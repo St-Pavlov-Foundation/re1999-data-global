@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity2_2.act173.controller.Activity173Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act173/controller/Activity173Controller.lua
 
-local var_0_0 = class("Activity173Controller", BaseController)
+module("modules.logic.versionactivity2_2.act173.controller.Activity173Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity173Controller = class("Activity173Controller", BaseController)
+
+function Activity173Controller:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity173Controller:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function Activity173Controller:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function Activity173Controller:addConstEvents()
 	return
 end
 
-function var_0_0.openActivity173FullView(arg_5_0)
+function Activity173Controller:openActivity173FullView()
 	ViewMgr.instance:openView(ViewName.Activity173FullView)
 end
 
-function var_0_0.numberDisplay(arg_6_0)
-	local var_6_0 = tonumber(arg_6_0)
+function Activity173Controller.numberDisplay(number)
+	local num = tonumber(number)
 
-	if var_6_0 <= 9999 then
-		return var_6_0
+	if num <= 9999 then
+		return num
 	else
-		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("activity173panelview_tenThousand"), math.floor(var_6_0 / 10000))
+		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("activity173panelview_tenThousand"), math.floor(num / 10000))
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity173Controller.instance = Activity173Controller.New()
 
-return var_0_0
+return Activity173Controller

@@ -1,111 +1,118 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.controller.YeShuMeiController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/controller/YeShuMeiController.lua
 
-local var_0_0 = class("YeShuMeiController", BaseController)
+module("modules.logic.versionactivity3_1.yeshumei.controller.YeShuMeiController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local YeShuMeiController = class("YeShuMeiController", BaseController)
+
+function YeShuMeiController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function YeShuMeiController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function YeShuMeiController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function YeShuMeiController:addConstEvents()
 	return
 end
 
-function var_0_0._onGameFinished(arg_5_0, arg_5_1, arg_5_2)
-	if not YeShuMeiModel.instance:isEpisodePass(arg_5_2) then
-		if YeShuMeiModel.instance:checkEpisodeIsGame(arg_5_2) and not YeShuMeiModel.instance:checkEpisodeFinishGame(arg_5_2) then
-			YeShuMeiRpc.instance:sendAct211SaveEpisodeProgressRequest(arg_5_1, arg_5_2)
+function YeShuMeiController:_onGameFinished(actId, episodeId)
+	if not YeShuMeiModel.instance:isEpisodePass(episodeId) then
+		if YeShuMeiModel.instance:checkEpisodeIsGame(episodeId) and not YeShuMeiModel.instance:checkEpisodeFinishGame(episodeId) then
+			YeShuMeiRpc.instance:sendAct211SaveEpisodeProgressRequest(actId, episodeId)
 		end
 
-		local var_5_0 = YeShuMeiConfig.instance:getStoryClear(arg_5_1, arg_5_2)
+		local storyClear = YeShuMeiConfig.instance:getStoryClear(actId, episodeId)
 
-		function arg_5_0._sendCallBack()
-			YeShuMeiModel.instance:setNewFinishEpisode(arg_5_2)
-			arg_5_0:_finishEpisode({
-				episodeId = arg_5_2
+		function self._sendCallBack()
+			YeShuMeiModel.instance:setNewFinishEpisode(episodeId)
+			self:_finishEpisode({
+				episodeId = episodeId
 			})
 		end
 
-		function arg_5_0._afterFinishStory()
-			YeShuMeiRpc.instance:sendGetAct211FinishEpisodeRequest(arg_5_1, arg_5_2, arg_5_0._sendCallBack, arg_5_0)
+		function self._afterFinishStory()
+			YeShuMeiRpc.instance:sendGetAct211FinishEpisodeRequest(actId, episodeId, self._sendCallBack, self)
 		end
 
-		if var_5_0 and var_5_0 ~= 0 then
-			StoryController.instance:playStory(var_5_0, nil, arg_5_0._afterFinishStory, arg_5_0, {
-				episodeId = arg_5_2
+		if storyClear and storyClear ~= 0 then
+			StoryController.instance:playStory(storyClear, nil, self._afterFinishStory, self, {
+				episodeId = episodeId
 			})
 		else
-			arg_5_0:_afterFinishStory()
+			self:_afterFinishStory()
 		end
 	else
-		arg_5_0:_playStoryClear(arg_5_2)
+		self:_playStoryClear(episodeId)
 	end
 end
 
-function var_0_0._playStoryClear(arg_8_0, arg_8_1)
-	if not YeShuMeiModel.instance:isEpisodePass(arg_8_1) then
+function YeShuMeiController:_playStoryClear(episodeId)
+	local isPass = YeShuMeiModel.instance:isEpisodePass(episodeId)
+
+	if not isPass then
 		return
 	end
 
-	local var_8_0 = VersionActivity3_1Enum.ActivityId.YeShuMei
-	local var_8_1 = YeShuMeiConfig.instance:getStoryClear(var_8_0, arg_8_1)
+	local actId = VersionActivity3_1Enum.ActivityId.YeShuMei
+	local storyClear = YeShuMeiConfig.instance:getStoryClear(actId, episodeId)
 
-	if var_8_1 and var_8_1 ~= 0 then
-		StoryController.instance:playStory(var_8_1, nil, arg_8_0._finishEpisode, arg_8_0, {
-			episodeId = arg_8_1
+	if storyClear and storyClear ~= 0 then
+		StoryController.instance:playStory(storyClear, nil, self._finishEpisode, self, {
+			episodeId = episodeId
 		})
 	else
-		arg_8_0:_finishEpisode({
-			episodeId = arg_8_1
+		self:_finishEpisode({
+			episodeId = episodeId
 		})
 	end
 end
 
-function var_0_0._finishEpisode(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1 and arg_9_1.episodeId
-	local var_9_1 = VersionActivity3_1Enum.ActivityId.YeShuMei
+function YeShuMeiController:_finishEpisode(param)
+	local episodeId = param and param.episodeId
+	local actId = VersionActivity3_1Enum.ActivityId.YeShuMei
 
-	if not var_9_1 or not var_9_0 then
+	if not actId or not episodeId then
 		return
 	end
 
-	if YeShuMeiConfig.instance:getEpisodeCo(var_9_1, var_9_0).gameId ~= 0 and ViewMgr.instance:isOpen(ViewName.YeShuMeiGameView) then
+	local config = YeShuMeiConfig.instance:getEpisodeCo(actId, episodeId)
+	local hasGame = config.gameId ~= 0
+
+	if hasGame and ViewMgr.instance:isOpen(ViewName.YeShuMeiGameView) then
 		YeShuMeiStatHelper.instance:sendGameFinish()
 		ViewMgr.instance:closeView(ViewName.YeShuMeiGameView)
 	end
 
-	arg_9_0:dispatchEvent(YeShuMeiEvent.OnBackToLevel)
-	arg_9_0:dispatchEvent(YeShuMeiEvent.EpisodeFinished)
+	self:dispatchEvent(YeShuMeiEvent.OnBackToLevel)
+	self:dispatchEvent(YeShuMeiEvent.EpisodeFinished)
 end
 
-function var_0_0.enterLevelView(arg_10_0, arg_10_1)
-	arg_10_0._openEpisodeId = arg_10_1
+function YeShuMeiController:enterLevelView(episodeId)
+	self._openEpisodeId = episodeId
 
-	YeShuMeiRpc.instance:sendGetAct211InfoRequest(VersionActivity3_1Enum.ActivityId.YeShuMei, arg_10_0._onRecInfo, arg_10_0)
+	YeShuMeiRpc.instance:sendGetAct211InfoRequest(VersionActivity3_1Enum.ActivityId.YeShuMei, self._onRecInfo, self)
 end
 
-function var_0_0._onRecInfo(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 == 0 and arg_11_3.activityId == VersionActivity3_1Enum.ActivityId.YeShuMei then
-		YeShuMeiModel.instance:initInfos(arg_11_3.episodes)
+function YeShuMeiController:_onRecInfo(cmd, resultCode, msg)
+	if resultCode == 0 and msg.activityId == VersionActivity3_1Enum.ActivityId.YeShuMei then
+		YeShuMeiModel.instance:initInfos(msg.episodes)
 		ViewMgr.instance:openView(ViewName.YeShuMeiLevelView, {
-			episodeId = arg_11_0._openEpisodeId
+			episodeId = self._openEpisodeId
 		})
 
-		arg_11_0._openEpisodeId = nil
+		self._openEpisodeId = nil
 	end
 end
 
-function var_0_0.reInit(arg_12_0)
+function YeShuMeiController:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+YeShuMeiController.instance = YeShuMeiController.New()
 
-return var_0_0
+return YeShuMeiController

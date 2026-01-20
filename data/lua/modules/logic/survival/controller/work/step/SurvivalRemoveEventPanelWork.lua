@@ -1,18 +1,22 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalRemoveEventPanelWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalRemoveEventPanelWork.lua
 
-local var_0_0 = class("SurvivalRemoveEventPanelWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalRemoveEventPanelWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = false
-	local var_1_1 = arg_1_0._stepMo.paramInt[1]
+local SurvivalRemoveEventPanelWork = class("SurvivalRemoveEventPanelWork", SurvivalStepBaseWork)
 
-	if var_1_1 == 1 then
-		local var_1_2 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalRemoveEventPanelWork:onStart(context)
+	local isIceSpEvent = false
+	local source = self._stepMo.paramInt[1]
 
-		var_1_0 = var_1_2:isHaveIceEvent()
-		var_1_2.panel = nil
-	elseif var_1_1 == 2 then
-		SurvivalShelterModel.instance:getWeekInfo().panel = nil
+	if source == 1 then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+		isIceSpEvent = sceneMo:isHaveIceEvent()
+		sceneMo.panel = nil
+	elseif source == 2 then
+		local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+
+		weekMo.panel = nil
 	end
 
 	ViewMgr.instance:closeView(ViewName.SurvivalMapEventView)
@@ -20,31 +24,31 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	ViewMgr.instance:closeView(ViewName.SurvivalDropSelectView)
 	ViewMgr.instance:closeView(ViewName.SurvivalShopView)
 
-	if var_1_0 then
-		local var_1_3 = SurvivalMapHelper.instance:getEntity(0)
+	if isIceSpEvent then
+		local entity = SurvivalMapHelper.instance:getEntity(0)
 
-		if var_1_3 then
-			var_1_3:playAnim("down_out")
-			TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 1.2)
+		if entity then
+			entity:playAnim("down_out")
+			TaskDispatcher.runDelay(self._delayDone, self, 1.2)
 		else
-			arg_1_0:onDone(true)
+			self:onDone(true)
 		end
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function SurvivalRemoveEventPanelWork:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
+function SurvivalRemoveEventPanelWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-function var_0_0.getRunOrder(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1.havePanelUpdate then
-		arg_4_1.havePanelUpdate = false
+function SurvivalRemoveEventPanelWork:getRunOrder(params, flow)
+	if params.havePanelUpdate then
+		params.havePanelUpdate = false
 
 		return SurvivalEnum.StepRunOrder.After
 	else
@@ -52,4 +56,4 @@ function var_0_0.getRunOrder(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-return var_0_0
+return SurvivalRemoveEventPanelWork

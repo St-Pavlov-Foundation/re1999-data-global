@@ -1,13 +1,15 @@
-﻿module("modules.logic.stresstip.view.StressTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/stresstip/view/StressTipViewContainer.lua
 
-local var_0_0 = class("StressTipViewContainer", BaseViewContainer)
+module("modules.logic.stresstip.view.StressTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StressTipViewContainer = class("StressTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, StressTipView.New())
+function StressTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, StressTipView.New())
+
+	return views
 end
 
-return var_0_0
+return StressTipViewContainer

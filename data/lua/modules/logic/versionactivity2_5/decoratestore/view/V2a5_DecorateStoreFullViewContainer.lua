@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity2_5.decoratestore.view.V2a5_DecorateStoreFullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/decoratestore/view/V2a5_DecorateStoreFullViewContainer.lua
 
-local var_0_0 = class("V2a5_DecorateStoreFullViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.decoratestore.view.V2a5_DecorateStoreFullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a5_DecorateStoreFullViewContainer = class("V2a5_DecorateStoreFullViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V2a5_DecorateStoreView.New())
+function V2a5_DecorateStoreFullViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V2a5_DecorateStoreView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function V2a5_DecorateStoreFullViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return V2a5_DecorateStoreFullViewContainer

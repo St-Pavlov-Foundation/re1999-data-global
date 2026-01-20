@@ -1,36 +1,38 @@
-﻿module("modules.logic.store.model.StoreChargeGoodsItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/StoreChargeGoodsItemListModel.lua
 
-local var_0_0 = class("StoreChargeGoodsItemListModel", ListScrollModel)
+module("modules.logic.store.model.StoreChargeGoodsItemListModel", package.seeall)
 
-function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._moList = {}
+local StoreChargeGoodsItemListModel = class("StoreChargeGoodsItemListModel", ListScrollModel)
 
-	if arg_1_1 then
-		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-			if iter_1_1.config.belongStoreId == arg_1_2 then
-				table.insert(arg_1_0._moList, iter_1_1)
+function StoreChargeGoodsItemListModel:setMOList(moList, storeId)
+	self._moList = {}
+
+	if moList then
+		for _, mo in pairs(moList) do
+			if mo.config.belongStoreId == storeId then
+				table.insert(self._moList, mo)
 			end
 		end
 
-		if #arg_1_0._moList > 1 then
-			table.sort(arg_1_0._moList, arg_1_0._sortFunction)
+		if #self._moList > 1 then
+			table.sort(self._moList, self._sortFunction)
 		end
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0._sortFunction(arg_2_0, arg_2_1)
-	local var_2_0 = StoreConfig.instance:getChargeGoodsConfig(arg_2_0.id)
-	local var_2_1 = StoreConfig.instance:getChargeGoodsConfig(arg_2_1.id)
+function StoreChargeGoodsItemListModel._sortFunction(x, y)
+	local xConfig = StoreConfig.instance:getChargeGoodsConfig(x.id)
+	local yConfig = StoreConfig.instance:getChargeGoodsConfig(y.id)
 
-	if var_2_0.order ~= var_2_1.order then
-		return var_2_0.order < var_2_1.order
+	if xConfig.order ~= yConfig.order then
+		return xConfig.order < yConfig.order
 	end
 
-	return var_2_0.id < var_2_1.id
+	return xConfig.id < yConfig.id
 end
 
-var_0_0.instance = var_0_0.New()
+StoreChargeGoodsItemListModel.instance = StoreChargeGoodsItemListModel.New()
 
-return var_0_0
+return StoreChargeGoodsItemListModel

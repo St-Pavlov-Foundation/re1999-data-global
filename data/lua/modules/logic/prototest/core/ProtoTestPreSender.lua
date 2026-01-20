@@ -1,22 +1,24 @@
-﻿module("modules.logic.prototest.core.ProtoTestPreSender", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/core/ProtoTestPreSender.lua
 
-local var_0_0 = class("ProtoTestPreSender", BasePreSender)
+module("modules.logic.prototest.core.ProtoTestPreSender", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local ProtoTestPreSender = class("ProtoTestPreSender", BasePreSender)
+
+function ProtoTestPreSender:ctor()
 	return
 end
 
-function var_0_0.preSendSysMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function ProtoTestPreSender:preSendSysMsg(cmd, dataTable, socketId)
 	return
 end
 
-function var_0_0.preSendProto(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not ProtoEnum.IgnoreCmdList[arg_3_1] then
-		local var_3_0 = ProtoTestCaseMO.New()
+function ProtoTestPreSender:preSendProto(cmd, proto, socketId)
+	if not ProtoEnum.IgnoreCmdList[cmd] then
+		local mo = ProtoTestCaseMO.New()
 
-		var_3_0:initFromProto(arg_3_1, arg_3_2)
-		ProtoTestCaseModel.instance:addAtLast(var_3_0)
+		mo:initFromProto(cmd, proto)
+		ProtoTestCaseModel.instance:addAtLast(mo)
 	end
 end
 
-return var_0_0
+return ProtoTestPreSender

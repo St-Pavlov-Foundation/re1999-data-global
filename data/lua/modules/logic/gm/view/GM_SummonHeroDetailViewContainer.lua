@@ -1,23 +1,25 @@
-﻿module("modules.logic.gm.view.GM_SummonHeroDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_SummonHeroDetailViewContainer.lua
 
-local var_0_0 = class("GM_SummonHeroDetailViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_SummonHeroDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_SummonHeroDetailViewContainer = class("GM_SummonHeroDetailViewContainer", BaseViewContainer)
+
+function GM_SummonHeroDetailViewContainer:buildViews()
 	return {
 		GM_SummonHeroDetailView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_SummonHeroDetailViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.SummonHeroDetailView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
+function GM_SummonHeroDetailViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.SummonHeroDetailView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.SummonHeroDetailView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
+function GM_SummonHeroDetailViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.SummonHeroDetailView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-return var_0_0
+return GM_SummonHeroDetailViewContainer

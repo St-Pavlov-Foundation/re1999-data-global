@@ -1,320 +1,363 @@
-﻿module("modules.logic.fight.view.FightView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightView.lua
 
-local var_0_0 = class("FightView", BaseView)
+module("modules.logic.fight.view.FightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._rootGO = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._topRightBtnRoot = gohelper.findChild(arg_1_0.viewGO, "root/btns")
-	arg_1_0._btnBack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btns/btnBack")
-	arg_1_0._btnSpecialTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btns/btnSpecialTip")
-	arg_1_0._btnSpeed = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btns/btnSpeed")
-	arg_1_0._imageSpeed = gohelper.findChildImage(arg_1_0.viewGO, "root/btns/btnSpeed/image")
-	arg_1_0._btnCareerRestrain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btnRestraintInfo")
-	arg_1_0._roundGO = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/imgRound")
-	arg_1_0._txtWave = gohelper.findChildText(arg_1_0.viewGO, "root/topLeftContent/imgRound/txtWave")
-	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "root/topLeftContent/imgRound/txtRound")
-	arg_1_0._txtSpeed = gohelper.findChildText(arg_1_0.viewGO, "root/btns/btnSpeed/Text")
-	arg_1_0._goReplay = gohelper.findChild(arg_1_0.viewGO, "root/#go_replay")
-	arg_1_0._goEnemyNum = gohelper.findChild(arg_1_0.viewGO, "root/enemynum")
-	arg_1_0._txtEnemyNum = gohelper.findChildText(arg_1_0.viewGO, "root/enemynum/#txt_enemynum")
-	arg_1_0._enemyinfoRoot = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/enemyinfo")
-	arg_1_0._enemyActionRoot = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/enemyaction")
-	arg_1_0.enemyActionNormal = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/enemyaction/normal")
-	arg_1_0.enemyActionSelect = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/enemyaction/selected")
-	arg_1_0.enemyActionLocked = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/enemyaction/locked")
-	arg_1_0.btnEnemyAction = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/topLeftContent/enemyaction/#btn_enemyaction")
-	arg_1_0.weeklyWalkSubEnemy = gohelper.findChild(arg_1_0.viewGO, "root/enemyweekwalkheart")
-	arg_1_0.btnCheckSub = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "root/enemyweekwalkheart/btn_checkSub")
+local FightView = class("FightView", BaseView)
+
+function FightView:onInitView()
+	self._rootGO = gohelper.findChild(self.viewGO, "root")
+	self._topRightBtnRoot = gohelper.findChild(self.viewGO, "root/btns")
+	self._btnBack = gohelper.findChildButtonWithAudio(self.viewGO, "root/btns/btnBack")
+	self._btnSpecialTip = gohelper.findChildButtonWithAudio(self.viewGO, "root/btns/btnSpecialTip")
+	self._btnSpeed = gohelper.findChildButtonWithAudio(self.viewGO, "root/btns/btnSpeed")
+	self._imageSpeed = gohelper.findChildImage(self.viewGO, "root/btns/btnSpeed/image")
+	self._btnCareerRestrain = gohelper.findChildButtonWithAudio(self.viewGO, "root/btnRestraintInfo")
+	self._roundGO = gohelper.findChild(self.viewGO, "root/topLeftContent/imgRound")
+	self.roundAnimator = gohelper.onceAddComponent(self._roundGO, typeof(UnityEngine.Animator))
+	self._txtWave = gohelper.findChildText(self.viewGO, "root/topLeftContent/imgRound/txtWave")
+	self._txtRound = gohelper.findChildText(self.viewGO, "root/topLeftContent/imgRound/txtRound")
+	self._txtRound_add = gohelper.findChildText(self.viewGO, "root/topLeftContent/imgRound/txtRound_add")
+	self._txtSpeed = gohelper.findChildText(self.viewGO, "root/btns/btnSpeed/Text")
+	self._goReplay = gohelper.findChild(self.viewGO, "root/#go_replay")
+	self._goEnemyNum = gohelper.findChild(self.viewGO, "root/enemynum")
+	self._txtEnemyNum = gohelper.findChildText(self.viewGO, "root/enemynum/#txt_enemynum")
+	self._enemyinfoRoot = gohelper.findChild(self.viewGO, "root/topLeftContent/enemyinfo")
+	self._enemyActionRoot = gohelper.findChild(self.viewGO, "root/topLeftContent/enemyaction")
+	self.enemyActionNormal = gohelper.findChild(self.viewGO, "root/topLeftContent/enemyaction/normal")
+	self.enemyActionSelect = gohelper.findChild(self.viewGO, "root/topLeftContent/enemyaction/selected")
+	self.enemyActionLocked = gohelper.findChild(self.viewGO, "root/topLeftContent/enemyaction/locked")
+	self.btnEnemyAction = gohelper.findChildButtonWithAudio(self.viewGO, "root/topLeftContent/enemyaction/#btn_enemyaction")
+	self.weeklyWalkSubEnemy = gohelper.findChild(self.viewGO, "root/enemyweekwalkheart")
+	self.btnCheckSub = gohelper.findChildClickWithDefaultAudio(self.viewGO, "root/enemyweekwalkheart/btn_checkSub")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnBack:AddClickListener(arg_2_0._onClickBack, arg_2_0)
-	arg_2_0._btnSpeed:AddClickListener(arg_2_0._onClickSpeed, arg_2_0)
-	arg_2_0._btnSpecialTip:AddClickListener(arg_2_0._onClickBtnSpecialTip, arg_2_0)
-	arg_2_0._btnCareerRestrain:AddClickListener(arg_2_0._onClickCareerRestrain, arg_2_0)
-	arg_2_0.btnEnemyAction:AddClickListener(arg_2_0.onClickEnemyAction, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCheckSub, arg_2_0.onBtnCheckSub, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCombineCardEnd, arg_2_0._onBlockOperateEnd, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnUniversalAppear, arg_2_0._onBlockOperateEnd, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.SetIsShowUI, arg_2_0._setIsShowUI, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnChangeEntity, arg_2_0._onChangeEntity, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBeginWave, arg_2_0._onBeginWave, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, arg_2_0._onFightReconnectLastWork, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_2_0._onGMShowChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, arg_2_0._onSetStateForDialogBeforeStartFight, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RefreshUIRound, arg_2_0._onRefreshUIRound, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.AddSubEntity, arg_2_0._onAddSubEntity, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ClearMonsterSub, arg_2_0._onClearMonsterSub, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RefreshMonsterSubCount, arg_2_0._onRefreshMonsterSubCount, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.SetBtnListVisibleWhenHidingFightView, arg_2_0.onSetBtnListVisibleWhenHidingFightView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ChangeRound, arg_2_0._onChangeRound, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpentips, arg_2_0._onClickBack, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSpeedUp, arg_2_0._onClickSpeed, arg_2_0)
+function FightView:addEvents()
+	self._btnBack:AddClickListener(self._onClickBack, self)
+	self._btnSpeed:AddClickListener(self._onClickSpeed, self)
+	self._btnSpecialTip:AddClickListener(self._onClickBtnSpecialTip, self)
+	self._btnCareerRestrain:AddClickListener(self._onClickCareerRestrain, self)
+	self.btnEnemyAction:AddClickListener(self.onClickEnemyAction, self)
+	self:addClickCb(self.btnCheckSub, self.onBtnCheckSub, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCombineCardEnd, self._onBlockOperateEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.OnUniversalAppear, self._onBlockOperateEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.SetIsShowUI, self._setIsShowUI, self)
+	self:addEventCb(FightController.instance, FightEvent.OnChangeEntity, self._onChangeEntity, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBeginWave, self._onBeginWave, self)
+	self:addEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, self._onFightReconnectLastWork, self)
+	self:addEventCb(FightController.instance, FightEvent.GMHideFightView, self._onGMShowChange, self)
+	self:addEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, self._onSetStateForDialogBeforeStartFight, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.RefreshUIRound, self._onRefreshUIRound, self)
+	self:addEventCb(FightController.instance, FightEvent.AddSubEntity, self._onAddSubEntity, self)
+	self:addEventCb(FightController.instance, FightEvent.ClearMonsterSub, self._onClearMonsterSub, self)
+	self:addEventCb(FightController.instance, FightEvent.RefreshMonsterSubCount, self._onRefreshMonsterSubCount, self)
+	self:addEventCb(FightController.instance, FightEvent.SetBtnListVisibleWhenHidingFightView, self.onSetBtnListVisibleWhenHidingFightView, self)
+	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self.onStartSequenceFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(FightController.instance, FightEvent.ChangeRound, self._onChangeRound, self)
+	self:addEventCb(FightController.instance, FightEvent.RefreshMaxRoundUI, self.onRefreshMaxRoundUI, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpentips, self._onClickBack, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSpeedUp, self._onClickSpeed, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnBack:RemoveClickListener()
-	arg_3_0._btnSpecialTip:RemoveClickListener()
-	arg_3_0._btnSpeed:RemoveClickListener()
-	arg_3_0._btnCareerRestrain:RemoveClickListener()
-	arg_3_0.btnEnemyAction:RemoveClickListener()
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnCombineCardEnd, arg_3_0._onBlockOperateEnd, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnUniversalAppear, arg_3_0._onBlockOperateEnd, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.SetIsShowUI, arg_3_0._setIsShowUI, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnChangeEntity, arg_3_0._onChangeEntity, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnBeginWave, arg_3_0._onBeginWave, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, arg_3_0._onFightReconnectLastWork, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_3_0._onGMShowChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, arg_3_0._onSetStateForDialogBeforeStartFight, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.ChangeRound, arg_3_0._onChangeRound, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpentips, arg_3_0._onClickBack, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSpeedUp, arg_3_0._onClickSpeed, arg_3_0)
+function FightView:removeEvents()
+	self._btnBack:RemoveClickListener()
+	self._btnSpecialTip:RemoveClickListener()
+	self._btnSpeed:RemoveClickListener()
+	self._btnCareerRestrain:RemoveClickListener()
+	self.btnEnemyAction:RemoveClickListener()
+	self:removeEventCb(FightController.instance, FightEvent.OnCombineCardEnd, self._onBlockOperateEnd, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnUniversalAppear, self._onBlockOperateEnd, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetIsShowUI, self._setIsShowUI, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnChangeEntity, self._onChangeEntity, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnBeginWave, self._onBeginWave, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, self._onFightReconnectLastWork, self)
+	self:removeEventCb(FightController.instance, FightEvent.GMHideFightView, self._onGMShowChange, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetStateForDialogBeforeStartFight, self._onSetStateForDialogBeforeStartFight, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(FightController.instance, FightEvent.ChangeRound, self._onChangeRound, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpentips, self._onClickBack, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSpeedUp, self._onClickSpeed, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = FightModel.instance:getFightParam().episodeId
-	local var_4_1 = FightModel.instance:getFightParam().battleId
+function FightView:onStartSequenceFinish()
+	self:_showEnemySubCount()
+end
 
-	arg_4_0:_updateRound()
-	arg_4_0:_updateReplay()
+function FightView:onOpen()
+	local episodeId = FightModel.instance:getFightParam().episodeId
+	local battleId = FightModel.instance:getFightParam().battleId
 
-	local var_4_2 = GuideModel.instance:isDoingFirstGuide()
-	local var_4_3 = GuideController.instance:isForbidGuides()
-	local var_4_4 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightSpeed) and (not var_4_2 or var_4_3)
-	local var_4_5 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightBack) and (not var_4_2 or var_4_3)
+	self:_updateRound()
+	self:_updateReplay()
 
-	gohelper.setActive(arg_4_0._btnSpecialTip.gameObject, var_0_0.canShowSpecialBtn())
+	local firstGuide = GuideModel.instance:isDoingFirstGuide()
+	local forbidGuides = GuideController.instance:isForbidGuides()
+	local hasOpenSpeed = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightSpeed) and (not firstGuide or forbidGuides)
+	local isBackShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightBack) and (not firstGuide or forbidGuides)
 
-	if not var_4_4 and (var_4_0 == OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.FightSpeed).episodeId or GuideModel.instance:isGuideFinish(110)) then
-		var_4_4 = true
+	gohelper.setActive(self._btnSpecialTip.gameObject, FightView.canShowSpecialBtn())
+
+	if not hasOpenSpeed and (episodeId == OpenConfig.instance:getOpenCo(OpenEnum.UnlockFunc.FightSpeed).episodeId or GuideModel.instance:isGuideFinish(110)) then
+		hasOpenSpeed = true
 	end
 
-	if var_4_4 then
+	if hasOpenSpeed then
 		if FightDataHelper.stateMgr.isReplay then
 			FightModel.instance:setUserSpeed(2)
 		else
-			local var_4_6 = PlayerPrefsHelper.getNumber(arg_4_0:_getPlayerPrefKeySpeed(), 1)
+			local speed = PlayerPrefsHelper.getNumber(self:_getPlayerPrefKeySpeed(), 1)
 
-			FightModel.instance:setUserSpeed(var_4_6)
+			FightModel.instance:setUserSpeed(speed)
 		end
 	else
 		FightModel.instance:setUserSpeed(1)
 	end
 
-	arg_4_0:_updateSpeed()
-	gohelper.setActive(arg_4_0._btnSpeed.gameObject, var_4_4)
-	gohelper.setActive(arg_4_0._btnCareerRestrain.gameObject, false)
-	gohelper.setActive(arg_4_0._btnBack.gameObject, var_4_5)
-	gohelper.setActive(arg_4_0._roundGO, var_4_5 and GMFightShowState.topRightRound)
-	NavigateMgr.instance:addEscape(ViewName.FightView, arg_4_0._onEscapeBtnClick, arg_4_0)
-	arg_4_0:_showEnemySubCount()
-	arg_4_0:initEnemyActionStatus()
-	arg_4_0:_refreshDouQuQu()
+	self:_updateSpeed()
+	gohelper.setActive(self._btnSpeed.gameObject, hasOpenSpeed)
+	gohelper.setActive(self._btnCareerRestrain.gameObject, false)
+	gohelper.setActive(self._btnBack.gameObject, isBackShow)
+	gohelper.setActive(self._roundGO, isBackShow and GMFightShowState.topRightRound)
+	NavigateMgr.instance:addEscape(ViewName.FightView, self._onEscapeBtnClick, self)
+	gohelper.setActive(self._goEnemyNum, false)
+	gohelper.setActive(self.weeklyWalkSubEnemy, false)
+	self:initEnemyActionStatus()
+	self:_refreshDouQuQu()
 end
 
-function var_0_0._refreshDouQuQu(arg_5_0)
-	if FightDataHelper.fieldMgr:isDouQuQu() then
-		gohelper.setActive(arg_5_0._enemyinfoRoot, false)
+function FightView:_refreshDouQuQu()
+	local isDouQuQu = FightDataHelper.fieldMgr:isDouQuQu()
+
+	if isDouQuQu then
+		gohelper.setActive(self._enemyinfoRoot, false)
 
 		if FightDataModel.instance.douQuQuMgr and FightDataModel.instance.douQuQuMgr.isRecord then
 			return
 		end
 
-		gohelper.setActive(arg_5_0._btnBack.gameObject, false)
+		gohelper.setActive(self._btnBack.gameObject, false)
 		NavigateMgr.instance:removeEscape(ViewName.FightView)
 	end
 end
 
-function var_0_0.initEnemyActionStatus(arg_6_0)
-	local var_6_0 = FightModel.instance:getBattleId()
-	local var_6_1 = var_6_0 and lua_battle.configDict[var_6_0]
+function FightView:initEnemyActionStatus()
+	local isOpen = self:checkEnemyActionIsOpen()
 
-	if var_6_1 and var_6_1.aiLink ~= 0 then
-		arg_6_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
+	if isOpen then
+		self:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
 	else
-		arg_6_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.NotOpen)
+		self:setEnemyActionStatus(FightEnum.EnemyActionStatus.NotOpen)
 	end
 end
 
-function var_0_0.onClose(arg_7_0)
-	FightModel.instance:setUserSpeed(1)
-	TaskDispatcher.cancelTask(arg_7_0._showBtnSpeedAni, arg_7_0, 0.001)
+function FightView:checkEnemyActionIsOpen()
+	local battleId = FightModel.instance:getBattleId()
+	local battleCo = battleId and lua_battle.configDict[battleId]
+
+	if not battleCo then
+		return false
+	end
+
+	if battleCo.aiLink ~= 0 then
+		return true
+	end
+
+	if battleCo.actShow ~= 0 then
+		return true
+	end
+
+	return false
 end
 
-function var_0_0._setIsShowUI(arg_8_0, arg_8_1)
-	if not arg_8_0._canvasGroup then
-		arg_8_0._canvasGroup = gohelper.onceAddComponent(arg_8_0._rootGO, typeof(UnityEngine.CanvasGroup))
+function FightView:onClose()
+	FightModel.instance:setUserSpeed(1)
+	TaskDispatcher.cancelTask(self._showBtnSpeedAni, self, 0.001)
+end
+
+function FightView:_setIsShowUI(isVisible)
+	if not self._canvasGroup then
+		self._canvasGroup = gohelper.onceAddComponent(self._rootGO, typeof(UnityEngine.CanvasGroup))
 	end
 
 	if FightDataHelper.tempMgr.aiJiAoSelectTargetView then
-		arg_8_1 = false
+		isVisible = false
 	end
 
-	gohelper.setActiveCanvasGroup(arg_8_0._canvasGroup, arg_8_1)
+	gohelper.setActiveCanvasGroup(self._canvasGroup, isVisible)
 end
 
-function var_0_0._onOpenView(arg_9_0, arg_9_1)
+function FightView:_onOpenView(viewName)
 	return
 end
 
-function var_0_0._onCloseView(arg_10_0, arg_10_1)
-	if arg_10_1 == ViewName.FightFocusView then
-		TaskDispatcher.runDelay(arg_10_0._resetCamera, arg_10_0, 0.16)
+function FightView:_onCloseView(viewName)
+	if viewName == ViewName.FightFocusView then
+		TaskDispatcher.runDelay(self._resetCamera, self, 0.16)
 	end
 
-	if arg_10_1 == ViewName.FightEnemyActionView and arg_10_0.actionStatus == FightEnum.EnemyActionStatus.Select then
-		arg_10_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
-	end
-end
-
-function var_0_0._onBlockOperateEnd(arg_11_0)
-	if arg_11_0._blockOperate then
-		arg_11_0._blockOperate = nil
+	if viewName == ViewName.FightEnemyActionView and self.actionStatus == FightEnum.EnemyActionStatus.Select then
+		self:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
 	end
 end
 
-function var_0_0._updateSpeed(arg_12_0)
-	local var_12_0 = FightModel.instance:getUserSpeed() == 1 and 1 or 2
-
-	UISpriteSetMgr.instance:setFightSprite(arg_12_0._imageSpeed, "btn_x" .. var_12_0, true)
-
-	arg_12_0._txtSpeed.text = string.format("X%d", var_12_0)
-
-	TaskDispatcher.runDelay(arg_12_0._showBtnSpeedAni, arg_12_0, 0.001)
+function FightView:_onBlockOperateEnd()
+	if self._blockOperate then
+		self._blockOperate = nil
+	end
 end
 
-function var_0_0._showBtnSpeedAni(arg_13_0)
-	local var_13_0 = FightModel.instance:getUserSpeed() == 1 and "idle" or "click"
+function FightView:_updateSpeed()
+	local speed = FightModel.instance:getUserSpeed()
+	local speedShow = speed == 1 and 1 or 2
 
-	arg_13_0._btnSpeed:GetComponent(typeof(UnityEngine.Animator)):Play(var_13_0)
+	UISpriteSetMgr.instance:setFightSprite(self._imageSpeed, "btn_x" .. speedShow, true)
+
+	self._txtSpeed.text = string.format("X%d", speedShow)
+
+	TaskDispatcher.runDelay(self._showBtnSpeedAni, self, 0.001)
 end
 
-function var_0_0._onRefreshUIRound(arg_14_0)
-	arg_14_0:_updateRound()
+function FightView:_showBtnSpeedAni()
+	local speed = FightModel.instance:getUserSpeed()
+	local play_name = speed == 1 and "idle" or "click"
+
+	self._btnSpeed:GetComponent(typeof(UnityEngine.Animator)):Play(play_name)
 end
 
-function var_0_0._updateRound(arg_15_0)
-	arg_15_0:_refreshWaveUI()
-	arg_15_0:_refreshRoundUI()
-	arg_15_0:_showEnemySubHeroCount()
+function FightView:_onRefreshUIRound()
+	self:_updateRound()
 end
 
-function var_0_0._refreshWaveUI(arg_16_0)
-	local var_16_0 = FightModel.instance.maxWave
-	local var_16_1 = FightModel.instance:getCurWaveId()
-	local var_16_2 = math.min(var_16_1, var_16_0)
+function FightView:_updateRound()
+	self:_refreshWaveUI()
+	self:_refreshRoundUI()
+	self:_showEnemySubHeroCount()
+end
+
+function FightView:_refreshWaveUI()
+	local maxWave = FightModel.instance.maxWave
+	local curWaveId = FightModel.instance:getCurWaveId()
+
+	curWaveId = math.min(curWaveId, maxWave)
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
-		local var_16_3 = FightDataModel.instance.douQuQuMgr
+		local dataMgr = FightDataModel.instance.douQuQuMgr
 
-		var_16_2 = var_16_3.index or 1
-		var_16_0 = var_16_3.maxIndex or 1
+		curWaveId = dataMgr.index or 1
+		maxWave = dataMgr.maxIndex or 1
 	end
 
-	arg_16_0._txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), var_16_2, var_16_0)
+	self._txtWave.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_wave_lang"), curWaveId, maxWave)
 end
 
-function var_0_0._refreshRoundUI(arg_17_0)
-	local var_17_0 = FightModel.instance:getMaxRound()
-	local var_17_1 = FightModel.instance:getCurRoundId()
-	local var_17_2 = math.min(var_17_1, var_17_0)
+function FightView:_refreshRoundUI()
+	local maxRound = FightModel.instance:getMaxRound() + FightDataHelper.fieldMgr.maxRoundOffset
+	local curRound = FightModel.instance:getCurRoundId()
 
-	arg_17_0._txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), var_17_2, var_17_0)
+	curRound = math.min(curRound, maxRound)
+	self._txtRound.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("fight_round_lang"), curRound, maxRound)
 end
 
-function var_0_0._onChangeRound(arg_18_0)
-	arg_18_0:_refreshRoundUI()
+function FightView:_onChangeRound()
+	self:_refreshRoundUI()
 end
 
-function var_0_0._showEnemySubHeroCount(arg_19_0)
-	local var_19_0 = FightDataHelper.entityMgr:getEnemySubList()
+function FightView:onRefreshMaxRoundUI(offsetNum)
+	self._txtRound_add.text = offsetNum > 0 and "+" .. offsetNum or offsetNum
 
-	arg_19_0._txtEnemyNum.text = #var_19_0
+	self.roundAnimator:Play("add", 0, 0)
+	self:_refreshRoundUI()
+end
 
-	if #var_19_0 > 0 then
+function FightView:_showEnemySubHeroCount()
+	local subList = FightDataHelper.entityMgr:getEnemySubList()
+
+	self._txtEnemyNum.text = #subList
+
+	if #subList > 0 then
 		FightController.instance:dispatchEvent(FightEvent.OnGuideShowEnemyNum)
 	end
 
-	local var_19_1 = FightDataHelper.fieldMgr.customData
+	local customData = FightDataHelper.fieldMgr.customData
+	local limitless = customData and customData[FightCustomData.CustomDataType.WeekwalkVer2]
 
-	if var_19_1 and var_19_1[FightCustomData.CustomDataType.WeekwalkVer2] then
-		arg_19_0._txtEnemyNum.text = "∞"
+	if limitless then
+		self._txtEnemyNum.text = "∞"
 	end
 end
 
-function var_0_0.onBtnCheckSub(arg_20_0)
+function FightView:onBtnCheckSub()
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
 
-	local var_20_0 = FightDataHelper.fieldMgr.customData
+	local customData = FightDataHelper.fieldMgr.customData
+	local limitless = customData and customData[FightCustomData.CustomDataType.WeekwalkVer2]
 
-	if var_20_0 and var_20_0[FightCustomData.CustomDataType.WeekwalkVer2] then
+	if limitless then
 		ViewMgr.instance:openView(ViewName.FightWeekWalkEnemyTipsView)
 	end
 end
 
-function var_0_0._showEnemySubCount(arg_21_0)
-	local var_21_0 = FightDataHelper.entityMgr:getEnemySubList()
-	local var_21_1 = GMFightShowState.leftMonster
+function FightView:_showEnemySubCount()
+	if FightDataHelper.entityMgr:checkSideHasBuffAct(FightEnum.EntitySide.EnemySide, FightEnum.BuffActId.CycleToSub) then
+		gohelper.setActive(self._goEnemyNum, false)
+		gohelper.setActive(self.weeklyWalkSubEnemy, true)
 
-	gohelper.setActive(arg_21_0._goEnemyNum, #var_21_0 > 0 and var_21_1)
-	gohelper.setActive(arg_21_0.weeklyWalkSubEnemy, false)
+		return
+	end
 
-	local var_21_2 = FightDataHelper.fieldMgr.customData
+	local subList = FightDataHelper.entityMgr:getEnemySubList()
+	local gmLeftMonster = GMFightShowState.leftMonster
 
-	if var_21_2 and var_21_2[FightCustomData.CustomDataType.WeekwalkVer2] then
-		gohelper.setActive(arg_21_0._goEnemyNum, false)
-		gohelper.setActive(arg_21_0.weeklyWalkSubEnemy, true)
+	gohelper.setActive(self._goEnemyNum, #subList > 0 and gmLeftMonster)
+	gohelper.setActive(self.weeklyWalkSubEnemy, false)
+end
+
+function FightView:_onAddSubEntity()
+	self:_showEnemySubCount()
+	self:_showEnemySubHeroCount()
+end
+
+function FightView:_onClearMonsterSub()
+	self:_showEnemySubHeroCount()
+end
+
+function FightView:_onRefreshMonsterSubCount()
+	self:_showEnemySubHeroCount()
+end
+
+function FightView:_onBeginWave()
+	self:_showEnemySubCount()
+	self:_refreshWaveUI()
+end
+
+function FightView:_onChangeEntity()
+	self:_showEnemySubHeroCount()
+end
+
+function FightView:_updateReplay()
+	gohelper.setActive(self._goReplay, FightDataHelper.stateMgr.isReplay)
+end
+
+function FightView:_onEscapeBtnClick()
+	if self._btnBack.gameObject.activeInHierarchy then
+		self:_onClickBack()
 	end
 end
 
-function var_0_0._onAddSubEntity(arg_22_0)
-	arg_22_0:_showEnemySubCount()
-	arg_22_0:_showEnemySubHeroCount()
-end
-
-function var_0_0._onClearMonsterSub(arg_23_0)
-	arg_23_0:_showEnemySubHeroCount()
-end
-
-function var_0_0._onRefreshMonsterSubCount(arg_24_0)
-	arg_24_0:_showEnemySubHeroCount()
-end
-
-function var_0_0._onBeginWave(arg_25_0)
-	arg_25_0:_showEnemySubCount()
-	arg_25_0:_refreshWaveUI()
-end
-
-function var_0_0._onChangeEntity(arg_26_0)
-	arg_26_0:_showEnemySubHeroCount()
-end
-
-function var_0_0._updateReplay(arg_27_0)
-	gohelper.setActive(arg_27_0._goReplay, FightDataHelper.stateMgr.isReplay)
-end
-
-function var_0_0._onEscapeBtnClick(arg_28_0)
-	if arg_28_0._btnBack.gameObject.activeInHierarchy then
-		arg_28_0:_onClickBack()
-	end
-end
-
-function var_0_0._onClickBack(arg_29_0)
+function FightView:_onClickBack()
 	if FightDataMgr.instance.stateMgr:isPlayingEnd() then
 		return
 	end
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack) then
-		local var_29_0, var_29_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightBack)
+		local desc, param = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightBack)
 
-		GameFacade.showToast(var_29_0, var_29_1)
+		GameFacade.showToast(desc, param)
 
 		return
 	end
@@ -327,12 +370,12 @@ function var_0_0._onClickBack(arg_29_0)
 		return
 	end
 
-	local var_29_2 = FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard)
+	local inDistribute = FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard)
 
-	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) or var_29_2 then
-		local var_29_3 = GuideModel.instance:getDoingGuideIdList()
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) or inDistribute then
+		local guideList = GuideModel.instance:getDoingGuideIdList()
 
-		if var_29_3 and #var_29_3 > 0 then
+		if guideList and #guideList > 0 then
 			return
 		end
 	end
@@ -341,60 +384,63 @@ function var_0_0._onClickBack(arg_29_0)
 	ViewMgr.instance:openView(ViewName.FightQuitTipView)
 end
 
-function var_0_0.onSetBtnListVisibleWhenHidingFightView(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = arg_30_0._topRightBtnRoot.transform
+function FightView:onSetBtnListVisibleWhenHidingFightView(state, showBtnNames)
+	local transform = self._topRightBtnRoot.transform
 
-	if not arg_30_0.originBtnPosX then
-		arg_30_0.originBtnPosX = recthelper.getAnchorX(var_30_0)
-		arg_30_0.btnRootSiblingIndex = gohelper.getSibling(arg_30_0._topRightBtnRoot) - 1
+	if not self.originBtnPosX then
+		self.originBtnPosX = recthelper.getAnchorX(transform)
+		self.btnRootSiblingIndex = gohelper.getSibling(self._topRightBtnRoot) - 1
 	end
 
-	gohelper.addChild(arg_30_1 and arg_30_0.viewGO or arg_30_0._rootGO, arg_30_0._topRightBtnRoot)
-	recthelper.setAnchorX(var_30_0, arg_30_0.originBtnPosX)
-	gohelper.setSibling(arg_30_0._topRightBtnRoot, arg_30_0.btnRootSiblingIndex)
+	gohelper.addChild(state and self.viewGO or self._rootGO, self._topRightBtnRoot)
+	recthelper.setAnchorX(transform, self.originBtnPosX)
+	gohelper.setSibling(self._topRightBtnRoot, self.btnRootSiblingIndex)
 
-	if arg_30_2 then
-		if not arg_30_0.originBtnVisibleNames then
-			arg_30_0.originBtnVisibleNames = {}
+	if showBtnNames then
+		if not self.originBtnVisibleNames then
+			self.originBtnVisibleNames = {}
 
-			for iter_30_0 = 0, var_30_0.childCount - 1 do
-				local var_30_1 = var_30_0:GetChild(iter_30_0)
+			for i = 0, transform.childCount - 1 do
+				local child = transform:GetChild(i)
 
-				arg_30_0.originBtnVisibleNames[var_30_1.name] = var_30_1.gameObject.activeSelf
+				self.originBtnVisibleNames[child.name] = child.gameObject.activeSelf
 			end
 		end
 
-		if arg_30_1 then
-			for iter_30_1 = 0, var_30_0.childCount - 1 do
-				local var_30_2 = var_30_0:GetChild(iter_30_1)
+		if state then
+			for i = 0, transform.childCount - 1 do
+				local child = transform:GetChild(i)
 
-				gohelper.setActive(var_30_2.gameObject, tabletool.indexOf(arg_30_2, var_30_2.name))
+				gohelper.setActive(child.gameObject, tabletool.indexOf(showBtnNames, child.name))
 			end
 		else
-			for iter_30_2 = 0, var_30_0.childCount - 1 do
-				local var_30_3 = var_30_0:GetChild(iter_30_2)
+			for i = 0, transform.childCount - 1 do
+				local child = transform:GetChild(i)
 
-				gohelper.setActive(var_30_3.gameObject, arg_30_0.originBtnVisibleNames[var_30_3.name])
+				gohelper.setActive(child.gameObject, self.originBtnVisibleNames[child.name])
 			end
 		end
 	end
 end
 
-function var_0_0._onClickSpeed(arg_31_0)
+function FightView:_onClickSpeed()
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidSpeed) then
 		return
 	end
 
-	local var_31_0 = FightModel.instance:getUserSpeed() == 1 and 2 or 1
+	local curSpeed = FightModel.instance:getUserSpeed()
+	local newSpeed = curSpeed == 1 and 2 or 1
 
-	FightModel.instance:setUserSpeed(var_31_0)
-	PlayerPrefsHelper.setNumber(arg_31_0:_getPlayerPrefKeySpeed(), var_31_0)
+	FightModel.instance:setUserSpeed(newSpeed)
+	PlayerPrefsHelper.setNumber(self:_getPlayerPrefKeySpeed(), newSpeed)
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
-	arg_31_0:_updateSpeed()
+	self:_updateSpeed()
 end
 
-function var_0_0._onClickBtnSpecialTip(arg_32_0)
-	if GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightForbidClickOpenView) then
+function FightView:_onClickBtnSpecialTip()
+	local guideFlag = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightForbidClickOpenView)
+
+	if guideFlag then
 		return
 	end
 
@@ -402,25 +448,25 @@ function var_0_0._onClickBtnSpecialTip(arg_32_0)
 		return
 	end
 
-	local var_32_0 = GuideModel.instance:getDoingGuideIdList()
-	local var_32_1 = var_32_0 and #var_32_0 or 0
+	local doingGuideIdList = GuideModel.instance:getDoingGuideIdList()
+	local doingGuideIdCount = doingGuideIdList and #doingGuideIdList or 0
 
-	if not FightModel.instance:isStartFinish() and var_32_1 > 0 then
+	if not FightModel.instance:isStartFinish() and doingGuideIdCount > 0 then
 		return
 	end
 
 	FightController.instance:openFightSpecialTipView()
 end
 
-function var_0_0._getPlayerPrefKeySpeed(arg_33_0)
+function FightView:_getPlayerPrefKeySpeed()
 	return PlayerPrefsKey.FightSpeed .. PlayerModel.instance:getPlayinfo().userId
 end
 
-function var_0_0._onClickCareerRestrain(arg_34_0)
+function FightView:_onClickCareerRestrain()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightProperty) then
-		local var_34_0, var_34_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightProperty)
+		local desc, param = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightProperty)
 
-		GameFacade.showToast(var_34_0, var_34_1)
+		GameFacade.showToast(desc, param)
 
 		return
 	end
@@ -432,45 +478,45 @@ function var_0_0._onClickCareerRestrain(arg_34_0)
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView)
 end
 
-function var_0_0._onFightReconnectLastWork(arg_35_0)
-	gohelper.setActive(arg_35_0._btnSpecialTip.gameObject, var_0_0.canShowSpecialBtn())
+function FightView:_onFightReconnectLastWork()
+	gohelper.setActive(self._btnSpecialTip.gameObject, FightView.canShowSpecialBtn())
 end
 
-function var_0_0._onGMShowChange(arg_36_0)
-	arg_36_0:_showEnemySubCount()
+function FightView:_onGMShowChange()
+	self:_showEnemySubCount()
 end
 
-function var_0_0.onDestroyView(arg_37_0)
-	TaskDispatcher.cancelTask(arg_37_0._resetCamera, arg_37_0)
+function FightView:onDestroyView()
+	TaskDispatcher.cancelTask(self._resetCamera, self)
 end
 
-function var_0_0.canShowSpecialBtn()
-	local var_38_0 = FightWorkBeforeStartNoticeView.canShowTips()
+function FightView.canShowSpecialBtn()
+	local canShow = FightWorkBeforeStartNoticeView.canShowTips()
 
-	if not var_38_0 then
-		local var_38_1 = FightModel.instance:getFightParam().episodeId
-		local var_38_2 = DungeonConfig.instance:getEpisodeCO(var_38_1)
-		local var_38_3 = var_38_2 and var_38_2.type
+	if not canShow then
+		local episodeId = FightModel.instance:getFightParam().episodeId
+		local episode_config = DungeonConfig.instance:getEpisodeCO(episodeId)
+		local episodeType = episode_config and episode_config.type
 
-		if Activity104Model.instance:isSeasonEpisodeType(var_38_3) then
-			local var_38_4 = Activity104Model.instance:getFightCardDataList()
+		if Activity104Model.instance:isSeasonEpisodeType(episodeType) then
+			local list = Activity104Model.instance:getFightCardDataList()
 
-			var_38_0 = var_38_4 and #var_38_4 > 0
-		elseif Season123Controller.canUse123EquipEpisodeType(var_38_3) then
-			local var_38_5 = Season123Model.instance:getFightCardDataList()
+			canShow = list and #list > 0
+		elseif Season123Controller.canUse123EquipEpisodeType(episodeType) then
+			local list = Season123Model.instance:getFightCardDataList()
 
-			var_38_0 = var_38_5 and #var_38_5 > 0
+			canShow = list and #list > 0
 		end
 	end
 
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRoundView) then
-		var_38_0 = false
+		canShow = false
 	end
 
-	return var_38_0
+	return canShow
 end
 
-function var_0_0._resetCamera(arg_39_0)
+function FightView:_resetCamera()
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowUI, true)
 	FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, false)
 	FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, false)
@@ -479,92 +525,98 @@ function var_0_0._resetCamera(arg_39_0)
 		return
 	end
 
-	local var_39_0 = FightHelper.getAllEntitys()
+	local entityList = FightHelper.getAllEntitys()
 
-	for iter_39_0, iter_39_1 in ipairs(var_39_0) do
-		iter_39_1:setVisibleByPos(true)
+	for _, oneEntity in ipairs(entityList) do
+		oneEntity:setVisibleByPos(true)
 
-		if iter_39_1.buff then
-			iter_39_1.buff:hideBuffEffects()
-			iter_39_1.buff:showBuffEffects()
+		if oneEntity.buff then
+			oneEntity.buff:hideBuffEffects()
+			oneEntity.buff:showBuffEffects()
 		end
 
-		if iter_39_1.nameUI then
-			iter_39_1.nameUI:setActive(true)
+		if oneEntity.nameUI then
+			oneEntity.nameUI:setActive(true)
 		end
 	end
 
-	local var_39_1 = GameSceneMgr.instance:getScene(SceneType.Fight)
+	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
 
-	var_39_1.level:setFrontVisible(true)
-	var_39_1.camera:setSceneCameraOffset()
+	fightScene.level:setFrontVisible(true)
+	fightScene.camera:setSceneCameraOffset()
 end
 
-function var_0_0._onSetStateForDialogBeforeStartFight(arg_40_0, arg_40_1)
-	gohelper.setActive(arg_40_0._topRightBtnRoot, not arg_40_1)
-	gohelper.setActive(arg_40_0._roundGO, not arg_40_1)
+function FightView:_onSetStateForDialogBeforeStartFight(state)
+	gohelper.setActive(self._topRightBtnRoot, not state)
+	gohelper.setActive(self._roundGO, not state)
 
 	if FightDataHelper.fieldMgr:isDouQuQu() or FightDataHelper.fieldMgr:is191DouQuQu() then
-		gohelper.setActive(arg_40_0._enemyinfoRoot, false)
+		gohelper.setActive(self._enemyinfoRoot, false)
 	else
-		gohelper.setActive(arg_40_0._enemyinfoRoot, not arg_40_1)
+		gohelper.setActive(self._enemyinfoRoot, not state)
 	end
 
-	arg_40_0:refreshEnemyAction(not arg_40_1)
+	self:refreshEnemyAction(not state)
 end
 
-function var_0_0.refreshEnemyAction(arg_41_0, arg_41_1)
-	if arg_41_0.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
-		gohelper.setActive(arg_41_0._enemyActionRoot, false)
+function FightView:refreshEnemyAction(show)
+	if self.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
+		gohelper.setActive(self._enemyActionRoot, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_41_0._enemyActionRoot, arg_41_1)
-	gohelper.setActive(arg_41_0.enemyActionNormal, arg_41_0.actionStatus == FightEnum.EnemyActionStatus.Normal)
-	gohelper.setActive(arg_41_0.enemyActionSelect, arg_41_0.actionStatus == FightEnum.EnemyActionStatus.Select)
-	gohelper.setActive(arg_41_0.enemyActionLocked, arg_41_0.actionStatus == FightEnum.EnemyActionStatus.Lock)
+	gohelper.setActive(self._enemyActionRoot, show)
+	gohelper.setActive(self.enemyActionNormal, self.actionStatus == FightEnum.EnemyActionStatus.Normal)
+	gohelper.setActive(self.enemyActionSelect, self.actionStatus == FightEnum.EnemyActionStatus.Select)
+	gohelper.setActive(self.enemyActionLocked, self.actionStatus == FightEnum.EnemyActionStatus.Lock)
 end
 
-function var_0_0.onStageChange(arg_42_0)
-	if arg_42_0.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
+function FightView:onStageChange()
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
+		self:_showEnemySubCount()
+	end
+
+	if self.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
 		return
 	end
 
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
-		arg_42_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Lock)
+		self:setEnemyActionStatus(FightEnum.EnemyActionStatus.Lock)
 	else
-		arg_42_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
+		self:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
 	end
 end
 
-function var_0_0.setEnemyActionStatus(arg_43_0, arg_43_1)
-	arg_43_0.actionStatus = arg_43_1
+function FightView:setEnemyActionStatus(status)
+	self.actionStatus = status
 
-	FightController.instance:dispatchEvent(FightEvent.OnEnemyActionStatusChange, arg_43_0.actionStatus)
-	arg_43_0:refreshEnemyAction(true)
+	FightController.instance:dispatchEvent(FightEvent.OnEnemyActionStatusChange, self.actionStatus)
+	self:refreshEnemyAction(true)
 end
 
-function var_0_0.onClickEnemyAction(arg_44_0)
-	if arg_44_0.actionStatus ~= FightEnum.EnemyActionStatus.Normal then
+function FightView:onClickEnemyAction()
+	if self.actionStatus ~= FightEnum.EnemyActionStatus.Normal then
 		return
 	end
 
-	if arg_44_0:checkMonsterCardIsEmpty() then
+	if self:checkMonsterCardIsEmpty() then
 		return
 	end
 
-	arg_44_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Select)
+	self:setEnemyActionStatus(FightEnum.EnemyActionStatus.Select)
 	ViewMgr.instance:openView(ViewName.FightEnemyActionView)
 end
 
-function var_0_0.checkMonsterCardIsEmpty(arg_45_0)
-	local var_45_0 = FightDataHelper.roundMgr:getRoundData()
-	local var_45_1 = var_45_0 and var_45_0:getAIUseCardMOList()
+function FightView:checkMonsterCardIsEmpty()
+	local roundData = FightDataHelper.roundMgr:getRoundData()
+	local cardList = roundData and roundData:getAIUseCardMOList()
 
-	if var_45_1 then
-		for iter_45_0, iter_45_1 in ipairs(var_45_1) do
-			if FightDataHelper.entityMgr:getById(iter_45_1.uid) then
+	if cardList then
+		for _, cardMo in ipairs(cardList) do
+			local entityMo = FightDataHelper.entityMgr:getById(cardMo.uid)
+
+			if entityMo then
 				return false
 			end
 		end
@@ -573,4 +625,4 @@ function var_0_0.checkMonsterCardIsEmpty(arg_45_0)
 	return true
 end
 
-return var_0_0
+return FightView

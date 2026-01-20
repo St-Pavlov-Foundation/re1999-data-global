@@ -1,159 +1,163 @@
-﻿module("modules.logic.mainsceneswitch.view.MainSceneSwitchDisplayView", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/view/MainSceneSwitchDisplayView.lua
 
-local var_0_0 = class("MainSceneSwitchDisplayView", BaseView)
+module("modules.logic.mainsceneswitch.view.MainSceneSwitchDisplayView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg1 = gohelper.findChild(arg_1_0.viewGO, "#go_bg1")
-	arg_1_0._gobg2 = gohelper.findChild(arg_1_0.viewGO, "#go_bg2")
-	arg_1_0._simageFullBG1 = gohelper.findChildSingleImage(arg_1_0._gobg1, "img")
-	arg_1_0._simageFullBG2 = gohelper.findChildSingleImage(arg_1_0._gobg2, "img")
+local MainSceneSwitchDisplayView = class("MainSceneSwitchDisplayView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainSceneSwitchDisplayView:onInitView()
+	self._gobg1 = gohelper.findChild(self.viewGO, "#go_bg1")
+	self._gobg2 = gohelper.findChild(self.viewGO, "#go_bg2")
+	self._simageFullBG1 = gohelper.findChildSingleImage(self._gobg1, "img")
+	self._simageFullBG2 = gohelper.findChildSingleImage(self._gobg2, "img")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MainSceneSwitchDisplayView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MainSceneSwitchDisplayView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._weatherRoot = gohelper.findChild(arg_4_0.viewGO, "left/#go_weatherRoot")
+function MainSceneSwitchDisplayView:_editableInitView()
+	self._weatherRoot = gohelper.findChild(self.viewGO, "left/#go_weatherRoot")
 
-	gohelper.setActive(arg_4_0._weatherRoot, false)
+	gohelper.setActive(self._weatherRoot, false)
 	MainSceneSwitchDisplayController.instance:initMaps()
-	arg_4_0:_initSceneRoot()
-	arg_4_0:_clearPage()
+	self:_initSceneRoot()
+	self:_clearPage()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ShowSceneInfo, arg_5_0._onShowSceneInfo, arg_5_0)
-	arg_5_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, arg_5_0._onStartSwitchScene, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_5_0._onCloseView, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_5_0._onOpenView, arg_5_0)
+function MainSceneSwitchDisplayView:onOpen()
+	self:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ShowSceneInfo, self._onShowSceneInfo, self)
+	self:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, self._onStartSwitchScene, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenView, self)
 end
 
-function var_0_0._onCloseView(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.MainSceneSkinMaterialTipView then
-		MainSceneSwitchDisplayController.instance:setSwitchCompContinue(arg_6_0._curShowSceneId, true)
+function MainSceneSwitchDisplayView:_onCloseView(viewName)
+	if viewName == ViewName.MainSceneSkinMaterialTipView then
+		MainSceneSwitchDisplayController.instance:setSwitchCompContinue(self._curShowSceneId, true)
 	end
 end
 
-function var_0_0._onOpenView(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.MainSceneSkinMaterialTipView then
-		MainSceneSwitchDisplayController.instance:setSwitchCompContinue(arg_7_0._curShowSceneId, false)
+function MainSceneSwitchDisplayView:_onOpenView(viewName)
+	if viewName == ViewName.MainSceneSkinMaterialTipView then
+		MainSceneSwitchDisplayController.instance:setSwitchCompContinue(self._curShowSceneId, false)
 	end
 end
 
-function var_0_0._onShowScene(arg_8_0, arg_8_1)
-	MainSceneSwitchDisplayController.instance:showScene(arg_8_1, function()
+function MainSceneSwitchDisplayView:_onShowScene(id)
+	MainSceneSwitchDisplayController.instance:showScene(id, function()
 		WeatherController.instance:FakeShowScene(false)
 
-		arg_8_0._weatherSwitchControlComp = arg_8_0._weatherSwitchControlComp or MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0._weatherRoot, WeatherSwitchControlComp)
+		self._weatherSwitchControlComp = self._weatherSwitchControlComp or MonoHelper.addNoUpdateLuaComOnceToGo(self._weatherRoot, WeatherSwitchControlComp)
 
-		arg_8_0._weatherSwitchControlComp:updateScene(arg_8_1, MainSceneSwitchDisplayController.instance)
+		self._weatherSwitchControlComp:updateScene(id, MainSceneSwitchDisplayController.instance)
 	end)
 end
 
-function var_0_0._initSceneRoot(arg_10_0)
-	local var_10_0 = GameSceneMgr.instance:getCurScene()
-	local var_10_1 = var_10_0 and var_10_0:getSceneContainerGO()
-	local var_10_2 = arg_10_0:_getSceneRoot(var_10_1)
+function MainSceneSwitchDisplayView:_initSceneRoot()
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local curSceneRootGO = curScene and curScene:getSceneContainerGO()
+	local rootGo = self:_getSceneRoot(curSceneRootGO)
 
-	MainSceneSwitchDisplayController.instance:setSceneRoot(var_10_2)
+	MainSceneSwitchDisplayController.instance:setSceneRoot(rootGo)
 end
 
-function var_0_0._getSceneRoot(arg_11_0, arg_11_1)
-	local var_11_0 = "mainSceneSkinRoot"
-	local var_11_1 = arg_11_1.transform
-	local var_11_2 = var_11_1.childCount
+function MainSceneSwitchDisplayView:_getSceneRoot(root)
+	local name = "mainSceneSkinRoot"
+	local transform = root.transform
+	local childCount = transform.childCount
 
-	for iter_11_0 = 1, var_11_2 do
-		local var_11_3 = var_11_1:GetChild(iter_11_0 - 1)
+	for i = 1, childCount do
+		local child = transform:GetChild(i - 1)
 
-		if var_11_3.name == var_11_0 then
-			return var_11_3.gameObject
+		if child.name == name then
+			return child.gameObject
 		end
 	end
 
-	return (gohelper.create3d(arg_11_1, var_11_0))
+	local rootGo = gohelper.create3d(root, name)
+
+	return rootGo
 end
 
-function var_0_0._onStartSwitchScene(arg_12_0)
+function MainSceneSwitchDisplayView:_onStartSwitchScene()
 	MainSceneSwitchDisplayController.instance:hideScene()
 end
 
-function var_0_0._onShowSceneInfo(arg_13_0, arg_13_1)
-	arg_13_0._curShowSceneId = arg_13_1
-	arg_13_0._curSceneId = MainSceneSwitchModel.instance:getCurSceneId()
+function MainSceneSwitchDisplayView:_onShowSceneInfo(id)
+	self._curShowSceneId = id
+	self._curSceneId = MainSceneSwitchModel.instance:getCurSceneId()
 
-	arg_13_0:_onShowScene(arg_13_1)
+	self:_onShowScene(id)
 end
 
-function var_0_0._clearPage(arg_14_0)
-	gohelper.setActive(arg_14_0._simageFullBG1, false)
-	gohelper.setActive(arg_14_0._simageFullBG2, false)
+function MainSceneSwitchDisplayView:_clearPage()
+	gohelper.setActive(self._simageFullBG1, false)
+	gohelper.setActive(self._simageFullBG2, false)
 end
 
-function var_0_0.onTabSwitchOpen(arg_15_0)
-	arg_15_0._isShowView = true
+function MainSceneSwitchDisplayView:onTabSwitchOpen()
+	self._isShowView = true
 
-	arg_15_0:showTab()
+	self:showTab()
 end
 
-function var_0_0.showTab(arg_16_0)
-	gohelper.setActive(arg_16_0._weatherRoot, true)
-	arg_16_0:_changeToPrevScene()
+function MainSceneSwitchDisplayView:showTab()
+	gohelper.setActive(self._weatherRoot, true)
+	self:_changeToPrevScene()
 end
 
-function var_0_0._changeToPrevScene(arg_17_0)
+function MainSceneSwitchDisplayView:_changeToPrevScene()
 	WeatherController.instance:onSceneHide(true)
 
-	if arg_17_0._prevShowSceneId then
-		local var_17_0 = arg_17_0._prevShowSceneId
+	if self._prevShowSceneId then
+		local id = self._prevShowSceneId
 
-		arg_17_0._prevShowSceneId = nil
+		self._prevShowSceneId = nil
 
-		arg_17_0:_onShowScene(var_17_0)
+		self:_onShowScene(id)
 	end
 end
 
-function var_0_0._changeToMainScene(arg_18_0)
-	arg_18_0._prevShowSceneId = arg_18_0._curShowSceneId
+function MainSceneSwitchDisplayView:_changeToMainScene()
+	self._prevShowSceneId = self._curShowSceneId
 
 	MainSceneSwitchDisplayController.instance:hideScene()
 	WeatherController.instance:onSceneShow()
 end
 
-function var_0_0.onTabSwitchClose(arg_19_0)
-	arg_19_0._isShowView = false
+function MainSceneSwitchDisplayView:onTabSwitchClose()
+	self._isShowView = false
 
-	arg_19_0:hideTab()
+	self:hideTab()
 end
 
-function var_0_0.hideTab(arg_20_0)
-	gohelper.setActive(arg_20_0._weatherRoot, false)
-	arg_20_0:_changeToMainScene()
+function MainSceneSwitchDisplayView:hideTab()
+	gohelper.setActive(self._weatherRoot, false)
+	self:_changeToMainScene()
 end
 
-function var_0_0.isShowView(arg_21_0)
-	return arg_21_0._isShowView
+function MainSceneSwitchDisplayView:isShowView()
+	return self._isShowView
 end
 
-function var_0_0.onClose(arg_22_0)
-	arg_22_0:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ShowSceneInfo, arg_22_0._onShowSceneInfo, arg_22_0)
-	arg_22_0:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, arg_22_0._onStartSwitchScene, arg_22_0)
-	arg_22_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_22_0._onCloseView, arg_22_0)
-	arg_22_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_22_0._onOpenView, arg_22_0)
+function MainSceneSwitchDisplayView:onClose()
+	self:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ShowSceneInfo, self._onShowSceneInfo, self)
+	self:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, self._onStartSwitchScene, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenView, self)
 	MainSceneSwitchDisplayController.instance:clear()
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	arg_23_0:_clearPage()
+function MainSceneSwitchDisplayView:onDestroyView()
+	self:_clearPage()
 end
 
-return var_0_0
+return MainSceneSwitchDisplayView

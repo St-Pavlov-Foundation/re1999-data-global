@@ -1,188 +1,190 @@
-﻿module("modules.logic.room.view.critter.RoomTrainAccelerateView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomTrainAccelerateView.lua
 
-local var_0_0 = class("RoomTrainAccelerateView", BaseView)
+module("modules.logic.room.view.critter.RoomTrainAccelerateView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "itemArea/#simage_bg")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "itemArea/#scroll_item")
-	arg_1_0._goaccelerateItem = gohelper.findChild(arg_1_0.viewGO, "itemArea/#scroll_item/viewport/content/#go_accelerateItem")
-	arg_1_0._godetailitemtab = gohelper.findChild(arg_1_0.viewGO, "#go_detailitemtab")
+local RoomTrainAccelerateView = class("RoomTrainAccelerateView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomTrainAccelerateView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "itemArea/#simage_bg")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "itemArea/#scroll_item")
+	self._goaccelerateItem = gohelper.findChild(self.viewGO, "itemArea/#scroll_item/viewport/content/#go_accelerateItem")
+	self._godetailitemtab = gohelper.findChild(self.viewGO, "#go_detailitemtab")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomTrainAccelerateView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomTrainAccelerateView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomTrainAccelerateView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._previewForwardTime = 0
-	arg_5_0._gocontent = gohelper.findChild(arg_5_0.viewGO, "itemArea/#scroll_item/viewport/content")
+function RoomTrainAccelerateView:_editableInitView()
+	self._previewForwardTime = 0
+	self._gocontent = gohelper.findChild(self.viewGO, "itemArea/#scroll_item/viewport/content")
 
-	local var_5_0 = arg_5_0:getResInst(RoomCritterTrainDetailItem.prefabPath, arg_5_0._godetailitemtab)
+	local go = self:getResInst(RoomCritterTrainDetailItem.prefabPath, self._godetailitemtab)
 
-	arg_5_0.detailItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0, RoomCritterTrainDetailItem, arg_5_0)
+	self.detailItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomCritterTrainDetailItem, self)
 
-	arg_5_0.detailItem:setFinishCallback(arg_5_0._btncloseOnClick, arg_5_0)
+	self.detailItem:setFinishCallback(self._btncloseOnClick, self)
 
-	local var_5_1 = gohelper.findChild(var_5_0, "TrainProgress")
+	local goTrainProgress = gohelper.findChild(go, "TrainProgress")
 
-	recthelper.setAnchorY(var_5_1.transform, -120)
+	recthelper.setAnchorY(goTrainProgress.transform, -120)
 
-	arg_5_0.detailItem.addBarValue = gohelper.findChildImage(var_5_0, "TrainProgress/ProgressBg/#bar_add")
-	arg_5_0.detailItem.gohasten = gohelper.findChild(var_5_0, "TrainProgress/ProgressBg/#image_totalBarValue/hasten")
+	self.detailItem.addBarValue = gohelper.findChildImage(go, "TrainProgress/ProgressBg/#bar_add")
+	self.detailItem.gohasten = gohelper.findChild(go, "TrainProgress/ProgressBg/#image_totalBarValue/hasten")
 
-	gohelper.setActive(arg_5_0.detailItem.addBarValue, true)
-	arg_5_0.detailItem:setShowStateInfo(false)
+	gohelper.setActive(self.detailItem.addBarValue, true)
+	self.detailItem:setShowStateInfo(false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function RoomTrainAccelerateView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._critterUid = arg_7_0.viewParam and arg_7_0.viewParam.critterUid
-	arg_7_0._critterMO = CritterModel.instance:getCritterMOByUid(arg_7_0._critterUid)
+function RoomTrainAccelerateView:onOpen()
+	self._critterUid = self.viewParam and self.viewParam.critterUid
+	self._critterMO = CritterModel.instance:getCritterMOByUid(self._critterUid)
 
-	if not arg_7_0._critterMO then
-		arg_7_0:closeThis()
+	if not self._critterMO then
+		self:closeThis()
 
 		return
 	end
 
-	if arg_7_0.viewContainer then
-		arg_7_0:addEventCb(arg_7_0.viewContainer, CritterEvent.UITrainCdTime, arg_7_0._opTranCdTimeUpdate, arg_7_0)
+	if self.viewContainer then
+		self:addEventCb(self.viewContainer, CritterEvent.UITrainCdTime, self._opTranCdTimeUpdate, self)
 	end
 
-	arg_7_0:addEventCb(CritterController.instance, CritterEvent.FastForwardTrainReply, arg_7_0._onForwardTrainReply, arg_7_0)
-	arg_7_0.detailItem:onUpdateMO(arg_7_0._critterMO)
-	TaskDispatcher.cancelTask(arg_7_0._onRunCdTimeTask, arg_7_0)
-	TaskDispatcher.runRepeat(arg_7_0._onRunCdTimeTask, arg_7_0, 1)
-	arg_7_0:setAccelerateItemList()
+	self:addEventCb(CritterController.instance, CritterEvent.FastForwardTrainReply, self._onForwardTrainReply, self)
+	self.detailItem:onUpdateMO(self._critterMO)
+	TaskDispatcher.cancelTask(self._onRunCdTimeTask, self)
+	TaskDispatcher.runRepeat(self._onRunCdTimeTask, self, 1)
+	self:setAccelerateItemList()
 end
 
-function var_0_0.onClose(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._onRunCdTimeTask, arg_8_0)
+function RoomTrainAccelerateView:onClose()
+	TaskDispatcher.cancelTask(self._onRunCdTimeTask, self)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0.detailItem:onDestroy()
+function RoomTrainAccelerateView:onDestroyView()
+	self.detailItem:onDestroy()
 
-	if arg_9_0._fadeInTweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._fadeInTweenId)
+	if self._fadeInTweenId then
+		ZProj.TweenHelper.KillById(self._fadeInTweenId)
 
-		arg_9_0._fadeInTweenId = nil
+		self._fadeInTweenId = nil
 	end
 end
 
-function var_0_0._onRunCdTimeTask(arg_10_0)
-	if arg_10_0.viewContainer and arg_10_0.viewContainer:isOpen() then
-		arg_10_0.viewContainer:dispatchEvent(CritterEvent.UITrainCdTime)
+function RoomTrainAccelerateView:_onRunCdTimeTask()
+	if self.viewContainer and self.viewContainer:isOpen() then
+		self.viewContainer:dispatchEvent(CritterEvent.UITrainCdTime)
 	else
-		TaskDispatcher.cancelTask(arg_10_0._onRunCdTimeTask, arg_10_0)
+		TaskDispatcher.cancelTask(self._onRunCdTimeTask, self)
 	end
 end
 
-function var_0_0._opTranCdTimeUpdate(arg_11_0)
-	if arg_11_0._isPlayBarAnim then
+function RoomTrainAccelerateView:_opTranCdTimeUpdate()
+	if self._isPlayBarAnim then
 		return
 	end
 
-	if not arg_11_0._critterMO or arg_11_0._critterMO:isMaturity() or arg_11_0._critterMO.trainInfo:isTrainFinish() then
-		arg_11_0:closeThis()
+	if not self._critterMO or self._critterMO:isMaturity() or self._critterMO.trainInfo:isTrainFinish() then
+		self:closeThis()
 
 		return
 	end
 
-	arg_11_0.detailItem:tranCdTimeUpdate()
+	self.detailItem:tranCdTimeUpdate()
 
-	arg_11_0.detailItem.addBarValue.fillAmount = arg_11_0:getPreviewPross()
+	self.detailItem.addBarValue.fillAmount = self:getPreviewPross()
 end
 
-function var_0_0._onForwardTrainReply(arg_12_0)
-	if arg_12_0._critterMO and arg_12_0._critterMO.trainInfo then
-		arg_12_0._isPlayBarAnim = true
+function RoomTrainAccelerateView:_onForwardTrainReply()
+	if self._critterMO and self._critterMO.trainInfo then
+		self._isPlayBarAnim = true
 
-		local var_12_0 = arg_12_0.detailItem:getBarValue()
-		local var_12_1 = arg_12_0._critterMO.trainInfo:getProcess()
+		local startValue = self.detailItem:getBarValue()
+		local endValue = self._critterMO.trainInfo:getProcess()
 
-		if arg_12_0._fadeInTweenId then
-			ZProj.TweenHelper.KillById(arg_12_0._fadeInTweenId)
+		if self._fadeInTweenId then
+			ZProj.TweenHelper.KillById(self._fadeInTweenId)
 
-			arg_12_0._fadeInTweenId = nil
+			self._fadeInTweenId = nil
 		end
 
-		gohelper.setActive(arg_12_0.detailItem.gohasten, false)
-		gohelper.setActive(arg_12_0.detailItem.gohasten, true)
+		gohelper.setActive(self.detailItem.gohasten, false)
+		gohelper.setActive(self.detailItem.gohasten, true)
 
-		arg_12_0._fadeInTweenId = ZProj.TweenHelper.DOTweenFloat(var_12_0, var_12_1, 0.5, arg_12_0._fadeUpdate, arg_12_0._fadeInFinished, arg_12_0, nil, EaseType.Linear)
+		self._fadeInTweenId = ZProj.TweenHelper.DOTweenFloat(startValue, endValue, 0.5, self._fadeUpdate, self._fadeInFinished, self, nil, EaseType.Linear)
 	else
-		arg_12_0:_opTranCdTimeUpdate()
+		self:_opTranCdTimeUpdate()
 	end
 
-	arg_12_0.viewContainer:dispatchEvent(CritterEvent.FastForwardTrainReply)
+	self.viewContainer:dispatchEvent(CritterEvent.FastForwardTrainReply)
 end
 
-function var_0_0._fadeUpdate(arg_13_0, arg_13_1)
-	arg_13_0.detailItem:setBarValue(arg_13_1)
+function RoomTrainAccelerateView:_fadeUpdate(value)
+	self.detailItem:setBarValue(value)
 end
 
-function var_0_0._fadeInFinished(arg_14_0)
-	arg_14_0._isPlayBarAnim = false
+function RoomTrainAccelerateView:_fadeInFinished()
+	self._isPlayBarAnim = false
 
-	arg_14_0:_opTranCdTimeUpdate()
+	self:_opTranCdTimeUpdate()
 end
 
-function var_0_0.setPreviewForwardTime(arg_15_0, arg_15_1)
-	arg_15_0._previewForwardTime = arg_15_1
+function RoomTrainAccelerateView:setPreviewForwardTime(previewForwardTime)
+	self._previewForwardTime = previewForwardTime
 
-	if not arg_15_0._isPlayBarAnim then
-		arg_15_0.detailItem.addBarValue.fillAmount = arg_15_0:getPreviewPross()
+	if not self._isPlayBarAnim then
+		self.detailItem.addBarValue.fillAmount = self:getPreviewPross()
 	end
 end
 
-function var_0_0.getPreviewPross(arg_16_0)
-	if arg_16_0._critterMO and arg_16_0._critterMO.trainInfo then
-		local var_16_0 = arg_16_0._critterMO.trainInfo:getProcessTime() + arg_16_0._previewForwardTime
-		local var_16_1 = arg_16_0._critterMO.trainInfo.trainTime
+function RoomTrainAccelerateView:getPreviewPross()
+	if self._critterMO and self._critterMO.trainInfo then
+		local processTime = self._critterMO.trainInfo:getProcessTime() + self._previewForwardTime
+		local total = self._critterMO.trainInfo.trainTime
 
-		if var_16_1 > 0 and var_16_0 > 0 then
-			if var_16_1 < var_16_0 then
+		if total > 0 and processTime > 0 then
+			if total < processTime then
 				return 1
 			end
 
-			return var_16_0 / var_16_1
+			return processTime / total
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.setAccelerateItemList(arg_17_0)
-	local var_17_0 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.CritterAccelerateItem)
+function RoomTrainAccelerateView:setAccelerateItemList()
+	local accelerateItemList = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.CritterAccelerateItem)
 
-	gohelper.CreateObjList(arg_17_0, arg_17_0._onSetAccelerateItem, var_17_0, arg_17_0._gocontent, arg_17_0._goaccelerateItem, RoomTrainAccelerateItem)
+	gohelper.CreateObjList(self, self._onSetAccelerateItem, accelerateItemList, self._gocontent, self._goaccelerateItem, RoomTrainAccelerateItem)
 end
 
-function var_0_0._onSetAccelerateItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_1._view == nil then
-		arg_18_1._view = arg_18_0
+function RoomTrainAccelerateView:_onSetAccelerateItem(comp, data, index)
+	if comp._view == nil then
+		comp._view = self
 
-		arg_18_1:_editableAddEvents()
+		comp:_editableAddEvents()
 	end
 
-	arg_18_1:setData(arg_18_0._critterUid, arg_18_2.id)
+	comp:setData(self._critterUid, data.id)
 end
 
-return var_0_0
+return RoomTrainAccelerateView

@@ -1,77 +1,88 @@
-﻿module("modules.logic.sp01.assassin2.controller.AssassinStealthGameController", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/AssassinStealthGameController.lua
 
-local var_0_0 = class("AssassinStealthGameController", BaseController)
+module("modules.logic.sp01.assassin2.controller.AssassinStealthGameController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearEnemyFlow()
+local AssassinStealthGameController = class("AssassinStealthGameController", BaseController)
+
+function AssassinStealthGameController:onInit()
+	self:_clearEnemyFlow()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearEnemyFlow()
+function AssassinStealthGameController:reInit()
+	self:_clearEnemyFlow()
 end
 
-function var_0_0.pickAssassinHeroItemInHeroView(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_1 or not arg_3_2 then
+function AssassinStealthGameController:pickAssassinHeroItemInHeroView(questId, assassinHeroId, isFightQuest)
+	if not questId or not assassinHeroId then
 		return true
 	end
 
-	if AssassinStealthGameModel.instance:getHeroPickIndex(arg_3_2) then
-		if not AssassinHeroModel.instance:isRequiredAssassin(arg_3_2) then
-			AssassinStealthGameModel.instance:removeHeroPick(arg_3_2)
+	local pickIndex = AssassinStealthGameModel.instance:getHeroPickIndex(assassinHeroId)
+
+	if pickIndex then
+		local isRequired = AssassinHeroModel.instance:isRequiredAssassin(assassinHeroId)
+
+		if not isRequired then
+			AssassinStealthGameModel.instance:removeHeroPick(assassinHeroId)
 		end
 	else
-		local var_3_0 = 0
+		local maxHeroCount = 0
 
-		if arg_3_3 then
-			local var_3_1 = AssassinConfig.instance:getQuestParam(arg_3_1)
-			local var_3_2 = tonumber(var_3_1)
-			local var_3_3 = var_3_2 and lua_episode.configDict[var_3_2]
-			local var_3_4 = var_3_3 and lua_battle.configDict[var_3_3.battleId]
+		if isFightQuest then
+			local strEpisodeId = AssassinConfig.instance:getQuestParam(questId)
+			local episodeId = tonumber(strEpisodeId)
+			local episodeCO = episodeId and lua_episode.configDict[episodeId]
+			local battleCO = episodeCO and lua_battle.configDict[episodeCO.battleId]
 
-			var_3_0 = var_3_4 and var_3_4.playerMax or ModuleEnum.HeroCountInGroup
+			maxHeroCount = battleCO and battleCO.playerMax or ModuleEnum.HeroCountInGroup
 		else
-			local var_3_5 = AssassinConfig.instance:getQuestParam(arg_3_1)
+			local strMapId = AssassinConfig.instance:getQuestParam(questId)
 
-			var_3_0 = AssassinConfig.instance:getStealthMapNeedHeroCount(tonumber(var_3_5))
+			maxHeroCount = AssassinConfig.instance:getStealthMapNeedHeroCount(tonumber(strMapId))
 		end
 
-		if var_3_0 <= AssassinStealthGameModel.instance:getPickHeroCount() then
+		local curPickCount = AssassinStealthGameModel.instance:getPickHeroCount()
+
+		if maxHeroCount <= curPickCount then
 			GameFacade.showToast(ToastEnum.AssassinStealthHeroFull)
 
 			return false
 		end
 
-		AssassinStealthGameModel.instance:addHeroPick(arg_3_2)
+		AssassinStealthGameModel.instance:addHeroPick(assassinHeroId)
 	end
 
 	return true
 end
 
-function var_0_0.startStealthGame(arg_4_0, arg_4_1)
-	local var_4_0 = AssassinConfig.instance:getQuestParam(arg_4_1)
-	local var_4_1 = tonumber(var_4_0)
+function AssassinStealthGameController:startStealthGame(questId)
+	local strMapId = AssassinConfig.instance:getQuestParam(questId)
+	local mapId = tonumber(strMapId)
 
-	if not var_4_1 then
+	if not mapId then
 		return
 	end
 
-	if AssassinStealthGameModel.instance:getPickHeroCount() < AssassinConfig.instance:getStealthMapNeedHeroCount(var_4_1) then
+	local pickCount = AssassinStealthGameModel.instance:getPickHeroCount()
+	local needHeroCount = AssassinConfig.instance:getStealthMapNeedHeroCount(mapId)
+
+	if pickCount < needHeroCount then
 		return
 	end
 
-	local var_4_2 = AssassinStealthGameModel.instance:getPickHeroList()
+	local assassinHeroList = AssassinStealthGameModel.instance:getPickHeroList()
 
-	AssassinSceneRpc.instance:sendEnterAssassinSceneRequest(arg_4_1, var_4_2, arg_4_0._realStartStealthGame, arg_4_0)
+	AssassinSceneRpc.instance:sendEnterAssassinSceneRequest(questId, assassinHeroList, self._realStartStealthGame, self)
 end
 
-function var_0_0._realStartStealthGame(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 ~= 0 then
+function AssassinStealthGameController:_realStartStealthGame(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_5_0._gameStartTime = UnityEngine.Time.realtimeSinceStartup
+	self._gameStartTime = UnityEngine.Time.realtimeSinceStartup
 
-	arg_5_0:_initGameData(arg_5_3.scene)
+	self:_initGameData(msg.scene)
 	AssassinStealthGameModel.instance:setIsFightReturn()
 	AssassinStealthGameModel.instance:setMapPosRecordOnFight()
 	AssassinStealthGameModel.instance:setMapPosRecordOnTurn()
@@ -79,373 +90,398 @@ function var_0_0._realStartStealthGame(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	ViewMgr.instance:openView(ViewName.AssassinStealthGameView)
 end
 
-function var_0_0._initGameData(arg_6_0, arg_6_1)
-	AssassinStealthGameModel.instance:initGameSceneData(arg_6_1)
+function AssassinStealthGameController:_initGameData(serverSceneData)
+	AssassinStealthGameModel.instance:initGameSceneData(serverSceneData)
 end
 
-function var_0_0.checkGameState(arg_7_0)
-	local var_7_0 = AssassinStealthGameModel.instance:getGameState()
+function AssassinStealthGameController:checkGameState()
+	local gameState = AssassinStealthGameModel.instance:getGameState()
 
-	if var_7_0 == AssassinEnum.GameState.Win or var_7_0 == AssassinEnum.GameState.Fail then
+	if gameState == AssassinEnum.GameState.Win or gameState == AssassinEnum.GameState.Fail then
 		AssassinController.instance:openAssassinStealthGameResultView()
 	end
 
-	return var_7_0 ~= AssassinEnum.GameState.InProgress
+	local isGameEnd = gameState ~= AssassinEnum.GameState.InProgress
+
+	return isGameEnd
 end
 
-function var_0_0.checkGameRequest(arg_8_0)
-	local var_8_0 = AssassinStealthGameModel.instance:getNeedChangingMap()
-	local var_8_1 = AssassinStealthGameModel.instance:getBattleGridIds()
-	local var_8_2 = AssassinStealthGameModel.instance:getNeedNextRound()
+function AssassinStealthGameController:checkGameRequest()
+	local changingMapId = AssassinStealthGameModel.instance:getNeedChangingMap()
+	local battleGridIds = AssassinStealthGameModel.instance:getBattleGridIds()
+	local needNextRound = AssassinStealthGameModel.instance:getNeedNextRound()
 
 	AssassinStealthGameModel.instance:setGameRequestData()
 
-	if AssassinStealthGameModel.instance:getGameState() ~= AssassinEnum.GameState.InProgress then
-		if not AssassinStealthGameModel.instance:isPlayerTurn() then
-			arg_8_0:checkGameState()
+	local gameState = AssassinStealthGameModel.instance:getGameState()
+
+	if gameState ~= AssassinEnum.GameState.InProgress then
+		local isPlayerTurn = AssassinStealthGameModel.instance:isPlayerTurn()
+
+		if not isPlayerTurn then
+			self:checkGameState()
 		end
 
 		return
 	end
 
-	if var_8_0 and var_8_0 ~= 0 then
-		arg_8_0:changeMap(var_8_0)
+	if changingMapId and changingMapId ~= 0 then
+		self:changeMap(changingMapId)
 
 		return
 	end
 
-	local var_8_3 = var_8_1 and var_8_1[1]
+	local battleGrid = battleGridIds and battleGridIds[1]
 
-	if var_8_3 then
-		arg_8_0:enterBattleGrid(var_8_3)
+	if battleGrid then
+		self:enterBattleGrid(battleGrid)
 
 		return
 	end
 
-	if var_8_2 and var_8_2 ~= 0 then
-		arg_8_0:_beginNewRound()
+	if needNextRound and needNextRound ~= 0 then
+		self:_beginNewRound()
 
 		return
 	end
 end
 
-function var_0_0.initBaseMap(arg_9_0, arg_9_1)
+function AssassinStealthGameController:initBaseMap(goMap)
 	AssassinStealthGameEffectMgr.instance:init()
-	AssassinStealthGameEntityMgr.instance:onInitBaseMap(arg_9_1)
+	AssassinStealthGameEntityMgr.instance:onInitBaseMap(goMap)
 end
 
-function var_0_0.updateGrids(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_1 then
+function AssassinStealthGameController:updateGrids(assassinGridList, effectId)
+	if not assassinGridList then
 		return
 	end
 
-	local var_10_0 = {}
+	local updateGridIdDict = {}
 
-	AssassinStealthGameModel.instance:setGridDataByList(arg_10_1)
+	AssassinStealthGameModel.instance:setGridDataByList(assassinGridList)
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-		local var_10_1 = iter_10_1.gridId
+	for _, gridData in ipairs(assassinGridList) do
+		local gridId = gridData.gridId
 
-		var_10_0[var_10_1] = var_10_1
+		updateGridIdDict[gridId] = gridId
 
-		AssassinStealthGameEntityMgr.instance:refreshGrid(var_10_1, arg_10_2)
+		AssassinStealthGameEntityMgr.instance:refreshGrid(gridId, effectId)
 	end
 
-	arg_10_0:dispatchEvent(AssassinEvent.OnGridUpdate, var_10_0)
+	self:dispatchEvent(AssassinEvent.OnGridUpdate, updateGridIdDict)
 end
 
-function var_0_0.updateGrid(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function AssassinStealthGameController:updateGrid(assassinGrid)
+	if not assassinGrid then
 		return
 	end
 
-	local var_11_0 = arg_11_1.gridId
+	local gridId = assassinGrid.gridId
 
-	AssassinStealthGameModel.instance:setGridData(arg_11_1)
-	AssassinStealthGameEntityMgr.instance:refreshGrid(var_11_0)
-	arg_11_0:dispatchEvent(AssassinEvent.OnGridUpdate, {
-		gridId = var_11_0
+	AssassinStealthGameModel.instance:setGridData(assassinGrid)
+	AssassinStealthGameEntityMgr.instance:refreshGrid(gridId)
+	self:dispatchEvent(AssassinEvent.OnGridUpdate, {
+		gridId = gridId
 	})
 end
 
-function var_0_0.updateHeroes(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_1 then
+function AssassinStealthGameController:updateHeroes(heroUnitList, effectId)
+	if not heroUnitList then
 		return
 	end
 
-	local var_12_0 = {}
+	local updateHeroUidDict = {}
 
-	AssassinStealthGameModel.instance:updateHeroDataByList(arg_12_1)
+	AssassinStealthGameModel.instance:updateHeroDataByList(heroUnitList)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		local var_12_1 = iter_12_1.uid
+	for _, heroUnit in ipairs(heroUnitList) do
+		local uid = heroUnit.uid
 
-		var_12_0[var_12_1] = var_12_1
+		updateHeroUidDict[uid] = uid
 
-		AssassinStealthGameEntityMgr.instance:refreshHeroEntity(var_12_1, arg_12_2)
+		AssassinStealthGameEntityMgr.instance:refreshHeroEntity(uid, effectId)
 	end
 
-	arg_12_0:dispatchEvent(AssassinEvent.OnHeroUpdate, var_12_0)
+	self:dispatchEvent(AssassinEvent.OnHeroUpdate, updateHeroUidDict)
 end
 
-function var_0_0.updateHero(arg_13_0, arg_13_1, arg_13_2)
-	if not arg_13_1 then
+function AssassinStealthGameController:updateHero(heroUnit, effectId)
+	if not heroUnit then
 		return
 	end
 
-	local var_13_0 = arg_13_1.uid
+	local uid = heroUnit.uid
 
-	AssassinStealthGameModel.instance:updateHeroData(arg_13_1)
-	AssassinStealthGameEntityMgr.instance:refreshHeroEntity(var_13_0, arg_13_2)
-	arg_13_0:dispatchEvent(AssassinEvent.OnHeroUpdate, {
-		[var_13_0] = var_13_0
+	AssassinStealthGameModel.instance:updateHeroData(heroUnit)
+	AssassinStealthGameEntityMgr.instance:refreshHeroEntity(uid, effectId)
+	self:dispatchEvent(AssassinEvent.OnHeroUpdate, {
+		[uid] = uid
 	})
 end
 
-function var_0_0.updateEnemies(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_1 then
+function AssassinStealthGameController:updateEnemies(monsterUnitList, effectId)
+	if not monsterUnitList then
 		return
 	end
 
-	local var_14_0 = {}
+	local updateEnemyUidDict = {}
 
-	AssassinStealthGameModel.instance:updateEnemyDataByList(arg_14_1)
+	AssassinStealthGameModel.instance:updateEnemyDataByList(monsterUnitList)
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-		local var_14_1 = iter_14_1.uid
+	for _, monsterUnit in ipairs(monsterUnitList) do
+		local uid = monsterUnit.uid
 
-		var_14_0[var_14_1] = var_14_1
+		updateEnemyUidDict[uid] = uid
 
-		AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(var_14_1, arg_14_2)
+		AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(uid, effectId)
 	end
 
-	arg_14_0:dispatchEvent(AssassinEvent.OnEnemyUpdate, var_14_0)
+	self:dispatchEvent(AssassinEvent.OnEnemyUpdate, updateEnemyUidDict)
 end
 
-function var_0_0.updateEnemy(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_1 then
+function AssassinStealthGameController:updateEnemy(monsterUnit, effectId)
+	if not monsterUnit then
 		return
 	end
 
-	local var_15_0 = arg_15_1.uid
+	local uid = monsterUnit.uid
 
-	AssassinStealthGameModel.instance:updateEnemyData(arg_15_1)
-	AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(var_15_0, arg_15_2)
-	arg_15_0:dispatchEvent(AssassinEvent.OnEnemyUpdate, {
-		uid = var_15_0
+	AssassinStealthGameModel.instance:updateEnemyData(monsterUnit)
+	AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(uid, effectId)
+	self:dispatchEvent(AssassinEvent.OnEnemyUpdate, {
+		uid = uid
 	})
 end
 
-function var_0_0.clickHeroEntity(arg_16_0, arg_16_1, arg_16_2)
-	if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToHero(arg_16_1) then
-		arg_16_0:_useSkillProp(arg_16_1)
+function AssassinStealthGameController:clickHeroEntity(uid, needFocus)
+	local isCanUseSkillProp2Hero = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToHero(uid)
+
+	if isCanUseSkillProp2Hero then
+		self:_useSkillProp(uid)
 
 		return
 	end
 
-	if AssassinStealthGameHelper.isCanSelectHero(arg_16_1) then
-		arg_16_0:selectHero(arg_16_1, arg_16_2)
+	local isCanSelect = AssassinStealthGameHelper.isCanSelectHero(uid)
+
+	if isCanSelect then
+		self:selectHero(uid, needFocus)
 	end
 end
 
-function var_0_0.selectHero(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = AssassinStealthGameModel.instance:getSelectedHero()
+function AssassinStealthGameController:selectHero(uid, needFocus)
+	local lastSelectedHeroUid = AssassinStealthGameModel.instance:getSelectedHero()
 
-	if var_17_0 and var_17_0 == arg_17_1 then
-		arg_17_1 = nil
+	if lastSelectedHeroUid and lastSelectedHeroUid == uid then
+		uid = nil
 	end
 
 	AssassinStealthGameModel.instance:setIsShowHeroHighlight(false)
-	AssassinStealthGameModel.instance:setSelectedHero(arg_17_1)
-	arg_17_0:selectEnemy()
-	arg_17_0:selectSkillProp()
+	AssassinStealthGameModel.instance:setSelectedHero(uid)
+	self:selectEnemy()
+	self:selectSkillProp()
 	AssassinStealthGameEntityMgr.instance:refreshAllHeroEntities()
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
-	arg_17_0:dispatchEvent(AssassinEvent.OnStealthGameSelectHero, {
-		lastSelectedHeroUid = var_17_0,
-		needFocus = arg_17_2
+	self:dispatchEvent(AssassinEvent.OnStealthGameSelectHero, {
+		lastSelectedHeroUid = lastSelectedHeroUid,
+		needFocus = needFocus
 	})
 end
 
-function var_0_0.clickEnemyEntity(arg_18_0, arg_18_1)
-	if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(arg_18_1) then
-		arg_18_0:_useSkillProp(arg_18_1)
+function AssassinStealthGameController:clickEnemyEntity(uid)
+	local isCanUseSkillProp2Enemy = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(uid)
+
+	if isCanUseSkillProp2Enemy then
+		self:_useSkillProp(uid)
 
 		return
 	end
 
-	if AssassinStealthGameHelper.isSelectedHeroCanRemoveEnemyBody(arg_18_1) then
-		arg_18_0:_handleEnemyBody(arg_18_1)
+	local isCanRemoveBody = AssassinStealthGameHelper.isSelectedHeroCanRemoveEnemyBody(uid)
+
+	if isCanRemoveBody then
+		self:_handleEnemyBody(uid)
 
 		return
 	end
 
-	if AssassinStealthGameHelper.isSelectedHeroCanSelectEnemy(arg_18_1) then
-		arg_18_0:selectEnemy(arg_18_1)
+	local isCanSelect = AssassinStealthGameHelper.isSelectedHeroCanSelectEnemy(uid)
+
+	if isCanSelect then
+		self:selectEnemy(uid)
 	end
 end
 
-function var_0_0.selectEnemy(arg_19_0, arg_19_1)
-	local var_19_0 = AssassinStealthGameModel.instance:getSelectedEnemy()
+function AssassinStealthGameController:selectEnemy(uid)
+	local oldSelectedEnemy = AssassinStealthGameModel.instance:getSelectedEnemy()
 
-	if var_19_0 and var_19_0 == arg_19_1 then
-		arg_19_1 = nil
+	if oldSelectedEnemy and oldSelectedEnemy == uid then
+		uid = nil
 	end
 
-	AssassinStealthGameModel.instance:setSelectedEnemy(arg_19_1)
+	AssassinStealthGameModel.instance:setSelectedEnemy(uid)
 
-	if arg_19_1 then
-		AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(arg_19_1)
+	if uid then
+		AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(uid)
 	end
 
-	arg_19_0:dispatchEvent(AssassinEvent.OnStealthGameSelectEnemy, var_19_0)
+	self:dispatchEvent(AssassinEvent.OnStealthGameSelectEnemy, oldSelectedEnemy)
 end
 
-function var_0_0.clickGridItem(arg_20_0, arg_20_1, arg_20_2)
-	if AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(arg_20_1) then
-		arg_20_0:_useSkillProp(arg_20_1)
+function AssassinStealthGameController:clickGridItem(gridId, pointIndex)
+	local isCanUseSkillProp2Grid = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(gridId)
+
+	if isCanUseSkillProp2Grid then
+		self:_useSkillProp(gridId)
 
 		return
 	end
 
-	if AssassinStealthGameHelper.isSelectedHeroCanMoveTo(arg_20_1, arg_20_2) then
-		arg_20_0:_heroMove(arg_20_1, arg_20_2)
+	local isCanMove = AssassinStealthGameHelper.isSelectedHeroCanMoveTo(gridId, pointIndex)
+
+	if isCanMove then
+		self:_heroMove(gridId, pointIndex)
 
 		return
 	end
 end
 
-function var_0_0.clickSkillProp(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = AssassinStealthGameModel.instance:getSelectedHero()
+function AssassinStealthGameController:clickSkillProp(skillPropId, isSkill)
+	local selectedHeroUid = AssassinStealthGameModel.instance:getSelectedHero()
+	local isCanUse = AssassinStealthGameHelper.isCanUseSkillProp(selectedHeroUid, skillPropId, isSkill)
 
-	if not AssassinStealthGameHelper.isCanUseSkillProp(var_21_0, arg_21_1, arg_21_2) then
+	if not isCanUse then
 		return
 	end
 
-	if AssassinConfig.instance:getSkillPropTargetType(arg_21_1, arg_21_2) ~= AssassinEnum.SkillPropTargetType.None then
-		arg_21_0:selectSkillProp(arg_21_1, arg_21_2)
+	local targetType = AssassinConfig.instance:getSkillPropTargetType(skillPropId, isSkill)
+
+	if targetType ~= AssassinEnum.SkillPropTargetType.None then
+		self:selectSkillProp(skillPropId, isSkill)
 	else
-		arg_21_0:_useSkillProp(nil, arg_21_1, arg_21_2)
+		self:_useSkillProp(nil, skillPropId, isSkill)
 	end
 end
 
-function var_0_0.selectSkillProp(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0, var_22_1 = AssassinStealthGameModel.instance:getSelectedSkillProp()
+function AssassinStealthGameController:selectSkillProp(skillPropId, isSkill, notPlay)
+	local selectedSkillPropId, selectedIsSkill = AssassinStealthGameModel.instance:getSelectedSkillProp()
 
-	if var_22_0 == arg_22_1 and arg_22_2 == var_22_1 then
-		arg_22_1 = nil
-		arg_22_2 = nil
+	if selectedSkillPropId == skillPropId and isSkill == selectedIsSkill then
+		skillPropId = nil
+		isSkill = nil
 	end
 
-	AssassinStealthGameModel.instance:setSelectedSkillProp(arg_22_1, arg_22_2)
+	AssassinStealthGameModel.instance:setSelectedSkillProp(skillPropId, isSkill)
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 	AssassinStealthGameEntityMgr.instance:refreshAllHeroEntities()
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
-	arg_22_0:dispatchEvent(AssassinEvent.OnSelectSkillProp, arg_22_3)
+	self:dispatchEvent(AssassinEvent.OnSelectSkillProp, notPlay)
 end
 
-function var_0_0.heroInteract(arg_23_0)
-	local var_23_0 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+function AssassinStealthGameController:heroInteract()
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
 
-	if not var_23_0 then
+	if not heroGameMo then
 		return
 	end
 
-	local var_23_1 = var_23_0:getActionPoint()
-	local var_23_2 = var_23_0:getPos()
-	local var_23_3 = AssassinStealthGameModel.instance:getGridInteractId(var_23_2)
+	local curAp = heroGameMo:getActionPoint()
+	local curGridId = heroGameMo:getPos()
+	local interactId = AssassinStealthGameModel.instance:getGridInteractId(curGridId)
+	local apCost = AssassinConfig.instance:getInteractApCost(interactId)
 
-	if var_23_1 < AssassinConfig.instance:getInteractApCost(var_23_3) then
+	if curAp < apCost then
 		GameFacade.showToast(ToastEnum.AssassinStealthApNotEnough)
 
 		return
 	end
 
-	local var_23_4 = var_23_0:getUid()
+	local heroUid = heroGameMo:getUid()
 
-	AssassinSceneRpc.instance:sendHeroInteractiveRequest(var_23_4, var_23_3, arg_23_0._onHeroInteract, arg_23_0)
+	AssassinSceneRpc.instance:sendHeroInteractiveRequest(heroUid, interactId, self._onHeroInteract, self)
 end
 
-function var_0_0.playerEndTurn(arg_24_0)
-	if not AssassinStealthGameModel.instance:isPlayerTurn() then
+function AssassinStealthGameController:playerEndTurn()
+	local isPlayerTurn = AssassinStealthGameModel.instance:isPlayerTurn()
+
+	if not isPlayerTurn then
 		return
 	end
 
 	AssassinStealthGameModel.instance:setIsPlayerTurn(false)
 
-	local var_24_0 = AssassinStealthGameModel.instance:getRound()
+	local round = AssassinStealthGameModel.instance:getRound()
 
-	AssassinSceneRpc.instance:sendFinishUserTurnRequest(var_24_0, arg_24_0._onEndPlayerTurn, arg_24_0)
+	AssassinSceneRpc.instance:sendFinishUserTurnRequest(round, self._onEndPlayerTurn, self)
 end
 
-function var_0_0._useSkillProp(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0
-	local var_25_1
-	local var_25_2 = AssassinStealthGameModel.instance:getSelectedHero()
+function AssassinStealthGameController:_useSkillProp(targetId, argsSkillProp, argsIsSkill)
+	local skillPropId, isSkill
+	local selectedHeroUid = AssassinStealthGameModel.instance:getSelectedHero()
 
-	if arg_25_1 then
-		var_25_0, var_25_1 = AssassinStealthGameModel.instance:getSelectedSkillProp()
+	if targetId then
+		skillPropId, isSkill = AssassinStealthGameModel.instance:getSelectedSkillProp()
 	else
-		arg_25_1 = var_25_2
-		var_25_0 = arg_25_2
-		var_25_1 = arg_25_3
+		targetId = selectedHeroUid
+		skillPropId = argsSkillProp
+		isSkill = argsIsSkill
 	end
 
-	if var_25_1 then
-		AssassinSceneRpc.instance:sendAssassinUseSkillRequest(var_25_2, arg_25_1, arg_25_0._onUseSkill, arg_25_0)
+	if isSkill then
+		AssassinSceneRpc.instance:sendAssassinUseSkillRequest(selectedHeroUid, targetId, self._onUseSkill, self)
 	else
-		AssassinSceneRpc.instance:sendUseAssassinItemRequest(var_25_2, var_25_0, arg_25_1, arg_25_0._onUseItem, arg_25_0)
+		AssassinSceneRpc.instance:sendUseAssassinItemRequest(selectedHeroUid, skillPropId, targetId, self._onUseItem, self)
 	end
 
-	arg_25_0:selectSkillProp()
+	self:selectSkillProp()
 end
 
-function var_0_0._onUseSkill(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	if arg_26_2 ~= 0 then
+function AssassinStealthGameController:_onUseSkill(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_26_0 = false
-	local var_26_1 = AssassinStealthGameModel.instance:getHeroMo(arg_26_3.uid, true)
-	local var_26_2 = var_26_1 and var_26_1:getActiveSkillId()
-	local var_26_3 = AssassinConfig.instance:getAssassinSkillTargetEff(var_26_2)
-	local var_26_4 = arg_26_3.grid
+	local havePlayedEff = false
+	local heroGameMo = AssassinStealthGameModel.instance:getHeroMo(msg.uid, true)
+	local skillId = heroGameMo and heroGameMo:getActiveSkillId()
+	local effectId = AssassinConfig.instance:getAssassinSkillTargetEff(skillId)
+	local grids = msg.grid
 
-	if var_26_2 == AssassinEnum.Skill.LightGrid then
-		if var_26_4 and #var_26_4 > 0 then
-			var_26_0 = true
+	if skillId == AssassinEnum.Skill.LightGrid then
+		if grids and #grids > 0 then
+			havePlayedEff = true
 
-			arg_26_0:updateGrids(var_26_4, var_26_3)
+			self:updateGrids(grids, effectId)
 		end
 	else
-		arg_26_0:updateGrids(var_26_4)
+		self:updateGrids(grids)
 	end
 
-	if var_26_2 == AssassinEnum.Skill.CureAll then
-		var_26_0 = true
+	if skillId == AssassinEnum.Skill.CureAll then
+		havePlayedEff = true
 
-		arg_26_0:updateHeroes(arg_26_3.hero, var_26_3)
+		self:updateHeroes(msg.hero, effectId)
 	else
-		arg_26_0:updateHeroes(arg_26_3.hero)
+		self:updateHeroes(msg.hero)
 	end
 
-	if var_26_2 == AssassinEnum.Skill.Petrifaction then
-		var_26_0 = true
+	if skillId == AssassinEnum.Skill.Petrifaction then
+		havePlayedEff = true
 
-		arg_26_0:updateEnemies(arg_26_3.monster, var_26_3)
+		self:updateEnemies(msg.monster, effectId)
 	else
-		arg_26_0:updateEnemies(arg_26_3.monster)
+		self:updateEnemies(msg.monster)
 	end
 
-	arg_26_0:changeAlertLevel(arg_26_3.alertLevel)
+	self:changeAlertLevel(msg.alertLevel)
 
-	local var_26_5 = arg_26_3.delMonsterUid
+	local delMonsterUidList = msg.delMonsterUid
 
-	if var_26_5 then
-		for iter_26_0, iter_26_1 in ipairs(var_26_5) do
-			if iter_26_1 and iter_26_1 > 0 then
-				AssassinStealthGameModel.instance:removeEnemyData(iter_26_1)
-				AssassinStealthGameEntityMgr.instance:removeEnemyEntity(iter_26_1)
+	if delMonsterUidList then
+		for _, delMonsterUid in ipairs(delMonsterUidList) do
+			if delMonsterUid and delMonsterUid > 0 then
+				AssassinStealthGameModel.instance:removeEnemyData(delMonsterUid)
+				AssassinStealthGameEntityMgr.instance:removeEnemyEntity(delMonsterUid)
 			end
 		end
 	end
@@ -453,340 +489,353 @@ function var_0_0._onUseSkill(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
 
-	if not var_26_0 then
-		local var_26_6 = arg_26_3.targetId
-		local var_26_7 = AssassinConfig.instance:getSkillPropTargetType(var_26_2, true)
+	if not havePlayedEff then
+		local targetId = msg.targetId
+		local targetType = AssassinConfig.instance:getSkillPropTargetType(skillId, true)
 
-		if var_26_7 == AssassinEnum.SkillPropTargetType.None or var_26_7 == AssassinEnum.SkillPropTargetType.Hero then
-			AssassinStealthGameEntityMgr.instance:playHeroEff(var_26_6, var_26_3)
-		elseif var_26_7 == AssassinEnum.SkillPropTargetType.Enemy then
-			AssassinStealthGameEntityMgr.instance:playEnemyEff(var_26_6, var_26_3)
-		elseif var_26_7 == AssassinEnum.SkillPropTargetType.Grid then
-			if var_26_2 == AssassinEnum.Skill.Transfer then
-				AssassinStealthGameEntityMgr.instance:playHeroEff(arg_26_3.uid, var_26_3)
+		if targetType == AssassinEnum.SkillPropTargetType.None or targetType == AssassinEnum.SkillPropTargetType.Hero then
+			AssassinStealthGameEntityMgr.instance:playHeroEff(targetId, effectId)
+		elseif targetType == AssassinEnum.SkillPropTargetType.Enemy then
+			AssassinStealthGameEntityMgr.instance:playEnemyEff(targetId, effectId)
+		elseif targetType == AssassinEnum.SkillPropTargetType.Grid then
+			if skillId == AssassinEnum.Skill.Transfer then
+				AssassinStealthGameEntityMgr.instance:playHeroEff(msg.uid, effectId)
 			else
-				AssassinStealthGameEntityMgr.instance:playGridEff(var_26_6, var_26_3)
+				AssassinStealthGameEntityMgr.instance:playGridEff(targetId, effectId)
 			end
 		end
 	end
 
-	arg_26_0:dispatchEvent(AssassinEvent.OnUseSkillProp)
+	self:dispatchEvent(AssassinEvent.OnUseSkillProp)
 end
 
-function var_0_0._onUseItem(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	if arg_27_2 ~= 0 then
+function AssassinStealthGameController:_onUseItem(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_27_0 = false
-	local var_27_1 = arg_27_3.itemId
-	local var_27_2 = AssassinConfig.instance:getAssassinItemTargetEff(var_27_1)
-	local var_27_3 = AssassinConfig.instance:getAssassinItemType(var_27_1)
+	local havePlayedEff = false
+	local itemId = msg.itemId
+	local effectId = AssassinConfig.instance:getAssassinItemTargetEff(itemId)
+	local itemType = AssassinConfig.instance:getAssassinItemType(itemId)
 
-	arg_27_0:updateGrid(arg_27_3.grid)
-	arg_27_0:updateHeroes(arg_27_3.hero)
+	self:updateGrid(msg.grid)
+	self:updateHeroes(msg.hero)
 
-	if var_27_3 == AssassinEnum.ItemType.PoisonKnife then
-		var_27_0 = true
+	if itemType == AssassinEnum.ItemType.PoisonKnife then
+		havePlayedEff = true
 
-		arg_27_0:updateEnemies(arg_27_3.monster, var_27_2)
+		self:updateEnemies(msg.monster, effectId)
 	else
-		arg_27_0:updateEnemies(arg_27_3.monster)
+		self:updateEnemies(msg.monster)
 	end
 
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
 
-	if not var_27_0 then
-		local var_27_4 = arg_27_3.targetId
-		local var_27_5 = AssassinConfig.instance:getSkillPropTargetType(var_27_1)
+	if not havePlayedEff then
+		local targetId = msg.targetId
+		local targetType = AssassinConfig.instance:getSkillPropTargetType(itemId)
 
-		if var_27_5 == AssassinEnum.SkillPropTargetType.None or var_27_5 == AssassinEnum.SkillPropTargetType.Hero then
-			AssassinStealthGameEntityMgr.instance:playHeroEff(var_27_4, var_27_2)
-		elseif var_27_5 == AssassinEnum.SkillPropTargetType.Enemy then
-			AssassinStealthGameEntityMgr.instance:playEnemyEff(var_27_4, var_27_2)
-		elseif var_27_5 == AssassinEnum.SkillPropTargetType.Grid then
-			AssassinStealthGameEntityMgr.instance:playHeroEff(arg_27_3.uid, var_27_2)
+		if targetType == AssassinEnum.SkillPropTargetType.None or targetType == AssassinEnum.SkillPropTargetType.Hero then
+			AssassinStealthGameEntityMgr.instance:playHeroEff(targetId, effectId)
+		elseif targetType == AssassinEnum.SkillPropTargetType.Enemy then
+			AssassinStealthGameEntityMgr.instance:playEnemyEff(targetId, effectId)
+		elseif targetType == AssassinEnum.SkillPropTargetType.Grid then
+			AssassinStealthGameEntityMgr.instance:playHeroEff(msg.uid, effectId)
 		end
 	end
 
-	arg_27_0:dispatchEvent(AssassinEvent.OnUseSkillProp)
+	self:dispatchEvent(AssassinEvent.OnUseSkillProp)
 end
 
-function var_0_0._onHeroInteract(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	if arg_28_2 ~= 0 then
+function AssassinStealthGameController:_onHeroInteract(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_28_0:updateHero(arg_28_3.hero)
-	AssassinStealthGameModel.instance:setFinishedInteractive(arg_28_3.interactiveId)
+	self:updateHero(msg.hero)
+	AssassinStealthGameModel.instance:setFinishedInteractive(msg.interactiveId)
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
-	arg_28_0:dispatchEvent(AssassinEvent.OnQTEInteractUpdate)
+	self:dispatchEvent(AssassinEvent.OnQTEInteractUpdate)
 end
 
-function var_0_0._onEndPlayerTurn(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	if arg_29_2 ~= 0 then
+function AssassinStealthGameController:_onEndPlayerTurn(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_29_0:changeAlertLevel(arg_29_3.alertLevel)
-	AssassinStealthGameModel.instance:setGridDataByList(arg_29_3.grid)
-	AssassinStealthGameModel.instance:setEnemyOperationData(arg_29_3)
-	arg_29_0:_startEnemyOperationFlow()
-	arg_29_0:dispatchEvent(AssassinEvent.OnPlayerEndTurn)
+	self:changeAlertLevel(msg.alertLevel)
+	AssassinStealthGameModel.instance:setGridDataByList(msg.grid)
+	AssassinStealthGameModel.instance:setEnemyOperationData(msg)
+	self:_startEnemyOperationFlow()
+	self:dispatchEvent(AssassinEvent.OnPlayerEndTurn)
 end
 
-function var_0_0._heroMove(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = AssassinStealthGameModel.instance:getSelectedHero()
-	local var_30_1 = AssassinStealthGameHelper.getSelectedHeroMoveActId(arg_30_1, arg_30_2)
-	local var_30_2 = arg_30_1
-	local var_30_3 = var_30_1 == AssassinEnum.HeroAct.LeaveHide
+function AssassinStealthGameController:_heroMove(gridId, pointIndex)
+	local selectedHeroUid = AssassinStealthGameModel.instance:getSelectedHero()
+	local moveActId = AssassinStealthGameHelper.getSelectedHeroMoveActId(gridId, pointIndex)
+	local param = gridId
+	local isLeaveHide = moveActId == AssassinEnum.HeroAct.LeaveHide
 
-	if var_30_1 == AssassinEnum.HeroAct.Hide or var_30_3 then
-		if var_30_3 then
-			var_30_2 = AssassinStealthGameModel.instance:getGridEmptyPointIndex(arg_30_1)
+	if moveActId == AssassinEnum.HeroAct.Hide or isLeaveHide then
+		if isLeaveHide then
+			param = AssassinStealthGameModel.instance:getGridEmptyPointIndex(gridId)
 
-			if not var_30_2 then
+			if not param then
 				return
 			end
 		else
-			var_30_2 = arg_30_2
+			param = pointIndex
 		end
-	elseif var_30_1 == AssassinEnum.HeroAct.ClimbTower or var_30_1 == AssassinEnum.HeroAct.Jump then
-		var_30_2 = string.format("%s#%s", arg_30_1, arg_30_2)
+	elseif moveActId == AssassinEnum.HeroAct.ClimbTower or moveActId == AssassinEnum.HeroAct.Jump then
+		param = string.format("%s#%s", gridId, pointIndex)
 	end
 
-	arg_30_0:dispatchEvent(AssassinEvent.ShowHeroActImg, var_30_1, {
-		actId = var_30_1,
-		selectedHeroUid = var_30_0,
-		param = tostring(var_30_2 or "")
+	self:dispatchEvent(AssassinEvent.ShowHeroActImg, moveActId, {
+		actId = moveActId,
+		selectedHeroUid = selectedHeroUid,
+		param = tostring(param or "")
 	})
 end
 
-function var_0_0.heroAttack(arg_31_0, arg_31_1)
-	if not arg_31_1 then
+function AssassinStealthGameController:heroAttack(actId)
+	if not actId then
 		return
 	end
 
-	local var_31_0 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
 
-	if not var_31_0 then
+	if not heroGameMo then
 		return
 	end
 
-	if var_31_0:getActionPoint() < AssassinConfig.instance:getAssassinActPower(arg_31_1) then
+	local curAp = heroGameMo:getActionPoint()
+	local needAp = AssassinConfig.instance:getAssassinActPower(actId)
+
+	if curAp < needAp then
 		GameFacade.showToast(ToastEnum.AssassinStealthApNotEnough)
 
 		return
 	end
 
-	local var_31_1 = var_31_0:getUid()
-	local var_31_2 = AssassinStealthGameModel.instance:getSelectedEnemy()
+	local heroUid = heroGameMo:getUid()
+	local enemyUid = AssassinStealthGameModel.instance:getSelectedEnemy()
 
-	arg_31_0:selectEnemy()
-	arg_31_0:dispatchEvent(AssassinEvent.ShowHeroActImg, arg_31_1, {
-		actId = arg_31_1,
-		heroUid = var_31_1,
-		enemyUid = var_31_2
+	self:selectEnemy()
+	self:dispatchEvent(AssassinEvent.ShowHeroActImg, actId, {
+		actId = actId,
+		heroUid = heroUid,
+		enemyUid = enemyUid
 	})
 end
 
-function var_0_0.heroAssassinate(arg_32_0, arg_32_1)
-	if not arg_32_1 then
+function AssassinStealthGameController:heroAssassinate(actId)
+	if not actId then
 		return
 	end
 
-	local var_32_0 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
-	local var_32_1 = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local enemyGameMo = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
 
-	if not var_32_0 or not var_32_1 then
+	if not heroGameMo or not enemyGameMo then
 		return
 	end
 
-	if var_32_0:getActionPoint() < AssassinConfig.instance:getAssassinActPower(arg_32_1) then
+	local curAp = heroGameMo:getActionPoint()
+	local needAp = AssassinConfig.instance:getAssassinActPower(actId)
+
+	if curAp < needAp then
 		GameFacade.showToast(ToastEnum.AssassinStealthApNotEnough)
 
 		return
 	end
 
-	local var_32_2 = var_32_1:getUid()
-	local var_32_3 = var_32_0:getUid()
-	local var_32_4 = tostring(var_32_2)
+	local enemyUid = enemyGameMo:getUid()
+	local heroUid = heroGameMo:getUid()
+	local param = tostring(enemyUid)
 
-	if arg_32_1 == AssassinEnum.HeroAct.AirAssassinate then
-		local var_32_5 = var_32_1:getPos()
+	if actId == AssassinEnum.HeroAct.AirAssassinate then
+		local targetGridId = enemyGameMo:getPos()
 
-		var_32_4 = string.format("%s#%s", var_32_5, var_32_2)
+		param = string.format("%s#%s", targetGridId, enemyUid)
 	end
 
-	arg_32_0:selectEnemy()
-	arg_32_0:dispatchEvent(AssassinEvent.ShowHeroActImg, arg_32_1, {
-		actId = arg_32_1,
-		heroUid = var_32_3,
-		param = var_32_4
+	self:selectEnemy()
+	self:dispatchEvent(AssassinEvent.ShowHeroActImg, actId, {
+		actId = actId,
+		heroUid = heroUid,
+		param = param
 	})
 end
 
-function var_0_0._handleEnemyBody(arg_33_0, arg_33_1)
-	local var_33_0 = AssassinStealthGameModel.instance:getSelectedHero()
+function AssassinStealthGameController:_handleEnemyBody(targetEnemyUid)
+	local selectedHeroUid = AssassinStealthGameModel.instance:getSelectedHero()
 
-	arg_33_0:dispatchEvent(AssassinEvent.ShowHeroActImg, AssassinEnum.HeroAct.HandleBody, {
+	self:dispatchEvent(AssassinEvent.ShowHeroActImg, AssassinEnum.HeroAct.HandleBody, {
 		actId = AssassinEnum.HeroAct.HandleBody,
-		selectedHeroUid = var_33_0,
-		param = tostring(arg_33_1)
+		selectedHeroUid = selectedHeroUid,
+		param = tostring(targetEnemyUid)
 	})
 end
 
-function var_0_0.showActImgFinish(arg_34_0, arg_34_1, arg_34_2)
-	if not arg_34_1 or not arg_34_2 then
+function AssassinStealthGameController:showActImgFinish(actId, actParam)
+	if not actId or not actParam then
 		return
 	end
 
-	local var_34_0 = AssassinEnum.HeroAct
+	local actEnum = AssassinEnum.HeroAct
 
-	if arg_34_1 == var_34_0.Move or arg_34_1 == var_34_0.Hide or arg_34_1 == var_34_0.LeaveHide or arg_34_1 == var_34_0.ClimbTower or arg_34_1 == var_34_0.LeaveTower or arg_34_1 == var_34_0.Jump then
-		AssassinSceneRpc.instance:sendHeroMoveRequest(arg_34_2.selectedHeroUid, arg_34_1, arg_34_2.param, arg_34_0._onHeroMove, arg_34_0)
-	elseif arg_34_1 == var_34_0.Attack or arg_34_1 == var_34_0.AttackTogether or arg_34_1 == var_34_0.Ambush or arg_34_1 == var_34_0.AmbushTogether then
-		local var_34_1, var_34_2 = AssassinConfig.instance:getAssassinActEffect(arg_34_1)
+	if actId == actEnum.Move or actId == actEnum.Hide or actId == actEnum.LeaveHide or actId == actEnum.ClimbTower or actId == actEnum.LeaveTower or actId == actEnum.Jump then
+		AssassinSceneRpc.instance:sendHeroMoveRequest(actParam.selectedHeroUid, actId, actParam.param, self._onHeroMove, self)
+	elseif actId == actEnum.Attack or actId == actEnum.AttackTogether or actId == actEnum.Ambush or actId == actEnum.AmbushTogether then
+		local _, enemyEffectId = AssassinConfig.instance:getAssassinActEffect(actId)
 
-		AssassinStealthGameEntityMgr.instance:playEnemyEff(arg_34_2.enemyUid, var_34_2, arg_34_0._afterAttackEffect, arg_34_0, arg_34_2, AssassinEnum.BlockKey.PlayAttackEff)
-	elseif arg_34_1 == var_34_0.Assassinate or arg_34_1 == var_34_0.AirAssassinate or arg_34_1 == var_34_0.HideAssassinate then
-		AssassinSceneRpc.instance:sendHeroAssassinRequest(arg_34_2.heroUid, arg_34_1, arg_34_2.param, arg_34_0._onHeroAssassinate, arg_34_0)
-	elseif arg_34_1 == var_34_0.HandleBody then
-		AssassinSceneRpc.instance:sendHeroAssassinRequest(arg_34_2.selectedHeroUid, arg_34_1, arg_34_2.param, arg_34_0._onHandleEnemyBody, arg_34_0)
+		AssassinStealthGameEntityMgr.instance:playEnemyEff(actParam.enemyUid, enemyEffectId, self._afterAttackEffect, self, actParam, AssassinEnum.BlockKey.PlayAttackEff)
+	elseif actId == actEnum.Assassinate or actId == actEnum.AirAssassinate or actId == actEnum.HideAssassinate then
+		AssassinSceneRpc.instance:sendHeroAssassinRequest(actParam.heroUid, actId, actParam.param, self._onHeroAssassinate, self)
+	elseif actId == actEnum.HandleBody then
+		AssassinSceneRpc.instance:sendHeroAssassinRequest(actParam.selectedHeroUid, actId, actParam.param, self._onHandleEnemyBody, self)
 	else
-		logError(string.format("AssassinStealthGameController:showActImgFinish error, not support act:%s", arg_34_1))
+		logError(string.format("AssassinStealthGameController:showActImgFinish error, not support act:%s", actId))
 	end
 end
 
-function var_0_0._afterAttackEffect(arg_35_0, arg_35_1)
-	AssassinSceneRpc.instance:sendHeroAttackRequest(arg_35_1.heroUid, arg_35_1.actId, arg_35_1.enemyUid, arg_35_0._onHeroAttack, arg_35_0)
+function AssassinStealthGameController:_afterAttackEffect(actParam)
+	AssassinSceneRpc.instance:sendHeroAttackRequest(actParam.heroUid, actParam.actId, actParam.enemyUid, self._onHeroAttack, self)
 end
 
-function var_0_0._onHeroMove(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	if arg_36_2 ~= 0 then
+function AssassinStealthGameController:_onHeroMove(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_36_0 = AssassinConfig.instance:getAssassinActEffect(arg_36_3.actId)
-	local var_36_1 = arg_36_3.hero.uid
-	local var_36_2 = arg_36_3.hero.gridId
-	local var_36_3 = AssassinStealthGameModel.instance:getHeroMo(var_36_1, true)
-	local var_36_4 = var_36_3 and var_36_3:getStatus()
+	local heroEffectId = AssassinConfig.instance:getAssassinActEffect(msg.actId)
+	local heroUid = msg.hero.uid
+	local gridId = msg.hero.gridId
+	local gameHeroMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
+	local oldStatus = gameHeroMo and gameHeroMo:getStatus()
 
-	arg_36_0:updateHero(arg_36_3.hero, var_36_0)
+	self:updateHero(msg.hero, heroEffectId)
 
-	if arg_36_3.actId == AssassinEnum.HeroAct.Move then
+	if msg.actId == AssassinEnum.HeroAct.Move then
 		AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_heromove)
 	end
 
-	AssassinStealthGameModel.updateEnemyDataByList(arg_36_3.monster)
+	AssassinStealthGameModel.updateEnemyDataByList(msg.monster)
 
-	for iter_36_0, iter_36_1 in ipairs(arg_36_3.moves) do
-		local var_36_5 = iter_36_1.path[1]
+	for _, moveData in ipairs(msg.moves) do
+		local path = moveData.path[1]
 
-		arg_36_0:enemyMove(iter_36_1.uid, var_36_5.gridId, var_36_5.pos)
+		self:enemyMove(moveData.uid, path.gridId, path.pos)
 	end
 
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
-	AssassinStealthGameModel.instance:setGridDataByList(arg_36_3.grid)
+	AssassinStealthGameModel.instance:setGridDataByList(msg.grid)
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
-	arg_36_0:changeAlertLevel(arg_36_3.alertLevel)
+	self:changeAlertLevel(msg.alertLevel)
 
-	if AssassinStealthGameHelper.isHeroCanBeScan(var_36_1, var_36_4, arg_36_3.actId) and AssassinStealthGameHelper.isGridEnemyWillScan(var_36_2) then
-		local var_36_6 = var_36_3:getStatus()
+	local isCanBeScan = AssassinStealthGameHelper.isHeroCanBeScan(heroUid, oldStatus, msg.actId)
 
-		if var_36_6 == AssassinEnum.HeroStatus.Expose and var_36_4 ~= var_36_6 then
-			AssassinStealthGameEntityMgr.instance:playGridScanEff(var_36_2, arg_36_0._playScanEffFinish, arg_36_0, {
-				var_36_1
-			})
-		else
-			AssassinStealthGameEntityMgr.instance:playGridScanEff(var_36_2, arg_36_0._playScanEffFinish, arg_36_0)
+	if isCanBeScan then
+		local enemyWillScan = AssassinStealthGameHelper.isGridEnemyWillScan(gridId)
+
+		if enemyWillScan then
+			local newStatus = gameHeroMo:getStatus()
+			local isExpose = newStatus == AssassinEnum.HeroStatus.Expose
+
+			if isExpose and oldStatus ~= newStatus then
+				AssassinStealthGameEntityMgr.instance:playGridScanEff(gridId, self._playScanEffFinish, self, {
+					heroUid
+				})
+			else
+				AssassinStealthGameEntityMgr.instance:playGridScanEff(gridId, self._playScanEffFinish, self)
+			end
+
+			AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnemyScanEffPlaying, true)
 		end
-
-		AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnemyScanEffPlaying, true)
 	end
 
-	arg_36_0:dispatchEvent(AssassinEvent.OnHeroMove)
+	self:dispatchEvent(AssassinEvent.OnHeroMove)
 end
 
-function var_0_0._playScanEffFinish(arg_37_0, arg_37_1)
-	if arg_37_1 then
-		arg_37_0:heroBeExposed(arg_37_1)
+function AssassinStealthGameController:_playScanEffFinish(exposeHeroUidList)
+	if exposeHeroUidList then
+		self:heroBeExposed(exposeHeroUidList)
 	end
 
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnemyScanEffPlaying, false)
 end
 
-function var_0_0._onHeroAttack(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	if arg_38_2 ~= 0 then
+function AssassinStealthGameController:_onHeroAttack(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_38_0:_enterFight(arg_38_2, arg_38_3)
+	self:_enterFight(resultCode, msg)
 end
 
-function var_0_0._onHeroAssassinate(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
-	if arg_39_2 ~= 0 then
+function AssassinStealthGameController:_onHeroAssassinate(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_39_0, var_39_1 = AssassinConfig.instance:getAssassinActEffect(arg_39_3.actId)
+	local heroEffectId, enemyEffectId = AssassinConfig.instance:getAssassinActEffect(msg.actId)
 
-	arg_39_0:updateHero(arg_39_3.hero, var_39_0)
-	arg_39_0:updateEnemies(arg_39_3.monster, var_39_1)
+	self:updateHero(msg.hero, heroEffectId)
+	self:updateEnemies(msg.monster, enemyEffectId)
 
-	local var_39_2 = arg_39_3.delMonsterUid
+	local delMonsterUidList = msg.delMonsterUid
 
-	if var_39_2 then
-		for iter_39_0, iter_39_1 in ipairs(var_39_2) do
-			if iter_39_1 and iter_39_1 > 0 then
-				AssassinStealthGameModel.instance:removeEnemyData(iter_39_1)
-				AssassinStealthGameEntityMgr.instance:removeEnemyEntity(iter_39_1)
+	if delMonsterUidList then
+		for _, delMonsterUid in ipairs(delMonsterUidList) do
+			if delMonsterUid and delMonsterUid > 0 then
+				AssassinStealthGameModel.instance:removeEnemyData(delMonsterUid)
+				AssassinStealthGameEntityMgr.instance:removeEnemyEntity(delMonsterUid)
 			end
 		end
 	end
 
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
-	arg_39_0:dispatchEvent(AssassinEvent.TriggerGuideAfterHeroAssassinate)
+	self:dispatchEvent(AssassinEvent.TriggerGuideAfterHeroAssassinate)
 end
 
-function var_0_0._onHandleEnemyBody(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
-	if arg_40_2 ~= 0 then
+function AssassinStealthGameController:_onHandleEnemyBody(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_40_0:updateHero(arg_40_3.hero)
-	arg_40_0:updateEnemies(arg_40_3.monster)
+	self:updateHero(msg.hero)
+	self:updateEnemies(msg.monster)
 
-	local var_40_0 = arg_40_3.delMonsterUid
+	local delMonsterUidList = msg.delMonsterUid
 
-	if var_40_0 then
-		for iter_40_0, iter_40_1 in ipairs(var_40_0) do
-			if iter_40_1 and iter_40_1 > 0 then
-				AssassinStealthGameModel.instance:removeEnemyData(iter_40_1)
-				AssassinStealthGameEntityMgr.instance:removeEnemyEntity(iter_40_1)
+	if delMonsterUidList then
+		for _, delMonsterUid in ipairs(delMonsterUidList) do
+			if delMonsterUid and delMonsterUid > 0 then
+				AssassinStealthGameModel.instance:removeEnemyData(delMonsterUid)
+				AssassinStealthGameEntityMgr.instance:removeEnemyEntity(delMonsterUid)
 			end
 		end
 	end
 end
 
-function var_0_0._clearEnemyFlow(arg_41_0)
-	if arg_41_0._enemyOperationFlow then
-		arg_41_0._enemyOperationFlow:unregisterDoneListener(arg_41_0._enemyOperationFlowDone, arg_41_0)
-		arg_41_0._enemyOperationFlow:destroy()
+function AssassinStealthGameController:_clearEnemyFlow()
+	if self._enemyOperationFlow then
+		self._enemyOperationFlow:unregisterDoneListener(self._enemyOperationFlowDone, self)
+		self._enemyOperationFlow:destroy()
 	end
 
-	arg_41_0._enemyOperationFlow = nil
+	self._enemyOperationFlow = nil
 
 	AssassinStealthGameModel.instance:setEnemyOperationData()
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnemyOperation, false)
 end
 
-function var_0_0._startEnemyOperationFlow(arg_42_0)
-	if arg_42_0._enemyOperationFlow then
+function AssassinStealthGameController:_startEnemyOperationFlow()
+	if self._enemyOperationFlow then
 		logError("AssassinStealthGameController:_startEnemyOperationFlow error, already have flow")
 
 		return
@@ -794,329 +843,340 @@ function var_0_0._startEnemyOperationFlow(arg_42_0)
 
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnemyOperation, true)
 
-	arg_42_0._enemyOperationFlow = FlowSequence.New()
+	self._enemyOperationFlow = FlowSequence.New()
 
-	arg_42_0._enemyOperationFlow:addWork(StealthEnemyTurnBeginWork.New())
-	arg_42_0._enemyOperationFlow:addWork(StealthEnemyBornWork.New())
-	arg_42_0._enemyOperationFlow:addWork(StealthEnemyArcheryWork.New())
-	arg_42_0._enemyOperationFlow:addWork(StealthEnemyMoveWork.New())
-	arg_42_0._enemyOperationFlow:addWork(StealthEnemyDetectsWork.New())
-	arg_42_0._enemyOperationFlow:addWork(StealthEnemyFightWork.New())
-	arg_42_0._enemyOperationFlow:addWork(StealthEnemyTurnEndWork.New())
-	arg_42_0._enemyOperationFlow:registerDoneListener(arg_42_0._enemyOperationFlowDone, arg_42_0)
-	arg_42_0._enemyOperationFlow:start()
+	self._enemyOperationFlow:addWork(StealthEnemyTurnBeginWork.New())
+	self._enemyOperationFlow:addWork(StealthEnemyBornWork.New())
+	self._enemyOperationFlow:addWork(StealthEnemyArcheryWork.New())
+	self._enemyOperationFlow:addWork(StealthEnemyMoveWork.New())
+	self._enemyOperationFlow:addWork(StealthEnemyDetectsWork.New())
+	self._enemyOperationFlow:addWork(StealthEnemyFightWork.New())
+	self._enemyOperationFlow:addWork(StealthEnemyTurnEndWork.New())
+	self._enemyOperationFlow:registerDoneListener(self._enemyOperationFlowDone, self)
+	self._enemyOperationFlow:start()
 end
 
-function var_0_0.enemyBornByList(arg_43_0, arg_43_1)
-	for iter_43_0, iter_43_1 in ipairs(arg_43_1) do
-		arg_43_0:enemyBorn(iter_43_1, true)
+function AssassinStealthGameController:enemyBornByList(enemyDataList)
+	for _, enemyData in ipairs(enemyDataList) do
+		self:enemyBorn(enemyData, true)
 	end
 end
 
-function var_0_0.enemyBorn(arg_44_0, arg_44_1)
-	AssassinStealthGameModel.instance:addEnemyData(arg_44_1)
-	AssassinStealthGameEntityMgr.instance:addEnemyEntity(arg_44_1.uid)
+function AssassinStealthGameController:enemyBorn(enemyData)
+	AssassinStealthGameModel.instance:addEnemyData(enemyData)
+	AssassinStealthGameEntityMgr.instance:addEnemyEntity(enemyData.uid)
 end
 
-function var_0_0.enemyMove(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	AssassinStealthGameModel.instance:updateEnemyPos(arg_45_1, arg_45_2, arg_45_3)
-	AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(arg_45_1)
-	AssassinStealthGameEntityMgr.instance:refreshGrid(arg_45_2)
+function AssassinStealthGameController:enemyMove(enemyUid, gridId, pointIndex)
+	AssassinStealthGameModel.instance:updateEnemyPos(enemyUid, gridId, pointIndex)
+	AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(enemyUid)
+	AssassinStealthGameEntityMgr.instance:refreshGrid(gridId)
 end
 
-function var_0_0.heroBeExposed(arg_46_0, arg_46_1)
-	if not arg_46_1 or #arg_46_1 <= 0 then
+function AssassinStealthGameController:heroBeExposed(exposeHeroUidList)
+	if not exposeHeroUidList or #exposeHeroUidList <= 0 then
 		return
 	end
 
-	arg_46_0:dispatchEvent(AssassinEvent.ShowExposeTip, arg_46_1)
+	self:dispatchEvent(AssassinEvent.ShowExposeTip, exposeHeroUidList)
 end
 
-function var_0_0._enemyOperationFlowDone(arg_47_0, arg_47_1)
-	arg_47_0:_clearEnemyFlow()
+function AssassinStealthGameController:_enemyOperationFlowDone(success)
+	self:_clearEnemyFlow()
 
-	if arg_47_0:checkGameState() then
+	local isGameEnd = self:checkGameState()
+
+	if isGameEnd then
 		return
 	end
 
-	if arg_47_1 then
-		arg_47_0:_beginNewRound()
+	if success then
+		self:_beginNewRound()
 	end
 
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 end
 
-function var_0_0._beginNewRound(arg_48_0)
-	local var_48_0 = AssassinStealthGameModel.instance:getRound()
+function AssassinStealthGameController:_beginNewRound()
+	local round = AssassinStealthGameModel.instance:getRound()
 
-	AssassinSceneRpc.instance:sendNextRoundRequest(var_48_0, arg_48_0._onBeginNewRound, arg_48_0)
+	AssassinSceneRpc.instance:sendNextRoundRequest(round, self._onBeginNewRound, self)
 end
 
-function var_0_0.finishMission(arg_49_0)
-	local var_49_0 = AssassinStealthGameModel.instance:getMissionId()
+function AssassinStealthGameController:finishMission()
+	local missionId = AssassinStealthGameModel.instance:getMissionId()
 
-	AssassinSceneRpc.instance:sendFinishMissionRequest(var_49_0, arg_49_0._onFinishMission, arg_49_0)
+	AssassinSceneRpc.instance:sendFinishMissionRequest(missionId, self._onFinishMission, self)
 end
 
-function var_0_0.returnAssassinStealthGame(arg_50_0, arg_50_1, arg_50_2)
-	if AssassinConfig.instance:getQuestType(arg_50_1) ~= AssassinEnum.QuestType.Stealth then
-		logError(string.format("AssassinStealthGameOverView:returnAssassinStealthGame error, quest is not stealth, questId:%s", arg_50_1))
+function AssassinStealthGameController:returnAssassinStealthGame(questId, fightReturn)
+	local questType = AssassinConfig.instance:getQuestType(questId)
+
+	if questType ~= AssassinEnum.QuestType.Stealth then
+		logError(string.format("AssassinStealthGameOverView:returnAssassinStealthGame error, quest is not stealth, questId:%s", questId))
 
 		return
 	end
 
-	local var_50_0
+	local mapId
 
-	if arg_50_1 then
-		local var_50_1 = AssassinConfig.instance:getQuestParam(arg_50_1)
+	if questId then
+		local strMapId = AssassinConfig.instance:getQuestParam(questId)
 
-		var_50_0 = tonumber(var_50_1)
+		mapId = tonumber(strMapId)
 	else
-		var_50_0 = AssassinStealthGameModel.instance:getMapId()
+		mapId = AssassinStealthGameModel.instance:getMapId()
 	end
 
-	AssassinStealthGameModel.instance:setIsFightReturn(arg_50_2)
-	AssassinSceneRpc.instance:sendReturnAssassinSceneRequest(var_50_0, arg_50_0._onReturnAssassinStealthGame, arg_50_0)
+	AssassinStealthGameModel.instance:setIsFightReturn(fightReturn)
+	AssassinSceneRpc.instance:sendReturnAssassinSceneRequest(mapId, self._onReturnAssassinStealthGame, self)
 end
 
-function var_0_0.recoverAssassinStealthGame(arg_51_0)
-	local var_51_0 = AssassinStealthGameModel.instance:getMapId()
+function AssassinStealthGameController:recoverAssassinStealthGame()
+	local mapId = AssassinStealthGameModel.instance:getMapId()
 
-	if var_51_0 then
-		AssassinSceneRpc.instance:sendRecoverSceneRequest(var_51_0, arg_51_0._onRecoverAssassinStealthGame, arg_51_0)
+	if mapId then
+		AssassinSceneRpc.instance:sendRecoverSceneRequest(mapId, self._onRecoverAssassinStealthGame, self)
 	end
 end
 
-function var_0_0.changeMap(arg_52_0, arg_52_1)
-	AssassinSceneRpc.instance:sendAssassinChangeMapRequest(arg_52_1, arg_52_0._onChangeMap, arg_52_0)
+function AssassinStealthGameController:changeMap(mapId)
+	AssassinSceneRpc.instance:sendAssassinChangeMapRequest(mapId, self._onChangeMap, self)
 end
 
-function var_0_0.enterBattleGrid(arg_53_0, arg_53_1)
-	if AssassinStealthGameModel.instance:getGameState() ~= AssassinEnum.GameState.InProgress then
+function AssassinStealthGameController:enterBattleGrid(gridId)
+	local gameState = AssassinStealthGameModel.instance:getGameState()
+	local isGameEnd = gameState ~= AssassinEnum.GameState.InProgress
+
+	if isGameEnd then
 		return
 	end
 
-	AssassinSceneRpc.instance:sendEnterBattleGridRequest(arg_53_1, arg_53_0._onEnterBattleGrid, arg_53_0)
+	AssassinSceneRpc.instance:sendEnterBattleGridRequest(gridId, self._onEnterBattleGrid, self)
 end
 
-function var_0_0.resetGame(arg_54_0)
-	local var_54_0 = AssassinStealthGameModel.instance:getMapId()
+function AssassinStealthGameController:resetGame()
+	local mapId = AssassinStealthGameModel.instance:getMapId()
 
-	AssassinSceneRpc.instance:sendRestartAssassinSceneRequest(var_54_0, arg_54_0._onResetGame, arg_54_0)
+	AssassinSceneRpc.instance:sendRestartAssassinSceneRequest(mapId, self._onResetGame, self)
 end
 
-function var_0_0.abandonGame(arg_55_0)
-	local var_55_0 = AssassinStealthGameModel.instance:getMapId()
+function AssassinStealthGameController:abandonGame()
+	local mapId = AssassinStealthGameModel.instance:getMapId()
 
-	AssassinSceneRpc.instance:sendGiveUpAssassinSceneRequest(var_55_0, arg_55_0._onAbandonGame, arg_55_0)
+	AssassinSceneRpc.instance:sendGiveUpAssassinSceneRequest(mapId, self._onAbandonGame, self)
 end
 
-function var_0_0.exitGame(arg_56_0)
+function AssassinStealthGameController:exitGame()
 	ViewMgr.instance:closeView(ViewName.AssassinStealthGameView)
 end
 
-function var_0_0.changeAlertLevel(arg_57_0, arg_57_1)
-	if not arg_57_1 then
+function AssassinStealthGameController:changeAlertLevel(alertLevel)
+	if not alertLevel then
 		return
 	end
 
-	AssassinStealthGameModel.instance:setAlertLevel(arg_57_1)
+	AssassinStealthGameModel.instance:setAlertLevel(alertLevel)
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
-	arg_57_0:dispatchEvent(AssassinEvent.OnChangeAlertLevel)
+	self:dispatchEvent(AssassinEvent.OnChangeAlertLevel)
 end
 
-function var_0_0._onBeginNewRound(arg_58_0, arg_58_1, arg_58_2, arg_58_3)
-	if arg_58_2 ~= 0 then
+function AssassinStealthGameController:_onBeginNewRound(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	AssassinStealthGameModel.instance:updateGameSceneDataOnNewRound(arg_58_3.scene)
+	AssassinStealthGameModel.instance:updateGameSceneDataOnNewRound(msg.scene)
 	AssassinStealthGameModel.instance:setIsPlayerTurn(true)
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 	AssassinStealthGameEntityMgr.instance:refreshAllHeroEntities()
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
-	arg_58_0:dispatchEvent(AssassinEvent.OnBeginNewRound)
+	self:dispatchEvent(AssassinEvent.OnBeginNewRound)
 end
 
-function var_0_0._onFinishMission(arg_59_0, arg_59_1, arg_59_2, arg_59_3)
-	if arg_59_2 ~= 0 then
+function AssassinStealthGameController:_onFinishMission(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	AssassinStealthGameModel.instance:setMissionData(arg_59_3.mission)
+	AssassinStealthGameModel.instance:setMissionData(msg.mission)
 	AssassinStealthGameEntityMgr.instance:refreshAllGrid()
 	AssassinStealthGameEntityMgr.instance:refreshAllEnemyEntities()
-	arg_59_0:dispatchEvent(AssassinEvent.OnMissionChange)
+	self:dispatchEvent(AssassinEvent.OnMissionChange)
 end
 
-function var_0_0._onReturnAssassinStealthGame(arg_60_0, arg_60_1, arg_60_2, arg_60_3)
-	if arg_60_2 ~= 0 then
+function AssassinStealthGameController:_onReturnAssassinStealthGame(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_60_0 = AssassinStealthGameModel.instance:getIsFightReturn()
+	local isFightReturn = AssassinStealthGameModel.instance:getIsFightReturn()
 
 	AssassinStealthGameModel.instance:setIsFightReturn()
 
-	local var_60_1, var_60_2, var_60_3 = AssassinStealthGameModel.instance:getMapPosRecordOnFight()
+	local posX, posY, scale = AssassinStealthGameModel.instance:getMapPosRecordOnFight()
 
 	AssassinStealthGameModel.instance:setMapPosRecordOnFight()
-	arg_60_0:_initGameData(arg_60_3.scene)
+	self:_initGameData(msg.scene)
 
-	local var_60_4 = AssassinStealthGameModel.instance:getNeedNextRound()
+	local needNextRound = AssassinStealthGameModel.instance:getNeedNextRound()
 
-	if var_60_4 and var_60_4 ~= 0 then
-		var_60_1, var_60_2, var_60_3 = AssassinStealthGameModel.instance:getMapPosRecordOnTurn()
+	if needNextRound and needNextRound ~= 0 then
+		posX, posY, scale = AssassinStealthGameModel.instance:getMapPosRecordOnTurn()
 
 		AssassinStealthGameModel.instance:setMapPosRecordOnTurn()
 	end
 
 	ViewMgr.instance:openView(ViewName.AssassinStealthGameView, {
-		fightReturn = var_60_0,
-		mapPosX = var_60_1,
-		mapPosY = var_60_2,
-		mapScale = var_60_3
+		fightReturn = isFightReturn,
+		mapPosX = posX,
+		mapPosY = posY,
+		mapScale = scale
 	})
 end
 
-function var_0_0._onRecoverAssassinStealthGame(arg_61_0, arg_61_1, arg_61_2, arg_61_3)
-	if arg_61_2 ~= 0 then
+function AssassinStealthGameController:_onRecoverAssassinStealthGame(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_61_0:sendSettleTrack(StatEnum.Result2Cn[StatEnum.Result.BackTrace], true)
-	arg_61_0:_initGameData(arg_61_3.scene)
+	self:sendSettleTrack(StatEnum.Result2Cn[StatEnum.Result.BackTrace], true)
+	self:_initGameData(msg.scene)
 	AssassinStealthGameEntityMgr.instance:setupMap()
-	arg_61_0:dispatchEvent(AssassinEvent.OnGameSceneRecover)
+	self:dispatchEvent(AssassinEvent.OnGameSceneRecover)
 end
 
-function var_0_0._onChangeMap(arg_62_0, arg_62_1, arg_62_2, arg_62_3)
-	if arg_62_2 ~= 0 then
+function AssassinStealthGameController:_onChangeMap(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_62_0:_clearEnemyFlow()
-	arg_62_0:_initGameData(arg_62_3.scene)
+	self:_clearEnemyFlow()
+	self:_initGameData(msg.scene)
 	AssassinStealthGameEntityMgr.instance:setupMap()
-	arg_62_0:dispatchEvent(AssassinEvent.OnGameChangeMap)
+	self:dispatchEvent(AssassinEvent.OnGameChangeMap)
 end
 
-function var_0_0._onEnterBattleGrid(arg_63_0, arg_63_1, arg_63_2, arg_63_3)
-	if arg_63_2 ~= 0 then
+function AssassinStealthGameController:_onEnterBattleGrid(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_63_0:_enterFight(arg_63_2, arg_63_3)
+	self:_enterFight(resultCode, msg)
 end
 
-function var_0_0._enterFight(arg_64_0, arg_64_1, arg_64_2)
-	arg_64_0:dispatchEvent(AssassinEvent.BeforeEnterFight)
+function AssassinStealthGameController:_enterFight(resultCode, msg)
+	self:dispatchEvent(AssassinEvent.BeforeEnterFight)
 
-	local var_64_0 = arg_64_2.fight.episodeId
-	local var_64_1 = DungeonConfig.instance:getEpisodeCO(var_64_0).chapterId
+	local episodeId = msg.fight.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterId = episodeConfig.chapterId
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_64_1, var_64_0)
-	FightController.instance:setFightParamByEpisodeId(var_64_0):setDungeon(var_64_1, var_64_0)
-	DungeonFightController.instance:onReceiveStartDungeonReply(arg_64_1, arg_64_2)
+	DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
+
+	local fightParam = FightController.instance:setFightParamByEpisodeId(episodeId)
+
+	fightParam:setDungeon(chapterId, episodeId)
+	DungeonFightController.instance:onReceiveStartDungeonReply(resultCode, msg)
 end
 
-function var_0_0._onResetGame(arg_65_0, arg_65_1, arg_65_2, arg_65_3)
-	if arg_65_2 ~= 0 then
+function AssassinStealthGameController:_onResetGame(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_65_0:sendSettleTrack(StatEnum.Result2Cn[StatEnum.Result.Reset], true)
-	arg_65_0:_initGameData(arg_65_3.scene)
+	self:sendSettleTrack(StatEnum.Result2Cn[StatEnum.Result.Reset], true)
+	self:_initGameData(msg.scene)
 	AssassinStealthGameEntityMgr.instance:setupMap()
-	arg_65_0:dispatchEvent(AssassinEvent.OnGameSceneRestart)
+	self:dispatchEvent(AssassinEvent.OnGameSceneRestart)
 end
 
-function var_0_0._onAbandonGame(arg_66_0, arg_66_1, arg_66_2, arg_66_3)
-	if arg_66_2 ~= 0 then
+function AssassinStealthGameController:_onAbandonGame(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_66_0:sendSettleTrack(StatEnum.Result2Cn[StatEnum.Result.Abort])
-	arg_66_0:exitGame()
+	self:sendSettleTrack(StatEnum.Result2Cn[StatEnum.Result.Abort])
+	self:exitGame()
 end
 
-function var_0_0.onGameViewDestroy(arg_67_0)
-	arg_67_0:_clearEnemyFlow()
+function AssassinStealthGameController:onGameViewDestroy()
+	self:_clearEnemyFlow()
 	AssassinStealthGameEffectMgr.instance:dispose()
 	AssassinStealthGameEntityMgr.instance:clearAll()
 	AssassinStealthGameModel.instance:clearAll()
 	AssassinController.instance:getAssassinOutsideInfo()
 end
 
-function var_0_0.sendSettleTrack(arg_68_0, arg_68_1, arg_68_2)
-	if not arg_68_0._gameStartTime then
+function AssassinStealthGameController:sendSettleTrack(result, resetTime)
+	if not self._gameStartTime then
 		return
 	end
 
-	local var_68_0 = AssassinStealthGameModel.instance:getMapId()
-	local var_68_1 = AssassinConfig.instance:getStealthMapTitle(var_68_0)
-	local var_68_2 = AssassinStealthGameModel.instance:getRound()
-	local var_68_3 = {}
-	local var_68_4 = {}
-	local var_68_5 = AssassinStealthGameModel.instance:getHeroUidList()
+	local mapId = AssassinStealthGameModel.instance:getMapId()
+	local mapTitle = AssassinConfig.instance:getStealthMapTitle(mapId)
+	local round = AssassinStealthGameModel.instance:getRound()
+	local heroNameList = {}
+	local heroArray = {}
+	local heroUidList = AssassinStealthGameModel.instance:getHeroUidList()
 
-	for iter_68_0, iter_68_1 in ipairs(var_68_5) do
-		local var_68_6 = AssassinStealthGameModel.instance:getHeroMo(iter_68_1, true)
+	for _, heroUid in ipairs(heroUidList) do
+		local heroGameMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
 
-		if var_68_6 then
-			local var_68_7 = var_68_6:getHeroId()
-			local var_68_8 = AssassinHeroModel.instance:getAssassinHeroName(var_68_7)
+		if heroGameMo then
+			local assassinHeroId = heroGameMo:getHeroId()
+			local heroName = AssassinHeroModel.instance:getAssassinHeroName(assassinHeroId)
 
-			var_68_3[#var_68_3 + 1] = var_68_8
+			heroNameList[#heroNameList + 1] = heroName
 
-			local var_68_9 = {
-				name = var_68_8,
-				career = var_68_6:getCareerId(),
-				item = var_68_6:getItemIdList(),
-				remaining_hp = var_68_6:getHp()
+			local heroData = {
+				name = heroName,
+				career = heroGameMo:getCareerId(),
+				item = heroGameMo:getItemIdList(),
+				remaining_hp = heroGameMo:getHp()
 			}
 
-			var_68_4[#var_68_4 + 1] = var_68_9
+			heroArray[#heroArray + 1] = heroData
 		end
 	end
 
-	local var_68_10 = {}
-	local var_68_11 = AssassinOutsideModel.instance:getBuildingMapMo()
+	local buildingArray = {}
+	local buildingMapMo = AssassinOutsideModel.instance:getBuildingMapMo()
 
-	if var_68_11 then
-		for iter_68_2, iter_68_3 in pairs(AssassinEnum.BuildingType) do
-			local var_68_12 = var_68_11:getBuildingMo(iter_68_3)
+	if buildingMapMo then
+		for _, buildingType in pairs(AssassinEnum.BuildingType) do
+			local buildingMo = buildingMapMo:getBuildingMo(buildingType)
 
-			if var_68_12 then
-				local var_68_13 = var_68_12:getConfig()
-				local var_68_14 = {
-					name = var_68_13 and var_68_13.title or "",
-					level = var_68_12:getLv()
+			if buildingMo then
+				local buildingCo = buildingMo:getConfig()
+				local buildingData = {
+					name = buildingCo and buildingCo.title or "",
+					level = buildingMo:getLv()
 				}
 
-				var_68_10[#var_68_10 + 1] = var_68_14
+				buildingArray[#buildingArray + 1] = buildingData
 			end
 		end
 	end
 
 	StatController.instance:track(StatEnum.EventName.S01StealthGame, {
-		[StatEnum.EventProperties.MapId] = tostring(var_68_0),
-		[StatEnum.EventProperties.MapName] = var_68_1,
-		[StatEnum.EventProperties.Result] = arg_68_1,
-		[StatEnum.EventProperties.TotalRound] = var_68_2,
-		[StatEnum.EventProperties.UseTime] = UnityEngine.Time.realtimeSinceStartup - arg_68_0._gameStartTime,
-		[StatEnum.EventProperties.StealthGame_HeroGroup] = var_68_3,
-		[StatEnum.EventProperties.StealthGame_HeroGroupArray] = var_68_4,
-		[StatEnum.EventProperties.StealthGame_BuildingInfo] = var_68_10
+		[StatEnum.EventProperties.MapId] = tostring(mapId),
+		[StatEnum.EventProperties.MapName] = mapTitle,
+		[StatEnum.EventProperties.Result] = result,
+		[StatEnum.EventProperties.TotalRound] = round,
+		[StatEnum.EventProperties.UseTime] = UnityEngine.Time.realtimeSinceStartup - self._gameStartTime,
+		[StatEnum.EventProperties.StealthGame_HeroGroup] = heroNameList,
+		[StatEnum.EventProperties.StealthGame_HeroGroupArray] = heroArray,
+		[StatEnum.EventProperties.StealthGame_BuildingInfo] = buildingArray
 	})
 
-	if arg_68_2 then
-		arg_68_0._gameStartTime = UnityEngine.Time.realtimeSinceStartup
+	if resetTime then
+		self._gameStartTime = UnityEngine.Time.realtimeSinceStartup
 	else
-		arg_68_0._gameStartTime = nil
+		self._gameStartTime = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinStealthGameController.instance = AssassinStealthGameController.New()
 
-return var_0_0
+return AssassinStealthGameController

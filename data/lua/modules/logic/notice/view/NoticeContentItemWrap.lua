@@ -1,8 +1,10 @@
-﻿module("modules.logic.notice.view.NoticeContentItemWrap", package.seeall)
+﻿-- chunkname: @modules/logic/notice/view/NoticeContentItemWrap.lua
 
-local var_0_0 = class("NoticeContentItemWrap", MixScrollCell)
+module("modules.logic.notice.view.NoticeContentItemWrap", package.seeall)
 
-var_0_0.Comp2TypeDict = {
+local NoticeContentItemWrap = class("NoticeContentItemWrap", MixScrollCell)
+
+NoticeContentItemWrap.Comp2TypeDict = {
 	[NoticeTxtTopTitleItem] = {
 		NoticeContentType.TxtTopTitle
 	},
@@ -15,41 +17,52 @@ var_0_0.Comp2TypeDict = {
 	}
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.compList = {}
+function NoticeContentItemWrap:init(go)
+	self.compList = {}
 
-	for iter_1_0, iter_1_1 in pairs(var_0_0.Comp2TypeDict) do
-		local var_1_0 = iter_1_0.New()
+	for compCls, types in pairs(NoticeContentItemWrap.Comp2TypeDict) do
+		local comp = compCls.New()
 
-		var_1_0:init(arg_1_1, iter_1_1)
-		table.insert(arg_1_0.compList, var_1_0)
+		comp:init(go, types)
+		table.insert(self.compList, comp)
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.compList) do
-		iter_2_1:addEventListeners()
+function NoticeContentItemWrap:initInternal(go, view)
+	self._go = go
+	self._view = view
+
+	for _, comp in ipairs(self.compList) do
+		comp.viewContainer = self._view.viewContainer
+
+		comp:setFont()
 	end
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.compList) do
-		iter_3_1:removeEventListeners()
+function NoticeContentItemWrap:addEventListeners()
+	for _, comp in ipairs(self.compList) do
+		comp:addEventListeners()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.compList) do
-		iter_4_1:onUpdateMO(arg_4_1)
+function NoticeContentItemWrap:removeEventListeners()
+	for _, comp in ipairs(self.compList) do
+		comp:removeEventListeners()
 	end
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.compList) do
-		iter_5_1:onDestroy()
+function NoticeContentItemWrap:onUpdateMO(mo)
+	for _, comp in ipairs(self.compList) do
+		comp:onUpdateMO(mo)
 	end
-
-	arg_5_0.compList = nil
 end
 
-return var_0_0
+function NoticeContentItemWrap:onDestroy()
+	for _, comp in ipairs(self.compList) do
+		comp:onDestroy()
+	end
+
+	self.compList = nil
+end
+
+return NoticeContentItemWrap

@@ -1,204 +1,204 @@
-﻿module("modules.logic.versionactivity2_4.pinball.controller.PinballHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/controller/PinballHelper.lua
 
-local var_0_0 = class("PinballHelper")
+module("modules.logic.versionactivity2_4.pinball.controller.PinballHelper", package.seeall)
 
-function var_0_0.getHitInfo(arg_1_0, arg_1_1)
-	if arg_1_0.shape == PinballEnum.Shape.Rect and arg_1_1.shape == PinballEnum.Shape.Rect then
-		return var_0_0.getHitRectRect(arg_1_0, arg_1_1)
-	elseif arg_1_0.shape == PinballEnum.Shape.Circle and arg_1_1.shape == PinballEnum.Shape.Circle then
-		return var_0_0.getHitCirCleCirCle(arg_1_0, arg_1_1)
-	elseif arg_1_0.shape == PinballEnum.Shape.Rect and arg_1_1.shape == PinballEnum.Shape.Circle then
-		return var_0_0.getHitRectCircle(arg_1_0, arg_1_1)
-	elseif arg_1_0.shape == PinballEnum.Shape.Circle and arg_1_1.shape == PinballEnum.Shape.Rect then
-		local var_1_0, var_1_1, var_1_2 = var_0_0.getHitRectCircle(arg_1_1, arg_1_0)
+local PinballHelper = class("PinballHelper")
 
-		var_1_2 = var_1_2 and -var_1_2
+function PinballHelper.getHitInfo(colliderEntityA, colliderEntityB)
+	if colliderEntityA.shape == PinballEnum.Shape.Rect and colliderEntityB.shape == PinballEnum.Shape.Rect then
+		return PinballHelper.getHitRectRect(colliderEntityA, colliderEntityB)
+	elseif colliderEntityA.shape == PinballEnum.Shape.Circle and colliderEntityB.shape == PinballEnum.Shape.Circle then
+		return PinballHelper.getHitCirCleCirCle(colliderEntityA, colliderEntityB)
+	elseif colliderEntityA.shape == PinballEnum.Shape.Rect and colliderEntityB.shape == PinballEnum.Shape.Circle then
+		return PinballHelper.getHitRectCircle(colliderEntityA, colliderEntityB)
+	elseif colliderEntityA.shape == PinballEnum.Shape.Circle and colliderEntityB.shape == PinballEnum.Shape.Rect then
+		local hitX, hitY, hitDir = PinballHelper.getHitRectCircle(colliderEntityB, colliderEntityA)
 
-		return var_1_0, var_1_1, var_1_2
+		hitDir = hitDir and -hitDir
+
+		return hitX, hitY, hitDir
 	end
 end
 
-local var_0_1 = {
+local tempData1 = {
 	width = 0,
 	height = 0,
 	angle = 0,
 	y = 0,
 	x = 0
 }
-local var_0_2 = {
+local tempData2 = {
 	width = 0,
 	height = 0,
 	angle = 0,
 	y = 0,
 	x = 0
 }
-local var_0_3 = Vector2()
+local tempV2 = Vector2()
 
-function var_0_0.getHitRectCircle(arg_2_0, arg_2_1)
-	if arg_2_0.angle ~= 0 then
-		var_0_3.x = arg_2_1.x - arg_2_0.x
-		var_0_3.y = arg_2_1.y - arg_2_0.y
-		var_0_1.x = arg_2_0.x + var_0_3.x * math.cos(-arg_2_0.angle * Mathf.Deg2Rad) - var_0_3.y * math.sin(-arg_2_0.angle * Mathf.Deg2Rad)
-		var_0_1.y = arg_2_0.y + var_0_3.x * math.sin(-arg_2_0.angle * Mathf.Deg2Rad) + var_0_3.y * math.cos(-arg_2_0.angle * Mathf.Deg2Rad)
-		var_0_1.width = arg_2_1.width
-		var_0_1.height = arg_2_1.height
-		var_0_2.x = arg_2_0.x
-		var_0_2.y = arg_2_0.y
-		var_0_2.width = arg_2_0.width
-		var_0_2.height = arg_2_0.height
+function PinballHelper.getHitRectCircle(rect, circle)
+	if rect.angle ~= 0 then
+		tempV2.x = circle.x - rect.x
+		tempV2.y = circle.y - rect.y
+		tempData1.x = rect.x + tempV2.x * math.cos(-rect.angle * Mathf.Deg2Rad) - tempV2.y * math.sin(-rect.angle * Mathf.Deg2Rad)
+		tempData1.y = rect.y + tempV2.x * math.sin(-rect.angle * Mathf.Deg2Rad) + tempV2.y * math.cos(-rect.angle * Mathf.Deg2Rad)
+		tempData1.width = circle.width
+		tempData1.height = circle.height
+		tempData2.x = rect.x
+		tempData2.y = rect.y
+		tempData2.width = rect.width
+		tempData2.height = rect.height
 
-		local var_2_0, var_2_1 = var_0_0.getHitRectCircle(var_0_2, var_0_1)
+		local hitX, hitY = PinballHelper.getHitRectCircle(tempData2, tempData1)
 
-		if var_2_0 then
-			var_0_3.x = var_2_0 - arg_2_0.x
-			var_0_3.y = var_2_1 - arg_2_0.y
-			var_2_0 = arg_2_0.x + var_0_3.x * math.cos(arg_2_0.angle * Mathf.Deg2Rad) - var_0_3.y * math.sin(arg_2_0.angle * Mathf.Deg2Rad)
-			var_2_1 = arg_2_0.y + var_0_3.x * math.sin(arg_2_0.angle * Mathf.Deg2Rad) + var_0_3.y * math.cos(arg_2_0.angle * Mathf.Deg2Rad)
+		if hitX then
+			tempV2.x = hitX - rect.x
+			tempV2.y = hitY - rect.y
+			hitX = rect.x + tempV2.x * math.cos(rect.angle * Mathf.Deg2Rad) - tempV2.y * math.sin(rect.angle * Mathf.Deg2Rad)
+			hitY = rect.y + tempV2.x * math.sin(rect.angle * Mathf.Deg2Rad) + tempV2.y * math.cos(rect.angle * Mathf.Deg2Rad)
 		end
 
-		return var_2_0, var_2_1, PinballEnum.Dir.None
+		return hitX, hitY, PinballEnum.Dir.None
 	end
 
-	local var_2_2 = math.abs(arg_2_0.x - arg_2_1.x)
-	local var_2_3 = math.abs(arg_2_0.y - arg_2_1.y)
+	local disX = math.abs(rect.x - circle.x)
+	local disY = math.abs(rect.y - circle.y)
 
-	if var_2_2 > arg_2_0.width + arg_2_1.width or var_2_3 > arg_2_0.height + arg_2_1.width then
+	if disX > rect.width + circle.width or disY > rect.height + circle.width then
 		return
 	end
 
-	local var_2_4
-	local var_2_5
-	local var_2_6
+	local hitX, hitY, hitDir
 
-	if var_2_2 <= arg_2_0.width and var_2_3 <= arg_2_0.height then
-		if arg_2_0.width - var_2_2 > arg_2_0.height - var_2_3 then
-			var_2_4 = arg_2_1.x
-			var_2_5 = arg_2_1.y > arg_2_0.y and arg_2_0.y + arg_2_0.height or arg_2_0.y - arg_2_0.height
-			var_2_6 = arg_2_1.y > arg_2_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	if disX <= rect.width and disY <= rect.height then
+		if rect.width - disX > rect.height - disY then
+			hitX = circle.x
+			hitY = circle.y > rect.y and rect.y + rect.height or rect.y - rect.height
+			hitDir = circle.y > rect.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
 		else
-			var_2_4 = arg_2_1.x > arg_2_0.x and arg_2_0.x + arg_2_0.width or arg_2_0.x - arg_2_0.width
-			var_2_5 = arg_2_1.y
-			var_2_6 = arg_2_1.x < arg_2_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+			hitX = circle.x > rect.x and rect.x + rect.width or rect.x - rect.width
+			hitY = circle.y
+			hitDir = circle.x < rect.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
 		end
-	elseif var_2_2 <= arg_2_0.width then
-		var_2_4 = arg_2_1.x
-		var_2_5 = arg_2_1.y > arg_2_0.y and arg_2_0.y + arg_2_0.height or arg_2_0.y - arg_2_0.height
-		var_2_6 = arg_2_1.y > arg_2_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
-	elseif var_2_3 <= arg_2_0.height then
-		var_2_4 = arg_2_1.x > arg_2_0.x and arg_2_0.x + arg_2_0.width or arg_2_0.x - arg_2_0.width
-		var_2_5 = arg_2_1.y
-		var_2_6 = arg_2_1.x < arg_2_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+	elseif disX <= rect.width then
+		hitX = circle.x
+		hitY = circle.y > rect.y and rect.y + rect.height or rect.y - rect.height
+		hitDir = circle.y > rect.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	elseif disY <= rect.height then
+		hitX = circle.x > rect.x and rect.x + rect.width or rect.x - rect.width
+		hitY = circle.y
+		hitDir = circle.x < rect.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
 	else
-		for iter_2_0 = -1, 1, 2 do
-			for iter_2_1 = -1, 1, 2 do
-				local var_2_7 = arg_2_0.x + iter_2_0 * arg_2_0.width
-				local var_2_8 = arg_2_0.y + iter_2_1 * arg_2_0.height
+		for i = -1, 1, 2 do
+			for j = -1, 1, 2 do
+				local x = rect.x + i * rect.width
+				local y = rect.y + j * rect.height
 
-				if (var_2_7 - arg_2_1.x)^2 + (var_2_8 - arg_2_1.y)^2 <= arg_2_1.width^2 then
-					var_2_4 = var_2_7
-					var_2_5 = var_2_8
-					var_2_6 = arg_2_1.y > arg_2_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+				if (x - circle.x)^2 + (y - circle.y)^2 <= circle.width^2 then
+					hitX = x
+					hitY = y
+					hitDir = circle.y > rect.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
 
 					break
 				end
 			end
 
-			if var_2_4 then
+			if hitX then
 				break
 			end
 		end
 	end
 
-	return var_2_4, var_2_5, var_2_6
+	return hitX, hitY, hitDir
 end
 
-function var_0_0.rotateAngle(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0 * math.cos(arg_3_2 * Mathf.Deg2Rad) - arg_3_1 * math.sin(arg_3_2 * Mathf.Deg2Rad)
-	local var_3_1 = arg_3_0 * math.sin(arg_3_2 * Mathf.Deg2Rad) + arg_3_1 * math.cos(arg_3_2 * Mathf.Deg2Rad)
+function PinballHelper.rotateAngle(x, y, angle)
+	local newX = x * math.cos(angle * Mathf.Deg2Rad) - y * math.sin(angle * Mathf.Deg2Rad)
+	local newY = x * math.sin(angle * Mathf.Deg2Rad) + y * math.cos(angle * Mathf.Deg2Rad)
 
-	return var_3_0, var_3_1
+	return newX, newY
 end
 
-function var_0_0.getHitRectRect(arg_4_0, arg_4_1)
-	local var_4_0 = math.abs(arg_4_0.x - arg_4_1.x)
-	local var_4_1 = math.abs(arg_4_0.y - arg_4_1.y)
+function PinballHelper.getHitRectRect(rect, rect2)
+	local disX = math.abs(rect.x - rect2.x)
+	local disY = math.abs(rect.y - rect2.y)
 
-	if var_4_0 > arg_4_0.width + arg_4_1.width or var_4_1 > arg_4_0.height + arg_4_1.height then
+	if disX > rect.width + rect2.width or disY > rect.height + rect2.height then
 		return
 	end
 
-	local var_4_2
-	local var_4_3
-	local var_4_4
-	local var_4_5 = (arg_4_1.x + arg_4_0.x) / 2
-	local var_4_6 = (arg_4_1.y + arg_4_0.y) / 2
+	local hitX, hitY, hitDir
 
-	if var_4_0 <= arg_4_0.width then
-		var_4_4 = arg_4_1.y > arg_4_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
-	elseif var_4_1 <= arg_4_0.height then
-		var_4_4 = arg_4_1.x < arg_4_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+	hitX = (rect2.x + rect.x) / 2
+	hitY = (rect2.y + rect.y) / 2
+
+	if disX <= rect.width then
+		hitDir = rect2.y > rect.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+	elseif disY <= rect.height then
+		hitDir = rect2.x < rect.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
 	end
 
-	return var_4_5, var_4_6, var_4_4
+	return hitX, hitY, hitDir
 end
 
-function var_0_0.getHitCirCleCirCle(arg_5_0, arg_5_1)
-	local var_5_0 = math.abs(arg_5_0.x - arg_5_1.x)
-	local var_5_1 = math.abs(arg_5_0.y - arg_5_1.y)
+function PinballHelper.getHitCirCleCirCle(circle, circle2)
+	local disX = math.abs(circle.x - circle2.x)
+	local disY = math.abs(circle.y - circle2.y)
 
-	if var_5_0 > arg_5_0.width + arg_5_1.width or var_5_1 > arg_5_0.height + arg_5_1.height then
+	if disX > circle.width + circle2.width or disY > circle.height + circle2.height then
 		return
 	end
 
-	if var_5_0^2 + var_5_1^2 > (arg_5_0.width + arg_5_1.width)^2 then
+	local realDis = disX^2 + disY^2
+
+	if realDis > (circle.width + circle2.width)^2 then
 		return
 	end
 
-	local var_5_2
-	local var_5_3
-	local var_5_4
-	local var_5_5 = (arg_5_1.x + arg_5_0.x) / 2
-	local var_5_6 = (arg_5_1.y + arg_5_0.y) / 2
+	local hitX, hitY, hitDir
 
-	if var_5_1 < var_5_0 then
-		var_5_4 = arg_5_1.x < arg_5_0.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
+	hitX = (circle2.x + circle.x) / 2
+	hitY = (circle2.y + circle.y) / 2
+
+	if disY < disX then
+		hitDir = circle2.x < circle.x and PinballEnum.Dir.Left or PinballEnum.Dir.Right
 	else
-		var_5_4 = arg_5_1.y > arg_5_0.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
+		hitDir = circle2.y > circle.y and PinballEnum.Dir.Up or PinballEnum.Dir.Down
 	end
 
-	return var_5_5, var_5_6, var_5_4
+	return hitX, hitY, hitDir
 end
 
-function var_0_0.isResType(arg_6_0)
-	return arg_6_0 == PinballEnum.UnitType.ResSmallFood or arg_6_0 == PinballEnum.UnitType.ResFood or arg_6_0 == PinballEnum.UnitType.ResMine or arg_6_0 == PinballEnum.UnitType.ResStone or arg_6_0 == PinballEnum.UnitType.ResWood
+function PinballHelper.isResType(unitType)
+	return unitType == PinballEnum.UnitType.ResSmallFood or unitType == PinballEnum.UnitType.ResFood or unitType == PinballEnum.UnitType.ResMine or unitType == PinballEnum.UnitType.ResStone or unitType == PinballEnum.UnitType.ResWood
 end
 
-function var_0_0.isMarblesType(arg_7_0)
-	return arg_7_0 == PinballEnum.UnitType.MarblesNormal or arg_7_0 == PinballEnum.UnitType.MarblesDivision or arg_7_0 == PinballEnum.UnitType.MarblesElasticity or arg_7_0 == PinballEnum.UnitType.MarblesExplosion or arg_7_0 == PinballEnum.UnitType.MarblesGlass
+function PinballHelper.isMarblesType(unitType)
+	return unitType == PinballEnum.UnitType.MarblesNormal or unitType == PinballEnum.UnitType.MarblesDivision or unitType == PinballEnum.UnitType.MarblesElasticity or unitType == PinballEnum.UnitType.MarblesExplosion or unitType == PinballEnum.UnitType.MarblesGlass
 end
 
-function var_0_0.isOtherType(arg_8_0)
-	return not var_0_0.isResType(arg_8_0) and not var_0_0.isMarblesType(arg_8_0)
+function PinballHelper.isOtherType(unitType)
+	return not PinballHelper.isResType(unitType) and not PinballHelper.isMarblesType(unitType)
 end
 
-function var_0_0.getLimitTimeStr()
-	local var_9_0 = ActivityModel.instance:getActMO(VersionActivity2_4Enum.ActivityId.Pinball)
+function PinballHelper.getLimitTimeStr()
+	local actInfoMo = ActivityModel.instance:getActMO(VersionActivity2_4Enum.ActivityId.Pinball)
 
-	if not var_9_0 then
+	if not actInfoMo then
 		return ""
 	end
 
-	local var_9_1 = var_9_0:getRealEndTimeStamp() - ServerTime.now()
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_9_1 > 0 then
-		return TimeUtil.SecondToActivityTimeFormat(var_9_1)
+	if offsetSecond > 0 then
+		return TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 	end
 
 	return ""
 end
 
-function var_0_0.isBanOper()
+function PinballHelper.isBanOper()
 	return GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.PinballBanOper)
 end
 
-return var_0_0
+return PinballHelper

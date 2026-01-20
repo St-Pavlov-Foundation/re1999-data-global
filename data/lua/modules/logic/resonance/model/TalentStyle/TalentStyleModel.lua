@@ -1,334 +1,351 @@
-﻿module("modules.logic.resonance.model.TalentStyle.TalentStyleModel", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/model/TalentStyle/TalentStyleModel.lua
 
-local var_0_0 = class("TalentStyleModel", BaseModel)
+module("modules.logic.resonance.model.TalentStyle.TalentStyleModel", package.seeall)
 
-function var_0_0.openView(arg_1_0, arg_1_1)
-	arg_1_0._heroId = arg_1_1
-	arg_1_0._heroMo = HeroModel.instance:getByHeroId(arg_1_1)
-	arg_1_0._selectStyleId = nil
-	arg_1_0._unlockIdList = arg_1_0:getUnlockStyle(arg_1_1)
-	arg_1_0._newUnlockStyle = nil
+local TalentStyleModel = class("TalentStyleModel", BaseModel)
 
-	arg_1_0:refreshNewState(arg_1_1)
-	TalentStyleListModel.instance:initData(arg_1_1)
+function TalentStyleModel:openView(heroId)
+	self._heroId = heroId
+	self._heroMo = HeroModel.instance:getByHeroId(heroId)
+	self._selectStyleId = nil
+	self._unlockIdList = self:getUnlockStyle(heroId)
+	self._newUnlockStyle = nil
+
+	self:refreshNewState(heroId)
+	TalentStyleListModel.instance:initData(heroId)
 end
 
-function var_0_0.getHeroMainCubeMo(arg_2_0, arg_2_1)
-	local var_2_0 = HeroModel.instance:getByHeroId(arg_2_1)
+function TalentStyleModel:getHeroMainCubeMo(heroId)
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	return var_2_0 and var_2_0.talentCubeInfos:getMainCubeMo()
+	return heroMo and heroMo.talentCubeInfos:getMainCubeMo()
 end
 
-function var_0_0.getHeroUseCubeStyleId(arg_3_0, arg_3_1)
-	local var_3_0 = HeroModel.instance:getByHeroId(arg_3_1)
+function TalentStyleModel:getHeroUseCubeStyleId(heroId)
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	return var_3_0 and var_3_0:getHeroUseCubeStyleId()
+	return heroMo and heroMo:getHeroUseCubeStyleId()
 end
 
-function var_0_0.getHeroUseCubeId(arg_4_0, arg_4_1)
-	local var_4_0 = HeroModel.instance:getByHeroId(arg_4_1)
+function TalentStyleModel:getHeroUseCubeId(heroId)
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	return var_4_0 and var_4_0:getHeroUseStyleCubeId()
+	return heroMo and heroMo:getHeroUseStyleCubeId()
 end
 
-function var_0_0.UseStyle(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_2 then
-		if arg_5_2._isUnlock then
-			if not arg_5_2._isUse then
-				local var_5_0 = arg_5_2._styleId
-				local var_5_1 = arg_5_0:getTalentTemplateId(arg_5_1)
+function TalentStyleModel:UseStyle(heroId, mo)
+	if mo then
+		if mo._isUnlock then
+			if not mo._isUse then
+				local style = mo._styleId
+				local useTalentTemplateId = self:getTalentTemplateId(heroId)
 
-				HeroRpc.instance:setUseTalentStyleRequest(arg_5_1, var_5_1, var_5_0)
-				arg_5_0:selectCubeStyle(arg_5_1, arg_5_2._styleId)
+				HeroRpc.instance:setUseTalentStyleRequest(heroId, useTalentTemplateId, style)
+				self:selectCubeStyle(heroId, mo._styleId)
 			end
-		elseif HeroModel.instance:getByHeroId(arg_5_1).config.heroType == 6 then
-			GameFacade.showToast(ToastEnum.TalentStyleLock2)
 		else
-			GameFacade.showToast(ToastEnum.TalentStyleLock1)
+			local heroMo = HeroModel.instance:getByHeroId(heroId)
+
+			if heroMo.config.heroType == 6 then
+				GameFacade.showToast(ToastEnum.TalentStyleLock2)
+			else
+				GameFacade.showToast(ToastEnum.TalentStyleLock1)
+			end
 		end
 	end
 end
 
-function var_0_0.getTalentTemplateId(arg_6_0, arg_6_1)
-	local var_6_0 = HeroModel.instance:getByHeroId(arg_6_1)
+function TalentStyleModel:getTalentTemplateId(heroId)
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	return var_6_0 and var_6_0.useTalentTemplateId
+	return heroMo and heroMo.useTalentTemplateId
 end
 
-function var_0_0.getHeroUseCubeMo(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getHeroUseCubeStyleId(arg_7_1)
+function TalentStyleModel:getHeroUseCubeMo(heroId)
+	local style = self:getHeroUseCubeStyleId(heroId)
+	local cubeMo = self:getCubeMoByStyle(heroId, style)
 
-	return (arg_7_0:getCubeMoByStyle(arg_7_1, var_7_0))
+	return cubeMo
 end
 
-function var_0_0.getSelectStyleId(arg_8_0, arg_8_1)
-	if not arg_8_0._selectStyleId then
-		arg_8_0._selectStyleId = arg_8_0:getHeroUseCubeStyleId(arg_8_1)
+function TalentStyleModel:getSelectStyleId(heroId)
+	if not self._selectStyleId then
+		self._selectStyleId = self:getHeroUseCubeStyleId(heroId)
 	end
 
-	return arg_8_0._selectStyleId
+	return self._selectStyleId
 end
 
-function var_0_0.selectCubeStyle(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._selectStyleId == arg_9_2 then
+function TalentStyleModel:selectCubeStyle(heroId, style)
+	if self._selectStyleId == style then
 		return
 	end
 
-	arg_9_0._selectStyleId = arg_9_2
+	self._selectStyleId = style
 
-	arg_9_0:setNewSelectStyle(arg_9_2)
-	TalentStyleListModel.instance:refreshData(arg_9_1, arg_9_2)
-	CharacterController.instance:dispatchEvent(CharacterEvent.onSelectTalentStyle, arg_9_2)
+	self:setNewSelectStyle(style)
+	TalentStyleListModel.instance:refreshData(heroId, style)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onSelectTalentStyle, style)
 end
 
-function var_0_0.getSelectCubeMo(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getSelectStyleId(arg_10_1)
-	local var_10_1 = arg_10_0:getStyleCoList(arg_10_1)
+function TalentStyleModel:getSelectCubeMo(heroId)
+	local style = self:getSelectStyleId(heroId)
+	local list = self:getStyleCoList(heroId)
 
-	if var_10_1 and var_10_1[var_10_0] then
-		return var_10_1[var_10_0]
+	if list and list[style] then
+		return list[style]
 	end
 
-	arg_10_0:selectCubeStyle(arg_10_1, 0)
+	self:selectCubeStyle(heroId, 0)
 end
 
-function var_0_0.clear(arg_11_0)
-	arg_11_0:setHeroUseSelectId()
+function TalentStyleModel:clear()
+	self:setHeroUseSelectId()
 end
 
-function var_0_0.getTalentStyle(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = HeroResonanceConfig.instance:getTalentStyle(arg_12_1)
+function TalentStyleModel:getTalentStyle(cubeId, style)
+	local styleList = HeroResonanceConfig.instance:getTalentStyle(cubeId)
 
-	if var_12_0 and var_12_0[arg_12_2] then
-		return var_12_0[arg_12_2]
+	if styleList and styleList[style] then
+		return styleList[style]
 	end
 end
 
-function var_0_0.getStyleCoList(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getHeroMainCubeMo(arg_13_1)
+function TalentStyleModel:getStyleCoList(heroId)
+	local hero_mo_data = self:getHeroMainCubeMo(heroId)
 
-	if var_13_0 then
-		local var_13_1 = var_13_0 and var_13_0.id
+	if hero_mo_data then
+		local mainCubeId = hero_mo_data and hero_mo_data.id
 
-		if var_13_1 then
-			return (HeroResonanceConfig.instance:getTalentStyle(var_13_1))
+		if mainCubeId then
+			local styleList = HeroResonanceConfig.instance:getTalentStyle(mainCubeId)
+
+			return styleList
 		end
 	end
 end
 
-function var_0_0.getStyleMoList(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getStyleCoList(arg_14_1)
+function TalentStyleModel:getStyleMoList(heroId)
+	local style = self:getStyleCoList(heroId)
+	local moList = self:refreshMoList(heroId, style)
 
-	return (arg_14_0:refreshMoList(arg_14_1, var_14_0))
+	return moList
 end
 
-function var_0_0.refreshMoList(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = {}
+function TalentStyleModel:refreshMoList(heroId, styleMoList)
+	local moList = {}
 
-	if arg_15_2 then
-		local var_15_1 = HeroModel.instance:getByHeroId(arg_15_1)
-		local var_15_2 = var_15_1 and var_15_1.talent or 0
-		local var_15_3, var_15_4, var_15_5 = arg_15_0:getCurInfo(arg_15_1)
+	if styleMoList then
+		local heroMo = HeroModel.instance:getByHeroId(heroId)
+		local heroLevel = heroMo and heroMo.talent or 0
+		local useId, selectId, unlock = self:getCurInfo(heroId)
 
-		for iter_15_0, iter_15_1 in pairs(arg_15_2) do
-			if iter_15_1:isCanUnlock(var_15_2) then
-				local var_15_6 = iter_15_1._styleId
-				local var_15_7 = LuaUtil.tableContains(var_15_5, var_15_6)
+		for _, mo in pairs(styleMoList) do
+			local _isCanUnlock = mo:isCanUnlock(heroLevel)
 
-				iter_15_1:onRefresh(var_15_3, var_15_4, var_15_7)
-				table.insert(var_15_0, iter_15_1)
+			if _isCanUnlock then
+				local styleId = mo._styleId
+				local isUnlock = LuaUtil.tableContains(unlock, styleId)
+
+				mo:onRefresh(useId, selectId, isUnlock)
+				table.insert(moList, mo)
 			end
 		end
 	end
 
-	return var_15_0
+	return moList
 end
 
-function var_0_0.refreshNewState(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getStyleMoList(arg_16_1)
-	local var_16_1 = HeroModel.instance:getByHeroId(arg_16_1)
+function TalentStyleModel:refreshNewState(heroId)
+	local moList = self:getStyleMoList(heroId)
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		iter_16_1:setNew(var_16_1.isShowTalentStyleRed)
+	for _, mo in pairs(moList) do
+		mo:setNew(heroMo.isShowTalentStyleRed)
 	end
 end
 
-function var_0_0.hideNewState(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getStyleMoList(arg_17_1)
+function TalentStyleModel:hideNewState(heroId)
+	local moList = self:getStyleMoList(heroId)
 
-	for iter_17_0, iter_17_1 in pairs(var_17_0) do
-		iter_17_1:setNew(false)
+	for _, mo in pairs(moList) do
+		mo:setNew(false)
 	end
 end
 
-function var_0_0.getCurInfo(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getHeroUseCubeStyleId(arg_18_1)
-	local var_18_1 = arg_18_0:getSelectStyleId(arg_18_1)
-	local var_18_2 = arg_18_0._unlockIdList
+function TalentStyleModel:getCurInfo(heroId)
+	local useId = self:getHeroUseCubeStyleId(heroId)
+	local selectId = self:getSelectStyleId(heroId)
+	local unlock = self._unlockIdList
 
-	return var_18_0, var_18_1, var_18_2
+	return useId, selectId, unlock
 end
 
-function var_0_0.getCubeMoByStyle(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0:getStyleCoList(arg_19_1)
+function TalentStyleModel:getCubeMoByStyle(heroId, styleId)
+	local styleList = self:getStyleCoList(heroId)
 
-	if var_19_0 and var_19_0[arg_19_2] then
-		return var_19_0[arg_19_2]
+	if styleList and styleList[styleId] then
+		return styleList[styleId]
 	end
 
-	return var_19_0 and var_19_0[0]
+	return styleList and styleList[0]
 end
 
-function var_0_0.refreshUnlockInfo(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getStyleCoList(arg_20_1)
+function TalentStyleModel:refreshUnlockInfo(heroId)
+	local styleList = self:getStyleCoList(heroId)
 
-	arg_20_0:refreshUnlockList(arg_20_1)
+	self:refreshUnlockList(heroId)
 
-	local var_20_1, var_20_2, var_20_3 = arg_20_0:getCurInfo(arg_20_1)
+	local useId, selectId, unlock = self:getCurInfo(heroId)
 
-	for iter_20_0, iter_20_1 in pairs(var_20_0) do
-		local var_20_4 = LuaUtil.tableContains(var_20_3, iter_20_1._styleId)
+	for _, mo in pairs(styleList) do
+		local isUnlock = LuaUtil.tableContains(unlock, mo._styleId)
 
-		iter_20_1:onRefresh(var_20_1, var_20_2, var_20_4)
+		mo:onRefresh(useId, selectId, isUnlock)
 	end
 end
 
-function var_0_0.getUnlockStyle(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getStyleCoList(arg_21_1)
-	local var_21_1 = 0
+function TalentStyleModel:getUnlockStyle(heroId)
+	local style = self:getStyleCoList(heroId)
+	local count = 0
 
-	if var_21_0 then
-		for iter_21_0, iter_21_1 in pairs(var_21_0) do
-			var_21_1 = math.max(iter_21_0, var_21_1)
+	if style then
+		for k, v in pairs(style) do
+			count = math.max(k, count)
 		end
 	end
 
-	local var_21_2 = HeroModel.instance:getByHeroId(arg_21_1).talentStyleUnlock
+	local unlock = HeroModel.instance:getByHeroId(heroId).talentStyleUnlock
+	local unlockId = self:parseUnlock(unlock, count)
 
-	return (arg_21_0:parseUnlock(var_21_2, var_21_1))
+	return unlockId
 end
 
-function var_0_0.refreshUnlockList(arg_22_0, arg_22_1)
-	arg_22_0._unlockIdList = arg_22_0:getUnlockStyle(arg_22_1)
+function TalentStyleModel:refreshUnlockList(heroId)
+	self._unlockIdList = self:getUnlockStyle(heroId)
 end
 
-function var_0_0.parseUnlock(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = {}
-	local var_23_1 = arg_23_1
+function TalentStyleModel:parseUnlock(num, max)
+	local list = {}
+	local temp = num
 
-	for iter_23_0 = arg_23_2, 0, -1 do
-		local var_23_2 = 2^iter_23_0
+	for i = max, 0, -1 do
+		local power = 2^i
 
-		if var_23_2 <= var_23_1 then
-			table.insert(var_23_0, iter_23_0)
+		if power <= temp then
+			table.insert(list, i)
 
-			var_23_1 = var_23_1 - var_23_2
+			temp = temp - power
 
-			if var_23_1 == 0 then
+			if temp == 0 then
 				break
 			end
 		end
 	end
 
-	if var_23_1 ~= 0 then
-		logError("解锁数据计算错误：" .. arg_23_1)
+	if temp ~= 0 then
+		logError("解锁数据计算错误：" .. num)
 	end
 
-	return var_23_0
+	return list
 end
 
-function var_0_0.getLevelUnlockStyle(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = HeroResonanceConfig.instance:getTalentStyle(arg_24_1)
+function TalentStyleModel:getLevelUnlockStyle(cubeId, level)
+	local styleList = HeroResonanceConfig.instance:getTalentStyle(cubeId)
 
-	for iter_24_0, iter_24_1 in pairs(var_24_0) do
-		if iter_24_1._styleCo.level == arg_24_2 then
+	for _, style in pairs(styleList) do
+		if style._styleCo.level == level then
 			return true
 		end
 	end
 end
 
-function var_0_0.isUnlockStyleSystem(arg_25_0, arg_25_1)
-	return arg_25_1 >= 10
+function TalentStyleModel:isUnlockStyleSystem(level)
+	return level >= 10
 end
 
-function var_0_0.setNewUnlockStyle(arg_26_0, arg_26_1)
-	arg_26_0._newUnlockStyle = arg_26_1
+function TalentStyleModel:setNewUnlockStyle(style)
+	self._newUnlockStyle = style
 end
 
-function var_0_0.getNewUnlockStyle(arg_27_0)
-	return arg_27_0._newUnlockStyle
+function TalentStyleModel:getNewUnlockStyle()
+	return self._newUnlockStyle
 end
 
-function var_0_0.setNewSelectStyle(arg_28_0, arg_28_1)
-	arg_28_0._newSelectStyle = arg_28_1
+function TalentStyleModel:setNewSelectStyle(style)
+	self._newSelectStyle = style
 end
 
-function var_0_0.getNewSelectStyle(arg_29_0)
-	return arg_29_0._newSelectStyle
+function TalentStyleModel:getNewSelectStyle()
+	return self._newSelectStyle
 end
 
-function var_0_0.isPlayAnim(arg_30_0, arg_30_1, arg_30_2)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_30_0:getPlayUnlockAnimKey(arg_30_1, arg_30_2), 0) == 0
+function TalentStyleModel:isPlayAnim(heroId, style)
+	local isPlay = GameUtil.playerPrefsGetNumberByUserId(self:getPlayUnlockAnimKey(heroId, style), 0)
+
+	return isPlay == 0
 end
 
-function var_0_0.setPlayAnim(arg_31_0, arg_31_1, arg_31_2)
-	return GameUtil.playerPrefsSetNumberByUserId(arg_31_0:getPlayUnlockAnimKey(arg_31_1, arg_31_2), 1)
+function TalentStyleModel:setPlayAnim(heroId, style)
+	return GameUtil.playerPrefsSetNumberByUserId(self:getPlayUnlockAnimKey(heroId, style), 1)
 end
 
-function var_0_0.getPlayUnlockAnimKey(arg_32_0, arg_32_1, arg_32_2)
-	return "TalentStyleModel_PlayUnlockAnim_" .. arg_32_1 .. "_" .. arg_32_2
+function TalentStyleModel:getPlayUnlockAnimKey(heroId, style)
+	return "TalentStyleModel_PlayUnlockAnim_" .. heroId .. "_" .. style
 end
 
-function var_0_0.isPlayStyleEnterBtnAnim(arg_33_0, arg_33_1)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_33_0:getPlayStyleEnterBtnAnimKey(arg_33_1), 0) == 0
+function TalentStyleModel:isPlayStyleEnterBtnAnim(heroId)
+	local isPlay = GameUtil.playerPrefsGetNumberByUserId(self:getPlayStyleEnterBtnAnimKey(heroId), 0)
+
+	return isPlay == 0
 end
 
-function var_0_0.setPlayStyleEnterBtnAnim(arg_34_0, arg_34_1)
-	return GameUtil.playerPrefsSetNumberByUserId(arg_34_0:getPlayStyleEnterBtnAnimKey(arg_34_1), 1)
+function TalentStyleModel:setPlayStyleEnterBtnAnim(heroId)
+	return GameUtil.playerPrefsSetNumberByUserId(self:getPlayStyleEnterBtnAnimKey(heroId), 1)
 end
 
-function var_0_0.getPlayStyleEnterBtnAnimKey(arg_35_0, arg_35_1)
-	return "PlayStyleEnterBtnAnimKey_" .. arg_35_1
+function TalentStyleModel:getPlayStyleEnterBtnAnimKey(heroId)
+	return "PlayStyleEnterBtnAnimKey_" .. heroId
 end
 
-function var_0_0.setHeroTalentStyleStatInfo(arg_36_0, arg_36_1)
-	if not arg_36_0.unlockStateInfo then
-		arg_36_0.unlockStateInfo = {}
+function TalentStyleModel:setHeroTalentStyleStatInfo(msg)
+	if not self.unlockStateInfo then
+		self.unlockStateInfo = {}
 	end
 
-	if not arg_36_0.unlockStateInfo[arg_36_1.heroId] then
-		arg_36_0.unlockStateInfo[arg_36_1.heroId] = {}
+	if not self.unlockStateInfo[msg.heroId] then
+		self.unlockStateInfo[msg.heroId] = {}
 	end
 
-	local var_36_0 = 0
+	local hot = 0
 
-	if arg_36_1.stylePercentList then
-		for iter_36_0 = 1, #arg_36_1.stylePercentList do
-			local var_36_1 = arg_36_1.stylePercentList[iter_36_0]
-			local var_36_2 = arg_36_0:getCubeMoByStyle(arg_36_1.heroId, var_36_1.style)
+	if msg.stylePercentList then
+		for i = 1, #msg.stylePercentList do
+			local info = msg.stylePercentList[i]
+			local mo = self:getCubeMoByStyle(msg.heroId, info.style)
 
-			var_36_2:setUnlockPercent(var_36_1.percent)
+			mo:setUnlockPercent(info.percent)
 
-			arg_36_0.unlockStateInfo[arg_36_1.heroId][var_36_1.style] = var_36_2
-			var_36_0 = math.max(var_36_1.percent, var_36_0)
+			self.unlockStateInfo[msg.heroId][info.style] = mo
+			hot = math.max(info.percent, hot)
 		end
 	end
 
-	if arg_36_0.unlockStateInfo[arg_36_1.heroId] then
-		for iter_36_1, iter_36_2 in pairs(arg_36_0.unlockStateInfo[arg_36_1.heroId]) do
-			iter_36_2:setHotUnlockStyle(var_36_0 == iter_36_2:getUnlockPercent())
+	if self.unlockStateInfo[msg.heroId] then
+		for _, mo in pairs(self.unlockStateInfo[msg.heroId]) do
+			mo:setHotUnlockStyle(hot == mo:getUnlockPercent())
 		end
 	end
 end
 
-function var_0_0.sortUnlockPercent(arg_37_0, arg_37_1)
-	return arg_37_0:getUnlockPercent() > arg_37_1:getUnlockPercent()
+function TalentStyleModel.sortUnlockPercent(a, b)
+	return a:getUnlockPercent() > b:getUnlockPercent()
 end
 
-function var_0_0.getHeroTalentStyleStatInfo(arg_38_0, arg_38_1)
-	return arg_38_0.unlockStateInfo and arg_38_0.unlockStateInfo[arg_38_1]
+function TalentStyleModel:getHeroTalentStyleStatInfo(heroId)
+	return self.unlockStateInfo and self.unlockStateInfo[heroId]
 end
 
-var_0_0.instance = var_0_0.New()
+TalentStyleModel.instance = TalentStyleModel.New()
 
-return var_0_0
+return TalentStyleModel

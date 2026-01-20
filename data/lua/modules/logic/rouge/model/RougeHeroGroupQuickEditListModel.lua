@@ -1,221 +1,243 @@
-﻿module("modules.logic.rouge.model.RougeHeroGroupQuickEditListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeHeroGroupQuickEditListModel.lua
 
-local var_0_0 = class("RougeHeroGroupQuickEditListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeHeroGroupQuickEditListModel", package.seeall)
 
-function var_0_0.calcTotalCapacity(arg_1_0)
-	local var_1_0 = 0
+local RougeHeroGroupQuickEditListModel = class("RougeHeroGroupQuickEditListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0._inTeamHeroUidList) do
-		local var_1_1 = HeroModel.instance:getById(iter_1_1)
+function RougeHeroGroupQuickEditListModel:calcTotalCapacity()
+	local totalCapacity = 0
 
-		if var_1_1 then
-			var_1_0 = var_1_0 + RougeController.instance:getRoleStyleCapacity(var_1_1, iter_1_0 > RougeEnum.FightTeamNormalHeroNum and not arg_1_0._skipAssitType)
+	for index, heroUid in pairs(self._inTeamHeroUidList) do
+		local heroMo = HeroModel.instance:getById(heroUid)
+
+		if heroMo then
+			local capacity = RougeController.instance:getRoleStyleCapacity(heroMo, index > RougeEnum.FightTeamNormalHeroNum and not self._skipAssitType)
+
+			totalCapacity = totalCapacity + capacity
 		end
 	end
 
-	return var_1_0 + arg_1_0:_getAssitCapacity() + RougeHeroGroupEditListModel.instance:getAssistCapacity()
+	totalCapacity = totalCapacity + self:_getAssitCapacity()
+	totalCapacity = totalCapacity + RougeHeroGroupEditListModel.instance:getAssistCapacity()
+
+	return totalCapacity
 end
 
-function var_0_0._isTeamCapacityEnough(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = 0
-	local var_2_1 = false
+function RougeHeroGroupQuickEditListModel:_isTeamCapacityEnough(posIndex, uid)
+	local totalCapacity = 0
+	local checkTarget = false
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0._inTeamHeroUidList) do
-		local var_2_2 = HeroModel.instance:getById(iter_2_1)
+	for index, heroUid in pairs(self._inTeamHeroUidList) do
+		local heroMo = HeroModel.instance:getById(heroUid)
 
-		if iter_2_1 == arg_2_2 then
-			var_2_1 = true
+		if heroUid == uid then
+			checkTarget = true
 		end
 
-		if var_2_2 then
-			var_2_0 = var_2_0 + RougeController.instance:getRoleStyleCapacity(var_2_2, iter_2_0 > RougeEnum.FightTeamNormalHeroNum and not arg_2_0._skipAssitType)
-		end
-	end
+		if heroMo then
+			local capacity = RougeController.instance:getRoleStyleCapacity(heroMo, index > RougeEnum.FightTeamNormalHeroNum and not self._skipAssitType)
 
-	if not var_2_1 then
-		local var_2_3 = HeroModel.instance:getById(arg_2_2)
-
-		if var_2_3 then
-			var_2_0 = var_2_0 + RougeController.instance:getRoleStyleCapacity(var_2_3, arg_2_1 > RougeEnum.FightTeamNormalHeroNum and not arg_2_0._skipAssitType)
+			totalCapacity = totalCapacity + capacity
 		end
 	end
 
-	return var_2_0 + arg_2_0:_getAssitCapacity(arg_2_1, arg_2_2) + RougeHeroGroupEditListModel.instance:getAssistCapacity() <= RougeHeroGroupEditListModel.instance:getTotalCapacity()
+	if not checkTarget then
+		local heroMo = HeroModel.instance:getById(uid)
+
+		if heroMo then
+			local capacity = RougeController.instance:getRoleStyleCapacity(heroMo, posIndex > RougeEnum.FightTeamNormalHeroNum and not self._skipAssitType)
+
+			totalCapacity = totalCapacity + capacity
+		end
+	end
+
+	totalCapacity = totalCapacity + self:_getAssitCapacity(posIndex, uid)
+	totalCapacity = totalCapacity + RougeHeroGroupEditListModel.instance:getAssistCapacity()
+
+	return totalCapacity <= RougeHeroGroupEditListModel.instance:getTotalCapacity()
 end
 
-function var_0_0._getAssitCapacity(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0._edityType ~= RougeEnum.HeroGroupEditType.Fight then
+function RougeHeroGroupQuickEditListModel:_getAssitCapacity(posIndex, uid)
+	if self._edityType ~= RougeEnum.HeroGroupEditType.Fight then
 		return 0
 	end
 
-	local var_3_0
+	local tempTeamHeroUidList
 
-	if arg_3_1 and arg_3_2 then
-		var_3_0 = {}
+	if posIndex and uid then
+		tempTeamHeroUidList = {}
 
-		for iter_3_0, iter_3_1 in pairs(arg_3_0._inTeamHeroUidList) do
-			if HeroModel.instance:getById(iter_3_1) then
-				var_3_0[iter_3_0] = iter_3_1
-			elseif arg_3_2 then
-				var_3_0[iter_3_0] = arg_3_2
-				arg_3_2 = nil
+		for index, heroUid in pairs(self._inTeamHeroUidList) do
+			if HeroModel.instance:getById(heroUid) then
+				tempTeamHeroUidList[index] = heroUid
+			elseif uid then
+				tempTeamHeroUidList[index] = uid
+				uid = nil
 			end
 		end
 	end
 
-	var_3_0 = var_3_0 or arg_3_0._inTeamHeroUidList
+	tempTeamHeroUidList = tempTeamHeroUidList or self._inTeamHeroUidList
 
-	local var_3_1 = 0
-	local var_3_2 = RougeHeroSingleGroupModel.instance:getList()
-	local var_3_3 = {}
-	local var_3_4 = {}
+	local totalCapacity = 0
+	local tempList = RougeHeroSingleGroupModel.instance:getList()
+	local groupList = {}
+	local heroMap = {}
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_2) do
-		var_3_3[iter_3_2] = nil
+	for i, v in ipairs(tempList) do
+		groupList[i] = nil
 
-		if iter_3_2 <= RougeEnum.FightTeamNormalHeroNum then
-			local var_3_5 = var_3_0[iter_3_2]
-			local var_3_6 = HeroModel.instance:getById(var_3_5)
+		if i <= RougeEnum.FightTeamNormalHeroNum then
+			local heroUid = tempTeamHeroUidList[i]
+			local heroMo = HeroModel.instance:getById(heroUid)
 
-			var_3_3[iter_3_2] = var_3_6
+			groupList[i] = heroMo
 
-			if var_3_6 then
-				var_3_4[var_3_6.heroId] = var_3_6
+			if heroMo then
+				heroMap[heroMo.heroId] = heroMo
 			end
 		else
-			local var_3_7 = iter_3_3:getHeroMO()
+			local heroMo = v:getHeroMO()
 
-			if var_3_7 and not var_3_4[var_3_7.heroId] and var_3_3[iter_3_2 - RougeEnum.FightTeamNormalHeroNum] then
-				var_3_3[iter_3_2] = var_3_7
+			if heroMo and not heroMap[heroMo.heroId] and groupList[i - RougeEnum.FightTeamNormalHeroNum] then
+				groupList[i] = heroMo
 			end
 		end
 	end
 
-	for iter_3_4, iter_3_5 in pairs(var_3_3) do
-		if iter_3_4 > RougeEnum.FightTeamNormalHeroNum then
-			var_3_1 = var_3_1 + RougeController.instance:getRoleStyleCapacity(iter_3_5, iter_3_4 > RougeEnum.FightTeamNormalHeroNum and not arg_3_0._skipAssitType)
+	for i, heroMo in pairs(groupList) do
+		if i > RougeEnum.FightTeamNormalHeroNum then
+			local capacity = RougeController.instance:getRoleStyleCapacity(heroMo, i > RougeEnum.FightTeamNormalHeroNum and not self._skipAssitType)
+
+			totalCapacity = totalCapacity + capacity
 		end
 	end
 
-	return var_3_1
+	return totalCapacity
 end
 
-function var_0_0.copyQuickEditCardList(arg_4_0)
-	arg_4_0._edityType = RougeHeroGroupEditListModel.instance:getHeroGroupEditType()
-	arg_4_0._isSelectHeroType = arg_4_0._edityType == RougeEnum.HeroGroupEditType.SelectHero
-	arg_4_0._isInitType = arg_4_0._edityType == RougeEnum.HeroGroupEditType.Init
-	arg_4_0._skipAssitType = not arg_4_0._isSelectHeroType and not arg_4_0._isInitType
+function RougeHeroGroupQuickEditListModel:copyQuickEditCardList()
+	self._edityType = RougeHeroGroupEditListModel.instance:getHeroGroupEditType()
+	self._isSelectHeroType = self._edityType == RougeEnum.HeroGroupEditType.SelectHero
+	self._isInitType = self._edityType == RougeEnum.HeroGroupEditType.Init
+	self._skipAssitType = not self._isSelectHeroType and not self._isInitType
 
-	if arg_4_0._isInitType then
-		arg_4_0._battleRoleNum = RougeEnum.InitTeamHeroNum
+	if self._isInitType then
+		self._battleRoleNum = RougeEnum.InitTeamHeroNum
 	else
-		arg_4_0._battleRoleNum = RougeEnum.DefaultTeamHeroNum
+		self._battleRoleNum = RougeEnum.DefaultTeamHeroNum
 	end
 
-	local var_4_0
+	local moList
 
-	if arg_4_0._isSelectHeroType then
-		var_4_0 = RougeHeroGroupEditListModel.instance:getSelectHeroList(CharacterBackpackCardListModel.instance:getCharacterCardList())
-	elseif arg_4_0._edityType == RougeEnum.HeroGroupEditType.Init then
-		var_4_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+	if self._isSelectHeroType then
+		moList = RougeHeroGroupEditListModel.instance:getSelectHeroList(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	elseif self._edityType == RougeEnum.HeroGroupEditType.Init then
+		moList = CharacterBackpackCardListModel.instance:getCharacterCardList()
 	else
-		var_4_0 = RougeHeroGroupEditListModel.instance:getTeamList(CharacterBackpackCardListModel.instance:getCharacterCardList())
+		moList = RougeHeroGroupEditListModel.instance:getTeamList(CharacterBackpackCardListModel.instance:getCharacterCardList())
 	end
 
-	local var_4_1 = {}
-	local var_4_2 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_4_0._inTeamHeroUidMap = {}
-	arg_4_0._inTeamHeroUidList = {}
-	arg_4_0._originalHeroUidList = {}
-	arg_4_0._assitPosIndex = {}
-	arg_4_0._selectUid = nil
+	self._inTeamHeroUidMap = {}
+	self._inTeamHeroUidList = {}
+	self._originalHeroUidList = {}
+	self._assitPosIndex = {}
+	self._selectUid = nil
 
-	local var_4_3 = RougeHeroSingleGroupModel.instance:getList()
+	local alreadyList = RougeHeroSingleGroupModel.instance:getList()
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_3) do
-		local var_4_4 = arg_4_0:isPositionOpen(iter_4_0)
-		local var_4_5 = iter_4_1.heroUid
+	for pos, heroSingleGroupMO in ipairs(alreadyList) do
+		local posOpen = self:isPositionOpen(pos)
+		local heroUid = heroSingleGroupMO.heroUid
 
-		if tonumber(var_4_5) > 0 and not var_4_2[var_4_5] then
-			table.insert(var_4_1, HeroModel.instance:getById(var_4_5))
+		if tonumber(heroUid) > 0 and not repeatHero[heroUid] then
+			table.insert(newMOList, HeroModel.instance:getById(heroUid))
 
-			if var_4_4 then
-				arg_4_0._inTeamHeroUidMap[var_4_5] = 1
+			if posOpen then
+				self._inTeamHeroUidMap[heroUid] = 1
 			end
 
-			var_4_2[var_4_5] = true
-		elseif RougeHeroSingleGroupModel.instance:getByIndex(iter_4_0).trial then
-			table.insert(var_4_1, HeroGroupTrialModel.instance:getById(var_4_5))
+			repeatHero[heroUid] = true
+		else
+			local singleGroupMo = RougeHeroSingleGroupModel.instance:getByIndex(pos)
 
-			if var_4_4 then
-				arg_4_0._inTeamHeroUidMap[var_4_5] = 1
-			end
+			if singleGroupMo.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroUid))
 
-			var_4_2[var_4_5] = true
-		end
-
-		if var_4_4 then
-			table.insert(arg_4_0._inTeamHeroUidList, var_4_5)
-			table.insert(arg_4_0._originalHeroUidList, var_4_5)
-		end
-
-		if iter_4_0 > RougeEnum.FightTeamNormalHeroNum then
-			arg_4_0._assitPosIndex[var_4_5] = iter_4_0
-		end
-	end
-
-	local var_4_6 = RougeHeroGroupEditListModel.instance:getAssistHeroId()
-	local var_4_7 = {}
-
-	for iter_4_2, iter_4_3 in ipairs(var_4_0) do
-		if not var_4_2[iter_4_3.uid] then
-			var_4_2[iter_4_3.uid] = true
-
-			if arg_4_0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(iter_4_3.heroId) > 0 then
-					table.insert(var_4_7, iter_4_3)
-				else
-					table.insert(var_4_1, iter_4_3)
+				if posOpen then
+					self._inTeamHeroUidMap[heroUid] = 1
 				end
-			elseif iter_4_3.heroId ~= var_4_6 then
-				table.insert(var_4_1, iter_4_3)
+
+				repeatHero[heroUid] = true
+			end
+		end
+
+		if posOpen then
+			table.insert(self._inTeamHeroUidList, heroUid)
+			table.insert(self._originalHeroUidList, heroUid)
+		end
+
+		if pos > RougeEnum.FightTeamNormalHeroNum then
+			self._assitPosIndex[heroUid] = pos
+		end
+	end
+
+	local assistHeroId = RougeHeroGroupEditListModel.instance:getAssistHeroId()
+	local deathList = {}
+
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
+
+			if self.adventure then
+				local cd = WeekWalkModel.instance:getCurMapHeroCd(mo.heroId)
+
+				if cd > 0 then
+					table.insert(deathList, mo)
+				else
+					table.insert(newMOList, mo)
+				end
+			elseif mo.heroId ~= assistHeroId then
+				table.insert(newMOList, mo)
 			end
 		end
 	end
 
-	if arg_4_0.adventure then
-		tabletool.addValues(var_4_1, var_4_7)
+	if self.adventure then
+		tabletool.addValues(newMOList, deathList)
 	end
 
-	arg_4_0:setList(var_4_1)
+	self:setList(newMOList)
 end
 
-function var_0_0.keepSelect(arg_5_0, arg_5_1)
-	arg_5_0._selectIndex = arg_5_1
+function RougeHeroGroupQuickEditListModel:keepSelect(selectIndex)
+	self._selectIndex = selectIndex
 
-	local var_5_0 = arg_5_0:getList()
+	local list = self:getList()
 
-	if #arg_5_0._scrollViews > 0 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._scrollViews) do
-			iter_5_1:selectCell(arg_5_1, true)
+	if #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
 		end
 
-		if var_5_0[arg_5_1] then
-			return var_5_0[arg_5_1]
+		if list[selectIndex] then
+			return list[selectIndex]
 		end
 	end
 end
 
-function var_0_0.isInTeamHero(arg_6_0, arg_6_1)
-	return arg_6_0._inTeamHeroUidMap and arg_6_0._inTeamHeroUidMap[arg_6_1]
+function RougeHeroGroupQuickEditListModel:isInTeamHero(uid)
+	return self._inTeamHeroUidMap and self._inTeamHeroUidMap[uid]
 end
 
-function var_0_0.getHeroTeamPos(arg_7_0, arg_7_1)
-	if arg_7_0._inTeamHeroUidList then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._inTeamHeroUidList) do
-			if iter_7_1 == arg_7_1 then
-				return iter_7_0
+function RougeHeroGroupQuickEditListModel:getHeroTeamPos(uid)
+	if self._inTeamHeroUidList then
+		for index, heroUid in pairs(self._inTeamHeroUidList) do
+			if heroUid == uid then
+				return index
 			end
 		end
 	end
@@ -223,73 +245,73 @@ function var_0_0.getHeroTeamPos(arg_7_0, arg_7_1)
 	return 0
 end
 
-function var_0_0.selectHero(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getHeroTeamPos(arg_8_1)
+function RougeHeroGroupQuickEditListModel:selectHero(uid)
+	local index = self:getHeroTeamPos(uid)
 
-	if var_8_0 ~= 0 then
-		arg_8_0._inTeamHeroUidList[var_8_0] = "0"
-		arg_8_0._inTeamHeroUidMap[arg_8_1] = nil
+	if index ~= 0 then
+		self._inTeamHeroUidList[index] = "0"
+		self._inTeamHeroUidMap[uid] = nil
 
-		arg_8_0:onModelUpdate()
+		self:onModelUpdate()
 
-		arg_8_0._selectUid = nil
+		self._selectUid = nil
 
 		return true
 	else
-		if arg_8_0._isInitType and not arg_8_0:_isTeamCapacityEnough(var_8_0, arg_8_1) then
+		if self._isInitType and not self:_isTeamCapacityEnough(index, uid) then
 			GameFacade.showToast(ToastEnum.RougeTeamCapacityFull)
 
 			return false
 		end
 
-		if arg_8_0._isSelectHeroType and not arg_8_0:_isTeamCapacityEnough(var_8_0, arg_8_1) then
+		if self._isSelectHeroType and not self:_isTeamCapacityEnough(index, uid) then
 			GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 			return false
 		end
 
-		if arg_8_0._edityType == RougeEnum.HeroGroupEditType.Fight and not arg_8_0:_isTeamCapacityEnough(var_8_0, arg_8_1) then
+		if self._edityType == RougeEnum.HeroGroupEditType.Fight and not self:_isTeamCapacityEnough(index, uid) then
 			GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 			return false
 		end
 
-		if arg_8_0:isTeamFull() then
+		if self:isTeamFull() then
 			GameFacade.showToast(ToastEnum.RougeTeamFull)
 
 			return false
 		end
 
-		local var_8_1 = 0
+		local nextIndex = 0
 
-		for iter_8_0 = 1, #arg_8_0._inTeamHeroUidList do
-			local var_8_2 = arg_8_0._inTeamHeroUidList[iter_8_0]
+		for i = 1, #self._inTeamHeroUidList do
+			local heroUid = self._inTeamHeroUidList[i]
 
-			if var_8_2 == 0 or var_8_2 == "0" and not arg_8_0:_skipAssistPos(iter_8_0) then
-				arg_8_0._inTeamHeroUidList[iter_8_0] = arg_8_1
-				arg_8_0._inTeamHeroUidMap[arg_8_1] = 1
+			if heroUid == 0 or heroUid == "0" and not self:_skipAssistPos(i) then
+				self._inTeamHeroUidList[i] = uid
+				self._inTeamHeroUidMap[uid] = 1
 
-				arg_8_0:onModelUpdate()
+				self:onModelUpdate()
 
 				return true
 			end
 		end
 
-		arg_8_0._selectUid = arg_8_1
+		self._selectUid = uid
 	end
 
 	return false
 end
 
-function var_0_0.isRepeatHero(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._inTeamHeroUidMap then
+function RougeHeroGroupQuickEditListModel:isRepeatHero(heroId, uid)
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	for iter_9_0 in pairs(arg_9_0._inTeamHeroUidMap) do
-		local var_9_0 = arg_9_0:getById(iter_9_0)
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
 
-		if var_9_0.heroId == arg_9_1 and arg_9_2 ~= var_9_0.uid then
+		if mo.heroId == heroId and uid ~= mo.uid then
 			return true
 		end
 	end
@@ -297,45 +319,47 @@ function var_0_0.isRepeatHero(arg_9_0, arg_9_1, arg_9_2)
 	return false
 end
 
-function var_0_0.isTrialLimit(arg_10_0)
-	if not arg_10_0._inTeamHeroUidMap then
+function RougeHeroGroupQuickEditListModel:isTrialLimit()
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	local var_10_0 = 0
+	local curNum = 0
 
-	for iter_10_0 in pairs(arg_10_0._inTeamHeroUidMap) do
-		if arg_10_0:getById(iter_10_0):isTrial() then
-			var_10_0 = var_10_0 + 1
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
+
+		if mo:isTrial() then
+			curNum = curNum + 1
 		end
 	end
 
-	return var_10_0 >= HeroGroupTrialModel.instance:getLimitNum()
+	return curNum >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function var_0_0.inInTeam(arg_11_0, arg_11_1)
-	if not arg_11_0._inTeamHeroUidMap then
+function RougeHeroGroupQuickEditListModel:inInTeam(uid)
+	if not self._inTeamHeroUidMap then
 		return false
 	end
 
-	return arg_11_0._inTeamHeroUidMap[arg_11_1] and true or false
+	return self._inTeamHeroUidMap[uid] and true or false
 end
 
-function var_0_0.getHeroUids(arg_12_0)
-	return arg_12_0._inTeamHeroUidList
+function RougeHeroGroupQuickEditListModel:getHeroUids()
+	return self._inTeamHeroUidList
 end
 
-function var_0_0.getHeroUidByPos(arg_13_0, arg_13_1)
-	return arg_13_0._inTeamHeroUidList[arg_13_1]
+function RougeHeroGroupQuickEditListModel:getHeroUidByPos(pos)
+	return self._inTeamHeroUidList[pos]
 end
 
-function var_0_0.getAssitPosIndex(arg_14_0, arg_14_1)
-	return arg_14_0._assitPosIndex[arg_14_1]
+function RougeHeroGroupQuickEditListModel:getAssitPosIndex(uid)
+	return self._assitPosIndex[uid]
 end
 
-function var_0_0.getIsDirty(arg_15_0)
-	for iter_15_0 = 1, #arg_15_0._inTeamHeroUidList do
-		if arg_15_0._inTeamHeroUidList[iter_15_0] ~= arg_15_0._originalHeroUidList[iter_15_0] then
+function RougeHeroGroupQuickEditListModel:getIsDirty()
+	for i = 1, #self._inTeamHeroUidList do
+		if self._inTeamHeroUidList[i] ~= self._originalHeroUidList[i] then
 			return true
 		end
 	end
@@ -343,36 +367,36 @@ function var_0_0.getIsDirty(arg_15_0)
 	return false
 end
 
-function var_0_0.cancelAllSelected(arg_16_0)
-	if arg_16_0._scrollViews then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._scrollViews) do
-			local var_16_0 = iter_16_1:getFirstSelect()
-			local var_16_1 = arg_16_0:getIndex(var_16_0)
+function RougeHeroGroupQuickEditListModel:cancelAllSelected()
+	if self._scrollViews then
+		for _, view in ipairs(self._scrollViews) do
+			local mo = view:getFirstSelect()
+			local index = self:getIndex(mo)
 
-			iter_16_1:selectCell(var_16_1, false)
+			view:selectCell(index, false)
 		end
 	end
 end
 
-function var_0_0.isPositionOpen(arg_17_0, arg_17_1)
-	if arg_17_0._isSelectHeroType or arg_17_0._isInitType then
+function RougeHeroGroupQuickEditListModel:isPositionOpen(index)
+	if self._isSelectHeroType or self._isInitType then
 		return true
 	end
 
-	return RougeHeroGroupModel.instance:isPositionOpen(arg_17_1)
+	return RougeHeroGroupModel.instance:isPositionOpen(index)
 end
 
-function var_0_0.isTeamFull(arg_18_0)
-	if arg_18_0._isSelectHeroType then
+function RougeHeroGroupQuickEditListModel:isTeamFull()
+	if self._isSelectHeroType then
 		return false
 	end
 
-	local var_18_0 = arg_18_0._battleRoleNum
+	local limitRole = self._battleRoleNum
 
-	for iter_18_0 = 1, math.min(var_18_0, #arg_18_0._inTeamHeroUidList) do
-		local var_18_1 = arg_18_0:isPositionOpen(iter_18_0)
+	for i = 1, math.min(limitRole, #self._inTeamHeroUidList) do
+		local posOpen = self:isPositionOpen(i)
 
-		if arg_18_0._inTeamHeroUidList[iter_18_0] == "0" and var_18_1 and not arg_18_0:_skipAssistPos(iter_18_0) then
+		if self._inTeamHeroUidList[i] == "0" and posOpen and not self:_skipAssistPos(i) then
 			return false
 		end
 	end
@@ -380,24 +404,24 @@ function var_0_0.isTeamFull(arg_18_0)
 	return true
 end
 
-function var_0_0._skipAssistPos(arg_19_0, arg_19_1)
-	return RougeHeroGroupEditListModel.instance:getAssistPos() == arg_19_1
+function RougeHeroGroupQuickEditListModel:_skipAssistPos(i)
+	return RougeHeroGroupEditListModel.instance:getAssistPos() == i
 end
 
-function var_0_0.setParam(arg_20_0, arg_20_1)
-	arg_20_0.adventure = arg_20_1
+function RougeHeroGroupQuickEditListModel:setParam(adventure)
+	self.adventure = adventure
 end
 
-function var_0_0.clear(arg_21_0)
-	arg_21_0._inTeamHeroUidMap = nil
-	arg_21_0._inTeamHeroUidList = nil
-	arg_21_0._originalHeroUidList = nil
-	arg_21_0._selectIndex = nil
-	arg_21_0._selectUid = nil
+function RougeHeroGroupQuickEditListModel:clear()
+	self._inTeamHeroUidMap = nil
+	self._inTeamHeroUidList = nil
+	self._originalHeroUidList = nil
+	self._selectIndex = nil
+	self._selectUid = nil
 
-	var_0_0.super.clear(arg_21_0)
+	RougeHeroGroupQuickEditListModel.super.clear(self)
 end
 
-var_0_0.instance = var_0_0.New()
+RougeHeroGroupQuickEditListModel.instance = RougeHeroGroupQuickEditListModel.New()
 
-return var_0_0
+return RougeHeroGroupQuickEditListModel

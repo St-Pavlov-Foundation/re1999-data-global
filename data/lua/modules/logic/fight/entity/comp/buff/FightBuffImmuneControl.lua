@@ -1,7 +1,9 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffImmuneControl", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffImmuneControl.lua
 
-local var_0_0 = class("FightBuffImmuneControl")
-local var_0_1 = {
+module("modules.logic.fight.entity.comp.buff.FightBuffImmuneControl", package.seeall)
+
+local FightBuffImmuneControl = class("FightBuffImmuneControl")
+local BuffMatParam = {
 	buff_immune = {
 		"_TempOffsetTwoPass",
 		"Vector4",
@@ -14,7 +16,7 @@ local var_0_1 = {
 		"0.1,0.1,0,0"
 	}
 }
-local var_0_2 = {
+local SpecialSkinParam = {
 	["304901_kachakacha"] = {
 		"_AlphaRange",
 		"Vector4",
@@ -27,67 +29,67 @@ local var_0_2 = {
 	}
 }
 
-function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.buffMO = arg_1_2
+function FightBuffImmuneControl:onBuffStart(entity, buffMO)
+	self.entity = entity
+	self.buffMO = buffMO
 
-	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, arg_1_0._onChangeMaterial, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
 end
 
-function var_0_0.onBuffEnd(arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_2_0._onChangeMaterial, arg_2_0)
+function FightBuffImmuneControl:onBuffEnd()
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
 end
 
-function var_0_0.reset(arg_3_0)
-	arg_3_0._preMatName = nil
+function FightBuffImmuneControl:reset()
+	self._preMatName = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_3_0._onChangeMaterial, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
 end
 
-function var_0_0.dispose(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, arg_4_0._onChangeMaterial, arg_4_0)
+function FightBuffImmuneControl:dispose()
+	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onChangeMaterial, self)
 end
 
-function var_0_0._onChangeMaterial(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= arg_5_0.entity.id then
+function FightBuffImmuneControl:_onChangeMaterial(entityId, spineMat)
+	if entityId ~= self.entity.id then
 		return
 	end
 
-	if arg_5_0._preMatName and arg_5_0._preMatName == arg_5_2.name then
+	if self._preMatName and self._preMatName == spineMat.name then
 		return
 	end
 
-	arg_5_0._preMatName = arg_5_2.name
+	self._preMatName = spineMat.name
 
-	local var_5_0 = lua_skill_buff.configDict[arg_5_0.buffMO.buffId]
-	local var_5_1 = var_0_1[var_5_0.mat]
+	local buffCO = lua_skill_buff.configDict[self.buffMO.buffId]
+	local matParam = BuffMatParam[buffCO.mat]
 
-	if not var_5_1 then
+	if not matParam then
 		return
 	end
 
-	for iter_5_0 = 1, 9, 3 do
-		local var_5_2 = var_5_1[iter_5_0]
-		local var_5_3 = var_5_1[iter_5_0 + 1]
-		local var_5_4 = var_5_1[iter_5_0 + 2]
+	for i = 1, 9, 3 do
+		local propName = matParam[i]
+		local propType = matParam[i + 1]
+		local value = matParam[i + 2]
 
-		MaterialUtil.setPropValue(arg_5_2, var_5_2, var_5_3, MaterialUtil.getPropValueFromStr(var_5_3, var_5_4))
+		MaterialUtil.setPropValue(spineMat, propName, propType, MaterialUtil.getPropValueFromStr(propType, value))
 	end
 
-	local var_5_5 = arg_5_0.entity:getMO()
-	local var_5_6 = var_5_5 and var_5_5:getSpineSkinCO()
-	local var_5_7 = var_5_6 and var_5_6.spine
-	local var_5_8 = not string.nilorempty(var_5_7) and var_0_2[var_5_7]
+	local entityMO = self.entity:getMO()
+	local skinCO = entityMO and entityMO:getSpineSkinCO()
+	local skinSpine = skinCO and skinCO.spine
+	local specialSkinParam = not string.nilorempty(skinSpine) and SpecialSkinParam[skinSpine]
 
-	if var_5_8 then
-		for iter_5_1 = 1, 9, 3 do
-			local var_5_9 = var_5_8[iter_5_1]
-			local var_5_10 = var_5_8[iter_5_1 + 1]
-			local var_5_11 = var_5_8[iter_5_1 + 2]
+	if specialSkinParam then
+		for i = 1, 9, 3 do
+			local propName = specialSkinParam[i]
+			local propType = specialSkinParam[i + 1]
+			local value = specialSkinParam[i + 2]
 
-			MaterialUtil.setPropValue(arg_5_2, var_5_9, var_5_10, MaterialUtil.getPropValueFromStr(var_5_10, var_5_11))
+			MaterialUtil.setPropValue(spineMat, propName, propType, MaterialUtil.getPropValueFromStr(propType, value))
 		end
 	end
 end
 
-return var_0_0
+return FightBuffImmuneControl

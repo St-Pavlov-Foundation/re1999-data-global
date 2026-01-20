@@ -1,25 +1,29 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionEntityDeadPause", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionEntityDeadPause.lua
 
-local var_0_0 = class("WaitGuideActionEntityDeadPause", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionEntityDeadPause", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnGuideEntityDeadPause, arg_1_0._onGuideEntityDeadPause, arg_1_0)
+local WaitGuideActionEntityDeadPause = class("WaitGuideActionEntityDeadPause", BaseGuideAction)
 
-	arg_1_0._side = tonumber(arg_1_0.actionParam)
+function WaitGuideActionEntityDeadPause:onStart(context)
+	WaitGuideActionEntityDeadPause.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnGuideEntityDeadPause, self._onGuideEntityDeadPause, self)
+
+	self._side = tonumber(self.actionParam)
 end
 
-function var_0_0._onGuideEntityDeadPause(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_2.side == arg_2_0._side then
-		arg_2_1.OnGuideEntityDeadPause = true
+function WaitGuideActionEntityDeadPause:_onGuideEntityDeadPause(guideParam, deadParam)
+	local isRightSide = deadParam.side == self._side
 
-		FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, arg_2_0._onGuideEntityDeadPause, arg_2_0)
-		arg_2_0:onDone(true)
+	if isRightSide then
+		guideParam.OnGuideEntityDeadPause = true
+
+		FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, self._onGuideEntityDeadPause, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, arg_3_0._onGuideEntityDeadPause, arg_3_0)
+function WaitGuideActionEntityDeadPause:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnGuideEntityDeadPause, self._onGuideEntityDeadPause, self)
 end
 
-return var_0_0
+return WaitGuideActionEntityDeadPause

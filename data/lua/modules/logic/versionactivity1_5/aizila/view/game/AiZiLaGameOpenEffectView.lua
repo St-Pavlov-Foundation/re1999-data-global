@@ -1,88 +1,90 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameOpenEffectView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameOpenEffectView.lua
 
-local var_0_0 = class("AiZiLaGameOpenEffectView", BaseView)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameOpenEffectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "ani/#simage_FullBG")
-	arg_1_0._txtInfo = gohelper.findChildText(arg_1_0.viewGO, "ani/Title/#txt_Info")
-	arg_1_0._txtdaydesc = gohelper.findChildText(arg_1_0.viewGO, "ani/Title/image_Info/#txt_daydesc")
+local AiZiLaGameOpenEffectView = class("AiZiLaGameOpenEffectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaGameOpenEffectView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "ani/#simage_FullBG")
+	self._txtInfo = gohelper.findChildText(self.viewGO, "ani/Title/#txt_Info")
+	self._txtdaydesc = gohelper.findChildText(self.viewGO, "ani/Title/image_Info/#txt_daydesc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AiZiLaGameOpenEffectView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AiZiLaGameOpenEffectView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function AiZiLaGameOpenEffectView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function AiZiLaGameOpenEffectView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	if arg_6_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_6_0.viewContainer.viewName, arg_6_0._onEscape, arg_6_0)
+function AiZiLaGameOpenEffectView:onOpen()
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onEscape, self)
 	end
 
-	arg_6_0._callback = arg_6_0.viewParam and arg_6_0.viewParam.callback
-	arg_6_0._callbackObj = arg_6_0.viewParam and arg_6_0.viewParam.callbackObj
+	self._callback = self.viewParam and self.viewParam.callback
+	self._callbackObj = self.viewParam and self.viewParam.callbackObj
 
-	TaskDispatcher.runDelay(arg_6_0._onAnimFinish, arg_6_0, AiZiLaEnum.AnimatorTime.EffectViewOpen)
-	TaskDispatcher.runDelay(arg_6_0.closeThis, arg_6_0, AiZiLaEnum.AnimatorTime.EffectViewOpen + 0.1)
-	arg_6_0:refreshUI()
+	TaskDispatcher.runDelay(self._onAnimFinish, self, AiZiLaEnum.AnimatorTime.EffectViewOpen)
+	TaskDispatcher.runDelay(self.closeThis, self, AiZiLaEnum.AnimatorTime.EffectViewOpen + 0.1)
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.play_ui_wulu_aizila_level_transition)
 end
 
-function var_0_0._onEscape(arg_7_0)
+function AiZiLaGameOpenEffectView:_onEscape()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function AiZiLaGameOpenEffectView:onClose()
 	return
 end
 
-function var_0_0._onAnimFinish(arg_9_0)
-	if arg_9_0._callback then
-		if arg_9_0._callbackObj then
-			arg_9_0._callback(arg_9_0._callbackObj)
+function AiZiLaGameOpenEffectView:_onAnimFinish()
+	if self._callback then
+		if self._callbackObj then
+			self._callback(self._callbackObj)
 		else
-			arg_9_0._callback()
+			self._callback()
 		end
 
-		arg_9_0._callbackObj = nil
-		arg_9_0._callback = nil
+		self._callbackObj = nil
+		self._callback = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._onAnimFinish, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.closeThis, arg_10_0)
+function AiZiLaGameOpenEffectView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onAnimFinish, self)
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = AiZiLaGameModel.instance:getEpisodeMO()
+function AiZiLaGameOpenEffectView:refreshUI()
+	local episodeMO = AiZiLaGameModel.instance:getEpisodeMO()
 
-	if not var_11_0 then
+	if not episodeMO then
 		return
 	end
 
-	local var_11_1 = var_11_0:getConfig()
+	local episodeCfg = episodeMO:getConfig()
 
-	arg_11_0._txtInfo.text = var_11_1 and var_11_1.name
-	arg_11_0._txtdaydesc.text = formatLuaLang("v1a5_aizila_day_explore", var_11_0.day)
+	self._txtInfo.text = episodeCfg and episodeCfg.name
+	self._txtdaydesc.text = formatLuaLang("v1a5_aizila_day_explore", episodeMO.day)
 end
 
-function var_0_0.playViewAnimator(arg_12_0, arg_12_1)
+function AiZiLaGameOpenEffectView:playViewAnimator(animName)
 	return
 end
 
-return var_0_0
+return AiZiLaGameOpenEffectView

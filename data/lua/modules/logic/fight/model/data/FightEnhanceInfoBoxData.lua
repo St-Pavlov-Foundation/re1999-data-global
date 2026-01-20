@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.model.data.FightEnhanceInfoBoxData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightEnhanceInfoBoxData.lua
 
-local var_0_0 = FightDataClass("FightEnhanceInfoBoxData")
+module("modules.logic.fight.model.data.FightEnhanceInfoBoxData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.canUpgradeIds = {}
-	arg_1_0.upgradedOptions = {}
+local FightEnhanceInfoBoxData = FightDataClass("FightEnhanceInfoBoxData")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.canUpgradeIds) do
-		table.insert(arg_1_0.canUpgradeIds, iter_1_1)
+function FightEnhanceInfoBoxData:onConstructor(proto)
+	self.uid = proto.uid
+	self.canUpgradeIds = {}
+	self.upgradedOptions = {}
+
+	for i, v in ipairs(proto.canUpgradeIds) do
+		table.insert(self.canUpgradeIds, v)
 	end
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.upgradedOptions) do
-		table.insert(arg_1_0.upgradedOptions, iter_1_3)
+	for i, v in ipairs(proto.upgradedOptions) do
+		table.insert(self.upgradedOptions, v)
 	end
 end
 
-return var_0_0
+return FightEnhanceInfoBoxData

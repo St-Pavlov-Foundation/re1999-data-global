@@ -1,97 +1,99 @@
-﻿module("modules.logic.survival.model.map.SurvivalLogMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalLogMo.lua
 
-local var_0_0 = pureTable("SurvivalLogMo")
-local var_0_1 = {
+module("modules.logic.survival.model.map.SurvivalLogMo", package.seeall)
+
+local SurvivalLogMo = pureTable("SurvivalLogMo")
+local LogType = {
 	TeamHealth = 4,
 	HeroHealth = 5,
 	Item = 1,
 	TaskChange = 3
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.isNpcRecr = false
+function SurvivalLogMo:ctor()
+	self.isNpcRecr = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.logStr = ""
+function SurvivalLogMo:init(data, colorDict)
+	self.logStr = ""
 
-	local var_2_0 = string.splitToNumber(arg_2_1, "#") or {}
+	local arr = string.splitToNumber(data, "#") or {}
 
-	if var_2_0[1] == var_0_1.Item then
-		local var_2_1 = var_2_0[3] or 0
-		local var_2_2 = var_2_0[4] or SurvivalEnum.ItemSource.Map
-		local var_2_3 = lua_survival_item.configDict[var_2_0[2]]
+	if arr[1] == LogType.Item then
+		local count = arr[3] or 0
+		local bagType = arr[4] or SurvivalEnum.ItemSource.Map
+		local itemCo = lua_survival_item.configDict[arr[2]]
 
-		if var_2_3 then
-			local var_2_4 = var_2_3.type
+		if itemCo then
+			local type = itemCo.type
 
-			if var_2_4 == SurvivalEnum.ItemType.NPC then
-				if var_2_1 > 0 then
-					arg_2_0.isNpcRecr = var_2_0[2]
-					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_addnpc"), var_2_3.name)
+			if type == SurvivalEnum.ItemType.NPC then
+				if count > 0 then
+					self.isNpcRecr = arr[2]
+					self.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_addnpc"), itemCo.name)
 				else
-					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_removenpc"), var_2_3.name)
+					self.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_removenpc"), itemCo.name)
 				end
-			elseif var_2_4 == SurvivalEnum.ItemType.Currency then
-				if var_2_1 > 0 then
-					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_addcurrency"), var_2_3.name, var_2_1)
-				elseif var_2_2 == SurvivalEnum.ItemSource.Map then
-					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_removecurrency"), var_2_3.name, -var_2_1)
+			elseif type == SurvivalEnum.ItemType.Currency then
+				if count > 0 then
+					self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_addcurrency"), itemCo.name, count)
+				elseif bagType == SurvivalEnum.ItemSource.Map then
+					self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_removecurrency"), itemCo.name, -count)
 				else
-					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_removecurrency_shelter"), var_2_3.name, -var_2_1)
+					self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_removecurrency_shelter"), itemCo.name, -count)
 				end
 			else
-				local var_2_5 = var_2_3.name
+				local itemName = itemCo.name
 
-				arg_2_2 = arg_2_2 or SurvivalConst.ItemRareColor
+				colorDict = colorDict or SurvivalConst.ItemRareColor
 
-				if arg_2_2[var_2_3.rare] then
-					var_2_5 = string.format("<color=%s>%s</color>", arg_2_2[var_2_3.rare], var_2_5)
+				if colorDict[itemCo.rare] then
+					itemName = string.format("<color=%s>%s</color>", colorDict[itemCo.rare], itemName)
 				end
 
-				if var_2_1 > 0 then
-					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_additem"), var_2_5, var_2_1)
+				if count > 0 then
+					self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_additem"), itemName, count)
 				else
-					arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_removeitem"), var_2_5, -var_2_1)
+					self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_removeitem"), itemName, -count)
 				end
 			end
 		end
-	elseif var_2_0[1] == var_0_1.TaskChange then
-		local var_2_6 = var_2_0[2] or 0
-		local var_2_7 = var_2_0[3] or 0
-		local var_2_8 = var_2_0[4] or 1
-		local var_2_9 = SurvivalConfig.instance:getTaskCo(var_2_6, var_2_7)
+	elseif arr[1] == LogType.TaskChange then
+		local moduleId = arr[2] or 0
+		local taskId = arr[3] or 0
+		local status = arr[4] or 1
+		local taskCo = SurvivalConfig.instance:getTaskCo(moduleId, taskId)
 
-		if var_2_9 then
-			if var_2_8 == 1 then
-				arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_taskbegin"), var_2_9.desc)
+		if taskCo then
+			if status == 1 then
+				self.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_taskbegin"), taskCo.desc)
 			else
-				arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_taskfail"), var_2_9.desc)
+				self.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_taskfail"), taskCo.desc)
 			end
 		end
-	elseif var_2_0[1] == var_0_1.TeamHealth then
-		local var_2_10 = var_2_0[2] or 0
+	elseif arr[1] == LogType.TeamHealth then
+		local num = arr[2] or 0
 
-		if var_2_10 >= 0 then
-			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_teamhealthadd"), var_2_10)
+		if num >= 0 then
+			self.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_teamhealthadd"), num)
 		else
-			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_teamhealthsub"), -var_2_10)
+			self.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_teamhealthsub"), -num)
 		end
-	elseif var_2_0[1] == var_0_1.HeroHealth then
-		local var_2_11 = lua_character.configDict[tonumber(var_2_0[2])]
-		local var_2_12 = var_2_11 and var_2_11.name or ""
-		local var_2_13 = var_2_0[3] or 0
+	elseif arr[1] == LogType.HeroHealth then
+		local heroCo = lua_character.configDict[tonumber(arr[2])]
+		local heroName = heroCo and heroCo.name or ""
+		local num = arr[3] or 0
 
-		if var_2_13 >= 0 then
-			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_herohealthadd"), var_2_12, var_2_13)
+		if num >= 0 then
+			self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_herohealthadd"), heroName, num)
 		else
-			arg_2_0.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_heaohealthsub"), var_2_12, -var_2_13)
+			self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_heaohealthsub"), heroName, -num)
 		end
 	end
 end
 
-function var_0_0.getLogStr(arg_3_0)
-	return arg_3_0.logStr
+function SurvivalLogMo:getLogStr()
+	return self.logStr
 end
 
-return var_0_0
+return SurvivalLogMo

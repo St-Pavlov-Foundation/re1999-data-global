@@ -1,98 +1,101 @@
-﻿module("modules.logic.tower.view.bosstower.TowerBossSpEpisodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/bosstower/TowerBossSpEpisodeItem.lua
 
-local var_0_0 = class("TowerBossSpEpisodeItem", LuaCompBase)
+module("modules.logic.tower.view.bosstower.TowerBossSpEpisodeItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0.goOpen = gohelper.findChild(arg_1_0.viewGO, "goOpen")
-	arg_1_0.goUnopen = gohelper.findChild(arg_1_0.viewGO, "goUnopen")
-	arg_1_0.goSelect1 = gohelper.findChild(arg_1_0.viewGO, "goOpen/goSelect")
-	arg_1_0.goSelect2 = gohelper.findChild(arg_1_0.viewGO, "goOpen/goSelect2")
-	arg_1_0.txtCurEpisode = gohelper.findChildTextMesh(arg_1_0.viewGO, "goOpen/txtCurEpisode")
-	arg_1_0.goLock = gohelper.findChild(arg_1_0.viewGO, "goOpen/goLock")
-	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "goOpen/goFinished")
-	arg_1_0.animHasGet = gohelper.findChild(arg_1_0.viewGO, "goOpen/goFinished/go_hasget"):GetComponent(gohelper.Type_Animator)
-	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.viewGO)
-	arg_1_0.towerType = TowerEnum.TowerType.Boss
+local TowerBossSpEpisodeItem = class("TowerBossSpEpisodeItem", LuaCompBase)
+
+function TowerBossSpEpisodeItem:init(go)
+	self.viewGO = go
+	self.transform = go.transform
+	self.goOpen = gohelper.findChild(self.viewGO, "goOpen")
+	self.goUnopen = gohelper.findChild(self.viewGO, "goUnopen")
+	self.goSelect1 = gohelper.findChild(self.viewGO, "goOpen/goSelect")
+	self.goSelect2 = gohelper.findChild(self.viewGO, "goOpen/goSelect2")
+	self.txtCurEpisode = gohelper.findChildTextMesh(self.viewGO, "goOpen/txtCurEpisode")
+	self.goLock = gohelper.findChild(self.viewGO, "goOpen/goLock")
+	self.goFinish = gohelper.findChild(self.viewGO, "goOpen/goFinished")
+	self.animHasGet = gohelper.findChild(self.viewGO, "goOpen/goFinished/go_hasget"):GetComponent(gohelper.Type_Animator)
+	self.btnClick = gohelper.findButtonWithAudio(self.viewGO)
+	self.towerType = TowerEnum.TowerType.Boss
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0._onBtnClick, arg_2_0)
+function TowerBossSpEpisodeItem:addEventListeners()
+	self:addClickCb(self.btnClick, self._onBtnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnClick)
+function TowerBossSpEpisodeItem:removeEventListeners()
+	self:removeClickCb(self.btnClick)
 end
 
-function var_0_0._onBtnClick(arg_4_0)
-	arg_4_0.parentView:onClickEpisode(arg_4_0.layerId)
+function TowerBossSpEpisodeItem:_onBtnClick()
+	self.parentView:onClickEpisode(self.layerId)
 end
 
-function var_0_0.updateItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.parentView = arg_5_3
-	arg_5_0.layerId = arg_5_1
-	arg_5_0.index = arg_5_2
+function TowerBossSpEpisodeItem:updateItem(layerId, index, parentView)
+	self.parentView = parentView
+	self.layerId = layerId
+	self.index = index
 
-	if not arg_5_1 then
-		gohelper.setActive(arg_5_0.goUnopen, true)
-		gohelper.setActive(arg_5_0.goOpen, false)
+	if not layerId then
+		gohelper.setActive(self.goUnopen, true)
+		gohelper.setActive(self.goOpen, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_5_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	local var_5_0 = arg_5_0.parentView.towerMo
-	local var_5_1 = arg_5_0.parentView.episodeMo
-	local var_5_2 = var_5_0:isSpLayerOpen(arg_5_0.layerId)
+	local towerMo = self.parentView.towerMo
+	local episodeMo = self.parentView.episodeMo
+	local isOpen = towerMo:isSpLayerOpen(self.layerId)
 
-	gohelper.setActive(arg_5_0.goUnopen, not var_5_2)
-	gohelper.setActive(arg_5_0.goOpen, var_5_2)
+	gohelper.setActive(self.goUnopen, not isOpen)
+	gohelper.setActive(self.goOpen, isOpen)
 
-	if var_5_2 then
-		arg_5_0.txtCurEpisode.text = tostring(arg_5_2)
+	if isOpen then
+		self.txtCurEpisode.text = tostring(index)
 
-		local var_5_3 = var_5_0:isLayerUnlock(arg_5_0.layerId, var_5_1)
+		local isUnlock = towerMo:isLayerUnlock(self.layerId, episodeMo)
 
-		gohelper.setActive(arg_5_0.goLock, not var_5_3)
-		arg_5_0:updateSelect()
+		gohelper.setActive(self.goLock, not isUnlock)
+		self:updateSelect()
 	end
 
-	arg_5_0.isPassLayer = var_5_0.passLayerId >= arg_5_0.layerId
+	self.isPassLayer = towerMo.passLayerId >= self.layerId
 
-	gohelper.setActive(arg_5_0.goFinish, arg_5_0.isPassLayer)
-	arg_5_0:playFinishEffect()
+	gohelper.setActive(self.goFinish, self.isPassLayer)
+	self:playFinishEffect()
 end
 
-function var_0_0.updateSelect(arg_6_0)
-	if not arg_6_0.layerId then
+function TowerBossSpEpisodeItem:updateSelect()
+	if not self.layerId then
 		return
 	end
 
-	local var_6_0 = arg_6_0.parentView:isSelectEpisode(arg_6_0.layerId)
+	local isSelect = self.parentView:isSelectEpisode(self.layerId)
 
-	gohelper.setActive(arg_6_0.goSelect1, var_6_0)
-	gohelper.setActive(arg_6_0.goSelect2, var_6_0)
+	gohelper.setActive(self.goSelect1, isSelect)
+	gohelper.setActive(self.goSelect2, isSelect)
 
-	local var_6_1 = var_6_0 and 1 or 0.85
+	local scale = isSelect and 1 or 0.85
 
-	transformhelper.setLocalScale(arg_6_0.transform, var_6_1, var_6_1, 1)
+	transformhelper.setLocalScale(self.transform, scale, scale, 1)
 end
 
-function var_0_0.playFinishEffect(arg_7_0)
-	local var_7_0 = TowerModel.instance:getTowerOpenInfo(arg_7_0.parentView.towerMo.type, arg_7_0.parentView.towerMo.towerId)
+function TowerBossSpEpisodeItem:playFinishEffect()
+	local openInfoMO = TowerModel.instance:getTowerOpenInfo(self.parentView.towerMo.type, self.parentView.towerMo.towerId)
+	local saveFinishEffectState = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.TowerBossSPEpisodeFinishEffect, self.layerId, openInfoMO, 0)
 
-	if TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.TowerBossSPEpisodeFinishEffect, arg_7_0.layerId, var_7_0, 0) == 0 and arg_7_0.isPassLayer then
-		arg_7_0.animHasGet:Play("go_hasget_in", 0, 0)
-		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.TowerBossSPEpisodeFinishEffect, arg_7_0.layerId, var_7_0, 1)
+	if saveFinishEffectState == 0 and self.isPassLayer then
+		self.animHasGet:Play("go_hasget_in", 0, 0)
+		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.TowerBossSPEpisodeFinishEffect, self.layerId, openInfoMO, 1)
 	else
-		arg_7_0.animHasGet:Play("go_hasget_idle", 0, 0)
+		self.animHasGet:Play("go_hasget_idle", 0, 0)
 	end
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function TowerBossSpEpisodeItem:onDestroy()
 	return
 end
 
-return var_0_0
+return TowerBossSpEpisodeItem

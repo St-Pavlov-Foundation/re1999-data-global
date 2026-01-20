@@ -1,58 +1,60 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerBase", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerBase.lua
 
-local var_0_0 = class("ExploreTriggerBase", BaseWork)
+module("modules.logic.explore.controller.trigger.ExploreTriggerBase", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if arg_1_0.isCancel then
-		arg_1_0:cancel(arg_1_0._param, arg_1_0._unit)
+local ExploreTriggerBase = class("ExploreTriggerBase", BaseWork)
+
+function ExploreTriggerBase:onStart()
+	if self.isCancel then
+		self:cancel(self._param, self._unit)
 	else
-		arg_1_0:handle(arg_1_0._param, arg_1_0._unit)
+		self:handle(self._param, self._unit)
 	end
 end
 
-function var_0_0.setParam(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_0._recordLen = 0
-	arg_2_0._param = arg_2_1
-	arg_2_0._unit = arg_2_2
-	arg_2_0.unitId = arg_2_2.id
-	arg_2_0.unitType = arg_2_0._unit:getUnitType()
-	arg_2_0.stepIndex = arg_2_3
-	arg_2_0.clientOnly = arg_2_4
-	arg_2_0.isCancel = arg_2_5
+function ExploreTriggerBase:setParam(v, unit, stepIndex, clientOnly, isCancel)
+	self._recordLen = 0
+	self._param = v
+	self._unit = unit
+	self.unitId = unit.id
+	self.unitType = self._unit:getUnitType()
+	self.stepIndex = stepIndex
+	self.clientOnly = clientOnly
+	self.isCancel = isCancel
 end
 
-function var_0_0.onReply(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0:onDone(true)
+function ExploreTriggerBase:onReply(cmd, resultCode, msg)
+	self:onDone(true)
 end
 
-function var_0_0.sendTriggerRequest(arg_4_0, arg_4_1)
-	if not arg_4_0.stepIndex then
-		arg_4_0:onDone(false)
+function ExploreTriggerBase:sendTriggerRequest(params)
+	if not self.stepIndex then
+		self:onDone(false)
 
 		return
 	end
 
-	ExploreRpc.instance:sendExploreInteractRequest(arg_4_0.unitId, arg_4_0.stepIndex, arg_4_1 or "", arg_4_0.onRequestCallBack, arg_4_0)
+	ExploreRpc.instance:sendExploreInteractRequest(self.unitId, self.stepIndex, params or "", self.onRequestCallBack, self)
 end
 
-function var_0_0.onRequestCallBack(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == 0 then
-		arg_5_0:onReply(arg_5_1, arg_5_2, arg_5_3)
+function ExploreTriggerBase:onRequestCallBack(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:onReply(cmd, resultCode, msg)
 	else
-		arg_5_0:onDone(false)
+		self:onDone(false)
 	end
 end
 
-function var_0_0.onStepDone(arg_6_0, arg_6_1)
-	arg_6_0:onDone(arg_6_1)
+function ExploreTriggerBase:onStepDone(v)
+	self:onDone(v)
 end
 
-function var_0_0.handle(arg_7_0)
-	arg_7_0:onDone(true)
+function ExploreTriggerBase:handle()
+	self:onDone(true)
 end
 
-function var_0_0.cancel(arg_8_0)
-	arg_8_0:onDone(true)
+function ExploreTriggerBase:cancel()
+	self:onDone(true)
 end
 
-return var_0_0
+return ExploreTriggerBase

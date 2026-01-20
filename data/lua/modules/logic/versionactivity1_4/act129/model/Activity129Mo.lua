@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity1_4.act129.model.Activity129Mo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/model/Activity129Mo.lua
 
-local var_0_0 = class("Activity129Mo")
+module("modules.logic.versionactivity1_4.act129.model.Activity129Mo", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.id = arg_1_1
+local Activity129Mo = class("Activity129Mo")
 
-	arg_1_0:initCfg()
+function Activity129Mo:ctor(activityId)
+	self.activityId = activityId
+	self.id = activityId
+
+	self:initCfg()
 end
 
-function var_0_0.initCfg(arg_2_0)
-	arg_2_0.poolDict = {}
+function Activity129Mo:initCfg()
+	self.poolDict = {}
 
-	local var_2_0 = Activity129Config.instance:getPoolDict(arg_2_0.activityId)
+	local dict = Activity129Config.instance:getPoolDict(self.activityId)
 
-	if var_2_0 then
-		for iter_2_0, iter_2_1 in pairs(var_2_0) do
-			arg_2_0.poolDict[iter_2_1.poolId] = Activity129PoolMo.New(iter_2_1)
+	if dict then
+		for k, v in pairs(dict) do
+			self.poolDict[v.poolId] = Activity129PoolMo.New(v)
 		end
 	end
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	for iter_3_0 = 1, #arg_3_1.lotteryDetail do
-		local var_3_0 = arg_3_1.lotteryDetail[iter_3_0]
-		local var_3_1 = arg_3_0:getPoolMo(var_3_0.poolId)
+function Activity129Mo:init(info)
+	for i = 1, #info.lotteryDetail do
+		local lotteryInfo = info.lotteryDetail[i]
+		local poolMo = self:getPoolMo(lotteryInfo.poolId)
 
-		if var_3_1 then
-			var_3_1:init(var_3_0)
+		if poolMo then
+			poolMo:init(lotteryInfo)
 		else
-			logError(string.format("cant find poolCfg，poolId:%s", var_3_0.poolId))
+			logError(string.format("cant find poolCfg，poolId:%s", lotteryInfo.poolId))
 		end
 	end
 end
 
-function var_0_0.onLotterySuccess(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getPoolMo(arg_4_1.poolId)
+function Activity129Mo:onLotterySuccess(info)
+	local poolMo = self:getPoolMo(info.poolId)
 
-	if var_4_0 then
-		var_4_0:onLotterySuccess(arg_4_1)
+	if poolMo then
+		poolMo:onLotterySuccess(info)
 	else
-		logError(string.format("cant find poolCfg，poolId:%s", arg_4_1.poolId))
+		logError(string.format("cant find poolCfg，poolId:%s", info.poolId))
 	end
 end
 
-function var_0_0.getPoolMo(arg_5_0, arg_5_1)
-	return arg_5_0.poolDict[arg_5_1]
+function Activity129Mo:getPoolMo(poolId)
+	return self.poolDict[poolId]
 end
 
-function var_0_0.checkPoolIsEmpty(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getPoolMo(arg_6_1)
+function Activity129Mo:checkPoolIsEmpty(poolId)
+	local mo = self:getPoolMo(poolId)
 
-	return var_6_0 and var_6_0:checkPoolIsEmpty()
+	return mo and mo:checkPoolIsEmpty()
 end
 
-return var_0_0
+return Activity129Mo

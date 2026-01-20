@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonFragmentInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonFragmentInfoViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonFragmentInfoViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonFragmentInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_9DungeonFragmentInfoViewContainer = class("VersionActivity2_9DungeonFragmentInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_9DungeonFragmentInfoView.New())
+function VersionActivity2_9DungeonFragmentInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_9DungeonFragmentInfoView.New())
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_9DungeonFragmentInfoViewContainer

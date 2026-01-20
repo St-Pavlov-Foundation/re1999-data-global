@@ -1,119 +1,121 @@
-﻿module("modules.logic.versionactivity2_4.act181.model.Activity181Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/act181/model/Activity181Model.lua
 
-local var_0_0 = class("Activity181Model", BaseModel)
+module("modules.logic.versionactivity2_4.act181.model.Activity181Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._activityInfoDic = {}
+local Activity181Model = class("Activity181Model", BaseModel)
+
+function Activity181Model:onInit()
+	self._activityInfoDic = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._activityInfoDic = {}
+function Activity181Model:reInit()
+	self._activityInfoDic = {}
 end
 
-function var_0_0.setActInfo(arg_3_0, arg_3_1, arg_3_2)
-	if not arg_3_2 or not arg_3_1 then
+function Activity181Model:setActInfo(activityId, info)
+	if not info or not activityId then
 		return
 	end
 
-	local var_3_0 = arg_3_0._activityInfoDic[arg_3_1]
+	local mo = self._activityInfoDic[activityId]
 
-	if not var_3_0 then
-		var_3_0 = Activity181MO.New()
-		arg_3_0._activityInfoDic[arg_3_1] = var_3_0
+	if not mo then
+		mo = Activity181MO.New()
+		self._activityInfoDic[activityId] = mo
 	end
 
-	var_3_0:setInfo(arg_3_2)
+	mo:setInfo(info)
 end
 
-function var_0_0.getActivityInfo(arg_4_0, arg_4_1)
-	return arg_4_0._activityInfoDic[arg_4_1]
+function Activity181Model:getActivityInfo(activityId)
+	return self._activityInfoDic[activityId]
 end
 
-function var_0_0.setBonusInfo(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_2 or not arg_5_1 then
+function Activity181Model:setBonusInfo(activityId, info)
+	if not info or not activityId then
 		return
 	end
 
-	local var_5_0 = arg_5_0:getActivityInfo(arg_5_1)
+	local mo = self:getActivityInfo(activityId)
 
-	if not var_5_0 then
+	if not mo then
 		return
 	end
 
-	var_5_0:setBonusInfo(arg_5_2.pos, arg_5_2.id)
+	mo:setBonusInfo(info.pos, info.id)
 end
 
-function var_0_0.setSPBonusInfo(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function Activity181Model:setSPBonusInfo(activityId)
+	if not activityId then
 		return
 	end
 
-	local var_6_0 = arg_6_0:getActivityInfo(arg_6_1)
+	local mo = self:getActivityInfo(activityId)
 
-	if not var_6_0 then
+	if not mo then
 		return
 	end
 
-	var_6_0:setSPBonusInfo()
+	mo:setSPBonusInfo()
 end
 
-function var_0_0.addBonusTimes(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function Activity181Model:addBonusTimes(activityId)
+	if not activityId then
 		return
 	end
 
-	local var_7_0 = arg_7_0:getActivityInfo(arg_7_1)
+	local mo = self:getActivityInfo(activityId)
 
-	if not var_7_0 then
+	if not mo then
 		return
 	end
 
-	local var_7_1 = var_7_0:getBonusTimes()
+	local times = mo:getBonusTimes()
 
-	var_7_0:setBonusTimes(var_7_1 + 1)
-	Activity181Controller.instance:dispatchEvent(Activity181Event.BonusTimesChange, arg_7_1)
+	mo:setBonusTimes(times + 1)
+	Activity181Controller.instance:dispatchEvent(Activity181Event.BonusTimesChange, activityId)
 end
 
-function var_0_0.isActivityInTime(arg_8_0, arg_8_1)
-	local var_8_0 = ActivityModel.instance:getActMO(arg_8_1)
+function Activity181Model:isActivityInTime(activityId)
+	local activityInfo = ActivityModel.instance:getActMO(activityId)
 
-	if not var_8_0 then
+	if not activityInfo then
 		return false
 	end
 
-	if not var_8_0:isOpen() or var_8_0:isExpired() then
+	if not activityInfo:isOpen() or activityInfo:isExpired() then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getHaveFirstDayLogin(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getDaliyLoginKey(arg_9_1)
+function Activity181Model:getHaveFirstDayLogin(activityId)
+	local key = self:getDaliyLoginKey(activityId)
 
-	return TimeUtil.getDayFirstLoginRed(var_9_0)
+	return TimeUtil.getDayFirstLoginRed(key)
 end
 
-function var_0_0.setHaveFirstDayLogin(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getDaliyLoginKey(arg_10_1)
+function Activity181Model:setHaveFirstDayLogin(activityId)
+	local key = self:getDaliyLoginKey(activityId)
 
-	TimeUtil.setDayFirstLoginRed(var_10_0)
+	TimeUtil.setDayFirstLoginRed(key)
 end
 
-function var_0_0.getDaliyLoginKey(arg_11_0, arg_11_1)
-	return PlayerPrefsKey.Version2_4_Act181FirstOpen .. tostring(arg_11_1)
+function Activity181Model:getDaliyLoginKey(activityId)
+	return PlayerPrefsKey.Version2_4_Act181FirstOpen .. tostring(activityId)
 end
 
-function var_0_0.setPopUpPauseState(arg_12_0, arg_12_1)
-	arg_12_0._popUpState = arg_12_1
+function Activity181Model:setPopUpPauseState(state)
+	self._popUpState = state
 
-	PopupController.instance:setPause("Activity181MainView_bonus", arg_12_1)
+	PopupController.instance:setPause("Activity181MainView_bonus", state)
 end
 
-function var_0_0.getPopUpPauseState(arg_13_0)
-	return arg_13_0._popUpState
+function Activity181Model:getPopUpPauseState()
+	return self._popUpState
 end
 
-var_0_0.instance = var_0_0.New()
+Activity181Model.instance = Activity181Model.New()
 
-return var_0_0
+return Activity181Model

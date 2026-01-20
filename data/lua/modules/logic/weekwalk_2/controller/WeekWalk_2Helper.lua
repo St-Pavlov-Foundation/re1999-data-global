@@ -1,33 +1,35 @@
-﻿module("modules.logic.weekwalk_2.controller.WeekWalk_2Helper", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/controller/WeekWalk_2Helper.lua
 
-local var_0_0 = class("WeekWalk_2Helper")
+module("modules.logic.weekwalk_2.controller.WeekWalk_2Helper", package.seeall)
 
-function var_0_0.setCupIcon(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1 and arg_1_1.result or 0
+local WeekWalk_2Helper = class("WeekWalk_2Helper")
 
-	UISpriteSetMgr.instance:setWeekWalkSprite(arg_1_0, "weekwalkheart_star" .. var_1_0)
+function WeekWalk_2Helper.setCupIcon(icon, cupInfo)
+	local result = cupInfo and cupInfo.result or 0
+
+	UISpriteSetMgr.instance:setWeekWalkSprite(icon, "weekwalkheart_star" .. result)
 end
 
-function var_0_0.setCupEffect(arg_2_0, arg_2_1)
-	if not arg_2_0 then
+function WeekWalk_2Helper.setCupEffect(go, cupInfo)
+	if not go then
 		return
 	end
 
-	local var_2_0 = arg_2_1 and arg_2_1.result or WeekWalk_2Enum.CupType.None
+	local result = cupInfo and cupInfo.result or WeekWalk_2Enum.CupType.None
 
-	var_0_0.setCupEffectByResult(arg_2_0, var_2_0)
+	WeekWalk_2Helper.setCupEffectByResult(go, result)
 end
 
-function var_0_0.setCupEffectByResult(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.transform
-	local var_3_1 = var_3_0.childCount
-	local var_3_2 = "star0" .. arg_3_1
+function WeekWalk_2Helper.setCupEffectByResult(go, result)
+	local transform = go.transform
+	local childCount = transform.childCount
+	local targetName = "star0" .. result
 
-	for iter_3_0 = 1, var_3_1 do
-		local var_3_3 = var_3_0:GetChild(iter_3_0 - 1)
+	for i = 1, childCount do
+		local child = transform:GetChild(i - 1)
 
-		gohelper.setActive(var_3_3, var_3_3.name == var_3_2)
+		gohelper.setActive(child, child.name == targetName)
 	end
 end
 
-return var_0_0
+return WeekWalk_2Helper

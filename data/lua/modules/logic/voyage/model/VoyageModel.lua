@@ -1,20 +1,22 @@
-﻿module("modules.logic.voyage.model.VoyageModel", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/model/VoyageModel.lua
 
-local var_0_0 = class("VoyageModel", Activity1001Model)
+module("modules.logic.voyage.model.VoyageModel", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	var_0_0.super.reInit(arg_1_0)
+local VoyageModel = class("VoyageModel", Activity1001Model)
 
-	local var_1_0 = VoyageConfig.instance
-	local var_1_1 = var_1_0:getActivityId()
+function VoyageModel:reInit()
+	VoyageModel.super.reInit(self)
 
-	arg_1_0:_internal_set_config(var_1_0)
-	arg_1_0:_internal_set_activity(var_1_1)
+	local config = VoyageConfig.instance
+	local activityId = config:getActivityId()
+
+	self:_internal_set_config(config)
+	self:_internal_set_activity(activityId)
 end
 
-function var_0_0.hasAnyRewardAvailable(arg_2_0)
-	for iter_2_0, iter_2_1 in pairs(arg_2_0.__id2StateDict) do
-		if iter_2_1 == VoyageEnum.State.Available then
+function VoyageModel:hasAnyRewardAvailable()
+	for _, state in pairs(self.__id2StateDict) do
+		if state == VoyageEnum.State.Available then
 			return true
 		end
 	end
@@ -22,6 +24,6 @@ function var_0_0.hasAnyRewardAvailable(arg_2_0)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+VoyageModel.instance = VoyageModel.New()
 
-return var_0_0
+return VoyageModel

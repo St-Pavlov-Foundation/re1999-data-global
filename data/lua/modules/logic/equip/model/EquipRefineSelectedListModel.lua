@@ -1,25 +1,27 @@
-﻿module("modules.logic.equip.model.EquipRefineSelectedListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipRefineSelectedListModel.lua
 
-local var_0_0 = class("EquipRefineSelectedListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipRefineSelectedListModel", package.seeall)
 
-function var_0_0.initList(arg_1_0)
-	arg_1_0:updateList()
+local EquipRefineSelectedListModel = class("EquipRefineSelectedListModel", ListScrollModel)
+
+function EquipRefineSelectedListModel:initList()
+	self:updateList()
 end
 
-function var_0_0.updateList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function EquipRefineSelectedListModel:updateList(value)
+	local list = {}
 
-	for iter_2_0 = 1, EquipEnum.RefineMaxCount do
-		table.insert(var_2_0, arg_2_1 and arg_2_1[iter_2_0] or {})
+	for i = 1, EquipEnum.RefineMaxCount do
+		table.insert(list, value and value[i] or {})
 	end
 
-	arg_2_0:setList(var_2_0)
+	self:setList(list)
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0:clear()
+function EquipRefineSelectedListModel:clearData()
+	self:clear()
 end
 
-var_0_0.instance = var_0_0.New()
+EquipRefineSelectedListModel.instance = EquipRefineSelectedListModel.New()
 
-return var_0_0
+return EquipRefineSelectedListModel

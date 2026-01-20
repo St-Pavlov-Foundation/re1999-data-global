@@ -1,162 +1,166 @@
-﻿module("modules.logic.room.entity.comp.RoomCrossloadComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomCrossloadComp.lua
 
-local var_0_0 = class("RoomCrossloadComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomCrossloadComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+local RoomCrossloadComp = class("RoomCrossloadComp", LuaCompBase)
+
+function RoomCrossloadComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._mo = arg_2_0.entity:getMO()
-	arg_2_0._crossload = RoomBuildingEnum.Crossload[arg_2_0._mo.buildingId]
-	arg_2_0._nextTime = 0
-	arg_2_0._durtion = 5
-	arg_2_0._isCanMove = true
-	arg_2_0._defaultAnimTime = 2.1
-	arg_2_0._animTime = 2.1
+function RoomCrossloadComp:init(go)
+	self.go = go
+	self._mo = self.entity:getMO()
+	self._crossload = RoomBuildingEnum.Crossload[self._mo.buildingId]
+	self._nextTime = 0
+	self._durtion = 5
+	self._isCanMove = true
+	self._defaultAnimTime = 2.1
+	self._animTime = 2.1
 
-	arg_2_0:reset()
+	self:reset()
 end
 
-function var_0_0.getCurResId(arg_3_0)
-	return arg_3_0._curResId
+function RoomCrossloadComp:getCurResId()
+	return self._curResId
 end
 
-function var_0_0.getCanMove(arg_4_0)
-	return arg_4_0._isCanMove
+function RoomCrossloadComp:getCanMove()
+	return self._isCanMove
 end
 
-function var_0_0.reset(arg_5_0)
-	arg_5_0._curResId = nil
+function RoomCrossloadComp:reset()
+	self._curResId = nil
 
-	if arg_5_0:_canWork() then
-		arg_5_0:_runDelayInitAnim(3)
+	if self:_canWork() then
+		self:_runDelayInitAnim(3)
 	end
 end
 
-function var_0_0._canWork(arg_6_0)
+function RoomCrossloadComp:_canWork()
 	return RoomController.instance:isObMode() or RoomController.instance:isVisitMode()
 end
 
-function var_0_0.playAnim(arg_7_0, arg_7_1)
-	if not arg_7_0:_canWork() then
+function RoomCrossloadComp:playAnim(resId)
+	if not self:_canWork() then
 		return
 	end
 
-	if arg_7_1 == arg_7_0._curResId then
-		local var_7_0 = Time.time + arg_7_0._durtion
+	if resId == self._curResId then
+		local tempNextTime = Time.time + self._durtion
 
-		if var_7_0 > arg_7_0._nextTime then
-			arg_7_0._nextTime = var_7_0
+		if tempNextTime > self._nextTime then
+			self._nextTime = tempNextTime
 		end
 
 		return
 	end
 
-	if Time.time < arg_7_0._nextTime then
+	if Time.time < self._nextTime then
 		return
 	end
 
-	arg_7_0:_playAnim(arg_7_1)
-	arg_7_0:_runDelayInitAnim(arg_7_0._animTime + arg_7_0._durtion)
+	self:_playAnim(resId)
+	self:_runDelayInitAnim(self._animTime + self._durtion)
 end
 
-function var_0_0._runDelayInitAnim(arg_8_0, arg_8_1)
-	TaskDispatcher.cancelTask(arg_8_0._playInitAnim, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0._playInitAnim, arg_8_0, arg_8_1)
+function RoomCrossloadComp:_runDelayInitAnim(duration)
+	TaskDispatcher.cancelTask(self._playInitAnim, self)
+	TaskDispatcher.runDelay(self._playInitAnim, self, duration)
 end
 
-function var_0_0._playInitAnim(arg_9_0)
-	local var_9_0 = arg_9_0:_getInitResId()
+function RoomCrossloadComp:_playInitAnim()
+	local resId = self:_getInitResId()
 
-	if var_9_0 ~= arg_9_0._curResId then
-		arg_9_0:_playAnim(var_9_0, arg_9_0._curResId == nil)
+	if resId ~= self._curResId then
+		self:_playAnim(resId, self._curResId == nil)
 	end
 end
 
-function var_0_0._playAnim(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0, var_10_1, var_10_2 = arg_10_0:_findAninNameByResId(arg_10_1)
+function RoomCrossloadComp:_playAnim(resId, isOne)
+	local animName, animTime, audioId = self:_findAninNameByResId(resId)
 
-	if not var_10_0 then
+	if not animName then
 		return
 	end
 
-	if arg_10_0:_getAnimator() then
-		arg_10_0._isCanMove = arg_10_0._curResId == arg_10_1
-		arg_10_0._curResId = arg_10_1
-		arg_10_0._animTime = var_10_1 or arg_10_0._defineAnimTime
+	local anim = self:_getAnimator()
 
-		arg_10_0._animator:Play(var_10_0, 0, arg_10_2 and 1 or 0)
-		TaskDispatcher.cancelTask(arg_10_0._delayOpenOrClose, arg_10_0)
-		TaskDispatcher.runDelay(arg_10_0._delayOpenOrClose, arg_10_0, arg_10_0._animTime)
+	if anim then
+		self._isCanMove = self._curResId == resId
+		self._curResId = resId
+		self._animTime = animTime or self._defineAnimTime
 
-		arg_10_0._nextTime = Time.time + arg_10_0._durtion
+		self._animator:Play(animName, 0, isOne and 1 or 0)
+		TaskDispatcher.cancelTask(self._delayOpenOrClose, self)
+		TaskDispatcher.runDelay(self._delayOpenOrClose, self, self._animTime)
 
-		if not arg_10_2 and var_10_2 and var_10_2 ~= 0 then
-			arg_10_0.entity:playAudio(var_10_2, arg_10_0.go)
+		self._nextTime = Time.time + self._durtion
+
+		if not isOne and audioId and audioId ~= 0 then
+			self.entity:playAudio(audioId, self.go)
 		end
 	end
 end
 
-function var_0_0._delayOpenOrClose(arg_11_0)
+function RoomCrossloadComp:_delayOpenOrClose()
 	if not RoomCrossLoadController.instance:isLock() then
-		RoomCrossLoadController.instance:updatePathGraphic(arg_11_0._mo.id)
+		RoomCrossLoadController.instance:updatePathGraphic(self._mo.id)
 
-		arg_11_0._isCanMove = true
+		self._isCanMove = true
 	else
-		arg_11_0._curResId = nil
+		self._curResId = nil
 	end
 end
 
-function var_0_0.addEventListeners(arg_12_0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_12_0._onSwitchModel, arg_12_0)
+function RoomCrossloadComp:addEventListeners()
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, self._onSwitchModel, self)
 end
 
-function var_0_0.removeEventListeners(arg_13_0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, arg_13_0._onSwitchModel, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._playInitAnim, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._delayOpenOrClose, arg_13_0)
+function RoomCrossloadComp:removeEventListeners()
+	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, self._onSwitchModel, self)
+	TaskDispatcher.cancelTask(self._playInitAnim, self)
+	TaskDispatcher.cancelTask(self._delayOpenOrClose, self)
 end
 
-function var_0_0._onSwitchModel(arg_14_0)
-	arg_14_0:reset()
+function RoomCrossloadComp:_onSwitchModel()
+	self:reset()
 end
 
-function var_0_0._findAninNameByResId(arg_15_0, arg_15_1)
-	if arg_15_0._crossload and arg_15_0._crossload.AnimStatus then
-		local var_15_0 = arg_15_0._crossload.AnimStatus
+function RoomCrossloadComp:_findAninNameByResId(resId)
+	if self._crossload and self._crossload.AnimStatus then
+		local AnimStatus = self._crossload.AnimStatus
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			if iter_15_1.resId == arg_15_1 then
-				return iter_15_1.animName, iter_15_1.animTime, iter_15_1.audioId
+		for i, coss in ipairs(AnimStatus) do
+			if coss.resId == resId then
+				return coss.animName, coss.animTime, coss.audioId
 			end
 		end
 	end
 end
 
-function var_0_0._getInitResId(arg_16_0)
-	if arg_16_0._crossload and arg_16_0._crossload.AnimStatus then
-		return arg_16_0._crossload.AnimStatus[1].resId
+function RoomCrossloadComp:_getInitResId()
+	if self._crossload and self._crossload.AnimStatus then
+		return self._crossload.AnimStatus[1].resId
 	end
 end
 
-function var_0_0._getAnimator(arg_17_0)
-	if not arg_17_0._animator then
-		local var_17_0 = arg_17_0.entity:getBuildingGO()
+function RoomCrossloadComp:_getAnimator()
+	if not self._animator then
+		local buildingGO = self.entity:getBuildingGO()
 
-		if var_17_0 then
-			arg_17_0._animator = var_17_0:GetComponent(typeof(UnityEngine.Animator))
+		if buildingGO then
+			self._animator = buildingGO:GetComponent(typeof(UnityEngine.Animator))
 		end
 	end
 
-	return arg_17_0._animator
+	return self._animator
 end
 
-function var_0_0.beforeDestroy(arg_18_0)
-	arg_18_0._animator = nil
+function RoomCrossloadComp:beforeDestroy()
+	self._animator = nil
 
-	arg_18_0:removeEventListeners()
+	self:removeEventListeners()
 end
 
-return var_0_0
+return RoomCrossloadComp

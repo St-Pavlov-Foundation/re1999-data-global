@@ -1,71 +1,73 @@
-﻿module("modules.logic.main.view.MainHeroMipView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainHeroMipView.lua
 
-local var_0_0 = class("MainHeroMipView", BaseView)
+module("modules.logic.main.view.MainHeroMipView", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	arg_1_0:addEventCb(MainController.instance, MainEvent.HeroShowInScene, arg_1_0._onHeroShowInScene, arg_1_0)
-	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_1_0._onOpenFullView, arg_1_0)
-	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, arg_1_0._onCloseFullView, arg_1_0)
+local MainHeroMipView = class("MainHeroMipView", BaseView)
+
+function MainHeroMipView:addEvents()
+	self:addEventCb(MainController.instance, MainEvent.HeroShowInScene, self._onHeroShowInScene, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, self._onOpenFullView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, self._onCloseFullView, self)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	arg_2_0:removeEventCb(MainController.instance, MainEvent.HeroShowInScene, arg_2_0._onHeroShowInScene, arg_2_0)
-	arg_2_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_2_0._onOpenFullView, arg_2_0)
-	arg_2_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, arg_2_0._onCloseFullView, arg_2_0)
+function MainHeroMipView:removeEvents()
+	self:removeEventCb(MainController.instance, MainEvent.HeroShowInScene, self._onHeroShowInScene, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, self._onOpenFullView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, self._onCloseFullView, self)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0._showInScene = true
+function MainHeroMipView:onOpen()
+	self._showInScene = true
 
-	arg_3_0:_enableMip(true)
+	self:_enableMip(true)
 end
 
-function var_0_0.onClose(arg_4_0)
-	arg_4_0:_enableMip(false)
+function MainHeroMipView:onClose()
+	self:_enableMip(false)
 end
 
-function var_0_0._onHeroShowInScene(arg_5_0, arg_5_1)
-	arg_5_0._showInScene = arg_5_1
+function MainHeroMipView:_onHeroShowInScene(showInScene)
+	self._showInScene = showInScene
 
-	arg_5_0:_enableMip(true)
+	self:_enableMip(true)
 end
 
-function var_0_0._onOpenFullView(arg_6_0, arg_6_1)
-	arg_6_0:_enableMip(false)
+function MainHeroMipView:_onOpenFullView(viewName)
+	self:_enableMip(false)
 end
 
-function var_0_0._onCloseFullView(arg_7_0, arg_7_1)
-	local var_7_0 = false
-	local var_7_1 = ViewMgr.instance:getOpenViewNameList()
+function MainHeroMipView:_onCloseFullView(viewName)
+	local hasOpenAnyFullView = false
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if ViewMgr.instance:isFull(iter_7_1) then
-			var_7_0 = true
+	for _, viewName in ipairs(openViewNameList) do
+		if ViewMgr.instance:isFull(viewName) then
+			hasOpenAnyFullView = true
 
 			break
 		end
 	end
 
-	if not var_7_0 then
-		arg_7_0:_enableMip(true)
+	if not hasOpenAnyFullView then
+		self:_enableMip(true)
 	end
 end
 
-function var_0_0._enableMip(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		if not arg_8_0._showInScene then
+function MainHeroMipView:_enableMip(enable)
+	if enable then
+		if not self._showInScene then
 			UnityEngine.Shader.EnableKeyword("_USE_SIMULATE_HIGH_MIP")
 		else
 			UnityEngine.Shader.DisableKeyword("_USE_SIMULATE_HIGH_MIP")
 		end
 
-		if arg_8_0._showInScene then
+		if self._showInScene then
 			UnityEngine.Shader.EnableKeyword("_USE_SIMULATE_MIP")
 		else
 			UnityEngine.Shader.DisableKeyword("_USE_SIMULATE_MIP")
 		end
 
-		logNormal(arg_8_0._showInScene and "开启Mip" or "开启HighMip")
+		logNormal(self._showInScene and "开启Mip" or "开启HighMip")
 	else
 		UnityEngine.Shader.DisableKeyword("_USE_SIMULATE_HIGH_MIP")
 		UnityEngine.Shader.DisableKeyword("_USE_SIMULATE_MIP")
@@ -73,4 +75,4 @@ function var_0_0._enableMip(arg_8_0, arg_8_1)
 	end
 end
 
-return var_0_0
+return MainHeroMipView

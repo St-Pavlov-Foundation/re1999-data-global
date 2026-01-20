@@ -1,162 +1,171 @@
-﻿module("modules.logic.character.view.CharacterBackpackCardListItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterBackpackCardListItem.lua
 
-local var_0_0 = class("CharacterBackpackCardListItem", ListScrollCell)
+module("modules.logic.character.view.CharacterBackpackCardListItem", package.seeall)
 
-var_0_0.PressColor = GameUtil.parseColor("#C8C8C8")
+local CharacterBackpackCardListItem = class("CharacterBackpackCardListItem", ListScrollCell)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._heroGO = arg_1_1
-	arg_1_0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._heroGO, CommonHeroItem)
+CharacterBackpackCardListItem.PressColor = GameUtil.parseColor("#C8C8C8")
 
-	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
-	arg_1_0._heroItem:addClickDownListener(arg_1_0._onItemClickDown, arg_1_0)
-	arg_1_0._heroItem:addClickUpListener(arg_1_0._onItemClickUp, arg_1_0)
-	arg_1_0:_initObj()
+function CharacterBackpackCardListItem:init(go)
+	self._heroGO = go
+	self._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._heroGO, CommonHeroItem)
+
+	self._heroItem:addClickListener(self._onItemClick, self)
+	self._heroItem:addClickDownListener(self._onItemClickDown, self)
+	self._heroItem:addClickUpListener(self._onItemClickUp, self)
+	self:_initObj()
 end
 
-function var_0_0._initObj(arg_2_0)
-	arg_2_0._animator = arg_2_0._heroGO:GetComponent(typeof(UnityEngine.Animator))
+function CharacterBackpackCardListItem:_initObj()
+	self._animator = self._heroGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, arg_3_0._refreshRedDot, arg_3_0)
-	PlayerController.instance:registerCallback(PlayerEvent.UpdateSimpleProperty, arg_3_0._refreshRedDot, arg_3_0)
+function CharacterBackpackCardListItem:addEventListeners()
+	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, self._refreshRedDot, self)
+	PlayerController.instance:registerCallback(PlayerEvent.UpdateSimpleProperty, self._refreshRedDot, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, arg_4_0._refreshRedDot, arg_4_0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.UpdateSimpleProperty, arg_4_0._refreshRedDot, arg_4_0)
+function CharacterBackpackCardListItem:removeEventListeners()
+	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, self._refreshRedDot, self)
+	PlayerController.instance:unregisterCallback(PlayerEvent.UpdateSimpleProperty, self._refreshRedDot, self)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function CharacterBackpackCardListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0._heroItem:onUpdateMO(arg_5_1)
-	arg_5_0._heroItem:setStyle_CharacterBackpack()
-	arg_5_0:_refreshRedDot()
+	self._heroItem:onUpdateMO(mo)
+	self._heroItem:setStyle_CharacterBackpack()
+	self:_refreshRedDot()
 
-	if arg_5_0._heroItemContainer then
-		arg_5_0._heroItemContainer.spines = nil
+	if self._heroItemContainer then
+		self._heroItemContainer.spines = nil
 	end
 end
 
-function var_0_0._refreshRedDot(arg_6_0)
-	if CharacterModel.instance:isHeroCouldExskillUp(arg_6_0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(arg_6_0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(arg_6_0._mo.heroId) or arg_6_0:_isShowDestinyReddot() or arg_6_0._mo.extraMo:showReddot() or arg_6_0:_isShowNuodikaReddot() then
-		arg_6_0._heroItem:setRedDotShow(true)
+function CharacterBackpackCardListItem:_refreshRedDot()
+	local reddotShow = CharacterModel.instance:isHeroCouldExskillUp(self._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(self._mo.heroId) or CharacterModel.instance:hasItemRewardGet(self._mo.heroId) or self:_isShowDestinyReddot() or self._mo.extraMo:showReddot() or self:_isShowNuodikaReddot()
+
+	if reddotShow then
+		self._heroItem:setRedDotShow(true)
 	else
-		arg_6_0._heroItem:setRedDotShow(false)
+		self._heroItem:setRedDotShow(false)
 	end
 end
 
-function var_0_0._onrefreshItem(arg_7_0)
+function CharacterBackpackCardListItem:_onrefreshItem()
 	return
 end
 
-function var_0_0._onItemClick(arg_8_0)
+function CharacterBackpackCardListItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	CharacterController.instance:openCharacterView(arg_8_0._mo)
+	CharacterController.instance:openCharacterView(self._mo)
 
-	if arg_8_0:_isShowDestinyReddot() then
-		HeroRpc.instance:setHeroRedDotReadRequest(arg_8_0._mo.heroId, 1)
+	if self:_isShowDestinyReddot() then
+		HeroRpc.instance:setHeroRedDotReadRequest(self._mo.heroId, 1)
 	end
 end
 
-function var_0_0._onItemClickDown(arg_9_0)
-	arg_9_0:_setHeroItemPressState(true)
+function CharacterBackpackCardListItem:_onItemClickDown()
+	self:_setHeroItemPressState(true)
 end
 
-function var_0_0._onItemClickUp(arg_10_0)
-	arg_10_0:_setHeroItemPressState(false)
+function CharacterBackpackCardListItem:_onItemClickUp()
+	self:_setHeroItemPressState(false)
 end
 
-function var_0_0._setHeroItemPressState(arg_11_0, arg_11_1)
-	if not arg_11_0._heroItemContainer then
-		arg_11_0._heroItemContainer = arg_11_0:getUserDataTb_()
+function CharacterBackpackCardListItem:_setHeroItemPressState(press)
+	if not self._heroItemContainer then
+		self._heroItemContainer = self:getUserDataTb_()
 
-		local var_11_0 = arg_11_0._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
+		local images = self._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
 
-		arg_11_0._heroItemContainer.images = var_11_0
+		self._heroItemContainer.images = images
 
-		local var_11_1 = arg_11_0._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+		local tmps = self._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
 
-		arg_11_0._heroItemContainer.tmps = var_11_1
-		arg_11_0._heroItemContainer.compColor = {}
+		self._heroItemContainer.tmps = tmps
+		self._heroItemContainer.compColor = {}
 
-		local var_11_2 = var_11_0:GetEnumerator()
+		local iter = images:GetEnumerator()
 
-		while var_11_2:MoveNext() do
-			arg_11_0._heroItemContainer.compColor[var_11_2.Current] = var_11_2.Current.color
+		while iter:MoveNext() do
+			self._heroItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 
-		local var_11_3 = var_11_1:GetEnumerator()
+		iter = tmps:GetEnumerator()
 
-		while var_11_3:MoveNext() do
-			arg_11_0._heroItemContainer.compColor[var_11_3.Current] = var_11_3.Current.color
-		end
-	end
-
-	if not arg_11_0._heroItemContainer.spines then
-		local var_11_4 = arg_11_0._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
-
-		arg_11_0._heroItemContainer.spines = var_11_4
-
-		local var_11_5 = var_11_4:GetEnumerator()
-
-		while var_11_5:MoveNext() do
-			arg_11_0._heroItemContainer.compColor[var_11_5.Current] = var_11_5.Current.color
+		while iter:MoveNext() do
+			self._heroItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 	end
 
-	if arg_11_0._heroItemContainer then
-		arg_11_0:_setUIPressState(arg_11_0._heroItemContainer.images, arg_11_1, arg_11_0._heroItemContainer.compColor)
-		arg_11_0:_setUIPressState(arg_11_0._heroItemContainer.tmps, arg_11_1, arg_11_0._heroItemContainer.compColor)
-		arg_11_0:_setUIPressState(arg_11_0._heroItemContainer.spines, arg_11_1, arg_11_0._heroItemContainer.compColor)
+	if not self._heroItemContainer.spines then
+		local spines = self._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
+
+		self._heroItemContainer.spines = spines
+
+		local iter = spines:GetEnumerator()
+
+		while iter:MoveNext() do
+			self._heroItemContainer.compColor[iter.Current] = iter.Current.color
+		end
+	end
+
+	if self._heroItemContainer then
+		self:_setUIPressState(self._heroItemContainer.images, press, self._heroItemContainer.compColor)
+		self:_setUIPressState(self._heroItemContainer.tmps, press, self._heroItemContainer.compColor)
+		self:_setUIPressState(self._heroItemContainer.spines, press, self._heroItemContainer.compColor)
 	end
 end
 
-function var_0_0._setUIPressState(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not arg_12_1 then
+function CharacterBackpackCardListItem:_setUIPressState(graphicCompArray, isPress, oriColorMap)
+	if not graphicCompArray then
 		return
 	end
 
-	local var_12_0 = arg_12_1:GetEnumerator()
+	local iter = graphicCompArray:GetEnumerator()
 
-	while var_12_0:MoveNext() do
-		local var_12_1
+	while iter:MoveNext() do
+		local color
 
-		if arg_12_2 then
-			var_12_1 = arg_12_3 and arg_12_3[var_12_0.Current] * 0.7 or var_0_0.PressColor
-			var_12_1.a = var_12_0.Current.color.a
+		if isPress then
+			color = oriColorMap and oriColorMap[iter.Current] * 0.7 or CharacterBackpackCardListItem.PressColor
+
+			local alpha = iter.Current.color.a
+
+			color.a = alpha
 		else
-			var_12_1 = arg_12_3 and arg_12_3[var_12_0.Current] or Color.white
+			color = oriColorMap and oriColorMap[iter.Current] or Color.white
 		end
 
-		var_12_0.Current.color = var_12_1
+		iter.Current.color = color
 	end
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	if arg_13_0._heroItem then
-		arg_13_0._heroItem:onDestroy()
+function CharacterBackpackCardListItem:onDestroy()
+	if self._heroItem then
+		self._heroItem:onDestroy()
 
-		arg_13_0._heroItem = nil
+		self._heroItem = nil
 	end
 end
 
-function var_0_0.getAnimator(arg_14_0)
-	return arg_14_0._animator
+function CharacterBackpackCardListItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0._isShowDestinyReddot(arg_15_0)
-	if arg_15_0._mo and arg_15_0._mo.destinyStoneMo then
-		return arg_15_0._mo:isCanOpenDestinySystem() and arg_15_0._mo.destinyStoneMo:getRedDot() < 1
+function CharacterBackpackCardListItem:_isShowDestinyReddot()
+	if self._mo and self._mo.destinyStoneMo then
+		local isOpenDestiny = self._mo:isCanOpenDestinySystem()
+
+		return isOpenDestiny and self._mo.destinyStoneMo:getRedDot() < 1
 	end
 end
 
-function var_0_0._isShowNuodikaReddot(arg_16_0)
-	local var_16_0, var_16_1 = CharacterModel.instance:isNeedShowNewSkillReddot(arg_16_0._mo)
+function CharacterBackpackCardListItem:_isShowNuodikaReddot()
+	local isOverRank, isCanShow = CharacterModel.instance:isNeedShowNewSkillReddot(self._mo)
 
-	return var_16_0 and var_16_1
+	return isOverRank and isCanShow
 end
 
-return var_0_0
+return CharacterBackpackCardListItem

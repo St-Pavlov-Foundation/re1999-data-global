@@ -1,440 +1,465 @@
-﻿module("modules.logic.rouge.controller.RougeCollectionDescHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/controller/RougeCollectionDescHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.rouge.controller.RougeCollectionDescHelper", package.seeall)
 
-function var_0_0.setCollectionDescInfos(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_3 = arg_1_3 or var_0_0.getDefaultShowDescTypes()
-	arg_1_4 = arg_1_4 or var_0_0.getDefaultExtraParams_HasInst()
+local RougeCollectionDescHelper = _M
 
-	local var_1_0 = var_0_0.buildCollectionInfos(arg_1_3, arg_1_0, nil, nil, arg_1_4)
+function RougeCollectionDescHelper.setCollectionDescInfos(collectionId, goItemParent, goItemInstMap, descTypes, extraParams)
+	descTypes = descTypes or RougeCollectionDescHelper.getDefaultShowDescTypes()
+	extraParams = extraParams or RougeCollectionDescHelper.getDefaultExtraParams_HasInst()
 
-	var_0_0._showCollectionDescs(arg_1_1, arg_1_2, arg_1_3, var_1_0, arg_1_4)
+	local descInfoMap = RougeCollectionDescHelper.buildCollectionInfos(descTypes, collectionId, nil, nil, extraParams)
+
+	RougeCollectionDescHelper._showCollectionDescs(goItemParent, goItemInstMap, descTypes, descInfoMap, extraParams)
 end
 
-function var_0_0.setCollectionDescInfos2(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_4 = arg_2_4 or var_0_0.getDefaultShowDescTypes()
-	arg_2_5 = arg_2_5 or var_0_0.getDefaultExtraParams_NoneInst()
+function RougeCollectionDescHelper.setCollectionDescInfos2(collectionCfgId, enchantCfgIds, goItemParent, goItemInstMap, descTypes, extraParams)
+	descTypes = descTypes or RougeCollectionDescHelper.getDefaultShowDescTypes()
+	extraParams = extraParams or RougeCollectionDescHelper.getDefaultExtraParams_NoneInst()
 
-	local var_2_0 = var_0_0.buildCollectionInfos(arg_2_4, nil, arg_2_0, arg_2_1, arg_2_5)
+	local descInfoMap = RougeCollectionDescHelper.buildCollectionInfos(descTypes, nil, collectionCfgId, enchantCfgIds, extraParams)
 
-	var_0_0._showCollectionDescs(arg_2_2, arg_2_3, arg_2_4, var_2_0, arg_2_5)
+	RougeCollectionDescHelper._showCollectionDescs(goItemParent, goItemInstMap, descTypes, descInfoMap, extraParams)
 end
 
-function var_0_0.setCollectionDescInfos3(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_3 = arg_3_3 or var_0_0.getDefaultShowDescTypes()
-	arg_3_4 = arg_3_4 or var_0_0.getDefaultExtraParams_NoneInst()
+function RougeCollectionDescHelper.setCollectionDescInfos3(collectionCfgId, enchantCfgIds, txtComp, descTypes, extraParams)
+	descTypes = descTypes or RougeCollectionDescHelper.getDefaultShowDescTypes()
+	extraParams = extraParams or RougeCollectionDescHelper.getDefaultExtraParams_NoneInst()
 
-	local var_3_0 = var_0_0.buildCollectionInfos(arg_3_3, nil, arg_3_0, arg_3_1, arg_3_4)
+	local descInfoMap = RougeCollectionDescHelper.buildCollectionInfos(descTypes, nil, collectionCfgId, enchantCfgIds, extraParams)
 
-	var_0_0._showCollectionDesc2(arg_3_3, var_3_0, arg_3_2, arg_3_4)
+	RougeCollectionDescHelper._showCollectionDesc2(descTypes, descInfoMap, txtComp, extraParams)
 end
 
-function var_0_0.setCollectionDescInfos4(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_2 = arg_4_2 or var_0_0.getDefaultShowDescTypes()
-	arg_4_3 = arg_4_3 or var_0_0.getDefaultExtraParams_HasInst()
+function RougeCollectionDescHelper.setCollectionDescInfos4(collectionId, txtComp, descTypes, extraParams)
+	descTypes = descTypes or RougeCollectionDescHelper.getDefaultShowDescTypes()
+	extraParams = extraParams or RougeCollectionDescHelper.getDefaultExtraParams_HasInst()
 
-	local var_4_0 = var_0_0.buildCollectionInfos(arg_4_2, arg_4_0, arg_4_3)
+	local descInfoMap = RougeCollectionDescHelper.buildCollectionInfos(descTypes, collectionId, extraParams)
 
-	var_0_0._showCollectionDesc2(arg_4_2, var_4_0, arg_4_1, arg_4_3)
+	RougeCollectionDescHelper._showCollectionDesc2(descTypes, descInfoMap, txtComp, extraParams)
 end
 
-function var_0_0._showCollectionDescs(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	if not arg_5_2 or not arg_5_3 then
+function RougeCollectionDescHelper._showCollectionDescs(goItemParent, goItemInstMap, descTypes, descInfoMap, extraParams)
+	if not descTypes or not descInfoMap then
 		return
 	end
 
-	local var_5_0 = {}
+	local useIndexMap = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
-		local var_5_1 = arg_5_3[iter_5_1]
+	for _, descType in ipairs(descTypes) do
+		local contentInfo = descInfoMap[descType]
 
-		if var_5_1 then
-			for iter_5_2, iter_5_3 in ipairs(var_5_1) do
-				local var_5_2 = var_0_0._getOrCreateDescItem(iter_5_1, var_5_0, arg_5_0, arg_5_1)
+		if contentInfo then
+			for _, info in ipairs(contentInfo) do
+				local itemInst = RougeCollectionDescHelper._getOrCreateDescItem(descType, useIndexMap, goItemParent, goItemInstMap)
 
-				var_0_0._showCollectionSingleContent(iter_5_1, iter_5_3, var_5_2, arg_5_4)
+				RougeCollectionDescHelper._showCollectionSingleContent(descType, info, itemInst, extraParams)
 			end
 		end
 	end
 
-	for iter_5_4, iter_5_5 in pairs(arg_5_1) do
-		local var_5_3 = var_5_0[iter_5_4] or 0
-		local var_5_4 = #iter_5_5
+	for descType, itemInsts in pairs(goItemInstMap) do
+		local useIndex = useIndexMap[descType] or 0
+		local itemInstCount = #itemInsts
 
-		for iter_5_6 = var_5_3 + 1, var_5_4 do
-			gohelper.setActive(iter_5_5[iter_5_6], false)
+		for i = useIndex + 1, itemInstCount do
+			gohelper.setActive(itemInsts[i], false)
 		end
 	end
 end
 
-function var_0_0._showCollectionDesc2(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if not arg_6_0 or not arg_6_1 or not arg_6_2 then
+function RougeCollectionDescHelper._showCollectionDesc2(descTypes, descInfoMap, txtComp, extraParams)
+	if not descTypes or not descInfoMap or not txtComp then
 		return
 	end
 
-	local var_6_0 = arg_6_3 and arg_6_3.showDescToListFunc
-	local var_6_1 = var_0_0._defaultShowDescToListFunc
+	local overrideShowFunc = extraParams and extraParams.showDescToListFunc
+	local defaultShowFunc = RougeCollectionDescHelper._defaultShowDescToListFunc
+	local showFunc = overrideShowFunc or defaultShowFunc
 
-	;(var_6_0 or var_6_1)(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	showFunc(descTypes, descInfoMap, txtComp, extraParams)
 end
 
-function var_0_0._defaultShowDescToListFunc(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = {}
-	local var_7_1 = arg_7_3 and arg_7_3.isAllActive
+function RougeCollectionDescHelper._defaultShowDescToListFunc(descTypes, descInfoMap, txtComp, extraParams)
+	local descList = {}
+	local isAllActive = extraParams and extraParams.isAllActive
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0) do
-		local var_7_2 = arg_7_1[iter_7_1]
+	for _, descType in ipairs(descTypes) do
+		local contentInfo = descInfoMap[descType]
 
-		if var_7_2 then
-			for iter_7_2, iter_7_3 in ipairs(var_7_2) do
-				local var_7_3 = var_7_1 or iter_7_3.isActive
-				local var_7_4 = var_0_0._decorateCollectionEffectStr(iter_7_3.content, var_7_3)
+		if contentInfo then
+			for _, info in ipairs(contentInfo) do
+				local isActive = isAllActive or info.isActive
+				local desc = RougeCollectionDescHelper._decorateCollectionEffectStr(info.content, isActive)
 
-				table.insert(var_7_0, var_7_4)
+				table.insert(descList, desc)
 
-				if iter_7_3.isConditionVisible and not string.nilorempty(iter_7_3.condition) then
-					local var_7_5 = var_0_0._decorateCollectionEffectStr(iter_7_3.condition, var_7_3)
+				if info.isConditionVisible and not string.nilorempty(info.condition) then
+					local condition = RougeCollectionDescHelper._decorateCollectionEffectStr(info.condition, isActive)
 
-					table.insert(var_7_0, var_7_5)
+					table.insert(descList, condition)
 				end
 			end
 		end
 	end
 
-	arg_7_2.text = table.concat(var_7_0, "\n")
+	local descStr = table.concat(descList, "\n")
 
-	SkillHelper.addHyperLinkClick(arg_7_2)
+	txtComp.text = descStr
+
+	SkillHelper.addHyperLinkClick(txtComp)
 end
 
-function var_0_0._getOrCreateDescItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.findChild(arg_8_2, "go_descitem" .. arg_8_0)
+function RougeCollectionDescHelper._getOrCreateDescItem(descType, useIndexMap, goItemParent, goItemInstMap)
+	local goItemPrefab = gohelper.findChild(goItemParent, "go_descitem" .. descType)
 
-	if not var_8_0 then
-		logError("找不到描述类型对应的预制体 descType = " .. tostring(arg_8_0))
+	if not goItemPrefab then
+		logError("找不到描述类型对应的预制体 descType = " .. tostring(descType))
 
 		return
 	end
 
-	local var_8_1 = arg_8_3 and arg_8_3[arg_8_0]
-	local var_8_2 = var_8_1 and #var_8_1 or 0
-	local var_8_3 = arg_8_1 and arg_8_1[arg_8_0] or 0
-	local var_8_4 = var_8_3 < var_8_2
-	local var_8_5 = var_8_3 + 1
+	local goItemInstList = goItemInstMap and goItemInstMap[descType]
+	local goItemInstCount = goItemInstList and #goItemInstList or 0
+	local useIndex = useIndexMap and useIndexMap[descType] or 0
+	local canGetFromInstList = useIndex < goItemInstCount
 
-	if not var_8_4 then
-		local var_8_6 = string.format("%s_%s", arg_8_0, var_8_5)
-		local var_8_7 = gohelper.cloneInPlace(var_8_0, var_8_6)
+	useIndex = useIndex + 1
 
-		arg_8_3[arg_8_0] = arg_8_3[arg_8_0] or {}
+	if not canGetFromInstList then
+		local newInstName = string.format("%s_%s", descType, useIndex)
+		local newInstItem = gohelper.cloneInPlace(goItemPrefab, newInstName)
 
-		table.insert(arg_8_3[arg_8_0], var_8_7)
+		goItemInstMap[descType] = goItemInstMap[descType] or {}
+
+		table.insert(goItemInstMap[descType], newInstItem)
 	end
 
-	arg_8_1[arg_8_0] = var_8_5
+	useIndexMap[descType] = useIndex
 
-	return arg_8_3[arg_8_0][var_8_5]
+	local canGetInstItem = goItemInstMap[descType][useIndex]
+
+	return canGetInstItem
 end
 
-function var_0_0._showCollectionSingleContent(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_3 and arg_9_3.showDescFuncMap
-	local var_9_1 = var_9_0 and var_9_0[arg_9_0]
-	local var_9_2 = var_0_0.getDefaultDescTypeShowFunc(arg_9_0)
-	local var_9_3 = var_9_1 or var_9_2
+function RougeCollectionDescHelper._showCollectionSingleContent(descType, contentInfo, obj, extraParams)
+	local overrideShowFuncMap = extraParams and extraParams.showDescFuncMap
+	local overrideShowFunc = overrideShowFuncMap and overrideShowFuncMap[descType]
+	local defaultShowFunc = RougeCollectionDescHelper.getDefaultDescTypeShowFunc(descType)
+	local contentShowFunc = overrideShowFunc or defaultShowFunc
 
-	if not var_9_3 then
-		logError("缺少造物描述显示方法 描述类型 : " .. tostring(arg_9_0))
+	if not contentShowFunc then
+		logError("缺少造物描述显示方法 描述类型 : " .. tostring(descType))
 
 		return
 	end
 
-	gohelper.setActive(arg_9_2, true)
-	gohelper.setAsLastSibling(arg_9_2)
-	var_9_3(arg_9_2, arg_9_1)
+	gohelper.setActive(obj, true)
+	gohelper.setAsLastSibling(obj)
+	contentShowFunc(obj, contentInfo)
 end
 
-function var_0_0._showCollectionBaseEffect(arg_10_0, arg_10_1)
-	local var_10_0 = gohelper.findChildText(arg_10_0, "txt_desc")
-	local var_10_1 = gohelper.findChildImage(arg_10_0, "txt_desc/image_point")
-	local var_10_2 = arg_10_1.isActive and "rouge_collection_point1" or "rouge_collection_point2"
+function RougeCollectionDescHelper._showCollectionBaseEffect(goItem, contentInfo)
+	local txtDesc = gohelper.findChildText(goItem, "txt_desc")
+	local imagePoint = gohelper.findChildImage(goItem, "txt_desc/image_point")
+	local pointImageName = contentInfo.isActive and "rouge_collection_point1" or "rouge_collection_point2"
 
-	UISpriteSetMgr.instance:setRougeSprite(var_10_1, var_10_2)
+	UISpriteSetMgr.instance:setRougeSprite(imagePoint, pointImageName)
 
-	var_10_0.text = var_0_0._decorateCollectionEffectStr(arg_10_1.content, arg_10_1.isActive)
+	local decorateStr = RougeCollectionDescHelper._decorateCollectionEffectStr(contentInfo.content, contentInfo.isActive)
 
-	SkillHelper.addHyperLinkClick(var_10_0)
-	var_0_0.addFixTmpBreakLine(var_10_0)
+	txtDesc.text = decorateStr
+
+	SkillHelper.addHyperLinkClick(txtDesc)
+	RougeCollectionDescHelper.addFixTmpBreakLine(txtDesc)
 end
 
-function var_0_0._showCollectionExtraEffect(arg_11_0, arg_11_1)
-	local var_11_0 = gohelper.findChildText(arg_11_0, "txt_desc")
+function RougeCollectionDescHelper._showCollectionExtraEffect(goItem, contentInfo)
+	local txtDesc = gohelper.findChildText(goItem, "txt_desc")
 
-	var_11_0.text = var_0_0._decorateCollectionEffectStr(arg_11_1.content, arg_11_1.isActive)
+	txtDesc.text = RougeCollectionDescHelper._decorateCollectionEffectStr(contentInfo.content, contentInfo.isActive)
 
-	SkillHelper.addHyperLinkClick(var_11_0)
-	var_0_0.addFixTmpBreakLine(var_11_0)
+	SkillHelper.addHyperLinkClick(txtDesc)
+	RougeCollectionDescHelper.addFixTmpBreakLine(txtDesc)
 end
 
-function var_0_0._showCollectionText(arg_12_0, arg_12_1)
-	gohelper.findChildText(arg_12_0, "txt_desc").text = arg_12_1.content
+function RougeCollectionDescHelper._showCollectionText(goItem, contentInfo)
+	local txtDesc = gohelper.findChildText(goItem, "txt_desc")
+
+	txtDesc.text = contentInfo.content
 end
 
-function var_0_0.addFixTmpBreakLine(arg_13_0)
-	if not arg_13_0 then
+function RougeCollectionDescHelper.addFixTmpBreakLine(txtComp)
+	if not txtComp then
 		return
 	end
 
-	local var_13_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_13_0.gameObject, FixTmpBreakLine)
+	local fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(txtComp.gameObject, FixTmpBreakLine)
 
-	var_13_0:refreshTmpContent(arg_13_0)
+	fixTmpBreakLine:refreshTmpContent(txtComp)
 
-	return var_13_0
+	return fixTmpBreakLine
 end
 
-function var_0_0.buildCollectionInfos(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	if not arg_14_0 then
+function RougeCollectionDescHelper.buildCollectionInfos(descTypes, collectionId, collectionCfgId, enchantCfgIds, extraParams)
+	if not descTypes then
 		return
 	end
 
-	local var_14_0, var_14_1, var_14_2, var_14_3 = var_0_0._checkExtraParamsValid(arg_14_1, arg_14_2, arg_14_3)
+	local isValid, collectionId, collectionCfgId, enchantCfgIds = RougeCollectionDescHelper._checkExtraParamsValid(collectionId, collectionCfgId, enchantCfgIds)
 
-	if not var_14_0 then
+	if not isValid then
 		return
 	end
 
-	local var_14_4 = arg_14_4 and arg_14_4.buildDescFuncMap
-	local var_14_5 = RougeCollectionExpressionHelper.getCollectionAttrMap(var_14_1, var_14_2, var_14_3)
-	local var_14_6 = {}
+	local overrideBuildDescFuncMap = extraParams and extraParams.buildDescFuncMap
+	local resultAttrMap = RougeCollectionExpressionHelper.getCollectionAttrMap(collectionId, collectionCfgId, enchantCfgIds)
+	local infoMap = {}
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0) do
-		local var_14_7 = var_14_4 and var_14_4[iter_14_1]
-		local var_14_8 = var_0_0.getDefaultDescTypeExecuteFunc(iter_14_1)
-		local var_14_9 = var_14_7 or var_14_8
+	for _, descType in ipairs(descTypes) do
+		local overrideBuildDescFunc = overrideBuildDescFuncMap and overrideBuildDescFuncMap[descType]
+		local defaultBuildDescFunc = RougeCollectionDescHelper.getDefaultDescTypeExecuteFunc(descType)
+		local buildFunc = overrideBuildDescFunc or defaultBuildDescFunc
 
-		if not var_14_9 then
-			logError("缺少造物描述数据构建方法 描述类型 : " .. tostring(iter_14_1))
+		if not buildFunc then
+			logError("缺少造物描述数据构建方法 描述类型 : " .. tostring(descType))
 		else
-			local var_14_10 = var_14_9(var_14_1, var_14_2, var_14_3, var_14_5, arg_14_4)
+			local typeInfo = buildFunc(collectionId, collectionCfgId, enchantCfgIds, resultAttrMap, extraParams)
 
-			if var_14_10 and #var_14_10 > 0 then
-				var_14_6[iter_14_1] = var_14_10
+			if typeInfo and #typeInfo > 0 then
+				infoMap[descType] = typeInfo
 			end
 		end
 	end
 
-	return var_14_6
+	return infoMap
 end
 
-function var_0_0._checkExtraParamsValid(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0 then
-		local var_15_0 = RougeCollectionModel.instance:getCollectionByUid(arg_15_0)
+function RougeCollectionDescHelper._checkExtraParamsValid(collectionId, collectionCfgId, enchantCfgIds)
+	if collectionId then
+		local collectionMo = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-		if not var_15_0 then
+		if not collectionMo then
 			return
 		end
 
-		arg_15_1 = var_15_0:getCollectionCfgId()
-		arg_15_2 = var_15_0:getAllEnchantCfgId()
-	elseif not RougeCollectionConfig.instance:getCollectionCfg(arg_15_1) then
-		return
-	end
+		collectionCfgId = collectionMo:getCollectionCfgId()
+		enchantCfgIds = collectionMo:getAllEnchantCfgId()
+	else
+		local collectionCo = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
 
-	return true, arg_15_0, arg_15_1, arg_15_2
-end
-
-function var_0_0.getCollectionBaseEffectInfo(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	local var_16_0 = arg_16_4 and arg_16_4.isAllActive
-	local var_16_1 = arg_16_4 and arg_16_4.activeEffectMap
-
-	if not var_16_0 and not var_16_1 and arg_16_0 ~= nil then
-		var_16_1 = RougeCollectionModel.instance:getCollectionActiveEffectMap(arg_16_0)
-	end
-
-	local var_16_2 = arg_16_4 and arg_16_4.infoType
-	local var_16_3 = RougeCollectionModel.instance:getCurCollectionInfoType()
-	local var_16_4 = (var_16_2 or var_16_3) == RougeEnum.CollectionInfoType.Complex
-	local var_16_5 = arg_16_4 and arg_16_4.effectInfos
-	local var_16_6 = RougeCollectionConfig.instance:getCollectionDescsCfg(arg_16_1)
-	local var_16_7 = var_16_5 or var_16_6
-	local var_16_8 = {}
-
-	for iter_16_0, iter_16_1 in ipairs(var_16_7) do
-		local var_16_9 = var_16_4 and iter_16_1.desc or iter_16_1.descSimply
-
-		if not string.nilorempty(var_16_9) then
-			local var_16_10 = RougeCollectionExpressionHelper.getDescExpressionResult(var_16_9, arg_16_3)
-			local var_16_11
-
-			var_16_11.isActive, var_16_11 = var_16_0 or var_16_1 and var_16_1[iter_16_1.effectId] == true, var_0_0._createCollectionDescMo(var_16_10)
-
-			table.insert(var_16_8, var_16_11)
+		if not collectionCo then
+			return
 		end
 	end
 
-	return var_16_8
+	return true, collectionId, collectionCfgId, enchantCfgIds
 end
 
-function var_0_0.getCollectionExtraEffectInfo(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = arg_17_4 and arg_17_4.isAllActive
-	local var_17_1 = arg_17_4 and arg_17_4.activeEffectMap
+function RougeCollectionDescHelper.getCollectionBaseEffectInfo(collectionId, collectionCfgId, enchantCfgIds, resultAttrMap, params)
+	local isAllActive = params and params.isAllActive
+	local activeEffectMap = params and params.activeEffectMap
+	local isUseDefaultEffectMap = not isAllActive and not activeEffectMap and collectionId ~= nil
 
-	if not var_17_0 and not var_17_1 and arg_17_0 ~= nil then
-		var_17_1 = RougeCollectionModel.instance:getCollectionActiveEffectMap(arg_17_0)
+	if isUseDefaultEffectMap then
+		activeEffectMap = RougeCollectionModel.instance:getCollectionActiveEffectMap(collectionId)
 	end
 
-	local var_17_2 = arg_17_4 and arg_17_4.effectInfos
-	local var_17_3 = RougeCollectionConfig.instance:getCollectionDescsCfg(arg_17_1)
-	local var_17_4 = var_17_2 or var_17_3
-	local var_17_5 = arg_17_4 and arg_17_4.infoType
-	local var_17_6 = RougeCollectionModel.instance:getCurCollectionInfoType()
-	local var_17_7 = (var_17_5 or var_17_6) == RougeEnum.CollectionInfoType.Complex
-	local var_17_8 = {}
+	local infoTypeParam = params and params.infoType
+	local defaultInfoType = RougeCollectionModel.instance:getCurCollectionInfoType()
+	local infoType = infoTypeParam or defaultInfoType
+	local isComplextType = infoType == RougeEnum.CollectionInfoType.Complex
+	local effectInfosParam = params and params.effectInfos
+	local defaultEffectInfo = RougeCollectionConfig.instance:getCollectionDescsCfg(collectionCfgId)
+	local effectInfos = effectInfosParam or defaultEffectInfo
+	local infoList = {}
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_4) do
-		local var_17_9 = var_17_7 and iter_17_1.descExtra or iter_17_1.descExtraSimply
+	for _, effectInfo in ipairs(effectInfos) do
+		local desc = isComplextType and effectInfo.desc or effectInfo.descSimply
 
-		if not string.nilorempty(var_17_9) then
-			local var_17_10 = RougeCollectionExpressionHelper.getDescExpressionResult(var_17_9, arg_17_3)
-			local var_17_11
+		if not string.nilorempty(desc) then
+			local descResult = RougeCollectionExpressionHelper.getDescExpressionResult(desc, resultAttrMap)
+			local isActive = isAllActive or activeEffectMap and activeEffectMap[effectInfo.effectId] == true
+			local baseInfo = RougeCollectionDescHelper._createCollectionDescMo(descResult)
 
-			var_17_11.isActive, var_17_11 = var_17_0 or var_17_1 and var_17_1[iter_17_1.effectId] == true, var_0_0._createCollectionDescMo(var_17_10)
+			baseInfo.isActive = isActive
 
-			table.insert(var_17_8, var_17_11)
+			table.insert(infoList, baseInfo)
 		end
 	end
 
-	return var_17_8
+	return infoList
 end
 
-function var_0_0.getCollectionTextInfo(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = RougeCollectionConfig.instance:getCollectionOfficialDesc(arg_18_1)
+function RougeCollectionDescHelper.getCollectionExtraEffectInfo(collectionId, collectionCfgId, enchantCfgIds, resultAttrMap, params)
+	local isAllActive = params and params.isAllActive
+	local activeEffectMap = params and params.activeEffectMap
+	local isUseDefaultEffectMap = not isAllActive and not activeEffectMap and collectionId ~= nil
 
-	if not string.nilorempty(var_18_0) then
-		local var_18_1 = var_0_0._createCollectionDescMo(var_18_0)
+	if isUseDefaultEffectMap then
+		activeEffectMap = RougeCollectionModel.instance:getCollectionActiveEffectMap(collectionId)
+	end
+
+	local effectInfosParam = params and params.effectInfos
+	local defaultEffectInfo = RougeCollectionConfig.instance:getCollectionDescsCfg(collectionCfgId)
+	local effectInfos = effectInfosParam or defaultEffectInfo
+	local infoTypeParam = params and params.infoType
+	local defaultInfoType = RougeCollectionModel.instance:getCurCollectionInfoType()
+	local infoType = infoTypeParam or defaultInfoType
+	local isComplextType = infoType == RougeEnum.CollectionInfoType.Complex
+	local infoList = {}
+
+	for _, effectInfo in ipairs(effectInfos) do
+		local extraDesc = isComplextType and effectInfo.descExtra or effectInfo.descExtraSimply
+
+		if not string.nilorempty(extraDesc) then
+			local extraDescResult = RougeCollectionExpressionHelper.getDescExpressionResult(extraDesc, resultAttrMap)
+			local isActive = isAllActive or activeEffectMap and activeEffectMap[effectInfo.effectId] == true
+			local extraInfo = RougeCollectionDescHelper._createCollectionDescMo(extraDescResult)
+
+			extraInfo.isActive = isActive
+
+			table.insert(infoList, extraInfo)
+		end
+	end
+
+	return infoList
+end
+
+function RougeCollectionDescHelper.getCollectionTextInfo(collectionId, collectionCfgId, enchantCfgIds, params)
+	local officialDesc = RougeCollectionConfig.instance:getCollectionOfficialDesc(collectionCfgId)
+
+	if not string.nilorempty(officialDesc) then
+		local descMo = RougeCollectionDescHelper._createCollectionDescMo(officialDesc)
 
 		return {
-			var_18_1
+			descMo
 		}
 	end
 end
 
-function var_0_0._createCollectionDescMo(arg_19_0)
-	return {
-		content = arg_19_0
+function RougeCollectionDescHelper._createCollectionDescMo(descStr)
+	local mo = {
+		content = descStr
 	}
+
+	return mo
 end
 
-var_0_0.ActiveEffectColor = "#B7B7B7"
-var_0_0.DisactiveEffectColor = "#7E7E7E"
+RougeCollectionDescHelper.ActiveEffectColor = "#B7B7B7"
+RougeCollectionDescHelper.DisactiveEffectColor = "#7E7E7E"
 
-function var_0_0._decorateCollectionEffectStr(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if string.nilorempty(arg_20_0) then
+function RougeCollectionDescHelper._decorateCollectionEffectStr(desc, isActive, activeColor, disactiveColor)
+	if string.nilorempty(desc) then
 		return
 	end
 
-	local var_20_0 = arg_20_3 or var_0_0.DisactiveEffectColor
-	local var_20_1 = arg_20_2 or var_0_0.ActiveEffectColor
-	local var_20_2 = arg_20_1 and var_20_1 or var_20_0
-	local var_20_3 = SkillHelper.buildDesc(arg_20_0)
+	local resultDisactiveColor = disactiveColor or RougeCollectionDescHelper.DisactiveEffectColor
+	local resultActiveColor = activeColor or RougeCollectionDescHelper.ActiveEffectColor
+	local resultColor = isActive and resultActiveColor or resultDisactiveColor
+	local buildDesc = SkillHelper.buildDesc(desc)
+	local result = string.format("<%s>%s</color>", resultColor, buildDesc)
 
-	return (string.format("<%s>%s</color>", var_20_2, var_20_3))
+	return result
 end
 
-function var_0_0.getDefaultDescTypeShowFunc(arg_21_0)
-	if not var_0_0.DefaultDescTypeShowFuncMap then
-		var_0_0.DefaultDescTypeShowFuncMap = {
-			[RougeEnum.CollectionDescType.BaseEffect] = var_0_0._showCollectionBaseEffect,
-			[RougeEnum.CollectionDescType.ExtraEffect] = var_0_0._showCollectionExtraEffect,
-			[RougeEnum.CollectionDescType.Text] = var_0_0._showCollectionText,
+function RougeCollectionDescHelper.getDefaultDescTypeShowFunc(descType)
+	if not RougeCollectionDescHelper.DefaultDescTypeShowFuncMap then
+		RougeCollectionDescHelper.DefaultDescTypeShowFuncMap = {
+			[RougeEnum.CollectionDescType.BaseEffect] = RougeCollectionDescHelper._showCollectionBaseEffect,
+			[RougeEnum.CollectionDescType.ExtraEffect] = RougeCollectionDescHelper._showCollectionExtraEffect,
+			[RougeEnum.CollectionDescType.Text] = RougeCollectionDescHelper._showCollectionText,
 			[RougeEnum.CollectionDescType.SpecialHeader] = RougeDLCHelper102._showSpCollectionHeader,
 			[RougeEnum.CollectionDescType.SpecialText] = RougeDLCHelper102._showSpCollectionDescInfo
 		}
 	end
 
-	return var_0_0.DefaultDescTypeShowFuncMap[arg_21_0]
+	return RougeCollectionDescHelper.DefaultDescTypeShowFuncMap[descType]
 end
 
-function var_0_0.getDefaultDescTypeExecuteFunc(arg_22_0)
-	if not var_0_0.DefaultDescTypeExecuteFuncMap then
-		var_0_0.DefaultDescTypeExecuteFuncMap = {
-			[RougeEnum.CollectionDescType.BaseEffect] = var_0_0.getCollectionBaseEffectInfo,
-			[RougeEnum.CollectionDescType.ExtraEffect] = var_0_0.getCollectionExtraEffectInfo,
-			[RougeEnum.CollectionDescType.Text] = var_0_0.getCollectionTextInfo,
+function RougeCollectionDescHelper.getDefaultDescTypeExecuteFunc(descType)
+	if not RougeCollectionDescHelper.DefaultDescTypeExecuteFuncMap then
+		RougeCollectionDescHelper.DefaultDescTypeExecuteFuncMap = {
+			[RougeEnum.CollectionDescType.BaseEffect] = RougeCollectionDescHelper.getCollectionBaseEffectInfo,
+			[RougeEnum.CollectionDescType.ExtraEffect] = RougeCollectionDescHelper.getCollectionExtraEffectInfo,
+			[RougeEnum.CollectionDescType.Text] = RougeCollectionDescHelper.getCollectionTextInfo,
 			[RougeEnum.CollectionDescType.SpecialHeader] = RougeDLCHelper102.getSpCollectionHeaderInfo,
 			[RougeEnum.CollectionDescType.SpecialText] = RougeDLCHelper102.getSpCollectionDescInfo
 		}
 	end
 
-	return var_0_0.DefaultDescTypeExecuteFuncMap[arg_22_0]
+	return RougeCollectionDescHelper.DefaultDescTypeExecuteFuncMap[descType]
 end
 
-function var_0_0.getDefaultShowDescTypes()
-	if not var_0_0.DefaultShowDescTypes then
-		var_0_0.DefaultShowDescTypes = {}
+function RougeCollectionDescHelper.getDefaultShowDescTypes()
+	if not RougeCollectionDescHelper.DefaultShowDescTypes then
+		RougeCollectionDescHelper.DefaultShowDescTypes = {}
 
-		for iter_23_0, iter_23_1 in pairs(RougeEnum.CollectionDescType) do
-			table.insert(var_0_0.DefaultShowDescTypes, iter_23_1)
+		for _, descType in pairs(RougeEnum.CollectionDescType) do
+			table.insert(RougeCollectionDescHelper.DefaultShowDescTypes, descType)
 		end
 
-		table.sort(var_0_0.DefaultShowDescTypes, var_0_0._showDescTypeSortFunc)
+		table.sort(RougeCollectionDescHelper.DefaultShowDescTypes, RougeCollectionDescHelper._showDescTypeSortFunc)
 	end
 
-	return var_0_0.DefaultShowDescTypes
+	return RougeCollectionDescHelper.DefaultShowDescTypes
 end
 
-function var_0_0._showDescTypeSortFunc(arg_24_0, arg_24_1)
-	local var_24_0 = RougeEnum.CollectionDescTypeSort[arg_24_0] or 10000
-	local var_24_1 = RougeEnum.CollectionDescTypeSort[arg_24_1] or 10000
+function RougeCollectionDescHelper._showDescTypeSortFunc(sortTypeA, sortTypeB)
+	local priorityA = RougeEnum.CollectionDescTypeSort[sortTypeA] or 10000
+	local priorityB = RougeEnum.CollectionDescTypeSort[sortTypeB] or 10000
 
-	if var_24_0 ~= var_24_1 then
-		return var_24_0 < var_24_1
+	if priorityA ~= priorityB then
+		return priorityA < priorityB
 	end
 
-	return arg_24_0 < arg_24_1
+	return sortTypeA < sortTypeB
 end
 
-function var_0_0.getShowDescTypesWithoutText()
-	if not var_0_0.ShowDescTypesWithoutText then
-		var_0_0.ShowDescTypesWithoutText = {}
+function RougeCollectionDescHelper.getShowDescTypesWithoutText()
+	if not RougeCollectionDescHelper.ShowDescTypesWithoutText then
+		RougeCollectionDescHelper.ShowDescTypesWithoutText = {}
 
-		for iter_25_0, iter_25_1 in pairs(RougeEnum.CollectionDescType) do
-			if iter_25_1 ~= RougeEnum.CollectionDescType.Text then
-				table.insert(var_0_0.ShowDescTypesWithoutText, iter_25_1)
+		for _, descType in pairs(RougeEnum.CollectionDescType) do
+			if descType ~= RougeEnum.CollectionDescType.Text then
+				table.insert(RougeCollectionDescHelper.ShowDescTypesWithoutText, descType)
 			end
 		end
 
-		table.sort(var_0_0.ShowDescTypesWithoutText, var_0_0._showDescTypeSortFunc)
+		table.sort(RougeCollectionDescHelper.ShowDescTypesWithoutText, RougeCollectionDescHelper._showDescTypeSortFunc)
 	end
 
-	return var_0_0.ShowDescTypesWithoutText
+	return RougeCollectionDescHelper.ShowDescTypesWithoutText
 end
 
-function var_0_0.getDefaultExtraParams_NoneInst()
-	if not var_0_0.NoneInstExtraParams then
-		var_0_0.NoneInstExtraParams = {
+function RougeCollectionDescHelper.getDefaultExtraParams_NoneInst()
+	if not RougeCollectionDescHelper.NoneInstExtraParams then
+		RougeCollectionDescHelper.NoneInstExtraParams = {
 			isKeepConditionVisible = true,
 			isAllActive = true
 		}
 	end
 
-	return var_0_0.NoneInstExtraParams
+	return RougeCollectionDescHelper.NoneInstExtraParams
 end
 
-function var_0_0.getDefaultExtraParams_HasInst()
-	if not var_0_0.HasInstExtraParams then
-		var_0_0.HasInstExtraParams = {}
+function RougeCollectionDescHelper.getDefaultExtraParams_HasInst()
+	if not RougeCollectionDescHelper.HasInstExtraParams then
+		RougeCollectionDescHelper.HasInstExtraParams = {}
 	end
 
-	return var_0_0.HasInstExtraParams
+	return RougeCollectionDescHelper.HasInstExtraParams
 end
 
-function var_0_0.getExtraParams_KeepAllActive()
-	if not var_0_0.ExtraParams_KeepAllActive then
-		var_0_0.ExtraParams_KeepAllActive = {
+function RougeCollectionDescHelper.getExtraParams_KeepAllActive()
+	if not RougeCollectionDescHelper.ExtraParams_KeepAllActive then
+		RougeCollectionDescHelper.ExtraParams_KeepAllActive = {
 			isAllActive = true
 		}
 	end
 
-	return var_0_0.ExtraParams_KeepAllActive
+	return RougeCollectionDescHelper.ExtraParams_KeepAllActive
 end
 
-return var_0_0
+return RougeCollectionDescHelper

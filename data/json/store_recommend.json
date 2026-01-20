@@ -20,7 +20,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10002,
@@ -43,7 +44,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10004,
@@ -54,7 +56,7 @@
     "des": "",
     "order": 1000,
     "adjustOrder": "",
-    "isOffline": 0,
+    "isOffline": 1,
     "onlineTime": "",
     "offlineTime": "",
     "showOnlineTime": "",
@@ -66,7 +68,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10010,
@@ -89,7 +92,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10011,
@@ -112,7 +116,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10012,
@@ -135,7 +140,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10013,
@@ -158,7 +164,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10014,
@@ -181,7 +188,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10015,
@@ -204,7 +212,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10016,
@@ -227,7 +236,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10018,
@@ -250,7 +260,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10019,
@@ -273,7 +284,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10020,
@@ -296,7 +308,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10201,
@@ -319,7 +332,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10202,
@@ -342,7 +356,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10203,
@@ -365,7 +380,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10204,
@@ -388,7 +404,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10205,
@@ -411,7 +428,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10206,
@@ -434,7 +452,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10207,
@@ -457,7 +476,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10208,
@@ -480,7 +500,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20001,
@@ -503,7 +524,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20002,
@@ -526,7 +548,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20003,
@@ -549,7 +572,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20004,
@@ -572,7 +596,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20005,
@@ -595,7 +620,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20006,
@@ -618,7 +644,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20011,
@@ -641,7 +668,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20012,
@@ -664,7 +692,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20013,
@@ -687,7 +716,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20014,
@@ -710,7 +740,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20015,
@@ -733,7 +764,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20016,
@@ -756,7 +788,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 711,
@@ -779,7 +812,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 1
+    "topType": 1,
+    "isShowTurnback": false
   },
   {
     "id": 712,
@@ -802,7 +836,8 @@
     "isCustomLoad": 0,
     "className": "StoreNewbieChooseView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 713,
@@ -825,30 +860,32 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 714,
     "name": "language_10022144",
     "res": "bpenterview",
     "prefab": 3,
-    "nameEn": "§临时资源",
+    "nameEn": "ROAR JUKEBOX",
     "des": "",
     "order": 5,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-12-11 05:00:00",
-    "offlineTime": "2026-01-19 04:59:59",
-    "showOnlineTime": "2025-12-11 10:00:00",
-    "showOfflineTime": "2026-01-19 04:59:59",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-04 04:59:59",
+    "showOnlineTime": "2026-01-20 10:00:00",
+    "showOfflineTime": "2026-03-04 04:59:59",
     "relations": "4",
     "country": [],
-    "systemJumpCode": "48",
+    "systemJumpCode": "",
     "type": 0,
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 2
+    "topType": 2,
+    "isShowTurnback": false
   },
   {
     "id": 801,
@@ -871,7 +908,8 @@
     "isCustomLoad": 1,
     "className": "StoreRoleSkinView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 802,
@@ -894,53 +932,56 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 803,
-    "name": "language_10096583",
-    "res": "store/v3a1_giftrecommendview",
+    "name": "language_10103693",
+    "res": "store/v3a2_giftrecommendview",
     "prefab": 7,
-    "nameEn": "DAWN EXPRESS",
+    "nameEn": "UNDER THE TOWER'S WATCH",
     "des": "",
-    "order": 18,
+    "order": 19,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-12-11 05:00:00",
-    "offlineTime": "2026-01-01 04:59:59",
-    "showOnlineTime": "2025-12-11 10:00:00",
-    "showOfflineTime": "2026-01-01 04:59:59",
-    "relations": "2#831006|2#831012|2#831015",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-02-12 04:59:59",
+    "showOnlineTime": "2026-01-20 10:00:00",
+    "showOfflineTime": "2026-02-12 04:59:59",
+    "relations": "2#832012|2#832017|2#832008",
     "country": [],
-    "systemJumpCode": "10011444#831006 10011444#831012 10011444#831015",
+    "systemJumpCode": "10011444#832012 10011444#832017 10011444#832008",
     "type": 0,
     "isCustomLoad": 1,
     "className": "GiftrecommendView1",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 804,
-    "name": "language_10096583",
-    "res": "store/v3a1_giftrecommendview2",
+    "name": "language_10103693",
+    "res": "store/v3a2_giftrecommendview2",
     "prefab": 8,
-    "nameEn": "DAWN EXPRESS",
+    "nameEn": "UNDER THE TOWER'S WATCH",
     "des": "",
     "order": 15,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2026-01-01 05:00:00",
-    "offlineTime": "2026-01-20 04:59:59",
-    "showOnlineTime": "2025-01-01 05:00:00",
-    "showOfflineTime": "2026-01-20 04:59:59",
-    "relations": "2#831005|2#831009|2#831007",
+    "onlineTime": "2026-02-12 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "2026-02-12 05:00:00",
+    "showOfflineTime": "2026-03-05 04:59:59",
+    "relations": "2#832011|2#832015|2#832013",
     "country": [],
-    "systemJumpCode": "10011444#831005 10011444#831009 10011444#831007",
+    "systemJumpCode": "10011444#832011 10011444#832015 10011444#832013",
     "type": 0,
     "isCustomLoad": 1,
     "className": "GiftrecommendView1",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10301,
@@ -963,7 +1004,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10302,
@@ -986,7 +1028,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10303,
@@ -1009,7 +1052,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10304,
@@ -1032,7 +1076,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10305,
@@ -1055,7 +1100,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10306,
@@ -1078,7 +1124,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10307,
@@ -1101,7 +1148,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10170,
@@ -1124,7 +1172,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10308,
@@ -1147,7 +1196,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20021,
@@ -1170,7 +1220,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20022,
@@ -1193,7 +1244,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20023,
@@ -1216,7 +1268,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20024,
@@ -1239,7 +1292,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20025,
@@ -1262,7 +1316,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20026,
@@ -1285,7 +1340,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20027,
@@ -1308,7 +1364,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10408,
@@ -1331,7 +1388,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20420,
@@ -1354,7 +1412,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20421,
@@ -1377,7 +1436,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20422,
@@ -1400,7 +1460,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20423,
@@ -1423,7 +1484,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20424,
@@ -1446,7 +1508,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20426,
@@ -1469,7 +1532,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20427,
@@ -1492,7 +1556,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20428,
@@ -1515,7 +1580,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20429,
@@ -1538,7 +1604,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20430,
@@ -1561,7 +1628,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10411,
@@ -1584,7 +1652,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10412,
@@ -1607,7 +1676,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10199,
@@ -1630,7 +1700,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10401,
@@ -1653,7 +1724,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10402,
@@ -1676,7 +1748,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10403,
@@ -1699,7 +1772,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10404,
@@ -1722,7 +1796,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10405,
@@ -1745,7 +1820,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10406,
@@ -1768,30 +1844,32 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 805,
-    "name": "language_10053335",
-    "res": "store/v3a3_giftrecommendview3",
-    "prefab": 9,
-    "nameEn": "SNOWY SEASON",
+    "name": "language_10104440",
+    "res": "store/v3a4_giftrecommendview3",
+    "prefab": 6,
+    "nameEn": "BLOSSOM OF THE EAST WIND",
     "des": "",
     "order": 14,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-12-20 05:00:00",
-    "offlineTime": "2026-01-08 04:59:59",
-    "showOnlineTime": "2025-12-20 05:00:00",
-    "showOfflineTime": "2026-01-08 04:59:59",
-    "relations": "2#831018|2#831020|2#831019",
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-18 04:59:59",
+    "showOnlineTime": "2026-02-01 05:00:00",
+    "showOfflineTime": "2026-02-18 04:59:59",
+    "relations": "2#832021|2#832024|2#832023",
     "country": [],
-    "systemJumpCode": "10011444#831018 10011444#831020 10011444#831019",
+    "systemJumpCode": "10011444#832021 10011444#832024 10011444#832023",
     "type": 0,
     "isCustomLoad": 1,
     "className": "GiftrecommendView2",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10120,
@@ -1814,7 +1892,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10501,
@@ -1837,7 +1916,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10502,
@@ -1860,7 +1940,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10503,
@@ -1883,7 +1964,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10504,
@@ -1906,7 +1988,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10505,
@@ -1929,7 +2012,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10506,
@@ -1952,7 +2036,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10507,
@@ -1975,7 +2060,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10508,
@@ -1998,7 +2084,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10509,
@@ -2021,7 +2108,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10510,
@@ -2044,7 +2132,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10511,
@@ -2067,7 +2156,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10512,
@@ -2090,7 +2180,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10555,
@@ -2113,7 +2204,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10513,
@@ -2136,7 +2228,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10514,
@@ -2159,7 +2252,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10556,
@@ -2182,7 +2276,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10601,
@@ -2205,7 +2300,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10602,
@@ -2228,7 +2324,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10603,
@@ -2251,7 +2348,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10604,
@@ -2274,7 +2372,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10605,
@@ -2297,7 +2396,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10606,
@@ -2320,7 +2420,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10607,
@@ -2343,7 +2444,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10608,
@@ -2366,7 +2468,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10613,
@@ -2389,7 +2492,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10609,
@@ -2412,7 +2516,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10610,
@@ -2435,7 +2540,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10611,
@@ -2458,7 +2564,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10612,
@@ -2481,7 +2588,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10614,
@@ -2504,7 +2612,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10615,
@@ -2527,7 +2636,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10616,
@@ -2550,7 +2660,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10711,
@@ -2573,7 +2684,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10712,
@@ -2596,7 +2708,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10713,
@@ -2619,7 +2732,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10714,
@@ -2642,7 +2756,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10701,
@@ -2665,7 +2780,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10702,
@@ -2688,7 +2804,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10703,
@@ -2711,7 +2828,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10704,
@@ -2734,7 +2852,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10705,
@@ -2757,7 +2876,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10706,
@@ -2780,7 +2900,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10811,
@@ -2803,7 +2924,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10812,
@@ -2826,7 +2948,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10813,
@@ -2849,7 +2972,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10814,
@@ -2872,7 +2996,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10815,
@@ -2895,7 +3020,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10816,
@@ -2918,7 +3044,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10817,
@@ -2941,7 +3068,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10818,
@@ -2964,7 +3092,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10819,
@@ -2987,7 +3116,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10820,
@@ -3010,7 +3140,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10911,
@@ -3033,7 +3164,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10912,
@@ -3056,7 +3188,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10913,
@@ -3079,7 +3212,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10914,
@@ -3102,7 +3236,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10915,
@@ -3125,7 +3260,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10916,
@@ -3148,7 +3284,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10917,
@@ -3171,7 +3308,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10918,
@@ -3194,7 +3332,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10919,
@@ -3217,7 +3356,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10901,
@@ -3240,7 +3380,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10902,
@@ -3263,7 +3404,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10903,
@@ -3286,7 +3428,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10904,
@@ -3309,7 +3452,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 806,
@@ -3332,7 +3476,8 @@
     "isCustomLoad": 1,
     "className": "StoreRoleSkinView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 807,
@@ -3355,7 +3500,8 @@
     "isCustomLoad": 1,
     "className": "StoreRoleSkinView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 11011,
@@ -3378,7 +3524,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 11012,
@@ -3401,7 +3548,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 11013,
@@ -3424,7 +3572,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20192,
@@ -3447,7 +3596,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20193,
@@ -3470,7 +3620,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20194,
@@ -3493,7 +3644,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20111,
@@ -3516,7 +3668,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20196,
@@ -3539,7 +3692,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20201,
@@ -3562,7 +3716,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20202,
@@ -3585,7 +3740,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20195,
@@ -3608,7 +3764,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21111,
@@ -3631,7 +3788,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21112,
@@ -3654,7 +3812,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21113,
@@ -3677,7 +3836,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 814,
@@ -3700,7 +3860,8 @@
     "isCustomLoad": 1,
     "className": "GiftrecommendView2",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21114,
@@ -3723,7 +3884,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21115,
@@ -3746,7 +3908,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21116,
@@ -3769,7 +3932,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21119,
@@ -3792,7 +3956,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21118,
@@ -3815,7 +3980,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21201,
@@ -3838,7 +4004,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21202,
@@ -3861,7 +4028,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21203,
@@ -3884,7 +4052,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21117,
@@ -3907,7 +4076,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22000,
@@ -3930,7 +4100,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22001,
@@ -3953,7 +4124,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22002,
@@ -3976,7 +4148,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22003,
@@ -3999,30 +4172,32 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 808,
-    "name": "language_10097135",
-    "res": "store/storeroleskinview4",
-    "prefab": 21,
-    "nameEn": "YEARLY BOOKMARKS",
+    "name": "language_10103694",
+    "res": "store/storeroleskinview",
+    "prefab": 22,
+    "nameEn": "Waves Against Time",
     "des": "",
-    "order": 19,
+    "order": 21,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-12-20 05:00:00",
-    "offlineTime": "2026-01-20 04:59:59",
-    "showOnlineTime": "2025-12-20 05:00:00",
-    "showOfflineTime": "2026-01-20 04:59:59",
-    "relations": "2#831003|5#510056",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "2026-01-20 10:00:00",
+    "showOfflineTime": "2026-03-05 04:59:59",
+    "relations": "2#832001|2#832002|5#510052|5#510053",
     "country": [],
     "systemJumpCode": "10173",
     "type": 0,
     "isCustomLoad": 1,
     "className": "StoreRoleSkinView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22016,
@@ -4045,7 +4220,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22011,
@@ -4068,7 +4244,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22012,
@@ -4091,7 +4268,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22013,
@@ -4114,7 +4292,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22014,
@@ -4137,7 +4316,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 816,
@@ -4160,7 +4340,8 @@
     "isCustomLoad": 1,
     "className": "StoreNew6StarsChooseView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22015,
@@ -4183,7 +4364,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22018,
@@ -4206,7 +4388,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22019,
@@ -4229,7 +4412,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22020,
@@ -4252,7 +4436,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22021,
@@ -4275,7 +4460,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23000,
@@ -4298,7 +4484,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23001,
@@ -4321,7 +4508,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23002,
@@ -4344,7 +4532,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23003,
@@ -4367,7 +4556,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23004,
@@ -4390,7 +4580,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23005,
@@ -4413,7 +4604,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23006,
@@ -4436,7 +4628,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23101,
@@ -4459,7 +4652,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23102,
@@ -4482,7 +4676,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23103,
@@ -4505,7 +4700,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23007,
@@ -4528,7 +4724,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23201,
@@ -4553,7 +4750,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23008,
@@ -4576,7 +4774,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23009,
@@ -4599,7 +4798,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23010,
@@ -4622,7 +4822,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24000,
@@ -4645,7 +4846,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24001,
@@ -4668,7 +4870,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24003,
@@ -4691,7 +4894,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24004,
@@ -4714,7 +4918,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24005,
@@ -4737,7 +4942,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24006,
@@ -4760,7 +4966,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24007,
@@ -4783,7 +4990,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24008,
@@ -4806,7 +5014,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24010,
@@ -4829,7 +5038,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24201,
@@ -4852,7 +5062,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24202,
@@ -4875,7 +5086,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24011,
@@ -4898,7 +5110,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24012,
@@ -4921,7 +5134,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24013,
@@ -4944,7 +5158,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25001,
@@ -4967,7 +5182,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25002,
@@ -4990,7 +5206,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25003,
@@ -5013,7 +5230,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25004,
@@ -5036,7 +5254,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 720,
@@ -5045,21 +5264,22 @@
     "prefab": 16,
     "nameEn": "ROARING SEASON",
     "des": "",
-    "order": 2,
+    "order": 3,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-04-24 05:00:00",
-    "offlineTime": "2025-05-29 04:59:59",
-    "showOnlineTime": "2025-04-24 10:00:00",
-    "showOfflineTime": "2025-05-29 04:59:59",
-    "relations": "2#811532",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "2026-01-20 10:00:00",
+    "showOfflineTime": "2026-03-05 04:59:59",
+    "relations": "2#832004",
     "country": [],
-    "systemJumpCode": "10011444#811532",
+    "systemJumpCode": "10011444#832004",
     "type": 0,
     "isCustomLoad": 1,
     "className": "StoreSeasonCardView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25005,
@@ -5082,7 +5302,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25006,
@@ -5105,7 +5326,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25007,
@@ -5128,7 +5350,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 721,
@@ -5151,7 +5374,8 @@
     "isCustomLoad": 1,
     "className": "StoreSkinBagView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25201,
@@ -5174,7 +5398,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25202,
@@ -5197,7 +5422,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25203,
@@ -5220,7 +5446,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25008,
@@ -5243,7 +5470,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 815,
@@ -5266,7 +5494,8 @@
     "isCustomLoad": 1,
     "className": "GiftrecommendView2",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25009,
@@ -5289,7 +5518,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25010,
@@ -5312,7 +5542,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25011,
@@ -5335,53 +5566,56 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 809,
-    "name": "language_10096593",
+    "name": "language_10086104",
     "res": "store/storeroleskinview2",
-    "prefab": 12,
-    "nameEn": "A NIGHT OF THE BIZARRE",
+    "prefab": 21,
+    "nameEn": "CARD #0 TO #21",
     "des": "",
-    "order": 21,
+    "order": 20,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-12-11 05:00:00",
-    "offlineTime": "2026-01-20 04:59:59",
-    "showOnlineTime": "2025-12-11 10:00:00",
-    "showOfflineTime": "2026-01-20 04:59:59",
-    "relations": "2#831001|2#831002|5#510049|5#510050",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "2026-01-20 10:00:00",
+    "showOfflineTime": "2026-03-05 04:59:59",
+    "relations": "2#832003|5#510051",
     "country": [],
     "systemJumpCode": "10173",
     "type": 0,
     "isCustomLoad": 1,
     "className": "StoreRoleSkinView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 821,
-    "name": "language_10096626",
+    "name": "language_10103695",
     "res": "store/storeblockpackageview",
     "prefab": 20,
-    "nameEn": "THE WAY HERE AND BACK",
+    "nameEn": "ECHOES OF THE SEINE",
     "des": "",
-    "order": 29,
+    "order": 22,
     "adjustOrder": "",
     "isOffline": 0,
-    "onlineTime": "2025-12-11 05:00:00",
-    "offlineTime": "2026-01-20 04:59:59",
-    "showOnlineTime": "2025-12-11 05:00:00",
-    "showOfflineTime": "2026-01-20 04:59:59",
-    "relations": "5#172100",
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "2026-01-20 10:00:00",
+    "showOfflineTime": "2026-03-05 04:59:59",
+    "relations": "5#172200",
     "country": [],
-    "systemJumpCode": "10013156",
+    "systemJumpCode": "10013256",
     "type": 0,
     "isCustomLoad": 1,
     "className": "StoreBlockPackageView",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25012,
@@ -5404,7 +5638,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25013,
@@ -5427,7 +5662,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25014,
@@ -5450,7 +5686,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26001,
@@ -5473,7 +5710,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26101,
@@ -5496,7 +5734,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26802,
@@ -5519,7 +5758,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26803,
@@ -5542,7 +5782,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26002,
@@ -5565,7 +5806,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26003,
@@ -5588,7 +5830,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26004,
@@ -5611,7 +5854,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26005,
@@ -5634,7 +5878,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26006,
@@ -5657,7 +5902,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26007,
@@ -5680,7 +5926,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26501,
@@ -5703,7 +5950,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27001,
@@ -5726,7 +5974,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27002,
@@ -5749,7 +5998,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27006,
@@ -5772,7 +6022,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27201,
@@ -5795,7 +6046,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27007,
@@ -5818,7 +6070,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27008,
@@ -5841,7 +6094,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27019,
@@ -5864,7 +6118,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 1,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27020,
@@ -5887,7 +6142,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 1,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27021,
@@ -5910,7 +6166,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27022,
@@ -5933,7 +6190,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27003,
@@ -5956,7 +6214,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27004,
@@ -5979,7 +6238,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 27005,
@@ -6002,7 +6262,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28601,
@@ -6025,7 +6286,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28617,
@@ -6048,7 +6310,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28602,
@@ -6071,7 +6334,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28603,
@@ -6094,7 +6358,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28604,
@@ -6117,7 +6382,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28605,
@@ -6140,7 +6406,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28606,
@@ -6163,7 +6430,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 1,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28607,
@@ -6186,7 +6454,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28616,
@@ -6209,7 +6478,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28615,
@@ -6232,7 +6502,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28608,
@@ -6255,7 +6526,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28609,
@@ -6278,7 +6550,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28610,
@@ -6301,7 +6574,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28611,
@@ -6324,7 +6598,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28612,
@@ -6347,7 +6622,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28613,
@@ -6370,7 +6646,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28614,
@@ -6393,7 +6670,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28618,
@@ -6416,7 +6694,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 28619,
@@ -6439,7 +6718,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30001,
@@ -6462,7 +6742,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30002,
@@ -6485,7 +6766,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30003,
@@ -6508,7 +6790,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30004,
@@ -6531,7 +6814,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30005,
@@ -6554,7 +6838,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30010,
@@ -6577,7 +6862,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30011,
@@ -6600,7 +6886,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30012,
@@ -6623,7 +6910,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30006,
@@ -6646,7 +6934,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30007,
@@ -6669,7 +6958,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30008,
@@ -6692,7 +6982,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30009,
@@ -6715,7 +7006,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30013,
@@ -6738,7 +7030,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 830,
@@ -6761,7 +7054,8 @@
     "isCustomLoad": 1,
     "className": "GiftDecorateSkinSetView",
     "topDay": 1,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305001,
@@ -6784,7 +7078,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305002,
@@ -6807,7 +7102,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305003,
@@ -6830,7 +7126,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 831,
@@ -6853,7 +7150,8 @@
     "isCustomLoad": 1,
     "className": "GiftrecommendViewBase",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 832,
@@ -6876,7 +7174,8 @@
     "isCustomLoad": 1,
     "className": "GiftrecommendViewBase",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305004,
@@ -6899,7 +7198,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305005,
@@ -6922,7 +7222,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305006,
@@ -6945,7 +7246,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305007,
@@ -6968,7 +7270,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305008,
@@ -6991,7 +7294,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305009,
@@ -7014,7 +7318,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305010,
@@ -7037,7 +7342,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305011,
@@ -7060,7 +7366,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305012,
@@ -7083,7 +7390,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31001,
@@ -7106,7 +7414,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31002,
@@ -7129,7 +7438,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31003,
@@ -7152,7 +7462,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31004,
@@ -7175,7 +7486,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31005,
@@ -7198,7 +7510,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31006,
@@ -7221,7 +7534,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31007,
@@ -7244,7 +7558,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31008,
@@ -7267,7 +7582,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31009,
@@ -7290,7 +7606,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31010,
@@ -7313,7 +7630,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31101,
@@ -7336,7 +7654,344 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
+  },
+  {
+    "id": 32001,
+    "name": "language_10103696",
+    "res": "kerandian",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 902,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-27 05:00:00",
+    "offlineTime": "2026-02-10 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32111",
+    "country": [],
+    "systemJumpCode": "202#32111",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32002,
+    "name": "language_10103697",
+    "res": "v1a9_yaxian",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 901,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-02-10 05:00:00",
+    "offlineTime": "2026-02-24 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32121",
+    "country": [],
+    "systemJumpCode": "202#32121",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32003,
+    "name": "language_10103698",
+    "res": "v3a2_summon_wuerlixi",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 900,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-02-24 05:00:00",
+    "offlineTime": "2026-03-10 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32131",
+    "country": [],
+    "systemJumpCode": "202#32131",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32004,
+    "name": "language_10103699",
+    "res": "v2a2_summon_tianshinana",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 600,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-02-01 05:00:00",
+    "offlineTime": "2026-02-15 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32141",
+    "country": [],
+    "systemJumpCode": "202#32141",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32005,
+    "name": "language_10103700",
+    "res": "v3a2_shop_skin_2",
+    "prefab": 0,
+    "nameEn": "\tTill the Sun Falls",
+    "des": "",
+    "order": 1300,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#832002|5#510053",
+    "country": [],
+    "systemJumpCode": "10013201",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": false
+  },
+  {
+    "id": 32006,
+    "name": "language_10103701",
+    "res": "v3a2_shop_skin_1",
+    "prefab": 0,
+    "nameEn": "The Last Fluttering Beat",
+    "des": "",
+    "order": 1200,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#832001|5#510052",
+    "country": [],
+    "systemJumpCode": "10013202",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": false
+  },
+  {
+    "id": 32007,
+    "name": "language_10103702",
+    "res": "v3a2_summon_selfselectnine",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 700,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-02-12 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32151",
+    "country": [],
+    "systemJumpCode": "202#32151",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32008,
+    "name": "language_10103703",
+    "res": "v3a2_summon_beilier",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 90,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32161",
+    "country": [],
+    "systemJumpCode": "202#32161",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32009,
+    "name": "language_10103704",
+    "res": "v3a2_summon_huidiaolan",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 100,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-02-12 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32171",
+    "country": [],
+    "systemJumpCode": "202#32171",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32010,
+    "name": "language_10103693",
+    "res": "v3a2_shop_1",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 1000,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "",
+    "country": [],
+    "systemJumpCode": "10170",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": false
+  },
+  {
+    "id": 32011,
+    "name": "language_10103705",
+    "res": "v3a2_summon_selfselectsix",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 800,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "1#32181",
+    "country": [],
+    "systemJumpCode": "202#32181",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": true
+  },
+  {
+    "id": 32012,
+    "name": "language_10103706",
+    "res": "v3a2_shop_skin_3",
+    "prefab": 0,
+    "nameEn": "\tTill the Sun Falls",
+    "des": "",
+    "order": 1100,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "2#832003|5#510051",
+    "country": [],
+    "systemJumpCode": "10013222",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": false
+  },
+  {
+    "id": 822,
+    "name": "language_10056483",
+    "res": "store/v3a2_giftrecommendview3",
+    "prefab": 11,
+    "nameEn": "SOUVENIR OF THE CARNIVAL",
+    "des": "",
+    "order": 4,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "2026-01-20 05:00:00",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "2026-01-20 10:00:00",
+    "showOfflineTime": "2026-03-05 04:59:59",
+    "relations": "2#832005",
+    "country": [],
+    "systemJumpCode": "10011444#832005",
+    "type": 0,
+    "isCustomLoad": 1,
+    "className": "SummonSimulationRecommendView",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": false
+  },
+  {
+    "id": 32101,
+    "name": "language_10097658",
+    "res": "v3a2_mainact",
+    "prefab": 0,
+    "nameEn": "",
+    "des": "",
+    "order": 500,
+    "adjustOrder": "",
+    "isOffline": 0,
+    "onlineTime": "",
+    "offlineTime": "2026-03-05 04:59:59",
+    "showOnlineTime": "",
+    "showOfflineTime": "",
+    "relations": "",
+    "country": [],
+    "systemJumpCode": "10113223",
+    "type": 1,
+    "isCustomLoad": 0,
+    "className": "",
+    "topDay": 0,
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 31020,
@@ -7359,7 +8014,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 33013,
@@ -7382,7 +8038,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 33011,
@@ -7405,7 +8062,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 90002,
@@ -7430,7 +8088,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 90003,
@@ -7455,7 +8114,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 90004,
@@ -7480,7 +8140,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 90005,
@@ -7505,7 +8166,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 26008,
@@ -7528,7 +8190,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24015,
@@ -7551,7 +8214,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10005,
@@ -7574,7 +8238,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10006,
@@ -7597,7 +8262,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10007,
@@ -7620,7 +8286,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10320,
@@ -7643,7 +8310,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10180,
@@ -7666,7 +8334,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10017,
@@ -7689,7 +8358,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 30020,
@@ -7712,7 +8382,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 305013,
@@ -7735,7 +8406,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25015,
@@ -7758,7 +8430,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 4,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 25016,
@@ -7781,7 +8454,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 2,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24014,
@@ -7804,7 +8478,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 24016,
@@ -7827,7 +8502,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23011,
@@ -7850,7 +8526,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23012,
@@ -7873,7 +8550,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23013,
@@ -7896,7 +8574,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 23014,
@@ -7919,7 +8598,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22022,
@@ -7942,7 +8622,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22023,
@@ -7965,7 +8646,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22098,
@@ -7990,7 +8672,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22099,
@@ -8015,7 +8698,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 22024,
@@ -8038,7 +8722,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21210,
@@ -8061,7 +8746,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21211,
@@ -8084,7 +8770,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21212,
@@ -8107,7 +8794,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21213,
@@ -8130,7 +8818,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21214,
@@ -8153,7 +8842,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 21215,
@@ -8176,7 +8866,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20210,
@@ -8199,7 +8890,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20211,
@@ -8222,7 +8914,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20212,
@@ -8245,7 +8938,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 20213,
@@ -8268,7 +8962,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10920,
@@ -8291,7 +8986,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10921,
@@ -8314,7 +9010,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10922,
@@ -8337,7 +9034,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10923,
@@ -8360,7 +9058,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10821,
@@ -8383,7 +9082,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10822,
@@ -8406,7 +9106,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10823,
@@ -8429,7 +9130,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10824,
@@ -8452,7 +9154,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10716,
@@ -8475,7 +9178,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10717,
@@ -8498,7 +9202,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10718,
@@ -8521,7 +9226,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10719,
@@ -8544,7 +9250,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10620,
@@ -8567,7 +9274,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10621,
@@ -8590,7 +9298,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10525,
@@ -8613,7 +9322,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10521,
@@ -8636,7 +9346,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10522,
@@ -8659,7 +9370,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10523,
@@ -8682,7 +9394,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 10524,
@@ -8705,7 +9418,8 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   },
   {
     "id": 90001,
@@ -8730,6 +9444,7 @@
     "isCustomLoad": 0,
     "className": "",
     "topDay": 0,
-    "topType": 0
+    "topType": 0,
+    "isShowTurnback": false
   }
 ]

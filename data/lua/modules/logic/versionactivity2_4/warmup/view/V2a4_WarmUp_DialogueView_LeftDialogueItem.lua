@@ -1,34 +1,38 @@
-﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView_LeftDialogueItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/view/V2a4_WarmUp_DialogueView_LeftDialogueItem.lua
 
-local var_0_0 = class("V2a4_WarmUp_DialogueView_LeftDialogueItem", V2a4_WarmUpDialogueItemBase_LR)
+module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView_LeftDialogueItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "content_bg/#txt_content")
-	arg_1_0._goloading = gohelper.findChild(arg_1_0.viewGO, "content_bg/#go_loading")
+local V2a4_WarmUp_DialogueView_LeftDialogueItem = class("V2a4_WarmUp_DialogueView_LeftDialogueItem", V2a4_WarmUpDialogueItemBase_LR)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a4_WarmUp_DialogueView_LeftDialogueItem:onInitView()
+	self._txtcontent = gohelper.findChildText(self.viewGO, "content_bg/#txt_content")
+	self._goloading = gohelper.findChild(self.viewGO, "content_bg/#go_loading")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V2a4_WarmUp_DialogueView_LeftDialogueItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V2a4_WarmUp_DialogueView_LeftDialogueItem:removeEvents()
 	return
 end
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function V2a4_WarmUp_DialogueView_LeftDialogueItem:ctor(...)
+	V2a4_WarmUp_DialogueView_LeftDialogueItem.super.ctor(self, ...)
 end
 
-function var_0_0.getTemplateGo(arg_5_0)
-	return arg_5_0:parent()._goleftdialogueitem
+function V2a4_WarmUp_DialogueView_LeftDialogueItem:getTemplateGo()
+	local p = self:parent()
+
+	return p._goleftdialogueitem
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	var_0_0.super.onDestroyView(arg_6_0)
+function V2a4_WarmUp_DialogueView_LeftDialogueItem:onDestroyView()
+	V2a4_WarmUp_DialogueView_LeftDialogueItem.super.onDestroyView(self)
 end
 
-return var_0_0
+return V2a4_WarmUp_DialogueView_LeftDialogueItem

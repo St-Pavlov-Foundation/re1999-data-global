@@ -1,91 +1,98 @@
-﻿module("modules.logic.scene.survival.entity.SurvivalSpBlockEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/entity/SurvivalSpBlockEntity.lua
 
-local var_0_0 = class("SurvivalSpBlockEntity", SurvivalBlockEntity)
+module("modules.logic.scene.survival.entity.SurvivalSpBlockEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1)
-	local var_1_0 = gohelper.create3d(arg_1_1, tostring(arg_1_0.pos))
-	local var_1_1, var_1_2, var_1_3 = SurvivalHelper.instance:hexPointToWorldPoint(arg_1_0.pos.q, arg_1_0.pos.r)
-	local var_1_4 = var_1_0.transform
+local SurvivalSpBlockEntity = class("SurvivalSpBlockEntity", SurvivalBlockEntity)
 
-	transformhelper.setLocalPos(var_1_4, var_1_1, var_1_2, var_1_3)
-	transformhelper.setLocalRotation(var_1_4, 0, arg_1_0.dir * 60 + 30, 0)
+function SurvivalSpBlockEntity.Create(unitMo, root)
+	local go = gohelper.create3d(root, tostring(unitMo.pos))
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(unitMo.pos.q, unitMo.pos.r)
+	local rootTrans = go.transform
 
-	if arg_1_0.co then
-		local var_1_5 = arg_1_0:getResPath()
-		local var_1_6 = SurvivalMapHelper.instance:getSpBlockRes(tonumber(arg_1_0.co.copyIds) or 0, var_1_5)
+	transformhelper.setLocalPos(rootTrans, x, y, z)
+	transformhelper.setLocalRotation(rootTrans, 0, unitMo.dir * 60 + 30, 0)
 
-		if var_1_6 then
-			local var_1_7 = gohelper.clone(var_1_6, var_1_0).transform
+	if unitMo.co then
+		local blockResPath = unitMo:getResPath()
+		local blockRes = SurvivalMapHelper.instance:getSpBlockRes(tonumber(unitMo.co.copyIds) or 0, blockResPath)
 
-			transformhelper.setLocalPos(var_1_7, 0, 0, 0)
-			transformhelper.setLocalRotation(var_1_7, 0, 0, 0)
-			transformhelper.setLocalScale(var_1_7, 1, 1, 1)
+		if blockRes then
+			local blockGo = gohelper.clone(blockRes, go)
+			local trans = blockGo.transform
+
+			transformhelper.setLocalPos(trans, 0, 0, 0)
+			transformhelper.setLocalRotation(trans, 0, 0, 0)
+			transformhelper.setLocalScale(trans, 1, 1, 1)
 		else
-			logError("加载资源失败！" .. tostring(arg_1_0.co.copyIds) .. " >> " .. tostring(var_1_5))
+			logError("加载资源失败！" .. tostring(unitMo.co.copyIds) .. " >> " .. tostring(blockResPath))
 		end
 	end
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalSpBlockEntity, unitMo)
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0._data = arg_2_1
+function SurvivalSpBlockEntity:ctor(data)
+	self._data = data
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	var_0_0.super.init(arg_3_0, arg_3_1)
+function SurvivalSpBlockEntity:init(go)
+	SurvivalSpBlockEntity.super.init(self, go)
 
-	arg_3_0._anim = arg_3_1:GetComponentInChildren(typeof(UnityEngine.Animator))
-	arg_3_0._subType = arg_3_0._data:getSubType()
+	self._anim = go:GetComponentInChildren(typeof(UnityEngine.Animator))
+	self._subType = self._data:getSubType()
 
-	if arg_3_0._subType == SurvivalEnum.UnitSubType.Block then
-		SurvivalMapModel.instance:getCurMapCo():setWalkByUnitMo(arg_3_0._data, false)
+	if self._subType == SurvivalEnum.UnitSubType.Block then
+		local mapCo = SurvivalMapModel.instance:getCurMapCo()
+
+		mapCo:setWalkByUnitMo(self._data, false)
 	end
 
-	arg_3_0:_onMagmaStatusUpdate()
+	self:_onMagmaStatusUpdate()
 end
 
-function var_0_0.onStart(arg_4_0)
-	arg_4_0:_onMagmaStatusUpdate()
+function SurvivalSpBlockEntity:onStart()
+	self:_onMagmaStatusUpdate()
 end
 
-function var_0_0._onMagmaStatusUpdate(arg_5_0)
-	if arg_5_0._subType ~= SurvivalEnum.UnitSubType.Magma then
+function SurvivalSpBlockEntity:_onMagmaStatusUpdate()
+	if self._subType ~= SurvivalEnum.UnitSubType.Magma then
 		return
 	end
 
-	local var_5_0 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if arg_5_0._anim and arg_5_0._anim.isActiveAndEnabled then
-		arg_5_0._anim:Play("statu" .. var_5_0.sceneProp.magmaStatus)
+	if self._anim and self._anim.isActiveAndEnabled then
+		self._anim:Play("statu" .. sceneMo.sceneProp.magmaStatus)
 	end
 end
 
-function var_0_0.addEventListeners(arg_6_0)
-	var_0_0.super.addEventListeners(arg_6_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMagmaStatusUpdate, arg_6_0._onMagmaStatusUpdate, arg_6_0)
+function SurvivalSpBlockEntity:addEventListeners()
+	SurvivalSpBlockEntity.super.addEventListeners(self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMagmaStatusUpdate, self._onMagmaStatusUpdate, self)
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
-	var_0_0.super.removeEventListeners(arg_7_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMagmaStatusUpdate, arg_7_0._onMagmaStatusUpdate, arg_7_0)
+function SurvivalSpBlockEntity:removeEventListeners()
+	SurvivalSpBlockEntity.super.removeEventListeners(self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMagmaStatusUpdate, self._onMagmaStatusUpdate, self)
 end
 
-function var_0_0.tryDestory(arg_8_0)
-	if arg_8_0._subType == SurvivalEnum.UnitSubType.Block then
-		SurvivalMapModel.instance:getCurMapCo():setWalkByUnitMo(arg_8_0._data, true)
-		SurvivalMapHelper.instance:addPointEffect(arg_8_0._data.pos)
+function SurvivalSpBlockEntity:tryDestory()
+	if self._subType == SurvivalEnum.UnitSubType.Block then
+		local mapCo = SurvivalMapModel.instance:getCurMapCo()
 
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._data.exPoints) do
-			SurvivalMapHelper.instance:addPointEffect(iter_8_1)
+		mapCo:setWalkByUnitMo(self._data, true)
+		SurvivalMapHelper.instance:addPointEffect(self._data.pos)
+
+		for _, v in ipairs(self._data.exPoints) do
+			SurvivalMapHelper.instance:addPointEffect(v)
 		end
 	end
 
-	gohelper.destroy(arg_8_0.go)
+	gohelper.destroy(self.go)
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	var_0_0.super.onDestroy(arg_9_0)
+function SurvivalSpBlockEntity:onDestroy()
+	SurvivalSpBlockEntity.super.onDestroy(self)
 end
 
-return var_0_0
+return SurvivalSpBlockEntity

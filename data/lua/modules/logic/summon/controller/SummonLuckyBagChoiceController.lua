@@ -1,105 +1,108 @@
-﻿module("modules.logic.summon.controller.SummonLuckyBagChoiceController", package.seeall)
+﻿-- chunkname: @modules/logic/summon/controller/SummonLuckyBagChoiceController.lua
 
-local var_0_0 = class("SummonLuckyBagChoiceController", BaseController)
+module("modules.logic.summon.controller.SummonLuckyBagChoiceController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2)
-	SummonLuckyBagChoiceListModel.instance:initDatas(arg_1_1, arg_1_2)
+local SummonLuckyBagChoiceController = class("SummonLuckyBagChoiceController", BaseController)
+
+function SummonLuckyBagChoiceController:onOpenView(luckyBagId, poolId)
+	SummonLuckyBagChoiceListModel.instance:initDatas(luckyBagId, poolId)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function SummonLuckyBagChoiceController:onCloseView()
 	return
 end
 
-function var_0_0.trySendChoice(arg_3_0)
-	local var_3_0 = SummonLuckyBagChoiceListModel.instance:getPoolId()
-	local var_3_1 = SummonMainModel.instance:getPoolServerMO(var_3_0)
+function SummonLuckyBagChoiceController:trySendChoice()
+	local poolId = SummonLuckyBagChoiceListModel.instance:getPoolId()
+	local poolMO = SummonMainModel.instance:getPoolServerMO(poolId)
 
-	if not var_3_1 or not var_3_1:isOpening() then
+	if not poolMO or not poolMO:isOpening() then
 		return false
 	end
 
-	local var_3_2 = SummonLuckyBagChoiceListModel.instance:getSelectId()
+	local selectHeroId = SummonLuckyBagChoiceListModel.instance:getSelectId()
 
-	if not var_3_2 then
+	if not selectHeroId then
 		GameFacade.showToast(ToastEnum.SummonLuckyBagNotSelect)
 
 		return false
 	end
 
-	if arg_3_0:isLuckyBagOpened() then
+	if self:isLuckyBagOpened() then
 		GameFacade.showToast(ToastEnum.SummonLuckyBagAlreadyReceive)
 
 		return false
 	end
 
-	local var_3_3, var_3_4, var_3_5, var_3_6 = arg_3_0:getDuplicatePopUpParam(var_3_2)
+	local msgId, heroName, duplicateItemName, duplicateItemCount = self:getDuplicatePopUpParam(selectHeroId)
 
-	GameFacade.showMessageBox(var_3_3, MsgBoxEnum.BoxType.Yes_No, arg_3_0.realSendChoice, nil, nil, arg_3_0, nil, nil, var_3_4, var_3_5, var_3_6)
+	GameFacade.showMessageBox(msgId, MsgBoxEnum.BoxType.Yes_No, self.realSendChoice, nil, nil, self, nil, nil, heroName, duplicateItemName, duplicateItemCount)
 end
 
-function var_0_0.realSendChoice(arg_4_0)
-	local var_4_0 = SummonLuckyBagChoiceListModel.instance:getSelectId()
-	local var_4_1 = SummonLuckyBagChoiceListModel.instance:getLuckyBagId()
+function SummonLuckyBagChoiceController:realSendChoice()
+	local heroId = SummonLuckyBagChoiceListModel.instance:getSelectId()
+	local luckyBagId = SummonLuckyBagChoiceListModel.instance:getLuckyBagId()
 
-	if var_4_0 and var_4_0 ~= 0 then
-		SummonRpc.instance:sendOpenLuckyBagRequest(var_4_1, var_4_0)
+	if heroId and heroId ~= 0 then
+		SummonRpc.instance:sendOpenLuckyBagRequest(luckyBagId, heroId)
 	end
 end
 
-function var_0_0.getDuplicatePopUpParam(arg_5_0, arg_5_1)
-	local var_5_0 = HeroModel.instance:getByHeroId(arg_5_1)
-	local var_5_1 = HeroConfig.instance:getHeroCO(arg_5_1)
-	local var_5_2 = MessageBoxIdDefine.SummonLuckyBagSelectChar
-	local var_5_3 = var_5_1 and var_5_1.name or ""
-	local var_5_4 = ""
-	local var_5_5 = ""
+function SummonLuckyBagChoiceController:getDuplicatePopUpParam(heroId)
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+	local msgId = MessageBoxIdDefine.SummonLuckyBagSelectChar
+	local heroName = heroConfig and heroConfig.name or ""
+	local duplicateItemName = ""
+	local duplicateItemCount = ""
 
-	if var_5_0 and var_5_1 then
-		local var_5_6 = {}
+	if heroMo and heroConfig then
+		local itemParams = {}
+		local isMaxExSkill = HeroModel.instance:isMaxExSkill(heroId, true)
 
-		if not HeroModel.instance:isMaxExSkill(arg_5_1, true) then
-			local var_5_7 = GameUtil.splitString2(var_5_1.duplicateItem, true)
+		if not isMaxExSkill then
+			local duplicateItem1List = GameUtil.splitString2(heroConfig.duplicateItem, true)
 
-			var_5_6 = var_5_7 and var_5_7[1] or var_5_6
-			var_5_2 = MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat
+			itemParams = duplicateItem1List and duplicateItem1List[1] or itemParams
+			msgId = MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat
 		else
-			var_5_6 = string.splitToNumber(var_5_1.duplicateItem2, "#") or var_5_6
-			var_5_5 = var_5_6[3] or ""
-			var_5_2 = MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat2
+			itemParams = string.splitToNumber(heroConfig.duplicateItem2, "#") or itemParams
+			duplicateItemCount = itemParams[3] or ""
+			msgId = MessageBoxIdDefine.SummonLuckyBagSelectCharRepeat2
 		end
 
-		local var_5_8 = var_5_6[1]
-		local var_5_9 = var_5_6[2]
+		local itemType = itemParams[1]
+		local itemId = itemParams[2]
 
-		if var_5_8 and var_5_9 then
-			local var_5_10, var_5_11 = ItemModel.instance:getItemConfigAndIcon(var_5_6[1], var_5_6[2])
+		if itemType and itemId then
+			local itemConfig, _ = ItemModel.instance:getItemConfigAndIcon(itemParams[1], itemParams[2])
 
-			var_5_4 = var_5_10 and var_5_10.name or ""
+			duplicateItemName = itemConfig and itemConfig.name or ""
 		end
 	end
 
-	return var_5_2, var_5_3, var_5_4, var_5_5
+	return msgId, heroName, duplicateItemName, duplicateItemCount
 end
 
-function var_0_0.isLuckyBagOpened(arg_6_0)
-	local var_6_0 = SummonLuckyBagChoiceListModel.instance:getPoolId()
-	local var_6_1 = SummonLuckyBagChoiceListModel.instance:getLuckyBagId()
+function SummonLuckyBagChoiceController:isLuckyBagOpened()
+	local poolId = SummonLuckyBagChoiceListModel.instance:getPoolId()
+	local luckyBagId = SummonLuckyBagChoiceListModel.instance:getLuckyBagId()
 
-	if SummonLuckyBagModel.instance:isLuckyBagOpened(var_6_0, var_6_1) then
+	if SummonLuckyBagModel.instance:isLuckyBagOpened(poolId, luckyBagId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.setSelect(arg_7_0, arg_7_1)
-	SummonLuckyBagChoiceListModel.instance:setSelectId(arg_7_1)
+function SummonLuckyBagChoiceController:setSelect(heroId)
+	SummonLuckyBagChoiceListModel.instance:setSelectId(heroId)
 	SummonLuckyBagChoiceListModel.instance:onModelUpdate()
-	arg_7_0:dispatchEvent(SummonEvent.onLuckyListChanged)
+	self:dispatchEvent(SummonEvent.onLuckyListChanged)
 end
 
-var_0_0.instance = var_0_0.New()
+SummonLuckyBagChoiceController.instance = SummonLuckyBagChoiceController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(SummonLuckyBagChoiceController.instance)
 
-return var_0_0
+return SummonLuckyBagChoiceController

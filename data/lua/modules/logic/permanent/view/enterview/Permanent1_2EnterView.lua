@@ -1,110 +1,113 @@
-﻿module("modules.logic.permanent.view.enterview.Permanent1_2EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/permanent/view/enterview/Permanent1_2EnterView.lua
 
-local var_0_0 = class("Permanent1_2EnterView", BaseView)
+module("modules.logic.permanent.view.enterview.Permanent1_2EnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._btnEntranceRole1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
-	arg_1_0._goReddot1 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole1/#go_Reddot1")
-	arg_1_0._btnEntranceRole2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
-	arg_1_0._goReddot2 = gohelper.findChild(arg_1_0.viewGO, "Left/EntranceRole2/#go_Reddot2")
-	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/#btn_Play")
-	arg_1_0._btnEntranceDungeon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
-	arg_1_0._goReddot3 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Reddot3")
+local Permanent1_2EnterView = class("Permanent1_2EnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Permanent1_2EnterView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._btnEntranceRole1 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/EntranceRole1/#btn_EntranceRole1")
+	self._goReddot1 = gohelper.findChild(self.viewGO, "Left/EntranceRole1/#go_Reddot1")
+	self._btnEntranceRole2 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/EntranceRole2/#btn_EntranceRole2")
+	self._goReddot2 = gohelper.findChild(self.viewGO, "Left/EntranceRole2/#go_Reddot2")
+	self._btnPlay = gohelper.findChildButtonWithAudio(self.viewGO, "Title/#btn_Play")
+	self._btnEntranceDungeon = gohelper.findChildButtonWithAudio(self.viewGO, "Right/EntranceDungeon/#btn_EntranceDungeon")
+	self._goReddot3 = gohelper.findChild(self.viewGO, "Right/#go_Reddot3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEntranceRole1:AddClickListener(arg_2_0._btnEntranceRole1OnClick, arg_2_0)
-	arg_2_0._btnEntranceRole2:AddClickListener(arg_2_0._btnEntranceRole2OnClick, arg_2_0)
-	arg_2_0._btnPlay:AddClickListener(arg_2_0._btnPlayOnClick, arg_2_0)
-	arg_2_0._btnEntranceDungeon:AddClickListener(arg_2_0._btnEntranceDungeonOnClick, arg_2_0)
+function Permanent1_2EnterView:addEvents()
+	self._btnEntranceRole1:AddClickListener(self._btnEntranceRole1OnClick, self)
+	self._btnEntranceRole2:AddClickListener(self._btnEntranceRole2OnClick, self)
+	self._btnPlay:AddClickListener(self._btnPlayOnClick, self)
+	self._btnEntranceDungeon:AddClickListener(self._btnEntranceDungeonOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEntranceRole1:RemoveClickListener()
-	arg_3_0._btnEntranceRole2:RemoveClickListener()
-	arg_3_0._btnPlay:RemoveClickListener()
-	arg_3_0._btnEntranceDungeon:RemoveClickListener()
+function Permanent1_2EnterView:removeEvents()
+	self._btnEntranceRole1:RemoveClickListener()
+	self._btnEntranceRole2:RemoveClickListener()
+	self._btnPlay:RemoveClickListener()
+	self._btnEntranceDungeon:RemoveClickListener()
 end
 
-function var_0_0._btnEntranceRole1OnClick(arg_4_0)
-	local var_4_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.YaXian).confirmCondition
+function Permanent1_2EnterView:_btnEntranceRole1OnClick()
+	local activityCO = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.YaXian)
+	local condition = activityCO.confirmCondition
 
-	if string.nilorempty(var_4_0) then
+	if string.nilorempty(condition) then
 		YaXianController.instance:openYaXianMapView()
 	else
-		local var_4_1 = string.split(var_4_0, "=")
-		local var_4_2 = tonumber(var_4_1[2])
-		local var_4_3 = PlayerModel.instance:getPlayinfo().userId
-		local var_4_4 = PlayerPrefsKey.EnterRoleActivity .. "#" .. tostring(VersionActivity1_2Enum.ActivityId.YaXian) .. "#" .. tostring(var_4_3)
-		local var_4_5 = PlayerPrefsHelper.getNumber(var_4_4, 0) == 1
+		local strs = string.split(condition, "=")
+		local openId = tonumber(strs[2])
+		local userid = PlayerModel.instance:getPlayinfo().userId
+		local key = PlayerPrefsKey.EnterRoleActivity .. "#" .. tostring(VersionActivity1_2Enum.ActivityId.YaXian) .. "#" .. tostring(userid)
+		local hasTiped = PlayerPrefsHelper.getNumber(key, 0) == 1
 
-		if OpenModel.instance:isFunctionUnlock(var_4_2) or var_4_5 then
+		if OpenModel.instance:isFunctionUnlock(openId) or hasTiped then
 			YaXianController.instance:openYaXianMapView()
 		else
-			local var_4_6 = OpenConfig.instance:getOpenCo(var_4_2)
-			local var_4_7 = DungeonConfig.instance:getEpisodeDisplay(var_4_6.episodeId)
-			local var_4_8 = DungeonConfig.instance:getEpisodeCO(var_4_6.episodeId).name
-			local var_4_9
+			local openCO = OpenConfig.instance:getOpenCo(openId)
+			local dungeonDisplay = DungeonConfig.instance:getEpisodeDisplay(openCO.episodeId)
+			local dungeonName = DungeonConfig.instance:getEpisodeCO(openCO.episodeId).name
+			local name
 
 			if LangSettings.instance:isEn() then
-				var_4_9 = var_4_7 .. " " .. var_4_8
+				name = dungeonDisplay .. " " .. dungeonName
 			else
-				var_4_9 = var_4_7 .. var_4_8
+				name = dungeonDisplay .. dungeonName
 			end
 
 			GameFacade.showMessageBox(MessageBoxIdDefine.RoleActivityOpenTip, MsgBoxEnum.BoxType.Yes_No, function()
-				PlayerPrefsHelper.setNumber(var_4_4, 1)
+				PlayerPrefsHelper.setNumber(key, 1)
 				YaXianController.instance:openYaXianMapView()
-			end, nil, nil, nil, nil, nil, var_4_9)
+			end, nil, nil, nil, nil, nil, name)
 		end
 	end
 end
 
-function var_0_0._btnEntranceRole2OnClick(arg_6_0)
+function Permanent1_2EnterView:_btnEntranceRole2OnClick()
 	Activity114Controller.instance:openAct114View()
 end
 
-function var_0_0._btnPlayOnClick(arg_7_0)
-	local var_7_0 = {}
+function Permanent1_2EnterView:_btnPlayOnClick()
+	local param = {}
 
-	var_7_0.isVersionActivityPV = true
+	param.isVersionActivityPV = true
 
-	StoryController.instance:playStory(arg_7_0.actCfg.storyId, var_7_0)
+	StoryController.instance:playStory(self.actCfg.storyId, param)
 end
 
-function var_0_0._btnEntranceDungeonOnClick(arg_8_0)
+function Permanent1_2EnterView:_btnEntranceDungeonOnClick()
 	VersionActivity1_2DungeonController.instance:openDungeonView()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.EnterView)
+function Permanent1_2EnterView:_editableInitView()
+	self.actCfg = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.EnterView)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	local var_10_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.YaXian)
-	local var_10_1 = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.JieXiKa)
-	local var_10_2 = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.Dungeon)
+function Permanent1_2EnterView:onOpen()
+	local act1MO = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.YaXian)
+	local act2MO = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.JieXiKa)
+	local act3MO = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.Dungeon)
 
-	if var_10_0.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(arg_10_0._goReddot1, var_10_0.redDotId)
+	if act1MO.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(self._goReddot1, act1MO.redDotId)
 	end
 
-	if var_10_1.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(arg_10_0._goReddot2, var_10_1.redDotId)
+	if act2MO.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(self._goReddot2, act2MO.redDotId)
 	end
 
-	if var_10_2.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(arg_10_0._goReddot3, var_10_2.redDotId)
+	if act3MO.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(self._goReddot3, act3MO.redDotId)
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
-	PermanentModel.instance:undateActivityInfo(arg_11_0.actCfg.id)
+function Permanent1_2EnterView:onClose()
+	PermanentModel.instance:undateActivityInfo(self.actCfg.id)
 end
 
-return var_0_0
+return Permanent1_2EnterView

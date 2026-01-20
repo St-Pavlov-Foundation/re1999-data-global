@@ -1,9 +1,11 @@
-﻿module("modules.versionactivitybase.dungeon.define.VersionActivityDungeonEvent", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/dungeon/define/VersionActivityDungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.versionactivitybase.dungeon.define.VersionActivityDungeonEvent", package.seeall)
 
-var_0_0.OnModeChange = 1
-var_0_0.OnHardUnlockAnimDone = 2
-var_0_0.OnActivityDungeonMoChange = 3
+local VersionActivityDungeonEvent = _M
 
-return var_0_0
+VersionActivityDungeonEvent.OnModeChange = 1
+VersionActivityDungeonEvent.OnHardUnlockAnimDone = 2
+VersionActivityDungeonEvent.OnActivityDungeonMoChange = 3
+
+return VersionActivityDungeonEvent

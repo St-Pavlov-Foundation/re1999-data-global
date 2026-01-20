@@ -1,61 +1,63 @@
-﻿module("modules.logic.investigate.model.InvestigateOpinionModel", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/model/InvestigateOpinionModel.lua
 
-local var_0_0 = class("InvestigateOpinionModel", BaseModel)
+module("modules.logic.investigate.model.InvestigateOpinionModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._isInitOpinionInfo = false
-	arg_1_0._connectedId = {}
-	arg_1_0._unLockedId = {}
+local InvestigateOpinionModel = class("InvestigateOpinionModel", BaseModel)
+
+function InvestigateOpinionModel:onInit()
+	self._isInitOpinionInfo = false
+	self._connectedId = {}
+	self._unLockedId = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function InvestigateOpinionModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.getIsInitOpinionInfo(arg_3_0)
-	return arg_3_0._isInitOpinionInfo
+function InvestigateOpinionModel:getIsInitOpinionInfo()
+	return self._isInitOpinionInfo
 end
 
-function var_0_0.initOpinionInfo(arg_4_0, arg_4_1)
-	arg_4_0._isInitOpinionInfo = true
+function InvestigateOpinionModel:initOpinionInfo(info)
+	self._isInitOpinionInfo = true
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.intelBox) do
-		for iter_4_2, iter_4_3 in ipairs(iter_4_1.clueIds) do
-			arg_4_0._connectedId[iter_4_3] = iter_4_3
+	for i, v in ipairs(info.intelBox) do
+		for _, clueId in ipairs(v.clueIds) do
+			self._connectedId[clueId] = clueId
 		end
 	end
 
-	for iter_4_4, iter_4_5 in ipairs(arg_4_1.clueIds) do
-		arg_4_0._unLockedId[iter_4_5] = iter_4_5
+	for _, clueId in ipairs(info.clueIds) do
+		self._unLockedId[clueId] = clueId
 	end
 end
 
-function var_0_0.isUnlocked(arg_5_0, arg_5_1)
-	return arg_5_0._unLockedId[arg_5_1] ~= nil
+function InvestigateOpinionModel:isUnlocked(id)
+	return self._unLockedId[id] ~= nil
 end
 
-function var_0_0.setInfo(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._mo = arg_6_1
-	arg_6_0._moList = arg_6_2
+function InvestigateOpinionModel:setInfo(mo, moList)
+	self._mo = mo
+	self._moList = moList
 end
 
-function var_0_0.getInfo(arg_7_0)
-	return arg_7_0._mo, arg_7_0._moList
+function InvestigateOpinionModel:getInfo()
+	return self._mo, self._moList
 end
 
-function var_0_0.getLinkedStatus(arg_8_0, arg_8_1)
-	return arg_8_0._connectedId[arg_8_1] ~= nil
+function InvestigateOpinionModel:getLinkedStatus(id)
+	return self._connectedId[id] ~= nil
 end
 
-function var_0_0.setLinkedStatus(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._connectedId[arg_9_1] = arg_9_2
+function InvestigateOpinionModel:setLinkedStatus(id, value)
+	self._connectedId[id] = value
 end
 
-function var_0_0.allOpinionLinked(arg_10_0, arg_10_1)
-	local var_10_0 = InvestigateConfig.instance:getInvestigateAllClueInfos(arg_10_1)
+function InvestigateOpinionModel:allOpinionLinked(infoId)
+	local opinionList = InvestigateConfig.instance:getInvestigateAllClueInfos(infoId)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		if not arg_10_0:getLinkedStatus(iter_10_1.id) then
+	for i, v in ipairs(opinionList) do
+		if not self:getLinkedStatus(v.id) then
 			return false
 		end
 	end
@@ -63,6 +65,6 @@ function var_0_0.allOpinionLinked(arg_10_0, arg_10_1)
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+InvestigateOpinionModel.instance = InvestigateOpinionModel.New()
 
-return var_0_0
+return InvestigateOpinionModel

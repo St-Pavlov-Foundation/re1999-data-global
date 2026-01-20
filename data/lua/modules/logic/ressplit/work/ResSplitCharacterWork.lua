@@ -1,148 +1,151 @@
-﻿module("modules.logic.ressplit.work.ResSplitCharacterWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/ResSplitCharacterWork.lua
 
-local var_0_0 = class("ResSplitCharacterWork", BaseWork)
+module("modules.logic.ressplit.work.ResSplitCharacterWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SkinConfig.instance:getAllSkinCoList()
-	local var_1_1 = lua_monster_skin.configList
-	local var_1_2 = {}
+local ResSplitCharacterWork = class("ResSplitCharacterWork", BaseWork)
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0) do
-		table.insert(var_1_2, iter_1_1)
+function ResSplitCharacterWork:onStart(context)
+	local skinList = SkinConfig.instance:getAllSkinCoList()
+	local monsterSkinList = lua_monster_skin.configList
+	local allSkin = {}
+
+	for i, v in pairs(skinList) do
+		table.insert(allSkin, v)
 	end
 
-	for iter_1_2, iter_1_3 in pairs(var_1_1) do
-		table.insert(var_1_2, iter_1_3)
+	for i, v in pairs(monsterSkinList) do
+		table.insert(allSkin, v)
 	end
 
-	for iter_1_4, iter_1_5 in pairs(var_1_2) do
-		if ResSplitModel.instance:isExcludeCharacter(iter_1_5.characterId) and ResSplitModel.instance:isExcludeSkin(iter_1_5.id) then
-			arg_1_0:_addSkinRes(iter_1_5, true)
+	for i, v in pairs(allSkin) do
+		if ResSplitModel.instance:isExcludeCharacter(v.characterId) and ResSplitModel.instance:isExcludeSkin(v.id) then
+			self:_addSkinRes(v, true)
 		else
-			arg_1_0:_addSkinRes(iter_1_5, false)
+			self:_addSkinRes(v, false)
 		end
 	end
 
-	local var_1_3 = HeroConfig.instance.heroConfig.configDict
+	local allHero = HeroConfig.instance.heroConfig.configDict
 
-	for iter_1_6, iter_1_7 in pairs(var_1_3) do
-		local var_1_4 = ResSplitModel.instance:isExcludeCharacter(iter_1_6)
+	for heroId, v in pairs(allHero) do
+		local isExclude = ResSplitModel.instance:isExcludeCharacter(heroId)
 
-		if ResSplitModel.instance:isExcludeCharacter(iter_1_6) then
-			local var_1_5 = CharacterDataConfig.instance:getCharacterVoicesCo(iter_1_6)
+		if ResSplitModel.instance:isExcludeCharacter(heroId) then
+			local voicesCo = CharacterDataConfig.instance:getCharacterVoicesCo(heroId)
 
-			if var_1_5 then
-				for iter_1_8, iter_1_9 in pairs(var_1_5) do
-					local var_1_6 = ResSplitModel.instance.audioDic[iter_1_8]
+			if voicesCo then
+				for audioId, co in pairs(voicesCo) do
+					local audioInfo = ResSplitModel.instance.audioDic[audioId]
 
-					if var_1_6 then
-						ResSplitModel.instance:setExclude(ResSplitEnum.AudioBank, var_1_6.bankName, true)
+					if audioInfo then
+						ResSplitModel.instance:setExclude(ResSplitEnum.AudioBank, audioInfo.bankName, true)
 					end
 				end
 			end
 		else
-			local var_1_7 = FightHelper.buildSkills(iter_1_6)
+			local skillArr = FightHelper.buildSkills(heroId)
 
-			for iter_1_10, iter_1_11 in ipairs(var_1_7) do
-				ResSplitModel.instance:addIncludeSkill(iter_1_11)
+			for i, m in ipairs(skillArr) do
+				ResSplitModel.instance:addIncludeSkill(m)
 			end
 		end
 
-		local var_1_8 = ResUrl.getSignature(iter_1_7.signature)
+		local path = ResUrl.getSignature(v.signature)
 
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_1_8, var_1_4)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, isExclude)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._addSkinRes(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = string.format("skin:%d", arg_2_1.id)
-	local var_2_1 = ResUrl.getHeadSkinSmall(arg_2_1.id)
+function ResSplitCharacterWork:_addSkinRes(config, exclude)
+	local mainKey = string.format("skin:%d", config.id)
+	local path = ResUrl.getHeadSkinSmall(config.id)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_1, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_2 = ResUrl.getHandbookheroIcon(arg_2_1.id)
+	local path = ResUrl.getHandbookheroIcon(config.id)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_2, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_3 = ResUrl.getHeadIconImg(arg_2_1.drawing)
+	local path = ResUrl.getHeadIconImg(config.drawing)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_3, arg_2_2)
-	ResSplitHelper.checkConfigEmpty(var_2_0, "headIcon", arg_2_1.headIcon)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
+	ResSplitHelper.checkConfigEmpty(mainKey, "headIcon", config.headIcon)
 
-	local var_2_4 = ResUrl.getHeadIconSmall(arg_2_1.headIcon)
+	path = ResUrl.getHeadIconSmall(config.headIcon)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_4, false)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, false)
 
-	local var_2_5 = ResUrl.getHeadIconMiddle(arg_2_1.retangleIcon)
+	path = ResUrl.getHeadIconMiddle(config.retangleIcon)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_5, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_6 = ResUrl.getHeadIconSmall(arg_2_1.retangleIcon)
+	path = ResUrl.getHeadIconSmall(config.retangleIcon)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_6, false)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, false)
 
-	local var_2_7 = ResUrl.getHeadIconLarge(arg_2_1.retangleIcon)
+	path = ResUrl.getHeadIconLarge(config.retangleIcon)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_7, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_8 = ResUrl.getHeadIconLarge(arg_2_1.largeIcon)
+	path = ResUrl.getHeadIconLarge(config.largeIcon)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_8, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_9 = ResUrl.getHeadSkinIconMiddle(arg_2_1.skinGetIcon)
+	path = ResUrl.getHeadSkinIconMiddle(config.skinGetIcon)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_9, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_10 = ResUrl.getHeadSkinIconLarge(arg_2_1.skinGetBackIcon)
+	path = ResUrl.getHeadSkinIconLarge(config.skinGetBackIcon)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_10, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_11 = ResUrl.getLightLive2dFolder(arg_2_1.live2d)
+	path = ResUrl.getLightLive2dFolder(config.live2d)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_11, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, path, exclude)
 
-	local var_2_12 = arg_2_1.live2dbg
+	local live2dbg = config.live2dbg
 
-	if not string.nilorempty(var_2_12) then
-		local var_2_13 = ResUrl.getCharacterSkinLive2dBg(var_2_12)
+	if not string.nilorempty(live2dbg) then
+		path = ResUrl.getCharacterSkinLive2dBg(live2dbg)
 
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_13, arg_2_2)
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, path, exclude)
 	end
 
-	local var_2_14 = ResUrl.getRolesPrefabStoryFolder(arg_2_1.verticalDrawing)
-	local var_2_15 = string.sub(var_2_14, 1, string.len(var_2_14) - 1)
+	path = ResUrl.getRolesPrefabStoryFolder(config.verticalDrawing)
+	path = string.sub(path, 1, string.len(path) - 1)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_15, arg_2_2)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
 
-	local var_2_16 = string.split(arg_2_1.spine, "/")
-	local var_2_17 = string.format("roles/%s/", var_2_16[1])
+	local arr = string.split(config.spine, "/")
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_17, arg_2_2)
+	path = string.format("roles/%s/", arr[1])
 
-	local var_2_18 = string.split(arg_2_1.alternateSpine, "/")
-	local var_2_19 = string.format("roles/%s/", var_2_18[1])
+	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, path, exclude)
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_19, arg_2_2)
+	arr = string.split(config.alternateSpine, "/")
+	path = string.format("roles/%s/", arr[1])
 
-	local var_2_20 = lua_character_limited.configDict[arg_2_1.id]
+	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, path, exclude)
 
-	if var_2_20 and not string.nilorempty(var_2_20.entranceMv) then
-		ResSplitModel.instance:setExclude(ResSplitEnum.Video, var_2_20.entranceMv, true)
+	local limitedCO = lua_character_limited.configDict[config.id]
+
+	if limitedCO and not string.nilorempty(limitedCO.entranceMv) then
+		ResSplitModel.instance:setExclude(ResSplitEnum.Video, limitedCO.entranceMv, true)
 	end
 
-	if arg_2_2 == false then
+	if exclude == false then
 		FightConfig.instance:_checkskinSkill()
 
-		local var_2_21 = FightConfig.instance._skinSkillTLDict[arg_2_1.id]
+		local skinSkillTLDict = FightConfig.instance._skinSkillTLDict[config.id]
 
-		if var_2_21 then
-			for iter_2_0, iter_2_1 in pairs(var_2_21) do
-				ResSplitModel.instance:addIncludeTimeline(iter_2_1)
+		if skinSkillTLDict then
+			for i, timeline in pairs(skinSkillTLDict) do
+				ResSplitModel.instance:addIncludeTimeline(timeline)
 			end
 		end
 	end
 end
 
-return var_0_0
+return ResSplitCharacterWork

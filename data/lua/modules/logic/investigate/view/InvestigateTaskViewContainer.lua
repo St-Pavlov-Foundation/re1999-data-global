@@ -1,37 +1,39 @@
-﻿module("modules.logic.investigate.view.InvestigateTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateTaskViewContainer.lua
 
-local var_0_0 = class("InvestigateTaskViewContainer", BaseViewContainer)
+module("modules.logic.investigate.view.InvestigateTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local InvestigateTaskViewContainer = class("InvestigateTaskViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_TaskList"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = InvestigateTaskItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 1160
-	var_1_0.cellHeight = 165
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
+function InvestigateTaskViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	scrollParam.scrollGOPath = "#scroll_TaskList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = InvestigateTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1160
+	scrollParam.cellHeight = 165
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
 
-	for iter_1_0 = 1, 6 do
-		var_1_1[iter_1_0] = (iter_1_0 - 1) * 0.06
+	local times = {}
+
+	for i = 1, 6 do
+		times[i] = (i - 1) * 0.06
 	end
 
-	arg_1_0._taskScrollView = LuaListScrollViewWithAnimator.New(InvestigateTaskListModel.instance, var_1_0, var_1_1)
+	self._taskScrollView = LuaListScrollViewWithAnimator.New(InvestigateTaskListModel.instance, scrollParam, times)
 
 	return {
-		arg_1_0._taskScrollView,
+		self._taskScrollView,
 		InvestigateTaskView.New(),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function InvestigateTaskViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -41,10 +43,10 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._taskScrollView)
+function InvestigateTaskViewContainer:onContainerInit()
+	self.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._taskScrollView)
 
-	arg_3_0.taskAnimRemoveItem:setMoveInterval(0)
+	self.taskAnimRemoveItem:setMoveInterval(0)
 end
 
-return var_0_0
+return InvestigateTaskViewContainer

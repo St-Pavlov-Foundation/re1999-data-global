@@ -1,13 +1,15 @@
-﻿module("modules.logic.scene.rouge.comp.RougeSceneModel", package.seeall)
+﻿-- chunkname: @modules/logic/scene/rouge/comp/RougeSceneModel.lua
 
-local var_0_0 = class("RougeSceneModel", BaseSceneComp)
+module("modules.logic.scene.rouge.comp.RougeSceneModel", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+local RougeSceneModel = class("RougeSceneModel", BaseSceneComp)
+
+function RougeSceneModel:onSceneStart(chapterId, layerId)
 	return
 end
 
-function var_0_0.onSceneClose(arg_2_0)
+function RougeSceneModel:onSceneClose()
 	return
 end
 
-return var_0_0
+return RougeSceneModel

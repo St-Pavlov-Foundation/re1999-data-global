@@ -1,29 +1,31 @@
-﻿module("modules.logic.survival.view.shelter.ShelterTaskDecreeTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterTaskDecreeTaskView.lua
 
-local var_0_0 = class("ShelterTaskDecreeTaskView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterTaskDecreeTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.tabList = {}
+local ShelterTaskDecreeTaskView = class("ShelterTaskDecreeTaskView", BaseView)
+
+function ShelterTaskDecreeTaskView:onInitView()
+	self.tabList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, arg_2_0.refreshView, arg_2_0)
+function ShelterTaskDecreeTaskView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, self.refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, arg_3_0.refreshView, arg_3_0)
+function ShelterTaskDecreeTaskView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, self.refreshView, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function ShelterTaskDecreeTaskView:onOpen()
 	return
 end
 
-function var_0_0.refreshView(arg_5_0, arg_5_1)
+function ShelterTaskDecreeTaskView:refreshView(taskType)
 	return
 end
 
-function var_0_0.onClose(arg_6_0)
+function ShelterTaskDecreeTaskView:onClose()
 	return
 end
 
-return var_0_0
+return ShelterTaskDecreeTaskView

@@ -1,115 +1,117 @@
-﻿module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteBargainItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/view/ActivityQuoteBargainItem.lua
 
-local var_0_0 = class("ActivityQuoteBargainItem", UserDataDispose)
+module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteBargainItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local ActivityQuoteBargainItem = class("ActivityQuoteBargainItem", UserDataDispose)
 
-	arg_1_0.viewGO = arg_1_1
+function ActivityQuoteBargainItem:ctor(go, gotarget)
+	self:__onInit()
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "#go_target")
+	self.viewGO = go
 
-	arg_1_0._gotarget = gohelper.clone(arg_1_2, var_1_0)
+	local gotargetParent = gohelper.findChild(self.viewGO, "#go_target")
 
-	recthelper.setAnchor(arg_1_0._gotarget.transform, 0, 0)
+	self._gotarget = gohelper.clone(gotarget, gotargetParent)
 
-	arg_1_0._scrollinfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_info")
-	arg_1_0._content = gohelper.findChild(arg_1_0.viewGO, "#scroll_info/Viewport/Content")
-	arg_1_0._goquoteitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#go_quoteitem")
+	recthelper.setAnchor(self._gotarget.transform, 0, 0)
 
-	arg_1_0:initDailySelected()
-	arg_1_0:addEvents()
+	self._scrollinfo = gohelper.findChildScrollRect(self.viewGO, "#scroll_info")
+	self._content = gohelper.findChild(self.viewGO, "#scroll_info/Viewport/Content")
+	self._goquoteitem = gohelper.findChild(self.viewGO, "#scroll_info/Viewport/Content/#go_quoteitem")
+
+	self:initDailySelected()
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityQuoteBargainItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityQuoteBargainItem:removeEvents()
 	return
 end
 
-function var_0_0.refresh(arg_4_0, arg_4_1)
-	arg_4_0.actId = arg_4_1
+function ActivityQuoteBargainItem:refresh(actId)
+	self.actId = actId
 
-	if arg_4_0:noSelectOrder() then
-		gohelper.setActive(arg_4_0.viewGO, false)
-
-		return
-	end
-
-	gohelper.setActive(arg_4_0.viewGO, true)
-
-	local var_4_0 = Activity117Model.instance:getOrderDataById(arg_4_0.actId, arg_4_0:getSelectOrderId())
-
-	if not arg_4_0.quoteItem then
-		arg_4_0.quoteItem = ActivityQuoteItem.New(arg_4_0._goquoteitem)
-	end
-
-	arg_4_0.quoteItem:setData(var_4_0)
-	arg_4_0._selectItem:setData(var_4_0)
-end
-
-function var_0_0.initDailySelected(arg_5_0)
-	arg_5_0._selectItem = ActivityQuoteDemandItem.New(arg_5_0._gotarget, true)
-end
-
-function var_0_0.getSelectOrderId(arg_6_0)
-	return Activity117Model.instance:getSelectOrder(arg_6_0.actId)
-end
-
-function var_0_0.noSelectOrder(arg_7_0)
-	return not arg_7_0:getSelectOrderId()
-end
-
-function var_0_0.onDeal(arg_8_0)
-	if arg_8_0:noSelectOrder() then
-		gohelper.setActive(arg_8_0.viewGO, false)
+	if self:noSelectOrder() then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_8_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	local var_8_0 = Activity117Model.instance:getOrderDataById(arg_8_0.actId, arg_8_0:getSelectOrderId())
+	local mo = Activity117Model.instance:getOrderDataById(self.actId, self:getSelectOrderId())
 
-	if not arg_8_0.quoteItem then
-		arg_8_0.quoteItem = ActivityQuoteItem.New(arg_8_0._goquoteitem)
+	if not self.quoteItem then
+		self.quoteItem = ActivityQuoteItem.New(self._goquoteitem)
 	end
 
-	arg_8_0.quoteItem:setData(var_8_0)
-	arg_8_0._selectItem:setData(var_8_0)
+	self.quoteItem:setData(mo)
+	self._selectItem:setData(mo)
 end
 
-function var_0_0.onNegotiate(arg_9_0)
-	if arg_9_0:noSelectOrder() then
-		gohelper.setActive(arg_9_0.viewGO, false)
+function ActivityQuoteBargainItem:initDailySelected()
+	self._selectItem = ActivityQuoteDemandItem.New(self._gotarget, true)
+end
+
+function ActivityQuoteBargainItem:getSelectOrderId()
+	return Activity117Model.instance:getSelectOrder(self.actId)
+end
+
+function ActivityQuoteBargainItem:noSelectOrder()
+	return not self:getSelectOrderId()
+end
+
+function ActivityQuoteBargainItem:onDeal()
+	if self:noSelectOrder() then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	local var_9_0 = Activity117Model.instance:getOrderDataById(arg_9_0.actId, arg_9_0:getSelectOrderId())
+	gohelper.setActive(self.viewGO, true)
 
-	if arg_9_0.quoteItem then
-		arg_9_0.quoteItem:onNegotiate(var_9_0)
+	local mo = Activity117Model.instance:getOrderDataById(self.actId, self:getSelectOrderId())
+
+	if not self.quoteItem then
+		self.quoteItem = ActivityQuoteItem.New(self._goquoteitem)
+	end
+
+	self.quoteItem:setData(mo)
+	self._selectItem:setData(mo)
+end
+
+function ActivityQuoteBargainItem:onNegotiate()
+	if self:noSelectOrder() then
+		gohelper.setActive(self.viewGO, false)
+
+		return
+	end
+
+	local mo = Activity117Model.instance:getOrderDataById(self.actId, self:getSelectOrderId())
+
+	if self.quoteItem then
+		self.quoteItem:onNegotiate(mo)
 	end
 end
 
-function var_0_0.destory(arg_10_0)
-	if arg_10_0.quoteItem then
-		arg_10_0.quoteItem:destory()
+function ActivityQuoteBargainItem:destory()
+	if self.quoteItem then
+		self.quoteItem:destory()
 
-		arg_10_0.quoteItem = nil
+		self.quoteItem = nil
 	end
 
-	if arg_10_0._selectItem then
-		arg_10_0._selectItem:destory()
+	if self._selectItem then
+		self._selectItem:destory()
 
-		arg_10_0._selectItem = nil
+		self._selectItem = nil
 	end
 
-	arg_10_0:removeEvents()
-	arg_10_0:__onDispose()
+	self:removeEvents()
+	self:__onDispose()
 end
 
-return var_0_0
+return ActivityQuoteBargainItem

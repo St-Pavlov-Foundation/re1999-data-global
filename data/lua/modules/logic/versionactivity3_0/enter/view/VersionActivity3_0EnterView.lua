@@ -1,193 +1,206 @@
-﻿module("modules.logic.versionactivity3_0.enter.view.VersionActivity3_0EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/enter/view/VersionActivity3_0EnterView.lua
 
-local var_0_0 = class("VersionActivity3_0EnterView", VersionActivityEnterBaseViewWithListNew)
-local var_0_1 = 2.1
+module("modules.logic.versionactivity3_0.enter.view.VersionActivity3_0EnterView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._scrolltab = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab")
-	arg_1_0._scroll = arg_1_0._scrolltab:GetComponent(gohelper.Type_ScrollRect)
-	arg_1_0.goArrowRedDot = gohelper.findChild(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/arrow/#go_arrowreddot")
+local VersionActivity3_0EnterView = class("VersionActivity3_0EnterView", VersionActivityEnterBaseViewWithListNew)
+local VIDEO_DURATION = 2.1
 
-	local var_1_0 = gohelper.findChildComponent(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport", gohelper.Type_RectTransform)
+function VersionActivity3_0EnterView:_editableInitView()
+	self._scrolltab = gohelper.findChildScrollRect(self.viewGO, "#go_tabcontainer/#scroll_tab")
+	self._scroll = self._scrolltab:GetComponent(gohelper.Type_ScrollRect)
+	self.goArrowRedDot = gohelper.findChild(self.viewGO, "#go_tabcontainer/#scroll_tab/arrow/#go_arrowreddot")
 
-	arg_1_0.viewPortHeight = recthelper.getHeight(var_1_0)
-	arg_1_0.viewPortWidth = recthelper.getWidth(var_1_0)
-	arg_1_0.rectTrContent = gohelper.findChildComponent(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content", gohelper.Type_RectTransform)
-	arg_1_0._gotabitem1 = gohelper.findChild(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem1")
-	arg_1_0._gotabitem2 = gohelper.findChild(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem2")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_line")
+	local rectTrViewPort = gohelper.findChildComponent(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport", gohelper.Type_RectTransform)
 
-	arg_1_0:setTabLevelSetting(VersionActivityEnterViewEnum.ActLevel.First, arg_1_0._gotabitem1, VersionActivity3_0EnterViewTabItem1)
-	arg_1_0:setTabLevelSetting(VersionActivityEnterViewEnum.ActLevel.Second, arg_1_0._gotabitem2, VersionActivity3_0EnterViewTabItem2)
-	arg_1_0:setActivityLineGo(arg_1_0._goline)
+	self.viewPortHeight = recthelper.getHeight(rectTrViewPort)
+	self.viewPortWidth = recthelper.getWidth(rectTrViewPort)
+	self.rectTrContent = gohelper.findChildComponent(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content", gohelper.Type_RectTransform)
+	self._gotabitem1 = gohelper.findChild(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem1")
+	self._gotabitem2 = gohelper.findChild(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_tabitem2")
+	self._goline = gohelper.findChild(self.viewGO, "#go_tabcontainer/#scroll_tab/Viewport/Content/#go_line")
 
-	arg_1_0._btnreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_replay")
-	arg_1_0._btnachievementnormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_achievement_normal")
-	arg_1_0._btnachievementpreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_achievementpreview")
-	arg_1_0.goReplayBtn = arg_1_0._btnreplay.gameObject
-	arg_1_0.goAchievementBtn = arg_1_0._btnachievementpreview.gameObject
-	arg_1_0.viewAnim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0.gosubviewCanvasGroup = gohelper.findChildComponent(arg_1_0.viewGO, "#go_subview", gohelper.Type_CanvasGroup)
+	self:setTabLevelSetting(VersionActivityEnterViewEnum.ActLevel.First, self._gotabitem1, VersionActivity3_0EnterViewTabItem1)
+	self:setTabLevelSetting(VersionActivityEnterViewEnum.ActLevel.Second, self._gotabitem2, VersionActivity3_0EnterViewTabItem2)
+	self:setActivityLineGo(self._goline)
+
+	self._btnreplay = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_replay")
+	self._btnachievementnormal = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_achievement_normal")
+	self._btnachievementpreview = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_achievementpreview")
+	self.goReplayBtn = self._btnreplay.gameObject
+	self.goAchievementBtn = self._btnachievementpreview.gameObject
+	self.viewAnim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self.gosubviewCanvasGroup = gohelper.findChildComponent(self.viewGO, "#go_subview", gohelper.Type_CanvasGroup)
 end
 
-function var_0_0.childAddEvents(arg_2_0)
-	arg_2_0._btnreplay:AddClickListener(arg_2_0._btnreplayOnClick, arg_2_0)
-	arg_2_0._btnachievementnormal:AddClickListener(arg_2_0._btnachievementpreviewOnClick, arg_2_0)
-	arg_2_0._btnachievementpreview:AddClickListener(arg_2_0._btnachievementpreviewOnClick, arg_2_0)
-	arg_2_0._scrolltab:AddOnValueChanged(arg_2_0._onTabScrollChange, arg_2_0)
-	arg_2_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_2_0.refreshRedDot, arg_2_0, LuaEventSystem.Low)
+function VersionActivity3_0EnterView:childAddEvents()
+	self._btnreplay:AddClickListener(self._btnreplayOnClick, self)
+	self._btnachievementnormal:AddClickListener(self._btnachievementpreviewOnClick, self)
+	self._btnachievementpreview:AddClickListener(self._btnachievementpreviewOnClick, self)
+	self._scrolltab:AddOnValueChanged(self._onTabScrollChange, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, self.refreshRedDot, self, LuaEventSystem.Low)
 end
 
-function var_0_0.childRemoveEvents(arg_3_0)
-	arg_3_0._btnreplay:RemoveClickListener()
-	arg_3_0._btnachievementnormal:RemoveClickListener()
-	arg_3_0._btnachievementpreview:RemoveClickListener()
-	arg_3_0._scrolltab:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_3_0.refreshRedDot, arg_3_0)
+function VersionActivity3_0EnterView:childRemoveEvents()
+	self._btnreplay:RemoveClickListener()
+	self._btnachievementnormal:RemoveClickListener()
+	self._btnachievementpreview:RemoveClickListener()
+	self._scrolltab:RemoveOnValueChanged()
+	self:removeEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, self.refreshRedDot, self)
 end
 
-function var_0_0.moveContent(arg_4_0, arg_4_1)
-	local var_4_0 = recthelper.getWidth(arg_4_0._scrolltab.transform)
-	local var_4_1 = recthelper.getWidth(arg_4_0.rectTrContent)
-	local var_4_2 = -(recthelper.getAnchorX(arg_4_1.go.transform) - recthelper.getWidth(arg_4_1.go.transform) / 2)
-	local var_4_3 = math.min(0, math.max(var_4_0 - var_4_1, var_4_2))
+function VersionActivity3_0EnterView:moveContent(nextItem)
+	local viewWidth = recthelper.getWidth(self._scrolltab.transform)
+	local contentWidth = recthelper.getWidth(self.rectTrContent)
+	local itemMovePosX = -(recthelper.getAnchorX(nextItem.go.transform) - recthelper.getWidth(nextItem.go.transform) / 2)
+	local posX = math.min(0, math.max(viewWidth - contentWidth, itemMovePosX))
 
-	recthelper.setAnchorX(arg_4_0.rectTrContent, var_4_3)
+	recthelper.setAnchorX(self.rectTrContent, posX)
 end
 
-function var_0_0._btnreplayOnClick(arg_5_0)
-	local var_5_0 = ActivityModel.instance:getActMO(arg_5_0.curActId)
-	local var_5_1 = var_5_0 and var_5_0.config and var_5_0.config.storyId
+function VersionActivity3_0EnterView:_btnreplayOnClick()
+	local activityMo = ActivityModel.instance:getActMO(self.curActId)
+	local storyId = activityMo and activityMo.config and activityMo.config.storyId
 
-	if not var_5_1 or var_5_1 == 0 then
-		logError(string.format("act id %s dot config story id", arg_5_0.curActId))
+	if not storyId or storyId == 0 then
+		logError(string.format("act id %s dot config story id", self.curActId))
 
 		return
 	end
 
-	local var_5_2 = {}
+	local param = {}
 
-	var_5_2.isVersionActivityPV = true
+	param.isVersionActivityPV = true
 
-	StoryController.instance:playStory(var_5_1, var_5_2)
+	StoryController.instance:playStory(storyId, param)
 end
 
-function var_0_0._btnachievementpreviewOnClick(arg_6_0)
-	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_0.curActId)
-	local var_6_1 = var_6_0 and var_6_0.achievementJumpId
+function VersionActivity3_0EnterView:_btnachievementpreviewOnClick()
+	local activityCfg = ActivityConfig.instance:getActivityCo(self.curActId)
+	local achievementJumpId = activityCfg and activityCfg.achievementJumpId
 
-	JumpController.instance:jump(var_6_1)
+	JumpController.instance:jump(achievementJumpId)
 end
 
-function var_0_0._onTabScrollChange(arg_7_0)
-	if arg_7_0._scroll.horizontal then
-		arg_7_0:_checkHorizontalScroll()
+function VersionActivity3_0EnterView:_onTabScrollChange()
+	if self._scroll.horizontal then
+		self:_checkHorizontalScroll()
 	else
-		arg_7_0:_checkVerticalScroll()
+		self:_checkVerticalScroll()
 	end
 end
 
-function var_0_0._checkHorizontalScroll(arg_8_0)
-	local var_8_0 = recthelper.getAnchorX(arg_8_0.rectTrContent)
+function VersionActivity3_0EnterView:_checkHorizontalScroll()
+	local contentAnchorX = recthelper.getAnchorX(self.rectTrContent)
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.activityTabItemList) do
-		if iter_8_1:isShowRedDot() and -iter_8_1:getAnchorX() + iter_8_1:getWidth() / 2 - VersionActivity3_0Enum.RedDotOffsetX - var_8_0 < -arg_8_0.viewPortWidth then
-			gohelper.setActive(arg_8_0.goArrowRedDot, true)
+	for _, tabItem in ipairs(self.activityTabItemList) do
+		if tabItem:isShowRedDot() then
+			local anchorX = -tabItem:getAnchorX() + tabItem:getWidth() / 2 - VersionActivity3_0Enum.RedDotOffsetX
 
-			return
+			if anchorX - contentAnchorX < -self.viewPortWidth then
+				gohelper.setActive(self.goArrowRedDot, true)
+
+				return
+			end
 		end
 	end
 
-	gohelper.setActive(arg_8_0.goArrowRedDot, false)
+	gohelper.setActive(self.goArrowRedDot, false)
 end
 
-function var_0_0._checkVerticalScroll(arg_9_0)
-	local var_9_0 = recthelper.getAnchorY(arg_9_0.rectTrContent)
+function VersionActivity3_0EnterView:_checkVerticalScroll()
+	local contentAnchorY = recthelper.getAnchorY(self.rectTrContent)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.activityTabItemList) do
-		if iter_9_1:isShowRedDot() and -iter_9_1:getAnchorY() + VersionActivity3_0Enum.RedDotOffsetY - var_9_0 > arg_9_0.viewPortHeight then
-			gohelper.setActive(arg_9_0.goArrowRedDot, true)
+	for _, tabItem in ipairs(self.activityTabItemList) do
+		if tabItem:isShowRedDot() then
+			local anchorY = -tabItem:getAnchorY() + VersionActivity3_0Enum.RedDotOffsetY
 
-			return
+			if anchorY - contentAnchorY > self.viewPortHeight then
+				gohelper.setActive(self.goArrowRedDot, true)
+
+				return
+			end
 		end
 	end
 
-	gohelper.setActive(arg_9_0.goArrowRedDot, false)
+	gohelper.setActive(self.goArrowRedDot, false)
 end
 
-function var_0_0.refreshRedDot(arg_10_0)
-	arg_10_0:_onTabScrollChange()
+function VersionActivity3_0EnterView:refreshRedDot()
+	self:_onTabScrollChange()
 end
 
-function var_0_0.refreshBtnVisible(arg_11_0, arg_11_1)
-	local var_11_0 = VersionActivity3_0EnterHelper.GetIsShowReplayBtn(arg_11_0.curActId)
-	local var_11_1 = VersionActivity3_0EnterHelper.GetIsShowAchievementBtn(arg_11_0.curActId)
+function VersionActivity3_0EnterView:refreshBtnVisible(isOnOpen)
+	local showReplay = VersionActivity3_0EnterHelper.GetIsShowReplayBtn(self.curActId)
+	local showAchieve = VersionActivity3_0EnterHelper.GetIsShowAchievementBtn(self.curActId)
 
-	gohelper.setActive(arg_11_0.goReplayBtn, var_11_0)
-	gohelper.setActive(arg_11_0.goAchievementBtn, var_11_1)
+	gohelper.setActive(self.goReplayBtn, showReplay)
+	gohelper.setActive(self.goAchievementBtn, showAchieve)
 end
 
-function var_0_0.onOpen(arg_12_0)
-	var_0_0.super.onOpen(arg_12_0)
+function VersionActivity3_0EnterView:onOpen()
+	VersionActivity3_0EnterView.super.onOpen(self)
 
-	local var_12_0 = arg_12_0.viewParam.jumpActId
+	local jumpActId = self.viewParam.jumpActId
 
-	if var_12_0 and arg_12_0.activityTabItemList then
-		local var_12_1 = arg_12_0:_getActTabIndex(var_12_0) or VersionActivityEnterHelper.getTabIndex(arg_12_0.activitySettingList, var_12_0)
-		local var_12_2 = 0
-		local var_12_3 = 3
-		local var_12_4 = #arg_12_0.activityTabItemList or 1
-		local var_12_5 = var_12_1 <= var_12_3 and 0 or var_12_1 >= var_12_4 - var_12_3 and 1 or GameUtil.clamp(var_12_1 / var_12_4, 0, 1)
+	if jumpActId and self.activityTabItemList then
+		local tabIndex = self:_getActTabIndex(jumpActId)
 
-		arg_12_0._scrolltab.horizontalNormalizedPosition = var_12_5
+		tabIndex = tabIndex or VersionActivityEnterHelper.getTabIndex(self.activitySettingList, jumpActId)
+
+		local nor = 0
+		local offset = 3
+		local count = #self.activityTabItemList or 1
+
+		nor = tabIndex <= offset and 0 or tabIndex >= count - offset and 1 or GameUtil.clamp(tabIndex / count, 0, 1)
+		self._scrolltab.horizontalNormalizedPosition = nor
 	end
 end
 
-function var_0_0._getActTabIndex(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.activityTabItemList) do
-		if iter_13_1.actId == arg_13_1 then
-			return gohelper.getSibling(iter_13_1.go)
+function VersionActivity3_0EnterView:_getActTabIndex(jumpActId)
+	for i, tabItem in ipairs(self.activityTabItemList) do
+		if tabItem.actId == jumpActId then
+			return gohelper.getSibling(tabItem.go)
 		end
 	end
 
 	return 0
 end
 
-function var_0_0._playOpenAnim(arg_14_0, arg_14_1)
-	if not string.nilorempty(arg_14_1) then
-		arg_14_0.viewAnim:Play(arg_14_1, 0, 0)
+function VersionActivity3_0EnterView:_playOpenAnim(animNim)
+	if not string.nilorempty(animNim) then
+		self.viewAnim:Play(animNim, 0, 0)
 	else
-		arg_14_0.viewAnim:Play(UIAnimationName.Open, 0, 0)
-		arg_14_0.viewContainer:markPlayedSubViewAnim()
+		self.viewAnim:Play(UIAnimationName.Open, 0, 0)
+		self.viewContainer:markPlayedSubViewAnim()
 	end
 end
 
-local var_0_2 = 5
+local VIDEO_DURATION = 5
 
-function var_0_0.playVideo(arg_15_0)
-	if arg_15_0.viewParam and arg_15_0.viewParam.playVideo then
+function VersionActivity3_0EnterView:playVideo()
+	if self.viewParam and self.viewParam.playVideo then
 		AudioMgr.instance:trigger(AudioEnum3_0.VersionActivity3_0Enter.play_ui_lushang_open_1)
 
-		arg_15_0.viewAnim.speed = 0
+		self.viewAnim.speed = 0
 
-		VideoController.instance:openFullScreenVideoView(langVideoUrl(VersionActivity3_0Enum.EnterAnimVideoName), nil, var_0_2)
+		VideoController.instance:openFullScreenVideoView(VersionActivity3_0Enum.EnterAnimVideoName, nil, VIDEO_DURATION)
 		TimeUtil.setDayFirstLoginRed(VersionActivity3_0Enum.EnterVideoDayKey)
-		arg_15_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, arg_15_0.onPlayVideoDone, arg_15_0)
-		arg_15_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, arg_15_0.onPlayVideoDone, arg_15_0)
+		self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, self.onPlayVideoDone, self)
+		self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, self.onPlayVideoDone, self)
 	else
-		arg_15_0.viewAnim.speed = 1
+		self.viewAnim.speed = 1
 
-		arg_15_0:_playOpenAnim()
+		self:_playOpenAnim()
 	end
 end
 
-function var_0_0.onPlayVideoDone(arg_16_0)
-	arg_16_0:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, arg_16_0.onPlayVideoDone, arg_16_0)
-	arg_16_0:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, arg_16_0.onPlayVideoDone, arg_16_0)
+function VersionActivity3_0EnterView:onPlayVideoDone()
+	self:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, self.onPlayVideoDone, self)
+	self:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, self.onPlayVideoDone, self)
 
-	arg_16_0.viewAnim.speed = 1
+	self.viewAnim.speed = 1
 
-	arg_16_0:_playOpenAnim("open1")
+	self:_playOpenAnim("open1")
 end
 
-return var_0_0
+return VersionActivity3_0EnterView

@@ -1,30 +1,32 @@
-﻿module("modules.logic.activitywelfare.view.ActivityWelfareView", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/view/ActivityWelfareView.lua
 
-local var_0_0 = class("ActivityWelfareView", BaseView)
+module("modules.logic.activitywelfare.view.ActivityWelfareView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_category/#scroll_categoryitem")
-	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
+local ActivityWelfareView = class("ActivityWelfareView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityWelfareView:onInitView()
+	self._gocategory = gohelper.findChild(self.viewGO, "#go_category")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "#go_category/#scroll_categoryitem")
+	self._gosubview = gohelper.findChild(self.viewGO, "#go_subview")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityWelfareView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityWelfareView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ActivityWelfareView:_editableInitView()
 	return
 end
 
-local var_0_1 = {
+local activitySubViewDict = {
 	[ActivityEnum.Activity.NewWelfare] = ViewName.NewWelfareView,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.StoryShow] = ViewName.ActivityStoryShowView,
@@ -33,55 +35,57 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a7_SelfSelectSix2] = ViewName.V2a7_SelfSelectSix_FullView
 }
 
-function var_0_0.onUpdateParam(arg_5_0)
+function ActivityWelfareView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function ActivityWelfareView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
-	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_6_0._refreshView, arg_6_0)
-	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_6_0.setCategoryListInteractable, arg_6_0)
-	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.SwitchWelfareActivity, arg_6_0._openSubView, arg_6_0)
-	arg_6_0:_refreshView()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshView, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, self.setCategoryListInteractable, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.SwitchWelfareActivity, self._openSubView, self)
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_7_0)
-	local var_7_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)
+function ActivityWelfareView:_refreshView()
+	local actCo = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)
 
-	if not var_7_0 or not next(var_7_0) then
-		arg_7_0:closeThis()
+	if not actCo or not next(actCo) then
+		self:closeThis()
 	end
 
-	ActivityModel.instance:removeFinishedWelfare(var_7_0)
+	ActivityModel.instance:removeFinishedWelfare(actCo)
 
-	local var_7_1 = arg_7_0.data and tabletool.copy(arg_7_0.data) or nil
-	local var_7_2 = {}
+	local lastdata = self.data and tabletool.copy(self.data) or nil
+	local id2data = {}
 
-	arg_7_0.data = {}
+	self.data = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		local var_7_3 = {
-			id = iter_7_1,
-			co = ActivityConfig.instance:getActivityCo(iter_7_1),
-			type = ActivityEnum.ActivityType.Welfare
-		}
+	for _, v in pairs(actCo) do
+		local o = {}
 
-		table.insert(arg_7_0.data, var_7_3)
+		o.id = v
+		o.co = ActivityConfig.instance:getActivityCo(v)
+		o.type = ActivityEnum.ActivityType.Welfare
 
-		var_7_2[iter_7_1] = var_7_3
+		table.insert(self.data, o)
+
+		id2data[v] = o
 	end
 
 	ActivityWelfareListModel.instance:setOpenViewTime()
 
-	local var_7_4 = var_7_1 == nil
+	local isNeedCallOpenSubView = lastdata == nil
 
-	if var_7_1 ~= nil then
-		if #var_7_1 ~= #arg_7_0.data then
-			var_7_4 = true
+	if lastdata ~= nil then
+		if #lastdata ~= #self.data then
+			isNeedCallOpenSubView = true
 		else
-			for iter_7_2, iter_7_3 in ipairs(var_7_1) do
-				if not var_7_2[iter_7_3.id] then
-					var_7_4 = true
+			for _, v in ipairs(lastdata) do
+				local id = v.id
+
+				if not id2data[id] then
+					isNeedCallOpenSubView = true
 
 					break
 				end
@@ -89,85 +93,85 @@ function var_0_0._refreshView(arg_7_0)
 		end
 	end
 
-	if not var_7_4 and arg_7_0._viewName then
-		local var_7_5 = ViewMgr.instance:getContainer(arg_7_0._viewName)
+	if not isNeedCallOpenSubView and self._viewName then
+		local c = ViewMgr.instance:getContainer(self._viewName)
 
-		if var_7_5 then
-			ViewMgr.instance:openView(arg_7_0._viewName, var_7_5.viewParam, true)
+		if c then
+			ViewMgr.instance:openView(self._viewName, c.viewParam, true)
 
 			return
 		end
 	end
 
-	ActivityWelfareListModel.instance:setCategoryList(arg_7_0.data)
-	arg_7_0:_openSubView()
+	ActivityWelfareListModel.instance:setCategoryList(self.data)
+	self:_openSubView()
 end
 
-function var_0_0._openSubView(arg_8_0)
-	if arg_8_0._viewName then
-		ViewMgr.instance:closeView(arg_8_0._viewName, true)
+function ActivityWelfareView:_openSubView()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 	end
 
-	local var_8_0 = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Welfare)
+	local actId = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Welfare)
 
-	arg_8_0._viewName = var_0_1[var_8_0]
+	self._viewName = activitySubViewDict[actId]
 
-	if not arg_8_0._viewName then
+	if not self._viewName then
 		return
 	end
 
-	if var_8_0 == ActivityEnum.Activity.StoryShow or var_8_0 == ActivityEnum.Activity.ClassShow then
-		arg_8_0:setCategoryRedDotData(var_8_0)
+	if actId == ActivityEnum.Activity.StoryShow or actId == ActivityEnum.Activity.ClassShow then
+		self:setCategoryRedDotData(actId)
 	end
 
-	arg_8_0.viewContainer:hideHelp()
+	self.viewContainer:hideHelp()
 
-	local var_8_1 = {
-		parent = arg_8_0._gosubview,
-		actId = var_8_0,
-		root = arg_8_0.viewGO
+	local viewParam = {
+		parent = self._gosubview,
+		actId = actId,
+		root = self.viewGO
 	}
 
-	ViewMgr.instance:openView(arg_8_0._viewName, var_8_1, true)
+	ViewMgr.instance:openView(self._viewName, viewParam, true)
 end
 
-function var_0_0.setCategoryRedDotData(arg_9_0, arg_9_1)
-	local var_9_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_9_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function ActivityWelfareView:setCategoryRedDotData(actId)
+	local key = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(var_9_0, "hasEnter")
+	PlayerPrefsHelper.setString(key, "hasEnter")
 
-	return var_9_0
+	return key
 end
 
-function var_0_0.closeSubView(arg_10_0)
-	if arg_10_0._viewName then
-		ViewMgr.instance:closeView(arg_10_0._viewName, true)
+function ActivityWelfareView:closeSubView()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 
-		arg_10_0._viewName = nil
+		self._viewName = nil
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function ActivityWelfareView:onClose()
 	ActivityModel.instance:setTargetActivityCategoryId(0)
-	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_11_0._refreshView, arg_11_0)
-	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_11_0.setCategoryListInteractable, arg_11_0)
-	arg_11_0:closeSubView()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshView, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, self.setCategoryListInteractable, self)
+	self:closeSubView()
 	ActivityModel.instance:setTargetActivityCategoryId(0)
 	ActivityWelfareListModel.instance:clear()
 end
 
-function var_0_0.setCategoryListInteractable(arg_12_0, arg_12_1)
-	if not arg_12_0._categoryListCanvasGroup then
-		arg_12_0._categoryListCanvasGroup = gohelper.onceAddComponent(arg_12_0._gocategory, typeof(UnityEngine.CanvasGroup))
+function ActivityWelfareView:setCategoryListInteractable(isInteractable)
+	if not self._categoryListCanvasGroup then
+		self._categoryListCanvasGroup = gohelper.onceAddComponent(self._gocategory, typeof(UnityEngine.CanvasGroup))
 	end
 
-	arg_12_0._categoryListCanvasGroup.interactable = arg_12_1
-	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
-	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
+	self._categoryListCanvasGroup.interactable = isInteractable
+	self._categoryListCanvasGroup.blocksRaycasts = isInteractable
+	self._categoryListCanvasGroup.blocksRaycasts = isInteractable
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function ActivityWelfareView:onDestroyView()
 	return
 end
 
-return var_0_0
+return ActivityWelfareView

@@ -1,13 +1,15 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterLockedTipsViewContainer.lua
 
-local var_0_0 = class("RougeLimiterLockedTipsViewContainer", BaseViewContainer)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeLimiterLockedTipsViewContainer = class("RougeLimiterLockedTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeLimiterLockedTipsView.New())
+function RougeLimiterLockedTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeLimiterLockedTipsView.New())
+
+	return views
 end
 
-return var_0_0
+return RougeLimiterLockedTipsViewContainer

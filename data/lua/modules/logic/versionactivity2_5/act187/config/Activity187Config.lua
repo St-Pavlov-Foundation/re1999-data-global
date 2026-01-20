@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_5.act187.config.Activity187Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act187/config/Activity187Config.lua
 
-local var_0_0 = class("Activity187Config", BaseConfig)
+module("modules.logic.versionactivity2_5.act187.config.Activity187Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity187Config = class("Activity187Config", BaseConfig)
+
+function Activity187Config:reqConfigNames()
 	return {
 		"activity187_const",
 		"activity187",
@@ -10,149 +12,150 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function Activity187Config:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+function Activity187Config:onConfigLoaded(configName, configTable)
+	local funcName = string.format("%sConfigLoaded", configName)
+	local configLoadedFunc = self[funcName]
 
-	if var_3_0 then
-		var_3_0(arg_3_0, arg_3_2)
+	if configLoadedFunc then
+		configLoadedFunc(self, configTable)
 	end
 end
 
-function var_0_0.getAct187ConstCfg(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = lua_activity187_const.configDict[arg_4_1]
+function Activity187Config:getAct187ConstCfg(constId, nilError)
+	local cfg = lua_activity187_const.configDict[constId]
 
-	if not var_4_0 and arg_4_2 then
-		logError(string.format("Activity187Config:getAct187ConstCfg error, cfg is nil, constId:%s", arg_4_1))
+	if not cfg and nilError then
+		logError(string.format("Activity187Config:getAct187ConstCfg error, cfg is nil, constId:%s", constId))
 	end
 
-	return var_4_0
+	return cfg
 end
 
-function var_0_0.getAct187Const(arg_5_0, arg_5_1)
-	local var_5_0
-	local var_5_1 = arg_5_0:getAct187ConstCfg(arg_5_1, true)
+function Activity187Config:getAct187Const(constId)
+	local result
+	local cfg = self:getAct187ConstCfg(constId, true)
 
-	if var_5_1 then
-		var_5_0 = var_5_1.value
+	if cfg then
+		result = cfg.value
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.getAct187AccrueRewardCfg(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = lua_activity187.configDict[arg_6_1] and lua_activity187.configDict[arg_6_1][arg_6_2]
+function Activity187Config:getAct187AccrueRewardCfg(actId, accrueId, nilError)
+	local cfg = lua_activity187.configDict[actId] and lua_activity187.configDict[actId][accrueId]
 
-	if not var_6_0 and arg_6_3 then
-		logError(string.format("Activity187Config:getAct187AccrueRewardCfg error, cfg is nil, actId:%s, accrueId:%s", arg_6_1, arg_6_2))
+	if not cfg and nilError then
+		logError(string.format("Activity187Config:getAct187AccrueRewardCfg error, cfg is nil, actId:%s, accrueId:%s", actId, accrueId))
 	end
 
-	return var_6_0
+	return cfg
 end
 
-function var_0_0.getAccrueRewardIdList(arg_7_0, arg_7_1)
-	local var_7_0 = {}
-	local var_7_1 = lua_activity187.configDict[arg_7_1]
+function Activity187Config:getAccrueRewardIdList(actId)
+	local result = {}
+	local cfgDict = lua_activity187.configDict[actId]
 
-	if var_7_1 then
-		for iter_7_0, iter_7_1 in pairs(var_7_1) do
-			var_7_0[#var_7_0 + 1] = iter_7_0
+	if cfgDict then
+		for id, _ in pairs(cfgDict) do
+			result[#result + 1] = id
 		end
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getAccrueRewards(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = {}
-	local var_8_1 = arg_8_0:getAct187AccrueRewardCfg(arg_8_1, arg_8_2, true)
+function Activity187Config:getAccrueRewards(actId, accrueId)
+	local result = {}
+	local cfg = self:getAct187AccrueRewardCfg(actId, accrueId, true)
 
-	if var_8_1 then
-		local var_8_2 = GameUtil.splitString2(var_8_1.bonus, true)
+	if cfg then
+		local items = GameUtil.splitString2(cfg.bonus, true)
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-			local var_8_3 = {
-				accrueId = arg_8_2,
-				materilType = iter_8_1[1],
-				materilId = iter_8_1[2],
-				quantity = iter_8_1[3]
+		for _, item in ipairs(items) do
+			local itemData = {
+				accrueId = accrueId,
+				materilType = item[1],
+				materilId = item[2],
+				quantity = item[3]
 			}
 
-			var_8_0[#var_8_0 + 1] = var_8_3
+			result[#result + 1] = itemData
 		end
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getAct187BlessingCfg(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = activity187_blessing.configDict[arg_9_1] and activity187_blessing.configDict[arg_9_1][arg_9_2]
+function Activity187Config:getAct187BlessingCfg(actId, rewardId, nilError)
+	local cfg = activity187_blessing.configDict[actId] and activity187_blessing.configDict[actId][rewardId]
 
-	if not var_9_0 and arg_9_3 then
-		logError(string.format("Activity187Config:getAct187BlessingCfg error, cfg is nil, actId:%s, rewardId:%s", arg_9_1, arg_9_2))
+	if not cfg and nilError then
+		logError(string.format("Activity187Config:getAct187BlessingCfg error, cfg is nil, actId:%s, rewardId:%s", actId, rewardId))
 	end
 
-	return var_9_0
+	return cfg
 end
 
-function var_0_0.getLantern(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = ""
-	local var_10_1 = arg_10_0:getAct187BlessingCfg(arg_10_1, arg_10_2)
+function Activity187Config:getLantern(actId, rewardId)
+	local result = ""
+	local cfg = self:getAct187BlessingCfg(actId, rewardId)
 
-	if var_10_1 then
-		var_10_0 = var_10_1.lantern
+	if cfg then
+		result = cfg.lantern
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.getLanternRibbon(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = ""
-	local var_11_1 = arg_11_0:getAct187BlessingCfg(arg_11_1, arg_11_2)
+function Activity187Config:getLanternRibbon(actId, rewardId)
+	local result = ""
+	local cfg = self:getAct187BlessingCfg(actId, rewardId)
 
-	if var_11_1 then
-		var_11_0 = var_11_1.lanternRibbon
+	if cfg then
+		result = cfg.lanternRibbon
 	end
 
-	return var_11_0
+	return result
 end
 
-function var_0_0.getLanternImg(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0
-	local var_12_1 = arg_12_0:getAct187BlessingCfg(arg_12_1, arg_12_2)
+function Activity187Config:getLanternImg(actId, rewardId)
+	local result
+	local cfg = self:getAct187BlessingCfg(actId, rewardId)
 
-	if var_12_1 then
-		var_12_0 = var_12_1.lanternImg
+	if cfg then
+		result = cfg.lanternImg
 	end
 
-	return var_12_0
+	return result
 end
 
-function var_0_0.getLanternImgBg(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0
-	local var_13_1 = arg_13_0:getAct187BlessingCfg(arg_13_1, arg_13_2)
+function Activity187Config:getLanternImgBg(actId, rewardId)
+	local result
+	local cfg = self:getAct187BlessingCfg(actId, rewardId)
 
-	if var_13_1 then
-		var_13_0 = var_13_1.lanternImgBg
+	if cfg then
+		result = cfg.lanternImgBg
 	end
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.getBlessing(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = ""
-	local var_14_1 = arg_14_0:getAct187BlessingCfg(arg_14_1, arg_14_2)
+function Activity187Config:getBlessing(actId, rewardId)
+	local result = ""
+	local cfg = self:getAct187BlessingCfg(actId, rewardId)
 
-	if var_14_1 then
-		var_14_0 = var_14_1.blessing
+	if cfg then
+		result = cfg.blessing
 	end
 
-	return var_14_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+Activity187Config.instance = Activity187Config.New()
 
-return var_0_0
+return Activity187Config

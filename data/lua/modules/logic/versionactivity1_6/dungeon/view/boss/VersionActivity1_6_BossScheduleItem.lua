@@ -1,119 +1,125 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6_BossScheduleItem.lua
 
-local var_0_0 = class("VersionActivity1_6_BossScheduleItem", LuaCompBase)
-local var_0_1 = string.split
-local var_0_2 = string.splitToNumber
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._goBg = gohelper.findChildImage(arg_1_1, "#go_Bg")
-	arg_1_0._imageStatus = gohelper.findChildImage(arg_1_1, "verticalLayout/#image_Status")
-	arg_1_0._txtPointValue = gohelper.findChildText(arg_1_1, "verticalLayout/#image_Status/#txt_PointValue")
+local VersionActivity1_6_BossScheduleItem = class("VersionActivity1_6_BossScheduleItem", LuaCompBase)
+local split = string.split
+local splitToNumber = string.splitToNumber
 
-	arg_1_0:_initItems(arg_1_1)
+function VersionActivity1_6_BossScheduleItem:init(go)
+	self._goBg = gohelper.findChildImage(go, "#go_Bg")
+	self._imageStatus = gohelper.findChildImage(go, "verticalLayout/#image_Status")
+	self._txtPointValue = gohelper.findChildText(go, "verticalLayout/#image_Status/#txt_PointValue")
 
-	arg_1_0._txtPointValue.text = ""
+	self:_initItems(go)
 
-	gohelper.setActive(arg_1_0._goBg, false)
+	self._txtPointValue.text = ""
+
+	gohelper.setActive(self._goBg, false)
 end
 
-function var_0_0._initItems(arg_2_0, arg_2_1)
-	arg_2_0._itemList = {}
+function VersionActivity1_6_BossScheduleItem:_initItems(rootGo)
+	self._itemList = {}
 
-	local var_2_0 = 1
-	local var_2_1 = gohelper.findChild(arg_2_1, "verticalLayout/item" .. var_2_0)
-	local var_2_2 = VersionActivity1_6_BossScheduleRewardItem
+	local i = 1
+	local go = gohelper.findChild(rootGo, "verticalLayout/item" .. i)
+	local itemClass = VersionActivity1_6_BossScheduleRewardItem
 
-	while not gohelper.isNil(var_2_1) do
-		arg_2_0._itemList[var_2_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, var_2_2)
-		var_2_0 = var_2_0 + 1
-		var_2_1 = gohelper.findChild(arg_2_1, "verticalLayout/item" .. var_2_0)
+	while not gohelper.isNil(go) do
+		self._itemList[i] = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
+		i = i + 1
+		go = gohelper.findChild(rootGo, "verticalLayout/item" .. i)
 	end
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1)
-	arg_3_0._mo = arg_3_1
+function VersionActivity1_6_BossScheduleItem:setData(mo)
+	self._mo = mo
 
-	arg_3_0:_refresh()
-	arg_3_0:_playOpen()
+	self:_refresh()
+	self:_playOpen()
 end
 
-function var_0_0.onDestroyView(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._playOpenInner, arg_4_0)
-	GameUtil.onDestroyViewMemberList(arg_4_0, "_itemList")
+function VersionActivity1_6_BossScheduleItem:onDestroyView()
+	TaskDispatcher.cancelTask(self._playOpenInner, self)
+	GameUtil.onDestroyViewMemberList(self, "_itemList")
 end
 
-function var_0_0._refresh(arg_5_0)
-	local var_5_0 = arg_5_0._mo.rewardCfg
-	local var_5_1 = var_0_1(var_5_0.reward, "|")
+function VersionActivity1_6_BossScheduleItem:_refresh()
+	local mo = self._mo
+	local rewardCfg = mo.rewardCfg
+	local rewardStrList = split(rewardCfg.reward, "|")
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._itemList) do
-		iter_5_1:setActive(false)
+	for _, item in ipairs(self._itemList) do
+		item:setActive(false)
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_1) do
-		local var_5_2 = var_0_2(iter_5_3, "#")
-		local var_5_3 = arg_5_0._itemList[iter_5_2]
+	for i, str in ipairs(rewardStrList) do
+		local itemCO = splitToNumber(str, "#")
+		local item = self._itemList[i]
 
-		if var_5_3 then
-			var_5_3:setData(var_5_2)
-			var_5_3:setActive(true)
+		if item then
+			item:setData(itemCO)
+			item:setActive(true)
 		end
 	end
 
-	arg_5_0._txtPointValue.text = var_5_0.rewardPointNum
+	self._txtPointValue.text = rewardCfg.rewardPointNum
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._txtPointValue, arg_5_0:_isGot() and BossRushEnum.Color.POINTVALUE_GOT or BossRushEnum.Color.POINTVALUE_NORMAL)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtPointValue, self:_isGot() and BossRushEnum.Color.POINTVALUE_GOT or BossRushEnum.Color.POINTVALUE_NORMAL)
 end
 
-function var_0_0.refreshByDisplayTarget(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
-	arg_6_0._index = arg_6_1._index
+function VersionActivity1_6_BossScheduleItem:refreshByDisplayTarget(mo)
+	self._mo = mo
+	self._index = mo._index
 
-	arg_6_0:_refresh()
-	gohelper.setActive(arg_6_0._goBg, false)
+	self:_refresh()
+	gohelper.setActive(self._goBg, false)
 end
 
-function var_0_0._isNewGot(arg_7_0)
-	local var_7_0 = arg_7_0._index
-	local var_7_1 = VersionActivity1_6ScheduleViewListModel.instance:getStaticData()
-	local var_7_2 = var_7_1.fromIndex
-	local var_7_3 = var_7_1.toIndex
+function VersionActivity1_6_BossScheduleItem:_isNewGot()
+	local index = self._index
+	local staticData = VersionActivity1_6ScheduleViewListModel.instance:getStaticData()
+	local fromIndex = staticData.fromIndex
+	local toIndex = staticData.toIndex
 
-	return var_7_2 <= var_7_0 and var_7_0 <= var_7_3
+	return fromIndex <= index and index <= toIndex
 end
 
-function var_0_0._isAlreadyGot(arg_8_0)
-	local var_8_0 = arg_8_0._mo.isGot
-	local var_8_1 = arg_8_0._index
-	local var_8_2 = VersionActivity1_6ScheduleViewListModel.instance:getStaticData().fromIndex
+function VersionActivity1_6_BossScheduleItem:_isAlreadyGot()
+	local mo = self._mo
+	local isGot = mo.isGot
+	local index = self._index
+	local staticData = VersionActivity1_6ScheduleViewListModel.instance:getStaticData()
+	local fromIndex = staticData.fromIndex
 
-	return var_8_0 or var_8_1 < var_8_2
+	return isGot or index < fromIndex
 end
 
-function var_0_0._isGot(arg_9_0)
-	return arg_9_0:_isAlreadyGot() or arg_9_0:_isNewGot()
+function VersionActivity1_6_BossScheduleItem:_isGot()
+	return self:_isAlreadyGot() or self:_isNewGot()
 end
 
-function var_0_0._playOpen(arg_10_0)
-	if arg_10_0:_isGot() then
-		local var_10_0 = VersionActivity1_6ScheduleViewListModel.instance:getStaticData().fromIndex
+function VersionActivity1_6_BossScheduleItem:_playOpen()
+	if self:_isGot() then
+		local staticData = VersionActivity1_6ScheduleViewListModel.instance:getStaticData()
+		local fromIndex = staticData.fromIndex
 
-		TaskDispatcher.runDelay(arg_10_0._playOpenInner, arg_10_0, 0.1 + (arg_10_0._index - var_10_0) * 0.02)
+		TaskDispatcher.runDelay(self._playOpenInner, self, 0.1 + (self._index - fromIndex) * 0.02)
 	end
 end
 
-local var_0_3 = BossRushEnum.AnimScheduleItemRewardItem
-local var_0_4 = BossRushEnum.AnimScheduleItemRewardItem_HasGet
+local EAnimScheduleItemRewardItem = BossRushEnum.AnimScheduleItemRewardItem
+local EAnimScheduleItemRewardItem_HasGet = BossRushEnum.AnimScheduleItemRewardItem_HasGet
 
-function var_0_0._playOpenInner(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._itemList) do
-		if arg_11_0:_isNewGot() then
-			iter_11_1:playAnim(var_0_3.ReceiveEnter)
-			iter_11_1:playAnim_HasGet(var_0_4.Got)
+function VersionActivity1_6_BossScheduleItem:_playOpenInner()
+	for _, v in ipairs(self._itemList) do
+		if self:_isNewGot() then
+			v:playAnim(EAnimScheduleItemRewardItem.ReceiveEnter)
+			v:playAnim_HasGet(EAnimScheduleItemRewardItem_HasGet.Got)
 		else
-			iter_11_1:playAnim(arg_11_0:_isGot() and var_0_3.Got or var_0_3.Idle)
+			v:playAnim(self:_isGot() and EAnimScheduleItemRewardItem.Got or EAnimScheduleItemRewardItem.Idle)
 		end
 	end
 end
 
-return var_0_0
+return VersionActivity1_6_BossScheduleItem

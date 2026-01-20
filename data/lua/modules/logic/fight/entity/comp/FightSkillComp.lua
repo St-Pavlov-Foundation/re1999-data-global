@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.entity.comp.FightSkillComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightSkillComp.lua
 
-local var_0_0 = class("FightSkillComp", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightSkillComp", package.seeall)
 
-var_0_0.FrameEventHandlerCls = {
+local FightSkillComp = class("FightSkillComp", LuaCompBase)
+
+FightSkillComp.FrameEventHandlerCls = {
 	[0] = FightTLEventMove,
 	FightTLEventTargetEffect,
 	FightTLEventAtkSpineLookDir,
@@ -60,280 +62,286 @@ var_0_0.FrameEventHandlerCls = {
 	FightTLEventPlayEffectByOperation,
 	FightTLEventEffectVisible,
 	FightTLEvent500MMonsterRefreshHeadIcon,
+	FightTLEventAddEffectByBuffActId,
 	[1001] = FightTLEventObjFly,
 	[1002] = FightTLEventSetSign
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.timeScale = 1
-	arg_1_0.workComp = FightWorkComponent.New()
-	arg_1_0.sameSkillParam = {}
-	arg_1_0.sameSkillStartParam = {}
+function FightSkillComp:ctor(entity)
+	self.entity = entity
+	self.timeScale = 1
+	self.workComp = FightWorkComponent.New()
+	self.sameSkillParam = {}
+	self.sameSkillStartParam = {}
 end
 
-function var_0_0.playTimeline(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_0:registTimelineWork(arg_2_1, arg_2_2)
+function FightSkillComp:playTimeline(timelineName, fightStepData)
+	local work = self:registTimelineWork(timelineName, fightStepData)
 
-	if not var_2_0 then
+	if not work then
 		return
 	end
 
-	var_2_0:start()
+	work:start()
 end
 
-function var_0_0.registTimelineWork(arg_3_0, arg_3_1, arg_3_2)
-	return arg_3_0.workComp:registWork(FightWorkTimelineItem, arg_3_0.entity, arg_3_1, arg_3_2)
+function FightSkillComp:registTimelineWork(timelineName, fightStepData)
+	return self.workComp:registWork(FightWorkTimelineItem, self.entity, timelineName, fightStepData)
 end
 
-function var_0_0.registPlaySkillWork(arg_4_0, arg_4_1, arg_4_2)
-	FightHelper.logForPCSkillEditor("++++++++++++++++ entityId_ " .. arg_4_0.entity.id .. " play skill_" .. arg_4_1)
+function FightSkillComp:registPlaySkillWork(skillId, fightStepData)
+	FightHelper.logForPCSkillEditor("++++++++++++++++ entityId_ " .. self.entity.id .. " play skill_" .. skillId)
 
-	if arg_4_2 == nil then
+	if fightStepData == nil then
 		logError("找不到fightStepData, 请检查代码")
 
 		return
 	end
 
-	if not lua_skill.configDict[arg_4_1] then
-		logError("技能表找不到id:" .. arg_4_1)
+	local skillCO = lua_skill.configDict[skillId]
+
+	if not skillCO then
+		logError("技能表找不到id:" .. skillId)
 
 		return
 	end
 
-	local var_4_0 = arg_4_0.entity:getMO()
-	local var_4_1 = var_4_0 and var_4_0.skin
+	local entityMO = self.entity:getMO()
+	local skinId = entityMO and entityMO.skin
 
-	if arg_4_2 and var_4_0 and arg_4_2.fromId == var_4_0.id then
-		var_4_1 = FightHelper.processSkinByStepData(arg_4_2, var_4_0)
+	if fightStepData and entityMO and fightStepData.fromId == entityMO.id then
+		skinId = FightHelper.processSkinByStepData(fightStepData, entityMO)
 	end
 
-	local var_4_2 = FightHelper.detectReplaceTimeline(FightConfig.instance:getSkinSkillTimeline(var_4_1, arg_4_1), arg_4_2)
+	local timeline = FightHelper.detectReplaceTimeline(FightConfig.instance:getSkinSkillTimeline(skinId, skillId), fightStepData)
+	local work = self:registTimelineWork(timeline, fightStepData)
 
-	return (arg_4_0:registTimelineWork(var_4_2, arg_4_2))
+	return work
 end
 
-function var_0_0.playSkill(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:registPlaySkillWork(arg_5_1, arg_5_2)
+function FightSkillComp:playSkill(skillId, fightStepData)
+	local work = self:registPlaySkillWork(skillId, fightStepData)
 
-	if not var_5_0 then
+	if not work then
 		return
 	end
 
-	var_5_0:start()
+	work:start()
 end
 
-function var_0_0.skipSkill(arg_6_0)
-	local var_6_0 = arg_6_0.workComp.workList
+function FightSkillComp:skipSkill()
+	local workList = self.workComp.workList
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		if iter_6_1:isAlive() then
-			iter_6_1:skipSkill()
+	for i, work in ipairs(workList) do
+		if work:isAlive() then
+			work:skipSkill()
 		end
 	end
 end
 
-function var_0_0.stopSkill(arg_7_0)
-	local var_7_0 = arg_7_0.workComp.workList
+function FightSkillComp:stopSkill()
+	local workList = self.workComp.workList
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		iter_7_1:disposeSelf()
+	for i, work in ipairs(workList) do
+		work:disposeSelf()
 	end
 end
 
-function var_0_0.isLastWork(arg_8_0, arg_8_1)
-	return arg_8_1 == arg_8_0:getLastWork()
+function FightSkillComp:isLastWork(work)
+	return work == self:getLastWork()
 end
 
-function var_0_0.getLastWork(arg_9_0)
-	local var_9_0 = arg_9_0.workComp.workList
+function FightSkillComp:getLastWork()
+	local workList = self.workComp.workList
 
-	for iter_9_0 = #var_9_0, 1, -1 do
-		local var_9_1 = var_9_0[iter_9_0]
+	for i = #workList, 1, -1 do
+		local work = workList[i]
 
-		if var_9_1:isAlive() then
-			return var_9_1
+		if work:isAlive() then
+			return work
 		end
 	end
 end
 
-function var_0_0.getBinder(arg_10_0)
-	local var_10_0 = arg_10_0:getLastWork()
+function FightSkillComp:getBinder()
+	local work = self:getLastWork()
 
-	if not var_10_0 then
+	if not work then
 		return
 	end
 
-	return (var_10_0:getBinder())
+	local binder = work:getBinder()
+
+	return binder
 end
 
-function var_0_0.getCurTimelineDuration(arg_11_0)
-	local var_11_0 = arg_11_0:getBinder()
+function FightSkillComp:getCurTimelineDuration()
+	local binder = self:getBinder()
 
-	return var_11_0 and var_11_0:GetDuration() or 0
+	return binder and binder:GetDuration() or 0
 end
 
-function var_0_0.getCurFrameFloat(arg_12_0)
-	local var_12_0 = arg_12_0:getBinder()
+function FightSkillComp:getCurFrameFloat()
+	local binder = self:getBinder()
 
-	if not var_12_0 then
+	if not binder then
 		return
 	end
 
-	return var_12_0.CurFrameFloat
+	return binder.CurFrameFloat
 end
 
-function var_0_0.getFrameFloatByTime(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getBinder()
+function FightSkillComp:getFrameFloatByTime(time)
+	local binder = self:getBinder()
 
-	if not var_13_0 then
+	if not binder then
 		return
 	end
 
-	return var_13_0:GetFrameFloatByTime(arg_13_1)
+	return binder:GetFrameFloatByTime(time)
 end
 
-function var_0_0.setTimeScale(arg_14_0, arg_14_1)
-	arg_14_0.timeScale = arg_14_1
+function FightSkillComp:setTimeScale(timeScale)
+	self.timeScale = timeScale
 
-	local var_14_0 = arg_14_0.workComp.workList
+	local workList = self.workComp.workList
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		if iter_14_1:isAlive() then
-			iter_14_1:setTimeScale(arg_14_1)
+	for i, work in ipairs(workList) do
+		if work:isAlive() then
+			work:setTimeScale(timeScale)
 		end
 	end
 end
 
-function var_0_0.beforeDestroy(arg_15_0)
-	arg_15_0:stopSkill()
-	arg_15_0.workComp:disposeSelf()
+function FightSkillComp:beforeDestroy()
+	self:stopSkill()
+	self.workComp:disposeSelf()
 
-	arg_15_0.workComp = nil
+	self.workComp = nil
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	arg_16_0.sameSkillParam = nil
+function FightSkillComp:onDestroy()
+	self.sameSkillParam = nil
 end
 
-function var_0_0.recordSameSkillStartParam(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0.sameSkillStartParam[arg_17_1.stepUid] = arg_17_2
+function FightSkillComp:recordSameSkillStartParam(fightStepData, param)
+	self.sameSkillStartParam[fightStepData.stepUid] = param
 end
 
-function var_0_0.recordFilterAtkEffect(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0.sameSkillParam[arg_18_2.stepUid]
+function FightSkillComp:recordFilterAtkEffect(str, fightStepData)
+	local tab = self.sameSkillParam[fightStepData.stepUid]
 
-	if not var_18_0 then
-		var_18_0 = {}
-		arg_18_0.sameSkillParam[arg_18_2.stepUid] = var_18_0
+	if not tab then
+		tab = {}
+		self.sameSkillParam[fightStepData.stepUid] = tab
 	end
 
-	var_18_0.filter_atk_effects = {}
+	tab.filter_atk_effects = {}
 
-	local var_18_1 = string.split(arg_18_1, "#")
+	local arr = string.split(str, "#")
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
-		var_18_0.filter_atk_effects[iter_18_1] = true
+	for i, v in ipairs(arr) do
+		tab.filter_atk_effects[v] = true
 	end
 end
 
-function var_0_0.atkEffectNeedFilter(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0.sameSkillParam[arg_19_2.stepUid]
+function FightSkillComp:atkEffectNeedFilter(name, fightStepData)
+	local tab = self.sameSkillParam[fightStepData.stepUid]
 
-	if not var_19_0 then
+	if not tab then
 		return
 	end
 
-	if var_19_0.filter_atk_effects and var_19_0.filter_atk_effects[arg_19_1] then
+	if tab.filter_atk_effects and tab.filter_atk_effects[name] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.recordFilterFlyEffect(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0.sameSkillParam[arg_20_2.stepUid]
+function FightSkillComp:recordFilterFlyEffect(str, fightStepData)
+	local tab = self.sameSkillParam[fightStepData.stepUid]
 
-	if not var_20_0 then
-		var_20_0 = {}
-		arg_20_0.sameSkillParam[arg_20_2.stepUid] = var_20_0
+	if not tab then
+		tab = {}
+		self.sameSkillParam[fightStepData.stepUid] = tab
 	end
 
-	var_20_0.filter_fly_effects = {}
+	tab.filter_fly_effects = {}
 
-	local var_20_1 = string.split(arg_20_1, "#")
+	local arr = string.split(str, "#")
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-		var_20_0.filter_fly_effects[iter_20_1] = true
+	for i, v in ipairs(arr) do
+		tab.filter_fly_effects[v] = true
 	end
 end
 
-function var_0_0.flyEffectNeedFilter(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0.sameSkillParam[arg_21_2.stepUid]
+function FightSkillComp:flyEffectNeedFilter(name, fightStepData)
+	local tab = self.sameSkillParam[fightStepData.stepUid]
 
-	if not var_21_0 then
+	if not tab then
 		return
 	end
 
-	if var_21_0.filter_fly_effects and var_21_0.filter_fly_effects[arg_21_1] then
+	if tab.filter_fly_effects and tab.filter_fly_effects[name] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.clearSameSkillParam(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.sameSkillParam[arg_22_1.stepUid]
+function FightSkillComp:clearSameSkillParam(lastFightStepData)
+	local tab = self.sameSkillParam[lastFightStepData.stepUid]
 
-	if not var_22_0 then
+	if not tab then
 		return
 	end
 
-	local var_22_1 = var_22_0.preStepData
+	local preStepData = tab.preStepData
 
-	while var_22_1 do
-		local var_22_2 = var_22_1
+	while preStepData do
+		local stepData = preStepData
 
-		var_22_1 = arg_22_0.sameSkillParam[var_22_2.stepUid] and arg_22_0.sameSkillParam[var_22_2.stepUid].preStepData
-		arg_22_0.sameSkillStartParam[var_22_2.stepUid] = nil
-		arg_22_0.sameSkillParam[var_22_2.stepUid] = nil
+		preStepData = self.sameSkillParam[stepData.stepUid] and self.sameSkillParam[stepData.stepUid].preStepData
+		self.sameSkillStartParam[stepData.stepUid] = nil
+		self.sameSkillParam[stepData.stepUid] = nil
 
-		local var_22_3 = arg_22_0.workComp.workList
+		local workList = self.workComp.workList
 
-		for iter_22_0, iter_22_1 in ipairs(var_22_3) do
-			if iter_22_1:isAlive() and iter_22_1.fightStepData == var_22_2 then
-				iter_22_1:onDone(true)
+		for i, work in ipairs(workList) do
+			if work:isAlive() and work.fightStepData == stepData then
+				work:onDone(true)
 			end
 		end
 	end
 
-	arg_22_0.sameSkillParam[arg_22_1.stepUid] = nil
+	self.sameSkillParam[lastFightStepData.stepUid] = nil
 end
 
-function var_0_0.stopCurTimelineWaitPlaySameSkill(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
-	local var_23_0 = arg_23_0:getLastWork()
+function FightSkillComp:stopCurTimelineWaitPlaySameSkill(jump_type, act_ani_state, audio_id, fightStepData, nextStepData)
+	local work = self:getLastWork()
 
-	if not var_23_0 then
+	if not work then
 		return
 	end
 
-	local var_23_1 = arg_23_0.sameSkillParam[arg_23_5.stepUid]
+	local tab = self.sameSkillParam[nextStepData.stepUid]
 
-	if not var_23_1 then
-		var_23_1 = {}
-		arg_23_0.sameSkillParam[arg_23_5.stepUid] = var_23_1
+	if not tab then
+		tab = {}
+		self.sameSkillParam[nextStepData.stepUid] = tab
 	end
 
-	var_23_1.curAnimState = arg_23_2
-	var_23_1.audio_id = arg_23_3
-	var_23_1.preStepData = arg_23_4
-	var_23_1.startParam = arg_23_0.sameSkillStartParam[arg_23_4.stepUid]
+	tab.curAnimState = act_ani_state
+	tab.audio_id = audio_id
+	tab.preStepData = fightStepData
+	tab.startParam = self.sameSkillStartParam[fightStepData.stepUid]
 
-	var_23_0.timelineItem:stopCurTimelineWaitPlaySameSkill(arg_23_1, arg_23_2)
+	work.timelineItem:stopCurTimelineWaitPlaySameSkill(jump_type, act_ani_state)
 end
 
-function var_0_0.sameSkillPlaying(arg_24_0)
-	return tabletool.len(arg_24_0.sameSkillParam) > 0
+function FightSkillComp:sameSkillPlaying()
+	return tabletool.len(self.sameSkillParam) > 0
 end
 
-return var_0_0
+return FightSkillComp

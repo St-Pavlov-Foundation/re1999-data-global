@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureGetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureGetViewContainer.lua
 
-local var_0_0 = class("RoomManufactureGetViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomManufactureGetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomManufactureGetViewContainer = class("RoomManufactureGetViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomManufactureGetView.New())
+function RoomManufactureGetViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomManufactureGetView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomManufactureGetViewContainer

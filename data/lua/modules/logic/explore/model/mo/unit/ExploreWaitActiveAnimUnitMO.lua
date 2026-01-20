@@ -1,23 +1,25 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreWaitActiveAnimUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreWaitActiveAnimUnitMO.lua
 
-local var_0_0 = class("ExploreWaitActiveAnimUnitMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreWaitActiveAnimUnitMO", package.seeall)
 
-function var_0_0.activeStateChange(arg_1_0, arg_1_1)
+local ExploreWaitActiveAnimUnitMO = class("ExploreWaitActiveAnimUnitMO", ExploreBaseUnitMO)
+
+function ExploreWaitActiveAnimUnitMO:activeStateChange(isActive)
 	return
 end
 
-function var_0_0.checkActiveCount(arg_2_0)
-	if not arg_2_0._countSource then
+function ExploreWaitActiveAnimUnitMO:checkActiveCount()
+	if not self._countSource then
 		return
 	end
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0._countSource) do
-		if arg_2_0:isInteractActiveState() then
-			ExploreCounterModel.instance:add(iter_2_1, arg_2_0.id)
+	for _, targetId in pairs(self._countSource) do
+		if self:isInteractActiveState() then
+			ExploreCounterModel.instance:add(targetId, self.id)
 		else
-			ExploreCounterModel.instance:reduce(iter_2_1, arg_2_0.id)
+			ExploreCounterModel.instance:reduce(targetId, self.id)
 		end
 	end
 end
 
-return var_0_0
+return ExploreWaitActiveAnimUnitMO

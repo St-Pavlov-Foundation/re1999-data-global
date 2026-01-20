@@ -1,124 +1,126 @@
-﻿module("modules.logic.explore.view.ExploreEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreEnterView.lua
 
-local var_0_0 = class("ExploreEnterView", BaseView)
+module("modules.logic.explore.view.ExploreEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._txtnamecn = gohelper.findChildTextMesh(arg_1_0.viewGO, "center/#txt_namecn")
-	arg_1_0._imagenum = gohelper.findChildImage(arg_1_0.viewGO, "center/bg/#image_num")
-	arg_1_0._txtlevelname = gohelper.findChildTextMesh(arg_1_0.viewGO, "center/bg/#txt_levelname")
-	arg_1_0._gohorizontal = gohelper.findChild(arg_1_0.viewGO, "center/progressbar/horizontal")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "center/progressbar/horizontal/#go_item")
+local ExploreEnterView = class("ExploreEnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ExploreEnterView:onInitView()
+	self._btnclose = gohelper.findChildButton(self.viewGO, "#btn_close")
+	self._txtnamecn = gohelper.findChildTextMesh(self.viewGO, "center/#txt_namecn")
+	self._imagenum = gohelper.findChildImage(self.viewGO, "center/bg/#image_num")
+	self._txtlevelname = gohelper.findChildTextMesh(self.viewGO, "center/bg/#txt_levelname")
+	self._gohorizontal = gohelper.findChild(self.viewGO, "center/progressbar/horizontal")
+	self._goitem = gohelper.findChild(self.viewGO, "center/progressbar/horizontal/#go_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function ExploreEnterView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function ExploreEnterView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ExploreEnterView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
+function ExploreEnterView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_jlbn_level_unlock)
 
-	local var_5_0 = ExploreModel.instance:getMapId()
-	local var_5_1 = ExploreConfig.instance:getMapIdConfig(var_5_0)
-	local var_5_2 = DungeonConfig.instance:getExploreChapterList()
-	local var_5_3 = 1
+	local mapId = ExploreModel.instance:getMapId()
+	local mapCo = ExploreConfig.instance:getMapIdConfig(mapId)
+	local chapterCoList = DungeonConfig.instance:getExploreChapterList()
+	local chapterIndex = 1
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_2) do
-		if iter_5_1.id == var_5_1.chapterId then
-			var_5_3 = iter_5_0
+	for index, chapterCo in ipairs(chapterCoList) do
+		if chapterCo.id == mapCo.chapterId then
+			chapterIndex = index
 
 			break
 		end
 	end
 
-	local var_5_4 = var_5_2[var_5_3].name
-	local var_5_5 = GameUtil.utf8len(var_5_4)
-	local var_5_6
+	local name = chapterCoList[chapterIndex].name
+	local len = GameUtil.utf8len(name)
+	local showName
 
-	if var_5_5 >= 2 then
-		local var_5_7 = GameUtil.utf8sub(var_5_4, 1, 1)
-		local var_5_8 = GameUtil.utf8sub(var_5_4, 2, var_5_5 - 2)
-		local var_5_9 = GameUtil.utf8sub(var_5_4, var_5_5, 1)
+	if len >= 2 then
+		local first = GameUtil.utf8sub(name, 1, 1)
+		local center = GameUtil.utf8sub(name, 2, len - 2)
+		local last = GameUtil.utf8sub(name, len, 1)
 
-		var_5_6 = string.format("<size=50>%s</size>%s<size=50>%s</size>", var_5_7, var_5_8, var_5_9)
+		showName = string.format("<size=50>%s</size>%s<size=50>%s</size>", first, center, last)
 	else
-		var_5_6 = "<size=50>" .. var_5_4
+		showName = "<size=50>" .. name
 	end
 
-	arg_5_0._txtnamecn.text = var_5_6
+	self._txtnamecn.text = showName
 
-	local var_5_10 = DungeonConfig.instance:getChapterEpisodeCOList(var_5_2[var_5_3].id)
-	local var_5_11 = 1
+	local episodeCoList = DungeonConfig.instance:getChapterEpisodeCOList(chapterCoList[chapterIndex].id)
+	local episodeIndex = 1
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_10) do
-		if iter_5_3.id == var_5_1.episodeId then
-			var_5_11 = iter_5_2
+	for index, co in ipairs(episodeCoList) do
+		if co.id == mapCo.episodeId then
+			episodeIndex = index
 
 			break
 		end
 	end
 
-	UISpriteSetMgr.instance:setExploreSprite(arg_5_0._imagenum, "dungeon_secretroom_num_" .. var_5_11)
+	UISpriteSetMgr.instance:setExploreSprite(self._imagenum, "dungeon_secretroom_num_" .. episodeIndex)
 
-	arg_5_0._txtlevelname.text = var_5_10[var_5_11].name
+	self._txtlevelname.text = episodeCoList[episodeIndex].name
 
-	local var_5_12, var_5_13, var_5_14, var_5_15, var_5_16, var_5_17 = ExploreSimpleModel.instance:getCoinCountByMapId(var_5_0)
-	local var_5_18 = {
+	local bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal = ExploreSimpleModel.instance:getCoinCountByMapId(mapId)
+	local data = {
 		{
-			var_5_14,
-			var_5_17,
+			purpleCoin,
+			purpleCoinTotal,
 			"dungeon_secretroom_btn_triangle"
 		},
 		{
-			var_5_13,
-			var_5_16,
+			goldCoin,
+			goldCoinTotal,
 			"dungeon_secretroom_btn_sandglass"
 		},
 		{
-			var_5_12,
-			var_5_15,
+			bonusNum,
+			bonusNumTotal,
 			"dungeon_secretroom_btn_box"
 		}
 	}
 
-	gohelper.CreateObjList(arg_5_0, arg_5_0.setItem, var_5_18, arg_5_0._gohorizontal, arg_5_0._goitem)
-	TaskDispatcher.runDelay(arg_5_0.closeThis, arg_5_0, 3)
+	gohelper.CreateObjList(self, self.setItem, data, self._gohorizontal, self._goitem)
+	TaskDispatcher.runDelay(self.closeThis, self, 3)
 end
 
-function var_0_0.setItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = gohelper.findChildImage(arg_6_1, "bg")
-	local var_6_1 = gohelper.findChildImage(arg_6_1, "image_icon")
-	local var_6_2 = gohelper.findChildTextMesh(arg_6_1, "txt_progress")
+function ExploreEnterView:setItem(obj, data, index)
+	local bg = gohelper.findChildImage(obj, "bg")
+	local icon = gohelper.findChildImage(obj, "image_icon")
+	local progress = gohelper.findChildTextMesh(obj, "txt_progress")
 
-	UISpriteSetMgr.instance:setExploreSprite(var_6_0, arg_6_2[1] == arg_6_2[2] and "dungeon_secretroom_img_full" or "dungeon_secretroom_img_unfull")
-	UISpriteSetMgr.instance:setExploreSprite(var_6_1, arg_6_2[3] .. (arg_6_2[1] == arg_6_2[2] and "1" or "2"))
+	UISpriteSetMgr.instance:setExploreSprite(bg, data[1] == data[2] and "dungeon_secretroom_img_full" or "dungeon_secretroom_img_unfull")
+	UISpriteSetMgr.instance:setExploreSprite(icon, data[3] .. (data[1] == data[2] and "1" or "2"))
 
-	var_6_2.text = string.format("%d/%d", arg_6_2[1], arg_6_2[2])
+	progress.text = string.format("%d/%d", data[1], data[2])
 end
 
-function var_0_0.onClose(arg_7_0)
+function ExploreEnterView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feedback_close)
-	TaskDispatcher.cancelTask(arg_7_0.closeThis, arg_7_0)
+	TaskDispatcher.cancelTask(self.closeThis, self)
 
-	local var_7_0 = ExploreController.instance:getMap()
+	local map = ExploreController.instance:getMap()
 
-	if not var_7_0 then
+	if not map then
 		return
 	end
 
-	var_7_0:getHero():onRoleFirstEnter()
+	map:getHero():onRoleFirstEnter()
 end
 
-return var_0_0
+return ExploreEnterView

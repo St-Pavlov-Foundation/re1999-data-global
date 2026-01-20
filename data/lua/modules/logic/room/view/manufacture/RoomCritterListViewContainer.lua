@@ -1,84 +1,83 @@
-﻿module("modules.logic.room.view.manufacture.RoomCritterListViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomCritterListViewContainer.lua
 
-local var_0_0 = class("RoomCritterListViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomCritterListViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local RoomCritterListViewContainer = class("RoomCritterListViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#go_critter/#scroll_critter"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#go_critter/#scroll_critter/viewport/content/#go_critterItem"
-	var_1_1.cellClass = RoomManufactureCritterItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 648
-	var_1_1.cellHeight = 175
-	var_1_1.cellSpaceV = 10
+function RoomCritterListViewContainer:buildViews()
+	local views = {}
+	local critterScrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(ManufactureCritterListModel.instance, var_1_1))
-	table.insert(var_1_0, RoomCritterListView.New())
+	critterScrollParam.scrollGOPath = "#go_critter/#scroll_critter"
+	critterScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	critterScrollParam.prefabUrl = "#go_critter/#scroll_critter/viewport/content/#go_critterItem"
+	critterScrollParam.cellClass = RoomManufactureCritterItem
+	critterScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	critterScrollParam.lineCount = 1
+	critterScrollParam.cellWidth = 648
+	critterScrollParam.cellHeight = 175
+	critterScrollParam.cellSpaceV = 10
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(ManufactureCritterListModel.instance, critterScrollParam))
+	table.insert(views, RoomCritterListView.New())
+
+	return views
 end
 
-function var_0_0.onContainerInit(arg_2_0)
-	local var_2_0
-	local var_2_1
+function RoomCritterListViewContainer:onContainerInit()
+	local pathId, buildingUid
 
-	if arg_2_0.viewParam then
-		var_2_1 = arg_2_0.viewParam.buildingUid
-		var_2_0 = arg_2_0.viewParam.pathId
+	if self.viewParam then
+		buildingUid = self.viewParam.buildingUid
+		pathId = self.viewParam.pathId
 	end
 
-	if not var_2_1 and not var_2_0 then
+	if not buildingUid and not pathId then
 		logError("RoomCritterListViewContainer:onContainerInit,error, no buildingUid and no pathId")
 	end
 
-	arg_2_0:setContainerViewBelongId(var_2_1, var_2_0)
+	self:setContainerViewBelongId(buildingUid, pathId)
 end
 
-function var_0_0.onContainerClose(arg_3_0)
-	arg_3_0:setContainerViewBelongId()
+function RoomCritterListViewContainer:onContainerClose()
+	self:setContainerViewBelongId()
 end
 
-function var_0_0.setContainerViewBelongId(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._isTransport = false
+function RoomCritterListViewContainer:setContainerViewBelongId(buildingUid, pathId)
+	self._isTransport = false
 
-	if not arg_4_1 and arg_4_2 then
-		arg_4_0._isTransport = true
+	if not buildingUid and pathId then
+		self._isTransport = true
 	end
 
-	arg_4_0._viewBelongId = arg_4_1 or arg_4_2
+	self._viewBelongId = buildingUid or pathId
 end
 
-function var_0_0.getContainerPathId(arg_5_0)
-	if arg_5_0._isTransport then
-		return arg_5_0._viewBelongId
+function RoomCritterListViewContainer:getContainerPathId()
+	if self._isTransport then
+		return self._viewBelongId
 	end
 end
 
-function var_0_0.getContainerViewBuilding(arg_6_0, arg_6_1)
-	local var_6_0
-	local var_6_1
-	local var_6_2
+function RoomCritterListViewContainer:getContainerViewBuilding(nilError)
+	local buildingUid, buildingMO, buildingId
 
-	if arg_6_0._isTransport then
-		local var_6_3 = RoomMapTransportPathModel.instance:getTransportPathMO(arg_6_0._viewBelongId)
+	if self._isTransport then
+		local pathMO = RoomMapTransportPathModel.instance:getTransportPathMO(self._viewBelongId)
 
-		var_6_0 = var_6_3 and var_6_3.buildingUid
-		var_6_2 = var_6_3 and var_6_3.buildingId
+		buildingUid = pathMO and pathMO.buildingUid
+		buildingId = pathMO and pathMO.buildingId
 	else
-		var_6_0 = arg_6_0._viewBelongId
-		var_6_1 = RoomMapBuildingModel.instance:getBuildingMOById(var_6_0)
-		var_6_2 = var_6_1 and var_6_1.buildingId
+		buildingUid = self._viewBelongId
+		buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+		buildingId = buildingMO and buildingMO.buildingId
 	end
 
-	if not var_6_1 and arg_6_1 then
-		logError(string.format("RoomCritterListViewContainer:getContainerViewBuilding error, buildingMO is nil, id:%s  isTransport:%s", arg_6_0._viewBelongId, arg_6_0._isTransport))
+	if not buildingMO and nilError then
+		logError(string.format("RoomCritterListViewContainer:getContainerViewBuilding error, buildingMO is nil, id:%s  isTransport:%s", self._viewBelongId, self._isTransport))
 	end
 
-	return var_6_0, var_6_1, var_6_2
+	return buildingUid, buildingMO, buildingId
 end
 
-return var_0_0
+return RoomCritterListViewContainer

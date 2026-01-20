@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.model.LiangYueInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/model/LiangYueInfoMo.lua
 
-local var_0_0 = pureTable("LiangYueInfoMo")
+module("modules.logic.versionactivity2_5.liangyue.model.LiangYueInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.actId = arg_1_1
-	arg_1_0.episodeId = arg_1_2
-	arg_1_0.isFinish = arg_1_3
-	arg_1_0.puzzle = arg_1_4
+local LiangYueInfoMo = pureTable("LiangYueInfoMo")
 
-	local var_1_0 = LiangYueConfig.instance:getEpisodeConfigByActAndId(arg_1_1, arg_1_2)
+function LiangYueInfoMo:init(actId, episodeId, isFinish, puzzle)
+	self.actId = actId
+	self.episodeId = episodeId
+	self.isFinish = isFinish
+	self.puzzle = puzzle
 
-	if var_1_0 == nil then
-		logError("config is nil" .. arg_1_2)
+	local config = LiangYueConfig.instance:getEpisodeConfigByActAndId(actId, episodeId)
+
+	if config == nil then
+		logError("config is nil" .. episodeId)
 
 		return
 	end
 
-	arg_1_0.config = var_1_0
-	arg_1_0.preEpisodeId = var_1_0.preEpisodeId
+	self.config = config
+	self.preEpisodeId = config.preEpisodeId
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.isFinish = arg_2_1
-	arg_2_0.puzzle = arg_2_2
+function LiangYueInfoMo:updateMO(isFinish, puzzle)
+	self.isFinish = isFinish
+	self.puzzle = puzzle
 end
 
-return var_0_0
+return LiangYueInfoMo

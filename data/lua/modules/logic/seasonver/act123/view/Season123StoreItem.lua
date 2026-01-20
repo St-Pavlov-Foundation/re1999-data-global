@@ -1,167 +1,168 @@
-﻿module("modules.logic.seasonver.act123.view.Season123StoreItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123StoreItem.lua
 
-local var_0_0 = class("Season123StoreItem", ListScrollCell)
+module("modules.logic.seasonver.act123.view.Season123StoreItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.effectRare = gohelper.findChild(arg_1_0.go, "eff_rare5")
-	arg_1_0.goClick = gohelper.findChildClickWithAudio(arg_1_0.go, "goClick")
-	arg_1_0.goTag = gohelper.findChild(arg_1_0.go, "go_tag")
-	arg_1_0.goLimit = gohelper.findChild(arg_1_0.go, "go_tag/#go_limit")
-	arg_1_0.txtLimitBuy = gohelper.findChildText(arg_1_0.go, "layout/txt_limitbuy")
-	arg_1_0.imageRare = gohelper.findChildImage(arg_1_0.go, "image_rare")
-	arg_1_0.goIcon = gohelper.findChild(arg_1_0.go, "goIcon")
-	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.go, "goIcon/simage_icon")
-	arg_1_0.imageIcon = gohelper.findChildImage(arg_1_0.go, "goIcon/simage_icon")
-	arg_1_0.goQuantity = gohelper.findChild(arg_1_0.go, "quantity")
-	arg_1_0.txtQuantity = gohelper.findChildText(arg_1_0.go, "quantity/bg/txt_quantity")
-	arg_1_0.txtName = gohelper.findChildText(arg_1_0.go, "layout/txt_name")
-	arg_1_0.txtCost = gohelper.findChildText(arg_1_0.go, "txt_cost")
-	arg_1_0.simageCoin = gohelper.findChildSingleImage(arg_1_0.go, "txt_cost/simage_coin")
-	arg_1_0.imageCoin = gohelper.findChildImage(arg_1_0.go, "txt_cost/simage_coin")
-	arg_1_0.goSoldout = gohelper.findChild(arg_1_0.go, "go_soldout")
+local Season123StoreItem = class("Season123StoreItem", ListScrollCell)
 
-	arg_1_0.goClick:AddClickListener(arg_1_0.onClick, arg_1_0)
+function Season123StoreItem:init(go)
+	self.go = go
+	self.effectRare = gohelper.findChild(self.go, "eff_rare5")
+	self.goClick = gohelper.findChildClickWithAudio(self.go, "goClick")
+	self.goTag = gohelper.findChild(self.go, "go_tag")
+	self.goLimit = gohelper.findChild(self.go, "go_tag/#go_limit")
+	self.txtLimitBuy = gohelper.findChildText(self.go, "layout/txt_limitbuy")
+	self.imageRare = gohelper.findChildImage(self.go, "image_rare")
+	self.goIcon = gohelper.findChild(self.go, "goIcon")
+	self.simageIcon = gohelper.findChildSingleImage(self.go, "goIcon/simage_icon")
+	self.imageIcon = gohelper.findChildImage(self.go, "goIcon/simage_icon")
+	self.goQuantity = gohelper.findChild(self.go, "quantity")
+	self.txtQuantity = gohelper.findChildText(self.go, "quantity/bg/txt_quantity")
+	self.txtName = gohelper.findChildText(self.go, "layout/txt_name")
+	self.txtCost = gohelper.findChildText(self.go, "txt_cost")
+	self.simageCoin = gohelper.findChildSingleImage(self.go, "txt_cost/simage_coin")
+	self.imageCoin = gohelper.findChildImage(self.go, "txt_cost/simage_coin")
+	self.goSoldout = gohelper.findChild(self.go, "go_soldout")
+
+	self.goClick:AddClickListener(self.onClick, self)
 end
 
-function var_0_0.onClick(arg_2_0)
+function Season123StoreItem:onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	if not arg_2_0.data then
+	if not self.data then
 		return
 	end
 
-	if arg_2_0.remainBuyCount <= 0 then
+	if self.remainBuyCount <= 0 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	if arg_2_0.productItemType == MaterialEnum.MaterialType.HeroSkin then
+	if self.productItemType == MaterialEnum.MaterialType.HeroSkin then
 		ViewMgr.instance:openView(ViewName.StoreSkinGoodsView, {
 			isActivityStore = true,
-			goodsMO = arg_2_0.data
+			goodsMO = self.data
 		})
 	else
-		ViewMgr.instance:openView(ViewName.VersionActivityNormalStoreGoodsView, arg_2_0.data)
+		ViewMgr.instance:openView(ViewName.VersionActivityNormalStoreGoodsView, self.data)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0.data = arg_3_1
+function Season123StoreItem:onUpdateMO(data)
+	self.data = data
 
-	if not arg_3_1 then
-		gohelper.setActive(arg_3_0.go, false)
+	if not data then
+		gohelper.setActive(self.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_3_0.go, true)
-	arg_3_0:refreshRemainBuyCount()
+	gohelper.setActive(self.go, true)
+	self:refreshRemainBuyCount()
 
-	local var_3_0, var_3_1, var_3_2 = arg_3_0:getItemTypeIdQuantity(arg_3_0.data.product)
-	local var_3_3, var_3_4 = ItemModel.instance:getItemConfigAndIcon(var_3_0, var_3_1, true)
+	local productItemType, productItemId, productItemQuantity = self:getItemTypeIdQuantity(self.data.product)
+	local productItemConfig, productIconUrl = ItemModel.instance:getItemConfigAndIcon(productItemType, productItemId, true)
 
-	arg_3_0.productItemType = var_3_0
+	self.productItemType = productItemType
 
-	local var_3_5
-	local var_3_6
+	local rare
 
-	if not var_3_3.rare then
+	if not productItemConfig.rare then
 		logWarn("material type : %s, material id : %s not had rare attribute")
 
-		var_3_6 = 5
+		rare = 5
 	else
-		var_3_6 = var_3_3.rare
+		rare = productItemConfig.rare
 	end
 
-	gohelper.setActive(arg_3_0.effectRare, var_3_6 >= 5)
-	UISpriteSetMgr.instance:setStoreGoodsSprite(arg_3_0.imageRare, "rare" .. var_3_6)
+	gohelper.setActive(self.effectRare, rare >= 5)
+	UISpriteSetMgr.instance:setStoreGoodsSprite(self.imageRare, "rare" .. rare)
 
-	if var_3_0 == MaterialEnum.MaterialType.Equip then
-		arg_3_0.simageIcon:LoadImage(ResUrl.getHeroDefaultEquipIcon(var_3_3.icon), function()
-			arg_3_0.imageIcon:SetNativeSize()
+	if productItemType == MaterialEnum.MaterialType.Equip then
+		self.simageIcon:LoadImage(ResUrl.getHeroDefaultEquipIcon(productItemConfig.icon), function()
+			self.imageIcon:SetNativeSize()
 		end)
 
-		if arg_3_0.headIconItem then
-			arg_3_0.headIconItem:setVisible(false)
+		if self.headIconItem then
+			self.headIconItem:setVisible(false)
 		end
-	elseif var_3_3.subType == ItemEnum.SubType.Portrait then
-		gohelper.setActive(arg_3_0.simageIcon.gameObject, false)
+	elseif productItemConfig.subType == ItemEnum.SubType.Portrait then
+		gohelper.setActive(self.simageIcon.gameObject, false)
 
-		if not arg_3_0.headIconItem then
-			arg_3_0.headIconItem = IconMgr.instance:getCommonHeadIcon(arg_3_0.goIcon)
+		if not self.headIconItem then
+			self.headIconItem = IconMgr.instance:getCommonHeadIcon(self.goIcon)
 		end
 
-		arg_3_0.headIconItem:setItemId(var_3_3.id)
+		self.headIconItem:setItemId(productItemConfig.id)
 	else
-		gohelper.setActive(arg_3_0.simageIcon.gameObject, true)
-		arg_3_0.simageIcon:LoadImage(var_3_4, function()
-			arg_3_0.imageIcon:SetNativeSize()
+		gohelper.setActive(self.simageIcon.gameObject, true)
+		self.simageIcon:LoadImage(productIconUrl, function()
+			self.imageIcon:SetNativeSize()
 		end)
 
-		if arg_3_0.headIconItem then
-			arg_3_0.headIconItem:setVisible(false)
+		if self.headIconItem then
+			self.headIconItem:setVisible(false)
 		end
 	end
 
-	arg_3_0.txtName.text = var_3_3.name
+	self.txtName.text = productItemConfig.name
 
-	gohelper.setActive(arg_3_0.goQuantity, var_3_2 > 1)
+	gohelper.setActive(self.goQuantity, productItemQuantity > 1)
 
-	arg_3_0.txtQuantity.text = var_3_2 > 1 and var_3_2 or ""
-	arg_3_0.costItemType, arg_3_0.costItemId, arg_3_0.costItemQuantity = arg_3_0:getItemTypeIdQuantity(arg_3_0.data.cost)
-	arg_3_0.txtCost.text = arg_3_0.costItemQuantity
+	self.txtQuantity.text = productItemQuantity > 1 and productItemQuantity or ""
+	self.costItemType, self.costItemId, self.costItemQuantity = self:getItemTypeIdQuantity(self.data.cost)
+	self.txtCost.text = self.costItemQuantity
 
-	local var_3_7, var_3_8 = ItemModel.instance:getItemConfigAndIcon(arg_3_0.costItemType, arg_3_0.costItemId)
+	local costCo, costIconUrl = ItemModel.instance:getItemConfigAndIcon(self.costItemType, self.costItemId)
 
-	if arg_3_0.costItemType == MaterialEnum.MaterialType.Currency then
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_3_0.imageCoin, var_3_7.icon .. "_1")
+	if self.costItemType == MaterialEnum.MaterialType.Currency then
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self.imageCoin, costCo.icon .. "_1")
 	else
-		arg_3_0.simageCoin:LoadImage(var_3_8)
+		self.simageCoin:LoadImage(costIconUrl)
 	end
 
-	arg_3_0:refreshTag()
+	self:refreshTag()
 end
 
-function var_0_0.refreshRemainBuyCount(arg_6_0)
-	if arg_6_0.data.maxBuyCount == 0 then
-		gohelper.setActive(arg_6_0.txtLimitBuy.gameObject, false)
-		gohelper.setActive(arg_6_0.goSoldout, false)
+function Season123StoreItem:refreshRemainBuyCount()
+	if self.data.maxBuyCount == 0 then
+		gohelper.setActive(self.txtLimitBuy.gameObject, false)
+		gohelper.setActive(self.goSoldout, false)
 
-		arg_6_0.remainBuyCount = 9999
+		self.remainBuyCount = 9999
 	else
-		gohelper.setActive(arg_6_0.txtLimitBuy.gameObject, true)
+		gohelper.setActive(self.txtLimitBuy.gameObject, true)
 
-		arg_6_0.remainBuyCount = arg_6_0.data.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_6_0.data.activityId, arg_6_0.data.id)
-		arg_6_0.txtLimitBuy.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
-			arg_6_0.remainBuyCount
+		self.remainBuyCount = self.data.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(self.data.activityId, self.data.id)
+		self.txtLimitBuy.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_buylimit_count"), {
+			self.remainBuyCount
 		})
 
-		gohelper.setActive(arg_6_0.goSoldout, arg_6_0.remainBuyCount <= 0)
+		gohelper.setActive(self.goSoldout, self.remainBuyCount <= 0)
 	end
 end
 
-function var_0_0.refreshTag(arg_7_0)
-	if arg_7_0.data.tag == 0 or arg_7_0.remainBuyCount <= 0 then
-		gohelper.setActive(arg_7_0.goLimit, false)
+function Season123StoreItem:refreshTag()
+	if self.data.tag == 0 or self.remainBuyCount <= 0 then
+		gohelper.setActive(self.goLimit, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0.goLimit, true)
+	gohelper.setActive(self.goLimit, true)
 end
 
-function var_0_0.getItemTypeIdQuantity(arg_8_0, arg_8_1)
-	local var_8_0 = string.splitToNumber(arg_8_1, "#")
+function Season123StoreItem:getItemTypeIdQuantity(coStr)
+	local attribute = string.splitToNumber(coStr, "#")
 
-	return var_8_0[1], var_8_0[2], var_8_0[3]
+	return attribute[1], attribute[2], attribute[3]
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0.goClick:RemoveClickListener()
-	arg_9_0.simageIcon:UnLoadImage()
-	arg_9_0.simageCoin:UnLoadImage()
+function Season123StoreItem:onDestroy()
+	self.goClick:RemoveClickListener()
+	self.simageIcon:UnLoadImage()
+	self.simageCoin:UnLoadImage()
 end
 
-return var_0_0
+return Season123StoreItem

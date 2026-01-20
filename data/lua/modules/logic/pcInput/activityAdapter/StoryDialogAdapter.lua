@@ -1,8 +1,10 @@
-﻿module("modules.logic.pcInput.activityAdapter.StoryDialogAdapter", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/activityAdapter/StoryDialogAdapter.lua
 
-local var_0_0 = class("StoryDialogAdapter", BaseActivityAdapter)
+module("modules.logic.pcInput.activityAdapter.StoryDialogAdapter", package.seeall)
 
-var_0_0.keytoFunction = {
+local StoryDialogAdapter = class("StoryDialogAdapter", BaseActivityAdapter)
+
+StoryDialogAdapter.keytoFunction = {
 	Space = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogNext)
 	end,
@@ -26,42 +28,42 @@ var_0_0.keytoFunction = {
 	end
 }
 
-function var_0_0.ctor(arg_8_0)
-	arg_8_0.keytoFunction = var_0_0.keytoFunction
+function StoryDialogAdapter:ctor()
+	self.keytoFunction = StoryDialogAdapter.keytoFunction
 
-	arg_8_0:registerFunction()
+	self:registerFunction()
 end
 
-function var_0_0.registerFunction(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0.keytoFunction) do
-		PCInputController.instance:registerKey(iter_9_0, ZProj.PCInputManager.PCInputEvent.KeyUp)
+function StoryDialogAdapter:registerFunction()
+	for k, _ in pairs(self.keytoFunction) do
+		PCInputController.instance:registerKey(k, ZProj.PCInputManager.PCInputEvent.KeyUp)
 	end
 end
 
-function var_0_0.unRegisterFunction(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.keytoFunction) do
-		PCInputController.instance:unregisterKey(iter_10_0, ZProj.PCInputManager.PCInputEvent.KeyUp)
+function StoryDialogAdapter:unRegisterFunction()
+	for k, _ in pairs(self.keytoFunction) do
+		PCInputController.instance:unregisterKey(k, ZProj.PCInputManager.PCInputEvent.KeyUp)
 	end
 end
 
-function var_0_0.OnkeyUp(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.keytoFunction[arg_11_1]
+function StoryDialogAdapter:OnkeyUp(keyName)
+	local func = self.keytoFunction[keyName]
 
-	if var_11_0 then
-		var_11_0()
+	if func then
+		func()
 	end
 end
 
-function var_0_0.OnkeyDown(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.keytoFunction[arg_12_1]
+function StoryDialogAdapter:OnkeyDown(keyName)
+	local func = self.keytoFunction[keyName]
 
-	if var_12_0 then
-		var_12_0()
+	if func then
+		func()
 	end
 end
 
-function var_0_0.destroy(arg_13_0)
-	arg_13_0:unRegisterFunction()
+function StoryDialogAdapter:destroy()
+	self:unRegisterFunction()
 end
 
-return var_0_0
+return StoryDialogAdapter

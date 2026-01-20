@@ -1,215 +1,221 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterBuildingMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterBuildingMo.lua
 
-local var_0_0 = pureTable("SurvivalShelterBuildingMo")
+module("modules.logic.survival.model.shelter.SurvivalShelterBuildingMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.buildingId = arg_1_1.buildingId
-	arg_1_0.level = arg_1_1.level
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.attrs = {}
+local SurvivalShelterBuildingMo = pureTable("SurvivalShelterBuildingMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.attrContainer.values) do
-		arg_1_0.attrs[iter_1_1.attrId] = iter_1_1.finalVal
+function SurvivalShelterBuildingMo:init(data, isUpgrade)
+	self.id = data.id
+	self.buildingId = data.buildingId
+	self.level = data.level
+	self.status = data.status
+	self.attrs = {}
+
+	for i, v in ipairs(data.attrContainer.values) do
+		self.attrs[v.attrId] = v.finalVal
 	end
 
-	arg_1_0:updateHeros(arg_1_1.heroPos)
+	self:updateHeros(data.heroPos)
 
-	arg_1_0.npcs = {}
+	self.npcs = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.npcPos) do
-		arg_1_0:addNpc(iter_1_3.npcId, iter_1_3.pos)
+	for i, v in ipairs(data.npcPos) do
+		self:addNpc(v.npcId, v.pos)
 	end
 
-	arg_1_0.baseCo = SurvivalConfig.instance:getBuildingConfig(arg_1_0.buildingId, 1)
-	arg_1_0.isSingleLevel = SurvivalConfig.instance:getBuildingConfig(arg_1_0.buildingId, 2, true) == nil
-	arg_1_0.shop = arg_1_0.shop or SurvivalShopMo.New()
+	self.baseCo = SurvivalConfig.instance:getBuildingConfig(self.buildingId, 1)
+	self.isSingleLevel = SurvivalConfig.instance:getBuildingConfig(self.buildingId, 2, true) == nil
+	self.shop = self.shop or SurvivalShopMo.New()
 
-	arg_1_0.shop:init(arg_1_1.shop)
+	self.shop:init(data.shop)
 
-	arg_1_0.survivalReputationPropMo = arg_1_0.survivalReputationPropMo or SurvivalReputationPropMo.New()
+	self.survivalReputationPropMo = self.survivalReputationPropMo or SurvivalReputationPropMo.New()
 
-	arg_1_0:setReputationData(arg_1_1.reputationProp)
+	self:setReputationData(data.reputationProp)
 
-	if arg_1_2 then
-		arg_1_0._lockLevel = nil
-	end
-end
-
-function var_0_0.setReputationData(arg_2_0, arg_2_1)
-	arg_2_0.survivalReputationPropMo:setData(arg_2_1)
-	arg_2_0:refreshReputationRedDot()
-end
-
-function var_0_0.updateHeros(arg_3_0, arg_3_1)
-	arg_3_0.heros = {}
-
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		arg_3_0.heros[iter_3_1.heroId] = iter_3_1.pos
+	if isUpgrade then
+		self._lockLevel = nil
 	end
 end
 
-function var_0_0.batchHeros(arg_4_0, arg_4_1)
-	arg_4_0.heros = {}
+function SurvivalShelterBuildingMo:setReputationData(reputationProp)
+	self.survivalReputationPropMo:setData(reputationProp)
+	self:refreshReputationRedDot()
+end
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		if iter_4_1 ~= 0 then
-			arg_4_0.heros[iter_4_1] = iter_4_0 - 1
+function SurvivalShelterBuildingMo:updateHeros(heros)
+	self.heros = {}
+
+	for i, v in ipairs(heros) do
+		self.heros[v.heroId] = v.pos
+	end
+end
+
+function SurvivalShelterBuildingMo:batchHeros(heros)
+	self.heros = {}
+
+	for i, heroId in ipairs(heros) do
+		if heroId ~= 0 then
+			self.heros[heroId] = i - 1
 		end
 	end
 end
 
-function var_0_0.isDestoryed(arg_5_0)
-	return arg_5_0.status == SurvivalEnum.BuildingStatus.Destroy
+function SurvivalShelterBuildingMo:isDestoryed()
+	return self.status == SurvivalEnum.BuildingStatus.Destroy
 end
 
-function var_0_0.sort(arg_6_0, arg_6_1)
-	return arg_6_0.buildingId < arg_6_1.buildingId
+function SurvivalShelterBuildingMo.sort(a, b)
+	return a.buildingId < b.buildingId
 end
 
-function var_0_0.isEqualType(arg_7_0, arg_7_1)
-	return arg_7_0.baseCo.type == arg_7_1
+function SurvivalShelterBuildingMo:isEqualType(type)
+	return self.baseCo.type == type
 end
 
-function var_0_0.getBuildingType(arg_8_0)
-	return arg_8_0.baseCo.type
+function SurvivalShelterBuildingMo:getBuildingType()
+	return self.baseCo.type
 end
 
-function var_0_0.isBuild(arg_9_0)
-	return arg_9_0.level > 0
+function SurvivalShelterBuildingMo:isBuild()
+	return self.level > 0
 end
 
-function var_0_0.getNpcByPosition(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.npcs) do
-		if iter_10_1 == arg_10_1 then
-			return iter_10_0
+function SurvivalShelterBuildingMo:getNpcByPosition(pos)
+	for npcId, v in pairs(self.npcs) do
+		if v == pos then
+			return npcId
 		end
 	end
 end
 
-function var_0_0.isNpcInBuilding(arg_11_0, arg_11_1)
-	return arg_11_0:getNpcPos(arg_11_1) ~= nil
+function SurvivalShelterBuildingMo:isNpcInBuilding(npcId)
+	local pos = self:getNpcPos(npcId)
+
+	return pos ~= nil
 end
 
-function var_0_0.getNpcPos(arg_12_0, arg_12_1)
-	return arg_12_0.npcs[arg_12_1]
+function SurvivalShelterBuildingMo:getNpcPos(npcId)
+	return self.npcs[npcId]
 end
 
-function var_0_0.removeNpc(arg_13_0, arg_13_1)
-	arg_13_0.npcs[arg_13_1] = nil
+function SurvivalShelterBuildingMo:removeNpc(npcId)
+	self.npcs[npcId] = nil
 end
 
-function var_0_0.addNpc(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_2 < 0 then
+function SurvivalShelterBuildingMo:addNpc(npcId, pos)
+	if pos < 0 then
 		return
 	end
 
-	arg_14_0.npcs[arg_14_1] = arg_14_2
+	self.npcs[npcId] = pos
 end
 
-function var_0_0.isHeroInBuilding(arg_15_0, arg_15_1)
-	return arg_15_0:getHeroPos(arg_15_1) ~= nil
+function SurvivalShelterBuildingMo:isHeroInBuilding(heroId)
+	local pos = self:getHeroPos(heroId)
+
+	return pos ~= nil
 end
 
-function var_0_0.getHeroPos(arg_16_0, arg_16_1)
-	return arg_16_0.heros[arg_16_1]
+function SurvivalShelterBuildingMo:getHeroPos(heroId)
+	return self.heros[heroId]
 end
 
-function var_0_0.removeHero(arg_17_0, arg_17_1)
-	arg_17_0.heros[arg_17_1] = nil
+function SurvivalShelterBuildingMo:removeHero(heroId)
+	self.heros[heroId] = nil
 end
 
-function var_0_0.addHero(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0.heros[arg_18_1] = arg_18_2
+function SurvivalShelterBuildingMo:addHero(heroId, pos)
+	self.heros[heroId] = pos
 end
 
-function var_0_0.getAttr(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0.attrs[arg_19_1] or 0
+function SurvivalShelterBuildingMo:getAttr(attrType, curNum)
+	local attrVal = self.attrs[attrType] or 0
 
-	if SurvivalEnum.AttrTypePer[arg_19_1] then
-		arg_19_2 = arg_19_2 or 0
-		var_19_0 = math.floor(arg_19_2 * math.max(0, 1 + var_19_0 / 1000))
+	if SurvivalEnum.AttrTypePer[attrType] then
+		curNum = curNum or 0
+		attrVal = math.floor(curNum * math.max(0, 1 + attrVal / 1000))
 	end
 
-	return var_19_0
+	return attrVal
 end
 
-function var_0_0.refreshLocalStatus(arg_20_0)
-	arg_20_0._localStatus = arg_20_0:getRealLocalStatus()
+function SurvivalShelterBuildingMo:refreshLocalStatus()
+	self._localStatus = self:getRealLocalStatus()
 end
 
-function var_0_0.getLocalStatus(arg_21_0)
-	if arg_21_0._localStatus == nil then
-		arg_21_0:refreshLocalStatus()
+function SurvivalShelterBuildingMo:getLocalStatus()
+	if self._localStatus == nil then
+		self:refreshLocalStatus()
 
-		return arg_21_0._localStatus
+		return self._localStatus
 	end
 
-	local var_21_0 = arg_21_0:getRealLocalStatus()
+	local realStatus = self:getRealLocalStatus()
 
-	if arg_21_0._localStatus == var_21_0 then
-		return arg_21_0._localStatus
+	if self._localStatus == realStatus then
+		return self._localStatus
 	end
 
-	if arg_21_0._localStatus == SurvivalEnum.ShelterBuildingLocalStatus.UnBuild and var_21_0 == SurvivalEnum.ShelterBuildingLocalStatus.Normal then
+	if self._localStatus == SurvivalEnum.ShelterBuildingLocalStatus.UnBuild and realStatus == SurvivalEnum.ShelterBuildingLocalStatus.Normal then
 		return SurvivalEnum.ShelterBuildingLocalStatus.UnBuildToNormal
 	end
 
-	if arg_21_0._localStatus == SurvivalEnum.ShelterBuildingLocalStatus.Destroy and var_21_0 == SurvivalEnum.ShelterBuildingLocalStatus.Normal then
+	if self._localStatus == SurvivalEnum.ShelterBuildingLocalStatus.Destroy and realStatus == SurvivalEnum.ShelterBuildingLocalStatus.Normal then
 		return SurvivalEnum.ShelterBuildingLocalStatus.DestroyToNormal
 	end
 
-	if arg_21_0._localStatus == SurvivalEnum.ShelterBuildingLocalStatus.Normal and var_21_0 == SurvivalEnum.ShelterBuildingLocalStatus.Destroy then
+	if self._localStatus == SurvivalEnum.ShelterBuildingLocalStatus.Normal and realStatus == SurvivalEnum.ShelterBuildingLocalStatus.Destroy then
 		return SurvivalEnum.ShelterBuildingLocalStatus.NormalToDestroy
 	end
 
 	return SurvivalEnum.ShelterBuildingLocalStatus.Normal
 end
 
-function var_0_0.getRealLocalStatus(arg_22_0)
-	if arg_22_0:isDestoryed() then
+function SurvivalShelterBuildingMo:getRealLocalStatus()
+	if self:isDestoryed() then
 		return SurvivalEnum.ShelterBuildingLocalStatus.Destroy
 	end
 
-	if arg_22_0:isBuild() then
+	if self:isBuild() then
 		return SurvivalEnum.ShelterBuildingLocalStatus.Normal
 	end
 
 	return SurvivalEnum.ShelterBuildingLocalStatus.UnBuild
 end
 
-function var_0_0.lockLevel(arg_23_0)
-	arg_23_0._lockLevel = arg_23_0.level
+function SurvivalShelterBuildingMo:lockLevel()
+	self._lockLevel = self.level
 end
 
-function var_0_0.getLevel(arg_24_0)
-	return arg_24_0._lockLevel or arg_24_0.level
+function SurvivalShelterBuildingMo:getLevel()
+	return self._lockLevel or self.level
 end
 
-function var_0_0.getShop(arg_25_0)
-	if arg_25_0:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
-		return arg_25_0.survivalReputationPropMo.survivalShopMo
+function SurvivalShelterBuildingMo:getShop()
+	if self:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
+		return self.survivalReputationPropMo.survivalShopMo
 	else
-		return arg_25_0.shop
+		return self.shop
 	end
 end
 
-function var_0_0.refreshReputationRedDot(arg_26_0)
-	if arg_26_0:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
-		local var_26_0 = arg_26_0:getReputationShopRedDot()
-		local var_26_1 = SurvivalConfig.instance:getReputationRedDotType(arg_26_0.buildingId)
-		local var_26_2 = {}
+function SurvivalShelterBuildingMo:refreshReputationRedDot()
+	if self:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
+		local redDotNum = self:getReputationShopRedDot()
+		local redDotType = SurvivalConfig.instance:getReputationRedDotType(self.buildingId)
+		local redDotInfoList = {}
 
-		table.insert(var_26_2, {
-			id = var_26_1,
-			value = var_26_0
+		table.insert(redDotInfoList, {
+			id = redDotType,
+			value = redDotNum
 		})
-		RedDotRpc.instance:clientAddRedDotGroupList(var_26_2, true)
+		RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
 	end
 end
 
-function var_0_0.getReputationShopRedDot(arg_27_0)
-	return arg_27_0.survivalReputationPropMo:haveFreeReward() and 1 or 0
+function SurvivalShelterBuildingMo:getReputationShopRedDot()
+	return self.survivalReputationPropMo:haveFreeReward() and 1 or 0
 end
 
-return var_0_0
+return SurvivalShelterBuildingMo

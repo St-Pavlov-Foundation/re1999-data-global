@@ -1,24 +1,26 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorBuffSelectModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorBuffSelectModel.lua
 
-local var_0_0 = class("SkillEditorBuffSelectModel", ListScrollModel)
+module("modules.logic.fight.view.preview.SkillEditorBuffSelectModel", package.seeall)
 
-function var_0_0.setSelect(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.attacker = arg_1_1
+local SkillEditorBuffSelectModel = class("SkillEditorBuffSelectModel", ListScrollModel)
 
-	local var_1_0 = {}
+function SkillEditorBuffSelectModel:setSelect(attacker, searchText)
+	self.attacker = attacker
 
-	for iter_1_0, iter_1_1 in ipairs(lua_skill_buff.configList) do
-		if string.find(tostring(iter_1_1.id), arg_1_2) or string.find(iter_1_1.name, arg_1_2) then
-			table.insert(var_1_0, {
-				id = iter_1_0,
-				co = iter_1_1
+	local list = {}
+
+	for i, buffCO in ipairs(lua_skill_buff.configList) do
+		if string.find(tostring(buffCO.id), searchText) or string.find(buffCO.name, searchText) then
+			table.insert(list, {
+				id = i,
+				co = buffCO
 			})
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+SkillEditorBuffSelectModel.instance = SkillEditorBuffSelectModel.New()
 
-return var_0_0
+return SkillEditorBuffSelectModel

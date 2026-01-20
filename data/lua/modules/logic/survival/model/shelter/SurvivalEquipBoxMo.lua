@@ -1,69 +1,71 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalEquipBoxMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalEquipBoxMo.lua
 
-local var_0_0 = pureTable("SurvivalEquipBoxMo")
+module("modules.logic.survival.model.shelter.SurvivalEquipBoxMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.currPlanId = arg_1_1.currPlanId
-	arg_1_0.maxTagId = arg_1_1.maxTagId
-	arg_1_0.slots = {}
+local SurvivalEquipBoxMo = pureTable("SurvivalEquipBoxMo")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.slots) do
-		local var_1_0 = SurvivalEquipSlotMo.New()
+function SurvivalEquipBoxMo:init(data)
+	self.currPlanId = data.currPlanId
+	self.maxTagId = data.maxTagId
+	self.slots = {}
 
-		var_1_0:init(iter_1_1, arg_1_0)
+	for _, v in ipairs(data.slots) do
+		local slotMo = SurvivalEquipSlotMo.New()
 
-		arg_1_0.slots[var_1_0.slotId] = var_1_0
+		slotMo:init(v, self)
+
+		self.slots[slotMo.slotId] = slotMo
 	end
 
-	arg_1_0.jewelrySlots = {}
+	self.jewelrySlots = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.jewelrySlots) do
-		local var_1_1 = SurvivalEquipSlotMo.New()
+	for _, v in ipairs(data.jewelrySlots) do
+		local slotMo = SurvivalEquipSlotMo.New()
 
-		var_1_1:init(iter_1_3, arg_1_0)
+		slotMo:init(v, self)
 
-		arg_1_0.jewelrySlots[var_1_1.slotId] = var_1_1
+		self.jewelrySlots[slotMo.slotId] = slotMo
 	end
 
-	arg_1_0:calcAttrs()
+	self:calcAttrs()
 end
 
-function var_0_0.calcAttrs(arg_2_0)
-	arg_2_0.values = {}
+function SurvivalEquipBoxMo:calcAttrs()
+	self.values = {}
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0.slots) do
-		for iter_2_2, iter_2_3 in pairs(iter_2_1.values) do
-			if arg_2_0.values[iter_2_2] then
-				arg_2_0.values[iter_2_2] = arg_2_0.values[iter_2_2] + iter_2_3
+	for _, slotMO in pairs(self.slots) do
+		for k, v in pairs(slotMO.values) do
+			if self.values[k] then
+				self.values[k] = self.values[k] + v
 			else
-				arg_2_0.values[iter_2_2] = iter_2_3
+				self.values[k] = v
 			end
 		end
 	end
 
-	for iter_2_4, iter_2_5 in pairs(arg_2_0.jewelrySlots) do
-		for iter_2_6, iter_2_7 in pairs(iter_2_5.values) do
-			if arg_2_0.values[iter_2_6] then
-				arg_2_0.values[iter_2_6] = arg_2_0.values[iter_2_6] + iter_2_7
+	for _, slotMO in pairs(self.jewelrySlots) do
+		for k, v in pairs(slotMO.values) do
+			if self.values[k] then
+				self.values[k] = self.values[k] + v
 			else
-				arg_2_0.values[iter_2_6] = iter_2_7
+				self.values[k] = v
 			end
 		end
 	end
 end
 
-function var_0_0.getAllScore(arg_3_0)
-	local var_3_0 = 0
+function SurvivalEquipBoxMo:getAllScore()
+	local value = 0
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.slots) do
-		var_3_0 = var_3_0 + iter_3_1:getScore()
+	for _, slotMO in pairs(self.slots) do
+		value = value + slotMO:getScore()
 	end
 
-	for iter_3_2, iter_3_3 in pairs(arg_3_0.jewelrySlots) do
-		var_3_0 = var_3_0 + iter_3_3:getScore()
+	for _, slotMO in pairs(self.jewelrySlots) do
+		value = value + slotMO:getScore()
 	end
 
-	return var_3_0
+	return value
 end
 
-return var_0_0
+return SurvivalEquipBoxMo

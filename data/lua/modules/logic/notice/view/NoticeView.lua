@@ -1,184 +1,188 @@
-﻿module("modules.logic.notice.view.NoticeView", package.seeall)
+﻿-- chunkname: @modules/logic/notice/view/NoticeView.lua
 
-local var_0_0 = class("NoticeView", BaseView)
+module("modules.logic.notice.view.NoticeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._btncloseBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#simage_bg/top/#btn_closeBtn")
-	arg_1_0._scrollnotice = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_notice")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_normal")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_select")
-	arg_1_0._goredtip = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_redtip")
-	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#scroll_content")
-	arg_1_0._gotoptitle = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle/#txt_title")
-	arg_1_0._simagecontent = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#simage_content")
-	arg_1_0._txtcontentTitle = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/contentTitle/#txt_contentTitle")
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "right/#scroll_content/Viewport/Content/#txt_content")
-	arg_1_0._simagenotice = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#simage_notice")
-	arg_1_0._gocontentMask = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_content/#go_contentMask")
-	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
+local NoticeView = class("NoticeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NoticeView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._btncloseBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#simage_bg/top/#btn_closeBtn")
+	self._scrollnotice = gohelper.findChildScrollRect(self.viewGO, "left/#scroll_notice")
+	self._gonormal = gohelper.findChild(self.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_normal")
+	self._goselect = gohelper.findChild(self.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_select")
+	self._goredtip = gohelper.findChild(self.viewGO, "left/#scroll_notice/Viewport/Content/noticeItem/#go_redtip")
+	self._scrollcontent = gohelper.findChildScrollRect(self.viewGO, "right/#scroll_content")
+	self._gotoptitle = gohelper.findChild(self.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle")
+	self._txttitle = gohelper.findChildText(self.viewGO, "right/#scroll_content/Viewport/Content/#go_toptitle/#txt_title")
+	self._simagecontent = gohelper.findChildSingleImage(self.viewGO, "right/#scroll_content/Viewport/Content/#simage_content")
+	self._txtcontentTitle = gohelper.findChildText(self.viewGO, "right/#scroll_content/Viewport/Content/contentTitle/#txt_contentTitle")
+	self._txtcontent = gohelper.findChildText(self.viewGO, "right/#scroll_content/Viewport/Content/#txt_content")
+	self._simagenotice = gohelper.findChildSingleImage(self.viewGO, "right/#simage_notice")
+	self._gocontentMask = gohelper.findChild(self.viewGO, "right/#scroll_content/#go_contentMask")
+	self._btncloseview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeview")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseBtn:AddClickListener(arg_2_0._btncloseBtnOnClick, arg_2_0)
-	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseBtnOnClick, arg_2_0)
-	arg_2_0._scrollcontent:AddOnValueChanged(arg_2_0._onContentScrollValueChanged, arg_2_0)
+function NoticeView:addEvents()
+	self._btncloseBtn:AddClickListener(self._btncloseBtnOnClick, self)
+	self._btncloseview:AddClickListener(self._btncloseBtnOnClick, self)
+	self._scrollcontent:AddOnValueChanged(self._onContentScrollValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseBtn:RemoveClickListener()
-	arg_3_0._btncloseview:RemoveClickListener()
-	arg_3_0._scrollcontent:RemoveOnValueChanged()
+function NoticeView:removeEvents()
+	self._btncloseBtn:RemoveClickListener()
+	self._btncloseview:RemoveClickListener()
+	self._scrollcontent:RemoveOnValueChanged()
 end
 
-function var_0_0._btncloseBtnOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function NoticeView:_btncloseBtnOnClick()
+	self:closeThis()
 end
 
-function var_0_0.createToggleItem(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getUserDataTb_()
+function NoticeView:createToggleItem(goToggle, type)
+	local toggleItem = self:getUserDataTb_()
 
-	var_5_0.type = arg_5_2
-	var_5_0.goToggle = arg_5_1
-	var_5_0.click = gohelper.getClick(arg_5_1)
-	var_5_0.selectLabel = gohelper.findChild(arg_5_1, "selectLabel")
-	var_5_0.unselectLabel = gohelper.findChild(arg_5_1, "unselectLabel")
-	var_5_0.goReddot = gohelper.findChild(arg_5_1, "unselectLabel/reddot")
+	toggleItem.type = type
+	toggleItem.goToggle = goToggle
+	toggleItem.click = gohelper.getClick(goToggle)
+	toggleItem.selectLabel = gohelper.findChild(goToggle, "selectLabel")
+	toggleItem.unselectLabel = gohelper.findChild(goToggle, "unselectLabel")
+	toggleItem.goReddot = gohelper.findChild(goToggle, "unselectLabel/reddot")
 
-	var_5_0.click:AddClickListener(arg_5_0._toggleBeSelect, arg_5_0)
-	var_5_0.click:AddClickDownListener(arg_5_0._toggleBeClickDown, arg_5_0, var_5_0)
-	var_5_0.click:AddClickUpListener(arg_5_0._toggleBeClickUp, arg_5_0, var_5_0)
-	gohelper.addUIClickAudio(arg_5_1, AudioEnum.UI.play_ui_feedback_open)
-	table.insert(arg_5_0.toggleItemList, var_5_0)
+	toggleItem.click:AddClickListener(self._toggleBeSelect, self)
+	toggleItem.click:AddClickDownListener(self._toggleBeClickDown, self, toggleItem)
+	toggleItem.click:AddClickUpListener(self._toggleBeClickUp, self, toggleItem)
+	gohelper.addUIClickAudio(goToggle, AudioEnum.UI.play_ui_feedback_open)
+	table.insert(self.toggleItemList, toggleItem)
 
-	return var_5_0
+	return toggleItem
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagebg:LoadImage(ResUrl.getNoticeBg("bg_announcement"))
+function NoticeView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getNoticeBg("bg_announcement"))
 
-	arg_6_0._goContent = gohelper.findChild(arg_6_0._scrollcontent.gameObject, "Viewport/Content")
-	arg_6_0.toggleItemList = {}
-	arg_6_0.goToggle1 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle1")
-	arg_6_0.goToggle2 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle2")
-	arg_6_0.goToggle3 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle3")
-	arg_6_0.goToggle4 = gohelper.findChild(arg_6_0.viewGO, "right/#toggleGroup/Toggle4")
+	self._goContent = gohelper.findChild(self._scrollcontent.gameObject, "Viewport/Content")
+	self.toggleItemList = {}
+	self.goToggle1 = gohelper.findChild(self.viewGO, "right/#toggleGroup/Toggle1")
+	self.goToggle2 = gohelper.findChild(self.viewGO, "right/#toggleGroup/Toggle2")
+	self.goToggle3 = gohelper.findChild(self.viewGO, "right/#toggleGroup/Toggle3")
+	self.goToggle4 = gohelper.findChild(self.viewGO, "right/#toggleGroup/Toggle4")
 
-	arg_6_0:createToggleItem(arg_6_0.goToggle1, NoticeType.Activity)
-	arg_6_0:createToggleItem(arg_6_0.goToggle2, NoticeType.Game)
-	arg_6_0:createToggleItem(arg_6_0.goToggle3, NoticeType.System)
-	arg_6_0:createToggleItem(arg_6_0.goToggle4, NoticeType.Information)
+	self:createToggleItem(self.goToggle1, NoticeType.Activity)
+	self:createToggleItem(self.goToggle2, NoticeType.Game)
+	self:createToggleItem(self.goToggle3, NoticeType.System)
+	self:createToggleItem(self.goToggle4, NoticeType.Information)
 
-	arg_6_0._scrollContentHeight = recthelper.getHeight(arg_6_0._goContent.transform)
+	self._scrollContentHeight = recthelper.getHeight(self._goContent.transform)
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function NoticeView:onDestroy()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function NoticeView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function NoticeView:onOpen()
 	NoticeModel.instance:onOpenNoticeView()
-	arg_9_0:_addEvent()
-	arg_9_0:updateUI()
-	NavigateMgr.instance:addEscape(ViewName.NoticeView, arg_9_0._btncloseBtnOnClick, arg_9_0)
+	self:_addEvent()
+	self:updateUI()
+	NavigateMgr.instance:addEscape(ViewName.NoticeView, self._btncloseBtnOnClick, self)
 end
 
-function var_0_0._addEvent(arg_10_0)
-	NoticeController.instance:registerCallback(NoticeEvent.OnSelectNoticeItem, arg_10_0._onSelectNoticeItem, arg_10_0)
-	arg_10_0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, arg_10_0.updateUI, arg_10_0)
-	arg_10_0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, arg_10_0.refreshRedDot, arg_10_0)
-	arg_10_0:addEventCb(GameSceneMgr.instance, SceneEventName.EnterScene, arg_10_0._enterScene, arg_10_0)
+function NoticeView:_addEvent()
+	NoticeController.instance:registerCallback(NoticeEvent.OnSelectNoticeItem, self._onSelectNoticeItem, self)
+	self:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, self.updateUI, self)
+	self:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, self.refreshRedDot, self)
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.EnterScene, self._enterScene, self)
 end
 
-function var_0_0._enterScene(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0:closeThis()
+function NoticeView:_enterScene(sceneType, sceneId)
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_12_0)
-	arg_12_0:_removeEvent()
+function NoticeView:onClose()
+	self:_removeEvent()
 	NoticeModel.instance:onCloseNoticeView()
 end
 
-function var_0_0._removeEvent(arg_13_0)
-	NoticeController.instance:unregisterCallback(NoticeEvent.OnSelectNoticeItem, arg_13_0._onSelectNoticeItem, arg_13_0)
+function NoticeView:_removeEvent()
+	NoticeController.instance:unregisterCallback(NoticeEvent.OnSelectNoticeItem, self._onSelectNoticeItem, self)
 end
 
-function var_0_0.updateUI(arg_14_0)
-	local var_14_0 = arg_14_0.viewContainer:getFirstShowNoticeType()
+function NoticeView:updateUI()
+	local firstType = self.viewContainer:getFirstShowNoticeType()
 
-	NoticeModel.instance:switchNoticeType(var_14_0)
+	NoticeModel.instance:switchNoticeType(firstType)
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.toggleItemList) do
-		gohelper.setActive(iter_14_1.goToggle, #NoticeModel.instance:getNoticesByType(iter_14_1.type) > 0)
+	for _, toggleItem in ipairs(self.toggleItemList) do
+		gohelper.setActive(toggleItem.goToggle, #NoticeModel.instance:getNoticesByType(toggleItem.type) > 0)
 	end
 
-	arg_14_0:refreshRedDot()
-	arg_14_0.viewContainer:selectFirstNotice()
-	arg_14_0:_toggleBeSelect()
+	self:refreshRedDot()
+	self.viewContainer:selectFirstNotice()
+	self:_toggleBeSelect()
 end
 
-function var_0_0.refreshRedDot(arg_15_0)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.toggleItemList) do
-		gohelper.setActive(iter_15_1.goReddot, not NoticeModel.instance:getNoticeTypeIsRead(iter_15_1.type))
-	end
-end
-
-function var_0_0._onSelectNoticeItem(arg_16_0, arg_16_1)
-	NoticeContentListModel.instance:setNoticeMO(arg_16_1)
-
-	arg_16_0._scrollcontent.verticalNormalizedPosition = 1
-
-	arg_16_0:_refreshScrollContent()
-end
-
-function var_0_0.onDestroyView(arg_17_0)
-	arg_17_0._simagebg:UnLoadImage()
-
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.toggleItemList) do
-		iter_17_1.click:RemoveClickListener()
-		iter_17_1.click:RemoveClickDownListener()
-		iter_17_1.click:RemoveClickUpListener()
-	end
-
-	arg_17_0.toggleItemList = nil
-end
-
-function var_0_0._toggleBeSelect(arg_18_0)
-	local var_18_0 = NoticeModel.instance:getSelectType()
-
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.toggleItemList) do
-		gohelper.setActive(iter_18_1.selectLabel, var_18_0 == iter_18_1.type)
-		gohelper.setActive(iter_18_1.unselectLabel, var_18_0 ~= iter_18_1.type)
+function NoticeView:refreshRedDot()
+	for _, toggleItem in ipairs(self.toggleItemList) do
+		gohelper.setActive(toggleItem.goReddot, not NoticeModel.instance:getNoticeTypeIsRead(toggleItem.type))
 	end
 end
 
-function var_0_0._toggleBeClickDown(arg_19_0, arg_19_1)
-	UIColorHelper.setGameObjectPressState(arg_19_0, arg_19_1.goToggle, true)
+function NoticeView:_onSelectNoticeItem(noticeMO)
+	NoticeContentListModel.instance:setNoticeMO(noticeMO)
+
+	self._scrollcontent.verticalNormalizedPosition = 1
+
+	self:_refreshScrollContent()
 end
 
-function var_0_0._toggleBeClickUp(arg_20_0, arg_20_1)
-	UIColorHelper.setGameObjectPressState(arg_20_0, arg_20_1.goToggle, false)
+function NoticeView:onDestroyView()
+	self._simagebg:UnLoadImage()
+
+	for _, toggleItem in ipairs(self.toggleItemList) do
+		toggleItem.click:RemoveClickListener()
+		toggleItem.click:RemoveClickDownListener()
+		toggleItem.click:RemoveClickUpListener()
+	end
+
+	self.toggleItemList = nil
 end
 
-function var_0_0._refreshScrollContent(arg_21_0)
-	ZProj.UGUIHelper.RebuildLayout(arg_21_0._goContent.transform)
+function NoticeView:_toggleBeSelect()
+	local type = NoticeModel.instance:getSelectType()
 
-	arg_21_0._couldScroll = recthelper.getHeight(arg_21_0._goContent.transform) > arg_21_0._scrollContentHeight and true or false
-
-	gohelper.setActive(arg_21_0._gocontentMask, arg_21_0._couldScroll)
+	for _, toggleItem in ipairs(self.toggleItemList) do
+		gohelper.setActive(toggleItem.selectLabel, type == toggleItem.type)
+		gohelper.setActive(toggleItem.unselectLabel, type ~= toggleItem.type)
+	end
 end
 
-function var_0_0._onContentScrollValueChanged(arg_22_0, arg_22_1)
-	gohelper.setActive(arg_22_0._gocontentMask, arg_22_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_22_0._scrollcontent.verticalNormalizedPosition) <= 0))
+function NoticeView:_toggleBeClickDown(toggleItem)
+	UIColorHelper.setGameObjectPressState(self, toggleItem.goToggle, true)
 end
 
-return var_0_0
+function NoticeView:_toggleBeClickUp(toggleItem)
+	UIColorHelper.setGameObjectPressState(self, toggleItem.goToggle, false)
+end
+
+function NoticeView:_refreshScrollContent()
+	ZProj.UGUIHelper.RebuildLayout(self._goContent.transform)
+
+	local contentHeight = recthelper.getHeight(self._goContent.transform)
+
+	self._couldScroll = contentHeight > self._scrollContentHeight and true or false
+
+	gohelper.setActive(self._gocontentMask, self._couldScroll)
+end
+
+function NoticeView:_onContentScrollValueChanged(value)
+	gohelper.setActive(self._gocontentMask, self._couldScroll and not (gohelper.getRemindFourNumberFloat(self._scrollcontent.verticalNormalizedPosition) <= 0))
+end
+
+return NoticeView

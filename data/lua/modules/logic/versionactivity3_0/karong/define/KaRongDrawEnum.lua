@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity3_0.karong.define.KaRongDrawEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/define/KaRongDrawEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_0.karong.define.KaRongDrawEnum", package.seeall)
 
-var_0_0.dir = {
+local KaRongDrawEnum = _M
+
+KaRongDrawEnum.dir = {
 	down = -2,
 	up = 2,
 	left = -1,
 	right = 1
 }
-var_0_0.mazeDrawWidth = 7
-var_0_0.mazeDrawHeight = 4
-var_0_0.mazeUIGridWidth = 205
-var_0_0.mazeUIGridHeight = 205
-var_0_0.mazeUILineWidth = 176
-var_0_0.mazeUILineHorizonUIWidth = 204
-var_0_0.mazeUILineVerticalUIWidth = 204
-var_0_0.mazeMonsterHeight = 75
-var_0_0.mazeMonsterTouchOffsetX = 0
-var_0_0.MazeObjType = {
+KaRongDrawEnum.mazeDrawWidth = 7
+KaRongDrawEnum.mazeDrawHeight = 4
+KaRongDrawEnum.mazeUIGridWidth = 205
+KaRongDrawEnum.mazeUIGridHeight = 205
+KaRongDrawEnum.mazeUILineWidth = 176
+KaRongDrawEnum.mazeUILineHorizonUIWidth = 204
+KaRongDrawEnum.mazeUILineVerticalUIWidth = 204
+KaRongDrawEnum.mazeMonsterHeight = 75
+KaRongDrawEnum.mazeMonsterTouchOffsetX = 0
+KaRongDrawEnum.MazeObjType = {
 	CheckPoint = 4,
 	End = 2,
 	Start = 1,
 	Block = 3
 }
-var_0_0.MazeObjSubType = {
+KaRongDrawEnum.MazeObjSubType = {
 	Two = 2,
 	Default = 1,
 	Three = 3
 }
-var_0_0.MazeAlertBlockOffsetX, var_0_0.MazeAlertBlockOffsetY = 90.8, 48.5
-var_0_0.MazeAlertCrossOffsetX, var_0_0.MazeAlertCrossOffsetY = 25.3, 33.1
-var_0_0.MazeMonsterIconOffset = {
+KaRongDrawEnum.MazeAlertBlockOffsetX, KaRongDrawEnum.MazeAlertBlockOffsetY = 90.8, 48.5
+KaRongDrawEnum.MazeAlertCrossOffsetX, KaRongDrawEnum.MazeAlertCrossOffsetY = 25.3, 33.1
+KaRongDrawEnum.MazeMonsterIconOffset = {
 	x = 0,
 	y = 50
 }
-var_0_0.MazeAlertResPath = "ui_maze_alert"
-var_0_0.AnimEvent_OnJump = "OnJump"
-var_0_0.MazeAlertType = {
+KaRongDrawEnum.MazeAlertResPath = "ui_maze_alert"
+KaRongDrawEnum.AnimEvent_OnJump = "OnJump"
+KaRongDrawEnum.MazeAlertType = {
 	VisitBlock = 1,
 	VisitRepeat = 2,
 	DisconnectLine = 3,
 	None = 0
 }
-var_0_0.LineType = {
+KaRongDrawEnum.LineType = {
 	Path = 2,
 	Map = 1
 }
-var_0_0.LineState = {
+KaRongDrawEnum.LineState = {
 	Disconnect = 1,
 	Switch_On = 3,
 	Connect = 0,
 	Switch_Off = 2
 }
-var_0_0.PositionType = {
+KaRongDrawEnum.PositionType = {
 	Line = 2,
 	Point = 1
 }
-var_0_0.EffectType = {
+KaRongDrawEnum.EffectType = {
 	Guide = 3,
 	Story = 2,
 	Dialog = 1,
 	AddSkill = 5,
 	PopView = 4
 }
-var_0_0.InteractIndexIcon = {
+KaRongDrawEnum.InteractIndexIcon = {
 	"bianhao_a",
 	"bianhao_b",
 	"bianhao_c",
 	"bianhao_d",
 	"bianhao_e"
 }
-var_0_0.GameResult = {
+KaRongDrawEnum.GameResult = {
 	Abort = 3,
 	Restart = 4,
 	Failed = 2,
 	Success = 1
 }
 
-return var_0_0
+return KaRongDrawEnum

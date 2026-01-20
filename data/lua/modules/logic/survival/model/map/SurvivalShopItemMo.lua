@@ -1,76 +1,79 @@
-﻿module("modules.logic.survival.model.map.SurvivalShopItemMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalShopItemMo.lua
 
-local var_0_0 = pureTable("SurvivalShopItemMo", SurvivalBagItemMo)
+module("modules.logic.survival.model.map.SurvivalShopItemMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	SurvivalBagItemMo.ctor(arg_1_0)
+local SurvivalShopItemMo = pureTable("SurvivalShopItemMo", SurvivalBagItemMo)
+
+function SurvivalShopItemMo:ctor()
+	SurvivalBagItemMo.ctor(self)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.shopId = arg_2_2
-	arg_2_0.shopCfg = lua_survival_shop.configDict[arg_2_2]
-	arg_2_0.shopType = SurvivalConfig.instance:getShopType(arg_2_2)
+function SurvivalShopItemMo:init(data, shopId)
+	self.shopId = shopId
+	self.shopCfg = lua_survival_shop.configDict[shopId]
+	self.shopType = SurvivalConfig.instance:getShopType(shopId)
 
-	if arg_2_0.shopId == nil then
+	if self.shopId == nil then
 		logError("shopId为nil")
 	end
 
-	if arg_2_0.shopType ~= SurvivalEnum.ShopType.Reputation and arg_2_1.count == 0 then
-		arg_2_1.itemId = 0
+	if self.shopType ~= SurvivalEnum.ShopType.Reputation and data.count == 0 then
+		data.itemId = 0
 	end
 
-	SurvivalBagItemMo.init(arg_2_0, {
-		id = arg_2_1.itemId,
-		count = arg_2_1.count,
-		uid = arg_2_1.uid
+	SurvivalBagItemMo.init(self, {
+		id = data.itemId,
+		count = data.count,
+		uid = data.uid
 	})
 
-	arg_2_0.shopItemId = arg_2_1.id
-	arg_2_0.shopItemCo = lua_survival_shop_item.configDict[arg_2_0.shopItemId]
-	arg_2_0.buyPrice = 0
+	self.shopItemId = data.id
+	self.shopItemCo = lua_survival_shop_item.configDict[self.shopItemId]
+	self.buyPrice = 0
 
-	if arg_2_0.co and not string.nilorempty(arg_2_0.co.cost) then
-		local var_2_0 = string.match(arg_2_0.co.cost, "^item#1:(.+)$")
+	if self.co and not string.nilorempty(self.co.cost) then
+		local price = string.match(self.co.cost, "^item#1:(.+)$")
 
-		if var_2_0 then
-			arg_2_0.buyPrice = tonumber(var_2_0) or 0
+		if price then
+			self.buyPrice = tonumber(price) or 0
 		end
 	end
 
-	arg_2_0.fixRate = 0
+	self.fixRate = 0
 
-	if arg_2_0.shopItemCo then
-		arg_2_0.fixRate = arg_2_0.shopItemCo.worthFix
+	if self.shopItemCo then
+		self.fixRate = self.shopItemCo.worthFix
 	end
 
-	arg_2_0.source = SurvivalEnum.ItemSource.ShopItem
+	self.source = SurvivalEnum.ItemSource.ShopItem
 end
 
-function var_0_0.isEmpty(arg_3_0)
-	if arg_3_0.shopType == SurvivalEnum.ShopType.Reputation then
+function SurvivalShopItemMo:isEmpty()
+	if self.shopType == SurvivalEnum.ShopType.Reputation then
 		return false
 	else
-		return SurvivalBagItemMo.isEmpty(arg_3_0)
+		return SurvivalBagItemMo.isEmpty(self)
 	end
 end
 
-function var_0_0.getBuyPrice(arg_4_0)
-	local var_4_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_4_1 = 0
+function SurvivalShopItemMo:getBuyPrice()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local attrRate = 0
 
-	if arg_4_0.shopType == SurvivalEnum.ShopType.Normal then
-		var_4_1 = var_4_0:getAttrRaw(SurvivalEnum.AttrType.ShopBuyPriceFix)
+	if self.shopType == SurvivalEnum.ShopType.Normal then
+		attrRate = weekMo:getAttrRaw(SurvivalEnum.AttrType.ShopBuyPriceFix)
 	else
-		var_4_1 = var_4_0:getAttrRaw(SurvivalEnum.AttrType.BuildBuyPriceFix)
+		attrRate = weekMo:getAttrRaw(SurvivalEnum.AttrType.BuildBuyPriceFix)
 	end
 
-	local var_4_2 = var_4_0:getAttrRaw(SurvivalEnum.AttrType.BuyPriceFix)
+	local attrRate2 = weekMo:getAttrRaw(SurvivalEnum.AttrType.BuyPriceFix)
+	local price = math.floor(self.buyPrice * (1 + self.fixRate / 1000) * (1000 + attrRate + attrRate2) / 1000)
 
-	return (math.floor(arg_4_0.buyPrice * (1 + arg_4_0.fixRate / 1000) * (1000 + var_4_1 + var_4_2) / 1000))
+	return price
 end
 
-function var_0_0.getTabId(arg_5_0)
-	return arg_5_0.shopItemCo.type
+function SurvivalShopItemMo:getTabId()
+	return self.shopItemCo.type
 end
 
-return var_0_0
+return SurvivalShopItemMo

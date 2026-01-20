@@ -1,183 +1,187 @@
-﻿module("modules.logic.rouge.map.controller.RougeMapVoiceTriggerController", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/controller/RougeMapVoiceTriggerController.lua
 
-local var_0_0 = class("RougeMapVoiceTriggerController")
+module("modules.logic.rouge.map.controller.RougeMapVoiceTriggerController", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	if arg_1_0.inited then
+local RougeMapVoiceTriggerController = class("RougeMapVoiceTriggerController")
+
+function RougeMapVoiceTriggerController:init()
+	if self.inited then
 		return
 	end
 
-	arg_1_0.inited = true
-	arg_1_0.lastTriggerTime = -RougeMapEnum.TalkCD
+	self.inited = true
+	self.lastTriggerTime = -RougeMapEnum.TalkCD
 
-	RougeMapController.instance:registerCallback(RougeMapEvent.onCreateMapDoneFlowDone, arg_1_0.tryTriggerRecordVoice, arg_1_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, arg_1_0.onChangeMapInfo, arg_1_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onExitPieceChoiceEvent, arg_1_0.onExitPieceChoiceEvent, arg_1_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onAcceptEntrust, arg_1_0.onAcceptEntrust, arg_1_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onNodeEventStatusChange, arg_1_0.onNodeEventStatusChange, arg_1_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onMiddleActorBeforeMove, arg_1_0.onMiddleActorBeforeMove, arg_1_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onNormalActorBeforeMove, arg_1_0.onNormalActorBeforeMove, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0.onCloseViewFinish, arg_1_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onCreateMapDoneFlowDone, self.tryTriggerRecordVoice, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onExitPieceChoiceEvent, self.onExitPieceChoiceEvent, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onAcceptEntrust, self.onAcceptEntrust, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onNodeEventStatusChange, self.onNodeEventStatusChange, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onMiddleActorBeforeMove, self.onMiddleActorBeforeMove, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onNormalActorBeforeMove, self.onNormalActorBeforeMove, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 
 	if RougeMapModel.instance:getFirstEnterMapFlag() then
-		arg_1_0:tryRecordEnterNormalLayerVoice()
+		self:tryRecordEnterNormalLayerVoice()
 		RougeMapModel.instance:setFirstEnterMap(nil)
 	end
 end
 
-function var_0_0.clear(arg_2_0)
-	arg_2_0.inited = nil
-	arg_2_0.lastTriggerTime = nil
+function RougeMapVoiceTriggerController:clear()
+	self.inited = nil
+	self.lastTriggerTime = nil
 
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onCreateMapDoneFlowDone, arg_2_0.tryTriggerRecordVoice, arg_2_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, arg_2_0.onChangeMapInfo, arg_2_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onExitPieceChoiceEvent, arg_2_0.onExitPieceChoiceEvent, arg_2_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onAcceptEntrust, arg_2_0.onAcceptEntrust, arg_2_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onNodeEventStatusChange, arg_2_0.onNodeEventStatusChange, arg_2_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMiddleActorBeforeMove, arg_2_0.onMiddleActorBeforeMove, arg_2_0)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onNormalActorBeforeMove, arg_2_0.onNormalActorBeforeMove, arg_2_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0.endTriggerShortVoice, arg_2_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onCreateMapDoneFlowDone, self.tryTriggerRecordVoice, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onExitPieceChoiceEvent, self.onExitPieceChoiceEvent, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onAcceptEntrust, self.onAcceptEntrust, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onNodeEventStatusChange, self.onNodeEventStatusChange, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMiddleActorBeforeMove, self.onMiddleActorBeforeMove, self)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onNormalActorBeforeMove, self.onNormalActorBeforeMove, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
+	TaskDispatcher.cancelTask(self.endTriggerShortVoice, self)
 end
 
-function var_0_0.onChangeMapInfo(arg_3_0)
-	local var_3_0 = RougeMapModel.instance:getMapType()
+function RougeMapVoiceTriggerController:onChangeMapInfo()
+	local type = RougeMapModel.instance:getMapType()
 
-	if var_3_0 == RougeMapEnum.MapType.Normal then
-		arg_3_0:tryRecordEnterNormalLayerVoice()
-	elseif var_3_0 == RougeMapEnum.MapType.Middle then
-		arg_3_0:tryRecordEnterMiddleLayerVoice()
-	elseif var_3_0 == RougeMapEnum.MapType.PathSelect then
-		arg_3_0:tryRecordEnterPathSelectLayerVoice()
+	if type == RougeMapEnum.MapType.Normal then
+		self:tryRecordEnterNormalLayerVoice()
+	elseif type == RougeMapEnum.MapType.Middle then
+		self:tryRecordEnterMiddleLayerVoice()
+	elseif type == RougeMapEnum.MapType.PathSelect then
+		self:tryRecordEnterPathSelectLayerVoice()
 	end
 end
 
-function var_0_0.onExitPieceChoiceEvent(arg_4_0)
-	local var_4_0 = arg_4_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.ExitPieceTalk)
+function RougeMapVoiceTriggerController:onExitPieceChoiceEvent()
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.ExitPieceTalk)
 
-	if not arg_4_0:checkCanTriggerGroup(var_4_0) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_4_0:recordCurTriggerVoice(var_4_0.id)
-	arg_4_0:tryTriggerRecordVoice()
+	self:recordCurTriggerVoice(groupCo.id)
+	self:tryTriggerRecordVoice()
 end
 
-function var_0_0.onAcceptEntrust(arg_5_0)
-	if not RougeMapModel.instance:getEntrustId() then
+function RougeMapVoiceTriggerController:onAcceptEntrust()
+	local entrustId = RougeMapModel.instance:getEntrustId()
+
+	if not entrustId then
 		return
 	end
 
-	local var_5_0 = arg_5_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.AcceptEntrust)
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.AcceptEntrust)
 
-	if not arg_5_0:checkCanTriggerGroup(var_5_0) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_5_0:recordCurTriggerVoice(var_5_0.id)
-	arg_5_0:tryTriggerRecordVoice()
+	self:recordCurTriggerVoice(groupCo.id)
+	self:tryTriggerRecordVoice()
 end
 
-function var_0_0.onNodeEventStatusChange(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_2 ~= RougeMapEnum.EventState.Finish then
+function RougeMapVoiceTriggerController:onNodeEventStatusChange(eventId, curStatus)
+	if curStatus ~= RougeMapEnum.EventState.Finish then
 		return
 	end
 
-	arg_6_0:tryTriggerFinishEvent(arg_6_1)
+	self:tryTriggerFinishEvent(eventId)
 end
 
-function var_0_0.onMiddleActorBeforeMove(arg_7_0)
-	local var_7_0 = arg_7_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.MiddleLayerMove)
+function RougeMapVoiceTriggerController:onMiddleActorBeforeMove()
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.MiddleLayerMove)
 
-	if not arg_7_0:checkCanTriggerGroup(var_7_0) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_7_0:recordCurTriggerVoice(var_7_0.id)
-	arg_7_0:tryTriggerRecordVoice()
+	self:recordCurTriggerVoice(groupCo.id)
+	self:tryTriggerRecordVoice()
 end
 
-function var_0_0.onNormalActorBeforeMove(arg_8_0)
-	local var_8_0 = arg_8_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.NormalLayerMove)
+function RougeMapVoiceTriggerController:onNormalActorBeforeMove()
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.NormalLayerMove)
 
-	if not arg_8_0:checkCanTriggerGroup(var_8_0) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_8_0:recordCurTriggerVoice(var_8_0.id)
-	arg_8_0:tryTriggerRecordVoice()
+	self:recordCurTriggerVoice(groupCo.id)
+	self:tryTriggerRecordVoice()
 end
 
-function var_0_0.tryTriggerFinishEvent(arg_9_0, arg_9_1)
-	local var_9_0 = RougeMapConfig.instance:getRougeEvent(arg_9_1)
+function RougeMapVoiceTriggerController:tryTriggerFinishEvent(eventId)
+	local eventCo = RougeMapConfig.instance:getRougeEvent(eventId)
 
-	if not var_9_0 then
+	if not eventCo then
 		return
 	end
 
-	local var_9_1 = arg_9_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.FinishEvent, var_9_0.type)
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.FinishEvent, eventCo.type)
 
-	if not arg_9_0:checkCanTriggerGroup(var_9_1) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_9_0:recordCurTriggerVoice(var_9_1.id)
-	arg_9_0:tryTriggerRecordVoice()
+	self:recordCurTriggerVoice(groupCo.id)
+	self:tryTriggerRecordVoice()
 end
 
-function var_0_0.tryRecordEnterNormalLayerVoice(arg_10_0)
-	local var_10_0 = RougeMapModel.instance:getLayerId()
-	local var_10_1 = arg_10_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.EnterNormalLayer, var_10_0)
+function RougeMapVoiceTriggerController:tryRecordEnterNormalLayerVoice()
+	local layerId = RougeMapModel.instance:getLayerId()
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.EnterNormalLayer, layerId)
 
-	if not arg_10_0:checkCanTriggerGroup(var_10_1) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_10_0:recordCurTriggerVoice(var_10_1.id)
+	self:recordCurTriggerVoice(groupCo.id)
 end
 
-function var_0_0.tryRecordEnterMiddleLayerVoice(arg_11_0)
-	local var_11_0 = RougeMapModel.instance:getMiddleLayerId()
-	local var_11_1 = arg_11_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.EnterMiddleLayer, var_11_0)
+function RougeMapVoiceTriggerController:tryRecordEnterMiddleLayerVoice()
+	local layerId = RougeMapModel.instance:getMiddleLayerId()
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.EnterMiddleLayer, layerId)
 
-	if not arg_11_0:checkCanTriggerGroup(var_11_1) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_11_0:recordCurTriggerVoice(var_11_1.id)
+	self:recordCurTriggerVoice(groupCo.id)
 end
 
-function var_0_0.tryRecordEnterPathSelectLayerVoice(arg_12_0)
-	local var_12_0 = RougeMapModel.instance:getPathSelectCo()
-	local var_12_1 = var_12_0 and var_12_0.id
-	local var_12_2 = arg_12_0:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.EnterPathSelectLayer, var_12_1)
+function RougeMapVoiceTriggerController:tryRecordEnterPathSelectLayerVoice()
+	local layerCo = RougeMapModel.instance:getPathSelectCo()
+	local layerId = layerCo and layerCo.id
+	local groupCo = self:getCanTriggerGroup(RougeMapEnum.ShortVoiceTriggerType.EnterPathSelectLayer, layerId)
 
-	if not arg_12_0:checkCanTriggerGroup(var_12_2) then
+	if not self:checkCanTriggerGroup(groupCo) then
 		return
 	end
 
-	arg_12_0:recordCurTriggerVoice(var_12_2.id)
+	self:recordCurTriggerVoice(groupCo.id)
 end
 
-function var_0_0.onCloseViewFinish(arg_13_0, arg_13_1)
-	arg_13_0:tryTriggerRecordVoice()
+function RougeMapVoiceTriggerController:onCloseViewFinish(viewName)
+	self:tryTriggerRecordVoice()
 end
 
-function var_0_0.tryTriggerRecordVoice(arg_14_0)
-	if not arg_14_0.curTriggerGroupId then
+function RougeMapVoiceTriggerController:tryTriggerRecordVoice()
+	if not self.curTriggerGroupId then
 		return
 	end
 
-	local var_14_0 = Time.time
+	local curTime = Time.time
 
-	if var_14_0 - arg_14_0.lastTriggerTime < RougeMapEnum.TalkCD then
+	if curTime - self.lastTriggerTime < RougeMapEnum.TalkCD then
 		return
 	end
 
-	local var_14_1 = RougeMapModel.instance:getMapState()
+	local curMapState = RougeMapModel.instance:getMapState()
 
-	if var_14_1 ~= RougeMapEnum.MapState.Normal then
-		arg_14_0:log(string.format("try trigger groupId : %s, mapState : %s", arg_14_0.curTriggerGroupId, var_14_1))
+	if curMapState ~= RougeMapEnum.MapState.Normal then
+		self:log(string.format("try trigger groupId : %s, mapState : %s", self.curTriggerGroupId, curMapState))
 
 		return
 	end
@@ -186,75 +190,81 @@ function var_0_0.tryTriggerRecordVoice(arg_14_0)
 		return
 	end
 
-	local var_14_2 = RougeMapConfig.instance:getRandomVoice(arg_14_0.curTriggerGroupId)
+	local voice = RougeMapConfig.instance:getRandomVoice(self.curTriggerGroupId)
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onTriggerShortVoice, var_14_2)
-	arg_14_0:log(string.format("trigger voice id : %s, voice desc : %s", var_14_2.id, var_14_2.desc))
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onTriggerShortVoice, voice)
+	self:log(string.format("trigger voice id : %s, voice desc : %s", voice.id, voice.desc))
 
-	arg_14_0.lastTriggerTime = var_14_0
-	arg_14_0.curTriggerGroupId = nil
+	self.lastTriggerTime = curTime
+	self.curTriggerGroupId = nil
 
-	TaskDispatcher.runDelay(arg_14_0.endTriggerShortVoice, arg_14_0, RougeMapEnum.TalkDuration)
+	TaskDispatcher.runDelay(self.endTriggerShortVoice, self, RougeMapEnum.TalkDuration)
 end
 
-function var_0_0.endTriggerShortVoice(arg_15_0)
+function RougeMapVoiceTriggerController:endTriggerShortVoice()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onEndTriggerShortVoice)
 end
 
-function var_0_0.recordCurTriggerVoice(arg_16_0, arg_16_1)
-	if Time.time - arg_16_0.lastTriggerTime < RougeMapEnum.TalkCD then
+function RougeMapVoiceTriggerController:recordCurTriggerVoice(groupId)
+	local curTime = Time.time
+
+	if curTime - self.lastTriggerTime < RougeMapEnum.TalkCD then
 		return
 	end
 
-	if arg_16_0.curTriggerGroupId then
-		arg_16_0:log(string.format("exist group id ： %s, cover new group id ： %s", arg_16_0.curTriggerGroupId, arg_16_1))
+	if self.curTriggerGroupId then
+		self:log(string.format("exist group id ： %s, cover new group id ： %s", self.curTriggerGroupId, groupId))
 	end
 
-	arg_16_0.curTriggerGroupId = arg_16_1
+	self.curTriggerGroupId = groupId
 end
 
-function var_0_0.getCanTriggerGroup(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = RougeMapConfig.instance:getVoiceGroupList()
+function RougeMapVoiceTriggerController:getCanTriggerGroup(type, param)
+	local groupList = RougeMapConfig.instance:getVoiceGroupList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		if iter_17_1.triggerType == arg_17_1 then
-			local var_17_1 = iter_17_1.triggerParam
+	for _, groupCo in ipairs(groupList) do
+		local triggerType = groupCo.triggerType
 
-			if var_17_1 == 0 then
-				arg_17_0:logTriggerGroup(iter_17_1)
+		if triggerType == type then
+			local groupParam = groupCo.triggerParam
 
-				return iter_17_1
-			elseif var_17_1 == arg_17_2 then
-				arg_17_0:logTriggerGroup(iter_17_1)
+			if groupParam == 0 then
+				self:logTriggerGroup(groupCo)
 
-				return iter_17_1
+				return groupCo
+			elseif groupParam == param then
+				self:logTriggerGroup(groupCo)
+
+				return groupCo
 			end
 		end
 	end
 end
 
-function var_0_0.logTriggerGroup(arg_18_0, arg_18_1)
-	arg_18_0:log(string.format("trigger group id " .. tostring(arg_18_1.id)))
+function RougeMapVoiceTriggerController:logTriggerGroup(groupCo)
+	self:log(string.format("trigger group id " .. tostring(groupCo.id)))
 end
 
-function var_0_0.log(arg_19_0, arg_19_1)
-	logNormal("[地图语音]" .. tostring(arg_19_1))
+function RougeMapVoiceTriggerController:log(msg)
+	logNormal("[地图语音]" .. tostring(msg))
 end
 
-function var_0_0.checkCanTriggerGroup(arg_20_0, arg_20_1)
-	if not arg_20_1 then
+function RougeMapVoiceTriggerController:checkCanTriggerGroup(groupCo)
+	if not groupCo then
 		return false
 	end
 
-	local var_20_0 = arg_20_1.rate
+	local rate = groupCo.rate
 
-	if var_20_0 >= 1000 then
+	if rate >= 1000 then
 		return true
 	end
 
-	return var_20_0 >= math.random(1000)
+	local randomRate = math.random(1000)
+
+	return randomRate <= rate
 end
 
-var_0_0.instance = var_0_0.New()
+RougeMapVoiceTriggerController.instance = RougeMapVoiceTriggerController.New()
 
-return var_0_0
+return RougeMapVoiceTriggerController

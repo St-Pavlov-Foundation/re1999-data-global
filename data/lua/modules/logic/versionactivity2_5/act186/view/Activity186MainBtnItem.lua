@@ -1,58 +1,60 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186MainBtnItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186MainBtnItem.lua
 
-local var_0_0 = class("Activity186MainBtnItem", ActCenterItemBase)
+module("modules.logic.versionactivity2_5.act186.view.Activity186MainBtnItem", package.seeall)
 
-function var_0_0.onAddEvent(arg_1_0)
-	gohelper.addUIClickAudio(arg_1_0._btnitem)
-	Activity186Controller.instance:registerCallback(Activity186Event.RefreshRed, arg_1_0.refreshDot, arg_1_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, arg_1_0.refreshDot, arg_1_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, arg_1_0.refreshDot, arg_1_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_1_0.refreshDot, arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, arg_1_0.refreshDot, arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_1_0.refreshDot, arg_1_0)
+local Activity186MainBtnItem = class("Activity186MainBtnItem", ActCenterItemBase)
+
+function Activity186MainBtnItem:onAddEvent()
+	gohelper.addUIClickAudio(self._btnitem)
+	Activity186Controller.instance:registerCallback(Activity186Event.RefreshRed, self.refreshDot, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateFriendInfoDot, self.refreshDot, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, self.refreshDot, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self.refreshDot, self)
+	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, self.refreshDot, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshDot, self)
 end
 
-function var_0_0.onRemoveEvent(arg_2_0)
-	Activity186Controller.instance:unregisterCallback(Activity186Event.RefreshRed, arg_2_0.refreshDot, arg_2_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, arg_2_0.refreshDot, arg_2_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, arg_2_0.refreshDot, arg_2_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_2_0.refreshDot, arg_2_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, arg_2_0.refreshDot, arg_2_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshDot, arg_2_0)
+function Activity186MainBtnItem:onRemoveEvent()
+	Activity186Controller.instance:unregisterCallback(Activity186Event.RefreshRed, self.refreshDot, self)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateActTag, self.refreshDot, self)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, self.refreshDot, self)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self.refreshDot, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, self.refreshDot, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshDot, self)
 end
 
-function var_0_0.onClick(arg_3_0)
-	local var_3_0 = arg_3_0:onGetActId()
+function Activity186MainBtnItem:onClick()
+	local actId = self:onGetActId()
 
-	Activity186Rpc.instance:sendGetAct186InfoRequest(var_3_0, arg_3_0._onReceiveGetInfosReply, arg_3_0)
+	Activity186Rpc.instance:sendGetAct186InfoRequest(actId, self._onReceiveGetInfosReply, self)
 end
 
-function var_0_0._onReceiveGetInfosReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 == 0 then
-		local var_4_0, var_4_1 = arg_4_0:onGetViewNameAndParam()
+function Activity186MainBtnItem:_onReceiveGetInfosReply(_, resultCode)
+	if resultCode == 0 then
+		local viewName, viewParam = self:onGetViewNameAndParam()
 
-		ViewMgr.instance:openView(var_4_0, var_4_1)
+		ViewMgr.instance:openView(viewName, viewParam)
 	end
 end
 
-function var_0_0.refreshData(arg_5_0)
-	local var_5_0 = Activity186Model.instance:getActId()
-	local var_5_1 = {
+function Activity186MainBtnItem:refreshData()
+	local actId = Activity186Model.instance:getActId()
+	local data = {
 		viewName = "Activity186View",
 		viewParam = {
-			actId = var_5_0
+			actId = actId
 		}
 	}
 
-	arg_5_0:setCustomData(var_5_1)
+	self:setCustomData(data)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshData()
-	arg_6_0:_addNotEventRedDot(arg_6_0._checkRed, arg_6_0)
+function Activity186MainBtnItem:onOpen()
+	self:refreshData()
+	self:_addNotEventRedDot(self._checkRed, self)
 end
 
-function var_0_0._checkRed(arg_7_0)
+function Activity186MainBtnItem:_checkRed()
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a5_Act186, 0) then
 		return true
 	end
@@ -61,53 +63,57 @@ function var_0_0._checkRed(arg_7_0)
 		return true
 	end
 
-	local var_7_0 = Activity186Model.instance:getActId()
-	local var_7_1 = Activity186Model.instance:getById(var_7_0)
+	local actId = Activity186Model.instance:getActId()
+	local actMO = Activity186Model.instance:getById(actId)
 
-	if var_7_1 and var_7_1:isCanShowAvgBtn() then
+	if actMO and actMO:isCanShowAvgBtn() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.onRefresh(arg_8_0)
-	arg_8_0:refreshData()
+function Activity186MainBtnItem:onRefresh()
+	self:refreshData()
 
-	local var_8_0 = ActivityModel.showActivityEffect()
-	local var_8_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local var_8_2 = var_8_0 and var_8_1.mainViewActBtnPrefix .. "icon_6" or "icon_6"
+	local isShow = ActivityModel.showActivityEffect()
+	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_6" or "icon_6"
 
-	if not var_8_0 then
-		local var_8_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	if not isShow then
+		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-		if var_8_3 then
-			for iter_8_0, iter_8_1 in ipairs(var_8_3.mainViewActBtn) do
-				local var_8_4 = gohelper.findChild(arg_8_0.go, iter_8_1)
+		if config then
+			for _, path in ipairs(config.mainViewActBtn) do
+				local go = gohelper.findChild(self.go, path)
 
-				if var_8_4 then
-					gohelper.setActive(var_8_4, var_8_0)
+				if go then
+					gohelper.setActive(go, isShow)
 				end
 			end
 		end
 	end
 
-	arg_8_0:_setMainSprite(var_8_2)
+	self:_setMainSprite(spriteName)
 end
 
-function var_0_0.onGetViewNameAndParam(arg_9_0)
-	local var_9_0 = arg_9_0:getCustomData()
-	local var_9_1 = var_9_0.viewParam
+function Activity186MainBtnItem:onGetViewNameAndParam()
+	local data = self:getCustomData()
+	local viewParam = data.viewParam
+	local viewName = data.viewName
 
-	return var_9_0.viewName, var_9_1
+	return viewName, viewParam
 end
 
-function var_0_0.onGetActId(arg_10_0)
-	return arg_10_0:getCustomData().viewParam.actId
+function Activity186MainBtnItem:onGetActId()
+	local data = self:getCustomData()
+	local viewParam = data.viewParam
+
+	return viewParam.actId
 end
 
-function var_0_0.refreshDot(arg_11_0)
-	arg_11_0:_refreshRedDot()
+function Activity186MainBtnItem:refreshDot()
+	self:_refreshRedDot()
 end
 
-return var_0_0
+return Activity186MainBtnItem

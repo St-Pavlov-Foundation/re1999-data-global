@@ -1,13 +1,15 @@
-﻿module("modules.logic.turnback.invitation.view.TurnBackInvitationMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/invitation/view/TurnBackInvitationMainViewContainer.lua
 
-local var_0_0 = class("TurnBackInvitationMainViewContainer", BaseViewContainer)
+module("modules.logic.turnback.invitation.view.TurnBackInvitationMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TurnBackInvitationMainViewContainer = class("TurnBackInvitationMainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TurnBackInvitationMainView.New())
+function TurnBackInvitationMainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TurnBackInvitationMainView.New())
+
+	return views
 end
 
-return var_0_0
+return TurnBackInvitationMainViewContainer

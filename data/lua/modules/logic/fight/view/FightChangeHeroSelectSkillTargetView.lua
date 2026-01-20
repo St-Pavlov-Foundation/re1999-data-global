@@ -1,91 +1,93 @@
-﻿module("modules.logic.fight.view.FightChangeHeroSelectSkillTargetView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightChangeHeroSelectSkillTargetView.lua
 
-local var_0_0 = class("FightChangeHeroSelectSkillTargetView", BaseViewExtended)
+module("modules.logic.fight.view.FightChangeHeroSelectSkillTargetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._block = gohelper.findChildClick(arg_1_0.viewGO, "block")
+local FightChangeHeroSelectSkillTargetView = class("FightChangeHeroSelectSkillTargetView", BaseViewExtended)
+
+function FightChangeHeroSelectSkillTargetView:onInitView()
+	self._block = gohelper.findChildClick(self.viewGO, "block")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._block, arg_2_0._onBlock, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.ChangeSubHeroExSkillReply, arg_2_0._onChangeSubHeroExSkillReply, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+function FightChangeHeroSelectSkillTargetView:addEvents()
+	self:addClickCb(self._block, self._onBlock, self)
+	FightController.instance:registerCallback(FightEvent.ChangeSubHeroExSkillReply, self._onChangeSubHeroExSkillReply, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.ChangeSubHeroExSkillReply, arg_3_0._onChangeSubHeroExSkillReply, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+function FightChangeHeroSelectSkillTargetView:removeEvents()
+	FightController.instance:unregisterCallback(FightEvent.ChangeSubHeroExSkillReply, self._onChangeSubHeroExSkillReply, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightChangeHeroSelectSkillTargetView:_editableInitView()
 	return
 end
 
-function var_0_0._onCloseViewFinish(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.FightSkillTargetView then
-		arg_5_0:closeThis()
+function FightChangeHeroSelectSkillTargetView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.FightSkillTargetView then
+		self:closeThis()
 	end
 end
 
-function var_0_0._onChangeSubHeroExSkillReply(arg_6_0)
-	arg_6_0:closeThis()
+function FightChangeHeroSelectSkillTargetView:_onChangeSubHeroExSkillReply()
+	self:closeThis()
 end
 
-function var_0_0._onBtnEsc(arg_7_0)
+function FightChangeHeroSelectSkillTargetView:_onBtnEsc()
 	return
 end
 
-function var_0_0._onBlock(arg_8_0)
-	arg_8_0._clickCounter = arg_8_0._clickCounter + 1
+function FightChangeHeroSelectSkillTargetView:_onBlock()
+	self._clickCounter = self._clickCounter + 1
 
-	if arg_8_0._clickCounter >= 5 then
-		arg_8_0:closeThis()
+	if self._clickCounter >= 5 then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._clickCounter = 0
+function FightChangeHeroSelectSkillTargetView:onOpen()
+	self._clickCounter = 0
 
-	NavigateMgr.instance:addEscape(arg_9_0.viewContainer.viewName, arg_9_0._onBtnEsc, arg_9_0)
+	NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onBtnEsc, self)
 
-	local var_9_0 = arg_9_0.viewParam.skillConfig
-	local var_9_1 = arg_9_0.viewParam.fromId
+	local skillConfig = self.viewParam.skillConfig
+	local fromId = self.viewParam.fromId
 
-	if FightEnum.ShowLogicTargetView[var_9_0.logicTarget] and var_9_0.targetLimit == FightEnum.TargetLimit.MySide then
-		local var_9_2 = FightDataHelper.entityMgr:getMyNormalList()
-		local var_9_3 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
-		local var_9_4 = #var_9_2 + #var_9_3
+	if FightEnum.ShowLogicTargetView[skillConfig.logicTarget] and skillConfig.targetLimit == FightEnum.TargetLimit.MySide then
+		local mySideList = FightDataHelper.entityMgr:getMyNormalList()
+		local mySideSpList = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+		local mySideEntityCount = #mySideList + #mySideSpList
 
-		if var_9_4 > 1 then
+		if mySideEntityCount > 1 then
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
 				mustSelect = true,
-				fromId = var_9_1,
-				skillId = var_9_0.id,
-				callback = arg_9_0._onChangeHeroSkillSelected,
-				callbackObj = arg_9_0
+				fromId = fromId,
+				skillId = skillConfig.id,
+				callback = self._onChangeHeroSkillSelected,
+				callbackObj = self
 			})
-		elseif var_9_4 == 1 then
-			local var_9_5 = #var_9_2 > 0 and var_9_2 or var_9_3
+		elseif mySideEntityCount == 1 then
+			local list = #mySideList > 0 and mySideList or mySideSpList
 
-			FightRpc.instance:sendChangeSubHeroExSkillRequest(var_9_5[1].id)
+			FightRpc.instance:sendChangeSubHeroExSkillRequest(list[1].id)
 		else
-			arg_9_0:closeThis()
+			self:closeThis()
 		end
 	else
 		FightRpc.instance:sendChangeSubHeroExSkillRequest(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 
-function var_0_0._onChangeHeroSkillSelected(arg_10_0, arg_10_1)
-	FightRpc.instance:sendChangeSubHeroExSkillRequest(arg_10_1)
+function FightChangeHeroSelectSkillTargetView:_onChangeHeroSkillSelected(entityId)
+	FightRpc.instance:sendChangeSubHeroExSkillRequest(entityId)
 end
 
-function var_0_0.onClose(arg_11_0)
+function FightChangeHeroSelectSkillTargetView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function FightChangeHeroSelectSkillTargetView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightChangeHeroSelectSkillTargetView

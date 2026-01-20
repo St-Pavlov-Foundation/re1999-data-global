@@ -1,142 +1,144 @@
-﻿module("modules.logic.tips.view.RoomManufactureMaterialTipView", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/RoomManufactureMaterialTipView.lua
 
-local var_0_0 = class("RoomManufactureMaterialTipView", BaseView)
+module("modules.logic.tips.view.RoomManufactureMaterialTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = GMController.instance:getGMNode("materialtipview", arg_1_0.viewGO)
+local RoomManufactureMaterialTipView = class("RoomManufactureMaterialTipView", BaseView)
 
-	if var_1_0 then
-		arg_1_0._gogm = gohelper.findChild(var_1_0, "#go_gm")
-		arg_1_0._txtmattip = gohelper.findChildText(var_1_0, "#go_gm/bg/#txt_mattip")
-		arg_1_0._btnone = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_one")
-		arg_1_0._btnten = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_ten")
-		arg_1_0._btnhundred = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_hundred")
-		arg_1_0._btnthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_thousand")
-		arg_1_0._btntenthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenthousand")
-		arg_1_0._btntenmillion = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenmillion")
-		arg_1_0._btninput = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_input")
+function RoomManufactureMaterialTipView:onInitView()
+	local guideGMNode = GMController.instance:getGMNode("materialtipview", self.viewGO)
+
+	if guideGMNode then
+		self._gogm = gohelper.findChild(guideGMNode, "#go_gm")
+		self._txtmattip = gohelper.findChildText(guideGMNode, "#go_gm/bg/#txt_mattip")
+		self._btnone = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_one")
+		self._btnten = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_ten")
+		self._btnhundred = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_hundred")
+		self._btnthousand = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_thousand")
+		self._btntenthousand = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_tenthousand")
+		self._btntenmillion = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_tenmillion")
+		self._btninput = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_input")
 	end
 
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._imagequality = gohelper.findChildImage(arg_1_0.viewGO, "iconbg/#image_quality")
-	arg_1_0._simagepropicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "iconbg/#simage_propicon")
-	arg_1_0._gohadnumber = gohelper.findChild(arg_1_0.viewGO, "iconbg/#go_hadnumber")
-	arg_1_0._txthadnumber = gohelper.findChildText(arg_1_0.viewGO, "iconbg/#go_hadnumber/#txt_hadnumber")
-	arg_1_0._txtpropname = gohelper.findChildText(arg_1_0.viewGO, "#txt_propname")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._jumpItemParent = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/jumpItemLayout")
-	arg_1_0._gojumpItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/jumpItemLayout/#go_jumpItem")
-	arg_1_0._txtdec1 = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#txt_dec1")
-	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#txt_dec2")
-	arg_1_0._gosource = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_source")
-	arg_1_0._txtsource = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_source/#txt_source")
-	arg_1_0._txtWrongTip = gohelper.findChildText(arg_1_0.viewGO, "#txt_wrongJump")
-	arg_1_0._btnWrongJump = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#txt_wrongJump/#btn_wrongJump")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._imagequality = gohelper.findChildImage(self.viewGO, "iconbg/#image_quality")
+	self._simagepropicon = gohelper.findChildSingleImage(self.viewGO, "iconbg/#simage_propicon")
+	self._gohadnumber = gohelper.findChild(self.viewGO, "iconbg/#go_hadnumber")
+	self._txthadnumber = gohelper.findChildText(self.viewGO, "iconbg/#go_hadnumber/#txt_hadnumber")
+	self._txtpropname = gohelper.findChildText(self.viewGO, "#txt_propname")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._jumpItemParent = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/jumpItemLayout")
+	self._gojumpItem = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/jumpItemLayout/#go_jumpItem")
+	self._txtdec1 = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#txt_dec1")
+	self._txtdec2 = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#txt_dec2")
+	self._gosource = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/#go_source")
+	self._txtsource = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#go_source/#txt_source")
+	self._txtWrongTip = gohelper.findChildText(self.viewGO, "#txt_wrongJump")
+	self._btnWrongJump = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#txt_wrongJump/#btn_wrongJump")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	if arg_2_0._gogm then
-		arg_2_0._btnone:AddClickListener(arg_2_0._btnGMClick, arg_2_0, 1)
-		arg_2_0._btnten:AddClickListener(arg_2_0._btnGMClick, arg_2_0, 10)
-		arg_2_0._btnhundred:AddClickListener(arg_2_0._btnGMClick, arg_2_0, 100)
-		arg_2_0._btnthousand:AddClickListener(arg_2_0._btnGMClick, arg_2_0, 1000)
-		arg_2_0._btntenthousand:AddClickListener(arg_2_0._btnGMClick, arg_2_0, 10000)
-		arg_2_0._btntenmillion:AddClickListener(arg_2_0._btnGMClick, arg_2_0, 10000000)
-		arg_2_0._btninput:AddClickListener(arg_2_0._btninputOnClick, arg_2_0)
+function RoomManufactureMaterialTipView:addEvents()
+	if self._gogm then
+		self._btnone:AddClickListener(self._btnGMClick, self, 1)
+		self._btnten:AddClickListener(self._btnGMClick, self, 10)
+		self._btnhundred:AddClickListener(self._btnGMClick, self, 100)
+		self._btnthousand:AddClickListener(self._btnGMClick, self, 1000)
+		self._btntenthousand:AddClickListener(self._btnGMClick, self, 10000)
+		self._btntenmillion:AddClickListener(self._btnGMClick, self, 10000000)
+		self._btninput:AddClickListener(self._btninputOnClick, self)
 	end
 
-	arg_2_0._btnWrongJump:AddClickListener(arg_2_0._btnwrongjumpOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChange, arg_2_0)
+	self._btnWrongJump:AddClickListener(self._btnwrongjumpOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0._gogm then
-		arg_3_0._btnone:RemoveClickListener()
-		arg_3_0._btnten:RemoveClickListener()
-		arg_3_0._btnhundred:RemoveClickListener()
-		arg_3_0._btnthousand:RemoveClickListener()
-		arg_3_0._btntenthousand:RemoveClickListener()
-		arg_3_0._btntenmillion:RemoveClickListener()
-		arg_3_0._btninput:RemoveClickListener()
+function RoomManufactureMaterialTipView:removeEvents()
+	if self._gogm then
+		self._btnone:RemoveClickListener()
+		self._btnten:RemoveClickListener()
+		self._btnhundred:RemoveClickListener()
+		self._btnthousand:RemoveClickListener()
+		self._btntenthousand:RemoveClickListener()
+		self._btntenmillion:RemoveClickListener()
+		self._btninput:RemoveClickListener()
 	end
 
-	arg_3_0._btnWrongJump:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChange, arg_3_0)
+	self._btnWrongJump:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChange, self)
 end
 
-function var_0_0._btnGMClick(arg_4_0, arg_4_1)
-	arg_4_0:sendGMRequest(arg_4_1)
+function RoomManufactureMaterialTipView:_btnGMClick(num)
+	self:sendGMRequest(num)
 end
 
-function var_0_0._btninputOnClick(arg_5_0)
-	local var_5_0 = CommonInputMO.New()
+function RoomManufactureMaterialTipView:_btninputOnClick()
+	local inputMo = CommonInputMO.New()
 
-	var_5_0.title = "请输入增加道具数量！"
-	var_5_0.defaultInput = "Enter Item Num"
+	inputMo.title = "请输入增加道具数量！"
+	inputMo.defaultInput = "Enter Item Num"
 
-	function var_5_0.sureCallback(arg_6_0)
+	function inputMo.sureCallback(inputStr)
 		GameFacade.closeInputBox()
 
-		local var_6_0 = tonumber(arg_6_0)
+		local inputNum = tonumber(inputStr)
 
-		if var_6_0 and var_6_0 > 0 then
-			arg_5_0:sendGMRequest(var_6_0)
+		if inputNum and inputNum > 0 then
+			self:sendGMRequest(inputNum)
 		end
 	end
 
-	GameFacade.openInputBox(var_5_0)
+	GameFacade.openInputBox(inputMo)
 end
 
-function var_0_0.sendGMRequest(arg_7_0, arg_7_1)
-	GameFacade.showToast(ToastEnum.GMTool5, arg_7_0.viewParam.id)
+function RoomManufactureMaterialTipView:sendGMRequest(val)
+	GameFacade.showToast(ToastEnum.GMTool5, self.viewParam.id)
 
-	if arg_7_0.viewParam.type == MaterialEnum.MaterialType.Item and arg_7_0.viewParam.id == 510001 then
-		GMRpc.instance:sendGMRequest(string.format("add heroStoryTicket %d", arg_7_1))
+	if self.viewParam.type == MaterialEnum.MaterialType.Item and self.viewParam.id == 510001 then
+		GMRpc.instance:sendGMRequest(string.format("add heroStoryTicket %d", val))
 	else
-		GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", arg_7_0.viewParam.type, arg_7_0.viewParam.id, arg_7_1))
+		GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", self.viewParam.type, self.viewParam.id, val))
 	end
 end
 
-function var_0_0._btnwrongjumpOnClick(arg_8_0)
-	if not arg_8_0.isWrong then
+function RoomManufactureMaterialTipView:_btnwrongjumpOnClick()
+	if not self.isWrong then
 		return
 	end
 
-	if arg_8_0.wrongBuildingUid then
-		ManufactureController.instance:jumpToManufactureBuildingLevelUpView(arg_8_0.wrongBuildingUid)
+	if self.wrongBuildingUid then
+		ManufactureController.instance:jumpToManufactureBuildingLevelUpView(self.wrongBuildingUid)
 	else
 		ManufactureController.instance:jump2PlaceManufactureBuildingView()
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_9_0)
-	arg_9_0:closeThis()
+function RoomManufactureMaterialTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._onItemChange(arg_10_0)
-	arg_10_0:refreshItemQuantity()
+function RoomManufactureMaterialTipView:_onItemChange()
+	self:refreshItemQuantity()
 end
 
-function var_0_0.jumpBtnOnClick(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.jumpItemList[arg_11_1]
+function RoomManufactureMaterialTipView:jumpBtnOnClick(index)
+	local jumpItem = self.jumpItemList[index]
 
-	if not var_11_0 then
+	if not jumpItem then
 		return
 	end
 
-	if var_11_0.cantJumpTips then
-		GameFacade.showToastWithTableParam(var_11_0.cantJumpTips, var_11_0.cantJumpParam)
+	if jumpItem.cantJumpTips then
+		GameFacade.showToastWithTableParam(jumpItem.cantJumpTips, jumpItem.cantJumpParam)
 
 		return
 	end
 
-	if not arg_11_0.canJump then
+	if not self.canJump then
 		GameFacade.showToast(ToastEnum.MaterialTipJump)
 
 		return
@@ -148,227 +150,231 @@ function var_0_0.jumpBtnOnClick(arg_11_0, arg_11_1)
 		return
 	end
 
-	JumpController.instance:dispatchEvent(JumpEvent.JumpBtnClick, var_11_0.jumpId)
-	GameFacade.jump(var_11_0.jumpId, arg_11_0._onJumpFinish, arg_11_0, arg_11_0.viewParam.recordFarmItem)
+	JumpController.instance:dispatchEvent(JumpEvent.JumpBtnClick, jumpItem.jumpId)
+	GameFacade.jump(jumpItem.jumpId, self._onJumpFinish, self, self.viewParam.recordFarmItem)
 end
 
-function var_0_0._onJumpFinish(arg_12_0)
-	arg_12_0:closeThis()
+function RoomManufactureMaterialTipView:_onJumpFinish()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	if arg_13_0._gogm then
-		gohelper.setActive(arg_13_0._gogm, GMController.instance:isOpenGM())
+function RoomManufactureMaterialTipView:_editableInitView()
+	if self._gogm then
+		gohelper.setActive(self._gogm, GMController.instance:isOpenGM())
 	end
 
-	arg_13_0._txtsource.text = luaLang("materialview_source")
-	arg_13_0.jumpItemList = {}
+	self._txtsource.text = luaLang("materialview_source")
+	self.jumpItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
-	arg_14_0.type = nil
-	arg_14_0.id = nil
+function RoomManufactureMaterialTipView:onUpdateParam()
+	self.type = nil
+	self.id = nil
 
-	if arg_14_0.viewParam then
-		arg_14_0.type = arg_14_0.viewParam.type
-		arg_14_0.id = arg_14_0.viewParam.id
-		arg_14_0.canJump = arg_14_0.viewParam.canJump
+	if self.viewParam then
+		self.type = self.viewParam.type
+		self.id = self.viewParam.id
+		self.canJump = self.viewParam.canJump
 	end
 
-	arg_14_0:setItem()
-	arg_14_0:setJumpItems()
+	self:setItem()
+	self:setJumpItems()
 
-	arg_14_0._scrolldesc.verticalNormalizedPosition = 1
+	self._scrolldesc.verticalNormalizedPosition = 1
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:onUpdateParam()
+function RoomManufactureMaterialTipView:onOpen()
+	self:onUpdateParam()
 end
 
-function var_0_0.setItem(arg_16_0)
-	arg_16_0.config, arg_16_0.icon = ItemModel.instance:getItemConfigAndIcon(arg_16_0.type, arg_16_0.id)
-	arg_16_0._txtpropname.text = arg_16_0.config.name
-	arg_16_0._txtdec1.text = arg_16_0.config.useDesc
-	arg_16_0._txtdec2.text = arg_16_0.config.desc
+function RoomManufactureMaterialTipView:setItem()
+	self.config, self.icon = ItemModel.instance:getItemConfigAndIcon(self.type, self.id)
+	self._txtpropname.text = self.config.name
+	self._txtdec1.text = self.config.useDesc
+	self._txtdec2.text = self.config.desc
 
-	arg_16_0._simagepropicon:LoadImage(arg_16_0.icon)
+	self._simagepropicon:LoadImage(self.icon)
 
-	local var_16_0 = arg_16_0.config.rare
+	local rare = self.config.rare
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_16_0._imagequality, "critter_manufacture_itemquality" .. var_16_0)
+	UISpriteSetMgr.instance:setCritterSprite(self._imagequality, "critter_manufacture_itemquality" .. rare)
 
-	if arg_16_0._txtmattip then
-		arg_16_0._txtmattip.text = tostring(arg_16_0.type) .. "#" .. tostring(arg_16_0.id)
+	if self._txtmattip then
+		self._txtmattip.text = tostring(self.type) .. "#" .. tostring(self.id)
 	end
 
-	arg_16_0:refreshItemQuantity()
-	arg_16_0:checkWrong()
+	self:refreshItemQuantity()
+	self:checkWrong()
 end
 
-function var_0_0.checkWrong(arg_17_0)
-	arg_17_0.isWrong = false
-	arg_17_0.wrongBuildingUid = nil
+function RoomManufactureMaterialTipView:checkWrong()
+	self.isWrong = false
+	self.wrongBuildingUid = nil
 
-	local var_17_0 = ManufactureConfig.instance:getManufactureItemListByItemId(arg_17_0.id)[1]
+	local manufactureItemIdList = ManufactureConfig.instance:getManufactureItemListByItemId(self.id)
+	local manufactureItemId = manufactureItemIdList[1]
 
-	if var_17_0 then
-		if ManufactureController.instance:checkPlaceProduceBuilding(var_17_0) then
-			local var_17_1, var_17_2, var_17_3 = ManufactureController.instance:checkProduceBuildingLevel(var_17_0)
+	if manufactureItemId then
+		local hasBuilding = ManufactureController.instance:checkPlaceProduceBuilding(manufactureItemId)
 
-			if var_17_1 then
-				local var_17_4 = ""
-				local var_17_5 = RoomMapBuildingModel.instance:getBuildingMOById(var_17_2)
+		if hasBuilding then
+			local needUpgrade, buildingUid, needLevel = ManufactureController.instance:checkProduceBuildingLevel(manufactureItemId)
 
-				if var_17_5 then
-					var_17_4 = var_17_5.config.useDesc
+			if needUpgrade then
+				local name = ""
+				local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+
+				if buildingMO then
+					name = buildingMO.config.useDesc
 				end
 
-				local var_17_6 = luaLang("room_upgrade_building_unlock")
+				local langStr = luaLang("room_upgrade_building_unlock")
 
-				arg_17_0._txtWrongTip.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_17_6, var_17_4, var_17_3)
-				arg_17_0.wrongBuildingUid = var_17_2
-				arg_17_0.isWrong = true
+				self._txtWrongTip.text = GameUtil.getSubPlaceholderLuaLangTwoParam(langStr, name, needLevel)
+				self.wrongBuildingUid = buildingUid
+				self.isWrong = true
 			end
 		else
-			local var_17_7 = ""
-			local var_17_8 = ManufactureConfig.instance:getManufactureItemBelongBuildingList(var_17_0)
-			local var_17_9 = RoomConfig.instance:getBuildingConfig(var_17_8[1])
+			local name = ""
+			local produceBuildingList = ManufactureConfig.instance:getManufactureItemBelongBuildingList(manufactureItemId)
+			local buildingConfig = RoomConfig.instance:getBuildingConfig(produceBuildingList[1])
 
-			if var_17_9 then
-				var_17_7 = var_17_9.useDesc
+			if buildingConfig then
+				name = buildingConfig.useDesc
 			end
 
-			local var_17_10 = luaLang("room_place_building_to_unlock")
+			local langStr = luaLang("room_place_building_to_unlock")
 
-			arg_17_0._txtWrongTip.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_17_10, var_17_7)
-			arg_17_0.isWrong = true
+			self._txtWrongTip.text = GameUtil.getSubPlaceholderLuaLangOneParam(langStr, name)
+			self.isWrong = true
 		end
 	end
 
-	gohelper.setActive(arg_17_0._txtWrongTip, arg_17_0.isWrong)
+	gohelper.setActive(self._txtWrongTip, self.isWrong)
 end
 
-function var_0_0.refreshItemQuantity(arg_18_0)
-	local var_18_0 = ItemModel.instance:getItemQuantity(arg_18_0.type, arg_18_0.id) or 0
-	local var_18_1 = ManufactureConfig.instance:getManufactureItemListByItemId(arg_18_0.id)[1]
+function RoomManufactureMaterialTipView:refreshItemQuantity()
+	local quantity = ItemModel.instance:getItemQuantity(self.type, self.id) or 0
+	local manufactureItemIdList = ManufactureConfig.instance:getManufactureItemListByItemId(self.id)
+	local manufactureItemId = manufactureItemIdList[1]
 
-	if var_18_1 then
-		var_18_0 = ManufactureModel.instance:getManufactureItemCount(var_18_1)
+	if manufactureItemId then
+		quantity = ManufactureModel.instance:getManufactureItemCount(manufactureItemId)
 	end
 
-	local var_18_2 = tostring(GameUtil.numberDisplay(var_18_0))
+	local numStr = tostring(GameUtil.numberDisplay(quantity))
 
-	arg_18_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_18_2)
+	self._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", numStr)
 end
 
-function var_0_0.setJumpItems(arg_19_0)
-	local var_19_0 = {}
-	local var_19_1 = arg_19_0.config.sources
+function RoomManufactureMaterialTipView:setJumpItems()
+	local sourceTables = {}
+	local sourcesConfig = self.config.sources
 
-	if not string.nilorempty(var_19_1) then
-		local var_19_2 = string.split(var_19_1, "|")
+	if not string.nilorempty(sourcesConfig) then
+		local sources = string.split(sourcesConfig, "|")
 
-		for iter_19_0, iter_19_1 in ipairs(var_19_2) do
-			local var_19_3 = string.splitToNumber(iter_19_1, "#")
-			local var_19_4 = {
-				sourceId = var_19_3[1],
-				probability = var_19_3[2]
-			}
+		for _, source in ipairs(sources) do
+			local sourceParam = string.splitToNumber(source, "#")
+			local sourceTable = {}
 
-			var_19_4.episodeId = JumpConfig.instance:getJumpEpisodeId(var_19_4.sourceId)
+			sourceTable.sourceId = sourceParam[1]
+			sourceTable.probability = sourceParam[2]
+			sourceTable.episodeId = JumpConfig.instance:getJumpEpisodeId(sourceTable.sourceId)
 
-			local var_19_5 = JumpConfig.instance:isOpenJumpId(var_19_4.sourceId)
-			local var_19_6 = var_19_4.probability ~= MaterialEnum.JumpProbability.Normal
-			local var_19_7 = DungeonModel.instance:hasPassLevel(var_19_4.episodeId)
+			local isOpen = JumpConfig.instance:isOpenJumpId(sourceTable.sourceId)
+			local isNormal = sourceTable.probability ~= MaterialEnum.JumpProbability.Normal
+			local hasPass = DungeonModel.instance:hasPassLevel(sourceTable.episodeId)
 
-			if var_19_5 and (var_19_6 or not var_19_7) then
-				table.insert(var_19_0, var_19_4)
+			if isOpen and (isNormal or not hasPass) then
+				table.insert(sourceTables, sourceTable)
 			end
 		end
 	end
 
-	gohelper.CreateObjList(arg_19_0, arg_19_0._onSetJumpItem, var_19_0, arg_19_0._jumpItemParent, arg_19_0._gojumpItem)
-	gohelper.setActive(arg_19_0._gosource, #var_19_0 > 0)
+	gohelper.CreateObjList(self, self._onSetJumpItem, sourceTables, self._jumpItemParent, self._gojumpItem)
+	gohelper.setActive(self._gosource, #sourceTables > 0)
 end
 
-function var_0_0._onSetJumpItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0:getUserDataTb_()
+function RoomManufactureMaterialTipView:_onSetJumpItem(obj, data, index)
+	local jumpItem = self:getUserDataTb_()
 
-	var_20_0.go = arg_20_1
-	var_20_0.indexText = gohelper.findChildText(arg_20_1, "indexText")
-	var_20_0.originText = gohelper.findChildText(arg_20_1, "layout/originText")
-	var_20_0.jumpHardTagGO = gohelper.findChild(arg_20_1, "layout/hardtag")
-	var_20_0.probabilityBg = gohelper.findChild(arg_20_1, "layout/bg")
-	var_20_0.txtProbability = gohelper.findChildText(arg_20_1, "layout/bg/probality")
-	var_20_0.hasJump = gohelper.findChild(arg_20_1, "jump")
-	var_20_0.jumpBgGO = gohelper.findChild(arg_20_1, "jump/bg")
-	var_20_0.jumpBtn = gohelper.findChildButtonWithAudio(arg_20_1, "jump/jumpBtn")
-	var_20_0.jumpText = gohelper.findChildText(arg_20_1, "jump/jumpBtn/jumpText")
-	var_20_0.jumpText.text = luaLang("p_materialtip_jump")
+	jumpItem.go = obj
+	jumpItem.indexText = gohelper.findChildText(obj, "indexText")
+	jumpItem.originText = gohelper.findChildText(obj, "layout/originText")
+	jumpItem.jumpHardTagGO = gohelper.findChild(obj, "layout/hardtag")
+	jumpItem.probabilityBg = gohelper.findChild(obj, "layout/bg")
+	jumpItem.txtProbability = gohelper.findChildText(obj, "layout/bg/probality")
+	jumpItem.hasJump = gohelper.findChild(obj, "jump")
+	jumpItem.jumpBgGO = gohelper.findChild(obj, "jump/bg")
+	jumpItem.jumpBtn = gohelper.findChildButtonWithAudio(obj, "jump/jumpBtn")
+	jumpItem.jumpText = gohelper.findChildText(obj, "jump/jumpBtn/jumpText")
+	jumpItem.jumpText.text = luaLang("p_materialtip_jump")
 
-	var_20_0.jumpBtn:AddClickListener(arg_20_0.jumpBtnOnClick, arg_20_0, arg_20_3)
+	jumpItem.jumpBtn:AddClickListener(self.jumpBtnOnClick, self, index)
 
-	var_20_0.data = arg_20_2
-	var_20_0.jumpId = arg_20_2.sourceId
+	jumpItem.data = data
+	jumpItem.jumpId = data.sourceId
 
-	local var_20_1 = JumpConfig.instance:getJumpConfig(var_20_0.jumpId)
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpItem.jumpId)
 
-	if var_20_1 then
-		local var_20_2
-		local var_20_3
+	if jumpConfig then
+		local jumpName, jumpIndex
 
-		if string.nilorempty(var_20_1.param) then
-			var_20_2 = var_20_1.name
+		if string.nilorempty(jumpConfig.param) then
+			jumpName = jumpConfig.name
 		else
-			var_20_2, var_20_3 = JumpConfig.instance:getJumpName(var_20_0.jumpId, "#D0AB74")
+			jumpName, jumpIndex = JumpConfig.instance:getJumpName(jumpItem.jumpId, "#D0AB74")
 		end
 
-		var_20_0.originText.text = var_20_2 or ""
-		var_20_0.indexText.text = var_20_3 or ""
+		jumpItem.originText.text = jumpName or ""
+		jumpItem.indexText.text = jumpIndex or ""
 
-		local var_20_4 = var_20_0.data.episodeId
+		local episodeId = jumpItem.data.episodeId
 
-		gohelper.setActive(var_20_0.jumpHardTagGO, JumpConfig.instance:isJumpHardDungeon(var_20_4))
+		gohelper.setActive(jumpItem.jumpHardTagGO, JumpConfig.instance:isJumpHardDungeon(episodeId))
 
-		local var_20_5 = var_20_0.data.probability
-		local var_20_6 = var_20_4 and var_20_5 and MaterialEnum.JumpProbabilityDisplay[var_20_5]
-		local var_20_7 = ""
+		local probability = jumpItem.data.probability
+		local showProbability = episodeId and probability and MaterialEnum.JumpProbabilityDisplay[probability]
+		local probabilityText = ""
 
-		if var_20_6 then
-			local var_20_8 = luaLang(MaterialEnum.JumpProbabilityDisplay[var_20_5])
+		if showProbability then
+			probabilityText = luaLang(MaterialEnum.JumpProbabilityDisplay[probability])
 		end
 
-		var_20_0.txtProbability.text = var_20_5
+		jumpItem.txtProbability.text = probability
 
-		gohelper.setActive(var_20_0.probabilityBg, var_20_6 and true or false)
+		gohelper.setActive(jumpItem.probabilityBg, showProbability and true or false)
 
-		local var_20_9 = JumpController.instance:isOnlyShowJump(var_20_0.jumpId)
+		local isOnlyShowJump = JumpController.instance:isOnlyShowJump(jumpItem.jumpId)
 
-		gohelper.setActive(var_20_0.hasJump, not var_20_9)
+		gohelper.setActive(jumpItem.hasJump, not isOnlyShowJump)
 
-		if JumpController.instance:isJumpOpen(var_20_0.jumpId) then
-			var_20_0.cantJumpTips, var_20_0.cantJumpParam = JumpController.instance:cantJump(var_20_1.param)
+		local isOpen = JumpController.instance:isJumpOpen(jumpItem.jumpId)
+
+		if isOpen then
+			jumpItem.cantJumpTips, jumpItem.cantJumpParam = JumpController.instance:cantJump(jumpConfig.param)
 		else
-			var_20_0.cantJumpTips, var_20_0.cantJumpParam = OpenHelper.getToastIdAndParam(var_20_1.openId)
+			jumpItem.cantJumpTips, jumpItem.cantJumpParam = OpenHelper.getToastIdAndParam(jumpConfig.openId)
 		end
 
-		ZProj.UGUIHelper.SetGrayscale(var_20_0.jumpText.gameObject, var_20_0.cantJumpTips)
-		ZProj.UGUIHelper.SetGrayscale(var_20_0.jumpBgGO, var_20_0.cantJumpTips)
+		ZProj.UGUIHelper.SetGrayscale(jumpItem.jumpText.gameObject, jumpItem.cantJumpTips)
+		ZProj.UGUIHelper.SetGrayscale(jumpItem.jumpBgGO, jumpItem.cantJumpTips)
 	else
-		gohelper.setActive(var_20_0.go, false)
+		gohelper.setActive(jumpItem.go, false)
 	end
 
-	arg_20_0.jumpItemList[arg_20_3] = var_20_0
+	self.jumpItemList[index] = jumpItem
 end
 
-function var_0_0.onClose(arg_21_0)
-	arg_21_0._simagepropicon:UnLoadImage()
+function RoomManufactureMaterialTipView:onClose()
+	self._simagepropicon:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.jumpItemList) do
-		iter_22_1.jumpBtn:RemoveClickListener()
+function RoomManufactureMaterialTipView:onDestroyView()
+	for _, jumpItem in ipairs(self.jumpItemList) do
+		jumpItem.jumpBtn:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return RoomManufactureMaterialTipView

@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.FightUpdateItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightUpdateItem.lua
 
-local var_0_0 = class("FightUpdateItem")
-local var_0_1 = xpcall
-local var_0_2 = __G__TRACKBACK__
+module("modules.logic.fight.FightUpdateItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.func = arg_1_1
-	arg_1_0.handle = arg_1_2
-	arg_1_0.param = arg_1_3
+local FightUpdateItem = class("FightUpdateItem")
+local xpcall = xpcall
+local __G__TRACKBACK__ = __G__TRACKBACK__
+
+function FightUpdateItem:ctor(func, handle, param)
+	self.func = func
+	self.handle = handle
+	self.param = param
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	if arg_2_0.isDone then
+function FightUpdateItem:update(deltaTime)
+	if self.isDone then
 		return
 	end
 
-	var_0_1(arg_2_0.func, var_0_2, arg_2_0.handle, arg_2_1, arg_2_0.param)
+	xpcall(self.func, __G__TRACKBACK__, self.handle, deltaTime, self.param)
 end
 
-return var_0_0
+return FightUpdateItem

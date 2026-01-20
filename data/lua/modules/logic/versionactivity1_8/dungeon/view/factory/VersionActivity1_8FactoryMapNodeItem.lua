@@ -1,413 +1,430 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryMapNodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/VersionActivity1_8FactoryMapNodeItem.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryMapNodeItem", UserDataDispose)
-local var_0_1 = 0.8
-local var_0_2 = 0.5
+module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryMapNodeItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local VersionActivity1_8FactoryMapNodeItem = class("VersionActivity1_8FactoryMapNodeItem", UserDataDispose)
+local OPEN_DELAY_TIME = 0.8
+local NODE_OPEN_DELAY_TIME = 0.5
 
-	arg_1_0.actId = Activity157Model.instance:getActId()
-	arg_1_0.go = arg_1_1
-	arg_1_0.getLineTemplateFunc = arg_1_2
-	arg_1_0.lineParentGo = arg_1_3
-	arg_1_0.trans = arg_1_0.go.transform
-	arg_1_0._animator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goLineParentInNode = gohelper.findChild(arg_1_0.go, "line")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.go, "num")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.go, "num/#txt_num")
-	arg_1_0._gotimetips = gohelper.findChild(arg_1_0.go, "timetips")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.go, "timetips/#txt_time")
-	arg_1_0._imagestatus = gohelper.findChildImage(arg_1_0.go, "#image_status")
-	arg_1_0._godispatchrewardeff = gohelper.findChild(arg_1_0.go, "#image_status/#vx_reward")
-	arg_1_0._gounlockeff = gohelper.findChild(arg_1_0.go, "#image_status/#vx_unlock")
-	arg_1_0._goReddot = gohelper.findChild(arg_1_0.go, "#go_reddot")
-	arg_1_0._btnnode = gohelper.findChildClickWithDefaultAudio(arg_1_0.go, "#btn_node")
-	arg_1_0.parentView = arg_1_4
+function VersionActivity1_8FactoryMapNodeItem:init(go, getLineTemplateFunc, lineParentGo, parentView)
+	self:__onInit()
 
-	arg_1_0:addEventListeners()
+	self.actId = Activity157Model.instance:getActId()
+	self.go = go
+	self.getLineTemplateFunc = getLineTemplateFunc
+	self.lineParentGo = lineParentGo
+	self.trans = self.go.transform
+	self._animator = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._goLineParentInNode = gohelper.findChild(self.go, "line")
+	self._gonum = gohelper.findChild(self.go, "num")
+	self._txtnum = gohelper.findChildText(self.go, "num/#txt_num")
+	self._gotimetips = gohelper.findChild(self.go, "timetips")
+	self._txttime = gohelper.findChildText(self.go, "timetips/#txt_time")
+	self._imagestatus = gohelper.findChildImage(self.go, "#image_status")
+	self._godispatchrewardeff = gohelper.findChild(self.go, "#image_status/#vx_reward")
+	self._gounlockeff = gohelper.findChild(self.go, "#image_status/#vx_unlock")
+	self._goReddot = gohelper.findChild(self.go, "#go_reddot")
+	self._btnnode = gohelper.findChildClickWithDefaultAudio(self.go, "#btn_node")
+	self.parentView = parentView
+
+	self:addEventListeners()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0.statusClickHandler = {
-		[Activity157Enum.MissionStatus.Normal] = arg_2_0._clickNormal,
-		[Activity157Enum.MissionStatus.Locked] = arg_2_0._clickLocked,
-		[Activity157Enum.MissionStatus.Dispatching] = arg_2_0._clickDispatch,
-		[Activity157Enum.MissionStatus.DispatchFinish] = arg_2_0._clickDispatch,
-		[Activity157Enum.MissionStatus.Finish] = arg_2_0._clickFinish
+function VersionActivity1_8FactoryMapNodeItem:addEventListeners()
+	self.statusClickHandler = {
+		[Activity157Enum.MissionStatus.Normal] = self._clickNormal,
+		[Activity157Enum.MissionStatus.Locked] = self._clickLocked,
+		[Activity157Enum.MissionStatus.Dispatching] = self._clickDispatch,
+		[Activity157Enum.MissionStatus.DispatchFinish] = self._clickDispatch,
+		[Activity157Enum.MissionStatus.Finish] = self._clickFinish
 	}
 
-	arg_2_0._btnnode:AddClickListener(arg_2_0._btnnodeOnClick, arg_2_0)
-	arg_2_0:addEventCb(DispatchController.instance, DispatchEvent.OnDispatchFinish, arg_2_0.onDispatchFinish, arg_2_0)
+	self._btnnode:AddClickListener(self._btnnodeOnClick, self)
+	self:addEventCb(DispatchController.instance, DispatchEvent.OnDispatchFinish, self.onDispatchFinish, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnnode:RemoveClickListener()
-	arg_3_0:removeEventCb(DispatchController.instance, DispatchEvent.OnDispatchFinish, arg_3_0.onDispatchFinish, arg_3_0)
+function VersionActivity1_8FactoryMapNodeItem:removeEventListeners()
+	self._btnnode:RemoveClickListener()
+	self:removeEventCb(DispatchController.instance, DispatchEvent.OnDispatchFinish, self.onDispatchFinish, self)
 end
 
-function var_0_0._btnnodeOnClick(arg_4_0)
-	local var_4_0 = Activity157Config.instance:getMissionElementId(arg_4_0.actId, arg_4_0.missionId)
+function VersionActivity1_8FactoryMapNodeItem:_btnnodeOnClick()
+	local elementId = Activity157Config.instance:getMissionElementId(self.actId, self.missionId)
 
-	if not var_4_0 then
+	if not elementId then
 		return
 	end
 
-	local var_4_1 = Activity157Model.instance:getMissionStatus(arg_4_0.missionGroupId, arg_4_0.missionId)
-	local var_4_2 = arg_4_0.statusClickHandler[var_4_1]
+	local missionStatus = Activity157Model.instance:getMissionStatus(self.missionGroupId, self.missionId)
+	local clickHandler = self.statusClickHandler[missionStatus]
 
-	if var_4_2 then
-		var_4_2(arg_4_0, var_4_0)
+	if clickHandler then
+		clickHandler(self, elementId)
 	else
-		logError(string.format("VersionActivity1_8FactoryMapNodeItem:_btnnodeOnClick, no status handler, status:%s", var_4_1))
+		logError(string.format("VersionActivity1_8FactoryMapNodeItem:_btnnodeOnClick, no status handler, status:%s", missionStatus))
 	end
 end
 
-function var_0_0._clickNormal(arg_5_0, arg_5_1)
-	if Activity157Model.instance:isInProgressOtherMissionGroup(arg_5_0.missionGroupId) then
+function VersionActivity1_8FactoryMapNodeItem:_clickNormal(elementId)
+	local isProgressOther = Activity157Model.instance:isInProgressOtherMissionGroup(self.missionGroupId)
+
+	if isProgressOther then
 		GameFacade.showToast(ToastEnum.V1a8Activity157HasDoingOtherMissionGroup)
 
 		return
 	end
 
-	VersionActivity1_8DungeonController.instance:dispatchEvent(VersionActivity1_8DungeonEvent.FocusElement, arg_5_1)
+	VersionActivity1_8DungeonController.instance:dispatchEvent(VersionActivity1_8DungeonEvent.FocusElement, elementId)
 	AudioMgr.instance:trigger(AudioEnum.main_ui.play_ui_task_page)
 end
 
-function var_0_0._clickLocked(arg_6_0, arg_6_1)
-	local var_6_0 = Activity157Model.instance:getMissionUnlockToastId(arg_6_0.missionId, arg_6_1)
+function VersionActivity1_8FactoryMapNodeItem:_clickLocked(elementId)
+	local toastId = Activity157Model.instance:getMissionUnlockToastId(self.missionId, elementId)
 
-	if var_6_0 then
-		GameFacade.showToast(var_6_0)
+	if toastId then
+		GameFacade.showToast(toastId)
 	end
 end
 
-function var_0_0._clickDispatch(arg_7_0, arg_7_1)
-	VersionActivity1_8DungeonController.instance:dispatchEvent(VersionActivity1_8DungeonEvent.ManualClickElement, arg_7_1)
+function VersionActivity1_8FactoryMapNodeItem:_clickDispatch(elementId)
+	VersionActivity1_8DungeonController.instance:dispatchEvent(VersionActivity1_8DungeonEvent.ManualClickElement, elementId)
 end
 
-function var_0_0._clickFinish(arg_8_0)
-	local var_8_0 = Activity157Config.instance:getMissionElementId(arg_8_0.actId, arg_8_0.missionId)
-	local var_8_1 = var_8_0 and DungeonConfig.instance:getChapterMapElement(var_8_0)
-	local var_8_2 = var_8_1 and var_8_1.type
+function VersionActivity1_8FactoryMapNodeItem:_clickFinish()
+	local elementId = Activity157Config.instance:getMissionElementId(self.actId, self.missionId)
+	local elementCo = elementId and DungeonConfig.instance:getChapterMapElement(elementId)
+	local type = elementCo and elementCo.type
 
-	if var_8_2 == DungeonEnum.ElementType.None or var_8_2 == DungeonEnum.ElementType.Story then
-		local var_8_3 = Activity157Config.instance:getAct157MissionStoryId(arg_8_0.actId, arg_8_0.missionId)
+	if type == DungeonEnum.ElementType.None or type == DungeonEnum.ElementType.Story then
+		local storyId = Activity157Config.instance:getAct157MissionStoryId(self.actId, self.missionId)
 
-		if var_8_3 and var_8_3 ~= 0 then
-			StoryController.instance:playStory(var_8_3, nil, function()
-				arg_8_0:openFragmentInfoView(var_8_1)
+		if storyId and storyId ~= 0 then
+			StoryController.instance:playStory(storyId, nil, function()
+				self:openFragmentInfoView(elementCo)
 			end)
 		else
-			arg_8_0:openFragmentInfoView(var_8_1)
+			self:openFragmentInfoView(elementCo)
 		end
 	else
 		GameFacade.showToast(ToastEnum.V1a8Activity157MissionHasFinished)
 	end
 end
 
-function var_0_0.openFragmentInfoView(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1.fragment
-	local var_10_1 = HandbookModel.instance:getFragmentDialogIdList(var_10_0)
+function VersionActivity1_8FactoryMapNodeItem:openFragmentInfoView(elementCo)
+	local fragmentId = elementCo.fragment
+	local dialogIdList = HandbookModel.instance:getFragmentDialogIdList(fragmentId)
 
 	ViewMgr.instance:openView(ViewName.DungeonFragmentInfoView, {
 		isFromHandbook = true,
-		fragmentId = var_10_0,
-		dialogIdList = var_10_1
+		fragmentId = fragmentId,
+		dialogIdList = dialogIdList
 	})
 end
 
-function var_0_0.onDispatchFinish(arg_11_0)
-	local var_11_0 = Activity157Config.instance:getMissionElementId(arg_11_0.actId, arg_11_0.missionId)
+function VersionActivity1_8FactoryMapNodeItem:onDispatchFinish()
+	local elementId = Activity157Config.instance:getMissionElementId(self.actId, self.missionId)
+	local isDispatchElement = DungeonConfig.instance:isDispatchElement(elementId)
 
-	if not DungeonConfig.instance:isDispatchElement(var_11_0) then
+	if not isDispatchElement then
 		return
 	end
 
-	arg_11_0:refreshStatus()
+	self:refreshStatus()
 end
 
-function var_0_0.setMissionData(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not arg_12_1 or not arg_12_2 then
+function VersionActivity1_8FactoryMapNodeItem:setMissionData(missionGroupId, missionId, isOnOpen)
+	if not missionGroupId or not missionId then
 		return
 	end
 
-	arg_12_0.missionId = arg_12_2
-	arg_12_0.missionGroupId = arg_12_1
+	self.missionId = missionId
+	self.missionGroupId = missionGroupId
 
-	local var_12_0 = Activity157Config.instance:getAct157MissionPos(arg_12_0.actId, arg_12_0.missionId)
+	local anchorPos = Activity157Config.instance:getAct157MissionPos(self.actId, self.missionId)
 
-	recthelper.setAnchor(arg_12_0.trans, var_12_0[1], var_12_0[2])
+	recthelper.setAnchor(self.trans, anchorPos[1], anchorPos[2])
 
-	arg_12_0.go.name = string.format("%s-%s", arg_12_0.missionGroupId, arg_12_0.missionId)
+	self.go.name = string.format("%s-%s", self.missionGroupId, self.missionId)
 
-	local var_12_1 = Activity157Config.instance:getAct157MissionOrder(arg_12_0.actId, arg_12_0.missionId)
+	local order = Activity157Config.instance:getAct157MissionOrder(self.actId, self.missionId)
 
-	if var_12_1 then
-		arg_12_0._txtnum.text = var_12_1
+	if order then
+		self._txtnum.text = order
 
-		gohelper.setActive(arg_12_0._gonum, true)
+		gohelper.setActive(self._gonum, true)
 	else
-		gohelper.setActive(arg_12_0._gonum, false)
+		gohelper.setActive(self._gonum, false)
 	end
 
-	arg_12_0:createLine()
-	arg_12_0:refresh()
+	self:createLine()
+	self:refresh()
 
-	local var_12_2
-	local var_12_3 = Activity157Config.instance:getMissionElementId(arg_12_0.actId, arg_12_0.missionId)
-	local var_12_4 = var_12_3 and DungeonConfig.instance:getChapterMapElement(var_12_3)
+	local dispatchId
+	local elementId = Activity157Config.instance:getMissionElementId(self.actId, self.missionId)
+	local elementCo = elementId and DungeonConfig.instance:getChapterMapElement(elementId)
+	local type = elementCo and elementCo.type
 
-	if (var_12_4 and var_12_4.type) == DungeonEnum.ElementType.Dispatch then
-		var_12_2 = tonumber(var_12_4.param)
+	if type == DungeonEnum.ElementType.Dispatch then
+		dispatchId = tonumber(elementCo.param)
 	end
 
-	RedDotController.instance:addRedDot(arg_12_0._goReddot, RedDotEnum.DotNode.V1a8FactoryMapDispatchFinish, var_12_2, arg_12_0.checkDispatchReddot, arg_12_0)
-	gohelper.setActive(arg_12_0.go, true)
+	RedDotController.instance:addRedDot(self._goReddot, RedDotEnum.DotNode.V1a8FactoryMapDispatchFinish, dispatchId, self.checkDispatchReddot, self)
+	gohelper.setActive(self.go, true)
 
-	if Activity157Model.instance:getIsNeedPlayMissionUnlockAnim(arg_12_0.missionId) then
-		arg_12_0:playNodeAnimation("open", "go")
+	local isNeedPlayUnlockAnim = Activity157Model.instance:getIsNeedPlayMissionUnlockAnim(self.missionId)
 
-		if arg_12_0._lineAnimator then
-			arg_12_0._lineAnimator.speed = 0
+	if isNeedPlayUnlockAnim then
+		self:playNodeAnimation("open", "go")
+
+		if self._lineAnimator then
+			self._lineAnimator.speed = 0
 		end
 
-		arg_12_0._animator.speed = 0
+		self._animator.speed = 0
 
-		local var_12_5 = 0
+		local delayTime = 0
 
-		if arg_12_3 then
-			var_12_5 = var_0_1
-		elseif not Activity157Config.instance:isRootMission(arg_12_0.actId, arg_12_2) then
-			var_12_5 = var_0_2
+		if isOnOpen then
+			delayTime = OPEN_DELAY_TIME
+		else
+			local isRoot = Activity157Config.instance:isRootMission(self.actId, missionId)
+
+			if not isRoot then
+				delayTime = NODE_OPEN_DELAY_TIME
+			end
 		end
 
-		TaskDispatcher.cancelTask(arg_12_0.playNodeUnlockAnimation, arg_12_0)
-		TaskDispatcher.runDelay(arg_12_0.playNodeUnlockAnimation, arg_12_0, var_12_5)
+		TaskDispatcher.cancelTask(self.playNodeUnlockAnimation, self)
+		TaskDispatcher.runDelay(self.playNodeUnlockAnimation, self, delayTime)
 	else
-		arg_12_0:playNodeAnimation("open", "open", "unlock")
+		self:playNodeAnimation("open", "open", "unlock")
 	end
 end
 
-function var_0_0.refreshUnlockAnim(arg_13_0)
-	arg_13_0:refresh()
+function VersionActivity1_8FactoryMapNodeItem:refreshUnlockAnim()
+	self:refresh()
 
-	if not Activity157Model.instance:getIsNeedPlayMissionUnlockAnim(arg_13_0.missionId) then
+	local isNeedPlayUnlockAnim = Activity157Model.instance:getIsNeedPlayMissionUnlockAnim(self.missionId)
+
+	if not isNeedPlayUnlockAnim then
 		return
 	end
 
-	arg_13_0:playNodeUnlockAnimation()
+	self:playNodeUnlockAnimation()
 end
 
-function var_0_0.checkDispatchReddot(arg_14_0, arg_14_1)
-	arg_14_1:defaultRefreshDot()
-	gohelper.setActive(arg_14_0._godispatchrewardeff, arg_14_1.show)
+function VersionActivity1_8FactoryMapNodeItem:checkDispatchReddot(redDotIcon)
+	redDotIcon:defaultRefreshDot()
+	gohelper.setActive(self._godispatchrewardeff, redDotIcon.show)
 end
 
-function var_0_0.createLine(arg_15_0)
-	arg_15_0:destroyLine()
+function VersionActivity1_8FactoryMapNodeItem:createLine()
+	self:destroyLine()
 
-	local var_15_0
+	local lineTemplate
 
-	if arg_15_0.getLineTemplateFunc then
-		local var_15_1 = Activity157Config.instance:getLineResPath(arg_15_0.actId, arg_15_0.missionId)
+	if self.getLineTemplateFunc then
+		local lineRes = Activity157Config.instance:getLineResPath(self.actId, self.missionId)
 
-		var_15_0 = arg_15_0.getLineTemplateFunc(arg_15_0.parentView, var_15_1)
+		lineTemplate = self.getLineTemplateFunc(self.parentView, lineRes)
 	end
 
-	if not var_15_0 then
+	if not lineTemplate then
 		return
 	end
 
-	arg_15_0.lineGo = gohelper.clone(var_15_0, arg_15_0.lineParentGo or arg_15_0._goLineParentInNode)
+	self.lineGo = gohelper.clone(lineTemplate, self.lineParentGo or self._goLineParentInNode)
 
-	if gohelper.isNil(arg_15_0.lineGo) then
+	if gohelper.isNil(self.lineGo) then
 		return
 	end
 
-	arg_15_0._lineAnimator = gohelper.findChildComponent(arg_15_0.lineGo, "ani", typeof(UnityEngine.Animator))
-	arg_15_0._goLineFinish = gohelper.findChild(arg_15_0.lineGo, "ani/line_finish")
-	arg_15_0._goLineUnlock = gohelper.findChild(arg_15_0.lineGo, "ani/line_unlock")
-	arg_15_0._goLineLock = gohelper.findChild(arg_15_0.lineGo, "ani/line_lock")
-	arg_15_0._lineImagePoint1 = gohelper.findChildImage(arg_15_0.lineGo, "ani/point1")
-	arg_15_0._lineImagePoint2 = gohelper.findChildImage(arg_15_0.lineGo, "ani/point2")
+	self._lineAnimator = gohelper.findChildComponent(self.lineGo, "ani", typeof(UnityEngine.Animator))
+	self._goLineFinish = gohelper.findChild(self.lineGo, "ani/line_finish")
+	self._goLineUnlock = gohelper.findChild(self.lineGo, "ani/line_unlock")
+	self._goLineLock = gohelper.findChild(self.lineGo, "ani/line_lock")
+	self._lineImagePoint1 = gohelper.findChildImage(self.lineGo, "ani/point1")
+	self._lineImagePoint2 = gohelper.findChildImage(self.lineGo, "ani/point2")
 
-	local var_15_2, var_15_3 = recthelper.getAnchor(arg_15_0._lineImagePoint2.transform, 0, 0)
-	local var_15_4 = Activity157Config.instance:getAct157Const(arg_15_0.actId, Activity157Enum.ConstId.FactoryMapNodeLineOffsetY)
-	local var_15_5 = tonumber(var_15_4) or 0
+	local pointX, pointY = recthelper.getAnchor(self._lineImagePoint2.transform, 0, 0)
+	local strOffsetY = Activity157Config.instance:getAct157Const(self.actId, Activity157Enum.ConstId.FactoryMapNodeLineOffsetY)
+	local offsetY = tonumber(strOffsetY) or 0
 
-	if arg_15_0.lineParentGo then
-		local var_15_6 = Activity157Config.instance:getAct157MissionPos(arg_15_0.actId, arg_15_0.missionId)
+	if self.lineParentGo then
+		local anchorPos = Activity157Config.instance:getAct157MissionPos(self.actId, self.missionId)
 
-		recthelper.setAnchor(arg_15_0.lineGo.transform, var_15_6[1] - var_15_2, var_15_6[2] - var_15_3 + var_15_5)
+		recthelper.setAnchor(self.lineGo.transform, anchorPos[1] - pointX, anchorPos[2] - pointY + offsetY)
 	else
-		recthelper.setAnchor(arg_15_0.lineGo.transform, -var_15_2, -var_15_3 + var_15_5)
+		recthelper.setAnchor(self.lineGo.transform, -pointX, -pointY + offsetY)
 	end
 
-	gohelper.setActive(arg_15_0.lineGo, true)
+	gohelper.setActive(self.lineGo, true)
 end
 
-function var_0_0.playNodeAnimation(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if not string.nilorempty(arg_16_1) and arg_16_0._animator then
-		arg_16_0._animator:Play(arg_16_1, 0, 0)
+function VersionActivity1_8FactoryMapNodeItem:playNodeAnimation(animName, lineName, areaAnim)
+	if not string.nilorempty(animName) and self._animator then
+		self._animator:Play(animName, 0, 0)
 	end
 
-	if not string.nilorempty(arg_16_2) and arg_16_0._lineAnimator then
-		arg_16_0._lineAnimator:Play(arg_16_2, 0, 0)
+	if not string.nilorempty(lineName) and self._lineAnimator then
+		self._lineAnimator:Play(lineName, 0, 0)
 	end
 
-	local var_16_0 = Activity157Config.instance:getMissionArea(arg_16_0.actId, arg_16_0.missionId)
+	local area = Activity157Config.instance:getMissionArea(self.actId, self.missionId)
 
-	arg_16_0.parentView:playAreaAnim(var_16_0, arg_16_3)
+	self.parentView:playAreaAnim(area, areaAnim)
 end
 
-function var_0_0.playNodeUnlockAnimation(arg_17_0)
-	arg_17_0:playNodeAnimation("open", "go", "unlock")
+function VersionActivity1_8FactoryMapNodeItem:playNodeUnlockAnimation()
+	self:playNodeAnimation("open", "go", "unlock")
 
-	if arg_17_0._lineAnimator then
-		arg_17_0._lineAnimator.speed = 1
+	if self._lineAnimator then
+		self._lineAnimator.speed = 1
 
 		AudioMgr.instance:trigger(AudioEnum.UI.Act157FactoryNodeLineShow)
 	end
 
-	arg_17_0._animator.speed = 1
+	self._animator.speed = 1
 
-	gohelper.setActive(arg_17_0._gounlockeff, false)
-	gohelper.setActive(arg_17_0._gounlockeff, true)
+	gohelper.setActive(self._gounlockeff, false)
+	gohelper.setActive(self._gounlockeff, true)
 
-	if arg_17_0.missionId then
-		local var_17_0 = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedMissionNodeUnlocked .. arg_17_0.missionId
+	if self.missionId then
+		local prefsKey = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedMissionNodeUnlocked .. self.missionId
 
-		Activity157Model.instance:setHasPlayedAnim(var_17_0)
+		Activity157Model.instance:setHasPlayedAnim(prefsKey)
 		Activity157Controller.instance:dispatchEvent(Activity157Event.Act157PlayMissionUnlockAnim)
 	end
 end
 
-function var_0_0.everySecondCall(arg_18_0)
-	arg_18_0:refreshTime()
+function VersionActivity1_8FactoryMapNodeItem:everySecondCall()
+	self:refreshTime()
 end
 
-function var_0_0.refresh(arg_19_0)
-	arg_19_0:refreshStatus()
-	arg_19_0:refreshTime()
-	arg_19_0:refreshLine()
+function VersionActivity1_8FactoryMapNodeItem:refresh()
+	self:refreshStatus()
+	self:refreshTime()
+	self:refreshLine()
 end
 
-function var_0_0.refreshStatus(arg_20_0)
-	local var_20_0
-	local var_20_1 = Activity157Model.instance:getMissionStatus(arg_20_0.missionGroupId, arg_20_0.missionId)
-	local var_20_2 = Activity157Enum.MissionStatusShowSetting[var_20_1]
+function VersionActivity1_8FactoryMapNodeItem:refreshStatus()
+	local statusIcon
+	local missionStatus = Activity157Model.instance:getMissionStatus(self.missionGroupId, self.missionId)
+	local statusShowSetting = Activity157Enum.MissionStatusShowSetting[missionStatus]
 
-	if type(var_20_2) == "table" then
-		local var_20_3 = Activity157Config.instance:getMissionElementId(arg_20_0.actId, arg_20_0.missionId)
-		local var_20_4 = var_20_3 and DungeonConfig.instance:getChapterMapElement(var_20_3)
-		local var_20_5 = var_20_4 and var_20_4.type
+	if type(statusShowSetting) == "table" then
+		local elementId = Activity157Config.instance:getMissionElementId(self.actId, self.missionId)
+		local elementCo = elementId and DungeonConfig.instance:getChapterMapElement(elementId)
+		local type = elementCo and elementCo.type
 
-		if var_20_1 == Activity157Enum.MissionStatus.Finish then
-			var_20_0 = var_20_2.normal
+		if missionStatus == Activity157Enum.MissionStatus.Finish then
+			statusIcon = statusShowSetting.normal
 
-			if var_20_5 == DungeonEnum.ElementType.None or var_20_5 == DungeonEnum.ElementType.Story then
-				var_20_0 = var_20_2.story
+			if type == DungeonEnum.ElementType.None or type == DungeonEnum.ElementType.Story then
+				statusIcon = statusShowSetting.story
 			end
-		elseif var_20_1 == Activity157Enum.MissionStatus.Normal then
-			var_20_0 = var_20_2.normal
+		elseif missionStatus == Activity157Enum.MissionStatus.Normal then
+			statusIcon = statusShowSetting.normal
 
-			if var_20_5 == DungeonEnum.ElementType.Fight then
-				var_20_0 = var_20_2.fight
+			if type == DungeonEnum.ElementType.Fight then
+				statusIcon = statusShowSetting.fight
 			end
 		else
-			logError("VersionActivity1_8FactoryMapNodeItem:refreshStatus error, no status icon, status:%s", var_20_1)
+			logError("VersionActivity1_8FactoryMapNodeItem:refreshStatus error, no status icon, status:%s", missionStatus)
 		end
 	else
-		var_20_0 = var_20_2
+		statusIcon = statusShowSetting
 	end
 
-	if var_20_0 then
-		UISpriteSetMgr.instance:setV1a8FactorySprite(arg_20_0._imagestatus, var_20_0)
+	if statusIcon then
+		UISpriteSetMgr.instance:setV1a8FactorySprite(self._imagestatus, statusIcon)
 	end
 
-	local var_20_6 = var_20_1 == Activity157Enum.MissionStatus.Dispatching
+	local isDispatching = missionStatus == Activity157Enum.MissionStatus.Dispatching
 
-	gohelper.setActive(arg_20_0._gotimetips, var_20_6)
+	gohelper.setActive(self._gotimetips, isDispatching)
 end
 
-function var_0_0.refreshTime(arg_21_0)
-	if not (Activity157Model.instance:getMissionStatus(arg_21_0.missionGroupId, arg_21_0.missionId) == Activity157Enum.MissionStatus.Dispatching) then
+function VersionActivity1_8FactoryMapNodeItem:refreshTime()
+	local status = Activity157Model.instance:getMissionStatus(self.missionGroupId, self.missionId)
+	local isDispatching = status == Activity157Enum.MissionStatus.Dispatching
+
+	if not isDispatching then
 		return
 	end
 
-	local var_21_0 = Activity157Config.instance:getMissionElementId(arg_21_0.actId, arg_21_0.missionId)
+	local elementId = Activity157Config.instance:getMissionElementId(self.actId, self.missionId)
 
-	arg_21_0._txttime.text = DispatchModel.instance:getDispatchTime(var_21_0)
+	self._txttime.text = DispatchModel.instance:getDispatchTime(elementId)
 end
 
-function var_0_0.refreshLine(arg_22_0)
-	if not arg_22_0.missionGroupId or not arg_22_0.missionId then
+function VersionActivity1_8FactoryMapNodeItem:refreshLine()
+	if not self.missionGroupId or not self.missionId then
 		return
 	end
 
-	local var_22_0 = Activity157Model.instance:getMissionStatus(arg_22_0.missionGroupId, arg_22_0.missionId)
+	local missionStatus = Activity157Model.instance:getMissionStatus(self.missionGroupId, self.missionId)
 
-	gohelper.setActive(arg_22_0._goLineLock, var_22_0 == Activity157Enum.MissionStatus.Locked)
+	gohelper.setActive(self._goLineLock, missionStatus == Activity157Enum.MissionStatus.Locked)
 
-	if var_22_0 == Activity157Enum.MissionStatus.Normal or var_22_0 == Activity157Enum.MissionStatus.Dispatching or var_22_0 == Activity157Enum.MissionStatus.DispatchFinish then
-		gohelper.setActive(arg_22_0._goLineUnlock, true)
+	if missionStatus == Activity157Enum.MissionStatus.Normal or missionStatus == Activity157Enum.MissionStatus.Dispatching or missionStatus == Activity157Enum.MissionStatus.DispatchFinish then
+		gohelper.setActive(self._goLineUnlock, true)
 	else
-		gohelper.setActive(arg_22_0._goLineUnlock, false)
+		gohelper.setActive(self._goLineUnlock, false)
 	end
 
-	gohelper.setActive(arg_22_0._goLineFinish, var_22_0 == Activity157Enum.MissionStatus.Finish)
+	gohelper.setActive(self._goLineFinish, missionStatus == Activity157Enum.MissionStatus.Finish)
 
-	local var_22_1 = Activity157Enum.MissionLineStatusIcon[var_22_0]
+	local showIconSetting = Activity157Enum.MissionLineStatusIcon[missionStatus]
 
-	if not var_22_1 then
+	if not showIconSetting then
 		return
 	end
 
-	if arg_22_0._lineImagePoint1 then
-		UISpriteSetMgr.instance:setV1a8FactorySprite(arg_22_0._lineImagePoint1, var_22_1.point, true)
+	if self._lineImagePoint1 then
+		UISpriteSetMgr.instance:setV1a8FactorySprite(self._lineImagePoint1, showIconSetting.point, true)
 	end
 
-	if arg_22_0._lineImagePoint2 then
-		UISpriteSetMgr.instance:setV1a8FactorySprite(arg_22_0._lineImagePoint2, var_22_1.point, true)
+	if self._lineImagePoint2 then
+		UISpriteSetMgr.instance:setV1a8FactorySprite(self._lineImagePoint2, showIconSetting.point, true)
 	end
 end
 
-function var_0_0.reset(arg_23_0, arg_23_1)
-	TaskDispatcher.cancelTask(arg_23_0.playNodeUnlockAnimation, arg_23_0)
+function VersionActivity1_8FactoryMapNodeItem:reset(playAnim)
+	TaskDispatcher.cancelTask(self.playNodeUnlockAnimation, self)
 
-	if arg_23_1 then
-		arg_23_0:playNodeAnimation("close", "close", "lock")
+	if playAnim then
+		self:playNodeAnimation("close", "close", "lock")
 	end
 
-	arg_23_0.missionId = nil
-	arg_23_0.missionGroupId = nil
-	arg_23_0.go.name = "nodeitem"
-	arg_23_0._animator.speed = 1
+	self.missionId = nil
+	self.missionGroupId = nil
+	self.go.name = "nodeitem"
+	self._animator.speed = 1
 
-	gohelper.setActive(arg_23_0.go, false)
-	arg_23_0:destroyLine()
+	gohelper.setActive(self.go, false)
+	self:destroyLine()
 end
 
-function var_0_0.destroyLine(arg_24_0)
-	arg_24_0._lineAnimator = nil
-	arg_24_0._lineImagePoint1 = nil
-	arg_24_0._lineImagePoint2 = nil
+function VersionActivity1_8FactoryMapNodeItem:destroyLine()
+	self._lineAnimator = nil
+	self._lineImagePoint1 = nil
+	self._lineImagePoint2 = nil
 
-	if not gohelper.isNil(arg_24_0.lineGo) then
-		gohelper.destroy(arg_24_0.lineGo)
+	if not gohelper.isNil(self.lineGo) then
+		gohelper.destroy(self.lineGo)
 	end
 
-	arg_24_0.lineGo = nil
+	self.lineGo = nil
 
-	gohelper.setActive(arg_24_0._gounlockeff, false)
+	gohelper.setActive(self._gounlockeff, false)
 end
 
-function var_0_0.destroy(arg_25_0)
-	arg_25_0:removeEventListeners()
-	arg_25_0:reset()
-	gohelper.destroy(arg_25_0.go)
-	arg_25_0:__onDispose()
+function VersionActivity1_8FactoryMapNodeItem:destroy()
+	self:removeEventListeners()
+	self:reset()
+	gohelper.destroy(self.go)
+	self:__onDispose()
 end
 
-return var_0_0
+return VersionActivity1_8FactoryMapNodeItem

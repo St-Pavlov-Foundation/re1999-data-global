@@ -1,56 +1,58 @@
-﻿module("modules.logic.scene.room.preloadwork.RoomPreloadUIWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/preloadwork/RoomPreloadUIWork.lua
 
-local var_0_0 = class("RoomPreloadUIWork", BaseWork)
+module("modules.logic.scene.room.preloadwork.RoomPreloadUIWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:_getUIUrlList()
+local RoomPreloadUIWork = class("RoomPreloadUIWork", BaseWork)
 
-	arg_1_0._loader = MultiAbLoader.New()
+function RoomPreloadUIWork:onStart(context)
+	local uiUrlList = self:_getUIUrlList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		arg_1_0._loader:addPath(iter_1_1)
+	self._loader = MultiAbLoader.New()
+
+	for _, resPath in ipairs(uiUrlList) do
+		self._loader:addPath(resPath)
 	end
 
-	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:setLoadFailCallback(self._onPreloadOneFail)
+	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1:getAssetItemDict()
+function RoomPreloadUIWork:_onPreloadFinish(loader)
+	local assetItemDict = loader:getAssetItemDict()
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_0, iter_2_1)
+	for url, assetItem in pairs(assetItemDict) do
+		self.context.callback(self.context.callbackObj, url, assetItem)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
-	logError("RoomPreloadUIWork: 加载失败, url: " .. arg_3_2.ResPath)
+function RoomPreloadUIWork:_onPreloadOneFail(loader, assetItem)
+	logError("RoomPreloadUIWork: 加载失败, url: " .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function RoomPreloadUIWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_4_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._getUIUrlList(arg_5_0)
-	local var_5_0 = {}
+function RoomPreloadUIWork:_getUIUrlList()
+	local urlList = {}
 
 	if RoomController.instance:isDebugPackageMode() then
-		table.insert(var_5_0, RoomScenePreloader.ResDebugPackageUI)
+		table.insert(urlList, RoomScenePreloader.ResDebugPackageUI)
 	end
 
-	table.insert(var_5_0, RoomViewConfirm.prefabPath)
+	table.insert(urlList, RoomViewConfirm.prefabPath)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		arg_5_0.context.poolUIDict[iter_5_1] = true
+	for i, url in ipairs(urlList) do
+		self.context.poolUIDict[url] = true
 	end
 
-	return var_5_0
+	return urlList
 end
 
-return var_0_0
+return RoomPreloadUIWork

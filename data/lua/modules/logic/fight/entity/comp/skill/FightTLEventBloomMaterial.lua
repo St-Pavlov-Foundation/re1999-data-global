@@ -1,59 +1,61 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventBloomMaterial", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventBloomMaterial.lua
 
-local var_0_0 = class("FightTLEventBloomMaterial", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventBloomMaterial", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_3[1]
-	local var_1_1 = arg_1_3[2]
+local FightTLEventBloomMaterial = class("FightTLEventBloomMaterial", FightTimelineTrackItem)
 
-	if string.nilorempty(var_1_1) then
+function FightTLEventBloomMaterial:onTrackStart(fightStepData, duration, paramsArr)
+	local targetType = paramsArr[1]
+	local passName = paramsArr[2]
+
+	if string.nilorempty(passName) then
 		return
 	end
 
-	arg_1_0._passNameList = string.split(var_1_1, "#")
-	arg_1_0._targetEntitys = nil
+	self._passNameList = string.split(passName, "#")
+	self._targetEntitys = nil
 
-	if var_1_0 == "1" then
-		arg_1_0._targetEntitys = {}
+	if targetType == "1" then
+		self._targetEntitys = {}
 
-		table.insert(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.fromId))
-	elseif var_1_0 == "2" then
-		arg_1_0._targetEntitys = FightHelper.getSkillTargetEntitys(arg_1_1)
-	elseif var_1_0 == "3" then
-		arg_1_0._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
-	elseif var_1_0 == "4" then
-		arg_1_0._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
-	elseif var_1_0 == "5" then
-		arg_1_0._targetEntitys = FightHelper.getAllEntitys()
+		table.insert(self._targetEntitys, FightHelper.getEntity(fightStepData.fromId))
+	elseif targetType == "2" then
+		self._targetEntitys = FightHelper.getSkillTargetEntitys(fightStepData)
+	elseif targetType == "3" then
+		self._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+	elseif targetType == "4" then
+		self._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
+	elseif targetType == "5" then
+		self._targetEntitys = FightHelper.getAllEntitys()
 	end
 
-	arg_1_0:_setPassEnable(true)
+	self:_setPassEnable(true)
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	arg_2_0:_clear()
+function FightTLEventBloomMaterial:onTrackEnd()
+	self:_clear()
 end
 
-function var_0_0._setPassEnable(arg_3_0, arg_3_1)
-	local var_3_0 = GameSceneMgr.instance:getCurScene().bloom
+function FightTLEventBloomMaterial:_setPassEnable(enable)
+	local bloomMgr = FightGameMgr.bloomMgr
 
-	if arg_3_0._targetEntitys then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._targetEntitys) do
-			for iter_3_2, iter_3_3 in ipairs(arg_3_0._passNameList) do
-				var_3_0:setSingleEntityPass(iter_3_3, arg_3_1, iter_3_1, "timeline_bloom")
+	if self._targetEntitys then
+		for _, entity in ipairs(self._targetEntitys) do
+			for _, passName in ipairs(self._passNameList) do
+				bloomMgr:setSingleEntityPass(passName, enable, entity, "timeline_bloom")
 			end
 		end
 	end
 end
 
-function var_0_0._clear(arg_4_0)
-	arg_4_0:_setPassEnable(false)
+function FightTLEventBloomMaterial:_clear()
+	self:_setPassEnable(false)
 
-	arg_4_0._targetEntitys = nil
+	self._targetEntitys = nil
 end
 
-function var_0_0.onDestructor(arg_5_0)
-	arg_5_0:_clear()
+function FightTLEventBloomMaterial:onDestructor()
+	self:_clear()
 end
 
-return var_0_0
+return FightTLEventBloomMaterial

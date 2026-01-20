@@ -1,54 +1,56 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2HeartViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2HeartViewContainer.lua
 
-local var_0_0 = class("WeekWalk_2HeartViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk_2.view.WeekWalk_2HeartViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WeekWalk_2HeartViewContainer = class("WeekWalk_2HeartViewContainer", BaseViewContainer)
 
-	arg_1_0._heartView = WeekWalk_2HeartView.New()
+function WeekWalk_2HeartViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._heartView)
-	table.insert(var_1_0, WeekWalk_2Ending.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	self._heartView = WeekWalk_2HeartView.New()
 
-	return var_1_0
+	table.insert(views, self._heartView)
+	table.insert(views, WeekWalk_2Ending.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function WeekWalk_2HeartViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.WeekWalk)
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self._overrideClose, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0._overrideClose(arg_3_0)
+function WeekWalk_2HeartViewContainer:_overrideClose()
 	module_views_preloader.WeekWalk_2HeartLayerViewPreload(function()
-		arg_3_0._heartView._viewAnim:Play(UIAnimationName.Close, 0, 0)
-		TaskDispatcher.runDelay(arg_3_0._doClose, arg_3_0, 0.133)
+		self._heartView._viewAnim:Play(UIAnimationName.Close, 0, 0)
+		TaskDispatcher.runDelay(self._doClose, self, 0.133)
 	end)
 end
 
-function var_0_0._doClose(arg_5_0)
+function WeekWalk_2HeartViewContainer:_doClose()
 	if not ViewMgr.instance:isOpen(ViewName.WeekWalk_2HeartLayerView) then
 		WeekWalk_2Controller.instance:openWeekWalk_2HeartLayerView({
 			mapId = WeekWalk_2Model.instance:getCurMapId()
 		})
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onContainerDestroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._doClose, arg_6_0)
+function WeekWalk_2HeartViewContainer:onContainerDestroy()
+	TaskDispatcher.cancelTask(self._doClose, self)
 end
 
-return var_0_0
+return WeekWalk_2HeartViewContainer

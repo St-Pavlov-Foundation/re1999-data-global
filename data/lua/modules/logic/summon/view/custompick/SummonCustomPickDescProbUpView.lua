@@ -1,251 +1,252 @@
-﻿module("modules.logic.summon.view.custompick.SummonCustomPickDescProbUpView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/custompick/SummonCustomPickDescProbUpView.lua
 
-local var_0_0 = class("SummonCustomPickDescProbUpView", BaseView)
+module("modules.logic.summon.view.custompick.SummonCustomPickDescProbUpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem")
-	arg_1_0._godesctitle = gohelper.findChild(arg_1_0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem/#go_desctitle")
+local SummonCustomPickDescProbUpView = class("SummonCustomPickDescProbUpView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonCustomPickDescProbUpView:onInitView()
+	self._goheroitem = gohelper.findChild(self.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem")
+	self._godesctitle = gohelper.findChild(self.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem/#go_desctitle")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SummonCustomPickDescProbUpView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SummonCustomPickDescProbUpView:removeEvents()
 	return
 end
 
-local var_0_1 = 5
-local var_0_2 = 5
+local MAX_RARE_LV = 5
+local SSR_RARE_LV = 5
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._scrollroot = gohelper.findChildScrollRect(arg_4_0.viewGO, "infoScroll")
-	arg_4_0._goscrollcontent = gohelper.findChild(arg_4_0.viewGO, "infoScroll/Viewport/#go_Content")
-	arg_4_0._rectscrollcontent = arg_4_0._goscrollcontent.transform
-	arg_4_0._probUpItemMap = {}
+function SummonCustomPickDescProbUpView:_editableInitView()
+	self._scrollroot = gohelper.findChildScrollRect(self.viewGO, "infoScroll")
+	self._goscrollcontent = gohelper.findChild(self.viewGO, "infoScroll/Viewport/#go_Content")
+	self._rectscrollcontent = self._goscrollcontent.transform
+	self._probUpItemMap = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.delayJumpToLuckyBag, arg_5_0)
+function SummonCustomPickDescProbUpView:onDestroyView()
+	TaskDispatcher.cancelTask(self.delayJumpToLuckyBag, self)
 
-	if arg_5_0._probUpItemMap then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._probUpItemMap) do
-			for iter_5_2, iter_5_3 in pairs(iter_5_1.heroIcons) do
-				iter_5_3.simageHero:UnLoadImage()
-				iter_5_3.simageHero2:UnLoadImage()
-				iter_5_3.btn:RemoveClickListener()
+	if self._probUpItemMap then
+		for _, probUpItem in pairs(self._probUpItemMap) do
+			for __, heroIcon in pairs(probUpItem.heroIcons) do
+				heroIcon.simageHero:UnLoadImage()
+				heroIcon.simageHero2:UnLoadImage()
+				heroIcon.btn:RemoveClickListener()
 			end
 
-			for iter_5_4, iter_5_5 in pairs(iter_5_1.equipIcons) do
-				iter_5_5.simageEquip:UnLoadImage()
-				iter_5_5.btn:RemoveClickListener()
+			for __, equipIcon in pairs(probUpItem.equipIcons) do
+				equipIcon.simageEquip:UnLoadImage()
+				equipIcon.btn:RemoveClickListener()
 			end
 		end
 
-		arg_5_0._probUpItemMap = nil
+		self._probUpItemMap = nil
 	end
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:onOpen()
+function SummonCustomPickDescProbUpView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._poolParam = SummonController.instance:getPoolInfo()
-	arg_7_0._poolDetailId = arg_7_0._poolParam.poolDetailId
-	arg_7_0._poolId = arg_7_0._poolParam.poolId
+function SummonCustomPickDescProbUpView:onOpen()
+	self._poolParam = SummonController.instance:getPoolInfo()
+	self._poolDetailId = self._poolParam.poolDetailId
+	self._poolId = self._poolParam.poolId
 
-	local var_7_0 = SummonConfig.instance:getSummonPool(arg_7_0._poolId)
+	local poolCo = SummonConfig.instance:getSummonPool(self._poolId)
 
-	arg_7_0._resultType = SummonMainModel.getResultType(var_7_0)
-	arg_7_0._poolType = var_7_0.type
+	self._resultType = SummonMainModel.getResultType(poolCo)
+	self._poolType = poolCo.type
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0._resultIds = SummonPoolDetailCategoryListModel.buildCustomPickDict(arg_8_0._poolId)
+function SummonCustomPickDescProbUpView:refreshUI()
+	self._resultIds = SummonPoolDetailCategoryListModel.buildCustomPickDict(self._poolId)
 
-	arg_8_0:refreshPropUpAD()
+	self:refreshPropUpAD()
 end
 
-function var_0_0.refreshPropUpAD(arg_9_0)
-	local var_9_0 = SummonConfig.instance:getSummonPool(arg_9_0._poolId)
-	local var_9_1 = arg_9_0:getProbUpItem(1)
+function SummonCustomPickDescProbUpView:refreshPropUpAD()
+	local poolCo = SummonConfig.instance:getSummonPool(self._poolId)
+	local item = self:getProbUpItem(1)
 
-	gohelper.setActive(var_9_1.go, true)
-	arg_9_0:applyRareStar(var_9_1, SummonEnum.CustomPickRare)
-	arg_9_0:refreshProbIcons(var_9_1, arg_9_0._resultIds)
+	gohelper.setActive(item.go, true)
+	self:applyRareStar(item, SummonEnum.CustomPickRare)
+	self:refreshProbIcons(item, self._resultIds)
 
-	local var_9_2, var_9_3, var_9_4 = SummonMainModel.instance:getCustomPickProbability(arg_9_0._poolId)
-	local var_9_5 = SummonEnum.CustomPickRare + 1
-	local var_9_6 = luaLang(var_9_3 ~= 0 and "summonpooldetail_up_probability_total" or "p_summonpooldetail_up_probability")
+	local probability, totalProbability, onlyOne = SummonMainModel.instance:getCustomPickProbability(self._poolId)
+	local rare = SummonEnum.CustomPickRare + 1
+	local desc = luaLang(totalProbability ~= 0 and "summonpooldetail_up_probability_total" or "p_summonpooldetail_up_probability")
 
-	gohelper.setActive(var_9_1.txtProbability, var_9_3 == 0 and not var_9_4)
+	gohelper.setActive(item.txtProbability, totalProbability == 0 and not onlyOne)
 
-	if var_9_3 ~= 0 then
-		var_9_1.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_9_6, var_9_5, var_9_2, var_9_3 / 10)
-	elseif var_9_4 then
-		local var_9_7 = luaLang("summonpooldetail_up_probability_StrongCustomOnePick")
-
-		var_9_1.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_9_7, var_9_5, var_9_2)
+	if totalProbability ~= 0 then
+		item.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangThreeParam(desc, rare, probability, totalProbability / 10)
+	elseif onlyOne then
+		desc = luaLang("summonpooldetail_up_probability_StrongCustomOnePick")
+		item.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLangTwoParam(desc, rare, probability)
 	else
-		var_9_1.txtProbability.text = ""
+		item.txtProbability.text = ""
 
-		local var_9_8 = SummonMainModel.instance:getCustomPickProbability(arg_9_0._poolId)
+		local p = SummonMainModel.instance:getCustomPickProbability(self._poolId)
 
-		var_9_1.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_summonpooldetail_up_probability"), {
+		item.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_summonpooldetail_up_probability"), {
 			SummonEnum.CustomPickRare + 1,
-			var_9_8
+			p
 		})
 	end
 end
 
-function var_0_0.getProbUpItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._probUpItemMap[arg_10_1]
+function SummonCustomPickDescProbUpView:getProbUpItem(index)
+	local item = self._probUpItemMap[index]
 
-	if not var_10_0 then
-		var_10_0 = arg_10_0:getUserDataTb_()
-		var_10_0.heroIcons = {}
-		var_10_0.equipIcons = {}
+	if not item then
+		item = self:getUserDataTb_()
+		item.heroIcons = {}
+		item.equipIcons = {}
 
-		local var_10_1 = gohelper.clone(arg_10_0._godesctitle, arg_10_0._goheroitem, "prob_up_item_" .. tostring(arg_10_1))
+		local itemGo = gohelper.clone(self._godesctitle, self._goheroitem, "prob_up_item_" .. tostring(index))
 
-		var_10_0.go = var_10_1
-		var_10_0.starList = arg_10_0:getUserDataTb_()
-		var_10_0.iconContainerGo = gohelper.findChild(var_10_1, "heroshowlist")
-		var_10_0.iconEquipContainerGo = gohelper.findChild(var_10_1, "equipshowlist")
-		var_10_0.iconTemplateGo = gohelper.findChild(var_10_1, "heroshowlist/summonpooldetailheroitem")
-		var_10_0.iconEquipTemplateGo = gohelper.findChild(var_10_1, "equipshowlist/summonpooldetailequipitem")
-		var_10_0.starContainerGo = gohelper.findChild(var_10_1, "#go_starList")
+		item.go = itemGo
+		item.starList = self:getUserDataTb_()
+		item.iconContainerGo = gohelper.findChild(itemGo, "heroshowlist")
+		item.iconEquipContainerGo = gohelper.findChild(itemGo, "equipshowlist")
+		item.iconTemplateGo = gohelper.findChild(itemGo, "heroshowlist/summonpooldetailheroitem")
+		item.iconEquipTemplateGo = gohelper.findChild(itemGo, "equipshowlist/summonpooldetailequipitem")
+		item.starContainerGo = gohelper.findChild(itemGo, "#go_starList")
 
-		for iter_10_0 = 1, var_0_1 + 1 do
-			var_10_0.starList[iter_10_0] = gohelper.findChild(var_10_0.starContainerGo, "star" .. tostring(iter_10_0))
+		for i = 1, MAX_RARE_LV + 1 do
+			item.starList[i] = gohelper.findChild(item.starContainerGo, "star" .. tostring(i))
 		end
 
-		var_10_0.txtProbability = gohelper.findChildText(var_10_0.starContainerGo, "probability/#txt_probability")
-		var_10_0.txtProbabilityLabel = gohelper.findChildText(var_10_0.starContainerGo, "probability")
-		arg_10_0._probUpItemMap[arg_10_1] = var_10_0
+		item.txtProbability = gohelper.findChildText(item.starContainerGo, "probability/#txt_probability")
+		item.txtProbabilityLabel = gohelper.findChildText(item.starContainerGo, "probability")
+		self._probUpItemMap[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.applyRareStar(arg_11_0, arg_11_1, arg_11_2)
-	for iter_11_0 = 1, var_0_1 + 1 do
-		gohelper.setActive(arg_11_1.starList[iter_11_0], iter_11_0 <= arg_11_2 + 1)
-	end
-end
-
-function var_0_0.refreshProbIcons(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._resultType == SummonEnum.ResultType.Char then
-		arg_12_0:refreshHeroProbIcons(arg_12_1, arg_12_2)
-	end
-
-	gohelper.setActive(arg_12_1.iconContainerGo, arg_12_0._resultType == SummonEnum.ResultType.Char)
-	gohelper.setActive(arg_12_1.iconEquipContainerGo, arg_12_0._resultType == SummonEnum.ResultType.Equip)
-end
-
-function var_0_0.refreshHeroProbIcons(arg_13_0, arg_13_1, arg_13_2)
-	for iter_13_0 = 1, SummonCustomPickModel.instance:getMaxSelectCount(arg_13_0._poolId) do
-		local var_13_0 = arg_13_2[iter_13_0]
-		local var_13_1 = arg_13_0:getProbUpHeroIconItem(arg_13_1, iter_13_0)
-
-		gohelper.setActive(var_13_1.go, true)
-		arg_13_0:refreshProbUpHeroIconItem(var_13_0, var_13_1, iter_13_0)
+function SummonCustomPickDescProbUpView:applyRareStar(item, rare)
+	for i = 1, MAX_RARE_LV + 1 do
+		gohelper.setActive(item.starList[i], i <= rare + 1)
 	end
 end
 
-function var_0_0.getProbUpHeroIconItem(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_1.heroIcons[arg_14_2]
-
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-
-		local var_14_1 = gohelper.clone(arg_14_1.iconTemplateGo, arg_14_1.iconContainerGo, "prob_up_item")
-
-		var_14_0.go = var_14_1
-		var_14_0.imageRare = gohelper.findChildImage(var_14_1, "image_rare")
-		var_14_0.imageCareer = gohelper.findChildImage(var_14_1, "image_career")
-		var_14_0.simageHero = gohelper.findChildSingleImage(var_14_1, "simage_hero")
-		var_14_0.imageNameEn = gohelper.findChildImage(var_14_1, "image_nameen")
-		var_14_0.txtNameCn = gohelper.findChildText(var_14_1, "txt_namecn")
-		var_14_0.simageHero2 = gohelper.findChildSingleImage(var_14_1, "simage_hero2")
-		var_14_0.data = {}
-		var_14_0.btn = gohelper.findChildButtonWithAudio(var_14_1, "simage_hero")
-
-		var_14_0.btn:AddClickListener(arg_14_0.onClickHeroItem, arg_14_0, var_14_0.data)
-
-		arg_14_1.heroIcons[arg_14_2] = var_14_0
+function SummonCustomPickDescProbUpView:refreshProbIcons(probUpItem, idList)
+	if self._resultType == SummonEnum.ResultType.Char then
+		self:refreshHeroProbIcons(probUpItem, idList)
 	end
 
-	return var_14_0
+	gohelper.setActive(probUpItem.iconContainerGo, self._resultType == SummonEnum.ResultType.Char)
+	gohelper.setActive(probUpItem.iconEquipContainerGo, self._resultType == SummonEnum.ResultType.Equip)
 end
 
-var_0_0.EmptyHeroIconList = {
+function SummonCustomPickDescProbUpView:refreshHeroProbIcons(probUpItem, idList)
+	for index = 1, SummonCustomPickModel.instance:getMaxSelectCount(self._poolId) do
+		local heroId = idList[index]
+		local item = self:getProbUpHeroIconItem(probUpItem, index)
+
+		gohelper.setActive(item.go, true)
+		self:refreshProbUpHeroIconItem(heroId, item, index)
+	end
+end
+
+function SummonCustomPickDescProbUpView:getProbUpHeroIconItem(probUpItem, index)
+	local item = probUpItem.heroIcons[index]
+
+	if not item then
+		item = self:getUserDataTb_()
+
+		local itemGo = gohelper.clone(probUpItem.iconTemplateGo, probUpItem.iconContainerGo, "prob_up_item")
+
+		item.go = itemGo
+		item.imageRare = gohelper.findChildImage(itemGo, "image_rare")
+		item.imageCareer = gohelper.findChildImage(itemGo, "image_career")
+		item.simageHero = gohelper.findChildSingleImage(itemGo, "simage_hero")
+		item.imageNameEn = gohelper.findChildImage(itemGo, "image_nameen")
+		item.txtNameCn = gohelper.findChildText(itemGo, "txt_namecn")
+		item.simageHero2 = gohelper.findChildSingleImage(itemGo, "simage_hero2")
+		item.data = {}
+		item.btn = gohelper.findChildButtonWithAudio(itemGo, "simage_hero")
+
+		item.btn:AddClickListener(self.onClickHeroItem, self, item.data)
+
+		probUpItem.heroIcons[index] = item
+	end
+
+	return item
+end
+
+SummonCustomPickDescProbUpView.EmptyHeroIconList = {
 	"300301_1",
 	"302501_1"
 }
-var_0_0.PickOneEmptyHeroIcon = "306601_1"
+SummonCustomPickDescProbUpView.PickOneEmptyHeroIcon = "306601_1"
 
-function var_0_0.refreshProbUpHeroIconItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_1 then
-		gohelper.setActive(arg_15_2.imageRare, true)
-		gohelper.setActive(arg_15_2.imageCareer, true)
-		gohelper.setActive(arg_15_2.txtNameCn, true)
-		gohelper.setActive(arg_15_2.imageNameEn, true)
-		gohelper.setActive(arg_15_2.simageHero2, false)
+function SummonCustomPickDescProbUpView:refreshProbUpHeroIconItem(heroId, item, index)
+	if heroId then
+		gohelper.setActive(item.imageRare, true)
+		gohelper.setActive(item.imageCareer, true)
+		gohelper.setActive(item.txtNameCn, true)
+		gohelper.setActive(item.imageNameEn, true)
+		gohelper.setActive(item.simageHero2, false)
 
-		local var_15_0 = HeroConfig.instance:getHeroCO(arg_15_1)
+		local heroCo = HeroConfig.instance:getHeroCO(heroId)
 
-		UISpriteSetMgr.instance:setSummonSprite(arg_15_2.imageRare, var_15_0.rare < var_0_2 and "bg_choukahuang" or "bg_choukaju")
-		UISpriteSetMgr.instance:setCommonSprite(arg_15_2.imageCareer, "lssx_" .. tostring(var_15_0.career))
-		arg_15_2.simageHero:LoadImage(ResUrl.getHandbookheroIcon(var_15_0.skinId))
+		UISpriteSetMgr.instance:setSummonSprite(item.imageRare, heroCo.rare < SSR_RARE_LV and "bg_choukahuang" or "bg_choukaju")
+		UISpriteSetMgr.instance:setCommonSprite(item.imageCareer, "lssx_" .. tostring(heroCo.career))
+		item.simageHero:LoadImage(ResUrl.getHandbookheroIcon(heroCo.skinId))
 
-		arg_15_2.data.clickId = arg_15_1
-		arg_15_2.txtNameCn.text = var_15_0.name
+		item.data.clickId = heroId
+		item.txtNameCn.text = heroCo.name
 	else
-		gohelper.setActive(arg_15_2.imageRare, false)
-		gohelper.setActive(arg_15_2.imageCareer, false)
-		gohelper.setActive(arg_15_2.txtNameCn, false)
-		gohelper.setActive(arg_15_2.imageNameEn, false)
+		gohelper.setActive(item.imageRare, false)
+		gohelper.setActive(item.imageCareer, false)
+		gohelper.setActive(item.txtNameCn, false)
+		gohelper.setActive(item.imageNameEn, false)
 
-		local var_15_1 = SummonCustomPickModel.instance:getMaxSelectCount(arg_15_0._poolId)
-		local var_15_2 = var_15_1 == 1 or var_15_1 == 3
+		local maxSelectCount = SummonCustomPickModel.instance:getMaxSelectCount(self._poolId)
+		local useSimageHeroOne = maxSelectCount == 1 or maxSelectCount == 3
 
-		gohelper.setActive(arg_15_2.simageHero, not var_15_2)
-		gohelper.setActive(arg_15_2.simageHero2, var_15_2)
+		gohelper.setActive(item.simageHero, not useSimageHeroOne)
+		gohelper.setActive(item.simageHero2, useSimageHeroOne)
 
-		local var_15_3 = var_0_0.EmptyHeroIconList[arg_15_3] or var_0_0.EmptyHeroIconList[1]
+		local picName = SummonCustomPickDescProbUpView.EmptyHeroIconList[index] or SummonCustomPickDescProbUpView.EmptyHeroIconList[1]
 
-		if var_15_2 then
-			var_15_3 = var_0_0.PickOneEmptyHeroIcon
+		if useSimageHeroOne then
+			picName = SummonCustomPickDescProbUpView.PickOneEmptyHeroIcon
 
-			arg_15_2.simageHero2:LoadImage(ResUrl.getHandbookheroIcon(var_15_3), arg_15_0.handleLoadedImage, {
-				imgTransform = arg_15_2.simageHero2.gameObject.transform
+			item.simageHero2:LoadImage(ResUrl.getHandbookheroIcon(picName), self.handleLoadedImage, {
+				imgTransform = item.simageHero2.gameObject.transform
 			})
 		else
-			arg_15_2.simageHero:LoadImage(ResUrl.getHandbookheroIcon(var_15_3))
+			item.simageHero:LoadImage(ResUrl.getHandbookheroIcon(picName))
 		end
 	end
 end
 
-function var_0_0.handleLoadedImage(arg_16_0)
-	local var_16_0 = arg_16_0.imgTransform
+function SummonCustomPickDescProbUpView.handleLoadedImage(param)
+	local imgTr = param.imgTransform
 
-	ZProj.UGUIHelper.SetImageSize(var_16_0.gameObject)
+	ZProj.UGUIHelper.SetImageSize(imgTr.gameObject)
 end
 
-function var_0_0.onClickHeroItem(arg_17_0, arg_17_1)
-	if arg_17_1.clickId ~= nil then
+function SummonCustomPickDescProbUpView:onClickHeroItem(item)
+	if item.clickId ~= nil then
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-			heroId = arg_17_1.clickId
+			heroId = item.clickId
 		})
 	end
 end
 
-return var_0_0
+return SummonCustomPickDescProbUpView

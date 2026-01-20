@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_summon_pool", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_summon_pool.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_summon_pool", package.seeall)
+
+local lua_summon_pool = {}
+local fields = {
 	awardTime = 25,
 	cost1 = 15,
 	guaranteeSRParam = 24,
@@ -40,15 +42,15 @@ local var_0_1 = {
 	bannerFlag = 12,
 	customClz = 14
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	nameCn = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_summon_pool.onLoad(json)
+	lua_summon_pool.configList, lua_summon_pool.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_summon_pool

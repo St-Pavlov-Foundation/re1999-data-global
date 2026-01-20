@@ -1,116 +1,120 @@
-﻿module("modules.logic.rouge.view.RougeIllustrationDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeIllustrationDetailView.lua
 
-local var_0_0 = class("RougeIllustrationDetailView", BaseView)
+module("modules.logic.rouge.view.RougeIllustrationDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageFrameBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FrameBG")
-	arg_1_0._simageBottomBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Bottom/#simage_BottomBG")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#txt_Name")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#txt_Descr")
-	arg_1_0._txtPage = gohelper.findChildText(arg_1_0.viewGO, "Bottom/#txt_Page")
-	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Left")
-	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Right")
-	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
+local RougeIllustrationDetailView = class("RougeIllustrationDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeIllustrationDetailView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageFrameBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FrameBG")
+	self._simageBottomBG = gohelper.findChildSingleImage(self.viewGO, "Bottom/#simage_BottomBG")
+	self._txtName = gohelper.findChildText(self.viewGO, "Bottom/#txt_Name")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Bottom/#txt_Descr")
+	self._txtPage = gohelper.findChildText(self.viewGO, "Bottom/#txt_Page")
+	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Left")
+	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Right")
+	self._goLeftTop = gohelper.findChild(self.viewGO, "#go_LeftTop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
-	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
+function RougeIllustrationDetailView:addEvents()
+	self._btnLeft:AddClickListener(self._btnLeftOnClick, self)
+	self._btnRight:AddClickListener(self._btnRightOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnLeft:RemoveClickListener()
-	arg_3_0._btnRight:RemoveClickListener()
+function RougeIllustrationDetailView:removeEvents()
+	self._btnLeft:RemoveClickListener()
+	self._btnRight:RemoveClickListener()
 end
 
-function var_0_0._btnLeftOnClick(arg_4_0)
-	arg_4_0._index = arg_4_0._index - 1
+function RougeIllustrationDetailView:_btnLeftOnClick()
+	self._index = self._index - 1
 
-	if arg_4_0._index < 1 then
-		arg_4_0._index = arg_4_0._num
+	if self._index < 1 then
+		self._index = self._num
 	end
 
-	arg_4_0:_changePage()
+	self:_changePage()
 end
 
-function var_0_0._btnRightOnClick(arg_5_0)
-	arg_5_0._index = arg_5_0._index + 1
+function RougeIllustrationDetailView:_btnRightOnClick()
+	self._index = self._index + 1
 
-	if arg_5_0._index > arg_5_0._num then
-		arg_5_0._index = 1
+	if self._index > self._num then
+		self._index = 1
 	end
 
-	arg_5_0:_changePage()
+	self:_changePage()
 end
 
-function var_0_0._changePage(arg_6_0)
-	arg_6_0._aniamtor:Play("switch", 0, 0)
-	TaskDispatcher.cancelTask(arg_6_0._delayUpdateInfo, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._delayUpdateInfo, arg_6_0, 0.3)
+function RougeIllustrationDetailView:_changePage()
+	self._aniamtor:Play("switch", 0, 0)
+	TaskDispatcher.cancelTask(self._delayUpdateInfo, self)
+	TaskDispatcher.runDelay(self._delayUpdateInfo, self, 0.3)
 end
 
-function var_0_0._delayUpdateInfo(arg_7_0)
-	arg_7_0:_updateInfo(arg_7_0._list[arg_7_0._index])
+function RougeIllustrationDetailView:_delayUpdateInfo()
+	self:_updateInfo(self._list[self._index])
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._txtNameEn = gohelper.findChildText(arg_8_0.viewGO, "Bottom/#txt_Name/txt_NameEn")
-	arg_8_0._aniamtor = gohelper.onceAddComponent(arg_8_0.viewGO, gohelper.Type_Animator)
+function RougeIllustrationDetailView:_editableInitView()
+	self._txtNameEn = gohelper.findChildText(self.viewGO, "Bottom/#txt_Name/txt_NameEn")
+	self._aniamtor = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 end
 
-function var_0_0._initIllustrationList(arg_9_0)
-	local var_9_0 = RougeFavoriteConfig.instance:getIllustrationList()
+function RougeIllustrationDetailView:_initIllustrationList()
+	local list = RougeFavoriteConfig.instance:getIllustrationList()
 
-	arg_9_0._list = {}
+	self._list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if RougeOutsideModel.instance:passedAnyEventId(iter_9_1.eventIdList) then
-			table.insert(arg_9_0._list, iter_9_1.config)
+	for i, v in ipairs(list) do
+		if RougeOutsideModel.instance:passedAnyEventId(v.eventIdList) then
+			table.insert(self._list, v.config)
 		end
 	end
 
-	arg_9_0._num = #arg_9_0._list
+	self._num = #self._list
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_initIllustrationList()
+function RougeIllustrationDetailView:onOpen()
+	self:_initIllustrationList()
 
-	local var_10_0 = arg_10_0.viewParam
+	local mo = self.viewParam
 
-	arg_10_0._index = tabletool.indexOf(arg_10_0._list, var_10_0) or 1
+	self._index = tabletool.indexOf(self._list, mo) or 1
 
-	arg_10_0:_updateInfo(var_10_0)
+	self:_updateInfo(mo)
 end
 
-function var_0_0._updateInfo(arg_11_0, arg_11_1)
-	arg_11_0._mo = arg_11_1
-	arg_11_0._txtName.text = arg_11_0._mo.name
-	arg_11_0._txtNameEn.text = arg_11_0._mo.nameEn
-	arg_11_0._txtDescr.text = arg_11_0._mo.desc
-	arg_11_0._txtPage.text = string.format("%s/%s", arg_11_0._index, arg_11_0._num)
+function RougeIllustrationDetailView:_updateInfo(mo)
+	self._mo = mo
+	self._txtName.text = self._mo.name
+	self._txtNameEn.text = self._mo.nameEn
+	self._txtDescr.text = self._mo.desc
+	self._txtPage.text = string.format("%s/%s", self._index, self._num)
 
-	if not string.nilorempty(arg_11_0._mo.fullImage) then
-		arg_11_0._simageFullBG:LoadImage(arg_11_0._mo.fullImage)
+	if not string.nilorempty(self._mo.fullImage) then
+		self._simageFullBG:LoadImage(self._mo.fullImage)
 	end
 
-	if RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Illustration, arg_11_0._mo.id) ~= nil then
-		local var_11_0 = RougeOutsideModel.instance:season()
+	local showNewFlag = RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Illustration, self._mo.id) ~= nil
 
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_11_0, RougeEnum.FavoriteType.Illustration, arg_11_0._mo.id)
+	if showNewFlag then
+		local season = RougeOutsideModel.instance:season()
+
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(season, RougeEnum.FavoriteType.Illustration, self._mo.id)
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function RougeIllustrationDetailView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._delayUpdateInfo, arg_13_0)
+function RougeIllustrationDetailView:onDestroyView()
+	TaskDispatcher.cancelTask(self._delayUpdateInfo, self)
 end
 
-return var_0_0
+return RougeIllustrationDetailView

@@ -1,28 +1,30 @@
-﻿module("modules.logic.room.define.RoomRecordEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomRecordEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomRecordEnum", package.seeall)
 
-var_0_0.View = {
+local RoomRecordEnum = _M
+
+RoomRecordEnum.View = {
 	HandBook = 3,
 	Task = 1,
 	Log = 2
 }
-var_0_0.LogType = {
+RoomRecordEnum.LogType = {
 	Normal = 2,
 	Custom = 3,
 	Time = 4,
 	Speical = 1
 }
-var_0_0.Dir = {
+RoomRecordEnum.Dir = {
 	Left = 1,
 	Right = 2
 }
-var_0_0.Relation = {
+RoomRecordEnum.Relation = {
 	Close = 1,
 	Both = 3,
 	Estrange = 2
 }
-var_0_0.AnimName = {
+RoomRecordEnum.AnimName = {
 	Log2Task = "2to1",
 	HandBook2Log = "3to2",
 	HandBook2Task = "3to1",
@@ -30,6 +32,6 @@ var_0_0.AnimName = {
 	Log2HandBook = "2to3",
 	Task2HandBook = "1to3"
 }
-var_0_0.AnimTime = 0.16
+RoomRecordEnum.AnimTime = 0.16
 
-return var_0_0
+return RoomRecordEnum

@@ -1,79 +1,81 @@
-﻿module("modules.logic.survival.model.handbook.SurvivalHandbookModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/handbook/SurvivalHandbookModel.lua
 
-local var_0_0 = class("SurvivalHandbookModel", BaseModel)
+module("modules.logic.survival.model.handbook.SurvivalHandbookModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.handbookMoDic = nil
-	arg_1_0.subTypeMoDic = {}
-	arg_1_0.resultMos = {}
-	arg_1_0.progressDic = {}
-	arg_1_0.eventTypes = {}
+local SurvivalHandbookModel = class("SurvivalHandbookModel", BaseModel)
 
-	for iter_1_0, iter_1_1 in pairs(SurvivalEnum.HandBookEventSubType) do
-		table.insert(arg_1_0.eventTypes, iter_1_1)
+function SurvivalHandbookModel:onInit()
+	self.handbookMoDic = nil
+	self.subTypeMoDic = {}
+	self.resultMos = {}
+	self.progressDic = {}
+	self.eventTypes = {}
+
+	for i, v in pairs(SurvivalEnum.HandBookEventSubType) do
+		table.insert(self.eventTypes, v)
 	end
 
-	arg_1_0.amplifierTypes = {}
+	self.amplifierTypes = {}
 
-	for iter_1_2, iter_1_3 in pairs(SurvivalEnum.HandBookAmplifierSubType) do
-		table.insert(arg_1_0.amplifierTypes, iter_1_3)
+	for i, v in pairs(SurvivalEnum.HandBookAmplifierSubType) do
+		table.insert(self.amplifierTypes, v)
 	end
 
-	arg_1_0.npcTypes = {}
+	self.npcTypes = {}
 
-	for iter_1_4, iter_1_5 in pairs(SurvivalEnum.HandBookNpcSubType) do
-		table.insert(arg_1_0.npcTypes, iter_1_5)
+	for i, v in pairs(SurvivalEnum.HandBookNpcSubType) do
+		table.insert(self.npcTypes, v)
 	end
 
-	local var_1_0 = SurvivalEnum.HandBookAmplifierSubType
-	local var_1_1 = SurvivalEnum.HandBookNpcSubType
+	local HandBookAmplifierSubType = SurvivalEnum.HandBookAmplifierSubType
+	local HandBookNpcSubType = SurvivalEnum.HandBookNpcSubType
 
-	arg_1_0.handbookTypeCfg = {
+	self.handbookTypeCfg = {
 		[SurvivalEnum.HandBookType.Amplifier] = {
-			[var_1_0.Common] = {
+			[HandBookAmplifierSubType.Common] = {
 				tabImage = "99_1",
 				tabTitle = "p_survivalhandbookview_txt_tab_Common"
 			},
-			[var_1_0.ElectricEnergy] = {
+			[HandBookAmplifierSubType.ElectricEnergy] = {
 				tabImage = "101_1",
 				tabTitle = "p_survivalhandbookview_txt_tab_ElectricEnergy"
 			},
-			[var_1_0.Revelation] = {
+			[HandBookAmplifierSubType.Revelation] = {
 				tabImage = "102_1",
 				tabTitle = "p_survivalhandbookview_txt_tab_Revelation"
 			},
-			[var_1_0.Bloom] = {
+			[HandBookAmplifierSubType.Bloom] = {
 				tabImage = "103_1",
 				tabTitle = "p_survivalhandbookview_txt_tab_Bloom"
 			},
-			[var_1_0.ExtraActions] = {
+			[HandBookAmplifierSubType.ExtraActions] = {
 				tabImage = "104_1",
 				tabTitle = "p_survivalhandbookview_txt_tab_ExtraActions"
 			},
-			[var_1_0.Ceremony] = {
+			[HandBookAmplifierSubType.Ceremony] = {
 				tabImage = "105_1",
 				tabTitle = "p_survivalhandbookview_txt_tab_Ceremony"
 			},
-			[var_1_0.StateAbnormal] = {
+			[HandBookAmplifierSubType.StateAbnormal] = {
 				tabImage = "106_1",
 				tabTitle = "Survival_HandBookTitle_StateAbnormal"
 			},
 			RedDot = RedDotEnum.DotNode.SurvivalHandbookAmplifier
 		},
 		[SurvivalEnum.HandBookType.Npc] = {
-			[var_1_1.People] = {
+			[HandBookNpcSubType.People] = {
 				tabImage = "survival_handbook_npctabicon4",
 				tabTitle = "p_survivalhandbookview_txt_tab_People"
 			},
-			[var_1_1.Laplace] = {
+			[HandBookNpcSubType.Laplace] = {
 				tabImage = "survival_handbook_npctabicon2",
 				tabTitle = "p_survivalhandbookview_txt_tab_Laplace"
 			},
-			[var_1_1.Foundation] = {
+			[HandBookNpcSubType.Foundation] = {
 				tabImage = "survival_handbook_npctabicon1",
 				tabTitle = "p_survivalhandbookview_txt_tab_Foundation"
 			},
-			[var_1_1.Zeno] = {
+			[HandBookNpcSubType.Zeno] = {
 				tabImage = "survival_handbook_npctabicon3",
 				tabTitle = "p_survivalhandbookview_txt_tab_Zeno"
 			},
@@ -88,387 +90,402 @@ function var_0_0.onInit(arg_1_0)
 	}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.handbookMoDic = nil
-	arg_2_0.subTypeMoDic = {}
-	arg_2_0.resultMos = {}
+function SurvivalHandbookModel:reInit()
+	self.handbookMoDic = nil
+	self.subTypeMoDic = {}
+	self.resultMos = {}
 end
 
-function var_0_0.setSurvivalHandbookBox(arg_3_0, arg_3_1)
-	arg_3_0:_parseBasicData()
+function SurvivalHandbookModel:setSurvivalHandbookBox(survivalHandbookBox)
+	self:_parseBasicData()
 
-	arg_3_0.cellMoDic = {}
+	self.cellMoDic = {}
 
-	local var_3_0 = {}
+	local unlock = {}
 
-	if arg_3_1 then
-		local var_3_1 = arg_3_1.handbook
+	if survivalHandbookBox then
+		local list = survivalHandbookBox.handbook
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-			local var_3_2 = iter_3_1.id
-			local var_3_3 = iter_3_1.isNew
-			local var_3_4 = arg_3_0.handbookMoDic[var_3_2]
+		for i, handbook in ipairs(list) do
+			local id = handbook.id
+			local isNew = handbook.isNew
+			local mo = self.handbookMoDic[id]
 
-			if var_3_4 then
-				local var_3_5 = true
+			if mo then
+				local isValid = true
 
-				if var_3_4:getType() == SurvivalEnum.HandBookType.Amplifier and iter_3_1.param then
-					local var_3_6 = lua_survival_equip.configDict[iter_3_1.param]
+				if mo:getType() == SurvivalEnum.HandBookType.Amplifier and handbook.param then
+					local equipCo = lua_survival_equip.configDict[handbook.param]
 
-					if not var_3_4:isLinkGroup(var_3_6.group) then
-						var_3_5 = false
+					if not mo:isLinkGroup(equipCo.group) then
+						isValid = false
 					end
 				end
 
-				if var_3_5 then
-					var_3_4:setCellCfgId(iter_3_1.param)
-					var_3_4:setIsNew(var_3_3)
+				if isValid then
+					mo:setCellCfgId(handbook.param)
+					mo:setIsNew(isNew)
 
-					var_3_0[var_3_2] = true
+					unlock[id] = true
 
-					if iter_3_1.param then
-						arg_3_0.cellMoDic[iter_3_1.param] = var_3_4
+					if handbook.param then
+						self.cellMoDic[handbook.param] = mo
 					end
 				end
 			else
-				logError("配置表没有id：" .. tostring(var_3_2) .. " i:" .. iter_3_0)
+				logError("配置表没有id：" .. tostring(id) .. " i:" .. i)
 			end
 		end
 	end
 
-	for iter_3_2, iter_3_3 in pairs(arg_3_0.handbookMoDic) do
-		local var_3_7 = var_3_0[iter_3_3.id]
+	for i, v in pairs(self.handbookMoDic) do
+		local have = unlock[v.id]
 
-		iter_3_3:setIsUnlock(var_3_7)
+		v:setIsUnlock(have)
 	end
 
-	tabletool.clear(arg_3_0.progressDic)
+	tabletool.clear(self.progressDic)
 
-	for iter_3_4, iter_3_5 in pairs(arg_3_0.handbookMoDic) do
-		local var_3_8 = iter_3_5:getType()
+	for i, v in pairs(self.handbookMoDic) do
+		local type = v:getType()
 
-		if arg_3_0.progressDic[var_3_8] == nil then
-			arg_3_0.progressDic[var_3_8] = {
+		if self.progressDic[type] == nil then
+			self.progressDic[type] = {
 				progress = 0,
 				amount = 0
 			}
 		end
 
-		arg_3_0.progressDic[var_3_8].amount = arg_3_0.progressDic[var_3_8].amount + 1
+		self.progressDic[type].amount = self.progressDic[type].amount + 1
 
-		if iter_3_5.isUnlock then
-			arg_3_0.progressDic[var_3_8].progress = arg_3_0.progressDic[var_3_8].progress + 1
+		if v.isUnlock then
+			self.progressDic[type].progress = self.progressDic[type].progress + 1
 		end
 	end
 
-	arg_3_0:refreshRedDot()
+	self:refreshRedDot()
 
-	arg_3_0.inheritSelectDic = {}
-	arg_3_0.inheritSelectList = {}
-	arg_3_0.inheritSubTypeMoDic = {}
+	self.inheritSelectDic = {}
+	self.inheritSelectList = {}
+	self.inheritSubTypeMoDic = {}
 
-	for iter_3_6, iter_3_7 in pairs(var_3_0) do
-		local var_3_9 = lua_survival_handbook.configDict[iter_3_6]
+	for id, _ in pairs(unlock) do
+		local cfg = lua_survival_handbook.configDict[id]
+		local type = cfg.type
 
-		if var_3_9.type == SurvivalEnum.HandBookType.Amplifier then
-			local var_3_10 = arg_3_0.handbookMoDic[iter_3_6]
-			local var_3_11 = var_3_10:getCellCfgId()
-			local var_3_12 = var_3_9.subtype
-			local var_3_13 = lua_survival_item.configDict[var_3_11].rare
+		if type == SurvivalEnum.HandBookType.Amplifier then
+			local mainMo = self.handbookMoDic[id]
+			local mainItemId = mainMo:getCellCfgId()
+			local mainSubtype = cfg.subtype
+			local mainItemCfg = lua_survival_item.configDict[mainItemId]
+			local mainItemRare = mainItemCfg.rare
 
-			if var_3_10:getSurvivalBagItemMo():getExtendCost() > 0 then
-				arg_3_0:insetInheritMo(var_3_11, var_3_12, var_3_10)
+			if mainMo:getSurvivalBagItemMo():getExtendCost() > 0 then
+				self:insetInheritMo(mainItemId, mainSubtype, mainMo)
 			end
 
-			local var_3_14 = var_3_9.link
-			local var_3_15 = SurvivalConfig.instance:getEquipByGroup(var_3_14)
+			local link = cfg.link
+			local cfgs = SurvivalConfig.instance:getEquipByGroup(link)
 
-			for iter_3_8, iter_3_9 in ipairs(var_3_15) do
-				local var_3_16 = iter_3_9.id
+			for i, v in ipairs(cfgs) do
+				local itemId = v.id
 
-				if var_3_16 ~= var_3_11 and var_3_13 >= lua_survival_item.configDict[var_3_16].rare then
-					local var_3_17 = SurvivalHandbookMo.New()
+				if itemId ~= mainItemId then
+					local itemCfg = lua_survival_item.configDict[itemId]
+					local rare = itemCfg.rare
 
-					var_3_17:setData(var_3_10.cfg)
-					var_3_17:setCellCfgId(var_3_16)
-					var_3_17:setIsNew(var_3_10.isNew)
-					var_3_17:setIsUnlock(var_3_10.isUnlock)
+					if rare <= mainItemRare then
+						local mo = SurvivalHandbookMo.New()
 
-					if var_3_17:getSurvivalBagItemMo():getExtendCost() > 0 then
-						arg_3_0:insetInheritMo(var_3_16, var_3_12, var_3_17)
+						mo:setData(mainMo.cfg)
+						mo:setCellCfgId(itemId)
+						mo:setIsNew(mainMo.isNew)
+						mo:setIsUnlock(mainMo.isUnlock)
+
+						if mo:getSurvivalBagItemMo():getExtendCost() > 0 then
+							self:insetInheritMo(itemId, mainSubtype, mo)
+						end
 					end
 				end
 			end
 		end
 	end
 
-	arg_3_0.inheritSubTypeNpcList = {}
+	self.inheritSubTypeNpcList = {}
 
-	for iter_3_10, iter_3_11 in pairs(arg_3_0.subTypeMoDic[SurvivalEnum.HandBookType.Npc]) do
-		arg_3_0.inheritSubTypeNpcList[iter_3_10] = {}
+	for subType, dic in pairs(self.subTypeMoDic[SurvivalEnum.HandBookType.Npc]) do
+		self.inheritSubTypeNpcList[subType] = {}
 
-		for iter_3_12, iter_3_13 in pairs(iter_3_11) do
-			if iter_3_13.isUnlock and iter_3_13:getSurvivalBagItemMo():getExtendCost() > 0 then
-				table.insert(arg_3_0.inheritSubTypeNpcList[iter_3_10], iter_3_13)
+		for id, mo in pairs(dic) do
+			if mo.isUnlock then
+				local itemMo = mo:getSurvivalBagItemMo()
+
+				if itemMo:getExtendCost() > 0 then
+					table.insert(self.inheritSubTypeNpcList[subType], mo)
+				end
 			end
 		end
 	end
 end
 
-function var_0_0.insetInheritMo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0.inheritSelectDic[arg_4_1] = arg_4_3
+function SurvivalHandbookModel:insetInheritMo(cellId, subtype, mo)
+	self.inheritSelectDic[cellId] = mo
 
-	table.insert(arg_4_0.inheritSelectList, arg_4_3)
+	table.insert(self.inheritSelectList, mo)
 
-	if arg_4_0.inheritSubTypeMoDic[arg_4_2] == nil then
-		arg_4_0.inheritSubTypeMoDic[arg_4_2] = {}
+	if self.inheritSubTypeMoDic[subtype] == nil then
+		self.inheritSubTypeMoDic[subtype] = {}
 	end
 
-	table.insert(arg_4_0.inheritSubTypeMoDic[arg_4_2], arg_4_3)
+	table.insert(self.inheritSubTypeMoDic[subtype], mo)
 end
 
-function var_0_0.getInheritMoById(arg_5_0, arg_5_1)
-	if arg_5_0.inheritSelectDic[arg_5_1] then
-		return arg_5_0.inheritSelectDic[arg_5_1]
+function SurvivalHandbookModel:getInheritMoById(cellId)
+	if self.inheritSelectDic[cellId] then
+		return self.inheritSelectDic[cellId]
 	else
-		return arg_5_0.cellMoDic[arg_5_1]
+		return self.cellMoDic[cellId]
 	end
 end
 
-function var_0_0.getInheritHandBookDatas(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = {}
+function SurvivalHandbookModel:getInheritHandBookDatas(handbookType, subType)
+	local data = {}
 
-	if arg_6_1 == SurvivalEnum.HandBookType.Amplifier then
-		var_6_0 = arg_6_0.inheritSubTypeMoDic[arg_6_2]
-	elseif arg_6_1 == SurvivalEnum.HandBookType.Npc then
-		var_6_0 = arg_6_0.inheritSubTypeNpcList[arg_6_2]
+	if handbookType == SurvivalEnum.HandBookType.Amplifier then
+		data = self.inheritSubTypeMoDic[subType]
+	elseif handbookType == SurvivalEnum.HandBookType.Npc then
+		data = self.inheritSubTypeNpcList[subType]
 	end
 
-	return var_6_0 or {}
+	return data or {}
 end
 
-function var_0_0.getMoById(arg_7_0, arg_7_1)
-	return arg_7_0.handbookMoDic[arg_7_1]
+function SurvivalHandbookModel:getMoById(id)
+	return self.handbookMoDic[id]
 end
 
-function var_0_0.getProgress(arg_8_0, arg_8_1)
-	return arg_8_0.progressDic[arg_8_1]
+function SurvivalHandbookModel:getProgress(type)
+	return self.progressDic[type]
 end
 
-function var_0_0.onReceiveSurvivalMarkNewHandbookReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		for iter_9_0, iter_9_1 in ipairs(arg_9_2.ids) do
-			if arg_9_0.handbookMoDic[iter_9_1] then
-				arg_9_0.handbookMoDic[iter_9_1]:setIsNew(false)
+function SurvivalHandbookModel:onReceiveSurvivalMarkNewHandbookReply(resultCode, msg)
+	if resultCode == 0 then
+		for i, id in ipairs(msg.ids) do
+			if self.handbookMoDic[id] then
+				self.handbookMoDic[id]:setIsNew(false)
 			else
 				logError("??")
 			end
 		end
 	end
 
-	arg_9_0:refreshRedDot()
+	self:refreshRedDot()
 end
 
-function var_0_0.refreshRedDot(arg_10_0)
-	local var_10_0 = {}
+function SurvivalHandbookModel:refreshRedDot()
+	local redDotInfoList = {}
 
-	arg_10_0.eventRedDots = {}
+	self.eventRedDots = {}
 
-	local var_10_1 = 0
+	local total = 0
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.eventTypes) do
-		local var_10_2 = arg_10_0:getRedDot(SurvivalEnum.HandBookType.Event, iter_10_1)
+	for i, subType in ipairs(self.eventTypes) do
+		local redDot = self:getRedDot(SurvivalEnum.HandBookType.Event, subType)
 
-		arg_10_0.eventRedDots[iter_10_1] = var_10_2
+		self.eventRedDots[subType] = redDot
 
-		table.insert(var_10_0, {
+		table.insert(redDotInfoList, {
 			id = RedDotEnum.DotNode.SurvivalHandbookEvent,
-			uid = iter_10_1,
-			value = var_10_2
+			uid = subType,
+			value = redDot
 		})
 
-		var_10_1 = var_10_1 + var_10_2
+		total = total + redDot
 	end
 
-	table.insert(var_10_0, {
+	table.insert(redDotInfoList, {
 		uid = -1,
 		id = RedDotEnum.DotNode.SurvivalHandbookEvent,
-		value = var_10_1
+		value = total
 	})
 
-	arg_10_0.amplifierRedDots = {}
+	self.amplifierRedDots = {}
+	total = 0
 
-	local var_10_3 = 0
+	for i, subType in ipairs(self.amplifierTypes) do
+		local redDot = self:getRedDot(SurvivalEnum.HandBookType.Amplifier, subType)
 
-	for iter_10_2, iter_10_3 in ipairs(arg_10_0.amplifierTypes) do
-		local var_10_4 = arg_10_0:getRedDot(SurvivalEnum.HandBookType.Amplifier, iter_10_3)
+		self.amplifierRedDots[subType] = redDot
 
-		arg_10_0.amplifierRedDots[iter_10_3] = var_10_4
-
-		table.insert(var_10_0, {
+		table.insert(redDotInfoList, {
 			id = RedDotEnum.DotNode.SurvivalHandbookAmplifier,
-			uid = iter_10_3,
-			value = var_10_4
+			uid = subType,
+			value = redDot
 		})
 
-		var_10_3 = var_10_3 + var_10_4
+		total = total + redDot
 	end
 
-	table.insert(var_10_0, {
+	table.insert(redDotInfoList, {
 		uid = -1,
 		id = RedDotEnum.DotNode.SurvivalHandbookAmplifier,
-		value = var_10_3
+		value = total
 	})
 
-	arg_10_0.npcRedDots = {}
+	self.npcRedDots = {}
+	total = 0
 
-	local var_10_5 = 0
+	for i, subType in ipairs(self.npcTypes) do
+		local redDot = self:getRedDot(SurvivalEnum.HandBookType.Npc, subType)
 
-	for iter_10_4, iter_10_5 in ipairs(arg_10_0.npcTypes) do
-		local var_10_6 = arg_10_0:getRedDot(SurvivalEnum.HandBookType.Npc, iter_10_5)
+		self.npcRedDots[subType] = redDot
 
-		arg_10_0.npcRedDots[iter_10_5] = var_10_6
-
-		table.insert(var_10_0, {
+		table.insert(redDotInfoList, {
 			id = RedDotEnum.DotNode.SurvivalHandbookNpc,
-			uid = iter_10_5,
-			value = var_10_6
+			uid = subType,
+			value = redDot
 		})
 
-		var_10_5 = var_10_5 + var_10_6
+		total = total + redDot
 	end
 
-	table.insert(var_10_0, {
+	table.insert(redDotInfoList, {
 		uid = -1,
 		id = RedDotEnum.DotNode.SurvivalHandbookNpc,
-		value = var_10_5
+		value = total
 	})
 
-	local var_10_7 = arg_10_0:getRedDot(SurvivalEnum.HandBookType.Result)
+	local redDot = self:getRedDot(SurvivalEnum.HandBookType.Result)
 
-	table.insert(var_10_0, {
+	table.insert(redDotInfoList, {
 		uid = -1,
 		id = RedDotEnum.DotNode.SurvivalHandbookResult,
-		value = var_10_7
+		value = redDot
 	})
-	RedDotRpc.instance:clientAddRedDotGroupList(var_10_0, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
 end
 
-function var_0_0.getRedDot(arg_11_0, arg_11_1, arg_11_2)
-	if #arg_11_0:getNewHandbook(arg_11_1, arg_11_2) > 0 then
+function SurvivalHandbookModel:getRedDot(type, subType)
+	local ids = self:getNewHandbook(type, subType)
+
+	if #ids > 0 then
 		return 1
 	end
 
 	return 0
 end
 
-function var_0_0.getHandBookDatas(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0.subTypeMoDic[arg_12_1] == nil or arg_12_0.subTypeMoDic[arg_12_1][arg_12_2] == nil then
-		arg_12_0:_parseBasicData()
+function SurvivalHandbookModel:getHandBookDatas(type, subType)
+	if self.subTypeMoDic[type] == nil or self.subTypeMoDic[type][subType] == nil then
+		self:_parseBasicData()
 	end
 
-	return arg_12_0.subTypeMoDic[arg_12_1][arg_12_2] or {}
+	local datas = self.subTypeMoDic[type][subType] or {}
+
+	return datas
 end
 
-function var_0_0.getHandBookUnlockDatas(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0.subTypeMoDic[arg_13_1] == nil or arg_13_0.subTypeMoDic[arg_13_1][arg_13_2] == nil then
-		arg_13_0:_parseBasicData()
+function SurvivalHandbookModel:getHandBookUnlockDatas(type, subType)
+	if self.subTypeMoDic[type] == nil or self.subTypeMoDic[type][subType] == nil then
+		self:_parseBasicData()
 	end
 
-	local var_13_0 = arg_13_0.subTypeMoDic[arg_13_1][arg_13_2] or {}
-	local var_13_1 = {}
+	local datas = self.subTypeMoDic[type][subType] or {}
+	local result = {}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if iter_13_1.isUnlock then
-			table.insert(var_13_1, iter_13_1)
+	for i, mo in ipairs(datas) do
+		if mo.isUnlock then
+			table.insert(result, mo)
 		end
 	end
 
-	return var_13_1
+	return result
 end
 
-function var_0_0._parseBasicData(arg_14_0)
-	if arg_14_0.handbookMoDic then
+function SurvivalHandbookModel:_parseBasicData()
+	if self.handbookMoDic then
 		return
 	end
 
-	arg_14_0.handbookMoDic = {}
+	self.handbookMoDic = {}
 
-	local var_14_0 = SurvivalHandbookConfig.instance:getConfigList()
+	local list = SurvivalHandbookConfig.instance:getConfigList()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_1 = iter_14_1.type
-		local var_14_2 = iter_14_1.subtype
+	for i, cfg in ipairs(list) do
+		local type = cfg.type
+		local subType = cfg.subtype
 
-		if arg_14_0.subTypeMoDic[var_14_1] == nil then
-			arg_14_0.subTypeMoDic[var_14_1] = {}
+		if self.subTypeMoDic[type] == nil then
+			self.subTypeMoDic[type] = {}
 		end
 
-		local var_14_3 = SurvivalHandbookMo.New()
+		local mo = SurvivalHandbookMo.New()
 
-		var_14_3:setData(iter_14_1)
+		mo:setData(cfg)
 
-		arg_14_0.handbookMoDic[iter_14_1.id] = var_14_3
+		self.handbookMoDic[cfg.id] = mo
 
-		if var_14_1 == SurvivalEnum.HandBookType.Result then
-			table.insert(arg_14_0.resultMos, var_14_3)
+		if type == SurvivalEnum.HandBookType.Result then
+			table.insert(self.resultMos, mo)
 		else
-			if arg_14_0.subTypeMoDic[var_14_1][var_14_2] == nil then
-				arg_14_0.subTypeMoDic[var_14_1][var_14_2] = {}
+			if self.subTypeMoDic[type][subType] == nil then
+				self.subTypeMoDic[type][subType] = {}
 			end
 
-			table.insert(arg_14_0.subTypeMoDic[var_14_1][var_14_2], var_14_3)
+			table.insert(self.subTypeMoDic[type][subType], mo)
 		end
 	end
 end
 
-function var_0_0.getNewHandbook(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = {}
+function SurvivalHandbookModel:getNewHandbook(type, subType)
+	local ids = {}
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.handbookMoDic) do
-		if iter_15_1:getType() == arg_15_1 and (arg_15_2 == nil or arg_15_2 == iter_15_1:getSubType()) and iter_15_1.isNew then
-			table.insert(var_15_0, iter_15_0)
+	for id, survivalHandbookMo in pairs(self.handbookMoDic) do
+		if survivalHandbookMo:getType() == type and (subType == nil or subType == survivalHandbookMo:getSubType()) and survivalHandbookMo.isNew then
+			table.insert(ids, id)
 		end
 	end
 
-	return var_15_0
+	return ids
 end
 
-function var_0_0.getTabTitleBySubType(arg_16_0, arg_16_1, arg_16_2)
-	return luaLang(arg_16_0.handbookTypeCfg[arg_16_1][arg_16_2].tabTitle)
+function SurvivalHandbookModel:getTabTitleBySubType(handBookType, subType)
+	return luaLang(self.handbookTypeCfg[handBookType][subType].tabTitle)
 end
 
-function var_0_0.getTabImageBySubType(arg_17_0, arg_17_1, arg_17_2)
-	return arg_17_0.handbookTypeCfg[arg_17_1][arg_17_2].tabImage
+function SurvivalHandbookModel:getTabImageBySubType(handBookType, subType)
+	return self.handbookTypeCfg[handBookType][subType].tabImage
 end
 
-function var_0_0.handBookSortFuncById(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0.isUnlock
+function SurvivalHandbookModel.handBookSortFuncById(a, b)
+	local isUnlockA = a.isUnlock
+	local isUnlockB = b.isUnlock
 
-	if var_18_0 ~= arg_18_1.isUnlock then
-		return var_18_0
+	if isUnlockA ~= isUnlockB then
+		return isUnlockA
 	end
 
-	return arg_18_0.id < arg_18_1.id
+	return a.id < b.id
 end
 
-function var_0_0.handBookSortFunc(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.isUnlock
+function SurvivalHandbookModel.handBookSortFunc(a, b)
+	local isUnlockA = a.isUnlock
+	local isUnlockB = b.isUnlock
 
-	if var_19_0 ~= arg_19_1.isUnlock then
-		return var_19_0
+	if isUnlockA ~= isUnlockB then
+		return isUnlockA
 	end
 
-	local var_19_1 = arg_19_0:getRare()
-	local var_19_2 = arg_19_1:getRare()
+	local rareA = a:getRare()
+	local rareB = b:getRare()
 
-	if var_19_1 ~= 0 and var_19_2 ~= 0 and var_19_1 ~= var_19_2 then
-		return var_19_2 < var_19_1
+	if rareA ~= 0 and rareB ~= 0 and rareA ~= rareB then
+		return rareB < rareA
 	end
 
-	return arg_19_0.id < arg_19_1.id
+	return a.id < b.id
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalHandbookModel.instance = SurvivalHandbookModel.New()
 
-return var_0_0
+return SurvivalHandbookModel

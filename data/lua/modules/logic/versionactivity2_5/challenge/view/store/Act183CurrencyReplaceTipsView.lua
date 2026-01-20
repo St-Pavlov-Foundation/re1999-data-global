@@ -1,104 +1,106 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.store.Act183CurrencyReplaceTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/store/Act183CurrencyReplaceTipsView.lua
 
-local var_0_0 = class("Act183CurrencyReplaceTipsView", BaseView)
+module("modules.logic.versionactivity2_5.challenge.view.store.Act183CurrencyReplaceTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_desc")
-	arg_1_0._simageold = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_old/#simage_old")
-	arg_1_0._simagenew = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_new/#simage_new")
-	arg_1_0._txtoldcount = gohelper.findChildText(arg_1_0.viewGO, "root/#go_old/#txt_oldcount")
-	arg_1_0._txtnewcount = gohelper.findChildText(arg_1_0.viewGO, "root/#go_new/#txt_newcount")
+local Act183CurrencyReplaceTipsView = class("Act183CurrencyReplaceTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183CurrencyReplaceTipsView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/#txt_desc")
+	self._simageold = gohelper.findChildSingleImage(self.viewGO, "root/#go_old/#simage_old")
+	self._simagenew = gohelper.findChildSingleImage(self.viewGO, "root/#go_new/#simage_new")
+	self._txtoldcount = gohelper.findChildText(self.viewGO, "root/#go_old/#txt_oldcount")
+	self._txtnewcount = gohelper.findChildText(self.viewGO, "root/#go_new/#txt_newcount")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Act183CurrencyReplaceTipsView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Act183CurrencyReplaceTipsView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Act183CurrencyReplaceTipsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function Act183CurrencyReplaceTipsView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refresh()
+function Act183CurrencyReplaceTipsView:onOpen()
+	self:refresh()
 	Act183Helper.saveOpenCurrencyReplaceTipsViewInLocal()
 end
 
-function var_0_0.refresh(arg_7_0)
-	arg_7_0._oldCurrencyId, arg_7_0._oldCurrencyCo, arg_7_0._oldCurrencyIconUrl = arg_7_0:initSingleInfo("oldCurrencyId", "oldCurrencyIconUrl")
-	arg_7_0._newCurrencyId, arg_7_0._newCurrencyCo, arg_7_0._newCurrencyIconUrl = arg_7_0:initSingleInfo("newCurrencyId", "newCurrencyIconUrl")
+function Act183CurrencyReplaceTipsView:refresh()
+	self._oldCurrencyId, self._oldCurrencyCo, self._oldCurrencyIconUrl = self:initSingleInfo("oldCurrencyId", "oldCurrencyIconUrl")
+	self._newCurrencyId, self._newCurrencyCo, self._newCurrencyIconUrl = self:initSingleInfo("newCurrencyId", "newCurrencyIconUrl")
 
-	arg_7_0._simageold:LoadImage(arg_7_0._oldCurrencyIconUrl)
-	arg_7_0._simagenew:LoadImage(arg_7_0._newCurrencyIconUrl)
+	self._simageold:LoadImage(self._oldCurrencyIconUrl)
+	self._simagenew:LoadImage(self._newCurrencyIconUrl)
 
-	arg_7_0._replaceRate = arg_7_0.viewParam and arg_7_0.viewParam.replaceRate
+	self._replaceRate = self.viewParam and self.viewParam.replaceRate
 
-	if not arg_7_0._replaceRate then
+	if not self._replaceRate then
 		logError(string.format("缺少货币替换比例参数replaceRate"))
 
-		arg_7_0._replaceRate = 1
+		self._replaceRate = 1
 	end
 
-	arg_7_0._oldCurrencyNum = arg_7_0.viewParam and arg_7_0.viewParam.oldCurrencyNum
+	self._oldCurrencyNum = self.viewParam and self.viewParam.oldCurrencyNum
 
-	if not arg_7_0._oldCurrencyNum then
+	if not self._oldCurrencyNum then
 		logError(string.format("缺少原始货币数量参数oldCurrencyNum"))
 
-		arg_7_0._oldCurrencyNum = 0
+		self._oldCurrencyNum = 0
 	end
 
-	arg_7_0._newCurrencyNum = arg_7_0._oldCurrencyNum * arg_7_0._replaceRate
-	arg_7_0._txtoldcount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), arg_7_0._oldCurrencyNum)
-	arg_7_0._txtnewcount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), arg_7_0._newCurrencyNum)
-	arg_7_0._txtdesc.text = arg_7_0.viewParam and arg_7_0.viewParam.desc or ""
+	self._newCurrencyNum = self._oldCurrencyNum * self._replaceRate
+	self._txtoldcount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), self._oldCurrencyNum)
+	self._txtnewcount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), self._newCurrencyNum)
+	self._txtdesc.text = self.viewParam and self.viewParam.desc or ""
 end
 
-function var_0_0.initSingleInfo(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0.viewParam and arg_8_0.viewParam[arg_8_1]
-	local var_8_1 = CurrencyConfig.instance:getCurrencyCo(var_8_0)
+function Act183CurrencyReplaceTipsView:initSingleInfo(currencyIdName, currencyIconUrlName)
+	local currencyId = self.viewParam and self.viewParam[currencyIdName]
+	local currencyCo = CurrencyConfig.instance:getCurrencyCo(currencyId)
 
-	if not var_8_1 then
-		logError(string.format("货币配置不存在  currencyIdParamName = %s, currencyId = %s", arg_8_1, var_8_0))
+	if not currencyCo then
+		logError(string.format("货币配置不存在  currencyIdParamName = %s, currencyId = %s", currencyIdName, currencyId))
 	end
 
-	local var_8_2 = arg_8_0.viewParam and arg_8_0.viewParam[arg_8_2]
+	local currencyIconUrl = self.viewParam and self.viewParam[currencyIconUrlName]
 
-	if not var_8_2 then
-		local var_8_3 = var_8_1 and var_8_1.icon
+	if not currencyIconUrl then
+		local iconName = currencyCo and currencyCo.icon
 
-		var_8_2 = ResUrl.getCurrencyItemIcon(var_8_3)
+		currencyIconUrl = ResUrl.getCurrencyItemIcon(iconName)
 	end
 
-	return var_8_0, var_8_1, var_8_2
+	return currencyId, currencyCo, currencyIconUrl
 end
 
-function var_0_0.getCurrencyCount(arg_9_0, arg_9_1)
-	local var_9_0 = CurrencyModel.instance:getCurrency(arg_9_1)
+function Act183CurrencyReplaceTipsView:getCurrencyCount(currencyId)
+	local currencyMo = CurrencyModel.instance:getCurrency(currencyId)
 
-	if not var_9_0 then
-		logError(string.format("货币数据不存在 currencyId = %s", arg_9_1))
+	if not currencyMo then
+		logError(string.format("货币数据不存在 currencyId = %s", currencyId))
 
 		return 0
 	end
 
-	return var_9_0.quantity
+	return currencyMo.quantity
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	arg_10_0._simageold:UnLoadImage()
-	arg_10_0._simagenew:UnloadImage()
+function Act183CurrencyReplaceTipsView:onDestroy()
+	self._simageold:UnLoadImage()
+	self._simagenew:UnloadImage()
 end
 
-return var_0_0
+return Act183CurrencyReplaceTipsView

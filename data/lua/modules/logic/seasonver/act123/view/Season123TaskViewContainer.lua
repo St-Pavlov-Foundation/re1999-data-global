@@ -1,48 +1,50 @@
-﻿module("modules.logic.seasonver.act123.view.Season123TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123TaskViewContainer.lua
 
-local var_0_0 = class("Season123TaskViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view.Season123TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season123TaskViewContainer = class("Season123TaskViewContainer", BaseViewContainer)
 
-	arg_1_0:buildScrollViews()
-	table.insert(var_1_0, arg_1_0.scrollView)
-	table.insert(var_1_0, Season123TaskView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function Season123TaskViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	self:buildScrollViews()
+	table.insert(views, self.scrollView)
+	table.insert(views, Season123TaskView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = NavigateButtonsView.New({
+function Season123TaskViewContainer:buildTabViews(tabContainerId)
+	local navigateButtonsView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
-	var_2_0:setHelpId(HelpEnum.HelpId.Season1_7TaskViewHelp)
+	navigateButtonsView:setHelpId(HelpEnum.HelpId.Season1_7TaskViewHelp)
 
 	return {
-		var_2_0
+		navigateButtonsView
 	}
 end
 
-function var_0_0.buildScrollViews(arg_3_0)
-	local var_3_0 = ListScrollParam.New()
+function Season123TaskViewContainer:buildScrollViews()
+	local scrollParam = ListScrollParam.New()
 
-	var_3_0.scrollGOPath = "#scroll_tasklist"
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
-	var_3_0.cellClass = Season123TaskItem
-	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.lineCount = 1
-	var_3_0.cellWidth = 1112
-	var_3_0.cellHeight = 140
-	var_3_0.cellSpaceH = 0
-	var_3_0.cellSpaceV = 18.9
-	var_3_0.startSpace = 0
-	var_3_0.frameUpdateMs = 100
-	arg_3_0.scrollView = LuaListScrollView.New(Season123TaskModel.instance, var_3_0)
+	scrollParam.scrollGOPath = "#scroll_tasklist"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Season123TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1112
+	scrollParam.cellHeight = 140
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 18.9
+	scrollParam.startSpace = 0
+	scrollParam.frameUpdateMs = 100
+	self.scrollView = LuaListScrollView.New(Season123TaskModel.instance, scrollParam)
 end
 
-return var_0_0
+return Season123TaskViewContainer

@@ -1,96 +1,99 @@
-﻿module("modules.logic.fight.system.work.FightWorkStartBorn", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkStartBorn.lua
 
-local var_0_0 = class("FightWorkStartBorn", BaseWork)
-local var_0_1 = 10
+module("modules.logic.fight.system.work.FightWorkStartBorn", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0.playedVoice = false
+local FightWorkStartBorn = class("FightWorkStartBorn", BaseWork)
+local BornTime = 10
+
+function FightWorkStartBorn:onStart()
+	self.playedVoice = false
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
-	arg_1_0._flowParallel = FlowParallel.New()
+	self._flowParallel = FlowParallel.New()
 
-	local var_1_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_1 = iter_1_1:getMO()
-		local var_1_2 = false
+	for _, entity in ipairs(entityList) do
+		local entityMo = entity:getMO()
+		local continue = false
 
-		if var_1_1:isAssistBoss() then
-			var_1_2 = true
+		if entityMo:isAssistBoss() then
+			continue = true
 		end
 
-		if var_1_1:isAct191Boss() then
-			var_1_2 = true
+		if entityMo:isAct191Boss() then
+			continue = true
 		end
 
-		if iter_1_1.spine and not iter_1_1.spine:hasAnimation(SpineAnimState.born) then
-			var_1_2 = true
+		if entity.spine and not entity.spine:hasAnimation(SpineAnimState.born) then
+			continue = true
 		end
 
-		if not var_1_2 then
-			if not arg_1_0.playedVoice then
-				arg_1_0.playedVoice = true
+		if not continue then
+			if not self.playedVoice then
+				self.playedVoice = true
 
-				arg_1_0:_playEnterVoice()
+				self:_playEnterVoice()
 			end
 
-			local var_1_3 = FightWorkStartBornNormal.New(iter_1_1, true)
+			local bornWork = FightWorkStartBornNormal.New(entity, true)
 
-			var_1_3.dontDealBuff = true
+			bornWork.dontDealBuff = true
 
-			if FightDataHelper.entityMgr:isSub(iter_1_1.id) then
-				var_1_3:onStart()
+			if FightDataHelper.entityMgr:isSub(entity.id) then
+				bornWork:onStart()
 			else
-				arg_1_0._flowParallel:addWork(var_1_3)
+				self._flowParallel:addWork(bornWork)
 			end
 		else
-			if iter_1_1.nameUI then
-				iter_1_1.nameUI:setActive(true)
+			if entity.nameUI then
+				entity.nameUI:setActive(true)
 			end
 
-			iter_1_1:setAlpha(1, 0)
+			entity:setAlpha(1, 0)
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._onBornTimeout, arg_1_0, var_0_1)
+	TaskDispatcher.runDelay(self._onBornTimeout, self, BornTime)
 	FightController.instance:dispatchEvent(FightEvent.OnStartFightPlayBorn)
-	arg_1_0._flowParallel:registerDoneListener(arg_1_0._onBornEnd, arg_1_0)
-	arg_1_0._flowParallel:start()
+	self._flowParallel:registerDoneListener(self._onBornEnd, self)
+	self._flowParallel:start()
 end
 
-function var_0_0._playEnterVoice(arg_2_0)
+function FightWorkStartBorn:_playEnterVoice()
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
 
-	local var_2_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
+	local entityNoSubList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
 
-	if var_2_0 and #var_2_0 > 0 then
-		local var_2_1 = var_2_0[math.random(#var_2_0)]:getMO().modelId
+	if entityNoSubList and #entityNoSubList > 0 then
+		local randomEntity = entityNoSubList[math.random(#entityNoSubList)]
+		local heroId = randomEntity:getMO().modelId
 
-		FightAudioMgr.instance:playHeroVoiceRandom(var_2_1, CharacterEnum.VoiceType.EnterFight)
+		FightAudioMgr.instance:playHeroVoiceRandom(heroId, CharacterEnum.VoiceType.EnterFight)
 
-		FightAudioMgr.instance.enterFightVoiceHeroID = var_2_1
+		FightAudioMgr.instance.enterFightVoiceHeroID = heroId
 	end
 end
 
-function var_0_0._onBornEnd(arg_3_0)
+function FightWorkStartBorn:_onBornEnd()
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
 
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onBornTimeout(arg_4_0)
+function FightWorkStartBorn:_onBornTimeout()
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
 
-	logError("播放出生效果时间超过" .. var_0_1 .. "秒")
-	arg_4_0:onDone(true)
+	logError("播放出生效果时间超过" .. BornTime .. "秒")
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	if arg_5_0._flowParallel then
-		arg_5_0._flowParallel:stop()
-		arg_5_0._flowParallel:unregisterDoneListener(arg_5_0._onBornEnd, arg_5_0)
+function FightWorkStartBorn:clearWork()
+	if self._flowParallel then
+		self._flowParallel:stop()
+		self._flowParallel:unregisterDoneListener(self._onBornEnd, self)
 	end
 
-	TaskDispatcher.cancelTask(arg_5_0._onBornTimeout, arg_5_0)
+	TaskDispatcher.cancelTask(self._onBornTimeout, self)
 end
 
-return var_0_0
+return FightWorkStartBorn

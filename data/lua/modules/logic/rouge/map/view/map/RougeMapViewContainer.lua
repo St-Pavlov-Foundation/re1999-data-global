@@ -1,44 +1,46 @@
-﻿module("modules.logic.rouge.map.view.map.RougeMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/map/RougeMapViewContainer.lua
 
-local var_0_0 = class("RougeMapViewContainer", BaseViewContainer)
+module("modules.logic.rouge.map.view.map.RougeMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeMapViewContainer = class("RougeMapViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeMapView.New())
-	table.insert(var_1_0, RougeMapDragView.New())
-	table.insert(var_1_0, RougeMapInputView.New())
-	table.insert(var_1_0, RougeMapCoinView.New())
-	table.insert(var_1_0, RougeMapNodeRightView.New())
-	table.insert(var_1_0, RougeMapLayerRightView.New())
-	table.insert(var_1_0, RougeMapLayerLineView.New())
-	table.insert(var_1_0, RougeMapEntrustView.New())
-	table.insert(var_1_0, RougeMapEliteFightView.New())
-	table.insert(var_1_0, RougeMapVoiceView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_LeftTop"))
-	table.insert(var_1_0, RougeBaseDLCViewComp.New())
+function RougeMapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeMapView.New())
+	table.insert(views, RougeMapDragView.New())
+	table.insert(views, RougeMapInputView.New())
+	table.insert(views, RougeMapCoinView.New())
+	table.insert(views, RougeMapNodeRightView.New())
+	table.insert(views, RougeMapLayerRightView.New())
+	table.insert(views, RougeMapLayerLineView.New())
+	table.insert(views, RougeMapEntrustView.New())
+	table.insert(views, RougeMapEliteFightView.New())
+	table.insert(views, RougeMapVoiceView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_LeftTop"))
+	table.insert(views, RougeBaseDLCViewComp.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeMapViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
-	arg_2_0.navigateView:setHelpId(HelpEnum.HelpId.RougeMapViewHelp)
-	arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+	self.navigateView:setHelpId(HelpEnum.HelpId.RougeMapViewHelp)
+	self.navigateView:setOverrideClose(self._overrideClose, self)
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0._overrideClose(arg_3_0)
+function RougeMapViewContainer:_overrideClose()
 	RougeMapHelper.backToMainScene()
 	RougeStatController.instance:statEnd(RougeStatController.EndResult.Close)
 end
 
-return var_0_0
+return RougeMapViewContainer

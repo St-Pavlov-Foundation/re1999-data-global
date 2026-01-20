@@ -1,36 +1,40 @@
-﻿module("modules.logic.rouge.view.RougeMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeMainViewContainer.lua
 
-local var_0_0 = class("RougeMainViewContainer", BaseViewContainer)
-local var_0_1 = 1
+module("modules.logic.rouge.view.RougeMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local RougeMainViewContainer = class("RougeMainViewContainer", BaseViewContainer)
+local kTabContainerId_NavigateButtonsView = 1
+
+function RougeMainViewContainer:buildViews()
 	return {
 		RougeMainView.New(),
 		RougeBaseDLCViewComp.New(),
-		TabViewGroup.New(var_0_1, "#go_lefttop")
+		TabViewGroup.New(kTabContainerId_NavigateButtonsView, "#go_lefttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == var_0_1 then
-		local var_2_0 = NavigateButtonsView.New({
+function RougeMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == kTabContainerId_NavigateButtonsView then
+		local navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		var_2_0:setHelpId(HelpEnum.HelpId.RougeMainViewHelp)
+		navigationView:setHelpId(HelpEnum.HelpId.RougeMainViewHelp)
 
 		return {
-			var_2_0
+			navigationView
 		}
 	end
 end
 
-function var_0_0.onContainerClose(arg_3_0)
-	if not ViewMgr.instance:getContainer(ViewName.DungeonView) then
+function RougeMainViewContainer:onContainerClose()
+	local c = ViewMgr.instance:getContainer(ViewName.DungeonView)
+
+	if not c then
 		return
 	end
 end
 
-return var_0_0
+return RougeMainViewContainer

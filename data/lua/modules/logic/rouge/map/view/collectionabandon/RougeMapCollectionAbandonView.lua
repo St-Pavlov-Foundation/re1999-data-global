@@ -1,179 +1,181 @@
-﻿module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionAbandonView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/collectionabandon/RougeMapCollectionAbandonView.lua
 
-local var_0_0 = class("RougeMapCollectionAbandonView", BaseView)
+module("modules.logic.rouge.map.view.collectionabandon.RougeMapCollectionAbandonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fullbg")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_rightbg")
-	arg_1_0._simagetopbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_topbg1")
-	arg_1_0._simagetopbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_topbg2")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "Title/txt_Title")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Title/#txt_dec")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_filter")
-	arg_1_0._gofilterselect = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_filter/#go_select")
-	arg_1_0._gofilterunselect = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_filter/#go_unselect")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_num")
-	arg_1_0._gorightempty = gohelper.findChild(arg_1_0.viewGO, "Right/#go_rightempty")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._goCollectionContainer = gohelper.findChild(arg_1_0.viewGO, "#go_collectioncontainer")
+local RougeMapCollectionAbandonView = class("RougeMapCollectionAbandonView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeMapCollectionAbandonView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_fullbg")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_rightbg")
+	self._simagetopbg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_topbg1")
+	self._simagetopbg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_topbg2")
+	self._txttitle = gohelper.findChildText(self.viewGO, "Title/txt_Title")
+	self._txtdec = gohelper.findChildText(self.viewGO, "Title/#txt_dec")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_filter")
+	self._gofilterselect = gohelper.findChild(self.viewGO, "Left/#btn_filter/#go_select")
+	self._gofilterunselect = gohelper.findChild(self.viewGO, "Left/#btn_filter/#go_unselect")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Right/#txt_num")
+	self._gorightempty = gohelper.findChild(self.viewGO, "Right/#go_rightempty")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._goCollectionContainer = gohelper.findChild(self.viewGO, "#go_collectioncontainer")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+function RougeMapCollectionAbandonView:addEvents()
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfilter:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
+function RougeMapCollectionAbandonView:removeEvents()
+	self._btnfilter:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
 end
 
-function var_0_0._btnfilterOnClick(arg_4_0)
-	arg_4_0.param = arg_4_0.param or {
-		confirmCallback = arg_4_0.onConfirmCallback,
-		confirmCallbackObj = arg_4_0,
-		baseSelectMap = arg_4_0.baseFilterTagDict,
-		extraSelectMap = arg_4_0.extraFilterTagDict
+function RougeMapCollectionAbandonView:_btnfilterOnClick()
+	self.param = self.param or {
+		confirmCallback = self.onConfirmCallback,
+		confirmCallbackObj = self,
+		baseSelectMap = self.baseFilterTagDict,
+		extraSelectMap = self.extraFilterTagDict
 	}
 
-	RougeController.instance:openRougeCollectionFilterView(arg_4_0.param)
+	RougeController.instance:openRougeCollectionFilterView(self.param)
 end
 
-function var_0_0.onConfirmCallback(arg_5_0, arg_5_1, arg_5_2)
-	RougeCollectionHelper.removeInValidItem(arg_5_1)
-	RougeCollectionHelper.removeInValidItem(arg_5_2)
+function RougeMapCollectionAbandonView:onConfirmCallback(baseSelectMap, extraSelectMap)
+	RougeCollectionHelper.removeInValidItem(baseSelectMap)
+	RougeCollectionHelper.removeInValidItem(extraSelectMap)
 	RougeLossCollectionListModel.instance:filterCollection()
-	arg_5_0:refreshLeft()
+	self:refreshLeft()
 end
 
-function var_0_0._btnconfirmOnClick(arg_6_0)
-	if RougeLossCollectionListModel.instance:getSelectCount() < arg_6_0.lossCount then
+function RougeMapCollectionAbandonView:_btnconfirmOnClick()
+	if RougeLossCollectionListModel.instance:getSelectCount() < self.lossCount then
 		return
 	end
 
-	arg_6_0.callbackId = RougeRpc.instance:sendRougeSelectLostCollectionRequest(RougeLossCollectionListModel.instance:getSelectMoList(), arg_6_0.onReceiveMsg, arg_6_0)
+	self.callbackId = RougeRpc.instance:sendRougeSelectLostCollectionRequest(RougeLossCollectionListModel.instance:getSelectMoList(), self.onReceiveMsg, self)
 end
 
-function var_0_0.onReceiveMsg(arg_7_0)
-	arg_7_0.callbackId = nil
+function RougeMapCollectionAbandonView:onReceiveMsg()
+	self.callbackId = nil
 
-	arg_7_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.goCollection = arg_8_0.viewContainer:getResInst(RougeEnum.ResPath.CommonCollectionItem, arg_8_0._goCollectionContainer)
-	arg_8_0.collectionComp = RougeCollectionComp.Get(arg_8_0.goCollection)
+function RougeMapCollectionAbandonView:_editableInitView()
+	self.goCollection = self.viewContainer:getResInst(RougeEnum.ResPath.CommonCollectionItem, self._goCollectionContainer)
+	self.collectionComp = RougeCollectionComp.Get(self.goCollection)
 
-	arg_8_0.collectionComp:_editableInitView()
-	arg_8_0._simagefullbg:LoadImage("singlebg/rouge/collection/rouge_collection_fullbg.png")
-	arg_8_0._simagerightbg:LoadImage("singlebg/rouge/collection/rouge_collection_storebg.png")
-	arg_8_0._simagetopbg1:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_01.png")
-	arg_8_0._simagetopbg2:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_02.png")
+	self.collectionComp:_editableInitView()
+	self._simagefullbg:LoadImage("singlebg/rouge/collection/rouge_collection_fullbg.png")
+	self._simagerightbg:LoadImage("singlebg/rouge/collection/rouge_collection_storebg.png")
+	self._simagetopbg1:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_01.png")
+	self._simagetopbg2:LoadImage("singlebg/rouge/collection/rouge_collection_topmask_02.png")
 
-	arg_8_0.leftCollectionItemList = {}
-	arg_8_0.rightCollectionItemList = {}
-	arg_8_0.selectedUidList = {}
-	arg_8_0.baseFilterTagDict = {}
-	arg_8_0.extraFilterTagDict = {}
-	arg_8_0.goRightItemContainer = gohelper.findChild(arg_8_0.viewGO, "Right/#scroll_view/Viewport/Content")
-	arg_8_0.rightItem = arg_8_0.viewContainer:getResInst(RougeMapEnum.CollectionRightItemRes, arg_8_0.goRightItemContainer)
+	self.leftCollectionItemList = {}
+	self.rightCollectionItemList = {}
+	self.selectedUidList = {}
+	self.baseFilterTagDict = {}
+	self.extraFilterTagDict = {}
+	self.goRightItemContainer = gohelper.findChild(self.viewGO, "Right/#scroll_view/Viewport/Content")
+	self.rightItem = self.viewContainer:getResInst(RougeMapEnum.CollectionRightItemRes, self.goRightItemContainer)
 
-	gohelper.setActive(arg_8_0.rightItem, false)
-	arg_8_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLossCollectionChange, arg_8_0.onSelectLossCollectionChange, arg_8_0)
-	NavigateMgr.instance:addEscape(arg_8_0.viewName, RougeMapHelper.blockEsc)
+	gohelper.setActive(self.rightItem, false)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectLossCollectionChange, self.onSelectLossCollectionChange, self)
+	NavigateMgr.instance:addEscape(self.viewName, RougeMapHelper.blockEsc)
 end
 
-function var_0_0.onOpen(arg_9_0)
+function RougeMapCollectionAbandonView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.LossCollectionViewOpen)
-	arg_9_0.collectionComp:onOpen()
+	self.collectionComp:onOpen()
 
-	arg_9_0.lossType = arg_9_0.viewParam.lossType
-	arg_9_0.lossCount = arg_9_0.viewParam.lostNum
-	arg_9_0.filterUnique = arg_9_0.viewParam.filterUnique
-	arg_9_0.collections = arg_9_0.viewParam.collections or RougeCollectionModel.instance:getAllCollections()
+	self.lossType = self.viewParam.lossType
+	self.lossCount = self.viewParam.lostNum
+	self.filterUnique = self.viewParam.filterUnique
+	self.collections = self.viewParam.collections or RougeCollectionModel.instance:getAllCollections()
 
-	RougeLossCollectionListModel.instance:setLossType(arg_9_0.lossType)
-	RougeLossCollectionListModel.instance:initList(arg_9_0.lossCount, arg_9_0.collections, arg_9_0.baseFilterTagDict, arg_9_0.extraFilterTagDict, arg_9_0.filterUnique)
-	arg_9_0:refreshTitle()
-	arg_9_0:refreshLeft()
-	arg_9_0:refreshRight()
-	arg_9_0:refreshBtn()
+	RougeLossCollectionListModel.instance:setLossType(self.lossType)
+	RougeLossCollectionListModel.instance:initList(self.lossCount, self.collections, self.baseFilterTagDict, self.extraFilterTagDict, self.filterUnique)
+	self:refreshTitle()
+	self:refreshLeft()
+	self:refreshRight()
+	self:refreshBtn()
 end
 
-function var_0_0.refreshTitle(arg_10_0)
-	if arg_10_0.lossType == RougeMapEnum.LossType.Copy then
-		arg_10_0._txttitle.text = luaLang("p_rougecollectionabandonview_txt_copy")
-		arg_10_0._txtdec.text = luaLang("p_rougecollectionabandonview_txt_copy1")
-	elseif arg_10_0.lossType == RougeMapEnum.LossType.AbandonSp then
-		arg_10_0._txttitle.text = luaLang("p_rougecollectionabandonview_txt_losssp")
-		arg_10_0._txtdec.text = luaLang("p_rougecollectionabandonview_txt_losssp1")
+function RougeMapCollectionAbandonView:refreshTitle()
+	if self.lossType == RougeMapEnum.LossType.Copy then
+		self._txttitle.text = luaLang("p_rougecollectionabandonview_txt_copy")
+		self._txtdec.text = luaLang("p_rougecollectionabandonview_txt_copy1")
+	elseif self.lossType == RougeMapEnum.LossType.AbandonSp then
+		self._txttitle.text = luaLang("p_rougecollectionabandonview_txt_losssp")
+		self._txtdec.text = luaLang("p_rougecollectionabandonview_txt_losssp1")
 	else
-		arg_10_0._txttitle.text = luaLang("p_rougecollectionabandonview_txt_dec1")
-		arg_10_0._txtdec.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_loss_title"), arg_10_0.lossCount)
+		self._txttitle.text = luaLang("p_rougecollectionabandonview_txt_dec1")
+		self._txtdec.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_loss_title"), self.lossCount)
 	end
 end
 
-function var_0_0.refreshLeft(arg_11_0)
+function RougeMapCollectionAbandonView:refreshLeft()
 	RougeLossCollectionListModel.instance:refresh()
-	arg_11_0:refreshFilterBtn()
+	self:refreshFilterBtn()
 end
 
-function var_0_0.refreshFilterBtn(arg_12_0)
-	local var_12_0 = RougeLossCollectionListModel.instance:isFiltering()
+function RougeMapCollectionAbandonView:refreshFilterBtn()
+	local isFiltering = RougeLossCollectionListModel.instance:isFiltering()
 
-	gohelper.setActive(arg_12_0._gofilterselect, var_12_0)
-	gohelper.setActive(arg_12_0._gofilterunselect, not var_12_0)
+	gohelper.setActive(self._gofilterselect, isFiltering)
+	gohelper.setActive(self._gofilterunselect, not isFiltering)
 end
 
-function var_0_0.refreshRight(arg_13_0)
-	local var_13_0 = RougeLossCollectionListModel.instance:getSelectCount()
+function RougeMapCollectionAbandonView:refreshRight()
+	local selectCount = RougeLossCollectionListModel.instance:getSelectCount()
 
-	arg_13_0._txtnum.text = string.format("（<#C69620>%s</color>/%s）", var_13_0, arg_13_0.lossCount)
+	self._txtnum.text = string.format("（<#C69620>%s</color>/%s）", selectCount, self.lossCount)
 
-	local var_13_1 = var_13_0 < 1
+	local isEmpty = selectCount < 1
 
-	gohelper.setActive(arg_13_0._gorightempty, var_13_1)
+	gohelper.setActive(self._gorightempty, isEmpty)
 
-	local var_13_2 = RougeLossCollectionListModel.instance:getSelectMoList()
+	local collectionMoList = RougeLossCollectionListModel.instance:getSelectMoList()
 
-	RougeMapHelper.loadItem(arg_13_0.rightItem, RougeMapCollectionLossRightItem, var_13_2, arg_13_0.rightCollectionItemList)
+	RougeMapHelper.loadItem(self.rightItem, RougeMapCollectionLossRightItem, collectionMoList, self.rightCollectionItemList)
 end
 
-function var_0_0.onClickRightItem(arg_14_0, arg_14_1, arg_14_2)
-	RougeLossCollectionListModel.instance:deselectMo(arg_14_2)
+function RougeMapCollectionAbandonView:onClickRightItem(index, mo)
+	RougeLossCollectionListModel.instance:deselectMo(mo)
 end
 
-function var_0_0.refreshBtn(arg_15_0)
-	gohelper.setActive(arg_15_0._btnconfirm.gameObject, RougeLossCollectionListModel.instance:getSelectCount() >= arg_15_0.lossCount)
+function RougeMapCollectionAbandonView:refreshBtn()
+	gohelper.setActive(self._btnconfirm.gameObject, RougeLossCollectionListModel.instance:getSelectCount() >= self.lossCount)
 end
 
-function var_0_0.onSelectLossCollectionChange(arg_16_0)
-	arg_16_0:refreshLeft()
-	arg_16_0:refreshRight()
-	arg_16_0:refreshBtn()
+function RougeMapCollectionAbandonView:onSelectLossCollectionChange()
+	self:refreshLeft()
+	self:refreshRight()
+	self:refreshBtn()
 end
 
-function var_0_0.onClose(arg_17_0)
-	arg_17_0.collectionComp:onClose()
+function RougeMapCollectionAbandonView:onClose()
+	self.collectionComp:onClose()
 	RougeLossCollectionListModel.instance:clear()
 
-	if arg_17_0.callbackId then
-		RougeRpc.instance:removeCallbackById(arg_17_0.callbackId)
+	if self.callbackId then
+		RougeRpc.instance:removeCallbackById(self.callbackId)
 	end
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0.collectionComp:destroy()
-	RougeMapHelper.destroyItemList(arg_18_0.leftCollectionItemList)
-	RougeMapHelper.destroyItemList(arg_18_0.rightCollectionItemList)
-	arg_18_0._simagefullbg:UnLoadImage()
-	arg_18_0._simagerightbg:UnLoadImage()
-	arg_18_0._simagetopbg1:UnLoadImage()
-	arg_18_0._simagetopbg2:UnLoadImage()
+function RougeMapCollectionAbandonView:onDestroyView()
+	self.collectionComp:destroy()
+	RougeMapHelper.destroyItemList(self.leftCollectionItemList)
+	RougeMapHelper.destroyItemList(self.rightCollectionItemList)
+	self._simagefullbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
+	self._simagetopbg1:UnLoadImage()
+	self._simagetopbg2:UnLoadImage()
 end
 
-return var_0_0
+return RougeMapCollectionAbandonView

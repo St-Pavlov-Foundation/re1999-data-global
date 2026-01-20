@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.system.work.FightWorkNotifyBindContract", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkNotifyBindContract.lua
 
-local var_0_0 = class("FightWorkNotifyBindContract", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkNotifyBindContract", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightStrUtil.instance:getSplitCache(arg_1_0.actEffectData.reserveStr, "#")
+local FightWorkNotifyBindContract = class("FightWorkNotifyBindContract", FightEffectBase)
 
-	FightModel.instance:setNotifyContractInfo(arg_1_0.actEffectData.targetId, var_1_0)
-	arg_1_0:onDone(true)
+function FightWorkNotifyBindContract:onStart()
+	local entityList = FightStrUtil.instance:getSplitCache(self.actEffectData.reserveStr, "#")
+
+	FightModel.instance:setNotifyContractInfo(self.actEffectData.targetId, entityList)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkNotifyBindContract

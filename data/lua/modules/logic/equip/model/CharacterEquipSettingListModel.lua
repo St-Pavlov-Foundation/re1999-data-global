@@ -1,22 +1,96 @@
-﻿module("modules.logic.equip.model.CharacterEquipSettingListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/CharacterEquipSettingListModel.lua
 
-local var_0_0 = class("CharacterEquipSettingListModel", EquipInfoBaseListModel)
+module("modules.logic.equip.model.CharacterEquipSettingListModel", package.seeall)
 
-function var_0_0.onOpen(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.heroMo = arg_1_1.heroMo
+local CharacterEquipSettingListModel = class("CharacterEquipSettingListModel", EquipInfoBaseListModel)
 
-	arg_1_0:initEquipList(arg_1_2)
-	arg_1_0:setCurrentShowHeroMo(arg_1_1.heroMo)
+function CharacterEquipSettingListModel:onInit()
+	CharacterEquipSettingListModel.super.onInit(self)
 
-	local var_1_0 = EquipModel.instance:getEquip(arg_1_1.heroMo.defaultEquipUid) or arg_1_0.equipMoList and arg_1_0.equipMoList[1]
-
-	arg_1_0:setCurrentSelectEquipMo(var_1_0)
+	self._tempEquipMos = {}
 end
 
-function var_0_0.setCurrentShowHeroMo(arg_2_0, arg_2_1)
-	arg_2_0.currentShowHeroMo = arg_2_1
+function CharacterEquipSettingListModel:onOpen(viewParam, filterMo)
+	self.heroMo = viewParam.heroMo
+
+	self:initEquipList(filterMo)
+	self:setCurrentShowHeroMo(viewParam.heroMo)
+
+	self._defaultEquipUid = viewParam.heroMo.defaultEquipUid
+
+	self:selectFirstEquip()
 end
 
-var_0_0.instance = var_0_0.New()
+function CharacterEquipSettingListModel:selectFirstEquip()
+	local equipMo = EquipModel.instance:getEquip(self._defaultEquipUid)
 
-return var_0_0
+	equipMo = equipMo or self.equipMoList and self.equipMoList[1]
+
+	self:setCurrentSelectEquipMo(equipMo)
+end
+
+function CharacterEquipSettingListModel:initEquipList(filterMo)
+	self.equipMoList = {}
+	self.recommendEquip = self.heroMo and self.heroMo:getRecommendEquip() or {}
+
+	local isHasRecommed = LuaUtil.tableNotEmpty(self.recommendEquip)
+	local isFilter = filterMo:isFiltering()
+	local recommendEqiuipMos = {}
+
+	for _, equipMo in ipairs(EquipModel.instance:getEquips()) do
+		if EquipHelper.isNormalEquip(equipMo.config) then
+			if isFilter then
+				if filterMo:checkIsIncludeTag(equipMo.config) then
+					self:_initCharacterEquipMO(isHasRecommed, equipMo, recommendEqiuipMos)
+				end
+			else
+				self:_initCharacterEquipMO(isHasRecommed, equipMo, recommendEqiuipMos)
+			end
+		end
+	end
+
+	for index, id in ipairs(self.recommendEquip) do
+		local equipMo = recommendEqiuipMos[id]
+
+		if not equipMo then
+			equipMo = self._tempEquipMos[id]
+
+			if not equipMo then
+				equipMo = CharacterEquipMO.New()
+
+				equipMo:setTempMo(id)
+
+				self._tempEquipMos[id] = equipMo
+			end
+
+			equipMo:setRecommedIndex(index)
+
+			recommendEqiuipMos[id] = equipMo
+
+			if not isFilter or filterMo:checkIsIncludeTag(equipMo.config) then
+				table.insert(self.equipMoList, equipMo)
+			end
+		end
+	end
+
+	self:resortEquip()
+end
+
+function CharacterEquipSettingListModel:_initCharacterEquipMO(isHasRecommed, equipMo, recommendEqiuipMos)
+	local index = isHasRecommed and tabletool.indexOf(self.recommendEquip, equipMo.equipId) or -1
+
+	equipMo:setRecommedIndex(index)
+	table.insert(self.equipMoList, equipMo)
+
+	if index ~= -1 then
+		recommendEqiuipMos[equipMo.equipId] = equipMo
+	end
+end
+
+function CharacterEquipSettingListModel:setCurrentShowHeroMo(heroMo)
+	self.currentShowHeroMo = heroMo
+end
+
+CharacterEquipSettingListModel.instance = CharacterEquipSettingListModel.New()
+
+return CharacterEquipSettingListModel

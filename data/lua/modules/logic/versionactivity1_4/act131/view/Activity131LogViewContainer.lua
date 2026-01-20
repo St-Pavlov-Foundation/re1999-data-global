@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131LogViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131LogViewContainer.lua
 
-local var_0_0 = class("Activity131LogViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act131.view.Activity131LogViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = MixScrollParam.New()
+local Activity131LogViewContainer = class("Activity131LogViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_log"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = Activity131LogItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+function Activity131LogViewContainer:buildViews()
+	local views = {}
+	local scrollParam = MixScrollParam.New()
 
-	table.insert(var_1_0, LuaMixScrollView.New(Activity131LogListModel.instance, var_1_1))
-	table.insert(var_1_0, Activity131LogView.New())
+	scrollParam.scrollGOPath = "#scroll_log"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Activity131LogItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
 
-	return var_1_0
+	table.insert(views, LuaMixScrollView.New(Activity131LogListModel.instance, scrollParam))
+	table.insert(views, Activity131LogView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity131LogViewContainer

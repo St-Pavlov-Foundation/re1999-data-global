@@ -1,227 +1,230 @@
-﻿module("modules.logic.versionactivity1_3.chess.model.Activity122Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/model/Activity122Model.lua
 
-local var_0_0 = class("Activity122Model", BaseModel)
-local var_0_1 = 1
+module("modules.logic.versionactivity1_3.chess.model.Activity122Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.cacheData = nil
-	arg_1_0.playerCacheData = nil
+local Activity122Model = class("Activity122Model", BaseModel)
+local defaultEpisodeId = 1
+
+function Activity122Model:onInit()
+	self.cacheData = nil
+	self.playerCacheData = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.cacheData = nil
-	arg_2_0.playerCacheData = nil
+function Activity122Model:reInit()
+	self.cacheData = nil
+	self.playerCacheData = nil
 end
 
-function var_0_0.getCurActivityID(arg_3_0)
-	return arg_3_0._curActivityId
+function Activity122Model:getCurActivityID()
+	return self._curActivityId
 end
 
-function var_0_0.setCurEpisodeId(arg_4_0, arg_4_1)
-	arg_4_0._curEpisodeId = arg_4_1
+function Activity122Model:setCurEpisodeId(value)
+	self._curEpisodeId = value
 end
 
-function var_0_0.getCurEpisodeId(arg_5_0)
-	return arg_5_0._curEpisodeId
+function Activity122Model:getCurEpisodeId()
+	return self._curEpisodeId
 end
 
-function var_0_0.getCurEpisodeSightMap(arg_6_0)
-	return arg_6_0._curEpisodeSightMap
+function Activity122Model:getCurEpisodeSightMap()
+	return self._curEpisodeSightMap
 end
 
-function var_0_0.checkPosIndexInSight(arg_7_0, arg_7_1)
-	return arg_7_0._curEpisodeSightMap[arg_7_1]
+function Activity122Model:checkPosIndexInSight(posIndex)
+	return self._curEpisodeSightMap[posIndex]
 end
 
-function var_0_0.getCurEpisodeFireMap(arg_8_0)
-	return arg_8_0._curEpisodeFireMap
+function Activity122Model:getCurEpisodeFireMap()
+	return self._curEpisodeFireMap
 end
 
-function var_0_0.checkPosIndexInFire(arg_9_0, arg_9_1)
-	return arg_9_0._curEpisodeFireMap[arg_9_1]
+function Activity122Model:checkPosIndexInFire(posIndex)
+	return self._curEpisodeFireMap[posIndex]
 end
 
-function var_0_0.onReceiveGetAct122InfoReply(arg_10_0, arg_10_1)
-	arg_10_0._curActivityId = arg_10_1.activityId
-	arg_10_0._curEpisodeId = arg_10_1.lastEpisodeId > 0 and arg_10_1.lastEpisodeId or var_0_1
-	arg_10_0._episodeInfoData = {}
+function Activity122Model:onReceiveGetAct122InfoReply(msg)
+	self._curActivityId = msg.activityId
+	self._curEpisodeId = msg.lastEpisodeId > 0 and msg.lastEpisodeId or defaultEpisodeId
+	self._episodeInfoData = {}
 
-	local var_10_0 = arg_10_1.act122Episodes
+	local sightInfo = msg.act122Episodes
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1.act122Episodes) do
-		local var_10_1 = iter_10_1.id
+	for i, v in ipairs(msg.act122Episodes) do
+		local id = v.id
 
-		arg_10_0._episodeInfoData[var_10_1] = {}
-		arg_10_0._episodeInfoData[var_10_1].id = iter_10_1.id
-		arg_10_0._episodeInfoData[var_10_1].star = iter_10_1.star
-		arg_10_0._episodeInfoData[var_10_1].totalCount = iter_10_1.totalCount
+		self._episodeInfoData[id] = {}
+		self._episodeInfoData[id].id = v.id
+		self._episodeInfoData[id].star = v.star
+		self._episodeInfoData[id].totalCount = v.totalCount
 	end
 
-	if arg_10_1.map and arg_10_1.map.allFinishInteracts then
-		Va3ChessGameModel.instance:updateFinishInteracts(arg_10_1.map.finishInteracts)
-		Va3ChessGameModel.instance:updateAllFinishInteracts(arg_10_1.map.allFinishInteracts)
+	if msg.map and msg.map.allFinishInteracts then
+		Va3ChessGameModel.instance:updateFinishInteracts(msg.map.finishInteracts)
+		Va3ChessGameModel.instance:updateAllFinishInteracts(msg.map.allFinishInteracts)
 	end
 end
 
-function var_0_0.onReceiveAct122StartEpisodeReply(arg_11_0, arg_11_1)
-	arg_11_0:increaseCount(arg_11_1.map.id)
+function Activity122Model:onReceiveAct122StartEpisodeReply(msg)
+	self:increaseCount(msg.map.id)
 
-	local var_11_0 = arg_11_1.map.act122Sight
+	local sightInfo = msg.map.act122Sight
 
-	arg_11_0:initSight(var_11_0)
+	self:initSight(sightInfo)
 
-	local var_11_1 = arg_11_1.map.act122Fire
+	local fireInfo = msg.map.act122Fire
 
-	arg_11_0:initFire(var_11_1)
+	self:initFire(fireInfo)
 end
 
-function var_0_0.initSight(arg_12_0, arg_12_1)
-	arg_12_0._curEpisodeSightMap = {}
+function Activity122Model:initSight(addSights)
+	self._curEpisodeSightMap = {}
 
-	local var_12_0 = arg_12_1
+	local newSight = addSights
 
-	if not var_12_0 then
+	if not newSight then
 		return
 	end
 
-	local var_12_1 = #var_12_0
+	local len = #newSight
 
-	for iter_12_0 = 1, var_12_1 do
-		local var_12_2 = var_12_0[iter_12_0]
-		local var_12_3 = Va3ChessMapUtils.calPosIndex(var_12_2.x, var_12_2.y)
+	for i = 1, len do
+		local sightData = newSight[i]
+		local tileIndex = Va3ChessMapUtils.calPosIndex(sightData.x, sightData.y)
 
-		arg_12_0._curEpisodeSightMap[var_12_3] = true
+		self._curEpisodeSightMap[tileIndex] = true
 	end
 end
 
-function var_0_0.updateSight(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1
+function Activity122Model:updateSight(addSights)
+	local newSight = addSights
 
-	if not var_13_0 then
+	if not newSight then
 		return
 	end
 
-	arg_13_0._curEpisodeSightMap = arg_13_0._curEpisodeSightMap or {}
+	self._curEpisodeSightMap = self._curEpisodeSightMap or {}
 
-	local var_13_1 = #var_13_0
+	local len = #newSight
 
-	for iter_13_0 = 1, var_13_1 do
-		local var_13_2 = var_13_0[iter_13_0]
-		local var_13_3 = Va3ChessMapUtils.calPosIndex(var_13_2.x, var_13_2.y)
+	for i = 1, len do
+		local sightData = newSight[i]
+		local tileIndex = Va3ChessMapUtils.calPosIndex(sightData.x, sightData.y)
 
-		arg_13_0._curEpisodeSightMap[var_13_3] = true
+		self._curEpisodeSightMap[tileIndex] = true
 	end
 end
 
-function var_0_0.initFire(arg_14_0, arg_14_1)
-	arg_14_0._curEpisodeFireMap = {}
+function Activity122Model:initFire(addFires)
+	self._curEpisodeFireMap = {}
 
-	local var_14_0 = arg_14_1
+	local newFires = addFires
 
-	if not var_14_0 then
+	if not newFires then
 		return
 	end
 
-	local var_14_1 = #var_14_0
+	local len = #newFires
 
-	for iter_14_0 = 1, var_14_1 do
-		local var_14_2 = var_14_0[iter_14_0]
-		local var_14_3 = Va3ChessMapUtils.calPosIndex(var_14_2.x, var_14_2.y)
+	for i = 1, len do
+		local fireData = newFires[i]
+		local tileIndex = Va3ChessMapUtils.calPosIndex(fireData.x, fireData.y)
 
-		arg_14_0._curEpisodeFireMap[var_14_3] = true
+		self._curEpisodeFireMap[tileIndex] = true
 	end
 end
 
-function var_0_0.updateFire(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1
+function Activity122Model:updateFire(addFires)
+	local newFires = addFires
 
-	if not var_15_0 then
+	if not newFires then
 		return
 	end
 
-	local var_15_1 = #var_15_0
+	local len = #newFires
 
-	for iter_15_0 = 1, var_15_1 do
-		local var_15_2 = var_15_0[iter_15_0]
-		local var_15_3 = Va3ChessMapUtils.calPosIndex(var_15_2.x, var_15_2.y)
+	for i = 1, len do
+		local fireData = newFires[i]
+		local tileIndex = Va3ChessMapUtils.calPosIndex(fireData.x, fireData.y)
 
-		arg_15_0._curEpisodeFireMap[var_15_3] = true
+		self._curEpisodeFireMap[tileIndex] = true
 	end
 end
 
-function var_0_0.getEpisodeData(arg_16_0, arg_16_1)
-	return arg_16_0._episodeInfoData and arg_16_0._episodeInfoData[arg_16_1]
+function Activity122Model:getEpisodeData(id)
+	return self._episodeInfoData and self._episodeInfoData[id]
 end
 
-function var_0_0.isEpisodeClear(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getEpisodeData(arg_17_1)
+function Activity122Model:isEpisodeClear(id)
+	local episodeData = self:getEpisodeData(id)
 
-	if var_17_0 then
-		return var_17_0.star > 0
+	if episodeData then
+		return episodeData.star > 0
 	end
 
 	return false
 end
 
-function var_0_0.isEpisodeOpen(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getEpisodeData(arg_18_1)
+function Activity122Model:isEpisodeOpen(id)
+	local episodeData = self:getEpisodeData(id)
 
-	if not var_18_0 then
+	if not episodeData then
 		return false
 	end
 
-	local var_18_1 = Activity122Config.instance:getEpisodeCo(arg_18_0:getCurActivityID(), var_18_0.id)
+	local episodeCfg = Activity122Config.instance:getEpisodeCo(self:getCurActivityID(), episodeData.id)
+	local open = episodeCfg.preEpisode == 0 or self:isEpisodeClear(episodeCfg.preEpisode)
 
-	return var_18_1.preEpisode == 0 or arg_18_0:isEpisodeClear(var_18_1.preEpisode)
+	return open
 end
 
-function var_0_0.getTaskData(arg_19_0, arg_19_1)
-	return TaskModel.instance:getTaskById(arg_19_1)
+function Activity122Model:getTaskData(id)
+	return TaskModel.instance:getTaskById(id)
 end
 
-function var_0_0.increaseCount(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0._episodeInfoData and arg_20_0._episodeInfoData[arg_20_1]
+function Activity122Model:increaseCount(id)
+	local data = self._episodeInfoData and self._episodeInfoData[id]
 
-	if var_20_0 then
-		var_20_0.totalCount = var_20_0.totalCount + 1
+	if data then
+		data.totalCount = data.totalCount + 1
 	end
 end
 
-function var_0_0.getPlayerCacheData(arg_21_0)
-	if not arg_21_0.cacheData then
-		local var_21_0 = tostring(PlayerModel.instance:getMyUserId())
-		local var_21_1 = PlayerPrefsHelper.getString(PlayerPrefsKey.Version1_3_Roel2ChessKey, "")
+function Activity122Model:getPlayerCacheData()
+	if not self.cacheData then
+		local playerId = tostring(PlayerModel.instance:getMyUserId())
+		local str = PlayerPrefsHelper.getString(PlayerPrefsKey.Version1_3_Roel2ChessKey, "")
 
-		if not string.nilorempty(var_21_1) then
-			arg_21_0.cacheData = cjson.decode(var_21_1)
-			arg_21_0.playerCacheData = arg_21_0.cacheData[var_21_0]
+		if not string.nilorempty(str) then
+			self.cacheData = cjson.decode(str)
+			self.playerCacheData = self.cacheData[playerId]
 		end
 
-		if not arg_21_0.cacheData then
-			arg_21_0.cacheData = {}
+		if not self.cacheData then
+			self.cacheData = {}
 		end
 
-		if not arg_21_0.playerCacheData then
-			arg_21_0.playerCacheData = {}
-			arg_21_0.playerCacheData.isNextChapterLock = true
-			arg_21_0.playerCacheData.lockNodeList = {}
-			arg_21_0.cacheData[var_21_0] = arg_21_0.playerCacheData
+		if not self.playerCacheData then
+			self.playerCacheData = {}
+			self.playerCacheData.isNextChapterLock = true
+			self.playerCacheData.lockNodeList = {}
+			self.cacheData[playerId] = self.playerCacheData
 
-			arg_21_0:saveCacheData()
+			self:saveCacheData()
 		end
 	end
 
-	return arg_21_0.playerCacheData
+	return self.playerCacheData
 end
 
-function var_0_0.saveCacheData(arg_22_0)
-	if not arg_22_0.cacheData then
+function Activity122Model:saveCacheData()
+	if not self.cacheData then
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.Version1_3_Roel2ChessKey, cjson.encode(arg_22_0.cacheData))
+	PlayerPrefsHelper.setString(PlayerPrefsKey.Version1_3_Roel2ChessKey, cjson.encode(self.cacheData))
 end
 
-var_0_0.instance = var_0_0.New()
+Activity122Model.instance = Activity122Model.New()
 
-return var_0_0
+return Activity122Model

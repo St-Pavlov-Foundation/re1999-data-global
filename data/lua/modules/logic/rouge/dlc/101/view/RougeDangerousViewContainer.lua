@@ -1,20 +1,22 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeDangerousViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeDangerousViewContainer.lua
 
-local var_0_0 = class("RougeDangerousViewContainer", BaseViewContainer)
+module("modules.logic.rouge.dlc.101.view.RougeDangerousViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeDangerousViewContainer = class("RougeDangerousViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeDangerousView.New())
+function RougeDangerousViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeDangerousView.New())
+
+	return views
 end
 
-function var_0_0.playOpenTransition(arg_2_0)
-	var_0_0.super.playOpenTransition(arg_2_0, {
+function RougeDangerousViewContainer:playOpenTransition()
+	RougeDangerousViewContainer.super.playOpenTransition(self, {
 		noBlock = true,
 		duration = RougeDangerousView.OpenViewDuration
 	})
 end
 
-return var_0_0
+return RougeDangerousViewContainer

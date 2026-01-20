@@ -1,22 +1,26 @@
-﻿module("modules.logic.seasonver.act166.model.Season166InfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166InfoMO.lua
 
-local var_0_0 = pureTable("Season166InfoMO")
+module("modules.logic.seasonver.act166.model.Season166InfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = 0
-	arg_1_0.stage = 0
-	arg_1_0.bonusStage = 0
-	arg_1_0.activityId = arg_1_1
+local Season166InfoMO = pureTable("Season166InfoMO")
+
+function Season166InfoMO:init(activityId)
+	self.id = 0
+	self.stage = 0
+	self.bonusStage = 0
+	self.activityId = activityId
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.stage = arg_2_1.stage
-	arg_2_0.bonusStage = arg_2_1.bonusStage
+function Season166InfoMO:setData(info)
+	self.id = info.id
+	self.stage = info.stage
+	self.bonusStage = info.bonusStage
 end
 
-function var_0_0.hasAnaly(arg_3_0)
-	return (Season166Config.instance:getSeasonInfoAnalys(arg_3_0.activityId, arg_3_0.id) or {})[arg_3_0.stage + 1] == nil
+function Season166InfoMO:hasAnaly()
+	local dict = Season166Config.instance:getSeasonInfoAnalys(self.activityId, self.id) or {}
+
+	return dict[self.stage + 1] == nil
 end
 
-return var_0_0
+return Season166InfoMO

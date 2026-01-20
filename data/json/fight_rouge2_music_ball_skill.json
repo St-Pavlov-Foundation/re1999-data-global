@@ -1,0 +1,432 @@
+[
+  {
+    "skillId": 108280000,
+    "icon": "",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108280001,
+    "icon": "",
+    "condition1": "",
+    "behavior1": "Rouge2BallRecursive:3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108280002,
+    "icon": "",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320401,
+    "icon": "rouge2_backpack_smallskill_01",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:3#1",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320402,
+    "icon": "rouge2_backpack_smallskill_02",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320403,
+    "icon": "rouge2_backpack_smallskill_03",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320404,
+    "icon": "rouge2_backpack_smallskill_04",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#1",
+    "condition2": "",
+    "behavior2": "Rouge2BallIn:2#1",
+    "condition3": "",
+    "behavior3": "Rouge2BallIn:3#1"
+  },
+  {
+    "skillId": 110320405,
+    "icon": "rouge2_backpack_smallskill_05",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:2",
+    "condition2": "",
+    "behavior2": "Rouge2BallOut:2",
+    "condition3": "",
+    "behavior3": "Rouge2BallOut:2"
+  },
+  {
+    "skillId": 110320406,
+    "icon": "rouge2_backpack_smallskill_06",
+    "condition1": "",
+    "behavior1": "Rouge2BallRecursive:1",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320407,
+    "icon": "rouge2_backpack_smallskill_07",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320408,
+    "icon": "rouge2_backpack_smallskill_08",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:1",
+    "condition2": "",
+    "behavior2": "Rouge2BallOut:1",
+    "condition3": "",
+    "behavior3": "Rouge2BallOut:1"
+  },
+  {
+    "skillId": 110320409,
+    "icon": "rouge2_backpack_smallskill_10",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320410,
+    "icon": "rouge2_backpack_smallskill_09",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320411,
+    "icon": "rouge2_backpack_smallskill_01",
+    "condition1": "",
+    "behavior1": "",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320412,
+    "icon": "rouge2_backpack_smallskill_02",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320413,
+    "icon": "rouge2_backpack_smallskill_03",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#1",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320414,
+    "icon": "rouge2_backpack_smallskill_04",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#2",
+    "condition2": "",
+    "behavior2": "Rouge2BallIn:2#2",
+    "condition3": "",
+    "behavior3": "Rouge2BallIn:3#2"
+  },
+  {
+    "skillId": 110320415,
+    "icon": "rouge2_backpack_smallskill_05",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:3",
+    "condition2": "",
+    "behavior2": "Rouge2BallOut:3",
+    "condition3": "",
+    "behavior3": "Rouge2BallOut:3"
+  },
+  {
+    "skillId": 110320416,
+    "icon": "rouge2_backpack_smallskill_06",
+    "condition1": "",
+    "behavior1": "Rouge2BallRecursive:2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320417,
+    "icon": "rouge2_backpack_smallskill_07",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 110320418,
+    "icon": "rouge2_backpack_smallskill_08",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:1",
+    "condition2": "",
+    "behavior2": "Rouge2BallOut:1",
+    "condition3": "",
+    "behavior3": "Rouge2BallOut:1"
+  },
+  {
+    "skillId": 110320419,
+    "icon": "rouge2_backpack_smallskill_10",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:1",
+    "condition2": "",
+    "behavior2": "Rouge2BallOut:1",
+    "condition3": "",
+    "behavior3": "Rouge2BallOut:1"
+  },
+  {
+    "skillId": 110320420,
+    "icon": "rouge2_backpack_smallskill_09",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270078,
+    "icon": "rouge2_backpack_smallskill_01",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:3#1",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270079,
+    "icon": "rouge2_backpack_smallskill_02",
+    "condition1": "",
+    "behavior1": "",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270080,
+    "icon": "rouge2_backpack_smallskill_03",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#1",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270081,
+    "icon": "rouge2_backpack_smallskill_04",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#1",
+    "condition2": "",
+    "behavior2": "Rouge2BallIn:1#1",
+    "condition3": "",
+    "behavior3": "Rouge2BallIn:3#1"
+  },
+  {
+    "skillId": 108270082,
+    "icon": "rouge2_backpack_smallskill_05",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270083,
+    "icon": "rouge2_backpack_smallskill_06",
+    "condition1": "",
+    "behavior1": "Rouge2BallRecursive:1",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270084,
+    "icon": "rouge2_backpack_smallskill_07",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270085,
+    "icon": "rouge2_backpack_smallskill_08",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270086,
+    "icon": "rouge2_backpack_smallskill_10",
+    "condition1": "",
+    "behavior1": "",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270087,
+    "icon": "rouge2_backpack_smallskill_09",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#1",
+    "condition2": "",
+    "behavior2": "Rouge2BallIn:3#1",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270098,
+    "icon": "rouge2_backpack_smallskill_01",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:3#2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270099,
+    "icon": "rouge2_backpack_smallskill_02",
+    "condition1": "",
+    "behavior1": "",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270100,
+    "icon": "rouge2_backpack_smallskill_03",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#2",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270101,
+    "icon": "rouge2_backpack_smallskill_04",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:2#2",
+    "condition2": "",
+    "behavior2": "Rouge2BallIn:1#2",
+    "condition3": "",
+    "behavior3": "Rouge2BallIn:3#2"
+  },
+  {
+    "skillId": 108270102,
+    "icon": "rouge2_backpack_smallskill_05",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270103,
+    "icon": "rouge2_backpack_smallskill_06",
+    "condition1": "",
+    "behavior1": "Rouge2BallRecursive:3",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270104,
+    "icon": "rouge2_backpack_smallskill_07",
+    "condition1": "",
+    "behavior1": "Rouge2BallOut:6",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270105,
+    "icon": "rouge2_backpack_smallskill_08",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#6",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270106,
+    "icon": "rouge2_backpack_smallskill_10",
+    "condition1": "",
+    "behavior1": "",
+    "condition2": "",
+    "behavior2": "",
+    "condition3": "",
+    "behavior3": ""
+  },
+  {
+    "skillId": 108270107,
+    "icon": "rouge2_backpack_smallskill_09",
+    "condition1": "",
+    "behavior1": "Rouge2BallIn:1#2",
+    "condition2": "",
+    "behavior2": "Rouge2BallIn:3#2",
+    "condition3": "",
+    "behavior3": ""
+  }
+]

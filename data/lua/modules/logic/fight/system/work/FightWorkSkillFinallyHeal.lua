@@ -1,91 +1,93 @@
-﻿module("modules.logic.fight.system.work.FightWorkSkillFinallyHeal", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSkillFinallyHeal.lua
 
-local var_0_0 = class("FightWorkSkillFinallyHeal", BaseWork)
+module("modules.logic.fight.system.work.FightWorkSkillFinallyHeal", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0._actEffect = {}
+local FightWorkSkillFinallyHeal = class("FightWorkSkillFinallyHeal", BaseWork)
+
+function FightWorkSkillFinallyHeal:ctor(fightStepData)
+	self.fightStepData = fightStepData
+	self._actEffect = {}
 end
 
-function var_0_0.addActEffectData(arg_2_0, arg_2_1)
-	table.insert(arg_2_0._actEffect, arg_2_1)
+function FightWorkSkillFinallyHeal:addActEffectData(actEffectData)
+	table.insert(self._actEffect, actEffectData)
 end
 
-function var_0_0.onStart(arg_3_0)
-	local var_3_0 = FightHelper.getEntity(arg_3_0.fightStepData.fromId)
+function FightWorkSkillFinallyHeal:onStart()
+	local attacker = FightHelper.getEntity(self.fightStepData.fromId)
 
-	if not var_3_0 then
-		arg_3_0:onDone(true)
+	if not attacker then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_3_1 = arg_3_0.fightStepData.actId
-	local var_3_2 = var_3_0:getMO()
-	local var_3_3 = var_3_2 and var_3_2.skin
-	local var_3_4 = FightConfig.instance:getSkinSkillTimeline(var_3_3, var_3_1)
+	local skillId = self.fightStepData.actId
+	local mo = attacker:getMO()
+	local skinId = mo and mo.skin
+	local timeline = FightConfig.instance:getSkinSkillTimeline(skinId, skillId)
 
-	if string.nilorempty(var_3_4) then
-		arg_3_0:onDone(true)
+	if string.nilorempty(timeline) then
+		self:onDone(true)
 
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 20 / FightModel.instance:getSpeed())
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillEnd, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.OnTimelineHeal, arg_3_0._onTimelineHeal, arg_3_0)
+	TaskDispatcher.runDelay(self._delayDone, self, 20 / FightModel.instance:getSpeed())
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillEnd, self)
+	FightController.instance:registerCallback(FightEvent.OnTimelineHeal, self._onTimelineHeal, self)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkSkillFinallyHeal:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0._onSkillEnd(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_3 ~= arg_5_0.fightStepData then
+function FightWorkSkillFinallyHeal:_onSkillEnd(attacker, skillId, fightStepData)
+	if fightStepData ~= self.fightStepData then
 		return
 	end
 
-	arg_5_0:_removeEvents()
+	self:_removeEvents()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._actEffect) do
-		local var_5_0 = FightHelper.getEntity(iter_5_1.targetId)
+	for _, actEffectData in ipairs(self._actEffect) do
+		local entity = FightHelper.getEntity(actEffectData.targetId)
 
-		if var_5_0 and not var_5_0.isDead then
-			FightDataHelper.playEffectData(iter_5_1)
+		if entity and not entity.isDead then
+			FightDataHelper.playEffectData(actEffectData)
 
-			if iter_5_1.effectType == FightEnum.EffectType.HEAL then
-				FightFloatMgr.instance:float(var_5_0.id, FightEnum.FloatType.heal, iter_5_1.effectNum, nil, iter_5_1.effectNum1 == 1)
-			elseif iter_5_1.effectType == FightEnum.EffectType.HEALCRIT then
-				FightFloatMgr.instance:float(var_5_0.id, FightEnum.FloatType.crit_heal, iter_5_1.effectNum, nil, iter_5_1.effectNum1 == 1)
+			if actEffectData.effectType == FightEnum.EffectType.HEAL then
+				FightFloatMgr.instance:float(entity.id, FightEnum.FloatType.heal, actEffectData.effectNum, nil, actEffectData.effectNum1 == 1)
+			elseif actEffectData.effectType == FightEnum.EffectType.HEALCRIT then
+				FightFloatMgr.instance:float(entity.id, FightEnum.FloatType.crit_heal, actEffectData.effectNum, nil, actEffectData.effectNum1 == 1)
 			end
 
-			if var_5_0.nameUI then
-				var_5_0.nameUI:addHp(iter_5_1.effectNum)
+			if entity.nameUI then
+				entity.nameUI:addHp(actEffectData.effectNum)
 
 				if not FightSkillMgr.instance:isPlayingAnyTimeline() then
-					var_5_0.nameUI:setActive(true)
+					entity.nameUI:setActive(true)
 				end
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_5_0, iter_5_1.effectNum)
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, actEffectData.effectNum)
 		end
 	end
 
-	arg_5_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onTimelineHeal(arg_6_0, arg_6_1)
-	tabletool.removeValue(arg_6_0._actEffect, arg_6_1)
+function FightWorkSkillFinallyHeal:_onTimelineHeal(actEffectData)
+	tabletool.removeValue(self._actEffect, actEffectData)
 end
 
-function var_0_0._removeEvents(arg_7_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_7_0._onSkillEnd, arg_7_0)
-	FightController.instance:unregisterCallback(FightEvent.OnTimelineHeal, arg_7_0._onTimelineHeal, arg_7_0)
+function FightWorkSkillFinallyHeal:_removeEvents()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillEnd, self)
+	FightController.instance:unregisterCallback(FightEvent.OnTimelineHeal, self._onTimelineHeal, self)
 end
 
-function var_0_0.clearWork(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._delayDone, arg_8_0)
-	arg_8_0:_removeEvents()
+function FightWorkSkillFinallyHeal:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	self:_removeEvents()
 end
 
-return var_0_0
+return FightWorkSkillFinallyHeal

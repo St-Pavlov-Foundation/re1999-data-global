@@ -1,5 +1,8 @@
-﻿module("modules.logic.activity.view.Vxax_Role_PanelSignView_Part2_Container", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Vxax_Role_PanelSignView_Part2_Container.lua
 
-local var_0_0 = Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX_ContainerImpl(2)
+module("modules.logic.activity.view.Vxax_Role_PanelSignView_Part2_Container", package.seeall)
 
-return (class("Vxax_Role_PanelSignView_Part2_Container", var_0_0))
+local Impl = Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX_ContainerImpl(2)
+local Vxax_Role_PanelSignView_Part2_Container = class("Vxax_Role_PanelSignView_Part2_Container", Impl)
+
+return Vxax_Role_PanelSignView_Part2_Container

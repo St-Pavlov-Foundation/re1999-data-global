@@ -1,185 +1,189 @@
-﻿module("modules.logic.seasonver.act166.view.information.Season166InformationCurrencyView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/information/Season166InformationCurrencyView.lua
 
-local var_0_0 = class("Season166InformationCurrencyView", BaseView)
+module("modules.logic.seasonver.act166.view.information.Season166InformationCurrencyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.viewGO, "RightTop/#go_container/#go_currency")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "RightTop/#go_container")
+local Season166InformationCurrencyView = class("Season166InformationCurrencyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season166InformationCurrencyView:onInitView()
+	self._gocurrency = gohelper.findChild(self.viewGO, "RightTop/#go_container/#go_currency")
+	self._gocontainer = gohelper.findChild(self.viewGO, "RightTop/#go_container")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season166InformationCurrencyView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season166InformationCurrencyView:removeEvents()
 	return
 end
 
-function var_0_0._btncurrencyOnClick(arg_4_0)
-	local var_4_0 = arg_4_0.self
-	local var_4_1 = arg_4_0.index
+function Season166InformationCurrencyView._btncurrencyOnClick(param)
+	local selfObj = param.self
+	local index = param.index
 
-	var_4_0:_btncurrencyClick(var_4_0.param[var_4_1])
+	selfObj:_btncurrencyClick(selfObj.param[index])
 end
 
-function var_0_0._btncurrencyClick(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function Season166InformationCurrencyView:_btncurrencyClick(param)
+	if not param then
 		return
 	end
 
-	if arg_5_0.overrideClickFunc then
-		return arg_5_0.overrideClickFunc(arg_5_0.overrideClickFuncObj, arg_5_1)
+	if self.overrideClickFunc then
+		return self.overrideClickFunc(self.overrideClickFuncObj, param)
 	end
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, arg_5_1, false)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, param, false)
 
-	if arg_5_0._callback then
-		arg_5_0._callback(arg_5_0._callbackObj)
+	if self._callback then
+		self._callback(self._callbackObj)
 	end
 end
 
-function var_0_0._onClick(arg_6_0)
-	local var_6_0 = arg_6_0.self
-	local var_6_1 = arg_6_0.index
-	local var_6_2 = var_6_0.param[var_6_1]
+function Season166InformationCurrencyView._onClick(param)
+	local selfObj = param.self
+	local index = param.index
+	local param = selfObj.param[index]
 
-	if not var_6_2 then
+	if not param then
 		return
 	end
 
-	if type(var_6_2) == "number" then
-		local var_6_3 = var_6_2
+	if type(param) == "number" then
+		local currencyId = param
 
-		CurrencyJumpHandler.JumpByCurrency(var_6_3)
-	elseif var_6_2.jumpFunc then
-		var_6_2.jumpFunc()
+		CurrencyJumpHandler.JumpByCurrency(currencyId)
+	elseif param.jumpFunc then
+		param.jumpFunc()
 	end
 end
 
-local var_0_1 = CurrencyEnum.CurrencyType
+local currencyType = CurrencyEnum.CurrencyType
 
-function var_0_0._editableInitView(arg_7_0)
-	gohelper.setActive(arg_7_0._gocurrency, false)
+function Season166InformationCurrencyView:_editableInitView()
+	gohelper.setActive(self._gocurrency, false)
 
-	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_7_0._currencyObjs = {}
-	arg_7_0._currentItemIndex = nil
-	arg_7_0._initialized = true
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._currencyObjs = {}
+	self._currentItemIndex = nil
+	self._initialized = true
 end
 
-function var_0_0.setCurrencyType(arg_8_0, arg_8_1)
-	arg_8_0.param = arg_8_1
+function Season166InformationCurrencyView:setCurrencyType(currencyTypeParam)
+	self.param = currencyTypeParam
 
-	arg_8_0:_onCurrencyChange()
+	self:_onCurrencyChange()
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._currencyObjs) do
-		iter_9_1.btn:RemoveClickListener()
-		iter_9_1.btncurrency:RemoveClickListener()
+function Season166InformationCurrencyView:onDestroyView()
+	for _, itemObj in ipairs(self._currencyObjs) do
+		itemObj.btn:RemoveClickListener()
+		itemObj.btncurrency:RemoveClickListener()
 	end
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0.actId = arg_10_0.viewParam.actId or arg_10_0.viewParam.activityId
-	arg_10_0.param = {
-		Season166Config.instance:getSeasonConstNum(arg_10_0.actId, Season166Enum.InfoCostId)
+function Season166InformationCurrencyView:onOpen()
+	self.actId = self.viewParam.actId or self.viewParam.activityId
+	self.param = {
+		Season166Config.instance:getSeasonConstNum(self.actId, Season166Enum.InfoCostId)
 	}
 
-	arg_10_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_10_0._onCurrencyChange, arg_10_0)
-	arg_10_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_10_0._onCurrencyChange, arg_10_0)
-	arg_10_0:_onCurrencyChange()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onCurrencyChange, self)
+	self:_onCurrencyChange()
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0._onCurrencyChange, arg_11_0)
-	arg_11_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0._onCurrencyChange, arg_11_0)
+function Season166InformationCurrencyView:onClose()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onCurrencyChange, self)
 end
 
-function var_0_0._onCurrencyChange(arg_12_0)
-	if not arg_12_0.param then
-		gohelper.setActive(arg_12_0._gocontainer, false)
+function Season166InformationCurrencyView:_onCurrencyChange()
+	if not self.param then
+		gohelper.setActive(self._gocontainer, false)
 
 		return
 	end
 
-	if not arg_12_0._initialized then
+	if not self._initialized then
 		return
 	end
 
-	local var_12_0 = #arg_12_0.param
-	local var_12_1 = 1
+	local paramLen = #self.param
+	local sibling = 1
 
-	for iter_12_0 = var_12_0, 1, -1 do
-		local var_12_2 = arg_12_0:getCurrencyItem(iter_12_0)
-		local var_12_3 = arg_12_0.param[iter_12_0]
+	for index = paramLen, 1, -1 do
+		local itemObj = self:getCurrencyItem(index)
+		local param = self.param[index]
 
-		gohelper.setSibling(var_12_2.go, var_12_1)
+		gohelper.setSibling(itemObj.go, sibling)
 
-		var_12_1 = var_12_1 + 1
+		sibling = sibling + 1
 
-		if var_12_3 then
-			local var_12_4 = var_12_3
-			local var_12_5 = CurrencyModel.instance:getCurrency(var_12_4)
-			local var_12_6 = CurrencyConfig.instance:getCurrencyCo(var_12_4)
-			local var_12_7 = var_12_5 and var_12_5.quantity or 0
+		if param then
+			local currencyID = param
+			local currencyMO = CurrencyModel.instance:getCurrency(currencyID)
+			local currencyCO = CurrencyConfig.instance:getCurrencyCo(currencyID)
+			local quantity = currencyMO and currencyMO.quantity or 0
 
-			var_12_2.txt.text = GameUtil.numberDisplay(var_12_7)
+			itemObj.txt.text = GameUtil.numberDisplay(quantity)
 
-			var_12_2.go:SetActive(true)
+			itemObj.go:SetActive(true)
 
-			local var_12_8 = var_12_6.icon
+			local currencyname = currencyCO.icon
 
-			UISpriteSetMgr.instance:setCurrencyItemSprite(var_12_2.image, var_12_8 .. "_1")
+			UISpriteSetMgr.instance:setCurrencyItemSprite(itemObj.image, currencyname .. "_1")
 		else
-			var_12_2.go:SetActive(false)
+			itemObj.go:SetActive(false)
 		end
 	end
 
-	if var_12_0 < #arg_12_0._currencyObjs then
-		for iter_12_1 = var_12_0 + 1, #arg_12_0._currencyObjs do
-			arg_12_0:getCurrencyItem(iter_12_1).go:SetActive(false)
+	if paramLen < #self._currencyObjs then
+		for i = paramLen + 1, #self._currencyObjs do
+			local itemObj = self:getCurrencyItem(i)
+
+			itemObj.go:SetActive(false)
 		end
 	end
 
-	gohelper.setActive(arg_12_0._gocontainer, var_12_0 > 0)
+	gohelper.setActive(self._gocontainer, paramLen > 0)
 end
 
-function var_0_0.getCurrencyItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._currencyObjs[arg_13_1]
+function Season166InformationCurrencyView:getCurrencyItem(index)
+	local currencyObj = self._currencyObjs[index]
 
-	if not var_13_0 then
-		var_13_0 = arg_13_0:getUserDataTb_()
+	if not currencyObj then
+		currencyObj = self:getUserDataTb_()
 
-		local var_13_1 = gohelper.cloneInPlace(arg_13_0._gocurrency, "currency")
+		local go = gohelper.cloneInPlace(self._gocurrency, "currency")
 
-		var_13_0.go = var_13_1
-		var_13_0.btn = gohelper.findChildButtonWithAudio(var_13_1, "#btn_currency/#btn")
-		var_13_0.image = gohelper.findChildImage(var_13_1, "#btn_currency/#image")
-		var_13_0.btncurrency = gohelper.findChildButtonWithAudio(var_13_1, "#btn_currency")
-		var_13_0.txt = gohelper.findChildText(var_13_1, "#btn_currency/content/#txt")
-		var_13_0.click = gohelper.findChild(var_13_1, "#btn_currency/click")
+		currencyObj.go = go
+		currencyObj.btn = gohelper.findChildButtonWithAudio(go, "#btn_currency/#btn")
+		currencyObj.image = gohelper.findChildImage(go, "#btn_currency/#image")
+		currencyObj.btncurrency = gohelper.findChildButtonWithAudio(go, "#btn_currency")
+		currencyObj.txt = gohelper.findChildText(go, "#btn_currency/content/#txt")
+		currencyObj.click = gohelper.findChild(go, "#btn_currency/click")
 
-		var_13_0.btn:AddClickListener(arg_13_0._onClick, {
-			self = arg_13_0,
-			index = arg_13_1
+		currencyObj.btn:AddClickListener(self._onClick, {
+			self = self,
+			index = index
 		})
-		gohelper.setActive(var_13_0.btn, false)
-		var_13_0.btncurrency:AddClickListener(arg_13_0._btncurrencyOnClick, {
-			self = arg_13_0,
-			index = arg_13_1
+		gohelper.setActive(currencyObj.btn, false)
+		currencyObj.btncurrency:AddClickListener(self._btncurrencyOnClick, {
+			self = self,
+			index = index
 		})
 
-		arg_13_0._currencyObjs[arg_13_1] = var_13_0
+		self._currencyObjs[index] = currencyObj
 
-		gohelper.setActive(var_13_0.go, true)
+		gohelper.setActive(currencyObj.go, true)
 	end
 
-	return var_13_0
+	return currencyObj
 end
 
-return var_0_0
+return Season166InformationCurrencyView

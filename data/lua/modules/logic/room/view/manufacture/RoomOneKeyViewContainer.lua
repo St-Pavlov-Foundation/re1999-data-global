@@ -1,44 +1,47 @@
-﻿module("modules.logic.room.view.manufacture.RoomOneKeyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomOneKeyViewContainer.lua
 
-local var_0_0 = class("RoomOneKeyViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomOneKeyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = MixScrollParam.New()
+local RoomOneKeyViewContainer = class("RoomOneKeyViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "right/#go_addPop/#scroll_production"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "right/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
-	var_1_1.cellClass = RoomOneKeyAddPopItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+function RoomOneKeyViewContainer:buildViews()
+	local views = {}
+	local scrollParam = MixScrollParam.New()
 
-	table.insert(var_1_0, LuaMixScrollView.New(OneKeyAddPopListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "right/#go_addPop/#scroll_production"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "right/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
+	scrollParam.cellClass = RoomOneKeyAddPopItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
 
-	arg_1_0.roomOneKeyAddPopView = RoomOneKeyAddPopView.New()
+	table.insert(views, LuaMixScrollView.New(OneKeyAddPopListModel.instance, scrollParam))
 
-	table.insert(var_1_0, arg_1_0.roomOneKeyAddPopView)
+	self.roomOneKeyAddPopView = RoomOneKeyAddPopView.New()
 
-	arg_1_0.oneKeyView = RoomOneKeyView.New()
+	table.insert(views, self.roomOneKeyAddPopView)
 
-	table.insert(var_1_0, arg_1_0.oneKeyView)
+	self.oneKeyView = RoomOneKeyView.New()
 
-	return var_1_0
+	table.insert(views, self.oneKeyView)
+
+	return views
 end
 
-function var_0_0.playOpenTransition(arg_2_0)
-	local var_2_0 = "open"
+function RoomOneKeyViewContainer:playOpenTransition()
+	local anim = "open"
+	local defaultOneKeyType = ManufactureModel.instance:getRecordOneKeyType()
 
-	if ManufactureModel.instance:getRecordOneKeyType() == RoomManufactureEnum.OneKeyType.Customize then
-		var_2_0 = "open2"
+	if defaultOneKeyType == RoomManufactureEnum.OneKeyType.Customize then
+		anim = "open2"
 	end
 
-	var_0_0.super.playOpenTransition(arg_2_0, {
-		anim = var_2_0
+	RoomOneKeyViewContainer.super.playOpenTransition(self, {
+		anim = anim
 	})
 end
 
-function var_0_0.oneKeyViewSetAddPopActive(arg_3_0, arg_3_1)
-	arg_3_0.oneKeyView:setAddPopActive(arg_3_1)
+function RoomOneKeyViewContainer:oneKeyViewSetAddPopActive(isShow)
+	self.oneKeyView:setAddPopActive(isShow)
 end
 
-return var_0_0
+return RoomOneKeyViewContainer

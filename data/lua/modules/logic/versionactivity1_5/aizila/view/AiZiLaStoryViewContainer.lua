@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaStoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaStoryViewContainer.lua
 
-local var_0_0 = class("AiZiLaStoryViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaStoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local AiZiLaStoryViewContainer = class("AiZiLaStoryViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_ChapterList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = AiZiLaStoryItem.prefabPath
-	var_1_1.cellClass = AiZiLaStoryItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 500
-	var_1_1.cellHeight = 720
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function AiZiLaStoryViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(AiZiLaStoryListModel.instance, var_1_1))
-	table.insert(var_1_0, AiZiLaStoryView.New())
+	scrollParam.scrollGOPath = "#scroll_ChapterList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = AiZiLaStoryItem.prefabPath
+	scrollParam.cellClass = AiZiLaStoryItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 500
+	scrollParam.cellHeight = 720
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(AiZiLaStoryListModel.instance, scrollParam))
+	table.insert(views, AiZiLaStoryView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaStoryViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function AiZiLaStoryViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -41,4 +43,4 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-return var_0_0
+return AiZiLaStoryViewContainer

@@ -1,33 +1,40 @@
-﻿module("modules.logic.settings.model.SettingsShowHelper", package.seeall)
+﻿-- chunkname: @modules/logic/settings/model/SettingsShowHelper.lua
 
-local var_0_0 = class("SettingsShowHelper")
+module("modules.logic.settings.model.SettingsShowHelper", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._handlerMap = {
-		[SettingsEnum.ShowType.RecordVideo] = var_0_0.canShowRecordVideo,
-		[SettingsEnum.ShowType.KeyMap] = var_0_0.canShowKeySetting,
-		[SettingsEnum.ShowType.Push] = var_0_0.canShowPush
+local SettingsShowHelper = class("SettingsShowHelper")
+
+function SettingsShowHelper:ctor()
+	self._handlerMap = {
+		[SettingsEnum.ShowType.RecordVideo] = SettingsShowHelper.canShowRecordVideo,
+		[SettingsEnum.ShowType.KeyMap] = SettingsShowHelper.canShowKeySetting,
+		[SettingsEnum.ShowType.Push] = SettingsShowHelper.canShowPush,
+		[SettingsEnum.ShowType.Udimo] = SettingsShowHelper.canShowUdimo
 	}
 end
 
-function var_0_0.canShow(arg_2_0, arg_2_1)
-	if not arg_2_0._handlerMap[arg_2_1] then
+function SettingsShowHelper:canShow(settingsType)
+	if not self._handlerMap[settingsType] then
 		return true
 	end
 
-	return arg_2_0._handlerMap[arg_2_1]()
+	return self._handlerMap[settingsType]()
 end
 
-function var_0_0.canShowRecordVideo()
+function SettingsShowHelper.canShowRecordVideo()
 	return OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SettingsRecordVideo) and SDKMgr.isSupportRecord ~= nil and SDKMgr.instance:isSupportRecord()
 end
 
-function var_0_0.canShowKeySetting()
+function SettingsShowHelper.canShowKeySetting()
 	return BootNativeUtil.isWindows() and PCInputController.instance:getIsUse()
 end
 
-function var_0_0.canShowPush()
+function SettingsShowHelper.canShowPush()
 	return not BootNativeUtil.isWindows()
 end
 
-return var_0_0
+function SettingsShowHelper.canShowUdimo()
+	return UdimoModel.instance:isOpenUdimoFunc()
+end
+
+return SettingsShowHelper

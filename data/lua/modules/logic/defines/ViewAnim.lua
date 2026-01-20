@@ -1,16 +1,18 @@
-﻿module("modules.logic.defines.ViewAnim", package.seeall)
+﻿-- chunkname: @modules/logic/defines/ViewAnim.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.ViewAnim", package.seeall)
 
-var_0_0.Internal = "AnimInternal"
-var_0_0.Default = "Tween"
-var_0_0.CharacterLevelUpView = "ui/animations/dynamic/characterlevelupview.controller"
-var_0_0.CharacterLevelUpView2 = "ui/animations/dynamic/characterlevelupview2.controller"
-var_0_0.LvUpAnimPath = "ui/animations/dynamic/fightcard_rising.controller"
-var_0_0.LvDownAnimPath = "ui/animations/dynamic/fightcard_escending.controller"
-var_0_0.FightCardZaiXu = "ui/animations/dynamic/fightcarditem_zaixu.controller"
-var_0_0.FightCardBalance = "ui/animations/dynamic/fightcard_balance.controller"
-var_0_0.FightCardWuDuQuan = "ui/animations/dynamic/fightcarditem_wuduquan.controller"
-var_0_0.FightCardAppear = "ui/animations/dynamic/fightcard_appear.controller"
+local ViewAnim = _M
 
-return var_0_0
+ViewAnim.Internal = "AnimInternal"
+ViewAnim.Default = "Tween"
+ViewAnim.CharacterLevelUpView = "ui/animations/dynamic/characterlevelupview.controller"
+ViewAnim.CharacterLevelUpView2 = "ui/animations/dynamic/characterlevelupview2.controller"
+ViewAnim.LvUpAnimPath = "ui/animations/dynamic/fightcard_rising.controller"
+ViewAnim.LvDownAnimPath = "ui/animations/dynamic/fightcard_escending.controller"
+ViewAnim.FightCardZaiXu = "ui/animations/dynamic/fightcarditem_zaixu.controller"
+ViewAnim.FightCardBalance = "ui/animations/dynamic/fightcard_balance.controller"
+ViewAnim.FightCardWuDuQuan = "ui/animations/dynamic/fightcarditem_wuduquan.controller"
+ViewAnim.FightCardAppear = "ui/animations/dynamic/fightcard_appear.controller"
+
+return ViewAnim

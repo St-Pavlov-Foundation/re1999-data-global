@@ -1,54 +1,56 @@
-﻿module("modules.logic.fight.controller.FightController", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightController.lua
 
-local var_0_0 = class("FightController", BaseController)
+module("modules.logic.fight.controller.FightController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FightController = class("FightController", BaseController)
+
+function FightController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._delayEnterFightScene, arg_2_0)
+function FightController:reInit()
+	TaskDispatcher.cancelTask(self._delayEnterFightScene, self)
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 		FightSystem.instance:dispose()
 	end
 
-	arg_2_0._guideContinueEvent = nil
+	self._guideContinueEvent = nil
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	var_0_0.instance:registerCallback(FightEvent.RespBeginFight, arg_3_0._respBeginFight, arg_3_0)
-	var_0_0.instance:registerCallback(FightEvent.PushEndFight, arg_3_0._pushEndFight, arg_3_0)
-	var_0_0.instance:registerCallback(FightEvent.OnStartSequenceFinish, arg_3_0._onStartSequenceFinish, arg_3_0)
-	var_0_0.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_3_0._onRoundSequenceFinish, arg_3_0)
-	var_0_0.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_3_0.onClothSkillRoundSequenceFinish, arg_3_0)
-	var_0_0.instance:registerCallback(FightEvent.OnEndSequenceFinish, arg_3_0._onEndSequenceFinish, arg_3_0)
-	GameSceneMgr.instance:registerCallback(SceneType.Fight, arg_3_0._onFightSceneStart, arg_3_0)
+function FightController:addConstEvents()
+	FightController.instance:registerCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, self._pushEndFight, self)
+	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self.onClothSkillRoundSequenceFinish, self)
+	FightController.instance:registerCallback(FightEvent.OnEndSequenceFinish, self._onEndSequenceFinish, self)
+	GameSceneMgr.instance:registerCallback(SceneType.Fight, self._onFightSceneStart, self)
 
-	arg_3_0._fightEventExtend = FightEventExtend.New()
+	self._fightEventExtend = FightEventExtend.New()
 
-	arg_3_0._fightEventExtend:addConstEvents()
+	self._fightEventExtend:addConstEvents()
 end
 
-function var_0_0.sendTestFight(arg_4_0, arg_4_1, arg_4_2)
-	logNormal("Enter Test Fight, param = \n" .. cjson.encode(arg_4_1))
-	FightModel.instance:setFightParam(arg_4_1)
+function FightController:sendTestFight(fightParam, fightActType)
+	logNormal("Enter Test Fight, param = \n" .. cjson.encode(fightParam))
+	FightModel.instance:setFightParam(fightParam)
 
-	arg_4_2 = arg_4_2 or FightEnum.FightActType.Normal
+	fightActType = fightActType or FightEnum.FightActType.Normal
 
-	FightRpc.instance:sendTestFightRequest(arg_4_1, arg_4_1.monsterGroupIds, arg_4_2)
+	FightRpc.instance:sendTestFightRequest(fightParam, fightParam.monsterGroupIds, fightActType)
 end
 
-function var_0_0.sendTestFightId(arg_5_0, arg_5_1)
-	logNormal("Enter Test FightId, param = \n" .. cjson.encode(arg_5_1))
-	FightModel.instance:setFightParam(arg_5_1)
+function FightController:sendTestFightId(fightParam)
+	logNormal("Enter Test FightId, param = \n" .. cjson.encode(fightParam))
+	FightModel.instance:setFightParam(fightParam)
 
-	arg_5_1.fightActType = arg_5_1.fightActType or FightEnum.FightActType.Normal
+	fightParam.fightActType = fightParam.fightActType or FightEnum.FightActType.Normal
 
-	FightRpc.instance:sendTestFightIdRequest(arg_5_1)
+	FightRpc.instance:sendTestFightIdRequest(fightParam)
 end
 
-function var_0_0.enterFightScene(arg_6_0)
+function FightController:enterFightScene()
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 		if GameSceneMgr.instance:isLoading() then
 			logNormal("正在进入战斗，无法重复进入战斗")
@@ -59,32 +61,32 @@ function var_0_0.enterFightScene(arg_6_0)
 		return
 	end
 
-	local var_6_0 = FightModel.instance:getFightParam()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if var_6_0 and var_6_0.sceneId then
+	if fightParam and fightParam.sceneId then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView2)
 		GameSceneMgr.instance:showLoading(SceneType.Fight)
-		TaskDispatcher.runDelay(arg_6_0._delayEnterFightScene, arg_6_0, 0.5)
+		TaskDispatcher.runDelay(self._delayEnterFightScene, self, 0.5)
 	else
 		logError("FightParam.sceneId not exist")
 	end
 end
 
-function var_0_0._delayEnterFightScene(arg_7_0)
-	local var_7_0 = FightModel.instance:getFightParam()
+function FightController:_delayEnterFightScene()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if var_7_0 and var_7_0.sceneId then
+	if fightParam and fightParam.sceneId then
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnEnterFbFight)
 		PlayerModel.instance:getAndResetPlayerLevelUp()
 		FightModel.instance:checkEnterUseFreeLimit()
-		GameSceneMgr.instance:startScene(SceneType.Fight, var_7_0.sceneId, var_7_0.levelId)
+		GameSceneMgr.instance:startScene(SceneType.Fight, fightParam.sceneId, fightParam.levelId)
 	else
 		GameSceneMgr.instance:hideLoading(SceneType.Fight)
 		logError("FightParam.sceneId not exist")
 	end
 end
 
-function var_0_0.exitFightScene(arg_8_0)
+function FightController:exitFightScene()
 	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Checkpointend)
 
 	if DungeonJumpGameController.instance:checkIsJumpGameBattle() then
@@ -111,31 +113,31 @@ function var_0_0.exitFightScene(arg_8_0)
 		return
 	end
 
-	local var_8_0 = JumpModel.instance:getRecordFarmItem()
+	local recordFarmItem = JumpModel.instance:getRecordFarmItem()
 
-	if var_8_0 then
-		if var_8_0.canBackSource and (var_8_0.special or var_8_0.openedViewNameList and #var_8_0.openedViewNameList > 0) then
-			arg_8_0:handleJump()
+	if recordFarmItem then
+		if recordFarmItem.canBackSource and (recordFarmItem.special or recordFarmItem.openedViewNameList and #recordFarmItem.openedViewNameList > 0) then
+			self:handleJump()
 
 			return
 		end
 
-		if var_8_0.checkFunc and var_8_0.checkFunc(var_8_0.checkFuncObj) then
+		if recordFarmItem.checkFunc and recordFarmItem.checkFunc(recordFarmItem.checkFuncObj) then
 			JumpModel.instance:clearRecordFarmItem()
 		end
 	end
 
-	local var_8_1 = DungeonModel.instance.curSendEpisodeId
-	local var_8_2 = DungeonConfig.instance:getEpisodeCO(var_8_1)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_8_2 then
-		if var_8_2.type == DungeonEnum.EpisodeType.Explore then
+	if episodeCO then
+		if episodeCO.type == DungeonEnum.EpisodeType.Explore then
 			ExploreController.instance:enterExploreScene()
 
 			return
 		end
 
-		if var_8_2.type == DungeonEnum.EpisodeType.Survival then
+		if episodeCO.type == DungeonEnum.EpisodeType.Survival then
 			SurvivalMapHelper.instance:tryStartFlow("")
 
 			SurvivalMapModel.instance.isFightEnter = true
@@ -145,84 +147,96 @@ function var_0_0.exitFightScene(arg_8_0)
 			return
 		end
 
-		if var_8_2.type == DungeonEnum.EpisodeType.Shelter then
+		if episodeCO.type == DungeonEnum.EpisodeType.Shelter then
 			SurvivalController.instance:enterShelterMap(true)
 
 			return
 		end
 
-		if var_8_2.type == DungeonEnum.EpisodeType.Rouge then
+		if episodeCO.type == DungeonEnum.EpisodeType.Rouge then
 			RougeMapController.instance:onExistFight()
 
 			return
 		end
 
-		if var_8_2.chapterId == DungeonEnum.ChapterId.BossStory then
+		if episodeCO.type == DungeonEnum.EpisodeType.Rouge2 then
+			Rouge2_MapController.instance:onExistFight()
+
+			return
+		end
+
+		if episodeCO.chapterId == DungeonEnum.ChapterId.BossStory then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.VersionActivity2_8BossStoryLoadingView)
 		end
 
-		if var_8_2.type == DungeonEnum.EpisodeType.TowerDeep then
-			local var_8_3, var_8_4 = TowerPermanentDeepModel.instance:checkCanShowResultView()
+		if episodeCO.type == DungeonEnum.EpisodeType.TowerDeep then
+			local canShowResultView, fightResult = TowerPermanentDeepModel.instance:checkCanShowResultView()
 
-			if not var_8_3 and var_8_4 == TowerDeepEnum.FightResult.NotFinish then
-				TowerController.instance:endFightEnterTowerDeepHeroGroup(var_8_2)
+			if not canShowResultView and fightResult == TowerDeepEnum.FightResult.NotFinish then
+				TowerController.instance:endFightEnterTowerDeepHeroGroup(episodeCO)
 
 				return
 			end
 		end
 	end
 
-	local var_8_5 = FightResultModel.instance.episodeId
-	local var_8_6 = DungeonConfig.instance:getEpisodeCO(var_8_5)
-	local var_8_7 = arg_8_0:isReplayMode(var_8_5)
-	local var_8_8 = GameSceneMgr.instance:getPreSceneType()
-	local var_8_9 = GameSceneMgr.instance:getPreSceneId()
-	local var_8_10 = GameSceneMgr.instance:getPreLevelId()
+	episodeId = FightResultModel.instance.episodeId
+	episodeCO = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_8_7 then
+	local isReplay = self:isReplayMode(episodeId)
+	local preSceneType = GameSceneMgr.instance:getPreSceneType()
+	local preSceneId = GameSceneMgr.instance:getPreSceneId()
+	local preLevelId = GameSceneMgr.instance:getPreLevelId()
+
+	if isReplay then
 		GameSceneMgr.instance:closeScene(nil, nil, nil, true)
-		GameSceneMgr.instance:setPrevScene(var_8_8, var_8_9, var_8_10)
-		DungeonFightController.instance:enterFight(var_8_6.chapterId, var_8_5, DungeonModel.instance.curSelectTicketId)
+		GameSceneMgr.instance:setPrevScene(preSceneType, preSceneId, preLevelId)
+		DungeonFightController.instance:enterFight(episodeCO.chapterId, episodeId, DungeonModel.instance.curSelectTicketId)
 	else
-		GameSceneMgr.instance:startScene(var_8_8, var_8_9, var_8_10)
+		GameSceneMgr.instance:startScene(preSceneType, preSceneId, preLevelId)
 
 		if TeachNoteModel.instance:isJumpEnter() then
 			TeachNoteModel.instance:setJumpEnter(false)
-			TeachNoteController.instance:enterTeachNoteView(var_8_5, true)
+			TeachNoteController.instance:enterTeachNoteView(episodeId, true)
 		end
 	end
 end
 
-function var_0_0.isReplayMode(arg_9_0, arg_9_1)
-	local var_9_0 = false
-	local var_9_1 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+function FightController:isReplayMode(episodeId)
+	local isReplay = false
+	local replayRecord = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
 
-	if not string.nilorempty(var_9_1) then
-		var_9_0 = cjson.decode(var_9_1)[tostring(arg_9_1)]
+	if not string.nilorempty(replayRecord) then
+		replayRecord = cjson.decode(replayRecord)
+		isReplay = replayRecord[tostring(episodeId)]
 	end
 
-	return var_9_0
+	return isReplay
 end
 
-function var_0_0.enterVersionActivityDungeon(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = DungeonModel.instance.curSendChapterId
-	local var_10_1 = DungeonModel.instance.curSendEpisodeId
-	local var_10_2 = arg_10_0:isReplayMode(var_10_1)
-	local var_10_3 = DungeonConfig.instance:getEpisodeCO(var_10_1)
+function FightController:enterVersionActivityDungeon(forceStarting, exitFightGroup)
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local isReplay = self:isReplayMode(episodeId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not arg_10_2 and var_10_2 then
-		local var_10_4 = JumpModel.instance:getRecordFarmItem()
+	if not exitFightGroup and isReplay then
+		local recordFarmItem = JumpModel.instance:getRecordFarmItem()
+		local farm = FightSuccView.checkRecordFarmItem(episodeId, recordFarmItem)
 
-		if FightSuccView.checkRecordFarmItem(var_10_1, var_10_4) then
-			if not (ItemModel.instance:getItemQuantity(var_10_4.type, var_10_4.id) >= var_10_4.quantity) then
+		if farm then
+			local quantity = ItemModel.instance:getItemQuantity(recordFarmItem.type, recordFarmItem.id)
+			local enough = quantity >= recordFarmItem.quantity
+
+			if not enough then
 				GameSceneMgr.instance:closeScene(nil, nil, nil, true)
-				DungeonFightController.instance:enterFight(var_10_3.chapterId, var_10_1, DungeonModel.instance.curSelectTicketId)
+				DungeonFightController.instance:enterFight(episodeCo.chapterId, episodeId, DungeonModel.instance.curSelectTicketId)
 
 				return
 			end
 		else
 			GameSceneMgr.instance:closeScene(nil, nil, nil, true)
-			DungeonFightController.instance:enterFight(var_10_3.chapterId, var_10_1, DungeonModel.instance.curSelectTicketId)
+			DungeonFightController.instance:enterFight(episodeCo.chapterId, episodeId, DungeonModel.instance.curSelectTicketId)
 
 			return
 		end
@@ -232,70 +246,70 @@ function var_0_0.enterVersionActivityDungeon(arg_10_0, arg_10_1, arg_10_2)
 	DungeonModel.instance.lastSendEpisodeId = DungeonModel.instance.curSendEpisodeId
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_10_1)
+	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivityDungeonMapLevelView)
 		VersionActivityController.instance:directOpenVersionActivityEnterView()
 
-		if var_10_3.chapterId == VersionActivityEnum.DungeonChapterId.ElementFight then
+		if episodeCo.chapterId == VersionActivityEnum.DungeonChapterId.ElementFight then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivityDungeonMapView)
 
-			DungeonMapModel.instance.lastElementBattleId = var_10_1
-			var_10_1 = DungeonConfig.instance:getElementFightEpisodeToNormalEpisodeId(var_10_3)
+			DungeonMapModel.instance.lastElementBattleId = episodeId
+			episodeId = DungeonConfig.instance:getElementFightEpisodeToNormalEpisodeId(episodeCo)
 
-			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, var_10_1)
+			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId)
 		elseif DungeonModel.instance.curSendEpisodePass then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivityDungeonMapView)
-			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, var_10_1)
+			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId)
 		else
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivityDungeonMapLevelView)
-			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(var_10_0, var_10_1, function()
+			VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(chapterId, episodeId, function()
 				ViewMgr.instance:openView(ViewName.VersionActivityDungeonMapLevelView, {
-					episodeId = var_10_1
+					episodeId = episodeId
 				})
 			end)
 		end
 	end)
 end
 
-function var_0_0.enterVersionActivityDogView(arg_13_0, arg_13_1, arg_13_2)
+function FightController:enterVersionActivityDogView(forceStarting, fromRefuseBattle)
 	DungeonModel.instance.versionActivityChapterType = nil
 	DungeonModel.instance.lastSendEpisodeId = DungeonModel.instance.curSendEpisodeId
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_13_1)
+	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivityEnterView)
 		VersionActivityController.instance:directOpenVersionActivityEnterView()
-		Activity109ChessController.instance:openGameAfterFight(arg_13_2)
+		Activity109ChessController.instance:openGameAfterFight(fromRefuseBattle)
 	end)
 end
 
-function var_0_0.enterVersionActivity1_2YaXianView(arg_15_0, arg_15_1, arg_15_2)
+function FightController:enterVersionActivity1_2YaXianView(forceStarting, refuseBattle)
 	return
 end
 
-function var_0_0.handleJump(arg_16_0)
-	local var_16_0 = JumpModel.instance:getRecordFarmItem()
+function FightController:handleJump()
+	local recordFarmItem = JumpModel.instance:getRecordFarmItem()
 
 	JumpModel.instance:clearRecordFarmItem()
 
-	var_16_0.canBackSource = nil
+	recordFarmItem.canBackSource = nil
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	local var_16_1 = SceneType.Main
+	local sceneType = SceneType.Main
 
-	if var_16_0.sceneType == SceneType.Main then
-		var_16_1 = SceneType.Main
+	if recordFarmItem.sceneType == SceneType.Main then
+		sceneType = SceneType.Main
 
 		MainController.instance:enterMainScene()
-	elseif var_16_0.sceneType == SceneType.Room then
-		var_16_1 = SceneType.Room
+	elseif recordFarmItem.sceneType == SceneType.Room then
+		sceneType = SceneType.Room
 
 		RoomController.instance:enterRoom(RoomEnum.GameMode.Ob, nil, nil, nil, nil, true)
-	elseif var_16_0.sceneType == SceneType.Fight then
-		if not arg_16_0._fightViewDict then
-			arg_16_0._fightViewDict = {
+	elseif recordFarmItem.sceneType == SceneType.Fight then
+		if not self._fightViewDict then
+			self._fightViewDict = {
 				[ViewName.HeroGroupFightView] = true,
 				[ViewName.V1a2_HeroGroupFightView] = true,
 				[ViewName.V1a3_HeroGroupFightView] = true,
@@ -314,52 +328,55 @@ function var_0_0.handleJump(arg_16_0)
 				[ViewName.ShelterHeroGroupFightView] = true,
 				[ViewName.SurvivalHeroGroupEditView] = true,
 				[ViewName.OdysseyHeroGroupView] = true,
-				[ViewName.OdysseyHeroGroupEditView] = true
+				[ViewName.OdysseyHeroGroupEditView] = true,
+				[ViewName.Rouge2_HeroGroupFightView] = true
 			}
 		end
 
-		if var_16_0.openedViewNameList then
-			for iter_16_0 = #var_16_0.openedViewNameList, 1, -1 do
-				local var_16_2 = var_16_0.openedViewNameList[iter_16_0]
+		if recordFarmItem.openedViewNameList then
+			for i = #recordFarmItem.openedViewNameList, 1, -1 do
+				local openViewTable = recordFarmItem.openedViewNameList[i]
 
-				if arg_16_0._fightViewDict[var_16_2.viewName] then
-					table.remove(var_16_0.openedViewNameList, iter_16_0)
+				if self._fightViewDict[openViewTable.viewName] then
+					table.remove(recordFarmItem.openedViewNameList, i)
 				end
 			end
 		end
 
-		var_16_1 = SceneType.Main
+		sceneType = SceneType.Main
 
 		MainController.instance:enterMainScene()
 	else
-		var_16_1 = SceneType.Main
+		sceneType = SceneType.Main
 
 		MainController.instance:enterMainScene()
-		logWarn("not handle recordFarmItem.sceneType : " .. tostring(var_16_0.sceneType))
+		logWarn("not handle recordFarmItem.sceneType : " .. tostring(recordFarmItem.sceneType))
 	end
 
-	SceneHelper.instance:waitSceneDone(var_16_1, function()
-		if var_16_0.jumpId then
-			GameFacade.jump(var_16_0.jumpId)
+	SceneHelper.instance:waitSceneDone(sceneType, function()
+		if recordFarmItem.jumpId then
+			GameFacade.jump(recordFarmItem.jumpId)
 		else
-			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_16_0.openedViewNameList[#var_16_0.openedViewNameList].viewName)
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, recordFarmItem.openedViewNameList[#recordFarmItem.openedViewNameList].viewName)
 
-			if RoomController.instance:isRoomScene() then
-				RoomController.instance:popUpSourceView(var_16_0.openedViewNameList)
+			local isRoomScene = RoomController.instance:isRoomScene()
 
-				for iter_17_0, iter_17_1 in ipairs(var_16_0.openedViewNameList) do
-					if iter_17_1.viewName ~= ViewName.RoomInitBuildingView and iter_17_1.viewName ~= ViewName.RoomFormulaView then
-						ViewMgr.instance:openView(iter_17_1.viewName, iter_17_1.viewParam)
+			if isRoomScene then
+				RoomController.instance:popUpSourceView(recordFarmItem.openedViewNameList)
+
+				for _, openView in ipairs(recordFarmItem.openedViewNameList) do
+					if openView.viewName ~= ViewName.RoomInitBuildingView and openView.viewName ~= ViewName.RoomFormulaView then
+						ViewMgr.instance:openView(openView.viewName, openView.viewParam)
 					end
 				end
 			else
-				for iter_17_2, iter_17_3 in ipairs(var_16_0.openedViewNameList) do
-					if iter_17_3.viewName == ViewName.RoomInitBuildingView or iter_17_3.viewName == ViewName.RoomFormulaView then
-						RoomController.instance:popUpSourceView(var_16_0.openedViewNameList)
-					elseif iter_17_3.viewName == ViewName.BackpackView then
+				for _, openView in ipairs(recordFarmItem.openedViewNameList) do
+					if openView.viewName == ViewName.RoomInitBuildingView or openView.viewName == ViewName.RoomFormulaView then
+						RoomController.instance:popUpSourceView(recordFarmItem.openedViewNameList)
+					elseif openView.viewName == ViewName.BackpackView then
 						BackpackController.instance:enterItemBackpack()
 					else
-						ViewMgr.instance:openView(iter_17_3.viewName, iter_17_3.viewParam)
+						ViewMgr.instance:openView(openView.viewName, openView.viewParam)
 					end
 				end
 			end
@@ -367,18 +384,18 @@ function var_0_0.handleJump(arg_16_0)
 	end)
 end
 
-function var_0_0._respBeginFight(arg_18_0)
-	arg_18_0:enterFightScene()
+function FightController:_respBeginFight()
+	self:enterFightScene()
 end
 
-function var_0_0._pushEndFight(arg_19_0)
+function FightController:_pushEndFight()
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight and not GameSceneMgr.instance:isLoading() then
 		FightGameMgr.playMgr:playEnd()
 	end
 end
 
-function var_0_0._onFightSceneStart(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_2 == 1 then
+function FightController:_onFightSceneStart(sceneLevelId, Exit0Enter1)
+	if Exit0Enter1 == 1 then
 		if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 			return
 		end
@@ -391,9 +408,9 @@ function var_0_0._onFightSceneStart(arg_20_0, arg_20_1, arg_20_2)
 	end
 end
 
-function var_0_0._onStartSequenceFinish(arg_21_0)
-	arg_21_0:_recordFreeTicket()
-	arg_21_0:beginWave()
+function FightController:_onStartSequenceFinish()
+	self:_recordFreeTicket()
+	self:beginWave()
 
 	if FightModel.instance:isFinish() then
 		logNormal("回合结束，战斗结束")
@@ -406,11 +423,11 @@ function var_0_0._onStartSequenceFinish(arg_21_0)
 	end
 end
 
-function var_0_0.beginWave(arg_22_0)
-	var_0_0.instance:dispatchEvent(FightEvent.OnBeginWave)
+function FightController:beginWave()
+	FightController.instance:dispatchEvent(FightEvent.OnBeginWave)
 end
 
-function var_0_0._onRoundSequenceFinish(arg_23_0)
+function FightController:_onRoundSequenceFinish()
 	if FightModel.instance:isFinish() then
 		logNormal("回合结束，战斗结束")
 
@@ -422,7 +439,7 @@ function var_0_0._onRoundSequenceFinish(arg_23_0)
 	end
 end
 
-function var_0_0.onClothSkillRoundSequenceFinish(arg_24_0)
+function FightController:onClothSkillRoundSequenceFinish()
 	if FightModel.instance:isFinish() then
 		logNormal("回合结束，战斗结束")
 
@@ -434,209 +451,209 @@ function var_0_0.onClothSkillRoundSequenceFinish(arg_24_0)
 	end
 end
 
-function var_0_0._onEndSequenceFinish(arg_25_0)
+function FightController:_onEndSequenceFinish()
 	return
 end
 
-function var_0_0.GuideFlowPauseAndContinue(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6, arg_26_7, arg_26_8)
-	local var_26_0 = FightModel.instance:getGuideParam()
+function FightController:GuideFlowPauseAndContinue(varKey, pauseEvent, continueEvent, callback, callbackObj, p1, p2, p3)
+	local guideParam = FightModel.instance:getGuideParam()
 
-	var_0_0.instance:dispatchEvent(arg_26_2, var_26_0, arg_26_6, arg_26_7, arg_26_8)
+	FightController.instance:dispatchEvent(pauseEvent, guideParam, p1, p2, p3)
 
-	if var_26_0[arg_26_1] then
-		var_26_0[arg_26_1] = false
+	if guideParam[varKey] then
+		guideParam[varKey] = false
 
-		if arg_26_0._guideContinueEvent then
-			logError("guiding event: " .. arg_26_0._guideContinueEvent .. ", try to replase with: " .. arg_26_3)
-			var_0_0.instance:unregisterCallback(arg_26_0._guideContinueEvent, arg_26_0._continueCallback, arg_26_0)
+		if self._guideContinueEvent then
+			logError("guiding event: " .. self._guideContinueEvent .. ", try to replase with: " .. continueEvent)
+			FightController.instance:unregisterCallback(self._guideContinueEvent, self._continueCallback, self)
 		end
 
-		arg_26_0._guideContinueEvent = arg_26_3
-		arg_26_0._guideCallback = arg_26_4
-		arg_26_0._guideCallbackObj = arg_26_5
+		self._guideContinueEvent = continueEvent
+		self._guideCallback = callback
+		self._guideCallbackObj = callbackObj
 
-		var_0_0.instance:registerCallback(arg_26_0._guideContinueEvent, arg_26_0._continueCallback, arg_26_0)
+		FightController.instance:registerCallback(self._guideContinueEvent, self._continueCallback, self)
 
 		return true
 	else
-		arg_26_4(arg_26_5)
+		callback(callbackObj)
 
-		if arg_26_0._guideContinueEvent == arg_26_2 then
-			var_0_0.instance:unregisterCallback(arg_26_0._guideContinueEvent, arg_26_0._continueCallback, arg_26_0)
+		if self._guideContinueEvent == pauseEvent then
+			FightController.instance:unregisterCallback(self._guideContinueEvent, self._continueCallback, self)
 
-			arg_26_0._guideContinueEvent = nil
-			arg_26_0._guideCallback = nil
-			arg_26_0._guideCallbackObj = nil
+			self._guideContinueEvent = nil
+			self._guideCallback = nil
+			self._guideCallbackObj = nil
 		end
 	end
 
 	return false
 end
 
-function var_0_0._continueCallback(arg_27_0)
-	if arg_27_0._guideContinueEvent then
-		var_0_0.instance:unregisterCallback(arg_27_0._guideContinueEvent, arg_27_0._continueCallback, arg_27_0)
+function FightController:_continueCallback()
+	if self._guideContinueEvent then
+		FightController.instance:unregisterCallback(self._guideContinueEvent, self._continueCallback, self)
 
-		local var_27_0 = arg_27_0._guideCallback
-		local var_27_1 = arg_27_0._guideCallbackObj
+		local callback = self._guideCallback
+		local callbackObj = self._guideCallbackObj
 
-		arg_27_0._guideContinueEvent = nil
-		arg_27_0._guideCallback = nil
-		arg_27_0._guideCallbackObj = nil
+		self._guideContinueEvent = nil
+		self._guideCallback = nil
+		self._guideCallbackObj = nil
 
-		var_27_0(var_27_1)
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.setNewBieFightParamByEpisodeId(arg_28_0, arg_28_1)
-	local var_28_0 = FightParam.New()
+function FightController:setNewBieFightParamByEpisodeId(episodeId)
+	local fightParam = FightParam.New()
 
-	var_28_0:setEpisodeId(arg_28_1)
-	FightModel.instance:setFightParam(var_28_0)
+	fightParam:setEpisodeId(episodeId)
+	FightModel.instance:setFightParam(fightParam)
 
-	return var_28_0
+	return fightParam
 end
 
-function var_0_0.setFightParamByEpisodeAndBattle(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = FightParam.New()
+function FightController:setFightParamByEpisodeAndBattle(episodeId, battleId)
+	local fightParam = FightParam.New()
 
-	var_29_0:setEpisodeAndBattle(arg_29_1, arg_29_2)
-	FightModel.instance:setFightParam(var_29_0)
+	fightParam:setEpisodeAndBattle(episodeId, battleId)
+	FightModel.instance:setFightParam(fightParam)
 
-	return var_29_0
+	return fightParam
 end
 
-function var_0_0.setFightParamByEpisodeId(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4)
-	local var_30_0 = FightParam.New()
+function FightController:setFightParamByEpisodeId(episodeId, isReplay, multiplication, battleId)
+	local fightParam = FightParam.New()
 
-	var_30_0:setEpisodeId(arg_30_1, arg_30_4)
+	fightParam:setEpisodeId(episodeId, battleId)
 
-	var_30_0.isReplay = arg_30_2
-	var_30_0.multiplication = arg_30_3
+	fightParam.isReplay = isReplay
+	fightParam.multiplication = multiplication
 
-	FightModel.instance:setFightParam(var_30_0)
+	FightModel.instance:setFightParam(fightParam)
 
-	return var_30_0
+	return fightParam
 end
 
-function var_0_0.setFightParamByEpisodeBattleId(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = FightParam.New()
+function FightController:setFightParamByEpisodeBattleId(episodeId, battleId)
+	local fightParam = FightParam.New()
 
-	var_31_0:setEpisodeId(arg_31_1, arg_31_2)
-	FightModel.instance:setFightParam(var_31_0)
+	fightParam:setEpisodeId(episodeId, battleId)
+	FightModel.instance:setFightParam(fightParam)
 
-	return var_31_0
+	return fightParam
 end
 
-function var_0_0.setFightParamByBattleId(arg_32_0, arg_32_1)
-	local var_32_0 = FightParam.New()
+function FightController:setFightParamByBattleId(battleId)
+	local fightParam = FightParam.New()
 
-	var_32_0:setBattleId(arg_32_1)
-	FightModel.instance:setFightParam(var_32_0)
+	fightParam:setBattleId(battleId)
+	FightModel.instance:setFightParam(fightParam)
 
-	return var_32_0
+	return fightParam
 end
 
-function var_0_0.setFightHeroGroup(arg_33_0)
-	local var_33_0 = FightModel.instance:getFightParam()
+function FightController:setFightHeroGroup()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if not var_33_0 then
+	if not fightParam then
 		return false
 	end
 
-	local var_33_1 = HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_33_1 then
+	if not curGroupMO then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	local var_33_2, var_33_3 = var_33_1:getMainList()
-	local var_33_4, var_33_5 = var_33_1:getSubList()
+	local main, mainCount = curGroupMO:getMainList()
+	local sub, subCount = curGroupMO:getSubList()
 
-	if (not var_33_1.aidDict or #var_33_1.aidDict <= 0) and var_33_3 + var_33_5 == 0 then
+	if (not curGroupMO.aidDict or #curGroupMO.aidDict <= 0) and mainCount + subCount == 0 then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	local var_33_6 = var_33_0.battleId
-	local var_33_7 = var_33_6 and lua_battle.configDict[var_33_6]
-	local var_33_8 = var_33_7 and var_33_7.noClothSkill == 0 and var_33_1.clothId or 0
-	local var_33_9 = SeasonFightHandler.getSeasonEquips(var_33_1, var_33_0)
+	local battleId = fightParam.battleId
+	local battleConfig = battleId and lua_battle.configDict[battleId]
+	local clothId = battleConfig and battleConfig.noClothSkill == 0 and curGroupMO.clothId or 0
+	local seasonEquips = SeasonFightHandler.getSeasonEquips(curGroupMO, fightParam)
 
-	var_33_0:setMySide(var_33_8, var_33_2, var_33_1:getSubList(), var_33_1:getAllHeroEquips(), var_33_9, nil, nil, var_33_1:getAssistBossId())
+	fightParam:setMySide(clothId, main, curGroupMO:getSubList(), curGroupMO:getAllHeroEquips(), seasonEquips, nil, nil, curGroupMO:getAssistBossId())
 
 	return true
 end
 
-function var_0_0.setFightHeroSingleGroup(arg_34_0)
-	local var_34_0 = FightModel.instance:getFightParam()
+function FightController:setFightHeroSingleGroup()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if not var_34_0 then
+	if not fightParam then
 		return false
 	end
 
-	local var_34_1 = HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_34_1 then
+	if not curGroupMO then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	local var_34_2, var_34_3 = var_34_1:getMainList()
-	local var_34_4, var_34_5 = var_34_1:getSubList()
-	local var_34_6 = HeroSingleGroupModel.instance:getList()
-	local var_34_7 = var_34_1:getAllHeroEquips()
-	local var_34_8 = var_34_1:getAssistBossId()
+	local main, mainCount = curGroupMO:getMainList()
+	local sub, subCount = curGroupMO:getSubList()
+	local alreadyList = HeroSingleGroupModel.instance:getList()
+	local equips = curGroupMO:getAllHeroEquips()
+	local assistBossId = curGroupMO:getAssistBossId()
 
-	for iter_34_0 = 1, #var_34_2 do
-		if var_34_2[iter_34_0] ~= var_34_6[iter_34_0].heroUid then
-			var_34_2[iter_34_0] = "0"
-			var_34_3 = var_34_3 - 1
+	for i = 1, #main do
+		if main[i] ~= alreadyList[i].heroUid then
+			main[i] = "0"
+			mainCount = mainCount - 1
 
-			if var_34_7[iter_34_0] then
-				var_34_7[iter_34_0].heroUid = "0"
+			if equips[i] then
+				equips[i].heroUid = "0"
 			end
 		end
 	end
 
-	for iter_34_1 = #var_34_2 + 1, math.min(#var_34_2 + #var_34_4, #var_34_6) do
-		if var_34_4[iter_34_1 - #var_34_2] ~= var_34_6[iter_34_1].heroUid then
-			var_34_4[iter_34_1 - #var_34_2] = "0"
-			var_34_5 = var_34_5 - 1
+	for i = #main + 1, math.min(#main + #sub, #alreadyList) do
+		if sub[i - #main] ~= alreadyList[i].heroUid then
+			sub[i - #main] = "0"
+			subCount = subCount - 1
 
-			if var_34_7[iter_34_1] then
-				var_34_7[iter_34_1].heroUid = "0"
+			if equips[i] then
+				equips[i].heroUid = "0"
 			end
 		end
 	end
 
-	if (not var_34_1.aidDict or #var_34_1.aidDict <= 0) and var_34_3 + var_34_5 == 0 then
+	if (not curGroupMO.aidDict or #curGroupMO.aidDict <= 0) and mainCount + subCount == 0 then
 		GameFacade.showToast(ToastEnum.FightNoCurGroupMO)
 
 		return false
 	end
 
-	local var_34_9 = SeasonFightHandler.getSeasonEquips(var_34_1, var_34_0)
-	local var_34_10 = var_34_0.battleId
-	local var_34_11 = var_34_10 and lua_battle.configDict[var_34_10]
-	local var_34_12 = var_34_11 and var_34_11.noClothSkill == 0 and var_34_1.clothId or 0
+	local seasonEquips = SeasonFightHandler.getSeasonEquips(curGroupMO, fightParam)
+	local battleId = fightParam.battleId
+	local battleConfig = battleId and lua_battle.configDict[battleId]
+	local clothId = battleConfig and battleConfig.noClothSkill == 0 and curGroupMO.clothId or 0
 
-	var_34_0:setMySide(var_34_12, var_34_2, var_34_4, var_34_7, var_34_9, nil, nil, var_34_8)
+	fightParam:setMySide(clothId, main, sub, equips, seasonEquips, nil, nil, assistBossId)
 
 	return true
 end
 
-function var_0_0.openRoundView(arg_35_0)
-	if arg_35_0:canOpenRoundView() then
+function FightController:openRoundView()
+	if self:canOpenRoundView() then
 		ViewMgr.instance:openView(ViewName.FightRoundView)
 	end
 end
 
-function var_0_0.canOpenRoundView(arg_36_0)
+function FightController:canOpenRoundView()
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return
 	end
@@ -645,29 +662,31 @@ function var_0_0.canOpenRoundView(arg_36_0)
 		return false
 	end
 
-	if not FightModel.instance:getFightParam().episodeId then
+	local fightParam = FightModel.instance:getFightParam()
+
+	if not fightParam.episodeId then
 		return false
 	end
 
 	return not GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRoundView)
 end
 
-function var_0_0.getPlayerPrefKeyAuto(arg_37_0, arg_37_1)
-	if not arg_37_1 then
+function FightController:getPlayerPrefKeyAuto(episodeId)
+	if not episodeId then
 		return
 	end
 
-	local var_37_0 = PlayerPrefsKey.FightAutoEpsodeIds .. PlayerModel.instance:getPlayinfo().userId
-	local var_37_1 = PlayerPrefsHelper.getString(var_37_0, "")
+	local key = PlayerPrefsKey.FightAutoEpsodeIds .. PlayerModel.instance:getPlayinfo().userId
+	local param = PlayerPrefsHelper.getString(key, "")
 
-	if string.nilorempty(var_37_1) then
+	if string.nilorempty(param) then
 		return false
 	end
 
-	local var_37_2 = string.splitToNumber(var_37_1, "#")
+	local episodeIds = string.splitToNumber(param, "#")
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_2) do
-		if iter_37_1 == arg_37_1 then
+	for i, one in ipairs(episodeIds) do
+		if one == episodeId then
 			return true
 		end
 	end
@@ -675,63 +694,63 @@ function var_0_0.getPlayerPrefKeyAuto(arg_37_0, arg_37_1)
 	return false
 end
 
-function var_0_0.setPlayerPrefKeyAuto(arg_38_0, arg_38_1, arg_38_2)
-	if not arg_38_1 then
+function FightController:setPlayerPrefKeyAuto(episodeId, isAuto)
+	if not episodeId then
 		return
 	end
 
-	local var_38_0 = PlayerPrefsKey.FightAutoEpsodeIds .. PlayerModel.instance:getPlayinfo().userId
-	local var_38_1 = PlayerPrefsHelper.getString(var_38_0, "")
+	local key = PlayerPrefsKey.FightAutoEpsodeIds .. PlayerModel.instance:getPlayinfo().userId
+	local param = PlayerPrefsHelper.getString(key, "")
 
-	if string.nilorempty(var_38_1) then
-		if arg_38_2 then
-			var_38_1 = tostring(arg_38_1)
+	if string.nilorempty(param) then
+		if isAuto then
+			param = tostring(episodeId)
 
-			PlayerPrefsHelper.setString(var_38_0, var_38_1)
+			PlayerPrefsHelper.setString(key, param)
 		end
 
 		return
 	end
 
-	local var_38_2 = false
-	local var_38_3 = string.splitToNumber(var_38_1, "#")
+	local has = false
+	local episodeIds = string.splitToNumber(param, "#")
 
-	for iter_38_0, iter_38_1 in ipairs(var_38_3) do
-		if iter_38_1 == arg_38_1 then
-			var_38_2 = true
+	for i, one in ipairs(episodeIds) do
+		if one == episodeId then
+			has = true
 		end
 	end
 
-	if not var_38_2 and arg_38_2 then
-		local var_38_4 = table.concat({
-			var_38_1,
+	if not has and isAuto then
+		param = table.concat({
+			param,
 			"#",
-			tostring(arg_38_1)
+			tostring(episodeId)
 		})
 
-		PlayerPrefsHelper.setString(var_38_0, var_38_4)
+		PlayerPrefsHelper.setString(key, param)
 
 		return
 	end
 
-	if var_38_2 and not arg_38_2 then
-		local var_38_5 = {}
+	if has and not isAuto then
+		local deletedEpisodeIds = {}
 
-		for iter_38_2, iter_38_3 in ipairs(var_38_3) do
-			if iter_38_3 ~= arg_38_1 then
-				table.insert(var_38_5, iter_38_3)
+		for i, one in ipairs(episodeIds) do
+			if one ~= episodeId then
+				table.insert(deletedEpisodeIds, one)
 			end
 		end
 
-		local var_38_6 = table.concat(var_38_5, "#")
+		param = table.concat(deletedEpisodeIds, "#")
 
-		PlayerPrefsHelper.setString(var_38_0, var_38_6)
+		PlayerPrefsHelper.setString(key, param)
 
 		return
 	end
 end
 
-function var_0_0.checkFightQuitTipViewClose(arg_39_0)
+function FightController:checkFightQuitTipViewClose()
 	if ViewMgr.instance:isOpen(ViewName.FightQuitTipView) then
 		ViewMgr.instance:closeView(ViewName.FightQuitTipView, nil)
 	end
@@ -739,16 +758,17 @@ function var_0_0.checkFightQuitTipViewClose(arg_39_0)
 	SeasonFightHandler.closeSeasonFightRuleTipView()
 end
 
-function var_0_0.openFightSpecialTipView(arg_40_0, arg_40_1)
-	if not arg_40_1 then
-		local var_40_0 = FightModel.instance:getFightParam()
+function FightController:openFightSpecialTipView(isBefore)
+	if not isBefore then
+		local fightParam = FightModel.instance:getFightParam()
 
-		if var_40_0 then
-			local var_40_1 = var_40_0.episodeId
-			local var_40_2 = DungeonConfig.instance:getEpisodeCO(var_40_1)
-			local var_40_3 = var_40_2 and var_40_2.type
+		if fightParam then
+			local episodeId = fightParam.episodeId
+			local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+			local episodeType = episodeConfig and episodeConfig.type
+			local isSeasonFightRuleTip = SeasonFightHandler.openSeasonFightRuleTipView(episodeType)
 
-			if SeasonFightHandler.openSeasonFightRuleTipView(var_40_3) then
+			if isSeasonFightRuleTip then
 				return
 			end
 		end
@@ -757,48 +777,48 @@ function var_0_0.openFightSpecialTipView(arg_40_0, arg_40_1)
 	ViewMgr.instance:openView(ViewName.FightSpecialTipView)
 end
 
-function var_0_0.openFightTechniqueView(arg_41_0)
+function FightController:openFightTechniqueView()
 	ViewMgr.instance:openView(ViewName.FightTechniqueView)
 end
 
-function var_0_0._recordFreeTicket(arg_42_0)
-	local var_42_0 = FightModel.instance:getFightParam()
-	local var_42_1 = var_42_0 and var_42_0.episodeId
-	local var_42_2 = var_42_1 and lua_episode.configDict[var_42_1]
+function FightController:_recordFreeTicket()
+	local fightParam = FightModel.instance:getFightParam()
+	local episodeId = fightParam and fightParam.episodeId
+	local episodeCO = episodeId and lua_episode.configDict[episodeId]
 
-	if not var_42_2 then
+	if not episodeCO then
 		return
 	end
 
-	local var_42_3 = DungeonConfig.instance:getChapterCO(var_42_2.chapterId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeCO.chapterId)
 
-	arg_42_0.TEMP_equip_chapter_free_count = nil
+	self.TEMP_equip_chapter_free_count = nil
 
-	if var_42_3.type == DungeonEnum.ChapterType.Equip then
-		arg_42_0.TEMP_equip_chapter_free_count = DungeonModel.instance:getChapterRemainingNum(var_42_3.type)
+	if chapterConfig.type == DungeonEnum.ChapterType.Equip then
+		self.TEMP_equip_chapter_free_count = DungeonModel.instance:getChapterRemainingNum(chapterConfig.type)
 	end
 end
 
-function var_0_0.onResultViewClose()
-	local var_43_0 = {}
+function FightController.onResultViewClose()
+	local breakInfo = {}
 
-	var_0_0.instance:dispatchEvent(FightEvent.OnBreakResultViewClose, var_43_0)
+	FightController.instance:dispatchEvent(FightEvent.OnBreakResultViewClose, breakInfo)
 
-	if var_43_0.isBreak then
+	if breakInfo.isBreak then
 		return
 	end
 
-	var_0_0.instance:dispatchEvent(FightEvent.OnResultViewClose)
+	FightController.instance:dispatchEvent(FightEvent.OnResultViewClose)
 end
 
-function var_0_0.errorAndEnterMainScene(arg_44_0)
+function FightController:errorAndEnterMainScene()
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	arg_44_0:clearFightData()
+	self:clearFightData()
 	MainController.instance:enterMainScene(true)
 end
 
-function var_0_0.clearFightData(arg_45_0)
+function FightController:clearFightData()
 	FightModel.instance.needFightReconnect = false
 
 	FightModel.instance:onEndFight()
@@ -806,6 +826,6 @@ function var_0_0.clearFightData(arg_45_0)
 	FightModel.instance:clearRecordMO()
 end
 
-var_0_0.instance = var_0_0.New()
+FightController.instance = FightController.New()
 
-return var_0_0
+return FightController

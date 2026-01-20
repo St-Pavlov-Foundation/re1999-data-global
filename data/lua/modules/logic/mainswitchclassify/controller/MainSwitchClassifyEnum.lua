@@ -1,39 +1,41 @@
-﻿module("modules.logic.mainswitchclassify.controller.MainSwitchClassifyEnum", package.seeall)
+﻿-- chunkname: @modules/logic/mainswitchclassify/controller/MainSwitchClassifyEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.mainswitchclassify.controller.MainSwitchClassifyEnum", package.seeall)
 
-var_0_0.Classify = {
+local MainSwitchClassifyEnum = _M
+
+MainSwitchClassifyEnum.Classify = {
 	UI = 2,
 	Scene = 1,
 	Click = 3
 }
-var_0_0.StyleClassifyInfo = {
-	[var_0_0.Classify.Scene] = {
+MainSwitchClassifyEnum.StyleClassifyInfo = {
+	[MainSwitchClassifyEnum.Classify.Scene] = {
 		Sort = 1,
 		Title = "main_switch_classify_title_1",
-		Classify = var_0_0.Classify.Scene
+		Classify = MainSwitchClassifyEnum.Classify.Scene
 	},
-	[var_0_0.Classify.UI] = {
+	[MainSwitchClassifyEnum.Classify.UI] = {
 		Sort = 2,
 		Title = "main_switch_classify_title_2",
-		Classify = var_0_0.Classify.UI
+		Classify = MainSwitchClassifyEnum.Classify.UI
 	},
-	[var_0_0.Classify.Click] = {
+	[MainSwitchClassifyEnum.Classify.Click] = {
 		Sort = 3,
 		Title = "main_switch_classify_title_3",
-		Classify = var_0_0.Classify.Click
+		Classify = MainSwitchClassifyEnum.Classify.Click
 	}
 }
-var_0_0.SwitchAnimDelayTime = 0
-var_0_0.ClassifyShowInfo = {
-	[var_0_0.Classify.UI] = {
+MainSwitchClassifyEnum.SwitchAnimDelayTime = 0
+MainSwitchClassifyEnum.ClassifyShowInfo = {
+	[MainSwitchClassifyEnum.Classify.UI] = {
 		TitleLogo = "mainsceneswitch_logo03",
-		Classify = var_0_0.Classify.UI
+		Classify = MainSwitchClassifyEnum.Classify.UI
 	},
-	[var_0_0.Classify.Click] = {
+	[MainSwitchClassifyEnum.Classify.Click] = {
 		TitleLogo = "mainsceneswitch_logo04",
-		Classify = var_0_0.Classify.Click
+		Classify = MainSwitchClassifyEnum.Classify.Click
 	}
 }
 
-return var_0_0
+return MainSwitchClassifyEnum

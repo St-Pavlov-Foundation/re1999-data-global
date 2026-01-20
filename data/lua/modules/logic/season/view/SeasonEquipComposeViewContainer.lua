@@ -1,61 +1,65 @@
-﻿module("modules.logic.season.view.SeasonEquipComposeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonEquipComposeViewContainer.lua
 
-local var_0_0 = class("SeasonEquipComposeViewContainer", BaseViewContainer)
+module("modules.logic.season.view.SeasonEquipComposeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = arg_1_0:createEquipItemsParam()
-	local var_1_1 = SeasonEquipTagSelect.New()
+local SeasonEquipComposeViewContainer = class("SeasonEquipComposeViewContainer", BaseViewContainer)
 
-	var_1_1:init(Activity104EquipComposeController.instance, "left/#drop_filter")
+function SeasonEquipComposeViewContainer:buildViews()
+	local scrollParam = self:createEquipItemsParam()
+	local filterView = SeasonEquipTagSelect.New()
+
+	filterView:init(Activity104EquipComposeController.instance, "left/#drop_filter")
 
 	return {
 		SeasonEquipComposeView.New(),
-		var_1_1,
-		LuaListScrollView.New(Activity104EquipItemComposeModel.instance, var_1_0),
+		filterView,
+		LuaListScrollView.New(Activity104EquipItemComposeModel.instance, scrollParam),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.createEquipItemsParam(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function SeasonEquipComposeViewContainer:createEquipItemsParam()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "left/mask/#scroll_cardlist"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-	var_2_0.cellClass = SeasonEquipComposeItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = SeasonEquipComposeItem.ColumnCount
-	var_2_0.cellWidth = 170
-	var_2_0.cellHeight = 235
-	var_2_0.cellSpaceH = 8.48
-	var_2_0.cellSpaceV = 1
-	var_2_0.frameUpdateMs = 100
-	var_2_0.minUpdateCountInFrame = SeasonEquipComposeItem.ColumnCount
+	scrollParam.scrollGOPath = "left/mask/#scroll_cardlist"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = SeasonEquipComposeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = SeasonEquipComposeItem.ColumnCount
+	scrollParam.cellWidth = 170
+	scrollParam.cellHeight = 235
+	scrollParam.cellSpaceH = 8.48
+	scrollParam.cellSpaceV = 1
+	scrollParam.frameUpdateMs = 100
+	scrollParam.minUpdateCountInFrame = SeasonEquipComposeItem.ColumnCount
 
-	return var_2_0
+	return scrollParam
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function SeasonEquipComposeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.playCloseTransition(arg_4_0)
-	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play("close", 0, 0)
-	TaskDispatcher.runDelay(arg_4_0.delayOnPlayCloseAnim, arg_4_0, 0.2)
+function SeasonEquipComposeViewContainer:playCloseTransition()
+	local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	animator:Play("close", 0, 0)
+	TaskDispatcher.runDelay(self.delayOnPlayCloseAnim, self, 0.2)
 end
 
-function var_0_0.delayOnPlayCloseAnim(arg_5_0)
-	arg_5_0:onPlayCloseTransitionFinish()
+function SeasonEquipComposeViewContainer:delayOnPlayCloseAnim()
+	self:onPlayCloseTransitionFinish()
 end
 
-return var_0_0
+return SeasonEquipComposeViewContainer

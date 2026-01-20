@@ -1,11 +1,13 @@
-﻿module("modules.logic.social.view.SocialRemarkTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/SocialRemarkTipViewContainer.lua
 
-local var_0_0 = class("SocialRemarkTipViewContainer", BaseViewContainer)
+module("modules.logic.social.view.SocialRemarkTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SocialRemarkTipViewContainer = class("SocialRemarkTipViewContainer", BaseViewContainer)
+
+function SocialRemarkTipViewContainer:buildViews()
 	return {
 		SocialRemarkTipView.New()
 	}
 end
 
-return var_0_0
+return SocialRemarkTipViewContainer

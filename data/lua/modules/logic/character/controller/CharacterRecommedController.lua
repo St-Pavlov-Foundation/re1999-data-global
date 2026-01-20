@@ -1,200 +1,216 @@
-﻿module("modules.logic.character.controller.CharacterRecommedController", package.seeall)
+﻿-- chunkname: @modules/logic/character/controller/CharacterRecommedController.lua
 
-local var_0_0 = class("CharacterRecommedController", BaseController)
+module("modules.logic.character.controller.CharacterRecommedController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local CharacterRecommedController = class("CharacterRecommedController", BaseController)
+
+function CharacterRecommedController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function CharacterRecommedController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	FightController.instance:registerCallback(FightEvent.RespBeginFight, arg_3_0._respBeginFight, arg_3_0)
-	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_3_0._onCurrencyChange, arg_3_0)
-	MainController.instance:registerCallback(MainEvent.OnFirstEnterMain, arg_3_0._onFirstEnterMain, arg_3_0)
+function CharacterRecommedController:addConstEvents()
+	FightController.instance:registerCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
+	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, self._onCurrencyChange, self)
+	MainController.instance:registerCallback(MainEvent.OnFirstEnterMain, self._onFirstEnterMain, self)
 end
 
-function var_0_0.reInit(arg_4_0)
+function CharacterRecommedController:reInit()
 	return
 end
 
-function var_0_0._onFirstEnterMain(arg_5_0)
+function CharacterRecommedController:_onFirstEnterMain()
 	CharacterRecommedModel.instance:initTracedHeroDevelopGoalsMO()
 
-	if not arg_5_0._tradeIcon then
-		arg_5_0:loadTrade()
+	if not self._tradeIcon then
+		self:loadTrade()
 	end
 end
 
-function var_0_0._respBeginFight(arg_6_0)
-	local var_6_0 = JumpModel.instance:getRecordFarmItem()
+function CharacterRecommedController:_respBeginFight()
+	local recordFarmItem = JumpModel.instance:getRecordFarmItem()
 
-	if var_6_0 and not var_6_0.isFormHeroTraced then
+	if recordFarmItem and not recordFarmItem.isFormHeroTraced then
 		return
 	end
 
-	local var_6_1 = FightResultModel.instance:getEpisodeId()
-	local var_6_2 = CharacterRecommedModel.instance:getEpisodeOrChapterTracedItem(var_6_1)
+	local episodeId = FightResultModel.instance:getEpisodeId()
+	local item = CharacterRecommedModel.instance:getEpisodeOrChapterTracedItem(episodeId)
 
-	if var_6_2 then
-		local var_6_3 = {
-			type = var_6_2.materilType,
-			id = var_6_2.materilId,
-			quantity = var_6_2.quantity,
-			sceneType = SceneType.Main,
-			openedViewNameList = var_0_0.instance:getRecommedViewDict()
-		}
+	if item then
+		local recordFarmItem = {}
 
-		var_6_3.isFormHeroTraced = true
+		recordFarmItem.type = item.materilType
+		recordFarmItem.id = item.materilId
+		recordFarmItem.quantity = item.quantity
+		recordFarmItem.sceneType = SceneType.Main
 
-		JumpModel.instance:setRecordFarmItem(var_6_3)
+		local jumpViewList = CharacterRecommedController.instance:getRecommedViewDict()
+
+		recordFarmItem.openedViewNameList = jumpViewList
+		recordFarmItem.isFormHeroTraced = true
+
+		JumpModel.instance:setRecordFarmItem(recordFarmItem)
 	end
 end
 
-function var_0_0._onCurrencyChange(arg_7_0)
-	var_0_0.instance:dispatchEvent(CharacterRecommedEvent.OnRefreshTraced)
+function CharacterRecommedController:_onCurrencyChange()
+	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnRefreshTraced)
 end
 
-function var_0_0.openRecommedView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = CharacterRecommedModel.instance:getHeroRecommendMo(arg_8_1)
-	local var_8_1 = (var_8_0:isShowTeam() or var_8_0:isShowEquip()) and CharacterRecommedEnum.TabSubType.RecommedGroup or CharacterRecommedEnum.TabSubType.DevelopGoals
-	local var_8_2 = {
-		heroId = arg_8_1,
-		fromView = arg_8_2,
-		defaultTabId = var_8_1,
-		uiSpine = arg_8_3
+function CharacterRecommedController:openRecommedView(heroId, fromView, uiSpine)
+	local heroRecommendMO = CharacterRecommedModel.instance:getHeroRecommendMo(heroId)
+	local isShowRecommendTab = heroRecommendMO:isShowTeam() or heroRecommendMO:isShowEquip()
+	local defaultTabId = isShowRecommendTab and CharacterRecommedEnum.TabSubType.RecommedGroup or CharacterRecommedEnum.TabSubType.DevelopGoals
+	local param = {
+		heroId = heroId,
+		fromView = fromView,
+		defaultTabId = defaultTabId,
+		uiSpine = uiSpine
 	}
 
-	ViewMgr.instance:openView(ViewName.CharacterRecommedView, var_8_2)
-	CharacterRecommedHeroListModel.instance:setMoList(arg_8_1)
+	ViewMgr.instance:openView(ViewName.CharacterRecommedView, param)
+	CharacterRecommedHeroListModel.instance:setMoList(heroId)
 end
 
-function var_0_0.jump(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or CharacterRecommedModel.instance:getTracedHeroDevelopGoalsMO()
+function CharacterRecommedController:jump(mo)
+	mo = mo or CharacterRecommedModel.instance:getTracedHeroDevelopGoalsMO()
 
-	if not arg_9_1 then
+	if not mo then
 		return
 	end
 
-	local var_9_0 = arg_9_1:getTracedItems()
+	local tracedItems = mo:getTracedItems()
 
-	if not var_9_0 or #var_9_0 == 0 then
-		arg_9_0:jumpLevelUp(arg_9_1)
+	if not tracedItems or #tracedItems == 0 then
+		self:jumpLevelUp(mo)
 
 		return
 	end
 
-	arg_9_0:jumpDungeonView()
+	self:jumpDungeonView()
 end
 
-function var_0_0.jumpLevelUp(arg_10_0, arg_10_1)
-	if arg_10_1:getDevelopGoalsType() == CharacterRecommedEnum.DevelopGoalsType.RankLevel then
-		local var_10_0, var_10_1 = arg_10_1:isCurRankMaxLv()
+function CharacterRecommedController:jumpLevelUp(mo)
+	if mo:getDevelopGoalsType() == CharacterRecommedEnum.DevelopGoalsType.RankLevel then
+		local isCurRankMaxLv, heroMo = mo:isCurRankMaxLv()
 
-		if not var_10_1 or not var_10_1:isOwnHero() then
+		if not heroMo or not heroMo:isOwnHero() then
 			return
 		end
 
-		if var_10_0 then
-			var_0_0.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Rank)
-			CharacterController.instance:openCharacterRankUpView(var_10_1)
+		if isCurRankMaxLv then
+			CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Rank)
+			CharacterController.instance:openCharacterRankUpView(heroMo)
 		else
-			CharacterController.instance:openCharacterView(var_10_1)
-			CharacterController.instance:openCharacterLevelUpView(var_10_1)
-			var_0_0.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Level)
+			CharacterController.instance:openCharacterView(heroMo)
+			CharacterController.instance:openCharacterLevelUpView(heroMo)
+			CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Level)
 		end
 	else
-		local var_10_2, var_10_3 = arg_10_1:isMaxTalentLv()
+		local isMaxLv, heroMo = mo:isMaxTalentLv()
 
-		if not var_10_3 or not var_10_3:isOwnHero() then
+		if not heroMo or not heroMo:isOwnHero() then
 			return
 		end
 
-		if not var_10_2 and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
-			if var_10_3.rank >= CharacterEnum.TalentRank then
+		if not isMaxLv and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
+			if heroMo.rank >= CharacterEnum.TalentRank then
 				CharacterController.instance:openCharacterTalentView({
 					isBack = true,
-					heroid = var_10_3.heroId,
-					heroMo = var_10_3
+					heroid = heroMo.heroId,
+					heroMo = heroMo
 				})
-			elseif var_10_3.config.heroType == CharacterEnum.HumanHeroType then
-				GameFacade.showToast(ToastEnum.CharacterType6, var_10_3.config.name)
+			elseif heroMo.config.heroType == CharacterEnum.HumanHeroType then
+				GameFacade.showToast(ToastEnum.CharacterType6, heroMo.config.name)
 			else
-				GameFacade.showToast(ToastEnum.Character, var_10_3.config.name)
+				GameFacade.showToast(ToastEnum.Character, heroMo.config.name)
 			end
 		end
 	end
 end
 
-function var_0_0.jumpDungeonView(arg_11_0)
-	arg_11_0._recommedViewDict = JumpController.instance:getCurrentOpenedView()
+function CharacterRecommedController:jumpDungeonView()
+	self._recommedViewDict = JumpController.instance:getCurrentOpenedView()
 
 	DungeonController.instance:enterDungeonView(true)
-	var_0_0.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Dungeon)
+	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Dungeon)
 end
 
-function var_0_0.onJumpReturnRecommedView(arg_12_0)
-	if not arg_12_0._recommedViewDict then
-		arg_12_0._recommedViewDict = {}
+function CharacterRecommedController:onJumpReturnRecommedView()
+	local tradeMo = CharacterRecommedModel.instance:getTracedHeroDevelopGoalsMO()
 
-		local var_12_0 = CharacterRecommedModel.instance:getTracedHeroDevelopGoalsMO()
+	if not self._recommedViewDict then
+		self._recommedViewDict = {}
 
-		if var_12_0 then
-			local var_12_1 = {
+		if tradeMo then
+			local info = {
 				viewName = ViewName.CharacterRecommedView,
 				viewParam = {
 					defaultTabId = CharacterRecommedEnum.TabSubType.DevelopGoals,
-					heroId = var_12_0._heroId
+					heroId = tradeMo._heroId
 				}
 			}
 
-			table.insert(arg_12_0._recommedViewDict, var_12_1)
+			table.insert(self._recommedViewDict, info)
 		end
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._recommedViewDict) do
-		if iter_12_1.viewName == ViewName.CharacterRecommedView then
-			ViewMgr.instance:openView(iter_12_1.viewName, iter_12_1.viewParam)
+	for _, openedViewTable in ipairs(self._recommedViewDict) do
+		local heroId = tradeMo and tradeMo._heroId or openedViewTable.viewParam.heroId
+
+		if openedViewTable.viewName == ViewName.CharacterRecommedView then
+			local tabId = CharacterRecommedEnum.TabSubType.DevelopGoals
+
+			openedViewTable.viewParam.defaultTabId = tabId
+			openedViewTable.viewParam.defaultTabIds[2] = tabId
+
+			CharacterRecommedHeroListModel.instance:setMoList(heroId)
 		end
+
+		openedViewTable.viewParam.heroId = heroId
+
+		ViewMgr.instance:openView(openedViewTable.viewName, openedViewTable.viewParam)
 	end
 end
 
-function var_0_0.getRecommedViewDict(arg_13_0)
-	return arg_13_0._recommedViewDict
+function CharacterRecommedController:getRecommedViewDict()
+	return self._recommedViewDict
 end
 
-function var_0_0.loadTrade(arg_14_0)
-	if arg_14_0._loader then
-		arg_14_0._loader:dispose()
+function CharacterRecommedController:loadTrade()
+	if self._loader then
+		self._loader:dispose()
 	end
 
-	arg_14_0._loader = MultiAbLoader.New()
+	self._loader = MultiAbLoader.New()
 
-	arg_14_0._loader:addPath(CharacterRecommedEnum.TracedIconPath)
-	arg_14_0._loader:startLoad(arg_14_0._onLoadFinish, arg_14_0)
+	self._loader:addPath(CharacterRecommedEnum.TracedIconPath)
+	self._loader:startLoad(self._onLoadFinish, self)
 end
 
-function var_0_0._onLoadFinish(arg_15_0)
-	arg_15_0._tradeIcon = arg_15_0._loader:getFirstAssetItem():GetResource()
+function CharacterRecommedController:_onLoadFinish()
+	self._tradeIcon = self._loader:getFirstAssetItem():GetResource()
 
-	var_0_0.instance:dispatchEvent(CharacterRecommedEvent.OnLoadFinishTracedIcon)
+	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnLoadFinishTracedIcon)
 end
 
-function var_0_0.getTradeIcon(arg_16_0)
-	if not arg_16_0._tradeIcon then
-		arg_16_0:loadTrade()
+function CharacterRecommedController:getTradeIcon()
+	if not self._tradeIcon then
+		self:loadTrade()
 	end
 
-	return arg_16_0._tradeIcon
+	return self._tradeIcon
 end
 
-function var_0_0.replaceHeroGroup(arg_17_0)
+function CharacterRecommedController:replaceHeroGroup()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterRecommedController.instance = CharacterRecommedController.New()
 
-return var_0_0
+return CharacterRecommedController

@@ -1,35 +1,37 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventPlayVideo", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventPlayVideo.lua
 
-local var_0_0 = class("FightTLEventPlayVideo", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventPlayVideo", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._resName = arg_1_3[1]
+local FightTLEventPlayVideo = class("FightTLEventPlayVideo", FightTimelineTrackItem)
 
-	if not string.nilorempty(arg_1_0._resName) then
-		if arg_1_3[2] ~= "1" and FightVideoMgr.instance:isSameVideo(arg_1_0._resName) and FightVideoMgr.instance:isPause() then
-			FightVideoMgr.instance:continue(arg_1_0._resName)
+function FightTLEventPlayVideo:onTrackStart(fightStepData, duration, paramsArr)
+	self._resName = paramsArr[1]
+
+	if not string.nilorempty(self._resName) then
+		if paramsArr[2] ~= "1" and FightVideoMgr.instance:isSameVideo(self._resName) and FightVideoMgr.instance:isPause() then
+			FightVideoMgr.instance:continue(self._resName)
 
 			return
 		end
 
-		FightVideoMgr.instance:play(arg_1_0._resName)
+		FightVideoMgr.instance:play(self._resName)
 
-		if arg_1_3[2] == "1" then
+		if paramsArr[2] == "1" then
 			FightVideoMgr.instance:pause()
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	arg_2_0:_clear()
+function FightTLEventPlayVideo:onTrackEnd()
+	self:_clear()
 end
 
-function var_0_0.onDestructor(arg_3_0)
-	arg_3_0:_clear()
+function FightTLEventPlayVideo:onDestructor()
+	self:_clear()
 end
 
-function var_0_0._clear(arg_4_0)
+function FightTLEventPlayVideo:_clear()
 	FightVideoMgr.instance:stop()
 end
 
-return var_0_0
+return FightTLEventPlayVideo

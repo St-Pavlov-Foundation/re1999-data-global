@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.config.Activity188Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/config/Activity188Config.lua
 
-local var_0_0 = class("Activity188Config", BaseConfig)
+module("modules.logic.versionactivity2_6.xugouji.config.Activity188Config", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._episodeCfg = nil
-	arg_1_0._gameCfg = nil
-	arg_1_0._aiCfg = nil
-	arg_1_0._abilityCfg = nil
-	arg_1_0._skillCfg = nil
-	arg_1_0._taskCfg = nil
-	arg_1_0._buffCfg = nil
-	arg_1_0._cardCfg = nil
-	arg_1_0._constCfg = nil
-	arg_1_0._episodeDict = {}
+local Activity188Config = class("Activity188Config", BaseConfig)
+
+function Activity188Config:onInit()
+	self._episodeCfg = nil
+	self._gameCfg = nil
+	self._aiCfg = nil
+	self._abilityCfg = nil
+	self._skillCfg = nil
+	self._taskCfg = nil
+	self._buffCfg = nil
+	self._cardCfg = nil
+	self._constCfg = nil
+	self._episodeDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity188Config:reqConfigNames()
 	return {
 		"activity188_episode",
 		"activity188_game",
@@ -29,160 +31,166 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity188_episode" then
-		arg_3_0._episodeCfg = arg_3_2
-		arg_3_0._episodeDict = {}
+function Activity188Config:onConfigLoaded(configName, configTable)
+	if configName == "activity188_episode" then
+		self._episodeCfg = configTable
+		self._episodeDict = {}
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._episodeCfg.configList) do
-			arg_3_0._episodeDict[iter_3_1.activityId] = arg_3_0._episodeDict[iter_3_1.activityId] or {}
+		for _, v in ipairs(self._episodeCfg.configList) do
+			self._episodeDict[v.activityId] = self._episodeDict[v.activityId] or {}
 
-			table.insert(arg_3_0._episodeDict[iter_3_1.activityId], iter_3_1)
+			table.insert(self._episodeDict[v.activityId], v)
 		end
-	elseif arg_3_1 == "activity188_game" then
-		arg_3_0._gameCfg = arg_3_2
-	elseif arg_3_1 == "activity188_ai" then
-		arg_3_0._aiCfg = arg_3_2
-	elseif arg_3_1 == "activity188_ability" then
-		arg_3_0._abilityCfg = arg_3_2
-	elseif arg_3_1 == "activity188_skill" then
-		arg_3_0._skillCfg = arg_3_2
-	elseif arg_3_1 == "activity188_task" then
-		arg_3_0._taskCfg = arg_3_2
-	elseif arg_3_1 == "activity188_buff" then
-		arg_3_0._buffCfg = arg_3_2
-	elseif arg_3_1 == "activity188_card" then
-		arg_3_0._cardCfg = arg_3_2
-	elseif arg_3_1 == "activity188_const" then
-		arg_3_0._constCfg = arg_3_2
+	elseif configName == "activity188_game" then
+		self._gameCfg = configTable
+	elseif configName == "activity188_ai" then
+		self._aiCfg = configTable
+	elseif configName == "activity188_ability" then
+		self._abilityCfg = configTable
+	elseif configName == "activity188_skill" then
+		self._skillCfg = configTable
+	elseif configName == "activity188_task" then
+		self._taskCfg = configTable
+	elseif configName == "activity188_buff" then
+		self._buffCfg = configTable
+	elseif configName == "activity188_card" then
+		self._cardCfg = configTable
+	elseif configName == "activity188_const" then
+		self._constCfg = configTable
 	end
 end
 
-function var_0_0.getEpisodeCfgList(arg_4_0, arg_4_1)
-	return arg_4_0._episodeDict[arg_4_1] or {}
+function Activity188Config:getEpisodeCfgList(activityId)
+	return self._episodeDict[activityId] or {}
 end
 
-function var_0_0.getEpisodeCfg(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0._episodeDict[arg_5_1]
+function Activity188Config:getEpisodeCfg(activityId, episodeId)
+	local activityEpisodeList = self._episodeDict[activityId]
 
-	if not var_5_0 then
+	if not activityEpisodeList then
 		return nil
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		if iter_5_1.episodeId == arg_5_2 then
-			return iter_5_1
+	for _, episoCfg in ipairs(activityEpisodeList) do
+		if episoCfg.episodeId == episodeId then
+			return episoCfg
 		end
 	end
 end
 
-function var_0_0.getEpisodeCfgByEpisodeId(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._episodeDict) do
-		for iter_6_2, iter_6_3 in ipairs(iter_6_1) do
-			if iter_6_3.episodeId == arg_6_1 then
-				return iter_6_3
+function Activity188Config:getEpisodeCfgByEpisodeId(episodeId)
+	for activityId, activityEpisodeList in pairs(self._episodeDict) do
+		for _, episoCfg in ipairs(activityEpisodeList) do
+			if episoCfg.episodeId == episodeId then
+				return episoCfg
 			end
 		end
 	end
 end
 
-function var_0_0.getEpisodeCfgByPreEpisodeId(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._episodeDict) do
-		for iter_7_2, iter_7_3 in ipairs(iter_7_1) do
-			if iter_7_3.preEpisodeId == arg_7_1 then
-				return iter_7_3
+function Activity188Config:getEpisodeCfgByPreEpisodeId(episodeId)
+	for activityId, activityEpisodeList in pairs(self._episodeDict) do
+		for _, episoCfg in ipairs(activityEpisodeList) do
+			if episoCfg.preEpisodeId == episodeId then
+				return episoCfg
 			end
 		end
 	end
 end
 
-function var_0_0.getEventCfg(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._eventConfig.configDict[arg_8_1]
+function Activity188Config:getEventCfg(activityId, eventId)
+	local actEvents = self._eventConfig.configDict[activityId]
 
-	return var_8_0 and var_8_0[arg_8_2]
+	return actEvents and actEvents[eventId]
 end
 
-function var_0_0.getCardCfg(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0._cardCfg.configDict[arg_9_1][arg_9_2]
+function Activity188Config:getCardCfg(activityId, cardId)
+	local activityCards = self._cardCfg.configDict[activityId]
+
+	return activityCards[cardId]
 end
 
-function var_0_0.getCardSkillCfg(arg_10_0, arg_10_1, arg_10_2)
-	return arg_10_0._skillCfg.configDict[arg_10_1][arg_10_2]
+function Activity188Config:getCardSkillCfg(activityId, skillId)
+	local activitySkills = self._skillCfg.configDict[activityId]
+
+	return activitySkills[skillId]
 end
 
-function var_0_0.getGameCfg(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._gameCfg.configDict[arg_11_1]
+function Activity188Config:getGameCfg(activityId, gameId)
+	local gameCfgs = self._gameCfg.configDict[activityId]
 
-	return var_11_0 and var_11_0[arg_11_2]
+	return gameCfgs and gameCfgs[gameId]
 end
 
-function var_0_0.getAbilityCfg(arg_12_0, arg_12_1, arg_12_2)
-	return arg_12_0._abilityCfg.configDict[arg_12_1][arg_12_2]
+function Activity188Config:getAbilityCfg(activityId, id)
+	local activityCards = self._abilityCfg.configDict[activityId]
+
+	return activityCards[id]
 end
 
-function var_0_0.getGameItemListCfg(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = {}
-	local var_13_1 = arg_13_0._itemConfig.configDict[arg_13_1]
+function Activity188Config:getGameItemListCfg(activityId, _type)
+	local result = {}
+	local activityItemList = self._itemConfig.configDict[activityId]
 
-	for iter_13_0, iter_13_1 in pairs(var_13_1) do
-		if arg_13_2 == nil or iter_13_1.compostType == arg_13_2 then
-			var_13_0[#var_13_0 + 1] = iter_13_1
+	for _, itemCfg in pairs(activityItemList) do
+		if _type == nil or itemCfg.compostType == _type then
+			result[#result + 1] = itemCfg
 		end
 	end
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.getTaskList(arg_14_0, arg_14_1)
-	if arg_14_0._task_list then
-		return arg_14_0._task_list
+function Activity188Config:getTaskList(activityId)
+	if self._task_list then
+		return self._task_list
 	end
 
-	arg_14_0._task_list = {}
+	self._task_list = {}
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._taskCfg.configDict) do
-		if arg_14_1 == iter_14_1.activityId then
-			arg_14_0._task_list[#arg_14_0._task_list + 1] = iter_14_1
+	for k, v in pairs(self._taskCfg.configDict) do
+		if activityId == v.activityId then
+			self._task_list[#self._task_list + 1] = v
 		end
 	end
 
-	return arg_14_0._task_list
+	return self._task_list
 end
 
-function var_0_0.getConstCfg(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0._constCfg.configDict[arg_15_1]
+function Activity188Config:getConstCfg(activityId, subId)
+	local activityConstCfgList = self._constCfg.configDict[activityId]
 
-	if not var_15_0 then
+	if not activityConstCfgList then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		if arg_15_2 == iter_15_1.id then
-			return iter_15_1
+	for k, v in pairs(activityConstCfgList) do
+		if subId == v.id then
+			return v
 		end
 	end
 end
 
-function var_0_0.getConstValueCfg(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0._constCfg.configDict[arg_16_1]
+function Activity188Config:getConstValueCfg(activityId, value1)
+	local activityConstCfgList = self._constCfg.configDict[activityId]
 
-	if not var_16_0 then
+	if not activityConstCfgList then
 		return
 	end
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if arg_16_2 == iter_16_1.value1 then
-			return iter_16_1
+	for k, v in ipairs(activityConstCfgList) do
+		if value1 == v.value1 then
+			return v
 		end
 	end
 end
 
-function var_0_0.getBuffCfg(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0._buffCfg.configDict[arg_17_1]
+function Activity188Config:getBuffCfg(activityId, buffId)
+	local activityBuffCfgs = self._buffCfg.configDict[activityId]
 
-	return var_17_0 and var_17_0[arg_17_2]
+	return activityBuffCfgs and activityBuffCfgs[buffId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity188Config.instance = Activity188Config.New()
 
-return var_0_0
+return Activity188Config

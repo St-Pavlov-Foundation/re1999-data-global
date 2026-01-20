@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.mgr.FightSceneTriggerSceneAnimatorMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightSceneTriggerSceneAnimatorMgr.lua
 
-local var_0_0 = class("FightSceneTriggerSceneAnimatorMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightSceneTriggerSceneAnimatorMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0:com_registEvent(GameSceneMgr.instance, SceneEventName.OnLevelLoaded, arg_1_0._onLevelLoaded)
+local FightSceneTriggerSceneAnimatorMgr = class("FightSceneTriggerSceneAnimatorMgr", FightBaseClass)
+
+function FightSceneTriggerSceneAnimatorMgr:onConstructor()
+	self:com_registEvent(GameSceneMgr.instance, SceneEventName.OnLevelLoaded, self._onLevelLoaded)
 end
 
-function var_0_0._onLevelLoaded(arg_2_0)
-	if arg_2_0.sceneItemClass then
-		arg_2_0.sceneItemClass:disposeSelf()
+function FightSceneTriggerSceneAnimatorMgr:_onLevelLoaded()
+	if self.sceneItemClass then
+		self.sceneItemClass:disposeSelf()
 
-		arg_2_0.sceneItemClass = nil
+		self.sceneItemClass = nil
 	end
 
-	arg_2_0.sceneItemClass = arg_2_0:newClass(FightSceneTriggerSceneAnimatorItem)
+	self.sceneItemClass = self:newClass(FightSceneTriggerSceneAnimatorItem)
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightSceneTriggerSceneAnimatorMgr:onDestructor()
 	return
 end
 
-return var_0_0
+return FightSceneTriggerSceneAnimatorMgr

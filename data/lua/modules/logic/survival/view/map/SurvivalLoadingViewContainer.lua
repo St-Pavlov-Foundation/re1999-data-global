@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.map.SurvivalLoadingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalLoadingViewContainer.lua
 
-local var_0_0 = class("SurvivalLoadingViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalLoadingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalLoadingViewContainer = class("SurvivalLoadingViewContainer", BaseViewContainer)
+
+function SurvivalLoadingViewContainer:buildViews()
 	return {
 		SurvivalLoadingView.New()
 	}
 end
 
-return var_0_0
+return SurvivalLoadingViewContainer

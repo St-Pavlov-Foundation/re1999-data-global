@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardChangeMagicEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardChangeMagicEffect.lua
 
-local var_0_0 = class("FightCardChangeMagicEffect", BaseWork)
+module("modules.logic.fight.view.cardeffect.FightCardChangeMagicEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0:_playEffects()
+local FightCardChangeMagicEffect = class("FightCardChangeMagicEffect", BaseWork)
+
+function FightCardChangeMagicEffect:onStart(context)
+	self:_playEffects()
 end
 
-function var_0_0._playEffects(arg_2_0)
-	arg_2_0:onDone(true)
+function FightCardChangeMagicEffect:_playEffects()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightCardChangeMagicEffect:clearWork()
 	return
 end
 
-return var_0_0
+return FightCardChangeMagicEffect

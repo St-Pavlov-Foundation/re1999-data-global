@@ -1,29 +1,31 @@
-﻿module("modules.logic.pay.controller.PayController", package.seeall)
+﻿-- chunkname: @modules/logic/pay/controller/PayController.lua
 
-local var_0_0 = class("PayController", BaseController)
+module("modules.logic.pay.controller.PayController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local PayController = class("PayController", BaseController)
+
+function PayController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function PayController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function PayController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	SDKMgr.instance:setPayCallBack(arg_4_0._onPayCallback, arg_4_0)
-	SDKMgr.instance:setQueryProductDetailsCallBack(arg_4_0._onQueryProductDetailsCallBack, arg_4_0)
-	arg_4_0:registerCallback(PayEvent.GetSignSuccess, arg_4_0._onGetSignSuccess, arg_4_0)
-	arg_4_0:registerCallback(PayEvent.GetSignFailed, arg_4_0._onGetSignFailed, arg_4_0)
-	arg_4_0:registerCallback(PayEvent.PayFinished, arg_4_0._onPayFinished, arg_4_0)
-	arg_4_0:registerCallback(PayEvent.PayFailed, arg_4_0._onPayFailed, arg_4_0)
+function PayController:addConstEvents()
+	SDKMgr.instance:setPayCallBack(self._onPayCallback, self)
+	SDKMgr.instance:setQueryProductDetailsCallBack(self._onQueryProductDetailsCallBack, self)
+	self:registerCallback(PayEvent.GetSignSuccess, self._onGetSignSuccess, self)
+	self:registerCallback(PayEvent.GetSignFailed, self._onGetSignFailed, self)
+	self:registerCallback(PayEvent.PayFinished, self._onPayFinished, self)
+	self:registerCallback(PayEvent.PayFailed, self._onPayFailed, self)
 end
 
-function var_0_0.startPay(arg_5_0, arg_5_1, arg_5_2)
+function PayController:startPay(goodsId, selectInfos, isDict)
 	if MinorsController.instance:isPayLimit() then
 		ViewMgr.instance:openView(ViewName.DateOfBirthSelectionView)
 
@@ -35,244 +37,251 @@ function var_0_0.startPay(arg_5_0, arg_5_1, arg_5_2)
 	end
 
 	UIBlockMgr.instance:startBlock("charging")
-	ChargeRpc.instance:sendNewOrderRequest(arg_5_1, arg_5_2)
+
+	if isDict then
+		ChargeRpc.instance:sendDictNewOrderRequest(goodsId, selectInfos)
+	else
+		ChargeRpc.instance:sendNewOrderRequest(goodsId, selectInfos)
+	end
 end
 
-function var_0_0._onGetSignSuccess(arg_6_0)
+function PayController:_onGetSignSuccess()
 	UIBlockMgr.instance:endBlock("charging")
 
-	local var_6_0 = StatModel.instance:getPayInfo()
+	local payInfo = StatModel.instance:getPayInfo()
 
 	if PayModel.instance:getSandboxEnable() then
 		ViewMgr.instance:openView(ViewName.SDKSandboxPayView, {
 			payInfo = PayModel.instance:getGamePayInfo()
 		})
 	else
-		SDKMgr.instance:payGoods(var_6_0)
+		SDKMgr.instance:payGoods(payInfo)
 	end
 end
 
-function var_0_0._onGetSignFailed(arg_7_0)
+function PayController:_onGetSignFailed()
 	UIBlockMgr.instance:endBlock("charging")
 	PayModel.instance:clearOrderInfo()
 end
 
-function var_0_0._onPayFinished(arg_8_0, arg_8_1)
-	TaskDispatcher.cancelTask(arg_8_0._payFinishedPushTimeout, arg_8_0)
-	arg_8_0:_hidePayFinishBlock()
+function PayController:_onPayFinished(id)
+	TaskDispatcher.cancelTask(self._payFinishedPushTimeout, self)
+	self:_hidePayFinishBlock()
 	PayModel.instance:clearOrderInfo()
-	SDKChannelEventModel.instance:purchase(arg_8_1)
+	SDKChannelEventModel.instance:purchase(id)
 
-	local var_8_0 = StoreConfig.instance:getChargeGoodsConfig(arg_8_1)
+	local config = StoreConfig.instance:getChargeGoodsConfig(id)
 
-	if var_8_0 then
-		local var_8_1 = {
-			amount = StoreConfig.instance:getChargeGoodsPrice(arg_8_1),
-			currency = StoreConfig.instance:getChargeGoodsCurrencyCode(arg_8_1)
-		}
+	if config then
+		local payData = {}
+
+		payData.amount = StoreConfig.instance:getChargeGoodsPrice(id)
+		payData.currency = StoreConfig.instance:getChargeGoodsCurrencyCode(id)
 
 		if SLFramework.FrameworkSettings.IsEditor then
-			var_8_1.productId = ""
+			payData.productId = ""
 		else
-			var_8_1.productId = StoreConfig.instance:getStoreChargeConfig(arg_8_1, BootNativeUtil.getPackageName()).appStoreProductID
+			payData.productId = StoreConfig.instance:getStoreChargeConfig(id, BootNativeUtil.getPackageName()).appStoreProductID
 		end
 
-		var_8_1.goodsName = var_8_0.name
-		var_8_1.goodsId = arg_8_1
+		payData.goodsName = config.name
+		payData.goodsId = id
 
-		if SDKMediaEventEnum.PurchaseIdMediaEvent[arg_8_1] then
-			SDKDataTrackMgr.instance:trackMediaPayEvent(SDKMediaEventEnum.PurchaseIdMediaEvent[arg_8_1], var_8_1)
-		elseif var_8_0 and var_8_0.storeId == StoreEnum.StoreId.Skin then
-			SDKDataTrackMgr.instance:trackMediaPayEvent(SDKDataTrackMgr.MediaEvent.purchase_skin, var_8_1)
+		if SDKMediaEventEnum.PurchaseIdMediaEvent[id] then
+			SDKDataTrackMgr.instance:trackMediaPayEvent(SDKMediaEventEnum.PurchaseIdMediaEvent[id], payData)
+		elseif config and config.storeId == StoreEnum.StoreId.Skin then
+			SDKDataTrackMgr.instance:trackMediaPayEvent(SDKDataTrackMgr.MediaEvent.purchase_skin, payData)
 		end
 
-		SDKDataTrackMgr.instance:trackMediaPayEvent(SDKDataTrackMgr.MediaEvent.purchase, var_8_1)
+		SDKDataTrackMgr.instance:trackMediaPayEvent(SDKDataTrackMgr.MediaEvent.purchase, payData)
 	end
 end
 
-function var_0_0._onPayFailed(arg_9_0)
+function PayController:_onPayFailed()
 	PayModel.instance:clearOrderInfo()
 end
 
-function var_0_0.getAllQueryProductDetails(arg_10_0, arg_10_1, arg_10_2)
+function PayController:getAllQueryProductDetails(callback, callbackobj)
 	if PayModel.instance:hasInitProductInfo() then
-		if arg_10_1 then
-			arg_10_1(arg_10_2)
+		if callback then
+			callback(callbackobj)
 		end
 
-		arg_10_0:clearAllQueryProductDetailsCallBack()
+		self:clearAllQueryProductDetailsCallBack()
 
 		return
 	end
 
-	local var_10_0 = StoreConfig.instance:getAllChargeGoodsConfig()
-	local var_10_1 = {}
+	local allConfig = StoreConfig.instance:getAllChargeGoodsConfig()
+	local ids = {}
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		local var_10_2 = StoreConfig.instance:getStoreChargeConfig(iter_10_1.id, BootNativeUtil.getPackageName(), true)
+	for i, v in pairs(allConfig) do
+		local config = StoreConfig.instance:getStoreChargeConfig(v.id, BootNativeUtil.getPackageName(), true)
 
-		if var_10_2 then
-			local var_10_3 = var_10_2.appStoreProductID
+		if config then
+			local id = config.appStoreProductID
 
-			table.insert(var_10_1, var_10_3)
+			table.insert(ids, id)
 		end
 	end
 
-	arg_10_0._queryProductDetailsCallBack = arg_10_1
-	arg_10_0._queryProductDetailsCallBackObj = arg_10_2
+	self._queryProductDetailsCallBack = callback
+	self._queryProductDetailsCallBackObj = callbackobj
 
-	SDKMgr.instance:queryProductDetailEntity("inapp", var_10_1)
+	SDKMgr.instance:queryProductDetailEntity("inapp", ids)
 end
 
-function var_0_0._onQueryProductDetailsCallBack(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 == PayEnum.PayResultCode.PayFinish then
-		local var_11_0
+function PayController:_onQueryProductDetailsCallBack(code, msg)
+	if code == PayEnum.PayResultCode.PayFinish then
+		local productListStr
 
 		if BootNativeUtil.isIOS() then
-			var_11_0 = arg_11_2
+			productListStr = msg
 		else
-			var_11_0 = SDKMgr.instance:getProductList()
+			productListStr = SDKMgr.instance:getProductList()
 		end
 
-		logNormal("查询商品列表结果: " .. var_11_0)
-		PayModel.instance:setProductInfo(var_11_0)
-		var_0_0.instance:dispatchEvent(PayEvent.UpdateProductDetails)
+		logNormal("查询商品列表结果: " .. productListStr)
+		PayModel.instance:setProductInfo(productListStr)
+		PayController.instance:dispatchEvent(PayEvent.UpdateProductDetails)
 	else
-		logNormal("查询商品列表出错 : " .. arg_11_1 .. ":" .. arg_11_2)
+		logNormal("查询商品列表出错 : " .. code .. ":" .. msg)
 	end
 
-	if arg_11_0._queryProductDetailsCallBack then
-		arg_11_0._queryProductDetailsCallBack(arg_11_0._queryProductDetailsCallBackObj)
+	if self._queryProductDetailsCallBack then
+		self._queryProductDetailsCallBack(self._queryProductDetailsCallBackObj)
 	end
 
-	arg_11_0:clearAllQueryProductDetailsCallBack()
+	self:clearAllQueryProductDetailsCallBack()
 end
 
-function var_0_0.clearAllQueryProductDetailsCallBack(arg_12_0)
-	arg_12_0._queryProductDetailsCallBack = nil
-	arg_12_0._queryProductDetailsCallBackObj = nil
+function PayController:clearAllQueryProductDetailsCallBack()
+	self._queryProductDetailsCallBack = nil
+	self._queryProductDetailsCallBackObj = nil
 end
 
-function var_0_0._onPayCallback(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == PayEnum.PayResultCode.PayFinish then
+function PayController:_onPayCallback(code, msg)
+	if code == PayEnum.PayResultCode.PayFinish then
 		if PayModel.instance:getOrderInfo().gameOrderId then
-			TaskDispatcher.runDelay(arg_13_0._payFinishedPushTimeout, arg_13_0, 10)
+			TaskDispatcher.runDelay(self._payFinishedPushTimeout, self, 10)
 			UIBlockMgr.instance:startBlock(UIBlockKey.PayFinish)
 		end
-	elseif arg_13_1 == PayEnum.PayResultCode.PayCancel then
+	elseif code == PayEnum.PayResultCode.PayCancel then
 		-- block empty
-	elseif arg_13_1 == PayEnum.PayResultCode.PayInfoFail then
+	elseif code == PayEnum.PayResultCode.PayInfoFail then
 		-- block empty
-	elseif arg_13_1 == PayEnum.PayResultCode.PayError then
+	elseif code == PayEnum.PayResultCode.PayError then
 		-- block empty
-	elseif arg_13_1 == PayEnum.PayResultCode.PayOrderCancel then
+	elseif code == PayEnum.PayResultCode.PayOrderCancel then
 		-- block empty
-	elseif arg_13_1 == PayEnum.PayResultCode.PayChannelFail then
+	elseif code == PayEnum.PayResultCode.PayChannelFail then
 		-- block empty
 	else
-		logNormal("支付异常 : " .. arg_13_1 .. ":" .. arg_13_2)
-		GameFacade.showToast(ToastEnum.PayError, arg_13_2, arg_13_1)
-		var_0_0.instance:dispatchEvent(PayEvent.PayFailed)
+		logNormal("支付异常 : " .. code .. ":" .. msg)
+		GameFacade.showToast(ToastEnum.PayError, msg, code)
+		PayController.instance:dispatchEvent(PayEvent.PayFailed)
 	end
 
-	if arg_13_1 ~= PayEnum.PayResultCode.PayFinish then
-		arg_13_0:_hidePayFinishBlock()
+	if code ~= PayEnum.PayResultCode.PayFinish then
+		self:_hidePayFinishBlock()
 	end
 end
 
-function var_0_0._payFinishedPushTimeout(arg_14_0)
+function PayController:_payFinishedPushTimeout()
 	ToastController.instance:showToast(ToastEnum.PayFinishedPushTimeout)
-	arg_14_0:_hidePayFinishBlock()
+	self:_hidePayFinishBlock()
 end
 
-function var_0_0._hidePayFinishBlock(arg_15_0)
+function PayController:_hidePayFinishBlock()
 	UIBlockMgr.instance:endBlock(UIBlockKey.PayFinish)
 end
 
-function var_0_0.onReceiveMaterialChangePush(arg_16_0, arg_16_1)
-	if not arg_16_1 or #arg_16_1 == 0 then
+function PayController:onReceiveMaterialChangePush(materialDataMOList)
+	if not materialDataMOList or #materialDataMOList == 0 then
 		return
 	end
 
-	local var_16_0 = PayModel.instance:getQuickUseInfo()
+	local info = PayModel.instance:getQuickUseInfo()
 
-	if not var_16_0 then
+	if not info then
 		return
 	end
 
-	local var_16_1 = {}
+	local itemId2GotCountDict = {}
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
-		local var_16_2 = iter_16_1.materilType
-		local var_16_3 = iter_16_1.materilId
-		local var_16_4 = iter_16_1.quantity or 0
+	for i, mo in ipairs(materialDataMOList) do
+		local materilType = mo.materilType
+		local materilId = mo.materilId
+		local quantity = mo.quantity or 0
 
-		var_16_1[var_16_2] = var_16_1[var_16_2] or {}
+		itemId2GotCountDict[materilType] = itemId2GotCountDict[materilType] or {}
 
-		local var_16_5 = var_16_1[var_16_2][var_16_3] or 0
+		local cur = itemId2GotCountDict[materilType][materilId] or 0
 
-		var_16_1[var_16_2][var_16_3] = var_16_5 + var_16_4
+		itemId2GotCountDict[materilType][materilId] = cur + quantity
 	end
 
-	local var_16_6 = {}
+	local hasNumDict = {}
 
-	for iter_16_2, iter_16_3 in ipairs(var_16_0.itemList) do
-		local var_16_7 = iter_16_3[1]
-		local var_16_8 = iter_16_3[2]
-		local var_16_9 = iter_16_3[3]
+	for i, v in ipairs(info.itemList) do
+		local itemType = v[1]
+		local itemId = v[2]
+		local useCount = v[3]
 
-		if var_16_1[var_16_7] and var_16_1[var_16_7][var_16_8] then
-			var_16_6[var_16_7] = var_16_6[var_16_7] or {}
+		if itemId2GotCountDict[itemType] and itemId2GotCountDict[itemType][itemId] then
+			hasNumDict[itemType] = hasNumDict[itemType] or {}
 
-			local var_16_10 = var_16_6[var_16_7][var_16_8]
+			local has = hasNumDict[itemType][itemId]
 
-			if not var_16_10 then
-				local var_16_11 = var_16_1[var_16_7][var_16_8]
+			if not has then
+				local maxUseCount = itemId2GotCountDict[itemType][itemId]
 
-				var_16_10 = math.min(ItemModel.instance:getItemQuantity(var_16_7, var_16_8) or 0, var_16_11)
-				var_16_6[var_16_7][var_16_8] = var_16_10
+				has = math.min(ItemModel.instance:getItemQuantity(itemType, itemId) or 0, maxUseCount)
+				hasNumDict[itemType][itemId] = has
 			end
 
-			if var_16_10 - var_16_9 < 0 then
-				var_16_9 = var_16_10
-				var_16_10 = 0
+			local newHas = has - useCount
+
+			if newHas < 0 then
+				useCount = has
+				has = 0
 			end
 
-			if var_16_9 > 0 then
-				local var_16_12 = var_16_9 == 1
-				local var_16_13 = var_16_12 and MessageBoxIdDefine.ChargeStoreQuickUseTip or MessageBoxIdDefine.ChargeStoreQuickUseTipWithNum
-				local var_16_14 = ItemModel.instance:getItemConfig(var_16_7, var_16_8)
-				local var_16_15 = {
-					var_16_14.name,
-					not var_16_12 and var_16_9 or nil
+			if useCount > 0 then
+				local isOnlyOne = useCount == 1
+				local messageBoxId = isOnlyOne and MessageBoxIdDefine.ChargeStoreQuickUseTip or MessageBoxIdDefine.ChargeStoreQuickUseTipWithNum
+				local itemCo = ItemModel.instance:getItemConfig(itemType, itemId)
+				local extra = {
+					itemCo.name,
+					not isOnlyOne and useCount or nil
 				}
-				local var_16_16 = {
-					messageBoxId = var_16_13,
-					msg = MessageBoxConfig.instance:getMessage(var_16_13),
+				local viewParam = {
+					messageBoxId = messageBoxId,
+					msg = MessageBoxConfig.instance:getMessage(messageBoxId),
 					msgBoxType = MsgBoxEnum.BoxType.Yes_No,
 					yesCallback = function()
-						local var_17_0 = {
+						local list = {
 							{
-								materialId = var_16_8,
-								quantity = var_16_9
+								materialId = itemId,
+								quantity = useCount
 							}
 						}
 
 						CharacterModel.instance:setGainHeroViewShowState(false)
 						CharacterModel.instance:setGainHeroViewNewShowState(false)
-						ItemRpc.instance:sendUseItemRequest(var_17_0, 0)
+						ItemRpc.instance:sendUseItemRequest(list, 0)
 					end,
-					extra = var_16_15
+					extra = extra
 				}
 
-				PopupController.instance:addPopupView(PopupEnum.PriorityType.ChargeStoreQuickUseTip, ViewName.MessageBoxView, var_16_16)
+				PopupController.instance:addPopupView(PopupEnum.PriorityType.ChargeStoreQuickUseTip, ViewName.MessageBoxView, viewParam)
 			end
 
-			var_16_6[var_16_7][var_16_8] = var_16_10
+			hasNumDict[itemType][itemId] = has
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+PayController.instance = PayController.New()
 
-return var_0_0
+return PayController

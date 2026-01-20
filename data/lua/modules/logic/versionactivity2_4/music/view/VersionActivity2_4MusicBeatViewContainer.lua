@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicBeatViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_4MusicBeatViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._noteView = VersionActivity2_4MusicBeatNoteView.New()
-	arg_1_0._beatView = VersionActivity2_4MusicBeatView.New()
+local VersionActivity2_4MusicBeatViewContainer = class("VersionActivity2_4MusicBeatViewContainer", BaseViewContainer)
 
-	local var_1_0 = {}
+function VersionActivity2_4MusicBeatViewContainer:buildViews()
+	self._noteView = VersionActivity2_4MusicBeatNoteView.New()
+	self._beatView = VersionActivity2_4MusicBeatView.New()
 
-	table.insert(var_1_0, arg_1_0._noteView)
-	table.insert(var_1_0, arg_1_0._beatView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_left"))
+	local views = {}
 
-	return var_1_0
+	table.insert(views, self._noteView)
+	table.insert(views, self._beatView)
+	table.insert(views, TabViewGroup.New(1, "#go_left"))
+
+	return views
 end
 
-function var_0_0.getNoteView(arg_2_0)
-	return arg_2_0._noteView
+function VersionActivity2_4MusicBeatViewContainer:getNoteView()
+	return self._noteView
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0.navigateView = NavigateButtonsView.New({
+function VersionActivity2_4MusicBeatViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.MusicGameBeatHelp)
 
-		arg_3_0.navigateView:setHomeCheck(arg_3_0._closeHomeCheckFunc, arg_3_0)
-		arg_3_0.navigateView:setCloseCheck(arg_3_0._closeThisCheckFunc, arg_3_0)
+		self.navigateView:setHomeCheck(self._closeHomeCheckFunc, self)
+		self.navigateView:setCloseCheck(self._closeThisCheckFunc, self)
 
 		return {
-			arg_3_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._closeHomeCheckFunc(arg_4_0)
-	if arg_4_0._beatView:isCountDown() then
+function VersionActivity2_4MusicBeatViewContainer:_closeHomeCheckFunc()
+	if self._beatView:isCountDown() then
 		return false
 	end
 
-	if arg_4_0._beatView:isPlaying() then
+	if self._beatView:isPlaying() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.MusicBeatQuitConfirm, MsgBoxEnum.BoxType.Yes_No, function()
-			arg_4_0.navigateView:_reallyHome()
+			self.navigateView:_reallyHome()
 		end)
 
 		return false
@@ -52,14 +54,14 @@ function var_0_0._closeHomeCheckFunc(arg_4_0)
 	return true
 end
 
-function var_0_0._closeThisCheckFunc(arg_6_0)
-	if arg_6_0._beatView:isCountDown() then
+function VersionActivity2_4MusicBeatViewContainer:_closeThisCheckFunc()
+	if self._beatView:isCountDown() then
 		return false
 	end
 
-	if arg_6_0._beatView:isPlaying() then
+	if self._beatView:isPlaying() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.MusicBeatQuitConfirm, MsgBoxEnum.BoxType.Yes_No, function()
-			arg_6_0:closeThis()
+			self:closeThis()
 		end)
 
 		return false
@@ -68,12 +70,12 @@ function var_0_0._closeThisCheckFunc(arg_6_0)
 	return true
 end
 
-function var_0_0.onContainerInit(arg_8_0)
-	VersionActivity2_4MultiTouchController.instance:startMultiTouch(arg_8_0.viewName)
+function VersionActivity2_4MusicBeatViewContainer:onContainerInit()
+	VersionActivity2_4MultiTouchController.instance:startMultiTouch(self.viewName)
 end
 
-function var_0_0.onContainerDestroy(arg_9_0)
+function VersionActivity2_4MusicBeatViewContainer:onContainerDestroy()
 	VersionActivity2_4MultiTouchController.instance:endMultiTouch()
 end
 
-return var_0_0
+return VersionActivity2_4MusicBeatViewContainer

@@ -1,44 +1,46 @@
-﻿module("modules.logic.survival.controller.work.SurvivalItemTipsPushWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalItemTipsPushWork.lua
 
-local var_0_0 = class("SurvivalItemTipsPushWork", SurvivalMsgPushWork)
+module("modules.logic.survival.controller.work.SurvivalItemTipsPushWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if arg_1_0.context.fastExecute then
-		arg_1_0:onDone(true)
+local SurvivalItemTipsPushWork = class("SurvivalItemTipsPushWork", SurvivalMsgPushWork)
+
+function SurvivalItemTipsPushWork:onStart(context)
+	if self.context.fastExecute then
+		self:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0.onViewClose, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onViewClose, self)
 
-	local var_1_0 = {}
+	local items = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._msg.itemTips) do
-		local var_1_1 = SurvivalBagItemMo.New()
+	for _, v in ipairs(self._msg.itemTips) do
+		local itemMo = SurvivalBagItemMo.New()
 
-		var_1_1:init({
-			id = iter_1_1.itemId,
-			count = iter_1_1.count
+		itemMo:init({
+			id = v.itemId,
+			count = v.count
 		})
 
-		var_1_1.source = SurvivalEnum.ItemSource.Drop
+		itemMo.source = SurvivalEnum.ItemSource.Drop
 
-		table.insert(var_1_0, var_1_1)
+		table.insert(items, itemMo)
 	end
 
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalGetRewardView, {
-		items = var_1_0
+		items = items
 	})
 end
 
-function var_0_0.onViewClose(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.SurvivalGetRewardView then
-		arg_2_0:onDone(true)
+function SurvivalItemTipsPushWork:onViewClose(viewName)
+	if viewName == ViewName.SurvivalGetRewardView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0.onViewClose, arg_3_0)
+function SurvivalItemTipsPushWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onViewClose, self)
 end
 
-return var_0_0
+return SurvivalItemTipsPushWork

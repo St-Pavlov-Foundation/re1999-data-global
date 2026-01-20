@@ -1,142 +1,144 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyDungeonInteractFightView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyDungeonInteractFightView.lua
 
-local var_0_0 = class("OdysseyDungeonInteractFightView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyDungeonInteractFightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofightPanel = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel")
-	arg_1_0._imagelevelIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_fightPanel/panel/common/level/#image_levelIcon")
-	arg_1_0._txtenemyLevel = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/common/level/#image_levelIcon/#txt_enemyLevel")
-	arg_1_0._btnenemyLevel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/common/level/#image_levelIcon/#btn_enemyLevel")
-	arg_1_0._txtfightName = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/common/level/#txt_fightName")
-	arg_1_0._btnenemyInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/common/level/#txt_fightName/#btn_enemyInfo")
-	arg_1_0._golevelTip = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/common/level/#go_levelTip")
-	arg_1_0._btnlevelCloseTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#btn_levelCloseTip")
-	arg_1_0._txtlevelTip = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/common/level/#go_levelTip/bg/#txt_levelTip")
-	arg_1_0._imagetagLarge = gohelper.findChildImage(arg_1_0.viewGO, "#go_fightPanel/panel/common/enemyTag/#image_tagLarge")
-	arg_1_0._goenemyTagItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/common/enemyTag/#go_enemyTagItem")
-	arg_1_0._txtrecommend = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/common/recommendLevel/#txt_recommend")
-	arg_1_0._txtfightDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/common/scroll_fightDesc/Viewport/Content/#txt_fightDesc")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/common/#go_reward")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/common/#go_reward/scroll_reward/Viewport/#go_rewardContent")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/common/#go_reward/scroll_reward/Viewport/#go_rewardContent/#go_rewardItem")
-	arg_1_0._btnfight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/common/#btn_fight")
-	arg_1_0._txtfight = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/common/#btn_fight/#txt_fight")
-	arg_1_0._goequipReward = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward")
-	arg_1_0._goequipSuit = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit")
-	arg_1_0._txtequipSuit = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/#txt_equipSuit")
-	arg_1_0._imageequipSuit = gohelper.findChildImage(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/#image_icon")
-	arg_1_0._btnchangeSuit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/#btn_changeSuit")
-	arg_1_0._goequipContent = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/reward/scroll_equip/Viewport/#go_equipContent")
-	arg_1_0._goequipItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/reward/scroll_equip/Viewport/#go_equipContent/#go_equipItem")
-	arg_1_0._gosuitSelectTip = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip")
-	arg_1_0._btnsuitCloseTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip/#btn_suitCloseTip")
-	arg_1_0._gosuitSelectContent = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip/#go_suitSelectContent")
-	arg_1_0._gosuitSelectItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip/#go_suitSelectContent/#go_suitSelectItem")
-	arg_1_0._gosuitInfoTip = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip")
-	arg_1_0._imagesuitIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/suitName/#image_icon")
-	arg_1_0._txtsuitName = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/suitName/#txt_suitName")
-	arg_1_0._gosuitInfoContent = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/#go_suitInfoContent")
-	arg_1_0._gosuitInfoItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/#go_suitInfoContent/#go_suitInfoItem")
-	arg_1_0._goconquerReward = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward")
-	arg_1_0._goconquerHasget = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/icon/#go_conquerHasget")
-	arg_1_0._imageconquerBar = gohelper.findChildImage(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/conquerBar/#image_conquerBar")
-	arg_1_0._txtconquerTimes = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/#txt_conquerTimes")
-	arg_1_0._txtconquerTotalTimes = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/#txt_conquerTimes/#txt_conquerTotalTimes")
-	arg_1_0._btnconquer = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/#btn_conquer")
-	arg_1_0._goconquerTip = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip")
-	arg_1_0._btnconquerCloseTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#btn_conquerCloseTip")
-	arg_1_0._scrollconquer = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#scroll_conquer")
-	arg_1_0._goconquerContent = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#scroll_conquer/Viewport/#go_conquerContent")
-	arg_1_0._goconquerRewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#scroll_conquer/Viewport/#go_conquerContent/#go_conquerRewardItem")
-	arg_1_0._gomyth = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth")
-	arg_1_0._gorecord = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record")
-	arg_1_0._imagerecord = gohelper.findChildImage(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#image_record")
-	arg_1_0._goEmptyRecord = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#go_emptyRecord")
-	arg_1_0._txtrecord = gohelper.findChildText(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#txt_record")
-	arg_1_0._btnrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#btn_record")
-	arg_1_0._goaddition = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition")
-	arg_1_0._goadditionContent = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition/#go_additionContent")
-	arg_1_0._goadditionItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition/#go_additionContent/#go_additionItem")
-	arg_1_0._btnaddition = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition/#btn_addition")
-	arg_1_0._gorecordRewardTip = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip")
-	arg_1_0._btnrecordCloseTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip/#btn_recordCloseTip")
-	arg_1_0._gorecordContent = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip/#go_recordContent")
-	arg_1_0._gorecordItem = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip/#go_recordContent/#go_recordItem")
+local OdysseyDungeonInteractFightView = class("OdysseyDungeonInteractFightView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyDungeonInteractFightView:onInitView()
+	self._gofightPanel = gohelper.findChild(self.viewGO, "#go_fightPanel")
+	self._imagelevelIcon = gohelper.findChildImage(self.viewGO, "#go_fightPanel/panel/common/level/#image_levelIcon")
+	self._txtenemyLevel = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/common/level/#image_levelIcon/#txt_enemyLevel")
+	self._btnenemyLevel = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/common/level/#image_levelIcon/#btn_enemyLevel")
+	self._txtfightName = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/common/level/#txt_fightName")
+	self._btnenemyInfo = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/common/level/#txt_fightName/#btn_enemyInfo")
+	self._golevelTip = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/common/level/#go_levelTip")
+	self._btnlevelCloseTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#btn_levelCloseTip")
+	self._txtlevelTip = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/common/level/#go_levelTip/bg/#txt_levelTip")
+	self._imagetagLarge = gohelper.findChildImage(self.viewGO, "#go_fightPanel/panel/common/enemyTag/#image_tagLarge")
+	self._goenemyTagItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/common/enemyTag/#go_enemyTagItem")
+	self._txtrecommend = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/common/recommendLevel/#txt_recommend")
+	self._txtfightDesc = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/common/scroll_fightDesc/Viewport/Content/#txt_fightDesc")
+	self._goreward = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/common/#go_reward")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/common/#go_reward/scroll_reward/Viewport/#go_rewardContent")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/common/#go_reward/scroll_reward/Viewport/#go_rewardContent/#go_rewardItem")
+	self._btnfight = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/common/#btn_fight")
+	self._txtfight = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/common/#btn_fight/#txt_fight")
+	self._goequipReward = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward")
+	self._goequipSuit = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit")
+	self._txtequipSuit = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/#txt_equipSuit")
+	self._imageequipSuit = gohelper.findChildImage(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/#image_icon")
+	self._btnchangeSuit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/#btn_changeSuit")
+	self._goequipContent = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/reward/scroll_equip/Viewport/#go_equipContent")
+	self._goequipItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/reward/scroll_equip/Viewport/#go_equipContent/#go_equipItem")
+	self._gosuitSelectTip = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip")
+	self._btnsuitCloseTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip/#btn_suitCloseTip")
+	self._gosuitSelectContent = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip/#go_suitSelectContent")
+	self._gosuitSelectItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitSelectTip/#go_suitSelectContent/#go_suitSelectItem")
+	self._gosuitInfoTip = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip")
+	self._imagesuitIcon = gohelper.findChildImage(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/suitName/#image_icon")
+	self._txtsuitName = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/suitName/#txt_suitName")
+	self._gosuitInfoContent = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/#go_suitInfoContent")
+	self._gosuitInfoItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_suitInfoTip/suit/#go_suitInfoContent/#go_suitInfoItem")
+	self._goconquerReward = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_conquerReward")
+	self._goconquerHasget = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/icon/#go_conquerHasget")
+	self._imageconquerBar = gohelper.findChildImage(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/conquerBar/#image_conquerBar")
+	self._txtconquerTimes = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/#txt_conquerTimes")
+	self._txtconquerTotalTimes = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/#txt_conquerTimes/#txt_conquerTotalTimes")
+	self._btnconquer = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/#btn_conquer")
+	self._goconquerTip = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip")
+	self._btnconquerCloseTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#btn_conquerCloseTip")
+	self._scrollconquer = gohelper.findChildScrollRect(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#scroll_conquer")
+	self._goconquerContent = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#scroll_conquer/Viewport/#go_conquerContent")
+	self._goconquerRewardItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/#go_conquerTip/#scroll_conquer/Viewport/#go_conquerContent/#go_conquerRewardItem")
+	self._gomyth = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth")
+	self._gorecord = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record")
+	self._imagerecord = gohelper.findChildImage(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#image_record")
+	self._goEmptyRecord = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#go_emptyRecord")
+	self._txtrecord = gohelper.findChildText(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#txt_record")
+	self._btnrecord = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_record/#btn_record")
+	self._goaddition = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition")
+	self._goadditionContent = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition/#go_additionContent")
+	self._goadditionItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition/#go_additionContent/#go_additionItem")
+	self._btnaddition = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#go_myth/content/#go_addition/#btn_addition")
+	self._gorecordRewardTip = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip")
+	self._btnrecordCloseTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip/#btn_recordCloseTip")
+	self._gorecordContent = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip/#go_recordContent")
+	self._gorecordItem = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_myth/#go_recordRewardTip/#go_recordContent/#go_recordItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlevelCloseTip:AddClickListener(arg_2_0._btnLevelCloseTipOnClick, arg_2_0)
-	arg_2_0._btnsuitCloseTip:AddClickListener(arg_2_0._btnSuitCloseTipOnClick, arg_2_0)
-	arg_2_0._btnconquerCloseTip:AddClickListener(arg_2_0._btnConquerCloseTipOnClick, arg_2_0)
-	arg_2_0._btnrecordCloseTip:AddClickListener(arg_2_0._btnRecordCloseTipOnClick, arg_2_0)
-	arg_2_0._btnenemyLevel:AddClickListener(arg_2_0._btnenemyLevelOnClick, arg_2_0)
-	arg_2_0._btnenemyInfo:AddClickListener(arg_2_0._btnenemyInfoOnClick, arg_2_0)
-	arg_2_0._btnfight:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
-	arg_2_0._btnchangeSuit:AddClickListener(arg_2_0._btnchangeSuitOnClick, arg_2_0)
-	arg_2_0._btnconquer:AddClickListener(arg_2_0._btnconquerOnClick, arg_2_0)
-	arg_2_0._btnrecord:AddClickListener(arg_2_0._btnrecordOnClick, arg_2_0)
-	arg_2_0._btnaddition:AddClickListener(arg_2_0._btnadditionOnClick, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshMercenarySuit, arg_2_0.refreshMercenaryUI, arg_2_0)
+function OdysseyDungeonInteractFightView:addEvents()
+	self._btnlevelCloseTip:AddClickListener(self._btnLevelCloseTipOnClick, self)
+	self._btnsuitCloseTip:AddClickListener(self._btnSuitCloseTipOnClick, self)
+	self._btnconquerCloseTip:AddClickListener(self._btnConquerCloseTipOnClick, self)
+	self._btnrecordCloseTip:AddClickListener(self._btnRecordCloseTipOnClick, self)
+	self._btnenemyLevel:AddClickListener(self._btnenemyLevelOnClick, self)
+	self._btnenemyInfo:AddClickListener(self._btnenemyInfoOnClick, self)
+	self._btnfight:AddClickListener(self._btnfightOnClick, self)
+	self._btnchangeSuit:AddClickListener(self._btnchangeSuitOnClick, self)
+	self._btnconquer:AddClickListener(self._btnconquerOnClick, self)
+	self._btnrecord:AddClickListener(self._btnrecordOnClick, self)
+	self._btnaddition:AddClickListener(self._btnadditionOnClick, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshMercenarySuit, self.refreshMercenaryUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlevelCloseTip:RemoveClickListener()
-	arg_3_0._btnsuitCloseTip:RemoveClickListener()
-	arg_3_0._btnconquerCloseTip:RemoveClickListener()
-	arg_3_0._btnrecordCloseTip:RemoveClickListener()
-	arg_3_0._btnenemyLevel:RemoveClickListener()
-	arg_3_0._btnenemyInfo:RemoveClickListener()
-	arg_3_0._btnfight:RemoveClickListener()
-	arg_3_0._btnchangeSuit:RemoveClickListener()
-	arg_3_0._btnconquer:RemoveClickListener()
-	arg_3_0._btnrecord:RemoveClickListener()
-	arg_3_0._btnaddition:RemoveClickListener()
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshMercenarySuit, arg_3_0.refreshMercenaryUI, arg_3_0)
+function OdysseyDungeonInteractFightView:removeEvents()
+	self._btnlevelCloseTip:RemoveClickListener()
+	self._btnsuitCloseTip:RemoveClickListener()
+	self._btnconquerCloseTip:RemoveClickListener()
+	self._btnrecordCloseTip:RemoveClickListener()
+	self._btnenemyLevel:RemoveClickListener()
+	self._btnenemyInfo:RemoveClickListener()
+	self._btnfight:RemoveClickListener()
+	self._btnchangeSuit:RemoveClickListener()
+	self._btnconquer:RemoveClickListener()
+	self._btnrecord:RemoveClickListener()
+	self._btnaddition:RemoveClickListener()
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshMercenarySuit, self.refreshMercenaryUI, self)
 end
 
-var_0_0.normalDescHeight = 271
-var_0_0.smallDescHeight = 162
+OdysseyDungeonInteractFightView.normalDescHeight = 271
+OdysseyDungeonInteractFightView.smallDescHeight = 162
 
-function var_0_0._btnenemyLevelOnClick(arg_4_0)
-	arg_4_0:showLevelSuppressTip(true)
+function OdysseyDungeonInteractFightView:_btnenemyLevelOnClick()
+	self:showLevelSuppressTip(true)
 end
 
-function var_0_0._btnLevelCloseTipOnClick(arg_5_0)
-	arg_5_0:showLevelSuppressTip(false)
+function OdysseyDungeonInteractFightView:_btnLevelCloseTipOnClick()
+	self:showLevelSuppressTip(false)
 end
 
-function var_0_0._btnchangeSuitOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0._gosuitSelectTip, true)
+function OdysseyDungeonInteractFightView:_btnchangeSuitOnClick()
+	gohelper.setActive(self._gosuitSelectTip, true)
 end
 
-function var_0_0._btnSuitCloseTipOnClick(arg_7_0)
-	gohelper.setActive(arg_7_0._gosuitInfoTip, false)
-	gohelper.setActive(arg_7_0._gosuitSelectTip, false)
+function OdysseyDungeonInteractFightView:_btnSuitCloseTipOnClick()
+	gohelper.setActive(self._gosuitInfoTip, false)
+	gohelper.setActive(self._gosuitSelectTip, false)
 end
 
-function var_0_0._btnconquerOnClick(arg_8_0)
-	gohelper.setActive(arg_8_0._goconquerTip, true)
+function OdysseyDungeonInteractFightView:_btnconquerOnClick()
+	gohelper.setActive(self._goconquerTip, true)
 end
 
-function var_0_0._btnConquerCloseTipOnClick(arg_9_0)
-	gohelper.setActive(arg_9_0._goconquerTip, false)
+function OdysseyDungeonInteractFightView:_btnConquerCloseTipOnClick()
+	gohelper.setActive(self._goconquerTip, false)
 end
 
-function var_0_0._btnrecordOnClick(arg_10_0)
-	gohelper.setActive(arg_10_0._gorecordRewardTip, true)
+function OdysseyDungeonInteractFightView:_btnrecordOnClick()
+	gohelper.setActive(self._gorecordRewardTip, true)
 end
 
-function var_0_0._btnRecordCloseTipOnClick(arg_11_0)
-	gohelper.setActive(arg_11_0._gorecordRewardTip, false)
+function OdysseyDungeonInteractFightView:_btnRecordCloseTipOnClick()
+	gohelper.setActive(self._gorecordRewardTip, false)
 end
 
-function var_0_0._btnadditionOnClick(arg_12_0)
+function OdysseyDungeonInteractFightView:_btnadditionOnClick()
 	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
-		ruleList = arg_12_0.ruleList,
+		ruleList = self.ruleList,
 		offSet = {
 			-200,
 			-176
@@ -144,577 +146,581 @@ function var_0_0._btnadditionOnClick(arg_12_0)
 	})
 end
 
-function var_0_0._btnenemyInfoOnClick(arg_13_0)
-	local var_13_0 = DungeonConfig.instance:getEpisodeCO(arg_13_0.fightElementConfig.episodeId)
+function OdysseyDungeonInteractFightView:_btnenemyInfoOnClick()
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self.fightElementConfig.episodeId)
 
-	EnemyInfoController.instance:openEnemyInfoViewByBattleId(var_13_0.battleId)
+	EnemyInfoController.instance:openEnemyInfoViewByBattleId(episodeConfig.battleId)
 end
 
-function var_0_0._btnfightOnClick(arg_14_0)
-	if arg_14_0.fightEpisodeCo.beforeStory > 0 then
-		if arg_14_0.fightEpisodeCo.afterStory > 0 then
-			if not StoryModel.instance:isStoryFinished(arg_14_0.fightEpisodeCo.afterStory) then
-				arg_14_0:playStoryAndEnterFight(arg_14_0.fightEpisodeCo.beforeStory)
+function OdysseyDungeonInteractFightView:_btnfightOnClick()
+	if self.fightEpisodeCo.beforeStory > 0 then
+		if self.fightEpisodeCo.afterStory > 0 then
+			if not StoryModel.instance:isStoryFinished(self.fightEpisodeCo.afterStory) then
+				self:playStoryAndEnterFight(self.fightEpisodeCo.beforeStory)
 
 				return
 			end
-		elseif not OdysseyDungeonModel.instance:isElementFinish(arg_14_0.elementConfig.id) then
-			arg_14_0:playStoryAndEnterFight(arg_14_0.fightEpisodeCo.beforeStory)
+		else
+			local isElementFinish = OdysseyDungeonModel.instance:isElementFinish(self.elementConfig.id)
 
-			return
+			if not isElementFinish then
+				self:playStoryAndEnterFight(self.fightEpisodeCo.beforeStory)
+
+				return
+			end
 		end
 	end
 
-	arg_14_0:enterFight()
+	self:enterFight()
 end
 
-function var_0_0._editableInitView(arg_15_0)
-	arg_15_0.rewardItemTab = arg_15_0:getUserDataTb_()
-	arg_15_0.rewardOuteritemTab = arg_15_0:getUserDataTb_()
-	arg_15_0.multiRewardItemTab = arg_15_0:getUserDataTb_()
-	arg_15_0.suitSelectItemTab = arg_15_0:getUserDataTb_()
-	arg_15_0.fightUIHandleFunc = {
-		[OdysseyEnum.FightType.Normal] = var_0_0.refreshNormalUI,
-		[OdysseyEnum.FightType.Elite] = var_0_0.refreshNormalUI,
-		[OdysseyEnum.FightType.Mercenary] = var_0_0.refreshMercenaryUI,
-		[OdysseyEnum.FightType.Religion] = var_0_0.refreshNormalUI,
-		[OdysseyEnum.FightType.Conquer] = var_0_0.refreshConquerUI,
-		[OdysseyEnum.FightType.Myth] = var_0_0.refreshMythUI
+function OdysseyDungeonInteractFightView:_editableInitView()
+	self.rewardItemTab = self:getUserDataTb_()
+	self.rewardOuteritemTab = self:getUserDataTb_()
+	self.multiRewardItemTab = self:getUserDataTb_()
+	self.suitSelectItemTab = self:getUserDataTb_()
+	self.fightUIHandleFunc = {
+		[OdysseyEnum.FightType.Normal] = OdysseyDungeonInteractFightView.refreshNormalUI,
+		[OdysseyEnum.FightType.Elite] = OdysseyDungeonInteractFightView.refreshNormalUI,
+		[OdysseyEnum.FightType.Mercenary] = OdysseyDungeonInteractFightView.refreshMercenaryUI,
+		[OdysseyEnum.FightType.Religion] = OdysseyDungeonInteractFightView.refreshNormalUI,
+		[OdysseyEnum.FightType.Conquer] = OdysseyDungeonInteractFightView.refreshConquerUI,
+		[OdysseyEnum.FightType.Myth] = OdysseyDungeonInteractFightView.refreshMythUI
 	}
-	arg_15_0._txtEnemyTag = gohelper.findChildText(arg_15_0._goenemyTagItem, "txt_tag")
-	arg_15_0._imageEnemyTag = gohelper.findChildImage(arg_15_0._goenemyTagItem, "image_tag")
-	arg_15_0._gofightDesc = gohelper.findChild(arg_15_0.viewGO, "#go_fightPanel/panel/common/scroll_fightDesc")
-	arg_15_0._goConquerBar = gohelper.findChild(arg_15_0.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/conquerBar")
-	arg_15_0._goequipSuitEffect = gohelper.findChild(arg_15_0.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/vx_eff")
-	arg_15_0._conquerBarWith = recthelper.getWidth(arg_15_0._goConquerBar.transform)
+	self._txtEnemyTag = gohelper.findChildText(self._goenemyTagItem, "txt_tag")
+	self._imageEnemyTag = gohelper.findChildImage(self._goenemyTagItem, "image_tag")
+	self._gofightDesc = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/common/scroll_fightDesc")
+	self._goConquerBar = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_conquerReward/conquerReward/conquerBar")
+	self._goequipSuitEffect = gohelper.findChild(self.viewGO, "#go_fightPanel/panel/#go_equipReward/#go_equipSuit/vx_eff")
+	self._conquerBarWith = recthelper.getWidth(self._goConquerBar.transform)
 
-	gohelper.setActive(arg_15_0._btnlevelCloseTip, false)
-	gohelper.setActive(arg_15_0._goequipSuitEffect, false)
-	gohelper.setActive(arg_15_0._gosuitInfoTip, false)
-	gohelper.setActive(arg_15_0._gosuitSelectTip, false)
+	gohelper.setActive(self._btnlevelCloseTip, false)
+	gohelper.setActive(self._goequipSuitEffect, false)
+	gohelper.setActive(self._gosuitInfoTip, false)
+	gohelper.setActive(self._gosuitSelectTip, false)
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function OdysseyDungeonInteractFightView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0.elementConfig = arg_17_0.viewParam.config
-	arg_17_0.elementType = arg_17_0.elementConfig.type
-	arg_17_0.fightElementConfig = OdysseyConfig.instance:getElementFightConfig(arg_17_0.elementConfig.id)
-	arg_17_0.elementMO = OdysseyDungeonModel.instance:getElementMo(arg_17_0.elementConfig.id)
+function OdysseyDungeonInteractFightView:onOpen()
+	self.elementConfig = self.viewParam.config
+	self.elementType = self.elementConfig.type
+	self.fightElementConfig = OdysseyConfig.instance:getElementFightConfig(self.elementConfig.id)
+	self.elementMO = OdysseyDungeonModel.instance:getElementMo(self.elementConfig.id)
 end
 
-function var_0_0.refreshFightPanel(arg_18_0)
-	arg_18_0:showLevelSuppressTip(false, true)
-	arg_18_0:refreshCommonUI()
-	arg_18_0:hideAllSpUI()
+function OdysseyDungeonInteractFightView:refreshFightPanel()
+	self:showLevelSuppressTip(false, true)
+	self:refreshCommonUI()
+	self:hideAllSpUI()
 
-	local var_18_0 = arg_18_0.fightUIHandleFunc[arg_18_0.fightElementConfig.type]
+	local handleFunc = self.fightUIHandleFunc[self.fightElementConfig.type]
 
-	if var_18_0 then
-		var_18_0(arg_18_0)
+	if handleFunc then
+		handleFunc(self)
 	end
 end
 
-function var_0_0.refreshCommonUI(arg_19_0)
-	local var_19_0 = OdysseyModel.instance:getHeroCurLevelAndExp()
+function OdysseyDungeonInteractFightView:refreshCommonUI()
+	local curHeroLevel = OdysseyModel.instance:getHeroCurLevelAndExp()
 
-	arg_19_0.fightEpisodeCo = DungeonConfig.instance:getEpisodeCO(arg_19_0.fightElementConfig.episodeId)
+	self.fightEpisodeCo = DungeonConfig.instance:getEpisodeCO(self.fightElementConfig.episodeId)
 
-	local var_19_1 = arg_19_0.fightElementConfig.enemyLevel
+	local enemyLevel = self.fightElementConfig.enemyLevel
 
-	arg_19_0._txtenemyLevel.text = var_19_0 < var_19_1 and string.format("<#E76969>%s</color>", var_19_1) or var_19_1
-	arg_19_0._txtfightName.text = arg_19_0.fightElementConfig.title
-	arg_19_0._txtfightDesc.text = arg_19_0.fightElementConfig.desc
+	self._txtenemyLevel.text = curHeroLevel < enemyLevel and string.format("<#E76969>%s</color>", enemyLevel) or enemyLevel
+	self._txtfightName.text = self.fightElementConfig.title
+	self._txtfightDesc.text = self.fightElementConfig.desc
 
-	local var_19_2 = FightHelper.getBattleRecommendLevel(arg_19_0.fightEpisodeCo.battleId)
+	local recommendLevel = FightHelper.getBattleRecommendLevel(self.fightEpisodeCo.battleId)
 
-	arg_19_0._txtrecommend.text = var_19_2 >= 0 and HeroConfig.instance:getLevelDisplayVariant(var_19_2) or ""
-	arg_19_0._txtfight.text = luaLang("toughbattle_mainview_txt_start")
+	self._txtrecommend.text = recommendLevel >= 0 and HeroConfig.instance:getLevelDisplayVariant(recommendLevel) or ""
+	self._txtfight.text = luaLang("toughbattle_mainview_txt_start")
 
-	local var_19_3 = arg_19_0.fightElementConfig.type == OdysseyEnum.FightType.Mercenary and tonumber(arg_19_0.fightElementConfig.param) or 0
-	local var_19_4 = OdysseyEnum.FightElementTagLang[arg_19_0.fightElementConfig.type][var_19_3]
+	local mercenaryType = self.fightElementConfig.type == OdysseyEnum.FightType.Mercenary and tonumber(self.fightElementConfig.param) or 0
+	local tagLang = OdysseyEnum.FightElementTagLang[self.fightElementConfig.type][mercenaryType]
 
-	arg_19_0._txtEnemyTag.text = luaLang(var_19_4)
+	self._txtEnemyTag.text = luaLang(tagLang)
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_19_0._imageEnemyTag, string.format("%s_0", OdysseyEnum.FightElementTagIcon[arg_19_0.fightElementConfig.type]), true)
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_19_0._imagetagLarge, string.format("%s_2", OdysseyEnum.FightElementTagIcon[arg_19_0.fightElementConfig.type]))
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_19_0._imagelevelIcon, OdysseyEnum.FightElementEnemyIcon[arg_19_0.fightElementConfig.type])
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imageEnemyTag, string.format("%s_0", OdysseyEnum.FightElementTagIcon[self.fightElementConfig.type]), true)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imagetagLarge, string.format("%s_2", OdysseyEnum.FightElementTagIcon[self.fightElementConfig.type]))
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imagelevelIcon, OdysseyEnum.FightElementEnemyIcon[self.fightElementConfig.type])
 end
 
-function var_0_0.showLevelSuppressTip(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = OdysseyModel.instance:getHeroCurLevelAndExp()
-	local var_20_1 = arg_20_0.fightElementConfig.enemyLevel
-	local var_20_2 = OdysseyEnum.LocalSaveKey.FightLevelSuppress
-	local var_20_3 = GameUtil.playerPrefsGetNumberByUserId(var_20_2, 0)
-	local var_20_4 = var_20_0 - var_20_1
-	local var_20_5 = OdysseyConfig.instance:getLevelSuppressConfig(var_20_4)
+function OdysseyDungeonInteractFightView:showLevelSuppressTip(showState, isAuto)
+	local curHeroLevel = OdysseyModel.instance:getHeroCurLevelAndExp()
+	local enemyLevel = self.fightElementConfig.enemyLevel
+	local saveLevelSuppressKey = OdysseyEnum.LocalSaveKey.FightLevelSuppress
+	local saveLevelSuppressValue = GameUtil.playerPrefsGetNumberByUserId(saveLevelSuppressKey, 0)
+	local levelDifference = curHeroLevel - enemyLevel
+	local levelSuppressConfig = OdysseyConfig.instance:getLevelSuppressConfig(levelDifference)
 
-	arg_20_0._txtlevelTip.text = var_20_5.tips
+	self._txtlevelTip.text = levelSuppressConfig.tips
 
-	gohelper.setActive(arg_20_0._golevelTip, arg_20_1)
-	gohelper.setActive(arg_20_0._btnlevelCloseTip, arg_20_1)
+	gohelper.setActive(self._golevelTip, showState)
+	gohelper.setActive(self._btnlevelCloseTip, showState)
 
-	if var_20_3 == 0 and var_20_0 < var_20_1 and arg_20_2 then
-		GameUtil.playerPrefsSetNumberByUserId(var_20_2, 1)
-		gohelper.setActive(arg_20_0._golevelTip, true)
+	if saveLevelSuppressValue == 0 and curHeroLevel < enemyLevel and isAuto then
+		GameUtil.playerPrefsSetNumberByUserId(saveLevelSuppressKey, 1)
+		gohelper.setActive(self._golevelTip, true)
 	end
 end
 
-function var_0_0.hideAllSpUI(arg_21_0)
-	gohelper.setActive(arg_21_0._goequipReward, false)
-	gohelper.setActive(arg_21_0._goconquerReward, false)
-	gohelper.setActive(arg_21_0._gomyth, false)
-	gohelper.setActive(arg_21_0._goreward, false)
+function OdysseyDungeonInteractFightView:hideAllSpUI()
+	gohelper.setActive(self._goequipReward, false)
+	gohelper.setActive(self._goconquerReward, false)
+	gohelper.setActive(self._gomyth, false)
+	gohelper.setActive(self._goreward, false)
 end
 
-function var_0_0.refreshNormalUI(arg_22_0)
-	gohelper.setActive(arg_22_0._goreward, true)
-	gohelper.setActive(arg_22_0._gorewardItem, false)
+function OdysseyDungeonInteractFightView:refreshNormalUI()
+	gohelper.setActive(self._goreward, true)
+	gohelper.setActive(self._gorewardItem, false)
 
-	local var_22_0 = arg_22_0.fightElementConfig.episodeId
-	local var_22_1 = DungeonConfig.instance:getEpisodeCO(var_22_0)
-	local var_22_2 = lua_bonus.configDict[var_22_1.firstBonus]
+	local episodeId = self.fightElementConfig.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local rewardCo = lua_bonus.configDict[episodeConfig.firstBonus]
 
-	if var_22_1.firstBonus > 0 and var_22_2 then
-		local var_22_3 = GameUtil.splitString2(var_22_2.fixBonus)
+	if episodeConfig.firstBonus > 0 and rewardCo then
+		local outerItemRewardList = GameUtil.splitString2(rewardCo.fixBonus)
 
-		for iter_22_0, iter_22_1 in ipairs(var_22_3) do
-			local var_22_4 = arg_22_0.rewardOuteritemTab[iter_22_0]
+		for index, rewardData in ipairs(outerItemRewardList) do
+			local rewardItem = self.rewardOuteritemTab[index]
 
-			if not var_22_4 then
-				var_22_4 = {
-					go = gohelper.clone(arg_22_0._gorewardItem, arg_22_0._gorewardContent, "rewardOuterItem_" .. iter_22_0)
+			if not rewardItem then
+				rewardItem = {
+					go = gohelper.clone(self._gorewardItem, self._gorewardContent, "rewardOuterItem_" .. index)
 				}
-				var_22_4.itemGO = arg_22_0.viewContainer:getResInst(arg_22_0.viewContainer:getSetting().otherRes[1], var_22_4.go)
-				var_22_4.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_4.itemGO, OdysseyItemIcon)
-				arg_22_0.rewardOuteritemTab[iter_22_0] = var_22_4
+				rewardItem.itemGO = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes[1], rewardItem.go)
+				rewardItem.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(rewardItem.itemGO, OdysseyItemIcon)
+				self.rewardOuteritemTab[index] = rewardItem
 			end
 
-			local var_22_5 = {
-				type = tonumber(iter_22_1[1]),
-				id = tonumber(iter_22_1[2])
+			local dataParam = {
+				type = tonumber(rewardData[1]),
+				id = tonumber(rewardData[2])
 			}
 
-			var_22_4.itemIcon:initRewardItemInfo(OdysseyEnum.RewardItemType.OuterItem, var_22_5, tonumber(iter_22_1[3]))
-			gohelper.setActive(var_22_4.go, true)
+			rewardItem.itemIcon:initRewardItemInfo(OdysseyEnum.RewardItemType.OuterItem, dataParam, tonumber(rewardData[3]))
+			gohelper.setActive(rewardItem.go, true)
 		end
 
-		for iter_22_2 = #var_22_3 + 1, #arg_22_0.rewardOuteritemTab do
-			local var_22_6 = arg_22_0.rewardOuteritemTab[iter_22_2]
+		for index = #outerItemRewardList + 1, #self.rewardOuteritemTab do
+			local rewardItem = self.rewardOuteritemTab[index]
 
-			if var_22_6 then
-				gohelper.setActive(var_22_6.go, false)
+			if rewardItem then
+				gohelper.setActive(rewardItem.go, false)
 			end
 		end
 	end
 
-	local var_22_7 = GameUtil.splitString2(arg_22_0.fightElementConfig.reward)
+	local rewardList = GameUtil.splitString2(self.fightElementConfig.reward)
 
-	for iter_22_3, iter_22_4 in ipairs(var_22_7) do
-		local var_22_8 = arg_22_0.rewardItemTab[iter_22_3]
+	for index, rewardData in ipairs(rewardList) do
+		local rewardItem = self.rewardItemTab[index]
 
-		if not var_22_8 then
-			var_22_8 = {
-				go = gohelper.clone(arg_22_0._gorewardItem, arg_22_0._gorewardContent, "rewardItem_" .. iter_22_3)
+		if not rewardItem then
+			rewardItem = {
+				go = gohelper.clone(self._gorewardItem, self._gorewardContent, "rewardItem_" .. index)
 			}
-			var_22_8.itemGO = arg_22_0.viewContainer:getResInst(arg_22_0.viewContainer:getSetting().otherRes[1], var_22_8.go)
-			var_22_8.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_8.itemGO, OdysseyItemIcon)
-			arg_22_0.rewardItemTab[iter_22_3] = var_22_8
+			rewardItem.itemGO = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes[1], rewardItem.go)
+			rewardItem.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(rewardItem.itemGO, OdysseyItemIcon)
+			self.rewardItemTab[index] = rewardItem
 		end
 
-		var_22_8.itemIcon:initRewardItemInfo(iter_22_4[1], tonumber(iter_22_4[2]), tonumber(iter_22_4[3]))
-		gohelper.setActive(var_22_8.go, true)
+		rewardItem.itemIcon:initRewardItemInfo(rewardData[1], tonumber(rewardData[2]), tonumber(rewardData[3]))
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_22_5 = #var_22_7 + 1, #arg_22_0.rewardItemTab do
-		local var_22_9 = arg_22_0.rewardItemTab[iter_22_5]
+	for index = #rewardList + 1, #self.rewardItemTab do
+		local rewardItem = self.rewardItemTab[index]
 
-		if var_22_9 then
-			gohelper.setActive(var_22_9.go, false)
+		if rewardItem then
+			gohelper.setActive(rewardItem.go, false)
 		end
 	end
 end
 
-function var_0_0.refreshMercenaryUI(arg_23_0)
-	gohelper.setActive(arg_23_0._goequipReward, true)
+function OdysseyDungeonInteractFightView:refreshMercenaryUI()
+	gohelper.setActive(self._goequipReward, true)
 
-	arg_23_0.mercenaryType = tonumber(arg_23_0.fightElementConfig.param)
+	self.mercenaryType = tonumber(self.fightElementConfig.param)
 
-	local var_23_0 = OdysseyEnum.MercenaryTypeToSuit[arg_23_0.mercenaryType]
-	local var_23_1 = OdysseyConfig.instance:getConstConfig(var_23_0)
-	local var_23_2 = not string.nilorempty(var_23_1.value)
+	local suitConstId = OdysseyEnum.MercenaryTypeToSuit[self.mercenaryType]
+	local suitConstConfig = OdysseyConfig.instance:getConstConfig(suitConstId)
+	local canSelectSuit = not string.nilorempty(suitConstConfig.value)
 
-	gohelper.setActive(arg_23_0._goequipSuit, var_23_2)
+	gohelper.setActive(self._goequipSuit, canSelectSuit)
 
-	if var_23_2 then
-		local var_23_3 = string.splitToNumber(var_23_1.value, "#")
+	if canSelectSuit then
+		local suitIdList = string.splitToNumber(suitConstConfig.value, "#")
 
-		arg_23_0.curSuitId = OdysseyModel.instance:getMercenaryTypeSuit(arg_23_0.mercenaryType)
+		self.curSuitId = OdysseyModel.instance:getMercenaryTypeSuit(self.mercenaryType)
 
-		local var_23_4 = OdysseyConfig.instance:getEquipSuitConfig(arg_23_0.curSuitId)
+		local suitConfig = OdysseyConfig.instance:getEquipSuitConfig(self.curSuitId)
 
-		arg_23_0._txtequipSuit.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("odyssey_get_rateup"), var_23_4.name)
+		self._txtequipSuit.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("odyssey_get_rateup"), suitConfig.name)
 
-		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_23_0._imageequipSuit, var_23_4.icon)
-		arg_23_0:refreshSuitSelectTip(var_23_3)
-		arg_23_0:playSuitSelectEffect()
+		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imageequipSuit, suitConfig.icon)
+		self:refreshSuitSelectTip(suitIdList)
+		self:playSuitSelectEffect()
 	end
 
-	arg_23_0:createAndRefreshMercenaryReward()
+	self:createAndRefreshMercenaryReward()
 end
 
-function var_0_0.createAndRefreshMercenaryReward(arg_24_0)
-	gohelper.setActive(arg_24_0._goequipItem, false)
+function OdysseyDungeonInteractFightView:createAndRefreshMercenaryReward()
+	gohelper.setActive(self._goequipItem, false)
 
-	local var_24_0 = {}
-	local var_24_1 = GameUtil.splitString2(arg_24_0.fightElementConfig.reward)
-	local var_24_2 = arg_24_0.fightElementConfig.randomDrop
-	local var_24_3 = OdysseyConfig.instance:getEquipDropConfig(var_24_2)
-	local var_24_4 = GameUtil.splitString2(var_24_3.dropRare, true)
+	local rewardInfoList = {}
+	local rewardItemList = GameUtil.splitString2(self.fightElementConfig.reward)
+	local dropEquipId = self.fightElementConfig.randomDrop
+	local equipDropConfig = OdysseyConfig.instance:getEquipDropConfig(dropEquipId)
+	local suitRareInfoList = GameUtil.splitString2(equipDropConfig.dropRare, true)
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_1) do
-		local var_24_5 = {}
+	for index, rewardData in ipairs(rewardItemList) do
+		local rewardInfo = {}
 
-		var_24_5.isEquipSuit = false
-		var_24_5.data = iter_24_1
+		rewardInfo.isEquipSuit = false
+		rewardInfo.data = rewardData
 
-		table.insert(var_24_0, var_24_5)
+		table.insert(rewardInfoList, rewardInfo)
 	end
 
-	table.sort(var_24_4, function(arg_25_0, arg_25_1)
-		return tonumber(arg_25_0[1]) > tonumber(arg_25_1[1])
+	table.sort(suitRareInfoList, function(a, b)
+		return tonumber(a[1]) > tonumber(b[1])
 	end)
 
-	for iter_24_2, iter_24_3 in ipairs(var_24_4) do
-		local var_24_6 = {}
+	for index, rewardData in ipairs(suitRareInfoList) do
+		local rewardInfo = {}
 
-		var_24_6.isEquipSuit = true
-		var_24_6.data = iter_24_3
+		rewardInfo.isEquipSuit = true
+		rewardInfo.data = rewardData
 
-		table.insert(var_24_0, var_24_6)
+		table.insert(rewardInfoList, rewardInfo)
 	end
 
-	for iter_24_4, iter_24_5 in ipairs(var_24_0) do
-		local var_24_7 = arg_24_0.rewardItemTab[iter_24_4]
+	for index, rewardInfo in ipairs(rewardInfoList) do
+		local rewardItem = self.rewardItemTab[index]
 
-		if not var_24_7 then
-			var_24_7 = {
-				go = gohelper.clone(arg_24_0._goequipItem, arg_24_0._goequipContent, "rewardItem_" .. iter_24_4)
+		if not rewardItem then
+			rewardItem = {
+				go = gohelper.clone(self._goequipItem, self._goequipContent, "rewardItem_" .. index)
 			}
-			var_24_7.itemGO = arg_24_0.viewContainer:getResInst(arg_24_0.viewContainer:getSetting().otherRes[1], var_24_7.go)
-			var_24_7.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_24_7.itemGO, OdysseyItemIcon)
-			arg_24_0.rewardItemTab[iter_24_4] = var_24_7
+			rewardItem.itemGO = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes[1], rewardItem.go)
+			rewardItem.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(rewardItem.itemGO, OdysseyItemIcon)
+			self.rewardItemTab[index] = rewardItem
 		end
 
-		if iter_24_5.isEquipSuit then
-			var_24_7.itemIcon:showUnknowSuitIcon(iter_24_5.data[1])
+		if rewardInfo.isEquipSuit then
+			rewardItem.itemIcon:showUnknowSuitIcon(rewardInfo.data[1])
 		else
-			var_24_7.itemIcon:initRewardItemInfo(iter_24_5.data[1], tonumber(iter_24_5.data[2]), tonumber(iter_24_5.data[3]))
+			rewardItem.itemIcon:initRewardItemInfo(rewardInfo.data[1], tonumber(rewardInfo.data[2]), tonumber(rewardInfo.data[3]))
 		end
 
-		gohelper.setActive(var_24_7.go, true)
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_24_6 = #var_24_0 + 1, #arg_24_0.rewardItemTab do
-		local var_24_8 = arg_24_0.rewardItemTab[iter_24_6]
+	for index = #rewardInfoList + 1, #self.rewardItemTab do
+		local rewardItem = self.rewardItemTab[index]
 
-		if var_24_8 then
-			gohelper.setActive(var_24_8.go, false)
+		if rewardItem then
+			gohelper.setActive(rewardItem.go, false)
 		end
 	end
 end
 
-function var_0_0.playSuitSelectEffect(arg_26_0)
-	if arg_26_0.curSuitId and arg_26_0.lastSuitId and arg_26_0.curSuitId ~= arg_26_0.lastSuitId then
-		gohelper.setActive(arg_26_0._goequipSuitEffect, false)
-		gohelper.setActive(arg_26_0._goequipSuitEffect, true)
+function OdysseyDungeonInteractFightView:playSuitSelectEffect()
+	if self.curSuitId and self.lastSuitId and self.curSuitId ~= self.lastSuitId then
+		gohelper.setActive(self._goequipSuitEffect, false)
+		gohelper.setActive(self._goequipSuitEffect, true)
 	end
 
-	arg_26_0.lastSuitId = arg_26_0.curSuitId
+	self.lastSuitId = self.curSuitId
 end
 
-function var_0_0.refreshSuitSelectTip(arg_27_0, arg_27_1)
-	arg_27_0.isSuitLongPress = false
+function OdysseyDungeonInteractFightView:refreshSuitSelectTip(suitIdList)
+	self.isSuitLongPress = false
 
-	gohelper.CreateObjList(arg_27_0, arg_27_0.onSuitSelectTipShow, arg_27_1, arg_27_0._gosuitSelectContent, arg_27_0._gosuitSelectItem)
+	gohelper.CreateObjList(self, self.onSuitSelectTipShow, suitIdList, self._gosuitSelectContent, self._gosuitSelectItem)
 end
 
-function var_0_0.onSuitSelectTipShow(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	local var_28_0 = arg_28_0.suitSelectItemTab[arg_28_3]
+function OdysseyDungeonInteractFightView:onSuitSelectTipShow(obj, data, index)
+	local selectItem = self.suitSelectItemTab[index]
 
-	if not var_28_0 then
-		var_28_0 = {
-			go = arg_28_1
+	if not selectItem then
+		selectItem = {
+			go = obj
 		}
-		var_28_0.imageSuitIcon = gohelper.findChildImage(var_28_0.go, "image_suitIcon")
-		var_28_0.txtSuitName = gohelper.findChildText(var_28_0.go, "txt_suitName")
-		var_28_0.btnSuitSelect = gohelper.findChildButtonWithAudio(var_28_0.go, "btn_select")
-		var_28_0.btnSuitClickLongPrees = SLFramework.UGUI.UILongPressListener.Get(var_28_0.btnSuitSelect.gameObject)
+		selectItem.imageSuitIcon = gohelper.findChildImage(selectItem.go, "image_suitIcon")
+		selectItem.txtSuitName = gohelper.findChildText(selectItem.go, "txt_suitName")
+		selectItem.btnSuitSelect = gohelper.findChildButtonWithAudio(selectItem.go, "btn_select")
+		selectItem.btnSuitClickLongPrees = SLFramework.UGUI.UILongPressListener.Get(selectItem.btnSuitSelect.gameObject)
 
-		var_28_0.btnSuitClickLongPrees:SetLongPressTime({
+		selectItem.btnSuitClickLongPrees:SetLongPressTime({
 			0.5,
 			99999
 		})
 
-		var_28_0.goSelect = gohelper.findChild(var_28_0.go, "btn_select/go_select")
-		arg_28_0.suitSelectItemTab[arg_28_3] = var_28_0
+		selectItem.goSelect = gohelper.findChild(selectItem.go, "btn_select/go_select")
+		self.suitSelectItemTab[index] = selectItem
 	end
 
-	var_28_0.suitConfig = OdysseyConfig.instance:getEquipSuitConfig(arg_28_2)
-	var_28_0.txtSuitName.text = var_28_0.suitConfig.name
+	selectItem.suitConfig = OdysseyConfig.instance:getEquipSuitConfig(data)
+	selectItem.txtSuitName.text = selectItem.suitConfig.name
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(var_28_0.imageSuitIcon, var_28_0.suitConfig.icon)
-	var_28_0.btnSuitSelect:AddClickListener(arg_28_0._onSuitSelectClick, arg_28_0, var_28_0)
-	var_28_0.btnSuitClickLongPrees:AddLongPressListener(arg_28_0._onSuitEffectInfoClick, arg_28_0, var_28_0)
-	gohelper.setActive(var_28_0.goSelect, arg_28_2 == arg_28_0.curSuitId)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(selectItem.imageSuitIcon, selectItem.suitConfig.icon)
+	selectItem.btnSuitSelect:AddClickListener(self._onSuitSelectClick, self, selectItem)
+	selectItem.btnSuitClickLongPrees:AddLongPressListener(self._onSuitEffectInfoClick, self, selectItem)
+	gohelper.setActive(selectItem.goSelect, data == self.curSuitId)
 end
 
-function var_0_0._onSuitEffectInfoClick(arg_29_0, arg_29_1)
-	gohelper.setActive(arg_29_0._gosuitInfoTip, true)
+function OdysseyDungeonInteractFightView:_onSuitEffectInfoClick(selectItem)
+	gohelper.setActive(self._gosuitInfoTip, true)
 
-	arg_29_0._txtsuitName.text = arg_29_1.suitConfig.name
+	self._txtsuitName.text = selectItem.suitConfig.name
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_29_0._imagesuitIcon, arg_29_1.suitConfig.icon)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imagesuitIcon, selectItem.suitConfig.icon)
 
-	arg_29_0.suitEffectList = OdysseyConfig.instance:getEquipSuitAllEffect(arg_29_1.suitConfig.id)
+	self.suitEffectList = OdysseyConfig.instance:getEquipSuitAllEffect(selectItem.suitConfig.id)
 
-	gohelper.CreateObjList(arg_29_0, arg_29_0.onSuitEffectInfoTipShow, arg_29_0.suitEffectList, arg_29_0._gosuitInfoContent, arg_29_0._gosuitInfoItem)
+	gohelper.CreateObjList(self, self.onSuitEffectInfoTipShow, self.suitEffectList, self._gosuitInfoContent, self._gosuitInfoItem)
 
-	arg_29_0.isSuitLongPress = true
+	self.isSuitLongPress = true
 end
 
-function var_0_0.onSuitEffectInfoTipShow(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	local var_30_0 = arg_30_1
-	local var_30_1 = gohelper.findChildText(var_30_0, "txt_suitInfo")
-	local var_30_2 = gohelper.findChild(var_30_0, "go_line")
-	local var_30_3 = HeroSkillModel.instance:skillDesToSpot(arg_30_2.effect, "#CC492F", "#485E92")
+function OdysseyDungeonInteractFightView:onSuitEffectInfoTipShow(obj, data, index)
+	local go = obj
+	local txtSuitInfo = gohelper.findChildText(go, "txt_suitInfo")
+	local goLine = gohelper.findChild(go, "go_line")
+	local skillDesc = HeroSkillModel.instance:skillDesToSpot(data.effect, "#CC492F", "#485E92")
 
-	var_30_1.text = SkillHelper.buildDesc(var_30_3)
+	txtSuitInfo.text = SkillHelper.buildDesc(skillDesc)
 
-	local var_30_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_30_1.gameObject, FixTmpBreakLine)
+	local fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(txtSuitInfo.gameObject, FixTmpBreakLine)
 
-	SkillHelper.addHyperLinkClick(var_30_1, arg_30_0._onHyperLinkClick, arg_30_0)
-	var_30_4:refreshTmpContent(var_30_1)
-	gohelper.setActive(var_30_2, arg_30_3 ~= #arg_30_0.suitEffectList)
+	SkillHelper.addHyperLinkClick(txtSuitInfo, self._onHyperLinkClick, self)
+	fixTmpBreakLine:refreshTmpContent(txtSuitInfo)
+	gohelper.setActive(goLine, index ~= #self.suitEffectList)
 end
 
-function var_0_0._onHyperLinkClick(arg_31_0, arg_31_1, arg_31_2)
-	CommonBuffTipController.instance:openCommonTipView(tonumber(arg_31_1), arg_31_2)
+function OdysseyDungeonInteractFightView:_onHyperLinkClick(effId, clickPosition)
+	CommonBuffTipController.instance:openCommonTipView(tonumber(effId), clickPosition)
 end
 
-function var_0_0._onSuitSelectClick(arg_32_0, arg_32_1)
-	if arg_32_0.isSuitLongPress then
-		arg_32_0.isSuitLongPress = false
+function OdysseyDungeonInteractFightView:_onSuitSelectClick(selectItem)
+	if self.isSuitLongPress then
+		self.isSuitLongPress = false
 
 		return
 	end
 
-	arg_32_0.curSuitId = arg_32_1.suitConfig.id
+	self.curSuitId = selectItem.suitConfig.id
 
-	OdysseyRpc.instance:sendOdysseyFightMercenarySetDropRequest(arg_32_0.mercenaryType, arg_32_0.curSuitId)
+	OdysseyRpc.instance:sendOdysseyFightMercenarySetDropRequest(self.mercenaryType, self.curSuitId)
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_0.suitSelectItemTab) do
-		gohelper.setActive(iter_32_1.goSelect, iter_32_1.suitConfig.id == arg_32_0.curSuitId)
+	for _, suitSelectItem in ipairs(self.suitSelectItemTab) do
+		gohelper.setActive(suitSelectItem.goSelect, suitSelectItem.suitConfig.id == self.curSuitId)
 	end
 
-	arg_32_0._txtequipSuit.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("odyssey_get_rateup"), arg_32_1.suitConfig.name)
+	self._txtequipSuit.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("odyssey_get_rateup"), selectItem.suitConfig.name)
 
-	gohelper.setActive(arg_32_0._gosuitInfoTip, false)
-	gohelper.setActive(arg_32_0._gosuitSelectTip, false)
+	gohelper.setActive(self._gosuitInfoTip, false)
+	gohelper.setActive(self._gosuitSelectTip, false)
 end
 
-function var_0_0.refreshConquerUI(arg_33_0)
-	gohelper.setActive(arg_33_0._goconquerTip, false)
-	gohelper.setActive(arg_33_0._goconquerReward, true)
+function OdysseyDungeonInteractFightView:refreshConquerUI()
+	gohelper.setActive(self._goconquerTip, false)
+	gohelper.setActive(self._goconquerReward, true)
 
-	local var_33_0 = string.split(arg_33_0.fightElementConfig.reward, "@")
-	local var_33_1 = #var_33_0 and #var_33_0 > 0 and #var_33_0 or 1
-	local var_33_2 = arg_33_0.elementMO:getConquestEleData()
+	local fightRewardList = string.split(self.fightElementConfig.reward, "@")
+	local allWaveCount = #fightRewardList and #fightRewardList > 0 and #fightRewardList or 1
+	local conquestInfoData = self.elementMO:getConquestEleData()
 
-	arg_33_0.curConquestHighWave = var_33_2 and var_33_2.highWave or 0
+	self.curConquestHighWave = conquestInfoData and conquestInfoData.highWave or 0
 
-	local var_33_3 = arg_33_0.curConquestHighWave / var_33_1 * arg_33_0._conquerBarWith
+	local barWidth = self.curConquestHighWave / allWaveCount * self._conquerBarWith
 
-	recthelper.setWidth(arg_33_0._imageconquerBar.gameObject.transform, var_33_3)
+	recthelper.setWidth(self._imageconquerBar.gameObject.transform, barWidth)
 
-	arg_33_0._txtconquerTimes.text = arg_33_0.curConquestHighWave
-	arg_33_0._txtconquerTotalTimes.text = "/" .. var_33_1
+	self._txtconquerTimes.text = self.curConquestHighWave
+	self._txtconquerTotalTimes.text = "/" .. allWaveCount
 
-	gohelper.setActive(arg_33_0._goconquerHasget, arg_33_0.curConquestHighWave == var_33_1)
-	arg_33_0:createRewardItem(var_33_0, arg_33_0._goconquerRewardItem, arg_33_0._goconquerContent)
+	gohelper.setActive(self._goconquerHasget, self.curConquestHighWave == allWaveCount)
+	self:createRewardItem(fightRewardList, self._goconquerRewardItem, self._goconquerContent)
 
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0.multiRewardItemTab) do
-		for iter_33_2, iter_33_3 in ipairs(iter_33_1.itemIconTab) do
-			gohelper.setActive(iter_33_3.itemGet, iter_33_0 <= arg_33_0.curConquestHighWave)
+	for index, rewardItem in ipairs(self.multiRewardItemTab) do
+		for _, itemIcon in ipairs(rewardItem.itemIconTab) do
+			gohelper.setActive(itemIcon.itemGet, index <= self.curConquestHighWave)
 		end
 
-		iter_33_1.txt.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("odyssey_conquest_wave"), GameUtil.getNum2Chinese(iter_33_0))
+		rewardItem.txt.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("odyssey_conquest_wave"), GameUtil.getNum2Chinese(index))
 	end
 end
 
-function var_0_0.refreshMythUI(arg_34_0)
-	gohelper.setActive(arg_34_0._gomyth, true)
-	gohelper.setActive(arg_34_0._gorecordRewardTip, false)
+function OdysseyDungeonInteractFightView:refreshMythUI()
+	gohelper.setActive(self._gomyth, true)
+	gohelper.setActive(self._gorecordRewardTip, false)
 
-	local var_34_0 = arg_34_0.elementMO:getMythicEleData()
-	local var_34_1 = var_34_0 and var_34_0.evaluation or 0
+	local mythInfoData = self.elementMO:getMythicEleData()
+	local curRecodeLevel = mythInfoData and mythInfoData.evaluation or 0
 
-	arg_34_0._txtrecord.text = var_34_1 > 0 and luaLang("odyssey_dungeon_mapselectinfo_mythRecord" .. var_34_1) or luaLang("odyssey_myth_record_empty")
+	self._txtrecord.text = curRecodeLevel > 0 and luaLang("odyssey_dungeon_mapselectinfo_mythRecord" .. curRecodeLevel) or luaLang("odyssey_myth_record_empty")
 
-	if var_34_1 > 0 then
-		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_34_0._imagerecord, "pingji_d_" .. var_34_1)
+	if curRecodeLevel > 0 then
+		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imagerecord, "pingji_d_" .. curRecodeLevel)
 	end
 
-	gohelper.setActive(arg_34_0._imagerecord.gameObject, var_34_1 > 0)
-	gohelper.setActive(arg_34_0._goEmptyRecord, var_34_1 == 0)
+	gohelper.setActive(self._imagerecord.gameObject, curRecodeLevel > 0)
+	gohelper.setActive(self._goEmptyRecord, curRecodeLevel == 0)
 
-	local var_34_2 = GameUtil.splitString2(arg_34_0.fightElementConfig.param, true)
-	local var_34_3 = string.split(arg_34_0.fightElementConfig.reward, "@")
+	local paramData = GameUtil.splitString2(self.fightElementConfig.param, true)
+	local fightRewardList = string.split(self.fightElementConfig.reward, "@")
 
-	arg_34_0:createRewardItem(var_34_3, arg_34_0._gorecordItem, arg_34_0._gorecordContent)
+	self:createRewardItem(fightRewardList, self._gorecordItem, self._gorecordContent)
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_0.multiRewardItemTab) do
-		for iter_34_2, iter_34_3 in ipairs(iter_34_1.itemIconTab) do
-			gohelper.setActive(iter_34_3.itemGet, iter_34_0 <= var_34_1)
+	for index, rewardItem in ipairs(self.multiRewardItemTab) do
+		for _, itemIcon in ipairs(rewardItem.itemIconTab) do
+			gohelper.setActive(itemIcon.itemGet, index <= curRecodeLevel)
 		end
 
-		iter_34_1.imageRecord = gohelper.findChildImage(iter_34_1.go, "image_record")
+		rewardItem.imageRecord = gohelper.findChildImage(rewardItem.go, "image_record")
 
-		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(iter_34_1.imageRecord, "pingji_x_" .. iter_34_0)
+		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(rewardItem.imageRecord, "pingji_x_" .. index)
 
-		local var_34_4 = OdysseyConfig.instance:getFightTaskDescConfig(var_34_2[iter_34_0][2])
+		local fightTaskDescConfig = OdysseyConfig.instance:getFightTaskDescConfig(paramData[index][2])
 
-		iter_34_1.txt.text = var_34_4.desc
+		rewardItem.txt.text = fightTaskDescConfig.desc
 	end
 
-	local var_34_5 = arg_34_0.fightElementConfig.episodeId
-	local var_34_6 = DungeonConfig.instance:getEpisodeCO(var_34_5)
-	local var_34_7 = lua_battle.configDict[var_34_6.battleId]
-	local var_34_8 = not string.nilorempty(var_34_7.AdditionRule)
+	local episodeId = self.fightElementConfig.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local battleCo = lua_battle.configDict[episodeConfig.battleId]
+	local canShowAddition = not string.nilorempty(battleCo.AdditionRule)
 
-	gohelper.setActive(arg_34_0._goaddition, var_34_8)
-	recthelper.setHeight(arg_34_0._gofightDesc.transform, var_34_8 and var_0_0.smallDescHeight or var_0_0.normalDescHeight)
+	gohelper.setActive(self._goaddition, canShowAddition)
+	recthelper.setHeight(self._gofightDesc.transform, canShowAddition and OdysseyDungeonInteractFightView.smallDescHeight or OdysseyDungeonInteractFightView.normalDescHeight)
 
-	if var_34_8 then
-		arg_34_0.ruleList = FightStrUtil.instance:getSplitString2Cache(var_34_7.AdditionRule, true, "|", "#")
+	if canShowAddition then
+		self.ruleList = FightStrUtil.instance:getSplitString2Cache(battleCo.AdditionRule, true, "|", "#")
 
-		gohelper.CreateObjList(arg_34_0, arg_34_0.onAdditionalRuleShow, arg_34_0.ruleList, arg_34_0._goadditionContent, arg_34_0._goadditionItem)
+		gohelper.CreateObjList(self, self.onAdditionalRuleShow, self.ruleList, self._goadditionContent, self._goadditionItem)
 	end
 end
 
-function var_0_0.onAdditionalRuleShow(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	local var_35_0 = arg_35_2[1]
-	local var_35_1 = arg_35_2[2]
-	local var_35_2 = lua_rule.configDict[var_35_1]
-	local var_35_3 = arg_35_1
+function OdysseyDungeonInteractFightView:onAdditionalRuleShow(obj, data, index)
+	local targetId = data[1]
+	local ruleId = data[2]
+	local ruleCo = lua_rule.configDict[ruleId]
+	local go = obj
 
-	if var_35_2 then
-		gohelper.setActive(var_35_3, true)
+	if ruleCo then
+		gohelper.setActive(go, true)
 
-		local var_35_4 = gohelper.findChildImage(var_35_3, "image_ruleicon")
-		local var_35_5 = gohelper.findChildImage(var_35_3, "image_ruleicon/image_tagicon")
+		local ruleicon = gohelper.findChildImage(go, "image_ruleicon")
+		local tagicon = gohelper.findChildImage(go, "image_ruleicon/image_tagicon")
 
-		UISpriteSetMgr.instance:setCommonSprite(var_35_5, "wz_" .. var_35_0)
-		UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_35_4, var_35_2.icon)
+		UISpriteSetMgr.instance:setCommonSprite(tagicon, "wz_" .. targetId)
+		UISpriteSetMgr.instance:setDungeonLevelRuleSprite(ruleicon, ruleCo.icon)
 	else
-		gohelper.setActive(var_35_3, false)
+		gohelper.setActive(go, false)
 	end
 end
 
-function var_0_0.createRewardItem(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	gohelper.setActive(arg_36_2, false)
+function OdysseyDungeonInteractFightView:createRewardItem(fightRewardList, rewardItemGO, rewardItemContentGO)
+	gohelper.setActive(rewardItemGO, false)
 
-	for iter_36_0, iter_36_1 in ipairs(arg_36_1) do
-		local var_36_0 = arg_36_0.multiRewardItemTab[iter_36_0]
+	for index, rewardStr in ipairs(fightRewardList) do
+		local rewardItem = self.multiRewardItemTab[index]
 
-		if not var_36_0 then
-			var_36_0 = {
-				go = gohelper.clone(arg_36_2, arg_36_3, "rewardItem" .. iter_36_0)
+		if not rewardItem then
+			rewardItem = {
+				go = gohelper.clone(rewardItemGO, rewardItemContentGO, "rewardItem" .. index)
 			}
-			var_36_0.txt = gohelper.findChildText(var_36_0.go, "txt_desc")
-			var_36_0.itemContent = gohelper.findChild(var_36_0.go, "go_rewardContent")
-			var_36_0.itemGO = gohelper.findChild(var_36_0.go, "go_rewardContent/go_rewardItem")
-			var_36_0.itemIconTab = {}
+			rewardItem.txt = gohelper.findChildText(rewardItem.go, "txt_desc")
+			rewardItem.itemContent = gohelper.findChild(rewardItem.go, "go_rewardContent")
+			rewardItem.itemGO = gohelper.findChild(rewardItem.go, "go_rewardContent/go_rewardItem")
+			rewardItem.itemIconTab = {}
 
-			arg_36_0:createRewardItemIcon(iter_36_1, var_36_0.itemGO, var_36_0.itemContent, var_36_0.itemIconTab)
+			self:createRewardItemIcon(rewardStr, rewardItem.itemGO, rewardItem.itemContent, rewardItem.itemIconTab)
 
-			arg_36_0.multiRewardItemTab[iter_36_0] = var_36_0
+			self.multiRewardItemTab[index] = rewardItem
 		end
 
-		gohelper.setActive(var_36_0.go, true)
+		gohelper.setActive(rewardItem.go, true)
 	end
 end
 
-function var_0_0.createRewardItemIcon(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4)
-	gohelper.setActive(arg_37_2, false)
+function OdysseyDungeonInteractFightView:createRewardItemIcon(rewardStr, rewardItemGO, rewardItemContentGO, itemIconTab)
+	gohelper.setActive(rewardItemGO, false)
 
-	local var_37_0 = GameUtil.splitString2(arg_37_1)
+	local rewardList = GameUtil.splitString2(rewardStr)
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_0) do
-		local var_37_1 = arg_37_4[iter_37_0]
+	for index, rewardData in ipairs(rewardList) do
+		local rewardItem = itemIconTab[index]
 
-		if not var_37_1 then
-			var_37_1 = {
-				go = gohelper.clone(arg_37_2, arg_37_3, "rewardItem_" .. iter_37_0)
+		if not rewardItem then
+			rewardItem = {
+				go = gohelper.clone(rewardItemGO, rewardItemContentGO, "rewardItem_" .. index)
 			}
-			var_37_1.itemPos = gohelper.findChild(var_37_1.go, "go_itemPos")
-			var_37_1.itemGet = gohelper.findChild(var_37_1.go, "go_get")
-			var_37_1.itemGO = arg_37_0.viewContainer:getResInst(arg_37_0.viewContainer:getSetting().otherRes[1], var_37_1.itemPos)
-			var_37_1.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_37_1.itemGO, OdysseyItemIcon)
-			arg_37_4[iter_37_0] = var_37_1
+			rewardItem.itemPos = gohelper.findChild(rewardItem.go, "go_itemPos")
+			rewardItem.itemGet = gohelper.findChild(rewardItem.go, "go_get")
+			rewardItem.itemGO = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes[1], rewardItem.itemPos)
+			rewardItem.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(rewardItem.itemGO, OdysseyItemIcon)
+			itemIconTab[index] = rewardItem
 		end
 
-		var_37_1.itemIcon:initRewardItemInfo(iter_37_1[1], tonumber(iter_37_1[2]), tonumber(iter_37_1[3]))
-		gohelper.setActive(var_37_1.go, true)
+		rewardItem.itemIcon:initRewardItemInfo(rewardData[1], tonumber(rewardData[2]), tonumber(rewardData[3]))
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_37_2 = #var_37_0 + 1, #arg_37_4 do
-		local var_37_2 = arg_37_4[iter_37_2]
+	for index = #rewardList + 1, #itemIconTab do
+		local rewardItem = itemIconTab[index]
 
-		if var_37_2 then
-			gohelper.setActive(var_37_2.go, false)
+		if rewardItem then
+			gohelper.setActive(rewardItem.go, false)
 		end
 	end
 end
 
-function var_0_0.enterFight(arg_38_0)
-	local var_38_0 = {
-		episodeId = arg_38_0.fightEpisodeCo.id,
-		elementId = arg_38_0.elementConfig.id
+function OdysseyDungeonInteractFightView:enterFight()
+	local param = {
+		episodeId = self.fightEpisodeCo.id,
+		elementId = self.elementConfig.id
 	}
 
-	OdysseyDungeonModel.instance:setLastElementFightParam(var_38_0)
-	DungeonFightController.instance:enterFight(arg_38_0.fightEpisodeCo.chapterId, arg_38_0.fightEpisodeCo.id)
+	OdysseyDungeonModel.instance:setLastElementFightParam(param)
+	DungeonFightController.instance:enterFight(self.fightEpisodeCo.chapterId, self.fightEpisodeCo.id)
 end
 
-function var_0_0.playStoryAndEnterFight(arg_39_0, arg_39_1, arg_39_2)
-	if not arg_39_2 and StoryModel.instance:isStoryFinished(arg_39_1) then
-		arg_39_0:enterFight()
+function OdysseyDungeonInteractFightView:playStoryAndEnterFight(storyId, noCheckFinish)
+	if not noCheckFinish and StoryModel.instance:isStoryFinished(storyId) then
+		self:enterFight()
 
 		return
 	end
 
-	local var_39_0 = {}
+	local param = {}
 
-	var_39_0.mark = true
-	var_39_0.episodeId = arg_39_0.fightEpisodeCo.id
+	param.mark = true
+	param.episodeId = self.fightEpisodeCo.id
 
-	StoryController.instance:playStory(arg_39_1, var_39_0, arg_39_0.enterFight, arg_39_0)
+	StoryController.instance:playStory(storyId, param, self.enterFight, self)
 end
 
-function var_0_0.onClose(arg_40_0)
-	if #arg_40_0.suitSelectItemTab > 0 then
-		for iter_40_0, iter_40_1 in ipairs(arg_40_0.suitSelectItemTab) do
-			iter_40_1.btnSuitSelect:RemoveClickListener()
-			iter_40_1.btnSuitClickLongPrees:RemoveLongPressListener()
+function OdysseyDungeonInteractFightView:onClose()
+	if #self.suitSelectItemTab > 0 then
+		for index, suitSelectItem in ipairs(self.suitSelectItemTab) do
+			suitSelectItem.btnSuitSelect:RemoveClickListener()
+			suitSelectItem.btnSuitClickLongPrees:RemoveLongPressListener()
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_41_0)
+function OdysseyDungeonInteractFightView:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseyDungeonInteractFightView

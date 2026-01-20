@@ -1,80 +1,82 @@
-﻿module("modules.logic.explore.view.ExploreFinishView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreFinishView.lua
 
-local var_0_0 = class("ExploreFinishView", BaseView)
+module("modules.logic.explore.view.ExploreFinishView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gohorizontal = gohelper.findChild(arg_1_0.viewGO, "center/progressbar/content")
-	arg_1_0._txtchapter = gohelper.findChildTextMesh(arg_1_0.viewGO, "center/bg/#txt_chaptername")
-	arg_1_0._txtchapterEn = gohelper.findChildTextMesh(arg_1_0.viewGO, "center/bg/#txt_chapternameen")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "center/progressbar/content/#go_item")
+local ExploreFinishView = class("ExploreFinishView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ExploreFinishView:onInitView()
+	self._btnclose = gohelper.findChildButton(self.viewGO, "#btn_close")
+	self._gohorizontal = gohelper.findChild(self.viewGO, "center/progressbar/content")
+	self._txtchapter = gohelper.findChildTextMesh(self.viewGO, "center/bg/#txt_chaptername")
+	self._txtchapterEn = gohelper.findChildTextMesh(self.viewGO, "center/bg/#txt_chapternameen")
+	self._goitem = gohelper.findChild(self.viewGO, "center/progressbar/content/#go_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function ExploreFinishView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function ExploreFinishView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ExploreFinishView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
+function ExploreFinishView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 
-	local var_5_0 = ExploreModel.instance:getMapId()
-	local var_5_1 = ExploreConfig.instance:getMapIdConfig(var_5_0)
-	local var_5_2 = DungeonConfig.instance:getEpisodeCO(var_5_1.episodeId)
+	local mapId = ExploreModel.instance:getMapId()
+	local mapCo = ExploreConfig.instance:getMapIdConfig(mapId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(mapCo.episodeId)
 
-	arg_5_0._txtchapter.text = var_5_2.name
-	arg_5_0._txtchapterEn.text = var_5_2.name_En
+	self._txtchapter.text = episodeCo.name
+	self._txtchapterEn.text = episodeCo.name_En
 
-	local var_5_3, var_5_4, var_5_5, var_5_6, var_5_7, var_5_8 = ExploreSimpleModel.instance:getCoinCountByMapId(var_5_0)
-	local var_5_9 = {
+	local bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal = ExploreSimpleModel.instance:getCoinCountByMapId(mapId)
+	local data = {
 		{
-			var_5_5,
-			var_5_8,
+			purpleCoin,
+			purpleCoinTotal,
 			"dungeon_secretroom_btn_triangle"
 		},
 		{
-			var_5_4,
-			var_5_7,
+			goldCoin,
+			goldCoinTotal,
 			"dungeon_secretroom_btn_sandglass"
 		},
 		{
-			var_5_3,
-			var_5_6,
+			bonusNum,
+			bonusNumTotal,
 			"dungeon_secretroom_btn_box"
 		}
 	}
 
-	gohelper.CreateObjList(arg_5_0, arg_5_0.setItem, var_5_9, arg_5_0._gohorizontal, arg_5_0._goitem)
+	gohelper.CreateObjList(self, self.setItem, data, self._gohorizontal, self._goitem)
 end
 
-function var_0_0.setItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = gohelper.findChildImage(arg_6_1, "bg2")
-	local var_6_1 = gohelper.findChildImage(arg_6_1, "bg2/image_icon")
-	local var_6_2 = gohelper.findChildTextMesh(arg_6_1, "txt_progress")
-	local var_6_3 = arg_6_2[1] == arg_6_2[2]
+function ExploreFinishView:setItem(obj, data, index)
+	local bg = gohelper.findChildImage(obj, "bg2")
+	local icon = gohelper.findChildImage(obj, "bg2/image_icon")
+	local progress = gohelper.findChildTextMesh(obj, "txt_progress")
+	local isFull = data[1] == data[2]
 
-	UISpriteSetMgr.instance:setExploreSprite(var_6_0, var_6_3 and "dungeon_secretroom_img_full" or "dungeon_secretroom_img_unfull")
-	UISpriteSetMgr.instance:setExploreSprite(var_6_1, arg_6_2[3] .. (var_6_3 and "1" or "2"))
+	UISpriteSetMgr.instance:setExploreSprite(bg, isFull and "dungeon_secretroom_img_full" or "dungeon_secretroom_img_unfull")
+	UISpriteSetMgr.instance:setExploreSprite(icon, data[3] .. (isFull and "1" or "2"))
 
-	local var_6_4 = var_6_3 and "E0BB6D" or "D5D4BC"
+	local color = isFull and "E0BB6D" or "D5D4BC"
 
-	var_6_2.text = string.format("<color=#%s>%d/%d", var_6_4, arg_6_2[1], arg_6_2[2])
+	progress.text = string.format("<color=#%s>%d/%d", color, data[1], data[2])
 end
 
-function var_0_0.onClose(arg_7_0)
+function ExploreFinishView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feedback_close)
 	ExploreController.instance:exit()
 end
 
-return var_0_0
+return ExploreFinishView

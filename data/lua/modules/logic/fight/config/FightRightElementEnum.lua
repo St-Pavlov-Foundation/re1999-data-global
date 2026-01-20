@@ -1,94 +1,108 @@
-﻿module("modules.logic.fight.config.FightRightElementEnum", package.seeall)
+﻿-- chunkname: @modules/logic/fight/config/FightRightElementEnum.lua
 
-local var_0_0 = _M
-local var_0_1 = 0
+module("modules.logic.fight.config.FightRightElementEnum", package.seeall)
 
-local function var_0_2()
-	var_0_1 = var_0_1 + 1
+local FightRightElementEnum = _M
+local EnumIndex = 0
 
-	return var_0_1
+local function GetEnum()
+	EnumIndex = EnumIndex + 1
+
+	return EnumIndex
 end
 
-var_0_0.Elements = {
-	BossRush = var_0_2(),
-	CharSupport = var_0_2(),
-	MelodyLevel = var_0_2(),
-	MelodySkill = var_0_2(),
-	RougeCoin = var_0_2(),
-	RougeGongMing = var_0_2(),
-	RougeTongPin = var_0_2(),
-	AssistBoss = var_0_2(),
-	AssistBossScore = var_0_2(),
-	DoomsdayClock = var_0_2(),
-	DouQuQuDice = var_0_2(),
-	Dice = var_0_2(),
-	DouQuQuCoin = var_0_2(),
-	DouQuQuHunting = var_0_2(),
-	SurvivalTalent = var_0_2(),
-	DeepScore_500M = var_0_2(),
-	DouQuQuBoss = var_0_2(),
-	SurvivalTalent2 = var_0_2()
+FightRightElementEnum.Elements = {
+	BossRush = GetEnum(),
+	CharSupport = GetEnum(),
+	MelodyLevel = GetEnum(),
+	MelodySkill = GetEnum(),
+	RougeCoin = GetEnum(),
+	RougeGongMing = GetEnum(),
+	RougeTongPin = GetEnum(),
+	AssistBoss = GetEnum(),
+	AssistBossScore = GetEnum(),
+	DoomsdayClock = GetEnum(),
+	DouQuQuDice = GetEnum(),
+	Dice = GetEnum(),
+	DouQuQuCoin = GetEnum(),
+	DouQuQuHunting = GetEnum(),
+	SurvivalTalent = GetEnum(),
+	DeepScore_500M = GetEnum(),
+	DouQuQuBoss = GetEnum(),
+	SurvivalTalent2 = GetEnum(),
+	Rouge2RevivalCoin = GetEnum(),
+	Rouge2Treasure = GetEnum(),
+	Rouge2Task = GetEnum()
 }
-var_0_0.Priority = {
-	var_0_0.Elements.DouQuQuDice,
-	var_0_0.Elements.Dice,
-	var_0_0.Elements.BossRush,
-	var_0_0.Elements.SurvivalTalent,
-	var_0_0.Elements.MelodyLevel,
-	var_0_0.Elements.MelodySkill,
-	var_0_0.Elements.AssistBossScore,
-	var_0_0.Elements.AssistBoss,
-	var_0_0.Elements.DoomsdayClock,
-	var_0_0.Elements.DouQuQuCoin,
-	var_0_0.Elements.DouQuQuHunting,
-	var_0_0.Elements.DouQuQuBoss,
-	var_0_0.Elements.RougeCoin,
-	var_0_0.Elements.RougeGongMing,
-	var_0_0.Elements.RougeTongPin,
-	var_0_0.Elements.CharSupport,
-	var_0_0.Elements.DeepScore_500M,
-	var_0_0.Elements.SurvivalTalent2
+FightRightElementEnum.Priority = {
+	FightRightElementEnum.Elements.DouQuQuDice,
+	FightRightElementEnum.Elements.Dice,
+	FightRightElementEnum.Elements.BossRush,
+	FightRightElementEnum.Elements.SurvivalTalent,
+	FightRightElementEnum.Elements.MelodyLevel,
+	FightRightElementEnum.Elements.MelodySkill,
+	FightRightElementEnum.Elements.AssistBossScore,
+	FightRightElementEnum.Elements.AssistBoss,
+	FightRightElementEnum.Elements.DoomsdayClock,
+	FightRightElementEnum.Elements.DouQuQuCoin,
+	FightRightElementEnum.Elements.DouQuQuHunting,
+	FightRightElementEnum.Elements.DouQuQuBoss,
+	FightRightElementEnum.Elements.RougeCoin,
+	FightRightElementEnum.Elements.RougeGongMing,
+	FightRightElementEnum.Elements.RougeTongPin,
+	FightRightElementEnum.Elements.CharSupport,
+	FightRightElementEnum.Elements.DeepScore_500M,
+	FightRightElementEnum.Elements.SurvivalTalent2,
+	FightRightElementEnum.Elements.Rouge2RevivalCoin,
+	FightRightElementEnum.Elements.Rouge2Treasure,
+	FightRightElementEnum.Elements.Rouge2Task
 }
-var_0_0.ElementsSizeDict = {
-	[var_0_0.Elements.DouQuQuDice] = Vector2(540, 120),
-	[var_0_0.Elements.Dice] = Vector2(540, 150),
-	[var_0_0.Elements.BossRush] = Vector2(200, 135),
-	[var_0_0.Elements.CharSupport] = Vector2(200, 130),
-	[var_0_0.Elements.MelodyLevel] = Vector2(300, 50),
-	[var_0_0.Elements.MelodySkill] = Vector2(200, 175),
-	[var_0_0.Elements.RougeCoin] = Vector2(220, 84),
-	[var_0_0.Elements.RougeGongMing] = Vector2(327, 111),
-	[var_0_0.Elements.RougeTongPin] = Vector2(412.9, 111),
-	[var_0_0.Elements.AssistBoss] = Vector2(200, 200),
-	[var_0_0.Elements.AssistBossScore] = Vector2(200, 100),
-	[var_0_0.Elements.DoomsdayClock] = Vector2(200, 350),
-	[var_0_0.Elements.DouQuQuCoin] = Vector2(400, 80),
-	[var_0_0.Elements.DouQuQuHunting] = Vector2(220, 60),
-	[var_0_0.Elements.SurvivalTalent] = Vector2(240, 200),
-	[var_0_0.Elements.DeepScore_500M] = Vector2(300, 500),
-	[var_0_0.Elements.DouQuQuBoss] = Vector2(200, 140),
-	[var_0_0.Elements.SurvivalTalent2] = Vector2(200, 200)
+FightRightElementEnum.ElementsSizeDict = {
+	[FightRightElementEnum.Elements.DouQuQuDice] = Vector2(540, 120),
+	[FightRightElementEnum.Elements.Dice] = Vector2(540, 150),
+	[FightRightElementEnum.Elements.BossRush] = Vector2(200, 135),
+	[FightRightElementEnum.Elements.CharSupport] = Vector2(200, 130),
+	[FightRightElementEnum.Elements.MelodyLevel] = Vector2(300, 50),
+	[FightRightElementEnum.Elements.MelodySkill] = Vector2(200, 175),
+	[FightRightElementEnum.Elements.RougeCoin] = Vector2(220, 84),
+	[FightRightElementEnum.Elements.RougeGongMing] = Vector2(327, 111),
+	[FightRightElementEnum.Elements.RougeTongPin] = Vector2(412.9, 111),
+	[FightRightElementEnum.Elements.AssistBoss] = Vector2(200, 200),
+	[FightRightElementEnum.Elements.AssistBossScore] = Vector2(200, 100),
+	[FightRightElementEnum.Elements.DoomsdayClock] = Vector2(200, 350),
+	[FightRightElementEnum.Elements.DouQuQuCoin] = Vector2(400, 80),
+	[FightRightElementEnum.Elements.DouQuQuHunting] = Vector2(220, 60),
+	[FightRightElementEnum.Elements.SurvivalTalent] = Vector2(240, 200),
+	[FightRightElementEnum.Elements.DeepScore_500M] = Vector2(300, 500),
+	[FightRightElementEnum.Elements.DouQuQuBoss] = Vector2(200, 140),
+	[FightRightElementEnum.Elements.SurvivalTalent2] = Vector2(200, 200),
+	[FightRightElementEnum.Elements.Rouge2RevivalCoin] = Vector2(220, 80),
+	[FightRightElementEnum.Elements.Rouge2Treasure] = Vector2(120, 290),
+	[FightRightElementEnum.Elements.Rouge2Task] = Vector2(120, 120)
 }
-var_0_0.ElementsNodeName = {
-	[var_0_0.Elements.BossRush] = "bossrush_score",
-	[var_0_0.Elements.CharSupport] = "#go_charsupport",
-	[var_0_0.Elements.MelodyLevel] = "melody_level",
-	[var_0_0.Elements.MelodySkill] = "melody_skill",
-	[var_0_0.Elements.RougeCoin] = "rougeCoin",
-	[var_0_0.Elements.RougeGongMing] = "rougeGongMing",
-	[var_0_0.Elements.RougeTongPin] = "rougeTongPin",
-	[var_0_0.Elements.AssistBoss] = "assistboss",
-	[var_0_0.Elements.AssistBossScore] = "assistbossscore",
-	[var_0_0.Elements.DoomsdayClock] = "doomsdayclock",
-	[var_0_0.Elements.DouQuQuDice] = "douququdice",
-	[var_0_0.Elements.Dice] = "dice",
-	[var_0_0.Elements.DouQuQuCoin] = "douququCoin",
-	[var_0_0.Elements.DouQuQuHunting] = "douququHunting",
-	[var_0_0.Elements.SurvivalTalent] = "survival_talent",
-	[var_0_0.Elements.DeepScore_500M] = "deep_score_500m",
-	[var_0_0.Elements.DouQuQuBoss] = "douququBoss",
-	[var_0_0.Elements.SurvivalTalent2] = "survivalTalent2"
+FightRightElementEnum.ElementsNodeName = {
+	[FightRightElementEnum.Elements.BossRush] = "bossrush_score",
+	[FightRightElementEnum.Elements.CharSupport] = "#go_charsupport",
+	[FightRightElementEnum.Elements.MelodyLevel] = "melody_level",
+	[FightRightElementEnum.Elements.MelodySkill] = "melody_skill",
+	[FightRightElementEnum.Elements.RougeCoin] = "rougeCoin",
+	[FightRightElementEnum.Elements.RougeGongMing] = "rougeGongMing",
+	[FightRightElementEnum.Elements.RougeTongPin] = "rougeTongPin",
+	[FightRightElementEnum.Elements.AssistBoss] = "assistboss",
+	[FightRightElementEnum.Elements.AssistBossScore] = "assistbossscore",
+	[FightRightElementEnum.Elements.DoomsdayClock] = "doomsdayclock",
+	[FightRightElementEnum.Elements.DouQuQuDice] = "douququdice",
+	[FightRightElementEnum.Elements.Dice] = "dice",
+	[FightRightElementEnum.Elements.DouQuQuCoin] = "douququCoin",
+	[FightRightElementEnum.Elements.DouQuQuHunting] = "douququHunting",
+	[FightRightElementEnum.Elements.SurvivalTalent] = "survival_talent",
+	[FightRightElementEnum.Elements.DeepScore_500M] = "deep_score_500m",
+	[FightRightElementEnum.Elements.DouQuQuBoss] = "douququBoss",
+	[FightRightElementEnum.Elements.SurvivalTalent2] = "survivalTalent2",
+	[FightRightElementEnum.Elements.Rouge2RevivalCoin] = "rouge2_revival_coin",
+	[FightRightElementEnum.Elements.Rouge2Treasure] = "rouge2_treasure",
+	[FightRightElementEnum.Elements.Rouge2Task] = "rouge2_task"
 }
-var_0_0.AnchorTweenDuration = 0.2
+FightRightElementEnum.AnchorTweenDuration = 0.2
 
-return var_0_0
+return FightRightElementEnum

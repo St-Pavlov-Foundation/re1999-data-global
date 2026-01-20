@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayCardIndex", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayCardIndex.lua
 
-local var_0_0 = class("FightWorkPlayCardIndex", BaseWork)
+module("modules.logic.fight.system.work.FightWorkPlayCardIndex", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkPlayCardIndex = class("FightWorkPlayCardIndex", BaseWork)
+
+function FightWorkPlayCardIndex:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if FightHelper.isPlayerCardSkill(arg_2_0.fightStepData) then
-		FightController.instance:dispatchEvent(FightEvent.InvalidUsedCard, arg_2_0.fightStepData.cardIndex, -1)
-		FightPlayCardModel.instance:playCard(arg_2_0.fightStepData.cardIndex)
-		TaskDispatcher.runDelay(arg_2_0._delayAfterDissolveCard, arg_2_0, 1 / FightModel.instance:getUISpeed())
+function FightWorkPlayCardIndex:onStart(context)
+	if FightHelper.isPlayerCardSkill(self.fightStepData) then
+		FightController.instance:dispatchEvent(FightEvent.InvalidUsedCard, self.fightStepData.cardIndex, -1)
+		FightPlayCardModel.instance:playCard(self.fightStepData.cardIndex)
+		TaskDispatcher.runDelay(self._delayAfterDissolveCard, self, 1 / FightModel.instance:getUISpeed())
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayAfterDissolveCard(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkPlayCardIndex:_delayAfterDissolveCard()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayAfterDissolveCard, arg_4_0)
+function FightWorkPlayCardIndex:clearWork()
+	TaskDispatcher.cancelTask(self._delayAfterDissolveCard, self)
 end
 
-return var_0_0
+return FightWorkPlayCardIndex

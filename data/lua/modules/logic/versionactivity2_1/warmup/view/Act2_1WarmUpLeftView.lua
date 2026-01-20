@@ -1,161 +1,163 @@
-﻿module("modules.logic.versionactivity2_1.warmup.view.Act2_1WarmUpLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/warmup/view/Act2_1WarmUpLeftView.lua
 
-local var_0_0 = class("Act2_1WarmUpLeftView", BaseView)
+module("modules.logic.versionactivity2_1.warmup.view.Act2_1WarmUpLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Middle")
+local Act2_1WarmUpLeftView = class("Act2_1WarmUpLeftView", BaseView)
 
-	arg_1_0._middleGo = var_1_0
-	arg_1_0._godrag = gohelper.findChild(var_1_0, "#go_drag")
-	arg_1_0._imageicon = gohelper.findChildImage(var_1_0, "#image_icon")
+function Act2_1WarmUpLeftView:onInitView()
+	local go = gohelper.findChild(self.viewGO, "Middle")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._middleGo = go
+	self._godrag = gohelper.findChild(go, "#go_drag")
+	self._imageicon = gohelper.findChildImage(go, "#image_icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act2_1WarmUpLeftView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act2_1WarmUpLeftView:removeEvents()
 	return
 end
 
-local var_0_1 = -1
-local var_0_2 = 0
-local var_0_3 = 1
-local var_0_4 = SLFramework.AnimatorPlayer
+local kFirstLocked = -1
+local kFirstUnlocked = 0
+local kHasDragged = 1
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._drag = UIDragListenerHelper.New()
-	arg_4_0._animatorPlayer = var_0_4.Get(arg_4_0._middleGo)
-	arg_4_0._animSelf = arg_4_0._animatorPlayer.animator
-	arg_4_0._guideGo = gohelper.findChild(arg_4_0.viewGO, "Middle/guide")
-	arg_4_0._animatorPlayer_guide = var_0_4.Get(arg_4_0._guideGo)
-	arg_4_0._audioClick = gohelper.getClickWithDefaultAudio(arg_4_0._godrag)
-	arg_4_0._draggedState = var_0_1
+function Act2_1WarmUpLeftView:_editableInitView()
+	self._drag = UIDragListenerHelper.New()
+	self._animatorPlayer = csAnimatorPlayer.Get(self._middleGo)
+	self._animSelf = self._animatorPlayer.animator
+	self._guideGo = gohelper.findChild(self.viewGO, "Middle/guide")
+	self._animatorPlayer_guide = csAnimatorPlayer.Get(self._guideGo)
+	self._audioClick = gohelper.getClickWithDefaultAudio(self._godrag)
+	self._draggedState = kFirstLocked
 end
 
-function var_0_0.onDataUpdateFirst(arg_5_0)
-	arg_5_0._draggedState = arg_5_0:_checkIsOpen() and var_0_2 or var_0_1
+function Act2_1WarmUpLeftView:onDataUpdateFirst()
+	self._draggedState = self:_checkIsOpen() and kFirstUnlocked or kFirstLocked
 
-	arg_5_0._drag:create(arg_5_0._godrag)
-	arg_5_0._drag:registerCallback(arg_5_0._drag.EventBegin, arg_5_0._onDragBegin, arg_5_0)
-	arg_5_0._drag:registerCallback(arg_5_0._drag.EventEnd, arg_5_0._onDragEnd, arg_5_0)
+	self._drag:create(self._godrag)
+	self._drag:registerCallback(self._drag.EventBegin, self._onDragBegin, self)
+	self._drag:registerCallback(self._drag.EventEnd, self._onDragEnd, self)
 end
 
-function var_0_0.onDataUpdate(arg_6_0)
-	arg_6_0:_refresh()
+function Act2_1WarmUpLeftView:onDataUpdate()
+	self:_refresh()
 end
 
-function var_0_0.onSwitchEpisode(arg_7_0)
-	local var_7_0 = arg_7_0:_checkIsOpen()
+function Act2_1WarmUpLeftView:onSwitchEpisode()
+	local isOpened = self:_checkIsOpen()
 
-	if arg_7_0._draggedState == var_0_2 and not var_7_0 then
-		arg_7_0._draggedState = var_0_1 - 1
-	elseif arg_7_0._draggedState < var_0_1 and var_7_0 then
-		arg_7_0._draggedState = var_0_2
+	if self._draggedState == kFirstUnlocked and not isOpened then
+		self._draggedState = kFirstLocked - 1
+	elseif self._draggedState < kFirstLocked and isOpened then
+		self._draggedState = kFirstUnlocked
 	end
 
-	arg_7_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_8_0)
+function Act2_1WarmUpLeftView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_9_0)
+function Act2_1WarmUpLeftView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	GameUtil.onDestroyViewMember(arg_10_0, "_drag")
+function Act2_1WarmUpLeftView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_drag")
 end
 
-function var_0_0._setActive_drag(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._godrag, arg_11_1)
+function Act2_1WarmUpLeftView:_setActive_drag(isActive)
+	gohelper.setActive(self._godrag, isActive)
 end
 
-function var_0_0._setActive_guide(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._guideGo, arg_12_1)
+function Act2_1WarmUpLeftView:_setActive_guide(isActive)
+	gohelper.setActive(self._guideGo, isActive)
 end
 
-function var_0_0._episodeId(arg_13_0)
-	return arg_13_0.viewContainer:getCurSelectedEpisode()
+function Act2_1WarmUpLeftView:_episodeId()
+	return self.viewContainer:getCurSelectedEpisode()
 end
 
-function var_0_0._checkIsOpen(arg_14_0, arg_14_1)
-	return arg_14_0.viewContainer:checkIsOpen(arg_14_1 or arg_14_0:_episodeId())
+function Act2_1WarmUpLeftView:_checkIsOpen(episodeId)
+	return self.viewContainer:checkIsOpen(episodeId or self:_episodeId())
 end
 
-function var_0_0._refresh(arg_15_0)
-	local var_15_0 = arg_15_0:_episodeId()
-	local var_15_1 = arg_15_0:_checkIsOpen(var_15_0)
-	local var_15_2 = arg_15_0.viewContainer:getImgSpriteName(arg_15_0.viewContainer:episode2Index(var_15_0))
+function Act2_1WarmUpLeftView:_refresh()
+	local episodeId = self:_episodeId()
+	local isOpened = self:_checkIsOpen(episodeId)
+	local spriteName = self.viewContainer:getImgSpriteName(self.viewContainer:episode2Index(episodeId))
 
-	UISpriteSetMgr.instance:setV2a1WarmupSprite(arg_15_0._imageicon, var_15_2, true)
-	arg_15_0:_setActive_guide(not var_15_1 and arg_15_0._draggedState <= var_0_1)
-	arg_15_0:_setActive_drag(not var_15_1)
-	arg_15_0:_setBoxState(var_15_1)
+	UISpriteSetMgr.instance:setV2a1WarmupSprite(self._imageicon, spriteName, true)
+	self:_setActive_guide(not isOpened and self._draggedState <= kFirstLocked)
+	self:_setActive_drag(not isOpened)
+	self:_setBoxState(isOpened)
 end
 
-function var_0_0.openGuide(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._animatorPlayer_guide:Play("guide_warmup1_loop", arg_16_1, arg_16_2)
+function Act2_1WarmUpLeftView:openGuide(cb, cbObj)
+	self._animatorPlayer_guide:Play("guide_warmup1_loop", cb, cbObj)
 end
 
-function var_0_0._onDragBegin(arg_17_0)
-	arg_17_0:_setActive_guide(false)
+function Act2_1WarmUpLeftView:_onDragBegin()
+	self:_setActive_guide(false)
 
-	arg_17_0._draggedState = var_0_3
+	self._draggedState = kHasDragged
 end
 
-function var_0_0._onDragEnd(arg_18_0)
-	if arg_18_0:_checkIsOpen() then
+function Act2_1WarmUpLeftView:_onDragEnd()
+	if self:_checkIsOpen() then
 		return
 	end
 
-	if arg_18_0._drag:isMoveVerticalMajor() and arg_18_0._drag:isSwipeUp() then
-		arg_18_0:_playAnim_Box(true)
+	if self._drag:isMoveVerticalMajor() and self._drag:isSwipeUp() then
+		self:_playAnim_Box(true)
 	end
 end
 
-function var_0_0._playAnim(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	arg_19_0._animatorPlayer:Play(arg_19_1, arg_19_2, arg_19_3)
+function Act2_1WarmUpLeftView:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb, cbObj)
 end
 
-function var_0_0._playAnimRaw(arg_20_0, arg_20_1, ...)
-	arg_20_0._animSelf.enabled = true
+function Act2_1WarmUpLeftView:_playAnimRaw(name, ...)
+	self._animSelf.enabled = true
 
-	arg_20_0._animSelf:Play(arg_20_1, ...)
+	self._animSelf:Play(name, ...)
 end
 
-local var_0_5 = "Act2_1WarmUpLeftView:_playAnim_Box"
-local var_0_6 = 9.99
+local kBlock_Box = "Act2_1WarmUpLeftView:_playAnim_Box"
+local kTimeout = 9.99
 
-function var_0_0._playAnim_Box(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:_episodeId()
+function Act2_1WarmUpLeftView:_playAnim_Box(isOpen)
+	local episodeId = self:_episodeId()
 
-	if arg_21_1 == arg_21_0:_checkIsOpen(var_21_0) then
+	if isOpen == self:_checkIsOpen(episodeId) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wangshi_carton_open_20211603)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockHelper.instance:startBlock(var_0_5, var_0_6, arg_21_0.viewName)
+	UIBlockHelper.instance:startBlock(kBlock_Box, kTimeout, self.viewName)
 
-	arg_21_0._animSelf.speed = arg_21_1 and 1 or -1
+	self._animSelf.speed = isOpen and 1 or -1
 
-	arg_21_0:_playAnim("open", function()
-		arg_21_0.viewContainer:saveBoxState(var_21_0, arg_21_1)
-		arg_21_0.viewContainer:openDesc()
-		UIBlockHelper.instance:endBlock(var_0_5)
+	self:_playAnim("open", function()
+		self.viewContainer:saveBoxState(episodeId, isOpen)
+		self.viewContainer:openDesc()
+		UIBlockHelper.instance:endBlock(kBlock_Box)
 		UIBlockMgrExtend.setNeedCircleMv(true)
 	end)
 end
 
-function var_0_0._setBoxState(arg_23_0, arg_23_1)
-	arg_23_0:_playAnimRaw(arg_23_1 and "unlock" or "lock", 0, 1)
+function Act2_1WarmUpLeftView:_setBoxState(isOpened)
+	self:_playAnimRaw(isOpened and "unlock" or "lock", 0, 1)
 end
 
-return var_0_0
+return Act2_1WarmUpLeftView

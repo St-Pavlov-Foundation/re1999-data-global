@@ -1,46 +1,48 @@
-﻿module("modules.logic.fight.entity.FightEntityBuffMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityBuffMgr.lua
 
-local var_0_0 = class("FightEntityBuffMgr", FightBaseClass)
+module("modules.logic.fight.entity.FightEntityBuffMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.buffDic = {}
+local FightEntityBuffMgr = class("FightEntityBuffMgr", FightBaseClass)
+
+function FightEntityBuffMgr:onConstructor()
+	self.buffDic = {}
 end
 
-function var_0_0.addBuff(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.uid
+function FightEntityBuffMgr:addBuff(buff)
+	local uid = buff.uid
 
-	if arg_2_0.buffDic[var_2_0] then
+	if self.buffDic[uid] then
 		return
 	end
 
-	arg_2_0.buffDic[var_2_0] = arg_2_0:newClass(FightEntityBuffObject, arg_2_1)
+	self.buffDic[uid] = self:newClass(FightEntityBuffObject, buff)
 
-	arg_2_0.buffDic[var_2_0]:onAddBuff()
+	self.buffDic[uid]:onAddBuff()
 end
 
-function var_0_0.removeBuff(arg_3_0, arg_3_1)
-	if not arg_3_0.buffDic[arg_3_1] then
+function FightEntityBuffMgr:removeBuff(uid)
+	if not self.buffDic[uid] then
 		return
 	end
 
-	arg_3_0.buffDic[arg_3_1]:onRemoveBuff(arg_3_1)
-	arg_3_0.buffDic[arg_3_1]:disposeSelf()
+	self.buffDic[uid]:onRemoveBuff(uid)
+	self.buffDic[uid]:disposeSelf()
 
-	arg_3_0.buffDic[arg_3_1] = nil
+	self.buffDic[uid] = nil
 end
 
-function var_0_0.updateBuff(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.uid
+function FightEntityBuffMgr:updateBuff(buff)
+	local uid = buff.uid
 
-	if not arg_4_0.buffDic[var_4_0] then
+	if not self.buffDic[uid] then
 		return
 	end
 
-	arg_4_0.buffDic[var_4_0]:onUpdateBuff(var_4_0, arg_4_1)
+	self.buffDic[uid]:onUpdateBuff(uid, buff)
 end
 
-function var_0_0.onDestructor(arg_5_0)
+function FightEntityBuffMgr:onDestructor()
 	return
 end
 
-return var_0_0
+return FightEntityBuffMgr

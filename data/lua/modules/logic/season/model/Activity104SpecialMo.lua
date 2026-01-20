@@ -1,18 +1,20 @@
-﻿local var_0_0 = pureTable("Activity104SpecialMo")
+﻿-- chunkname: @modules/logic/season/model/Activity104SpecialMo.lua
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.layer = 0
-	arg_1_0.state = 0
+local Activity104SpecialMo = pureTable("Activity104SpecialMo")
+
+function Activity104SpecialMo:ctor()
+	self.layer = 0
+	self.state = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.layer = arg_2_1.layer
-	arg_2_0.state = arg_2_1.state
+function Activity104SpecialMo:init(info)
+	self.layer = info.layer
+	self.state = info.state
 end
 
-function var_0_0.reset(arg_3_0, arg_3_1)
-	arg_3_0.layer = arg_3_1.layer
-	arg_3_0.state = arg_3_1.state
+function Activity104SpecialMo:reset(info)
+	self.layer = info.layer
+	self.state = info.state
 end
 
-return var_0_0
+return Activity104SpecialMo

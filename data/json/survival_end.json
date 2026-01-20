@@ -115,7 +115,7 @@
     "type": 3,
     "group": 300,
     "endDesc": "language_10096572",
-    "unlock": "finishTask#3#310006",
+    "unlock": "finishTask#3#300007",
     "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_5.png",
     "order": 2,
     "mainImg": ""

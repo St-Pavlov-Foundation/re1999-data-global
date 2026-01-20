@@ -1,53 +1,55 @@
-﻿module("modules.logic.activity.view.Role_FullSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Role_FullSignView.lua
 
-local var_0_0 = class("Role_FullSignView", Activity101SignViewBase)
+module("modules.logic.activity.view.Role_FullSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
+local Role_FullSignView = class("Role_FullSignView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Role_FullSignView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
+function Role_FullSignView:addEvents()
+	Activity101SignViewBase.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
+function Role_FullSignView:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._txtLimitTime.text = ""
+function Role_FullSignView:onOpen()
+	self._txtLimitTime.text = ""
 
-	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
-	arg_4_0:internal_onOpen()
-	TaskDispatcher.runRepeat(arg_4_0._refreshTimeTick, arg_4_0, 1)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	self:internal_onOpen()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_5_0)
-	arg_5_0._isFirstUpdateScrollPos = nil
+function Role_FullSignView:onClose()
+	self._isFirstUpdateScrollPos = nil
 
-	TaskDispatcher.cancelTask(arg_5_0._refreshTimeTick, arg_5_0)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	Activity101SignViewBase._internal_onDestroy(arg_6_0)
-	arg_6_0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
+function Role_FullSignView:onDestroyView()
+	Activity101SignViewBase._internal_onDestroy(self)
+	self._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_7_0)
-	arg_7_0:_refreshList()
-	arg_7_0:_refreshTimeTick()
+function Role_FullSignView:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_8_0)
-	arg_8_0._txtLimitTime.text = arg_8_0:getRemainTimeStr()
+function Role_FullSignView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-return var_0_0
+return Role_FullSignView

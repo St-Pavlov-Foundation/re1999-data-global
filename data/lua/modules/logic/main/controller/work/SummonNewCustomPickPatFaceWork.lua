@@ -1,125 +1,129 @@
-﻿module("modules.logic.main.controller.work.SummonNewCustomPickPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/SummonNewCustomPickPatFaceWork.lua
 
-local var_0_0 = class("SummonNewCustomPickPatFaceWork", PatFaceWorkBase)
+module("modules.logic.main.controller.work.SummonNewCustomPickPatFaceWork", package.seeall)
 
-function var_0_0._viewName(arg_1_0)
-	return PatFaceConfig.instance:getPatFaceViewName(arg_1_0._patFaceId)
+local SummonNewCustomPickPatFaceWork = class("SummonNewCustomPickPatFaceWork", PatFaceWorkBase)
+
+function SummonNewCustomPickPatFaceWork:_viewName()
+	return PatFaceConfig.instance:getPatFaceViewName(self._patFaceId)
 end
 
-function var_0_0._actId(arg_2_0)
-	return PatFaceConfig.instance:getPatFaceActivityId(arg_2_0._patFaceId)
+function SummonNewCustomPickPatFaceWork:_actId()
+	return PatFaceConfig.instance:getPatFaceActivityId(self._patFaceId)
 end
 
-function var_0_0.checkCanPat(arg_3_0)
-	local var_3_0 = arg_3_0:_actId()
-	local var_3_1 = SummonNewCustomPickViewModel.instance:getHaveFirstDayLogin(var_3_0)
+function SummonNewCustomPickPatFaceWork:checkCanPat()
+	local actId = self:_actId()
 
-	return SummonNewCustomPickViewModel.instance:isActivityOpen(var_3_0) and var_3_1
+	return SummonNewCustomPickViewModel.instance:isActivityOpen(actId)
 end
 
-function var_0_0.startPat(arg_4_0)
-	arg_4_0:_startBlock()
+function SummonNewCustomPickPatFaceWork:startPat()
+	self:_startBlock()
 
-	local var_4_0 = arg_4_0:_actId()
+	local actId = self:_actId()
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-	SummonNewCustomPickViewController.instance:registerCallback(SummonNewCustomPickEvent.OnGetServerInfoReply, arg_4_0._refreshSummonCustomPickActivity, arg_4_0)
-	SummonNewCustomPickViewController.instance:registerCallback(SummonNewCustomPickEvent.OnSummonCustomGet, arg_4_0._revertOpenState, arg_4_0)
-	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(var_4_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	SummonNewCustomPickViewController.instance:registerCallback(SummonNewCustomPickEvent.OnGetServerInfoReply, self._refreshSummonCustomPickActivity, self)
+	SummonNewCustomPickViewController.instance:registerCallback(SummonNewCustomPickEvent.OnSummonCustomGet, self._revertOpenState, self)
+	SummonNewCustomPickViewRpc.instance:sendGet169InfoRequest(actId)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	arg_5_0:_endBlock()
+function SummonNewCustomPickPatFaceWork:clearWork()
+	self:_endBlock()
 
-	arg_5_0._needRevert = false
+	self._needRevert = false
 
-	SummonNewCustomPickViewController.instance:unregisterCallback(SummonNewCustomPickEvent.OnGetServerInfoReply, arg_5_0._refreshSummonCustomPickActivity, arg_5_0)
-	SummonNewCustomPickViewController.instance:unregisterCallback(SummonNewCustomPickEvent.OnSummonCustomGet, arg_5_0._revertOpenState, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0.OnGetReward, arg_5_0)
+	SummonNewCustomPickViewController.instance:unregisterCallback(SummonNewCustomPickEvent.OnGetServerInfoReply, self._refreshSummonCustomPickActivity, self)
+	SummonNewCustomPickViewController.instance:unregisterCallback(SummonNewCustomPickEvent.OnSummonCustomGet, self._revertOpenState, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.OnGetReward, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0:_viewName() then
+function SummonNewCustomPickPatFaceWork:_onOpenViewFinish(openingViewName)
+	local viewName = self:_viewName()
+
+	if openingViewName ~= viewName then
 		return
 	end
 
-	arg_6_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:_viewName()
+function SummonNewCustomPickPatFaceWork:_onCloseViewFinish(closingViewName)
+	local viewName = self:_viewName()
 
-	if arg_7_1 ~= var_7_0 then
+	if closingViewName ~= viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(var_7_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	if arg_7_0._needRevert then
-		arg_7_0._needRevert = false
+	if self._needRevert then
+		self._needRevert = false
 
 		return
 	end
 
-	arg_7_0:patComplete()
+	self:patComplete()
 end
 
-function var_0_0._refreshSummonCustomPickActivity(arg_8_0)
-	local var_8_0 = arg_8_0:_actId()
-	local var_8_1 = arg_8_0:_viewName()
+function SummonNewCustomPickPatFaceWork:_refreshSummonCustomPickActivity()
+	local actId = self:_actId()
+	local viewName = self:_viewName()
+	local isFirstLogin = SummonNewCustomPickViewModel.instance:getHaveFirstDayLogin(actId)
 
-	if arg_8_0:isActivityRewardGet() then
-		if ViewMgr.instance:isOpen(var_8_1) then
+	if self:isActivityRewardGet() or not isFirstLogin then
+		if ViewMgr.instance:isOpen(viewName) then
 			return
 		end
 
-		arg_8_0:patComplete()
+		self:patComplete()
 
 		return
 	end
 
-	local var_8_2 = {
+	local viewParam = {
 		refreshData = false,
-		actId = var_8_0
+		actId = actId
 	}
 
-	ViewMgr.instance:openView(var_8_1, var_8_2)
-	SummonNewCustomPickViewModel.instance:setHaveFirstDayLogin(var_8_0)
-	SummonNewCustomPickViewController.instance:registerCallback(SummonNewCustomPickEvent.OnSummonCustomGet, arg_8_0._revertOpenState, arg_8_0)
+	ViewMgr.instance:openView(viewName, viewParam)
+	SummonNewCustomPickViewModel.instance:setHaveFirstDayLogin(actId)
+	SummonNewCustomPickViewController.instance:registerCallback(SummonNewCustomPickEvent.OnSummonCustomGet, self._revertOpenState, self)
 end
 
-function var_0_0._revertOpenState(arg_9_0)
-	arg_9_0._needRevert = true
+function SummonNewCustomPickPatFaceWork:_revertOpenState()
+	self._needRevert = true
 end
 
-function var_0_0._endBlock(arg_10_0)
-	if not arg_10_0:_isBlock() then
+function SummonNewCustomPickPatFaceWork:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_11_0)
-	if arg_11_0:_isBlock() then
+function SummonNewCustomPickPatFaceWork:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_12_0)
+function SummonNewCustomPickPatFaceWork:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function var_0_0.isActivityRewardGet(arg_13_0)
-	local var_13_0 = arg_13_0:_actId()
+function SummonNewCustomPickPatFaceWork:isActivityRewardGet()
+	local actId = self:_actId()
 
-	return SummonNewCustomPickViewModel.instance:isGetReward(var_13_0)
+	return SummonNewCustomPickViewModel.instance:isGetReward(actId)
 end
 
-return var_0_0
+return SummonNewCustomPickPatFaceWork

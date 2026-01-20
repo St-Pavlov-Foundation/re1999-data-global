@@ -1,105 +1,107 @@
-﻿module("modules.logic.activity.view.V2a3_Special_PanelsView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a3_Special_PanelsView.lua
 
-local var_0_0 = class("V2a3_Special_PanelsView", V2a3_Special_BaseView)
+module("modules.logic.activity.view.V2a3_Special_PanelsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#simage_FullBG/#btn_Close")
-	arg_1_0._btnemptyTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyTop")
-	arg_1_0._btnemptyBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBottom")
-	arg_1_0._btnemptyLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyLeft")
-	arg_1_0._btnemptyRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyRight")
+local V2a3_Special_PanelsView = class("V2a3_Special_PanelsView", V2a3_Special_BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a3_Special_PanelsView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#simage_FullBG/#btn_Close")
+	self._btnemptyTop = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyTop")
+	self._btnemptyBottom = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyBottom")
+	self._btnemptyLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyLeft")
+	self._btnemptyRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyRight")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnemptyTop:AddClickListener(arg_2_0._btnemptyTopOnClick, arg_2_0)
-	arg_2_0._btnemptyBottom:AddClickListener(arg_2_0._btnemptyBottomOnClick, arg_2_0)
-	arg_2_0._btnemptyLeft:AddClickListener(arg_2_0._btnemptyLeftOnClick, arg_2_0)
-	arg_2_0._btnemptyRight:AddClickListener(arg_2_0._btnemptyRightOnClick, arg_2_0)
+function V2a3_Special_PanelsView:addEvents()
+	V2a3_Special_PanelsView.super.addEvents(self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnemptyTop:AddClickListener(self._btnemptyTopOnClick, self)
+	self._btnemptyBottom:AddClickListener(self._btnemptyBottomOnClick, self)
+	self._btnemptyLeft:AddClickListener(self._btnemptyLeftOnClick, self)
+	self._btnemptyRight:AddClickListener(self._btnemptyRightOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._btnemptyTop:RemoveClickListener()
-	arg_3_0._btnemptyBottom:RemoveClickListener()
-	arg_3_0._btnemptyLeft:RemoveClickListener()
-	arg_3_0._btnemptyRight:RemoveClickListener()
+function V2a3_Special_PanelsView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	V2a3_Special_PanelsView.super.removeEvents(self)
+	self._btnemptyTop:RemoveClickListener()
+	self._btnemptyBottom:RemoveClickListener()
+	self._btnemptyLeft:RemoveClickListener()
+	self._btnemptyRight:RemoveClickListener()
 end
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
-	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
+function V2a3_Special_PanelsView:ctor(...)
+	V2a3_Special_PanelsView.super.ctor(self, ...)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
 end
 
-function var_0_0._btnCloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function V2a3_Special_PanelsView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyTopOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function V2a3_Special_PanelsView:_btnemptyTopOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyBottomOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function V2a3_Special_PanelsView:_btnemptyBottomOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyLeftOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function V2a3_Special_PanelsView:_btnemptyLeftOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyRightOnClick(arg_9_0)
-	arg_9_0:closeThis()
+function V2a3_Special_PanelsView:_btnemptyRightOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._txtLimitTime.text = ""
+function V2a3_Special_PanelsView:_editableInitView()
+	self._txtLimitTime.text = ""
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:internal_set_actId(arg_11_0.viewParam.actId)
-	arg_11_0:_clearTimeTick()
-	TaskDispatcher.runRepeat(arg_11_0._refreshTimeTick, arg_11_0, 1)
+function V2a3_Special_PanelsView:onOpen()
+	self:internal_set_actId(self.viewParam.actId)
+	self:_clearTimeTick()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 
-	if not arg_11_0._inited then
-		arg_11_0:internal_onOpen()
+	if not self._inited then
+		self:internal_onOpen()
 
-		arg_11_0._inited = true
+		self._inited = true
 	else
-		arg_11_0:_refresh()
+		self:_refresh()
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
-	arg_12_0:_clearTimeTick()
+function V2a3_Special_PanelsView:onClose()
+	self:_clearTimeTick()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0:_clearTimeTick()
-	var_0_0.super.onDestroyView(arg_13_0)
+function V2a3_Special_PanelsView:onDestroyView()
+	self:_clearTimeTick()
+	V2a3_Special_PanelsView.super.onDestroyView(self)
 end
 
-function var_0_0._clearTimeTick(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._refreshTimeTick, arg_14_0)
+function V2a3_Special_PanelsView:_clearTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_15_0)
-	arg_15_0:_refreshList()
-	arg_15_0:_refreshTimeTick()
+function V2a3_Special_PanelsView:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_16_0)
-	arg_16_0._txtLimitTime.text = arg_16_0:getRemainTimeStr()
+function V2a3_Special_PanelsView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0.onFindChind_RewardGo(arg_17_0, arg_17_1)
-	return gohelper.findChild(arg_17_0.viewGO, "Root/reward/node" .. arg_17_1)
+function V2a3_Special_PanelsView:onFindChind_RewardGo(i)
+	return gohelper.findChild(self.viewGO, "Root/reward/node" .. i)
 end
 
-return var_0_0
+return V2a3_Special_PanelsView

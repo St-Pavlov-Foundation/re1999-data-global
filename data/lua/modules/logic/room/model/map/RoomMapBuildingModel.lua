@@ -1,438 +1,451 @@
-﻿module("modules.logic.room.model.map.RoomMapBuildingModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomMapBuildingModel.lua
 
-local var_0_0 = class("RoomMapBuildingModel", BaseModel)
+module("modules.logic.room.model.map.RoomMapBuildingModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomMapBuildingModel = class("RoomMapBuildingModel", BaseModel)
+
+function RoomMapBuildingModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomMapBuildingModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomMapBuildingModel:clear()
+	RoomMapBuildingModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._mapBuildingMODict = {}
-	arg_4_0._type2BuildingDict = {}
-	arg_4_0._tempBuildingMO = nil
-	arg_4_0._allOccupyDict = nil
-	arg_4_0._canConfirmPlaceDict = nil
-	arg_4_0._revertHexPoint = nil
-	arg_4_0._revertRotate = nil
-	arg_4_0._tempOccupyDict = nil
-	arg_4_0._lightResourcePointDict = nil
-	arg_4_0._isHasCritterDict = nil
+function RoomMapBuildingModel:_clearData()
+	self._mapBuildingMODict = {}
+	self._type2BuildingDict = {}
+	self._tempBuildingMO = nil
+	self._allOccupyDict = nil
+	self._canConfirmPlaceDict = nil
+	self._revertHexPoint = nil
+	self._revertRotate = nil
+	self._tempOccupyDict = nil
+	self._lightResourcePointDict = nil
+	self._isHasCritterDict = nil
 end
 
-function var_0_0.initMap(arg_5_0, arg_5_1)
-	arg_5_0:clear()
+function RoomMapBuildingModel:initMap(infos)
+	self:clear()
 
-	if not arg_5_1 or #arg_5_1 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		if iter_5_1.use then
-			local var_5_0 = RoomInfoHelper.serverInfoToBuildingInfo(iter_5_1)
-			local var_5_1 = RoomBuildingMO.New()
+	for i, info in ipairs(infos) do
+		if info.use then
+			local buildingInfo = RoomInfoHelper.serverInfoToBuildingInfo(info)
+			local buildingMO = RoomBuildingMO.New()
 
-			var_5_1:init(var_5_0)
+			buildingMO:init(buildingInfo)
 
-			if var_5_1.config then
-				arg_5_0:_addBuildingMO(var_5_1)
+			if buildingMO.config then
+				self:_addBuildingMO(buildingMO)
 			end
 		end
 	end
 end
 
-function var_0_0._addBuildingMO(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.hexPoint
+function RoomMapBuildingModel:_addBuildingMO(mo)
+	local hexPoint = mo.hexPoint
 
-	arg_6_0._mapBuildingMODict[var_6_0.x] = arg_6_0._mapBuildingMODict[var_6_0.x] or {}
-	arg_6_0._mapBuildingMODict[var_6_0.x][var_6_0.y] = arg_6_1
+	self._mapBuildingMODict[hexPoint.x] = self._mapBuildingMODict[hexPoint.x] or {}
+	self._mapBuildingMODict[hexPoint.x][hexPoint.y] = mo
 
-	local var_6_1 = arg_6_1.config.buildingType
+	local buildingType = mo.config.buildingType
 
-	arg_6_0._type2BuildingDict[var_6_1] = arg_6_0._type2BuildingDict[var_6_1] or {}
+	self._type2BuildingDict[buildingType] = self._type2BuildingDict[buildingType] or {}
 
-	table.insert(arg_6_0._type2BuildingDict[var_6_1], arg_6_1)
-	arg_6_0:addAtLast(arg_6_1)
+	table.insert(self._type2BuildingDict[buildingType], mo)
+	self:addAtLast(mo)
 end
 
-function var_0_0._removeBuildingMO(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.hexPoint
+function RoomMapBuildingModel:_removeBuildingMO(mo)
+	local hexPoint = mo.hexPoint
 
-	if arg_7_0._mapBuildingMODict[var_7_0.x] then
-		arg_7_0._mapBuildingMODict[var_7_0.x][var_7_0.y] = nil
+	if self._mapBuildingMODict[hexPoint.x] then
+		self._mapBuildingMODict[hexPoint.x][hexPoint.y] = nil
 	end
 
-	local var_7_1 = arg_7_1.config.buildingType
+	local buildingType = mo.config.buildingType
 
-	if arg_7_0._type2BuildingDict[var_7_1] then
-		tabletool.removeValue(arg_7_0._type2BuildingDict[var_7_1], arg_7_1)
+	if self._type2BuildingDict[buildingType] then
+		tabletool.removeValue(self._type2BuildingDict[buildingType], mo)
 	end
 
-	arg_7_0:remove(arg_7_1)
+	self:remove(mo)
 end
 
-function var_0_0.removeBuildingMO(arg_8_0, arg_8_1)
-	arg_8_0:_removeBuildingMO(arg_8_1)
+function RoomMapBuildingModel:removeBuildingMO(mo)
+	self:_removeBuildingMO(mo)
 end
 
-function var_0_0.addTempBuildingMO(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._tempBuildingMO then
+function RoomMapBuildingModel:addTempBuildingMO(inventoryBuildingMO, hexPoint)
+	if self._tempBuildingMO then
 		logError("暂不支持两个临时建筑")
 
 		return
 	end
 
-	local var_9_0 = RoomInfoHelper.buildingMOToBuildingInfo(arg_9_1)
+	local inventoryInfo = RoomInfoHelper.buildingMOToBuildingInfo(inventoryBuildingMO)
 
-	arg_9_0._tempBuildingMO = RoomBuildingMO.New()
-	var_9_0.buildingState = RoomBuildingEnum.BuildingState.Temp
-	var_9_0.x = arg_9_2.x
-	var_9_0.y = arg_9_2.y
+	self._tempBuildingMO = RoomBuildingMO.New()
+	inventoryInfo.buildingState = RoomBuildingEnum.BuildingState.Temp
+	inventoryInfo.x = hexPoint.x
+	inventoryInfo.y = hexPoint.y
 
-	arg_9_0._tempBuildingMO:init(var_9_0)
-	arg_9_0:_addBuildingMO(arg_9_0._tempBuildingMO)
+	self._tempBuildingMO:init(inventoryInfo)
+	self:_addBuildingMO(self._tempBuildingMO)
 	RoomResourceModel.instance:clearResourceAreaList()
-	arg_9_0:clearCanConfirmPlaceDict()
-	arg_9_0:clearTempOccupyDict()
-	arg_9_0:clearLightResourcePoint()
+	self:clearCanConfirmPlaceDict()
+	self:clearTempOccupyDict()
+	self:clearLightResourcePoint()
 
-	return arg_9_0._tempBuildingMO
+	return self._tempBuildingMO
 end
 
-function var_0_0.getTempBuildingMO(arg_10_0)
-	return arg_10_0._tempBuildingMO
+function RoomMapBuildingModel:getTempBuildingMO()
+	return self._tempBuildingMO
 end
 
-function var_0_0.changeTempBuildingMOUid(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0._tempBuildingMO and tonumber(arg_11_0._tempBuildingMO.id) < 1 and arg_11_0._tempBuildingMO.buildingId == arg_11_2 then
-		local var_11_0 = arg_11_0._tempBuildingMO.id
+function RoomMapBuildingModel:changeTempBuildingMOUid(uid, buildingId)
+	if self._tempBuildingMO and tonumber(self._tempBuildingMO.id) < 1 and self._tempBuildingMO.buildingId == buildingId then
+		local oldId = self._tempBuildingMO.id
 
-		if var_11_0 ~= arg_11_1 then
-			arg_11_0:_removeBuildingMO(arg_11_0._tempBuildingMO)
-			arg_11_0._tempBuildingMO:setUid(arg_11_1)
-			arg_11_0:_addBuildingMO(arg_11_0._tempBuildingMO)
+		if oldId ~= uid then
+			self:_removeBuildingMO(self._tempBuildingMO)
+			self._tempBuildingMO:setUid(uid)
+			self:_addBuildingMO(self._tempBuildingMO)
 		end
 
-		return true, var_11_0
+		return true, oldId
 	end
 end
 
-function var_0_0.changeTempBuildingMO(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_0._tempBuildingMO then
+function RoomMapBuildingModel:changeTempBuildingMO(hexPoint, rotate)
+	if not self._tempBuildingMO then
 		return
 	end
 
-	arg_12_0._tempBuildingMO.rotate = arg_12_2
+	self._tempBuildingMO.rotate = rotate
 
-	if arg_12_0._tempBuildingMO.hexPoint ~= arg_12_1 then
-		arg_12_0:_removeBuildingMO(arg_12_0._tempBuildingMO)
+	if self._tempBuildingMO.hexPoint ~= hexPoint then
+		self:_removeBuildingMO(self._tempBuildingMO)
 
-		arg_12_0._tempBuildingMO.hexPoint = arg_12_1
+		self._tempBuildingMO.hexPoint = hexPoint
 
-		arg_12_0:_addBuildingMO(arg_12_0._tempBuildingMO)
+		self:_addBuildingMO(self._tempBuildingMO)
 	end
 
 	RoomResourceModel.instance:clearResourceAreaList()
-	arg_12_0:clearTempOccupyDict()
-	arg_12_0:clearLightResourcePoint()
+	self:clearTempOccupyDict()
+	self:clearLightResourcePoint()
 end
 
-function var_0_0.removeTempBuildingMO(arg_13_0)
-	if not arg_13_0._tempBuildingMO then
+function RoomMapBuildingModel:removeTempBuildingMO()
+	if not self._tempBuildingMO then
 		return
 	end
 
-	arg_13_0:_removeBuildingMO(arg_13_0._tempBuildingMO)
+	self:_removeBuildingMO(self._tempBuildingMO)
 
-	arg_13_0._tempBuildingMO = nil
+	self._tempBuildingMO = nil
 
 	RoomResourceModel.instance:clearResourceAreaList()
-	arg_13_0:clearCanConfirmPlaceDict()
-	arg_13_0:clearTempOccupyDict()
-	arg_13_0:clearLightResourcePoint()
+	self:clearCanConfirmPlaceDict()
+	self:clearTempOccupyDict()
+	self:clearLightResourcePoint()
 end
 
-function var_0_0.placeTempBuildingMO(arg_14_0, arg_14_1)
-	if not arg_14_0._tempBuildingMO then
+function RoomMapBuildingModel:placeTempBuildingMO(info)
+	if not self._tempBuildingMO then
 		return
 	end
 
-	local var_14_0 = RoomBuildingMO.New()
-	local var_14_1 = RoomInfoHelper.serverInfoToBuildingInfo(arg_14_1)
+	local buildingMO = RoomBuildingMO.New()
+	local buildingInfo = RoomInfoHelper.serverInfoToBuildingInfo(info)
 
-	var_14_0:init(var_14_1)
+	buildingMO:init(buildingInfo)
 
-	arg_14_0._tempBuildingMO.uid = var_14_0.uid
-	arg_14_0._tempBuildingMO.buildingId = var_14_0.buildingId
-	arg_14_0._tempBuildingMO.rotate = var_14_0.rotate
-	arg_14_0._tempBuildingMO.levels = var_14_0.levels
-	arg_14_0._tempBuildingMO.resAreaDirection = var_14_0.resAreaDirection
-	arg_14_0._tempBuildingMO.buildingState = RoomBuildingEnum.BuildingState.Map
-	arg_14_0._tempBuildingMO = nil
+	self._tempBuildingMO.uid = buildingMO.uid
+	self._tempBuildingMO.buildingId = buildingMO.buildingId
+	self._tempBuildingMO.rotate = buildingMO.rotate
+	self._tempBuildingMO.levels = buildingMO.levels
+	self._tempBuildingMO.resAreaDirection = buildingMO.resAreaDirection
+	self._tempBuildingMO.buildingState = RoomBuildingEnum.BuildingState.Map
+	self._tempBuildingMO = nil
 
 	RoomResourceModel.instance:clearResourceAreaList()
-	arg_14_0:clearAllOccupyDict()
-	arg_14_0:clearCanConfirmPlaceDict()
-	arg_14_0:clearTempOccupyDict()
-	arg_14_0:clearLightResourcePoint()
+	self:clearAllOccupyDict()
+	self:clearCanConfirmPlaceDict()
+	self:clearTempOccupyDict()
+	self:clearLightResourcePoint()
 end
 
-function var_0_0.revertTempBuildingMO(arg_15_0, arg_15_1)
-	if arg_15_0._tempBuildingMO then
+function RoomMapBuildingModel:revertTempBuildingMO(buildingUid)
+	if self._tempBuildingMO then
 		logError("暂不支持两个临时建筑")
 
 		return
 	end
 
-	arg_15_0._tempBuildingMO = arg_15_0:getBuildingMOById(arg_15_1)
+	self._tempBuildingMO = self:getBuildingMOById(buildingUid)
 
-	if not arg_15_0._tempBuildingMO then
+	if not self._tempBuildingMO then
 		return
 	end
 
-	arg_15_0._tempBuildingMO.buildingState = RoomBuildingEnum.BuildingState.Revert
-	arg_15_0._revertHexPoint = HexPoint(arg_15_0._tempBuildingMO.hexPoint.x, arg_15_0._tempBuildingMO.hexPoint.y)
-	arg_15_0._revertRotate = arg_15_0._tempBuildingMO.rotate
+	self._tempBuildingMO.buildingState = RoomBuildingEnum.BuildingState.Revert
+	self._revertHexPoint = HexPoint(self._tempBuildingMO.hexPoint.x, self._tempBuildingMO.hexPoint.y)
+	self._revertRotate = self._tempBuildingMO.rotate
 
 	RoomResourceModel.instance:clearResourceAreaList()
-	arg_15_0:clearAllOccupyDict()
-	arg_15_0:clearCanConfirmPlaceDict()
-	arg_15_0:clearTempOccupyDict()
-	arg_15_0:clearLightResourcePoint()
+	self:clearAllOccupyDict()
+	self:clearCanConfirmPlaceDict()
+	self:clearTempOccupyDict()
+	self:clearLightResourcePoint()
 
-	return arg_15_0._tempBuildingMO
+	return self._tempBuildingMO
 end
 
-function var_0_0.removeRevertBuildingMO(arg_16_0)
-	if not arg_16_0._tempBuildingMO then
+function RoomMapBuildingModel:removeRevertBuildingMO()
+	if not self._tempBuildingMO then
 		return
 	end
 
-	local var_16_0 = arg_16_0._tempBuildingMO.buildingId
+	local buildingId = self._tempBuildingMO.buildingId
 
-	arg_16_0._tempBuildingMO.hexPoint = arg_16_0._revertHexPoint
-	arg_16_0._tempBuildingMO.rotate = arg_16_0._revertRotate
-	arg_16_0._tempBuildingMO.buildingState = RoomBuildingEnum.BuildingState.Map
-	arg_16_0._tempBuildingMO = nil
+	self._tempBuildingMO.hexPoint = self._revertHexPoint
+	self._tempBuildingMO.rotate = self._revertRotate
+	self._tempBuildingMO.buildingState = RoomBuildingEnum.BuildingState.Map
+	self._tempBuildingMO = nil
 
 	RoomResourceModel.instance:clearResourceAreaList()
-	arg_16_0:clearAllOccupyDict()
-	arg_16_0:clearCanConfirmPlaceDict()
-	arg_16_0:clearTempOccupyDict()
-	arg_16_0:clearLightResourcePoint()
+	self:clearAllOccupyDict()
+	self:clearCanConfirmPlaceDict()
+	self:clearTempOccupyDict()
+	self:clearLightResourcePoint()
 
-	return var_16_0, arg_16_0._revertHexPoint, arg_16_0._revertRotate
+	return buildingId, self._revertHexPoint, self._revertRotate
 end
 
-function var_0_0.unUseRevertBuildingMO(arg_17_0)
-	if not arg_17_0._tempBuildingMO then
+function RoomMapBuildingModel:unUseRevertBuildingMO()
+	if not self._tempBuildingMO then
 		return
 	end
 
-	arg_17_0:_removeBuildingMO(arg_17_0._tempBuildingMO)
+	self:_removeBuildingMO(self._tempBuildingMO)
 
-	arg_17_0._tempBuildingMO = nil
+	self._tempBuildingMO = nil
 
 	RoomResourceModel.instance:clearResourceAreaList()
-	arg_17_0:clearCanConfirmPlaceDict()
-	arg_17_0:clearTempOccupyDict()
-	arg_17_0:clearLightResourcePoint()
+	self:clearCanConfirmPlaceDict()
+	self:clearTempOccupyDict()
+	self:clearLightResourcePoint()
 end
 
-function var_0_0.updateBuildingLevels(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0:getBuildingMOById(arg_18_1):updateBuildingLevels(arg_18_2)
+function RoomMapBuildingModel:updateBuildingLevels(buildingUid, levels)
+	local buildingMO = self:getBuildingMOById(buildingUid)
+
+	buildingMO:updateBuildingLevels(levels)
 end
 
-function var_0_0.getBuildingMO(arg_19_0, arg_19_1, arg_19_2)
-	return arg_19_0._mapBuildingMODict[arg_19_1] and arg_19_0._mapBuildingMODict[arg_19_1][arg_19_2]
+function RoomMapBuildingModel:getBuildingMO(x, y)
+	return self._mapBuildingMODict[x] and self._mapBuildingMODict[x][y]
 end
 
-function var_0_0.getBuildingMOList(arg_20_0)
-	return arg_20_0:getList()
+function RoomMapBuildingModel:getBuildingMOList()
+	return self:getList()
 end
 
-function var_0_0.getBuildingMODict(arg_21_0)
-	return arg_21_0._mapBuildingMODict
+function RoomMapBuildingModel:getBuildingMODict()
+	return self._mapBuildingMODict
 end
 
-function var_0_0.getBuildingMOById(arg_22_0, arg_22_1)
-	return arg_22_0:getById(arg_22_1)
+function RoomMapBuildingModel:getBuildingMOById(uid)
+	return self:getById(uid)
 end
 
-function var_0_0.getCount(arg_23_0)
-	local var_23_0 = arg_23_0:getCount()
+function RoomMapBuildingModel:getCount()
+	local count = self:getCount()
 
-	if arg_23_0._tempBuildingMO then
-		var_23_0 = var_23_0 - 1
+	if self._tempBuildingMO then
+		count = count - 1
 	end
 
-	return var_23_0
+	return count
 end
 
-function var_0_0.refreshAllOccupyDict(arg_24_0)
-	arg_24_0._allOccupyDict = RoomBuildingHelper.getAllOccupyDict()
+function RoomMapBuildingModel:refreshAllOccupyDict()
+	self._allOccupyDict = RoomBuildingHelper.getAllOccupyDict()
 end
 
-function var_0_0.getAllOccupyDict(arg_25_0)
-	if not arg_25_0._allOccupyDict then
-		arg_25_0:refreshAllOccupyDict()
+function RoomMapBuildingModel:getAllOccupyDict()
+	if not self._allOccupyDict then
+		self:refreshAllOccupyDict()
 	end
 
-	return arg_25_0._allOccupyDict
+	return self._allOccupyDict
 end
 
-function var_0_0.clearAllOccupyDict(arg_26_0)
-	arg_26_0._allOccupyDict = nil
+function RoomMapBuildingModel:clearAllOccupyDict()
+	self._allOccupyDict = nil
 end
 
-function var_0_0.getBuildingParam(arg_27_0, arg_27_1, arg_27_2)
-	if not arg_27_0._allOccupyDict then
-		arg_27_0:refreshAllOccupyDict()
+function RoomMapBuildingModel:getBuildingParam(x, y)
+	if not self._allOccupyDict then
+		self:refreshAllOccupyDict()
 	end
 
-	return arg_27_0._allOccupyDict[arg_27_1] and arg_27_0._allOccupyDict[arg_27_1][arg_27_2]
+	return self._allOccupyDict[x] and self._allOccupyDict[x][y]
 end
 
-function var_0_0.isHasBuilding(arg_28_0, arg_28_1, arg_28_2)
-	if not arg_28_0._allOccupyDict then
-		arg_28_0:refreshAllOccupyDict()
+function RoomMapBuildingModel:isHasBuilding(x, y)
+	if not self._allOccupyDict then
+		self:refreshAllOccupyDict()
 	end
 
-	if arg_28_0._allOccupyDict[arg_28_1] and arg_28_0._allOccupyDict[arg_28_1][arg_28_2] then
+	if self._allOccupyDict[x] and self._allOccupyDict[x][y] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.refreshCanConfirmPlaceDict(arg_29_0)
-	if not arg_29_0._tempBuildingMO then
-		arg_29_0._canConfirmPlaceDict = {}
+function RoomMapBuildingModel:refreshCanConfirmPlaceDict()
+	if not self._tempBuildingMO then
+		self._canConfirmPlaceDict = {}
 	else
-		arg_29_0._canConfirmPlaceDict = RoomBuildingHelper.getCanConfirmPlaceDict(arg_29_0._tempBuildingMO.buildingId, nil, nil, false, arg_29_0._tempBuildingMO.levels)
+		self._canConfirmPlaceDict = RoomBuildingHelper.getCanConfirmPlaceDict(self._tempBuildingMO.buildingId, nil, nil, false, self._tempBuildingMO.levels)
 	end
 end
 
-function var_0_0.isCanConfirm(arg_30_0, arg_30_1)
-	if not arg_30_0._canConfirmPlaceDict then
-		arg_30_0:refreshCanConfirmPlaceDict()
+function RoomMapBuildingModel:isCanConfirm(hexPoint)
+	if not self._canConfirmPlaceDict then
+		self:refreshCanConfirmPlaceDict()
 	end
 
-	return arg_30_0._canConfirmPlaceDict[arg_30_1.x] and arg_30_0._canConfirmPlaceDict[arg_30_1.x][arg_30_1.y]
+	return self._canConfirmPlaceDict[hexPoint.x] and self._canConfirmPlaceDict[hexPoint.x][hexPoint.y]
 end
 
-function var_0_0.getCanConfirmPlaceDict(arg_31_0)
-	if not arg_31_0._canConfirmPlaceDict then
-		arg_31_0:refreshCanConfirmPlaceDict()
+function RoomMapBuildingModel:getCanConfirmPlaceDict()
+	if not self._canConfirmPlaceDict then
+		self:refreshCanConfirmPlaceDict()
 	end
 
-	return arg_31_0._canConfirmPlaceDict
+	return self._canConfirmPlaceDict
 end
 
-function var_0_0.clearCanConfirmPlaceDict(arg_32_0)
-	arg_32_0._canConfirmPlaceDict = nil
+function RoomMapBuildingModel:clearCanConfirmPlaceDict()
+	self._canConfirmPlaceDict = nil
 end
 
-function var_0_0.refreshTempOccupyDict(arg_33_0)
-	if arg_33_0._tempBuildingMO then
-		local var_33_0 = arg_33_0._tempBuildingMO.hexPoint
-		local var_33_1 = RoomBuildingController.instance:isPressBuilding()
+function RoomMapBuildingModel:refreshTempOccupyDict()
+	if self._tempBuildingMO then
+		local buildingHexPoint = self._tempBuildingMO.hexPoint
+		local pressBuildingUid = RoomBuildingController.instance:isPressBuilding()
 
-		var_33_0 = var_33_1 and var_33_1 == arg_33_0._tempBuildingMO.id and RoomBuildingController.instance:getPressBuildingHexPoint() or var_33_0
-		arg_33_0._tempOccupyIndexDict = {}
-		arg_33_0._tempOccupyDict = RoomBuildingHelper.getOccupyDict(arg_33_0._tempBuildingMO.buildingId, var_33_0, arg_33_0._tempBuildingMO.rotate)
+		if pressBuildingUid and pressBuildingUid == self._tempBuildingMO.id then
+			local pressBuildingHexPoint = RoomBuildingController.instance:getPressBuildingHexPoint()
 
-		local var_33_2 = RoomBuildingAreaHelper.checkBuildingArea(arg_33_0._tempBuildingMO.buildingId, var_33_0, arg_33_0._tempBuildingMO.rotate)
+			buildingHexPoint = pressBuildingHexPoint or buildingHexPoint
+		end
 
-		for iter_33_0, iter_33_1 in pairs(arg_33_0._tempOccupyDict) do
-			for iter_33_2, iter_33_3 in pairs(iter_33_1) do
-				arg_33_0._tempOccupyIndexDict[iter_33_3.index] = iter_33_3
-				iter_33_3.checkBuildingAreaSuccess = var_33_2
+		self._tempOccupyIndexDict = {}
+		self._tempOccupyDict = RoomBuildingHelper.getOccupyDict(self._tempBuildingMO.buildingId, buildingHexPoint, self._tempBuildingMO.rotate)
+
+		local success = RoomBuildingAreaHelper.checkBuildingArea(self._tempBuildingMO.buildingId, buildingHexPoint, self._tempBuildingMO.rotate)
+
+		for x, dict in pairs(self._tempOccupyDict) do
+			for y, param in pairs(dict) do
+				self._tempOccupyIndexDict[param.index] = param
+				param.checkBuildingAreaSuccess = success
 			end
 		end
 	else
-		arg_33_0._tempOccupyDict = {}
-		arg_33_0._tempOccupyIndexDict = {}
+		self._tempOccupyDict = {}
+		self._tempOccupyIndexDict = {}
 	end
 end
 
-function var_0_0.isTempOccupy(arg_34_0, arg_34_1)
-	if arg_34_0:getTempBuildingParam(arg_34_1.x, arg_34_1.y) then
+function RoomMapBuildingModel:isTempOccupy(hexPoint)
+	if self:getTempBuildingParam(hexPoint.x, hexPoint.y) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getTempBuildingParam(arg_35_0, arg_35_1, arg_35_2)
-	if not arg_35_0._tempOccupyDict then
-		arg_35_0:refreshTempOccupyDict()
+function RoomMapBuildingModel:getTempBuildingParam(x, y)
+	if not self._tempOccupyDict then
+		self:refreshTempOccupyDict()
 	end
 
-	return arg_35_0._tempOccupyDict[arg_35_1] and arg_35_0._tempOccupyDict[arg_35_1][arg_35_2]
+	return self._tempOccupyDict[x] and self._tempOccupyDict[x][y]
 end
 
-function var_0_0.getTempBuildingParamByPointIndex(arg_36_0, arg_36_1)
-	if not arg_36_0._tempOccupyDict then
-		arg_36_0:refreshTempOccupyDict()
+function RoomMapBuildingModel:getTempBuildingParamByPointIndex(index)
+	if not self._tempOccupyDict then
+		self:refreshTempOccupyDict()
 	end
 
-	return arg_36_0._tempOccupyIndexDict[arg_36_1]
+	return self._tempOccupyIndexDict[index]
 end
 
-function var_0_0.clearTempOccupyDict(arg_37_0)
-	arg_37_0._tempOccupyDict = nil
-	arg_37_0._tempOccupyIndexDict = nil
+function RoomMapBuildingModel:clearTempOccupyDict()
+	self._tempOccupyDict = nil
+	self._tempOccupyIndexDict = nil
 end
 
-function var_0_0._refreshLightResourcePoint(arg_38_0)
-	arg_38_0._lightResourcePointDict = {}
+function RoomMapBuildingModel:_refreshLightResourcePoint()
+	self._lightResourcePointDict = {}
 
-	if arg_38_0._tempBuildingMO then
-		local var_38_0 = RoomBuildingHelper.getCostResource(arg_38_0._tempBuildingMO.buildingId)
-		local var_38_1 = RoomResourceModel.instance:getResourceAreaList()
+	if self._tempBuildingMO then
+		local costResource = RoomBuildingHelper.getCostResource(self._tempBuildingMO.buildingId)
+		local resourceAreaList = RoomResourceModel.instance:getResourceAreaList()
 
-		for iter_38_0, iter_38_1 in ipairs(var_38_1) do
-			if RoomBuildingHelper.checkCostResource(var_38_0, iter_38_1.resourceId) and RoomBuildingHelper.canContain(iter_38_1.hexPointDict, arg_38_0._tempBuildingMO.buildingId) then
-				local var_38_2 = iter_38_1.area
+		for i, resourceArea in ipairs(resourceAreaList) do
+			if RoomBuildingHelper.checkCostResource(costResource, resourceArea.resourceId) then
+				local canContain = RoomBuildingHelper.canContain(resourceArea.hexPointDict, self._tempBuildingMO.buildingId)
 
-				for iter_38_2, iter_38_3 in ipairs(var_38_2) do
-					arg_38_0._lightResourcePointDict[tostring(iter_38_3)] = true
-				end
-			end
-		end
+				if canContain then
+					local area = resourceArea.area
 
-		local var_38_3 = RoomBuildingController.instance:isPressBuilding()
-		local var_38_4 = var_0_0.instance:getAllOccupyDict()
-		local var_38_5 = RoomBuildingHelper.getOccupyDict(arg_38_0._tempBuildingMO.buildingId, arg_38_0._tempBuildingMO.hexPoint, arg_38_0._tempBuildingMO.rotate, arg_38_0._tempBuildingMO.buildingUid)
-
-		for iter_38_4, iter_38_5 in pairs(var_38_5) do
-			for iter_38_6, iter_38_7 in pairs(iter_38_5) do
-				if iter_38_7.buildingUid ~= var_38_3 then
-					for iter_38_8 = 0, 6 do
-						local var_38_6 = ResourcePoint(HexPoint(iter_38_4, iter_38_6), iter_38_8)
-
-						arg_38_0._lightResourcePointDict[tostring(var_38_6)] = nil
+					for j, resourcePoint in ipairs(area) do
+						self._lightResourcePointDict[tostring(resourcePoint)] = true
 					end
 				end
 			end
 		end
 
-		for iter_38_9, iter_38_10 in pairs(var_38_4) do
-			for iter_38_11, iter_38_12 in pairs(iter_38_10) do
-				if iter_38_12.buildingUid ~= var_38_3 then
-					for iter_38_13 = 0, 6 do
-						local var_38_7 = ResourcePoint(HexPoint(iter_38_9, iter_38_11), iter_38_13)
+		local pressBuildingUid = RoomBuildingController.instance:isPressBuilding()
+		local allOccupyDict = RoomMapBuildingModel.instance:getAllOccupyDict()
+		local occupyDict = RoomBuildingHelper.getOccupyDict(self._tempBuildingMO.buildingId, self._tempBuildingMO.hexPoint, self._tempBuildingMO.rotate, self._tempBuildingMO.buildingUid)
 
-						arg_38_0._lightResourcePointDict[tostring(var_38_7)] = nil
+		for x, dict in pairs(occupyDict) do
+			for y, param in pairs(dict) do
+				if param.buildingUid ~= pressBuildingUid then
+					for direction = 0, 6 do
+						local resourcePoint = ResourcePoint(HexPoint(x, y), direction)
+
+						self._lightResourcePointDict[tostring(resourcePoint)] = nil
+					end
+				end
+			end
+		end
+
+		for x, dict in pairs(allOccupyDict) do
+			for y, param in pairs(dict) do
+				if param.buildingUid ~= pressBuildingUid then
+					for direction = 0, 6 do
+						local resourcePoint = ResourcePoint(HexPoint(x, y), direction)
+
+						self._lightResourcePointDict[tostring(resourcePoint)] = nil
 					end
 				end
 			end
@@ -440,115 +453,115 @@ function var_0_0._refreshLightResourcePoint(arg_38_0)
 	end
 end
 
-function var_0_0.isLightResourcePoint(arg_39_0, arg_39_1)
-	if not arg_39_0._lightResourcePointDict then
-		arg_39_0:_refreshLightResourcePoint()
+function RoomMapBuildingModel:isLightResourcePoint(resourcePoint)
+	if not self._lightResourcePointDict then
+		self:_refreshLightResourcePoint()
 	end
 
-	return arg_39_0._lightResourcePointDict[tostring(arg_39_1)]
+	return self._lightResourcePointDict[tostring(resourcePoint)]
 end
 
-function var_0_0.clearLightResourcePoint(arg_40_0)
-	arg_40_0._lightResourcePointDict = nil
+function RoomMapBuildingModel:clearLightResourcePoint()
+	self._lightResourcePointDict = nil
 end
 
-function var_0_0.getTotalReserve(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_0:getBuildingMOById(arg_41_1)
+function RoomMapBuildingModel:getTotalReserve(buildingUid)
+	local buildingMO = self:getBuildingMOById(buildingUid)
 
-	if not var_41_0 then
+	if not buildingMO then
 		return 0
 	end
 
-	return var_41_0.config.reserve
+	return buildingMO.config.reserve
 end
 
-function var_0_0.debugPlaceBuilding(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = RoomBuildingMO.New()
+function RoomMapBuildingModel:debugPlaceBuilding(hexPoint, info)
+	local buildingMO = RoomBuildingMO.New()
 
-	var_42_0:init(arg_42_2)
-	arg_42_0:_addBuildingMO(var_42_0)
+	buildingMO:init(info)
+	self:_addBuildingMO(buildingMO)
 
-	return var_42_0
+	return buildingMO
 end
 
-function var_0_0.debugRootOutBuilding(arg_43_0, arg_43_1)
-	local var_43_0 = arg_43_0:getBuildingMO(arg_43_1.x, arg_43_1.y)
+function RoomMapBuildingModel:debugRootOutBuilding(hexPoint)
+	local buildingMO = self:getBuildingMO(hexPoint.x, hexPoint.y)
 
-	arg_43_0:_removeBuildingMO(var_43_0)
+	self:_removeBuildingMO(buildingMO)
 
-	return var_43_0
+	return buildingMO
 end
 
-function var_0_0.debugMoveAllBuilding(arg_44_0, arg_44_1, arg_44_2)
-	local var_44_0 = arg_44_0:getList()
+function RoomMapBuildingModel:debugMoveAllBuilding(offsetX, offsetY)
+	local list = self:getList()
 
-	if not var_44_0 then
+	if not list then
 		return
 	end
 
-	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
-		local var_44_1 = iter_44_1.hexPoint.x
-		local var_44_2 = iter_44_1.hexPoint.y
-		local var_44_3 = var_44_1 + arg_44_1
-		local var_44_4 = var_44_2 + arg_44_2
+	for _, buildingMO in ipairs(list) do
+		local x = buildingMO.hexPoint.x
+		local y = buildingMO.hexPoint.y
+		local newX = x + offsetX
+		local newY = y + offsetY
 
-		iter_44_1.hexPoint = HexPoint(var_44_3, var_44_4)
-		arg_44_0._mapBuildingMODict[var_44_1][var_44_2] = nil
-		arg_44_0._mapBuildingMODict[var_44_3] = arg_44_0._mapBuildingMODict[var_44_3] or {}
-		arg_44_0._mapBuildingMODict[var_44_3][var_44_4] = iter_44_1
+		buildingMO.hexPoint = HexPoint(newX, newY)
+		self._mapBuildingMODict[x][y] = nil
+		self._mapBuildingMODict[newX] = self._mapBuildingMODict[newX] or {}
+		self._mapBuildingMODict[newX][newY] = buildingMO
 	end
 
-	arg_44_0:refreshAllOccupyDict()
+	self:refreshAllOccupyDict()
 end
 
-function var_0_0.getRevertHexPoint(arg_45_0)
-	return arg_45_0._revertHexPoint
+function RoomMapBuildingModel:getRevertHexPoint()
+	return self._revertHexPoint
 end
 
-function var_0_0.getRevertRotate(arg_46_0)
-	return arg_46_0._revertRotate
+function RoomMapBuildingModel:getRevertRotate()
+	return self._revertRotate
 end
 
-function var_0_0.getBuildingListByType(arg_47_0, arg_47_1, arg_47_2)
-	local var_47_0 = arg_47_0._type2BuildingDict[arg_47_1]
+function RoomMapBuildingModel:getBuildingListByType(buildingType, isSort)
+	local result = self._type2BuildingDict[buildingType]
 
-	if var_47_0 and arg_47_2 then
-		table.sort(var_47_0, RoomHelper.sortBuildingById)
+	if result and isSort then
+		table.sort(result, RoomHelper.sortBuildingById)
 	end
 
-	return var_47_0
+	return result
 end
 
-function var_0_0.isHasCritterByBuid(arg_48_0, arg_48_1)
-	if not arg_48_0._isHasCritterDict then
-		arg_48_0._isHasCritterDict = {}
+function RoomMapBuildingModel:isHasCritterByBuid(buildingUid)
+	if not self._isHasCritterDict then
+		self._isHasCritterDict = {}
 
-		local var_48_0 = CritterModel.instance:getAllCritters()
+		local critterMOList = CritterModel.instance:getAllCritters()
 
-		for iter_48_0, iter_48_1 in ipairs(var_48_0) do
-			if iter_48_1.workInfo.buildingUid and iter_48_1.workInfo.buildingUid ~= 0 then
-				arg_48_0._isHasCritterDict[iter_48_1.workInfo.buildingUid] = true
-			elseif iter_48_1.restInfo.restBuildingUid and iter_48_1.restInfo.restBuildingUid ~= 0 then
-				arg_48_0._isHasCritterDict[iter_48_1.restInfo.restBuildingUid] = true
+		for i, critterMO in ipairs(critterMOList) do
+			if critterMO.workInfo.buildingUid and critterMO.workInfo.buildingUid ~= 0 then
+				self._isHasCritterDict[critterMO.workInfo.buildingUid] = true
+			elseif critterMO.restInfo.restBuildingUid and critterMO.restInfo.restBuildingUid ~= 0 then
+				self._isHasCritterDict[critterMO.restInfo.restBuildingUid] = true
 			end
 		end
 	end
 
-	return arg_48_0._isHasCritterDict[arg_48_1]
+	return self._isHasCritterDict[buildingUid]
 end
 
-function var_0_0.getBuildingMoByBuildingId(arg_49_0, arg_49_1)
-	local var_49_0 = arg_49_0:getList()
+function RoomMapBuildingModel:getBuildingMoByBuildingId(buildingId)
+	local list = self:getList()
 
-	if var_49_0 then
-		for iter_49_0, iter_49_1 in pairs(var_49_0) do
-			if iter_49_1.buildingId == arg_49_1 then
-				return iter_49_1
+	if list then
+		for k, v in pairs(list) do
+			if v.buildingId == buildingId then
+				return v
 			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomMapBuildingModel.instance = RoomMapBuildingModel.New()
 
-return var_0_0
+return RoomMapBuildingModel

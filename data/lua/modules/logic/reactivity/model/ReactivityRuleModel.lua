@@ -1,44 +1,46 @@
-﻿module("modules.logic.reactivity.model.ReactivityRuleModel", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/model/ReactivityRuleModel.lua
 
-local var_0_0 = class("ReactivityRuleModel", ListScrollModel)
+module("modules.logic.reactivity.model.ReactivityRuleModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ReactivityRuleModel = class("ReactivityRuleModel", ListScrollModel)
+
+function ReactivityRuleModel:onInit()
 	return
 end
 
-function var_0_0.refreshList(arg_2_0)
-	arg_2_0:clear()
+function ReactivityRuleModel:refreshList()
+	self:clear()
 
-	local var_2_0 = ReactivityController.instance:getCurReactivityId()
-	local var_2_1 = ReactivityEnum.ActivityDefine[var_2_0]
-	local var_2_2 = var_2_1 and var_2_1.storeActId
-	local var_2_3 = ReactivityConfig.instance:getItemConvertList()
-	local var_2_4 = {}
+	local actId = ReactivityController.instance:getCurReactivityId()
+	local define = ReactivityEnum.ActivityDefine[actId]
+	local storeActId = define and define.storeActId
+	local converList = ReactivityConfig.instance:getItemConvertList()
+	local list = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_3) do
-		if iter_2_1.version == var_2_2 then
-			local var_2_5 = {
-				id = iter_2_0,
-				typeId = iter_2_1.typeId,
-				itemId = iter_2_1.itemId,
-				limit = iter_2_1.limit,
-				price = iter_2_1.price
-			}
+	for i, v in ipairs(converList) do
+		if v.version == storeActId then
+			local mo = {}
 
-			table.insert(var_2_4, var_2_5)
+			mo.id = i
+			mo.typeId = v.typeId
+			mo.itemId = v.itemId
+			mo.limit = v.limit
+			mo.price = v.price
+
+			table.insert(list, mo)
 		end
 	end
 
-	if #var_2_4 > 1 then
-		table.sort(var_2_4, SortUtil.tableKeyLower({
+	if #list > 1 then
+		table.sort(list, SortUtil.tableKeyLower({
 			"typeId",
 			"itemId"
 		}))
 	end
 
-	arg_2_0:setList(var_2_4)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+ReactivityRuleModel.instance = ReactivityRuleModel.New()
 
-return var_0_0
+return ReactivityRuleModel

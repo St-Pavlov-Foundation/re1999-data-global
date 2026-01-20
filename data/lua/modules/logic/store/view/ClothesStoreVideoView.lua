@@ -1,146 +1,148 @@
-﻿module("modules.logic.store.view.ClothesStoreVideoView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/ClothesStoreVideoView.lua
 
-local var_0_0 = class("ClothesStoreVideoView", BaseView)
+module("modules.logic.store.view.ClothesStoreVideoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._videoRoot = gohelper.findChild(arg_1_0.viewGO, "#go_has/character/bg/video/videoRoot")
-	arg_1_0._videoGO = gohelper.findChild(arg_1_0._videoRoot, "#go_video")
-	arg_1_0.viewCanvasGroup = gohelper.onceAddComponent(arg_1_0.viewGO, typeof(UnityEngine.CanvasGroup))
+local ClothesStoreVideoView = class("ClothesStoreVideoView", BaseView)
+
+function ClothesStoreVideoView:onInitView()
+	self._videoRoot = gohelper.findChild(self.viewGO, "#go_has/character/bg/video/videoRoot")
+	self._videoGO = gohelper.findChild(self._videoRoot, "#go_video")
+	self.viewCanvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, arg_2_0._onPlaySkinVideo, arg_2_0)
+function ClothesStoreVideoView:addEvents()
+	self:addEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, arg_3_0._onPlaySkinVideo, arg_3_0)
+function ClothesStoreVideoView:removeEvents()
+	self:removeEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
 end
 
-function var_0_0._onPlaySkinVideo(arg_4_0, arg_4_1)
-	arg_4_0:playSkinVideo(arg_4_1)
+function ClothesStoreVideoView:_onPlaySkinVideo(goodsMo)
+	self:playSkinVideo(goodsMo)
 end
 
-function var_0_0.onOpen(arg_5_0)
+function ClothesStoreVideoView:onOpen()
 	return
 end
 
-function var_0_0.playSkinVideo(arg_6_0, arg_6_1)
-	if not arg_6_1 then
-		arg_6_0:_stopMovie()
+function ClothesStoreVideoView:playSkinVideo(goodsMo)
+	if not goodsMo then
+		self:_stopMovie()
 
 		return
 	end
 
-	local var_6_0 = arg_6_1.config.product
-	local var_6_1 = string.splitToNumber(var_6_0, "#")[2]
-	local var_6_2 = lua_character_limited.configDict[var_6_1]
+	local product = goodsMo.config.product
+	local productInfo = string.splitToNumber(product, "#")
+	local skinId = productInfo[2]
+	local skinViewCfg = lua_character_limited.configDict[skinId]
 
-	if not var_6_2 or VersionValidator.instance:isInReviewing() then
+	if not skinViewCfg or VersionValidator.instance:isInReviewing() then
 		return
 	end
 
-	if arg_6_0._stopAudioId and arg_6_0._stopAudioId > 0 then
-		AudioMgr.instance:trigger(arg_6_0._stopAudioId)
+	if self._stopAudioId and self._stopAudioId > 0 then
+		AudioMgr.instance:trigger(self._stopAudioId)
 	end
 
-	arg_6_0._hasPlayFinish = false
+	self._hasPlayFinish = false
 
-	NavigateMgr.instance:addEscape(arg_6_0.viewName, arg_6_0._onEscBtnClick, arg_6_0)
+	NavigateMgr.instance:addEscape(self.viewName, self._onEscBtnClick, self)
 
-	arg_6_0._videoAudioId = var_6_2.audio
-	arg_6_0._stopAudioId = var_6_2.stopAudio
-	arg_6_0._stopBgm = arg_6_0._videoAudioId > 0
-	arg_6_0._videoPath = string.nilorempty(var_6_2.entranceMv) and "" or langVideoUrl(var_6_2.entranceMv)
-	arg_6_0._mvTime = var_6_2.mvtime
+	self._videoAudioId = skinViewCfg.audio
+	self._stopAudioId = skinViewCfg.stopAudio
+	self._stopBgm = self._videoAudioId > 0
+	self._videoPath = string.nilorempty(skinViewCfg.entranceMv) and "" or skinViewCfg.entranceMv
+	self._mvTime = skinViewCfg.mvtime
 
-	if arg_6_0._stopBgm then
-		arg_6_0:_stopMainBgm()
-		TaskDispatcher.runDelay(arg_6_0._stopMainBgm, arg_6_0, 0.5)
+	if self._stopBgm then
+		self:_stopMainBgm()
+		TaskDispatcher.runDelay(self._stopMainBgm, self, 0.5)
 	end
 
-	gohelper.setActive(arg_6_0._videoRoot, true)
+	gohelper.setActive(self._videoRoot, true)
 
-	if not string.nilorempty(arg_6_0._videoPath) then
-		if not arg_6_0._videoPlayer then
-			arg_6_0._videoPlayer, arg_6_0._displauUGUI, arg_6_0._videoPlayerGO = AvProMgr.instance:getVideoPlayer(arg_6_0._videoGO)
+	if not string.nilorempty(self._videoPath) then
+		if not self._videoPlayer then
+			self._videoPlayer, self._videoPlayerGO = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._videoGO)
 
-			local var_6_3 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._videoPlayerGO, FullScreenVideoAdapter)
+			local uiVideoAdapter = MonoHelper.addNoUpdateLuaComOnceToGo(self._videoPlayerGO, FullScreenVideoAdapter)
 
-			arg_6_0._videoPlayerGO = nil
+			self._videoPlayerGO = nil
 		end
 
-		arg_6_0._videoPlayer:Play(arg_6_0._displauUGUI, arg_6_0._videoPath, false, arg_6_0._videoStatusUpdate, arg_6_0)
+		self._videoPlayer:play(self._videoPath, false, self._videoStatusUpdate, self)
 
-		if arg_6_0._mvTime and arg_6_0._mvTime > 0 then
-			TaskDispatcher.runDelay(arg_6_0._timeout, arg_6_0, arg_6_0._mvTime)
+		if self._mvTime and self._mvTime > 0 then
+			TaskDispatcher.runDelay(self._timeout, self, self._mvTime)
 		end
 	else
-		TaskDispatcher.runDelay(arg_6_0._hideVideoGo, arg_6_0, 1)
+		TaskDispatcher.runDelay(self._hideVideoGo, self, 1)
 	end
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:_stopMovie()
+function ClothesStoreVideoView:onClose()
+	self:_stopMovie()
 end
 
-function var_0_0._onEscBtnClick(arg_8_0)
+function ClothesStoreVideoView:_onEscBtnClick()
 	return
 end
 
-function var_0_0._videoStatusUpdate(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		TaskDispatcher.cancelTask(arg_9_0._timeout, arg_9_0)
-		arg_9_0:_playMovieFinish()
+function ClothesStoreVideoView:_videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.FinishedPlaying then
+		TaskDispatcher.cancelTask(self._timeout, self)
+		self:_playMovieFinish()
 	end
 
-	if arg_9_2 == AvProEnum.PlayerStatus.Started or arg_9_2 == AvProEnum.PlayerStatus.StartedSeeking then
-		if arg_9_0._videoAudioId > 0 then
-			AudioMgr.instance:trigger(arg_9_0._videoAudioId)
+	if status == VideoEnum.PlayerStatus.Started or status == VideoEnum.PlayerStatus.StartedSeeking then
+		if self._videoAudioId > 0 then
+			AudioMgr.instance:trigger(self._videoAudioId)
 		end
 
-		arg_9_0.viewCanvasGroup.alpha = 1
+		self.viewCanvasGroup.alpha = 1
 	end
 end
 
-function var_0_0._timeout(arg_10_0)
-	arg_10_0:_stopMovie()
+function ClothesStoreVideoView:_timeout()
+	self:_stopMovie()
 end
 
-function var_0_0._stopMovie(arg_11_0)
-	NavigateMgr.instance:removeEscape(arg_11_0.viewName)
-	arg_11_0:_hideVideoGo()
+function ClothesStoreVideoView:_stopMovie()
+	NavigateMgr.instance:removeEscape(self.viewName)
+	self:_hideVideoGo()
 
-	if arg_11_0._videoPlayer then
-		arg_11_0._videoPlayer:Stop()
-		arg_11_0._videoPlayer:Clear()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
 
-		arg_11_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_11_0._timeout, arg_11_0)
+	TaskDispatcher.cancelTask(self._timeout, self)
 
-	if arg_11_0._stopAudioId and arg_11_0._stopAudioId > 0 then
-		AudioMgr.instance:trigger(arg_11_0._stopAudioId)
+	if self._stopAudioId and self._stopAudioId > 0 then
+		AudioMgr.instance:trigger(self._stopAudioId)
 	end
 
-	arg_11_0:_playMainBgm()
+	self:_playMainBgm()
 end
 
-function var_0_0._playMovieFinish(arg_12_0)
-	arg_12_0._hasPlayFinish = true
+function ClothesStoreVideoView:_playMovieFinish()
+	self._hasPlayFinish = true
 
-	arg_12_0:_hideVideoGo()
-	NavigateMgr.instance:removeEscape(arg_12_0.viewName)
+	self:_hideVideoGo()
+	NavigateMgr.instance:removeEscape(self.viewName)
 
-	if arg_12_0._stopAudioId and arg_12_0._stopAudioId > 0 then
-		AudioMgr.instance:trigger(arg_12_0._stopAudioId)
+	if self._stopAudioId and self._stopAudioId > 0 then
+		AudioMgr.instance:trigger(self._stopAudioId)
 	end
 
-	arg_12_0:_playMainBgm()
+	self:_playMainBgm()
 	ViewMgr.instance:closeView(ViewName.StoreSkinDefaultShowView)
 end
 
-function var_0_0._playMainBgm(arg_13_0)
+function ClothesStoreVideoView:_playMainBgm()
 	if ViewMgr.instance:isOpen(ViewName.CharacterSkinView) then
 		AudioBgmManager.instance:playBgm(AudioBgmEnum.Layer.Character)
 	else
@@ -148,7 +150,7 @@ function var_0_0._playMainBgm(arg_13_0)
 	end
 end
 
-function var_0_0._stopMainBgm(arg_14_0)
+function ClothesStoreVideoView:_stopMainBgm()
 	if ViewMgr.instance:isOpen(ViewName.CharacterSkinView) then
 		AudioBgmManager.instance:stopBgm(AudioBgmEnum.Layer.Character)
 	else
@@ -156,8 +158,8 @@ function var_0_0._stopMainBgm(arg_14_0)
 	end
 end
 
-function var_0_0._hideVideoGo(arg_15_0)
-	gohelper.setActive(arg_15_0._videoRoot, false)
+function ClothesStoreVideoView:_hideVideoGo()
+	gohelper.setActive(self._videoRoot, false)
 end
 
-return var_0_0
+return ClothesStoreVideoView

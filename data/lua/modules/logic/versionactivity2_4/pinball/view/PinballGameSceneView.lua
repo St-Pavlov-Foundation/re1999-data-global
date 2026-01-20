@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballGameSceneView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballGameSceneView.lua
 
-local var_0_0 = class("PinballGameSceneView", BaseView)
+module("modules.logic.versionactivity2_4.pinball.view.PinballGameSceneView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "mask/#go_root")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "mask/#go_root/item")
-	arg_1_0._gotopitem = gohelper.findChild(arg_1_0.viewGO, "#go_root_top/item")
-	arg_1_0._gonumitem = gohelper.findChild(arg_1_0.viewGO, "#go_root_num/item")
+local PinballGameSceneView = class("PinballGameSceneView", BaseView)
+
+function PinballGameSceneView:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, "mask/#go_root")
+	self._goitem = gohelper.findChild(self.viewGO, "mask/#go_root/item")
+	self._gotopitem = gohelper.findChild(self.viewGO, "#go_root_top/item")
+	self._gonumitem = gohelper.findChild(self.viewGO, "#go_root_num/item")
 end
 
-function var_0_0.onOpen(arg_2_0)
+function PinballGameSceneView:onOpen()
 	PinballStatHelper.instance:resetGameDt()
-	gohelper.setActive(arg_2_0._goitem, false)
-	gohelper.setActive(arg_2_0._gotopitem, false)
-	gohelper.setActive(arg_2_0._gonumitem, false)
+	gohelper.setActive(self._goitem, false)
+	gohelper.setActive(self._gotopitem, false)
+	gohelper.setActive(self._gonumitem, false)
 
-	arg_2_0._layers = arg_2_0:getUserDataTb_()
+	self._layers = self:getUserDataTb_()
 
-	for iter_2_0 in ipairs(PinballEnum.UnitLayers) do
-		arg_2_0._layers[iter_2_0] = gohelper.create2d(arg_2_0._goroot, "Layer" .. iter_2_0)
+	for layer in ipairs(PinballEnum.UnitLayers) do
+		self._layers[layer] = gohelper.create2d(self._goroot, "Layer" .. layer)
 	end
 
-	PinballEntityMgr.instance:setRoot(arg_2_0._goitem, arg_2_0._gotopitem, arg_2_0._gonumitem, arg_2_0._layers)
+	PinballEntityMgr.instance:setRoot(self._goitem, self._gotopitem, self._gonumitem, self._layers)
 end
 
-function var_0_0.onClose(arg_3_0)
+function PinballGameSceneView:onClose()
 	PinballEntityMgr.instance:clear()
 end
 
-return var_0_0
+return PinballGameSceneView

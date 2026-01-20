@@ -1,23 +1,25 @@
-﻿module("modules.logic.explore.model.mo.ExploreLightMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/ExploreLightMO.lua
 
-local var_0_0 = pureTable("ExploreLightMO")
+module("modules.logic.explore.model.mo.ExploreLightMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.curEmitUnit = nil
-	arg_1_0.dir = nil
-	arg_1_0.endEmitUnit = nil
-	arg_1_0.crossNodes = {}
-	arg_1_0.lightLen = nil
+local ExploreLightMO = pureTable("ExploreLightMO")
+
+function ExploreLightMO:ctor()
+	self.curEmitUnit = nil
+	self.dir = nil
+	self.endEmitUnit = nil
+	self.crossNodes = {}
+	self.lightLen = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.curEmitUnit = arg_2_1
-	arg_2_0.dir = ExploreHelper.getDir(arg_2_2)
+function ExploreLightMO:init(curUnit, dir)
+	self.curEmitUnit = curUnit
+	self.dir = ExploreHelper.getDir(dir)
 
-	arg_2_0:updateData()
+	self:updateData()
 end
 
-local var_0_1 = {
+local dirs = {
 	[0] = {
 		x = 0,
 		y = 1
@@ -51,97 +53,102 @@ local var_0_1 = {
 		y = 1
 	}
 }
-local var_0_2 = {
+local tempPos = {
 	x = 0,
 	y = 0
 }
-local var_0_3 = math.sqrt(2)
+local sqrt2 = math.sqrt(2)
 
-function var_0_0.updateData(arg_3_0)
-	arg_3_0.crossNodes = {}
+function ExploreLightMO:updateData()
+	self.crossNodes = {}
 
-	local var_3_0 = ExploreController.instance:getMap()
-	local var_3_1 = ExploreController.instance:getMapLight()
-	local var_3_2 = arg_3_0.curEmitUnit.nodePos
+	local map = ExploreController.instance:getMap()
+	local mapLight = ExploreController.instance:getMapLight()
+	local firstNode = self.curEmitUnit.nodePos
 
-	var_0_2.x, var_0_2.y = var_3_2.x, var_3_2.y
+	tempPos.x, tempPos.y = firstNode.x, firstNode.y
 
-	local var_3_3
-	local var_3_4 = 0
-	local var_3_5 = var_0_1[arg_3_0.dir]
+	local endEmitUnit
+	local len = 0
+	local dir = dirs[self.dir]
 
-	repeat
-		local var_3_6 = ExploreHelper.getKey(var_0_2)
+	while true do
+		local key = ExploreHelper.getKey(tempPos)
 
-		if not var_3_0:haveNodeXY(var_3_6) then
+		if not map:haveNodeXY(key) then
 			break
 		end
 
-		arg_3_0.crossNodes[var_3_6] = true
-		var_0_2.x = var_0_2.x + var_3_5.x
-		var_0_2.y = var_0_2.y + var_3_5.y
-		var_3_4 = var_3_4 + 1
+		self.crossNodes[key] = true
+		tempPos.x = tempPos.x + dir.x
+		tempPos.y = tempPos.y + dir.y
+		len = len + 1
 
-		local var_3_7 = var_3_0:getUnitByPos(var_0_2)
-		local var_3_8 = false
+		local units = map:getUnitByPos(tempPos)
+		local isBarricade = false
 
-		for iter_3_0, iter_3_1 in pairs(var_3_7) do
-			if not iter_3_1:isPassLight() then
-				var_3_8 = true
-				var_3_3 = iter_3_1
+		for _, unit in pairs(units) do
+			if not unit:isPassLight() then
+				isBarricade = true
+				endEmitUnit = unit
 
 				break
 			end
 		end
-	until var_3_8
 
-	if not var_3_3 then
-		var_3_4 = var_3_4 - 0.5
+		if isBarricade then
+			break
+		end
 	end
 
-	if (arg_3_0.dir + 360) % 90 == 45 then
-		var_3_4 = var_3_4 * var_0_3
+	if not endEmitUnit then
+		len = len - 0.5
 	end
 
-	if var_3_3 and isTypeOf(var_3_3, ExploreBaseMoveUnit) and var_3_3:isMoving() then
-		var_3_4 = Vector3.Distance(arg_3_0.curEmitUnit:getPos(), var_3_3:getPos())
+	if (self.dir + 360) % 90 == 45 then
+		len = len * sqrt2
 	end
 
-	arg_3_0.lightLen = var_3_4
+	if endEmitUnit and isTypeOf(endEmitUnit, ExploreBaseMoveUnit) and endEmitUnit:isMoving() then
+		len = Vector3.Distance(self.curEmitUnit:getPos(), endEmitUnit:getPos())
+	end
 
-	if var_3_3 ~= arg_3_0.endEmitUnit then
-		local var_3_9 = arg_3_0.endEmitUnit
+	self.lightLen = len
 
-		arg_3_0.endEmitUnit = var_3_3
+	if endEmitUnit ~= self.endEmitUnit then
+		local preEndEmitUnit = self.endEmitUnit
 
-		if var_3_9 then
-			var_3_1:removeUnitLight(var_3_9, arg_3_0)
+		self.endEmitUnit = endEmitUnit
+
+		if preEndEmitUnit then
+			mapLight:removeUnitLight(preEndEmitUnit, self)
 		end
 
-		if var_3_3 then
-			local var_3_10 = var_3_3:getLightRecvDirs()
+		if endEmitUnit then
+			local lightDirs = endEmitUnit:getLightRecvDirs()
 
-			if not var_3_10 or var_3_10[ExploreHelper.getDir(arg_3_0.dir - 180)] then
-				if not var_3_1:haveLight(var_3_3, arg_3_0) then
-					var_3_3:onLightEnter(arg_3_0)
+			if not lightDirs or lightDirs[ExploreHelper.getDir(self.dir - 180)] then
+				if not mapLight:haveLight(endEmitUnit, self) then
+					endEmitUnit:onLightEnter(self)
 				end
 
-				var_3_3:onLightChange(arg_3_0, true)
+				endEmitUnit:onLightChange(self, true)
 			end
 		end
 	end
 
-	arg_3_0.curEmitUnit:onLightDataChange(arg_3_0)
+	self.curEmitUnit:onLightDataChange(self)
 end
 
-function var_0_0.isInLight(arg_4_0, arg_4_1)
-	local var_4_0 = ExploreHelper.getKey(arg_4_1)
+function ExploreLightMO:isInLight(pos)
+	local key = ExploreHelper.getKey(pos)
+	local nodes = self:getCrossNode()
 
-	return arg_4_0:getCrossNode()[var_4_0] or false
+	return nodes[key] or false
 end
 
-function var_0_0.getCrossNode(arg_5_0)
-	return arg_5_0.crossNodes
+function ExploreLightMO:getCrossNode()
+	return self.crossNodes
 end
 
-return var_0_0
+return ExploreLightMO

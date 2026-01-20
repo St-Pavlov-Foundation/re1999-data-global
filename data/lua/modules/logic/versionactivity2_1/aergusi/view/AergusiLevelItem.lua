@@ -1,115 +1,125 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiLevelItem.lua
 
-local var_0_0 = class("AergusiLevelItem", LuaCompBase)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiLevelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._animator = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.go, "Root/unlock")
-	arg_1_0._imagehasstar = gohelper.findChildImage(arg_1_0.go, "Root/unlock/Info/#image_HasStar")
-	arg_1_0._imagenostar = gohelper.findChildImage(arg_1_0.go, "Root/unlock/Info/#image_NoStar")
-	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0.go, "Root/unlock/Info/#txt_StageName")
-	arg_1_0._txtstagenum = gohelper.findChildText(arg_1_0.go, "Root/unlock/Info/#txt_StageNum")
-	arg_1_0._imageinfo = gohelper.findChildImage(arg_1_0.go, "Root/#image_Info")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "Root/unlock/#btn_Click")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.go, "Root/#go_Locked")
-	arg_1_0._imageItemMask = gohelper.findChildImage(arg_1_0.go, "Root/#go_Locked/image_ItemMask")
+local AergusiLevelItem = class("AergusiLevelItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0._gounlock, true)
-	gohelper.setActive(arg_1_0._golocked, true)
+function AergusiLevelItem:init(go)
+	self.go = go
+	self._animator = go:GetComponent(typeof(UnityEngine.Animator))
+	self._gounlock = gohelper.findChild(self.go, "Root/unlock")
+	self._imagehasstar = gohelper.findChildImage(self.go, "Root/unlock/Info/#image_HasStar")
+	self._imagenostar = gohelper.findChildImage(self.go, "Root/unlock/Info/#image_NoStar")
+	self._txtstagename = gohelper.findChildText(self.go, "Root/unlock/Info/#txt_StageName")
+	self._txtstagenum = gohelper.findChildText(self.go, "Root/unlock/Info/#txt_StageNum")
+	self._imageinfo = gohelper.findChildImage(self.go, "Root/#image_Info")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "Root/unlock/#btn_Click")
+	self._golocked = gohelper.findChild(self.go, "Root/#go_Locked")
+	self._imageItemMask = gohelper.findChildImage(self.go, "Root/#go_Locked/image_ItemMask")
 
-	arg_1_0._itemAni = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
+	gohelper.setActive(self._gounlock, true)
+	gohelper.setActive(self._golocked, true)
 
-	arg_1_0:addEventListeners()
+	self._itemAni = self.go:GetComponent(typeof(UnityEngine.Animator))
+
+	self:addEventListeners()
 end
 
-function var_0_0.refreshItem(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._index = arg_2_2
-	arg_2_0._episodeMo = arg_2_1
-	arg_2_0._config = AergusiConfig.instance:getEpisodeConfig(nil, arg_2_1.episodeId)
-	arg_2_0._episodeId = arg_2_0._config.episodeId
+function AergusiLevelItem:refreshItem(co, index)
+	self._index = index
+	self._episodeMo = co
+	self._config = AergusiConfig.instance:getEpisodeConfig(nil, co.episodeId)
+	self._episodeId = self._config.episodeId
 
-	if AergusiModel.instance:isEpisodeUnlock(arg_2_0._episodeId) then
-		arg_2_0._imageItemMask.raycastTarget = false
+	local unlock = AergusiModel.instance:isEpisodeUnlock(self._episodeId)
 
-		if AergusiModel.instance:getNewUnlockEpisode() == arg_2_0._episodeId then
-			arg_2_0._itemAni:Play("idlegray", 0, 0)
+	if unlock then
+		self._imageItemMask.raycastTarget = false
+
+		local newUnlockEpisode = AergusiModel.instance:getNewUnlockEpisode()
+
+		if newUnlockEpisode == self._episodeId then
+			self._itemAni:Play("idlegray", 0, 0)
 		else
-			arg_2_0._itemAni:Play("idle", 0, 0)
+			self._itemAni:Play("idle", 0, 0)
 		end
 	else
-		arg_2_0._itemAni:Play("idlegray", 0, 0)
+		self._itemAni:Play("idlegray", 0, 0)
 	end
 
-	local var_2_0 = AergusiModel.instance:isEpisodePassed(arg_2_0._episodeId)
+	local hasPass = AergusiModel.instance:isEpisodePassed(self._episodeId)
 
-	gohelper.setActive(arg_2_0._imagenostar.gameObject, not var_2_0)
-	gohelper.setActive(arg_2_0._imagehasstar.gameObject, var_2_0)
+	gohelper.setActive(self._imagenostar.gameObject, not hasPass)
+	gohelper.setActive(self._imagehasstar.gameObject, hasPass)
 
-	local var_2_1 = AergusiModel.instance:isStoryEpisode(arg_2_0._episodeId)
+	local isStoryEpisode = AergusiModel.instance:isStoryEpisode(self._episodeId)
 
-	gohelper.setActive(arg_2_0._imageinfo.gameObject, not var_2_1)
+	gohelper.setActive(self._imageinfo.gameObject, not isStoryEpisode)
 
-	arg_2_0._txtstagenum.text = arg_2_0._index
-	arg_2_0._txtstagename.text = arg_2_0._config.name
+	self._txtstagenum.text = self._index
+	self._txtstagename.text = self._config.name
 
-	arg_2_0:_checkFirstTimeEnter()
+	self:_checkFirstTimeEnter()
 end
 
-function var_0_0._checkFirstTimeEnter(arg_3_0)
-	local var_3_0 = AergusiModel.instance:getNewFinishEpisode()
-	local var_3_1 = AergusiModel.instance:isStoryEpisode(arg_3_0._episodeId)
+function AergusiLevelItem:_checkFirstTimeEnter()
+	local newFinishEpisode = AergusiModel.instance:getNewFinishEpisode()
+	local isStoryEpisode = AergusiModel.instance:isStoryEpisode(self._episodeId)
 
-	if var_3_0 == arg_3_0._episodeId then
+	if newFinishEpisode == self._episodeId then
 		AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_over)
-		arg_3_0._itemAni:Play("finish", 0, 0)
+		self._itemAni:Play("finish", 0, 0)
 
-		local var_3_2 = AergusiModel.instance:getEpisodeClueConfigs(arg_3_0._episodeId, false)
+		local episodeClues = AergusiModel.instance:getEpisodeClueConfigs(self._episodeId, false)
 
-		if var_3_1 and #var_3_2 > 0 then
+		if isStoryEpisode and #episodeClues > 0 then
 			GameFacade.showToast(ToastEnum.Act163GetClueTip)
 		end
 
 		AergusiModel.instance:setNewFinishEpisode(0)
 	end
 
-	if AergusiModel.instance:getNewUnlockEpisode() == arg_3_0._episodeId then
-		local var_3_3 = arg_3_0._index == 1 and 0.68 or 1.34
+	local newUnlockEpisode = AergusiModel.instance:getNewUnlockEpisode()
+
+	if newUnlockEpisode == self._episodeId then
+		local delayTime = self._index == 1 and 0.68 or 1.34
 
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("waitUnlock")
 		AergusiModel.instance:setNewUnlockEpisode(0)
-		TaskDispatcher.runDelay(arg_3_0._playUnlock, arg_3_0, var_3_3)
+		TaskDispatcher.runDelay(self._playUnlock, self, delayTime)
 	end
 end
 
-function var_0_0._playUnlock(arg_4_0)
+function AergusiLevelItem:_playUnlock()
 	UIBlockMgr.instance:endBlock("waitUnlock")
 	AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_open)
-	arg_4_0._itemAni:Play("unlock")
+	self._itemAni:Play("unlock")
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	arg_5_0._btnclick:AddClickListener(arg_5_0._btnclickOnClick, arg_5_0)
+function AergusiLevelItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	arg_6_0._btnclick:RemoveClickListener()
+function AergusiLevelItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_7_0)
-	if not AergusiModel.instance:isEpisodeUnlock(arg_7_0._episodeId) then
+function AergusiLevelItem:_btnclickOnClick()
+	local unlock = AergusiModel.instance:isEpisodeUnlock(self._episodeId)
+
+	if not unlock then
 		GameFacade.showToast(ToastEnum.Act163LevelLocked)
 
 		return
 	end
 
-	AergusiController.instance:dispatchEvent(AergusiEvent.EnterEpisode, arg_7_0._episodeId)
+	AergusiController.instance:dispatchEvent(AergusiEvent.EnterEpisode, self._episodeId)
 end
 
-function var_0_0.destroy(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._playUnlock, arg_8_0)
-	arg_8_0:removeEventListeners()
+function AergusiLevelItem:destroy()
+	TaskDispatcher.cancelTask(self._playUnlock, self)
+	self:removeEventListeners()
 end
 
-return var_0_0
+return AergusiLevelItem

@@ -1,65 +1,67 @@
-﻿module("modules.logic.settings.controller.SettingVoiceHttpGetter", package.seeall)
+﻿-- chunkname: @modules/logic/settings/controller/SettingVoiceHttpGetter.lua
 
-local var_0_0 = class("SettingVoiceHttpGetter")
-local var_0_1 = 5
+module("modules.logic.settings.controller.SettingVoiceHttpGetter", package.seeall)
 
-function var_0_0.start(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._langShortcuts, arg_1_0._langVersions = arg_1_0:_getLangVersions()
+local SettingVoiceHttpGetter = class("SettingVoiceHttpGetter")
+local Timeout = 5
 
-	if #arg_1_0._langShortcuts == 0 then
-		arg_1_0._result = {}
+function SettingVoiceHttpGetter:start(onFinish, finishObj)
+	self._langShortcuts, self._langVersions = self:_getLangVersions()
 
-		arg_1_1(arg_1_2)
+	if #self._langShortcuts == 0 then
+		self._result = {}
+
+		onFinish(finishObj)
 
 		return
 	end
 
-	arg_1_0._onGetFinish = arg_1_1
-	arg_1_0._onGetFinishObj = arg_1_2
+	self._onGetFinish = onFinish
+	self._onGetFinishObj = finishObj
 
-	arg_1_0:_httpGet()
+	self:_httpGet()
 end
 
-function var_0_0.stop(arg_2_0)
-	if arg_2_0._requestId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_2_0._requestId)
+function SettingVoiceHttpGetter:stop()
+	if self._requestId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._requestId)
 
-		arg_2_0._requestId = nil
+		self._requestId = nil
 
 		UIBlockMgr.instance:endBlock(UIBlockKey.VoiceHttpGetter)
 	end
 end
 
-function var_0_0._httpGet(arg_3_0)
+function SettingVoiceHttpGetter:_httpGet()
 	UIBlockMgr.instance:startBlock(UIBlockKey.VoiceHttpGetter)
 
-	local var_3_0 = arg_3_0:_getUrl()
+	local url = self:_getUrl()
 
-	logNormal("SettingVoiceHttpGetter url: " .. var_3_0)
+	logNormal("SettingVoiceHttpGetter url: " .. url)
 
-	arg_3_0._requestId = SLFramework.SLWebRequest.Instance:Get(var_3_0, arg_3_0._onWebResponse, arg_3_0, var_0_1)
+	self._requestId = SLFramework.SLWebRequestClient.Instance:Get(url, self._onWebResponse, self, Timeout)
 end
 
-function var_0_0._onWebResponse(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 then
+function SettingVoiceHttpGetter:_onWebResponse(isSuccess, msg, errorMsg)
+	if isSuccess then
 		LoginModel.instance:resetFailCount()
 		UIBlockMgr.instance:endBlock(UIBlockKey.VoiceHttpGetter)
 
-		if arg_4_2 and arg_4_2 ~= "" then
-			logNormal("获取语音包返回:" .. arg_4_2)
+		if msg and msg ~= "" then
+			logNormal("获取语音包返回:" .. msg)
 
-			arg_4_0._result = cjson.decode(arg_4_2)
+			self._result = cjson.decode(msg)
 		else
 			logNormal("获取语音包返回空串")
 		end
 
-		local var_4_0 = arg_4_0._onGetFinish
-		local var_4_1 = arg_4_0._onGetFinishObj
+		local cb = self._onGetFinish
+		local cbObj = self._onGetFinishObj
 
-		arg_4_0._onGetFinish = nil
-		arg_4_0._onGetFinishObj = nil
+		self._onGetFinish = nil
+		self._onGetFinishObj = nil
 
-		var_4_0(var_4_1, true)
+		cb(cbObj, true)
 	else
 		LoginModel.instance:inverseUseBackup()
 		LoginModel.instance:incFailCount()
@@ -68,102 +70,103 @@ function var_0_0._onWebResponse(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 			LoginModel.instance:resetFailAlertCount()
 			UIBlockMgr.instance:endBlock(UIBlockKey.VoiceHttpGetter)
 
-			arg_4_0._useBackupUrl = not arg_4_0._useBackupUrl
+			self._useBackupUrl = not self._useBackupUrl
 
-			local var_4_2 = MessageBoxIdDefine.CheckVersionFail
-			local var_4_3 = MsgBoxEnum.BoxType.Yes_No
+			local id = MessageBoxIdDefine.CheckVersionFail
+			local t = MsgBoxEnum.BoxType.Yes_No
 
-			MessageBoxController.instance:showMsgBoxAndSetBtn(var_4_2, var_4_3, booterLang("retry"), "retry", nil, nil, arg_4_0._httpGet, nil, nil, arg_4_0, nil, nil, arg_4_3)
+			MessageBoxController.instance:showMsgBoxAndSetBtn(id, t, booterLang("retry"), "retry", nil, nil, self._httpGet, nil, nil, self, nil, nil, errorMsg)
 		else
-			arg_4_0:_httpGet()
+			self:_httpGet()
 		end
 	end
 end
 
-function var_0_0.getHttpResult(arg_5_0)
-	return arg_5_0._result
+function SettingVoiceHttpGetter:getHttpResult()
+	return self._result
 end
 
-function var_0_0.getLangSize(arg_6_0, arg_6_1)
-	if not arg_6_0._result then
+function SettingVoiceHttpGetter:getLangSize(lang)
+	if not self._result then
 		return 0
 	end
 
-	local var_6_0 = arg_6_0._result[arg_6_1]
+	local langTb = self._result[lang]
 
-	if not var_6_0 or not var_6_0.res then
+	if not langTb or not langTb.res then
 		return 0
 	end
 
-	local var_6_1 = 0
+	local size = 0
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0.res) do
-		var_6_1 = var_6_1 + iter_6_1.length
+	for _, oneRes in ipairs(langTb.res) do
+		size = size + oneRes.length
 	end
 
-	return var_6_1
+	return size
 end
 
-function var_0_0._getUrl(arg_7_0)
-	local var_7_0 = table.concat(arg_7_0._langShortcuts, ",")
-	local var_7_1 = table.concat(arg_7_0._langVersions, ",")
-	local var_7_2 = {}
-	local var_7_3, var_7_4 = GameUrlConfig.getOptionalUpdateUrl()
-	local var_7_5 = LoginModel.instance:getUseBackup() and var_7_4 or var_7_3
-	local var_7_6 = SLFramework.FrameworkSettings.CurPlatform
+function SettingVoiceHttpGetter:_getUrl()
+	local langShortcut = table.concat(self._langShortcuts, ",")
+	local langVersion = table.concat(self._langVersions, ",")
+	local param = {}
+	local url1, url2 = GameUrlConfig.getOptionalUpdateUrl()
+	local url = LoginModel.instance:getUseBackup() and url2 or url1
+	local osType = SLFramework.FrameworkSettings.CurPlatform
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_7_6 = 0
+		osType = 0
 	end
 
-	local var_7_7 = GameChannelConfig.getServerType()
+	local serverType = GameChannelConfig.getServerType()
 
-	table.insert(var_7_2, string.format("os_type=%s", var_7_6))
-	table.insert(var_7_2, string.format("lang=%s", var_7_0))
-	table.insert(var_7_2, string.format("version=%s", var_7_1))
-	table.insert(var_7_2, string.format("env_type=%s", var_7_7))
-	table.insert(var_7_2, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
+	table.insert(param, string.format("os_type=%s", osType))
+	table.insert(param, string.format("lang=%s", langShortcut))
+	table.insert(param, string.format("version=%s", langVersion))
+	table.insert(param, string.format("env_type=%s", serverType))
+	table.insert(param, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
 
-	local var_7_8 = SDKMgr.instance:getGameId()
-	local var_7_9 = string.format("/resource/%d/check", var_7_8)
+	local gameId = SDKMgr.instance:getGameId()
+	local suffix = string.format("/resource/%d/check", gameId)
+	local url = url .. suffix .. "?" .. table.concat(param, "&")
 
-	return var_7_5 .. var_7_9 .. "?" .. table.concat(var_7_2, "&")
+	return url
 end
 
-function var_0_0._getLangVersions(arg_8_0)
-	local var_8_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
-	local var_8_1 = {}
-	local var_8_2 = {}
-	local var_8_3 = SettingsVoicePackageModel.instance:getSupportVoiceLangs()
+function SettingVoiceHttpGetter:_getLangVersions()
+	local optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+	local langShortcuts = {}
+	local langVersions = {}
+	local supportLangList = SettingsVoicePackageModel.instance:getSupportVoiceLangs()
 
-	table.insert(var_8_3, "res-HD")
+	table.insert(supportLangList, "res-HD")
 
-	local var_8_4 = GameConfig:GetDefaultVoiceShortcut()
+	local defaultLang = GameConfig:GetDefaultVoiceShortcut()
 
-	for iter_8_0 = 1, #var_8_3 do
-		local var_8_5 = var_8_3[iter_8_0]
-		local var_8_6 = var_8_5 ~= var_8_4
-		local var_8_7 = var_8_0:GetLocalVersion(var_8_5)
-		local var_8_8 = string.nilorempty(var_8_7)
+	for i = 1, #supportLangList do
+		local lang = supportLangList[i]
+		local notDefault = lang ~= defaultLang
+		local localVersion = optionalUpdateInst:GetLocalVersion(lang)
+		local noLocalVersion = string.nilorempty(localVersion)
 
-		if var_8_6 and var_8_8 then
-			table.insert(var_8_1, var_8_5)
+		if notDefault and noLocalVersion then
+			table.insert(langShortcuts, lang)
 
-			local var_8_9 = var_8_0.VoiceBranch
+			local voiceBranch = optionalUpdateInst.VoiceBranch
 
-			if string.nilorempty(var_8_9) or not tonumber(var_8_9) then
-				var_8_9 = 1
+			if string.nilorempty(voiceBranch) or not tonumber(voiceBranch) then
+				voiceBranch = 1
 
-				logError("随包的语音分支错误：" .. var_8_0.VoiceBranch)
+				logError("随包的语音分支错误：" .. optionalUpdateInst.VoiceBranch)
 			end
 
-			local var_8_10 = var_8_9 .. ".0"
+			local version = voiceBranch .. ".0"
 
-			table.insert(var_8_2, var_8_10)
+			table.insert(langVersions, version)
 		end
 	end
 
-	return var_8_1, var_8_2
+	return langShortcuts, langVersions
 end
 
-return var_0_0
+return SettingVoiceHttpGetter

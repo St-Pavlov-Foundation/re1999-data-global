@@ -1,67 +1,70 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6BuffItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6BuffItem.lua
 
-local var_0_0 = class("LengZhou6BuffItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6BuffItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagebuff = gohelper.findChildImage(arg_1_0.viewGO, "#image_buff")
-	arg_1_0._txtbuffValue = gohelper.findChildText(arg_1_0.viewGO, "#image_buff/#txt_buffValue")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#image_buff/#go_click")
+local LengZhou6BuffItem = class("LengZhou6BuffItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LengZhou6BuffItem:onInitView()
+	self._imagebuff = gohelper.findChildImage(self.viewGO, "#image_buff")
+	self._txtbuffValue = gohelper.findChildText(self.viewGO, "#image_buff/#txt_buffValue")
+	self._goclick = gohelper.findChild(self.viewGO, "#image_buff/#go_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function LengZhou6BuffItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function LengZhou6BuffItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = SLFramework.UGUI.UIClickListener.Get(arg_4_0._goclick)
+function LengZhou6BuffItem:_editableInitView()
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._goclick)
 
-	arg_4_0._click:AddClickListener(arg_4_0._onClick, arg_4_0)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0._onClick(arg_5_0)
+function LengZhou6BuffItem:_onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_5_0._buff then
-		LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.OnClickBuff, arg_5_0._buff._configId)
+	if self._buff then
+		LengZhou6Controller.instance:dispatchEvent(LengZhou6Event.OnClickBuff, self._buff._configId)
 	end
 end
 
-function var_0_0.updateBuffItem(arg_6_0, arg_6_1)
-	arg_6_0._buff = arg_6_1
+function LengZhou6BuffItem:updateBuffItem(buff)
+	self._buff = buff
 
-	if arg_6_0._buff ~= nil then
-		local var_6_0 = arg_6_0._buff.config.icon
+	if self._buff ~= nil then
+		local config = self._buff.config
+		local name = config.icon
 
-		UISpriteSetMgr.instance:setBuffSprite(arg_6_0._imagebuff, var_6_0)
+		UISpriteSetMgr.instance:setBuffSprite(self._imagebuff, name)
 
-		local var_6_1 = arg_6_0._buff:getLayerCount()
+		local value = self._buff:getLayerCount()
 
-		arg_6_0._txtbuffValue.text = var_6_1
+		self._txtbuffValue.text = value
 
-		gohelper.setActive(arg_6_0.viewGO, var_6_1 > 0)
+		gohelper.setActive(self.viewGO, value > 0)
 	else
-		gohelper.setActive(arg_6_0.viewGO, false)
+		gohelper.setActive(self.viewGO, false)
 	end
 end
 
-function var_0_0.changeParent(arg_7_0, arg_7_1)
-	arg_7_0.viewGO.transform.parent = arg_7_1.transform
+function LengZhou6BuffItem:changeParent(parent)
+	self.viewGO.transform.parent = parent.transform
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	if arg_8_0._click then
-		arg_8_0._click:RemoveClickListener()
+function LengZhou6BuffItem:onDestroyView()
+	if self._click then
+		self._click:RemoveClickListener()
 
-		arg_8_0._click = nil
+		self._click = nil
 	end
 end
 
-return var_0_0
+return LengZhou6BuffItem

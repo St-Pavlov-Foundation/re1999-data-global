@@ -1,49 +1,56 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123PickHeroController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123PickHeroController.lua
 
-local var_0_0 = class("Season123PickHeroController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123PickHeroController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
-	arg_1_0._finishCall = arg_1_3
-	arg_1_0._finishCallObj = arg_1_4
+local Season123PickHeroController = class("Season123PickHeroController", BaseController)
+
+function Season123PickHeroController:onOpenView(actId, stage, finishCall, finishCallObj, entryMOList, selectUid)
+	self._finishCall = finishCall
+	self._finishCallObj = finishCallObj
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
-	Season123PickHeroModel.instance:init(arg_1_1, arg_1_2, arg_1_5, arg_1_6)
+	Season123PickHeroModel.instance:init(actId, stage, entryMOList, selectUid)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function Season123PickHeroController:onCloseView()
 	Season123PickHeroModel.instance:release()
 	CharacterBackpackCardListModel.instance:clearCardList()
 end
 
-function var_0_0.setHeroSelect(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_2 and Season123PickHeroModel.instance:getSelectCount() >= Season123PickHeroModel.instance:getLimitCount() then
-		logNormal("max hero count!")
+function Season123PickHeroController:setHeroSelect(heroUid, value)
+	if value then
+		local count = Season123PickHeroModel.instance:getSelectCount()
+		local limitCount = Season123PickHeroModel.instance:getLimitCount()
 
-		return
+		if limitCount <= count then
+			logNormal("max hero count!")
+
+			return
+		end
 	end
 
-	Season123PickHeroModel.instance:setHeroSelect(arg_3_1, arg_3_2)
-	arg_3_0:notifyView()
+	Season123PickHeroModel.instance:setHeroSelect(heroUid, value)
+	self:notifyView()
 end
 
-function var_0_0.pickOver(arg_4_0)
-	local var_4_0 = Season123PickHeroModel.instance:getSelectMOList()
+function Season123PickHeroController:pickOver()
+	local list = Season123PickHeroModel.instance:getSelectMOList()
 
-	if arg_4_0._finishCall then
-		arg_4_0._finishCall(arg_4_0._finishCallObj, var_4_0)
+	if self._finishCall then
+		self._finishCall(self._finishCallObj, list)
 	end
 end
 
-function var_0_0.updateFilter(arg_5_0)
+function Season123PickHeroController:updateFilter()
 	Season123PickHeroModel.instance:refreshList()
 	Season123Controller.instance:dispatchEvent(Season123Event.PickViewRefresh)
 end
 
-function var_0_0.notifyView(arg_6_0)
+function Season123PickHeroController:notifyView()
 	Season123PickHeroModel.instance:onModelUpdate()
 	Season123Controller.instance:dispatchEvent(Season123Event.PickViewRefresh)
 end
 
-var_0_0.instance = var_0_0.New()
+Season123PickHeroController.instance = Season123PickHeroController.New()
 
-return var_0_0
+return Season123PickHeroController

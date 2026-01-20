@@ -1,34 +1,36 @@
-﻿module("modules.logic.explore.controller.steps.ExploreAddMaterialStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreAddMaterialStep.lua
 
-local var_0_0 = class("ExploreAddMaterialStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreAddMaterialStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = {}
+local ExploreAddMaterialStep = class("ExploreAddMaterialStep", ExploreStepBase)
 
-	for iter_1_0 = 1, #arg_1_0._data.materialData do
-		var_1_0[iter_1_0] = cjson.decode(arg_1_0._data.materialData[iter_1_0])
+function ExploreAddMaterialStep:onStart()
+	local dataList = {}
+
+	for i = 1, #self._data.materialData do
+		dataList[i] = cjson.decode(self._data.materialData[i])
 	end
 
-	ExploreController.instance:addItem(var_1_0)
+	ExploreController.instance:addItem(dataList)
 
 	if PopupController.instance:getPopupCount() > 0 or ViewMgr.instance:isOpen(ViewName.ExploreGetItemView) or ViewMgr.instance:isOpen(ViewName.CommonPropView) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0.checkHavePopup, arg_1_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
 	else
-		arg_1_0:onDone()
+		self:onDone()
 	end
 end
 
-function var_0_0.checkHavePopup(arg_2_0)
+function ExploreAddMaterialStep:checkHavePopup()
 	if PopupController.instance:getPopupCount() > 0 or ViewMgr.instance:isOpen(ViewName.ExploreGetItemView) or ViewMgr.instance:isOpen(ViewName.CommonPropView) then
 		-- block empty
 	else
-		arg_2_0:onDone()
+		self:onDone()
 	end
 end
 
-function var_0_0.onDestory(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0.checkHavePopup, arg_3_0)
-	var_0_0.super.onDestory(arg_3_0)
+function ExploreAddMaterialStep:onDestory()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.checkHavePopup, self)
+	ExploreAddMaterialStep.super.onDestory(self)
 end
 
-return var_0_0
+return ExploreAddMaterialStep

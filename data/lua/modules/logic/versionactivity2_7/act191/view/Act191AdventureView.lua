@@ -1,118 +1,121 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191AdventureView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191AdventureView.lua
 
-local var_0_0 = class("Act191AdventureView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191AdventureView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goLive2d = gohelper.findChild(arg_1_0.viewGO, "live2dcontainer/#go_Live2d")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_Title")
-	arg_1_0._btnEnemyInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#txt_Title/#btn_EnemyInfo")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_Desc")
-	arg_1_0._txtTarget = gohelper.findChildText(arg_1_0.viewGO, "#txt_Target")
-	arg_1_0._goReward = gohelper.findChild(arg_1_0.viewGO, "#go_Reward")
-	arg_1_0._btnNext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Next")
-	arg_1_0._txtNext = gohelper.findChildText(arg_1_0.viewGO, "#btn_Next/#txt_Next")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Act191AdventureView = class("Act191AdventureView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191AdventureView:onInitView()
+	self._goLive2d = gohelper.findChild(self.viewGO, "live2dcontainer/#go_Live2d")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#txt_Title")
+	self._btnEnemyInfo = gohelper.findChildButtonWithAudio(self.viewGO, "#txt_Title/#btn_EnemyInfo")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "#txt_Desc")
+	self._txtTarget = gohelper.findChildText(self.viewGO, "#txt_Target")
+	self._goReward = gohelper.findChild(self.viewGO, "#go_Reward")
+	self._btnNext = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Next")
+	self._txtNext = gohelper.findChildText(self.viewGO, "#btn_Next/#txt_Next")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnemyInfo:AddClickListener(arg_2_0._btnEnemyInfoOnClick, arg_2_0)
-	arg_2_0._btnNext:AddClickListener(arg_2_0._btnNextOnClick, arg_2_0)
+function Act191AdventureView:addEvents()
+	self._btnEnemyInfo:AddClickListener(self._btnEnemyInfoOnClick, self)
+	self._btnNext:AddClickListener(self._btnNextOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnemyInfo:RemoveClickListener()
-	arg_3_0._btnNext:RemoveClickListener()
+function Act191AdventureView:removeEvents()
+	self._btnEnemyInfo:RemoveClickListener()
+	self._btnNext:RemoveClickListener()
 end
 
-function var_0_0._btnEnemyInfoOnClick(arg_4_0)
-	if arg_4_0.battleId then
-		EnemyInfoController.instance:openAct191EnemyInfoView(arg_4_0.battleId)
+function Act191AdventureView:_btnEnemyInfoOnClick()
+	if self.battleId then
+		EnemyInfoController.instance:openAct191EnemyInfoView(self.battleId)
 	end
 end
 
-function var_0_0._btnNextOnClick(arg_5_0)
-	if arg_5_0.nodeDetailMo.type == Activity191Enum.NodeType.RewardEvent then
-		local var_5_0 = Activity191Model.instance:getCurActId()
+function Act191AdventureView:_btnNextOnClick()
+	if self.nodeDetailMo.type == Activity191Enum.NodeType.RewardEvent then
+		local actId = Activity191Model.instance:getCurActId()
 
-		Activity191Rpc.instance:sendGain191RewardEventRequest(var_5_0, arg_5_0.onGainRewardReply, arg_5_0)
-	elseif arg_5_0.nodeDetailMo.type == Activity191Enum.NodeType.BattleEvent then
-		Activity191Controller.instance:enterFightScene(arg_5_0.nodeDetailMo)
+		Activity191Rpc.instance:sendGain191RewardEventRequest(actId, self.onGainRewardReply, self)
+	elseif self.nodeDetailMo.type == Activity191Enum.NodeType.BattleEvent then
+		Activity191Controller.instance:enterFightScene(self.nodeDetailMo)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function Act191AdventureView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	Act191StatController.instance:onViewOpen(arg_7_0.viewName)
+function Act191AdventureView:onOpen()
+	Act191StatController.instance:onViewOpen(self.viewName)
 
-	arg_7_0.nodeDetailMo = arg_7_0.viewParam
-	arg_7_0.eventCo = lua_activity191_event.configDict[arg_7_0.nodeDetailMo.eventId]
-	arg_7_0._txtTitle.text = GameUtil.setFirstStrSize(arg_7_0.eventCo.title, 62)
-	arg_7_0._txtDesc.text = arg_7_0.eventCo.desc
-	arg_7_0._txtTarget.text = arg_7_0.eventCo.task
+	self.nodeDetailMo = self.viewParam
+	self.eventCo = lua_activity191_event.configDict[self.nodeDetailMo.eventId]
+	self._txtTitle.text = GameUtil.setFirstStrSize(self.eventCo.title, 62)
+	self._txtDesc.text = self.eventCo.desc
+	self._txtTarget.text = self.eventCo.task
 
-	if arg_7_0.nodeDetailMo.type == Activity191Enum.NodeType.RewardEvent then
-		arg_7_0._txtNext.text = luaLang("act191adventureview_gainreward")
+	if self.nodeDetailMo.type == Activity191Enum.NodeType.RewardEvent then
+		self._txtNext.text = luaLang("act191adventureview_gainreward")
 
-		gohelper.setActive(arg_7_0._btnEnemyInfo, false)
-	elseif arg_7_0.nodeDetailMo.type == Activity191Enum.NodeType.BattleEvent then
-		arg_7_0._txtNext.text = luaLang("act191adventureview_start")
+		gohelper.setActive(self._btnEnemyInfo, false)
+	elseif self.nodeDetailMo.type == Activity191Enum.NodeType.BattleEvent then
+		self._txtNext.text = luaLang("act191adventureview_start")
 
-		gohelper.setActive(arg_7_0._btnEnemyInfo, true)
+		gohelper.setActive(self._btnEnemyInfo, true)
 
-		local var_7_0 = arg_7_0.nodeDetailMo.fightEventId
-		local var_7_1 = lua_activity191_fight_event.configDict[var_7_0].episodeId
-		local var_7_2 = DungeonConfig.instance:getEpisodeCO(var_7_1)
+		local eventId = self.nodeDetailMo.fightEventId
+		local episodeId = lua_activity191_fight_event.configDict[eventId].episodeId
+		local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		arg_7_0.battleId = var_7_2 and var_7_2.battleId
+		self.battleId = episodeCo and episodeCo.battleId
 	end
 
-	arg_7_0._uiSpine = GuiModelAgent.Create(arg_7_0._goLive2d, true)
+	self._uiSpine = GuiModelAgent.Create(self._goLive2d, true)
 
-	local var_7_3 = FightConfig.instance:getSkinCO(arg_7_0.eventCo.skinId)
+	local skinCO = FightConfig.instance:getSkinCO(self.eventCo.skinId)
 
-	if var_7_3 then
-		arg_7_0._uiSpine:setResPath(var_7_3, function()
-			arg_7_0._uiSpine:setLayer(UnityLayer.Unit)
-		end, arg_7_0)
+	if skinCO then
+		self._uiSpine:setResPath(skinCO, function()
+			self._uiSpine:setLayer(UnityLayer.Unit)
+		end, self)
 
-		if not string.nilorempty(arg_7_0.eventCo.offset) then
-			local var_7_4 = string.splitToNumber(arg_7_0.eventCo.offset, "#")
+		if not string.nilorempty(self.eventCo.offset) then
+			local offsetArr = string.splitToNumber(self.eventCo.offset, "#")
 
-			recthelper.setAnchor(arg_7_0._goLive2d.transform, var_7_4[1], var_7_4[2])
+			recthelper.setAnchor(self._goLive2d.transform, offsetArr[1], offsetArr[2])
 
-			local var_7_5 = var_7_4[3]
+			local scale = offsetArr[3]
 
-			if var_7_5 then
-				transformhelper.setLocalScale(arg_7_0._goLive2d.transform, var_7_5, var_7_5, 1)
+			if scale then
+				transformhelper.setLocalScale(self._goLive2d.transform, scale, scale, 1)
 			end
 		end
 	end
 
-	local var_7_6 = GameUtil.splitString2(arg_7_0.eventCo.rewardView, true)
+	local rewardList = GameUtil.splitString2(self.eventCo.rewardView, true)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_6) do
-		local var_7_7 = arg_7_0:getResInst(Activity191Enum.PrefabPath.RewardItem, arg_7_0._goReward)
+	for _, v in ipairs(rewardList) do
+		local go = self:getResInst(Activity191Enum.PrefabPath.RewardItem, self._goReward)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act191RewardItem)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_7_7, Act191RewardItem):setData(iter_7_1[1], iter_7_1[2])
+		item:setData(v[1], v[2])
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
-	local var_9_0 = arg_9_0.viewContainer:isManualClose()
+function Act191AdventureView:onClose()
+	local isManual = self.viewContainer:isManualClose()
 
-	Act191StatController.instance:statViewClose(arg_9_0.viewName, var_9_0)
+	Act191StatController.instance:statViewClose(self.viewName, isManual)
 end
 
-function var_0_0.onGainRewardReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_2 == 0 then
-		ViewMgr.instance:closeView(arg_10_0.viewName)
+function Act191AdventureView:onGainRewardReply(_, resultCode)
+	if resultCode == 0 then
+		ViewMgr.instance:closeView(self.viewName)
 
 		if not Activity191Controller.instance:checkOpenGetView() then
 			Activity191Controller.instance:nextStep()
@@ -120,4 +123,4 @@ function var_0_0.onGainRewardReply(arg_10_0, arg_10_1, arg_10_2)
 	end
 end
 
-return var_0_0
+return Act191AdventureView

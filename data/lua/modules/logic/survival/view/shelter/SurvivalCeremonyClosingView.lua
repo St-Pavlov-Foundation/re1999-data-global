@@ -1,68 +1,70 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalCeremonyClosingView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalCeremonyClosingView.lua
 
-local var_0_0 = class("SurvivalCeremonyClosingView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalCeremonyClosingView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Mask")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_PanelBG")
-	arg_1_0._simagePanelBG1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_PanelBG1")
-	arg_1_0._simagePanelBG2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_PanelBG2")
-	arg_1_0._scrollcontentlist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_contentlist")
-	arg_1_0._goEnding = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Ending")
-	arg_1_0._simageending = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#simage_ending")
-	arg_1_0._txtending = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#txt_ending")
-	arg_1_0._goendingScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#go_endingScore")
-	arg_1_0._txtendingScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#go_endingScore/#txt_endingScore")
-	arg_1_0._goNpc = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc")
-	arg_1_0._gonpcitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcitem")
-	arg_1_0._imagenpc = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcitem/#image_npc")
-	arg_1_0._gonpcline1 = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcline1")
-	arg_1_0._gonpcline2 = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcline2")
-	arg_1_0._gonpcScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/#go_npcScore")
-	arg_1_0._txtnpcScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/#go_npcScore/#txt_npcScore")
-	arg_1_0._goBoss = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Boss")
-	arg_1_0._gobossitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossitem")
-	arg_1_0._imageboss = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossitem/#image_boss")
-	arg_1_0._gobossline1 = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossline1")
-	arg_1_0._gobossline2 = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossline2")
-	arg_1_0._gobossScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/#go_bossScore")
-	arg_1_0._txtbossScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/#go_bossScore/#txt_bossScore")
-	arg_1_0._gosurvivalTime = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime")
-	arg_1_0._txtsurvivalTime = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime/#txt_survivalTime")
-	arg_1_0._goscore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime/#go_score")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime/#go_score/#txt_score")
-	arg_1_0._goextraTarget = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget")
-	arg_1_0._txtextraTarget = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget/#txt_extraTarget")
-	arg_1_0._goextraScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget/#go_extraScore")
-	arg_1_0._txtextraScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget/#go_extraScore/#txt_extraScore")
-	arg_1_0._goCollection = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Collection")
-	arg_1_0._txtCollection = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/#txt_Collection")
-	arg_1_0._gocollectionScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/#go_collectionScore")
-	arg_1_0._txtcollectionScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/#go_collectionScore/#txt_collectionScore")
-	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Item")
-	arg_1_0._txtItem = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#txt_Item")
-	arg_1_0._goItemScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#go_ItemScore")
-	arg_1_0._txtItemScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#go_ItemScore/#txt_ItemScore")
-	arg_1_0._goTotalScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore")
-	arg_1_0._txtTotalScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/#txt_TotalScore")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local SurvivalCeremonyClosingView = class("SurvivalCeremonyClosingView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalCeremonyClosingView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageMask = gohelper.findChildSingleImage(self.viewGO, "#simage_Mask")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_PanelBG")
+	self._simagePanelBG1 = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_PanelBG1")
+	self._simagePanelBG2 = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_PanelBG2")
+	self._scrollcontentlist = gohelper.findChildScrollRect(self.viewGO, "#scroll_contentlist")
+	self._goEnding = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Ending")
+	self._simageending = gohelper.findChildSingleImage(self.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#simage_ending")
+	self._txtending = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#txt_ending")
+	self._goendingScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#go_endingScore")
+	self._txtendingScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Ending/#go_endingScore/#txt_endingScore")
+	self._goNpc = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc")
+	self._gonpcitem = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcitem")
+	self._imagenpc = gohelper.findChildImage(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcitem/#image_npc")
+	self._gonpcline1 = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcline1")
+	self._gonpcline2 = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/layout/#go_npcline2")
+	self._gonpcScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/#go_npcScore")
+	self._txtnpcScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/#go_npcScore/#txt_npcScore")
+	self._goBoss = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Boss")
+	self._gobossitem = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossitem")
+	self._imageboss = gohelper.findChildImage(self.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossitem/#image_boss")
+	self._gobossline1 = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossline1")
+	self._gobossline2 = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/layout/#go_bossline2")
+	self._gobossScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/#go_bossScore")
+	self._txtbossScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Boss/#go_bossScore/#txt_bossScore")
+	self._gosurvivalTime = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime")
+	self._txtsurvivalTime = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime/#txt_survivalTime")
+	self._goscore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime/#go_score")
+	self._txtscore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_survivalTime/#go_score/#txt_score")
+	self._goextraTarget = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget")
+	self._txtextraTarget = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget/#txt_extraTarget")
+	self._goextraScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget/#go_extraScore")
+	self._txtextraScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_extraTarget/#go_extraScore/#txt_extraScore")
+	self._goCollection = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Collection")
+	self._txtCollection = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/#txt_Collection")
+	self._gocollectionScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/#go_collectionScore")
+	self._txtcollectionScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/#go_collectionScore/#txt_collectionScore")
+	self._goItem = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Item")
+	self._txtItem = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#txt_Item")
+	self._goItemScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#go_ItemScore")
+	self._txtItemScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#go_ItemScore/#txt_ItemScore")
+	self._goTotalScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore")
+	self._txtTotalScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/#txt_TotalScore")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function SurvivalCeremonyClosingView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function SurvivalCeremonyClosingView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-local var_0_1 = 50
-local var_0_2 = {
+local addHeight = 50
+local showTime = {
 	0.5,
 	0.5,
 	0.5,
@@ -72,7 +74,7 @@ local var_0_2 = {
 	0.5,
 	0.5
 }
-local var_0_3 = {
+local scoreEnum = {
 	boss = 3,
 	extraTarget = 5,
 	item = 7,
@@ -81,436 +83,445 @@ local var_0_3 = {
 	collection = 1,
 	winScore = 6
 }
-local var_0_4 = ZProj.TweenHelper
+local ZProj_TweenHelper = ZProj.TweenHelper
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SurvivalCeremonyClosingView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._nextClick = gohelper.findChildClickWithAudio(arg_5_0.viewGO, "go_click")
+function SurvivalCeremonyClosingView:_editableInitView()
+	self._nextClick = gohelper.findChildClickWithAudio(self.viewGO, "go_click")
 
-	arg_5_0._nextClick:AddClickListener(arg_5_0.enterNext, arg_5_0)
+	self._nextClick:AddClickListener(self.enterNext, self)
 
-	arg_5_0._canvasGroupEnding = arg_5_0._goEnding:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvasGroupNpc = arg_5_0._goNpc:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvasGroupBoss = arg_5_0._goBoss:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvasGroupSurvivalTime = arg_5_0._gosurvivalTime:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvasGroupExtraTarget = arg_5_0._goextraTarget:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvasGroupCollection = arg_5_0._goCollection:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvasGroupItem = arg_5_0._goItem:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._canvasGroupTotalScore = arg_5_0._goTotalScore:GetComponent(gohelper.Type_CanvasGroup)
-	arg_5_0._animationEnding = arg_5_0._goEnding:GetComponent(gohelper.Type_Animation)
-	arg_5_0._animationNpc = arg_5_0._goNpc:GetComponent(gohelper.Type_Animation)
-	arg_5_0._animationBoss = arg_5_0._goBoss:GetComponent(gohelper.Type_Animation)
-	arg_5_0._animationSurvivalTime = arg_5_0._gosurvivalTime:GetComponent(gohelper.Type_Animation)
-	arg_5_0._animationExtraTarget = arg_5_0._goextraTarget:GetComponent(gohelper.Type_Animation)
-	arg_5_0._animationCollection = arg_5_0._goCollection:GetComponent(gohelper.Type_Animation)
-	arg_5_0._animationExtraItem = arg_5_0._goItem:GetComponent(gohelper.Type_Animation)
-	arg_5_0._animationTotalScore = arg_5_0._goTotalScore:GetComponent(gohelper.Type_Animation)
-	arg_5_0._contentRect = gohelper.findChild(arg_5_0.viewGO, "#scroll_contentlist/viewport/content").transform:GetComponent(gohelper.Type_RectTransform)
+	self._canvasGroupEnding = self._goEnding:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupNpc = self._goNpc:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupBoss = self._goBoss:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupSurvivalTime = self._gosurvivalTime:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupExtraTarget = self._goextraTarget:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupCollection = self._goCollection:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupItem = self._goItem:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupTotalScore = self._goTotalScore:GetComponent(gohelper.Type_CanvasGroup)
+	self._animationEnding = self._goEnding:GetComponent(gohelper.Type_Animation)
+	self._animationNpc = self._goNpc:GetComponent(gohelper.Type_Animation)
+	self._animationBoss = self._goBoss:GetComponent(gohelper.Type_Animation)
+	self._animationSurvivalTime = self._gosurvivalTime:GetComponent(gohelper.Type_Animation)
+	self._animationExtraTarget = self._goextraTarget:GetComponent(gohelper.Type_Animation)
+	self._animationCollection = self._goCollection:GetComponent(gohelper.Type_Animation)
+	self._animationExtraItem = self._goItem:GetComponent(gohelper.Type_Animation)
+	self._animationTotalScore = self._goTotalScore:GetComponent(gohelper.Type_Animation)
 
-	local var_5_0 = arg_5_0._scrollcontentlist.transform:GetComponent(gohelper.Type_RectTransform)
+	local content = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content")
 
-	arg_5_0._scrollHeight = recthelper.getHeight(var_5_0)
-	arg_5_0._goCollectionLayout = gohelper.findChild(arg_5_0.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/layout")
-	arg_5_0._goItemLayout = gohelper.findChild(arg_5_0.viewGO, "#scroll_contentlist/viewport/content/#go_Item/layout")
-	arg_5_0._txtTips = gohelper.findChildText(arg_5_0.viewGO, "txt_tips")
+	self._contentRect = content.transform:GetComponent(gohelper.Type_RectTransform)
 
-	gohelper.setActive(arg_5_0._btnclose.gameObject, false)
-	gohelper.setActive(arg_5_0._txtTips.gameObject, false)
-	gohelper.setActive(arg_5_0._gonpcitem, false)
+	local scrollContentTr = self._scrollcontentlist.transform:GetComponent(gohelper.Type_RectTransform)
+
+	self._scrollHeight = recthelper.getHeight(scrollContentTr)
+	self._goCollectionLayout = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Collection/layout")
+	self._goItemLayout = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Item/layout")
+	self._txtTips = gohelper.findChildText(self.viewGO, "txt_tips")
+
+	gohelper.setActive(self._btnclose.gameObject, false)
+	gohelper.setActive(self._txtTips.gameObject, false)
+	gohelper.setActive(self._gonpcitem, false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function SurvivalCeremonyClosingView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._isWin = arg_7_0.viewParam.isWin or false
+function SurvivalCeremonyClosingView:onOpen()
+	self._isWin = self.viewParam.isWin or false
 
-	local var_7_0 = arg_7_0.viewParam.report
+	local report = self.viewParam.report
 
-	if not string.nilorempty(var_7_0) then
-		arg_7_0._report = cjson.decode(var_7_0)
+	if not string.nilorempty(report) then
+		self._report = cjson.decode(report)
 	end
 
-	arg_7_0._totalScore = arg_7_0._report.totalCount
+	self._totalScore = self._report.totalCount
 
 	SurvivalShelterChooseNpcListModel.instance:clearSelectList()
 	SurvivalShelterChooseEquipListModel.instance:clearSelectList()
 
-	local var_7_1 = arg_7_0._report.extraData
+	local extraData = self._report.extraData
 
-	if not string.nilorempty(var_7_1) then
-		local var_7_2 = string.split(var_7_1, "|")
-		local var_7_3 = var_7_2[1]
-		local var_7_4 = var_7_2[2]
+	if not string.nilorempty(extraData) then
+		local data = string.split(extraData, "|")
+		local npcIdsStr = data[1]
+		local equipIdsStr = data[2]
 
-		if not string.nilorempty(var_7_3) then
-			local var_7_5 = string.splitToNumber(var_7_3, "#")
+		if not string.nilorempty(npcIdsStr) then
+			local npcIds = string.splitToNumber(npcIdsStr, "#")
 
-			SurvivalShelterChooseNpcListModel.instance:setNeedSelectNpcList(var_7_5)
+			SurvivalShelterChooseNpcListModel.instance:setNeedSelectNpcList(npcIds)
 		end
 
-		if not string.nilorempty(var_7_4) then
-			local var_7_6 = string.splitToNumber(var_7_4, "#")
+		if not string.nilorempty(equipIdsStr) then
+			local equipIds = string.splitToNumber(equipIdsStr, "#")
 
-			SurvivalShelterChooseEquipListModel.instance:setNeedSelectEquipList(var_7_6)
+			SurvivalShelterChooseEquipListModel.instance:setNeedSelectEquipList(equipIds)
 		end
 	end
 
-	arg_7_0:_initView()
+	self:_initView()
 end
 
-function var_0_0._initView(arg_8_0)
-	arg_8_0._allShowGO = arg_8_0:getUserDataTb_()
-	arg_8_0._allShowAnimation = arg_8_0:getUserDataTb_()
-	arg_8_0._showTime = {}
-	arg_8_0._maxStep = 0
+function SurvivalCeremonyClosingView:_initView()
+	self._allShowGO = self:getUserDataTb_()
+	self._allShowAnimation = self:getUserDataTb_()
+	self._showTime = {}
+	self._maxStep = 0
 
-	arg_8_0:_initEnding()
-	arg_8_0:_initNpc()
-	arg_8_0:_initBoss()
-	arg_8_0:_initSurvivalTime()
-	arg_8_0:_initExtraTarget()
-	arg_8_0:_initCollection()
-	arg_8_0:_initItem()
-	arg_8_0:_initTotalScore()
+	self:_initEnding()
+	self:_initNpc()
+	self:_initBoss()
+	self:_initSurvivalTime()
+	self:_initExtraTarget()
+	self:_initCollection()
+	self:_initItem()
+	self:_initTotalScore()
 
-	arg_8_0._progress = 1
+	self._progress = 1
 
-	arg_8_0:_refreshCurProgress()
+	self:_refreshCurProgress()
 end
 
-function var_0_0._initEnding(arg_9_0)
-	local var_9_0 = arg_9_0:getScoreByType(var_0_3.winScore)
+function SurvivalCeremonyClosingView:_initEnding()
+	local score = self:getScoreByType(scoreEnum.winScore)
 
-	arg_9_0._txtendingScore.text = var_9_0
+	self._txtendingScore.text = score
 
-	gohelper.setActive(arg_9_0._goendingScore, var_9_0 > 0)
+	gohelper.setActive(self._goendingScore, score > 0)
 
-	local var_9_1 = arg_9_0._report.endId
-	local var_9_2 = lua_survival_end.configDict[var_9_1]
-	local var_9_3 = var_9_2.endImg
+	local endId = self._report.endId
+	local endConfig = lua_survival_end.configDict[endId]
+	local path = endConfig.endImg
 
-	arg_9_0._simageending:LoadImage(var_9_3)
+	self._simageending:LoadImage(path)
 
-	arg_9_0._txtending.text = var_9_2.endDesc
+	self._txtending.text = endConfig.endDesc
 
-	arg_9_0:addShowStep(arg_9_0._animationEnding, var_0_2[1], arg_9_0._canvasGroupEnding)
+	self:addShowStep(self._animationEnding, showTime[1], self._canvasGroupEnding)
 end
 
-local var_0_5 = 9
-local var_0_6 = 0
+local lineMax = 9
+local count = 0
 
-function var_0_0._initNpc(arg_10_0)
-	local var_10_0 = arg_10_0:getScoreByType(var_0_3.npc)
+function SurvivalCeremonyClosingView:_initNpc()
+	local score = self:getScoreByType(scoreEnum.npc)
 
-	var_0_6 = 0
+	count = 0
 
-	gohelper.setActive(arg_10_0._goNpc, var_10_0 > 0)
+	gohelper.setActive(self._goNpc, score > 0)
 
-	if var_10_0 <= 0 then
+	if score <= 0 then
 		return
 	end
 
-	arg_10_0._txtnpcScore.text = var_10_0
+	self._txtnpcScore.text = score
 
-	if arg_10_0._npcItems == nil then
-		arg_10_0._npcItems = arg_10_0:getUserDataTb_()
+	if self._npcItems == nil then
+		self._npcItems = self:getUserDataTb_()
 	end
 
-	local var_10_1 = arg_10_0._report.gainNpcSet
-	local var_10_2 = #var_10_1
+	local npcIdList = self._report.gainNpcSet
+	local npcListCount = #npcIdList
 
-	for iter_10_0 = 1, var_10_2 do
-		local var_10_3 = var_10_1[iter_10_0]
-		local var_10_4 = SurvivalConfig.instance:getNpcConfig(var_10_3)
-		local var_10_5 = arg_10_0._npcItems[iter_10_0]
+	for i = 1, npcListCount do
+		local npcId = npcIdList[i]
+		local config = SurvivalConfig.instance:getNpcConfig(npcId)
+		local item = self._npcItems[i]
 
-		if var_10_5 == nil then
-			local var_10_6 = arg_10_0:getNpcLine()
+		if item == nil then
+			local parent = self:getNpcLine()
 
-			var_10_5 = gohelper.clone(arg_10_0._gonpcitem, var_10_6, var_10_3)
+			item = gohelper.clone(self._gonpcitem, parent, npcId)
 
-			gohelper.setActive(var_10_5, true)
-			table.insert(arg_10_0._npcItems, var_10_5)
+			gohelper.setActive(item, true)
+			table.insert(self._npcItems, item)
 
-			if not var_10_6.activeSelf then
-				gohelper.setActive(var_10_6, true)
+			if not parent.activeSelf then
+				gohelper.setActive(parent, true)
 			end
 		end
 
-		local var_10_7 = gohelper.findChildSingleImage(var_10_5, "#image_npc")
+		local sImage = gohelper.findChildSingleImage(item, "#image_npc")
 
-		if var_10_4 and not string.nilorempty(var_10_4.smallIcon) then
-			local var_10_8 = ResUrl.getSurvivalNpcIcon(var_10_4.smallIcon)
+		if config and not string.nilorempty(config.smallIcon) then
+			local path = ResUrl.getSurvivalNpcIcon(config.smallIcon)
 
-			var_10_7:LoadImage(var_10_8)
+			sImage:LoadImage(path)
 		end
 	end
 
-	arg_10_0:addShowStep(arg_10_0._animationNpc, var_0_2[2], arg_10_0._canvasGroupNpc)
+	self:addShowStep(self._animationNpc, showTime[2], self._canvasGroupNpc)
 end
 
-function var_0_0.getNpcLine(arg_11_0)
-	var_0_6 = var_0_6 + 1
+function SurvivalCeremonyClosingView:getNpcLine()
+	count = count + 1
 
-	local var_11_0 = math.ceil(var_0_6 / var_0_5)
+	local index = math.ceil(count / lineMax)
 
-	if arg_11_0._npcLines == nil then
-		arg_11_0._npcLines = arg_11_0:getUserDataTb_()
+	if self._npcLines == nil then
+		self._npcLines = self:getUserDataTb_()
 	end
 
-	if arg_11_0._npcLines[var_11_0] ~= nil then
-		return arg_11_0._npcLines[var_11_0]
+	if self._npcLines[index] ~= nil then
+		return self._npcLines[index]
 	end
 
-	local var_11_1 = arg_11_0._gonpcline1
+	local cloneGo = self._gonpcline1
 
-	if var_11_0 % 2 == 0 then
-		var_11_1 = arg_11_0._gonpcline2
+	if index % 2 == 0 then
+		cloneGo = self._gonpcline2
 	end
 
-	local var_11_2 = gohelper.cloneInPlace(var_11_1, var_11_0)
+	local go = gohelper.cloneInPlace(cloneGo, index)
 
-	arg_11_0._npcLines[var_11_0] = var_11_2
+	self._npcLines[index] = go
 
-	return var_11_2
+	return go
 end
 
-function var_0_0._initBoss(arg_12_0)
-	local var_12_0 = arg_12_0:getScoreByType(var_0_3.boss)
+function SurvivalCeremonyClosingView:_initBoss()
+	local score = self:getScoreByType(scoreEnum.boss)
 
-	gohelper.setActive(arg_12_0._goBoss, var_12_0 > 0)
+	gohelper.setActive(self._goBoss, score > 0)
 
-	if var_12_0 <= 0 then
+	if score <= 0 then
 		return
 	end
 
-	arg_12_0._txtbossScore.text = var_12_0
+	self._txtbossScore.text = score
 
-	if arg_12_0._bossItems == nil then
-		arg_12_0._bossItems = arg_12_0:getUserDataTb_()
+	if self._bossItems == nil then
+		self._bossItems = self:getUserDataTb_()
 	end
 
-	local var_12_1 = arg_12_0._report.fightIds
-	local var_12_2 = 9
-	local var_12_3 = #var_12_1
+	local fightIds = self._report.fightIds
+	local lineMax = 9
+	local npcListCount = #fightIds
 
-	for iter_12_0 = 1, var_12_3 do
-		local var_12_4 = tonumber(var_12_1[iter_12_0])
-		local var_12_5 = lua_survival_shelter_intrude_fight.configDict[var_12_4]
-		local var_12_6 = arg_12_0._bossItems[iter_12_0]
+	for i = 1, npcListCount do
+		local fightId = tonumber(fightIds[i])
+		local config = lua_survival_shelter_intrude_fight.configDict[fightId]
+		local item = self._bossItems[i]
 
-		if var_12_6 == nil then
-			local var_12_7 = arg_12_0._gobossline1
+		if item == nil then
+			local parent = self._gobossline1
 
-			if var_12_2 < iter_12_0 then
-				var_12_7 = arg_12_0._gobossline2
+			if lineMax < i then
+				parent = self._gobossline2
 			end
 
-			var_12_6 = gohelper.clone(arg_12_0._gobossitem, var_12_7, var_12_4)
+			item = gohelper.clone(self._gobossitem, parent, fightId)
 
-			gohelper.setActive(var_12_6, true)
-			table.insert(arg_12_0._bossItems, var_12_6)
+			gohelper.setActive(item, true)
+			table.insert(self._bossItems, item)
 		end
 
-		local var_12_8 = gohelper.findChildSingleImage(var_12_6, "#image_boss")
+		local sImage = gohelper.findChildSingleImage(item, "#image_boss")
 
-		if not string.nilorempty(var_12_5.smallheadicon) then
-			local var_12_9 = ResUrl.monsterHeadIcon(var_12_5.smallheadicon)
+		if not string.nilorempty(config.smallheadicon) then
+			local path = ResUrl.monsterHeadIcon(config.smallheadicon)
 
-			var_12_8:LoadImage(var_12_9)
+			sImage:LoadImage(path)
 		end
 	end
 
-	gohelper.setActive(arg_12_0._gobossline2, var_12_2 < var_12_3)
-	arg_12_0:addShowStep(arg_12_0._animationBoss, var_0_2[3], arg_12_0._canvasGroupBoss)
+	gohelper.setActive(self._gobossline2, lineMax < npcListCount)
+	self:addShowStep(self._animationBoss, showTime[3], self._canvasGroupBoss)
 end
 
-function var_0_0._initSurvivalTime(arg_13_0)
-	local var_13_0 = arg_13_0:getScoreByType(var_0_3.survival)
+function SurvivalCeremonyClosingView:_initSurvivalTime()
+	local score = self:getScoreByType(scoreEnum.survival)
 
-	gohelper.setActive(arg_13_0._gosurvivalTime, var_13_0 > 0)
+	gohelper.setActive(self._gosurvivalTime, score > 0)
 
-	if var_13_0 <= 0 then
+	if score <= 0 then
 		return
 	end
 
-	arg_13_0._txtscore.text = var_13_0
+	self._txtscore.text = score
 
-	local var_13_1 = arg_13_0._report.day
+	local day = self._report.day
 
-	arg_13_0._txtsurvivalTime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_survivalTime"), var_13_1)
+	self._txtsurvivalTime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_survivalTime"), day)
 
-	arg_13_0:addShowStep(arg_13_0._animationSurvivalTime, var_0_2[4], arg_13_0._canvasGroupSurvivalTime)
+	self:addShowStep(self._animationSurvivalTime, showTime[4], self._canvasGroupSurvivalTime)
 end
 
-function var_0_0._initExtraTarget(arg_14_0)
-	local var_14_0 = arg_14_0:getScoreByType(var_0_3.extraTarget)
+function SurvivalCeremonyClosingView:_initExtraTarget()
+	local score = self:getScoreByType(scoreEnum.extraTarget)
 
-	gohelper.setActive(arg_14_0._goextraTarget, var_14_0 > 0)
+	gohelper.setActive(self._goextraTarget, score > 0)
 
-	if var_14_0 <= 0 then
+	if score <= 0 then
 		return
 	end
 
-	arg_14_0._txtextraScore.text = var_14_0
+	self._txtextraScore.text = score
 
-	local var_14_1 = arg_14_0._report.normalTaskCount
+	local normalTaskCount = self._report.normalTaskCount
 
-	arg_14_0._txtextraTarget.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_extraTarget"), var_14_1)
+	self._txtextraTarget.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_extraTarget"), normalTaskCount)
 
-	arg_14_0:addShowStep(arg_14_0._animationExtraTarget, var_0_2[5], arg_14_0._canvasGroupExtraTarget)
+	self:addShowStep(self._animationExtraTarget, showTime[5], self._canvasGroupExtraTarget)
 end
 
-function var_0_0._initCollection(arg_15_0)
-	local var_15_0 = arg_15_0:getScoreByType(var_0_3.collection)
+function SurvivalCeremonyClosingView:_initCollection()
+	local collectionScore = self:getScoreByType(scoreEnum.collection)
 
-	gohelper.setActive(arg_15_0._goCollection, var_15_0 > 0)
+	gohelper.setActive(self._goCollection, collectionScore > 0)
 
-	if var_15_0 <= 0 then
+	if collectionScore <= 0 then
 		return
 	end
 
-	arg_15_0._txtcollectionScore.text = var_15_0
+	self._txtcollectionScore.text = collectionScore
 
-	if arg_15_0._collectionItems == nil then
-		arg_15_0._collectionItems = arg_15_0:getUserDataTb_()
+	if self._collectionItems == nil then
+		self._collectionItems = self:getUserDataTb_()
 	end
 
-	local var_15_1 = arg_15_0._report.itemId2Count
-	local var_15_2 = {}
+	local itemId2Count = self._report.itemId2Count
+	local allItemIds = {}
 
-	for iter_15_0, iter_15_1 in pairs(var_15_1) do
-		table.insert(var_15_2, iter_15_0)
+	for itemId, _ in pairs(itemId2Count) do
+		table.insert(allItemIds, itemId)
 	end
 
-	table.sort(var_15_2, function(arg_16_0, arg_16_1)
-		return var_15_1[arg_16_0] > var_15_1[arg_16_1]
+	table.sort(allItemIds, function(a, b)
+		local countA = itemId2Count[a]
+		local countB = itemId2Count[b]
+
+		return countB < countA
 	end)
-	gohelper.setActive(arg_15_0._item, false)
+	gohelper.setActive(self._item, false)
 
-	for iter_15_2 = 1, #var_15_2 do
-		local var_15_3 = var_15_1[var_15_2[iter_15_2]]
-		local var_15_4 = tonumber(var_15_2[iter_15_2])
-		local var_15_5 = SurvivalBagItemMo.New()
+	for i = 1, #allItemIds do
+		local count = itemId2Count[allItemIds[i]]
+		local id = tonumber(allItemIds[i])
+		local mo = SurvivalBagItemMo.New()
 
-		var_15_5:init({
-			id = var_15_4,
-			count = var_15_3
+		mo:init({
+			id = id,
+			count = count
 		})
 
-		if var_15_5.equipCo ~= nil then
-			local var_15_6 = arg_15_0.viewContainer:getSetting().otherRes.itemRes
-			local var_15_7 = arg_15_0:getResInst(var_15_6, arg_15_0._goCollectionLayout)
-			local var_15_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_7, SurvivalBagItem)
+		if mo.equipCo ~= nil then
+			local itemRes = self.viewContainer:getSetting().otherRes.itemRes
+			local item = self:getResInst(itemRes, self._goCollectionLayout)
+			local equipItem = MonoHelper.addNoUpdateLuaComOnceToGo(item, SurvivalBagItem)
 
-			var_15_8:updateMo(var_15_5)
-			var_15_8:setShowNum(true)
-			var_15_8:setItemSize(150, 150)
-			gohelper.setActive(var_15_7, true)
-			table.insert(arg_15_0._collectionItems, var_15_8)
+			equipItem:updateMo(mo)
+			equipItem:setShowNum(true)
+			equipItem:setItemSize(150, 150)
+			gohelper.setActive(item, true)
+			table.insert(self._collectionItems, equipItem)
 		end
 	end
 
-	local var_15_9 = arg_15_0._report.equipCount
+	local equipNum = self._report.equipCount
 
-	if var_15_9 > 0 then
-		arg_15_0._txtCollection.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_collection"), var_15_9)
+	if equipNum > 0 then
+		self._txtCollection.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_collection"), equipNum)
 	end
 
-	gohelper.setActive(arg_15_0._txtCollection.gameObject, var_15_9 > 0)
-	arg_15_0:addShowStep(arg_15_0._animationCollection, var_0_2[6], arg_15_0._canvasGroupCollection)
+	gohelper.setActive(self._txtCollection.gameObject, equipNum > 0)
+	self:addShowStep(self._animationCollection, showTime[6], self._canvasGroupCollection)
 end
 
-function var_0_0._initItem(arg_17_0)
-	local var_17_0 = arg_17_0:getScoreByType(var_0_3.item)
+function SurvivalCeremonyClosingView:_initItem()
+	local itemScore = self:getScoreByType(scoreEnum.item)
 
-	gohelper.setActive(arg_17_0._goItem, var_17_0 > 0)
+	gohelper.setActive(self._goItem, itemScore > 0)
 
-	if var_17_0 <= 0 then
+	if itemScore <= 0 then
 		return
 	end
 
-	if arg_17_0._collectionItems == nil then
-		arg_17_0._collectionItems = arg_17_0:getUserDataTb_()
+	if self._collectionItems == nil then
+		self._collectionItems = self:getUserDataTb_()
 	end
 
-	arg_17_0._txtItemScore.text = var_17_0
+	self._txtItemScore.text = itemScore
 
-	local var_17_1 = arg_17_0._report.itemId2Count
-	local var_17_2 = {}
+	local itemId2Count = self._report.itemId2Count
+	local allItemIds = {}
 
-	for iter_17_0, iter_17_1 in pairs(var_17_1) do
-		table.insert(var_17_2, iter_17_0)
+	for itemId, _ in pairs(itemId2Count) do
+		table.insert(allItemIds, itemId)
 	end
 
-	table.sort(var_17_2, function(arg_18_0, arg_18_1)
-		return var_17_1[arg_18_0] > var_17_1[arg_18_1]
+	table.sort(allItemIds, function(a, b)
+		local countA = itemId2Count[a]
+		local countB = itemId2Count[b]
+
+		return countB < countA
 	end)
 
-	local var_17_3 = 0
+	local itemNum = 0
 
-	gohelper.setActive(arg_17_0._item, false)
+	gohelper.setActive(self._item, false)
 
-	for iter_17_2 = 1, #var_17_2 do
-		local var_17_4 = var_17_1[var_17_2[iter_17_2]]
-		local var_17_5 = tonumber(var_17_2[iter_17_2])
-		local var_17_6 = SurvivalBagItemMo.New()
+	for i = 1, #allItemIds do
+		local count = itemId2Count[allItemIds[i]]
+		local id = tonumber(allItemIds[i])
+		local mo = SurvivalBagItemMo.New()
 
-		var_17_6:init({
-			id = var_17_5,
-			count = var_17_4
+		mo:init({
+			id = id,
+			count = count
 		})
 
-		if var_17_6.equipCo == nil and (not var_17_6:isCurrency() or var_17_6.co.subType ~= SurvivalEnum.CurrencyType.Enthusiastic) then
-			var_17_3 = var_17_3 + var_17_4
+		if mo.equipCo == nil and (not mo:isCurrency() or mo.co.subType ~= SurvivalEnum.CurrencyType.Enthusiastic) then
+			itemNum = itemNum + count
 
-			local var_17_7 = arg_17_0.viewContainer:getSetting().otherRes.itemRes
-			local var_17_8 = arg_17_0:getResInst(var_17_7, arg_17_0._goItemLayout)
-			local var_17_9 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_8, SurvivalBagItem)
+			local itemRes = self.viewContainer:getSetting().otherRes.itemRes
+			local item = self:getResInst(itemRes, self._goItemLayout)
+			local equipItem = MonoHelper.addNoUpdateLuaComOnceToGo(item, SurvivalBagItem)
 
-			var_17_9:updateMo(var_17_6)
-			var_17_9:setShowNum(true)
-			var_17_9:setItemSize(150, 150)
-			gohelper.setActive(var_17_8, true)
-			table.insert(arg_17_0._collectionItems, var_17_9)
+			equipItem:updateMo(mo)
+			equipItem:setShowNum(true)
+			equipItem:setItemSize(150, 150)
+			gohelper.setActive(item, true)
+			table.insert(self._collectionItems, equipItem)
 		end
 	end
 
-	arg_17_0._txtItem.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_item"), var_17_3)
+	self._txtItem.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalceremonyclosingview_item"), itemNum)
 
-	arg_17_0:addShowStep(arg_17_0._animationExtraItem, var_0_2[7], arg_17_0._canvasGroupItem)
+	self:addShowStep(self._animationExtraItem, showTime[7], self._canvasGroupItem)
 end
 
-function var_0_0._initTotalScore(arg_19_0)
-	local var_19_0 = arg_19_0._totalScore
+function SurvivalCeremonyClosingView:_initTotalScore()
+	local totalScore = self._totalScore
 
-	arg_19_0._txtTotalScore.text = var_19_0
+	self._txtTotalScore.text = totalScore
 
-	arg_19_0:addShowStep(arg_19_0._animationTotalScore, var_0_2[8], arg_19_0._canvasGroupTotalScore)
+	self:addShowStep(self._animationTotalScore, showTime[8], self._canvasGroupTotalScore)
 end
 
-function var_0_0.addShowStep(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	table.insert(arg_20_0._allShowAnimation, arg_20_1)
-	table.insert(arg_20_0._allShowGO, arg_20_1.gameObject)
-	table.insert(arg_20_0._showTime, arg_20_2)
+function SurvivalCeremonyClosingView:addShowStep(anim, time, canvasGroup)
+	table.insert(self._allShowAnimation, anim)
+	table.insert(self._allShowGO, anim.gameObject)
+	table.insert(self._showTime, time)
 
-	arg_20_0._maxStep = arg_20_0._maxStep + 1
+	self._maxStep = self._maxStep + 1
 
-	arg_20_0:_initCanvasAlpha(arg_20_3)
+	self:_initCanvasAlpha(canvasGroup)
 end
 
-function var_0_0.getScoreByType(arg_21_0, arg_21_1)
-	if arg_21_0._report then
-		local var_21_0 = arg_21_0._report.module2Score
+function SurvivalCeremonyClosingView:getScoreByType(scoreType)
+	if self._report then
+		local scoreMap = self._report.module2Score
 
-		for iter_21_0, iter_21_1 in pairs(var_21_0) do
-			if tonumber(iter_21_0) == arg_21_1 then
-				return iter_21_1
+		for index, v in pairs(scoreMap) do
+			if tonumber(index) == scoreType then
+				return v
 			end
 		end
 	end
@@ -518,115 +529,118 @@ function var_0_0.getScoreByType(arg_21_0, arg_21_1)
 	return 0
 end
 
-function var_0_0._initCanvasAlpha(arg_22_0, arg_22_1)
-	if arg_22_1 then
-		arg_22_1.alpha = 0
+function SurvivalCeremonyClosingView:_initCanvasAlpha(canvas)
+	if canvas then
+		canvas.alpha = 0
 	end
 end
 
-function var_0_0.enterNext(arg_23_0)
-	if not arg_23_0._canEnterNext then
+function SurvivalCeremonyClosingView:enterNext()
+	if not self._canEnterNext then
 		return
 	end
 
-	if arg_23_0._progress == arg_23_0._maxStep then
+	if self._progress == self._maxStep then
 		return
 	end
 
-	arg_23_0._progress = arg_23_0._progress + 1
+	self._progress = self._progress + 1
 
-	arg_23_0:_refreshCurProgress()
+	self:_refreshCurProgress()
 end
 
-function var_0_0.getContentY(arg_24_0)
-	if arg_24_0._allContentY == nil or #arg_24_0._allContentY <= 0 then
-		arg_24_0._allContentY = {}
+function SurvivalCeremonyClosingView:getContentY()
+	if self._allContentY == nil or #self._allContentY <= 0 then
+		self._allContentY = {}
 
-		local var_24_0 = tabletool.len(arg_24_0._allShowGO)
+		local count = tabletool.len(self._allShowGO)
 
-		for iter_24_0 = 1, var_24_0 do
-			local var_24_1 = arg_24_0._allShowGO[iter_24_0].transform
+		for i = 1, count do
+			local go = self._allShowGO[i]
+			local tr = go.transform
 
-			ZProj.UGUIHelper.RebuildLayout(var_24_1)
+			ZProj.UGUIHelper.RebuildLayout(tr)
 
-			local var_24_2 = var_24_1:GetComponent(gohelper.Type_RectTransform)
-			local var_24_3 = recthelper.getHeight(var_24_2)
+			local rectTr = tr:GetComponent(gohelper.Type_RectTransform)
+			local height = recthelper.getHeight(rectTr)
 
-			if var_24_3 ~= 0 then
-				arg_24_0._allContentY[iter_24_0] = var_24_3 + var_0_1
+			if height ~= 0 then
+				self._allContentY[i] = height + addHeight
 			end
 		end
 	end
 
-	local var_24_4 = 0
-	local var_24_5 = math.min(arg_24_0._progress, #arg_24_0._allContentY)
+	local allHeight = 0
+	local count = math.min(self._progress, #self._allContentY)
 
-	for iter_24_1 = 1, var_24_5 do
-		var_24_4 = var_24_4 + arg_24_0._allContentY[iter_24_1]
+	for i = 1, count do
+		allHeight = allHeight + self._allContentY[i]
 	end
 
-	return var_24_4 - arg_24_0._scrollHeight
+	local contentY = allHeight - self._scrollHeight
+
+	return contentY
 end
 
-function var_0_0._refreshCurProgress(arg_25_0)
-	arg_25_0._canEnterNext = false
+function SurvivalCeremonyClosingView:_refreshCurProgress()
+	self._canEnterNext = false
 
-	local var_25_0 = arg_25_0._allShowGO[arg_25_0._progress]
-	local var_25_1 = arg_25_0._showTime[arg_25_0._progress]
-	local var_25_2 = arg_25_0._allShowAnimation[arg_25_0._progress]
-	local var_25_3 = arg_25_0:getContentY()
+	local go = self._allShowGO[self._progress]
+	local time = self._showTime[self._progress]
+	local animation = self._allShowAnimation[self._progress]
+	local contentY = self:getContentY()
 
-	if var_25_3 > 0 then
-		arg_25_0._moveTweenId = var_0_4.DOAnchorPosY(arg_25_0._contentRect, var_25_3, var_25_1)
+	if contentY > 0 then
+		self._moveTweenId = ZProj_TweenHelper.DOAnchorPosY(self._contentRect, contentY, time)
 	end
 
-	if var_25_0 ~= nil then
-		arg_25_0._tweenId = var_0_4.DOFadeCanvasGroup(var_25_0, 0, 1, var_25_1, arg_25_0._progressFinish, arg_25_0)
+	if go ~= nil then
+		self._tweenId = ZProj_TweenHelper.DOFadeCanvasGroup(go, 0, 1, time, self._progressFinish, self)
 	end
 
-	if var_25_2 then
-		var_25_2:Play()
+	if animation then
+		animation:Play()
 	end
 end
 
-function var_0_0._progressFinish(arg_26_0)
-	arg_26_0._canEnterNext = true
+function SurvivalCeremonyClosingView:_progressFinish()
+	self._canEnterNext = true
 
-	local var_26_0 = arg_26_0._progress == arg_26_0._maxStep
+	local isFinish = self._progress == self._maxStep
 
-	gohelper.setActive(arg_26_0._nextClick.gameObject, not var_26_0)
-	gohelper.setActive(arg_26_0._txtTips.gameObject, var_26_0)
-	gohelper.setActive(arg_26_0._btnclose.gameObject, var_26_0)
+	gohelper.setActive(self._nextClick.gameObject, not isFinish)
+	gohelper.setActive(self._txtTips.gameObject, isFinish)
+	gohelper.setActive(self._btnclose.gameObject, isFinish)
 end
 
-function var_0_0.onClose(arg_27_0)
-	local var_27_0 = GameSceneMgr.instance:getCurSceneType()
+function SurvivalCeremonyClosingView:onClose()
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if var_27_0 == SceneType.SurvivalShelter or var_27_0 == SceneType.Fight then
+	if curSceneType == SceneType.SurvivalShelter or curSceneType == SceneType.Fight then
 		SurvivalController.instance:exitMap()
 	end
 
-	local var_27_1 = SurvivalModel.instance:getOutSideInfo()
+	local outSideMo = SurvivalModel.instance:getOutSideInfo()
 
-	if var_27_1 then
-		var_27_1.inWeek = false
+	if outSideMo then
+		outSideMo.inWeek = false
 	end
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._progressFinish, arg_28_0)
+function SurvivalCeremonyClosingView:onDestroyView()
+	TaskDispatcher.cancelTask(self._progressFinish, self)
 
-	if arg_28_0._nextClick then
-		arg_28_0._nextClick:RemoveClickListener()
+	if self._nextClick then
+		self._nextClick:RemoveClickListener()
 
-		arg_28_0._nextClick = nil
+		self._nextClick = nil
 	end
 
-	if arg_28_0._tweenId then
-		var_0_4.KillById(arg_28_0._tweenId)
+	if self._tweenId then
+		ZProj_TweenHelper.KillById(self._tweenId)
 
-		arg_28_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return SurvivalCeremonyClosingView

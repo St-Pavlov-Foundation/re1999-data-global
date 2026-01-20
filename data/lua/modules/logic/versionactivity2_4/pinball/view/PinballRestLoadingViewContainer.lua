@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballRestLoadingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballRestLoadingViewContainer.lua
 
-local var_0_0 = class("PinballRestLoadingViewContainer", PinballLoadingViewContainer)
+module("modules.logic.versionactivity2_4.pinball.view.PinballRestLoadingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local PinballRestLoadingViewContainer = class("PinballRestLoadingViewContainer", PinballLoadingViewContainer)
+
+function PinballRestLoadingViewContainer:buildViews()
 	return {}
 end
 
-function var_0_0.onContainerOpen(arg_2_0, ...)
-	var_0_0.super.onContainerOpen(arg_2_0, ...)
+function PinballRestLoadingViewContainer:onContainerOpen(...)
+	PinballRestLoadingViewContainer.super.onContainerOpen(self, ...)
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio10)
 
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "bg/#txt_dec")
-	local var_2_1 = gohelper.findChild(arg_2_0.viewGO, "bg/#txt_dec2")
+	local txt1 = gohelper.findChild(self.viewGO, "bg/#txt_dec")
+	local txt2 = gohelper.findChild(self.viewGO, "bg/#txt_dec2")
 
-	gohelper.setActive(var_2_0, PinballModel.instance.restCdDay <= 0)
-	gohelper.setActive(var_2_1, PinballModel.instance.restCdDay > 0)
+	gohelper.setActive(txt1, PinballModel.instance.restCdDay <= 0)
+	gohelper.setActive(txt2, PinballModel.instance.restCdDay > 0)
 
-	arg_2_0._openDt = UnityEngine.Time.realtimeSinceStartup
+	self._openDt = UnityEngine.Time.realtimeSinceStartup
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
-	if not arg_3_0._openDt or UnityEngine.Time.realtimeSinceStartup - arg_3_0._openDt > 1 then
-		arg_3_0:closeThis()
+function PinballRestLoadingViewContainer:onContainerClickModalMask()
+	if not self._openDt or UnityEngine.Time.realtimeSinceStartup - self._openDt > 1 then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onContainerClose(arg_4_0, ...)
-	var_0_0.super.onContainerClose(arg_4_0, ...)
+function PinballRestLoadingViewContainer:onContainerClose(...)
+	PinballRestLoadingViewContainer.super.onContainerClose(self, ...)
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio11)
 end
 
-return var_0_0
+return PinballRestLoadingViewContainer

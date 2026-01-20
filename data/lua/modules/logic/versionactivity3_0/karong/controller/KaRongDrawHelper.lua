@@ -1,43 +1,45 @@
-﻿module("modules.logic.versionactivity3_0.karong.controller.KaRongDrawHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/controller/KaRongDrawHelper.lua
 
-local var_0_0 = _M
-local var_0_1 = KaRongDrawEnum.dir.left
-local var_0_2 = KaRongDrawEnum.dir.right
-local var_0_3 = KaRongDrawEnum.dir.down
-local var_0_4 = KaRongDrawEnum.dir.up
+module("modules.logic.versionactivity3_0.karong.controller.KaRongDrawHelper", package.seeall)
 
-function var_0_0.formatPos(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if arg_1_2 < arg_1_0 then
-		arg_1_0, arg_1_2 = arg_1_2, arg_1_0
+local KaRongDrawHelper = _M
+local LEFT = KaRongDrawEnum.dir.left
+local RIGHT = KaRongDrawEnum.dir.right
+local DOWN = KaRongDrawEnum.dir.down
+local UP = KaRongDrawEnum.dir.up
+
+function KaRongDrawHelper.formatPos(x1, y1, x2, y2)
+	if x2 < x1 then
+		x1, x2 = x2, x1
 	end
 
-	if arg_1_3 < arg_1_1 then
-		arg_1_1, arg_1_3 = arg_1_3, arg_1_1
+	if y2 < y1 then
+		y1, y2 = y2, y1
 	end
 
-	return arg_1_0, arg_1_1, arg_1_2, arg_1_3
+	return x1, y1, x2, y2
 end
 
-function var_0_0.getFromToDir(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_0 ~= arg_2_2 then
-		if arg_2_1 ~= arg_2_3 then
+function KaRongDrawHelper.getFromToDir(fromX, fromY, toX, toY)
+	if fromX ~= toX then
+		if fromY ~= toY then
 			return nil
 		end
 
-		return arg_2_0 < arg_2_2 and var_0_2 or var_0_1
+		return fromX < toX and RIGHT or LEFT
 	else
-		return arg_2_1 < arg_2_3 and var_0_4 or var_0_3
+		return fromY < toY and UP or DOWN
 	end
 end
 
-function var_0_0.getPosKey(arg_3_0, arg_3_1)
-	return string.format("%s_%s", arg_3_0, arg_3_1)
+function KaRongDrawHelper.getPosKey(x, y)
+	return string.format("%s_%s", x, y)
 end
 
-function var_0_0.getLineKey(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0, var_4_1, var_4_2, var_4_3 = var_0_0.formatPos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function KaRongDrawHelper.getLineKey(x1, y1, x2, y2)
+	local x1_f, y1_f, x2_f, y2_f = KaRongDrawHelper.formatPos(x1, y1, x2, y2)
 
-	return string.format("%s_%s_%s_%s", var_4_0, var_4_1, var_4_2, var_4_3)
+	return string.format("%s_%s_%s_%s", x1_f, y1_f, x2_f, y2_f)
 end
 
-return var_0_0
+return KaRongDrawHelper

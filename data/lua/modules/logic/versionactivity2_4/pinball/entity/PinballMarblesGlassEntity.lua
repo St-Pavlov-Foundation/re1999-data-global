@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesGlassEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballMarblesGlassEntity.lua
 
-local var_0_0 = class("PinballMarblesGlassEntity", PinballMarblesEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballMarblesGlassEntity", package.seeall)
 
-function var_0_0.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	local var_1_0 = PinballEntityMgr.instance:getEntity(arg_1_1)
+local PinballMarblesGlassEntity = class("PinballMarblesGlassEntity", PinballMarblesEntity)
 
-	if not var_1_0 then
+function PinballMarblesGlassEntity:onHitEnter(hitEntityId, hitX, hitY, hitDir)
+	local hitEntity = PinballEntityMgr.instance:getEntity(hitEntityId)
+
+	if not hitEntity then
 		return
 	end
 
-	if var_1_0:isResType() then
-		if var_1_0.unitType == PinballEnum.UnitType.ResMine and var_1_0.totalHitCount > arg_1_0.hitNum then
-			var_0_0.super.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	if hitEntity:isResType() then
+		if hitEntity.unitType == PinballEnum.UnitType.ResMine and hitEntity.totalHitCount > self.hitNum then
+			PinballMarblesGlassEntity.super.onHitEnter(self, hitEntityId, hitX, hitY, hitDir)
 		else
 			AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio16)
-			var_1_0:doHit(arg_1_0.hitNum)
+			hitEntity:doHit(self.hitNum)
 		end
 	else
-		var_0_0.super.onHitEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+		PinballMarblesGlassEntity.super.onHitEnter(self, hitEntityId, hitX, hitY, hitDir)
 	end
 end
 
-function var_0_0.getHitResCount(arg_2_0)
-	return arg_2_0.hitNum
+function PinballMarblesGlassEntity:getHitResCount()
+	return self.hitNum
 end
 
-return var_0_0
+return PinballMarblesGlassEntity

@@ -1,167 +1,173 @@
-﻿module("modules.logic.rouge.view.RougeIllustrationListView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeIllustrationListView.lua
 
-local var_0_0 = class("RougeIllustrationListView", BaseView)
+module("modules.logic.rouge.view.RougeIllustrationListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageListBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_ListBG")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
-	arg_1_0._sliderprogress = gohelper.findChildSlider(arg_1_0.viewGO, "#slider_progress")
-	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBottom/normal")
-	arg_1_0._godlc = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBottom/dlc")
-	arg_1_0._btnnormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_LeftBottom/normal/btn_click")
-	arg_1_0._gonormalunselect = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBottom/normal/unselect")
-	arg_1_0._gonormalselected = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBottom/normal/selected")
-	arg_1_0._btndlc = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_LeftBottom/dlc/btn_click")
-	arg_1_0._godlcunselect = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBottom/dlc/unselect")
-	arg_1_0._godlcselected = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBottom/dlc/selected")
-	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/Content")
-	arg_1_0._simagedlcbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_view/Viewport/Content/#simage_dlcbg")
+local RougeIllustrationListView = class("RougeIllustrationListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeIllustrationListView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageListBG = gohelper.findChildSingleImage(self.viewGO, "#simage_ListBG")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "#scroll_view")
+	self._sliderprogress = gohelper.findChildSlider(self.viewGO, "#slider_progress")
+	self._goLeftTop = gohelper.findChild(self.viewGO, "#go_LeftTop")
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_LeftBottom/normal")
+	self._godlc = gohelper.findChild(self.viewGO, "#go_LeftBottom/dlc")
+	self._btnnormal = gohelper.findChildButtonWithAudio(self.viewGO, "#go_LeftBottom/normal/btn_click")
+	self._gonormalunselect = gohelper.findChild(self.viewGO, "#go_LeftBottom/normal/unselect")
+	self._gonormalselected = gohelper.findChild(self.viewGO, "#go_LeftBottom/normal/selected")
+	self._btndlc = gohelper.findChildButtonWithAudio(self.viewGO, "#go_LeftBottom/dlc/btn_click")
+	self._godlcunselect = gohelper.findChild(self.viewGO, "#go_LeftBottom/dlc/unselect")
+	self._godlcselected = gohelper.findChild(self.viewGO, "#go_LeftBottom/dlc/selected")
+	self._goscrollcontent = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/Content")
+	self._simagedlcbg = gohelper.findChildSingleImage(self.viewGO, "#scroll_view/Viewport/Content/#simage_dlcbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnormal:AddClickListener(arg_2_0._btnnormalOnClick, arg_2_0)
-	arg_2_0._btndlc:AddClickListener(arg_2_0._btndlcOnClick, arg_2_0)
+function RougeIllustrationListView:addEvents()
+	self._btnnormal:AddClickListener(self._btnnormalOnClick, self)
+	self._btndlc:AddClickListener(self._btndlcOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnormal:RemoveClickListener()
-	arg_3_0._btndlc:RemoveClickListener()
+function RougeIllustrationListView:removeEvents()
+	self._btnnormal:RemoveClickListener()
+	self._btndlc:RemoveClickListener()
 end
 
-function var_0_0._btnnormalOnClick(arg_4_0)
-	arg_4_0:refreshButtons(RougeEnum.IllustrationType.Normal)
-	arg_4_0:focus2TargetPos(true, RougeEnum.IllustrationType.Normal)
+function RougeIllustrationListView:_btnnormalOnClick()
+	self:refreshButtons(RougeEnum.IllustrationType.Normal)
+	self:focus2TargetPos(true, RougeEnum.IllustrationType.Normal)
 end
 
-function var_0_0._btndlcOnClick(arg_5_0)
-	arg_5_0:refreshButtons(RougeEnum.IllustrationType.DLC)
-	arg_5_0:focus2TargetPos(true, RougeEnum.IllustrationType.DLC)
+function RougeIllustrationListView:_btndlcOnClick()
+	self:refreshButtons(RougeEnum.IllustrationType.DLC)
+	self:focus2TargetPos(true, RougeEnum.IllustrationType.DLC)
 end
 
-function var_0_0.refreshButtons(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0._gonormalselected, arg_6_1 == RougeEnum.IllustrationType.Normal)
-	gohelper.setActive(arg_6_0._gonormalunselect, arg_6_1 ~= RougeEnum.IllustrationType.Normal)
-	gohelper.setActive(arg_6_0._godlcselected, arg_6_1 == RougeEnum.IllustrationType.DLC)
-	gohelper.setActive(arg_6_0._godlcunselect, arg_6_1 ~= RougeEnum.IllustrationType.DLC)
+function RougeIllustrationListView:refreshButtons(selectType)
+	gohelper.setActive(self._gonormalselected, selectType == RougeEnum.IllustrationType.Normal)
+	gohelper.setActive(self._gonormalunselect, selectType ~= RougeEnum.IllustrationType.Normal)
+	gohelper.setActive(self._godlcselected, selectType == RougeEnum.IllustrationType.DLC)
+	gohelper.setActive(self._godlcunselect, selectType ~= RougeEnum.IllustrationType.DLC)
 end
 
-local var_0_1 = 0.01
-local var_0_2 = 1
-local var_0_3 = 0
-local var_0_4 = 100
+local Min_TWEENSCROLLDELTA_X = 0.01
+local SCROLL_TWEEN_DURATION = 1
+local SCROLL_POS_NORMAL_X = 0
+local DLCBG_POSOffset_X = 100
 
-function var_0_0.focus2TargetPos(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = var_0_3
+function RougeIllustrationListView:focus2TargetPos(isTween, focusType)
+	local scrollPosX = SCROLL_POS_NORMAL_X
 
-	if arg_7_2 == RougeEnum.IllustrationType.DLC then
-		local var_7_1 = recthelper.getWidth(arg_7_0._goscrollcontent.transform)
+	if focusType == RougeEnum.IllustrationType.DLC then
+		local scrollContentWidth = recthelper.getWidth(self._goscrollcontent.transform)
 
-		var_7_0 = RougeIllustrationListModel.instance:getSplitEmptySpaceStartPosX()
+		scrollPosX = RougeIllustrationListModel.instance:getSplitEmptySpaceStartPosX()
 
-		local var_7_2 = recthelper.getWidth(arg_7_0._scrollview.transform)
+		local viewPortWidth = recthelper.getWidth(self._scrollview.transform)
 
-		var_7_0 = Mathf.Clamp(var_7_0 / (var_7_1 - var_7_2), 0, 1)
+		scrollPosX = Mathf.Clamp(scrollPosX / (scrollContentWidth - viewPortWidth), 0, 1)
 	end
 
-	arg_7_0:_moveScroll2TargetPos(arg_7_1, var_7_0)
+	self:_moveScroll2TargetPos(isTween, scrollPosX)
 end
 
-function var_0_0._moveScroll2TargetPos(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:killTween()
-	arg_8_0:endUIBlock()
+function RougeIllustrationListView:_moveScroll2TargetPos(isTween, scrollPosX)
+	self:killTween()
+	self:endUIBlock()
 
-	if arg_8_1 then
-		local var_8_0 = true
-		local var_8_1 = arg_8_0._scrollview.horizontalNormalizedPosition
+	if isTween then
+		local isNeedTween = true
+		local startPos = self._scrollview.horizontalNormalizedPosition
+		local diff = math.abs(scrollPosX - startPos)
 
-		if math.abs(arg_8_2 - var_8_1) > var_0_1 then
-			arg_8_0:startUIBlock()
+		isNeedTween = diff > Min_TWEENSCROLLDELTA_X
 
-			arg_8_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_8_1, arg_8_2, var_0_2, arg_8_0.tweenFrame, arg_8_0.tweenFinish, arg_8_0)
+		if isNeedTween then
+			self:startUIBlock()
+
+			self._tweenId = ZProj.TweenHelper.DOTweenFloat(startPos, scrollPosX, SCROLL_TWEEN_DURATION, self.tweenFrame, self.tweenFinish, self)
 		end
 	else
-		arg_8_0._scrollview.horizontalNormalizedPosition = arg_8_2
+		self._scrollview.horizontalNormalizedPosition = scrollPosX
 	end
 end
 
-function var_0_0.tweenFrame(arg_9_0, arg_9_1)
-	if not arg_9_0._scrollview then
+function RougeIllustrationListView:tweenFrame(value)
+	if not self._scrollview then
 		return
 	end
 
-	arg_9_0._scrollview.horizontalNormalizedPosition = arg_9_1
+	self._scrollview.horizontalNormalizedPosition = value
 end
 
-function var_0_0.tweenFinish(arg_10_0)
-	arg_10_0._tweenId = nil
+function RougeIllustrationListView:tweenFinish()
+	self._tweenId = nil
 
-	arg_10_0:endUIBlock()
+	self:endUIBlock()
 end
 
-function var_0_0.killTween(arg_11_0)
-	if arg_11_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._tweenId)
+function RougeIllustrationListView:killTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_11_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0.startUIBlock(arg_12_0)
+function RougeIllustrationListView:startUIBlock()
 	UIBlockMgrExtend.instance.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("RougeIllustrationTween")
 end
 
-function var_0_0.endUIBlock(arg_13_0)
+function RougeIllustrationListView:endUIBlock()
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("RougeIllustrationTween")
 end
 
-function var_0_0._editableInitView(arg_14_0)
+function RougeIllustrationListView:_editableInitView()
 	RougeIllustrationListModel.instance.startFrameCount = UnityEngine.Time.frameCount
 
 	RougeIllustrationListModel.instance:initList()
 end
 
-function var_0_0.onOpen(arg_15_0)
+function RougeIllustrationListView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio4)
-	arg_15_0:focus2TargetPos(false, RougeEnum.IllustrationType.Normal)
-	arg_15_0:setSplitImagePos()
+	self:focus2TargetPos(false, RougeEnum.IllustrationType.Normal)
+	self:setSplitImagePos()
 end
 
-function var_0_0.setSplitImagePos(arg_16_0)
-	local var_16_0 = RougeFavoriteConfig.instance:getDLCIllustationPageCount()
-	local var_16_1 = var_16_0 and var_16_0 > 0
+function RougeIllustrationListView:setSplitImagePos()
+	local dlcIllustrationCount = RougeFavoriteConfig.instance:getDLCIllustationPageCount()
+	local hasDLCIllustration = dlcIllustrationCount and dlcIllustrationCount > 0
 
-	gohelper.setActive(arg_16_0._simagedlcbg.gameObject, var_16_1)
+	gohelper.setActive(self._simagedlcbg.gameObject, hasDLCIllustration)
 
-	if not var_16_1 then
+	if not hasDLCIllustration then
 		return
 	end
 
-	local var_16_2 = RougeIllustrationListModel.instance:getSplitEmptySpaceStartPosX() + var_0_4
+	local splitPosX = RougeIllustrationListModel.instance:getSplitEmptySpaceStartPosX()
+	local bgPosX = splitPosX + DLCBG_POSOffset_X
 
-	recthelper.setAnchorX(arg_16_0._simagedlcbg.transform, var_16_2)
+	recthelper.setAnchorX(self._simagedlcbg.transform, bgPosX)
 end
 
-function var_0_0.onClose(arg_17_0)
+function RougeIllustrationListView:onClose()
 	if RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Illustration) > 0 then
-		local var_17_0 = RougeOutsideModel.instance:season()
+		local season = RougeOutsideModel.instance:season()
 
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_17_0, RougeEnum.FavoriteType.Illustration, 0)
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(season, RougeEnum.FavoriteType.Illustration, 0)
 	end
 
-	arg_17_0:killTween()
-	arg_17_0:endUIBlock()
+	self:killTween()
+	self:endUIBlock()
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function RougeIllustrationListView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeIllustrationListView

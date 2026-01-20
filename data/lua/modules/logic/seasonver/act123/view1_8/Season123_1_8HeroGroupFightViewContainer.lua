@@ -1,8 +1,10 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8HeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8HeroGroupFightViewContainer.lua
 
-local var_0_0 = class("Season123_1_8HeroGroupFightViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8HeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_1_8HeroGroupFightViewContainer = class("Season123_1_8HeroGroupFightViewContainer", BaseViewContainer)
+
+function Season123_1_8HeroGroupFightViewContainer:buildViews()
 	return {
 		Season123_1_8HeroGroupFightView.New(),
 		Season123_1_8HeroGroupListView.New(),
@@ -13,38 +15,38 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.getSeasonHeroGroupFightView(arg_2_0)
-	return arg_2_0._views[1]
+function Season123_1_8HeroGroupFightViewContainer:getSeasonHeroGroupFightView()
+	return self._views[1]
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function Season123_1_8HeroGroupFightViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			false,
 			true
-		}, HelpEnum.HelpId.Season1_8HerogroupHelp, arg_3_0._closeCallback, nil, nil, arg_3_0)
+		}, HelpEnum.HelpId.Season1_8HerogroupHelp, self._closeCallback, nil, nil, self)
 
-		arg_3_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.Season1_8HerogroupHelp)
-		arg_3_0._navigateButtonsView:setCloseCheck(arg_3_0.defaultOverrideCloseCheck, arg_3_0)
+		self._navigateButtonsView:setHelpId(HelpEnum.HelpId.Season1_8HerogroupHelp)
+		self._navigateButtonsView:setCloseCheck(self.defaultOverrideCloseCheck, self)
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_4_0)
-	arg_4_0:closeThis()
+function Season123_1_8HeroGroupFightViewContainer:_closeCallback()
+	self:closeThis()
 
-	if arg_4_0:handleVersionActivityCloseCall() then
+	if self:handleVersionActivityCloseCall() then
 		return
 	end
 
 	MainController.instance:enterMainScene(true, false)
 end
 
-function var_0_0.handleVersionActivityCloseCall(arg_5_0)
+function Season123_1_8HeroGroupFightViewContainer:handleVersionActivityCloseCall()
 	if EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight() then
 		EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(true, true)
 
@@ -52,4 +54,4 @@ function var_0_0.handleVersionActivityCloseCall(arg_5_0)
 	end
 end
 
-return var_0_0
+return Season123_1_8HeroGroupFightViewContainer

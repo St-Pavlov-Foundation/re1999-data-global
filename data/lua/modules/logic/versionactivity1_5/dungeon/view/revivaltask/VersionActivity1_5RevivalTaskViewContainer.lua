@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5RevivalTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/revivaltask/VersionActivity1_5RevivalTaskViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_5RevivalTaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5RevivalTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.exploreTipView = VersionActivity1_5ExploreTaskTipView.New()
+local VersionActivity1_5RevivalTaskViewContainer = class("VersionActivity1_5RevivalTaskViewContainer", BaseViewContainer)
+
+function VersionActivity1_5RevivalTaskViewContainer:buildViews()
+	self.exploreTipView = VersionActivity1_5ExploreTaskTipView.New()
 
 	return {
 		VersionActivity1_5RevivalTaskView.New(),
 		VersionActivity1_5ExploreTaskView.New(),
 		VersionActivity1_5HeroTaskView.New(),
 		VersionActivity1_5RevivalTaskTipView.New(),
-		arg_1_0.exploreTipView,
+		self.exploreTipView,
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function VersionActivity1_5RevivalTaskViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonsView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
-	arg_2_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.Dungeon1_5TaskHelp)
+	self._navigateButtonsView:setHelpId(HelpEnum.HelpId.Dungeon1_5TaskHelp)
 
 	return {
-		arg_2_0._navigateButtonsView
+		self._navigateButtonsView
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function VersionActivity1_5RevivalTaskViewContainer:onContainerInit()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_paiqian_open)
 end
 
-return var_0_0
+return VersionActivity1_5RevivalTaskViewContainer

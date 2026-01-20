@@ -1,53 +1,55 @@
-﻿module("modules.logic.fight.fightcomponent.FightLongPressComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightLongPressComponent.lua
 
-local var_0_0 = class("FightLongPressComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightLongPressComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0._longPressArr = {
+local FightLongPressComponent = class("FightLongPressComponent", FightBaseClass)
+
+function FightLongPressComponent:onConstructor()
+	self._longPressArr = {
 		0.5,
 		99999
 	}
-	arg_1_0._pressDic = {}
+	self._pressDic = {}
 end
 
-function var_0_0.registLongPress(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = arg_2_1:GetInstanceID()
+function FightLongPressComponent:registLongPress(longPress, callback, handle, param)
+	local id = longPress:GetInstanceID()
 
-	arg_2_0._pressDic[var_2_0] = arg_2_1
+	self._pressDic[id] = longPress
 
-	arg_2_1:SetLongPressTime(arg_2_0._longPressArr)
-	arg_2_1:AddLongPressListener(arg_2_2, arg_2_3, arg_2_4)
+	longPress:SetLongPressTime(self._longPressArr)
+	longPress:AddLongPressListener(callback, handle, param)
 end
 
-function var_0_0.registHover(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_1:GetInstanceID()
+function FightLongPressComponent:registHover(longPress, callback, handle)
+	local id = longPress:GetInstanceID()
 
-	arg_3_0._pressDic[var_3_0] = arg_3_1
+	self._pressDic[id] = longPress
 
-	arg_3_1:AddHoverListener(arg_3_2, arg_3_3)
+	longPress:AddHoverListener(callback, handle)
 end
 
-function var_0_0.removeLongPress(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1:GetInstanceID()
+function FightLongPressComponent:removeLongPress(longPress)
+	local id = longPress:GetInstanceID()
 
-	if arg_4_0._pressDic[var_4_0] then
-		arg_4_0._pressDic[var_4_0]:RemoveLongPressListener()
+	if self._pressDic[id] then
+		self._pressDic[id]:RemoveLongPressListener()
 	end
 end
 
-function var_0_0.removeHover(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1:GetInstanceID()
+function FightLongPressComponent:removeHover(longPress)
+	local id = longPress:GetInstanceID()
 
-	if arg_5_0._pressDic[var_5_0] then
-		arg_5_0._pressDic[var_5_0]:RemoveHoverListener()
+	if self._pressDic[id] then
+		self._pressDic[id]:RemoveHoverListener()
 	end
 end
 
-function var_0_0.onDestructor(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._pressDic) do
-		iter_6_1:RemoveLongPressListener()
-		iter_6_1:RemoveHoverListener()
+function FightLongPressComponent:onDestructor()
+	for k, longPress in pairs(self._pressDic) do
+		longPress:RemoveLongPressListener()
+		longPress:RemoveHoverListener()
 	end
 end
 
-return var_0_0
+return FightLongPressComponent

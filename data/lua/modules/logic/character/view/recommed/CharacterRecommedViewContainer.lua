@@ -1,113 +1,123 @@
-﻿module("modules.logic.character.view.recommed.CharacterRecommedViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/recommed/CharacterRecommedViewContainer.lua
 
-local var_0_0 = class("CharacterRecommedViewContainer", BaseViewContainer)
+module("modules.logic.character.view.recommed.CharacterRecommedViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._recommedView = CharacterRecommedView.New()
-	arg_1_0._heroView = CharacterRecommedHeroView.New()
+local CharacterRecommedViewContainer = class("CharacterRecommedViewContainer", BaseViewContainer)
 
-	local var_1_0 = {}
+function CharacterRecommedViewContainer:buildViews()
+	self._recommedView = CharacterRecommedView.New()
+	self._heroView = CharacterRecommedHeroView.New()
 
-	table.insert(var_1_0, arg_1_0._heroView)
-	table.insert(var_1_0, arg_1_0._recommedView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, TabViewGroup.New(2, "right/#go_scroll"))
-	table.insert(var_1_0, TabViewGroup.New(3, "#go_changehero"))
+	local views = {}
 
-	return var_1_0
+	table.insert(views, self._heroView)
+	table.insert(views, self._recommedView)
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "right/#go_scroll"))
+	table.insert(views, TabViewGroup.New(3, "#go_changehero"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function CharacterRecommedViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 
-	if arg_2_1 == 2 then
-		return {
+	if tabContainerId == 2 then
+		local views = {
 			CharacterRecommedGroupView.New(),
 			CharacterDevelopGoalsView.New()
 		}
+
+		return views
 	end
 
-	if arg_2_1 == 3 then
-		local var_2_0 = {}
+	if tabContainerId == 3 then
+		local views = {}
 
-		arg_2_0:_addCharacterChangeHeroView(var_2_0)
+		self:_addCharacterChangeHeroView(views)
 
-		return var_2_0
+		return views
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.viewParam.defaultTabIds = {}
-	arg_3_0.viewParam.defaultTabIds[2] = arg_3_0.viewParam.defaultTabId or CharacterRecommedEnum.TabSubType.RecommedGroup
+function CharacterRecommedViewContainer:onContainerInit()
+	self.viewParam.defaultTabIds = {}
+	self.viewParam.defaultTabIds[2] = self.viewParam.defaultTabId or CharacterRecommedEnum.TabSubType.RecommedGroup
+
+	local characterViewContainer = ViewMgr.instance:getContainer(ViewName.CharacterView)
+
+	if characterViewContainer and characterViewContainer:isOpen() then
+		characterViewContainer:onOpenAnimDone()
+	end
 end
 
-function var_0_0._addCharacterChangeHeroView(arg_4_0, arg_4_1)
-	local var_4_0 = {}
+function CharacterRecommedViewContainer:_addCharacterChangeHeroView(t)
+	local views = {}
 
-	table.insert(var_4_0, CharacterRecommedChangeHeroView.New())
+	table.insert(views, CharacterRecommedChangeHeroView.New())
 
-	local var_4_1 = ListScrollParam.New()
+	local scrollParam = ListScrollParam.New()
 
-	var_4_1.scrollGOPath = "#scroll_hero"
-	var_4_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_4_1.prefabUrl = arg_4_0._viewSetting.otherRes[3]
-	var_4_1.cellClass = CharacterRecommedChangeHeroItem
-	var_4_1.scrollDir = ScrollEnum.ScrollDirV
-	var_4_1.lineCount = 3
-	var_4_1.cellWidth = 150
-	var_4_1.cellHeight = 150
-	var_4_1.cellSpaceH = 0
-	var_4_1.cellSpaceV = 0
+	scrollParam.scrollGOPath = "#scroll_hero"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[3]
+	scrollParam.cellClass = CharacterRecommedChangeHeroItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 150
+	scrollParam.cellHeight = 150
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
 
-	local var_4_2 = LuaListScrollView.New(CharacterRecommedHeroListModel.instance, var_4_1)
+	local scrollView = LuaListScrollView.New(CharacterRecommedHeroListModel.instance, scrollParam)
 
-	table.insert(var_4_0, var_4_2)
+	table.insert(views, scrollView)
 
-	arg_4_1[1] = MultiView.New(var_4_0)
+	t[1] = MultiView.New(views)
 end
 
-function var_0_0.playCloseTransition(arg_5_0)
-	arg_5_0._recommedView:playViewAnimPlayer(CharacterRecommedEnum.AnimName.Close, arg_5_0.onPlayCloseTransitionFinish, arg_5_0)
+function CharacterRecommedViewContainer:playCloseTransition()
+	self._recommedView:playViewAnimPlayer(CharacterRecommedEnum.AnimName.Close, self.onPlayCloseTransitionFinish, self)
 end
 
-function var_0_0.cutTab(arg_6_0, arg_6_1)
-	arg_6_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_6_1)
+function CharacterRecommedViewContainer:cutTab(tab)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, tab)
 
-	arg_6_0.viewParam.defaultTabId = arg_6_1
+	self.viewParam.defaultTabId = tab
 end
 
-function var_0_0.getGroupItemRes(arg_7_0)
-	local var_7_0 = arg_7_0._viewSetting.otherRes[1]
+function CharacterRecommedViewContainer:getGroupItemRes()
+	local resPath = self._viewSetting.otherRes[1]
 
-	return arg_7_0:getRes(var_7_0)
+	return self:getRes(resPath)
 end
 
-function var_0_0.getGoalsItemRes(arg_8_0)
-	local var_8_0 = arg_8_0._viewSetting.otherRes[2]
+function CharacterRecommedViewContainer:getGoalsItemRes()
+	local resPath = self._viewSetting.otherRes[2]
 
-	return arg_8_0:getRes(var_8_0)
+	return self:getRes(resPath)
 end
 
-function var_0_0.getHeroIconRes(arg_9_0)
-	local var_9_0 = arg_9_0._viewSetting.otherRes[3]
+function CharacterRecommedViewContainer:getHeroIconRes()
+	local resPath = self._viewSetting.otherRes[3]
 
-	return arg_9_0:getRes(var_9_0)
+	return self:getRes(resPath)
 end
 
-function var_0_0.getEquipIconRes(arg_10_0)
-	local var_10_0 = arg_10_0._viewSetting.otherRes[4]
+function CharacterRecommedViewContainer:getEquipIconRes()
+	local resPath = self._viewSetting.otherRes[4]
 
-	return arg_10_0:getRes(var_10_0)
+	return self:getRes(resPath)
 end
 
-return var_0_0
+return CharacterRecommedViewContainer

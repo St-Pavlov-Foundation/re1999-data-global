@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_7.enter.view.VersionActivity2_7EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/enter/view/VersionActivity2_7EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_7EnterViewContainer", VersionActivityFixedEnterViewContainer)
+module("modules.logic.versionactivity2_7.enter.view.VersionActivity2_7EnterViewContainer", package.seeall)
 
-function var_0_0.getViews(arg_1_0)
+local VersionActivity2_7EnterViewContainer = class("VersionActivity2_7EnterViewContainer", VersionActivityFixedEnterViewContainer)
+
+function VersionActivity2_7EnterViewContainer:getViews()
 	return {
 		VersionActivityFixedHelper.getVersionActivityEnterView().New(),
 		VersionActivity2_7EnterBgmView.New()
 	}
 end
 
-function var_0_0.getMultiViews(arg_2_0)
+function VersionActivity2_7EnterViewContainer:getMultiViews()
 	return {
 		VersionActivity2_7DungeonEnterView.New(),
 		V2a7_Act191EnterView.New(),
@@ -21,4 +23,4 @@ function var_0_0.getMultiViews(arg_2_0)
 	}
 end
 
-return var_0_0
+return VersionActivity2_7EnterViewContainer

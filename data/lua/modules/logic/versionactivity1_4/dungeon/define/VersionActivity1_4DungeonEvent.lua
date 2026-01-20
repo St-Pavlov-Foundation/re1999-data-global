@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_4.dungeon.define.VersionActivity1_4DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/dungeon/define/VersionActivity1_4DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.dungeon.define.VersionActivity1_4DungeonEvent", package.seeall)
 
-var_0_0.OnSelectEpisodeId = 1
+local VersionActivity1_4DungeonEvent = _M
 
-return var_0_0
+VersionActivity1_4DungeonEvent.OnSelectEpisodeId = 1
+
+return VersionActivity1_4DungeonEvent

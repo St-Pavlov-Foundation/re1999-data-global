@@ -1,160 +1,164 @@
-﻿module("modules.logic.room.view.manufacture.RoomCritterRestTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomCritterRestTipsView.lua
 
-local var_0_0 = class("RoomCritterRestTipsView", BaseView)
-local var_0_1 = 43
+module("modules.logic.room.view.manufacture.RoomCritterRestTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerestarea = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/info/#simage_restarea")
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "root/info/#txt_namecn")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "root/info/#txt_namecn/#txt_nameen")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/info/#txt_namecn/#image_icon")
-	arg_1_0._gocostitem = gohelper.findChild(arg_1_0.viewGO, "root/costs/content/#go_costitem")
-	arg_1_0._btnbuild = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_build")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+local RoomCritterRestTipsView = class("RoomCritterRestTipsView", BaseView)
+local COST_FONT_SIZE = 43
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterRestTipsView:onInitView()
+	self._simagerestarea = gohelper.findChildSingleImage(self.viewGO, "root/info/#simage_restarea")
+	self._txtnamecn = gohelper.findChildText(self.viewGO, "root/info/#txt_namecn")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "root/info/#txt_namecn/#txt_nameen")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/info/#txt_namecn/#image_icon")
+	self._gocostitem = gohelper.findChild(self.viewGO, "root/costs/content/#go_costitem")
+	self._btnbuild = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_build")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbuild:AddClickListener(arg_2_0._btnbuildOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterUnlockSeatSlot, arg_2_0.closeThis, arg_2_0)
+function RoomCritterRestTipsView:addEvents()
+	self._btnbuild:AddClickListener(self._btnbuildOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterUnlockSeatSlot, self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbuild:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterUnlockSeatSlot, arg_3_0.closeThis, arg_3_0)
+function RoomCritterRestTipsView:removeEvents()
+	self._btnbuild:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterUnlockSeatSlot, self.closeThis, self)
 end
 
-function var_0_0._btnbuildOnClick(arg_4_0)
-	if not arg_4_0._isCanUpgrade then
+function RoomCritterRestTipsView:_btnbuildOnClick()
+	if not self._isCanUpgrade then
 		GameFacade.showToast(ToastEnum.RoomNotEnoughMatBuySeatSlot)
 
 		return
 	end
 
-	CritterController.instance:buySeatSlot(arg_4_0.buildingUid, arg_4_0.seatSlotId)
+	CritterController.instance:buySeatSlot(self.buildingUid, self.seatSlotId)
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function RoomCritterRestTipsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._onItemChanged(arg_6_0)
-	arg_6_0:refreshCost()
+function RoomCritterRestTipsView:_onItemChanged()
+	self:refreshCost()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = ResUrl.getRoomCritterIcon("room_rest_area_1")
+function RoomCritterRestTipsView:_editableInitView()
+	local imgPath = ResUrl.getRoomCritterIcon("room_rest_area_1")
 
-	arg_7_0._simagerestarea:LoadImage(var_7_0)
+	self._simagerestarea:LoadImage(imgPath)
 
-	arg_7_0._costItemList = {}
+	self._costItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0.buildingUid = arg_8_0.viewParam.buildingUid
-	arg_8_0.seatSlotId = arg_8_0.viewParam.seatSlotId
+function RoomCritterRestTipsView:onUpdateParam()
+	self.buildingUid = self.viewParam.buildingUid
+	self.seatSlotId = self.viewParam.seatSlotId
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:onUpdateParam()
-	arg_9_0:refreshBuildingInfo()
-	arg_9_0:refreshCost()
+function RoomCritterRestTipsView:onOpen()
+	self:onUpdateParam()
+	self:refreshBuildingInfo()
+	self:refreshCost()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_open)
 end
 
-function var_0_0.refreshBuildingInfo(arg_10_0)
-	local var_10_0 = ""
-	local var_10_1 = ""
-	local var_10_2 = RoomMapBuildingModel.instance:getBuildingMOById(arg_10_0.buildingUid)
-	local var_10_3 = var_10_2 and var_10_2.config
+function RoomCritterRestTipsView:refreshBuildingInfo()
+	local name = ""
+	local nameEn = ""
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self.buildingUid)
+	local buildingConfig = buildingMO and buildingMO.config
 
-	if var_10_3 then
-		var_10_0 = var_10_3.name
-		var_10_1 = var_10_3.nameEn
+	if buildingConfig then
+		name = buildingConfig.name
+		nameEn = buildingConfig.nameEn
 	end
 
-	arg_10_0._txtnamecn.text = var_10_0
-	arg_10_0._txtnameen.text = var_10_1
+	self._txtnamecn.text = name
+	self._txtnameen.text = nameEn
 
-	local var_10_4 = ManufactureConfig.instance:getManufactureBuildingIcon(var_10_2.buildingId)
+	local manuBuildingIcon = ManufactureConfig.instance:getManufactureBuildingIcon(buildingMO.buildingId)
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_10_0._imageicon, var_10_4)
+	UISpriteSetMgr.instance:setRoomSprite(self._imageicon, manuBuildingIcon)
 end
 
-function var_0_0.refreshCost(arg_11_0)
-	local var_11_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_11_0.buildingUid)
-	local var_11_1 = ManufactureConfig.instance:getRestBuildingSeatSlotCost(var_11_0 and var_11_0.buildingId)
-	local var_11_2 = true
+function RoomCritterRestTipsView:refreshCost()
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self.buildingUid)
+	local costInfoList = ManufactureConfig.instance:getRestBuildingSeatSlotCost(buildingMO and buildingMO.buildingId)
+	local isCanUpgrade = true
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		local var_11_3 = iter_11_1.type
-		local var_11_4 = iter_11_1.id
-		local var_11_5 = iter_11_1.quantity
-		local var_11_6 = ItemModel.instance:getItemQuantity(var_11_3, var_11_4)
-		local var_11_7 = var_11_5 <= var_11_6
-		local var_11_8 = arg_11_0._costItemList[iter_11_0]
+	for i, costInfo in ipairs(costInfoList) do
+		local costType = costInfo.type
+		local costId = costInfo.id
+		local costNum = costInfo.quantity
+		local hasQuantity = ItemModel.instance:getItemQuantity(costType, costId)
+		local enough = costNum <= hasQuantity
+		local costItem = self._costItemList[i]
 
-		if not var_11_8 then
-			var_11_8 = arg_11_0:getUserDataTb_()
-			var_11_8.index = iter_11_0
-			var_11_8.go = gohelper.cloneInPlace(arg_11_0._gocostitem, "item" .. iter_11_0)
-			var_11_8.parent = gohelper.findChild(var_11_8.go, "go_itempos")
-			var_11_8.itemIcon = IconMgr.instance:getCommonItemIcon(var_11_8.parent)
+		if not costItem then
+			costItem = self:getUserDataTb_()
+			costItem.index = i
+			costItem.go = gohelper.cloneInPlace(self._gocostitem, "item" .. i)
+			costItem.parent = gohelper.findChild(costItem.go, "go_itempos")
+			costItem.itemIcon = IconMgr.instance:getCommonItemIcon(costItem.parent)
 
-			table.insert(arg_11_0._costItemList, var_11_8)
+			table.insert(self._costItemList, costItem)
 		end
 
-		var_11_8.itemIcon:setMOValue(var_11_3, var_11_4, var_11_5)
-		var_11_8.itemIcon:setCountFontSize(var_0_1)
-		var_11_8.itemIcon:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, arg_11_0)
+		costItem.itemIcon:setMOValue(costType, costId, costNum)
+		costItem.itemIcon:setCountFontSize(COST_FONT_SIZE)
+		costItem.itemIcon:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, self)
 
-		local var_11_9 = var_11_3 == MaterialEnum.MaterialType.Currency
-		local var_11_10 = ""
+		local isCurrency = costType == MaterialEnum.MaterialType.Currency
+		local countStr = ""
 
-		if var_11_7 then
-			if var_11_9 then
-				var_11_10 = GameUtil.numberDisplay(var_11_5)
+		if enough then
+			if isCurrency then
+				countStr = GameUtil.numberDisplay(costNum)
 			else
-				var_11_10 = string.format("%s/%s", GameUtil.numberDisplay(var_11_6), GameUtil.numberDisplay(var_11_5))
+				countStr = string.format("%s/%s", GameUtil.numberDisplay(hasQuantity), GameUtil.numberDisplay(costNum))
 			end
-		elseif var_11_9 then
-			var_11_10 = string.format("<color=#d97373>%s</color>", GameUtil.numberDisplay(var_11_5))
+		elseif isCurrency then
+			countStr = string.format("<color=#d97373>%s</color>", GameUtil.numberDisplay(costNum))
 		else
-			var_11_10 = string.format("<color=#d97373>%s</color>/%s", GameUtil.numberDisplay(var_11_6), GameUtil.numberDisplay(var_11_5))
+			countStr = string.format("<color=#d97373>%s</color>/%s", GameUtil.numberDisplay(hasQuantity), GameUtil.numberDisplay(costNum))
 		end
 
-		var_11_8.itemIcon:getCount().text = var_11_10
-		var_11_2 = var_11_2 and var_11_7
+		local countText = costItem.itemIcon:getCount()
 
-		gohelper.setActive(var_11_8.go, true)
+		countText.text = countStr
+		isCanUpgrade = isCanUpgrade and enough
+
+		gohelper.setActive(costItem.go, true)
 	end
 
-	arg_11_0._isCanUpgrade = var_11_2
+	self._isCanUpgrade = isCanUpgrade
 
-	for iter_11_2 = #var_11_1 + 1, #arg_11_0._costItemList do
-		local var_11_11 = arg_11_0._costItemList[iter_11_2]
+	for i = #costInfoList + 1, #self._costItemList do
+		local costItem = self._costItemList[i]
 
-		gohelper.setActive(var_11_11.go, false)
+		gohelper.setActive(costItem.go, false)
 	end
 
-	ZProj.UGUIHelper.SetGrayscale(arg_11_0._btnbuild.gameObject, not arg_11_0._isCanUpgrade)
+	ZProj.UGUIHelper.SetGrayscale(self._btnbuild.gameObject, not self._isCanUpgrade)
 end
 
-function var_0_0.onClose(arg_12_0)
+function RoomCritterRestTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function RoomCritterRestTipsView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomCritterRestTipsView

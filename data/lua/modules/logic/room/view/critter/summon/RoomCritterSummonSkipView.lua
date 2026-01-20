@@ -1,60 +1,62 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonSkipView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonSkipView.lua
 
-local var_0_0 = class("RoomCritterSummonSkipView", BaseView)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonSkipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skip")
-	arg_1_0._imageskip = gohelper.findChildImage(arg_1_0.viewGO, "#btn_skip/#image_skip")
+local RoomCritterSummonSkipView = class("RoomCritterSummonSkipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterSummonSkipView:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_skip")
+	self._imageskip = gohelper.findChildImage(self.viewGO, "#btn_skip/#image_skip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
-	arg_2_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, arg_2_0.onDragEnd, arg_2_0)
-	arg_2_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onOpenEgg, arg_2_0._closeSkip, arg_2_0)
+function RoomCritterSummonSkipView:addEvents()
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, self.onDragEnd, self)
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onOpenEgg, self._closeSkip, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnskip:RemoveClickListener()
-	arg_3_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, arg_3_0.onDragEnd, arg_3_0)
-	arg_3_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onOpenEgg, arg_3_0._closeSkip, arg_3_0)
+function RoomCritterSummonSkipView:removeEvents()
+	self._btnskip:RemoveClickListener()
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, self.onDragEnd, self)
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onOpenEgg, self._closeSkip, self)
 end
 
-function var_0_0._btnskipOnClick(arg_4_0)
-	arg_4_0:_closeSkip()
+function RoomCritterSummonSkipView:_btnskipOnClick()
+	self:_closeSkip()
 	CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onSummonSkip)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RoomCritterSummonSkipView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function RoomCritterSummonSkipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onDragEnd(arg_7_0)
+function RoomCritterSummonSkipView:onDragEnd()
 	return
 end
 
-function var_0_0._closeSkip(arg_8_0)
-	arg_8_0:closeThis()
+function RoomCritterSummonSkipView:_closeSkip()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	gohelper.setActive(arg_9_0._btnskip.gameObject, true)
+function RoomCritterSummonSkipView:onOpen()
+	gohelper.setActive(self._btnskip.gameObject, true)
 end
 
-function var_0_0.onClose(arg_10_0)
+function RoomCritterSummonSkipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RoomCritterSummonSkipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomCritterSummonSkipView

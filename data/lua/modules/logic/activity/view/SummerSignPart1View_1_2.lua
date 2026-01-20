@@ -1,15 +1,17 @@
-﻿module("modules.logic.activity.view.SummerSignPart1View_1_2", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/SummerSignPart1View_1_2.lua
 
-local var_0_0 = class("SummerSignPart1View_1_2", ActivityNorSignViewBase_1_2)
+module("modules.logic.activity.view.SummerSignPart1View_1_2", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	gohelper.setActive(arg_1_0._gorule, false)
+local SummerSignPart1View_1_2 = class("SummerSignPart1View_1_2", ActivityNorSignViewBase_1_2)
 
-	arg_1_0._actId = ActivityEnum.Activity.SummerSignPart1_1_2
+function SummerSignPart1View_1_2:_editableInitView()
+	gohelper.setActive(self._gorule, false)
 
-	Activity101Rpc.instance:sendGet101InfosRequest(arg_1_0._actId)
-	arg_1_0._titleicon:LoadImage(ResUrl.getActivityLangIcon("qiandao_biaoti_shang"))
-	arg_1_0._simagebanner:LoadImage(ResUrl.getActivityFullBg("qiandao_bg_shang"))
+	self._actId = ActivityEnum.Activity.SummerSignPart1_1_2
+
+	Activity101Rpc.instance:sendGet101InfosRequest(self._actId)
+	self._titleicon:LoadImage(ResUrl.getActivityLangIcon("qiandao_biaoti_shang"))
+	self._simagebanner:LoadImage(ResUrl.getActivityFullBg("qiandao_bg_shang"))
 end
 
-return var_0_0
+return SummerSignPart1View_1_2

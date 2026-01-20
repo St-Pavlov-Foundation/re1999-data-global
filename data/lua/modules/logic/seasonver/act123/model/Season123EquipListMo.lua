@@ -1,13 +1,15 @@
-﻿local var_0_0 = pureTable("Season123EquipListMo")
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EquipListMo.lua
 
-function var_0_0.ctor(arg_1_0)
+local Season123EquipListMo = pureTable("Season123EquipListMo")
+
+function Season123EquipListMo:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.uid
-	arg_2_0.itemId = arg_2_1.itemId
-	arg_2_0.originMO = arg_2_1
+function Season123EquipListMo:init(itemMO)
+	self.id = itemMO.uid
+	self.itemId = itemMO.itemId
+	self.originMO = itemMO
 end
 
-return var_0_0
+return Season123EquipListMo

@@ -1,169 +1,173 @@
-﻿module("modules.logic.help.view.HelpContentItem", package.seeall)
+﻿-- chunkname: @modules/logic/help/view/HelpContentItem.lua
 
-local var_0_0 = class("HelpContentItem", LuaCompBase)
+module("modules.logic.help.view.HelpContentItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
+local HelpContentItem = class("HelpContentItem", LuaCompBase)
+
+function HelpContentItem:ctor(propObj)
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1.go
-	arg_2_0._config = arg_2_1.config
-	arg_2_0._index = arg_2_1.index
-	arg_2_0._txtObj = gohelper.findChild(arg_2_0._go, "txtobj")
-	arg_2_0._imgObj = gohelper.findChild(arg_2_0._go, "imgobj")
-	arg_2_0._gocontentRoot = gohelper.findChild(arg_2_0._go, "imgobj/#go_content")
-	arg_2_0._btnquit = gohelper.findChildButtonWithAudio(arg_2_0._imgObj, "#btn_quit")
+function HelpContentItem:init(param)
+	self._go = param.go
+	self._config = param.config
+	self._index = param.index
+	self._txtObj = gohelper.findChild(self._go, "txtobj")
+	self._imgObj = gohelper.findChild(self._go, "imgobj")
+	self._gocontentRoot = gohelper.findChild(self._go, "imgobj/#go_content")
+	self._btnquit = gohelper.findChildButtonWithAudio(self._imgObj, "#btn_quit")
 
-	arg_2_0._btnquit:AddClickListener(arg_2_0._btnquitOnClick, arg_2_0)
-	gohelper.addUIClickAudio(arg_2_0._btnquit.gameObject, AudioEnum.UI.UI_help_close)
-	transformhelper.setLocalPos(arg_2_0._go.transform, arg_2_1.pos, 0, 0)
+	self._btnquit:AddClickListener(self._btnquitOnClick, self)
+	gohelper.addUIClickAudio(self._btnquit.gameObject, AudioEnum.UI.UI_help_close)
+	transformhelper.setLocalPos(self._go.transform, param.pos, 0, 0)
 
-	if not string.nilorempty(arg_2_0._config.icon) then
-		arg_2_0._conImg = gohelper.findChildSingleImage(arg_2_0._imgObj, "img")
+	if not string.nilorempty(self._config.icon) then
+		self._conImg = gohelper.findChildSingleImage(self._imgObj, "img")
 
-		arg_2_0:setImageContent()
-	elseif not string.nilorempty(arg_2_0._config.text) then
-		arg_2_0._conGameObject = gohelper.findChild(arg_2_0._txtObj, "#scroll_desc/viewport/content/desctxt")
+		self:setImageContent()
+	elseif not string.nilorempty(self._config.text) then
+		self._conGameObject = gohelper.findChild(self._txtObj, "#scroll_desc/viewport/content/desctxt")
 
-		gohelper.setActive(arg_2_0._conGameObject, false)
+		gohelper.setActive(self._conGameObject, false)
 
-		arg_2_0._titleTxt = SLFramework.GameObjectHelper.FindChildComponent(arg_2_0._txtObj, "titletxt", typeof(TMPro.TextMeshProUGUI))
-		arg_2_0._conTexts = {}
+		self._titleTxt = SLFramework.GameObjectHelper.FindChildComponent(self._txtObj, "titletxt", typeof(TMPro.TextMeshProUGUI))
+		self._conTexts = {}
 
-		arg_2_0:setTextContent()
+		self:setTextContent()
 	end
 end
 
-function var_0_0.updatePos(arg_3_0, arg_3_1)
-	transformhelper.setLocalPos(arg_3_0._go.transform, arg_3_1, 0, 0)
+function HelpContentItem:updatePos(pos)
+	transformhelper.setLocalPos(self._go.transform, pos, 0, 0)
 end
 
-function var_0_0._btnquitOnClick(arg_4_0)
+function HelpContentItem:_btnquitOnClick()
 	ViewMgr.instance:closeView(ViewName.HelpView)
 end
 
-function var_0_0.setImageContent(arg_5_0)
-	gohelper.setActive(arg_5_0._imgObj, true)
-	gohelper.setActive(arg_5_0._txtObj, false)
+function HelpContentItem:setImageContent()
+	gohelper.setActive(self._imgObj, true)
+	gohelper.setActive(self._txtObj, false)
 
-	if arg_5_0._config.icon == "empty" then
-		arg_5_0._conImg:UnLoadImage()
+	if self._config.icon == "empty" then
+		self._conImg:UnLoadImage()
 	else
-		arg_5_0._conImg:LoadImage(ResUrl.getHelpItem(arg_5_0._config.icon, arg_5_0._config.isCn == 1))
+		self._conImg:LoadImage(ResUrl.getHelpItem(self._config.icon, self._config.isCn == 1))
 	end
 
-	if not string.nilorempty(arg_5_0._config.iconText) then
-		local var_5_0 = string.format("ui/viewres/help/imgcontent/%s.prefab", arg_5_0._config.iconText)
+	if not string.nilorempty(self._config.iconText) then
+		local assetPath = string.format("ui/viewres/help/imgcontent/%s.prefab", self._config.iconText)
 
-		arg_5_0._resLoader = PrefabInstantiate.Create(arg_5_0._gocontentRoot)
+		self._resLoader = PrefabInstantiate.Create(self._gocontentRoot)
 
-		arg_5_0._resLoader:startLoad(var_5_0, arg_5_0._onHelpImgLoaded, arg_5_0)
-	end
-end
-
-function var_0_0._onHelpImgLoaded(arg_6_0)
-	arg_6_0._imgPrefGo = arg_6_0._resLoader:getInstGO()
-
-	gohelper.setActive(arg_6_0._imgPrefGo, true)
-
-	arg_6_0._imgPrefTrans = arg_6_0._imgPrefGo.transform
-
-	if arg_6_0._config.icon == "v3a1_power_help_1" then
-		local var_6_0 = arg_6_0._imgPrefTrans:GetChild(0):GetComponent(gohelper.Type_TextMesh)
-		local var_6_1 = luaLang("p_v3a1_power_help_1_txt_1")
-
-		var_6_0.text = ServerTime.ReplaceUTCStr(var_6_1)
-	end
-
-	if arg_6_0._config.iconText == "50110" then
-		local var_6_2 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "#text_rule")
-		local var_6_3 = luaLang("p_helpcontentitem_50110_7")
-
-		var_6_2.text = string.gsub(var_6_3, "UTC%+8", ServerTime.GetUTCOffsetStr())
-	end
-
-	if arg_6_0._config.icon == "va_1_1_season_3" then
-		local var_6_4 = gohelper.findChildTextMesh(arg_6_0._imgPrefGo, "Text1/Text2")
-		local var_6_5 = luaLang("p_vahelpcontentitem_season3_7")
-
-		var_6_4.text = ServerTime.ReplaceUTCStr(var_6_5)
+		self._resLoader:startLoad(assetPath, self._onHelpImgLoaded, self)
 	end
 end
 
-function var_0_0.setTextContent(arg_7_0)
-	gohelper.setActive(arg_7_0._imgObj, false)
-	gohelper.setActive(arg_7_0._txtObj, true)
+function HelpContentItem:_onHelpImgLoaded()
+	self._imgPrefGo = self._resLoader:getInstGO()
 
-	arg_7_0._titleTxt.text = arg_7_0._config.title
+	gohelper.setActive(self._imgPrefGo, true)
 
-	local var_7_0 = string.split(arg_7_0._config.text, "\n")
+	self._imgPrefTrans = self._imgPrefGo.transform
 
-	for iter_7_0 = 1, #var_7_0 do
-		local var_7_1 = arg_7_0._conTexts[iter_7_0]
+	if self._config.icon == "v3a1_power_help_1" then
+		local textComp = self._imgPrefTrans:GetChild(0):GetComponent(gohelper.Type_TextMesh)
+		local langStr = luaLang("p_v3a1_power_help_1_txt_1")
 
-		if not var_7_1 then
-			var_7_1 = gohelper.cloneInPlace(arg_7_0._conGameObject, "item" .. iter_7_0):GetComponent(typeof(TMPro.TextMeshProUGUI))
+		textComp.text = ServerTime.ReplaceUTCStr(langStr)
+	end
 
-			table.insert(arg_7_0._conTexts, var_7_1)
+	if self._config.iconText == "50110" then
+		local txtrule = gohelper.findChildTextMesh(self._imgPrefGo, "#text_rule")
+		local langStr = luaLang("p_helpcontentitem_50110_7")
+
+		txtrule.text = string.gsub(langStr, "UTC%+8", ServerTime.GetUTCOffsetStr())
+	end
+
+	if self._config.icon == "va_1_1_season_3" then
+		local txtrule = gohelper.findChildTextMesh(self._imgPrefGo, "Text1/Text2")
+		local langStr = luaLang("p_vahelpcontentitem_season3_7")
+
+		txtrule.text = ServerTime.ReplaceUTCStr(langStr)
+	end
+end
+
+function HelpContentItem:setTextContent()
+	gohelper.setActive(self._imgObj, false)
+	gohelper.setActive(self._txtObj, true)
+
+	self._titleTxt.text = self._config.title
+
+	local texts = string.split(self._config.text, "\n")
+
+	for i = 1, #texts do
+		local conText = self._conTexts[i]
+
+		if not conText then
+			local go = gohelper.cloneInPlace(self._conGameObject, "item" .. i)
+
+			conText = go:GetComponent(typeof(TMPro.TextMeshProUGUI))
+
+			table.insert(self._conTexts, conText)
 		end
 
-		local var_7_2 = var_7_0[iter_7_0]
-		local var_7_3 = luaLang("helpcontentitem_lefttag")
+		local text = texts[i]
+		local lefttag = luaLang("helpcontentitem_lefttag")
 
-		if GameUtil.utf8sub(var_7_2, 1, 1) == var_7_3 then
-			local var_7_4 = luaLang("helpcontentitem_righttag")
+		if GameUtil.utf8sub(text, 1, 1) == lefttag then
+			local righttag = luaLang("helpcontentitem_righttag")
 
-			var_7_2 = string.gsub(var_7_2, var_7_3, "<line-height=108%%><size=32><color=#323c34><alpha=#FF>" .. var_7_3, 1)
-			var_7_2 = string.gsub(var_7_2, var_7_4, var_7_4 .. "</size></color>\n<line-height=100%%><margin=14>", 1)
+			text = string.gsub(text, lefttag, "<line-height=108%%><size=32><color=#323c34><alpha=#FF>" .. lefttag, 1)
+			text = string.gsub(text, righttag, righttag .. "</size></color>\n<line-height=100%%><margin=14>", 1)
 		else
-			var_7_2 = "<margin=14><alpha=#BF>" .. var_7_2
+			text = "<margin=14><alpha=#BF>" .. text
 		end
 
-		var_7_1.text = var_7_2
+		conText.text = text
 
-		gohelper.setActive(var_7_1.gameObject, true)
+		gohelper.setActive(conText.gameObject, true)
 	end
 
-	for iter_7_1 = #var_7_0 + 1, #arg_7_0._conTexts do
-		gohelper.setActive(arg_7_0._conTexts[iter_7_1], false)
+	for i = #texts + 1, #self._conTexts do
+		gohelper.setActive(self._conTexts[i], false)
 	end
 end
 
-function var_0_0.showQuitBtn(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._btnquit.gameObject, arg_8_1)
+function HelpContentItem:showQuitBtn(show)
+	gohelper.setActive(self._btnquit.gameObject, show)
 end
 
-function var_0_0.updateItem(arg_9_0)
+function HelpContentItem:updateItem()
 	return
 end
 
-function var_0_0.addEventListeners(arg_10_0)
+function HelpContentItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_11_0)
+function HelpContentItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onStart(arg_12_0)
+function HelpContentItem:onStart()
 	return
 end
 
-function var_0_0.destroy(arg_13_0)
-	if arg_13_0._conImg then
-		arg_13_0._conImg:UnLoadImage()
+function HelpContentItem:destroy()
+	if self._conImg then
+		self._conImg:UnLoadImage()
 
-		arg_13_0._conImg = nil
+		self._conImg = nil
 	end
 
-	if arg_13_0._resloader then
-		arg_13_0._resloader:dispose()
+	if self._resloader then
+		self._resloader:dispose()
 
-		arg_13_0._resloader = nil
+		self._resloader = nil
 	end
 
-	arg_13_0._btnquit:RemoveClickListener()
+	self._btnquit:RemoveClickListener()
 end
 
-return var_0_0
+return HelpContentItem

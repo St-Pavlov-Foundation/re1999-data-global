@@ -1,456 +1,461 @@
-﻿module("projbooter.ui.BootVoiceView", package.seeall)
+﻿-- chunkname: @projbooter/ui/BootVoiceView.lua
 
-local var_0_0 = class("BootVoiceView")
-local var_0_1 = "BootVoiceViewState"
-local var_0_2 = "BootVoiceDownloadChoice"
-local var_0_3 = "BootVoiceDownloadLang"
-local var_0_4 = "1"
-local var_0_5 = "2"
-local var_0_6 = typeof(UnityEngine.UI.Text)
-local var_0_7 = typeof(UnityEngine.Animator)
-local var_0_8 = SLFramework.GameObjectHelper.FindChildComponent
-local var_0_9 = SLFramework.GameObjectHelper.SetActive
+module("projbooter.ui.BootVoiceView", package.seeall)
 
-function var_0_0.getDownloadChoices(arg_1_0)
-	if not arg_1_0._choiceStr then
-		arg_1_0._choiceStr = UnityEngine.PlayerPrefs.GetString(var_0_2, "")
+local BootVoiceView = class("BootVoiceView")
+local StateKey = "BootVoiceViewState"
+local CacheKey = "BootVoiceDownloadChoice"
+local DownloadingKey = "BootVoiceDownloadLang"
+local Downloading, DownloadDone = "1", "2"
+local TextComp = typeof(UnityEngine.UI.Text)
+local AnimatorComp = typeof(UnityEngine.Animator)
+local FindChildComponent = SLFramework.GameObjectHelper.FindChildComponent
+local setActive = SLFramework.GameObjectHelper.SetActive
+
+function BootVoiceView:getDownloadChoices()
+	if not self._choiceStr then
+		self._choiceStr = UnityEngine.PlayerPrefs.GetString(CacheKey, "")
 	end
 
-	if not string.nilorempty(arg_1_0._choiceStr) then
-		return string.split(arg_1_0._choiceStr, "#")
+	if not string.nilorempty(self._choiceStr) then
+		return string.split(self._choiceStr, "#")
 	end
 
 	return {}
 end
 
-function var_0_0.setDownloadChoices(arg_2_0, arg_2_1)
-	arg_2_0._choiceStr = table.concat(arg_2_1, "#")
+function BootVoiceView:setDownloadChoices(choicesTb)
+	self._choiceStr = table.concat(choicesTb, "#")
 end
 
-function var_0_0.saveDownloadChoices(arg_3_0)
-	UnityEngine.PlayerPrefs.SetString(var_0_2, arg_3_0._choiceStr)
+function BootVoiceView:saveDownloadChoices()
+	UnityEngine.PlayerPrefs.SetString(CacheKey, self._choiceStr)
 	UnityEngine.PlayerPrefs.Save()
 end
 
-function var_0_0.isNeverOpen(arg_4_0)
-	return UnityEngine.PlayerPrefs.GetString(var_0_1, "0") == "0"
+function BootVoiceView:isNeverOpen()
+	return UnityEngine.PlayerPrefs.GetString(StateKey, "0") == "0"
 end
 
-function var_0_0.isDownloading(arg_5_0)
-	return UnityEngine.PlayerPrefs.GetString(var_0_1, "0") == var_0_4
+function BootVoiceView:isDownloading()
+	return UnityEngine.PlayerPrefs.GetString(StateKey, "0") == Downloading
 end
 
-function var_0_0.isFirstDownloadDone(arg_6_0)
-	return UnityEngine.PlayerPrefs.GetString(var_0_1, "0") == var_0_5
+function BootVoiceView:isFirstDownloadDone()
+	return UnityEngine.PlayerPrefs.GetString(StateKey, "0") == DownloadDone
 end
 
-function var_0_0.setDownloading(arg_7_0)
-	if not arg_7_0:isDownloading() then
-		UnityEngine.PlayerPrefs.SetString(var_0_1, var_0_4)
+function BootVoiceView:setDownloading()
+	if not self:isDownloading() then
+		UnityEngine.PlayerPrefs.SetString(StateKey, Downloading)
 		UnityEngine.PlayerPrefs.Save()
 	end
 end
 
-function var_0_0.setFirstDownloadDone(arg_8_0)
-	if not arg_8_0:isFirstDownloadDone() then
-		UnityEngine.PlayerPrefs.SetString(var_0_1, var_0_5)
+function BootVoiceView:setFirstDownloadDone()
+	if not self:isFirstDownloadDone() then
+		UnityEngine.PlayerPrefs.SetString(StateKey, DownloadDone)
 		UnityEngine.PlayerPrefs.Save()
 	end
 end
 
-function var_0_0.showChoose(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._hasGetHotupdateInfo = false
-	arg_9_0._chooseCallback = arg_9_1
-	arg_9_0._chooseCallbackObj = arg_9_2
-	arg_9_0._go = BootResMgr.instance:getVoiceViewGo()
+function BootVoiceView:showChoose(callback, callbackObj)
+	self._hasGetHotupdateInfo = false
+	self._chooseCallback = callback
+	self._chooseCallbackObj = callbackObj
+	self._go = BootResMgr.instance:getVoiceViewGo()
 
-	arg_9_0._go.transform:SetAsLastSibling()
-	arg_9_0._go:SetActive(true)
+	self._go.transform:SetAsLastSibling()
+	self._go:SetActive(true)
 
-	arg_9_0._rootTr = arg_9_0._go.transform
+	self._rootTr = self._go.transform
 
-	arg_9_0:_initView()
-	arg_9_0:_setState(true)
+	self:_initView()
+	self:_setState(true)
 	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.voice_pack_UI_manager)
 end
 
-function var_0_0.showDownloadSize(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._hasGetHotupdateInfo = true
-	arg_10_0._hotupdateSize = arg_10_1
-	arg_10_0._downloadSizeCallback = arg_10_2
-	arg_10_0._downloadSizeCallbackObj = arg_10_3
-	arg_10_0._go = BootResMgr.instance:getVoiceViewGo()
+function BootVoiceView:showDownloadSize(hotupdateSize, callback, callbackObj)
+	self._hasGetHotupdateInfo = true
+	self._hotupdateSize = hotupdateSize
+	self._downloadSizeCallback = callback
+	self._downloadSizeCallbackObj = callbackObj
+	self._go = BootResMgr.instance:getVoiceViewGo()
 
-	arg_10_0._go.transform:SetAsLastSibling()
-	arg_10_0._go:SetActive(true)
+	self._go.transform:SetAsLastSibling()
+	self._go:SetActive(true)
 
-	arg_10_0._rootTr = arg_10_0._go.transform
+	self._rootTr = self._go.transform
 
-	arg_10_0:_initView()
+	self:_initView()
 
-	if arg_10_0._firstClickNextTime then
-		UpdateBeat:Add(arg_10_0._onFrame, arg_10_0)
+	if self._firstClickNextTime then
+		UpdateBeat:Add(self._onFrame, self)
 	else
-		arg_10_0:_setState(false)
-		arg_10_0:_initDownloadSize()
-		arg_10_0:_playAnim("go_seconcheck")
+		self:_setState(false)
+		self:_initDownloadSize()
+		self:_playAnim("go_seconcheck")
 	end
 end
 
-function var_0_0.isShow(arg_11_0)
-	return arg_11_0._go and arg_11_0._go.activeInHierarchy
+function BootVoiceView:isShow()
+	return self._go and self._go.activeInHierarchy
 end
 
-function var_0_0.hide(arg_12_0)
-	if arg_12_0._go then
-		arg_12_0._go:SetActive(false)
+function BootVoiceView:hide()
+	if self._go then
+		self._go:SetActive(false)
 	end
 end
 
-function var_0_0._onFrame(arg_13_0)
-	local var_13_0 = Time.time
+function BootVoiceView:_onFrame()
+	local now = Time.time
 
-	if var_13_0 - arg_13_0._firstClickNextTime < 0.5 then
+	if now - self._firstClickNextTime < 0.5 then
 		return
 	end
 
-	if not arg_13_0._playDownloadSizeTime then
-		arg_13_0._playDownloadSizeTime = Time.time
+	if not self._playDownloadSizeTime then
+		self._playDownloadSizeTime = Time.time
 
-		arg_13_0:_playAnim("go_getinformation")
-	elseif var_13_0 - arg_13_0._playDownloadSizeTime > 0.1667 then
-		arg_13_0:_setState(false)
-		arg_13_0:_initDownloadSize()
-		UpdateBeat:Remove(arg_13_0._onFrame, arg_13_0)
+		self:_playAnim("go_getinformation")
+	elseif now - self._playDownloadSizeTime > 0.1667 then
+		self:_setState(false)
+		self:_initDownloadSize()
+		UpdateBeat:Remove(self._onFrame, self)
 	end
 end
 
-function var_0_0._initView(arg_14_0)
-	var_0_9(arg_14_0._go, true)
+function BootVoiceView:_initView()
+	setActive(self._go, true)
 
-	local var_14_0 = arg_14_0._rootTr:Find("view/btn/#btn_back").gameObject
-	local var_14_1 = arg_14_0._rootTr:Find("view/btn/#btn_next").gameObject
-	local var_14_2 = arg_14_0._rootTr:Find("view/btn/#btn_downloadall").gameObject
-	local var_14_3 = arg_14_0._rootTr:Find("view/btn/#btn_lock").gameObject
+	local btnBack = self._rootTr:Find("view/btn/#btn_back").gameObject
+	local btnNext = self._rootTr:Find("view/btn/#btn_next").gameObject
+	local btnDownload = self._rootTr:Find("view/btn/#btn_downloadall").gameObject
+	local btnLock = self._rootTr:Find("view/btn/#btn_lock").gameObject
 
-	arg_14_0._btnBack = SLFramework.UGUI.ButtonWrap.Get(var_14_0)
-	arg_14_0._btnNext = SLFramework.UGUI.ButtonWrap.Get(var_14_1)
-	arg_14_0._btnDownload = SLFramework.UGUI.ButtonWrap.Get(var_14_2)
-	arg_14_0._btnLock = SLFramework.UGUI.ButtonWrap.Get(var_14_3)
+	self._btnBack = SLFramework.UGUI.ButtonWrap.Get(btnBack)
+	self._btnNext = SLFramework.UGUI.ButtonWrap.Get(btnNext)
+	self._btnDownload = SLFramework.UGUI.ButtonWrap.Get(btnDownload)
+	self._btnLock = SLFramework.UGUI.ButtonWrap.Get(btnLock)
 
-	arg_14_0._btnBack:AddClickListener(arg_14_0._onClickBack, arg_14_0)
-	arg_14_0._btnNext:AddClickListener(arg_14_0._onClickNext, arg_14_0)
-	arg_14_0._btnDownload:AddClickListener(arg_14_0._onClickDownload, arg_14_0)
+	self._btnBack:AddClickListener(self._onClickBack, self)
+	self._btnNext:AddClickListener(self._onClickNext, self)
+	self._btnDownload:AddClickListener(self._onClickDownload, self)
 
-	arg_14_0._firstChooseGO = arg_14_0._rootTr:Find("view/#go_firstchoose").gameObject
-	arg_14_0._secondCheckGO = arg_14_0._rootTr:Find("view/#go_secondcheck").gameObject
-	arg_14_0._firstSelectGO = arg_14_0._rootTr:Find("view/bg/#go_Title/first/icon1").gameObject
-	arg_14_0._firstUnselectGO = arg_14_0._rootTr:Find("view/bg/#go_Title/first/icon2").gameObject
-	arg_14_0._secondSelectGO = arg_14_0._rootTr:Find("view/bg/#go_Title/second/light").gameObject
-	arg_14_0._secondUnselectGO = arg_14_0._rootTr:Find("view/bg/#go_Title/second/dark").gameObject
-	arg_14_0._lineDarkGO = arg_14_0._rootTr:Find("view/bg/#go_Title/line_dark").gameObject
-	arg_14_0._lineLightGO = arg_14_0._rootTr:Find("view/bg/#go_Title/line_light").gameObject
-	arg_14_0._animator = arg_14_0._go:GetComponent(var_0_7)
+	self._firstChooseGO = self._rootTr:Find("view/#go_firstchoose").gameObject
+	self._secondCheckGO = self._rootTr:Find("view/#go_secondcheck").gameObject
+	self._firstSelectGO = self._rootTr:Find("view/bg/#go_Title/first/icon1").gameObject
+	self._firstUnselectGO = self._rootTr:Find("view/bg/#go_Title/first/icon2").gameObject
+	self._secondSelectGO = self._rootTr:Find("view/bg/#go_Title/second/light").gameObject
+	self._secondUnselectGO = self._rootTr:Find("view/bg/#go_Title/second/dark").gameObject
+	self._lineDarkGO = self._rootTr:Find("view/bg/#go_Title/line_dark").gameObject
+	self._lineLightGO = self._rootTr:Find("view/bg/#go_Title/line_light").gameObject
+	self._animator = self._go:GetComponent(AnimatorComp)
 
-	local var_14_4 = var_0_8(arg_14_0._go, "view/bg/#go_Title/first", var_0_6)
-	local var_14_5 = var_0_8(arg_14_0._go, "view/bg/#go_Title/second/light", var_0_6)
-	local var_14_6 = var_0_8(arg_14_0._go, "view/bg/#go_Title/second/dark", var_0_6)
-	local var_14_7 = var_0_8(arg_14_0._go, "view/#go_firstchoose/#txt_desc", var_0_6)
+	local txtFirst = FindChildComponent(self._go, "view/bg/#go_Title/first", TextComp)
+	local txtSecondLight = FindChildComponent(self._go, "view/bg/#go_Title/second/light", TextComp)
+	local txtSecondDark = FindChildComponent(self._go, "view/bg/#go_Title/second/dark", TextComp)
+	local txtDefaultDownloadLangTips = FindChildComponent(self._go, "view/#go_firstchoose/#txt_desc", TextComp)
 
-	var_14_4.text = booterLang("select_lang")
-	var_14_5.text = booterLang("check_update")
-	var_14_6.text = booterLang("check_update")
+	txtFirst.text = booterLang("select_lang")
+	txtSecondLight.text = booterLang("check_update")
+	txtSecondDark.text = booterLang("check_update")
 
-	local var_14_8 = GameConfig:GetDefaultLangShortcut()
+	local defaultLang = GameConfig:GetDefaultLangShortcut()
 
-	var_14_7.text = booterLang("default_download_lang_tips_" .. var_14_8)
+	txtDefaultDownloadLangTips.text = booterLang("default_download_lang_tips_" .. defaultLang)
 
-	local var_14_9 = var_0_8(arg_14_0._go, "view/btn/#btn_next/Text", var_0_6)
-	local var_14_10 = var_0_8(arg_14_0._go, "view/btn/#btn_back/Text", var_0_6)
-	local var_14_11 = var_0_8(arg_14_0._go, "view/btn/#btn_downloadall/Text", var_0_6)
-	local var_14_12 = var_0_8(arg_14_0._go, "view/btn/#btn_lock/Text", var_0_6)
+	local txtNext = FindChildComponent(self._go, "view/btn/#btn_next/Text", TextComp)
+	local txtBack = FindChildComponent(self._go, "view/btn/#btn_back/Text", TextComp)
+	local txtDownload1 = FindChildComponent(self._go, "view/btn/#btn_downloadall/Text", TextComp)
+	local txtDownload2 = FindChildComponent(self._go, "view/btn/#btn_lock/Text", TextComp)
 
-	var_14_9.text = booterLang("next_step")
-	var_14_10.text = booterLang("back_step")
-	var_14_11.text = booterLang("download")
-	var_14_12.text = booterLang("download")
+	txtNext.text = booterLang("next_step")
+	txtBack.text = booterLang("back_step")
+	txtDownload1.text = booterLang("download")
+	txtDownload2.text = booterLang("download")
 
-	local var_14_13 = GameConfig:GetCurLangShortcut()
-	local var_14_14 = true
+	local shortcut = GameConfig:GetCurLangShortcut()
+	local ishide = true
 
-	if var_14_13 ~= "zh" then
-		var_14_14 = false
+	if shortcut ~= "zh" then
+		ishide = false
 	end
 
-	arg_14_0._rootTr:Find("view/btn/#btn_back/Text en").gameObject:SetActive(var_14_14)
-	arg_14_0._rootTr:Find("view/btn/#btn_downloadall/Text en").gameObject:SetActive(var_14_14)
-	arg_14_0._rootTr:Find("view/btn/#btn_next/Text en").gameObject:SetActive(var_14_14)
-	arg_14_0._rootTr:Find("view/btn/#btn_lock/Text en").gameObject:SetActive(var_14_14)
-	arg_14_0:_initChoose()
+	self._rootTr:Find("view/btn/#btn_back/Text en").gameObject:SetActive(ishide)
+	self._rootTr:Find("view/btn/#btn_downloadall/Text en").gameObject:SetActive(ishide)
+	self._rootTr:Find("view/btn/#btn_next/Text en").gameObject:SetActive(ishide)
+	self._rootTr:Find("view/btn/#btn_lock/Text en").gameObject:SetActive(ishide)
+	self:_initChoose()
 end
 
-function var_0_0._initChoose(arg_15_0)
-	arg_15_0._selectGOList = {}
-	arg_15_0._selectClickList = {}
+function BootVoiceView:_initChoose()
+	self._selectGOList = {}
+	self._selectClickList = {}
 
-	local var_15_0 = arg_15_0._rootTr:Find("view/#go_firstchoose/#scroll_content/viewport/content")
-	local var_15_1 = var_15_0:Find("item")
+	local contentTr = self._rootTr:Find("view/#go_firstchoose/#scroll_content/viewport/content")
+	local itemTr = contentTr:Find("item")
 
-	arg_15_0._supportLangList = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	self._supportLangList = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
 
-	table.insert(arg_15_0._supportLangList, "res-HD")
+	table.insert(self._supportLangList, "res-HD")
 
-	local var_15_2 = GameConfig:GetDefaultVoiceShortcut()
+	local defaultLang = GameConfig:GetDefaultVoiceShortcut()
 
-	for iter_15_0 = 1, #arg_15_0._supportLangList do
-		local var_15_3 = arg_15_0._supportLangList[iter_15_0]
-		local var_15_4 = iter_15_0 == 1 and var_15_1 or SLFramework.GameObjectHelper.FindChild(var_15_0.gameObject, "item" .. iter_15_0)
+	for i = 1, #self._supportLangList do
+		local lang = self._supportLangList[i]
+		local item = i == 1 and itemTr or SLFramework.GameObjectHelper.FindChild(contentTr.gameObject, "item" .. i)
 
-		var_15_4 = var_15_4 or SLFramework.GameObjectHelper.CloneInPlace(var_15_1.gameObject, "item" .. iter_15_0)
+		item = item or SLFramework.GameObjectHelper.CloneInPlace(itemTr.gameObject, "item" .. i)
 
-		local var_15_5 = var_15_4.gameObject
-		local var_15_6 = SLFramework.GameObjectHelper.FindChild(var_15_5, "#go_select")
-		local var_15_7 = SLFramework.GameObjectHelper.FindChild(var_15_6, "icon")
+		local itemGO = item.gameObject
+		local selectGO = SLFramework.GameObjectHelper.FindChild(itemGO, "#go_select")
+		local selectIconGO = SLFramework.GameObjectHelper.FindChild(selectGO, "icon")
 
-		table.insert(arg_15_0._selectGOList, var_15_6)
+		table.insert(self._selectGOList, selectGO)
 
-		local var_15_8 = SLFramework.GameObjectHelper.FindChild(var_15_5, "#go_tips")
+		local tipsGO = SLFramework.GameObjectHelper.FindChild(itemGO, "#go_tips")
 
-		if HotUpdateVoiceMgr.ForceSelect[var_15_3] or var_15_3 == var_15_2 then
-			var_0_9(var_15_6, true)
-			var_0_9(var_15_8, true)
-			var_0_9(var_15_7, false)
+		if HotUpdateVoiceMgr.ForceSelect[lang] or lang == defaultLang then
+			setActive(selectGO, true)
+			setActive(tipsGO, true)
+			setActive(selectIconGO, false)
 
-			var_0_8(var_15_8, "dec", var_0_6).text = booterLang("default_download")
+			FindChildComponent(tipsGO, "dec", TextComp).text = booterLang("default_download")
 		else
-			local var_15_9 = arg_15_0:getDownloadChoices()
-			local var_15_10 = tabletool.indexOf(var_15_9, var_15_3) ~= nil
+			local choices = self:getDownloadChoices()
+			local hasChoose = tabletool.indexOf(choices, lang) ~= nil
 
-			var_0_9(var_15_6, var_15_10)
-			var_0_9(var_15_8, false)
-			var_0_9(var_15_7, true)
+			setActive(selectGO, hasChoose)
+			setActive(tipsGO, false)
+			setActive(selectIconGO, true)
 
-			local var_15_11 = SLFramework.UGUI.UIClickListener.Get(var_15_5)
+			local click = SLFramework.UGUI.UIClickListener.Get(itemGO)
 
-			var_15_11:AddClickListener(arg_15_0._onClickItem, arg_15_0, iter_15_0)
-			table.insert(arg_15_0._selectClickList, var_15_11)
+			click:AddClickListener(self._onClickItem, self, i)
+			table.insert(self._selectClickList, click)
 		end
 
-		local var_15_12 = var_0_8(var_15_5, "#txt_title", var_0_6)
-		local var_15_13 = var_0_8(var_15_5, "#txt_dec", var_0_6)
-		local var_15_14 = HotUpdateVoiceMgr.instance:getLangSize(var_15_3)
+		local txtTitle = FindChildComponent(itemGO, "#txt_title", TextComp)
+		local txtDesc = FindChildComponent(itemGO, "#txt_dec", TextComp)
+		local size = HotUpdateVoiceMgr.instance:getLangSize(lang)
 
-		if HotUpdateVoiceMgr.IsGuoFu and var_15_14 == 0 and var_15_3 == HotUpdateVoiceMgr.LangEn then
-			var_15_14 = HotUpdateVoiceMgr.instance:getLangSize(HotUpdateVoiceMgr.LangZh)
+		if HotUpdateVoiceMgr.IsGuoFu and size == 0 and lang == HotUpdateVoiceMgr.LangEn then
+			size = HotUpdateVoiceMgr.instance:getLangSize(HotUpdateVoiceMgr.LangZh)
 		end
 
-		if var_15_14 > 0 then
-			var_15_12.text = booterLang(var_15_3 .. "_voice") .. string.format(" (%s)", arg_15_0:_fixSizeStr(var_15_14))
+		if size > 0 then
+			txtTitle.text = booterLang(lang .. "_voice") .. string.format(" (%s)", self:_fixSizeStr(size))
 		else
-			var_15_12.text = booterLang(var_15_3 .. "_voice")
+			txtTitle.text = booterLang(lang .. "_voice")
 		end
 
-		var_15_13.text = booterLang(var_15_3 .. "_voice_desc")
+		txtDesc.text = booterLang(lang .. "_voice_desc")
 	end
 end
 
-function var_0_0._initDownloadSize(arg_16_0)
-	local var_16_0 = HotUpdateVoiceMgr.instance:getNeedDownloadSize() + (arg_16_0._hotupdateSize or 0)
-	local var_16_1 = var_0_8(arg_16_0._go, "view/#go_secondcheck/#txt_tips", var_0_6)
-	local var_16_2 = var_0_8(arg_16_0._go, "view/#go_secondcheck/#txt_desc", var_0_6)
-	local var_16_3 = var_0_8(arg_16_0._go, "view/btn/#btn_downloadall/Text", var_0_6)
+function BootVoiceView:_initDownloadSize()
+	local voiceSize = HotUpdateVoiceMgr.instance:getNeedDownloadSize()
+	local totalSize = voiceSize + (self._hotupdateSize or 0)
+	local txtTips = FindChildComponent(self._go, "view/#go_secondcheck/#txt_tips", TextComp)
+	local txtWifi = FindChildComponent(self._go, "view/#go_secondcheck/#txt_desc", TextComp)
+	local txtDownload = FindChildComponent(self._go, "view/btn/#btn_downloadall/Text", TextComp)
 
-	if var_16_0 > 0 then
-		local var_16_4 = string.format("<color=#bb541d>%s</color>", arg_16_0:_fixSizeStr(var_16_0))
+	if totalSize > 0 then
+		local sizeStr = string.format("<color=#bb541d>%s</color>", self:_fixSizeStr(totalSize))
 
-		var_16_1.text = string.format(booterLang("hotupdate_info"), var_16_4)
-		var_16_2.text = booterLang("recommend_wifi")
-		var_16_3.text = booterLang("download")
+		sizeStr = string.format(booterLang("hotupdate_info"), sizeStr)
+		txtTips.text = sizeStr
+		txtWifi.text = booterLang("recommend_wifi")
+		txtDownload.text = booterLang("download")
 
-		var_0_9(var_16_2.gameObject, true)
+		setActive(txtWifi.gameObject, true)
 	else
-		var_16_1.text = booterLang("zero_hotupdate_size")
-		var_16_3.text = booterLang("sure")
+		txtTips.text = booterLang("zero_hotupdate_size")
+		txtDownload.text = booterLang("sure")
 
-		var_0_9(var_16_2.gameObject, false)
+		setActive(txtWifi.gameObject, false)
 	end
 end
 
-function var_0_0._initGetInfoTips(arg_17_0)
-	arg_17_0:updateTips()
+function BootVoiceView:_initGetInfoTips()
+	self:updateTips()
 
-	local var_17_0 = var_0_8(arg_17_0._go, "view/#go_secondcheck/#txt_desc", var_0_6)
+	local txtWifi = FindChildComponent(self._go, "view/#go_secondcheck/#txt_desc", TextComp)
 
-	var_0_9(var_17_0.gameObject, false)
+	setActive(txtWifi.gameObject, false)
 end
 
-function var_0_0.updateTips(arg_18_0)
-	if arg_18_0._go then
-		local var_18_0 = var_0_8(arg_18_0._go, "view/#go_secondcheck/#txt_tips", var_0_6)
+function BootVoiceView:updateTips()
+	if self._go then
+		local txtTips = FindChildComponent(self._go, "view/#go_secondcheck/#txt_tips", TextComp)
 
 		if HotUpdateMgr.instance:getFailAlertCount() > 0 then
-			local var_18_1 = string.format("(%d)", HotUpdateMgr.instance:getFailAlertCount())
+			local failCountStr = string.format("(%d)", HotUpdateMgr.instance:getFailAlertCount())
 
-			var_18_0.text = booterLang("hotupdate_getinfo") .. var_18_1
+			txtTips.text = booterLang("hotupdate_getinfo") .. failCountStr
 		else
-			var_18_0.text = booterLang("hotupdate_getinfo")
+			txtTips.text = booterLang("hotupdate_getinfo")
 		end
 	end
 end
 
-function var_0_0._setState(arg_19_0, arg_19_1)
-	var_0_9(arg_19_0._firstChooseGO, arg_19_1)
-	var_0_9(arg_19_0._secondCheckGO, not arg_19_1)
-	var_0_9(arg_19_0._firstSelectGO, arg_19_1)
-	var_0_9(arg_19_0._firstUnselectGO, not arg_19_1)
-	var_0_9(arg_19_0._secondSelectGO, not arg_19_1)
-	var_0_9(arg_19_0._secondUnselectGO, arg_19_1)
-	var_0_9(arg_19_0._lineDarkGO, arg_19_1)
-	var_0_9(arg_19_0._lineLightGO, not arg_19_1)
+function BootVoiceView:_setState(isChooseState)
+	setActive(self._firstChooseGO, isChooseState)
+	setActive(self._secondCheckGO, not isChooseState)
+	setActive(self._firstSelectGO, isChooseState)
+	setActive(self._firstUnselectGO, not isChooseState)
+	setActive(self._secondSelectGO, not isChooseState)
+	setActive(self._secondUnselectGO, isChooseState)
+	setActive(self._lineDarkGO, isChooseState)
+	setActive(self._lineLightGO, not isChooseState)
 
-	local var_19_0 = arg_19_0:isDownloading()
+	local isDownloading = self:isDownloading()
 
-	var_0_9(arg_19_0._btnBack.gameObject, not arg_19_1 and not var_19_0 and arg_19_0._hasGetHotupdateInfo)
-	var_0_9(arg_19_0._btnNext.gameObject, arg_19_1)
-	var_0_9(arg_19_0._btnDownload.gameObject, not arg_19_1 and arg_19_0._hasGetHotupdateInfo)
-	var_0_9(arg_19_0._btnLock.gameObject, not arg_19_1 and not arg_19_0._hasGetHotupdateInfo)
+	setActive(self._btnBack.gameObject, not isChooseState and not isDownloading and self._hasGetHotupdateInfo)
+	setActive(self._btnNext.gameObject, isChooseState)
+	setActive(self._btnDownload.gameObject, not isChooseState and self._hasGetHotupdateInfo)
+	setActive(self._btnLock.gameObject, not isChooseState and not self._hasGetHotupdateInfo)
 end
 
-function var_0_0._playAnim(arg_20_0, arg_20_1)
-	if arg_20_0._animator then
-		arg_20_0._animator:Play(arg_20_1, 0, 0)
+function BootVoiceView:_playAnim(stateName)
+	if self._animator then
+		self._animator:Play(stateName, 0, 0)
 	end
 end
 
-function var_0_0._onClickItem(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0._selectGOList[arg_21_1]
+function BootVoiceView:_onClickItem(i)
+	local selectGO = self._selectGOList[i]
 
-	if var_21_0 then
-		var_0_9(var_21_0, not var_21_0.activeSelf)
+	if selectGO then
+		setActive(selectGO, not selectGO.activeSelf)
 	end
 end
 
-function var_0_0._onClickBack(arg_22_0)
-	UpdateBeat:Remove(arg_22_0._onFrame, arg_22_0)
-	arg_22_0:_initChoose()
-	arg_22_0:_setState(true)
-	arg_22_0:_playAnim("go_firstchoose")
+function BootVoiceView:_onClickBack()
+	UpdateBeat:Remove(self._onFrame, self)
+	self:_initChoose()
+	self:_setState(true)
+	self:_playAnim("go_firstchoose")
 end
 
-function var_0_0._onClickNext(arg_23_0)
-	local var_23_0 = {}
+function BootVoiceView:_onClickNext()
+	local selectLangs = {}
 
-	for iter_23_0 = 1, #arg_23_0._supportLangList do
-		local var_23_1 = arg_23_0._selectGOList[iter_23_0]
+	for i = 1, #self._supportLangList do
+		local selectGO = self._selectGOList[i]
 
-		if var_23_1 and var_23_1.activeSelf then
-			table.insert(var_23_0, arg_23_0._supportLangList[iter_23_0])
+		if selectGO and selectGO.activeSelf then
+			table.insert(selectLangs, self._supportLangList[i])
 		end
 	end
 
-	arg_23_0:setDownloadChoices(var_23_0)
-	arg_23_0:_playAnim("go_seconcheck")
+	self:setDownloadChoices(selectLangs)
+	self:_playAnim("go_seconcheck")
 
-	if not arg_23_0._firstClickNextTime then
-		arg_23_0._firstClickNextTime = Time.time
+	if not self._firstClickNextTime then
+		self._firstClickNextTime = Time.time
 	end
 
-	if arg_23_0._chooseCallback then
-		arg_23_0:_setState(false)
-		arg_23_0:_initGetInfoTips()
+	if self._chooseCallback then
+		self:_setState(false)
+		self:_initGetInfoTips()
 
-		local var_23_2 = arg_23_0._chooseCallback
-		local var_23_3 = arg_23_0._chooseCallbackObj
+		local cb = self._chooseCallback
+		local cbObj = self._chooseCallbackObj
 
-		arg_23_0._chooseCallback = nil
-		arg_23_0._chooseCallbackObj = nil
+		self._chooseCallback = nil
+		self._chooseCallbackObj = nil
 
-		var_23_2(var_23_3)
+		cb(cbObj)
 	else
-		arg_23_0:_initDownloadSize()
-		arg_23_0:_setState(false)
+		self:_initDownloadSize()
+		self:_setState(false)
 	end
 end
 
-function var_0_0._onClickDownload(arg_24_0)
-	local var_24_0 = {}
+function BootVoiceView:_onClickDownload()
+	local data = {}
 
-	var_24_0.entrance = "first_open"
-	var_24_0.update_amount = arg_24_0:_fixSizeMB(HotUpdateVoiceMgr.instance:getNeedDownloadSize())
-	var_24_0.download_voice_pack_list = arg_24_0:getDownloadChoices()
-	var_24_0.current_voice_pack_list = {
+	data.entrance = "first_open"
+	data.update_amount = self:_fixSizeMB(HotUpdateVoiceMgr.instance:getNeedDownloadSize())
+	data.download_voice_pack_list = self:getDownloadChoices()
+	data.current_voice_pack_list = {
 		GameConfig:GetCurVoiceShortcut()
 	}
 
-	SDKDataTrackMgr.instance:trackVoicePackDownloadConfirm(var_24_0)
-	UpdateBeat:Remove(arg_24_0._onFrame, arg_24_0)
-	arg_24_0:setDownloading()
-	arg_24_0:saveDownloadChoices()
-	arg_24_0._go:SetActive(false)
+	SDKDataTrackMgr.instance:trackVoicePackDownloadConfirm(data)
+	UpdateBeat:Remove(self._onFrame, self)
+	self:setDownloading()
+	self:saveDownloadChoices()
+	self._go:SetActive(false)
 
-	local var_24_1 = arg_24_0._downloadSizeCallback
-	local var_24_2 = arg_24_0._downloadSizeCallbackObj
+	local cb = self._downloadSizeCallback
+	local cbObj = self._downloadSizeCallbackObj
 
-	arg_24_0._downloadSizeCallback = nil
-	arg_24_0._downloadSizeCallbackObj = nil
+	self._downloadSizeCallback = nil
+	self._downloadSizeCallbackObj = nil
 
 	HotUpdateProgress.instance:updateVoiceNeedDownloadSize()
-	var_24_1(var_24_2)
+	cb(cbObj)
 end
 
-function var_0_0.dispose(arg_25_0)
-	UpdateBeat:Remove(arg_25_0._onFrame, arg_25_0)
+function BootVoiceView:dispose()
+	UpdateBeat:Remove(self._onFrame, self)
 
-	if arg_25_0._go then
-		arg_25_0._btnBack:RemoveClickListener()
-		arg_25_0._btnNext:RemoveClickListener()
-		arg_25_0._btnDownload:RemoveClickListener()
-		UnityEngine.GameObject.Destroy(arg_25_0._go)
+	if self._go then
+		self._btnBack:RemoveClickListener()
+		self._btnNext:RemoveClickListener()
+		self._btnDownload:RemoveClickListener()
+		UnityEngine.GameObject.Destroy(self._go)
 
-		arg_25_0._go = nil
+		self._go = nil
 	end
 
-	if arg_25_0._selectClickList then
-		for iter_25_0 = #arg_25_0._selectClickList, 1, -1 do
-			arg_25_0._selectClickList[iter_25_0]:RemoveClickListener()
+	if self._selectClickList then
+		for i = #self._selectClickList, 1, -1 do
+			local click = self._selectClickList[i]
 
-			arg_25_0._selectClickList[iter_25_0] = nil
+			click:RemoveClickListener()
+
+			self._selectClickList[i] = nil
 		end
 
-		arg_25_0._selectClickList = nil
+		self._selectClickList = nil
 	end
 
-	for iter_25_1, iter_25_2 in pairs(arg_25_0) do
-		if type(iter_25_2) == "userdata" then
-			rawset(arg_25_0, iter_25_1, nil)
+	for key, value in pairs(self) do
+		if type(value) == "userdata" then
+			rawset(self, key, nil)
 		end
 	end
 end
 
-function var_0_0._fixSizeStr(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_1 / HotUpdateMgr.MB_SIZE
-	local var_26_1 = "MB"
+function BootVoiceView:_fixSizeStr(size)
+	local ret = size / HotUpdateMgr.MB_SIZE
+	local units = "MB"
 
-	if var_26_0 < 1 then
-		var_26_0 = arg_26_1 / HotUpdateMgr.KB_SIZE
-		var_26_1 = "KB"
+	if ret < 1 then
+		ret = size / HotUpdateMgr.KB_SIZE
+		units = "KB"
 
-		if var_26_0 < 0.01 then
-			var_26_0 = 0.01
+		if ret < 0.01 then
+			ret = 0.01
 		end
 	end
 
-	local var_26_2 = var_26_0 - var_26_0 % 0.01
+	ret = ret - ret % 0.01
 
-	return string.format("%.2f %s", var_26_2, var_26_1)
+	return string.format("%.2f %s", ret, units)
 end
 
-function var_0_0._fixSizeMB(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_1 / HotUpdateMgr.MB_SIZE
+function BootVoiceView:_fixSizeMB(size)
+	local ret = size / HotUpdateMgr.MB_SIZE
 
-	return var_27_0 - var_27_0 % 0.01
+	return ret - ret % 0.01
 end
 
-var_0_0.instance = var_0_0.New()
+BootVoiceView.instance = BootVoiceView.New()
 
-return var_0_0
+return BootVoiceView

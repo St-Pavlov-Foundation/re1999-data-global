@@ -1,107 +1,109 @@
-﻿module("modules.logic.chessgame.model.ChessGameInteractMo", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/model/ChessGameInteractMo.lua
 
-local var_0_0 = class("ChessGameInteractMo")
+module("modules.logic.chessgame.model.ChessGameInteractMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:setCo(arg_1_1)
-	arg_1_0:setMo(arg_1_2)
+local ChessGameInteractMo = class("ChessGameInteractMo")
+
+function ChessGameInteractMo:init(interactCo, interactmo)
+	self:setCo(interactCo)
+	self:setMo(interactmo)
 end
 
-function var_0_0.setCo(arg_2_0, arg_2_1)
-	arg_2_0.config = arg_2_1
-	arg_2_0.interactType = arg_2_1.interactType
-	arg_2_0.path = arg_2_1.path
-	arg_2_0.walkable = arg_2_1.walkable
-	arg_2_0.show = arg_2_1.show
-	arg_2_0.canMove = arg_2_1.canMove
-	arg_2_0.touchTrigger = arg_2_1.touchTrigger
-	arg_2_0.iconType = arg_2_1.iconType
-	arg_2_0.posX = arg_2_1.x
-	arg_2_0.posY = arg_2_1.y
-	arg_2_0.direction = arg_2_1.dir
+function ChessGameInteractMo:setCo(interactCo)
+	self.config = interactCo
+	self.interactType = interactCo.interactType
+	self.path = interactCo.path
+	self.walkable = interactCo.walkable
+	self.show = interactCo.show
+	self.canMove = interactCo.canMove
+	self.touchTrigger = interactCo.touchTrigger
+	self.iconType = interactCo.iconType
+	self.posX = interactCo.x
+	self.posY = interactCo.y
+	self.direction = interactCo.dir
 end
 
-function var_0_0.setMo(arg_3_0, arg_3_1)
-	arg_3_0.id = arg_3_1.id
-	arg_3_0.direction = arg_3_1.direction or arg_3_1.dir or arg_3_0.config.dir
-	arg_3_0.show = arg_3_1.show
-	arg_3_0.triggerByClick = arg_3_1.triggerByclick
-	arg_3_0.mapIndex = arg_3_1.mapIndex
-	arg_3_0.posX = arg_3_1.posX or arg_3_1.x or arg_3_0.config.x
-	arg_3_0.posY = arg_3_1.posY or arg_3_1.y or arg_3_0.config.y
+function ChessGameInteractMo:setMo(interactmo)
+	self.id = interactmo.id
+	self.direction = interactmo.direction or interactmo.dir or self.config.dir
+	self.show = interactmo.show
+	self.triggerByClick = interactmo.triggerByclick
+	self.mapIndex = interactmo.mapIndex
+	self.posX = interactmo.posX or interactmo.x or self.config.x
+	self.posY = interactmo.posY or interactmo.y or self.config.y
 
-	if arg_3_1.attrMap then
-		arg_3_0:setIsFinsh(arg_3_1.attrMap)
+	if interactmo.attrMap then
+		self:setIsFinsh(interactmo.attrMap)
 	end
 
-	arg_3_0:setParamStr(arg_3_1.attrData)
+	self:setParamStr(interactmo.attrData)
 end
 
-function var_0_0.isShow(arg_4_0)
-	return arg_4_0.show
+function ChessGameInteractMo:isShow()
+	return self.show
 end
 
-function var_0_0.getConfig(arg_5_0)
-	return arg_5_0.config
+function ChessGameInteractMo:getConfig()
+	return self.config
 end
 
-function var_0_0.getId(arg_6_0)
-	return arg_6_0.id or arg_6_0:getConfig().id
+function ChessGameInteractMo:getId()
+	return self.id or self:getConfig().id
 end
 
-function var_0_0.getInteractTypeName(arg_7_0)
-	return ChessGameEnum.InteractTypeToName[arg_7_0.interactType]
+function ChessGameInteractMo:getInteractTypeName()
+	return ChessGameEnum.InteractTypeToName[self.interactType]
 end
 
-function var_0_0.setDirection(arg_8_0, arg_8_1)
-	arg_8_0.direction = arg_8_1
+function ChessGameInteractMo:setDirection(dir)
+	self.direction = dir
 end
 
-function var_0_0.getDirection(arg_9_0)
-	return arg_9_0.direction
+function ChessGameInteractMo:getDirection()
+	return self.direction
 end
 
-function var_0_0.setXY(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0.posX = arg_10_1
-	arg_10_0.posY = arg_10_2
+function ChessGameInteractMo:setXY(x, y)
+	self.posX = x
+	self.posY = y
 end
 
-function var_0_0.getXY(arg_11_0)
-	return arg_11_0.posX, arg_11_0.posY
+function ChessGameInteractMo:getXY()
+	return self.posX, self.posY
 end
 
-function var_0_0.setParamStr(arg_12_0, arg_12_1)
-	if string.nilorempty(arg_12_1) then
+function ChessGameInteractMo:setParamStr(param)
+	if string.nilorempty(param) then
 		return
 	end
 
-	local var_12_0 = cjson.decode(arg_12_1)
+	local data = cjson.decode(param)
 
-	if var_12_0 then
-		arg_12_0.isFinish = var_12_0.Completed
+	if data then
+		self.isFinish = data.Completed
 	end
 end
 
-function var_0_0.setIsFinsh(arg_13_0, arg_13_1)
-	if arg_13_1 then
-		arg_13_0.isFinish = arg_13_1.Completed
+function ChessGameInteractMo:setIsFinsh(data)
+	if data then
+		self.isFinish = data.Completed
 	end
 end
 
-function var_0_0.CheckInteractFinish(arg_14_0)
-	return arg_14_0.isFinish
+function ChessGameInteractMo:CheckInteractFinish()
+	return self.isFinish
 end
 
-function var_0_0.isInCurrentMap(arg_15_0)
-	return arg_15_0.mapIndex == ChessGameModel.instance:getNowMapIndex()
+function ChessGameInteractMo:isInCurrentMap()
+	return self.mapIndex == ChessGameModel.instance:getNowMapIndex()
 end
 
-function var_0_0.checkWalkable(arg_16_0)
-	return arg_16_0.isWalkable and not arg_16_0.show
+function ChessGameInteractMo:checkWalkable()
+	return self.isWalkable and not self.show
 end
 
-function var_0_0.getEffectType(arg_17_0)
-	return arg_17_0.iconType
+function ChessGameInteractMo:getEffectType()
+	return self.iconType
 end
 
-return var_0_0
+return ChessGameInteractMo

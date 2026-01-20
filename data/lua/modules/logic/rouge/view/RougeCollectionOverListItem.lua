@@ -1,88 +1,91 @@
-﻿module("modules.logic.rouge.view.RougeCollectionOverListItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionOverListItem.lua
 
-local var_0_0 = class("RougeCollectionOverListItem", ListScrollCellExtend)
+module("modules.logic.rouge.view.RougeCollectionOverListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#txt_dec")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+local RougeCollectionOverListItem = class("RougeCollectionOverListItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionOverListItem:onInitView()
+	self._goicon = gohelper.findChild(self.viewGO, "#go_icon")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#txt_dec")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function RougeCollectionOverListItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RougeCollectionOverListItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	local var_4_0 = {
+function RougeCollectionOverListItem:_btnclickOnClick()
+	local params = {
 		interactable = false,
-		collectionId = arg_4_0._mo.id,
+		collectionId = self._mo.id,
 		viewPosition = RougeEnum.CollectionTipViewPlacePos,
 		source = RougeEnum.OpenCollectionTipSource.SlotArea
 	}
 
-	RougeController.instance:openRougeCollectionTipView(var_4_0)
+	RougeController.instance:openRougeCollectionTipView(params)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._animator = gohelper.onceAddComponent(arg_5_0.viewGO, gohelper.Type_Animator)
+function RougeCollectionOverListItem:_editableInitView()
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function RougeCollectionOverListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	if RougeCollectionConfig.instance:getCollectionCfg(arg_7_0._mo.cfgId) then
-		arg_7_0:refreshCollectionIcon()
+function RougeCollectionOverListItem:refreshUI()
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(self._mo.cfgId)
 
-		local var_7_0 = arg_7_0._mo:getAllEnchantCfgId()
+	if collectionCfg then
+		self:refreshCollectionIcon()
 
-		arg_7_0._txtname.text = RougeCollectionConfig.instance:getCollectionName(arg_7_0._mo.cfgId, var_7_0)
+		local enchantCfgIds = self._mo:getAllEnchantCfgId()
 
-		local var_7_1 = RougeCollectionDescHelper.getShowDescTypesWithoutText()
-		local var_7_2 = RougeCollectionDescHelper.getExtraParams_KeepAllActive()
+		self._txtname.text = RougeCollectionConfig.instance:getCollectionName(self._mo.cfgId, enchantCfgIds)
 
-		RougeCollectionDescHelper.setCollectionDescInfos4(arg_7_0._mo.id, arg_7_0._txtdec, var_7_1, var_7_2)
+		local showTypes = RougeCollectionDescHelper.getShowDescTypesWithoutText()
+		local extraParams = RougeCollectionDescHelper.getExtraParams_KeepAllActive()
+
+		RougeCollectionDescHelper.setCollectionDescInfos4(self._mo.id, self._txtdec, showTypes, extraParams)
 	end
 end
 
-local var_0_1 = 160
-local var_0_2 = 160
+local collectionIconWidth, collectionIconHeight = 160, 160
 
-function var_0_0.refreshCollectionIcon(arg_8_0)
-	if not arg_8_0._itemIcon then
-		local var_8_0 = ViewMgr.instance:getSetting(ViewName.RougeCollectionOverView)
-		local var_8_1 = arg_8_0._view:getResInst(var_8_0.otherRes[1], arg_8_0._goicon, "itemicon")
+function RougeCollectionOverListItem:refreshCollectionIcon()
+	if not self._itemIcon then
+		local setting = ViewMgr.instance:getSetting(ViewName.RougeCollectionOverView)
+		local itemIconGO = self._view:getResInst(setting.otherRes[1], self._goicon, "itemicon")
 
-		arg_8_0._itemIcon = RougeCollectionEnchantIconItem.New(var_8_1)
+		self._itemIcon = RougeCollectionEnchantIconItem.New(itemIconGO)
 
-		arg_8_0._itemIcon:setCollectionIconSize(var_0_1, var_0_2)
+		self._itemIcon:setCollectionIconSize(collectionIconWidth, collectionIconHeight)
 	end
 
-	arg_8_0._itemIcon:onUpdateMO(arg_8_0._mo)
+	self._itemIcon:onUpdateMO(self._mo)
 end
 
-function var_0_0.getAnimator(arg_9_0)
-	return arg_9_0._animator
+function RougeCollectionOverListItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	if arg_10_0._itemIcon then
-		arg_10_0._itemIcon:destroy()
+function RougeCollectionOverListItem:onDestroyView()
+	if self._itemIcon then
+		self._itemIcon:destroy()
 
-		arg_10_0._itemIcon = nil
+		self._itemIcon = nil
 	end
 end
 
-return var_0_0
+return RougeCollectionOverListItem

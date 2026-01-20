@@ -1,15 +1,17 @@
-﻿module("modules.logic.nfc.model.NFCModel", package.seeall)
+﻿-- chunkname: @modules/logic/nfc/model/NFCModel.lua
 
-local var_0_0 = class("NFCModel", BaseModel)
+module("modules.logic.nfc.model.NFCModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local NFCModel = class("NFCModel", BaseModel)
+
+function NFCModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function NFCModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+NFCModel.instance = NFCModel.New()
 
-return var_0_0
+return NFCModel

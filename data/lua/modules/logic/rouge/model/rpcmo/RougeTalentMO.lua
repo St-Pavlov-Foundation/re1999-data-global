@@ -1,10 +1,12 @@
-﻿module("modules.logic.rouge.model.rpcmo.RougeTalentMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/rpcmo/RougeTalentMO.lua
 
-local var_0_0 = pureTable("RougeTalentMO")
+module("modules.logic.rouge.model.rpcmo.RougeTalentMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.isActive = arg_1_1.isActive
+local RougeTalentMO = pureTable("RougeTalentMO")
+
+function RougeTalentMO:init(info)
+	self.id = info.id
+	self.isActive = info.isActive
 end
 
-return var_0_0
+return RougeTalentMO

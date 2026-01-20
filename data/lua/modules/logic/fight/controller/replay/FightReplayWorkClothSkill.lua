@@ -1,148 +1,156 @@
-﻿module("modules.logic.fight.controller.replay.FightReplayWorkClothSkill", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/replay/FightReplayWorkClothSkill.lua
 
-local var_0_0 = class("FightReplayWorkClothSkill", BaseWork)
+module("modules.logic.fight.controller.replay.FightReplayWorkClothSkill", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.clothSkillOp = arg_1_1
+local FightReplayWorkClothSkill = class("FightReplayWorkClothSkill", BaseWork)
+
+function FightReplayWorkClothSkill:ctor(clothSkillOp)
+	self.clothSkillOp = clothSkillOp
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
+function FightReplayWorkClothSkill:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 10)
 
-	if arg_2_0.clothSkillOp.type == FightEnum.ClothSkillType.HeroUpgrade then
-		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_2_0._failDone, arg_2_0)
-		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillDone, arg_2_0)
-		FightRpc.instance:sendUseClothSkillRequest(arg_2_0.clothSkillOp.skillId, arg_2_0.clothSkillOp.fromId, arg_2_0.clothSkillOp.toId, FightEnum.ClothSkillType.HeroUpgrade)
-
-		return
-	elseif arg_2_0.clothSkillOp.type == FightEnum.ClothSkillType.Contract then
-		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_2_0._failDone, arg_2_0)
-		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillDone, arg_2_0)
-		FightRpc.instance:sendUseClothSkillRequest(arg_2_0.clothSkillOp.skillId, arg_2_0.clothSkillOp.fromId, arg_2_0.clothSkillOp.toId, FightEnum.ClothSkillType.Contract)
+	if self.clothSkillOp.type == FightEnum.ClothSkillType.HeroUpgrade then
+		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.HeroUpgrade)
 
 		return
-	elseif arg_2_0.clothSkillOp.type == FightEnum.ClothSkillType.EzioBigSkill then
-		local var_2_0 = FightHelper.getEntity(arg_2_0.clothSkillOp.fromId)
+	elseif self.clothSkillOp.type == FightEnum.ClothSkillType.Contract then
+		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.Contract)
 
-		if var_2_0 and not FightDataHelper.tempMgr.replayAiJiAoQtePreTimeline then
+		return
+	elseif self.clothSkillOp.type == FightEnum.ClothSkillType.EzioBigSkill then
+		local playEntity = FightHelper.getEntity(self.clothSkillOp.fromId)
+
+		if playEntity and not FightDataHelper.tempMgr.replayAiJiAoQtePreTimeline then
 			FightDataHelper.tempMgr.replayAiJiAoQtePreTimeline = true
-			arg_2_0.aiJiAoPreTimeline = FightWorkFlowSequence.New()
+			self.aiJiAoPreTimeline = FightWorkFlowSequence.New()
 
-			arg_2_0.aiJiAoPreTimeline:registWork(Work2FightWork, FightWorkPlayTimeline, var_2_0, "aijiao_312301_unique_pre", arg_2_0.clothSkillOp.toId)
-			arg_2_0.aiJiAoPreTimeline:registFinishCallback(arg_2_0._aiJiAoPreTimelineFinish, arg_2_0)
-			arg_2_0.aiJiAoPreTimeline:start()
+			self.aiJiAoPreTimeline:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", self.clothSkillOp.toId)
+			self.aiJiAoPreTimeline:registFinishCallback(self._aiJiAoPreTimelineFinish, self)
+			self.aiJiAoPreTimeline:start()
 		else
-			FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_2_0._failDone, arg_2_0)
-			FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillDone, arg_2_0)
-			FightRpc.instance:sendUseClothSkillRequest(arg_2_0.clothSkillOp.skillId, arg_2_0.clothSkillOp.fromId, arg_2_0.clothSkillOp.toId, FightEnum.ClothSkillType.EzioBigSkill)
+			FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+			FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+			FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.EzioBigSkill)
 		end
 
 		return
-	elseif arg_2_0.clothSkillOp.type == FightEnum.ClothSkillType.AssassinBigSkill then
-		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_2_0._failDone, arg_2_0)
-		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillDone, arg_2_0)
-		FightRpc.instance:sendUseClothSkillRequest(arg_2_0.clothSkillOp.skillId, arg_2_0.clothSkillOp.fromId, arg_2_0.clothSkillOp.toId, FightEnum.ClothSkillType.AssassinBigSkill)
+	elseif self.clothSkillOp.type == FightEnum.ClothSkillType.AssassinBigSkill then
+		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.AssassinBigSkill)
+
+		return
+	elseif self.clothSkillOp.type == FightEnum.ClothSkillType.SelectCrystal then
+		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.SelectCrystal)
 
 		return
 	end
 
-	local var_2_1 = lua_skill.configDict[arg_2_0.clothSkillOp.skillId]
+	local skillCO = lua_skill.configDict[self.clothSkillOp.skillId]
 
-	if var_2_1 then
-		local var_2_2 = var_2_1.behavior1
+	if skillCO then
+		local behavior = skillCO.behavior1
 
-		if not string.nilorempty(var_2_2) then
-			local var_2_3 = string.splitToNumber(var_2_2, "#")[1]
-			local var_2_4 = var_2_3 and lua_skill_behavior.configDict[var_2_3]
-			local var_2_5 = var_2_4 and var_2_4.type
+		if not string.nilorempty(behavior) then
+			local behaviorType = string.splitToNumber(behavior, "#")[1]
+			local behaviorTypeCO = behaviorType and lua_skill_behavior.configDict[behaviorType]
+			local behaviorTypeStr = behaviorTypeCO and behaviorTypeCO.type
 
-			if var_2_5 then
-				arg_2_0:_playBehavior(var_2_5)
+			if behaviorTypeStr then
+				self:_playBehavior(behaviorTypeStr)
 			else
-				logError("主角技能行为类型不存在：" .. arg_2_0.clothSkillOp.skillId .. " behavior=" .. var_2_2)
-				arg_2_0:onDone(true)
+				logError("主角技能行为类型不存在：" .. self.clothSkillOp.skillId .. " behavior=" .. behavior)
+				self:onDone(true)
 			end
 		else
-			logError("主角技能行为不存在：" .. arg_2_0.clothSkillOp.skillId)
-			arg_2_0:onDone(true)
+			logError("主角技能行为不存在：" .. self.clothSkillOp.skillId)
+			self:onDone(true)
 		end
 	else
-		logError("主角技能不存在：" .. arg_2_0.clothSkillOp.skillId)
-		arg_2_0:onDone(true)
+		logError("主角技能不存在：" .. self.clothSkillOp.skillId)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._playBehavior(arg_3_0, arg_3_1)
-	if arg_3_1 == "AddUniversalCard" then
-		FightController.instance:registerCallback(FightEvent.OnUniversalAppear, arg_3_0._onUniversalAppear, arg_3_0)
-	elseif arg_3_1 == "RedealCardKeepStar" then
-		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_3_0._onRedealCardDone, arg_3_0)
-	elseif arg_3_1 == "SubHeroChange" then
-		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_3_0._onChangeSubDone, arg_3_0)
-	elseif arg_3_1 == "ExtraMoveCard" then
-		FightController.instance:registerCallback(FightEvent.OnEffectExtraMoveAct, arg_3_0._onEffectExtraMoveAct, arg_3_0)
+function FightReplayWorkClothSkill:_playBehavior(behaviorTypeStr)
+	if behaviorTypeStr == "AddUniversalCard" then
+		FightController.instance:registerCallback(FightEvent.OnUniversalAppear, self._onUniversalAppear, self)
+	elseif behaviorTypeStr == "RedealCardKeepStar" then
+		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, self._onRedealCardDone, self)
+	elseif behaviorTypeStr == "SubHeroChange" then
+		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, self._onChangeSubDone, self)
+	elseif behaviorTypeStr == "ExtraMoveCard" then
+		FightController.instance:registerCallback(FightEvent.OnEffectExtraMoveAct, self._onEffectExtraMoveAct, self)
 	else
-		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_3_0._onClothSkillDone, arg_3_0)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
 	end
 
-	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_3_0._failDone, arg_3_0)
-	FightController.instance:dispatchEvent(FightEvent.SimulateClickClothSkillIcon, arg_3_0.clothSkillOp)
+	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+	FightController.instance:dispatchEvent(FightEvent.SimulateClickClothSkillIcon, self.clothSkillOp)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightReplayWorkClothSkill:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0._onChangeSubDone(arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0._done, arg_5_0, 0.1)
+function FightReplayWorkClothSkill:_onChangeSubDone()
+	TaskDispatcher.runDelay(self._done, self, 0.1)
 end
 
-function var_0_0._onRedealCardDone(arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._done, arg_6_0, 0.1)
+function FightReplayWorkClothSkill:_onRedealCardDone()
+	TaskDispatcher.runDelay(self._done, self, 0.1)
 end
 
-function var_0_0._onUniversalAppear(arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._done, arg_7_0, 0.1)
+function FightReplayWorkClothSkill:_onUniversalAppear()
+	TaskDispatcher.runDelay(self._done, self, 0.1)
 end
 
-function var_0_0._onEffectExtraMoveAct(arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0._done, arg_8_0, 0.1)
+function FightReplayWorkClothSkill:_onEffectExtraMoveAct()
+	TaskDispatcher.runDelay(self._done, self, 0.1)
 end
 
-function var_0_0._onClothSkillDone(arg_9_0)
-	TaskDispatcher.runDelay(arg_9_0._done, arg_9_0, 0.1)
+function FightReplayWorkClothSkill:_onClothSkillDone()
+	TaskDispatcher.runDelay(self._done, self, 0.1)
 end
 
-function var_0_0._done(arg_10_0)
-	arg_10_0:onDone(true)
+function FightReplayWorkClothSkill:_done()
+	self:onDone(true)
 end
 
-function var_0_0._failDone(arg_11_0)
-	arg_11_0:onDone(true)
+function FightReplayWorkClothSkill:_failDone()
+	self:onDone(true)
 end
 
-function var_0_0._aiJiAoPreTimelineFinish(arg_12_0)
-	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_12_0._failDone, arg_12_0)
-	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_12_0._onClothSkillDone, arg_12_0)
-	FightRpc.instance:sendUseClothSkillRequest(arg_12_0.clothSkillOp.skillId, arg_12_0.clothSkillOp.fromId, arg_12_0.clothSkillOp.toId, FightEnum.ClothSkillType.EzioBigSkill)
+function FightReplayWorkClothSkill:_aiJiAoPreTimelineFinish()
+	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+	FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.EzioBigSkill)
 end
 
-function var_0_0.clearWork(arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.OnUniversalAppear, arg_13_0._onUniversalAppear, arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_13_0._done, arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_13_0._onChangeSubDone, arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.OnEffectExtraMoveAct, arg_13_0._onEffectExtraMoveAct, arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_13_0._onClothSkillDone, arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, arg_13_0._failDone, arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_13_0._onRedealCardDone, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._delayDone, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._done, arg_13_0)
+function FightReplayWorkClothSkill:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnUniversalAppear, self._onUniversalAppear, self)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._done, self)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onChangeSubDone, self)
+	FightController.instance:unregisterCallback(FightEvent.OnEffectExtraMoveAct, self._onEffectExtraMoveAct, self)
+	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onRedealCardDone, self)
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	TaskDispatcher.cancelTask(self._done, self)
 
-	if arg_13_0.aiJiAoPreTimeline then
-		arg_13_0.aiJiAoPreTimeline:disposeSelf()
+	if self.aiJiAoPreTimeline then
+		self.aiJiAoPreTimeline:disposeSelf()
 
-		arg_13_0.aiJiAoPreTimeline = nil
+		self.aiJiAoPreTimeline = nil
 	end
 end
 
-return var_0_0
+return FightReplayWorkClothSkill

@@ -1,130 +1,134 @@
-﻿module("modules.logic.character.view.CharacterSkinGetDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinGetDetailView.lua
 
-local var_0_0 = class("CharacterSkinGetDetailView", BaseView)
+module("modules.logic.character.view.CharacterSkinGetDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goContainer = gohelper.findChild(arg_1_0.viewGO, "characterskingetdetailview")
-	arg_1_0._goclose = gohelper.findChild(arg_1_0._goContainer, "#go_close")
-	arg_1_0._txtcharacterNameEn = gohelper.findChildText(arg_1_0._goContainer, "#txt_characterNameEn")
-	arg_1_0._imagesingleItemBg = gohelper.findChildImage(arg_1_0._goContainer, "characterSingleItem/#image_singleItemBg")
-	arg_1_0._simagesingleItemIcon = gohelper.findChildSingleImage(arg_1_0._goContainer, "characterSingleItem/#simage_singleItemIcon")
-	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0._goContainer, "#btn_back")
-	arg_1_0._simageskinbg = gohelper.findChildSingleImage(arg_1_0._goContainer, "FullScreenGameObject/skinDetail/#simage_skinbg")
-	arg_1_0._simageskin = gohelper.findChildSingleImage(arg_1_0._goContainer, "FullScreenGameObject/skinDetail/#simage_skin")
-	arg_1_0._txtskinName = gohelper.findChildText(arg_1_0._goContainer, "FullScreenGameObject/skinDetail/#txt_skinName")
-	arg_1_0._txtskinNameEn = gohelper.findChildText(arg_1_0._goContainer, "FullScreenGameObject/skinDetail/#txt_skinNameEn")
-	arg_1_0._txtskinDesc = gohelper.findChildText(arg_1_0._goContainer, "FullScreenGameObject/skinDetail/#txt_skinDesc")
-	arg_1_0._simagecircle = gohelper.findChildSingleImage(arg_1_0._goContainer, "circlebg/circlewai/#simage_circle")
+local CharacterSkinGetDetailView = class("CharacterSkinGetDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkinGetDetailView:onInitView()
+	self._goContainer = gohelper.findChild(self.viewGO, "characterskingetdetailview")
+	self._goclose = gohelper.findChild(self._goContainer, "#go_close")
+	self._txtcharacterNameEn = gohelper.findChildText(self._goContainer, "#txt_characterNameEn")
+	self._imagesingleItemBg = gohelper.findChildImage(self._goContainer, "characterSingleItem/#image_singleItemBg")
+	self._simagesingleItemIcon = gohelper.findChildSingleImage(self._goContainer, "characterSingleItem/#simage_singleItemIcon")
+	self._btnback = gohelper.findChildButtonWithAudio(self._goContainer, "#btn_back")
+	self._simageskinbg = gohelper.findChildSingleImage(self._goContainer, "FullScreenGameObject/skinDetail/#simage_skinbg")
+	self._simageskin = gohelper.findChildSingleImage(self._goContainer, "FullScreenGameObject/skinDetail/#simage_skin")
+	self._txtskinName = gohelper.findChildText(self._goContainer, "FullScreenGameObject/skinDetail/#txt_skinName")
+	self._txtskinNameEn = gohelper.findChildText(self._goContainer, "FullScreenGameObject/skinDetail/#txt_skinNameEn")
+	self._txtskinDesc = gohelper.findChildText(self._goContainer, "FullScreenGameObject/skinDetail/#txt_skinDesc")
+	self._simagecircle = gohelper.findChildSingleImage(self._goContainer, "circlebg/circlewai/#simage_circle")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
+function CharacterSkinGetDetailView:addEvents()
+	self._btnback:AddClickListener(self._btnbackOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnback:RemoveClickListener()
+function CharacterSkinGetDetailView:removeEvents()
+	self._btnback:RemoveClickListener()
 end
 
-function var_0_0._btnbackOnClick(arg_4_0)
-	arg_4_0.viewParam.isReplay = true
+function CharacterSkinGetDetailView:_btnbackOnClick()
+	self.viewParam.isReplay = true
 
-	ViewMgr.instance:openView(arg_4_0.viewName, arg_4_0.viewParam)
+	ViewMgr.instance:openView(self.viewName, self.viewParam)
 end
 
-function var_0_0._onBgClick(arg_5_0)
-	arg_5_0:closeThis()
+function CharacterSkinGetDetailView:_onBgClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagecircle:LoadImage(ResUrl.getCharacterGetIcon("bg_yuanchuan"))
+function CharacterSkinGetDetailView:_editableInitView()
+	self._simagecircle:LoadImage(ResUrl.getCharacterGetIcon("bg_yuanchuan"))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function CharacterSkinGetDetailView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterNewSkin, arg_8_0.reallyOpenView, arg_8_0)
+function CharacterSkinGetDetailView:onOpen()
+	self:addEventCb(CharacterController.instance, CharacterEvent.showCharacterNewSkin, self.reallyOpenView, self)
 end
 
-function var_0_0.reallyOpenView(arg_9_0)
-	if HeroModel.instance:getCurrentSkinId(arg_9_0.viewParam.heroId) == 304902 then
+function CharacterSkinGetDetailView:reallyOpenView()
+	if HeroModel.instance:getCurrentSkinId(self.viewParam.heroId) == 304902 then
 		AudioMgr.instance:trigger(AudioEnum.UI.kacakaca_audio)
 	end
 
-	gohelper.setActive(arg_9_0._goContainer, true)
+	gohelper.setActive(self._goContainer, true)
 
-	arg_9_0._bgClick = gohelper.getClickWithAudio(arg_9_0._goclose)
+	self._bgClick = gohelper.getClickWithAudio(self._goclose)
 
-	arg_9_0._bgClick:AddClickListener(arg_9_0._onBgClick, arg_9_0)
-	arg_9_0:_setImage()
-	arg_9_0:_setText()
-	arg_9_0:_playOpenAnim()
-	NavigateMgr.instance:addEscape(ViewName.CharacterGetView, arg_9_0._onBgClick, arg_9_0)
+	self._bgClick:AddClickListener(self._onBgClick, self)
+	self:_setImage()
+	self:_setText()
+	self:_playOpenAnim()
+	NavigateMgr.instance:addEscape(ViewName.CharacterGetView, self._onBgClick, self)
 end
 
-function var_0_0._playOpenAnim(arg_10_0)
-	arg_10_0._animator = arg_10_0._goContainer:GetComponent(typeof(UnityEngine.Animator))
+function CharacterSkinGetDetailView:_playOpenAnim()
+	self._animator = self._goContainer:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_10_0._animator:Play("characterget_skin2")
+	self._animator:Play("characterget_skin2")
 end
 
-function var_0_0._setImage(arg_11_0)
-	local var_11_0 = CharacterDataConfig.instance:getCharacterDataCO(arg_11_0.viewParam.heroId, HeroModel.instance:getCurrentSkinId(arg_11_0.viewParam.heroId), CharacterEnum.CharacterDataItemType.Item, 1).icon
-	local var_11_1 = HeroModel.instance:getCurrentSkinConfig(arg_11_0.viewParam.heroId)
+function CharacterSkinGetDetailView:_setImage()
+	local itemIcon = CharacterDataConfig.instance:getCharacterDataCO(self.viewParam.heroId, HeroModel.instance:getCurrentSkinId(self.viewParam.heroId), CharacterEnum.CharacterDataItemType.Item, 1).icon
+	local skinConfig = HeroModel.instance:getCurrentSkinConfig(self.viewParam.heroId)
 
-	if var_11_0 and var_11_0 ~= "" then
-		arg_11_0._simagesingleItemIcon:LoadImage(ResUrl.getCharacterDataPic(var_11_0), function(arg_12_0)
-			local var_12_0 = SkinConfig.instance:getSkinOffset(var_11_1.skinGetDetailViewIconOffset)
+	if itemIcon and itemIcon ~= "" then
+		self._simagesingleItemIcon:LoadImage(ResUrl.getCharacterDataPic(itemIcon), function(self)
+			local offsets = SkinConfig.instance:getSkinOffset(skinConfig.skinGetDetailViewIconOffset)
 
-			recthelper.setAnchor(arg_12_0._simagesingleItemIcon.transform, tonumber(var_12_0[1]), tonumber(var_12_0[2]))
-			transformhelper.setLocalScale(arg_12_0._simagesingleItemIcon.transform, tonumber(var_12_0[3]), tonumber(var_12_0[3]), tonumber(var_12_0[3]))
-		end, arg_11_0)
+			recthelper.setAnchor(self._simagesingleItemIcon.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+			transformhelper.setLocalScale(self._simagesingleItemIcon.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
+		end, self)
 
-		local var_11_2 = var_11_1.skinGetColorbg or "#000000"
+		local color = skinConfig.skinGetColorbg or "#000000"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._imagesingleItemBg, var_11_2)
+		SLFramework.UGUI.GuiHelper.SetColor(self._imagesingleItemBg, color)
 	end
 
-	if var_11_1.skinGetBackIcon and var_11_1.skinGetBackIcon ~= "" then
-		arg_11_0._simageskinbg:LoadImage(ResUrl.getHeadSkinIconLarge(var_11_1.skinGetBackIcon))
+	if skinConfig.skinGetBackIcon and skinConfig.skinGetBackIcon ~= "" then
+		self._simageskinbg:LoadImage(ResUrl.getHeadSkinIconLarge(skinConfig.skinGetBackIcon))
 	end
 
-	if var_11_1.skinGetIcon and var_11_1.skinGetIcon ~= "" then
-		arg_11_0._simageskin:LoadImage(ResUrl.getHeadSkinIconMiddle(var_11_1.skinGetIcon))
+	if skinConfig.skinGetIcon and skinConfig.skinGetIcon ~= "" then
+		self._simageskin:LoadImage(ResUrl.getHeadSkinIconMiddle(skinConfig.skinGetIcon))
 	end
 end
 
-function var_0_0._setText(arg_13_0)
-	local var_13_0 = HeroModel.instance:getCurrentSkinConfig(arg_13_0.viewParam.heroId)
+function CharacterSkinGetDetailView:_setText()
+	local heroId = self.viewParam.heroId
+	local skinConfig = HeroModel.instance:getCurrentSkinConfig(heroId)
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
-	arg_13_0._txtskinName.text = var_13_0.characterSkin
-	arg_13_0._txtskinNameEn.text = var_13_0.characterSkinNameEng
-	arg_13_0._txtskinDesc.text = var_13_0.skinDescription
-	arg_13_0._txtcharacterNameEn.text = var_13_0.nameEng
+	self._txtskinName.text = skinConfig.characterSkin
+	self._txtskinNameEn.text = skinConfig.characterSkinNameEng
+	self._txtskinDesc.text = skinConfig.skinDescription
+	self._txtcharacterNameEn.text = heroConfig.nameEng
 end
 
-function var_0_0._onSpineLoaded(arg_14_0)
+function CharacterSkinGetDetailView:_onSpineLoaded()
 	return
 end
 
-function var_0_0.onClose(arg_15_0)
-	if arg_15_0._bgClick then
-		arg_15_0._bgClick:RemoveClickListener()
+function CharacterSkinGetDetailView:onClose()
+	if self._bgClick then
+		self._bgClick:RemoveClickListener()
 	end
 
-	arg_15_0:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterNewSkin, arg_15_0.reallyOpenView, arg_15_0)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterNewSkin, self.reallyOpenView, self)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	arg_16_0._simagesingleItemIcon:UnLoadImage()
-	arg_16_0._simageskinbg:UnLoadImage()
-	arg_16_0._simageskin:UnLoadImage()
-	arg_16_0._simagecircle:UnLoadImage()
+function CharacterSkinGetDetailView:onDestroyView()
+	self._simagesingleItemIcon:UnLoadImage()
+	self._simageskinbg:UnLoadImage()
+	self._simageskin:UnLoadImage()
+	self._simagecircle:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSkinGetDetailView

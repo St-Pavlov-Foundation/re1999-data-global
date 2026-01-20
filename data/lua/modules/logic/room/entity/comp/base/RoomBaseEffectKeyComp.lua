@@ -1,38 +1,40 @@
-﻿module("modules.logic.room.entity.comp.base.RoomBaseEffectKeyComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/base/RoomBaseEffectKeyComp.lua
 
-local var_0_0 = class("RoomBaseEffectKeyComp", LuaCompBase)
+module("modules.logic.room.entity.comp.base.RoomBaseEffectKeyComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._effectKey = arg_1_1:getMainEffectKey()
+local RoomBaseEffectKeyComp = class("RoomBaseEffectKeyComp", LuaCompBase)
+
+function RoomBaseEffectKeyComp:ctor(entity)
+	self.entity = entity
+	self._effectKey = entity:getMainEffectKey()
 end
 
-function var_0_0.setEffectKey(arg_2_0, arg_2_1)
-	arg_2_0._effectKey = arg_2_1
+function RoomBaseEffectKeyComp:setEffectKey(key)
+	self._effectKey = key
 end
 
-function var_0_0.onRebuildEffectGO(arg_3_0)
+function RoomBaseEffectKeyComp:onRebuildEffectGO()
 	return
 end
 
-function var_0_0.onReturnEffectGO(arg_4_0)
+function RoomBaseEffectKeyComp:onReturnEffectGO()
 	return
 end
 
-function var_0_0.onEffectReturn(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._effectKey == arg_5_1 then
-		arg_5_0:onReturnEffectGO()
+function RoomBaseEffectKeyComp:onEffectReturn(key, res)
+	if self._effectKey == key then
+		self:onReturnEffectGO()
 	end
 end
 
-function var_0_0.onEffectRebuild(arg_6_0)
-	local var_6_0 = arg_6_0.entity.effect
+function RoomBaseEffectKeyComp:onEffectRebuild()
+	local effect = self.entity.effect
 
-	if var_6_0:isHasEffectGOByKey(arg_6_0._effectKey) and not var_6_0:isSameResByKey(arg_6_0._effectKey, arg_6_0._effectRes) then
-		arg_6_0._effectRes = var_6_0:getEffectRes(arg_6_0._effectKey)
+	if effect:isHasEffectGOByKey(self._effectKey) and not effect:isSameResByKey(self._effectKey, self._effectRes) then
+		self._effectRes = effect:getEffectRes(self._effectKey)
 
-		arg_6_0:onRebuildEffectGO()
+		self:onRebuildEffectGO()
 	end
 end
 
-return var_0_0
+return RoomBaseEffectKeyComp

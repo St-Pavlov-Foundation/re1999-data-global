@@ -1,21 +1,23 @@
-﻿module("modules.logic.guide.controller.trigger.MainViewGuideCondition", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/MainViewGuideCondition.lua
 
-local var_0_0 = class("MainViewGuideCondition")
-local var_0_1 = 19701
+module("modules.logic.guide.controller.trigger.MainViewGuideCondition", package.seeall)
 
-function var_0_0.getCondition(arg_1_0)
-	return var_0_0.guideConditions[arg_1_0]
+local MainViewGuideCondition = class("MainViewGuideCondition")
+local rougeOpenMainViewGuideId = 19701
+
+function MainViewGuideCondition.getCondition(guideId)
+	return MainViewGuideCondition.guideConditions[guideId]
 end
 
-function var_0_0._checkRougeOpen()
-	local var_2_0 = RougeOutsideModel.instance:isUnlock()
-	local var_2_1 = GuideModel.instance:isDoingClickGuide()
+function MainViewGuideCondition._checkRougeOpen()
+	local unlock = RougeOutsideModel.instance:isUnlock()
+	local doingClickGuide = GuideModel.instance:isDoingClickGuide()
 
-	return var_2_0 and not var_2_1
+	return unlock and not doingClickGuide
 end
 
-var_0_0.guideConditions = {
-	[var_0_1] = var_0_0._checkRougeOpen
+MainViewGuideCondition.guideConditions = {
+	[rougeOpenMainViewGuideId] = MainViewGuideCondition._checkRougeOpen
 }
 
-return var_0_0
+return MainViewGuideCondition

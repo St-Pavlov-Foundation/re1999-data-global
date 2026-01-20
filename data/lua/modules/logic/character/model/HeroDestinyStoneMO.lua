@@ -1,58 +1,62 @@
-﻿module("modules.logic.character.model.HeroDestinyStoneMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/HeroDestinyStoneMO.lua
 
-local var_0_0 = class("HeroDestinyStoneMO")
+module("modules.logic.character.model.HeroDestinyStoneMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.rank = 0
-	arg_1_0.level = 0
-	arg_1_0.curUseStoneId = 0
-	arg_1_0.unlockStoneIds = nil
-	arg_1_0.stoneMoList = nil
-	arg_1_0.upStoneId = nil
-	arg_1_0.heroId = arg_1_1
-	arg_1_0.maxRank = 0
-	arg_1_0.maxLevel = {}
+local HeroDestinyStoneMO = class("HeroDestinyStoneMO")
 
-	local var_1_0 = CharacterDestinyConfig.instance:getDestinySlotCosByHeroId(arg_1_1)
+function HeroDestinyStoneMO:ctor(heroId)
+	self.rank = 0
+	self.level = 0
+	self.curUseStoneId = 0
+	self.unlockStoneIds = nil
+	self.stoneMoList = nil
+	self.upStoneId = nil
+	self.heroId = heroId
+	self.maxRank = 0
+	self.maxLevel = {}
 
-	if var_1_0 then
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			arg_1_0.maxRank = math.max(iter_1_0, arg_1_0.maxRank)
-			arg_1_0.maxLevel[iter_1_0] = tabletool.len(iter_1_1)
+	local slotCos = CharacterDestinyConfig.instance:getDestinySlotCosByHeroId(heroId)
+
+	if slotCos then
+		for rank, cos in ipairs(slotCos) do
+			self.maxRank = math.max(rank, self.maxRank)
+			self.maxLevel[rank] = tabletool.len(cos)
 		end
 	end
 end
 
-function var_0_0.refreshMo(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	arg_2_0.rank = arg_2_1
-	arg_2_0.level = arg_2_2
-	arg_2_0.curUseStoneId = arg_2_3
-	arg_2_0.unlockStoneIds = arg_2_4 or {}
+function HeroDestinyStoneMO:refreshMo(rank, level, curUseStoneId, unlockStoneIds)
+	self.rank = rank
+	self.level = level
+	self.curUseStoneId = curUseStoneId
+	self.unlockStoneIds = unlockStoneIds or {}
 
-	arg_2_0:setStoneMo()
+	self:setStoneMo()
 end
 
-function var_0_0.isUnlockSlot(arg_3_0)
-	return arg_3_0.rank > 0
+function HeroDestinyStoneMO:isUnlockSlot()
+	return self.rank > 0
 end
 
-function var_0_0.isCanUpSlotRank(arg_4_0)
-	local var_4_0 = arg_4_0:getNextDestinySlotCo()
+function HeroDestinyStoneMO:isCanUpSlotRank()
+	local nextCo = self:getNextDestinySlotCo()
 
-	return var_4_0 and var_4_0.node == 1
+	return nextCo and nextCo.node == 1
 end
 
-function var_0_0.isSlotMaxLevel(arg_5_0)
-	return not arg_5_0:getNextDestinySlotCo()
+function HeroDestinyStoneMO:isSlotMaxLevel()
+	local nextCo = self:getNextDestinySlotCo()
+
+	return not nextCo
 end
 
-function var_0_0.isAllFacetUnlock(arg_6_0)
-	if not arg_6_0.stoneMoList then
+function HeroDestinyStoneMO:isAllFacetUnlock()
+	if not self.stoneMoList then
 		return false
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.stoneMoList) do
-		if not iter_6_1.isUnlock then
+	for _, mo in pairs(self.stoneMoList) do
+		if not mo.isUnlock then
 			return false
 		end
 	end
@@ -60,187 +64,228 @@ function var_0_0.isAllFacetUnlock(arg_6_0)
 	return true
 end
 
-function var_0_0.setUpStoneId(arg_7_0, arg_7_1)
-	arg_7_0.upStoneId = arg_7_1
+function HeroDestinyStoneMO:setUpStoneId(stoneId)
+	self.upStoneId = stoneId
 end
 
-function var_0_0.getUpStoneId(arg_8_0)
-	return arg_8_0.upStoneId
+function HeroDestinyStoneMO:getUpStoneId()
+	return self.upStoneId
 end
 
-function var_0_0.clearUpStoneId(arg_9_0)
-	arg_9_0.upStoneId = nil
+function HeroDestinyStoneMO:clearUpStoneId()
+	self.upStoneId = nil
 end
 
-function var_0_0.checkAllUnlock(arg_10_0)
-	return arg_10_0:isSlotMaxLevel() and arg_10_0:isAllFacetUnlock()
+function HeroDestinyStoneMO:checkAllUnlock()
+	return self:isSlotMaxLevel() and self:isAllFacetUnlock()
 end
 
-function var_0_0.setStoneMo(arg_11_0)
-	local var_11_0 = CharacterDestinyConfig.instance:getFacetIdsByHeroId(arg_11_0.heroId)
+function HeroDestinyStoneMO:setStoneMo()
+	local _facetIds = CharacterDestinyConfig.instance:getFacetIdsByHeroId(self.heroId)
 
-	if not arg_11_0.stoneMoList then
-		arg_11_0.stoneMoList = {}
+	if not self.stoneMoList then
+		self.stoneMoList = {}
 	end
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-			local var_11_1 = arg_11_0.stoneMoList[iter_11_1]
+	if _facetIds then
+		for _, stoneId in ipairs(_facetIds) do
+			local mo = self.stoneMoList[stoneId]
 
-			if not var_11_1 then
-				var_11_1 = DestinyStoneMO.New()
+			if not mo then
+				mo = DestinyStoneMO.New()
 
-				var_11_1:initMo(iter_11_1)
+				mo:initMo(stoneId)
 
-				arg_11_0.stoneMoList[iter_11_1] = var_11_1
+				self.stoneMoList[stoneId] = mo
 			end
 
-			var_11_1:refresUnlock(LuaUtil.tableContains(arg_11_0.unlockStoneIds, iter_11_1))
-			var_11_1:refreshUse(iter_11_1 == arg_11_0.curUseStoneId)
+			mo:refresUnlock(LuaUtil.tableContains(self.unlockStoneIds, stoneId))
+			mo:refreshUse(stoneId == self.curUseStoneId)
 		end
 	end
 end
 
-function var_0_0.getStoneMoList(arg_12_0)
-	return arg_12_0.stoneMoList and arg_12_0.stoneMoList
+function HeroDestinyStoneMO:getStoneMoList()
+	return self.stoneMoList and self.stoneMoList
 end
 
-function var_0_0.getStoneMo(arg_13_0, arg_13_1)
-	return arg_13_0.stoneMoList and arg_13_0.stoneMoList[arg_13_1]
+function HeroDestinyStoneMO:getStoneMo(stoneId)
+	return self.stoneMoList and self.stoneMoList[stoneId]
 end
 
-function var_0_0.refreshUseStone(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.stoneMoList) do
-		iter_14_1:refreshUse(iter_14_0 == arg_14_0.curUseStoneId)
+function HeroDestinyStoneMO:refreshUseStone()
+	for stoneId, mo in pairs(self.stoneMoList) do
+		mo:refreshUse(stoneId == self.curUseStoneId)
 	end
 end
 
-function var_0_0.getCurUseStoneCo(arg_15_0)
-	if arg_15_0.curUseStoneId ~= 0 then
-		return CharacterDestinyConfig.instance:getDestinyFacets(arg_15_0.curUseStoneId, arg_15_0.rank)
+function HeroDestinyStoneMO:getCurUseStoneCo()
+	if self.curUseStoneId ~= 0 then
+		return CharacterDestinyConfig.instance:getDestinyFacets(self.curUseStoneId, self.rank)
 	end
 end
 
-function var_0_0.getAddAttrValues(arg_16_0)
-	return (arg_16_0:getAddAttrValueByLevel(arg_16_0.rank, arg_16_0.level))
+function HeroDestinyStoneMO:getAddAttrValues()
+	local curAddAttr = self:getAddAttrValueByLevel(self.rank, self.level)
+
+	return curAddAttr
 end
 
-function var_0_0.getAddAttrValueByLevel(arg_17_0, arg_17_1, arg_17_2)
-	return (CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(arg_17_0.heroId, arg_17_1, arg_17_2))
+function HeroDestinyStoneMO:getAddAttrValueByLevel(rank, level)
+	local curAddAttr = CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(self.heroId, rank, level)
+
+	return curAddAttr
 end
 
-function var_0_0.getAddValueByAttrId(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	arg_18_1 = arg_18_1 or arg_18_0:getAddAttrValues()
+function HeroDestinyStoneMO:getAddValueByAttrId(addValues, attrId, heroMo)
+	addValues = addValues or self:getAddAttrValues()
 
-	local var_18_0 = arg_18_1[arg_18_2]
+	local num = addValues[attrId]
 
-	if not var_18_0 then
-		local var_18_1 = CharacterDestinyEnum.DestinyUpBaseParseAttr[arg_18_2]
+	if not num then
+		local attrIds = CharacterDestinyEnum.DestinyUpBaseParseAttr[attrId]
 
-		if var_18_1 then
-			local var_18_2 = var_18_1[1]
+		if attrIds then
+			local _attrId = attrIds[1]
 
-			if var_18_2 then
-				var_18_0 = arg_18_1[var_18_2] or 0
-				var_18_0 = var_18_0 + (arg_18_0:getPercentAddValueByAttrId(arg_18_1, arg_18_2, arg_18_3) or 0)
+			if _attrId then
+				num = addValues[_attrId] or 0
 
-				return var_18_0
+				local percentValue = self:getPercentAddValueByAttrId(addValues, attrId, heroMo) or 0
+
+				num = num + percentValue
+
+				return num
 			end
 		end
 	else
-		return var_18_0
+		return num
 	end
 
 	return 0
 end
 
-function var_0_0.getPercentAddValueByAttrId(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	arg_19_1 = arg_19_1 or arg_19_0:getAddAttrValues()
+function HeroDestinyStoneMO:getPercentAddValueByAttrId(addValues, attrId, heroMo)
+	addValues = addValues or self:getAddAttrValues()
 
-	if not arg_19_3 then
-		arg_19_3 = HeroModel.instance:getById(arg_19_0.heroId)
+	if not heroMo then
+		heroMo = HeroModel.instance:getById(self.heroId)
 
-		if not arg_19_3 then
+		if not heroMo then
 			return 0
 		end
 	end
 
-	local var_19_0 = arg_19_3:getHeroBaseAttrDict()[arg_19_2] or 0
-	local var_19_1 = CharacterDestinyEnum.DestinyUpBaseParseAttr[arg_19_2]
-	local var_19_2 = var_19_0 * (arg_19_1[var_19_1 and var_19_1[2]] or 0) * 0.01
+	local baseAttrDict = heroMo:getHeroBaseAttrDict()
+	local baseValue = baseAttrDict[attrId] or 0
+	local attrIds = CharacterDestinyEnum.DestinyUpBaseParseAttr[attrId]
+	local _attrId = attrIds and attrIds[2]
+	local percentValue = addValues[_attrId] or 0
+	local value = baseValue * percentValue * 0.01
 
-	return math.floor(var_19_2)
+	return math.floor(value)
 end
 
-function var_0_0.getRankLevelCount(arg_20_0)
-	return arg_20_0.maxLevel[arg_20_0.rank] or 0
+function HeroDestinyStoneMO:getRankLevelCount()
+	return self.maxLevel[self.rank] or 0
 end
 
-function var_0_0.getNextDestinySlotCo(arg_21_0)
-	return (CharacterDestinyConfig.instance:getNextDestinySlotCo(arg_21_0.heroId, arg_21_0.rank, arg_21_0.level))
+function HeroDestinyStoneMO:getNextDestinySlotCo()
+	local nextCo = CharacterDestinyConfig.instance:getNextDestinySlotCo(self.heroId, self.rank, self.level)
+
+	return nextCo
 end
 
-function var_0_0.getCurStoneNameAndIcon(arg_22_0)
-	if arg_22_0.curUseStoneId == 0 then
+function HeroDestinyStoneMO:getCurStoneNameAndIcon()
+	if self.curUseStoneId == 0 then
 		return
 	end
 
-	return arg_22_0:getStoneMo(arg_22_0.curUseStoneId):getNameAndIcon()
+	local stoneMo = self:getStoneMo(self.curUseStoneId)
+
+	return stoneMo:getNameAndIcon()
 end
 
-function var_0_0.isCanPlayAttrUnlockAnim(arg_23_0, arg_23_1, arg_23_2)
-	if not arg_23_0:isUnlockSlot() then
+function HeroDestinyStoneMO:isCanPlayAttrUnlockAnim(stoneId, rank)
+	if not self:isUnlockSlot() then
 		return
 	end
 
-	if arg_23_2 > arg_23_0.rank then
+	if rank > self.rank then
 		return
 	end
 
-	local var_23_0 = arg_23_0:getStoneMo(arg_23_1)
+	local stoneMo = self:getStoneMo(stoneId)
 
-	if not var_23_0 then
+	if not stoneMo then
 		return
 	end
 
-	if not var_23_0.isUnlock then
+	if not stoneMo.isUnlock then
 		return
 	end
 
-	local var_23_1 = "HeroDestinyStoneMO_isCanPlayAttrUnlockAnim_" .. arg_23_0.heroId .. "_" .. arg_23_2 .. "_" .. arg_23_1
+	local key = "HeroDestinyStoneMO_isCanPlayAttrUnlockAnim_" .. self.heroId .. "_" .. rank .. "_" .. stoneId
+	local value = GameUtil.playerPrefsGetNumberByUserId(key, 0)
 
-	if GameUtil.playerPrefsGetNumberByUserId(var_23_1, 0) == 0 then
-		GameUtil.playerPrefsSetNumberByUserId(var_23_1, 1)
+	if value == 0 then
+		GameUtil.playerPrefsSetNumberByUserId(key, 1)
 
 		return true
 	end
 end
 
-function var_0_0._replaceSkill(arg_24_0, arg_24_1)
-	if arg_24_1 then
-		var_0_0.replaceSkillList(arg_24_1, arg_24_0.curUseStoneId, arg_24_0.rank)
+function HeroDestinyStoneMO:getEquipReshapeStoneCo(stoneMo)
+	local stoneMo = stoneMo or self:isEquipReshape()
+
+	if not stoneMo then
+		return
 	end
 
-	return arg_24_1
+	local stoneCo = stoneMo:getFacetCo(self.rank)
+
+	if stoneCo and stoneCo.ex_level_exchange then
+		return stoneCo
+	end
 end
 
-function var_0_0.replaceSkillList(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_1 and arg_25_1 ~= 0 then
-		local var_25_0 = CharacterDestinyConfig.instance:getDestinyFacets(arg_25_1, arg_25_2)
+function HeroDestinyStoneMO:getExpExchangeSkillCo(exp)
+	if self.curUseStoneId ~= 0 then
+		local co = self:getEquipReshapeStoneCo()
 
-		if var_25_0 then
-			local var_25_1 = var_25_0.exchangeSkills
+		if co then
+			local skillexCo = CharacterDestinyConfig.instance:getSkillExlevelTable(self.curUseStoneId, exp)
 
-			if not string.nilorempty(var_25_1) then
-				local var_25_2 = GameUtil.splitString2(var_25_1, true)
+			return skillexCo
+		end
+	end
+end
 
-				for iter_25_0, iter_25_1 in pairs(arg_25_0) do
-					for iter_25_2, iter_25_3 in ipairs(var_25_2) do
-						local var_25_3 = iter_25_3[1]
-						local var_25_4 = iter_25_3[2]
+function HeroDestinyStoneMO:_replaceSkill(skillIdList)
+	if skillIdList then
+		HeroDestinyStoneMO.replaceSkillList(skillIdList, self.curUseStoneId, self.rank)
+	end
 
-						if iter_25_1 == var_25_3 then
-							arg_25_0[iter_25_0] = var_25_4
+	return skillIdList
+end
+
+function HeroDestinyStoneMO.replaceSkillList(skillIdList, destinyId, rank)
+	if destinyId and destinyId ~= 0 then
+		local co = CharacterDestinyConfig.instance:getDestinyFacets(destinyId, rank)
+
+		if co then
+			local exchangeSkills = co.exchangeSkills
+
+			if not string.nilorempty(exchangeSkills) then
+				local splitSkillId = GameUtil.splitString2(exchangeSkills, true)
+
+				for i, v in pairs(skillIdList) do
+					for _, skillId in ipairs(splitSkillId) do
+						local orignSkillId = skillId[1]
+						local newSkillId = skillId[2]
+
+						if v == orignSkillId then
+							skillIdList[i] = newSkillId
 						end
 					end
 				end
@@ -248,21 +293,75 @@ function var_0_0.replaceSkillList(arg_25_0, arg_25_1, arg_25_2)
 		end
 	end
 
-	return arg_25_0
+	return skillIdList
 end
 
-function var_0_0.setRedDot(arg_26_0, arg_26_1)
-	arg_26_0.reddot = arg_26_1
-end
+function HeroDestinyStoneMO:isEquipReshape()
+	if self.curUseStoneId == 0 then
+		return
+	end
 
-function var_0_0.getRedDot(arg_27_0)
-	return arg_27_0.reddot or 0
-end
+	local stoneMo = self:getStoneMo(self.curUseStoneId)
 
-function var_0_0.setTrial(arg_28_0)
-	if arg_28_0.maxLevel and arg_28_0.maxRank then
-		arg_28_0.level = arg_28_0.maxLevel[arg_28_0.maxRank] or 1
+	if stoneMo and stoneMo:isReshape() then
+		return stoneMo
 	end
 end
 
-return var_0_0
+function HeroDestinyStoneMO:getEquipReshapeStoneSkillGroupStr(exp)
+	local stoneMo = self:isEquipReshape()
+
+	if not stoneMo then
+		return
+	end
+
+	local stoneCo = stoneMo:getFacetCo(self.rank)
+
+	if not stoneCo or string.nilorempty(stoneCo.desc1) then
+		return
+	end
+
+	if not stoneCo then
+		return
+	end
+
+	local splitGroup1 = string.split(stoneCo.skillGroup1, "|")
+	local splitGroup2 = string.split(stoneCo.skillGroup2, "|")
+	local skillEx = string.split(stoneCo.skillEx, "#")
+	local skillGroup = string.format("1#%s|2#%s", splitGroup1[exp], splitGroup2[exp])
+	local exSkill = skillEx[exp]
+
+	return skillGroup, exSkill
+end
+
+function HeroDestinyStoneMO:hasReshapeStone()
+	for _, mo in pairs(self.stoneMoList) do
+		if mo:isReshape() then
+			return true
+		end
+	end
+end
+
+function HeroDestinyStoneMO:getReshapeDesc()
+	for _, mo in pairs(self.stoneMoList) do
+		if mo:getReshapeDesc() then
+			return mo:getReshapeDesc()
+		end
+	end
+end
+
+function HeroDestinyStoneMO:setRedDot(reddot)
+	self.reddot = reddot
+end
+
+function HeroDestinyStoneMO:getRedDot()
+	return self.reddot or 0
+end
+
+function HeroDestinyStoneMO:setTrial()
+	if self.maxLevel and self.maxRank then
+		self.level = self.maxLevel[self.maxRank] or 1
+	end
+end
+
+return HeroDestinyStoneMO

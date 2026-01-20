@@ -1,16 +1,18 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalShowToastWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalShowToastWork.lua
 
-local var_0_0 = class("SurvivalShowToastWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalShowToastWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._stepMo.paramInt[1] or 0
+local SurvivalShowToastWork = class("SurvivalShowToastWork", SurvivalStepBaseWork)
 
-	ToastController.instance:showToast(var_1_0)
-	arg_1_0:onDone(true)
+function SurvivalShowToastWork:onStart(context)
+	local toastId = self._stepMo.paramInt[1] or 0
+
+	ToastController.instance:showToast(toastId)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+function SurvivalShowToastWork:getRunOrder(params, flow, index, allStep)
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalShowToastWork

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_skin_ui_effect", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_skin_ui_effect.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_skin_ui_effect", package.seeall)
+
+local lua_skin_ui_effect = {}
+local fields = {
 	delayVisible = 5,
 	effect = 2,
 	id = 1,
@@ -10,13 +12,13 @@ local var_0_1 = {
 	scale = 3,
 	frameVisible = 6
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_skin_ui_effect.onLoad(json)
+	lua_skin_ui_effect.configList, lua_skin_ui_effect.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_skin_ui_effect

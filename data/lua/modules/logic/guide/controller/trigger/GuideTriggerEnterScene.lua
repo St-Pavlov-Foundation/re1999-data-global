@@ -1,18 +1,22 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerEnterScene", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerEnterScene.lua
 
-local var_0_0 = class("GuideTriggerEnterScene", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerEnterScene", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
+local GuideTriggerEnterScene = class("GuideTriggerEnterScene", BaseGuideTrigger)
+
+function GuideTriggerEnterScene:ctor(triggerKey)
+	GuideTriggerEnterScene.super.ctor(self, triggerKey)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return arg_2_1 == SceneType[arg_2_2]
+function GuideTriggerEnterScene:assertGuideSatisfy(param, configParam)
+	local configSceneType = SceneType[configParam]
+
+	return param == configSceneType
 end
 
-function var_0_0._onEnterOneSceneFinish(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerEnterScene:_onEnterOneSceneFinish(sceneType, sceneId)
+	self:checkStartGuide(sceneType)
 end
 
-return var_0_0
+return GuideTriggerEnterScene

@@ -1,299 +1,301 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessSoldierUnit", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/entity/TeamChessSoldierUnit.lua
 
-local var_0_0 = class("TeamChessSoldierUnit", TeamChessUnitEntityBase)
-local var_0_1 = UnityEngine.Input
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessSoldierUnit", package.seeall)
 
-function var_0_0.refreshTransform(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._lastTr = arg_1_0._tr
-	arg_1_0._tr = arg_1_1
-	arg_1_0._unitParentPosition = arg_1_2
+local TeamChessSoldierUnit = class("TeamChessSoldierUnit", TeamChessUnitEntityBase)
+local UnityEngine_Input = UnityEngine.Input
 
-	arg_1_0:updatePosByTr()
-	arg_1_0:refreshShowModeState()
+function TeamChessSoldierUnit:refreshTransform(tr, unitParentPosition, needPlayOutAndIn)
+	self._lastTr = self._tr
+	self._tr = tr
+	self._unitParentPosition = unitParentPosition
+
+	self:updatePosByTr()
+	self:refreshShowModeState()
 end
 
-function var_0_0.getPosByTr(arg_2_0)
-	if arg_2_0._tr == nil then
+function TeamChessSoldierUnit:getPosByTr()
+	if self._tr == nil then
 		return 0, 0, 0
 	end
 
-	local var_2_0 = EliminateTeamChessModel.instance:getViewCanvas()
-	local var_2_1, var_2_2 = recthelper.uiPosToScreenPos2(arg_2_0._tr, var_2_0)
-	local var_2_3, var_2_4, var_2_5 = recthelper.screenPosToWorldPos3(Vector2(var_2_1, var_2_2), nil, arg_2_0._unitParentPosition)
+	local uiCanvas = EliminateTeamChessModel.instance:getViewCanvas()
+	local screenX, screenY = recthelper.uiPosToScreenPos2(self._tr, uiCanvas)
+	local posX, posY, posZ = recthelper.screenPosToWorldPos3(Vector2(screenX, screenY), nil, self._unitParentPosition)
 
-	return var_2_3, var_2_4, var_2_5
+	return posX, posY, posZ
 end
 
-function var_0_0.updatePosByTr(arg_3_0)
-	local var_3_0, var_3_1, var_3_2 = arg_3_0:getPosByTr()
+function TeamChessSoldierUnit:updatePosByTr()
+	local posX, posY, posZ = self:getPosByTr()
 
-	arg_3_0:updatePos(var_3_0, var_3_1, var_3_2)
+	self:updatePos(posX, posY, posZ)
 
-	if arg_3_0._lastTr == nil or arg_3_0._lastTr ~= arg_3_0._tr then
-		arg_3_0:playAnimator("in")
+	if self._lastTr == nil or self._lastTr ~= self._tr then
+		self:playAnimator("in")
 	end
 end
 
-function var_0_0.movePosByTr(arg_4_0)
-	local var_4_0, var_4_1, var_4_2 = arg_4_0:getPosByTr()
+function TeamChessSoldierUnit:movePosByTr()
+	local posX, posY, posZ = self:getPosByTr()
 
-	arg_4_0:moveToPos(var_4_0, var_4_1, var_4_2)
+	self:moveToPos(posX, posY, posZ)
 end
 
-function var_0_0.moveToPosByTargetTr(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_1 == nil then
+function TeamChessSoldierUnit:moveToPosByTargetTr(targetTr, rectWidth, rectHeight)
+	if targetTr == nil then
 		return
 	end
 
-	local var_5_0, var_5_1, var_5_2 = arg_5_0:getPosXYZ()
+	local x, y, z = self:getPosXYZ()
 
-	if arg_5_0._unitMo.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
-		var_5_0 = var_5_0 + EliminateTeamChessEnum.chessMoveOffsetX
-		var_5_1 = var_5_1 + EliminateTeamChessEnum.chessMoveOffsetY
+	if self._unitMo.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		x = x + EliminateTeamChessEnum.chessMoveOffsetX
+		y = y + EliminateTeamChessEnum.chessMoveOffsetY
 	end
 
-	if arg_5_0._unitMo.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		var_5_0 = var_5_0 - EliminateTeamChessEnum.chessMoveOffsetX
-		var_5_1 = var_5_1 - EliminateTeamChessEnum.chessMoveOffsetY
+	if self._unitMo.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		x = x - EliminateTeamChessEnum.chessMoveOffsetX
+		y = y - EliminateTeamChessEnum.chessMoveOffsetY
 	end
 
-	arg_5_0:moveToPos(var_5_0, var_5_1, var_5_2)
+	self:moveToPos(x, y, z)
 end
 
-function var_0_0._onResLoaded(arg_6_0)
-	var_0_0.super._onResLoaded(arg_6_0)
+function TeamChessSoldierUnit:_onResLoaded()
+	TeamChessSoldierUnit.super._onResLoaded(self)
 
-	if arg_6_0._resGo.transform.childCount ~= 6 then
-		logError("TeamChessSoldierUnit:_onResLoaded() childCount ~= 6, resName: " .. arg_6_0._resGo.name)
+	if self._resGo.transform.childCount ~= 6 then
+		logError("TeamChessSoldierUnit:_onResLoaded() childCount ~= 6, resName: " .. self._resGo.name)
 	end
 
-	local var_6_0 = arg_6_0._resGo.transform.childCount
+	local count = self._resGo.transform.childCount
 
-	for iter_6_0 = 1, var_6_0 do
-		local var_6_1 = arg_6_0._resGo.transform:GetChild(iter_6_0 - 1).gameObject
+	for i = 1, count do
+		local child = self._resGo.transform:GetChild(i - 1).gameObject
 
-		if not gohelper.isNil(var_6_1) then
-			local var_6_2 = var_6_1.name
+		if not gohelper.isNil(child) then
+			local childName = child.name
 
-			if GameUtil.endsWith(var_6_2, "1") then
-				arg_6_0._frontGo = var_6_1
+			if GameUtil.endsWith(childName, "1") then
+				self._frontGo = child
 			end
 
-			if GameUtil.endsWith(var_6_2, "2") then
-				arg_6_0._backGo = var_6_1
+			if GameUtil.endsWith(childName, "2") then
+				self._backGo = child
 			end
 
-			if GameUtil.endsWith(var_6_2, "1_outline") then
-				arg_6_0._frontOutLineGo = var_6_1
+			if GameUtil.endsWith(childName, "1_outline") then
+				self._frontOutLineGo = child
 			end
 
-			if GameUtil.endsWith(var_6_2, "2_outline") then
-				arg_6_0._backOutLineGo = var_6_1
+			if GameUtil.endsWith(childName, "2_outline") then
+				self._backOutLineGo = child
 			end
 
-			if GameUtil.endsWith(var_6_2, "1_grayscale") then
-				arg_6_0._frontGrayGo = var_6_1
+			if GameUtil.endsWith(childName, "1_grayscale") then
+				self._frontGrayGo = child
 			end
 
-			if GameUtil.endsWith(var_6_2, "2_grayscale") then
-				arg_6_0._backGrayGo = var_6_1
+			if GameUtil.endsWith(childName, "2_grayscale") then
+				self._backGrayGo = child
 			end
 		end
 	end
 
-	if not gohelper.isNil(arg_6_0._frontGo) and not gohelper.isNil(arg_6_0._backGo) then
-		gohelper.setActive(arg_6_0._frontGo, false)
-		gohelper.setActive(arg_6_0._backGo, false)
+	if not gohelper.isNil(self._frontGo) and not gohelper.isNil(self._backGo) then
+		gohelper.setActive(self._frontGo, false)
+		gohelper.setActive(self._backGo, false)
 	end
 
-	if not gohelper.isNil(arg_6_0._frontOutLineGo) and not gohelper.isNil(arg_6_0._backOutLineGo) then
-		gohelper.setActive(arg_6_0._frontOutLineGo, false)
-		gohelper.setActive(arg_6_0._backOutLineGo, false)
+	if not gohelper.isNil(self._frontOutLineGo) and not gohelper.isNil(self._backOutLineGo) then
+		gohelper.setActive(self._frontOutLineGo, false)
+		gohelper.setActive(self._backOutLineGo, false)
 	end
 
-	if not gohelper.isNil(arg_6_0._frontGrayGo) and not gohelper.isNil(arg_6_0._backGrayGo) then
-		gohelper.setActive(arg_6_0._frontGrayGo, false)
-		gohelper.setActive(arg_6_0._backGrayGo, false)
+	if not gohelper.isNil(self._frontGrayGo) and not gohelper.isNil(self._backGrayGo) then
+		gohelper.setActive(self._frontGrayGo, false)
+		gohelper.setActive(self._backGrayGo, false)
 	end
 
-	arg_6_0.ani = arg_6_0._resGo:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._goClick = ZProj.BoxColliderClickListener.Get(arg_6_0._resGo)
+	self.ani = self._resGo:GetComponent(typeof(UnityEngine.Animator))
+	self._goClick = ZProj.BoxColliderClickListener.Get(self._resGo)
 
-	arg_6_0._goClick:SetIgnoreUI(true)
-	arg_6_0._goClick:AddMouseUpListener(arg_6_0._onMouseUp, arg_6_0)
-	arg_6_0._goClick:AddDragListener(arg_6_0._onDrag, arg_6_0)
+	self._goClick:SetIgnoreUI(true)
+	self._goClick:AddMouseUpListener(self._onMouseUp, self)
+	self._goClick:AddDragListener(self._onDrag, self)
 
-	arg_6_0._isDrag = false
+	self._isDrag = false
 
-	transformhelper.setLocalPos(arg_6_0._resGo.transform, 0, 0.4, 0)
-	arg_6_0:setShowModeType(EliminateTeamChessEnum.ModeType.Normal)
+	transformhelper.setLocalPos(self._resGo.transform, 0, 0.4, 0)
+	self:setShowModeType(EliminateTeamChessEnum.ModeType.Normal)
 end
 
-function var_0_0.setOutlineActive(arg_7_0, arg_7_1)
-	arg_7_0:playAnimator(arg_7_1 and "select" or "idle")
+function TeamChessSoldierUnit:setOutlineActive(active)
+	self:playAnimator(active and "select" or "idle")
 end
 
-function var_0_0.setGrayActive(arg_8_0, arg_8_1)
-	arg_8_0:playAnimator(arg_8_1 and "gray" or "idle")
+function TeamChessSoldierUnit:setGrayActive(active)
+	self:playAnimator(active and "gray" or "idle")
 end
 
-function var_0_0.setActive(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._resGo, arg_9_1)
+function TeamChessSoldierUnit:setActive(active)
+	gohelper.setActive(self._resGo, active)
 end
 
-function var_0_0.setNormalActive(arg_10_0, arg_10_1)
-	arg_10_0:playAnimator("idle")
+function TeamChessSoldierUnit:setNormalActive(active)
+	self:playAnimator("idle")
 end
 
-function var_0_0.setShowModeType(arg_11_0, arg_11_1)
-	if gohelper.isNil(arg_11_0._resGo) then
+function TeamChessSoldierUnit:setShowModeType(modelType)
+	if gohelper.isNil(self._resGo) then
 		return
 	end
 
-	if arg_11_0._lastModelType ~= nil and arg_11_0._lastModelType == arg_11_1 then
+	if self._lastModelType ~= nil and self._lastModelType == modelType then
 		return
 	end
 
-	arg_11_0._lastModelType = arg_11_1
+	self._lastModelType = modelType
 
-	local var_11_0 = false
-	local var_11_1 = false
-	local var_11_2 = false
-	local var_11_3 = "idle"
+	local isShowOutLine = false
+	local isShowGray = false
+	local isShowNormal = false
+	local name = "idle"
 
-	if arg_11_1 ~= nil then
-		if arg_11_1 == EliminateTeamChessEnum.ModeType.Gray then
-			var_11_1 = true
-			var_11_3 = "gray"
+	if modelType ~= nil then
+		if modelType == EliminateTeamChessEnum.ModeType.Gray then
+			isShowGray = true
+			name = "gray"
 		end
 
-		if arg_11_1 == EliminateTeamChessEnum.ModeType.Normal then
-			var_11_2 = true
-			var_11_3 = "idle"
+		if modelType == EliminateTeamChessEnum.ModeType.Normal then
+			isShowNormal = true
+			name = "idle"
 		end
 
-		if arg_11_1 == EliminateTeamChessEnum.ModeType.Outline then
-			var_11_0 = true
-			var_11_3 = "select"
+		if modelType == EliminateTeamChessEnum.ModeType.Outline then
+			isShowOutLine = true
+			name = "select"
 		end
 
-		arg_11_0._modeType = arg_11_1
+		self._modeType = modelType
 	end
 
-	arg_11_0:setNormalActive(var_11_2)
-	arg_11_0:setOutlineActive(var_11_0)
-	arg_11_0:setGrayActive(var_11_1)
-	arg_11_0:playAnimator(var_11_3)
+	self:setNormalActive(isShowNormal)
+	self:setOutlineActive(isShowOutLine)
+	self:setGrayActive(isShowGray)
+	self:playAnimator(name)
 end
 
-function var_0_0.getShowModeType(arg_12_0)
-	return arg_12_0._modeType
+function TeamChessSoldierUnit:getShowModeType()
+	return self._modeType
 end
 
-function var_0_0.cacheModel(arg_13_0)
-	arg_13_0.cacheModelType = arg_13_0:getShowModeType()
+function TeamChessSoldierUnit:cacheModel()
+	self.cacheModelType = self:getShowModeType()
 end
 
-function var_0_0.restoreModel(arg_14_0)
-	if arg_14_0.cacheModelType == nil then
+function TeamChessSoldierUnit:restoreModel()
+	if self.cacheModelType == nil then
 		return
 	end
 
-	arg_14_0:setShowModeType(arg_14_0.cacheModelType)
+	self:setShowModeType(self.cacheModelType)
 end
 
-function var_0_0.setActiveAndPlayAni(arg_15_0, arg_15_1)
-	arg_15_0:setActive(arg_15_1)
+function TeamChessSoldierUnit:setActiveAndPlayAni(active)
+	self:setActive(active)
 
-	if arg_15_1 then
-		arg_15_0:playAnimator("fadein")
+	if active then
+		self:playAnimator("fadein")
 	else
-		arg_15_0:playAnimator("fadeout")
+		self:playAnimator("fadeout")
 	end
 end
 
-function var_0_0.playAnimator(arg_16_0, arg_16_1)
-	if arg_16_0.ani then
-		arg_16_0.ani:Play(arg_16_1, 0, 0)
+function TeamChessSoldierUnit:playAnimator(name)
+	if self.ani then
+		self.ani:Play(name, 0, 0)
 	end
 end
 
-function var_0_0._onMouseUp(arg_17_0)
-	local var_17_0 = UnityEngine.Input.mousePosition
+function TeamChessSoldierUnit:_onMouseUp()
+	local pos = UnityEngine.Input.mousePosition
 
-	if not arg_17_0:_needResponseClick(var_17_0) then
+	if not self:_needResponseClick(pos) then
 		return
 	end
 
-	if arg_17_0._isDrag then
-		arg_17_0:_dragEnd()
+	if self._isDrag then
+		self:_dragEnd()
 
 		return
 	end
 
-	arg_17_0:_onClick()
+	self:_onClick()
 end
 
-function var_0_0._onDrag(arg_18_0)
+function TeamChessSoldierUnit:_onDrag()
 	if EliminateTeamChessModel.instance:getTeamChessSkillState() then
 		return
 	end
 
-	local var_18_0 = UnityEngine.Input.mousePosition
+	local pos = UnityEngine.Input.mousePosition
 
-	if not arg_18_0:_needResponseClick(var_18_0) then
+	if not self:_needResponseClick(pos) then
 		return
 	end
 
-	if not arg_18_0._canDrag or arg_18_0._unitMo == nil then
+	if not self._canDrag or self._unitMo == nil then
 		return
 	end
 
-	if not arg_18_0._isDrag and (var_0_1.GetAxis("Mouse X") ~= 0 or var_0_1.GetAxis("Mouse Y") ~= 0) then
-		arg_18_0._isDrag = true
+	if not self._isDrag and (UnityEngine_Input.GetAxis("Mouse X") ~= 0 or UnityEngine_Input.GetAxis("Mouse Y") ~= 0) then
+		self._isDrag = true
 	end
 
-	if not arg_18_0._isDrag then
+	if not self._isDrag then
 		return
 	end
 
-	local var_18_1 = UnityEngine.Input.mousePosition
+	local pos = UnityEngine.Input.mousePosition
 
-	arg_18_0:onDrag(var_18_1.x, var_18_1.y)
+	self:onDrag(pos.x, pos.y)
 end
 
-function var_0_0._onClick(arg_19_0)
-	local var_19_0 = UnityEngine.Input.mousePosition
+function TeamChessSoldierUnit:_onClick()
+	local pos = UnityEngine.Input.mousePosition
 
-	if not arg_19_0:_needResponseClick(var_19_0) then
+	if not self:_needResponseClick(pos) then
 		return
 	end
 
-	if not arg_19_0._canClick or arg_19_0._unitMo == nil then
+	if not self._canClick or self._unitMo == nil then
 		return
 	end
 
-	arg_19_0:onClick()
+	self:onClick()
 end
 
-function var_0_0._needResponseClick(arg_20_0, arg_20_1)
-	if arg_20_0._pointerEventData == nil then
-		arg_20_0._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine.EventSystems.EventSystem.current)
-		arg_20_0._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
-		arg_20_0._uiRootGO = EliminateTeamChessModel.instance:getTipViewParent()
+function TeamChessSoldierUnit:_needResponseClick(position)
+	if self._pointerEventData == nil then
+		self._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine.EventSystems.EventSystem.current)
+		self._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
+		self._uiRootGO = EliminateTeamChessModel.instance:getTipViewParent()
 	end
 
-	arg_20_0._pointerEventData.position = arg_20_1
+	self._pointerEventData.position = position
 
-	UnityEngine.EventSystems.EventSystem.current:RaycastAll(arg_20_0._pointerEventData, arg_20_0._raycastResults)
+	UnityEngine.EventSystems.EventSystem.current:RaycastAll(self._pointerEventData, self._raycastResults)
 
-	local var_20_0 = arg_20_0._raycastResults:GetEnumerator()
+	local iter = self._raycastResults:GetEnumerator()
 
-	while var_20_0:MoveNext() do
-		local var_20_1 = var_20_0.Current
-		local var_20_2 = var_20_1.module
+	while iter:MoveNext() do
+		local raycastResult = iter.Current
+		local raycaster = raycastResult.module
 
-		if arg_20_0:_isRaycaster2d(var_20_2, var_20_1.gameObject) then
+		if self:_isRaycaster2d(raycaster, raycastResult.gameObject) then
 			return false
 		end
 	end
@@ -301,152 +303,155 @@ function var_0_0._needResponseClick(arg_20_0, arg_20_1)
 	return true
 end
 
-local var_0_2 = {
+local Ray2dList = {
 	"#btn_click_2",
 	"#btn_click",
 	"#btn_mask"
 }
 
-function var_0_0._isRaycaster2d(arg_21_0, arg_21_1, arg_21_2)
-	for iter_21_0 = 1, #var_0_2 do
-		local var_21_0 = var_0_2[iter_21_0]
+function TeamChessSoldierUnit:_isRaycaster2d(raycaster, go)
+	for i = 1, #Ray2dList do
+		local ray2d = Ray2dList[i]
 
-		if arg_21_2.name == var_21_0 then
+		if go.name == ray2d then
 			return true
 		end
 	end
 
-	return (arg_21_1.gameObject.transform:IsChildOf(arg_21_0._uiRootGO.transform))
+	local raycasterGO = raycaster.gameObject
+	local isRaycaster2d = raycasterGO.transform:IsChildOf(self._uiRootGO.transform)
+
+	return isRaycaster2d
 end
 
-function var_0_0._dragEnd(arg_22_0)
-	if arg_22_0._unitMo == nil then
+function TeamChessSoldierUnit:_dragEnd()
+	if self._unitMo == nil then
 		return
 	end
 
-	arg_22_0._isDrag = false
+	self._isDrag = false
 
-	local var_22_0 = UnityEngine.Input.mousePosition
+	local pos = UnityEngine.Input.mousePosition
 
-	arg_22_0:onDragEnd(var_22_0.x, var_22_0.y)
+	self:onDragEnd(pos.x, pos.y)
 end
 
-function var_0_0.onDrag(arg_23_0, arg_23_1, arg_23_2)
+function TeamChessSoldierUnit:onDrag(x, y)
 	return
 end
 
-function var_0_0.onDragEnd(arg_24_0, arg_24_1, arg_24_2)
+function TeamChessSoldierUnit:onDragEnd(x, y)
 	return
 end
 
-function var_0_0.onClick(arg_25_0)
+function TeamChessSoldierUnit:onClick()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
 
-	local var_25_0 = arg_25_0._unitMo.stronghold
-	local var_25_1 = arg_25_0._unitMo.uid
-	local var_25_2 = arg_25_0._unitMo.soldierId
-	local var_25_3 = EliminateTeamChessEnum.ChessTipType.showDesc
-	local var_25_4
+	local strongholdId = self._unitMo.stronghold
+	local uid = self._unitMo.uid
+	local soldierId = self._unitMo.soldierId
+	local type = EliminateTeamChessEnum.ChessTipType.showDesc
+	local offsetData
 
-	if arg_25_0._unitMo.teamType ~= EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		var_25_3 = EliminateTeamChessEnum.ChessTipType.showSell
+	if self._unitMo.teamType ~= EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		type = EliminateTeamChessEnum.ChessTipType.showSell
 	else
-		var_25_4 = {
+		offsetData = {
 			soliderTipOffsetX = EliminateTeamChessEnum.soliderSellTipOffsetX,
 			soliderTipOffsetY = -EliminateTeamChessEnum.soliderSellTipOffsetY
 		}
 	end
 
 	if not EliminateLevelModel.instance:sellChessIsUnLock() or EliminateLevelModel.instance:getIsWatchTeamChess() then
-		var_25_3 = EliminateTeamChessEnum.ChessTipType.showDesc
+		type = EliminateTeamChessEnum.ChessTipType.showDesc
 
-		if arg_25_0._unitMo.teamType ~= EliminateTeamChessEnum.TeamChessTeamType.enemy then
-			var_25_4 = {
+		if self._unitMo.teamType ~= EliminateTeamChessEnum.TeamChessTeamType.enemy then
+			offsetData = {
 				soliderTipOffsetX = EliminateTeamChessEnum.playerSoliderWatchTipOffsetX,
 				soliderTipOffsetY = EliminateTeamChessEnum.playerSoliderWatchTipOffsetY
 			}
 		end
 	end
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.SoliderChessModelClick, var_25_2, var_25_1, var_25_0, var_25_3, arg_25_0, var_25_4)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.SoliderChessModelClick, soldierId, uid, strongholdId, type, self, offsetData)
 end
 
-function var_0_0.setAllMeshRenderOrderInLayer(arg_26_0, arg_26_1)
-	if not gohelper.isNil(arg_26_0._frontGo) then
-		arg_26_0._frontGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = arg_26_1
+function TeamChessSoldierUnit:setAllMeshRenderOrderInLayer(order)
+	if not gohelper.isNil(self._frontGo) then
+		self._frontGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = order
 	end
 
-	if not gohelper.isNil(arg_26_0._backGo) then
-		arg_26_0._backGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = arg_26_1
+	if not gohelper.isNil(self._backGo) then
+		self._backGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = order
 	end
 
-	if not gohelper.isNil(arg_26_0._frontOutLineGo) then
-		arg_26_0._frontOutLineGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = arg_26_1
+	if not gohelper.isNil(self._frontOutLineGo) then
+		self._frontOutLineGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = order
 	end
 
-	if not gohelper.isNil(arg_26_0._backOutLineGo) then
-		arg_26_0._backOutLineGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = arg_26_1
+	if not gohelper.isNil(self._backOutLineGo) then
+		self._backOutLineGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = order
 	end
 
-	if not gohelper.isNil(arg_26_0._frontGrayGo) then
-		arg_26_0._frontGrayGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = arg_26_1
+	if not gohelper.isNil(self._frontGrayGo) then
+		self._frontGrayGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = order
 	end
 
-	if not gohelper.isNil(arg_26_0._backGrayGo) then
-		arg_26_0._backGrayGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = arg_26_1
+	if not gohelper.isNil(self._backGrayGo) then
+		self._backGrayGo.transform:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingOrder = order
 	end
 end
 
-function var_0_0.dispose(arg_27_0)
+function TeamChessSoldierUnit:dispose()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_pkls_enemy_move)
 
-	if arg_27_0._unitMo ~= nil and arg_27_0._unitMo.uid == EliminateTeamChessEnum.tempPieceUid then
-		arg_27_0:onDestroy()
+	if self._unitMo ~= nil and self._unitMo.uid == EliminateTeamChessEnum.tempPieceUid then
+		self:onDestroy()
 	else
-		arg_27_0:playAnimator("out")
-		TaskDispatcher.runDelay(arg_27_0.onDestroy, arg_27_0, 0.33)
+		self:playAnimator("out")
+		TaskDispatcher.runDelay(self.onDestroy, self, 0.33)
 	end
 end
 
-function var_0_0.refreshShowModeState(arg_28_0)
-	local var_28_0 = EliminateTeamChessEnum.ModeType.Normal
+function TeamChessSoldierUnit:refreshShowModeState()
+	local showModel = EliminateTeamChessEnum.ModeType.Normal
 
-	if arg_28_0._unitMo ~= nil and arg_28_0._unitMo:canActiveMove() then
-		var_28_0 = EliminateTeamChessEnum.ModeType.Outline
+	if self._unitMo ~= nil and self._unitMo:canActiveMove() then
+		showModel = EliminateTeamChessEnum.ModeType.Outline
 	end
 
-	arg_28_0:setShowModeType(var_28_0)
+	self:setShowModeType(showModel)
 end
 
-function var_0_0.refreshMeshOrder(arg_29_0)
-	if arg_29_0._unitMo ~= nil then
-		arg_29_0:setAllMeshRenderOrderInLayer(arg_29_0._unitMo:getOrder())
+function TeamChessSoldierUnit:refreshMeshOrder()
+	if self._unitMo ~= nil then
+		self:setAllMeshRenderOrderInLayer(self._unitMo:getOrder())
 	end
 end
 
-function var_0_0.onDestroy(arg_30_0)
-	if arg_30_0._goClick then
-		arg_30_0._goClick:RemoveMouseUpListener()
-		arg_30_0._goClick:RemoveDragListener()
+function TeamChessSoldierUnit:onDestroy()
+	if self._goClick then
+		self._goClick:RemoveMouseUpListener()
+		self._goClick:RemoveDragListener()
 
-		arg_30_0._goClick = nil
+		self._goClick = nil
 	end
 
-	arg_30_0._pointerEventData = nil
-	arg_30_0._raycastResults = nil
-	arg_30_0._uiRootGO = nil
-	arg_30_0._frontGo = nil
-	arg_30_0._backGo = nil
-	arg_30_0._frontOutLineGo = nil
-	arg_30_0._backOutLineGo = nil
-	arg_30_0._frontGrayGo = nil
-	arg_30_0._backGrayGo = nil
-	arg_30_0._tr = nil
-	arg_30_0._unitParentPosition = nil
+	self._pointerEventData = nil
+	self._raycastResults = nil
+	self._uiRootGO = nil
+	self._frontGo = nil
+	self._backGo = nil
+	self._frontOutLineGo = nil
+	self._backOutLineGo = nil
+	self._frontGrayGo = nil
+	self._backGrayGo = nil
+	self._tr = nil
+	self._unitParentPosition = nil
 
-	TaskDispatcher.cancelTask(arg_30_0.onDestroy, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0.setActiveByCache, arg_30_0)
-	var_0_0.super.onDestroy(arg_30_0)
+	TaskDispatcher.cancelTask(self.onDestroy, self)
+	TaskDispatcher.cancelTask(self.setActiveByCache, self)
+	TeamChessSoldierUnit.super.onDestroy(self)
 end
 
-return var_0_0
+return TeamChessSoldierUnit

@@ -1,8 +1,10 @@
-﻿module("modules.logic.dragonboat.define.DragonBoatFestivalEvent", package.seeall)
+﻿-- chunkname: @modules/logic/dragonboat/define/DragonBoatFestivalEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.dragonboat.define.DragonBoatFestivalEvent", package.seeall)
 
-var_0_0.SelectItem = 1001
-var_0_0.ShowMapFinished = 1002
+local DragonBoatFestivalEvent = _M
 
-return var_0_0
+DragonBoatFestivalEvent.SelectItem = 1001
+DragonBoatFestivalEvent.ShowMapFinished = 1002
+
+return DragonBoatFestivalEvent

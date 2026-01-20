@@ -1,31 +1,33 @@
-﻿module("modules.logic.mail.config.MailConfig", package.seeall)
+﻿-- chunkname: @modules/logic/mail/config/MailConfig.lua
 
-local var_0_0 = class("MailConfig", BaseConfig)
+module("modules.logic.mail.config.MailConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._mailConfig = nil
+local MailConfig = class("MailConfig", BaseConfig)
+
+function MailConfig:ctor()
+	self._mailConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function MailConfig:reqConfigNames()
 	return {
 		"mail"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "mail" then
-		arg_3_0._mailConfig = arg_3_2
+function MailConfig:onConfigLoaded(configName, configTable)
+	if configName == "mail" then
+		self._mailConfig = configTable
 	end
 end
 
-function var_0_0.getCategoryCO(arg_4_0)
-	return arg_4_0._mailConfig.configDict
+function MailConfig:getCategoryCO()
+	return self._mailConfig.configDict
 end
 
-function var_0_0.getPropDetailCO(arg_5_0, arg_5_1)
-	return arg_5_0._mailConfig.configDict[arg_5_1]
+function MailConfig:getPropDetailCO(mailid)
+	return self._mailConfig.configDict[mailid]
 end
 
-var_0_0.instance = var_0_0.New()
+MailConfig.instance = MailConfig.New()
 
-return var_0_0
+return MailConfig

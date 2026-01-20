@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "language_90001255",
+    "iconUrl": "rouge_collection_tag1"
+  },
+  {
+    "id": 2,
+    "name": "language_10102771",
+    "iconUrl": "rouge_collection_tag5"
+  },
+  {
+    "id": 3,
+    "name": "language_10102773",
+    "iconUrl": "rouge_collection_tag6"
+  },
+  {
+    "id": 4,
+    "name": "language_10102775",
+    "iconUrl": "rouge_collection_tag2"
+  },
+  {
+    "id": 5,
+    "name": "language_90001256",
+    "iconUrl": "rouge_collection_tag3"
+  },
+  {
+    "id": 100,
+    "name": "language_90001269",
+    "iconUrl": ""
+  },
+  {
+    "id": 140,
+    "name": "language_10103526",
+    "iconUrl": ""
+  },
+  {
+    "id": 200,
+    "name": "language_10100369",
+    "iconUrl": ""
+  },
+  {
+    "id": 300,
+    "name": "language_10100368",
+    "iconUrl": ""
+  }
+]

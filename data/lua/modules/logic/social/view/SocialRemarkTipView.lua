@@ -1,67 +1,69 @@
-﻿module("modules.logic.social.view.SocialRemarkTipView", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/SocialRemarkTipView.lua
 
-local var_0_0 = class("SocialRemarkTipView", BaseView)
+module("modules.logic.social.view.SocialRemarkTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "main/bg/#simage_left")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "main/bg/#simage_right")
-	arg_1_0._inputsignature = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "main/bg/textArea/#input_signature")
-	arg_1_0._btncleanname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/bg/textArea/#btn_cleanname")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/bg/btnnode/#btn_cancel")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "main/bg/btnnode/#btn_confirm")
+local SocialRemarkTipView = class("SocialRemarkTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SocialRemarkTipView:onInitView()
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "main/bg/#simage_left")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "main/bg/#simage_right")
+	self._inputsignature = gohelper.findChildTextMeshInputField(self.viewGO, "main/bg/textArea/#input_signature")
+	self._btncleanname = gohelper.findChildButtonWithAudio(self.viewGO, "main/bg/textArea/#btn_cleanname")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "main/bg/btnnode/#btn_cancel")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "main/bg/btnnode/#btn_confirm")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncleanname:AddClickListener(arg_2_0._clickClean, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._clickConfirm, arg_2_0)
-	arg_2_0._inputsignature:AddOnValueChanged(arg_2_0._onValueChange, arg_2_0)
+function SocialRemarkTipView:addEvents()
+	self._btncleanname:AddClickListener(self._clickClean, self)
+	self._btncancel:AddClickListener(self.closeThis, self)
+	self._btnconfirm:AddClickListener(self._clickConfirm, self)
+	self._inputsignature:AddOnValueChanged(self._onValueChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncleanname:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._inputsignature:RemoveOnValueChanged()
+function SocialRemarkTipView:removeEvents()
+	self._btncleanname:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._inputsignature:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_4_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function SocialRemarkTipView:_editableInitView()
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	arg_4_0._simagebg2 = gohelper.findChildSingleImage(arg_4_0.viewGO, "main/bg/#simage_bg2")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "main/bg/#simage_bg2")
 end
 
-function var_0_0._clickConfirm(arg_5_0)
-	FriendRpc.instance:changeDesc(arg_5_0.viewParam.userId, arg_5_0._inputsignature:GetText())
-	arg_5_0:closeThis()
+function SocialRemarkTipView:_clickConfirm()
+	FriendRpc.instance:changeDesc(self.viewParam.userId, self._inputsignature:GetText())
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._inputsignature:SetText(arg_6_0.viewParam.desc)
-	gohelper.setActive(arg_6_0._btncleanname, not string.nilorempty(arg_6_0.viewParam.desc))
+function SocialRemarkTipView:onOpen()
+	self._inputsignature:SetText(self.viewParam.desc)
+	gohelper.setActive(self._btncleanname, not string.nilorempty(self.viewParam.desc))
 end
 
-function var_0_0._clickClean(arg_7_0)
-	arg_7_0._inputsignature:SetText("")
+function SocialRemarkTipView:_clickClean()
+	self._inputsignature:SetText("")
 end
 
-function var_0_0._onValueChange(arg_8_0)
-	local var_8_0 = arg_8_0._inputsignature:GetText()
-	local var_8_1 = CommonConfig.instance:getConstNum(ConstEnum.CharacterNameLimit)
-	local var_8_2 = GameUtil.utf8sub(var_8_0, 1, math.min(GameUtil.utf8len(var_8_0), var_8_1))
+function SocialRemarkTipView:_onValueChange()
+	local inputValue = self._inputsignature:GetText()
+	local limit = CommonConfig.instance:getConstNum(ConstEnum.CharacterNameLimit)
+	local newInput = GameUtil.utf8sub(inputValue, 1, math.min(GameUtil.utf8len(inputValue), limit))
 
-	gohelper.setActive(arg_8_0._btncleanname, not string.nilorempty(var_8_2))
+	gohelper.setActive(self._btncleanname, not string.nilorempty(newInput))
 
-	if var_8_2 == var_8_0 then
+	if newInput == inputValue then
 		return
 	end
 
-	arg_8_0._inputsignature:SetText(var_8_2)
+	self._inputsignature:SetText(newInput)
 end
 
-return var_0_0
+return SocialRemarkTipView

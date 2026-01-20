@@ -1,47 +1,49 @@
-﻿module("modules.logic.activity.view.chessmap.ActivityChessGameContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/chessmap/ActivityChessGameContainer.lua
 
-local var_0_0 = class("ActivityChessGameContainer", BaseViewContainer)
+module("modules.logic.activity.view.chessmap.ActivityChessGameContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityChessGameContainer = class("ActivityChessGameContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityChessGameScene.New())
-	table.insert(var_1_0, ActivityChessGameMain.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function ActivityChessGameContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityChessGameScene.New())
+	table.insert(views, ActivityChessGameMain.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function ActivityChessGameContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.ChessGame109)
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self.overrideOnCloseClick, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.setHelpVisible(arg_3_0, arg_3_1)
-	arg_3_0._navigateButtonView:setHelpVisible(arg_3_1)
+function ActivityChessGameContainer:setHelpVisible(value)
+	self._navigateButtonView:setHelpVisible(value)
 end
 
-function var_0_0.overrideOnCloseClick(arg_4_0)
-	local function var_4_0()
+function ActivityChessGameContainer:overrideOnCloseClick()
+	local function yesFunc()
 		ViewMgr.instance:closeView(ViewName.ActivityChessGame, nil, true)
 
-		local var_5_0 = Activity109ChessModel.instance:getActId()
+		local actId = Activity109ChessModel.instance:getActId()
 
-		Activity109Rpc.instance:sendGetAct109InfoRequest(var_5_0)
+		Activity109Rpc.instance:sendGetAct109InfoRequest(actId)
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, var_4_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, yesFunc)
 end
 
-return var_0_0
+return ActivityChessGameContainer

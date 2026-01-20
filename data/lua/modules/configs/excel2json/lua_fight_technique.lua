@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_fight_technique", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_technique.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_technique", package.seeall)
+
+local lua_fight_technique = {}
+local fields = {
 	title_cn = 7,
 	iconShow = 9,
 	picture1 = 10,
@@ -18,18 +20,18 @@ local var_0_1 = {
 	content1 = 12,
 	subTitleId = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	title_cn = 3,
 	content1 = 4,
 	mainTitle_en = 2,
 	mainTitle_cn = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_technique.onLoad(json)
+	lua_fight_technique.configList, lua_fight_technique.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_technique

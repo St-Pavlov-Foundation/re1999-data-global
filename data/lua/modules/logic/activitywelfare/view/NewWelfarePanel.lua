@@ -1,127 +1,130 @@
-﻿module("modules.logic.activitywelfare.view.NewWelfarePanel", package.seeall)
+﻿-- chunkname: @modules/logic/activitywelfare/view/NewWelfarePanel.lua
 
-local var_0_0 = class("NewWelfarePanel", BaseView)
+module("modules.logic.activitywelfare.view.NewWelfarePanel", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Descr")
-	arg_1_0._btnClose = gohelper.findChildButton(arg_1_0.viewGO, "Root/#btn_Close")
-	arg_1_0._rewardItemList = {}
+local NewWelfarePanel = class("NewWelfarePanel", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NewWelfarePanel:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Root/#txt_Descr")
+	self._btnClose = gohelper.findChildButton(self.viewGO, "Root/#btn_Close")
+	self._rewardItemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function NewWelfarePanel:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
+function NewWelfarePanel:removeEvents()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._btnClaimOnClick(arg_4_0, arg_4_1)
-	Activity160Rpc.instance:sendGetAct160FinishMissionRequest(arg_4_0.actId, arg_4_1)
+function NewWelfarePanel:_btnClaimOnClick(id)
+	Activity160Rpc.instance:sendGetAct160FinishMissionRequest(self.actId, id)
 end
 
-function var_0_0._jumpToTargetDungeon(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1
+function NewWelfarePanel:_jumpToTargetDungeon(episodeId)
+	local episodeId = episodeId
 
-	if var_5_0 ~= 0 then
-		local var_5_1 = DungeonConfig.instance:getEpisodeCO(var_5_0)
-		local var_5_2 = {}
-		local var_5_3 = var_5_1.id
-		local var_5_4 = var_5_1.chapterId
+	if episodeId ~= 0 then
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+		local jumpParam = {}
+		local episodeId = episodeConfig.id
+		local chapterId = episodeConfig.chapterId
+		local chapterConfig = lua_chapter.configDict[chapterId]
 
-		var_5_2.chapterType = lua_chapter.configDict[var_5_4].type
-		var_5_2.chapterId = var_5_4
-		var_5_2.episodeId = var_5_3
+		jumpParam.chapterType = chapterConfig.type
+		jumpParam.chapterId = chapterId
+		jumpParam.episodeId = episodeId
 
 		ViewMgr.instance:closeView(ViewName.NewWelfarePanel)
-		DungeonController.instance:jumpDungeon(var_5_2)
+		DungeonController.instance:jumpDungeon(jumpParam)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.actId = ActivityEnum.Activity.NewWelfare
-	arg_6_0.missionCO = Activity160Config.instance:getActivityMissions(arg_6_0.actId)
+function NewWelfarePanel:_editableInitView()
+	self.actId = ActivityEnum.Activity.NewWelfare
+	self.missionCO = Activity160Config.instance:getActivityMissions(self.actId)
 
-	arg_6_0:_initRewardItem()
+	self:_initRewardItem()
 end
 
-function var_0_0._initRewardItem(arg_7_0)
-	if not arg_7_0.missionCO then
+function NewWelfarePanel:_initRewardItem()
+	if not self.missionCO then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.missionCO) do
-		local var_7_0 = arg_7_0:getUserDataTb_()
-		local var_7_1 = gohelper.findChild(arg_7_0.viewGO, "Root/Card" .. iter_7_0)
+	for index, itemco in ipairs(self.missionCO) do
+		local item = self:getUserDataTb_()
+		local go = gohelper.findChild(self.viewGO, "Root/Card" .. index)
 
-		var_7_0.go = var_7_1
-		var_7_0.co = iter_7_1
-		var_7_0.id = iter_7_1.id
-		var_7_0.gocomplete = gohelper.findChild(var_7_1, "#go_Complete")
-		var_7_0.gonormal = gohelper.findChild(var_7_1, "#go_Normal")
-		var_7_0.txttitle = gohelper.findChildText(var_7_1, "#txt_Title")
-		var_7_0.txtnum = gohelper.findChildText(var_7_1, "#txt_Num")
-		var_7_0.goClaim = gohelper.findChild(var_7_0.gonormal, "#btn_Claim")
-		var_7_0.btnClaim = gohelper.findChildButton(var_7_0.gonormal, "#btn_Claim")
+		item.go = go
+		item.co = itemco
+		item.id = itemco.id
+		item.gocomplete = gohelper.findChild(go, "#go_Complete")
+		item.gonormal = gohelper.findChild(go, "#go_Normal")
+		item.txttitle = gohelper.findChildText(go, "#txt_Title")
+		item.txtnum = gohelper.findChildText(go, "#txt_Num")
+		item.goClaim = gohelper.findChild(item.gonormal, "#btn_Claim")
+		item.btnClaim = gohelper.findChildButton(item.gonormal, "#btn_Claim")
 
-		var_7_0.btnClaim:AddClickListener(arg_7_0._btnClaimOnClick, arg_7_0, iter_7_1.id)
+		item.btnClaim:AddClickListener(self._btnClaimOnClick, self, itemco.id)
 
-		var_7_0.gogo = gohelper.findChild(var_7_0.gonormal, "#btn_Go")
-		var_7_0.btnGo = gohelper.findChildButton(var_7_0.gonormal, "#btn_Go")
+		item.gogo = gohelper.findChild(item.gonormal, "#btn_Go")
+		item.btnGo = gohelper.findChildButton(item.gonormal, "#btn_Go")
 
-		var_7_0.btnGo:AddClickListener(arg_7_0._jumpToTargetDungeon, arg_7_0, iter_7_1.episodeId)
-		table.insert(arg_7_0._rewardItemList, var_7_0)
+		item.btnGo:AddClickListener(self._jumpToTargetDungeon, self, itemco.episodeId)
+		table.insert(self._rewardItemList, item)
 	end
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(Activity160Controller.instance, Activity160Event.InfoUpdate, arg_8_0._onInfoUpdate, arg_8_0)
-	arg_8_0:refreshView()
+function NewWelfarePanel:onOpen()
+	self:addEventCb(Activity160Controller.instance, Activity160Event.InfoUpdate, self._onInfoUpdate, self)
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0)
-	local var_9_0 = ActivityConfig.instance:getActivityCo(arg_9_0.actId)
+function NewWelfarePanel:refreshView()
+	local actCO = ActivityConfig.instance:getActivityCo(self.actId)
 
-	arg_9_0._txtDescr.text = var_9_0.actDesc
-	arg_9_0._txtLimitTime.text = luaLang("activityshow_unlimittime")
+	self._txtDescr.text = actCO.actDesc
+	self._txtLimitTime.text = luaLang("activityshow_unlimittime")
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	arg_10_0:refreshItem()
+function NewWelfarePanel:refreshUI()
+	self:refreshItem()
 end
 
-function var_0_0._onInfoUpdate(arg_11_0, arg_11_1)
-	if arg_11_1 == arg_11_0.actId then
-		arg_11_0:refreshUI()
+function NewWelfarePanel:_onInfoUpdate(actId)
+	if actId == self.actId then
+		self:refreshUI()
 	end
 end
 
-function var_0_0._jumpFinishCallBack(arg_12_0)
+function NewWelfarePanel:_jumpFinishCallBack()
 	ViewMgr.instance:closeView(ViewName.NewWelfarePanel)
 end
 
-function var_0_0.refreshItem(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._rewardItemList) do
-		local var_13_0 = Activity160Model.instance:isMissionFinish(arg_13_0.actId, iter_13_1.id)
-		local var_13_1 = Activity160Model.instance:isMissionCanGet(arg_13_0.actId, iter_13_1.id)
+function NewWelfarePanel:refreshItem()
+	for _, rewardItem in ipairs(self._rewardItemList) do
+		local isFinish = Activity160Model.instance:isMissionFinish(self.actId, rewardItem.id)
+		local canGet = Activity160Model.instance:isMissionCanGet(self.actId, rewardItem.id)
 
-		gohelper.setActive(iter_13_1.gocomplete, var_13_0)
-		gohelper.setActive(iter_13_1.goClaim, var_13_1)
+		gohelper.setActive(rewardItem.gocomplete, isFinish)
+		gohelper.setActive(rewardItem.goClaim, canGet)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._rewardItemList) do
-		iter_14_1.btnClaim:RemoveClickListener()
-		iter_14_1.btnGo:RemoveClickListener()
+function NewWelfarePanel:onClose()
+	for index, item in ipairs(self._rewardItemList) do
+		item.btnClaim:RemoveClickListener()
+		item.btnGo:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return NewWelfarePanel

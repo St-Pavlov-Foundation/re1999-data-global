@@ -1,64 +1,66 @@
-﻿module("modules.logic.room.view.common.RoomStroreGoodsTipViewBanner", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomStroreGoodsTipViewBanner.lua
 
-local var_0_0 = class("RoomStroreGoodsTipViewBanner", RoomMaterialTipViewBanner)
+module("modules.logic.room.view.common.RoomStroreGoodsTipViewBanner", package.seeall)
 
-function var_0_0._getItemDataList(arg_1_0)
-	local var_1_0 = arg_1_0.viewParam.storeGoodsMO.config
-	local var_1_1 = GameUtil.splitString2(var_1_0.product, true)
-	local var_1_2 = {
+local RoomStroreGoodsTipViewBanner = class("RoomStroreGoodsTipViewBanner", RoomMaterialTipViewBanner)
+
+function RoomStroreGoodsTipViewBanner:_getItemDataList()
+	local config = self.viewParam.storeGoodsMO.config
+	local num2List = GameUtil.splitString2(config.product, true)
+	local typeList = {
 		MaterialEnum.MaterialType.RoomTheme,
 		MaterialEnum.MaterialType.BlockPackage,
 		MaterialEnum.MaterialType.Building
 	}
-	local var_1_3 = {}
-	local var_1_4 = #var_1_1 > 1
+	local itemDic = {}
+	local needThemeBanner = #num2List > 1
 
-	for iter_1_0 = 1, #var_1_1 do
-		local var_1_5 = var_1_1[iter_1_0]
-		local var_1_6 = var_1_5[1]
-		local var_1_7 = var_1_5[2]
+	for i = 1, #num2List do
+		local items = num2List[i]
+		local itemType = items[1]
+		local itemId = items[2]
 
-		if var_1_4 then
-			local var_1_8 = RoomConfig.instance:getThemeIdByItem(var_1_7, var_1_6)
+		if needThemeBanner then
+			local themeId = RoomConfig.instance:getThemeIdByItem(itemId, itemType)
 
-			if var_1_8 then
-				arg_1_0:_addItemInfoToDic(var_1_3, var_1_8, MaterialEnum.MaterialType.RoomTheme)
+			if themeId then
+				self:_addItemInfoToDic(itemDic, themeId, MaterialEnum.MaterialType.RoomTheme)
 			end
 		end
 
-		if tabletool.indexOf(var_1_2, var_1_6) then
-			arg_1_0:_addItemInfoToDic(var_1_3, var_1_7, var_1_6)
+		if tabletool.indexOf(typeList, itemType) then
+			self:_addItemInfoToDic(itemDic, itemId, itemType)
 		end
 	end
 
-	local var_1_9 = {}
+	local list = {}
 
-	for iter_1_1, iter_1_2 in ipairs(var_1_2) do
-		if var_1_3[iter_1_2] then
-			for iter_1_3, iter_1_4 in ipairs(var_1_3[iter_1_2]) do
-				table.insert(var_1_9, {
-					itemId = iter_1_4,
-					itemType = iter_1_2
+	for _, itemType in ipairs(typeList) do
+		if itemDic[itemType] then
+			for __, itemId in ipairs(itemDic[itemType]) do
+				table.insert(list, {
+					itemId = itemId,
+					itemType = itemType
 				})
 			end
 		end
 	end
 
-	return var_1_9
+	return list
 end
 
-function var_0_0._addItemInfoToDic(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_1 = arg_2_1 or {}
+function RoomStroreGoodsTipViewBanner:_addItemInfoToDic(itemDic, itemId, itemType)
+	itemDic = itemDic or {}
 
-	if not arg_2_1[arg_2_3] then
-		arg_2_1[arg_2_3] = {}
+	if not itemDic[itemType] then
+		itemDic[itemType] = {}
 	end
 
-	if tabletool.indexOf(arg_2_1[arg_2_3], arg_2_2) == nil then
-		table.insert(arg_2_1[arg_2_3], arg_2_2)
+	if tabletool.indexOf(itemDic[itemType], itemId) == nil then
+		table.insert(itemDic[itemType], itemId)
 	end
 
-	return arg_2_1
+	return itemDic
 end
 
-return var_0_0
+return RoomStroreGoodsTipViewBanner

@@ -1,252 +1,254 @@
-﻿module("modules.logic.season.view1_5.Season1_5SumView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_5/Season1_5SumView.lua
 
-local var_0_0 = class("Season1_5SumView", BaseView)
+module("modules.logic.season.view1_5.Season1_5SumView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_CloseMask")
-	arg_1_0._btnClose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
-	arg_1_0.simagePanelBg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/BG/#simage_PanelBG1")
-	arg_1_0.simagePanelBg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/BG/#simage_PanelBG2")
-	arg_1_0.simagePanelBg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/BG/#simage_PanelBG3")
-	arg_1_0.mailRoot = gohelper.findChild(arg_1_0.viewGO, "Root/1")
-	arg_1_0.mailTipsTxt = gohelper.findChildTextMesh(arg_1_0.mailRoot, "Right/txt_Tips")
-	arg_1_0.mailDescTxt = gohelper.findChildTextMesh(arg_1_0.mailRoot, "Right/Scroll View/Viewport/#txt_Descr")
-	arg_1_0.mailChapterTxt = gohelper.findChildTextMesh(arg_1_0.mailRoot, "Right/Chapter/#txt_ChapterName")
-	arg_1_0.mailChapterEnTxt = gohelper.findChildTextMesh(arg_1_0.mailRoot, "Right/Chapter/#txt_ChapterNameEn")
-	arg_1_0.mailChapterBg = gohelper.findChildImage(arg_1_0.mailRoot, "Right/Chapter/image_ChapterPic")
-	arg_1_0.reviewRoot = gohelper.findChild(arg_1_0.viewGO, "Root/2")
-	arg_1_0.reviewTitleTxt = gohelper.findChildTextMesh(arg_1_0.reviewRoot, "Right/#txt_TitleName")
-	arg_1_0.reviewChapterGrid = gohelper.findChild(arg_1_0.reviewRoot, "Right/Chapter/Grid")
-	arg_1_0.goChapterItem = gohelper.findChild(arg_1_0.reviewChapterGrid, "goChapterItem")
-	arg_1_0.reviewCardGrid = gohelper.findChild(arg_1_0.reviewRoot, "Right/Card/Grid")
-	arg_1_0.goCardItem = gohelper.findChild(arg_1_0.reviewCardGrid, "goCardItem")
-	arg_1_0.cardItems = {}
-	arg_1_0.chapterItems = {}
-	arg_1_0.inMail = true
+local Season1_5SumView = class("Season1_5SumView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season1_5SumView:onInitView()
+	self.anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_CloseMask")
+	self._btnClose2 = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Close")
+	self.simagePanelBg1 = gohelper.findChildSingleImage(self.viewGO, "Root/BG/#simage_PanelBG1")
+	self.simagePanelBg2 = gohelper.findChildSingleImage(self.viewGO, "Root/BG/#simage_PanelBG2")
+	self.simagePanelBg3 = gohelper.findChildSingleImage(self.viewGO, "Root/BG/#simage_PanelBG3")
+	self.mailRoot = gohelper.findChild(self.viewGO, "Root/1")
+	self.mailTipsTxt = gohelper.findChildTextMesh(self.mailRoot, "Right/txt_Tips")
+	self.mailDescTxt = gohelper.findChildTextMesh(self.mailRoot, "Right/Scroll View/Viewport/#txt_Descr")
+	self.mailChapterTxt = gohelper.findChildTextMesh(self.mailRoot, "Right/Chapter/#txt_ChapterName")
+	self.mailChapterEnTxt = gohelper.findChildTextMesh(self.mailRoot, "Right/Chapter/#txt_ChapterNameEn")
+	self.mailChapterBg = gohelper.findChildImage(self.mailRoot, "Right/Chapter/image_ChapterPic")
+	self.reviewRoot = gohelper.findChild(self.viewGO, "Root/2")
+	self.reviewTitleTxt = gohelper.findChildTextMesh(self.reviewRoot, "Right/#txt_TitleName")
+	self.reviewChapterGrid = gohelper.findChild(self.reviewRoot, "Right/Chapter/Grid")
+	self.goChapterItem = gohelper.findChild(self.reviewChapterGrid, "goChapterItem")
+	self.reviewCardGrid = gohelper.findChild(self.reviewRoot, "Right/Card/Grid")
+	self.goCardItem = gohelper.findChild(self.reviewCardGrid, "goCardItem")
+	self.cardItems = {}
+	self.chapterItems = {}
+	self.inMail = true
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnClose, arg_2_0._onClickClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnClose2, arg_2_0._onClickClose, arg_2_0)
+function Season1_5SumView:addEvents()
+	self:addClickCb(self._btnClose, self._onClickClose, self)
+	self:addClickCb(self._btnClose2, self._onClickClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0._btnClose, arg_3_0._onClickClose, arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0._btnClose2, arg_3_0._onClickClose, arg_3_0)
+function Season1_5SumView:removeEvents()
+	self:removeClickCb(self._btnClose, self._onClickClose, self)
+	self:removeClickCb(self._btnClose2, self._onClickClose, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.simagePanelBg1:LoadImage("singlebg/v1a4_season_sum_singlebg/v1a4_season_sum_bg.png")
-	arg_4_0.simagePanelBg2:LoadImage("singlebg/v1a4_season_sum_singlebg/v1a4_season_sum_bg.png")
-	arg_4_0.simagePanelBg3:LoadImage("singlebg/v1a4_season_sum_singlebg/v1a4_season_sum_frame.png")
+function Season1_5SumView:_editableInitView()
+	self.simagePanelBg1:LoadImage("singlebg/v1a4_season_sum_singlebg/v1a4_season_sum_bg.png")
+	self.simagePanelBg2:LoadImage("singlebg/v1a4_season_sum_singlebg/v1a4_season_sum_bg.png")
+	self.simagePanelBg3:LoadImage("singlebg/v1a4_season_sum_singlebg/v1a4_season_sum_frame.png")
 end
 
-function var_0_0._onClickClose(arg_5_0)
-	if arg_5_0.inMail then
-		arg_5_0:showReviewView(true)
+function Season1_5SumView:_onClickClose()
+	if self.inMail then
+		self:showReviewView(true)
 
 		return
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function Season1_5SumView:onOpen()
 	Activity104Rpc.instance:sendMarkPopSummaryRequest(Activity104Model.instance:getCurSeasonId())
-	arg_6_0:showMailView()
+	self:showMailView()
 end
 
-function var_0_0.showMailView(arg_7_0)
-	arg_7_0.inMail = true
+function Season1_5SumView:showMailView()
+	self.inMail = true
 
-	gohelper.setActive(arg_7_0.mailRoot, true)
-	gohelper.setActive(arg_7_0.reviewRoot, false)
-	gohelper.setActive(arg_7_0._btnClose2, false)
+	gohelper.setActive(self.mailRoot, true)
+	gohelper.setActive(self.reviewRoot, false)
+	gohelper.setActive(self._btnClose2, false)
 
-	local var_7_0 = Activity104Model.instance:getCurSeasonId()
-	local var_7_1 = Activity104Model.instance:getLastMaxLayer(var_7_0)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local lastMaxLayer = Activity104Model.instance:getLastMaxLayer(actId)
 
-	if not var_7_1 or var_7_1 <= 0 then
-		arg_7_0:showReviewView()
+	if not lastMaxLayer or lastMaxLayer <= 0 then
+		self:showReviewView()
 
 		return
 	end
 
-	local var_7_2 = SeasonConfig.instance:getSeasonConstCo(var_7_0, Activity104Enum.ConstEnum.LastSeasonId)
-	local var_7_3 = var_7_2 and var_7_2.value1
-	local var_7_4 = ActivityConfig.instance:getActivityCo(var_7_3)
-	local var_7_5 = var_7_4 and var_7_4.name or ""
+	local constCo1 = SeasonConfig.instance:getSeasonConstCo(actId, Activity104Enum.ConstEnum.LastSeasonId)
+	local lastActId = constCo1 and constCo1.value1
+	local actCo = ActivityConfig.instance:getActivityCo(lastActId)
+	local actName = actCo and actCo.name or ""
 
-	arg_7_0.mailTipsTxt.text = formatLuaLang("season_review_mail_tips", var_7_5)
+	self.mailTipsTxt.text = formatLuaLang("season_review_mail_tips", actName)
 
-	local var_7_6 = SeasonConfig.instance:getSeasonConstCo(var_7_0, Activity104Enum.ConstEnum.SumMailLangKey)
-	local var_7_7 = var_7_6 and var_7_6.value2
+	local constCo2 = SeasonConfig.instance:getSeasonConstCo(actId, Activity104Enum.ConstEnum.SumMailLangKey)
+	local langKey = constCo2 and constCo2.value2
 
-	arg_7_0.mailDescTxt.text = var_7_7 and luaLang(var_7_7) or ""
+	self.mailDescTxt.text = langKey and luaLang(langKey) or ""
 
-	local var_7_8 = SeasonConfig.instance:getSeasonEpisodeCo(var_7_3, var_7_1)
+	local layerCo = SeasonConfig.instance:getSeasonEpisodeCo(lastActId, lastMaxLayer)
 
-	arg_7_0.mailChapterTxt.text = string.format("%s-%s", formatLuaLang("title_chapter", var_7_1), var_7_8.stageName)
-	arg_7_0.mailChapterEnTxt.text = var_7_8.stageNameEn
+	self.mailChapterTxt.text = string.format("%s-%s", formatLuaLang("title_chapter", lastMaxLayer), layerCo.stageName)
+	self.mailChapterEnTxt.text = layerCo.stageNameEn
 
-	UISpriteSetMgr.instance:setV1a4SeasonSumSprite(arg_7_0.mailChapterBg, string.format("v1a4_season_sum_chapterpic%s", var_7_8.stage))
+	UISpriteSetMgr.instance:setV1a4SeasonSumSprite(self.mailChapterBg, string.format("v1a4_season_sum_chapterpic%s", layerCo.stage))
 end
 
-function var_0_0.showReviewView(arg_8_0, arg_8_1)
-	arg_8_0.inMail = false
+function Season1_5SumView:showReviewView(isSwitch)
+	self.inMail = false
 
-	gohelper.setActive(arg_8_0.reviewRoot, true)
-	gohelper.setActive(arg_8_0._btnClose2, true)
+	gohelper.setActive(self.reviewRoot, true)
+	gohelper.setActive(self._btnClose2, true)
 
-	if arg_8_1 then
-		arg_8_0.anim:Play("switch")
-		TaskDispatcher.runDelay(arg_8_0.hideMail, arg_8_0, 0.84)
+	if isSwitch then
+		self.anim:Play("switch")
+		TaskDispatcher.runDelay(self.hideMail, self, 0.84)
 	else
-		gohelper.setActive(arg_8_0.mailRoot, false)
+		gohelper.setActive(self.mailRoot, false)
 	end
 
-	local var_8_0 = Activity104Model.instance:getCurSeasonId()
-	local var_8_1 = SeasonConfig.instance:getSeasonConstCo(var_8_0, Activity104Enum.ConstEnum.LastSeasonId)
-	local var_8_2 = var_8_1 and var_8_1.value1
-	local var_8_3 = ActivityConfig.instance:getActivityCo(var_8_2)
-	local var_8_4 = var_8_3 and var_8_3.name or ""
-	local var_8_5 = GameUtil.utf8sub(var_8_4, 1, 1)
-	local var_8_6 = ""
-	local var_8_7 = GameUtil.utf8len(var_8_4)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local constCo1 = SeasonConfig.instance:getSeasonConstCo(actId, Activity104Enum.ConstEnum.LastSeasonId)
+	local lastActId = constCo1 and constCo1.value1
+	local actCo = ActivityConfig.instance:getActivityCo(lastActId)
+	local actName = actCo and actCo.name or ""
+	local first = GameUtil.utf8sub(actName, 1, 1)
+	local remain = ""
+	local nameLen = GameUtil.utf8len(actName)
 
-	if var_8_7 >= 2 then
-		var_8_6 = GameUtil.utf8sub(var_8_4, 2, var_8_7 - 1)
+	if nameLen >= 2 then
+		remain = GameUtil.utf8sub(actName, 2, nameLen - 1)
 	end
 
-	local var_8_8 = {
-		var_8_5,
-		var_8_6
+	local tag = {
+		first,
+		remain
 	}
 
-	arg_8_0.reviewTitleTxt.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season_review"), var_8_8)
+	self.reviewTitleTxt.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season_review"), tag)
 
-	local var_8_9 = SeasonConfig.instance:getSeasonConstCo(var_8_0, Activity104Enum.ConstEnum.SumReviewChapter)
-	local var_8_10 = var_8_9 and var_8_9.value2 or ""
-	local var_8_11 = GameUtil.splitString2(var_8_10, true) or {}
+	local constCo1 = SeasonConfig.instance:getSeasonConstCo(actId, Activity104Enum.ConstEnum.SumReviewChapter)
+	local chapterConstValue = constCo1 and constCo1.value2 or ""
+	local chapterList = GameUtil.splitString2(chapterConstValue, true) or {}
 
-	for iter_8_0 = 1, math.max(#var_8_11, #arg_8_0.chapterItems) do
-		arg_8_0:refreshChapter(iter_8_0, var_8_11[iter_8_0], #var_8_11)
+	for i = 1, math.max(#chapterList, #self.chapterItems) do
+		self:refreshChapter(i, chapterList[i], #chapterList)
 	end
 
-	local var_8_12 = SeasonConfig.instance:getSeasonConstCo(var_8_0, Activity104Enum.ConstEnum.SumReviewCard)
-	local var_8_13 = var_8_12 and var_8_12.value2 or ""
-	local var_8_14 = string.splitToNumber(var_8_13, "#")
+	local constCo2 = SeasonConfig.instance:getSeasonConstCo(actId, Activity104Enum.ConstEnum.SumReviewCard)
+	local cardConstValue = constCo2 and constCo2.value2 or ""
+	local cardList = string.splitToNumber(cardConstValue, "#")
 
-	for iter_8_1 = 1, math.max(#var_8_14, #arg_8_0.chapterItems) do
-		arg_8_0:refreshCard(iter_8_1, var_8_14[iter_8_1])
+	for i = 1, math.max(#cardList, #self.chapterItems) do
+		self:refreshCard(i, cardList[i])
 	end
 end
 
-function var_0_0.refreshChapter(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_0.chapterItems[arg_9_1]
+function Season1_5SumView:refreshChapter(index, data, dataCount)
+	local item = self.chapterItems[index]
 
-	if not var_9_0 then
-		var_9_0 = arg_9_0:getUserDataTb_()
-		arg_9_0.chapterItems[arg_9_1] = var_9_0
-		var_9_0.go = gohelper.cloneInPlace(arg_9_0.goChapterItem, tostring(arg_9_1))
-		var_9_0.txtChapter = gohelper.findChildTextMesh(var_9_0.go, "#txt_ChapterNum")
-		var_9_0.txtPer = gohelper.findChildTextMesh(var_9_0.go, "#txt_per")
-		var_9_0.slider = gohelper.findChildSlider(var_9_0.go, "Slider")
-		var_9_0.line1 = gohelper.findChild(var_9_0.go, "image_Line1")
-		var_9_0.line2 = gohelper.findChild(var_9_0.go, "image_Line2")
+	if not item then
+		item = self:getUserDataTb_()
+		self.chapterItems[index] = item
+		item.go = gohelper.cloneInPlace(self.goChapterItem, tostring(index))
+		item.txtChapter = gohelper.findChildTextMesh(item.go, "#txt_ChapterNum")
+		item.txtPer = gohelper.findChildTextMesh(item.go, "#txt_per")
+		item.slider = gohelper.findChildSlider(item.go, "Slider")
+		item.line1 = gohelper.findChild(item.go, "image_Line1")
+		item.line2 = gohelper.findChild(item.go, "image_Line2")
 
-		function var_9_0._setFaithPercent(arg_10_0, arg_10_1)
-			arg_10_0.txtPer.text = string.format("%d%%", arg_10_1)
+		function item._setFaithPercent(targetItem, percent)
+			targetItem.txtPer.text = string.format("%d%%", percent)
 
-			arg_10_0.slider:SetValue(arg_10_1 * 0.01)
+			targetItem.slider:SetValue(percent * 0.01)
 		end
 
-		function var_9_0._setFaithValue(arg_11_0)
-			arg_11_0:_setFaithPercent(arg_11_0.data[2] or 0)
+		function item._setFaithValue(targetItem)
+			targetItem:_setFaithPercent(targetItem.data[2] or 0)
 
-			if arg_11_0._faithTweenId then
-				ZProj.TweenHelper.KillById(arg_11_0._faithTweenId)
+			if targetItem._faithTweenId then
+				ZProj.TweenHelper.KillById(targetItem._faithTweenId)
 
-				arg_11_0._faithTweenId = nil
+				targetItem._faithTweenId = nil
 			end
 		end
 	end
 
-	var_9_0.data = arg_9_2
+	item.data = data
 
-	if not arg_9_2 then
-		gohelper.setActive(var_9_0.go, false)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(var_9_0.go, true)
+	gohelper.setActive(item.go, true)
 
-	var_9_0.txtChapter.text = formatLuaLang("chapter", arg_9_2[1])
+	item.txtChapter.text = formatLuaLang("chapter", data[1])
 
-	local var_9_1 = arg_9_2[2] or 0
+	local per = data[2] or 0
 
-	gohelper.setActive(var_9_0.line1, arg_9_1 ~= 1)
-	gohelper.setActive(var_9_0.line2, arg_9_1 ~= 1)
+	gohelper.setActive(item.line1, index ~= 1)
+	gohelper.setActive(item.line2, index ~= 1)
 
-	var_9_0._faithTweenId = ZProj.TweenHelper.DOTweenFloat(0, var_9_1, 1.2, var_9_0._setFaithPercent, var_9_0._setFaithValue, var_9_0, nil, EaseType.Linear)
+	item._faithTweenId = ZProj.TweenHelper.DOTweenFloat(0, per, 1.2, item._setFaithPercent, item._setFaithValue, item, nil, EaseType.Linear)
 end
 
-function var_0_0.refreshCard(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0.cardItems[arg_12_1]
+function Season1_5SumView:refreshCard(index, equipId)
+	local item = self.cardItems[index]
 
-	if not var_12_0 then
-		var_12_0 = arg_12_0:getUserDataTb_()
-		arg_12_0.cardItems[arg_12_1] = var_12_0
-		var_12_0.go = gohelper.cloneInPlace(arg_12_0.goCardItem, tostring(arg_12_1))
-		var_12_0.goCard = gohelper.findChild(var_12_0.go, "#go_seasoncelebritycarditem")
-		var_12_0.txtIndex = gohelper.findChildTextMesh(var_12_0.go, "image_NumBG/txt_Num")
+	if not item then
+		item = self:getUserDataTb_()
+		self.cardItems[index] = item
+		item.go = gohelper.cloneInPlace(self.goCardItem, tostring(index))
+		item.goCard = gohelper.findChild(item.go, "#go_seasoncelebritycarditem")
+		item.txtIndex = gohelper.findChildTextMesh(item.go, "image_NumBG/txt_Num")
 	end
 
-	if not arg_12_2 then
-		gohelper.setActive(var_12_0.go, false)
+	if not equipId then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(var_12_0.go, true)
+	gohelper.setActive(item.go, true)
 
-	var_12_0.txtIndex.text = tostring(arg_12_1)
+	item.txtIndex.text = tostring(index)
 
-	if not var_12_0.cardItem then
-		var_12_0.cardItem = Season1_5CelebrityCardItem.New()
+	if not item.cardItem then
+		item.cardItem = Season1_5CelebrityCardItem.New()
 
-		var_12_0.cardItem:init(var_12_0.goCard, arg_12_2, {
+		item.cardItem:init(item.goCard, equipId, {
 			noClick = true
 		})
 	else
-		var_12_0.cardItem:reset(arg_12_2)
+		item.cardItem:reset(equipId)
 	end
 end
 
-function var_0_0.hideMail(arg_13_0)
-	gohelper.setActive(arg_13_0.mailRoot, false)
+function Season1_5SumView:hideMail()
+	gohelper.setActive(self.mailRoot, false)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.chapterItems) do
-		if iter_14_1._faithTweenId then
-			ZProj.TweenHelper.KillById(iter_14_1._faithTweenId)
+function Season1_5SumView:onDestroyView()
+	for k, targetItem in pairs(self.chapterItems) do
+		if targetItem._faithTweenId then
+			ZProj.TweenHelper.KillById(targetItem._faithTweenId)
 
-			iter_14_1._faithTweenId = nil
+			targetItem._faithTweenId = nil
 		end
 	end
 
-	arg_14_0.simagePanelBg1:UnLoadImage()
-	arg_14_0.simagePanelBg2:UnLoadImage()
-	arg_14_0.simagePanelBg3:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_14_0.hideMail, arg_14_0)
+	self.simagePanelBg1:UnLoadImage()
+	self.simagePanelBg2:UnLoadImage()
+	self.simagePanelBg3:UnLoadImage()
+	TaskDispatcher.cancelTask(self.hideMail, self)
 	Activity104Controller.instance:dispatchEvent(Activity104Event.EnterSeasonMainView)
 end
 
-return var_0_0
+return Season1_5SumView

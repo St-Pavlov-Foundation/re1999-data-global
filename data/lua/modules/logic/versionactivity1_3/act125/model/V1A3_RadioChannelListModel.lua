@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_3.act125.model.V1A3_RadioChannelListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act125/model/V1A3_RadioChannelListModel.lua
 
-local var_0_0 = class("V1A3_RadioChannelListModel", ListScrollModel)
+module("modules.logic.versionactivity1_3.act125.model.V1A3_RadioChannelListModel", package.seeall)
 
-function var_0_0.setCategoryList(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1 and arg_1_1 or {}
+local V1A3_RadioChannelListModel = class("V1A3_RadioChannelListModel", ListScrollModel)
 
-	arg_1_0:setList(var_1_0)
+function V1A3_RadioChannelListModel:setCategoryList(infos)
+	local moList = infos and infos or {}
+
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+V1A3_RadioChannelListModel.instance = V1A3_RadioChannelListModel.New()
 
-return var_0_0
+return V1A3_RadioChannelListModel

@@ -1,162 +1,166 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EnemyModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EnemyModel.lua
 
-local var_0_0 = class("Season123EnemyModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123EnemyModel", package.seeall)
 
-function var_0_0.release(arg_1_0)
-	arg_1_0.selectIndex = nil
-	arg_1_0.battleIdList = nil
-	arg_1_0.stage = nil
-	arg_1_0._groupMap = nil
-	arg_1_0._monsterGroupMap = nil
-	arg_1_0._group2Monsters = nil
-	arg_1_0.selectMonsterGroupIndex = nil
-	arg_1_0.selectMonsterIndex = nil
-	arg_1_0.selectMonsterId = nil
+local Season123EnemyModel = class("Season123EnemyModel", BaseModel)
+
+function Season123EnemyModel:release()
+	self.selectIndex = nil
+	self.battleIdList = nil
+	self.stage = nil
+	self._groupMap = nil
+	self._monsterGroupMap = nil
+	self._group2Monsters = nil
+	self.selectMonsterGroupIndex = nil
+	self.selectMonsterIndex = nil
+	self.selectMonsterId = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.activityId = arg_2_1
-	arg_2_0.stage = arg_2_2
-	arg_2_0.selectIndex = 1
-	arg_2_0.battleIdList = var_0_0.getStageBattleIds(arg_2_1, arg_2_2)
+function Season123EnemyModel:init(actId, stage, layer)
+	self.activityId = actId
+	self.stage = stage
+	self.selectIndex = 1
+	self.battleIdList = Season123EnemyModel.getStageBattleIds(actId, stage)
 
-	arg_2_0:initDatas()
-	arg_2_0:initSelect(arg_2_3)
+	self:initDatas()
+	self:initSelect(layer)
 end
 
-function var_0_0.initDatas(arg_3_0)
-	arg_3_0._groupMap = {}
-	arg_3_0._monsterGroupMap = {}
-	arg_3_0._group2Monsters = {}
+function Season123EnemyModel:initDatas()
+	self._groupMap = {}
+	self._monsterGroupMap = {}
+	self._group2Monsters = {}
 end
 
-function var_0_0.initSelect(arg_4_0, arg_4_1)
-	local var_4_0 = Season123Config.instance:getSeasonEpisodeStageCos(arg_4_0.activityId, arg_4_0.stage)
+function Season123EnemyModel:initSelect(layer)
+	local cfgList = Season123Config.instance:getSeasonEpisodeStageCos(self.activityId, self.stage)
 
-	if not var_4_0 then
+	if not cfgList then
 		return nil
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		if iter_4_1.layer == arg_4_1 then
-			arg_4_0.selectIndex = iter_4_0
+	for i, co in ipairs(cfgList) do
+		if co.layer == layer then
+			self.selectIndex = i
 
 			return
 		end
 	end
 end
 
-function var_0_0.getCurrentBattleGroupIds(arg_5_0)
-	local var_5_0 = arg_5_0:getSelectBattleId()
+function Season123EnemyModel:getCurrentBattleGroupIds()
+	local battleId = self:getSelectBattleId()
 
-	if not var_5_0 then
+	if not battleId then
 		return
 	end
 
-	local var_5_1 = arg_5_0._groupMap[var_5_0]
+	local monsterGroupIds = self._groupMap[battleId]
 
-	if not var_5_1 then
-		local var_5_2 = lua_battle.configDict[var_5_0]
+	if not monsterGroupIds then
+		local battleConfig = lua_battle.configDict[battleId]
 
-		if string.nilorempty(var_5_2.monsterGroupIds) then
-			var_5_1 = {}
+		if string.nilorempty(battleConfig.monsterGroupIds) then
+			monsterGroupIds = {}
 		else
-			var_5_1 = string.splitToNumber(var_5_2.monsterGroupIds, "#")
+			monsterGroupIds = string.splitToNumber(battleConfig.monsterGroupIds, "#")
 
-			for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-				local var_5_3 = lua_monster_group.configDict[iter_5_1]
+			for i, groupId in ipairs(monsterGroupIds) do
+				local monsterGroupCfg = lua_monster_group.configDict[groupId]
 
-				arg_5_0._monsterGroupMap[iter_5_1] = var_5_3
+				self._monsterGroupMap[groupId] = monsterGroupCfg
 
-				arg_5_0:initGroup2Monster(iter_5_1, var_5_3)
+				self:initGroup2Monster(groupId, monsterGroupCfg)
 			end
 		end
 
-		arg_5_0._groupMap[var_5_0] = var_5_1
+		self._groupMap[battleId] = monsterGroupIds
 	end
 
-	return var_5_1
+	return monsterGroupIds
 end
 
-function var_0_0.initGroup2Monster(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = {}
-	local var_6_1 = string.nilorempty(arg_6_2.monster)
-	local var_6_2 = string.nilorempty(arg_6_2.spMonster)
+function Season123EnemyModel:initGroup2Monster(groupId, monsterGroupConfig)
+	local monsterIds = {}
+	local monsterNilOrEmpty = string.nilorempty(monsterGroupConfig.monster)
+	local spmonsterNilOrEmpty = string.nilorempty(monsterGroupConfig.spMonster)
 
-	if var_6_1 and var_6_2 then
+	if monsterNilOrEmpty and spmonsterNilOrEmpty then
 		return
 	end
 
-	local var_6_3 = var_6_1 and {} or string.splitToNumber(arg_6_2.monster, "#")
-	local var_6_4 = var_6_2 and {} or string.splitToNumber(arg_6_2.spMonster, "#")
+	monsterIds = monsterNilOrEmpty and {} or string.splitToNumber(monsterGroupConfig.monster, "#")
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_4) do
-		table.insert(var_6_3, iter_6_1)
+	local spMonsterIds = spmonsterNilOrEmpty and {} or string.splitToNumber(monsterGroupConfig.spMonster, "#")
+
+	for _, spMonsterId in ipairs(spMonsterIds) do
+		table.insert(monsterIds, spMonsterId)
 	end
 
-	arg_6_0._group2Monsters[arg_6_1] = var_6_3
+	self._group2Monsters[groupId] = monsterIds
 end
 
-function var_0_0.getMonsterIds(arg_7_0, arg_7_1)
-	return arg_7_0._group2Monsters[arg_7_1]
+function Season123EnemyModel:getMonsterIds(groupId)
+	return self._group2Monsters[groupId]
 end
 
-function var_0_0.setSelectIndex(arg_8_0, arg_8_1)
-	arg_8_0.selectIndex = arg_8_1
+function Season123EnemyModel:setSelectIndex(index)
+	self.selectIndex = index
 
-	arg_8_0:getCurrentBattleGroupIds()
+	self:getCurrentBattleGroupIds()
 end
 
-function var_0_0.getSelectedIndex(arg_9_0)
-	return arg_9_0.selectIndex
+function Season123EnemyModel:getSelectedIndex()
+	return self.selectIndex
 end
 
-function var_0_0.getBattleIds(arg_10_0)
-	return arg_10_0.battleIdList
+function Season123EnemyModel:getBattleIds()
+	return self.battleIdList
 end
 
-function var_0_0.getSelectBattleId(arg_11_0)
-	return arg_11_0.battleIdList[arg_11_0.selectIndex]
+function Season123EnemyModel:getSelectBattleId()
+	return self.battleIdList[self.selectIndex]
 end
 
-function var_0_0.setEnemySelectMonsterId(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	arg_12_0.selectMonsterGroupIndex = arg_12_1
-	arg_12_0.selectMonsterIndex = arg_12_2
-	arg_12_0.selectMonsterId = arg_12_3
+function Season123EnemyModel:setEnemySelectMonsterId(groupIndex, monsterIndex, monsterId)
+	self.selectMonsterGroupIndex = groupIndex
+	self.selectMonsterIndex = monsterIndex
+	self.selectMonsterId = monsterId
 end
 
-function var_0_0.getBossId(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getSelectBattleId()
+function Season123EnemyModel:getBossId(groupIndex)
+	local battleId = self:getSelectBattleId()
 
-	if not var_13_0 then
+	if not battleId then
 		return
 	end
 
-	local var_13_1 = FightModel.instance:getSelectMonsterGroupId(arg_13_1, var_13_0)
-	local var_13_2 = var_13_1 and lua_monster_group.configDict[var_13_1]
+	local monsterGroupId = FightModel.instance:getSelectMonsterGroupId(groupIndex, battleId)
+	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]
+	local bossId = monsterGroupCO and not string.nilorempty(monsterGroupCO.bossId) and monsterGroupCO.bossId or nil
 
-	return var_13_2 and not string.nilorempty(var_13_2.bossId) and var_13_2.bossId or nil
+	return bossId
 end
 
-function var_0_0.getStageBattleIds(arg_14_0, arg_14_1)
-	local var_14_0 = {}
-	local var_14_1 = Season123Config.instance:getSeasonEpisodeStageCos(arg_14_0, arg_14_1)
+function Season123EnemyModel.getStageBattleIds(actId, stage)
+	local rs = {}
+	local cfgList = Season123Config.instance:getSeasonEpisodeStageCos(actId, stage)
 
-	if not var_14_1 then
-		return var_14_0
+	if not cfgList then
+		return rs
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_2 = DungeonConfig.instance:getEpisodeCO(iter_14_1.episodeId)
+	for i, cfg in ipairs(cfgList) do
+		local episodeCO = DungeonConfig.instance:getEpisodeCO(cfg.episodeId)
 
-		if var_14_2 then
-			table.insert(var_14_0, var_14_2.battleId)
+		if episodeCO then
+			table.insert(rs, episodeCO.battleId)
 		end
 	end
 
-	return var_14_0
+	return rs
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EnemyModel.instance = Season123EnemyModel.New()
 
-return var_0_0
+return Season123EnemyModel

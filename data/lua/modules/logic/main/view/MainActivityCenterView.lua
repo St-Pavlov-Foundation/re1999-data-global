@@ -1,679 +1,742 @@
-﻿module("modules.logic.main.view.MainActivityCenterView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainActivityCenterView.lua
 
-local var_0_0 = class("MainActivityCenterView", BaseView)
+module("modules.logic.main.view.MainActivityCenterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local MainActivityCenterView = class("MainActivityCenterView", BaseView)
+
+function MainActivityCenterView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MainActivityCenterView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MainActivityCenterView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._itemGoParent = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity")
-	arg_4_0._itemGoParentTran = arg_4_0._itemGoParent.transform
-	arg_4_0._itemGo = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/scroll_view/Viewport/Content/actcenteritem")
-	arg_4_0._centerItems = arg_4_0:getUserDataTb_()
-	arg_4_0._turnbackItems = arg_4_0:getUserDataTb_()
-	arg_4_0._sortBtnList = arg_4_0:getUserDataTb_()
-	arg_4_0._checkBtnList = arg_4_0:getUserDataTb_()
-	arg_4_0._index2Id = {}
-	arg_4_0._bpItem = nil
-	arg_4_0._bpSpItem = nil
-	arg_4_0._turnbackItem = nil
-	arg_4_0._goactivity = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity")
-	arg_4_0._activityLogo = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/actlogo")
-	arg_4_0._goactbg = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/scroll_view/#go_actbg")
-	arg_4_0._goactbgTrans = arg_4_0._goactbg.transform
-	arg_4_0._goactbgOffsetX = recthelper.getAnchorX(arg_4_0._goactbgTrans)
+function MainActivityCenterView:_editableInitView()
+	self._itemGoParent = gohelper.findChild(self.viewGO, "left/#go_activity")
+	self._itemGoParentTran = self._itemGoParent.transform
+	self._itemGo = gohelper.findChild(self.viewGO, "left/#go_activity/scroll_view/Viewport/Content/actcenteritem")
 
-	local var_4_0 = gohelper.findChildClickWithAudio(arg_4_0.viewGO, "left/#go_activity/actlogo/click")
+	gohelper.setActive(self._itemGo, false)
 
-	if var_4_0 then
-		arg_4_0._activityAnimator = arg_4_0._goactivity:GetComponent(gohelper.Type_Animator)
+	self._centerItems = self:getUserDataTb_()
+	self._turnbackItems = self:getUserDataTb_()
+	self._sortBtnList = self:getUserDataTb_()
+	self._checkBtnList = self:getUserDataTb_()
+	self._index2Id = {}
+	self._bpItem = nil
+	self._bpSpItem = nil
+	self._turnbackItem = nil
+	self._goactivity = gohelper.findChild(self.viewGO, "left/#go_activity")
+	self._activityLogo = gohelper.findChild(self.viewGO, "left/#go_activity/actlogo")
+	self._goactbg = gohelper.findChild(self.viewGO, "left/#go_activity/scroll_view/#go_actbg")
+	self._goactbgTrans = self._goactbg.transform
+	self._goactbgOffsetX = recthelper.getAnchorX(self._goactbgTrans)
 
-		arg_4_0:addClickCb(var_4_0, arg_4_0._logoClickHandler, arg_4_0)
+	local logoClick = gohelper.findChildClickWithAudio(self.viewGO, "left/#go_activity/actlogo/click")
+
+	if logoClick then
+		self._activityAnimator = self._goactivity:GetComponent(gohelper.Type_Animator)
+
+		self:addClickCb(logoClick, self._logoClickHandler, self)
 	end
 
-	arg_4_0._itemSize = 113
-	arg_4_0._needCheckPosX = 610
-	arg_4_0._needCheckArrowValue = 0.9
-	arg_4_0._goactivityadapter = gohelper.findChild(arg_4_0.viewGO, "#go_activity_adapter")
-	arg_4_0._scrollview = gohelper.findChildScrollRect(arg_4_0.viewGO, "left/#go_activity/scroll_view")
-	arg_4_0._scrollcontent = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/scroll_view/Viewport/Content")
-	arg_4_0._scrollarrow = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/arrow")
-	arg_4_0._scrollarrowpos = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/scroll_view/arrow_pos")
-	arg_4_0._scrollreddot = gohelper.findChild(arg_4_0._scrollarrow, "#go_reddot")
-	arg_4_0._horizontal = arg_4_0._scrollcontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	self._itemSize = 113
+	self._needCheckPosX = 610
+	self._needCheckArrowValue = 0.9
+	self._goactivityadapter = gohelper.findChild(self.viewGO, "#go_activity_adapter")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "left/#go_activity/scroll_view")
+	self._scrollcontent = gohelper.findChild(self.viewGO, "left/#go_activity/scroll_view/Viewport/Content")
+	self._scrollarrow = gohelper.findChild(self.viewGO, "left/#go_activity/arrow")
+	self._scrollarrowpos = gohelper.findChild(self.viewGO, "left/#go_activity/scroll_view/arrow_pos")
+	self._scrollreddot = gohelper.findChild(self._scrollarrow, "#go_reddot")
+	self._horizontal = self._scrollcontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
 
-	local var_4_1 = ActivityModel.showActivityEffect()
+	local isShow = ActivityModel.showActivityEffect()
 
-	arg_4_0._horizontal.spacing = var_4_1 and arg_4_0._horizontal.spacing or 0
-	arg_4_0._horizontalLeft = arg_4_0._horizontal.padding.left
-	arg_4_0._horizontalRight = arg_4_0._horizontal.padding.right
+	self._horizontal.spacing = isShow and self._horizontal.spacing or 0
+	self._horizontalLeft = self._horizontal.padding.left
+	self._horizontalRight = self._horizontal.padding.right
 
-	arg_4_0._scrollview:AddOnValueChanged(arg_4_0._onContentScrollValueChanged, arg_4_0)
-	arg_4_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_4_0._onScreenResize, arg_4_0)
+	self._scrollview:AddOnValueChanged(self._onContentScrollValueChanged, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
 
-	arg_4_0._btnarrow = gohelper.findChildClick(arg_4_0.viewGO, "left/#go_activity/arrow")
+	self._btnarrow = gohelper.findChildClick(self.viewGO, "left/#go_activity/arrow")
 
-	arg_4_0._btnarrow:AddClickListener(arg_4_0._btnarrowOnClick, arg_4_0)
-	gohelper.addUIClickAudio(arg_4_0._btnarrow.gameObject)
+	self._btnarrow:AddClickListener(self._btnarrowOnClick, self)
+	gohelper.addUIClickAudio(self._btnarrow.gameObject)
 end
 
-function var_0_0._logoClickHandler(arg_5_0)
-	local var_5_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+function MainActivityCenterView:_logoClickHandler()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if arg_5_0._clickLogoTime and var_5_0 and Time.time - arg_5_0._clickLogoTime < var_5_0.effectDuration then
+	if self._clickLogoTime and config and Time.time - self._clickLogoTime < config.effectDuration then
 		return
 	end
 
-	if arg_5_0._activityAnimator then
-		arg_5_0._activityAnimator:Play("click", 0, 0)
+	if self._activityAnimator then
+		self._activityAnimator:Play("click", 0, 0)
 	end
 
-	arg_5_0._clickLogoTime = Time.time
+	self._clickLogoTime = Time.time
 end
 
-function var_0_0._btnarrowOnClick(arg_6_0)
-	arg_6_0._scrollview.horizontalNormalizedPosition = 1
+function MainActivityCenterView:_btnarrowOnClick()
+	self._scrollview.horizontalNormalizedPosition = 1
 end
 
-function var_0_0._onScreenResize(arg_7_0)
-	local var_7_0 = recthelper.getWidth(arg_7_0._goactivityadapter.transform)
-	local var_7_1 = arg_7_0:_getContentItemNum() * arg_7_0._itemSize + arg_7_0._horizontalLeft + arg_7_0._horizontalRight
+function MainActivityCenterView:_onScreenResize()
+	local adapterWidth = recthelper.getWidth(self._goactivityadapter.transform)
+	local num = self:_getContentItemNum()
+	local width = num * self._itemSize + self._horizontalLeft + self._horizontalRight
 
-	if var_7_0 < var_7_1 then
-		recthelper.setWidth(arg_7_0._scrollview.transform, var_7_0)
+	if adapterWidth < width then
+		recthelper.setWidth(self._scrollview.transform, adapterWidth)
 	else
-		recthelper.setWidth(arg_7_0._scrollview.transform, var_7_1)
+		recthelper.setWidth(self._scrollview.transform, width)
 	end
 
-	arg_7_0._scrollview.horizontalNormalizedPosition = 0
-	arg_7_0._scrollarrow.transform.position = arg_7_0._scrollarrowpos.transform.position
+	self._scrollview.horizontalNormalizedPosition = 0
+	self._scrollarrow.transform.position = self._scrollarrowpos.transform.position
 
-	arg_7_0:_refreshActBgWidth()
+	self:_refreshActBgWidth()
 
-	local var_7_2 = recthelper.rectToRelativeAnchorPos(arg_7_0._scrollarrowpos.transform.position, arg_7_0._scrollview.transform)
+	local needCheckPos = recthelper.rectToRelativeAnchorPos(self._scrollarrowpos.transform.position, self._scrollview.transform)
 
-	arg_7_0._needCheckPosX = math.max(0, var_7_2.x - 32)
+	self._needCheckPosX = math.max(0, needCheckPos.x - 32)
 end
 
-function var_0_0._getViewShowNum(arg_8_0)
-	local var_8_0 = (recthelper.getWidth(arg_8_0._scrollview.transform) - arg_8_0._horizontalLeft - arg_8_0._horizontalRight) / arg_8_0._itemSize
+function MainActivityCenterView:_getViewShowNum()
+	local viewWidth = recthelper.getWidth(self._scrollview.transform)
+	local num = (viewWidth - self._horizontalLeft - self._horizontalRight) / self._itemSize
 
-	return (math.floor(var_8_0))
+	num = math.floor(num)
+
+	return num
 end
 
-function var_0_0._getContentItemNum(arg_9_0)
-	local var_9_0 = 0
-	local var_9_1 = arg_9_0._scrollcontent.transform
-	local var_9_2 = var_9_1.childCount
+function MainActivityCenterView:_getContentItemNum()
+	local num = 0
+	local tr = self._scrollcontent.transform
+	local childCount = tr.childCount
 
-	for iter_9_0 = 0, var_9_2 - 1 do
-		if var_9_1:GetChild(iter_9_0).gameObject.activeSelf then
-			var_9_0 = var_9_0 + 1
+	for i = 0, childCount - 1 do
+		local child = tr:GetChild(i)
+
+		if child.gameObject.activeSelf then
+			num = num + 1
 		end
 	end
 
-	return var_9_0
+	return num
 end
 
-function var_0_0._onContentScrollValueChanged(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1 < arg_10_0._needCheckArrowValue
+function MainActivityCenterView:_onContentScrollValueChanged(value)
+	local showArrow = value < self._needCheckArrowValue
 
-	if var_10_0 and recthelper.getWidth(arg_10_0._scrollview.transform) >= recthelper.getWidth(arg_10_0._scrollcontent.transform) then
-		var_10_0 = false
+	if showArrow then
+		local viewWidth = recthelper.getWidth(self._scrollview.transform)
+		local contentWidth = recthelper.getWidth(self._scrollcontent.transform)
+
+		if contentWidth <= viewWidth then
+			showArrow = false
+		end
 	end
 
-	gohelper.setActive(arg_10_0._scrollarrow, var_10_0)
-	gohelper.setActive(arg_10_0._scrollreddot, false)
+	gohelper.setActive(self._scrollarrow, showArrow)
+	gohelper.setActive(self._scrollreddot, false)
 
-	if not var_10_0 then
+	if not showArrow then
 		return
 	end
 
-	local var_10_1 = arg_10_0._index2Id or {}
+	local list = self._index2Id or {}
 
-	for iter_10_0 = #var_10_1, 1, -1 do
-		local var_10_2 = var_10_1[iter_10_0]
-		local var_10_3 = arg_10_0._sortBtnList[var_10_2]
+	for i = #list, 1, -1 do
+		local id = list[i]
+		local v = self._sortBtnList[id]
 
-		if var_10_3:isShowRedDot() then
-			local var_10_4 = var_10_3.go
+		if v:isShowRedDot() then
+			local go = v.go
 
-			if not gohelper.isNil(var_10_4) and recthelper.rectToRelativeAnchorPos(var_10_4.transform.position, arg_10_0._scrollview.transform).x >= arg_10_0._needCheckPosX then
-				gohelper.setActive(arg_10_0._scrollreddot, true)
+			if not gohelper.isNil(go) then
+				local pos = recthelper.rectToRelativeAnchorPos(go.transform.position, self._scrollview.transform)
 
-				break
+				if pos.x >= self._needCheckPosX then
+					gohelper.setActive(self._scrollreddot, true)
+
+					break
+				end
 			end
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function MainActivityCenterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_12_0._freshBtns, arg_12_0)
-	arg_12_0:addEventCb(BpController.instance, BpEvent.OnGetInfo, arg_12_0._freshBtns, arg_12_0)
-	arg_12_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_12_0._freshBtns, arg_12_0)
-	arg_12_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_12_0._onCloseFullView, arg_12_0)
-	arg_12_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_12_0._onCloseView, arg_12_0)
-	arg_12_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_12_0._freshBtns, arg_12_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_12_0._onDailyRefresh, arg_12_0)
-	arg_12_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_12_0._refreshNorSignActivity, arg_12_0, LuaEventSystem.Low)
-	arg_12_0:addEventCb(Activity160Controller.instance, Activity160Event.InfoUpdate, arg_12_0._freshBtns, arg_12_0)
-	arg_12_0:_freshBtns()
+function MainActivityCenterView:onOpen()
+	self:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self._freshBtns, self)
+	self:addEventCb(BpController.instance, BpEvent.OnGetInfo, self._freshBtns, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._freshBtns, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._freshBtns, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshNorSignActivity, self, LuaEventSystem.Low)
+	self:addEventCb(Activity160Controller.instance, Activity160Event.InfoUpdate, self._freshBtns, self)
+	self:_freshBtns()
 end
 
-function var_0_0._onCloseFullView(arg_13_0, arg_13_1)
+function MainActivityCenterView:_onCloseFullView(viewName)
 	if not ViewMgr.instance:hasOpenFullView() then
-		arg_13_0:_freshBtns()
+		self:_freshBtns()
 	end
 end
 
-function var_0_0._onCloseView(arg_14_0, arg_14_1)
-	arg_14_0._scrollview.horizontalNormalizedPosition = 0
+function MainActivityCenterView:_onCloseView(viewName)
+	self._scrollview.horizontalNormalizedPosition = 0
 
-	if arg_14_1 == ViewName.ActivityBeginnerView then
-		arg_14_0:_freshBtns()
+	if viewName == ViewName.ActivityBeginnerView then
+		self:_freshBtns()
 	end
 end
 
-function var_0_0._freshBtns(arg_15_0)
-	arg_15_0:_checkBpBtn()
-	arg_15_0:_refreshActCenter()
-	arg_15_0:_checkTestTaskBtn()
-	arg_15_0:_checkTurnbackBtn()
-	arg_15_0:_checkRoleSignViewBtn()
-	arg_15_0:_checkSpringSignViewBtn()
-	arg_15_0:_checkActivity186Btn()
-	arg_15_0:_checkActivity204Btn()
-	arg_15_0:_checkActivity2ndCollectionPageViewBtn()
-	arg_15_0:_checkActivityImgVisible()
-	arg_15_0:_sortBtns()
+function MainActivityCenterView:_freshBtns()
+	self:_checkBpBtn()
+	self:_refreshActCenter()
+	self:_checkTestTaskBtn()
+	self:_checkTurnbackBtn()
+	self:_checkRoleSignViewBtn()
+	self:_checkSpringSignViewBtn()
+	self:_checkActivity186Btn()
+	self:_checkActivity204Btn()
+	self:_checkActivityCruiseBtn()
+	self:_checkActivity2ndCollectionPageViewBtn()
+	self:_checkActivityImgVisible()
+	self:_sortBtns()
 end
 
-function var_0_0._checkActivityImgVisible(arg_16_0)
-	local var_16_0 = ActivityModel.showActivityEffect()
-	local var_16_1 = var_16_0 and ActivityModel.checkIsShowLogoVisible()
-	local var_16_2 = var_16_0 and ActivityModel.checkIsShowActBgVisible()
+function MainActivityCenterView:_checkActivityImgVisible()
+	local isShow = ActivityModel.showActivityEffect()
+	local showLogo = isShow and ActivityModel.checkIsShowLogoVisible()
+	local showActBg = isShow and ActivityModel.checkIsShowActBgVisible()
 
-	gohelper.setActive(arg_16_0._activityLogo, var_16_1)
-	gohelper.setActive(arg_16_0._goactbg, var_16_2)
+	gohelper.setActive(self._activityLogo, showLogo)
+	gohelper.setActive(self._goactbg, showActBg)
 
-	local var_16_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if var_16_3 then
-		for iter_16_0, iter_16_1 in ipairs(var_16_3.mainView) do
-			local var_16_4 = gohelper.findChild(arg_16_0.viewGO, iter_16_1)
+	if config then
+		for _, path in ipairs(config.mainView) do
+			local go = gohelper.findChild(self.viewGO, path)
 
-			if var_16_4 then
-				gohelper.setActive(var_16_4, var_16_0)
+			if go then
+				gohelper.setActive(go, isShow)
 			end
 		end
 	end
 end
 
-function var_0_0._refreshNorSignActivity(arg_17_0)
-	arg_17_0:_sortBtns()
-	arg_17_0:_onContentScrollValueChanged(arg_17_0._scrollview.horizontalNormalizedPosition)
+function MainActivityCenterView:_refreshNorSignActivity()
+	self:_sortBtns()
+	self:_onContentScrollValueChanged(self._scrollview.horizontalNormalizedPosition)
 end
 
-function var_0_0._addSortBtn(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._sortBtnList[arg_18_1] = arg_18_2
+function MainActivityCenterView:_addSortBtn(activityId, btn)
+	self._sortBtnList[activityId] = btn
 end
 
-function var_0_0._sortBtns(arg_19_0)
-	local var_19_0 = {}
+function MainActivityCenterView:_sortBtns()
+	local list = {}
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._sortBtnList) do
-		if iter_19_0 ~= ActivityEnum.MainActivityCenterViewClientId.Bp and iter_19_0 ~= ActivityEnum.MainActivityCenterViewClientId.BpSP then
-			table.insert(var_19_0, iter_19_0)
+	for k, _ in pairs(self._sortBtnList) do
+		if k ~= ActivityEnum.MainActivityCenterViewClientId.Bp and k ~= ActivityEnum.MainActivityCenterViewClientId.BpSP then
+			table.insert(list, k)
 		end
 	end
 
-	table.sort(var_19_0, function(arg_20_0, arg_20_1)
-		local var_20_0 = arg_19_0._sortBtnList[arg_20_0]
-		local var_20_1 = arg_19_0._sortBtnList[arg_20_1]
-		local var_20_2 = var_20_0:isShowRedDot() and 1 or 0
-		local var_20_3 = var_20_1:isShowRedDot() and 1 or 0
+	table.sort(list, function(a, b)
+		local aBtn = self._sortBtnList[a]
+		local bBtn = self._sortBtnList[b]
+		local aRedDot = aBtn:isShowRedDot() and 1 or 0
+		local bRedDot = bBtn:isShowRedDot() and 1 or 0
 
-		if var_20_2 ~= var_20_3 then
-			return var_20_3 < var_20_2
+		if aRedDot ~= bRedDot then
+			return bRedDot < aRedDot
 		end
 
-		return (ActivityEnum.ActivitySortWeight[arg_20_0] or 100) < (ActivityEnum.ActivitySortWeight[arg_20_1] or 100)
+		local aWeight = ActivityEnum.ActivitySortWeight[a] or 100
+		local bWeight = ActivityEnum.ActivitySortWeight[b] or 100
+
+		return aWeight < bWeight
 	end)
 
-	arg_19_0._index2Id = var_19_0
+	self._index2Id = list
 
-	for iter_19_2, iter_19_3 in ipairs(var_19_0) do
-		gohelper.setAsLastSibling(arg_19_0._sortBtnList[iter_19_3].go)
+	for i, id in ipairs(list) do
+		gohelper.setAsLastSibling(self._sortBtnList[id].go)
 	end
 
-	for iter_19_4, iter_19_5 in ipairs(arg_19_0._centerItems) do
-		gohelper.setSibling(iter_19_5.go, 0)
+	for _, item in ipairs(self._centerItems) do
+		gohelper.setSibling(item.go, 0)
 	end
 
-	if arg_19_0._bpSpItem then
-		gohelper.setSibling(arg_19_0._bpSpItem.go, 0)
+	if self._bpSpItem then
+		gohelper.setSibling(self._bpSpItem.go, 0)
 	end
 
-	if arg_19_0._bpItem then
-		gohelper.setSibling(arg_19_0._bpItem.go, 0)
+	if self._bpItem then
+		gohelper.setSibling(self._bpItem.go, 0)
 	end
 
-	if arg_19_0._act186Item then
-		gohelper.setSibling(arg_19_0._act186Item.go, 2)
+	if self._act186Item then
+		gohelper.setSibling(self._act186Item.go, 2)
 	end
 
-	for iter_19_6, iter_19_7 in pairs(arg_19_0._checkBtnList) do
-		rawset(arg_19_0._checkBtnList, iter_19_6, nil)
+	if self._actCruiseItem then
+		gohelper.setSibling(self._actCruiseItem.go, 3)
 	end
 
-	local var_19_1 = arg_19_0:_getContentItemNum()
-	local var_19_2 = var_19_1 - arg_19_0:_getViewShowNum()
+	for k, v in pairs(self._checkBtnList) do
+		rawset(self._checkBtnList, k, nil)
+	end
 
-	if var_19_2 > 0 then
-		for iter_19_8 = #var_19_0, 1, -1 do
-			table.insert(arg_19_0._checkBtnList, arg_19_0._sortBtnList[var_19_0[iter_19_8]])
+	local contentNum = self:_getContentItemNum()
+	local showNum = self:_getViewShowNum()
+	local num = contentNum - showNum
 
-			if var_19_2 <= #arg_19_0._checkBtnList then
+	if num > 0 then
+		for i = #list, 1, -1 do
+			table.insert(self._checkBtnList, self._sortBtnList[list[i]])
+
+			if num <= #self._checkBtnList then
 				break
 			end
 		end
 	end
 
-	if arg_19_0._contentItemNum ~= var_19_1 then
-		arg_19_0._contentItemNum = var_19_1
+	if self._contentItemNum ~= contentNum then
+		self._contentItemNum = contentNum
 
-		arg_19_0:_onScreenResize()
+		self:_onScreenResize()
 	end
 
-	arg_19_0._scrollview.horizontalNormalizedPosition = 0
+	self._scrollview.horizontalNormalizedPosition = 0
 
-	arg_19_0:_refreshActBgWidth()
+	self:_refreshActBgWidth()
 end
 
-function var_0_0._checkBpBtn(arg_21_0)
+function MainActivityCenterView:_checkBpBtn()
 	if BpModel.instance:isEnd() then
-		GameUtil.onDestroyViewMember(arg_21_0, "_bpItem")
-		GameUtil.onDestroyViewMember(arg_21_0, "_bpSpItem")
+		GameUtil.onDestroyViewMember(self, "_bpItem")
+		GameUtil.onDestroyViewMember(self, "_bpSpItem")
 
 		return
 	end
 
-	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.BP) or arg_21_0._bpItem then
+	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.BP) or self._bpItem then
 		return
 	end
 
-	arg_21_0._bpItem = BpMainBtnItem.New()
+	self._bpItem = BpMainBtnItem.New()
 
-	arg_21_0._bpItem:init(arg_21_0._itemGo)
-	arg_21_0:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Bp, arg_21_0._bpItem)
+	self._bpItem:init(self._itemGo)
+	self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Bp, self._bpItem)
 
-	local var_21_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
+	local bpCo = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-	if var_21_0 and var_21_0.isSp then
-		if ActivityHelper.getActivityStatus(VersionActivity2_2Enum.ActivityId.BPSP, true) ~= ActivityEnum.ActivityStatus.Normal then
+	if bpCo and bpCo.isSp then
+		local status = ActivityHelper.getActivityStatus(BpConfig.instance:getSpActId(), true)
+
+		if status ~= ActivityEnum.ActivityStatus.Normal then
 			return
 		end
 
-		arg_21_0._bpSpItem = BpSPMainBtnItem.New()
+		self._bpSpItem = BpSPMainBtnItem.New()
 
-		arg_21_0._bpSpItem:init(arg_21_0._itemGo)
-		arg_21_0:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.BpSP, arg_21_0._bpSpItem)
+		self._bpSpItem:init(self._itemGo)
+		self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.BpSP, self._bpSpItem)
 	end
 end
 
-function var_0_0._refreshActCenter(arg_22_0)
+function MainActivityCenterView:_refreshActCenter()
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Activity) then
 		return
 	end
 
-	GameUtil.onDestroyViewMemberList(arg_22_0, "_centerItems")
+	GameUtil.onDestroyViewMemberList(self, "_centerItems")
 
-	local var_22_0 = ActivityModel.instance:getActivityCenter()
+	local centerCo = ActivityModel.instance:getActivityCenter()
 
-	arg_22_0._centerItems = arg_22_0:getUserDataTb_()
+	self._centerItems = self:getUserDataTb_()
 
-	for iter_22_0, iter_22_1 in pairs(var_22_0) do
-		if iter_22_0 == ActivityEnum.ActivityType.Beginner then
-			ActivityModel.instance:removeFinishedCategory(iter_22_1)
-			ActivityModel.instance:removeUnExitAct(iter_22_1)
-		elseif iter_22_0 == ActivityEnum.ActivityType.Welfare then
-			ActivityModel.instance:removeFinishedWelfare(iter_22_1)
-			ActivityModel.instance:removeUnExitAct(iter_22_1)
-			ActivityModel.instance:removeSelectSixAfterRemoveFinished(iter_22_1)
+	for k, actIds in pairs(centerCo) do
+		if k == ActivityEnum.ActivityType.Beginner then
+			ActivityModel.instance:removeFinishedCategory(actIds)
+			ActivityModel.instance:removeUnExitAct(actIds)
+		elseif k == ActivityEnum.ActivityType.Welfare then
+			ActivityModel.instance:removeFinishedWelfare(actIds)
+			ActivityModel.instance:removeUnExitAct(actIds)
+			ActivityModel.instance:removeSelectSixAfterRemoveFinished(actIds)
 		end
 
-		if GameUtil.getTabLen(iter_22_1) ~= 0 then
-			local var_22_1 = ActivityMainBtnItem.New()
+		if GameUtil.getTabLen(actIds) ~= 0 then
+			local item = ActivityMainBtnItem.New()
 
-			var_22_1:init(iter_22_0, arg_22_0._itemGo)
-			table.insert(arg_22_0._centerItems, var_22_1)
+			item:init(k, self._itemGo)
+			table.insert(self._centerItems, item)
 		end
 	end
 
-	table.sort(arg_22_0._centerItems, function(arg_23_0, arg_23_1)
-		return arg_23_0:getSortPriority() > arg_23_1:getSortPriority()
+	table.sort(self._centerItems, function(a, b)
+		return a:getSortPriority() > b:getSortPriority()
 	end)
 end
 
-function var_0_0._checkActivity2ndCollectionPageViewBtn(arg_24_0)
+function MainActivityCenterView:_checkActivity2ndCollectionPageViewBtn()
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Activity) then
 		return
 	end
 
-	local var_24_0 = tabletool.copy(Activity2ndEnum.ActivityOrder)
+	local actIds = tabletool.copy(Activity2ndEnum.ActivityOrder)
 
-	table.insert(var_24_0, Activity196Enum.ActId)
-	table.insert(var_24_0, Activity2ndEnum.ActivityId.MailActivty)
-	table.insert(var_24_0, Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
+	table.insert(actIds, Activity196Enum.ActId)
+	table.insert(actIds, Activity2ndEnum.ActivityId.MailActivty)
+	table.insert(actIds, Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
 
-	local var_24_1 = false
+	local isOpen = false
 
-	for iter_24_0, iter_24_1 in pairs(var_24_0) do
-		if ActivityHelper.isOpen(iter_24_1) then
-			var_24_1 = true
+	for _, actId in pairs(actIds) do
+		if ActivityHelper.isOpen(actId) then
+			isOpen = true
 
 			break
 		end
 	end
 
-	if not var_24_1 then
-		GameUtil.onDestroyViewMember(arg_24_0, "_2ndItem")
+	if not isOpen then
+		GameUtil.onDestroyViewMember(self, "_2ndItem")
 
 		return
 	end
 
-	if arg_24_0._2ndItem then
-		arg_24_0._2ndItem:refresh()
+	if self._2ndItem then
+		self._2ndItem:refresh()
 
 		return
 	else
-		arg_24_0._2ndItem = arg_24_0:_createActCenterItem(Activity2ndBtnItem)
+		self._2ndItem = self:_createActCenterItem(Activity2ndBtnItem)
 	end
 
-	arg_24_0:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Act2nd, arg_24_0._2ndItem)
+	self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Act2nd, self._2ndItem)
 end
 
-function var_0_0._checkTurnbackBtn(arg_25_0)
+function MainActivityCenterView:_checkTurnbackBtn()
 	if not TurnbackModel.instance:isInOpenTime() or not TurnbackModel.instance:getCurTurnbackMo() then
-		GameUtil.onDestroyViewMember(arg_25_0, "_turnbackItem")
+		GameUtil.onDestroyViewMember(self, "_turnbackItem")
 
 		return
 	end
 
-	if arg_25_0._turnbackItem then
-		arg_25_0._turnbackItem:_refreshItem()
+	if self._turnbackItem then
+		self._turnbackItem:_refreshItem()
 
 		return
 	end
 
-	arg_25_0._turnbackItem = TurnbackMainBtnItem.New()
+	self._turnbackItem = TurnbackMainBtnItem.New()
 
-	arg_25_0._turnbackItem:init(arg_25_0._itemGo, TurnbackModel.instance:getCurTurnbackId())
-	arg_25_0:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.TurnBack, arg_25_0._turnbackItem)
+	self._turnbackItem:init(self._itemGo, TurnbackModel.instance:getCurTurnbackId())
+	self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.TurnBack, self._turnbackItem)
 end
 
-function var_0_0._checkTestTaskBtn(arg_26_0)
-	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.TestTask) then
-		GameUtil.onDestroyViewMember(arg_26_0, "_testTaskItem")
+function MainActivityCenterView:_checkTestTaskBtn()
+	local testTaskShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.TestTask)
+
+	if not testTaskShow then
+		GameUtil.onDestroyViewMember(self, "_testTaskItem")
 
 		return
 	end
 
-	if arg_26_0._testTaskItem then
-		arg_26_0._testTaskItem:_refreshItem()
+	if self._testTaskItem then
+		self._testTaskItem:_refreshItem()
 
 		return
 	end
 
-	arg_26_0._testTaskItem = TestTaskMainBtnItem.New()
+	self._testTaskItem = TestTaskMainBtnItem.New()
 
-	arg_26_0._testTaskItem:init(arg_26_0._itemGo)
-	arg_26_0:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.TestTask, arg_26_0._testTaskItem)
+	self._testTaskItem:init(self._itemGo)
+	self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.TestTask, self._testTaskItem)
 end
 
-function var_0_0._checkSelfSelectCharacterBtn(arg_27_0)
+function MainActivityCenterView:_checkSelfSelectCharacterBtn()
 	if not Activity136Model.instance:isActivity136InOpen() then
-		GameUtil.onDestroyViewMember(arg_27_0, "_selfSelectCharacterBtn")
+		GameUtil.onDestroyViewMember(self, "_selfSelectCharacterBtn")
 
 		return
 	end
 
-	if arg_27_0._selfSelectCharacterBtn then
-		arg_27_0._selfSelectCharacterBtn:refresh()
+	if self._selfSelectCharacterBtn then
+		self._selfSelectCharacterBtn:refresh()
 	else
-		local var_27_0 = gohelper.cloneInPlace(arg_27_0._itemGo)
+		local go = gohelper.cloneInPlace(self._itemGo)
 
-		arg_27_0._selfSelectCharacterBtn = MonoHelper.addNoUpdateLuaComOnceToGo(var_27_0, Activity136MainBtnItem)
+		self._selfSelectCharacterBtn = MonoHelper.addNoUpdateLuaComOnceToGo(go, Activity136MainBtnItem)
 
-		arg_27_0:_addSortBtn(Activity136Model.instance:getCurActivity136Id(), arg_27_0._selfSelectCharacterBtn)
+		self:_addSortBtn(Activity136Controller.instance:actId(), self._selfSelectCharacterBtn)
 	end
 end
 
-local var_0_1 = {
+local kRoleSignViewActIds = {
 	ActivityEnum.Activity.RoleSignViewPart1_1_6,
 	ActivityEnum.Activity.RoleSignViewPart2_1_6
 }
 
-function var_0_0._checkRoleSignViewBtn(arg_28_0)
-	local var_28_0 = {
+function MainActivityCenterView:_checkRoleSignViewBtn()
+	local viewNames = {
 		ViewName.V1a6_Role_PanelSignView_Part1,
 		ViewName.V1a6_Role_PanelSignView_Part2
 	}
-	local var_28_1 = false
-	local var_28_2
-	local var_28_3
+	local isOpen = false
+	local actId, viewName
 
-	for iter_28_0, iter_28_1 in ipairs(var_0_1) do
-		if ActivityType101Model.instance:isOpen(iter_28_1) then
-			var_28_1 = true
-			var_28_2 = iter_28_1
-			var_28_3 = var_28_0[iter_28_0]
+	for i, _actId in ipairs(kRoleSignViewActIds) do
+		if ActivityType101Model.instance:isOpen(_actId) then
+			isOpen = true
+			actId = _actId
+			viewName = viewNames[i]
 
 			break
 		end
 	end
 
-	if not var_28_1 then
-		GameUtil.onDestroyViewMember(arg_28_0, "_roleSignViewBtn")
+	if not isOpen then
+		GameUtil.onDestroyViewMember(self, "_roleSignViewBtn")
 
 		return
 	end
 
-	local var_28_4 = {
-		viewName = var_28_3,
+	local data = {
+		viewName = viewName,
 		viewParam = {
-			actId = var_28_2
+			actId = actId
 		}
 	}
 
-	if arg_28_0._roleSignViewBtn then
-		arg_28_0._roleSignViewBtn:setCustomData(var_28_4)
-		arg_28_0._roleSignViewBtn:refresh()
+	if self._roleSignViewBtn then
+		self._roleSignViewBtn:setCustomData(data)
+		self._roleSignViewBtn:refresh()
 
 		return
 	end
 
-	arg_28_0._roleSignViewBtn = arg_28_0:_createActCenterItem(V1a6_Role_PanelSignView_ActCenterItemBtn)
+	self._roleSignViewBtn = self:_createActCenterItem(V1a6_Role_PanelSignView_ActCenterItemBtn)
 
-	arg_28_0._roleSignViewBtn:setCustomData(var_28_4)
-	arg_28_0._roleSignViewBtn:refresh()
-	arg_28_0:_addSortBtn(var_28_2, arg_28_0._roleSignViewBtn)
+	self._roleSignViewBtn:setCustomData(data)
+	self._roleSignViewBtn:refresh()
+	self:_addSortBtn(actId, self._roleSignViewBtn)
 end
 
-function var_0_0._checkGoldenMilletPresentBtn(arg_29_0)
-	if GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen() then
-		if not arg_29_0._goldenMilletPresentBtn then
-			arg_29_0._goldenMilletPresentBtn = arg_29_0:_createActCenterItem(GoldenMilletPresentMainBtnItem)
+function MainActivityCenterView:_checkGoldenMilletPresentBtn()
+	local isOpen = GoldenMilletPresentModel.instance:isGoldenMilletPresentOpen()
 
-			arg_29_0:_addSortBtn(GoldenMilletPresentModel.instance:getGoldenMilletPresentActId(), arg_29_0._goldenMilletPresentBtn)
+	if isOpen then
+		if not self._goldenMilletPresentBtn then
+			self._goldenMilletPresentBtn = self:_createActCenterItem(GoldenMilletPresentMainBtnItem)
+
+			self:_addSortBtn(GoldenMilletPresentModel.instance:getGoldenMilletPresentActId(), self._goldenMilletPresentBtn)
 		end
 
-		arg_29_0._goldenMilletPresentBtn:refreshRedDot()
-	elseif arg_29_0._goldenMilletPresentBtn then
-		arg_29_0._goldenMilletPresentBtn:destroy()
+		self._goldenMilletPresentBtn:refreshRedDot()
+	elseif self._goldenMilletPresentBtn then
+		self._goldenMilletPresentBtn:destroy()
 
-		arg_29_0._goldenMilletPresentBtn = nil
+		self._goldenMilletPresentBtn = nil
 	end
 end
 
-function var_0_0._checkSpringSignViewBtn(arg_30_0)
-	local var_30_0 = ActivityEnum.Activity.SpringSign
-	local var_30_1 = ViewName.V1a6_Spring_PanelSignView
+function MainActivityCenterView:_checkSpringSignViewBtn()
+	local actId = ActivityEnum.Activity.SpringSign
+	local viewName = ViewName.V1a6_Spring_PanelSignView
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
 
-	if not ActivityType101Model.instance:isOpen(var_30_0) then
-		GameUtil.onDestroyViewMember(arg_30_0, "_springSignViewBtn")
+	if not isOpen then
+		GameUtil.onDestroyViewMember(self, "_springSignViewBtn")
 
 		return
 	end
 
-	local var_30_2 = {
-		viewName = var_30_1,
+	local data = {
+		viewName = viewName,
 		viewParam = {
-			actId = var_30_0
+			actId = actId
 		}
 	}
 
-	if arg_30_0._springSignViewBtn then
-		arg_30_0._springSignViewBtn:setCustomData(var_30_2)
-		arg_30_0._springSignViewBtn:refresh()
+	if self._springSignViewBtn then
+		self._springSignViewBtn:setCustomData(data)
+		self._springSignViewBtn:refresh()
 
 		return
 	end
 
-	arg_30_0._springSignViewBtn = arg_30_0:_createActCenterItem(ActCenterItem_SpringSignViewBtn_1_6)
+	self._springSignViewBtn = self:_createActCenterItem(ActCenterItem_SpringSignViewBtn_1_6)
 
-	arg_30_0._springSignViewBtn:setCustomData(var_30_2)
-	arg_30_0._springSignViewBtn:refresh()
-	arg_30_0:_addSortBtn(var_30_0, arg_30_0._springSignViewBtn)
+	self._springSignViewBtn:setCustomData(data)
+	self._springSignViewBtn:refresh()
+	self:_addSortBtn(actId, self._springSignViewBtn)
 end
 
-function var_0_0._checkActivity186Btn(arg_31_0)
-	if not Activity186Model.instance:isActivityOnline() then
-		GameUtil.onDestroyViewMember(arg_31_0, "_act186Item")
+function MainActivityCenterView:_checkActivity186Btn()
+	local isOnline = Activity186Model.instance:isActivityOnline()
+
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_act186Item")
 
 		return
 	end
 
-	if not arg_31_0._act186Item then
-		local var_31_0 = gohelper.cloneInPlace(arg_31_0._itemGo)
+	if not self._act186Item then
+		local go = gohelper.cloneInPlace(self._itemGo)
 
-		arg_31_0._act186Item = MonoHelper.addNoUpdateLuaComOnceToGo(var_31_0, Activity186MainBtnItem)
+		self._act186Item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Activity186MainBtnItem)
 
-		arg_31_0:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Act186, arg_31_0._act186Item)
+		self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Act186, self._act186Item)
 	end
 
-	arg_31_0._act186Item:refresh()
+	self._act186Item:refresh()
 end
 
-function var_0_0._checkActivity204Btn(arg_32_0)
-	local var_32_0 = ActivityEnum.Activity.V2a9_ActCollection
+function MainActivityCenterView:_checkActivity204Btn()
+	local actId = ActivityEnum.Activity.V2a9_ActCollection
+	local isOnline = ActivityHelper.isOpen(actId)
 
-	if not ActivityHelper.isOpen(var_32_0) then
-		GameUtil.onDestroyViewMember(arg_32_0, "_act204Item")
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_act204Item")
 
 		return
 	end
 
-	if not arg_32_0._act204Item then
-		local var_32_1 = gohelper.cloneInPlace(arg_32_0._itemGo)
+	if not self._act204Item then
+		local go = gohelper.cloneInPlace(self._itemGo)
 
-		arg_32_0._act204Item = MonoHelper.addNoUpdateLuaComOnceToGo(var_32_1, Activity204MainBtnItem)
+		self._act204Item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Activity204MainBtnItem)
 
-		arg_32_0:_addSortBtn(var_32_0, arg_32_0._act204Item)
+		self:_addSortBtn(actId, self._act204Item)
 	end
 
-	arg_32_0._act204Item:refresh()
+	self._act204Item:refresh()
 end
 
-function var_0_0._createActCenterItem(arg_33_0, arg_33_1)
-	local var_33_0 = gohelper.cloneInPlace(arg_33_0._itemGo)
+function MainActivityCenterView:_checkActivityCruiseBtn()
+	local actId = VersionActivity3_2Enum.ActivityId.CruiseMain
+	local isOnline = ActivityHelper.isOpen(actId)
 
-	arg_33_0:_refreshActBgWidth()
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_actCruiseItem")
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_33_0, arg_33_1)
+		return
+	end
+
+	if not self._actCruiseItem then
+		local go = gohelper.cloneInPlace(self._itemGo)
+
+		self._actCruiseItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, ActivityCruiseMainBtnItem)
+
+		self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Cruise, self._actCruiseItem)
+	end
+
+	self._actCruiseItem:refresh()
 end
 
-function var_0_0.onClose(arg_34_0)
-	arg_34_0._scrollview:RemoveOnValueChanged()
-	arg_34_0._btnarrow:RemoveClickListener()
+function MainActivityCenterView:_createActCenterItem(class)
+	local go = gohelper.cloneInPlace(self._itemGo)
+
+	self:_refreshActBgWidth()
+
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, class)
 end
 
-function var_0_0.onDestroyView(arg_35_0)
-	GameUtil.onDestroyViewMemberList(arg_35_0, "_centerItems")
-	GameUtil.onDestroyViewMember(arg_35_0, "_bpItem")
-	GameUtil.onDestroyViewMember(arg_35_0, "_bpSpItem")
-	GameUtil.onDestroyViewMember(arg_35_0, "_testTaskItem")
-	GameUtil.onDestroyViewMember(arg_35_0, "_turnbackItem")
-	GameUtil.onDestroyViewMember(arg_35_0, "_selfSelectCharacterBtn")
-	GameUtil.onDestroyViewMember(arg_35_0, "_act186Item")
-	GameUtil.onDestroyViewMember(arg_35_0, "_act204Item")
-	GameUtil.onDestroyViewMember(arg_35_0, "_roleSignViewBtn")
-	GameUtil.onDestroyViewMember(arg_35_0, "_springSignViewBtn")
-	GameUtil.onDestroyViewMember(arg_35_0, "_2ndItem")
-	arg_35_0:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_35_0._freshBtns, arg_35_0)
-	arg_35_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_35_0._onCloseFullView, arg_35_0)
-	arg_35_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_35_0._freshBtns, arg_35_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_35_0._onDailyRefresh, arg_35_0)
+function MainActivityCenterView:onClose()
+	self._scrollview:RemoveOnValueChanged()
+	self._btnarrow:RemoveClickListener()
 end
 
-function var_0_0._updateRoleSignViewBtn(arg_36_0)
-	for iter_36_0, iter_36_1 in ipairs(var_0_1) do
-		if ActivityType101Model.instance:isOpen(iter_36_1) then
-			Activity101Rpc.instance:sendGet101InfosRequest(iter_36_1)
+function MainActivityCenterView:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_centerItems")
+	GameUtil.onDestroyViewMember(self, "_bpItem")
+	GameUtil.onDestroyViewMember(self, "_bpSpItem")
+	GameUtil.onDestroyViewMember(self, "_testTaskItem")
+	GameUtil.onDestroyViewMember(self, "_turnbackItem")
+	GameUtil.onDestroyViewMember(self, "_selfSelectCharacterBtn")
+	GameUtil.onDestroyViewMember(self, "_act186Item")
+	GameUtil.onDestroyViewMember(self, "_act204Item")
+	GameUtil.onDestroyViewMember(self, "_actCruiseItem")
+	GameUtil.onDestroyViewMember(self, "_roleSignViewBtn")
+	GameUtil.onDestroyViewMember(self, "_springSignViewBtn")
+	GameUtil.onDestroyViewMember(self, "_2ndItem")
+	self:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self._freshBtns, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._freshBtns, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+end
+
+function MainActivityCenterView:_updateRoleSignViewBtn()
+	for _, actId in ipairs(kRoleSignViewActIds) do
+		if ActivityType101Model.instance:isOpen(actId) then
+			Activity101Rpc.instance:sendGet101InfosRequest(actId)
 		end
 	end
 end
 
-function var_0_0._updateSpringSignViewBtn(arg_37_0)
-	local var_37_0 = ActivityEnum.Activity.SpringSign
+function MainActivityCenterView:_updateSpringSignViewBtn()
+	local actId = ActivityEnum.Activity.SpringSign
 
-	if ActivityType101Model.instance:isOpen(var_37_0) then
-		Activity101Rpc.instance:sendGet101InfosRequest(var_37_0)
+	if ActivityType101Model.instance:isOpen(actId) then
+		Activity101Rpc.instance:sendGet101InfosRequest(actId)
 	end
 end
 
-function var_0_0._onDailyRefresh(arg_38_0)
-	arg_38_0:_freshBtns()
-	arg_38_0:_updateRoleSignViewBtn()
-	arg_38_0:_updateSpringSignViewBtn()
+function MainActivityCenterView:_onDailyRefresh()
+	self:_freshBtns()
+	self:_updateRoleSignViewBtn()
+	self:_updateSpringSignViewBtn()
 end
 
-local var_0_2 = 840.4
+local kMaxActBgWidth = 840.4
 
-function var_0_0._refreshActBgWidth(arg_39_0)
-	local var_39_0 = ActivityModel.checkIsShowLogoVisible()
-	local var_39_1 = 0
+function MainActivityCenterView:_refreshActBgWidth()
+	local showLogo = ActivityModel.checkIsShowLogoVisible()
+	local num = 0
 
-	if arg_39_0._sortBtnList then
-		for iter_39_0, iter_39_1 in pairs(arg_39_0._sortBtnList) do
-			var_39_1 = var_39_1 + 1
+	if self._sortBtnList then
+		for _, v in pairs(self._sortBtnList) do
+			num = num + 1
 		end
 	end
 
-	if arg_39_0._centerItems then
-		var_39_1 = var_39_1 + #arg_39_0._centerItems
+	if self._centerItems then
+		num = num + #self._centerItems
 	end
 
-	local var_39_2 = arg_39_0._horizontal.spacing
-	local var_39_3 = (var_39_1 - 1) * var_39_2
-	local var_39_4 = var_39_1 * arg_39_0._itemSize + arg_39_0._horizontalLeft + -math.min(0, arg_39_0._goactbgOffsetX) * 2
+	local spacing = self._horizontal.spacing
+	local spacingX = (num - 1) * spacing
+	local width = num * self._itemSize + self._horizontalLeft
+	local offset = -math.min(0, self._goactbgOffsetX) * 2
 
-	recthelper.setWidth(arg_39_0._goactbgTrans, GameUtil.clamp(var_39_4, 0, var_0_2))
+	width = width + offset
+
+	recthelper.setWidth(self._goactbgTrans, GameUtil.clamp(width, 0, kMaxActBgWidth))
 end
 
-return var_0_0
+return MainActivityCenterView

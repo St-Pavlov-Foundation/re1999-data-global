@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183FinishView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/result/Act183FinishView.lua
 
-local var_0_0 = class("Act183FinishView", BaseView)
+module("modules.logic.versionactivity2_5.challenge.view.result.Act183FinishView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+local Act183FinishView = class("Act183FinishView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183FinishView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	NavigateMgr.instance:addEscape(arg_2_0.viewName, arg_2_0._btncloseOnClick, arg_2_0)
+function Act183FinishView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	NavigateMgr.instance:addEscape(self.viewName, self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	NavigateMgr.instance:removeEscape(arg_3_0.viewName)
+function Act183FinishView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	NavigateMgr.instance:removeEscape(self.viewName)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Act183FinishView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function Act183FinishView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Act183FinishView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_7_0.viewGO)
+function Act183FinishView:onOpen()
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 
-	arg_7_0.animatorPlayer:Play(UIAnimationName.Open, arg_7_0.closeThis, arg_7_0)
+	self.animatorPlayer:Play(UIAnimationName.Open, self.closeThis, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_OpenFinishView)
 end
 
-function var_0_0.onClose(arg_8_0)
+function Act183FinishView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function Act183FinishView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act183FinishView

@@ -1,97 +1,99 @@
-﻿module("modules.logic.survival.util.SurvivalStatHelper", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalStatHelper.lua
 
-local var_0_0 = class("SurvivalStatHelper")
+module("modules.logic.survival.util.SurvivalStatHelper", package.seeall)
 
-function var_0_0.statBtnClick(arg_1_0, arg_1_1, arg_1_2)
+local SurvivalStatHelper = class("SurvivalStatHelper")
+
+function SurvivalStatHelper:statBtnClick(name, viewName)
 	StatController.instance:track(StatEnum.EventName.ButtonClick, {
-		[StatEnum.EventProperties.ButtonName] = arg_1_1,
-		[StatEnum.EventProperties.ViewName] = arg_1_2
+		[StatEnum.EventProperties.ButtonName] = name,
+		[StatEnum.EventProperties.ViewName] = viewName
 	})
 end
 
-function var_0_0.statSurvivalMapUnit(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_2_1 = var_2_0.player.pos
-	local var_2_2 = var_2_0.unitsById[arg_2_2]
+function SurvivalStatHelper:statSurvivalMapUnit(operationType, eventId, optionId, treeId)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local pos = sceneMo.player.pos
+	local unitMo = sceneMo.unitsById[eventId]
 
 	StatController.instance:track(StatEnum.EventName.SurvivalMapUnit, {
-		[StatEnum.EventProperties.SurvivalBaseObj] = arg_2_0:getWeekData(),
-		[StatEnum.EventProperties.SurvivalMapBaseObj] = arg_2_0:getMapData(),
-		[StatEnum.EventProperties.OperationType] = arg_2_1,
-		[StatEnum.EventProperties.EventId] = var_2_2 and var_2_2.cfgId,
-		[StatEnum.EventProperties.TreeId] = arg_2_4 or 0,
-		[StatEnum.EventProperties.OptionId] = arg_2_3,
+		[StatEnum.EventProperties.SurvivalBaseObj] = self:getWeekData(),
+		[StatEnum.EventProperties.SurvivalMapBaseObj] = self:getMapData(),
+		[StatEnum.EventProperties.OperationType] = operationType,
+		[StatEnum.EventProperties.EventId] = unitMo and unitMo.cfgId,
+		[StatEnum.EventProperties.TreeId] = treeId or 0,
+		[StatEnum.EventProperties.OptionId] = optionId,
 		[StatEnum.EventProperties.Position] = {
-			x = var_2_1.q,
-			y = var_2_1.r,
-			z = var_2_1.s
+			x = pos.q,
+			y = pos.r,
+			z = pos.s
 		}
 	})
 end
 
-function var_0_0.statWeekClose(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = SurvivalModel.instance:getOutSideInfo()
+function SurvivalStatHelper:statWeekClose(time, type)
+	local outSideMo = SurvivalModel.instance:getOutSideInfo()
 
 	StatController.instance:track(StatEnum.EventName.SurvivalWeekClose, {
-		[StatEnum.EventProperties.Season] = var_3_0.season,
-		[StatEnum.EventProperties.SurvivalBaseObj] = arg_3_0:getWeekData(),
-		[StatEnum.EventProperties.UseTime] = arg_3_1,
-		[StatEnum.EventProperties.From] = arg_3_2
+		[StatEnum.EventProperties.Season] = outSideMo.season,
+		[StatEnum.EventProperties.SurvivalBaseObj] = self:getWeekData(),
+		[StatEnum.EventProperties.UseTime] = time,
+		[StatEnum.EventProperties.From] = type
 	})
 end
 
-function var_0_0.statMapClose(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = SurvivalModel.instance:getOutSideInfo()
+function SurvivalStatHelper:statMapClose(time, type)
+	local outSideMo = SurvivalModel.instance:getOutSideInfo()
 
 	StatController.instance:track(StatEnum.EventName.SurvivalMapClose, {
-		[StatEnum.EventProperties.Season] = var_4_0.season,
-		[StatEnum.EventProperties.SurvivalBaseObj] = arg_4_0:getWeekData(),
-		[StatEnum.EventProperties.SurvivalMapBaseObj] = arg_4_0:getMapData(),
-		[StatEnum.EventProperties.UseTime] = arg_4_1,
-		[StatEnum.EventProperties.From] = arg_4_2
+		[StatEnum.EventProperties.Season] = outSideMo.season,
+		[StatEnum.EventProperties.SurvivalBaseObj] = self:getWeekData(),
+		[StatEnum.EventProperties.SurvivalMapBaseObj] = self:getMapData(),
+		[StatEnum.EventProperties.UseTime] = time,
+		[StatEnum.EventProperties.From] = type
 	})
 end
 
-function var_0_0.getWeekData(arg_5_0)
-	local var_5_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalStatHelper:getWeekData()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if not var_5_0 then
+	if not weekInfo then
 		return
 	end
 
 	return {
-		world_lv = var_5_0:getAttr(SurvivalEnum.AttrType.WorldLevel),
-		difficulty = var_5_0.difficulty,
-		day = var_5_0.day
+		world_lv = weekInfo:getAttr(SurvivalEnum.AttrType.WorldLevel),
+		difficulty = weekInfo.difficulty,
+		day = weekInfo.day
 	}
 end
 
-function var_0_0.getMapData(arg_6_0)
-	local var_6_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalStatHelper:getMapData()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if not var_6_0 then
+	if not sceneMo then
 		return
 	end
 
-	local var_6_1 = lua_survival_map_group_mapping.configDict[var_6_0.mapId].id
-	local var_6_2 = lua_survival_map_group.configDict[var_6_1]
-	local var_6_3 = var_6_0.currMaxGameTime - var_6_0.gameTime
-	local var_6_4 = {}
+	local groupId = lua_survival_map_group_mapping.configDict[sceneMo.mapId].id
+	local copyCo = lua_survival_map_group.configDict[groupId]
+	local countdown = sceneMo.currMaxGameTime - sceneMo.gameTime
+	local eventList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0.units) do
-		table.insert(var_6_4, iter_6_1.cfgId)
+	for _, v in ipairs(sceneMo.units) do
+		table.insert(eventList, v.cfgId)
 	end
 
 	return {
-		map_type = var_6_2.id,
-		map_id = var_6_0.mapId,
-		countdown = var_6_3,
-		alive_events = var_6_4,
-		rain_id = var_6_0._mapInfo.rainId,
-		disaster_id = var_6_0._mapInfo.disasterId
+		map_type = copyCo.id,
+		map_id = sceneMo.mapId,
+		countdown = countdown,
+		alive_events = eventList,
+		rain_id = sceneMo._mapInfo.rainId,
+		disaster_id = sceneMo._mapInfo.disasterId
 	}
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalStatHelper.instance = SurvivalStatHelper.New()
 
-return var_0_0
+return SurvivalStatHelper

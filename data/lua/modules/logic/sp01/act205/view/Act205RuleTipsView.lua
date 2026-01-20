@@ -1,61 +1,63 @@
-﻿module("modules.logic.sp01.act205.view.Act205RuleTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/view/Act205RuleTipsView.lua
 
-local var_0_0 = class("Act205RuleTipsView", BaseView)
+module("modules.logic.sp01.act205.view.Act205RuleTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_title")
-	arg_1_0._scrollinfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_info")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#txt_desc")
-	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
+local Act205RuleTipsView = class("Act205RuleTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act205RuleTipsView:onInitView()
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1")
+	self._txttitle = gohelper.findChildText(self.viewGO, "title/#txt_title")
+	self._scrollinfo = gohelper.findChildScrollRect(self.viewGO, "#scroll_info")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#scroll_info/Viewport/Content/#txt_desc")
+	self._btnclose2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
-	arg_2_0._btnclose2:AddClickListener(arg_2_0._btnclose2OnClick, arg_2_0)
+function Act205RuleTipsView:addEvents()
+	self._btnclose1:AddClickListener(self._btnclose1OnClick, self)
+	self._btnclose2:AddClickListener(self._btnclose2OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose1:RemoveClickListener()
-	arg_3_0._btnclose2:RemoveClickListener()
+function Act205RuleTipsView:removeEvents()
+	self._btnclose1:RemoveClickListener()
+	self._btnclose2:RemoveClickListener()
 end
 
-function var_0_0._btnclose1OnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Act205RuleTipsView:_btnclose1OnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnclose2OnClick(arg_5_0)
-	arg_5_0:closeThis()
+function Act205RuleTipsView:_btnclose2OnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function Act205RuleTipsView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function Act205RuleTipsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.activityId = Act205Model.instance:getAct205Id()
-	arg_8_0.gameStageId = Act205Model.instance:getGameStageId()
+function Act205RuleTipsView:onOpen()
+	self.activityId = Act205Model.instance:getAct205Id()
+	self.gameStageId = Act205Model.instance:getGameStageId()
 
-	local var_8_0 = Act205Config.instance:getStageConfig(arg_8_0.activityId, arg_8_0.gameStageId)
+	local stageConfig = Act205Config.instance:getStageConfig(self.activityId, self.gameStageId)
 
-	arg_8_0._txttitle.text = var_8_0.ruleTitle
-	arg_8_0._txtdesc.text = var_8_0.ruleDesc
+	self._txttitle.text = stageConfig.ruleTitle
+	self._txtdesc.text = stageConfig.ruleDesc
 end
 
-function var_0_0.onClose(arg_9_0)
+function Act205RuleTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function Act205RuleTipsView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act205RuleTipsView

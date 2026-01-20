@@ -1,82 +1,84 @@
-﻿module("modules.logic.explore.map.whirl.ExploreWhirlBase", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/whirl/ExploreWhirlBase.lua
 
-local var_0_0 = class("ExploreWhirlBase", BaseUnitSpawn)
+module("modules.logic.explore.map.whirl.ExploreWhirlBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = gohelper.create3d(arg_1_1, arg_1_2)
+local ExploreWhirlBase = class("ExploreWhirlBase", BaseUnitSpawn)
 
-	arg_1_0.trans = var_1_0.transform
+function ExploreWhirlBase:ctor(parentGo, type)
+	local go = gohelper.create3d(parentGo, type)
 
-	arg_1_0:init(var_1_0)
+	self.trans = go.transform
 
-	arg_1_0._type = arg_1_2
-	arg_1_0._resPath = ""
+	self:init(go)
 
-	arg_1_0:onInit()
-	arg_1_0:_loadAssets()
+	self._type = type
+	self._resPath = ""
+
+	self:onInit()
+	self:_loadAssets()
 end
 
-function var_0_0.initComponents(arg_2_0)
-	arg_2_0:addComp("followComp", ExploreWhirlFollowComp)
-	arg_2_0:addComp("effectComp", ExploreWhirlEffectComp)
+function ExploreWhirlBase:initComponents()
+	self:addComp("followComp", ExploreWhirlFollowComp)
+	self:addComp("effectComp", ExploreWhirlEffectComp)
 end
 
-function var_0_0.onInit(arg_3_0)
+function ExploreWhirlBase:onInit()
 	return
 end
 
-function var_0_0._loadAssets(arg_4_0)
-	if string.nilorempty(arg_4_0._resPath) then
+function ExploreWhirlBase:_loadAssets()
+	if string.nilorempty(self._resPath) then
 		return
 	end
 
-	arg_4_0._assetId = ResMgr.getAbAsset(arg_4_0._resPath, arg_4_0._onResLoaded, arg_4_0, arg_4_0._assetId)
+	self._assetId = ResMgr.getAbAsset(self._resPath, self._onResLoaded, self, self._assetId)
 end
 
-function var_0_0.getResPath(arg_5_0)
-	return arg_5_0._resPath
+function ExploreWhirlBase:getResPath()
+	return self._resPath
 end
 
-function var_0_0.onResLoaded(arg_6_0)
+function ExploreWhirlBase:onResLoaded()
 	return
 end
 
-function var_0_0.getGo(arg_7_0)
-	return arg_7_0._displayGo
+function ExploreWhirlBase:getGo()
+	return self._displayGo
 end
 
-function var_0_0._onResLoaded(arg_8_0, arg_8_1)
-	if not arg_8_1.IsLoadSuccess then
+function ExploreWhirlBase:_onResLoaded(assetMO)
+	if not assetMO.IsLoadSuccess then
 		return
 	end
 
-	arg_8_0:_releaseDisplayGo()
+	self:_releaseDisplayGo()
 
-	arg_8_0._displayGo = arg_8_1:getInstance(nil, nil, arg_8_0.go)
-	arg_8_0._displayTr = arg_8_0._displayGo.transform
+	self._displayGo = assetMO:getInstance(nil, nil, self.go)
+	self._displayTr = self._displayGo.transform
 
-	if arg_8_0.followComp then
-		arg_8_0.followComp:setup(arg_8_0.go)
-		arg_8_0.followComp:start()
+	if self.followComp then
+		self.followComp:setup(self.go)
+		self.followComp:start()
 	end
 
-	arg_8_0:onResLoaded()
+	self:onResLoaded()
 end
 
-function var_0_0._releaseDisplayGo(arg_9_0)
-	ResMgr.ReleaseObj(arg_9_0._displayGo)
-	ResMgr.removeCallBack(arg_9_0._assetId)
+function ExploreWhirlBase:_releaseDisplayGo()
+	ResMgr.ReleaseObj(self._displayGo)
+	ResMgr.removeCallBack(self._assetId)
 
-	arg_9_0._displayGo = nil
-	arg_9_0._displayTr = nil
+	self._displayGo = nil
+	self._displayTr = nil
 end
 
-function var_0_0.destroy(arg_10_0)
-	arg_10_0:_releaseDisplayGo()
-	gohelper.destroy(arg_10_0.go)
-	arg_10_0:onDestroy()
+function ExploreWhirlBase:destroy()
+	self:_releaseDisplayGo()
+	gohelper.destroy(self.go)
+	self:onDestroy()
 
-	arg_10_0.trans = nil
+	self.trans = nil
 end
 
-return var_0_0
+return ExploreWhirlBase

@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/view/YeShuMeiLevelViewContainer.lua
 
-local var_0_0 = class("YeShuMeiLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local YeShuMeiLevelViewContainer = class("YeShuMeiLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, YeShuMeiLevelView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function YeShuMeiLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, YeShuMeiLevelView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function YeShuMeiLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function YeShuMeiLevelViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity3_1Enum.ActivityId.YeShuMei)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity3_1Enum.ActivityId.YeShuMei
 	})
 end
 
-return var_0_0
+return YeShuMeiLevelViewContainer

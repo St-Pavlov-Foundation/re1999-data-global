@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114KeyDayCheckResultWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114KeyDayCheckResultWork.lua
 
-local var_0_0 = class("Activity114KeyDayCheckResultWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114KeyDayCheckResultWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
-	arg_1_0:getFlow():addWork(Activity114OpenAttrViewWork.New())
+local Activity114KeyDayCheckResultWork = class("Activity114KeyDayCheckResultWork", Activity114BaseWork)
 
-	local var_1_0 = Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, arg_1_0.context.nowDay)
-	local var_1_1 = false
+function Activity114KeyDayCheckResultWork:onStart(context)
+	self:getFlow():addWork(Activity114StopStoryWork.New())
+	self:getFlow():addWork(Activity114OpenAttrViewWork.New())
 
-	if not var_1_0 then
-		local var_1_2, var_1_3, var_1_4, var_1_5 = Activity114Helper.getWeekEndScore()
+	local nextKeyDayCo = Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, self.context.nowDay)
+	local isScoreE = false
 
-		var_1_1 = var_1_5 < Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.ScoreC)
+	if not nextKeyDayCo then
+		local _, _, _, totalScore = Activity114Helper.getWeekEndScore()
 
-		arg_1_0:getFlow():addWork(Activity114WeekEndWork.New())
+		isScoreE = totalScore < Activity114Config.instance:getConstValue(Activity114Model.instance.id, Activity114Enum.ConstId.ScoreC)
+
+		self:getFlow():addWork(Activity114WeekEndWork.New())
 	end
 
-	arg_1_0.context.storyId = nil
+	self.context.storyId = nil
 
-	local var_1_6 = arg_1_0.context.eventCo
+	local eventCo = self.context.eventCo
 
-	if arg_1_0.context.result == Activity114Enum.Result.None then
+	if self.context.result == Activity114Enum.Result.None then
 		-- block empty
-	elseif var_1_0 and arg_1_0.context.result == Activity114Enum.Result.Success or not var_1_0 and not var_1_1 then
-		arg_1_0:getFlow():addWork(Activity114StoryWork.New(var_1_6.config.successStoryId, Activity114Enum.StoryType.Result))
-	elseif var_1_0 and arg_1_0.context.result == Activity114Enum.Result.Fail or not var_1_0 and var_1_1 then
-		arg_1_0:getFlow():addWork(Activity114StoryWork.New(var_1_6.config.failureStoryId, Activity114Enum.StoryType.Result))
+	elseif nextKeyDayCo and self.context.result == Activity114Enum.Result.Success or not nextKeyDayCo and not isScoreE then
+		self:getFlow():addWork(Activity114StoryWork.New(eventCo.config.successStoryId, Activity114Enum.StoryType.Result))
+	elseif nextKeyDayCo and self.context.result == Activity114Enum.Result.Fail or not nextKeyDayCo and isScoreE then
+		self:getFlow():addWork(Activity114StoryWork.New(eventCo.config.failureStoryId, Activity114Enum.StoryType.Result))
 	else
-		logError("error :" .. tostring(var_1_1) .. " +++ " .. tostring(arg_1_0.context.nowDay))
+		logError("error :" .. tostring(isScoreE) .. " +++ " .. tostring(self.context.nowDay))
 	end
 
-	arg_1_0:getFlow():addWork(Activity114StopStoryWork.New())
-	arg_1_0:startFlow()
+	self:getFlow():addWork(Activity114StopStoryWork.New())
+	self:startFlow()
 end
 
-return var_0_0
+return Activity114KeyDayCheckResultWork

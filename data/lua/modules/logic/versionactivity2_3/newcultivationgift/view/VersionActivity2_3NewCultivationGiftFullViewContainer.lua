@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftFullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/view/VersionActivity2_3NewCultivationGiftFullViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationGiftFullViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftFullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_3NewCultivationGiftFullViewContainer = class("VersionActivity2_3NewCultivationGiftFullViewContainer", CultivationDestinyViewBaseContainer)
 
-	table.insert(var_1_0, VersionActivity2_3NewCultivationGiftFullView.New())
+function VersionActivity2_3NewCultivationGiftFullViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_3NewCultivationGiftFullView.New())
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_3NewCultivationGiftFullViewContainer

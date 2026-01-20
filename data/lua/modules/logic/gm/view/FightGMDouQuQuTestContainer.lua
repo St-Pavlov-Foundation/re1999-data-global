@@ -1,13 +1,15 @@
-﻿module("modules.logic.gm.view.FightGMDouQuQuTestContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/FightGMDouQuQuTestContainer.lua
 
-local var_0_0 = class("FightGMDouQuQuTestContainer", BaseViewContainer)
+module("modules.logic.gm.view.FightGMDouQuQuTestContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FightGMDouQuQuTestContainer = class("FightGMDouQuQuTestContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FightGMDouQuQuTest.New())
+function FightGMDouQuQuTestContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FightGMDouQuQuTest.New())
+
+	return views
 end
 
-return var_0_0
+return FightGMDouQuQuTestContainer

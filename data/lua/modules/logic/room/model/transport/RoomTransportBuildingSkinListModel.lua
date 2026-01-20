@@ -1,73 +1,75 @@
-﻿module("modules.logic.room.model.transport.RoomTransportBuildingSkinListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/transport/RoomTransportBuildingSkinListModel.lua
 
-local var_0_0 = class("RoomTransportBuildingSkinListModel", ListScrollModel)
+module("modules.logic.room.model.transport.RoomTransportBuildingSkinListModel", package.seeall)
 
-function var_0_0.setBuildingUid(arg_1_0, arg_1_1)
-	local var_1_0 = RoomModel.instance:getBuildingInfoByBuildingUid(arg_1_1)
+local RoomTransportBuildingSkinListModel = class("RoomTransportBuildingSkinListModel", ListScrollModel)
 
-	if var_1_0 then
-		local var_1_1 = var_1_0.buildingId or var_1_0.defineId
+function RoomTransportBuildingSkinListModel:setBuildingUid(buildingUid)
+	local info = RoomModel.instance:getBuildingInfoByBuildingUid(buildingUid)
 
-		arg_1_0:setBuildingId(var_1_1)
+	if info then
+		local buildingId = info.buildingId or info.defineId
+
+		self:setBuildingId(buildingId)
 	else
-		arg_1_0:setList({})
+		self:setList({})
 	end
 end
 
-function var_0_0.setBuildingId(arg_2_0, arg_2_1)
-	local var_2_0 = {}
-	local var_2_1 = RoomConfig.instance:getBuildingConfig(arg_2_1)
-	local var_2_2 = RoomConfig.instance:getBuildingSkinList(arg_2_1)
+function RoomTransportBuildingSkinListModel:setBuildingId(buildingId)
+	local moList = {}
+	local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
+	local skinCfgList = RoomConfig.instance:getBuildingSkinList(buildingId)
 
-	if var_2_2 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-			local var_2_3 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_2_1.itemId)
-			local var_2_4 = true
+	if skinCfgList then
+		for i, skinCfg in ipairs(skinCfgList) do
+			local quantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, skinCfg.itemId)
+			local isLock = true
 
-			if var_2_3 > 0 then
-				var_2_4 = false
+			if quantity > 0 then
+				isLock = false
 			end
 
-			local var_2_5 = {
-				id = iter_2_1.id,
-				buildingId = arg_2_1,
-				config = iter_2_1,
-				buildingCfg = var_2_1,
-				isLock = var_2_4
+			local mo = {
+				id = skinCfg.id,
+				buildingId = buildingId,
+				config = skinCfg,
+				buildingCfg = buildingCfg,
+				isLock = isLock
 			}
 
-			table.insert(var_2_0, var_2_5)
+			table.insert(moList, mo)
 		end
 	end
 
-	local var_2_6 = {
+	local mo = {
 		isLock = false,
 		id = 0,
-		buildingId = arg_2_1,
-		buildingCfg = var_2_1
+		buildingId = buildingId,
+		buildingCfg = buildingCfg
 	}
 
-	table.insert(var_2_0, var_2_6)
-	table.sort(var_2_0, arg_2_0:_getSortFunc())
-	arg_2_0:setList(var_2_0)
+	table.insert(moList, mo)
+	table.sort(moList, self:_getSortFunc())
+	self:setList(moList)
 end
 
-function var_0_0._getSortFunc(arg_3_0)
-	if arg_3_0._sortFunc_ then
-		return arg_3_0._sortFunc_
+function RoomTransportBuildingSkinListModel:_getSortFunc()
+	if self._sortFunc_ then
+		return self._sortFunc_
 	end
 
-	function arg_3_0._sortFunc_(arg_4_0, arg_4_1)
-		if arg_4_0.isLock ~= arg_4_1.isLock then
-			if arg_4_1.isLock then
+	function self._sortFunc_(a, b)
+		if a.isLock ~= b.isLock then
+			if b.isLock then
 				return true
 			end
 
 			return false
 		end
 
-		if arg_4_0.id ~= arg_4_1.id then
-			if arg_4_0.id == 0 or arg_4_0.id > arg_4_1.id then
+		if a.id ~= b.id then
+			if a.id == 0 or a.id > b.id then
 				return true
 			end
 
@@ -75,35 +77,35 @@ function var_0_0._getSortFunc(arg_3_0)
 		end
 	end
 
-	return arg_3_0._sortFunc_
+	return self._sortFunc_
 end
 
-function var_0_0.getBuildingUid(arg_5_0)
-	return arg_5_0._buildingUid
+function RoomTransportBuildingSkinListModel:getBuildingUid()
+	return self._buildingUid
 end
 
-function var_0_0.getSelectMO(arg_6_0)
-	return arg_6_0:getById(arg_6_0._selectId)
+function RoomTransportBuildingSkinListModel:getSelectMO()
+	return self:getById(self._selectId)
 end
 
-function var_0_0.getSelect(arg_7_0)
-	return arg_7_0._selectId
+function RoomTransportBuildingSkinListModel:getSelect()
+	return self._selectId
 end
 
-function var_0_0._refreshSelect(arg_8_0)
-	local var_8_0 = arg_8_0:getById(arg_8_0._selectId)
+function RoomTransportBuildingSkinListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectId)
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._scrollViews) do
-		iter_8_1:setSelect(var_8_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_9_0, arg_9_1)
-	arg_9_0._selectId = arg_9_1
+function RoomTransportBuildingSkinListModel:setSelect(skinId)
+	self._selectId = skinId
 
-	arg_9_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTransportBuildingSkinListModel.instance = RoomTransportBuildingSkinListModel.New()
 
-return var_0_0
+return RoomTransportBuildingSkinListModel

@@ -1,209 +1,213 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyHeroGroupMo", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyHeroGroupMo.lua
 
-local var_0_0 = class("OdysseyHeroGroupMo", HeroGroupMO)
+module("modules.logic.sp01.odyssey.model.OdysseyHeroGroupMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.no
-	arg_1_0.groupId = arg_1_1.no
-	arg_1_0.name = tostring(arg_1_1.name)
+local OdysseyHeroGroupMo = class("OdysseyHeroGroupMo", HeroGroupMO)
 
-	if arg_1_1.clothId and arg_1_1.clothId == 0 then
-		local var_1_0 = lua_cloth.configList[1].id
+function OdysseyHeroGroupMo:init(info)
+	self.id = info.no
+	self.groupId = info.no
+	self.name = tostring(info.name)
 
-		if PlayerClothModel.instance:canUse(var_1_0) then
-			arg_1_1.clothId = var_1_0
+	if info.clothId and info.clothId == 0 then
+		local defaultSelectClothId = lua_cloth.configList[1].id
+
+		if PlayerClothModel.instance:canUse(defaultSelectClothId) then
+			info.clothId = defaultSelectClothId
 		end
 	end
 
-	arg_1_0.clothId = arg_1_1.clothId or 0
-	arg_1_0.heroList = {}
-	arg_1_0.assistBossId = nil
-	arg_1_0.odysseyEquips = {}
-	arg_1_0.isReplay = false
-	arg_1_0.odysseySuitDic = {}
-	arg_1_0._playerMax = OdysseyEnum.MaxHeroGroupCount
-	arg_1_0._roleNum = OdysseyEnum.MaxHeroGroupCount
-	arg_1_0.odysseyEquipDic = {}
-	arg_1_0.heroIdPosDic = {}
+	self.clothId = info.clothId or 0
+	self.heroList = {}
+	self.assistBossId = nil
+	self.odysseyEquips = {}
+	self.isReplay = false
+	self.odysseySuitDic = {}
+	self._playerMax = OdysseyEnum.MaxHeroGroupCount
+	self._roleNum = OdysseyEnum.MaxHeroGroupCount
+	self.odysseyEquipDic = {}
+	self.heroIdPosDic = {}
 
-	local var_1_1 = {}
-	local var_1_2
-	local var_1_3 = arg_1_1.heroes and #arg_1_1.heroes or 0
+	local tempTrialDict = {}
+	local realHeroId
+	local heroCount = info.heroes and #info.heroes or 0
 
-	for iter_1_0 = 1, var_1_3 do
-		local var_1_4 = arg_1_1.heroes[iter_1_0]
-		local var_1_5 = var_1_4.trialId
-		local var_1_6 = var_1_5 ~= nil and var_1_5 ~= 0
-		local var_1_7
+	for i = 1, heroCount do
+		local odysseyFormHero = info.heroes[i]
+		local trialId = odysseyFormHero.trialId
+		local haveTrialId = trialId ~= nil and trialId ~= 0
+		local trialCo
 
-		if var_1_6 then
-			var_1_7 = lua_hero_trial.configDict[var_1_5][0]
+		if haveTrialId then
+			trialCo = lua_hero_trial.configDict[trialId][0]
 
-			local var_1_8 = tostring(tonumber(var_1_5 .. "." .. "0") - 1099511627776)
+			local uid = tostring(tonumber(trialId .. "." .. "0") - 1099511627776)
 
-			table.insert(arg_1_0.heroList, tostring(var_1_8))
+			table.insert(self.heroList, tostring(uid))
 
-			var_1_1[var_1_4.position] = {
-				var_1_5,
+			tempTrialDict[odysseyFormHero.position] = {
+				trialId,
 				0
 			}
-			var_1_2 = -var_1_5
+			realHeroId = -trialId
 		else
-			if var_1_4.heroId ~= 0 then
-				local var_1_9 = HeroModel.instance:getByHeroId(var_1_4.heroId)
+			if odysseyFormHero.heroId ~= 0 then
+				local heroMo = HeroModel.instance:getByHeroId(odysseyFormHero.heroId)
 
-				table.insert(arg_1_0.heroList, tostring(var_1_9.uid))
+				table.insert(self.heroList, tostring(heroMo.uid))
 			else
-				table.insert(arg_1_0.heroList, tostring(var_1_4.heroId))
+				table.insert(self.heroList, tostring(odysseyFormHero.heroId))
 			end
 
-			var_1_2 = var_1_4.heroId
+			realHeroId = odysseyFormHero.heroId
 		end
 
-		arg_1_0.heroIdPosDic[var_1_4.position] = var_1_2
+		self.heroIdPosDic[odysseyFormHero.position] = realHeroId
 
-		if var_1_4.mindId ~= nil then
-			local var_1_10
+		if odysseyFormHero.mindId ~= nil then
+			local equipUid
 
-			if var_1_6 then
-				var_1_10 = -var_1_7.equipId or 0
+			if haveTrialId then
+				equipUid = -trialCo.equipId or 0
 			else
-				var_1_10 = var_1_4.mindId
+				equipUid = odysseyFormHero.mindId
 			end
 
-			local var_1_11 = {
-				index = iter_1_0 - 1,
+			local param = {
+				index = i - 1,
 				equipUid = {
-					tostring(var_1_10)
+					tostring(equipUid)
 				}
 			}
 
-			arg_1_0:updatePosEquips(var_1_11)
+			self:updatePosEquips(param)
 		end
 
-		arg_1_0:updateOdysseyEquips(var_1_4)
+		self:updateOdysseyEquips(odysseyFormHero)
 
-		for iter_1_1, iter_1_2 in ipairs(var_1_4.equips) do
-			if iter_1_2.equipUid ~= 0 then
-				arg_1_0.odysseyEquipDic[iter_1_2.equipUid] = {
-					heroId = var_1_2,
-					heroPos = var_1_4.position,
-					slotId = iter_1_2.slotId
+		for _, odysseyEquipInfo in ipairs(odysseyFormHero.equips) do
+			if odysseyEquipInfo.equipUid ~= 0 then
+				self.odysseyEquipDic[odysseyEquipInfo.equipUid] = {
+					heroId = realHeroId,
+					heroPos = odysseyFormHero.position,
+					slotId = odysseyEquipInfo.slotId
 				}
 			end
 		end
 	end
 
-	arg_1_0.haveSuit = false
+	self.haveSuit = false
 
-	for iter_1_3, iter_1_4 in ipairs(arg_1_1.suits) do
-		if iter_1_4 then
-			if arg_1_0.odysseySuitDic[iter_1_4.suitId] == nil then
-				arg_1_0.odysseySuitDic[iter_1_4.suitId] = iter_1_4
+	for _, suitInfo in ipairs(info.suits) do
+		if suitInfo then
+			if self.odysseySuitDic[suitInfo.suitId] == nil then
+				self.odysseySuitDic[suitInfo.suitId] = suitInfo
 			end
 
-			if iter_1_4.count > 0 then
-				arg_1_0.haveSuit = true
+			if suitInfo.count > 0 then
+				self.haveSuit = true
 			end
 		end
 	end
 
-	arg_1_0.trialDict = var_1_1
+	self.trialDict = tempTrialDict
 
-	for iter_1_5 = var_1_3 + 1, OdysseyEnum.MaxHeroGroupCount do
-		table.insert(arg_1_0.heroList, "0")
+	for i = heroCount + 1, OdysseyEnum.MaxHeroGroupCount do
+		table.insert(self.heroList, "0")
 	end
 end
 
-function var_0_0.updateOdysseyEquips(arg_2_0, arg_2_1)
-	local var_2_0 = OdysseyHeroGroupEquipMo.New()
+function OdysseyHeroGroupMo:updateOdysseyEquips(v)
+	local equipMo = OdysseyHeroGroupEquipMo.New()
 
-	var_2_0:init(arg_2_1)
-	arg_2_0:setOdysseyEquips(var_2_0)
+	equipMo:init(v)
+	self:setOdysseyEquips(equipMo)
 end
 
-function var_0_0.getOdysseyEquips(arg_3_0, arg_3_1)
-	return arg_3_0.odysseyEquips[arg_3_1]
+function OdysseyHeroGroupMo:getOdysseyEquips(pos)
+	return self.odysseyEquips[pos]
 end
 
-function var_0_0.setOdysseyEquips(arg_4_0, arg_4_1)
-	arg_4_0.odysseyEquips[arg_4_1.index] = arg_4_1
+function OdysseyHeroGroupMo:setOdysseyEquips(odysseyEquipMo)
+	self.odysseyEquips[odysseyEquipMo.index] = odysseyEquipMo
 end
 
-function var_0_0.swapOdysseyEquips(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getOdysseyEquips(arg_5_1)
-	local var_5_1 = arg_5_0:getOdysseyEquips(arg_5_2)
+function OdysseyHeroGroupMo:swapOdysseyEquips(posA, posB)
+	local odysseyEquipA = self:getOdysseyEquips(posA)
+	local odysseyEquipB = self:getOdysseyEquips(posB)
 
-	var_5_0.index = arg_5_2
-	var_5_1.index = arg_5_1
+	odysseyEquipA.index = posB
+	odysseyEquipB.index = posA
 
-	arg_5_0:setOdysseyEquips(var_5_0)
-	arg_5_0:setOdysseyEquips(var_5_1)
+	self:setOdysseyEquips(odysseyEquipA)
+	self:setOdysseyEquips(odysseyEquipB)
 end
 
-function var_0_0.swapOdysseyEquip(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = arg_6_0:getOdysseyEquips(arg_6_1)
-	local var_6_1 = arg_6_0:getOdysseyEquips(arg_6_2)
-	local var_6_2 = var_6_0.equipUid[arg_6_3] or 0
+function OdysseyHeroGroupMo:swapOdysseyEquip(posA, posB, indexA, indexB)
+	local odysseyEquipA = self:getOdysseyEquips(posA)
+	local odysseyEquipB = self:getOdysseyEquips(posB)
+	local tempUid = odysseyEquipA.equipUid[indexA] or 0
 
-	var_6_0.equipUid[arg_6_3] = var_6_1.equipUid[arg_6_4]
-	var_6_1.equipUid[arg_6_4] = var_6_2
+	odysseyEquipA.equipUid[indexA] = odysseyEquipB.equipUid[indexB]
+	odysseyEquipB.equipUid[indexB] = tempUid
 end
 
-function var_0_0.setOdysseyEquip(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0:checkOdysseyEquipIsUse(arg_7_3)
+function OdysseyHeroGroupMo:setOdysseyEquip(heroPos, equipIndex, equipUid)
+	self:checkOdysseyEquipIsUse(equipUid)
 
-	arg_7_0:getOdysseyEquips(arg_7_1 - 1).equipUid[arg_7_2] = arg_7_3
+	local equipInfoMo = self:getOdysseyEquips(heroPos - 1)
+
+	equipInfoMo.equipUid[equipIndex] = equipUid
 end
 
-function var_0_0.replaceOdysseyEquip(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0:setOdysseyEquip(arg_8_1, arg_8_2, arg_8_3)
+function OdysseyHeroGroupMo:replaceOdysseyEquip(heroPos, equipIndex, equipUid)
+	self:setOdysseyEquip(heroPos, equipIndex, equipUid)
 end
 
-function var_0_0.unloadOdysseyEquip(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0:setOdysseyEquip(arg_9_1, arg_9_2, 0)
+function OdysseyHeroGroupMo:unloadOdysseyEquip(heroPos, equipIndex)
+	self:setOdysseyEquip(heroPos, equipIndex, 0)
 end
 
-function var_0_0.checkOdysseyEquipIsUse(arg_10_0, arg_10_1)
-	if arg_10_1 ~= nil and arg_10_1 ~= 0 then
-		local var_10_0 = arg_10_0.odysseyEquipDic[arg_10_1]
+function OdysseyHeroGroupMo:checkOdysseyEquipIsUse(equipUid)
+	if equipUid ~= nil and equipUid ~= 0 then
+		local heroPosInfo = self.odysseyEquipDic[equipUid]
 
-		if var_10_0 then
-			arg_10_0:setOdysseyEquip(var_10_0.heroPos, var_10_0.slotId, 0)
+		if heroPosInfo then
+			self:setOdysseyEquip(heroPosInfo.heroPos, heroPosInfo.slotId, 0)
 		end
 	end
 end
 
-function var_0_0.isEquipUse(arg_11_0, arg_11_1)
-	return arg_11_0.odysseyEquipDic[arg_11_1] ~= nil
+function OdysseyHeroGroupMo:isEquipUse(equipUid)
+	return self.odysseyEquipDic[equipUid] ~= nil
 end
 
-function var_0_0.getEquipByUid(arg_12_0, arg_12_1)
-	return arg_12_0.odysseyEquipDic[arg_12_1]
+function OdysseyHeroGroupMo:getEquipByUid(equipUid)
+	return self.odysseyEquipDic[equipUid]
 end
 
-function var_0_0.getOdysseyEquipSuit(arg_13_0, arg_13_1)
-	return arg_13_0.odysseySuitDic[arg_13_1]
+function OdysseyHeroGroupMo:getOdysseyEquipSuit(id)
+	return self.odysseySuitDic[id]
 end
 
-function var_0_0.updatePosEquips(arg_14_0, arg_14_1)
-	for iter_14_0 = 0, OdysseyEnum.MaxHeroGroupCount do
-		local var_14_0 = arg_14_0.equips[iter_14_0]
+function OdysseyHeroGroupMo:updatePosEquips(v)
+	for i = 0, OdysseyEnum.MaxHeroGroupCount do
+		local equips = self.equips[i]
 
-		if var_14_0 and var_14_0.equipUid and #var_14_0.equipUid > 0 and arg_14_1.equipUid and #arg_14_1.equipUid > 0 then
-			for iter_14_1 = 1, 1 do
-				if var_14_0.equipUid[iter_14_1] == arg_14_1.equipUid[iter_14_1] then
-					var_14_0.equipUid[iter_14_1] = "0"
+		if equips and equips.equipUid and #equips.equipUid > 0 and v.equipUid and #v.equipUid > 0 then
+			for j = 1, 1 do
+				if equips.equipUid[j] == v.equipUid[j] then
+					equips.equipUid[j] = "0"
 				end
 			end
 		end
 	end
 
-	local var_14_1 = HeroGroupEquipMO.New()
+	local t = HeroGroupEquipMO.New()
 
-	var_14_1:init(arg_14_1)
+	t:init(v)
 
-	arg_14_0.equips[arg_14_1.index] = var_14_1
+	self.equips[v.index] = t
 end
 
-return var_0_0
+return OdysseyHeroGroupMo

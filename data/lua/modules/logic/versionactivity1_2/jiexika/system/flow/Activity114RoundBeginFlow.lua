@@ -1,21 +1,24 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114RoundBeginFlow", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/flow/Activity114RoundBeginFlow.lua
 
-local var_0_0 = class("Activity114RoundBeginFlow", FlowSequence)
+module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114RoundBeginFlow", package.seeall)
 
-function var_0_0.beginFlow(arg_1_0)
-	local var_1_0 = {
-		day = Activity114Model.instance.serverData.day,
-		round = Activity114Model.instance.serverData.round
-	}
-	local var_1_1 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, var_1_0.day, var_1_0.round)
+local Activity114RoundBeginFlow = class("Activity114RoundBeginFlow", FlowSequence)
 
-	if not var_1_1 then
-		logError("没有回合配置：" .. arg_1_0.context.day .. "#" .. arg_1_0.context.round)
+function Activity114RoundBeginFlow:beginFlow()
+	local context = {}
+
+	context.day = Activity114Model.instance.serverData.day
+	context.round = Activity114Model.instance.serverData.round
+
+	local roundCo = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, context.day, context.round)
+
+	if not roundCo then
+		logError("没有回合配置：" .. self.context.day .. "#" .. self.context.round)
 
 		return
 	end
 
-	if string.nilorempty(var_1_1.preStoryId) then
+	if string.nilorempty(roundCo.preStoryId) then
 		return
 	end
 
@@ -29,28 +32,28 @@ function var_0_0.beginFlow(arg_1_0)
 		return
 	end
 
-	local var_1_2 = string.splitToNumber(var_1_1.preStoryId, "#")
+	local info = string.splitToNumber(roundCo.preStoryId, "#")
 
-	if #var_1_2 == 1 then
-		var_1_2[2] = var_1_2[1]
-		var_1_2[1] = Activity114Enum.PlayStartRoundType.Story
+	if #info == 1 then
+		info[2] = info[1]
+		info[1] = Activity114Enum.PlayStartRoundType.Story
 	end
 
-	if var_1_2[1] == Activity114Enum.PlayStartRoundType.Story then
-		arg_1_0:addWork(Activity114StoryWork.New(var_1_2[2], Activity114Enum.StoryType.RoundStart))
-	elseif var_1_2[1] == Activity114Enum.PlayStartRoundType.Guide then
-		arg_1_0:addWork(Activity114GuideWork.New(var_1_2[2]))
+	if info[1] == Activity114Enum.PlayStartRoundType.Story then
+		self:addWork(Activity114StoryWork.New(info[2], Activity114Enum.StoryType.RoundStart))
+	elseif info[1] == Activity114Enum.PlayStartRoundType.Guide then
+		self:addWork(Activity114GuideWork.New(info[2]))
 	else
-		logError("回合开始配置错误" .. var_1_1.preStoryId)
+		logError("回合开始配置错误" .. roundCo.preStoryId)
 
 		return
 	end
 
-	arg_1_0:addWork(Activity114SendRoundBeginReqWork.New())
-	arg_1_0:addWork(Activity114ChangeEventWork.New())
-	arg_1_0:start(var_1_0)
+	self:addWork(Activity114SendRoundBeginReqWork.New())
+	self:addWork(Activity114ChangeEventWork.New())
+	self:start(context)
 
 	return true
 end
 
-return var_0_0
+return Activity114RoundBeginFlow

@@ -1,60 +1,62 @@
-﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepPickUpItem", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/step/ActivityChessStepPickUpItem.lua
 
-local var_0_0 = class("ActivityChessStepPickUpItem", ActivityChessStepBase)
+module("modules.logic.activity.controller.chessmap.step.ActivityChessStepPickUpItem", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.id
-	local var_1_1 = ActivityChessGameController.instance.interacts
+local ActivityChessStepPickUpItem = class("ActivityChessStepPickUpItem", ActivityChessStepBase)
 
-	if var_1_1 then
-		local var_1_2 = var_1_1:get(var_1_0)
+function ActivityChessStepPickUpItem:start()
+	local objId = self.originData.id
+	local interactMgr = ActivityChessGameController.instance.interacts
 
-		if var_1_2 then
-			local var_1_3 = var_1_2:tryGetGameObject()
+	if interactMgr then
+		local interactObj = interactMgr:get(objId)
 
-			if not gohelper.isNil(var_1_3) then
-				local var_1_4 = gohelper.findChild(var_1_3, "vx_daoju")
+		if interactObj then
+			local go = interactObj:tryGetGameObject()
 
-				gohelper.setActive(var_1_4, true)
+			if not gohelper.isNil(go) then
+				local goVfx = gohelper.findChild(go, "vx_daoju")
+
+				gohelper.setActive(goVfx, true)
 			end
 		end
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PickUpBottle)
-	TaskDispatcher.runDelay(arg_1_0.delayCallPick, arg_1_0, 1)
+	TaskDispatcher.runDelay(self.delayCallPick, self, 1)
 end
 
-function var_0_0.delayCallPick(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0.delayCallPick, arg_2_0)
+function ActivityChessStepPickUpItem:delayCallPick()
+	TaskDispatcher.cancelTask(self.delayCallPick, self)
 
-	local var_2_0 = ActivityChessGameModel.instance:getActId()
-	local var_2_1 = arg_2_0.originData.id
+	local actId = ActivityChessGameModel.instance:getActId()
+	local objId = self.originData.id
 
-	if var_2_0 then
-		local var_2_2 = Activity109Config.instance:getInteractObjectCo(var_2_0, var_2_1)
+	if actId then
+		local interactCo = Activity109Config.instance:getInteractObjectCo(actId, objId)
 
-		if var_2_2 then
-			ActivityChessGameController.instance:registerCallback(ActivityChessEvent.RewardIsClose, arg_2_0.finish, arg_2_0)
+		if interactCo then
+			ActivityChessGameController.instance:registerCallback(ActivityChessEvent.RewardIsClose, self.finish, self)
 			ViewMgr.instance:openView(ViewName.ActivityChessGameRewardView, {
-				config = var_2_2
+				config = interactCo
 			})
 
 			return
 		end
 	end
 
-	arg_2_0:finish()
+	self:finish()
 end
 
-function var_0_0.finish(arg_3_0)
-	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.RewardIsClose, arg_3_0.finish, arg_3_0)
-	var_0_0.super.finish(arg_3_0)
+function ActivityChessStepPickUpItem:finish()
+	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.RewardIsClose, self.finish, self)
+	ActivityChessStepPickUpItem.super.finish(self)
 end
 
-function var_0_0.dispose(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.delayCallPick, arg_4_0)
-	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.RewardIsClose, arg_4_0.finish, arg_4_0)
-	var_0_0.super.dispose(arg_4_0)
+function ActivityChessStepPickUpItem:dispose()
+	TaskDispatcher.cancelTask(self.delayCallPick, self)
+	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.RewardIsClose, self.finish, self)
+	ActivityChessStepPickUpItem.super.dispose(self)
 end
 
-return var_0_0
+return ActivityChessStepPickUpItem

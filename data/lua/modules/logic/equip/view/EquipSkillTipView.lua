@@ -1,176 +1,178 @@
-﻿module("modules.logic.equip.view.EquipSkillTipView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipSkillTipView.lua
 
-local var_0_0 = class("EquipSkillTipView", BaseView)
+module("modules.logic.equip.view.EquipSkillTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "#go_skill")
-	arg_1_0._btnclosedetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_skill/#btn_closedetail")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_skill/Scroll View/Viewport/#go_content")
-	arg_1_0._txtattributelv = gohelper.findChildText(arg_1_0.viewGO, "#go_skill/Scroll View/Viewport/#go_content/attributename/#txt_attributelv")
-	arg_1_0._txtmeshcurlevel = gohelper.findChildText(arg_1_0.viewGO, "#go_skill/Scroll View/Viewport/#go_content/#go_suiteffect/#txt_meshcurlevel")
-	arg_1_0._txtmeshalllevel = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_skill/Scroll View/Viewport/#go_content/allleveldesc/#txtmesh_alllevel")
-	arg_1_0._gocharacter = gohelper.findChild(arg_1_0.viewGO, "#go_character")
-	arg_1_0._scrollcharacter = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_character/#scroll_character")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_character/#txt_title")
+local EquipSkillTipView = class("EquipSkillTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipSkillTipView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goskill = gohelper.findChild(self.viewGO, "#go_skill")
+	self._btnclosedetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_skill/#btn_closedetail")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_skill/Scroll View/Viewport/#go_content")
+	self._txtattributelv = gohelper.findChildText(self.viewGO, "#go_skill/Scroll View/Viewport/#go_content/attributename/#txt_attributelv")
+	self._txtmeshcurlevel = gohelper.findChildText(self.viewGO, "#go_skill/Scroll View/Viewport/#go_content/#go_suiteffect/#txt_meshcurlevel")
+	self._txtmeshalllevel = gohelper.findChildTextMesh(self.viewGO, "#go_skill/Scroll View/Viewport/#go_content/allleveldesc/#txtmesh_alllevel")
+	self._gocharacter = gohelper.findChild(self.viewGO, "#go_character")
+	self._scrollcharacter = gohelper.findChildScrollRect(self.viewGO, "#go_character/#scroll_character")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_character/#txt_title")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnclosedetail:AddClickListener(arg_2_0._btnclosedetailOnClick, arg_2_0)
+function EquipSkillTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnclosedetail:AddClickListener(self._btnclosedetailOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnclosedetail:RemoveClickListener()
+function EquipSkillTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnclosedetail:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function EquipSkillTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnclosedetailOnClick(arg_5_0)
-	arg_5_0:hideCharacter()
+function EquipSkillTipView:_btnclosedetailOnClick()
+	self:hideCharacter()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._hyperLinkClick = gohelper.onceAddComponent(arg_6_0._txtmeshalllevel.gameObject, typeof(ZProj.TMPHyperLinkClick))
+function EquipSkillTipView:_editableInitView()
+	self._hyperLinkClick = gohelper.onceAddComponent(self._txtmeshalllevel.gameObject, typeof(ZProj.TMPHyperLinkClick))
 
-	arg_6_0._hyperLinkClick:SetClickListener(arg_6_0._onHyperLinkClick, arg_6_0)
+	self._hyperLinkClick:SetClickListener(self._onHyperLinkClick, self)
 
-	arg_6_0._hyperLinkClick2 = gohelper.onceAddComponent(arg_6_0._txtmeshcurlevel.gameObject, typeof(ZProj.TMPHyperLinkClick))
+	self._hyperLinkClick2 = gohelper.onceAddComponent(self._txtmeshcurlevel.gameObject, typeof(ZProj.TMPHyperLinkClick))
 
-	arg_6_0._hyperLinkClick2:SetClickListener(arg_6_0._onHyperLinkClick, arg_6_0)
+	self._hyperLinkClick2:SetClickListener(self._onHyperLinkClick, self)
 end
 
-function var_0_0._onHyperLinkClick(arg_7_0)
-	arg_7_0:showCharacter()
+function EquipSkillTipView:_onHyperLinkClick()
+	self:showCharacter()
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function EquipSkillTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._equipMO = arg_9_0.viewParam[1]
-	arg_9_0._equipId = arg_9_0._equipMO and arg_9_0._equipMO.config.id or arg_9_0.viewParam[2]
-	arg_9_0._showCharacter = arg_9_0.viewParam[3]
-	arg_9_0._characterScreenPos = arg_9_0.viewParam[4]
-	arg_9_0._config = arg_9_0._equipMO and arg_9_0._equipMO.config or EquipConfig.instance:getEquipCo(arg_9_0._equipId)
-	arg_9_0._breakLv = arg_9_0._equipMO and arg_9_0._equipMO.breakLv or EquipConfig.instance:getMaxBreakLevel()
-	arg_9_0._level = arg_9_0._equipMO and arg_9_0._equipMO.level or EquipConfig.instance:getMaxLevel(arg_9_0._breakLv)
-	arg_9_0._refineLv = arg_9_0._equipMO and arg_9_0._equipMO.refineLv or 1
-	arg_9_0._equipSkillCo = EquipConfig.instance:getEquipSkillCfg(arg_9_0._config.skillType, arg_9_0._refineLv)
+function EquipSkillTipView:onOpen()
+	self._equipMO = self.viewParam[1]
+	self._equipId = self._equipMO and self._equipMO.config.id or self.viewParam[2]
+	self._showCharacter = self.viewParam[3]
+	self._characterScreenPos = self.viewParam[4]
+	self._config = self._equipMO and self._equipMO.config or EquipConfig.instance:getEquipCo(self._equipId)
+	self._breakLv = self._equipMO and self._equipMO.breakLv or EquipConfig.instance:getMaxBreakLevel()
+	self._level = self._equipMO and self._equipMO.level or EquipConfig.instance:getMaxLevel(self._breakLv)
+	self._refineLv = self._equipMO and self._equipMO.refineLv or 1
+	self._equipSkillCo = EquipConfig.instance:getEquipSkillCfg(self._config.skillType, self._refineLv)
 
-	gohelper.setActive(arg_9_0._gocharacter, false)
-	gohelper.setActive(arg_9_0._goskill, false)
-	gohelper.setActive(arg_9_0._btnclosedetail.gameObject, false)
+	gohelper.setActive(self._gocharacter, false)
+	gohelper.setActive(self._goskill, false)
+	gohelper.setActive(self._btnclosedetail.gameObject, false)
 
-	if arg_9_0._showCharacter then
-		arg_9_0:showCharacter()
+	if self._showCharacter then
+		self:showCharacter()
 	else
-		arg_9_0:showSkill()
+		self:showSkill()
 	end
 
-	NavigateMgr.instance:addEscape(ViewName.EquipSkillTipView, arg_9_0._btncloseOnClick, arg_9_0)
+	NavigateMgr.instance:addEscape(ViewName.EquipSkillTipView, self._btncloseOnClick, self)
 end
 
-function var_0_0.showCharacter(arg_10_0)
-	gohelper.setActive(arg_10_0._gocharacter, true)
+function EquipSkillTipView:showCharacter()
+	gohelper.setActive(self._gocharacter, true)
 
-	arg_10_0._txttitle.text = string.format(luaLang("equip_suitable_characters"), arg_10_0._config.feature)
+	self._txttitle.text = string.format(luaLang("equip_suitable_characters"), self._config.feature)
 
-	if not string.nilorempty(arg_10_0._config.cardGroup) then
-		local var_10_0 = string.split(arg_10_0._config.cardGroup, "|")
-		local var_10_1 = {}
+	if not string.nilorempty(self._config.cardGroup) then
+		local specials = string.split(self._config.cardGroup, "|")
+		local t = {}
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-			table.insert(var_10_1, {
-				id = tonumber(iter_10_1)
+		for i, v in ipairs(specials) do
+			table.insert(t, {
+				id = tonumber(v)
 			})
 		end
 
-		EquipSkillCharacterListModel.instance:setList(var_10_1)
+		EquipSkillCharacterListModel.instance:setList(t)
 	end
 
-	if arg_10_0._characterScreenPos then
-		local var_10_2 = recthelper.screenPosToAnchorPos(arg_10_0._characterScreenPos, arg_10_0.viewGO.transform)
+	if self._characterScreenPos then
+		local localPos = recthelper.screenPosToAnchorPos(self._characterScreenPos, self.viewGO.transform)
 
-		recthelper.setAnchor(arg_10_0._gocharacter.transform, var_10_2.x, var_10_2.y)
+		recthelper.setAnchor(self._gocharacter.transform, localPos.x, localPos.y)
 	end
 
-	gohelper.setActive(arg_10_0._btnclosedetail.gameObject, true)
+	gohelper.setActive(self._btnclosedetail.gameObject, true)
 end
 
-function var_0_0.hideCharacter(arg_11_0)
-	gohelper.setActive(arg_11_0._gocharacter, false)
-	gohelper.setActive(arg_11_0._btnclosedetail.gameObject, false)
+function EquipSkillTipView:hideCharacter()
+	gohelper.setActive(self._gocharacter, false)
+	gohelper.setActive(self._btnclosedetail.gameObject, false)
 end
 
-function var_0_0.showSkill(arg_12_0)
-	gohelper.setActive(arg_12_0._goskill, true)
-	arg_12_0:showCurLevel()
-	arg_12_0:showAllLevel()
+function EquipSkillTipView:showSkill()
+	gohelper.setActive(self._goskill, true)
+	self:showCurLevel()
+	self:showAllLevel()
 end
 
-function var_0_0.showCurLevel(arg_13_0)
-	local var_13_0 = EquipConfig.instance:getEquipSkillCfg(arg_13_0._config.skillType, arg_13_0._refineLv)
-	local var_13_1 = string.format("%s", HeroSkillModel.instance:spotSkillAttribute(var_13_0.baseDesc))
+function EquipSkillTipView:showCurLevel()
+	local equipSkillCo = EquipConfig.instance:getEquipSkillCfg(self._config.skillType, self._refineLv)
+	local strDesc = string.format("%s", HeroSkillModel.instance:spotSkillAttribute(equipSkillCo.baseDesc))
 
-	arg_13_0._txtattributelv.text = var_13_0.skillLv + 1
-	arg_13_0._txtmeshcurlevel.text = var_13_1
+	self._txtattributelv.text = equipSkillCo.skillLv + 1
+	self._txtmeshcurlevel.text = strDesc
 end
 
-function var_0_0.showAllLevel(arg_14_0)
-	local var_14_0 = arg_14_0._config.skillType
+function EquipSkillTipView:showAllLevel()
+	local skillType = self._config.skillType
 
-	if var_14_0 <= 0 then
+	if skillType <= 0 then
 		return
 	end
 
-	local var_14_1 = arg_14_0._txtmeshalllevel.preferredHeight
-	local var_14_2 = ""
+	local oldHeight = self._txtmeshalllevel.preferredHeight
+	local str = ""
 
-	arg_14_0._curSkillCfg = EquipConfig.instance:getEquipSkillCfg(var_14_0, arg_14_0._refineLv)
+	self._curSkillCfg = EquipConfig.instance:getEquipSkillCfg(skillType, self._refineLv)
 
-	for iter_14_0, iter_14_1 in pairs(lua_equip_skill.configDict[var_14_0]) do
-		if iter_14_0 > 0 then
-			local var_14_3 = string.format("Lv.%s:%s", iter_14_0 + 1, HeroSkillModel.instance:spotSkillAttribute(iter_14_1.upDesc))
+	for i, v in pairs(lua_equip_skill.configDict[skillType]) do
+		if i > 0 then
+			local line = string.format("Lv.%s:%s", i + 1, HeroSkillModel.instance:spotSkillAttribute(v.upDesc))
 
-			if not LuaUtil.isEmptyStr(iter_14_1.spUpDesc) then
-				var_14_3 = string.format("%s\n<#4b93d6><u><link='%s'>[%s]</link></u></color>:%s", var_14_3, iter_14_0, arg_14_0._config.feature, HeroSkillModel.instance:spotSkillAttribute(iter_14_1.spUpDesc))
+			if not LuaUtil.isEmptyStr(v.spUpDesc) then
+				line = string.format("%s\n<#4b93d6><u><link='%s'>[%s]</link></u></color>:%s", line, i, self._config.feature, HeroSkillModel.instance:spotSkillAttribute(v.spUpDesc))
 			end
 
-			if iter_14_1 == arg_14_0._curSkillCfg then
-				var_14_3 = string.format("<#805e00>%s</color>", var_14_3)
+			if v == self._curSkillCfg then
+				line = string.format("<#805e00>%s</color>", line)
 			end
 
-			if var_14_2 == "" then
-				var_14_2 = var_14_3
+			if str == "" then
+				str = line
 			else
-				var_14_2 = string.format("%s\n%s", var_14_2, var_14_3)
+				str = string.format("%s\n%s", str, line)
 			end
 		end
 	end
 
-	arg_14_0._txtmeshalllevel.text = var_14_2
+	self._txtmeshalllevel.text = str
 
-	local var_14_4 = arg_14_0._txtmeshalllevel.preferredHeight - var_14_1
-	local var_14_5 = recthelper.getHeight(arg_14_0._gocontent.transform)
+	local deltaHeight = self._txtmeshalllevel.preferredHeight - oldHeight
+	local h = recthelper.getHeight(self._gocontent.transform)
 
-	recthelper.setHeight(arg_14_0._gocontent.transform, var_14_5 + var_14_4)
+	recthelper.setHeight(self._gocontent.transform, h + deltaHeight)
 end
 
-function var_0_0.onClose(arg_15_0)
+function EquipSkillTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function EquipSkillTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return EquipSkillTipView

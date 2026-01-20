@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/survival/lua_survival_map_41004.lua
+
+return {
 	{
 		{
 			12,

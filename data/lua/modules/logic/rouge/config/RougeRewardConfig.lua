@@ -1,72 +1,74 @@
-﻿module("modules.logic.rouge.config.RougeRewardConfig", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/config/RougeRewardConfig.lua
 
-local var_0_0 = class("RougeRewardConfig", BaseConfig)
+module("modules.logic.rouge.config.RougeRewardConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local RougeRewardConfig = class("RougeRewardConfig", BaseConfig)
+
+function RougeRewardConfig:reqConfigNames()
 	return {
 		"rouge_reward",
 		"rouge_reward_stage"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._rewardDict = {}
-	arg_2_0._rewardList = {}
-	arg_2_0._stageRewardDict = nil
-	arg_2_0._bigRewardToStage = {}
-	arg_2_0._stageToLayout = {}
+function RougeRewardConfig:onInit()
+	self._rewardDict = {}
+	self._rewardList = {}
+	self._stageRewardDict = nil
+	self._bigRewardToStage = {}
+	self._stageToLayout = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "rouge_reward_stage" then
-		arg_3_0._stageRewardDict = arg_3_2.configDict
+function RougeRewardConfig:onConfigLoaded(configName, configTable)
+	if configName == "rouge_reward_stage" then
+		self._stageRewardDict = configTable.configDict
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
-			if iter_3_1.bigRewardId then
-				if arg_3_0._bigRewardToStage[iter_3_1.bigRewardId] == nil then
-					arg_3_0._bigRewardToStage[iter_3_1.bigRewardId] = {}
+		for key, value in ipairs(configTable.configList) do
+			if value.bigRewardId then
+				if self._bigRewardToStage[value.bigRewardId] == nil then
+					self._bigRewardToStage[value.bigRewardId] = {}
 				end
 
-				table.insert(arg_3_0._bigRewardToStage[iter_3_1.bigRewardId], iter_3_1)
+				table.insert(self._bigRewardToStage[value.bigRewardId], value)
 			end
 		end
 	end
 
-	if arg_3_1 == "rouge_reward" then
-		for iter_3_2, iter_3_3 in ipairs(arg_3_2.configList) do
-			if iter_3_3.stage then
-				if arg_3_0._rewardDict[iter_3_3.stage] == nil then
-					arg_3_0._rewardDict[iter_3_3.stage] = {}
+	if configName == "rouge_reward" then
+		for key, value in ipairs(configTable.configList) do
+			if value.stage then
+				if self._rewardDict[value.stage] == nil then
+					self._rewardDict[value.stage] = {}
 				end
 
-				table.insert(arg_3_0._rewardDict[iter_3_3.stage], iter_3_3)
+				table.insert(self._rewardDict[value.stage], value)
 			end
 		end
 
-		arg_3_0._rewardList = arg_3_2.configDict
+		self._rewardList = configTable.configDict
 	end
 
-	arg_3_0:_buildRewardByLayout()
+	self:_buildRewardByLayout()
 end
 
-function var_0_0._buildRewardByLayout(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._rewardDict) do
-		if #iter_4_1 ~= 0 then
-			if arg_4_0._stageToLayout[iter_4_0] == nil then
-				arg_4_0._stageToLayout[iter_4_0] = {}
+function RougeRewardConfig:_buildRewardByLayout()
+	for stage, dict in ipairs(self._rewardDict) do
+		if #dict ~= 0 then
+			if self._stageToLayout[stage] == nil then
+				self._stageToLayout[stage] = {}
 			end
 
-			for iter_4_2, iter_4_3 in ipairs(iter_4_1) do
-				if iter_4_3.pos and iter_4_3.pos ~= "" then
-					local var_4_0 = string.split(iter_4_3.pos, "#")
-					local var_4_1 = tonumber(var_4_0[1])
+			for index, co in ipairs(dict) do
+				if co.pos and co.pos ~= "" then
+					local temp = string.split(co.pos, "#")
+					local y = tonumber(temp[1])
 
-					if arg_4_0._stageToLayout[iter_4_0][var_4_1] == nil then
-						arg_4_0._stageToLayout[iter_4_0][var_4_1] = {}
+					if self._stageToLayout[stage][y] == nil then
+						self._stageToLayout[stage][y] = {}
 					end
 
-					if not tabletool.indexOf(arg_4_0._stageToLayout[iter_4_0][var_4_1], iter_4_3) then
-						table.insert(arg_4_0._stageToLayout[iter_4_0][var_4_1], iter_4_3)
+					if not tabletool.indexOf(self._stageToLayout[stage][y], co) then
+						table.insert(self._stageToLayout[stage][y], co)
 					end
 				end
 			end
@@ -74,105 +76,107 @@ function var_0_0._buildRewardByLayout(arg_4_0)
 	end
 end
 
-function var_0_0.getStageToLayourConfig(arg_5_0, arg_5_1, arg_5_2)
-	return arg_5_0._stageToLayout[arg_5_1][arg_5_2]
+function RougeRewardConfig:getStageToLayourConfig(stage, layout)
+	return self._stageToLayout[stage][layout]
 end
 
-function var_0_0.getRewardDict(arg_6_0)
-	return arg_6_0._rewardDict
+function RougeRewardConfig:getRewardDict()
+	return self._rewardDict
 end
 
-function var_0_0.getConfigById(arg_7_0, arg_7_1, arg_7_2)
-	return arg_7_0._rewardList[arg_7_1][arg_7_2]
+function RougeRewardConfig:getConfigById(season, id)
+	return self._rewardList[season][id]
 end
 
-function var_0_0.getRewardStageDictNum(arg_8_0, arg_8_1)
-	return #arg_8_0._rewardDict[arg_8_1]
+function RougeRewardConfig:getRewardStageDictNum(stage)
+	return #self._rewardDict[stage]
 end
 
-function var_0_0.getConfigByStage(arg_9_0, arg_9_1)
-	if arg_9_0._rewardDict and arg_9_0._rewardDict[arg_9_1] then
-		return arg_9_0._rewardDict[arg_9_1]
+function RougeRewardConfig:getConfigByStage(stage)
+	if self._rewardDict and self._rewardDict[stage] then
+		return self._rewardDict[stage]
 	end
 end
 
-function var_0_0.getConfigByStageAndId(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._rewardDict and arg_10_0._rewardDict[arg_10_1] then
-		return arg_10_0._rewardDict[arg_10_1][arg_10_2]
+function RougeRewardConfig:getConfigByStageAndId(stage, id)
+	if self._rewardDict and self._rewardDict[stage] then
+		return self._rewardDict[stage][id]
 	end
 end
 
-function var_0_0.getBigRewardConfigByStage(arg_11_0, arg_11_1)
-	if arg_11_0._rewardDict and arg_11_0._rewardDict[arg_11_1] then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0._rewardDict[arg_11_1]) do
-			if iter_11_1 and iter_11_1.type == 1 then
-				return iter_11_1
+function RougeRewardConfig:getBigRewardConfigByStage(stage)
+	if self._rewardDict and self._rewardDict[stage] then
+		for index, co in ipairs(self._rewardDict[stage]) do
+			if co and co.type == 1 then
+				return co
 			end
 		end
 	end
 end
 
-function var_0_0.getStageCount(arg_12_0)
-	return #arg_12_0._rewardDict
+function RougeRewardConfig:getStageCount()
+	return #self._rewardDict
 end
 
-function var_0_0.getStageLayoutCount(arg_13_0, arg_13_1)
-	return #arg_13_0._stageToLayout[arg_13_1]
+function RougeRewardConfig:getStageLayoutCount(stage)
+	return #self._stageToLayout[stage]
 end
 
-function var_0_0.getPointLimitByStage(arg_14_0, arg_14_1, arg_14_2)
-	return arg_14_0:getStageRewardConfigById(arg_14_1, arg_14_2).pointLimit
+function RougeRewardConfig:getPointLimitByStage(season, stage)
+	local config = self:getStageRewardConfigById(season, stage)
+
+	return config.pointLimit
 end
 
-function var_0_0.getNeedUnlockNum(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getConfigByStage(arg_15_1)
-	local var_15_1 = 0
+function RougeRewardConfig:getNeedUnlockNum(stage)
+	local dict = self:getConfigByStage(stage)
+	local num = 0
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			if iter_15_1.type and iter_15_1.type == 2 then
-				var_15_1 = var_15_1 + 1
+	if dict then
+		for index, value in ipairs(dict) do
+			if value.type and value.type == 2 then
+				num = num + 1
 			end
 		end
 	end
 
-	return var_15_1
+	return num
 end
 
-function var_0_0.getCurStageBigRewardConfig(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getConfigByStage(arg_16_1)
+function RougeRewardConfig:getCurStageBigRewardConfig(stage)
+	local coList = self:getConfigByStage(stage)
 
-	if not var_16_0 then
+	if not coList then
 		return
 	end
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if iter_16_1 and iter_16_1.type == 1 then
-			return iter_16_1
+	for _, co in ipairs(coList) do
+		if co and co.type == 1 then
+			return co
 		end
 	end
 end
 
-function var_0_0.getStageRewardCount(arg_17_0, arg_17_1)
-	return #arg_17_0._stageRewardDict[arg_17_1]
+function RougeRewardConfig:getStageRewardCount(season)
+	return #self._stageRewardDict[season]
 end
 
-function var_0_0.getStageRewardConfig(arg_18_0, arg_18_1)
-	return arg_18_0._stageRewardDict[arg_18_1]
+function RougeRewardConfig:getStageRewardConfig(season)
+	return self._stageRewardDict[season]
 end
 
-function var_0_0.getStageRewardConfigById(arg_19_0, arg_19_1, arg_19_2)
-	return arg_19_0._stageRewardDict[arg_19_1][arg_19_2]
+function RougeRewardConfig:getStageRewardConfigById(season, id)
+	return self._stageRewardDict[season][id]
 end
 
-function var_0_0.getBigRewardToStageConfigById(arg_20_0, arg_20_1)
-	return arg_20_0._bigRewardToStage[arg_20_1]
+function RougeRewardConfig:getBigRewardToStageConfigById(bigRewardId)
+	return self._bigRewardToStage[bigRewardId]
 end
 
-function var_0_0.getBigRewardToStage(arg_21_0)
-	return arg_21_0._bigRewardToStage
+function RougeRewardConfig:getBigRewardToStage()
+	return self._bigRewardToStage
 end
 
-var_0_0.instance = var_0_0.New()
+RougeRewardConfig.instance = RougeRewardConfig.New()
 
-return var_0_0
+return RougeRewardConfig

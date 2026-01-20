@@ -1,33 +1,37 @@
-﻿module("modules.logic.room.view.debug.RoomDebugThemeFilterView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugThemeFilterView.lua
 
-local var_0_0 = class("RoomDebugThemeFilterView", BaseView)
+module("modules.logic.room.view.debug.RoomDebugThemeFilterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._gobuildingArrow = gohelper.findChild(arg_1_0.viewGO, "#go_content/bg/#go_buildingArrow")
-	arg_1_0._goblockpackageArrow = gohelper.findChild(arg_1_0.viewGO, "#go_content/bg/#go_blockpackageArrow")
-	arg_1_0._goall = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all/#go_selected")
-	arg_1_0._gounselected = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_all/#go_unselected")
-	arg_1_0._btnall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#go_all/#btn_all")
-	arg_1_0._scrolltheme = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/#scroll_theme")
-	arg_1_0._gothemeitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_themeitem")
+local RoomDebugThemeFilterView = class("RoomDebugThemeFilterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomDebugThemeFilterView:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._gobuildingArrow = gohelper.findChild(self.viewGO, "#go_content/bg/#go_buildingArrow")
+	self._goblockpackageArrow = gohelper.findChild(self.viewGO, "#go_content/bg/#go_blockpackageArrow")
+	self._goall = gohelper.findChild(self.viewGO, "#go_content/#go_all")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_content/#go_all/#go_selected")
+	self._gounselected = gohelper.findChild(self.viewGO, "#go_content/#go_all/#go_unselected")
+	self._btnall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#go_all/#btn_all")
+	self._scrolltheme = gohelper.findChildScrollRect(self.viewGO, "#go_content/#scroll_theme")
+	self._gothemeitem = gohelper.findChild(self.viewGO, "#go_content/#go_themeitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnall:AddClickListener(arg_2_0._btnallOnClick, arg_2_0)
+function RoomDebugThemeFilterView:addEvents()
+	self._btnall:AddClickListener(self._btnallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnall:RemoveClickListener()
+function RoomDebugThemeFilterView:removeEvents()
+	self._btnall:RemoveClickListener()
 end
 
-function var_0_0._btnallOnClick(arg_4_0)
-	if RoomDebugThemeFilterListModel.instance:getIsAll() then
+function RoomDebugThemeFilterView:_btnallOnClick()
+	local isSelect = RoomDebugThemeFilterListModel.instance:getIsAll()
+
+	if isSelect then
 		RoomDebugThemeFilterListModel.instance:clearFilterData()
 	else
 		RoomDebugThemeFilterListModel.instance:selectAll()
@@ -37,40 +41,40 @@ function var_0_0._btnallOnClick(arg_4_0)
 	RoomDebugController.instance:dispatchEvent(RoomEvent.UIRoomThemeFilterChanged)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RoomDebugThemeFilterView:_editableInitView()
 	return
 end
 
-function var_0_0._onThemeFilterChanged(arg_6_0)
-	arg_6_0:_refreshUI()
+function RoomDebugThemeFilterView:_onThemeFilterChanged()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	local var_7_0 = RoomDebugThemeFilterListModel.instance:getIsAll()
+function RoomDebugThemeFilterView:_refreshUI()
+	local isSelect = RoomDebugThemeFilterListModel.instance:getIsAll()
 
-	if arg_7_0._lastSelect ~= var_7_0 then
-		arg_7_0._lastSelect = var_7_0
+	if self._lastSelect ~= isSelect then
+		self._lastSelect = isSelect
 
-		gohelper.setActive(arg_7_0._goselected, var_7_0)
-		gohelper.setActive(arg_7_0._gounselected, not var_7_0)
+		gohelper.setActive(self._goselected, isSelect)
+		gohelper.setActive(self._gounselected, not isSelect)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function RoomDebugThemeFilterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(RoomDebugController.instance, RoomEvent.UIRoomThemeFilterChanged, arg_9_0._onThemeFilterChanged, arg_9_0)
-	arg_9_0:_refreshUI()
+function RoomDebugThemeFilterView:onOpen()
+	self:addEventCb(RoomDebugController.instance, RoomEvent.UIRoomThemeFilterChanged, self._onThemeFilterChanged, self)
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_10_0)
+function RoomDebugThemeFilterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RoomDebugThemeFilterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomDebugThemeFilterView

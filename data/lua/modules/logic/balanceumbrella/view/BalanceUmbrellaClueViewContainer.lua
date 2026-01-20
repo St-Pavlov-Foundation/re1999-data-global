@@ -1,11 +1,13 @@
-﻿module("modules.logic.balanceumbrella.view.BalanceUmbrellaClueViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/balanceumbrella/view/BalanceUmbrellaClueViewContainer.lua
 
-local var_0_0 = class("BalanceUmbrellaClueViewContainer", BaseViewContainer)
+module("modules.logic.balanceumbrella.view.BalanceUmbrellaClueViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BalanceUmbrellaClueViewContainer = class("BalanceUmbrellaClueViewContainer", BaseViewContainer)
+
+function BalanceUmbrellaClueViewContainer:buildViews()
 	return {
 		BalanceUmbrellaClueView.New()
 	}
 end
 
-return var_0_0
+return BalanceUmbrellaClueViewContainer

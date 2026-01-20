@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.view.Va3ChessGameSceneContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/view/Va3ChessGameSceneContainer.lua
 
-local var_0_0 = class("Va3ChessGameSceneContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.va3chess.view.Va3ChessGameSceneContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Va3ChessGameSceneContainer = class("Va3ChessGameSceneContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Va3ChessGameScene.New())
+function Va3ChessGameSceneContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Va3ChessGameScene.New())
+
+	return views
 end
 
-return var_0_0
+return Va3ChessGameSceneContainer

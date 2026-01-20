@@ -1,13 +1,15 @@
-﻿module("modules.versionactivitybase.common.VersionActivityViewDefine", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/common/VersionActivityViewDefine.lua
 
-local var_0_0 = class("VersionActivityViewDefine")
+module("modules.versionactivitybase.common.VersionActivityViewDefine", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	var_0_0.V3A1(arg_1_0)
+local VersionActivityViewDefine = class("VersionActivityViewDefine")
+
+function VersionActivityViewDefine.init(module_views)
+	VersionActivityViewDefine.V3A1(module_views)
 end
 
-function var_0_0.V3A1(arg_2_0)
-	arg_2_0.VersionActivity3_1EnterView = {
+function VersionActivityViewDefine.V3A1(module_views)
+	module_views.VersionActivity3_1EnterView = {
 		destroy = 0,
 		container = "VersionActivity3_1EnterViewContainer",
 		mainRes = "ui/viewres/versionactivity_3_1/v3a1_enter/v3a1_enterview.prefab",
@@ -56,7 +58,7 @@ function var_0_0.V3A1(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.VersionActivity3_1StoreView = {
+	module_views.VersionActivity3_1StoreView = {
 		destroy = 0,
 		container = "VersionActivityFixedStoreViewContainer",
 		bgBlur = 1,
@@ -76,7 +78,7 @@ function var_0_0.V3A1(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.VersionActivity3_1TaskView = {
+	module_views.VersionActivity3_1TaskView = {
 		destroy = 0,
 		container = "VersionActivityFixedTaskViewContainer",
 		mainRes = "ui/viewres/versionactivity_3_1/v3a1_dungeon/v3a1_taskview.prefab",
@@ -93,7 +95,7 @@ function var_0_0.V3A1(arg_2_0)
 			"ui/viewres/versionactivity_3_1/v3a1_dungeon/v3a1_taskitem.prefab"
 		}
 	}
-	arg_2_0.VersionActivity3_1DungeonMapView = {
+	module_views.VersionActivity3_1DungeonMapView = {
 		destroy = 0,
 		container = "VersionActivityFixedDungeonMapViewContainer",
 		mainRes = "ui/viewres/versionactivity_3_1/v3a1_dungeon/v3a1_dungeonmapview.prefab",
@@ -113,7 +115,7 @@ function var_0_0.V3A1(arg_2_0)
 			}
 		}
 	}
-	arg_2_0.VersionActivity3_1DungeonMapLevelView = {
+	module_views.VersionActivity3_1DungeonMapLevelView = {
 		destroy = 0,
 		container = "VersionActivityFixedDungeonMapLevelViewContainer",
 		mainRes = "ui/viewres/versionactivity_3_1/v3a1_dungeon/v3a1_dungeonmaplevelview.prefab",
@@ -134,4 +136,4 @@ function var_0_0.V3A1(arg_2_0)
 	}
 end
 
-return var_0_0
+return VersionActivityViewDefine

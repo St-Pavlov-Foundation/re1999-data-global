@@ -1,114 +1,116 @@
-﻿module("modules.common.unit.UnitMoverBezier3", package.seeall)
+﻿-- chunkname: @modules/common/unit/UnitMoverBezier3.lua
 
-local var_0_0 = class("UnitMoverBezier3", LuaCompBase)
+module("modules.common.unit.UnitMoverBezier3", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._timeScale = 1
-	arg_1_0._currTime = 0
-	arg_1_0._duration = 0
-	arg_1_0._getTimeFunction = nil
-	arg_1_0._getTimeObject = nil
-	arg_1_0._start = nil
+local UnitMoverBezier3 = class("UnitMoverBezier3", LuaCompBase)
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+function UnitMoverBezier3:ctor()
+	self._timeScale = 1
+	self._currTime = 0
+	self._duration = 0
+	self._getTimeFunction = nil
+	self._getTimeObject = nil
+	self._start = nil
+
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.setEaseType(arg_2_0, arg_2_1)
-	arg_2_0._easeType = arg_2_1 or EaseType.Linear
+function UnitMoverBezier3:setEaseType(easeType)
+	self._easeType = easeType or EaseType.Linear
 end
 
-function var_0_0.setTimeScale(arg_3_0, arg_3_1)
-	arg_3_0._timeScale = arg_3_1
+function UnitMoverBezier3:setTimeScale(timeScale)
+	self._timeScale = timeScale
 end
 
-function var_0_0.simpleMove(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	arg_4_0:setPosDirectly(arg_4_1.x, arg_4_1.y, arg_4_1.z)
+function UnitMoverBezier3:simpleMove(p1, p2, p3, p4, duration)
+	self:setPosDirectly(p1.x, p1.y, p1.z)
 
-	arg_4_0.p1 = arg_4_1
-	arg_4_0.p2 = arg_4_2
-	arg_4_0.p3 = arg_4_3
-	arg_4_0.p4 = arg_4_4
-	arg_4_0.startPos = arg_4_1
-	arg_4_0.endPos = arg_4_4
-	arg_4_0._duration = arg_4_5
-	arg_4_0._currTime = 0
-	arg_4_0._start = true
+	self.p1 = p1
+	self.p2 = p2
+	self.p3 = p3
+	self.p4 = p4
+	self.startPos = p1
+	self.endPos = p4
+	self._duration = duration
+	self._currTime = 0
+	self._start = true
 end
 
-function var_0_0.setPosDirectly(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._posX = arg_5_1
-	arg_5_0._posY = arg_5_2
-	arg_5_0._posZ = arg_5_3
+function UnitMoverBezier3:setPosDirectly(x, y, z)
+	self._posX = x
+	self._posY = y
+	self._posZ = z
 
-	arg_5_0:updatePrePos()
-	arg_5_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_5_0)
+	self:updatePrePos()
+	self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 end
 
-function var_0_0.updatePrePos(arg_6_0)
-	arg_6_0.prePosX = arg_6_0._posX
-	arg_6_0.prePosY = arg_6_0._posY
-	arg_6_0.prePosZ = arg_6_0._posZ
+function UnitMoverBezier3:updatePrePos()
+	self.prePosX = self._posX
+	self.prePosY = self._posY
+	self.prePosZ = self._posZ
 end
 
-function var_0_0.setGetTimeFunction(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._getTimeFunction = arg_7_1
-	arg_7_0._getTimeObject = arg_7_2
+function UnitMoverBezier3:setGetTimeFunction(getTimeFunction, getTimeObject)
+	self._getTimeFunction = getTimeFunction
+	self._getTimeObject = getTimeObject
 end
 
-function var_0_0.getPos(arg_8_0)
-	return arg_8_0._posX, arg_8_0._posY, arg_8_0._posZ
+function UnitMoverBezier3:getPos()
+	return self._posX, self._posY, self._posZ
 end
 
-function var_0_0.getPrePos(arg_9_0)
-	return arg_9_0.prePosX, arg_9_0.prePosY, arg_9_0.prePosZ
+function UnitMoverBezier3:getPrePos()
+	return self.prePosX, self.prePosY, self.prePosZ
 end
 
-function var_0_0.onUpdate(arg_10_0)
-	if not arg_10_0._start then
+function UnitMoverBezier3:onUpdate()
+	if not self._start then
 		return
 	end
 
-	arg_10_0:updatePrePos()
+	self:updatePrePos()
 
-	if arg_10_0._getTimeFunction then
-		arg_10_0._currTime = arg_10_0._getTimeFunction(arg_10_0._getTimeObject)
+	if self._getTimeFunction then
+		self._currTime = self._getTimeFunction(self._getTimeObject)
 	else
-		arg_10_0._currTime = arg_10_0._currTime + Time.deltaTime * arg_10_0._timeScale
+		self._currTime = self._currTime + Time.deltaTime * self._timeScale
 	end
 
-	if arg_10_0._currTime >= arg_10_0._duration then
-		arg_10_0._posX = arg_10_0.endPos.x
-		arg_10_0._posY = arg_10_0.endPos.y
-		arg_10_0._posZ = arg_10_0.endPos.z
+	if self._currTime >= self._duration then
+		self._posX = self.endPos.x
+		self._posY = self.endPos.y
+		self._posZ = self.endPos.z
 
-		arg_10_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_10_0)
-		arg_10_0:dispatchEvent(UnitMoveEvent.Arrive, arg_10_0)
+		self:dispatchEvent(UnitMoveEvent.PosChanged, self)
+		self:dispatchEvent(UnitMoveEvent.Arrive, self)
 
-		arg_10_0._start = nil
+		self._start = nil
 	else
-		local var_10_0 = arg_10_0._currTime / arg_10_0._duration
-		local var_10_1 = LuaTween.tween(var_10_0, 0, 1, 1, arg_10_0._easeType)
+		local percent = self._currTime / self._duration
+		local t = LuaTween.tween(percent, 0, 1, 1, self._easeType)
 
-		arg_10_0._posX = arg_10_0:calculateValue(var_10_1, arg_10_0.p1.x, arg_10_0.p2.x, arg_10_0.p3.x, arg_10_0.p4.x)
-		arg_10_0._posY = arg_10_0:calculateValue(var_10_1, arg_10_0.p1.y, arg_10_0.p2.y, arg_10_0.p3.y, arg_10_0.p4.y)
-		arg_10_0._posZ = arg_10_0:calculateValue(var_10_1, arg_10_0.p1.z, arg_10_0.p2.z, arg_10_0.p3.z, arg_10_0.p4.z)
+		self._posX = self:calculateValue(t, self.p1.x, self.p2.x, self.p3.x, self.p4.x)
+		self._posY = self:calculateValue(t, self.p1.y, self.p2.y, self.p3.y, self.p4.y)
+		self._posZ = self:calculateValue(t, self.p1.z, self.p2.z, self.p3.z, self.p4.z)
 
-		arg_10_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_10_0)
+		self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 	end
 end
 
-function var_0_0.calculateValue(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
-	local var_11_0 = (1 - arg_11_1) * (1 - arg_11_1) * (1 - arg_11_1) * arg_11_2
-	local var_11_1 = 3 * arg_11_1 * (1 - arg_11_1) * (1 - arg_11_1) * arg_11_3
-	local var_11_2 = 3 * arg_11_1 * arg_11_1 * (1 - arg_11_1) * arg_11_4
-	local var_11_3 = arg_11_1 * arg_11_1 * arg_11_1 * arg_11_5
+function UnitMoverBezier3:calculateValue(t, p1, p2, p3, p4)
+	local a1 = (1 - t) * (1 - t) * (1 - t) * p1
+	local a2 = 3 * t * (1 - t) * (1 - t) * p2
+	local a3 = 3 * t * t * (1 - t) * p3
+	local a4 = t * t * t * p4
 
-	return var_11_0 + var_11_1 + var_11_2 + var_11_3
+	return a1 + a2 + a3 + a4
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0._start = nil
-	arg_12_0._animationCurve = nil
+function UnitMoverBezier3:onDestroy()
+	self._start = nil
+	self._animationCurve = nil
 end
 
-return var_0_0
+return UnitMoverBezier3

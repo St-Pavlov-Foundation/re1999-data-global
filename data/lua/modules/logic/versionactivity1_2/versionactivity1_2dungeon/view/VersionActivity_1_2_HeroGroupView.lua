@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_HeroGroupView.lua
 
-local var_0_0 = class("VersionActivity_1_2_HeroGroupView", HeroGroupFightView)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_HeroGroupView", package.seeall)
 
-function var_0_0.openHeroGroupEditView(arg_1_0)
-	ViewMgr.instance:openView(ViewName.VersionActivity_1_2_HeroGroupEditView, arg_1_0._param)
+local VersionActivity_1_2_HeroGroupView = class("VersionActivity_1_2_HeroGroupView", HeroGroupFightView)
+
+function VersionActivity_1_2_HeroGroupView:openHeroGroupEditView()
+	ViewMgr.instance:openView(ViewName.VersionActivity_1_2_HeroGroupEditView, self._param)
 end
 
-return var_0_0
+return VersionActivity_1_2_HeroGroupView

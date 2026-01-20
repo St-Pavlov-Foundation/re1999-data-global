@@ -1,184 +1,187 @@
-﻿module("modules.logic.reactivity.view.ReactivityEnterview", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/view/ReactivityEnterview.lua
 
-local var_0_0 = class("ReactivityEnterview", VersionActivityEnterBaseSubView)
+module("modules.logic.reactivity.view.ReactivityEnterview", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Replay")
-	arg_1_0._btnAchevement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Achevement")
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Store")
-	arg_1_0._txtstoretime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Store/#go_taglimit/#txt_limit")
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Store/#txt_Num")
-	arg_1_0._txttime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Logo/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "Logo/#txt_Descr")
-	arg_1_0._btnExchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Exchange")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#image_reddot")
-	arg_1_0._btnEnd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_End")
-	arg_1_0._btnLock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
-	arg_1_0._txtlockedtips = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Locked/txt_LockedTips")
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	arg_1_0.rewardItems = {}
+local ReactivityEnterview = class("ReactivityEnterview", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ReactivityEnterview:onInitView()
+	self._btnreplay = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Replay")
+	self._btnAchevement = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Achevement")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Store")
+	self._txtstoretime = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Store/#go_taglimit/#txt_limit")
+	self._txtNum = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Store/#txt_Num")
+	self._txttime = gohelper.findChildTextMesh(self.viewGO, "Logo/image_LimitTimeBG/#txt_LimitTime")
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "Logo/#txt_Descr")
+	self._btnExchange = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Exchange")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._goreddot = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#image_reddot")
+	self._btnEnd = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_End")
+	self._btnLock = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+	self._txtlockedtips = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Locked/txt_LockedTips")
+	self._gorewardcontent = gohelper.findChild(self.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	self.rewardItems = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnAchevement:AddClickListener(arg_2_0._onClickAchevementBtn, arg_2_0)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._onClickStoreBtn, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._onClickEnter, arg_2_0)
-	arg_2_0._btnreplay:AddClickListener(arg_2_0._onClickReplay, arg_2_0)
-	arg_2_0._btnExchange:AddClickListener(arg_2_0._onClickExchange, arg_2_0)
-	arg_2_0._btnEnd:AddClickListener(arg_2_0._onClickEnter, arg_2_0)
-	arg_2_0._btnLock:AddClickListener(arg_2_0._onClickEnter, arg_2_0)
+function ReactivityEnterview:addEvents()
+	self._btnAchevement:AddClickListener(self._onClickAchevementBtn, self)
+	self._btnstore:AddClickListener(self._onClickStoreBtn, self)
+	self._btnEnter:AddClickListener(self._onClickEnter, self)
+	self._btnreplay:AddClickListener(self._onClickReplay, self)
+	self._btnExchange:AddClickListener(self._onClickExchange, self)
+	self._btnEnd:AddClickListener(self._onClickEnter, self)
+	self._btnLock:AddClickListener(self._onClickEnter, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnAchevement:RemoveClickListener()
-	arg_3_0._btnstore:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnreplay:RemoveClickListener()
-	arg_3_0._btnExchange:RemoveClickListener()
-	arg_3_0._btnEnd:RemoveClickListener()
-	arg_3_0._btnLock:RemoveClickListener()
+function ReactivityEnterview:removeEvents()
+	self._btnAchevement:RemoveClickListener()
+	self._btnstore:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
+	self._btnreplay:RemoveClickListener()
+	self._btnExchange:RemoveClickListener()
+	self._btnEnd:RemoveClickListener()
+	self._btnLock:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0._onRefreshActivityState, arg_4_0)
-	arg_4_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0.refreshCurrency, arg_4_0)
+function ReactivityEnterview:_editableInitView()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onRefreshActivityState, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0._onClickAchevementBtn(arg_5_0)
-	if not arg_5_0.actId then
+function ReactivityEnterview:_onClickAchevementBtn()
+	if not self.actId then
 		return
 	end
 
-	local var_5_0 = ActivityConfig.instance:getActivityCo(arg_5_0.actId)
-	local var_5_1 = var_5_0 and var_5_0.achievementJumpId
+	local activityCfg = ActivityConfig.instance:getActivityCo(self.actId)
+	local achievementJumpId = activityCfg and activityCfg.achievementJumpId
 
-	JumpController.instance:jump(var_5_1)
+	JumpController.instance:jump(achievementJumpId)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:initRedDot()
-	var_0_0.super.onOpen(arg_6_0)
-	arg_6_0:refreshUI()
+function ReactivityEnterview:onOpen()
+	self:initRedDot()
+	ReactivityEnterview.super.onOpen(self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
-	var_0_0.super.onClose(arg_7_0)
+function ReactivityEnterview:onClose()
+	ReactivityEnterview.super.onClose(self)
 end
 
-function var_0_0.initRedDot(arg_8_0)
-	if arg_8_0.actId then
+function ReactivityEnterview:initRedDot()
+	if self.actId then
 		return
 	end
 
-	local var_8_0 = arg_8_0.tabContainer:getCurTabId()
+	local tabId = self.tabContainer:getCurTabId()
+	local actIdList = self.viewParam and self.viewParam.activityIdList or {}
 
-	arg_8_0.actId = (arg_8_0.viewParam and arg_8_0.viewParam.activityIdList or {})[var_8_0]
+	self.actId = actIdList[tabId]
 
-	if not arg_8_0.actId then
+	if not self.actId then
 		logError("ReactivityEnterview activity id is nil")
 
 		return
 	end
 
-	local var_8_1 = ActivityConfig.instance:getActivityCo(arg_8_0.actId)
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	RedDotController.instance:addRedDot(arg_8_0._goreddot, var_8_1.redDotId)
+	RedDotController.instance:addRedDot(self._goreddot, actCo.redDotId)
 end
 
-function var_0_0._onRefreshRedDot(arg_9_0)
+function ReactivityEnterview:_onRefreshRedDot()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function ReactivityEnterview:onUpdateParam()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	if arg_11_0.rewardItems then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0.rewardItems) do
-			iter_11_1:onDestroy()
+function ReactivityEnterview:onDestroyView()
+	if self.rewardItems then
+		for k, v in pairs(self.rewardItems) do
+			v:onDestroy()
 		end
 
-		arg_11_0.rewardItems = nil
+		self.rewardItems = nil
 	end
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	local var_12_0 = ActivityConfig.instance:getActivityCo(arg_12_0.actId)
+function ReactivityEnterview:refreshUI()
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	arg_12_0._txtdesc.text = var_12_0.actDesc
+	self._txtdesc.text = actCo.actDesc
 
-	local var_12_1 = GameUtil.splitString2(var_12_0.activityBonus, true) or {}
+	local rewards = GameUtil.splitString2(actCo.activityBonus, true) or {}
 
-	for iter_12_0 = 1, math.max(#var_12_1, #arg_12_0.rewardItems) do
-		local var_12_2 = arg_12_0.rewardItems[iter_12_0]
-		local var_12_3 = var_12_1[iter_12_0]
+	for i = 1, math.max(#rewards, #self.rewardItems) do
+		local item = self.rewardItems[i]
+		local data = rewards[i]
 
-		if not var_12_2 then
-			var_12_2 = IconMgr.instance:getCommonItemIcon(arg_12_0._gorewardcontent)
-			arg_12_0.rewardItems[iter_12_0] = var_12_2
+		if not item then
+			item = IconMgr.instance:getCommonItemIcon(self._gorewardcontent)
+			self.rewardItems[i] = item
 		end
 
-		if var_12_3 then
-			gohelper.setActive(var_12_2.go, true)
-			var_12_2:setMOValue(var_12_3[1], var_12_3[2], var_12_3[3] or 1, nil, true)
-			var_12_2:hideEquipLvAndCount()
-			var_12_2:isShowCount(false)
+		if data then
+			gohelper.setActive(item.go, true)
+			item:setMOValue(data[1], data[2], data[3] or 1, nil, true)
+			item:hideEquipLvAndCount()
+			item:isShowCount(false)
 		else
-			gohelper.setActive(var_12_2.go, false)
+			gohelper.setActive(item.go, false)
 		end
 	end
 
-	arg_12_0:refreshEnterBtn()
-	arg_12_0:refreshCurrency()
-	arg_12_0:refreshRemainTime()
+	self:refreshEnterBtn()
+	self:refreshCurrency()
+	self:refreshRemainTime()
 end
 
-function var_0_0.everySecondCall(arg_13_0)
-	arg_13_0:refreshRemainTime()
+function ReactivityEnterview:everySecondCall()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshEnterBtn(arg_14_0)
-	local var_14_0, var_14_1, var_14_2 = ActivityHelper.getActivityStatusAndToast(arg_14_0.actId)
+function ReactivityEnterview:refreshEnterBtn()
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(self.actId)
 
-	gohelper.setActive(arg_14_0._btnEnter, var_14_0 == ActivityEnum.ActivityStatus.Normal)
-	gohelper.setActive(arg_14_0._btnEnd, var_14_0 ~= ActivityEnum.ActivityStatus.Normal and var_14_0 ~= ActivityEnum.ActivityStatus.NotUnlock)
-	gohelper.setActive(arg_14_0._btnLock, var_14_0 == ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnEnter, status == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._btnEnd, status ~= ActivityEnum.ActivityStatus.Normal and status ~= ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnLock, status == ActivityEnum.ActivityStatus.NotUnlock)
 
-	if var_14_0 == ActivityEnum.ActivityStatus.NotUnlock then
-		arg_14_0._txtlockedtips.text = ToastController.instance:getToastMsgWithTableParam(var_14_1, var_14_2)
+	if status == ActivityEnum.ActivityStatus.NotUnlock then
+		self._txtlockedtips.text = ToastController.instance:getToastMsgWithTableParam(toastId, toastParamList)
 	end
 
-	local var_14_3 = ReactivityEnum.ActivityDefine[arg_14_0.actId]
-	local var_14_4 = var_14_3 and var_14_3.storeActId
+	local define = ReactivityEnum.ActivityDefine[self.actId]
+	local storeActId = define and define.storeActId
 
-	arg_14_0.storeActId = var_14_4
+	self.storeActId = storeActId
 
-	local var_14_5 = ActivityHelper.getActivityStatus(var_14_4)
+	local storeStatus = ActivityHelper.getActivityStatus(storeActId)
 
-	gohelper.setActive(arg_14_0._btnstore, var_14_5 == ActivityEnum.ActivityStatus.Normal)
-	gohelper.setActive(arg_14_0._btnExchange, var_14_5 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._btnstore, storeStatus == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._btnExchange, storeStatus == ActivityEnum.ActivityStatus.Normal)
 end
 
-function var_0_0.refreshCurrency(arg_15_0)
-	local var_15_0 = ReactivityModel.instance:getActivityCurrencyId(arg_15_0.actId)
-	local var_15_1 = CurrencyModel.instance:getCurrency(var_15_0)
-	local var_15_2 = var_15_1 and var_15_1.quantity or 0
+function ReactivityEnterview:refreshCurrency()
+	local currencyId = ReactivityModel.instance:getActivityCurrencyId(self.actId)
+	local currencyMO = CurrencyModel.instance:getCurrency(currencyId)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_15_0._txtNum.text = GameUtil.numberDisplay(var_15_2)
+	self._txtNum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0._onClickEnter(arg_16_0)
-	local var_16_0, var_16_1, var_16_2 = ActivityHelper.getActivityStatusAndToast(arg_16_0.actId)
+function ReactivityEnterview:_onClickEnter()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(self.actId)
 
-	if var_16_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_16_1 then
-			GameFacade.showToastWithTableParam(var_16_1, var_16_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 
 		return
@@ -187,79 +190,80 @@ function var_0_0._onClickEnter(arg_16_0)
 	VersionActivity1_8DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0._onClickReplay(arg_17_0)
-	local var_17_0 = ActivityModel.instance:getActMO(arg_17_0.actId)
-	local var_17_1 = var_17_0 and var_17_0.config and var_17_0.config.storyId
+function ReactivityEnterview:_onClickReplay()
+	local activityMo = ActivityModel.instance:getActMO(self.actId)
+	local storyId = activityMo and activityMo.config and activityMo.config.storyId
 
-	if not var_17_1 then
-		logError(string.format("act id %s dot config story id", var_17_1))
+	if not storyId then
+		logError(string.format("act id %s dot config story id", storyId))
 
 		return
 	end
 
-	local var_17_2 = {}
+	local param = {}
 
-	var_17_2.isVersionActivityPV = true
+	param.isVersionActivityPV = true
 
-	StoryController.instance:playStory(var_17_1, var_17_2)
+	StoryController.instance:playStory(storyId, param)
 end
 
-function var_0_0._onClickExchange(arg_18_0)
+function ReactivityEnterview:_onClickExchange()
 	ViewMgr.instance:openView(ViewName.ReactivityRuleView)
 end
 
-function var_0_0._onClickStoreBtn(arg_19_0)
-	ReactivityController.instance:openReactivityStoreView(arg_19_0.actId)
+function ReactivityEnterview:_onClickStoreBtn()
+	ReactivityController.instance:openReactivityStoreView(self.actId)
 end
 
-function var_0_0.refreshRemainTime(arg_20_0)
-	local var_20_0 = ActivityModel.instance:getActMO(arg_20_0.actId):getRealEndTimeStamp() - ServerTime.now()
+function ReactivityEnterview:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActMO(self.actId)
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_20_0 > 0 then
-		local var_20_1 = TimeUtil.SecondToActivityTimeFormat(var_20_0)
+	if offsetSecond > 0 then
+		local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-		arg_20_0._txttime.text = var_20_1
+		self._txttime.text = dateStr
 	else
-		arg_20_0._txttime.text = luaLang("ended")
+		self._txttime.text = luaLang("ended")
 	end
 
-	arg_20_0:refreshStoreTime()
+	self:refreshStoreTime()
 end
 
-function var_0_0.refreshStoreTime(arg_21_0)
-	local var_21_0 = arg_21_0.storeActId
+function ReactivityEnterview:refreshStoreTime()
+	local actId = self.storeActId
 
-	if not var_21_0 then
+	if not actId then
 		return
 	end
 
-	local var_21_1 = ActivityModel.instance:getActMO(var_21_0)
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
 
-	if not var_21_1 then
+	if not actInfoMo then
 		return
 	end
 
-	local var_21_2 = ActivityHelper.getActivityStatusAndToast(var_21_0)
+	local status = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_21_2 ~= ActivityEnum.ActivityStatus.Normal and var_21_2 ~= ActivityEnum.ActivityStatus.NotUnlock then
-		arg_21_0._txtstoretime.text = luaLang("turnback_end")
+	if status ~= ActivityEnum.ActivityStatus.Normal and status ~= ActivityEnum.ActivityStatus.NotUnlock then
+		self._txtstoretime.text = luaLang("turnback_end")
 	else
-		arg_21_0._txtstoretime.text = var_21_1:getRemainTimeStr2ByEndTime(true)
+		self._txtstoretime.text = actInfoMo:getRemainTimeStr2ByEndTime(true)
 	end
 end
 
-function var_0_0._onRefreshActivityState(arg_22_0, arg_22_1)
-	if not arg_22_1 or arg_22_1 ~= arg_22_0.actId then
+function ReactivityEnterview:_onRefreshActivityState(actId)
+	if not actId or actId ~= self.actId then
 		return
 	end
 
-	if not ActivityHelper.isOpen(arg_22_1) then
-		arg_22_0:closeThis()
+	if not ActivityHelper.isOpen(actId) then
+		self:closeThis()
 
 		return
 	end
 
-	arg_22_0:refreshUI()
+	self:refreshUI()
 end
 
-return var_0_0
+return ReactivityEnterview

@@ -1,96 +1,100 @@
-﻿module("modules.logic.weekwalk.model.WeekwalkInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekwalkInfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkInfoMO")
+module("modules.logic.weekwalk.model.WeekwalkInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.time = arg_1_1.time
-	arg_1_0.endTime = arg_1_1.endTime
-	arg_1_0.maxLayer = arg_1_1.maxLayer
-	arg_1_0.issueId = arg_1_1.issueId
-	arg_1_0.isPopDeepRule = arg_1_1.isPopDeepRule
-	arg_1_0.isOpenDeep = arg_1_1.isOpenDeep
-	arg_1_0.isPopShallowSettle = arg_1_1.isPopShallowSettle
-	arg_1_0.isPopDeepSettle = arg_1_1.isPopDeepSettle
-	arg_1_0.deepProgress = arg_1_1.deepProgress
-	arg_1_0._mapInfos = {}
-	arg_1_0._mapInfosMap = {}
-	arg_1_0._mapInfoLayerMap = {}
+local WeekwalkInfoMO = pureTable("WeekwalkInfoMO")
 
-	if arg_1_1.mapInfo then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_1.mapInfo) do
-			local var_1_0 = MapInfoMO.New()
+function WeekwalkInfoMO:init(info)
+	self.time = info.time
+	self.endTime = info.endTime
+	self.maxLayer = info.maxLayer
+	self.issueId = info.issueId
+	self.isPopDeepRule = info.isPopDeepRule
+	self.isOpenDeep = info.isOpenDeep
+	self.isPopShallowSettle = info.isPopShallowSettle
+	self.isPopDeepSettle = info.isPopDeepSettle
+	self.deepProgress = info.deepProgress
+	self._mapInfos = {}
+	self._mapInfosMap = {}
+	self._mapInfoLayerMap = {}
 
-			var_1_0:init(iter_1_1)
+	if info.mapInfo then
+		for i, v in ipairs(info.mapInfo) do
+			local info = MapInfoMO.New()
 
-			arg_1_0._mapInfosMap[iter_1_1.id] = var_1_0
+			info:init(v)
 
-			table.insert(arg_1_0._mapInfos, var_1_0)
+			self._mapInfosMap[v.id] = info
 
-			local var_1_1 = var_1_0:getLayer()
+			table.insert(self._mapInfos, info)
 
-			if var_1_1 then
-				if not arg_1_0._mapInfoLayerMap[var_1_1] then
-					arg_1_0._mapInfoLayerMap[var_1_1] = var_1_0
+			local layer = info:getLayer()
+
+			if layer then
+				if not self._mapInfoLayerMap[layer] then
+					self._mapInfoLayerMap[layer] = info
 				else
-					logError("WeekwalkInfoMO init error,layer repeat:" .. tostring(var_1_1))
+					logError("WeekwalkInfoMO init error,layer repeat:" .. tostring(layer))
 				end
 			end
 		end
 	end
 
-	table.sort(arg_1_0._mapInfos, var_0_0._sort)
+	table.sort(self._mapInfos, WeekwalkInfoMO._sort)
 end
 
-function var_0_0._sort(arg_2_0, arg_2_1)
-	return arg_2_0.id < arg_2_1.id
+function WeekwalkInfoMO._sort(a, b)
+	return a.id < b.id
 end
 
-function var_0_0.getMapInfos(arg_3_0)
-	return arg_3_0._mapInfos
+function WeekwalkInfoMO:getMapInfos()
+	return self._mapInfos
 end
 
-function var_0_0.getMapInfoLayer(arg_4_0)
-	return arg_4_0._mapInfoLayerMap
+function WeekwalkInfoMO:getMapInfoLayer()
+	return self._mapInfoLayerMap
 end
 
-function var_0_0.getNotFinishedMap(arg_5_0)
-	local var_5_0 = #arg_5_0._mapInfos
+function WeekwalkInfoMO:getNotFinishedMap()
+	local index = #self._mapInfos
 
-	return arg_5_0._mapInfos[var_5_0], var_5_0
+	return self._mapInfos[index], index
 end
 
-function var_0_0.getNameIndexByBattleId(arg_6_0, arg_6_1)
-	local var_6_0
+function WeekwalkInfoMO:getNameIndexByBattleId(battleId)
+	local targetMap
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._mapInfos) do
-		if iter_6_1:getBattleInfo(arg_6_1) then
-			var_6_0 = iter_6_1
+	for _, map in ipairs(self._mapInfos) do
+		if map:getBattleInfo(battleId) then
+			targetMap = map
 
 			break
 		end
 	end
 
-	if not var_6_0 then
+	if not targetMap then
 		return
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(lua_weekwalk.configList) do
-		if iter_6_3.id == var_6_0.id then
-			return lua_weekwalk_scene.configDict[var_6_0.sceneId].battleName, iter_6_3.layer
+	for i, v in ipairs(lua_weekwalk.configList) do
+		if v.id == targetMap.id then
+			local sceneConfig = lua_weekwalk_scene.configDict[targetMap.sceneId]
+
+			return sceneConfig.battleName, v.layer
 		end
 	end
 end
 
-function var_0_0.getMapInfo(arg_7_0, arg_7_1)
-	return arg_7_0._mapInfosMap[arg_7_1]
+function WeekwalkInfoMO:getMapInfo(id)
+	return self._mapInfosMap[id]
 end
 
-function var_0_0.getMapInfoByLayer(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._mapInfos) do
-		if iter_8_1:getLayer() == arg_8_1 then
-			return iter_8_1
+function WeekwalkInfoMO:getMapInfoByLayer(layer)
+	for _, map in ipairs(self._mapInfos) do
+		if map:getLayer() == layer then
+			return map
 		end
 	end
 end
 
-return var_0_0
+return WeekwalkInfoMO

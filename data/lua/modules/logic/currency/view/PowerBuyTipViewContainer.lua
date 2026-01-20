@@ -1,26 +1,28 @@
-﻿module("modules.logic.currency.view.PowerBuyTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/PowerBuyTipViewContainer.lua
 
-local var_0_0 = class("PowerBuyTipViewContainer", BaseViewContainer)
+module("modules.logic.currency.view.PowerBuyTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PowerBuyTipViewContainer = class("PowerBuyTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PowerBuyTipView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
+function PowerBuyTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, PowerBuyTipView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_righttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = CurrencyEnum.CurrencyType
-	local var_2_1 = {
-		var_2_0.Diamond,
-		var_2_0.FreeDiamondCoupon
+function PowerBuyTipViewContainer:buildTabViews(tabContainerId)
+	local currencyType = CurrencyEnum.CurrencyType
+	local currencyParam = {
+		currencyType.Diamond,
+		currencyType.FreeDiamondCoupon
 	}
 
 	return {
-		CurrencyView.New(var_2_1)
+		CurrencyView.New(currencyParam)
 	}
 end
 
-return var_0_0
+return PowerBuyTipViewContainer

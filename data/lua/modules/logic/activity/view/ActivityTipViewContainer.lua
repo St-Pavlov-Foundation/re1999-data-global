@@ -1,11 +1,13 @@
-﻿module("modules.logic.activity.view.ActivityTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityTipViewContainer.lua
 
-local var_0_0 = class("ActivityTipViewContainer", BaseViewContainer)
+module("modules.logic.activity.view.ActivityTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ActivityTipViewContainer = class("ActivityTipViewContainer", BaseViewContainer)
+
+function ActivityTipViewContainer:buildViews()
 	return {
 		ActivityTipView.New()
 	}
 end
 
-return var_0_0
+return ActivityTipViewContainer

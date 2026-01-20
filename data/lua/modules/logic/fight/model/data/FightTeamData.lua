@@ -1,95 +1,105 @@
-﻿module("modules.logic.fight.model.data.FightTeamData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightTeamData.lua
 
-local var_0_0 = FightDataClass("FightTeamData")
+module("modules.logic.fight.model.data.FightTeamData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.entitys = {}
+local FightTeamData = FightDataClass("FightTeamData")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.entitys) do
-		table.insert(arg_1_0.entitys, FightEntityInfoData.New(iter_1_1))
+function FightTeamData:onConstructor(proto)
+	self.entitys = {}
+
+	for i, v in ipairs(proto.entitys) do
+		table.insert(self.entitys, FightEntityInfoData.New(v))
 	end
 
-	arg_1_0.subEntitys = {}
+	self.subEntitys = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.subEntitys) do
-		table.insert(arg_1_0.subEntitys, FightEntityInfoData.New(iter_1_3))
+	for i, v in ipairs(proto.subEntitys) do
+		table.insert(self.subEntitys, FightEntityInfoData.New(v))
 	end
 
-	arg_1_0.power = arg_1_1.power
-	arg_1_0.clothId = arg_1_1.clothId
-	arg_1_0.skillInfos = {}
+	self.power = proto.power
+	self.clothId = proto.clothId
+	self.skillInfos = {}
 
-	for iter_1_4, iter_1_5 in ipairs(arg_1_1.skillInfos) do
-		table.insert(arg_1_0.skillInfos, FightPlayerSkillInfoData.New(iter_1_5))
+	for i, v in ipairs(proto.skillInfos) do
+		table.insert(self.skillInfos, FightPlayerSkillInfoData.New(v))
 	end
 
-	arg_1_0.spEntitys = {}
+	self.spEntitys = {}
 
-	for iter_1_6, iter_1_7 in ipairs(arg_1_1.spEntitys) do
-		table.insert(arg_1_0.spEntitys, FightEntityInfoData.New(iter_1_7))
+	for i, v in ipairs(proto.spEntitys) do
+		table.insert(self.spEntitys, FightEntityInfoData.New(v))
 	end
 
-	arg_1_0.indicators = {}
+	self.indicators = {}
 
-	for iter_1_8, iter_1_9 in ipairs(arg_1_1.indicators) do
-		table.insert(arg_1_0.indicators, FightIndicatorInfoData.New(iter_1_9))
+	for i, v in ipairs(proto.indicators) do
+		table.insert(self.indicators, FightIndicatorInfoData.New(v))
 	end
 
-	arg_1_0.exTeamStr = arg_1_1.exTeamStr
+	self.exTeamStr = proto.exTeamStr
 
-	if arg_1_1:HasField("assistBoss") then
-		arg_1_0.assistBoss = FightEntityInfoData.New(arg_1_1.assistBoss)
+	if proto:HasField("assistBoss") then
+		self.assistBoss = FightEntityInfoData.New(proto.assistBoss)
 	end
 
-	if arg_1_1:HasField("assistBossInfo") then
-		arg_1_0.assistBossInfo = FightAssistBossInfoData.New(arg_1_1.assistBossInfo)
+	if proto:HasField("assistBossInfo") then
+		self.assistBossInfo = FightAssistBossInfoData.New(proto.assistBossInfo)
 	end
 
-	if arg_1_1:HasField("emitter") then
-		arg_1_0.emitter = FightEntityInfoData.New(arg_1_1.emitter)
+	if proto:HasField("emitter") then
+		self.emitter = FightEntityInfoData.New(proto.emitter)
 	end
 
-	if arg_1_1:HasField("emitterInfo") then
-		arg_1_0.emitterInfo = FightEmitterInfoData.New(arg_1_1.emitterInfo)
+	if proto:HasField("emitterInfo") then
+		self.emitterInfo = FightEmitterInfoData.New(proto.emitterInfo)
 	end
 
-	if arg_1_1:HasField("playerEntity") then
-		arg_1_0.playerEntity = FightEntityInfoData.New(arg_1_1.playerEntity)
+	if proto:HasField("playerEntity") then
+		self.playerEntity = FightEntityInfoData.New(proto.playerEntity)
 	end
 
-	if arg_1_1:HasField("playerFinisherInfo") then
-		arg_1_0.playerFinisherInfo = FightPlayerFinisherInfoData.New(arg_1_1.playerFinisherInfo)
+	if proto:HasField("playerFinisherInfo") then
+		self.playerFinisherInfo = FightPlayerFinisherInfoData.New(proto.playerFinisherInfo)
 	end
 
-	arg_1_0.energy = arg_1_1.energy
+	self.energy = proto.energy
 
-	if arg_1_1:HasField("cardHeat") then
-		arg_1_0.cardHeat = FightCardHeatInfoData.New(arg_1_1.cardHeat)
+	if proto:HasField("cardHeat") then
+		self.cardHeat = FightCardHeatInfoData.New(proto.cardHeat)
 	end
 
-	arg_1_0.cardDeckSize = arg_1_1.cardDeckSize
+	self.cardDeckSize = proto.cardDeckSize
 
-	if arg_1_1:HasField("bloodPool") then
-		arg_1_0.bloodPool = FightDataBloodPool.New(arg_1_1.bloodPool)
+	if proto:HasField("bloodPool") then
+		self.bloodPool = FightDataBloodPool.New(proto.bloodPool)
 	end
 
-	if arg_1_1:HasField("vorpalith") then
-		arg_1_0.vorpalith = FightEntityInfoData.New(arg_1_1.vorpalith)
+	if proto:HasField("heatScale") then
+		self.heatScale = FightDataHeatScale.New(proto.heatScale)
 	end
 
-	if arg_1_1:HasField("itemSkillGroup") then
-		arg_1_0.itemSkillInfos = {}
+	if proto:HasField("vorpalith") then
+		self.vorpalith = FightEntityInfoData.New(proto.vorpalith)
+	end
 
-		for iter_1_10, iter_1_11 in ipairs(arg_1_1.itemSkillGroup.itemSkillInfos) do
-			table.insert(arg_1_0.itemSkillInfos, FightItemPlayerSkillInfoData.New(iter_1_11))
+	if proto:HasField("itemSkillGroup") then
+		self.itemSkillInfos = {}
+
+		for i, v in ipairs(proto.itemSkillGroup.itemSkillInfos) do
+			table.insert(self.itemSkillInfos, FightItemPlayerSkillInfoData.New(v))
 		end
 	end
 
-	arg_1_0.spFightEntities = {}
+	self.spFightEntities = {}
 
-	for iter_1_12, iter_1_13 in ipairs(arg_1_1.spFightEntities) do
-		table.insert(arg_1_0.spFightEntities, FightEntityInfoData.New(iter_1_13))
+	for i, v in ipairs(proto.spFightEntities) do
+		table.insert(self.spFightEntities, FightEntityInfoData.New(v))
+	end
+
+	if proto:HasField("musicInfo") then
+		self.rouge2MusicInfo = FightRouge2MusicInfo.New(proto.musicInfo)
 	end
 end
 
-return var_0_0
+return FightTeamData

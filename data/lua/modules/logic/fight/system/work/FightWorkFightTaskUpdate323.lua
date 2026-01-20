@@ -1,13 +1,16 @@
-﻿module("modules.logic.fight.system.work.FightWorkFightTaskUpdate323", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFightTaskUpdate323.lua
 
-local var_0_0 = class("FightWorkFightTaskUpdate323", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkFightTaskUpdate323", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkFightTaskUpdate323 = class("FightWorkFightTaskUpdate323", FightEffectBase)
+
+function FightWorkFightTaskUpdate323:onStart()
+	FightController.instance:dispatchEvent(FightEvent.TaskDataUpdate)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkFightTaskUpdate323:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkFightTaskUpdate323

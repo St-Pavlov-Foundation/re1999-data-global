@@ -1,25 +1,28 @@
-﻿module("modules.logic.character.model.CharacterLevelListModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/CharacterLevelListModel.lua
 
-local var_0_0 = class("CharacterLevelListModel", ListScrollModel)
+module("modules.logic.character.model.CharacterLevelListModel", package.seeall)
 
-function var_0_0.setCharacterLevelList(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = {}
-	local var_1_1 = arg_1_1.heroId
-	local var_1_2 = arg_1_1.rank
-	local var_1_3 = CharacterModel.instance:getrankEffects(var_1_1, var_1_2)[1]
+local CharacterLevelListModel = class("CharacterLevelListModel", ListScrollModel)
 
-	for iter_1_0 = arg_1_2 or arg_1_1.level, var_1_3 do
-		local var_1_4 = {
-			heroId = var_1_1,
-			level = iter_1_0
+function CharacterLevelListModel:setCharacterLevelList(heroMo, argsHeroLevel)
+	local moList = {}
+	local heroId = heroMo.heroId
+	local rank = heroMo.rank
+	local rankMaxLv = CharacterModel.instance:getrankEffects(heroId, rank)[1]
+	local level = argsHeroLevel or heroMo.level
+
+	for lv = level, rankMaxLv do
+		local mo = {
+			heroId = heroId,
+			level = lv
 		}
 
-		var_1_0[#var_1_0 + 1] = var_1_4
+		moList[#moList + 1] = mo
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterLevelListModel.instance = CharacterLevelListModel.New()
 
-return var_0_0
+return CharacterLevelListModel

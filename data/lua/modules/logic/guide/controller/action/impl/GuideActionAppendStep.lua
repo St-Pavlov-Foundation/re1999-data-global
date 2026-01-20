@@ -1,34 +1,36 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionAppendStep", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionAppendStep.lua
 
-local var_0_0 = class("GuideActionAppendStep", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionAppendStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionAppendStep = class("GuideActionAppendStep", BaseGuideAction)
 
-	local var_1_0 = arg_1_0.guideId
-	local var_1_1 = string.split(arg_1_0.actionParam, "#")
-	local var_1_2 = tonumber(var_1_1[1])
-	local var_1_3 = string.split(var_1_1[2], "_")
-	local var_1_4 = GuideStepController.instance:getActionFlow(arg_1_0.sourceGuideId or var_1_0)
-	local var_1_5 = GuideStepController.instance:getActionBuilder()
+function GuideActionAppendStep:onStart(context)
+	GuideActionAppendStep.super.onStart(self, context)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-		local var_1_6 = tonumber(iter_1_1)
+	local guideId = self.guideId
+	local params = string.split(self.actionParam, "#")
+	local appendGuideId = tonumber(params[1])
+	local appendStepIds = string.split(params[2], "_")
+	local flow = GuideStepController.instance:getActionFlow(self.sourceGuideId or guideId)
+	local actionBuilder = GuideStepController.instance:getActionBuilder()
 
-		var_1_5:addActionToFlow(var_1_4, var_1_2, var_1_6, true)
+	for _, stepIdStr in ipairs(appendStepIds) do
+		local appendStepId = tonumber(stepIdStr)
+
+		actionBuilder:addActionToFlow(flow, appendGuideId, appendStepId, true)
 	end
 
-	if var_1_4 then
-		local var_1_7 = var_1_4:getWorkList()
+	if flow then
+		local workList = flow:getWorkList()
 
-		if var_1_7 then
-			for iter_1_2, iter_1_3 in pairs(var_1_7) do
-				iter_1_3.sourceGuideId = var_1_0
+		if workList then
+			for k, v in pairs(workList) do
+				v.sourceGuideId = guideId
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionAppendStep

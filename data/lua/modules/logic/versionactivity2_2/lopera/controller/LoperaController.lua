@@ -1,250 +1,254 @@
-﻿module("modules.logic.versionactivity2_2.lopera.controller.LoperaController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/controller/LoperaController.lua
 
-local var_0_0 = class("LoperaController", BaseController)
-local var_0_1 = VersionActivity2_2Enum.ActivityId.Lopera
+module("modules.logic.versionactivity2_2.lopera.controller.LoperaController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local LoperaController = class("LoperaController", BaseController)
+local actId = VersionActivity2_2Enum.ActivityId.Lopera
+
+function LoperaController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function LoperaController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function LoperaController:addConstEvents()
 	return
 end
 
-function var_0_0.openLoperaMainView(arg_4_0)
-	local var_4_0 = ActivityModel.instance:getActMO(var_0_1)
-	local var_4_1 = var_4_0 and var_4_0.config and var_4_0.config.storyId
+function LoperaController:openLoperaMainView()
+	local activityMo = ActivityModel.instance:getActMO(actId)
+	local firstStoryId = activityMo and activityMo.config and activityMo.config.storyId
+	local toPlayStory = self:_checkCanPlayStory(firstStoryId)
 
-	if arg_4_0:_checkCanPlayStory(var_4_1) then
-		StoryController.instance:playStory(var_4_1, nil, arg_4_0.openFirstStoryEnd, arg_4_0)
+	if toPlayStory then
+		StoryController.instance:playStory(firstStoryId, nil, self.openFirstStoryEnd, self)
 	else
-		Activity168Rpc.instance:sendGet168InfosRequest(VersionActivity2_2Enum.ActivityId.Lopera, arg_4_0._onReceivedActInfo, arg_4_0)
+		Activity168Rpc.instance:sendGet168InfosRequest(VersionActivity2_2Enum.ActivityId.Lopera, self._onReceivedActInfo, self)
 	end
 end
 
-function var_0_0.openFirstStoryEnd(arg_5_0)
-	Activity168Rpc.instance:sendGet168InfosRequest(VersionActivity2_2Enum.ActivityId.Lopera, arg_5_0._onReceivedActInfo, arg_5_0)
+function LoperaController:openFirstStoryEnd()
+	Activity168Rpc.instance:sendGet168InfosRequest(VersionActivity2_2Enum.ActivityId.Lopera, self._onReceivedActInfo, self)
 end
 
-function var_0_0.openLoperaLevelView(arg_6_0, arg_6_1)
+function LoperaController:openLoperaLevelView(episodeId)
 	ViewMgr.instance:openView(ViewName.LoperaLevelView)
 end
 
-function var_0_0.openTaskView(arg_7_0)
+function LoperaController:openTaskView()
 	ViewMgr.instance:openView(ViewName.LoperaTaskView)
 end
 
-function var_0_0._onReceivedActInfo(arg_8_0)
+function LoperaController:_onReceivedActInfo()
 	ViewMgr.instance:openView(ViewName.LoperaMainView)
 end
 
-function var_0_0.openSmeltView(arg_9_0)
+function LoperaController:openSmeltView()
 	ViewMgr.instance:openView(ViewName.LoperaSmeltView)
 end
 
-function var_0_0.openSmeltResultView(arg_10_0)
+function LoperaController:openSmeltResultView()
 	ViewMgr.instance:openView(ViewName.LoperaSmeltResultView)
 end
 
-function var_0_0.openGameResultView(arg_11_0, arg_11_1)
-	if arg_11_0._isWaitingEventResult then
-		arg_11_0._isWaitingGameResult = true
+function LoperaController:openGameResultView(resultParams)
+	if self._isWaitingEventResult then
+		self._isWaitingGameResult = true
 
 		return
 	end
 
-	arg_11_0._isWaitingGameResult = false
+	self._isWaitingGameResult = false
 
-	ViewMgr.instance:openView(ViewName.LoperaGameResultView, arg_11_1)
+	ViewMgr.instance:openView(ViewName.LoperaGameResultView, resultParams)
 end
 
-function var_0_0.enterEpisode(arg_12_0, arg_12_1)
+function LoperaController:enterEpisode(episodeId)
 	Activity168Model.instance:setCurActId(VersionActivity2_2Enum.ActivityId.Lopera)
 
-	arg_12_0._curEnterEpisode = arg_12_1
+	self._curEnterEpisode = episodeId
 
-	Activity168Rpc.instance:sendAct168EnterEpisodeRequest(VersionActivity2_2Enum.ActivityId.Lopera, arg_12_1, arg_12_0._onEnterGameReply, arg_12_0)
-	Activity168Rpc.instance:SetGameSettlePushCallback(arg_12_0._onGameResultPush, arg_12_0)
-	Activity168Rpc.instance:SetEpisodePushCallback(arg_12_0._onEpisodeUpdate, arg_12_0)
+	Activity168Rpc.instance:sendAct168EnterEpisodeRequest(VersionActivity2_2Enum.ActivityId.Lopera, episodeId, self._onEnterGameReply, self)
+	Activity168Rpc.instance:SetGameSettlePushCallback(self._onGameResultPush, self)
+	Activity168Rpc.instance:SetEpisodePushCallback(self._onEpisodeUpdate, self)
 end
 
-function var_0_0.finishStoryPlay(arg_13_0)
-	Activity168Rpc.instance:sendAct168StoryRequest(VersionActivity2_2Enum.ActivityId.Lopera, arg_13_0._onEpisodeUpdate, arg_13_0)
+function LoperaController:finishStoryPlay()
+	Activity168Rpc.instance:sendAct168StoryRequest(VersionActivity2_2Enum.ActivityId.Lopera, self._onEpisodeUpdate, self)
 end
 
-function var_0_0.moveToDir(arg_14_0, arg_14_1)
-	arg_14_0._moveTime = arg_14_0._moveTime + 1
+function LoperaController:moveToDir(dir)
+	self._moveTime = self._moveTime + 1
 
 	Activity168Model.instance:clearItemChangeDict()
-	Activity168Rpc.instance:sendAct168GameMoveRequest(VersionActivity2_2Enum.ActivityId.Lopera, arg_14_1, arg_14_0._onMoveDirReply, arg_14_0)
+	Activity168Rpc.instance:sendAct168GameMoveRequest(VersionActivity2_2Enum.ActivityId.Lopera, dir, self._onMoveDirReply, self)
 end
 
-function var_0_0.selectOption(arg_15_0, arg_15_1)
-	arg_15_0:saveOptionChoosed(arg_15_1)
+function LoperaController:selectOption(optionId)
+	self:saveOptionChoosed(optionId)
 
-	arg_15_0._finishEventNum = arg_15_0._finishEventNum + 1
+	self._finishEventNum = self._finishEventNum + 1
 
 	Activity168Model.instance:clearItemChangeDict()
-	Activity168Rpc.instance:sendAct168GameSelectOptionRequest(VersionActivity2_2Enum.ActivityId.Lopera, arg_15_1, arg_15_0._onSelectOptionReply, arg_15_0)
+	Activity168Rpc.instance:sendAct168GameSelectOptionRequest(VersionActivity2_2Enum.ActivityId.Lopera, optionId, self._onSelectOptionReply, self)
 end
 
-function var_0_0.startBattle(arg_16_0)
+function LoperaController:startBattle()
 	Activity168Rpc.instance:sendStartAct168BattleRequest(VersionActivity2_2Enum.ActivityId.Lopera)
 end
 
-function var_0_0.composeItem(arg_17_0, arg_17_1)
+function LoperaController:composeItem(composeType)
 	Activity168Model.instance:clearItemChangeDict()
-	Activity168Rpc.instance:sendAct168GameComposeItemRequest(var_0_1, arg_17_1, arg_17_0._onComposeDone, arg_17_0)
+	Activity168Rpc.instance:sendAct168GameComposeItemRequest(actId, composeType, self._onComposeDone, self)
 end
 
-function var_0_0.abortEpisode(arg_18_0)
-	Activity168Rpc.instance:sendAct168GameSettleRequest(VersionActivity2_2Enum.ActivityId.Lopera, arg_18_0._onEpisodeUpdate, arg_18_0)
+function LoperaController:abortEpisode()
+	Activity168Rpc.instance:sendAct168GameSettleRequest(VersionActivity2_2Enum.ActivityId.Lopera, self._onEpisodeUpdate, self)
 end
 
-function var_0_0.gameResultOver(arg_19_0)
-	arg_19_0:dispatchEvent(LoperaEvent.ExitGame)
+function LoperaController:gameResultOver()
+	self:dispatchEvent(LoperaEvent.ExitGame)
 end
 
-function var_0_0._onEnterGameReply(arg_20_0)
-	local var_20_0 = Activity168Config.instance:getEpisodeCfg(var_0_1, arg_20_0._curEnterEpisode)
-	local var_20_1 = var_20_0.mapId
+function LoperaController:_onEnterGameReply()
+	local episodeCfg = Activity168Config.instance:getEpisodeCfg(actId, self._curEnterEpisode)
+	local curMapId = episodeCfg.mapId
 
-	if var_20_1 ~= 0 then
-		Activity168Config.instance:InitMapCfg(var_20_1)
+	if curMapId ~= 0 then
+		Activity168Config.instance:InitMapCfg(curMapId)
 	end
 
-	if var_20_0.episodeType == LoperaEnum.EpisodeType.ExploreEndless then
-		Activity168Model.instance:setCurEpisodeId(arg_20_0._curEnterEpisode)
-		arg_20_0:openLoperaLevelView()
+	if episodeCfg.episodeType == LoperaEnum.EpisodeType.ExploreEndless then
+		Activity168Model.instance:setCurEpisodeId(self._curEnterEpisode)
+		self:openLoperaLevelView()
 	else
-		arg_20_0:dispatchEvent(LoperaEvent.EnterEpisode, arg_20_0._curEnterEpisode)
+		self:dispatchEvent(LoperaEvent.EnterEpisode, self._curEnterEpisode)
 	end
 
-	local var_20_2 = Activity168Model.instance:getCurGameState()
-	local var_20_3 = var_20_2.round
+	local gameState = Activity168Model.instance:getCurGameState()
+	local roundNum = gameState.round
 
-	arg_20_0._moveTime = 0
-	arg_20_0._finishEventNum = var_20_2.eventId ~= 0 and var_20_2.option <= 0 and var_20_3 - 2 or var_20_3 - 1
+	self._moveTime = 0
 
-	arg_20_0:initStatData(arg_20_0._curEnterEpisode)
+	local haveOption = gameState.eventId ~= 0 and gameState.option <= 0
+
+	self._finishEventNum = haveOption and roundNum - 2 or roundNum - 1
+
+	self:initStatData(self._curEnterEpisode)
 end
 
-function var_0_0._onMoveDirReply(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0:dispatchEvent(LoperaEvent.EpisodeMove)
+function LoperaController:_onMoveDirReply(resultCode, msg)
+	self:dispatchEvent(LoperaEvent.EpisodeMove)
 end
 
-function var_0_0._onSelectOptionReply(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0:dispatchEvent(LoperaEvent.SelectOption)
+function LoperaController:_onSelectOptionReply(resultCode, msg)
+	self:dispatchEvent(LoperaEvent.SelectOption)
 end
 
-function var_0_0._onEpisodeUpdate(arg_23_0)
-	arg_23_0:dispatchEvent(LoperaEvent.EpisodeUpdate)
+function LoperaController:_onEpisodeUpdate()
+	self:dispatchEvent(LoperaEvent.EpisodeUpdate)
 end
 
-function var_0_0._onComposeDone(arg_24_0)
-	arg_24_0:dispatchEvent(LoperaEvent.ComposeDone)
+function LoperaController:_onComposeDone()
+	self:dispatchEvent(LoperaEvent.ComposeDone)
 end
 
-function var_0_0._checkCanPlayStory(arg_25_0, arg_25_1)
-	if arg_25_1 and arg_25_1 ~= 0 and not StoryModel.instance:isStoryHasPlayed(arg_25_1) then
+function LoperaController:_checkCanPlayStory(storyId)
+	if storyId and storyId ~= 0 and not StoryModel.instance:isStoryHasPlayed(storyId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._onGameResultPush(arg_26_0, arg_26_1)
-	arg_26_0:dispatchEvent(LoperaEvent.EpisodeFinish, arg_26_1)
+function LoperaController:_onGameResultPush(resultData)
+	self:dispatchEvent(LoperaEvent.EpisodeFinish, resultData)
 
-	local var_26_0 = arg_26_1.episodeId
-	local var_26_1 = arg_26_1.power
-	local var_26_2 = arg_26_1.cellCount
-	local var_26_3 = arg_26_1.settleReason
-	local var_26_4 = arg_26_1.totalItems
-	local var_26_5 = {}
-	local var_26_6 = {}
+	local episodeId = resultData.episodeId
+	local remainPower = resultData.power
+	local cellCount = resultData.cellCount
+	local resultId = resultData.settleReason
+	local totalItems = resultData.totalItems
+	local materials = {}
+	local products = {}
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_4) do
-		local var_26_7 = Activity168Config.instance:getGameItemCfg(var_0_1, iter_26_1.itemId)
+	for i, item in ipairs(totalItems) do
+		local itemCfg = Activity168Config.instance:getGameItemCfg(actId, item.itemId)
 
-		if var_26_7.type == LoperaEnum.ItemType.Material then
-			local var_26_8 = {
-				alchemy_stuff = var_26_7.name,
-				alchemy_stuff_num = iter_26_1.count
-			}
+		if itemCfg.type == LoperaEnum.ItemType.Material then
+			local itemInfo = {}
 
-			var_26_5[#var_26_5 + 1] = var_26_8
+			itemInfo.alchemy_stuff = itemCfg.name
+			itemInfo.alchemy_stuff_num = item.count
+			materials[#materials + 1] = itemInfo
 		else
-			local var_26_9 = {
-				alchemy_prop = var_26_7.name,
-				alchemy_prop_num = iter_26_1.count
-			}
+			local itemInfo = {}
 
-			var_26_6[#var_26_6 + 1] = var_26_9
+			itemInfo.alchemy_prop = itemCfg.name
+			itemInfo.alchemy_prop_num = item.count
+			products[#products + 1] = itemInfo
 		end
 	end
 
-	arg_26_0:fillStatInfo(arg_26_0._curEnterEpisode)
-	arg_26_0:sendStat()
+	self:fillStatInfo(self._curEnterEpisode)
+	self:sendStat()
 end
 
-function var_0_0.sendStatOnHomeClick(arg_27_0)
-	local var_27_0 = Activity168Model.instance:getCurGameState()
-	local var_27_1 = arg_27_0._curEnterEpisode
-	local var_27_2 = var_27_0.power
-	local var_27_3 = var_27_0.round
-	local var_27_4 = 3
-	local var_27_5 = var_27_0.totalAct168Items
-	local var_27_6 = {}
-	local var_27_7 = {}
+function LoperaController:sendStatOnHomeClick()
+	local gameState = Activity168Model.instance:getCurGameState()
+	local episodeId = self._curEnterEpisode
+	local remainPower = gameState.power
+	local cellCount = gameState.round
+	local resultId = 3
+	local totalItems = gameState.totalAct168Items
+	local materials = {}
+	local products = {}
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_5) do
-		local var_27_8 = Activity168Config.instance:getGameItemCfg(var_0_1, iter_27_1.itemId)
+	for i, item in ipairs(totalItems) do
+		local itemCfg = Activity168Config.instance:getGameItemCfg(actId, item.itemId)
 
-		if var_27_8.type == LoperaEnum.ItemType.Material then
-			local var_27_9 = {
-				alchemy_stuff = var_27_8.name,
-				alchemy_stuff_num = iter_27_1.count
-			}
+		if itemCfg.type == LoperaEnum.ItemType.Material then
+			local itemInfo = {}
 
-			var_27_6[#var_27_6 + 1] = var_27_9
+			itemInfo.alchemy_stuff = itemCfg.name
+			itemInfo.alchemy_stuff_num = item.count
+			materials[#materials + 1] = itemInfo
 		else
-			local var_27_10 = {
-				alchemy_prop = var_27_8.name,
-				alchemy_prop_num = iter_27_1.count
-			}
+			local itemInfo = {}
 
-			var_27_7[#var_27_7 + 1] = var_27_10
+			itemInfo.alchemy_prop = itemCfg.name
+			itemInfo.alchemy_prop_num = item.count
+			products[#products + 1] = itemInfo
 		end
 	end
 
-	arg_27_0:fillStatInfo(var_27_1, var_27_4, arg_27_0._moveTime, arg_27_0._finishEventNum, var_27_2, var_27_3, var_27_6, var_27_7)
-	arg_27_0:sendStat()
+	self:fillStatInfo(episodeId, resultId, self._moveTime, self._finishEventNum, remainPower, cellCount, materials, products)
+	self:sendStat()
 end
 
-function var_0_0.checkCanCompose(arg_28_0, arg_28_1)
-	local var_28_0
-	local var_28_1 = Activity168Config.instance:getComposeTypeList(var_0_1)
+function LoperaController:checkCanCompose(composeType)
+	local curComposeTypeCfg
+	local typeCfgList = Activity168Config.instance:getComposeTypeList(actId)
 
-	for iter_28_0, iter_28_1 in ipairs(var_28_1) do
-		if iter_28_1.composeType == arg_28_1 then
-			var_28_0 = iter_28_1
+	for idx, composeTypeData in ipairs(typeCfgList) do
+		if composeTypeData.composeType == composeType then
+			curComposeTypeCfg = composeTypeData
 
 			break
 		end
 	end
 
-	local var_28_2 = string.split(var_28_0.costItems, "|")
+	local materialInfos = string.split(curComposeTypeCfg.costItems, "|")
 
-	for iter_28_2, iter_28_3 in ipairs(var_28_2) do
-		local var_28_3 = string.splitToNumber(iter_28_3, "#")
-		local var_28_4 = var_28_3[1]
+	for idx, materialInfo in ipairs(materialInfos) do
+		local materialInfoArray = string.splitToNumber(materialInfo, "#")
+		local materialId = materialInfoArray[1]
+		local materialRequire = materialInfoArray[2]
+		local count = Activity168Model.instance:getItemCount(materialId)
 
-		if var_28_3[2] > Activity168Model.instance:getItemCount(var_28_4) then
+		if count < materialRequire then
 			return false
 		end
 	end
@@ -252,72 +256,74 @@ function var_0_0.checkCanCompose(arg_28_0, arg_28_1)
 	return true
 end
 
-function var_0_0.checkAnyComposable(arg_29_0)
-	local var_29_0 = Activity168Config.instance:getComposeTypeList(var_0_1)
+function LoperaController:checkAnyComposable()
+	local typeCfgList = Activity168Config.instance:getComposeTypeList(actId)
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-		local var_29_1 = true
-		local var_29_2 = string.split(iter_29_1.costItems, "|")
+	for _, cfg in ipairs(typeCfgList) do
+		local canCompose = true
+		local materialInfos = string.split(cfg.costItems, "|")
 
-		for iter_29_2, iter_29_3 in ipairs(var_29_2) do
-			local var_29_3 = string.splitToNumber(iter_29_3, "#")
-			local var_29_4 = var_29_3[1]
+		for idx, materialInfo in ipairs(materialInfos) do
+			local materialInfoArray = string.splitToNumber(materialInfo, "#")
+			local materialId = materialInfoArray[1]
+			local materialRequire = materialInfoArray[2]
+			local count = Activity168Model.instance:getItemCount(materialId)
 
-			if var_29_3[2] > Activity168Model.instance:getItemCount(var_29_4) then
-				var_29_1 = false
+			if count < materialRequire then
+				canCompose = false
 
 				break
 			end
 		end
 
-		if var_29_1 then
+		if canCompose then
 			return true
 		end
 	end
 end
 
-function var_0_0.checkOptionChoosed(arg_30_0, arg_30_1)
-	if not arg_30_0._optionDescRecord then
-		arg_30_0._optionDescRecord = {}
-		arg_30_0._optionDescRecordStr = ""
-		arg_30_0._optionDescRecordStr = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.Version2_2LoperaOptionDesc, "")
+function LoperaController:checkOptionChoosed(optionId)
+	if not self._optionDescRecord then
+		self._optionDescRecord = {}
+		self._optionDescRecordStr = ""
+		self._optionDescRecordStr = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.Version2_2LoperaOptionDesc, "")
 
-		local var_30_0 = string.splitToNumber(arg_30_0._optionDescRecordStr, ",")
+		local optionIds = string.splitToNumber(self._optionDescRecordStr, ",")
 
-		for iter_30_0, iter_30_1 in pairs(var_30_0) do
-			arg_30_0._optionDescRecord[iter_30_1] = true
+		for _, id in pairs(optionIds) do
+			self._optionDescRecord[id] = true
 		end
 	end
 
-	return arg_30_0._optionDescRecord[arg_30_1]
+	return self._optionDescRecord[optionId]
 end
 
-function var_0_0.saveOptionChoosed(arg_31_0, arg_31_1)
-	arg_31_0._optionDescRecord[arg_31_1] = true
+function LoperaController:saveOptionChoosed(optionId)
+	self._optionDescRecord[optionId] = true
 
-	if string.nilorempty(arg_31_0._optionDescRecordStr) then
-		arg_31_0._optionDescRecordStr = arg_31_1
+	if string.nilorempty(self._optionDescRecordStr) then
+		self._optionDescRecordStr = optionId
 	else
-		arg_31_0._optionDescRecordStr = arg_31_0._optionDescRecordStr .. "," .. arg_31_1
+		self._optionDescRecordStr = self._optionDescRecordStr .. "," .. optionId
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2LoperaOptionDesc, arg_31_0._optionDescRecordStr)
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_2LoperaOptionDesc, self._optionDescRecordStr)
 end
 
-function var_0_0.initStatData(arg_32_0, arg_32_1)
-	arg_32_0.statMo = LoperaStatMo.New()
+function LoperaController:initStatData(episodeId)
+	self.statMo = LoperaStatMo.New()
 
-	arg_32_0.statMo:setEpisodeId(arg_32_1)
+	self.statMo:setEpisodeId(episodeId)
 end
 
-function var_0_0.fillStatInfo(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4, arg_33_5, arg_33_6, arg_33_7, arg_33_8)
-	arg_33_0.statMo:fillInfo(arg_33_1, arg_33_2, arg_33_3, arg_33_4, arg_33_5, arg_33_6, arg_33_7, arg_33_8)
+function LoperaController:fillStatInfo(episdoeId, result, roundNum, eventNum, remainPower, exploreNum, gainMaterial, product)
+	self.statMo:fillInfo(episdoeId, result, roundNum, eventNum, remainPower, exploreNum, gainMaterial, product)
 end
 
-function var_0_0.sendStat(arg_34_0)
-	arg_34_0.statMo:sendStatData()
+function LoperaController:sendStat()
+	self.statMo:sendStatData()
 end
 
-var_0_0.instance = var_0_0.New()
+LoperaController.instance = LoperaController.New()
 
-return var_0_0
+return LoperaController

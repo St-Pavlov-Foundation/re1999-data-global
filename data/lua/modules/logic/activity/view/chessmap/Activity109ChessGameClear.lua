@@ -1,38 +1,40 @@
-﻿module("modules.logic.activity.view.chessmap.Activity109ChessGameClear", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/chessmap/Activity109ChessGameClear.lua
 
-local var_0_0 = class("Activity109ChessGameClear", BaseView)
+module("modules.logic.activity.view.chessmap.Activity109ChessGameClear", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._gotaskitemcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_task/viewport/#go_taskitemcontent")
+local Activity109ChessGameClear = class("Activity109ChessGameClear", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity109ChessGameClear:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._gotaskitemcontent = gohelper.findChild(self.viewGO, "#scroll_task/viewport/#go_taskitemcontent")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity109ChessGameClear:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity109ChessGameClear:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getActivityBg("full/barqiandao_bj_009"))
+function Activity109ChessGameClear:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getActivityBg("full/barqiandao_bj_009"))
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0._simagebg:UnLoadImage()
+function Activity109ChessGameClear:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function Activity109ChessGameClear:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_7_0)
+function Activity109ChessGameClear:onClose()
 	return
 end
 
-return var_0_0
+return Activity109ChessGameClear

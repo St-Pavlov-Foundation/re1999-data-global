@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_dice_character", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_dice_character.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_dice_character", package.seeall)
+
+local lua_dice_character = {}
+local fields = {
 	relicIds = 7,
 	name = 2,
 	dicelist = 5,
@@ -14,16 +16,16 @@ local var_0_1 = {
 	id = 1,
 	icon = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_dice_character.onLoad(json)
+	lua_dice_character.configList, lua_dice_character.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_dice_character

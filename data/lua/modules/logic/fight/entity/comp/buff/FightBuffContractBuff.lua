@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffContractBuff", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffContractBuff.lua
 
-local var_0_0 = class("FightBuffContractBuff")
+module("modules.logic.fight.entity.comp.buff.FightBuffContractBuff", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightBuffContractBuff = class("FightBuffContractBuff")
+
+function FightBuffContractBuff:ctor()
 	return
 end
 
-function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
-	FightModel.instance:setContractEntityUid(arg_2_1.id)
+function FightBuffContractBuff:onBuffStart(entity, buffMO)
+	FightModel.instance:setContractEntityUid(entity.id)
 end
 
-function var_0_0.onBuffEnd(arg_3_0)
+function FightBuffContractBuff:onBuffEnd()
 	FightModel.instance:setContractEntityUid(nil)
 end
 
-return var_0_0
+return FightBuffContractBuff

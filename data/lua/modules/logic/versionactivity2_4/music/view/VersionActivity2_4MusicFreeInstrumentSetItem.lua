@@ -1,92 +1,94 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentSetItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeInstrumentSetItem.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeInstrumentSetItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentSetItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnroot = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_root")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#btn_root/#go_select")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "#btn_root/#go_unselect")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_root/#image_icon")
-	arg_1_0._imageselectframe = gohelper.findChildImage(arg_1_0.viewGO, "#btn_root/#image_selectframe")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_root/#btn_click")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+local VersionActivity2_4MusicFreeInstrumentSetItem = class("VersionActivity2_4MusicFreeInstrumentSetItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeInstrumentSetItem:onInitView()
+	self._btnroot = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_root")
+	self._goselect = gohelper.findChild(self.viewGO, "#btn_root/#go_select")
+	self._gounselect = gohelper.findChild(self.viewGO, "#btn_root/#go_unselect")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#btn_root/#image_icon")
+	self._imageselectframe = gohelper.findChildImage(self.viewGO, "#btn_root/#image_selectframe")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_root/#btn_click")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnroot:AddClickListener(arg_2_0._btnrootOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function VersionActivity2_4MusicFreeInstrumentSetItem:addEvents()
+	self._btnroot:AddClickListener(self._btnrootOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnroot:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
+function VersionActivity2_4MusicFreeInstrumentSetItem:removeEvents()
+	self._btnroot:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._showIndex then
-		arg_4_0._parentView:removeInstrument(arg_4_0._mo.id)
+function VersionActivity2_4MusicFreeInstrumentSetItem:_btnclickOnClick()
+	if self._showIndex then
+		self._parentView:removeInstrument(self._mo.id)
 
 		return
 	end
 
-	arg_4_0._parentView:addInstrument(arg_4_0._mo.id)
+	self._parentView:addInstrument(self._mo.id)
 end
 
-function var_0_0._btnrootOnClick(arg_5_0)
+function VersionActivity2_4MusicFreeInstrumentSetItem:_btnrootOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function VersionActivity2_4MusicFreeInstrumentSetItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_7_0)
+function VersionActivity2_4MusicFreeInstrumentSetItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_8_0)
+function VersionActivity2_4MusicFreeInstrumentSetItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._mo = arg_9_1
-	arg_9_0._parentView = arg_9_2
-	arg_9_0._txtname.text = arg_9_0._mo.name
+function VersionActivity2_4MusicFreeInstrumentSetItem:onUpdateMO(mo, parent)
+	self._mo = mo
+	self._parentView = parent
+	self._txtname.text = self._mo.name
 
-	arg_9_0:updateIndex()
-	UISpriteSetMgr.instance:setMusicSprite(arg_9_0._imageicon, "v2a4_bakaluoer_freeinstrument_icon_t_" .. arg_9_1.icon)
+	self:updateIndex()
+	UISpriteSetMgr.instance:setMusicSprite(self._imageicon, "v2a4_bakaluoer_freeinstrument_icon_t_" .. mo.icon)
 end
 
-function var_0_0.updateIndex(arg_10_0)
-	local var_10_0 = tabletool.indexOf(arg_10_0._parentView._indexList, arg_10_0._mo.id)
+function VersionActivity2_4MusicFreeInstrumentSetItem:updateIndex()
+	local index = tabletool.indexOf(self._parentView._indexList, self._mo.id)
 
-	arg_10_0._showIndex = var_10_0 ~= nil
+	self._showIndex = index ~= nil
 
-	gohelper.setActive(arg_10_0._imageselectframe, arg_10_0._showIndex)
-	gohelper.setActive(arg_10_0._goselect, arg_10_0._showIndex)
-	gohelper.setActive(arg_10_0._gounselect, not arg_10_0._showIndex)
+	gohelper.setActive(self._imageselectframe, self._showIndex)
+	gohelper.setActive(self._goselect, self._showIndex)
+	gohelper.setActive(self._gounselect, not self._showIndex)
 
-	if arg_10_0._showIndex then
-		UISpriteSetMgr.instance:setMusicSprite(arg_10_0._imageselectframe, "v2a4_bakaluoer_freeinstrument_set_num" .. var_10_0)
+	if self._showIndex then
+		UISpriteSetMgr.instance:setMusicSprite(self._imageselectframe, "v2a4_bakaluoer_freeinstrument_set_num" .. index)
 	end
 
-	local var_10_1 = arg_10_0._imageicon.color
+	local color = self._imageicon.color
 
-	var_10_1.a = arg_10_0._showIndex and 1 or 0.35
-	arg_10_0._imageicon.color = var_10_1
-	arg_10_0._txtname.color = GameUtil.parseColor(arg_10_0._showIndex and "#ebf0f4" or "#728698")
+	color.a = self._showIndex and 1 or 0.35
+	self._imageicon.color = color
+	self._txtname.color = GameUtil.parseColor(self._showIndex and "#ebf0f4" or "#728698")
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
+function VersionActivity2_4MusicFreeInstrumentSetItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function VersionActivity2_4MusicFreeInstrumentSetItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeInstrumentSetItem

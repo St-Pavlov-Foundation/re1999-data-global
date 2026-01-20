@@ -1,27 +1,29 @@
-﻿module("modules.logic.chessgame.game.interact.ChessInteractObstacle", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/interact/ChessInteractObstacle.lua
 
-local var_0_0 = class("ChessInteractObstacle", ChessInteractBase)
+module("modules.logic.chessgame.game.interact.ChessInteractObstacle", package.seeall)
 
-function var_0_0.playBreakAnim(arg_1_0, arg_1_1, arg_1_2)
+local ChessInteractObstacle = class("ChessInteractObstacle", ChessInteractBase)
+
+function ChessInteractObstacle:playBreakAnim(callback, callbackObj)
 	logNormal("on playBreakAnim....")
 
-	if arg_1_1 and arg_1_2 then
-		arg_1_0:showDestoryAni(arg_1_1, arg_1_2)
+	if callback and callbackObj then
+		self:showDestoryAni(callback, callbackObj)
 	else
-		arg_1_0:showDestoryAni(arg_1_0.destroy, arg_1_0)
+		self:showDestoryAni(self.destroy, self)
 	end
 end
 
-function var_0_0.destroy(arg_2_0)
-	if arg_2_0._target.mo:isInCurrentMap() then
-		ChessGameController.instance:deleteInteractObj(arg_2_0._target.mo.id)
+function ChessInteractObstacle:destroy()
+	if self._target.mo:isInCurrentMap() then
+		ChessGameController.instance:deleteInteractObj(self._target.mo.id)
 	end
 end
 
-function var_0_0.withCatch(arg_3_0)
-	if arg_3_0._target.chessEffectObj and arg_3_0._target.chessEffectObj:getIsLoadEffect() then
-		arg_3_0._target.chessEffectObj:hideEffect()
+function ChessInteractObstacle:withCatch()
+	if self._target.chessEffectObj and self._target.chessEffectObj:getIsLoadEffect() then
+		self._target.chessEffectObj:hideEffect()
 	end
 end
 
-return var_0_0
+return ChessInteractObstacle

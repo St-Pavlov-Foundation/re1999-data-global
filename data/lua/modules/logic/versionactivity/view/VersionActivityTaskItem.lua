@@ -1,228 +1,228 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityTaskItem.lua
 
-local var_0_0 = class("VersionActivityTaskItem", ListScrollCell)
+module("modules.logic.versionactivity.view.VersionActivityTaskItem", package.seeall)
 
-var_0_0.episodeColor = "#C05216"
+local VersionActivityTaskItem = class("VersionActivityTaskItem", ListScrollCell)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_bg")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/info/#txt_desc")
-	arg_1_0._gomode = gohelper.findChild(arg_1_0.viewGO, "#go_normal/info/#go_mode")
-	arg_1_0._gostorymode1 = gohelper.findChild(arg_1_0.viewGO, "#go_normal/info/#go_mode/#go_storymode1")
-	arg_1_0._gostorymode2 = gohelper.findChild(arg_1_0.viewGO, "#go_normal/info/#go_mode/#go_storymode2")
-	arg_1_0._gostorymode3 = gohelper.findChild(arg_1_0.viewGO, "#go_normal/info/#go_mode/#go_storymode3")
-	arg_1_0._gohardmode = gohelper.findChild(arg_1_0.viewGO, "#go_normal/info/#go_mode/#go_hardmode")
-	arg_1_0._txtremaindesc = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/info/#txt_remaindesc")
-	arg_1_0._txtpointcount = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_pointcount")
-	arg_1_0._txtcurprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_curprogress")
-	arg_1_0._txttotalprogress = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_totalprogress")
-	arg_1_0._imagefull = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/progress/probarbg/#image_full")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_jump")
-	arg_1_0._btnreceive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_receive")
-	arg_1_0._btnhasgot = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_hasgot")
-	arg_1_0._gofinishmask = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_finishmask")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
-	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0._gogetall, "bg")
-	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0._gogetall, "#btn_getall")
-	arg_1_0._txtrewardcount = gohelper.findChildText(arg_1_0._gogetall, "#txt_pointcount")
+VersionActivityTaskItem.episodeColor = "#C05216"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityTaskItem:init(go)
+	self.viewGO = go
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_bg")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_normal/info/#txt_desc")
+	self._gomode = gohelper.findChild(self.viewGO, "#go_normal/info/#go_mode")
+	self._gostorymode1 = gohelper.findChild(self.viewGO, "#go_normal/info/#go_mode/#go_storymode1")
+	self._gostorymode2 = gohelper.findChild(self.viewGO, "#go_normal/info/#go_mode/#go_storymode2")
+	self._gostorymode3 = gohelper.findChild(self.viewGO, "#go_normal/info/#go_mode/#go_storymode3")
+	self._gohardmode = gohelper.findChild(self.viewGO, "#go_normal/info/#go_mode/#go_hardmode")
+	self._txtremaindesc = gohelper.findChildText(self.viewGO, "#go_normal/info/#txt_remaindesc")
+	self._txtpointcount = gohelper.findChildText(self.viewGO, "#go_normal/#txt_pointcount")
+	self._txtcurprogress = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_curprogress")
+	self._txttotalprogress = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_totalprogress")
+	self._imagefull = gohelper.findChildImage(self.viewGO, "#go_normal/progress/probarbg/#image_full")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_jump")
+	self._btnreceive = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_receive")
+	self._btnhasgot = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_hasgot")
+	self._gofinishmask = gohelper.findChild(self.viewGO, "#go_normal/#go_finishmask")
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._gogetall = gohelper.findChild(self.viewGO, "#go_getall")
+	self._simagegetallbg = gohelper.findChildSingleImage(self._gogetall, "bg")
+	self._btngetall = gohelper.findChildButtonWithAudio(self._gogetall, "#btn_getall")
+	self._txtrewardcount = gohelper.findChildText(self._gogetall, "#txt_pointcount")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0._btnreceive:AddClickListener(arg_2_0._btnreceiveOnClick, arg_2_0)
-	arg_2_0._btnhasgot:AddClickListener(arg_2_0._btnhasgotOnClick, arg_2_0)
-	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
+function VersionActivityTaskItem:addEventListeners()
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
+	self._btnreceive:AddClickListener(self._btnreceiveOnClick, self)
+	self._btnhasgot:AddClickListener(self._btnhasgotOnClick, self)
+	self._btngetall:AddClickListener(self._btngetallOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnjump:RemoveClickListener()
-	arg_3_0._btnreceive:RemoveClickListener()
-	arg_3_0._btnhasgot:RemoveClickListener()
-	arg_3_0._btngetall:RemoveClickListener()
+function VersionActivityTaskItem:removeEventListeners()
+	self._btnjump:RemoveClickListener()
+	self._btnreceive:RemoveClickListener()
+	self._btnhasgot:RemoveClickListener()
+	self._btngetall:RemoveClickListener()
 end
 
-function var_0_0._btnjumpOnClick(arg_4_0)
-	if arg_4_0.co.jumpId ~= 0 then
+function VersionActivityTaskItem:_btnjumpOnClick()
+	if self.co.jumpId ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
 
-		if GameFacade.jump(arg_4_0.co.jumpId) then
+		if GameFacade.jump(self.co.jumpId) then
 			ViewMgr.instance:closeView(ViewName.VersionActivityTaskView)
 		end
 	end
 end
 
-function var_0_0._btnhasgotOnClick(arg_5_0)
+function VersionActivityTaskItem:_btnhasgotOnClick()
 	return
 end
 
-function var_0_0._btngetallOnClick(arg_6_0)
-	arg_6_0:_btnreceiveOnClick()
+function VersionActivityTaskItem:_btngetallOnClick()
+	self:_btnreceiveOnClick()
 end
 
-var_0_0.FinishAnimationBlockKey = "FinishAnimationBlockKey"
+VersionActivityTaskItem.FinishAnimationBlockKey = "FinishAnimationBlockKey"
 
-function var_0_0._btnreceiveOnClick(arg_7_0)
-	if arg_7_0.taskMo.getAll then
-		arg_7_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_7_0._gogetall)
+function VersionActivityTaskItem:_btnreceiveOnClick()
+	if self.taskMo.getAll then
+		self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gogetall)
 	else
-		arg_7_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_7_0._gonormal)
+		self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gonormal)
 	end
 
-	gohelper.setActive(arg_7_0._gofinishmask, true)
+	gohelper.setActive(self._gofinishmask, true)
 
-	arg_7_0._animator.speed = 1
+	self._animator.speed = 1
 
-	UIBlockMgr.instance:startBlock(var_0_0.FinishAnimationBlockKey)
-	arg_7_0.animatorPlayer:Play("finish", arg_7_0.onFinishFirstPartAnimationDone, arg_7_0)
+	UIBlockMgr.instance:startBlock(VersionActivityTaskItem.FinishAnimationBlockKey)
+	self.animatorPlayer:Play("finish", self.onFinishFirstPartAnimationDone, self)
 end
 
-function var_0_0.onFinishFirstPartAnimationDone(arg_8_0)
-	arg_8_0._view.viewContainer.taskAnimRemoveItem:removeByIndex(arg_8_0._index, arg_8_0.onFinishSecondPartAnimationDone, arg_8_0)
+function VersionActivityTaskItem:onFinishFirstPartAnimationDone()
+	self._view.viewContainer.taskAnimRemoveItem:removeByIndex(self._index, self.onFinishSecondPartAnimationDone, self)
 end
 
-function var_0_0.onFinishSecondPartAnimationDone(arg_9_0)
+function VersionActivityTaskItem:onFinishSecondPartAnimationDone()
 	VersionActivityTaskBonusListModel.instance:recordPrefixActivityPointCount()
 
-	if arg_9_0.taskMo.getAll then
-		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.ActivityDungeon, nil, nil, arg_9_0.onReceiveReply, arg_9_0, VersionActivityEnum.ActivityId.Act113)
+	if self.taskMo.getAll then
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.ActivityDungeon, nil, nil, self.onReceiveReply, self, VersionActivityEnum.ActivityId.Act113)
 	else
-		TaskRpc.instance:sendFinishTaskRequest(arg_9_0.co.id, arg_9_0.onReceiveReply, arg_9_0)
+		TaskRpc.instance:sendFinishTaskRequest(self.co.id, self.onReceiveReply, self)
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.FinishAnimationBlockKey)
+	UIBlockMgr.instance:endBlock(VersionActivityTaskItem.FinishAnimationBlockKey)
 end
 
-function var_0_0.onReceiveReply(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 == 0 then
+function VersionActivityTaskItem:onReceiveReply(cmd, resultCode, msg)
+	if resultCode == 0 then
 		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnReceiveFinishTaskReply)
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._simagebg:LoadImage(ResUrl.getVersionActivityIcon("img_di2"))
+function VersionActivityTaskItem:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getVersionActivityIcon("img_di2"))
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
-	arg_12_0.taskMo = arg_12_1
+function VersionActivityTaskItem:onUpdateMO(taskMo)
+	self.taskMo = taskMo
 
-	gohelper.setActive(arg_12_0._gonormal, not arg_12_0.taskMo.getAll)
-	gohelper.setActive(arg_12_0._gogetall, arg_12_0.taskMo.getAll)
+	gohelper.setActive(self._gonormal, not self.taskMo.getAll)
+	gohelper.setActive(self._gogetall, self.taskMo.getAll)
 
-	if arg_12_0.taskMo.getAll then
-		arg_12_0:refreshGetAllUI()
+	if self.taskMo.getAll then
+		self:refreshGetAllUI()
 
-		arg_12_0._animator = arg_12_0._gogetall:GetComponent(typeof(UnityEngine.Animator))
+		self._animator = self._gogetall:GetComponent(typeof(UnityEngine.Animator))
 	else
-		arg_12_0:refreshNormalUI()
+		self:refreshNormalUI()
 
-		arg_12_0._animator = arg_12_0._gonormal:GetComponent(typeof(UnityEngine.Animator))
+		self._animator = self._gonormal:GetComponent(typeof(UnityEngine.Animator))
 	end
 end
 
-function var_0_0.refreshNormalUI(arg_13_0)
-	arg_13_0.co = arg_13_0.taskMo.config
+function VersionActivityTaskItem:refreshNormalUI()
+	self.co = self.taskMo.config
 
-	arg_13_0:refreshDesc()
+	self:refreshDesc()
 
-	arg_13_0._txtpointcount.text = luaLang("multiple") .. arg_13_0.co.activity
-	arg_13_0._txtcurprogress.text = arg_13_0.taskMo.progress
-	arg_13_0._txttotalprogress.text = arg_13_0.co.maxProgress
-	arg_13_0._imagefull.fillAmount = arg_13_0.taskMo.progress / arg_13_0.co.maxProgress
+	self._txtpointcount.text = luaLang("multiple") .. self.co.activity
+	self._txtcurprogress.text = self.taskMo.progress
+	self._txttotalprogress.text = self.co.maxProgress
+	self._imagefull.fillAmount = self.taskMo.progress / self.co.maxProgress
 
-	if arg_13_0.taskMo.finishCount >= arg_13_0.co.maxFinishCount then
-		gohelper.setActive(arg_13_0._btnjump.gameObject, false)
-		gohelper.setActive(arg_13_0._btnreceive.gameObject, false)
-		gohelper.setActive(arg_13_0._btnhasgot.gameObject, true)
-		gohelper.setActive(arg_13_0._gofinishmask, true)
-	elseif arg_13_0.taskMo.hasFinished then
-		gohelper.setActive(arg_13_0._btnreceive.gameObject, true)
-		gohelper.setActive(arg_13_0._btnjump.gameObject, false)
-		gohelper.setActive(arg_13_0._btnhasgot.gameObject, false)
-		gohelper.setActive(arg_13_0._gofinishmask, false)
+	if self.taskMo.finishCount >= self.co.maxFinishCount then
+		gohelper.setActive(self._btnjump.gameObject, false)
+		gohelper.setActive(self._btnreceive.gameObject, false)
+		gohelper.setActive(self._btnhasgot.gameObject, true)
+		gohelper.setActive(self._gofinishmask, true)
+	elseif self.taskMo.hasFinished then
+		gohelper.setActive(self._btnreceive.gameObject, true)
+		gohelper.setActive(self._btnjump.gameObject, false)
+		gohelper.setActive(self._btnhasgot.gameObject, false)
+		gohelper.setActive(self._gofinishmask, false)
 	else
-		gohelper.setActive(arg_13_0._btnjump.gameObject, true)
-		gohelper.setActive(arg_13_0._btnreceive.gameObject, false)
-		gohelper.setActive(arg_13_0._btnhasgot.gameObject, false)
-		gohelper.setActive(arg_13_0._gofinishmask, false)
+		gohelper.setActive(self._btnjump.gameObject, true)
+		gohelper.setActive(self._btnreceive.gameObject, false)
+		gohelper.setActive(self._btnhasgot.gameObject, false)
+		gohelper.setActive(self._gofinishmask, false)
 	end
 end
 
-function var_0_0.refreshDesc(arg_14_0)
-	local var_14_0 = arg_14_0.co.desc
-	local var_14_1, var_14_2, var_14_3 = string.match(var_14_0, "(.-)%[(.-)%](.+)")
-	local var_14_4 = false
+function VersionActivityTaskItem:refreshDesc()
+	local globalDesc = self.co.desc
+	local prefixDesc, mode, suffixDesc = string.match(globalDesc, "(.-)%[(.-)%](.+)")
+	local hasMode = false
 
-	if var_14_2 then
-		arg_14_0:clearModeStatus()
+	if mode then
+		self:clearModeStatus()
 
-		if var_14_2 == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Story1]) then
-			gohelper.setActive(arg_14_0._gostorymode1, true)
+		if mode == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Story1]) then
+			gohelper.setActive(self._gostorymode1, true)
 
-			var_14_4 = true
-		elseif var_14_2 == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Story2]) then
-			gohelper.setActive(arg_14_0._gostorymode2, true)
+			hasMode = true
+		elseif mode == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Story2]) then
+			gohelper.setActive(self._gostorymode2, true)
 
-			var_14_4 = true
-		elseif var_14_2 == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Story3]) then
-			gohelper.setActive(arg_14_0._gostorymode3, true)
+			hasMode = true
+		elseif mode == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Story3]) then
+			gohelper.setActive(self._gostorymode3, true)
 
-			var_14_4 = true
-		elseif var_14_2 == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Hard]) then
-			gohelper.setActive(arg_14_0._gohardmode, true)
+			hasMode = true
+		elseif mode == luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[VersionActivityDungeonBaseEnum.DungeonMode.Hard]) then
+			gohelper.setActive(self._gohardmode, true)
 
-			var_14_4 = true
+			hasMode = true
 		end
 	end
 
-	var_14_1 = var_14_1 or arg_14_0.co.desc
+	prefixDesc = prefixDesc or self.co.desc
+	prefixDesc = string.gsub(prefixDesc, "(TRC%-%d+)", "<color=#C05216>%1</color>")
+	self._txtdesc.text = prefixDesc
 
-	local var_14_5 = string.gsub(var_14_1, "(TRC%-%d+)", "<color=#C05216>%1</color>")
+	gohelper.setActive(self._gomode, hasMode)
 
-	arg_14_0._txtdesc.text = var_14_5
-
-	gohelper.setActive(arg_14_0._gomode, var_14_4)
-
-	if var_14_4 then
-		arg_14_0._txtremaindesc.text = var_14_3
+	if hasMode then
+		self._txtremaindesc.text = suffixDesc
 	else
-		arg_14_0._txtremaindesc.text = ""
+		self._txtremaindesc.text = ""
 	end
 end
 
-function var_0_0.refreshGetAllUI(arg_15_0)
-	arg_15_0._simagegetallbg:LoadImage(ResUrl.getVersionActivityIcon("xuanzhong"))
+function VersionActivityTaskItem:refreshGetAllUI()
+	self._simagegetallbg:LoadImage(ResUrl.getVersionActivityIcon("xuanzhong"))
 
-	arg_15_0._txtrewardcount.text = string.format("<size=30>%s</size>%s", luaLang("multiple"), VersionActivityTaskListModel.instance:getFinishTaskActivityCount())
+	self._txtrewardcount.text = string.format("<size=30>%s</size>%s", luaLang("multiple"), VersionActivityTaskListModel.instance:getFinishTaskActivityCount())
 end
 
-function var_0_0.canGetReward(arg_16_0)
-	return arg_16_0.taskMo.finishCount < arg_16_0.co.maxFinishCount and arg_16_0.taskMo.hasFinished
+function VersionActivityTaskItem:canGetReward()
+	return self.taskMo.finishCount < self.co.maxFinishCount and self.taskMo.hasFinished
 end
 
-function var_0_0.getAnimator(arg_17_0)
-	return arg_17_0._animator
+function VersionActivityTaskItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.clearModeStatus(arg_18_0)
-	gohelper.setActive(arg_18_0._gostorymode1, false)
-	gohelper.setActive(arg_18_0._gostorymode2, false)
-	gohelper.setActive(arg_18_0._gostorymode3, false)
-	gohelper.setActive(arg_18_0._gohardmode, false)
+function VersionActivityTaskItem:clearModeStatus()
+	gohelper.setActive(self._gostorymode1, false)
+	gohelper.setActive(self._gostorymode2, false)
+	gohelper.setActive(self._gostorymode3, false)
+	gohelper.setActive(self._gohardmode, false)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0._simagebg:UnLoadImage()
-	arg_19_0._simagegetallbg:UnLoadImage()
+function VersionActivityTaskItem:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagegetallbg:UnLoadImage()
 
-	if arg_19_0.animatorPlayer then
-		arg_19_0.animatorPlayer:Stop()
+	if self.animatorPlayer then
+		self.animatorPlayer:Stop()
 	end
 end
 
-return var_0_0
+return VersionActivityTaskItem

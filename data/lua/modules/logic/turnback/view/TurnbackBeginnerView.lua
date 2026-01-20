@@ -1,38 +1,40 @@
-﻿module("modules.logic.turnback.view.TurnbackBeginnerView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackBeginnerView.lua
 
-local var_0_0 = class("TurnbackBeginnerView", BaseView)
+module("modules.logic.turnback.view.TurnbackBeginnerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
-	arg_1_0._scrollcategoryitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_category/#scroll_categoryitem")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "lefttitle/#txt_time")
-	arg_1_0._gomonthcard = gohelper.findChild(arg_1_0.viewGO, "#go_monthcard")
-	arg_1_0._simagemonthcardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_monthcard/#simage_monthcard")
-	arg_1_0._btnmonthcard = gohelper.findChildButton(arg_1_0.viewGO, "#go_monthcard/#btn_monthcard")
-	arg_1_0._txtmonthcard = gohelper.findChildText(arg_1_0.viewGO, "#go_monthcard/#simage_monthcard/#txt_monthcard")
+local TurnbackBeginnerView = class("TurnbackBeginnerView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackBeginnerView:onInitView()
+	self._gosubview = gohelper.findChild(self.viewGO, "#go_subview")
+	self._gocategory = gohelper.findChild(self.viewGO, "#go_category")
+	self._scrollcategoryitem = gohelper.findChildScrollRect(self.viewGO, "#go_category/#scroll_categoryitem")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._txttime = gohelper.findChildText(self.viewGO, "lefttitle/#txt_time")
+	self._gomonthcard = gohelper.findChild(self.viewGO, "#go_monthcard")
+	self._simagemonthcardicon = gohelper.findChildSingleImage(self.viewGO, "#go_monthcard/#simage_monthcard")
+	self._btnmonthcard = gohelper.findChildButton(self.viewGO, "#go_monthcard/#btn_monthcard")
+	self._txtmonthcard = gohelper.findChildText(self.viewGO, "#go_monthcard/#simage_monthcard/#txt_monthcard")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, arg_2_0.refreshView, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_2_0._refreshRemainTime, arg_2_0)
-	arg_2_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_2_0._onChargeBuySuccess, arg_2_0)
-	arg_2_0._btnmonthcard:AddClickListener(arg_2_0.onClickMonthCard, arg_2_0)
+function TurnbackBeginnerView:addEvents()
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, self.refreshView, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, self._refreshRemainTime, self)
+	self:addEventCb(PayController.instance, PayEvent.PayFinished, self._onChargeBuySuccess, self)
+	self._btnmonthcard:AddClickListener(self.onClickMonthCard, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, arg_3_0.refreshView, arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, arg_3_0._refreshRemainTime, arg_3_0)
-	arg_3_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_3_0._onChargeBuySuccess, arg_3_0)
-	arg_3_0._btnmonthcard:RemoveClickListener()
+function TurnbackBeginnerView:removeEvents()
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshBeginner, self.refreshView, self)
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshRemainTime, self._refreshRemainTime, self)
+	self:removeEventCb(PayController.instance, PayEvent.PayFinished, self._onChargeBuySuccess, self)
+	self._btnmonthcard:RemoveClickListener()
 end
 
-local var_0_1 = {
+local turnbackSubViewDict = {
 	[TurnbackEnum.ActivityId.SignIn] = ViewName.TurnbackSignInView,
 	[TurnbackEnum.ActivityId.TaskView] = ViewName.TurnbackTaskView,
 	[TurnbackEnum.ActivityId.DungeonShowView] = ViewName.TurnbackDungeonShowView,
@@ -40,115 +42,116 @@ local var_0_1 = {
 	[TurnbackEnum.ActivityId.RecommendView] = ViewName.TurnbackRecommendView
 }
 
-function var_0_0._editableInitView(arg_4_0)
+function TurnbackBeginnerView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickMonthCard(arg_5_0)
+function TurnbackBeginnerView:onClickMonthCard()
 	if TurnbackModel.instance:getMonthCardShowState() == false then
 		return
 	end
 
 	logNormal("onClickMonthCard")
 
-	local var_5_0 = TurnbackModel.instance:getCurTurnbackMo().config
-	local var_5_1 = StoreModel.instance:getGoodsMO(var_5_0.monthCardAddedId)
+	local turnBackMo = TurnbackModel.instance:getCurTurnbackMo()
+	local config = turnBackMo.config
+	local storePackageMo = StoreModel.instance:getGoodsMO(config.monthCardAddedId)
 
-	StoreController.instance:openPackageStoreGoodsView(var_5_1)
+	StoreController.instance:openPackageStoreGoodsView(storePackageMo)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function TurnbackBeginnerView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.turnbackId = arg_7_0.viewParam.turnbackId
+function TurnbackBeginnerView:onOpen()
+	self.turnbackId = self.viewParam.turnbackId
 
-	arg_7_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	arg_8_0.allActivityTab = TurnbackConfig.instance:getAllTurnbackSubModules(arg_8_0.turnbackId)
+function TurnbackBeginnerView:refreshView()
+	self.allActivityTab = TurnbackConfig.instance:getAllTurnbackSubModules(self.turnbackId)
 
-	if arg_8_0.allActivityTab == nil or GameUtil.getTabLen(arg_8_0.allActivityTab) == 0 then
-		arg_8_0:closeThis()
+	if self.allActivityTab == nil or GameUtil.getTabLen(self.allActivityTab) == 0 then
+		self:closeThis()
 	end
 
-	arg_8_0.allActivityTab = TurnbackModel.instance:removeUnExitCategory(arg_8_0.allActivityTab)
-	arg_8_0.subViewTab = {}
+	self.allActivityTab = TurnbackModel.instance:removeUnExitCategory(self.allActivityTab)
+	self.subViewTab = {}
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.allActivityTab) do
-		local var_8_0 = {
-			id = iter_8_1,
-			order = iter_8_0,
-			config = TurnbackConfig.instance:getTurnbackSubModuleCo(iter_8_1)
-		}
+	for index, v in pairs(self.allActivityTab) do
+		local o = {}
 
-		table.insert(arg_8_0.subViewTab, var_8_0)
+		o.id = v
+		o.order = index
+		o.config = TurnbackConfig.instance:getTurnbackSubModuleCo(v)
+
+		table.insert(self.subViewTab, o)
 	end
 
 	TurnbackBeginnerCategoryListModel.instance:setOpenViewTime()
-	TurnbackBeginnerCategoryListModel.instance:setCategoryList(arg_8_0.subViewTab)
-	arg_8_0:openSubView()
-	arg_8_0:_refreshRemainTime()
-	arg_8_0:_refreshMonthCardState()
+	TurnbackBeginnerCategoryListModel.instance:setCategoryList(self.subViewTab)
+	self:openSubView()
+	self:_refreshRemainTime()
+	self:_refreshMonthCardState()
 end
 
-function var_0_0.openSubView(arg_9_0)
-	if arg_9_0._viewName then
-		ViewMgr.instance:closeView(arg_9_0._viewName, true)
+function TurnbackBeginnerView:openSubView()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 	end
 
-	local var_9_0 = TurnbackModel.instance:getTargetCategoryId(arg_9_0.turnbackId)
+	local actId = TurnbackModel.instance:getTargetCategoryId(self.turnbackId)
 
-	arg_9_0._viewName = var_0_1[var_9_0]
+	self._viewName = turnbackSubViewDict[actId]
 
-	if var_9_0 ~= 0 then
-		TurnbackModel.instance:setTargetCategoryId(var_9_0)
+	if actId ~= 0 then
+		TurnbackModel.instance:setTargetCategoryId(actId)
 	end
 
-	local var_9_1 = {
-		parent = arg_9_0._gosubview,
-		actId = var_9_0
+	local viewParam = {
+		parent = self._gosubview,
+		actId = actId
 	}
 
-	ViewMgr.instance:openView(arg_9_0._viewName, var_9_1, true)
+	ViewMgr.instance:openView(self._viewName, viewParam, true)
 
-	arg_9_0.viewParam = nil
+	self.viewParam = nil
 end
 
-function var_0_0._refreshRemainTime(arg_10_0)
-	arg_10_0._txttime.text = TurnbackController.instance:refreshRemainTime()
+function TurnbackBeginnerView:_refreshRemainTime()
+	self._txttime.text = TurnbackController.instance:refreshRemainTime()
 end
 
-function var_0_0._onChargeBuySuccess(arg_11_0)
+function TurnbackBeginnerView:_onChargeBuySuccess()
 	TurnbackRpc.instance:sendGetTurnbackInfoRequest()
-	arg_11_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_11_0.onGetTurnBackInfo, arg_11_0)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self.onGetTurnBackInfo, self)
 end
 
-function var_0_0.onGetTurnBackInfo(arg_12_0)
-	arg_12_0:_refreshMonthCardState()
-	arg_12_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_12_0.onGetTurnBackInfo, arg_12_0)
+function TurnbackBeginnerView:onGetTurnBackInfo()
+	self:_refreshMonthCardState()
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self.onGetTurnBackInfo, self)
 end
 
-function var_0_0._refreshMonthCardState(arg_13_0)
-	local var_13_0 = TurnbackModel.instance:getMonthCardShowState()
+function TurnbackBeginnerView:_refreshMonthCardState()
+	local showMonthCard = TurnbackModel.instance:getMonthCardShowState()
 
-	gohelper.setActive(arg_13_0._gomonthcard, var_13_0)
+	gohelper.setActive(self._gomonthcard, showMonthCard)
 end
 
-function var_0_0.onClose(arg_14_0)
-	if arg_14_0._viewName then
-		ViewMgr.instance:closeView(arg_14_0._viewName, true)
+function TurnbackBeginnerView:onClose()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 
-		arg_14_0._viewName = nil
+		self._viewName = nil
 	end
 
 	TurnbackModel.instance:setTargetCategoryId(0)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function TurnbackBeginnerView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackBeginnerView

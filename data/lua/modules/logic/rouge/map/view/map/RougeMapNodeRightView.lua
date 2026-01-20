@@ -1,357 +1,362 @@
-﻿module("modules.logic.rouge.map.view.map.RougeMapNodeRightView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/map/RougeMapNodeRightView.lua
 
-local var_0_0 = class("RougeMapNodeRightView", BaseView)
+module("modules.logic.rouge.map.view.map.RougeMapNodeRightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtChapterName = gohelper.findChildText(arg_1_0.viewGO, "#go_node_right/Title/#txt_ChapterName")
-	arg_1_0._txtChapterNameEn = gohelper.findChildText(arg_1_0.viewGO, "#go_node_right/Title/#txt_ChapterNameEn")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_node_right/#txt_Desc")
-	arg_1_0._btnMoveBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_node_right/#btn_MoveBtn")
-	arg_1_0._gocareer = gohelper.findChild(arg_1_0.viewGO, "#go_node_right/#go_career")
-	arg_1_0._gocareeritem = gohelper.findChild(arg_1_0.viewGO, "#go_node_right/#go_career/bg/go_careeritem")
-	arg_1_0._simageDefaultPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_node_right/#go_DefaultPic")
-	arg_1_0._simageMonsterMaskPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_node_right/#go_MonsterMaskPic")
+local RougeMapNodeRightView = class("RougeMapNodeRightView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeMapNodeRightView:onInitView()
+	self._txtChapterName = gohelper.findChildText(self.viewGO, "#go_node_right/Title/#txt_ChapterName")
+	self._txtChapterNameEn = gohelper.findChildText(self.viewGO, "#go_node_right/Title/#txt_ChapterNameEn")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "#go_node_right/#txt_Desc")
+	self._btnMoveBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_node_right/#btn_MoveBtn")
+	self._gocareer = gohelper.findChild(self.viewGO, "#go_node_right/#go_career")
+	self._gocareeritem = gohelper.findChild(self.viewGO, "#go_node_right/#go_career/bg/go_careeritem")
+	self._simageDefaultPic = gohelper.findChildSingleImage(self.viewGO, "#go_node_right/#go_DefaultPic")
+	self._simageMonsterMaskPic = gohelper.findChildSingleImage(self.viewGO, "#go_node_right/#go_MonsterMaskPic")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnMoveBtn:AddClickListener(arg_2_0._btnMoveBtnOnClick, arg_2_0)
+function RougeMapNodeRightView:addEvents()
+	self._btnMoveBtn:AddClickListener(self._btnMoveBtnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnMoveBtn:RemoveClickListener()
+function RougeMapNodeRightView:removeEvents()
+	self._btnMoveBtn:RemoveClickListener()
 end
 
-function var_0_0._btnMoveBtnOnClick(arg_4_0)
-	if arg_4_0.nodeMo.arriveStatus == RougeMapEnum.Arrive.CanArrive then
+function RougeMapNodeRightView:_btnMoveBtnOnClick()
+	local status = self.nodeMo.arriveStatus
+
+	if status == RougeMapEnum.Arrive.CanArrive then
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onBeforeSendMoveRpc)
-		RougeRpc.instance:sendRougeRoundMoveRequest(arg_4_0.nodeMo.nodeId)
+		RougeRpc.instance:sendRougeRoundMoveRequest(self.nodeMo.nodeId)
 
 		return
 	end
 
-	RougeMapChoiceEventHelper.triggerEventHandle(arg_4_0.nodeMo)
+	RougeMapChoiceEventHelper.triggerEventHandle(self.nodeMo)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.goDefaultPic = arg_5_0._simageDefaultPic.gameObject
-	arg_5_0.goMonsterMaskPic = arg_5_0._simageMonsterMaskPic.gameObject
-	arg_5_0.goNodeRight = gohelper.findChild(arg_5_0.viewGO, "#go_node_right")
-	arg_5_0.rightAnimator = arg_5_0.goNodeRight:GetComponent(gohelper.Type_Animator)
-	arg_5_0.txtBtn = gohelper.findChildText(arg_5_0.viewGO, "#go_node_right/#btn_MoveBtn/txt_Move")
-	arg_5_0.txtBtnEn = gohelper.findChildText(arg_5_0.viewGO, "#go_node_right/#btn_MoveBtn/txt_MoveEn")
+function RougeMapNodeRightView:_editableInitView()
+	self.goDefaultPic = self._simageDefaultPic.gameObject
+	self.goMonsterMaskPic = self._simageMonsterMaskPic.gameObject
+	self.goNodeRight = gohelper.findChild(self.viewGO, "#go_node_right")
+	self.rightAnimator = self.goNodeRight:GetComponent(gohelper.Type_Animator)
+	self.txtBtn = gohelper.findChildText(self.viewGO, "#go_node_right/#btn_MoveBtn/txt_Move")
+	self.txtBtnEn = gohelper.findChildText(self.viewGO, "#go_node_right/#btn_MoveBtn/txt_MoveEn")
 
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectNode, arg_5_0.onSelectNode, arg_5_0)
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onNormalActorBeforeMove, arg_5_0.onNormalActorBeforeMove, arg_5_0)
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onActorMovingDone, arg_5_0.onActorMovingDone, arg_5_0)
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, arg_5_0.onChangeMapInfo, arg_5_0)
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onShowContinueFight, arg_5_0.onShowContinueFight, arg_5_0)
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, arg_5_0.onUpdateMapInfo, arg_5_0)
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onPopViewDone, arg_5_0.onPopViewDone, arg_5_0)
-	arg_5_0:addEventCb(RougeMapController.instance, RougeMapEvent.onClearInteract, arg_5_0.onClearInteract, arg_5_0)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectNode, self.onSelectNode, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onNormalActorBeforeMove, self.onNormalActorBeforeMove, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onActorMovingDone, self.onActorMovingDone, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onShowContinueFight, self.onShowContinueFight, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, self.onUpdateMapInfo, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onPopViewDone, self.onPopViewDone, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onClearInteract, self.onClearInteract, self)
 
-	arg_5_0.goCareerList = arg_5_0:getUserDataTb_()
-	arg_5_0.careerList = {}
+	self.goCareerList = self:getUserDataTb_()
+	self.careerList = {}
 
-	table.insert(arg_5_0.goCareerList, arg_5_0._gocareeritem)
-	arg_5_0:hideDescContainer()
+	table.insert(self.goCareerList, self._gocareeritem)
+	self:hideDescContainer()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:autoContinueEvent()
+function RougeMapNodeRightView:onOpen()
+	self:autoContinueEvent()
 end
 
-function var_0_0.autoContinueEvent(arg_7_0)
-	local var_7_0 = RougeMapModel.instance:getCurNode()
+function RougeMapNodeRightView:autoContinueEvent()
+	local curNode = RougeMapModel.instance:getCurNode()
 
-	if var_7_0 and var_7_0:isStartedEvent() then
-		arg_7_0:_triggerHandle()
+	if curNode and curNode:isStartedEvent() then
+		self:_triggerHandle()
 	end
 end
 
-function var_0_0.onUpdateMapInfo(arg_8_0)
-	if not arg_8_0.nodeMo then
+function RougeMapNodeRightView:onUpdateMapInfo()
+	if not self.nodeMo then
 		return
 	end
 
-	if arg_8_0.nodeMo.eventId == arg_8_0.eventId then
+	if self.nodeMo.eventId == self.eventId then
 		return
 	end
 
-	arg_8_0:updateData(arg_8_0.nodeMo)
-	arg_8_0:refreshRight()
+	self:updateData(self.nodeMo)
+	self:refreshRight()
 end
 
-function var_0_0.onChangeMapInfo(arg_9_0)
+function RougeMapNodeRightView:onChangeMapInfo()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectNode, nil)
 end
 
-function var_0_0.onSelectNode(arg_10_0, arg_10_1)
-	if not arg_10_1 then
-		arg_10_0:updateData()
-		arg_10_0:hideDescContainer()
+function RougeMapNodeRightView:onSelectNode(nodeMo)
+	if not nodeMo then
+		self:updateData()
+		self:hideDescContainer()
 
 		return
 	end
 
-	if arg_10_1 == arg_10_0.nodeMo then
+	if nodeMo == self.nodeMo then
 		return
 	end
 
-	arg_10_0:updateData(arg_10_1)
+	self:updateData(nodeMo)
 
-	if arg_10_0.nodeMo.arriveStatus == RougeMapEnum.Arrive.CanArrive then
-		arg_10_0:switchNode()
+	local status = self.nodeMo.arriveStatus
+
+	if status == RougeMapEnum.Arrive.CanArrive then
+		self:switchNode()
 	else
-		RougeMapChoiceEventHelper.triggerContinueEventHandle(arg_10_0.nodeMo)
+		RougeMapChoiceEventHelper.triggerContinueEventHandle(self.nodeMo)
 	end
 end
 
-function var_0_0.switchNode(arg_11_0)
-	arg_11_0.rightAnimator:Play("switch", 0, 0)
-	TaskDispatcher.cancelTask(arg_11_0.refreshRight, arg_11_0)
-	TaskDispatcher.runDelay(arg_11_0.refreshRight, arg_11_0, RougeMapEnum.WaitMapRightRefreshTime)
+function RougeMapNodeRightView:switchNode()
+	self.rightAnimator:Play("switch", 0, 0)
+	TaskDispatcher.cancelTask(self.refreshRight, self)
+	TaskDispatcher.runDelay(self.refreshRight, self, RougeMapEnum.WaitMapRightRefreshTime)
 end
 
-function var_0_0.onShowContinueFight(arg_12_0)
-	arg_12_0:refreshRight(true)
+function RougeMapNodeRightView:onShowContinueFight()
+	self:refreshRight(true)
 end
 
-function var_0_0.updateData(arg_13_0, arg_13_1)
-	if not arg_13_1 then
-		arg_13_0.nodeMo = nil
-		arg_13_0.eventCo = nil
-		arg_13_0.eventMo = nil
-		arg_13_0.eventId = nil
+function RougeMapNodeRightView:updateData(nodeMo)
+	if not nodeMo then
+		self.nodeMo = nil
+		self.eventCo = nil
+		self.eventMo = nil
+		self.eventId = nil
 
 		return
 	end
 
-	arg_13_0.nodeMo = arg_13_1
-	arg_13_0.eventCo = arg_13_0.nodeMo:getEventCo()
-	arg_13_0.eventMo = arg_13_0.nodeMo.eventMo
-	arg_13_0.eventId = arg_13_0.nodeMo.eventId
+	self.nodeMo = nodeMo
+	self.eventCo = self.nodeMo:getEventCo()
+	self.eventMo = self.nodeMo.eventMo
+	self.eventId = self.nodeMo.eventId
 end
 
-function var_0_0.refreshRight(arg_14_0, arg_14_1)
-	if not arg_14_0.eventCo then
+function RougeMapNodeRightView:refreshRight(showContinueFight)
+	if not self.eventCo then
 		return
 	end
 
-	arg_14_0._txtChapterName.text = arg_14_0.eventCo.name
-	arg_14_0._txtChapterNameEn.text = arg_14_0.eventCo.nameEn
-	arg_14_0._txtDesc.text = arg_14_0.eventCo.desc
+	self._txtChapterName.text = self.eventCo.name
+	self._txtChapterNameEn.text = self.eventCo.nameEn
+	self._txtDesc.text = self.eventCo.desc
 
-	arg_14_0:showDescContainer()
-	arg_14_0:refreshBtn(arg_14_1)
-	arg_14_0:refreshCareer()
-	arg_14_0:refreshPic()
+	self:showDescContainer()
+	self:refreshBtn(showContinueFight)
+	self:refreshCareer()
+	self:refreshPic()
 end
 
-function var_0_0.refreshCareer(arg_15_0)
-	local var_15_0 = arg_15_0.eventCo.type
+function RougeMapNodeRightView:refreshCareer()
+	local eventType = self.eventCo.type
 
-	if not var_15_0 then
-		gohelper.setActive(arg_15_0._gocareer, false)
+	if not eventType then
+		gohelper.setActive(self._gocareer, false)
 	end
 
-	local var_15_1 = RougeMapHelper.isFightEvent(var_15_0)
+	local isFight = RougeMapHelper.isFightEvent(eventType)
 
-	gohelper.setActive(arg_15_0._gocareer, var_15_1)
+	gohelper.setActive(self._gocareer, isFight)
 
-	if var_15_1 then
-		local var_15_2 = arg_15_0:getCareerList(arg_15_0.eventId)
+	if isFight then
+		local careerList = self:getCareerList(self.eventId)
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_2) do
-			local var_15_3 = arg_15_0.goCareerList[iter_15_0]
+		for i, career in ipairs(careerList) do
+			local go = self.goCareerList[i]
 
-			if not var_15_3 then
-				var_15_3 = gohelper.cloneInPlace(arg_15_0._gocareeritem)
+			if not go then
+				go = gohelper.cloneInPlace(self._gocareeritem)
 
-				table.insert(arg_15_0.goCareerList, var_15_3)
+				table.insert(self.goCareerList, go)
 			end
 
-			gohelper.setActive(var_15_3, true)
+			gohelper.setActive(go, true)
 
-			local var_15_4 = var_15_3:GetComponent(gohelper.Type_Image)
+			local image = go:GetComponent(gohelper.Type_Image)
 
-			UISpriteSetMgr.instance:setRougeSprite(var_15_4, "rouge_map_career_" .. iter_15_1)
+			UISpriteSetMgr.instance:setRougeSprite(image, "rouge_map_career_" .. career)
 		end
 
-		for iter_15_2 = #var_15_2 + 1, #arg_15_0.goCareerList do
-			gohelper.setActive(arg_15_0.goCareerList[iter_15_2], false)
+		for i = #careerList + 1, #self.goCareerList do
+			gohelper.setActive(self.goCareerList[i], false)
 		end
 	end
 end
 
-function var_0_0.getCareerList(arg_16_0, arg_16_1)
-	tabletool.clear(arg_16_0.careerList)
+function RougeMapNodeRightView:getCareerList(eventId)
+	tabletool.clear(self.careerList)
 
-	local var_16_0 = RougeMapConfig.instance:getFightEvent(arg_16_1)
+	local fightEventCo = RougeMapConfig.instance:getFightEvent(eventId)
 
-	if not var_16_0 then
-		return arg_16_0.careerList
+	if not fightEventCo then
+		return self.careerList
 	end
 
-	local var_16_1 = DungeonConfig.instance:getEpisodeCO(var_16_0.episodeId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(fightEventCo.episodeId)
 
-	if not var_16_1 then
-		return arg_16_0.careerList
+	if not episodeCo then
+		return self.careerList
 	end
 
-	local var_16_2 = lua_battle.configDict[var_16_1.battleId]
+	local battleCo = lua_battle.configDict[episodeCo.battleId]
 
-	if not var_16_2 then
-		return arg_16_0.careerList
+	if not battleCo then
+		return self.careerList
 	end
 
-	local var_16_3 = string.splitToNumber(var_16_2.monsterGroupIds, "#")
+	local monsterGroupIdList = string.splitToNumber(battleCo.monsterGroupIds, "#")
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_3) do
-		local var_16_4 = lua_monster_group.configDict[iter_16_1]
-		local var_16_5 = string.splitToNumber(var_16_4.monster, "#")
+	for _, groupId in ipairs(monsterGroupIdList) do
+		local groupCo = lua_monster_group.configDict[groupId]
+		local monsterIdList = string.splitToNumber(groupCo.monster, "#")
 
-		for iter_16_2, iter_16_3 in ipairs(var_16_5) do
-			local var_16_6 = lua_monster.configDict[iter_16_3].career
+		for _, monsterId in ipairs(monsterIdList) do
+			local monsterCo = lua_monster.configDict[monsterId]
+			local career = monsterCo.career
 
-			if not tabletool.indexOf(arg_16_0.careerList, var_16_6) then
-				table.insert(arg_16_0.careerList, var_16_6)
+			if not tabletool.indexOf(self.careerList, career) then
+				table.insert(self.careerList, career)
 			end
 		end
 	end
 
-	return arg_16_0.careerList
+	return self.careerList
 end
 
-function var_0_0.refreshPic(arg_17_0)
-	local var_17_0 = arg_17_0.eventCo.type
-	local var_17_1 = RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockShowPassFightMask, var_17_0)
-	local var_17_2 = RougeOutsideModel.instance:passedEventId(arg_17_0.eventId)
+function RougeMapNodeRightView:refreshPic()
+	local eventType = self.eventCo.type
+	local showMask = RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockShowPassFightMask, eventType)
+	local passed = RougeOutsideModel.instance:passedEventId(self.eventId)
 
-	if var_17_1 and var_17_2 then
-		arg_17_0:refreshMonsterPic()
+	if showMask and passed then
+		self:refreshMonsterPic()
 	else
-		arg_17_0:refreshDefaultPic()
+		self:refreshDefaultPic()
 	end
 end
 
-function var_0_0.refreshDefaultPic(arg_18_0)
-	gohelper.setActive(arg_18_0.goDefaultPic, true)
-	gohelper.setActive(arg_18_0.goMonsterMaskPic, false)
+function RougeMapNodeRightView:refreshDefaultPic()
+	gohelper.setActive(self.goDefaultPic, true)
+	gohelper.setActive(self.goMonsterMaskPic, false)
 
-	local var_18_0 = arg_18_0.eventCo.type
-	local var_18_1 = RougeMapEnum.EventDefaultPic[var_18_0]
+	local eventType = self.eventCo.type
+	local defaultPic = RougeMapEnum.EventDefaultPic[eventType]
 
-	if not var_18_1 then
-		logError("event type not config default pic " .. tostring(var_18_0))
+	if not defaultPic then
+		logError("event type not config default pic " .. tostring(eventType))
 
 		return
 	end
 
-	arg_18_0._simageDefaultPic:LoadImage(string.format(RougeMapEnum.PicFormat, var_18_1))
+	self._simageDefaultPic:LoadImage(string.format(RougeMapEnum.PicFormat, defaultPic))
 end
 
-function var_0_0.refreshMonsterPic(arg_19_0)
-	gohelper.setActive(arg_19_0.goDefaultPic, false)
-	gohelper.setActive(arg_19_0.goMonsterMaskPic, true)
+function RougeMapNodeRightView:refreshMonsterPic()
+	gohelper.setActive(self.goDefaultPic, false)
+	gohelper.setActive(self.goMonsterMaskPic, true)
 
-	local var_19_0 = RougeMapConfig.instance:getFightEvent(arg_19_0.eventId)
-	local var_19_1 = var_19_0 and var_19_0.monsterMask
+	local fightEventCo = RougeMapConfig.instance:getFightEvent(self.eventId)
+	local monsterMask = fightEventCo and fightEventCo.monsterMask
 
-	if string.nilorempty(var_19_1) then
-		arg_19_0:refreshDefaultPic()
+	if string.nilorempty(monsterMask) then
+		self:refreshDefaultPic()
 
 		return
 	end
 
-	arg_19_0._simageMonsterMaskPic:LoadImage(string.format(RougeMapEnum.RougeMapEnum.MonsterMaskFormat, var_19_1))
+	self._simageMonsterMaskPic:LoadImage(string.format(RougeMapEnum.RougeMapEnum.MonsterMaskFormat, monsterMask))
 end
 
-function var_0_0.onNormalActorBeforeMove(arg_20_0)
+function RougeMapNodeRightView:onNormalActorBeforeMove()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectNode, nil)
 end
 
-function var_0_0.onActorMovingDone(arg_21_0)
+function RougeMapNodeRightView:onActorMovingDone()
 	if not RougeMapModel.instance:isNormalLayer() then
 		return
 	end
 
-	arg_21_0:_triggerHandle()
+	self:_triggerHandle()
 end
 
-function var_0_0._triggerHandle(arg_22_0)
+function RougeMapNodeRightView:_triggerHandle()
 	if RougePopController.instance:hadPopView() then
-		arg_22_0.waitPopDone = true
+		self.waitPopDone = true
 
 		return
 	end
 
 	if RougeMapModel.instance:isInteractiving() then
-		arg_22_0.waitInteract = true
+		self.waitInteract = true
 
 		return
 	end
 
-	arg_22_0.waitPopDone = nil
-	arg_22_0.waitInteract = nil
+	self.waitPopDone = nil
+	self.waitInteract = nil
 
-	local var_22_0 = RougeMapModel.instance:getCurNode()
+	local nodeMo = RougeMapModel.instance:getCurNode()
 
-	RougeMapChoiceEventHelper.triggerEventHandle(var_22_0)
+	RougeMapChoiceEventHelper.triggerEventHandle(nodeMo)
 end
 
-function var_0_0.onClearInteract(arg_23_0)
-	if not arg_23_0.waitInteract then
+function RougeMapNodeRightView:onClearInteract()
+	if not self.waitInteract then
 		return
 	end
 
-	arg_23_0:_triggerHandle()
+	self:_triggerHandle()
 end
 
-function var_0_0.onPopViewDone(arg_24_0)
-	if not arg_24_0.waitPopDone then
+function RougeMapNodeRightView:onPopViewDone()
+	if not self.waitPopDone then
 		return
 	end
 
-	arg_24_0:_triggerHandle()
+	self:_triggerHandle()
 end
 
-function var_0_0.showDescContainer(arg_25_0)
-	gohelper.setActive(arg_25_0.goNodeRight, true)
+function RougeMapNodeRightView:showDescContainer()
+	gohelper.setActive(self.goNodeRight, true)
 end
 
-function var_0_0.refreshBtn(arg_26_0, arg_26_1)
-	local var_26_0
-	local var_26_1
-	local var_26_2
+function RougeMapNodeRightView:refreshBtn(showContinueFight)
+	local text, textEn
 
-	if arg_26_1 then
-		var_26_0 = luaLang("rougemapview_txt_Fight")
-		var_26_2 = "FIGHT"
+	if showContinueFight then
+		text = luaLang("rougemapview_txt_Fight")
+		textEn = "FIGHT"
 	else
-		var_26_0 = luaLang("rougemapview_txt_Move")
-		var_26_2 = "MOVE"
+		text = luaLang("rougemapview_txt_Move")
+		textEn = "MOVE"
 	end
 
-	arg_26_0.txtBtn.text = var_26_0
-	arg_26_0.txtBtnEn.text = var_26_2
+	self.txtBtn.text = text
+	self.txtBtnEn.text = textEn
 end
 
-function var_0_0.hideDescContainer(arg_27_0)
-	gohelper.setActive(arg_27_0.goNodeRight, false)
+function RougeMapNodeRightView:hideDescContainer()
+	gohelper.setActive(self.goNodeRight, false)
 end
 
-function var_0_0.onClose(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0.refreshRight, arg_28_0)
+function RougeMapNodeRightView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRight, self)
 end
 
-function var_0_0.onDestroyView(arg_29_0)
-	TaskDispatcher.cancelTask(arg_29_0.refreshRight, arg_29_0)
-	arg_29_0._simageDefaultPic:UnLoadImage()
-	arg_29_0._simageMonsterMaskPic:UnLoadImage()
+function RougeMapNodeRightView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshRight, self)
+	self._simageDefaultPic:UnLoadImage()
+	self._simageMonsterMaskPic:UnLoadImage()
 end
 
-return var_0_0
+return RougeMapNodeRightView

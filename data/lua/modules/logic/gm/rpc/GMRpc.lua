@@ -1,35 +1,37 @@
-﻿module("modules.logic.gm.rpc.GMRpc", package.seeall)
+﻿-- chunkname: @modules/logic/gm/rpc/GMRpc.lua
 
-local var_0_0 = class("GMRpc", BaseRpc)
+module("modules.logic.gm.rpc.GMRpc", package.seeall)
 
-function var_0_0.sendGMRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = GMModule_pb.GMRequest()
+local GMRpc = class("GMRpc", BaseRpc)
 
-	logNormal("sendGMRequest: " .. arg_1_1)
+function GMRpc:sendGMRequest(commandText, callback, callbackObj)
+	local req = GMModule_pb.GMRequest()
 
-	var_1_0.commandText = arg_1_1
-	arg_1_0.callback = arg_1_2
-	arg_1_0.callbackObj = arg_1_3
+	logNormal("sendGMRequest: " .. commandText)
 
-	arg_1_0:sendMsg(var_1_0)
+	req.commandText = commandText
+	self.callback = callback
+	self.callbackObj = callbackObj
+
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGMReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_0.callback then
-		if arg_2_0.callbackObj then
-			arg_2_0.callback(arg_2_0.callbackObj)
+function GMRpc:onReceiveGMReply(resultCode, msg)
+	if self.callback then
+		if self.callbackObj then
+			self.callback(self.callbackObj)
 		else
-			arg_2_0.callback()
+			self.callback()
 		end
 
-		arg_2_0.callback = nil
-		arg_2_0.callbackObj = nil
+		self.callback = nil
+		self.callbackObj = nil
 	end
 
 	if isDebugBuild then
-		if arg_2_2.result == 1 then
+		if msg.result == 1 then
 			ToastController.instance:showToastWithString("GM 执行失败")
-		elseif arg_2_2.result == 2 then
+		elseif msg.result == 2 then
 			ToastController.instance:showToastWithString("GM 命令不存在")
 		end
 	end
@@ -37,52 +39,52 @@ function var_0_0.onReceiveGMReply(arg_2_0, arg_2_1, arg_2_2)
 	GMController.instance:dispatchEvent(GMController.Event.OnRecvGMMsg)
 end
 
-function var_0_0.sendGpuCpuLogRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = GMModule_pb.GpuCpuLogRequest()
+function GMRpc:sendGpuCpuLogRequest(cpu, gpu)
+	local req = GMModule_pb.GpuCpuLogRequest()
 
-	var_3_0.cpu = arg_3_1
-	var_3_0.gpu = arg_3_2
+	req.cpu = cpu
+	req.gpu = gpu
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGpuCpuLogReply(arg_4_0, arg_4_1, arg_4_2)
+function GMRpc:onReceiveGpuCpuLogReply(resultCode, msg)
 	return
 end
 
-function var_0_0.onReceiveTestGMTextReply(arg_5_0, arg_5_1, arg_5_2)
-	GMBattleModel.instance:setBattleParam(arg_5_2.text)
+function GMRpc:onReceiveTestGMTextReply(resultCode, msg)
+	GMBattleModel.instance:setBattleParam(msg.text)
 end
 
-function var_0_0.onReceiveGMSummonResultPush(arg_6_0, arg_6_1, arg_6_2)
-	GMSummonModel.instance:setInfo(arg_6_2)
+function GMRpc:onReceiveGMSummonResultPush(resultCode, msg)
+	GMSummonModel.instance:setInfo(msg)
 
 	if not ViewMgr.instance:isOpen(ViewName.GMSummonView) then
 		ViewMgr.instance:openView(ViewName.GMSummonView)
 	end
 end
 
-function var_0_0.onReceiveFightTipsMessagePush(arg_7_0, arg_7_1, arg_7_2)
+function GMRpc:onReceiveFightTipsMessagePush(resultCode, msg)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	logError("FightTipsMessagePush: " .. arg_7_2.msg)
+	logError("FightTipsMessagePush: " .. msg.msg)
 end
 
-function var_0_0.onReceiveServerErrorInfoPush(arg_8_0, arg_8_1, arg_8_2)
+function GMRpc:onReceiveServerErrorInfoPush(resultCode, msg)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	if arg_8_2.isAlert then
-		MessageBoxController.instance:showMsgBoxByStr("服务器报错了: " .. arg_8_2.msg, MsgBoxEnum.BoxType.Yes)
+	if msg.isAlert then
+		MessageBoxController.instance:showMsgBoxByStr("服务器报错了: " .. msg.msg, MsgBoxEnum.BoxType.Yes)
 	else
 		ToastController.instance:showToastWithString("服务器报错了，看一下Console！")
-		logError("服务器报错了: " .. arg_8_2.msg)
+		logError("服务器报错了: " .. msg.msg)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GMRpc.instance = GMRpc.New()
 
-return var_0_0
+return GMRpc

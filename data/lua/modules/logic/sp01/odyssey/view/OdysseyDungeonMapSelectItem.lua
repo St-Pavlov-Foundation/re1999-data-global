@@ -1,110 +1,112 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyDungeonMapSelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyDungeonMapSelectItem.lua
 
-local var_0_0 = class("OdysseyDungeonMapSelectItem", LuaCompBase)
-local var_0_1 = Vector2(200, 200)
+module("modules.logic.sp01.odyssey.view.OdysseyDungeonMapSelectItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.config = arg_1_1[1]
-	arg_1_0.mapSelectView = arg_1_1[2]
+local OdysseyDungeonMapSelectItem = class("OdysseyDungeonMapSelectItem", LuaCompBase)
+local BOX_COLLIDER_SIZE = Vector2(200, 200)
+
+function OdysseyDungeonMapSelectItem:ctor(param)
+	self.config = param[1]
+	self.mapSelectView = param[2]
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.trans = arg_2_0.go.transform
-	arg_2_0.goSelect = gohelper.findChild(arg_2_0.go, "go_select")
-	arg_2_0.txtName = gohelper.findChildText(arg_2_0.go, "name/txt_name")
-	arg_2_0.goMercenary = gohelper.findChild(arg_2_0.go, "go_mercenary")
-	arg_2_0.goMercenaryItem = gohelper.findChild(arg_2_0.go, "go_mercenary/go_mercenaryItem")
-	arg_2_0.goHeroItem = gohelper.findChild(arg_2_0.go, "go_heroItem")
-	arg_2_0.goMainTask = gohelper.findChild(arg_2_0.go, "go_mainTask")
-	arg_2_0.goMainTaskEffect = gohelper.findChild(arg_2_0.go, "go_mainTask/icon/glow2")
-	arg_2_0.goLock = gohelper.findChild(arg_2_0.go, "go_lock")
-	arg_2_0.goInfo = gohelper.findChild(arg_2_0.go, "go_info")
-	arg_2_0.txtExplore = gohelper.findChildText(arg_2_0.go, "go_info/txt_explore")
-	arg_2_0.txtLevel = gohelper.findChildText(arg_2_0.go, "go_info/txt_level")
-	arg_2_0.goReddot = gohelper.findChild(arg_2_0.go, "go_reddot")
+function OdysseyDungeonMapSelectItem:init(go)
+	self.go = go
+	self.trans = self.go.transform
+	self.goSelect = gohelper.findChild(self.go, "go_select")
+	self.txtName = gohelper.findChildText(self.go, "name/txt_name")
+	self.goMercenary = gohelper.findChild(self.go, "go_mercenary")
+	self.goMercenaryItem = gohelper.findChild(self.go, "go_mercenary/go_mercenaryItem")
+	self.goHeroItem = gohelper.findChild(self.go, "go_heroItem")
+	self.goMainTask = gohelper.findChild(self.go, "go_mainTask")
+	self.goMainTaskEffect = gohelper.findChild(self.go, "go_mainTask/icon/glow2")
+	self.goLock = gohelper.findChild(self.go, "go_lock")
+	self.goInfo = gohelper.findChild(self.go, "go_info")
+	self.txtExplore = gohelper.findChildText(self.go, "go_info/txt_explore")
+	self.txtLevel = gohelper.findChildText(self.go, "go_info/txt_level")
+	self.goReddot = gohelper.findChild(self.go, "go_reddot")
 
-	arg_2_0.addBoxColliderListener(arg_2_0.go, arg_2_0.onClickDown, arg_2_0)
-	gohelper.setActive(arg_2_0.goSelect, false)
-	gohelper.setActive(arg_2_0.goMainTaskEffect, false)
+	self.addBoxColliderListener(self.go, self.onClickDown, self)
+	gohelper.setActive(self.goSelect, false)
+	gohelper.setActive(self.goMainTaskEffect, false)
 end
 
-function var_0_0.addBoxColliderListener(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = ZProj.BoxColliderClickListener.Get(arg_3_0)
+function OdysseyDungeonMapSelectItem.addBoxColliderListener(go, callback, callbackTarget)
+	local clickListener = ZProj.BoxColliderClickListener.Get(go)
 
-	var_3_0:SetIgnoreUI(true)
-	var_3_0:AddClickListener(arg_3_1, arg_3_2)
+	clickListener:SetIgnoreUI(true)
+	clickListener:AddClickListener(callback, callbackTarget)
 end
 
-function var_0_0.onClickDown(arg_4_0)
-	arg_4_0.mapSelectView:onMapItemClickDown(arg_4_0)
+function OdysseyDungeonMapSelectItem:onClickDown()
+	self.mapSelectView:onMapItemClickDown(self)
 end
 
-function var_0_0.addEvents(arg_5_0)
-	OdysseyDungeonController.instance:registerCallback(OdysseyEvent.OnUpdateElementPush, arg_5_0.updateInfo, arg_5_0)
+function OdysseyDungeonMapSelectItem:addEvents()
+	OdysseyDungeonController.instance:registerCallback(OdysseyEvent.OnUpdateElementPush, self.updateInfo, self)
 end
 
-function var_0_0.removeEvents(arg_6_0)
-	OdysseyDungeonController.instance:unregisterCallback(OdysseyEvent.OnUpdateElementPush, arg_6_0.updateInfo, arg_6_0)
+function OdysseyDungeonMapSelectItem:removeEvents()
+	OdysseyDungeonController.instance:unregisterCallback(OdysseyEvent.OnUpdateElementPush, self.updateInfo, self)
 end
 
-function var_0_0.updateInfo(arg_7_0)
-	arg_7_0.txtName.text = arg_7_0.config.mapName
-	arg_7_0.curInMapId = OdysseyDungeonModel.instance:getHeroInMapId()
+function OdysseyDungeonMapSelectItem:updateInfo()
+	self.txtName.text = self.config.mapName
+	self.curInMapId = OdysseyDungeonModel.instance:getHeroInMapId()
 
-	gohelper.setActive(arg_7_0.goHeroItem, arg_7_0.curInMapId == arg_7_0.config.id)
+	gohelper.setActive(self.goHeroItem, self.curInMapId == self.config.id)
 
-	arg_7_0.mapInfoMo = OdysseyDungeonModel.instance:getMapInfo(arg_7_0.config.id)
+	self.mapInfoMo = OdysseyDungeonModel.instance:getMapInfo(self.config.id)
 
-	if arg_7_0.mapInfoMo then
-		arg_7_0.txtExplore.text = string.format("%s%%", math.floor(arg_7_0.mapInfoMo.exploreValue / 10))
+	if self.mapInfoMo then
+		self.txtExplore.text = string.format("%s%%", math.floor(self.mapInfoMo.exploreValue / 10))
 
-		local var_7_0 = string.splitToNumber(arg_7_0.config.recommendLevel, "#")
+		local recommendLevelList = string.splitToNumber(self.config.recommendLevel, "#")
 
-		arg_7_0.txtLevel.text = string.format("%s-%s", var_7_0[1], var_7_0[2])
+		self.txtLevel.text = string.format("%s-%s", recommendLevelList[1], recommendLevelList[2])
 	end
 
-	local var_7_1, var_7_2 = OdysseyDungeonModel.instance:getCurMainElement()
+	local mainTaskMapCo, mainTaskElementCo = OdysseyDungeonModel.instance:getCurMainElement()
 
-	arg_7_0.canShowMainTask = var_7_2 and var_7_2.mapId == arg_7_0.config.id
+	self.canShowMainTask = mainTaskElementCo and mainTaskElementCo.mapId == self.config.id
 
-	gohelper.setActive(arg_7_0.goMainTask, arg_7_0.canShowMainTask)
-	gohelper.setActive(arg_7_0.goLock, not arg_7_0.mapInfoMo)
-	gohelper.setActive(arg_7_0.goInfo, arg_7_0.mapInfoMo)
+	gohelper.setActive(self.goMainTask, self.canShowMainTask)
+	gohelper.setActive(self.goLock, not self.mapInfoMo)
+	gohelper.setActive(self.goInfo, self.mapInfoMo)
 
-	local var_7_3 = OdysseyDungeonModel.instance:getMercenaryElementsByMap(arg_7_0.config.id)
+	local mercenaryEleMoList = OdysseyDungeonModel.instance:getMercenaryElementsByMap(self.config.id)
 
-	gohelper.setActive(arg_7_0.goMercenary, #var_7_3 > 0)
+	gohelper.setActive(self.goMercenary, #mercenaryEleMoList > 0)
 
-	if #var_7_3 > 0 then
-		gohelper.CreateObjList(arg_7_0, arg_7_0.onMercenaryItemShow, var_7_3, arg_7_0.goMercenary, arg_7_0.goMercenaryItem)
+	if #mercenaryEleMoList > 0 then
+		gohelper.CreateObjList(self, self.onMercenaryItemShow, mercenaryEleMoList, self.goMercenary, self.goMercenaryItem)
 	end
 end
 
-function var_0_0.onMercenaryItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	gohelper.setActive(arg_8_1, arg_8_2)
+function OdysseyDungeonMapSelectItem:onMercenaryItemShow(obj, data, index)
+	gohelper.setActive(obj, data)
 end
 
-function var_0_0.setSelectState(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0.goSelect, arg_9_1)
-	gohelper.setActive(arg_9_0.goMainTaskEffect, false)
+function OdysseyDungeonMapSelectItem:setSelectState(state)
+	gohelper.setActive(self.goSelect, state)
+	gohelper.setActive(self.goMainTaskEffect, false)
 end
 
-function var_0_0.playMainTaskEffect(arg_10_0)
-	gohelper.setActive(arg_10_0.goMainTaskEffect, false)
-	gohelper.setActive(arg_10_0.goMainTaskEffect, true)
+function OdysseyDungeonMapSelectItem:playMainTaskEffect()
+	gohelper.setActive(self.goMainTaskEffect, false)
+	gohelper.setActive(self.goMainTaskEffect, true)
 end
 
-function var_0_0.refreshReddotShowState(arg_11_0)
-	local var_11_0 = OdysseyDungeonModel.instance:checkHasNewUnlock(OdysseyEnum.LocalSaveKey.MapNew, {
-		arg_11_0.config.id
+function OdysseyDungeonMapSelectItem:refreshReddotShowState()
+	local isNewUnlock = OdysseyDungeonModel.instance:checkHasNewUnlock(OdysseyEnum.LocalSaveKey.MapNew, {
+		self.config.id
 	})
 
-	gohelper.setActive(arg_11_0.goReddot, var_11_0 and arg_11_0.mapInfoMo)
+	gohelper.setActive(self.goReddot, isNewUnlock and self.mapInfoMo)
 end
 
-function var_0_0.onDestroy(arg_12_0)
+function OdysseyDungeonMapSelectItem:onDestroy()
 	return
 end
 
-return var_0_0
+return OdysseyDungeonMapSelectItem

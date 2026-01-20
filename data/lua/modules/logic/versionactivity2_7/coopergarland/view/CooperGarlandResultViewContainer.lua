@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/view/CooperGarlandResultViewContainer.lua
 
-local var_0_0 = class("CooperGarlandResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CooperGarlandResultViewContainer = class("CooperGarlandResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CooperGarlandResultView.New())
+function CooperGarlandResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CooperGarlandResultView.New())
+
+	return views
 end
 
-return var_0_0
+return CooperGarlandResultViewContainer

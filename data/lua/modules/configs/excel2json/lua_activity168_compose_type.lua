@@ -1,22 +1,24 @@
-﻿module("modules.configs.excel2json.lua_activity168_compose_type", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity168_compose_type.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity168_compose_type", package.seeall)
+
+local lua_activity168_compose_type = {}
+local fields = {
 	name = 3,
 	composeType = 2,
 	activityId = 1,
 	costItems = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"composeType"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity168_compose_type.onLoad(json)
+	lua_activity168_compose_type.configList, lua_activity168_compose_type.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity168_compose_type

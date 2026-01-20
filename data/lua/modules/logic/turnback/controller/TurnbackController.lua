@@ -1,201 +1,222 @@
-﻿module("modules.logic.turnback.controller.TurnbackController", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/controller/TurnbackController.lua
 
-local var_0_0 = class("TurnbackController", BaseController)
+module("modules.logic.turnback.controller.TurnbackController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TurnbackController = class("TurnbackController", BaseController)
+
+function TurnbackController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function TurnbackController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
-	arg_3_0:registerCallback(TurnbackEvent.AdditionCountChange, arg_3_0._onAdditionCountChange, arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._dailyRefresh, arg_3_0)
+function TurnbackController:addConstEvents()
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	self:registerCallback(TurnbackEvent.AdditionCountChange, self._onAdditionCountChange, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._dailyRefresh, self)
 end
 
-function var_0_0.reInit(arg_4_0)
+function TurnbackController:reInit()
 	return
 end
 
-function var_0_0._dailyRefresh(arg_5_0)
+function TurnbackController:_dailyRefresh()
 	if TurnbackModel.instance:isInOpenTime() then
 		TurnbackRpc.instance:sendGetTurnbackInfoRequest()
 	else
+		ViewMgr.instance:closeView(ViewName.Turnback3BeginnerView)
 		ViewMgr.instance:closeView(ViewName.TurnbackNewBeginnerView)
 		ViewMgr.instance:closeView(ViewName.TurnbackBeginnerView)
 	end
 end
 
-function var_0_0.hasPlayedStoryVideo(arg_6_0, arg_6_1)
-	local var_6_0 = TurnbackConfig.instance:getTurnbackCo(arg_6_1)
+function TurnbackController:hasPlayedStoryVideo(turnbackId)
+	local config = TurnbackConfig.instance:getTurnbackCo(turnbackId)
 
-	if not var_6_0 then
+	if not config then
 		return true
 	end
 
-	if var_6_0.startStory == 0 then
+	if config.startStory == 0 then
 		return true
 	end
 
-	return StoryModel.instance:isStoryFinished(var_6_0.startStory)
+	return StoryModel.instance:isStoryFinished(config.startStory)
 end
 
-function var_0_0.checkFirstOpenLatter(arg_7_0, arg_7_1)
-	local var_7_0 = string.format("%s#%s#%s", PlayerPrefsKey.TurnbackSigninLatterFirstOpen, arg_7_1, PlayerModel.instance:getPlayinfo().userId)
-	local var_7_1 = PlayerPrefsHelper.getString(var_7_0, "")
+function TurnbackController:checkFirstOpenLatter(day)
+	local key = string.format("%s#%s#%s", PlayerPrefsKey.TurnbackSigninLatterFirstOpen, day, PlayerModel.instance:getPlayinfo().userId)
+	local data = PlayerPrefsHelper.getString(key, "")
+	local canOpen = string.nilorempty(data)
 
-	if string.nilorempty(var_7_1) then
+	if canOpen then
 		ViewMgr.instance:openView(ViewName.TurnbackNewLatterView, {
 			isNormal = true,
-			day = arg_7_1
+			day = day
 		})
-		PlayerPrefsHelper.setString(var_7_0, "opened")
+		PlayerPrefsHelper.setString(key, "opened")
 	end
 end
 
-function var_0_0.openTurnbackBeginnerView(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.turnbackId
-	local var_8_1 = TurnbackModel.instance:getCurTurnbackMo():isNewType()
+function TurnbackController:openTurnbackBeginnerView(param)
+	local turnbackId = param.turnbackId
 
-	if GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackSubModules(var_8_0)) > 0 then
-		if var_8_1 then
-			ViewMgr.instance:openView(ViewName.TurnbackNewBeginnerView, arg_8_1)
+	local function callback()
+		if GameUtil.getTabLen(TurnbackConfig.instance:getAllTurnbackSubModules(turnbackId)) > 0 then
+			if turnbackId == 1 then
+				ViewMgr.instance:openView(ViewName.TurnbackBeginnerView, param)
+			end
+
+			if turnbackId == 2 then
+				ViewMgr.instance:openView(ViewName.TurnbackNewBeginnerView, param)
+			else
+				local viewName = string.format("Turnback%sBeginnerView", turnbackId)
+
+				if ViewMgr.instance:isOpen(viewName) then
+					if param and param.subModuleId then
+						TurnbackModel.instance:setTargetCategoryId(param.subModuleId)
+						self:dispatchEvent(TurnbackEvent.RefreshBeginner)
+					end
+
+					return
+				end
+
+				ViewMgr.instance:openView(viewName, param)
+			end
 		else
-			ViewMgr.instance:openView(ViewName.TurnbackBeginnerView, arg_8_1)
+			GameFacade.showToast(ToastEnum.ActivityNormalView)
 		end
-	else
-		GameFacade.showToast(ToastEnum.ActivityNormalView)
 	end
+
+	TurnbackRpc.instance:sendGetTurnbackInfoRequest(callback, self)
 end
 
-function var_0_0._onUpdateTaskList(arg_9_0, arg_9_1)
+function TurnbackController:_onUpdateTaskList(msg)
 	if not TurnbackModel.instance:getCurTurnbackMo() then
 		return
 	end
 
-	if TurnbackTaskModel.instance:updateInfo(arg_9_1.taskInfo) then
-		if not TurnbackModel.instance:isNewType() then
-			TurnbackTaskModel.instance:refreshList(TurnbackTaskModel.instance.curTaskLoopType)
-		else
-			TurnbackTaskModel.instance:refreshListNewTaskList()
-		end
+	local isChange = TurnbackTaskModel.instance:updateInfo(msg.taskInfo)
 
-		var_0_0.instance:dispatchEvent(TurnbackEvent.RefreshTaskRedDot)
+	if isChange then
+		TurnbackTaskModel.instance:refreshListNewTaskList()
+		TurnbackController.instance:dispatchEvent(TurnbackEvent.RefreshTaskRedDot)
 	end
 end
 
-function var_0_0.setSignInList(arg_10_0)
+function TurnbackController:setSignInList()
 	TurnbackSignInModel.instance:setSignInList()
 end
 
-function var_0_0._onAdditionCountChange(arg_11_0)
-	local var_11_0, var_11_1 = TurnbackModel.instance:getAdditionCountInfo()
-	local var_11_2 = string.format("%s/%s", var_11_0, var_11_1)
+function TurnbackController:_onAdditionCountChange()
+	local remainCount, totalCount = TurnbackModel.instance:getAdditionCountInfo()
+	local strCount = string.format("%s/%s", remainCount, totalCount)
 
-	GameFacade.showToast(ToastEnum.TurnBackAdditionTimesChange, var_11_2)
+	GameFacade.showToast(ToastEnum.TurnBackAdditionTimesChange, strCount)
 end
 
-function var_0_0._checkCustomShowRedDotData(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_1:defaultRefreshDot()
+function TurnbackController:_checkCustomShowRedDotData(redDotIcon, subModuleId)
+	redDotIcon:defaultRefreshDot()
 
-	if not arg_12_1.show then
-		local var_12_0 = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_12_2).reddotId
-		local var_12_1 = RedDotConfig.instance:getRedDotCO(var_12_0)
+	if not redDotIcon.show then
+		local reddotId = TurnbackConfig.instance:getTurnbackSubModuleCo(subModuleId).reddotId
+		local reddotCo = RedDotConfig.instance:getRedDotCO(reddotId)
 
-		if not var_12_1 then
+		if not reddotCo then
 			return
 		end
 
-		arg_12_1.show = arg_12_0:checkIsShowCustomRedDot(arg_12_2)
+		local showState = self:checkIsShowCustomRedDot(subModuleId)
 
-		local var_12_2 = var_12_0 ~= 0 and var_12_1.style or RedDotEnum.Style.Normal
+		redDotIcon.show = showState
 
-		arg_12_1:showRedDot(var_12_2)
+		local type = reddotId ~= 0 and reddotCo.style or RedDotEnum.Style.Normal
+
+		redDotIcon:showRedDot(type)
 	end
 end
 
-function var_0_0.checkIsShowCustomRedDot(arg_13_0, arg_13_1)
-	local var_13_0 = TurnbackConfig.instance:getTurnbackSubModuleCo(arg_13_1).reddotId
-	local var_13_1 = RedDotConfig.instance:getRedDotCO(var_13_0)
+function TurnbackController:checkIsShowCustomRedDot(subModuleId)
+	local reddotId = TurnbackConfig.instance:getTurnbackSubModuleCo(subModuleId).reddotId
+	local reddotCo = RedDotConfig.instance:getRedDotCO(reddotId)
 
-	if not var_13_1 then
+	if not reddotCo then
 		return
 	end
 
-	local var_13_2 = TurnbackModel.instance:getCurTurnbackId()
+	local curTurnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	if var_13_1.canLoad == 0 then
-		local var_13_3 = var_13_2 .. "_" .. arg_13_1
+	if reddotCo.canLoad == 0 then
+		local signStr = curTurnbackId .. "_" .. subModuleId
 
-		return TimeUtil.getDayFirstLoginRed(var_13_3)
+		return TimeUtil.getDayFirstLoginRed(signStr)
 	end
 
 	return false
 end
 
-function var_0_0.refreshRemainTime(arg_14_0, arg_14_1)
-	local var_14_0, var_14_1, var_14_2 = TurnbackModel.instance:getRemainTime(arg_14_1)
-	local var_14_3 = string.format("%02d", var_14_0)
-	local var_14_4 = string.format("%02d", var_14_1)
-	local var_14_5 = string.format("%02d", var_14_2)
-	local var_14_6 = ""
+function TurnbackController:refreshRemainTime(endTime)
+	local day, hour, minute = TurnbackModel.instance:getRemainTime(endTime)
+	local dayStr = string.format("%02d", day)
+	local hourStr = string.format("%02d", hour)
+	local minuteStr = string.format("%02d", minute)
+	local timeStr = ""
 
-	if var_14_0 >= 1 then
-		var_14_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_day_hour"), {
-			var_14_3,
-			var_14_4
+	if day >= 1 then
+		timeStr = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_day_hour"), {
+			dayStr,
+			hourStr
 		})
-	elseif var_14_0 == 0 and var_14_1 >= 1 then
-		var_14_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_hour_minute"), {
-			var_14_4,
-			var_14_5
+	elseif day == 0 and hour >= 1 then
+		timeStr = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_hour_minute"), {
+			hourStr,
+			minuteStr
 		})
-	elseif var_14_0 == 0 and var_14_1 < 1 and var_14_2 >= 1 then
-		var_14_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_minute"), {
-			var_14_5
+	elseif day == 0 and hour < 1 and minute >= 1 then
+		timeStr = GameUtil.getSubPlaceholderLuaLang(luaLang("remaintime_minute"), {
+			minuteStr
 		})
-	elseif var_14_0 == 0 and var_14_1 < 1 and var_14_2 < 1 then
-		var_14_6 = luaLang("lessOneMinute")
-	elseif var_14_0 < 0 or not TurnbackModel.instance:isInOpenTime() then
-		var_14_6 = luaLang("turnback_end")
+	elseif day == 0 and hour < 1 and minute < 1 then
+		timeStr = luaLang("lessOneMinute")
+	elseif day < 0 or not TurnbackModel.instance:isInOpenTime() then
+		timeStr = luaLang("turnback_end")
 	end
 
-	return var_14_6
+	return timeStr
 end
 
-function var_0_0.showPopupView(arg_15_0, arg_15_1)
-	if arg_15_1 ~= nil then
-		local var_15_0 = {
-			dataList = arg_15_1
+function TurnbackController:showPopupView(MaterialData)
+	if MaterialData ~= nil then
+		local mo = {
+			dataList = MaterialData
 		}
-		local var_15_1 = MaterialRpc.receiveMaterial(var_15_0)
+		local co = MaterialRpc.receiveMaterial(mo)
 
-		if var_15_1 and #var_15_1 > 0 then
-			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_15_1)
+		if co and #co > 0 then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, co)
 		end
 	end
 end
 
-local var_0_1 = PlayerPrefsKey.PlayerPrefsKey.TurnbackOnlineTaskUnlock .. "#"
+local keyHead = PlayerPrefsKey.PlayerPrefsKey.TurnbackOnlineTaskUnlock .. "#"
 
-function var_0_0.isPlayFirstUnlockToday(arg_16_0, arg_16_1)
-	local var_16_0 = var_0_1 .. tostring(PlayerModel.instance:getPlayinfo().userId) .. arg_16_1
-	local var_16_1 = ServerTime.nowInLocal()
-	local var_16_2 = os.date("*t", var_16_1)
+function TurnbackController:isPlayFirstUnlockToday(id)
+	local key = keyHead .. tostring(PlayerModel.instance:getPlayinfo().userId) .. id
+	local curDate = ServerTime.nowInLocal()
+	local dateObj = os.date("*t", curDate)
 
-	if PlayerPrefsHelper.hasKey(var_16_0) then
-		local var_16_3 = tonumber(PlayerPrefsHelper.getString(var_16_0, var_16_1))
+	if PlayerPrefsHelper.hasKey(key) then
+		local lastEnterTime = tonumber(PlayerPrefsHelper.getString(key, curDate))
 
-		var_16_2.hour = 5
-		var_16_2.min = 0
-		var_16_2.sec = 0
+		dateObj.hour = 5
+		dateObj.min = 0
+		dateObj.sec = 0
 
-		local var_16_4 = os.time(var_16_2)
+		local today5H = os.time(dateObj)
 
-		if var_16_3 and TimeUtil.getDiffDay(var_16_1, var_16_3) < 1 and (var_16_1 - var_16_4) * (var_16_3 - var_16_4) > 0 then
+		if lastEnterTime and TimeUtil.getDiffDay(curDate, lastEnterTime) < 1 and (curDate - today5H) * (lastEnterTime - today5H) > 0 then
 			return false
 		end
 	end
@@ -203,13 +224,37 @@ function var_0_0.isPlayFirstUnlockToday(arg_16_0, arg_16_1)
 	return true
 end
 
-function var_0_0.savePlayUnlockAnim(arg_17_0, arg_17_1)
-	local var_17_0 = var_0_1 .. tostring(PlayerModel.instance:getPlayinfo().userId) .. arg_17_1
-	local var_17_1 = ServerTime.nowInLocal()
+function TurnbackController:savePlayUnlockAnim(id)
+	local key = keyHead .. tostring(PlayerModel.instance:getPlayinfo().userId) .. id
+	local stamp = ServerTime.nowInLocal()
 
-	PlayerPrefsHelper.setString(var_17_0, tostring(var_17_1))
+	PlayerPrefsHelper.setString(key, tostring(stamp))
 end
 
-var_0_0.instance = var_0_0.New()
+function TurnbackController:openTurnback3BpBuyView()
+	local config = TurnbackConfig.instance:getTurnbackCo(TurnbackModel.instance:getCurTurnbackId())
+	local havenum = CurrencyModel.instance:getDiamond()
+	local temp = not string.nilorempty(config.buyDoubleBonusPrice) and string.splitToNumber(config.buyDoubleBonusPrice, "#")
+	local price = temp and temp[3]
 
-return var_0_0
+	if price <= havenum then
+		if TurnbackModel.instance:checkHasGetAllTaskReward() then
+			ViewMgr.instance:openView(ViewName.Turnback3BuyBpTipView)
+		else
+			ViewMgr.instance:openView(ViewName.Turnback3BuyBpView)
+		end
+	else
+		ViewMgr.instance:openView(ViewName.Turnback3BuyMonthCardView)
+	end
+end
+
+function TurnbackController:getProgressTaskId()
+	local turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	local taskId = TurnbackEnum.Version2ProgressId[turnbackId]
+
+	return taskId
+end
+
+TurnbackController.instance = TurnbackController.New()
+
+return TurnbackController

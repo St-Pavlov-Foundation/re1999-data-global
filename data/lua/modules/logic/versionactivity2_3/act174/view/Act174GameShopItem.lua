@@ -1,206 +1,207 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174GameShopItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174GameShopItem.lua
 
-local var_0_0 = class("Act174GameShopItem", LuaCompBase)
+module("modules.logic.versionactivity2_3.act174.view.Act174GameShopItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.anim = arg_1_1:GetComponent(gohelper.Type_Animator)
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_1, "btn_Click")
-	arg_1_0.txtCost = gohelper.findChildText(arg_1_1, "btn_Buy/txt_Cost")
-	arg_1_0.goSoldOut = gohelper.findChild(arg_1_1, "go_SellOut")
+local Act174GameShopItem = class("Act174GameShopItem", LuaCompBase)
 
-	for iter_1_0 = 1, 7 do
-		arg_1_0["goType" .. iter_1_0] = gohelper.findChild(arg_1_1, "type" .. iter_1_0)
+function Act174GameShopItem:init(go)
+	self.go = go
+	self.anim = go:GetComponent(gohelper.Type_Animator)
+	self.btnClick = gohelper.findChildButtonWithAudio(go, "btn_Click")
+	self.txtCost = gohelper.findChildText(go, "btn_Buy/txt_Cost")
+	self.goSoldOut = gohelper.findChild(go, "go_SellOut")
+
+	for i = 1, 7 do
+		self["goType" .. i] = gohelper.findChild(go, "type" .. i)
 	end
 
-	arg_1_0.roleItemList = {}
+	self.roleItemList = {}
 
-	for iter_1_1 = 1, 3 do
-		for iter_1_2 = 1, iter_1_1 do
-			local var_1_0 = gohelper.findChild(arg_1_0["goType" .. iter_1_1], "role" .. iter_1_2)
-			local var_1_1 = arg_1_0:getUserDataTb_()
+	for i = 1, 3 do
+		for j = 1, i do
+			local goRole = gohelper.findChild(self["goType" .. i], "role" .. j)
+			local roleItem = self:getUserDataTb_()
 
-			var_1_1.imageRare = gohelper.findChildImage(var_1_0, "rare")
-			var_1_1.heroIcon = gohelper.findChildSingleImage(var_1_0, "heroicon")
-			var_1_1.imageCareer = gohelper.findChildImage(var_1_0, "career")
-			arg_1_0.roleItemList[#arg_1_0.roleItemList + 1] = var_1_1
+			roleItem.imageRare = gohelper.findChildImage(goRole, "rare")
+			roleItem.heroIcon = gohelper.findChildSingleImage(goRole, "heroicon")
+			roleItem.imageCareer = gohelper.findChildImage(goRole, "career")
+			self.roleItemList[#self.roleItemList + 1] = roleItem
 		end
 	end
 
-	arg_1_0.roleCareerList = {}
+	self.roleCareerList = {}
 
-	for iter_1_3 = 4, 7 do
-		for iter_1_4 = 1, 3 do
-			local var_1_2 = gohelper.findChild(arg_1_0["goType" .. iter_1_3], iter_1_4)
-			local var_1_3 = gohelper.findChildImage(var_1_2, "career")
+	for i = 4, 7 do
+		for j = 1, 3 do
+			local goNum = gohelper.findChild(self["goType" .. i], j)
+			local imgCareer = gohelper.findChildImage(goNum, "career")
 
-			arg_1_0.roleCareerList[#arg_1_0.roleCareerList + 1] = var_1_3
+			self.roleCareerList[#self.roleCareerList + 1] = imgCareer
 		end
 	end
 
-	arg_1_0.collectionRare = gohelper.findChildImage(arg_1_0.goType4, "collection/rare")
-	arg_1_0.collectionIcon = gohelper.findChildSingleImage(arg_1_0.goType4, "collection/collectionicon")
+	self.collectionRare = gohelper.findChildImage(self.goType4, "collection/rare")
+	self.collectionIcon = gohelper.findChildSingleImage(self.goType4, "collection/collectionicon")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClick, arg_2_0)
+function Act174GameShopItem:addEventListeners()
+	self:addClickCb(self.btnClick, self.onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnClick)
+function Act174GameShopItem:removeEventListeners()
+	self:removeClickCb(self.btnClick)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	arg_4_0.collectionIcon:UnLoadImage()
+function Act174GameShopItem:onDestroy()
+	self.collectionIcon:UnLoadImage()
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.roleItemList) do
-		iter_4_1.heroIcon:UnLoadImage()
+	for _, roleItem in ipairs(self.roleItemList) do
+		roleItem.heroIcon:UnLoadImage()
 	end
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1)
-	arg_5_0.goodInfo = arg_5_1
+function Act174GameShopItem:setData(goodInfo)
+	self.goodInfo = goodInfo
 
-	if arg_5_1 then
-		arg_5_0.actId = Activity174Model.instance:getCurActId()
-		arg_5_0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
-		arg_5_0.type = arg_5_0:inferBagType()
+	if goodInfo then
+		self.actId = Activity174Model.instance:getCurActId()
+		self.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+		self.type = self:inferBagType()
 
-		arg_5_0:refreshCost()
+		self:refreshCost()
 
-		local var_5_0 = arg_5_1.bagInfo.heroId
+		local roleIdList = goodInfo.bagInfo.heroId
 
-		table.sort(var_5_0, var_0_0.sortFunc)
+		table.sort(roleIdList, Act174GameShopItem.sortFunc)
 
-		if arg_5_0.type == 1 then
-			arg_5_0:refreshRoleItem(arg_5_0.roleItemList[1], var_5_0[1])
-		elseif arg_5_0.type == 2 then
-			arg_5_0:refreshRoleItem(arg_5_0.roleItemList[2], var_5_0[1])
-			arg_5_0:refreshRoleItem(arg_5_0.roleItemList[3], var_5_0[2])
-		elseif arg_5_0.type == 3 then
-			arg_5_0:refreshRoleItem(arg_5_0.roleItemList[4], var_5_0[1])
-			arg_5_0:refreshRoleItem(arg_5_0.roleItemList[5], var_5_0[2])
-			arg_5_0:refreshRoleItem(arg_5_0.roleItemList[6], var_5_0[3])
-		elseif arg_5_0.type == 4 then
-			local var_5_1 = arg_5_1.bagInfo.itemId[1]
-			local var_5_2 = lua_activity174_collection.configDict[var_5_1]
+		if self.type == 1 then
+			self:refreshRoleItem(self.roleItemList[1], roleIdList[1])
+		elseif self.type == 2 then
+			self:refreshRoleItem(self.roleItemList[2], roleIdList[1])
+			self:refreshRoleItem(self.roleItemList[3], roleIdList[2])
+		elseif self.type == 3 then
+			self:refreshRoleItem(self.roleItemList[4], roleIdList[1])
+			self:refreshRoleItem(self.roleItemList[5], roleIdList[2])
+			self:refreshRoleItem(self.roleItemList[6], roleIdList[3])
+		elseif self.type == 4 then
+			local collectionIdList = goodInfo.bagInfo.itemId
+			local id = collectionIdList[1]
+			local config = lua_activity174_collection.configDict[id]
 
-			UISpriteSetMgr.instance:setAct174Sprite(arg_5_0.collectionRare, "act174_propitembg_" .. var_5_2.rare)
-			arg_5_0.collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(var_5_2.icon))
-		elseif arg_5_0.type == 5 then
-			arg_5_0:refreshRoleCareer(arg_5_0.roleCareerList[1], var_5_0[1])
-		elseif arg_5_0.type == 6 then
-			arg_5_0:refreshRoleCareer(arg_5_0.roleCareerList[2], var_5_0[1])
-			arg_5_0:refreshRoleCareer(arg_5_0.roleCareerList[3], var_5_0[2])
-		elseif arg_5_0.type == 7 then
-			arg_5_0:refreshRoleCareer(arg_5_0.roleCareerList[4], var_5_0[1])
-			arg_5_0:refreshRoleCareer(arg_5_0.roleCareerList[5], var_5_0[2])
-			arg_5_0:refreshRoleCareer(arg_5_0.roleCareerList[6], var_5_0[3])
+			UISpriteSetMgr.instance:setAct174Sprite(self.collectionRare, "act174_propitembg_" .. config.rare)
+			self.collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(config.icon))
+		elseif self.type == 5 then
+			self:refreshRoleCareer(self.roleCareerList[1], roleIdList[1])
+		elseif self.type == 6 then
+			self:refreshRoleCareer(self.roleCareerList[2], roleIdList[1])
+			self:refreshRoleCareer(self.roleCareerList[3], roleIdList[2])
+		elseif self.type == 7 then
+			self:refreshRoleCareer(self.roleCareerList[4], roleIdList[1])
+			self:refreshRoleCareer(self.roleCareerList[5], roleIdList[2])
+			self:refreshRoleCareer(self.roleCareerList[6], roleIdList[3])
 		end
 
-		for iter_5_0 = 1, 7 do
-			gohelper.setActive(arg_5_0["goType" .. iter_5_0], iter_5_0 == arg_5_0.type)
+		for i = 1, 7 do
+			gohelper.setActive(self["goType" .. i], i == self.type)
 		end
 	end
 
-	gohelper.setActive(arg_5_0.go, arg_5_1)
+	gohelper.setActive(self.go, goodInfo)
 end
 
-function var_0_0.refreshCost(arg_6_0)
-	local var_6_0 = "#211F1F"
-	local var_6_1 = arg_6_0.goodInfo.buyCost
+function Act174GameShopItem:refreshCost()
+	local color = "#211F1F"
+	local cost = self.goodInfo.buyCost
 
-	if var_6_1 > arg_6_0.gameInfo.coin then
-		var_6_0 = "#be4343"
+	if cost > self.gameInfo.coin then
+		color = "#be4343"
 	end
 
-	gohelper.setActive(arg_6_0.goSoldOut, arg_6_0.goodInfo.finish)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0.txtCost, var_6_0)
+	gohelper.setActive(self.goSoldOut, self.goodInfo.finish)
+	SLFramework.UGUI.GuiHelper.SetColor(self.txtCost, color)
 
-	arg_6_0.txtCost.text = var_6_1
+	self.txtCost.text = cost
 end
 
-function var_0_0.onClick(arg_7_0)
-	if arg_7_0.goodInfo.finish then
+function Act174GameShopItem:onClick()
+	if self.goodInfo.finish then
 		return
 	end
 
-	if arg_7_0.type == 4 then
-		local var_7_0 = arg_7_0.goodInfo.bagInfo.itemId[1]
-		local var_7_1 = {
-			type = Activity174Enum.ItemTipType.Collection,
-			co = Activity174Config.instance:getCollectionCo(var_7_0),
-			pos = Vector2.New(518, 0)
-		}
+	if self.type == 4 then
+		local collectionIdList = self.goodInfo.bagInfo.itemId
+		local id = collectionIdList[1]
+		local viewParam = {}
 
-		var_7_1.showMask = true
-		var_7_1.goodInfo = arg_7_0.goodInfo
+		viewParam.type = Activity174Enum.ItemTipType.Collection
+		viewParam.co = Activity174Config.instance:getCollectionCo(id)
+		viewParam.pos = Vector2.New(518, 0)
+		viewParam.showMask = true
+		viewParam.goodInfo = self.goodInfo
 
-		Activity174Controller.instance:openItemTipView(var_7_1)
-	elseif arg_7_0.type == 1 or arg_7_0.type == 2 or arg_7_0.type == 3 then
-		local var_7_2 = {
-			type = Activity174Enum.ItemTipType.Character1,
-			co = arg_7_0.goodInfo.bagInfo.heroId,
-			pos = Vector2.New(479, 0)
-		}
+		Activity174Controller.instance:openItemTipView(viewParam)
+	elseif self.type == 1 or self.type == 2 or self.type == 3 then
+		local viewParam = {}
 
-		var_7_2.showMask = true
-		var_7_2.goodInfo = arg_7_0.goodInfo
+		viewParam.type = Activity174Enum.ItemTipType.Character1
+		viewParam.co = self.goodInfo.bagInfo.heroId
+		viewParam.pos = Vector2.New(479, 0)
+		viewParam.showMask = true
+		viewParam.goodInfo = self.goodInfo
 
-		Activity174Controller.instance:openItemTipView(var_7_2)
-	elseif arg_7_0.type == 5 or arg_7_0.type == 6 or arg_7_0.type == 7 then
-		local var_7_3 = arg_7_0.goodInfo.bagInfo
-		local var_7_4 = {
-			type = Activity174Enum.ItemTipType.Character2,
-			co = lua_activity174_bag.configDict[var_7_3.bagId],
-			pos = Vector2.New(518, 0)
-		}
+		Activity174Controller.instance:openItemTipView(viewParam)
+	elseif self.type == 5 or self.type == 6 or self.type == 7 then
+		local bagInfo = self.goodInfo.bagInfo
+		local viewParam = {}
 
-		var_7_4.showMask = true
-		var_7_4.goodInfo = arg_7_0.goodInfo
+		viewParam.type = Activity174Enum.ItemTipType.Character2
+		viewParam.co = lua_activity174_bag.configDict[bagInfo.bagId]
+		viewParam.pos = Vector2.New(518, 0)
+		viewParam.showMask = true
+		viewParam.goodInfo = self.goodInfo
 
-		Activity174Controller.instance:openItemTipView(var_7_4)
+		Activity174Controller.instance:openItemTipView(viewParam)
 	end
 end
 
-function var_0_0.inferBagType(arg_8_0)
-	local var_8_0 = arg_8_0.goodInfo.bagInfo
-	local var_8_1 = lua_activity174_bag.configDict[var_8_0.bagId]
+function Act174GameShopItem:inferBagType()
+	local bagInfo = self.goodInfo.bagInfo
+	local bagConfig = lua_activity174_bag.configDict[bagInfo.bagId]
 
-	if var_8_1.type == Activity174Enum.BagType.Hero then
-		if var_8_1.heroType == "quality" then
-			return #var_8_0.heroId + 4
+	if bagConfig.type == Activity174Enum.BagType.Hero then
+		if bagConfig.heroType == "quality" then
+			return #bagInfo.heroId + 4
 		end
 
-		return #var_8_0.heroId
-	elseif var_8_1.type == Activity174Enum.BagType.Collection then
+		return #bagInfo.heroId
+	elseif bagConfig.type == Activity174Enum.BagType.Collection then
 		return 4
 	end
 end
 
-function var_0_0.refreshRoleItem(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = Activity174Config.instance:getRoleCo(arg_9_2)
+function Act174GameShopItem:refreshRoleItem(roleItem, roleId)
+	local config = Activity174Config.instance:getRoleCo(roleId)
 
-	arg_9_1.heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_9_0.skinId))
-	UISpriteSetMgr.instance:setCommonSprite(arg_9_1.imageRare, "bgequip" .. tostring(CharacterEnum.Color[var_9_0.rare]))
-	UISpriteSetMgr.instance:setCommonSprite(arg_9_1.imageCareer, "lssx_" .. var_9_0.career)
+	roleItem.heroIcon:LoadImage(ResUrl.getHeadIconSmall(config.skinId))
+	UISpriteSetMgr.instance:setCommonSprite(roleItem.imageRare, "bgequip" .. tostring(CharacterEnum.Color[config.rare]))
+	UISpriteSetMgr.instance:setCommonSprite(roleItem.imageCareer, "lssx_" .. config.career)
 end
 
-function var_0_0.refreshRoleCareer(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = Activity174Config.instance:getRoleCo(arg_10_2)
+function Act174GameShopItem:refreshRoleCareer(imgCareer, roleId)
+	local config = Activity174Config.instance:getRoleCo(roleId)
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_10_1, "lssx_" .. var_10_0.career)
+	UISpriteSetMgr.instance:setCommonSprite(imgCareer, "lssx_" .. config.career)
 end
 
-function var_0_0.sortFunc(arg_11_0, arg_11_1)
-	local var_11_0 = Activity174Config.instance:getRoleCo(arg_11_0)
-	local var_11_1 = Activity174Config.instance:getRoleCo(arg_11_1)
+function Act174GameShopItem.sortFunc(a, b)
+	local roleCoA = Activity174Config.instance:getRoleCo(a)
+	local roleCoB = Activity174Config.instance:getRoleCo(b)
 
-	if var_11_0.rare == var_11_1.rare then
-		return arg_11_1 < arg_11_0
+	if roleCoA.rare == roleCoB.rare then
+		return b < a
 	else
-		return var_11_0.rare > var_11_1.rare
+		return roleCoA.rare > roleCoB.rare
 	end
 end
 
-return var_0_0
+return Act174GameShopItem

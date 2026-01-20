@@ -1,51 +1,53 @@
-﻿module("modules.logic.fight.entity.comp.FightSkinCustomComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightSkinCustomComp.lua
 
-local var_0_0 = class("FightSkinCustomComp", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightSkinCustomComp", package.seeall)
 
-var_0_0.SkinId2CustomComp = {
+local FightSkinCustomComp = class("FightSkinCustomComp", LuaCompBase)
+
+FightSkinCustomComp.SkinId2CustomComp = {
 	[308603] = FightSkinLuXi_308603CustomComp,
 	[630305] = FightSkinSM_630305CustomComp
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+function FightSkinCustomComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function FightSkinCustomComp:init(go)
+	self.go = go
 
-	local var_2_0 = arg_2_0.entity:getMO()
-	local var_2_1 = var_0_0.SkinId2CustomComp[var_2_0.skin]
+	local entityMo = self.entity:getMO()
+	local compCls = FightSkinCustomComp.SkinId2CustomComp[entityMo.skin]
 
-	if var_2_1 then
-		arg_2_0.customComp = var_2_1.New(arg_2_0.entity)
+	if compCls then
+		self.customComp = compCls.New(self.entity)
 
-		arg_2_0.customComp:init(arg_2_1)
+		self.customComp:init(go)
 	end
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	if arg_3_0.customComp then
-		arg_3_0.customComp:addEventListeners()
+function FightSkinCustomComp:addEventListeners()
+	if self.customComp then
+		self.customComp:addEventListeners()
 	end
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	if arg_4_0.customComp then
-		arg_4_0.customComp:removeEventListeners()
+function FightSkinCustomComp:removeEventListeners()
+	if self.customComp then
+		self.customComp:removeEventListeners()
 	end
 end
 
-function var_0_0.getCustomComp(arg_5_0)
-	return arg_5_0.customComp
+function FightSkinCustomComp:getCustomComp()
+	return self.customComp
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	if arg_6_0.customComp then
-		arg_6_0.customComp:onDestroy()
+function FightSkinCustomComp:onDestroy()
+	if self.customComp then
+		self.customComp:onDestroy()
 
-		arg_6_0.customComp = nil
+		self.customComp = nil
 	end
 end
 
-return var_0_0
+return FightSkinCustomComp

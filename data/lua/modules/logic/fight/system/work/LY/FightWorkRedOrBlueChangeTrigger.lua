@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueChangeTrigger", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/LY/FightWorkRedOrBlueChangeTrigger.lua
 
-local var_0_0 = class("FightWorkRedOrBlueChangeTrigger", FightEffectBase)
+module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueChangeTrigger", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkRedOrBlueChangeTrigger = class("FightWorkRedOrBlueChangeTrigger", FightEffectBase)
+
+function FightWorkRedOrBlueChangeTrigger:onStart()
 	FightDataHelper.LYDataMgr:refreshShowAreaSize()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkRedOrBlueChangeTrigger

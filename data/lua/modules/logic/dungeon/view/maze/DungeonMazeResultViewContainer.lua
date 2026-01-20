@@ -1,11 +1,13 @@
-﻿module("modules.logic.dungeon.view.maze.DungeonMazeResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/maze/DungeonMazeResultViewContainer.lua
 
-local var_0_0 = class("DungeonMazeResultViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.maze.DungeonMazeResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DungeonMazeResultViewContainer = class("DungeonMazeResultViewContainer", BaseViewContainer)
+
+function DungeonMazeResultViewContainer:buildViews()
 	return {
 		DungeonMazeResultView.New()
 	}
 end
 
-return var_0_0
+return DungeonMazeResultViewContainer

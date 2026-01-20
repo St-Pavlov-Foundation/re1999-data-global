@@ -1,13 +1,15 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkDegradeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkDegradeViewContainer.lua
 
-local var_0_0 = class("WeekWalkDegradeViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkDegradeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WeekWalkDegradeViewContainer = class("WeekWalkDegradeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, WeekWalkDegradeView.New())
+function WeekWalkDegradeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, WeekWalkDegradeView.New())
+
+	return views
 end
 
-return var_0_0
+return WeekWalkDegradeViewContainer

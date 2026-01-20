@@ -1,189 +1,214 @@
-﻿local var_0_0 = require("modules.logic.common.defines.UIAnimationName")
+﻿-- chunkname: @modules/logic/handbook/view/HandbookSkinItem.lua
+
+local UIAnimationName = require("modules.logic.common.defines.UIAnimationName")
 
 module("modules.logic.handbook.view.HandbookSkinItem", package.seeall)
 
-local var_0_1 = class("HandbookSkinItem", LuaCompBase)
-local var_0_2 = {
+local HandbookSkinItem = class("HandbookSkinItem", LuaCompBase)
+local iconBgDefaultSize = {
 	376,
 	780
 }
-local var_0_3 = {
+local spineDefaultSize = {
 	500,
 	780
 }
-local var_0_4 = ZProj.UIEffectsCollection
-local var_0_5 = SLFramework.UGUI.GuiHelper
-local var_0_6 = 0.63
+local ZProj_UIEffectsCollection = ZProj.UIEffectsCollection
+local SLFramework_UGUI_GuiHelper = SLFramework.UGUI.GuiHelper
+local spineGray = 0.63
 
-function var_0_1.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._goUniqueSkin = gohelper.findChild(arg_1_0.viewGO, "#go_UniqueSkin")
-	arg_1_0._goUniqueSkinsImage = gohelper.findChild(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._uniqueImageicon = gohelper.findChildImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._goUniqueImageicon2 = gohelper.findChild(arg_1_0.viewGO, "#simage_icon2")
-	arg_1_0._roleImage = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#image")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root")
-	arg_1_0._uiEffectComp = var_0_4.Get(arg_1_0.viewGO)
-	arg_1_0._roleImageGraphic = gohelper.findChildImage(arg_1_0.viewGO, "root/#image")
-	arg_1_0._goimageL2DRole = gohelper.findChildImage(arg_1_0.viewGO, "image_L2DRole")
+function HandbookSkinItem:init(go)
+	self.viewGO = go
+	self._goUniqueSkin = gohelper.findChild(self.viewGO, "#go_UniqueSkin")
+	self._goUniqueSkinsImage = gohelper.findChild(self.viewGO, "#simage_icon")
+	self._uniqueImageicon = gohelper.findChildImage(self.viewGO, "#simage_icon")
+	self._goUniqueImageicon2 = gohelper.findChild(self.viewGO, "#simage_icon2")
+	self._roleImage = gohelper.findChildSingleImage(self.viewGO, "root/#image")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "root")
+	self._btnframeclick = gohelper.findChildButtonWithAudio(self.viewGO, "image_Frame")
+	self._uiEffectComp = ZProj_UIEffectsCollection.Get(self.viewGO)
+	self._roleImageGraphic = gohelper.findChildImage(self.viewGO, "root/#image")
+	self._roleImageFrame = gohelper.findChildImage(self.viewGO, "image_Frame")
+	self._goimageL2DRole = gohelper.findChildImage(self.viewGO, "image_L2DRole")
 
-	arg_1_0:_addEvents()
+	self:_addEvents()
 end
 
-function var_0_1.setData(arg_2_0, arg_2_1)
-	arg_2_0._suitId = arg_2_1
+function HandbookSkinItem:setData(suitId)
+	self._suitId = suitId
 end
 
-function var_0_1.refreshItem(arg_3_0, arg_3_1)
-	arg_3_0._skinId = arg_3_1
-	arg_3_0.skinCfg = SkinConfig.instance:getSkinCo(arg_3_1)
-	arg_3_0._skinSuitCfg = HandbookConfig.instance:getSkinSuitCfg(arg_3_0._suitId)
+function HandbookSkinItem:refreshItem(skinId)
+	self._skinId = skinId
+	self.skinCfg = SkinConfig.instance:getSkinCo(skinId)
+	self._skinSuitCfg = HandbookConfig.instance:getSkinSuitCfg(self._suitId)
 
-	local var_3_0 = arg_3_0._skinSuitCfg.spineParams
+	local spineParams = self._skinSuitCfg.spineParams
 
-	if string.nilorempty(var_3_0) then
+	if string.nilorempty(spineParams) then
 		-- block empty
 	end
 
-	local var_3_1 = string.split(var_3_0, "#")
-	local var_3_2
+	local spineParamsList = string.split(spineParams, "#")
+	local curSkinSpineParam
 
-	if var_3_1 then
-		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-			local var_3_3 = string.split(iter_3_1, "|")
+	if spineParamsList then
+		for _, spineParamStr in ipairs(spineParamsList) do
+			local spineParam = string.split(spineParamStr, "|")
+			local spineSkinId = tonumber(spineParam[1])
 
-			if tonumber(var_3_3[1]) == arg_3_1 then
-				var_3_2 = var_3_3
+			if spineSkinId == skinId then
+				curSkinSpineParam = spineParam
 			end
 		end
 	end
 
-	if var_3_2 ~= nil then
-		gohelper.setActive(arg_3_0._goUniqueSkinsImage, false)
-		gohelper.setActive(arg_3_0._goUniqueImageicon2, false)
-		gohelper.setActive(arg_3_0._roleImage.gameObject, false)
-		gohelper.setActive(arg_3_0._goimageL2DRole, false)
+	local isUniqueSkin = curSkinSpineParam ~= nil
 
-		local var_3_4 = var_3_2[2]
-		local var_3_5 = #var_3_2 > 2 and string.splitToNumber(var_3_2[3], ",") or {
+	if isUniqueSkin then
+		gohelper.setActive(self._goUniqueSkinsImage, false)
+		gohelper.setActive(self._goUniqueImageicon2, false)
+		gohelper.setActive(self._roleImage.gameObject, false)
+		gohelper.setActive(self._goimageL2DRole, false)
+
+		local spinePrefabPath = curSkinSpineParam[2]
+		local pos = #curSkinSpineParam > 2 and string.splitToNumber(curSkinSpineParam[3], ",") or {
 			0,
 			0
 		}
-		local var_3_6 = #var_3_2 > 3 and tonumber(var_3_2[4]) or 1
+		local uniScale = #curSkinSpineParam > 3 and tonumber(curSkinSpineParam[4]) or 1
 
-		if arg_3_0._skinSpine then
-			arg_3_0._skinSpine:setResPath(var_3_4, arg_3_0._onSkinSpineLoaded, arg_3_0, true)
+		if self._skinSpine then
+			self._skinSpine:setResPath(spinePrefabPath, self._onSkinSpineLoaded, self, true)
 		else
-			gohelper.setActive(arg_3_0._goUniqueSkinsImage, true)
+			gohelper.setActive(self._goUniqueSkinsImage, true)
 
-			arg_3_0._skinSpineGO = arg_3_0._skinSpineGO or gohelper.create2d(arg_3_0._goUniqueSkinsImage, "uniqueSkinSpine")
+			self._skinSpineGO = self._skinSpineGO or gohelper.create2d(self._goUniqueSkinsImage, "uniqueSkinSpine")
 
-			local var_3_7 = arg_3_0._skinSpineGO.transform
+			local spineRootRect = self._skinSpineGO.transform
 
-			recthelper.setWidth(var_3_7, var_0_3[1])
-			transformhelper.setLocalPos(var_3_7, var_3_5[1], var_3_5[2], 0)
-			transformhelper.setLocalScale(var_3_7, var_3_6, var_3_6, var_3_6)
+			recthelper.setWidth(spineRootRect, spineDefaultSize[1])
+			transformhelper.setLocalPos(spineRootRect, pos[1], pos[2], 0)
+			transformhelper.setLocalScale(spineRootRect, uniScale, uniScale, uniScale)
 
-			arg_3_0._skinSpine = GuiSpine.Create(arg_3_0._skinSpineGO, false)
+			self._skinSpine = GuiSpine.Create(self._skinSpineGO, false)
 
-			arg_3_0._skinSpine:setResPath(var_3_4, arg_3_0._onSkinSpineLoaded, arg_3_0, true)
+			self._skinSpine:setResPath(spinePrefabPath, self._onSkinSpineLoaded, self, true)
 		end
 	else
-		gohelper.setActive(arg_3_0._goUniqueSkinsImage, false)
-		gohelper.setActive(arg_3_0._goUniqueImageicon2, false)
-		arg_3_0._roleImage:LoadImage(ResUrl.getHeadIconImg(arg_3_1), arg_3_0._onLoadRoleImageDone, arg_3_0)
+		gohelper.setActive(self._goUniqueSkinsImage, false)
+		gohelper.setActive(self._goUniqueImageicon2, false)
+		self._roleImage:LoadImage(ResUrl.getHeadIconImg(skinId), self._onLoadRoleImageDone, self)
 
-		arg_3_0._width = arg_3_0._roleImage.transform.parent.sizeDelta.x
+		self._width = self._roleImage.transform.parent.sizeDelta.x
 	end
 
-	local var_3_8 = HeroModel.instance:checkHasSkin(arg_3_1)
+	local has = HeroModel.instance:checkHasSkin(skinId)
 
-	if arg_3_0._lastHasSkin ~= var_3_8 then
-		arg_3_0._lastHasSkin = var_3_8
+	if self._lastHasSkin ~= has then
+		self._lastHasSkin = has
 
-		if var_3_8 then
-			arg_3_0._uiEffectComp:SetGray(false)
+		if has then
+			self._uiEffectComp:SetGray(false)
 		else
-			arg_3_0._uiEffectComp:SetGray(true)
+			self._uiEffectComp:SetGray(true)
 		end
 
-		var_0_5.SetColor(arg_3_0._roleImageGraphic, var_3_8 and "#FFFFFF" or "#DCDCDC")
-	end
-end
+		SLFramework_UGUI_GuiHelper.SetColor(self._roleImageGraphic, has and "#FFFFFF" or "#DCDCDC")
 
-function var_0_1._onLoadRoleImageDone(arg_4_0)
-	ZProj.UGUIHelper.SetImageSize(arg_4_0._roleImage.gameObject)
-end
+		local isFrameAsIcon = self._btnframeclick ~= nil
 
-function var_0_1.resetRes(arg_5_0)
-	if arg_5_0._roleImage then
-		arg_5_0._roleImage:UnLoadImage()
-	end
-end
-
-function var_0_1._onSkinSpineLoaded(arg_6_0)
-	local var_6_0 = arg_6_0._skinSpine:getSpineTr()
-	local var_6_1 = var_6_0.parent
-
-	recthelper.setWidth(var_6_0, recthelper.getWidth(var_6_1))
-	recthelper.setHeight(var_6_0, recthelper.getHeight(var_6_1))
-	arg_6_0:setSpineRaycastTarget(arg_6_0._raycastTarget)
-end
-
-function var_0_1.setSpineRaycastTarget(arg_7_0, arg_7_1)
-	arg_7_0._raycastTarget = arg_7_1 == true and true or false
-
-	if arg_7_0._skinSpine then
-		local var_7_0 = arg_7_0._skinSpine:getSkeletonGraphic()
-
-		if var_7_0 then
-			var_7_0.raycastTarget = arg_7_0._raycastTarget
-		end
-
-		if not HeroModel.instance:checkHasSkin(arg_7_0._skinId) then
-			var_7_0.runtimeMaterial:SetFloat(ShaderPropertyId.LumFactor, var_0_6)
+		if isFrameAsIcon then
+			SLFramework_UGUI_GuiHelper.SetColor(self._roleImageFrame, has and "#FFFFFF" or "#9F9F9F")
 		end
 	end
 end
 
-function var_0_1.refreshTitle(arg_8_0)
+function HandbookSkinItem:_onLoadRoleImageDone()
+	ZProj.UGUIHelper.SetImageSize(self._roleImage.gameObject)
+end
+
+function HandbookSkinItem:resetRes()
+	if self._roleImage then
+		self._roleImage:UnLoadImage()
+	end
+end
+
+function HandbookSkinItem:_onSkinSpineLoaded()
+	local spineTr = self._skinSpine:getSpineTr()
+	local rootTrans = spineTr.parent
+
+	recthelper.setWidth(spineTr, recthelper.getWidth(rootTrans))
+	recthelper.setHeight(spineTr, recthelper.getHeight(rootTrans))
+	self:setSpineRaycastTarget(self._raycastTarget)
+end
+
+function HandbookSkinItem:setSpineRaycastTarget(raycast)
+	self._raycastTarget = raycast == true and true or false
+
+	if self._skinSpine then
+		local spineGraphic = self._skinSpine:getSkeletonGraphic()
+
+		if spineGraphic then
+			spineGraphic.raycastTarget = self._raycastTarget
+		end
+
+		local has = HeroModel.instance:checkHasSkin(self._skinId)
+
+		if not has then
+			local mat = spineGraphic.runtimeMaterial
+
+			mat:SetFloat(ShaderPropertyId.LumFactor, spineGray)
+		end
+	end
+end
+
+function HandbookSkinItem:refreshTitle()
 	return
 end
 
-function var_0_1.addEventListeners(arg_9_0)
-	arg_9_0._btnclick:AddClickListener(arg_9_0._btnclickOnClick, arg_9_0)
+function HandbookSkinItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+
+	if self._btnframeclick then
+		self._btnframeclick:AddClickListener(self._btnclickOnClick, self)
+	end
 end
 
-function var_0_1.removeEventListeners(arg_10_0)
-	arg_10_0._btnclick:RemoveClickListener()
+function HandbookSkinItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+
+	if self._btnframeclick then
+		self._btnframeclick:RemoveClickListener()
+	end
 end
 
-function var_0_1._btnclickOnClick(arg_11_0)
-	local var_11_0 = arg_11_0.skinCfg.characterId
-	local var_11_1 = arg_11_0.skinCfg.id
-	local var_11_2 = {
+function HandbookSkinItem:_btnclickOnClick()
+	local heroId = self.skinCfg.characterId
+	local skinId = self.skinCfg.id
+	local skinViewParams = {
 		handbook = true,
 		storyMode = true,
-		heroId = var_11_0,
-		skin = var_11_1,
-		skinSuitId = arg_11_0._suitId
+		heroId = heroId,
+		skin = skinId,
+		skinSuitId = self._suitId
 	}
 
-	CharacterController.instance:openCharacterSkinView(var_11_2)
+	CharacterController.instance:openCharacterSkinView(skinViewParams)
 end
 
-function var_0_1._addEvents(arg_12_0)
+function HandbookSkinItem:_addEvents()
 	return
 end
 
-function var_0_1._removeEvents(arg_13_0)
+function HandbookSkinItem:_removeEvents()
 	return
 end
 
-function var_0_1.onDestroy(arg_14_0)
-	arg_14_0:resetRes()
-	arg_14_0:_removeEvents()
-	arg_14_0:removeEventListeners()
+function HandbookSkinItem:onDestroy()
+	self:resetRes()
+	self:_removeEvents()
+	self:removeEventListeners()
 end
 
-return var_0_1
+return HandbookSkinItem

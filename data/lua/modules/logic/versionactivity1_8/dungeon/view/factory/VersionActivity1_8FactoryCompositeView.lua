@@ -1,208 +1,217 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryCompositeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/VersionActivity1_8FactoryCompositeView.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryCompositeView", BaseView)
-local var_0_1 = 1
+module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryCompositeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._translayout1 = gohelper.findChild(arg_1_0.viewGO, "left/layout").gameObject
-	arg_1_0._txtitemname1 = gohelper.findChildText(arg_1_0.viewGO, "left/layout/#txt_leftproductname")
-	arg_1_0._txtitemnum1 = gohelper.findChildText(arg_1_0.viewGO, "left/layout/#txt_leftproductnum")
-	arg_1_0._simageitemicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/leftproduct_icon")
-	arg_1_0._translayout2 = gohelper.findChild(arg_1_0.viewGO, "right/layout").gameObject
-	arg_1_0._txtitemname2 = gohelper.findChildText(arg_1_0.viewGO, "right/layout/#txt_rightproductname")
-	arg_1_0._txtitemnum2 = gohelper.findChildText(arg_1_0.viewGO, "right/layout/#txt_rightproductnum")
-	arg_1_0._simageitemicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/rightproduct_icon")
-	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_composite/valuebg/#input_value")
-	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_min")
-	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_sub")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_add")
-	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_max")
-	arg_1_0._btncomposite = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_composite/#btn_composite")
-	arg_1_0._simagecosticon1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_composite/cost/#simage_costicon")
-	arg_1_0._txtoriginalCost = gohelper.findChildText(arg_1_0.viewGO, "#go_composite/cost/#txt_originalCost")
+local VersionActivity1_8FactoryCompositeView = class("VersionActivity1_8FactoryCompositeView", BaseView)
+local MIN_COMPOSITE_COUNT = 1
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_8FactoryCompositeView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	local leftlayout = gohelper.findChild(self.viewGO, "left/layout")
+
+	self._translayout1 = leftlayout.gameObject
+	self._txtitemname1 = gohelper.findChildText(self.viewGO, "left/layout/#txt_leftproductname")
+	self._txtitemnum1 = gohelper.findChildText(self.viewGO, "left/layout/#txt_leftproductnum")
+	self._simageitemicon1 = gohelper.findChildSingleImage(self.viewGO, "left/leftproduct_icon")
+
+	local rightlayout = gohelper.findChild(self.viewGO, "right/layout")
+
+	self._translayout2 = rightlayout.gameObject
+	self._txtitemname2 = gohelper.findChildText(self.viewGO, "right/layout/#txt_rightproductname")
+	self._txtitemnum2 = gohelper.findChildText(self.viewGO, "right/layout/#txt_rightproductnum")
+	self._simageitemicon2 = gohelper.findChildSingleImage(self.viewGO, "right/rightproduct_icon")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.viewGO, "#go_composite/valuebg/#input_value")
+	self._btnmin = gohelper.findChildButtonWithAudio(self.viewGO, "#go_composite/#btn_min")
+	self._btnsub = gohelper.findChildButtonWithAudio(self.viewGO, "#go_composite/#btn_sub")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_composite/#btn_add")
+	self._btnmax = gohelper.findChildButtonWithAudio(self.viewGO, "#go_composite/#btn_max")
+	self._btncomposite = gohelper.findChildButtonWithAudio(self.viewGO, "#go_composite/#btn_composite")
+	self._simagecosticon1 = gohelper.findChildImage(self.viewGO, "#go_composite/cost/#simage_costicon")
+	self._txtoriginalCost = gohelper.findChildText(self.viewGO, "#go_composite/cost/#txt_originalCost")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseClick, arg_2_0)
-	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
-	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
-	arg_2_0._btncomposite:AddClickListener(arg_2_0._btncompositeOnClick, arg_2_0)
-	arg_2_0._inputvalue:AddOnValueChanged(arg_2_0.onCompositeCountValueChange, arg_2_0)
+function VersionActivity1_8FactoryCompositeView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseClick, self)
+	self._btnmin:AddClickListener(self._btnminOnClick, self)
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnmax:AddClickListener(self._btnmaxOnClick, self)
+	self._btncomposite:AddClickListener(self._btncompositeOnClick, self)
+	self._inputvalue:AddOnValueChanged(self.onCompositeCountValueChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnmin:RemoveClickListener()
-	arg_3_0._btnsub:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnmax:RemoveClickListener()
-	arg_3_0._btncomposite:RemoveClickListener()
-	arg_3_0._inputvalue:RemoveOnValueChanged()
+function VersionActivity1_8FactoryCompositeView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnmin:RemoveClickListener()
+	self._btnsub:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
+	self._btnmax:RemoveClickListener()
+	self._btncomposite:RemoveClickListener()
+	self._inputvalue:RemoveOnValueChanged()
 end
 
-function var_0_0._btncloseClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity1_8FactoryCompositeView:_btncloseClick()
+	self:closeThis()
 end
 
-function var_0_0._btnminOnClick(arg_5_0)
-	arg_5_0:changeCompositeCount(var_0_1)
+function VersionActivity1_8FactoryCompositeView:_btnminOnClick()
+	self:changeCompositeCount(MIN_COMPOSITE_COUNT)
 end
 
-function var_0_0._btnsubOnClick(arg_6_0)
-	arg_6_0:changeCompositeCount(arg_6_0.compositeCount - 1)
+function VersionActivity1_8FactoryCompositeView:_btnsubOnClick()
+	self:changeCompositeCount(self.compositeCount - 1)
 end
 
-function var_0_0._btnaddOnClick(arg_7_0)
-	arg_7_0:changeCompositeCount(arg_7_0.compositeCount + 1)
+function VersionActivity1_8FactoryCompositeView:_btnaddOnClick()
+	self:changeCompositeCount(self.compositeCount + 1)
 end
 
-function var_0_0._btnmaxOnClick(arg_8_0)
-	local var_8_0 = arg_8_0:getMaxCompositeCount()
+function VersionActivity1_8FactoryCompositeView:_btnmaxOnClick()
+	local maxCompositeCount = self:getMaxCompositeCount()
 
-	arg_8_0:changeCompositeCount(var_8_0)
+	self:changeCompositeCount(maxCompositeCount)
 end
 
-function var_0_0._btncompositeOnClick(arg_9_0)
-	local var_9_0 = arg_9_0.compositeCount * arg_9_0.costPerComposite
+function VersionActivity1_8FactoryCompositeView:_btncompositeOnClick()
+	local costCount = self.compositeCount * self.costPerComposite
 
-	Activity157Controller.instance:factoryComposite(arg_9_0.compositeCount, var_9_0, arg_9_0.closeThis, arg_9_0)
+	Activity157Controller.instance:factoryComposite(self.compositeCount, costCount, self.closeThis, self)
 end
 
-function var_0_0.onCompositeCountValueChange(arg_10_0, arg_10_1)
-	local var_10_0 = tonumber(arg_10_1)
+function VersionActivity1_8FactoryCompositeView:onCompositeCountValueChange(value)
+	local count = tonumber(value)
 
-	if not var_10_0 then
+	if not count then
 		return
 	end
 
-	arg_10_0:changeCompositeCount(var_10_0, true)
+	self:changeCompositeCount(count, true)
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0.actId = Activity157Model.instance:getActId()
+function VersionActivity1_8FactoryCompositeView:_editableInitView()
+	self.actId = Activity157Model.instance:getActId()
 
-	local var_11_0 = Activity157Config.instance:getAct157CompositeFormula(arg_11_0.actId)
-	local var_11_1 = true
+	local itemList = Activity157Config.instance:getAct157CompositeFormula(self.actId)
+	local isFirst = true
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if var_11_1 then
-			arg_11_0.costItemType = iter_11_1.materilType
-			arg_11_0.costItemId = iter_11_1.materilId
-			arg_11_0.costPerComposite = iter_11_1.quantity or 0
-			var_11_1 = false
+	for i, item in ipairs(itemList) do
+		if isFirst then
+			self.costItemType = item.materilType
+			self.costItemId = item.materilId
+			self.costPerComposite = item.quantity or 0
+			isFirst = false
 		else
-			arg_11_0.targetPerComposite = iter_11_1.quantity or 0
+			self.targetPerComposite = item.quantity or 0
 		end
 
-		local var_11_2, var_11_3 = ItemModel.instance:getItemConfigAndIcon(iter_11_1.materilType, iter_11_1.materilId)
-		local var_11_4 = "_txtitemname" .. iter_11_0
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(item.materilType, item.materilId)
+		local nameComp = "_txtitemname" .. i
 
-		if arg_11_0[var_11_4] then
-			arg_11_0[var_11_4].text = var_11_2.name
+		if self[nameComp] then
+			self[nameComp].text = config.name
 		end
 
-		local var_11_5 = "_simageitemicon" .. iter_11_0
+		local iconComp = "_simageitemicon" .. i
 
-		if arg_11_0[var_11_5] then
-			arg_11_0[var_11_5]:LoadImage(var_11_3)
+		if self[iconComp] then
+			self[iconComp]:LoadImage(icon)
 		end
 
-		local var_11_6 = "_simagecosticon" .. iter_11_0
+		local costComp = "_simagecosticon" .. i
 
-		if arg_11_0[var_11_6] then
-			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_11_0[var_11_6], var_11_2.icon .. "_1")
+		if self[costComp] then
+			UISpriteSetMgr.instance:setCurrencyItemSprite(self[costComp], config.icon .. "_1")
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function VersionActivity1_8FactoryCompositeView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	local var_13_0 = var_0_1
-	local var_13_1 = Activity157Model.instance:getLastWillBeRepairedComponent()
+function VersionActivity1_8FactoryCompositeView:onOpen()
+	local defaultCount = MIN_COMPOSITE_COUNT
+	local beRepairedComponentId = Activity157Model.instance:getLastWillBeRepairedComponent()
 
-	if var_13_1 then
-		local var_13_2, var_13_3, var_13_4 = Activity157Config.instance:getComponentUnlockCondition(arg_13_0.actId, var_13_1)
-		local var_13_5 = var_13_4 - ItemModel.instance:getItemQuantity(var_13_2, var_13_3)
+	if beRepairedComponentId then
+		local type, id, needQuantity = Activity157Config.instance:getComponentUnlockCondition(self.actId, beRepairedComponentId)
+		local itemQuantity = ItemModel.instance:getItemQuantity(type, id)
+		local diff = needQuantity - itemQuantity
 
-		if var_13_5 > 0 then
-			local var_13_6 = arg_13_0:getMaxCompositeCount()
+		if diff > 0 then
+			local maxCompositeCount = self:getMaxCompositeCount()
 
-			var_13_0 = var_13_6 < var_13_5 and var_13_6 or var_13_5
+			defaultCount = maxCompositeCount < diff and maxCompositeCount or diff
 		end
 	end
 
-	arg_13_0:changeCompositeCount(var_13_0)
+	self:changeCompositeCount(defaultCount)
 end
 
-function var_0_0.getMaxCompositeCount(arg_14_0)
-	local var_14_0 = var_0_1
-	local var_14_1 = ItemModel.instance:getItemQuantity(arg_14_0.costItemType, arg_14_0.costItemId)
+function VersionActivity1_8FactoryCompositeView:getMaxCompositeCount()
+	local result = MIN_COMPOSITE_COUNT
+	local itemQuantity = ItemModel.instance:getItemQuantity(self.costItemType, self.costItemId)
 
-	if var_14_1 then
-		var_14_0 = math.floor(var_14_1 / arg_14_0.costPerComposite)
+	if itemQuantity then
+		result = math.floor(itemQuantity / self.costPerComposite)
 	end
 
-	return var_14_0
+	return result
 end
 
-function var_0_0.changeCompositeCount(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getMaxCompositeCount()
+function VersionActivity1_8FactoryCompositeView:changeCompositeCount(count, isIgnoreNotify)
+	local maxCompositeCount = self:getMaxCompositeCount()
 
-	if var_15_0 < arg_15_1 then
-		arg_15_1 = var_15_0
+	if maxCompositeCount < count then
+		count = maxCompositeCount
 	end
 
-	if arg_15_1 < var_0_1 then
-		arg_15_1 = var_0_1
+	if count < MIN_COMPOSITE_COUNT then
+		count = MIN_COMPOSITE_COUNT
 	end
 
-	arg_15_0.compositeCount = arg_15_1
+	self.compositeCount = count
 
-	if arg_15_2 then
-		arg_15_0._inputvalue:SetTextWithoutNotify(tostring(arg_15_1))
+	if isIgnoreNotify then
+		self._inputvalue:SetTextWithoutNotify(tostring(count))
 	else
-		arg_15_0._inputvalue:SetText(arg_15_1)
+		self._inputvalue:SetText(count)
 	end
 
-	arg_15_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_16_0)
-	local var_16_0 = arg_16_0.compositeCount * arg_16_0.costPerComposite
-	local var_16_1 = arg_16_0.compositeCount * arg_16_0.targetPerComposite
+function VersionActivity1_8FactoryCompositeView:refreshUI()
+	local costCount = self.compositeCount * self.costPerComposite
+	local targetPerComposite = self.compositeCount * self.targetPerComposite
 
-	arg_16_0._txtitemnum1.text = luaLang("multiple") .. var_16_0
-	arg_16_0._txtitemnum2.text = luaLang("multiple") .. var_16_1
+	self._txtitemnum1.text = luaLang("multiple") .. costCount
+	self._txtitemnum2.text = luaLang("multiple") .. targetPerComposite
 
-	ZProj.UGUIHelper.RebuildLayout(arg_16_0._translayout1.transform)
-	ZProj.UGUIHelper.RebuildLayout(arg_16_0._translayout2.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._translayout1.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._translayout2.transform)
 
-	local var_16_2 = ItemModel.instance:getItemQuantity(arg_16_0.costItemType, arg_16_0.costItemId)
+	local itemQuantity = ItemModel.instance:getItemQuantity(self.costItemType, self.costItemId)
 
-	arg_16_0:showOriginalCostTxt(var_16_0, var_16_2)
+	self:showOriginalCostTxt(costCount, itemQuantity)
 end
 
-function var_0_0.showOriginalCostTxt(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._txtoriginalCost.text = string.format("<color=#E07E25>%s</color>/%s", arg_17_1, arg_17_2)
+function VersionActivity1_8FactoryCompositeView:showOriginalCostTxt(costCount, maxCount)
+	self._txtoriginalCost.text = string.format("<color=#E07E25>%s</color>/%s", costCount, maxCount)
 end
 
-function var_0_0.onClose(arg_18_0)
+function VersionActivity1_8FactoryCompositeView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0._simageitemicon1:UnLoadImage()
-	arg_19_0._simageitemicon2:UnLoadImage()
+function VersionActivity1_8FactoryCompositeView:onDestroyView()
+	self._simageitemicon1:UnLoadImage()
+	self._simageitemicon2:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_8FactoryCompositeView

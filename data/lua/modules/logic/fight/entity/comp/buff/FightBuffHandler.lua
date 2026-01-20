@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffHandler", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffHandler.lua
 
-local var_0_0 = class("FightBuffHandler")
+module("modules.logic.fight.entity.comp.buff.FightBuffHandler", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.type = nil
+local FightBuffHandler = class("FightBuffHandler")
+
+function FightBuffHandler:ctor()
+	self.type = nil
 end
 
-function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
+function FightBuffHandler:onBuffStart(entity, buffMO)
 	return
 end
 
-function var_0_0.onBuffEnd(arg_3_0)
+function FightBuffHandler:onBuffEnd()
 	return
 end
 
-function var_0_0.reset(arg_4_0)
+function FightBuffHandler:reset()
 	return
 end
 
-function var_0_0.dispose(arg_5_0)
+function FightBuffHandler:dispose()
 	return
 end
 
-return var_0_0
+return FightBuffHandler

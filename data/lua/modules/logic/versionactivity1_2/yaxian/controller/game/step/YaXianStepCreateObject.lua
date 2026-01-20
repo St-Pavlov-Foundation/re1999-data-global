@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepCreateObject", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/step/YaXianStepCreateObject.lua
 
-local var_0_0 = class("YaXianStepCreateObject", YaXianStepBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepCreateObject", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.id
+local YaXianStepCreateObject = class("YaXianStepCreateObject", YaXianStepBase)
 
-	YaXianGameModel.instance:removeObjectById(var_1_0)
-	YaXianGameController.instance:deleteInteractObj(var_1_0)
+function YaXianStepCreateObject:start()
+	local objId = self.originData.id
 
-	local var_1_1 = YaXianGameModel.instance:addObject(arg_1_0.originData)
+	YaXianGameModel.instance:removeObjectById(objId)
+	YaXianGameController.instance:deleteInteractObj(objId)
 
-	YaXianGameController.instance:addInteractObj(var_1_1)
-	logNormal("create object finish !" .. tostring(var_1_1.id))
-	arg_1_0:finish()
+	local mo = YaXianGameModel.instance:addObject(self.originData)
+
+	YaXianGameController.instance:addInteractObj(mo)
+	logNormal("create object finish !" .. tostring(mo.id))
+	self:finish()
 end
 
-return var_0_0
+return YaXianStepCreateObject

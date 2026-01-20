@@ -1,305 +1,309 @@
-﻿module("modules.logic.task.view.TaskListCommonLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/task/view/TaskListCommonLevelItem.lua
 
-local var_0_0 = class("TaskListCommonLevelItem", LuaCompBase)
+module("modules.logic.task.view.TaskListCommonLevelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tag = gohelper.findChildText(arg_1_1, "tag")
-	arg_1_0._goflagcontent = gohelper.findChild(arg_1_1, "flagitem")
-	arg_1_0._goflag = gohelper.findChild(arg_1_1, "flagitem/#go_flag")
-	arg_1_0._scrollreward = gohelper.findChild(arg_1_1, "rewarditem"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_1, "rewarditem/viewport/content")
-	arg_1_0._gomaskbg = gohelper.findChild(arg_1_1, "go_maskbg")
-	arg_1_0._gomask = gohelper.findChild(arg_1_1, "go_maskbg/maskcontainer")
-	arg_1_0._itemAni = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._itemAni.enabled = false
-	arg_1_0._maskAni = arg_1_0._gomaskbg:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._maskAni.enabled = false
-	arg_1_0._maskCanvasGroup = arg_1_0._gomaskbg:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._getAct = 0
-	arg_1_0._gocanvasgroup = arg_1_1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._scrollreward.parentGameObject = arg_1_2
+local TaskListCommonLevelItem = class("TaskListCommonLevelItem", LuaCompBase)
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCheckPlayRewardGet, arg_1_0)
+function TaskListCommonLevelItem:init(go, parentScrollGO)
+	self.go = go
+	self._tag = gohelper.findChildText(go, "tag")
+	self._goflagcontent = gohelper.findChild(go, "flagitem")
+	self._goflag = gohelper.findChild(go, "flagitem/#go_flag")
+	self._scrollreward = gohelper.findChild(go, "rewarditem"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._gorewardcontent = gohelper.findChild(go, "rewarditem/viewport/content")
+	self._gomaskbg = gohelper.findChild(go, "go_maskbg")
+	self._gomask = gohelper.findChild(go, "go_maskbg/maskcontainer")
+	self._itemAni = go:GetComponent(typeof(UnityEngine.Animator))
+	self._itemAni.enabled = false
+	self._maskAni = self._gomaskbg:GetComponent(typeof(UnityEngine.Animator))
+	self._maskAni.enabled = false
+	self._maskCanvasGroup = self._gomaskbg:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._getAct = 0
+	self._gocanvasgroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._scrollreward.parentGameObject = parentScrollGO
+
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCheckPlayRewardGet, self)
 end
 
-function var_0_0._onPlayActState(arg_2_0, arg_2_1)
-	if arg_2_1.taskType == TaskEnum.TaskType.Novice or arg_2_1.num < 1 then
+function TaskListCommonLevelItem:_onPlayActState(param)
+	if param.taskType == TaskEnum.TaskType.Novice or param.num < 1 then
 		return
 	end
 
-	if arg_2_0._taskType ~= arg_2_1.taskType then
+	if self._taskType ~= param.taskType then
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_2_0._flagPlayUpdate, arg_2_0)
+	TaskDispatcher.cancelTask(self._flagPlayUpdate, self)
 
-	local var_2_0 = arg_2_0:_getAddNum(arg_2_1.num)
+	local addNum = self:_getAddNum(param.num)
 
-	if var_2_0 < 1 then
+	if addNum < 1 then
 		return
 	end
 
-	arg_2_0._totalAct = arg_2_0._getAct + var_2_0
+	self._totalAct = self._getAct + addNum
 
-	if var_2_0 > 0 then
-		arg_2_0._flagupdateCount = 0
+	if addNum > 0 then
+		self._flagupdateCount = 0
 
-		TaskDispatcher.runRepeat(arg_2_0._flagPlayUpdate, arg_2_0, 0.06, var_2_0)
+		TaskDispatcher.runRepeat(self._flagPlayUpdate, self, 0.06, addNum)
 	end
 end
 
-function var_0_0._getAddNum(arg_3_0, arg_3_1)
-	local var_3_0 = TaskModel.instance:getTaskActivityMO(arg_3_0._taskType)
+function TaskListCommonLevelItem:_getAddNum(num)
+	local actMo = TaskModel.instance:getTaskActivityMO(self._taskType)
 
-	if arg_3_0._index <= var_3_0.defineId then
+	if self._index <= actMo.defineId then
 		return 0
 	end
 
-	local var_3_1 = 0
-	local var_3_2 = 0
-	local var_3_3 = 0
+	local addNum = 0
+	local showNum = 0
+	local totalNum = 0
 
-	for iter_3_0 = var_3_0.defineId + 1, arg_3_0._index do
-		var_3_3 = var_3_3 + TaskConfig.instance:gettaskactivitybonusCO(arg_3_0._taskType, iter_3_0).needActivity
+	for i = actMo.defineId + 1, self._index do
+		totalNum = totalNum + TaskConfig.instance:gettaskactivitybonusCO(self._taskType, i).needActivity
 	end
 
-	local var_3_4 = TaskConfig.instance:gettaskactivitybonusCO(arg_3_0._taskType, arg_3_0._index).needActivity
+	local curTotal = TaskConfig.instance:gettaskactivitybonusCO(self._taskType, self._index).needActivity
+	local beyondNum = actMo.value - actMo.gainValue + num - totalNum
 
-	if var_3_0.value - var_3_0.gainValue + arg_3_1 - var_3_3 >= 0 then
-		if arg_3_0._index == var_3_0.defineId + 1 then
-			var_3_1 = var_3_4 - (var_3_0.value - var_3_0.gainValue)
+	if beyondNum >= 0 then
+		if self._index == actMo.defineId + 1 then
+			addNum = curTotal - (actMo.value - actMo.gainValue)
 		else
-			var_3_1 = var_3_4
+			addNum = curTotal
 		end
-	elseif arg_3_0._index == var_3_0.defineId + 1 then
-		var_3_1 = arg_3_1
+	elseif self._index == actMo.defineId + 1 then
+		addNum = num
 	else
-		var_3_1 = arg_3_1 + (var_3_0.value - var_3_0.gainValue) - (var_3_3 - var_3_4)
+		addNum = num + (actMo.value - actMo.gainValue) - (totalNum - curTotal)
 	end
 
-	return var_3_1
+	return addNum
 end
 
-function var_0_0._flagPlayUpdate(arg_4_0)
-	arg_4_0._flagupdateCount = arg_4_0._flagupdateCount + 1
+function TaskListCommonLevelItem:_flagPlayUpdate()
+	self._flagupdateCount = self._flagupdateCount + 1
 
-	if arg_4_0._flagupdateCount + arg_4_0._getAct > #arg_4_0._flags then
-		TaskDispatcher.cancelTask(arg_4_0._flagPlayUpdate, arg_4_0)
+	if self._flagupdateCount + self._getAct > #self._flags then
+		TaskDispatcher.cancelTask(self._flagPlayUpdate, self)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0._flags[arg_4_0._flagupdateCount + arg_4_0._getAct].go, true)
-	arg_4_0._flags[arg_4_0._flagupdateCount + arg_4_0._getAct].ani:Play("play")
+	gohelper.setActive(self._flags[self._flagupdateCount + self._getAct].go, true)
+	self._flags[self._flagupdateCount + self._getAct].ani:Play("play")
 
-	if arg_4_0._flagupdateCount + arg_4_0._getAct >= arg_4_0._totalAct then
-		for iter_4_0 = arg_4_0._getAct, arg_4_0._totalAct - 1 do
-			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._flags[iter_4_0 + 1].img, "logo_huoyuedu")
+	if self._flagupdateCount + self._getAct >= self._totalAct then
+		for i = self._getAct, self._totalAct - 1 do
+			UISpriteSetMgr.instance:setCommonSprite(self._flags[i + 1].img, "logo_huoyuedu")
 		end
 
-		arg_4_0._getAct = arg_4_0._totalAct
+		self._getAct = self._totalAct
 
-		if TaskConfig.instance:gettaskactivitybonusCO(arg_4_0._taskType, arg_4_0._index).needActivity <= arg_4_0._getAct then
-			arg_4_0._needOpen = true
+		local totalNum = TaskConfig.instance:gettaskactivitybonusCO(self._taskType, self._index).needActivity
+
+		if totalNum <= self._getAct then
+			self._needOpen = true
 		end
 
-		TaskDispatcher.cancelTask(arg_4_0._flagPlayUpdate, arg_4_0)
+		TaskDispatcher.cancelTask(self._flagPlayUpdate, self)
 	end
 end
 
-function var_0_0._onCheckPlayRewardGet(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.CommonPropView and arg_5_0._needOpen and arg_5_0._maskCanvasGroup then
-		arg_5_0._maskCanvasGroup.alpha = 1
-		arg_5_0._maskAni.enabled = true
+function TaskListCommonLevelItem:_onCheckPlayRewardGet(viewName)
+	if viewName == ViewName.CommonPropView and self._needOpen and self._maskCanvasGroup then
+		self._maskCanvasGroup.alpha = 1
+		self._maskAni.enabled = true
 
-		arg_5_0._maskAni:Play(UIAnimationName.Open)
+		self._maskAni:Play(UIAnimationName.Open)
 
-		arg_5_0._needOpen = false
+		self._needOpen = false
 	end
 end
 
-function var_0_0.setItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	arg_6_0._index = arg_6_1
-	arg_6_0._mo = arg_6_2
-	arg_6_0._taskType = arg_6_3
+function TaskListCommonLevelItem:setItem(index, co, type, open)
+	self._index = index
+	self._mo = co
+	self._taskType = type
 
-	TaskController.instance:registerCallback(TaskEvent.RefreshActState, arg_6_0._onPlayActState, arg_6_0)
+	TaskController.instance:registerCallback(TaskEvent.RefreshActState, self._onPlayActState, self)
 
-	local var_6_0 = TaskModel.instance:getTaskActivityMO(arg_6_0._taskType)
-	local var_6_1 = 0
-	local var_6_2 = TaskConfig.instance:getTaskActivityBonusConfig(arg_6_0._taskType)
+	local actMo = TaskModel.instance:getTaskActivityMO(self._taskType)
+	local totalAct = 0
+	local boCo = TaskConfig.instance:getTaskActivityBonusConfig(self._taskType)
 
-	for iter_6_0 = 1, #var_6_2 do
-		var_6_1 = var_6_1 + var_6_2[iter_6_0].needActivity
+	for i = 1, #boCo do
+		totalAct = totalAct + boCo[i].needActivity
 	end
 
-	if arg_6_0._index <= var_6_0.defineId and var_6_1 > var_6_0.value then
-		arg_6_0._maskCanvasGroup.alpha = 1
-		arg_6_0._maskAni.enabled = true
+	if self._index <= actMo.defineId and totalAct > actMo.value then
+		self._maskCanvasGroup.alpha = 1
+		self._maskAni.enabled = true
 
-		if arg_6_4 then
-			arg_6_0._maskAni:Play(UIAnimationName.Open)
+		if open then
+			self._maskAni:Play(UIAnimationName.Open)
 		else
-			arg_6_0._maskAni:Play(UIAnimationName.Idle)
+			self._maskAni:Play(UIAnimationName.Idle)
 		end
 	else
-		arg_6_0._maskCanvasGroup.alpha = 0
-		arg_6_0._itemAni.enabled = true
-		arg_6_0._gocanvasgroup.alpha = 1
+		self._maskCanvasGroup.alpha = 0
+		self._itemAni.enabled = true
+		self._gocanvasgroup.alpha = 1
 	end
 
-	arg_6_0._tag.text = string.format("%02d", arg_6_0._index)
+	self._tag.text = string.format("%02d", self._index)
 
-	if arg_6_4 then
-		arg_6_0._gocanvasgroup.alpha = 0
-		arg_6_0._itemAni.enabled = false
+	if open then
+		self._gocanvasgroup.alpha = 0
+		self._itemAni.enabled = false
 
-		local var_6_3 = TaskModel.instance:getMaxStage(arg_6_0._taskType)
-		local var_6_4 = TaskModel.instance:getTaskActivityMO(arg_6_0._taskType).defineId + 1
-		local var_6_5 = var_6_3 - var_6_4 >= 5 and var_6_4 - 1 or var_6_3 - 5
+		local totalStage = TaskModel.instance:getMaxStage(self._taskType)
+		local curStage = TaskModel.instance:getTaskActivityMO(self._taskType).defineId + 1
+		local hideNum = totalStage - curStage >= 5 and curStage - 1 or totalStage - 5
 
-		TaskDispatcher.runDelay(arg_6_0._playStartAni, arg_6_0, 0.04 * (arg_6_0._index - var_6_5 + 1))
+		TaskDispatcher.runDelay(self._playStartAni, self, 0.04 * (self._index - hideNum + 1))
 	else
-		arg_6_0._gocanvasgroup.alpha = 1
-		arg_6_0._itemAni.enabled = true
+		self._gocanvasgroup.alpha = 1
+		self._itemAni.enabled = true
 
-		arg_6_0._itemAni:Play(UIAnimationName.Idle)
-		arg_6_0:_setFlagItem()
-		arg_6_0:_setRewardItem()
+		self._itemAni:Play(UIAnimationName.Idle)
+		self:_setFlagItem()
+		self:_setRewardItem()
 	end
 end
 
-function var_0_0.showAllComplete(arg_7_0)
-	arg_7_0._maskCanvasGroup.alpha = 1
+function TaskListCommonLevelItem:showAllComplete()
+	self._maskCanvasGroup.alpha = 1
 
-	arg_7_0._maskAni:Play(UIAnimationName.Idle)
-	gohelper.setActive(arg_7_0._gomask, false)
+	self._maskAni:Play(UIAnimationName.Idle)
+	gohelper.setActive(self._gomask, false)
 end
 
-function var_0_0._playStartAni(arg_8_0)
-	arg_8_0._gocanvasgroup.alpha = 1
-	arg_8_0._itemAni.enabled = true
+function TaskListCommonLevelItem:_playStartAni()
+	self._gocanvasgroup.alpha = 1
+	self._itemAni.enabled = true
 
-	arg_8_0._itemAni:Play(UIAnimationName.Open)
-	arg_8_0:_setFlagItem(true)
-	arg_8_0:_setRewardItem()
+	self._itemAni:Play(UIAnimationName.Open)
+	self:_setFlagItem(true)
+	self:_setRewardItem()
 end
 
-function var_0_0._setFlagItem(arg_9_0, arg_9_1)
-	if arg_9_0._flags then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._flags) do
-			gohelper.destroy(iter_9_1.go)
+function TaskListCommonLevelItem:_setFlagItem(open)
+	if self._flags then
+		for _, v in pairs(self._flags) do
+			gohelper.destroy(v.go)
 		end
 	end
 
-	arg_9_0._getAct = 0
-	arg_9_0._flags = arg_9_0:getUserDataTb_()
+	self._getAct = 0
+	self._flags = self:getUserDataTb_()
 
-	local var_9_0 = TaskConfig.instance:gettaskactivitybonusCO(arg_9_0._taskType, arg_9_0._index).needActivity
-	local var_9_1 = TaskModel.instance:getTaskActivityMO(arg_9_0._taskType)
+	local totalNum = TaskConfig.instance:gettaskactivitybonusCO(self._taskType, self._index).needActivity
+	local actMo = TaskModel.instance:getTaskActivityMO(self._taskType)
 
-	if arg_9_0._index <= var_9_1.defineId then
-		arg_9_0._getAct = var_9_0
-	elseif arg_9_0._index == var_9_1.defineId + 1 then
-		arg_9_0._getAct = var_9_1.value - var_9_1.gainValue
+	if self._index <= actMo.defineId then
+		self._getAct = totalNum
+	elseif self._index == actMo.defineId + 1 then
+		self._getAct = actMo.value - actMo.gainValue
 	end
 
-	for iter_9_2 = 1, var_9_0 do
-		local var_9_2 = gohelper.cloneInPlace(arg_9_0._goflag.gameObject)
+	for i = 1, totalNum do
+		local child = gohelper.cloneInPlace(self._goflag.gameObject)
 
-		gohelper.setActive(var_9_2, not arg_9_1)
+		gohelper.setActive(child, not open)
 
-		local var_9_3 = {
-			go = var_9_2
-		}
+		local flag = {}
 
-		var_9_3.idle = gohelper.findChild(var_9_3.go, "idle")
+		flag.go = child
+		flag.idle = gohelper.findChild(flag.go, "idle")
 
-		gohelper.setActive(var_9_3.idle, true)
+		gohelper.setActive(flag.idle, true)
 
-		var_9_3.img = gohelper.findChildImage(var_9_3.go, "idle")
+		flag.img = gohelper.findChildImage(flag.go, "idle")
 
-		local var_9_4 = iter_9_2 <= arg_9_0._getAct and "logo_huoyuedu" or "logo_huoyuedu_dis"
+		local spr = i <= self._getAct and "logo_huoyuedu" or "logo_huoyuedu_dis"
 
-		UISpriteSetMgr.instance:setCommonSprite(var_9_3.img, var_9_4)
+		UISpriteSetMgr.instance:setCommonSprite(flag.img, spr)
 
-		var_9_3.play = gohelper.findChild(var_9_3.go, "play")
+		flag.play = gohelper.findChild(flag.go, "play")
 
-		gohelper.setActive(var_9_3.play, false)
+		gohelper.setActive(flag.play, false)
 
-		var_9_3.ani = var_9_3.go:GetComponent(typeof(UnityEngine.Animator))
+		flag.ani = flag.go:GetComponent(typeof(UnityEngine.Animator))
 
-		var_9_3.ani:Play(UIAnimationName.Idle)
-		table.insert(arg_9_0._flags, var_9_3)
+		flag.ani:Play(UIAnimationName.Idle)
+		table.insert(self._flags, flag)
 	end
 
-	arg_9_0._flagopenCount = 0
+	self._flagopenCount = 0
 
-	if arg_9_1 then
-		TaskDispatcher.cancelTask(arg_9_0._flagOpenUpdate, arg_9_0)
-		TaskDispatcher.runRepeat(arg_9_0._flagOpenUpdate, arg_9_0, 0.03, var_9_0)
+	if open then
+		TaskDispatcher.cancelTask(self._flagOpenUpdate, self)
+		TaskDispatcher.runRepeat(self._flagOpenUpdate, self, 0.03, totalNum)
 	end
 end
 
-function var_0_0._flagOpenUpdate(arg_10_0)
-	arg_10_0._flagopenCount = arg_10_0._flagopenCount + 1
+function TaskListCommonLevelItem:_flagOpenUpdate()
+	self._flagopenCount = self._flagopenCount + 1
 
-	gohelper.setActive(arg_10_0._flags[arg_10_0._flagopenCount].go, true)
-	arg_10_0._flags[arg_10_0._flagopenCount].ani:Play(UIAnimationName.Open)
+	gohelper.setActive(self._flags[self._flagopenCount].go, true)
+	self._flags[self._flagopenCount].ani:Play(UIAnimationName.Open)
 end
 
-function var_0_0._setRewardItem(arg_11_0)
-	if arg_11_0._rewardItems then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0._rewardItems) do
-			gohelper.destroy(iter_11_1.go)
-			iter_11_1:onDestroy()
+function TaskListCommonLevelItem:_setRewardItem()
+	if self._rewardItems then
+		for _, v in pairs(self._rewardItems) do
+			gohelper.destroy(v.go)
+			v:onDestroy()
 		end
 	end
 
-	arg_11_0._rewardItems = arg_11_0:getUserDataTb_()
+	self._rewardItems = self:getUserDataTb_()
 
-	local var_11_0 = string.split(TaskConfig.instance:gettaskactivitybonusCO(arg_11_0._taskType, arg_11_0._index).bonus, "|")
+	local rewards = string.split(TaskConfig.instance:gettaskactivitybonusCO(self._taskType, self._index).bonus, "|")
 
-	for iter_11_2 = 1, #var_11_0 do
-		arg_11_0._rewardItems[iter_11_2] = IconMgr.instance:getCommonPropItemIcon(arg_11_0._gorewardcontent)
+	for i = 1, #rewards do
+		self._rewardItems[i] = IconMgr.instance:getCommonPropItemIcon(self._gorewardcontent)
 
-		local var_11_1 = string.splitToNumber(var_11_0[iter_11_2], "#")
+		local infos = string.splitToNumber(rewards[i], "#")
 
-		arg_11_0._rewardItems[iter_11_2]:setMOValue(var_11_1[1], var_11_1[2], var_11_1[3], nil, true)
-		transformhelper.setLocalScale(arg_11_0._rewardItems[iter_11_2].go.transform, 0.6, 0.6, 1)
-		arg_11_0._rewardItems[iter_11_2]:setCountFontSize(50)
-		arg_11_0._rewardItems[iter_11_2]:showStackableNum2()
-		arg_11_0._rewardItems[iter_11_2]:isShowEffect(true)
-		arg_11_0._rewardItems[iter_11_2]:setHideLvAndBreakFlag(true)
-		arg_11_0._rewardItems[iter_11_2]:hideEquipLvAndBreak(true)
-		gohelper.setActive(arg_11_0._rewardItems[iter_11_2].go, true)
+		self._rewardItems[i]:setMOValue(infos[1], infos[2], infos[3], nil, true)
+		transformhelper.setLocalScale(self._rewardItems[i].go.transform, 0.6, 0.6, 1)
+		self._rewardItems[i]:setCountFontSize(50)
+		self._rewardItems[i]:showStackableNum2()
+		self._rewardItems[i]:isShowEffect(true)
+		self._rewardItems[i]:setHideLvAndBreakFlag(true)
+		self._rewardItems[i]:hideEquipLvAndBreak(true)
+		gohelper.setActive(self._rewardItems[i].go, true)
 	end
 end
 
-function var_0_0.destroy(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._playStartAni, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._flagOpenUpdate, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._flagPlayUpdate, arg_12_0)
-	TaskController.instance:unregisterCallback(TaskEvent.RefreshActState, arg_12_0._onPlayActState, arg_12_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_12_0._onCheckPlayRewardGet, arg_12_0)
+function TaskListCommonLevelItem:destroy()
+	TaskDispatcher.cancelTask(self._playStartAni, self)
+	TaskDispatcher.cancelTask(self._flagOpenUpdate, self)
+	TaskDispatcher.cancelTask(self._flagPlayUpdate, self)
+	TaskController.instance:unregisterCallback(TaskEvent.RefreshActState, self._onPlayActState, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCheckPlayRewardGet, self)
 
-	if arg_12_0._rewardItems then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0._rewardItems) do
-			gohelper.destroy(iter_12_1.go)
-			iter_12_1:onDestroy()
+	if self._rewardItems then
+		for _, v in pairs(self._rewardItems) do
+			gohelper.destroy(v.go)
+			v:onDestroy()
 		end
 
-		arg_12_0._rewardItems = nil
+		self._rewardItems = nil
 	end
 
-	if arg_12_0._flags then
-		for iter_12_2, iter_12_3 in pairs(arg_12_0._flags) do
-			gohelper.destroy(iter_12_3.go)
+	if self._flags then
+		for _, v in pairs(self._flags) do
+			gohelper.destroy(v.go)
 		end
 
-		arg_12_0._flags = nil
+		self._flags = nil
 	end
 end
 
-return var_0_0
+return TaskListCommonLevelItem

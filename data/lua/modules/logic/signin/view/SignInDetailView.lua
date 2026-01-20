@@ -1,707 +1,748 @@
-﻿module("modules.logic.signin.view.SignInDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/signin/view/SignInDetailView.lua
 
-local var_0_0 = class("SignInDetailView", BaseView)
+module("modules.logic.signin.view.SignInDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
-	arg_1_0._imagesignature = gohelper.findChildImage(arg_1_0.viewGO, "bg/#image_signature")
-	arg_1_0._goroleitem = gohelper.findChild(arg_1_0.viewGO, "bg/#go_roleitem")
-	arg_1_0._simagetopicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#go_roleitem/#simage_topicon")
-	arg_1_0._goicontip = gohelper.findChild(arg_1_0.viewGO, "bg/#go_roleitem/#go_icontip")
-	arg_1_0._txtbirtime = gohelper.findChildText(arg_1_0.viewGO, "bg/#go_roleitem/#txt_birtime")
-	arg_1_0._txtlimit = gohelper.findChildText(arg_1_0.viewGO, "bg/#go_roleitem/#txt_limit")
-	arg_1_0._txtmonth = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_month")
-	arg_1_0._txtday = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_day")
-	arg_1_0._txtdayfestival = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_day_festival")
-	arg_1_0._imageweek = gohelper.findChildImage(arg_1_0.viewGO, "content/#image_week")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "content/scroll_desc/Viewport/Content/#txt_desc")
-	arg_1_0._simageorangebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#simage_orangebg")
-	arg_1_0._gobirthdayrewarditem = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem")
-	arg_1_0._simagebirthdaybg = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#simage_birthdaybg")
-	arg_1_0._simagebirthdaybg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#simage_birthdaybg2")
-	arg_1_0._gobirthday = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#simage_icon")
-	arg_1_0._btngift = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift")
-	arg_1_0._gogiftnoget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_noget")
-	arg_1_0._gogiftget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_get")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_reddot")
-	arg_1_0._txtmonthtitle = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/monthtitle")
-	arg_1_0._txtdeco = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/scrollview/viewport/#txt_deco")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#simage_signature")
-	arg_1_0._gobirthdayrewarddetail = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail")
-	arg_1_0._gocontentSize = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize")
-	arg_1_0._trstitle = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/bg/title").transform
-	arg_1_0._txtrewarddetailtitle = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/bg/title/#txt_rewarddetailtitle")
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content")
-	arg_1_0._gorewarddetailitem = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/#go_rewarddetailItem")
-	arg_1_0._godayrewarditem = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem")
-	arg_1_0._simagerewardbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#simage_rewardbg")
-	arg_1_0._gototalreward = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward")
-	arg_1_0._txtdaycount = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/monthtitle/#txt_daycount")
-	arg_1_0._gomonth1 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1")
-	arg_1_0._monthreward1Click = gohelper.getClick(arg_1_0._gomonth1)
-	arg_1_0._gomonthmask1 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1")
-	arg_1_0._month1canvasGroup = arg_1_0._gomonthmask1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._gogetmonthbg1 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_getmonthbg1")
-	arg_1_0._gorewardmark1 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_rewardmark1")
-	arg_1_0._simagemonthicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#simage_monthicon1")
-	arg_1_0._month1Ani = arg_1_0._simagemonthicon1.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtmonthquantity1 = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_monthquantity1")
-	arg_1_0._txtmonthrewardcount1 = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_monthrewardcount1")
-	arg_1_0._gomonthtip1 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthtip1")
-	arg_1_0._gomonthget1 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthget1")
-	arg_1_0._gonomonthget1 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_nomonthget1")
-	arg_1_0._gomonth2 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2")
-	arg_1_0._monthreward2Click = gohelper.getClick(arg_1_0._gomonth2)
-	arg_1_0._gomonthmask2 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2")
-	arg_1_0._month2canvasGroup = arg_1_0._gomonthmask2:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._gogetmonthbg2 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_getmonthbg2")
-	arg_1_0._gorewardmark2 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_rewardmark2")
-	arg_1_0._simagemonthicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#simage_monthicon2")
-	arg_1_0._month2Ani = arg_1_0._simagemonthicon2.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtmonthquantity2 = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_monthquantity2")
-	arg_1_0._txtmonthrewardcount2 = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_monthrewardcount2")
-	arg_1_0._gomonthtip2 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthtip2")
-	arg_1_0._gomonthget2 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthget2")
-	arg_1_0._gonomonthget2 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_nomonthget2")
-	arg_1_0._gomonth3 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3")
-	arg_1_0._monthreward3Click = gohelper.getClick(arg_1_0._gomonth3)
-	arg_1_0._gomonthmask3 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3")
-	arg_1_0._month3canvasGroup = arg_1_0._gomonthmask3:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._gogetmonthbg3 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_getmonthbg3")
-	arg_1_0._gorewardmark3 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_rewardmark3")
-	arg_1_0._simagemonthicon3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#simage_monthicon3")
-	arg_1_0._month3Ani = arg_1_0._simagemonthicon3.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtmonthquantity3 = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_monthquantity3")
-	arg_1_0._txtmonthrewardcount3 = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_monthrewardcount3")
-	arg_1_0._gomonthtip3 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthtip3")
-	arg_1_0._gomonthget3 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthget3")
-	arg_1_0._gonomonthget3 = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_nomonthget3")
-	arg_1_0._gocurrentreward = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal")
-	arg_1_0._gonormaldayreward = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward")
-	arg_1_0._gonormalday = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday")
-	arg_1_0._normaldayClick = gohelper.getClick(arg_1_0._gonormalday)
-	arg_1_0._gonormalday_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday")
-	arg_1_0._normaldayClick_gold = gohelper.getClick(arg_1_0._gonormalday_gold)
-	arg_1_0._txtnormaldayrewardname = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#txt_normaldayrewardname")
-	arg_1_0._simagenormaldayrewardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon")
-	arg_1_0._normaldayrewardAni = arg_1_0._simagenormaldayrewardicon.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtnormaldayrewardcount = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
-	arg_1_0._gonormaldaysigned = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned")
-	arg_1_0._gonormaldayget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldayget")
-	arg_1_0._gonormaldaynoget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldaynoget")
-	arg_1_0._gonormaldayreward_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2")
-	arg_1_0._txtnormaldayrewardname_gold = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#txt_normaldayrewardname")
-	arg_1_0._simagenormaldayrewardicon_gold = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon")
-	arg_1_0._normaldayrewardAni_gold = arg_1_0._simagenormaldayrewardicon_gold.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtnormaldayrewardcount_gold = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
-	arg_1_0._gonormaldaysigned_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned")
-	arg_1_0._gonormaldayget_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldayget")
-	arg_1_0._gonormaldaynoget_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldaynoget")
-	arg_1_0._normaldayrewardAni_gold = arg_1_0._simagenormaldayrewardicon_gold.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._gomonthcard = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard")
-	arg_1_0._gomonthcarddayreward = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward")
-	arg_1_0._gomonthcardday = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday")
-	arg_1_0._monthcarddayClick = gohelper.getClick(arg_1_0._gomonthcardday)
-	arg_1_0._gomonthcardday_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday")
-	arg_1_0._monthcarddayClick_gold = gohelper.getClick(arg_1_0._gomonthcardday_gold)
-	arg_1_0._txtmonthcarddayrewardname = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#txt_monthcarddayrewardname")
-	arg_1_0._simagemonthcarddayrewardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon")
-	arg_1_0._monthcarddayrewardAni = arg_1_0._simagemonthcarddayrewardicon.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtmonthcarddayrewardcount = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
-	arg_1_0._gomonthcarddaysigned = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned")
-	arg_1_0._gomonthcarddayget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_monthcarddayget")
-	arg_1_0._gomonthcarddaynoget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_monthcarddaynoget")
-	arg_1_0._gomonthcarddayreward_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2")
-	arg_1_0._txtmonthcarddayrewardname_gold = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#txt_monthcarddayrewardname")
-	arg_1_0._simagemonthcarddayrewardicon_gold = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon")
-	arg_1_0._monthcarddayrewardAni_gold = arg_1_0._simagemonthcarddayrewardicon_gold.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtmonthcarddayrewardcount_gold = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
-	arg_1_0._gomonthcarddaysigned_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned")
-	arg_1_0._gomonthcarddayget_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_monthcarddayget")
-	arg_1_0._gomonthcarddaynoget_gold = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_monthcarddaynoget")
-	arg_1_0._gomonthcardreward = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward")
-	arg_1_0._gomonthcardrewarditem = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem")
-	arg_1_0._txtmonthcardname = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#txt_monthcardname")
-	arg_1_0._simagemonthcardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon")
-	arg_1_0._monthcardClick = gohelper.getClick(arg_1_0._gomonthcardrewarditem.gameObject)
-	arg_1_0._gomonthcardpowerrewarditem = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem")
-	arg_1_0._txtmonthcardcount = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon/#txt_monthcardcount")
-	arg_1_0._txtmonthcardpowername = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#txt_monthcardname")
-	arg_1_0._simagemonthcardpowericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon")
-	arg_1_0._monthcardpowerClick = gohelper.getClick(arg_1_0._gomonthcardpowerrewarditem.gameObject)
-	arg_1_0._txtmonthcardpowercount = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon/#txt_monthcardcount")
-	arg_1_0._golimittime = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/#txt_limittime")
-	arg_1_0._gonormallimittimebg = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/normalbg")
-	arg_1_0._goredlimittimebg = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/redbg")
-	arg_1_0._gomonthcardsigned = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned")
-	arg_1_0._gomonthcardget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardget")
-	arg_1_0._gomonthcardnoget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardnoget")
-	arg_1_0._gomonthcardpowernoget = gohelper.findChild(arg_1_0.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardpowernoget")
-	arg_1_0._btnqiehuan = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/#btn_qiehuan")
-	arg_1_0._goqiehuan = gohelper.findChild(arg_1_0.viewGO, "content/#btn_qiehuan/#qiehuan")
-	arg_1_0._btncalendar = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_calendar")
-	arg_1_0._btncalendarfestival = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_calendar_festival")
-	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
-	arg_1_0._gonodes = gohelper.findChild(arg_1_0.viewGO, "#go_nodes")
-	arg_1_0._gonodeitem = gohelper.findChild(arg_1_0.viewGO, "#go_nodes/#go_nodeitem")
-	arg_1_0._btnrewarddetailclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rewarddetailclose")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gofestivaldecorationtop = gohelper.findChild(arg_1_0.viewGO, "bg/#go_festivalDecorationTop")
-	arg_1_0._gofestivaldecorationBg = gohelper.findChild(arg_1_0.viewGO, "bg/#go_festivalDecorationBg")
-	arg_1_0._gofestivaldecorationbottom = gohelper.findChild(arg_1_0.viewGO, "content/#go_festivalDecorationBottom")
-	arg_1_0._gorewardicon = gohelper.findChild(arg_1_0.viewGO, "bg/#go_rewardicon")
-	arg_1_0._imgbias = gohelper.findChildImage(arg_1_0.viewGO, "content/#image_bias")
-	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._viewAniEventWrap = arg_1_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#go_effect")
+local SignInDetailView = class("SignInDetailView", BaseView)
 
-	local var_1_0 = GMController.instance:getGMNode("signindetailview", gohelper.findChild(arg_1_0.viewGO, "content"))
+function SignInDetailView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._imagesignature = gohelper.findChildImage(self.viewGO, "bg/#image_signature")
+	self._goroleitem = gohelper.findChild(self.viewGO, "bg/#go_roleitem")
+	self._simagetopicon = gohelper.findChildSingleImage(self.viewGO, "bg/#go_roleitem/#simage_topicon")
+	self._goicontip = gohelper.findChild(self.viewGO, "bg/#go_roleitem/#go_icontip")
+	self._txtbirtime = gohelper.findChildText(self.viewGO, "bg/#go_roleitem/#txt_birtime")
+	self._txtlimit = gohelper.findChildText(self.viewGO, "bg/#go_roleitem/#txt_limit")
+	self._txtmonth = gohelper.findChildText(self.viewGO, "content/#txt_month")
+	self._txtday = gohelper.findChildText(self.viewGO, "content/#txt_day")
+	self._txtdayfestival = gohelper.findChildText(self.viewGO, "content/#txt_day_festival")
+	self._imageweek = gohelper.findChildImage(self.viewGO, "content/#image_week")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "content/scroll_desc/Viewport/Content/#txt_desc")
+	self._simageorangebg = gohelper.findChildSingleImage(self.viewGO, "content/reward/#simage_orangebg")
+	self._gobirthdayrewarditem = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem")
+	self._simagebirthdaybg = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_birthdayrewarditem/#simage_birthdaybg")
+	self._simagebirthdaybg2 = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_birthdayrewarditem/#simage_birthdaybg2")
+	self._gobirthday = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#simage_icon")
+	self._btngift = gohelper.findChildButtonWithAudio(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift")
+	self._gogiftnoget = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_noget")
+	self._gogiftget = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_get")
+	self._goreddot = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#btn_gift/#go_reddot")
+	self._txtmonthtitle = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/monthtitle")
+	self._txtdeco = gohelper.findChildText(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/scrollview/viewport/#txt_deco")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#simage_signature")
+	self._gobirthdayrewarddetail = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail")
+	self._gocontentSize = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize")
+	self._trstitle = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/bg/title").transform
+	self._txtrewarddetailtitle = gohelper.findChildText(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/bg/title/#txt_rewarddetailtitle")
+	self._gorewardcontent = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content")
+	self._gorewarddetailitem = gohelper.findChild(self.viewGO, "content/reward/#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/#go_rewarddetailItem")
+	self._godayrewarditem = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem")
+	self._simagerewardbg = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#simage_rewardbg")
+	self._gototalreward = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward")
+	self._txtdaycount = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/monthtitle/#txt_daycount")
+	self._gomonth1 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1")
+	self._monthreward1Click = gohelper.getClick(self._gomonth1)
+	self._gomonthmask1 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1")
+	self._month1canvasGroup = self._gomonthmask1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._gogetmonthbg1 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_getmonthbg1")
+	self._gorewardmark1 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#go_rewardmark1")
+	self._simagemonthicon1 = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#simage_monthicon1")
+	self._month1Ani = self._simagemonthicon1.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._txtmonthquantity1 = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_monthquantity1")
+	self._txtmonthrewardcount1 = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthmask1/#txt_monthrewardcount1")
+	self._gomonthtip1 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthtip1")
+	self._gomonthget1 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_monthget1")
+	self._gonomonthget1 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month1/#go_nomonthget1")
+	self._gomonth2 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2")
+	self._monthreward2Click = gohelper.getClick(self._gomonth2)
+	self._gomonthmask2 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2")
+	self._month2canvasGroup = self._gomonthmask2:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._gogetmonthbg2 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_getmonthbg2")
+	self._gorewardmark2 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#go_rewardmark2")
+	self._simagemonthicon2 = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#simage_monthicon2")
+	self._month2Ani = self._simagemonthicon2.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._txtmonthquantity2 = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_monthquantity2")
+	self._txtmonthrewardcount2 = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthmask2/#txt_monthrewardcount2")
+	self._gomonthtip2 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthtip2")
+	self._gomonthget2 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_monthget2")
+	self._gonomonthget2 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month2/#go_nomonthget2")
+	self._gomonth3 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3")
+	self._monthreward3Click = gohelper.getClick(self._gomonth3)
+	self._gomonthmask3 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3")
+	self._month3canvasGroup = self._gomonthmask3:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._gogetmonthbg3 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_getmonthbg3")
+	self._gorewardmark3 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#go_rewardmark3")
+	self._simagemonthicon3 = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#simage_monthicon3")
+	self._month3Ani = self._simagemonthicon3.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._txtmonthquantity3 = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_monthquantity3")
+	self._txtmonthrewardcount3 = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthmask3/#txt_monthrewardcount3")
+	self._gomonthtip3 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthtip3")
+	self._gomonthget3 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_monthget3")
+	self._gonomonthget3 = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_totalreward/#go_month3/#go_nomonthget3")
+	self._gocurrentreward = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward")
+	self._gonormal = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal")
+	self._gonormaldayreward = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward")
+	self._gonormalday = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday")
+	self._normaldayClick = gohelper.getClick(self._gonormalday)
+	self._gonormalday_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday")
+	self._normaldayClick_gold = gohelper.getClick(self._gonormalday_gold)
+	self._txtnormaldayrewardname = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#txt_normaldayrewardname")
+	self._simagenormaldayrewardicon = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon")
+	self._normaldayrewardAni = self._simagenormaldayrewardicon.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._txtnormaldayrewardcount = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
+	self._gonormaldaysigned = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned")
+	self._gonormaldayget = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldayget")
+	self._gonormaldaynoget = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item1/#go_normaldaysigned/#go_normaldaynoget")
+	self._gonormaldayreward_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2")
+	self._txtnormaldayrewardname_gold = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#txt_normaldayrewardname")
+	self._simagenormaldayrewardicon_gold = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon")
+	self._normaldayrewardAni_gold = self._simagenormaldayrewardicon_gold.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._txtnormaldayrewardcount_gold = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normalday/#simage_normaldayrewardicon/#txt_normaldayrewardcount")
+	self._gonormaldaysigned_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned")
+	self._gonormaldayget_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldayget")
+	self._gonormaldaynoget_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_normal/#go_normaldayreward/LayoutGroup/Item2/#go_normaldaysigned/#go_normaldaynoget")
+	self._normaldayrewardAni_gold = self._simagenormaldayrewardicon_gold.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._gomonthcard = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard")
+	self._gomonthcarddayreward = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward")
+	self._gomonthcardday = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday")
+	self._monthcarddayClick = gohelper.getClick(self._gomonthcardday)
+	self._gomonthcardday_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday")
+	self._monthcarddayClick_gold = gohelper.getClick(self._gomonthcardday_gold)
+	self._txtmonthcarddayrewardname = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#txt_monthcarddayrewardname")
+	self._simagemonthcarddayrewardicon = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon")
+	self._monthcarddayrewardAni = self._simagemonthcarddayrewardicon.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._txtmonthcarddayrewardcount = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
+	self._gomonthcarddaysigned = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned")
+	self._gomonthcarddayget = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_monthcarddayget")
+	self._gomonthcarddaynoget = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item1/#go_monthcarddaysigned/#go_monthcarddaynoget")
+	self._gomonthcarddayreward_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2")
+	self._txtmonthcarddayrewardname_gold = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#txt_monthcarddayrewardname")
+	self._simagemonthcarddayrewardicon_gold = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon")
+	self._monthcarddayrewardAni_gold = self._simagemonthcarddayrewardicon_gold.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._txtmonthcarddayrewardcount_gold = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcardday/#simage_monthcarddayrewardicon/#txt_monthcarddayrewardcount")
+	self._gomonthcarddaysigned_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned")
+	self._gomonthcarddayget_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_monthcarddayget")
+	self._gomonthcarddaynoget_gold = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcarddayreward/LayoutGroup/Item2/#go_monthcarddaysigned/#go_monthcarddaynoget")
+	self._gomonthcardreward = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward")
+	self._gomonthcardrewarditem = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem")
+	self._txtmonthcardname = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#txt_monthcardname")
+	self._simagemonthcardicon = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon")
+	self._monthcardClick = gohelper.getClick(self._gomonthcardrewarditem.gameObject)
+	self._gomonthcardpowerrewarditem = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem")
+	self._txtmonthcardcount = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardrewarditem/#simage_monthcardicon/#txt_monthcardcount")
+	self._txtmonthcardpowername = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#txt_monthcardname")
+	self._simagemonthcardpowericon = gohelper.findChildSingleImage(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon")
+	self._monthcardpowerClick = gohelper.getClick(self._gomonthcardpowerrewarditem.gameObject)
+	self._txtmonthcardpowercount = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardpowerrewarditem/#simage_monthcardicon/#txt_monthcardcount")
+	self._golimittime = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/#txt_limittime")
+	self._gonormallimittimebg = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/normalbg")
+	self._goredlimittimebg = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_limittime/redbg")
+	self._gomonthcardsigned = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned")
+	self._gomonthcardget = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardget")
+	self._gomonthcardnoget = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardnoget")
+	self._gomonthcardpowernoget = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_monthcard/#go_monthcardreward/#go_monthcardsigned/#go_monthcardpowernoget")
+	self._btnqiehuan = gohelper.findChildButtonWithAudio(self.viewGO, "content/#btn_qiehuan")
+	self._goqiehuan = gohelper.findChild(self.viewGO, "content/#btn_qiehuan/#qiehuan")
+	self._btncalendar = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_calendar")
+	self._btncalendarfestival = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_calendar_festival")
+	self._btncloseview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeview")
+	self._gonodes = gohelper.findChild(self.viewGO, "#go_nodes")
+	self._gonodeitem = gohelper.findChild(self.viewGO, "#go_nodes/#go_nodeitem")
+	self._btnrewarddetailclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_rewarddetailclose")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gofestivaldecorationtop = gohelper.findChild(self.viewGO, "bg/#go_festivalDecorationTop")
+	self._gofestivaldecorationBg = gohelper.findChild(self.viewGO, "bg/#go_festivalDecorationBg")
+	self._gofestivaldecorationbottom = gohelper.findChild(self.viewGO, "content/#go_festivalDecorationBottom")
+	self._gorewardicon = gohelper.findChild(self.viewGO, "bg/#go_rewardicon")
+	self._imgbias = gohelper.findChildImage(self.viewGO, "content/#image_bias")
+	self._gosupplement = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_yuekapatch")
+	self._gosupplementicon = gohelper.findChild(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_yuekapatch/itemicon")
+	self._btnyueka = gohelper.findChildButtonWithAudio(self.viewGO, "content/reward/#go_dayrewarditem/#go_currentreward/#go_yuekapatch/#btn_yueka")
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._viewAniEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._goeffect = gohelper.findChild(self.viewGO, "#go_effect")
+	self._gobgeffect = gohelper.findChild(self.viewGO, "bg_effect")
 
-	if var_1_0 then
-		arg_1_0._btnswitchdecorate = gohelper.findChildButtonWithAudio(var_1_0, "#_btns_switchdecorate")
+	local guideGMNode = GMController.instance:getGMNode("signindetailview", gohelper.findChild(self.viewGO, "content"))
+
+	if guideGMNode then
+		self._btnswitchdecorate = gohelper.findChildButtonWithAudio(guideGMNode, "#_btns_switchdecorate")
 	end
 
-	arg_1_0._godayrewarditem_image3 = gohelper.findChild(arg_1_0._godayrewarditem, "image3")
+	self._godayrewarditem_image3 = gohelper.findChild(self._godayrewarditem, "image3")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngift:AddClickListener(arg_2_0._btngiftOnClick, arg_2_0)
-	arg_2_0._btnqiehuan:AddClickListener(arg_2_0._btnqiehuanOnClick, arg_2_0)
-	arg_2_0._btnrewarddetailclose:AddClickListener(arg_2_0._onBtnRewardDetailClick, arg_2_0)
-	arg_2_0._btncalendar:AddClickListener(arg_2_0._btncalendarOnClick, arg_2_0)
-	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
+function SignInDetailView:addEvents()
+	self._btngift:AddClickListener(self._btngiftOnClick, self)
+	self._btnqiehuan:AddClickListener(self._btnqiehuanOnClick, self)
+	self._btnrewarddetailclose:AddClickListener(self._onBtnRewardDetailClick, self)
+	self._btncalendar:AddClickListener(self._btncalendarOnClick, self)
+	self._btncloseview:AddClickListener(self._btncloseviewOnClick, self)
 
-	if arg_2_0._btnswitchdecorate then
-		arg_2_0._btnswitchdecorate:AddClickListener(arg_2_0._onBtnChangeDecorate, arg_2_0)
+	if self._btnswitchdecorate then
+		self._btnswitchdecorate:AddClickListener(self._onBtnChangeDecorate, self)
 	end
 
-	arg_2_0._btncalendarfestival:AddClickListener(arg_2_0._btncalendarOnClick, arg_2_0)
+	self._btncalendarfestival:AddClickListener(self._btncalendarOnClick, self)
+	self._btnyueka:AddClickListener(self._onBtnBuQian, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngift:RemoveClickListener()
-	arg_3_0._btnqiehuan:RemoveClickListener()
-	arg_3_0._btnrewarddetailclose:RemoveClickListener()
-	arg_3_0._btncalendar:RemoveClickListener()
-	arg_3_0._btncloseview:RemoveClickListener()
+function SignInDetailView:removeEvents()
+	self._btngift:RemoveClickListener()
+	self._btnqiehuan:RemoveClickListener()
+	self._btnrewarddetailclose:RemoveClickListener()
+	self._btncalendar:RemoveClickListener()
+	self._btncloseview:RemoveClickListener()
 
-	if arg_3_0._btnswitchdecorate then
-		arg_3_0._btnswitchdecorate:RemoveClickListener()
+	if self._btnswitchdecorate then
+		self._btnswitchdecorate:RemoveClickListener()
 	end
 
-	arg_3_0._btncalendarfestival:RemoveClickListener()
+	self._btncalendarfestival:RemoveClickListener()
+	self._btnyueka:RemoveClickListener()
 end
 
-function var_0_0._onBtnChangeDecorate(arg_4_0)
-	arg_4_0:_switchFestivalDecoration(not arg_4_0._haveFestival)
+function SignInDetailView:_onBtnChangeDecorate()
+	self:_switchFestivalDecoration(not self._haveFestival)
 end
 
-function var_0_0._btngiftOnClick(arg_5_0)
-	local var_5_0 = SignInModel.instance:getSignBirthdayHeros(arg_5_0._targetDate[1], arg_5_0._targetDate[2], arg_5_0._targetDate[3])
+function SignInDetailView:_onBtnBuQian()
+	local currencyParam = {}
+	local item = {
+		isHideAddBtn = true,
+		id = StoreEnum.SupplementMonthCardItemId,
+		type = MaterialEnum.MaterialType.SpecialExpiredItem
+	}
 
-	if arg_5_0._curDate.year == arg_5_0._targetDate[1] and arg_5_0._curDate.month == arg_5_0._targetDate[2] and arg_5_0._curDate.day == arg_5_0._targetDate[3] then
-		local var_5_1 = SignInModel.instance:getCurDayBirthdayHeros()[arg_5_0._index]
+	table.insert(currencyParam, item)
+	SignInController.instance:showPatchpropUseView(MessageBoxIdDefine.SupplementMonthCardUseTip, MsgBoxEnum.BoxType.Yes_No, currencyParam, self._useSupplementMonthCard, nil, nil, self, nil, nil, SignInModel.instance:getCanSupplementMonthCardDays())
+end
 
-		if not SignInModel.instance:isHeroBirthdayGet(var_5_1) then
-			arg_5_0._startGetReward = true
+function SignInDetailView:_useSupplementMonthCard()
+	SignInRpc.instance:sendSupplementMonthCardRequest()
+end
 
-			SignInRpc.instance:sendGetHeroBirthdayRequest(var_5_1)
+function SignInDetailView:_btngiftOnClick()
+	local birthdayHeros = SignInModel.instance:getSignBirthdayHeros(self._targetDate[1], self._targetDate[2], self._targetDate[3])
+
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = SignInModel.instance:getCurDayBirthdayHeros()
+
+		local heroId = birthdayHeros[self._index]
+		local giftGet = SignInModel.instance:isHeroBirthdayGet(heroId)
+
+		if not giftGet then
+			self._startGetReward = true
+
+			SignInRpc.instance:sendGetHeroBirthdayRequest(heroId)
 
 			return
 		end
 	end
 
-	arg_5_0:_showBirthdayRewardDetail()
+	self:_showBirthdayRewardDetail()
 end
 
-function var_0_0._showBirthdayRewardDetail(arg_6_0)
-	gohelper.setActive(arg_6_0._gobirthdayrewarddetail, true)
-	gohelper.setActive(arg_6_0._btnrewarddetailclose.gameObject, true)
+function SignInDetailView:_showBirthdayRewardDetail()
+	gohelper.setActive(self._gobirthdayrewarddetail, true)
+	gohelper.setActive(self._btnrewarddetailclose.gameObject, true)
 
-	local var_6_0 = SignInModel.instance:getSignBirthdayHeros(arg_6_0._targetDate[1], arg_6_0._targetDate[2], arg_6_0._targetDate[3])
+	local birthdayHeros = SignInModel.instance:getSignBirthdayHeros(self._targetDate[1], self._targetDate[2], self._targetDate[3])
 
-	if arg_6_0._curDate.year == arg_6_0._targetDate[1] and arg_6_0._curDate.month == arg_6_0._targetDate[2] and arg_6_0._curDate.day == arg_6_0._targetDate[3] then
-		var_6_0 = SignInModel.instance:getCurDayBirthdayHeros()
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	local var_6_1 = var_6_0[arg_6_0._index]
-	local var_6_2 = SignInModel.instance:getHeroBirthdayCount(var_6_1)
-	local var_6_3 = var_6_2
+	local heroId = birthdayHeros[self._index]
+	local birthdayCount = SignInModel.instance:getHeroBirthdayCount(heroId)
+	local index = birthdayCount
 
-	if arg_6_0._curDate.month == arg_6_0._targetDate[2] then
-		local var_6_4 = SignInModel.instance:isHeroBirthdayGet(var_6_1)
+	if self._curDate.month == self._targetDate[2] then
+		local birthdayGet = SignInModel.instance:isHeroBirthdayGet(heroId)
 
-		if arg_6_0._curDate.year == arg_6_0._targetDate[1] then
-			var_6_3 = var_6_4 and var_6_2 or var_6_2 + 1
+		if self._curDate.year == self._targetDate[1] then
+			index = birthdayGet and birthdayCount or birthdayCount + 1
 		else
-			var_6_3 = var_6_4 and var_6_2 - 1 or var_6_2
+			index = birthdayGet and birthdayCount - 1 or birthdayCount
 		end
 	end
 
-	local var_6_5 = string.split(HeroConfig.instance:getHeroCO(var_6_1).birthdayBonus, ";")[var_6_3]
-	local var_6_6 = string.split(var_6_5, "|")
+	if not index or index == 0 then
+		index = 1
+	end
 
-	arg_6_0:_hideAllRewardTipsItem()
+	local rewardStr = string.split(HeroConfig.instance:getHeroCO(heroId).birthdayBonus, ";")[index]
+	local rewards = string.split(rewardStr, "|")
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_6) do
-		if not arg_6_0._rewardTipItems[iter_6_0] then
-			local var_6_7 = {
-				go = gohelper.clone(arg_6_0._gorewarddetailitem, arg_6_0._gorewardcontent, "item" .. iter_6_0)
-			}
-			local var_6_8 = gohelper.findChild(var_6_7.go, "icon")
+	self:_hideAllRewardTipsItem()
 
-			var_6_7.icon = IconMgr.instance:getCommonItemIcon(var_6_8)
+	for k, itemCo in ipairs(rewards) do
+		local item = self._rewardTipItems[k]
 
-			table.insert(arg_6_0._rewardTipItems, var_6_7)
+		if not item then
+			local o = {}
+
+			o.go = gohelper.clone(self._gorewarddetailitem, self._gorewardcontent, "item" .. k)
+
+			local icon = gohelper.findChild(o.go, "icon")
+
+			o.icon = IconMgr.instance:getCommonItemIcon(icon)
+
+			table.insert(self._rewardTipItems, o)
 		end
 
-		gohelper.setActive(arg_6_0._rewardTipItems[iter_6_0].go, true)
+		gohelper.setActive(self._rewardTipItems[k].go, true)
 
-		local var_6_9 = string.split(iter_6_1, "#")
-		local var_6_10, var_6_11 = ItemModel.instance:getItemConfigAndIcon(var_6_9[1], var_6_9[2])
+		local splitCo = string.split(itemCo, "#")
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(splitCo[1], splitCo[2])
 
-		arg_6_0._rewardTipItems[iter_6_0].icon:setMOValue(var_6_9[1], var_6_9[2], var_6_9[3], nil, true)
-		arg_6_0._rewardTipItems[iter_6_0].icon:setScale(0.6)
-		arg_6_0._rewardTipItems[iter_6_0].icon:isShowQuality(false)
-		arg_6_0._rewardTipItems[iter_6_0].icon:isShowCount(false)
+		self._rewardTipItems[k].icon:setMOValue(splitCo[1], splitCo[2], splitCo[3], nil, true)
+		self._rewardTipItems[k].icon:setScale(0.6)
+		self._rewardTipItems[k].icon:isShowQuality(false)
+		self._rewardTipItems[k].icon:isShowCount(false)
 
-		gohelper.findChildText(arg_6_0._rewardTipItems[iter_6_0].go, "name").text = var_6_10.name
-		gohelper.findChildText(arg_6_0._rewardTipItems[iter_6_0].go, "name/quantity").text = luaLang("multiple") .. var_6_9[3]
+		gohelper.findChildText(self._rewardTipItems[k].go, "name").text = config.name
+		gohelper.findChildText(self._rewardTipItems[k].go, "name/quantity").text = luaLang("multiple") .. splitCo[3]
 	end
 
-	arg_6_0:_computeRewardsTipsContainerHeight(#var_6_6)
+	self:_computeRewardsTipsContainerHeight(#rewards)
 end
 
-function var_0_0._hideAllRewardTipsItem(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._rewardTipItems) do
-		gohelper.setActive(iter_7_1.go, false)
+function SignInDetailView:_hideAllRewardTipsItem()
+	for _, item in ipairs(self._rewardTipItems) do
+		gohelper.setActive(item.go, false)
 	end
 end
 
-function var_0_0._computeRewardsTipsContainerHeight(arg_8_0, arg_8_1)
-	local var_8_0 = recthelper.getHeight(arg_8_0._trstitle) + arg_8_1 * recthelper.getHeight(arg_8_0._gorewarddetailitem.transform) - 10
+function SignInDetailView:_computeRewardsTipsContainerHeight(itemCount)
+	local titleHeight = recthelper.getHeight(self._trstitle)
+	local itemHeight = recthelper.getHeight(self._gorewarddetailitem.transform)
+	local height = titleHeight + itemCount * itemHeight - 10
 
-	recthelper.setHeight(arg_8_0._gocontentSize.transform, var_8_0)
+	recthelper.setHeight(self._gocontentSize.transform, height)
 end
 
-function var_0_0._btnqiehuanOnClick(arg_9_0)
-	local var_9_0 = SignInModel.instance:getSignBirthdayHeros(arg_9_0._targetDate[1], arg_9_0._targetDate[2], arg_9_0._targetDate[3])
+function SignInDetailView:_btnqiehuanOnClick()
+	local birthdayHeros = SignInModel.instance:getSignBirthdayHeros(self._targetDate[1], self._targetDate[2], self._targetDate[3])
 
-	if arg_9_0._curDate.year == arg_9_0._targetDate[1] and arg_9_0._curDate.month == arg_9_0._targetDate[2] and arg_9_0._curDate.day == arg_9_0._targetDate[3] then
-		var_9_0 = SignInModel.instance:getCurDayBirthdayHeros()
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	arg_9_0._index = (arg_9_0._index + 1) % (#var_9_0 + 1)
+	self._index = (self._index + 1) % (#birthdayHeros + 1)
 
 	UIBlockMgr.instance:startBlock("signshowing")
-	TaskDispatcher.runDelay(arg_9_0._onQiehuanFinished, arg_9_0, 0.85)
+	TaskDispatcher.runDelay(self._onQiehuanFinished, self, 0.85)
 
-	if arg_9_0._index == 1 then
-		arg_9_0:_setRewardItems()
-		arg_9_0._viewAnim:Play("tobirthday", 0, 0)
-	elseif arg_9_0._index > 1 then
-		arg_9_0._viewAnim:Play("birthtobirth", 0, 0)
+	if self._index == 1 then
+		self:_setRewardItems()
+		self._viewAnim:Play("tobirthday", 0, 0)
+	elseif self._index > 1 then
+		self._viewAnim:Play("birthtobirth", 0, 0)
 	else
-		arg_9_0._viewAnim:Play("tonormal", 0, 0)
+		self._viewAnim:Play("tonormal", 0, 0)
 	end
 end
 
-function var_0_0._onQiehuanFinished(arg_10_0)
+function SignInDetailView:_onQiehuanFinished()
 	UIBlockMgr.instance:endBlock("signshowing")
 end
 
-function var_0_0._btncalendarOnClick(arg_11_0)
-	arg_11_0._viewAnim:Play("out")
-	TaskDispatcher.runDelay(arg_11_0._waitOpenSignInView, arg_11_0, 0.2)
+function SignInDetailView:_btncalendarOnClick()
+	self._viewAnim:Play("out")
+	TaskDispatcher.runDelay(self._waitOpenSignInView, self, 0.2)
 end
 
-function var_0_0._waitOpenSignInView(arg_12_0)
-	SignInController.instance:openSignInView(arg_12_0.viewParam)
-	arg_12_0:closeThis()
+function SignInDetailView:_waitOpenSignInView()
+	SignInController.instance:openSignInView(self.viewParam)
+	self:closeThis()
 end
 
-function var_0_0._btncloseviewOnClick(arg_13_0)
-	arg_13_0:_onEscapeBtnClick()
+function SignInDetailView:_btncloseviewOnClick()
+	self:_onEscapeBtnClick()
 end
 
-function var_0_0._onBtnRewardDetailClick(arg_14_0)
-	gohelper.setActive(arg_14_0._btnrewarddetailclose.gameObject, false)
-	gohelper.setActive(arg_14_0._gobirthdayrewarddetail, false)
+function SignInDetailView:_onBtnRewardDetailClick()
+	gohelper.setActive(self._btnrewarddetailclose.gameObject, false)
+	gohelper.setActive(self._gobirthdayrewarddetail, false)
 end
 
-function var_0_0._addCustomEvent(arg_15_0)
-	arg_15_0._monthreward1Click:AddClickListener(arg_15_0._onMonthRewardClick, arg_15_0, 1)
-	arg_15_0._monthreward2Click:AddClickListener(arg_15_0._onMonthRewardClick, arg_15_0, 2)
-	arg_15_0._monthreward3Click:AddClickListener(arg_15_0._onMonthRewardClick, arg_15_0, 3)
-	arg_15_0._normaldayClick:AddClickListener(arg_15_0._onDayRewardClick, arg_15_0)
-	arg_15_0._monthcarddayClick:AddClickListener(arg_15_0._onDayRewardClick, arg_15_0)
-	arg_15_0._normaldayClick_gold:AddClickListener(arg_15_0._onDayGoldRewardClick, arg_15_0)
-	arg_15_0._monthcarddayClick_gold:AddClickListener(arg_15_0._onDayGoldRewardClick, arg_15_0)
-	arg_15_0._monthcardClick:AddClickListener(arg_15_0._onMonthCardRewardClick, arg_15_0)
-	arg_15_0._monthcardpowerClick:AddClickListener(arg_15_0._onMonthCardPowerRewardClick, arg_15_0)
-	arg_15_0._viewAniEventWrap:AddEventListener("changetobirthday", arg_15_0._onChangeToBirthday, arg_15_0)
-	arg_15_0._viewAniEventWrap:AddEventListener("changetonormal", arg_15_0._onChangeToNormal, arg_15_0)
-	arg_15_0._viewAniEventWrap:AddEventListener("birthdaytobirthday", arg_15_0._onChangeBirthdayToBirthday, arg_15_0)
-	SignInController.instance:registerCallback(SignInEvent.GetSignInInfo, arg_15_0._onGetSignInInfo, arg_15_0)
-	SignInController.instance:registerCallback(SignInEvent.GetSignInReply, arg_15_0._onGetSignInReply, arg_15_0)
-	SignInController.instance:registerCallback(SignInEvent.GetSignInAddUp, arg_15_0._setMonthView, arg_15_0)
-	SignInController.instance:registerCallback(SignInEvent.SignInItemClick, arg_15_0._onChangeItemClick, arg_15_0)
-	SignInController.instance:registerCallback(SignInEvent.ClickSignInMonthItem, arg_15_0._closeViewEffect, arg_15_0)
-	SignInController.instance:registerCallback(SignInEvent.GetHeroBirthday, arg_15_0._onGetHeroBirthday, arg_15_0)
-	SignInController.instance:registerCallback(SignInEvent.CloseSignInDetailView, arg_15_0._onEscapeBtnClick, arg_15_0)
-	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, arg_15_0._onDailyRefresh, arg_15_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_15_0._onCloseViewFinish, arg_15_0)
+function SignInDetailView:_addCustomEvent()
+	self._monthreward1Click:AddClickListener(self._onMonthRewardClick, self, 1)
+	self._monthreward2Click:AddClickListener(self._onMonthRewardClick, self, 2)
+	self._monthreward3Click:AddClickListener(self._onMonthRewardClick, self, 3)
+	self._normaldayClick:AddClickListener(self._onDayRewardClick, self)
+	self._monthcarddayClick:AddClickListener(self._onDayRewardClick, self)
+	self._normaldayClick_gold:AddClickListener(self._onDayGoldRewardClick, self)
+	self._monthcarddayClick_gold:AddClickListener(self._onDayGoldRewardClick, self)
+	self._monthcardClick:AddClickListener(self._onMonthCardRewardClick, self)
+	self._monthcardpowerClick:AddClickListener(self._onMonthCardPowerRewardClick, self)
+	self._viewAniEventWrap:AddEventListener("changetobirthday", self._onChangeToBirthday, self)
+	self._viewAniEventWrap:AddEventListener("changetonormal", self._onChangeToNormal, self)
+	self._viewAniEventWrap:AddEventListener("birthdaytobirthday", self._onChangeBirthdayToBirthday, self)
+	SignInController.instance:registerCallback(SignInEvent.GetSignInInfo, self._onGetSignInInfo, self)
+	SignInController.instance:registerCallback(SignInEvent.GetSignInReply, self._onGetSignInReply, self)
+	SignInController.instance:registerCallback(SignInEvent.GetSignInAddUp, self._setMonthView, self)
+	SignInController.instance:registerCallback(SignInEvent.SignInItemClick, self._onChangeItemClick, self)
+	SignInController.instance:registerCallback(SignInEvent.ClickSignInMonthItem, self._closeViewEffect, self)
+	SignInController.instance:registerCallback(SignInEvent.GetHeroBirthday, self._onGetHeroBirthday, self)
+	SignInController.instance:registerCallback(SignInEvent.CloseSignInDetailView, self._onEscapeBtnClick, self)
+	PlayerController.instance:registerCallback(PlayerEvent.OnDailyRefresh, self._onDailyRefresh, self)
+	SignInController.instance:registerCallback(SignInEvent.OnReceiveSupplementMonthCardReply, self._refreshSupplement, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._removeCustomEvent(arg_16_0)
-	arg_16_0._monthreward1Click:RemoveClickListener()
-	arg_16_0._monthreward2Click:RemoveClickListener()
-	arg_16_0._monthreward3Click:RemoveClickListener()
-	arg_16_0._normaldayClick:RemoveClickListener()
-	arg_16_0._monthcarddayClick:RemoveClickListener()
-	arg_16_0._normaldayClick_gold:RemoveClickListener()
-	arg_16_0._monthcarddayClick_gold:RemoveClickListener()
-	arg_16_0._monthcardClick:RemoveClickListener()
-	arg_16_0._monthcardpowerClick:RemoveClickListener()
-	arg_16_0._viewAniEventWrap:RemoveAllEventListener()
-	SignInController.instance:unregisterCallback(SignInEvent.GetSignInInfo, arg_16_0._onGetSignInInfo, arg_16_0)
-	SignInController.instance:unregisterCallback(SignInEvent.GetSignInReply, arg_16_0._onGetSignInReply, arg_16_0)
-	SignInController.instance:unregisterCallback(SignInEvent.GetSignInAddUp, arg_16_0._setMonthView, arg_16_0)
-	SignInController.instance:unregisterCallback(SignInEvent.SignInItemClick, arg_16_0._onChangeItemClick, arg_16_0)
-	SignInController.instance:unregisterCallback(SignInEvent.ClickSignInMonthItem, arg_16_0._closeViewEffect, arg_16_0)
-	SignInController.instance:unregisterCallback(SignInEvent.GetHeroBirthday, arg_16_0._onGetHeroBirthday, arg_16_0)
-	SignInController.instance:unregisterCallback(SignInEvent.CloseSignInDetailView, arg_16_0._onEscapeBtnClick, arg_16_0)
-	PlayerController.instance:unregisterCallback(PlayerEvent.OnDailyRefresh, arg_16_0._onDailyRefresh, arg_16_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_16_0._onCloseViewFinish, arg_16_0)
+function SignInDetailView:_removeCustomEvent()
+	self._monthreward1Click:RemoveClickListener()
+	self._monthreward2Click:RemoveClickListener()
+	self._monthreward3Click:RemoveClickListener()
+	self._normaldayClick:RemoveClickListener()
+	self._monthcarddayClick:RemoveClickListener()
+	self._normaldayClick_gold:RemoveClickListener()
+	self._monthcarddayClick_gold:RemoveClickListener()
+	self._monthcardClick:RemoveClickListener()
+	self._monthcardpowerClick:RemoveClickListener()
+	self._viewAniEventWrap:RemoveAllEventListener()
+	SignInController.instance:unregisterCallback(SignInEvent.GetSignInInfo, self._onGetSignInInfo, self)
+	SignInController.instance:unregisterCallback(SignInEvent.GetSignInReply, self._onGetSignInReply, self)
+	SignInController.instance:unregisterCallback(SignInEvent.GetSignInAddUp, self._setMonthView, self)
+	SignInController.instance:unregisterCallback(SignInEvent.SignInItemClick, self._onChangeItemClick, self)
+	SignInController.instance:unregisterCallback(SignInEvent.ClickSignInMonthItem, self._closeViewEffect, self)
+	SignInController.instance:unregisterCallback(SignInEvent.GetHeroBirthday, self._onGetHeroBirthday, self)
+	SignInController.instance:unregisterCallback(SignInEvent.CloseSignInDetailView, self._onEscapeBtnClick, self)
+	PlayerController.instance:unregisterCallback(PlayerEvent.OnDailyRefresh, self._onDailyRefresh, self)
+	SignInController.instance:unregisterCallback(SignInEvent.OnReceiveSupplementMonthCardReply, self._refreshSupplement, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._onEscapeBtnClick(arg_17_0)
-	arg_17_0._viewAnim:Play("out")
-	TaskDispatcher.runDelay(arg_17_0.clickCloseView, arg_17_0, 0.2)
+function SignInDetailView:_onEscapeBtnClick()
+	self._viewAnim:Play("out")
+	TaskDispatcher.runDelay(self.clickCloseView, self, 0.2)
 end
 
-function var_0_0.clickCloseView(arg_18_0)
-	if arg_18_0.viewParam and arg_18_0.viewParam.callback then
-		arg_18_0.viewParam.callback(arg_18_0.viewParam.callbackObj)
+function SignInDetailView:clickCloseView()
+	if self.viewParam and self.viewParam.callback then
+		self.viewParam.callback(self.viewParam.callbackObj)
 	end
 
-	arg_18_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_19_0)
-	gohelper.addUIClickAudio(arg_19_0._btnqiehuan.gameObject, AudioEnum.UI.play_ui_sign_in_qiehuan)
-	gohelper.setActive(arg_19_0._gomonthget1, false)
-	gohelper.setActive(arg_19_0._gonomonthget1, false)
-	gohelper.setActive(arg_19_0._gomonthget2, false)
-	gohelper.setActive(arg_19_0._gonomonthget2, false)
-	gohelper.setActive(arg_19_0._gomonthget3, false)
-	gohelper.setActive(arg_19_0._gonomonthget3, false)
-	gohelper.setActive(arg_19_0._gonormaldaysigned, false)
-	gohelper.setActive(arg_19_0._gonormaldaysigned_gold, false)
-	gohelper.setActive(arg_19_0._gomonthcarddaysigned, false)
-	gohelper.setActive(arg_19_0._gomonthcarddaysigned_gold, false)
-	gohelper.setActive(arg_19_0._gomonthcardsigned, false)
-	arg_19_0._normaldayrewardAni:Play("none")
-	arg_19_0._normaldayrewardAni_gold:Play("none")
-	arg_19_0._monthcarddayrewardAni:Play("none")
-	arg_19_0._monthcarddayrewardAni_gold:Play("none")
+function SignInDetailView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnqiehuan.gameObject, AudioEnum.UI.play_ui_sign_in_qiehuan)
+	gohelper.setActive(self._gomonthget1, false)
+	gohelper.setActive(self._gonomonthget1, false)
+	gohelper.setActive(self._gomonthget2, false)
+	gohelper.setActive(self._gonomonthget2, false)
+	gohelper.setActive(self._gomonthget3, false)
+	gohelper.setActive(self._gonomonthget3, false)
+	gohelper.setActive(self._gonormaldaysigned, false)
+	gohelper.setActive(self._gonormaldaysigned_gold, false)
+	gohelper.setActive(self._gomonthcarddaysigned, false)
+	gohelper.setActive(self._gomonthcarddaysigned_gold, false)
+	gohelper.setActive(self._gomonthcardsigned, false)
+	self._normaldayrewardAni:Play("none")
+	self._normaldayrewardAni_gold:Play("none")
+	self._monthcarddayrewardAni:Play("none")
+	self._monthcarddayrewardAni_gold:Play("none")
 
-	arg_19_0._gogetmonthbgs = arg_19_0:getUserDataTb_()
+	self._gogetmonthbgs = self:getUserDataTb_()
 
-	table.insert(arg_19_0._gogetmonthbgs, arg_19_0._gogetmonthbg1)
-	table.insert(arg_19_0._gogetmonthbgs, arg_19_0._gogetmonthbg2)
-	table.insert(arg_19_0._gogetmonthbgs, arg_19_0._gogetmonthbg3)
+	table.insert(self._gogetmonthbgs, self._gogetmonthbg1)
+	table.insert(self._gogetmonthbgs, self._gogetmonthbg2)
+	table.insert(self._gogetmonthbgs, self._gogetmonthbg3)
 
-	arg_19_0._gomonthmasks = arg_19_0:getUserDataTb_()
+	self._gomonthmasks = self:getUserDataTb_()
 
-	table.insert(arg_19_0._gomonthmasks, arg_19_0._gomonthmask1)
-	table.insert(arg_19_0._gomonthmasks, arg_19_0._gomonthmask2)
-	table.insert(arg_19_0._gomonthmasks, arg_19_0._gomonthmask3)
+	table.insert(self._gomonthmasks, self._gomonthmask1)
+	table.insert(self._gomonthmasks, self._gomonthmask2)
+	table.insert(self._gomonthmasks, self._gomonthmask3)
 
-	arg_19_0._gomonthgets = arg_19_0:getUserDataTb_()
+	self._gomonthgets = self:getUserDataTb_()
 
-	table.insert(arg_19_0._gomonthgets, arg_19_0._gomonthget1)
-	table.insert(arg_19_0._gomonthgets, arg_19_0._gomonthget2)
-	table.insert(arg_19_0._gomonthgets, arg_19_0._gomonthget3)
+	table.insert(self._gomonthgets, self._gomonthget1)
+	table.insert(self._gomonthgets, self._gomonthget2)
+	table.insert(self._gomonthgets, self._gomonthget3)
 
-	arg_19_0._gonomonthgets = arg_19_0:getUserDataTb_()
+	self._gonomonthgets = self:getUserDataTb_()
 
-	table.insert(arg_19_0._gonomonthgets, arg_19_0._gonomonthget1)
-	table.insert(arg_19_0._gonomonthgets, arg_19_0._gonomonthget2)
-	table.insert(arg_19_0._gonomonthgets, arg_19_0._gonomonthget3)
-	arg_19_0._simagebg:LoadImage(ResUrl.getSignInBg("bg_white"))
-	arg_19_0._simageorangebg:LoadImage(ResUrl.getSignInBg("img_bcard3"))
-	arg_19_0._simagerewardbg:LoadImage(ResUrl.getSignInBg("img_di"))
+	table.insert(self._gonomonthgets, self._gonomonthget1)
+	table.insert(self._gonomonthgets, self._gonomonthget2)
+	table.insert(self._gonomonthgets, self._gonomonthget3)
+	self._simagebg:LoadImage(ResUrl.getSignInBg("bg_white"))
+	self._simageorangebg:LoadImage(ResUrl.getSignInBg("img_bcard3"))
+	self._simagerewardbg:LoadImage(ResUrl.getSignInBg("img_di"))
 
-	arg_19_0._rewardTipItems = {}
-	arg_19_0._nodeItems = {}
-	arg_19_0._monthgetlightanimTab = arg_19_0:getUserDataTb_()
-	arg_19_0._delayAnimTab = arg_19_0:getUserDataTb_()
-	arg_19_0._monthRewards = arg_19_0:getUserDataTb_()
+	self._rewardTipItems = {}
+	self._nodeItems = {}
+	self._monthgetlightanimTab = self:getUserDataTb_()
+	self._delayAnimTab = self:getUserDataTb_()
+	self._monthRewards = self:getUserDataTb_()
 
-	table.insert(arg_19_0._monthgetlightanimTab, arg_19_0._gomonthgetlightanim1)
-	table.insert(arg_19_0._monthgetlightanimTab, arg_19_0._gomonthgetlightanim2)
-	table.insert(arg_19_0._monthgetlightanimTab, arg_19_0._gomonthgetlightanim3)
+	table.insert(self._monthgetlightanimTab, self._gomonthgetlightanim1)
+	table.insert(self._monthgetlightanimTab, self._gomonthgetlightanim2)
+	table.insert(self._monthgetlightanimTab, self._gomonthgetlightanim3)
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._monthgetlightanimTab) do
-		gohelper.setActive(iter_19_1, false)
+	for k, v in ipairs(self._monthgetlightanimTab) do
+		gohelper.setActive(v, false)
 	end
 end
 
-function var_0_0.onOpen(arg_20_0)
-	if arg_20_0.viewParam.back then
-		arg_20_0._viewAnim:Play("AutoIn")
+function SignInDetailView:onOpen()
+	if self.viewParam.back then
+		self._viewAnim:Play("AutoIn")
 	else
-		arg_20_0._viewAnim:Play("NormalIn")
+		self._viewAnim:Play("NormalIn")
 	end
 
-	arg_20_0._index = 0
-	arg_20_0._checkSignIn = true
+	self._index = 0
+	self._checkSignIn = true
 
-	arg_20_0:_setMonthView(true)
-	arg_20_0:_setRedDot()
-	arg_20_0:_addCustomEvent()
-	NavigateMgr.instance:addEscape(ViewName.SignInDetailView, arg_20_0._onEscapeBtnClick, arg_20_0)
-	arg_20_0:_refreshFestivalDecoration()
+	self:_setMonthView(true)
+	self:_setRedDot()
+	self:_addCustomEvent()
+	NavigateMgr.instance:addEscape(ViewName.SignInDetailView, self._onEscapeBtnClick, self)
+	self:_refreshFestivalDecoration()
 end
 
-function var_0_0._onDailyRefresh(arg_21_0)
-	arg_21_0._index = 0
-	arg_21_0._checkSignIn = true
+function SignInDetailView:_onDailyRefresh()
+	self._index = 0
+	self._checkSignIn = true
 
-	gohelper.setActive(arg_21_0._gomonthget1, false)
-	gohelper.setActive(arg_21_0._gonomonthget1, false)
-	gohelper.setActive(arg_21_0._gomonthget2, false)
-	gohelper.setActive(arg_21_0._gonomonthget2, false)
-	gohelper.setActive(arg_21_0._gomonthget3, false)
-	gohelper.setActive(arg_21_0._gonomonthget3, false)
-	gohelper.setActive(arg_21_0._gonormaldaysigned, false)
-	gohelper.setActive(arg_21_0._gonormaldaysigned_gold, false)
-	gohelper.setActive(arg_21_0._gomonthcarddaysigned, false)
-	gohelper.setActive(arg_21_0._gomonthcarddaysigned_gold, false)
-	gohelper.setActive(arg_21_0._gomonthcardsigned, false)
-	gohelper.setActive(arg_21_0._gonormaldayget, false)
-	gohelper.setActive(arg_21_0._gonormaldayget_gold, false)
-	gohelper.setActive(arg_21_0._gomonthcardget, false)
-	gohelper.setActive(arg_21_0._gomonthcarddayget, false)
-	gohelper.setActive(arg_21_0._gomonthcarddayget_gold, false)
-	gohelper.setActive(arg_21_0._gonormaldaynoget, false)
-	gohelper.setActive(arg_21_0._gomonthcardnoget, false)
-	gohelper.setActive(arg_21_0._gomonthcardpowernoget, false)
-	gohelper.setActive(arg_21_0._gomonthcarddaynoget, false)
-	gohelper.setActive(arg_21_0._gomonthcarddaynoget_gold, false)
-	arg_21_0:_setMonthView()
+	gohelper.setActive(self._gomonthget1, false)
+	gohelper.setActive(self._gonomonthget1, false)
+	gohelper.setActive(self._gomonthget2, false)
+	gohelper.setActive(self._gonomonthget2, false)
+	gohelper.setActive(self._gomonthget3, false)
+	gohelper.setActive(self._gonomonthget3, false)
+	gohelper.setActive(self._gonormaldaysigned, false)
+	gohelper.setActive(self._gonormaldaysigned_gold, false)
+	gohelper.setActive(self._gomonthcarddaysigned, false)
+	gohelper.setActive(self._gomonthcarddaysigned_gold, false)
+	gohelper.setActive(self._gomonthcardsigned, false)
+	gohelper.setActive(self._gonormaldayget, false)
+	gohelper.setActive(self._gonormaldayget_gold, false)
+	gohelper.setActive(self._gomonthcardget, false)
+	gohelper.setActive(self._gomonthcarddayget, false)
+	gohelper.setActive(self._gomonthcarddayget_gold, false)
+	gohelper.setActive(self._gonormaldaynoget, false)
+	gohelper.setActive(self._gomonthcardnoget, false)
+	gohelper.setActive(self._gomonthcardpowernoget, false)
+	gohelper.setActive(self._gomonthcarddaynoget, false)
+	gohelper.setActive(self._gomonthcarddaynoget_gold, false)
+	self:_setMonthView()
 end
 
-function var_0_0._onChangeItemClick(arg_22_0, arg_22_1)
-	arg_22_0.currentSelectMaterialType = arg_22_1.materilType
-	arg_22_0.currentSelectMaterialId = arg_22_1.materilId
+function SignInDetailView:_onChangeItemClick(itemMo)
+	self.currentSelectMaterialType = itemMo.materilType
+	self.currentSelectMaterialId = itemMo.materilId
 
-	if tonumber(arg_22_1.materilType) == MaterialEnum.MaterialType.Equip then
-		local var_22_0, var_22_1 = ItemModel.instance:getItemConfigAndIcon(arg_22_1.materilType, arg_22_1.materilId, true)
+	if tonumber(itemMo.materilType) == MaterialEnum.MaterialType.Equip then
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(itemMo.materilType, itemMo.materilId, true)
 	end
 end
 
-function var_0_0._onMonthCardRewardClick(arg_23_0)
-	MaterialTipController.instance:showMaterialInfo(arg_23_0._curmonthCardRewards[1], arg_23_0._curmonthCardRewards[2])
+function SignInDetailView:_onMonthCardRewardClick()
+	MaterialTipController.instance:showMaterialInfo(self._curmonthCardRewards[1], self._curmonthCardRewards[2])
 end
 
-function var_0_0._onMonthCardPowerRewardClick(arg_24_0)
-	MaterialTipController.instance:showMaterialInfo(arg_24_0._curmonthCardPower[1], arg_24_0._curmonthCardPower[2])
+function SignInDetailView:_onMonthCardPowerRewardClick()
+	MaterialTipController.instance:showMaterialInfo(self._curmonthCardPower[1], self._curmonthCardPower[2])
 end
 
-function var_0_0._onChangeToBirthday(arg_25_0)
-	gohelper.setSiblingBefore(arg_25_0._godayrewarditem, arg_25_0._gobirthdayrewarditem)
+function SignInDetailView:_onChangeToBirthday()
+	gohelper.setSiblingBefore(self._godayrewarditem, self._gobirthdayrewarditem)
 end
 
-function var_0_0._onChangeToNormal(arg_26_0)
-	arg_26_0:_setRewardItems()
-	gohelper.setSiblingBefore(arg_26_0._gobirthdayrewarditem, arg_26_0._godayrewarditem)
+function SignInDetailView:_onChangeToNormal()
+	self:_setRewardItems()
+	gohelper.setSiblingBefore(self._gobirthdayrewarditem, self._godayrewarditem)
 end
 
-function var_0_0._onChangeBirthdayToBirthday(arg_27_0)
-	arg_27_0:_setRewardItems()
+function SignInDetailView:_onChangeBirthdayToBirthday()
+	self:_setRewardItems()
 end
 
-function var_0_0._onGetSignInInfo(arg_28_0)
-	arg_28_0:_setMonthView()
+function SignInDetailView:_onGetSignInInfo()
+	self:_setMonthView()
 end
 
-function var_0_0._onGetSignInReply(arg_29_0)
-	arg_29_0:_setMonthView()
+function SignInDetailView:_onGetSignInReply()
+	self:_setMonthView()
 end
 
-function var_0_0._onGetHeroBirthday(arg_30_0)
-	local var_30_0 = SignInModel.instance:getSignBirthdayHeros(arg_30_0._targetDate[1], arg_30_0._targetDate[2], arg_30_0._targetDate[3])
+function SignInDetailView:_onGetHeroBirthday()
+	local birthdayHeros = SignInModel.instance:getSignBirthdayHeros(self._targetDate[1], self._targetDate[2], self._targetDate[3])
 
-	if arg_30_0._curDate.year == arg_30_0._targetDate[1] and arg_30_0._curDate.month == arg_30_0._targetDate[2] and arg_30_0._curDate.day == arg_30_0._targetDate[3] then
-		var_30_0 = SignInModel.instance:getCurDayBirthdayHeros()
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	local var_30_1 = false
+	local hasBirthdayRewards = false
 
-	for iter_30_0, iter_30_1 in pairs(var_30_0) do
-		if not SignInModel.instance:isHeroBirthdayGet(iter_30_1) then
-			var_30_1 = true
+	for _, v in pairs(birthdayHeros) do
+		local giftGet = SignInModel.instance:isHeroBirthdayGet(v)
+
+		if not giftGet then
+			hasBirthdayRewards = true
 		end
 	end
 
-	gohelper.setActive(arg_30_0._goqiehuan, var_30_1)
-	gohelper.setActive(arg_30_0._gogiftnoget, false)
-	gohelper.setActive(arg_30_0._gogiftget, true)
+	gohelper.setActive(self._goqiehuan, hasBirthdayRewards)
+	gohelper.setActive(self._gogiftnoget, false)
+	gohelper.setActive(self._gogiftget, true)
 end
 
-function var_0_0._closeViewEffect(arg_31_0)
-	arg_31_0._clickMonth = true
-	arg_31_0._index = 0
+function SignInDetailView:_closeViewEffect()
+	self._clickMonth = true
+	self._index = 0
 
-	arg_31_0._viewAnim:Play("idel")
-	arg_31_0:_setMonthView()
-	gohelper.setSiblingBefore(arg_31_0._gobirthdayrewarditem, arg_31_0._godayrewarditem)
+	self._viewAnim:Play("idel")
+	self:_setMonthView()
+	gohelper.setSiblingBefore(self._gobirthdayrewarditem, self._godayrewarditem)
 end
 
-function var_0_0._setMonthView(arg_32_0, arg_32_1)
-	arg_32_0:_setSignInData()
+function SignInDetailView:_setMonthView(open)
+	self:_setSignInData()
 
-	if arg_32_1 then
-		arg_32_0:_playOpenAudio()
-		arg_32_0:_initIndex()
+	if open then
+		self:_playOpenAudio()
+		self:_initIndex()
 	end
 
-	arg_32_0:_setTitleInfo()
-	arg_32_0:_setRewardItems()
-	arg_32_0:_setMonthViewRewardTips()
+	self:_setTitleInfo()
+	self:_setRewardItems()
+	self:_setMonthViewRewardTips()
+	self:_refreshSupplement()
 
-	if not arg_32_0._checkSignIn then
+	if not self._checkSignIn then
 		return
 	end
 
-	if not arg_32_0._isCurDayRewardGet then
-		gohelper.setActive(arg_32_0._gonormaldaysigned, true)
-		gohelper.setActive(arg_32_0._gonormaldaysigned_gold, true)
-		gohelper.setActive(arg_32_0._gomonthcarddaysigned, true)
-		gohelper.setActive(arg_32_0._gomonthcarddaysigned_gold, true)
-		gohelper.setActive(arg_32_0._gomonthcardsigned, true)
-		gohelper.setActive(arg_32_0._gonormaldayget, true)
-		gohelper.setActive(arg_32_0._gonormaldayget_gold, true)
-		gohelper.setActive(arg_32_0._gomonthcardget, true)
-		gohelper.setActive(arg_32_0._gomonthcarddayget, true)
-		gohelper.setActive(arg_32_0._gomonthcarddayget_gold, true)
-		gohelper.setActive(arg_32_0._gonormaldaynoget, false)
-		gohelper.setActive(arg_32_0._gomonthcardnoget, false)
-		gohelper.setActive(arg_32_0._gomonthcardpowernoget, false)
-		gohelper.setActive(arg_32_0._gomonthcarddaynoget, false)
-		gohelper.setActive(arg_32_0._gomonthcarddaynoget_gold, false)
-		arg_32_0._normaldayrewardAni:Play("none")
-		arg_32_0._normaldayrewardAni_gold:Play("none")
-		arg_32_0._monthcarddayrewardAni:Play("none")
-		arg_32_0._monthcarddayrewardAni_gold:Play("none")
-		ZProj.UGUIHelper.SetColorAlpha(arg_32_0._txtnormaldayrewardcount, 1)
+	if not self._isCurDayRewardGet then
+		gohelper.setActive(self._gonormaldaysigned, true)
+		gohelper.setActive(self._gonormaldaysigned_gold, true)
+		gohelper.setActive(self._gomonthcarddaysigned, true)
+		gohelper.setActive(self._gomonthcarddaysigned_gold, true)
+		gohelper.setActive(self._gomonthcardsigned, true)
+		gohelper.setActive(self._gonormaldayget, true)
+		gohelper.setActive(self._gonormaldayget_gold, true)
+		gohelper.setActive(self._gomonthcardget, true)
+		gohelper.setActive(self._gomonthcarddayget, true)
+		gohelper.setActive(self._gomonthcarddayget_gold, true)
+		gohelper.setActive(self._gonormaldaynoget, false)
+		gohelper.setActive(self._gomonthcardnoget, false)
+		gohelper.setActive(self._gomonthcardpowernoget, false)
+		gohelper.setActive(self._gomonthcarddaynoget, false)
+		gohelper.setActive(self._gomonthcarddaynoget_gold, false)
+		self._normaldayrewardAni:Play("none")
+		self._normaldayrewardAni_gold:Play("none")
+		self._monthcarddayrewardAni:Play("none")
+		self._monthcarddayrewardAni_gold:Play("none")
+		ZProj.UGUIHelper.SetColorAlpha(self._txtnormaldayrewardcount, 1)
 
-		arg_32_0._checkSignIn = false
+		self._checkSignIn = false
 
 		UIBlockMgr.instance:startBlock("signshowing")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_sign_dailyrewards)
-		TaskDispatcher.runDelay(arg_32_0._delaySignInRequest, arg_32_0, 1.3)
+		TaskDispatcher.runDelay(self._delaySignInRequest, self, 1.3)
 	else
-		gohelper.setActive(arg_32_0._gonormaldaysigned, true)
-		gohelper.setActive(arg_32_0._gonormaldaysigned_gold, true)
-		gohelper.setActive(arg_32_0._gomonthcarddaysigned, true)
-		gohelper.setActive(arg_32_0._gomonthcarddaysigned_gold, true)
-		gohelper.setActive(arg_32_0._gomonthcardsigned, true)
-		gohelper.setActive(arg_32_0._gonormaldayget, false)
-		gohelper.setActive(arg_32_0._gonormaldayget_gold, false)
-		gohelper.setActive(arg_32_0._gomonthcarddayget, false)
-		gohelper.setActive(arg_32_0._gomonthcarddayget_gold, false)
-		gohelper.setActive(arg_32_0._gomonthcardget, false)
-		gohelper.setActive(arg_32_0._gonormaldaynoget, true)
-		gohelper.setActive(arg_32_0._gomonthcarddaynoget, true)
-		gohelper.setActive(arg_32_0._gomonthcarddaynoget_gold, true)
-		gohelper.setActive(arg_32_0._gomonthcardnoget, true)
-		gohelper.setActive(arg_32_0._gomonthcardpowernoget, true)
-		gohelper.setActive(arg_32_0._gomonthcardpowernoget_gold, true)
-		ZProj.UGUIHelper.SetColorAlpha(arg_32_0._txtnormaldayrewardcount, 0.7)
+		gohelper.setActive(self._gonormaldaysigned, true)
+		gohelper.setActive(self._gonormaldaysigned_gold, true)
+		gohelper.setActive(self._gomonthcarddaysigned, true)
+		gohelper.setActive(self._gomonthcarddaysigned_gold, true)
+		gohelper.setActive(self._gomonthcardsigned, true)
+		gohelper.setActive(self._gonormaldayget, false)
+		gohelper.setActive(self._gonormaldayget_gold, false)
+		gohelper.setActive(self._gomonthcarddayget, false)
+		gohelper.setActive(self._gomonthcarddayget_gold, false)
+		gohelper.setActive(self._gomonthcardget, false)
+		gohelper.setActive(self._gonormaldaynoget, true)
+		gohelper.setActive(self._gomonthcarddaynoget, true)
+		gohelper.setActive(self._gomonthcarddaynoget_gold, true)
+		gohelper.setActive(self._gomonthcardnoget, true)
+		gohelper.setActive(self._gomonthcardpowernoget, true)
+		gohelper.setActive(self._gomonthcardpowernoget_gold, true)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtnormaldayrewardcount, 0.7)
 
-		if arg_32_0._gonormaldayget.activeSelf then
-			arg_32_0._normaldayrewardAni.enabled = true
-			arg_32_0._normaldayrewardAni_gold.enabled = true
-			arg_32_0._monthcarddayrewardAni.enabled = true
-			arg_32_0._monthcarddayrewardAni_gold.enabled = true
+		if self._gonormaldayget.activeSelf then
+			self._normaldayrewardAni.enabled = true
+			self._normaldayrewardAni_gold.enabled = true
+			self._monthcarddayrewardAni.enabled = true
+			self._monthcarddayrewardAni_gold.enabled = true
 
-			arg_32_0._normaldayrewardAni:Play("none")
-			arg_32_0._normaldayrewardAni_gold:Play("none")
-			arg_32_0._monthcarddayrewardAni:Play("none")
-			arg_32_0._monthcarddayrewardAni_gold:Play("none")
+			self._normaldayrewardAni:Play("none")
+			self._normaldayrewardAni_gold:Play("none")
+			self._monthcarddayrewardAni:Play("none")
+			self._monthcarddayrewardAni_gold:Play("none")
 		else
-			gohelper.setActive(arg_32_0._gomonthcarddayget, false)
-			gohelper.setActive(arg_32_0._gomonthcarddayget_gold, false)
-			gohelper.setActive(arg_32_0._gomonthcardget, false)
+			gohelper.setActive(self._gomonthcarddayget, false)
+			gohelper.setActive(self._gomonthcarddayget_gold, false)
+			gohelper.setActive(self._gomonthcardget, false)
 
-			arg_32_0._normaldayrewardAni.enabled = true
-			arg_32_0._normaldayrewardAni_gold.enabled = true
-			arg_32_0._monthcarddayrewardAni.enabled = true
-			arg_32_0._monthcarddayrewardAni_gold.enabled = true
+			self._normaldayrewardAni.enabled = true
+			self._normaldayrewardAni_gold.enabled = true
+			self._monthcarddayrewardAni.enabled = true
+			self._monthcarddayrewardAni_gold.enabled = true
 
-			if not arg_32_0._clickMonth then
-				gohelper.setActive(arg_32_0._gomonthcardnoget, true)
-				gohelper.setActive(arg_32_0._gomonthcardpowernoget, true)
-				gohelper.setActive(arg_32_0._gomonthcarddaynoget, true)
-				gohelper.setActive(arg_32_0._gomonthcarddaynoget_gold, true)
-				arg_32_0._monthcarddayrewardAni:Play("lingqu")
-				arg_32_0._monthcarddayrewardAni_gold:Play("lingqu")
+			if not self._clickMonth then
+				gohelper.setActive(self._gomonthcardnoget, true)
+				gohelper.setActive(self._gomonthcardpowernoget, true)
+				gohelper.setActive(self._gomonthcarddaynoget, true)
+				gohelper.setActive(self._gomonthcarddaynoget_gold, true)
+				self._monthcarddayrewardAni:Play("lingqu")
+				self._monthcarddayrewardAni_gold:Play("lingqu")
 			else
-				arg_32_0._monthcarddayrewardAni:Play("none")
-				arg_32_0._monthcarddayrewardAni_gold:Play("none")
-				gohelper.setActive(arg_32_0._gomonthcardnoget, true)
-				gohelper.setActive(arg_32_0._gomonthcardpowernoget, true)
-				gohelper.setActive(arg_32_0._gomonthcarddaynoget, true)
-				gohelper.setActive(arg_32_0._gomonthcarddaynoget_gold, true)
+				self._monthcarddayrewardAni:Play("none")
+				self._monthcarddayrewardAni_gold:Play("none")
+				gohelper.setActive(self._gomonthcardnoget, true)
+				gohelper.setActive(self._gomonthcardpowernoget, true)
+				gohelper.setActive(self._gomonthcarddaynoget, true)
+				gohelper.setActive(self._gomonthcarddaynoget_gold, true)
 			end
 
-			arg_32_0._normaldayrewardAni:Play("lingqu")
-			arg_32_0._normaldayrewardAni_gold:Play("lingqu")
-			arg_32_0._monthcarddayrewardAni:Play("lingqu")
-			arg_32_0._monthcarddayrewardAni_gold:Play("lingqu")
+			self._normaldayrewardAni:Play("lingqu")
+			self._normaldayrewardAni_gold:Play("lingqu")
+			self._monthcarddayrewardAni:Play("lingqu")
+			self._monthcarddayrewardAni_gold:Play("lingqu")
 		end
 	end
 end
 
-function var_0_0._setSignInData(arg_33_0)
-	arg_33_0._curDate = SignInModel.instance:getCurDate()
-	arg_33_0._targetDate = SignInModel.instance:getSignTargetDate()
-	arg_33_0._curDayRewards = string.splitToNumber(SignInConfig.instance:getSignRewards(tonumber(arg_33_0._curDate.day)).signinBonus, "#")
-	arg_33_0._rewardGetState = SignInModel.instance:isSignDayRewardGet(arg_33_0._targetDate[3])
-	arg_33_0._isCurDayRewardGet = SignInModel.instance:isSignDayRewardGet(arg_33_0._curDate.day)
+function SignInDetailView:_setSignInData()
+	self._curDate = SignInModel.instance:getCurDate()
+	self._targetDate = SignInModel.instance:getSignTargetDate()
+	self._curDayRewards = SignInModel.instance:getSignRewardsByDate(self._curDate)
+	self._rewardGetState = SignInModel.instance:isSignDayRewardGet(self._targetDate[3])
+	self._isCurDayRewardGet = SignInModel.instance:isSignDayRewardGet(self._curDate.day)
 end
 
-function var_0_0._playOpenAudio(arg_34_0)
-	local var_34_0 = SignInModel.instance:getValidMonthCard(arg_34_0._curDate.year, arg_34_0._curDate.month, arg_34_0._curDate.day)
+function SignInDetailView:_playOpenAudio()
+	local monthCardId = SignInModel.instance:getValidMonthCard(self._curDate.year, self._curDate.month, self._curDate.day)
 
-	if not arg_34_0._isCurDayRewardGet and var_34_0 then
+	if not self._isCurDayRewardGet and monthCardId then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_sign_menology)
 
 		return
 	end
 
-	local var_34_1 = false
+	local hasTotalRewardCouldGet = false
 
-	for iter_34_0 = 1, 3 do
-		local var_34_2 = SignInModel.instance:isSignTotalRewardGet(iter_34_0)
-		local var_34_3 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(iter_34_0).signinaddup)
+	for i = 1, 3 do
+		local get = SignInModel.instance:isSignTotalRewardGet(i)
+		local unlock = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(i).signinaddup)
 
-		if not var_34_2 and var_34_3 then
-			var_34_1 = true
+		if not get and unlock then
+			hasTotalRewardCouldGet = true
 		end
 	end
 
-	if var_34_1 then
+	if hasTotalRewardCouldGet then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_sign_special)
 
 		return
@@ -710,577 +751,600 @@ function var_0_0._playOpenAudio(arg_34_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_sign_general)
 end
 
-function var_0_0._initIndex(arg_35_0)
-	if not arg_35_0._isCurDayRewardGet then
+function SignInDetailView:_initIndex()
+	if not self._isCurDayRewardGet then
 		return
 	end
 
-	for iter_35_0 = 1, 3 do
-		local var_35_0 = SignInModel.instance:isSignTotalRewardGet(iter_35_0)
-		local var_35_1 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(iter_35_0).signinaddup)
+	for i = 1, 3 do
+		local rewardget = SignInModel.instance:isSignTotalRewardGet(i)
+		local unlock = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(i).signinaddup)
 
-		if not var_35_0 and var_35_1 then
+		if not rewardget and unlock then
 			return
 		end
 	end
 
-	local var_35_2 = SignInModel.instance:getSignBirthdayHeros(arg_35_0._targetDate[1], arg_35_0._targetDate[2], arg_35_0._targetDate[3])
+	local birthdayHeros = SignInModel.instance:getSignBirthdayHeros(self._targetDate[1], self._targetDate[2], self._targetDate[3])
 
-	if arg_35_0._curDate.year == arg_35_0._targetDate[1] and arg_35_0._curDate.month == arg_35_0._targetDate[2] and arg_35_0._curDate.day == arg_35_0._targetDate[3] then
-		var_35_2 = SignInModel.instance:getCurDayBirthdayHeros()
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	local var_35_3 = arg_35_0._inputheros:GetText()
+	local inputValue = self._inputheros:GetText()
 
-	if var_35_3 and var_35_3 ~= "" and arg_35_0._curDate.year == arg_35_0._targetDate[1] and arg_35_0._curDate.month == arg_35_0._targetDate[2] and arg_35_0._curDate.day == arg_35_0._targetDate[3] then
-		var_35_2 = string.splitToNumber(var_35_3, "|")
+	if inputValue and inputValue ~= "" and self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = string.splitToNumber(inputValue, "|")
 	end
 
-	for iter_35_1, iter_35_2 in ipairs(var_35_2) do
-		if not SignInModel.instance:isHeroBirthdayGet(iter_35_2) then
-			arg_35_0._index = iter_35_1
+	for k, v in ipairs(birthdayHeros) do
+		local giftGet = SignInModel.instance:isHeroBirthdayGet(v)
 
-			gohelper.setSiblingBefore(arg_35_0._gobirthdayrewarditem, arg_35_0._godayrewarditem)
+		if not giftGet then
+			self._index = k
+
+			gohelper.setSiblingBefore(self._gobirthdayrewarditem, self._godayrewarditem)
 
 			return
 		end
 	end
 end
 
-function var_0_0._setTitleInfo(arg_36_0)
-	local var_36_0 = TimeUtil.timeToTimeStamp(arg_36_0._targetDate[1], arg_36_0._targetDate[2], arg_36_0._targetDate[3], TimeDispatcher.DailyRefreshTime, 1, 1)
-	local var_36_1 = ServerTime.weekDayInServerLocal()
+function SignInDetailView:_setTitleInfo()
+	local datets = TimeUtil.timeToTimeStamp(self._targetDate[1], self._targetDate[2], self._targetDate[3], TimeDispatcher.DailyRefreshTime, 1, 1)
+	local week = ServerTime.weekDayInServerLocal()
 
-	if var_36_1 >= 7 then
-		var_36_1 = 0
+	if week >= 7 then
+		week = 0
 	end
 
-	UISpriteSetMgr.instance:setSignInSprite(arg_36_0._imageweek, "date_" .. tostring(var_36_1))
+	UISpriteSetMgr.instance:setSignInSprite(self._imageweek, "date_" .. tostring(week))
 
-	arg_36_0._txtdesc.text = SignInConfig.instance:getSignDescByDate(var_36_0)
+	self._txtdesc.text = SignInConfig.instance:getSignDescByDate(datets)
 
-	local var_36_2 = string.format("%02d", arg_36_0._targetDate[3])
+	local dayStr = string.format("%02d", self._targetDate[3])
 
-	arg_36_0._txtday.text = var_36_2
-	arg_36_0._txtdayfestival.text = var_36_2
-	arg_36_0._txtmonth.text = string.format("%02d", arg_36_0._targetDate[2])
+	self._txtday.text = dayStr
+	self._txtdayfestival.text = dayStr
+	self._txtmonth.text = string.format("%02d", self._targetDate[2])
 
-	local var_36_3, var_36_4 = SignInModel.instance:getAdvanceHero()
+	local advanceHero, day = SignInModel.instance:getAdvanceHero()
 
-	if var_36_3 == 0 then
-		gohelper.setActive(arg_36_0._goroleitem, false)
+	if advanceHero == 0 then
+		gohelper.setActive(self._goroleitem, false)
 	else
-		gohelper.setActive(arg_36_0._goroleitem, true)
+		gohelper.setActive(self._goroleitem, true)
 
-		local var_36_5 = HeroModel.instance:getByHeroId(var_36_3)
-		local var_36_6 = var_36_5 and var_36_5.skin or HeroConfig.instance:getHeroCO(var_36_3).skinId
+		local heroMo = HeroModel.instance:getByHeroId(advanceHero)
+		local skin = heroMo and heroMo.skin or HeroConfig.instance:getHeroCO(advanceHero).skinId
 
-		arg_36_0._simagetopicon:LoadImage(ResUrl.getHeadIconSmall(var_36_6))
+		self._simagetopicon:LoadImage(ResUrl.getHeadIconSmall(skin))
 
-		arg_36_0._txtbirtime.text = var_36_4
-		arg_36_0._txtlimit.text = var_36_4 > 1 and "Days Later" or "Day Later"
+		self._txtbirtime.text = day
+		self._txtlimit.text = day > 1 and "Days Later" or "Day Later"
 	end
 end
 
-function var_0_0._setRewardItems(arg_37_0)
-	local var_37_0 = SignInModel.instance:getSignBirthdayHeros(arg_37_0._targetDate[1], arg_37_0._targetDate[2], arg_37_0._targetDate[3])
+function SignInDetailView:_setRewardItems()
+	local birthdayHeros = SignInModel.instance:getSignBirthdayHeros(self._targetDate[1], self._targetDate[2], self._targetDate[3])
 
-	if arg_37_0._curDate.year == arg_37_0._targetDate[1] and arg_37_0._curDate.month == arg_37_0._targetDate[2] and arg_37_0._curDate.day == arg_37_0._targetDate[3] then
-		var_37_0 = SignInModel.instance:getCurDayBirthdayHeros()
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	if arg_37_0._curDate.year == arg_37_0._targetDate[1] and arg_37_0._curDate.month == arg_37_0._targetDate[2] and arg_37_0._curDate.day == arg_37_0._targetDate[3] then
-		if arg_37_0._index > 0 then
-			RedDotController.instance:addRedDot(arg_37_0._goreddot, RedDotEnum.DotNode.SignInBirthReward, var_37_0[arg_37_0._index])
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		if self._index > 0 then
+			RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.SignInBirthReward, birthdayHeros[self._index])
 		end
 	else
-		RedDotController.instance:addRedDot(arg_37_0._goreddot, 0)
+		RedDotController.instance:addRedDot(self._goreddot, 0)
 	end
 
-	for iter_37_0, iter_37_1 in pairs(arg_37_0._nodeItems) do
-		gohelper.setActive(iter_37_1.go, false)
+	for _, v in pairs(self._nodeItems) do
+		gohelper.setActive(v.go, false)
 	end
 
-	local var_37_1 = false
+	local hasBirthdayRewards = false
 
-	if arg_37_0._curDate.year == arg_37_0._targetDate[1] and arg_37_0._curDate.month == arg_37_0._targetDate[2] and arg_37_0._curDate.day == arg_37_0._targetDate[3] then
-		for iter_37_2, iter_37_3 in pairs(var_37_0) do
-			if not SignInModel.instance:isHeroBirthdayGet(iter_37_3) then
-				var_37_1 = true
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		for _, v in pairs(birthdayHeros) do
+			local giftGet = SignInModel.instance:isHeroBirthdayGet(v)
+
+			if not giftGet then
+				hasBirthdayRewards = true
 			end
 		end
 	end
 
-	gohelper.setActive(arg_37_0._goqiehuan, var_37_1)
+	gohelper.setActive(self._goqiehuan, hasBirthdayRewards)
 
-	if #var_37_0 > 0 then
-		for iter_37_4 = 1, #var_37_0 + 1 do
-			if not arg_37_0._nodeItems[iter_37_4] then
-				arg_37_0._nodeItems[iter_37_4] = arg_37_0:getUserDataTb_()
-				arg_37_0._nodeItems[iter_37_4].go = gohelper.cloneInPlace(arg_37_0._gonodeitem, "node" .. tostring(iter_37_4))
-				arg_37_0._nodeItems[iter_37_4].on = gohelper.findChild(arg_37_0._nodeItems[iter_37_4].go, "on")
-				arg_37_0._nodeItems[iter_37_4].off = gohelper.findChild(arg_37_0._nodeItems[iter_37_4].off, "off")
+	if #birthdayHeros > 0 then
+		for i = 1, #birthdayHeros + 1 do
+			if not self._nodeItems[i] then
+				self._nodeItems[i] = self:getUserDataTb_()
+				self._nodeItems[i].go = gohelper.cloneInPlace(self._gonodeitem, "node" .. tostring(i))
+				self._nodeItems[i].on = gohelper.findChild(self._nodeItems[i].go, "on")
+				self._nodeItems[i].off = gohelper.findChild(self._nodeItems[i].off, "off")
 			end
 
-			gohelper.setActive(arg_37_0._nodeItems[iter_37_4].go, true)
-			gohelper.setActive(arg_37_0._nodeItems[iter_37_4].on, arg_37_0._index == iter_37_4 - 1)
-			gohelper.setActive(arg_37_0._nodeItems[iter_37_4].off, arg_37_0._index ~= iter_37_4 - 1)
+			gohelper.setActive(self._nodeItems[i].go, true)
+			gohelper.setActive(self._nodeItems[i].on, self._index == i - 1)
+			gohelper.setActive(self._nodeItems[i].off, self._index ~= i - 1)
 		end
 
-		gohelper.setActive(arg_37_0._gonodes, true)
+		gohelper.setActive(self._gonodes, true)
 
-		if arg_37_0._index == 0 then
-			arg_37_0:_showDayRewardItem()
+		if self._index == 0 then
+			self:_showDayRewardItem()
 		else
-			arg_37_0:_showBirthdayRewardItem()
+			self:_showBirthdayRewardItem()
 		end
 	else
-		gohelper.setActive(arg_37_0._gonodes, false)
-		arg_37_0:_showNoBirthdayRewardItem()
+		gohelper.setActive(self._gonodes, false)
+		self:_showNoBirthdayRewardItem()
 	end
 end
 
-function var_0_0._showNoBirthdayRewardItem(arg_38_0)
-	gohelper.setActive(arg_38_0._btnqiehuan.gameObject, false)
-	gohelper.setActive(arg_38_0._simageorangebg.gameObject, false)
-	gohelper.setActive(arg_38_0._gobirthdayrewarditem, false)
+function SignInDetailView:_showNoBirthdayRewardItem()
+	gohelper.setActive(self._btnqiehuan.gameObject, false)
+	gohelper.setActive(self._simageorangebg.gameObject, false)
+	gohelper.setActive(self._gobirthdayrewarditem, false)
 end
 
-function var_0_0._showDayRewardItem(arg_39_0)
-	gohelper.setActive(arg_39_0._gobirthday, false)
-	gohelper.setActive(arg_39_0._btnqiehuan.gameObject, true)
-	gohelper.setActive(arg_39_0._simageorangebg.gameObject, true)
-	gohelper.setActive(arg_39_0._gobirthdayrewarditem, true)
-	arg_39_0._simagebirthdaybg:LoadImage(ResUrl.getSignInBg("img_bcard1"))
-	arg_39_0._simagebirthdaybg2:LoadImage(ResUrl.getSignInBg("img_bcard1"))
+function SignInDetailView:_showDayRewardItem()
+	gohelper.setActive(self._gobirthday, false)
+	gohelper.setActive(self._btnqiehuan.gameObject, true)
+	gohelper.setActive(self._simageorangebg.gameObject, true)
+	gohelper.setActive(self._gobirthdayrewarditem, true)
+	self._simagebirthdaybg:LoadImage(ResUrl.getSignInBg("img_bcard1"))
+	self._simagebirthdaybg2:LoadImage(ResUrl.getSignInBg("img_bcard1"))
 end
 
-function var_0_0._showBirthdayRewardItem(arg_40_0)
-	gohelper.setActive(arg_40_0._gobirthday, true)
-	gohelper.setActive(arg_40_0._btnqiehuan.gameObject, true)
-	gohelper.setActive(arg_40_0._simageorangebg.gameObject, true)
-	gohelper.setActive(arg_40_0._gobirthdayrewarditem, true)
-	arg_40_0._simagebirthdaybg:LoadImage(ResUrl.getSignInBg("img_bcard1"))
-	arg_40_0._simagebirthdaybg2:LoadImage(ResUrl.getSignInBg("img_bcard1"))
-	arg_40_0:_setBirthdayInfo()
+function SignInDetailView:_showBirthdayRewardItem()
+	gohelper.setActive(self._gobirthday, true)
+	gohelper.setActive(self._btnqiehuan.gameObject, true)
+	gohelper.setActive(self._simageorangebg.gameObject, true)
+	gohelper.setActive(self._gobirthdayrewarditem, true)
+	self._simagebirthdaybg:LoadImage(ResUrl.getSignInBg("img_bcard1"))
+	self._simagebirthdaybg2:LoadImage(ResUrl.getSignInBg("img_bcard1"))
+	self:_setBirthdayInfo()
 end
 
-function var_0_0._setBirthdayInfo(arg_41_0)
-	local var_41_0 = SignInModel.instance:getSignBirthdayHeros(arg_41_0._targetDate[1], arg_41_0._targetDate[2], arg_41_0._targetDate[3])
+function SignInDetailView:_setBirthdayInfo()
+	local birthdayHeros = SignInModel.instance:getSignBirthdayHeros(self._targetDate[1], self._targetDate[2], self._targetDate[3])
 
-	if arg_41_0._curDate.year == arg_41_0._targetDate[1] and arg_41_0._curDate.month == arg_41_0._targetDate[2] and arg_41_0._curDate.day == arg_41_0._targetDate[3] then
-		var_41_0 = SignInModel.instance:getCurDayBirthdayHeros()
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		birthdayHeros = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	local var_41_1 = var_41_0[arg_41_0._index]
-	local var_41_2 = HeroModel.instance:getByHeroId(var_41_1)
-	local var_41_3 = var_41_2 and var_41_2.skin or HeroConfig.instance:getHeroCO(var_41_1).skinId
+	local heroId = birthdayHeros[self._index]
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
+	local skin = heroMo and heroMo.skin or HeroConfig.instance:getHeroCO(heroId).skinId
 
-	arg_41_0._simageicon:LoadImage(ResUrl.getHeadIconSmall(var_41_3))
+	self._simageicon:LoadImage(ResUrl.getHeadIconSmall(skin))
 
-	local var_41_4 = SignInModel.instance:getHeroBirthdayCount(var_41_1)
-	local var_41_5 = var_41_4
+	local birthdayCount = SignInModel.instance:getHeroBirthdayCount(heroId)
+	local index = birthdayCount
 
-	if arg_41_0._curDate.month == arg_41_0._targetDate[2] then
-		local var_41_6 = SignInModel.instance:isHeroBirthdayGet(var_41_1)
+	if self._curDate.month == self._targetDate[2] then
+		local birthdayGet = SignInModel.instance:isHeroBirthdayGet(heroId)
 
-		if arg_41_0._curDate.year == arg_41_0._targetDate[1] then
-			var_41_5 = var_41_6 and var_41_4 or var_41_4 + 1
+		if self._curDate.year == self._targetDate[1] then
+			index = birthdayGet and birthdayCount or birthdayCount + 1
 		else
-			var_41_5 = var_41_6 and var_41_4 - 1 or var_41_4
+			index = birthdayGet and birthdayCount - 1 or birthdayCount
 		end
 	end
 
-	local var_41_7 = string.split(HeroConfig.instance:getHeroCO(var_41_1).desc, "|")[var_41_5]
-
-	arg_41_0._txtdeco.text = var_41_7
-
-	ZProj.UGUIHelper.RebuildLayout(arg_41_0._txtdeco.gameObject.transform)
-	gohelper.setActive(arg_41_0._txtdeco.gameObject, false)
-	gohelper.setActive(arg_41_0._txtdeco.gameObject, true)
-	arg_41_0._simagesignature:LoadImage(ResUrl.getSignature(tostring(var_41_1)))
-
-	local var_41_8 = true
-
-	if arg_41_0._curDate.year == arg_41_0._targetDate[1] and arg_41_0._curDate.month == arg_41_0._targetDate[2] and arg_41_0._curDate.day == arg_41_0._targetDate[3] then
-		var_41_8 = SignInModel.instance:isHeroBirthdayGet(var_41_1)
+	if not index or index == 0 then
+		index = 1
 	end
 
-	gohelper.setActive(arg_41_0._gogiftnoget, not var_41_8)
-	gohelper.setActive(arg_41_0._gogiftget, var_41_8)
+	local desc = string.split(HeroConfig.instance:getHeroCO(heroId).desc, "|")[index]
+
+	self._txtdeco.text = desc
+
+	ZProj.UGUIHelper.RebuildLayout(self._txtdeco.gameObject.transform)
+	gohelper.setActive(self._txtdeco.gameObject, false)
+	gohelper.setActive(self._txtdeco.gameObject, true)
+	self._simagesignature:LoadImage(ResUrl.getSignature(tostring(heroId)))
+
+	local giftGet = true
+
+	if self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3] then
+		giftGet = SignInModel.instance:isHeroBirthdayGet(heroId)
+	end
+
+	gohelper.setActive(self._gogiftnoget, not giftGet)
+	gohelper.setActive(self._gogiftget, giftGet)
 end
 
-function var_0_0._delaySignInRequest(arg_42_0)
-	gohelper.setActive(arg_42_0._gomonthcarddaysigned, true)
-	gohelper.setActive(arg_42_0._gomonthcarddaysigned_gold, true)
-	gohelper.setActive(arg_42_0._gonormaldaysigned, true)
-	gohelper.setActive(arg_42_0._gonormaldaysigned_gold, true)
-	gohelper.setActive(arg_42_0._gomonthcardsigned, true)
-	gohelper.setActive(arg_42_0._gonormaldayget, false)
-	gohelper.setActive(arg_42_0._gonormaldayget_gold, false)
-	gohelper.setActive(arg_42_0._gomonthcarddayget, false)
-	gohelper.setActive(arg_42_0._gomonthcarddayget_gold, false)
-	gohelper.setActive(arg_42_0._gomonthcardget, false)
-	gohelper.setActive(arg_42_0._gonormaldaynoget, true)
-	gohelper.setActive(arg_42_0._gomonthcarddaynoget, true)
-	gohelper.setActive(arg_42_0._gomonthcarddaynoget_gold, true)
-	gohelper.setActive(arg_42_0._gomonthcardnoget, true)
-	gohelper.setActive(arg_42_0._gomonthcardpowernoget, true)
-	arg_42_0._normaldayrewardAni:Play("lingqu")
-	arg_42_0._normaldayrewardAni_gold:Play("lingqu")
-	arg_42_0._monthcarddayrewardAni:Play("lingqu")
-	arg_42_0._monthcarddayrewardAni_gold:Play("lingqu")
+function SignInDetailView:_delaySignInRequest()
+	gohelper.setActive(self._gomonthcarddaysigned, true)
+	gohelper.setActive(self._gomonthcarddaysigned_gold, true)
+	gohelper.setActive(self._gonormaldaysigned, true)
+	gohelper.setActive(self._gonormaldaysigned_gold, true)
+	gohelper.setActive(self._gomonthcardsigned, true)
+	gohelper.setActive(self._gonormaldayget, false)
+	gohelper.setActive(self._gonormaldayget_gold, false)
+	gohelper.setActive(self._gomonthcarddayget, false)
+	gohelper.setActive(self._gomonthcarddayget_gold, false)
+	gohelper.setActive(self._gomonthcardget, false)
+	gohelper.setActive(self._gonormaldaynoget, true)
+	gohelper.setActive(self._gomonthcarddaynoget, true)
+	gohelper.setActive(self._gomonthcarddaynoget_gold, true)
+	gohelper.setActive(self._gomonthcardnoget, true)
+	gohelper.setActive(self._gomonthcardpowernoget, true)
+	self._normaldayrewardAni:Play("lingqu")
+	self._normaldayrewardAni_gold:Play("lingqu")
+	self._monthcarddayrewardAni:Play("lingqu")
+	self._monthcarddayrewardAni_gold:Play("lingqu")
 	UIBlockMgr.instance:endBlock("signshowing")
 
-	if arg_42_0._startGetReward then
+	if self._startGetReward then
 		return
 	end
 
 	LifeCircleController.instance:sendSignInRequest()
 
-	arg_42_0._startGetReward = true
+	self._startGetReward = true
 end
 
-function var_0_0._setRedDot(arg_43_0)
-	RedDotController.instance:addRedDot(arg_43_0._gomonthtip1, RedDotEnum.DotNode.SignInMonthTab, 1)
-	RedDotController.instance:addRedDot(arg_43_0._gomonthtip2, RedDotEnum.DotNode.SignInMonthTab, 2)
-	RedDotController.instance:addRedDot(arg_43_0._gomonthtip3, RedDotEnum.DotNode.SignInMonthTab, 3)
+function SignInDetailView:_setRedDot()
+	RedDotController.instance:addRedDot(self._gomonthtip1, RedDotEnum.DotNode.SignInMonthTab, 1)
+	RedDotController.instance:addRedDot(self._gomonthtip2, RedDotEnum.DotNode.SignInMonthTab, 2)
+	RedDotController.instance:addRedDot(self._gomonthtip3, RedDotEnum.DotNode.SignInMonthTab, 3)
 end
 
-function var_0_0.onClose(arg_44_0)
-	arg_44_0:_removeCustomEvent()
+function SignInDetailView:onClose()
+	self:_removeCustomEvent()
 end
 
-function var_0_0._onCloseMonthRewardDetailClick(arg_45_0)
-	gohelper.setActive(arg_45_0._gomonthrewarddetail, false)
+function SignInDetailView:_onCloseMonthRewardDetailClick()
+	gohelper.setActive(self._gomonthrewarddetail, false)
 end
 
-function var_0_0.onClickModalMask(arg_46_0)
-	arg_46_0:_onEscapeBtnClick()
+function SignInDetailView:onClickModalMask()
+	self:_onEscapeBtnClick()
 end
 
-function var_0_0._onMonthRewardClick(arg_47_0, arg_47_1)
-	local var_47_0 = SignInModel.instance:isSignTotalRewardGet(arg_47_1)
-	local var_47_1 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(arg_47_1).signinaddup)
+function SignInDetailView:_onMonthRewardClick(id)
+	local rewardget = SignInModel.instance:isSignTotalRewardGet(id)
+	local unlock = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(id).signinaddup)
 
-	gohelper.setActive(arg_47_0._gogetmonthbgs[arg_47_1], var_47_1)
+	gohelper.setActive(self._gogetmonthbgs[id], unlock)
 
-	if not var_47_0 and var_47_1 then
+	if not rewardget and unlock then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_sign_receive)
-		gohelper.setActive(arg_47_0._gomonthgets[arg_47_1], true)
-		gohelper.setActive(arg_47_0._monthgetlightanimTab[arg_47_1], true)
+		gohelper.setActive(self._gomonthgets[id], true)
+		gohelper.setActive(self._monthgetlightanimTab[id], true)
 
-		arg_47_0._targetid = arg_47_1
+		self._targetid = id
 
-		TaskDispatcher.runDelay(arg_47_0._showGetRewards, arg_47_0, 1.2)
+		TaskDispatcher.runDelay(self._showGetRewards, self, 1.2)
 	else
-		MaterialTipController.instance:showMaterialInfo(tonumber(arg_47_0._monthRewards[arg_47_1].reward[1]), tonumber(arg_47_0._monthRewards[arg_47_1].reward[2]))
+		MaterialTipController.instance:showMaterialInfo(tonumber(self._monthRewards[id].reward[1]), tonumber(self._monthRewards[id].reward[2]))
 	end
 end
 
-function var_0_0._showGetRewards(arg_48_0)
-	if arg_48_0._targetid then
-		gohelper.setActive(arg_48_0._gomonthgets[arg_48_0._targetid], false)
-		gohelper.setActive(arg_48_0._gonomonthgets[arg_48_0._targetid], true)
-		SignInRpc.instance:sendSignInAddupRequest(arg_48_0._targetid)
+function SignInDetailView:_showGetRewards()
+	if self._targetid then
+		gohelper.setActive(self._gomonthgets[self._targetid], false)
+		gohelper.setActive(self._gonomonthgets[self._targetid], true)
+		SignInRpc.instance:sendSignInAddupRequest(self._targetid)
 
-		arg_48_0._targetid = nil
+		self._targetid = nil
 	end
 end
 
-function var_0_0._onDayRewardClick(arg_49_0)
-	MaterialTipController.instance:showMaterialInfo(arg_49_0._curDayRewards[1], arg_49_0._curDayRewards[2])
+function SignInDetailView:_onDayRewardClick()
+	MaterialTipController.instance:showMaterialInfo(self._curDayRewards[1], self._curDayRewards[2])
 end
 
-function var_0_0._onDayGoldRewardClick(arg_50_0)
-	MaterialTipController.instance:showMaterialInfo(arg_50_0._goldReward[1], arg_50_0._goldReward[2])
+function SignInDetailView:_onDayGoldRewardClick()
+	MaterialTipController.instance:showMaterialInfo(self._goldReward[1], self._goldReward[2])
 end
 
-function var_0_0._onCloseViewFinish(arg_51_0, arg_51_1)
-	if arg_51_1 == ViewName.CommonPropView then
-		if not arg_51_0._startGetReward then
+function SignInDetailView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		if not self._startGetReward then
 			return
 		end
 
-		arg_51_0._startGetReward = false
+		self._startGetReward = false
 
-		local var_51_0 = SignInModel.instance:getCurDayBirthdayHeros()
+		local showHeros = SignInModel.instance:getCurDayBirthdayHeros()
 
-		if arg_51_0._index >= #var_51_0 then
+		if self._index >= #showHeros then
 			return
 		end
 
-		arg_51_0:_btnqiehuanOnClick()
+		self:_btnqiehuanOnClick()
 	end
 end
 
-function var_0_0._showMonthRewardInfo(arg_52_0, arg_52_1)
-	local var_52_0 = {
-		rewardCo = SignInConfig.instance:getSignMonthReward(arg_52_1)
-	}
+function SignInDetailView:_showMonthRewardInfo(index)
+	local o = {}
 
-	var_52_0.rewards = string.split(var_52_0.rewardCo.signinBonus, "|")
-	var_52_0.reward = string.split(var_52_0.rewards[1], "#")
+	o.rewardCo = SignInConfig.instance:getSignMonthReward(index)
+	o.rewards = string.split(o.rewardCo.signinBonus, "|")
+	o.reward = string.split(o.rewards[1], "#")
 
-	local var_52_1, var_52_2 = ItemModel.instance:getItemConfigAndIcon(var_52_0.reward[1], var_52_0.reward[2])
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(o.reward[1], o.reward[2])
 
-	arg_52_0["_simagemonthicon" .. arg_52_1]:LoadImage(var_52_2)
+	self["_simagemonthicon" .. index]:LoadImage(icon)
 
-	arg_52_0["_txtmonthquantity" .. arg_52_1].text = var_52_0.rewardCo.signinaddup
-	arg_52_0["_txtmonthrewardcount" .. arg_52_1].text = string.format("<size=12>%s</size>%s", luaLang("multiple"), var_52_0.reward[3])
+	self["_txtmonthquantity" .. index].text = o.rewardCo.signinaddup
+	self["_txtmonthrewardcount" .. index].text = string.format("<size=12>%s</size>%s", luaLang("multiple"), o.reward[3])
 
-	table.insert(arg_52_0._monthRewards, arg_52_1, var_52_0)
+	table.insert(self._monthRewards, index, o)
 end
 
-function var_0_0._setMonthViewRewardTips(arg_53_0)
-	local var_53_0 = SignInModel.instance:getTotalSignDays()
-	local var_53_1 = string.format("<color=#ED7B3C>%s</color>", var_53_0)
-	local var_53_2 = string.format(luaLang("p_activitysignin_signindaystitle"), var_53_1)
+function SignInDetailView:_setMonthViewRewardTips()
+	local signinTotalDay = SignInModel.instance:getTotalSignDays()
+	local txtdaycount = string.format("<color=#ED7B3C>%s</color>", signinTotalDay)
+	local text = string.format(luaLang("p_activitysignin_signindaystitle"), txtdaycount)
 
-	arg_53_0._txtmonthtitle.text = var_53_2
+	self._txtmonthtitle.text = text
 
-	local var_53_3 = SignInConfig.instance:getSignMonthRewards()
+	local monthRewards = SignInConfig.instance:getSignMonthRewards()
 
-	for iter_53_0 = 1, 3 do
-		arg_53_0:_showMonthRewardInfo(iter_53_0)
+	for i = 1, 3 do
+		self:_showMonthRewardInfo(i)
 	end
 
-	local var_53_4 = SignInModel.instance:isSignTotalRewardGet(1)
-	local var_53_5 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(1).signinaddup)
+	local month1get = SignInModel.instance:isSignTotalRewardGet(1)
+	local unlock1 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(1).signinaddup)
 
-	gohelper.setActive(arg_53_0._gorewardmark1, not var_53_4 and var_53_5)
-	gohelper.setActive(arg_53_0._gogetmonthbg1, var_53_5)
+	gohelper.setActive(self._gorewardmark1, not month1get and unlock1)
+	gohelper.setActive(self._gogetmonthbg1, unlock1)
 
-	if var_53_4 then
-		gohelper.setActive(arg_53_0._gomonthget1, arg_53_0._gomonthget1.activeSelf)
-		gohelper.setActive(arg_53_0._gonomonthget1, not arg_53_0._gomonthget1.activeSelf)
-		arg_53_0._month1Ani:Play("lingqu")
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity1, 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthrewardcount1, 0.5)
+	if month1get then
+		gohelper.setActive(self._gomonthget1, self._gomonthget1.activeSelf)
+		gohelper.setActive(self._gonomonthget1, not self._gomonthget1.activeSelf)
+		self._month1Ani:Play("lingqu")
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthquantity1, 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthrewardcount1, 0.5)
 	else
-		gohelper.setActive(arg_53_0._gomonthget1, false)
-		gohelper.setActive(arg_53_0._gonomonthget1, false)
-		arg_53_0._month1Ani:Play("none")
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity1, 1)
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthrewardcount1, 1)
+		gohelper.setActive(self._gomonthget1, false)
+		gohelper.setActive(self._gonomonthget1, false)
+		self._month1Ani:Play("none")
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthquantity1, 1)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthrewardcount1, 1)
 	end
 
-	local var_53_6 = SignInModel.instance:isSignTotalRewardGet(2)
-	local var_53_7 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(2).signinaddup)
+	local month2get = SignInModel.instance:isSignTotalRewardGet(2)
+	local unlock2 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(2).signinaddup)
 
-	gohelper.setActive(arg_53_0._gorewardmark2, not var_53_6 and var_53_7)
-	gohelper.setActive(arg_53_0._gogetmonthbg2, var_53_7)
+	gohelper.setActive(self._gorewardmark2, not month2get and unlock2)
+	gohelper.setActive(self._gogetmonthbg2, unlock2)
 
-	if var_53_6 then
-		gohelper.setActive(arg_53_0._gomonthget2, arg_53_0._gomonthget2.activeSelf)
-		gohelper.setActive(arg_53_0._gonomonthget2, not arg_53_0._gomonthget2.activeSelf)
-		arg_53_0._month2Ani:Play("lingqu")
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity2, 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthrewardcount2, 0.5)
+	if month2get then
+		gohelper.setActive(self._gomonthget2, self._gomonthget2.activeSelf)
+		gohelper.setActive(self._gonomonthget2, not self._gomonthget2.activeSelf)
+		self._month2Ani:Play("lingqu")
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthquantity2, 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthrewardcount2, 0.5)
 	else
-		gohelper.setActive(arg_53_0._gomonthget2, false)
-		gohelper.setActive(arg_53_0._gonomonthget2, false)
-		arg_53_0._month2Ani:Play("none")
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity2, 1)
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthrewardcount2, 1)
+		gohelper.setActive(self._gomonthget2, false)
+		gohelper.setActive(self._gonomonthget2, false)
+		self._month2Ani:Play("none")
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthquantity2, 1)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthrewardcount2, 1)
 	end
 
-	local var_53_8 = SignInModel.instance:isSignTotalRewardGet(3)
-	local var_53_9 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(3).signinaddup)
+	local month3get = SignInModel.instance:isSignTotalRewardGet(3)
+	local unlock3 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(3).signinaddup)
 
-	gohelper.setActive(arg_53_0._gorewardmark3, not var_53_8 and var_53_9)
-	gohelper.setActive(arg_53_0._gogetmonthbg3, var_53_9)
+	gohelper.setActive(self._gorewardmark3, not month3get and unlock3)
+	gohelper.setActive(self._gogetmonthbg3, unlock3)
 
-	if var_53_8 then
-		gohelper.setActive(arg_53_0._gomonthget3, arg_53_0._gomonthget3.activeSelf)
-		gohelper.setActive(arg_53_0._gonomonthget3, not arg_53_0._gomonthget3.activeSelf)
-		arg_53_0._month3Ani:Play("lingqu")
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity3, 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthrewardcount3, 0.5)
+	if month3get then
+		gohelper.setActive(self._gomonthget3, self._gomonthget3.activeSelf)
+		gohelper.setActive(self._gonomonthget3, not self._gomonthget3.activeSelf)
+		self._month3Ani:Play("lingqu")
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthquantity3, 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthrewardcount3, 0.5)
 	else
-		gohelper.setActive(arg_53_0._gomonthget3, false)
-		gohelper.setActive(arg_53_0._gonomonthget3, false)
-		arg_53_0._month3Ani:Play("none")
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity3, 1)
-		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthrewardcount3, 1)
+		gohelper.setActive(self._gomonthget3, false)
+		gohelper.setActive(self._gonomonthget3, false)
+		self._month3Ani:Play("none")
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthquantity3, 1)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtmonthrewardcount3, 1)
 	end
 
-	local var_53_10 = SignInModel.instance:getSignTargetDate()
+	local date = SignInModel.instance:getSignTargetDate()
 
-	arg_53_0:_setGoldRewards(var_53_10)
+	self:_setGoldRewards(date)
 
-	arg_53_0._curDayRewards = string.splitToNumber(SignInConfig.instance:getSignRewards(var_53_10[3]).signinBonus, "#")
+	self._curDayRewards = SignInModel.instance:getSignRewardsByDate(date)
 
-	local var_53_11, var_53_12 = ItemModel.instance:getItemConfigAndIcon(arg_53_0._curDayRewards[1], arg_53_0._curDayRewards[2], true)
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(self._curDayRewards[1], self._curDayRewards[2], true)
 
-	arg_53_0._txtnormaldayrewardcount.text = luaLang("multiple") .. tostring(arg_53_0._curDayRewards[3])
-	arg_53_0._txtmonthcarddayrewardcount.text = luaLang("multiple") .. tostring(arg_53_0._curDayRewards[3])
+	self._txtnormaldayrewardcount.text = luaLang("multiple") .. tostring(self._curDayRewards[3])
+	self._txtmonthcarddayrewardcount.text = luaLang("multiple") .. tostring(self._curDayRewards[3])
 
-	arg_53_0._simagenormaldayrewardicon:LoadImage(var_53_12)
-	arg_53_0._simagemonthcarddayrewardicon:LoadImage(var_53_12)
+	self._simagenormaldayrewardicon:LoadImage(icon)
+	self._simagemonthcarddayrewardicon:LoadImage(icon)
 
-	if tonumber(arg_53_0._curDayRewards[1]) == MaterialEnum.MaterialType.Equip then
-		arg_53_0._simagenormaldayrewardicon:LoadImage(ResUrl.getPropItemIcon(var_53_11.icon))
-		arg_53_0._simagemonthcarddayrewardicon:LoadImage(ResUrl.getPropItemIcon(var_53_11.icon))
+	if tonumber(self._curDayRewards[1]) == MaterialEnum.MaterialType.Equip then
+		self._simagenormaldayrewardicon:LoadImage(ResUrl.getPropItemIcon(config.icon))
+		self._simagemonthcarddayrewardicon:LoadImage(ResUrl.getPropItemIcon(config.icon))
 	end
 
-	local var_53_13 = SignInModel.instance:getValidMonthCard(var_53_10[1], var_53_10[2], var_53_10[3])
+	local monthCardId = SignInModel.instance:getValidMonthCard(date[1], date[2], date[3])
 
-	gohelper.setActive(arg_53_0._gomonthcard, var_53_13)
-	gohelper.setActive(arg_53_0._gonormal, not var_53_13)
+	gohelper.setActive(self._gomonthcard, monthCardId)
+	gohelper.setActive(self._gonormal, not monthCardId)
 
-	if var_53_13 then
-		local var_53_14 = string.split(StoreConfig.instance:getMonthCardConfig(var_53_13).dailyBonus, "|")
+	if monthCardId then
+		local dailyBonus = string.split(StoreConfig.instance:getMonthCardConfig(monthCardId).dailyBonus, "|")
 
-		arg_53_0._curmonthCardRewards = string.splitToNumber(var_53_14[1], "#")
-		arg_53_0._curmonthCardPower = string.splitToNumber(var_53_14[2], "#")
-		arg_53_0._txtmonthcardcount.text = luaLang("multiple") .. tostring(arg_53_0._curmonthCardRewards[3])
-		arg_53_0._txtmonthcardpowercount.text = luaLang("multiple") .. tostring(arg_53_0._curmonthCardPower[3])
+		self._curmonthCardRewards = string.splitToNumber(dailyBonus[1], "#")
+		self._curmonthCardPower = string.splitToNumber(dailyBonus[2], "#")
+		self._txtmonthcardcount.text = luaLang("multiple") .. tostring(self._curmonthCardRewards[3])
+		self._txtmonthcardpowercount.text = luaLang("multiple") .. tostring(self._curmonthCardPower[3])
 
-		local var_53_15, var_53_16 = ItemModel.instance:getItemConfigAndIcon(arg_53_0._curmonthCardRewards[1], arg_53_0._curmonthCardRewards[2], true)
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(self._curmonthCardRewards[1], self._curmonthCardRewards[2], true)
 
-		arg_53_0._simagemonthcardicon:LoadImage(var_53_16)
+		self._simagemonthcardicon:LoadImage(icon)
 
-		local var_53_17, var_53_18 = ItemModel.instance:getItemConfigAndIcon(arg_53_0._curmonthCardPower[1], arg_53_0._curmonthCardPower[2], true)
+		local powerconfig, powericon = ItemModel.instance:getItemConfigAndIcon(self._curmonthCardPower[1], self._curmonthCardPower[2], true)
 
-		arg_53_0._simagemonthcardpowericon:LoadImage(var_53_18)
-		gohelper.setActive(arg_53_0._gopowerlimittime, false)
+		self._simagemonthcardpowericon:LoadImage(powericon)
+		gohelper.setActive(self._gopowerlimittime, false)
 
-		if var_53_17.expireTime then
-			gohelper.setActive(arg_53_0._gopowerlimittime, true)
+		if powerconfig.expireTime then
+			gohelper.setActive(self._gopowerlimittime, true)
 		end
 
-		local var_53_19 = StoreModel.instance:getMonthCardInfo()
+		local monthCardInfo = StoreModel.instance:getMonthCardInfo()
 
-		if var_53_19 then
-			local var_53_20 = var_53_19:getRemainDay()
+		if monthCardInfo then
+			local remaintime = monthCardInfo:getRemainDay()
 
-			if var_53_20 > 0 then
-				gohelper.setActive(arg_53_0._golimittime.gameObject, true)
+			if remaintime > 0 then
+				gohelper.setActive(self._golimittime.gameObject, true)
 
-				if var_53_20 <= StoreEnum.MonthCardStatus.NotEnoughThreeDay then
-					gohelper.setActive(arg_53_0._goredlimittimebg, true)
-					gohelper.setActive(arg_53_0._gonormallimittimebg, false)
+				if remaintime <= StoreEnum.MonthCardStatus.NotEnoughThreeDay then
+					gohelper.setActive(self._goredlimittimebg, true)
+					gohelper.setActive(self._gonormallimittimebg, false)
 				else
-					gohelper.setActive(arg_53_0._goredlimittimebg, false)
-					gohelper.setActive(arg_53_0._gonormallimittimebg, true)
+					gohelper.setActive(self._goredlimittimebg, false)
+					gohelper.setActive(self._gonormallimittimebg, true)
 				end
 
-				arg_53_0._txtlimittime.text = formatLuaLang("remain_day", var_53_20)
+				self._txtlimittime.text = formatLuaLang("remain_day", remaintime)
 			else
-				gohelper.setActive(arg_53_0._golimittime.gameObject, false)
+				gohelper.setActive(self._golimittime.gameObject, false)
 			end
 		end
 
-		local var_53_21 = arg_53_0._curDate.year == arg_53_0._targetDate[1] and arg_53_0._curDate.month == arg_53_0._targetDate[2] and arg_53_0._curDate.day == arg_53_0._targetDate[3] and not arg_53_0._rewardGetState
+		local isToday = self._curDate.year == self._targetDate[1] and self._curDate.month == self._targetDate[2] and self._curDate.day == self._targetDate[3]
+		local showGet = isToday and not self._rewardGetState
 
-		gohelper.setActive(arg_53_0._gomonthcardget, var_53_21)
-		gohelper.setActive(arg_53_0._gomonthcarddayget, var_53_21)
-		gohelper.setActive(arg_53_0._gomonthcarddayget_gold, var_53_21)
-		gohelper.setActive(arg_53_0._gomonthcardnoget, not var_53_21)
-		gohelper.setActive(arg_53_0._gomonthcardpowernoget, not var_53_21)
-		gohelper.setActive(arg_53_0._gomonthcarddaynoget, not var_53_21)
-		gohelper.setActive(arg_53_0._gomonthcarddaynoget_gold, not var_53_21)
+		gohelper.setActive(self._gomonthcardget, showGet)
+		gohelper.setActive(self._gomonthcarddayget, showGet)
+		gohelper.setActive(self._gomonthcarddayget_gold, showGet)
+		gohelper.setActive(self._gomonthcardnoget, not showGet)
+		gohelper.setActive(self._gomonthcardpowernoget, not showGet)
+		gohelper.setActive(self._gomonthcarddaynoget, not showGet)
+		gohelper.setActive(self._gomonthcarddaynoget_gold, not showGet)
 	end
 end
 
-function var_0_0._setGoldRewards(arg_54_0, arg_54_1)
-	if SignInModel.instance:checkIsGoldDay(arg_54_1) then
-		local var_54_0 = SignInModel.instance:getTargetDailyAllowanceBonus(arg_54_1)
+function SignInDetailView:_setGoldRewards(targetdate)
+	local isOpen = SignInModel.instance:checkIsGoldDay(targetdate)
 
-		gohelper.setActive(arg_54_0._gonormaldayreward_gold, var_54_0)
-		gohelper.setActive(arg_54_0._gomonthcarddayreward_gold, var_54_0)
+	if isOpen then
+		local reward = SignInModel.instance:getTargetDailyAllowanceBonus(targetdate)
 
-		if var_54_0 then
-			local var_54_1 = string.split(var_54_0, "#")
+		gohelper.setActive(self._gonormaldayreward_gold, reward)
+		gohelper.setActive(self._gomonthcarddayreward_gold, reward)
 
-			arg_54_0._goldReward = var_54_1
+		if reward then
+			local rewards = string.split(reward, "#")
 
-			local var_54_2, var_54_3 = ItemModel.instance:getItemConfigAndIcon(var_54_1[1], var_54_1[2], true)
+			self._goldReward = rewards
 
-			arg_54_0._txtnormaldayrewardcount_gold.text = luaLang("multiple") .. tostring(var_54_1[3])
-			arg_54_0._txtmonthcarddayrewardcount_gold.text = luaLang("multiple") .. tostring(var_54_1[3])
+			local config, icon = ItemModel.instance:getItemConfigAndIcon(rewards[1], rewards[2], true)
 
-			arg_54_0._simagenormaldayrewardicon_gold:LoadImage(var_54_3)
-			arg_54_0._simagemonthcarddayrewardicon_gold:LoadImage(var_54_3)
+			self._txtnormaldayrewardcount_gold.text = luaLang("multiple") .. tostring(rewards[3])
+			self._txtmonthcarddayrewardcount_gold.text = luaLang("multiple") .. tostring(rewards[3])
 
-			if tonumber(var_54_1[1]) == MaterialEnum.MaterialType.Equip then
-				arg_54_0._simagenormaldayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(var_54_2.icon))
-				arg_54_0._simagemonthcarddayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(var_54_2.icon))
+			self._simagenormaldayrewardicon_gold:LoadImage(icon)
+			self._simagemonthcarddayrewardicon_gold:LoadImage(icon)
+
+			if tonumber(rewards[1]) == MaterialEnum.MaterialType.Equip then
+				self._simagenormaldayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(config.icon))
+				self._simagemonthcarddayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(config.icon))
 			end
 		end
 	else
-		gohelper.setActive(arg_54_0._gonormaldayreward_gold, false)
-		gohelper.setActive(arg_54_0._gomonthcarddayreward_gold, false)
+		gohelper.setActive(self._gonormaldayreward_gold, false)
+		gohelper.setActive(self._gomonthcarddayreward_gold, false)
 	end
 end
 
-function var_0_0._switchFestivalDecoration(arg_55_0, arg_55_1)
-	if arg_55_0._haveFestival == arg_55_1 then
+function SignInDetailView:_switchFestivalDecoration(haveFestival)
+	if self._haveFestival == haveFestival then
 		return
 	end
 
-	arg_55_0._haveFestival = arg_55_1
+	self._haveFestival = haveFestival
 
-	arg_55_0:_refreshFestivalDecoration()
+	self:_refreshFestivalDecoration()
 end
 
-function var_0_0._refreshFestivalDecoration(arg_56_0)
-	local var_56_0 = arg_56_0:haveFestival()
+function SignInDetailView:_refreshFestivalDecoration()
+	local haveFestival = self:haveFestival()
 
-	gohelper.setActive(arg_56_0._gofestivaldecorationBg, var_56_0)
-	gohelper.setActive(arg_56_0._gofestivaldecorationtop, var_56_0)
-	gohelper.setActive(arg_56_0._gofestivaldecorationbottom, var_56_0)
-	gohelper.setActive(arg_56_0._gorewardicon, not var_56_0)
-	gohelper.setActive(arg_56_0._goeffect, var_56_0)
-	gohelper.setActive(arg_56_0._godayrewarditem_image3, var_56_0)
-	gohelper.setActive(arg_56_0._btncalendarfestival, var_56_0)
-	gohelper.setActive(arg_56_0._btncalendar, not var_56_0)
-	gohelper.setActive(arg_56_0._txtday, not var_56_0)
-	gohelper.setActive(arg_56_0._txtdayfestival, var_56_0)
-	arg_56_0:_setFestivalColor(arg_56_0._txtmonth)
-	arg_56_0:_setFestivalColor(arg_56_0._imgbias)
-	arg_56_0:_setFestivalColor(arg_56_0._txtday)
-	arg_56_0._simagebg:LoadImage(ResUrl.getSignInBg(var_56_0 and "act_bg_white" or "bg_white"))
-	arg_56_0._simagerewardbg:LoadImage(ResUrl.getSignInBg(var_56_0 and "act_img_di" or "img_di"))
+	gohelper.setActive(self._gofestivaldecorationBg, haveFestival)
+	gohelper.setActive(self._gofestivaldecorationtop, haveFestival)
+	gohelper.setActive(self._gofestivaldecorationbottom, haveFestival)
+	gohelper.setActive(self._gorewardicon, not haveFestival)
+	gohelper.setActive(self._goeffect, haveFestival)
+	gohelper.setActive(self._gobgeffect, haveFestival)
+	gohelper.setActive(self._godayrewarditem_image3, haveFestival)
+	gohelper.setActive(self._btncalendarfestival, haveFestival)
+	gohelper.setActive(self._btncalendar, not haveFestival)
+	gohelper.setActive(self._txtday, not haveFestival)
+	gohelper.setActive(self._txtdayfestival, haveFestival)
+	self:_setFestivalColor(self._txtmonth)
+	self:_setFestivalColor(self._imgbias)
+	self:_setFestivalColor(self._txtday)
+	self._simagebg:LoadImage(ResUrl.getSignInBg(haveFestival and "act_bg_white" or "bg_white"))
+	self._simagerewardbg:LoadImage(ResUrl.getSignInBg(haveFestival and "act_img_di" or "img_di"))
 end
 
-function var_0_0.onDestroyView(arg_57_0)
+function SignInDetailView:onDestroyView()
 	UIBlockMgr.instance:endBlock("signshowing")
-	TaskDispatcher.cancelTask(arg_57_0._setView1Effect, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._onLineAniStart, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._calendarBtnEffect, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._delaySignInRequest, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._showGetRewards, arg_57_0)
+	TaskDispatcher.cancelTask(self._setView1Effect, self)
+	TaskDispatcher.cancelTask(self._onLineAniStart, self)
+	TaskDispatcher.cancelTask(self._calendarBtnEffect, self)
+	TaskDispatcher.cancelTask(self._delaySignInRequest, self)
+	TaskDispatcher.cancelTask(self._showGetRewards, self)
 
-	for iter_57_0, iter_57_1 in pairs(arg_57_0._delayAnimTab) do
-		TaskDispatcher.cancelTask(iter_57_1, arg_57_0)
+	for k, v in pairs(self._delayAnimTab) do
+		TaskDispatcher.cancelTask(v, self)
 	end
 
-	arg_57_0._simagebg:UnLoadImage()
-	arg_57_0._simagerewardbg:UnLoadImage()
-	arg_57_0._simagemonthicon1:UnLoadImage()
-	arg_57_0._simagemonthicon2:UnLoadImage()
-	arg_57_0._simagemonthicon3:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagerewardbg:UnLoadImage()
+	self._simagemonthicon1:UnLoadImage()
+	self._simagemonthicon2:UnLoadImage()
+	self._simagemonthicon3:UnLoadImage()
 end
 
-function var_0_0.closeThis(arg_58_0)
-	var_0_0.super.closeThis(arg_58_0)
+function SignInDetailView:closeThis()
+	SignInDetailView.super.closeThis(self)
 	MailController.instance:showOrRegisterEvent()
 end
 
-function var_0_0.haveFestival(arg_59_0)
-	if arg_59_0._haveFestival == nil then
-		arg_59_0._haveFestival = SignInModel.instance.checkFestivalDecorationUnlock()
+function SignInDetailView:haveFestival()
+	if self._haveFestival == nil then
+		self._haveFestival = SignInModel.instance.checkFestivalDecorationUnlock()
 	end
 
-	return arg_59_0._haveFestival
+	return self._haveFestival
 end
 
-function var_0_0._setFestivalColor(arg_60_0, arg_60_1)
-	local var_60_0 = arg_60_0:haveFestival() and "#3D201A" or "#222222"
+function SignInDetailView:_setFestivalColor(textOrImg)
+	local hexColor = self:haveFestival() and "#12141C" or "#222222"
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_60_1, var_60_0)
+	SLFramework.UGUI.GuiHelper.SetColor(textOrImg, hexColor)
 end
 
-return var_0_0
+function SignInDetailView:_refreshSupplement()
+	local showBtn = SignInModel.instance:getCanSupplementMonthCardDays() > 0
+
+	gohelper.setActive(self._gosupplement, showBtn)
+
+	if not self._supplementItem then
+		self._supplementItem = IconMgr.instance:getCommonItemIcon(self._gosupplementicon)
+
+		self._supplementItem:setMOValue(MaterialEnum.MaterialType.SpecialExpiredItem, StoreEnum.SupplementMonthCardItemId, 1)
+	end
+end
+
+return SignInDetailView

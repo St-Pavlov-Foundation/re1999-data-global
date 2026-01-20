@@ -1,34 +1,36 @@
-﻿module("modules.logic.scene.survival.util.SurvivalSceneFogUtil", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/util/SurvivalSceneFogUtil.lua
 
-local var_0_0 = class("SurvivalSceneFogUtil")
+module("modules.logic.scene.survival.util.SurvivalSceneFogUtil", package.seeall)
 
-function var_0_0.loadFog(arg_1_0, arg_1_1)
-	if not arg_1_0._fogLoader then
-		local var_1_0 = gohelper.create3d(arg_1_1, "Fog")
+local SurvivalSceneFogUtil = class("SurvivalSceneFogUtil")
 
-		arg_1_0._fogLoader = PrefabInstantiate.Create(var_1_0)
+function SurvivalSceneFogUtil:loadFog(parent)
+	if not self._fogLoader then
+		local go = gohelper.create3d(parent, "Fog")
+
+		self._fogLoader = PrefabInstantiate.Create(go)
 	end
 
-	arg_1_0._fogLoader:dispose()
-	arg_1_0._fogLoader:startLoad(SurvivalSceneFogComp.FogResPath, arg_1_0._onLoadFogEnd, arg_1_0)
+	self._fogLoader:dispose()
+	self._fogLoader:startLoad(SurvivalSceneFogComp.FogResPath, self._onLoadFogEnd, self)
 end
 
-function var_0_0.unLoadFog(arg_2_0)
-	if arg_2_0._fogLoader then
-		arg_2_0._fogLoader:dispose()
+function SurvivalSceneFogUtil:unLoadFog()
+	if self._fogLoader then
+		self._fogLoader:dispose()
 
-		arg_2_0._fogLoader = nil
+		self._fogLoader = nil
 	end
 end
 
-function var_0_0._onLoadFogEnd(arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._delayDestroyFog, arg_3_0, 0)
+function SurvivalSceneFogUtil:_onLoadFogEnd()
+	TaskDispatcher.runDelay(self._delayDestroyFog, self, 0)
 end
 
-function var_0_0._delayDestroyFog(arg_4_0)
-	arg_4_0._fogLoader:dispose()
+function SurvivalSceneFogUtil:_delayDestroyFog()
+	self._fogLoader:dispose()
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalSceneFogUtil.instance = SurvivalSceneFogUtil.New()
 
-return var_0_0
+return SurvivalSceneFogUtil

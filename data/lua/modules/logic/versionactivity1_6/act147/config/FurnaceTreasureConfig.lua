@@ -1,142 +1,145 @@
-﻿module("modules.logic.versionactivity1_6.act147.config.FurnaceTreasureConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act147/config/FurnaceTreasureConfig.lua
 
-local var_0_0 = class("FurnaceTreasureConfig", BaseConfig)
+module("modules.logic.versionactivity1_6.act147.config.FurnaceTreasureConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local FurnaceTreasureConfig = class("FurnaceTreasureConfig", BaseConfig)
+
+function FurnaceTreasureConfig:reqConfigNames()
 	return {
 		"activity147",
 		"activity147_goods"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function FurnaceTreasureConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+function FurnaceTreasureConfig:onConfigLoaded(configName, configTable)
+	local funcName = string.format("%sConfigLoaded", configName)
+	local configLoadedFunc = self[funcName]
 
-	if var_3_0 then
-		var_3_0(arg_3_0, arg_3_2)
+	if configLoadedFunc then
+		configLoadedFunc(self, configTable)
 	end
 end
 
-local function var_0_1(arg_4_0, arg_4_1)
-	local var_4_0 = lua_activity147 and lua_activity147.configDict[arg_4_0] or nil
+local function getAct147Cfg(activityId, nilError)
+	local cfg = lua_activity147 and lua_activity147.configDict[activityId] or nil
 
-	if not var_4_0 and arg_4_1 then
-		logError(string.format("FurnaceTreasureConfig.getAct147Cfg error, cfg is nil, id:%s", arg_4_0))
+	if not cfg and nilError then
+		logError(string.format("FurnaceTreasureConfig.getAct147Cfg error, cfg is nil, id:%s", activityId))
 	end
 
-	return var_4_0
+	return cfg
 end
 
-function var_0_0.getDescList(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = var_0_1(arg_5_1, true)
+function FurnaceTreasureConfig:getDescList(activityId)
+	local result = {}
+	local cfg = getAct147Cfg(activityId, true)
 
-	if var_5_1 then
-		local var_5_2 = var_5_1.descList
+	if cfg then
+		local strDescList = cfg.descList
 
-		var_5_0 = string.split(var_5_2, "|")
+		result = string.split(strDescList, "|")
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.getRewardList(arg_6_0, arg_6_1)
-	local var_6_0 = {}
-	local var_6_1 = var_0_1(arg_6_1, true)
+function FurnaceTreasureConfig:getRewardList(activityId)
+	local result = {}
+	local cfg = getAct147Cfg(activityId, true)
 
-	if var_6_1 then
-		local var_6_2 = var_6_1.rewardList
+	if cfg then
+		local strRewardList = cfg.rewardList
 
-		var_6_0 = ItemModel.instance:getItemDataListByConfigStr(var_6_2)
+		result = ItemModel.instance:getItemDataListByConfigStr(strRewardList)
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.getSpineRes(arg_7_0, arg_7_1)
-	local var_7_0
-	local var_7_1 = var_0_1(arg_7_1, true)
+function FurnaceTreasureConfig:getSpineRes(activityId)
+	local result
+	local cfg = getAct147Cfg(activityId, true)
 
-	if var_7_1 then
-		var_7_0 = var_7_1.spineRes
+	if cfg then
+		result = cfg.spineRes
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.getDialogList(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1 = var_0_1(arg_8_1, true)
+function FurnaceTreasureConfig:getDialogList(activityId)
+	local result = {}
+	local cfg = getAct147Cfg(activityId, true)
 
-	if var_8_1 then
-		local var_8_2 = var_8_1.dialogs
+	if cfg then
+		local strDialogs = cfg.dialogs
 
-		var_8_0 = string.split(var_8_2, "|")
+		result = string.split(strDialogs, "|")
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getJumpId(arg_9_0, arg_9_1)
-	local var_9_0 = 0
-	local var_9_1 = var_0_1(arg_9_1, true)
+function FurnaceTreasureConfig:getJumpId(activityId)
+	local result = 0
+	local cfg = getAct147Cfg(activityId, true)
 
-	if var_9_1 then
-		var_9_0 = var_9_1.jumpId
+	if cfg then
+		result = cfg.jumpId
 	end
 
-	return var_9_0
+	return result
 end
 
-local function var_0_2(arg_10_0, arg_10_1)
-	local var_10_0
-	local var_10_1 = FurnaceTreasureModel.instance:getActId()
+local function getAct147GoodCfg(goodsId, nilError)
+	local cfg
+	local activityId = FurnaceTreasureModel.instance:getActId()
 
-	if lua_activity147_goods and lua_activity147_goods.configDict[var_10_1] then
-		var_10_0 = lua_activity147_goods.configDict[var_10_1][arg_10_0]
+	if lua_activity147_goods and lua_activity147_goods.configDict[activityId] then
+		cfg = lua_activity147_goods.configDict[activityId][goodsId]
 	end
 
-	if not var_10_0 and arg_10_1 then
-		logError(string.format("FurnaceTreasureConfig.get147GoodCfg error, cfg is nil, actId:%s,goodsId:%s", var_10_1, arg_10_0))
+	if not cfg and nilError then
+		logError(string.format("FurnaceTreasureConfig.get147GoodCfg error, cfg is nil, actId:%s,goodsId:%s", activityId, goodsId))
 	end
 
-	return var_10_0
+	return cfg
 end
 
-function var_0_0.get147GoodsCost(arg_11_0, arg_11_1)
-	local var_11_0
-	local var_11_1 = var_0_2(arg_11_1, true)
+function FurnaceTreasureConfig:get147GoodsCost(goodsId)
+	local result
+	local cfg = getAct147GoodCfg(goodsId, true)
 
-	if var_11_1 then
-		var_11_0 = var_11_1.cost
+	if cfg then
+		result = cfg.cost
 	end
 
-	return var_11_0
+	return result
 end
 
-function var_0_0.getAct147GoodsShowItem(arg_12_0, arg_12_1)
-	local var_12_0 = 0
-	local var_12_1 = 0
-	local var_12_2 = 0
-	local var_12_3 = arg_12_1 and FurnaceTreasureEnum.Pool2GoodsId[arg_12_1] or nil
+function FurnaceTreasureConfig:getAct147GoodsShowItem(poolId)
+	local type = 0
+	local id = 0
+	local quantity = 0
+	local strShowItem = poolId and FurnaceTreasureEnum.Pool2GoodsId[poolId] or nil
 
-	if var_12_3 then
-		local var_12_4 = string.splitToNumber(var_12_3, "#")
+	if strShowItem then
+		local showInfo = string.splitToNumber(strShowItem, "#")
 
-		var_12_0 = var_12_4[1] or 0
-		var_12_1 = var_12_4[2] or 0
-		var_12_2 = var_12_4[3] or 0
+		type = showInfo[1] or 0
+		id = showInfo[2] or 0
+		quantity = showInfo[3] or 0
 	else
-		logError(string.format("FurnaceTreasureConfig:getAct147GoodsShowItem error, can't get strShowItem, poolId:%s", arg_12_1))
+		logError(string.format("FurnaceTreasureConfig:getAct147GoodsShowItem error, can't get strShowItem, poolId:%s", poolId))
 	end
 
-	return var_12_0, var_12_1, var_12_2
+	return type, id, quantity
 end
 
-var_0_0.instance = var_0_0.New()
+FurnaceTreasureConfig.instance = FurnaceTreasureConfig.New()
 
-return var_0_0
+return FurnaceTreasureConfig

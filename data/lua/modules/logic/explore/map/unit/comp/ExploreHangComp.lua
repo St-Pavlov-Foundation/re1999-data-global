@@ -1,38 +1,40 @@
-﻿module("modules.logic.explore.map.unit.comp.ExploreHangComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/comp/ExploreHangComp.lua
 
-local var_0_0 = class("ExploreHangComp", LuaCompBase)
+module("modules.logic.explore.map.unit.comp.ExploreHangComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.unit = arg_1_1
-	arg_1_0.hangList = {}
+local ExploreHangComp = class("ExploreHangComp", LuaCompBase)
+
+function ExploreHangComp:ctor(unit)
+	self.unit = unit
+	self.hangList = {}
 end
 
-function var_0_0.setup(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function ExploreHangComp:setup(go)
+	self.go = go
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0.hangList) do
-		arg_2_0:addHang(iter_2_0, iter_2_1)
+	for hangNode, resPath in pairs(self.hangList) do
+		self:addHang(hangNode, resPath)
 	end
 end
 
-function var_0_0.addHang(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.hangList[arg_3_1] = arg_3_2
+function ExploreHangComp:addHang(hangNode, resPath)
+	self.hangList[hangNode] = resPath
 
-	if arg_3_0.go then
-		local var_3_0 = gohelper.findChild(arg_3_0.go, arg_3_1)
+	if self.go then
+		local child = gohelper.findChild(self.go, hangNode)
 
-		if var_3_0 then
-			local var_3_1 = PrefabInstantiate.Create(var_3_0)
+		if child then
+			local loader = PrefabInstantiate.Create(child)
 
-			if var_3_1:getPath() ~= arg_3_2 then
-				var_3_1:startLoad(arg_3_2)
+			if loader:getPath() ~= resPath then
+				loader:startLoad(resPath)
 			end
 		end
 	end
 end
 
-function var_0_0.clear(arg_4_0)
-	arg_4_0.go = nil
+function ExploreHangComp:clear()
+	self.go = nil
 end
 
-return var_0_0
+return ExploreHangComp

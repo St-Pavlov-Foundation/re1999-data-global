@@ -1,39 +1,41 @@
-﻿module("modules.logic.store.config.StoreConfig", package.seeall)
+﻿-- chunkname: @modules/logic/store/config/StoreConfig.lua
 
-local var_0_0 = class("StoreConfig", BaseConfig)
+module("modules.logic.store.config.StoreConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._storeEntranceConfig = nil
-	arg_1_0._storeGoodsConfig = nil
-	arg_1_0._storeRecommendConfig = nil
-	arg_1_0._storeConfig = nil
-	arg_1_0._storeChargeConfig = nil
-	arg_1_0._storeChargeGoodsConfig = nil
-	arg_1_0._dailyReleasePackageCfg = nil
-	arg_1_0._storeMonthAddCfg = nil
-	arg_1_0._critterStoreGoods = {}
-	arg_1_0._preGoodsIdDict = nil
-	arg_1_0._decorateProduct2GoodsId = {}
-	arg_1_0._roomProduct2GoodsId = {}
-	arg_1_0._configPriceKey = "price"
-	arg_1_0._configBasePriceKey = "price"
-	arg_1_0._configCurrencyCodeKey = "currencyCode"
-	arg_1_0._configOriginalCostKey = "originalCost"
+local StoreConfig = class("StoreConfig", BaseConfig)
+
+function StoreConfig:ctor()
+	self._storeEntranceConfig = nil
+	self._storeGoodsConfig = nil
+	self._storeRecommendConfig = nil
+	self._storeConfig = nil
+	self._storeChargeConfig = nil
+	self._storeChargeGoodsConfig = nil
+	self._dailyReleasePackageCfg = nil
+	self._storeMonthAddCfg = nil
+	self._critterStoreGoods = {}
+	self._preGoodsIdDict = nil
+	self._decorateProduct2GoodsId = {}
+	self._roomProduct2GoodsId = {}
+	self._configPriceKey = "price"
+	self._configBasePriceKey = "price"
+	self._configCurrencyCodeKey = "currencyCode"
+	self._configOriginalCostKey = "originalCost"
 
 	if GameChannelConfig.isLongCheng() then
-		arg_1_0._configBasePriceKey = "pricekr"
-		arg_1_0._configPriceKey = "pricekr"
-		arg_1_0._configCurrencyCodeKey = "currencyCodekr"
-		arg_1_0._configOriginalCostKey = "originalCostkr"
+		self._configBasePriceKey = "pricekr"
+		self._configPriceKey = "pricekr"
+		self._configCurrencyCodeKey = "currencyCodekr"
+		self._configOriginalCostKey = "originalCostkr"
 	elseif GameChannelConfig.isGpJapan() then
-		arg_1_0._configBasePriceKey = "pricejp"
-		arg_1_0._configPriceKey = "pricejp"
-		arg_1_0._configCurrencyCodeKey = "currencyCodejp"
-		arg_1_0._configOriginalCostKey = "originalCostjp"
+		self._configBasePriceKey = "pricejp"
+		self._configPriceKey = "pricejp"
+		self._configCurrencyCodeKey = "currencyCodejp"
+		self._configOriginalCostKey = "originalCostjp"
 	end
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function StoreConfig:reqConfigNames()
 	return {
 		"store_entrance",
 		"store_goods",
@@ -49,524 +51,526 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "store_entrance" then
-		arg_3_0._storeEntranceConfig = arg_3_2
-	elseif arg_3_1 == "store_goods" then
-		arg_3_0._storeGoodsConfig = arg_3_2
+function StoreConfig:onConfigLoaded(configName, configTable)
+	if configName == "store_entrance" then
+		self._storeEntranceConfig = configTable
+	elseif configName == "store_goods" then
+		self._storeGoodsConfig = configTable
 
-		arg_3_0:initPreGoodsIdDict(arg_3_2)
-	elseif arg_3_1 == "store" then
-		arg_3_0._storeConfig = arg_3_2
-	elseif arg_3_1 == "store_recommend" then
-		arg_3_0._storeRecommendConfig = arg_3_2
-	elseif arg_3_1 == "store_charge" then
-		arg_3_0._storeChargeConfig = arg_3_2
-	elseif arg_3_1 == "store_charge_goods" then
-		arg_3_0:initStoreChargeGoodsConfig(arg_3_2)
-	elseif arg_3_1 == "month_card" then
-		arg_3_0._monthCardConfig = arg_3_2
-	elseif arg_3_1 == "slow_release_gift" then
-		arg_3_0._dailyReleasePackageCfg = arg_3_2
-	elseif arg_3_1 == "store_charge_optional" then
-		arg_3_0._chargeOptionalConfig = arg_3_2
-	elseif arg_3_1 == "month_card_added" then
-		arg_3_0._storeMonthAddCfg = arg_3_2
-	elseif arg_3_1 == "store_charge_conditional" then
-		arg_3_0._storeChargeConditionalConfig = arg_3_2
+		self:initPreGoodsIdDict(configTable)
+	elseif configName == "store" then
+		self._storeConfig = configTable
+	elseif configName == "store_recommend" then
+		self._storeRecommendConfig = configTable
+	elseif configName == "store_charge" then
+		self._storeChargeConfig = configTable
+	elseif configName == "store_charge_goods" then
+		self:initStoreChargeGoodsConfig(configTable)
+	elseif configName == "month_card" then
+		self._monthCardConfig = configTable
+	elseif configName == "slow_release_gift" then
+		self._dailyReleasePackageCfg = configTable
+	elseif configName == "store_charge_optional" then
+		self._chargeOptionalConfig = configTable
+	elseif configName == "month_card_added" then
+		self._storeMonthAddCfg = configTable
+	elseif configName == "store_charge_conditional" then
+		self._storeChargeConditionalConfig = configTable
 	end
 end
 
-function var_0_0.initPreGoodsIdDict(arg_4_0, arg_4_1)
-	arg_4_0._preGoodsIdDict = {}
-	arg_4_0._roomProduct2GoodsId = {}
+function StoreConfig:initPreGoodsIdDict(configTable)
+	self._preGoodsIdDict = {}
+	self._roomProduct2GoodsId = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_1.configDict) do
-		if iter_4_1.preGoodsId ~= 0 then
-			arg_4_0._preGoodsIdDict[iter_4_1.preGoodsId] = iter_4_0
+	for id, cfg in pairs(configTable.configDict) do
+		if cfg.preGoodsId ~= 0 then
+			self._preGoodsIdDict[cfg.preGoodsId] = id
 		end
 
-		local var_4_0 = tonumber(iter_4_1.storeId)
+		local storeId = tonumber(cfg.storeId)
 
-		if var_4_0 == StoreEnum.StoreId.NewRoomStore or var_4_0 == StoreEnum.StoreId.OldRoomStore then
-			local var_4_1
-			local var_4_2
-			local var_4_3 = GameUtil.splitString2(iter_4_1.product, true)
+		if storeId == StoreEnum.StoreId.NewRoomStore or storeId == StoreEnum.StoreId.OldRoomStore then
+			local roomProductType, roomProductId
+			local arr = GameUtil.splitString2(cfg.product, true)
 
-			if var_4_3 and #var_4_3 == 1 then
-				local var_4_4 = var_4_3[1]
-				local var_4_5 = var_4_4[1]
+			if arr and #arr == 1 then
+				local productItem = arr[1]
+				local type = productItem[1]
 
-				if var_4_5 == MaterialEnum.MaterialType.Building or var_4_5 == MaterialEnum.MaterialType.BlockPackage then
-					var_4_1 = var_4_5
-					var_4_2 = var_4_4[2]
+				if type == MaterialEnum.MaterialType.Building or type == MaterialEnum.MaterialType.BlockPackage then
+					roomProductType = type
+					roomProductId = productItem[2]
 				end
 			end
 
-			if var_4_1 and var_4_2 then
-				local var_4_6 = arg_4_0._roomProduct2GoodsId[var_4_1]
+			if roomProductType and roomProductId then
+				local product2GoodsIdDict = self._roomProduct2GoodsId[roomProductType]
 
-				if not var_4_6 then
-					var_4_6 = {}
-					arg_4_0._roomProduct2GoodsId[var_4_1] = var_4_6
+				if not product2GoodsIdDict then
+					product2GoodsIdDict = {}
+					self._roomProduct2GoodsId[roomProductType] = product2GoodsIdDict
 				end
 
-				var_4_6[var_4_2] = iter_4_1.id
+				product2GoodsIdDict[roomProductId] = cfg.id
 			end
-		elseif var_4_0 == StoreEnum.StoreId.CritterStore then
-			local var_4_7 = string.splitToNumber(iter_4_1.product, "#")
+		elseif storeId == StoreEnum.StoreId.CritterStore then
+			local arr = string.splitToNumber(cfg.product, "#")
 
-			if not arg_4_0._critterStoreGoods[var_4_7[2]] then
-				arg_4_0._critterStoreGoods[var_4_7[2]] = {}
-			end
-
-			table.insert(arg_4_0._critterStoreGoods[var_4_7[2]], iter_4_1)
-		elseif var_4_0 == StoreEnum.StoreId.NewDecorateStore or var_4_0 == StoreEnum.StoreId.OldDecorateStore then
-			local var_4_8 = string.splitToNumber(iter_4_1.product, "#")
-
-			if not arg_4_0._decorateProduct2GoodsId[var_4_8[2]] then
-				arg_4_0._decorateProduct2GoodsId[var_4_8[2]] = {}
+			if not self._critterStoreGoods[arr[2]] then
+				self._critterStoreGoods[arr[2]] = {}
 			end
 
-			arg_4_0._decorateProduct2GoodsId[var_4_8[2]] = iter_4_1
-		end
-	end
-end
+			table.insert(self._critterStoreGoods[arr[2]], cfg)
+		elseif storeId == StoreEnum.StoreId.NewDecorateStore or storeId == StoreEnum.StoreId.OldDecorateStore then
+			local arr = string.splitToNumber(cfg.product, "#")
 
-function var_0_0.initStoreChargeGoodsConfig(arg_5_0, arg_5_1)
-	arg_5_0._storeChargeGoodsConfig = arg_5_1
-	arg_5_0._skin2ChargeGoodsCfg = {}
-
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._storeChargeGoodsConfig.configList) do
-		if iter_5_1.belongStoreId == StoreEnum.StoreId.Skin then
-			local var_5_0 = GameUtil.splitString2(iter_5_1.item, true)
-			local var_5_1
-
-			if var_5_0 and #var_5_0 == 1 then
-				local var_5_2 = var_5_0[1]
-
-				if var_5_2[1] == MaterialEnum.MaterialType.HeroSkin then
-					var_5_1 = var_5_2[2]
-				end
+			if not self._decorateProduct2GoodsId[arr[2]] then
+				self._decorateProduct2GoodsId[arr[2]] = {}
 			end
 
-			if var_5_1 then
-				arg_5_0._skin2ChargeGoodsCfg[var_5_1] = iter_5_1
-			end
+			self._decorateProduct2GoodsId[arr[2]] = cfg
 		end
 	end
 end
 
-function var_0_0.getSkinChargeGoodsCfg(arg_6_0, arg_6_1)
-	return arg_6_0._skin2ChargeGoodsCfg[arg_6_1]
+function StoreConfig:initStoreChargeGoodsConfig(configTable)
+	self._storeChargeGoodsConfig = configTable
+	self._skin2ChargeGoodsCfg = {}
+
+	for _, cfg in ipairs(self._storeChargeGoodsConfig.configList) do
+		if cfg.belongStoreId == StoreEnum.StoreId.Skin then
+			local arr = GameUtil.splitString2(cfg.item, true)
+			local skinId
+
+			if arr and #arr == 1 then
+				local item = arr[1]
+
+				if item[1] == MaterialEnum.MaterialType.HeroSkin then
+					skinId = item[2]
+				end
+			end
+
+			if skinId then
+				self._skin2ChargeGoodsCfg[skinId] = cfg
+			end
+		end
+	end
 end
 
-function var_0_0.getSkinChargePrice(arg_7_0, arg_7_1)
-	local var_7_0
-	local var_7_1
-	local var_7_2 = arg_7_0:getSkinChargeGoodsCfg(arg_7_1)
+function StoreConfig:getSkinChargeGoodsCfg(skinId)
+	return self._skin2ChargeGoodsCfg[skinId]
+end
 
-	if var_7_2 then
-		var_7_0 = var_7_2.price
-		var_7_1 = var_7_2.originalCost
-		var_7_0 = PayModel.instance:getProductPrice(var_7_2.id)
-		var_7_1 = PayModel.instance:getProductPrice(var_7_2.originalCostGoodsId)
+function StoreConfig:getSkinChargePrice(skinId)
+	local price, originalPrice
+	local cfg = self:getSkinChargeGoodsCfg(skinId)
+
+	if cfg then
+		price = cfg.price
+		originalPrice = cfg.originalCost
+		price = PayModel.instance:getProductPrice(cfg.id)
+		originalPrice = PayModel.instance:getProductPrice(cfg.originalCostGoodsId)
 	end
 
-	return var_7_0, var_7_1
+	return price, originalPrice
 end
 
-function var_0_0.getSkinChargeGoodsId(arg_8_0, arg_8_1)
-	local var_8_0
-	local var_8_1 = arg_8_0:getSkinChargeGoodsCfg(arg_8_1)
+function StoreConfig:getSkinChargeGoodsId(skinId)
+	local id
+	local cfg = self:getSkinChargeGoodsCfg(skinId)
 
-	if var_8_1 then
-		var_8_0 = var_8_1.id
+	if cfg then
+		id = cfg.id
 	end
 
-	return var_8_0
+	return id
 end
 
-function var_0_0.getTabConfig(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._storeEntranceConfig.configDict[arg_9_1]
+function StoreConfig:getTabConfig(tabId)
+	local config = self._storeEntranceConfig.configDict[tabId]
 
-	if not var_9_0 then
-		arg_9_1 = StoreEnum.StoreId2TabId[arg_9_1]
-		var_9_0 = arg_9_0._storeEntranceConfig.configDict[arg_9_1]
+	if not config then
+		tabId = StoreEnum.StoreId2TabId[tabId]
+		config = self._storeEntranceConfig.configDict[tabId]
 	end
 
-	return var_9_0
+	return config
 end
 
-function var_0_0.getGoodsConfig(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0._storeGoodsConfig.configDict[arg_10_1]
+function StoreConfig:getGoodsConfig(goodsId, notError)
+	local config = self._storeGoodsConfig.configDict[goodsId]
 
-	if not var_10_0 and not arg_10_2 then
-		logError("找不到商品: " .. tostring(arg_10_1))
+	if not config and not notError then
+		logError("找不到商品: " .. tostring(goodsId))
 	end
 
-	return var_10_0
+	return config
 end
 
-function var_0_0.getCharageGoodsCfgListByPoolId(arg_11_0, arg_11_1)
-	if not arg_11_0._poolId2CharageGoodsCfgListDic and arg_11_0._storeChargeGoodsConfig and arg_11_0._storeChargeConditionalConfig then
-		arg_11_0._poolId2CharageGoodsCfgListDic = {}
+function StoreConfig:getCharageGoodsCfgListByPoolId(poolId)
+	if not self._poolId2CharageGoodsCfgListDic and self._storeChargeGoodsConfig and self._storeChargeConditionalConfig then
+		self._poolId2CharageGoodsCfgListDic = {}
 
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0._storeChargeGoodsConfig.configList) do
-			local var_11_0 = arg_11_0:getChargeConditionalConfig(iter_11_1.taskid)
-			local var_11_1
+		for _, goodsCfg in ipairs(self._storeChargeGoodsConfig.configList) do
+			local condCfg = self:getChargeConditionalConfig(goodsCfg.taskid)
+			local poolIds
 
-			if var_11_0 then
-				if not string.nilorempty(var_11_0.idsStr) then
-					var_11_1 = string.splitToNumber(var_11_0.idsStr, "#")
+			if condCfg then
+				if not string.nilorempty(condCfg.idsStr) then
+					poolIds = string.splitToNumber(condCfg.idsStr, "#")
 				end
 
-				if var_11_0.id ~= 0 then
-					var_11_1 = var_11_1 or {}
+				if condCfg.id ~= 0 then
+					poolIds = poolIds or {}
 
-					if not tabletool.indexOf(var_11_1, var_11_0.id) then
-						table.insert(var_11_1, var_11_0.id)
+					if not tabletool.indexOf(poolIds, condCfg.id) then
+						table.insert(poolIds, condCfg.id)
 					end
 				end
 			end
 
-			if var_11_1 then
-				for iter_11_2, iter_11_3 in ipairs(var_11_1) do
-					arg_11_0._poolId2CharageGoodsCfgListDic[iter_11_3] = arg_11_0._poolId2CharageGoodsCfgListDic[iter_11_3] or {}
+			if poolIds then
+				for _idx, tPoolId in ipairs(poolIds) do
+					self._poolId2CharageGoodsCfgListDic[tPoolId] = self._poolId2CharageGoodsCfgListDic[tPoolId] or {}
 
-					table.insert(arg_11_0._poolId2CharageGoodsCfgListDic[iter_11_3], iter_11_1)
+					table.insert(self._poolId2CharageGoodsCfgListDic[tPoolId], goodsCfg)
 				end
 			end
 		end
 	end
 
-	return arg_11_0._poolId2CharageGoodsCfgListDic and arg_11_0._poolId2CharageGoodsCfgListDic[arg_11_1]
+	return self._poolId2CharageGoodsCfgListDic and self._poolId2CharageGoodsCfgListDic[poolId]
 end
 
-function var_0_0.getChargeGoodsConfig(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._storeChargeGoodsConfig.configDict[arg_12_1]
+function StoreConfig:getChargeGoodsConfig(chargeGoodsId, notShowError)
+	local config = self._storeChargeGoodsConfig.configDict[chargeGoodsId]
 
-	if not var_12_0 and arg_12_2 ~= true then
-		logError("找不到充值商品: " .. tostring(arg_12_1))
+	if not config and notShowError ~= true then
+		logError("找不到充值商品: " .. tostring(chargeGoodsId))
 	end
 
-	return var_12_0
+	return config
 end
 
-function var_0_0.findChargeConditionalConfigByGoodsId(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getChargeGoodsConfig(arg_13_1, true)
+function StoreConfig:findChargeConditionalConfigByGoodsId(chargeGoodsId)
+	local cfg = self:getChargeGoodsConfig(chargeGoodsId, true)
 
-	if var_13_0 then
-		return arg_13_0:getChargeConditionalConfig(var_13_0.taskid)
+	if cfg then
+		return self:getChargeConditionalConfig(cfg.taskid)
 	end
 end
 
-function var_0_0.getChargeConditionalConfig(arg_14_0, arg_14_1)
-	return arg_14_0._storeChargeConditionalConfig.configDict[arg_14_1]
+function StoreConfig:getChargeConditionalConfig(sccId)
+	return self._storeChargeConditionalConfig.configDict[sccId]
 end
 
-function var_0_0.getChargeGoodsPrice(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getChargeGoodsConfig(arg_15_1, arg_15_2)
+function StoreConfig:getChargeGoodsPrice(chargeGoodsId, notShowError)
+	local config = self:getChargeGoodsConfig(chargeGoodsId, notShowError)
 
-	if var_15_0 then
-		return var_15_0[arg_15_0._configPriceKey]
-	end
-
-	return 0
-end
-
-function var_0_0.getBaseChargeGoodsPrice(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0:getChargeGoodsConfig(arg_16_1, arg_16_2)
-
-	if var_16_0 then
-		return var_16_0[arg_16_0._configBasePriceKey]
+	if config then
+		return config[self._configPriceKey]
 	end
 
 	return 0
 end
 
-function var_0_0.getChargeGoodsCurrencyCode(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getChargeGoodsConfig(arg_17_1, arg_17_2)
+function StoreConfig:getBaseChargeGoodsPrice(chargeGoodsId, notShowError)
+	local config = self:getChargeGoodsConfig(chargeGoodsId, notShowError)
 
-	if var_17_0 then
-		return var_17_0[arg_17_0._configCurrencyCodeKey]
+	if config then
+		return config[self._configBasePriceKey]
+	end
+
+	return 0
+end
+
+function StoreConfig:getChargeGoodsCurrencyCode(chargeGoodsId, notShowError)
+	local config = self:getChargeGoodsConfig(chargeGoodsId, notShowError)
+
+	if config then
+		return config[self._configCurrencyCodeKey]
 	end
 
 	return "USD"
 end
 
-function var_0_0.getChargeGoodsOriginalCost(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0:getChargeGoodsConfig(arg_18_1, arg_18_2)
+function StoreConfig:getChargeGoodsOriginalCost(chargeGoodsId, notShowError)
+	local config = self:getChargeGoodsConfig(chargeGoodsId, notShowError)
 
-	if var_18_0 then
-		return var_18_0[arg_18_0._configOriginalCostKey]
+	if config then
+		return config[self._configOriginalCostKey]
 	end
 
 	return 0
 end
 
-function var_0_0.getAllChargeGoodsConfig(arg_19_0)
-	return arg_19_0._storeChargeGoodsConfig.configDict
+function StoreConfig:getAllChargeGoodsConfig()
+	return self._storeChargeGoodsConfig.configDict
 end
 
-function var_0_0.getStoreChargeConfig(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0
+function StoreConfig:getStoreChargeConfig(goodId, packageName, notShowError)
+	local config
 
-	if arg_20_0._storeChargeConfig.configDict[arg_20_1] then
-		var_20_0 = arg_20_0._storeChargeConfig.configDict[arg_20_1][arg_20_2]
+	if self._storeChargeConfig.configDict[goodId] then
+		config = self._storeChargeConfig.configDict[goodId][packageName]
 	end
 
-	if not var_20_0 and not arg_20_3 then
-		logError("找不到充值商品相关配置: " .. tostring(arg_20_1) .. arg_20_2)
+	if not config and not notShowError then
+		logError("找不到充值商品相关配置: " .. tostring(goodId) .. packageName)
 	end
 
-	return var_20_0
+	return config
 end
 
-function var_0_0.getStoreChargeConfigByProductID(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0._storeChargeConfig.configDict
-	local var_21_1 = BootNativeUtil.getPackageName()
-	local var_21_2 = {}
+function StoreConfig:getStoreChargeConfigByProductID(appStoreProductID)
+	local config = self._storeChargeConfig.configDict
+	local packageName = BootNativeUtil.getPackageName()
+	local list = {}
 
-	for iter_21_0, iter_21_1 in pairs(var_21_0) do
-		if iter_21_1[var_21_1] and iter_21_1[var_21_1].appStoreProductID == arg_21_1 then
-			table.insert(var_21_2, iter_21_1[var_21_1])
+	for goodId, v in pairs(config) do
+		if v[packageName] and v[packageName].appStoreProductID == appStoreProductID then
+			table.insert(list, v[packageName])
 		end
 	end
 
-	return var_21_2
+	return list
 end
 
-function var_0_0.getStoreRecommendConfig(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._storeRecommendConfig.configDict[arg_22_1]
+function StoreConfig:getStoreRecommendConfig(goodId)
+	local config = self._storeRecommendConfig.configDict[goodId]
 
-	if not var_22_0 then
-		logError("找不到充值商品相关配置: " .. tostring(arg_22_1))
+	if not config then
+		logError("找不到充值商品相关配置: " .. tostring(goodId))
 	end
 
-	return var_22_0
+	return config
 end
 
-function var_0_0.getStoreConfig(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0._storeConfig.configDict[arg_23_1]
+function StoreConfig:getStoreConfig(storeId)
+	local config = self._storeConfig.configDict[storeId]
 
-	if not var_23_0 then
-		logError("找不到商店: " .. tostring(arg_23_1))
+	if not config then
+		logError("找不到商店: " .. tostring(storeId))
 	end
 
-	return var_23_0
+	return config
 end
 
-function var_0_0.getAllStoreIds(arg_24_0)
-	local var_24_0 = {}
-	local var_24_1 = arg_24_0._storeConfig.configDict
+function StoreConfig:getAllStoreIds()
+	local storeIds = {}
+	local storeConfigDict = self._storeConfig.configDict
 
-	for iter_24_0, iter_24_1 in pairs(var_24_1) do
-		table.insert(var_24_0, iter_24_1.id)
+	for _, storeConfig in pairs(storeConfigDict) do
+		table.insert(storeIds, storeConfig.id)
 	end
 
-	return var_24_0
+	return storeIds
 end
 
-function var_0_0.getTabHierarchy(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0:getTabConfig(arg_25_1)
+function StoreConfig:getTabHierarchy(tabId)
+	local tabConfig = self:getTabConfig(tabId)
 
-	if not var_25_0 then
+	if not tabConfig then
 		return 0
 	end
 
-	if not arg_25_0:hasTab(var_25_0.belongFirstTab) and not arg_25_0:hasTab(var_25_0.belongSecondTab) then
+	if not self:hasTab(tabConfig.belongFirstTab) and not self:hasTab(tabConfig.belongSecondTab) then
 		return 1
-	elseif not arg_25_0:hasTab(var_25_0.belongSecondTab) then
+	elseif not self:hasTab(tabConfig.belongSecondTab) then
 		return 2
 	else
 		return 3
 	end
 end
 
-function var_0_0.isPackageStore(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0:getTabConfig(arg_26_1)
+function StoreConfig:isPackageStore(storeId)
+	local belongStore = self:getTabConfig(storeId)
 
-	if var_26_0 and var_26_0.belongFirstTab == StoreEnum.StoreId.Package then
+	if belongStore and belongStore.belongFirstTab == StoreEnum.StoreId.Package then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getMonthCardConfig(arg_27_0, arg_27_1)
-	if arg_27_1 == StoreEnum.LittleMonthCardGoodsId then
-		local var_27_0 = arg_27_0._storeMonthAddCfg.configDict[arg_27_1]
+function StoreConfig:getMonthCardConfig(goodsId)
+	if goodsId == StoreEnum.LittleMonthCardGoodsId then
+		local littleMonthConfig = self._storeMonthAddCfg.configDict[goodsId]
 
-		if var_27_0 ~= nil then
-			return arg_27_0._monthCardConfig.configDict[var_27_0.month_id]
+		if littleMonthConfig ~= nil then
+			return self._monthCardConfig.configDict[littleMonthConfig.month_id]
 		end
 	end
 
-	return arg_27_0._monthCardConfig.configDict[arg_27_1]
+	return self._monthCardConfig.configDict[goodsId]
 end
 
-function var_0_0.getDailyReleasePackageCfg(arg_28_0, arg_28_1)
-	return arg_28_0._dailyReleasePackageCfg.configDict[arg_28_1]
+function StoreConfig:getDailyReleasePackageCfg(goodsId)
+	return self._dailyReleasePackageCfg.configDict[goodsId]
 end
 
-function var_0_0.getOpenTimeDiff(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	if arg_29_2 <= arg_29_1 then
+function StoreConfig:getOpenTimeDiff(openTimeStamp, closeTimeStamp, nowTimeStamp)
+	if closeTimeStamp <= openTimeStamp then
 		logError("结束时间比开启时间早")
-	elseif arg_29_3 < arg_29_1 then
-		return arg_29_3 - arg_29_1
-	elseif arg_29_3 < arg_29_2 then
-		return arg_29_2 - arg_29_3
+	elseif nowTimeStamp < openTimeStamp then
+		return nowTimeStamp - openTimeStamp
+	elseif nowTimeStamp < closeTimeStamp then
+		return closeTimeStamp - nowTimeStamp
 	end
 
 	return 0
 end
 
-function var_0_0.hasTab(arg_30_0, arg_30_1)
-	return arg_30_1 and arg_30_1 ~= 0
+function StoreConfig:hasTab(tabId)
+	return tabId and tabId ~= 0
 end
 
-function var_0_0.getRemain(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if arg_31_2 <= 0 then
+function StoreConfig:getRemain(goodsConfig, remain, offlineTime)
+	if remain <= 0 then
 		return nil
 	end
 
-	local var_31_0 = arg_31_1.maxBuyCount
+	local maxBuyCount = goodsConfig.maxBuyCount
 
-	if arg_31_1.refreshTime == StoreEnum.RefreshTime.Forever then
-		if var_31_0 > 0 then
-			if arg_31_1.jumpId ~= 0 then
-				return formatLuaLang("store_limitget", arg_31_2)
-			elseif arg_31_3 > 0 then
-				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_31_2)
+	if goodsConfig.refreshTime == StoreEnum.RefreshTime.Forever then
+		if maxBuyCount > 0 then
+			if goodsConfig.jumpId ~= 0 then
+				return formatLuaLang("store_limitget", remain)
+			elseif offlineTime > 0 then
+				return formatLuaLang("v1a4_bossrush_storeview_buylimit", remain)
 			else
-				return formatLuaLang("store_buylimit_forever", arg_31_2)
+				return formatLuaLang("store_buylimit_forever", remain)
 			end
 		else
 			return nil
 		end
-	elseif arg_31_1.refreshTime == StoreEnum.RefreshTime.Day then
-		return formatLuaLang("store_buylimit_day", arg_31_2)
-	elseif arg_31_1.refreshTime == StoreEnum.RefreshTime.Week then
-		return formatLuaLang("store_buylimit_week", arg_31_2)
-	elseif arg_31_1.refreshTime == StoreEnum.RefreshTime.Month then
-		return formatLuaLang("store_buylimit_month", arg_31_2)
+	elseif goodsConfig.refreshTime == StoreEnum.RefreshTime.Day then
+		return formatLuaLang("store_buylimit_day", remain)
+	elseif goodsConfig.refreshTime == StoreEnum.RefreshTime.Week then
+		return formatLuaLang("store_buylimit_week", remain)
+	elseif goodsConfig.refreshTime == StoreEnum.RefreshTime.Month then
+		return formatLuaLang("store_buylimit_month", remain)
 	else
-		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_31_2)
+		return formatLuaLang("v1a4_bossrush_storeview_buylimit", remain)
 	end
 end
 
-function var_0_0.getRemainText(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4)
-	if arg_32_2 == StoreEnum.RefreshTime.Forever then
-		if arg_32_1 > 0 then
-			if arg_32_4 > 0 then
-				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_32_3)
+function StoreConfig:getRemainText(maxBuyCount, refreshTime, remain, offlineTime)
+	if refreshTime == StoreEnum.RefreshTime.Forever then
+		if maxBuyCount > 0 then
+			if offlineTime > 0 then
+				return formatLuaLang("v1a4_bossrush_storeview_buylimit", remain)
 			else
-				return formatLuaLang("store_buylimit_forever", arg_32_3)
+				return formatLuaLang("store_buylimit_forever", remain)
 			end
 		else
 			return nil
 		end
-	elseif arg_32_2 == StoreEnum.RefreshTime.Day then
-		return formatLuaLang("store_buylimit_day", arg_32_3)
-	elseif arg_32_2 == StoreEnum.RefreshTime.Week then
-		return formatLuaLang("store_buylimit_week", arg_32_3)
-	elseif arg_32_2 == StoreEnum.RefreshTime.Month then
-		return formatLuaLang("store_buylimit_month", arg_32_3)
+	elseif refreshTime == StoreEnum.RefreshTime.Day then
+		return formatLuaLang("store_buylimit_day", remain)
+	elseif refreshTime == StoreEnum.RefreshTime.Week then
+		return formatLuaLang("store_buylimit_week", remain)
+	elseif refreshTime == StoreEnum.RefreshTime.Month then
+		return formatLuaLang("store_buylimit_month", remain)
 	else
-		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_32_3)
+		return formatLuaLang("v1a4_bossrush_storeview_buylimit", remain)
 	end
 end
 
-function var_0_0.getChargeRemainText(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
-	if arg_33_2 == StoreEnum.ChargeRefreshTime.Forever then
-		if arg_33_1 > 0 then
-			if arg_33_4 > 0 then
-				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_33_3)
+function StoreConfig:getChargeRemainText(maxBuyCount, refreshTime, remain, offlineTime)
+	if refreshTime == StoreEnum.ChargeRefreshTime.Forever then
+		if maxBuyCount > 0 then
+			if offlineTime > 0 then
+				return formatLuaLang("v1a4_bossrush_storeview_buylimit", remain)
 			else
-				return formatLuaLang("store_buylimit_forever", arg_33_3)
+				return formatLuaLang("store_buylimit_forever", remain)
 			end
 		else
 			return nil
 		end
-	elseif arg_33_2 == StoreEnum.ChargeRefreshTime.MonthCard then
-		local var_33_0 = StoreModel.instance:getMonthCardInfo()
+	elseif refreshTime == StoreEnum.ChargeRefreshTime.MonthCard then
+		local monthCardInfo = StoreModel.instance:getMonthCardInfo()
 
-		if var_33_0 then
-			local var_33_1 = var_33_0:getRemainDay()
+		if monthCardInfo then
+			local remainDay = monthCardInfo:getRemainDay()
 
-			if var_33_1 == StoreEnum.MonthCardStatus.NotPurchase then
+			if remainDay == StoreEnum.MonthCardStatus.NotPurchase then
 				return nil
-			elseif var_33_1 == StoreEnum.MonthCardStatus.NotEnoughOneDay then
+			elseif remainDay == StoreEnum.MonthCardStatus.NotEnoughOneDay then
 				return luaLang("not_enough_one_day")
 			else
-				return formatLuaLang("remain_day", var_33_1)
+				return formatLuaLang("remain_day", remainDay)
 			end
 		else
 			return nil
 		end
-	elseif arg_33_2 == StoreEnum.ChargeRefreshTime.Day then
-		return formatLuaLang("store_buylimit_day", arg_33_3)
-	elseif arg_33_2 == StoreEnum.ChargeRefreshTime.Week then
-		return formatLuaLang("store_buylimit_week", arg_33_3)
-	elseif arg_33_2 == StoreEnum.ChargeRefreshTime.Month then
-		return formatLuaLang("store_buylimit_month", arg_33_3)
+	elseif refreshTime == StoreEnum.ChargeRefreshTime.Day then
+		return formatLuaLang("store_buylimit_day", remain)
+	elseif refreshTime == StoreEnum.ChargeRefreshTime.Week then
+		return formatLuaLang("store_buylimit_week", remain)
+	elseif refreshTime == StoreEnum.ChargeRefreshTime.Month then
+		return formatLuaLang("store_buylimit_month", remain)
 	else
-		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_33_3)
+		return formatLuaLang("v1a4_bossrush_storeview_buylimit", remain)
 	end
 end
 
-function var_0_0.hasNextGood(arg_34_0, arg_34_1)
-	return arg_34_0._preGoodsIdDict[arg_34_1] ~= nil
+function StoreConfig:hasNextGood(goodId)
+	return self._preGoodsIdDict[goodId] ~= nil
 end
 
-function var_0_0.getRoomProductGoodsId(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0
+function StoreConfig:getRoomProductGoodsId(type, id)
+	local result
 
-	if arg_35_0._roomProduct2GoodsId then
-		var_35_0 = (arg_35_0._roomProduct2GoodsId[arg_35_1] or {})[arg_35_2]
+	if self._roomProduct2GoodsId then
+		local typeDict = self._roomProduct2GoodsId[type] or {}
+
+		result = typeDict[id]
 	end
 
-	return var_35_0
+	return result
 end
 
-function var_0_0.getRoomCritterProductGoods(arg_36_0, arg_36_1)
-	return arg_36_0._critterStoreGoods[arg_36_1] or {}
+function StoreConfig:getRoomCritterProductGoods(id)
+	return self._critterStoreGoods[id] or {}
 end
 
-function var_0_0.getChargeOptionalGroup(arg_37_0, arg_37_1)
-	local var_37_0 = arg_37_0._chargeOptionalConfig.configDict[arg_37_1]
+function StoreConfig:getChargeOptionalGroup(chargeGoodsId)
+	local config = self._chargeOptionalConfig.configDict[chargeGoodsId]
 
-	if not var_37_0 then
-		logError("充值商品ID未配置充值自选礼包表" .. tostring(arg_37_1))
+	if not config then
+		logError("充值商品ID未配置充值自选礼包表" .. tostring(chargeGoodsId))
 	end
 
-	return var_37_0
+	return config
 end
 
-function var_0_0.getMonthCardAddConfig(arg_38_0, arg_38_1)
-	return arg_38_0._storeMonthAddCfg.configDict[arg_38_1]
+function StoreConfig:getMonthCardAddConfig(cardId)
+	local config = self._storeMonthAddCfg.configDict[cardId]
+
+	return config
 end
 
-function var_0_0.getSeasonCardMultiFactor(arg_39_0)
+function StoreConfig:getSeasonCardMultiFactor()
 	return CommonConfig.instance:getConstNum(2501)
 end
 
-function var_0_0.getDecorateGoodsCfgById(arg_40_0, arg_40_1)
-	return arg_40_0._decorateProduct2GoodsId[arg_40_1]
+function StoreConfig:getDecorateGoodsCfgById(materialId)
+	return self._decorateProduct2GoodsId[materialId]
 end
 
-function var_0_0.getDecorateGoodsIdById(arg_41_0, arg_41_1)
-	local var_41_0
-	local var_41_1 = arg_41_0:getDecorateGoodsCfgById(arg_41_1)
+function StoreConfig:getDecorateGoodsIdById(materialId)
+	local id
+	local cfg = self:getDecorateGoodsCfgById(materialId)
 
-	if var_41_1 then
-		var_41_0 = var_41_1.id
+	if cfg then
+		id = cfg.id
 	end
 
-	return var_41_0
+	return id
 end
 
-var_0_0.instance = var_0_0.New()
+StoreConfig.instance = StoreConfig.New()
 
-return var_0_0
+return StoreConfig

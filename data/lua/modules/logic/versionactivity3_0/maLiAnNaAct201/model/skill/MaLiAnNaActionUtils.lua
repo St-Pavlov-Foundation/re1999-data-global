@@ -1,124 +1,126 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.skill.MaLiAnNaActionUtils", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/skill/MaLiAnNaActionUtils.lua
 
-local var_0_0 = class("MaLiAnNaActionUtils")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.skill.MaLiAnNaActionUtils", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._defineList = {
-		[Activity201MaLiAnNaEnum.SkillAction.addSlotSolider] = var_0_0._addSlotSolider,
-		[Activity201MaLiAnNaEnum.SkillAction.removeSlotSolider] = var_0_0._removeSlotSolider,
-		[Activity201MaLiAnNaEnum.SkillAction.moveSlotSolider] = var_0_0._moveSlotSolider,
-		[Activity201MaLiAnNaEnum.SkillAction.pauseSlotGenerateSolider] = var_0_0._pauseSlotGenerateSolider,
-		[Activity201MaLiAnNaEnum.SkillAction.releaseBullet] = var_0_0._releaseBullet,
-		[Activity201MaLiAnNaEnum.SkillAction.killSolider] = var_0_0._killSolider
+local MaLiAnNaActionUtils = class("MaLiAnNaActionUtils")
+
+function MaLiAnNaActionUtils:ctor()
+	self._defineList = {
+		[Activity201MaLiAnNaEnum.SkillAction.addSlotSolider] = MaLiAnNaActionUtils._addSlotSolider,
+		[Activity201MaLiAnNaEnum.SkillAction.removeSlotSolider] = MaLiAnNaActionUtils._removeSlotSolider,
+		[Activity201MaLiAnNaEnum.SkillAction.moveSlotSolider] = MaLiAnNaActionUtils._moveSlotSolider,
+		[Activity201MaLiAnNaEnum.SkillAction.pauseSlotGenerateSolider] = MaLiAnNaActionUtils._pauseSlotGenerateSolider,
+		[Activity201MaLiAnNaEnum.SkillAction.releaseBullet] = MaLiAnNaActionUtils._releaseBullet,
+		[Activity201MaLiAnNaEnum.SkillAction.killSolider] = MaLiAnNaActionUtils._killSolider
 	}
 end
 
-function var_0_0._addSlotSolider(arg_2_0, arg_2_1)
-	if arg_2_0 == nil or arg_2_1 == nil then
+function MaLiAnNaActionUtils._addSlotSolider(param, effect)
+	if param == nil or effect == nil then
 		return
 	end
 
-	local var_2_0 = arg_2_0[1]
+	local slotId = param[1]
 
-	if var_2_0 == nil then
+	if slotId == nil then
 		return
 	end
 
-	local var_2_1 = tonumber(arg_2_1[2]) or 1
-	local var_2_2 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_2_0)
+	local num = tonumber(effect[2]) or 1
+	local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
 
-	if var_2_2 then
-		var_2_2:skillToCreateSolider(var_2_1, Activity201MaLiAnNaEnum.CampType.Player)
+	if slot then
+		slot:skillToCreateSolider(num, Activity201MaLiAnNaEnum.CampType.Player)
 
 		if isDebugBuild then
-			logNormal("添加槽位士兵：" .. var_2_2:getConfig().baseId .. " 数量：" .. var_2_1)
+			logNormal("添加槽位士兵：" .. slot:getConfig().baseId .. " 数量：" .. num)
 		end
 	end
 end
 
-function var_0_0._removeSlotSolider(arg_3_0, arg_3_1)
-	if arg_3_0 == nil or arg_3_1 == nil then
+function MaLiAnNaActionUtils._removeSlotSolider(param, effect)
+	if param == nil or effect == nil then
 		return
 	end
 
-	local var_3_0 = arg_3_0[1]
+	local slotId = param[1]
 
-	if var_3_0 == nil then
+	if slotId == nil then
 		return
 	end
 
-	local var_3_1 = tonumber(arg_3_1[2]) or 1
-	local var_3_2 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_3_0)
+	local num = tonumber(effect[2]) or 1
+	local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
 
-	if var_3_2 then
-		var_3_2:skillToRemoveSolider(var_3_1, Activity201MaLiAnNaEnum.CampType.Enemy)
+	if slot then
+		slot:skillToRemoveSolider(num, Activity201MaLiAnNaEnum.CampType.Enemy)
 
 		if isDebugBuild then
-			logNormal("移除槽位士兵：" .. var_3_2:getConfig().baseId .. " 数量：" .. var_3_1)
+			logNormal("移除槽位士兵：" .. slot:getConfig().baseId .. " 数量：" .. num)
 		end
 	end
 end
 
-function var_0_0._moveSlotSolider(arg_4_0, arg_4_1)
-	if arg_4_0 == nil or arg_4_1 == nil then
+function MaLiAnNaActionUtils._moveSlotSolider(param, effect)
+	if param == nil or effect == nil then
 		return
 	end
 
-	local var_4_0 = arg_4_0[1]
-	local var_4_1 = arg_4_0[2]
+	local startSlotId = param[1]
+	local endSlotId = param[2]
 
-	if var_4_0 == nil or var_4_1 == nil then
+	if startSlotId == nil or endSlotId == nil then
 		return
 	end
 
-	local var_4_2 = tonumber(arg_4_1[2]) or 1
-	local var_4_3 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_4_0)
-	local var_4_4 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_4_1)
-	local var_4_5 = var_4_3:getSoliderCount()
-	local var_4_6 = math.min(var_4_2, var_4_5 - 1)
+	local num = tonumber(effect[2]) or 1
+	local startSlot = Activity201MaLiAnNaGameModel.instance:getSlotById(startSlotId)
+	local endSlot = Activity201MaLiAnNaGameModel.instance:getSlotById(endSlotId)
+	local normalSoliderCount = startSlot:getSoliderCount()
+	local moveNum = math.min(num, normalSoliderCount - 1)
 
-	if var_4_3 and var_4_4 then
-		for iter_4_0 = 1, var_4_6 do
-			local var_4_7 = var_4_3:getAndRemoveNormalSolider()
+	if startSlot and endSlot then
+		for i = 1, moveNum do
+			local soliderMo = startSlot:getAndRemoveNormalSolider()
 
-			if var_4_7 then
-				var_4_4:enterSoldier(var_4_7, true)
+			if soliderMo then
+				endSlot:enterSoldier(soliderMo, true)
 			end
 		end
 
 		if isDebugBuild then
-			logNormal("转移士兵【1->2】：" .. var_4_3:getConfig().baseId .. " -> " .. var_4_4:getConfig().baseId)
+			logNormal("转移士兵【1->2】：" .. startSlot:getConfig().baseId .. " -> " .. endSlot:getConfig().baseId)
 		end
 	end
 end
 
-function var_0_0._pauseSlotGenerateSolider(arg_5_0, arg_5_1)
-	if arg_5_0 == nil or arg_5_1 == nil then
+function MaLiAnNaActionUtils._pauseSlotGenerateSolider(param, effect)
+	if param == nil or effect == nil then
 		return
 	end
 
-	local var_5_0 = arg_5_0[1]
+	local slotId = param[1]
 
-	if var_5_0 == nil then
+	if slotId == nil then
 		return
 	end
 
-	local var_5_1 = tonumber(arg_5_1[2]) or 1
-	local var_5_2 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_5_0)
+	local time = tonumber(effect[2]) or 1
+	local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
 
-	if var_5_2 then
-		var_5_2:setSkillGenerateSoliderEffectTime(var_5_1)
+	if slot then
+		slot:setSkillGenerateSoliderEffectTime(time)
 
 		if isDebugBuild then
-			logNormal("干扰生成和出兵：" .. var_5_2:getConfig().baseId)
+			logNormal("干扰生成和出兵：" .. slot:getConfig().baseId)
 		end
 	end
 end
 
-local var_0_1 = {}
+local tempSlot = {}
 
-function var_0_0._releaseBullet(arg_6_0, arg_6_1)
-	if arg_6_0 == nil or arg_6_1 == nil then
+function MaLiAnNaActionUtils._releaseBullet(param, effect)
+	if param == nil or effect == nil then
 		return
 	end
 
@@ -126,37 +128,37 @@ function var_0_0._releaseBullet(arg_6_0, arg_6_1)
 		logNormal("触发狙杀：")
 	end
 
-	local var_6_0 = arg_6_0[1]
-	local var_6_1 = arg_6_1[3]
-	local var_6_2 = arg_6_1[4]
-	local var_6_3 = tonumber(arg_6_1[5]) or 1
-	local var_6_4 = MaLiAnNaLaSoliderMoUtil.instance:getSoliderMoById(var_6_0)
+	local useSoliderId = param[1]
+	local range = effect[3]
+	local effectPathId = effect[4]
+	local speed = tonumber(effect[5]) or 1
+	local soliderMo = MaLiAnNaLaSoliderMoUtil.instance:getSoliderMoById(useSoliderId)
 
-	if var_6_4 == nil then
+	if soliderMo == nil then
 		return
 	end
 
-	local var_6_5 = var_6_4:getCamp()
-	local var_6_6 = Activity201MaLiAnNaEnum.CampType.Enemy
+	local camp = soliderMo:getCamp()
+	local findCamp = Activity201MaLiAnNaEnum.CampType.Enemy
 
-	if var_6_5 == Activity201MaLiAnNaEnum.CampType.Enemy then
-		var_6_6 = Activity201MaLiAnNaEnum.CampType.Player
+	if camp == Activity201MaLiAnNaEnum.CampType.Enemy then
+		findCamp = Activity201MaLiAnNaEnum.CampType.Player
 	end
 
-	local var_6_7, var_6_8 = var_6_4:getLocalPos()
-	local var_6_9 = var_0_0._findSolider(var_6_7, var_6_8, var_6_1, var_6_6)
+	local x, y = soliderMo:getLocalPos()
+	local soliderId = MaLiAnNaActionUtils._findSolider(x, y, range, findCamp)
 
-	if var_6_9 ~= nil then
-		local var_6_10 = MaliAnNaBulletEntityMgr.instance:getBulletEffectEntity()
+	if soliderId ~= nil then
+		local bullet = MaliAnNaBulletEntityMgr.instance:getBulletEffectEntity()
 
-		if var_6_10 ~= nil then
-			local var_6_11, var_6_12 = var_6_4:getBulletPos()
+		if bullet ~= nil then
+			local startX, startY = soliderMo:getBulletPos()
 
-			if var_6_11 == nil or var_6_12 == nil then
-				var_6_11, var_6_12 = var_6_4:getLocalPos()
+			if startX == nil or startY == nil then
+				startX, startY = soliderMo:getLocalPos()
 			end
 
-			var_6_10:setInfo(var_6_11, var_6_12, var_6_9, var_6_3, var_6_2, true)
+			bullet:setInfo(startX, startY, soliderId, speed, effectPathId, true)
 
 			if isDebugBuild then
 				logNormal("实行狙杀：")
@@ -167,20 +169,20 @@ function var_0_0._releaseBullet(arg_6_0, arg_6_1)
 	end
 end
 
-function var_0_0._killSolider(arg_7_0, arg_7_1)
-	if arg_7_0 == nil or arg_7_1 == nil then
+function MaLiAnNaActionUtils._killSolider(param, effect)
+	if param == nil or effect == nil then
 		return
 	end
 
-	local var_7_0 = arg_7_1[2]
-	local var_7_1 = arg_7_1[4] or 1
-	local var_7_2 = arg_7_0[1]
-	local var_7_3 = arg_7_0[2]
-	local var_7_4 = arg_7_0[3]
-	local var_7_5 = var_0_0._findSolider(var_7_2, var_7_3, var_7_0, var_7_4)
+	local range = effect[2]
+	local damage = effect[4] or 1
+	local x = param[1]
+	local y = param[2]
+	local camp = param[3]
+	local soliderId = MaLiAnNaActionUtils._findSolider(x, y, range, camp)
 
-	if var_7_5 then
-		Activity201MaLiAnNaGameController.instance:consumeSoliderHp(var_7_5, -var_7_1)
+	if soliderId then
+		Activity201MaLiAnNaGameController.instance:consumeSoliderHp(soliderId, -damage)
 
 		if isDebugBuild then
 			logNormal("杀死士兵：")
@@ -188,45 +190,45 @@ function var_0_0._killSolider(arg_7_0, arg_7_1)
 	end
 end
 
-function var_0_0._findSolider(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0
+function MaLiAnNaActionUtils._findSolider(x, y, range, findCamp)
+	local soliderId
 
-	if var_0_1 ~= nil then
-		tabletool.clear(var_0_1)
+	if tempSlot ~= nil then
+		tabletool.clear(tempSlot)
 	end
 
-	local var_8_1 = MaLiAnNaLaSoliderMoUtil.instance:getAllSoliderMoList()
+	local allSolider = MaLiAnNaLaSoliderMoUtil.instance:getAllSoliderMoList()
 
-	for iter_8_0, iter_8_1 in pairs(var_8_1) do
-		if iter_8_1 then
-			local var_8_2, var_8_3 = iter_8_1:getLocalPos()
+	for _, solider in pairs(allSolider) do
+		if solider then
+			local posX, posY = solider:getLocalPos()
 
-			if iter_8_1:getCamp() == arg_8_3 and MathUtil.isPointInCircleRange(arg_8_0, arg_8_1, arg_8_2, var_8_2, var_8_3) and not iter_8_1:isDead() then
-				table.insert(var_0_1, iter_8_1)
+			if solider:getCamp() == findCamp and MathUtil.isPointInCircleRange(x, y, range, posX, posY) and not solider:isDead() then
+				table.insert(tempSlot, solider)
 			end
 		end
 	end
 
-	if var_0_1 ~= nil then
-		table.sort(var_0_1, function(arg_9_0, arg_9_1)
-			local var_9_0, var_9_1 = arg_9_0:getLocalPos()
-			local var_9_2, var_9_3 = arg_9_1:getLocalPos()
+	if tempSlot ~= nil then
+		table.sort(tempSlot, function(a, b)
+			local ax, ay = a:getLocalPos()
+			local bx, by = b:getLocalPos()
 
-			return MathUtil.vec2_lengthSqr(arg_8_0, arg_8_1, var_9_0, var_9_1) < MathUtil.vec2_lengthSqr(arg_8_0, arg_8_1, var_9_2, var_9_3)
+			return MathUtil.vec2_lengthSqr(x, y, ax, ay) < MathUtil.vec2_lengthSqr(x, y, bx, by)
 		end)
 	end
 
-	if #var_0_1 > 0 then
-		var_8_0 = var_0_1[1]:getId()
+	if #tempSlot > 0 then
+		soliderId = tempSlot[1]:getId()
 	end
 
-	return var_8_0
+	return soliderId
 end
 
-function var_0_0.getHandleFunc(arg_10_0, arg_10_1)
-	return arg_10_0._defineList[arg_10_1]
+function MaLiAnNaActionUtils:getHandleFunc(type)
+	return self._defineList[type]
 end
 
-var_0_0.instance = var_0_0.New()
+MaLiAnNaActionUtils.instance = MaLiAnNaActionUtils.New()
 
-return var_0_0
+return MaLiAnNaActionUtils

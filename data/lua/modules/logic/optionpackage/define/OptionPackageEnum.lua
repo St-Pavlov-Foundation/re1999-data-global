@@ -1,38 +1,40 @@
-﻿module("modules.logic.optionpackage.define.OptionPackageEnum", package.seeall)
+﻿-- chunkname: @modules/logic/optionpackage/define/OptionPackageEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.optionpackage.define.OptionPackageEnum", package.seeall)
 
-var_0_0.SourceType = {
+local OptionPackageEnum = _M
+
+OptionPackageEnum.SourceType = {
 	OptResVoice = 3,
 	Voice = 1,
 	OptRes = 2
 }
-var_0_0.UpdateState = {
+OptionPackageEnum.UpdateState = {
 	NeedUpdate = 3,
 	NotDownload = 1,
 	AlreadyLatest = 4,
 	InDownload = 2
 }
-var_0_0.Package = {
+OptionPackageEnum.Package = {
 	VersionActivity = "opveract"
 }
-var_0_0.NeedPackLangList = {
+OptionPackageEnum.NeedPackLangList = {
 	"res",
 	"media"
 }
-var_0_0.NeedPackLangDict = {}
+OptionPackageEnum.NeedPackLangDict = {}
 
-for iter_0_0, iter_0_1 in ipairs(var_0_0.NeedPackLangList) do
-	var_0_0.NeedPackLangDict[iter_0_1] = true
+for _, lang in ipairs(OptionPackageEnum.NeedPackLangList) do
+	OptionPackageEnum.NeedPackLangDict[lang] = true
 end
 
-var_0_0.PackageNameList = {}
-var_0_0.HasPackageNameDict = {}
+OptionPackageEnum.PackageNameList = {}
+OptionPackageEnum.HasPackageNameDict = {}
 
-for iter_0_2, iter_0_3 in pairs(var_0_0.Package) do
-	var_0_0.HasPackageNameDict[iter_0_3] = true
+for k, packageName in pairs(OptionPackageEnum.Package) do
+	OptionPackageEnum.HasPackageNameDict[packageName] = true
 
-	table.insert(var_0_0.PackageNameList, iter_0_3)
+	table.insert(OptionPackageEnum.PackageNameList, packageName)
 end
 
-return var_0_0
+return OptionPackageEnum

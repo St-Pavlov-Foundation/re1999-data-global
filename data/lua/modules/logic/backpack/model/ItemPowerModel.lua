@@ -1,323 +1,325 @@
-﻿module("modules.logic.backpack.model.ItemPowerModel", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/model/ItemPowerModel.lua
 
-local var_0_0 = class("ItemPowerModel", BaseModel)
+module("modules.logic.backpack.model.ItemPowerModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._powerItemList = {}
-	arg_1_0._latestPushItemUids = {}
-	arg_1_0._powerMakerInfo = {}
+local ItemPowerModel = class("ItemPowerModel", BaseModel)
+
+function ItemPowerModel:onInit()
+	self._powerItemList = {}
+	self._latestPushItemUids = {}
+	self._powerMakerInfo = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._powerItemList = {}
-	arg_2_0._latestPushItemUids = {}
-	arg_2_0._powerMakerInfo = {}
+function ItemPowerModel:reInit()
+	self._powerItemList = {}
+	self._latestPushItemUids = {}
+	self._powerMakerInfo = {}
 end
 
-function var_0_0.getPowerItem(arg_3_0, arg_3_1)
-	return arg_3_0._powerItemList[tonumber(arg_3_1)]
+function ItemPowerModel:getPowerItem(uid)
+	return self._powerItemList[tonumber(uid)]
 end
 
-function var_0_0.getPowerItemList(arg_4_0)
-	return arg_4_0._powerItemList
+function ItemPowerModel:getPowerItemList()
+	return self._powerItemList
 end
 
-function var_0_0.setPowerItemList(arg_5_0, arg_5_1)
-	arg_5_0._powerItemList = {}
+function ItemPowerModel:setPowerItemList(powerList)
+	self._powerItemList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_0 = ItemPowerMo.New()
+	for _, v in ipairs(powerList) do
+		local itemMo = ItemPowerMo.New()
 
-		var_5_0:init(iter_5_1)
+		itemMo:init(v)
 
-		arg_5_0._powerItemList[tonumber(iter_5_1.uid)] = var_5_0
+		self._powerItemList[tonumber(v.uid)] = itemMo
 	end
 
-	arg_5_0:setPowerMakerItemsList()
+	self:setPowerMakerItemsList()
 	CurrencyController.instance:checkToUseExpirePowerItem()
 end
 
-function var_0_0.setPowerMakerItemsList(arg_6_0)
-	local var_6_0 = var_0_0.instance:getPowerMakerInfo()
+function ItemPowerModel:setPowerMakerItemsList()
+	local ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
 
-	if var_6_0 and var_6_0.powerMakerItems then
-		if not arg_6_0._powerMakerItems then
-			arg_6_0._powerMakerItems = {}
+	if ofMakerInfo and ofMakerInfo.powerMakerItems then
+		if not self._powerMakerItems then
+			self._powerMakerItems = {}
 		end
 
-		local var_6_1 = {}
+		local itemList = {}
 
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._powerItemList) do
-			if iter_6_1.id ~= MaterialEnum.PowerId.OverflowPowerId then
-				var_6_1[iter_6_0] = iter_6_1
+		for k, v in pairs(self._powerItemList) do
+			if v.id ~= MaterialEnum.PowerId.OverflowPowerId then
+				itemList[k] = v
 			end
 		end
 
-		for iter_6_2 = 1, #var_6_0.powerMakerItems do
-			local var_6_2 = var_6_0.powerMakerItems[iter_6_2]
-			local var_6_3 = tonumber(var_6_2.uid)
-			local var_6_4 = arg_6_0._powerMakerItems[var_6_3] or ItemPowerMo.New()
+		for i = 1, #ofMakerInfo.powerMakerItems do
+			local v = ofMakerInfo.powerMakerItems[i]
+			local uid = tonumber(v.uid)
+			local itemMo = self._powerMakerItems[uid] or ItemPowerMo.New()
 
-			var_6_4:init(var_6_2)
+			itemMo:init(v)
 
-			var_6_1[var_6_3] = var_6_4
+			itemList[uid] = itemMo
 		end
 
-		arg_6_0._powerItemList = var_6_1
+		self._powerItemList = itemList
 	end
 end
 
-function var_0_0.changePowerItemList(arg_7_0, arg_7_1)
-	if not arg_7_1 or #arg_7_1 < 1 then
+function ItemPowerModel:changePowerItemList(powerList)
+	if not powerList or #powerList < 1 then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		local var_7_0 = tonumber(iter_7_1.uid)
-		local var_7_1 = {
-			itemid = iter_7_1.itemId,
-			uid = var_7_0
-		}
+	for _, v in ipairs(powerList) do
+		local uid = tonumber(v.uid)
+		local o = {}
 
-		table.insert(arg_7_0._latestPushItemUids, var_7_1)
+		o.itemid = v.itemId
+		o.uid = uid
 
-		if not arg_7_0._powerItemList[var_7_0] then
-			local var_7_2 = ItemPowerMo.New()
+		table.insert(self._latestPushItemUids, o)
 
-			var_7_2:init(iter_7_1)
+		if not self._powerItemList[uid] then
+			local itemMo = ItemPowerMo.New()
 
-			arg_7_0._powerItemList[var_7_0] = var_7_2
+			itemMo:init(v)
+
+			self._powerItemList[uid] = itemMo
 		else
-			arg_7_0._powerItemList[var_7_0]:reset(iter_7_1)
+			self._powerItemList[uid]:reset(v)
 		end
 	end
 end
 
-function var_0_0.getLatestPowerChange(arg_8_0)
-	return arg_8_0._latestPushItemUids
+function ItemPowerModel:getLatestPowerChange()
+	return self._latestPushItemUids
 end
 
-function var_0_0.getPowerItemCount(arg_9_0, arg_9_1)
-	return arg_9_0._powerItemList[arg_9_1] and arg_9_0._powerItemList[arg_9_1].quantity or 0
+function ItemPowerModel:getPowerItemCount(uid)
+	return self._powerItemList[uid] and self._powerItemList[uid].quantity or 0
 end
 
-function var_0_0.getPowerItemCountById(arg_10_0, arg_10_1)
-	local var_10_0 = 0
+function ItemPowerModel:getPowerItemCountById(id)
+	local count = 0
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._powerItemList) do
-		if iter_10_1.id == arg_10_1 then
-			var_10_0 = var_10_0 + iter_10_1.quantity
+	for _, itemMO in pairs(self._powerItemList) do
+		if itemMO.id == id then
+			count = count + itemMO.quantity
 		end
 	end
 
-	return var_10_0
+	return count
 end
 
-function var_0_0.getPowerItemDeadline(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._powerItemList[arg_11_1]
+function ItemPowerModel:getPowerItemDeadline(uid)
+	local item = self._powerItemList[uid]
 
-	return var_11_0 and tonumber(var_11_0.expireTime) or 0
+	return item and tonumber(item.expireTime) or 0
 end
 
-function var_0_0.getPowerItemCo(arg_12_0, arg_12_1)
-	return arg_12_0._powerItemList[arg_12_1] and ItemConfig.instance:getPowerItemCo(arg_12_0._powerItemList[arg_12_1].id) or nil
+function ItemPowerModel:getPowerItemCo(uid)
+	return self._powerItemList[uid] and ItemConfig.instance:getPowerItemCo(self._powerItemList[uid].id) or nil
 end
 
-function var_0_0.getPowerCount(arg_13_0, arg_13_1)
-	local var_13_0 = 0
+function ItemPowerModel:getPowerCount(powerId)
+	local count = 0
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._powerItemList) do
-		if iter_13_1.id == arg_13_1 and (iter_13_1.expireTime == 0 or iter_13_1.expireTime > ServerTime.now()) then
-			var_13_0 = var_13_0 + iter_13_1.quantity
+	for _, powerMo in pairs(self._powerItemList) do
+		if powerMo.id == powerId and (powerMo.expireTime == 0 or powerMo.expireTime > ServerTime.now()) then
+			count = count + powerMo.quantity
 		end
 	end
 
-	return var_13_0
+	return count
 end
 
-function var_0_0.getPowerMinExpireTimeOffset(arg_14_0, arg_14_1)
-	local var_14_0
-	local var_14_1 = false
-	local var_14_2 = ServerTime.now()
+function ItemPowerModel:getPowerMinExpireTimeOffset(powerId)
+	local minOffset
+	local isFind = false
+	local now = ServerTime.now()
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._powerItemList) do
-		if iter_14_1.id == arg_14_1 and iter_14_1.expireTime ~= 0 and iter_14_1.quantity > 0 then
-			local var_14_3 = iter_14_1.expireTime - var_14_2
+	for _, powerMo in pairs(self._powerItemList) do
+		if powerMo.id == powerId and powerMo.expireTime ~= 0 and powerMo.quantity > 0 then
+			local offset = powerMo.expireTime - now
 
-			if var_14_3 > 0 then
-				if var_14_1 then
-					if var_14_3 < var_14_0 then
-						var_14_0 = var_14_3
+			if offset > 0 then
+				if isFind then
+					if offset < minOffset then
+						minOffset = offset
 					end
 				else
-					var_14_0 = var_14_3
+					minOffset = offset
 				end
 
-				var_14_1 = true
+				isFind = true
 			end
 		end
 	end
 
-	return var_14_1 and var_14_0 or 0
+	return isFind and minOffset or 0
 end
 
-function var_0_0.getPowerByType(arg_15_0, arg_15_1)
-	if arg_15_1 == MaterialEnum.PowerType.Small then
-		local var_15_0 = arg_15_0:getExpirePower(MaterialEnum.PowerId.SmallPower_Expire)
+function ItemPowerModel:getPowerByType(powerType)
+	if powerType == MaterialEnum.PowerType.Small then
+		local powerMo = self:getExpirePower(MaterialEnum.PowerId.SmallPower_Expire)
 
-		if not var_15_0 or var_15_0.quantity == 0 then
-			var_15_0 = arg_15_0:getNoExpirePower(MaterialEnum.PowerId.SmallPower)
+		if not powerMo or powerMo.quantity == 0 then
+			powerMo = self:getNoExpirePower(MaterialEnum.PowerId.SmallPower)
 		end
 
-		return var_15_0
-	elseif arg_15_1 == MaterialEnum.PowerType.Big then
-		local var_15_1 = arg_15_0:getExpirePower(MaterialEnum.PowerId.BigPower_Expire)
+		return powerMo
+	elseif powerType == MaterialEnum.PowerType.Big then
+		local powerMo = self:getExpirePower(MaterialEnum.PowerId.BigPower_Expire)
 
-		if not var_15_1 or var_15_1.quantity == 0 then
-			var_15_1 = arg_15_0:getNoExpirePower(MaterialEnum.PowerId.BigPower)
+		if not powerMo or powerMo.quantity == 0 then
+			powerMo = self:getNoExpirePower(MaterialEnum.PowerId.BigPower)
 		end
 
-		return var_15_1
-	elseif arg_15_1 == MaterialEnum.PowerType.Overflow then
-		local var_15_2 = arg_15_0:getExpirePower(MaterialEnum.PowerId.OverflowPowerId)
+		return powerMo
+	elseif powerType == MaterialEnum.PowerType.Overflow then
+		local powerMo = self:getExpirePower(MaterialEnum.PowerId.OverflowPowerId)
 
-		if not var_15_2 or var_15_2.quantity == 0 then
-			var_15_2 = arg_15_0:getNoExpirePower(MaterialEnum.PowerId.OverflowPowerId)
+		if not powerMo or powerMo.quantity == 0 then
+			powerMo = self:getNoExpirePower(MaterialEnum.PowerId.OverflowPowerId)
 		end
 
-		return var_15_2
+		return powerMo
 	else
-		return arg_15_0:getExpirePower(MaterialEnum.PowerId.ActPowerId)
+		return self:getExpirePower(MaterialEnum.PowerId.ActPowerId)
 	end
 end
 
-function var_0_0.getNoExpirePower(arg_16_0, arg_16_1)
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._powerItemList) do
-		if iter_16_1.id == arg_16_1 and iter_16_1.quantity > 0 and iter_16_1.expireTime == 0 then
-			return iter_16_1
+function ItemPowerModel:getNoExpirePower(powerId)
+	for _, powerMo in pairs(self._powerItemList) do
+		if powerMo.id == powerId and powerMo.quantity > 0 and powerMo.expireTime == 0 then
+			return powerMo
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getExpirePower(arg_17_0, arg_17_1)
-	local var_17_0
-	local var_17_1 = ServerTime.now()
+function ItemPowerModel:getExpirePower(powerId)
+	local tempPower
+	local now = ServerTime.now()
 
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._powerItemList) do
-		if iter_17_1.id == arg_17_1 and iter_17_1.quantity > 0 and iter_17_1.expireTime ~= 0 and var_17_1 < iter_17_1.expireTime then
-			if var_17_0 then
-				if var_17_0.expireTime > iter_17_1.expireTime then
-					var_17_0 = iter_17_1
+	for _, powerMo in pairs(self._powerItemList) do
+		if powerMo.id == powerId and powerMo.quantity > 0 and powerMo.expireTime ~= 0 and now < powerMo.expireTime then
+			if tempPower then
+				if tempPower.expireTime > powerMo.expireTime then
+					tempPower = powerMo
 				end
 			else
-				var_17_0 = iter_17_1
+				tempPower = powerMo
 			end
 		end
 	end
 
-	return var_17_0
+	return tempPower
 end
 
-function var_0_0.getUsePower(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = ServerTime.now()
-	local var_18_1 = {}
-	local var_18_2 = 0
+function ItemPowerModel:getUsePower(powerId, count)
+	local now = ServerTime.now()
+	local moList = {}
+	local powerCount = 0
 
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._powerItemList) do
-		if iter_18_1.id == arg_18_1 and iter_18_1.quantity > 0 then
-			if iter_18_1.expireTime == 0 then
-				table.insert(var_18_1, iter_18_1)
+	for _, powerMo in pairs(self._powerItemList) do
+		if powerMo.id == powerId and powerMo.quantity > 0 then
+			if powerMo.expireTime == 0 then
+				table.insert(moList, powerMo)
 
-				var_18_2 = var_18_2 + iter_18_1.quantity
-			elseif var_18_0 < iter_18_1.expireTime then
-				table.insert(var_18_1, iter_18_1)
+				powerCount = powerCount + powerMo.quantity
+			elseif now < powerMo.expireTime then
+				table.insert(moList, powerMo)
 
-				var_18_2 = var_18_2 + iter_18_1.quantity
+				powerCount = powerCount + powerMo.quantity
 			end
 		end
 	end
 
-	local var_18_3 = {}
+	local result = {}
 
-	if var_18_2 <= arg_18_2 then
-		for iter_18_2, iter_18_3 in pairs(var_18_1) do
-			table.insert(var_18_3, {
-				uid = iter_18_3.uid,
-				num = iter_18_3.quantity
+	if powerCount <= count then
+		for _, powerMo in pairs(moList) do
+			table.insert(result, {
+				uid = powerMo.uid,
+				num = powerMo.quantity
 			})
 		end
 
-		return var_18_3
+		return result
 	end
 
-	local var_18_4 = 0
+	powerCount = 0
 
-	table.sort(var_18_1, var_0_0.sortPowerMoFunc)
+	table.sort(moList, ItemPowerModel.sortPowerMoFunc)
 
-	for iter_18_4, iter_18_5 in pairs(var_18_1) do
-		local var_18_5 = iter_18_5.quantity
+	for _, powerMo in pairs(moList) do
+		local quantity = powerMo.quantity
 
-		if arg_18_2 < var_18_4 + iter_18_5.quantity then
-			var_18_5 = arg_18_2 - var_18_4
+		if count < powerCount + powerMo.quantity then
+			quantity = count - powerCount
 		end
 
-		var_18_4 = var_18_4 + var_18_5
+		powerCount = powerCount + quantity
 
-		table.insert(var_18_3, {
-			uid = iter_18_5.uid,
-			num = var_18_5
+		table.insert(result, {
+			uid = powerMo.uid,
+			num = quantity
 		})
 
-		if arg_18_2 <= var_18_4 then
+		if count <= powerCount then
 			break
 		end
 	end
 
-	return var_18_3
+	return result
 end
 
-function var_0_0.sortPowerMoFunc(arg_19_0, arg_19_1)
-	if arg_19_0.expireTime == 0 and arg_19_1.expireTime == 0 then
+function ItemPowerModel.sortPowerMoFunc(powerMoA, powerMoB)
+	if powerMoA.expireTime == 0 and powerMoB.expireTime == 0 then
 		return false
 	end
 
-	if arg_19_0.expireTime == 0 then
+	if powerMoA.expireTime == 0 then
 		return false
 	end
 
-	if arg_19_1.expireTime == 0 then
+	if powerMoB.expireTime == 0 then
 		return true
 	end
 
-	return arg_19_0.expireTime < arg_19_1.expireTime
+	return powerMoA.expireTime < powerMoB.expireTime
 end
 
-function var_0_0.onGetPowerMakerInfo(arg_20_0, arg_20_1)
-	local var_20_0 = 0
+function ItemPowerModel:onGetPowerMakerInfo(msg)
+	local itemTotalCount = 0
 
-	if arg_20_1.powerMakerItems then
-		for iter_20_0 = 1, #arg_20_1.powerMakerItems do
-			var_20_0 = var_20_0 + arg_20_1.powerMakerItems[iter_20_0].quantity
+	if msg.powerMakerItems then
+		for i = 1, #msg.powerMakerItems do
+			itemTotalCount = itemTotalCount + msg.powerMakerItems[i].quantity
 		end
 	end
 
-	arg_20_0._powerMakerInfo = {
-		status = arg_20_1.status or 0,
-		nextRemainSecond = arg_20_1.nextRemainSecond or 0,
-		makeCount = arg_20_1.makeCount or 0,
-		logoutSecond = arg_20_1.logoutSecond or 0,
-		powerMakerItems = arg_20_1.powerMakerItems or {},
-		itemTotalCount = var_20_0 or 0,
+	self._powerMakerInfo = {
+		status = msg.status or 0,
+		nextRemainSecond = msg.nextRemainSecond or 0,
+		makeCount = msg.makeCount or 0,
+		logoutSecond = msg.logoutSecond or 0,
+		powerMakerItems = msg.powerMakerItems or {},
+		itemTotalCount = itemTotalCount or 0,
 		nowTime = ServerTime.now() or 0
 	}
 end
 
-function var_0_0.getPowerMakerInfo(arg_21_0)
-	return arg_21_0._powerMakerInfo
+function ItemPowerModel:getPowerMakerInfo()
+	return self._powerMakerInfo
 end
 
-var_0_0.instance = var_0_0.New()
+ItemPowerModel.instance = ItemPowerModel.New()
 
-return var_0_0
+return ItemPowerModel

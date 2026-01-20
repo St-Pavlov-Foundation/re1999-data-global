@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeShield", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeShield.lua
 
-local var_0_0 = class("FightWorkChangeShield", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkChangeShield", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.targetId
+local FightWorkChangeShield = class("FightWorkChangeShield", FightEffectBase)
 
-	arg_1_0:com_sendFightEvent(FightEvent.ChangeShield, var_1_0)
+function FightWorkChangeShield:onStart()
+	local entityId = self.actEffectData.targetId
 
-	if arg_1_0.actEffectData.reserveId == "1" then
-		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.addShield, "+" .. arg_1_0.actEffectData.effectNum, nil, arg_1_0.actEffectData.effectNum1 == 1)
+	self:com_sendFightEvent(FightEvent.ChangeShield, entityId)
+
+	if self.actEffectData.reserveId == "1" then
+		FightFloatMgr.instance:float(entityId, FightEnum.FloatType.addShield, "+" .. self.actEffectData.effectNum, nil, self.actEffectData.effectNum1 == 1)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPlayCardOver(arg_2_0)
+function FightWorkChangeShield:_onPlayCardOver()
 	return
 end
 
-return var_0_0
+return FightWorkChangeShield

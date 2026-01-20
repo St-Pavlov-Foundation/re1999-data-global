@@ -1,319 +1,321 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzle2", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/puzzle/FairyLandPuzzle2.lua
 
-local var_0_0 = class("FairyLandPuzzle2", FairyLandPuzzleBase)
+module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzle2", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._puzzleGO = gohelper.findChild(arg_1_0.viewGO, "main/#go_Root/#go_Puzzle/2")
-	arg_1_0._goShape = gohelper.findChild(arg_1_0.viewGO, "main/#go_Shape")
-	arg_1_0._shapeGO = gohelper.findChild(arg_1_0.viewGO, "main/#go_Shape/2")
-	arg_1_0.tipAnim = SLFramework.AnimatorPlayer.Get(arg_1_0._shapeGO)
-	arg_1_0._shapeTrs = arg_1_0._shapeGO.transform
-	arg_1_0._goImageShape = gohelper.findChild(arg_1_0._shapeGO, "image_shape")
+local FairyLandPuzzle2 = class("FairyLandPuzzle2", FairyLandPuzzleBase)
 
-	arg_1_0:addDrag(arg_1_0._goImageShape)
+function FairyLandPuzzle2:onInitView()
+	self._puzzleGO = gohelper.findChild(self.viewGO, "main/#go_Root/#go_Puzzle/2")
+	self._goShape = gohelper.findChild(self.viewGO, "main/#go_Shape")
+	self._shapeGO = gohelper.findChild(self.viewGO, "main/#go_Shape/2")
+	self.tipAnim = SLFramework.AnimatorPlayer.Get(self._shapeGO)
+	self._shapeTrs = self._shapeGO.transform
+	self._goImageShape = gohelper.findChild(self._shapeGO, "image_shape")
 
-	arg_1_0.itemList = arg_1_0:getUserDataTb_()
+	self:addDrag(self._goImageShape)
 
-	for iter_1_0 = 1, 3 do
-		local var_1_0 = arg_1_0:getUserDataTb_()
+	self.itemList = self:getUserDataTb_()
 
-		var_1_0.go = gohelper.findChild(arg_1_0._puzzleGO, "item" .. tostring(iter_1_0))
-		var_1_0.anim = var_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-		var_1_0.transform = var_1_0.go.transform
-		var_1_0.itemGO = gohelper.findChild(var_1_0.go, "item")
-		var_1_0.itemTransform = var_1_0.itemGO.transform
-		arg_1_0.itemList[iter_1_0] = var_1_0
+	for i = 1, 3 do
+		local item = self:getUserDataTb_()
+
+		item.go = gohelper.findChild(self._puzzleGO, "item" .. tostring(i))
+		item.anim = item.go:GetComponent(typeof(UnityEngine.Animator))
+		item.transform = item.go.transform
+		item.itemGO = gohelper.findChild(item.go, "item")
+		item.itemTransform = item.itemGO.transform
+		self.itemList[i] = item
 	end
 
-	arg_1_0.mainGO = gohelper.findChild(arg_1_0.viewGO, "main")
-	arg_1_0.mainTrs = arg_1_0.mainGO.transform
-	arg_1_0._dragTrs = arg_1_0._shapeTrs
-	arg_1_0.initPos = recthelper.uiPosToScreenPos(arg_1_0._dragTrs)
-	arg_1_0.initAngle = arg_1_0:getRotationZ()
+	self.mainGO = gohelper.findChild(self.viewGO, "main")
+	self.mainTrs = self.mainGO.transform
+	self._dragTrs = self._shapeTrs
+	self.initPos = recthelper.uiPosToScreenPos(self._dragTrs)
+	self.initAngle = self:getRotationZ()
 end
 
-function var_0_0.initPuzzleView(arg_2_0)
+function FairyLandPuzzle2:initPuzzleView()
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.SetSceneUpdatePos, true)
-	gohelper.addChildPosStay(arg_2_0.viewGO, arg_2_0._shapeGO)
+	gohelper.addChildPosStay(self.viewGO, self._shapeGO)
 end
 
-function var_0_0.resetGOList(arg_3_0)
-	transformhelper.setLocalRotation(arg_3_0.mainTrs, 0, 0, arg_3_0.initAngle)
-	transformhelper.setLocalRotation(arg_3_0._shapeTrs, 0, 0, arg_3_0.initAngle)
-	gohelper.addChildPosStay(arg_3_0._goShape, arg_3_0._shapeGO)
+function FairyLandPuzzle2:resetGOList()
+	transformhelper.setLocalRotation(self.mainTrs, 0, 0, self.initAngle)
+	transformhelper.setLocalRotation(self._shapeTrs, 0, 0, self.initAngle)
+	gohelper.addChildPosStay(self._goShape, self._shapeGO)
 end
 
-function var_0_0.addDrag(arg_4_0, arg_4_1)
-	if arg_4_0._drag then
+function FairyLandPuzzle2:addDrag(go)
+	if self._drag then
 		return
 	end
 
-	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_1)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(go)
 
-	arg_4_0._drag:AddDragBeginListener(arg_4_0._onBeginDrag, arg_4_0, arg_4_1.transform)
-	arg_4_0._drag:AddDragListener(arg_4_0._onDrag, arg_4_0)
-	arg_4_0._drag:AddDragEndListener(arg_4_0._onEndDrag, arg_4_0, arg_4_1.transform)
+	self._drag:AddDragBeginListener(self._onBeginDrag, self, go.transform)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onEndDrag, self, go.transform)
 end
 
-function var_0_0.onStart(arg_5_0)
-	local var_5_0 = FairyLandModel.instance:isPassPuzzle(arg_5_0.config.id)
+function FairyLandPuzzle2:onStart()
+	local isPass = FairyLandModel.instance:isPassPuzzle(self.config.id)
 
-	arg_5_0._canDrag = not var_5_0
+	self._canDrag = not isPass
 
-	gohelper.setActive(arg_5_0._puzzleGO, not var_5_0)
-	gohelper.setActive(arg_5_0._shapeGO, not var_5_0)
+	gohelper.setActive(self._puzzleGO, not isPass)
+	gohelper.setActive(self._shapeGO, not isPass)
 
-	if var_5_0 then
-		if arg_5_0.gyro then
-			arg_5_0.gyro:closeGyro()
+	if isPass then
+		if self.gyro then
+			self.gyro:closeGyro()
 		end
 
-		arg_5_0:resetGOList()
+		self:resetGOList()
 	else
-		arg_5_0:initPuzzleView()
-		arg_5_0:setItemPos(1, 19)
-		arg_5_0:setItemPos(2, 20)
-		arg_5_0:setItemPos(3, 21)
-		arg_5_0:startGyro()
+		self:initPuzzleView()
+		self:setItemPos(1, 19)
+		self:setItemPos(2, 20)
+		self:setItemPos(3, 21)
+		self:startGyro()
 	end
 
-	arg_5_0:startCheckTips()
+	self:startCheckTips()
 end
 
-function var_0_0.startGyro(arg_6_0)
-	if arg_6_0.gyro then
+function FairyLandPuzzle2:startGyro()
+	if self.gyro then
 		return
 	end
 
-	arg_6_0.gyro = FairyLandGyroRotationComp.New()
+	self.gyro = FairyLandGyroRotationComp.New()
 
-	local var_6_0 = {
-		callback = arg_6_0.checkFinish,
-		callbackObj = arg_6_0,
-		goList = {
-			arg_6_0._shapeGO,
-			arg_6_0.mainGO
-		}
+	local param = {}
+
+	param.callback = self.checkFinish
+	param.callbackObj = self
+	param.goList = {
+		self._shapeGO,
+		self.mainGO
 	}
 
-	arg_6_0.gyro:init(var_6_0)
+	self.gyro:init(param)
 end
 
-function var_0_0.setItemPos(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0.itemList[arg_7_1]
+function FairyLandPuzzle2:setItemPos(index, pos)
+	local item = self.itemList[index]
 
-	if var_7_0 then
-		gohelper.setActive(var_7_0.go, true)
+	if item then
+		gohelper.setActive(item.go, true)
 
-		local var_7_1 = (arg_7_2 - 1) * 244 - 100
-		local var_7_2 = -((arg_7_2 - 1) * 73 + 52)
+		local x = (pos - 1) * 244 - 100
+		local y = -((pos - 1) * 73 + 52)
 
-		recthelper.setAnchor(var_7_0.transform, var_7_1, var_7_2)
+		recthelper.setAnchor(item.transform, x, y)
 	end
 end
 
-function var_0_0.checkFinish(arg_8_0)
-	local var_8_0 = arg_8_0:getRotationZ()
+function FairyLandPuzzle2:checkFinish()
+	local angle = self:getRotationZ()
 
-	if var_8_0 > 160 and var_8_0 < 200 then
-		arg_8_0:finished()
+	if angle > 160 and angle < 200 then
+		self:finished()
 	end
 end
 
-function var_0_0.finished(arg_9_0)
-	if arg_9_0.inDrag then
+function FairyLandPuzzle2:finished()
+	if self.inDrag then
 		return
 	end
 
-	arg_9_0._canDrag = false
+	self._canDrag = false
 
-	if arg_9_0.gyro then
-		arg_9_0.gyro:closeGyro()
+	if self.gyro then
+		self.gyro:closeGyro()
 	end
 
-	arg_9_0:stopCheckTips()
-	arg_9_0:killTweenId()
-	arg_9_0:playFinishAnim()
+	self:stopCheckTips()
+	self:killTweenId()
+	self:playFinishAnim()
 end
 
-function var_0_0.playFinishAnim(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.itemList) do
-		local var_10_0, var_10_1, var_10_2 = transformhelper.getPos(iter_10_1.itemTransform)
+function FairyLandPuzzle2:playFinishAnim()
+	for i, v in ipairs(self.itemList) do
+		local x, y, z = transformhelper.getPos(v.itemTransform)
 
-		iter_10_1.downDir = Vector3.down
-		iter_10_1.initPos = {
-			var_10_0,
-			var_10_1,
-			var_10_2
+		v.downDir = Vector3.down
+		v.initPos = {
+			x,
+			y,
+			z
 		}
 
-		iter_10_1.anim:Play("open", 0, 0)
+		v.anim:Play("open", 0, 0)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_barrier_fall)
 
-	arg_10_0.moveTweenId = ZProj.TweenHelper.DOTweenFloat(0, 10, 0.84, arg_10_0._itemFrameMove, arg_10_0._onFinishAnimEnd, arg_10_0, nil, EaseType.Linear)
+	self.moveTweenId = ZProj.TweenHelper.DOTweenFloat(0, 10, 0.84, self._itemFrameMove, self._onFinishAnimEnd, self, nil, EaseType.Linear)
 end
 
-function var_0_0._itemFrameMove(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.itemList) do
-		local var_11_0 = iter_11_1.downDir * arg_11_1
-		local var_11_1 = var_11_0.x + iter_11_1.initPos[1]
-		local var_11_2 = var_11_0.y + iter_11_1.initPos[2]
-		local var_11_3 = var_11_0.z + iter_11_1.initPos[3]
+function FairyLandPuzzle2:_itemFrameMove(value)
+	for i, v in ipairs(self.itemList) do
+		local dir = v.downDir * value
+		local x = dir.x + v.initPos[1]
+		local y = dir.y + v.initPos[2]
+		local z = dir.z + v.initPos[3]
 
-		transformhelper.setPos(iter_11_1.itemTransform, var_11_1, var_11_2, var_11_3)
+		transformhelper.setPos(v.itemTransform, x, y, z)
 	end
 end
 
-function var_0_0._onFinishAnimEnd(arg_12_0)
-	arg_12_0:resetGOList()
-	gohelper.setActive(arg_12_0._puzzleGO, false)
-	gohelper.setActive(arg_12_0._shapeGO, false)
-	arg_12_0:playSuccessTalk()
+function FairyLandPuzzle2:_onFinishAnimEnd()
+	self:resetGOList()
+	gohelper.setActive(self._puzzleGO, false)
+	gohelper.setActive(self._shapeGO, false)
+	self:playSuccessTalk()
 end
 
-function var_0_0.canDrag(arg_13_0)
-	return arg_13_0._canDrag
+function FairyLandPuzzle2:canDrag()
+	return self._canDrag
 end
 
-function var_0_0.getRotationZ(arg_14_0, arg_14_1)
-	local var_14_0, var_14_1, var_14_2 = transformhelper.getLocalRotation(arg_14_1 or arg_14_0._dragTrs)
+function FairyLandPuzzle2:getRotationZ(transform)
+	local x, y, z = transformhelper.getLocalRotation(transform or self._dragTrs)
 
-	return var_14_2
+	return z
 end
 
-function var_0_0.vector2Angle(arg_15_0, arg_15_1)
-	return Mathf.Atan2(arg_15_1.y - arg_15_0.initPos.y, arg_15_1.x - arg_15_0.initPos.x) / Mathf.PI * 180
+function FairyLandPuzzle2:vector2Angle(vector)
+	return Mathf.Atan2(vector.y - self.initPos.y, vector.x - self.initPos.x) / Mathf.PI * 180
 end
 
-function var_0_0._onBeginDrag(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_0:canDrag() then
-		arg_16_0.inDrag = false
+function FairyLandPuzzle2:_onBeginDrag(dragTransform, pointerEventData)
+	if not self:canDrag() then
+		self.inDrag = false
 
 		return
 	end
 
-	arg_16_0:killTweenId()
+	self:killTweenId()
 
-	arg_16_0.angleRecord = arg_16_0:getRotationZ()
-	arg_16_0.clickRecord = arg_16_0:vector2Angle(arg_16_2.position)
-	arg_16_0.inDrag = true
+	self.angleRecord = self:getRotationZ()
+	self.clickRecord = self:vector2Angle(pointerEventData.position)
+	self.inDrag = true
 end
 
-function var_0_0._onDrag(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_0:canDrag() then
-		arg_17_0.inDrag = false
+function FairyLandPuzzle2:_onDrag(dragTransform, pointerEventData)
+	if not self:canDrag() then
+		self.inDrag = false
 
 		return
 	end
 
-	local var_17_0 = arg_17_0:vector2Angle(arg_17_2.position)
-	local var_17_1 = arg_17_0.angleRecord + var_17_0 - arg_17_0.clickRecord
+	local rotAngle = self:vector2Angle(pointerEventData.position)
+	local rot2Angle = self.angleRecord + rotAngle - self.clickRecord
 
-	arg_17_0:_tweenToRotation(arg_17_0._dragTrs, var_17_1)
-	arg_17_0:_tween2ToRotation(arg_17_0.mainTrs, var_17_1)
+	self:_tweenToRotation(self._dragTrs, rot2Angle)
+	self:_tween2ToRotation(self.mainTrs, rot2Angle)
 
-	arg_17_0.inDrag = true
+	self.inDrag = true
 end
 
-function var_0_0._onEndDrag(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0:startCheckTips()
+function FairyLandPuzzle2:_onEndDrag(dragTransform, pointerEventData)
+	self:startCheckTips()
 
-	arg_18_0.inDrag = false
+	self.inDrag = false
 
-	if not arg_18_0:canDrag() then
+	if not self:canDrag() then
 		return
 	end
 
-	arg_18_0:killTweenId()
-	arg_18_0:checkFinish()
+	self:killTweenId()
+	self:checkFinish()
 end
 
-function var_0_0._onDragTweenEnd(arg_19_0)
+function FairyLandPuzzle2:_onDragTweenEnd()
 	return
 end
 
-function var_0_0._tweenToRotation(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
-	if arg_20_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_20_0.tweenId)
+function FairyLandPuzzle2:_tweenToRotation(transform, angleZ, callback, callbackObj, param)
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_20_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	local var_20_0 = arg_20_0:getRotationZ(arg_20_1)
+	local curRotationz = self:getRotationZ(transform)
 
-	if math.abs(var_20_0 - arg_20_2) > 1 then
-		arg_20_0.tweenId = ZProj.TweenHelper.DOLocalRotate(arg_20_1, 0, 0, arg_20_2, 0.16, arg_20_3, arg_20_4, arg_20_5)
+	if math.abs(curRotationz - angleZ) > 1 then
+		self.tweenId = ZProj.TweenHelper.DOLocalRotate(transform, 0, 0, angleZ, 0.16, callback, callbackObj, param)
 	else
-		transformhelper.setLocalRotation(arg_20_1, 0, 0, arg_20_2)
+		transformhelper.setLocalRotation(transform, 0, 0, angleZ)
 
-		if arg_20_3 then
-			arg_20_3(arg_20_4, arg_20_5)
+		if callback then
+			callback(callbackObj, param)
 		end
 	end
 end
 
-function var_0_0._tween2ToRotation(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5)
-	if arg_21_0.tweenId2 then
-		ZProj.TweenHelper.KillById(arg_21_0.tweenId2)
+function FairyLandPuzzle2:_tween2ToRotation(transform, angleZ, callback, callbackObj, param)
+	if self.tweenId2 then
+		ZProj.TweenHelper.KillById(self.tweenId2)
 
-		arg_21_0.tweenId2 = nil
+		self.tweenId2 = nil
 	end
 
-	local var_21_0 = arg_21_0:getRotationZ(arg_21_1)
+	local curRotationz = self:getRotationZ(transform)
 
-	if math.abs(var_21_0 - arg_21_2) > 1 then
-		arg_21_0.tweenId2 = ZProj.TweenHelper.DOLocalRotate(arg_21_1, 0, 0, arg_21_2, 0.16, arg_21_3, arg_21_4, arg_21_5)
+	if math.abs(curRotationz - angleZ) > 1 then
+		self.tweenId2 = ZProj.TweenHelper.DOLocalRotate(transform, 0, 0, angleZ, 0.16, callback, callbackObj, param)
 	else
-		transformhelper.setLocalRotation(arg_21_1, 0, 0, arg_21_2)
+		transformhelper.setLocalRotation(transform, 0, 0, angleZ)
 
-		if arg_21_3 then
-			arg_21_3(arg_21_4, arg_21_5)
+		if callback then
+			callback(callbackObj, param)
 		end
 	end
 end
 
-function var_0_0.killTweenId(arg_22_0)
-	if arg_22_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.tweenId)
+function FairyLandPuzzle2:killTweenId()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_22_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	if arg_22_0.tweenId2 then
-		ZProj.TweenHelper.KillById(arg_22_0.tweenId2)
+	if self.tweenId2 then
+		ZProj.TweenHelper.KillById(self.tweenId2)
 
-		arg_22_0.tweenId2 = nil
+		self.tweenId2 = nil
 	end
 
-	if arg_22_0.moveTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.moveTweenId)
+	if self.moveTweenId then
+		ZProj.TweenHelper.KillById(self.moveTweenId)
 
-		arg_22_0.moveTweenId = nil
+		self.moveTweenId = nil
 	end
 end
 
-function var_0_0.playTipsTalk(arg_23_0)
-	arg_23_0:playTalk(arg_23_0.config.tipsTalkId, arg_23_0.startCheckTalk, arg_23_0, true, true)
+function FairyLandPuzzle2:playTipsTalk()
+	self:playTalk(self.config.tipsTalkId, self.startCheckTalk, self, true, true)
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	if arg_24_0._drag then
-		arg_24_0._drag:RemoveDragBeginListener()
-		arg_24_0._drag:RemoveDragListener()
-		arg_24_0._drag:RemoveDragEndListener()
+function FairyLandPuzzle2:onDestroyView()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 
-	if arg_24_0.gyro then
-		arg_24_0.gyro:closeGyro()
+	if self.gyro then
+		self.gyro:closeGyro()
 	end
 
-	arg_24_0:killTweenId()
-	gohelper.setActive(arg_24_0._puzzleGO, false)
-	gohelper.setActive(arg_24_0._shapeGO, false)
-	arg_24_0:resetGOList()
+	self:killTweenId()
+	gohelper.setActive(self._puzzleGO, false)
+	gohelper.setActive(self._shapeGO, false)
+	self:resetGOList()
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.SetSceneUpdatePos, false)
 end
 
-return var_0_0
+return FairyLandPuzzle2

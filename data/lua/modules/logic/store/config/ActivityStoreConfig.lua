@@ -1,8 +1,10 @@
-﻿module("modules.logic.store.config.ActivityStoreConfig", package.seeall)
+﻿-- chunkname: @modules/logic/store/config/ActivityStoreConfig.lua
 
-local var_0_0 = class("ActivityStoreConfig", BaseConfig)
+module("modules.logic.store.config.ActivityStoreConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local ActivityStoreConfig = class("ActivityStoreConfig", BaseConfig)
+
+function ActivityStoreConfig:reqConfigNames()
 	return {
 		"activity107",
 		"activity107_bubble_group",
@@ -11,159 +13,165 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0.activityStoreGroupConfigDict = nil
+function ActivityStoreConfig:onInit()
+	self.activityStoreGroupConfigDict = nil
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity107" then
-		arg_3_0:initActivityStoreGroupConfig()
-	elseif arg_3_1 == "activity107_bubble_group" then
-		arg_3_0:initBubbleConfig()
-	elseif arg_3_1 == "activity107_bubble_talk" then
-		arg_3_0:initBubbleTalkConfig()
+function ActivityStoreConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity107" then
+		self:initActivityStoreGroupConfig()
+	elseif configName == "activity107_bubble_group" then
+		self:initBubbleConfig()
+	elseif configName == "activity107_bubble_talk" then
+		self:initBubbleTalkConfig()
 	end
 end
 
-function var_0_0.initActivityStoreGroupConfig(arg_4_0)
-	arg_4_0._skin2ActivityIdDict = {}
-	arg_4_0.activityStoreGroupConfigDict = {}
+function ActivityStoreConfig:initActivityStoreGroupConfig()
+	self._skin2ActivityIdDict = {}
+	self.activityStoreGroupConfigDict = {}
 
-	local var_4_0
-	local var_4_1
+	local groupList, actStoreDict
 
-	for iter_4_0, iter_4_1 in ipairs(lua_activity107.configList) do
-		local var_4_2 = arg_4_0.activityStoreGroupConfigDict[iter_4_1.activityId]
+	for _, storeCo in ipairs(lua_activity107.configList) do
+		actStoreDict = self.activityStoreGroupConfigDict[storeCo.activityId]
 
-		if not var_4_2 then
-			var_4_2 = {}
-			arg_4_0.activityStoreGroupConfigDict[iter_4_1.activityId] = var_4_2
+		if not actStoreDict then
+			actStoreDict = {}
+			self.activityStoreGroupConfigDict[storeCo.activityId] = actStoreDict
 		end
 
-		local var_4_3 = var_4_2[iter_4_1.group]
+		groupList = actStoreDict[storeCo.group]
 
-		if not var_4_3 then
-			var_4_3 = {}
-			var_4_2[iter_4_1.group] = var_4_3
+		if not groupList then
+			groupList = {}
+			actStoreDict[storeCo.group] = groupList
 		end
 
-		table.insert(var_4_3, iter_4_1)
+		table.insert(groupList, storeCo)
 
-		local var_4_4 = string.splitToNumber(iter_4_1.product, "#")
-		local var_4_5 = var_4_4[1]
-		local var_4_6 = var_4_4[2]
+		local arr = string.splitToNumber(storeCo.product, "#")
+		local type, id = arr[1], arr[2]
 
-		if var_4_5 == MaterialEnum.MaterialType.HeroSkin then
-			arg_4_0._skin2ActivityIdDict[var_4_6] = iter_4_1.activityId
+		if type == MaterialEnum.MaterialType.HeroSkin then
+			self._skin2ActivityIdDict[id] = storeCo.activityId
 		end
 	end
 end
 
-function var_0_0.initBubbleConfig(arg_5_0)
-	arg_5_0.actId2GroupList = {}
+function ActivityStoreConfig:initBubbleConfig()
+	self.actId2GroupList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(lua_activity107_bubble_group.configList) do
-		local var_5_0 = arg_5_0.actId2GroupList[iter_5_1.actId]
+	for _, groupCo in ipairs(lua_activity107_bubble_group.configList) do
+		local list = self.actId2GroupList[groupCo.actId]
 
-		if not var_5_0 then
-			var_5_0 = {}
-			arg_5_0.actId2GroupList[iter_5_1.actId] = var_5_0
+		if not list then
+			list = {}
+			self.actId2GroupList[groupCo.actId] = list
 		end
 
-		table.insert(var_5_0, iter_5_1)
+		table.insert(list, groupCo)
 	end
 end
 
-function var_0_0.initBubbleTalkConfig(arg_6_0)
-	arg_6_0.groupId2TalkList = {}
+function ActivityStoreConfig:initBubbleTalkConfig()
+	self.groupId2TalkList = {}
 
-	local var_6_0 = {
-		__index = function(arg_7_0, arg_7_1)
-			return rawget(arg_7_0, arg_7_1) or rawget(arg_7_0, "_srcCo")[arg_7_1]
-		end
-	}
+	local metaTable = {}
 
-	for iter_6_0, iter_6_1 in ipairs(lua_activity107_bubble_talk.configList) do
-		local var_6_1 = arg_6_0.groupId2TalkList[iter_6_1.groupId]
+	function metaTable.__index(t, key)
+		local value = rawget(t, key)
 
-		if not var_6_1 then
-			var_6_1 = {}
-			arg_6_0.groupId2TalkList[iter_6_1.groupId] = var_6_1
+		if not value then
+			local srcCo = rawget(t, "_srcCo")
+
+			value = srcCo[key]
 		end
 
-		local var_6_2 = {}
-		local var_6_3 = string.splitToNumber(iter_6_1.condition, "#")
+		return value
+	end
 
-		var_6_2._srcCo = iter_6_1
-		var_6_2.triggerType = var_6_3[1]
+	for _, talkCo in ipairs(lua_activity107_bubble_talk.configList) do
+		local list = self.groupId2TalkList[talkCo.groupId]
 
-		if var_6_3[2] then
-			table.remove(var_6_3, 1)
-
-			var_6_2.triggerParam = var_6_3
+		if not list then
+			list = {}
+			self.groupId2TalkList[talkCo.groupId] = list
 		end
 
-		setmetatable(var_6_2, var_6_0)
-		table.insert(var_6_1, var_6_2)
+		local newTalkCo = {}
+		local arr = string.splitToNumber(talkCo.condition, "#")
+
+		newTalkCo._srcCo = talkCo
+		newTalkCo.triggerType = arr[1]
+
+		if arr[2] then
+			table.remove(arr, 1)
+
+			newTalkCo.triggerParam = arr
+		end
+
+		setmetatable(newTalkCo, metaTable)
+		table.insert(list, newTalkCo)
 	end
 end
 
-function var_0_0.getActivityStoreGroupDict(arg_8_0, arg_8_1)
-	return arg_8_0.activityStoreGroupConfigDict[arg_8_1]
+function ActivityStoreConfig:getActivityStoreGroupDict(actId)
+	return self.activityStoreGroupConfigDict[actId]
 end
 
-function var_0_0.getStoreConfig(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = lua_activity107.configDict[arg_9_1]
+function ActivityStoreConfig:getStoreConfig(actId, id)
+	local dict = lua_activity107.configDict[actId]
 
-	return var_9_0 and var_9_0[arg_9_2]
+	return dict and dict[id]
 end
 
-var_0_0.TagEnum = {
+ActivityStoreConfig.TagEnum = {
 	TimeLimit = 1
 }
 
-function var_0_0.initTag(arg_10_0)
-	arg_10_0.tagDict = {
-		[var_0_0.TagEnum.TimeLimit] = "versionactivity_store_goods_tag_1"
+function ActivityStoreConfig:initTag()
+	self.tagDict = {
+		[ActivityStoreConfig.TagEnum.TimeLimit] = "versionactivity_store_goods_tag_1"
 	}
 end
 
-function var_0_0.getTagName(arg_11_0, arg_11_1)
-	arg_11_0:initTag()
+function ActivityStoreConfig:getTagName(tag)
+	self:initTag()
 
-	local var_11_0 = arg_11_0.tagDict[arg_11_1]
+	local key = self.tagDict[tag]
 
-	if string.nilorempty(var_11_0) then
+	if string.nilorempty(key) then
 		return ""
 	end
 
-	return luaLang(var_11_0)
+	return luaLang(key)
 end
 
-function var_0_0.getTalkGroupList(arg_12_0, arg_12_1)
-	return arg_12_0.actId2GroupList[arg_12_1]
+function ActivityStoreConfig:getTalkGroupList(actId)
+	return self.actId2GroupList[actId]
 end
 
-function var_0_0.getUnlockGroupList(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getTalkGroupList(arg_13_1)
-	local var_13_1 = {}
+function ActivityStoreConfig:getUnlockGroupList(actId)
+	local groupList = self:getTalkGroupList(actId)
+	local result = {}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_2 = iter_13_1.unlockCondition
+	for _, groupCo in ipairs(groupList) do
+		local episodeId = groupCo.unlockCondition
 
-		if var_13_2 == 0 or DungeonModel.instance:hasPassLevelAndStory(var_13_2) then
-			table.insert(var_13_1, iter_13_1)
+		if episodeId == 0 or DungeonModel.instance:hasPassLevelAndStory(episodeId) then
+			table.insert(result, groupCo)
 		end
 	end
 
-	return var_13_1
+	return result
 end
 
-function var_0_0.getGroupTalkCoList(arg_14_0, arg_14_1)
-	return arg_14_0.groupId2TalkList[arg_14_1]
+function ActivityStoreConfig:getGroupTalkCoList(groupId)
+	return self.groupId2TalkList[groupId]
 end
 
-var_0_0.BubbleTalkTriggerType = {
+ActivityStoreConfig.BubbleTalkTriggerType = {
 	ClickStageArea = 2,
 	BuyGoodsById = 5,
 	SellOutGoodsByRare = 4,
@@ -174,68 +182,67 @@ var_0_0.BubbleTalkTriggerType = {
 	None = 0
 }
 
-function var_0_0.checkTalkCanTrigger(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	arg_15_0:initTypeCheckHandle()
+function ActivityStoreConfig:checkTalkCanTrigger(actId, talkCo, typeParam)
+	self:initTypeCheckHandle()
 
-	local var_15_0 = arg_15_2.triggerType
-	local var_15_1 = arg_15_0.typeHandle[var_15_0]
+	local type = talkCo.triggerType
+	local handle = self.typeHandle[type]
 
-	if not var_15_1 then
+	if not handle then
 		return true
 	end
 
-	return var_15_1(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	return handle(self, actId, talkCo, typeParam)
 end
 
-function var_0_0.initTypeCheckHandle(arg_16_0)
-	if not arg_16_0.typeHandle then
-		arg_16_0.typeHandle = {
-			[var_0_0.BubbleTalkTriggerType.BuyGoodsByRare] = arg_16_0.checkGoodsRareHandle,
-			[var_0_0.BubbleTalkTriggerType.BuyGoodsById] = arg_16_0.checkGoodsIdHandle,
-			[var_0_0.BubbleTalkTriggerType.SellOutGoodsByRare] = arg_16_0.checkGoodsRareHandle,
-			[var_0_0.BubbleTalkTriggerType.SellOutGoodsById] = arg_16_0.checkGoodsIdHandle
+function ActivityStoreConfig:initTypeCheckHandle()
+	if not self.typeHandle then
+		self.typeHandle = {
+			[ActivityStoreConfig.BubbleTalkTriggerType.BuyGoodsByRare] = self.checkGoodsRareHandle,
+			[ActivityStoreConfig.BubbleTalkTriggerType.BuyGoodsById] = self.checkGoodsIdHandle,
+			[ActivityStoreConfig.BubbleTalkTriggerType.SellOutGoodsByRare] = self.checkGoodsRareHandle,
+			[ActivityStoreConfig.BubbleTalkTriggerType.SellOutGoodsById] = self.checkGoodsIdHandle
 		}
 	end
 end
 
-function var_0_0.checkGoodsRareHandle(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_2.triggerParam
+function ActivityStoreConfig:checkGoodsRareHandle(actId, talkCo, goodsId)
+	local paramList = talkCo.triggerParam
 
-	if not var_17_0 then
-		logError("type param is nil, talkId : " .. tostring(arg_17_2.id))
-
-		return false
-	end
-
-	local var_17_1 = lua_activity107.configDict[arg_17_1][arg_17_3]
-	local var_17_2 = string.splitToNumber(var_17_1.product, "#")
-	local var_17_3 = var_17_2[1]
-	local var_17_4 = var_17_2[2]
-	local var_17_5 = ItemConfig.instance:getItemConfig(var_17_3, var_17_4)
-
-	return tabletool.indexOf(var_17_0, var_17_5.rare)
-end
-
-function var_0_0.checkGoodsIdHandle(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_2.triggerParam
-
-	if not var_18_0 then
-		logError("type param is nil, talkId : " .. tostring(arg_18_2.id))
+	if not paramList then
+		logError("type param is nil, talkId : " .. tostring(talkCo.id))
 
 		return false
 	end
 
-	return tabletool.indexOf(var_18_0, arg_18_3)
+	local goodsCo = lua_activity107.configDict[actId][goodsId]
+	local arr = string.splitToNumber(goodsCo.product, "#")
+	local type, id = arr[1], arr[2]
+	local productCo = ItemConfig.instance:getItemConfig(type, id)
+
+	return tabletool.indexOf(paramList, productCo.rare)
 end
 
-function var_0_0.getSkinApproachActivity(arg_19_0, arg_19_1)
-	if arg_19_0._skin2ActivityIdDict and arg_19_0._skin2ActivityIdDict[arg_19_1] then
-		return arg_19_0._skin2ActivityIdDict[arg_19_1]
+function ActivityStoreConfig:checkGoodsIdHandle(actId, talkCo, goodsId)
+	local paramList = talkCo.triggerParam
+
+	if not paramList then
+		logError("type param is nil, talkId : " .. tostring(talkCo.id))
+
+		return false
+	end
+
+	return tabletool.indexOf(paramList, goodsId)
+end
+
+function ActivityStoreConfig:getSkinApproachActivity(skinId)
+	if self._skin2ActivityIdDict and self._skin2ActivityIdDict[skinId] then
+		return self._skin2ActivityIdDict[skinId]
 	end
 
 	return -1
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityStoreConfig.instance = ActivityStoreConfig.New()
 
-return var_0_0
+return ActivityStoreConfig

@@ -1,107 +1,109 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131LevelScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131LevelScene.lua
 
-local var_0_0 = class("Activity131LevelScene", BaseView)
+module("modules.logic.versionactivity1_4.act131.view.Activity131LevelScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local Activity131LevelScene = class("Activity131LevelScene", BaseView)
+
+function Activity131LevelScene:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity131LevelScene:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity131LevelScene:removeEvents()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_4_0)
+function Activity131LevelScene:onUpdateParam()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	local var_5_0 = CameraMgr.instance:getSceneRoot()
+function Activity131LevelScene:_editableInitView()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_5_0._sceneRoot = UnityEngine.GameObject.New("ActivityRole6Map")
+	self._sceneRoot = UnityEngine.GameObject.New("ActivityRole6Map")
 
-	gohelper.addChild(var_5_0, arg_5_0._sceneRoot)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_addEvents()
-	MainCameraMgr.instance:addView(ViewName.Activity131LevelView, arg_6_0._initCamera, nil, arg_6_0)
+function Activity131LevelScene:onOpen()
+	self:_addEvents()
+	MainCameraMgr.instance:addView(ViewName.Activity131LevelView, self._initCamera, nil, self)
 
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[2]
+	local path = self.viewContainer:getSetting().otherRes[2]
 
-	arg_6_0._sceneGo = arg_6_0:getResInst(var_6_0, arg_6_0._sceneRoot)
+	self._sceneGo = self:getResInst(path, self._sceneRoot)
 
-	local var_6_1 = Activity131Model.instance:getMaxUnlockEpisode()
+	local episodeId = Activity131Model.instance:getMaxUnlockEpisode()
 
-	if arg_6_0.viewParam and arg_6_0.viewParam.episodeId then
-		var_6_1 = arg_6_0.viewParam.episodeId
+	if self.viewParam and self.viewParam.episodeId then
+		episodeId = self.viewParam.episodeId
 	end
 
-	Activity131Model.instance:setCurEpisodeId(var_6_1)
-	gohelper.setActive(arg_6_0._sceneGo, true)
-	transformhelper.setLocalPos(arg_6_0._sceneGo.transform, 0, 0, 0)
+	Activity131Model.instance:setCurEpisodeId(episodeId)
+	gohelper.setActive(self._sceneGo, true)
+	transformhelper.setLocalPos(self._sceneGo.transform, 0, 0, 0)
 
-	arg_6_0._sceneAnimator = arg_6_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+	self._sceneAnimator = self._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_6_0._sceneAnimator:Play("open", 0, 0)
+	self._sceneAnimator:Play("open", 0, 0)
 
-	if arg_6_0.viewParam and arg_6_0.viewParam.exitFromBattle then
-		arg_6_0:_onSetSceneActive(false)
-	end
-end
-
-function var_0_0._initCamera(arg_7_0)
-	local var_7_0 = CameraMgr.instance:getMainCamera()
-	local var_7_1 = GameUtil.getAdapterScale(true)
-
-	var_7_0.orthographic = true
-	var_7_0.orthographicSize = 7.4 * var_7_1
-end
-
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:_removeEvents()
-end
-
-function var_0_0._onSetSceneActive(arg_9_0, arg_9_1)
-	if arg_9_0._sceneRoot then
-		gohelper.setActive(arg_9_0._sceneRoot, arg_9_1)
+	if self.viewParam and self.viewParam.exitFromBattle then
+		self:_onSetSceneActive(false)
 	end
 end
 
-function var_0_0._onSetScenePos(arg_10_0, arg_10_1)
-	transformhelper.setPosXY(arg_10_0._sceneRoot.transform, arg_10_1, 0)
+function Activity131LevelScene:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale(true)
+
+	camera.orthographic = true
+	camera.orthographicSize = 7.4 * scale
 end
 
-function var_0_0._onBackToLevelView(arg_11_0)
-	if arg_11_0._sceneRoot then
-		gohelper.setActive(arg_11_0._sceneRoot, true)
-		arg_11_0._sceneAnimator:Play("open", 0, 0)
+function Activity131LevelScene:onClose()
+	self:_removeEvents()
+end
+
+function Activity131LevelScene:_onSetSceneActive(isActive)
+	if self._sceneRoot then
+		gohelper.setActive(self._sceneRoot, isActive)
 	end
 end
 
-function var_0_0._addEvents(arg_12_0)
-	arg_12_0:addEventCb(Activity131Controller.instance, Activity131Event.ShowLevelScene, arg_12_0._onSetSceneActive, arg_12_0)
-	arg_12_0:addEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, arg_12_0._onBackToLevelView, arg_12_0)
-	arg_12_0:addEventCb(Activity131Controller.instance, Activity131Event.SetScenePos, arg_12_0._onSetScenePos, arg_12_0)
+function Activity131LevelScene:_onSetScenePos(posX)
+	transformhelper.setPosXY(self._sceneRoot.transform, posX, 0)
 end
 
-function var_0_0._removeEvents(arg_13_0)
-	arg_13_0:removeEventCb(Activity131Controller.instance, Activity131Event.ShowLevelScene, arg_13_0._onSetSceneActive, arg_13_0)
-	arg_13_0:removeEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, arg_13_0._onBackToLevelView, arg_13_0)
-	arg_13_0:removeEventCb(Activity131Controller.instance, Activity131Event.SetScenePos, arg_13_0._onSetScenePos, arg_13_0)
-end
-
-function var_0_0.onDestroyView(arg_14_0)
-	if arg_14_0._sceneRoot then
-		gohelper.destroy(arg_14_0._sceneRoot)
-
-		arg_14_0._sceneRoot = nil
+function Activity131LevelScene:_onBackToLevelView()
+	if self._sceneRoot then
+		gohelper.setActive(self._sceneRoot, true)
+		self._sceneAnimator:Play("open", 0, 0)
 	end
 end
 
-return var_0_0
+function Activity131LevelScene:_addEvents()
+	self:addEventCb(Activity131Controller.instance, Activity131Event.ShowLevelScene, self._onSetSceneActive, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, self._onBackToLevelView, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.SetScenePos, self._onSetScenePos, self)
+end
+
+function Activity131LevelScene:_removeEvents()
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.ShowLevelScene, self._onSetSceneActive, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.BackToLevelView, self._onBackToLevelView, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.SetScenePos, self._onSetScenePos, self)
+end
+
+function Activity131LevelScene:onDestroyView()
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
+
+		self._sceneRoot = nil
+	end
+end
+
+return Activity131LevelScene

@@ -1,103 +1,105 @@
-﻿module("modules.common.others.UIBlockMgrExtend", package.seeall)
+﻿-- chunkname: @modules/common/others/UIBlockMgrExtend.lua
 
-local var_0_0 = class("UIBlockMgrExtend", LuaCompBase)
-local var_0_1 = "ui/viewres/common/blockanimui.prefab"
-local var_0_2 = "UIRoot/TOP/UIEndBlock"
-local var_0_3 = "effects/prefabs/weak_network"
-local var_0_4 = "effects/prefabs/weak_network/weak_network_effect_loop.prefab"
-local var_0_5 = "effects/prefabs/weak_network/weak_network_effect_end.prefab"
-local var_0_6 = 2
-local var_0_7 = 1.2
-local var_0_8 = true
+module("modules.common.others.UIBlockMgrExtend", package.seeall)
 
-var_0_0.CircleMvDelay = nil
+local UIBlockMgrExtend = class("UIBlockMgrExtend", LuaCompBase)
+local ResPath = "ui/viewres/common/blockanimui.prefab"
+local UIEndBlockPath = "UIRoot/TOP/UIEndBlock"
+local WeakNetworkEffectAbPath = "effects/prefabs/weak_network"
+local WeakNetworkEffectLoopPath = "effects/prefabs/weak_network/weak_network_effect_loop.prefab"
+local WeakNetworkEffectEndPath = "effects/prefabs/weak_network/weak_network_effect_end.prefab"
+local Delay = 2
+local WeakNetworkEndAnimationDuration = 1.2
+local needCircleMv = true
 
-function var_0_0.setNeedCircleMv(arg_1_0)
-	if var_0_8 ~= arg_1_0 then
+UIBlockMgrExtend.CircleMvDelay = nil
+
+function UIBlockMgrExtend.setNeedCircleMv(enable)
+	if needCircleMv ~= enable then
 		if canLogNormal then
-			logNormal((arg_1_0 and "显示菊花" or "隐藏菊花") .. debug.traceback("", 2))
+			logNormal((enable and "显示菊花" or "隐藏菊花") .. debug.traceback("", 2))
 		end
 
-		var_0_8 = arg_1_0
+		needCircleMv = enable
 	end
 end
 
-function var_0_0.preload(arg_2_0, arg_2_1)
-	var_0_0._callback = arg_2_0
-	var_0_0._callbackObj = arg_2_1
-	var_0_0._loader = PrefabInstantiate.Create(UIBlockMgr.instance:getBlockGO())
+function UIBlockMgrExtend.preload(callback, callbackObj)
+	UIBlockMgrExtend._callback = callback
+	UIBlockMgrExtend._callbackObj = callbackObj
+	UIBlockMgrExtend._loader = PrefabInstantiate.Create(UIBlockMgr.instance:getBlockGO())
 
-	var_0_0._loader:startLoad(var_0_1, var_0_0._onCallback)
+	UIBlockMgrExtend._loader:startLoad(ResPath, UIBlockMgrExtend._onCallback)
 end
 
-function var_0_0._onCallback()
-	if var_0_0._callback then
-		var_0_0._callback(var_0_0._callbackObj)
+function UIBlockMgrExtend._onCallback()
+	if UIBlockMgrExtend._callback then
+		UIBlockMgrExtend._callback(UIBlockMgrExtend._callbackObj)
 	end
 
-	var_0_0._callback = nil
-	var_0_0._callbackObj = nil
+	UIBlockMgrExtend._callback = nil
+	UIBlockMgrExtend._callbackObj = nil
 
-	local var_3_0 = UIBlockMgr.instance:getBlockGO()
-	local var_3_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, var_0_0)
+	local blockGO = UIBlockMgr.instance:getBlockGO()
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(blockGO, UIBlockMgrExtend)
 
-	var_3_1:setGO(var_0_0._loader:getInstGO())
+	comp:setGO(UIBlockMgrExtend._loader:getInstGO())
 
-	var_0_0.instance = var_3_1
+	UIBlockMgrExtend.instance = comp
 end
 
-function var_0_0.getEndUIBlockGo()
-	if not var_0_0._endUIBlockGo then
-		var_0_0._endUIBlockGo = gohelper.find(var_0_2)
+function UIBlockMgrExtend.getEndUIBlockGo()
+	if not UIBlockMgrExtend._endUIBlockGo then
+		UIBlockMgrExtend._endUIBlockGo = gohelper.find(UIEndBlockPath)
 	end
 
-	return var_0_0._endUIBlockGo
+	return UIBlockMgrExtend._endUIBlockGo
 end
 
-function var_0_0.setGO(arg_5_0, arg_5_1)
-	arg_5_0._loopGoWrapper = arg_5_1
-	arg_5_0._endGoWrapper = gohelper.clone(arg_5_0._loopGoWrapper, var_0_0.getEndUIBlockGo(), "endblockanimui")
-	arg_5_0.isPlay = false
+function UIBlockMgrExtend:setGO(go)
+	self._loopGoWrapper = go
+	self._endGoWrapper = gohelper.clone(self._loopGoWrapper, UIBlockMgrExtend.getEndUIBlockGo(), "endblockanimui")
+	self.isPlay = false
 
 	if GameResMgr.IsFromEditorDir then
-		loadAbAsset(var_0_4, false, arg_5_0._onLoopLoadCallback, arg_5_0)
-		loadAbAsset(var_0_5, false, arg_5_0._onEndLoadCallback, arg_5_0)
+		loadAbAsset(WeakNetworkEffectLoopPath, false, self._onLoopLoadCallback, self)
+		loadAbAsset(WeakNetworkEffectEndPath, false, self._onEndLoadCallback, self)
 	else
-		loadAbAsset(var_0_3, false, arg_5_0._onAbLoadCallback, arg_5_0)
+		loadAbAsset(WeakNetworkEffectAbPath, false, self._onAbLoadCallback, self)
 	end
 
-	arg_5_0._txt = gohelper.findChildText(arg_5_1, "Text")
-	arg_5_0._clickCounter = 0
+	self._txt = gohelper.findChildText(go, "Text")
+	self._clickCounter = 0
 
-	SLFramework.UGUI.UIClickListener.Get(arg_5_1.transform.parent.gameObject):AddClickListener(arg_5_0._onClickBlock, arg_5_0)
+	SLFramework.UGUI.UIClickListener.Get(go.transform.parent.gameObject):AddClickListener(self._onClickBlock, self)
 end
 
-function var_0_0.setTips(arg_6_0, arg_6_1)
-	if gohelper.isNil(arg_6_0._txt) then
+function UIBlockMgrExtend:setTips(str)
+	if gohelper.isNil(self._txt) then
 		return
 	end
 
-	if string.nilorempty(arg_6_1) then
-		arg_6_0._txt.text = "CONNECTING"
+	if string.nilorempty(str) then
+		self._txt.text = "CONNECTING"
 	else
-		arg_6_0._txt.text = arg_6_1
+		self._txt.text = str
 	end
 end
 
-function var_0_0._onClickBlock(arg_7_0)
-	arg_7_0._clickCounter = arg_7_0._clickCounter + 1
+function UIBlockMgrExtend:_onClickBlock()
+	self._clickCounter = self._clickCounter + 1
 
-	if arg_7_0._clickCounter == 30 then
-		local var_7_0 = {}
+	if self._clickCounter == 30 then
+		local keyList = {}
 
-		for iter_7_0, iter_7_1 in pairs(UIBlockMgr.instance._blockKeyDict) do
-			table.insert(var_7_0, iter_7_0)
+		for key, _ in pairs(UIBlockMgr.instance._blockKeyDict) do
+			table.insert(keyList, key)
 		end
 
-		local var_7_1 = ConnectAliveMgr.instance:getUnresponsiveMsgList()
+		local unresponseList = ConnectAliveMgr.instance:getUnresponsiveMsgList()
 
-		if #var_7_0 == 1 and var_7_0[1] == UIBlockKey.MsgLock then
-			if #var_7_1 == 0 then
+		if #keyList == 1 and keyList[1] == UIBlockKey.MsgLock then
+			if #unresponseList == 0 then
 				UIBlockMgr.instance:endAll()
 				logError("没有要等待的回包，关闭遮罩")
 
@@ -109,95 +111,95 @@ function var_0_0._onClickBlock(arg_7_0)
 			end
 		end
 
-		if isDebugBuild and tabletool.indexOf(var_7_0, UIBlockKey.MsgLock) then
-			local var_7_2 = ""
+		if isDebugBuild and tabletool.indexOf(keyList, UIBlockKey.MsgLock) then
+			local unresponsiveMsg = ""
 
-			for iter_7_2, iter_7_3 in ipairs(var_7_1) do
-				var_7_2 = string.format("%s%s,", var_7_2, iter_7_3.msg.__cname)
+			for i, one in ipairs(unresponseList) do
+				unresponsiveMsg = string.format("%s%s,", unresponsiveMsg, one.msg.__cname)
 			end
 
-			logError(string.format("Block Msg count=%d: %s", #var_7_1, var_7_2))
+			logError(string.format("Block Msg count=%d: %s", #unresponseList, unresponsiveMsg))
 		end
 
-		logError("BlockKeys: " .. table.concat(var_7_0, ","))
+		logError("BlockKeys: " .. table.concat(keyList, ","))
 	end
 end
 
-function var_0_0._onLoopLoadCallback(arg_8_0, arg_8_1)
-	if arg_8_1.IsLoadSuccess then
-		arg_8_1:Retain()
-		gohelper.clone(arg_8_1:GetResource(var_0_4), gohelper.findChild(arg_8_0._loopGoWrapper, "network_wrapper"))
+function UIBlockMgrExtend:_onLoopLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		assetItem:Retain()
+		gohelper.clone(assetItem:GetResource(WeakNetworkEffectLoopPath), gohelper.findChild(self._loopGoWrapper, "network_wrapper"))
 	end
 end
 
-function var_0_0._onEndLoadCallback(arg_9_0, arg_9_1)
-	if arg_9_1.IsLoadSuccess then
-		arg_9_1:Retain()
-		gohelper.clone(arg_9_1:GetResource(var_0_5), gohelper.findChild(arg_9_0._endGoWrapper, "network_wrapper"))
+function UIBlockMgrExtend:_onEndLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		assetItem:Retain()
+		gohelper.clone(assetItem:GetResource(WeakNetworkEffectEndPath), gohelper.findChild(self._endGoWrapper, "network_wrapper"))
 	end
 end
 
-function var_0_0._onAbLoadCallback(arg_10_0, arg_10_1)
-	if arg_10_1.IsLoadSuccess then
-		arg_10_1:Retain()
-		gohelper.clone(arg_10_1:GetResource(var_0_4), gohelper.findChild(arg_10_0._loopGoWrapper, "network_wrapper"))
-		gohelper.clone(arg_10_1:GetResource(var_0_5), gohelper.findChild(arg_10_0._endGoWrapper, "network_wrapper"))
+function UIBlockMgrExtend:_onAbLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		assetItem:Retain()
+		gohelper.clone(assetItem:GetResource(WeakNetworkEffectLoopPath), gohelper.findChild(self._loopGoWrapper, "network_wrapper"))
+		gohelper.clone(assetItem:GetResource(WeakNetworkEffectEndPath), gohelper.findChild(self._endGoWrapper, "network_wrapper"))
 	end
 end
 
-function var_0_0.onEnable(arg_11_0)
-	arg_11_0._clickCounter = 0
+function UIBlockMgrExtend:onEnable()
+	self._clickCounter = 0
 
-	TaskDispatcher.cancelTask(arg_11_0._onEndAnimationFinished, arg_11_0)
-	gohelper.setActive(var_0_0.getEndUIBlockGo(), false)
-	gohelper.setActive(arg_11_0._loopGoWrapper, false)
+	TaskDispatcher.cancelTask(self._onEndAnimationFinished, self)
+	gohelper.setActive(UIBlockMgrExtend.getEndUIBlockGo(), false)
+	gohelper.setActive(self._loopGoWrapper, false)
 
-	if var_0_8 then
-		local var_11_0 = var_0_0.CircleMvDelay and var_0_0.CircleMvDelay > 0 and var_0_0.CircleMvDelay or var_0_6
+	if needCircleMv then
+		local delay = UIBlockMgrExtend.CircleMvDelay and UIBlockMgrExtend.CircleMvDelay > 0 and UIBlockMgrExtend.CircleMvDelay or Delay
 
-		TaskDispatcher.runDelay(arg_11_0._onDelayShow, arg_11_0, var_11_0)
+		TaskDispatcher.runDelay(self._onDelayShow, self, delay)
 	end
 end
 
-function var_0_0.onDisable(arg_12_0)
-	arg_12_0._clickCounter = 0
+function UIBlockMgrExtend:onDisable()
+	self._clickCounter = 0
 
-	TaskDispatcher.cancelTask(arg_12_0._onDelayShow, arg_12_0)
-	gohelper.setActive(arg_12_0._loopGoWrapper, false)
+	TaskDispatcher.cancelTask(self._onDelayShow, self)
+	gohelper.setActive(self._loopGoWrapper, false)
 
-	if not arg_12_0.isPlay then
+	if not self.isPlay then
 		return
 	end
 
-	if var_0_8 then
-		gohelper.setActive(var_0_0.getEndUIBlockGo(), true)
-		TaskDispatcher.runDelay(arg_12_0._onEndAnimationFinished, arg_12_0, var_0_7)
+	if needCircleMv then
+		gohelper.setActive(UIBlockMgrExtend.getEndUIBlockGo(), true)
+		TaskDispatcher.runDelay(self._onEndAnimationFinished, self, WeakNetworkEndAnimationDuration)
 	end
 end
 
-function var_0_0._onDelayShow(arg_13_0)
-	if not var_0_8 then
+function UIBlockMgrExtend:_onDelayShow()
+	if not needCircleMv then
 		return
 	end
 
-	gohelper.setActive(arg_13_0._loopGoWrapper, true)
+	gohelper.setActive(self._loopGoWrapper, true)
 
-	arg_13_0.isPlay = true
+	self.isPlay = true
 
-	local var_13_0 = {}
+	local keyList = {}
 
-	for iter_13_0, iter_13_1 in pairs(UIBlockMgr.instance._blockKeyDict) do
-		table.insert(var_13_0, iter_13_0)
+	for key, _ in pairs(UIBlockMgr.instance._blockKeyDict) do
+		table.insert(keyList, key)
 	end
 
-	logNormal("BlockKeys: " .. table.concat(var_13_0, ","))
+	logNormal("BlockKeys: " .. table.concat(keyList, ","))
 end
 
-function var_0_0._onEndAnimationFinished(arg_14_0)
-	arg_14_0.isPlay = false
+function UIBlockMgrExtend:_onEndAnimationFinished()
+	self.isPlay = false
 
-	TaskDispatcher.cancelTask(arg_14_0._onEndAnimationFinished, arg_14_0)
-	gohelper.setActive(var_0_0.getEndUIBlockGo(), false)
+	TaskDispatcher.cancelTask(self._onEndAnimationFinished, self)
+	gohelper.setActive(UIBlockMgrExtend.getEndUIBlockGo(), false)
 end
 
-return var_0_0
+return UIBlockMgrExtend

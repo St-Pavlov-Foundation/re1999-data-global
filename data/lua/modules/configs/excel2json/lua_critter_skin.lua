@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_critter_skin", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_critter_skin.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_critter_skin", package.seeall)
+
+local lua_critter_skin = {}
+local fields = {
 	handEffects = 5,
 	spine = 4,
 	largeIcon = 3,
 	id = 1,
 	headIcon = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_critter_skin.onLoad(json)
+	lua_critter_skin.configList, lua_critter_skin.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_critter_skin

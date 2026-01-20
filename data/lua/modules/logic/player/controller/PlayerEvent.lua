@@ -1,25 +1,27 @@
-﻿module("modules.logic.player.controller.PlayerEvent", package.seeall)
+﻿-- chunkname: @modules/logic/player/controller/PlayerEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.player.controller.PlayerEvent", package.seeall)
 
-var_0_0.PlayerbassinfoChange = 1
-var_0_0.SetShowHero = 2
-var_0_0.SetPortrait = 3
-var_0_0.SelectPortrait = 4
-var_0_0.ChangePlayerinfo = 5
-var_0_0.PlayerLevelUp = 6
-var_0_0.ChangePlayerName = 7
-var_0_0.NickNameConfirmNo = 8
-var_0_0.NickNameConfirmYes = 9
-var_0_0.RenameReplyFail = 10
-var_0_0.SelectCloth = 11
-var_0_0.ShowClothSkillTips = 12
-var_0_0.UpdateSimpleProperty = 13
-var_0_0.UpdateAssistRewardCount = 14
-var_0_0.OnDailyRefresh = 15
-var_0_0.RenameFlagUpdate = 20
-var_0_0.ChangeBgTab = 1000
-var_0_0.ShowHideRoot = 1001
-var_0_0.ShowPlayerId = 21
+local PlayerEvent = _M
 
-return var_0_0
+PlayerEvent.PlayerbassinfoChange = 1
+PlayerEvent.SetShowHero = 2
+PlayerEvent.SetPortrait = 3
+PlayerEvent.SelectPortrait = 4
+PlayerEvent.ChangePlayerinfo = 5
+PlayerEvent.PlayerLevelUp = 6
+PlayerEvent.ChangePlayerName = 7
+PlayerEvent.NickNameConfirmNo = 8
+PlayerEvent.NickNameConfirmYes = 9
+PlayerEvent.RenameReplyFail = 10
+PlayerEvent.SelectCloth = 11
+PlayerEvent.ShowClothSkillTips = 12
+PlayerEvent.UpdateSimpleProperty = 13
+PlayerEvent.UpdateAssistRewardCount = 14
+PlayerEvent.OnDailyRefresh = 15
+PlayerEvent.RenameFlagUpdate = 20
+PlayerEvent.ChangeBgTab = 1000
+PlayerEvent.ShowHideRoot = 1001
+PlayerEvent.ShowPlayerId = 21
+
+return PlayerEvent

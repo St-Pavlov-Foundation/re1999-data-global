@@ -1,8 +1,10 @@
-﻿module("modules.logic.tower.view.TowerStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/TowerStoreViewContainer.lua
 
-local var_0_0 = class("TowerStoreViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.TowerStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local TowerStoreViewContainer = class("TowerStoreViewContainer", BaseViewContainer)
+
+function TowerStoreViewContainer:buildViews()
 	return {
 		TowerStoreView.New(),
 		TabViewGroup.New(1, "#go_btns"),
@@ -10,8 +12,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function TowerStoreViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,20 +23,20 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	end
 
-	if arg_2_1 == 2 then
-		arg_2_0._currencyView = CurrencyView.New({
+	if tabContainerId == 2 then
+		self._currencyView = CurrencyView.New({
 			CurrencyEnum.CurrencyType.TowerStore
-		}, arg_2_0._onCurrencyCallback, arg_2_0)
-		arg_2_0._currencyView.foreHideBtn = true
+		}, self._onCurrencyCallback, self)
+		self._currencyView.foreHideBtn = true
 
 		return {
-			arg_2_0._currencyView
+			self._currencyView
 		}
 	end
 end
 
-function var_0_0._onCurrencyCallback(arg_3_0)
+function TowerStoreViewContainer:_onCurrencyCallback()
 	BossRushController.instance:dispatchEvent(TowerEvent.OnHandleInStoreView)
 end
 
-return var_0_0
+return TowerStoreViewContainer

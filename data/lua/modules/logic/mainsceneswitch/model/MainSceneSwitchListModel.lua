@@ -1,85 +1,87 @@
-﻿module("modules.logic.mainsceneswitch.model.MainSceneSwitchListModel", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/model/MainSceneSwitchListModel.lua
 
-local var_0_0 = class("MainSceneSwitchListModel", MixScrollModel)
+module("modules.logic.mainsceneswitch.model.MainSceneSwitchListModel", package.seeall)
 
-function var_0_0._getSceneList(arg_1_0)
-	local var_1_0 = MainSceneSwitchModel.instance:getCurSceneId()
-	local var_1_1 = {}
+local MainSceneSwitchListModel = class("MainSceneSwitchListModel", MixScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(lua_scene_switch.configList) do
-		if iter_1_1.id == var_1_0 then
-			table.insert(var_1_1, 1, iter_1_1)
+function MainSceneSwitchListModel:_getSceneList()
+	local curSceneId = MainSceneSwitchModel.instance:getCurSceneId()
+	local list = {}
+
+	for i, v in ipairs(lua_scene_switch.configList) do
+		if v.id == curSceneId then
+			table.insert(list, 1, v)
 		else
-			table.insert(var_1_1, iter_1_1)
+			table.insert(list, v)
 		end
 	end
 
-	return var_1_1
+	return list
 end
 
-function var_0_0.initList(arg_2_0)
-	local var_2_0 = arg_2_0:_getSceneList()
+function MainSceneSwitchListModel:initList()
+	local list = self:_getSceneList()
 
-	arg_2_0:setList(var_2_0)
+	self:setList(list)
 end
 
-function var_0_0.getFirstUnlockSceneIndex(arg_3_0)
-	local var_3_0 = arg_3_0:_getSceneList()
+function MainSceneSwitchListModel:getFirstUnlockSceneIndex()
+	local list = self:_getSceneList()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		if iter_3_1.defaultUnlock ~= 1 and ItemModel.instance:getItemCount(iter_3_1.itemId) > 0 then
-			return iter_3_0
+	for i, v in ipairs(list) do
+		if v.defaultUnlock ~= 1 and ItemModel.instance:getItemCount(v.itemId) > 0 then
+			return i
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.clearList(arg_4_0)
-	arg_4_0._selectedCellIndex = nil
-	arg_4_0._cellInfoList = nil
+function MainSceneSwitchListModel:clearList()
+	self._selectedCellIndex = nil
+	self._cellInfoList = nil
 
-	arg_4_0:clear()
+	self:clear()
 end
 
-function var_0_0.getSelectedCellIndex(arg_5_0)
-	return arg_5_0._selectedCellIndex
+function MainSceneSwitchListModel:getSelectedCellIndex()
+	return self._selectedCellIndex
 end
 
-function var_0_0.selectCellIndex(arg_6_0, arg_6_1)
-	arg_6_0._selectedCellIndex = arg_6_1
+function MainSceneSwitchListModel:selectCellIndex(index)
+	self._selectedCellIndex = index
 
-	arg_6_0:refreshScroll()
+	self:refreshScroll()
 end
 
-function var_0_0.refreshScroll(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._scrollViews) do
-		iter_7_1:refreshScroll()
+function MainSceneSwitchListModel:refreshScroll()
+	for _, scrollView in ipairs(self._scrollViews) do
+		scrollView:refreshScroll()
 	end
 end
 
-function var_0_0.getInfoList(arg_8_0, arg_8_1)
-	arg_8_0._cellInfoList = arg_8_0._cellInfoList or {}
+function MainSceneSwitchListModel:getInfoList(scrollGO)
+	self._cellInfoList = self._cellInfoList or {}
 
-	local var_8_0 = arg_8_0:getList()
+	local list = self:getList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1 = arg_8_0._cellInfoList[iter_8_0] or SLFramework.UGUI.MixCellInfo.New(MainSceneSwitchEnum.ItemTypeUnSelected, MainSceneSwitchEnum.ItemHeight, iter_8_0)
+	for i, mo in ipairs(list) do
+		local mixCellInfo = self._cellInfoList[i] or SLFramework.UGUI.MixCellInfo.New(MainSceneSwitchEnum.ItemTypeUnSelected, MainSceneSwitchEnum.ItemHeight, i)
 
-		if iter_8_0 == arg_8_0._selectedCellIndex then
-			var_8_1.type = MainSceneSwitchEnum.ItemTypeSelected
-			var_8_1.lineLength = MainSceneSwitchEnum.ItemHeight
+		if i == self._selectedCellIndex then
+			mixCellInfo.type = MainSceneSwitchEnum.ItemTypeSelected
+			mixCellInfo.lineLength = MainSceneSwitchEnum.ItemHeight
 		else
-			var_8_1.type = MainSceneSwitchEnum.ItemTypeUnSelected
-			var_8_1.lineLength = MainSceneSwitchEnum.ItemUnSelectedHeight
+			mixCellInfo.type = MainSceneSwitchEnum.ItemTypeUnSelected
+			mixCellInfo.lineLength = MainSceneSwitchEnum.ItemUnSelectedHeight
 		end
 
-		arg_8_0._cellInfoList[iter_8_0] = var_8_1
+		self._cellInfoList[i] = mixCellInfo
 	end
 
-	return arg_8_0._cellInfoList
+	return self._cellInfoList
 end
 
-var_0_0.instance = var_0_0.New()
+MainSceneSwitchListModel.instance = MainSceneSwitchListModel.New()
 
-return var_0_0
+return MainSceneSwitchListModel

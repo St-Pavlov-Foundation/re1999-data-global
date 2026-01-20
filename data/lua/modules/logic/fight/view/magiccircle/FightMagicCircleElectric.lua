@@ -1,277 +1,288 @@
-﻿module("modules.logic.fight.view.magiccircle.FightMagicCircleElectric", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/magiccircle/FightMagicCircleElectric.lua
 
-local var_0_0 = class("FightMagicCircleElectric", FightMagicCircleBaseItem)
+module("modules.logic.fight.view.magiccircle.FightMagicCircleElectric", package.seeall)
 
-function var_0_0.getUIType(arg_1_0)
+local FightMagicCircleElectric = class("FightMagicCircleElectric", FightMagicCircleBaseItem)
+
+function FightMagicCircleElectric:getUIType()
 	return FightEnum.MagicCircleUIType.Electric
 end
 
-function var_0_0.initView(arg_2_0)
-	arg_2_0.rectTr = arg_2_0.go:GetComponent(gohelper.Type_RectTransform)
-	arg_2_0.sliderAnimator = gohelper.findChildComponent(arg_2_0.go, "slider", gohelper.Type_Animator)
-	arg_2_0.textSlider = gohelper.findChildText(arg_2_0.go, "slider/sliderbg/#txt_slidernum")
-	arg_2_0.goRoundHero = gohelper.findChild(arg_2_0.go, "slider/round/hero")
-	arg_2_0.roundNumHero = gohelper.findChildText(arg_2_0.go, "slider/round/hero/#txt_round")
-	arg_2_0.goRoundEnemy = gohelper.findChild(arg_2_0.go, "slider/round/enemy")
-	arg_2_0.roundNumEnemy = gohelper.findChildText(arg_2_0.go, "slider/round/enemy/#txt_round")
-	arg_2_0.imageSliderFlash = gohelper.findChildImage(arg_2_0.go, "slider/sliderbg/slider_flashbg")
-	arg_2_0.imageSliderFlash.fillAmount = 0
-	arg_2_0.goVxRoot = gohelper.findChild(arg_2_0.go, "go_survivalEffect")
-	arg_2_0.upVx = gohelper.findChild(arg_2_0.goVxRoot, "up")
-	arg_2_0.upDown = gohelper.findChild(arg_2_0.goVxRoot, "down")
+function FightMagicCircleElectric:initView()
+	self.rectTr = self.go:GetComponent(gohelper.Type_RectTransform)
+	self.sliderAnimator = gohelper.findChildComponent(self.go, "slider", gohelper.Type_Animator)
+	self.textSlider = gohelper.findChildText(self.go, "slider/sliderbg/#txt_slidernum")
+	self.goRoundHero = gohelper.findChild(self.go, "slider/round/hero")
+	self.roundNumHero = gohelper.findChildText(self.go, "slider/round/hero/#txt_round")
+	self.goRoundEnemy = gohelper.findChild(self.go, "slider/round/enemy")
+	self.roundNumEnemy = gohelper.findChildText(self.go, "slider/round/enemy/#txt_round")
+	self.imageSliderFlash = gohelper.findChildImage(self.go, "slider/sliderbg/slider_flashbg")
+	self.imageSliderFlash.fillAmount = 0
+	self.goVxRoot = gohelper.findChild(self.go, "go_survivalEffect")
+	self.upVx = gohelper.findChild(self.goVxRoot, "up")
+	self.upDown = gohelper.findChild(self.goVxRoot, "down")
 
-	gohelper.setActive(arg_2_0.goVxRoot, true)
-	gohelper.setActive(arg_2_0.upVx, false)
-	gohelper.setActive(arg_2_0.upDown, false)
+	gohelper.setActive(self.goVxRoot, true)
+	gohelper.setActive(self.upVx, false)
+	gohelper.setActive(self.upDown, false)
 
-	arg_2_0.imageSlider = arg_2_0:getUserDataTb_()
+	self.imageSlider = self:getUserDataTb_()
 
-	for iter_2_0 = 1, 3 do
-		local var_2_0 = gohelper.findChildImage(arg_2_0.go, "slider/sliderbg/slider_level" .. iter_2_0)
+	for i = 1, 3 do
+		local image = gohelper.findChildImage(self.go, "slider/sliderbg/slider_level" .. i)
 
-		arg_2_0.imageSlider[iter_2_0] = var_2_0
-		var_2_0.fillAmount = 0
+		self.imageSlider[i] = image
+		image.fillAmount = 0
 
-		gohelper.setActive(var_2_0.gameObject, true)
+		gohelper.setActive(image.gameObject, true)
 	end
 
-	arg_2_0.energyList = {}
+	self.energyList = {}
 
-	for iter_2_1 = 1, 3 do
-		local var_2_1 = arg_2_0:getUserDataTb_()
+	for i = 1, 3 do
+		local oneEnergy = self:getUserDataTb_()
 
-		arg_2_0.energyList[iter_2_1] = var_2_1
+		self.energyList[i] = oneEnergy
 
-		local var_2_2 = gohelper.findChild(arg_2_0.go, "slider/energy/" .. iter_2_1)
+		local energyGo = gohelper.findChild(self.go, "slider/energy/" .. i)
 
-		for iter_2_2 = 1, 3 do
-			table.insert(var_2_1, gohelper.findChild(var_2_2, "light" .. iter_2_2))
+		for j = 1, 3 do
+			table.insert(oneEnergy, gohelper.findChild(energyGo, "light" .. j))
 		end
 	end
 
-	arg_2_0._click = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "btn")
+	self._click = gohelper.findChildClickWithDefaultAudio(self.go, "btn")
 
-	arg_2_0._click:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
+	self._click:AddClickListener(self.onClickSelf, self)
 
-	arg_2_0.levelVxDict = arg_2_0:getUserDataTb_()
-	arg_2_0.levelVxDict[1] = gohelper.findChild(arg_2_0.go, "slider/vx/1")
-	arg_2_0.levelVxDict[2] = gohelper.findChild(arg_2_0.go, "slider/vx/2")
-	arg_2_0.levelVxDict[3] = gohelper.findChild(arg_2_0.go, "slider/vx/3")
-	arg_2_0.preRecordProgress = 0
+	self.levelVxDict = self:getUserDataTb_()
+	self.levelVxDict[1] = gohelper.findChild(self.go, "slider/vx/1")
+	self.levelVxDict[2] = gohelper.findChild(self.go, "slider/vx/2")
+	self.levelVxDict[3] = gohelper.findChild(self.go, "slider/vx/3")
+	self.preRecordProgress = 0
 
-	arg_2_0:addEventCb(FightController.instance, FightEvent.UpgradeMagicCircile, arg_2_0.onUpgradeMagicCircle, arg_2_0)
+	self:addEventCb(FightController.instance, FightEvent.UpgradeMagicCircile, self.onUpgradeMagicCircle, self)
 end
 
-var_0_0.Upgrade2AnimatorName = {
+FightMagicCircleElectric.Upgrade2AnimatorName = {
 	[2] = "upgrade_01",
 	[3] = "upgrade_02"
 }
 
-function var_0_0.onUpgradeMagicCircle(arg_3_0, arg_3_1)
-	local var_3_0 = lua_magic_circle.configDict[arg_3_1.magicCircleId]
-	local var_3_1 = arg_3_1.electricLevel
-	local var_3_2 = arg_3_0.Upgrade2AnimatorName[var_3_1]
+function FightMagicCircleElectric:onUpgradeMagicCircle(magicMo)
+	local magicConfig = lua_magic_circle.configDict[magicMo.magicCircleId]
+	local curLevel = magicMo.electricLevel
+	local anim = self.Upgrade2AnimatorName[curLevel]
 
-	if var_3_2 then
-		arg_3_0.sliderAnimator:Play(var_3_2, 0, 0)
+	if anim then
+		self.sliderAnimator:Play(anim, 0, 0)
 	end
 
-	arg_3_0.preProgress = 0
+	self.preProgress = 0
 
-	arg_3_0:refreshUI(arg_3_1, var_3_0)
+	self:refreshUI(magicMo, magicConfig)
 	AudioMgr.instance:trigger(20270001)
 end
 
-function var_0_0.onClickSelf(arg_4_0)
-	local var_4_0 = recthelper.getHeight(arg_4_0.rectTr)
-	local var_4_1 = arg_4_0.rectTr.position
+function FightMagicCircleElectric:onClickSelf()
+	local preferredHeight = recthelper.getHeight(self.rectTr)
+	local position = self.rectTr.position
 
-	FightController.instance:dispatchEvent(FightEvent.OnClickMagicCircleText, var_4_0, var_4_1)
+	FightController.instance:dispatchEvent(FightEvent.OnClickMagicCircleText, preferredHeight, position)
 end
 
-function var_0_0.onCreateMagic(arg_5_0, arg_5_1, arg_5_2)
-	var_0_0.super.onCreateMagic(arg_5_0, arg_5_1, arg_5_2)
+function FightMagicCircleElectric:onCreateMagic(magicMo, magicConfig)
+	FightMagicCircleElectric.super.onCreateMagic(self, magicMo, magicConfig)
 	AudioMgr.instance:trigger(20270001)
 end
 
-function var_0_0.refreshUI(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.magicMo = arg_6_1
-	arg_6_0.magicConfig = arg_6_2
+function FightMagicCircleElectric:refreshUI(magicMo, magicConfig, fromId)
+	self.magicMo = magicMo
+	self.magicConfig = magicConfig
 
-	arg_6_0:refreshRound(arg_6_1, arg_6_2)
-	arg_6_0:refreshSlider(arg_6_1, arg_6_2)
-	arg_6_0:refreshEnergy(arg_6_1, arg_6_2)
-	arg_6_0:playProgressChangeAnim(arg_6_3)
+	self:refreshRound(magicMo, magicConfig)
+	self:refreshSlider(magicMo, magicConfig)
+	self:refreshEnergy(magicMo, magicConfig)
+	self:playProgressChangeAnim(fromId)
 end
 
-var_0_0.ChangeProgressEffect = "buff/buff_dianneng_zr"
-var_0_0.ChangeProgressEffectAudioId = 20280002
-var_0_0.EffectDuration = 1
+FightMagicCircleElectric.ChangeProgressEffect = "buff/buff_dianneng_zr"
+FightMagicCircleElectric.ChangeProgressEffectAudioId = 20280002
+FightMagicCircleElectric.EffectDuration = 1
 
-function var_0_0.playProgressChangeAnim(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.magicMo.electricProgress
+function FightMagicCircleElectric:playProgressChangeAnim(fromId)
+	local curProgress = self.magicMo.electricProgress
 
-	if arg_7_0.preRecordProgress == var_7_0 then
+	if self.preRecordProgress == curProgress then
 		return
 	end
 
-	if var_7_0 > arg_7_0.preRecordProgress then
-		gohelper.setActive(arg_7_0.upVx, false)
-		gohelper.setActive(arg_7_0.upVx, true)
+	local isUp = curProgress > self.preRecordProgress
+
+	if isUp then
+		gohelper.setActive(self.upVx, false)
+		gohelper.setActive(self.upVx, true)
 	else
-		gohelper.setActive(arg_7_0.upDown, false)
-		gohelper.setActive(arg_7_0.upDown, true)
+		gohelper.setActive(self.upDown, false)
+		gohelper.setActive(self.upDown, true)
 	end
 
-	arg_7_0.preRecordProgress = arg_7_0.magicMo.electricProgress
+	self.preRecordProgress = self.magicMo.electricProgress
 
-	local var_7_1 = arg_7_1 and FightHelper.getEntity(arg_7_1)
+	local entity = fromId and FightHelper.getEntity(fromId)
 
-	if not var_7_1 then
+	if not entity then
 		return
 	end
 
-	local var_7_2 = var_7_1.effect:addHangEffect(var_0_0.ChangeProgressEffect, ModuleEnum.SpineHangPoint.mountbottom, nil, var_0_0.EffectDuration)
+	local effectWrap = entity.effect:addHangEffect(FightMagicCircleElectric.ChangeProgressEffect, ModuleEnum.SpineHangPoint.mountbottom, nil, FightMagicCircleElectric.EffectDuration)
 
-	var_7_2:setLocalPos(0, 0, 0)
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_7_1, var_7_2)
-	AudioMgr.instance:trigger(var_0_0.ChangeProgressEffectAudioId)
+	effectWrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(fromId, effectWrap)
+	AudioMgr.instance:trigger(FightMagicCircleElectric.ChangeProgressEffectAudioId)
 end
 
-function var_0_0.refreshRound(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_1.round == -1 and "∞" or arg_8_1.round
+function FightMagicCircleElectric:refreshRound(magicMo, magicConfig)
+	local round = magicMo.round == -1 and "∞" or magicMo.round
 
-	arg_8_0.roundNumHero.text = var_8_0
-	arg_8_0.roundNumEnemy.text = var_8_0
+	self.roundNumHero.text = round
+	self.roundNumEnemy.text = round
 
-	local var_8_1 = FightHelper.getMagicSide(arg_8_1.createUid)
+	local side = FightHelper.getMagicSide(magicMo.createUid)
 
-	gohelper.setActive(arg_8_0.goRoundHero, var_8_1 == FightEnum.EntitySide.MySide)
-	gohelper.setActive(arg_8_0.goRoundEnemy, var_8_1 == FightEnum.EntitySide.EnemySide)
+	gohelper.setActive(self.goRoundHero, side == FightEnum.EntitySide.MySide)
+	gohelper.setActive(self.goRoundEnemy, side == FightEnum.EntitySide.EnemySide)
 end
 
-var_0_0.FillAmountDuration = 0.5
+FightMagicCircleElectric.FillAmountDuration = 0.5
 
-function var_0_0.refreshSlider(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.curMaxProgress = arg_9_1.maxElectricProgress
+function FightMagicCircleElectric:refreshSlider(magicMo, magicConfig)
+	self.curMaxProgress = magicMo.maxElectricProgress
 
-	if not arg_9_0.preProgress then
-		arg_9_0:refreshSliderByProgressAndLevel(arg_9_1.electricProgress, arg_9_1.electricLevel)
-		arg_9_0:showCurLevelVx()
+	if not self.preProgress then
+		self:refreshSliderByProgressAndLevel(magicMo.electricProgress, magicMo.electricLevel)
+		self:showCurLevelVx()
 
-		arg_9_0.preProgress = arg_9_1.electricProgress
-		arg_9_0.preLevel = arg_9_1.electricLevel
+		self.preProgress = magicMo.electricProgress
+		self.preLevel = magicMo.electricLevel
 
 		return
 	end
 
-	local var_9_0 = arg_9_1.electricProgress
-	local var_9_1 = arg_9_0.preProgress
+	local curProgress = magicMo.electricProgress
+	local preProgress = self.preProgress
 
-	arg_9_0.preProgress = var_9_0
+	self.preProgress = curProgress
 
-	arg_9_0:clearTween()
+	self:clearTween()
 
-	arg_9_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_9_1, var_9_0, var_0_0.FillAmountDuration, arg_9_0.tweenProgress, arg_9_0.onTweenFinish, arg_9_0)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(preProgress, curProgress, FightMagicCircleElectric.FillAmountDuration, self.tweenProgress, self.onTweenFinish, self)
 end
 
-function var_0_0.tweenProgress(arg_10_0, arg_10_1)
-	arg_10_1 = math.floor(arg_10_1)
+function FightMagicCircleElectric:tweenProgress(progress)
+	progress = math.floor(progress)
 
-	local var_10_0 = arg_10_0.magicMo.electricLevel
+	local level = self.magicMo.electricLevel
 
-	arg_10_0:refreshSliderByProgressAndLevel(arg_10_1, var_10_0)
+	self:refreshSliderByProgressAndLevel(progress, level)
 end
 
-function var_0_0.refreshSliderByProgressAndLevel(arg_11_0, arg_11_1, arg_11_2)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.imageSlider) do
-		if iter_11_0 == arg_11_2 then
-			if iter_11_0 == 3 then
-				arg_11_0.textSlider.text = "MAX"
-				iter_11_1.fillAmount = 1
+function FightMagicCircleElectric:refreshSliderByProgressAndLevel(progress, level)
+	for i, sliderImage in ipairs(self.imageSlider) do
+		if i == level then
+			if i == 3 then
+				self.textSlider.text = "MAX"
+				sliderImage.fillAmount = 1
 			else
-				local var_11_0 = arg_11_0.curMaxProgress
+				local curMax = self.curMaxProgress
 
-				if not var_11_0 or var_11_0 < 1 then
-					local var_11_1 = lua_fight_dnsz.configList[arg_11_2 + 1]
+				if not curMax or curMax < 1 then
+					local co = lua_fight_dnsz.configList[level + 1]
 
-					var_11_0 = 0
+					curMax = 0
 
-					if var_11_1 then
-						var_11_0 = var_11_1.progress
+					if co then
+						curMax = co.progress
 					else
-						logError("not found fight_dnsz co, level : " .. tostring(arg_11_2))
+						logError("not found fight_dnsz co, level : " .. tostring(level))
 
-						var_11_0 = 1
+						curMax = 1
 					end
 				end
 
-				iter_11_1.fillAmount = arg_11_1 / var_11_0
-				arg_11_0.textSlider.text = string.format("%s/<#E3E3E3>%s</COLOR>", arg_11_1, var_11_0)
+				local rate = progress / curMax
+
+				sliderImage.fillAmount = rate
+				self.textSlider.text = string.format("%s/<#E3E3E3>%s</COLOR>", progress, curMax)
 			end
 		else
-			iter_11_1.fillAmount = 0
+			sliderImage.fillAmount = 0
 		end
 	end
 end
 
-function var_0_0.onTweenFinish(arg_12_0)
-	arg_12_0:showCurLevelVx()
-	arg_12_0:clearTween()
+function FightMagicCircleElectric:onTweenFinish()
+	self:showCurLevelVx()
+	self:clearTween()
 end
 
-function var_0_0.showCurLevelVx(arg_13_0)
-	local var_13_0 = arg_13_0.magicMo.electricLevel
+function FightMagicCircleElectric:showCurLevelVx()
+	local level = self.magicMo.electricLevel
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.levelVxDict) do
-		gohelper.setActive(iter_13_1, iter_13_0 <= var_13_0)
+	for lv, goVx in pairs(self.levelVxDict) do
+		gohelper.setActive(goVx, lv <= level)
 	end
 end
 
-function var_0_0.refreshEnergy(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_1.electricLevel
+function FightMagicCircleElectric:refreshEnergy(magicMo, magicConfig)
+	local level = magicMo.electricLevel
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.energyList) do
-		for iter_14_2, iter_14_3 in ipairs(iter_14_1) do
-			gohelper.setActive(iter_14_3, iter_14_0 <= var_14_0 and iter_14_2 == var_14_0)
+	for i, oneEnergy in ipairs(self.energyList) do
+		for j, goEnergy in ipairs(oneEnergy) do
+			gohelper.setActive(goEnergy, i <= level and j == level)
 		end
 	end
 end
 
-function var_0_0.getLevelByProgress(arg_15_0, arg_15_1)
-	local var_15_0 = lua_fight_dnsz.configList
+function FightMagicCircleElectric:getLevelByProgress(progress)
+	local list = lua_fight_dnsz.configList
+	local len = #list
 
-	for iter_15_0 = #var_15_0, 1, -1 do
-		local var_15_1 = var_15_0[iter_15_0]
+	for i = len, 1, -1 do
+		local co = list[i]
 
-		if arg_15_1 >= var_15_1.progress then
-			return var_15_1.level
+		if progress >= co.progress then
+			return co.level
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.getLevelCo(arg_16_0, arg_16_1)
-	return lua_fight_dnsz.configDict[arg_16_1] or lua_fight_dnsz.configDict[1]
+function FightMagicCircleElectric:getLevelCo(level)
+	local levelCo = lua_fight_dnsz.configDict[level]
+
+	levelCo = levelCo or lua_fight_dnsz.configDict[1]
+
+	return levelCo
 end
 
-function var_0_0.clearTween(arg_17_0)
-	if arg_17_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_17_0.tweenId)
+function FightMagicCircleElectric:clearTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_17_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.destroy(arg_18_0)
-	arg_18_0:clearTween()
+function FightMagicCircleElectric:destroy()
+	self:clearTween()
 
-	if arg_18_0._click then
-		arg_18_0._click:RemoveClickListener()
+	if self._click then
+		self._click:RemoveClickListener()
 	end
 
-	var_0_0.super.destroy(arg_18_0)
+	FightMagicCircleElectric.super.destroy(self)
 end
 
-return var_0_0
+return FightMagicCircleElectric

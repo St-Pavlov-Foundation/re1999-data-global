@@ -1,26 +1,28 @@
-﻿module("modules.logic.prototest.view.ProtoModifyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/view/ProtoModifyViewContainer.lua
 
-local var_0_0 = class("ProtoModifyViewContainer", BaseViewContainer)
+module("modules.logic.prototest.view.ProtoModifyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local ProtoModifyViewContainer = class("ProtoModifyViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "paramlistpanel/paramscroll"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "paramlistpanel/paramscroll/Viewport/item"
-	var_1_1.cellClass = ProtoModifyListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 667
-	var_1_1.cellHeight = 75
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
+function ProtoModifyViewContainer:buildViews()
+	local views = {}
+	local listParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(ProtoModifyModel.instance, var_1_1))
-	table.insert(var_1_0, ProtoModifyView.New())
+	listParam.scrollGOPath = "paramlistpanel/paramscroll"
+	listParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	listParam.prefabUrl = "paramlistpanel/paramscroll/Viewport/item"
+	listParam.cellClass = ProtoModifyListItem
+	listParam.scrollDir = ScrollEnum.ScrollDirV
+	listParam.lineCount = 1
+	listParam.cellWidth = 667
+	listParam.cellHeight = 75
+	listParam.cellSpaceH = 0
+	listParam.cellSpaceV = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(ProtoModifyModel.instance, listParam))
+	table.insert(views, ProtoModifyView.New())
+
+	return views
 end
 
-return var_0_0
+return ProtoModifyViewContainer

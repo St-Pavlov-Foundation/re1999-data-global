@@ -1,186 +1,188 @@
-﻿module("modules.logic.explore.rpc.ExploreRpc", package.seeall)
+﻿-- chunkname: @modules/logic/explore/rpc/ExploreRpc.lua
 
-local var_0_0 = class("ExploreRpc", BaseRpc)
+module("modules.logic.explore.rpc.ExploreRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local ExploreRpc = class("ExploreRpc", BaseRpc)
 
-function var_0_0.sendChangeMapRequest(arg_1_0, arg_1_1)
-	local var_1_0 = ExploreModule_pb.ChangeMapRequest()
+ExploreRpc.instance = ExploreRpc.New()
 
-	var_1_0.mapId = arg_1_1
+function ExploreRpc:sendChangeMapRequest(mapId)
+	local req = ExploreModule_pb.ChangeMapRequest()
 
-	arg_1_0:sendMsg(var_1_0)
+	req.mapId = mapId
+
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveChangeMapReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		ExploreModel.instance.isFirstEnterMap = arg_2_2.exploreInfo.exploreMap.isFirstEnter and ExploreEnum.EnterMode.First or ExploreEnum.EnterMode.Normal
+function ExploreRpc:onReceiveChangeMapReply(resultCode, msg)
+	if resultCode == 0 then
+		ExploreModel.instance.isFirstEnterMap = msg.exploreInfo.exploreMap.isFirstEnter and ExploreEnum.EnterMode.First or ExploreEnum.EnterMode.Normal
 
-		ExploreSimpleModel.instance:setNowMapId(arg_2_2.exploreInfo.exploreMap.mapId)
-		ExploreModel.instance:updateExploreInfo(arg_2_2.exploreInfo)
-		ExploreController.instance:enterExploreMap(arg_2_2.exploreInfo.exploreMap.mapId)
+		ExploreSimpleModel.instance:setNowMapId(msg.exploreInfo.exploreMap.mapId)
+		ExploreModel.instance:updateExploreInfo(msg.exploreInfo)
+		ExploreController.instance:enterExploreMap(msg.exploreInfo.exploreMap.mapId)
 	end
 end
 
-function var_0_0.sendGetExploreInfoRequest(arg_3_0)
-	local var_3_0 = ExploreModule_pb.GetExploreInfoRequest()
+function ExploreRpc:sendGetExploreInfoRequest()
+	local req = ExploreModule_pb.GetExploreInfoRequest()
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetExploreInfoReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		ExploreModel.instance:updateExploreInfo(arg_4_2.exploreInfo)
+function ExploreRpc:onReceiveGetExploreInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		ExploreModel.instance:updateExploreInfo(msg.exploreInfo)
 		ExploreController.instance:enterExploreMap(ExploreModel.instance:getMapId())
 	end
 end
 
-function var_0_0.sendGetExploreSimpleInfoRequest(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = ExploreModule_pb.GetExploreSimpleInfoRequest()
+function ExploreRpc:sendGetExploreSimpleInfoRequest(callback, callObj)
+	local req = ExploreModule_pb.GetExploreSimpleInfoRequest()
 
-	return arg_5_0:sendMsg(var_5_0, arg_5_1, arg_5_2)
+	return self:sendMsg(req, callback, callObj)
 end
 
-function var_0_0.onReceiveGetExploreSimpleInfoReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
-		ExploreSimpleModel.instance:onGetInfo(arg_6_2)
+function ExploreRpc:onReceiveGetExploreSimpleInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		ExploreSimpleModel.instance:onGetInfo(msg)
 	end
 end
 
-function var_0_0.sendExploreMoveRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	local var_7_0 = ExploreModule_pb.ExploreMoveRequest()
+function ExploreRpc:sendExploreMoveRequest(posx, posy, interactId, callback, callbackObj)
+	local req = ExploreModule_pb.ExploreMoveRequest()
 
-	var_7_0.posx = arg_7_1
-	var_7_0.posy = arg_7_2
+	req.posx = posx
+	req.posy = posy
 
-	if arg_7_3 then
-		var_7_0.interactId = arg_7_3
+	if interactId then
+		req.interactId = interactId
 	end
 
-	return arg_7_0:sendMsg(var_7_0, arg_7_4, arg_7_5)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveExploreMoveReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == 0 then
+function ExploreRpc:onReceiveExploreMoveReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	else
 		ExploreStepController.instance:forceAsyncPos()
 	end
 end
 
-function var_0_0.sendExploreInteractSetStatusRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
-	local var_9_0 = ExploreModule_pb.ExploreInteractSetStatusRequest()
+function ExploreRpc:sendExploreInteractSetStatusRequest(type, id, status, callback, callbackObj)
+	local req = ExploreModule_pb.ExploreInteractSetStatusRequest()
 
-	var_9_0.type = arg_9_1
-	var_9_0.id = arg_9_2
-	var_9_0.status = arg_9_3
+	req.type = type
+	req.id = id
+	req.status = status
 
-	return arg_9_0:sendMsg(var_9_0, arg_9_4, arg_9_5)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveExploreInteractSetStatusReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == 0 then
-		ExploreModel.instance:updateInteractStatus(arg_10_2.mapId, arg_10_2.id, arg_10_2.status)
+function ExploreRpc:onReceiveExploreInteractSetStatusReply(resultCode, msg)
+	if resultCode == 0 then
+		ExploreModel.instance:updateInteractStatus(msg.mapId, msg.id, msg.status)
 	end
 end
 
-function var_0_0.sendExploreInteractRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
-	local var_11_0 = ExploreModule_pb.ExploreInteractRequest()
+function ExploreRpc:sendExploreInteractRequest(id, step, params, callback, callbackObj)
+	local req = ExploreModule_pb.ExploreInteractRequest()
 
-	var_11_0.id = arg_11_1
+	req.id = id
 
-	if not string.nilorempty(arg_11_3) then
-		var_11_0.params = arg_11_3
+	if not string.nilorempty(params) then
+		req.params = params
 	end
 
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.BeginInteract)
 
-	return arg_11_0:sendMsg(var_11_0, arg_11_4, arg_11_5)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveExploreInteractReply(arg_12_0, arg_12_1, arg_12_2)
+function ExploreRpc:onReceiveExploreInteractReply(resultCode, msg)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.BeginInteract)
 	ExploreController.instance:dispatchEvent(ExploreEvent.UnitInteractEnd)
 
-	if arg_12_1 == 0 then
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.onReceiveStartExplorePush(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
+function ExploreRpc:onReceiveStartExplorePush(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendExploreItemInteractRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	local var_14_0 = ExploreModule_pb.ExploreItemInteractRequest()
+function ExploreRpc:sendExploreItemInteractRequest(id, params, callback, callbackObj)
+	local req = ExploreModule_pb.ExploreItemInteractRequest()
 
-	var_14_0.id = arg_14_1
-	var_14_0.params = arg_14_2
+	req.id = id
+	req.params = params
 
-	return arg_14_0:sendMsg(var_14_0, arg_14_3, arg_14_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveExploreItemInteractReply(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 == 0 then
+function ExploreRpc:onReceiveExploreItemInteractReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendExploreUseItemRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6)
-	local var_16_0 = ExploreModule_pb.ExploreUseItemRequest()
+function ExploreRpc:sendExploreUseItemRequest(id, posx, posy, interactId, callback, callbackObj)
+	local req = ExploreModule_pb.ExploreUseItemRequest()
 
-	var_16_0.uid = arg_16_1
-	var_16_0.posx = arg_16_2
-	var_16_0.posy = arg_16_3
+	req.uid = id
+	req.posx = posx
+	req.posy = posy
 
-	if arg_16_4 then
-		var_16_0.interactId = arg_16_4
+	if interactId then
+		req.interactId = interactId
 	end
 
-	return arg_16_0:sendMsg(var_16_0, arg_16_5, arg_16_6)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveExploreUseItemReply(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_1 == 0 then
+function ExploreRpc:onReceiveExploreUseItemReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.onReceiveExploreItemChangePush(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 == 0 then
-		ExploreBackpackModel.instance:updateItems(arg_18_2.exploreItems)
+function ExploreRpc:onReceiveExploreItemChangePush(resultCode, msg)
+	if resultCode == 0 then
+		ExploreBackpackModel.instance:updateItems(msg.exploreItems)
 	end
 end
 
-function var_0_0.onReceiveExploreStepPush(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1 == 0 then
-		ExploreStepController.instance:onExploreStepPush(arg_19_2)
+function ExploreRpc:onReceiveExploreStepPush(resultCode, msg)
+	if resultCode == 0 then
+		ExploreStepController.instance:onExploreStepPush(msg)
 	end
 end
 
-function var_0_0.sendResetExploreRequest(arg_20_0)
-	local var_20_0 = ExploreModule_pb.ResetExploreRequest()
+function ExploreRpc:sendResetExploreRequest()
+	local req = ExploreModule_pb.ResetExploreRequest()
 
 	ExploreController.instance:getMap():getHero():stopMoving(true)
 
-	local var_20_1 = {
+	local stepData = {
 		stepType = ExploreEnum.StepType.ResetBegin
 	}
 
-	ExploreStepController.instance:insertClientStep(var_20_1, 1)
+	ExploreStepController.instance:insertClientStep(stepData, 1)
 	ExploreStepController.instance:startStep()
-	arg_20_0:sendMsg(var_20_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveResetExploreReply(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = {
+function ExploreRpc:onReceiveResetExploreReply(resultCode, msg)
+	local stepData = {
 		stepType = ExploreEnum.StepType.ResetEnd
 	}
 
-	ExploreStepController.instance:insertClientStep(var_21_0)
+	ExploreStepController.instance:insertClientStep(stepData)
 	ExploreStepController.instance:startStep()
 end
 
-return var_0_0
+return ExploreRpc

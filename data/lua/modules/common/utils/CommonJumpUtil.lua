@@ -1,95 +1,97 @@
-﻿module("modules.common.utils.CommonJumpUtil", package.seeall)
+﻿-- chunkname: @modules/common/utils/CommonJumpUtil.lua
 
-local var_0_0 = _M
+module("modules.common.utils.CommonJumpUtil", package.seeall)
 
-function var_0_0._enterMainScene(arg_1_0)
-	logError("enter main scene " .. cjson.encode(arg_1_0))
+local CommonJumpUtil = _M
+
+function CommonJumpUtil._enterMainScene(param)
+	logError("enter main scene " .. cjson.encode(param))
 end
 
-function var_0_0._jumpSpecial(arg_2_0)
-	logError("jump special " .. cjson.encode(arg_2_0))
+function CommonJumpUtil._jumpSpecial(param)
+	logError("jump special " .. cjson.encode(param))
 end
 
-function var_0_0._openSpecialView(arg_3_0)
-	logError("open special view " .. cjson.encode(arg_3_0))
+function CommonJumpUtil._openSpecialView(param)
+	logError("open special view " .. cjson.encode(param))
 end
 
-var_0_0.JumpTypeSpecialFunc = {
-	special = var_0_0._jumpSpecial
+CommonJumpUtil.JumpTypeSpecialFunc = {
+	special = CommonJumpUtil._jumpSpecial
 }
-var_0_0.JumpViewSpecialFunc = {
-	["view#special"] = var_0_0._openSpecialView
+CommonJumpUtil.JumpViewSpecialFunc = {
+	["view#special"] = CommonJumpUtil._openSpecialView
 }
-var_0_0.JumpSceneFunc = {
-	["scene#main"] = var_0_0._enterMainScene
+CommonJumpUtil.JumpSceneFunc = {
+	["scene#main"] = CommonJumpUtil._enterMainScene
 }
-var_0_0.JumpSeparator = "#"
-var_0_0.JumpType = {
+CommonJumpUtil.JumpSeparator = "#"
+CommonJumpUtil.JumpType = {
 	View = "view",
 	Scene = "scene"
 }
 
-function var_0_0.jump(arg_4_0)
-	if string.nilorempty(arg_4_0) then
+function CommonJumpUtil.jump(jumpString)
+	if string.nilorempty(jumpString) then
 		return
 	end
 
-	local var_4_0 = string.split(arg_4_0, var_0_0.JumpSeparator)
-	local var_4_1 = string.trim(var_4_0[1])
-	local var_4_2 = var_0_0.JumpTypeSpecialFunc[var_4_1]
+	local jumpStringSplitArr = string.split(jumpString, CommonJumpUtil.JumpSeparator)
+	local jumpType = string.trim(jumpStringSplitArr[1])
+	local specialJumpTypeFunc = CommonJumpUtil.JumpTypeSpecialFunc[jumpType]
 
-	if var_4_2 then
-		local var_4_3 = var_0_0._deserializeParams(var_4_0, 2)
+	if specialJumpTypeFunc then
+		local param = CommonJumpUtil._deserializeParams(jumpStringSplitArr, 2)
 
-		var_4_2(var_4_3)
-	elseif var_4_1 == var_0_0.JumpType.View then
-		local var_4_4 = var_0_0._deserializeParams(var_4_0, 3)
-		local var_4_5 = string.trim(var_4_0[2])
-		local var_4_6 = var_0_0.JumpType.View .. var_0_0.JumpSeparator .. var_4_5
-		local var_4_7 = var_0_0.JumpViewSpecialFunc[var_4_6]
+		specialJumpTypeFunc(param)
+	elseif jumpType == CommonJumpUtil.JumpType.View then
+		local param = CommonJumpUtil._deserializeParams(jumpStringSplitArr, 3)
+		local viewName = string.trim(jumpStringSplitArr[2])
+		local specialKey = CommonJumpUtil.JumpType.View .. CommonJumpUtil.JumpSeparator .. viewName
+		local specialViewFunc = CommonJumpUtil.JumpViewSpecialFunc[specialKey]
 
-		if var_4_7 then
-			var_4_7(var_4_4)
+		if specialViewFunc then
+			specialViewFunc(param)
 		else
-			ViewMgr.instance:openView(var_4_5, var_4_4)
+			ViewMgr.instance:openView(viewName, param)
 		end
-	elseif var_4_1 == var_0_0.JumpType.Scene then
-		local var_4_8 = string.trim(var_4_0[2])
-		local var_4_9 = var_0_0.JumpType.Scene .. var_0_0.JumpSeparator .. var_4_8
-		local var_4_10 = var_0_0.JumpSceneFunc[var_4_9]
+	elseif jumpType == CommonJumpUtil.JumpType.Scene then
+		local sceneName = string.trim(jumpStringSplitArr[2])
+		local specialKey = CommonJumpUtil.JumpType.Scene .. CommonJumpUtil.JumpSeparator .. sceneName
+		local jumpSceneFunc = CommonJumpUtil.JumpSceneFunc[specialKey]
 
-		if var_4_10 then
-			local var_4_11 = var_0_0._deserializeParams(var_4_0, 3)
+		if jumpSceneFunc then
+			local param = CommonJumpUtil._deserializeParams(jumpStringSplitArr, 3)
 
-			var_4_10(var_4_11)
+			jumpSceneFunc(param)
 		else
-			logError("jumpType scene invalid: " .. arg_4_0)
+			logError("jumpType scene invalid: " .. jumpString)
 		end
 	else
-		logError("jumpType invalid: " .. arg_4_0)
+		logError("jumpType invalid: " .. jumpString)
 	end
 end
 
-function var_0_0._deserializeParams(arg_5_0, arg_5_1)
-	local var_5_0 = #arg_5_0
+function CommonJumpUtil._deserializeParams(jumpStringSplitArr, index)
+	local spCount = #jumpStringSplitArr
 
-	if var_5_0 < arg_5_1 then
+	if spCount < index then
 		return nil
 	end
 
-	local var_5_1 = arg_5_0[var_5_0]
+	local jsonStr = jumpStringSplitArr[spCount]
 
-	if arg_5_1 < var_5_0 then
-		local var_5_2 = {}
+	if index < spCount then
+		local temp = {}
 
-		for iter_5_0 = arg_5_1, var_5_0 do
-			table.insert(var_5_2, arg_5_0[iter_5_0])
+		for i = index, spCount do
+			table.insert(temp, jumpStringSplitArr[i])
 		end
 
-		var_5_1 = table.concat(var_5_2, var_0_0.JumpSeparator)
+		jsonStr = table.concat(temp, CommonJumpUtil.JumpSeparator)
 	end
 
-	return cjson.decode(var_5_1)
+	return cjson.decode(jsonStr)
 end
 
-return var_0_0
+return CommonJumpUtil

@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191ItemView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191ItemView.lua
 
-local var_0_0 = class("Act191ItemView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191ItemView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goRoot = gohelper.findChild(arg_1_0.viewGO, "#go_Root")
-	arg_1_0._imageRare = gohelper.findChildImage(arg_1_0.viewGO, "#go_Root/#image_Rare")
-	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_Root/#image_Icon")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "#go_Root/#txt_Name")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_Root/scroll_desc/Viewport/go_desccontent/#txt_Desc")
+local Act191ItemView = class("Act191ItemView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191ItemView:onInitView()
+	self._goRoot = gohelper.findChild(self.viewGO, "#go_Root")
+	self._imageRare = gohelper.findChildImage(self.viewGO, "#go_Root/#image_Rare")
+	self._imageIcon = gohelper.findChildImage(self.viewGO, "#go_Root/#image_Icon")
+	self._txtName = gohelper.findChildText(self.viewGO, "#go_Root/#txt_Name")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "#go_Root/scroll_desc/Viewport/go_desccontent/#txt_Desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Act191ItemView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0.config = arg_3_0.viewParam
+function Act191ItemView:onOpen()
+	self.config = self.viewParam
 
-	if arg_3_0.config.rare ~= 0 then
-		UISpriteSetMgr.instance:setAct174Sprite(arg_3_0._imageRare, "act174_roleframe_" .. arg_3_0.config.rare)
+	if self.config.rare ~= 0 then
+		UISpriteSetMgr.instance:setAct174Sprite(self._imageRare, "act174_roleframe_" .. self.config.rare)
 	end
 
-	gohelper.setActive(arg_3_0._imageRare, arg_3_0.config.rare ~= 0)
-	UISpriteSetMgr.instance:setAct174Sprite(arg_3_0._imageIcon, arg_3_0.config.icon)
+	gohelper.setActive(self._imageRare, self.config.rare ~= 0)
+	UISpriteSetMgr.instance:setAct174Sprite(self._imageIcon, self.config.icon)
 
-	arg_3_0._txtName.text = arg_3_0.config.name
-	arg_3_0._txtDesc.text = arg_3_0.config.desc
+	self._txtName.text = self.config.name
+	self._txtDesc.text = self.config.desc
 
-	if arg_3_0.config.id == 1001 then
-		transformhelper.setLocalScale(arg_3_0._imageIcon.gameObject.transform, 0.75, 0.75, 1)
+	if self.config.id == 1001 then
+		transformhelper.setLocalScale(self._imageIcon.gameObject.transform, 0.75, 0.75, 1)
 	end
 end
 
-return var_0_0
+return Act191ItemView

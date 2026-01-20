@@ -1,77 +1,81 @@
-﻿module("modules.logic.versionactivity1_4.enter.controller.VersionActivity1_4EnterController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/enter/controller/VersionActivity1_4EnterController.lua
 
-local var_0_0 = class("VersionActivity1_4EnterController", BaseController)
+module("modules.logic.versionactivity1_4.enter.controller.VersionActivity1_4EnterController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.actId = VersionActivity1_4Enum.ActivityId.EnterView
+local VersionActivity1_4EnterController = class("VersionActivity1_4EnterController", BaseController)
+
+function VersionActivity1_4EnterController:onInit()
+	self.actId = VersionActivity1_4Enum.ActivityId.EnterView
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_4EnterController:reInit()
 	return
 end
 
-function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_3_0, arg_3_1, arg_3_2)
+function VersionActivity1_4EnterController:openVersionActivityEnterViewIfNotOpened(openedCallback, openedCallbackObj)
 	if ViewMgr.instance:isOpen(ViewName.VersionActivity1_4EnterView) then
-		if arg_3_1 then
-			arg_3_1(arg_3_2)
+		if openedCallback then
+			openedCallback(openedCallbackObj)
 		end
 
 		return
 	end
 
-	arg_3_0:openVersionActivityEnterView(arg_3_1, arg_3_2)
+	self:openVersionActivityEnterView(openedCallback, openedCallbackObj)
 end
 
-function var_0_0.openVersionActivityEnterView(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.openedCallback = arg_4_1
-	arg_4_0.openedCallbackObj = arg_4_2
+function VersionActivity1_4EnterController:openVersionActivityEnterView(openedCallback, openedCallbackObj)
+	self.openedCallback = openedCallback
+	self.openedCallbackObj = openedCallbackObj
 
-	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, arg_4_0.actId, arg_4_0._openVersionActivityEnterView, arg_4_0)
+	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, self.actId, self._openVersionActivityEnterView, self)
 end
 
-function var_0_0._onFinishStory(arg_5_0)
-	if ActivityHelper.getActivityStatus(arg_5_0.actId) ~= ActivityEnum.ActivityStatus.Normal then
+function VersionActivity1_4EnterController:_onFinishStory()
+	local status = ActivityHelper.getActivityStatus(self.actId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		return
 	end
 
-	arg_5_0:_openVersionActivityEnterView()
+	self:_openVersionActivityEnterView()
 end
 
-function var_0_0._openVersionActivityEnterView(arg_6_0)
-	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_0.actId)
-	local var_6_1 = var_6_0 and var_6_0.storyId
+function VersionActivity1_4EnterController:_openVersionActivityEnterView()
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
+	local storyId = actCo and actCo.storyId
 
-	if var_6_1 and var_6_1 > 0 and not StoryModel.instance:isStoryFinished(var_6_0.storyId) then
-		StoryController.instance:playStory(var_6_1, {
+	if storyId and storyId > 0 and not StoryModel.instance:isStoryFinished(actCo.storyId) then
+		StoryController.instance:playStory(storyId, {
 			isVersionActivityPV = true
-		}, arg_6_0._onFinishStory, arg_6_0)
+		}, self._onFinishStory, self)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.VersionActivity1_4EnterView, {
-		actId = arg_6_0.actId,
+		actId = self.actId,
 		activityIdList = VersionActivity1_4Enum.EnterViewActIdList
 	})
 
-	if arg_6_0.openedCallback then
-		arg_6_0.openedCallback(arg_6_0.openedCallbackObj)
+	if self.openedCallback then
+		self.openedCallback(self.openedCallbackObj)
 
-		arg_6_0.openedCallback = nil
-		arg_6_0.openedCallbackObj = nil
+		self.openedCallback = nil
+		self.openedCallbackObj = nil
 	end
 end
 
-function var_0_0.directOpenVersionActivityEnterView(arg_7_0)
-	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, arg_7_0.actId, function()
+function VersionActivity1_4EnterController:directOpenVersionActivityEnterView()
+	VersionActivityBaseController.instance:enterVersionActivityView(ViewName.VersionActivity1_4EnterView, self.actId, function()
 		ViewMgr.instance:openView(ViewName.VersionActivity1_4EnterView, {
 			skipOpenAnim = true,
-			actId = arg_7_0.actId,
+			actId = self.actId,
 			activityIdList = VersionActivity1_4Enum.EnterViewActIdList
 		})
-	end, arg_7_0)
+	end, self)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_4EnterController.instance = VersionActivity1_4EnterController.New()
 
-return var_0_0
+return VersionActivity1_4EnterController

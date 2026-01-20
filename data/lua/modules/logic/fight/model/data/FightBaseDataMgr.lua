@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.model.data.FightBaseDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightBaseDataMgr.lua
 
-local var_0_0 = class("FightBaseDataMgr", BaseModel)
+module("modules.logic.fight.model.data.FightBaseDataMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FightBaseDataMgr = class("FightBaseDataMgr", BaseModel)
+
+function FightBaseDataMgr:onInit()
 	return
 end
 
-return var_0_0
+return FightBaseDataMgr

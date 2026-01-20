@@ -1,83 +1,87 @@
-﻿module("modules.logic.settings.view.SettingsRoleVoiceListItem", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsRoleVoiceListItem.lua
 
-local var_0_0 = class("SettingsRoleVoiceListItem", ListScrollCell)
+module("modules.logic.settings.view.SettingsRoleVoiceListItem", package.seeall)
 
-var_0_0.PressColor = GameUtil.parseColor("#C8C8C8")
+local SettingsRoleVoiceListItem = class("SettingsRoleVoiceListItem", ListScrollCell)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._heroGO = arg_1_1
-	arg_1_0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._heroGO, CommonHeroItem)
+SettingsRoleVoiceListItem.PressColor = GameUtil.parseColor("#C8C8C8")
 
-	arg_1_0._heroItem:hideFavor(true)
-	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
-	arg_1_0:_initObj()
+function SettingsRoleVoiceListItem:init(go)
+	self._heroGO = go
+	self._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._heroGO, CommonHeroItem)
+
+	self._heroItem:hideFavor(true)
+	self._heroItem:addClickListener(self._onItemClick, self)
+	self:_initObj()
 end
 
-function var_0_0._initObj(arg_2_0)
-	arg_2_0._animator = arg_2_0._heroGO:GetComponent(typeof(UnityEngine.Animator))
+function SettingsRoleVoiceListItem:_initObj()
+	self._animator = self._heroGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_2_0._selectframe, false)
+	gohelper.setActive(self._selectframe, false)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function SettingsRoleVoiceListItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function SettingsRoleVoiceListItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function SettingsRoleVoiceListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0._heroItem:onUpdateMO(arg_5_1)
-	arg_5_0._heroItem:setNewShow(false)
-	arg_5_0._heroItem:setRankObjActive(false)
-	arg_5_0._heroItem:setLevelContentShow(false)
-	arg_5_0._heroItem:setExSkillActive(false)
+	self._heroItem:onUpdateMO(mo)
+	self._heroItem:setNewShow(false)
+	self._heroItem:setRankObjActive(false)
+	self._heroItem:setLevelContentShow(false)
+	self._heroItem:setExSkillActive(false)
 
-	local var_5_0 = arg_5_1.heroId
-	local var_5_1, var_5_2 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_5_0)
-	local var_5_3 = luaLang(LangSettings.shortcutTab[var_5_1])
+	local heroId = mo.heroId
+	local langId, langStr = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
+	local text = luaLang(LangSettings.shortcutTab[langId])
 
-	arg_5_0._heroItem:setCenterTxt(var_5_3)
-	arg_5_0._heroItem:setStyle_CharacterBackpack()
+	self._heroItem:setCenterTxt(text)
+	self._heroItem:setStyle_CharacterBackpack()
 end
 
-function var_0_0._onrefreshItem(arg_6_0)
+function SettingsRoleVoiceListItem:_onrefreshItem()
 	return
 end
 
-function var_0_0._onItemClick(arg_7_0)
-	local var_7_0 = not arg_7_0._isSelect
+function SettingsRoleVoiceListItem:_onItemClick()
+	local newState = not self._isSelect
 
-	arg_7_0._view:selectCell(arg_7_0._index, var_7_0)
+	self._view:selectCell(self._index, newState)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	SettingsRoleVoiceController.instance:dispatchEvent(SettingsEvent.OnSetVoiceRoleSelected, arg_7_0._mo, var_7_0)
+	SettingsRoleVoiceController.instance:dispatchEvent(SettingsEvent.OnSetVoiceRoleSelected, self._mo, newState)
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
-	if arg_8_0._view.viewContainer:isBatchEditMode() then
-		arg_8_0._isSelect = arg_8_1
+function SettingsRoleVoiceListItem:onSelect(select)
+	local isBatchMode = self._view.viewContainer:isBatchEditMode()
 
-		arg_8_0._heroItem:setSelect(arg_8_1)
+	if isBatchMode then
+		self._isSelect = select
+
+		self._heroItem:setSelect(select)
 	else
-		arg_8_0._isSelect = arg_8_1
+		self._isSelect = select
 
-		arg_8_0._heroItem:setSelect(arg_8_1)
+		self._heroItem:setSelect(select)
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	if arg_9_0._heroItem then
-		arg_9_0._heroItem:onDestroy()
+function SettingsRoleVoiceListItem:onDestroy()
+	if self._heroItem then
+		self._heroItem:onDestroy()
 
-		arg_9_0._heroItem = nil
+		self._heroItem = nil
 	end
 end
 
-function var_0_0.getAnimator(arg_10_0)
-	return arg_10_0._animator
+function SettingsRoleVoiceListItem:getAnimator()
+	return self._animator
 end
 
-return var_0_0
+return SettingsRoleVoiceListItem

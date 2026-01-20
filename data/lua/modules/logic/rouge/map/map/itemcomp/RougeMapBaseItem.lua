@@ -1,67 +1,70 @@
-﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapBaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/map/itemcomp/RougeMapBaseItem.lua
 
-local var_0_0 = class("RougeMapBaseItem", UserDataDispose)
+module("modules.logic.rouge.map.map.itemcomp.RougeMapBaseItem", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:__onInit()
+local RougeMapBaseItem = class("RougeMapBaseItem", UserDataDispose)
 
-	arg_1_0.id = nil
-	arg_1_0.scenePos = nil
+function RougeMapBaseItem:init()
+	self:__onInit()
+
+	self.id = nil
+	self.scenePos = nil
 end
 
-function var_0_0.setId(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
+function RougeMapBaseItem:setId(id)
+	self.id = id
 end
 
-function var_0_0.getScenePos(arg_3_0)
-	return arg_3_0.scenePos
+function RougeMapBaseItem:getScenePos()
+	return self.scenePos
 end
 
-function var_0_0.getMapPos(arg_4_0)
+function RougeMapBaseItem:getMapPos()
 	return 0, 0, 0
 end
 
-function var_0_0.getActorPos(arg_5_0)
+function RougeMapBaseItem:getActorPos()
 	return 0, 0, 0
 end
 
-function var_0_0.getUiPos(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getScenePos()
+function RougeMapBaseItem:getUiPos(uiRectTr)
+	local scenePos = self:getScenePos()
 
-	return recthelper.worldPosToAnchorPos2(var_6_0, arg_6_1)
+	return recthelper.worldPosToAnchorPos2(scenePos, uiRectTr)
 end
 
-function var_0_0.getClickArea(arg_7_0)
+function RougeMapBaseItem:getClickArea()
 	return Vector4(100, 100, 0, 0)
 end
 
-function var_0_0.checkInClickArea(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if not arg_8_0:isActive() then
+function RougeMapBaseItem:checkInClickArea(clickPosX, clickPosY, uiRectTr)
+	if not self:isActive() then
 		return
 	end
 
-	local var_8_0, var_8_1 = arg_8_0:getUiPos(arg_8_3)
-	local var_8_2 = arg_8_0:getClickArea()
-	local var_8_3 = var_8_2.x / 2
-	local var_8_4 = var_8_2.y / 2
-	local var_8_5 = var_8_0 + var_8_2.z
-	local var_8_6 = var_8_1 + var_8_2.w
+	local posX, posY = self:getUiPos(uiRectTr)
+	local area = self:getClickArea()
+	local halfWidth = area.x / 2
+	local halfHeight = area.y / 2
 
-	if arg_8_1 >= var_8_5 - var_8_3 and arg_8_1 <= var_8_5 + var_8_3 and arg_8_2 >= var_8_6 - var_8_4 and arg_8_2 <= var_8_6 + var_8_4 then
+	posX = posX + area.z
+	posY = posY + area.w
+
+	if clickPosX >= posX - halfWidth and clickPosX <= posX + halfWidth and clickPosY >= posY - halfHeight and clickPosY <= posY + halfHeight then
 		return true
 	end
 end
 
-function var_0_0.onClick(arg_9_0)
+function RougeMapBaseItem:onClick()
 	return
 end
 
-function var_0_0.isActive(arg_10_0)
+function RougeMapBaseItem:isActive()
 	return true
 end
 
-function var_0_0.destroy(arg_11_0)
-	arg_11_0:__onDispose()
+function RougeMapBaseItem:destroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return RougeMapBaseItem

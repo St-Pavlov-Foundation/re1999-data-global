@@ -1,111 +1,113 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityExchangeTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityExchangeTaskItem.lua
 
-local var_0_0 = class("VersionActivityExchangeTaskItem", LuaCompBase)
+module("modules.logic.versionactivity.view.VersionActivityExchangeTaskItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "simage_bg")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._txtcurcount = gohelper.findChildText(arg_1_0.viewGO, "#txt_curcount")
-	arg_1_0._txttotalcount = gohelper.findChildText(arg_1_0.viewGO, "#txt_totalcount")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_rewards")
-	arg_1_0._btnreceive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_receive")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
-	arg_1_0._goblackmask = gohelper.findChild(arg_1_0.viewGO, "#go_mask")
+local VersionActivityExchangeTaskItem = class("VersionActivityExchangeTaskItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityExchangeTaskItem:init(go)
+	self.go = go
+	self.viewGO = go
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "simage_bg")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._txtcurcount = gohelper.findChildText(self.viewGO, "#txt_curcount")
+	self._txttotalcount = gohelper.findChildText(self.viewGO, "#txt_totalcount")
+	self._gorewards = gohelper.findChild(self.viewGO, "#go_rewards")
+	self._btnreceive = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_receive")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_jump")
+	self._gofinish = gohelper.findChild(self.viewGO, "#go_finish")
+	self._goblackmask = gohelper.findChild(self.viewGO, "#go_mask")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnreceive:AddClickListener(arg_2_0._btnreceiveOnClick, arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+function VersionActivityExchangeTaskItem:addEventListeners()
+	self._btnreceive:AddClickListener(self._btnreceiveOnClick, self)
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnreceive:RemoveClickListener()
-	arg_3_0._btnjump:RemoveClickListener()
+function VersionActivityExchangeTaskItem:removeEventListeners()
+	self._btnreceive:RemoveClickListener()
+	self._btnjump:RemoveClickListener()
 end
 
-function var_0_0._btnreceiveOnClick(arg_4_0)
-	arg_4_0._animator:Play("finish")
+function VersionActivityExchangeTaskItem:_btnreceiveOnClick()
+	self._animator:Play("finish")
 	UIBlockMgr.instance:startBlock("VersionActivityExchangeTaskItem")
-	TaskDispatcher.runDelay(arg_4_0.sendRewardRequest, arg_4_0, 0.6)
+	TaskDispatcher.runDelay(self.sendRewardRequest, self, 0.6)
 end
 
-function var_0_0._btnjumpOnClick(arg_5_0)
-	GameFacade.jump(arg_5_0.mo.config.jumpId)
+function VersionActivityExchangeTaskItem:_btnjumpOnClick()
+	GameFacade.jump(self.mo.config.jumpId)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.icon = IconMgr.instance:getCommonItemIcon(arg_6_0._gorewards)
+function VersionActivityExchangeTaskItem:_editableInitView()
+	self.icon = IconMgr.instance:getCommonItemIcon(self._gorewards)
 
-	arg_6_0.icon:setCountFontSize(36)
-	arg_6_0._simagebg:LoadImage(ResUrl.getVersionActivityExchangeIcon("bg_rwdi"))
+	self.icon:setCountFontSize(36)
+	self._simagebg:LoadImage(ResUrl.getVersionActivityExchangeIcon("bg_rwdi"))
 
-	arg_6_0._animator = arg_6_0.go:GetComponent(typeof(UnityEngine.Animator))
+	self._animator = self.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.sendRewardRequest(arg_7_0)
+function VersionActivityExchangeTaskItem:sendRewardRequest()
 	UIBlockMgr.instance:endBlock("VersionActivityExchangeTaskItem")
-	Activity112Rpc.instance:sendReceiveAct112TaskRewardRequest(arg_7_0.mo.actId, arg_7_0.mo.id)
+	Activity112Rpc.instance:sendReceiveAct112TaskRewardRequest(self.mo.actId, self.mo.id)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0.mo = arg_8_1
-	arg_8_0._txtdesc.text = arg_8_1.config.desc
-	arg_8_0._txtcurcount.text = arg_8_1.progress
-	arg_8_0._txttotalcount.text = arg_8_1.config.maxProgress
+function VersionActivityExchangeTaskItem:onUpdateMO(mo, index, playAnimator)
+	self.mo = mo
+	self._txtdesc.text = mo.config.desc
+	self._txtcurcount.text = mo.progress
+	self._txttotalcount.text = mo.config.maxProgress
 
-	arg_8_0:_setCurCountFontSize()
+	self:_setCurCountFontSize()
 
-	local var_8_0 = GameUtil.splitString2(arg_8_1.config.bonus, true)[1]
+	local arr = GameUtil.splitString2(mo.config.bonus, true)[1]
 
-	arg_8_0.icon:setMOValue(var_8_0[1], var_8_0[2], var_8_0[3])
-	arg_8_0.icon:isShowCount(true)
-	gohelper.setActive(arg_8_0._btnjump.gameObject, arg_8_1.config.maxProgress > arg_8_1.progress and arg_8_1.hasGetBonus == false)
-	gohelper.setActive(arg_8_0._btnreceive.gameObject, arg_8_1.config.maxProgress <= arg_8_1.progress and arg_8_1.hasGetBonus == false)
-	gohelper.setActive(arg_8_0._gofinish, arg_8_1.hasGetBonus)
-	gohelper.setActive(arg_8_0._goblackmask, arg_8_1.hasGetBonus)
+	self.icon:setMOValue(arr[1], arr[2], arr[3])
+	self.icon:isShowCount(true)
+	gohelper.setActive(self._btnjump.gameObject, mo.config.maxProgress > mo.progress and mo.hasGetBonus == false)
+	gohelper.setActive(self._btnreceive.gameObject, mo.config.maxProgress <= mo.progress and mo.hasGetBonus == false)
+	gohelper.setActive(self._gofinish, mo.hasGetBonus)
+	gohelper.setActive(self._goblackmask, mo.hasGetBonus)
 
-	if arg_8_3 then
-		arg_8_0._animator:Play(UIAnimationName.Open, 0, 0)
-		arg_8_0._animator:Update(0)
+	if playAnimator then
+		self._animator:Play(UIAnimationName.Open, 0, 0)
+		self._animator:Update(0)
 
-		local var_8_1 = arg_8_0._animator:GetCurrentAnimatorStateInfo(0).length
+		local currentAnimatorStateInfo = self._animator:GetCurrentAnimatorStateInfo(0)
+		local length = currentAnimatorStateInfo.length
 
-		if var_8_1 <= 0 then
-			var_8_1 = 1
+		if length <= 0 then
+			length = 1
 		end
 
-		arg_8_0._animator:Play(UIAnimationName.Open, 0, -0.06 * (arg_8_2 - 1) / var_8_1)
-		arg_8_0._animator:Update(0)
+		self._animator:Play(UIAnimationName.Open, 0, -0.06 * (index - 1) / length)
+		self._animator:Update(0)
 	else
-		arg_8_0._animator:Play(UIAnimationName.Open, 0, 1)
-		arg_8_0._animator:Update(0)
+		self._animator:Play(UIAnimationName.Open, 0, 1)
+		self._animator:Update(0)
 	end
 end
 
-function var_0_0._setCurCountFontSize(arg_9_0)
-	local var_9_0 = 0.35
-	local var_9_1 = 0.7
-	local var_9_2 = var_9_1
-	local var_9_3 = 6
-	local var_9_4 = #arg_9_0._txtcurcount.text
-	local var_9_5 = 3
+function VersionActivityExchangeTaskItem:_setCurCountFontSize()
+	local minScale, maxScale = 0.35, 0.7
+	local targetScale = maxScale
+	local maxValueSize = 6
+	local valueCount = #self._txtcurcount.text
+	local canMaxValueCount = 3
 
-	if var_9_5 < var_9_4 then
-		var_9_2 = var_9_1 - (var_9_1 - var_9_0) / (var_9_3 - var_9_5) * (var_9_4 - var_9_5)
+	if canMaxValueCount < valueCount then
+		targetScale = maxScale - (maxScale - minScale) / (maxValueSize - canMaxValueCount) * (valueCount - canMaxValueCount)
 	end
 
-	transformhelper.setLocalScale(arg_9_0._txtcurcount.transform, var_9_2, var_9_2, 1)
+	transformhelper.setLocalScale(self._txtcurcount.transform, targetScale, targetScale, 1)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagebg:UnLoadImage()
+function VersionActivityExchangeTaskItem:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivityExchangeTaskItem

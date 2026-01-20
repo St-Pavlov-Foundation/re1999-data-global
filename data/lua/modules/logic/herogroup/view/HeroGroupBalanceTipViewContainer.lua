@@ -1,11 +1,13 @@
-﻿module("modules.logic.herogroup.view.HeroGroupBalanceTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupBalanceTipViewContainer.lua
 
-local var_0_0 = class("HeroGroupBalanceTipViewContainer", BaseViewContainer)
+module("modules.logic.herogroup.view.HeroGroupBalanceTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local HeroGroupBalanceTipViewContainer = class("HeroGroupBalanceTipViewContainer", BaseViewContainer)
+
+function HeroGroupBalanceTipViewContainer:buildViews()
 	return {
 		HeroGroupBalanceTipView.New()
 	}
 end
 
-return var_0_0
+return HeroGroupBalanceTipViewContainer

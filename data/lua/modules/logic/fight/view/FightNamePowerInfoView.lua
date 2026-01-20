@@ -1,51 +1,61 @@
-﻿module("modules.logic.fight.view.FightNamePowerInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightNamePowerInfoView.lua
 
-local var_0_0 = class("FightNamePowerInfoView", FightBaseClass)
+module("modules.logic.fight.view.FightNamePowerInfoView", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.entityId = arg_1_1
-	arg_1_0.fightNameObj = arg_1_2
-	arg_1_0.viewComp = arg_1_0:addComponent(FightViewComponent)
+local FightNamePowerInfoView = class("FightNamePowerInfoView", FightBaseClass)
+
+function FightNamePowerInfoView:onConstructor(entityId, fightNameObj)
+	self.entityId = entityId
+	self.fightNameObj = fightNameObj
+	self.viewComp = self:addComponent(FightViewComponent)
 end
 
-local var_0_1 = {
-	[FightEnum.PowerType.Alert] = FightNamePowerInfoView6
+local type2Class = {
+	[FightEnum.PowerType.Alert] = FightNamePowerInfoView6,
+	[FightEnum.PowerType.ZongMaoBossEnergy] = FightNamePowerInfoView9
 }
-local var_0_2 = {
-	[FightEnum.PowerType.Alert] = "ui/viewres/fight/fightalertview.prefab"
+local type2url = {
+	[FightEnum.PowerType.Alert] = "ui/viewres/fight/fightalertview.prefab",
+	[FightEnum.PowerType.ZongMaoBossEnergy] = "ui/viewres/fight/fight_bossspecialenergy.prefab"
 }
 
-function var_0_0.onLogicEnter(arg_2_0)
-	arg_2_0.entityData = FightDataHelper.entityMgr:getById(arg_2_0.entityId)
+function FightNamePowerInfoView:onLogicEnter()
+	self.entityData = FightDataHelper.entityMgr:getById(self.entityId)
 
-	if not arg_2_0.entityData then
+	if not self.entityData then
 		return
 	end
 
-	local var_2_0 = arg_2_0.entityData._powerInfos
+	local powerInfoDic = self.entityData._powerInfos
 
-	if var_2_0 then
-		for iter_2_0, iter_2_1 in pairs(var_2_0) do
-			local var_2_1 = var_0_1[iter_2_0]
+	if powerInfoDic then
+		for powerId, powerInfo in pairs(powerInfoDic) do
+			local class = type2Class[powerId]
 
-			if var_2_1 then
-				local var_2_2 = var_0_2[iter_2_0]
-				local var_2_3 = arg_2_0:getParentRoot(iter_2_0)
+			if class then
+				local url = type2url[powerId]
+				local parentRoot = self:getParentRoot(powerId)
 
-				arg_2_0.viewComp:openSubView(var_2_1, var_2_2, var_2_3, arg_2_0.entityId, iter_2_1)
+				self.viewComp:openSubView(class, url, parentRoot, self.entityId, powerInfo)
 			end
 		end
 	end
 end
 
-function var_0_0.getParentRoot(arg_3_0, arg_3_1)
-	if arg_3_1 == FightEnum.PowerType.Alert then
-		return (gohelper.create2d(arg_3_0.fightNameObj, "alertRoot"))
+function FightNamePowerInfoView:getParentRoot(powerId)
+	if powerId == FightEnum.PowerType.Alert then
+		local alertRoot = gohelper.create2d(self.fightNameObj, "alertRoot")
+
+		return alertRoot
+	elseif powerId == FightEnum.PowerType.ZongMaoBossEnergy then
+		local bossEnergyRoot = gohelper.create2d(self.fightNameObj, "expointContainer")
+
+		return bossEnergyRoot
 	end
 end
 
-function var_0_0.onDestructor(arg_4_0)
+function FightNamePowerInfoView:onDestructor()
 	return
 end
 
-return var_0_0
+return FightNamePowerInfoView

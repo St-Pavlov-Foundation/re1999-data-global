@@ -1,54 +1,56 @@
-﻿module("modules.logic.rouge.view.RougeFactionItemLocked", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFactionItemLocked.lua
 
-local var_0_0 = class("RougeFactionItemLocked", RougeFactionItem_Base)
+module("modules.logic.rouge.view.RougeFactionItemLocked", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goBg = gohelper.findChild(arg_1_0.viewGO, "#go_Bg")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_en")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._txtscrollDesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#txt_scrollDesc")
-	arg_1_0._txtlocked = gohelper.findChildText(arg_1_0.viewGO, "bg/#txt_locked")
+local RougeFactionItemLocked = class("RougeFactionItemLocked", RougeFactionItem_Base)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeFactionItemLocked:onInitView()
+	self._goBg = gohelper.findChild(self.viewGO, "#go_Bg")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#image_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txten = gohelper.findChildText(self.viewGO, "#txt_name/#txt_en")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._txtscrollDesc = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#txt_scrollDesc")
+	self._txtlocked = gohelper.findChildText(self.viewGO, "bg/#txt_locked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeFactionItemLocked:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeFactionItemLocked:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	RougeFactionItem_Base._editableInitView(arg_4_0)
+function RougeFactionItemLocked:_editableInitView()
+	RougeFactionItem_Base._editableInitView(self)
 
-	local var_4_0 = arg_4_0._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
+	local limitScrollRectCmp = self._scrolldesc.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
 
-	arg_4_0:_onSetScrollParentGameObject(var_4_0)
+	self:_onSetScrollParentGameObject(limitScrollRectCmp)
 
-	arg_4_0._txtlocked.text = ""
+	self._txtlocked.text = ""
 end
 
-function var_0_0._onItemClick(arg_5_0)
+function RougeFactionItemLocked:_onItemClick()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	RougeFactionItem_Base.onDestroyView(arg_6_0)
+function RougeFactionItemLocked:onDestroyView()
+	RougeFactionItem_Base.onDestroyView(self)
 end
 
-function var_0_0.setData(arg_7_0, arg_7_1)
-	RougeFactionItem_Base.setData(arg_7_0, arg_7_1)
+function RougeFactionItemLocked:setData(mo)
+	RougeFactionItem_Base.setData(self, mo)
 
-	local var_7_0 = arg_7_1.styleCO
-	local var_7_1 = RougeOutsideModel.instance:config()
+	local styleCO = mo.styleCO
+	local cfg = RougeOutsideModel.instance:config()
 
-	arg_7_0._txtlocked.text = var_7_1:getStyleLockDesc(var_7_0.id)
+	self._txtlocked.text = cfg:getStyleLockDesc(styleCO.id)
 end
 
-return var_0_0
+return RougeFactionItemLocked

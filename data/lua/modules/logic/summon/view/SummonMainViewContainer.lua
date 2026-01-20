@@ -1,112 +1,114 @@
-﻿module("modules.logic.summon.view.SummonMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonMainViewContainer.lua
 
-local var_0_0 = class("SummonMainViewContainer", BaseViewContainer)
+module("modules.logic.summon.view.SummonMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SummonMainViewContainer = class("SummonMainViewContainer", BaseViewContainer)
 
-	arg_1_0.centerTabContent = SummonMainPreloadView.New(3, "#go_ui/contentView")
+function SummonMainViewContainer:buildViews()
+	local views = {}
 
-	arg_1_0.centerTabContent:preloadTab(arg_1_0:getPreloadTabs())
-	table.insert(var_1_0, arg_1_0.centerTabContent)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_ui/#go_lefttop"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_ui/#go_righttop"))
+	self.centerTabContent = SummonMainPreloadView.New(3, "#go_ui/contentView")
 
-	arg_1_0._mainView = SummonMainView.New()
+	self.centerTabContent:preloadTab(self:getPreloadTabs())
+	table.insert(views, self.centerTabContent)
+	table.insert(views, TabViewGroup.New(1, "#go_ui/#go_lefttop"))
+	table.insert(views, TabViewGroup.New(2, "#go_ui/#go_righttop"))
 
-	table.insert(var_1_0, arg_1_0._mainView)
-	table.insert(var_1_0, SummonMainTabView.New())
+	self._mainView = SummonMainView.New()
+
+	table.insert(views, self._mainView)
+	table.insert(views, SummonMainTabView.New())
 	SummonMainCategoryListModel.instance:saveEnterTime()
 
-	var_0_0.BlockCloseKey = "SummonCloseAnim"
+	SummonMainViewContainer.BlockCloseKey = "SummonCloseAnim"
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.getPreloadTabs(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = SummonMainModel.getValidPools()
-	local var_2_3 = SummonMainModel.instance:getCurId()
-	local var_2_4 = 1
+function SummonMainViewContainer:getPreloadTabs()
+	local tabIdSet = {}
+	local result = {}
+	local validPools = SummonMainModel.getValidPools()
+	local curId = SummonMainModel.instance:getCurId()
+	local curPoolIdIndex = 1
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-		local var_2_5 = SummonMainModel.instance:getADPageTabIndexForUI(iter_2_1)
+	for _, poolCfg in ipairs(validPools) do
+		local tabIndex = SummonMainModel.instance:getADPageTabIndexForUI(poolCfg)
 
-		if iter_2_1.id ~= var_2_3 then
-			var_2_0[var_2_5] = true
+		if poolCfg.id ~= curId then
+			tabIdSet[tabIndex] = true
 		else
-			table.insert(var_2_1, var_2_5)
+			table.insert(result, tabIndex)
 
-			var_2_4 = var_2_5
+			curPoolIdIndex = tabIndex
 		end
 	end
 
-	for iter_2_2, iter_2_3 in pairs(var_2_0) do
-		if iter_2_2 ~= var_2_4 then
-			table.insert(var_2_1, iter_2_2)
+	for k, _ in pairs(tabIdSet) do
+		if k ~= curPoolIdIndex then
+			table.insert(result, k)
 		end
 	end
 
-	return var_2_1
+	return result
 end
 
-function var_0_0.preloadUIRes(arg_3_0)
-	if not arg_3_0._uiLoader then
-		local var_3_0 = SummonMainController.instance:pickAllUIPreloadRes()
+function SummonMainViewContainer:preloadUIRes()
+	if not self._uiLoader then
+		local resList = SummonMainController.instance:pickAllUIPreloadRes()
 
-		arg_3_0._uiLoader = MultiAbLoader.New()
+		self._uiLoader = MultiAbLoader.New()
 
-		arg_3_0._uiLoader:setPathList(var_3_0)
-		arg_3_0._uiLoader:startLoad(arg_3_0.disposeUILoader, arg_3_0)
+		self._uiLoader:setPathList(resList)
+		self._uiLoader:startLoad(self.disposeUILoader, self)
 	end
 end
 
-function var_0_0.disposeUILoader(arg_4_0)
-	if arg_4_0._uiLoader ~= nil then
+function SummonMainViewContainer:disposeUILoader()
+	if self._uiLoader ~= nil then
 		logNormal("disposeUILoader")
-		arg_4_0._uiLoader:dispose()
+		self._uiLoader:dispose()
 
-		arg_4_0._uiLoader = nil
+		self._uiLoader = nil
 	end
 end
 
-function var_0_0.buildTabViews(arg_5_0, arg_5_1)
-	if arg_5_1 == 1 then
-		arg_5_0._navigateButtonView = NavigateButtonsView.New({
+function SummonMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_5_0._navigateButtonView:setCloseCheck(arg_5_0._closeCheckFunc, arg_5_0)
-		arg_5_0._navigateButtonView:setHomeCheck(arg_5_0._closeCheckFunc, arg_5_0)
+		self._navigateButtonView:setCloseCheck(self._closeCheckFunc, self)
+		self._navigateButtonView:setHomeCheck(self._closeCheckFunc, self)
 
 		return {
-			arg_5_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_5_1 == 2 then
-		return arg_5_0:_buildCurrency()
-	elseif arg_5_1 == 3 then
-		arg_5_0._tabInsts = SummonMainModel.instance:createUIClassTab()
+	elseif tabContainerId == 2 then
+		return self:_buildCurrency()
+	elseif tabContainerId == 3 then
+		self._tabInsts = SummonMainModel.instance:createUIClassTab()
 
-		return arg_5_0._tabInsts
+		return self._tabInsts
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_6_0)
-	arg_6_0._navigateButtonView:resetOnCloseViewAudio(0)
+function SummonMainViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(0)
 
-	if arg_6_0.centerTabContent then
-		arg_6_0.centerTabContent:checkPreload()
+	if self.centerTabContent then
+		self.centerTabContent:checkPreload()
 	end
 
-	arg_6_0:preloadUIRes()
+	self:preloadUIRes()
 end
 
-function var_0_0.refreshHelp(arg_7_0)
-	if arg_7_0._navigateButtonView then
-		arg_7_0._navigateButtonView:setParam({
+function SummonMainViewContainer:refreshHelp()
+	if self._navigateButtonView then
+		self._navigateButtonView:setParam({
 			true,
 			true,
 			false
@@ -114,8 +116,8 @@ function var_0_0.refreshHelp(arg_7_0)
 	end
 end
 
-function var_0_0._buildCurrency(arg_8_0)
-	arg_8_0._currencyView = CurrencyView.New({
+function SummonMainViewContainer:_buildCurrency()
+	self._currencyView = CurrencyView.New({
 		CurrencyEnum.CurrencyType.Diamond,
 		CurrencyEnum.CurrencyType.FreeDiamondCoupon,
 		{
@@ -127,85 +129,85 @@ function var_0_0._buildCurrency(arg_8_0)
 	}, nil, nil, nil, true)
 
 	return {
-		arg_8_0._currencyView
+		self._currencyView
 	}
 end
 
-function var_0_0.refreshCurrencyType(arg_9_0)
-	if arg_9_0._currencyView then
-		local var_9_0 = SummonMainModel.instance:getCurPool()
+function SummonMainViewContainer:refreshCurrencyType()
+	if self._currencyView then
+		local pool = SummonMainModel.instance:getCurPool()
 
-		if var_9_0 then
-			arg_9_0._currencyView:setCurrencyType(SummonMainModel.getCostCurrencyParam(var_9_0))
+		if pool then
+			self._currencyView:setCurrencyType(SummonMainModel.getCostCurrencyParam(pool))
 		end
 	end
 end
 
-function var_0_0._closeCheckFunc(arg_10_0)
+function SummonMainViewContainer:_closeCheckFunc()
 	logNormal("_closeCheckFunc")
 
-	local var_10_0 = arg_10_0._mainView:startExitSummonFadeOut()
+	local delayTime = self._mainView:startExitSummonFadeOut()
 
-	TaskDispatcher.runDelay(arg_10_0._onAnimExit, arg_10_0, var_10_0)
-	arg_10_0:_onBlackLoadingShow()
+	TaskDispatcher.runDelay(self._onAnimExit, self, delayTime)
+	self:_onBlackLoadingShow()
 
 	return false
 end
 
-function var_0_0.getCurTabInst(arg_11_0)
-	local var_11_0 = SummonMainModel.instance:getCurADPageIndex()
+function SummonMainViewContainer:getCurTabInst()
+	local tabIndex = SummonMainModel.instance:getCurADPageIndex()
 
-	if var_11_0 then
-		return arg_11_0._tabInsts[var_11_0]
+	if tabIndex then
+		return self._tabInsts[tabIndex]
 	end
 
 	return nil
 end
 
-function var_0_0._onBlackLoadingShow(arg_12_0)
+function SummonMainViewContainer:_onBlackLoadingShow()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_12_0._onMainUILoaded, arg_12_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onMainUILoaded, self)
 		MainController.instance:enterMainScene(true)
 	else
-		arg_12_0._isSceneExitFinish = true
+		self._isSceneExitFinish = true
 	end
 
 	VirtualSummonScene.instance:close(true)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(var_0_0.BlockCloseKey)
+	UIBlockMgr.instance:startBlock(SummonMainViewContainer.BlockCloseKey)
 end
 
-function var_0_0._onMainUILoaded(arg_13_0, arg_13_1)
-	if arg_13_1 == ViewName.MainView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_13_0._onMainUILoaded, arg_13_0)
+function SummonMainViewContainer:_onMainUILoaded(viewName)
+	if viewName == ViewName.MainView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onMainUILoaded, self)
 
-		arg_13_0._isSceneExitFinish = true
+		self._isSceneExitFinish = true
 
-		logNormal("_onMainSceneLoaded ViewName : " .. tostring(arg_13_1))
-		arg_13_0:_checkAllStepFinish()
+		logNormal("_onMainSceneLoaded ViewName : " .. tostring(viewName))
+		self:_checkAllStepFinish()
 	end
 end
 
-function var_0_0._onAnimExit(arg_14_0)
-	arg_14_0._isAnimExitFinish = true
+function SummonMainViewContainer:_onAnimExit()
+	self._isAnimExitFinish = true
 
-	arg_14_0:_checkAllStepFinish()
+	self:_checkAllStepFinish()
 end
 
-function var_0_0._checkAllStepFinish(arg_15_0)
-	if arg_15_0._isSceneExitFinish and arg_15_0._isAnimExitFinish then
-		arg_15_0:reallyClose()
+function SummonMainViewContainer:_checkAllStepFinish()
+	if self._isSceneExitFinish and self._isAnimExitFinish then
+		self:reallyClose()
 	end
 end
 
-function var_0_0.reallyClose(arg_16_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BlockCloseKey)
+function SummonMainViewContainer:reallyClose()
+	UIBlockMgr.instance:endBlock(SummonMainViewContainer.BlockCloseKey)
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	arg_16_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onContainerClose(arg_17_0)
-	arg_17_0:disposeUILoader()
+function SummonMainViewContainer:onContainerClose()
+	self:disposeUILoader()
 end
 
-return var_0_0
+return SummonMainViewContainer

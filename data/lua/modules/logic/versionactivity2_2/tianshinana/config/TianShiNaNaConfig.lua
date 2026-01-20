@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.config.TianShiNaNaConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/config/TianShiNaNaConfig.lua
 
-local var_0_0 = class("TianShiNaNaConfig", BaseConfig)
+module("modules.logic.versionactivity2_2.tianshinana.config.TianShiNaNaConfig", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._mapCos = {}
-	arg_1_0._taskDict = {}
+local TianShiNaNaConfig = class("TianShiNaNaConfig", BaseConfig)
+
+function TianShiNaNaConfig:onInit()
+	self._mapCos = {}
+	self._taskDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function TianShiNaNaConfig:reqConfigNames()
 	return {
 		"activity167_episode",
 		"activity167_task",
@@ -15,81 +17,81 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.getMapCo(arg_3_0, arg_3_1)
-	if not arg_3_0._mapCos[arg_3_1] then
-		local var_3_0 = TianShiNaNaMapCo.New()
-		local var_3_1 = addGlobalModule("modules.configs.tianshinana.lua_tianshinana_map_" .. tostring(arg_3_1), "lua_tianshinana_map_" .. tostring(arg_3_1))
+function TianShiNaNaConfig:getMapCo(mapId)
+	if not self._mapCos[mapId] then
+		local co = TianShiNaNaMapCo.New()
+		local rawCo = addGlobalModule("modules.configs.tianshinana.lua_tianshinana_map_" .. tostring(mapId), "lua_tianshinana_map_" .. tostring(mapId))
 
-		if not var_3_1 then
-			logError("天使娜娜地图配置不存在" .. arg_3_1)
+		if not rawCo then
+			logError("天使娜娜地图配置不存在" .. mapId)
 
 			return
 		end
 
-		var_3_0:init(var_3_1)
+		co:init(rawCo)
 
-		arg_3_0._mapCos[arg_3_1] = var_3_0
+		self._mapCos[mapId] = co
 	end
 
-	return arg_3_0._mapCos[arg_3_1]
+	return self._mapCos[mapId]
 end
 
-function var_0_0.getEpisodeByMapId(arg_4_0, arg_4_1)
-	if not arg_4_0._mapIdToEpisodeCo then
-		arg_4_0._mapIdToEpisodeCo = {}
+function TianShiNaNaConfig:getEpisodeByMapId(mapId)
+	if not self._mapIdToEpisodeCo then
+		self._mapIdToEpisodeCo = {}
 
-		for iter_4_0, iter_4_1 in ipairs(lua_activity167_episode.configList) do
-			arg_4_0._mapIdToEpisodeCo[iter_4_1.mapId] = iter_4_1
+		for _, v in ipairs(lua_activity167_episode.configList) do
+			self._mapIdToEpisodeCo[v.mapId] = v
 		end
 	end
 
-	return arg_4_0._mapIdToEpisodeCo[arg_4_1]
+	return self._mapIdToEpisodeCo[mapId]
 end
 
-function var_0_0.getEpisodeCoList(arg_5_0, arg_5_1)
-	if not arg_5_0._episodeDict then
-		arg_5_0._episodeDict = {}
+function TianShiNaNaConfig:getEpisodeCoList(activityId)
+	if not self._episodeDict then
+		self._episodeDict = {}
 
-		for iter_5_0, iter_5_1 in ipairs(lua_activity167_episode.configList) do
-			if not arg_5_0._episodeDict[iter_5_1.activityId] then
-				arg_5_0._episodeDict[iter_5_1.activityId] = {}
+		for _, v in ipairs(lua_activity167_episode.configList) do
+			if not self._episodeDict[v.activityId] then
+				self._episodeDict[v.activityId] = {}
 			end
 
-			table.insert(arg_5_0._episodeDict[iter_5_1.activityId], iter_5_1)
+			table.insert(self._episodeDict[v.activityId], v)
 		end
 	end
 
-	return arg_5_0._episodeDict[arg_5_1] or {}
+	return self._episodeDict[activityId] or {}
 end
 
-function var_0_0.getBubbleCo(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = lua_activity167_bubble.configDict[arg_6_1]
+function TianShiNaNaConfig:getBubbleCo(activityId, id)
+	local dict = lua_activity167_bubble.configDict[activityId]
 
-	if not var_6_0 then
+	if not dict then
 		return
 	end
 
-	return var_6_0[arg_6_2]
+	return dict[id]
 end
 
-function var_0_0.getTaskByActId(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._taskDict[arg_7_1]
+function TianShiNaNaConfig:getTaskByActId(activityId)
+	local list = self._taskDict[activityId]
 
-	if not var_7_0 then
-		var_7_0 = {}
+	if not list then
+		list = {}
 
-		for iter_7_0, iter_7_1 in ipairs(lua_activity167_task.configList) do
-			if iter_7_1.activityId == arg_7_1 then
-				table.insert(var_7_0, iter_7_1)
+		for _, co in ipairs(lua_activity167_task.configList) do
+			if co.activityId == activityId then
+				table.insert(list, co)
 			end
 		end
 
-		arg_7_0._taskDict[arg_7_1] = var_7_0
+		self._taskDict[activityId] = list
 	end
 
-	return var_7_0
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+TianShiNaNaConfig.instance = TianShiNaNaConfig.New()
 
-return var_0_0
+return TianShiNaNaConfig

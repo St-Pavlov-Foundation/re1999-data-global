@@ -1,107 +1,109 @@
-﻿module("modules.logic.seasonver.act123.model.Season123ShowHeroModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123ShowHeroModel.lua
 
-local var_0_0 = class("Season123ShowHeroModel", ListScrollModel)
+module("modules.logic.seasonver.act123.model.Season123ShowHeroModel", package.seeall)
 
-function var_0_0.release(arg_1_0)
-	arg_1_0:clear()
+local Season123ShowHeroModel = class("Season123ShowHeroModel", ListScrollModel)
+
+function Season123ShowHeroModel:release()
+	self:clear()
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.activityId = arg_2_1
-	arg_2_0.stage = arg_2_2
-	arg_2_0.layer = arg_2_3
+function Season123ShowHeroModel:init(actId, stage, layer)
+	self.activityId = actId
+	self.stage = stage
+	self.layer = layer
 
-	arg_2_0:initHeroList()
+	self:initHeroList()
 end
 
-function var_0_0.initHeroList(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = HeroModel.instance:getList()
+function Season123ShowHeroModel:initHeroList()
+	local result = {}
+	local list = HeroModel.instance:getList()
 
-	arg_3_0:initLayerHeroList(var_3_0, arg_3_0.layer)
-	logNormal("hero list count : " .. tostring(#var_3_0))
-	arg_3_0:setList(var_3_0)
+	self:initLayerHeroList(result, self.layer)
+	logNormal("hero list count : " .. tostring(#result))
+	self:setList(result)
 end
 
-function var_0_0.initLayerHeroList(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = Season123Model.instance:getActInfo(arg_4_0.activityId)
+function Season123ShowHeroModel:initLayerHeroList(result, layer)
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
 
-	if not var_4_0 then
+	if not seasonMO then
 		return
 	end
 
-	local var_4_1 = var_4_0.stageMap[arg_4_0.stage]
+	local stageMO = seasonMO.stageMap[self.stage]
 
-	if not var_4_1 then
+	if not stageMO then
 		return
 	end
 
-	local var_4_2 = var_4_1.episodeMap[arg_4_2]
+	local episodeMO = stageMO.episodeMap[layer]
 
-	if not var_4_2 then
+	if not episodeMO then
 		return
 	end
 
-	local var_4_3 = var_4_2.heroes
+	local heroList = episodeMO.heroes
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_3) do
-		local var_4_4 = HeroModel.instance:getById(iter_4_1.heroUid)
+	for _, season123HeroMO in ipairs(heroList) do
+		local heroMO = HeroModel.instance:getById(season123HeroMO.heroUid)
 
-		if not var_4_4 then
-			local var_4_5, var_4_6 = Season123Model.instance:getAssistData(arg_4_0.activityId, arg_4_0.stage)
+		if not heroMO then
+			local assistHeroMO, assistMO = Season123Model.instance:getAssistData(self.activityId, self.stage)
 
-			if var_4_6 and var_4_6.heroUid == iter_4_1.heroUid then
-				local var_4_7 = Season123ShowHeroMO.New()
+			if assistMO and assistMO.heroUid == season123HeroMO.heroUid then
+				local mo = Season123ShowHeroMO.New()
 
-				var_4_7:init(var_4_5, var_4_6.heroUid, var_4_6.heroId, var_4_6.skin, iter_4_1.hpRate, true)
-				table.insert(arg_4_1, var_4_7)
+				mo:init(assistHeroMO, assistMO.heroUid, assistMO.heroId, assistMO.skin, season123HeroMO.hpRate, true)
+				table.insert(result, mo)
 			end
 		else
-			local var_4_8 = Season123ShowHeroMO.New()
+			local mo = Season123ShowHeroMO.New()
 
-			var_4_8:init(var_4_4, var_4_4.uid, var_4_4.heroId, var_4_4.skin, iter_4_1.hpRate, false)
-			table.insert(arg_4_1, var_4_8)
+			mo:init(heroMO, heroMO.uid, heroMO.heroId, heroMO.skin, season123HeroMO.hpRate, false)
+			table.insert(result, mo)
 		end
 	end
 end
 
-function var_0_0.isFirstPlayHeroDieAnim(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getPlayHeroDieAnimPrefKey(arg_5_0.stage)
-	local var_5_1 = PlayerPrefsHelper.getString(var_5_0, "")
-	local var_5_2 = string.split(var_5_1, "|")
+function Season123ShowHeroModel:isFirstPlayHeroDieAnim(heroId)
+	local key = self:getPlayHeroDieAnimPrefKey(self.stage)
+	local value = PlayerPrefsHelper.getString(key, "")
+	local heroList = string.split(value, "|")
 
-	if var_5_2 and not LuaUtil.tableContains(var_5_2, arg_5_1) then
+	if heroList and not LuaUtil.tableContains(heroList, heroId) then
 		return true
 	end
 end
 
-function var_0_0.setPlayedHeroDieAnim(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getPlayHeroDieAnimPrefKey(arg_6_0.stage)
-	local var_6_1 = PlayerPrefsHelper.getString(var_6_0, "")
+function Season123ShowHeroModel:setPlayedHeroDieAnim(heroId)
+	local key = self:getPlayHeroDieAnimPrefKey(self.stage)
+	local value = PlayerPrefsHelper.getString(key, "")
 
-	if string.nilorempty(var_6_1) then
-		var_6_1 = arg_6_1
+	if string.nilorempty(value) then
+		value = heroId
 	else
-		local var_6_2 = string.split(var_6_1, "|")
+		local heroList = string.split(value, "|")
 
-		if var_6_2 and not LuaUtil.tableContains(var_6_2, arg_6_1) then
-			var_6_1 = var_6_1 .. "|" .. arg_6_1
+		if heroList and not LuaUtil.tableContains(heroList, heroId) then
+			value = value .. "|" .. heroId
 		end
 	end
 
-	PlayerPrefsHelper.setString(var_6_0, var_6_1)
+	PlayerPrefsHelper.setString(key, value)
 end
 
-function var_0_0.clearPlayHeroDieAnim(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getPlayHeroDieAnimPrefKey(arg_7_1)
+function Season123ShowHeroModel:clearPlayHeroDieAnim(stage)
+	local key = self:getPlayHeroDieAnimPrefKey(stage)
 
-	PlayerPrefsHelper.setString(var_7_0, "")
+	PlayerPrefsHelper.setString(key, "")
 end
 
-function var_0_0.getPlayHeroDieAnimPrefKey(arg_8_0, arg_8_1)
-	return "Season123ShowHeroModel_PlayHeroDieAnim_" .. arg_8_1
+function Season123ShowHeroModel:getPlayHeroDieAnimPrefKey(stage)
+	return "Season123ShowHeroModel_PlayHeroDieAnim_" .. stage
 end
 
-var_0_0.instance = var_0_0.New()
+Season123ShowHeroModel.instance = Season123ShowHeroModel.New()
 
-return var_0_0
+return Season123ShowHeroModel

@@ -1,29 +1,31 @@
-﻿module("modules.logic.explore.controller.steps.ExploreStepBase", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreStepBase.lua
 
-local var_0_0 = class("ExploreStepBase")
+module("modules.logic.explore.controller.steps.ExploreStepBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._data = arg_1_1
+local ExploreStepBase = class("ExploreStepBase")
 
-	arg_1_0:onInit()
+function ExploreStepBase:ctor(data)
+	self._data = data
+
+	self:onInit()
 end
 
-function var_0_0.onInit(arg_2_0)
+function ExploreStepBase:onInit()
 	return
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0:onDone()
+function ExploreStepBase:onStart()
+	self:onDone()
 end
 
-function var_0_0.onDone(arg_4_0)
-	arg_4_0:onDestory()
+function ExploreStepBase:onDone()
+	self:onDestory()
 
 	return ExploreStepController.instance:onStepEnd()
 end
 
-function var_0_0.onDestory(arg_5_0)
-	arg_5_0._data = nil
+function ExploreStepBase:onDestory()
+	self._data = nil
 end
 
-return var_0_0
+return ExploreStepBase

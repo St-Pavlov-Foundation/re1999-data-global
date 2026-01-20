@@ -1,54 +1,74 @@
-﻿module("modules.logic.dungeon.model.RoleStoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/RoleStoryListModel.lua
 
-local var_0_0 = class("RoleStoryListModel", ListScrollModel)
+module("modules.logic.dungeon.model.RoleStoryListModel", package.seeall)
 
-function var_0_0.markUnlockOrder(arg_1_0)
-	arg_1_0.unlockOrderDict = {}
+local RoleStoryListModel = class("RoleStoryListModel", ListScrollModel)
 
-	local var_1_0 = RoleStoryConfig.instance:getStoryList()
-	local var_1_1 = {}
+function RoleStoryListModel:markUnlockOrder()
+	self.unlockOrderDict = {}
 
-	if var_1_0 then
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			local var_1_2 = RoleStoryModel.instance:getMoById(iter_1_1.id)
+	local list = RoleStoryConfig.instance:getStoryList()
+	local dataList = {}
 
-			if var_1_2:isResidentTime() then
-				arg_1_0.unlockOrderDict[iter_1_1.id] = var_1_2.hasUnlock and 1 or 0
+	if list then
+		for i, v in ipairs(list) do
+			local mo = RoleStoryModel.instance:getMoById(v.id)
+
+			if mo:isResidentTime() then
+				self.unlockOrderDict[v.id] = mo.hasUnlock and 1 or 0
 			end
 		end
 	end
 end
 
-function var_0_0.refreshList(arg_2_0)
-	if #arg_2_0._scrollViews == 0 then
+function RoleStoryListModel:refreshList()
+	if #self._scrollViews == 0 then
 		return
 	end
 
-	local var_2_0 = RoleStoryConfig.instance:getStoryList()
-	local var_2_1 = {}
+	local list = RoleStoryConfig.instance:getStoryList()
+	local dataList = {}
 
-	if var_2_0 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-			local var_2_2 = RoleStoryModel.instance:getMoById(iter_2_1.id)
+	if list then
+		for i, v in ipairs(list) do
+			local mo = RoleStoryModel.instance:getMoById(v.id)
 
-			if var_2_2:isResidentTime() then
-				var_2_2.unlockOrder = arg_2_0.unlockOrderDict[iter_2_1.id] or 0
+			if mo:getType() == self.selectTabType and mo:isResidentTime() then
+				mo.unlockOrder = self.unlockOrderDict[v.id] or 0
 
-				table.insert(var_2_1, var_2_2)
+				table.insert(dataList, mo)
 			end
 		end
 	end
 
-	table.sort(var_2_1, SortUtil.tableKeyUpper({
+	table.sort(dataList, SortUtil.tableKeyUpper({
 		"getUnlockOrder",
 		"unlockOrder",
 		"hasRewardUnget",
 		"getRewardOrder",
 		"order"
 	}))
-	arg_2_0:setList(var_2_1)
+	self:setList(dataList)
 end
 
-var_0_0.instance = var_0_0.New()
+function RoleStoryListModel:setSelectTabType(tabType, noUpdate)
+	if self.selectTabType == tabType then
+		return
+	end
 
-return var_0_0
+	self.selectTabType = tabType
+
+	if not noUpdate then
+		RoleStoryController.instance:dispatchEvent(RoleStoryEvent.StoryTabChange)
+	end
+
+	return true
+end
+
+function RoleStoryListModel:getSelectTabType()
+	return self.selectTabType
+end
+
+RoleStoryListModel.instance = RoleStoryListModel.New()
+
+return RoleStoryListModel

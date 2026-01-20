@@ -1,191 +1,193 @@
-﻿module("modules.logic.rouge.view.RougeDifficultyItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeDifficultyItem.lua
 
-local var_0_0 = class("RougeDifficultyItem", RougeSimpleItemBase)
-local var_0_1 = ZProj.TweenHelper
-local var_0_2 = SLFramework.AnimatorPlayer
+module("modules.logic.rouge.view.RougeDifficultyItem", package.seeall)
 
-var_0_0.ScalerSelected = 1
-var_0_0.ScalerSelectedAdjacent = 0.9
-var_0_0.ScalerNormal = 0.85
+local RougeDifficultyItem = class("RougeDifficultyItem", RougeSimpleItemBase)
+local csTweenHelper = ZProj.TweenHelper
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	RougeSimpleItemBase.ctor(arg_1_0, arg_1_1)
+RougeDifficultyItem.ScalerSelected = 1
+RougeDifficultyItem.ScalerSelectedAdjacent = 0.9
+RougeDifficultyItem.ScalerNormal = 0.85
 
-	arg_1_0._staticData.parentScrollViewGo = arg_1_1.baseViewContainer:getScrollViewGo()
-	arg_1_0._staticData.geniusBranchStartViewInfo = RougeOutsideModel.instance:getGeniusBranchStartViewAllInfo()
-	arg_1_0._selected = RougeDifficultyItemSelected.New(arg_1_0)
-	arg_1_0._unSelected = RougeDifficultyItemUnselected.New(arg_1_0)
-	arg_1_0._locked = RougeDifficultyItemLocked.New(arg_1_0)
+function RougeDifficultyItem:ctor(ctorParam)
+	RougeSimpleItemBase.ctor(self, ctorParam)
+
+	self._staticData.parentScrollViewGo = ctorParam.baseViewContainer:getScrollViewGo()
+	self._staticData.geniusBranchStartViewInfo = RougeOutsideModel.instance:getGeniusBranchStartViewAllInfo()
+	self._selected = RougeDifficultyItemSelected.New(self)
+	self._unSelected = RougeDifficultyItemUnselected.New(self)
+	self._locked = RougeDifficultyItemLocked.New(self)
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	RougeSimpleItemBase._editableInitView(arg_2_0)
+function RougeDifficultyItem:_editableInitView()
+	RougeSimpleItemBase._editableInitView(self)
 
-	arg_2_0._animatorPlayer = var_0_2.Get(arg_2_0.viewGO)
-	arg_2_0._animSelf = arg_2_0._animatorPlayer.animator
-	arg_2_0._root = gohelper.findChild(arg_2_0.viewGO, "Root")
-	arg_2_0._rootTrans = arg_2_0._root.transform
+	self._animatorPlayer = csAnimatorPlayer.Get(self.viewGO)
+	self._animSelf = self._animatorPlayer.animator
+	self._root = gohelper.findChild(self.viewGO, "Root")
+	self._rootTrans = self._root.transform
 
-	arg_2_0._selected:init(gohelper.findChild(arg_2_0._root, "Select"))
-	arg_2_0._unSelected:init(gohelper.findChild(arg_2_0._root, "Unselect"))
-	arg_2_0._locked:init(gohelper.findChild(arg_2_0._root, "Locked"))
+	self._selected:init(gohelper.findChild(self._root, "Select"))
+	self._unSelected:init(gohelper.findChild(self._root, "Unselect"))
+	self._locked:init(gohelper.findChild(self._root, "Locked"))
 
-	arg_2_0._itemClick = gohelper.getClickWithAudio(arg_2_0._gobg)
+	self._itemClick = gohelper.getClickWithAudio(self._gobg)
 
-	arg_2_0:setScale(var_0_0.ScalerSelectedAdjacent)
-	arg_2_0._selected:setActive(false)
-	arg_2_0._unSelected:setActive(false)
-	arg_2_0._locked:setActive(false)
+	self:setScale(RougeDifficultyItem.ScalerSelectedAdjacent)
+	self._selected:setActive(false)
+	self._unSelected:setActive(false)
+	self._locked:setActive(false)
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	RougeSimpleItemBase.onDestroyView(arg_3_0)
-	arg_3_0:_killTween()
-	GameUtil.onDestroyViewMember(arg_3_0, "_selected")
-	GameUtil.onDestroyViewMember(arg_3_0, "_unSelected")
-	GameUtil.onDestroyViewMember(arg_3_0, "_locked")
+function RougeDifficultyItem:onDestroyView()
+	RougeSimpleItemBase.onDestroyView(self)
+	self:_killTween()
+	GameUtil.onDestroyViewMember(self, "_selected")
+	GameUtil.onDestroyViewMember(self, "_unSelected")
+	GameUtil.onDestroyViewMember(self, "_locked")
 end
 
-function var_0_0.setSelected(arg_4_0, arg_4_1)
-	if not arg_4_0:isUnLocked() then
+function RougeDifficultyItem:setSelected(isSelect)
+	if not self:isUnLocked() then
 		return
 	end
 
-	RougeSimpleItemBase.setSelected(arg_4_0, arg_4_1)
+	RougeSimpleItemBase.setSelected(self, isSelect)
 end
 
-function var_0_0.onSelect(arg_5_0, arg_5_1)
-	arg_5_0._staticData.isSelected = arg_5_1
+function RougeDifficultyItem:onSelect(isSelected)
+	self._staticData.isSelected = isSelected
 
-	arg_5_0._selected:setActive(arg_5_1)
-	arg_5_0._unSelected:setActive(not arg_5_1)
+	self._selected:setActive(isSelected)
+	self._unSelected:setActive(not isSelected)
 end
 
-function var_0_0.setData(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
-	arg_6_0._isUnLocked = arg_6_1.isUnLocked
+function RougeDifficultyItem:setData(mo)
+	self._mo = mo
+	self._isUnLocked = mo.isUnLocked
 
-	arg_6_0._selected:setData(arg_6_1)
-	arg_6_0._unSelected:setData(arg_6_1)
-	arg_6_0._locked:setData(arg_6_1)
+	self._selected:setData(mo)
+	self._unSelected:setData(mo)
+	self._locked:setData(mo)
 
-	local var_6_0 = arg_6_0:isSelected()
+	local isSelected = self:isSelected()
 
-	if arg_6_0:isUnLocked() then
-		arg_6_0._selected:setActive(var_6_0)
-		arg_6_0._unSelected:setActive(not var_6_0)
+	if self:isUnLocked() then
+		self._selected:setActive(isSelected)
+		self._unSelected:setActive(not isSelected)
 	else
-		arg_6_0._locked:setActive(true)
+		self._locked:setActive(true)
 	end
 end
 
-function var_0_0.isUnLocked(arg_7_0)
-	return arg_7_0._mo.isUnLocked
+function RougeDifficultyItem:isUnLocked()
+	return self._mo.isUnLocked
 end
 
-function var_0_0.setScale(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_2 then
-		arg_8_0:tweenScale(arg_8_1)
+function RougeDifficultyItem:setScale(s, isAnim)
+	if isAnim then
+		self:tweenScale(s)
 	else
-		transformhelper.setLocalScale(arg_8_0._rootTrans, arg_8_1, arg_8_1, arg_8_1)
+		transformhelper.setLocalScale(self._rootTrans, s, s, s)
 	end
 end
 
-function var_0_0.setScale01(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or 1
-	arg_9_1 = GameUtil.remap(arg_9_1, 0, 1, var_0_0.ScalerSelectedAdjacent, var_0_0.ScalerSelected)
+function RougeDifficultyItem:setScale01(s)
+	s = s or 1
+	s = GameUtil.remap(s, 0, 1, RougeDifficultyItem.ScalerSelectedAdjacent, RougeDifficultyItem.ScalerSelected)
 
-	arg_9_0:setScale(arg_9_1)
+	self:setScale(s)
 end
 
-function var_0_0.tweenScale(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_2 = arg_10_2 or 0.4
+function RougeDifficultyItem:tweenScale(s, duration)
+	duration = duration or 0.4
 
-	arg_10_0:_killTween()
+	self:_killTween()
 
-	arg_10_0._tweenRotationId = var_0_1.DOScale(arg_10_0._rootTrans, arg_10_1, arg_10_1, arg_10_1, arg_10_2, nil, nil, nil, EaseType.OutQuad)
+	self._tweenRotationId = csTweenHelper.DOScale(self._rootTrans, s, s, s, duration, nil, nil, nil, EaseType.OutQuad)
 end
 
-function var_0_0._killTween(arg_11_0)
-	GameUtil.onDestroyViewMember_TweenId(arg_11_0, "_tweenRotationId")
+function RougeDifficultyItem:_killTween()
+	GameUtil.onDestroyViewMember_TweenId(self, "_tweenRotationId")
 end
 
-function var_0_0.setIsLocked(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._locked:setActive(arg_12_1)
+function RougeDifficultyItem:setIsLocked(isLock, ignorePlayIdleAnim)
+	self._locked:setActive(isLock)
 
-	if not arg_12_2 then
-		arg_12_0:playIdle()
-		arg_12_0:onSelect(arg_12_0._staticData.isSelected)
+	if not ignorePlayIdleAnim then
+		self:playIdle()
+		self:onSelect(self._staticData.isSelected)
 	end
 end
 
-function var_0_0.playOpen(arg_13_0, arg_13_1)
-	if arg_13_1 == true then
-		arg_13_0._isNewUnlockAnim = true
+function RougeDifficultyItem:playOpen(isNewUnlock)
+	if isNewUnlock == true then
+		self._isNewUnlockAnim = true
 
-		arg_13_0:setIsLocked(true, true)
+		self:setIsLocked(true, true)
 	end
 
-	arg_13_0:_playAnim(UIAnimationName.Open, arg_13_0._onOpenEnd, arg_13_0)
+	self:_playAnim(UIAnimationName.Open, self._onOpenEnd, self)
 end
 
-function var_0_0.playIdle(arg_14_0)
-	arg_14_0._animSelf.enabled = true
+function RougeDifficultyItem:playIdle()
+	self._animSelf.enabled = true
 
-	arg_14_0._animSelf:Play(UIAnimationName.Open, 0, 1)
+	self._animSelf:Play(UIAnimationName.Open, 0, 1)
 end
 
-function var_0_0.playClose(arg_15_0)
-	arg_15_0:_playAnim(UIAnimationName.Close, arg_15_0._onCloseEnd, arg_15_0)
+function RougeDifficultyItem:playClose()
+	self:_playAnim(UIAnimationName.Close, self._onCloseEnd, self)
 end
 
-function var_0_0.setOnOpenEndCb(arg_16_0, arg_16_1)
-	arg_16_0._onOpenEndCb = arg_16_1
+function RougeDifficultyItem:setOnOpenEndCb(cb)
+	self._onOpenEndCb = cb
 end
 
-function var_0_0._onOpenEnd(arg_17_0)
-	if arg_17_0._onOpenEndCb then
-		arg_17_0._onOpenEndCb()
+function RougeDifficultyItem:_onOpenEnd()
+	if self._onOpenEndCb then
+		self._onOpenEndCb()
 
-		arg_17_0._onOpenEndCb = nil
+		self._onOpenEndCb = nil
 	end
 
-	if arg_17_0._isNewUnlockAnim then
-		arg_17_0:_playAnim(UIAnimationName.Unlock, arg_17_0._onUnlockEnd, arg_17_0)
+	if self._isNewUnlockAnim then
+		self:_playAnim(UIAnimationName.Unlock, self._onUnlockEnd, self)
 
-		arg_17_0._isNewUnlockAnim = nil
-	end
-end
-
-function var_0_0.setOnCloseEndCb(arg_18_0, arg_18_1)
-	arg_18_0._onCloseEndCb = arg_18_1
-end
-
-function var_0_0._onCloseEnd(arg_19_0)
-	if arg_19_0._onCloseEndCb then
-		arg_19_0._onCloseEndCb()
-
-		arg_19_0._onCloseEndCb = nil
+		self._isNewUnlockAnim = nil
 	end
 end
 
-function var_0_0.setOnUnlockEndCb(arg_20_0, arg_20_1)
-	arg_20_0._onUnlockEndCb = arg_20_1
+function RougeDifficultyItem:setOnCloseEndCb(cb)
+	self._onCloseEndCb = cb
 end
 
-function var_0_0._onUnlockEnd(arg_21_0)
-	if arg_21_0._onUnlockEndCb then
-		arg_21_0._onUnlockEndCb()
+function RougeDifficultyItem:_onCloseEnd()
+	if self._onCloseEndCb then
+		self._onCloseEndCb()
 
-		arg_21_0._onUnlockEndCb = nil
+		self._onCloseEndCb = nil
+	end
+end
+
+function RougeDifficultyItem:setOnUnlockEndCb(cb)
+	self._onUnlockEndCb = cb
+end
+
+function RougeDifficultyItem:_onUnlockEnd()
+	if self._onUnlockEndCb then
+		self._onUnlockEndCb()
+
+		self._onUnlockEndCb = nil
 	end
 
-	arg_21_0:setIsLocked(false)
-	arg_21_0:onSelect(arg_21_0._staticData.isSelected)
+	self:setIsLocked(false)
+	self:onSelect(self._staticData.isSelected)
 end
 
-function var_0_0._playAnim(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	arg_22_0._animatorPlayer:Play(arg_22_1, arg_22_2, arg_22_3)
+function RougeDifficultyItem:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb, cbObj)
 end
 
-return var_0_0
+return RougeDifficultyItem

@@ -1,18 +1,23 @@
-﻿module("modules.logic.versionactivity2_2.act173.view.Activity173FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act173/view/Activity173FullViewContainer.lua
 
-local var_0_0 = class("Activity173FullViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.act173.view.Activity173FullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity173FullViewContainer = class("Activity173FullViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity173FullView.New())
+function Activity173FullViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity173FullView.New())
+
+	return views
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	arg_2_0:startViewCloseBlock()
-	SLFramework.AnimatorPlayer.Get(arg_2_0.viewGO):Play(UIAnimationName.Close, arg_2_0.onPlayCloseTransitionFinish, arg_2_0)
+function Activity173FullViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+
+	local player = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	player:Play(UIAnimationName.Close, self.onPlayCloseTransitionFinish, self)
 end
 
-return var_0_0
+return Activity173FullViewContainer

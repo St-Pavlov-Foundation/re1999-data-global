@@ -1,47 +1,51 @@
-﻿module("modules.logic.rouge.config.RougeConfig1", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/config/RougeConfig1.lua
 
-local var_0_0 = class("RougeConfig1", RougeConfig)
+module("modules.logic.rouge.config.RougeConfig1", package.seeall)
 
-function var_0_0.season(arg_1_0)
+local RougeConfig1 = class("RougeConfig1", RougeConfig)
+
+function RougeConfig1:season()
 	return 1
 end
 
-function var_0_0.openUnlockId(arg_2_0)
+function RougeConfig1:openUnlockId()
 	return OpenEnum.UnlockFunc.Rouge1
 end
 
-function var_0_0.achievementJumpId(arg_3_0)
-	return (tonumber(lua_rouge_const.configDict[RougeEnum.Const.AchievementJumpId].value))
+function RougeConfig1:achievementJumpId()
+	local jumpId = tonumber(lua_rouge_const.configDict[RougeEnum.Const.AchievementJumpId].value)
+
+	return jumpId
 end
 
-function var_0_0.getRougeDifficultyViewStyleIndex(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function RougeConfig1:getRougeDifficultyViewStyleIndex(difficulty)
+	if not difficulty then
 		return
 	end
 
-	local var_4_0 = tonumber(arg_4_0:getConstValueByID(11)) or 1
-	local var_4_1 = tonumber(arg_4_0:getConstValueByID(12)) or 1
-	local var_4_2 = math.ceil(arg_4_1 / var_4_0)
+	local stepDifficulty = tonumber(self:getConstValueByID(11)) or 1
+	local totalStyle = tonumber(self:getConstValueByID(12)) or 1
+	local resultStyle = math.ceil(difficulty / stepDifficulty)
 
-	return math.min(var_4_1, var_4_2)
+	return math.min(totalStyle, resultStyle)
 end
 
-function var_0_0.calcStyleCOPassiveSkillDescsList(arg_5_0, arg_5_1)
-	local var_5_0 = {
-		arg_5_1.passiveSkillDescs
+function RougeConfig1:calcStyleCOPassiveSkillDescsList(styleCO)
+	local descList = {
+		styleCO.passiveSkillDescs
 	}
-	local var_5_1 = 2
-	local var_5_2 = arg_5_1["passiveSkillDescs" .. tostring(var_5_1)]
+	local index = 2
+	local str = styleCO["passiveSkillDescs" .. tostring(index)]
 
-	while var_5_2 do
-		var_5_0[#var_5_0 + 1] = var_5_2
-		var_5_1 = var_5_1 + 1
-		var_5_2 = arg_5_1["passiveSkillDescs" .. tostring(var_5_1)]
+	while str do
+		descList[#descList + 1] = str
+		index = index + 1
+		str = styleCO["passiveSkillDescs" .. tostring(index)]
 	end
 
-	return var_5_0
+	return descList
 end
 
-var_0_0.instance = var_0_0.New()
+RougeConfig1.instance = RougeConfig1.New()
 
-return var_0_0
+return RougeConfig1

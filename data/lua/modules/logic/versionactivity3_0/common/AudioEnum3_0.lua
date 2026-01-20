@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity3_0.common.AudioEnum3_0", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/common/AudioEnum3_0.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_0.common.AudioEnum3_0", package.seeall)
 
-var_0_0.VersionActivity3_0Store = {
+local AudioEnum3_0 = _M
+
+AudioEnum3_0.VersionActivity3_0Store = {
 	play_ui_jinye_chess_talk = 20170010,
 	play_ui_jinye_click_stage = 20170011,
 	stop_ui_jinye_chess_talk = 20170012,
 	play_ui_jinye_chess_enter = 20170009
 }
-var_0_0.VersionActivity3_0Enter = {
+AudioEnum3_0.VersionActivity3_0Enter = {
 	play_ui_jinye_open = 20301048,
 	play_ui_lushang_gunfire_loop = 20301049,
 	stop_ui_lushang_gunfire_loop = 20301046,
 	play_ui_lushang_open_1 = 20301047,
 	play_ui_jinye_unfold = 20301048
 }
-var_0_0.Bgm = {
+AudioEnum3_0.Bgm = {
 	play_ui_zhihuisuo_music = 3309051,
 	play_login_interface_music_3_0 = 3309052
 }
-var_0_0.WarmUp = {
+AudioEnum3_0.WarmUp = {
 	stop_ui_lushang_yure_typewriter = 20300033,
 	play_ui_lushang_yure_typewriter = 20300032,
 	play_ui_lushang_yure_tear = 20300031
 }
-var_0_0.MaLiAnNa = {
+AudioEnum3_0.MaLiAnNa = {
 	play_ui_leimi_theft_open = 20301006,
 	play_ui_lushang_enemy_occupy = 20301011,
 	play_ui_lushang_warring_loop = 20301015,
@@ -48,7 +50,7 @@ var_0_0.MaLiAnNa = {
 	play_ui_lushang_level_appear = 20301003,
 	play_ui_lushang_fight_begin_2 = 20301008
 }
-var_0_0.CommandStationMap = {
+AudioEnum3_0.CommandStationMap = {
 	play_ui_lushang_zhihuibu_switch = 20301042,
 	play_ui_lushang_zhihuibu_shapan = 20301035,
 	play_ui_lushang_zhihuibu_paper = 20301043,
@@ -62,7 +64,7 @@ var_0_0.CommandStationMap = {
 	play_ui_lushang_zhihuibu_open = 20301024,
 	play_ui_lushang_zhihuibu_timeline1 = 20301036
 }
-var_0_0.CommandStationPaper = {
+AudioEnum3_0.CommandStationPaper = {
 	play_ui_diqiu_yure_success = 20301032,
 	play_ui_wenming_cards_effect = 20301028,
 	play_ui_common_click = 20301027,
@@ -74,7 +76,7 @@ var_0_0.CommandStationPaper = {
 	play_ui_lushang_zhihuibu_fanhui = 20301033,
 	play_ui_tangren_pen1 = 20301029
 }
-var_0_0.ActKaRong = {
+AudioEnum3_0.ActKaRong = {
 	play_ui_lushang_skill_get = 20301058,
 	stop_ui_lushang_burn_loop = 20301055,
 	play_ui_lushang_karong_finish = 20301052,
@@ -86,4 +88,4 @@ var_0_0.ActKaRong = {
 	play_ui_lushang_karong_unlock = 20301053
 }
 
-return var_0_0
+return AudioEnum3_0

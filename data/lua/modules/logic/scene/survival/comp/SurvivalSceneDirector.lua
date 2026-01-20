@@ -1,96 +1,98 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneDirector.lua
 
-local var_0_0 = class("SurvivalSceneDirector", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalSceneDirector", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+local SurvivalSceneDirector = class("SurvivalSceneDirector", BaseSceneComp)
+
+function SurvivalSceneDirector:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
-	arg_2_0._compInitSequence = FlowSequence.New()
+function SurvivalSceneDirector:onSceneStart(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._compInitSequence = FlowSequence.New()
 
-	local var_2_0 = FlowParallel.New()
+	local levelAndPreloadWork = FlowParallel.New()
 
-	arg_2_0._compInitSequence:addWork(var_2_0)
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.level, CommonSceneLevelComp.OnLevelLoaded))
+	self._compInitSequence:addWork(levelAndPreloadWork)
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.level, CommonSceneLevelComp.OnLevelLoaded))
 
-	if arg_2_0._scene.fog then
-		var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.fog, SurvivalEvent.OnSurvivalFogLoaded))
+	if self._scene.fog then
+		levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.fog, SurvivalEvent.OnSurvivalFogLoaded))
 	end
 
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.block, SurvivalEvent.OnSurvivalBlockLoadFinish))
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.block, SurvivalEvent.OnSurvivalBlockLoadFinish))
 
-	if arg_2_0._scene.spBlock then
-		var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.spBlock, SurvivalEvent.OnSurvivalBlockLoadFinish))
+	if self._scene.spBlock then
+		levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.spBlock, SurvivalEvent.OnSurvivalBlockLoadFinish))
 	end
 
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.preloader, SurvivalEvent.OnSurvivalPreloadFinish))
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.preloader, SurvivalEvent.OnSurvivalPreloadFinish))
 
-	if arg_2_0._scene.cloud then
-		arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.cloud))
+	if self._scene.cloud then
+		self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.cloud))
 	end
 
-	arg_2_0._compInitSequence:addWork(BpWaitSecWork.New(0.3))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.graphics))
-	arg_2_0._compInitSequence:addWork(BpWaitSecWork.New(0.3))
-	arg_2_0._compInitSequence:registerDoneListener(arg_2_0._compInitDone, arg_2_0)
-	arg_2_0._compInitSequence:start({
-		sceneId = arg_2_1,
-		levelId = arg_2_2
+	self._compInitSequence:addWork(BpWaitSecWork.New(0.3))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.graphics))
+	self._compInitSequence:addWork(BpWaitSecWork.New(0.3))
+	self._compInitSequence:registerDoneListener(self._compInitDone, self)
+	self._compInitSequence:start({
+		sceneId = sceneId,
+		levelId = levelId
 	})
 end
 
-function var_0_0._compInitDone(arg_3_0)
-	arg_3_0._scene:onPrepared()
+function SurvivalSceneDirector:_compInitDone()
+	self._scene:onPrepared()
 
-	arg_3_0._compInitSequence = nil
+	self._compInitSequence = nil
 
-	arg_3_0:startEnterProgress()
+	self:startEnterProgress()
 end
 
-function var_0_0.startEnterProgress(arg_4_0)
-	local var_4_0 = SurvivalOpenViewWork.New({
+function SurvivalSceneDirector:startEnterProgress()
+	local survivalOpenViewWork = SurvivalOpenViewWork.New({
 		viewName = ViewName.SurvivalMapMainView
 	})
 
-	var_4_0:registerDoneListener(arg_4_0.onOpenView, arg_4_0)
+	survivalOpenViewWork:registerDoneListener(self.onOpenView, self)
 
-	local var_4_1 = FlowParallel.New()
+	local parallel = FlowParallel.New()
 
-	var_4_1:addWork(var_4_0)
+	parallel:addWork(survivalOpenViewWork)
 
-	arg_4_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	arg_4_0.flow:addWork(TimerWork.New(0.1))
-	arg_4_0.flow:addWork(var_4_1)
-	arg_4_0.flow:start()
+	self.flow:addWork(TimerWork.New(0.1))
+	self.flow:addWork(parallel)
+	self.flow:start()
 end
 
-function var_0_0.onOpenView(arg_5_0)
-	arg_5_0:onSurvivalMainViewOpen()
+function SurvivalSceneDirector:onOpenView()
+	self:onSurvivalMainViewOpen()
 end
 
-function var_0_0.onSurvivalMainViewOpen(arg_6_0)
+function SurvivalSceneDirector:onSurvivalMainViewOpen()
 	ViewMgr.instance:closeView(ViewName.SurvivalLoadingView)
 end
 
-function var_0_0.onSceneClose(arg_7_0)
-	if arg_7_0._compInitSequence then
-		arg_7_0._compInitSequence:destroy()
+function SurvivalSceneDirector:onSceneClose()
+	if self._compInitSequence then
+		self._compInitSequence:destroy()
 
-		arg_7_0._compInitSequence = nil
+		self._compInitSequence = nil
 	end
 
-	arg_7_0:disposeEnterProgress()
+	self:disposeEnterProgress()
 end
 
-function var_0_0.disposeEnterProgress(arg_8_0)
-	if arg_8_0.flow then
-		arg_8_0.flow:destroy()
+function SurvivalSceneDirector:disposeEnterProgress()
+	if self.flow then
+		self.flow:destroy()
 
-		arg_8_0.flow = nil
+		self.flow = nil
 	end
 end
 
-return var_0_0
+return SurvivalSceneDirector

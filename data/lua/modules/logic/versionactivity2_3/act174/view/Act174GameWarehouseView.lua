@@ -1,195 +1,197 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174GameWarehouseView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174GameWarehouseView.lua
 
-local var_0_0 = class("Act174GameWarehouseView", BaseView)
+module("modules.logic.versionactivity2_3.act174.view.Act174GameWarehouseView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goEditTeam = gohelper.findChild(arg_1_0.viewGO, "#go_EditTeam")
-	arg_1_0._goWarehouse = gohelper.findChild(arg_1_0.viewGO, "go_Warehouse")
-	arg_1_0._goWareItemRoot = gohelper.findChild(arg_1_0.viewGO, "go_Warehouse/go_WareItemRoot")
-	arg_1_0._btnLastPage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_Warehouse/btn_LastPage")
-	arg_1_0._txtPage = gohelper.findChildText(arg_1_0.viewGO, "go_Warehouse/Page/txt_Page")
-	arg_1_0._btnNextPage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_Warehouse/btn_NextPage")
-	arg_1_0._btnHeroBage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_Warehouse/btn_HeroBag")
-	arg_1_0._btnCollectionBag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_Warehouse/btn_CollectionBag")
+local Act174GameWarehouseView = class("Act174GameWarehouseView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act174GameWarehouseView:onInitView()
+	self._goEditTeam = gohelper.findChild(self.viewGO, "#go_EditTeam")
+	self._goWarehouse = gohelper.findChild(self.viewGO, "go_Warehouse")
+	self._goWareItemRoot = gohelper.findChild(self.viewGO, "go_Warehouse/go_WareItemRoot")
+	self._btnLastPage = gohelper.findChildButtonWithAudio(self.viewGO, "go_Warehouse/btn_LastPage")
+	self._txtPage = gohelper.findChildText(self.viewGO, "go_Warehouse/Page/txt_Page")
+	self._btnNextPage = gohelper.findChildButtonWithAudio(self.viewGO, "go_Warehouse/btn_NextPage")
+	self._btnHeroBage = gohelper.findChildButtonWithAudio(self.viewGO, "go_Warehouse/btn_HeroBag")
+	self._btnCollectionBag = gohelper.findChildButtonWithAudio(self.viewGO, "go_Warehouse/btn_CollectionBag")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnCollectionBag, arg_2_0._btnCollectionBagOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnHeroBage, arg_2_0._btnHeroBageOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnLastPage, arg_2_0._btnLastPageOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnNextPage, arg_2_0._btnNextPageOnClick, arg_2_0)
+function Act174GameWarehouseView:addEvents()
+	self:addClickCb(self._btnCollectionBag, self._btnCollectionBagOnClick, self)
+	self:addClickCb(self._btnHeroBage, self._btnHeroBageOnClick, self)
+	self:addClickCb(self._btnLastPage, self._btnLastPageOnClick, self)
+	self:addClickCb(self._btnNextPage, self._btnNextPageOnClick, self)
 end
 
-function var_0_0._btnCollectionBagOnClick(arg_3_0)
-	if arg_3_0.wareType == Activity174Enum.WareType.Collection then
+function Act174GameWarehouseView:_btnCollectionBagOnClick()
+	if self.wareType == Activity174Enum.WareType.Collection then
 		return
 	end
 
-	arg_3_0.animWareHouse:Play("switch", 0, 0)
-	gohelper.setActive(arg_3_0.goBtnHeroS, false)
-	gohelper.setActive(arg_3_0.goBtnHeroU, true)
-	gohelper.setActive(arg_3_0.goBtnCollectionS, true)
-	gohelper.setActive(arg_3_0.goBtnCollectionU, false)
+	self.animWareHouse:Play("switch", 0, 0)
+	gohelper.setActive(self.goBtnHeroS, false)
+	gohelper.setActive(self.goBtnHeroU, true)
+	gohelper.setActive(self.goBtnCollectionS, true)
+	gohelper.setActive(self.goBtnCollectionU, false)
 
-	arg_3_0.wareType = Activity174Enum.WareType.Collection
+	self.wareType = Activity174Enum.WareType.Collection
 
-	local var_3_0 = arg_3_0.wareHouseMo:getItemData()
+	local wareDatas = self.wareHouseMo:getItemData()
 
-	arg_3_0.maxPage = math.ceil(#var_3_0 / arg_3_0.maxWareCnt)
+	self.maxPage = math.ceil(#wareDatas / self.maxWareCnt)
 
-	arg_3_0:setPage(1)
-	TaskDispatcher.cancelTask(arg_3_0.refreshWareItem, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0.refreshWareItem, arg_3_0, 0.16)
-	Activity174Controller.instance:dispatchEvent(Activity174Event.WareHouseTypeChange, arg_3_0.wareType)
+	self:setPage(1)
+	TaskDispatcher.cancelTask(self.refreshWareItem, self)
+	TaskDispatcher.runDelay(self.refreshWareItem, self, 0.16)
+	Activity174Controller.instance:dispatchEvent(Activity174Event.WareHouseTypeChange, self.wareType)
 end
 
-function var_0_0._btnHeroBageOnClick(arg_4_0)
-	if arg_4_0.wareType == Activity174Enum.WareType.Hero then
+function Act174GameWarehouseView:_btnHeroBageOnClick()
+	if self.wareType == Activity174Enum.WareType.Hero then
 		return
 	end
 
-	arg_4_0.animWareHouse:Play("switch", 0, 0)
-	gohelper.setActive(arg_4_0.goBtnHeroS, true)
-	gohelper.setActive(arg_4_0.goBtnHeroU, false)
-	gohelper.setActive(arg_4_0.goBtnCollectionS, false)
-	gohelper.setActive(arg_4_0.goBtnCollectionU, true)
+	self.animWareHouse:Play("switch", 0, 0)
+	gohelper.setActive(self.goBtnHeroS, true)
+	gohelper.setActive(self.goBtnHeroU, false)
+	gohelper.setActive(self.goBtnCollectionS, false)
+	gohelper.setActive(self.goBtnCollectionU, true)
 
-	arg_4_0.wareType = Activity174Enum.WareType.Hero
+	self.wareType = Activity174Enum.WareType.Hero
 
-	local var_4_0 = arg_4_0.wareHouseMo:getHeroData()
+	local wareDatas = self.wareHouseMo:getHeroData()
 
-	arg_4_0.maxPage = math.ceil(#var_4_0 / arg_4_0.maxWareCnt)
+	self.maxPage = math.ceil(#wareDatas / self.maxWareCnt)
 
-	arg_4_0:setPage(1)
-	TaskDispatcher.cancelTask(arg_4_0.refreshWareItem, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0.refreshWareItem, arg_4_0, 0.16)
-	Activity174Controller.instance:dispatchEvent(Activity174Event.WareHouseTypeChange, arg_4_0.wareType)
+	self:setPage(1)
+	TaskDispatcher.cancelTask(self.refreshWareItem, self)
+	TaskDispatcher.runDelay(self.refreshWareItem, self, 0.16)
+	Activity174Controller.instance:dispatchEvent(Activity174Event.WareHouseTypeChange, self.wareType)
 end
 
-function var_0_0._btnLastPageOnClick(arg_5_0)
-	if arg_5_0.curPage - 1 < 1 then
+function Act174GameWarehouseView:_btnLastPageOnClick()
+	if self.curPage - 1 < 1 then
 		return
 	end
 
-	arg_5_0.animWareHouse:Play("switch", 0, 0)
-	arg_5_0:setPage(arg_5_0.curPage - 1)
-	TaskDispatcher.cancelTask(arg_5_0.refreshWareItem, arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0.refreshWareItem, arg_5_0, 0.16)
+	self.animWareHouse:Play("switch", 0, 0)
+	self:setPage(self.curPage - 1)
+	TaskDispatcher.cancelTask(self.refreshWareItem, self)
+	TaskDispatcher.runDelay(self.refreshWareItem, self, 0.16)
 end
 
-function var_0_0._btnNextPageOnClick(arg_6_0)
-	if arg_6_0.curPage + 1 > arg_6_0.maxPage then
+function Act174GameWarehouseView:_btnNextPageOnClick()
+	if self.curPage + 1 > self.maxPage then
 		return
 	end
 
-	arg_6_0.animWareHouse:Play("switch", 0, 0)
-	arg_6_0:setPage(arg_6_0.curPage + 1)
-	TaskDispatcher.cancelTask(arg_6_0.refreshWareItem, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0.refreshWareItem, arg_6_0, 0.16)
+	self.animWareHouse:Play("switch", 0, 0)
+	self:setPage(self.curPage + 1)
+	TaskDispatcher.cancelTask(self.refreshWareItem, self)
+	TaskDispatcher.runDelay(self.refreshWareItem, self, 0.16)
 end
 
-function var_0_0.updateWareHouseInfo(arg_7_0)
-	arg_7_0.wareHouseMo = arg_7_0.gameInfo:getWarehouseInfo()
+function Act174GameWarehouseView:updateWareHouseInfo()
+	self.wareHouseMo = self.gameInfo:getWarehouseInfo()
 
-	local var_7_0
+	local wareDatas
 
-	if arg_7_0.wareType == Activity174Enum.WareType.Hero then
-		var_7_0 = arg_7_0.wareHouseMo:getHeroData()
+	if self.wareType == Activity174Enum.WareType.Hero then
+		wareDatas = self.wareHouseMo:getHeroData()
 	else
-		var_7_0 = arg_7_0.wareHouseMo:getItemData()
+		wareDatas = self.wareHouseMo:getItemData()
 	end
 
-	arg_7_0.maxPage = math.ceil(#var_7_0 / arg_7_0.maxWareCnt)
+	self.maxPage = math.ceil(#wareDatas / self.maxWareCnt)
 
-	arg_7_0:setPage(arg_7_0.curPage)
-	arg_7_0:refreshWareItem(true)
+	self:setPage(self.curPage)
+	self:refreshWareItem(true)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.maxWareCnt = Activity174Enum.MaxWareItemSinglePage
-	arg_8_0.goware = gohelper.findChild(arg_8_0._goWareItemRoot, "ware")
-	arg_8_0.goBtnHeroS = gohelper.findChild(arg_8_0._btnHeroBage.gameObject, "select")
-	arg_8_0.goBtnHeroU = gohelper.findChild(arg_8_0._btnHeroBage.gameObject, "unselect")
-	arg_8_0.goBtnCollectionS = gohelper.findChild(arg_8_0._btnCollectionBag.gameObject, "select")
-	arg_8_0.goBtnCollectionU = gohelper.findChild(arg_8_0._btnCollectionBag.gameObject, "unselect")
-	arg_8_0.goBtnLastL = gohelper.findChild(arg_8_0._btnLastPage.gameObject, "lock")
-	arg_8_0.goBtnNextL = gohelper.findChild(arg_8_0._btnNextPage.gameObject, "lock")
-	arg_8_0.animWareHouse = arg_8_0._goWarehouse:GetComponent(gohelper.Type_Animator)
+function Act174GameWarehouseView:_editableInitView()
+	self.maxWareCnt = Activity174Enum.MaxWareItemSinglePage
+	self.goware = gohelper.findChild(self._goWareItemRoot, "ware")
+	self.goBtnHeroS = gohelper.findChild(self._btnHeroBage.gameObject, "select")
+	self.goBtnHeroU = gohelper.findChild(self._btnHeroBage.gameObject, "unselect")
+	self.goBtnCollectionS = gohelper.findChild(self._btnCollectionBag.gameObject, "select")
+	self.goBtnCollectionU = gohelper.findChild(self._btnCollectionBag.gameObject, "unselect")
+	self.goBtnLastL = gohelper.findChild(self._btnLastPage.gameObject, "lock")
+	self.goBtnNextL = gohelper.findChild(self._btnNextPage.gameObject, "lock")
+	self.animWareHouse = self._goWarehouse:GetComponent(gohelper.Type_Animator)
 
-	arg_8_0:initWareItem()
+	self:initWareItem()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
-	arg_9_0.wareHouseMo = arg_9_0.gameInfo:getWarehouseInfo()
+function Act174GameWarehouseView:onOpen()
+	self.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+	self.wareHouseMo = self.gameInfo:getWarehouseInfo()
 
-	arg_9_0:_btnHeroBageOnClick()
-	arg_9_0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, arg_9_0.updateWareHouseInfo, arg_9_0)
-	arg_9_0:addEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, arg_9_0.updateWareHouseInfo, arg_9_0)
-	arg_9_0:addEventCb(Activity174Controller.instance, Activity174Event.ChangeLocalTeam, arg_9_0.onChangeLocalTeam, arg_9_0)
+	self:_btnHeroBageOnClick()
+	self:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, self.updateWareHouseInfo, self)
+	self:addEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, self.updateWareHouseInfo, self)
+	self:addEventCb(Activity174Controller.instance, Activity174Event.ChangeLocalTeam, self.onChangeLocalTeam, self)
 end
 
-function var_0_0.onClose(arg_10_0)
-	arg_10_0:removeEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, arg_10_0.updateWareHouseInfo, arg_10_0)
-	arg_10_0:removeEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, arg_10_0.updateWareHouseInfo, arg_10_0)
-	arg_10_0:removeEventCb(Activity174Controller.instance, Activity174Event.ChangeLocalTeam, arg_10_0.onChangeLocalTeam, arg_10_0)
+function Act174GameWarehouseView:onClose()
+	self:removeEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, self.updateWareHouseInfo, self)
+	self:removeEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, self.updateWareHouseInfo, self)
+	self:removeEventCb(Activity174Controller.instance, Activity174Event.ChangeLocalTeam, self.onChangeLocalTeam, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.refreshWareItem, arg_11_0)
-	arg_11_0.wareHouseMo:clearNewSign()
+function Act174GameWarehouseView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshWareItem, self)
+	self.wareHouseMo:clearNewSign()
 end
 
-function var_0_0.initWareItem(arg_12_0)
-	arg_12_0.wareItemList = {}
+function Act174GameWarehouseView:initWareItem()
+	self.wareItemList = {}
 
-	for iter_12_0 = 1, arg_12_0.maxWareCnt do
-		local var_12_0 = gohelper.clone(arg_12_0.goware, arg_12_0._goWareItemRoot, "wareItem" .. iter_12_0)
+	for i = 1, self.maxWareCnt do
+		local go = gohelper.clone(self.goware, self._goWareItemRoot, "wareItem" .. i)
 
-		arg_12_0.wareItemList[iter_12_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0, Act174GameWareItem, arg_12_0)
+		self.wareItemList[i] = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act174GameWareItem, self)
 
-		arg_12_0.wareItemList[iter_12_0]:setIndex(iter_12_0)
+		self.wareItemList[i]:setIndex(i)
 	end
 end
 
-function var_0_0.refreshWareItem(arg_13_0, arg_13_1)
-	local var_13_0
+function Act174GameWarehouseView:refreshWareItem(isNew)
+	local wareDatas
 
-	if arg_13_0.wareType == Activity174Enum.WareType.Hero then
-		var_13_0 = arg_13_0.wareHouseMo:getHeroData()
-	elseif arg_13_0.wareType == Activity174Enum.WareType.Collection then
-		var_13_0 = arg_13_0.wareHouseMo:getItemData()
+	if self.wareType == Activity174Enum.WareType.Hero then
+		wareDatas = self.wareHouseMo:getHeroData()
+	elseif self.wareType == Activity174Enum.WareType.Collection then
+		wareDatas = self.wareHouseMo:getItemData()
 	end
 
-	arg_13_0.curPageWareDatas = arg_13_0:calculateCurPage(var_13_0)
+	self.curPageWareDatas = self:calculateCurPage(wareDatas)
 
-	for iter_13_0 = 1, arg_13_0.maxWareCnt do
-		local var_13_1 = arg_13_0.curPageWareDatas[iter_13_0]
+	for i = 1, self.maxWareCnt do
+		local wareData = self.curPageWareDatas[i]
 
-		arg_13_0.wareItemList[iter_13_0]:setData(var_13_1, arg_13_0.wareType)
+		self.wareItemList[i]:setData(wareData, self.wareType)
 	end
 
-	local var_13_2 = arg_13_0.wareHouseMo:getNewIdDic(arg_13_0.wareType)
+	local newIdDic = self.wareHouseMo:getNewIdDic(self.wareType)
 
-	if var_13_2 and next(var_13_2) then
-		for iter_13_1 = arg_13_0.maxWareCnt, 1, -1 do
-			local var_13_3 = arg_13_0.curPageWareDatas[iter_13_1]
+	if newIdDic and next(newIdDic) then
+		for i = self.maxWareCnt, 1, -1 do
+			local wareData = self.curPageWareDatas[i]
 
-			if var_13_3 then
-				local var_13_4 = var_13_3.id
-				local var_13_5 = arg_13_0.wareItemList[iter_13_1]
+			if wareData then
+				local id = wareData.id
+				local wareItem = self.wareItemList[i]
 
-				if var_13_2[var_13_4] and var_13_2[var_13_4] ~= 0 then
-					var_13_2[var_13_4] = var_13_2[var_13_4] - 1
+				if newIdDic[id] and newIdDic[id] ~= 0 then
+					newIdDic[id] = newIdDic[id] - 1
 
-					var_13_5:setNew(true)
+					wareItem:setNew(true)
 
-					if arg_13_1 then
-						var_13_5:playNew()
+					if isNew then
+						wareItem:playNew()
 					end
 				end
 			end
@@ -197,30 +199,30 @@ function var_0_0.refreshWareItem(arg_13_0, arg_13_1)
 	end
 end
 
-function var_0_0.calculateCurPage(arg_14_0, arg_14_1)
-	local var_14_0 = {}
-	local var_14_1 = (arg_14_0.curPage - 1) * arg_14_0.maxWareCnt + 1
-	local var_14_2 = var_14_1 + arg_14_0.maxWareCnt - 1
+function Act174GameWarehouseView:calculateCurPage(wareDatas)
+	local curPageWareIds = {}
+	local startNum = (self.curPage - 1) * self.maxWareCnt + 1
+	local endNum = startNum + self.maxWareCnt - 1
 
-	var_14_2 = var_14_2 > #arg_14_1 and #arg_14_1 or var_14_2
+	endNum = endNum > #wareDatas and #wareDatas or endNum
 
-	for iter_14_0 = var_14_1, var_14_2 do
-		table.insert(var_14_0, arg_14_1[iter_14_0])
+	for i = startNum, endNum do
+		table.insert(curPageWareIds, wareDatas[i])
 	end
 
-	return var_14_0
+	return curPageWareIds
 end
 
-function var_0_0.onChangeLocalTeam(arg_15_0)
-	arg_15_0:refreshWareItem()
+function Act174GameWarehouseView:onChangeLocalTeam()
+	self:refreshWareItem()
 end
 
-function var_0_0.setPage(arg_16_0, arg_16_1)
-	arg_16_0.curPage = arg_16_1
-	arg_16_0._txtPage.text = arg_16_0.curPage
+function Act174GameWarehouseView:setPage(page)
+	self.curPage = page
+	self._txtPage.text = self.curPage
 
-	gohelper.setActive(arg_16_0.goBtnLastL, arg_16_0.curPage <= 1)
-	gohelper.setActive(arg_16_0.goBtnNextL, arg_16_0.curPage >= arg_16_0.maxPage)
+	gohelper.setActive(self.goBtnLastL, self.curPage <= 1)
+	gohelper.setActive(self.goBtnNextL, self.curPage >= self.maxPage)
 end
 
-return var_0_0
+return Act174GameWarehouseView

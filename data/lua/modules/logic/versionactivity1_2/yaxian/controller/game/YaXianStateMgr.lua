@@ -1,87 +1,89 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianStateMgr", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/YaXianStateMgr.lua
 
-local var_0_0 = class("YaXianStateMgr")
+module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianStateMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._curEventData = nil
-	arg_1_0._curEvent = nil
+local YaXianStateMgr = class("YaXianStateMgr")
+
+function YaXianStateMgr:ctor()
+	self._curEventData = nil
+	self._curEvent = nil
 end
 
-var_0_0.EventClzMap = {
+YaXianStateMgr.EventClzMap = {
 	[YaXianGameEnum.GameStateType.Battle] = YaXianStateBattle,
 	[YaXianGameEnum.GameStateType.UseItem] = YaXianStateUseItem,
 	[YaXianGameEnum.GameStateType.FinishEvent] = YaXianStateFinishEvent
 }
 
-function var_0_0.setCurEvent(arg_2_0, arg_2_1)
-	if arg_2_1 ~= nil and not string.nilorempty(arg_2_1.param) then
-		arg_2_0._curEventData = cjson.decode(arg_2_1.param)
+function YaXianStateMgr:setCurEvent(serverEvt)
+	if serverEvt ~= nil and not string.nilorempty(serverEvt.param) then
+		self._curEventData = cjson.decode(serverEvt.param)
 	else
-		arg_2_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_2_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.setCurEventByObj(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0._curEventData = arg_3_1
+function YaXianStateMgr:setCurEventByObj(obj)
+	if obj then
+		self._curEventData = obj
 	else
-		arg_3_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_3_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.buildEventState(arg_4_0)
-	local var_4_0
+function YaXianStateMgr:buildEventState()
+	local eventType
 
-	if not arg_4_0._curEventData then
-		var_4_0 = YaXianGameEnum.GameStateType.Normal
+	if not self._curEventData then
+		eventType = YaXianGameEnum.GameStateType.Normal
 	else
-		var_4_0 = arg_4_0._curEventData.eventType
+		eventType = self._curEventData.eventType
 	end
 
-	if arg_4_0._curEvent and arg_4_0._curEvent:getStateType() == var_4_0 then
+	if self._curEvent and self._curEvent:getStateType() == eventType then
 		return
 	end
 
-	local var_4_1 = var_0_0.EventClzMap[var_4_0]
+	local clz = YaXianStateMgr.EventClzMap[eventType]
 
-	if var_4_1 then
-		arg_4_0:disposeEventState()
+	if clz then
+		self:disposeEventState()
 
-		arg_4_0._curEvent = var_4_1.New()
+		self._curEvent = clz.New()
 
-		arg_4_0._curEvent:init(arg_4_0._curEventData)
-		arg_4_0._curEvent:start()
+		self._curEvent:init(self._curEventData)
+		self._curEvent:start()
 	end
 end
 
-function var_0_0.setLockState(arg_5_0)
-	arg_5_0:disposeEventState()
+function YaXianStateMgr:setLockState()
+	self:disposeEventState()
 
-	arg_5_0._curEventData = nil
-	arg_5_0._curEvent = YaXianStateLock.New()
+	self._curEventData = nil
+	self._curEvent = YaXianStateLock.New()
 
-	arg_5_0._curEvent:init()
-	arg_5_0._curEvent:start()
+	self._curEvent:init()
+	self._curEvent:start()
 end
 
-function var_0_0.disposeEventState(arg_6_0)
-	if arg_6_0._curEvent ~= nil then
-		arg_6_0._curEvent:dispose()
+function YaXianStateMgr:disposeEventState()
+	if self._curEvent ~= nil then
+		self._curEvent:dispose()
 
-		arg_6_0._curEvent = nil
+		self._curEvent = nil
 	end
 end
 
-function var_0_0.getCurEvent(arg_7_0)
-	return arg_7_0._curEvent
+function YaXianStateMgr:getCurEvent()
+	return self._curEvent
 end
 
-function var_0_0.removeAll(arg_8_0)
-	arg_8_0:disposeEventState()
+function YaXianStateMgr:removeAll()
+	self:disposeEventState()
 end
 
-return var_0_0
+return YaXianStateMgr

@@ -1,19 +1,21 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkBuffBindingHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkBuffBindingHeroItem.lua
 
-local var_0_0 = class("WeekWalkBuffBindingHeroItem", HeroGroupEditItem)
+module("modules.logic.weekwalk.view.WeekWalkBuffBindingHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
-	arg_1_0:enableDeselect(false)
+local WeekWalkBuffBindingHeroItem = class("WeekWalkBuffBindingHeroItem", HeroGroupEditItem)
+
+function WeekWalkBuffBindingHeroItem:init(go)
+	WeekWalkBuffBindingHeroItem.super.init(self, go)
+	self:enableDeselect(false)
 end
 
-function var_0_0._onItemClick(arg_2_0)
+function WeekWalkBuffBindingHeroItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_2_0._mo)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, self._mo)
 end
 
-function var_0_0.onDestroy(arg_3_0)
+function WeekWalkBuffBindingHeroItem:onDestroy()
 	return
 end
 
-return var_0_0
+return WeekWalkBuffBindingHeroItem

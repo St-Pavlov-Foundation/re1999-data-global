@@ -1,21 +1,25 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNodeEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/entity/TianShiNaNaNodeEntity.lua
 
-local var_0_0 = class("TianShiNaNaNodeEntity", LuaCompBase)
+module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNodeEntity", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
+local TianShiNaNaNodeEntity = class("TianShiNaNaNodeEntity", LuaCompBase)
+
+function TianShiNaNaNodeEntity:init(go)
+	self.go = go
 end
 
-function var_0_0.updateCo(arg_2_0, arg_2_1)
-	PrefabInstantiate.Create(arg_2_0.go):startLoad(arg_2_1.nodePath)
+function TianShiNaNaNodeEntity:updateCo(nodeCo)
+	local loader = PrefabInstantiate.Create(self.go)
 
-	local var_2_0 = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2(arg_2_1.x, arg_2_1.y))
+	loader:startLoad(nodeCo.nodePath)
 
-	transformhelper.setLocalPos(arg_2_0.go.transform, var_2_0.x, var_2_0.y, var_2_0.z)
+	local pos = TianShiNaNaHelper.nodeToV3(TianShiNaNaHelper.getV2(nodeCo.x, nodeCo.y))
+
+	transformhelper.setLocalPos(self.go.transform, pos.x, pos.y, pos.z)
 end
 
-function var_0_0.dispose(arg_3_0)
-	gohelper.destroy(arg_3_0.go)
+function TianShiNaNaNodeEntity:dispose()
+	gohelper.destroy(self.go)
 end
 
-return var_0_0
+return TianShiNaNaNodeEntity

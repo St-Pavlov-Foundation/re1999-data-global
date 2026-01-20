@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkUpdateItemPlayerSkill1002", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkUpdateItemPlayerSkill1002.lua
 
-local var_0_0 = class("FightWorkUpdateItemPlayerSkill1002", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkUpdateItemPlayerSkill1002", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkUpdateItemPlayerSkill1002 = class("FightWorkUpdateItemPlayerSkill1002", FightEffectBase)
+
+function FightWorkUpdateItemPlayerSkill1002:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkUpdateItemPlayerSkill1002

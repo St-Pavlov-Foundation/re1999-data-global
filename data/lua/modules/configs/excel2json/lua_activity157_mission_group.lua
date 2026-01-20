@@ -1,22 +1,24 @@
-﻿module("modules.configs.excel2json.lua_activity157_mission_group", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity157_mission_group.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity157_mission_group", package.seeall)
+
+local lua_activity157_mission_group = {}
+local fields = {
 	type = 3,
 	mapName = 4,
 	activityId = 1,
 	missionGroupId = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"missionGroupId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	mapName = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity157_mission_group.onLoad(json)
+	lua_activity157_mission_group.configList, lua_activity157_mission_group.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity157_mission_group

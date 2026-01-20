@@ -1,122 +1,127 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapSceneElements", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonMapSceneElements.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonMapSceneElements", VersionActivityFixedDungeonMapSceneElements)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapSceneElements", package.seeall)
 
-function var_0_0.loadSceneFinish(arg_1_0, arg_1_1)
-	arg_1_0._mapCfg = arg_1_1.mapConfig
-	arg_1_0._sceneGo = arg_1_1.mapSceneGo
-	arg_1_0._elementRoot = gohelper.findChild(arg_1_0._sceneGo, "elementRoot")
+local VersionActivity2_9DungeonMapSceneElements = class("VersionActivity2_9DungeonMapSceneElements", VersionActivityFixedDungeonMapSceneElements)
 
-	if gohelper.isNil(arg_1_0._elementRoot) then
-		arg_1_0._elementRoot = UnityEngine.GameObject.New("elementRoot")
+function VersionActivity2_9DungeonMapSceneElements:loadSceneFinish(param)
+	self._mapCfg = param.mapConfig
+	self._sceneGo = param.mapSceneGo
+	self._elementRoot = gohelper.findChild(self._sceneGo, "elementRoot")
 
-		gohelper.addChild(arg_1_0._sceneGo, arg_1_0._elementRoot)
+	if gohelper.isNil(self._elementRoot) then
+		self._elementRoot = UnityEngine.GameObject.New("elementRoot")
+
+		gohelper.addChild(self._sceneGo, self._elementRoot)
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_9DungeonController.instance, VersionActivity2_9Event.OnTweenEpisodeListVisible, arg_2_0._onTweenEpisodeListVisible, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_9DungeonController.instance, VersionActivity2_9Event.OnEpisodeListVisibleDone, arg_2_0._onEpisodeListVisibleDone, arg_2_0)
+function VersionActivity2_9DungeonMapSceneElements:addEvents()
+	VersionActivity2_9DungeonMapSceneElements.super.addEvents(self)
+	self:addEventCb(VersionActivity2_9DungeonController.instance, VersionActivity2_9Event.OnTweenEpisodeListVisible, self._onTweenEpisodeListVisible, self)
+	self:addEventCb(VersionActivity2_9DungeonController.instance, VersionActivity2_9Event.OnEpisodeListVisibleDone, self._onEpisodeListVisibleDone, self)
 end
 
-function var_0_0.isMouseDownElement(arg_3_0)
-	return arg_3_0.mouseDownElement ~= nil
+function VersionActivity2_9DungeonMapSceneElements:isMouseDownElement()
+	return self.mouseDownElement ~= nil
 end
 
-function var_0_0._updateArrow(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._arrowList[arg_4_1:getElementId()]
+function VersionActivity2_9DungeonMapSceneElements:_updateArrow(elementComp)
+	local arrowItem = self._arrowList[elementComp:getElementId()]
 
-	if not var_4_0 then
+	if not arrowItem then
 		return
 	end
 
-	if not arg_4_1:isConfigShowArrow() then
-		gohelper.setActive(var_4_0.go, false)
+	local isShowArrow = elementComp:isConfigShowArrow()
+
+	if not isShowArrow then
+		gohelper.setActive(arrowItem.go, false)
 
 		return
 	end
 
-	local var_4_1 = arg_4_1._transform
-	local var_4_2 = CameraMgr.instance:getMainCamera():WorldToViewportPoint(var_4_1.position)
+	local t = elementComp._transform
+	local camera = CameraMgr.instance:getMainCamera()
+	local pos = camera:WorldToViewportPoint(t.position)
 
-	if var_4_2.z < 0 then
-		var_4_2.x = 1 - var_4_2.x
-		var_4_2.y = 1 - var_4_2.y
+	if pos.z < 0 then
+		pos.x = 1 - pos.x
+		pos.y = 1 - pos.y
 	end
 
-	local var_4_3 = var_4_2.x
-	local var_4_4 = var_4_2.y
-	local var_4_5 = var_4_3 >= 0 and var_4_3 <= 1 and var_4_4 >= 0 and var_4_4 <= 1
+	local x = pos.x
+	local y = pos.y
+	local isShowElement = x >= 0 and x <= 1 and y >= 0 and y <= 1
 
-	gohelper.setActive(var_4_0.go, not var_4_5)
+	gohelper.setActive(arrowItem.go, not isShowElement)
 
-	if var_4_5 then
+	if isShowElement then
 		return
 	end
 
-	local var_4_6 = math.max(0.02, math.min(var_4_3, 0.98))
-	local var_4_7 = math.max(0.035, math.min(var_4_4, 0.965))
-	local var_4_8 = recthelper.getWidth(arg_4_0._goarrow.transform)
-	local var_4_9 = recthelper.getHeight(arg_4_0._goarrow.transform)
+	local viewportX = math.max(0.02, math.min(x, 0.98))
+	local viewportY = math.max(0.035, math.min(y, 0.965))
+	local width = recthelper.getWidth(self._goarrow.transform)
+	local height = recthelper.getHeight(self._goarrow.transform)
 
-	recthelper.setAnchor(var_4_0.go.transform, var_4_8 * (var_4_6 - 0.5), var_4_9 * (var_4_7 - 0.5))
+	recthelper.setAnchor(arrowItem.go.transform, width * (viewportX - 0.5), height * (viewportY - 0.5))
 
-	local var_4_10 = var_4_0.initRotation
+	local initRotation = arrowItem.initRotation
 
-	if var_4_3 >= 0 and var_4_3 <= 1 then
-		if var_4_4 < 0 then
-			transformhelper.setLocalRotation(var_4_0.rotationTrans, var_4_10[1], var_4_10[2], 180)
-
-			return
-		elseif var_4_4 > 1 then
-			transformhelper.setLocalRotation(var_4_0.rotationTrans, var_4_10[1], var_4_10[2], 0)
+	if x >= 0 and x <= 1 then
+		if y < 0 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 180)
 
 			return
-		end
-	end
-
-	if var_4_4 >= 0 and var_4_4 <= 1 then
-		if var_4_3 < 0 then
-			transformhelper.setLocalRotation(var_4_0.rotationTrans, var_4_10[1], var_4_10[2], 270)
-
-			return
-		elseif var_4_3 > 1 then
-			transformhelper.setLocalRotation(var_4_0.rotationTrans, var_4_10[1], var_4_10[2], 90)
+		elseif y > 1 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 0)
 
 			return
 		end
 	end
 
-	local var_4_11 = 90 - Mathf.Atan2(var_4_4, var_4_3) * Mathf.Rad2Deg
+	if y >= 0 and y <= 1 then
+		if x < 0 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 270)
 
-	transformhelper.setLocalRotation(var_4_0.rotationTrans, var_4_10[1], var_4_10[2], var_4_11)
+			return
+		elseif x > 1 then
+			transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], 90)
+
+			return
+		end
+	end
+
+	local angle = 90 - Mathf.Atan2(y, x) * Mathf.Rad2Deg
+
+	transformhelper.setLocalRotation(arrowItem.rotationTrans, initRotation[1], initRotation[2], angle)
 end
 
-function var_0_0._showElementAnim(arg_5_0, arg_5_1, arg_5_2)
-	var_0_0.super._showElementAnim(arg_5_0, arg_5_1, arg_5_2)
+function VersionActivity2_9DungeonMapSceneElements:_showElementAnim(animElements, normalElements)
+	VersionActivity2_9DungeonMapSceneElements.super._showElementAnim(self, animElements, normalElements)
 
-	if not arg_5_1 or #arg_5_1 <= 0 then
-		arg_5_0:_dispatchNewElementsFocusDoneEvent()
+	if not animElements or #animElements <= 0 then
+		self:_dispatchNewElementsFocusDoneEvent()
 
 		return
 	end
 
-	if arg_5_0._showSequence then
-		arg_5_0._showSequence:addWork(FunctionWork.New(arg_5_0._dispatchNewElementsFocusDoneEvent, arg_5_0))
+	if self._showSequence then
+		self._showSequence:addWork(FunctionWork.New(self._dispatchNewElementsFocusDoneEvent, self))
 	end
 end
 
-function var_0_0._dispatchNewElementsFocusDoneEvent(arg_6_0)
+function VersionActivity2_9DungeonMapSceneElements:_dispatchNewElementsFocusDoneEvent()
 	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnNewElementsFocusDone)
 end
 
-function var_0_0._onTweenEpisodeListVisible(arg_7_0)
-	gohelper.setActive(arg_7_0._goarrow, false)
+function VersionActivity2_9DungeonMapSceneElements:_onTweenEpisodeListVisible()
+	gohelper.setActive(self._goarrow, false)
 end
 
-function var_0_0._onEpisodeListVisibleDone(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._goarrow, arg_8_1)
+function VersionActivity2_9DungeonMapSceneElements:_onEpisodeListVisibleDone(isVisible)
+	gohelper.setActive(self._goarrow, isVisible)
 end
 
-return var_0_0
+return VersionActivity2_9DungeonMapSceneElements

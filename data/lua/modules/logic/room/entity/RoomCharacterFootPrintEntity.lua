@@ -1,88 +1,90 @@
-﻿module("modules.logic.room.entity.RoomCharacterFootPrintEntity", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/RoomCharacterFootPrintEntity.lua
 
-local var_0_0 = class("RoomCharacterFootPrintEntity", RoomBaseEntity)
+module("modules.logic.room.entity.RoomCharacterFootPrintEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomCharacterFootPrintEntity = class("RoomCharacterFootPrintEntity", RoomBaseEntity)
 
-	arg_1_0.id = arg_1_1
-	arg_1_0.entityId = arg_1_0.id
-	arg_1_0._keyParamDict = {}
-	arg_1_0._resRightPath = RoomResHelper.getCharacterEffectPath(RoomCharacterEnum.CommonEffect.RightFoot)
-	arg_1_0._resRightAb = RoomResHelper.getCharacterEffectABPath(RoomCharacterEnum.CommonEffect.RightFoot)
-	arg_1_0._resLeftPath = RoomResHelper.getCharacterEffectPath(RoomCharacterEnum.CommonEffect.LeftFoot)
-	arg_1_0._resLeftAb = RoomResHelper.getCharacterEffectABPath(RoomCharacterEnum.CommonEffect.LeftFoot)
+function RoomCharacterFootPrintEntity:ctor(entityId)
+	RoomCharacterFootPrintEntity.super.ctor(self)
+
+	self.id = entityId
+	self.entityId = self.id
+	self._keyParamDict = {}
+	self._resRightPath = RoomResHelper.getCharacterEffectPath(RoomCharacterEnum.CommonEffect.RightFoot)
+	self._resRightAb = RoomResHelper.getCharacterEffectABPath(RoomCharacterEnum.CommonEffect.RightFoot)
+	self._resLeftPath = RoomResHelper.getCharacterEffectPath(RoomCharacterEnum.CommonEffect.LeftFoot)
+	self._resLeftAb = RoomResHelper.getCharacterEffectABPath(RoomCharacterEnum.CommonEffect.LeftFoot)
 end
 
-function var_0_0.getTag(arg_2_0)
+function RoomCharacterFootPrintEntity:getTag()
 	return SceneTag.Untagged
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.containerGO = gohelper.create3d(arg_3_1, RoomEnum.EntityChildKey.ContainerGOKey)
-	arg_3_0.staticContainerGO = arg_3_0.containerGO
-	arg_3_0.goTrs = arg_3_1.transform
+function RoomCharacterFootPrintEntity:init(go)
+	self.containerGO = gohelper.create3d(go, RoomEnum.EntityChildKey.ContainerGOKey)
+	self.staticContainerGO = self.containerGO
+	self.goTrs = go.transform
 
-	var_0_0.super.init(arg_3_0, arg_3_1)
-	RoomMapController.instance:registerCallback(RoomEvent.AddCharacterFootPrint, arg_3_0._addFootPrintEffect, arg_3_0)
+	RoomCharacterFootPrintEntity.super.init(self, go)
+	RoomMapController.instance:registerCallback(RoomEvent.AddCharacterFootPrint, self._addFootPrintEffect, self)
 end
 
-function var_0_0.initComponents(arg_4_0)
-	arg_4_0:addComp("effect", RoomEffectComp)
+function RoomCharacterFootPrintEntity:initComponents()
+	self:addComp("effect", RoomEffectComp)
 end
 
-function var_0_0.onStart(arg_5_0)
-	var_0_0.super.onStart(arg_5_0)
+function RoomCharacterFootPrintEntity:onStart()
+	RoomCharacterFootPrintEntity.super.onStart(self)
 end
 
-function var_0_0.setLocalPos(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	transformhelper.setLocalPos(arg_6_0.goTrs, arg_6_1, arg_6_2, arg_6_3)
+function RoomCharacterFootPrintEntity:setLocalPos(x, y, z)
+	transformhelper.setLocalPos(self.goTrs, x, y, z)
 end
 
-function var_0_0.getMO(arg_7_0)
+function RoomCharacterFootPrintEntity:getMO()
 	return nil
 end
 
-function var_0_0.beforeDestroy(arg_8_0)
-	var_0_0.super.beforeDestroy(arg_8_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.AddCharacterFootPrint, arg_8_0._addFootPrintEffect, arg_8_0)
+function RoomCharacterFootPrintEntity:beforeDestroy()
+	RoomCharacterFootPrintEntity.super.beforeDestroy(self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.AddCharacterFootPrint, self._addFootPrintEffect, self)
 end
 
-function var_0_0._addFootPrintEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = 5
-	local var_9_1 = arg_9_0:_findEffectKey()
+function RoomCharacterFootPrintEntity:_addFootPrintEffect(rotationV3, position, isLeft)
+	local delayDestroy = 5
+	local effectKey = self:_findEffectKey()
 
-	arg_9_0.effect:addParams({
-		[var_9_1] = {
-			res = arg_9_3 and arg_9_0._resLeftPath or arg_9_0._resRightPath,
-			ab = arg_9_3 and arg_9_0._resLeftAb or arg_9_0._resRightAb,
-			localPos = arg_9_2,
-			localRotation = arg_9_1
+	self.effect:addParams({
+		[effectKey] = {
+			res = isLeft and self._resLeftPath or self._resRightPath,
+			ab = isLeft and self._resLeftAb or self._resRightAb,
+			localPos = position,
+			localRotation = rotationV3
 		}
-	}, var_9_0)
-	arg_9_0.effect:refreshEffect()
+	}, delayDestroy)
+	self.effect:refreshEffect()
 end
 
-function var_0_0._findEffectKey(arg_10_0)
-	local var_10_0 = 1
+function RoomCharacterFootPrintEntity:_findEffectKey()
+	local index = 1
 
-	while arg_10_0.effect:isHasEffectGOByKey(arg_10_0:_getKeyByIndex(var_10_0)) do
-		var_10_0 = var_10_0 + 1
+	while self.effect:isHasEffectGOByKey(self:_getKeyByIndex(index)) do
+		index = index + 1
 	end
 
-	return arg_10_0:_getKeyByIndex(var_10_0)
+	return self:_getKeyByIndex(index)
 end
 
-function var_0_0._getKeyByIndex(arg_11_0, arg_11_1)
-	if not arg_11_0._keyParamDict[arg_11_1] then
-		arg_11_0._keyParamDict[arg_11_1] = string.format("footprint_%s", arg_11_1)
+function RoomCharacterFootPrintEntity:_getKeyByIndex(index)
+	if not self._keyParamDict[index] then
+		self._keyParamDict[index] = string.format("footprint_%s", index)
 	end
 
-	return arg_11_0._keyParamDict[arg_11_1]
+	return self._keyParamDict[index]
 end
 
-function var_0_0.onEffectRebuild(arg_12_0)
+function RoomCharacterFootPrintEntity:onEffectRebuild()
 	return
 end
 
-return var_0_0
+return RoomCharacterFootPrintEntity

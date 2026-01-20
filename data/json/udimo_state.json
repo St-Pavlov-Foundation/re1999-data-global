@@ -1,0 +1,182 @@
+[
+  {
+    "udimoId": 360001,
+    "state": "idle",
+    "emoji": "101#103#104#105#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360001,
+    "state": "walk",
+    "emoji": "101#107",
+    "param": "1#4#1"
+  },
+  {
+    "udimoId": 360001,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360002,
+    "state": "idle",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360002,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360002,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360003,
+    "state": "idle",
+    "emoji": "101#103#104#105#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360003,
+    "state": "walk",
+    "emoji": "101#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360003,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360004,
+    "state": "idle",
+    "emoji": "101#102#103#104#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360004,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360004,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360005,
+    "state": "idle",
+    "emoji": "101#102#103#104#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360005,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360005,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360006,
+    "state": "idle",
+    "emoji": "101#102#103#104#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360006,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360006,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360007,
+    "state": "idle",
+    "emoji": "101#102#103#104#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360007,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360007,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360008,
+    "state": "idle",
+    "emoji": "101#102#103#104#105#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360008,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360008,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360009,
+    "state": "idle",
+    "emoji": "101#102#103#104#105#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360009,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360009,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  },
+  {
+    "udimoId": 360010,
+    "state": "idle",
+    "emoji": "101#102#103#104#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360010,
+    "state": "walk",
+    "emoji": "101#103#107",
+    "param": ""
+  },
+  {
+    "udimoId": 360010,
+    "state": "pickedUp",
+    "emoji": "102#103",
+    "param": ""
+  }
+]

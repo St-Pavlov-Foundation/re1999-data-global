@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_odyssey_dialog_element", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_odyssey_dialog_element.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_odyssey_dialog_element", package.seeall)
+
+local lua_odyssey_dialog_element = {}
+local fields = {
 	stepId = 2,
 	name = 6,
 	nextStep = 3,
@@ -10,17 +12,17 @@ local var_0_1 = {
 	picture = 4,
 	desc = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"stepId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 2,
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_odyssey_dialog_element.onLoad(json)
+	lua_odyssey_dialog_element.configList, lua_odyssey_dialog_element.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_odyssey_dialog_element

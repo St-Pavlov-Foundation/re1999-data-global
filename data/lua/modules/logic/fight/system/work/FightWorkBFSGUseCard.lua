@@ -1,24 +1,28 @@
-﻿module("modules.logic.fight.system.work.FightWorkBFSGUseCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBFSGUseCard.lua
 
-local var_0_0 = class("FightWorkBFSGUseCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkBFSGUseCard", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if FightModel.instance:getVersion() >= 1 and arg_1_0.actEffectData.teamType ~= FightEnum.TeamType.MySide then
-		arg_1_0:onDone(true)
+local FightWorkBFSGUseCard = class("FightWorkBFSGUseCard", FightEffectBase)
+
+function FightWorkBFSGUseCard:onStart()
+	local version = FightModel.instance:getVersion()
+
+	if version >= 1 and self.actEffectData.teamType ~= FightEnum.TeamType.MySide then
+		self:onDone(true)
 
 		return
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkBFSGUseCard:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkBFSGUseCard:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkBFSGUseCard

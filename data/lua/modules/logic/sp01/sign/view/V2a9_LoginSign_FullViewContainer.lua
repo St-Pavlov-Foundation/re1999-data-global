@@ -1,27 +1,29 @@
-﻿module("modules.logic.sp01.sign.view.V2a9_LoginSign_FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/sign/view/V2a9_LoginSign_FullViewContainer.lua
 
-local var_0_0 = class("V2a9_LoginSign_FullViewContainer", Activity101SignViewBaseContainer)
+module("modules.logic.sp01.sign.view.V2a9_LoginSign_FullViewContainer", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	arg_1_1.cellClass = V2a9_LoginSignItem
-	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
-	arg_1_1.cellWidth = 220
-	arg_1_1.cellHeight = 600
-	arg_1_1.cellSpaceH = -16
+local V2a9_LoginSign_FullViewContainer = class("V2a9_LoginSign_FullViewContainer", Activity101SignViewBaseContainer)
+
+function V2a9_LoginSign_FullViewContainer:onModifyListScrollParam(refListScrollParam)
+	refListScrollParam.cellClass = V2a9_LoginSignItem
+	refListScrollParam.scrollGOPath = "Root/#scroll_ItemList"
+	refListScrollParam.cellWidth = 220
+	refListScrollParam.cellHeight = 600
+	refListScrollParam.cellSpaceH = -16
 end
 
-function var_0_0.onGetMainViewClassType(arg_2_0)
+function V2a9_LoginSign_FullViewContainer:onGetMainViewClassType()
 	return V2a9_LoginSign_FullView
 end
 
-function var_0_0.onBuildViews(arg_3_0)
+function V2a9_LoginSign_FullViewContainer:onBuildViews()
 	return {
-		arg_3_0:getMainView(),
+		self:getMainView(),
 		(TabViewGroup.New(1, "#go_topleft"))
 	}
 end
 
-function var_0_0.buildTabViews(arg_4_0, arg_4_1)
+function V2a9_LoginSign_FullViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -31,4 +33,4 @@ function var_0_0.buildTabViews(arg_4_0, arg_4_1)
 	}
 end
 
-return var_0_0
+return V2a9_LoginSign_FullViewContainer

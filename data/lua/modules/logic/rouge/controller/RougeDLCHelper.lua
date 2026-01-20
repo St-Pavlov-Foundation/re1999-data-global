@@ -1,182 +1,195 @@
-﻿module("modules.logic.rouge.controller.RougeDLCHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/controller/RougeDLCHelper.lua
 
-local var_0_0 = class("RougeDLCHelper")
+module("modules.logic.rouge.controller.RougeDLCHelper", package.seeall)
 
-function var_0_0.isUsingDLCs()
-	local var_1_0 = RougeModel.instance:getVersion()
+local RougeDLCHelper = class("RougeDLCHelper")
 
-	return var_1_0 and #var_1_0 > 0
+function RougeDLCHelper.isUsingDLCs()
+	local versions = RougeModel.instance:getVersion()
+
+	return versions and #versions > 0
 end
 
-function var_0_0.isUsingTargetDLC(arg_2_0)
-	local var_2_0 = RougeModel.instance:getVersion()
+function RougeDLCHelper.isUsingTargetDLC(dlcId)
+	local versions = RougeModel.instance:getVersion()
 
-	if var_2_0 then
-		local var_2_1 = tabletool.indexOf(var_2_0, arg_2_0)
+	if versions then
+		local index = tabletool.indexOf(versions, dlcId)
 
-		return var_2_1 and var_2_1 > 0
+		return index and index > 0
 	end
 end
 
-function var_0_0.isCurrentUsingContent(arg_3_0)
-	return var_0_0.isCurrentBaseContent(arg_3_0) or var_0_0.isCurrentUsingVersions(arg_3_0)
+function RougeDLCHelper.isCurrentUsingContent(configVersionStr)
+	local isUsing = RougeDLCHelper.isCurrentBaseContent(configVersionStr)
+
+	isUsing = isUsing or RougeDLCHelper.isCurrentUsingVersions(configVersionStr)
+
+	return isUsing
 end
 
-function var_0_0.isCurrentUsingVersions(arg_4_0)
-	local var_4_0 = var_0_0.versionStrToList(arg_4_0)
-	local var_4_1 = RougeModel.instance:getVersion()
-	local var_4_2 = var_0_0.versionListToMap(var_4_1)
+function RougeDLCHelper.isCurrentUsingVersions(configVersionStr)
+	local configVersionList = RougeDLCHelper.versionStrToList(configVersionStr)
+	local curVersionList = RougeModel.instance:getVersion()
+	local curVersionMap = RougeDLCHelper.versionListToMap(curVersionList)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		if var_4_2[iter_4_1] then
+	for _, configVersion in ipairs(configVersionList) do
+		if curVersionMap[configVersion] then
 			return true
 		end
 	end
 end
 
-function var_0_0.isCurrentBaseContent(arg_5_0)
-	return string.nilorempty(arg_5_0)
+function RougeDLCHelper.isCurrentBaseContent(configVersionStr)
+	return string.nilorempty(configVersionStr)
 end
 
-function var_0_0.versionListToMap(arg_6_0)
-	local var_6_0 = {}
+function RougeDLCHelper.versionListToMap(versionList)
+	local versionMap = {}
 
-	if arg_6_0 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0) do
-			var_6_0[iter_6_1] = true
+	if versionList then
+		for _, version in ipairs(versionList) do
+			versionMap[version] = true
 		end
 	end
 
-	return var_6_0
+	return versionMap
 end
 
-function var_0_0.versionStrToList(arg_7_0)
-	if string.nilorempty(arg_7_0) then
+function RougeDLCHelper.versionStrToList(versionStr)
+	if string.nilorempty(versionStr) then
 		return {}
 	end
 
-	return (string.splitToNumber(arg_7_0, "#"))
+	local versions = string.splitToNumber(versionStr, "#")
+
+	return versions
 end
 
-function var_0_0.getAllCurrentUseStyleSkills(arg_8_0)
-	local var_8_0 = RougeOutsideModel.instance:config():getStyleConfig(arg_8_0)
+function RougeDLCHelper.getAllCurrentUseStyleSkills(styleId)
+	local config = RougeOutsideModel.instance:config()
+	local styleCo = config:getStyleConfig(styleId)
 
-	if not var_8_0 then
+	if not styleCo then
 		return {}
 	end
 
-	local var_8_1 = {}
-	local var_8_2 = string.splitToNumber(var_8_0.activeSkills, "#")
-	local var_8_3 = string.splitToNumber(var_8_0.mapSkills, "#")
-	local var_8_4 = RougeDLCConfig101.instance:getStyleUnlockSkills(arg_8_0)
+	local allSkills = {}
+	local fightSkills = string.splitToNumber(styleCo.activeSkills, "#")
+	local mapSkills = string.splitToNumber(styleCo.mapSkills, "#")
+	local skillCos = RougeDLCConfig101.instance:getStyleUnlockSkills(styleId)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-		local var_8_5 = var_0_0._createSkillMo(RougeEnum.SkillType.Style, iter_8_1)
+	for _, fightSkillId in ipairs(fightSkills) do
+		local skillMo = RougeDLCHelper._createSkillMo(RougeEnum.SkillType.Style, fightSkillId)
 
-		table.insert(var_8_1, var_8_5)
+		table.insert(allSkills, skillMo)
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(var_8_3) do
-		local var_8_6 = var_0_0._createSkillMo(RougeEnum.SkillType.Map, iter_8_3)
+	for _, mapSkillId in ipairs(mapSkills) do
+		local skillMo = RougeDLCHelper._createSkillMo(RougeEnum.SkillType.Map, mapSkillId)
 
-		table.insert(var_8_1, var_8_6)
+		table.insert(allSkills, skillMo)
 	end
 
-	local var_8_7 = RougeOutsideModel.instance:getRougeGameRecord()
+	local gameRecordInfo = RougeOutsideModel.instance:getRougeGameRecord()
 
-	for iter_8_4, iter_8_5 in ipairs(var_8_4 or {}) do
-		local var_8_8 = var_0_0.isCurrentUsingContent(iter_8_5.version)
-		local var_8_9 = var_8_7:isSkillUnlock(iter_8_5.type, iter_8_5.skillId)
+	for _, skillCo in ipairs(skillCos or {}) do
+		local isUsing = RougeDLCHelper.isCurrentUsingContent(skillCo.version)
+		local isUnlock = gameRecordInfo:isSkillUnlock(skillCo.type, skillCo.skillId)
 
-		if var_8_8 and var_8_9 then
-			local var_8_10 = var_0_0._createSkillMo(iter_8_5.type, iter_8_5.skillId)
+		if isUsing and isUnlock then
+			local skillMo = RougeDLCHelper._createSkillMo(skillCo.type, skillCo.skillId)
 
-			table.insert(var_8_1, var_8_10)
+			table.insert(allSkills, skillMo)
 		end
 	end
 
-	table.sort(var_8_1, var_0_0._styleSkillSortFunc)
+	table.sort(allSkills, RougeDLCHelper._styleSkillSortFunc)
 
-	return var_8_1
+	return allSkills
 end
 
-function var_0_0._createSkillMo(arg_9_0, arg_9_1)
-	return {
-		type = arg_9_0,
-		skillId = arg_9_1
+function RougeDLCHelper._createSkillMo(skillType, skillId)
+	local skillMo = {
+		type = skillType,
+		skillId = skillId
 	}
+
+	return skillMo
 end
 
-function var_0_0._styleSkillSortFunc(arg_10_0, arg_10_1)
-	local var_10_0 = RougeOutsideModel.instance:config()
-	local var_10_1 = var_10_0 and var_10_0:getSkillCo(arg_10_0.type, arg_10_0.skillId)
-	local var_10_2 = var_10_0 and var_10_0:getSkillCo(arg_10_1.type, arg_10_1.skillId)
-	local var_10_3 = var_0_0.isCurrentBaseContent(var_10_1 and var_10_1.version)
+function RougeDLCHelper._styleSkillSortFunc(aSkillMo, bSkillMo)
+	local config = RougeOutsideModel.instance:config()
+	local aSkillCo = config and config:getSkillCo(aSkillMo.type, aSkillMo.skillId)
+	local bSkillCo = config and config:getSkillCo(bSkillMo.type, bSkillMo.skillId)
+	local is_A_Base = RougeDLCHelper.isCurrentBaseContent(aSkillCo and aSkillCo.version)
+	local is_B_Base = RougeDLCHelper.isCurrentBaseContent(bSkillCo and bSkillCo.version)
 
-	if var_10_3 ~= var_0_0.isCurrentBaseContent(var_10_2 and var_10_2.version) then
-		return var_10_3
+	if is_A_Base ~= is_B_Base then
+		return is_A_Base
 	end
 
-	local var_10_4 = RougeEnum.SkillTypeSortEnum[arg_10_0.type]
-	local var_10_5 = RougeEnum.SkillTypeSortEnum[arg_10_1.type]
+	local aSortId = RougeEnum.SkillTypeSortEnum[aSkillMo.type]
+	local bSortId = RougeEnum.SkillTypeSortEnum[bSkillMo.type]
 
-	if var_10_4 and var_10_5 and var_10_4 ~= var_10_5 then
-		return var_10_4 < var_10_5
+	if aSortId and bSortId and aSortId ~= bSortId then
+		return aSortId < bSortId
 	end
 
-	return arg_10_0.skillId < arg_10_1.skillId
+	return aSkillMo.skillId < bSkillMo.skillId
 end
 
-function var_0_0.getCurrentUseStyleFightSkills(arg_11_0)
-	local var_11_0 = RougeOutsideModel.instance:config():getStyleConfig(arg_11_0)
+function RougeDLCHelper.getCurrentUseStyleFightSkills(styleId)
+	local config = RougeOutsideModel.instance:config()
+	local styleCo = config:getStyleConfig(styleId)
 
-	if not var_11_0 then
+	if not styleCo then
 		return {}
 	end
 
-	local var_11_1 = {}
-	local var_11_2 = string.splitToNumber(var_11_0.activeSkills, "#")
+	local allSkills = {}
+	local fightSkills = string.splitToNumber(styleCo.activeSkills, "#")
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-		local var_11_3 = var_0_0._createSkillMo(RougeEnum.SkillType.Style, iter_11_1)
+	for _, fightSkillId in ipairs(fightSkills) do
+		local skillMo = RougeDLCHelper._createSkillMo(RougeEnum.SkillType.Style, fightSkillId)
 
-		table.insert(var_11_1, var_11_3)
+		table.insert(allSkills, skillMo)
 	end
 
-	local var_11_4 = RougeOutsideModel.instance:getRougeGameRecord()
-	local var_11_5 = RougeDLCConfig101.instance:getStyleUnlockSkills(arg_11_0)
+	local gameRecordInfo = RougeOutsideModel.instance:getRougeGameRecord()
+	local skillCos = RougeDLCConfig101.instance:getStyleUnlockSkills(styleId)
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_5 or {}) do
-		local var_11_6 = var_0_0.isCurrentUsingContent(iter_11_3.version)
-		local var_11_7 = var_11_4:isSkillUnlock(iter_11_3.type, iter_11_3.skillId)
+	for _, skillCo in ipairs(skillCos or {}) do
+		local isUsing = RougeDLCHelper.isCurrentUsingContent(skillCo.version)
+		local isUnlock = gameRecordInfo:isSkillUnlock(skillCo.type, skillCo.skillId)
 
-		if var_11_6 and var_11_7 and iter_11_3.type == RougeEnum.SkillType.Style then
-			local var_11_8 = var_0_0._createSkillMo(iter_11_3.type, iter_11_3.skillId)
+		if isUsing and isUnlock and skillCo.type == RougeEnum.SkillType.Style then
+			local skillMo = RougeDLCHelper._createSkillMo(skillCo.type, skillCo.skillId)
 
-			table.insert(var_11_1, var_11_8)
+			table.insert(allSkills, skillMo)
 		end
 	end
 
-	table.sort(var_11_1, var_0_0._styleSkillSortFunc)
+	table.sort(allSkills, RougeDLCHelper._styleSkillSortFunc)
 
-	return var_11_1
+	return allSkills
 end
 
-function var_0_0.getCurVersionString()
-	local var_12_0 = RougeOutsideModel.instance:getRougeGameRecord()
-	local var_12_1 = var_12_0 and var_12_0:getVersionIds()
+function RougeDLCHelper.getCurVersionString()
+	local gameRecordInfo = RougeOutsideModel.instance:getRougeGameRecord()
+	local versions = gameRecordInfo and gameRecordInfo:getVersionIds()
 
-	return var_0_0.versionListToString(var_12_1)
+	return RougeDLCHelper.versionListToString(versions)
 end
 
-function var_0_0.versionListToString(arg_13_0)
-	local var_13_0 = ""
+function RougeDLCHelper.versionListToString(versionIds)
+	local result = ""
 
-	if arg_13_0 then
-		var_13_0 = table.concat(arg_13_0, "_")
+	if versionIds then
+		result = table.concat(versionIds, "_")
 	end
 
-	return var_13_0
+	return result
 end
 
-return var_0_0
+return RougeDLCHelper

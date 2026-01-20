@@ -1,11 +1,13 @@
-﻿module("modules.logic.weekwalk.model.WeekWalkTarotItemMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekWalkTarotItemMO.lua
 
-local var_0_0 = pureTable("WeekWalkTarotItemMO")
+module("modules.logic.weekwalk.model.WeekWalkTarotItemMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.tarotId = arg_1_1
-	arg_1_0.type = arg_1_2
-	arg_1_0.heroId = arg_1_3
+local WeekWalkTarotItemMO = pureTable("WeekWalkTarotItemMO")
+
+function WeekWalkTarotItemMO:init(buffId, type, heroId)
+	self.tarotId = buffId
+	self.type = type
+	self.heroId = heroId
 end
 
-return var_0_0
+return WeekWalkTarotItemMO

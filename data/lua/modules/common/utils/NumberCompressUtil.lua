@@ -1,8 +1,10 @@
-﻿module("modules.common.utils.NumberCompressUtil", package.seeall)
+﻿-- chunkname: @modules/common/utils/NumberCompressUtil.lua
 
-local var_0_0 = {}
-local var_0_1 = require("bit")
-local var_0_2 = {
+module("modules.common.utils.NumberCompressUtil", package.seeall)
+
+local NumberCompressUtil = {}
+local bit = require("bit")
+local dict = {
 	"0",
 	"1",
 	"2",
@@ -68,81 +70,81 @@ local var_0_2 = {
 	"-",
 	"/"
 }
-local var_0_3 = {}
+local dictToIndex = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_2) do
-	var_0_3[iter_0_1] = iter_0_0
+for k, v in pairs(dict) do
+	dictToIndex[v] = k
 end
 
-function var_0_0.compress(arg_1_0)
-	local var_1_0 = {}
+function NumberCompressUtil.compress(list)
+	local compressStrs = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
-		var_1_0[iter_1_0] = var_0_0.numToStr(iter_1_1)
+	for i, num in ipairs(list) do
+		compressStrs[i] = NumberCompressUtil.numToStr(num)
 	end
 
-	return table.concat(var_1_0, "#")
+	return table.concat(compressStrs, "#")
 end
 
-function var_0_0.decompress(arg_2_0)
-	local var_2_0 = string.split(arg_2_0, "#")
-	local var_2_1 = {}
+function NumberCompressUtil.decompress(str)
+	local arr = string.split(str, "#")
+	local newIds = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_2 = var_0_0.strToNum(iter_2_1)
+	for _, s in ipairs(arr) do
+		local num = NumberCompressUtil.strToNum(s)
 
-		if var_2_2 ~= 0 then
-			table.insert(var_2_1, var_2_2)
+		if num ~= 0 then
+			table.insert(newIds, num)
 		end
 	end
 
-	return var_2_1
+	return newIds
 end
 
-function var_0_0.numToStr(arg_3_0)
-	if type(arg_3_0) ~= "number" then
+function NumberCompressUtil.numToStr(num)
+	if type(num) ~= "number" then
 		return ""
 	end
 
-	local var_3_0 = ""
+	local str = ""
 
-	while arg_3_0 > 0 do
-		local var_3_1 = var_0_1.band(arg_3_0, 63)
+	while num > 0 do
+		local remainder = bit.band(num, 63)
 
-		if not var_0_2[var_3_1 + 1] then
-			logError("NumberCompressUtil.numToStr Error:" .. tostring(var_3_1))
+		if not dict[remainder + 1] then
+			logError("NumberCompressUtil.numToStr Error:" .. tostring(remainder))
 
 			return ""
 		end
 
-		var_3_0 = var_0_2[var_3_1 + 1] .. var_3_0
-		arg_3_0 = var_0_1.rshift(arg_3_0, 6)
+		str = dict[remainder + 1] .. str
+		num = bit.rshift(num, 6)
 	end
 
-	return var_3_0
+	return str
 end
 
-function var_0_0.strToNum(arg_4_0)
-	if string.nilorempty(arg_4_0) then
+function NumberCompressUtil.strToNum(str)
+	if string.nilorempty(str) then
 		return 0
 	end
 
-	local var_4_0 = #arg_4_0
-	local var_4_1 = 0
+	local strLen = #str
+	local id = 0
 
-	for iter_4_0 = 1, var_4_0 do
-		local var_4_2 = string.sub(arg_4_0, iter_4_0, iter_4_0)
+	for i = 1, strLen do
+		local c = string.sub(str, i, i)
 
-		if not var_0_3[var_4_2] then
-			logError("NumberCompressUtil.strToNum Error：" .. tostring(arg_4_0))
+		if not dictToIndex[c] then
+			logError("NumberCompressUtil.strToNum Error：" .. tostring(str))
 
 			return 0
 		end
 
-		var_4_1 = var_4_1 + var_0_1.lshift(var_0_3[var_4_2] - 1, (var_4_0 - iter_4_0) * 6)
+		id = id + bit.lshift(dictToIndex[c] - 1, (strLen - i) * 6)
 	end
 
-	return var_4_1
+	return id
 end
 
-return var_0_0
+return NumberCompressUtil

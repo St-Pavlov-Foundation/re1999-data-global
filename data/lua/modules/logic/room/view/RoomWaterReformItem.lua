@@ -1,163 +1,167 @@
-﻿module("modules.logic.room.view.RoomWaterReformItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomWaterReformItem.lua
 
-local var_0_0 = class("RoomWaterReformItem", ListScrollCellExtend)
-local var_0_1 = "#BFB5A3"
+module("modules.logic.room.view.RoomWaterReformItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "go_empty")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "go_icon")
-	arg_1_0._btnItem = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_icon")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "go_locked")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "#go_num")
-	arg_1_0._txtnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_num/#txt_num")
-	arg_1_0._rawImageIcon = gohelper.onceAddComponent(arg_1_0._goicon, gohelper.Type_RawImage)
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local RoomWaterReformItem = class("RoomWaterReformItem", ListScrollCellExtend)
+local COLOR_STR = "#BFB5A3"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomWaterReformItem:onInitView()
+	self._goselect = gohelper.findChild(self.viewGO, "go_select")
+	self._goempty = gohelper.findChild(self.viewGO, "go_empty")
+	self._goicon = gohelper.findChild(self.viewGO, "go_icon")
+	self._btnItem = gohelper.findChildButtonWithAudio(self.viewGO, "go_icon")
+	self._golocked = gohelper.findChild(self.viewGO, "go_locked")
+	self._gonum = gohelper.findChild(self.viewGO, "#go_num")
+	self._txtnum = gohelper.findChildTextMesh(self.viewGO, "#go_num/#txt_num")
+	self._rawImageIcon = gohelper.onceAddComponent(self._goicon, gohelper.Type_RawImage)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnItem:AddClickListener(arg_2_0._onBtnItemClick, arg_2_0)
-	arg_2_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_2_0._waterReformShowChanged, arg_2_0)
-	arg_2_0:addEventCb(UnlockVoucherController.instance, UnlockVoucherEvent.OnUpdateUnlockVoucherInfo, arg_2_0._onVoucherInfoChange, arg_2_0)
-	arg_2_0:addEventCb(RoomWaterReformController.instance, RoomEvent.OnRoomBlockReform, arg_2_0._onRoomBlockReform, arg_2_0)
+function RoomWaterReformItem:addEvents()
+	self._btnItem:AddClickListener(self._onBtnItemClick, self)
+	self:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, self._waterReformShowChanged, self)
+	self:addEventCb(UnlockVoucherController.instance, UnlockVoucherEvent.OnUpdateUnlockVoucherInfo, self._onVoucherInfoChange, self)
+	self:addEventCb(RoomWaterReformController.instance, RoomEvent.OnRoomBlockReform, self._onRoomBlockReform, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnItem:RemoveClickListener()
-	arg_3_0:removeEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_3_0._waterReformShowChanged, arg_3_0)
-	arg_3_0:removeEventCb(UnlockVoucherController.instance, UnlockVoucherEvent.OnUpdateUnlockVoucherInfo, arg_3_0._onVoucherInfoChange, arg_3_0)
-	arg_3_0:removeEventCb(RoomWaterReformController.instance, RoomEvent.OnRoomBlockReform, arg_3_0._onRoomBlockReform, arg_3_0)
+function RoomWaterReformItem:removeEvents()
+	self._btnItem:RemoveClickListener()
+	self:removeEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, self._waterReformShowChanged, self)
+	self:removeEventCb(UnlockVoucherController.instance, UnlockVoucherEvent.OnUpdateUnlockVoucherInfo, self._onVoucherInfoChange, self)
+	self:removeEventCb(RoomWaterReformController.instance, RoomEvent.OnRoomBlockReform, self._onRoomBlockReform, self)
 end
 
-function var_0_0._onBtnItemClick(arg_4_0)
-	if not arg_4_0._mo then
+function RoomWaterReformItem:_onBtnItemClick()
+	if not self._mo then
 		return
 	end
 
-	if arg_4_0._mo.waterType then
-		RoomWaterReformController.instance:selectWaterType(arg_4_0._mo.waterType)
-	elseif arg_4_0._mo.blockColor then
-		RoomWaterReformController.instance:selectBlockColorType(arg_4_0._mo.blockColor)
+	if self._mo.waterType then
+		RoomWaterReformController.instance:selectWaterType(self._mo.waterType)
+	elseif self._mo.blockColor then
+		RoomWaterReformController.instance:selectBlockColorType(self._mo.blockColor)
 	end
 end
 
-function var_0_0._waterReformShowChanged(arg_5_0)
-	if RoomWaterReformModel.instance:isWaterReform() then
+function RoomWaterReformItem:_waterReformShowChanged()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+
+	if isWaterReform then
 		return
 	end
 
-	if arg_5_0._rawImageIcon then
-		arg_5_0._rawImageIcon.texture = nil
+	if self._rawImageIcon then
+		self._rawImageIcon.texture = nil
 	end
 
-	arg_5_0:clearItem()
+	self:clearItem()
 end
 
-function var_0_0._onVoucherInfoChange(arg_6_0)
-	if not arg_6_0._mo or not arg_6_0._mo.blockColor then
+function RoomWaterReformItem:_onVoucherInfoChange()
+	if not self._mo or not self._mo.blockColor then
 		return
 	end
 
-	arg_6_0:_refreshLocked()
+	self:_refreshLocked()
 end
 
-function var_0_0._onRoomBlockReform(arg_7_0)
-	arg_7_0:_refreshNum()
+function RoomWaterReformItem:_onRoomBlockReform()
+	self:_refreshNum()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	gohelper.setActive(arg_8_0._goempty, false)
+function RoomWaterReformItem:_editableInitView()
+	gohelper.setActive(self._goempty, false)
 
-	arg_8_0._rtIndex = OrthCameraRTMgr.instance:getNewIndex()
+	self._rtIndex = OrthCameraRTMgr.instance:getNewIndex()
 
-	OrthCameraRTMgr.instance:setRawImageUvRect(arg_8_0._rawImageIcon, arg_8_0._rtIndex)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._rawImageIcon, var_0_1)
+	OrthCameraRTMgr.instance:setRawImageUvRect(self._rawImageIcon, self._rtIndex)
+	SLFramework.UGUI.GuiHelper.SetColor(self._rawImageIcon, COLOR_STR)
 
-	arg_8_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_8_0._backBlockIds = {}
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._backBlockIds = {}
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1 and arg_9_1.blockId
-	local var_9_1 = arg_9_0._mo and arg_9_0._mo.blockId
+function RoomWaterReformItem:onUpdateMO(mo)
+	local newBlockId = mo and mo.blockId
+	local curBlockId = self._mo and self._mo.blockId
 
-	if var_9_0 and var_9_0 ~= var_9_1 then
-		arg_9_0:clearItem()
+	if newBlockId and newBlockId ~= curBlockId then
+		self:clearItem()
 
-		arg_9_0._mo = arg_9_1
+		self._mo = mo
 
-		arg_9_0:_refreshBlock()
+		self:_refreshBlock()
 	end
 
-	arg_9_0:_refreshLocked()
-	arg_9_0:_refreshNum()
+	self:_refreshLocked()
+	self:_refreshNum()
 end
 
-function var_0_0._refreshBlock(arg_10_0)
-	local var_10_0 = arg_10_0._mo and arg_10_0._mo.blockId
+function RoomWaterReformItem:_refreshBlock()
+	local blockId = self._mo and self._mo.blockId
 
-	if not var_10_0 then
+	if not blockId then
 		return
 	end
 
-	arg_10_0._scene.inventorymgr:addBlockEntity(var_10_0, true)
+	self._scene.inventorymgr:addBlockEntity(blockId, true)
 
-	local var_10_1 = arg_10_0._scene.inventorymgr:getIndexById(var_10_0)
+	local index = self._scene.inventorymgr:getIndexById(blockId)
 
-	OrthCameraRTMgr.instance:setRawImageUvRect(arg_10_0._rawImageIcon, var_10_1)
+	OrthCameraRTMgr.instance:setRawImageUvRect(self._rawImageIcon, index)
 end
 
-function var_0_0._refreshLocked(arg_11_0)
-	local var_11_0 = false
+function RoomWaterReformItem:_refreshLocked()
+	local isUnlock = false
 
-	if arg_11_0._mo.waterType then
-		var_11_0 = RoomWaterReformModel.instance:isUnlockWaterReform(arg_11_0._mo.waterType)
-	elseif arg_11_0._mo.blockColor then
-		var_11_0 = RoomWaterReformModel.instance:isUnlockBlockColor(arg_11_0._mo.blockColor)
+	if self._mo.waterType then
+		isUnlock = RoomWaterReformModel.instance:isUnlockWaterReform(self._mo.waterType)
+	elseif self._mo.blockColor then
+		isUnlock = RoomWaterReformModel.instance:isUnlockBlockColor(self._mo.blockColor)
 	end
 
-	gohelper.setActive(arg_11_0._golocked, not var_11_0)
+	gohelper.setActive(self._golocked, not isUnlock)
 end
 
-function var_0_0._refreshNum(arg_12_0)
-	local var_12_0 = 0
-	local var_12_1 = arg_12_0._mo and arg_12_0._mo.blockColor
+function RoomWaterReformItem:_refreshNum()
+	local num = 0
+	local blockColor = self._mo and self._mo.blockColor
 
-	if var_12_1 then
-		var_12_0 = RoomWaterReformModel.instance:getChangedBlockColorCount(var_12_1)
+	if blockColor then
+		num = RoomWaterReformModel.instance:getChangedBlockColorCount(blockColor)
 	end
 
-	arg_12_0._txtnum.text = var_12_0
+	self._txtnum.text = num
 
-	gohelper.setActive(arg_12_0._gonum, var_12_0 > 0)
+	gohelper.setActive(self._gonum, num > 0)
 end
 
-function var_0_0.clearItem(arg_13_0)
-	local var_13_0 = arg_13_0._mo and arg_13_0._mo.blockId
+function RoomWaterReformItem:clearItem()
+	local oldBlockId = self._mo and self._mo.blockId
 
-	if not var_13_0 then
+	if not oldBlockId then
 		return
 	end
 
-	arg_13_0._scene.inventorymgr:removeBlockEntity(var_13_0)
+	self._scene.inventorymgr:removeBlockEntity(oldBlockId)
 
-	arg_13_0._mo = nil
+	self._mo = nil
 end
 
-function var_0_0.onSelect(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._goselect, arg_14_1)
+function RoomWaterReformItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	if arg_15_0._rawImageIcon then
-		arg_15_0._rawImageIcon.texture = nil
+function RoomWaterReformItem:onDestroyView()
+	if self._rawImageIcon then
+		self._rawImageIcon.texture = nil
 	end
 
-	arg_15_0:clearItem()
+	self:clearItem()
 end
 
-return var_0_0
+return RoomWaterReformItem

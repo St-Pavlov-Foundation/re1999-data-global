@@ -1,11 +1,13 @@
-﻿module("modules.logic.optionpackage.view.OptionPackageDownloadViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/optionpackage/view/OptionPackageDownloadViewContainer.lua
 
-local var_0_0 = class("OptionPackageDownloadViewContainer", BaseViewContainer)
+module("modules.logic.optionpackage.view.OptionPackageDownloadViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local OptionPackageDownloadViewContainer = class("OptionPackageDownloadViewContainer", BaseViewContainer)
+
+function OptionPackageDownloadViewContainer:buildViews()
 	return {
 		OptionPackageDownloadView.New()
 	}
 end
 
-return var_0_0
+return OptionPackageDownloadViewContainer

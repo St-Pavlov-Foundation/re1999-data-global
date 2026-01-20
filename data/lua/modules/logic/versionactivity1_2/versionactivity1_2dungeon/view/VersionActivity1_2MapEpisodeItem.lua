@@ -1,98 +1,100 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2MapEpisodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity1_2MapEpisodeItem.lua
 
-local var_0_0 = class("VersionActivity1_2MapEpisodeItem", VersionActivity1_2MapEpisodeBaseItem)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2MapEpisodeItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local VersionActivity1_2MapEpisodeItem = class("VersionActivity1_2MapEpisodeItem", VersionActivity1_2MapEpisodeBaseItem)
+
+function VersionActivity1_2MapEpisodeItem:onInitView()
+	VersionActivity1_2MapEpisodeItem.super.onInitView(self)
 end
 
-function var_0_0.getDungeonMapLevelView(arg_2_0)
+function VersionActivity1_2MapEpisodeItem:getDungeonMapLevelView()
 	return ViewName.VersionActivity1_2DungeonMapLevelView
 end
 
-function var_0_0._editableInitView(arg_3_0)
-	var_0_0.super._editableInitView(arg_3_0)
+function VersionActivity1_2MapEpisodeItem:_editableInitView()
+	VersionActivity1_2MapEpisodeItem.super._editableInitView(self)
 end
 
-function var_0_0.refreshFlag(arg_4_0)
-	local var_4_0 = DungeonModel.instance:hasPassLevelAndStory(arg_4_0._config.id)
+function VersionActivity1_2MapEpisodeItem:refreshFlag()
+	local passStory = DungeonModel.instance:hasPassLevelAndStory(self._config.id)
 
-	gohelper.setActive(arg_4_0._goflag, not var_4_0)
+	gohelper.setActive(self._goflag, not passStory)
 end
 
-function var_0_0._onStarItemShow(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_2
-	local var_5_1 = DungeonConfig.instance:getEpisodeAdvancedConditionText(var_5_0)
-	local var_5_2 = DungeonModel.instance:getEpisodeInfo(var_5_0)
-	local var_5_3 = gohelper.findChildImage(arg_5_1, "#image_star1")
-	local var_5_4 = gohelper.findChildImage(arg_5_1, "#image_star2")
-	local var_5_5 = arg_5_0:isDungeonHardModel()
-	local var_5_6
+function VersionActivity1_2MapEpisodeItem:_onStarItemShow(obj, data, index)
+	local episodeId = data
+	local advancedConditionText = DungeonConfig.instance:getEpisodeAdvancedConditionText(episodeId)
+	local episodeMo = DungeonModel.instance:getEpisodeInfo(episodeId)
+	local image_star1 = gohelper.findChildImage(obj, "#image_star1")
+	local image_star2 = gohelper.findChildImage(obj, "#image_star2")
+	local is_hard = self:isDungeonHardModel()
+	local _color
 
-	if var_5_5 then
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_3, "juqing_xing1_kn")
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_4, "juqing_xing2_kn")
+	if is_hard then
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(image_star1, "juqing_xing1_kn")
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(image_star2, "juqing_xing2_kn")
 
-		var_5_6 = "#e43938"
+		_color = "#e43938"
 	else
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_3, "juqing_xing1")
-		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(var_5_4, "juqing_xing2")
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(image_star1, "juqing_xing1")
+		UISpriteSetMgr.instance:setVersionActivity1_2Sprite(image_star2, "juqing_xing2")
 
-		if arg_5_3 == 1 then
-			var_5_6 = "#e4b472"
-		elseif arg_5_3 == 2 then
-			var_5_6 = "#e7853d"
-		elseif arg_5_3 == 3 then
-			var_5_6 = "#ef3939"
+		if index == 1 then
+			_color = "#e4b472"
+		elseif index == 2 then
+			_color = "#e7853d"
+		elseif index == 3 then
+			_color = "#ef3939"
 		end
 	end
 
-	local var_5_7 = "#949494"
-	local var_5_8 = DungeonModel.instance:hasPassLevelAndStory(var_5_0)
+	local _gray = "#949494"
+	local pass = DungeonModel.instance:hasPassLevelAndStory(episodeId)
 
-	SLFramework.UGUI.GuiHelper.SetColor(var_5_3, var_5_8 and var_5_6 or var_5_7)
+	SLFramework.UGUI.GuiHelper.SetColor(image_star1, pass and _color or _gray)
 
-	if string.nilorempty(var_5_1) then
-		gohelper.setActive(var_5_4.gameObject, false)
+	if string.nilorempty(advancedConditionText) then
+		gohelper.setActive(image_star2.gameObject, false)
 	else
-		gohelper.setActive(var_5_4.gameObject, true)
-		SLFramework.UGUI.GuiHelper.SetColor(var_5_4, var_5_8 and var_5_2 and var_5_2.star >= DungeonEnum.StarType.Advanced and var_5_6 or var_5_7)
+		gohelper.setActive(image_star2.gameObject, true)
+		SLFramework.UGUI.GuiHelper.SetColor(image_star2, pass and episodeMo and episodeMo.star >= DungeonEnum.StarType.Advanced and _color or _gray)
 	end
 end
 
-function var_0_0.setImage(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function VersionActivity1_2MapEpisodeItem:setImage(image, light, isHard)
 	return
 end
 
-function var_0_0.getMapCfg(arg_7_0)
-	return VersionActivity1_2DungeonConfig.instance:get1_2EpisodeMapConfig(arg_7_0._config.id)
+function VersionActivity1_2MapEpisodeItem:getMapCfg()
+	return VersionActivity1_2DungeonConfig.instance:get1_2EpisodeMapConfig(self._config.id)
 end
 
-function var_0_0.playAnimation(arg_8_0, arg_8_1)
-	arg_8_0.animator:Play(arg_8_1, 0, 0)
+function VersionActivity1_2MapEpisodeItem:playAnimation(animationName)
+	self.animator:Play(animationName, 0, 0)
 end
 
-function var_0_0.getEpisodeId(arg_9_0)
-	return arg_9_0._config and arg_9_0._config.id
+function VersionActivity1_2MapEpisodeItem:getEpisodeId()
+	return self._config and self._config.id
 end
 
-function var_0_0.createStarItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getUserDataTb_()
+function VersionActivity1_2MapEpisodeItem:createStarItem(goStar)
+	local starItem = self:getUserDataTb_()
 
-	var_10_0.goStar = arg_10_1
-	var_10_0.imgStar1 = gohelper.findChildImage(arg_10_1, "#image_star1")
-	var_10_0.imgStar2 = gohelper.findChildImage(arg_10_1, "#image_star2")
+	starItem.goStar = goStar
+	starItem.imgStar1 = gohelper.findChildImage(goStar, "#image_star1")
+	starItem.imgStar2 = gohelper.findChildImage(goStar, "#image_star2")
 
-	return var_10_0
+	return starItem
 end
 
-function var_0_0.onClose(arg_11_0)
-	var_0_0.super.onClose(arg_11_0)
+function VersionActivity1_2MapEpisodeItem:onClose()
+	VersionActivity1_2MapEpisodeItem.super.onClose(self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	var_0_0.super.onDestroyView(arg_12_0)
-	arg_12_0.goClick:RemoveClickListener()
+function VersionActivity1_2MapEpisodeItem:onDestroyView()
+	VersionActivity1_2MapEpisodeItem.super.onDestroyView(self)
+	self.goClick:RemoveClickListener()
 end
 
-return var_0_0
+return VersionActivity1_2MapEpisodeItem

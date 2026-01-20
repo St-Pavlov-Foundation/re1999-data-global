@@ -1,550 +1,583 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUI", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUI.lua
 
-local var_0_0 = class("FightNameUI", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightNameUI", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._entity = arg_1_1
-	arg_1_0._nameUIActive = true
-	arg_1_0._nameUIVisible = true
-	arg_1_0.buffMgr = FightNameUIBuffMgr.New()
-	arg_1_0._power = FightNameUIPower.New(arg_1_0, 1)
-	arg_1_0._hpKillLineComp = FightHpKillLineComp.New(FightHpKillLineComp.KillLineType.NameUiHp)
+local FightNameUI = class("FightNameUI", LuaCompBase)
+
+function FightNameUI:ctor(entity)
+	self.entity = entity
+	self._entity = entity
+	self._nameUIActive = true
+	self._nameUIVisible = true
+	self.buffMgr = FightNameUIBuffMgr.New()
+	self._power = FightNameUIPower.New(self, 1)
+	self._hpKillLineComp = FightHpKillLineComp.New(FightHpKillLineComp.KillLineType.NameUiHp)
+
+	if FightDataHelper.fieldMgr:isRouge2() then
+		self.rouge2RevivalComp = FightRouge2RevivalComp.New()
+	end
 end
 
-function var_0_0.load(arg_2_0, arg_2_1)
-	if arg_2_0._uiLoader then
-		arg_2_0._uiLoader:dispose()
+function FightNameUI:load(url)
+	if self._uiLoader then
+		self._uiLoader:dispose()
 	end
 
-	arg_2_0._containerGO = gohelper.create2d(FightNameMgr.instance:getNameParent(), arg_2_0.entity:getMO():getIdName())
-	arg_2_0._floatContainerGO = gohelper.create2d(arg_2_0._containerGO, "float")
+	self._containerGO = gohelper.create2d(FightNameMgr.instance:getNameParent(), self.entity:getMO():getIdName())
+	self._floatContainerGO = gohelper.create2d(self._containerGO, "float")
 
-	FightNameMgr.instance:register(arg_2_0)
+	FightNameMgr.instance:register(self)
 
-	arg_2_0._uiLoader = PrefabInstantiate.Create(arg_2_0._containerGO)
+	self._uiLoader = PrefabInstantiate.Create(self._containerGO)
 
-	arg_2_0._uiLoader:startLoad(arg_2_1, arg_2_0._onLoaded, arg_2_0)
-	arg_2_0:checkLoadHealth()
+	self._uiLoader:startLoad(url, self._onLoaded, self)
+	self:checkLoadHealth()
 end
 
-function var_0_0.checkLoadHealth(arg_3_0)
-	if not FightHelper.getSurvivalEntityHealth(arg_3_0.entity.id) then
+function FightNameUI:checkLoadHealth()
+	local curHealth = FightHelper.getSurvivalEntityHealth(self.entity.id)
+
+	if not curHealth then
 		return
 	end
 
-	arg_3_0.healthComp = FightNameUIHealthComp.Create(arg_3_0.entity, arg_3_0._containerGO)
+	self.healthComp = FightNameUIHealthComp.Create(self.entity, self._containerGO)
 end
 
-function var_0_0.setActive(arg_4_0, arg_4_1)
-	if arg_4_1 and arg_4_0._curHp and arg_4_0._curHp <= 0 then
+function FightNameUI:setActive(isActive)
+	if isActive and self._curHp and self._curHp <= 0 then
 		return
 	end
 
-	arg_4_0._nameUIActive = arg_4_1
+	self._nameUIActive = isActive
 
-	arg_4_0:_doSetActive()
+	self:_doSetActive()
 end
 
-function var_0_0.playDeadEffect(arg_5_0)
-	arg_5_0:_playAni("die")
+function FightNameUI:playDeadEffect()
+	self:_playAni("die")
 end
 
-function var_0_0.playOpenEffect(arg_6_0)
-	arg_6_0:_playAni(UIAnimationName.Open)
+function FightNameUI:playOpenEffect()
+	self:_playAni(UIAnimationName.Open)
 end
 
-function var_0_0.playCloseEffect(arg_7_0)
-	arg_7_0:_playAni("close")
+function FightNameUI:playCloseEffect()
+	self:_playAni("close")
 end
 
-function var_0_0._playAni(arg_8_0, arg_8_1)
-	if arg_8_0._ani then
-		arg_8_0._ani:Play(arg_8_1, 0, 0)
+function FightNameUI:_playAni(name)
+	if self._ani then
+		self._ani:Play(name, 0, 0)
 
-		local var_8_0 = FightModel.instance:getSpeed()
+		local speed = FightModel.instance:getSpeed()
 
-		arg_8_0._ani.speed = var_8_0
+		self._ani.speed = speed
 	end
 end
 
-function var_0_0._setIsShowNameUI(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = false
+function FightNameUI:_setIsShowNameUI(isVisible, entitys)
+	local isTarget = false
 
-	if not arg_9_2 then
-		var_9_0 = true
+	if not entitys then
+		isTarget = true
 	else
-		for iter_9_0, iter_9_1 in ipairs(arg_9_2) do
-			if iter_9_1.id == arg_9_0.entity.id then
-				var_9_0 = true
+		for i, entity in ipairs(entitys) do
+			if entity.id == self.entity.id then
+				isTarget = true
 
 				break
 			end
 		end
 	end
 
-	if var_9_0 then
-		arg_9_0._nameUIVisible = arg_9_1
+	if isTarget then
+		self._nameUIVisible = isVisible
 
-		arg_9_0:_doSetActive()
+		self:_doSetActive()
 	end
 end
 
-function var_0_0._doSetActive(arg_10_0)
-	local var_10_0 = arg_10_0:getUIGO()
+function FightNameUI:_doSetActive()
+	local uiObj = self:getUIGO()
 
-	if gohelper.isNil(var_10_0) then
+	if gohelper.isNil(uiObj) then
 		return
 	end
 
-	local var_10_1 = arg_10_0._nameUIActive and arg_10_0._nameUIVisible
+	local active = self._nameUIActive and self._nameUIVisible
 
-	if arg_10_0.entity:getMO():hasBuffFeature(FightEnum.BuffType_HideLife) then
-		var_10_1 = false
+	if self.entity:getMO():hasBuffFeature(FightEnum.BuffType_HideLife) then
+		active = false
 	end
 
 	if FightDataHelper.tempMgr.hideNameUIByTimeline then
-		var_10_1 = false
+		active = false
 	end
 
-	if not gohelper.isNil(arg_10_0._uiCanvasGroup) then
-		if var_10_1 then
-			recthelper.setAnchor(arg_10_0:getUIGO().transform, arg_10_0._originPosOffsetX or 0, arg_10_0._originPosOffsetY or 0)
+	if not gohelper.isNil(self._uiCanvasGroup) then
+		if active then
+			recthelper.setAnchor(self:getUIGO().transform, self._originPosOffsetX or 0, self._originPosOffsetY or 0)
 		else
-			recthelper.setAnchor(arg_10_0:getUIGO().transform, 20000, 20000)
+			recthelper.setAnchor(self:getUIGO().transform, 20000, 20000)
 		end
 	end
 
-	if var_10_1 and arg_10_0._uiFollower then
-		arg_10_0._uiFollower:ForceUpdate()
+	if active and self._uiFollower then
+		self._uiFollower:ForceUpdate()
 	end
 end
 
-function var_0_0.getAnchorXY(arg_11_0)
-	if arg_11_0._uiTransform then
-		local var_11_0, var_11_1 = recthelper.getAnchor(arg_11_0._uiTransform, 0, 0)
+function FightNameUI:getAnchorXY()
+	if self._uiTransform then
+		local x, y = recthelper.getAnchor(self._uiTransform, 0, 0)
 
-		return recthelper.getAnchor(arg_11_0._uiTransform, 0, 0)
+		return recthelper.getAnchor(self._uiTransform, 0, 0)
 	end
 
 	return 0, 0
 end
 
-function var_0_0.getFloatContainerGO(arg_12_0)
-	return arg_12_0._floatContainerGO
+function FightNameUI:getFloatContainerGO()
+	return self._floatContainerGO
 end
 
-function var_0_0.getGO(arg_13_0)
-	return arg_13_0._containerGO
+function FightNameUI:getGO()
+	return self._containerGO
 end
 
-function var_0_0.getUIGO(arg_14_0)
-	return arg_14_0._uiGO
+function FightNameUI:getUIGO()
+	return self._uiGO
 end
 
-function var_0_0._onLoaded(arg_15_0)
-	gohelper.setAsLastSibling(arg_15_0._floatContainerGO)
+function FightNameUI:_onLoaded()
+	gohelper.setAsLastSibling(self._floatContainerGO)
 
-	arg_15_0._uiGO = arg_15_0._uiLoader:getInstGO()
-	arg_15_0.entityView = FightEntityView.New(arg_15_0.entity.id, arg_15_0._uiGO)
-	arg_15_0._uiTransform = arg_15_0._uiGO.transform
-	arg_15_0._uiCanvasGroup = gohelper.onceAddComponent(arg_15_0._uiGO, typeof(UnityEngine.CanvasGroup))
-	arg_15_0._txtName = gohelper.findChildText(arg_15_0._uiGO, "layout/top/Text")
+	self._uiGO = self._uiLoader:getInstGO()
+	self.entityView = FightEntityView.New(self.entity.id, self._uiGO)
+	self._uiTransform = self._uiGO.transform
+	self._uiCanvasGroup = gohelper.onceAddComponent(self._uiGO, typeof(UnityEngine.CanvasGroup))
+	self._txtName = gohelper.findChildText(self._uiGO, "layout/top/Text")
 
-	arg_15_0:_doSetActive()
+	self:_doSetActive()
 
-	arg_15_0._gohpbg = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp/container/bg")
-	arg_15_0._gochoushibg = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp/container/choushibg")
-	arg_15_0._imgHpMinus = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/minus")
+	self._gohpbg = gohelper.findChild(self._uiGO, "layout/top/hp/container/bg")
+	self._gochoushibg = gohelper.findChild(self._uiGO, "layout/top/hp/container/choushibg")
+	self._imgHpMinus = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/minus")
 
-	local var_15_0 = arg_15_0.entity:isMySide()
-	local var_15_1 = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/my")
-	local var_15_2 = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/enemy")
+	local isMySide = self.entity:isMySide()
+	local imgMyHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/my")
+	local imgEnemyHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/enemy")
 
-	gohelper.setActive(var_15_1.gameObject, var_15_0)
-	gohelper.setActive(var_15_2.gameObject, not var_15_0)
+	gohelper.setActive(imgMyHp.gameObject, isMySide)
+	gohelper.setActive(imgEnemyHp.gameObject, not isMySide)
 
-	arg_15_0._hpGo = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp")
-	arg_15_0._hp_ani = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp"):GetComponent(typeof(UnityEngine.Animator))
-	arg_15_0._hp_container_tran = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp/container").transform
-	arg_15_0._imgHp = var_15_0 and var_15_1 or var_15_2
-	arg_15_0._imgHpShield = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/hp/container/shield")
-	arg_15_0._txtHp = gohelper.findChildText(arg_15_0._uiGO, "layout/top/hp/Text")
-	arg_15_0._reduceHp = gohelper.findChild(arg_15_0._uiGO, "layout/top/hp/container/reduce")
-	arg_15_0._reduceHpImage = arg_15_0._reduceHp:GetComponent(gohelper.Type_Image)
+	self.fictionHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/xuxue")
+	self._hpGo = gohelper.findChild(self._uiGO, "layout/top/hp")
+	self._hp_ani = gohelper.findChild(self._uiGO, "layout/top/hp"):GetComponent(typeof(UnityEngine.Animator))
+	self._hp_container_tran = gohelper.findChild(self._uiGO, "layout/top/hp/container").transform
+	self._imgHp = isMySide and imgMyHp or imgEnemyHp
+	self._imgHpShield = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/shield")
+	self._txtHp = gohelper.findChildText(self._uiGO, "layout/top/hp/Text")
+	self._reduceHp = gohelper.findChild(self._uiGO, "layout/top/hp/container/reduce")
+	self._reduceHpImage = self._reduceHp:GetComponent(gohelper.Type_Image)
 
-	arg_15_0:resetHp()
+	self:resetHp()
 
-	arg_15_0._imgCareerIcon = gohelper.findChildImage(arg_15_0._uiGO, "layout/top/imgCareerIcon")
-	arg_15_0.careerTopRectTr = gohelper.findChildComponent(arg_15_0._uiGO, "layout/top/imgCareerIcon/careertoppos", gohelper.Type_RectTransform)
+	self._imgCareerIcon = gohelper.findChildImage(self._uiGO, "layout/top/imgCareerIcon")
+	self.careerTopRectTr = gohelper.findChildComponent(self._uiGO, "layout/top/imgCareerIcon/careertoppos", gohelper.Type_RectTransform)
 
-	arg_15_0:initExPointMgr()
-	arg_15_0:initStressMgr()
-	arg_15_0._hpKillLineComp:init(arg_15_0.entity.id, arg_15_0._hpGo)
-	arg_15_0:initPowerMgr()
+	self:initExPointMgr()
+	self:initStressMgr()
+	self._hpKillLineComp:init(self.entity.id, self._hpGo)
 
-	arg_15_0._opContainerGO = gohelper.findChild(arg_15_0._uiGO, "layout/top/op")
-	arg_15_0._opContainerTr = arg_15_0._opContainerGO.transform
-	arg_15_0._buffContainerGO = gohelper.findChild(arg_15_0._uiGO, "layout/top/buffContainer")
-	arg_15_0._buffGO = gohelper.findChild(arg_15_0._uiGO, "layout/top/buffContainer/buff")
-
-	arg_15_0.buffMgr:init(arg_15_0.entity, arg_15_0._buffGO, arg_15_0._opContainerTr)
-	gohelper.setActive(gohelper.findChild(arg_15_0._uiGO, "#go_Shield"), false)
-
-	if FightModel.instance:isSeason2() and arg_15_0.entity:getMO().guard ~= -1 then
-		arg_15_0._seasonGuard = FightNameUISeasonGuard.New(arg_15_0)
-
-		arg_15_0._seasonGuard:init(gohelper.findChild(arg_15_0._uiGO, "#go_Shield"))
+	if self.rouge2RevivalComp then
+		self.rouge2RevivalComp:init(self.entity.id, self._uiGO.transform.parent.gameObject)
 	end
 
-	arg_15_0._ani = arg_15_0._uiGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_15_0._goBossFocusIcon = gohelper.findChild(arg_15_0._uiGO, "go_bossfocusicon")
+	self:initPowerMgr()
 
-	gohelper.setActive(arg_15_0._goBossFocusIcon, false)
-	arg_15_0:updateUI()
-	arg_15_0:_insteadSpecialHp()
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_15_0._updateFollow, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.BeforePlayTimeline, arg_15_0._beforePlaySkill, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_15_0._onMySideRoundEnd, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_15_0._updateUIPos, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_15_0._onStartSequenceFinish, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_15_0.updateUI, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_15_0._onRoundSequenceFinish, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_15_0.updateActive, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.SetIsShowFloat, arg_15_0._setIsShowFloat, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.SetIsShowNameUI, arg_15_0._setIsShowNameUI, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, arg_15_0._onFloatEquipEffect, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnCameraFovChange, arg_15_0._updateUIPos, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_15_0._onMaxHpChange, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_15_0._onCurrentHpChange, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.MultiHpChange, arg_15_0._onMultiHpChange, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeWaveEnd, arg_15_0._onChangeWaveEnd, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, arg_15_0.onCoverPerformanceEntityData, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeCareer, arg_15_0._onChangeCareer, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, arg_15_0._onUpdateUIFollower, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeShield, arg_15_0._onChangeShield, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_15_0._onStageChange, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_15_0._onSkillPlayFinish, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.OnLockHpChange, arg_15_0._onLockHpChange, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.AiJiAoFakeDecreaseHp, arg_15_0.onAiJiAoFakeDecreaseHp, arg_15_0)
-	arg_15_0._power:onOpen()
-	arg_15_0:_setPosOffset()
-	arg_15_0:updateInnerLayout()
+	self._opContainerGO = gohelper.findChild(self._uiGO, "layout/top/op")
+	self._opContainerTr = self._opContainerGO.transform
+	self._buffContainerGO = gohelper.findChild(self._uiGO, "layout/top/buffContainer")
+	self._buffGO = gohelper.findChild(self._uiGO, "layout/top/buffContainer/buff")
+
+	self.buffMgr:init(self.entity, self._buffGO, self._opContainerTr)
+	gohelper.setActive(gohelper.findChild(self._uiGO, "#go_Shield"), false)
+
+	if FightModel.instance:isSeason2() then
+		local entityMo = self.entity:getMO()
+
+		if entityMo.guard ~= -1 then
+			self._seasonGuard = FightNameUISeasonGuard.New(self)
+
+			self._seasonGuard:init(gohelper.findChild(self._uiGO, "#go_Shield"))
+		end
+	end
+
+	self._ani = self._uiGO:GetComponent(typeof(UnityEngine.Animator))
+	self._goBossFocusIcon = gohelper.findChild(self._uiGO, "go_bossfocusicon")
+
+	gohelper.setActive(self._goBossFocusIcon, false)
+	self:updateUI()
+	self:_insteadSpecialHp()
+	self:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._updateFollow, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforePlayTimeline, self._beforePlaySkill, self)
+	self:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._updateUIPos, self)
+	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, self.updateUI, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.updateActive, self)
+	self:addEventCb(FightController.instance, FightEvent.SetIsShowFloat, self._setIsShowFloat, self)
+	self:addEventCb(FightController.instance, FightEvent.SetIsShowNameUI, self._setIsShowNameUI, self)
+	self:addEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, self._onFloatEquipEffect, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCameraFovChange, self._updateUIPos, self)
+	self:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, self._onMaxHpChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, self._onCurrentHpChange, self)
+	self:addEventCb(FightController.instance, FightEvent.MultiHpChange, self._onMultiHpChange, self)
+	self:addEventCb(FightController.instance, FightEvent.ChangeWaveEnd, self._onChangeWaveEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, self.onCoverPerformanceEntityData, self)
+	self:addEventCb(FightController.instance, FightEvent.ChangeCareer, self._onChangeCareer, self)
+	self:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, self._onUpdateUIFollower, self)
+	self:addEventCb(FightController.instance, FightEvent.ChangeShield, self._onChangeShield, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self._onStageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnLockHpChange, self._onLockHpChange, self)
+	self:addEventCb(FightController.instance, FightEvent.AiJiAoFakeDecreaseHp, self.onAiJiAoFakeDecreaseHp, self)
+	self._power:onOpen()
+	self:_setPosOffset()
+	self:updateInnerLayout()
 end
 
-function var_0_0._onStageChange(arg_16_0)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		local var_16_0 = FightDataHelper.roundMgr:getRoundData()
-		local var_16_1 = var_16_0 and var_16_0:getAIUseCardMOList()
+function FightNameUI:_onStageChange()
+	local curStage = FightDataHelper.stageMgr:getCurStage()
 
-		arg_16_0:refreshBossFocusIcon(var_16_1)
+	if curStage == FightStageMgr.StageType.Operate then
+		local roundData = FightDataHelper.roundMgr:getRoundData()
+		local cardList = roundData and roundData:getAIUseCardMOList()
+
+		self:refreshBossFocusIcon(cardList)
 	end
 end
 
-function var_0_0.refreshBossFocusIcon(arg_17_0, arg_17_1)
-	if not arg_17_1 then
-		gohelper.setActive(arg_17_0._goBossFocusIcon, false)
+function FightNameUI:refreshBossFocusIcon(aiCardMoList)
+	if not aiCardMoList then
+		gohelper.setActive(self._goBossFocusIcon, false)
 
 		return
 	end
 
-	local var_17_0 = arg_17_0.entity and arg_17_0.entity:getMO()
-	local var_17_1 = false
+	local entityMo = self.entity and self.entity:getMO()
+	local isMark = false
 
-	if var_17_0 and var_17_0.side == FightEnum.EntitySide.MySide then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-			if arg_17_0:_checkCanMark(iter_17_1) then
-				var_17_1 = true
+	if entityMo and entityMo.side == FightEnum.EntitySide.MySide then
+		for _, cardMo in ipairs(aiCardMoList) do
+			if self:_checkCanMark(cardMo) then
+				isMark = true
 
 				break
 			end
 		end
 	end
 
-	gohelper.setActive(arg_17_0._goBossFocusIcon, var_17_1)
+	gohelper.setActive(self._goBossFocusIcon, isMark)
 end
 
-function var_0_0._onSkillPlayFinish(arg_18_0)
-	local var_18_0 = FightDataHelper.roundMgr:getPreRoundData()
-	local var_18_1 = var_18_0 and var_18_0:getAIUseCardMOList()
+function FightNameUI:_onSkillPlayFinish()
+	local roundDataMgr = FightDataHelper.roundMgr
+	local roundData = roundDataMgr:getPreRoundData()
+	local cardList = roundData and roundData:getAIUseCardMOList()
 
-	arg_18_0:refreshBossFocusIcon(var_18_1)
+	self:refreshBossFocusIcon(cardList)
 end
 
-function var_0_0._checkCanMark(arg_19_0, arg_19_1)
-	if not arg_19_1 then
+function FightNameUI:_checkCanMark(cardMo)
+	if not cardMo then
 		return false
 	end
 
-	if arg_19_1.targetUid ~= arg_19_0.entity.id then
+	if cardMo.targetUid ~= self.entity.id then
 		return false
 	end
 
-	local var_19_0 = FightDataHelper.entityMgr:getById(arg_19_1.uid)
+	local cardEntityMo = FightDataHelper.entityMgr:getById(cardMo.uid)
 
-	if not var_19_0 or var_19_0:isStatusDead() then
+	if not cardEntityMo or cardEntityMo:isStatusDead() then
 		return false
 	end
 
-	if not lua_ai_mark_skill.configDict[arg_19_1.skillId] then
+	local aiMarkSkillCo = lua_ai_mark_skill.configDict[cardMo.skillId]
+
+	if not aiMarkSkillCo then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.initExPointMgr(arg_20_0)
-	arg_20_0._expointCtrl = FightExPointView.New(arg_20_0.entity.id, arg_20_0._uiGO)
+function FightNameUI:initExPointMgr()
+	self._expointCtrl = FightExPointView.New(self.entity.id, self._uiGO)
 end
 
-function var_0_0.initPowerMgr(arg_21_0)
-	arg_21_0.powerView = FightNamePowerInfoView.New(arg_21_0.entity.id, arg_21_0._uiGO)
+function FightNameUI:initPowerMgr()
+	self.powerView = FightNamePowerInfoView.New(self.entity.id, self._uiGO)
 end
 
-function var_0_0.initStressMgr(arg_22_0)
-	if not arg_22_0.entity:getMO():hasStress() then
+function FightNameUI:initStressMgr()
+	local entityMo = self.entity:getMO()
+
+	if not entityMo:hasStress() then
 		return
 	end
 
-	arg_22_0.stressMgr = FightNameUIStressMgr.New(arg_22_0)
-	arg_22_0.stressGo = gohelper.findChild(arg_22_0._uiGO, "#go_fightstressitem")
+	self.stressMgr = FightNameUIStressMgr.New(self)
+	self.stressGo = gohelper.findChild(self._uiGO, "#go_fightstressitem")
 
-	arg_22_0.stressMgr:initMgr(arg_22_0.stressGo, arg_22_0.entity)
+	self.stressMgr:initMgr(self.stressGo, self.entity)
 end
 
-function var_0_0.beforeDestroy(arg_23_0)
-	arg_23_0._power:releaseSelf()
+function FightNameUI:beforeDestroy()
+	self._power:releaseSelf()
 
-	if arg_23_0._seasonGuard then
-		arg_23_0._seasonGuard:releaseSelf()
+	if self._seasonGuard then
+		self._seasonGuard:releaseSelf()
 	end
 
-	if arg_23_0.entityView then
-		arg_23_0.entityView:disposeSelf()
+	if self.entityView then
+		self.entityView:disposeSelf()
 	end
 
-	if arg_23_0._expointCtrl then
-		arg_23_0._expointCtrl:disposeSelf()
+	if self._expointCtrl then
+		self._expointCtrl:disposeSelf()
 	end
 
-	if arg_23_0.powerView then
-		arg_23_0.powerView:disposeSelf()
+	if self.powerView then
+		self.powerView:disposeSelf()
 	end
 
-	if arg_23_0.stressMgr then
-		arg_23_0.stressMgr:beforeDestroy()
+	if self.stressMgr then
+		self.stressMgr:beforeDestroy()
 	end
 
-	if arg_23_0._enemyOperation then
-		arg_23_0._enemyOperation:disposeSelf()
+	if self._enemyOperation then
+		self._enemyOperation:disposeSelf()
 	end
 
-	if arg_23_0.healthComp then
-		arg_23_0.healthComp:beforeDestroy()
+	if self.healthComp then
+		self.healthComp:beforeDestroy()
 
-		arg_23_0.healthComp = nil
+		self.healthComp = nil
 	end
 
-	arg_23_0.buffMgr:beforeDestroy()
-	arg_23_0._hpKillLineComp:beforeDestroy()
-	CameraMgr.instance:getCameraTrace():RemoveChangeActor(arg_23_0._uiFollower)
-	FightFloatMgr.instance:nameUIBeforeDestroy(arg_23_0._floatContainerGO)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, arg_23_0._updateFollow, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.BeforePlayTimeline, arg_23_0._beforePlaySkill, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_23_0._onMySideRoundEnd, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_23_0._updateUIPos, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_23_0._onStartSequenceFinish, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_23_0.updateUI, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_23_0._onRoundSequenceFinish, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_23_0.updateActive, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.SetIsShowFloat, arg_23_0._setIsShowFloat, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.SetIsShowNameUI, arg_23_0._setIsShowNameUI, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, arg_23_0._onFloatEquipEffect, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnCameraFovChange, arg_23_0._updateUIPos, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_23_0._onMaxHpChange, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_23_0._onCurrentHpChange, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.MultiHpChange, arg_23_0._onMultiHpChange, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.ChangeWaveEnd, arg_23_0._onChangeWaveEnd, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, arg_23_0._onChangeCareer, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.UpdateUIFollower, arg_23_0._onUpdateUIFollower, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.ChangeShield, arg_23_0._onChangeShield, arg_23_0)
-	arg_23_0:removeEventCb(FightController.instance, FightEvent.OnLockHpChange, arg_23_0._onLockHpChange, arg_23_0)
-	arg_23_0:_killHpTween()
-	TaskDispatcher.cancelTask(arg_23_0._onDelAniOver, arg_23_0)
-	FightNameMgr.instance:unregister(arg_23_0)
-	gohelper.destroy(arg_23_0._containerGO)
-	arg_23_0._uiLoader:dispose()
+	if self.rouge2RevivalComp then
+		self.rouge2RevivalComp:beforeDestroy()
 
-	arg_23_0._uiLoader = nil
-	arg_23_0._containerGO = nil
+		self.rouge2RevivalComp = nil
+	end
+
+	self.buffMgr:beforeDestroy()
+	self._hpKillLineComp:beforeDestroy()
+	CameraMgr.instance:getCameraTrace():RemoveChangeActor(self._uiFollower)
+	FightFloatMgr.instance:nameUIBeforeDestroy(self._floatContainerGO)
+	self:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._updateFollow, self)
+	self:removeEventCb(FightController.instance, FightEvent.BeforePlayTimeline, self._beforePlaySkill, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._updateUIPos, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, self.updateUI, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.updateActive, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetIsShowFloat, self._setIsShowFloat, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetIsShowNameUI, self._setIsShowNameUI, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, self._onFloatEquipEffect, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnCameraFovChange, self._updateUIPos, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, self._onMaxHpChange, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, self._onCurrentHpChange, self)
+	self:removeEventCb(FightController.instance, FightEvent.MultiHpChange, self._onMultiHpChange, self)
+	self:removeEventCb(FightController.instance, FightEvent.ChangeWaveEnd, self._onChangeWaveEnd, self)
+	self:removeEventCb(FightController.instance, FightEvent.ChangeCareer, self._onChangeCareer, self)
+	self:removeEventCb(FightController.instance, FightEvent.UpdateUIFollower, self._onUpdateUIFollower, self)
+	self:removeEventCb(FightController.instance, FightEvent.ChangeShield, self._onChangeShield, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnLockHpChange, self._onLockHpChange, self)
+	self:_killHpTween()
+	TaskDispatcher.cancelTask(self._onDelAniOver, self)
+	FightNameMgr.instance:unregister(self)
+	gohelper.destroy(self._containerGO)
+	self._uiLoader:dispose()
+
+	self._uiLoader = nil
+	self._containerGO = nil
 end
 
-function var_0_0.updateUI(arg_24_0)
-	local var_24_0 = arg_24_0.entity:getMO()
+function FightNameUI:updateUI()
+	local entityMO = self.entity:getMO()
 
-	arg_24_0._txtName.text = var_24_0:getEntityName()
+	self._txtName.text = entityMO:getEntityName()
 
-	arg_24_0:_refreshCareer()
-	arg_24_0:_updateFollow()
-	arg_24_0:updateActive()
+	self:_refreshCareer()
+	self:_updateFollow()
+	self:updateActive()
 end
 
-function var_0_0._refreshCareer(arg_25_0)
-	local var_25_0 = arg_25_0.entity:getMO()
-	local var_25_1 = FightModel.instance:getVersion()
+function FightNameUI:_refreshCareer()
+	local entityMO = self.entity:getMO()
+	local version = FightModel.instance:getVersion()
 
 	if SkillEditorMgr.instance.inEditMode then
-		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imgCareerIcon, "sx_icon_" .. tostring(var_25_0:getCO().career), true)
-	elseif var_25_1 >= 2 and var_25_0.career ~= 0 then
-		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imgCareerIcon, "sx_icon_" .. tostring(var_25_0.career), true)
+		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, "sx_icon_" .. tostring(entityMO:getCO().career), true)
+	elseif version >= 2 and entityMO.career ~= 0 then
+		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, "sx_icon_" .. tostring(entityMO.career), true)
 	else
-		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imgCareerIcon, "sx_icon_" .. tostring(var_25_0:getCO().career), true)
+		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, "sx_icon_" .. tostring(entityMO:getCO().career), true)
 	end
 end
 
-function var_0_0._onChangeCareer(arg_26_0, arg_26_1)
-	if arg_26_1 == arg_26_0.entity.id then
-		arg_26_0:_refreshCareer()
+function FightNameUI:_onChangeCareer(entityId)
+	if entityId == self.entity.id then
+		self:_refreshCareer()
 	end
 end
 
-function var_0_0._beforePlaySkill(arg_27_0)
+function FightNameUI:_beforePlaySkill()
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.ClothSkill) then
 		return
 	end
 end
 
-function var_0_0._onMySideRoundEnd(arg_28_0)
+function FightNameUI:_onMySideRoundEnd()
 	return
 end
 
-function var_0_0._onStartSequenceFinish(arg_29_0)
-	arg_29_0:updateUI()
+function FightNameUI:_onStartSequenceFinish()
+	self:updateUI()
 end
 
-function var_0_0._onRoundSequenceFinish(arg_30_0)
-	arg_30_0:updateUI()
+function FightNameUI:_onRoundSequenceFinish()
+	self:updateUI()
 end
 
-function var_0_0._updateFollow(arg_31_0, arg_31_1)
-	if arg_31_1 and arg_31_1.unitSpawn ~= arg_31_0.entity then
+function FightNameUI:_updateFollow(unitSpine)
+	if unitSpine and unitSpine.unitSpawn ~= self.entity then
 		return
 	end
 
-	local var_31_0 = arg_31_0.entity.spine and arg_31_0.entity.spine:getSpineGO()
+	local spineGO = self.entity.spine and self.entity.spine:getSpineGO()
 
-	if not var_31_0 then
-		recthelper.setAnchorX(arg_31_0._containerGO.transform, 20000)
+	if not spineGO then
+		recthelper.setAnchorX(self._containerGO.transform, 20000)
 
 		return
 	end
 
-	local var_31_1 = CameraMgr.instance:getUnitCamera()
-	local var_31_2 = CameraMgr.instance:getUICamera()
-	local var_31_3 = arg_31_0.entity.go.transform
-	local var_31_4 = ViewMgr.instance:getUIRoot().transform
-	local var_31_5 = FightConfig.instance:getSkinCO(arg_31_0.entity:getMO().skin)
-	local var_31_6 = var_31_5 and var_31_5.topuiOffset or {
+	local unitCamera = CameraMgr.instance:getUnitCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local entityGO = self.entity.go.transform
+	local plane = ViewMgr.instance:getUIRoot().transform
+	local skinCO = FightConfig.instance:getSkinCO(self.entity:getMO().skin)
+	local uiOffset = skinCO and skinCO.topuiOffset or {
 		0,
 		0,
 		0,
 		0
 	}
-	local var_31_7 = var_31_6 and var_31_6[1] or 0
-	local var_31_8 = var_31_6 and var_31_6[2] or 0
-	local var_31_9 = var_31_6 and var_31_6[3] or 0
-	local var_31_10 = var_31_6 and var_31_6[4] or 0
-	local var_31_11 = arg_31_0.entity:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle, true)
-	local var_31_12, var_31_13 = FightHelper.getEntityBoxSizeOffsetV2(arg_31_0.entity)
-	local var_31_14 = var_31_12.y
-	local var_31_15, var_31_16, var_31_17 = transformhelper.getPos(var_31_11.transform)
-	local var_31_18, var_31_19, var_31_20 = transformhelper.getPos(arg_31_0.entity.go.transform)
+	local uiOffsetX = uiOffset and uiOffset[1] or 0
+	local uiOffsetY = uiOffset and uiOffset[2] or 0
+	local worldOffsetX = uiOffset and uiOffset[3] or 0
+	local worldOffsetY = uiOffset and uiOffset[4] or 0
+	local hangPointGO = self.entity:getHangPoint(ModuleEnum.SpineHangPoint.mountmiddle, true)
+	local size, offset = FightHelper.getEntityBoxSizeOffsetV2(self.entity)
+	local boxHeight = size.y
+	local _, middleY, _ = transformhelper.getPos(hangPointGO.transform)
+	local _, spineY, _ = transformhelper.getPos(self.entity.go.transform)
 
-	arg_31_0._uiFollower = gohelper.onceAddComponent(arg_31_0._containerGO, typeof(ZProj.UIFollower))
+	self._uiFollower = gohelper.onceAddComponent(self._containerGO, typeof(ZProj.UIFollower))
 
-	arg_31_0._uiFollower:SetCameraShake(CameraMgr.instance:getCameraShake())
+	self._uiFollower:SetCameraShake(CameraMgr.instance:getCameraShake())
 
-	local var_31_21 = gohelper.findChild(var_31_0, ModuleEnum.SpineHangPointRoot)
-	local var_31_22 = var_31_21 and gohelper.findChild(var_31_21, ModuleEnum.SpineHangPoint.mounthproot)
+	local root = gohelper.findChild(spineGO, ModuleEnum.SpineHangPointRoot)
+	local hpRoot = root and gohelper.findChild(root, ModuleEnum.SpineHangPoint.mounthproot)
 
-	if var_31_22 then
-		local var_31_23, var_31_24 = transformhelper.getLocalScale(arg_31_0.entity.go.transform)
-		local var_31_25 = 0.5
+	if hpRoot then
+		local scaleX, scaleY = transformhelper.getLocalScale(self.entity.go.transform)
+		local numOffsetY = 0.5
 
-		arg_31_0._uiFollower:Set(var_31_1, var_31_2, var_31_4, var_31_22.transform, var_31_9, (var_31_10 + var_31_25) * var_31_24, 0, var_31_7, var_31_8)
-	elseif isTypeOf(arg_31_0.entity, FightEntityAssembledMonsterMain) or isTypeOf(arg_31_0.entity, FightEntityAssembledMonsterSub) then
-		local var_31_26 = arg_31_0.entity:getMO()
-		local var_31_27 = lua_fight_assembled_monster.configDict[var_31_26.skin]
+		self._uiFollower:Set(unitCamera, uiCamera, plane, hpRoot.transform, worldOffsetX, (worldOffsetY + numOffsetY) * scaleY, 0, uiOffsetX, uiOffsetY)
+	elseif isTypeOf(self.entity, FightEntityAssembledMonsterMain) or isTypeOf(self.entity, FightEntityAssembledMonsterSub) then
+		local entityMO = self.entity:getMO()
+		local assembledConfig = lua_fight_assembled_monster.configDict[entityMO.skin]
 
-		arg_31_0._uiFollower:Set(var_31_1, var_31_2, var_31_4, var_31_11.transform, var_31_27.hpPos[1] or 0, var_31_27.hpPos[2] or 0, 0, 0, 0)
+		self._uiFollower:Set(unitCamera, uiCamera, plane, hangPointGO.transform, assembledConfig.hpPos[1] or 0, assembledConfig.hpPos[2] or 0, 0, 0, 0)
 	else
-		local var_31_28, var_31_29 = transformhelper.getLocalScale(arg_31_0.entity.go.transform)
+		local scaleX, scaleY = transformhelper.getLocalScale(self.entity.go.transform)
 
-		arg_31_0._uiFollower:Set(var_31_1, var_31_2, var_31_4, var_31_11.transform, 0 + var_31_9, var_31_14 + var_31_19 - var_31_16 + var_31_10 * var_31_29, 0, var_31_7, var_31_8 + 15)
+		self._uiFollower:Set(unitCamera, uiCamera, plane, hangPointGO.transform, 0 + worldOffsetX, boxHeight + spineY - middleY + worldOffsetY * scaleY, 0, uiOffsetX, uiOffsetY + 15)
 	end
 
-	arg_31_0._uiFollower:SetEnable(true)
-	CameraMgr.instance:getCameraTrace():AddChangeActor(arg_31_0._uiFollower)
+	self._uiFollower:SetEnable(true)
+	CameraMgr.instance:getCameraTrace():AddChangeActor(self._uiFollower)
 end
 
-function var_0_0._updateUIPos(arg_32_0)
-	if arg_32_0._uiFollower then
-		arg_32_0._uiFollower:ForceUpdate()
+function FightNameUI:_updateUIPos()
+	if self._uiFollower then
+		self._uiFollower:ForceUpdate()
 	end
 end
 
-function var_0_0.changeHpWithChoushiBuff(arg_33_0, arg_33_1)
-	if not arg_33_0.entity:isMySide() then
-		gohelper.setActive(arg_33_0._gohpbg, not arg_33_1)
-		gohelper.setActive(arg_33_0._gohpbg, arg_33_1)
+function FightNameUI:changeHpWithChoushiBuff(state)
+	local isMySide = self.entity:isMySide()
 
-		if arg_33_1 then
-			UISpriteSetMgr.instance:setFightSprite(arg_33_0._imgHp, "bg_xt_choushi")
+	if not isMySide then
+		gohelper.setActive(self._gohpbg, not state)
+		gohelper.setActive(self._gohpbg, state)
+
+		if state then
+			UISpriteSetMgr.instance:setFightSprite(self._imgHp, "bg_xt_choushi")
 		else
-			UISpriteSetMgr.instance:setFightSprite(arg_33_0._imgHp, "bg_xt2")
+			UISpriteSetMgr.instance:setFightSprite(self._imgHp, "bg_xt2")
 		end
 	end
 end
 
-function var_0_0.getFollower(arg_34_0)
-	return arg_34_0._uiFollower
+function FightNameUI:getFollower()
+	return self._uiFollower
 end
 
-function var_0_0.updateActive(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4, arg_35_5)
-	if arg_35_1 and arg_35_1 ~= arg_35_0.entity.id then
+function FightNameUI:updateActive(entityId, effectType, buffId, buff_uid, configEffect)
+	if entityId and entityId ~= self.entity.id then
 		return
 	end
 
-	if arg_35_3 then
-		local var_35_0 = lua_skill_buff.configDict[arg_35_3]
+	if buffId then
+		local buffConfig = lua_skill_buff.configDict[buffId]
 
-		if var_35_0 and var_35_0.typeId == 3120005 then
-			arg_35_0:_insteadSpecialHp(arg_35_2)
+		if buffConfig and buffConfig.typeId == 3120005 then
+			self:_insteadSpecialHp(effectType)
 		end
 
-		if FightConfig.instance:hasBuffFeature(arg_35_3, FightEnum.BuffType_HideLife) then
-			arg_35_0:_doSetActive()
+		if FightConfig.instance:hasBuffFeature(buffId, FightEnum.BuffType_HideLife) then
+			self:_doSetActive()
 		end
 	else
-		arg_35_0:_doSetActive()
+		self:_doSetActive()
 	end
 end
 
-function var_0_0._insteadSpecialHp(arg_36_0, arg_36_1)
-	if arg_36_1 then
-		if arg_36_1 == FightEnum.EffectType.BUFFADD then
-			arg_36_0:changeHpWithChoushiBuff(true)
-		elseif arg_36_1 == FightEnum.EffectType.BUFFDEL or arg_36_1 == FightEnum.EffectType.BUFFDELNOEFFECT then
-			arg_36_0:changeHpWithChoushiBuff(false)
+function FightNameUI:_insteadSpecialHp(effectType)
+	if effectType then
+		if effectType == FightEnum.EffectType.BUFFADD then
+			self:changeHpWithChoushiBuff(true)
+		elseif effectType == FightEnum.EffectType.BUFFDEL or effectType == FightEnum.EffectType.BUFFDELNOEFFECT then
+			self:changeHpWithChoushiBuff(false)
 		end
 	else
-		local var_36_0 = arg_36_0.entity:getMO():getBuffDic()
+		local buffDic = self.entity:getMO():getBuffDic()
 
-		for iter_36_0, iter_36_1 in pairs(var_36_0) do
-			local var_36_1 = lua_skill_buff.configDict[iter_36_1.buffId]
+		for i, v in pairs(buffDic) do
+			local buffConfig = lua_skill_buff.configDict[v.buffId]
 
-			if var_36_1 and var_36_1.typeId == 3120005 then
-				arg_36_0:changeHpWithChoushiBuff(true)
+			if buffConfig and buffConfig.typeId == 3120005 then
+				self:changeHpWithChoushiBuff(true)
 
 				return
 			end
@@ -552,313 +585,323 @@ function var_0_0._insteadSpecialHp(arg_36_0, arg_36_1)
 	end
 end
 
-function var_0_0.getFloatItemStartY(arg_37_0)
-	local var_37_0 = FightMsgMgr.sendMsg(FightMsgId.GetEnemyAiUseCardItemList, arg_37_0.entity.id)
-	local var_37_1 = var_37_0 and #var_37_0 or 0
+function FightNameUI:getFloatItemStartY()
+	local opItemList = FightMsgMgr.sendMsg(FightMsgId.GetEnemyAiUseCardItemList, self.entity.id)
+	local opItemCount = opItemList and #opItemList or 0
 
-	return (arg_37_0.buffMgr:getBuffLineCount() or 0) * 34.5 + (var_37_1 > 0 and 42 or 0)
+	return (self.buffMgr:getBuffLineCount() or 0) * 34.5 + (opItemCount > 0 and 42 or 0)
 end
 
-function var_0_0.showPoisoningEffect(arg_38_0, arg_38_1)
-	arg_38_0.buffMgr:showPoisoningEffect(arg_38_1)
+function FightNameUI:showPoisoningEffect(buffCO)
+	self.buffMgr:showPoisoningEffect(buffCO)
 end
 
-function var_0_0._setIsShowFloat(arg_39_0, arg_39_1)
-	if not arg_39_0._canvasGroup then
-		arg_39_0._canvasGroup = gohelper.onceAddComponent(arg_39_0._floatContainerGO, typeof(UnityEngine.CanvasGroup))
+function FightNameUI:_setIsShowFloat(isVisible)
+	if not self._canvasGroup then
+		self._canvasGroup = gohelper.onceAddComponent(self._floatContainerGO, typeof(UnityEngine.CanvasGroup))
 	end
 
-	gohelper.setActiveCanvasGroup(arg_39_0._canvasGroup, arg_39_1)
+	gohelper.setActiveCanvasGroup(self._canvasGroup, isVisible)
 end
 
-function var_0_0.addHp(arg_40_0, arg_40_1)
-	local var_40_0 = arg_40_0.entity:getMO().attrMO.hp
+function FightNameUI:addHp(num)
+	local entityMO = self.entity:getMO()
+	local maxHp = entityMO.attrMO.hp
 
-	arg_40_0._curHp = arg_40_0._curHp + arg_40_1
-	arg_40_0._curHp = arg_40_0._curHp >= 0 and arg_40_0._curHp or 0
-	arg_40_0._curHp = var_40_0 >= arg_40_0._curHp and arg_40_0._curHp or var_40_0
-	arg_40_0._txtHp.text = arg_40_0._curHp
+	self._curHp = self._curHp + num
+	self._curHp = self._curHp >= 0 and self._curHp or 0
+	self._curHp = maxHp >= self._curHp and self._curHp or maxHp
+	self._txtHp.text = self._curHp
 
-	arg_40_0:_tweenFillAmount()
+	self:_tweenFillAmount()
 end
 
-function var_0_0.getHp(arg_41_0)
-	return arg_41_0._curHp
+function FightNameUI:getHp()
+	return self._curHp
 end
 
-function var_0_0.setShield(arg_42_0, arg_42_1)
-	arg_42_0._curShield = arg_42_1 > 0 and arg_42_1 or 0
+function FightNameUI:setShield(num)
+	self._curShield = num > 0 and num or 0
 
-	arg_42_0:_tweenFillAmount()
+	self:_tweenFillAmount()
 end
 
-function var_0_0._tweenFillAmount(arg_43_0, arg_43_1, arg_43_2)
-	arg_43_1 = arg_43_1 or arg_43_0._curHp
-	arg_43_2 = arg_43_2 or arg_43_0._curShield
+function FightNameUI:_tweenFillAmount(curHp, curShield)
+	curHp = curHp or self._curHp
+	curShield = curShield or self._curShield
 
-	local var_43_0, var_43_1 = arg_43_0:_getFillAmount(arg_43_1, arg_43_2)
-	local var_43_2 = var_43_0
+	local hpFillAmount, shieldFillAmount, fictionHpPercent = self:_getFillAmount(curHp, curShield)
+	local hpBgFillAmount = hpFillAmount
 
-	if FightDataHelper.tempMgr.aiJiAoFakeHpOffset[arg_43_0.entity.id] then
-		arg_43_1, arg_43_2 = FightWorkEzioBigSkillDamage1000.calFakeHpAndShield(arg_43_0.entity.id, arg_43_1, arg_43_2)
-		var_43_0, var_43_1 = arg_43_0:_getFillAmount(arg_43_1, arg_43_2)
+	if FightDataHelper.tempMgr.aiJiAoFakeHpOffset[self.entity.id] then
+		curHp, curShield = FightWorkEzioBigSkillDamage1000.calFakeHpAndShield(self.entity.id, curHp, curShield)
+		hpFillAmount, shieldFillAmount, fictionHpPercent = self:_getFillAmount(curHp, curShield)
 	end
 
-	arg_43_0._imgHp.fillAmount = var_43_0
+	self._imgHp.fillAmount = hpFillAmount
 
-	ZProj.TweenHelper.KillByObj(arg_43_0._imgHpMinus)
-	ZProj.TweenHelper.DOFillAmount(arg_43_0._imgHpMinus, var_43_2, 0.5)
-	ZProj.TweenHelper.KillByObj(arg_43_0._imgHpShield)
-	ZProj.TweenHelper.DOFillAmount(arg_43_0._imgHpShield, var_43_1, 0.5)
-	gohelper.setActive(arg_43_0._imgHpMinus.gameObject, arg_43_2 <= 0)
-	arg_43_0:refreshReduceHp()
+	ZProj.TweenHelper.KillByObj(self._imgHpMinus)
+	ZProj.TweenHelper.DOFillAmount(self._imgHpMinus, hpBgFillAmount, 0.5)
+	ZProj.TweenHelper.KillByObj(self._imgHpShield)
+	ZProj.TweenHelper.DOFillAmount(self._imgHpShield, shieldFillAmount, 0.5)
+	ZProj.TweenHelper.KillByObj(self.fictionHp)
+	ZProj.TweenHelper.DOFillAmount(self.fictionHp, fictionHpPercent, 0.5)
+	gohelper.setActive(self._imgHpMinus.gameObject, curShield <= 0)
+	self:refreshReduceHp()
 end
 
-function var_0_0.resetHp(arg_44_0)
-	arg_44_0._curHp = arg_44_0.entity:getMO().currentHp
-	arg_44_0._curHp = arg_44_0._curHp > 0 and arg_44_0._curHp or 0
-	arg_44_0._curShield = arg_44_0.entity:getMO().shieldValue
+function FightNameUI:resetHp()
+	self._curHp = self.entity:getMO().currentHp
+	self._curHp = self._curHp > 0 and self._curHp or 0
+	self._curShield = self.entity:getMO().shieldValue
 
-	arg_44_0:_tweenFillAmount()
+	self:_tweenFillAmount()
 end
 
-function var_0_0.refreshReduceHp(arg_45_0)
-	local var_45_0 = arg_45_0.entity:getMO()
-	local var_45_1 = var_45_0 and var_45_0:getLockMaxHpRate() or 1
-	local var_45_2 = var_45_1 < 1
+function FightNameUI:refreshReduceHp()
+	local entityMo = self.entity:getMO()
+	local rate = entityMo and entityMo:getLockMaxHpRate() or 1
+	local showReduceHp = rate < 1
 
-	gohelper.setActive(arg_45_0._reduceHp, var_45_2)
+	gohelper.setActive(self._reduceHp, showReduceHp)
 
-	if var_45_2 then
-		arg_45_0._reduceHpImage.fillAmount = Mathf.Clamp01(1 - var_45_1)
+	if showReduceHp then
+		self._reduceHpImage.fillAmount = Mathf.Clamp01(1 - rate)
 	end
 end
 
-function var_0_0._getFillAmount(arg_46_0, arg_46_1, arg_46_2)
-	arg_46_1 = arg_46_1 or arg_46_0._curHp
-	arg_46_2 = arg_46_2 or arg_46_0._curShield
+function FightNameUI:_getFillAmount(curHp, curShield)
+	curHp = curHp or self._curHp
+	curShield = curShield or self._curShield
 
-	return var_0_0.getHpFillAmount(arg_46_1, arg_46_2, arg_46_0.entity.id)
+	return FightNameUI.getHpFillAmount(curHp, curShield, self.entity.id)
 end
 
-function var_0_0.getHpFillAmount(arg_47_0, arg_47_1, arg_47_2)
-	local var_47_0 = FightDataHelper.entityMgr:getById(arg_47_2)
+function FightNameUI.getHpFillAmount(curHp, curShield, entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_47_0 then
+	if not entityMO then
 		return 0, 0
 	end
 
-	local var_47_1, var_47_2 = var_47_0:getHpAndShieldFillAmount(arg_47_0, arg_47_1)
+	local hpPercent, shieldPercent, fictionHpPercent = entityMO:getHpAndShieldFillAmount(curHp, curShield)
 
-	return var_47_1, var_47_2
+	return hpPercent, shieldPercent, fictionHpPercent
 end
 
-function var_0_0._onFloatEquipEffect(arg_48_0, arg_48_1, arg_48_2)
-	if arg_48_1 ~= arg_48_0.entity.id then
+function FightNameUI:_onFloatEquipEffect(id, equip_skill_config)
+	if id ~= self.entity.id then
 		return
 	end
 
-	if not arg_48_0._float_equip_time then
-		arg_48_0._float_equip_time = Time.time
-	elseif Time.time - arg_48_0._float_equip_time < 1 then
+	if not self._float_equip_time then
+		self._float_equip_time = Time.time
+	elseif Time.time - self._float_equip_time < 1 then
 		return
 	end
 
-	arg_48_0._float_equip_time = Time.time
+	self._float_equip_time = Time.time
 
-	FightFloatMgr.instance:float(arg_48_1, FightEnum.FloatType.equipeffect, "", arg_48_2, false)
+	FightFloatMgr.instance:float(id, FightEnum.FloatType.equipeffect, "", equip_skill_config, false)
 end
 
-function var_0_0.setFloatRootVisble(arg_49_0, arg_49_1)
-	gohelper.setActive(arg_49_0._floatContainerGO, arg_49_1)
+function FightNameUI:setFloatRootVisble(state)
+	gohelper.setActive(self._floatContainerGO, state)
 end
 
-function var_0_0._onMaxHpChange(arg_50_0, arg_50_1, arg_50_2, arg_50_3)
-	if arg_50_1 ~= arg_50_0.entity.id then
+function FightNameUI:_onMaxHpChange(entity_id, old_num, new_num)
+	if entity_id ~= self.entity.id then
 		return
 	end
 
-	arg_50_0:_killHpTween()
+	self:_killHpTween()
 
-	if not arg_50_0._hp_tweens then
-		arg_50_0._hp_tweens = {}
+	if not self._hp_tweens then
+		self._hp_tweens = {}
 	end
 
-	if arg_50_2 < arg_50_3 then
-		arg_50_0._hp_ani:Play("up", 0, 0)
+	if old_num < new_num then
+		self._hp_ani:Play("up", 0, 0)
 
-		local var_50_0 = ZProj.TweenHelper.DOAnchorPosX(arg_50_0._hp_container_tran, 0, 0.3, arg_50_0._hpTweenDone, arg_50_0)
+		local tween = ZProj.TweenHelper.DOAnchorPosX(self._hp_container_tran, 0, 0.3, self._hpTweenDone, self)
 
-		table.insert(arg_50_0._hp_tweens, var_50_0)
+		table.insert(self._hp_tweens, tween)
 	else
-		local var_50_1 = arg_50_0.entity:getMO()
+		local entityMO = self.entity:getMO()
+		local maxHp = entityMO.attrMO and entityMO.attrMO.hp > 0 and entityMO.attrMO.hp or 1
+		local original_max_hp = entityMO.attrMO and entityMO.attrMO.original_max_hp or 1
 
-		if (var_50_1.attrMO and var_50_1.attrMO.hp > 0 and var_50_1.attrMO.hp or 1) < (var_50_1.attrMO and var_50_1.attrMO.original_max_hp or 1) then
-			arg_50_0._hp_ani:Play("down", 0, 0)
-			arg_50_0:resetHp()
+		if maxHp < original_max_hp then
+			self._hp_ani:Play("down", 0, 0)
+			self:resetHp()
 		end
 	end
 end
 
-function var_0_0._hpTweenDone(arg_51_0)
-	arg_51_0:resetHp()
+function FightNameUI:_hpTweenDone()
+	self:resetHp()
 end
 
-function var_0_0._killHpTween(arg_52_0)
-	if arg_52_0._hp_tweens then
-		for iter_52_0, iter_52_1 in ipairs(arg_52_0._hp_tweens) do
-			ZProj.TweenHelper.KillById(iter_52_1)
+function FightNameUI:_killHpTween()
+	if self._hp_tweens then
+		for i, v in ipairs(self._hp_tweens) do
+			ZProj.TweenHelper.KillById(v)
 		end
 
-		arg_52_0._hp_tweens = {}
+		self._hp_tweens = {}
 	end
 end
 
-function var_0_0._onChangeShield(arg_53_0, arg_53_1)
-	if arg_53_1 ~= arg_53_0.entity.id then
+function FightNameUI:_onChangeShield(entity_id)
+	if entity_id ~= self.entity.id then
 		return
 	end
 
-	arg_53_0._curShield = FightDataHelper.entityMgr:getById(arg_53_1).shieldValue
+	local entityMO = FightDataHelper.entityMgr:getById(entity_id)
 
-	arg_53_0:_tweenFillAmount()
+	self._curShield = entityMO.shieldValue
+
+	self:_tweenFillAmount()
 end
 
-function var_0_0._onCurrentHpChange(arg_54_0, arg_54_1, arg_54_2, arg_54_3)
-	if arg_54_1 ~= arg_54_0.entity.id then
+function FightNameUI:_onCurrentHpChange(entity_id, old_num, new_num)
+	if entity_id ~= self.entity.id then
 		return
 	end
 
-	arg_54_0:resetHp()
+	self:resetHp()
 end
 
-function var_0_0._onMultiHpChange(arg_55_0, arg_55_1)
-	arg_55_0:_onCurrentHpChange(arg_55_1)
+function FightNameUI:_onMultiHpChange(entityId)
+	self:_onCurrentHpChange(entityId)
 end
 
-function var_0_0._onChangeWaveEnd(arg_56_0)
-	arg_56_0:_setPosOffset()
+function FightNameUI:_onChangeWaveEnd()
+	self:_setPosOffset()
 end
 
-function var_0_0.onCoverPerformanceEntityData(arg_57_0, arg_57_1)
-	if arg_57_1 ~= arg_57_0.entity.id then
+function FightNameUI:onCoverPerformanceEntityData(entityId)
+	if entityId ~= self.entity.id then
 		return
 	end
 
-	local var_57_0 = FightDataHelper.entityMgr:getById(arg_57_1)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	arg_57_0:setShield(var_57_0.shieldValue)
-	arg_57_0:resetHp()
-	arg_57_0.buffMgr:refreshBuffList()
-	arg_57_0._power:_refreshUI()
+	self:setShield(entityMO.shieldValue)
+	self:resetHp()
+	self.buffMgr:refreshBuffList()
+	self._power:_refreshUI()
 end
 
-function var_0_0._setPosOffset(arg_58_0)
-	if arg_58_0.entity:getSide() == FightEnum.EntitySide.MySide then
-		local var_58_0 = FightEnum.MySideDefaultStanceId
-		local var_58_1 = arg_58_0.entity:getMO()
-		local var_58_2 = FightModel.instance:getFightParam()
-		local var_58_3 = var_58_2 and var_58_2.battleId
-		local var_58_4 = var_58_3 and lua_battle.configDict[var_58_3]
+function FightNameUI:_setPosOffset()
+	local side = self.entity:getSide()
 
-		if var_58_4 and not string.nilorempty(var_58_4.myStance) then
-			var_58_0 = tonumber(var_58_4.myStance)
+	if side == FightEnum.EntitySide.MySide then
+		local stanceId = FightEnum.MySideDefaultStanceId
+		local entityMO = self.entity:getMO()
+		local fightParam = FightModel.instance:getFightParam()
+		local battleId = fightParam and fightParam.battleId
+		local battleCO = battleId and lua_battle.configDict[battleId]
 
-			if not var_58_0 then
-				local var_58_5 = string.splitToNumber(var_58_4.myStance, "#")
+		if battleCO and not string.nilorempty(battleCO.myStance) then
+			stanceId = tonumber(battleCO.myStance)
 
-				if #var_58_5 > 0 then
-					local var_58_6 = FightModel.instance:getCurWaveId() or 1
+			if not stanceId then
+				local sp = string.splitToNumber(battleCO.myStance, "#")
 
-					var_58_0 = var_58_5[var_58_6 <= #var_58_5 and var_58_6 or #var_58_5]
+				if #sp > 0 then
+					local waveId = FightModel.instance:getCurWaveId() or 1
+					local index = waveId <= #sp and waveId or #sp
+
+					stanceId = sp[index]
 				end
 			end
 		end
 
-		local var_58_7 = lua_stance_hp_offset.configDict[var_58_0]
+		local config = lua_stance_hp_offset.configDict[stanceId]
 
-		if var_58_7 then
-			local var_58_8 = var_58_7["offsetPos" .. var_58_1.position]
+		if config then
+			local arr = config["offsetPos" .. entityMO.position]
 
-			if var_58_8 and #var_58_8 > 0 then
-				recthelper.setAnchor(arg_58_0._floatContainerGO.transform, var_58_8[1], var_58_8[2])
-				recthelper.setAnchor(arg_58_0._uiGO.transform, var_58_8[1], var_58_8[2])
+			if arr and #arr > 0 then
+				recthelper.setAnchor(self._floatContainerGO.transform, arr[1], arr[2])
+				recthelper.setAnchor(self._uiGO.transform, arr[1], arr[2])
 
-				arg_58_0._originPosOffsetX = var_58_8[1]
-				arg_58_0._originPosOffsetY = var_58_8[2]
+				self._originPosOffsetX = arr[1]
+				self._originPosOffsetY = arr[2]
 			end
 		end
 	end
 end
 
-local var_0_1 = {
+local InnerLayoutEnum = {
 	NoExPoint_NoPower = 1,
 	ExPoint_NoPower = 2,
 	NoExPoint_Power = 3,
 	ExPoint_Power = 4
 }
-local var_0_2 = {
-	[var_0_1.NoExPoint_NoPower] = {
+local AnchorY = {
+	[InnerLayoutEnum.NoExPoint_NoPower] = {
 		imageCareer = 5,
 		layout = 36
 	},
-	[var_0_1.ExPoint_NoPower] = {
+	[InnerLayoutEnum.ExPoint_NoPower] = {
 		imageCareer = -5,
 		layout = 52
 	},
-	[var_0_1.NoExPoint_Power] = {
+	[InnerLayoutEnum.NoExPoint_Power] = {
 		imageCareer = -5,
 		layout = 40
 	},
-	[var_0_1.ExPoint_Power] = {
+	[InnerLayoutEnum.ExPoint_Power] = {
 		imageCareer = -12,
 		layout = 52
 	}
 }
 
-function var_0_0.updateInnerLayout(arg_59_0)
-	local var_59_0 = arg_59_0._power:_getPowerData()
-	local var_59_1 = FightMsgMgr.sendMsg(FightMsgId.GetExPointView, arg_59_0.entity.id)
-	local var_59_2
+function FightNameUI:updateInnerLayout()
+	local powerData = self._power:_getPowerData()
+	local hadExPoint = FightMsgMgr.sendMsg(FightMsgId.GetExPointView, self.entity.id)
+	local layoutEnum
 
-	if var_59_0 and var_59_1 then
-		var_59_2 = var_0_1.ExPoint_Power
-	elseif var_59_0 then
-		var_59_2 = var_0_1.NoExPoint_Power
-	elseif var_59_1 then
-		var_59_2 = var_0_1.ExPoint_NoPower
+	if powerData and hadExPoint then
+		layoutEnum = InnerLayoutEnum.ExPoint_Power
+	elseif powerData then
+		layoutEnum = InnerLayoutEnum.NoExPoint_Power
+	elseif hadExPoint then
+		layoutEnum = InnerLayoutEnum.ExPoint_NoPower
 	else
-		var_59_2 = var_0_1.NoExPoint_NoPower
+		layoutEnum = InnerLayoutEnum.NoExPoint_NoPower
 	end
 
-	local var_59_3 = var_0_2[var_59_2]
-	local var_59_4 = arg_59_0._imgCareerIcon:GetComponent(gohelper.Type_RectTransform)
-	local var_59_5 = gohelper.findChildComponent(arg_59_0._uiGO, "layout", gohelper.Type_RectTransform)
+	local anchor = AnchorY[layoutEnum]
+	local rectCareer = self._imgCareerIcon:GetComponent(gohelper.Type_RectTransform)
+	local rectLayout = gohelper.findChildComponent(self._uiGO, "layout", gohelper.Type_RectTransform)
 
-	recthelper.setAnchorY(var_59_4, var_59_3.imageCareer)
-	recthelper.setAnchorY(var_59_5, var_59_3.layout)
+	recthelper.setAnchorY(rectCareer, anchor.imageCareer)
+	recthelper.setAnchorY(rectLayout, anchor.layout)
 end
 
-function var_0_0._onUpdateUIFollower(arg_60_0, arg_60_1)
-	if arg_60_0._entity and arg_60_1 == arg_60_0._entity.id then
-		arg_60_0:_updateFollow()
+function FightNameUI:_onUpdateUIFollower(entityId)
+	if self._entity and entityId == self._entity.id then
+		self:_updateFollow()
 	end
 end
 
-function var_0_0._onLockHpChange(arg_61_0)
-	arg_61_0:resetHp()
+function FightNameUI:_onLockHpChange()
+	self:resetHp()
 end
 
-function var_0_0.onAiJiAoFakeDecreaseHp(arg_62_0, arg_62_1)
-	if arg_62_1 ~= arg_62_0.entity.id then
+function FightNameUI:onAiJiAoFakeDecreaseHp(entityId)
+	if entityId ~= self.entity.id then
 		return
 	end
 
-	arg_62_0:_tweenFillAmount()
+	self:_tweenFillAmount()
 end
 
-function var_0_0.onDestroy(arg_63_0)
+function FightNameUI:onDestroy()
 	return
 end
 
-return var_0_0
+return FightNameUI

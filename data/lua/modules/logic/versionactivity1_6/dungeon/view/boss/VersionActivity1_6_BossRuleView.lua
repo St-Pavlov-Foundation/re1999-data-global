@@ -1,174 +1,178 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossRuleView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6_BossRuleView.lua
 
-local var_0_0 = class("VersionActivity1_6_BossRuleView", BaseView)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossRuleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Left/Rule")
+local VersionActivity1_6_BossRuleView = class("VersionActivity1_6_BossRuleView", BaseView)
 
-	arg_1_0._goadditionRule = gohelper.findChild(var_1_0, "#scroll_ConditionIcons")
-	arg_1_0._goruletemp = gohelper.findChild(var_1_0, "#scroll_ConditionIcons/#go_ruletemp")
-	arg_1_0._imagetagicon = gohelper.findChildImage(arg_1_0._goruletemp, "#image_tagicon")
-	arg_1_0._gorulelist = gohelper.findChild(arg_1_0._goadditionRule, "Viewport/content")
-	arg_1_0._btnadditionRuleclick = gohelper.findChildButtonWithAudio(arg_1_0._goadditionRule, "#btn_additionRuleclick")
-	arg_1_0._goruledesc = gohelper.findChild(var_1_0, "Tips")
-	arg_1_0._goruleitem = gohelper.findChild(arg_1_0._goruledesc, "image_TipsBG/#go_Item1")
-	arg_1_0._goExtraRuleitem = gohelper.findChild(arg_1_0._goruledesc, "image_TipsBG/#go_Item2")
-	arg_1_0._goruleDescList = gohelper.findChild(arg_1_0._goruledesc, "bg/#go_ruleDescList")
-	arg_1_0._nextBossTitle = gohelper.findChildText(arg_1_0.viewGO, "Left/Rule/Tips/image_TipsBG/#go_Item2/#txt_Descr/#txt_Title")
-	arg_1_0._nextBossDay = gohelper.findChildText(arg_1_0.viewGO, "Left/Rule/Tips/image_TipsBG/#go_Item2/#txt_Descr/#txt_Title/#txt_dayNum")
+function VersionActivity1_6_BossRuleView:onInitView()
+	local root = gohelper.findChild(self.viewGO, "Left/Rule")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._goadditionRule = gohelper.findChild(root, "#scroll_ConditionIcons")
+	self._goruletemp = gohelper.findChild(root, "#scroll_ConditionIcons/#go_ruletemp")
+	self._imagetagicon = gohelper.findChildImage(self._goruletemp, "#image_tagicon")
+	self._gorulelist = gohelper.findChild(self._goadditionRule, "Viewport/content")
+	self._btnadditionRuleclick = gohelper.findChildButtonWithAudio(self._goadditionRule, "#btn_additionRuleclick")
+	self._goruledesc = gohelper.findChild(root, "Tips")
+	self._goruleitem = gohelper.findChild(self._goruledesc, "image_TipsBG/#go_Item1")
+	self._goExtraRuleitem = gohelper.findChild(self._goruledesc, "image_TipsBG/#go_Item2")
+	self._goruleDescList = gohelper.findChild(self._goruledesc, "bg/#go_ruleDescList")
+	self._nextBossTitle = gohelper.findChildText(self.viewGO, "Left/Rule/Tips/image_TipsBG/#go_Item2/#txt_Descr/#txt_Title")
+	self._nextBossDay = gohelper.findChildText(self.viewGO, "Left/Rule/Tips/image_TipsBG/#go_Item2/#txt_Descr/#txt_Title/#txt_dayNum")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnadditionRuleclick:AddClickListener(arg_2_0._btnRuleAreaOnClick, arg_2_0)
+function VersionActivity1_6_BossRuleView:addEvents()
+	self._btnadditionRuleclick:AddClickListener(self._btnRuleAreaOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnadditionRuleclick:RemoveClickListener()
+function VersionActivity1_6_BossRuleView:removeEvents()
+	self._btnadditionRuleclick:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goruleitem, false)
-	gohelper.setActive(arg_4_0._goExtraRuleitem, false)
-	gohelper.setActive(arg_4_0._goruletemp, false)
-	gohelper.setActive(arg_4_0._goruledesc, false)
-	gohelper.addUIClickAudio(arg_4_0._btnadditionRuleclick.gameObject, AudioEnum.UI.play_ui_hero_sign)
+function VersionActivity1_6_BossRuleView:_editableInitView()
+	gohelper.setActive(self._goruleitem, false)
+	gohelper.setActive(self._goExtraRuleitem, false)
+	gohelper.setActive(self._goruletemp, false)
+	gohelper.setActive(self._goruledesc, false)
+	gohelper.addUIClickAudio(self._btnadditionRuleclick.gameObject, AudioEnum.UI.play_ui_hero_sign)
 
-	arg_4_0._normalRuleItemList = {}
-	arg_4_0._extraRuleItemList = {}
+	self._normalRuleItemList = {}
+	self._extraRuleItemList = {}
 end
 
-function var_0_0.refreshUI(arg_5_0, arg_5_1, arg_5_2)
-	gohelper.setActive(arg_5_0._goruleitem, false)
-	gohelper.setActive(arg_5_0._goExtraRuleitem, false)
-	arg_5_0:addNormalRuleItem(arg_5_1, arg_5_2 and arg_5_2 ~= 0)
+function VersionActivity1_6_BossRuleView:refreshUI(battleId, addBattleId)
+	gohelper.setActive(self._goruleitem, false)
+	gohelper.setActive(self._goExtraRuleitem, false)
+	self:addNormalRuleItem(battleId, addBattleId and addBattleId ~= 0)
 
-	if arg_5_2 and arg_5_2 ~= 0 then
-		arg_5_0:AddExtraRuleItem(arg_5_2)
+	if addBattleId and addBattleId ~= 0 then
+		self:AddExtraRuleItem(addBattleId)
 	end
 end
 
-function var_0_0.addNormalRuleItem(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = DungeonConfig.instance:getBattleAdditionRule(arg_6_1)
+function VersionActivity1_6_BossRuleView:addNormalRuleItem(battleId, zoom)
+	local additionRule = DungeonConfig.instance:getBattleAdditionRule(battleId)
 
-	if string.nilorempty(var_6_0) then
-		gohelper.setActive(arg_6_0._goadditionRule, false)
+	if string.nilorempty(additionRule) then
+		gohelper.setActive(self._goadditionRule, false)
 
 		return
 	end
 
-	arg_6_0:_clear()
-	gohelper.setActive(arg_6_0._goadditionRule, true)
-	gohelper.setActive(arg_6_0._goruleitem, true)
+	self:_clear()
+	gohelper.setActive(self._goadditionRule, true)
+	gohelper.setActive(self._goruleitem, true)
 
-	local var_6_1 = GameUtil.splitString2(var_6_0, true, "|", "#")
+	local ruleList = GameUtil.splitString2(additionRule, true, "|", "#")
 
-	arg_6_0._ruleList = var_6_1
+	self._ruleList = ruleList
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		local var_6_2 = iter_6_1[1]
-		local var_6_3 = iter_6_1[2]
+	for i, ruleData in ipairs(ruleList) do
+		local targetId = ruleData[1]
+		local ruleId = ruleData[2]
+		local ruleCo = lua_rule.configDict[ruleId]
 
-		if lua_rule.configDict[var_6_3] then
-			local var_6_4 = arg_6_0:_addRuleItem(iter_6_1, false, arg_6_2)
+		if ruleCo then
+			local ruleItem = self:_addRuleItem(ruleData, false, zoom)
 
-			var_6_4.battleId = arg_6_1
-			arg_6_0._normalRuleItemList[#arg_6_0._normalRuleItemList + 1] = var_6_4
+			ruleItem.battleId = battleId
+			self._normalRuleItemList[#self._normalRuleItemList + 1] = ruleItem
 		end
 	end
 end
 
-function var_0_0.AddExtraRuleItem(arg_7_0, arg_7_1)
-	local var_7_0 = DungeonConfig.instance:getBattleAdditionRule(arg_7_1)
-	local var_7_1 = VersionActivity1_6DungeonBossModel.instance
+function VersionActivity1_6_BossRuleView:AddExtraRuleItem(battleId)
+	local additionRule = DungeonConfig.instance:getBattleAdditionRule(battleId)
+	local modelInstance = VersionActivity1_6DungeonBossModel.instance
 
-	if not var_7_0 then
+	if not additionRule then
 		return
 	end
 
-	local var_7_2 = GameUtil.splitString2(var_7_0, true, "|", "#")
+	local ruleList = GameUtil.splitString2(additionRule, true, "|", "#")
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-		local var_7_3 = iter_7_1[1]
-		local var_7_4 = iter_7_1[2]
+	for i, ruleData in ipairs(ruleList) do
+		local targetId = ruleData[1]
+		local ruleId = ruleData[2]
+		local ruleCo = lua_rule.configDict[ruleId]
 
-		if lua_rule.configDict[var_7_4] then
-			local var_7_5 = arg_7_0:_addRuleItem(iter_7_1, true)
+		if ruleCo then
+			local ruleItem = self:_addRuleItem(ruleData, true)
 
-			var_7_5.battleId = arg_7_1
-			arg_7_0._extraRuleItemList[#arg_7_0._extraRuleItemList + 1] = var_7_5
+			ruleItem.battleId = battleId
+			self._extraRuleItemList[#self._extraRuleItemList + 1] = ruleItem
 
-			table.insert(arg_7_0._ruleList, iter_7_1)
+			table.insert(self._ruleList, ruleData)
 
-			local var_7_6 = var_7_1:getCurBossEpisodeRemainDay()
+			local curBossDayRemain = modelInstance:getCurBossEpisodeRemainDay()
 
-			arg_7_0._nextBossTitle.text = string.format(luaLang("p_v1a6_activityboss_help_3_txt_3"), var_7_6)
-			arg_7_0._nextBossDay.text = ""
+			self._nextBossTitle.text = string.format(luaLang("p_v1a6_activityboss_help_3_txt_3"), curBossDayRemain)
+			self._nextBossDay.text = ""
 		end
 	end
 end
 
-function var_0_0._addRuleItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_0:getUserDataTb_()
+function VersionActivity1_6_BossRuleView:_addRuleItem(ruleData, extra, zoom)
+	local ruleItem = self:getUserDataTb_()
 
-	var_8_0.targetId = arg_8_1[1]
-	var_8_0.ruleId = arg_8_1[2]
-	var_8_0.ruleCfg = lua_rule.configDict[var_8_0.ruleId]
+	ruleItem.targetId = ruleData[1]
+	ruleItem.ruleId = ruleData[2]
+	ruleItem.ruleCfg = lua_rule.configDict[ruleItem.ruleId]
 
-	local var_8_1 = gohelper.clone(arg_8_0._goruletemp, arg_8_0._gorulelist, var_8_0.ruleCfg.id)
+	local go = gohelper.clone(self._goruletemp, self._gorulelist, ruleItem.ruleCfg.id)
 
-	var_8_0.go = var_8_1
+	ruleItem.go = go
 
-	gohelper.setActive(var_8_1, true)
+	gohelper.setActive(go, true)
 
-	local var_8_2 = gohelper.onceAddComponent(var_8_1, typeof(UnityEngine.CanvasGroup))
+	local canvasGroup = gohelper.onceAddComponent(go, typeof(UnityEngine.CanvasGroup))
 
-	if var_8_2 then
-		var_8_2.alpha = arg_8_2 and 0.5 or 1
+	if canvasGroup then
+		canvasGroup.alpha = extra and 0.5 or 1
 	end
 
-	local var_8_3 = arg_8_3 and 1.3 or 1
+	local scale = zoom and 1.3 or 1
 
-	transformhelper.setLocalScale(var_8_1.transform, var_8_3, var_8_3, 1)
+	transformhelper.setLocalScale(go.transform, scale, scale, 1)
 
-	local var_8_4 = gohelper.findChildImage(var_8_1, "#image_tagicon")
+	local tagicon = gohelper.findChildImage(go, "#image_tagicon")
 
-	UISpriteSetMgr.instance:setCommonSprite(var_8_4, "wz_" .. var_8_0.targetId)
+	UISpriteSetMgr.instance:setCommonSprite(tagicon, "wz_" .. ruleItem.targetId)
 
-	local var_8_5 = gohelper.findChildImage(var_8_1, "")
+	local simage = gohelper.findChildImage(go, "")
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_8_5, var_8_0.ruleCfg.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(simage, ruleItem.ruleCfg.icon)
 
-	var_8_4.maskable = true
-	var_8_5.maskable = true
+	tagicon.maskable = true
+	simage.maskable = true
 
-	return var_8_0
+	return ruleItem
 end
 
-function var_0_0._btnRuleAreaOnClick(arg_9_0)
+function VersionActivity1_6_BossRuleView:_btnRuleAreaOnClick()
 	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
-		ruleList = arg_9_0._ruleList
+		ruleList = self._ruleList
 	})
 end
 
-function var_0_0._clear(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._normalRuleItemList) do
-		gohelper.destroy(iter_10_1.go)
+function VersionActivity1_6_BossRuleView:_clear()
+	for i, ruleItem in ipairs(self._normalRuleItemList) do
+		gohelper.destroy(ruleItem.go)
 	end
 
-	for iter_10_2, iter_10_3 in ipairs(arg_10_0._extraRuleItemList) do
-		gohelper.destroy(iter_10_3.go)
+	for i, ruleItem in ipairs(self._extraRuleItemList) do
+		gohelper.destroy(ruleItem.go)
 	end
 
-	arg_10_0._normalRuleItemList = {}
-	arg_10_0._extraRuleItemList = {}
+	self._normalRuleItemList = {}
+	self._extraRuleItemList = {}
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0:_clear()
+function VersionActivity1_6_BossRuleView:onDestroyView()
+	self:_clear()
 end
 
-return var_0_0
+return VersionActivity1_6_BossRuleView

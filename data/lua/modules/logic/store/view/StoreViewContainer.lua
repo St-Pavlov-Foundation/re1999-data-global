@@ -1,103 +1,105 @@
-﻿module("modules.logic.store.view.StoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreViewContainer.lua
 
-local var_0_0 = class("StoreViewContainer", BaseViewContainer)
+module("modules.logic.store.view.StoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoreViewContainer = class("StoreViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_topright"))
-	table.insert(var_1_0, TabViewGroup.New(3, "#go_store"))
+function StoreViewContainer:buildViews()
+	local views = {}
 
-	arg_1_0.storeView = StoreView.New()
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "#go_topright"))
+	table.insert(views, TabViewGroup.New(3, "#go_store"))
 
-	table.insert(var_1_0, arg_1_0.storeView)
+	self.storeView = StoreView.New()
 
-	return var_1_0
+	table.insert(views, self.storeView)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = StoreController.instance:needHideHome()
+function StoreViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local needHideHome = StoreController.instance:needHideHome()
 
-		arg_2_0.navigationView = NavigateButtonsView.New({
+		self.navigationView = NavigateButtonsView.New({
 			true,
-			not var_2_0,
+			not needHideHome,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
-	elseif arg_2_1 == 2 then
-		arg_2_0._currencyView = CurrencyView.New({})
+	elseif tabContainerId == 2 then
+		self._currencyView = CurrencyView.New({})
 
 		return {
-			arg_2_0._currencyView
+			self._currencyView
 		}
-	elseif arg_2_1 == 3 then
-		local var_2_1 = ListScrollParam.New()
+	elseif tabContainerId == 3 then
+		local normalScrollParam = ListScrollParam.New()
 
-		var_2_1.scrollGOPath = "#scroll_prop"
-		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-		var_2_1.cellClass = NormalStoreGoodsItem
-		var_2_1.scrollDir = ScrollEnum.ScrollDirV
-		var_2_1.lineCount = 4
-		var_2_1.cellWidth = 332
-		var_2_1.cellHeight = 355
-		var_2_1.cellSpaceH = 29
-		var_2_1.cellSpaceV = 37
-		var_2_1.startSpace = 31
+		normalScrollParam.scrollGOPath = "#scroll_prop"
+		normalScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		normalScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+		normalScrollParam.cellClass = NormalStoreGoodsItem
+		normalScrollParam.scrollDir = ScrollEnum.ScrollDirV
+		normalScrollParam.lineCount = 4
+		normalScrollParam.cellWidth = 332
+		normalScrollParam.cellHeight = 355
+		normalScrollParam.cellSpaceH = 29
+		normalScrollParam.cellSpaceV = 37
+		normalScrollParam.startSpace = 31
 
-		local var_2_2 = ListScrollParam.New()
+		local chargeScrollParam = ListScrollParam.New()
 
-		var_2_2.scrollGOPath = "#scroll_prop"
-		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_2.prefabUrl = arg_2_0._viewSetting.otherRes[2]
-		var_2_2.cellClass = ChargeStoreGoodsItem
-		var_2_2.scrollDir = ScrollEnum.ScrollDirV
-		var_2_2.lineCount = 3
-		var_2_2.cellWidth = 446
-		var_2_2.cellHeight = 406
-		var_2_2.cellSpaceH = 38
-		var_2_2.cellSpaceV = 35
-		var_2_2.startSpace = 0
+		chargeScrollParam.scrollGOPath = "#scroll_prop"
+		chargeScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		chargeScrollParam.prefabUrl = self._viewSetting.otherRes[2]
+		chargeScrollParam.cellClass = ChargeStoreGoodsItem
+		chargeScrollParam.scrollDir = ScrollEnum.ScrollDirV
+		chargeScrollParam.lineCount = 3
+		chargeScrollParam.cellWidth = 446
+		chargeScrollParam.cellHeight = 406
+		chargeScrollParam.cellSpaceH = 38
+		chargeScrollParam.cellSpaceV = 35
+		chargeScrollParam.startSpace = 0
 
-		local var_2_3 = ListScrollParam.New()
+		local clothesScrollParam = ListScrollParam.New()
 
-		var_2_3.scrollGOPath = "#go_has/#scroll_skin"
-		var_2_3.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_3.prefabUrl = arg_2_0._viewSetting.otherRes[3]
-		var_2_3.cellClass = StoreSkinGoodsItem
-		var_2_3.scrollDir = ScrollEnum.ScrollDirV
-		var_2_3.lineCount = 2
-		var_2_3.cellWidth = 260
-		var_2_3.cellHeight = 408
-		var_2_3.cellSpaceH = 0
-		var_2_3.cellSpaceV = 0
-		var_2_3.startSpace = 0
-		var_2_3.notPlayAnimation = true
+		clothesScrollParam.scrollGOPath = "#go_has/#scroll_skin"
+		clothesScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		clothesScrollParam.prefabUrl = self._viewSetting.otherRes[3]
+		clothesScrollParam.cellClass = StoreSkinGoodsItem
+		clothesScrollParam.scrollDir = ScrollEnum.ScrollDirV
+		clothesScrollParam.lineCount = 2
+		clothesScrollParam.cellWidth = 260
+		clothesScrollParam.cellHeight = 408
+		clothesScrollParam.cellSpaceH = 0
+		clothesScrollParam.cellSpaceV = 0
+		clothesScrollParam.startSpace = 0
+		clothesScrollParam.notPlayAnimation = true
 
-		local var_2_4 = ListScrollParam.New()
+		local packageScrollParam = ListScrollParam.New()
 
-		var_2_4.scrollGOPath = "#scroll_prop"
-		var_2_4.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_4.prefabUrl = arg_2_0._viewSetting.otherRes[4]
-		var_2_4.cellClass = PackageStoreGoodsItem
-		var_2_4.scrollDir = ScrollEnum.ScrollDirH
-		var_2_4.lineCount = 1
-		var_2_4.cellWidth = 340
-		var_2_4.cellHeight = 770
-		var_2_4.cellSpaceH = 29.5
-		var_2_4.cellSpaceV = 0
-		var_2_4.startSpace = 8
+		packageScrollParam.scrollGOPath = "#scroll_prop"
+		packageScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		packageScrollParam.prefabUrl = self._viewSetting.otherRes[4]
+		packageScrollParam.cellClass = PackageStoreGoodsItem
+		packageScrollParam.scrollDir = ScrollEnum.ScrollDirH
+		packageScrollParam.lineCount = 1
+		packageScrollParam.cellWidth = 340
+		packageScrollParam.cellHeight = 770
+		packageScrollParam.cellSpaceH = 29.5
+		packageScrollParam.cellSpaceV = 0
+		packageScrollParam.startSpace = 8
 
-		local var_2_5 = TreeScrollParam.New()
+		local roomScrollParam = TreeScrollParam.New()
 
-		var_2_5.scrollGOPath = "#scroll_prop"
-		var_2_5.prefabType = ScrollEnum.ScrollPrefabFromView
-		var_2_5.prefabUrls = {
+		roomScrollParam.scrollGOPath = "#scroll_prop"
+		roomScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+		roomScrollParam.prefabUrls = {
 			"roomstoreitem/root",
 			"roomstoreitem/node",
 			"roomstoreitem/node",
@@ -105,70 +107,74 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			"roomstoreitem/node",
 			"roomstoreitem/node"
 		}
-		var_2_5.cellClass = StoreRoomTreeItem
-		var_2_5.scrollDir = ScrollEnum.ScrollDirV
+		roomScrollParam.cellClass = StoreRoomTreeItem
+		roomScrollParam.scrollDir = ScrollEnum.ScrollDirV
 
-		local var_2_6 = {}
+		local cardAnimationDelayTimes = {}
 
-		for iter_2_0 = 1, 12 do
-			var_2_6[iter_2_0] = math.floor((iter_2_0 - 1) / 4) * 0.07
+		for i = 1, 12 do
+			local delayTime = math.floor((i - 1) / 4) * 0.07
+
+			cardAnimationDelayTimes[i] = delayTime
 		end
 
-		local var_2_7 = {}
+		local ChargeAnimationDelayTimes = {}
 
-		for iter_2_1 = 1, 9 do
-			var_2_7[iter_2_1] = math.floor((iter_2_1 - 1) / 3) * 0.07
+		for i = 1, 9 do
+			local delayTime = math.floor((i - 1) / 3) * 0.07
+
+			ChargeAnimationDelayTimes[i] = delayTime
 		end
 
-		local var_2_8 = {}
-		local var_2_9 = {
-			__index = function(arg_3_0, arg_3_1)
-				return (arg_3_1 - 1) * 0.07
-			end
-		}
+		local packageAnimationDelayTimes = {}
+		local metaTab = {}
 
-		setmetatable(var_2_8, var_2_9)
+		function metaTab.__index(t, key)
+			return (key - 1) * 0.07
+		end
 
-		arg_2_0._ScrollViewNormalStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, var_2_1, var_2_6)
-		arg_2_0._ScrollViewChargeStore = LuaListScrollViewWithAnimator.New(StoreChargeGoodsItemListModel.instance, var_2_2, var_2_7)
-		arg_2_0._ScrollViewPackageStore = LuaListScrollViewWithAnimator.New(StorePackageGoodsItemListModel.instance, var_2_4, var_2_8)
-		arg_2_0._ScrollViewSkinStore = LuaListScrollViewWithAnimator.New(StoreClothesGoodsItemListModel.instance, var_2_3)
-		arg_2_0._ScrollViewRoomStore = LuaTreeScrollView.New(StoreRoomGoodsItemListModel.instance, var_2_5)
-		arg_2_0._RecommendStoreView = RecommendStoreView.New()
+		setmetatable(packageAnimationDelayTimes, metaTab)
+
+		self._ScrollViewNormalStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, normalScrollParam, cardAnimationDelayTimes)
+		self._ScrollViewChargeStore = LuaListScrollViewWithAnimator.New(StoreChargeGoodsItemListModel.instance, chargeScrollParam, ChargeAnimationDelayTimes)
+		self._ScrollViewPackageStore = LuaListScrollViewWithAnimator.New(StorePackageGoodsItemListModel.instance, packageScrollParam, packageAnimationDelayTimes)
+		self._ScrollViewSkinStore = LuaListScrollViewWithAnimator.New(StoreClothesGoodsItemListModel.instance, clothesScrollParam)
+		self._ScrollViewRoomStore = LuaTreeScrollView.New(StoreRoomGoodsItemListModel.instance, roomScrollParam)
+		self._RecommendStoreView = RecommendStoreView.New()
 
 		return {
 			MultiView.New({
 				NormalStoreView.New(),
-				arg_2_0._ScrollViewNormalStore,
+				self._ScrollViewNormalStore,
 				TabViewGroup.New(6, "#go_limit")
 			}),
 			MultiView.New({
 				ChargeStoreView.New(),
-				arg_2_0._ScrollViewChargeStore
+				self._ScrollViewChargeStore
 			}),
 			MultiView.New({
-				arg_2_0._ScrollViewSkinStore,
+				self._ScrollViewSkinStore,
 				ClothesStoreView.New(),
 				ClothesStoreVideoView.New(),
 				ClothesStoreDragView.New()
 			}),
 			MultiView.New({
 				PackageStoreView.New(),
-				arg_2_0._ScrollViewPackageStore
+				self._ScrollViewPackageStore
 			}),
 			MultiView.New({
-				arg_2_0._RecommendStoreView
+				self._RecommendStoreView
 			}),
 			MultiView.New({
 				RoomStoreView.New(),
-				arg_2_0._ScrollViewRoomStore,
+				self._ScrollViewRoomStore,
 				TabViewGroup.New(5, "#go_critter")
 			}),
 			MultiView.New({
 				DecorateStoreView.New()
 			})
 		}
-	elseif arg_2_1 == 4 then
+	elseif tabContainerId == 4 then
 		return {
 			StoreMonthCardView.New(),
 			GiftPacksView.New(),
@@ -181,224 +187,228 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			StoreSeasonCardView.New(),
 			StoreSkinBagView.New()
 		}
-	elseif arg_2_1 == 5 then
-		local var_2_10 = ListScrollParam.New()
+	elseif tabContainerId == 5 then
+		local critterScrollParam = ListScrollParam.New()
 
-		var_2_10.scrollGOPath = "#scroll_goods"
-		var_2_10.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_10.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-		var_2_10.cellClass = RoomStoreGoodsItem
-		var_2_10.scrollDir = ScrollEnum.ScrollDirV
-		var_2_10.lineCount = 4
-		var_2_10.cellWidth = 332
-		var_2_10.cellHeight = 355
-		var_2_10.cellSpaceH = 29
-		var_2_10.cellSpaceV = 37
-		var_2_10.startSpace = 31
+		critterScrollParam.scrollGOPath = "#scroll_goods"
+		critterScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		critterScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+		critterScrollParam.cellClass = RoomStoreGoodsItem
+		critterScrollParam.scrollDir = ScrollEnum.ScrollDirV
+		critterScrollParam.lineCount = 4
+		critterScrollParam.cellWidth = 332
+		critterScrollParam.cellHeight = 355
+		critterScrollParam.cellSpaceH = 29
+		critterScrollParam.cellSpaceV = 37
+		critterScrollParam.startSpace = 31
 
-		local var_2_11 = {}
+		local cardAnimationDelayTimes = {}
 
-		for iter_2_2 = 1, 12 do
-			var_2_11[iter_2_2] = math.floor((iter_2_2 - 1) / 4) * 0.07
+		for i = 1, 12 do
+			local delayTime = math.floor((i - 1) / 4) * 0.07
+
+			cardAnimationDelayTimes[i] = delayTime
 		end
 
-		arg_2_0._ScrollViewRoomCritterStore = LuaListScrollViewWithAnimator.New(StoreCritterGoodsItemListModel.instance, var_2_10, var_2_11)
+		self._ScrollViewRoomCritterStore = LuaListScrollViewWithAnimator.New(StoreCritterGoodsItemListModel.instance, critterScrollParam, cardAnimationDelayTimes)
 
 		return {
 			MultiView.New({
 				RoomCritterStoreView.New(),
-				arg_2_0._ScrollViewRoomCritterStore
+				self._ScrollViewRoomCritterStore
 			})
 		}
-	elseif arg_2_1 == 6 then
-		local var_2_12 = ListScrollParam.New()
+	elseif tabContainerId == 6 then
+		local summonScrollParam = ListScrollParam.New()
 
-		var_2_12.scrollGOPath = "#scroll_prop"
-		var_2_12.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_12.prefabUrl = arg_2_0._viewSetting.otherRes[5]
-		var_2_12.cellClass = SummonStoreGoodsItem
-		var_2_12.scrollDir = ScrollEnum.ScrollDirV
-		var_2_12.lineCount = 4
-		var_2_12.cellWidth = 332
-		var_2_12.cellHeight = 355
-		var_2_12.cellSpaceH = 29
-		var_2_12.cellSpaceV = 37
-		var_2_12.startSpace = 31
+		summonScrollParam.scrollGOPath = "#scroll_prop"
+		summonScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		summonScrollParam.prefabUrl = self._viewSetting.otherRes[5]
+		summonScrollParam.cellClass = SummonStoreGoodsItem
+		summonScrollParam.scrollDir = ScrollEnum.ScrollDirV
+		summonScrollParam.lineCount = 4
+		summonScrollParam.cellWidth = 332
+		summonScrollParam.cellHeight = 355
+		summonScrollParam.cellSpaceH = 29
+		summonScrollParam.cellSpaceV = 37
+		summonScrollParam.startSpace = 31
 
-		local var_2_13 = {}
+		local cardAnimationDelayTimes = {}
 
-		for iter_2_3 = 1, 12 do
-			var_2_13[iter_2_3] = math.floor((iter_2_3 - 1) / 4) * 0.07
+		for i = 1, 12 do
+			local delayTime = math.floor((i - 1) / 4) * 0.07
+
+			cardAnimationDelayTimes[i] = delayTime
 		end
 
-		arg_2_0._ScrollViewSummonStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, var_2_12, var_2_13)
+		self._ScrollViewSummonStore = LuaListScrollViewWithAnimator.New(StoreNormalGoodsItemListModel.instance, summonScrollParam, cardAnimationDelayTimes)
 
 		return {
 			MultiView.New({
 				StoreSummonView.New(),
-				arg_2_0._ScrollViewSummonStore
+				self._ScrollViewSummonStore
 			})
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	arg_4_0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Rolesopen)
+function StoreViewContainer:onContainerOpenFinish()
+	self.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Rolesopen)
 end
 
-function var_0_0.setCurrencyType(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function StoreViewContainer:setCurrencyType(showCost)
+	local currencyTypeParam = {}
 
-	if not string.nilorempty(arg_5_1) then
-		local var_5_1 = string.split(arg_5_1, "#")
+	if not string.nilorempty(showCost) then
+		local costInfo = string.split(showCost, "#")
 
-		for iter_5_0 = #var_5_1, 1, -1 do
-			table.insert(var_5_0, tonumber(var_5_1[iter_5_0]))
+		for i = #costInfo, 1, -1 do
+			table.insert(currencyTypeParam, tonumber(costInfo[i]))
 		end
 	end
 
-	if arg_5_0._currencyView then
-		arg_5_0._currencyView:setCurrencyType(var_5_0)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(currencyTypeParam)
 	end
 end
 
-function var_0_0.setCurrencyByParams(arg_6_0, arg_6_1)
-	if arg_6_0._currencyView then
-		arg_6_0._currencyView:setCurrencyType(arg_6_1)
+function StoreViewContainer:setCurrencyByParams(showCostParams)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(showCostParams)
 	end
 end
 
-function var_0_0.selectTabView(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	arg_7_0.viewParam.jumpTab = arg_7_1
-	arg_7_0.viewParam.jumpGoodsId = arg_7_3
-	arg_7_0._selectFirstTabId = arg_7_2
+function StoreViewContainer:selectTabView(jumpTabId, selectFirstTabId, jumpGoodsId, sameFirstTabId)
+	self.viewParam.jumpTab = jumpTabId
+	self.viewParam.jumpGoodsId = jumpGoodsId
+	self._selectFirstTabId = selectFirstTabId
 
-	local var_7_0 = StoreConfig.instance:getTabConfig(arg_7_2)
+	local tabConfig = StoreConfig.instance:getTabConfig(selectFirstTabId)
 
-	arg_7_0.notPlayAnimation = false
+	self.notPlayAnimation = false
 
-	if arg_7_3 ~= nil then
-		arg_7_0.notPlayAnimation = true
+	if jumpGoodsId ~= nil then
+		self.notPlayAnimation = true
 
-		if var_7_0 then
-			if var_7_0.prefab == StoreEnum.Prefab.NormalStore then
-				arg_7_0._ScrollViewNormalStore._firstUpdate = false
-			elseif var_7_0.prefab == StoreEnum.Prefab.PackageStore then
-				arg_7_0._ScrollViewPackageStore._firstUpdate = false
-			elseif var_7_0.prefab == StoreEnum.Prefab.ChargeStore then
-				arg_7_0._ScrollViewChargeStore._firstUpdate = false
-			elseif var_7_0.prefab == StoreEnum.Prefab.RoomStore then
-				arg_7_0._ScrollViewRoomStore._firstUpdate = false
+		if tabConfig then
+			if tabConfig.prefab == StoreEnum.Prefab.NormalStore then
+				self._ScrollViewNormalStore._firstUpdate = false
+			elseif tabConfig.prefab == StoreEnum.Prefab.PackageStore then
+				self._ScrollViewPackageStore._firstUpdate = false
+			elseif tabConfig.prefab == StoreEnum.Prefab.ChargeStore then
+				self._ScrollViewChargeStore._firstUpdate = false
+			elseif tabConfig.prefab == StoreEnum.Prefab.RoomStore then
+				self._ScrollViewRoomStore._firstUpdate = false
 			end
 		end
 	end
 
-	if var_7_0 and var_7_0.prefab and var_7_0.prefab ~= 0 and not arg_7_4 then
-		arg_7_0:dispatchEvent(ViewEvent.ToSwitchTab, 3, var_7_0.prefab)
-		StoreController.instance:dispatchEvent(StoreEvent.OnSwitchTab, var_7_0)
+	if tabConfig and tabConfig.prefab and tabConfig.prefab ~= 0 and not sameFirstTabId then
+		self:dispatchEvent(ViewEvent.ToSwitchTab, 3, tabConfig.prefab)
+		StoreController.instance:dispatchEvent(StoreEvent.OnSwitchTab, tabConfig)
 	end
 end
 
-function var_0_0.getSelectFirstTabId(arg_8_0)
-	return arg_8_0._selectFirstTabId
+function StoreViewContainer:getSelectFirstTabId()
+	return self._selectFirstTabId
 end
 
-function var_0_0.playNormalStoreAnimation(arg_9_0)
-	arg_9_0._ScrollViewNormalStore:playOpenAnimation()
+function StoreViewContainer:playNormalStoreAnimation()
+	self._ScrollViewNormalStore:playOpenAnimation()
 end
 
-function var_0_0.playSummonStoreAnimation(arg_10_0)
-	if arg_10_0._ScrollViewSummonStore ~= nil then
-		arg_10_0._ScrollViewSummonStore:playOpenAnimation()
+function StoreViewContainer:playSummonStoreAnimation()
+	if self._ScrollViewSummonStore ~= nil then
+		self._ScrollViewSummonStore:playOpenAnimation()
 	end
 end
 
-function var_0_0.playChargeStoreAnimation(arg_11_0)
-	arg_11_0._ScrollViewChargeStore:playOpenAnimation()
+function StoreViewContainer:playChargeStoreAnimation()
+	self._ScrollViewChargeStore:playOpenAnimation()
 end
 
-function var_0_0.playRoomtoreAnimation(arg_12_0)
-	arg_12_0._ScrollViewRoomStore:playOpenAnimation()
+function StoreViewContainer:playRoomtoreAnimation()
+	self._ScrollViewRoomStore:playOpenAnimation()
 end
 
-function var_0_0.playCritterStoreAnimation(arg_13_0)
-	arg_13_0._ScrollViewRoomCritterStore:playOpenAnimation()
+function StoreViewContainer:playCritterStoreAnimation()
+	self._ScrollViewRoomCritterStore:playOpenAnimation()
 end
 
-function var_0_0.setRoomStoreAnimation(arg_14_0, arg_14_1)
-	local var_14_0 = {}
+function StoreViewContainer:setRoomStoreAnimation(off)
+	local roomAnimationDelayTimes = {}
 
-	for iter_14_0 = arg_14_1 + 1, 8 do
-		local var_14_1 = math.floor((iter_14_0 - 1) / 4) * 0.07
+	for i = off + 1, 8 do
+		local delayTime = math.floor((i - 1) / 4) * 0.07
 
-		var_14_0[iter_14_0 - arg_14_1] = var_14_1
+		roomAnimationDelayTimes[i - off] = delayTime
 	end
 
-	arg_14_0._ScrollViewRoomStore._animationDelayTimes = var_14_0
+	self._ScrollViewRoomStore._animationDelayTimes = roomAnimationDelayTimes
 end
 
-function var_0_0.getJumpTabId(arg_15_0)
-	return arg_15_0.viewParam.jumpTab
+function StoreViewContainer:getJumpTabId()
+	return self.viewParam.jumpTab
 end
 
-function var_0_0.getJumpGoodsId(arg_16_0)
-	local var_16_0 = arg_16_0.viewParam.jumpGoodsId
+function StoreViewContainer:getJumpGoodsId()
+	local id = self.viewParam.jumpGoodsId
 
-	arg_16_0.viewParam.jumpGoodsId = nil
+	self.viewParam.jumpGoodsId = nil
 
-	return var_16_0
+	return id
 end
 
-function var_0_0.isJumpFocus(arg_17_0)
-	return arg_17_0.viewParam.isFocus
+function StoreViewContainer:isJumpFocus()
+	return self.viewParam.isFocus
 end
 
-function var_0_0.setVisibleInternal(arg_18_0, arg_18_1)
-	var_0_0.super.setVisibleInternal(arg_18_0, arg_18_1)
-	StoreController.instance:dispatchEvent(StoreEvent.SetVisibleInternal, arg_18_1)
+function StoreViewContainer:setVisibleInternal(isVisible)
+	StoreViewContainer.super.setVisibleInternal(self, isVisible)
+	StoreController.instance:dispatchEvent(StoreEvent.SetVisibleInternal, isVisible)
 end
 
-function var_0_0.sortSkinStoreSiblingIndex(arg_19_0)
-	local var_19_0 = arg_19_0._ScrollViewSkinStore and arg_19_0._ScrollViewSkinStore._cellCompDict
-	local var_19_1
+function StoreViewContainer:sortSkinStoreSiblingIndex()
+	local cellCompDict = self._ScrollViewSkinStore and self._ScrollViewSkinStore._cellCompDict
+	local cellList
 
-	if var_19_0 then
-		local var_19_2 = 0
+	if cellCompDict then
+		local count = 0
 
-		for iter_19_0, iter_19_1 in pairs(var_19_0) do
-			if iter_19_0 and iter_19_0._mo and iter_19_0._isUniqueSkin and iter_19_0:_isUniqueSkin() then
-				var_19_1 = var_19_1 or {}
+		for comp, _ in pairs(cellCompDict) do
+			if comp and comp._mo and comp._isUniqueSkin and comp:_isUniqueSkin() then
+				cellList = cellList or {}
 
-				table.insert(var_19_1, iter_19_0)
+				table.insert(cellList, comp)
 			end
 
-			var_19_2 = var_19_2 + 1
+			count = count + 1
 		end
 	end
 
-	if var_19_1 then
-		table.sort(var_19_1, var_0_0._sortSkinGoodsItem)
+	if cellList then
+		table.sort(cellList, StoreViewContainer._sortSkinGoodsItem)
 
-		for iter_19_2 = #var_19_1, 1, -1 do
-			local var_19_3 = var_19_1[iter_19_2]
+		for i = #cellList, 1, -1 do
+			local skinGoodsItem = cellList[i]
 
-			gohelper.setAsLastSibling(var_19_3.parentViewGO)
+			gohelper.setAsLastSibling(skinGoodsItem.parentViewGO)
 		end
 	end
 end
 
-function var_0_0.getRecommendTabIndex(arg_20_0, arg_20_1)
-	if arg_20_0._RecommendStoreView then
-		return arg_20_0._RecommendStoreView:getIndexByTabId(arg_20_1)
+function StoreViewContainer:getRecommendTabIndex(tabId)
+	if self._RecommendStoreView then
+		return self._RecommendStoreView:getIndexByTabId(tabId)
 	end
 
 	return 1
 end
 
-function var_0_0._sortSkinGoodsItem(arg_21_0, arg_21_1)
-	if arg_21_0._index ~= arg_21_1._index then
-		return arg_21_0._index < arg_21_1._index
+function StoreViewContainer._sortSkinGoodsItem(a, b)
+	if a._index ~= b._index then
+		return a._index < b._index
 	end
 end
 
-return var_0_0
+return StoreViewContainer

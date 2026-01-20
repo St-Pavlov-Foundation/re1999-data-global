@@ -1,84 +1,87 @@
-﻿module("modules.logic.commonprop.model.CommonPropListModel", package.seeall)
+﻿-- chunkname: @modules/logic/commonprop/model/CommonPropListModel.lua
 
-local var_0_0 = class("CommonPropListModel", ListScrollModel)
+module("modules.logic.commonprop.model.CommonPropListModel", package.seeall)
 
-function var_0_0.setPropList(arg_1_0, arg_1_1)
-	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
+local CommonPropListModel = class("CommonPropListModel", ListScrollModel)
 
-	arg_1_0:_sortList(arg_1_0._moList)
-	arg_1_0:_stackList(arg_1_0._moList)
-	arg_1_0:setList(arg_1_0._moList)
+function CommonPropListModel:setPropList(Infos)
+	self._moList = Infos and Infos or {}
+
+	self:_sortList(self._moList)
+	self:_stackList(self._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0._sortList(arg_2_0, arg_2_1)
-	table.sort(arg_2_1, function(arg_3_0, arg_3_1)
-		if arg_2_0:_getQuality(arg_3_0) ~= arg_2_0:_getQuality(arg_3_1) then
-			return arg_2_0:_getQuality(arg_3_0) > arg_2_0:_getQuality(arg_3_1)
-		elseif arg_3_0.materilType ~= arg_3_1.materilType then
-			return arg_3_0.materilType > arg_3_1.materilType
-		elseif arg_3_0.materilType == 1 and arg_3_1.materilType == 1 and arg_2_0:_getSubType(arg_3_0) ~= arg_2_0:_getSubType(arg_3_1) then
-			return arg_2_0:_getSubType(arg_3_0) < arg_2_0:_getSubType(arg_3_1)
-		elseif arg_3_0.materilId ~= arg_3_1.materilId then
-			return arg_3_0.materilId > arg_3_1.materilId
+function CommonPropListModel:_sortList(list)
+	table.sort(list, function(a, b)
+		if self:_getQuality(a) ~= self:_getQuality(b) then
+			return self:_getQuality(a) > self:_getQuality(b)
+		elseif a.materilType ~= b.materilType then
+			return a.materilType > b.materilType
+		elseif a.materilType == 1 and b.materilType == 1 and self:_getSubType(a) ~= self:_getSubType(b) then
+			return self:_getSubType(a) < self:_getSubType(b)
+		elseif a.materilId ~= b.materilId then
+			return a.materilId > b.materilId
 		end
 	end)
 end
 
-function var_0_0._getQuality(arg_4_0, arg_4_1)
-	local var_4_0 = ItemModel.instance:getItemConfig(arg_4_1.materilType, arg_4_1.materilId)
+function CommonPropListModel:_getQuality(config)
+	local co = ItemModel.instance:getItemConfig(config.materilType, config.materilId)
 
-	return ItemModel.instance:getItemRare(var_4_0)
+	return ItemModel.instance:getItemRare(co)
 end
 
-function var_0_0._getSubType(arg_5_0, arg_5_1)
-	local var_5_0 = ItemModel.instance:getItemConfig(arg_5_1.materilType, arg_5_1.materilId)
+function CommonPropListModel:_getSubType(config)
+	local co = ItemModel.instance:getItemConfig(config.materilType, config.materilId)
+	local type = co.subType == nil and 0 or co.subType
 
-	return var_5_0.subType == nil and 0 or var_5_0.subType
+	return type
 end
 
-function var_0_0._getStackable(arg_6_0, arg_6_1)
-	return ItemConfig.instance:isItemStackable(arg_6_1.materilType, arg_6_1.materilId)
+function CommonPropListModel:_getStackable(item)
+	return ItemConfig.instance:isItemStackable(item.materilType, item.materilId)
 end
 
-function var_0_0._stackList(arg_7_0, arg_7_1)
-	local var_7_0 = {}
+function CommonPropListModel:_stackList(list)
+	local newList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		if arg_7_0:_getStackable(iter_7_1) then
-			table.insert(var_7_0, iter_7_1)
+	for i, item in ipairs(list) do
+		if self:_getStackable(item) then
+			table.insert(newList, item)
 		else
-			for iter_7_2 = 1, iter_7_1.quantity do
-				local var_7_1 = {
+			for j = 1, item.quantity do
+				local sItem = {
 					quantity = 1,
-					materilType = iter_7_1.materilType,
-					materilId = iter_7_1.materilId,
-					uid = iter_7_1.uid
+					materilType = item.materilType,
+					materilId = item.materilId,
+					uid = item.uid
 				}
 
-				table.insert(var_7_0, var_7_1)
+				table.insert(newList, sItem)
 			end
 		end
 	end
 
-	arg_7_0._moList = var_7_0
+	self._moList = newList
 end
 
-var_0_0.HighRare = 5
+CommonPropListModel.HighRare = 5
 
-function var_0_0.isHadHighRareProp(arg_8_0)
-	local var_8_0 = arg_8_0:getList()
-	local var_8_1
+function CommonPropListModel:isHadHighRareProp()
+	local list = self:getList()
+	local config
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if tonumber(iter_8_1.materilType) == MaterialEnum.MaterialType.PlayerCloth then
+	for _, item in ipairs(list) do
+		if tonumber(item.materilType) == MaterialEnum.MaterialType.PlayerCloth then
 			return true
 		end
 
-		local var_8_2 = ItemModel.instance:getItemConfig(tonumber(iter_8_1.materilType), tonumber(iter_8_1.materilId))
+		config = ItemModel.instance:getItemConfig(tonumber(item.materilType), tonumber(item.materilId))
 
-		if not var_8_2 or not var_8_2.rare then
-			logWarn(string.format("type : %s, id : %s; getConfig error", iter_8_1.materilType, iter_8_1.materilId))
-		elseif var_8_2.rare >= var_0_0.HighRare then
+		if not config or not config.rare then
+			logWarn(string.format("type : %s, id : %s; getConfig error", item.materilType, item.materilId))
+		elseif config.rare >= CommonPropListModel.HighRare then
 			return true
 		end
 	end
@@ -86,6 +89,21 @@ function var_0_0.isHadHighRareProp(arg_8_0)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+local cellWidth = 270
 
-return var_0_0
+function CommonPropListModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
+	local list = self:getList()
+
+	for i, mo in ipairs(list) do
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(i, cellWidth, i)
+
+		table.insert(mixCellInfos, mixCellInfo)
+	end
+
+	return mixCellInfos
+end
+
+CommonPropListModel.instance = CommonPropListModel.New()
+
+return CommonPropListModel

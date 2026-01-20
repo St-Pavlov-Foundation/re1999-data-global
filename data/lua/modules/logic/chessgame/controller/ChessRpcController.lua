@@ -1,34 +1,36 @@
-﻿module("modules.logic.chessgame.controller.ChessRpcController", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/controller/ChessRpcController.lua
 
-local var_0_0 = class("ChessRpcController", BaseController)
+module("modules.logic.chessgame.controller.ChessRpcController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ChessRpcController = class("ChessRpcController", BaseController)
+
+function ChessRpcController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function ChessRpcController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function ChessRpcController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function ChessRpcController:reInit()
 	return
 end
 
-function var_0_0._registerRcp(arg_5_0)
+function ChessRpcController:_registerRcp()
 	return {
 		[VersionActivity2_1Enum.ActivityId.LanShouPa] = Activity164Rpc.instance
 	}
 end
 
-function var_0_0._getActiviyXRcpIns(arg_6_0, arg_6_1)
-	if not arg_6_0._acXRcpInsMap then
-		arg_6_0._acXRcpInsMap = arg_6_0:_registerRcp()
+function ChessRpcController:_getActiviyXRcpIns(actId)
+	if not self._acXRcpInsMap then
+		self._acXRcpInsMap = self:_registerRcp()
 
-		local var_6_0 = {
+		local funcNames = {
 			"sendGetActInfoRequest",
 			"sendActStartEpisodeRequest",
 			"sendActReStartEpisodeRequest",
@@ -37,124 +39,124 @@ function var_0_0._getActiviyXRcpIns(arg_6_0, arg_6_1)
 			"sendActRollBackRequest"
 		}
 
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._acXRcpInsMap) do
-			for iter_6_2, iter_6_3 in ipairs(var_6_0) do
-				if not iter_6_1[iter_6_3] or type(iter_6_1[iter_6_3]) ~= "function" then
-					logError(string.format("[%s] can not find function [%s]", iter_6_1.__cname, iter_6_3))
+		for _, rpc in pairs(self._acXRcpInsMap) do
+			for __, funName in ipairs(funcNames) do
+				if not rpc[funName] or type(rpc[funName]) ~= "function" then
+					logError(string.format("[%s] can not find function [%s]", rpc.__cname, funName))
 				end
 			end
 		end
 	end
 
-	local var_6_1 = arg_6_0._acXRcpInsMap[arg_6_1]
+	local acCRpc = self._acXRcpInsMap[actId]
 
-	if not var_6_1 then
-		logError(string.format("棋盘小游戏Rpc没注册，activityId[%s]", arg_6_1))
+	if not acCRpc then
+		logError(string.format("棋盘小游戏Rpc没注册，activityId[%s]", actId))
 	end
 
-	return var_6_1
+	return acCRpc
 end
 
-function var_0_0.sendGetActInfoRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_0:_getActiviyXRcpIns(arg_7_1)
+function ChessRpcController:sendGetActInfoRequest(actId, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_7_0 then
-		var_7_0:sendGetActInfoRequest(arg_7_1, arg_7_2, arg_7_3)
+	if acCRpc then
+		acCRpc:sendGetActInfoRequest(actId, callback, callbackObj)
 	end
 end
 
-function var_0_0.sendActStartEpisodeRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	if not arg_8_1 or not arg_8_2 then
+function ChessRpcController:sendActStartEpisodeRequest(actId, episodeId, callback, callbackObj)
+	if not actId or not episodeId then
 		return
 	end
 
-	local var_8_0 = arg_8_0:_getActiviyXRcpIns(arg_8_1)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_8_0 then
-		var_8_0:sendActStartEpisodeRequest(arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	if acCRpc then
+		acCRpc:sendActStartEpisodeRequest(actId, episodeId, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActStartEpisodeReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		ChessController.instance:initMapData(arg_9_2.activityId, arg_9_2.episodeId, arg_9_2.scene)
+function ChessRpcController:onReceiveActStartEpisodeReply(resultCode, msg)
+	if resultCode == 0 then
+		ChessController.instance:initMapData(msg.activityId, msg.episodeId, msg.scene)
 	end
 end
 
-function var_0_0.sendActReStartEpisodeRequest(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if not arg_10_1 or not arg_10_2 then
+function ChessRpcController:sendActReStartEpisodeRequest(actId, episodeId, callback, callbackObj)
+	if not actId or not episodeId then
 		return
 	end
 
-	local var_10_0 = arg_10_0:_getActiviyXRcpIns(arg_10_1)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_10_0 then
-		var_10_0:sendActReStartEpisodeRequest(arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	if acCRpc then
+		acCRpc:sendActReStartEpisodeRequest(actId, episodeId, callback, callbackObj)
 	end
 end
 
-function var_0_0.sendActBeginRoundRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
-	local var_11_0 = arg_11_0:_getActiviyXRcpIns(arg_11_1)
+function ChessRpcController:sendActBeginRoundRequest(actId, episodeId, optList, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_11_0 then
-		var_11_0:sendActBeginRoundRequest(arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	if acCRpc then
+		acCRpc:sendActBeginRoundRequest(actId, episodeId, optList, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActBeginRoundReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == 0 then
+function ChessRpcController:onReceiveActBeginRoundReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 
 	ChessGameModel.instance:cleanOptList()
 end
 
-function var_0_0.onReceiveActStepPush(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 and Va3ChessModel.instance:getActId() == arg_13_2.activityId then
-		local var_13_0 = Va3ChessGameController.instance.event
+function ChessRpcController:onReceiveActStepPush(resultCode, msg)
+	if resultCode == 0 and Va3ChessModel.instance:getActId() == msg.activityId then
+		local evtMgr = Va3ChessGameController.instance.event
 
-		if var_13_0 then
-			var_13_0:insertStepList(arg_13_2.steps)
+		if evtMgr then
+			evtMgr:insertStepList(msg.steps)
 		end
 	end
 end
 
-function var_0_0.sendActEventEndRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = arg_14_0:_getActiviyXRcpIns(arg_14_1)
+function ChessRpcController:sendActEventEndRequest(actId, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_14_0 then
-		var_14_0:sendActEventEndRequest(arg_14_1, arg_14_2, arg_14_3)
+	if acCRpc then
+		acCRpc:sendActEventEndRequest(actId, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActEventEndReply(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 == 0 then
+function ChessRpcController:onReceiveActEventEndReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendActAbortRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	local var_16_0 = arg_16_0:_getActiviyXRcpIns(arg_16_1, arg_16_2)
+function ChessRpcController:sendActAbortRequest(actId, episodeId, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId, episodeId)
 
-	if var_16_0 then
-		var_16_0:sendActAbortRequest(arg_16_1, arg_16_2, arg_16_3, arg_16_4)
+	if acCRpc then
+		acCRpc:sendActAbortRequest(actId, episodeId, callback, callbackObj)
 	end
 end
 
-function var_0_0.onReceiveActAbortReply(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_1 == 0 then
+function ChessRpcController:onReceiveActAbortReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendActRollBackRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
-	local var_18_0 = arg_18_0:_getActiviyXRcpIns(arg_18_1)
+function ChessRpcController:sendActRollBackRequest(actId, episodeId, rollBackType, callback, callbackObj)
+	local acCRpc = self:_getActiviyXRcpIns(actId)
 
-	if var_18_0 then
-		var_18_0:sendActRollBackRequest(arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
+	if acCRpc then
+		acCRpc:sendActRollBackRequest(actId, episodeId, rollBackType, callback, callbackObj)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ChessRpcController.instance = ChessRpcController.New()
 
-return var_0_0
+return ChessRpcController

@@ -1,152 +1,157 @@
-﻿module("modules.logic.sp01.act205.view.card.Act205CardResultView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/view/card/Act205CardResultView.lua
 
-local var_0_0 = class("Act205CardResultView", BaseView)
+module("modules.logic.sp01.act205.view.card.Act205CardResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Right/#txt_Descr")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "Right/#go_reward")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_reward/#go_rewardItem")
-	arg_1_0._btnFinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/LayoutGroup/#btn_Finished")
-	arg_1_0._btnNew = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/LayoutGroup/#btn_New")
-	arg_1_0._txtGameTimes = gohelper.findChildText(arg_1_0.viewGO, "Right/LayoutGroup/#btn_New/#txt_GameTimes")
+local Act205CardResultView = class("Act205CardResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act205CardResultView:onInitView()
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Right/#txt_Descr")
+	self._goreward = gohelper.findChild(self.viewGO, "Right/#go_reward")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "Right/#go_reward/#go_rewardItem")
+	self._btnFinished = gohelper.findChildButtonWithAudio(self.viewGO, "Right/LayoutGroup/#btn_Finished")
+	self._btnNew = gohelper.findChildButtonWithAudio(self.viewGO, "Right/LayoutGroup/#btn_New")
+	self._txtGameTimes = gohelper.findChildText(self.viewGO, "Right/LayoutGroup/#btn_New/#txt_GameTimes")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnFinished:AddClickListener(arg_2_0._btnFinishedOnClick, arg_2_0)
-	arg_2_0._btnNew:AddClickListener(arg_2_0._btnNewOnClick, arg_2_0)
-	arg_2_0:addEventCb(Act205Controller.instance, Act205Event.OnInfoUpdate, arg_2_0.refreshTimesInfo, arg_2_0)
-	NavigateMgr.instance:addEscape(arg_2_0.viewName, arg_2_0._btnFinishedOnClick, arg_2_0)
+function Act205CardResultView:addEvents()
+	self._btnFinished:AddClickListener(self._btnFinishedOnClick, self)
+	self._btnNew:AddClickListener(self._btnNewOnClick, self)
+	self:addEventCb(Act205Controller.instance, Act205Event.OnInfoUpdate, self.refreshTimesInfo, self)
+	NavigateMgr.instance:addEscape(self.viewName, self._btnFinishedOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnFinished:RemoveClickListener()
-	arg_3_0._btnNew:RemoveClickListener()
-	arg_3_0:removeEventCb(Act205Controller.instance, Act205Event.OnInfoUpdate, arg_3_0.refreshTimesInfo, arg_3_0)
+function Act205CardResultView:removeEvents()
+	self._btnFinished:RemoveClickListener()
+	self._btnNew:RemoveClickListener()
+	self:removeEventCb(Act205Controller.instance, Act205Event.OnInfoUpdate, self.refreshTimesInfo, self)
 end
 
-function var_0_0._btnFinishedOnClick(arg_4_0)
-	if Act205CardModel.instance:getGameCount() > 0 then
+function Act205CardResultView:_btnFinishedOnClick()
+	local gameCount = Act205CardModel.instance:getGameCount()
+
+	if gameCount > 0 then
 		Act205CardController.instance:openCardEnterView()
 	end
 
 	ViewMgr.instance:closeView(ViewName.Act205CardShowView)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnNewOnClick(arg_5_0)
+function Act205CardResultView:_btnNewOnClick()
 	Act205CardController.instance:beginNewCardGame()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._pointResultGoDict = arg_6_0:getUserDataTb_()
+function Act205CardResultView:_editableInitView()
+	self._pointResultGoDict = self:getUserDataTb_()
 
-	local var_6_0 = Act205Config.instance:getPointList()
+	local pointList = Act205Config.instance:getPointList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = gohelper.findChild(arg_6_0.viewGO, string.format("pointResult/%s", iter_6_1))
+	for _, point in ipairs(pointList) do
+		local pointResultGo = gohelper.findChild(self.viewGO, string.format("pointResult/%s", point))
 
-		if not gohelper.isNil(var_6_1) then
-			arg_6_0._pointResultGoDict[iter_6_1] = var_6_1
+		if not gohelper.isNil(pointResultGo) then
+			self._pointResultGoDict[point] = pointResultGo
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0._point = arg_7_0.viewParam.point
-	arg_7_0._rewardId = arg_7_0.viewParam.rewardId
+function Act205CardResultView:onUpdateParam()
+	self._point = self.viewParam.point
+	self._rewardId = self.viewParam.rewardId
 
-	if not arg_7_0._point then
-		arg_7_0._point = Act205Config.instance:getPointByReward(arg_7_0._rewardId) or Act205Config.instance:getMaxPoint()
+	if not self._point then
+		self._point = Act205Config.instance:getPointByReward(self._rewardId) or Act205Config.instance:getMaxPoint()
 	end
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:onUpdateParam()
+function Act205CardResultView:onOpen()
+	self:onUpdateParam()
 
-	local var_8_0 = Act205Config.instance:getGameRewardConfig(Act205Enum.GameStageId.Card, arg_8_0._rewardId)
+	local rewardConfig = Act205Config.instance:getGameRewardConfig(Act205Enum.GameStageId.Card, self._rewardId)
 
-	arg_8_0._txtDescr.text = var_8_0.rewardDesc
+	self._txtDescr.text = rewardConfig.rewardDesc
 
-	arg_8_0:refreshPointResult()
-	arg_8_0:refreshTimesInfo()
-	arg_8_0:createRewardItem(var_8_0)
-	TaskDispatcher.runDelay(arg_8_0.showRewardItemGet, arg_8_0, 1)
+	self:refreshPointResult()
+	self:refreshTimesInfo()
+	self:createRewardItem(rewardConfig)
+	TaskDispatcher.runDelay(self.showRewardItemGet, self, 1)
 end
 
-function var_0_0.refreshPointResult(arg_9_0)
-	local var_9_0 = arg_9_0._point
-	local var_9_1 = arg_9_0._pointResultGoDict[var_9_0]
+function Act205CardResultView:refreshPointResult()
+	local tmpPoint = self._point
+	local go = self._pointResultGoDict[tmpPoint]
 
-	if gohelper.isNil(var_9_1) then
-		var_9_0 = 0
+	if gohelper.isNil(go) then
+		tmpPoint = 0
 	end
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._pointResultGoDict) do
-		gohelper.setActive(iter_9_1, iter_9_0 == var_9_0)
+	for point, pointResultGo in pairs(self._pointResultGoDict) do
+		gohelper.setActive(pointResultGo, point == tmpPoint)
 	end
 
-	AudioMgr.instance:trigger(var_9_0 <= 0 and AudioEnum2_9.Activity205.play_ui_s01_yunying_fail or AudioEnum2_9.Activity205.play_ui_s01_yunying_win)
+	AudioMgr.instance:trigger(tmpPoint <= 0 and AudioEnum2_9.Activity205.play_ui_s01_yunying_fail or AudioEnum2_9.Activity205.play_ui_s01_yunying_win)
 end
 
-function var_0_0.refreshTimesInfo(arg_10_0)
-	local var_10_0 = Act205Model.instance:getAct205Id()
-	local var_10_1 = Act205Config.instance:getStageConfig(var_10_0, Act205Enum.GameStageId.Card).times
-	local var_10_2 = Act205CardModel.instance:getGameCount()
+function Act205CardResultView:refreshTimesInfo()
+	local actId = Act205Model.instance:getAct205Id()
+	local stageConfig = Act205Config.instance:getStageConfig(actId, Act205Enum.GameStageId.Card)
+	local totalGameTimes = stageConfig.times
+	local gameCount = Act205CardModel.instance:getGameCount()
 
-	arg_10_0._txtGameTimes.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("act205_remainGameTimes"), var_10_2, var_10_1)
+	self._txtGameTimes.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("act205_remainGameTimes"), gameCount, totalGameTimes)
 
-	local var_10_3 = var_10_2 > 0
+	local hasGameTimes = gameCount > 0
 
-	gohelper.setActive(arg_10_0._btnNew.gameObject, var_10_3)
+	gohelper.setActive(self._btnNew.gameObject, hasGameTimes)
 end
 
-function var_0_0.createRewardItem(arg_11_0, arg_11_1)
-	arg_11_0.rewardItemList = {}
+function Act205CardResultView:createRewardItem(rewardConfig)
+	self.rewardItemList = {}
 
-	local var_11_0 = GameUtil.splitString2(arg_11_1.bonus, true)
+	local rewardList = GameUtil.splitString2(rewardConfig.bonus, true)
 
-	gohelper.CreateObjList(arg_11_0, arg_11_0._onCreateRewardItem, var_11_0, arg_11_0._goreward, arg_11_0._gorewardItem)
+	gohelper.CreateObjList(self, self._onCreateRewardItem, rewardList, self._goreward, self._gorewardItem)
 end
 
-function var_0_0._onCreateRewardItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = arg_12_0:getUserDataTb_()
+function Act205CardResultView:_onCreateRewardItem(obj, data, index)
+	local rewardItem = self:getUserDataTb_()
 
-	var_12_0.go = arg_12_1
+	rewardItem.go = obj
 
-	local var_12_1 = gohelper.findChild(var_12_0.go, "go_rewardPos")
+	local goRewardPos = gohelper.findChild(rewardItem.go, "go_rewardPos")
 
-	var_12_0.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_12_1)
+	rewardItem.itemIcon = IconMgr.instance:getCommonPropItemIcon(goRewardPos)
 
-	var_12_0.itemIcon:setMOValue(arg_12_2[1], arg_12_2[2], arg_12_2[3])
-	var_12_0.itemIcon:isShowCount(true)
-	var_12_0.itemIcon:setCountFontSize(40)
-	var_12_0.itemIcon:showStackableNum2()
-	var_12_0.itemIcon:setHideLvAndBreakFlag(true)
-	var_12_0.itemIcon:hideEquipLvAndBreak(true)
+	rewardItem.itemIcon:setMOValue(data[1], data[2], data[3])
+	rewardItem.itemIcon:isShowCount(true)
+	rewardItem.itemIcon:setCountFontSize(40)
+	rewardItem.itemIcon:showStackableNum2()
+	rewardItem.itemIcon:setHideLvAndBreakFlag(true)
+	rewardItem.itemIcon:hideEquipLvAndBreak(true)
 
-	var_12_0.goRewardGet = gohelper.findChild(var_12_0.go, "go_rewardGet")
+	rewardItem.goRewardGet = gohelper.findChild(rewardItem.go, "go_rewardGet")
 
-	gohelper.setActive(var_12_0.goRewardGet, false)
+	gohelper.setActive(rewardItem.goRewardGet, false)
 
-	arg_12_0.rewardItemList[arg_12_3] = var_12_0
+	self.rewardItemList[index] = rewardItem
 end
 
-function var_0_0.showRewardItemGet(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.rewardItemList) do
-		gohelper.setActive(iter_13_1.goRewardGet, true)
+function Act205CardResultView:showRewardItemGet()
+	for _, rewardItem in ipairs(self.rewardItemList) do
+		gohelper.setActive(rewardItem.goRewardGet, true)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.showRewardItemGet, arg_14_0)
+function Act205CardResultView:onClose()
+	TaskDispatcher.cancelTask(self.showRewardItemGet, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function Act205CardResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act205CardResultView

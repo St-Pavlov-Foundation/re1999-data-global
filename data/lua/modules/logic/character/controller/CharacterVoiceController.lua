@@ -1,39 +1,42 @@
-﻿module("modules.logic.character.controller.CharacterVoiceController", package.seeall)
+﻿-- chunkname: @modules/logic/character/controller/CharacterVoiceController.lua
 
-local var_0_0 = class("CharacterVoiceController", BaseController)
+module("modules.logic.character.controller.CharacterVoiceController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._defaultValueMap = {
+local CharacterVoiceController = class("CharacterVoiceController", BaseController)
+
+function CharacterVoiceController:onInit()
+	self._defaultValueMap = {
 		[CharacterVoiceEnum.Hero.Luxi] = CharacterVoiceEnum.LuxiState.MetalFace
 	}
-	arg_1_0._changeValueMap = {
-		[CharacterVoiceEnum.Hero.Luxi] = arg_1_0._getLuxiChangeValue
+	self._changeValueMap = {
+		[CharacterVoiceEnum.Hero.Luxi] = self._getLuxiChangeValue
 	}
 end
 
-function var_0_0.getDefaultValue(arg_2_0, arg_2_1)
-	return arg_2_0._defaultValueMap[arg_2_1]
+function CharacterVoiceController:getDefaultValue(heroId)
+	return self._defaultValueMap[heroId]
 end
 
-function var_0_0.getChangeValue(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._changeValueMap[arg_3_1.heroId]
+function CharacterVoiceController:getChangeValue(voiceConfig)
+	local handler = self._changeValueMap[voiceConfig.heroId]
 
-	return var_3_0 and var_3_0(arg_3_0, arg_3_1)
+	return handler and handler(self, voiceConfig)
 end
 
-function var_0_0._getLuxiChangeValue(arg_4_0, arg_4_1)
-	if arg_4_1.stateCondition == CharacterVoiceEnum.LuxiState.MetalFace then
+function CharacterVoiceController:_getLuxiChangeValue(voiceConfig)
+	if voiceConfig.stateCondition == CharacterVoiceEnum.LuxiState.MetalFace then
 		return CharacterVoiceEnum.LuxiState.HumanFace
 	else
 		return CharacterVoiceEnum.LuxiState.MetalFace
 	end
 end
 
-function var_0_0.getIdle(arg_5_0, arg_5_1)
-	if arg_5_1 == CharacterVoiceEnum.Hero.Luxi then
-		local var_5_0 = arg_5_0:getDefaultValue(arg_5_1)
+function CharacterVoiceController:getIdle(heroId)
+	if heroId == CharacterVoiceEnum.Hero.Luxi then
+		local defaultValue = self:getDefaultValue(heroId)
+		local state = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, heroId, defaultValue)
 
-		if PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_5_1, var_5_0) == CharacterVoiceEnum.LuxiState.HumanFace then
+		if state == CharacterVoiceEnum.LuxiState.HumanFace then
 			return StoryAnimName.B_IDLE1
 		else
 			return StoryAnimName.B_IDLE
@@ -43,32 +46,32 @@ function var_0_0.getIdle(arg_5_0, arg_5_1)
 	return StoryAnimName.B_IDLE
 end
 
-function var_0_0.setSpecialInteractionPlayType(arg_6_0, arg_6_1)
-	arg_6_0._playType = arg_6_1
+function CharacterVoiceController:setSpecialInteractionPlayType(value)
+	self._playType = value
 end
 
-function var_0_0.getSpecialInteractionPlayType(arg_7_0)
-	return arg_7_0._playType
+function CharacterVoiceController:getSpecialInteractionPlayType()
+	return self._playType
 end
 
-function var_0_0.trackSpecialInteraction(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = HeroConfig.instance:getHeroCO(arg_8_1)
+function CharacterVoiceController:trackSpecialInteraction(heroId, voiceId, playType)
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
 
-	if not var_8_0 then
+	if not heroCfg then
 		return
 	end
 
-	local var_8_1 = arg_8_3 == CharacterVoiceEnum.PlayType.Click and "主动触发" or "被动触发"
-	local var_8_2 = {
-		[StatEnum.EventProperties.HeroId] = tonumber(arg_8_1),
-		[StatEnum.EventProperties.HeroName] = var_8_0.name,
-		[StatEnum.EventProperties.VoiceId] = tostring(arg_8_2),
-		[StatEnum.EventProperties.trigger_type] = tostring(var_8_1)
-	}
+	local trigger_type = playType == CharacterVoiceEnum.PlayType.Click and "主动触发" or "被动触发"
+	local properties = {}
 
-	StatController.instance:track(StatEnum.EventName.Interactive_special_action, var_8_2)
+	properties[StatEnum.EventProperties.HeroId] = tonumber(heroId)
+	properties[StatEnum.EventProperties.HeroName] = heroCfg.name
+	properties[StatEnum.EventProperties.VoiceId] = tostring(voiceId)
+	properties[StatEnum.EventProperties.trigger_type] = tostring(trigger_type)
+
+	StatController.instance:track(StatEnum.EventName.Interactive_special_action, properties)
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterVoiceController.instance = CharacterVoiceController.New()
 
-return var_0_0
+return CharacterVoiceController

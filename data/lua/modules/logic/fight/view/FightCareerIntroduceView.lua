@@ -1,69 +1,71 @@
-﻿module("modules.logic.fight.view.FightCareerIntroduceView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCareerIntroduceView.lua
 
-local var_0_0 = class("FightCareerIntroduceView", BaseView)
+module("modules.logic.fight.view.FightCareerIntroduceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goblackbg = gohelper.findChild(arg_1_0.viewGO, "#go_blackbg")
-	arg_1_0._btnitem1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_item1")
-	arg_1_0._btnitem2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_item2")
-	arg_1_0._btnitem3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_item3")
+local FightCareerIntroduceView = class("FightCareerIntroduceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightCareerIntroduceView:onInitView()
+	self._goblackbg = gohelper.findChild(self.viewGO, "#go_blackbg")
+	self._btnitem1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_item1")
+	self._btnitem2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_item2")
+	self._btnitem3 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_item3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnitem1:AddClickListener(arg_2_0._btnitem1OnClick, arg_2_0)
-	arg_2_0._btnitem2:AddClickListener(arg_2_0._btnitem2OnClick, arg_2_0)
-	arg_2_0._btnitem3:AddClickListener(arg_2_0._btnitem3OnClick, arg_2_0)
-	gohelper.getClickWithAudio(arg_2_0._goblackbg):AddClickListener(arg_2_0.closeThis, arg_2_0)
+function FightCareerIntroduceView:addEvents()
+	self._btnitem1:AddClickListener(self._btnitem1OnClick, self)
+	self._btnitem2:AddClickListener(self._btnitem2OnClick, self)
+	self._btnitem3:AddClickListener(self._btnitem3OnClick, self)
+	gohelper.getClickWithAudio(self._goblackbg):AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnitem1:RemoveClickListener()
-	arg_3_0._btnitem2:RemoveClickListener()
-	arg_3_0._btnitem3:RemoveClickListener()
-	gohelper.getClickWithAudio(arg_3_0._goblackbg):RemoveClickListener()
+function FightCareerIntroduceView:removeEvents()
+	self._btnitem1:RemoveClickListener()
+	self._btnitem2:RemoveClickListener()
+	self._btnitem3:RemoveClickListener()
+	gohelper.getClickWithAudio(self._goblackbg):RemoveClickListener()
 end
 
-function var_0_0._btnitem1OnClick(arg_4_0)
-	arg_4_0:_onItemClick()
+function FightCareerIntroduceView:_btnitem1OnClick()
+	self:_onItemClick()
 end
 
-function var_0_0._btnitem2OnClick(arg_5_0)
-	arg_5_0:_onItemClick()
+function FightCareerIntroduceView:_btnitem2OnClick()
+	self:_onItemClick()
 end
 
-function var_0_0._btnitem3OnClick(arg_6_0)
-	arg_6_0:_onItemClick()
+function FightCareerIntroduceView:_btnitem3OnClick()
+	self:_onItemClick()
 end
 
-function var_0_0._onItemClick(arg_7_0)
-	arg_7_0:closeThis()
+function FightCareerIntroduceView:_onItemClick()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView, {
 		isGuide = true
 	})
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function FightCareerIntroduceView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function FightCareerIntroduceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function FightCareerIntroduceView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_11_0)
+function FightCareerIntroduceView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function FightCareerIntroduceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightCareerIntroduceView

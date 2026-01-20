@@ -1,676 +1,692 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupFightView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotHeroGroupFightView.lua
 
-local var_0_0 = class("V1a6_CachotHeroGroupFightView", BaseView)
-local var_0_1 = 4
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupFightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStart")
-	arg_1_0._btnBalanceStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnBalance")
-	arg_1_0._btnUnPowerBalanceStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerBalance")
-	arg_1_0._btnstarthard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStartHard")
-	arg_1_0._btnstartreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStartReplay")
-	arg_1_0._goreplaybtnframe = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_replaybtnframe")
-	arg_1_0._goReplayBtn = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn")
-	arg_1_0._btnReplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay")
-	arg_1_0._imagereplayicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replayicon")
-	arg_1_0._imgbtnReplayBg = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replaybg")
-	arg_1_0._goreplayready = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_replayready")
-	arg_1_0._btnmultispeed = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed")
-	arg_1_0._txtmultispeed = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/Label")
-	arg_1_0._btnclosemult = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closemult")
-	arg_1_0._gomultPos = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/#go_multpos")
-	arg_1_0._gomultispeed = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed")
-	arg_1_0._gomultContent = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed/Viewport/Content")
-	arg_1_0._gomultitem = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed/Viewport/Content/#go_multitem")
-	arg_1_0._simagereplayframe = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_container/#go_replayready/#simage_replayframe")
-	arg_1_0._btncloth = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/btnCloth")
-	arg_1_0._txtclothname = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName")
-	arg_1_0._txtclothnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName/#txt_clothNameEn")
-	arg_1_0._btncareerrestrain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_topbtns/#btn_RestraintInfo")
-	arg_1_0._btnrecommend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_topbtns/btn_recommend")
-	arg_1_0._goRecommendEffect = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_topbtns/btn_recommend/recommend")
-	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_cost")
-	arg_1_0._gopower = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_power")
-	arg_1_0._simagepower = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_power/#simage_power")
-	arg_1_0._txtusepower = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_power/#txt_usepower")
-	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_count")
-	arg_1_0._txtcostcount = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_count/animroot/#txt_costCount")
-	arg_1_0._gopowercontent = gohelper.findChild(arg_1_0.viewGO, "#go_righttop/#go_power")
-	arg_1_0._gofightCount = gohelper.findChild(arg_1_0.viewGO, "#go_righttop/fightcount")
-	arg_1_0._txtfightCount = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_righttop/fightcount/#txt_fightcount")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "#go_container2/#go_mask")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
-	arg_1_0._gocontainer2 = gohelper.findChild(arg_1_0.viewGO, "#go_container2")
-	arg_1_0._golevelchange = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_levelchange")
-	arg_1_0._txtreplaycn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStartReplay/#txt_replaycn")
-	arg_1_0._gotopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_topbtns")
-	arg_1_0._btnunpowerstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerStart")
-	arg_1_0._btnunpowerreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay")
-	arg_1_0._btnhardreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnHardReplay")
-	arg_1_0._txtreplayhardcn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnHardReplay/#txt_replayhardcn")
-	arg_1_0._txtreplayunpowercn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay/#txt_replayunpowercn")
-	arg_1_0._gonormallackpower = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_normallackpower")
-	arg_1_0._goreplaylackpower = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_replaylackpower")
-	arg_1_0._goTrialTips = gohelper.findChild(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips")
-	arg_1_0._goTrialTipsBg = gohelper.findChild(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg")
-	arg_1_0._goTrialTipsItem = gohelper.findChild(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg/#go_tipsitem")
-	arg_1_0._btnTrialTips = gohelper.findChildButton(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips/#btn_tips")
-	arg_1_0._btnSwitchBalance = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance")
-	arg_1_0._goBalanceEnter = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_enter")
-	arg_1_0._goBalanceExit = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_exit")
-	arg_1_0._dropherogroup = gohelper.findChildDropdown(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
-	arg_1_0._btnmodifyname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
-	arg_1_0._dropherogrouparrow = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/arrow").transform
-	arg_1_0._btncoststart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostStart")
-	arg_1_0._txtCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostStart/#txt_num")
-	arg_1_0._btncostreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostReplay")
-	arg_1_0._txtreplaycostcn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_replaycostcn")
-	arg_1_0._txtReplayCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_num")
+local V1a6_CachotHeroGroupFightView = class("V1a6_CachotHeroGroupFightView", BaseView)
+local MaxMultiplication = 4
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotHeroGroupFightView:onInitView()
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnStart")
+	self._btnBalanceStart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnBalance")
+	self._btnUnPowerBalanceStart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerBalance")
+	self._btnstarthard = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnStartHard")
+	self._btnstartreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnStartReplay")
+	self._goreplaybtnframe = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_replaybtnframe")
+	self._goReplayBtn = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn")
+	self._btnReplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay")
+	self._imagereplayicon = gohelper.findChildImage(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replayicon")
+	self._imgbtnReplayBg = gohelper.findChildImage(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replaybg")
+	self._goreplayready = gohelper.findChild(self.viewGO, "#go_container/#go_replayready")
+	self._btnmultispeed = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed")
+	self._txtmultispeed = gohelper.findChildTextMesh(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/Label")
+	self._btnclosemult = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closemult")
+	self._gomultPos = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/#go_multpos")
+	self._gomultispeed = gohelper.findChild(self.viewGO, "#go_multispeed")
+	self._gomultContent = gohelper.findChild(self.viewGO, "#go_multispeed/Viewport/Content")
+	self._gomultitem = gohelper.findChild(self.viewGO, "#go_multispeed/Viewport/Content/#go_multitem")
+	self._simagereplayframe = gohelper.findChildSingleImage(self.viewGO, "#go_container/#go_replayready/#simage_replayframe")
+	self._btncloth = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/btnCloth")
+	self._txtclothname = gohelper.findChildText(self.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName")
+	self._txtclothnameen = gohelper.findChildText(self.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName/#txt_clothNameEn")
+	self._btncareerrestrain = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_topbtns/#btn_RestraintInfo")
+	self._btnrecommend = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_topbtns/btn_recommend")
+	self._goRecommendEffect = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_topbtns/btn_recommend/recommend")
+	self._gocost = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_cost")
+	self._gopower = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_cost/#go_power")
+	self._simagepower = gohelper.findChildSingleImage(self.viewGO, "#go_container/btnContain/#go_cost/#go_power/#simage_power")
+	self._txtusepower = gohelper.findChildText(self.viewGO, "#go_container/btnContain/#go_cost/#go_power/#txt_usepower")
+	self._gocount = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_cost/#go_count")
+	self._txtcostcount = gohelper.findChildText(self.viewGO, "#go_container/btnContain/#go_cost/#go_count/animroot/#txt_costCount")
+	self._gopowercontent = gohelper.findChild(self.viewGO, "#go_righttop/#go_power")
+	self._gofightCount = gohelper.findChild(self.viewGO, "#go_righttop/fightcount")
+	self._txtfightCount = gohelper.findChildTextMesh(self.viewGO, "#go_righttop/fightcount/#txt_fightcount")
+	self._gomask = gohelper.findChild(self.viewGO, "#go_container2/#go_mask")
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+	self._gocontainer2 = gohelper.findChild(self.viewGO, "#go_container2")
+	self._golevelchange = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_levelchange")
+	self._txtreplaycn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnStartReplay/#txt_replaycn")
+	self._gotopbtns = gohelper.findChild(self.viewGO, "#go_container/#go_topbtns")
+	self._btnunpowerstart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerStart")
+	self._btnunpowerreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay")
+	self._btnhardreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnHardReplay")
+	self._txtreplayhardcn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnHardReplay/#txt_replayhardcn")
+	self._txtreplayunpowercn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay/#txt_replayunpowercn")
+	self._gonormallackpower = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_normallackpower")
+	self._goreplaylackpower = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_replaylackpower")
+	self._goTrialTips = gohelper.findChild(self.viewGO, "#go_container/trialContainer/#go_trialTips")
+	self._goTrialTipsBg = gohelper.findChild(self.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg")
+	self._goTrialTipsItem = gohelper.findChild(self.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg/#go_tipsitem")
+	self._btnTrialTips = gohelper.findChildButton(self.viewGO, "#go_container/trialContainer/#go_trialTips/#btn_tips")
+	self._btnSwitchBalance = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance")
+	self._goBalanceEnter = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_enter")
+	self._goBalanceExit = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_exit")
+	self._dropherogroup = gohelper.findChildDropdown(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
+	self._btnmodifyname = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
+	self._dropherogrouparrow = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/arrow").transform
+	self._btncoststart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnCostStart")
+	self._txtCostNum = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnCostStart/#txt_num")
+	self._btncostreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnCostReplay")
+	self._txtreplaycostcn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_replaycostcn")
+	self._txtReplayCostNum = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTrialTips:AddClickListener(arg_2_0._switchTrialTips, arg_2_0)
-	arg_2_0._btnSwitchBalance:AddClickListener(arg_2_0._btnSwitchBalanceOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnstarthard:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnstartreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnReplay:AddClickListener(arg_2_0._onClickReplay, arg_2_0)
-	arg_2_0._btncloth:AddClickListener(arg_2_0._btnclothOnClock, arg_2_0)
-	arg_2_0._btncareerrestrain:AddClickListener(arg_2_0._btncareerrestrainOnClick, arg_2_0)
-	arg_2_0._btnrecommend:AddClickListener(arg_2_0._btnrecommendOnClick, arg_2_0)
-	arg_2_0._btnunpowerstart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btncoststart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnBalanceStart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnUnPowerBalanceStart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnunpowerreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btncostreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnhardreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnmultispeed:AddClickListener(arg_2_0._openmultcontent, arg_2_0)
-	arg_2_0._btnclosemult:AddClickListener(arg_2_0._closemultcontent, arg_2_0)
-	arg_2_0._btnmodifyname:AddClickListener(arg_2_0._modifyName, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0._onTouch, arg_2_0)
-	arg_2_0._dropherogroup:AddOnValueChanged(arg_2_0._groupDropValueChanged, arg_2_0)
+function V1a6_CachotHeroGroupFightView:addEvents()
+	self._btnTrialTips:AddClickListener(self._switchTrialTips, self)
+	self._btnSwitchBalance:AddClickListener(self._btnSwitchBalanceOnClick, self)
+	self._btnstart:AddClickListener(self._onClickStart, self)
+	self._btnstarthard:AddClickListener(self._onClickStart, self)
+	self._btnstartreplay:AddClickListener(self._onClickStart, self)
+	self._btnReplay:AddClickListener(self._onClickReplay, self)
+	self._btncloth:AddClickListener(self._btnclothOnClock, self)
+	self._btncareerrestrain:AddClickListener(self._btncareerrestrainOnClick, self)
+	self._btnrecommend:AddClickListener(self._btnrecommendOnClick, self)
+	self._btnunpowerstart:AddClickListener(self._onClickStart, self)
+	self._btncoststart:AddClickListener(self._onClickStart, self)
+	self._btnBalanceStart:AddClickListener(self._onClickStart, self)
+	self._btnUnPowerBalanceStart:AddClickListener(self._onClickStart, self)
+	self._btnunpowerreplay:AddClickListener(self._onClickStart, self)
+	self._btncostreplay:AddClickListener(self._onClickStart, self)
+	self._btnhardreplay:AddClickListener(self._onClickStart, self)
+	self._btnmultispeed:AddClickListener(self._openmultcontent, self)
+	self._btnclosemult:AddClickListener(self._closemultcontent, self)
+	self._btnmodifyname:AddClickListener(self._modifyName, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
+	self._dropherogroup:AddOnValueChanged(self._groupDropValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_3_0._onTouch, arg_3_0)
-	arg_3_0._btnTrialTips:RemoveClickListener()
-	arg_3_0._btnSwitchBalance:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnBalanceStart:RemoveClickListener()
-	arg_3_0._btnUnPowerBalanceStart:RemoveClickListener()
-	arg_3_0._btnstarthard:RemoveClickListener()
-	arg_3_0._btnstartreplay:RemoveClickListener()
-	arg_3_0._btnReplay:RemoveClickListener()
-	arg_3_0._btncloth:RemoveClickListener()
-	arg_3_0._btncareerrestrain:RemoveClickListener()
-	arg_3_0._btnrecommend:RemoveClickListener()
-	arg_3_0._btnunpowerstart:RemoveClickListener()
-	arg_3_0._btnunpowerreplay:RemoveClickListener()
-	arg_3_0._btncoststart:RemoveClickListener()
-	arg_3_0._btncostreplay:RemoveClickListener()
-	arg_3_0._btnhardreplay:RemoveClickListener()
-	arg_3_0._btnmultispeed:RemoveClickListener()
-	arg_3_0._btnclosemult:RemoveClickListener()
-	arg_3_0._btnmodifyname:RemoveClickListener()
-	arg_3_0._dropherogroup:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_3_0._onGetFightRecordGroupReply, arg_3_0)
+function V1a6_CachotHeroGroupFightView:removeEvents()
+	self:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
+	self._btnTrialTips:RemoveClickListener()
+	self._btnSwitchBalance:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btnBalanceStart:RemoveClickListener()
+	self._btnUnPowerBalanceStart:RemoveClickListener()
+	self._btnstarthard:RemoveClickListener()
+	self._btnstartreplay:RemoveClickListener()
+	self._btnReplay:RemoveClickListener()
+	self._btncloth:RemoveClickListener()
+	self._btncareerrestrain:RemoveClickListener()
+	self._btnrecommend:RemoveClickListener()
+	self._btnunpowerstart:RemoveClickListener()
+	self._btnunpowerreplay:RemoveClickListener()
+	self._btncoststart:RemoveClickListener()
+	self._btncostreplay:RemoveClickListener()
+	self._btnhardreplay:RemoveClickListener()
+	self._btnmultispeed:RemoveClickListener()
+	self._btnclosemult:RemoveClickListener()
+	self._btnmodifyname:RemoveClickListener()
+	self._dropherogroup:RemoveOnValueChanged()
+	self:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
 end
 
-function var_0_0._openmultcontent(arg_4_0)
-	gohelper.setActive(arg_4_0._gomultispeed, not arg_4_0._gomultispeed.activeSelf)
+function V1a6_CachotHeroGroupFightView:_openmultcontent()
+	gohelper.setActive(self._gomultispeed, not self._gomultispeed.activeSelf)
 
-	arg_4_0._gomultispeed.transform.position = arg_4_0._gomultPos.transform.position
+	self._gomultispeed.transform.position = self._gomultPos.transform.position
 end
 
-function var_0_0._closemultcontent(arg_5_0)
-	gohelper.setActive(arg_5_0._gomultispeed, false)
+function V1a6_CachotHeroGroupFightView:_closemultcontent()
+	gohelper.setActive(self._gomultispeed, false)
 end
 
-function var_0_0._btnSwitchBalanceOnClick(arg_6_0)
+function V1a6_CachotHeroGroupFightView:_btnSwitchBalanceOnClick()
 	HeroGroupBalanceHelper.switchBalanceMode()
 	HeroGroupModel.instance:setParam(HeroGroupModel.instance.battleId, HeroGroupModel.instance.episodeId, HeroGroupModel.instance.adventure)
-	arg_6_0.viewContainer:dispatchEvent(HeroGroupEvent.SwitchBalance)
-	gohelper.setActive(arg_6_0._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
-	gohelper.setActive(arg_6_0._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
+	self.viewContainer:dispatchEvent(HeroGroupEvent.SwitchBalance)
+	gohelper.setActive(self._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
+	gohelper.setActive(self._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
 
-	if arg_6_0._replayMode then
-		arg_6_0:_closemultcontent()
+	if self._replayMode then
+		self:_closemultcontent()
 
-		arg_6_0._replayMode = false
-		arg_6_0._multiplication = 1
+		self._replayMode = false
+		self._multiplication = 1
 
-		arg_6_0:_refreshCost(true)
-		arg_6_0:_switchReplayGroup()
+		self:_refreshCost(true)
+		self:_switchReplayGroup()
 	else
-		gohelper.setActive(arg_6_0._goherogroupcontain, false)
-		gohelper.setActive(arg_6_0._goherogroupcontain, true)
-		arg_6_0:_refreshUI()
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
+		self:_refreshUI()
 	end
 
-	arg_6_0.viewContainer:refreshHelpBtnIcon()
-	arg_6_0:isShowHelpBtnIcon()
-	arg_6_0:_initFightGroupDrop()
+	self.viewContainer:refreshHelpBtnIcon()
+	self:isShowHelpBtnIcon()
+	self:_initFightGroupDrop()
 
 	if HeroGroupBalanceHelper.getIsBalanceMode() then
 		ViewMgr.instance:openView(ViewName.HeroGroupBalanceTipView)
 	end
 end
 
-function var_0_0._btnclothOnClock(arg_7_0)
+function V1a6_CachotHeroGroupFightView:_btnclothOnClock()
 	if V1a6_CachotHeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) or PlayerClothModel.instance:getSpEpisodeClothID() then
-		local var_7_0 = V1a6_CachotHeroGroupModel.instance
+	local clothUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if clothUnlock or PlayerClothModel.instance:getSpEpisodeClothID() then
+		local groupModel = V1a6_CachotHeroGroupModel.instance
 
 		ViewMgr.instance:openView(ViewName.PlayerClothView, {
-			groupModel = var_7_0,
-			useCallback = var_7_0.cachotSaveCurGroup,
-			useCallbackObj = var_7_0
+			groupModel = groupModel,
+			useCallback = groupModel.cachotSaveCurGroup,
+			useCallbackObj = groupModel
 		})
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.LeadRoleSkill))
 	end
 end
 
-function var_0_0._btncareerrestrainOnClick(arg_8_0)
+function V1a6_CachotHeroGroupFightView:_btncareerrestrainOnClick()
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView)
 end
 
-function var_0_0._btnrecommendOnClick(arg_9_0)
+function V1a6_CachotHeroGroupFightView:_btnrecommendOnClick()
 	FightFailRecommendController.instance:onClickRecommend()
-	arg_9_0:_udpateRecommendEffect()
+	self:_udpateRecommendEffect()
 
-	if arg_9_0._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
-		local var_9_0 = WeekWalkModel.instance:getBattleElementId()
+	if self._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
+		local elementId = WeekWalkModel.instance:getBattleElementId()
 
-		WeekwalkRpc.instance:sendWeekwalkHeroRecommendRequest(var_9_0, arg_9_0._receiveRecommend, arg_9_0)
+		WeekwalkRpc.instance:sendWeekwalkHeroRecommendRequest(elementId, self._receiveRecommend, self)
 
 		return
 	end
 
-	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(arg_9_0._episodeId, arg_9_0._receiveRecommend, arg_9_0)
+	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(self._episodeId, self._receiveRecommend, self)
 end
 
-function var_0_0._receiveRecommend(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 ~= 0 then
+function V1a6_CachotHeroGroupFightView:_receiveRecommend(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, arg_10_3)
+	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, msg)
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	var_0_1 = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication) or var_0_1
-	arg_11_0._multiplication = 1
-	arg_11_0._goherogroupcontain = gohelper.findChild(arg_11_0.viewGO, "herogroupcontain")
-	arg_11_0._goBtnContain = gohelper.findChild(arg_11_0.viewGO, "#go_container/btnContain")
-	arg_11_0._btnContainAnim = arg_11_0._goBtnContain:GetComponent(typeof(UnityEngine.Animator))
+function V1a6_CachotHeroGroupFightView:_editableInitView()
+	MaxMultiplication = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication) or MaxMultiplication
+	self._multiplication = 1
+	self._goherogroupcontain = gohelper.findChild(self.viewGO, "herogroupcontain")
+	self._goBtnContain = gohelper.findChild(self.viewGO, "#go_container/btnContain")
+	self._btnContainAnim = self._goBtnContain:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_11_0._gomask, false)
-	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_11_0._onOpenFullView, arg_11_0)
-	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_11_0._onCloseView, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_11_0._onModifyHeroGroup, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupName, arg_11_0._initFightGroupDrop, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_11_0._onModifySnapshot, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_11_0._onClickHeroGroupItem, arg_11_0)
-	arg_11_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_11_0._respBeginFight, arg_11_0)
-	arg_11_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_11_0.isShowHelpBtnIcon, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, arg_11_0._onUseRecommendGroup, arg_11_0)
-	arg_11_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0._onCurrencyChange, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, arg_11_0._showGuideDragEffect, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUpdateRecommendLevel, arg_11_0._refreshTips, arg_11_0)
-	arg_11_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, arg_11_0._heroMoveForward, arg_11_0)
+	gohelper.setActive(self._gomask, false)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onModifyHeroGroup, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupName, self._initFightGroupDrop, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onModifySnapshot, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, self._onClickHeroGroupItem, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
+	self:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.isShowHelpBtnIcon, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, self._onUseRecommendGroup, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, self._showGuideDragEffect, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUpdateRecommendLevel, self._refreshTips, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, self._heroMoveForward, self)
 
 	if BossRushController.instance:isInBossRushFight() then
-		gohelper.addUIClickAudio(arg_11_0._btnstart.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
-		gohelper.addUIClickAudio(arg_11_0._btnstarthard.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
-		gohelper.addUIClickAudio(arg_11_0._btnstartreplay.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstarthard.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstartreplay.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
 	else
-		gohelper.addUIClickAudio(arg_11_0._btnstart.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-		gohelper.addUIClickAudio(arg_11_0._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-		gohelper.addUIClickAudio(arg_11_0._btnstartreplay.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstartreplay.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
 	end
 
-	gohelper.addUIClickAudio(arg_11_0._btnReplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
+	gohelper.addUIClickAudio(self._btnReplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
 
-	arg_11_0._iconGO = arg_11_0:getResInst(arg_11_0.viewContainer:getSetting().otherRes[1], arg_11_0._btncloth.gameObject)
+	self._iconGO = self:getResInst(self.viewContainer:getSetting().otherRes[1], self._btncloth.gameObject)
 
-	recthelper.setAnchor(arg_11_0._iconGO.transform, -100, 1)
+	recthelper.setAnchor(self._iconGO.transform, -100, 1)
 
-	arg_11_0._tweeningId = 0
-	arg_11_0._replayMode = false
-	arg_11_0._multSpeedItems = {}
+	self._tweeningId = 0
+	self._replayMode = false
+	self._multSpeedItems = {}
 
-	gohelper.CreateObjList(arg_11_0, arg_11_0._setMultSpeedItem, {
+	gohelper.CreateObjList(self, self._setMultSpeedItem, {
 		4,
 		3,
 		2,
 		1
-	}, arg_11_0._gomultContent, arg_11_0._gomultitem)
-	gohelper.setActive(arg_11_0._gomultispeed, false)
-	arg_11_0._simagereplayframe:LoadImage(ResUrl.getHeroGroupBg("fuxian_zhegai"))
+	}, self._gomultContent, self._gomultitem)
+	gohelper.setActive(self._gomultispeed, false)
+	self._simagereplayframe:LoadImage(ResUrl.getHeroGroupBg("fuxian_zhegai"))
 end
 
-function var_0_0._setMultSpeedItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = gohelper.findChild(arg_12_1, "line")
-	local var_12_1 = gohelper.findChildTextMesh(arg_12_1, "num")
-	local var_12_2 = gohelper.findChild(arg_12_1, "selecticon")
+function V1a6_CachotHeroGroupFightView:_setMultSpeedItem(go, multispeed, index)
+	local line = gohelper.findChild(go, "line")
+	local num = gohelper.findChildTextMesh(go, "num")
+	local selecticon = gohelper.findChild(go, "selecticon")
 
-	arg_12_0:addClickCb(gohelper.getClick(arg_12_1), arg_12_0.setMultSpeed, arg_12_0, arg_12_2)
+	self:addClickCb(gohelper.getClick(go), self.setMultSpeed, self, multispeed)
 
-	var_12_1.text = luaLang("multiple") .. arg_12_2
+	num.text = luaLang("multiple") .. multispeed
 
-	gohelper.setActive(var_12_0, arg_12_2 ~= var_0_1)
+	gohelper.setActive(line, multispeed ~= MaxMultiplication)
 
-	arg_12_0._multSpeedItems[arg_12_2] = arg_12_0:getUserDataTb_()
-	arg_12_0._multSpeedItems[arg_12_2].num = var_12_1
-	arg_12_0._multSpeedItems[arg_12_2].selecticon = var_12_2
+	self._multSpeedItems[multispeed] = self:getUserDataTb_()
+	self._multSpeedItems[multispeed].num = num
+	self._multSpeedItems[multispeed].selecticon = selecticon
 end
 
-local var_0_2 = GameUtil.parseColor("#efb785")
-local var_0_3 = GameUtil.parseColor("#C3BEB6")
+local selectColor = GameUtil.parseColor("#efb785")
+local unSelectColor = GameUtil.parseColor("#C3BEB6")
 
-function var_0_0.setMultSpeed(arg_13_0, arg_13_1)
-	for iter_13_0 = 1, var_0_1 do
-		arg_13_0._multSpeedItems[iter_13_0].num.color = arg_13_1 == iter_13_0 and var_0_2 or var_0_3
+function V1a6_CachotHeroGroupFightView:setMultSpeed(speed)
+	for i = 1, MaxMultiplication do
+		self._multSpeedItems[i].num.color = speed == i and selectColor or unSelectColor
 
-		gohelper.setActive(arg_13_0._multSpeedItems[iter_13_0].selecticon, arg_13_1 == iter_13_0)
+		gohelper.setActive(self._multSpeedItems[i].selecticon, speed == i)
 	end
 
-	arg_13_0._txtmultispeed.text = luaLang("multiple") .. arg_13_1
-	arg_13_0._multiplication = arg_13_1
+	self._txtmultispeed.text = luaLang("multiple") .. speed
+	self._multiplication = speed
 
-	PlayerPrefsHelper.setNumber(arg_13_0:_getMultiplicationKey(), arg_13_0._multiplication)
-	arg_13_0:_refreshUI()
-	arg_13_0:_refreshTips()
+	PlayerPrefsHelper.setNumber(self:_getMultiplicationKey(), self._multiplication)
+	self:_refreshUI()
+	self:_refreshTips()
 
-	local var_13_0 = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(arg_13_0._multiplication))
+	local replayCn = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(self._multiplication))
 
-	arg_13_0._txtreplaycn.text = var_13_0
-	arg_13_0._txtreplayhardcn.text = var_13_0
-	arg_13_0._txtreplayunpowercn.text = var_13_0
-	arg_13_0._txtreplaycostcn.text = var_13_0
+	self._txtreplaycn.text = replayCn
+	self._txtreplayhardcn.text = replayCn
+	self._txtreplayunpowercn.text = replayCn
+	self._txtreplaycostcn.text = replayCn
 
-	arg_13_0:_refreshPowerShow()
-	arg_13_0:_closemultcontent()
+	self:_refreshPowerShow()
+	self:_closemultcontent()
 end
 
-function var_0_0._heroMoveForward(arg_14_0, arg_14_1)
-	HeroGroupEditListModel.instance:setMoveHeroId(tonumber(arg_14_1))
+function V1a6_CachotHeroGroupFightView:_heroMoveForward(heroId)
+	HeroGroupEditListModel.instance:setMoveHeroId(tonumber(heroId))
 end
 
-function var_0_0.isReplayMode(arg_15_0)
-	return arg_15_0._replayMode
+function V1a6_CachotHeroGroupFightView:isReplayMode()
+	return self._replayMode
 end
 
-function var_0_0._onCurrencyChange(arg_16_0, arg_16_1)
-	if not arg_16_1[CurrencyEnum.CurrencyType.Power] then
+function V1a6_CachotHeroGroupFightView:_onCurrencyChange(changeIds)
+	if not changeIds[CurrencyEnum.CurrencyType.Power] then
 		return
 	end
 
-	arg_16_0:_refreshCostPower()
+	self:_refreshCostPower()
 end
 
-function var_0_0._respBeginFight(arg_17_0)
-	gohelper.setActive(arg_17_0._gomask, true)
+function V1a6_CachotHeroGroupFightView:_respBeginFight()
+	gohelper.setActive(self._gomask, true)
 end
 
-function var_0_0._onOpenFullView(arg_18_0, arg_18_1)
+function V1a6_CachotHeroGroupFightView:_onOpenFullView(viewName)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 end
 
-function var_0_0._onCloseView(arg_19_0, arg_19_1)
-	if arg_19_1 == ViewName.EquipInfoTeamShowView then
-		arg_19_0:_checkFirstPosHasEquip()
+function V1a6_CachotHeroGroupFightView:_onCloseView(viewName)
+	if viewName == ViewName.EquipInfoTeamShowView then
+		self:_checkFirstPosHasEquip()
 	end
 end
 
-function var_0_0.onOpen(arg_20_0)
+function V1a6_CachotHeroGroupFightView:onOpen()
 	if HeroGroupBalanceHelper.getIsBalanceMode() then
 		ViewMgr.instance:openView(ViewName.HeroGroupBalanceTipView)
 	end
 
 	HeroGroupTrialModel.instance:setTrialByBattleId(HeroGroupModel.instance.battleId)
-	arg_20_0:_checkFirstPosHasEquip()
-	arg_20_0:_checkEquipClothSkill()
-	gohelper.setActive(arg_20_0._btnSwitchBalance, HeroGroupBalanceHelper.canShowBalanceSwitchBtn())
-	gohelper.setActive(arg_20_0._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
-	gohelper.setActive(arg_20_0._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
-	arg_20_0:_refreshUI()
-	gohelper.addUIClickAudio(arg_20_0._btncareerrestrain.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
-	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotHeroGroupFightView, arg_20_0._onEscapeBtnClick, arg_20_0)
-	arg_20_0:isShowHelpBtnIcon()
+	self:_checkFirstPosHasEquip()
+	self:_checkEquipClothSkill()
+	gohelper.setActive(self._btnSwitchBalance, HeroGroupBalanceHelper.canShowBalanceSwitchBtn())
+	gohelper.setActive(self._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
+	gohelper.setActive(self._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
+	self:_refreshUI()
+	gohelper.addUIClickAudio(self._btncareerrestrain.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotHeroGroupFightView, self._onEscapeBtnClick, self)
+	self:isShowHelpBtnIcon()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Action_Cardsopen)
 
-	local var_20_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
-	local var_20_1 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-	local var_20_2 = var_20_1 and var_20_1.star == DungeonEnum.StarType.Advanced and var_20_1.hasRecord
-	local var_20_3 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+	local hasUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local hasRecord = userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced and userDungeonMO.hasRecord
+	local pass_model_record = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
 
-	if var_20_0 and var_20_2 and not string.nilorempty(var_20_3) and cjson.decode(var_20_3)[tostring(arg_20_0._episodeId)] and not arg_20_0._replayMode then
-		arg_20_0._replayMode = true
-		arg_20_0._multiplication = PlayerPrefsHelper.getNumber(arg_20_0:_getMultiplicationKey(), 1)
+	if hasUnlock and hasRecord and not string.nilorempty(pass_model_record) then
+		pass_model_record = cjson.decode(pass_model_record)
 
-		arg_20_0:_refreshCost(true)
+		if pass_model_record[tostring(self._episodeId)] and not self._replayMode then
+			self._replayMode = true
+			self._multiplication = PlayerPrefsHelper.getNumber(self:_getMultiplicationKey(), 1)
 
-		arg_20_0._replayFightGroupMO = HeroGroupModel.instance:getReplayParam()
+			self:_refreshCost(true)
 
-		if not arg_20_0._replayFightGroupMO then
-			arg_20_0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_20_0._onGetFightRecordGroupReply, arg_20_0)
-			FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
-		else
-			arg_20_0:_switchReplayGroup()
+			self._replayFightGroupMO = HeroGroupModel.instance:getReplayParam()
+
+			if not self._replayFightGroupMO then
+				self:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
+				FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
+			else
+				self:_switchReplayGroup()
+			end
 		end
 	end
 
-	arg_20_0:setMultSpeed(arg_20_0._multiplication)
-	gohelper.setActive(arg_20_0._goreplaybtnframe, arg_20_0._replayMode)
+	self:setMultSpeed(self._multiplication)
+	gohelper.setActive(self._goreplaybtnframe, self._replayMode)
 
-	local var_20_4 = false
-	local var_20_5 = HeroGroupModel.instance.episodeId
-	local var_20_6 = DungeonConfig.instance:getEpisodeCO(var_20_5)
-	local var_20_7 = DungeonConfig.instance:getChapterCO(var_20_6.chapterId)
+	local showNum = false
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	if var_20_7 and var_20_7.enterAfterFreeLimit > 0 then
-		local var_20_8 = DungeonModel.instance:getChapterRemainingNum(var_20_7.type)
+	if chapterConfig and chapterConfig.enterAfterFreeLimit > 0 then
+		local num = DungeonModel.instance:getChapterRemainingNum(chapterConfig.type)
 
-		if var_20_8 > 0 then
-			var_20_4 = true
-			arg_20_0._txtfightCount.text = var_20_8
+		if num > 0 then
+			showNum = true
+			self._txtfightCount.text = num
 		end
 	end
 
-	gohelper.setActive(arg_20_0._gofightCount, var_20_4)
+	gohelper.setActive(self._gofightCount, showNum)
 
-	arg_20_0._dropgroupchildcount = arg_20_0._dropherogroup.transform.childCount
+	self._dropgroupchildcount = self._dropherogroup.transform.childCount
 
-	arg_20_0:_refreshReplay()
-	arg_20_0:_refreshTips()
-	arg_20_0:_refreshPowerShow()
-	arg_20_0:_udpateRecommendEffect()
+	self:_refreshReplay()
+	self:_refreshTips()
+	self:_refreshPowerShow()
+	self:_udpateRecommendEffect()
 	FightHelper.detectAttributeCounter()
-	arg_20_0:_initFightGroupDrop()
+	self:_initFightGroupDrop()
 
-	if arg_20_0._goTrialTips.activeSelf then
-		gohelper.setActive(arg_20_0._goTrialTipsBg, true)
+	if self._goTrialTips.activeSelf then
+		gohelper.setActive(self._goTrialTipsBg, true)
 	end
 end
 
-function var_0_0.onOpenFinish(arg_21_0)
-	arg_21_0:_dispatchGuideEventOnOpenFinish()
+function V1a6_CachotHeroGroupFightView:onOpenFinish()
+	self:_dispatchGuideEventOnOpenFinish()
 end
 
-function var_0_0._setTrialNumTips(arg_22_0)
-	local var_22_0, var_22_1 = var_0_0._getEpisodeConfigAndBattleConfig()
-	local var_22_2 = {}
+function V1a6_CachotHeroGroupFightView:_setTrialNumTips()
+	local _, battleCO = V1a6_CachotHeroGroupFightView._getEpisodeConfigAndBattleConfig()
+	local tips = {}
 
-	if var_22_1 and var_22_1.trialLimit > 0 then
-		if var_22_1.trialLimit >= 4 then
-			var_22_2[1] = luaLang("herogroup_trial_tip")
+	if battleCO and battleCO.trialLimit > 0 then
+		if battleCO.trialLimit >= 4 then
+			tips[1] = luaLang("herogroup_trial_tip")
 		else
-			var_22_2[1] = formatLuaLang("herogroup_trial_limit_tip", var_22_1.trialLimit)
+			tips[1] = formatLuaLang("herogroup_trial_limit_tip", battleCO.trialLimit)
 		end
 	end
 
-	if var_22_1 and not string.nilorempty(var_22_1.trialEquips) then
-		table.insert(var_22_2, luaLang("herogroup_trial_equip_tip"))
+	if battleCO and not string.nilorempty(battleCO.trialEquips) then
+		table.insert(tips, luaLang("herogroup_trial_equip_tip"))
 	end
 
-	gohelper.setActive(arg_22_0._goTrialTips, #var_22_2 > 0)
+	gohelper.setActive(self._goTrialTips, #tips > 0)
 
-	if #var_22_2 > 0 then
-		gohelper.CreateObjList(arg_22_0, arg_22_0._setTrialTipsTxt, var_22_2, arg_22_0._goTrialTipsBg, arg_22_0._goTrialTipsItem)
-	end
-end
-
-function var_0_0._onTouch(arg_23_0)
-	if arg_23_0._goTrialTips.activeSelf and arg_23_0._clickTrialFrame ~= UnityEngine.Time.frameCount and not ViewMgr.instance:isOpen(ViewName.HeroGroupBalanceTipView) then
-		gohelper.setActive(arg_23_0._goTrialTipsBg, false)
+	if #tips > 0 then
+		gohelper.CreateObjList(self, self._setTrialTipsTxt, tips, self._goTrialTipsBg, self._goTrialTipsItem)
 	end
 end
 
-function var_0_0._setTrialTipsTxt(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	gohelper.findChildTextMesh(arg_24_1, "desc").text = arg_24_2
-end
-
-function var_0_0._switchTrialTips(arg_25_0)
-	gohelper.setActive(arg_25_0._goTrialTipsBg, not arg_25_0._goTrialTipsBg.activeSelf)
-
-	arg_25_0._clickTrialFrame = UnityEngine.Time.frameCount
-end
-
-function var_0_0._refreshPowerShow(arg_26_0)
-	local var_26_0 = true
-	local var_26_1 = HeroGroupModel.instance.episodeId
-	local var_26_2 = DungeonConfig.instance:getEpisodeCO(var_26_1)
-	local var_26_3 = DungeonConfig.instance:getChapterCO(var_26_2.chapterId)
-
-	if var_26_3 and var_26_3.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(var_26_3.type) >= arg_26_0._multiplication then
-		var_26_0 = false
-	end
-
-	gohelper.setActive(arg_26_0._gopowercontent, var_26_0)
-	gohelper.setActive(arg_26_0._gofightCount, not var_26_0)
-end
-
-function var_0_0._getMultiplicationKey(arg_27_0)
-	return string.format("%s#%d", PlayerPrefsKey.Multiplication .. PlayerModel.instance:getMyUserId(), arg_27_0._episodeId)
-end
-
-function var_0_0._udpateRecommendEffect(arg_28_0)
-	gohelper.setActive(arg_28_0._goRecommendEffect, FightFailRecommendController.instance:needShowRecommend(arg_28_0._episodeId))
-end
-
-function var_0_0.isShowHelpBtnIcon(arg_29_0)
-	local var_29_0 = arg_29_0.viewContainer:getHelpId()
-
-	recthelper.setAnchorX(arg_29_0._gotopbtns.transform, var_29_0 and 568.56 or 419.88)
-end
-
-function var_0_0._onEscapeBtnClick(arg_30_0)
-	if not arg_30_0._gomask.gameObject.activeInHierarchy then
-		arg_30_0.viewContainer:_closeCallback()
+function V1a6_CachotHeroGroupFightView:_onTouch()
+	if self._goTrialTips.activeSelf and self._clickTrialFrame ~= UnityEngine.Time.frameCount and not ViewMgr.instance:isOpen(ViewName.HeroGroupBalanceTipView) then
+		gohelper.setActive(self._goTrialTipsBg, false)
 	end
 end
 
-function var_0_0._getfreeCount(arg_31_0)
-	if not arg_31_0._chapterConfig or arg_31_0._chapterConfig.enterAfterFreeLimit <= 0 then
+function V1a6_CachotHeroGroupFightView:_setTrialTipsTxt(obj, data, index)
+	gohelper.findChildTextMesh(obj, "desc").text = data
+end
+
+function V1a6_CachotHeroGroupFightView:_switchTrialTips()
+	gohelper.setActive(self._goTrialTipsBg, not self._goTrialTipsBg.activeSelf)
+
+	self._clickTrialFrame = UnityEngine.Time.frameCount
+end
+
+function V1a6_CachotHeroGroupFightView:_refreshPowerShow()
+	local showPower = true
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+
+	if chapterConfig and chapterConfig.enterAfterFreeLimit > 0 then
+		local num = DungeonModel.instance:getChapterRemainingNum(chapterConfig.type)
+
+		if num >= self._multiplication then
+			showPower = false
+		end
+	end
+
+	gohelper.setActive(self._gopowercontent, showPower)
+	gohelper.setActive(self._gofightCount, not showPower)
+end
+
+function V1a6_CachotHeroGroupFightView:_getMultiplicationKey()
+	return string.format("%s#%d", PlayerPrefsKey.Multiplication .. PlayerModel.instance:getMyUserId(), self._episodeId)
+end
+
+function V1a6_CachotHeroGroupFightView:_udpateRecommendEffect()
+	gohelper.setActive(self._goRecommendEffect, FightFailRecommendController.instance:needShowRecommend(self._episodeId))
+end
+
+function V1a6_CachotHeroGroupFightView:isShowHelpBtnIcon()
+	local helpId = self.viewContainer:getHelpId()
+
+	recthelper.setAnchorX(self._gotopbtns.transform, helpId and 568.56 or 419.88)
+end
+
+function V1a6_CachotHeroGroupFightView:_onEscapeBtnClick()
+	if not self._gomask.gameObject.activeInHierarchy then
+		self.viewContainer:_closeCallback()
+	end
+end
+
+function V1a6_CachotHeroGroupFightView:_getfreeCount()
+	if not self._chapterConfig or self._chapterConfig.enterAfterFreeLimit <= 0 then
 		return 0
 	end
 
-	return (DungeonModel.instance:getChapterRemainingNum(arg_31_0._chapterConfig.type))
+	local freeNum = DungeonModel.instance:getChapterRemainingNum(self._chapterConfig.type)
+
+	return freeNum
 end
 
-function var_0_0._groupDropValueChanged(arg_32_0, arg_32_1)
-	local var_32_0
+function V1a6_CachotHeroGroupFightView:_groupDropValueChanged(value)
+	local selectIndex
 
 	if V1a6_CachotHeroGroupModel.instance:getGroupTypeName() then
-		var_32_0 = arg_32_1
+		selectIndex = value
 	else
-		var_32_0 = arg_32_1 + 1
+		selectIndex = value + 1
 	end
 
-	gohelper.setActive(arg_32_0._btnmodifyname, false)
+	gohelper.setActive(self._btnmodifyname, false)
 
-	if V1a6_CachotHeroGroupModel.instance:setHeroGroupSelectIndex(var_32_0) then
-		arg_32_0:_checkEquipClothSkill()
+	if V1a6_CachotHeroGroupModel.instance:setHeroGroupSelectIndex(selectIndex) then
+		self:_checkEquipClothSkill()
 		GameFacade.showToast(ToastEnum.SeasonGroupChanged)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-		gohelper.setActive(arg_32_0._goherogroupcontain, false)
-		gohelper.setActive(arg_32_0._goherogroupcontain, true)
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupSelectIndex)
 	end
 end
 
-function var_0_0._initFightGroupDrop(arg_33_0)
-	if not arg_33_0:_noAidHero() then
+function V1a6_CachotHeroGroupFightView:_initFightGroupDrop()
+	if not self:_noAidHero() then
 		return
 	end
 
-	local var_33_0 = {}
+	local list = {}
 
-	for iter_33_0 = 1, 4 do
-		var_33_0[iter_33_0] = V1a6_CachotHeroGroupModel.instance:getCommonGroupName(iter_33_0)
+	for i = 1, 4 do
+		list[i] = V1a6_CachotHeroGroupModel.instance:getCommonGroupName(i)
 	end
 
-	local var_33_1 = V1a6_CachotHeroGroupModel.instance.curGroupSelectIndex
+	local selectIndex = V1a6_CachotHeroGroupModel.instance.curGroupSelectIndex
 
-	gohelper.setActive(arg_33_0._btnmodifyname, false)
+	gohelper.setActive(self._btnmodifyname, false)
 
-	local var_33_2 = V1a6_CachotHeroGroupModel.instance:getGroupTypeName()
+	local name = V1a6_CachotHeroGroupModel.instance:getGroupTypeName()
 
-	if var_33_2 then
-		table.insert(var_33_0, 1, var_33_2)
+	if name then
+		table.insert(list, 1, name)
 	else
-		var_33_1 = var_33_1 - 1
+		selectIndex = selectIndex - 1
 	end
 
-	arg_33_0._dropherogroup:ClearOptions()
-	arg_33_0._dropherogroup:AddOptions(var_33_0)
-	arg_33_0._dropherogroup:SetValue(var_33_1)
+	self._dropherogroup:ClearOptions()
+	self._dropherogroup:AddOptions(list)
+	self._dropherogroup:SetValue(selectIndex)
 end
 
-function var_0_0._modifyName(arg_34_0)
+function V1a6_CachotHeroGroupFightView:_modifyName()
 	ViewMgr.instance:openView(ViewName.HeroGroupModifyNameView)
 end
 
-function var_0_0._refreshUI(arg_35_0)
-	local var_35_0 = V1a6_CachotHeroGroupModel.instance:getCurGroupId()
+function V1a6_CachotHeroGroupFightView:_refreshUI()
+	local heroGroupId = V1a6_CachotHeroGroupModel.instance:getCurGroupId()
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, var_35_0)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, heroGroupId)
 
-	arg_35_0._episodeId = HeroGroupModel.instance.episodeId
-	arg_35_0.episodeConfig = DungeonConfig.instance:getEpisodeCO(arg_35_0._episodeId)
-	arg_35_0._chapterConfig = DungeonConfig.instance:getChapterCO(arg_35_0.episodeConfig.chapterId)
+	self._episodeId = HeroGroupModel.instance.episodeId
+	self.episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
+	self._chapterConfig = DungeonConfig.instance:getChapterCO(self.episodeConfig.chapterId)
 
-	local var_35_1 = arg_35_0:_getfreeCount()
+	local freeNum = self:_getfreeCount()
 
-	arg_35_0._enterAfterFreeLimit = var_35_1 - arg_35_0._multiplication >= 0 and var_35_1 - arg_35_0._multiplication or false
+	self._enterAfterFreeLimit = freeNum - self._multiplication >= 0 and freeNum - self._multiplication or false
 
-	gohelper.setActive(arg_35_0._btnrecommend.gameObject, arg_35_0._chapterConfig.isHeroRecommend == 1)
-	arg_35_0:_refreshCost(true)
-	arg_35_0:_refreshCloth()
-	arg_35_0:_setTrialNumTips()
-	arg_35_0.viewContainer:setNavigateOverrideClose()
-	gohelper.setActive(arg_35_0._goReplayBtn, not HeroGroupBalanceHelper.getIsBalanceMode() and arg_35_0.episodeConfig and arg_35_0.episodeConfig.canUseRecord == 1 and arg_35_0._chapterConfig.type ~= DungeonEnum.ChapterType.WeekWalk)
+	gohelper.setActive(self._btnrecommend.gameObject, self._chapterConfig.isHeroRecommend == 1)
+	self:_refreshCost(true)
+	self:_refreshCloth()
+	self:_setTrialNumTips()
+	self.viewContainer:setNavigateOverrideClose()
+	gohelper.setActive(self._goReplayBtn, not HeroGroupBalanceHelper.getIsBalanceMode() and self.episodeConfig and self.episodeConfig.canUseRecord == 1 and self._chapterConfig.type ~= DungeonEnum.ChapterType.WeekWalk)
 end
 
-function var_0_0._refreshCost(arg_36_0, arg_36_1)
-	gohelper.setActive(arg_36_0._gocost, arg_36_1)
+function V1a6_CachotHeroGroupFightView:_refreshCost(visible)
+	gohelper.setActive(self._gocost, visible)
 
-	local var_36_0 = arg_36_0:_getfreeCount()
+	local remainCount = self:_getfreeCount()
 
-	gohelper.setActive(arg_36_0._gopower, not arg_36_0._enterAfterFreeLimit)
-	gohelper.setActive(arg_36_0._gocount, not arg_36_0._enterAfterFreeLimit and var_36_0 > 0)
-	gohelper.setActive(arg_36_0._gonormallackpower, false)
-	gohelper.setActive(arg_36_0._goreplaylackpower, false)
+	gohelper.setActive(self._gopower, not self._enterAfterFreeLimit)
+	gohelper.setActive(self._gocount, not self._enterAfterFreeLimit and remainCount > 0)
+	gohelper.setActive(self._gonormallackpower, false)
+	gohelper.setActive(self._goreplaylackpower, false)
 
-	if arg_36_0._enterAfterFreeLimit or var_36_0 > 0 then
-		local var_36_1 = tostring(-1 * math.min(arg_36_0._multiplication, var_36_0))
+	if self._enterAfterFreeLimit or remainCount > 0 then
+		local str = tostring(-1 * math.min(self._multiplication, remainCount))
 
-		arg_36_0._txtCostNum.text = var_36_1
-		arg_36_0._txtReplayCostNum.text = var_36_1
+		self._txtCostNum.text = str
+		self._txtReplayCostNum.text = str
 
-		if var_36_0 >= arg_36_0._multiplication then
-			arg_36_0:_refreshBtns(false)
+		if remainCount >= self._multiplication then
+			self:_refreshBtns(false)
 
 			return
 		end
 	end
 
-	local var_36_2 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
-	local var_36_3 = ResUrl.getCurrencyItemIcon(var_36_2.icon .. "_btn")
+	local currencyCo = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+	local powerIcon = ResUrl.getCurrencyItemIcon(currencyCo.icon .. "_btn")
 
-	arg_36_0._simagepower:LoadImage(var_36_3)
-	arg_36_0:_refreshCostPower()
+	self._simagepower:LoadImage(powerIcon)
+	self:_refreshCostPower()
 end
 
-function var_0_0._refreshTips(arg_37_0)
-	local var_37_0 = arg_37_0._enterAfterFreeLimit and -271.5 or -280
-	local var_37_1 = arg_37_0._enterAfterFreeLimit and 163 or 165.5
+function V1a6_CachotHeroGroupFightView:_refreshTips()
+	local posX = self._enterAfterFreeLimit and -271.5 or -280
+	local posY = self._enterAfterFreeLimit and 163 or 165.5
 
-	recthelper.setAnchor(arg_37_0._golevelchange.transform, var_37_0, var_37_1)
+	recthelper.setAnchor(self._golevelchange.transform, posX, posY)
 
-	local var_37_2 = arg_37_0._golevelchange.activeInHierarchy and not arg_37_0._replayMode
+	local isShowLevelChangeUI = self._golevelchange.activeInHierarchy and not self._replayMode
 
-	recthelper.setAnchorY(arg_37_0._gocount.transform, var_37_2 and 0 or -41.11)
-	recthelper.setAnchorX(arg_37_0._gocount.transform, -72)
-	gohelper.setActive(arg_37_0._btnmultispeed.gameObject, arg_37_0._replayMode)
+	recthelper.setAnchorY(self._gocount.transform, isShowLevelChangeUI and 0 or -41.11)
+	recthelper.setAnchorX(self._gocount.transform, -72)
+	gohelper.setActive(self._btnmultispeed.gameObject, self._replayMode)
 
-	arg_37_0._gomultispeed.transform.position = arg_37_0._gomultPos.transform.position
+	self._gomultispeed.transform.position = self._gomultPos.transform.position
 end
 
-function var_0_0._refreshCostPower(arg_38_0)
-	local var_38_0 = string.split(arg_38_0.episodeConfig.cost, "|")
-	local var_38_1 = string.split(var_38_0[1], "#")
-	local var_38_2 = tonumber(var_38_1[3] or 0)
-	local var_38_3 = var_38_2 > 0
+function V1a6_CachotHeroGroupFightView:_refreshCostPower()
+	local costs = string.split(self.episodeConfig.cost, "|")
+	local cost1 = string.split(costs[1], "#")
+	local value = tonumber(cost1[3] or 0)
+	local showPower = value > 0
 
-	if arg_38_0._enterAfterFreeLimit then
-		var_38_3 = false
+	if self._enterAfterFreeLimit then
+		showPower = false
 	end
 
-	gohelper.setActive(arg_38_0._gopower, var_38_3)
-	arg_38_0:_refreshBtns(var_38_3)
+	gohelper.setActive(self._gopower, showPower)
+	self:_refreshBtns(showPower)
 
-	if not var_38_3 then
+	if not showPower then
 		return
 	end
 
-	local var_38_4 = var_38_2 * ((arg_38_0._multiplication or 1) - arg_38_0:_getfreeCount())
+	local multiCost = value * ((self._multiplication or 1) - self:_getfreeCount())
 
-	arg_38_0._txtusepower.text = string.format("-%s", var_38_4)
+	self._txtusepower.text = string.format("-%s", multiCost)
 
-	local var_38_5 = arg_38_0._chapterConfig.type == DungeonEnum.ChapterType.Hard
+	local isHardChapter = self._chapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	if var_38_4 <= CurrencyModel.instance:getPower() then
-		local var_38_6 = var_38_5 and "#FFFFFF" or "#070706"
+	if multiCost <= CurrencyModel.instance:getPower() then
+		local usePowerColor = isHardChapter and "#FFFFFF" or "#070706"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_38_0._txtusepower, arg_38_0._replayMode and "#070706" or var_38_6)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepower, self._replayMode and "#070706" or usePowerColor)
 	else
-		local var_38_7 = var_38_5 and "#C44945" or "#800015"
+		local usePowerColor = isHardChapter and "#C44945" or "#800015"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_38_0._txtusepower, arg_38_0._replayMode and "#800015" or var_38_7)
-		gohelper.setActive(arg_38_0._gonormallackpower, not arg_38_0._replayMode)
-		gohelper.setActive(arg_38_0._goreplaylackpower, arg_38_0._replayMode)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepower, self._replayMode and "#800015" or usePowerColor)
+		gohelper.setActive(self._gonormallackpower, not self._replayMode)
+		gohelper.setActive(self._goreplaylackpower, self._replayMode)
 	end
 end
 
-function var_0_0._dispatchGuideEvent(arg_39_0)
-	if arg_39_0._replayMode then
+function V1a6_CachotHeroGroupFightView:_dispatchGuideEvent()
+	if self._replayMode then
 		return
 	end
 
-	if not arg_39_0:_isSpType(arg_39_0._chapterConfig.type) then
+	if not self:_isSpType(self._chapterConfig.type) then
 		if not GuideInvalidCondition.checkAllGroupSetEquip() then
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnEnteryEquipType)
 		end
 
-		arg_39_0:_dispatchRecordEvent()
-		arg_39_0:_dispatchNoEquipEvent()
+		self:_dispatchRecordEvent()
+		self:_dispatchNoEquipEvent()
 	end
 end
 
-function var_0_0._dispatchGuideEventOnOpenFinish(arg_40_0)
-	if arg_40_0._episodeId then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithEpisodeId, arg_40_0._episodeId)
+function V1a6_CachotHeroGroupFightView:_dispatchGuideEventOnOpenFinish()
+	if self._episodeId then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithEpisodeId, self._episodeId)
 	end
 end
 
-function var_0_0._dispatchNoEquipEvent(arg_41_0)
-	local var_41_0 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
+function V1a6_CachotHeroGroupFightView:_dispatchNoEquipEvent()
+	local curGroupMO = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
 
-	for iter_41_0 = 1, 4 do
-		local var_41_1 = var_41_0:getPosEquips(iter_41_0 - 1).equipUid[1]
+	for i = 1, 4 do
+		local equips = curGroupMO:getPosEquips(i - 1).equipUid
+		local equipId = equips[1]
+		local equipMO = EquipModel.instance:getEquip(equipId)
 
-		if EquipModel.instance:getEquip(var_41_1) then
+		if equipMO then
 			return
 		end
 	end
@@ -678,107 +694,105 @@ function var_0_0._dispatchNoEquipEvent(arg_41_0)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnEnteryNormalType)
 end
 
-function var_0_0._isSpType(arg_42_0, arg_42_1)
-	return arg_42_1 == DungeonEnum.ChapterType.Sp or arg_42_1 == DungeonEnum.ChapterType.TeachNote
+function V1a6_CachotHeroGroupFightView:_isSpType(type)
+	return type == DungeonEnum.ChapterType.Sp or type == DungeonEnum.ChapterType.TeachNote
 end
 
-function var_0_0._dispatchRecordEvent(arg_43_0)
-	local var_43_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
-	local var_43_1 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-	local var_43_2 = var_43_1 and var_43_1.hasRecord
+function V1a6_CachotHeroGroupFightView:_dispatchRecordEvent()
+	local showReplayBtn = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local hasRecord = userDungeonMO and userDungeonMO.hasRecord
 
-	if var_43_0 and var_43_2 then
+	if showReplayBtn and hasRecord then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHasRecord)
 	end
 end
 
-function var_0_0.onClose(arg_44_0)
-	arg_44_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_44_0._onModifySnapshot, arg_44_0)
-	arg_44_0:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_44_0.isShowHelpBtnIcon, arg_44_0)
-	TaskDispatcher.cancelTask(arg_44_0._checkDropArrow, arg_44_0)
+function V1a6_CachotHeroGroupFightView:onClose()
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onModifySnapshot, self)
+	self:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.isShowHelpBtnIcon, self)
+	TaskDispatcher.cancelTask(self._checkDropArrow, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
-	ZProj.TweenHelper.KillById(arg_44_0._tweeningId)
+	ZProj.TweenHelper.KillById(self._tweeningId)
 	HeroGroupBalanceHelper.clearBalanceStatus()
 
-	if arg_44_0._dragEffectLoader then
-		arg_44_0._dragEffectLoader:dispose()
+	if self._dragEffectLoader then
+		self._dragEffectLoader:dispose()
 
-		arg_44_0._dragEffectLoader = nil
+		self._dragEffectLoader = nil
 	end
 
-	arg_44_0:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_44_0.isShowHelpBtnIcon, arg_44_0)
+	self:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.isShowHelpBtnIcon, self)
 end
 
-function var_0_0._refreshReplay(arg_45_0)
-	if arg_45_0._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
-		gohelper.setActive(arg_45_0._goReplayBtn, false)
+function V1a6_CachotHeroGroupFightView:_refreshReplay()
+	if self._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
+		gohelper.setActive(self._goReplayBtn, false)
 	else
-		local var_45_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
-		local var_45_1 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
-		local var_45_2 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-		local var_45_3 = var_45_2 and var_45_2.hasRecord
+		local showReplayBtn = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
+		local replay_is_unlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+		local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+		local hasRecord = userDungeonMO and userDungeonMO.hasRecord
 
-		ZProj.UGUIHelper.SetColorAlpha(arg_45_0._imgbtnReplayBg, var_45_1 and var_45_3 and 1 or 0.75)
+		ZProj.UGUIHelper.SetColorAlpha(self._imgbtnReplayBg, replay_is_unlock and hasRecord and 1 or 0.75)
 
-		local var_45_4 = arg_45_0._replayMode and "btn_replay_pause" or "btn_replay_play"
+		local normalIcon = self._replayMode and "btn_replay_pause" or "btn_replay_play"
 
-		UISpriteSetMgr.instance:setHeroGroupSprite(arg_45_0._imagereplayicon, var_45_1 and var_45_3 and var_45_4 or "btn_replay_lack")
-		recthelper.setWidth(arg_45_0._goReplayBtn.transform, arg_45_0._replayMode and 249.538 or 83)
+		UISpriteSetMgr.instance:setHeroGroupSprite(self._imagereplayicon, replay_is_unlock and hasRecord and normalIcon or "btn_replay_lack")
+		recthelper.setWidth(self._goReplayBtn.transform, self._replayMode and 249.538 or 83)
 
-		if var_45_0 and var_45_3 and not arg_45_0._replayMode then
+		if showReplayBtn and hasRecord and not self._replayMode then
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHasRecord)
 		end
 	end
 end
 
-function var_0_0._refreshCloth(arg_46_0)
-	local var_46_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
-	local var_46_1 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO().clothId
+function V1a6_CachotHeroGroupFightView:_refreshCloth()
+	local clothShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+	local curGroupMO = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
+	local cloth_id = curGroupMO.clothId
 
-	var_46_1 = PlayerClothModel.instance:getSpEpisodeClothID() or var_46_1
+	cloth_id = PlayerClothModel.instance:getSpEpisodeClothID() or cloth_id
 
-	local var_46_2 = PlayerClothModel.instance:getById(var_46_1)
+	local clothMO = PlayerClothModel.instance:getById(cloth_id)
 
-	gohelper.setActive(arg_46_0._txtclothname.gameObject, var_46_2)
+	gohelper.setActive(self._txtclothname.gameObject, clothMO)
 
-	if var_46_2 then
-		local var_46_3 = lua_cloth.configDict[var_46_2.clothId]
+	if clothMO then
+		local clothConfig = lua_cloth.configDict[clothMO.clothId]
+		local clothLv = clothMO.level or 0
 
-		if not var_46_2.level then
-			local var_46_4 = 0
-		end
-
-		arg_46_0._txtclothname.text = var_46_3.name
-		arg_46_0._txtclothnameen.text = var_46_3.enname
+		self._txtclothname.text = clothConfig.name
+		self._txtclothnameen.text = clothConfig.enname
 	end
 
-	for iter_46_0, iter_46_1 in ipairs(lua_cloth.configList) do
-		local var_46_5 = gohelper.findChild(arg_46_0._iconGO, tostring(iter_46_1.id))
+	for _, clothCO in ipairs(lua_cloth.configList) do
+		local icon = gohelper.findChild(self._iconGO, tostring(clothCO.id))
 
-		if not gohelper.isNil(var_46_5) then
-			gohelper.setActive(var_46_5, iter_46_1.id == var_46_1)
+		if not gohelper.isNil(icon) then
+			gohelper.setActive(icon, clothCO.id == cloth_id)
 		end
 	end
 
-	gohelper.setActive(arg_46_0._btncloth.gameObject, var_0_0.showCloth())
+	gohelper.setActive(self._btncloth.gameObject, V1a6_CachotHeroGroupFightView.showCloth())
 end
 
-function var_0_0._checkEquipClothSkill(arg_47_0)
+function V1a6_CachotHeroGroupFightView:_checkEquipClothSkill()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
 		return
 	end
 
-	local var_47_0 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
 
-	if PlayerClothModel.instance:getById(var_47_0.clothId) then
+	if PlayerClothModel.instance:getById(curGroupMO.clothId) then
 		return
 	end
 
-	local var_47_1 = PlayerClothModel.instance:getList()
+	local list = PlayerClothModel.instance:getList()
 
-	for iter_47_0, iter_47_1 in ipairs(var_47_1) do
-		if PlayerClothModel.instance:hasCloth(iter_47_1.id) then
-			V1a6_CachotHeroGroupModel.instance:replaceCloth(iter_47_1.id)
+	for _, clothMO in ipairs(list) do
+		if PlayerClothModel.instance:hasCloth(clothMO.id) then
+			V1a6_CachotHeroGroupModel.instance:replaceCloth(clothMO.id)
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 			V1a6_CachotHeroGroupModel.instance:cachotSaveCurGroup()
 
@@ -787,147 +801,157 @@ function var_0_0._checkEquipClothSkill(arg_47_0)
 	end
 end
 
-function var_0_0._getEpisodeConfigAndBattleConfig()
-	local var_48_0 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
-	local var_48_1
+function V1a6_CachotHeroGroupFightView._getEpisodeConfigAndBattleConfig()
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local battleCO
 
 	if HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 then
-		var_48_1 = lua_battle.configDict[HeroGroupModel.instance.battleId]
+		battleCO = lua_battle.configDict[HeroGroupModel.instance.battleId]
 	else
-		var_48_1 = DungeonConfig.instance:getBattleCo(HeroGroupModel.instance.episodeId)
+		battleCO = DungeonConfig.instance:getBattleCo(HeroGroupModel.instance.episodeId)
 	end
 
-	return var_48_0, var_48_1
+	return episodeCO, battleCO
 end
 
-function var_0_0.showCloth()
+function V1a6_CachotHeroGroupFightView.showCloth()
 	if PlayerClothModel.instance:getSpEpisodeClothID() then
 		return true
 	end
 
-	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill) then
+	local clothShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if not clothShow then
 		return false
 	end
 
-	local var_49_0, var_49_1 = var_0_0._getEpisodeConfigAndBattleConfig()
+	local episodeCO, battleCO = V1a6_CachotHeroGroupFightView._getEpisodeConfigAndBattleConfig()
 
-	if var_49_1 and var_49_1.noClothSkill == 1 then
+	if battleCO and battleCO.noClothSkill == 1 then
 		return false
 	end
 
-	local var_49_2 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
-	local var_49_3 = PlayerClothModel.instance:getById(var_49_2.clothId)
-	local var_49_4 = PlayerClothModel.instance:getList()
-	local var_49_5 = false
+	local curGroupMO = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
+	local clothMO = PlayerClothModel.instance:getById(curGroupMO.clothId)
+	local list = PlayerClothModel.instance:getList()
+	local hasUnlock = false
 
-	for iter_49_0, iter_49_1 in ipairs(var_49_4) do
-		var_49_5 = true
+	for _, clothMO in ipairs(list) do
+		hasUnlock = true
 
 		break
 	end
 
-	return var_49_5
+	return hasUnlock
 end
 
-function var_0_0._onModifyHeroGroup(arg_50_0)
-	arg_50_0:_refreshCloth()
+function V1a6_CachotHeroGroupFightView:_onModifyHeroGroup()
+	self:_refreshCloth()
 end
 
-function var_0_0._onModifySnapshot(arg_51_0)
-	arg_51_0:_refreshCloth()
+function V1a6_CachotHeroGroupFightView:_onModifySnapshot()
+	self:_refreshCloth()
 end
 
-function var_0_0._onClickHeroGroupItem(arg_52_0, arg_52_1)
-	local var_52_0 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO():getPosEquips(arg_52_1 - 1).equipUid
+function V1a6_CachotHeroGroupFightView:_onClickHeroGroupItem(id)
+	local heroGroupMO = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
+	local equips = heroGroupMO:getPosEquips(id - 1).equipUid
 
-	arg_52_0._param = {}
-	arg_52_0._param.singleGroupMOId = arg_52_1
-	arg_52_0._param.originalHeroUid = V1a6_CachotHeroSingleGroupModel.instance:getHeroUid(arg_52_1)
-	arg_52_0._param.adventure = V1a6_CachotHeroGroupModel.instance:isAdventureOrWeekWalk()
-	arg_52_0._param.equips = var_52_0
-	arg_52_0._param.heroGroupEditType = V1a6_CachotEnum.HeroGroupEditType.Fight
-	arg_52_0._param.seatLevel = V1a6_CachotTeamModel.instance:getSeatLevel(arg_52_1)
+	self._param = {}
+	self._param.singleGroupMOId = id
+	self._param.originalHeroUid = V1a6_CachotHeroSingleGroupModel.instance:getHeroUid(id)
+	self._param.adventure = V1a6_CachotHeroGroupModel.instance:isAdventureOrWeekWalk()
+	self._param.equips = equips
+	self._param.heroGroupEditType = V1a6_CachotEnum.HeroGroupEditType.Fight
+	self._param.seatLevel = V1a6_CachotTeamModel.instance:getSeatLevel(id)
 
-	ViewMgr.instance:openView(ViewName.V1a6_CachotHeroGroupEditView, arg_52_0._param)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotHeroGroupEditView, self._param)
 end
 
-function var_0_0._checkFirstPosHasEquip(arg_53_0)
-	local var_53_0 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO():getPosEquips(0).equipUid
-	local var_53_1 = var_53_0 and var_53_0[1]
+function V1a6_CachotHeroGroupFightView:_checkFirstPosHasEquip()
+	local curGroupMO = V1a6_CachotHeroGroupModel.instance:getCurGroupMO()
+	local equips = curGroupMO:getPosEquips(0).equipUid
+	local equipId = equips and equips[1]
+	local equipMO = equipId and EquipModel.instance:getEquip(equipId)
 
-	if var_53_1 and EquipModel.instance:getEquip(var_53_1) then
+	if equipMO then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnFirstPosHasEquip)
 	end
 end
 
-function var_0_0._showGuideDragEffect(arg_54_0, arg_54_1)
-	if arg_54_0._dragEffectLoader then
-		arg_54_0._dragEffectLoader:dispose()
+function V1a6_CachotHeroGroupFightView:_showGuideDragEffect(param)
+	if self._dragEffectLoader then
+		self._dragEffectLoader:dispose()
 
-		arg_54_0._dragEffectLoader = nil
+		self._dragEffectLoader = nil
 	end
 
-	if tonumber(arg_54_1) == 1 then
-		arg_54_0._dragEffectLoader = PrefabInstantiate.Create(arg_54_0.viewGO)
+	local visible = tonumber(param) == 1
 
-		arg_54_0._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
+	if visible then
+		self._dragEffectLoader = PrefabInstantiate.Create(self.viewGO)
+
+		self._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
 	end
 end
 
-function var_0_0._onClickStart(arg_55_0)
-	local var_55_0 = string.split(arg_55_0.episodeConfig.cost, "|")
-	local var_55_1 = string.split(var_55_0[1], "#")
-	local var_55_2 = tonumber(var_55_1[3] or 0)
-	local var_55_3 = arg_55_0:_getfreeCount()
+function V1a6_CachotHeroGroupFightView:_onClickStart()
+	local costs = string.split(self.episodeConfig.cost, "|")
+	local cost1 = string.split(costs[1], "#")
+	local value = tonumber(cost1[3] or 0)
+	local remainCount = self:_getfreeCount()
+	local multiCost = value * ((self._multiplication or 1) - remainCount)
 
-	if var_55_2 * ((arg_55_0._multiplication or 1) - var_55_3) > CurrencyModel.instance:getPower() then
+	if multiCost > CurrencyModel.instance:getPower() then
 		CurrencyController.instance:openPowerView()
 
 		return
 	end
 
-	local var_55_4 = 10104
+	local guideEpisodeId = 10104
 
-	if HeroGroupModel.instance.episodeId == var_55_4 and not DungeonModel.instance:hasPassLevel(var_55_4) then
-		local var_55_5 = HeroSingleGroupModel.instance:getList()
-		local var_55_6 = 0
+	if HeroGroupModel.instance.episodeId == guideEpisodeId and not DungeonModel.instance:hasPassLevel(guideEpisodeId) then
+		local list = HeroSingleGroupModel.instance:getList()
+		local count = 0
 
-		for iter_55_0, iter_55_1 in ipairs(var_55_5) do
-			if not iter_55_1:isEmpty() then
-				var_55_6 = var_55_6 + 1
+		for i, v in ipairs(list) do
+			if not v:isEmpty() then
+				count = count + 1
 			end
 		end
 
-		if var_55_6 < 2 then
+		if count < 2 then
 			GameFacade.showToast(ToastEnum.HeroSingleGroupCount)
 
 			return
 		end
 	end
 
-	arg_55_0:_closemultcontent()
-	arg_55_0:_enterFight()
+	self:_closemultcontent()
+	self:_enterFight()
 end
 
-function var_0_0._enterFight(arg_56_0)
+function V1a6_CachotHeroGroupFightView:_enterFight()
 	if HeroGroupModel.instance.episodeId then
-		arg_56_0._closeWithEnteringFight = true
+		self._closeWithEnteringFight = true
 
-		if V1a6_CachotController.instance:setFightHeroGroup() then
-			arg_56_0.viewContainer:beforeEnterFight()
+		local result = V1a6_CachotController.instance:setFightHeroGroup()
 
-			local var_56_0 = FightModel.instance:getFightParam()
+		if result then
+			self.viewContainer:beforeEnterFight()
 
-			if arg_56_0._replayMode then
-				var_56_0.isReplay = true
-				var_56_0.multiplication = arg_56_0._multiplication
+			local fightParam = FightModel.instance:getFightParam()
 
-				DungeonFightController.instance:sendStartDungeonRequest(var_56_0.chapterId, var_56_0.episodeId, var_56_0, arg_56_0._multiplication, nil, true)
+			if self._replayMode then
+				fightParam.isReplay = true
+				fightParam.multiplication = self._multiplication
+
+				DungeonFightController.instance:sendStartDungeonRequest(fightParam.chapterId, fightParam.episodeId, fightParam, self._multiplication, nil, true)
 			else
-				var_56_0.isReplay = false
-				var_56_0.multiplication = 1
+				fightParam.isReplay = false
+				fightParam.multiplication = 1
 
-				DungeonFightController.instance:sendStartDungeonRequest(var_56_0.chapterId, var_56_0.episodeId, var_56_0, 1)
+				DungeonFightController.instance:sendStartDungeonRequest(fightParam.chapterId, fightParam.episodeId, fightParam, 1)
 			end
 
 			AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
@@ -937,23 +961,23 @@ function var_0_0._enterFight(arg_56_0)
 	end
 end
 
-function var_0_0._onUseRecommendGroup(arg_57_0)
-	if arg_57_0._replayMode then
-		arg_57_0:_closemultcontent()
+function V1a6_CachotHeroGroupFightView:_onUseRecommendGroup()
+	if self._replayMode then
+		self:_closemultcontent()
 
-		arg_57_0._replayMode = false
-		arg_57_0._multiplication = 1
+		self._replayMode = false
+		self._multiplication = 1
 
-		arg_57_0:_refreshCost(true)
-		arg_57_0:_switchReplayGroup()
+		self:_refreshCost(true)
+		self:_switchReplayGroup()
 	end
 end
 
-function var_0_0._onClickReplay(arg_58_0)
+function V1a6_CachotHeroGroupFightView:_onClickReplay()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) then
-		local var_58_0, var_58_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightReplay)
+		local desc, param = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightReplay)
 
-		GameFacade.showToast(var_58_0, var_58_1)
+		GameFacade.showToast(desc, param)
 
 		return
 	end
@@ -962,204 +986,204 @@ function var_0_0._onClickReplay(arg_58_0)
 		return
 	end
 
-	local var_58_2 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
-	local var_58_3 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-	local var_58_4 = var_58_3 and var_58_3.hasRecord
-	local var_58_5 = var_58_3 and var_58_3.star == DungeonEnum.StarType.Advanced
-	local var_58_6 = var_58_2 and var_58_2.firstBattleId > 0
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local hasRecord = userDungeonMO and userDungeonMO.hasRecord
+	local hasPass = userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced
+	local hasFirstBattle = episodeConfig and episodeConfig.firstBattleId > 0
 
-	if not var_58_4 and var_58_5 and var_58_6 then
+	if not hasRecord and hasPass and hasFirstBattle then
 		GameFacade.showToast(ToastEnum.CantRecordReplay)
 
 		return
 	end
 
-	if var_58_3 and var_58_3.star == DungeonEnum.StarType.Advanced and not var_58_3.hasRecord then
+	if userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced and not userDungeonMO.hasRecord then
 		GameFacade.showToast(ToastEnum.HeroGroupStarAdvanced)
 
 		return
 	end
 
-	if not var_58_3 or var_58_3 and var_58_3.star ~= DungeonEnum.StarType.Advanced then
+	if not userDungeonMO or userDungeonMO and userDungeonMO.star ~= DungeonEnum.StarType.Advanced then
 		GameFacade.showToast(ToastEnum.HeroGroupStarNoAdvanced)
 
 		return
 	end
 
-	local var_58_7 = arg_58_0._replayMode
+	local lastRelayMode = self._replayMode
 
-	if arg_58_0._replayMode then
-		arg_58_0._replayMode = false
-		arg_58_0._multiplication = 1
+	if self._replayMode then
+		self._replayMode = false
+		self._multiplication = 1
 
-		arg_58_0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
-		gohelper.setActive(arg_58_0._gomultispeed, false)
+		self._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
+		gohelper.setActive(self._gomultispeed, false)
 	else
-		arg_58_0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
+		self._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
 
-		arg_58_0._replayMode = true
-		arg_58_0._multiplication = 1
+		self._replayMode = true
+		self._multiplication = 1
 	end
 
-	PlayerPrefsHelper.setNumber(arg_58_0:_getMultiplicationKey(), arg_58_0._multiplication)
-	arg_58_0:_refreshCost(true)
+	PlayerPrefsHelper.setNumber(self:_getMultiplicationKey(), self._multiplication)
+	self:_refreshCost(true)
 
-	if arg_58_0._replayMode and not arg_58_0._replayFightGroupMO then
-		arg_58_0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_58_0._onGetFightRecordGroupReply, arg_58_0)
+	if self._replayMode and not self._replayFightGroupMO then
+		self:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
 		FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
 
 		return
 	end
 
-	arg_58_0:_switchReplayGroup(var_58_7)
+	self:_switchReplayGroup(lastRelayMode)
 end
 
-function var_0_0._switchReplayGroup(arg_59_0, arg_59_1)
-	arg_59_0:_switchReplayMul()
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupHeroEffect, arg_59_0._replayMode and "swicth" or UIAnimationName.Open)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SwitchReplay, arg_59_0._replayMode)
+function V1a6_CachotHeroGroupFightView:_switchReplayGroup(lastRelayMode)
+	self:_switchReplayMul()
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupHeroEffect, self._replayMode and "swicth" or UIAnimationName.Open)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SwitchReplay, self._replayMode)
 
-	if arg_59_0._replayMode then
-		arg_59_0._goLevelChangePosX = arg_59_0._goLevelChangePosX or recthelper.getAnchorX(arg_59_0._golevelchange.transform)
+	if self._replayMode then
+		self._goLevelChangePosX = self._goLevelChangePosX or recthelper.getAnchorX(self._golevelchange.transform)
 
-		recthelper.setAnchorX(arg_59_0._golevelchange.transform, 10000)
-		arg_59_0:_updateReplayHeroGorupList()
+		recthelper.setAnchorX(self._golevelchange.transform, 10000)
+		self:_updateReplayHeroGorupList()
 
-		local var_59_0 = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(arg_59_0._multiplication))
+		local replayCn = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(self._multiplication))
 
-		arg_59_0._txtreplaycn.text = var_59_0
-		arg_59_0._txtreplayhardcn.text = var_59_0
-		arg_59_0._txtreplayunpowercn.text = var_59_0
+		self._txtreplaycn.text = replayCn
+		self._txtreplayhardcn.text = replayCn
+		self._txtreplayunpowercn.text = replayCn
 	else
-		if arg_59_0._goLevelChangePosX then
-			recthelper.setAnchorX(arg_59_0._golevelchange.transform, arg_59_0._goLevelChangePosX)
+		if self._goLevelChangePosX then
+			recthelper.setAnchorX(self._golevelchange.transform, self._goLevelChangePosX)
 		end
 
 		V1a6_CachotHeroGroupModel.instance:setParam(V1a6_CachotHeroGroupModel.instance.battleId, V1a6_CachotHeroGroupModel.instance.episodeId, V1a6_CachotHeroGroupModel.instance.adventure)
 
-		local var_59_1 = V1a6_CachotHeroGroupModel.instance:getCurGroupMO().id
+		local heroGroupId = V1a6_CachotHeroGroupModel.instance:getCurGroupMO().id
 
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, var_59_1)
-		arg_59_0:_refreshCloth()
-		gohelper.setActive(arg_59_0._goherogroupcontain, false)
-		gohelper.setActive(arg_59_0._goherogroupcontain, true)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, heroGroupId)
+		self:_refreshCloth()
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
 	end
 end
 
-function var_0_0._switchReplayMul(arg_60_0)
-	if arg_60_0._replayMode then
-		arg_60_0:setMultSpeed(arg_60_0._multiplication)
+function V1a6_CachotHeroGroupFightView:_switchReplayMul()
+	if self._replayMode then
+		self:setMultSpeed(self._multiplication)
 	else
-		arg_60_0:_refreshUI()
-		arg_60_0:_refreshTips()
+		self:_refreshUI()
+		self:_refreshTips()
 	end
 
-	arg_60_0:_refreshCost(true)
-	arg_60_0:_refreshPowerShow()
-	gohelper.setActive(arg_60_0._goreplayready, arg_60_0._replayMode)
+	self:_refreshCost(true)
+	self:_refreshPowerShow()
+	gohelper.setActive(self._goreplayready, self._replayMode)
 
-	local var_60_0 = arg_60_0:_haveRecord()
+	local haveRecord = self:_haveRecord()
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(arg_60_0._imagereplayicon, not var_60_0 and "btn_replay_lack" or arg_60_0._replayMode and "btn_replay_pause" or "btn_replay_play")
-	recthelper.setWidth(arg_60_0._goReplayBtn.transform, arg_60_0._replayMode and 249.538 or 83)
-	ZProj.UGUIHelper.RebuildLayout(arg_60_0._goReplayBtn.transform.parent)
-	gohelper.setActive(arg_60_0._goreplaybtnframe, arg_60_0._replayMode)
+	UISpriteSetMgr.instance:setHeroGroupSprite(self._imagereplayicon, not haveRecord and "btn_replay_lack" or self._replayMode and "btn_replay_pause" or "btn_replay_play")
+	recthelper.setWidth(self._goReplayBtn.transform, self._replayMode and 249.538 or 83)
+	ZProj.UGUIHelper.RebuildLayout(self._goReplayBtn.transform.parent)
+	gohelper.setActive(self._goreplaybtnframe, self._replayMode)
 end
 
-function var_0_0._haveRecord(arg_61_0)
+function V1a6_CachotHeroGroupFightView:_haveRecord()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) then
 		return false
 	end
 
-	local var_61_0 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
 
-	if var_61_0 and var_61_0.star == DungeonEnum.StarType.Advanced and not var_61_0.hasRecord then
+	if userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced and not userDungeonMO.hasRecord then
 		return false
 	end
 
-	if not var_61_0 or var_61_0 and var_61_0.star ~= DungeonEnum.StarType.Advanced then
+	if not userDungeonMO or userDungeonMO and userDungeonMO.star ~= DungeonEnum.StarType.Advanced then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._refreshBtns(arg_62_0, arg_62_1)
-	local var_62_0 = HeroGroupBalanceHelper.getIsBalanceMode()
+function V1a6_CachotHeroGroupFightView:_refreshBtns(isCostPower)
+	local isBlance = HeroGroupBalanceHelper.getIsBalanceMode()
 
-	gohelper.setActive(arg_62_0._btnBalanceStart, var_62_0 and not arg_62_0._replayMode and arg_62_0._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_62_0._btnUnPowerBalanceStart, var_62_0 and not arg_62_0._replayMode and arg_62_0._chapterConfig.type == DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnBalanceStart, isBlance and not self._replayMode and self._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnUnPowerBalanceStart, isBlance and not self._replayMode and self._chapterConfig.type == DungeonEnum.ChapterType.Hard)
 
-	local var_62_1 = arg_62_0._enterAfterFreeLimit or arg_62_0:_getfreeCount() > 0
+	local hasLimitCount = self._enterAfterFreeLimit or self:_getfreeCount() > 0
 
-	gohelper.setActive(arg_62_0._btnstartreplay.gameObject, arg_62_1 and arg_62_0._replayMode and arg_62_0._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_62_0._btnunpowerreplay.gameObject, not arg_62_1 and not var_62_1 and arg_62_0._replayMode)
-	gohelper.setActive(arg_62_0._btnunpowerstart.gameObject, not var_62_0 and not arg_62_1 and not var_62_1 and not arg_62_0._replayMode)
-	gohelper.setActive(arg_62_0._btncostreplay.gameObject, not arg_62_1 and var_62_1 and arg_62_0._replayMode)
-	gohelper.setActive(arg_62_0._btncoststart.gameObject, not var_62_0 and not arg_62_1 and var_62_1 and not arg_62_0._replayMode)
-	gohelper.setActive(arg_62_0._btnhardreplay.gameObject, arg_62_1 and arg_62_0._replayMode and arg_62_0._chapterConfig.type == DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_62_0._btnstart.gameObject, not var_62_0 and arg_62_1 and not arg_62_0._replayMode and arg_62_0._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_62_0._btnstarthard.gameObject, not var_62_0 and arg_62_1 and not arg_62_0._replayMode and arg_62_0._chapterConfig.type == DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnstartreplay.gameObject, isCostPower and self._replayMode and self._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnunpowerreplay.gameObject, not isCostPower and not hasLimitCount and self._replayMode)
+	gohelper.setActive(self._btnunpowerstart.gameObject, not isBlance and not isCostPower and not hasLimitCount and not self._replayMode)
+	gohelper.setActive(self._btncostreplay.gameObject, not isCostPower and hasLimitCount and self._replayMode)
+	gohelper.setActive(self._btncoststart.gameObject, not isBlance and not isCostPower and hasLimitCount and not self._replayMode)
+	gohelper.setActive(self._btnhardreplay.gameObject, isCostPower and self._replayMode and self._chapterConfig.type == DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnstart.gameObject, not isBlance and isCostPower and not self._replayMode and self._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnstarthard.gameObject, not isBlance and isCostPower and not self._replayMode and self._chapterConfig.type == DungeonEnum.ChapterType.Hard)
 
-	local var_62_2 = not arg_62_0._replayMode and arg_62_0:_noAidHero()
+	local showDrop = not self._replayMode and self:_noAidHero()
 
-	gohelper.setActive(arg_62_0._dropherogroup, var_62_2)
+	gohelper.setActive(self._dropherogroup, showDrop)
 
-	if var_62_2 then
-		TaskDispatcher.runRepeat(arg_62_0._checkDropArrow, arg_62_0, 0)
+	if showDrop then
+		TaskDispatcher.runRepeat(self._checkDropArrow, self, 0)
 	else
-		TaskDispatcher.cancelTask(arg_62_0._checkDropArrow, arg_62_0)
+		TaskDispatcher.cancelTask(self._checkDropArrow, self)
 	end
 end
 
-function var_0_0._checkDropArrow(arg_63_0)
-	if not arg_63_0._dropherogrouparrow then
-		TaskDispatcher.cancelTask(arg_63_0._checkDropArrow, arg_63_0)
+function V1a6_CachotHeroGroupFightView:_checkDropArrow()
+	if not self._dropherogrouparrow then
+		TaskDispatcher.cancelTask(self._checkDropArrow, self)
 
 		return
 	end
 
-	local var_63_0 = arg_63_0._dropherogroup.transform.childCount
+	local childCount = self._dropherogroup.transform.childCount
 
-	if var_63_0 ~= arg_63_0._dropDownChildCount then
-		arg_63_0._dropDownChildCount = var_63_0
+	if childCount ~= self._dropDownChildCount then
+		self._dropDownChildCount = childCount
 
-		local var_63_1 = arg_63_0._dropgroupchildcount ~= var_63_0
+		local isOpen = self._dropgroupchildcount ~= childCount
 
-		transformhelper.setLocalScale(arg_63_0._dropherogrouparrow, 1, var_63_1 and -1 or 1, 1)
+		transformhelper.setLocalScale(self._dropherogrouparrow, 1, isOpen and -1 or 1, 1)
 	end
 end
 
-function var_0_0._noAidHero(arg_64_0)
-	local var_64_0 = HeroGroupModel.instance.battleId
-	local var_64_1 = lua_battle.configDict[var_64_0]
+function V1a6_CachotHeroGroupFightView:_noAidHero()
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCo = lua_battle.configDict[battleId]
 
-	if not var_64_1 then
+	if not battleCo then
 		return
 	end
 
-	return var_64_1.trialLimit <= 0 and string.nilorempty(var_64_1.aid) and string.nilorempty(var_64_1.trialHeros) and string.nilorempty(var_64_1.trialEquips)
+	return battleCo.trialLimit <= 0 and string.nilorempty(battleCo.aid) and string.nilorempty(battleCo.trialHeros) and string.nilorempty(battleCo.trialEquips)
 end
 
-function var_0_0._onGetFightRecordGroupReply(arg_65_0, arg_65_1)
-	arg_65_0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_65_0._onGetFightRecordGroupReply, arg_65_0)
+function V1a6_CachotHeroGroupFightView:_onGetFightRecordGroupReply(fightGroupMO)
+	self:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
 
-	arg_65_0._replayFightGroupMO = arg_65_1
+	self._replayFightGroupMO = fightGroupMO
 
-	if not arg_65_0._replayMode then
+	if not self._replayMode then
 		return
 	end
 
-	arg_65_0:_switchReplayGroup()
-	arg_65_0:_updateReplayHeroGorupList()
+	self:_switchReplayGroup()
+	self:_updateReplayHeroGorupList()
 end
 
-function var_0_0._updateReplayHeroGorupList(arg_66_0)
-	V1a6_CachotHeroGroupModel.instance:setReplayParam(arg_66_0._replayFightGroupMO)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, arg_66_0._replayFightGroupMO.id)
-	arg_66_0:_refreshCloth()
-	gohelper.setActive(arg_66_0._goherogroupcontain, false)
-	gohelper.setActive(arg_66_0._goherogroupcontain, true)
+function V1a6_CachotHeroGroupFightView:_updateReplayHeroGorupList()
+	V1a6_CachotHeroGroupModel.instance:setReplayParam(self._replayFightGroupMO)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, self._replayFightGroupMO.id)
+	self:_refreshCloth()
+	gohelper.setActive(self._goherogroupcontain, false)
+	gohelper.setActive(self._goherogroupcontain, true)
 end
 
-return var_0_0
+return V1a6_CachotHeroGroupFightView

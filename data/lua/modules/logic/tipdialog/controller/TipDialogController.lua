@@ -1,36 +1,38 @@
-﻿module("modules.logic.tipdialog.controller.TipDialogController", package.seeall)
+﻿-- chunkname: @modules/logic/tipdialog/controller/TipDialogController.lua
 
-local var_0_0 = class("TipDialogController", BaseController)
+module("modules.logic.tipdialog.controller.TipDialogController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TipDialogController = class("TipDialogController", BaseController)
+
+function TipDialogController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function TipDialogController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function TipDialogController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function TipDialogController:reInit()
 	return
 end
 
-function var_0_0.openTipDialogView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
-	local var_5_0 = {
-		dialogId = arg_5_1,
-		callback = arg_5_2,
-		callbackTarget = arg_5_3,
-		auto = arg_5_4,
-		autoplayTime = arg_5_5,
-		widthPercentage = arg_5_6
-	}
+function TipDialogController:openTipDialogView(dialogId, callback, callbackTarget, auto, autoplayTime, widthPercentage)
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.TipDialogView, var_5_0)
+	param.dialogId = dialogId
+	param.callback = callback
+	param.callbackTarget = callbackTarget
+	param.auto = auto
+	param.autoplayTime = autoplayTime
+	param.widthPercentage = widthPercentage
+
+	ViewMgr.instance:openView(ViewName.TipDialogView, param)
 end
 
-var_0_0.instance = var_0_0.New()
+TipDialogController.instance = TipDialogController.New()
 
-return var_0_0
+return TipDialogController

@@ -1,78 +1,80 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_BGMask", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviour_500M_BGMask.lua
 
-local var_0_0 = class("FightBuffBehaviour_500M_BGMask", FightBuffBehaviourBase)
-local var_0_1 = "ui/viewres/fight/fighttower/fightmaskview.prefab"
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_BGMask", package.seeall)
 
-function var_0_0.onAddBuff(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.root = gohelper.findChild(arg_1_0.viewGo, "root")
+local FightBuffBehaviour_500M_BGMask = class("FightBuffBehaviour_500M_BGMask", FightBuffBehaviourBase)
+local bgMaskPath = "ui/viewres/fight/fighttower/fightmaskview.prefab"
 
-	loadAbAsset(var_0_1, true, arg_1_0.onLoadFinish, arg_1_0)
+function FightBuffBehaviour_500M_BGMask:onAddBuff(entityId, buffId, buffMo)
+	self.root = gohelper.findChild(self.viewGo, "root")
+
+	loadAbAsset(bgMaskPath, true, self.onLoadFinish, self)
 end
 
-function var_0_0.onLoadFinish(arg_2_0, arg_2_1)
-	if not arg_2_1.IsLoadSuccess then
+function FightBuffBehaviour_500M_BGMask:onLoadFinish(assetItem)
+	if not assetItem.IsLoadSuccess then
 		return
 	end
 
-	local var_2_0 = arg_2_0.assetItem
+	local oldAsstet = self.assetItem
 
-	arg_2_0.assetItem = arg_2_1
+	self.assetItem = assetItem
 
-	arg_2_1:Retain()
+	assetItem:Retain()
 
-	if var_2_0 then
-		var_2_0:Release()
+	if oldAsstet then
+		oldAsstet:Release()
 	end
 
-	arg_2_0.bgMask = gohelper.clone(arg_2_1:GetResource(var_0_1), arg_2_0.root)
-	arg_2_0.animator = arg_2_0.bgMask:GetComponent(gohelper.Type_Animator)
-	arg_2_0.simageBg = gohelper.findChildSingleImage(arg_2_0.bgMask, "stage")
+	self.bgMask = gohelper.clone(assetItem:GetResource(bgMaskPath), self.root)
+	self.animator = self.bgMask:GetComponent(gohelper.Type_Animator)
+	self.simageBg = gohelper.findChildSingleImage(self.bgMask, "stage")
 
-	gohelper.setAsFirstSibling(arg_2_0.bgMask)
-	arg_2_0:refreshStage()
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnMonsterChange, arg_2_0.onMonsterChange, arg_2_0)
+	gohelper.setAsFirstSibling(self.bgMask)
+	self:refreshStage()
+	self:addEventCb(FightController.instance, FightEvent.OnMonsterChange, self.onMonsterChange, self)
 end
 
-function var_0_0.onMonsterChange(arg_3_0)
-	arg_3_0:refreshStage()
+function FightBuffBehaviour_500M_BGMask:onMonsterChange()
+	self:refreshStage()
 end
 
-function var_0_0.refreshStage(arg_4_0)
-	local var_4_0 = FightHelper.getBossCurStageCo_500M()
+function FightBuffBehaviour_500M_BGMask:refreshStage()
+	local curCo = FightHelper.getBossCurStageCo_500M()
 
-	if var_4_0 == arg_4_0.preCo then
+	if curCo == self.preCo then
 		return
 	end
 
-	arg_4_0.preCo = var_4_0
+	self.preCo = curCo
 
-	gohelper.setActive(arg_4_0.bgMask, var_4_0 ~= nil)
+	gohelper.setActive(self.bgMask, curCo ~= nil)
 
-	if var_4_0 then
-		arg_4_0.simageBg:UnLoadImage()
-		arg_4_0.simageBg:LoadImage(string.format("singlebg/fight/tower/%s", var_4_0.param2))
-		arg_4_0.animator:Play("open", 0, 0)
+	if curCo then
+		self.simageBg:UnLoadImage()
+		self.simageBg:LoadImage(string.format("singlebg/fight/tower/%s", curCo.param2))
+		self.animator:Play("open", 0, 0)
 		AudioMgr.instance:trigger(310009)
 	end
 end
 
-function var_0_0.onRemoveBuff(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	gohelper.destroy(arg_5_0.bgMask)
+function FightBuffBehaviour_500M_BGMask:onRemoveBuff(entityId, buffId, buffMo)
+	gohelper.destroy(self.bgMask)
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	if arg_6_0.simageBg then
-		arg_6_0.simageBg:UnLoadImage()
+function FightBuffBehaviour_500M_BGMask:onDestroy()
+	if self.simageBg then
+		self.simageBg:UnLoadImage()
 	end
 
-	if arg_6_0.assetItem then
-		arg_6_0.assetItem:Release()
+	if self.assetItem then
+		self.assetItem:Release()
 
-		arg_6_0.assetItem = nil
+		self.assetItem = nil
 	end
 
-	removeAssetLoadCb(var_0_1, arg_6_0.onLoadFinish, arg_6_0)
-	var_0_0.super.onDestroy(arg_6_0)
+	removeAssetLoadCb(bgMaskPath, self.onLoadFinish, self)
+	FightBuffBehaviour_500M_BGMask.super.onDestroy(self)
 end
 
-return var_0_0
+return FightBuffBehaviour_500M_BGMask

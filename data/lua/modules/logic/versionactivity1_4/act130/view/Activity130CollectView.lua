@@ -1,122 +1,124 @@
-﻿module("modules.logic.versionactivity1_4.act130.view.Activity130CollectView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/view/Activity130CollectView.lua
 
-local var_0_0 = class("Activity130CollectView", BaseView)
+module("modules.logic.versionactivity1_4.act130.view.Activity130CollectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnCloseMask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_CloseMask")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "BG/#simage_PanelBG")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title/txt_Title")
-	arg_1_0._goquestion = gohelper.findChild(arg_1_0.viewGO, "Question")
-	arg_1_0._txtQuestion = gohelper.findChildText(arg_1_0.viewGO, "Question/#txt_Question")
-	arg_1_0._scrollChapterList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ChapterList")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_ChapterList/Viewport/Content")
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.viewGO, "#go_Empty")
-	arg_1_0._txtEmpty = gohelper.findChildText(arg_1_0.viewGO, "#go_Empty/#txt_Empty")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+local Activity130CollectView = class("Activity130CollectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity130CollectView:onInitView()
+	self._btnCloseMask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_CloseMask")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "BG/#simage_PanelBG")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Title/txt_Title")
+	self._goquestion = gohelper.findChild(self.viewGO, "Question")
+	self._txtQuestion = gohelper.findChildText(self.viewGO, "Question/#txt_Question")
+	self._scrollChapterList = gohelper.findChildScrollRect(self.viewGO, "#scroll_ChapterList")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_ChapterList/Viewport/Content")
+	self._goEmpty = gohelper.findChild(self.viewGO, "#go_Empty")
+	self._txtEmpty = gohelper.findChildText(self.viewGO, "#go_Empty/#txt_Empty")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnCloseMask:AddClickListener(arg_2_0._btnCloseMaskOnClick, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+function Activity130CollectView:addEvents()
+	self._btnCloseMask:AddClickListener(self._btnCloseMaskOnClick, self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnCloseMask:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
+function Activity130CollectView:removeEvents()
+	self._btnCloseMask:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._btnCloseMaskOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Activity130CollectView:_btnCloseMaskOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnCloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function Activity130CollectView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	NavigateMgr.instance:addEscape(ViewName.Activity130CollectView, arg_6_0._btnCloseOnClick, arg_6_0)
+function Activity130CollectView:_editableInitView()
+	NavigateMgr.instance:addEscape(ViewName.Activity130CollectView, self._btnCloseOnClick, self)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function Activity130CollectView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._collectItems = {}
+function Activity130CollectView:onOpen()
+	self._collectItems = {}
 
-	local var_8_0 = VersionActivity1_4Enum.ActivityId.Role37
-	local var_8_1 = Activity130Model.instance:getCurEpisodeId()
+	local actId = VersionActivity1_4Enum.ActivityId.Role37
+	local episodeId = Activity130Model.instance:getCurEpisodeId()
 
-	arg_8_0._config = Activity130Config.instance:getActivity130EpisodeCo(var_8_0, var_8_1)
+	self._config = Activity130Config.instance:getActivity130EpisodeCo(actId, episodeId)
 
-	arg_8_0:_refreshItem()
+	self:_refreshItem()
 end
 
-function var_0_0._refreshItem(arg_9_0)
-	local var_9_0 = Activity130Model.instance:getEpisodeOperGroupId(arg_9_0._config.episodeId)
+function Activity130CollectView:_refreshItem()
+	local operGroupId = Activity130Model.instance:getEpisodeOperGroupId(self._config.episodeId)
 
-	gohelper.setActive(arg_9_0._goquestion, var_9_0 ~= 0)
+	gohelper.setActive(self._goquestion, operGroupId ~= 0)
 
-	if var_9_0 ~= 0 then
-		local var_9_1 = VersionActivity1_4Enum.ActivityId.Role37
-		local var_9_2 = Activity130Model.instance:getEpisodeOperGroupId(arg_9_0._config.episodeId)
-		local var_9_3 = Activity130Model.instance:getDecryptIdByGroupId(var_9_2)
-		local var_9_4 = Activity130Config.instance:getActivity130DecryptCo(var_9_1, var_9_3)
+	if operGroupId ~= 0 then
+		local actId = VersionActivity1_4Enum.ActivityId.Role37
+		local groupId = Activity130Model.instance:getEpisodeOperGroupId(self._config.episodeId)
+		local decryptId = Activity130Model.instance:getDecryptIdByGroupId(groupId)
+		local operCo = Activity130Config.instance:getActivity130DecryptCo(actId, decryptId)
 
-		arg_9_0._txtQuestion.text = var_9_4.puzzleTxt
+		self._txtQuestion.text = operCo.puzzleTxt
 	end
 
-	local var_9_5 = Activity130Model.instance:getCollects(arg_9_0._config.episodeId)
+	local collects = Activity130Model.instance:getCollects(self._config.episodeId)
 
-	if #var_9_5 < 1 then
-		gohelper.setActive(arg_9_0._goEmpty, true)
-		gohelper.setActive(arg_9_0._scrollChapterList.gameObject, false)
+	if #collects < 1 then
+		gohelper.setActive(self._goEmpty, true)
+		gohelper.setActive(self._scrollChapterList.gameObject, false)
 
-		local var_9_6, var_9_7 = Activity130Model.instance:getEpisodeTaskTip(arg_9_0._config.episodeId)
+		local tipId, stepId = Activity130Model.instance:getEpisodeTaskTip(self._config.episodeId)
 
-		if var_9_6 ~= 0 then
-			local var_9_8 = Activity130Config.instance:getActivity130DialogCo(var_9_6, var_9_7)
+		if tipId ~= 0 then
+			local dialogCo = Activity130Config.instance:getActivity130DialogCo(tipId, stepId)
 
-			arg_9_0._txtEmpty.text = var_9_8.content
+			self._txtEmpty.text = dialogCo.content
 		end
 
 		return
 	end
 
-	gohelper.setActive(arg_9_0._goEmpty, false)
-	gohelper.setActive(arg_9_0._scrollChapterList.gameObject, true)
+	gohelper.setActive(self._goEmpty, false)
+	gohelper.setActive(self._scrollChapterList.gameObject, true)
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._collectItems) do
-		iter_9_1:hideItems()
+	for _, v in pairs(self._collectItems) do
+		v:hideItems()
 	end
 
-	for iter_9_2 = 1, #var_9_5 do
-		if not arg_9_0._collectItems[iter_9_2] then
-			local var_9_9 = arg_9_0.viewContainer:getSetting().otherRes[1]
-			local var_9_10 = arg_9_0:getResInst(var_9_9, arg_9_0._gocontent, "item" .. tostring(iter_9_2))
-			local var_9_11 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_10, Activity130CollectItem)
+	for i = 1, #collects do
+		if not self._collectItems[i] then
+			local path = self.viewContainer:getSetting().otherRes[1]
+			local childGO = self:getResInst(path, self._gocontent, "item" .. tostring(i))
+			local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, Activity130CollectItem)
 
-			var_9_11:init(var_9_10)
-			table.insert(arg_9_0._collectItems, var_9_11)
+			item:init(childGO)
+			table.insert(self._collectItems, item)
 		end
 
-		local var_9_12 = VersionActivity1_4Enum.ActivityId.Role37
-		local var_9_13 = Activity130Config.instance:getActivity130OperateGroupCos(var_9_12, var_9_0)[var_9_5[iter_9_2]]
+		local actId = VersionActivity1_4Enum.ActivityId.Role37
+		local co = Activity130Config.instance:getActivity130OperateGroupCos(actId, operGroupId)[collects[i]]
 
-		arg_9_0._collectItems[iter_9_2]:setItem(var_9_13, iter_9_2)
+		self._collectItems[i]:setItem(co, i)
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function Activity130CollectView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function Activity130CollectView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity130CollectView

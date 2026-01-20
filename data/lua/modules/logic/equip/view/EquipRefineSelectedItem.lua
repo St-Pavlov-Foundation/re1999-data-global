@@ -1,110 +1,112 @@
-﻿module("modules.logic.equip.view.EquipRefineSelectedItem", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipRefineSelectedItem.lua
 
-local var_0_0 = class("EquipRefineSelectedItem", ListScrollCellExtend)
+module("modules.logic.equip.view.EquipRefineSelectedItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_cost_empty")
-	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "#go_cost_equip")
-	arg_1_0._btnclick = gohelper.findChildButton(arg_1_0.viewGO, "#btn_add_click")
-	arg_1_0._goClickEffect = gohelper.findChild(arg_1_0.viewGO, "#click_effect")
-	arg_1_0._effectImage = gohelper.findChildImage(arg_1_0.viewGO, "#click_effect/images")
-	arg_1_0._addEffectAnim = arg_1_0._goClickEffect:GetComponent(typeof(UnityEngine.Animation))
+local EquipRefineSelectedItem = class("EquipRefineSelectedItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipRefineSelectedItem:onInitView()
+	self._goempty = gohelper.findChild(self.viewGO, "#go_cost_empty")
+	self._goequip = gohelper.findChild(self.viewGO, "#go_cost_equip")
+	self._btnclick = gohelper.findChildButton(self.viewGO, "#btn_add_click")
+	self._goClickEffect = gohelper.findChild(self.viewGO, "#click_effect")
+	self._effectImage = gohelper.findChildImage(self.viewGO, "#click_effect/images")
+	self._addEffectAnim = self._goClickEffect:GetComponent(typeof(UnityEngine.Animation))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function EquipRefineSelectedItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function EquipRefineSelectedItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._isEmpty then
+function EquipRefineSelectedItem:_btnclickOnClick()
+	if self._isEmpty then
 		EquipController.instance:dispatchEvent(EquipEvent.onChangeRefineScrollState, true)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Forget)
-		EquipRefineListModel.instance:deselectEquip(arg_4_0._mo)
+		EquipRefineListModel.instance:deselectEquip(self._mo)
 		EquipRefineListModel.instance:refreshData()
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(arg_5_0._goequip, 1)
+function EquipRefineSelectedItem:_editableInitView()
+	self._commonEquipIcon = IconMgr.instance:getCommonEquipIcon(self._goequip, 1)
 
-	arg_5_0._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, arg_5_0._commonEquipIcon)
-	gohelper.setActive(arg_5_0._goequip, false)
+	self._commonEquipIcon:_overrideLoadIconFunc(EquipHelper.getEquipIconLoadPath, self._commonEquipIcon)
+	gohelper.setActive(self._goequip, false)
 
-	arg_5_0._isEmpty = true
+	self._isEmpty = true
 
-	arg_5_0:initAddEquipEffect()
+	self:initAddEquipEffect()
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function EquipRefineSelectedItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function EquipRefineSelectedItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0:_stopAddEquipEffect()
+function EquipRefineSelectedItem:onUpdateMO(mo)
+	self:_stopAddEquipEffect()
 
-	arg_8_0._mo = arg_8_1
-	arg_8_0._isEmpty = true
+	self._mo = mo
+	self._isEmpty = true
 
-	if arg_8_0._mo.config then
-		arg_8_0._isEmpty = false
+	if self._mo.config then
+		self._isEmpty = false
 
-		arg_8_0._commonEquipIcon:setEquipMO(arg_8_0._mo)
+		self._commonEquipIcon:setEquipMO(self._mo)
 	end
 
-	gohelper.setActive(arg_8_0._goClickEffect, not arg_8_0._isEmpty)
-	gohelper.setActive(arg_8_0._goequip, not arg_8_0._isEmpty)
-	gohelper.setActive(arg_8_0._goempty, arg_8_0._isEmpty)
+	gohelper.setActive(self._goClickEffect, not self._isEmpty)
+	gohelper.setActive(self._goequip, not self._isEmpty)
+	gohelper.setActive(self._goempty, self._isEmpty)
 end
 
-function var_0_0.initAddEquipEffect(arg_9_0)
-	local var_9_0 = arg_9_0._effectImage.material
+function EquipRefineSelectedItem:initAddEquipEffect()
+	local material = self._effectImage.material
 
-	arg_9_0._effectImage.material = UnityEngine.Object.Instantiate(var_9_0)
+	self._effectImage.material = UnityEngine.Object.Instantiate(material)
 
-	local var_9_1 = arg_9_0._goClickEffect:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	local materialPropsCtrl = self._goClickEffect:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 
-	var_9_1.mas:Clear()
-	var_9_1.mas:Add(arg_9_0._effectImage.material)
-	arg_9_0._addEffectAnim:Stop()
+	materialPropsCtrl.mas:Clear()
+	materialPropsCtrl.mas:Add(self._effectImage.material)
+	self._addEffectAnim:Stop()
 end
 
-function var_0_0._playAddEquipEffect(arg_10_0, arg_10_1)
-	if arg_10_0._mo.uid == arg_10_1 then
-		arg_10_0._addEffectAnim.enabled = true
+function EquipRefineSelectedItem:_playAddEquipEffect(id)
+	if self._mo.uid == id then
+		self._addEffectAnim.enabled = true
 
-		gohelper.setActive(arg_10_0._effectImage.gameObject, true)
-		arg_10_0._addEffectAnim:Stop()
-		arg_10_0._addEffectAnim:Play()
+		gohelper.setActive(self._effectImage.gameObject, true)
+		self._addEffectAnim:Stop()
+		self._addEffectAnim:Play()
 	end
 end
 
-function var_0_0.dispose(arg_11_0)
+function EquipRefineSelectedItem:dispose()
 	return
 end
 
-function var_0_0._stopAddEquipEffect(arg_12_0)
-	arg_12_0._addEffectAnim:Rewind()
+function EquipRefineSelectedItem:_stopAddEquipEffect()
+	self._addEffectAnim:Rewind()
 
-	arg_12_0._addEffectAnim.enabled = false
+	self._addEffectAnim.enabled = false
 
-	gohelper.setActive(arg_12_0._effectImage.gameObject, false)
+	gohelper.setActive(self._effectImage.gameObject, false)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function EquipRefineSelectedItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return EquipRefineSelectedItem

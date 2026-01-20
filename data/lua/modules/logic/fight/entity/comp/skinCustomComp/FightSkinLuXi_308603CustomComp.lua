@@ -1,121 +1,125 @@
-﻿module("modules.logic.fight.entity.comp.skinCustomComp.FightSkinLuXi_308603CustomComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skinCustomComp/FightSkinLuXi_308603CustomComp.lua
 
-local var_0_0 = class("FightSkinLuXi_308603CustomComp", FightSkinCustomCompBase)
+module("modules.logic.fight.entity.comp.skinCustomComp.FightSkinLuXi_308603CustomComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.skinId = arg_1_1:getMO().skin
-	arg_1_0.entityId = arg_1_1.id
+local FightSkinLuXi_308603CustomComp = class("FightSkinLuXi_308603CustomComp", FightSkinCustomCompBase)
+
+function FightSkinLuXi_308603CustomComp:ctor(entity)
+	self.entity = entity
+	self.skinId = entity:getMO().skin
+	self.entityId = entity.id
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.effectList = {}
+function FightSkinLuXi_308603CustomComp:init(go)
+	self.go = go
+	self.effectList = {}
 
-	arg_2_0.entity.spine:addAnimEventCallback(arg_2_0.onAnimEvent, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnStartFightPlayBornNormal, arg_2_0.onStartFightPlayBornNormal, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, arg_2_0.onBeforeDeadEffect, arg_2_0)
+	self.entity.spine:addAnimEventCallback(self.onAnimEvent, self)
+	FightController.instance:registerCallback(FightEvent.OnStartFightPlayBornNormal, self.onStartFightPlayBornNormal, self)
+	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, self.onBeforeDeadEffect, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0.entity.spine:removeAnimEventCallback(arg_3_0.onAnimEvent, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStartFightPlayBornNormal, arg_3_0.onStartFightPlayBornNormal, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, arg_3_0.onBeforeDeadEffect, arg_3_0)
+function FightSkinLuXi_308603CustomComp:removeEventListeners()
+	self.entity.spine:removeAnimEventCallback(self.onAnimEvent, self)
+	FightController.instance:unregisterCallback(FightEvent.OnStartFightPlayBornNormal, self.onStartFightPlayBornNormal, self)
+	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, self.onBeforeDeadEffect, self)
 end
 
-function var_0_0.onStartFightPlayBornNormal(arg_4_0, arg_4_1)
-	if arg_4_1 ~= arg_4_0.entityId then
+function FightSkinLuXi_308603CustomComp:onStartFightPlayBornNormal(entityId)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	local var_4_0 = lua_fight_luxi_skin_effect.configDict[arg_4_0.skinId]
+	local co = lua_fight_luxi_skin_effect.configDict[self.skinId]
 
-	if not var_4_0 then
+	if not co then
 		return
 	end
 
-	arg_4_0:removeAllEffect()
-	arg_4_0:addEffect(var_4_0[SpineAnimState.born])
+	self:removeAllEffect()
+	self:addEffect(co[SpineAnimState.born])
 end
 
-function var_0_0.onBeforeDeadEffect(arg_5_0, arg_5_1)
-	if arg_5_1 ~= arg_5_0.entityId then
+function FightSkinLuXi_308603CustomComp:onBeforeDeadEffect(entityId)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	local var_5_0 = lua_fight_luxi_skin_effect.configDict[arg_5_0.skinId]
+	local co = lua_fight_luxi_skin_effect.configDict[self.skinId]
 
-	if not var_5_0 then
+	if not co then
 		return
 	end
 
-	arg_5_0:removeAllEffect()
-	arg_5_0:addEffect(var_5_0[SpineAnimState.die])
+	self:removeAllEffect()
+	self:addEffect(co[SpineAnimState.die])
 end
 
-function var_0_0.onAnimEvent(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_2 == SpineAnimEvent.ActionComplete and arg_6_1 == SpineAnimState.born then
-		arg_6_0:removeAllEffect()
+function FightSkinLuXi_308603CustomComp:onAnimEvent(actionName, eventName, eventArgs)
+	if eventName == SpineAnimEvent.ActionComplete and actionName == SpineAnimState.born then
+		self:removeAllEffect()
 	end
 end
 
-function var_0_0.addEffect(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function FightSkinLuXi_308603CustomComp:addEffect(co)
+	if not co then
 		return
 	end
 
-	local var_7_0 = arg_7_1.effect
-	local var_7_1 = arg_7_1.effectHangPoint
+	local effectRes = co.effect
+	local hangPoints = co.effectHangPoint
 
-	if not string.nilorempty(var_7_0) then
-		local var_7_2 = string.split(var_7_0, "#")
-		local var_7_3 = string.split(var_7_1, "#")
+	if not string.nilorempty(effectRes) then
+		local effectList = string.split(effectRes, "#")
+		local hangPoint = string.split(hangPoints, "#")
 
-		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-			local var_7_4 = arg_7_0.entity.effect:addHangEffect(iter_7_1, var_7_3[iter_7_0])
+		for i, path in ipairs(effectList) do
+			local effectWrap = self.entity.effect:addHangEffect(path, hangPoint[i])
 
-			var_7_4:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(arg_7_0.entity.id, var_7_4)
-			table.insert(arg_7_0.effectList, var_7_4)
+			effectWrap:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(self.entity.id, effectWrap)
+			table.insert(self.effectList, effectWrap)
 		end
 	end
 
-	local var_7_5 = arg_7_1.audio
+	local audioId = co.audio
 
-	if var_7_5 > 0 then
-		if not arg_7_0.entity:getMO() then
+	if audioId > 0 then
+		local entityMO = self.entity:getMO()
+
+		if not entityMO then
 			return
 		end
 
-		local var_7_6
-		local var_7_7 = arg_7_0.entity:getMO().modelId
+		local audioLang
+		local heroId = self.entity:getMO().modelId
 
-		if not var_7_7 then
+		if not heroId then
 			return
 		end
 
-		local var_7_8, var_7_9, var_7_10 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_7_7)
-		local var_7_11 = LangSettings.shortcutTab[var_7_8]
+		local charVoiceLangId, langStr, usingDefaultLang = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
+		local charVoiceLang = LangSettings.shortcutTab[charVoiceLangId]
 
-		if not string.nilorempty(var_7_11) and not var_7_10 then
-			var_7_6 = var_7_11
+		if not string.nilorempty(charVoiceLang) and not usingDefaultLang then
+			audioLang = charVoiceLang
 		end
 
-		FightAudioMgr.instance:playAudioWithLang(var_7_5, var_7_6)
+		FightAudioMgr.instance:playAudioWithLang(audioId, audioLang)
 	end
 end
 
-function var_0_0.removeAllEffect(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.effectList) do
-		arg_8_0.entity.effect:removeEffect(iter_8_1)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_8_0.entity.id, iter_8_1)
+function FightSkinLuXi_308603CustomComp:removeAllEffect()
+	for _, effectWrap in ipairs(self.effectList) do
+		self.entity.effect:removeEffect(effectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entity.id, effectWrap)
 	end
 
-	tabletool.clear(arg_8_0.effectList)
+	tabletool.clear(self.effectList)
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0:removeAllEffect()
+function FightSkinLuXi_308603CustomComp:onDestroy()
+	self:removeAllEffect()
 end
 
-return var_0_0
+return FightSkinLuXi_308603CustomComp

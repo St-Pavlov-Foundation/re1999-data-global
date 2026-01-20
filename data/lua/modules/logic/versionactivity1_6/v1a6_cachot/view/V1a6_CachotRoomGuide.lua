@@ -1,71 +1,73 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomGuide", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoomGuide.lua
 
-local var_0_0 = class("V1a6_CachotRoomGuide", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomGuide", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local V1a6_CachotRoomGuide = class("V1a6_CachotRoomGuide", BaseView)
+
+function V1a6_CachotRoomGuide:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.CheckGuideEnterLayerRoom, arg_2_0._checkGuideEnterLayerRoom, arg_2_0)
-	arg_2_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.CheckPlayStory, arg_2_0._onRoomViewOpenAnimEnd, arg_2_0, LuaEventSystem.Low)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-	arg_2_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.GuideMoveCollection, arg_2_0._onGuideMoveCollection, arg_2_0)
-	arg_2_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_2_0._onFinishGuide, arg_2_0)
+function V1a6_CachotRoomGuide:addEvents()
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.CheckGuideEnterLayerRoom, self._checkGuideEnterLayerRoom, self)
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.CheckPlayStory, self._onRoomViewOpenAnimEnd, self, LuaEventSystem.Low)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.GuideMoveCollection, self._onGuideMoveCollection, self)
+	self:addEventCb(GuideController.instance, GuideEvent.FinishGuide, self._onFinishGuide, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V1a6_CachotRoomGuide:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._heartNum = V1a6_CachotController.instance.heartNum
+function V1a6_CachotRoomGuide:onOpen()
+	self._heartNum = V1a6_CachotController.instance.heartNum
 	V1a6_CachotController.instance.heartNum = nil
 end
 
-function var_0_0.onClose(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._guideEnterLayerRoom, arg_5_0)
+function V1a6_CachotRoomGuide:onClose()
+	TaskDispatcher.cancelTask(self._guideEnterLayerRoom, self)
 end
 
-function var_0_0._onFinishGuide(arg_6_0, arg_6_1)
-	if arg_6_1 == 16508 then
-		arg_6_0:_guideEnterLayerRoom()
+function V1a6_CachotRoomGuide:_onFinishGuide(guideId)
+	if guideId == 16508 then
+		self:_guideEnterLayerRoom()
 	end
 end
 
-function var_0_0._onGuideMoveCollection(arg_7_0)
+function V1a6_CachotRoomGuide:_onGuideMoveCollection()
 	V1a6_CachotCollectionBagController.instance.guideMoveCollection = true
 end
 
-function var_0_0._checkGuideEnterLayerRoom(arg_8_0)
+function V1a6_CachotRoomGuide:_checkGuideEnterLayerRoom()
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotRoomView) then
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_8_0._guideEnterLayerRoom, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0._guideEnterLayerRoom, arg_8_0, 0.5)
+	TaskDispatcher.cancelTask(self._guideEnterLayerRoom, self)
+	TaskDispatcher.runDelay(self._guideEnterLayerRoom, self, 0.5)
 end
 
-function var_0_0._guideEnterLayerRoom(arg_9_0)
+function V1a6_CachotRoomGuide:_guideEnterLayerRoom()
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotRoomView) then
 		return
 	end
 
-	arg_9_0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	self._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not arg_9_0._rogueInfo then
+	if not self._rogueInfo then
 		return
 	end
 
-	local var_9_0 = arg_9_0._rogueInfo.layer
-	local var_9_1, var_9_2 = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(arg_9_0._rogueInfo.room)
-	local var_9_3 = arg_9_0._rogueInfo.heart
-	local var_9_4 = arg_9_0._heartNum
+	local layer = self._rogueInfo.layer
+	local roomIndex, total = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(self._rogueInfo.room)
+	local heartNum = self._rogueInfo.heart
+	local oldHeartNum = self._heartNum
 
-	arg_9_0._heartNum = var_9_3
+	self._heartNum = heartNum
 
-	if var_9_0 ~= 1 or var_9_1 >= 3 then
-		if var_9_4 and var_9_4 ~= var_9_3 then
+	if layer ~= 1 or roomIndex >= 3 then
+		if oldHeartNum and oldHeartNum ~= heartNum then
 			V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.GuideHeartChange)
 		end
 
@@ -74,27 +76,27 @@ function var_0_0._guideEnterLayerRoom(arg_9_0)
 		end
 	end
 
-	if var_9_0 == 3 and var_9_1 == 3 then
-		local var_9_5 = arg_9_0._rogueInfo.collectionCfgMap
-		local var_9_6 = var_9_5 and var_9_5[V1a6_CachotEnum.SpecialCollection]
-		local var_9_7 = var_9_6 and #var_9_6 > 0
+	if layer == 3 and roomIndex == 3 then
+		local collectionMap = self._rogueInfo.collectionCfgMap
+		local collectionList = collectionMap and collectionMap[V1a6_CachotEnum.SpecialCollection]
+		local hasCollection = collectionList and #collectionList > 0
 
-		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.GuideEnterLayerRoom, string.format("%s_%s_%s", var_9_0, var_9_1, var_9_7 and 1 or 0))
+		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.GuideEnterLayerRoom, string.format("%s_%s_%s", layer, roomIndex, hasCollection and 1 or 0))
 
 		return
 	end
 
-	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.GuideEnterLayerRoom, string.format("%s_%s", var_9_0, var_9_1))
+	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.GuideEnterLayerRoom, string.format("%s_%s", layer, roomIndex))
 end
 
-function var_0_0._onRoomViewOpenAnimEnd(arg_10_0)
-	arg_10_0:_guideEnterLayerRoom()
+function V1a6_CachotRoomGuide:_onRoomViewOpenAnimEnd()
+	self:_guideEnterLayerRoom()
 end
 
-function var_0_0._onCloseViewFinish(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.StoryBackgroundView or string.find(arg_11_1, "V1a6_CachotCollection") then
-		arg_11_0:_guideEnterLayerRoom()
+function V1a6_CachotRoomGuide:_onCloseViewFinish(viewName)
+	if viewName == ViewName.StoryBackgroundView or string.find(viewName, "V1a6_CachotCollection") then
+		self:_guideEnterLayerRoom()
 	end
 end
 
-return var_0_0
+return V1a6_CachotRoomGuide

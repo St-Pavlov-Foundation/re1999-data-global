@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerObstacleEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballTriggerObstacleEntity.lua
 
-local var_0_0 = class("PinballTriggerObstacleEntity", PinballTriggerEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerObstacleEntity", package.seeall)
 
-function var_0_0.onInitByCo(arg_1_0)
-	arg_1_0.force = (tonumber(arg_1_0.spData) or 1000) / 1000
-	arg_1_0.baseForceX = arg_1_0.force
-	arg_1_0.baseForceY = arg_1_0.force
+local PinballTriggerObstacleEntity = class("PinballTriggerObstacleEntity", PinballTriggerEntity)
+
+function PinballTriggerObstacleEntity:onInitByCo()
+	self.force = (tonumber(self.spData) or 1000) / 1000
+	self.baseForceX = self.force
+	self.baseForceY = self.force
 end
 
-return var_0_0
+return PinballTriggerObstacleEntity

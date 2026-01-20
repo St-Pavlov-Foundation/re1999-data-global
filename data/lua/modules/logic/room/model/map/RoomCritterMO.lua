@@ -1,76 +1,79 @@
-﻿module("modules.logic.room.model.map.RoomCritterMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomCritterMO.lua
 
-local var_0_0 = pureTable("RoomCritterMO")
+module("modules.logic.room.model.map.RoomCritterMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.uid
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.critterId = arg_1_1.critterId or arg_1_1.defineId
-	arg_1_0.skinId = arg_1_1.skinId
-	arg_1_0.currentPosition = arg_1_1.currentPosition
-	arg_1_0.heroId = arg_1_1.heroId or nil
-	arg_1_0.characterId = arg_1_1.characterId or nil
+local RoomCritterMO = pureTable("RoomCritterMO")
+
+function RoomCritterMO:init(info)
+	self.id = info.uid
+	self.uid = info.uid
+	self.critterId = info.critterId or info.defineId
+	self.skinId = info.skinId
+	self.currentPosition = info.currentPosition
+	self.heroId = info.heroId or nil
+	self.characterId = info.characterId or nil
 end
 
-function var_0_0.initWithBuildingValue(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.id = arg_2_1
-	arg_2_0.uid = arg_2_1
+function RoomCritterMO:initWithBuildingValue(critterUid, stayBuildingUid, stayBuildingSlotId)
+	self.id = critterUid
+	self.uid = critterUid
 
-	local var_2_0 = CritterModel.instance:getCritterMOByUid(arg_2_0.id)
+	local critterMO = CritterModel.instance:getCritterMOByUid(self.id)
 
-	arg_2_0.critterId = var_2_0 and var_2_0.defineId
-	arg_2_0.skinId = var_2_0 and var_2_0:getSkinId()
-	arg_2_0.stayBuildingUid = arg_2_2
-	arg_2_0.stayBuildingSlotId = arg_2_3
+	self.critterId = critterMO and critterMO.defineId
+	self.skinId = critterMO and critterMO:getSkinId()
+	self.stayBuildingUid = stayBuildingUid
+	self.stayBuildingSlotId = stayBuildingSlotId
 end
 
-function var_0_0.setIsRestCritter(arg_3_0, arg_3_1)
-	arg_3_0._isRestCritter = arg_3_1
+function RoomCritterMO:setIsRestCritter(isRest)
+	self._isRestCritter = isRest
 end
 
-function var_0_0.getId(arg_4_0)
-	return arg_4_0.id
+function RoomCritterMO:getId()
+	return self.id
 end
 
-function var_0_0.getSkinId(arg_5_0)
-	local var_5_0 = arg_5_0.skinId
+function RoomCritterMO:getSkinId()
+	local result = self.skinId
 
-	if not var_5_0 then
-		local var_5_1 = arg_5_0:getId()
+	if not result then
+		local critterUid = self:getId()
 
-		var_5_0 = CritterModel.instance:getCritterSkinId(var_5_1)
+		result = CritterModel.instance:getCritterSkinId(critterUid)
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.getCurrentPosition(arg_6_0)
-	return arg_6_0.currentPosition
+function RoomCritterMO:getCurrentPosition()
+	return self.currentPosition
 end
 
-function var_0_0.getStayBuilding(arg_7_0)
-	return arg_7_0.stayBuildingUid, arg_7_0.stayBuildingSlotId
+function RoomCritterMO:getStayBuilding()
+	return self.stayBuildingUid, self.stayBuildingSlotId
 end
 
-function var_0_0.isRestingCritter(arg_8_0)
-	local var_8_0 = false
-	local var_8_1
-	local var_8_2
+function RoomCritterMO:isRestingCritter()
+	local result = false
+	local seatSlotId
 
-	if arg_8_0._isRestCritter then
-		var_8_2 = true
+	if self._isRestCritter then
+		result = true
 	else
-		local var_8_3 = RoomMapBuildingModel.instance:getBuildingMOById(arg_8_0.stayBuildingUid)
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self.stayBuildingUid)
 
-		var_8_1 = var_8_3 and var_8_3:isCritterInSeatSlot(arg_8_0.uid)
-		var_8_2 = var_8_1 and true or false
+		seatSlotId = buildingMO and buildingMO:isCritterInSeatSlot(self.uid)
+		result = seatSlotId and true or false
 	end
 
-	return var_8_2, var_8_1
+	return result, seatSlotId
 end
 
-function var_0_0.getSpecialRate(arg_9_0)
-	return CritterConfig.instance:getCritterSpecialRate(arg_9_0.critterId) / 1000
+function RoomCritterMO:getSpecialRate()
+	local rate = CritterConfig.instance:getCritterSpecialRate(self.critterId)
+
+	return rate / 1000
 end
 
-return var_0_0
+return RoomCritterMO

@@ -1,188 +1,193 @@
-﻿module("modules.logic.summon.view.SummonPoolHistoryView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonPoolHistoryView.lua
 
-local var_0_0 = class("SummonPoolHistoryView", BaseView)
+module("modules.logic.summon.view.SummonPoolHistoryView", package.seeall)
 
-var_0_0.PAGE_ITEM_NUM = 10
+local SummonPoolHistoryView = class("SummonPoolHistoryView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "allbg/#simage_top")
-	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "allbg/#simage_bottom")
-	arg_1_0._txtdes = gohelper.findChildText(arg_1_0.viewGO, "allbg/top/#txt_des")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "allbg/middle/#go_empty")
-	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "allbg/#go_bottom")
-	arg_1_0._btnarrowleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "allbg/#go_bottom/#btn_arrowleft")
-	arg_1_0._imagearrowleft = gohelper.findChildImage(arg_1_0.viewGO, "allbg/#go_bottom/#btn_arrowleft/#image_arrowleft")
-	arg_1_0._btnarrowright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "allbg/#go_bottom/#btn_arrowright")
-	arg_1_0._imagearrowright = gohelper.findChildImage(arg_1_0.viewGO, "allbg/#go_bottom/#btn_arrowright/#image_arrowright")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "allbg/#go_bottom/#txt_num")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "allbg/#btn_close")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "bottomright/#txt_time")
+SummonPoolHistoryView.PAGE_ITEM_NUM = 10
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonPoolHistoryView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._simagetop = gohelper.findChildSingleImage(self.viewGO, "allbg/#simage_top")
+	self._simagebottom = gohelper.findChildSingleImage(self.viewGO, "allbg/#simage_bottom")
+	self._txtdes = gohelper.findChildText(self.viewGO, "allbg/top/#txt_des")
+	self._goempty = gohelper.findChild(self.viewGO, "allbg/middle/#go_empty")
+	self._gobottom = gohelper.findChild(self.viewGO, "allbg/#go_bottom")
+	self._btnarrowleft = gohelper.findChildButtonWithAudio(self.viewGO, "allbg/#go_bottom/#btn_arrowleft")
+	self._imagearrowleft = gohelper.findChildImage(self.viewGO, "allbg/#go_bottom/#btn_arrowleft/#image_arrowleft")
+	self._btnarrowright = gohelper.findChildButtonWithAudio(self.viewGO, "allbg/#go_bottom/#btn_arrowright")
+	self._imagearrowright = gohelper.findChildImage(self.viewGO, "allbg/#go_bottom/#btn_arrowright/#image_arrowright")
+	self._txtnum = gohelper.findChildText(self.viewGO, "allbg/#go_bottom/#txt_num")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "allbg/#btn_close")
+	self._txttime = gohelper.findChildText(self.viewGO, "bottomright/#txt_time")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnarrowleft:AddClickListener(arg_2_0._btnarrowleftOnClick, arg_2_0)
-	arg_2_0._btnarrowright:AddClickListener(arg_2_0._btnarrowrightOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function SummonPoolHistoryView:addEvents()
+	self._btnarrowleft:AddClickListener(self._btnarrowleftOnClick, self)
+	self._btnarrowright:AddClickListener(self._btnarrowrightOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnarrowleft:RemoveClickListener()
-	arg_3_0._btnarrowright:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function SummonPoolHistoryView:removeEvents()
+	self._btnarrowleft:RemoveClickListener()
+	self._btnarrowright:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SummonPoolHistoryView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnarrowleftOnClick(arg_5_0)
-	if arg_5_0._curPage > 1 then
-		arg_5_0._curPage = arg_5_0._curPage - 1
+function SummonPoolHistoryView:_btnarrowleftOnClick()
+	if self._curPage > 1 then
+		self._curPage = self._curPage - 1
 
-		arg_5_0:_refreshView()
+		self:_refreshView()
 	end
 end
 
-function var_0_0._btnarrowrightOnClick(arg_6_0)
-	if arg_6_0:_getMaxPage() > arg_6_0._curPage then
-		arg_6_0._curPage = arg_6_0._curPage + 1
+function SummonPoolHistoryView:_btnarrowrightOnClick()
+	local maxPage = self:_getMaxPage()
 
-		arg_6_0:_refreshView()
+	if maxPage > self._curPage then
+		self._curPage = self._curPage + 1
+
+		self:_refreshView()
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_7_0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	gohelper.addUIClickAudio(arg_7_0._btnarrowleft.gameObject, AudioEnum.UI.Play_UI_Pool_History_Page_Switch)
-	gohelper.addUIClickAudio(arg_7_0._btnarrowright.gameObject, AudioEnum.UI.Play_UI_Pool_History_Page_Switch)
+function SummonPoolHistoryView:_editableInitView()
+	self._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	gohelper.addUIClickAudio(self._btnarrowleft.gameObject, AudioEnum.UI.Play_UI_Pool_History_Page_Switch)
+	gohelper.addUIClickAudio(self._btnarrowright.gameObject, AudioEnum.UI.Play_UI_Pool_History_Page_Switch)
 
-	arg_7_0._curPage = 1
-	arg_7_0._poolTypeId = nil
+	self._curPage = 1
+	self._poolTypeId = nil
 
-	arg_7_0:_initListItem()
-	arg_7_0:_initPoolType()
+	self:_initListItem()
+	self:_initPoolType()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._simagetop:UnLoadImage()
-	arg_8_0._simagebottom:UnLoadImage()
+function SummonPoolHistoryView:onDestroyView()
+	self._simagetop:UnLoadImage()
+	self._simagebottom:UnLoadImage()
 end
 
-function var_0_0._initPoolType(arg_9_0)
-	local var_9_0 = SummonMainModel.instance:getCurId()
-	local var_9_1 = SummonPoolHistoryModel.instance:getShowPoolTypeByPoolId(var_9_0)
+function SummonPoolHistoryView:_initPoolType()
+	local poolId = SummonMainModel.instance:getCurId()
+	local poolTypeId = SummonPoolHistoryModel.instance:getShowPoolTypeByPoolId(poolId)
 
-	if SummonPoolHistoryModel.instance:isCanShowByPoolTypeId(var_9_1) then
-		arg_9_0._poolTypeId = var_9_1
+	if SummonPoolHistoryModel.instance:isCanShowByPoolTypeId(poolTypeId) then
+		self._poolTypeId = poolTypeId
 	end
 end
 
-function var_0_0._initListItem(arg_10_0)
-	if arg_10_0._historyListItems then
+function SummonPoolHistoryView:_initListItem()
+	if self._historyListItems then
 		return
 	end
 
-	local var_10_0 = gohelper.findChild(arg_10_0.viewGO, "allbg/middle/history/item")
-	local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "allbg/middle/history")
+	local itemGo = gohelper.findChild(self.viewGO, "allbg/middle/history/item")
+	local parentGO = gohelper.findChild(self.viewGO, "allbg/middle/history")
 
-	arg_10_0._historyListItems = {}
+	self._historyListItems = {}
 
-	table.insert(arg_10_0._historyListItems, MonoHelper.addNoUpdateLuaComOnceToGo(var_10_0, SummonPoolHistoryListItem, arg_10_0))
+	table.insert(self._historyListItems, MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, SummonPoolHistoryListItem, self))
 
-	for iter_10_0 = 2, var_0_0.PAGE_ITEM_NUM do
-		local var_10_2 = gohelper.clone(var_10_0, var_10_1, "item" .. iter_10_0)
+	for i = 2, SummonPoolHistoryView.PAGE_ITEM_NUM do
+		local cloneGo = gohelper.clone(itemGo, parentGO, "item" .. i)
 
-		table.insert(arg_10_0._historyListItems, MonoHelper.addNoUpdateLuaComOnceToGo(var_10_2, SummonPoolHistoryListItem, arg_10_0))
+		table.insert(self._historyListItems, MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, SummonPoolHistoryListItem, self))
 	end
 end
 
-function var_0_0._refreshView(arg_11_0)
-	local var_11_0 = SummonPoolHistoryModel.instance:getNumByPoolId(arg_11_0._poolTypeId)
+function SummonPoolHistoryView:_refreshView()
+	local maxNum = SummonPoolHistoryModel.instance:getNumByPoolId(self._poolTypeId)
 
-	gohelper.setActive(arg_11_0._goempty, not (var_11_0 > 0))
-	gohelper.setActive(arg_11_0._gobottom, var_11_0 > 0)
+	gohelper.setActive(self._goempty, not (maxNum > 0))
+	gohelper.setActive(self._gobottom, maxNum > 0)
 
-	local var_11_1 = (arg_11_0._curPage - 1) * #arg_11_0._historyListItems + 1
-	local var_11_2 = SummonPoolHistoryModel.instance:getHistoryListByIndexOf(var_11_1, #arg_11_0._historyListItems, arg_11_0._poolTypeId)
+	local start = (self._curPage - 1) * #self._historyListItems + 1
+	local datas = SummonPoolHistoryModel.instance:getHistoryListByIndexOf(start, #self._historyListItems, self._poolTypeId)
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._historyListItems) do
-		iter_11_1:onUpdateMO(var_11_2[iter_11_0])
+	for index, item in ipairs(self._historyListItems) do
+		item:onUpdateMO(datas[index])
 	end
 
-	if var_11_0 > 0 then
-		local var_11_3 = arg_11_0:_getMaxPage()
+	if maxNum > 0 then
+		local maxPage = self:_getMaxPage()
 
-		ZProj.UGUIHelper.SetColorAlpha(arg_11_0._imagearrowleft, arg_11_0._curPage < 2 and 0.25 or 1)
-		ZProj.UGUIHelper.SetColorAlpha(arg_11_0._imagearrowright, var_11_3 <= arg_11_0._curPage and 0.25 or 1)
+		ZProj.UGUIHelper.SetColorAlpha(self._imagearrowleft, self._curPage < 2 and 0.25 or 1)
+		ZProj.UGUIHelper.SetColorAlpha(self._imagearrowright, maxPage <= self._curPage and 0.25 or 1)
 
-		arg_11_0._txtnum.text = arg_11_0._curPage .. "/" .. var_11_3
+		self._txtnum.text = self._curPage .. "/" .. maxPage
 	end
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function SummonPoolHistoryView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:addEventCb(SummonController.instance, SummonEvent.onGetSummonPoolHistoryData, arg_13_0.handleGetHistoryData, arg_13_0)
-	arg_13_0:addEventCb(SummonController.instance, SummonEvent.onSummonPoolHistorySelect, arg_13_0._onHandleHistorySelect, arg_13_0)
-	arg_13_0:_checkRequese()
+function SummonPoolHistoryView:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onGetSummonPoolHistoryData, self.handleGetHistoryData, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonPoolHistorySelect, self._onHandleHistorySelect, self)
+	self:_checkRequese()
 
-	local var_13_0 = SummonPoolHistoryTypeListModel.instance
+	local tSummonPoolHistoryTypeListModel = SummonPoolHistoryTypeListModel.instance
 
-	var_13_0:initPoolType()
+	tSummonPoolHistoryTypeListModel:initPoolType()
 
-	if not arg_13_0._poolTypeId then
-		arg_13_0._poolTypeId = var_13_0:getFirstId()
+	if not self._poolTypeId then
+		self._poolTypeId = tSummonPoolHistoryTypeListModel:getFirstId()
 	end
 
-	var_13_0:setSelectId(arg_13_0._poolTypeId)
-	arg_13_0:_refreshView()
+	tSummonPoolHistoryTypeListModel:setSelectId(self._poolTypeId)
+	self:_refreshView()
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0:removeEventCb(SummonController.instance, SummonEvent.onGetSummonPoolHistoryData, arg_14_0.handleGetHistoryData, arg_14_0)
-	arg_14_0:removeEventCb(SummonController.instance, SummonEvent.onSummonPoolHistorySelect, arg_14_0._onHandleHistorySelect, arg_14_0)
+function SummonPoolHistoryView:onClose()
+	self:removeEventCb(SummonController.instance, SummonEvent.onGetSummonPoolHistoryData, self.handleGetHistoryData, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonPoolHistorySelect, self._onHandleHistorySelect, self)
 end
 
-function var_0_0._onHandleHistorySelect(arg_15_0)
-	local var_15_0 = SummonPoolHistoryTypeListModel.instance:getSelectId()
+function SummonPoolHistoryView:_onHandleHistorySelect()
+	local curselectId = SummonPoolHistoryTypeListModel.instance:getSelectId()
 
-	if arg_15_0._poolTypeId ~= var_15_0 then
-		arg_15_0._poolTypeId = var_15_0
-		arg_15_0._curPage = 1
+	if self._poolTypeId ~= curselectId then
+		self._poolTypeId = curselectId
+		self._curPage = 1
 
-		arg_15_0:_refreshView()
+		self:_refreshView()
 	end
 end
 
-function var_0_0.handleGetHistoryData(arg_16_0)
-	local var_16_0 = arg_16_0:_getMaxPage()
+function SummonPoolHistoryView:handleGetHistoryData()
+	local maxPage = self:_getMaxPage()
 
-	if var_16_0 < arg_16_0._curPage then
-		arg_16_0._curPage = math.max(1, var_16_0)
+	if maxPage < self._curPage then
+		self._curPage = math.max(1, maxPage)
 	end
 
 	SummonPoolHistoryTypeListModel.instance:initPoolType()
-	arg_16_0:_refreshView()
+	self:_refreshView()
 end
 
-function var_0_0._getMaxPage(arg_17_0)
-	local var_17_0 = SummonPoolHistoryModel.instance:getNumByPoolId(arg_17_0._poolTypeId)
+function SummonPoolHistoryView:_getMaxPage()
+	local maxNum = SummonPoolHistoryModel.instance:getNumByPoolId(self._poolTypeId)
+	local maxPage = math.ceil(maxNum / SummonPoolHistoryView.PAGE_ITEM_NUM)
 
-	return (math.ceil(var_17_0 / var_0_0.PAGE_ITEM_NUM))
+	return maxPage
 end
 
-function var_0_0._checkRequese(arg_18_0)
+function SummonPoolHistoryView:_checkRequese()
 	if not SummonPoolHistoryModel.instance:isDataValidity() then
 		SummonPoolHistoryController.instance:request()
 	end
 end
 
-return var_0_0
+return SummonPoolHistoryView

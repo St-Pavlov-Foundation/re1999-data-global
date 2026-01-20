@@ -1,146 +1,153 @@
-﻿module("modules.logic.fight.view.assistboss.FightAssistBossBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/assistboss/FightAssistBossBase.lua
 
-local var_0_0 = class("FightAssistBossBase", UserDataDispose)
+module("modules.logic.fight.view.assistboss.FightAssistBossBase", package.seeall)
 
-var_0_0.InCDColor = Color(0.5019607843137255, 0.5019607843137255, 0.5019607843137255)
+local FightAssistBossBase = class("FightAssistBossBase", UserDataDispose)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+FightAssistBossBase.InCDColor = Color(0.5019607843137255, 0.5019607843137255, 0.5019607843137255)
 
-	arg_1_0.goContainer = arg_1_1
-	arg_1_0.loadDone = false
+function FightAssistBossBase:init(goContainer)
+	self:__onInit()
 
-	arg_1_0:setPrefabPath()
-	arg_1_0:loadRes()
+	self.goContainer = goContainer
+	self.loadDone = false
+
+	self:setPrefabPath()
+	self:loadRes()
 end
 
-function var_0_0.setPrefabPath(arg_2_0)
-	arg_2_0.prefabPath = "ui/viewres/assistboss/boss0.prefab"
+function FightAssistBossBase:setPrefabPath()
+	self.prefabPath = "ui/viewres/assistboss/boss0.prefab"
 end
 
-function var_0_0.loadRes(arg_3_0)
-	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.goContainer)
+function FightAssistBossBase:loadRes()
+	self.loader = PrefabInstantiate.Create(self.goContainer)
 
-	arg_3_0.loader:startLoad(arg_3_0.prefabPath, arg_3_0.onResLoaded, arg_3_0)
+	self.loader:startLoad(self.prefabPath, self.onResLoaded, self)
 end
 
-function var_0_0.onResLoaded(arg_4_0)
-	arg_4_0.loadDone = true
-	arg_4_0.viewGo = arg_4_0.loader:getInstGO()
+function FightAssistBossBase:onResLoaded()
+	self.loadDone = true
+	self.viewGo = self.loader:getInstGO()
 
-	arg_4_0:initView()
-	arg_4_0:addEvents()
-	arg_4_0:refreshUI()
+	self:initView()
+	self:addEvents()
+	self:refreshUI()
 end
 
-function var_0_0.initView(arg_5_0)
-	arg_5_0.headImage = gohelper.findChildImage(arg_5_0.viewGo, "head/boss")
-	arg_5_0.headSImage = gohelper.findChildSingleImage(arg_5_0.viewGo, "head/boss")
-	arg_5_0.goCD = gohelper.findChild(arg_5_0.viewGo, "cd")
-	arg_5_0.txtCD = gohelper.findChildText(arg_5_0.viewGo, "cd/cdbg/#txt_cd")
+function FightAssistBossBase:initView()
+	self.headImage = gohelper.findChildImage(self.viewGo, "head/boss")
+	self.headSImage = gohelper.findChildSingleImage(self.viewGo, "head/boss")
+	self.goCD = gohelper.findChild(self.viewGo, "cd")
+	self.txtCD = gohelper.findChildText(self.viewGo, "cd/cdbg/#txt_cd")
 
-	local var_5_0 = gohelper.findChild(arg_5_0.viewGo, "clickarea")
+	local goClickArea = gohelper.findChild(self.viewGo, "clickarea")
 
-	arg_5_0.longListener = SLFramework.UGUI.UILongPressListener.Get(var_5_0)
+	self.longListener = SLFramework.UGUI.UILongPressListener.Get(goClickArea)
 
-	arg_5_0.longListener:SetLongPressTime({
+	self.longListener:SetLongPressTime({
 		0.5,
 		99999
 	})
-	arg_5_0.longListener:AddLongPressListener(arg_5_0.onLongPress, arg_5_0)
-	arg_5_0.longListener:AddClickListener(arg_5_0.playAssistBossCard, arg_5_0)
+	self.longListener:AddLongPressListener(self.onLongPress, self)
+	self.longListener:AddClickListener(self.playAssistBossCard, self)
 end
 
-function var_0_0.addEvents(arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnAssistBossPowerChange, arg_6_0.onAssistBossPowerChange, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnAssistBossCDChange, arg_6_0.onAssistBossCDChange, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_6_0.onPowerChange, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_6_0.onResetCard, arg_6_0)
+function FightAssistBossBase:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.OnAssistBossPowerChange, self.onAssistBossPowerChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnAssistBossCDChange, self.onAssistBossCDChange, self)
+	self:addEventCb(FightController.instance, FightEvent.PowerChange, self.onPowerChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnResetCard, self.onResetCard, self)
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	if not arg_7_0.loadDone then
+function FightAssistBossBase:refreshUI()
+	if not self.loadDone then
 		return
 	end
 
-	arg_7_0:refreshHeadImage()
-	arg_7_0:refreshPower()
-	arg_7_0:refreshCD()
+	self:refreshHeadImage()
+	self:refreshPower()
+	self:refreshCD()
 end
 
-function var_0_0.onAssistBossPowerChange(arg_8_0)
-	arg_8_0:refreshPower()
+function FightAssistBossBase:onAssistBossPowerChange()
+	self:refreshPower()
 end
 
-function var_0_0.onAssistBossCDChange(arg_9_0)
-	arg_9_0:refreshCD()
+function FightAssistBossBase:onAssistBossCDChange()
+	self:refreshCD()
 end
 
-function var_0_0.onPowerChange(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if arg_10_2 ~= FightEnum.PowerType.AssistBoss then
+function FightAssistBossBase:onPowerChange(entityId, powerId, oldNum, newNum)
+	if powerId ~= FightEnum.PowerType.AssistBoss then
 		return
 	end
 
-	local var_10_0 = FightDataHelper.entityMgr:getAssistBoss()
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-	if not var_10_0 or var_10_0.id ~= arg_10_1 then
+	if not assistBoss or assistBoss.id ~= entityId then
 		return
 	end
 
-	arg_10_0:refreshPower()
+	self:refreshPower()
 end
 
-function var_0_0.onResetCard(arg_11_0)
-	arg_11_0:refreshPower()
-	arg_11_0:refreshCD()
+function FightAssistBossBase:onResetCard()
+	self:refreshPower()
+	self:refreshCD()
 end
 
-function var_0_0.refreshHeadImage(arg_12_0)
-	local var_12_0 = FightDataHelper.entityMgr:getAssistBoss().originSkin
-	local var_12_1 = FightConfig.instance:getSkinCO(var_12_0)
+function FightAssistBossBase:refreshHeadImage()
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
+	local skin = assistBoss.originSkin
+	local skinCo = FightConfig.instance:getSkinCO(skin)
 
-	arg_12_0.headSImage:LoadImage(ResUrl.monsterHeadIcon(var_12_1.headIcon))
+	self.headSImage:LoadImage(ResUrl.monsterHeadIcon(skinCo.headIcon))
 end
 
-function var_0_0.refreshPower(arg_13_0)
-	arg_13_0:refreshHeadImageColor()
+function FightAssistBossBase:refreshPower()
+	self:refreshHeadImageColor()
 end
 
-function var_0_0.checkInCd(arg_14_0)
-	local var_14_0 = FightDataHelper.paTaMgr:getCurCD()
+function FightAssistBossBase:checkInCd()
+	local cd = FightDataHelper.paTaMgr:getCurCD()
 
-	return var_14_0 and var_14_0 > 0
+	return cd and cd > 0
 end
 
-function var_0_0.refreshCD(arg_15_0)
-	local var_15_0 = arg_15_0:checkInCd()
+function FightAssistBossBase:refreshCD()
+	local inCd = self:checkInCd()
 
-	gohelper.setActive(arg_15_0.goCD, var_15_0)
+	gohelper.setActive(self.goCD, inCd)
 
-	if var_15_0 then
-		arg_15_0.txtCD.text = tostring(FightDataHelper.paTaMgr:getCurCD())
+	if inCd then
+		self.txtCD.text = tostring(FightDataHelper.paTaMgr:getCurCD())
 	end
 
-	arg_15_0:refreshHeadImageColor()
+	self:refreshHeadImageColor()
 end
 
-function var_0_0.refreshHeadImageColor(arg_16_0)
-	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() then
-		arg_16_0.headImage.color = var_0_0.InCDColor
+function FightAssistBossBase:refreshHeadImageColor()
+	local useSkill = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+
+	if not useSkill then
+		self.headImage.color = FightAssistBossBase.InCDColor
 
 		return
 	end
 
-	if arg_16_0:checkInCd() then
-		arg_16_0.headImage.color = var_0_0.InCDColor
+	local inCd = self:checkInCd()
+
+	if inCd then
+		self.headImage.color = FightAssistBossBase.InCDColor
 
 		return
 	end
 
-	arg_16_0.headImage.color = Color.white
+	self.headImage.color = Color.white
 end
 
-function var_0_0.onLongPress(arg_17_0)
+function FightAssistBossBase:onLongPress()
 	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
@@ -153,57 +160,61 @@ function var_0_0.onLongPress(arg_17_0)
 		return
 	end
 
-	local var_17_0 = FightDataHelper.paTaMgr:getCurUseSkillInfo()
-	local var_17_1 = FightDataHelper.paTaMgr:getBossSkillInfoList()
+	if FightGameMgr.operateMgr:isOperating() then
+		return
+	end
 
-	if not var_17_0 then
-		var_17_0 = var_17_1[1]
+	local useSkill = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+	local skillList = FightDataHelper.paTaMgr:getBossSkillInfoList()
 
-		if not var_17_0 then
+	if not useSkill then
+		useSkill = skillList[1]
+
+		if not useSkill then
 			logError("boss not found any one skill!")
 
 			return
 		end
 	end
 
-	local var_17_2 = var_17_0.skillId
-	local var_17_3 = lua_skill.configDict[var_17_2]
+	local skillId = useSkill.skillId
+	local skillCo = lua_skill.configDict[skillId]
 
-	if not var_17_3 then
-		logError("long press assist boss, skill not exist !!! id : " .. tostring(var_17_2))
+	if not skillCo then
+		logError("long press assist boss, skill not exist !!! id : " .. tostring(skillId))
 
 		return
 	end
 
-	arg_17_0.tempInfo = arg_17_0.tempInfo or {}
+	self.tempInfo = self.tempInfo or {}
 
-	tabletool.clear(arg_17_0.tempInfo)
+	tabletool.clear(self.tempInfo)
 
-	arg_17_0.tempSkillIdList = arg_17_0.tempSkillIdList or {}
+	self.tempSkillIdList = self.tempSkillIdList or {}
 
-	tabletool.clear(arg_17_0.tempSkillIdList)
+	tabletool.clear(self.tempSkillIdList)
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		table.insert(arg_17_0.tempSkillIdList, iter_17_1.skillId)
+	for index, skillInfo in ipairs(skillList) do
+		table.insert(self.tempSkillIdList, skillInfo.skillId)
 	end
 
-	arg_17_0.tempInfo.super = var_17_3.isBigSkill == 1
-	arg_17_0.tempInfo.skillIdList = arg_17_0.tempSkillIdList
-	arg_17_0.tempInfo.skillIndex = 1
-	arg_17_0.tempInfo.userSkillId = var_17_0.skillId
+	self.tempInfo.super = skillCo.isBigSkill == 1
+	self.tempInfo.skillIdList = self.tempSkillIdList
+	self.tempInfo.skillIndex = 1
+	self.tempInfo.userSkillId = useSkill.skillId
 
-	local var_17_4 = FightDataHelper.entityMgr:getAssistBoss()
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-	arg_17_0.tempInfo.monsterName = var_17_4 and var_17_4:getEntityName() or ""
+	self.tempInfo.monsterName = assistBoss and assistBoss:getEntityName() or ""
 
-	if var_17_4 and arg_17_0.tempInfo.super then
-		ViewMgr.instance:openView(ViewName.TowerSkillTipView, arg_17_0.tempInfo)
+	if assistBoss and self.tempInfo.super then
+		ViewMgr.instance:openView(ViewName.TowerSkillTipView, self.tempInfo)
 	else
-		ViewMgr.instance:openView(ViewName.SkillTipView, arg_17_0.tempInfo)
+		ViewMgr.instance:openView(ViewName.SkillTipView, self.tempInfo)
 	end
 end
 
-function var_0_0.playAssistBossCard(arg_18_0)
+function FightAssistBossBase:playAssistBossCard()
 	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
@@ -216,27 +227,31 @@ function var_0_0.playAssistBossCard(arg_18_0)
 		return
 	end
 
-	local var_18_0 = arg_18_0:canUseSkill()
-
-	if not var_18_0 then
+	if FightGameMgr.operateMgr:isOperating() then
 		return
 	end
 
-	local var_18_1 = FightDataHelper.operationDataMgr:newOperation()
+	local useSkill = self:canUseSkill()
 
-	var_18_1:playAssistBossHandCard(var_18_0.skillId)
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_18_1)
+	if not useSkill then
+		return
+	end
+
+	local op = FightDataHelper.operationDataMgr:newOperation()
+
+	op:playAssistBossHandCard(useSkill.skillId)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, op)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_18_1)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, var_18_1)
-	FightDataHelper.paTaMgr:playAssistBossSkill(var_18_0)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, op)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, op)
+	FightDataHelper.paTaMgr:playAssistBossSkill(useSkill)
 	FightController.instance:dispatchEvent(FightEvent.OnAssistBossPowerChange)
 	FightController.instance:dispatchEvent(FightEvent.OnAssistBossCDChange)
 
 	return true
 end
 
-function var_0_0.canUseSkill(arg_19_0)
+function FightAssistBossBase:canUseSkill()
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -249,75 +264,78 @@ function var_0_0.canUseSkill(arg_19_0)
 		return
 	end
 
-	local var_19_0 = FightDataHelper.paTaMgr:getCurCD()
+	local cd = FightDataHelper.paTaMgr:getCurCD()
 
-	if var_19_0 and var_19_0 > 0 then
+	if cd and cd > 0 then
 		return
 	end
 
-	local var_19_1 = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+	local useSkill = FightDataHelper.paTaMgr:getCurUseSkillInfo()
 
-	if not var_19_1 then
+	if not useSkill then
 		return
 	end
 
-	if FightDataHelper.paTaMgr:getNeedPower(var_19_1) > FightDataHelper.paTaMgr:getAssistBossPower() then
+	local needPower = FightDataHelper.paTaMgr:getNeedPower(useSkill)
+	local power = FightDataHelper.paTaMgr:getAssistBossPower()
+
+	if power < needPower then
 		return
 	end
 
-	return var_19_1
+	return useSkill
 end
 
-var_0_0.Duration = 0.5
+FightAssistBossBase.Duration = 0.5
 
-function var_0_0.setFillAmount(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0:killTween()
+function FightAssistBossBase:setFillAmount(image, targetValue)
+	self:killTween()
 
-	if not arg_20_1 then
-		arg_20_0.curImage = nil
+	if not image then
+		self.curImage = nil
 
 		return
 	end
 
-	local var_20_0 = arg_20_1.fillAmount
+	local curValue = image.fillAmount
 
-	arg_20_0.curImage = arg_20_1
-	arg_20_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_20_0, arg_20_2, var_0_0.Duration, arg_20_0.onFrameCallback, nil, arg_20_0, nil, EaseType.Linear)
+	self.curImage = image
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(curValue, targetValue, FightAssistBossBase.Duration, self.onFrameCallback, nil, self, nil, EaseType.Linear)
 end
 
-function var_0_0.onFrameCallback(arg_21_0, arg_21_1)
-	arg_21_0.curImage.fillAmount = arg_21_1
+function FightAssistBossBase:onFrameCallback(value)
+	self.curImage.fillAmount = value
 end
 
-function var_0_0.killTween(arg_22_0)
-	if arg_22_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.tweenId)
+function FightAssistBossBase:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 	end
 end
 
-function var_0_0.destroy(arg_23_0)
-	arg_23_0:killTween()
+function FightAssistBossBase:destroy()
+	self:killTween()
 
-	if arg_23_0.headSImage then
-		arg_23_0.headSImage:UnLoadImage()
+	if self.headSImage then
+		self.headSImage:UnLoadImage()
 	end
 
-	if arg_23_0.loader then
-		arg_23_0.loader:dispose()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_23_0.loader = nil
+		self.loader = nil
 	end
 
-	if arg_23_0.longListener then
-		arg_23_0.longListener:RemoveClickListener()
-		arg_23_0.longListener:RemoveLongPressListener()
+	if self.longListener then
+		self.longListener:RemoveClickListener()
+		self.longListener:RemoveLongPressListener()
 
-		arg_23_0.longListener = nil
+		self.longListener = nil
 	end
 
-	arg_23_0.loadDone = false
+	self.loadDone = false
 
-	arg_23_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightAssistBossBase

@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerNoneEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballTriggerNoneEntity.lua
 
-local var_0_0 = class("PinballTriggerNoneEntity", PinballTriggerEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerNoneEntity", package.seeall)
 
-function var_0_0.canHit(arg_1_0)
+local PinballTriggerNoneEntity = class("PinballTriggerNoneEntity", PinballTriggerEntity)
+
+function PinballTriggerNoneEntity:canHit()
 	return false
 end
 
-return var_0_0
+return PinballTriggerNoneEntity

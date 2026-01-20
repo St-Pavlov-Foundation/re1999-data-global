@@ -1,3 +1,7 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapChapterLayout", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/view/VersionActivity1_3DungeonMapChapterLayout.lua
 
-return (class("VersionActivity1_3DungeonMapChapterLayout", VersionActivity1_3DungeonBaseChapterLayout))
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapChapterLayout", package.seeall)
+
+local VersionActivity1_3DungeonMapChapterLayout = class("VersionActivity1_3DungeonMapChapterLayout", VersionActivity1_3DungeonBaseChapterLayout)
+
+return VersionActivity1_3DungeonMapChapterLayout

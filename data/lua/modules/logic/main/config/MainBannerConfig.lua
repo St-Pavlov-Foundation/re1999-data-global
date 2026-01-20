@@ -1,153 +1,155 @@
-﻿module("modules.logic.main.config.MainBannerConfig", package.seeall)
+﻿-- chunkname: @modules/logic/main/config/MainBannerConfig.lua
 
-local var_0_0 = class("MainBannerConfig", BaseConfig)
+module("modules.logic.main.config.MainBannerConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.bannerconfig = nil
-	arg_1_0.nowbanner = {}
+local MainBannerConfig = class("MainBannerConfig", BaseConfig)
+
+function MainBannerConfig:ctor()
+	self.bannerconfig = nil
+	self.nowbanner = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function MainBannerConfig:reqConfigNames()
 	return {
 		"main_banner"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "main_banner" then
-		arg_3_0.bannerconfig = arg_3_2
+function MainBannerConfig:onConfigLoaded(configName, configTable)
+	if configName == "main_banner" then
+		self.bannerconfig = configTable
 	end
 end
 
-function var_0_0.getbannerCO(arg_4_0, arg_4_1)
-	return arg_4_0.bannerconfig.configDict[arg_4_1]
+function MainBannerConfig:getbannerCO(id)
+	return self.bannerconfig.configDict[id]
 end
 
-function var_0_0.getBannersCo(arg_5_0)
-	return arg_5_0.bannerconfig.configDict
+function MainBannerConfig:getBannersCo()
+	return self.bannerconfig.configDict
 end
 
-function var_0_0.getNowBanner(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function MainBannerConfig:getNowBanner(nowtime)
+	local nowbanner = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.bannerconfig.configDict) do
-		if iter_6_1.startEnd ~= "" then
-			local var_6_1 = {}
-			local var_6_2 = string.split(iter_6_1.startEnd, "#")
+	for k, v in pairs(self.bannerconfig.configDict) do
+		if v.startEnd ~= "" then
+			local times = {}
+			local dates = string.split(v.startEnd, "#")
 
-			for iter_6_2, iter_6_3 in pairs(var_6_2) do
-				local var_6_3 = TimeUtil.stringToTimestamp(iter_6_3)
+			for x, y in pairs(dates) do
+				local time = TimeUtil.stringToTimestamp(y)
 
-				table.insert(var_6_1, var_6_3)
+				table.insert(times, time)
 			end
 
-			if arg_6_1 > var_6_1[1] and arg_6_1 < var_6_1[2] then
-				table.insert(var_6_0, iter_6_1.id)
+			if nowtime > times[1] and nowtime < times[2] then
+				table.insert(nowbanner, v.id)
 			end
 		else
-			table.insert(var_6_0, iter_6_1.id)
+			table.insert(nowbanner, v.id)
 		end
 	end
 
-	local var_6_4 = arg_6_0:_cleckCondition(var_6_0)
-	local var_6_5 = arg_6_0:_checkid(var_6_4)
+	nowbanner = self:_cleckCondition(nowbanner)
+	nowbanner = self:_checkid(nowbanner)
 
-	table.sort(var_6_5, function(arg_7_0, arg_7_1)
-		local var_7_0 = arg_6_0.bannerconfig.configDict[arg_7_0].sortId
-		local var_7_1 = arg_6_0.bannerconfig.configDict[arg_7_1].sortId
+	table.sort(nowbanner, function(a, b)
+		local asort = self.bannerconfig.configDict[a].sortId
+		local bsort = self.bannerconfig.configDict[b].sortId
 
-		if var_7_0 == var_7_1 then
-			return arg_7_0 < arg_7_1
+		if asort == bsort then
+			return a < b
 		else
-			return var_7_0 < var_7_1
+			return asort < bsort
 		end
 	end)
 
-	local var_6_6 = {}
+	local newbanner = {}
 
-	for iter_6_4, iter_6_5 in pairs(var_6_5) do
-		if iter_6_4 <= 3 then
-			table.insert(var_6_6, iter_6_5)
+	for k, v in pairs(nowbanner) do
+		if k <= 3 then
+			table.insert(newbanner, v)
 		end
 	end
 
-	arg_6_0.nowbanner = var_6_6
+	self.nowbanner = newbanner
 
-	return var_6_6
+	return newbanner
 end
 
-function var_0_0._cleckCondition(arg_8_0, arg_8_1)
-	local var_8_0 = {}
+function MainBannerConfig:_cleckCondition(banners)
+	local nowbanner = {}
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
-		local var_8_1 = arg_8_0.bannerconfig.configDict[iter_8_1].appearanceRole
+	for k, v in pairs(banners) do
+		local condition = self.bannerconfig.configDict[v].appearanceRole
 
-		if var_8_1 ~= "" then
-			local var_8_2 = string.split(var_8_1, "#")
+		if condition ~= "" then
+			local conditions = string.split(condition, "#")
 
-			if var_8_2[1] == "1" then
-				local var_8_3 = PlayerModel.instance:getPlayinfo().lastEpisodeId
+			if conditions[1] == "1" then
+				local lastEpisodeId = PlayerModel.instance:getPlayinfo().lastEpisodeId
 
-				if tonumber(var_8_3) > tonumber(var_8_2[2]) then
-					table.insert(var_8_0, iter_8_1)
+				if tonumber(lastEpisodeId) > tonumber(conditions[2]) then
+					table.insert(nowbanner, v)
 				end
 			end
 		else
-			table.insert(var_8_0, iter_8_1)
+			table.insert(nowbanner, v)
 		end
 	end
 
-	return var_8_0
+	return nowbanner
 end
 
-function var_0_0._checkid(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function MainBannerConfig:_checkid(ids)
+	local newids = {}
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_1) do
-		if not arg_9_0:_clecknum(iter_9_1) then
-			table.insert(var_9_0, iter_9_1)
+	for k, v in pairs(ids) do
+		if not self:_clecknum(v) then
+			table.insert(newids, v)
 		end
 	end
 
-	return var_9_0
+	return newids
 end
 
-function var_0_0._clecknum(arg_10_0, arg_10_1)
-	local var_10_0 = MainBannerModel.instance:getBannerInfo()
+function MainBannerConfig:_clecknum(num)
+	local notShowIds = MainBannerModel.instance:getBannerInfo()
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		if iter_10_1 == arg_10_1 then
+	for _, v in pairs(notShowIds) do
+		if v == num then
 			return true
 		end
 	end
 end
 
-function var_0_0.getNearTime(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = {}
+function MainBannerConfig:getNearTime(time, banners)
+	local nexttimes = {}
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_2) do
-		if arg_11_0.bannerconfig.configDict[iter_11_1].startEnd ~= "" then
-			local var_11_1 = string.split(arg_11_0.bannerconfig.configDict[iter_11_1].startEnd, "#")
-			local var_11_2 = TimeUtil.stringToTimestamp(var_11_1[2])
+	for k, v in pairs(banners) do
+		if self.bannerconfig.configDict[v].startEnd ~= "" then
+			local date = string.split(self.bannerconfig.configDict[v].startEnd, "#")
+			local endtime = TimeUtil.stringToTimestamp(date[2])
 
-			if arg_11_1 <= var_11_2 then
-				local var_11_3 = {
-					time = var_11_2,
-					id = iter_11_1
+			if time <= endtime then
+				local disapear = {
+					time = endtime,
+					id = v
 				}
 
-				table.insert(var_11_0, var_11_3)
+				table.insert(nexttimes, disapear)
 			end
 		end
 	end
 
-	table.sort(var_11_0, function(arg_12_0, arg_12_1)
-		return arg_12_0.time < arg_12_1.time
+	table.sort(nexttimes, function(a, b)
+		return a.time < b.time
 	end)
 
-	return var_11_0[1]
+	return nexttimes[1]
 end
 
-var_0_0.instance = var_0_0.New()
+MainBannerConfig.instance = MainBannerConfig.New()
 
-return var_0_0
+return MainBannerConfig

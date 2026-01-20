@@ -1,87 +1,89 @@
-﻿module("modules.logic.room.view.transport.RoomTransportSiteViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/transport/RoomTransportSiteViewContainer.lua
 
-local var_0_0 = class("RoomTransportSiteViewContainer", BaseViewContainer)
+module("modules.logic.room.view.transport.RoomTransportSiteViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local RoomTransportSiteViewContainer = class("RoomTransportSiteViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_building"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = RoomTransportBuildingItem.prefabPath
-	var_1_0.cellClass = RoomTransportBuildingItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 540
-	var_1_0.cellHeight = 180
-	var_1_0.cellSpaceV = 10
+function RoomTransportSiteViewContainer:buildViews()
+	local buildingScrollParam = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	buildingScrollParam.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_building"
+	buildingScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	buildingScrollParam.prefabUrl = RoomTransportBuildingItem.prefabPath
+	buildingScrollParam.cellClass = RoomTransportBuildingItem
+	buildingScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	buildingScrollParam.lineCount = 1
+	buildingScrollParam.cellWidth = 540
+	buildingScrollParam.cellHeight = 180
+	buildingScrollParam.cellSpaceV = 10
 
-	var_1_1.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_buildingskin"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = RoomTransportBuildingSkinItem.prefabPath
-	var_1_1.cellClass = RoomTransportBuildingSkinItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 196
-	var_1_1.cellHeight = 140
-	var_1_1.cellSpaceV = 10
+	local skinScrollParam = ListScrollParam.New()
 
-	local var_1_2 = ListScrollParam.New()
+	skinScrollParam.scrollGOPath = "go_content/#go_right/#go_buildinglist/#scroll_buildingskin"
+	skinScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	skinScrollParam.prefabUrl = RoomTransportBuildingSkinItem.prefabPath
+	skinScrollParam.cellClass = RoomTransportBuildingSkinItem
+	skinScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	skinScrollParam.lineCount = 1
+	skinScrollParam.cellWidth = 196
+	skinScrollParam.cellHeight = 140
+	skinScrollParam.cellSpaceV = 10
 
-	var_1_2.scrollGOPath = "go_content/#go_right/#go_critterlist/#scroll_critter"
-	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_2.prefabUrl = RoomTransportCritterItem.prefabPath
-	var_1_2.cellClass = RoomTransportCritterItem
-	var_1_2.scrollDir = ScrollEnum.ScrollDirV
-	var_1_2.lineCount = 1
-	var_1_2.cellWidth = 640
-	var_1_2.cellHeight = 175
-	var_1_2.cellSpaceV = 10
+	local critterScrollParam = ListScrollParam.New()
 
-	local var_1_3 = {}
+	critterScrollParam.scrollGOPath = "go_content/#go_right/#go_critterlist/#scroll_critter"
+	critterScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	critterScrollParam.prefabUrl = RoomTransportCritterItem.prefabPath
+	critterScrollParam.cellClass = RoomTransportCritterItem
+	critterScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	critterScrollParam.lineCount = 1
+	critterScrollParam.cellWidth = 640
+	critterScrollParam.cellHeight = 175
+	critterScrollParam.cellSpaceV = 10
 
-	table.insert(var_1_3, TabViewGroup.New(1, "go_content/#go_BackBtns"))
-	table.insert(var_1_3, RoomTransportSiteView.New())
-	table.insert(var_1_3, LuaListScrollView.New(RoomTransportBuildingListModel.instance, var_1_0))
-	table.insert(var_1_3, LuaListScrollView.New(RoomTransportBuildingSkinListModel.instance, var_1_1))
+	local views = {}
 
-	return var_1_3
+	table.insert(views, TabViewGroup.New(1, "go_content/#go_BackBtns"))
+	table.insert(views, RoomTransportSiteView.New())
+	table.insert(views, LuaListScrollView.New(RoomTransportBuildingListModel.instance, buildingScrollParam))
+	table.insert(views, LuaListScrollView.New(RoomTransportBuildingSkinListModel.instance, skinScrollParam))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RoomTransportSiteViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.RoomTransportHelp)
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
-		NavigateMgr.instance:addEscape(arg_2_0.viewName, arg_2_0._overrideCloseFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self._overrideCloseFunc, self)
+		NavigateMgr.instance:addEscape(self.viewName, self._overrideCloseFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_3_0)
+function RoomTransportSiteViewContainer:_overrideCloseFunc()
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterListView) then
 		ViewMgr.instance:closeView(ViewName.RoomCritterListView)
 
 		return
 	end
 
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.setUseBuildingUid(arg_4_0, arg_4_1)
-	arg_4_0.useBuildingUid = arg_4_1
+function RoomTransportSiteViewContainer:setUseBuildingUid(buildingUid)
+	self.useBuildingUid = buildingUid
 end
 
-function var_0_0.getUseBuildingUid(arg_5_0)
-	return arg_5_0.useBuildingUid
+function RoomTransportSiteViewContainer:getUseBuildingUid()
+	return self.useBuildingUid
 end
 
-return var_0_0
+return RoomTransportSiteViewContainer

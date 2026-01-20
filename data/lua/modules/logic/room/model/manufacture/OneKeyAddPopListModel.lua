@@ -1,152 +1,161 @@
-﻿module("modules.logic.room.model.manufacture.OneKeyAddPopListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/manufacture/OneKeyAddPopListModel.lua
 
-local var_0_0 = class("OneKeyAddPopListModel", ListScrollModel)
+module("modules.logic.room.model.manufacture.OneKeyAddPopListModel", package.seeall)
 
-var_0_0.MINI_COUNT = 1
+local OneKeyAddPopListModel = class("OneKeyAddPopListModel", ListScrollModel)
 
-local var_0_1 = 1
-local var_0_2 = 200
-local var_0_3 = 2
-local var_0_4 = 262
+OneKeyAddPopListModel.MINI_COUNT = 1
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local NO_MAT_ITEM_TYPE = 1
+local NO_MAT_ITEM_HEIGHT = 200
+local NEED_MAT_ITEM_TYPE = 2
+local NEED_MAT_ITEM_HEIGHT = 262
+
+function OneKeyAddPopListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_2_0)
-	var_0_0.super.clear(arg_2_0)
+function OneKeyAddPopListModel:clear()
+	OneKeyAddPopListModel.super.clear(self)
 
-	arg_2_0._strCache = nil
+	self._strCache = nil
 
-	arg_2_0:setSelectedManufactureItem()
+	self:setSelectedManufactureItem()
 end
 
-function var_0_0.resetSelectManufactureItemFromCache(arg_3_0)
-	if not arg_3_0._strCache then
-		arg_3_0._strCache = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, "")
+function OneKeyAddPopListModel:resetSelectManufactureItemFromCache()
+	if not self._strCache then
+		self._strCache = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, "")
 	end
 
-	local var_3_0 = string.splitToNumber(arg_3_0._strCache or "", "|")
+	local cacheData = string.splitToNumber(self._strCache or "", "|")
 
-	arg_3_0:setSelectedManufactureItem(var_3_0[1], var_3_0[2])
+	self:setSelectedManufactureItem(cacheData[1], cacheData[2])
 end
 
-function var_0_0.recordSelectManufactureItem(arg_4_0)
-	local var_4_0, var_4_1 = arg_4_0:getSelectedManufactureItem()
+function OneKeyAddPopListModel:recordSelectManufactureItem()
+	local curManufactureItem, curCount = self:getSelectedManufactureItem()
 
-	if var_4_0 then
-		arg_4_0._strCache = string.format("%s|%s", var_4_0, var_4_1)
+	if curManufactureItem then
+		self._strCache = string.format("%s|%s", curManufactureItem, curCount)
 
-		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, arg_4_0._strCache)
+		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.RoomManufactureOneKeyCustomize, self._strCache)
 	end
 end
 
-function var_0_0.setOneKeyFormulaItemList(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = {}
+function OneKeyAddPopListModel:setOneKeyFormulaItemList(buildingUidList)
+	local dict = {}
+	local list = {}
 
-	arg_5_0._isNoMat = true
+	self._isNoMat = true
 
-	local var_5_2 = {}
+	local repeatCheckDict = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_3 = RoomMapBuildingModel.instance:getBuildingMOById(iter_5_1)
+	for _, buildingUid in ipairs(buildingUidList) do
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-		if var_5_3 then
-			local var_5_4 = var_5_3.buildingId
+		if buildingMO then
+			local buildingId = buildingMO.buildingId
+			local buildingType = RoomConfig.instance:getBuildingType(buildingId)
 
-			arg_5_0._isNoMat = RoomConfig.instance:getBuildingType(var_5_4) == RoomBuildingEnum.BuildingType.Collect
+			self._isNoMat = buildingType == RoomBuildingEnum.BuildingType.Collect
 
-			local var_5_5 = var_5_3:getLevel()
-			local var_5_6 = ManufactureConfig.instance:getAllManufactureItems(var_5_4)
+			local buildingLevel = buildingMO:getLevel()
+			local allManufactureItemList = ManufactureConfig.instance:getAllManufactureItems(buildingId)
 
-			for iter_5_2, iter_5_3 in ipairs(var_5_6) do
-				local var_5_7 = ManufactureConfig.instance:getUnitCount(iter_5_3)
-				local var_5_8 = ManufactureConfig.instance:getItemId(iter_5_3)
+			for _, manufactureItemId in ipairs(allManufactureItemList) do
+				local unitCount = ManufactureConfig.instance:getUnitCount(manufactureItemId)
+				local itemId = ManufactureConfig.instance:getItemId(manufactureItemId)
 
-				if (not var_5_2[var_5_8] or var_5_7 < var_5_2[var_5_8]) and var_5_5 >= ManufactureConfig.instance:getManufactureItemNeedLevel(var_5_4, iter_5_3) then
-					var_5_0[var_5_8] = {
-						id = iter_5_3,
-						buildingUid = iter_5_1
-					}
-					var_5_2[var_5_8] = var_5_7
+				if not repeatCheckDict[itemId] or unitCount < repeatCheckDict[itemId] then
+					local needLevel = ManufactureConfig.instance:getManufactureItemNeedLevel(buildingId, manufactureItemId)
+
+					if needLevel <= buildingLevel then
+						local mo = {
+							id = manufactureItemId,
+							buildingUid = buildingUid
+						}
+
+						dict[itemId] = mo
+						repeatCheckDict[itemId] = unitCount
+					end
 				end
 			end
 		end
 	end
 
-	for iter_5_4, iter_5_5 in pairs(var_5_0) do
-		var_5_1[#var_5_1 + 1] = iter_5_5
+	for _, mo in pairs(dict) do
+		list[#list + 1] = mo
 	end
 
-	table.sort(var_5_1, ManufactureFormulaListModel.sortFormula)
-	arg_5_0:setList(var_5_1)
+	table.sort(list, ManufactureFormulaListModel.sortFormula)
+	self:setList(list)
 end
 
-function var_0_0.setSelectedManufactureItem(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._selectedManufacture = arg_6_1
-	arg_6_0._selectedManufactureCount = arg_6_2 or var_0_0.MINI_COUNT
+function OneKeyAddPopListModel:setSelectedManufactureItem(manufactureItemId, count)
+	self._selectedManufacture = manufactureItemId
+	self._selectedManufactureCount = count or OneKeyAddPopListModel.MINI_COUNT
 end
 
-function var_0_0.getInfoList(arg_7_0, arg_7_1)
-	local var_7_0 = {}
-	local var_7_1 = arg_7_0:getList()
+function OneKeyAddPopListModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
+	local list = self:getList()
 
-	if not var_7_1 or #var_7_1 <= 0 then
-		return var_7_0
+	if not list or #list <= 0 then
+		return mixCellInfos
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_2 = arg_7_0._isNoMat and var_0_1 or var_0_3
-		local var_7_3 = arg_7_0._isNoMat and var_0_2 or var_0_4
+	for i, mo in ipairs(list) do
+		local mixType = self._isNoMat and NO_MAT_ITEM_TYPE or NEED_MAT_ITEM_TYPE
+		local cellHeight = self._isNoMat and NO_MAT_ITEM_HEIGHT or NEED_MAT_ITEM_HEIGHT
 
-		table.insert(var_7_0, SLFramework.UGUI.MixCellInfo.New(var_7_2, var_7_3, nil))
+		table.insert(mixCellInfos, SLFramework.UGUI.MixCellInfo.New(mixType, cellHeight, nil))
 	end
 
-	return var_7_0
+	return mixCellInfos
 end
 
-function var_0_0.getSelectedManufactureItem(arg_8_0)
-	if not arg_8_0._strCache then
-		arg_8_0:resetSelectManufactureItemFromCache()
+function OneKeyAddPopListModel:getSelectedManufactureItem()
+	if not self._strCache then
+		self:resetSelectManufactureItemFromCache()
 	end
 
-	return arg_8_0._selectedManufacture, arg_8_0._selectedManufactureCount or var_0_0.MINI_COUNT
+	return self._selectedManufacture, self._selectedManufactureCount or OneKeyAddPopListModel.MINI_COUNT
 end
 
-function var_0_0.getTabDataList(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = {}
-	local var_9_2 = ManufactureModel.instance:getAllPlacedManufactureBuilding()
+function OneKeyAddPopListModel:getTabDataList()
+	local result = {}
+	local typeDict = {}
+	local allPlacedManufactureBuildingList = ManufactureModel.instance:getAllPlacedManufactureBuilding()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-		local var_9_3 = iter_9_1.buildingId
-		local var_9_4 = RoomConfig.instance:getBuildingType(var_9_3)
-		local var_9_5 = var_9_1[var_9_4]
+	for _, buildingMO in ipairs(allPlacedManufactureBuildingList) do
+		local buildingId = buildingMO.buildingId
+		local buildingType = RoomConfig.instance:getBuildingType(buildingId)
+		local typeList = typeDict[buildingType]
 
-		if not var_9_5 then
-			var_9_5 = {}
-			var_9_1[var_9_4] = var_9_5
+		if not typeList then
+			typeList = {}
+			typeDict[buildingType] = typeList
 		end
 
-		var_9_5[#var_9_5 + 1] = iter_9_1.id
+		typeList[#typeList + 1] = buildingMO.id
 	end
 
-	for iter_9_2, iter_9_3 in pairs(var_9_1) do
-		if iter_9_2 == RoomBuildingEnum.BuildingType.Collect then
-			var_9_0[#var_9_0 + 1] = iter_9_3
+	for buildingType, buildingUidList in pairs(typeDict) do
+		if buildingType == RoomBuildingEnum.BuildingType.Collect then
+			result[#result + 1] = buildingUidList
 		else
-			for iter_9_4, iter_9_5 in ipairs(iter_9_3) do
-				var_9_0[#var_9_0 + 1] = {
-					iter_9_5
+			for _, buildingUid in ipairs(buildingUidList) do
+				result[#result + 1] = {
+					buildingUid
 				}
 			end
 		end
 	end
 
-	return var_9_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+OneKeyAddPopListModel.instance = OneKeyAddPopListModel.New()
 
-return var_0_0
+return OneKeyAddPopListModel

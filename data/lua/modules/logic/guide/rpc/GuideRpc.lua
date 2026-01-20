@@ -1,72 +1,74 @@
-﻿module("modules.logic.guide.rpc.GuideRpc", package.seeall)
+﻿-- chunkname: @modules/logic/guide/rpc/GuideRpc.lua
 
-local var_0_0 = class("GuideRpc", BaseRpc)
+module("modules.logic.guide.rpc.GuideRpc", package.seeall)
 
-function var_0_0.sendGetGuideInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = GuideModule_pb.GetGuideInfoRequest()
+local GuideRpc = class("GuideRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function GuideRpc:sendGetGuideInfoRequest(callback, callbackObj)
+	local req = GuideModule_pb.GetGuideInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetGuideInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		GuideModel.instance:setGuideList(arg_2_2.guideInfos)
+function GuideRpc:onReceiveGetGuideInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		GuideModel.instance:setGuideList(msg.guideInfos)
 		GuideController.instance:dispatchEvent(GuideEvent.GetGuideInfoSuccess)
 	end
 end
 
-function var_0_0.sendFinishGuideRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = GuideModule_pb.FinishGuideRequest()
+function GuideRpc:sendFinishGuideRequest(guideId, stepId)
+	local req = GuideModule_pb.FinishGuideRequest()
 
-	var_3_0.guideId = arg_3_1
-	var_3_0.stepId = arg_3_2
+	req.guideId = guideId
+	req.stepId = stepId
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveFinishGuideReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		GuideController.instance:dispatchEvent(GuideEvent.onReceiveFinishGuideReply, arg_4_2)
+function GuideRpc:onReceiveFinishGuideReply(resultCode, msg)
+	if resultCode == 0 then
+		GuideController.instance:dispatchEvent(GuideEvent.onReceiveFinishGuideReply, msg)
 	else
 		GuideController.instance:dispatchEvent(GuideEvent.FinishGuideFail)
 	end
 end
 
-function var_0_0.onReceiveUpdateGuidePush(arg_5_0, arg_5_1, arg_5_2)
-	GuideModel.instance:updateGuideList(arg_5_2.guideInfos)
+function GuideRpc:onReceiveUpdateGuidePush(resultCode, msg)
+	GuideModel.instance:updateGuideList(msg.guideInfos)
 
-	for iter_5_0 = 1, #arg_5_2.guideInfos do
-		local var_5_0 = arg_5_2.guideInfos[iter_5_0]
+	for i = 1, #msg.guideInfos do
+		local guideInfo = msg.guideInfos[i]
 
-		logNormal(string.format("<color=#3E7E00>update guide push guide_%d_%d</color>", var_5_0.guideId, var_5_0.stepId))
+		logNormal(string.format("<color=#3E7E00>update guide push guide_%d_%d</color>", guideInfo.guideId, guideInfo.stepId))
 
-		local var_5_1 = GuideModel.instance:getById(var_5_0.guideId)
+		local guideMO = GuideModel.instance:getById(guideInfo.guideId)
 
-		if arg_5_2.guideInfos[iter_5_0].stepId == 0 then
-			GuideController.instance:dispatchEvent(GuideEvent.StartGuide, var_5_1.id)
+		if msg.guideInfos[i].stepId == 0 then
+			GuideController.instance:dispatchEvent(GuideEvent.StartGuide, guideMO.id)
 		else
-			GuideStepController.instance:clearFlow(var_5_1.id)
+			GuideStepController.instance:clearFlow(guideMO.id)
 
-			local var_5_2 = var_5_1.serverStepId > 0 and var_5_1.serverStepId or var_5_1.clientStepId
+			local finishStepId = guideMO.serverStepId > 0 and guideMO.serverStepId or guideMO.clientStepId
 
-			if var_5_2 == -1 then
-				local var_5_3 = GuideConfig.instance:getStepList(var_5_1.id)
+			if finishStepId == -1 then
+				local stepCOList = GuideConfig.instance:getStepList(guideMO.id)
 
-				var_5_2 = var_5_3[#var_5_3].stepId
+				finishStepId = stepCOList[#stepCOList].stepId
 			end
 
-			GuideController.instance:dispatchEvent(GuideEvent.FinishStep, var_5_1.id, var_5_2)
+			GuideController.instance:dispatchEvent(GuideEvent.FinishStep, guideMO.id, finishStepId)
 
-			if var_5_1.isFinish then
-				GuideController.instance:dispatchEvent(GuideEvent.FinishGuide, var_5_1.id)
+			if guideMO.isFinish then
+				GuideController.instance:dispatchEvent(GuideEvent.FinishGuide, guideMO.id)
 			end
 		end
 
-		GuideController.instance:statFinishStep(var_5_1.id, var_5_1.clientStepId, false)
-		GuideController.instance:execNextStep(var_5_1.id)
+		GuideController.instance:statFinishStep(guideMO.id, guideMO.clientStepId, false)
+		GuideController.instance:execNextStep(guideMO.id)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GuideRpc.instance = GuideRpc.New()
 
-return var_0_0
+return GuideRpc

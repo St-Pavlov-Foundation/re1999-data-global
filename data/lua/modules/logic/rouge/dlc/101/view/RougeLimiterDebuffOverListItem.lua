@@ -1,36 +1,38 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterDebuffOverListItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterDebuffOverListItem.lua
 
-local var_0_0 = class("RougeLimiterDebuffOverListItem", ListScrollCellExtend)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterDebuffOverListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagedebufficon = gohelper.findChildImage(arg_1_0.viewGO, "#image_debufficon")
-	arg_1_0._txtbufflevel = gohelper.findChildText(arg_1_0.viewGO, "#txt_bufflevel")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#txt_dec")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+local RougeLimiterDebuffOverListItem = class("RougeLimiterDebuffOverListItem", ListScrollCellExtend)
+
+function RougeLimiterDebuffOverListItem:onInitView()
+	self._imagedebufficon = gohelper.findChildImage(self.viewGO, "#image_debufficon")
+	self._txtbufflevel = gohelper.findChildText(self.viewGO, "#txt_bufflevel")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#txt_dec")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeLimiterDebuffOverListItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeLimiterDebuffOverListItem:removeEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._config = arg_4_1
-	arg_4_0._txtbufflevel.text = GameUtil.getRomanNums(arg_4_0._config.level)
-	arg_4_0._txtname.text = arg_4_0._config and arg_4_0._config.title
-	arg_4_0._txtdec.text = arg_4_0._config and arg_4_0._config.desc
+function RougeLimiterDebuffOverListItem:onUpdateMO(mo)
+	self._config = mo
+	self._txtbufflevel.text = GameUtil.getRomanNums(self._config.level)
+	self._txtname.text = self._config and self._config.title
+	self._txtdec.text = self._config and self._config.desc
 
-	local var_4_0 = RougeDLCConfig101.instance:getLimiterGroupCo(arg_4_0._config.group)
-	local var_4_1 = var_4_0 and var_4_0.icon
+	local limiterGroupCo = RougeDLCConfig101.instance:getLimiterGroupCo(self._config.group)
+	local icon = limiterGroupCo and limiterGroupCo.icon
 
-	UISpriteSetMgr.instance:setRouge4Sprite(arg_4_0._imagedebufficon, var_4_1)
+	UISpriteSetMgr.instance:setRouge4Sprite(self._imagedebufficon, icon)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function RougeLimiterDebuffOverListItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeLimiterDebuffOverListItem

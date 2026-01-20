@@ -1,51 +1,53 @@
-﻿module("modules.logic.survival.controller.work.SurvivalWaitSceneFinishWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalWaitSceneFinishWork.lua
 
-local var_0_0 = class("SurvivalWaitSceneFinishWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalWaitSceneFinishWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if arg_1_0.context.fastExecute then
-		arg_1_0:onDone(true)
+local SurvivalWaitSceneFinishWork = class("SurvivalWaitSceneFinishWork", BaseWork)
+
+function SurvivalWaitSceneFinishWork:onStart(context)
+	if self.context.fastExecute then
+		self:onDone(true)
 
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._delayCheckIsLoadingScene, arg_1_0, 1)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
+	TaskDispatcher.runDelay(self._delayCheckIsLoadingScene, self, 1)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
 end
 
-function var_0_0._delayCheckIsLoadingScene(arg_2_0)
+function SurvivalWaitSceneFinishWork:_delayCheckIsLoadingScene()
 	if not GameSceneMgr.instance:isLoading() then
-		arg_2_0:waitLoadingFinish()
+		self:waitLoadingFinish()
 	end
 end
 
-function var_0_0._onEnterOneSceneFinish(arg_3_0)
-	arg_3_0:waitLoadingFinish()
+function SurvivalWaitSceneFinishWork:_onEnterOneSceneFinish()
+	self:waitLoadingFinish()
 end
 
-function var_0_0.waitLoadingFinish(arg_4_0)
+function SurvivalWaitSceneFinishWork:waitLoadingFinish()
 	if ViewMgr.instance:isOpen(ViewName.SurvivalLoadingView) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	else
-		arg_4_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.SurvivalLoadingView then
-		TaskDispatcher.runDelay(arg_5_0._delayOnDone, arg_5_0, 0)
+function SurvivalWaitSceneFinishWork:_onCloseViewFinish(viewName)
+	if viewName == ViewName.SurvivalLoadingView then
+		TaskDispatcher.runDelay(self._delayOnDone, self, 0)
 	end
 end
 
-function var_0_0._delayOnDone(arg_6_0)
-	arg_6_0:onDone(true)
+function SurvivalWaitSceneFinishWork:_delayOnDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._delayOnDone, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._delayCheckIsLoadingScene, arg_7_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_7_0._onCloseViewFinish, arg_7_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_7_0._onEnterOneSceneFinish, arg_7_0)
+function SurvivalWaitSceneFinishWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayOnDone, self)
+	TaskDispatcher.cancelTask(self._delayCheckIsLoadingScene, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
 end
 
-return var_0_0
+return SurvivalWaitSceneFinishWork

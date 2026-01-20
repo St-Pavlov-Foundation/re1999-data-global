@@ -1,22 +1,24 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionSetFlag", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionSetFlag.lua
 
-local var_0_0 = class("GuideActionSetFlag", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionSetFlag", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionSetFlag = class("GuideActionSetFlag", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
-	local var_1_1 = tonumber(var_1_0[1])
-	local var_1_2 = var_1_0[2] == "1"
-	local var_1_3 = var_1_0[3] or true
+function GuideActionSetFlag:onStart(context)
+	GuideActionSetFlag.super.onStart(self, context)
 
-	if var_1_2 then
-		GuideModel.instance:setFlag(var_1_1, var_1_3, arg_1_0.guideId)
+	local temp = string.split(self.actionParam, "#")
+	local flagId = tonumber(temp[1])
+	local enable = temp[2] == "1"
+	local exParam = temp[3] or true
+
+	if enable then
+		GuideModel.instance:setFlag(flagId, exParam, self.guideId)
 	else
-		GuideModel.instance:setFlag(var_1_1, nil, arg_1_0.guideId)
+		GuideModel.instance:setFlag(flagId, nil, self.guideId)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionSetFlag

@@ -1,29 +1,31 @@
-﻿module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_TabViewGroup", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/taskachievement/V1a6_BossRush_TabViewGroup.lua
 
-local var_0_0 = class("V1a6_BossRush_TabViewGroup", TabViewGroup)
+module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_TabViewGroup", package.seeall)
 
-function var_0_0._openTabView(arg_1_0, arg_1_1)
-	if arg_1_0.__tabId == arg_1_1 then
+local V1a6_BossRush_TabViewGroup = class("V1a6_BossRush_TabViewGroup", TabViewGroup)
+
+function V1a6_BossRush_TabViewGroup:_openTabView(tabId)
+	if self.__tabId == tabId then
 		return
 	end
 
-	arg_1_0.__tabId = arg_1_1
+	self.__tabId = tabId
 
-	var_0_0.super._openTabView(arg_1_0, arg_1_1)
+	V1a6_BossRush_TabViewGroup.super._openTabView(self, tabId)
 end
 
-function var_0_0._setVisible(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_0._tabCanvasGroup[arg_2_1]
+function V1a6_BossRush_TabViewGroup:_setVisible(tabId, isVisible)
+	local canvasGroup = self._tabCanvasGroup[tabId]
 
-	if not var_2_0 then
-		local var_2_1 = arg_2_0._tabViews[arg_2_1].viewGO
+	if not canvasGroup then
+		local viewGO = self._tabViews[tabId].viewGO
 
-		var_2_0 = gohelper.onceAddComponent(var_2_1, typeof(UnityEngine.CanvasGroup))
-		arg_2_0._tabCanvasGroup[arg_2_1] = var_2_0
+		canvasGroup = gohelper.onceAddComponent(viewGO, typeof(UnityEngine.CanvasGroup))
+		self._tabCanvasGroup[tabId] = canvasGroup
 	end
 
-	var_2_0.interactable = arg_2_2
-	var_2_0.blocksRaycasts = arg_2_2
+	canvasGroup.interactable = isVisible
+	canvasGroup.blocksRaycasts = isVisible
 end
 
-return var_0_0
+return V1a6_BossRush_TabViewGroup

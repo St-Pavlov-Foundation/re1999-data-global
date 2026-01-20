@@ -1,15 +1,17 @@
-﻿module("modules.logic.dungeon.view.puzzle.PutCubeGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/PutCubeGameViewContainer.lua
 
-local var_0_0 = class("PutCubeGameViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.puzzle.PutCubeGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local PutCubeGameViewContainer = class("PutCubeGameViewContainer", BaseViewContainer)
+
+function PutCubeGameViewContainer:buildViews()
 	return {
 		TabViewGroup.New(1, "#go_btns"),
 		PutCubeGameView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function PutCubeGameViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,4 +21,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return PutCubeGameViewContainer

@@ -1,269 +1,282 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorView.lua
 
-local var_0_0 = class("SkillEditorView", BaseViewExtended)
+module("modules.logic.fight.view.preview.SkillEditorView", package.seeall)
 
-var_0_0.selectPosId = {
+local SkillEditorView = class("SkillEditorView", BaseViewExtended)
+
+SkillEditorView.selectPosId = {
 	[FightEnum.EntitySide.MySide] = 1,
 	[FightEnum.EntitySide.EnemySide] = 1
 }
-var_0_0.prevSelectPosId = {
+SkillEditorView.prevSelectPosId = {
 	[FightEnum.EntitySide.MySide] = 1,
 	[FightEnum.EntitySide.EnemySide] = 1
 }
 
-function var_0_0.setSelectPosId(arg_1_0, arg_1_1)
-	var_0_0.prevSelectPosId[arg_1_0] = var_0_0.selectPosId[arg_1_0]
-	var_0_0.selectPosId[arg_1_0] = arg_1_1
+function SkillEditorView.setSelectPosId(side, position)
+	SkillEditorView.prevSelectPosId[side] = SkillEditorView.selectPosId[side]
+	SkillEditorView.selectPosId[side] = position
 end
 
-var_0_0.selectSkillId = {}
-var_0_0.lockCamera = false
-var_0_0.useVirtualCamera2 = false
+SkillEditorView.selectSkillId = {}
+SkillEditorView.lockCamera = false
+SkillEditorView.useVirtualCamera2 = false
 
-function var_0_0.onInitView(arg_2_0)
+function SkillEditorView:onInitView()
 	GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.High)
 
-	arg_2_0._btnSpeed = gohelper.findChildButton(arg_2_0.viewGO, "btnSpeed")
-	arg_2_0._btnExit = gohelper.findChildButton(arg_2_0.viewGO, "right/btnExit")
-	arg_2_0._btnVisible = gohelper.findChildButton(arg_2_0.viewGO, "right/btnVisible")
-	arg_2_0._txtSpeed = gohelper.findChildText(arg_2_0.viewGO, "btnSpeed/Text")
-	arg_2_0._btnUseSub = gohelper.findChildButton(arg_2_0.viewGO, "right/btn_use_sub")
-	arg_2_0._btnSceneDissolve = gohelper.findChildButton(arg_2_0.viewGO, "right/btn_scene_dissolve")
-	arg_2_0._toggleLockCamera = gohelper.findChildToggle(arg_2_0.viewGO, "scene/goToggleRoot/lockCamera")
-	arg_2_0._toggleVirtualCamera = gohelper.findChildToggle(arg_2_0.viewGO, "scene/goToggleRoot/toggleVirtualCamera")
-	arg_2_0._toggleList = gohelper.findChild(arg_2_0.viewGO, "scene/goToggleRoot")
-	arg_2_0._btnShowToggleList = gohelper.findChildButton(arg_2_0.viewGO, "scene/btnToggleList")
+	self._btnSpeed = gohelper.findChildButton(self.viewGO, "btnSpeed")
+	self._btnExit = gohelper.findChildButton(self.viewGO, "right/btnExit")
+	self._btnVisible = gohelper.findChildButton(self.viewGO, "right/btnVisible")
+	self._txtSpeed = gohelper.findChildText(self.viewGO, "btnSpeed/Text")
+	self._btnUseSub = gohelper.findChildButton(self.viewGO, "right/btn_use_sub")
+	self._btnSceneDissolve = gohelper.findChildButton(self.viewGO, "right/btn_scene_dissolve")
+	self._toggleLockCamera = gohelper.findChildToggle(self.viewGO, "scene/goToggleRoot/lockCamera")
+	self._toggleVirtualCamera = gohelper.findChildToggle(self.viewGO, "scene/goToggleRoot/toggleVirtualCamera")
+	self._toggleList = gohelper.findChild(self.viewGO, "scene/goToggleRoot")
+	self._btnShowToggleList = gohelper.findChildButton(self.viewGO, "scene/btnToggleList")
 
-	arg_2_0:_updateSpeed()
+	self:_updateSpeed()
 
-	local var_2_0 = tonumber(PlayerModel.instance:getPlayinfo().userId)
+	local userId = tonumber(PlayerModel.instance:getPlayinfo().userId)
 
-	gohelper.setActive(arg_2_0._btnExit.gameObject, var_2_0 and var_2_0 ~= 0)
-	arg_2_0:_showSceneDissolveBtn()
+	gohelper.setActive(self._btnExit.gameObject, userId and userId ~= 0)
+	self:_showSceneDissolveBtn()
 
-	var_0_0.lockCamera = false
+	SkillEditorView.lockCamera = false
 
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
 end
 
-function var_0_0._showSceneDissolveBtn(arg_3_0)
-	local var_3_0 = GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
-	local var_3_1 = lua_scene_level.configDict[var_3_0]
+function SkillEditorView:_showSceneDissolveBtn()
+	local id = GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
+	local config = lua_scene_level.configDict[id]
 
-	gohelper.setActive(arg_3_0._btnSceneDissolve.gameObject, var_3_1 and var_3_1.sceneId == 115 or false)
+	gohelper.setActive(self._btnSceneDissolve.gameObject, config and config.sceneId == 115 or false)
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0._btnShowToggleList:AddClickListener(arg_4_0._onBtnShowToggleList, arg_4_0)
-	arg_4_0._btnSpeed:AddClickListener(arg_4_0._onClickSpeed, arg_4_0)
-	arg_4_0._btnExit:AddClickListener(arg_4_0._onClickExit, arg_4_0)
-	arg_4_0._btnVisible:AddClickListener(arg_4_0._onClickVisible, arg_4_0)
-	arg_4_0._btnUseSub:AddClickListener(arg_4_0._onBtnUseSub, arg_4_0)
-	arg_4_0._btnSceneDissolve:AddClickListener(arg_4_0._onBtnSceneDissolve, arg_4_0)
-	arg_4_0._toggleLockCamera:AddOnValueChanged(arg_4_0._onToggleLockCameraChanged, arg_4_0)
-	arg_4_0._toggleVirtualCamera:AddOnValueChanged(arg_4_0._onToggleVritualCameraChanged, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.OnSkillEditorSceneChange, arg_4_0._showSceneDissolveBtn, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.SetSkillEditorViewVisible, arg_4_0._onSetSkillEditorViewVisible, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.OnBuffClick, arg_4_0._onBuffClick, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.SetGMViewVisible, arg_4_0.onSetGMViewVisible, arg_4_0)
+function SkillEditorView:addEvents()
+	self._btnShowToggleList:AddClickListener(self._onBtnShowToggleList, self)
+	self._btnSpeed:AddClickListener(self._onClickSpeed, self)
+	self._btnExit:AddClickListener(self._onClickExit, self)
+	self._btnVisible:AddClickListener(self._onClickVisible, self)
+	self._btnUseSub:AddClickListener(self._onBtnUseSub, self)
+	self._btnSceneDissolve:AddClickListener(self._onBtnSceneDissolve, self)
+	self._toggleLockCamera:AddOnValueChanged(self._onToggleLockCameraChanged, self)
+	self._toggleVirtualCamera:AddOnValueChanged(self._onToggleVritualCameraChanged, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillEditorSceneChange, self._showSceneDissolveBtn, self)
+	self:addEventCb(FightController.instance, FightEvent.SetSkillEditorViewVisible, self._onSetSkillEditorViewVisible, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffClick, self._onBuffClick, self)
+	self:addEventCb(FightController.instance, FightEvent.SetGMViewVisible, self.onSetGMViewVisible, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0._btnShowToggleList:RemoveClickListener()
-	arg_5_0._btnSpeed:RemoveClickListener()
-	arg_5_0._btnExit:RemoveClickListener()
-	arg_5_0._btnVisible:RemoveClickListener()
-	arg_5_0._btnUseSub:RemoveClickListener()
-	arg_5_0._btnSceneDissolve:RemoveClickListener()
-	arg_5_0._toggleLockCamera:RemoveOnValueChanged()
-	arg_5_0._toggleVirtualCamera:RemoveOnValueChanged()
-	arg_5_0:removeEventCb(FightController.instance, FightEvent.OnSkillEditorSceneChange, arg_5_0._showSceneDissolveBtn, arg_5_0)
-	arg_5_0:removeEventCb(FightController.instance, FightEvent.SetSkillEditorViewVisible, arg_5_0._onSetSkillEditorViewVisible, arg_5_0)
-	arg_5_0:removeEventCb(FightController.instance, FightEvent.OnBuffClick, arg_5_0._onBuffClick, arg_5_0)
+function SkillEditorView:removeEvents()
+	self._btnShowToggleList:RemoveClickListener()
+	self._btnSpeed:RemoveClickListener()
+	self._btnExit:RemoveClickListener()
+	self._btnVisible:RemoveClickListener()
+	self._btnUseSub:RemoveClickListener()
+	self._btnSceneDissolve:RemoveClickListener()
+	self._toggleLockCamera:RemoveOnValueChanged()
+	self._toggleVirtualCamera:RemoveOnValueChanged()
+	self:removeEventCb(FightController.instance, FightEvent.OnSkillEditorSceneChange, self._showSceneDissolveBtn, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetSkillEditorViewVisible, self._onSetSkillEditorViewVisible, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnBuffClick, self._onBuffClick, self)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:openSubView(SkillEditorToolsBtnView, arg_6_0.viewGO)
+function SkillEditorView:onOpen()
+	self:openSubView(SkillEditorToolsBtnView, self.viewGO)
 end
 
-function var_0_0._updateSpeed(arg_7_0)
-	local var_7_0 = FightModel.instance:getUserSpeed() == 1 and 1 or 2
+function SkillEditorView:_updateSpeed()
+	local speed = FightModel.instance:getUserSpeed()
+	local speedShow = speed == 1 and 1 or 2
 
-	arg_7_0._txtSpeed.text = string.format("X%d", var_7_0)
+	self._txtSpeed.text = string.format("X%d", speedShow)
 end
 
-function var_0_0._onClickSpeed(arg_8_0)
-	local var_8_0 = FightModel.instance:getUserSpeed() == 1 and 2 or 1
+function SkillEditorView:_onClickSpeed()
+	local curSpeed = FightModel.instance:getUserSpeed()
+	local newSpeed = curSpeed == 1 and 2 or 1
 
-	FightModel.instance:setUserSpeed(var_8_0)
+	FightModel.instance:setUserSpeed(newSpeed)
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
-	arg_8_0:_updateSpeed()
+	self:_updateSpeed()
 end
 
-function var_0_0._onClickExit(arg_9_0)
-	arg_9_0:closeThis()
+function SkillEditorView:_onClickExit()
+	self:closeThis()
 	SkillEditorMgr.instance:exit()
 	FightController.instance:exitFightScene()
 end
 
-function var_0_0._onClickVisible(arg_10_0)
-	local var_10_0 = gohelper.onceAddComponent(arg_10_0.viewGO, typeof(UnityEngine.CanvasGroup))
+function SkillEditorView:_onClickVisible()
+	local canvasGorup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
 
-	if var_10_0.alpha == 1 then
-		var_10_0.alpha = 0
+	if canvasGorup.alpha == 1 then
+		canvasGorup.alpha = 0
 
 		FightController.instance:dispatchEvent(FightEvent.OnHideSkillEditorUIEvent, 0)
 	else
-		var_10_0.alpha = 1
+		canvasGorup.alpha = 1
 
 		FightController.instance:dispatchEvent(FightEvent.OnHideSkillEditorUIEvent, 1)
 	end
 end
 
-function var_0_0._onBtnUseSub(arg_11_0)
+function SkillEditorView:_onBtnUseSub()
 	if not SkillEditorMgr.instance.select_sub_hero_model then
 		return
 	end
 
-	local var_11_0 = GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(SceneTag.UnitPlayer, var_0_0.selectPosId[FightEnum.EntitySide.MySide]):getMO()
+	local dead_model = GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide]):getMO()
 
-	if var_11_0.uid == SkillEditorMgr.instance.select_sub_hero_model.uid then
-		var_11_0 = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)[1]
+	if dead_model.uid == SkillEditorMgr.instance.select_sub_hero_model.uid then
+		dead_model = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)[1]
 	end
 
-	GameSceneMgr.instance:getCurScene().entityMgr:removeUnit(SceneTag.UnitPlayer, var_11_0.id)
-	FightDataHelper.entityMgr:getById(var_11_0.id):setDead()
-	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, var_11_0.id)
-	FightController.instance:dispatchEvent(FightEvent.OnEntityDead, var_11_0.id)
+	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 
-	local var_11_1 = {
-		fromId = SkillEditorMgr.instance.select_sub_hero_model.uid,
-		toId = var_11_0.uid
-	}
+	entityMgr:removeUnit(SceneTag.UnitPlayer, dead_model.id)
 
-	arg_11_0.change_hero_work_flow = FlowSequence.New()
+	local entityMO = FightDataHelper.entityMgr:getById(dead_model.id)
 
-	local var_11_2 = FightWorkStepChangeHero.New(var_11_1)
+	entityMO:setDead()
+	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, dead_model.id)
+	FightController.instance:dispatchEvent(FightEvent.OnEntityDead, dead_model.id)
 
-	arg_11_0.change_hero_work_flow:addWork(var_11_2)
-	arg_11_0.change_hero_work_flow:addWork(WorkWaitSeconds.New(1))
-	arg_11_0.change_hero_work_flow:addWork(FunctionWork.New(function()
+	local step_data = {}
+
+	step_data.fromId = SkillEditorMgr.instance.select_sub_hero_model.uid
+	step_data.toId = dead_model.uid
+	self.change_hero_work_flow = FlowSequence.New()
+
+	local action = FightWorkStepChangeHero.New(step_data)
+
+	self.change_hero_work_flow:addWork(action)
+	self.change_hero_work_flow:addWork(WorkWaitSeconds.New(1))
+	self.change_hero_work_flow:addWork(FunctionWork.New(function()
 		SkillEditorMgr.instance:_buildSubHero()
 	end))
-	arg_11_0.change_hero_work_flow:start({})
+	self.change_hero_work_flow:start({})
 	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSubHeroEnter, SkillEditorMgr.instance.select_sub_hero_model.id)
 
 	SkillEditorMgr.instance.select_sub_hero_model = nil
 end
 
-function var_0_0._onBtnSceneDissolve(arg_13_0)
-	arg_13_0._loader = MultiAbLoader.New()
+function SkillEditorView:_onBtnSceneDissolve()
+	self._loader = MultiAbLoader.New()
 
-	arg_13_0._loader:addPath(ResUrl.getCameraAnim("m_s63_zjmzd/m_s63_zjmzd"))
-	arg_13_0._loader:startLoad(arg_13_0._onLoaded, arg_13_0)
+	self._loader:addPath(ResUrl.getCameraAnim("m_s63_zjmzd/m_s63_zjmzd"))
+	self._loader:startLoad(self._onLoaded, self)
 end
 
-function var_0_0._onFinish(arg_14_0)
-	gohelper.setActive(arg_14_0.viewContainer.viewGO, true)
+function SkillEditorView:_onFinish()
+	gohelper.setActive(self.viewContainer.viewGO, true)
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowNameUI, true)
-	TaskDispatcher.cancelTask(arg_14_0._onFinish, arg_14_0)
+	TaskDispatcher.cancelTask(self._onFinish, self)
 	UnityEngine.Shader.DisableKeyword("_USEPOP_ON")
 end
 
-function var_0_0._onLoaded(arg_15_0)
-	gohelper.setActive(arg_15_0.viewContainer.viewGO, false)
+function SkillEditorView:_onLoaded()
+	gohelper.setActive(self.viewContainer.viewGO, false)
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowNameUI, false)
 	UnityEngine.Shader.EnableKeyword("_USEPOP_ON")
 
-	local var_15_0 = GameSceneMgr.instance:getCurScene().level:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
+	local Animation = GameSceneMgr.instance:getCurScene().level:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
 
-	var_15_0:Play("m_s63_ani")
-	TaskDispatcher.runDelay(arg_15_0._onFinish, arg_15_0, var_15_0.clip.length)
+	Animation:Play("m_s63_ani")
+	TaskDispatcher.runDelay(self._onFinish, self, Animation.clip.length)
 
-	arg_15_0._animatorInst = arg_15_0._loader:getFirstAssetItem():GetResource()
-	arg_15_0._animComp = CameraMgr.instance:getCameraRootAnimator()
-	arg_15_0._animComp.enabled = true
-	arg_15_0._animComp.runtimeAnimatorController = nil
-	arg_15_0._animComp.runtimeAnimatorController = arg_15_0._animatorInst
-	arg_15_0._animComp.speed = FightModel.instance:getSpeed()
+	self._animatorInst = self._loader:getFirstAssetItem():GetResource()
+	self._animComp = CameraMgr.instance:getCameraRootAnimator()
+	self._animComp.enabled = true
+	self._animComp.runtimeAnimatorController = nil
+	self._animComp.runtimeAnimatorController = self._animatorInst
+	self._animComp.speed = FightModel.instance:getSpeed()
 
-	arg_15_0._animComp:Play("popcam")
+	self._animComp:Play("popcam")
 end
 
-function var_0_0._onToggleLockCameraChanged(arg_16_0)
-	var_0_0.lockCamera = not var_0_0.lockCamera
-	CameraMgr.instance:getMainCameraGO():GetComponent(typeof(Cinemachine.CinemachineBrain)).enabled = not var_0_0.lockCamera
+function SkillEditorView:_onToggleLockCameraChanged()
+	SkillEditorView.lockCamera = not SkillEditorView.lockCamera
+
+	local camera_obj = CameraMgr.instance:getMainCameraGO()
+
+	camera_obj:GetComponent(typeof(Cinemachine.CinemachineBrain)).enabled = not SkillEditorView.lockCamera
 end
 
-function var_0_0._onToggleVritualCameraChanged(arg_17_0)
-	var_0_0.useVirtualCamera2 = arg_17_0._toggleVirtualCamera.isOn and true or false
+function SkillEditorView:_onToggleVritualCameraChanged()
+	SkillEditorView.useVirtualCamera2 = self._toggleVirtualCamera.isOn and true or false
 
-	local var_17_0 = var_0_0.useVirtualCamera2 and 2 or 1
+	local virtualCameraId = SkillEditorView.useVirtualCamera2 and 2 or 1
 
-	CameraMgr.instance:switchVirtualCamera(var_17_0)
+	CameraMgr.instance:switchVirtualCamera(virtualCameraId)
 end
 
-function var_0_0._onBtnShowToggleList(arg_18_0)
-	arg_18_0._showToggleList = not arg_18_0._showToggleList
+function SkillEditorView:_onBtnShowToggleList()
+	self._showToggleList = not self._showToggleList
 
-	gohelper.setActive(arg_18_0._toggleList, arg_18_0._showToggleList)
+	gohelper.setActive(self._toggleList, self._showToggleList)
 end
 
-function var_0_0.onClose(arg_19_0)
-	if arg_19_0.change_hero_work_flow then
-		arg_19_0.change_hero_work_flow:stop()
+function SkillEditorView:onClose()
+	if self.change_hero_work_flow then
+		self.change_hero_work_flow:stop()
 
-		arg_19_0.change_hero_work_flow = nil
+		self.change_hero_work_flow = nil
 	end
 
 	FightModel.instance:setUserSpeed(1)
 
-	CameraMgr.instance:getMainCameraGO():GetComponent(typeof(Cinemachine.CinemachineBrain)).enabled = true
+	local camera_obj = CameraMgr.instance:getMainCameraGO()
+
+	camera_obj:GetComponent(typeof(Cinemachine.CinemachineBrain)).enabled = true
 
 	FightSystem.instance:dispose()
 end
 
-function var_0_0._onSetSkillEditorViewVisible(arg_20_0, arg_20_1)
+function SkillEditorView:_onSetSkillEditorViewVisible(state)
 	TaskDispatcher.runDelay(function()
-		if arg_20_0.viewGO then
-			gohelper.setActive(arg_20_0.viewGO, arg_20_1)
+		if self.viewGO then
+			gohelper.setActive(self.viewGO, state)
 			FightView._resetCamera()
 		end
-	end, arg_20_0, 0.16)
+	end, self, 0.16)
 end
 
-function var_0_0._onBuffClick(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	local var_22_0 = FightDataHelper.entityMgr:getById(arg_22_1)
+function SkillEditorView:_onBuffClick(entityId, buffIconTransform, offsetX, offsetY)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_22_0 then
-		logError("get EntityMo fail, entityId : " .. tostring(arg_22_1))
+	if not entityMO then
+		logError("get EntityMo fail, entityId : " .. tostring(entityId))
 
 		return
 	end
 
 	if isDebugBuild then
-		local var_22_1 = {}
+		local tempList = {}
 
-		for iter_22_0, iter_22_1 in pairs(var_22_0:getBuffDic()) do
-			local var_22_2 = lua_skill_buff.configDict[iter_22_1.buffId]
-			local var_22_3 = var_22_2.isNoShow == 0 and "show" or "noShow"
-			local var_22_4 = var_22_2.isGoodBuff == 1 and "good" or "bad"
-			local var_22_5 = iter_22_1.buffId
-			local var_22_6 = var_22_2.name
-			local var_22_7 = iter_22_1.count
-			local var_22_8 = iter_22_1.duration
-			local var_22_9 = var_22_2.desc
-			local var_22_10 = string.format("id=%d count=%d duration=%d name=%s desc=%s %s %s", var_22_5, var_22_7, var_22_8, var_22_6, var_22_9, var_22_4, var_22_3)
+		for _, buffMO in pairs(entityMO:getBuffDic()) do
+			local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+			local noShow = buffCO.isNoShow == 0 and "show" or "noShow"
+			local goodOrBad = buffCO.isGoodBuff == 1 and "good" or "bad"
+			local id = buffMO.buffId
+			local name = buffCO.name
+			local count = buffMO.count
+			local duration = buffMO.duration
+			local desc = buffCO.desc
+			local s = string.format("id=%d count=%d duration=%d name=%s desc=%s %s %s", id, count, duration, name, desc, goodOrBad, noShow)
 
-			table.insert(var_22_1, var_22_10)
+			table.insert(tempList, s)
 		end
 
-		logNormal(string.format("buff list %d :\n%s", #var_22_1, table.concat(var_22_1, "\n")))
+		logNormal(string.format("buff list %d :\n%s", #tempList, table.concat(tempList, "\n")))
 	end
 end
 
-function var_0_0.onSetGMViewVisible(arg_23_0, arg_23_1)
-	gohelper.setActive(arg_23_0.viewGO, arg_23_1)
+function SkillEditorView:onSetGMViewVisible(state)
+	gohelper.setActive(self.viewGO, state)
 end
 
-return var_0_0
+return SkillEditorView

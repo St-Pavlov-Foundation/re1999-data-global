@@ -1,70 +1,72 @@
-﻿module("modules.logic.rouge.map.view.map.RougeMapDragView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/map/RougeMapDragView.lua
 
-local var_0_0 = class("RougeMapDragView", BaseView)
+module("modules.logic.rouge.map.view.map.RougeMapDragView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goFullScreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+local RougeMapDragView = class("RougeMapDragView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeMapDragView:onInitView()
+	self.goFullScreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeMapDragView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeMapDragView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0.goFullScreen)
+function RougeMapDragView:_editableInitView()
+	self.drag = SLFramework.UGUI.UIDragListener.Get(self.goFullScreen)
 
-	arg_4_0.drag:AddDragBeginListener(arg_4_0._onBeginDrag, arg_4_0)
-	arg_4_0.drag:AddDragListener(arg_4_0._onDrag, arg_4_0)
-	arg_4_0.drag:AddDragEndListener(arg_4_0._onEndDrag, arg_4_0)
+	self.drag:AddDragBeginListener(self._onBeginDrag, self)
+	self.drag:AddDragListener(self._onDrag, self)
+	self.drag:AddDragEndListener(self._onEndDrag, self)
 
-	arg_4_0.mainCamera = CameraMgr.instance:getMainCamera()
-	arg_4_0.refPos = arg_4_0.goFullScreen.transform.position
+	self.mainCamera = CameraMgr.instance:getMainCamera()
+	self.refPos = self.goFullScreen.transform.position
 end
 
-function var_0_0._onBeginDrag(arg_5_0)
+function RougeMapDragView:_onBeginDrag()
 	if not RougeMapModel.instance:isNormalLayer() then
 		return
 	end
 
-	arg_5_0.startPosX = RougeMapHelper.getWorldPos(UnityEngine.Input.mousePosition, arg_5_0.mainCamera, arg_5_0.refPos)
+	self.startPosX = RougeMapHelper.getWorldPos(UnityEngine.Input.mousePosition, self.mainCamera, self.refPos)
 end
 
-function var_0_0._onDrag(arg_6_0)
+function RougeMapDragView:_onDrag()
 	if not RougeMapModel.instance:isNormalLayer() then
 		return
 	end
 
-	if not arg_6_0.startPosX then
+	if not self.startPosX then
 		return
 	end
 
-	local var_6_0 = RougeMapHelper.getWorldPos(UnityEngine.Input.mousePosition, arg_6_0.mainCamera, arg_6_0.refPos)
-	local var_6_1 = var_6_0 - arg_6_0.startPosX
-	local var_6_2 = RougeMapModel.instance:getMapPosX()
+	local curX = RougeMapHelper.getWorldPos(UnityEngine.Input.mousePosition, self.mainCamera, self.refPos)
+	local offsetX = curX - self.startPosX
+	local curPosX = RougeMapModel.instance:getMapPosX()
 
-	RougeMapModel.instance:setMapPosX(var_6_2 + var_6_1)
+	RougeMapModel.instance:setMapPosX(curPosX + offsetX)
 
-	arg_6_0.startPosX = var_6_0
+	self.startPosX = curX
 end
 
-function var_0_0._onEndDrag(arg_7_0)
-	arg_7_0.startPosX = nil
+function RougeMapDragView:_onEndDrag()
+	self.startPosX = nil
 end
 
-function var_0_0.onClose(arg_8_0)
-	if arg_8_0.drag then
-		arg_8_0.drag:RemoveDragBeginListener()
-		arg_8_0.drag:RemoveDragListener()
-		arg_8_0.drag:RemoveDragEndListener()
+function RougeMapDragView:onClose()
+	if self.drag then
+		self.drag:RemoveDragBeginListener()
+		self.drag:RemoveDragListener()
+		self.drag:RemoveDragEndListener()
 	end
 end
 
-return var_0_0
+return RougeMapDragView

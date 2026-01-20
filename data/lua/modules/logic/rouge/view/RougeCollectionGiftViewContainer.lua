@@ -1,19 +1,21 @@
-﻿module("modules.logic.rouge.view.RougeCollectionGiftViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionGiftViewContainer.lua
 
-local var_0_0 = class("RougeCollectionGiftViewContainer", BaseViewContainer)
-local var_0_1 = 1
+module("modules.logic.rouge.view.RougeCollectionGiftViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._collectionGiftView = RougeCollectionGiftView.New()
+local RougeCollectionGiftViewContainer = class("RougeCollectionGiftViewContainer", BaseViewContainer)
+local kTabContainerId_NavigateButtonsView = 1
+
+function RougeCollectionGiftViewContainer:buildViews()
+	self._collectionGiftView = RougeCollectionGiftView.New()
 
 	return {
-		arg_1_0._collectionGiftView,
-		TabViewGroup.New(var_0_1, "#go_topleft")
+		self._collectionGiftView,
+		TabViewGroup.New(kTabContainerId_NavigateButtonsView, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == var_0_1 then
+function RougeCollectionGiftViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == kTabContainerId_NavigateButtonsView then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -24,16 +26,16 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.getScrollRect(arg_3_0)
-	return arg_3_0._collectionGiftView:getScrollRect()
+function RougeCollectionGiftViewContainer:getScrollRect()
+	return self._collectionGiftView:getScrollRect()
 end
 
-function var_0_0.getScrollViewGo(arg_4_0)
-	return arg_4_0._collectionGiftView:getScrollViewGo()
+function RougeCollectionGiftViewContainer:getScrollViewGo()
+	return self._collectionGiftView:getScrollViewGo()
 end
 
-function var_0_0.setActiveBlock(arg_5_0, arg_5_1)
-	arg_5_0._collectionInitialView:setActiveBlock(arg_5_1)
+function RougeCollectionGiftViewContainer:setActiveBlock(isActive)
+	self._collectionInitialView:setActiveBlock(isActive)
 end
 
-return var_0_0
+return RougeCollectionGiftViewContainer

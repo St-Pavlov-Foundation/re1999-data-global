@@ -1,61 +1,64 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.controller.LiangYueController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/controller/LiangYueController.lua
 
-local var_0_0 = class("LiangYueController", BaseController)
+module("modules.logic.versionactivity2_5.liangyue.controller.LiangYueController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local LiangYueController = class("LiangYueController", BaseController)
+
+function LiangYueController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function LiangYueController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function LiangYueController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function LiangYueController:addConstEvents()
 	return
 end
 
-function var_0_0.openGameView(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = LiangYueConfig.instance:getEpisodeConfigByActAndId(arg_5_1, arg_5_2)
-	local var_5_1 = {
-		actId = arg_5_1,
-		episodeId = arg_5_2,
-		episodeGameId = var_5_0.puzzleId
+function LiangYueController:openGameView(actId, episodeId)
+	local config = LiangYueConfig.instance:getEpisodeConfigByActAndId(actId, episodeId)
+	local viewParam = {
+		actId = actId,
+		episodeId = episodeId,
+		episodeGameId = config.puzzleId
 	}
 
-	LiangYueModel.instance:setCurActId(arg_5_1)
-	LiangYueModel.instance:setCurEpisodeId(arg_5_2)
-	ViewMgr.instance:openView(ViewName.LiangYueGameView, var_5_1)
+	LiangYueModel.instance:setCurActId(actId)
+	LiangYueModel.instance:setCurEpisodeId(episodeId)
+	ViewMgr.instance:openView(ViewName.LiangYueGameView, viewParam)
 end
 
-function var_0_0.enterLevelView(arg_6_0, arg_6_1)
-	LiangYueRpc.instance:sendGetAct184InfoRequest(arg_6_1, arg_6_0._onReceiveInfo, arg_6_0)
+function LiangYueController:enterLevelView(actId)
+	LiangYueRpc.instance:sendGetAct184InfoRequest(actId, self._onReceiveInfo, self)
 end
 
-function var_0_0._onReceiveInfo(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_2 == 0 then
+function LiangYueController:_onReceiveInfo(cmd, resultCode, msg)
+	if resultCode == 0 then
 		ViewMgr.instance:openView(ViewName.LiangYueLevelView)
 	end
 end
 
-function var_0_0.finishEpisode(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	LiangYueRpc.instance:sendAct184FinishEpisodeRequest(arg_8_1, arg_8_2, arg_8_3)
+function LiangYueController:finishEpisode(actId, episodeId, puzzle)
+	LiangYueRpc.instance:sendAct184FinishEpisodeRequest(actId, episodeId, puzzle)
 end
 
-function var_0_0.statExitData(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = ServerTime.now() - arg_9_1
+function LiangYueController:statExitData(enterTime, episodeId, result, illustrationList)
+	local nowTime = ServerTime.now()
+	local useTime = nowTime - enterTime
 
 	StatController.instance:track(StatEnum.EventName.ExitLiangYueActivity, {
-		[StatEnum.EventProperties.LiangYue_UseTime] = var_9_0,
-		[StatEnum.EventProperties.EpisodeId] = tostring(arg_9_2),
-		[StatEnum.EventProperties.Result] = arg_9_3,
-		[StatEnum.EventProperties.LiangYue_Illustration_Result] = arg_9_4
+		[StatEnum.EventProperties.LiangYue_UseTime] = useTime,
+		[StatEnum.EventProperties.EpisodeId] = tostring(episodeId),
+		[StatEnum.EventProperties.Result] = result,
+		[StatEnum.EventProperties.LiangYue_Illustration_Result] = illustrationList
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+LiangYueController.instance = LiangYueController.New()
 
-return var_0_0
+return LiangYueController

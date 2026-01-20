@@ -1,406 +1,421 @@
-﻿module("modules.logic.gm.view.yeshumei.GMYeShuMeiView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/yeshumei/GMYeShuMeiView.lua
 
-local var_0_0 = class("GMYeShuMeiView", BaseView)
+module("modules.logic.gm.view.yeshumei.GMYeShuMeiView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnroot/#btn_add")
-	arg_1_0._btnaddline = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnroot/#btn_addline")
-	arg_1_0._btnload = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnroot/#btn_load")
-	arg_1_0._btnsave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnroot/#btn_save")
-	arg_1_0._nodeRoot = gohelper.findChild(arg_1_0.viewGO, "noderoot")
-	arg_1_0._gonode = gohelper.findChild(arg_1_0.viewGO, "noderoot/#go_node")
-	arg_1_0._lineRoot = gohelper.findChild(arg_1_0.viewGO, "lineroot")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "lineroot/#go_line")
-	arg_1_0._orderRoot = gohelper.findChild(arg_1_0.viewGO, "btnroot/orderroot")
-	arg_1_0._goorder = gohelper.findChild(arg_1_0.viewGO, "btnroot/orderroot/orderitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._inpActId = gohelper.findChildInputField(arg_1_0.viewGO, "btnroot/input/Input_actId")
-	arg_1_0._inpLineOrder = gohelper.findChildInputField(arg_1_0.viewGO, "btnroot/orderinput/Input_order")
+local GMYeShuMeiView = class("GMYeShuMeiView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function GMYeShuMeiView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "btnroot/#btn_add")
+	self._btnaddline = gohelper.findChildButtonWithAudio(self.viewGO, "btnroot/#btn_addline")
+	self._btnload = gohelper.findChildButtonWithAudio(self.viewGO, "btnroot/#btn_load")
+	self._btnsave = gohelper.findChildButtonWithAudio(self.viewGO, "btnroot/#btn_save")
+	self._nodeRoot = gohelper.findChild(self.viewGO, "noderoot")
+	self._gonode = gohelper.findChild(self.viewGO, "noderoot/#go_node")
+	self._lineRoot = gohelper.findChild(self.viewGO, "lineroot")
+	self._goline = gohelper.findChild(self.viewGO, "lineroot/#go_line")
+	self._orderRoot = gohelper.findChild(self.viewGO, "btnroot/orderroot")
+	self._goorder = gohelper.findChild(self.viewGO, "btnroot/orderroot/orderitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._inpActId = gohelper.findChildInputField(self.viewGO, "btnroot/input/Input_actId")
+	self._inpLineOrder = gohelper.findChildInputField(self.viewGO, "btnroot/orderinput/Input_order")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnload:AddClickListener(arg_2_0._btnloadOnClick, arg_2_0)
-	arg_2_0._btnsave:AddClickListener(arg_2_0._btnsaveOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnaddline:AddClickListener(arg_2_0._btnaddlineOnClick, arg_2_0)
+function GMYeShuMeiView:addEvents()
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnload:AddClickListener(self._btnloadOnClick, self)
+	self._btnsave:AddClickListener(self._btnsaveOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnaddline:AddClickListener(self._btnaddlineOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnload:RemoveClickListener()
-	arg_3_0._btnsave:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnaddline:RemoveClickListener()
+function GMYeShuMeiView:removeEvents()
+	self._btnadd:RemoveClickListener()
+	self._btnload:RemoveClickListener()
+	self._btnsave:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnaddline:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function GMYeShuMeiView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnaddOnClick(arg_5_0)
-	if not arg_5_0._curLevelData then
+function GMYeShuMeiView:_btnaddOnClick()
+	if not self._curLevelData then
 		return
 	end
 
-	local var_5_0
-	local var_5_1 = GMYeShuMeiModel.instance:addPoint()
+	local point
+	local mo = GMYeShuMeiModel.instance:addPoint()
 
-	if not var_5_1 then
+	if not mo then
 		return
 	end
 
-	if arg_5_0.pointItems == nil then
-		arg_5_0.pointItems = arg_5_0:getUserDataTb_()
+	if self.pointItems == nil then
+		self.pointItems = self:getUserDataTb_()
 	end
 
-	local var_5_2 = arg_5_0:createPoint(var_5_1.id)
+	point = self:createPoint(mo.id)
 
-	if var_5_2 and var_5_1 then
-		var_5_2.comp:updateInfo(var_5_1)
+	if point and mo then
+		point.comp:updateInfo(mo)
 	end
 end
 
-function var_0_0._btnaddlineOnClick(arg_6_0)
-	local var_6_0 = arg_6_0._inpLineOrder:GetText()
+function GMYeShuMeiView:_btnaddlineOnClick()
+	local orderstr = self._inpLineOrder:GetText()
 
-	if not arg_6_0._curLevelData then
+	if not self._curLevelData then
 		return
 	end
 
-	if not GMYeShuMeiModel.instance:addOrders(var_6_0) then
+	if not GMYeShuMeiModel.instance:addOrders(orderstr) then
 		return
 	end
 
-	if arg_6_0.orderItems == nil then
-		arg_6_0.orderItems = arg_6_0:getUserDataTb_()
+	if self.orderItems == nil then
+		self.orderItems = self:getUserDataTb_()
 	end
 
-	local var_6_1 = arg_6_0:createOrder()
+	local order = self:createOrder()
 
-	if var_6_1 and var_6_0 then
-		var_6_1.comp:initOrder(var_6_0)
+	if order and orderstr then
+		order.comp:initOrder(orderstr)
 	end
 
-	arg_6_0:switchOrder(var_6_0)
+	self:switchOrder(orderstr)
 end
 
-function var_0_0._btnloadOnClick(arg_7_0)
-	local var_7_0 = tonumber(arg_7_0._inpActId:GetText())
+function GMYeShuMeiView:_btnloadOnClick()
+	local levelId = tonumber(self._inpActId:GetText())
 
-	arg_7_0._curLevelData = GMYeShuMeiModel.instance:setCurLevelId(var_7_0)
+	self._curLevelData = GMYeShuMeiModel.instance:setCurLevelId(levelId)
 
-	arg_7_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0._btnsaveOnClick(arg_8_0)
+function GMYeShuMeiView:_btnsaveOnClick()
 	GMYeShuMeiModel.instance:saveAndExport()
 end
 
-function var_0_0._editableInitView(arg_9_0)
+function GMYeShuMeiView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function GMYeShuMeiView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
+function GMYeShuMeiView:onOpen()
 	return
 end
 
-function var_0_0.refreshView(arg_12_0)
-	if arg_12_0._curLevelData == nil then
+function GMYeShuMeiView:refreshView()
+	if self._curLevelData == nil then
 		return
 	end
 
-	arg_12_0:_clearLine()
-	arg_12_0:_initPoint()
-	arg_12_0:_initLine()
-	arg_12_0:_initOrder()
+	self:_clearLine()
+	self:_initPoint()
+	self:_initLine()
+	self:_initOrder()
 end
 
-function var_0_0._initOrder(arg_13_0)
-	local var_13_0 = string.split(arg_13_0._curLevelData.orderstr, "|")
+function GMYeShuMeiView:_initOrder()
+	local initOrderData = string.split(self._curLevelData.orderstr, "|")
 
-	if arg_13_0.orderItems == nil then
-		arg_13_0.orderItems = arg_13_0:getUserDataTb_()
+	if self.orderItems == nil then
+		self.orderItems = self:getUserDataTb_()
 
-		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-			GMYeShuMeiModel.instance:addOrders(iter_13_1)
-			arg_13_0:createOrder().comp:initOrder(iter_13_1)
+		for _, orderstr in ipairs(initOrderData) do
+			GMYeShuMeiModel.instance:addOrders(orderstr)
+
+			local order = self:createOrder()
+
+			order.comp:initOrder(orderstr)
 		end
 
-		arg_13_0:switchOrder(var_13_0[1])
+		self:switchOrder(initOrderData[1])
 	else
-		for iter_13_2, iter_13_3 in ipairs(arg_13_0.orderItems) do
-			iter_13_3.comp:onDestroy()
+		for _, order in ipairs(self.orderItems) do
+			order.comp:onDestroy()
 		end
 
-		tabletool.clear(arg_13_0.orderItems)
+		tabletool.clear(self.orderItems)
 
-		for iter_13_4, iter_13_5 in ipairs(var_13_0) do
-			(arg_13_0.orderItems[iter_13_4] or arg_13_0:createOrder()).comp:initOrder(iter_13_5)
+		for index, orderstr in ipairs(initOrderData) do
+			local order = self.orderItems[index]
+
+			order = order or self:createOrder()
+
+			order.comp:initOrder(orderstr)
 		end
 	end
 end
 
-function var_0_0.createOrder(arg_14_0)
-	local var_14_0 = arg_14_0:getUserDataTb_()
+function GMYeShuMeiView:createOrder()
+	local order = self:getUserDataTb_()
 
-	var_14_0.go = gohelper.clone(arg_14_0._goorder, arg_14_0._orderRoot, "order")
-	var_14_0.comp = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_0.go, GMYeShuMeiOrder)
+	order.go = gohelper.clone(self._goorder, self._orderRoot, "order")
+	order.comp = MonoHelper.addNoUpdateLuaComOnceToGo(order.go, GMYeShuMeiOrder)
 
-	var_14_0.comp:addDeleteCb(arg_14_0.deleteOrder, arg_14_0)
-	var_14_0.comp:addSwitchCb(arg_14_0.switchOrder, arg_14_0)
-	table.insert(arg_14_0.orderItems, var_14_0)
+	order.comp:addDeleteCb(self.deleteOrder, self)
+	order.comp:addSwitchCb(self.switchOrder, self)
+	table.insert(self.orderItems, order)
 
-	return var_14_0
+	return order
 end
 
-function var_0_0.deleteOrder(arg_15_0, arg_15_1)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.orderItems) do
-		if iter_15_1.comp:getOrder() == arg_15_1 then
-			GMYeShuMeiModel.instance:deleteOrders(arg_15_1)
-			iter_15_1.comp:onDestroy()
-			table.remove(arg_15_0.orderItems, iter_15_0)
+function GMYeShuMeiView:deleteOrder(orderstr)
+	for index, order in ipairs(self.orderItems) do
+		if order.comp:getOrder() == orderstr then
+			GMYeShuMeiModel.instance:deleteOrders(orderstr)
+			order.comp:onDestroy()
+			table.remove(self.orderItems, index)
 
-			if #arg_15_0.orderItems > 0 then
-				GMYeShuMeiModel.instance:setCurLevelOrder(arg_15_0.orderItems[1].comp:getOrder())
-				arg_15_0:switchOrder(arg_15_0.orderItems[1].comp:getOrder())
+			if #self.orderItems > 0 then
+				GMYeShuMeiModel.instance:setCurLevelOrder(self.orderItems[1].comp:getOrder())
+				self:switchOrder(self.orderItems[1].comp:getOrder())
 			end
 		end
 	end
 end
 
-function var_0_0.switchOrder(arg_16_0, arg_16_1)
-	GMYeShuMeiModel.instance:setCurLevelOrder(arg_16_1)
+function GMYeShuMeiView:switchOrder(orderstr)
+	GMYeShuMeiModel.instance:setCurLevelOrder(orderstr)
 
-	local var_16_0 = string.splitToNumber(arg_16_1, "#")
-	local var_16_1 = #var_16_0
+	local orderList = string.splitToNumber(orderstr, "#")
+	local count = #orderList
 
-	arg_16_0:_clearLine()
+	self:_clearLine()
 
-	for iter_16_0 = 1, var_16_1 - 1 do
-		local var_16_2 = arg_16_0:getPointById(var_16_0[iter_16_0])
-		local var_16_3 = arg_16_0:getPointById(var_16_0[iter_16_0 + 1])
+	for i = 1, count - 1 do
+		local beginPoint = self:getPointById(orderList[i])
+		local endPoint = self:getPointById(orderList[i + 1])
 
-		if not var_16_2 then
-			logError("请检查节点" .. var_16_0[iter_16_0])
-
-			return
-		end
-
-		if not var_16_3 then
-			logError("请检查节点" .. var_16_0[iter_16_0 + 1])
+		if not beginPoint then
+			logError("请检查节点" .. orderList[i])
 
 			return
 		end
 
-		if var_16_2 and var_16_3 and not GMYeShuMeiModel.instance:checkLineExist(var_16_2.id, var_16_3.id) then
-			local var_16_4 = GMYeShuMeiModel.instance:addLines()
-			local var_16_5 = arg_16_0:createLine(var_16_4.id)
+		if not endPoint then
+			logError("请检查节点" .. orderList[i + 1])
 
-			var_16_5:initData(var_16_4)
-			var_16_5:updatePoint(var_16_2, var_16_3)
+			return
+		end
 
-			arg_16_0._lineItem[var_16_4.id] = var_16_5
+		if beginPoint and endPoint and not GMYeShuMeiModel.instance:checkLineExist(beginPoint.id, endPoint.id) then
+			local roundData = GMYeShuMeiModel.instance:addLines()
+			local line = self:createLine(roundData.id)
+
+			line:initData(roundData)
+			line:updatePoint(beginPoint, endPoint)
+
+			self._lineItem[roundData.id] = line
 		end
 	end
 
-	arg_16_0:_refreshOrder()
+	self:_refreshOrder()
 end
 
-function var_0_0._refreshOrder(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.orderItems) do
-		iter_17_1.comp:updateOrder()
+function GMYeShuMeiView:_refreshOrder()
+	for index, order in ipairs(self.orderItems) do
+		order.comp:updateOrder()
 	end
 end
 
-function var_0_0._initPoint(arg_18_0)
-	local var_18_0 = arg_18_0._curLevelData.points
+function GMYeShuMeiView:_initPoint()
+	local initPointData = self._curLevelData.points
 
-	if arg_18_0.pointItems == nil then
-		arg_18_0.pointItems = arg_18_0:getUserDataTb_()
+	if self.pointItems == nil then
+		self.pointItems = self:getUserDataTb_()
 
-		for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-			arg_18_0:createPoint(iter_18_0).comp:updateInfo(iter_18_1)
+		for index, pointCo in ipairs(initPointData) do
+			local point = self:createPoint(index)
+
+			point.comp:updateInfo(pointCo)
 		end
 	else
-		for iter_18_2, iter_18_3 in ipairs(arg_18_0.pointItems) do
-			iter_18_3.comp:onDestroy()
+		for _, point in ipairs(self.pointItems) do
+			point.comp:onDestroy()
 		end
 
-		tabletool.clear(arg_18_0.pointItems)
+		tabletool.clear(self.pointItems)
 
-		for iter_18_4, iter_18_5 in ipairs(var_18_0) do
-			(arg_18_0.pointItems[iter_18_4] or arg_18_0:createPoint(iter_18_4)).comp:updateInfo(iter_18_5)
-		end
-	end
-end
+		for index, pointCo in ipairs(initPointData) do
+			local point = self.pointItems[index]
 
-function var_0_0.createPoint(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getUserDataTb_()
+			point = point or self:createPoint(index)
 
-	var_19_0.go = gohelper.clone(arg_19_0._gonode, arg_19_0._nodeRoot, "point" .. arg_19_1)
-	var_19_0.comp = MonoHelper.addNoUpdateLuaComOnceToGo(var_19_0.go, GMYeShuMeiPoint)
-
-	table.insert(arg_19_0.pointItems, var_19_0)
-	var_19_0.comp:addDeleteCb(arg_19_0.deletePoint, arg_19_0)
-	var_19_0.comp:addRefreshLineCb(arg_19_0.refreshAllLine, arg_19_0)
-
-	return var_19_0
-end
-
-function var_0_0.deletePoint(arg_20_0, arg_20_1)
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._lineItem) do
-		if iter_20_1._point1 and iter_20_1._point1.id == arg_20_1 or iter_20_1._point2 and iter_20_1._point2.id == arg_20_1 then
-			iter_20_1:onDestroy()
-			arg_20_0:deleteLines(iter_20_1._lineData.id)
-		end
-	end
-
-	GMYeShuMeiModel.instance:deletePoint(arg_20_1)
-
-	for iter_20_2, iter_20_3 in ipairs(arg_20_0.pointItems) do
-		if iter_20_3.comp:checkPointId(arg_20_1) then
-			iter_20_3.comp:onDestroy()
-			table.remove(arg_20_0.pointItems, iter_20_2)
+			point.comp:updateInfo(pointCo)
 		end
 	end
 end
 
-function var_0_0._initLine(arg_21_0)
-	arg_21_0._lineItem = arg_21_0:getUserDataTb_()
+function GMYeShuMeiView:createPoint(index)
+	local point = self:getUserDataTb_()
 
-	local var_21_0 = arg_21_0._curLevelData.lines
+	point.go = gohelper.clone(self._gonode, self._nodeRoot, "point" .. index)
+	point.comp = MonoHelper.addNoUpdateLuaComOnceToGo(point.go, GMYeShuMeiPoint)
 
-	if arg_21_0._lineItem ~= nil then
-		for iter_21_0, iter_21_1 in pairs(arg_21_0._lineItem) do
-			iter_21_1:onDestroy()
+	table.insert(self.pointItems, point)
+	point.comp:addDeleteCb(self.deletePoint, self)
+	point.comp:addRefreshLineCb(self.refreshAllLine, self)
+
+	return point
+end
+
+function GMYeShuMeiView:deletePoint(pointId)
+	for _, lineItem in pairs(self._lineItem) do
+		if lineItem._point1 and lineItem._point1.id == pointId or lineItem._point2 and lineItem._point2.id == pointId then
+			lineItem:onDestroy()
+			self:deleteLines(lineItem._lineData.id)
+		end
+	end
+
+	GMYeShuMeiModel.instance:deletePoint(pointId)
+
+	for index, point in ipairs(self.pointItems) do
+		if point.comp:checkPointId(pointId) then
+			point.comp:onDestroy()
+			table.remove(self.pointItems, index)
+		end
+	end
+end
+
+function GMYeShuMeiView:_initLine()
+	self._lineItem = self:getUserDataTb_()
+
+	local allLines = self._curLevelData.lines
+
+	if self._lineItem ~= nil then
+		for _, v in pairs(self._lineItem) do
+			v:onDestroy()
 		end
 
-		tabletool.clear(arg_21_0._lineItem)
+		tabletool.clear(self._lineItem)
 	else
-		arg_21_0._lineItem = arg_21_0:getUserDataTb_()
+		self._lineItem = self:getUserDataTb_()
 	end
 
-	for iter_21_2 = 1, #var_21_0 do
-		local var_21_1 = var_21_0[iter_21_2]
+	for i = 1, #allLines do
+		local roundData = allLines[i]
 
-		if var_21_1 ~= nil then
-			local var_21_2 = arg_21_0:createLine(var_21_1.id)
+		if roundData ~= nil then
+			local line = self:createLine(roundData.id)
 
-			var_21_2:initData(var_21_1)
+			line:initData(roundData)
 
-			local var_21_3 = arg_21_0:getPointById(var_21_1._beginPointId)
-			local var_21_4 = arg_21_0:getPointById(var_21_1._endPointId)
+			local beginPoint = self:getPointById(roundData._beginPointId)
+			local endPoint = self:getPointById(roundData._endPointId)
 
-			var_21_2:updatePoint(var_21_3, var_21_4)
+			line:updatePoint(beginPoint, endPoint)
 
-			arg_21_0._lineItem[var_21_1.id] = var_21_2
+			self._lineItem[roundData.id] = line
 		end
 	end
 end
 
-function var_0_0.createLine(arg_22_0, arg_22_1)
-	if not arg_22_0._curLevelData then
+function GMYeShuMeiView:createLine(id)
+	if not self._curLevelData then
 		return
 	end
 
-	local var_22_0 = gohelper.clone(arg_22_0._goline, arg_22_0._lineRoot, "line" .. arg_22_1)
-	local var_22_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_0, GMYeShuMeiLine)
+	local go = gohelper.clone(self._goline, self._lineRoot, "line" .. id)
+	local line = MonoHelper.addNoUpdateLuaComOnceToGo(go, GMYeShuMeiLine)
 
-	gohelper.setActive(var_22_0, true)
-	var_22_1:addAddCb(arg_22_0.relyAddLine, arg_22_0)
-	var_22_1:addGetIndexCb(arg_22_0.getIndexOfLine, arg_22_0)
+	gohelper.setActive(go, true)
+	line:addAddCb(self.relyAddLine, self)
+	line:addGetIndexCb(self.getIndexOfLine, self)
 
-	return var_22_1
+	return line
 end
 
-function var_0_0.deleteLines(arg_23_0, arg_23_1)
-	if arg_23_0._lineItem[arg_23_1] ~= nil then
-		arg_23_0._lineItem[arg_23_1]:onDestroy()
+function GMYeShuMeiView:deleteLines(id)
+	if self._lineItem[id] ~= nil then
+		self._lineItem[id]:onDestroy()
 
-		arg_23_0._lineItem[arg_23_1] = nil
+		self._lineItem[id] = nil
 	end
 
-	arg_23_0:refreshAllLine()
+	self:refreshAllLine()
 end
 
-function var_0_0.getIndexOfLine(arg_24_0, arg_24_1)
-	if not arg_24_0._lineItem or #arg_24_0._lineItem == 0 then
+function GMYeShuMeiView:getIndexOfLine(id)
+	if not self._lineItem or #self._lineItem == 0 then
 		return
 	end
 
-	local var_24_0 = 0
+	local count = 0
 
-	for iter_24_0, iter_24_1 in pairs(arg_24_0._lineItem) do
-		var_24_0 = var_24_0 + 1
+	for _, line in pairs(self._lineItem) do
+		count = count + 1
 
-		if arg_24_1 == iter_24_1._lineData.id then
-			return var_24_0
+		if id == line._lineData.id then
+			return count
 		end
 	end
 end
 
-function var_0_0.relyAddLine(arg_25_0, arg_25_1)
-	if arg_25_0._lineItem == nil then
-		arg_25_0._lineItem = arg_25_0:getUserDataTb_()
+function GMYeShuMeiView:relyAddLine(line)
+	if self._lineItem == nil then
+		self._lineItem = self:getUserDataTb_()
 	end
 
-	arg_25_0._lineItem[arg_25_1._lineData.id] = arg_25_1
+	self._lineItem[line._lineData.id] = line
 end
 
-function var_0_0.getPointById(arg_26_0, arg_26_1)
-	for iter_26_0, iter_26_1 in pairs(arg_26_0.pointItems) do
-		if iter_26_1.comp.id == arg_26_1 then
-			return iter_26_1.comp
+function GMYeShuMeiView:getPointById(pointId)
+	for _, pointData in pairs(self.pointItems) do
+		if pointData.comp.id == pointId then
+			return pointData.comp
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.refreshAllLine(arg_27_0)
-	if arg_27_0._lineItem and #arg_27_0._lineItem > 0 then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0._lineItem) do
-			if iter_27_1 then
-				iter_27_1:updateByPoint()
+function GMYeShuMeiView:refreshAllLine()
+	if self._lineItem and #self._lineItem > 0 then
+		for _, lineItem in pairs(self._lineItem) do
+			if lineItem then
+				lineItem:updateByPoint()
 			end
 		end
 	end
 end
 
-function var_0_0._clearLine(arg_28_0)
-	if arg_28_0._lineItem and #arg_28_0._lineItem > 0 then
-		for iter_28_0, iter_28_1 in pairs(arg_28_0._lineItem) do
-			iter_28_1:onDestroy()
+function GMYeShuMeiView:_clearLine()
+	if self._lineItem and #self._lineItem > 0 then
+		for index, line in pairs(self._lineItem) do
+			line:onDestroy()
 		end
 
-		tabletool.clear(arg_28_0._lineItem)
+		tabletool.clear(self._lineItem)
 	end
 end
 
-function var_0_0.onClose(arg_29_0)
+function GMYeShuMeiView:onClose()
 	GMYeShuMeiModel.instance:clearData()
 
-	if arg_29_0.pointItems and #arg_29_0.pointItems > 0 then
-		for iter_29_0, iter_29_1 in ipairs(arg_29_0.pointItems) do
-			iter_29_1.comp:onDestroy()
+	if self.pointItems and #self.pointItems > 0 then
+		for index, point in ipairs(self.pointItems) do
+			point.comp:onDestroy()
 		end
 	end
 
-	arg_29_0:_clearLine()
+	self:_clearLine()
 end
 
-function var_0_0.onDestroyView(arg_30_0)
+function GMYeShuMeiView:onDestroyView()
 	return
 end
 
-return var_0_0
+return GMYeShuMeiView

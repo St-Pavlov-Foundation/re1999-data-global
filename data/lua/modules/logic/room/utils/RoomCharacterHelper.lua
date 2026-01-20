@@ -1,197 +1,203 @@
-﻿module("modules.logic.room.utils.RoomCharacterHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomCharacterHelper.lua
 
-local var_0_0 = {
-	getCharacterPosition = function(arg_1_0)
-		return HexMath.resourcePointToPosition(arg_1_0, RoomBlockEnum.BlockSize, 0.33)
-	end
-}
+module("modules.logic.room.utils.RoomCharacterHelper", package.seeall)
 
-function var_0_0.getCharacterPosition3D(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_0.getCharacterPosition(arg_2_0)
-	local var_2_1 = arg_2_1 and var_0_0.getLandHeightByRaycast(Vector3(var_2_0.x, 0, var_2_0.y)) or RoomCharacterEnum.CharacterHeightOffset
+local RoomCharacterHelper = {}
 
-	return Vector3(var_2_0.x, var_2_1, var_2_0.y)
+function RoomCharacterHelper.getCharacterPosition(resourcePoint)
+	return HexMath.resourcePointToPosition(resourcePoint, RoomBlockEnum.BlockSize, 0.33)
 end
 
-function var_0_0.reCalculateHeight(arg_3_0)
-	local var_3_0 = var_0_0.getLandHeightByRaycast(Vector3(arg_3_0.x, 0, arg_3_0.z))
+function RoomCharacterHelper.getCharacterPosition3D(resourcePoint, withHeight)
+	local position2D = RoomCharacterHelper.getCharacterPosition(resourcePoint)
+	local height = withHeight and RoomCharacterHelper.getLandHeightByRaycast(Vector3(position2D.x, 0, position2D.y)) or RoomCharacterEnum.CharacterHeightOffset
 
-	return Vector3(arg_3_0.x, var_3_0, arg_3_0.z)
+	return Vector3(position2D.x, height, position2D.y)
 end
 
-function var_0_0.getLandHeightByAStarPath(arg_4_0)
-	return GameSceneMgr.instance:getCurScene().path:getNearestNodeHeight(arg_4_0)
+function RoomCharacterHelper.reCalculateHeight(position)
+	local height = RoomCharacterHelper.getLandHeightByRaycast(Vector3(position.x, 0, position.z))
+
+	return Vector3(position.x, height, position.z)
 end
 
-function var_0_0.getLandHeightByRaycast(arg_5_0)
-	local var_5_0, var_5_1 = ZProj.RoomHelper.GetLandHeightByRaycast(arg_5_0, SceneTag.RoomLand, 0)
+function RoomCharacterHelper.getLandHeightByAStarPath(position)
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if var_5_0 then
-		return var_5_1
+	return scene.path:getNearestNodeHeight(position)
+end
+
+function RoomCharacterHelper.getLandHeightByRaycast(position)
+	local success, height = ZProj.RoomHelper.GetLandHeightByRaycast(position, SceneTag.RoomLand, 0)
+
+	if success then
+		return height
 	end
 
 	return RoomCharacterEnum.CharacterHeightOffset
 end
 
-function var_0_0.pointListToPositionList3D(arg_6_0, arg_6_1)
-	if not arg_6_0 then
+function RoomCharacterHelper.pointListToPositionList3D(pointList, withHeight)
+	if not pointList then
 		return nil
 	end
 
-	local var_6_0 = {}
+	local positionList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0) do
-		table.insert(var_6_0, var_0_0.getCharacterPosition3D(iter_6_1, arg_6_1))
+	for i, point in ipairs(pointList) do
+		table.insert(positionList, RoomCharacterHelper.getCharacterPosition3D(point, withHeight))
 	end
 
-	return var_6_0
+	return positionList
 end
 
-function var_0_0.positionRoundToPoint(arg_7_0)
-	arg_7_0 = Vector2(arg_7_0.x, arg_7_0.z)
+function RoomCharacterHelper.positionRoundToPoint(position)
+	position = Vector2(position.x, position.z)
 
-	local var_7_0, var_7_1 = HexMath.positionToRoundHex(arg_7_0, RoomBlockEnum.BlockSize)
-	local var_7_2 = HexMath.hexToPosition(var_7_0, RoomBlockEnum.BlockSize)
-	local var_7_3 = math.sqrt(3)
+	local roundHexPoint, direction = HexMath.positionToRoundHex(position, RoomBlockEnum.BlockSize)
+	local centerPosition = HexMath.hexToPosition(roundHexPoint, RoomBlockEnum.BlockSize)
+	local sqrt3 = math.sqrt(3)
 
-	if Vector2.Distance(var_7_2, arg_7_0) < RoomBlockEnum.BlockSize * var_7_3 / 6 then
-		return ResourcePoint(var_7_0, 0)
+	if Vector2.Distance(centerPosition, position) < RoomBlockEnum.BlockSize * sqrt3 / 6 then
+		return ResourcePoint(roundHexPoint, 0)
 	else
-		return ResourcePoint(var_7_0, var_7_1)
+		return ResourcePoint(roundHexPoint, direction)
 	end
 end
 
-function var_0_0.canTryPlace(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0, var_8_1 = HexMath.positionToRoundHex(Vector2.New(arg_8_1.x, arg_8_1.z), RoomBlockEnum.BlockSize)
-	local var_8_2 = RoomBuildingHelper.getOccupyBuildingParam(var_8_0, true)
+function RoomCharacterHelper.canTryPlace(heroId, position, skinId)
+	local hexPoint, direction = HexMath.positionToRoundHex(Vector2.New(position.x, position.z), RoomBlockEnum.BlockSize)
+	local param = RoomBuildingHelper.getOccupyBuildingParam(hexPoint, true)
 
-	if var_8_2 and not var_8_2.isCanPlace then
+	if param and not param.isCanPlace then
 		return false
 	end
 
-	local var_8_3 = RoomCharacterModel.instance:getList()
+	local characterMOList = RoomCharacterModel.instance:getList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_3) do
-		local var_8_4 = iter_8_1.currentPosition
+	for i, characterMO in ipairs(characterMOList) do
+		local currentPosition = characterMO.currentPosition
 
-		if iter_8_1.characterState ~= RoomCharacterEnum.CharacterState.Temp then
-			if iter_8_1.characterState == RoomCharacterEnum.CharacterState.Revert then
-				var_8_4 = RoomCharacterModel.instance:getRevertPosition()
+		if characterMO.characterState ~= RoomCharacterEnum.CharacterState.Temp then
+			if characterMO.characterState == RoomCharacterEnum.CharacterState.Revert then
+				currentPosition = RoomCharacterModel.instance:getRevertPosition()
 			end
 
-			if var_0_0.isTooNear(var_8_4, arg_8_1) and arg_8_0 ~= iter_8_1.heroId then
+			if RoomCharacterHelper.isTooNear(currentPosition, position) and heroId ~= characterMO.heroId then
 				return false
 			end
 		end
 	end
 
-	local var_8_5 = RoomMapBlockModel.instance:getBlockMO(var_8_0.x, var_8_0.y)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if not var_8_5 or var_8_5.blockState ~= RoomBlockEnum.BlockState.Map then
+	if not blockMO or blockMO.blockState ~= RoomBlockEnum.BlockState.Map then
 		return false
 	end
 
-	local var_8_6 = var_0_0.reCalculateHeight(arg_8_1)
-	local var_8_7 = SkinConfig.instance:getSkinCo(arg_8_2)
-	local var_8_8 = var_8_7 and var_8_7.canWade > 0
+	local position = RoomCharacterHelper.reCalculateHeight(position)
+	local skinConfig = SkinConfig.instance:getSkinCo(skinId)
+	local canWade = skinConfig and skinConfig.canWade > 0
 
-	if not var_8_8 and var_8_5:getResourceId(var_8_1) == RoomResourceEnum.ResourceId.River then
+	if not canWade and blockMO:getResourceId(direction) == RoomResourceEnum.ResourceId.River then
 		return false
 	end
 
-	local var_8_9 = var_0_0.getTag(var_8_8)
+	local tag = RoomCharacterHelper.getTag(canWade)
 
-	if not ZProj.AStarPathBridge.IsWalkable(var_8_6.x, var_8_6.y, var_8_6.z, var_8_9) then
-		return false
-	end
-
-	return true
-end
-
-function var_0_0.isTooNear(arg_9_0, arg_9_1)
-	return Vector2.Distance(Vector2.New(arg_9_0.x, arg_9_0.z), Vector2.New(arg_9_1.x, arg_9_1.z)) < RoomCharacterEnum.TooNearDistance
-end
-
-function var_0_0.canConfirmPlace(arg_10_0, arg_10_1, arg_10_2)
-	return var_0_0.canTryPlace(arg_10_0, arg_10_1, arg_10_2)
-end
-
-function var_0_0.canMove(arg_11_0)
-	local var_11_0 = arg_11_0.hexPoint
-	local var_11_1 = RoomBuildingHelper.getOccupyBuildingParam(var_11_0, true)
-
-	if var_11_1 and not var_11_1.isCanPlace then
-		return false
-	end
-
-	local var_11_2 = RoomMapBlockModel.instance:getBlockMO(var_11_0.x, var_11_0.y)
-
-	if not var_11_2 or var_11_2.blockState ~= RoomBlockEnum.BlockState.Map then
+	if not ZProj.AStarPathBridge.IsWalkable(position.x, position.y, position.z, tag) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.checkMoveStraightRule(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	local var_12_0 = var_0_0.positionRoundToPoint(arg_12_1)
+function RoomCharacterHelper.isTooNear(posA, posB)
+	local distance = Vector2.Distance(Vector2.New(posA.x, posA.z), Vector2.New(posB.x, posB.z))
 
-	if not var_0_0.canMove(var_12_0, true) then
+	return distance < RoomCharacterEnum.TooNearDistance
+end
+
+function RoomCharacterHelper.canConfirmPlace(heroId, position, skinId)
+	return RoomCharacterHelper.canTryPlace(heroId, position, skinId)
+end
+
+function RoomCharacterHelper.canMove(resourcePoint)
+	local hexPoint = resourcePoint.hexPoint
+	local param = RoomBuildingHelper.getOccupyBuildingParam(hexPoint, true)
+
+	if param and not param.isCanPlace then
 		return false
 	end
 
-	if var_0_0.isOtherCharacter(arg_12_1, arg_12_2) then
-		return false
-	end
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if not var_0_0.checkMoveDistance(arg_12_1, arg_12_0) then
-		return false
-	end
-
-	if not var_0_0.isMoveCameraWalkable({
-		arg_12_0,
-		arg_12_1
-	}, true, arg_12_4) then
-		return false
-	end
-
-	local var_12_1 = arg_12_3.charactermove:getSeeker()
-	local var_12_2 = arg_12_0
-	local var_12_3 = arg_12_1
-
-	if not ZProj.AStarPathBridge.IsWalkable(var_12_3.x, var_12_3.y, var_12_3.z, var_12_1:GetTag()) then
+	if not blockMO or blockMO.blockState ~= RoomBlockEnum.BlockState.Map then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.checkMoveDistance(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0.x - arg_13_1.x
-	local var_13_1 = arg_13_0.z - arg_13_1.z
-	local var_13_2 = var_13_0 * var_13_0 + var_13_1 * var_13_1
+function RoomCharacterHelper.checkMoveStraightRule(startPosition, targetPosition, heroId, entity, isBridge)
+	local targetPoint = RoomCharacterHelper.positionRoundToPoint(targetPosition)
 
-	if var_13_2 > RoomBlockEnum.BlockSize * RoomBlockEnum.BlockSize * 8 then
+	if not RoomCharacterHelper.canMove(targetPoint, true) then
 		return false
 	end
 
-	if var_13_2 < RoomBlockEnum.BlockSize * RoomBlockEnum.BlockSize / 64 then
+	if RoomCharacterHelper.isOtherCharacter(targetPosition, heroId) then
+		return false
+	end
+
+	if not RoomCharacterHelper.checkMoveDistance(targetPosition, startPosition) then
+		return false
+	end
+
+	if not RoomCharacterHelper.isMoveCameraWalkable({
+		startPosition,
+		targetPosition
+	}, true, isBridge) then
+		return false
+	end
+
+	local seeker = entity.charactermove:getSeeker()
+	local pos1 = startPosition
+	local pos2 = targetPosition
+
+	if not ZProj.AStarPathBridge.IsWalkable(pos2.x, pos2.y, pos2.z, seeker:GetTag()) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.isOtherCharacter(arg_14_0, arg_14_1)
-	local var_14_0 = RoomCharacterModel.instance:getList()
+function RoomCharacterHelper.checkMoveDistance(posA, posB)
+	local offsetX = posA.x - posB.x
+	local offsetZ = posA.z - posB.z
+	local distance2 = offsetX * offsetX + offsetZ * offsetZ
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		if iter_14_1.heroId ~= arg_14_1 then
-			if var_0_0.isTooNear(iter_14_1.currentPosition, arg_14_0) then
+	if distance2 > RoomBlockEnum.BlockSize * RoomBlockEnum.BlockSize * 8 then
+		return false
+	end
+
+	if distance2 < RoomBlockEnum.BlockSize * RoomBlockEnum.BlockSize / 64 then
+		return false
+	end
+
+	return true
+end
+
+function RoomCharacterHelper.isOtherCharacter(targetPosition, heroId)
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
+
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		if roomCharacterMO.heroId ~= heroId then
+			if RoomCharacterHelper.isTooNear(roomCharacterMO.currentPosition, targetPosition) then
 				return true
 			end
 
-			if var_0_0.isTooNear(iter_14_1:getMoveTargetPosition(), arg_14_0) then
+			if RoomCharacterHelper.isTooNear(roomCharacterMO:getMoveTargetPosition(), targetPosition) then
 				return true
 			end
 		end
@@ -200,41 +206,42 @@ function var_0_0.isOtherCharacter(arg_14_0, arg_14_1)
 	return false
 end
 
-function var_0_0.isMoveCameraWalkable(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0 or #arg_15_0 < 2 then
+function RoomCharacterHelper.isMoveCameraWalkable(positionList, isStrict, isBridge)
+	if not positionList or #positionList < 2 then
 		return false
 	end
 
-	local var_15_0 = GameSceneMgr.instance:getCurScene().camera.camera.transform
-	local var_15_1 = Vector2.Normalize(Vector2(var_15_0.forward.x, var_15_0.forward.z))
-	local var_15_2 = 0
+	local scene = GameSceneMgr.instance:getCurScene()
+	local cameraTransform = scene.camera.camera.transform
+	local cameraDirection = Vector2.Normalize(Vector2(cameraTransform.forward.x, cameraTransform.forward.z))
+	local totalLength = 0
 
-	for iter_15_0 = 1, #arg_15_0 - 1 do
-		local var_15_3 = arg_15_0[iter_15_0]
-		local var_15_4 = arg_15_0[iter_15_0 + 1]
-		local var_15_5 = var_15_4.x - var_15_3.x
-		local var_15_6 = var_15_4.z - var_15_3.z
-		local var_15_7 = var_15_5 * var_15_5 + var_15_6 * var_15_6
+	for i = 1, #positionList - 1 do
+		local startPosition = positionList[i]
+		local targetPosition = positionList[i + 1]
+		local offsetX = targetPosition.x - startPosition.x
+		local offsetZ = targetPosition.z - startPosition.z
+		local length2 = offsetX * offsetX + offsetZ * offsetZ
 
-		if var_15_7 > 0.0001 then
-			local var_15_8 = Vector2.Normalize(Vector2.New(var_15_5, var_15_6))
-			local var_15_9 = RoomCharacterEnum.MoveStraightAngleLimit
+		if length2 > 0.0001 then
+			local direction = Vector2.Normalize(Vector2.New(offsetX, offsetZ))
+			local degree = RoomCharacterEnum.MoveStraightAngleLimit
 
-			if arg_15_2 then
-				var_15_9 = RoomCharacterEnum.MoveThroughBridge
-			elseif arg_15_1 then
-				var_15_9 = RoomCharacterEnum.MoveStraightAngleLimitStrict
+			if isBridge then
+				degree = RoomCharacterEnum.MoveThroughBridge
+			elseif isStrict then
+				degree = RoomCharacterEnum.MoveStraightAngleLimitStrict
 			end
 
-			local var_15_10 = math.cos(math.rad(90 - var_15_9))
+			local limit = math.cos(math.rad(90 - degree))
 
-			if var_15_10 < Vector2.Dot(var_15_8, var_15_1) then
-				var_15_2 = var_15_2 + math.sqrt(var_15_7)
-			elseif var_15_10 < Vector2.Dot(-var_15_8, var_15_1) then
-				var_15_2 = var_15_2 + math.sqrt(var_15_7)
+			if limit < Vector2.Dot(direction, cameraDirection) then
+				totalLength = totalLength + math.sqrt(length2)
+			elseif limit < Vector2.Dot(-direction, cameraDirection) then
+				totalLength = totalLength + math.sqrt(length2)
 			end
 
-			if var_15_2 > 0.01 then
+			if totalLength > 0.01 then
 				return false
 			end
 		end
@@ -243,362 +250,370 @@ function var_0_0.isMoveCameraWalkable(arg_15_0, arg_15_1, arg_15_2)
 	return true
 end
 
-function var_0_0.getCanConfirmPlaceDict(arg_16_0, arg_16_1)
-	local var_16_0 = {}
-	local var_16_1 = RoomMapBlockModel.instance:getBlockMODict()
+function RoomCharacterHelper.getCanConfirmPlaceDict(heroId, skinId)
+	local canConfirmPlaceDict = {}
+	local mapBlockMODict = RoomMapBlockModel.instance:getBlockMODict()
 
-	for iter_16_0, iter_16_1 in pairs(var_16_1) do
-		for iter_16_2, iter_16_3 in pairs(iter_16_1) do
-			if iter_16_3.blockState == RoomBlockEnum.BlockState.Map then
-				for iter_16_4 = 0, 6 do
-					local var_16_2 = ResourcePoint(HexPoint(iter_16_0, iter_16_2), iter_16_4)
-					local var_16_3 = var_0_0.getCharacterPosition3D(var_16_2)
+	for x, dict in pairs(mapBlockMODict) do
+		for y, blockMO in pairs(dict) do
+			if blockMO.blockState == RoomBlockEnum.BlockState.Map then
+				for direction = 0, 6 do
+					local resourcePoint = ResourcePoint(HexPoint(x, y), direction)
+					local position = RoomCharacterHelper.getCharacterPosition3D(resourcePoint)
 
-					if var_0_0.canConfirmPlace(arg_16_0, var_16_3, arg_16_1) then
-						var_16_0[iter_16_0] = var_16_0[iter_16_0] or {}
-						var_16_0[iter_16_0][iter_16_2] = var_16_0[iter_16_0][iter_16_2] or {}
-						var_16_0[iter_16_0][iter_16_2][iter_16_4] = true
+					if RoomCharacterHelper.canConfirmPlace(heroId, position, skinId) then
+						canConfirmPlaceDict[x] = canConfirmPlaceDict[x] or {}
+						canConfirmPlaceDict[x][y] = canConfirmPlaceDict[x][y] or {}
+						canConfirmPlaceDict[x][y][direction] = true
 					end
 				end
 			end
 		end
 	end
 
-	return var_16_0
+	return canConfirmPlaceDict
 end
 
-function var_0_0.getSelectPositionList()
-	local var_17_0 = {}
-	local var_17_1 = RoomMapBlockModel.instance:getBlockMODict()
+function RoomCharacterHelper.getSelectPositionList()
+	local positionList = {}
+	local mapBlockMODict = RoomMapBlockModel.instance:getBlockMODict()
 
-	for iter_17_0, iter_17_1 in pairs(var_17_1) do
-		for iter_17_2, iter_17_3 in pairs(iter_17_1) do
-			if iter_17_3.blockState == RoomBlockEnum.BlockState.Map then
-				local var_17_2
+	for x, dict in pairs(mapBlockMODict) do
+		for y, blockMO in pairs(dict) do
+			if blockMO.blockState == RoomBlockEnum.BlockState.Map then
+				local mainPosition
 
-				for iter_17_4 = 0, 6 do
-					local var_17_3 = ResourcePoint(HexPoint(iter_17_0, iter_17_2), iter_17_4)
-					local var_17_4 = var_0_0.getCharacterPosition3D(var_17_3)
+				for direction = 0, 6 do
+					local resourcePoint = ResourcePoint(HexPoint(x, y), direction)
+					local position = RoomCharacterHelper.getCharacterPosition3D(resourcePoint)
 
-					if iter_17_4 == 0 then
-						var_17_2 = var_17_4
+					if direction == 0 then
+						mainPosition = position
 					end
 
-					table.insert(var_17_0, var_17_4)
+					table.insert(positionList, position)
 				end
 
-				local var_17_5 = {}
-				local var_17_6 = 0.64 * RoomBlockEnum.BlockSize
-				local var_17_7 = 0.16 * RoomBlockEnum.BlockSize
-				local var_17_8 = Vector2(0, var_17_6)
-				local var_17_9 = Vector2(-var_17_7, var_17_6)
-				local var_17_10 = Vector2(var_17_7, var_17_6)
+				local list = {}
+				local offsetY = 0.64 * RoomBlockEnum.BlockSize
+				local offsetX = 0.16 * RoomBlockEnum.BlockSize
+				local up = Vector2(0, offsetY)
+				local upLeft = Vector2(-offsetX, offsetY)
+				local upRight = Vector2(offsetX, offsetY)
 
-				table.insert(var_17_5, var_17_8)
-				table.insert(var_17_5, var_17_9)
-				table.insert(var_17_5, var_17_10)
+				table.insert(list, up)
+				table.insert(list, upLeft)
+				table.insert(list, upRight)
 
-				for iter_17_5 = 0, 5 do
-					local var_17_11 = iter_17_5 * math.pi / 3
+				for i = 0, 5 do
+					local rotate = i * math.pi / 3
 
-					for iter_17_6, iter_17_7 in ipairs(var_17_5) do
-						local var_17_12 = Vector3(var_17_2.x + iter_17_7.x * math.cos(var_17_11) - iter_17_7.y * math.sin(var_17_11), 0, var_17_2.z + iter_17_7.y * math.cos(var_17_11) + iter_17_7.x * math.sin(var_17_11))
+					for _, offset in ipairs(list) do
+						local position = Vector3(mainPosition.x + offset.x * math.cos(rotate) - offset.y * math.sin(rotate), 0, mainPosition.z + offset.y * math.cos(rotate) + offset.x * math.sin(rotate))
 
-						table.insert(var_17_0, var_17_12)
+						table.insert(positionList, position)
 					end
 				end
 			end
 		end
 	end
 
-	return var_17_0
+	return positionList
 end
 
-function var_0_0.getRecommendHexPoint(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_2 then
-		local var_18_0 = GameSceneMgr.instance:getCurScene().camera:getCameraParam()
+function RoomCharacterHelper.getRecommendHexPoint(heroId, skinId, nearPosition)
+	if not nearPosition then
+		local scene = GameSceneMgr.instance:getCurScene()
+		local cameraParam = scene.camera:getCameraParam()
 
-		arg_18_2 = Vector2(var_18_0.focusX, var_18_0.focusY)
+		nearPosition = Vector2(cameraParam.focusX, cameraParam.focusY)
 	end
 
-	local var_18_1 = var_0_0.reCalculateHeight(Vector3.New(arg_18_2.x, 0, arg_18_2.y))
+	local nearPosition3D = RoomCharacterHelper.reCalculateHeight(Vector3.New(nearPosition.x, 0, nearPosition.y))
 
-	if var_0_0.canConfirmPlace(arg_18_0, var_18_1, arg_18_1) then
-		local var_18_2, var_18_3 = HexMath.positionToRoundHex(arg_18_2, RoomBlockEnum.BlockSize)
+	if RoomCharacterHelper.canConfirmPlace(heroId, nearPosition3D, skinId) then
+		local hexPoint, direction = HexMath.positionToRoundHex(nearPosition, RoomBlockEnum.BlockSize)
 
 		return {
 			distance = 0,
-			hexPoint = var_18_2,
-			direction = var_18_3,
-			position = var_18_1
+			hexPoint = hexPoint,
+			direction = direction,
+			position = nearPosition3D
 		}
 	end
 
-	local var_18_4 = SkinConfig.instance:getSkinCo(arg_18_1)
-	local var_18_5 = var_18_4 and var_18_4.canWade > 0
-	local var_18_6 = var_0_0.getTag(var_18_5)
-	local var_18_7, var_18_8 = ZProj.AStarPathBridge.GetNearestNodePosition(var_18_1, var_18_6, Vector3.zero)
+	local skinConfig = SkinConfig.instance:getSkinCo(skinId)
+	local canWade = skinConfig and skinConfig.canWade > 0
+	local tag = RoomCharacterHelper.getTag(canWade)
+	local success, nearNodePosition = ZProj.AStarPathBridge.GetNearestNodePosition(nearPosition3D, tag, Vector3.zero)
 
-	if var_18_7 and var_0_0.canConfirmPlace(arg_18_0, var_18_8, arg_18_1) then
-		local var_18_9 = var_0_0.reCalculateHeight(var_18_8)
-		local var_18_10, var_18_11 = HexMath.positionToRoundHex(Vector2(var_18_9.x, var_18_9.z), RoomBlockEnum.BlockSize)
+	if success and RoomCharacterHelper.canConfirmPlace(heroId, nearNodePosition, skinId) then
+		nearNodePosition = RoomCharacterHelper.reCalculateHeight(nearNodePosition)
+
+		local nearNodeHexPoint, nearNodeDirection = HexMath.positionToRoundHex(Vector2(nearNodePosition.x, nearNodePosition.z), RoomBlockEnum.BlockSize)
 
 		return {
-			hexPoint = var_18_10,
-			direction = var_18_11,
-			distance = Vector2.Distance(var_18_9, arg_18_2),
-			position = var_18_9
+			hexPoint = nearNodeHexPoint,
+			direction = nearNodeDirection,
+			distance = Vector2.Distance(nearNodePosition, nearPosition),
+			position = nearNodePosition
 		}
 	end
 
-	local var_18_12 = var_0_0.getSelectPositionList(arg_18_0, arg_18_1)
-	local var_18_13 = {}
-	local var_18_14 = {}
+	local selectPositionList = RoomCharacterHelper.getSelectPositionList(heroId, skinId)
+	local selectIndexList = {}
+	local selectDistanceList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_12) do
-		table.insert(var_18_13, iter_18_0)
-		table.insert(var_18_14, RoomHelper.vector3Distance2(iter_18_1, var_18_1))
+	for i, selectPosition in ipairs(selectPositionList) do
+		table.insert(selectIndexList, i)
+		table.insert(selectDistanceList, RoomHelper.vector3Distance2(selectPosition, nearPosition3D))
 	end
 
-	table.sort(var_18_13, function(arg_19_0, arg_19_1)
-		return var_18_14[arg_19_0] < var_18_14[arg_19_1]
+	table.sort(selectIndexList, function(x, y)
+		return selectDistanceList[x] < selectDistanceList[y]
 	end)
 
-	for iter_18_2, iter_18_3 in ipairs(var_18_13) do
-		local var_18_15 = var_18_12[iter_18_3]
+	for i, selectIndex in ipairs(selectIndexList) do
+		local selectPosition = selectPositionList[selectIndex]
 
-		if var_0_0.canConfirmPlace(arg_18_0, var_18_15, arg_18_1) then
-			local var_18_16, var_18_17 = HexMath.positionToRoundHex(var_18_15, RoomBlockEnum.BlockSize)
+		if RoomCharacterHelper.canConfirmPlace(heroId, selectPosition, skinId) then
+			local selectHexPoint, selectDirection = HexMath.positionToRoundHex(selectPosition, RoomBlockEnum.BlockSize)
 
 			return {
-				hexPoint = var_18_16,
-				direction = var_18_17,
-				distance = Vector2.Distance(var_18_15, arg_18_2),
-				position = var_18_15
+				hexPoint = selectHexPoint,
+				direction = selectDirection,
+				distance = Vector2.Distance(selectPosition, nearPosition),
+				position = selectPosition
 			}
 		end
 	end
 
-	local var_18_18 = var_0_0.getCanConfirmPlaceDict(arg_18_0, arg_18_1)
-	local var_18_19
+	local canConfirmPlaceDict = RoomCharacterHelper.getCanConfirmPlaceDict(heroId, skinId)
+	local bestParam
 
-	for iter_18_4, iter_18_5 in pairs(var_18_18) do
-		for iter_18_6, iter_18_7 in pairs(iter_18_5) do
-			for iter_18_8, iter_18_9 in pairs(iter_18_7) do
-				local var_18_20 = {
-					hexPoint = HexPoint(iter_18_4, iter_18_6),
-					direction = iter_18_8
-				}
-				local var_18_21 = ResourcePoint(var_18_20.hexPoint, var_18_20.direction)
+	for x, dict1 in pairs(canConfirmPlaceDict) do
+		for y, dict2 in pairs(dict1) do
+			for direction, _ in pairs(dict2) do
+				local param = {}
 
-				var_18_20.position = var_0_0.getCharacterPosition3D(var_18_21, true)
-				var_18_20.distance = Vector2.Distance(Vector2(var_18_20.position.x, var_18_20.position.z), arg_18_2)
+				param.hexPoint = HexPoint(x, y)
+				param.direction = direction
 
-				if not var_18_19 then
-					var_18_19 = var_18_20
+				local resourcePoint = ResourcePoint(param.hexPoint, param.direction)
+
+				param.position = RoomCharacterHelper.getCharacterPosition3D(resourcePoint, true)
+				param.distance = Vector2.Distance(Vector2(param.position.x, param.position.z), nearPosition)
+
+				if not bestParam then
+					bestParam = param
 				else
-					var_18_19 = var_0_0._compareRecommendParams(var_18_19, var_18_20)
+					bestParam = RoomCharacterHelper._compareRecommendParams(bestParam, param)
 				end
 			end
 		end
 	end
 
-	return var_18_19
+	return bestParam
 end
 
-function var_0_0.getGuideRecommendHexPoint(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = var_0_0.getCanConfirmPlaceDict(arg_20_0, arg_20_1)
-	local var_20_1 = HexMath.hexToPosition(arg_20_2, RoomBlockEnum.BlockSize)
-	local var_20_2
+function RoomCharacterHelper.getGuideRecommendHexPoint(heroId, skinId, refHexPoint)
+	local canConfirmPlaceDict = RoomCharacterHelper.getCanConfirmPlaceDict(heroId, skinId)
+	local refPosition = HexMath.hexToPosition(refHexPoint, RoomBlockEnum.BlockSize)
+	local bestParam
 
-	for iter_20_0, iter_20_1 in pairs(var_20_0) do
-		for iter_20_2, iter_20_3 in pairs(iter_20_1) do
-			for iter_20_4, iter_20_5 in pairs(iter_20_3) do
-				if iter_20_0 ~= arg_20_2.x or iter_20_2 ~= arg_20_2.y then
-					local var_20_3 = {
-						hexPoint = HexPoint(iter_20_0, iter_20_2),
-						direction = iter_20_4
-					}
+	for x, dict1 in pairs(canConfirmPlaceDict) do
+		for y, dict2 in pairs(dict1) do
+			for direction, _ in pairs(dict2) do
+				if x ~= refHexPoint.x or y ~= refHexPoint.y then
+					local param = {}
 
-					var_20_3.distance = Vector2.Distance(HexMath.hexToPosition(var_20_3.hexPoint, RoomBlockEnum.BlockSize), var_20_1)
-					var_20_3.position = var_0_0.getCharacterPosition3D(ResourcePoint(var_20_3.hexPoint, var_20_3.direction), true)
-					var_20_3.priority = 100
+					param.hexPoint = HexPoint(x, y)
+					param.direction = direction
+					param.distance = Vector2.Distance(HexMath.hexToPosition(param.hexPoint, RoomBlockEnum.BlockSize), refPosition)
+					param.position = RoomCharacterHelper.getCharacterPosition3D(ResourcePoint(param.hexPoint, param.direction), true)
+					param.priority = 100
 
-					if RoomMapBuildingModel.instance:isHasBuilding(iter_20_0, iter_20_2) then
-						var_20_3.priority = 0
-					elseif RoomBuildingHelper.isInInitBuildingOccupy(var_20_3.hexPoint) then
-						var_20_3.priority = 0
+					if RoomMapBuildingModel.instance:isHasBuilding(x, y) then
+						param.priority = 0
+					elseif RoomBuildingHelper.isInInitBuildingOccupy(param.hexPoint) then
+						param.priority = 0
 					end
 
-					if not var_20_2 then
-						var_20_2 = var_20_3
+					if not bestParam then
+						bestParam = param
 					else
-						var_20_2 = var_0_0._compareGuideRecommendParams(var_20_2, var_20_3)
+						bestParam = RoomCharacterHelper._compareGuideRecommendParams(bestParam, param)
 					end
 				end
 			end
 		end
 	end
 
-	return var_20_2
+	return bestParam
 end
 
-function var_0_0._compareGuideRecommendParams(arg_21_0, arg_21_1)
-	if arg_21_0.priority ~= arg_21_1.priority then
-		return arg_21_0.priority > arg_21_1.priority and arg_21_0 or arg_21_1
+function RoomCharacterHelper._compareGuideRecommendParams(paramA, paramB)
+	if paramA.priority ~= paramB.priority then
+		return paramA.priority > paramB.priority and paramA or paramB
 	end
 
-	return arg_21_0.distance > arg_21_1.distance and arg_21_1 or arg_21_0
+	return paramA.distance > paramB.distance and paramB or paramA
 end
 
-function var_0_0._compareRecommendParams(arg_22_0, arg_22_1)
-	return arg_22_0.distance > arg_22_1.distance and arg_22_1 or arg_22_0
+function RoomCharacterHelper._compareRecommendParams(paramA, paramB)
+	return paramA.distance > paramB.distance and paramB or paramA
 end
 
-function var_0_0.getNeedRemoveCount()
-	local var_23_0 = RoomCharacterModel.instance:getMaxCharacterCount()
-	local var_23_1 = RoomCharacterModel.instance:getConfirmCharacterCount()
+function RoomCharacterHelper.getNeedRemoveCount()
+	local maxCount = RoomCharacterModel.instance:getMaxCharacterCount()
+	local currentCount = RoomCharacterModel.instance:getConfirmCharacterCount()
 
-	if var_23_0 < var_23_1 then
-		return var_23_1 - var_23_0
+	if maxCount < currentCount then
+		return currentCount - maxCount
 	end
 
 	return 0
 end
 
-function var_0_0.offsetForwardNearPosition(arg_24_0, arg_24_1)
-	local var_24_0 = GameSceneMgr.instance:getCurScene()
-	local var_24_1 = var_24_0.charactermgr:getCharacterEntity(arg_24_1.id, SceneTag.RoomCharacter).characterspine:getLookDir()
-	local var_24_2 = var_24_0.camera.camera.transform
-	local var_24_3 = Vector2.Normalize(Vector2(var_24_2.right.x, var_24_2.right.z))
+function RoomCharacterHelper.offsetForwardNearPosition(position, roomCharacterMO)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local characterEntity = scene.charactermgr:getCharacterEntity(roomCharacterMO.id, SceneTag.RoomCharacter)
+	local lookDir = characterEntity.characterspine:getLookDir()
+	local cameraTransform = scene.camera.camera.transform
+	local direction = Vector2.Normalize(Vector2(cameraTransform.right.x, cameraTransform.right.z))
 
-	if var_24_1 == SpineLookDir.Left then
-		var_24_3 = -var_24_3
+	if lookDir == SpineLookDir.Left then
+		direction = -direction
 	end
 
-	arg_24_0 = arg_24_0 + var_24_3 * RoomBlockEnum.BlockSize * math.sqrt(3) / 2
+	position = position + direction * RoomBlockEnum.BlockSize * math.sqrt(3) / 2
 
-	return arg_24_0
+	return position
 end
 
-function var_0_0.getTag(arg_25_0)
-	local var_25_0 = RoomEnum.AStarLayerTag.Water
-	local var_25_1 = bit.bxor(bit.bnot(0), bit.lshift(1, RoomEnum.AStarLayerTag.NoWalkRoad))
+function RoomCharacterHelper.getTag(canWade)
+	local wadeIndex = RoomEnum.AStarLayerTag.Water
+	local rchTag = bit.bxor(bit.bnot(0), bit.lshift(1, RoomEnum.AStarLayerTag.NoWalkRoad))
 
-	if arg_25_0 then
-		return var_25_1
+	if canWade then
+		return rchTag
 	else
-		return bit.bxor(var_25_1, bit.lshift(1, var_25_0))
+		return bit.bxor(rchTag, bit.lshift(1, wadeIndex))
 	end
 end
 
-function var_0_0.getRandomPosition()
-	local var_26_0 = RoomMapBlockModel.instance:getFullBlockMOList()
+function RoomCharacterHelper.getRandomPosition()
+	local mapBlockMOList = RoomMapBlockModel.instance:getFullBlockMOList()
 
-	if var_26_0 and #var_26_0 > 0 then
-		local var_26_1 = var_26_0[math.random(1, #var_26_0)]
-		local var_26_2 = ResourcePoint(var_26_1.hexPoint, math.random(0, 6))
+	if mapBlockMOList and #mapBlockMOList > 0 then
+		local randomBlockMO = mapBlockMOList[math.random(1, #mapBlockMOList)]
+		local resourcePoint = ResourcePoint(randomBlockMO.hexPoint, math.random(0, 6))
 
-		return var_0_0.getCharacterPosition3D(var_26_2, false)
+		return RoomCharacterHelper.getCharacterPosition3D(resourcePoint, false)
 	end
 end
 
-function var_0_0.checkCharacterAnimalInteraction(arg_27_0)
-	local var_27_0
-	local var_27_1 = lua_room_character_interaction.configList
+function RoomCharacterHelper.checkCharacterAnimalInteraction(heroId)
+	local config
+	local configList = lua_room_character_interaction.configList
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_1) do
-		if iter_27_1.heroId == arg_27_0 and iter_27_1.behaviour == RoomCharacterEnum.InteractionType.Animal then
-			var_27_0 = iter_27_1
+	for i, one in ipairs(configList) do
+		if one.heroId == heroId and one.behaviour == RoomCharacterEnum.InteractionType.Animal then
+			config = one
 
 			break
 		end
 	end
 
-	if not var_27_0 then
+	if not config then
 		return false
 	end
 
-	return var_0_0.checkInteractionValid(var_27_0)
+	return RoomCharacterHelper.checkInteractionValid(config)
 end
 
-function var_0_0.checkInteractionValid(arg_28_0)
-	if not arg_28_0 then
+function RoomCharacterHelper.checkInteractionValid(config)
+	if not config then
 		return false
 	end
 
-	local var_28_0 = RoomCharacterModel.instance:getCharacterMOById(arg_28_0.heroId)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.heroId)
 
-	if not var_28_0 or var_28_0.characterState ~= RoomCharacterEnum.CharacterState.Map and not var_28_0:getCurrentInteractionId() then
+	if not roomCharacterMO or roomCharacterMO.characterState ~= RoomCharacterEnum.CharacterState.Map and not roomCharacterMO:getCurrentInteractionId() then
 		return false
 	end
 
-	if arg_28_0.relateHeroId ~= 0 then
-		local var_28_1 = RoomCharacterModel.instance:getCharacterMOById(arg_28_0.relateHeroId)
+	if config.relateHeroId ~= 0 then
+		local relateRoomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(config.relateHeroId)
 
-		if not var_28_1 or var_28_1.characterState ~= RoomCharacterEnum.CharacterState.Map and not var_28_1:getCurrentInteractionId() then
+		if not relateRoomCharacterMO or relateRoomCharacterMO.characterState ~= RoomCharacterEnum.CharacterState.Map and not relateRoomCharacterMO:getCurrentInteractionId() then
 			return false
 		end
 	end
 
-	if arg_28_0.buildingId ~= 0 then
-		local var_28_2 = false
-		local var_28_3 = RoomMapBuildingModel.instance:getBuildingMOList()
+	if config.buildingId ~= 0 then
+		local hasBuilding = false
+		local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-		for iter_28_0, iter_28_1 in ipairs(var_28_3) do
-			if iter_28_1.buildingId == arg_28_0.buildingId and iter_28_1.buildingState == RoomBuildingEnum.BuildingState.Map and not iter_28_1:getCurrentInteractionId() then
-				var_28_2 = true
+		for i, buildingMO in ipairs(buildingMOList) do
+			if buildingMO.buildingId == config.buildingId and buildingMO.buildingState == RoomBuildingEnum.BuildingState.Map and not buildingMO:getCurrentInteractionId() then
+				hasBuilding = true
 
 				break
 			end
 		end
 
-		if not var_28_2 then
+		if not hasBuilding then
 			return false
 		end
 	end
 
-	if math.random() >= arg_28_0.rate / 1000 then
+	if math.random() >= config.rate / 1000 then
 		return false
 	end
 
-	if arg_28_0.faithDialog and arg_28_0.behaviour == RoomCharacterEnum.InteractionType.Dialog and arg_28_0.faithDialog > 0 then
-		local var_28_4 = HeroModel.instance:getByHeroId(arg_28_0.heroId)
+	if config.faithDialog and config.behaviour == RoomCharacterEnum.InteractionType.Dialog and config.faithDialog > 0 then
+		local heroMO = HeroModel.instance:getByHeroId(config.heroId)
 
-		if var_28_4 and HeroConfig.instance:getFaithPercent(var_28_4.faith)[1] * 1000 < arg_28_0.faithDialog then
-			return false
+		if heroMO then
+			local faithPer = HeroConfig.instance:getFaithPercent(heroMO.faith)
+			local faith = faithPer[1] * 1000
+
+			if faith < config.faithDialog then
+				return false
+			end
 		end
 	end
 
 	return true
 end
 
-function var_0_0.isInDialogInteraction()
-	local var_29_0 = RoomCharacterController.instance:getPlayingInteractionParam()
+function RoomCharacterHelper.isInDialogInteraction()
+	local playingInteractionParam = RoomCharacterController.instance:getPlayingInteractionParam()
 
-	return var_29_0 and var_29_0.behaviour == RoomCharacterEnum.InteractionType.Dialog
+	return playingInteractionParam and playingInteractionParam.behaviour == RoomCharacterEnum.InteractionType.Dialog
 end
 
-function var_0_0.interactionIsDialogWithSelect(arg_30_0)
-	local var_30_0 = RoomConfig.instance:getCharacterInteractionConfig(arg_30_0)
+function RoomCharacterHelper.interactionIsDialogWithSelect(interactionId)
+	local interactionConfig = RoomConfig.instance:getCharacterInteractionConfig(interactionId)
 
-	if var_30_0.behaviour ~= RoomCharacterEnum.InteractionType.Dialog then
+	if interactionConfig.behaviour ~= RoomCharacterEnum.InteractionType.Dialog then
 		return false
 	end
 
-	local var_30_1 = var_30_0.dialogId
-	local var_30_2 = 0
+	local dialogId = interactionConfig.dialogId
+	local stepId = 0
 
 	while true do
-		var_30_2 = var_30_2 + 1
+		stepId = stepId + 1
 
-		local var_30_3 = RoomConfig.instance:getCharacterDialogConfig(var_30_1, var_30_2)
+		local dialogConfig = RoomConfig.instance:getCharacterDialogConfig(dialogId, stepId)
 
-		if not var_30_3 then
+		if not dialogConfig then
 			break
 		end
 
-		if not string.nilorempty(var_30_3.selectIds) then
+		if not string.nilorempty(dialogConfig.selectIds) then
 			return true
 		end
 	end
@@ -606,16 +621,19 @@ function var_0_0.interactionIsDialogWithSelect(arg_30_0)
 	return false
 end
 
-function var_0_0.isCharacterBlock(arg_31_0, arg_31_1)
-	if not arg_31_1 then
+function RoomCharacterHelper.isCharacterBlock(blockPosition, positionList)
+	if not positionList then
 		return false
 	end
 
-	local var_31_0 = CameraMgr.instance:getMainCameraGO().transform.position
-	local var_31_1 = Vector3.Distance(arg_31_0, var_31_0)
+	local mainCamera = CameraMgr.instance:getMainCameraGO()
+	local cameraPosition = mainCamera.transform.position
+	local blockDistance = Vector3.Distance(blockPosition, cameraPosition)
 
-	for iter_31_0, iter_31_1 in ipairs(arg_31_1) do
-		if var_31_1 < Vector3.Distance(iter_31_1, var_31_0) then
+	for i, position in ipairs(positionList) do
+		local distance = Vector3.Distance(position, cameraPosition)
+
+		if blockDistance < distance then
 			return true
 		end
 	end
@@ -623,75 +641,75 @@ function var_0_0.isCharacterBlock(arg_31_0, arg_31_1)
 	return false
 end
 
-function var_0_0.getAllBlockMeshRendererList()
-	local var_32_0 = GameSceneMgr.instance:getCurScene()
-	local var_32_1 = {}
+function RoomCharacterHelper.getAllBlockMeshRendererList()
+	local scene = GameSceneMgr.instance:getCurScene()
+	local entityList = {}
 
-	LuaUtil.insertDict(var_32_1, var_32_0.mapmgr:getTagUnitDict(SceneTag.RoomMapBlock))
-	LuaUtil.insertDict(var_32_1, var_32_0.mapmgr:getTagUnitDict(SceneTag.RoomEmptyBlock))
-	LuaUtil.insertDict(var_32_1, var_32_0.buildingmgr:getTagUnitDict(SceneTag.RoomBuilding))
-	LuaUtil.insertDict(var_32_1, var_32_0.buildingmgr:getTagUnitDict(SceneTag.RoomInitBuilding))
-	LuaUtil.insertDict(var_32_1, var_32_0.buildingmgr:getTagUnitDict(SceneTag.RoomPartBuilding))
+	LuaUtil.insertDict(entityList, scene.mapmgr:getTagUnitDict(SceneTag.RoomMapBlock))
+	LuaUtil.insertDict(entityList, scene.mapmgr:getTagUnitDict(SceneTag.RoomEmptyBlock))
+	LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomBuilding))
+	LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomInitBuilding))
+	LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomPartBuilding))
 
-	local var_32_2 = {}
+	local meshRendererListTable = {}
 
-	for iter_32_0, iter_32_1 in ipairs(var_32_1) do
-		tabletool.addValues(var_32_2, iter_32_1:getCharacterMeshRendererList())
+	for i, entity in ipairs(entityList) do
+		tabletool.addValues(meshRendererListTable, entity:getCharacterMeshRendererList())
 	end
 
-	return var_32_2
+	return meshRendererListTable
 end
 
-function var_0_0.getAllBlockCharacterGOList()
-	local var_33_0 = GameSceneMgr.instance:getCurScene()
-	local var_33_1 = {}
-	local var_33_2 = var_33_0.charactermgr:getRoomCharacterEntityDict()
+function RoomCharacterHelper.getAllBlockCharacterGOList()
+	local scene = GameSceneMgr.instance:getCurScene()
+	local goList = {}
+	local characterEntityDict = scene.charactermgr:getRoomCharacterEntityDict()
 
-	for iter_33_0, iter_33_1 in pairs(var_33_2) do
-		local var_33_3 = iter_33_1.characterspine:getCharacterGO()
+	for id, entity in pairs(characterEntityDict) do
+		local go = entity.characterspine:getCharacterGO()
 
-		if var_33_3 then
-			table.insert(var_33_1, var_33_3)
+		if go then
+			table.insert(goList, go)
 		end
 	end
 
-	return var_33_1
+	return goList
 end
 
-local var_0_1 = {
+local _BoundsMinSize = {
 	z = 0,
 	x = 0,
 	y = 0
 }
-local var_0_2 = {
+local _BoundsMaxSize = {
 	z = 0,
 	x = 0,
 	y = 0
 }
 
-function var_0_0.isBlockCharacter(arg_34_0, arg_34_1, arg_34_2)
-	if arg_34_0 and #arg_34_0 > 0 then
-		local var_34_0 = arg_34_2.bounds
-		local var_34_1 = arg_34_2.extents
-		local var_34_2 = arg_34_2.center
+function RoomCharacterHelper.isBlockCharacter(rayList, lengthList, meshBounds)
+	if rayList and #rayList > 0 then
+		local bounds = meshBounds.bounds
+		local extents = meshBounds.extents
+		local center = meshBounds.center
 
-		if var_34_2.y + var_34_1.y < 0.2 then
+		if center.y + extents.y < 0.2 then
 			return false
 		end
 
-		local var_34_3 = var_0_1
-		local var_34_4 = var_0_2
-		local var_34_5, var_34_6, var_34_7 = RoomBendingHelper.worldToBendingXYZ(var_34_2, true)
+		local boundsMin = _BoundsMinSize
+		local boundsMax = _BoundsMaxSize
+		local centerX, centerY, centerZ = RoomBendingHelper.worldToBendingXYZ(center, true)
 
-		var_34_3.x = var_34_5 - var_34_1.x
-		var_34_3.y = var_34_6 - var_34_1.y - 0.2
-		var_34_3.z = var_34_7 - var_34_1.z
-		var_34_4.x = var_34_5 + var_34_1.x
-		var_34_4.y = var_34_6 + var_34_1.y + 0.2
-		var_34_4.z = var_34_7 + var_34_1.z
+		boundsMin.x = centerX - extents.x
+		boundsMin.y = centerY - extents.y - 0.2
+		boundsMin.z = centerZ - extents.z
+		boundsMax.x = centerX + extents.x
+		boundsMax.y = centerY + extents.y + 0.2
+		boundsMax.z = centerZ + extents.z
 
-		for iter_34_0 = 1, #arg_34_0 do
-			if var_0_0.testAABB(arg_34_0[iter_34_0], arg_34_1[iter_34_0], var_34_3, var_34_4) then
+		for i = 1, #rayList do
+			if RoomCharacterHelper.testAABB(rayList[i], lengthList[i], boundsMin, boundsMax) then
 				return true
 			end
 		end
@@ -700,42 +718,42 @@ function var_0_0.isBlockCharacter(arg_34_0, arg_34_1, arg_34_2)
 	return false
 end
 
-local var_0_3 = {
+local _testAABBKeys = {
 	"x",
 	"y",
 	"z"
 }
 
-function var_0_0.testAABB(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	local var_35_0 = 0
-	local var_35_1 = arg_35_1
-	local var_35_2 = var_0_3
-	local var_35_3 = arg_35_0.direction
-	local var_35_4 = arg_35_0.origin
+function RoomCharacterHelper.testAABB(ray, length, boundsMin, boundsMax)
+	local tmin = 0
+	local tmax = length
+	local keys = _testAABBKeys
+	local rayDirection = ray.direction
+	local rayOirigin = ray.origin
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_2) do
-		if math.abs(var_35_3[iter_35_1]) < 0.01 then
-			if var_35_4[iter_35_1] < arg_35_2[iter_35_1] or var_35_4[iter_35_1] > arg_35_3[iter_35_1] then
+	for _, key in ipairs(keys) do
+		if math.abs(rayDirection[key]) < 0.01 then
+			if rayOirigin[key] < boundsMin[key] or rayOirigin[key] > boundsMax[key] then
 				return false
 			end
 		else
-			local var_35_5 = 1 / var_35_3[iter_35_1]
-			local var_35_6 = (arg_35_2[iter_35_1] - var_35_4[iter_35_1]) * var_35_5
-			local var_35_7 = (arg_35_3[iter_35_1] - var_35_4[iter_35_1]) * var_35_5
+			local invDir = 1 / rayDirection[key]
+			local t1 = (boundsMin[key] - rayOirigin[key]) * invDir
+			local t2 = (boundsMax[key] - rayOirigin[key]) * invDir
 
-			if var_35_7 < var_35_6 then
-				var_35_6, var_35_7 = var_35_7, var_35_6
+			if t2 < t1 then
+				t1, t2 = t2, t1
 			end
 
-			if var_35_0 < var_35_6 then
-				var_35_0 = var_35_6
+			if tmin < t1 then
+				tmin = t1
 			end
 
-			if var_35_7 < var_35_1 then
-				var_35_1 = var_35_7
+			if t2 < tmax then
+				tmax = t2
 			end
 
-			if var_35_1 < var_35_0 then
+			if tmax < tmin then
 				return false
 			end
 		end
@@ -744,99 +762,100 @@ function var_0_0.testAABB(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
 	return true
 end
 
-function var_0_0.getBridgePositions(arg_36_0)
-	local var_36_0 = {}
-	local var_36_1 = GameSceneMgr.instance:getCurScene()
-	local var_36_2 = {}
-	local var_36_3 = {}
+function RoomCharacterHelper.getBridgePositions(nearPosition)
+	local bridgePositions = {}
+	local scene = GameSceneMgr.instance:getCurScene()
+	local bridgeGameObjects = {}
+	local entityList = {}
 
-	LuaUtil.insertDict(var_36_3, var_36_1.mapmgr:getTagUnitDict(SceneTag.RoomMapBlock))
+	LuaUtil.insertDict(entityList, scene.mapmgr:getTagUnitDict(SceneTag.RoomMapBlock))
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_3) do
-		tabletool.addValues(var_36_2, iter_36_1:getGameObjectListByName("characterPathPoint"))
+	for i, entity in ipairs(entityList) do
+		tabletool.addValues(bridgeGameObjects, entity:getGameObjectListByName("characterPathPoint"))
 	end
 
-	for iter_36_2, iter_36_3 in ipairs(var_36_2) do
-		local var_36_4 = iter_36_3.transform.position
+	for i, bridgeGameObject in ipairs(bridgeGameObjects) do
+		local bridgePosition = bridgeGameObject.transform.position
 
-		if var_0_0.checkMoveDistance(arg_36_0, var_36_4) then
-			table.insert(var_36_0, var_36_4)
+		if RoomCharacterHelper.checkMoveDistance(nearPosition, bridgePosition) then
+			table.insert(bridgePositions, bridgePosition)
 		end
 	end
 
-	return var_36_0
+	return bridgePositions
 end
 
-function var_0_0.getCharacterFaithFill(arg_37_0)
-	if arg_37_0.currentFaith <= 0 then
+function RoomCharacterHelper.getCharacterFaithFill(roomCharacterMO)
+	if roomCharacterMO.currentFaith <= 0 then
 		return 0
 	end
 
-	local var_37_0 = CommonConfig.instance:getConstNum(ConstEnum.RoomCharacterFaithTotalMinute)
+	local maxMinute = CommonConfig.instance:getConstNum(ConstEnum.RoomCharacterFaithTotalMinute)
 
-	return arg_37_0.currentMinute / var_37_0
+	return roomCharacterMO.currentMinute / maxMinute
 end
 
-function var_0_0.getCharacterInteractionId(arg_38_0)
-	for iter_38_0, iter_38_1 in ipairs(lua_room_character_interaction.configList) do
-		if iter_38_1.heroId == arg_38_0 and iter_38_1.behaviour == RoomCharacterEnum.InteractionType.Dialog and iter_38_1.relateHeroId == 0 then
-			return iter_38_1.id
+function RoomCharacterHelper.getCharacterInteractionId(heroId)
+	for i, config in ipairs(lua_room_character_interaction.configList) do
+		if config.heroId == heroId and config.behaviour == RoomCharacterEnum.InteractionType.Dialog and config.relateHeroId == 0 then
+			return config.id
 		end
 	end
 end
 
-function var_0_0.getIdleAnimStateName(arg_39_0)
-	return RoomCharacterEnum.CharacterIdleAnimReplaceName[arg_39_0] or RoomCharacterEnum.CharacterAnimStateName.Idle
+function RoomCharacterHelper.getIdleAnimStateName(heroId)
+	return RoomCharacterEnum.CharacterIdleAnimReplaceName[heroId] or RoomCharacterEnum.CharacterAnimStateName.Idle
 end
 
-function var_0_0.getAnimStateName(arg_40_0, arg_40_1)
-	if arg_40_0 == RoomCharacterEnum.CharacterMoveState.Idle then
-		return var_0_0.getIdleAnimStateName(arg_40_1)
+function RoomCharacterHelper.getAnimStateName(moveState, heroId)
+	if moveState == RoomCharacterEnum.CharacterMoveState.Idle then
+		return RoomCharacterHelper.getIdleAnimStateName(heroId)
 	end
 
-	return RoomCharacterEnum.CharacterAnimState[arg_40_0]
+	return RoomCharacterEnum.CharacterAnimState[moveState]
 end
 
-function var_0_0.getNextAnimStateName(arg_41_0, arg_41_1)
-	local var_41_0
-	local var_41_1 = RoomCharacterEnum.CharacterNextAnimNameDict[arg_41_0]
+function RoomCharacterHelper.getNextAnimStateName(moveState, animStateName)
+	local result
+	local animList = RoomCharacterEnum.CharacterNextAnimNameDict[moveState]
 
-	if var_41_1 then
-		var_41_0 = var_41_1[arg_41_1]
+	if animList then
+		result = animList[animStateName]
 
-		if not var_41_0 and RoomCharacterEnum.LoopAnimState[arg_41_1] then
-			var_41_0 = arg_41_1
+		if not result and RoomCharacterEnum.LoopAnimState[animStateName] then
+			result = animStateName
 		end
 	end
 
-	return var_41_0
+	return result
 end
 
-function var_0_0.getSpinePointPath(arg_42_0)
-	if string.nilorempty(arg_42_0) or arg_42_0 == "mountroot" then
+function RoomCharacterHelper.getSpinePointPath(pointName)
+	if string.nilorempty(pointName) or pointName == "mountroot" then
 		return "mountroot"
 	end
 
-	return "mountroot/" .. arg_42_0
+	return "mountroot/" .. pointName
 end
 
-function var_0_0.hasWaterNodeNear(arg_43_0, arg_43_1)
-	local var_43_0 = arg_43_0.x
-	local var_43_1 = arg_43_0.z
-	local var_43_2 = (arg_43_1 + RoomBlockEnum.BlockSize)^2
-	local var_43_3 = RoomCharacterModel.instance:getEmptyBlockPositions()
+function RoomCharacterHelper.hasWaterNodeNear(position, nearDistance)
+	local posX = position.x
+	local posZ = position.z
+	local tempDistance = (nearDistance + RoomBlockEnum.BlockSize)^2
+	local emptyBlockPositions = RoomCharacterModel.instance:getEmptyBlockPositions()
 
-	for iter_43_0, iter_43_1 in ipairs(var_43_3) do
-		if var_43_2 >= (iter_43_1.x - var_43_0)^2 + (iter_43_1.y - var_43_1)^2 then
+	for i, emptyPosition in ipairs(emptyBlockPositions) do
+		if tempDistance >= (emptyPosition.x - posX)^2 + (emptyPosition.y - posZ)^2 then
 			return true
 		end
 	end
 
-	local var_43_4 = arg_43_1^2
-	local var_43_5 = RoomCharacterModel.instance:getWaterNodePositions()
+	tempDistance = nearDistance^2
 
-	for iter_43_2, iter_43_3 in ipairs(var_43_5) do
-		if var_43_4 >= (iter_43_3.x - var_43_0)^2 + (iter_43_3.z - var_43_1)^2 then
+	local waterNodePositions = RoomCharacterModel.instance:getWaterNodePositions()
+
+	for i, waterNodePosition in ipairs(waterNodePositions) do
+		if tempDistance >= (waterNodePosition.x - posX)^2 + (waterNodePosition.z - posZ)^2 then
 			return true
 		end
 	end
@@ -844,4 +863,4 @@ function var_0_0.hasWaterNodeNear(arg_43_0, arg_43_1)
 	return false
 end
 
-return var_0_0
+return RoomCharacterHelper

@@ -1,45 +1,47 @@
-﻿module("modules.logic.fight.view.FightCardIntroduceView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCardIntroduceView.lua
 
-local var_0_0 = class("FightCardIntroduceView", BaseView)
+module("modules.logic.fight.view.FightCardIntroduceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local FightCardIntroduceView = class("FightCardIntroduceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightCardIntroduceView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function FightCardIntroduceView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function FightCardIntroduceView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function FightCardIntroduceView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function FightCardIntroduceView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function FightCardIntroduceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function FightCardIntroduceView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function FightCardIntroduceView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function FightCardIntroduceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightCardIntroduceView

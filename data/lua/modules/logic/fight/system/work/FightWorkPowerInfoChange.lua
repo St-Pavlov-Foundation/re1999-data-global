@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkPowerInfoChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPowerInfoChange.lua
 
-local var_0_0 = class("FightWorkPowerInfoChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkPowerInfoChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.targetId
-	local var_1_1 = arg_1_0.actEffectData.powerInfo.powerId
+local FightWorkPowerInfoChange = class("FightWorkPowerInfoChange", FightEffectBase)
 
-	arg_1_0:com_sendFightEvent(FightEvent.PowerInfoChange, var_1_0, var_1_1)
-	arg_1_0:onDone(true)
+function FightWorkPowerInfoChange:onStart()
+	local entityId = self.actEffectData.targetId
+	local powerId = self.actEffectData.powerInfo.powerId
+
+	self:com_sendFightEvent(FightEvent.PowerInfoChange, entityId, powerId)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkPowerInfoChange

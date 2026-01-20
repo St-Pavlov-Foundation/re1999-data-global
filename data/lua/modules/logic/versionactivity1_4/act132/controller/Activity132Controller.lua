@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity1_4.act132.controller.Activity132Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/controller/Activity132Controller.lua
 
-local var_0_0 = class("Activity132Controller", BaseController)
+module("modules.logic.versionactivity1_4.act132.controller.Activity132Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity132Controller = class("Activity132Controller", BaseController)
+
+function Activity132Controller:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity132Controller:reInit()
 	return
 end
 
-function var_0_0.initAct(arg_3_0, arg_3_1)
-	Activity132Rpc.instance:sendGet132InfosRequest(arg_3_1)
+function Activity132Controller:initAct(actId)
+	Activity132Rpc.instance:sendGet132InfosRequest(actId)
 end
 
-function var_0_0.openCollectView(arg_4_0, arg_4_1)
-	Activity132Rpc.instance:sendGet132InfosRequest(arg_4_1, function()
+function Activity132Controller:openCollectView(actId)
+	Activity132Rpc.instance:sendGet132InfosRequest(actId, function()
 		ViewMgr.instance:openView(ViewName.Activity132CollectView, {
-			actId = arg_4_1
+			actId = actId
 		})
 	end)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity132Controller.instance = Activity132Controller.New()
 
-return var_0_0
+return Activity132Controller

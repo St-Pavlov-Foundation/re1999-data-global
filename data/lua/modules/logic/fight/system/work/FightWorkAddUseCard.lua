@@ -1,40 +1,42 @@
-﻿module("modules.logic.fight.system.work.FightWorkAddUseCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAddUseCard.lua
 
-local var_0_0 = class("FightWorkAddUseCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkAddUseCard", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
-		arg_1_0:onDone(true)
+local FightWorkAddUseCard = class("FightWorkAddUseCard", FightEffectBase)
+
+function FightWorkAddUseCard:onStart()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0.actEffectData.effectNum
-	local var_1_1 = FightPlayCardModel.instance:getUsedCards()
+	local index = self.actEffectData.effectNum
+	local curUsedCards = FightPlayCardModel.instance:getUsedCards()
 
-	if var_1_0 - 1 > #var_1_1 then
-		var_1_0 = #var_1_1 + 1
+	if index - 1 > #curUsedCards then
+		index = #curUsedCards + 1
 	end
 
 	FightViewPartVisible.set(false, false, false, false, true)
-	FightPlayCardModel.instance:addUseCard(var_1_0, arg_1_0.actEffectData.cardInfo, arg_1_0.actEffectData.effectNum1)
-	FightController.instance:dispatchEvent(FightEvent.AddUseCard, var_1_0)
+	FightPlayCardModel.instance:addUseCard(index, self.actEffectData.cardInfo, self.actEffectData.effectNum1)
+	FightController.instance:dispatchEvent(FightEvent.AddUseCard, index)
 
-	local var_1_2 = arg_1_0:getWaitTime()
+	local waitTime = self:getWaitTime()
 
-	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_2 / FightModel.instance:getUISpeed())
+	self:com_registTimer(self._delayAfterPerformance, waitTime / FightModel.instance:getUISpeed())
 end
 
-function var_0_0.getWaitTime(arg_2_0)
-	if FightHeroALFComp.ALFSkillDict[arg_2_0.actEffectData.effectNum1] then
+function FightWorkAddUseCard:getWaitTime()
+	if FightHeroALFComp.ALFSkillDict[self.actEffectData.effectNum1] then
 		return 1.8
 	end
 
 	return 0.5
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkAddUseCard:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkAddUseCard

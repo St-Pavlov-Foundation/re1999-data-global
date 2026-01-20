@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114ReqBaseWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114ReqBaseWork.lua
 
-local var_0_0 = class("Activity114ReqBaseWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114ReqBaseWork", package.seeall)
 
-function var_0_0.onReply(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:onDone(arg_1_2 == 0)
+local Activity114ReqBaseWork = class("Activity114ReqBaseWork", Activity114BaseWork)
+
+function Activity114ReqBaseWork:onReply(cmd, resultCode, msg)
+	self:onDone(resultCode == 0)
 end
 
-return var_0_0
+return Activity114ReqBaseWork

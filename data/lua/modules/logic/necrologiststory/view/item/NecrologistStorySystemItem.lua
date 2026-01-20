@@ -1,9 +1,11 @@
-﻿module("modules.logic.necrologiststory.view.item.NecrologistStorySystemItem", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/item/NecrologistStorySystemItem.lua
 
-local var_0_0 = class("NecrologistStorySystemItem", NecrologistStoryAsideItem)
+module("modules.logic.necrologiststory.view.item.NecrologistStorySystemItem", package.seeall)
 
-function var_0_0.getResPath()
-	return "ui/viewres/dungeon/rolestory/necrologiststorysystemitem.prefab"
+local NecrologistStorySystemItem = class("NecrologistStorySystemItem", NecrologistStoryTextItem)
+
+function NecrologistStorySystemItem.getResPath()
+	return "ui/viewres/dungeon/rolestory/item/necrologiststorysystemitem.prefab"
 end
 
-return var_0_0
+return NecrologistStorySystemItem

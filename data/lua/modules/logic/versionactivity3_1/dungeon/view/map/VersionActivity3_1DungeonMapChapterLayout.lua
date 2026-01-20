@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity3_1.dungeon.view.map.VersionActivity3_1DungeonMapChapterLayout", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/dungeon/view/map/VersionActivity3_1DungeonMapChapterLayout.lua
 
-local var_0_0 = class("VersionActivity3_1DungeonMapChapterLayout", VersionActivityFixedDungeonMapChapterLayout)
-local var_0_1 = "default"
-local var_0_2 = 600
-local var_0_3 = 100
-local var_0_4 = 0.26
+module("modules.logic.versionactivity3_1.dungeon.view.map.VersionActivity3_1DungeonMapChapterLayout", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._focusIndex = 0
-	arg_1_0._episodeItemDict = arg_1_0:getUserDataTb_()
-	arg_1_0._episodeContainerItemList = arg_1_0:getUserDataTb_()
-	arg_1_0.episodeItemPath = arg_1_0.viewContainer:getSetting().otherRes[1]
+local VersionActivity3_1DungeonMapChapterLayout = class("VersionActivity3_1DungeonMapChapterLayout", VersionActivityFixedDungeonMapChapterLayout)
+local CHAPTER_KEY = "default"
+local RIGHT_OFFSET_X = 600
+local CONST_DUNGEON_NORMAL_DELTA_X = 100
+local TWEEN_TIME = 0.26
 
-	local var_1_0 = Vector2(0, 1)
+function VersionActivity3_1DungeonMapChapterLayout:_editableInitView()
+	self._focusIndex = 0
+	self._episodeItemDict = self:getUserDataTb_()
+	self._episodeContainerItemList = self:getUserDataTb_()
+	self.episodeItemPath = self.viewContainer:getSetting().otherRes[1]
 
-	arg_1_0.rectTransform.pivot = var_1_0
-	arg_1_0.rectTransform.anchorMin = var_1_0
-	arg_1_0.rectTransform.anchorMax = var_1_0
-	arg_1_0.defaultY = arg_1_0.activityDungeonMo:getLayoutOffsetY()
+	local vec = Vector2(0, 1)
 
-	recthelper.setAnchorY(arg_1_0.rectTransform, arg_1_0.defaultY)
+	self.rectTransform.pivot = vec
+	self.rectTransform.anchorMin = vec
+	self.rectTransform.anchorMax = vec
+	self.defaultY = self.activityDungeonMo:getLayoutOffsetY()
 
-	arg_1_0._rawWidth = recthelper.getWidth(arg_1_0.rectTransform)
-	arg_1_0._rawHeight = 500
+	recthelper.setAnchorY(self.rectTransform, self.defaultY)
 
-	recthelper.setSize(arg_1_0.contentTransform, arg_1_0._rawWidth, arg_1_0._rawHeight)
-	recthelper.setAnchorY(arg_1_0.contentTransform, 300)
+	self._rawWidth = recthelper.getWidth(self.rectTransform)
+	self._rawHeight = 500
 
-	local var_1_1 = ViewMgr.instance:getUIRoot().transform
-	local var_1_2 = recthelper.getWidth(var_1_1)
+	recthelper.setSize(self.contentTransform, self._rawWidth, self._rawHeight)
+	recthelper.setAnchorY(self.contentTransform, 300)
 
-	arg_1_0._offsetX = (var_1_2 - var_0_2) / 2 + var_0_2
-	arg_1_0._constDungeonNormalPosX = var_1_2 - arg_1_0._offsetX
-	arg_1_0._constDungeonNormalPosY = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalPosY)
-	arg_1_0._constDungeonNormalDeltaX = var_0_3
-	arg_1_0._bigVersion, arg_1_0._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+	local uiRootTran = ViewMgr.instance:getUIRoot().transform
+	local width = recthelper.getWidth(uiRootTran)
 
-	if ViewMgr.instance:isOpening(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(arg_1_0._bigVersion, arg_1_0._smallVersion)) then
-		arg_1_0._timelineAnimation:Play("timeline_mask")
+	self._offsetX = (width - RIGHT_OFFSET_X) / 2 + RIGHT_OFFSET_X
+	self._constDungeonNormalPosX = width - self._offsetX
+	self._constDungeonNormalPosY = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalPosY)
+	self._constDungeonNormalDeltaX = CONST_DUNGEON_NORMAL_DELTA_X
+	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
+	if ViewMgr.instance:isOpening(VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(self._bigVersion, self._smallVersion)) then
+		self._timelineAnimation:Play("timeline_mask")
 	end
 end
 
-return var_0_0
+return VersionActivity3_1DungeonMapChapterLayout

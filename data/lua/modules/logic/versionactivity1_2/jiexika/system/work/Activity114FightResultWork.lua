@@ -1,26 +1,28 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114FightResultWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114FightResultWork.lua
 
-local var_0_0 = class("Activity114FightResultWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114FightResultWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnFightResult, arg_1_0.onFightResult, arg_1_0)
+local Activity114FightResultWork = class("Activity114FightResultWork", Activity114BaseWork)
+
+function Activity114FightResultWork:onStart()
+	Activity114Controller.instance:registerCallback(Activity114Event.OnFightResult, self.onFightResult, self)
 end
 
-function var_0_0.onFightResult(arg_2_0, arg_2_1)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, arg_2_0.onFightResult, arg_2_0)
+function Activity114FightResultWork:onFightResult(result)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, self.onFightResult, self)
 
-	arg_2_0.context.result = arg_2_1
+	self.context.result = result
 
-	if arg_2_0.context.type == Activity114Enum.EventType.KeyDay then
-		arg_2_0.context.storyId = arg_2_1 == Activity114Enum.Result.Success and arg_2_0.context.eventCo.config.successStoryId or arg_2_0.context.eventCo.config.failureStoryId
+	if self.context.type == Activity114Enum.EventType.KeyDay then
+		self.context.storyId = result == Activity114Enum.Result.Success and self.context.eventCo.config.successStoryId or self.context.eventCo.config.failureStoryId
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, arg_3_0.onFightResult, arg_3_0)
-	var_0_0.super.clearWork(arg_3_0)
+function Activity114FightResultWork:clearWork()
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnFightResult, self.onFightResult, self)
+	Activity114FightResultWork.super.clearWork(self)
 end
 
-return var_0_0
+return Activity114FightResultWork

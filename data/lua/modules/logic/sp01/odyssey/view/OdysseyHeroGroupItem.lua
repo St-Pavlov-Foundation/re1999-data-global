@@ -1,296 +1,300 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyHeroGroupItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyHeroGroupItem.lua
 
-local var_0_0 = class("OdysseyHeroGroupItem", LuaCompBase)
+module("modules.logic.sp01.odyssey.view.OdysseyHeroGroupItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._heroGroupListView = arg_1_1
+local OdysseyHeroGroupItem = class("OdysseyHeroGroupItem", LuaCompBase)
+
+function OdysseyHeroGroupItem:ctor(heroGroupListView)
+	self._heroGroupListView = heroGroupListView
 end
 
-var_0_0.EquipTweenDuration = 0.16
-var_0_0.EquipDragOffset = Vector2(0, 150)
-var_0_0.EquipDragMobileScale = 1.7
-var_0_0.EquipDragOtherScale = 1.4
-var_0_0.OdysseyEquipDragOtherScale = 1.1
-var_0_0.PressColor = GameUtil.parseColor("#C8C8C8")
+OdysseyHeroGroupItem.EquipTweenDuration = 0.16
+OdysseyHeroGroupItem.EquipDragOffset = Vector2(0, 150)
+OdysseyHeroGroupItem.EquipDragMobileScale = 1.7
+OdysseyHeroGroupItem.EquipDragOtherScale = 1.4
+OdysseyHeroGroupItem.OdysseyEquipDragOtherScale = 1.1
+OdysseyHeroGroupItem.PressColor = GameUtil.parseColor("#C8C8C8")
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._noneGO = gohelper.findChild(arg_2_1, "heroitemani/none")
-	arg_2_0._addGO = gohelper.findChild(arg_2_1, "heroitemani/none/add")
-	arg_2_0._lockGO = gohelper.findChild(arg_2_1, "heroitemani/none/lock")
-	arg_2_0._heroGO = gohelper.findChild(arg_2_1, "heroitemani/hero")
-	arg_2_0._tagTr = gohelper.findChildComponent(arg_2_1, "heroitemani/tags", typeof(UnityEngine.Transform))
-	arg_2_0._subGO = gohelper.findChild(arg_2_1, "heroitemani/tags/aidtag")
-	arg_2_0._aidGO = gohelper.findChild(arg_2_1, "heroitemani/tags/storytag")
-	arg_2_0._trialTagGO = gohelper.findChild(arg_2_1, "heroitemani/tags/trialtag")
-	arg_2_0._trialTagTxt = gohelper.findChildTextMesh(arg_2_1, "heroitemani/tags/trialtag/#txt_trial_tag")
-	arg_2_0._clickGO = gohelper.findChild(arg_2_1, "heroitemani/click")
-	arg_2_0._clickThis = gohelper.getClick(arg_2_0._clickGO)
-	arg_2_0._equipGO = gohelper.findChild(arg_2_1, "heroitemani/equip")
-	arg_2_0._clickEquip = gohelper.getClick(arg_2_0._equipGO)
-	arg_2_0._charactericon = gohelper.findChild(arg_2_1, "heroitemani/hero/charactericon")
-	arg_2_0._careericon = gohelper.findChildImage(arg_2_1, "heroitemani/hero/career")
-	arg_2_0._goblackmask = gohelper.findChild(arg_2_1, "heroitemani/hero/blackmask")
-	arg_2_0.level_part = gohelper.findChild(arg_2_1, "heroitemani/hero/vertical/layout")
-	arg_2_0._lvnum = gohelper.findChildText(arg_2_1, "heroitemani/hero/vertical/layout/lv/lvnum")
-	arg_2_0._lvnumen = gohelper.findChildText(arg_2_1, "heroitemani/hero/vertical/layout/lv/lvnum/lv")
-	arg_2_0._goRankList = arg_2_0:getUserDataTb_()
+function OdysseyHeroGroupItem:init(go)
+	self.go = go
+	self._noneGO = gohelper.findChild(go, "heroitemani/none")
+	self._addGO = gohelper.findChild(go, "heroitemani/none/add")
+	self._lockGO = gohelper.findChild(go, "heroitemani/none/lock")
+	self._heroGO = gohelper.findChild(go, "heroitemani/hero")
+	self._tagTr = gohelper.findChildComponent(go, "heroitemani/tags", typeof(UnityEngine.Transform))
+	self._subGO = gohelper.findChild(go, "heroitemani/tags/aidtag")
+	self._aidGO = gohelper.findChild(go, "heroitemani/tags/storytag")
+	self._trialTagGO = gohelper.findChild(go, "heroitemani/tags/trialtag")
+	self._trialTagTxt = gohelper.findChildTextMesh(go, "heroitemani/tags/trialtag/#txt_trial_tag")
+	self._clickGO = gohelper.findChild(go, "heroitemani/click")
+	self._clickThis = gohelper.getClick(self._clickGO)
+	self._equipGO = gohelper.findChild(go, "heroitemani/equip")
+	self._clickEquip = gohelper.getClick(self._equipGO)
+	self._charactericon = gohelper.findChild(go, "heroitemani/hero/charactericon")
+	self._careericon = gohelper.findChildImage(go, "heroitemani/hero/career")
+	self._goblackmask = gohelper.findChild(go, "heroitemani/hero/blackmask")
+	self.level_part = gohelper.findChild(go, "heroitemani/hero/vertical/layout")
+	self._lvnum = gohelper.findChildText(go, "heroitemani/hero/vertical/layout/lv/lvnum")
+	self._lvnumen = gohelper.findChildText(go, "heroitemani/hero/vertical/layout/lv/lvnum/lv")
+	self._goRankList = self:getUserDataTb_()
 
-	for iter_2_0 = 1, 3 do
-		local var_2_0 = gohelper.findChildImage(arg_2_1, "heroitemani/hero/vertical/layout/rankobj/rank" .. iter_2_0)
+	for i = 1, 3 do
+		local rankGO = gohelper.findChildImage(go, "heroitemani/hero/vertical/layout/rankobj/rank" .. i)
 
-		table.insert(arg_2_0._goRankList, var_2_0)
+		table.insert(self._goRankList, rankGO)
 	end
 
-	arg_2_0._goStarList = arg_2_0:getUserDataTb_()
+	self._goStarList = self:getUserDataTb_()
 
-	for iter_2_1 = 1, 6 do
-		local var_2_1 = gohelper.findChild(arg_2_1, "heroitemani/hero/vertical/#go_starList/star" .. iter_2_1)
+	for i = 1, 6 do
+		local starGO = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star" .. i)
 
-		table.insert(arg_2_0._goStarList, var_2_1)
+		table.insert(self._goStarList, starGO)
 	end
 
-	arg_2_0._goStars = gohelper.findChild(arg_2_1, "heroitemani/hero/vertical/#go_starList")
-	arg_2_0._fakeEquipGO = gohelper.findChild(arg_2_1, "heroitemani/hero/vertical/fakeequip")
-	arg_2_0._dragFrameGO = gohelper.findChild(arg_2_1, "heroitemani/selectedeffect")
-	arg_2_0._dragFrameSelectGO = gohelper.findChild(arg_2_1, "heroitemani/selectedeffect/xuanzhong")
-	arg_2_0._dragFrameCompleteGO = gohelper.findChild(arg_2_1, "heroitemani/selectedeffect/wancheng")
+	self._goStars = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList")
+	self._fakeEquipGO = gohelper.findChild(go, "heroitemani/hero/vertical/fakeequip")
+	self._dragFrameGO = gohelper.findChild(go, "heroitemani/selectedeffect")
+	self._dragFrameSelectGO = gohelper.findChild(go, "heroitemani/selectedeffect/xuanzhong")
+	self._dragFrameCompleteGO = gohelper.findChild(go, "heroitemani/selectedeffect/wancheng")
 
-	gohelper.setActive(arg_2_0._dragFrameGO, false)
+	gohelper.setActive(self._dragFrameGO, false)
 
-	arg_2_0._emptyEquipGo = gohelper.findChild(arg_2_1, "heroitemani/emptyequip")
-	arg_2_0._animGO = gohelper.findChild(arg_2_1, "heroitemani")
-	arg_2_0.anim = arg_2_0._animGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._replayReady = gohelper.findChild(arg_2_1, "heroitemani/hero/replayready")
-	arg_2_0._gorecommended = gohelper.findChild(arg_2_1, "heroitemani/hero/#go_recommended")
-	arg_2_0._gocounter = gohelper.findChild(arg_2_1, "heroitemani/hero/#go_counter")
-	arg_2_0._herocardGo = gohelper.findChild(arg_2_1, "heroitemani/roleequip")
-	arg_2_0._leftDrop = gohelper.findChildDropdown(arg_2_1, "heroitemani/roleequip/left")
-	arg_2_0._rightDrop = gohelper.findChildDropdown(arg_2_1, "heroitemani/roleequip/right")
-	arg_2_0._imageAdd = gohelper.findChildImage(arg_2_1, "heroitemani/none/add")
-	arg_2_0._gomojing = gohelper.findChild(arg_2_1, "heroitemani/#go_mojing")
-	arg_2_0._gomojingtxt = gohelper.findChildText(arg_2_1, "heroitemani/#go_mojing/#txt")
-	arg_2_0._commonHeroCard = CommonHeroCard.create(arg_2_0._charactericon, arg_2_0._heroGroupListView.viewName)
-	arg_2_0._goOdysseyEquipParent = gohelper.findChild(arg_2_1, "go_Equip")
+	self._emptyEquipGo = gohelper.findChild(go, "heroitemani/emptyequip")
+	self._animGO = gohelper.findChild(go, "heroitemani")
+	self.anim = self._animGO:GetComponent(typeof(UnityEngine.Animator))
+	self._replayReady = gohelper.findChild(go, "heroitemani/hero/replayready")
+	self._gorecommended = gohelper.findChild(go, "heroitemani/hero/#go_recommended")
+	self._gocounter = gohelper.findChild(go, "heroitemani/hero/#go_counter")
+	self._herocardGo = gohelper.findChild(go, "heroitemani/roleequip")
+	self._leftDrop = gohelper.findChildDropdown(go, "heroitemani/roleequip/left")
+	self._rightDrop = gohelper.findChildDropdown(go, "heroitemani/roleequip/right")
+	self._imageAdd = gohelper.findChildImage(go, "heroitemani/none/add")
+	self._gomojing = gohelper.findChild(go, "heroitemani/#go_mojing")
+	self._gomojingtxt = gohelper.findChildText(go, "heroitemani/#go_mojing/#txt")
+	self._commonHeroCard = CommonHeroCard.create(self._charactericon, self._heroGroupListView.viewName)
+	self._goOdysseyEquipParent = gohelper.findChild(go, "go_Equip")
 end
 
-function var_0_0.initEquipItem(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._odysseyItemList = {}
+function OdysseyHeroGroupItem:initEquipItem(getResFunc, getResObj)
+	self._odysseyItemList = {}
 
-	local var_3_0 = arg_3_0._goOdysseyEquipParent.transform
-	local var_3_1 = gohelper.clone(arg_3_0._goOdysseyEquipParent, arg_3_0._animGO)
-	local var_3_2 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
-	local var_3_3 = tonumber(var_3_2.value)
+	local parent = self._goOdysseyEquipParent.transform
+	local emptyParentGo = gohelper.clone(self._goOdysseyEquipParent, self._animGO)
+	local mainCountConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
+	local childCount = tonumber(mainCountConstCo.value)
 
-	for iter_3_0 = 1, var_3_3 do
-		local var_3_4 = arg_3_1(arg_3_2, var_3_0.gameObject)
-		local var_3_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_4.gameObject, OdysseyHeroGroupEquipItem)
+	for i = 1, childCount do
+		local child = getResFunc(getResObj, parent.gameObject)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(child.gameObject, OdysseyHeroGroupEquipItem)
 
-		var_3_5:setEmptyParent(var_3_1.transform)
-		arg_3_0:_odysseyEquipAddDrag(var_3_5)
-		table.insert(arg_3_0._odysseyItemList, var_3_5)
+		item:setEmptyParent(emptyParentGo.transform)
+		self:_odysseyEquipAddDrag(item)
+		table.insert(self._odysseyItemList, item)
 	end
 
-	arg_3_0._odysseyEmptyEquipParent = var_3_1
-	arg_3_0._odysseyEquipOriginPos = var_3_0.localPosition
-	arg_3_0._odysseyEquipEmptyOriginPos = var_3_1.transform.localPosition
+	self._odysseyEmptyEquipParent = emptyParentGo
+	self._odysseyEquipOriginPos = parent.localPosition
+	self._odysseyEquipEmptyOriginPos = emptyParentGo.transform.localPosition
 end
 
-function var_0_0.setIndex(arg_4_0, arg_4_1)
-	arg_4_0._index = arg_4_1
+function OdysseyHeroGroupItem:setIndex(index)
+	self._index = index
 end
 
-function var_0_0._showMojingTip(arg_5_0)
-	local var_5_0 = false
-	local var_5_1 = HeroGroupModel.instance.episodeId
-	local var_5_2 = DungeonConfig.instance:getEpisodeCO(var_5_1)
+function OdysseyHeroGroupItem:_showMojingTip()
+	local showMojingTip = false
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_5_2 and var_5_2.chapterId == VersionActivity1_3DungeonEnum.DungeonChapterId.Daily then
-		var_5_0 = arg_5_0._index == 3
+	if episodeConfig and episodeConfig.chapterId == VersionActivity1_3DungeonEnum.DungeonChapterId.Daily then
+		showMojingTip = self._index == 3
 	end
 
-	gohelper.setActive(arg_5_0._gomojing, var_5_0)
+	gohelper.setActive(self._gomojing, showMojingTip)
 
-	if not var_5_0 then
+	if not showMojingTip then
 		return
 	end
 
-	arg_5_0._gomojingtxt.text = luaLang("p_v1a3_herogroup_mojing_" .. tostring(var_5_1))
+	self._gomojingtxt.text = luaLang("p_v1a3_herogroup_mojing_" .. tostring(episodeId))
 end
 
-function var_0_0.setParent(arg_6_0, arg_6_1)
-	arg_6_0.currentParent = arg_6_1
+function OdysseyHeroGroupItem:setParent(transform)
+	self.currentParent = transform
 
-	arg_6_0._subGO.transform:SetParent(arg_6_1, true)
-	arg_6_0._equipGO.transform:SetParent(arg_6_1, true)
-	arg_6_0._goOdysseyEquipParent.transform:SetParent(arg_6_1, true)
+	self._subGO.transform:SetParent(transform, true)
+	self._equipGO.transform:SetParent(transform, true)
+	self._goOdysseyEquipParent.transform:SetParent(transform, true)
 end
 
-function var_0_0.flowOriginParent(arg_7_0)
-	arg_7_0._equipGO.transform:SetParent(arg_7_0._animGO.transform, true)
-	arg_7_0._goOdysseyEquipParent.transform:SetParent(arg_7_0._animGO.transform, true)
+function OdysseyHeroGroupItem:flowOriginParent()
+	self._equipGO.transform:SetParent(self._animGO.transform, true)
+	self._goOdysseyEquipParent.transform:SetParent(self._animGO.transform, true)
 end
 
-function var_0_0.flowCurrentParent(arg_8_0)
-	arg_8_0._equipGO.transform:SetParent(arg_8_0.currentParent, true)
-	arg_8_0._goOdysseyEquipParent.transform:SetParent(arg_8_0.currentParent, true)
+function OdysseyHeroGroupItem:flowCurrentParent()
+	self._equipGO.transform:SetParent(self.currentParent, true)
+	self._goOdysseyEquipParent.transform:SetParent(self.currentParent, true)
 end
 
-function var_0_0.initEquips(arg_9_0, arg_9_1)
-	arg_9_0._equipType = -1
+function OdysseyHeroGroupItem:initEquips(equipIndex)
+	self._equipType = -1
 
-	if arg_9_0.isLock or arg_9_0.isAid or arg_9_0.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not arg_9_0.trialCO and not HeroGroupTrialModel.instance:haveTrialEquip() then
-		gohelper.setActive(arg_9_0._equipGO, false)
-		gohelper.setActive(arg_9_0._fakeEquipGO, false)
-		gohelper.setActive(arg_9_0._emptyEquipGo, false)
+	if self.isLock or self.isAid or self.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not self.trialCO and not HeroGroupTrialModel.instance:haveTrialEquip() then
+		gohelper.setActive(self._equipGO, false)
+		gohelper.setActive(self._fakeEquipGO, false)
+		gohelper.setActive(self._emptyEquipGo, false)
 	else
-		gohelper.setActive(arg_9_0._equipGO, true)
-		gohelper.setActive(arg_9_0._fakeEquipGO, true)
-		gohelper.setActive(arg_9_0._emptyEquipGo, true)
+		gohelper.setActive(self._equipGO, true)
+		gohelper.setActive(self._fakeEquipGO, true)
+		gohelper.setActive(self._emptyEquipGo, true)
 
-		if not arg_9_0._equip then
-			arg_9_0._equip = arg_9_0:getUserDataTb_()
-			arg_9_0._equip.moveContainer = gohelper.findChild(arg_9_0._equipGO, "moveContainer")
-			arg_9_0._equip.equipIcon = gohelper.findChildImage(arg_9_0._equipGO, "moveContainer/equipIcon")
-			arg_9_0._equip.equipRare = gohelper.findChildImage(arg_9_0._equipGO, "moveContainer/equiprare")
-			arg_9_0._equip.equiptxten = gohelper.findChildText(arg_9_0._equipGO, "equiptxten")
-			arg_9_0._equip.equiptxtlv = gohelper.findChildText(arg_9_0._equipGO, "moveContainer/equiplv/txtequiplv")
-			arg_9_0._equip.equipGolv = gohelper.findChild(arg_9_0._equipGO, "moveContainer/equiplv")
+		if not self._equip then
+			self._equip = self:getUserDataTb_()
+			self._equip.moveContainer = gohelper.findChild(self._equipGO, "moveContainer")
+			self._equip.equipIcon = gohelper.findChildImage(self._equipGO, "moveContainer/equipIcon")
+			self._equip.equipRare = gohelper.findChildImage(self._equipGO, "moveContainer/equiprare")
+			self._equip.equiptxten = gohelper.findChildText(self._equipGO, "equiptxten")
+			self._equip.equiptxtlv = gohelper.findChildText(self._equipGO, "moveContainer/equiplv/txtequiplv")
+			self._equip.equipGolv = gohelper.findChild(self._equipGO, "moveContainer/equiplv")
 
-			arg_9_0:_equipIconAddDrag(arg_9_0._equip.moveContainer, arg_9_0._equip.equipIcon)
+			self:_equipIconAddDrag(self._equip.moveContainer, self._equip.equipIcon)
 		end
 
-		local var_9_0 = HeroGroupModel.instance:getCurGroupMO():getPosEquips(arg_9_0.mo.id - 1).equipUid[1]
+		local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+		local equips = curGroupMO:getPosEquips(self.mo.id - 1).equipUid
+		local equipId = equips[1]
 
-		arg_9_0._equipMO = EquipModel.instance:getEquip(var_9_0) or HeroGroupTrialModel.instance:getEquipMo(var_9_0)
+		self._equipMO = EquipModel.instance:getEquip(equipId) or HeroGroupTrialModel.instance:getEquipMo(equipId)
 
 		if HeroGroupModel.instance:getCurGroupMO().isReplay then
-			arg_9_0._equipMO = nil
+			self._equipMO = nil
 
-			local var_9_1 = HeroGroupModel.instance:getCurGroupMO().replay_equip_data[arg_9_0.mo.heroUid]
+			local equip_data = HeroGroupModel.instance:getCurGroupMO().replay_equip_data[self.mo.heroUid]
 
-			if var_9_1 then
-				local var_9_2 = EquipConfig.instance:getEquipCo(var_9_1.equipId)
+			if equip_data then
+				local tar_config = EquipConfig.instance:getEquipCo(equip_data.equipId)
 
-				if var_9_2 then
-					arg_9_0._equipMO = {}
-					arg_9_0._equipMO.config = var_9_2
-					arg_9_0._equipMO.refineLv = var_9_1.refineLv
-					arg_9_0._equipMO.level = var_9_1.equipLv
+				if tar_config then
+					self._equipMO = {}
+					self._equipMO.config = tar_config
+					self._equipMO.refineLv = equip_data.refineLv
+					self._equipMO.level = equip_data.equipLv
 				end
 			end
 		end
 
-		local var_9_3
+		local trialEquipCO
 
-		if arg_9_0.trialCO and arg_9_0.trialCO.equipId > 0 then
-			var_9_3 = EquipConfig.instance:getEquipCo(arg_9_0.trialCO.equipId)
+		if self.trialCO and self.trialCO.equipId > 0 then
+			trialEquipCO = EquipConfig.instance:getEquipCo(self.trialCO.equipId)
 		end
 
-		if arg_9_0._equipMO then
-			arg_9_0._equipType = arg_9_0._equipMO.config.rare - 2
-		elseif var_9_3 then
-			arg_9_0._equipType = var_9_3.rare - 2
+		if self._equipMO then
+			self._equipType = self._equipMO.config.rare - 2
+		elseif trialEquipCO then
+			self._equipType = trialEquipCO.rare - 2
 		end
 
-		gohelper.setActive(arg_9_0._equip.equipIcon.gameObject, arg_9_0._equipMO or var_9_3)
-		gohelper.setActive(arg_9_0._equip.equipRare.gameObject, arg_9_0._equipMO or var_9_3)
-		gohelper.setActive(arg_9_0._equip.equipAddGO, not arg_9_0._equipMO and not var_9_3)
-		gohelper.setActive(arg_9_0._equip.equipGolv, arg_9_0._equipMO or var_9_3)
-		ZProj.UGUIHelper.SetColorAlpha(arg_9_0._equip.equiptxten, (arg_9_0._equipMO or var_9_3) and 0.15 or 0.06)
+		gohelper.setActive(self._equip.equipIcon.gameObject, self._equipMO or trialEquipCO)
+		gohelper.setActive(self._equip.equipRare.gameObject, self._equipMO or trialEquipCO)
+		gohelper.setActive(self._equip.equipAddGO, not self._equipMO and not trialEquipCO)
+		gohelper.setActive(self._equip.equipGolv, self._equipMO or trialEquipCO)
+		ZProj.UGUIHelper.SetColorAlpha(self._equip.equiptxten, (self._equipMO or trialEquipCO) and 0.15 or 0.06)
 
-		if arg_9_0._equipMO then
-			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_9_0._equip.equipIcon, arg_9_0._equipMO.config.icon)
+		if self._equipMO then
+			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._equip.equipIcon, self._equipMO.config.icon)
 
-			local var_9_4, var_9_5, var_9_6 = HeroGroupBalanceHelper.getBalanceLv()
+			local _, _, equipLv = HeroGroupBalanceHelper.getBalanceLv()
 
-			if var_9_6 and var_9_6 > arg_9_0._equipMO.level and arg_9_0._equipMO.equipType == EquipEnum.ClientEquipType.Normal then
-				arg_9_0._equip.equiptxtlv.text = "<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">LV." .. var_9_6
+			if equipLv and equipLv > self._equipMO.level and self._equipMO.equipType == EquipEnum.ClientEquipType.Normal then
+				self._equip.equiptxtlv.text = "<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">LV." .. equipLv
 			else
-				arg_9_0._equip.equiptxtlv.text = "LV." .. arg_9_0._equipMO.level
+				self._equip.equiptxtlv.text = "LV." .. self._equipMO.level
 			end
 
-			UISpriteSetMgr.instance:setHeroGroupSprite(arg_9_0._equip.equipRare, "bianduixingxian_" .. arg_9_0._equipMO.config.rare)
-			arg_9_0:_showEquipParticleEffect(arg_9_1)
-		elseif var_9_3 then
-			local var_9_7 = EquipConfig.instance:getEquipCo(arg_9_0.trialCO.equipId)
+			UISpriteSetMgr.instance:setHeroGroupSprite(self._equip.equipRare, "bianduixingxian_" .. self._equipMO.config.rare)
+			self:_showEquipParticleEffect(equipIndex)
+		elseif trialEquipCO then
+			local equipCO = EquipConfig.instance:getEquipCo(self.trialCO.equipId)
 
-			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_9_0._equip.equipIcon, var_9_7.icon)
+			UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._equip.equipIcon, equipCO.icon)
 
-			arg_9_0._equip.equiptxtlv.text = "LV." .. arg_9_0.trialCO.equipLv
+			self._equip.equiptxtlv.text = "LV." .. self.trialCO.equipLv
 
-			UISpriteSetMgr.instance:setHeroGroupSprite(arg_9_0._equip.equipRare, "bianduixingxian_" .. var_9_7.rare)
-			arg_9_0:_showEquipParticleEffect(arg_9_1)
+			UISpriteSetMgr.instance:setHeroGroupSprite(self._equip.equipRare, "bianduixingxian_" .. equipCO.rare)
+			self:_showEquipParticleEffect(equipIndex)
 		end
 	end
 
-	arg_9_0.last_equip = arg_9_0._equipMO and arg_9_0._equipMO.uid
-	arg_9_0.last_hero = arg_9_0._heroMO and arg_9_0._heroMO.heroId or 0
+	self.last_equip = self._equipMO and self._equipMO.uid
+	self.last_hero = self._heroMO and self._heroMO.heroId or 0
 end
 
-function var_0_0.initOdysseyEquips(arg_10_0)
+function OdysseyHeroGroupItem:initOdysseyEquips()
 	if OdysseyItemModel.instance:haveEquipItem() == false then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._odysseyItemList) do
-			iter_10_1:setActive(false)
+		for _, item in ipairs(self._odysseyItemList) do
+			item:setActive(false)
 		end
 
 		return
 	end
 
-	local var_10_0 = HeroGroupModel.instance:getCurGroupMO()
-	local var_10_1 = arg_10_0.mo.id
-	local var_10_2 = var_10_0:getOdysseyEquips(var_10_1 - 1)
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local heroIndex = self.mo.id
+	local equipMo = curGroupMO:getOdysseyEquips(heroIndex - 1)
 
-	for iter_10_2, iter_10_3 in ipairs(var_10_2.equipUid) do
-		local var_10_3 = arg_10_0._odysseyItemList[iter_10_2]
+	for index, equipIdParam in ipairs(equipMo.equipUid) do
+		local item = self._odysseyItemList[index]
 
-		if not var_10_3 then
-			logError("奥德赛编队界面 装备索引超过上限 index: " .. tostring(iter_10_2))
+		if not item then
+			logError("奥德赛编队界面 装备索引超过上限 index: " .. tostring(index))
 		else
-			local var_10_4 = tonumber(iter_10_3)
+			local equipId = tonumber(equipIdParam)
 
-			var_10_3:setActive(true)
-			var_10_3:setInfo(var_10_1, iter_10_2, var_10_4, OdysseyEnum.BagType.FightPrepare)
-			var_10_3:refreshUI()
+			item:setActive(true)
+			item:setInfo(heroIndex, index, equipId, OdysseyEnum.BagType.FightPrepare)
+			item:refreshUI()
 		end
 	end
 
-	local var_10_5 = #arg_10_0._odysseyItemList
-	local var_10_6 = #var_10_2.equipUid
+	local itemCount = #self._odysseyItemList
+	local equipCount = #equipMo.equipUid
 
-	if var_10_6 < var_10_5 then
-		for iter_10_4 = var_10_6 + 1, var_10_5 do
-			local var_10_7 = arg_10_0._odysseyItemList[iter_10_4]
+	if equipCount < itemCount then
+		for i = equipCount + 1, itemCount do
+			local item = self._odysseyItemList[i]
 
-			var_10_7:clear()
-			var_10_7:setActive(false)
+			item:clear()
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0._showEquipParticleEffect(arg_11_0, arg_11_1)
-	if arg_11_1 == arg_11_0.mo.id - 1 then
+function OdysseyHeroGroupItem:_showEquipParticleEffect(equipIndex)
+	if equipIndex == self.mo.id - 1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_fail)
 	end
 end
 
-function var_0_0._odysseyEquipAddDrag(arg_12_0, arg_12_1)
-	local var_12_0 = var_0_0.OdysseyEquipDragOtherScale
-	local var_12_1
+function OdysseyHeroGroupItem:_odysseyEquipAddDrag(odysseyItem)
+	local scale = OdysseyHeroGroupItem.OdysseyEquipDragOtherScale
+	local moveOffset
 
 	if GameUtil.isMobilePlayerAndNotEmulator() then
-		var_12_1 = var_0_0.EquipDragOffset
-		var_12_0 = var_0_0.EquipDragMobileScale
+		moveOffset = OdysseyHeroGroupItem.EquipDragOffset
+		scale = OdysseyHeroGroupItem.EquipDragMobileScale
 	end
 
-	local var_12_2 = {
-		item = arg_12_1
-	}
+	local param = {}
 
-	CommonDragHelper.instance:registerDragObj(arg_12_1._gonoEmpty, arg_12_0._onOdysseyItemBeginDrag, nil, arg_12_0._onOdysseyItemEndDrag, arg_12_0._checkOdysseyItemDrag, arg_12_0, var_12_2, nil, var_12_1, var_12_0)
+	param.item = odysseyItem
+
+	CommonDragHelper.instance:registerDragObj(odysseyItem._gonoEmpty, self._onOdysseyItemBeginDrag, nil, self._onOdysseyItemEndDrag, self._checkOdysseyItemDrag, self, param, nil, moveOffset, scale)
 end
 
-function var_0_0._checkOdysseyItemDrag(arg_13_0, arg_13_1)
+function OdysseyHeroGroupItem:_checkOdysseyItemDrag(param)
 	if UnityEngine.Input.touchCount > 1 then
 		return false
 	end
@@ -299,92 +303,96 @@ function var_0_0._checkOdysseyItemDrag(arg_13_0, arg_13_1)
 		return true
 	end
 
-	local var_13_0 = arg_13_1.item
+	local odysseyItem = param.item
 
-	if var_13_0.isLongParse then
+	if odysseyItem.isLongParse then
 		return true
 	end
 
-	if var_13_0.equipUid == nil or var_13_0.equipUid == 0 then
+	if odysseyItem.equipUid == nil or odysseyItem.equipUid == 0 then
 		return true
 	end
 
-	if var_13_0.heroPos > OdysseyEnum.MaxHeroGroupCount then
+	local index = odysseyItem.heroPos
+
+	if index > OdysseyEnum.MaxHeroGroupCount then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._onOdysseyItemBeginDrag(arg_14_0, arg_14_1)
+function OdysseyHeroGroupItem:_onOdysseyItemBeginDrag(param)
 	logNormal("onOdysseyItemBeginDrag")
 
-	arg_14_1.item.isDrag = true
+	local currentItem = param.item
 
-	gohelper.setAsLastSibling(arg_14_0._heroGroupListView.heroPosTrList[arg_14_0.mo.id].parent.gameObject)
+	currentItem.isDrag = true
+
+	gohelper.setAsLastSibling(self._heroGroupListView.heroPosTrList[self.mo.id].parent.gameObject)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 end
 
-function var_0_0._onOdysseyItemEndDrag(arg_15_0, arg_15_1, arg_15_2)
+function OdysseyHeroGroupItem:_onOdysseyItemEndDrag(param, pointerEventData)
 	logNormal("onOdysseyItemEndDrag")
 
-	local var_15_0 = arg_15_2.position
+	local pos = pointerEventData.position
 
 	if GameUtil.isMobilePlayerAndNotEmulator() then
-		var_15_0 = var_15_0 + var_0_0.EquipDragOffset
+		pos = pos + OdysseyHeroGroupItem.EquipDragOffset
 	end
 
-	local var_15_1 = arg_15_1.item
-	local var_15_2 = arg_15_0:_moveOdysseyToTarget(var_15_0, var_15_1)
-	local var_15_3 = var_15_1._gonoEmpty.transform
+	local currentItem = param.item
+	local targetItem = self:_moveOdysseyToTarget(pos, currentItem)
+	local currentTran = currentItem._gonoEmpty.transform
 
-	if var_15_2 == nil then
+	if targetItem == nil then
 		logNormal("没有合适位置， 返回原处")
-		arg_15_0:_setToPos(var_15_3, Vector2(), true, function()
-			arg_15_0:_setEquipDragEnabled(true)
+		self:_setToPos(currentTran, Vector2(), true, function()
+			self:_setEquipDragEnabled(true)
 
-			var_15_1.isDrag = false
-		end, arg_15_0)
+			currentItem.isDrag = false
+		end, self)
 
 		return
 	end
 
-	arg_15_0:_setEquipDragEnabled(false)
-	arg_15_0:_playDragEndAudio()
-	gohelper.setAsLastSibling(arg_15_0._heroGroupListView.heroPosTrList[arg_15_0.mo.id].parent.gameObject)
-	gohelper.setAsLastSibling(arg_15_0._heroGroupListView.heroPosTrList[var_15_2.heroPos].parent.gameObject)
+	self:_setEquipDragEnabled(false)
+	self:_playDragEndAudio()
+	gohelper.setAsLastSibling(self._heroGroupListView.heroPosTrList[self.mo.id].parent.gameObject)
+	gohelper.setAsLastSibling(self._heroGroupListView.heroPosTrList[targetItem.heroPos].parent.gameObject)
 
-	local var_15_4 = var_15_2._gonoEmpty.transform
-	local var_15_5 = recthelper.rectToRelativeAnchorPos(var_15_1._goEmpty.transform.position, var_15_2._goEmpty.transform)
-	local var_15_6 = recthelper.rectToRelativeAnchorPos(var_15_2._goEmpty.transform.position, var_15_1._goEmpty.transform)
+	local targetTran = targetItem._gonoEmpty.transform
+	local curAnchorPos = recthelper.rectToRelativeAnchorPos(currentItem._goEmpty.transform.position, targetItem._goEmpty.transform)
+	local targetAnchorPos = recthelper.rectToRelativeAnchorPos(targetItem._goEmpty.transform.position, currentItem._goEmpty.transform)
 
-	if var_15_2:isEmpty() == false then
-		arg_15_0._odysseyTweenId = arg_15_0:_setToPos(var_15_4, var_15_5, true)
+	if targetItem:isEmpty() == false then
+		self._odysseyTweenId = self:_setToPos(targetTran, curAnchorPos, true)
 	end
 
 	logNormal("有合适位置")
-	arg_15_0:_setToPos(var_15_3, var_15_6, true, function()
-		if arg_15_0._odysseyTweenId then
-			ZProj.TweenHelper.KillById(arg_15_0._odysseyTweenId)
+	self:_setToPos(currentTran, targetAnchorPos, true, function()
+		if self._odysseyTweenId then
+			ZProj.TweenHelper.KillById(self._odysseyTweenId)
 		end
 
-		arg_15_0:_setEquipDragEnabled(true)
-		OdysseyHeroGroupController.instance:swapOdysseyEquip(var_15_1.heroPos - 1, var_15_2.heroPos - 1, var_15_1.index, var_15_2.index)
+		self:_setEquipDragEnabled(true)
+		OdysseyHeroGroupController.instance:swapOdysseyEquip(currentItem.heroPos - 1, targetItem.heroPos - 1, currentItem.index, targetItem.index)
 
-		var_15_1.isDrag = false
-	end, arg_15_0)
+		currentItem.isDrag = false
+	end, self)
 end
 
-function var_0_0._moveOdysseyToTarget(arg_18_0, arg_18_1, arg_18_2)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._heroGroupListView.odysseyEquipPosList) do
-		local var_18_0 = arg_18_0._heroGroupListView.odysseyEquipItemList[iter_18_0]
+function OdysseyHeroGroupItem:_moveOdysseyToTarget(position, item)
+	for i, v in ipairs(self._heroGroupListView.odysseyEquipPosList) do
+		local odysseyItem = self._heroGroupListView.odysseyEquipItemList[i]
 
-		if var_18_0:isActive() and (var_18_0:isEmpty() or var_18_0.heroPos ~= arg_18_2.heroPos or var_18_0.index ~= arg_18_2.index) then
-			local var_18_1 = var_18_0.go.transform
-			local var_18_2 = recthelper.screenPosToAnchorPos(arg_18_1, var_18_1)
+		if odysseyItem:isActive() and (odysseyItem:isEmpty() or odysseyItem.heroPos ~= item.heroPos or odysseyItem.index ~= item.index) then
+			local posTr = odysseyItem.go.transform
+			local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-			if math.abs(var_18_2.x) * 2 < recthelper.getWidth(var_18_1) and math.abs(var_18_2.y) * 2 < recthelper.getHeight(var_18_1) then
-				return var_18_0
+			if math.abs(anchorPos.x) * 2 < recthelper.getWidth(posTr) and math.abs(anchorPos.y) * 2 < recthelper.getHeight(posTr) then
+				return odysseyItem
 			end
 		end
 	end
@@ -392,22 +400,24 @@ function var_0_0._moveOdysseyToTarget(arg_18_0, arg_18_1, arg_18_2)
 	return nil
 end
 
-function var_0_0._equipIconAddDrag(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_2:GetComponent(gohelper.Type_Image).raycastTarget = true
+function OdysseyHeroGroupItem:_equipIconAddDrag(go, icon)
+	local image = icon:GetComponent(gohelper.Type_Image)
 
-	local var_19_0 = var_0_0.EquipDragOtherScale
-	local var_19_1
+	image.raycastTarget = true
+
+	local scale = OdysseyHeroGroupItem.EquipDragOtherScale
+	local moveOffset
 
 	if GameUtil.isMobilePlayerAndNotEmulator() then
-		var_19_1 = var_0_0.EquipDragOffset
-		var_19_0 = var_0_0.EquipDragMobileScale
+		moveOffset = OdysseyHeroGroupItem.EquipDragOffset
+		scale = OdysseyHeroGroupItem.EquipDragMobileScale
 	end
 
-	CommonDragHelper.instance:registerDragObj(arg_19_1, arg_19_0._onBeginDrag, nil, arg_19_0._onEndDrag, arg_19_0._checkDrag, arg_19_0, arg_19_1.transform, nil, var_19_1, var_19_0)
+	CommonDragHelper.instance:registerDragObj(go, self._onBeginDrag, nil, self._onEndDrag, self._checkDrag, self, go.transform, nil, moveOffset, scale)
 end
 
-function var_0_0._checkDrag(arg_20_0)
-	if arg_20_0.trialCO and arg_20_0.trialCO.equipId > 0 then
+function OdysseyHeroGroupItem:_checkDrag()
+	if self.trialCO and self.trialCO.equipId > 0 then
 		GameFacade.showToast(ToastEnum.TrialCantEditEquip)
 
 		return true
@@ -416,132 +426,132 @@ function var_0_0._checkDrag(arg_20_0)
 	return false
 end
 
-function var_0_0._onBeginDrag(arg_21_0)
-	gohelper.setAsLastSibling(arg_21_0._heroGroupListView.heroPosTrList[arg_21_0.mo.id].parent.gameObject)
-	gohelper.setAsLastSibling(arg_21_0._equipGO)
+function OdysseyHeroGroupItem:_onBeginDrag()
+	gohelper.setAsLastSibling(self._heroGroupListView.heroPosTrList[self.mo.id].parent.gameObject)
+	gohelper.setAsLastSibling(self._equipGO)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
-	gohelper.setActive(arg_21_0._equip.equipGolv, false)
+	gohelper.setActive(self._equip.equipGolv, false)
 end
 
-function var_0_0._onEndDrag(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_2.position
+function OdysseyHeroGroupItem:_onEndDrag(_, pointerEventData)
+	local pos = pointerEventData.position
 
 	if GameUtil.isMobilePlayerAndNotEmulator() then
-		var_22_0 = var_22_0 + var_0_0.EquipDragOffset
+		pos = pos + OdysseyHeroGroupItem.EquipDragOffset
 	end
 
-	local var_22_1 = arg_22_0:_moveToTarget(var_22_0)
+	local targetHeroItem = self:_moveToTarget(pos)
 
-	arg_22_0:_setEquipDragEnabled(false)
+	self:_setEquipDragEnabled(false)
 
-	local var_22_2 = var_22_1 and var_22_1.trialCO and var_22_1.trialCO.equipId > 0
+	local isTrialDefaultEquip = targetHeroItem and targetHeroItem.trialCO and targetHeroItem.trialCO.equipId > 0
 
-	if not var_22_1 or var_22_1 == arg_22_0 or var_22_1.mo.aid or var_22_2 or not var_22_1._equipGO.activeSelf then
-		if var_22_2 then
+	if not targetHeroItem or targetHeroItem == self or targetHeroItem.mo.aid or isTrialDefaultEquip or not targetHeroItem._equipGO.activeSelf then
+		if isTrialDefaultEquip then
 			GameFacade.showToast(ToastEnum.TrialCantEditEquip)
 		end
 
-		arg_22_0:_setToPos(arg_22_0._equip.moveContainer.transform, Vector2(), true, function()
-			gohelper.setActive(arg_22_0._equip.equipGolv, true)
-			arg_22_0:_setEquipDragEnabled(true)
-		end, arg_22_0)
-		arg_22_0:_showEquipParticleEffect()
+		self:_setToPos(self._equip.moveContainer.transform, Vector2(), true, function()
+			gohelper.setActive(self._equip.equipGolv, true)
+			self:_setEquipDragEnabled(true)
+		end, self)
+		self:_showEquipParticleEffect()
 
 		return
 	end
 
-	arg_22_0:_playDragEndAudio(var_22_1)
-	gohelper.setAsLastSibling(arg_22_0._heroGroupListView.heroPosTrList[var_22_1.mo.id].parent.gameObject)
-	gohelper.setAsLastSibling(arg_22_0._heroGroupListView.heroPosTrList[arg_22_0.mo.id].parent.gameObject)
+	self:_playDragEndAudio(targetHeroItem)
+	gohelper.setAsLastSibling(self._heroGroupListView.heroPosTrList[targetHeroItem.mo.id].parent.gameObject)
+	gohelper.setAsLastSibling(self._heroGroupListView.heroPosTrList[self.mo.id].parent.gameObject)
 
-	local var_22_3 = recthelper.rectToRelativeAnchorPos(arg_22_0._equipGO.transform.position, var_22_1._equipGO.transform)
+	local anotherAnchorPos = recthelper.rectToRelativeAnchorPos(self._equipGO.transform.position, targetHeroItem._equipGO.transform)
 
-	arg_22_0._tweenId = arg_22_0:_setToPos(var_22_1._equip.moveContainer.transform, var_22_3, true)
+	self._tweenId = self:_setToPos(targetHeroItem._equip.moveContainer.transform, anotherAnchorPos, true)
 
-	local var_22_4 = recthelper.rectToRelativeAnchorPos(var_22_1._equipGO.transform.position, arg_22_0._equipGO.transform)
+	local anchorPos = recthelper.rectToRelativeAnchorPos(targetHeroItem._equipGO.transform.position, self._equipGO.transform)
 
-	arg_22_0:_setToPos(arg_22_0._equip.moveContainer.transform, var_22_4, true, function()
-		EquipTeamListModel.instance:openTeamEquip(arg_22_0.mo.id - 1, arg_22_0._heroMO)
+	self:_setToPos(self._equip.moveContainer.transform, anchorPos, true, function()
+		EquipTeamListModel.instance:openTeamEquip(self.mo.id - 1, self._heroMO)
 
-		if arg_22_0._tweenId then
-			ZProj.TweenHelper.KillById(arg_22_0._tweenId)
+		if self._tweenId then
+			ZProj.TweenHelper.KillById(self._tweenId)
 		end
 
-		arg_22_0:_setToPos(arg_22_0._equip.moveContainer.transform, Vector2())
-		arg_22_0:_setToPos(var_22_1._equip.moveContainer.transform, Vector2())
-		gohelper.setActive(arg_22_0._equip.equipGolv, true)
-		arg_22_0:_setEquipDragEnabled(true)
+		self:_setToPos(self._equip.moveContainer.transform, Vector2())
+		self:_setToPos(targetHeroItem._equip.moveContainer.transform, Vector2())
+		gohelper.setActive(self._equip.equipGolv, true)
+		self:_setEquipDragEnabled(true)
 
-		local var_24_0 = arg_22_0.mo.id - 1
-		local var_24_1 = var_22_1.mo.id - 1
-		local var_24_2 = EquipTeamListModel.instance:getTeamEquip(var_24_0)[1]
+		local srcPos = self.mo.id - 1
+		local targetPos = targetHeroItem.mo.id - 1
+		local srcEquipId = EquipTeamListModel.instance:getTeamEquip(srcPos)[1]
 
-		var_24_2 = (EquipModel.instance:getEquip(var_24_2) or HeroGroupTrialModel.instance:getEquipMo(var_24_2)) and var_24_2 or nil
+		srcEquipId = (EquipModel.instance:getEquip(srcEquipId) or HeroGroupTrialModel.instance:getEquipMo(srcEquipId)) and srcEquipId or nil
 
-		if var_24_2 then
-			EquipTeamShowItem.removeEquip(var_24_0, true)
+		if srcEquipId then
+			EquipTeamShowItem.removeEquip(srcPos, true)
 		end
 
-		local var_24_3 = EquipTeamListModel.instance:getTeamEquip(var_24_1)[1]
+		local targetEquipId = EquipTeamListModel.instance:getTeamEquip(targetPos)[1]
 
-		var_24_3 = (EquipModel.instance:getEquip(var_24_3) or HeroGroupTrialModel.instance:getEquipMo(var_24_3)) and var_24_3 or nil
+		targetEquipId = (EquipModel.instance:getEquip(targetEquipId) or HeroGroupTrialModel.instance:getEquipMo(targetEquipId)) and targetEquipId or nil
 
-		if var_24_3 then
-			EquipTeamShowItem.removeEquip(var_24_1, true)
+		if targetEquipId then
+			EquipTeamShowItem.removeEquip(targetPos, true)
 		end
 
-		if var_24_2 then
-			EquipTeamShowItem.replaceEquip(var_24_1, var_24_2, true)
+		if srcEquipId then
+			EquipTeamShowItem.replaceEquip(targetPos, srcEquipId, true)
 		end
 
-		if var_24_3 then
-			EquipTeamShowItem.replaceEquip(var_24_0, var_24_3, true)
+		if targetEquipId then
+			EquipTeamShowItem.replaceEquip(srcPos, targetEquipId, true)
 		end
 
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip)
 		HeroGroupModel.instance:saveCurGroupData()
-	end, arg_22_0)
+	end, self)
 end
 
-function var_0_0.resetEquipPos(arg_25_0)
-	if not arg_25_0._equip then
+function OdysseyHeroGroupItem:resetEquipPos()
+	if not self._equip then
 		return
 	end
 
-	local var_25_0 = arg_25_0._equip.moveContainer.transform
+	local trans = self._equip.moveContainer.transform
 
-	recthelper.setAnchor(var_25_0, 0, 0)
-	transformhelper.setLocalScale(var_25_0, 1, 1, 1)
+	recthelper.setAnchor(trans, 0, 0)
+	transformhelper.setLocalScale(trans, 1, 1, 1)
 end
 
-function var_0_0._playDragEndAudio(arg_26_0, arg_26_1)
+function OdysseyHeroGroupItem:_playDragEndAudio(targetHeroItem)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_success)
 end
 
-function var_0_0._setToPos(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4, arg_27_5)
-	local var_27_0, var_27_1 = recthelper.getAnchor(arg_27_1)
+function OdysseyHeroGroupItem:_setToPos(transform, anchorPos, tween, callback, callbackObj)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(transform)
 
-	if arg_27_3 then
-		return ZProj.TweenHelper.DOAnchorPos(arg_27_1, arg_27_2.x, arg_27_2.y, 0.2, arg_27_4, arg_27_5)
+	if tween then
+		return ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, 0.2, callback, callbackObj)
 	else
-		recthelper.setAnchor(arg_27_1, arg_27_2.x, arg_27_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 
-		if arg_27_4 then
-			arg_27_4(arg_27_5)
+		if callback then
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0._moveToTarget(arg_28_0, arg_28_1)
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._heroGroupListView.heroPosTrList) do
-		if arg_28_0._heroGroupListView._heroItemList[iter_28_0] ~= arg_28_0 then
-			local var_28_0 = iter_28_1.parent
-			local var_28_1 = recthelper.screenPosToAnchorPos(arg_28_1, var_28_0)
+function OdysseyHeroGroupItem:_moveToTarget(position)
+	for i, v in ipairs(self._heroGroupListView.heroPosTrList) do
+		if self._heroGroupListView._heroItemList[i] ~= self then
+			local posTr = v.parent
+			local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-			if math.abs(var_28_1.x) * 2 < recthelper.getWidth(var_28_0) and math.abs(var_28_1.y) * 2 < recthelper.getHeight(var_28_0) then
-				local var_28_2 = arg_28_0._heroGroupListView._heroItemList[iter_28_0]
+			if math.abs(anchorPos.x) * 2 < recthelper.getWidth(posTr) and math.abs(anchorPos.y) * 2 < recthelper.getHeight(posTr) then
+				local heroItem = self._heroGroupListView._heroItemList[i]
 
-				return not var_28_2:selfIsLock() and var_28_2 or nil
+				return not heroItem:selfIsLock() and heroItem or nil
 			end
 		end
 	end
@@ -549,324 +559,330 @@ function var_0_0._moveToTarget(arg_28_0, arg_28_1)
 	return nil
 end
 
-function var_0_0._setEquipDragEnabled(arg_29_0, arg_29_1)
-	CommonDragHelper.instance:setGlobalEnabled(arg_29_1)
+function OdysseyHeroGroupItem:_setEquipDragEnabled(isEnabled)
+	CommonDragHelper.instance:setGlobalEnabled(isEnabled)
 end
 
-function var_0_0.addEventListeners(arg_30_0)
-	arg_30_0._clickThis:AddClickListener(arg_30_0._onClickThis, arg_30_0)
-	arg_30_0._clickThis:AddClickDownListener(arg_30_0._onClickThisDown, arg_30_0)
-	arg_30_0._clickThis:AddClickUpListener(arg_30_0._onClickThisUp, arg_30_0)
-	arg_30_0._clickEquip:AddClickListener(arg_30_0._onClickEquip, arg_30_0)
-	arg_30_0._clickEquip:AddClickDownListener(arg_30_0._onClickEquipDown, arg_30_0)
-	arg_30_0._clickEquip:AddClickUpListener(arg_30_0._onClickEquipUp, arg_30_0)
-	arg_30_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.setHeroGroupEquipEffect, arg_30_0.setHeroGroupEquipEffect, arg_30_0)
-	arg_30_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayHeroGroupHeroEffect, arg_30_0.playHeroGroupHeroEffect, arg_30_0)
-	arg_30_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, arg_30_0.initEquips, arg_30_0)
-	arg_30_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_30_0.initEquips, arg_30_0)
-	arg_30_0:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, arg_30_0.initEquips, arg_30_0)
-	arg_30_0:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, arg_30_0.initEquips, arg_30_0)
-	arg_30_0:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, arg_30_0.initEquips, arg_30_0)
-	arg_30_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_30_0.initEquips, arg_30_0)
+function OdysseyHeroGroupItem:addEventListeners()
+	self._clickThis:AddClickListener(self._onClickThis, self)
+	self._clickThis:AddClickDownListener(self._onClickThisDown, self)
+	self._clickThis:AddClickUpListener(self._onClickThisUp, self)
+	self._clickEquip:AddClickListener(self._onClickEquip, self)
+	self._clickEquip:AddClickDownListener(self._onClickEquipDown, self)
+	self._clickEquip:AddClickUpListener(self._onClickEquipUp, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.setHeroGroupEquipEffect, self.setHeroGroupEquipEffect, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayHeroGroupHeroEffect, self.playHeroGroupHeroEffect, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ChangeEquip, self.initEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, self.initEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, self.initEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, self.initEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, self.initEquips, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self.initEquips, self)
 end
 
-function var_0_0.removeEventListeners(arg_31_0)
-	arg_31_0._clickThis:RemoveClickListener()
-	arg_31_0._clickThis:RemoveClickUpListener()
-	arg_31_0._clickThis:RemoveClickDownListener()
-	arg_31_0._clickEquip:RemoveClickListener()
-	arg_31_0._clickEquip:RemoveClickUpListener()
-	arg_31_0._clickEquip:RemoveClickDownListener()
+function OdysseyHeroGroupItem:removeEventListeners()
+	self._clickThis:RemoveClickListener()
+	self._clickThis:RemoveClickUpListener()
+	self._clickThis:RemoveClickDownListener()
+	self._clickEquip:RemoveClickListener()
+	self._clickEquip:RemoveClickUpListener()
+	self._clickEquip:RemoveClickDownListener()
 end
 
-function var_0_0.playHeroGroupHeroEffect(arg_32_0, arg_32_1)
-	arg_32_0:playAnim(arg_32_1)
+function OdysseyHeroGroupItem:playHeroGroupHeroEffect(state)
+	self:playAnim(state)
 
-	arg_32_0.last_equip = nil
-	arg_32_0.last_hero = nil
+	self.last_equip = nil
+	self.last_hero = nil
 end
 
-function var_0_0.onUpdateMO(arg_33_0, arg_33_1)
-	arg_33_0._commonHeroCard:setGrayScale(false)
+function OdysseyHeroGroupItem:onUpdateMO(mo)
+	self._commonHeroCard:setGrayScale(false)
 
-	local var_33_0 = HeroGroupModel.instance.battleId
-	local var_33_1
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
 
-	var_33_1 = var_33_0 and lua_battle.configDict[var_33_0]
-	arg_33_0.mo = arg_33_1
-	arg_33_0._posIndex = arg_33_0.mo.id - 1
-	arg_33_0._heroMO = arg_33_1:getHeroMO()
-	arg_33_0.monsterCO = arg_33_1:getMonsterCO()
-	arg_33_0.trialCO = arg_33_1:getTrialCO()
+	self.mo = mo
+	self._posIndex = self.mo.id - 1
+	self._heroMO = mo:getHeroMO()
+	self.monsterCO = mo:getMonsterCO()
+	self.trialCO = mo:getTrialCO()
 
-	local var_33_2 = HeroGroupModel.instance:getCurGroupMO()
+	local groupMo = HeroGroupModel.instance:getCurGroupMO()
 
-	gohelper.setActive(arg_33_0._replayReady, var_33_2.isReplay)
+	gohelper.setActive(self._replayReady, groupMo.isReplay)
 
-	local var_33_3
+	local replay_data
 
-	if var_33_2.isReplay then
-		var_33_3 = var_33_2.replay_hero_data[arg_33_0.mo.heroUid]
+	if groupMo.isReplay then
+		replay_data = groupMo.replay_hero_data[self.mo.heroUid]
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_33_0._lvnumen, "#E9E9E9")
+	SLFramework.UGUI.GuiHelper.SetColor(self._lvnumen, "#E9E9E9")
 
-	for iter_33_0 = 1, 3 do
-		SLFramework.UGUI.GuiHelper.SetColor(arg_33_0._goRankList[iter_33_0], "#F6F3EC")
+	for i = 1, 3 do
+		SLFramework.UGUI.GuiHelper.SetColor(self._goRankList[i], "#F6F3EC")
 	end
 
-	if arg_33_0._heroMO then
-		local var_33_4 = HeroModel.instance:getByHeroId(arg_33_0._heroMO.heroId)
-		local var_33_5 = FightConfig.instance:getSkinCO(var_33_3 and var_33_3.skin or var_33_4.skin)
+	if self._heroMO then
+		local heroSkin = HeroModel.instance:getByHeroId(self._heroMO.heroId)
+		local skinConfig = FightConfig.instance:getSkinCO(replay_data and replay_data.skin or heroSkin.skin)
 
-		arg_33_0._commonHeroCard:onUpdateMO(var_33_5)
+		self._commonHeroCard:onUpdateMO(skinConfig)
 
-		if arg_33_0.isLock or arg_33_0.isAid or arg_33_0.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-			recthelper.setHeight(arg_33_0._goblackmask.transform, 125)
+		if self.isLock or self.isAid or self.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
+			recthelper.setHeight(self._goblackmask.transform, 125)
 		else
-			recthelper.setHeight(arg_33_0._goblackmask.transform, 300)
+			recthelper.setHeight(self._goblackmask.transform, 300)
 		end
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_33_0._careericon, "lssx_" .. tostring(arg_33_0._heroMO.config.career))
+		UISpriteSetMgr.instance:setCommonSprite(self._careericon, "lssx_" .. tostring(self._heroMO.config.career))
 
-		local var_33_6 = var_33_3 and var_33_3.level or arg_33_0._heroMO.level
-		local var_33_7 = HeroGroupBalanceHelper.getHeroBalanceLv(arg_33_0._heroMO.heroId)
-		local var_33_8
+		local lv = replay_data and replay_data.level or self._heroMO.level
+		local roleLv = HeroGroupBalanceHelper.getHeroBalanceLv(self._heroMO.heroId)
+		local isBalanceLv
 
-		if var_33_6 < var_33_7 then
-			var_33_6 = var_33_7
-			var_33_8 = true
+		if lv < roleLv then
+			lv = roleLv
+			isBalanceLv = true
 		end
 
-		local var_33_9, var_33_10 = HeroConfig.instance:getShowLevel(var_33_6)
+		local hero_level, hero_rank = HeroConfig.instance:getShowLevel(lv)
 
-		if var_33_8 then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_33_0._lvnumen, HeroGroupBalanceHelper.BalanceColor)
+		if isBalanceLv then
+			SLFramework.UGUI.GuiHelper.SetColor(self._lvnumen, HeroGroupBalanceHelper.BalanceColor)
 
-			arg_33_0._lvnum.text = "<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">" .. var_33_9
+			self._lvnum.text = "<color=" .. HeroGroupBalanceHelper.BalanceColor .. ">" .. hero_level
 
-			for iter_33_1 = 1, 3 do
-				SLFramework.UGUI.GuiHelper.SetColor(arg_33_0._goRankList[iter_33_1], HeroGroupBalanceHelper.BalanceIconColor)
+			for i = 1, 3 do
+				SLFramework.UGUI.GuiHelper.SetColor(self._goRankList[i], HeroGroupBalanceHelper.BalanceIconColor)
 			end
 		else
-			arg_33_0._lvnum.text = var_33_9
+			self._lvnum.text = hero_level
 		end
 
-		for iter_33_2 = 1, 3 do
-			local var_33_11 = arg_33_0._goRankList[iter_33_2]
+		for i = 1, 3 do
+			local rankGO = self._goRankList[i]
 
-			gohelper.setActive(var_33_11, iter_33_2 == var_33_10 - 1)
+			gohelper.setActive(rankGO, i == hero_rank - 1)
 		end
 
-		gohelper.setActive(arg_33_0._goStars, true)
+		gohelper.setActive(self._goStars, true)
 
-		for iter_33_3 = 1, 6 do
-			local var_33_12 = arg_33_0._goStarList[iter_33_3]
+		for i = 1, 6 do
+			local starGO = self._goStarList[i]
 
-			gohelper.setActive(var_33_12, iter_33_3 <= CharacterEnum.Star[arg_33_0._heroMO.config.rare])
+			gohelper.setActive(starGO, i <= CharacterEnum.Star[self._heroMO.config.rare])
 		end
-	elseif arg_33_0.monsterCO then
-		local var_33_13 = FightConfig.instance:getSkinCO(arg_33_0.monsterCO.skinId)
+	elseif self.monsterCO then
+		local skinConfig = FightConfig.instance:getSkinCO(self.monsterCO.skinId)
 
-		arg_33_0._commonHeroCard:onUpdateMO(var_33_13)
-		UISpriteSetMgr.instance:setCommonSprite(arg_33_0._careericon, "lssx_" .. tostring(arg_33_0.monsterCO.career))
+		self._commonHeroCard:onUpdateMO(skinConfig)
+		UISpriteSetMgr.instance:setCommonSprite(self._careericon, "lssx_" .. tostring(self.monsterCO.career))
 
-		local var_33_14, var_33_15 = HeroConfig.instance:getShowLevel(arg_33_0.monsterCO.level)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(self.monsterCO.level)
 
-		arg_33_0._lvnum.text = var_33_14
+		self._lvnum.text = showLevel
 
-		for iter_33_4 = 1, 3 do
-			local var_33_16 = arg_33_0._goRankList[iter_33_4]
+		for i = 1, 3 do
+			local rankGO = self._goRankList[i]
 
-			gohelper.setActive(var_33_16, iter_33_4 == var_33_15 - 1)
+			gohelper.setActive(rankGO, i == rank - 1)
 		end
 
-		gohelper.setActive(arg_33_0._goStars, false)
-	elseif arg_33_0.trialCO then
-		local var_33_17 = HeroConfig.instance:getHeroCO(arg_33_0.trialCO.heroId)
-		local var_33_18
+		gohelper.setActive(self._goStars, false)
+	elseif self.trialCO then
+		local heroCo = HeroConfig.instance:getHeroCO(self.trialCO.heroId)
+		local skinConfig
 
-		if arg_33_0.trialCO.skin > 0 then
-			var_33_18 = SkinConfig.instance:getSkinCo(arg_33_0.trialCO.skin)
+		if self.trialCO.skin > 0 then
+			skinConfig = SkinConfig.instance:getSkinCo(self.trialCO.skin)
 		else
-			var_33_18 = SkinConfig.instance:getSkinCo(var_33_17.skinId)
+			skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 		end
 
-		if arg_33_0.isLock or arg_33_0.isAid or arg_33_0.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-			recthelper.setHeight(arg_33_0._goblackmask.transform, 125)
+		if self.isLock or self.isAid or self.isRoleNumLock or not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
+			recthelper.setHeight(self._goblackmask.transform, 125)
 		else
-			recthelper.setHeight(arg_33_0._goblackmask.transform, 300)
+			recthelper.setHeight(self._goblackmask.transform, 300)
 		end
 
-		arg_33_0._commonHeroCard:onUpdateMO(var_33_18)
-		UISpriteSetMgr.instance:setCommonSprite(arg_33_0._careericon, "lssx_" .. tostring(var_33_17.career))
+		self._commonHeroCard:onUpdateMO(skinConfig)
+		UISpriteSetMgr.instance:setCommonSprite(self._careericon, "lssx_" .. tostring(heroCo.career))
 
-		local var_33_19, var_33_20 = HeroConfig.instance:getShowLevel(arg_33_0.trialCO.level)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(self.trialCO.level)
 
-		arg_33_0._lvnum.text = var_33_19
+		self._lvnum.text = showLevel
 
-		for iter_33_5 = 1, 3 do
-			local var_33_21 = arg_33_0._goRankList[iter_33_5]
+		for i = 1, 3 do
+			local rankGO = self._goRankList[i]
 
-			gohelper.setActive(var_33_21, iter_33_5 == var_33_20 - 1)
+			gohelper.setActive(rankGO, i == rank - 1)
 		end
 
-		gohelper.setActive(arg_33_0._goStars, true)
+		gohelper.setActive(self._goStars, true)
 
-		for iter_33_6 = 1, 6 do
-			local var_33_22 = arg_33_0._goStarList[iter_33_6]
+		for i = 1, 6 do
+			local starGO = self._goStarList[i]
 
-			gohelper.setActive(var_33_22, iter_33_6 <= CharacterEnum.Star[var_33_17.rare])
-		end
-	end
-
-	if arg_33_0._heroItemContainer then
-		arg_33_0._heroItemContainer.compColor[arg_33_0._lvnumen] = arg_33_0._lvnumen.color
-
-		for iter_33_7 = 1, 3 do
-			arg_33_0._heroItemContainer.compColor[arg_33_0._goRankList[iter_33_7]] = arg_33_0._goRankList[iter_33_7].color
+			gohelper.setActive(starGO, i <= CharacterEnum.Star[heroCo.rare])
 		end
 	end
 
-	arg_33_0.isLock = false
-	arg_33_0.isAidLock = arg_33_0.mo.aid and arg_33_0.mo.aid == -1
-	arg_33_0.isAid = arg_33_0.mo.aid ~= nil
-	arg_33_0.isTrialLock = (arg_33_0.mo.trial and arg_33_0.mo.trialPos) ~= nil
+	if self._heroItemContainer then
+		self._heroItemContainer.compColor[self._lvnumen] = self._lvnumen.color
 
-	local var_33_23 = OdysseyHeroGroupModel.instance:getBattleRoleNum()
+		for i = 1, 3 do
+			self._heroItemContainer.compColor[self._goRankList[i]] = self._goRankList[i].color
+		end
+	end
 
-	arg_33_0.isRoleNumLock = var_33_23 and var_33_23 < arg_33_0.mo.id
-	arg_33_0.isEmpty = arg_33_1:isEmpty()
+	self.isLock = false
+	self.isAidLock = self.mo.aid and self.mo.aid == -1
+	self.isAid = self.mo.aid ~= nil
+	self.isTrialLock = (self.mo.trial and self.mo.trialPos) ~= nil
 
-	gohelper.setActive(arg_33_0._heroGO, (arg_33_0._heroMO ~= nil or arg_33_0.monsterCO ~= nil or arg_33_0.trialCO ~= nil) and not arg_33_0.isLock and not arg_33_0.isRoleNumLock)
-	gohelper.setActive(arg_33_0._noneGO, arg_33_0._heroMO == nil and arg_33_0.monsterCO == nil and arg_33_0.trialCO == nil or arg_33_0.isLock or arg_33_0.isAidLock or arg_33_0.isRoleNumLock)
-	gohelper.setActive(arg_33_0._addGO, arg_33_0._heroMO == nil and arg_33_0.monsterCO == nil and arg_33_0.trialCO == nil and not arg_33_0.isLock and not arg_33_0.isAidLock and not arg_33_0.isRoleNumLock)
-	gohelper.setActive(arg_33_0._lockGO, arg_33_0:selfIsLock())
+	local roleNum = OdysseyHeroGroupModel.instance:getBattleRoleNum()
 
-	local var_33_24 = arg_33_0.mo.aid and arg_33_0.mo.aid ~= -1
+	self.isRoleNumLock = roleNum and roleNum < self.mo.id
+	self.isEmpty = mo:isEmpty()
 
-	gohelper.setActive(arg_33_0._aidGO, var_33_24)
-	gohelper.setActive(arg_33_0._subGO, false)
-	transformhelper.setLocalPosXY(arg_33_0._tagTr, 36.3, arg_33_0._subGO.activeSelf and 144.1 or 212.1)
+	gohelper.setActive(self._heroGO, (self._heroMO ~= nil or self.monsterCO ~= nil or self.trialCO ~= nil) and not self.isLock and not self.isRoleNumLock)
+	gohelper.setActive(self._noneGO, self._heroMO == nil and self.monsterCO == nil and self.trialCO == nil or self.isLock or self.isAidLock or self.isRoleNumLock)
+	gohelper.setActive(self._addGO, self._heroMO == nil and self.monsterCO == nil and self.trialCO == nil and not self.isLock and not self.isAidLock and not self.isRoleNumLock)
+	gohelper.setActive(self._lockGO, self:selfIsLock())
 
-	if arg_33_0.trialCO then
-		gohelper.setActive(arg_33_0._trialTagGO, true)
+	local isAid = self.mo.aid and self.mo.aid ~= -1
 
-		arg_33_0._trialTagTxt.text = luaLang("herogroup_trial_tag0")
+	gohelper.setActive(self._aidGO, isAid)
+	gohelper.setActive(self._subGO, false)
+	transformhelper.setLocalPosXY(self._tagTr, 36.3, self._subGO.activeSelf and 144.1 or 212.1)
+
+	if self.trialCO then
+		gohelper.setActive(self._trialTagGO, true)
+
+		self._trialTagTxt.text = luaLang("herogroup_trial_tag0")
 	else
-		gohelper.setActive(arg_33_0._trialTagGO, false)
+		gohelper.setActive(self._trialTagGO, false)
 	end
 
-	if not HeroSingleGroupModel.instance:isTemp() and arg_33_0.isRoleNumLock and arg_33_0._heroMO ~= nil and arg_33_0.monsterCO == nil then
-		HeroSingleGroupModel.instance:remove(arg_33_0._heroMO.id)
+	if not HeroSingleGroupModel.instance:isTemp() and self.isRoleNumLock and self._heroMO ~= nil and self.monsterCO == nil then
+		HeroSingleGroupModel.instance:remove(self._heroMO.id)
 	end
 
-	arg_33_0:initEquips()
-	arg_33_0:showCounterSign()
+	self:initEquips()
+	self:showCounterSign()
 
-	if arg_33_0._playDeathAnim then
-		arg_33_0._playDeathAnim = nil
+	if self._playDeathAnim then
+		self._playDeathAnim = nil
 
-		arg_33_0:playAnim(UIAnimationName.Open)
+		self:playAnim(UIAnimationName.Open)
 	end
 
-	arg_33_0:_showMojingTip()
-	arg_33_0:initOdysseyEquips()
+	self:_showMojingTip()
+	self:initOdysseyEquips()
 end
 
-function var_0_0.selfIsLock(arg_34_0)
-	return arg_34_0.isLock or arg_34_0.isAidLock or arg_34_0.isRoleNumLock
+function OdysseyHeroGroupItem:selfIsLock()
+	return self.isLock or self.isAidLock or self.isRoleNumLock
 end
 
-function var_0_0.playRestrictAnimation(arg_35_0, arg_35_1)
-	if arg_35_0._heroMO and arg_35_1[arg_35_0._heroMO.uid] then
-		arg_35_0._playDeathAnim = true
+function OdysseyHeroGroupItem:playRestrictAnimation(needRestrictHeroUidDict)
+	if self._heroMO and needRestrictHeroUidDict[self._heroMO.uid] then
+		self._playDeathAnim = true
 
-		arg_35_0:playAnim("herogroup_hero_deal")
+		self:playAnim("herogroup_hero_deal")
 
-		arg_35_0.tweenid = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, arg_35_0.setGrayFactor, nil, arg_35_0)
+		self.tweenid = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, self.setGrayFactor, nil, self)
 	end
 end
 
-function var_0_0.setGrayFactor(arg_36_0, arg_36_1)
-	arg_36_0._commonHeroCard:setGrayFactor(arg_36_1)
+function OdysseyHeroGroupItem:setGrayFactor(value)
+	self._commonHeroCard:setGrayFactor(value)
 end
 
-function var_0_0.resetGrayFactor(arg_37_0)
-	arg_37_0._commonHeroCard:setGrayFactor(0)
+function OdysseyHeroGroupItem:resetGrayFactor()
+	self._commonHeroCard:setGrayFactor(0)
 end
 
-function var_0_0.showCounterSign(arg_38_0)
-	local var_38_0
+function OdysseyHeroGroupItem:showCounterSign()
+	local career
 
-	if arg_38_0._heroMO then
-		var_38_0 = lua_character.configDict[arg_38_0._heroMO.heroId].career
-	elseif arg_38_0.trialCO then
-		var_38_0 = HeroConfig.instance:getHeroCO(arg_38_0.trialCO.heroId).career
-	elseif arg_38_0.monsterCO then
-		var_38_0 = arg_38_0.monsterCO.career
+	if self._heroMO then
+		local hero_config = lua_character.configDict[self._heroMO.heroId]
+
+		career = hero_config.career
+	elseif self.trialCO then
+		local heroCo = HeroConfig.instance:getHeroCO(self.trialCO.heroId)
+
+		career = heroCo.career
+	elseif self.monsterCO then
+		career = self.monsterCO.career
 	end
 
-	local var_38_1 = FightModel.instance:getFightParam()
-	local var_38_2 = HeroGroupModel.instance:getHeroGroupType()
-	local var_38_3 = var_38_2 and var_38_2 == OdysseyEnum.HeroGroupType.Fight
-	local var_38_4 = 0
-	local var_38_5 = 0
+	local haveFightParam = FightModel.instance:getFightParam()
+	local heroGroupType = HeroGroupModel.instance:getHeroGroupType()
+	local showRecommend = heroGroupType and heroGroupType == OdysseyEnum.HeroGroupType.Fight
+	local offset = 0
+	local currentParentOffset = 0
 
-	if arg_38_0._goOdysseyEquipParent.transform.parent ~= arg_38_0._animGO.transform then
-		var_38_5 = OdysseyEnum.CurrentOffset
+	if self._goOdysseyEquipParent.transform.parent ~= self._animGO.transform then
+		currentParentOffset = OdysseyEnum.CurrentOffset
 	end
 
-	local var_38_6 = arg_38_0._goOdysseyEquipParent.transform.localScale.x / arg_38_0._odysseyEmptyEquipParent.transform.localScale.x
+	local offsetScale = self._goOdysseyEquipParent.transform.localScale.x / self._odysseyEmptyEquipParent.transform.localScale.x
 
-	if var_38_3 and var_38_1 then
-		local var_38_7, var_38_8 = FightHelper.detectAttributeCounter()
-		local var_38_9 = tabletool.indexOf(var_38_7, var_38_0)
-		local var_38_10 = tabletool.indexOf(var_38_8, var_38_0)
+	if showRecommend and haveFightParam then
+		local recommended, counter = FightHelper.detectAttributeCounter()
+		local isRecommended = tabletool.indexOf(recommended, career)
+		local isCounter = tabletool.indexOf(counter, career)
 
-		gohelper.setActive(arg_38_0._gorecommended, var_38_9)
-		gohelper.setActive(arg_38_0._gocounter, var_38_10)
+		gohelper.setActive(self._gorecommended, isRecommended)
+		gohelper.setActive(self._gocounter, isCounter)
 
-		if var_38_9 or var_38_10 then
-			var_38_4 = OdysseyEnum.RecommendOffset
+		if isRecommended or isCounter then
+			offset = OdysseyEnum.RecommendOffset
 		end
 	else
-		gohelper.setActive(arg_38_0._gorecommended, false)
-		gohelper.setActive(arg_38_0._gocounter, false)
+		gohelper.setActive(self._gorecommended, false)
+		gohelper.setActive(self._gocounter, false)
 	end
 
-	recthelper.setAnchorY(arg_38_0._odysseyEmptyEquipParent.transform, arg_38_0._odysseyEquipEmptyOriginPos.y + var_38_4)
-	recthelper.setAnchorY(arg_38_0._goOdysseyEquipParent.transform, arg_38_0._odysseyEquipOriginPos.y + (var_38_4 + var_38_5) * var_38_6)
+	recthelper.setAnchorY(self._odysseyEmptyEquipParent.transform, self._odysseyEquipEmptyOriginPos.y + offset)
+	recthelper.setAnchorY(self._goOdysseyEquipParent.transform, self._odysseyEquipOriginPos.y + (offset + currentParentOffset) * offsetScale)
 end
 
-function var_0_0._setUIPressState(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
-	if not arg_39_1 then
+function OdysseyHeroGroupItem:_setUIPressState(graphicCompArr, isPress, oriColorMap)
+	if not graphicCompArr then
 		return
 	end
 
-	local var_39_0 = arg_39_1:GetEnumerator()
+	local iter = graphicCompArr:GetEnumerator()
 
-	while var_39_0:MoveNext() do
-		local var_39_1
+	while iter:MoveNext() do
+		local color
 
-		if arg_39_2 then
-			var_39_1 = arg_39_3 and arg_39_3[var_39_0.Current] * 0.7 or var_0_0.PressColor
-			var_39_1.a = var_39_0.Current.color.a
+		if isPress then
+			color = oriColorMap and oriColorMap[iter.Current] * 0.7 or OdysseyHeroGroupItem.PressColor
+
+			local alpha = iter.Current.color.a
+
+			color.a = alpha
 		else
-			var_39_1 = arg_39_3 and arg_39_3[var_39_0.Current] or Color.white
+			color = oriColorMap and oriColorMap[iter.Current] or Color.white
 		end
 
-		var_39_0.Current.color = var_39_1
+		iter.Current.color = color
 	end
 end
 
-function var_0_0._onClickThis(arg_40_0)
+function OdysseyHeroGroupItem:_onClickThis()
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if arg_40_0.mo.aid or arg_40_0.isRoleNumLock then
-		if arg_40_0.mo.aid == -1 or arg_40_0.isRoleNumLock then
+	if self.mo.aid or self.isRoleNumLock then
+		if self.mo.aid == -1 or self.isRoleNumLock then
 			GameFacade.showToast(ToastEnum.IsRoleNumLock)
 		else
 			GameFacade.showToast(ToastEnum.IsRoleNumUnLock)
@@ -875,263 +891,263 @@ function var_0_0._onClickThis(arg_40_0)
 		return
 	end
 
-	if arg_40_0.isLock then
-		local var_40_0, var_40_1 = HeroGroupModel.instance:getPositionLockDesc(arg_40_0.mo.id)
+	if self.isLock then
+		local lockDesc, param = HeroGroupModel.instance:getPositionLockDesc(self.mo.id)
 
-		GameFacade.showToast(var_40_0, var_40_1)
+		GameFacade.showToast(lockDesc, param)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroGroupItem, arg_40_0.mo.id)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroGroupItem, self.mo.id)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HideAllGroupHeroItemEffect)
 	end
 end
 
-function var_0_0._onClickThisDown(arg_41_0)
-	arg_41_0:_setHeroItemPressState(true)
+function OdysseyHeroGroupItem:_onClickThisDown()
+	self:_setHeroItemPressState(true)
 end
 
-function var_0_0._onClickThisUp(arg_42_0)
-	arg_42_0:_setHeroItemPressState(false)
+function OdysseyHeroGroupItem:_onClickThisUp()
+	self:_setHeroItemPressState(false)
 end
 
-function var_0_0._setHeroItemPressState(arg_43_0, arg_43_1)
-	if not arg_43_0._heroItemContainer then
-		arg_43_0._heroItemContainer = arg_43_0:getUserDataTb_()
+function OdysseyHeroGroupItem:_setHeroItemPressState(press)
+	if not self._heroItemContainer then
+		self._heroItemContainer = self:getUserDataTb_()
 
-		local var_43_0 = arg_43_0._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
+		local images = self._heroGO:GetComponentsInChildren(gohelper.Type_Image, true)
 
-		arg_43_0._heroItemContainer.images = var_43_0
+		self._heroItemContainer.images = images
 
-		local var_43_1 = arg_43_0._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+		local tmps = self._heroGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
 
-		arg_43_0._heroItemContainer.tmps = var_43_1
-		arg_43_0._heroItemContainer.compColor = {}
+		self._heroItemContainer.tmps = tmps
+		self._heroItemContainer.compColor = {}
 
-		local var_43_2 = var_43_0:GetEnumerator()
+		local iter = images:GetEnumerator()
 
-		while var_43_2:MoveNext() do
-			arg_43_0._heroItemContainer.compColor[var_43_2.Current] = var_43_2.Current.color
+		while iter:MoveNext() do
+			self._heroItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 
-		local var_43_3 = var_43_1:GetEnumerator()
+		iter = tmps:GetEnumerator()
 
-		while var_43_3:MoveNext() do
-			arg_43_0._heroItemContainer.compColor[var_43_3.Current] = var_43_3.Current.color
+		while iter:MoveNext() do
+			self._heroItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 	end
 
-	local var_43_4 = arg_43_0._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
+	local spines = self._heroGO:GetComponentsInChildren(GuiSpine.TypeSkeletonGraphic, true)
 
-	arg_43_0._heroItemContainer.spines = var_43_4
+	self._heroItemContainer.spines = spines
 
-	if arg_43_0._heroItemContainer then
-		arg_43_0:_setUIPressState(arg_43_0._heroItemContainer.images, arg_43_1, arg_43_0._heroItemContainer.compColor)
-		arg_43_0:_setUIPressState(arg_43_0._heroItemContainer.tmps, arg_43_1, arg_43_0._heroItemContainer.compColor)
-		arg_43_0:_setUIPressState(arg_43_0._heroItemContainer.spines, arg_43_1)
+	if self._heroItemContainer then
+		self:_setUIPressState(self._heroItemContainer.images, press, self._heroItemContainer.compColor)
+		self:_setUIPressState(self._heroItemContainer.tmps, press, self._heroItemContainer.compColor)
+		self:_setUIPressState(self._heroItemContainer.spines, press)
 	end
 
-	if arg_43_0._imageAdd then
-		local var_43_5 = arg_43_1 and var_0_0.PressColor or Color.white
+	if self._imageAdd then
+		local color = press and OdysseyHeroGroupItem.PressColor or Color.white
 
-		arg_43_0._imageAdd.color = var_43_5
+		self._imageAdd.color = color
 	end
 end
 
-function var_0_0._onClickEquip(arg_44_0)
+function OdysseyHeroGroupItem:_onClickEquip()
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) or arg_44_0.trialCO or HeroGroupTrialModel.instance:haveTrialEquip() then
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) or self.trialCO or HeroGroupTrialModel.instance:haveTrialEquip() then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Addmood)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HideAllGroupHeroItemEffect)
 
-		arg_44_0._viewParam = {
-			heroMo = arg_44_0._heroMO,
-			equipMo = arg_44_0._equipMO,
-			posIndex = arg_44_0._posIndex,
+		self._viewParam = {
+			heroMo = self._heroMO,
+			equipMo = self._equipMO,
+			posIndex = self._posIndex,
 			fromView = EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView
 		}
 
-		if arg_44_0.trialCO then
-			arg_44_0._viewParam.heroMo = HeroGroupTrialModel.instance:getHeroMo(arg_44_0.trialCO)
+		if self.trialCO then
+			self._viewParam.heroMo = HeroGroupTrialModel.instance:getHeroMo(self.trialCO)
 
-			if arg_44_0.trialCO.equipId > 0 then
-				arg_44_0._viewParam.equipMo = arg_44_0._viewParam.heroMo.trialEquipMo
+			if self.trialCO.equipId > 0 then
+				self._viewParam.equipMo = self._viewParam.heroMo.trialEquipMo
 			end
 		end
 
-		arg_44_0:_onOpenEquipTeamView()
+		self:_onOpenEquipTeamView()
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Equip))
 	end
 end
 
-function var_0_0._onClickEquipDown(arg_45_0)
-	arg_45_0:_setEquipItemPressState(true)
+function OdysseyHeroGroupItem:_onClickEquipDown()
+	self:_setEquipItemPressState(true)
 end
 
-function var_0_0._onClickEquipUp(arg_46_0)
-	arg_46_0:_setEquipItemPressState(false)
+function OdysseyHeroGroupItem:_onClickEquipUp()
+	self:_setEquipItemPressState(false)
 end
 
-function var_0_0._setEquipItemPressState(arg_47_0, arg_47_1)
-	if not arg_47_0._equipItemContainer then
-		arg_47_0._equipItemContainer = arg_47_0:getUserDataTb_()
-		arg_47_0._equipEmtpyContainer = arg_47_0:getUserDataTb_()
+function OdysseyHeroGroupItem:_setEquipItemPressState(press)
+	if not self._equipItemContainer then
+		self._equipItemContainer = self:getUserDataTb_()
+		self._equipEmtpyContainer = self:getUserDataTb_()
 
-		local var_47_0 = arg_47_0._equipGO:GetComponentsInChildren(gohelper.Type_Image, true)
+		local images = self._equipGO:GetComponentsInChildren(gohelper.Type_Image, true)
 
-		arg_47_0._equipItemContainer.images = var_47_0
+		self._equipItemContainer.images = images
 
-		local var_47_1 = arg_47_0._equipGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+		local tmps = self._equipGO:GetComponentsInChildren(gohelper.Type_TextMesh, true)
 
-		arg_47_0._equipItemContainer.tmps = var_47_1
-		arg_47_0._equipItemContainer.compColor = {}
+		self._equipItemContainer.tmps = tmps
+		self._equipItemContainer.compColor = {}
 
-		local var_47_2 = arg_47_0._emptyEquipGo:GetComponentsInChildren(gohelper.Type_Image, true)
+		local emptyEquipImages = self._emptyEquipGo:GetComponentsInChildren(gohelper.Type_Image, true)
 
-		arg_47_0._equipEmtpyContainer.images = var_47_2
+		self._equipEmtpyContainer.images = emptyEquipImages
 
-		local var_47_3 = arg_47_0._emptyEquipGo:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+		local emptyEquipTmps = self._emptyEquipGo:GetComponentsInChildren(gohelper.Type_TextMesh, true)
 
-		arg_47_0._equipEmtpyContainer.tmps = var_47_3
-		arg_47_0._equipEmtpyContainer.compColor = {}
+		self._equipEmtpyContainer.tmps = emptyEquipTmps
+		self._equipEmtpyContainer.compColor = {}
 
-		local var_47_4 = var_47_0:GetEnumerator()
+		local iter = images:GetEnumerator()
 
-		while var_47_4:MoveNext() do
-			arg_47_0._equipItemContainer.compColor[var_47_4.Current] = var_47_4.Current.color
+		while iter:MoveNext() do
+			self._equipItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 
-		local var_47_5 = var_47_1:GetEnumerator()
+		iter = tmps:GetEnumerator()
 
-		while var_47_5:MoveNext() do
-			arg_47_0._equipItemContainer.compColor[var_47_5.Current] = var_47_5.Current.color
+		while iter:MoveNext() do
+			self._equipItemContainer.compColor[iter.Current] = iter.Current.color
 		end
 
-		local var_47_6 = var_47_2:GetEnumerator()
+		iter = emptyEquipImages:GetEnumerator()
 
-		while var_47_6:MoveNext() do
-			arg_47_0._equipEmtpyContainer.compColor[var_47_6.Current] = var_47_6.Current.color
+		while iter:MoveNext() do
+			self._equipEmtpyContainer.compColor[iter.Current] = iter.Current.color
 		end
 
-		local var_47_7 = var_47_3:GetEnumerator()
+		iter = emptyEquipTmps:GetEnumerator()
 
-		while var_47_7:MoveNext() do
-			arg_47_0._equipEmtpyContainer.compColor[var_47_7.Current] = var_47_7.Current.color
+		while iter:MoveNext() do
+			self._equipEmtpyContainer.compColor[iter.Current] = iter.Current.color
 		end
 	end
 
-	if arg_47_0._equipItemContainer then
-		arg_47_0:_setUIPressState(arg_47_0._equipItemContainer.images, arg_47_1, arg_47_0._equipItemContainer.compColor)
-		arg_47_0:_setUIPressState(arg_47_0._equipItemContainer.tmps, arg_47_1, arg_47_0._equipItemContainer.compColor)
+	if self._equipItemContainer then
+		self:_setUIPressState(self._equipItemContainer.images, press, self._equipItemContainer.compColor)
+		self:_setUIPressState(self._equipItemContainer.tmps, press, self._equipItemContainer.compColor)
 	end
 
-	if arg_47_0._equipEmtpyContainer then
-		arg_47_0:_setUIPressState(arg_47_0._equipEmtpyContainer.images, arg_47_1, arg_47_0._equipEmtpyContainer.compColor)
-		arg_47_0:_setUIPressState(arg_47_0._equipEmtpyContainer.tmps, arg_47_1, arg_47_0._equipEmtpyContainer.compColor)
+	if self._equipEmtpyContainer then
+		self:_setUIPressState(self._equipEmtpyContainer.images, press, self._equipEmtpyContainer.compColor)
+		self:_setUIPressState(self._equipEmtpyContainer.tmps, press, self._equipEmtpyContainer.compColor)
 	end
 end
 
-function var_0_0._onOpenEquipTeamView(arg_48_0)
-	EquipController.instance:openEquipInfoTeamView(arg_48_0._viewParam)
+function OdysseyHeroGroupItem:_onOpenEquipTeamView()
+	EquipController.instance:openEquipInfoTeamView(self._viewParam)
 end
 
-function var_0_0.onItemBeginDrag(arg_49_0, arg_49_1)
-	if arg_49_1 == arg_49_0.mo.id then
-		ZProj.TweenHelper.DOScale(arg_49_0.go.transform, 1.1, 1.1, 1, 0.2, nil, nil, nil, EaseType.Linear)
-		ZProj.TweenHelper.DOScale(arg_49_0._odysseyEmptyEquipParent.transform, 0.682, 0.682, 1, 0.2, nil, nil, nil, EaseType.Linear)
-		ZProj.TweenHelper.DOScale(arg_49_0._goOdysseyEquipParent.transform, 0.682, 0.682, 1, 0.2, nil, nil, nil, EaseType.Linear)
-		gohelper.setActive(arg_49_0._dragFrameGO, true)
-		gohelper.setActive(arg_49_0._dragFrameSelectGO, true)
-		gohelper.setActive(arg_49_0._dragFrameCompleteGO, false)
+function OdysseyHeroGroupItem:onItemBeginDrag(index)
+	if index == self.mo.id then
+		ZProj.TweenHelper.DOScale(self.go.transform, 1.1, 1.1, 1, 0.2, nil, nil, nil, EaseType.Linear)
+		ZProj.TweenHelper.DOScale(self._odysseyEmptyEquipParent.transform, 0.682, 0.682, 1, 0.2, nil, nil, nil, EaseType.Linear)
+		ZProj.TweenHelper.DOScale(self._goOdysseyEquipParent.transform, 0.682, 0.682, 1, 0.2, nil, nil, nil, EaseType.Linear)
+		gohelper.setActive(self._dragFrameGO, true)
+		gohelper.setActive(self._dragFrameSelectGO, true)
+		gohelper.setActive(self._dragFrameCompleteGO, false)
 	end
 
-	gohelper.setActive(arg_49_0._clickGO, false)
+	gohelper.setActive(self._clickGO, false)
 end
 
-function var_0_0.onItemEndDrag(arg_50_0, arg_50_1, arg_50_2)
-	ZProj.TweenHelper.DOScale(arg_50_0.go.transform, 1, 1, 1, 0.2, nil, nil, nil, EaseType.Linear)
-	ZProj.TweenHelper.DOScale(arg_50_0._odysseyEmptyEquipParent.transform, 0.62, 0.62, 1, 0.2, nil, nil, nil, EaseType.Linear)
-	ZProj.TweenHelper.DOScale(arg_50_0._goOdysseyEquipParent.transform, 0.62, 0.62, 1, 0.2, nil, nil, nil, EaseType.Linear)
-	arg_50_0:_setHeroItemPressState(false)
+function OdysseyHeroGroupItem:onItemEndDrag(index, dragToIndex)
+	ZProj.TweenHelper.DOScale(self.go.transform, 1, 1, 1, 0.2, nil, nil, nil, EaseType.Linear)
+	ZProj.TweenHelper.DOScale(self._odysseyEmptyEquipParent.transform, 0.62, 0.62, 1, 0.2, nil, nil, nil, EaseType.Linear)
+	ZProj.TweenHelper.DOScale(self._goOdysseyEquipParent.transform, 0.62, 0.62, 1, 0.2, nil, nil, nil, EaseType.Linear)
+	self:_setHeroItemPressState(false)
 end
 
-function var_0_0.onItemCompleteDrag(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
-	if arg_51_2 == arg_51_0.mo.id and arg_51_1 ~= arg_51_2 then
-		if arg_51_3 then
-			gohelper.setActive(arg_51_0._dragFrameGO, true)
-			gohelper.setActive(arg_51_0._dragFrameSelectGO, false)
-			gohelper.setActive(arg_51_0._dragFrameCompleteGO, false)
-			gohelper.setActive(arg_51_0._dragFrameCompleteGO, true)
-			TaskDispatcher.cancelTask(arg_51_0.hideDragEffect, arg_51_0)
-			TaskDispatcher.runDelay(arg_51_0.hideDragEffect, arg_51_0, 0.833)
+function OdysseyHeroGroupItem:onItemCompleteDrag(index, dragToIndex, complete)
+	if dragToIndex == self.mo.id and index ~= dragToIndex then
+		if complete then
+			gohelper.setActive(self._dragFrameGO, true)
+			gohelper.setActive(self._dragFrameSelectGO, false)
+			gohelper.setActive(self._dragFrameCompleteGO, false)
+			gohelper.setActive(self._dragFrameCompleteGO, true)
+			TaskDispatcher.cancelTask(self.hideDragEffect, self)
+			TaskDispatcher.runDelay(self.hideDragEffect, self, 0.833)
 		end
 	else
-		gohelper.setActive(arg_51_0._dragFrameGO, false)
+		gohelper.setActive(self._dragFrameGO, false)
 	end
 
-	gohelper.setActive(arg_51_0._clickGO, true)
+	gohelper.setActive(self._clickGO, true)
 end
 
-function var_0_0.hideDragEffect(arg_52_0)
-	gohelper.setActive(arg_52_0._dragFrameGO, false)
+function OdysseyHeroGroupItem:hideDragEffect()
+	gohelper.setActive(self._dragFrameGO, false)
 end
 
-function var_0_0.setHeroGroupEquipEffect(arg_53_0, arg_53_1)
-	arg_53_0._canPlayEffect = arg_53_1
+function OdysseyHeroGroupItem:setHeroGroupEquipEffect(show)
+	self._canPlayEffect = show
 end
 
-function var_0_0.getAnimStateLength(arg_54_0, arg_54_1)
-	arg_54_0.clipLengthDict = arg_54_0.clipLengthDict or {
+function OdysseyHeroGroupItem:getAnimStateLength(stateName)
+	self.clipLengthDict = self.clipLengthDict or {
 		swicth = 0.833,
 		herogroup_hero_deal = 1.667,
 		[UIAnimationName.Open] = 0.833,
 		[UIAnimationName.Close] = 0.333
 	}
 
-	local var_54_0 = arg_54_0.clipLengthDict[arg_54_1]
+	local length = self.clipLengthDict[stateName]
 
-	if not var_54_0 then
-		logError("not get animation state name :  " .. tostring(arg_54_1))
+	if not length then
+		logError("not get animation state name :  " .. tostring(stateName))
 	end
 
-	return var_54_0 or 0
+	return length or 0
 end
 
-function var_0_0.playAnim(arg_55_0, arg_55_1)
-	local var_55_0 = arg_55_0:getAnimStateLength(arg_55_1)
+function OdysseyHeroGroupItem:playAnim(animName)
+	local length = self:getAnimStateLength(animName)
 
-	ShaderKeyWordMgr.enableKeyWordAutoDisable(ShaderKeyWordMgr.CLIPALPHA, var_55_0)
-	arg_55_0.anim:Play(arg_55_1, 0, 0)
+	ShaderKeyWordMgr.enableKeyWordAutoDisable(ShaderKeyWordMgr.CLIPALPHA, length)
+	self.anim:Play(animName, 0, 0)
 end
 
-function var_0_0.getOdysseyEquipItem(arg_56_0)
-	return arg_56_0._odysseyItemList
+function OdysseyHeroGroupItem:getOdysseyEquipItem()
+	return self._odysseyItemList
 end
 
-function var_0_0.onDestroy(arg_57_0)
-	if arg_57_0._equip then
-		CommonDragHelper.instance:unregisterDragObj(arg_57_0._equip.moveContainer)
+function OdysseyHeroGroupItem:onDestroy()
+	if self._equip then
+		CommonDragHelper.instance:unregisterDragObj(self._equip.moveContainer)
 	end
 
-	TaskDispatcher.cancelTask(arg_57_0._onOpenEquipTeamView, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0.hideDragEffect, arg_57_0)
+	TaskDispatcher.cancelTask(self._onOpenEquipTeamView, self)
+	TaskDispatcher.cancelTask(self.hideDragEffect, self)
 
-	for iter_57_0, iter_57_1 in ipairs(arg_57_0._odysseyItemList) do
-		CommonDragHelper.instance:unregisterDragObj(iter_57_1._gonoEmpty)
+	for _, item in ipairs(self._odysseyItemList) do
+		CommonDragHelper.instance:unregisterDragObj(item._gonoEmpty)
 	end
 
-	if arg_57_0._odysseyTweenId then
-		ZProj.TweenHelper.KillById(arg_57_0._odysseyTweenId)
+	if self._odysseyTweenId then
+		ZProj.TweenHelper.KillById(self._odysseyTweenId)
 	end
 
-	if arg_57_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_57_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	arg_57_0:_setEquipDragEnabled(true)
+	self:_setEquipDragEnabled(true)
 end
 
-return var_0_0
+return OdysseyHeroGroupItem

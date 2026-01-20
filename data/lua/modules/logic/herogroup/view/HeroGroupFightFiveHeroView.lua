@@ -1,95 +1,99 @@
-﻿module("modules.logic.herogroup.view.HeroGroupFightFiveHeroView", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupFightFiveHeroView.lua
 
-local var_0_0 = class("HeroGroupFightFiveHeroView", HeroGroupFightView)
+module("modules.logic.herogroup.view.HeroGroupFightFiveHeroView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0:checkHeroList()
-	var_0_0.super._editableInitView(arg_1_0)
+local HeroGroupFightFiveHeroView = class("HeroGroupFightFiveHeroView", HeroGroupFightView)
+
+function HeroGroupFightFiveHeroView:_editableInitView()
+	self:checkHeroList()
+	HeroGroupFightFiveHeroView.super._editableInitView(self)
 end
 
-function var_0_0.checkHeroList(arg_2_0)
-	local var_2_0 = ModuleEnum.FiveHeroEnum.MaxHeroNum
-	local var_2_1 = HeroGroupModel.instance:getCurGroupMO()
+function HeroGroupFightFiveHeroView:checkHeroList()
+	local roleNum = ModuleEnum.FiveHeroEnum.MaxHeroNum
+	local groupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	HeroSingleGroupModel.instance:setMaxHeroCount(var_2_0)
-	HeroSingleGroupModel.instance:setSingleGroup(var_2_1)
+	HeroSingleGroupModel.instance:setMaxHeroCount(roleNum)
+	HeroSingleGroupModel.instance:setSingleGroup(groupMO)
 end
 
-function var_0_0._getKey()
-	return (string.format("%s_%s", PlayerPrefsKey.FiveHeroGroupSelectIndex, PlayerModel.instance:getPlayinfo().userId))
+function HeroGroupFightFiveHeroView._getKey()
+	local key = string.format("%s_%s", PlayerPrefsKey.FiveHeroGroupSelectIndex, PlayerModel.instance:getPlayinfo().userId)
+
+	return key
 end
 
-function var_0_0._initFightGroupDrop(arg_4_0)
-	arg_4_0:_initFightGroupDropFiveHero()
-	arg_4_0:_checkEquipClothSkill()
+function HeroGroupFightFiveHeroView:_initFightGroupDrop()
+	self:_initFightGroupDropFiveHero()
+	self:_checkEquipClothSkill()
 end
 
-function var_0_0._initFightGroupDropFiveHero(arg_5_0)
-	if not arg_5_0:_noAidHero() then
+function HeroGroupFightFiveHeroView:_initFightGroupDropFiveHero()
+	if not self:_noAidHero() then
 		return
 	end
 
-	local var_5_0 = {}
+	local list = {}
 
-	for iter_5_0 = 1, 4 do
-		local var_5_1 = HeroGroupSnapshotModel.instance:getHeroGroupInfo(ModuleEnum.HeroGroupSnapshotType.FiveHero, iter_5_0)
-		local var_5_2 = var_5_1 and var_5_1.name
+	for i = 1, 4 do
+		local info = HeroGroupSnapshotModel.instance:getHeroGroupInfo(ModuleEnum.HeroGroupSnapshotType.FiveHero, i)
+		local name = info and info.name
 
-		var_5_0[iter_5_0] = not string.nilorempty(var_5_2) and var_5_2 or formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(iter_5_0))
+		list[i] = not string.nilorempty(name) and name or formatLuaLang("herogroup_common_name", GameUtil.getNum2Chinese(i))
 	end
 
-	local var_5_3 = PlayerPrefsHelper.getNumber(arg_5_0:_getKey(), 0)
+	local selectIndex = PlayerPrefsHelper.getNumber(self:_getKey(), 0)
 
-	arg_5_0:_setHeroGroupSelectIndex(var_5_3 == 0 and ModuleEnum.FiveHeroEnum.FifthIndex or var_5_3)
-	gohelper.setActive(arg_5_0._btnmodifyname, var_5_3 ~= 0)
+	self:_setHeroGroupSelectIndex(selectIndex == 0 and ModuleEnum.FiveHeroEnum.FifthIndex or selectIndex)
+	gohelper.setActive(self._btnmodifyname, selectIndex ~= 0)
 
-	local var_5_4 = HeroGroupModel.instance:getGroupTypeName()
+	local name = HeroGroupModel.instance:getGroupTypeName()
 
-	if var_5_4 then
-		table.insert(var_5_0, 1, var_5_4)
+	if name then
+		table.insert(list, 1, name)
 	else
-		var_5_3 = var_5_3 - 1
+		selectIndex = selectIndex - 1
 	end
 
-	arg_5_0._dropherogroup:ClearOptions()
-	arg_5_0._dropherogroup:AddOptions(var_5_0)
-	arg_5_0._dropherogroup:SetValue(var_5_3)
-	gohelper.setActive(arg_5_0._dropherogroup, false)
+	self._dropherogroup:ClearOptions()
+	self._dropherogroup:AddOptions(list)
+	self._dropherogroup:SetValue(selectIndex)
+	gohelper.setActive(self._dropherogroup, false)
 end
 
-function var_0_0._groupDropValueChanged(arg_6_0, arg_6_1)
-	PlayerPrefsHelper.setNumber(arg_6_0:_getKey(), arg_6_1)
+function HeroGroupFightFiveHeroView:_groupDropValueChanged(value)
+	PlayerPrefsHelper.setNumber(self:_getKey(), value)
 
-	local var_6_0 = arg_6_1
+	local selectIndex = value
 
-	gohelper.setActive(arg_6_0._btnmodifyname, var_6_0 ~= 0)
+	gohelper.setActive(self._btnmodifyname, selectIndex ~= 0)
 
-	local var_6_1 = arg_6_1 == 0 and ModuleEnum.FiveHeroEnum.FifthIndex or arg_6_1
+	selectIndex = value == 0 and ModuleEnum.FiveHeroEnum.FifthIndex or value
 
-	if arg_6_0:_setHeroGroupSelectIndex(var_6_1) then
-		arg_6_0:_checkEquipClothSkill()
+	if self:_setHeroGroupSelectIndex(selectIndex) then
+		self:_checkEquipClothSkill()
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-		gohelper.setActive(arg_6_0._goherogroupcontain, false)
-		gohelper.setActive(arg_6_0._goherogroupcontain, true)
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupSelectIndex)
 	end
 end
 
-function var_0_0._setHeroGroupSelectIndex(arg_7_0, arg_7_1)
-	HeroGroupSnapshotModel.instance:setSelectIndex(ModuleEnum.HeroGroupSnapshotType.FiveHero, arg_7_1)
+function HeroGroupFightFiveHeroView:_setHeroGroupSelectIndex(index)
+	HeroGroupSnapshotModel.instance:setSelectIndex(ModuleEnum.HeroGroupSnapshotType.FiveHero, index)
 	HeroGroupModel.instance:_setSingleGroup()
 
 	return true
 end
 
-function var_0_0.onClose(arg_8_0)
-	var_0_0.super.onClose(arg_8_0)
+function HeroGroupFightFiveHeroView:onClose()
+	HeroGroupFightFiveHeroView.super.onClose(self)
 	HeroSingleGroupModel.instance:setMaxHeroCount()
 end
 
-function var_0_0._refreshBtns(arg_9_0, arg_9_1)
-	var_0_0.super._refreshBtns(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._dropherogroup, false)
+function HeroGroupFightFiveHeroView:_refreshBtns(isCostPower)
+	HeroGroupFightFiveHeroView.super._refreshBtns(self, isCostPower)
+	gohelper.setActive(self._dropherogroup, false)
 end
 
-return var_0_0
+return HeroGroupFightFiveHeroView

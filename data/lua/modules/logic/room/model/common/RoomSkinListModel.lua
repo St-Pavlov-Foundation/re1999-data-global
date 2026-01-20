@@ -1,103 +1,105 @@
-﻿module("modules.logic.room.model.common.RoomSkinListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomSkinListModel.lua
 
-local var_0_0 = class("RoomSkinListModel", ListScrollModel)
+module("modules.logic.room.model.common.RoomSkinListModel", package.seeall)
 
-local function var_0_1(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0.id
-	local var_1_1 = arg_1_1.id
-	local var_1_2 = RoomConfig.instance:getRoomSkinPriority(var_1_0)
-	local var_1_3 = RoomConfig.instance:getRoomSkinPriority(var_1_1)
+local RoomSkinListModel = class("RoomSkinListModel", ListScrollModel)
 
-	if var_1_2 ~= var_1_3 then
-		return var_1_3 < var_1_2
+local function _sortSkinList(skinA, skinB)
+	local skinIdA = skinA.id
+	local skinIdB = skinB.id
+	local priorityA = RoomConfig.instance:getRoomSkinPriority(skinIdA)
+	local priorityB = RoomConfig.instance:getRoomSkinPriority(skinIdB)
+
+	if priorityA ~= priorityB then
+		return priorityB < priorityA
 	end
 
-	local var_1_4 = RoomConfig.instance:getRoomSkinRare(var_1_0)
-	local var_1_5 = RoomConfig.instance:getRoomSkinRare(var_1_1)
+	local rareA = RoomConfig.instance:getRoomSkinRare(skinIdA)
+	local rareB = RoomConfig.instance:getRoomSkinRare(skinIdB)
 
-	if var_1_4 ~= var_1_5 then
-		return var_1_5 < var_1_4
+	if rareA ~= rareB then
+		return rareB < rareA
 	end
 
-	return var_1_0 < var_1_1
+	return skinIdA < skinIdB
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0:clear()
+function RoomSkinListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_3_0)
+function RoomSkinListModel:reInit()
 	return
 end
 
-function var_0_0.clear(arg_4_0)
-	arg_4_0:_clearData()
-	var_0_0.super.clear(arg_4_0)
+function RoomSkinListModel:clear()
+	self:_clearData()
+	RoomSkinListModel.super.clear(self)
 end
 
-function var_0_0._clearData(arg_5_0)
-	arg_5_0:_setSelectPartId()
-	arg_5_0:setCurPreviewSkinId()
+function RoomSkinListModel:_clearData()
+	self:_setSelectPartId()
+	self:setCurPreviewSkinId()
 end
 
-function var_0_0._setSelectPartId(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function RoomSkinListModel:_setSelectPartId(partId)
+	if not partId then
 		return
 	end
 
-	arg_6_0._selectPartId = arg_6_1
+	self._selectPartId = partId
 end
 
-function var_0_0.setRoomSkinList(arg_7_0, arg_7_1)
-	arg_7_0:_setSelectPartId(arg_7_1)
+function RoomSkinListModel:setRoomSkinList(partId)
+	self:_setSelectPartId(partId)
 
-	local var_7_0 = arg_7_0:getSelectPartId()
-	local var_7_1 = {}
-	local var_7_2 = RoomConfig.instance:getSkinIdList(var_7_0)
+	local selectPartId = self:getSelectPartId()
+	local moList = {}
+	local skinIdList = RoomConfig.instance:getSkinIdList(selectPartId)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-		local var_7_3 = {
-			id = iter_7_1
+	for _, skinId in ipairs(skinIdList) do
+		local mo = {
+			id = skinId
 		}
 
-		var_7_1[#var_7_1 + 1] = var_7_3
+		moList[#moList + 1] = mo
 	end
 
-	table.sort(var_7_1, var_0_1)
-	arg_7_0:setList(var_7_1)
+	table.sort(moList, _sortSkinList)
+	self:setList(moList)
 end
 
-function var_0_0.setCurPreviewSkinId(arg_8_0, arg_8_1)
-	arg_8_0._curPreviewSkinId = arg_8_1
+function RoomSkinListModel:setCurPreviewSkinId(skinId)
+	self._curPreviewSkinId = skinId
 
-	if not arg_8_1 then
+	if not skinId then
 		return
 	end
 
-	local var_8_0
-	local var_8_1 = arg_8_0:getList()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		if iter_8_1.id == arg_8_1 then
-			var_8_0 = iter_8_1
+	for _, mo in ipairs(moList) do
+		if mo.id == skinId then
+			selectMO = mo
 
 			break
 		end
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(arg_8_0._scrollViews) do
-		iter_8_3:setSelect(var_8_0)
+	for _, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.getCurPreviewSkinId(arg_9_0)
-	return arg_9_0._curPreviewSkinId
+function RoomSkinListModel:getCurPreviewSkinId()
+	return self._curPreviewSkinId
 end
 
-function var_0_0.getSelectPartId(arg_10_0)
-	return arg_10_0._selectPartId
+function RoomSkinListModel:getSelectPartId()
+	return self._selectPartId
 end
 
-var_0_0.instance = var_0_0.New()
+RoomSkinListModel.instance = RoomSkinListModel.New()
 
-return var_0_0
+return RoomSkinListModel

@@ -1,433 +1,445 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectDeadNew", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectDeadNew.lua
 
-local var_0_0 = class("FightWorkEffectDeadNew", FightWorkItem)
-local var_0_1 = 1
-local var_0_2 = 0.35
-local var_0_3 = 0.4
-local var_0_4 = 1
-local var_0_5 = 0.1
-local var_0_6 = 0.6
+module("modules.logic.fight.system.work.FightWorkEffectDeadNew", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.actEffectData = arg_1_2
-	arg_1_0._waitForLastHit = arg_1_3
+local FightWorkEffectDeadNew = class("FightWorkEffectDeadNew", FightWorkItem)
+local TimeScale1 = 1
+local DeadActionTime1 = 0.35
+local DelayEffectTime1 = 0.4
+local TimeScale2 = 1
+local DeadActionTime2 = 0.1
+local DelayEffectTime2 = 0.6
+
+function FightWorkEffectDeadNew:onConstructor(fightStepData, fightActEffectData, waitForLastHit)
+	self.fightStepData = fightStepData
+	self.actEffectData = fightActEffectData
+	self._waitForLastHit = waitForLastHit
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0.delayDoneTimer = arg_2_0:com_registTimer(arg_2_0._delayDone, 20)
-	arg_2_0._deadEntity = FightHelper.getEntity(arg_2_0.actEffectData.targetId)
+function FightWorkEffectDeadNew:onStart()
+	self.delayDoneTimer = self:com_registTimer(self._delayDone, 20)
+	self._deadEntity = FightHelper.getEntity(self.actEffectData.targetId)
 
-	if arg_2_0._deadEntity and not arg_2_0._deadEntity.isDead then
-		arg_2_0._deadEntity.isDead = true
+	if self._deadEntity and not self._deadEntity.isDead then
+		self._deadEntity.isDead = true
 
-		if isTypeOf(arg_2_0._deadEntity, FightEntityAssembledMonsterMain) then
-			arg_2_0._deadEntity:killAllSubMonster()
+		if isTypeOf(self._deadEntity, FightEntityAssembledMonsterMain) then
+			self._deadEntity:killAllSubMonster()
 		end
 
-		if isTypeOf(arg_2_0._deadEntity, FightEntityAssembledMonsterSub) then
-			arg_2_0:onDone(true)
+		if isTypeOf(self._deadEntity, FightEntityAssembledMonsterSub) then
+			self:onDone(true)
 
 			return
 		end
 
-		arg_2_0._deadEntityModelId = arg_2_0._deadEntity:getMO().modelId
+		self._deadEntityModelId = self._deadEntity:getMO().modelId
 
-		FightController.instance:dispatchEvent(FightEvent.OnStartEntityDead, arg_2_0._deadEntity.id)
+		FightController.instance:dispatchEvent(FightEvent.OnStartEntityDead, self._deadEntity.id)
 
-		if arg_2_0.fightStepData.actType == FightEnum.ActType.SKILL then
-			arg_2_0._deadEntity.deadBySkillId = arg_2_0.fightStepData.actId
+		if self.fightStepData.actType == FightEnum.ActType.SKILL then
+			self._deadEntity.deadBySkillId = self.fightStepData.actId
 		end
 
-		if arg_2_0._waitForLastHit then
-			if not FightHelper.getEntity(arg_2_0.fightStepData.fromId) then
-				arg_2_0:_playDeadWork()
+		if self._waitForLastHit then
+			local attacker = FightHelper.getEntity(self.fightStepData.fromId)
+
+			if not attacker then
+				self:_playDeadWork()
 
 				return
 			end
 
-			FightController.instance:registerCallback(FightEvent.OnSkillLastHit, arg_2_0._onLastHit, arg_2_0)
-			FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
-			FightController.instance:registerCallback(FightEvent.PlaySameSkillOneDone, arg_2_0._playSameSKillOneDone, arg_2_0)
-			FightController.instance:registerCallback(FightEvent.InvokeEntityDeadImmediately, arg_2_0._invokeEntityDeadImmediately, arg_2_0)
+			FightController.instance:registerCallback(FightEvent.OnSkillLastHit, self._onLastHit, self)
+			FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+			FightController.instance:registerCallback(FightEvent.PlaySameSkillOneDone, self._playSameSKillOneDone, self)
+			FightController.instance:registerCallback(FightEvent.InvokeEntityDeadImmediately, self._invokeEntityDeadImmediately, self)
 		else
-			arg_2_0:_playDeadWork()
+			self:_playDeadWork()
 		end
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._invokeEntityDeadImmediately(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:_onLastHit(arg_3_1, arg_3_2)
+function FightWorkEffectDeadNew:_invokeEntityDeadImmediately(entityId, fightStepData)
+	self:_onLastHit(entityId, fightStepData)
 end
 
-function var_0_0._onLastHit(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0.fightStepData == arg_4_2 then
-		if arg_4_2.actId ~= arg_4_0.fightStepData.actId then
+function FightWorkEffectDeadNew:_onLastHit(entityId, fightStepData)
+	if self.fightStepData == fightStepData then
+		if fightStepData.actId ~= self.fightStepData.actId then
 			return
 		end
 
-		if arg_4_1 ~= arg_4_0._deadEntity.id then
+		if entityId ~= self._deadEntity.id then
 			return
 		end
 
-		local var_4_0 = arg_4_0._deadEntity and arg_4_0._deadEntity:getMO()
-		local var_4_1 = false
+		local entityMO = self._deadEntity and self._deadEntity:getMO()
+		local forceReplyLastHit = false
 
-		if var_4_0 and lua_fight_skin_replay_lasthit.configDict[var_4_0.skin] then
-			var_4_1 = true
+		if entityMO and lua_fight_skin_replay_lasthit.configDict[entityMO.skin] then
+			forceReplyLastHit = true
 		end
 
-		if not var_4_1 and arg_4_0:_isNoDeadEffect() then
-			arg_4_0._deadEntity.spine:play(SpineAnimState.hit, false, true)
+		if not forceReplyLastHit and self:_isNoDeadEffect() then
+			self._deadEntity.spine:play(SpineAnimState.hit, false, true)
 
 			return
 		end
 
-		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, arg_4_0._onLastHit, arg_4_0)
-		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_4_0._onSkillPlayFinish, arg_4_0)
-		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, arg_4_0._playSameSKillOneDone, arg_4_0)
-		arg_4_0:_playDeadWork()
+		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, self._onLastHit, self)
+		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, self._playSameSKillOneDone, self)
+		self:_playDeadWork()
 	end
 end
 
-function var_0_0._playSameSKillOneDone(arg_5_0, arg_5_1)
-	if arg_5_0.fightStepData == arg_5_1 then
-		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, arg_5_0._onLastHit, arg_5_0)
-		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_5_0._onSkillPlayFinish, arg_5_0)
-		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, arg_5_0._playSameSKillOneDone, arg_5_0)
-		arg_5_0:_playDeadWork()
+function FightWorkEffectDeadNew:_playSameSKillOneDone(fightStepData)
+	if self.fightStepData == fightStepData then
+		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, self._onLastHit, self)
+		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, self._playSameSKillOneDone, self)
+		self:_playDeadWork()
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_0.fightStepData == arg_6_3 then
-		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, arg_6_0._onLastHit, arg_6_0)
-		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_6_0._onSkillPlayFinish, arg_6_0)
-		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, arg_6_0._playSameSKillOneDone, arg_6_0)
-		arg_6_0:_playDeadWork()
+function FightWorkEffectDeadNew:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if self.fightStepData == fightStepData then
+		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, self._onLastHit, self)
+		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, self._playSameSKillOneDone, self)
+		self:_playDeadWork()
 	end
 end
 
-function var_0_0._playDeadWork(arg_7_0)
-	arg_7_0:com_cancelTimer(arg_7_0.delayDoneTimer)
+function FightWorkEffectDeadNew:_playDeadWork()
+	self:com_cancelTimer(self.delayDoneTimer)
 
-	arg_7_0.delayDoneTimer = arg_7_0:com_registTimer(arg_7_0._delayDone, 20)
+	self.delayDoneTimer = self:com_registTimer(self._delayDone, 20)
 
-	local var_7_0 = arg_7_0._deadEntity:getMO()
-	local var_7_1 = arg_7_0:_getDieActName(var_7_0)
+	local entityMO = self._deadEntity:getMO()
+	local aniName = self:_getDieActName(entityMO)
 
-	if var_7_1 then
-		arg_7_0._deadEntity.spine:play(var_7_1, false, false)
+	if aniName then
+		self._deadEntity.spine:play(aniName, false, false)
 	end
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0:getBuffDic()) do
-		arg_7_0._deadEntity.buff:delBuff(iter_7_1.uid, true)
+	for _, buffMO in pairs(entityMO:getBuffDic()) do
+		self._deadEntity.buff:delBuff(buffMO.uid, true)
 	end
 
-	var_7_0:clearAllBuff()
-	arg_7_0._deadEntity:resetSpineMat()
-	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, arg_7_0._deadEntity.id)
-	FightController.instance:dispatchEvent(FightEvent.SetEntityWeatherEffectVisible, arg_7_0._deadEntity, false)
-	FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, arg_7_0._deadEntity.id, arg_7_0._deadEntity.spineRenderer:getReplaceMat())
+	entityMO:clearAllBuff()
+	self._deadEntity:resetSpineMat()
+	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, self._deadEntity.id)
+	FightController.instance:dispatchEvent(FightEvent.SetEntityWeatherEffectVisible, self._deadEntity, false)
+	FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, self._deadEntity.id, self._deadEntity.spineRenderer:getReplaceMat())
 
-	if var_7_0.modelId == 111101 and FightModel.instance:getFightParam().episodeId == 10115 then
-		arg_7_0._direct_end_work = true
+	if entityMO.modelId == 111101 then
+		local fight_param = FightModel.instance:getFightParam()
+
+		if fight_param.episodeId == 10115 then
+			self._direct_end_work = true
+		end
 	end
 
-	local var_7_2 = "OnGuideEntityDeadPause"
-	local var_7_3 = FightEvent.OnGuideEntityDeadPause
-	local var_7_4 = FightEvent.OnGuideEntityDeadContinue
-	local var_7_5 = arg_7_0._deadContinue
-	local var_7_6 = arg_7_0
-	local var_7_7 = {
-		side = arg_7_0._deadEntity:getSide(),
-		modelId = arg_7_0._deadEntity:getMO().modelId
+	local v1 = "OnGuideEntityDeadPause"
+	local v2 = FightEvent.OnGuideEntityDeadPause
+	local v3 = FightEvent.OnGuideEntityDeadContinue
+	local v4 = self._deadContinue
+	local v5 = self
+	local v6 = {
+		side = self._deadEntity:getSide(),
+		modelId = self._deadEntity:getMO().modelId
 	}
+	local result = FightController.instance:GuideFlowPauseAndContinue(v1, v2, v3, v4, v5, v6)
 
-	if FightController.instance:GuideFlowPauseAndContinue(var_7_2, var_7_3, var_7_4, var_7_5, var_7_6, var_7_7) then
-		arg_7_0:com_cancelTimer(arg_7_0.delayDoneTimer)
+	if result then
+		self:com_cancelTimer(self.delayDoneTimer)
 	end
 
-	if arg_7_0._deadEntity.nameUI then
-		arg_7_0._deadEntity.nameUI:playDeadEffect()
+	if self._deadEntity.nameUI then
+		self._deadEntity.nameUI:playDeadEffect()
 	end
 
-	FightAudioMgr.instance:playHeroVoiceRandom(arg_7_0._deadEntity:getMO().modelId, CharacterEnum.VoiceType.FightDie)
+	FightAudioMgr.instance:playHeroVoiceRandom(self._deadEntity:getMO().modelId, CharacterEnum.VoiceType.FightDie)
 end
 
-function var_0_0._getDieActName(arg_8_0, arg_8_1)
-	if lua_fight_skin_dead_performance.configDict[arg_8_1.skin] then
+function FightWorkEffectDeadNew:_getDieActName(entityMO)
+	local deadPerformanceConfig = lua_fight_skin_dead_performance.configDict[entityMO.skin]
+
+	if deadPerformanceConfig then
 		return nil
 	end
 
-	local var_8_0 = SpineAnimState.die
-	local var_8_1 = lua_fight_die_act_enemyus.configDict[arg_8_1.skin]
+	local aniName = SpineAnimState.die
+	local fight_die_act_config = lua_fight_die_act_enemyus.configDict[entityMO.skin]
 
-	if var_8_1 then
-		if arg_8_0._deadEntity:isMySide() then
-			var_8_1 = var_8_1[1]
+	if fight_die_act_config then
+		if self._deadEntity:isMySide() then
+			fight_die_act_config = fight_die_act_config[1]
 		else
-			var_8_1 = var_8_1[2]
+			fight_die_act_config = fight_die_act_config[2]
 		end
 
-		if var_8_1 then
-			arg_8_0._showDeadEffect = var_8_1.playEffect
-			var_8_0 = var_8_1.act
+		if fight_die_act_config then
+			self._showDeadEffect = fight_die_act_config.playEffect
+			aniName = fight_die_act_config.act
 		end
 	end
 
-	return var_8_0
+	return aniName
 end
 
-function var_0_0._deadContinue(arg_9_0)
-	local var_9_0 = arg_9_0._deadEntity:getMO()
+function FightWorkEffectDeadNew:_deadContinue()
+	local entityMO = self._deadEntity:getMO()
+	local deadPerformanceConfig = lua_fight_skin_dead_performance.configDict[entityMO.skin]
 
-	if lua_fight_skin_dead_performance.configDict[var_9_0.skin] then
-		arg_9_0:_delayNoDeadEffectDone()
+	if deadPerformanceConfig then
+		self:_delayNoDeadEffectDone()
 	else
-		local var_9_1 = arg_9_0._deadEntity.spine:getSkeletonAnim()
+		local skeletonAnim = self._deadEntity.spine:getSkeletonAnim()
 
-		if gohelper.isNil(var_9_1) then
+		if gohelper.isNil(skeletonAnim) then
 			-- block empty
 		end
 
-		local var_9_2 = var_9_1 and var_9_1:GetCurAnimDuration() or 0.01
-		local var_9_3 = FightConfig.instance:getSkinSpineActionDict(arg_9_0._deadEntity:getMO().skin)
-		local var_9_4 = var_9_3 and var_9_3[SpineAnimState.die]
+		local deadAnimDuration = skeletonAnim and skeletonAnim:GetCurAnimDuration() or 0.01
+		local spineActionDict = FightConfig.instance:getSkinSpineActionDict(self._deadEntity:getMO().skin)
+		local spineActionCO = spineActionDict and spineActionDict[SpineAnimState.die]
 
-		if var_9_4 and var_9_4.effectRemoveTime ~= 0 then
-			var_9_2 = var_9_4.effectRemoveTime
+		if spineActionCO and spineActionCO.effectRemoveTime ~= 0 then
+			deadAnimDuration = spineActionCO.effectRemoveTime
 		end
 
-		local var_9_5 = var_9_2 / FightModel.instance:getSpeed()
+		deadAnimDuration = deadAnimDuration / FightModel.instance:getSpeed()
 
-		if arg_9_0:_isNoDeadEffect() then
-			TaskDispatcher.runDelay(arg_9_0._delayNoDeadEffectDone, arg_9_0, var_9_5)
+		if self:_isNoDeadEffect() then
+			TaskDispatcher.runDelay(self._delayNoDeadEffectDone, self, deadAnimDuration)
 		else
-			local var_9_6 = arg_9_0._deadEntity and arg_9_0._deadEntity:getMO()
-			local var_9_7 = var_9_6 and var_9_6:isCharacter() and var_0_2 or var_0_5
+			local mo = self._deadEntity and self._deadEntity:getMO()
+			local deadActionTime = mo and mo:isCharacter() and DeadActionTime1 or DeadActionTime2
 
-			TaskDispatcher.runDelay(arg_9_0._deadComplete, arg_9_0, var_9_5 * var_9_7)
+			TaskDispatcher.runDelay(self._deadComplete, self, deadAnimDuration * deadActionTime)
 		end
 	end
 
 	if FightDataHelper.stateMgr.isReplay then
-		TaskDispatcher.runRepeat(arg_9_0._tick, arg_9_0, 1, 10)
+		TaskDispatcher.runRepeat(self._tick, self, 1, 10)
 	end
 end
 
-function var_0_0._tick(arg_10_0)
+function FightWorkEffectDeadNew:_tick()
 	if FightDataHelper.stateMgr.isReplay then
 		FightController.instance:dispatchEvent(FightEvent.ReplayTick)
 	end
 end
 
-function var_0_0._deadComplete(arg_11_0)
-	local var_11_0 = arg_11_0._deadEntity:getMO()
-	local var_11_1 = var_11_0 and var_11_0:isCharacter() and true or false
-	local var_11_2 = arg_11_0:_getDeadEffectType()
+function FightWorkEffectDeadNew:_deadComplete()
+	local entityMO = self._deadEntity:getMO()
+	local isCharacter = entityMO and entityMO:isCharacter() and true or false
+	local deadEffectType = self:_getDeadEffectType()
 
-	if var_11_2 == FightEnum.DeadEffectType.NormalEffect then
-		local var_11_3 = var_11_1 and var_0_3 or var_0_6
+	if deadEffectType == FightEnum.DeadEffectType.NormalEffect then
+		local delayEffectTime = isCharacter and DelayEffectTime1 or DelayEffectTime2
 
-		TaskDispatcher.runDelay(arg_11_0._deadPlayEffect, arg_11_0, var_11_3 / FightModel.instance:getSpeed())
+		TaskDispatcher.runDelay(self._deadPlayEffect, self, delayEffectTime / FightModel.instance:getSpeed())
 	end
 
-	arg_11_0._dissolveWork = SpineDissolveWork.New()
+	self._dissolveWork = SpineDissolveWork.New()
 
-	arg_11_0._dissolveWork:registerDoneListener(arg_11_0._onDissolveDone, arg_11_0)
+	self._dissolveWork:registerDoneListener(self._onDissolveDone, self)
 
-	local var_11_4 = {
-		dissolveEntity = arg_11_0._deadEntity,
-		dissolveType = arg_11_0:_getDissolveType(var_11_2, var_11_1),
-		timeScale = var_11_1 and var_0_1 or var_0_4
-	}
+	local context = {}
 
-	arg_11_0._dissolveWork:onStart(var_11_4)
+	context.dissolveEntity = self._deadEntity
+	context.dissolveType = self:_getDissolveType(deadEffectType, isCharacter)
+	context.timeScale = isCharacter and TimeScale1 or TimeScale2
+
+	self._dissolveWork:onStart(context)
 end
 
-function var_0_0._getDissolveType(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == FightEnum.DeadEffectType.NormalEffect then
-		return arg_12_2 and FightEnum.DissolveType.Player or FightEnum.DissolveType.Monster
-	elseif arg_12_1 == FightEnum.DeadEffectType.ZaoWu then
+function FightWorkEffectDeadNew:_getDissolveType(deadEffectType, isCharacter)
+	if deadEffectType == FightEnum.DeadEffectType.NormalEffect then
+		return isCharacter and FightEnum.DissolveType.Player or FightEnum.DissolveType.Monster
+	elseif deadEffectType == FightEnum.DeadEffectType.ZaoWu then
 		return FightEnum.DissolveType.ZaoWu
-	elseif arg_12_1 == FightEnum.DeadEffectType.Abjqr4 then
+	elseif deadEffectType == FightEnum.DeadEffectType.Abjqr4 then
 		return FightEnum.DissolveType.Abjqr4
 	else
-		return arg_12_2 and FightEnum.DissolveType.Player or FightEnum.DissolveType.Monster
+		return isCharacter and FightEnum.DissolveType.Player or FightEnum.DissolveType.Monster
 	end
 end
 
-function var_0_0._deadPlayEffect(arg_13_0)
-	local var_13_0 = arg_13_0._deadEntity:isMySide() and FightPreloadEffectWork.buff_siwang or FightPreloadEffectWork.buff_siwang_monster
+function FightWorkEffectDeadNew:_deadPlayEffect()
+	local effectPath = self._deadEntity:isMySide() and FightPreloadEffectWork.buff_siwang or FightPreloadEffectWork.buff_siwang_monster
 
-	if var_13_0 == FightPreloadEffectWork.buff_siwang_monster then
+	if effectPath == FightPreloadEffectWork.buff_siwang_monster then
 		AudioMgr.instance:trigger(410000079)
 	end
 
-	if arg_13_0._deadEntity.effect:isDestroyed() then
+	if self._deadEntity.effect:isDestroyed() then
 		return
 	end
 
-	arg_13_0._effectWrap = arg_13_0._deadEntity.effect:addHangEffect(var_13_0, ModuleEnum.SpineHangPointRoot)
+	self._effectWrap = self._deadEntity.effect:addHangEffect(effectPath, ModuleEnum.SpineHangPointRoot)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_13_0._deadEntity.id, arg_13_0._effectWrap)
-	arg_13_0._effectWrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self._deadEntity.id, self._effectWrap)
+	self._effectWrap:setLocalPos(0, 0, 0)
 end
 
-function var_0_0._onDissolveDone(arg_14_0)
-	arg_14_0:_doneAndRemoveEntity()
+function FightWorkEffectDeadNew:_onDissolveDone()
+	self:_doneAndRemoveEntity()
 end
 
-function var_0_0._delayNoDeadEffectDone(arg_15_0)
-	if arg_15_0._direct_end_work then
-		arg_15_0:_checkDieDialogAfter()
+function FightWorkEffectDeadNew:_delayNoDeadEffectDone()
+	if self._direct_end_work then
+		self:_checkDieDialogAfter()
 
 		return
 	end
 
-	arg_15_0:_doneAndRemoveEntity()
+	self:_doneAndRemoveEntity()
 end
 
-function var_0_0._delayDone(arg_16_0)
+function FightWorkEffectDeadNew:_delayDone()
 	if FightTLEventPlayEffectByOperation.playing then
-		arg_16_0.delayDoneTimer = arg_16_0:com_registTimer(arg_16_0._delayDone, 20)
+		self.delayDoneTimer = self:com_registTimer(self._delayDone, 20)
 
 		return
 	end
 
-	logError("dead step play timeout, targetId = " .. arg_16_0.actEffectData.targetId)
-	arg_16_0:_doneAndRemoveEntity()
+	logError("dead step play timeout, targetId = " .. self.actEffectData.targetId)
+	self:_doneAndRemoveEntity()
 end
 
-function var_0_0._doneAndRemoveEntity(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._deadPlayEffect, arg_17_0)
+function FightWorkEffectDeadNew:_doneAndRemoveEntity()
+	TaskDispatcher.cancelTask(self._deadPlayEffect, self)
 
-	arg_17_0._afterDeadFlow = FlowSequence.New()
+	self._afterDeadFlow = FlowSequence.New()
 
-	local var_17_0 = GameSceneMgr.instance:getCurScene().entityMgr
-	local var_17_1 = arg_17_0._deadEntity:isMySide()
-	local var_17_2 = arg_17_0._deadEntity:getMO()
-	local var_17_3 = lua_fight_dead_entity_mgr.configDict[var_17_2.skin]
-	local var_17_4 = lua_fight_skin_dead_performance.configDict[var_17_2.skin]
+	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local isMySide = self._deadEntity:isMySide()
+	local entityMO = self._deadEntity:getMO()
+	local deadMgrConfig = lua_fight_dead_entity_mgr.configDict[entityMO.skin]
+	local deadPerformanceConfig = lua_fight_skin_dead_performance.configDict[entityMO.skin]
 
-	if var_17_3 then
-		var_17_0:removeUnitData(arg_17_0._deadEntity:getTag(), arg_17_0._deadEntity.id)
-		FightController.instance:dispatchEvent(FightEvent.EntrustEntity, arg_17_0._deadEntity)
-		arg_17_0._afterDeadFlow:addWork(WorkWaitSeconds.New(var_17_3.playTime / 1000))
-	elseif var_17_4 then
-		arg_17_0:com_cancelTimer(arg_17_0.delayDoneTimer)
-		arg_17_0._afterDeadFlow:addWork(FightHelper.buildDeadPerformanceWork(var_17_4, arg_17_0._deadEntity))
-		arg_17_0._afterDeadFlow:addWork(FunctionWork.New(function()
-			var_17_0:removeUnit(arg_17_0._deadEntity:getTag(), arg_17_0._deadEntity.id)
+	if deadMgrConfig then
+		entityMgr:removeUnitData(self._deadEntity:getTag(), self._deadEntity.id)
+		FightController.instance:dispatchEvent(FightEvent.EntrustEntity, self._deadEntity)
+		self._afterDeadFlow:addWork(WorkWaitSeconds.New(deadMgrConfig.playTime / 1000))
+	elseif deadPerformanceConfig then
+		self:com_cancelTimer(self.delayDoneTimer)
+		self._afterDeadFlow:addWork(FightHelper.buildDeadPerformanceWork(deadPerformanceConfig, self._deadEntity))
+		self._afterDeadFlow:addWork(FunctionWork.New(function()
+			entityMgr:removeUnit(self._deadEntity:getTag(), self._deadEntity.id)
 		end))
 	else
-		var_17_0:removeUnit(arg_17_0._deadEntity:getTag(), arg_17_0._deadEntity.id)
+		entityMgr:removeUnit(self._deadEntity:getTag(), self._deadEntity.id)
 	end
 
-	arg_17_0._afterDeadFlow:addWork(FunctionWork.New(arg_17_0._dispatchDead, arg_17_0))
+	self._afterDeadFlow:addWork(FunctionWork.New(self._dispatchDead, self))
 
-	if var_17_1 then
-		arg_17_0:com_cancelTimer(arg_17_0.delayDoneTimer)
-		arg_17_0._afterDeadFlow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.CheckDeadEntityCount))
+	if isMySide then
+		self:com_cancelTimer(self.delayDoneTimer)
+		self._afterDeadFlow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.CheckDeadEntityCount))
 	end
 
-	arg_17_0._afterDeadFlow:registerDoneListener(arg_17_0._checkDieDialogAfter, arg_17_0)
-	arg_17_0._afterDeadFlow:start()
+	self._afterDeadFlow:registerDoneListener(self._checkDieDialogAfter, self)
+	self._afterDeadFlow:start()
 end
 
-function var_0_0._dispatchDead(arg_19_0)
-	FightController.instance:dispatchEvent(FightEvent.OnEntityDead, arg_19_0._deadEntity.id)
+function FightWorkEffectDeadNew:_dispatchDead()
+	FightController.instance:dispatchEvent(FightEvent.OnEntityDead, self._deadEntity.id)
 end
 
-function var_0_0._checkDieDialogAfter(arg_20_0)
-	var_0_0.needStopDeadWork = nil
+function FightWorkEffectDeadNew:_checkDieDialogAfter()
+	FightWorkEffectDeadNew.needStopDeadWork = nil
 
-	if arg_20_0._deadEntityModelId then
-		FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterDieP, arg_20_0._deadEntityModelId)
+	if self._deadEntityModelId then
+		FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterDieP, self._deadEntityModelId)
 
-		if var_0_0.needStopDeadWork then
-			arg_20_0:com_cancelTimer(arg_20_0.delayDoneTimer)
-			FightController.instance:registerCallback(FightEvent.FightDialogEnd, arg_20_0._onFightDialogEnd, arg_20_0)
+		if FightWorkEffectDeadNew.needStopDeadWork then
+			self:com_cancelTimer(self.delayDoneTimer)
+			FightController.instance:registerCallback(FightEvent.FightDialogEnd, self._onFightDialogEnd, self)
 		else
-			arg_20_0:_onFinish()
+			self:_onFinish()
 		end
 	else
-		arg_20_0:_onFinish()
+		self:_onFinish()
 	end
 end
 
-function var_0_0._onFightDialogEnd(arg_21_0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_21_0._onFightDialogEnd, arg_21_0)
-	arg_21_0:_onFinish()
+function FightWorkEffectDeadNew:_onFightDialogEnd()
+	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, self._onFightDialogEnd, self)
+	self:_onFinish()
 end
 
-function var_0_0._onFinish(arg_22_0)
-	FightController.instance:dispatchEvent(FightEvent.EntityDeadFinish, arg_22_0._deadEntityModelId)
-	arg_22_0:onDone(true)
+function FightWorkEffectDeadNew:_onFinish()
+	FightController.instance:dispatchEvent(FightEvent.EntityDeadFinish, self._deadEntityModelId)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_23_0)
-	if arg_23_0._afterDeadFlow then
-		arg_23_0._afterDeadFlow:unregisterDoneListener(arg_23_0._checkDieDialogAfter, arg_23_0)
-		arg_23_0._afterDeadFlow:stop()
+function FightWorkEffectDeadNew:clearWork()
+	if self._afterDeadFlow then
+		self._afterDeadFlow:unregisterDoneListener(self._checkDieDialogAfter, self)
+		self._afterDeadFlow:stop()
 
-		arg_23_0._afterDeadFlow = nil
+		self._afterDeadFlow = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_23_0._tick, arg_23_0)
+	TaskDispatcher.cancelTask(self._tick, self)
 
-	if arg_23_0._dissolveWork then
-		arg_23_0._dissolveWork:onStop()
-		arg_23_0._dissolveWork:unregisterDoneListener(arg_23_0._onDissolveDone, arg_23_0)
+	if self._dissolveWork then
+		self._dissolveWork:onStop()
+		self._dissolveWork:unregisterDoneListener(self._onDissolveDone, self)
 
-		arg_23_0._dissolveWork = nil
+		self._dissolveWork = nil
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.InvokeEntityDeadImmediately, arg_23_0._invokeEntityDeadImmediately, arg_23_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, arg_23_0._onLastHit, arg_23_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_23_0._onSkillPlayFinish, arg_23_0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_23_0._onFightDialogEnd, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._deadPlayEffect, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._deadComplete, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._delayNoDeadEffectDone, arg_23_0)
+	FightController.instance:unregisterCallback(FightEvent.InvokeEntityDeadImmediately, self._invokeEntityDeadImmediately, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, self._onLastHit, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, self._onFightDialogEnd, self)
+	TaskDispatcher.cancelTask(self._deadPlayEffect, self)
+	TaskDispatcher.cancelTask(self._deadComplete, self)
+	TaskDispatcher.cancelTask(self._delayNoDeadEffectDone, self)
 
-	arg_23_0.fightStepData = nil
-	arg_23_0.actEffectData = nil
+	self.fightStepData = nil
+	self.actEffectData = nil
 end
 
-function var_0_0.onResume(arg_24_0)
+function FightWorkEffectDeadNew:onResume()
 	logError("dead step can't resume")
 end
 
-function var_0_0._isNoDeadEffect(arg_25_0)
-	if arg_25_0._showDeadEffect == 0 then
+function FightWorkEffectDeadNew:_isNoDeadEffect()
+	if self._showDeadEffect == 0 then
 		return true
-	elseif arg_25_0._showDeadEffect == 1 then
+	elseif self._showDeadEffect == 1 then
 		return false
 	end
 
-	local var_25_0 = arg_25_0._deadEntity and arg_25_0._deadEntity:getMO()
-	local var_25_1 = var_25_0 and var_25_0.skin
+	local mo = self._deadEntity and self._deadEntity:getMO()
+	local skinId = mo and mo.skin
 
-	if not var_25_1 then
-		local var_25_2 = var_25_0 and var_25_0:getCO()
+	if not skinId then
+		local co = mo and mo:getCO()
 
-		var_25_1 = var_25_2 and var_25_2.skinId
+		skinId = co and co.skinId
 	end
 
-	local var_25_3 = FightConfig.instance:getSkinCO(var_25_1)
+	local skinCO = FightConfig.instance:getSkinCO(skinId)
 
-	return var_25_3 and var_25_3.noDeadEffect == FightEnum.DeadEffectType.NoEffect
+	return skinCO and skinCO.noDeadEffect == FightEnum.DeadEffectType.NoEffect
 end
 
-function var_0_0._getDeadEffectType(arg_26_0)
-	local var_26_0 = arg_26_0._deadEntity and arg_26_0._deadEntity:getMO()
-	local var_26_1 = var_26_0 and FightConfig.instance:getSkinCO(var_26_0.skin)
+function FightWorkEffectDeadNew:_getDeadEffectType()
+	local mo = self._deadEntity and self._deadEntity:getMO()
+	local skinCO = mo and FightConfig.instance:getSkinCO(mo.skin)
 
-	return var_26_1 and var_26_1.noDeadEffect
+	return skinCO and skinCO.noDeadEffect
 end
 
-return var_0_0
+return FightWorkEffectDeadNew

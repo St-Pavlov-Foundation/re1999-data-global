@@ -1,107 +1,109 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroStageItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroStageItem.lua
 
-local var_0_0 = class("DiceHeroStageItem", LuaCompBase)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroStageItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._btnClick = gohelper.findChildButton(arg_1_1, "")
-	arg_1_0.viewGo = gohelper.findChild(arg_1_1, "#go_levelitem")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGo, "#go_normal")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGo, "#go_lock")
-	arg_1_0._gochallenge = gohelper.findChild(arg_1_0.viewGo, "#go_challenge")
-	arg_1_0._gocompleted = gohelper.findChild(arg_1_0.viewGo, "#go_completed")
-	arg_1_0._gopart = gohelper.findChild(arg_1_1, "Part")
-	arg_1_0._gobossicon1 = gohelper.findChild(arg_1_1, "Part/#go_BossIcon")
-	arg_1_0._gobossicon2 = gohelper.findChild(arg_1_1, "Part/#go_BigBossIcon")
-	arg_1_0._lockAnim = gohelper.findChildAnim(arg_1_0.viewGo, "#go_lock")
-	arg_1_0._completedAnim = gohelper.findChildAnim(arg_1_0.viewGo, "#go_completed")
+local DiceHeroStageItem = class("DiceHeroStageItem", LuaCompBase)
+
+function DiceHeroStageItem:init(go)
+	self._btnClick = gohelper.findChildButton(go, "")
+	self.viewGo = gohelper.findChild(go, "#go_levelitem")
+	self._gonormal = gohelper.findChild(self.viewGo, "#go_normal")
+	self._golock = gohelper.findChild(self.viewGo, "#go_lock")
+	self._gochallenge = gohelper.findChild(self.viewGo, "#go_challenge")
+	self._gocompleted = gohelper.findChild(self.viewGo, "#go_completed")
+	self._gopart = gohelper.findChild(go, "Part")
+	self._gobossicon1 = gohelper.findChild(go, "Part/#go_BossIcon")
+	self._gobossicon2 = gohelper.findChild(go, "Part/#go_BigBossIcon")
+	self._lockAnim = gohelper.findChildAnim(self.viewGo, "#go_lock")
+	self._completedAnim = gohelper.findChildAnim(self.viewGo, "#go_completed")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnClick:AddClickListener(arg_2_0._onClickStage, arg_2_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.InfoUpdate, arg_2_0._onInfoUpdate, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+function DiceHeroStageItem:addEventListeners()
+	self._btnClick:AddClickListener(self._onClickStage, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.InfoUpdate, self._onInfoUpdate, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnClick:RemoveClickListener()
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.InfoUpdate, arg_3_0._onInfoUpdate, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+function DiceHeroStageItem:removeEventListeners()
+	self._btnClick:RemoveClickListener()
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.InfoUpdate, self._onInfoUpdate, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._co = arg_4_1
-	arg_4_0.isInfinite = arg_4_2
+function DiceHeroStageItem:initData(data, isInfinite)
+	self._co = data
+	self.isInfinite = isInfinite
 
-	gohelper.setActive(arg_4_0._gobossicon1, arg_4_1.enemyType == 1)
-	gohelper.setActive(arg_4_0._gobossicon2, arg_4_1.enemyType == 2)
-	arg_4_0:_onInfoUpdate()
+	gohelper.setActive(self._gobossicon1, data.enemyType == 1)
+	gohelper.setActive(self._gobossicon2, data.enemyType == 2)
+	self:_onInfoUpdate()
 end
 
-function var_0_0._onCloseViewFinish(arg_5_0)
+function DiceHeroStageItem:_onCloseViewFinish()
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.DiceHeroLevelView) then
 		return
 	end
 
-	arg_5_0:_onInfoUpdate()
+	self:_onInfoUpdate()
 
-	if arg_5_0._showUnlockAnim then
-		gohelper.setActive(arg_5_0._lockAnim, true)
-		arg_5_0._lockAnim:Play("unlock", 0, 0)
-		TaskDispatcher.runDelay(arg_5_0._hideLock, arg_5_0, 2.4)
+	if self._showUnlockAnim then
+		gohelper.setActive(self._lockAnim, true)
+		self._lockAnim:Play("unlock", 0, 0)
+		TaskDispatcher.runDelay(self._hideLock, self, 2.4)
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockHelper.instance:startBlock("DiceHeroStageItem_Unlock", 2)
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_unclockglass)
 	end
 
-	if arg_5_0._showPassAnim then
-		arg_5_0._showPassAnim = false
+	if self._showPassAnim then
+		self._showPassAnim = false
 
-		arg_5_0._completedAnim:Play("completeglow", 0, 0)
+		self._completedAnim:Play("completeglow", 0, 0)
 	end
 end
 
-function var_0_0._hideLock(arg_6_0)
+function DiceHeroStageItem:_hideLock()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	gohelper.setActive(arg_6_0._lockAnim, false)
+	gohelper.setActive(self._lockAnim, false)
 
-	arg_6_0._showUnlockAnim = false
+	self._showUnlockAnim = false
 end
 
-function var_0_0._onInfoUpdate(arg_7_0)
-	local var_7_0 = DiceHeroModel.instance:getGameInfo(arg_7_0._co.chapter)
+function DiceHeroStageItem:_onInfoUpdate()
+	local gameInfo = DiceHeroModel.instance:getGameInfo(self._co.chapter)
 
-	if arg_7_0._unLockStatu ~= nil and not ViewHelper.instance:checkViewOnTheTop(ViewName.DiceHeroLevelView) then
-		local var_7_1 = arg_7_0._co.room - var_7_0.co.room
+	if self._unLockStatu ~= nil and not ViewHelper.instance:checkViewOnTheTop(ViewName.DiceHeroLevelView) then
+		local unLockStatu = self._co.room - gameInfo.co.room
 
-		if var_7_1 ~= arg_7_0._unLockStatu then
-			if var_7_1 == 0 then
-				arg_7_0._showUnlockAnim = true
-			elseif var_7_1 == -1 and arg_7_0.isInfinite then
-				arg_7_0._showPassAnim = true
+		if unLockStatu ~= self._unLockStatu then
+			if unLockStatu == 0 then
+				self._showUnlockAnim = true
+			elseif unLockStatu == -1 and self.isInfinite then
+				self._showPassAnim = true
 			end
 		end
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0._gonormal, not arg_7_0.isInfinite and (arg_7_0._co.room < var_7_0.co.room or var_7_0.allPass) or false)
-	gohelper.setActive(arg_7_0._gocompleted, arg_7_0.isInfinite and (arg_7_0._co.room < var_7_0.co.room or var_7_0.allPass) or false)
-	gohelper.setActive(arg_7_0._gochallenge, arg_7_0._co.room == var_7_0.co.room and not var_7_0.allPass)
-	gohelper.setActive(arg_7_0._golock, arg_7_0._co.room > var_7_0.co.room)
-	gohelper.setActive(arg_7_0._gopart, arg_7_0._co.room <= var_7_0.co.room)
+	gohelper.setActive(self._gonormal, not self.isInfinite and (self._co.room < gameInfo.co.room or gameInfo.allPass) or false)
+	gohelper.setActive(self._gocompleted, self.isInfinite and (self._co.room < gameInfo.co.room or gameInfo.allPass) or false)
+	gohelper.setActive(self._gochallenge, self._co.room == gameInfo.co.room and not gameInfo.allPass)
+	gohelper.setActive(self._golock, self._co.room > gameInfo.co.room)
+	gohelper.setActive(self._gopart, self._co.room <= gameInfo.co.room)
 
-	arg_7_0._unLockStatu = arg_7_0._co.room - var_7_0.co.room
+	self._unLockStatu = self._co.room - gameInfo.co.room
 end
 
-function var_0_0._onClickStage(arg_8_0)
-	if not arg_8_0._co then
+function DiceHeroStageItem:_onClickStage()
+	if not self._co then
 		return
 	end
 
-	local var_8_0 = DiceHeroModel.instance:getGameInfo(arg_8_0._co.chapter)
+	local gameInfo = DiceHeroModel.instance:getGameInfo(self._co.chapter)
 
-	if var_8_0.co.room > arg_8_0._co.room then
-		if arg_8_0.isInfinite then
+	if gameInfo.co.room > self._co.room then
+		if self.isInfinite then
 			GameFacade.showToast(ToastEnum.DiceHeroPassLevel)
 
 			return
@@ -109,16 +111,16 @@ function var_0_0._onClickStage(arg_8_0)
 
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_glassclick)
 
-		if arg_8_0._co.type == DiceHeroEnum.LevelType.Story then
+		if self._co.type == DiceHeroEnum.LevelType.Story then
 			ViewMgr.instance:openView(ViewName.DiceHeroTalkView, {
-				co = arg_8_0._co
+				co = self._co
 			})
 		else
-			DiceHeroRpc.instance:sendDiceHeroEnterFight(arg_8_0._co.id, arg_8_0._onEnterFight, arg_8_0)
+			DiceHeroRpc.instance:sendDiceHeroEnterFight(self._co.id, self._onEnterFight, self)
 		end
 
 		return
-	elseif var_8_0.co.room < arg_8_0._co.room then
+	elseif gameInfo.co.room < self._co.room then
 		GameFacade.showToast(ToastEnum.DiceHeroLockLevel)
 
 		return
@@ -126,50 +128,50 @@ function var_0_0._onClickStage(arg_8_0)
 
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_glassclick)
 
-	if arg_8_0._co.type == DiceHeroEnum.LevelType.Story then
-		if DiceHeroModel.instance:hasReward(arg_8_0._co.chapter) or arg_8_0._co.rewardSelectType == DiceHeroEnum.GetRewardType.None then
-			arg_8_0:_onOpenDialog()
+	if self._co.type == DiceHeroEnum.LevelType.Story then
+		if DiceHeroModel.instance:hasReward(self._co.chapter) or self._co.rewardSelectType == DiceHeroEnum.GetRewardType.None then
+			self:_onOpenDialog()
 		else
-			DiceHeroRpc.instance:sendDiceHeroEnterStory(arg_8_0._co.id, arg_8_0._co.chapter, arg_8_0._onEnterStory, arg_8_0)
+			DiceHeroRpc.instance:sendDiceHeroEnterStory(self._co.id, self._co.chapter, self._onEnterStory, self)
 		end
-	elseif arg_8_0._co.type == DiceHeroEnum.LevelType.Fight then
-		if DiceHeroModel.instance:hasReward(arg_8_0._co.chapter) then
-			arg_8_0:_onOpenDialog()
+	elseif self._co.type == DiceHeroEnum.LevelType.Fight then
+		if DiceHeroModel.instance:hasReward(self._co.chapter) then
+			self:_onOpenDialog()
 		else
-			DiceHeroRpc.instance:sendDiceHeroEnterFight(arg_8_0._co.id, arg_8_0._onEnterFight, arg_8_0)
+			DiceHeroRpc.instance:sendDiceHeroEnterFight(self._co.id, self._onEnterFight, self)
 		end
 	end
 end
 
-function var_0_0._onEnterStory(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 ~= 0 then
+function DiceHeroStageItem:_onEnterStory(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_9_0:_onOpenDialog()
+	self:_onOpenDialog()
 end
 
-function var_0_0._onOpenDialog(arg_10_0)
-	if not arg_10_0._co then
+function DiceHeroStageItem:_onOpenDialog()
+	if not self._co then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.DiceHeroTalkView, {
-		co = arg_10_0._co
+		co = self._co
 	})
 end
 
-function var_0_0._onEnterFight(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 ~= 0 then
+function DiceHeroStageItem:_onEnterFight(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.DiceHeroGameView)
 end
 
-function var_0_0.onDestroy(arg_12_0)
+function DiceHeroStageItem:onDestroy()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	TaskDispatcher.cancelTask(arg_12_0._hideLock, arg_12_0)
+	TaskDispatcher.cancelTask(self._hideLock, self)
 end
 
-return var_0_0
+return DiceHeroStageItem

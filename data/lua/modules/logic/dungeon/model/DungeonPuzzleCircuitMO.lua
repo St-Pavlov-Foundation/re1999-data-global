@@ -1,18 +1,20 @@
-﻿module("modules.logic.dungeon.model.DungeonPuzzleCircuitMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonPuzzleCircuitMO.lua
 
-local var_0_0 = pureTable("DungeonPuzzleCircuitMO")
+module("modules.logic.dungeon.model.DungeonPuzzleCircuitMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.x = arg_1_1
-	arg_1_0.y = arg_1_2
-	arg_1_0.id = arg_1_1 * 100 + arg_1_2
-	arg_1_0.value = 0
-	arg_1_0.rawValue = 0
-	arg_1_0.type = 0
+local DungeonPuzzleCircuitMO = pureTable("DungeonPuzzleCircuitMO")
+
+function DungeonPuzzleCircuitMO:init(x, y)
+	self.x = x
+	self.y = y
+	self.id = x * 100 + y
+	self.value = 0
+	self.rawValue = 0
+	self.type = 0
 end
 
-function var_0_0.toString(arg_2_0)
-	return string.format("id:%s,x:%s,y:%s,type:%s,value:%s", arg_2_0.id, arg_2_0.x, arg_2_0.y, arg_2_0.type, arg_2_0.value)
+function DungeonPuzzleCircuitMO:toString()
+	return string.format("id:%s,x:%s,y:%s,type:%s,value:%s", self.id, self.x, self.y, self.type, self.value)
 end
 
-return var_0_0
+return DungeonPuzzleCircuitMO

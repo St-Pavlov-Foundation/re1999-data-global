@@ -1,291 +1,294 @@
-﻿module("modules.logic.dungeon.view.puzzle.PutCubeGameView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/PutCubeGameView.lua
 
-local var_0_0 = class("PutCubeGameView", BaseViewExtended)
+module("modules.logic.dungeon.view.puzzle.PutCubeGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gochessContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_chessContainer")
-	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer")
-	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
-	arg_1_0._godragAnchor = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragAnchor")
-	arg_1_0._godragContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragAnchor/#go_dragContainer")
-	arg_1_0._gocellModel = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragAnchor/#go_cellModel")
-	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_chessitem")
-	arg_1_0._goraychessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_raychessitem")
-	arg_1_0._scrollinspiration = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_inspiration")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_inspiration/Viewport/#go_Content")
-	arg_1_0._goinspirationItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_inspiration/Viewport/#go_Content/#go_inspirationItem")
-	arg_1_0._btnrevertlastoperation = gohelper.findChildButton(arg_1_0.viewGO, "#btn_revert_last_operation")
-	arg_1_0._btnreset = gohelper.findChildButton(arg_1_0.viewGO, "#btn_reset")
+local PutCubeGameView = class("PutCubeGameView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PutCubeGameView:onInitView()
+	self._gochessContainer = gohelper.findChild(self.viewGO, "chessboard/#go_chessContainer")
+	self._gomeshContainer = gohelper.findChild(self.viewGO, "chessboard/#go_meshContainer")
+	self._gomeshItem = gohelper.findChild(self.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
+	self._godragAnchor = gohelper.findChild(self.viewGO, "chessboard/#go_dragAnchor")
+	self._godragContainer = gohelper.findChild(self.viewGO, "chessboard/#go_dragAnchor/#go_dragContainer")
+	self._gocellModel = gohelper.findChild(self.viewGO, "chessboard/#go_dragAnchor/#go_cellModel")
+	self._gochessitem = gohelper.findChild(self.viewGO, "chessboard/#go_chessitem")
+	self._goraychessitem = gohelper.findChild(self.viewGO, "chessboard/#go_raychessitem")
+	self._scrollinspiration = gohelper.findChildScrollRect(self.viewGO, "#scroll_inspiration")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_inspiration/Viewport/#go_Content")
+	self._goinspirationItem = gohelper.findChild(self.viewGO, "#scroll_inspiration/Viewport/#go_Content/#go_inspirationItem")
+	self._btnrevertlastoperation = gohelper.findChildButton(self.viewGO, "#btn_revert_last_operation")
+	self._btnreset = gohelper.findChildButton(self.viewGO, "#btn_reset")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnrevertlastoperation, arg_2_0._onBtnRevertLastOperation, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnreset, arg_2_0.onOpen, arg_2_0)
+function PutCubeGameView:addEvents()
+	self:addClickCb(self._btnrevertlastoperation, self._onBtnRevertLastOperation, self)
+	self:addClickCb(self._btnreset, self.onOpen, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function PutCubeGameView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function PutCubeGameView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function PutCubeGameView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_setChessData()
-	arg_6_0:_setDebrisData()
+function PutCubeGameView:onOpen()
+	self:_setChessData()
+	self:_setDebrisData()
 end
 
-function var_0_0._setChessData(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.param
+function PutCubeGameView:_setChessData()
+	local str = self.viewParam.param
 
-	arg_7_0.chess_data = GameUtil.splitString2(var_7_0, true, "#", ",")
+	self.chess_data = GameUtil.splitString2(str, true, "#", ",")
 
-	local var_7_1 = #arg_7_0.chess_data
-	local var_7_2 = #arg_7_0.chess_data[1]
+	local y_count = #self.chess_data
+	local x_count = #self.chess_data[1]
 
-	arg_7_0.cell_length = 70
-	arg_7_0._rabbet_cell = {}
-	arg_7_0._rabbet_cell_list = {}
+	self.cell_length = 70
+	self._rabbet_cell = {}
+	self._rabbet_cell_list = {}
 
-	local var_7_3 = 0
+	local create_count = 0
 
-	for iter_7_0 = 1, var_7_1 do
-		arg_7_0._rabbet_cell[iter_7_0] = {}
+	for y = 1, y_count do
+		self._rabbet_cell[y] = {}
 
-		for iter_7_1 = 1, var_7_2 do
-			local var_7_4
+		for x = 1, x_count do
+			local game_obj
 
-			if var_7_3 < arg_7_0._gomeshContainer.transform.childCount then
-				var_7_4 = arg_7_0._gomeshContainer.transform:GetChild(var_7_3).gameObject
+			if create_count < self._gomeshContainer.transform.childCount then
+				game_obj = self._gomeshContainer.transform:GetChild(create_count).gameObject
 			else
-				var_7_4 = gohelper.clone(arg_7_0._gomeshItem, arg_7_0._gomeshContainer)
+				game_obj = gohelper.clone(self._gomeshItem, self._gomeshContainer)
 			end
 
-			local var_7_5 = iter_7_1 - (var_7_2 + 1) / 2
-			local var_7_6 = (var_7_1 + 1) / 2 - iter_7_0
+			local offset_x = x - (x_count + 1) / 2
+			local offset_y = (y_count + 1) / 2 - y
 
-			recthelper.setAnchor(var_7_4.transform, var_7_5 * arg_7_0.cell_length, var_7_6 * arg_7_0.cell_length)
+			recthelper.setAnchor(game_obj.transform, offset_x * self.cell_length, offset_y * self.cell_length)
 
-			local var_7_7 = arg_7_0:openSubView(PutCubeGameItemView, var_7_4, nil, arg_7_0.chess_data[iter_7_0][iter_7_1], arg_7_0)
+			local item_view = self:openSubView(PutCubeGameItemView, game_obj, nil, self.chess_data[y][x], self)
 
-			arg_7_0._rabbet_cell[iter_7_0][iter_7_1] = var_7_7
+			self._rabbet_cell[y][x] = item_view
 
-			table.insert(arg_7_0._rabbet_cell_list, arg_7_0._rabbet_cell[iter_7_0][iter_7_1])
+			table.insert(self._rabbet_cell_list, self._rabbet_cell[y][x])
 
-			var_7_3 = var_7_3 + 1
+			create_count = create_count + 1
 		end
 	end
 end
 
-function var_0_0._setDebrisData(arg_8_0)
-	arg_8_0.debris_list = {}
-	arg_8_0.debris_count_dic = {}
+function PutCubeGameView:_setDebrisData()
+	self.debris_list = {}
+	self.debris_count_dic = {}
 
-	for iter_8_0, iter_8_1 in ipairs(DungeonConfig.instance:getPuzzleSquareDebrisGroupList(arg_8_0.viewParam.id)) do
-		arg_8_0.debris_count_dic[iter_8_1.id] = iter_8_1.count
+	for i, v in ipairs(DungeonConfig.instance:getPuzzleSquareDebrisGroupList(self.viewParam.id)) do
+		self.debris_count_dic[v.id] = v.count
 
-		table.insert(arg_8_0.debris_list, iter_8_1)
+		table.insert(self.debris_list, v)
 	end
 
-	arg_8_0:_refreshDebrisList()
+	self:_refreshDebrisList()
 end
 
-function var_0_0._refreshDebrisList(arg_9_0)
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onDebrisItemShow, arg_9_0.debris_list, arg_9_0._goContent, arg_9_0._goinspirationItem)
+function PutCubeGameView:_refreshDebrisList()
+	gohelper.CreateObjList(self, self._onDebrisItemShow, self.debris_list, self._goContent, self._goinspirationItem)
 end
 
-function var_0_0._onDebrisItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_1.transform
+function PutCubeGameView:_onDebrisItemShow(obj, data, index)
+	local transform = obj.transform
 
-	arg_10_1.name = arg_10_3
+	obj.name = index
 
-	local var_10_1 = var_10_0:Find("item/slot"):GetComponent(gohelper.Type_Image)
-	local var_10_2 = var_10_0:Find("item/slot/icon"):GetComponent(gohelper.Type_Image)
-	local var_10_3 = var_10_0:Find("item/slot/countbg")
-	local var_10_4 = var_10_0:Find("item/slot/countbg/count"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_5 = var_10_0:Find("item/slot/glow"):GetComponent(gohelper.Type_Image)
+	local cell_bg = transform:Find("item/slot"):GetComponent(gohelper.Type_Image)
+	local icon = transform:Find("item/slot/icon"):GetComponent(gohelper.Type_Image)
+	local countbg = transform:Find("item/slot/countbg")
+	local count = transform:Find("item/slot/countbg/count"):GetComponent(gohelper.Type_TextMesh)
+	local glow_icon = transform:Find("item/slot/glow"):GetComponent(gohelper.Type_Image)
 
-	var_10_4.text = arg_10_0.debris_count_dic[arg_10_2.id]
+	count.text = self.debris_count_dic[data.id]
 
-	gohelper.setActive(arg_10_1, arg_10_0.debris_count_dic[arg_10_2.id] > 0)
-	SLFramework.UGUI.UIDragListener.Get(var_10_1.gameObject):AddDragBeginListener(arg_10_0._onDragBegin, arg_10_0, arg_10_2)
-	SLFramework.UGUI.UIDragListener.Get(var_10_1.gameObject):AddDragListener(arg_10_0._onDrag, arg_10_0)
-	SLFramework.UGUI.UIDragListener.Get(var_10_1.gameObject):AddDragEndListener(arg_10_0._onDragEnd, arg_10_0)
+	gohelper.setActive(obj, self.debris_count_dic[data.id] > 0)
+	SLFramework.UGUI.UIDragListener.Get(cell_bg.gameObject):AddDragBeginListener(self._onDragBegin, self, data)
+	SLFramework.UGUI.UIDragListener.Get(cell_bg.gameObject):AddDragListener(self._onDrag, self)
+	SLFramework.UGUI.UIDragListener.Get(cell_bg.gameObject):AddDragEndListener(self._onDragEnd, self)
 end
 
-function var_0_0._onDragBegin(arg_11_0, arg_11_1)
-	arg_11_0:_createDragItem(arg_11_1)
+function PutCubeGameView:_onDragBegin(config)
+	self:_createDragItem(config)
 end
 
-function var_0_0._createDragItem(arg_12_0, arg_12_1)
-	if not arg_12_0.drag_container then
-		arg_12_0.drag_container = arg_12_0._godragContainer
-		arg_12_0.drag_container_transform = arg_12_0.drag_container.transform
+function PutCubeGameView:_createDragItem(config)
+	if not self.drag_container then
+		self.drag_container = self._godragContainer
+		self.drag_container_transform = self.drag_container.transform
 	end
 
-	local var_12_0 = arg_12_1.id
+	local cubeId = config.id
 
-	transformhelper.setLocalRotation(arg_12_0.drag_container_transform, 0, 0, 0)
+	transformhelper.setLocalRotation(self.drag_container_transform, 0, 0, 0)
 
-	local var_12_1 = arg_12_0.drag_container_transform:Find(var_12_0)
+	local drag_cube_transform = self.drag_container_transform:Find(cubeId)
 
-	if not var_12_1 then
-		var_12_1 = gohelper.clone(arg_12_0._gocellModel, arg_12_0.drag_container, var_12_0)
+	if not drag_cube_transform then
+		drag_cube_transform = gohelper.clone(self._gocellModel, self.drag_container, cubeId)
 
-		recthelper.setAnchor(var_12_1.transform, 0, 0)
+		recthelper.setAnchor(drag_cube_transform.transform, 0, 0)
 	end
 
-	gohelper.setActive(arg_12_0.drag_container, true)
+	gohelper.setActive(self.drag_container, true)
 
-	if arg_12_0.drag_data then
-		gohelper.setActive(arg_12_0.drag_container_transform:Find(arg_12_0.drag_data.drag_id).gameObject, false)
+	if self.drag_data then
+		gohelper.setActive(self.drag_container_transform:Find(self.drag_data.drag_id).gameObject, false)
 	else
-		arg_12_0.drag_data = {}
+		self.drag_data = {}
 	end
 
-	arg_12_0.drag_data.drag_id = var_12_0
-	arg_12_0.drag_data.config = arg_12_1
+	self.drag_data.drag_id = cubeId
+	self.drag_data.config = config
 
-	local var_12_2 = var_12_1.gameObject
+	local drag_cube = drag_cube_transform.gameObject
 
-	if not arg_12_0.drag_cube_child_list then
-		arg_12_0.drag_cube_child_list = {}
-		arg_12_0.cube_rightful_count = {}
+	if not self.drag_cube_child_list then
+		self.drag_cube_child_list = {}
+		self.cube_rightful_count = {}
 	end
 
-	if not arg_12_0.drag_cube_child_list[var_12_0] then
-		arg_12_0.drag_cube_child_list[var_12_0] = {}
-		arg_12_0.cube_rightful_count[var_12_0] = {}
+	if not self.drag_cube_child_list[cubeId] then
+		self.drag_cube_child_list[cubeId] = {}
+		self.cube_rightful_count[cubeId] = {}
 
-		arg_12_0:_createDragCubeChild(arg_12_0.drag_cube_child_list[var_12_0], arg_12_1, var_12_2)
+		self:_createDragCubeChild(self.drag_cube_child_list[cubeId], config, drag_cube)
 	end
 
-	gohelper.setActive(var_12_2, true)
+	gohelper.setActive(drag_cube, true)
 end
 
-function var_0_0._createDragCubeChild(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = GameUtil.splitString2(arg_13_2.shape, true, "#", ",")
-	local var_13_1 = GameUtil.getTabLen(var_13_0)
-	local var_13_2 = GameUtil.getTabLen(var_13_0[1])
-	local var_13_3 = 0
+function PutCubeGameView:_createDragCubeChild(child_list, config, drag_cube)
+	local mat = GameUtil.splitString2(config.shape, true, "#", ",")
+	local y_count = GameUtil.getTabLen(mat)
+	local x_count = GameUtil.getTabLen(mat[1])
+	local rightful = 0
 
-	for iter_13_0 = 1, var_13_1 do
-		for iter_13_1 = 1, var_13_2 do
-			local var_13_4 = arg_13_0:getUserDataTb_()
+	for i = 1, y_count do
+		for j = 1, x_count do
+			local tab = self:getUserDataTb_()
 
-			var_13_4.gameObject = gohelper.clone(arg_13_0._gocellModel, arg_13_3)
-			var_13_4.transform = var_13_4.gameObject.transform
-			var_13_4.rightful = var_13_0[iter_13_0][iter_13_1] == 1
+			tab.gameObject = gohelper.clone(self._gocellModel, drag_cube)
+			tab.transform = tab.gameObject.transform
+			tab.rightful = mat[i][j] == 1
 
-			if var_13_4.rightful then
-				var_13_3 = var_13_3 + 1
+			if tab.rightful then
+				rightful = rightful + 1
 			end
 
-			local var_13_5 = iter_13_1 - (var_13_2 + 1) / 2
-			local var_13_6 = (var_13_1 + 1) / 2 - iter_13_0
+			local offset_x = j - (x_count + 1) / 2
+			local offset_y = (y_count + 1) / 2 - i
 
-			recthelper.setAnchor(var_13_4.transform, var_13_5 * arg_13_0.cell_length, var_13_6 * arg_13_0.cell_length)
-			table.insert(arg_13_1, var_13_4)
+			recthelper.setAnchor(tab.transform, offset_x * self.cell_length, offset_y * self.cell_length)
+			table.insert(child_list, tab)
 
-			if iter_13_0 == 1 and iter_13_1 == 1 then
+			if i == 1 and j == 1 then
 				-- block empty
 			end
 		end
 	end
 
-	arg_13_0.cube_rightful_count[arg_13_2.id] = var_13_3
+	self.cube_rightful_count[config.id] = rightful
 end
 
-function var_0_0._onDrag(arg_14_0)
-	if not arg_14_0.drag_data then
+function PutCubeGameView:_onDrag()
+	if not self.drag_data then
 		return
 	end
 
-	local var_14_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_14_0._gomeshContainer.transform)
+	local temp_pos = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), self._gomeshContainer.transform)
 
-	recthelper.setAnchor(arg_14_0.drag_container_transform, var_14_0.x, var_14_0.y)
+	recthelper.setAnchor(self.drag_container_transform, temp_pos.x, temp_pos.y)
 end
 
-function var_0_0._detectDragResult(arg_15_0, arg_15_1)
-	arg_15_0.cur_fill_count = 0
+function PutCubeGameView:_detectDragResult(fill_cell_tab)
+	self.cur_fill_count = 0
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._rabbet_cell_list) do
-		local var_15_0 = iter_15_1
+	for i, v in ipairs(self._rabbet_cell_list) do
+		local cell = v
 
-		for iter_15_2, iter_15_3 in ipairs(arg_15_0.drag_cube_child_list[arg_15_0.drag_data.drag_id]) do
-			local var_15_1 = iter_15_3.transform
-			local var_15_2 = recthelper.getAnchorX(var_15_1)
-			local var_15_3 = recthelper.getAnchorY(var_15_1)
-			local var_15_4 = recthelper.getAnchorX(arg_15_0.drag_container_transform) + var_15_2
-			local var_15_5 = recthelper.getAnchorY(arg_15_0.drag_container_transform) + var_15_3
+		for index, cube in ipairs(self.drag_cube_child_list[self.drag_data.drag_id]) do
+			local cube_transform = cube.transform
+			local temp_x = recthelper.getAnchorX(cube_transform)
+			local temp_y = recthelper.getAnchorY(cube_transform)
+			local cube_anchor_pos_x = recthelper.getAnchorX(self.drag_container_transform) + temp_x
+			local cube_anchor_pos_y = recthelper.getAnchorY(self.drag_container_transform) + temp_y
+			local is_covered = cell:detectPosCover(cube_anchor_pos_x, cube_anchor_pos_y)
 
-			if var_15_0:detectPosCover(var_15_4, var_15_5) and iter_15_3.rightful and var_15_0.level < 3 then
-				arg_15_0.cur_fill_count = arg_15_0.cur_fill_count + 1
+			if is_covered and cube.rightful and cell.level < 3 then
+				self.cur_fill_count = self.cur_fill_count + 1
 
-				if arg_15_1 then
-					table.insert(arg_15_1, var_15_0)
+				if fill_cell_tab then
+					table.insert(fill_cell_tab, cell)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._onDragEnd(arg_16_0)
-	local var_16_0 = {}
+function PutCubeGameView:_onDragEnd()
+	local fill_cell = {}
 
-	arg_16_0:_detectDragResult(var_16_0)
+	self:_detectDragResult(fill_cell)
 
-	if not arg_16_0.drag_data then
-		arg_16_0:_releaseDragItem()
+	if not self.drag_data then
+		self:_releaseDragItem()
 
-		arg_16_0.cur_fill_count = 0
+		self.cur_fill_count = 0
 
 		return
 	end
 
-	if arg_16_0.cur_fill_count == arg_16_0.cube_rightful_count[arg_16_0.drag_data.config.id] then
-		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-			iter_16_1.level = iter_16_1.level + 1
+	if self.cur_fill_count == self.cube_rightful_count[self.drag_data.config.id] then
+		for i, v in ipairs(fill_cell) do
+			v.level = v.level + 1
 
-			iter_16_1:onOpen()
+			v:onOpen()
 		end
 
-		if not arg_16_0.step_data then
-			arg_16_0.step_data = {}
+		if not self.step_data then
+			self.step_data = {}
 		end
 
-		table.insert(arg_16_0.step_data, {
-			config = arg_16_0.drag_data.config,
-			fill_cell = var_16_0
+		table.insert(self.step_data, {
+			config = self.drag_data.config,
+			fill_cell = fill_cell
 		})
 
-		arg_16_0.debris_count_dic[arg_16_0.drag_data.config.id] = arg_16_0.debris_count_dic[arg_16_0.drag_data.config.id] - 1
+		self.debris_count_dic[self.drag_data.config.id] = self.debris_count_dic[self.drag_data.config.id] - 1
 
-		arg_16_0:_refreshDebrisList()
+		self:_refreshDebrisList()
 
-		if arg_16_0:_detectGameWin() then
-			DungeonRpc.instance:sendMapElementRequest(arg_16_0.viewParam.id)
-			arg_16_0:closeThis()
+		if self:_detectGameWin() then
+			DungeonRpc.instance:sendMapElementRequest(self.viewParam.id)
+			self:closeThis()
 		end
 	end
 
-	arg_16_0:_releaseDragItem()
+	self:_releaseDragItem()
 
-	arg_16_0.cur_fill_count = 0
+	self.cur_fill_count = 0
 end
 
-function var_0_0._detectGameWin(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._rabbet_cell_list) do
-		if iter_17_1.level < 3 then
+function PutCubeGameView:_detectGameWin()
+	for i, v in ipairs(self._rabbet_cell_list) do
+		if v.level < 3 then
 			return false
 		end
 	end
@@ -293,48 +296,48 @@ function var_0_0._detectGameWin(arg_17_0)
 	return true
 end
 
-function var_0_0._releaseDragItem(arg_18_0)
-	if arg_18_0.drag_data then
-		gohelper.setActive(arg_18_0.drag_container_transform:Find(arg_18_0.drag_data.drag_id).gameObject, false)
+function PutCubeGameView:_releaseDragItem()
+	if self.drag_data then
+		gohelper.setActive(self.drag_container_transform:Find(self.drag_data.drag_id).gameObject, false)
 	end
 
-	arg_18_0.drag_data = nil
+	self.drag_data = nil
 
-	gohelper.setActive(arg_18_0.drag_container, false)
+	gohelper.setActive(self.drag_container, false)
 end
 
-function var_0_0._onBtnRevertLastOperation(arg_19_0)
-	if arg_19_0.step_data and #arg_19_0.step_data > 0 then
-		local var_19_0 = table.remove(arg_19_0.step_data)
-		local var_19_1 = var_19_0.config.id
+function PutCubeGameView:_onBtnRevertLastOperation()
+	if self.step_data and #self.step_data > 0 then
+		local step = table.remove(self.step_data)
+		local cube_id = step.config.id
 
-		arg_19_0.debris_count_dic[var_19_1] = arg_19_0.debris_count_dic[var_19_1] + 1
+		self.debris_count_dic[cube_id] = self.debris_count_dic[cube_id] + 1
 
-		for iter_19_0, iter_19_1 in ipairs(var_19_0.fill_cell) do
-			iter_19_1.level = iter_19_1.level - 1
+		for i, v in ipairs(step.fill_cell) do
+			v.level = v.level - 1
 
-			iter_19_1:onOpen()
+			v:onOpen()
 		end
 
-		arg_19_0:_refreshDebrisList()
+		self:_refreshDebrisList()
 	end
 end
 
-function var_0_0.onClose(arg_20_0)
-	local var_20_0 = arg_20_0._goContent.transform
-	local var_20_1 = var_20_0.childCount
+function PutCubeGameView:onClose()
+	local transform = self._goContent.transform
+	local child_count = transform.childCount
 
-	for iter_20_0 = 0, var_20_1 - 1 do
-		local var_20_2 = var_20_0:GetChild(iter_20_0):Find("item/slot").gameObject
+	for i = 0, child_count - 1 do
+		local obj = transform:GetChild(i):Find("item/slot").gameObject
 
-		SLFramework.UGUI.UIDragListener.Get(var_20_2):RemoveDragBeginListener()
-		SLFramework.UGUI.UIDragListener.Get(var_20_2):RemoveDragListener()
-		SLFramework.UGUI.UIDragListener.Get(var_20_2):RemoveDragEndListener()
+		SLFramework.UGUI.UIDragListener.Get(obj):RemoveDragBeginListener()
+		SLFramework.UGUI.UIDragListener.Get(obj):RemoveDragListener()
+		SLFramework.UGUI.UIDragListener.Get(obj):RemoveDragEndListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function PutCubeGameView:onDestroyView()
 	return
 end
 
-return var_0_0
+return PutCubeGameView

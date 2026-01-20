@@ -1,28 +1,30 @@
-﻿local var_0_0 = class("VersionActivity2_3NewCultivationGiftRewardListModel", ListScrollModel)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/model/VersionActivity2_3NewCultivationGiftRewardListModel.lua
 
-function var_0_0.setRewardList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local VersionActivity2_3NewCultivationGiftRewardListModel = class("VersionActivity2_3NewCultivationGiftRewardListModel", ListScrollModel)
 
-	if not string.nilorempty(arg_1_1) then
-		local var_1_1 = string.split(arg_1_1, "|")
+function VersionActivity2_3NewCultivationGiftRewardListModel:setRewardList(infos)
+	local list = {}
 
-		if var_1_1 and #var_1_1 > 0 then
-			for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-				local var_1_2 = {}
-				local var_1_3 = string.splitToNumber(iter_1_1, "#")
+	if not string.nilorempty(infos) then
+		local datas = string.split(infos, "|")
 
-				var_1_2.type = var_1_3[1]
-				var_1_2.id = var_1_3[2]
-				var_1_2.quantity = var_1_3[3]
+		if datas and #datas > 0 then
+			for _, data in ipairs(datas) do
+				local mo = {}
+				local reward = string.splitToNumber(data, "#")
 
-				table.insert(var_1_0, var_1_2)
+				mo.type = reward[1]
+				mo.id = reward[2]
+				mo.quantity = reward[3]
+
+				table.insert(list, mo)
 			end
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_3NewCultivationGiftRewardListModel.instance = VersionActivity2_3NewCultivationGiftRewardListModel.New()
 
-return var_0_0
+return VersionActivity2_3NewCultivationGiftRewardListModel

@@ -1,35 +1,38 @@
-﻿module("modules.logic.versionactivity2_8.wuerlixigift.model.V2a8_WuErLiXiGiftModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/wuerlixigift/model/V2a8_WuErLiXiGiftModel.lua
 
-local var_0_0 = class("V2a8_WuErLiXiGiftModel", BaseModel)
+module("modules.logic.versionactivity2_8.wuerlixigift.model.V2a8_WuErLiXiGiftModel", package.seeall)
 
-var_0_0.REWARD_INDEX = 1
+local V2a8_WuErLiXiGiftModel = class("V2a8_WuErLiXiGiftModel", BaseModel)
 
-function var_0_0.getV2a8_WuErLiXiGiftActId(arg_1_0)
+V2a8_WuErLiXiGiftModel.REWARD_INDEX = 1
+
+function V2a8_WuErLiXiGiftModel:getV2a8_WuErLiXiGiftActId()
 	return ActivityEnum.Activity.V2a8_WuErLiXiGift
 end
 
-function var_0_0.isV2a8_WuErLiXiGiftOpen(arg_2_0)
-	local var_2_0 = false
-	local var_2_1 = arg_2_0:getV2a8_WuErLiXiGiftActId()
+function V2a8_WuErLiXiGiftModel:isV2a8_WuErLiXiGiftOpen()
+	local result = false
+	local actId = self:getV2a8_WuErLiXiGiftActId()
 
-	if ActivityType101Model.instance:isOpen(var_2_1) then
-		var_2_0 = true
+	if ActivityType101Model.instance:isOpen(actId) then
+		result = true
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.isShowRedDot(arg_3_0)
-	local var_3_0 = false
-	local var_3_1 = arg_3_0:getV2a8_WuErLiXiGiftActId()
+function V2a8_WuErLiXiGiftModel:isShowRedDot()
+	local result = false
+	local actId = self:getV2a8_WuErLiXiGiftActId()
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
 
-	if ActivityType101Model.instance:isOpen(var_3_1) then
-		var_3_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_3_1)
+	if isOpen then
+		result = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
 	end
 
-	return var_3_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+V2a8_WuErLiXiGiftModel.instance = V2a8_WuErLiXiGiftModel.New()
 
-return var_0_0
+return V2a8_WuErLiXiGiftModel

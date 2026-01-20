@@ -1,382 +1,384 @@
-﻿module("modules.logic.character.view.CharacterSkinFullScreenView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinFullScreenView.lua
 
-local var_0_0 = class("CharacterSkinFullScreenView", BaseView)
+module("modules.logic.character.view.CharacterSkinFullScreenView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "#go_scroll")
+local CharacterSkinFullScreenView = class("CharacterSkinFullScreenView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkinFullScreenView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goscroll = gohelper.findChild(self.viewGO, "#go_scroll")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CharacterSkinFullScreenView:addEvents()
 	if GamepadController.instance:isOpen() then
-		arg_2_0:addEventCb(GamepadController.instance, GamepadEvent.AxisChange, arg_2_0._onAxisChange, arg_2_0)
+		self:addEventCb(GamepadController.instance, GamepadEvent.AxisChange, self._onAxisChange, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CharacterSkinFullScreenView:removeEvents()
 	if GamepadController.instance:isOpen() then
-		arg_3_0:removeEventCb(GamepadController.instance, GamepadEvent.AxisChange, arg_3_0._onAxisChange, arg_3_0)
+		self:removeEventCb(GamepadController.instance, GamepadEvent.AxisChange, self._onAxisChange, self)
 	end
 end
 
-var_0_0.retainRate = 0.2
-var_0_0.live2dRetainRate = 0.4
-var_0_0.RetainRate = {
+CharacterSkinFullScreenView.retainRate = 0.2
+CharacterSkinFullScreenView.live2dRetainRate = 0.4
+CharacterSkinFullScreenView.RetainRate = {
 	Live2DHeight = 0.2,
 	Live2DWidth = 0.4,
 	Normal = 0.2
 }
-var_0_0.DefaultLive2dOffsetY = -350
-var_0_0.DefaultLive2dCameraSize = 14
+CharacterSkinFullScreenView.DefaultLive2dOffsetY = -350
+CharacterSkinFullScreenView.DefaultLive2dCameraSize = 14
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function CharacterSkinFullScreenView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
+function CharacterSkinFullScreenView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
 
-	arg_5_0._image = gohelper.findChildImage(arg_5_0.viewGO, "#go_scroll/#simage_pic")
-	arg_5_0._scrollRect = SLFramework.UGUI.ScrollRectWrap.Get(arg_5_0._goscroll)
-	arg_5_0._scrollTransform = arg_5_0._goscroll.transform
-	arg_5_0.goInteractArea = gohelper.findChild(arg_5_0.viewGO, "#go_scroll/interactable_area")
-	arg_5_0.goDynamicContainer = gohelper.findChild(arg_5_0.viewGO, "#go_scroll/dynamicContainer")
-	arg_5_0.goImageContainer = gohelper.findChild(arg_5_0.viewGO, "#go_scroll/dynamicContainer/#go_imagecontainer")
-	arg_5_0.goSpineContainer = gohelper.findChild(arg_5_0.viewGO, "#go_scroll/dynamicContainer/#go_spinecontainer")
-	arg_5_0._spineContainerTransform = arg_5_0.goSpineContainer.transform
-	arg_5_0.simageSkin = gohelper.findChildSingleImage(arg_5_0.viewGO, "#go_scroll/dynamicContainer/#go_imagecontainer/#simage_skin")
-	arg_5_0.goSpineSkin = gohelper.findChild(arg_5_0.viewGO, "#go_scroll/dynamicContainer/#go_spinecontainer/#go_spine")
-	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0.goInteractArea)
+	self._image = gohelper.findChildImage(self.viewGO, "#go_scroll/#simage_pic")
+	self._scrollRect = SLFramework.UGUI.ScrollRectWrap.Get(self._goscroll)
+	self._scrollTransform = self._goscroll.transform
+	self.goInteractArea = gohelper.findChild(self.viewGO, "#go_scroll/interactable_area")
+	self.goDynamicContainer = gohelper.findChild(self.viewGO, "#go_scroll/dynamicContainer")
+	self.goImageContainer = gohelper.findChild(self.viewGO, "#go_scroll/dynamicContainer/#go_imagecontainer")
+	self.goSpineContainer = gohelper.findChild(self.viewGO, "#go_scroll/dynamicContainer/#go_spinecontainer")
+	self._spineContainerTransform = self.goSpineContainer.transform
+	self.simageSkin = gohelper.findChildSingleImage(self.viewGO, "#go_scroll/dynamicContainer/#go_imagecontainer/#simage_skin")
+	self.goSpineSkin = gohelper.findChild(self.viewGO, "#go_scroll/dynamicContainer/#go_spinecontainer/#go_spine")
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self.goInteractArea)
 
-	arg_5_0._drag:AddDragBeginListener(arg_5_0._onDragBegin, arg_5_0)
-	arg_5_0._drag:AddDragEndListener(arg_5_0._onDragEnd, arg_5_0)
-	arg_5_0._drag:AddDragListener(arg_5_0._onDrag, arg_5_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self._drag:AddDragListener(self._onDrag, self)
 
-	arg_5_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_5_0.goInteractArea)
+	self._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(self.goInteractArea)
 
-	arg_5_0._touchEventMgr:SetIgnoreUI(true)
-	arg_5_0._touchEventMgr:SetOnMultiDragCb(arg_5_0.onScaleHandler, arg_5_0)
-	arg_5_0._touchEventMgr:SetScrollWheelCb(arg_5_0.onMouseScrollWheelChange, arg_5_0)
+	self._touchEventMgr:SetIgnoreUI(true)
+	self._touchEventMgr:SetOnMultiDragCb(self.onScaleHandler, self)
+	self._touchEventMgr:SetScrollWheelCb(self.onMouseScrollWheelChange, self)
 end
 
-function var_0_0._onDragBegin(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0.loadDone then
+function CharacterSkinFullScreenView:_onDragBegin(param, pointerEventData)
+	if not self.loadDone then
 		return
 	end
 
-	arg_6_0._startDragPos = recthelper.screenPosToAnchorPos(arg_6_2.position, arg_6_0._scrollTransform)
+	self._startDragPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._scrollTransform)
 
-	local var_6_0, var_6_1 = recthelper.getAnchor(arg_6_0.interactTr, 0, 0)
+	local x, y = recthelper.getAnchor(self.interactTr, 0, 0)
 
-	arg_6_0._startImagePos = Vector2(var_6_0, var_6_1)
+	self._startImagePos = Vector2(x, y)
 
-	arg_6_0:_showDragEffect(false)
+	self:_showDragEffect(false)
 end
 
-function var_0_0._onDragEnd(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0.loadDone then
+function CharacterSkinFullScreenView:_onDragEnd(param, pointerEventData)
+	if not self.loadDone then
 		return
 	end
 
-	arg_7_0._scale = false
-	arg_7_0._startDragPos = nil
+	self._scale = false
+	self._startDragPos = nil
 
-	arg_7_0:_showDragEffect(true)
+	self:_showDragEffect(true)
 end
 
-function var_0_0._onDrag(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0.loadDone then
+function CharacterSkinFullScreenView:_onDrag(param, pointerEventData)
+	if not self.loadDone then
 		return
 	end
 
-	if arg_8_0._scale or not arg_8_0._startDragPos then
+	if self._scale or not self._startDragPos then
 		return
 	end
 
-	local var_8_0 = recthelper.screenPosToAnchorPos(arg_8_2.position, arg_8_0._scrollTransform) - arg_8_0._startDragPos
-	local var_8_1 = arg_8_0._startImagePos.x + var_8_0.x
-	local var_8_2 = arg_8_0._startImagePos.y + var_8_0.y
+	local endPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._scrollTransform)
+	local deltaPos = endPos - self._startDragPos
+	local targetX = self._startImagePos.x + deltaPos.x
+	local targetY = self._startImagePos.y + deltaPos.y
 
-	arg_8_0:SetAnchor(var_8_1, var_8_2)
+	self:SetAnchor(targetX, targetY)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function CharacterSkinFullScreenView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._showSkinConfig = arg_10_0.viewParam.skinCo
-	arg_10_0._showEnum = arg_10_0.viewParam.showEnum or CharacterEnum.ShowSkinEnum.Static
-	arg_10_0.isLive2D = not string.nilorempty(arg_10_0._showSkinConfig.live2d)
-	arg_10_0.skinIndex = arg_10_0._showSkinConfig.id - arg_10_0._showSkinConfig.characterId * 100
-	arg_10_0._screenWidth = recthelper.getWidth(arg_10_0.viewGO.transform)
-	arg_10_0._screenHeight = recthelper.getHeight(arg_10_0.viewGO.transform)
-	arg_10_0.curScaleX = 1
-	arg_10_0.curScaleY = 1
-	arg_10_0._maxScale = 2
-	arg_10_0._minScale = 0.8
-	arg_10_0.initScaleX = 1
-	arg_10_0.initScaleY = 1
-	arg_10_0._deltaScale = 0.2
-	arg_10_0.interactTr = arg_10_0.simageSkin.transform
-	arg_10_0.retainRateW = var_0_0.RetainRate.Normal
-	arg_10_0.retainRateH = var_0_0.RetainRate.Normal
-	arg_10_0.imageWidth = recthelper.getWidth(arg_10_0.interactTr)
-	arg_10_0.imageHeight = recthelper.getHeight(arg_10_0.interactTr)
+function CharacterSkinFullScreenView:onOpen()
+	self._showSkinConfig = self.viewParam.skinCo
+	self._showEnum = self.viewParam.showEnum or CharacterEnum.ShowSkinEnum.Static
+	self.isLive2D = not string.nilorempty(self._showSkinConfig.live2d)
+	self.skinIndex = self._showSkinConfig.id - self._showSkinConfig.characterId * 100
+	self._screenWidth = recthelper.getWidth(self.viewGO.transform)
+	self._screenHeight = recthelper.getHeight(self.viewGO.transform)
+	self.curScaleX = 1
+	self.curScaleY = 1
+	self._maxScale = 2
+	self._minScale = 0.8
+	self.initScaleX = 1
+	self.initScaleY = 1
+	self._deltaScale = 0.2
+	self.interactTr = self.simageSkin.transform
+	self.retainRateW = CharacterSkinFullScreenView.RetainRate.Normal
+	self.retainRateH = CharacterSkinFullScreenView.RetainRate.Normal
+	self.imageWidth = recthelper.getWidth(self.interactTr)
+	self.imageHeight = recthelper.getHeight(self.interactTr)
 
-	arg_10_0:setContainerAnchor()
-	arg_10_0:refreshSkin()
+	self:setContainerAnchor()
+	self:refreshSkin()
 end
 
-function var_0_0.setContainerAnchor(arg_11_0)
-	local var_11_0 = arg_11_0.goDynamicContainer.transform
+function CharacterSkinFullScreenView:setContainerAnchor()
+	local containerTr = self.goDynamicContainer.transform
 
-	if arg_11_0._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and not arg_11_0.isLive2D then
-		var_11_0.anchorMin = RectTransformDefine.Anchor.CenterBottom
-		var_11_0.anchorMax = RectTransformDefine.Anchor.CenterBottom
+	if self._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and not self.isLive2D then
+		containerTr.anchorMin = RectTransformDefine.Anchor.CenterBottom
+		containerTr.anchorMax = RectTransformDefine.Anchor.CenterBottom
 
-		recthelper.setAnchorY(var_11_0, -700)
+		recthelper.setAnchorY(containerTr, -700)
 	else
-		var_11_0.anchorMin = RectTransformDefine.Anchor.CenterMiddle
-		var_11_0.anchorMax = RectTransformDefine.Anchor.CenterMiddle
+		containerTr.anchorMin = RectTransformDefine.Anchor.CenterMiddle
+		containerTr.anchorMax = RectTransformDefine.Anchor.CenterMiddle
 
-		recthelper.setAnchorY(var_11_0, 0)
+		recthelper.setAnchorY(containerTr, 0)
 	end
 end
 
-function var_0_0.refreshSkin(arg_12_0)
-	gohelper.setActive(arg_12_0.goImageContainer, arg_12_0._showEnum == CharacterEnum.ShowSkinEnum.Static)
-	gohelper.setActive(arg_12_0.goSpineContainer, arg_12_0._showEnum == CharacterEnum.ShowSkinEnum.Dynamic)
+function CharacterSkinFullScreenView:refreshSkin()
+	gohelper.setActive(self.goImageContainer, self._showEnum == CharacterEnum.ShowSkinEnum.Static)
+	gohelper.setActive(self.goSpineContainer, self._showEnum == CharacterEnum.ShowSkinEnum.Dynamic)
 
-	if arg_12_0._showEnum == CharacterEnum.ShowSkinEnum.Static then
-		arg_12_0:refreshStaticVertical()
-	elseif arg_12_0._showEnum == CharacterEnum.ShowSkinEnum.Dynamic then
-		arg_12_0:refreshDynamicVertical()
+	if self._showEnum == CharacterEnum.ShowSkinEnum.Static then
+		self:refreshStaticVertical()
+	elseif self._showEnum == CharacterEnum.ShowSkinEnum.Dynamic then
+		self:refreshDynamicVertical()
 	end
 end
 
-function var_0_0.refreshStaticVertical(arg_13_0)
-	arg_13_0.simageSkin:LoadImage(ResUrl.getHeadIconImg(arg_13_0._showSkinConfig.drawing), arg_13_0._onLoad, arg_13_0)
+function CharacterSkinFullScreenView:refreshStaticVertical()
+	self.simageSkin:LoadImage(ResUrl.getHeadIconImg(self._showSkinConfig.drawing), self._onLoad, self)
 end
 
-function var_0_0._onLoad(arg_14_0)
-	ZProj.UGUIHelper.SetImageSize(arg_14_0.simageSkin.gameObject)
+function CharacterSkinFullScreenView:_onLoad()
+	ZProj.UGUIHelper.SetImageSize(self.simageSkin.gameObject)
 
-	arg_14_0.interactTr = arg_14_0.simageSkin.transform
-	arg_14_0.imageWidth = recthelper.getWidth(arg_14_0.interactTr)
-	arg_14_0.imageHeight = recthelper.getHeight(arg_14_0.interactTr)
+	self.interactTr = self.simageSkin.transform
+	self.imageWidth = recthelper.getWidth(self.interactTr)
+	self.imageHeight = recthelper.getHeight(self.interactTr)
 
-	local var_14_0 = SkinConfig.instance:getSkinOffset(arg_14_0._showSkinConfig.skinViewImgOffset, {
+	local offsets = SkinConfig.instance:getSkinOffset(self._showSkinConfig.skinViewImgOffset, {
 		0,
 		0,
 		0.8
 	})
 
-	recthelper.setAnchor(arg_14_0.interactTr, 0, var_14_0[2])
-	transformhelper.setLocalScale(arg_14_0.interactTr, var_14_0[3], var_14_0[3], var_14_0[3])
+	recthelper.setAnchor(self.interactTr, 0, offsets[2])
+	transformhelper.setLocalScale(self.interactTr, offsets[3], offsets[3], offsets[3])
 
-	arg_14_0.initScaleX = var_14_0[3]
-	arg_14_0.initScaleY = var_14_0[3]
-	arg_14_0.retainRateW = var_0_0.RetainRate.Normal
-	arg_14_0.retainRateH = var_0_0.RetainRate.Normal
+	self.initScaleX = offsets[3]
+	self.initScaleY = offsets[3]
+	self.retainRateW = CharacterSkinFullScreenView.RetainRate.Normal
+	self.retainRateH = CharacterSkinFullScreenView.RetainRate.Normal
 
-	arg_14_0:calculateDragBorder()
+	self:calculateDragBorder()
 
-	arg_14_0.loadDone = true
+	self.loadDone = true
 end
 
-function var_0_0.refreshDynamicVertical(arg_15_0)
-	arg_15_0.interactTr = arg_15_0.goSpineSkin.transform
-	arg_15_0.imageWidth = 800
-	arg_15_0.imageHeight = 1400
-	arg_15_0._uiSpine = GuiModelAgent.Create(arg_15_0.goSpineSkin, true)
+function CharacterSkinFullScreenView:refreshDynamicVertical()
+	self.interactTr = self.goSpineSkin.transform
+	self.imageWidth = 800
+	self.imageHeight = 1400
+	self._uiSpine = GuiModelAgent.Create(self.goSpineSkin, true)
 
-	arg_15_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.FullScreen)
+	self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.FullScreen)
 
-	if arg_15_0.isLive2D then
-		arg_15_0._uiSpine:setLive2dCameraLoadedCallback(arg_15_0.onLive2dCameraLoadedCallback, arg_15_0)
+	if self.isLive2D then
+		self._uiSpine:setLive2dCameraLoadedCallback(self.onLive2dCameraLoadedCallback, self)
 	end
 
-	local var_15_0 = arg_15_0._showSkinConfig.fullScreenCameraSize
+	local cameraSize = self._showSkinConfig.fullScreenCameraSize
 
-	if var_15_0 <= 0 then
-		var_15_0 = var_0_0.DefaultLive2dCameraSize
+	if cameraSize <= 0 then
+		cameraSize = CharacterSkinFullScreenView.DefaultLive2dCameraSize
 	end
 
-	arg_15_0._uiSpine:setResPath(arg_15_0._showSkinConfig, arg_15_0._onUISpineLoaded, arg_15_0, var_15_0)
+	self._uiSpine:setResPath(self._showSkinConfig, self._onUISpineLoaded, self, cameraSize)
 end
 
-function var_0_0._showDragEffect(arg_16_0, arg_16_1)
-	if arg_16_0._uiSpine then
-		arg_16_0._uiSpine:showDragEffect(arg_16_1)
+function CharacterSkinFullScreenView:_showDragEffect(value)
+	if self._uiSpine then
+		self._uiSpine:showDragEffect(value)
 	end
 end
 
-function var_0_0._onUISpineLoaded(arg_17_0)
-	arg_17_0._uiSpine:initSkinDragEffect(arg_17_0._showSkinConfig.id)
+function CharacterSkinFullScreenView:_onUISpineLoaded()
+	self._uiSpine:initSkinDragEffect(self._showSkinConfig.id)
 
-	arg_17_0.retainRateW = var_0_0.RetainRate.Live2DWidth
-	arg_17_0.retainRateH = var_0_0.RetainRate.Live2DHeight
+	self.retainRateW = CharacterSkinFullScreenView.RetainRate.Live2DWidth
+	self.retainRateH = CharacterSkinFullScreenView.RetainRate.Live2DHeight
 
-	local var_17_0
+	local offsetStr
 
-	if arg_17_0.isLive2D then
-		var_17_0 = arg_17_0._showSkinConfig.fullScreenLive2dOffset
+	if self.isLive2D then
+		offsetStr = self._showSkinConfig.fullScreenLive2dOffset
 	end
 
-	if string.nilorempty(var_17_0) then
-		var_17_0 = arg_17_0._showSkinConfig.characterViewOffset
+	if string.nilorempty(offsetStr) then
+		offsetStr = self._showSkinConfig.characterViewOffset
 	end
 
-	local var_17_1 = SkinConfig.instance:getSkinOffset(var_17_0)
+	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(arg_17_0.goSpineSkin.transform, var_17_1[1], var_17_1[2])
-	transformhelper.setLocalScale(arg_17_0.goSpineSkin.transform, var_17_1[3], var_17_1[3], var_17_1[3])
+	recthelper.setAnchor(self.goSpineSkin.transform, offsets[1], offsets[2])
+	transformhelper.setLocalScale(self.goSpineSkin.transform, offsets[3], offsets[3], offsets[3])
 
-	if not arg_17_0.isLive2D then
-		arg_17_0.initScaleX = var_17_1[3]
-		arg_17_0.initScaleY = var_17_1[3]
+	if not self.isLive2D then
+		self.initScaleX = offsets[3]
+		self.initScaleY = offsets[3]
 	else
-		arg_17_0.initScaleX = 1
-		arg_17_0.initScaleY = 1
+		self.initScaleX = 1
+		self.initScaleY = 1
 	end
 
-	arg_17_0:calculateDragBorder()
+	self:calculateDragBorder()
 
-	arg_17_0.loadDone = true
+	self.loadDone = true
 end
 
-function var_0_0.onLive2dCameraLoadedCallback(arg_18_0, arg_18_1)
-	arg_18_0.retainRateW = var_0_0.RetainRate.Live2DWidth
-	arg_18_0.retainRateH = var_0_0.RetainRate.Live2DHeight
-	arg_18_0.interactTr = arg_18_1._rawImageGo.transform
-	arg_18_0.imageWidth = arg_18_1._rt.width
-	arg_18_0.imageHeight = arg_18_1._rt.height
+function CharacterSkinFullScreenView:onLive2dCameraLoadedCallback(live2d)
+	self.retainRateW = CharacterSkinFullScreenView.RetainRate.Live2DWidth
+	self.retainRateH = CharacterSkinFullScreenView.RetainRate.Live2DHeight
+	self.interactTr = live2d._rawImageGo.transform
+	self.imageWidth = live2d._rt.width
+	self.imageHeight = live2d._rt.height
 
-	gohelper.addChild(arg_18_0.goDynamicContainer, arg_18_1._rawImageGo)
-	gohelper.setAsFirstSibling(arg_18_1._rawImageGo)
-	arg_18_0:calculateDragBorder()
-	arg_18_0:SetAnchor(0, var_0_0.DefaultLive2dOffsetY)
+	gohelper.addChild(self.goDynamicContainer, live2d._rawImageGo)
+	gohelper.setAsFirstSibling(live2d._rawImageGo)
+	self:calculateDragBorder()
+	self:SetAnchor(0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
 end
 
-function var_0_0.calculateDragBorder(arg_19_0)
-	local var_19_0 = arg_19_0.imageWidth * arg_19_0.curScaleX
-	local var_19_1 = arg_19_0.imageHeight * arg_19_0.curScaleY
+function CharacterSkinFullScreenView:calculateDragBorder()
+	local imageWidth = self.imageWidth * self.curScaleX
+	local imageHeight = self.imageHeight * self.curScaleY
 
-	arg_19_0.maxX = arg_19_0._screenWidth / 2 + var_19_0 * (0.5 - arg_19_0.retainRateW)
-	arg_19_0.minX = -arg_19_0.maxX
-	arg_19_0.maxY = arg_19_0._screenHeight / 2 + var_19_1 * (0.5 - arg_19_0.retainRateH)
-	arg_19_0.minY = -arg_19_0.maxY
+	self.maxX = self._screenWidth / 2 + imageWidth * (0.5 - self.retainRateW)
+	self.minX = -self.maxX
+	self.maxY = self._screenHeight / 2 + imageHeight * (0.5 - self.retainRateH)
+	self.minY = -self.maxY
 end
 
-function var_0_0.onTouchDown(arg_20_0)
-	arg_20_0.isFirstScaleHandle = true
+function CharacterSkinFullScreenView:onTouchDown()
+	self.isFirstScaleHandle = true
 end
 
-function var_0_0.onTouchUp(arg_21_0)
-	arg_21_0.isFirstScaleHandle = true
+function CharacterSkinFullScreenView:onTouchUp()
+	self.isFirstScaleHandle = true
 end
 
-function var_0_0.onScaleHandler(arg_22_0, arg_22_1, arg_22_2)
-	if not arg_22_0.loadDone then
+function CharacterSkinFullScreenView:onScaleHandler(isEnLarger, delta)
+	if not self.loadDone then
 		return
 	end
 
-	if arg_22_0.isFirstScaleHandle then
-		arg_22_0.isFirstScaleHandle = false
+	if self.isFirstScaleHandle then
+		self.isFirstScaleHandle = false
 
 		return
 	end
 
-	arg_22_0._scale = true
-	arg_22_0._clickDown = false
+	self._scale = true
+	self._clickDown = false
 
-	local var_22_0 = arg_22_2 * 0.01
+	local deltaScale = delta * 0.01
 
-	arg_22_0.curScaleX = arg_22_0.curScaleX + var_22_0
-	arg_22_0.curScaleY = arg_22_0.curScaleY + var_22_0
+	self.curScaleX = self.curScaleX + deltaScale
+	self.curScaleY = self.curScaleY + deltaScale
 
-	arg_22_0:setLocalScale()
+	self:setLocalScale()
 end
 
-function var_0_0._onAxisChange(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 == GamepadEnum.KeyCode.RightStickHorizontal then
-		arg_23_0:onMouseScrollWheelChange(arg_23_2 * 0.1)
-	elseif arg_23_1 == GamepadEnum.KeyCode.RightStickVertical then
-		arg_23_0:onMouseScrollWheelChange(arg_23_2 * 0.1)
+function CharacterSkinFullScreenView:_onAxisChange(key, value)
+	if key == GamepadEnum.KeyCode.RightStickHorizontal then
+		self:onMouseScrollWheelChange(value * 0.1)
+	elseif key == GamepadEnum.KeyCode.RightStickVertical then
+		self:onMouseScrollWheelChange(value * 0.1)
 	end
 end
 
-function var_0_0.onMouseScrollWheelChange(arg_24_0, arg_24_1)
-	if not arg_24_0.loadDone then
+function CharacterSkinFullScreenView:onMouseScrollWheelChange(deltaData)
+	if not self.loadDone then
 		return
 	end
 
-	arg_24_0.curScaleX = arg_24_0.curScaleX + arg_24_1
-	arg_24_0.curScaleY = arg_24_0.curScaleY + arg_24_1
+	self.curScaleX = self.curScaleX + deltaData
+	self.curScaleY = self.curScaleY + deltaData
 
-	arg_24_0:setLocalScale()
+	self:setLocalScale()
 end
 
-function var_0_0.setLocalScale(arg_25_0)
-	arg_25_0.curScaleX = math.min(arg_25_0.curScaleX, arg_25_0._maxScale)
-	arg_25_0.curScaleY = math.min(arg_25_0.curScaleY, arg_25_0._maxScale)
-	arg_25_0.curScaleX = math.max(arg_25_0.curScaleX, arg_25_0._minScale)
-	arg_25_0.curScaleY = math.max(arg_25_0.curScaleY, arg_25_0._minScale)
+function CharacterSkinFullScreenView:setLocalScale()
+	self.curScaleX = math.min(self.curScaleX, self._maxScale)
+	self.curScaleY = math.min(self.curScaleY, self._maxScale)
+	self.curScaleX = math.max(self.curScaleX, self._minScale)
+	self.curScaleY = math.max(self.curScaleY, self._minScale)
 
-	local var_25_0 = arg_25_0.curScaleX * arg_25_0.initScaleX
-	local var_25_1 = arg_25_0.curScaleY * arg_25_0.initScaleY
+	local scaleX, scaleY = self.curScaleX * self.initScaleX, self.curScaleY * self.initScaleY
 
-	if arg_25_0._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and arg_25_0.isLive2D then
-		transformhelper.setLocalScale(arg_25_0._spineContainerTransform, var_25_0, var_25_1, 1)
+	if self._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and self.isLive2D then
+		transformhelper.setLocalScale(self._spineContainerTransform, scaleX, scaleY, 1)
 	else
-		transformhelper.setLocalScale(arg_25_0.interactTr, var_25_0, var_25_1, 1)
+		transformhelper.setLocalScale(self.interactTr, scaleX, scaleY, 1)
 	end
 
-	arg_25_0:calculateDragBorder()
-	arg_25_0:SetAnchor(recthelper.getAnchorX(arg_25_0.interactTr), recthelper.getAnchorY(arg_25_0.interactTr))
+	self:calculateDragBorder()
+	self:SetAnchor(recthelper.getAnchorX(self.interactTr), recthelper.getAnchorY(self.interactTr))
 end
 
-function var_0_0.SetAnchor(arg_26_0, arg_26_1, arg_26_2)
-	arg_26_1 = math.min(arg_26_1, arg_26_0.maxX)
-	arg_26_1 = math.max(arg_26_1, arg_26_0.minX)
-	arg_26_2 = math.min(arg_26_2, arg_26_0.maxY)
-	arg_26_2 = math.max(arg_26_2, arg_26_0.minY)
+function CharacterSkinFullScreenView:SetAnchor(anchorX, anchorY)
+	anchorX = math.min(anchorX, self.maxX)
+	anchorX = math.max(anchorX, self.minX)
+	anchorY = math.min(anchorY, self.maxY)
+	anchorY = math.max(anchorY, self.minY)
 
-	recthelper.setAnchor(arg_26_0.interactTr, arg_26_1, arg_26_2)
+	recthelper.setAnchor(self.interactTr, anchorX, anchorY)
 
-	if arg_26_0._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and arg_26_0.isLive2D then
-		recthelper.setAnchor(arg_26_0._spineContainerTransform, arg_26_1, arg_26_2)
+	if self._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and self.isLive2D then
+		recthelper.setAnchor(self._spineContainerTransform, anchorX, anchorY)
 	end
 end
 
-function var_0_0.onClose(arg_27_0)
-	gohelper.setActive(arg_27_0.goSpineSkin, false)
+function CharacterSkinFullScreenView:onClose()
+	gohelper.setActive(self.goSpineSkin, false)
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	arg_28_0._drag:RemoveDragBeginListener()
-	arg_28_0._drag:RemoveDragListener()
-	arg_28_0._drag:RemoveDragEndListener()
+function CharacterSkinFullScreenView:onDestroyView()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragEndListener()
 
-	if arg_28_0._touchEventMgr then
-		TouchEventMgrHepler.remove(arg_28_0._touchEventMgr)
+	if self._touchEventMgr then
+		TouchEventMgrHepler.remove(self._touchEventMgr)
 
-		arg_28_0._touchEventMgr = nil
+		self._touchEventMgr = nil
 	end
 
-	if arg_28_0._uiSpine then
-		arg_28_0._uiSpine:onDestroy()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_28_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 
-	arg_28_0.simageSkin:UnLoadImage()
-	arg_28_0._simagebg:UnLoadImage()
+	self.simageSkin:UnLoadImage()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSkinFullScreenView

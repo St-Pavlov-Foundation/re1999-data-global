@@ -1,152 +1,154 @@
-﻿module("modules.logic.fight.view.FightCardDeckGMView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCardDeckGMView.lua
 
-local var_0_0 = class("FightCardDeckGMView", BaseViewExtended)
+module("modules.logic.fight.view.FightCardDeckGMView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._click = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0._btnCardBox = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "topTab/#btn_cardbox")
-	arg_1_0._cardBoxSelect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardbox/select")
-	arg_1_0._cardBoxUnselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardbox/unselect")
-	arg_1_0._btnCardPre = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "topTab/#btn_cardpre")
-	arg_1_0._cardPreSelect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardpre/select")
-	arg_1_0._cardPreUnselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_cardpre/unselect")
-	arg_1_0._cardRoot = gohelper.findChild(arg_1_0.viewGO, "layout/#scroll_card/Viewport/Content")
-	arg_1_0._cardItem = gohelper.findChild(arg_1_0.viewGO, "layout/#scroll_card/Viewport/Content/#go_carditem")
-	arg_1_0._nameText = gohelper.findChildText(arg_1_0.viewGO, "layout/#scroll_card/#txt_skillname")
-	arg_1_0._skillText = gohelper.findChildText(arg_1_0.viewGO, "layout/#scroll_card/#scroll_skill/viewport/content/#txt_skilldec")
-	arg_1_0._cardMask = gohelper.findChild(arg_1_0.viewGO, "layout/#scroll_card/Viewport").transform
+local FightCardDeckGMView = class("FightCardDeckGMView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightCardDeckGMView:onInitView()
+	self._click = gohelper.getClick(self.viewGO)
+	self._btnCardBox = gohelper.findChildClickWithDefaultAudio(self.viewGO, "topTab/#btn_cardbox")
+	self._cardBoxSelect = gohelper.findChild(self.viewGO, "topTab/#btn_cardbox/select")
+	self._cardBoxUnselect = gohelper.findChild(self.viewGO, "topTab/#btn_cardbox/unselect")
+	self._btnCardPre = gohelper.findChildClickWithDefaultAudio(self.viewGO, "topTab/#btn_cardpre")
+	self._cardPreSelect = gohelper.findChild(self.viewGO, "topTab/#btn_cardpre/select")
+	self._cardPreUnselect = gohelper.findChild(self.viewGO, "topTab/#btn_cardpre/unselect")
+	self._cardRoot = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport/Content")
+	self._cardItem = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport/Content/#go_carditem")
+	self._nameText = gohelper.findChildText(self.viewGO, "layout/#scroll_card/#txt_skillname")
+	self._skillText = gohelper.findChildText(self.viewGO, "layout/#scroll_card/#scroll_skill/viewport/content/#txt_skilldec")
+	self._cardMask = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport").transform
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._click, arg_2_0._onViewClick, arg_2_0)
+function FightCardDeckGMView:addEvents()
+	self:addClickCb(self._click, self._onViewClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightCardDeckGMView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._nameText.text = ""
-	arg_4_0._skillText.text = ""
+function FightCardDeckGMView:_editableInitView()
+	self._nameText.text = ""
+	self._skillText.text = ""
 end
 
-function var_0_0._onViewClick(arg_5_0)
-	arg_5_0:closeThis()
+function FightCardDeckGMView:_onViewClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._proto = arg_6_0.viewParam
-	arg_6_0._cardItemDic = {}
+function FightCardDeckGMView:onOpen()
+	self._proto = self.viewParam
+	self._cardItemDic = {}
 
-	arg_6_0:_refreshBtn()
-	arg_6_0:_refreshBtnState()
+	self:_refreshBtn()
+	self:_refreshBtnState()
 
-	local var_6_0 = "ui/viewres/fight/fightcarditem.prefab"
+	local cardPath = "ui/viewres/fight/fightcarditem.prefab"
 
-	arg_6_0:com_loadAsset(var_6_0, arg_6_0._onCardLoadFinish)
+	self:com_loadAsset(cardPath, self._onCardLoadFinish)
 end
 
-function var_0_0._startRefreshUI(arg_7_0)
-	arg_7_0:_refreshUI()
+function FightCardDeckGMView:_startRefreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._onCardLoadFinish(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1:GetResource()
+function FightCardDeckGMView:_onCardLoadFinish(loader)
+	local tarPrefab = loader:GetResource()
 
-	gohelper.clone(var_8_0, gohelper.findChild(arg_8_0._cardItem, "card"), "card")
-	gohelper.setActive(gohelper.findChild(arg_8_0._cardItem, "select"), false)
-	arg_8_0:_startRefreshUI()
+	gohelper.clone(tarPrefab, gohelper.findChild(self._cardItem, "card"), "card")
+	gohelper.setActive(gohelper.findChild(self._cardItem, "select"), false)
+	self:_startRefreshUI()
 end
 
-function var_0_0._refreshUI(arg_9_0)
-	arg_9_0._cardDataList = {}
+function FightCardDeckGMView:_refreshUI()
+	self._cardDataList = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._proto.deckInfos) do
-		local var_9_0 = {
-			entityId = iter_9_1.uid,
-			skillId = iter_9_1.skillId,
-			num = iter_9_1.num
-		}
+	for i, v in ipairs(self._proto.deckInfos) do
+		local tab = {}
 
-		table.insert(arg_9_0._cardDataList, var_9_0)
+		tab.entityId = v.uid
+		tab.skillId = v.skillId
+		tab.num = v.num
+
+		table.insert(self._cardDataList, tab)
 	end
 
-	arg_9_0:com_createObjList(arg_9_0._onCardItemShow, arg_9_0._cardDataList, arg_9_0._cardRoot, arg_9_0._cardItem)
+	self:com_createObjList(self._onCardItemShow, self._cardDataList, self._cardRoot, self._cardItem)
 
-	if #arg_9_0._cardDataList == 0 then
-		arg_9_0._nameText.text = ""
-		arg_9_0._skillText.text = ""
+	if #self._cardDataList == 0 then
+		self._nameText.text = ""
+		self._skillText.text = ""
 	end
 
-	if #arg_9_0._cardDataList > 6 then
-		recthelper.setHeight(arg_9_0._cardMask, 480)
+	if #self._cardDataList > 6 then
+		recthelper.setHeight(self._cardMask, 480)
 	else
-		recthelper.setHeight(arg_9_0._cardMask, 320)
+		recthelper.setHeight(self._cardMask, 320)
 	end
 end
 
-function var_0_0._onCardItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	gohelper.setActive(arg_10_1, false)
-	gohelper.setActive(arg_10_1, true)
+function FightCardDeckGMView:_onCardItemShow(obj, data, index)
+	gohelper.setActive(obj, false)
+	gohelper.setActive(obj, true)
 
-	local var_10_0 = arg_10_1:GetInstanceID()
-	local var_10_1 = arg_10_0._cardItemDic[var_10_0]
+	local instanceId = obj:GetInstanceID()
+	local cardItem = self._cardItemDic[instanceId]
 
-	if not var_10_1 then
-		var_10_1 = arg_10_0:openSubView(FightCardDeckViewItem, arg_10_1)
-		arg_10_0._cardItemDic[var_10_0] = var_10_1
+	if not cardItem then
+		cardItem = self:openSubView(FightCardDeckViewItem, obj)
+		self._cardItemDic[instanceId] = cardItem
 
-		arg_10_0:addClickCb(gohelper.getClickWithDefaultAudio(gohelper.findChild(arg_10_1, "card")), arg_10_0._onCardItemClick, arg_10_0, var_10_0)
+		self:addClickCb(gohelper.getClickWithDefaultAudio(gohelper.findChild(obj, "card")), self._onCardItemClick, self, instanceId)
 	end
 
-	var_10_1:refreshItem(arg_10_2)
+	cardItem:refreshItem(data)
 
-	if arg_10_3 == 1 then
-		arg_10_0:_onCardItemClick(var_10_0)
+	if index == 1 then
+		self:_onCardItemClick(instanceId)
 	end
 end
 
-function var_0_0._onCardItemClick(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._cardItemDic[arg_11_1]
+function FightCardDeckGMView:_onCardItemClick(instanceId)
+	local cardItem = self._cardItemDic[instanceId]
 
-	if arg_11_0._curSelectItem then
-		arg_11_0._curSelectItem:setSelect(false)
+	if self._curSelectItem then
+		self._curSelectItem:setSelect(false)
 	end
 
-	arg_11_0._curSelectItem = var_11_0
+	self._curSelectItem = cardItem
 
-	arg_11_0._curSelectItem:setSelect(true)
+	self._curSelectItem:setSelect(true)
 
-	local var_11_1 = var_11_0._data
-	local var_11_2 = var_11_1.skillId
-	local var_11_3 = var_11_1.entityId
-	local var_11_4 = lua_skill.configDict[var_11_2]
+	local itemData = cardItem._data
+	local skillId = itemData.skillId
+	local entityId = itemData.entityId
+	local skillConfig = lua_skill.configDict[skillId]
 
-	arg_11_0._nameText.text = var_11_4.name
-	arg_11_0._skillText.text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getEntitySkillDesc(var_11_3, var_11_4), "#c56131", "#7c93ad")
+	self._nameText.text = skillConfig.name
+	self._skillText.text = HeroSkillModel.instance:skillDesToSpot(FightConfig.instance:getEntitySkillDesc(entityId, skillConfig), "#c56131", "#7c93ad")
 end
 
-function var_0_0._refreshBtnState(arg_12_0)
-	gohelper.setActive(arg_12_0._cardBoxSelect, true)
-	gohelper.setActive(arg_12_0._cardBoxUnselect, false)
-	gohelper.setActive(arg_12_0._cardPreSelect, false)
-	gohelper.setActive(arg_12_0._cardPreUnselect, false)
+function FightCardDeckGMView:_refreshBtnState()
+	gohelper.setActive(self._cardBoxSelect, true)
+	gohelper.setActive(self._cardBoxUnselect, false)
+	gohelper.setActive(self._cardPreSelect, false)
+	gohelper.setActive(self._cardPreUnselect, false)
 end
 
-function var_0_0._refreshBtn(arg_13_0)
+function FightCardDeckGMView:_refreshBtn()
 	return
 end
 
-function var_0_0.onClose(arg_14_0)
+function FightCardDeckGMView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function FightCardDeckGMView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightCardDeckGMView

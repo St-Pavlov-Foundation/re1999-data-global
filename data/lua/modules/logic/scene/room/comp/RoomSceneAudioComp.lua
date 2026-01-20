@@ -1,136 +1,139 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneAudioComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneAudioComp.lua
 
-local var_0_0 = class("RoomSceneAudioComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneAudioComp", package.seeall)
 
-var_0_0.CameraMaxDistance = -1.5
-var_0_0.CameraMinDistance = -3.5
+local RoomSceneAudioComp = class("RoomSceneAudioComp", BaseSceneComp)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.audioManagerGo = gohelper.find("AudioManager")
-	arg_1_0.mainCameraGo = CameraMgr.instance:getMainCameraGO()
+RoomSceneAudioComp.CameraMaxDistance = -1.5
+RoomSceneAudioComp.CameraMinDistance = -3.5
 
-	gohelper.enableAkListener(arg_1_0.audioManagerGo, false)
-	gohelper.enableAkListener(arg_1_0.mainCameraGo, true)
+function RoomSceneAudioComp:init()
+	self.audioManagerGo = gohelper.find("AudioManager")
+	self.mainCameraGo = CameraMgr.instance:getMainCameraGO()
 
-	arg_1_0.mainCameraFocusPositionY = CameraMgr.instance:getFocusTrs().position.y
+	gohelper.enableAkListener(self.audioManagerGo, false)
+	gohelper.enableAkListener(self.mainCameraGo, true)
 
-	RoomMapController.instance:registerCallback(RoomEvent.TouchScale, arg_1_0.changeRTPCValue, arg_1_0)
-	StoryController.instance:registerCallback(StoryEvent.Start, arg_1_0._onStoryStart, arg_1_0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, arg_1_0._onStoryFinish, arg_1_0)
-	StoryController.instance:registerCallback(StoryEvent.DialogConFinished, arg_1_0._onStoryFinish, arg_1_0)
-	arg_1_0:playRoomAudio(GameSceneMgr.instance:getCurSceneType(), GameSceneMgr.instance:getCurSceneId())
-	ManufactureController.instance:registerCallback(ManufactureEvent.PlayCritterBuildingBgm, arg_1_0._onPlayCritterBuildingBgm, arg_1_0)
+	self.mainCameraFocusPositionY = CameraMgr.instance:getFocusTrs().position.y
+
+	RoomMapController.instance:registerCallback(RoomEvent.TouchScale, self.changeRTPCValue, self)
+	StoryController.instance:registerCallback(StoryEvent.Start, self._onStoryStart, self)
+	StoryController.instance:registerCallback(StoryEvent.Finish, self._onStoryFinish, self)
+	StoryController.instance:registerCallback(StoryEvent.DialogConFinished, self._onStoryFinish, self)
+	self:playRoomAudio(GameSceneMgr.instance:getCurSceneType(), GameSceneMgr.instance:getCurSceneId())
+	ManufactureController.instance:registerCallback(ManufactureEvent.PlayCritterBuildingBgm, self._onPlayCritterBuildingBgm, self)
 end
 
-function var_0_0._onPlayCritterBuildingBgm(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._isPlayCritterBuildingBgm = arg_2_2
+function RoomSceneAudioComp:_onPlayCritterBuildingBgm(delayTime, isPlay)
+	self._isPlayCritterBuildingBgm = isPlay
 
-	if arg_2_0._waitCheck then
+	if self._waitCheck then
 		return
 	end
 
-	if arg_2_1 and arg_2_1 > 0 then
-		arg_2_0._waitCheck = true
+	if delayTime and delayTime > 0 then
+		self._waitCheck = true
 
-		TaskDispatcher.runDelay(arg_2_0._realCheckIsPlayCritterBuildingBgm, arg_2_0, arg_2_1)
+		TaskDispatcher.runDelay(self._realCheckIsPlayCritterBuildingBgm, self, delayTime)
 	else
-		arg_2_0:_realCheckIsPlayCritterBuildingBgm()
+		self:_realCheckIsPlayCritterBuildingBgm()
 	end
 end
 
-function var_0_0._realCheckIsPlayCritterBuildingBgm(arg_3_0)
-	if arg_3_0._bgmPlayingId then
-		AudioMgr.instance:stopPlayingID(arg_3_0._bgmPlayingId)
+function RoomSceneAudioComp:_realCheckIsPlayCritterBuildingBgm()
+	if self._bgmPlayingId then
+		AudioMgr.instance:stopPlayingID(self._bgmPlayingId)
 	end
 
-	local var_3_0 = arg_3_0._isPlayCritterBuildingBgm and AudioEnum.Room.play_ui_home_mojing_music or AudioEnum.Room.bgm_music_home
+	local bgm = self._isPlayCritterBuildingBgm and AudioEnum.Room.play_ui_home_mojing_music or AudioEnum.Room.bgm_music_home
 
-	if arg_3_0._isPlayCritterBuildingBgm then
+	if self._isPlayCritterBuildingBgm then
 		AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home)
 	else
 		AudioMgr.instance:trigger(AudioEnum.Room.play_amb_home_closeshot_ocean)
 	end
 
-	arg_3_0._bgmPlayingId = AudioMgr.instance:trigger(var_3_0)
-	arg_3_0._waitCheck = false
+	self._bgmPlayingId = AudioMgr.instance:trigger(bgm)
+	self._waitCheck = false
 end
 
-function var_0_0.playRoomAudio(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= SceneType.Room then
+function RoomSceneAudioComp:playRoomAudio(curSceneType, curSceneId)
+	if curSceneType ~= SceneType.Room then
 		return
 	end
 
-	arg_4_0:changeRTPCValue()
+	self:changeRTPCValue()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_amb_home_closeshot_ocean)
 
-	arg_4_0._bgmPlayingId = AudioMgr.instance:trigger(AudioEnum.Room.bgm_music_home)
+	self._bgmPlayingId = AudioMgr.instance:trigger(AudioEnum.Room.bgm_music_home)
 
-	arg_4_0:_playBuildingAudio()
+	self:_playBuildingAudio()
 	RoomMapController.instance:dispatchEvent(RoomEvent.StartPlayAmbientAudio)
 end
 
-function var_0_0._playBuildingAudio(arg_5_0)
+function RoomSceneAudioComp:_playBuildingAudio()
 	if RoomController.instance:isEditMode() then
 		return
 	end
 
-	local var_5_0 = GameSceneMgr.instance:getCurScene()
-	local var_5_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+	local scene = GameSceneMgr.instance:getCurScene()
+	local mapBuildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		local var_5_2 = var_5_0.buildingmgr:getBuildingEntity(iter_5_1.id, SceneTag.RoomBuilding)
+	for i, mo in ipairs(mapBuildingMOList) do
+		local entity = scene.buildingmgr:getBuildingEntity(mo.id, SceneTag.RoomBuilding)
 
-		if var_5_2 and iter_5_1.config and iter_5_1.config.sound ~= 0 then
-			var_5_2:playAudio(iter_5_1.config.sound)
-			logNormal(string.format("RoomBuildingEntity:playAudio() ->[%s] [%s] ", iter_5_1.config.name, iter_5_1.config.sound))
+		if entity and mo.config and mo.config.sound ~= 0 then
+			entity:playAudio(mo.config.sound)
+			logNormal(string.format("RoomBuildingEntity:playAudio() ->[%s] [%s] ", mo.config.name, mo.config.sound))
 		end
 	end
 end
 
-function var_0_0.changeRTPCValue(arg_6_0)
-	local var_6_0 = CameraMgr.instance:getMainCameraTrs()
-	local var_6_1 = arg_6_0:getRtpcValue(var_6_0.position.y - arg_6_0.mainCameraFocusPositionY)
+function RoomSceneAudioComp:changeRTPCValue()
+	local mainCameraTrs = CameraMgr.instance:getMainCameraTrs()
+	local rtpcValue = self:getRtpcValue(mainCameraTrs.position.y - self.mainCameraFocusPositionY)
 
-	AudioMgr.instance:setRTPCValue(AudioEnum.RoomRTPC.MainCamera, var_6_1)
+	AudioMgr.instance:setRTPCValue(AudioEnum.RoomRTPC.MainCamera, rtpcValue)
 end
 
-function var_0_0.getRtpcValue(arg_7_0, arg_7_1)
-	local var_7_0 = 0
-	local var_7_1
+function RoomSceneAudioComp:getRtpcValue(value)
+	local result = 0
 
-	if arg_7_1 <= var_0_0.CameraMinDistance then
-		var_7_1 = 0
-	elseif arg_7_1 >= var_0_0.CameraMaxDistance then
-		var_7_1 = 1
+	if value <= RoomSceneAudioComp.CameraMinDistance then
+		result = 0
+	elseif value >= RoomSceneAudioComp.CameraMaxDistance then
+		result = 1
 	else
-		local var_7_2 = var_0_0.CameraMaxDistance - var_0_0.CameraMinDistance
+		local maxDistanceInterval = RoomSceneAudioComp.CameraMaxDistance - RoomSceneAudioComp.CameraMinDistance
 
-		var_7_1 = (arg_7_1 - var_0_0.CameraMinDistance) / var_7_2
+		result = (value - RoomSceneAudioComp.CameraMinDistance) / maxDistanceInterval
 	end
 
-	return var_7_1
+	return result
 end
 
-function var_0_0._onStoryStart(arg_8_0, arg_8_1)
-	if not RoomTrainCritterModel.instance:isCritterTrainStory(arg_8_1) then
+function RoomSceneAudioComp:_onStoryStart(storyId)
+	local isCritterTrainStory = RoomTrainCritterModel.instance:isCritterTrainStory(storyId)
+
+	if not isCritterTrainStory then
 		AudioMgr.instance:trigger(AudioEnum.Room.set_home_all_lower)
 	end
 end
 
-function var_0_0._onStoryFinish(arg_9_0, arg_9_1)
+function RoomSceneAudioComp:_onStoryFinish(storyId)
 	AudioMgr.instance:trigger(AudioEnum.Room.set_home_all_normal)
 end
 
-function var_0_0.onSceneClose(arg_10_0)
+function RoomSceneAudioComp:onSceneClose()
 	AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home)
-	gohelper.enableAkListener(arg_10_0.audioManagerGo, true)
-	gohelper.enableAkListener(arg_10_0.mainCameraGo, false)
-	RoomMapController.instance:unregisterCallback(RoomEvent.TouchScale, arg_10_0.changeRTPCValue, arg_10_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_10_0.playRoomAudio, arg_10_0)
-	StoryController.instance:unregisterCallback(StoryEvent.Start, arg_10_0._onStoryStart, arg_10_0)
-	StoryController.instance:unregisterCallback(StoryEvent.Finish, arg_10_0._onStoryFinish, arg_10_0)
-	StoryController.instance:unregisterCallback(StoryEvent.DialogConFinished, arg_10_0._onStoryFinish, arg_10_0)
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingViewChange, arg_10_0._onPlayCritterBuildingBgm, arg_10_0)
+	gohelper.enableAkListener(self.audioManagerGo, true)
+	gohelper.enableAkListener(self.mainCameraGo, false)
+	RoomMapController.instance:unregisterCallback(RoomEvent.TouchScale, self.changeRTPCValue, self)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self.playRoomAudio, self)
+	StoryController.instance:unregisterCallback(StoryEvent.Start, self._onStoryStart, self)
+	StoryController.instance:unregisterCallback(StoryEvent.Finish, self._onStoryFinish, self)
+	StoryController.instance:unregisterCallback(StoryEvent.DialogConFinished, self._onStoryFinish, self)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingViewChange, self._onPlayCritterBuildingBgm, self)
 end
 
-return var_0_0
+return RoomSceneAudioComp

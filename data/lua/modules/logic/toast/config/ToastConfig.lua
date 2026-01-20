@@ -1,27 +1,29 @@
-﻿module("modules.logic.toast.config.ToastConfig", package.seeall)
+﻿-- chunkname: @modules/logic/toast/config/ToastConfig.lua
 
-local var_0_0 = class("ToastConfig", BaseConfig)
+module("modules.logic.toast.config.ToastConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.toastConfig = nil
+local ToastConfig = class("ToastConfig", BaseConfig)
+
+function ToastConfig:ctor()
+	self.toastConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ToastConfig:reqConfigNames()
 	return {
 		"toast"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "toast" then
-		arg_3_0.toastConfig = arg_3_2
+function ToastConfig:onConfigLoaded(configName, configTable)
+	if configName == "toast" then
+		self.toastConfig = configTable
 	end
 end
 
-function var_0_0.getToastCO(arg_4_0, arg_4_1)
-	return arg_4_0.toastConfig.configDict[arg_4_1]
+function ToastConfig:getToastCO(id)
+	return self.toastConfig.configDict[id]
 end
 
-var_0_0.instance = var_0_0.New()
+ToastConfig.instance = ToastConfig.New()
 
-return var_0_0
+return ToastConfig

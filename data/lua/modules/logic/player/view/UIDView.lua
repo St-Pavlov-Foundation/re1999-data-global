@@ -1,65 +1,69 @@
-﻿module("modules.logic.player.view.UIDView", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/UIDView.lua
 
-local var_0_0 = class("UIDView", UserDataDispose)
-local var_0_1 = 1.7777777777777777
-local var_0_2 = 2.25 - var_0_1
-local var_0_3 = 56
-local var_0_4 = 135
+module("modules.logic.player.view.UIDView", package.seeall)
 
-function var_0_0.getInstance()
-	if not var_0_0.instance then
-		var_0_0.instance = var_0_0.New()
+local UIDView = class("UIDView", UserDataDispose)
+local minRate = 1.7777777777777777
+local maxRate = 2.25
+local rateRange = maxRate - minRate
+local minRateAnchorX = 56
+local maxRateAnchor = 135
 
-		var_0_0.instance:__onInit()
+function UIDView.getInstance()
+	if not UIDView.instance then
+		UIDView.instance = UIDView.New()
+
+		UIDView.instance:__onInit()
 	end
 
-	return var_0_0.instance
+	return UIDView.instance
 end
 
-function var_0_0.hidePlayerId(arg_2_0)
-	if arg_2_0._txtId then
-		arg_2_0._txtId.text = ""
+function UIDView:hidePlayerId()
+	if self._txtId then
+		self._txtId.text = ""
 	end
 end
 
-function var_0_0.showPlayerId(arg_3_0)
-	if not arg_3_0._txtId then
-		arg_3_0:loadPrefab()
+function UIDView:showPlayerId()
+	if not self._txtId then
+		self:loadPrefab()
 
 		return
 	end
 
-	arg_3_0._txtId.text = "ID : " .. PlayerModel.instance:getMyUserId()
+	self._txtId.text = "ID : " .. PlayerModel.instance:getMyUserId()
 end
 
-function var_0_0.loadPrefab(arg_4_0)
-	if arg_4_0.loader then
+function UIDView:loadPrefab()
+	if self.loader then
 		return
 	end
 
-	local var_4_0 = "ui/viewres/common/uid.prefab"
-	local var_4_1 = gohelper.find("IDCanvas/POPUP")
+	local path = "ui/viewres/common/uid.prefab"
+	local goIDPopup = gohelper.find("IDCanvas/POPUP")
 
-	arg_4_0.loader = PrefabInstantiate.Create(var_4_1)
+	self.loader = PrefabInstantiate.Create(goIDPopup)
 
-	arg_4_0.loader:startLoad(var_4_0, arg_4_0.loadedCallback, arg_4_0)
+	self.loader:startLoad(path, self.loadedCallback, self)
 end
 
-function var_0_0.loadedCallback(arg_5_0)
-	arg_5_0.tr = arg_5_0.loader:getInstGO().transform
-	arg_5_0._txtId = gohelper.findChildText(arg_5_0.loader:getInstGO(), "#txt_id")
+function UIDView:loadedCallback()
+	self.tr = self.loader:getInstGO().transform
+	self._txtId = gohelper.findChildText(self.loader:getInstGO(), "#txt_id")
 
-	arg_5_0:showPlayerId()
-	arg_5_0:setAnchorPos()
-	arg_5_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_5_0.setAnchorPos, arg_5_0)
+	self:showPlayerId()
+	self:setAnchorPos()
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self.setAnchorPos, self)
 end
 
-function var_0_0.setAnchorPos(arg_6_0)
-	local var_6_0, var_6_1 = GameGlobalMgr.instance:getScreenState():getScreenSize()
-	local var_6_2 = (var_6_0 / var_6_1 - var_0_1) / var_0_2
-	local var_6_3 = Mathf.Lerp(var_0_3, var_0_4, var_6_2)
+function UIDView:setAnchorPos()
+	local width, height = GameGlobalMgr.instance:getScreenState():getScreenSize()
+	local rate = width / height
+	local lerpValue = (rate - minRate) / rateRange
+	local anchorX = Mathf.Lerp(minRateAnchorX, maxRateAnchor, lerpValue)
 
-	recthelper.setAnchorX(arg_6_0.tr, var_6_3)
+	recthelper.setAnchorX(self.tr, anchorX)
 end
 
-return var_0_0
+return UIDView

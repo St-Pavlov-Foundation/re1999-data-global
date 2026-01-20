@@ -1,250 +1,262 @@
-﻿module("modules.logic.scene.common.camera.FightSceneCameraComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/camera/FightSceneCameraComp.lua
 
-local var_0_0 = class("FightSceneCameraComp", BaseSceneComp)
+module("modules.logic.scene.common.camera.FightSceneCameraComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._cameraTrace = CameraMgr.instance:getCameraTrace()
-	arg_1_0._curVirtualCameraSetId = nil
+local FightSceneCameraComp = class("FightSceneCameraComp", BaseSceneComp)
+
+function FightSceneCameraComp:onInit()
+	self._scene = self:getCurScene()
+	self._cameraTrace = CameraMgr.instance:getCameraTrace()
+	self._curVirtualCameraSetId = nil
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	FightController.instance:registerCallback(FightEvent.FightRoundStart, arg_2_0._onFightRoundStart, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStageBefore, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, arg_2_0._onMySideRoundEnd, arg_2_0)
+function FightSceneCameraComp:onSceneStart(sceneId, levelId)
+	FightController.instance:registerCallback(FightEvent.FightRoundStart, self._onFightRoundStart, self)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
+	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
 
 	if CameraMgr.instance:hasCameraRootAnimatorPlayer() then
-		CameraMgr.instance:getCameraRootAnimatorPlayer():Stop()
+		local animatorPlayer = CameraMgr.instance:getCameraRootAnimatorPlayer()
+
+		animatorPlayer:Stop()
 	end
 
-	local var_2_0 = CameraMgr.instance:getCameraRootGO()
+	local rootGO = CameraMgr.instance:getCameraRootGO()
 
-	transformhelper.setPos(var_2_0.transform, 0, 0, 0)
+	transformhelper.setPos(rootGO.transform, 0, 0, 0)
 
-	local var_2_1 = CameraMgr.instance:getCameraTraceGO()
+	local mainGO = CameraMgr.instance:getCameraTraceGO()
 
-	transformhelper.setPos(var_2_1.transform, 0, 0, 0)
+	transformhelper.setPos(mainGO.transform, 0, 0, 0)
 
-	CameraMgr.instance:getMainCamera().orthographic = false
-	arg_2_0._cameraTrace.EnableTrace = false
+	local camera = CameraMgr.instance:getMainCamera()
 
-	local var_2_2 = CameraMgr.instance:getCameraTraceGO().transform
+	camera.orthographic = false
+	self._cameraTrace.EnableTrace = false
 
-	transformhelper.setLocalPos(var_2_2, 0, 0, 0)
-	transformhelper.setLocalRotation(var_2_2, 0, 0, 0)
+	local mainTrs = CameraMgr.instance:getCameraTraceGO().transform
+
+	transformhelper.setLocalPos(mainTrs, 0, 0, 0)
+	transformhelper.setLocalRotation(mainTrs, 0, 0, 0)
 	CameraMgr.instance:getCameraTrace():DisableTraceWithFixedParam()
 
-	local var_2_3 = CameraMgr.instance:getVirtualCameraGO()
+	local virsualCamerasGO = CameraMgr.instance:getVirtualCameraGO()
 
-	gohelper.setActive(var_2_3, true)
+	gohelper.setActive(virsualCamerasGO, true)
 
-	local var_2_4 = gohelper.findChild(var_2_3, "light")
+	local lightGo = gohelper.findChild(virsualCamerasGO, "light")
 
-	gohelper.setActive(var_2_4, true)
-	TaskDispatcher.runDelay(arg_2_0._delaySetUnitCameraFov, arg_2_0, 0.01)
-	arg_2_0:setSceneCameraOffset()
+	gohelper.setActive(lightGo, true)
+	TaskDispatcher.runDelay(self._delaySetUnitCameraFov, self, 0.01)
+	self:setSceneCameraOffset()
 
-	arg_2_0._curVirtualCameraSetId = nil
+	self._curVirtualCameraSetId = nil
 
-	arg_2_0:switchNextVirtualCamera()
+	self:switchNextVirtualCamera()
 
-	if not arg_2_0._hasRecord then
-		arg_2_0._hasRecord = true
+	if not self._hasRecord then
+		self._hasRecord = true
 
-		arg_2_0:recordParam()
+		self:recordParam()
 	end
 
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_2_0._onScreenResize, arg_2_0)
-	arg_2_0:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	arg_3_0._myTurnOffset = nil
+function FightSceneCameraComp:onSceneClose()
+	self._myTurnOffset = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_3_0._onRestartStageBefore, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.FightRoundStart, arg_3_0._onFightRoundStart, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, arg_3_0._onMySideRoundEnd, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delaySetUnitCameraFov, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._resetParam, arg_3_0)
-	arg_3_0:resetCameraOffset()
-	arg_3_0:resetParam()
-	arg_3_0:enablePostProcessSmooth(false)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
+	FightController.instance:unregisterCallback(FightEvent.FightRoundStart, self._onFightRoundStart, self)
+	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
+	TaskDispatcher.cancelTask(self._delaySetUnitCameraFov, self)
+	TaskDispatcher.cancelTask(self._resetParam, self)
+	self:resetCameraOffset()
+	self:resetParam()
+	self:enablePostProcessSmooth(false)
 
-	CameraMgr.instance:getCameraRootAnimator().speed = 1
+	local animComp = CameraMgr.instance:getCameraRootAnimator()
 
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_3_0._onScreenResize, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.disableClearSlot, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayDisableSmooth, arg_3_0)
-	arg_3_0:disableClearSlot()
-	arg_3_0:_delayDisableSmooth()
+	animComp.speed = 1
+
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	TaskDispatcher.cancelTask(self.disableClearSlot, self)
+	TaskDispatcher.cancelTask(self._delayDisableSmooth, self)
+	self:disableClearSlot()
+	self:_delayDisableSmooth()
 end
 
-function var_0_0.getCurActiveVirtualCame(arg_4_0)
-	local var_4_0 = arg_4_0:getCurVirtualCamera(1)
+function FightSceneCameraComp:getCurActiveVirtualCame()
+	local virtualCame = self:getCurVirtualCamera(1)
 
-	if not var_4_0.gameObject.activeInHierarchy then
-		var_4_0 = arg_4_0:getCurVirtualCamera(2)
+	if not virtualCame.gameObject.activeInHierarchy then
+		virtualCame = self:getCurVirtualCamera(2)
 	end
 
-	return var_4_0
+	return virtualCame
 end
 
-function var_0_0.enableClearSlot(arg_5_0, arg_5_1)
-	arg_5_0:disableClearSlot()
+function FightSceneCameraComp:enableClearSlot(resumeDelay)
+	self:disableClearSlot()
 
-	local var_5_0 = CameraMgr.instance:getVirtualCameraGO()
-	local var_5_1 = gohelper.findChild(var_5_0, "clearslot")
+	local virtualCameraRootGO = CameraMgr.instance:getVirtualCameraGO()
+	local clearSlotGO = gohelper.findChild(virtualCameraRootGO, "clearslot")
 
-	arg_5_0._clearSlotVC = arg_5_0:getCurActiveVirtualCame()
+	self._clearSlotVC = self:getCurActiveVirtualCame()
 
-	if not arg_5_0._clearSlotVC then
+	if not self._clearSlotVC then
 		return
 	end
 
-	arg_5_0._clearSlotParentGO = arg_5_0._clearSlotVC.transform.parent.gameObject
-	arg_5_0._tempClearSlotGO = gohelper.clone(var_5_1, arg_5_0._clearSlotParentGO, "ClearSlot")
-	arg_5_0._resumeDelay = arg_5_1
+	local parent = self._clearSlotVC.transform.parent
 
-	gohelper.addChild(arg_5_0._tempClearSlotGO, arg_5_0._clearSlotVC.gameObject)
-	gohelper.setActive(arg_5_0._tempClearSlotGO, false)
-	TaskDispatcher.runDelay(arg_5_0._delayActiveClearSlot, arg_5_0, 0.01)
+	self._clearSlotParentGO = parent.gameObject
+	self._tempClearSlotGO = gohelper.clone(clearSlotGO, self._clearSlotParentGO, "ClearSlot")
+	self._resumeDelay = resumeDelay
+
+	gohelper.addChild(self._tempClearSlotGO, self._clearSlotVC.gameObject)
+	gohelper.setActive(self._tempClearSlotGO, false)
+	TaskDispatcher.runDelay(self._delayActiveClearSlot, self, 0.01)
 end
 
-function var_0_0._delayActiveClearSlot(arg_6_0)
-	gohelper.setActive(arg_6_0._tempClearSlotGO, true)
+function FightSceneCameraComp:_delayActiveClearSlot()
+	gohelper.setActive(self._tempClearSlotGO, true)
 
-	if arg_6_0._resumeDelay then
-		TaskDispatcher.runDelay(arg_6_0.disableClearSlot, arg_6_0, arg_6_0._resumeDelay)
+	if self._resumeDelay then
+		TaskDispatcher.runDelay(self.disableClearSlot, self, self._resumeDelay)
 
-		arg_6_0._resumeDelay = nil
+		self._resumeDelay = nil
 	end
 end
 
-function var_0_0.disableClearSlot(arg_7_0)
-	if arg_7_0._tempClearSlotGO then
-		gohelper.addChild(arg_7_0._clearSlotParentGO, arg_7_0._clearSlotVC.gameObject)
-		gohelper.destroy(arg_7_0._tempClearSlotGO)
+function FightSceneCameraComp:disableClearSlot()
+	if self._tempClearSlotGO then
+		gohelper.addChild(self._clearSlotParentGO, self._clearSlotVC.gameObject)
+		gohelper.destroy(self._tempClearSlotGO)
 
-		arg_7_0._clearSlotVC = nil
-		arg_7_0._tempClearSlotGO = nil
-		arg_7_0._clearSlotParentGO = nil
+		self._clearSlotVC = nil
+		self._tempClearSlotGO = nil
+		self._clearSlotParentGO = nil
 	end
 end
 
-function var_0_0.getCurVirtualCamera(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._curVirtualCameraSetId or 1
+function FightSceneCameraComp:getCurVirtualCamera(indexInSet)
+	local setIndex = self._curVirtualCameraSetId or 1
 
-	return CameraMgr.instance:getVirtualCamera(var_8_0, arg_8_1)
+	return CameraMgr.instance:getVirtualCamera(setIndex, indexInSet)
 end
 
-function var_0_0.switchNextVirtualCamera(arg_9_0)
-	if not arg_9_0._curVirtualCameraSetId then
-		arg_9_0._curVirtualCameraSetId = 1
-	elseif arg_9_0._curVirtualCameraSetId == 1 then
-		arg_9_0._curVirtualCameraSetId = 2
-	elseif arg_9_0._curVirtualCameraSetId == 2 then
-		arg_9_0._curVirtualCameraSetId = 1
+function FightSceneCameraComp:switchNextVirtualCamera()
+	if not self._curVirtualCameraSetId then
+		self._curVirtualCameraSetId = 1
+	elseif self._curVirtualCameraSetId == 1 then
+		self._curVirtualCameraSetId = 2
+	elseif self._curVirtualCameraSetId == 2 then
+		self._curVirtualCameraSetId = 1
 	end
 
-	CameraMgr.instance:switchVirtualCamera(arg_9_0._curVirtualCameraSetId)
+	CameraMgr.instance:switchVirtualCamera(self._curVirtualCameraSetId)
 end
 
-function var_0_0.enablePostProcessSmooth(arg_10_0, arg_10_1)
-	local var_10_0 = CameraMgr.instance:getCameraRootGO()
+function FightSceneCameraComp:enablePostProcessSmooth(isEnable)
+	local cameraRoot = CameraMgr.instance:getCameraRootGO()
 
-	if not arg_10_0._dofSmoothComp then
-		local var_10_1 = gohelper.findChild(var_10_0, "main/MainCamera/unitcamera/PPVolume")
+	if not self._dofSmoothComp then
+		local ppVolume = gohelper.findChild(cameraRoot, "main/MainCamera/unitcamera/PPVolume")
 
-		if var_10_1 then
-			arg_10_0._dofSmoothComp = gohelper.onceAddComponent(var_10_1, typeof(ZProj.DepthOfFieldSmooth))
-			arg_10_0._dofSmoothComp.maxOffset = 0.1
-			arg_10_0._dofSmoothComp.frameRatio = 0.02
+		if ppVolume then
+			self._dofSmoothComp = gohelper.onceAddComponent(ppVolume, typeof(ZProj.DepthOfFieldSmooth))
+			self._dofSmoothComp.maxOffset = 0.1
+			self._dofSmoothComp.frameRatio = 0.02
 		else
 			logError("add smooth comp fail, PPVolume not exist")
 		end
 	end
 
-	if arg_10_0._dofSmoothComp then
-		arg_10_0._dofSmoothComp.enabled = arg_10_1
+	if self._dofSmoothComp then
+		self._dofSmoothComp.enabled = isEnable
 	end
 
-	if not arg_10_0._lightColorSmoothComp then
-		local var_10_2 = gohelper.findChild(var_10_0, "main/VirtualCameras/light/direct")
+	if not self._lightColorSmoothComp then
+		local directLight = gohelper.findChild(cameraRoot, "main/VirtualCameras/light/direct")
 
-		if var_10_2 then
-			arg_10_0._lightColorSmoothComp = gohelper.onceAddComponent(var_10_2, typeof(ZProj.LightColorSmooth))
-			arg_10_0._lightColorSmoothComp.maxOffset = 0.1
-			arg_10_0._lightColorSmoothComp.frameRatio = 0.02
+		if directLight then
+			self._lightColorSmoothComp = gohelper.onceAddComponent(directLight, typeof(ZProj.LightColorSmooth))
+			self._lightColorSmoothComp.maxOffset = 0.1
+			self._lightColorSmoothComp.frameRatio = 0.02
 		else
 			logError("add smooth comp fail, DirectLight not exist")
 		end
 	end
 
-	if arg_10_0._lightColorSmoothComp then
-		arg_10_0._lightColorSmoothComp.enabled = arg_10_1
+	if self._lightColorSmoothComp then
+		self._lightColorSmoothComp.enabled = isEnable
 
-		if arg_10_1 then
-			TaskDispatcher.runDelay(arg_10_0._delayDisableSmooth, arg_10_0, 0.2)
+		if isEnable then
+			TaskDispatcher.runDelay(self._delayDisableSmooth, self, 0.2)
 		end
 	end
 end
 
-function var_0_0._delayDisableSmooth(arg_11_0)
-	arg_11_0._lightColorSmoothComp.enabled = false
+function FightSceneCameraComp:_delayDisableSmooth()
+	self._lightColorSmoothComp.enabled = false
 end
 
-function var_0_0.recordParam(arg_12_0)
-	local var_12_0 = CameraMgr.instance:getCameraRootGO()
+function FightSceneCameraComp:recordParam()
+	local cameraRoot = CameraMgr.instance:getCameraRootGO()
+	local directLight = gohelper.findChildComponent(cameraRoot, "main/VirtualCameras/light/direct", typeof(UnityEngine.Light))
 
-	arg_12_0._lightColor = gohelper.findChildComponent(var_12_0, "main/VirtualCameras/light/direct", typeof(UnityEngine.Light)).color
-	arg_12_0._distortionRange = PostProcessingMgr.instance:getUnitPPValue("distortionRange")
-	arg_12_0._dofDistance = PostProcessingMgr.instance:getUnitPPValue("dofDistance")
-	arg_12_0._dofFactor = PostProcessingMgr.instance:getUnitPPValue("dofFactor")
-	arg_12_0._dofFarBlur = PostProcessingMgr.instance:getUnitPPValue("dofFarBlur")
-	arg_12_0._dofLength = PostProcessingMgr.instance:getUnitPPValue("dofLength")
-	arg_12_0._dofNearBlur = PostProcessingMgr.instance:getUnitPPValue("dofNearBlur")
-	arg_12_0._isDistortion = PostProcessingMgr.instance:getUnitPPValue("isDistortion")
-	arg_12_0._rgbSplitCenter = PostProcessingMgr.instance:getUnitPPValue("rgbSplitCenter")
+	self._lightColor = directLight.color
+	self._distortionRange = PostProcessingMgr.instance:getUnitPPValue("distortionRange")
+	self._dofDistance = PostProcessingMgr.instance:getUnitPPValue("dofDistance")
+	self._dofFactor = PostProcessingMgr.instance:getUnitPPValue("dofFactor")
+	self._dofFarBlur = PostProcessingMgr.instance:getUnitPPValue("dofFarBlur")
+	self._dofLength = PostProcessingMgr.instance:getUnitPPValue("dofLength")
+	self._dofNearBlur = PostProcessingMgr.instance:getUnitPPValue("dofNearBlur")
+	self._isDistortion = PostProcessingMgr.instance:getUnitPPValue("isDistortion")
+	self._rgbSplitCenter = PostProcessingMgr.instance:getUnitPPValue("rgbSplitCenter")
 
-	local var_12_1 = CameraMgr.instance:getVirtualCamera(1, 1)
-	local var_12_2 = ZProj.VirtualCameraWrap.Get(var_12_1.gameObject).body
-	local var_12_3 = "Follower" .. string.sub(var_12_1.name, string.len(var_12_1.name))
-	local var_12_4 = gohelper.findChild(var_12_1.transform.parent.gameObject, var_12_3)
-	local var_12_5 = var_12_1.transform.parent.gameObject
+	local virtualCamera = CameraMgr.instance:getVirtualCamera(1, 1)
+	local body = ZProj.VirtualCameraWrap.Get(virtualCamera.gameObject).body
+	local followerName = "Follower" .. string.sub(virtualCamera.name, string.len(virtualCamera.name))
+	local follower = gohelper.findChild(virtualCamera.transform.parent.gameObject, followerName)
+	local vcam = virtualCamera.transform.parent.gameObject
 
-	arg_12_0._pathOffset = var_12_2.m_PathOffset
-	arg_12_0._pathPosition = var_12_2.m_PathPosition
-	arg_12_0._xDamping = var_12_2.m_XDamping
-	arg_12_0._yDamping = var_12_2.m_YDamping
-	arg_12_0._zDamping = var_12_2.m_ZDamping
-	arg_12_0._followerPos = var_12_4.transform.localPosition
-	arg_12_0._vcamPos = var_12_5.transform.localPosition
+	self._pathOffset = body.m_PathOffset
+	self._pathPosition = body.m_PathPosition
+	self._xDamping = body.m_XDamping
+	self._yDamping = body.m_YDamping
+	self._zDamping = body.m_ZDamping
+	self._followerPos = follower.transform.localPosition
+	self._vcamPos = vcam.transform.localPosition
 end
 
-function var_0_0.resetParam(arg_13_0)
-	local var_13_0 = CameraMgr.instance:getCameraRootGO()
+function FightSceneCameraComp:resetParam()
+	local cameraRoot = CameraMgr.instance:getCameraRootGO()
+	local directLight = gohelper.findChildComponent(cameraRoot, "main/VirtualCameras/light/direct", typeof(UnityEngine.Light))
 
-	gohelper.findChildComponent(var_13_0, "main/VirtualCameras/light/direct", typeof(UnityEngine.Light)).color = arg_13_0._lightColor
+	directLight.color = self._lightColor
 
-	PostProcessingMgr.instance:setUnitPPValue("distortionRange", arg_13_0._distortionRange)
-	PostProcessingMgr.instance:setUnitPPValue("DistortionRange", arg_13_0._distortionRange)
-	PostProcessingMgr.instance:setUnitPPValue("dofDistance", arg_13_0._dofDistance)
-	PostProcessingMgr.instance:setUnitPPValue("DofDistance", arg_13_0._dofDistance)
-	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_13_0._dofFactor)
-	PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_13_0._dofFactor)
-	PostProcessingMgr.instance:setUnitPPValue("dofFarBlur", arg_13_0._dofFarBlur)
-	PostProcessingMgr.instance:setUnitPPValue("DofFarBlur", arg_13_0._dofFarBlur)
-	PostProcessingMgr.instance:setUnitPPValue("dofLength", arg_13_0._dofLength)
-	PostProcessingMgr.instance:setUnitPPValue("DofLength", arg_13_0._dofLength)
-	PostProcessingMgr.instance:setUnitPPValue("dofNearBlur", arg_13_0._dofNearBlur)
-	PostProcessingMgr.instance:setUnitPPValue("DofNearBlur", arg_13_0._dofNearBlur)
-	PostProcessingMgr.instance:setUnitPPValue("isDistortion", arg_13_0._isDistortion)
-	PostProcessingMgr.instance:setUnitPPValue("IsDistortion", arg_13_0._isDistortion)
-	PostProcessingMgr.instance:setUnitPPValue("rgbSplitCenter", arg_13_0._rgbSplitCenter)
-	PostProcessingMgr.instance:setUnitPPValue("RgbSplitCenter", arg_13_0._rgbSplitCenter)
+	PostProcessingMgr.instance:setUnitPPValue("distortionRange", self._distortionRange)
+	PostProcessingMgr.instance:setUnitPPValue("DistortionRange", self._distortionRange)
+	PostProcessingMgr.instance:setUnitPPValue("dofDistance", self._dofDistance)
+	PostProcessingMgr.instance:setUnitPPValue("DofDistance", self._dofDistance)
+	PostProcessingMgr.instance:setUnitPPValue("dofFactor", self._dofFactor)
+	PostProcessingMgr.instance:setUnitPPValue("DofFactor", self._dofFactor)
+	PostProcessingMgr.instance:setUnitPPValue("dofFarBlur", self._dofFarBlur)
+	PostProcessingMgr.instance:setUnitPPValue("DofFarBlur", self._dofFarBlur)
+	PostProcessingMgr.instance:setUnitPPValue("dofLength", self._dofLength)
+	PostProcessingMgr.instance:setUnitPPValue("DofLength", self._dofLength)
+	PostProcessingMgr.instance:setUnitPPValue("dofNearBlur", self._dofNearBlur)
+	PostProcessingMgr.instance:setUnitPPValue("DofNearBlur", self._dofNearBlur)
+	PostProcessingMgr.instance:setUnitPPValue("isDistortion", self._isDistortion)
+	PostProcessingMgr.instance:setUnitPPValue("IsDistortion", self._isDistortion)
+	PostProcessingMgr.instance:setUnitPPValue("rgbSplitCenter", self._rgbSplitCenter)
+	PostProcessingMgr.instance:setUnitPPValue("RgbSplitCenter", self._rgbSplitCenter)
 
-	arg_13_0._mulColor = arg_13_0._mulColor or Color.New(1, 1, 1, 1)
-	arg_13_0._keepColor = arg_13_0._keepColor or Color.New(0, 0, 0, 1)
+	self._mulColor = self._mulColor or Color.New(1, 1, 1, 1)
+	self._keepColor = self._keepColor or Color.New(0, 0, 0, 1)
 
 	PostProcessingMgr.instance:setUnitPPValue("flickerType", -1)
 	PostProcessingMgr.instance:setUnitPPValue("FlickerType", -1)
@@ -256,108 +268,117 @@ function var_0_0.resetParam(arg_13_0)
 	PostProcessingMgr.instance:setUnitPPValue("Saturation", 0.5)
 	PostProcessingMgr.instance:setUnitPPValue("contrast", 0.5)
 	PostProcessingMgr.instance:setUnitPPValue("Contrast", 0.5)
-	PostProcessingMgr.instance:setUnitPPValue("mulColor", arg_13_0._mulColor)
-	PostProcessingMgr.instance:setUnitPPValue("MulColor", arg_13_0._mulColor)
-	PostProcessingMgr.instance:setUnitPPValue("keepColor", arg_13_0._keepColor)
-	PostProcessingMgr.instance:setUnitPPValue("KeepColor", arg_13_0._keepColor)
+	PostProcessingMgr.instance:setUnitPPValue("mulColor", self._mulColor)
+	PostProcessingMgr.instance:setUnitPPValue("MulColor", self._mulColor)
+	PostProcessingMgr.instance:setUnitPPValue("keepColor", self._keepColor)
+	PostProcessingMgr.instance:setUnitPPValue("KeepColor", self._keepColor)
 	PostProcessingMgr.instance:setUnitPPValue("inverse", false)
 	PostProcessingMgr.instance:setUnitPPValue("Inverse", false)
 	PostProcessingMgr.instance:setUnitPPValue("colorSceOldMoviesActive", false)
 	PostProcessingMgr.instance:setUnitPPValue("ColorSceOldMoviesActive", false)
 
-	local var_13_1 = CameraMgr.instance:getVirtualCameras()
+	local virtualCameras = CameraMgr.instance:getVirtualCameras()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_2 = ZProj.VirtualCameraWrap.Get(iter_13_1.gameObject).body
-		local var_13_3 = "Follower" .. string.sub(iter_13_1.name, string.len(iter_13_1.name))
-		local var_13_4 = gohelper.findChild(iter_13_1.transform.parent.gameObject, var_13_3)
-		local var_13_5 = iter_13_1.transform.parent.gameObject
+	for _, virtualCamera in ipairs(virtualCameras) do
+		local body = ZProj.VirtualCameraWrap.Get(virtualCamera.gameObject).body
+		local followerName = "Follower" .. string.sub(virtualCamera.name, string.len(virtualCamera.name))
+		local follower = gohelper.findChild(virtualCamera.transform.parent.gameObject, followerName)
+		local vcam = virtualCamera.transform.parent.gameObject
 
-		var_13_2.m_PathOffset = arg_13_0._pathOffset
-		var_13_2.m_PathPosition = arg_13_0._pathPosition
-		var_13_2.m_XDamping = arg_13_0._xDamping
-		var_13_2.m_YDamping = arg_13_0._yDamping
-		var_13_2.m_ZDamping = arg_13_0._zDamping
-		var_13_4.transform.localPosition = arg_13_0._followerPos
-		var_13_5.transform.localPosition = arg_13_0._vcamPos
+		body.m_PathOffset = self._pathOffset
+		body.m_PathPosition = self._pathPosition
+		body.m_XDamping = self._xDamping
+		body.m_YDamping = self._yDamping
+		body.m_ZDamping = self._zDamping
+		follower.transform.localPosition = self._followerPos
+		vcam.transform.localPosition = self._vcamPos
 	end
 end
 
-function var_0_0._delaySetUnitCameraFov(arg_14_0)
-	local var_14_0 = CameraMgr.instance:getMainCamera()
+function FightSceneCameraComp:_delaySetUnitCameraFov()
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local unitCamera = CameraMgr.instance:getUnitCamera()
 
-	CameraMgr.instance:getUnitCamera().fieldOfView = var_14_0.fieldOfView
+	unitCamera.fieldOfView = mainCamera.fieldOfView
 
 	FightController.instance:dispatchEvent(FightEvent.OnCameraFovChange)
 end
 
-function var_0_0.setSceneCameraOffset(arg_15_0)
-	arg_15_0:setCameraOffset(arg_15_0:getDefaultCameraOffset())
+function FightSceneCameraComp:setSceneCameraOffset()
+	self:setCameraOffset(self:getDefaultCameraOffset())
 end
 
-function var_0_0.getDefaultCameraOffset(arg_16_0)
-	if arg_16_0._myTurnOffset then
-		return Vector3.New(arg_16_0._myTurnOffset[1], arg_16_0._myTurnOffset[2], arg_16_0._myTurnOffset[3])
+function FightSceneCameraComp:getDefaultCameraOffset()
+	if self._myTurnOffset then
+		return Vector3.New(self._myTurnOffset[1], self._myTurnOffset[2], self._myTurnOffset[3])
 	end
 
-	local var_16_0 = GameSceneMgr.instance:getCurLevelId()
-	local var_16_1 = lua_scene_level.configDict[var_16_0]
-	local var_16_2 = var_16_1 and var_16_1.cameraOffset
+	local levelId = GameSceneMgr.instance:getCurLevelId()
+	local levelConfig = lua_scene_level.configDict[levelId]
+	local cameraOffsetParam = levelConfig and levelConfig.cameraOffset
 
-	if not string.nilorempty(var_16_2) then
-		return (Vector3(unpack(cjson.decode(var_16_2))))
+	if not string.nilorempty(cameraOffsetParam) then
+		local offset = Vector3(unpack(cjson.decode(cameraOffsetParam)))
+
+		return offset
 	else
 		return Vector3.New(0, 0, 0)
 	end
 end
 
-function var_0_0.setCameraOffset(arg_17_0, arg_17_1)
-	CameraMgr.instance:getVirtualCameraGO().transform.localPosition = arg_17_1
+function FightSceneCameraComp:setCameraOffset(offset)
+	local virsualCamerasGO = CameraMgr.instance:getVirtualCameraGO()
+
+	virsualCamerasGO.transform.localPosition = offset
 end
 
-function var_0_0.resetCameraOffset(arg_18_0)
-	CameraMgr.instance:getVirtualCameraGO().transform.localPosition = Vector3.zero
+function FightSceneCameraComp:resetCameraOffset()
+	local virsualCamerasGO = CameraMgr.instance:getVirtualCameraGO()
+
+	virsualCamerasGO.transform.localPosition = Vector3.zero
 end
 
-local var_0_1 = 60
-local var_0_2 = 1.7777777777777777
+local ReferenceFov = 60
+local ReferenceResolution = 1.7777777777777777
 
-function var_0_0._onScreenResize(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = CameraMgr.instance:getVirtualCameras()
-	local var_19_1 = arg_19_1 / arg_19_2 / var_0_2
-	local var_19_2 = 2 * Mathf.Atan(Mathf.Tan(var_0_1 * Mathf.Deg2Rad / 2) / var_19_1) * Mathf.Rad2Deg
-	local var_19_3 = Mathf.Clamp(var_19_2, 60, 120)
+function FightSceneCameraComp:_onScreenResize(width, height)
+	local virtualCameraList = CameraMgr.instance:getVirtualCameras()
+	local screenResolution = width / height
+	local scaleFactor = screenResolution / ReferenceResolution
+	local fov = 2 * Mathf.Atan(Mathf.Tan(ReferenceFov * Mathf.Deg2Rad / 2) / scaleFactor) * Mathf.Rad2Deg
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		local var_19_4 = iter_19_1.m_Lens
+	fov = Mathf.Clamp(fov, 60, 120)
 
-		iter_19_1.m_Lens = Cinemachine.LensSettings.New(var_19_3, var_19_4.OrthographicSize, var_19_4.NearClipPlane, var_19_4.FarClipPlane, var_19_4.Dutch)
+	for _, virtualCamera in ipairs(virtualCameraList) do
+		local old = virtualCamera.m_Lens
+
+		virtualCamera.m_Lens = Cinemachine.LensSettings.New(fov, old.OrthographicSize, old.NearClipPlane, old.FarClipPlane, old.Dutch)
 	end
 
-	TaskDispatcher.runDelay(arg_19_0._delaySetUnitCameraFov, arg_19_0, 0.01)
+	TaskDispatcher.runDelay(self._delaySetUnitCameraFov, self, 0.01)
 end
 
-function var_0_0._onFightRoundStart(arg_20_0)
-	local var_20_0 = GameSceneMgr.instance:getCurLevelId()
-	local var_20_1 = lua_fight_camera_player_turn_offset.configDict[var_20_0]
+function FightSceneCameraComp:_onFightRoundStart()
+	local levelId = GameSceneMgr.instance:getCurLevelId()
+	local config = lua_fight_camera_player_turn_offset.configDict[levelId]
 
-	if var_20_1 then
-		arg_20_0._myTurnOffset = var_20_1.offset
+	if config then
+		self._myTurnOffset = config.offset
 
-		arg_20_0:setSceneCameraOffset()
+		self:setSceneCameraOffset()
 	else
-		arg_20_0._myTurnOffset = nil
+		self._myTurnOffset = nil
 	end
 end
 
-function var_0_0._onMySideRoundEnd(arg_21_0)
-	arg_21_0._myTurnOffset = nil
+function FightSceneCameraComp:_onMySideRoundEnd()
+	self._myTurnOffset = nil
 
-	arg_21_0:setSceneCameraOffset()
+	self:setSceneCameraOffset()
 end
 
-function var_0_0._onRestartStageBefore(arg_22_0)
-	arg_22_0._myTurnOffset = nil
+function FightSceneCameraComp:_onRestartStageBefore()
+	self._myTurnOffset = nil
 end
 
-return var_0_0
+return FightSceneCameraComp

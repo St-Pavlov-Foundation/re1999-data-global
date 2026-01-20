@@ -1,25 +1,27 @@
-﻿module("modules.logic.battlepass.controller.BpController", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/controller/BpController.lua
 
-local var_0_0 = class("BpController", BaseController)
+module("modules.logic.battlepass.controller.BpController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_1_0._onUpdateTaskList, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, arg_1_0._onDeleteTaskList, arg_1_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_1_0.dailyRefresh, arg_1_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_1_0._getBpInfo, arg_1_0)
+local BpController = class("BpController", BaseController)
+
+function BpController:addConstEvents()
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, self._onDeleteTaskList, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._getBpInfo, self)
 end
 
-function var_0_0.openBattlePassView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._isOpenSp = arg_2_1
-	arg_2_0._isOpenCharge = arg_2_3
-	arg_2_0._openViewParam = arg_2_2
+function BpController:openBattlePassView(isSp, viewParams, isCharge)
+	self._isOpenSp = isSp
+	self._isOpenCharge = isCharge
+	self._openViewParam = viewParams
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_permit_enter_button)
 
 	if not BpModel.instance:hasGetInfo() then
-		arg_2_0:registerCallback(BpEvent.OnGetInfo, arg_2_0._onGetInfo, arg_2_0)
+		self:registerCallback(BpEvent.OnGetInfo, self._onGetInfo, self)
 	elseif not BpModel.instance:isEnd() then
-		arg_2_0:_openBpView()
+		self:_openBpView()
 	else
 		GameFacade.showToast(ToastEnum.BattlePass)
 
@@ -29,19 +31,19 @@ function var_0_0.openBattlePassView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	BpRpc.instance:sendGetBpInfoRequest(true)
 end
 
-function var_0_0.dailyRefresh(arg_3_0)
+function BpController:dailyRefresh()
 	if not BpModel.instance:isEnd() and ViewMgr.instance:isOpen(ViewName.BpView) then
 		BpRpc.instance:sendGetBpInfoRequest(true)
 	end
 end
 
-function var_0_0._openBpView(arg_4_0)
-	if arg_4_0._isOpenSp then
+function BpController:_openBpView()
+	if self._isOpenSp then
 		if BpModel.instance.firstShowSp then
 			ViewMgr.instance:openView(ViewName.BPSPFaceView)
 		else
-			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_4_0.onViewOpen, arg_4_0)
-			ViewMgr.instance:openView(ViewName.BpSPView, arg_4_0._openViewParam)
+			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onViewOpen, self)
+			ViewMgr.instance:openView(ViewName.BpSPView, self._openViewParam)
 		end
 	else
 		module_views_preloader.BpViewPreLoad(function()
@@ -49,24 +51,26 @@ function var_0_0._openBpView(arg_4_0)
 				return
 			end
 
-			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_4_0.onViewOpen, arg_4_0)
+			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onViewOpen, self)
 
-			local var_5_0 = arg_4_0._openViewParam or {}
+			local viewParam = self._openViewParam
+
+			viewParam = viewParam or {}
 
 			if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.BattlePassTaskMain) then
-				var_5_0.defaultTabIds = {}
-				var_5_0.defaultTabIds[2] = 2
+				viewParam.defaultTabIds = {}
+				viewParam.defaultTabIds[2] = 2
 			end
 
-			var_5_0.isPlayDayFirstAnim = not BpModel.instance.firstShow and not arg_4_0._isOpenCharge
+			viewParam.isPlayDayFirstAnim = not BpModel.instance.firstShow and not self._isOpenCharge
 
 			if BpModel.instance.firstShow then
-				arg_4_0._isOpenCharge = nil
+				self._isOpenCharge = nil
 			end
 
-			ViewMgr.instance:openView(ViewName.BpView, var_5_0)
+			ViewMgr.instance:openView(ViewName.BpView, viewParam)
 
-			if arg_4_0._isOpenCharge then
+			if self._isOpenCharge then
 				if BpModel.instance:isBpChargeEnd() then
 					return
 				end
@@ -77,29 +81,29 @@ function var_0_0._openBpView(arg_4_0)
 	end
 end
 
-function var_0_0.onViewOpen(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.BpView then
+function BpController:onViewOpen(viewName)
+	if viewName == ViewName.BpView then
 		ViewMgr.instance:closeView(ViewName.BpSPView, true)
-	elseif arg_6_1 == ViewName.BpSPView then
+	elseif viewName == ViewName.BpSPView then
 		ViewMgr.instance:closeView(ViewName.BpView, true)
 	else
 		return
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_6_0.onViewOpen, arg_6_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onViewOpen, self)
 end
 
-function var_0_0._onGetInfo(arg_7_0)
-	arg_7_0:unregisterCallback(BpEvent.OnGetInfo, arg_7_0._onGetInfo, arg_7_0)
+function BpController:_onGetInfo()
+	self:unregisterCallback(BpEvent.OnGetInfo, self._onGetInfo, self)
 
 	if BpModel.instance:isEnd() then
 		return
 	end
 
-	arg_7_0:_openBpView()
+	self:_openBpView()
 end
 
-function var_0_0._getBpInfo(arg_8_0)
+function BpController:_getBpInfo()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BP) then
 		return
 	end
@@ -107,42 +111,42 @@ function var_0_0._getBpInfo(arg_8_0)
 	BpRpc.instance:sendGetBpInfoRequest(false)
 end
 
-function var_0_0.onCheckBpEndTime(arg_9_0)
+function BpController:onCheckBpEndTime()
 	if not BpModel.instance:isEnd() then
-		local var_9_0 = BpModel.instance.endTime - ServerTime.now()
+		local leftSecond = BpModel.instance.endTime - ServerTime.now()
 
-		if var_9_0 > 0 then
-			TaskDispatcher.cancelTask(arg_9_0._onBpClose, arg_9_0)
-			TaskDispatcher.runDelay(arg_9_0._onBpClose, arg_9_0, var_9_0)
+		if leftSecond > 0 then
+			TaskDispatcher.cancelTask(self._onBpClose, self)
+			TaskDispatcher.runDelay(self._onBpClose, self, leftSecond)
 		end
 	end
 end
 
-function var_0_0.onBpLevelUp(arg_10_0)
-	arg_10_0._isLevelUp = true
+function BpController:onBpLevelUp()
+	self._isLevelUp = true
 
-	TaskDispatcher.runDelay(arg_10_0._showLevelUpView, arg_10_0, 0.1)
+	TaskDispatcher.runDelay(self._showLevelUpView, self, 0.1)
 end
 
-function var_0_0.needShowLevelUp(arg_11_0)
-	return arg_11_0._isLevelUp
+function BpController:needShowLevelUp()
+	return self._isLevelUp
 end
 
-function var_0_0.pauseShowLevelUp(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._showLevelUpView, arg_12_0)
+function BpController:pauseShowLevelUp()
+	TaskDispatcher.cancelTask(self._showLevelUpView, self)
 
-	arg_12_0._isLevelUp = nil
+	self._isLevelUp = nil
 end
 
-function var_0_0._showLevelUpView(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._showLevelUpView, arg_13_0)
+function BpController:_showLevelUpView()
+	TaskDispatcher.cancelTask(self._showLevelUpView, self)
 
-	arg_13_0._isLevelUp = nil
+	self._isLevelUp = nil
 
 	ViewMgr.instance:openView(ViewName.BpLevelupTipView)
 end
 
-function var_0_0._onBpClose(arg_14_0)
+function BpController:_onBpClose()
 	if ViewMgr.instance:isOpen(ViewName.BpView) then
 		GameFacade.showToast(ToastEnum.BattlePass)
 	end
@@ -160,49 +164,65 @@ function var_0_0._onBpClose(arg_14_0)
 
 	BpModel.instance.endTime = 0
 
-	arg_14_0:dispatchEvent(BpEvent.OnGetInfo)
+	self:dispatchEvent(BpEvent.OnGetInfo)
 end
 
-function var_0_0._onUpdateTaskList(arg_15_0, arg_15_1)
-	if BpTaskModel.instance:updateInfo(arg_15_1.taskInfo) then
-		var_0_0.instance:dispatchEvent(BpEvent.OnTaskUpdate)
-		var_0_0.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
+function BpController:_onUpdateTaskList(msg)
+	local hasChange = BpTaskModel.instance:updateInfo(msg.taskInfo)
+
+	if hasChange then
+		BpController.instance:dispatchEvent(BpEvent.OnTaskUpdate)
+		BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 	end
 end
 
-function var_0_0._onDeleteTaskList(arg_16_0, arg_16_1)
-	if BpTaskModel.instance:deleteInfo(arg_16_1.taskIds) then
-		var_0_0.instance:dispatchEvent(BpEvent.OnTaskUpdate)
-		var_0_0.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
+function BpController:_onDeleteTaskList(msg)
+	local hasChange = BpTaskModel.instance:deleteInfo(msg.taskIds)
+
+	if hasChange then
+		BpController.instance:dispatchEvent(BpEvent.OnTaskUpdate)
+		BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 	end
 end
 
-function var_0_0._showCommonPropView(arg_17_0, arg_17_1)
+function BpController:_showCommonPropView(rewards)
 	if BpModel.instance.lockAlertBonus then
-		BpModel.instance.cacheBonus = arg_17_1
+		BpModel.instance.cacheBonus = rewards
 	else
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView, arg_17_1)
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.BpPropView, rewards)
 	end
 end
 
-function var_0_0.isEmptySkinFaceViewStr(arg_18_0, arg_18_1)
-	local var_18_0 = PlayerPrefsHelper.getString(arg_18_0:_getSkinFaceViewKey(arg_18_1), "")
+function BpController:isEmptySkinFaceViewStr(skinId)
+	local data = PlayerPrefsHelper.getString(self:_getSkinFaceViewKey(skinId), "")
 
-	return string.nilorempty(var_18_0)
+	return string.nilorempty(data)
 end
 
-function var_0_0.setSkinFaceViewStr(arg_19_0, arg_19_1)
-	arg_19_1 = arg_19_1 or 0
+function BpController:setSkinFaceViewStr(skinId)
+	skinId = skinId or 0
 
-	return PlayerPrefsHelper.setString(arg_19_0:_getSkinFaceViewKey(arg_19_1), tostring(arg_19_1))
+	return PlayerPrefsHelper.setString(self:_getSkinFaceViewKey(skinId), tostring(skinId))
 end
 
-function var_0_0._getSkinFaceViewKey(arg_20_0, arg_20_1)
-	arg_20_1 = arg_20_1 or 0
+function BpController:_getSkinFaceViewKey(skinId)
+	skinId = skinId or 0
 
-	return string.format("%s#%s#%s", PlayerPrefsKey.BPSkinFaceView, arg_20_1, PlayerModel.instance:getMyUserId())
+	return string.format("%s#%s#%s", PlayerPrefsKey.BPSkinFaceView, skinId, PlayerModel.instance:getMyUserId())
 end
 
-var_0_0.instance = var_0_0.New()
+function BpController:showSpecialBonusMaterialInfo()
+	local bonus = BpModel.instance:getSpecialBonus()[1]
 
-return var_0_0
+	MaterialTipController.instance:showMaterialInfo(bonus[1], bonus[2], nil, nil, nil, {
+		type = bonus[1],
+		id = bonus[2],
+		quantity = bonus[3],
+		sceneType = GameSceneMgr.instance:getCurSceneType(),
+		openedViewNameList = JumpController.instance:getCurrentOpenedView()
+	})
+end
+
+BpController.instance = BpController.New()
+
+return BpController

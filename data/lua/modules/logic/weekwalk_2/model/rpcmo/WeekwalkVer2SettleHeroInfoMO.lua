@@ -1,15 +1,17 @@
-﻿module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2SettleHeroInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/model/rpcmo/WeekwalkVer2SettleHeroInfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkVer2SettleHeroInfoMO")
+module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2SettleHeroInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.allHarm = arg_1_1.allHarm
-	arg_1_0.singleHighHarm = arg_1_1.singleHighHarm
-	arg_1_0.allHurt = arg_1_1.allHurt
-	arg_1_0.allHeal = arg_1_1.allHeal
-	arg_1_0.allHealed = arg_1_1.allHealed
-	arg_1_0.battleNum = arg_1_1.battleNum
+local WeekwalkVer2SettleHeroInfoMO = pureTable("WeekwalkVer2SettleHeroInfoMO")
+
+function WeekwalkVer2SettleHeroInfoMO:init(info)
+	self.heroId = info.heroId
+	self.allHarm = info.allHarm
+	self.singleHighHarm = info.singleHighHarm
+	self.allHurt = info.allHurt
+	self.allHeal = info.allHeal
+	self.allHealed = info.allHealed
+	self.battleNum = info.battleNum
 end
 
-return var_0_0
+return WeekwalkVer2SettleHeroInfoMO

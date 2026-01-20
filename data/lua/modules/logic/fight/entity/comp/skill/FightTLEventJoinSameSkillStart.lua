@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventJoinSameSkillStart", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventJoinSameSkillStart.lua
 
-local var_0_0 = class("FightTLEventJoinSameSkillStart", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventJoinSameSkillStart", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if not FightModel.instance:canParallelSkill(arg_1_1) then
+local FightTLEventJoinSameSkillStart = class("FightTLEventJoinSameSkillStart", FightTimelineTrackItem)
+
+function FightTLEventJoinSameSkillStart:onTrackStart(fightStepData, duration, paramsArr)
+	if not FightModel.instance:canParallelSkill(fightStepData) then
 		return
 	end
 
-	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
+	self._attacker = FightHelper.getEntity(fightStepData.fromId)
 
-	if arg_1_0._attacker and arg_1_0._attacker.skill then
-		arg_1_0._attacker.skill:recordSameSkillStartParam(arg_1_1, arg_1_3)
+	if self._attacker and self._attacker.skill then
+		self._attacker.skill:recordSameSkillStartParam(fightStepData, paramsArr)
 	end
 end
 
-return var_0_0
+return FightTLEventJoinSameSkillStart

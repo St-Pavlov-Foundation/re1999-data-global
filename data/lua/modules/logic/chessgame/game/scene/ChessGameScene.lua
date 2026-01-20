@@ -1,711 +1,726 @@
-﻿module("modules.logic.chessgame.game.scene.ChessGameScene", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/scene/ChessGameScene.lua
 
-local var_0_0 = class("ChessGameScene", BaseViewExtended)
+module("modules.logic.chessgame.game.scene.ChessGameScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotouch = gohelper.findChild(arg_1_0.viewGO, "#go_touch")
+local ChessGameScene = class("ChessGameScene", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ChessGameScene:onInitView()
+	self._gotouch = gohelper.findChild(self.viewGO, "#go_touch")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._tfTouch = arg_2_0._gotouch.transform
-	arg_2_0._click = SLFramework.UGUI.UIClickListener.Get(arg_2_0._gotouch)
+function ChessGameScene:_editableInitView()
+	self._tfTouch = self._gotouch.transform
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._gotouch)
 
-	arg_2_0._click:AddClickListener(arg_2_0.onClickContainer, arg_2_0)
+	self._click:AddClickListener(self.onClickContainer, self)
 
-	arg_2_0._baseTiles = {}
-	arg_2_0._baseTilePool = {}
-	arg_2_0._dirItems = {}
-	arg_2_0._dirItemPool = {}
-	arg_2_0._alarmItems = {}
-	arg_2_0._alarmItemPool = {}
-	arg_2_0._interactItemList = {}
-	arg_2_0._baffleItems = {}
-	arg_2_0._baffleItemPool = {}
-	arg_2_0._avatarMap = {}
-	arg_2_0.loadDoneInteractList = {}
-	arg_2_0.needLoadInteractIdList = {}
-	arg_2_0._fixedOrder = 0
+	self._baseTiles = {}
+	self._baseTilePool = {}
+	self._dirItems = {}
+	self._dirItemPool = {}
+	self._alarmItems = {}
+	self._alarmItemPool = {}
+	self._interactItemList = {}
+	self._baffleItems = {}
+	self._baffleItemPool = {}
+	self._avatarMap = {}
+	self.loadDoneInteractList = {}
+	self.needLoadInteractIdList = {}
+	self._fixedOrder = 0
 
-	MainCameraMgr.instance:addView(arg_2_0.viewName, arg_2_0.initCamera, nil, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.DeleteInteractAvatar, arg_2_0.deleteInteractObj, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.AddInteractObj, arg_2_0.createOrUpdateInteractItem, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.ChangeMap, arg_2_0.changeMap, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GamePointReturn, arg_2_0._onGamePointReturn, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.SetAlarmAreaVisible, arg_2_0.onSetAlarmAreaVisible, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.SetNeedChooseDirectionVisible, arg_2_0.onSetDirectionVisible, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GameReset, arg_2_0.onResetGame, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GameMapDataUpdate, arg_2_0.onGameDataUpdate, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.GameResultQuit, arg_2_0.onResultQuit, arg_2_0)
-	arg_2_0:addEventCb(ChessGameController.instance, ChessGameEvent.PlayStoryFinish, arg_2_0._onPlayStoryFinish, arg_2_0)
-	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0.onScreenResize, arg_2_0)
-	arg_2_0:createSceneRoot()
-	arg_2_0:loadRes()
+	MainCameraMgr.instance:addView(self.viewName, self.initCamera, nil, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.DeleteInteractAvatar, self.deleteInteractObj, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.AddInteractObj, self.createOrUpdateInteractItem, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.ChangeMap, self.changeMap, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.GamePointReturn, self._onGamePointReturn, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.SetAlarmAreaVisible, self.onSetAlarmAreaVisible, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.SetNeedChooseDirectionVisible, self.onSetDirectionVisible, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.GameReset, self.onResetGame, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.GameMapDataUpdate, self.onGameDataUpdate, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.GameResultQuit, self.onResultQuit, self)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.PlayStoryFinish, self._onPlayStoryFinish, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self.onScreenResize, self)
+	self:createSceneRoot()
+	self:loadRes()
 end
 
-function var_0_0.createSceneRoot(arg_3_0)
-	local var_3_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_3_1 = CameraMgr.instance:getSceneRoot()
+function ChessGameScene:createSceneRoot()
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_3_0._sceneRoot = UnityEngine.GameObject.New("ChessGameScene")
-	arg_3_0._sceneBackground = UnityEngine.GameObject.New("background")
-	arg_3_0._sceneGround = UnityEngine.GameObject.New("ground")
-	arg_3_0._sceneContainer = UnityEngine.GameObject.New("container")
+	self._sceneRoot = UnityEngine.GameObject.New("ChessGameScene")
+	self._sceneBackground = UnityEngine.GameObject.New("background")
+	self._sceneGround = UnityEngine.GameObject.New("ground")
+	self._sceneContainer = UnityEngine.GameObject.New("container")
 
-	local var_3_2, var_3_3, var_3_4 = transformhelper.getLocalPos(var_3_0)
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_3_0._sceneRoot.transform, 0, var_3_3, 0)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
 
-	arg_3_0._sceneOffsetY = var_3_3
+	self._sceneOffsetY = y
 
-	gohelper.addChild(var_3_1, arg_3_0._sceneRoot)
-	gohelper.addChild(arg_3_0._sceneRoot, arg_3_0._sceneBackground)
-	gohelper.addChild(arg_3_0._sceneRoot, arg_3_0._sceneGround)
-	gohelper.addChild(arg_3_0._sceneRoot, arg_3_0._sceneContainer)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
+	gohelper.addChild(self._sceneRoot, self._sceneBackground)
+	gohelper.addChild(self._sceneRoot, self._sceneGround)
+	gohelper.addChild(self._sceneRoot, self._sceneContainer)
 end
 
-function var_0_0.initCamera(arg_4_0)
-	if arg_4_0._isInitCamera then
+function ChessGameScene:initCamera()
+	if self._isInitCamera then
 		return
 	end
 
-	arg_4_0._isInitCamera = true
+	self._isInitCamera = true
 
-	arg_4_0:onScreenResize()
+	self:onScreenResize()
 end
 
-function var_0_0.onScreenResize(arg_5_0)
-	local var_5_0 = CameraMgr.instance:getMainCamera()
+function ChessGameScene:onScreenResize()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_5_0.orthographic = true
-	var_5_0.orthographicSize = 7.5 * GameUtil.getAdapterScale(true)
+	camera.orthographic = true
+
+	local scale = GameUtil.getAdapterScale(true)
+
+	camera.orthographicSize = 7.5 * scale
 end
 
-function var_0_0._onPlayStoryFinish(arg_6_0)
+function ChessGameScene:_onPlayStoryFinish()
 	ChessGameController.instance:setSceneCamera(true)
 end
 
-function var_0_0.loadRes(arg_7_0)
-	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_KEY)
+function ChessGameScene:loadRes()
+	UIBlockMgr.instance:startBlock(ChessGameScene.BLOCK_KEY)
 
-	arg_7_0._loader = MultiAbLoader.New()
+	self._loader = MultiAbLoader.New()
 
-	arg_7_0._loader:addPath(arg_7_0:getCurrentSceneUrl())
-	arg_7_0._loader:addPath(arg_7_0:getGroundItemUrl())
-	arg_7_0._loader:addPath(ChessGameEnum.SceneResPath.DirItem)
-	arg_7_0._loader:addPath(ChessGameEnum.SceneResPath.AlarmItem)
-	arg_7_0:onLoadRes()
-	arg_7_0._loader:startLoad(arg_7_0.loadResCompleted, arg_7_0)
+	self._loader:addPath(self:getCurrentSceneUrl())
+	self._loader:addPath(self:getGroundItemUrl())
+	self._loader:addPath(ChessGameEnum.SceneResPath.DirItem)
+	self._loader:addPath(ChessGameEnum.SceneResPath.AlarmItem)
+	self:onLoadRes()
+	self._loader:startLoad(self.loadResCompleted, self)
 end
 
-function var_0_0.onLoadRes(arg_8_0)
+function ChessGameScene:onLoadRes()
 	return
 end
 
-function var_0_0.onloadResCompleted(arg_9_0, arg_9_1)
+function ChessGameScene:onloadResCompleted(loader)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Finish, true)
 end
 
-function var_0_0.getGroundItemUrl(arg_10_0)
+function ChessGameScene:getGroundItemUrl()
 	return ChessGameEnum.NodePath
 end
 
-function var_0_0.getCurrentSceneUrl(arg_11_0)
+function ChessGameScene:getCurrentSceneUrl()
 	return ChessGameModel.instance:getNowMapResPath()
 end
 
-function var_0_0.onOpen(arg_12_0)
+function ChessGameScene:onOpen()
 	return
 end
 
-function var_0_0.loadResCompleted(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1:getAssetItem(ChessGameModel.instance:getNowMapResPath())
+function ChessGameScene:loadResCompleted(loader)
+	local assetItem = loader:getAssetItem(ChessGameModel.instance:getNowMapResPath())
 
-	if var_13_0 then
-		arg_13_0._sceneGo = gohelper.clone(var_13_0:GetResource(), arg_13_0._sceneRoot, "scene")
-		arg_13_0._sceneAnim = arg_13_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+	if assetItem then
+		self._sceneGo = gohelper.clone(assetItem:GetResource(), self._sceneRoot, "scene")
+		self._sceneAnim = self._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-		arg_13_0._sceneBackground.transform:SetParent(arg_13_0._sceneGo.transform, false)
-		arg_13_0._sceneGround.transform:SetParent(arg_13_0._sceneGo.transform, false)
-		arg_13_0._sceneContainer.transform:SetParent(arg_13_0._sceneGo.transform, false)
-		transformhelper.setLocalPos(arg_13_0._sceneBackground.transform, 0, 0, -0.5)
-		transformhelper.setLocalPos(arg_13_0._sceneGround.transform, 0, 0, -1)
-		transformhelper.setLocalPos(arg_13_0._sceneContainer.transform, 0, 0, -1.5)
-		arg_13_0:fillChessBoardBase()
-		arg_13_0:createAllInteractObjs()
-		arg_13_0:onloadResCompleted(arg_13_1)
-		arg_13_0:playEnterAnim()
+		self._sceneBackground.transform:SetParent(self._sceneGo.transform, false)
+		self._sceneGround.transform:SetParent(self._sceneGo.transform, false)
+		self._sceneContainer.transform:SetParent(self._sceneGo.transform, false)
+		transformhelper.setLocalPos(self._sceneBackground.transform, 0, 0, -0.5)
+		transformhelper.setLocalPos(self._sceneGround.transform, 0, 0, -1)
+		transformhelper.setLocalPos(self._sceneContainer.transform, 0, 0, -1.5)
+		self:fillChessBoardBase()
+		self:createAllInteractObjs()
+		self:onloadResCompleted(loader)
+		self:playEnterAnim()
 		ChessGameController.instance:autoSelectPlayer()
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(ChessGameScene.BLOCK_KEY)
 
-	local var_13_1 = ChessModel.instance:getEpisodeId()
+	local episodeId = ChessModel.instance:getEpisodeId()
 
-	ChessController.instance:dispatchEvent(ChessGameEvent.GuideOnEnterEpisode, tostring(var_13_1))
+	ChessController.instance:dispatchEvent(ChessGameEvent.GuideOnEnterEpisode, tostring(episodeId))
 end
 
-function var_0_0.changeMap(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function ChessGameScene:changeMap(newMapUrl)
+	if not newMapUrl then
 		return
 	end
 
-	if not arg_14_0._oldLoader then
-		arg_14_0._oldLoader = arg_14_0._loader
-		arg_14_0._oldSceneGo = arg_14_0._sceneGo
-	elseif arg_14_0._loader then
-		arg_14_0._loader:dispose()
+	if not self._oldLoader then
+		self._oldLoader = self._loader
+		self._oldSceneGo = self._sceneGo
+	elseif self._loader then
+		self._loader:dispose()
 
-		arg_14_0._loader = nil
+		self._loader = nil
 	end
 
-	local var_14_0 = arg_14_1
+	local url = newMapUrl
 
-	ChessGameModel.instance:setNowMapResPath(var_14_0)
-	arg_14_0:loadRes()
+	ChessGameModel.instance:setNowMapResPath(url)
+	self:loadRes()
 end
 
-function var_0_0.playEnterAnim(arg_15_0)
-	if arg_15_0._sceneAnim then
-		arg_15_0._sceneAnim:Play(UIAnimationName.Open, 0, 0)
+function ChessGameScene:playEnterAnim()
+	if self._sceneAnim then
+		self._sceneAnim:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function var_0_0.playAudio(arg_16_0)
-	local var_16_0 = ChessGameModel.instance:getActId()
+function ChessGameScene:playAudio()
+	local actId = ChessGameModel.instance:getActId()
 
-	if var_16_0 then
-		local var_16_1 = ChessGameConfig.instance:getMapCo(var_16_0)
+	if actId then
+		local mapCo = ChessGameConfig.instance:getMapCo(actId)
 
-		arg_16_0:stopAudio()
+		self:stopAudio()
 
-		if var_16_1 and var_16_1.audioAmbient ~= 0 then
-			arg_16_0._triggerAmbientId = AudioMgr.instance:trigger(var_16_1.audioAmbient)
+		if mapCo and mapCo.audioAmbient ~= 0 then
+			self._triggerAmbientId = AudioMgr.instance:trigger(mapCo.audioAmbient)
 		end
 	end
 end
 
-function var_0_0.fillChessBoardBase(arg_17_0)
-	arg_17_0:resetTiles()
+function ChessGameScene:fillChessBoardBase()
+	self:resetTiles()
 
-	local var_17_0 = ChessGameNodeModel.instance:getAllNodes()
+	local nodeList = ChessGameNodeModel.instance:getAllNodes()
 
-	for iter_17_0, iter_17_1 in pairs(var_17_0) do
-		arg_17_0._baseTiles[iter_17_0] = arg_17_0._baseTiles[iter_17_0] or {}
+	for x, xlist in pairs(nodeList) do
+		self._baseTiles[x] = self._baseTiles[x] or {}
 
-		for iter_17_2, iter_17_3 in pairs(iter_17_1) do
-			local var_17_1 = arg_17_0:createTileBaseItem(iter_17_0, iter_17_2)
+		for y, node in pairs(xlist) do
+			local tileItem = self:createTileBaseItem(x, y)
 
-			arg_17_0._baseTiles[iter_17_0][iter_17_2] = var_17_1
+			self._baseTiles[x][y] = tileItem
 
-			arg_17_0:onTileItemCreate(iter_17_0, iter_17_2, var_17_1)
+			self:onTileItemCreate(x, y, tileItem)
 		end
 	end
 end
 
-function var_0_0.onTileItemCreate(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+function ChessGameScene:onTileItemCreate(x, y, tileItem)
 	return
 end
 
-function var_0_0.createTileBaseItem(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0
-	local var_19_1 = arg_19_0._baseTiles[arg_19_1][arg_19_2]
+function ChessGameScene:createTileBaseItem(x, y)
+	local tileObj
 
-	if not var_19_1 then
-		var_19_1 = arg_19_0:getUserDataTb_()
+	tileObj = self._baseTiles[x][y]
 
-		local var_19_2 = arg_19_0:getGroundItemUrl(arg_19_1, arg_19_2)
-		local var_19_3 = arg_19_0._loader:getAssetItem(var_19_2)
-		local var_19_4 = gohelper.clone(var_19_3:GetResource(), arg_19_0._sceneBackground, "tilebase_" .. arg_19_1 .. "_" .. arg_19_2)
+	if not tileObj then
+		tileObj = self:getUserDataTb_()
 
-		var_19_1.go = var_19_4
-		var_19_1.sceneTf = var_19_4.transform
-		var_19_1.pos = {
-			x = arg_19_1,
-			y = arg_19_2
+		local resPath = self:getGroundItemUrl(x, y)
+		local assetItem = self._loader:getAssetItem(resPath)
+		local itemGo = gohelper.clone(assetItem:GetResource(), self._sceneBackground, "tilebase_" .. x .. "_" .. y)
+
+		tileObj.go = itemGo
+		tileObj.sceneTf = itemGo.transform
+		tileObj.pos = {
+			x = x,
+			y = y
 		}
 	end
 
-	gohelper.setActive(var_19_1.go, true)
+	gohelper.setActive(tileObj.go, true)
 
-	var_19_1.sceneTf.position = Vector3(arg_19_1, arg_19_2, 0)
+	tileObj.sceneTf.position = Vector3(x, y, 0)
 
-	arg_19_0:setTileBasePosition(var_19_1.sceneTf)
+	self:setTileBasePosition(tileObj.sceneTf)
 
-	return var_19_1
+	return tileObj
 end
 
-function var_0_0.setTileBasePosition(arg_20_0, arg_20_1)
-	local var_20_0 = ChessGameHelper.nodePosToWorldPos(arg_20_1.position)
+function ChessGameScene:setTileBasePosition(transform)
+	local v3 = ChessGameHelper.nodePosToWorldPos(transform.position)
 
-	transformhelper.setLocalPos(arg_20_1, var_20_0.x, var_20_0.y, var_20_0.z)
+	transformhelper.setLocalPos(transform, v3.x, v3.y, v3.z)
 end
 
-function var_0_0.createAllInteractObjs(arg_21_0)
+function ChessGameScene:createAllInteractObjs()
 	if not ChessGameController.instance.interactsMgr then
 		return
 	end
 
-	local var_21_0 = ChessGameController.instance.interactsMgr:getList()
+	local list = ChessGameController.instance.interactsMgr:getList()
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
-		if iter_21_1:isShow() then
-			arg_21_0:createOrUpdateInteractItem(iter_21_1)
+	for _, interactcomp in ipairs(list) do
+		if interactcomp:isShow() then
+			self:createOrUpdateInteractItem(interactcomp)
 		end
 	end
 
-	arg_21_0:addEventCb(ChessGameController.instance, ChessGameEvent.AllObjectCreated, arg_21_0.createAllInteractObjs, arg_21_0)
+	self:addEventCb(ChessGameController.instance, ChessGameEvent.AllObjectCreated, self.createAllInteractObjs, self)
 end
 
-function var_0_0.createOrUpdateInteractItem(arg_22_0, arg_22_1)
-	if gohelper.isNil(arg_22_0._sceneContainer) then
+function ChessGameScene:createOrUpdateInteractItem(interactcomp)
+	if gohelper.isNil(self._sceneContainer) then
 		logNormal("ChessGameScene: game is already end")
 
 		return
 	end
 
-	local var_22_0 = arg_22_0._avatarMap[arg_22_1.id]
+	local avatarObj = self._avatarMap[interactcomp.id]
 
-	if not var_22_0 then
-		var_22_0 = arg_22_0:getUserDataTb_()
-		var_22_0.sceneGo = UnityEngine.GameObject.New("item_" .. arg_22_1.id)
-		var_22_0.sceneTf = var_22_0.sceneGo.transform
-		var_22_0.loader = PrefabInstantiate.Create(var_22_0.sceneGo)
+	if not avatarObj then
+		avatarObj = self:getUserDataTb_()
+		avatarObj.sceneGo = UnityEngine.GameObject.New("item_" .. interactcomp.id)
+		avatarObj.sceneTf = avatarObj.sceneGo.transform
+		avatarObj.loader = PrefabInstantiate.Create(avatarObj.sceneGo)
 
-		var_22_0.sceneTf:SetParent(arg_22_0._sceneContainer.transform, false)
+		avatarObj.sceneTf:SetParent(self._sceneContainer.transform, false)
 
-		arg_22_0._avatarMap[arg_22_1.id] = var_22_0
+		self._avatarMap[interactcomp.id] = avatarObj
 	end
 
-	arg_22_1:setAvatar(var_22_0)
+	interactcomp:setAvatar(avatarObj)
 end
 
-function var_0_0.deleteInteractObj(arg_23_0, arg_23_1)
-	arg_23_0._avatarMap[arg_23_1] = nil
+function ChessGameScene:deleteInteractObj(id)
+	self._avatarMap[id] = nil
 end
 
-function var_0_0.onSetDirectionVisible(arg_24_0, arg_24_1)
-	arg_24_0:recycleAllDirItem()
+function ChessGameScene:onSetDirectionVisible(value)
+	self:recycleAllDirItem()
 
-	if not arg_24_1 then
+	if not value then
 		return
 	end
 
-	if arg_24_1.visible then
-		local var_24_0 = arg_24_1.selectType or ChessGameEnum.ChessSelectType.Normal
+	if value.visible then
+		local selectType = value.selectType or ChessGameEnum.ChessSelectType.Normal
 
-		for iter_24_0 = 1, #arg_24_1.posXList do
-			local var_24_1 = arg_24_0:createDirItem()
+		for i = 1, #value.posXList do
+			local itemObj = self:createDirItem()
 
-			arg_24_0:addDirectionItem(var_24_1, arg_24_1.posXList[iter_24_0], arg_24_1.posYList[iter_24_0])
+			self:addDirectionItem(itemObj, value.posXList[i], value.posYList[i])
 
-			local var_24_2 = arg_24_1.dirList[iter_24_0]
+			local targetdir = value.dirList[i]
 
-			for iter_24_1, iter_24_2 in pairs(ChessGameEnum.Direction) do
-				gohelper.setActive(var_24_1["goDir" .. iter_24_2], iter_24_2 == var_24_2)
+			for _, dir in pairs(ChessGameEnum.Direction) do
+				gohelper.setActive(itemObj["goDir" .. dir], dir == targetdir)
 			end
 
-			gohelper.setActive(var_24_1.goNormal, ChessGameEnum.ChessSelectType.Normal == var_24_0)
-			gohelper.setActive(var_24_1.goItem, ChessGameEnum.ChessSelectType.CatchObj == var_24_0)
-			gohelper.setActive(var_24_1.goCenter, false)
+			gohelper.setActive(itemObj.goNormal, ChessGameEnum.ChessSelectType.Normal == selectType)
+			gohelper.setActive(itemObj.goItem, ChessGameEnum.ChessSelectType.CatchObj == selectType)
+			gohelper.setActive(itemObj.goCenter, false)
 		end
 
-		if arg_24_1.selfPosX ~= nil and arg_24_1.selfPosY ~= nil then
-			local var_24_3 = arg_24_0:createDirItem()
+		if value.selfPosX ~= nil and value.selfPosY ~= nil then
+			local itemObj = self:createDirItem()
 
-			arg_24_0:addDirectionItem(var_24_3, arg_24_1.selfPosX, arg_24_1.selfPosY)
-			gohelper.setActive(var_24_3.goNormal, false)
-			gohelper.setActive(var_24_3.goItem, false)
-			gohelper.setActive(var_24_3.goCenter, true)
+			self:addDirectionItem(itemObj, value.selfPosX, value.selfPosY)
+			gohelper.setActive(itemObj.goNormal, false)
+			gohelper.setActive(itemObj.goItem, false)
+			gohelper.setActive(itemObj.goCenter, true)
 		end
 
-		if ChessGameEnum.ChessSelectType.Normal == var_24_0 then
-			local var_24_4 = {
-				arg_24_1.selfPosX + 1,
-				arg_24_1.selfPosX - 1,
-				arg_24_1.selfPosX,
-				arg_24_1.selfPosX
+		if ChessGameEnum.ChessSelectType.Normal == selectType then
+			local posXList = {
+				value.selfPosX + 1,
+				value.selfPosX - 1,
+				value.selfPosX,
+				value.selfPosX
 			}
-			local var_24_5 = {
-				arg_24_1.selfPosY,
-				arg_24_1.selfPosY,
-				arg_24_1.selfPosY + 1,
-				arg_24_1.selfPosY - 1
+			local posYList = {
+				value.selfPosY,
+				value.selfPosY,
+				value.selfPosY + 1,
+				value.selfPosY - 1
 			}
 
-			ChessGameController.instance:checkInteractCanUse(var_24_4, var_24_5)
+			ChessGameController.instance:checkInteractCanUse(posXList, posYList)
 		end
 	end
 end
 
-function var_0_0.recycleAllDirItem(arg_25_0)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._dirItems) do
-		gohelper.setActive(iter_25_1.go, false)
-		table.insert(arg_25_0._dirItemPool, iter_25_1)
+function ChessGameScene:recycleAllDirItem()
+	for k, v in pairs(self._dirItems) do
+		gohelper.setActive(v.go, false)
+		table.insert(self._dirItemPool, v)
 
-		arg_25_0._dirItems[iter_25_0] = nil
+		self._dirItems[k] = nil
 	end
 end
 
-function var_0_0.createDirItem(arg_26_0)
-	local var_26_0
-	local var_26_1 = #arg_26_0._dirItemPool
+function ChessGameScene:createDirItem()
+	local itemObj
+	local poolLen = #self._dirItemPool
 
-	if var_26_1 > 0 then
-		var_26_0 = arg_26_0._dirItemPool[var_26_1]
-		arg_26_0._dirItemPool[var_26_1] = nil
+	if poolLen > 0 then
+		itemObj = self._dirItemPool[poolLen]
+		self._dirItemPool[poolLen] = nil
 	end
 
-	if not var_26_0 then
-		var_26_0 = arg_26_0:getUserDataTb_()
+	if not itemObj then
+		itemObj = self:getUserDataTb_()
 
-		local var_26_2 = arg_26_0._loader:getAssetItem(ChessGameEnum.SceneResPath.DirItem)
+		local assetItem = self._loader:getAssetItem(ChessGameEnum.SceneResPath.DirItem)
 
-		var_26_0.go = gohelper.clone(var_26_2:GetResource(), arg_26_0._sceneGround, "dirItem")
-		var_26_0.sceneTf = var_26_0.go.transform
-		var_26_0.goCenter = gohelper.findChild(var_26_0.go, "#go_center")
-		var_26_0.goNormal = gohelper.findChild(var_26_0.go, "#go_normal")
-		var_26_0.goItem = gohelper.findChild(var_26_0.go, "#go_item")
+		itemObj.go = gohelper.clone(assetItem:GetResource(), self._sceneGround, "dirItem")
+		itemObj.sceneTf = itemObj.go.transform
+		itemObj.goCenter = gohelper.findChild(itemObj.go, "#go_center")
+		itemObj.goNormal = gohelper.findChild(itemObj.go, "#go_normal")
+		itemObj.goItem = gohelper.findChild(itemObj.go, "#go_item")
 
-		for iter_26_0, iter_26_1 in pairs(ChessGameEnum.Direction) do
-			var_26_0["goDir" .. iter_26_1] = gohelper.findChild(var_26_0.goItem, "jiantou_" .. iter_26_1)
+		for _, dir in pairs(ChessGameEnum.Direction) do
+			itemObj["goDir" .. dir] = gohelper.findChild(itemObj.goItem, "jiantou_" .. dir)
 		end
 	end
 
-	table.insert(arg_26_0._dirItems, var_26_0)
+	table.insert(self._dirItems, itemObj)
 
-	return var_26_0
+	return itemObj
 end
 
-function var_0_0.addDirectionItem(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	gohelper.setActive(arg_27_1.go, true)
+function ChessGameScene:addDirectionItem(itemObj, tileX, tileY)
+	gohelper.setActive(itemObj.go, true)
 
-	local var_27_0 = {
+	local pos = {
 		z = 0,
-		x = arg_27_2,
-		y = arg_27_3
+		x = tileX,
+		y = tileY
 	}
-	local var_27_1 = ChessGameHelper.nodePosToWorldPos(var_27_0)
+	local v3 = ChessGameHelper.nodePosToWorldPos(pos)
 
-	arg_27_1.tileX = arg_27_2
-	arg_27_1.tileY = arg_27_3
+	itemObj.tileX = tileX
+	itemObj.tileY = tileY
 
-	transformhelper.setLocalPos(arg_27_1.sceneTf, var_27_1.x, var_27_1.y, var_27_1.z)
+	transformhelper.setLocalPos(itemObj.sceneTf, v3.x, v3.y, v3.z)
 end
 
-function var_0_0.onSetAlarmAreaVisible(arg_28_0, arg_28_1)
-	arg_28_0:recycleAllAlarmItem()
+function ChessGameScene:onSetAlarmAreaVisible(value)
+	self:recycleAllAlarmItem()
 
-	if not arg_28_1 then
+	if not value then
 		return
 	end
 
-	if arg_28_1.visible then
-		arg_28_0:refreshAlarmArea()
+	if value.visible then
+		self:refreshAlarmArea()
 	end
 end
 
-function var_0_0.refreshAlarmArea(arg_29_0)
-	arg_29_0._isWaitingRefreshAlarm = false
+function ChessGameScene:refreshAlarmArea()
+	self._isWaitingRefreshAlarm = false
 
 	if not ChessGameController.instance.interactsMgr then
 		return
 	end
 
-	local var_29_0 = ChessGameController.instance.interactsMgr:getList()
+	local objList = ChessGameController.instance.interactsMgr:getList()
 
-	if not var_29_0 then
+	if not objList then
 		return
 	end
 
-	local var_29_1 = {}
+	local alarmMap = {}
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-		if iter_29_1.objType == ChessGameEnum.InteractType.Hunter then
-			iter_29_1:getHandler():onDrawAlert(var_29_1)
+	for _, interactObj in ipairs(objList) do
+		if interactObj.objType == ChessGameEnum.InteractType.Hunter then
+			local handler = interactObj:getHandler()
+
+			handler:onDrawAlert(alarmMap)
 		end
 	end
 
-	for iter_29_2, iter_29_3 in pairs(var_29_1) do
-		for iter_29_4, iter_29_5 in pairs(iter_29_3) do
-			for iter_29_6, iter_29_7 in pairs(iter_29_5) do
-				arg_29_0:createAlarmItem(iter_29_2, iter_29_4, nil, iter_29_7)
+	for x, yDict in pairs(alarmMap) do
+		for y, paramList in pairs(yDict) do
+			for _, param in pairs(paramList) do
+				self:createAlarmItem(x, y, nil, param)
 			end
 		end
 	end
 end
 
-function var_0_0.recycleAllAlarmItem(arg_30_0, arg_30_1)
-	for iter_30_0, iter_30_1 in pairs(arg_30_0._alarmItems) do
-		for iter_30_2, iter_30_3 in pairs(iter_30_1) do
-			local var_30_0 = not iter_30_3.isManual
-			local var_30_1 = arg_30_1 or not iter_30_3.isStatic
+function ChessGameScene:recycleAllAlarmItem(recycleStaticAlarmItem)
+	for _, alarmItemList in pairs(self._alarmItems) do
+		for index, alarmItem in pairs(alarmItemList) do
+			local notManual = not alarmItem.isManual
+			local isStaticCanRecycle = recycleStaticAlarmItem or not alarmItem.isStatic
 
-			if var_30_0 and var_30_1 then
-				gohelper.setActive(iter_30_3.go, false)
+			if notManual and isStaticCanRecycle then
+				gohelper.setActive(alarmItem.go, false)
 
-				local var_30_2 = arg_30_0._alarmItemPool[iter_30_3.resPath]
+				local pool = self._alarmItemPool[alarmItem.resPath]
 
-				if not var_30_2 then
-					var_30_2 = {}
-					arg_30_0._alarmItemPool[iter_30_3.resPath] = var_30_2
+				if not pool then
+					pool = {}
+					self._alarmItemPool[alarmItem.resPath] = pool
 				end
 
-				table.insert(var_30_2, iter_30_3)
+				table.insert(pool, alarmItem)
 
-				iter_30_1[iter_30_2] = nil
+				alarmItemList[index] = nil
 			end
 		end
 	end
 end
 
-function var_0_0.createAlarmItem(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	local var_31_0 = false
-	local var_31_1 = ChessGameEnum.SceneResPath.AlarmItem
+function ChessGameScene:createAlarmItem(x, y, isManual, param)
+	local isStatic = false
+	local resPath = ChessGameEnum.SceneResPath.AlarmItem
 
-	var_31_1 = type(arg_31_4) == "table" and arg_31_4.resPath or var_31_1
+	resPath = type(param) == "table" and param.resPath or resPath
 
-	local var_31_2 = ChessGameHelper.calPosIndex(arg_31_1, arg_31_2)
-	local var_31_3 = arg_31_0._alarmItems[var_31_2]
+	local tileIndex = ChessGameHelper.calPosIndex(x, y)
+	local tileList = self._alarmItems[tileIndex]
 
-	if var_31_3 then
-		for iter_31_0, iter_31_1 in ipairs(var_31_3) do
-			if iter_31_1.resPath == var_31_1 then
+	if tileList then
+		for _, tileItem in ipairs(tileList) do
+			if tileItem.resPath == resPath then
 				return
 			end
 		end
 	end
 
-	local var_31_4
-	local var_31_5 = arg_31_0._alarmItemPool[var_31_1]
+	local itemObj
+	local pool = self._alarmItemPool[resPath]
 
-	if var_31_5 then
-		local var_31_6 = #var_31_5
+	if pool then
+		local poolLen = #pool
 
-		if var_31_6 > 0 then
-			var_31_4 = var_31_5[var_31_6]
-			var_31_5[var_31_6] = nil
+		if poolLen > 0 then
+			itemObj = pool[poolLen]
+			pool[poolLen] = nil
 		end
 	end
 
-	if not var_31_4 then
-		var_31_4 = arg_31_0:getUserDataTb_()
+	if not itemObj then
+		itemObj = self:getUserDataTb_()
 
-		local var_31_7 = arg_31_0._loader:getAssetItem(var_31_1) or arg_31_0._loader:getAssetItem(ChessGameEnum.SceneResPath.AlarmItem)
+		local assetItem = self._loader:getAssetItem(resPath)
 
-		var_31_4.go = gohelper.clone(var_31_7:GetResource(), arg_31_0._sceneGround, "alarmItem")
-		var_31_4.sceneTf = var_31_4.go.transform
+		assetItem = assetItem or self._loader:getAssetItem(ChessGameEnum.SceneResPath.AlarmItem)
+		itemObj.go = gohelper.clone(assetItem:GetResource(), self._sceneGround, "alarmItem")
+		itemObj.sceneTf = itemObj.go.transform
 	end
 
-	gohelper.setActive(var_31_4.go, true)
+	gohelper.setActive(itemObj.go, true)
 
-	local var_31_8 = {
+	local pos = {
 		z = 0,
-		x = arg_31_1,
-		y = arg_31_2
+		x = x,
+		y = y
 	}
-	local var_31_9 = ChessGameHelper.nodePosToWorldPos(var_31_8)
+	local v3 = ChessGameHelper.nodePosToWorldPos(pos)
 
-	var_31_4.tileX = arg_31_1
-	var_31_4.tileY = arg_31_2
-	var_31_4.isManual = arg_31_3
-	var_31_4.isStatic = var_31_0
-	var_31_4.resPath = var_31_1
+	itemObj.tileX = x
+	itemObj.tileY = y
+	itemObj.isManual = isManual
+	itemObj.isStatic = isStatic
+	itemObj.resPath = resPath
 
-	transformhelper.setLocalPos(var_31_4.sceneTf, var_31_9.x, var_31_9.y, var_31_9.z)
+	transformhelper.setLocalPos(itemObj.sceneTf, v3.x, v3.y, v3.z)
 
-	if not var_31_3 then
-		var_31_3 = {}
-		arg_31_0._alarmItems[var_31_2] = var_31_3
+	if not tileList then
+		tileList = {}
+		self._alarmItems[tileIndex] = tileList
 	end
 
-	var_31_3[#var_31_3 + 1] = var_31_4
+	tileList[#tileList + 1] = itemObj
 
-	return var_31_4
+	return itemObj
 end
 
-function var_0_0.addNeedLoadInteractList(arg_32_0, arg_32_1)
-	if not tabletool.indexOf(arg_32_0.needLoadInteractIdList, arg_32_1) then
-		table.insert(arg_32_0.needLoadInteractIdList, arg_32_1)
+function ChessGameScene:addNeedLoadInteractList(interactId)
+	if not tabletool.indexOf(self.needLoadInteractIdList, interactId) then
+		table.insert(self.needLoadInteractIdList, interactId)
 	end
 end
 
-function var_0_0.findInteractItem(arg_33_0, arg_33_1)
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0._interactItemList) do
-		if iter_33_1.id == arg_33_1 then
-			return iter_33_1
+function ChessGameScene:findInteractItem(interactId)
+	for _, interactItem in ipairs(self._interactItemList) do
+		if interactItem.id == interactId then
+			return interactItem
 		end
 	end
 end
 
-function var_0_0.getPlayerInteractItem(arg_34_0)
-	return arg_34_0.playerInteractItem
+function ChessGameScene:getPlayerInteractItem()
+	return self.playerInteractItem
 end
 
-function var_0_0.setInteractObjActive(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_0:findInteractItem(arg_35_1)
+function ChessGameScene:setInteractObjActive(interactId, active)
+	local interactItem = self:findInteractItem(interactId)
 
-	if not var_35_0 then
+	if not interactItem then
 		return
 	end
 
-	var_35_0:setActive(arg_35_2)
+	interactItem:setActive(active)
 end
 
-function var_0_0.onClickContainer(arg_36_0, arg_36_1, arg_36_2)
+function ChessGameScene:onClickContainer(param, clickPosition)
 	if ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	local var_36_0 = CameraMgr.instance:getMainCamera()
-	local var_36_1 = recthelper.screenPosToWorldPos(GamepadController.instance:getMousePosition(), var_36_0, arg_36_0._sceneBackground.transform.position)
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local worldpos = recthelper.screenPosToWorldPos(GamepadController.instance:getMousePosition(), mainCamera, self._sceneBackground.transform.position)
 
-	logNormal("click Scene wolrdX, worldY : " .. tostring(var_36_1.x) .. ", " .. tostring(var_36_1.y))
+	logNormal("click Scene wolrdX, worldY : " .. tostring(worldpos.x) .. ", " .. tostring(worldpos.y))
 
-	local var_36_2 = {
-		x = var_36_1.x,
-		y = var_36_1.y - arg_36_0._sceneOffsetY,
-		z = var_36_1.z
+	local pos = {
+		x = worldpos.x,
+		y = worldpos.y - self._sceneOffsetY,
+		z = worldpos.z
 	}
-	local var_36_3 = ChessGameHelper.worldPosToNodePos(var_36_2)
+	local nodeXY = ChessGameHelper.worldPosToNodePos(pos)
 
-	logNormal("click Scene X, Y : " .. tostring(var_36_3.x) .. ", " .. tostring(var_36_3.y))
+	logNormal("click Scene X, Y : " .. tostring(nodeXY.x) .. ", " .. tostring(nodeXY.y))
 
-	if var_36_3 then
-		arg_36_0:onClickChessPos(var_36_3.x, var_36_3.y)
+	if nodeXY then
+		self:onClickChessPos(nodeXY.x, nodeXY.y)
 	end
 end
 
-function var_0_0.onClickChessPos(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = ChessGameController.instance.eventMgr
+function ChessGameScene:onClickChessPos(x, y)
+	local evtMgr = ChessGameController.instance.eventMgr
 
-	if var_37_0 and var_37_0:getCurEvent() then
-		local var_37_1 = var_37_0:getCurEvent()
+	if evtMgr and evtMgr:getCurEvent() then
+		local evt = evtMgr:getCurEvent()
 
-		if var_37_1 then
-			var_37_1:onClickPos(arg_37_1, arg_37_2, true)
+		if evt then
+			evt:onClickPos(x, y, true)
 		end
 	end
 end
 
-function var_0_0._guideClickTile(arg_38_0, arg_38_1)
-	local var_38_0 = string.splitToNumber(arg_38_1, "_")
-	local var_38_1 = var_38_0[1]
-	local var_38_2 = var_38_0[2]
+function ChessGameScene:_guideClickTile(param)
+	local list = string.splitToNumber(param, "_")
+	local tileX = list[1]
+	local tileY = list[2]
 
-	arg_38_0:onClickChessPos(var_38_1, var_38_2)
+	self:onClickChessPos(tileX, tileY)
 end
 
-function var_0_0.recycleAllInteract(arg_39_0)
-	for iter_39_0, iter_39_1 in ipairs(arg_39_0._interactItemList) do
-		iter_39_1:deleteSelf()
+function ChessGameScene:recycleAllInteract()
+	for _, interactItem in ipairs(self._interactItemList) do
+		interactItem:deleteSelf()
 	end
 end
 
-function var_0_0.disposeInteractItem(arg_40_0)
-	for iter_40_0, iter_40_1 in ipairs(arg_40_0._interactItemList) do
-		iter_40_1:dispose()
+function ChessGameScene:disposeInteractItem()
+	for _, interactItem in ipairs(self._interactItemList) do
+		interactItem:dispose()
 	end
 
-	arg_40_0._interactItemList = nil
+	self._interactItemList = nil
 end
 
-function var_0_0.disposeBaffle(arg_41_0)
-	local var_41_0
+function ChessGameScene:disposeBaffle()
+	local baffleObj
 
-	for iter_41_0 = 1, #arg_41_0._baffleItems do
-		arg_41_0._baffleItems[iter_41_0]:dispose()
+	for i = 1, #self._baffleItems do
+		baffleObj = self._baffleItems[i]
+
+		baffleObj:dispose()
 	end
 
-	for iter_41_1 = 1, #arg_41_0._baffleItemPool do
-		arg_41_0._baffleItemPool[iter_41_1]:dispose()
+	for i = 1, #self._baffleItemPool do
+		baffleObj = self._baffleItemPool[i]
+
+		baffleObj:dispose()
 	end
 
-	arg_41_0._baffleItems = nil
-	arg_41_0._baffleItemPool = nil
+	self._baffleItems = nil
+	self._baffleItemPool = nil
 end
 
-function var_0_0.disposeSceneRoot(arg_42_0)
-	if arg_42_0._sceneRoot then
-		gohelper.destroy(arg_42_0._sceneRoot)
+function ChessGameScene:disposeSceneRoot()
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_42_0._sceneRoot = nil
-	end
-end
-
-function var_0_0.releaseLoader(arg_43_0)
-	if arg_43_0._loader then
-		arg_43_0._loader:dispose()
-
-		arg_43_0._loader = nil
+		self._sceneRoot = nil
 	end
 end
 
-function var_0_0.refreshNearInteractIcon(arg_44_0)
-	ChessGameController.instance.interactsMgr:getMainPlayer():getHandler():calCanWalkArea()
-end
+function ChessGameScene:releaseLoader()
+	if self._loader then
+		self._loader:dispose()
 
-function var_0_0.onCancelSelectInteract(arg_45_0, arg_45_1)
-	local var_45_0 = arg_45_0:findInteractItem(arg_45_1)
-
-	if var_45_0 and not var_45_0.delete and var_45_0:getHandler() then
-		var_45_0:getHandler():onCancelSelect()
+		self._loader = nil
 	end
 end
 
-function var_0_0.onGameDataUpdate(arg_46_0)
+function ChessGameScene:refreshNearInteractIcon()
+	local player = ChessGameController.instance.interactsMgr:getMainPlayer()
+
+	player:getHandler():calCanWalkArea()
+end
+
+function ChessGameScene:onCancelSelectInteract(interactId)
+	local interactItem = self:findInteractItem(interactId)
+
+	if interactItem and not interactItem.delete and interactItem:getHandler() then
+		interactItem:getHandler():onCancelSelect()
+	end
+end
+
+function ChessGameScene:onGameDataUpdate()
 	if not ChessGameController.instance:getSelectObj() then
 		ChessGameController.instance:autoSelectPlayer(true)
 	end
 end
 
-function var_0_0.onResetGame(arg_47_0)
-	arg_47_0:fillChessBoardBase()
+function ChessGameScene:onResetGame()
+	self:fillChessBoardBase()
 	ChessGameController.instance:setSelectObj(nil)
 	ChessGameController.instance:autoSelectPlayer(true)
 end
 
-function var_0_0.resetTiles(arg_48_0)
-	for iter_48_0, iter_48_1 in pairs(arg_48_0._baseTiles) do
-		for iter_48_2, iter_48_3 in pairs(iter_48_1) do
-			gohelper.setActive(iter_48_3.go, false)
+function ChessGameScene:resetTiles()
+	for _, yList in pairs(self._baseTiles) do
+		for _, tileObj in pairs(yList) do
+			gohelper.setActive(tileObj.go, false)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_49_0)
+function ChessGameScene:onClose()
 	if not ChessGameModel.instance:getGameState() then
 		ChessStatController.instance:statAbort()
 	end
 end
 
-function var_0_0.resetCamera(arg_50_0)
-	local var_50_0 = CameraMgr.instance:getMainCamera()
+function ChessGameScene:resetCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_50_0.orthographicSize = 5
-	var_50_0.orthographic = false
+	camera.orthographicSize = 5
+	camera.orthographic = false
 end
 
-function var_0_0.onResultQuit(arg_51_0)
-	arg_51_0:closeThis()
+function ChessGameScene:onResultQuit()
+	self:closeThis()
 end
 
-function var_0_0.onDestroyView(arg_52_0)
-	if arg_52_0._click then
-		arg_52_0._click:RemoveClickListener()
+function ChessGameScene:onDestroyView()
+	if self._click then
+		self._click:RemoveClickListener()
 
-		arg_52_0._click = nil
+		self._click = nil
 	end
 
-	arg_52_0._baseTiles = nil
-	arg_52_0._alarmItemPool = {}
+	self._baseTiles = nil
+	self._alarmItemPool = {}
 
-	arg_52_0:resetCamera()
-	arg_52_0:disposeSceneRoot()
-	arg_52_0:releaseLoader()
+	self:resetCamera()
+	self:disposeSceneRoot()
+	self:releaseLoader()
 end
 
-return var_0_0
+return ChessGameScene

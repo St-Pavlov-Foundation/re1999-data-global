@@ -1,352 +1,358 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.view.XugoujiGamePlayerInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/view/XugoujiGamePlayerInfoView.lua
 
-local var_0_0 = class("XugoujiGamePlayerInfoView", BaseView)
-local var_0_1 = VersionActivity2_6Enum.ActivityId.Xugouji
-local var_0_2 = 0.35
+module("modules.logic.versionactivity2_6.xugouji.view.XugoujiGamePlayerInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goPlayerInfo = gohelper.findChild(arg_1_0.viewGO, "#go_cameraMain/Left/Role")
-	arg_1_0._imagePlayerIcon = gohelper.findChildImage(arg_1_0._goPlayerInfo, "Role/image/#simage_Role")
-	arg_1_0._txtPlayerHP = gohelper.findChildText(arg_1_0._goPlayerInfo, "Role/image_RoleHPNumBG/#txt_RoleHP")
-	arg_1_0._imagePlayerHP = gohelper.findChildImage(arg_1_0._goPlayerInfo, "Role/image_RoleHPBG/#image_RoleHPFG")
-	arg_1_0._goHp = gohelper.findChild(arg_1_0._goPlayerInfo, "#go_HP")
-	arg_1_0._textHpDiff = gohelper.findChildText(arg_1_0._goPlayerInfo, "#go_HP/#txt_HP")
-	arg_1_0._goBuffRoot = gohelper.findChild(arg_1_0._goPlayerInfo, "#go_Buff")
-	arg_1_0._goBuffItem = gohelper.findChild(arg_1_0._goBuffRoot, "#go_Buff")
-	arg_1_0._txtRemainTime = gohelper.findChildText(arg_1_0._goPlayerInfo, "Remain/#txt_RemainValue")
-	arg_1_0._txtGotPairNum = gohelper.findChildText(arg_1_0._goPlayerInfo, "Pairs/#txt_PairsValue")
-	arg_1_0._skillRoot = gohelper.findChild(arg_1_0._goPlayerInfo, "#go_ViewSkillTips")
-	arg_1_0._skillItemRoot = gohelper.findChild(arg_1_0._goPlayerInfo, "#go_ViewSkillTips/image_TipsBG")
-	arg_1_0._skillItem = gohelper.findChild(arg_1_0._skillRoot, "image_TipsBG/#go_Item")
-	arg_1_0._btnPlayerIcon = gohelper.findChildButtonWithAudio(arg_1_0._goPlayerInfo, "Role/image/#simage_Role")
-	arg_1_0._btnSkill = gohelper.findChildButtonWithAudio(arg_1_0._goPlayerInfo, "Role/#btn_Skill")
-	arg_1_0._btnSkillTipsHide = gohelper.findChildButtonWithAudio(arg_1_0._skillRoot, "#btnSkillTipsHide")
-	arg_1_0._skillTipsAnimator = ZProj.ProjAnimatorPlayer.Get(arg_1_0._skillRoot)
-	arg_1_0._btnBuff = gohelper.findChildButtonWithAudio(arg_1_0._goPlayerInfo, "#go_Buff")
-	arg_1_0._buffInfoRoot = gohelper.findChild(arg_1_0._goPlayerInfo, "bufftipsview")
-	arg_1_0._goBuffInfoContent = gohelper.findChild(arg_1_0._buffInfoRoot, "root/#go_buffinfocontainer/buff/#scroll_buff/viewport/content")
-	arg_1_0._goBuffInfoItem = gohelper.findChild(arg_1_0._buffInfoRoot, "root/#go_buffinfocontainer/buff/#scroll_buff/viewport/content/#go_buffitem")
-	arg_1_0._btnBuffInfoClose = gohelper.findChildButtonWithAudio(arg_1_0._buffInfoRoot, "#btn_buffTipsHide")
-	arg_1_0._goDamageEffect = gohelper.findChild(arg_1_0._goPlayerInfo, "#go_damage")
-	arg_1_0._viewAnimator = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
+local XugoujiGamePlayerInfoView = class("XugoujiGamePlayerInfoView", BaseView)
+local actId = VersionActivity2_6Enum.ActivityId.Xugouji
+local hpTweenDuration = 0.35
+
+function XugoujiGamePlayerInfoView:onInitView()
+	self._goPlayerInfo = gohelper.findChild(self.viewGO, "#go_cameraMain/Left/Role")
+	self._imagePlayerIcon = gohelper.findChildImage(self._goPlayerInfo, "Role/image/#simage_Role")
+	self._txtPlayerHP = gohelper.findChildText(self._goPlayerInfo, "Role/image_RoleHPNumBG/#txt_RoleHP")
+	self._imagePlayerHP = gohelper.findChildImage(self._goPlayerInfo, "Role/image_RoleHPBG/#image_RoleHPFG")
+	self._goHp = gohelper.findChild(self._goPlayerInfo, "#go_HP")
+	self._textHpDiff = gohelper.findChildText(self._goPlayerInfo, "#go_HP/#txt_HP")
+	self._goBuffRoot = gohelper.findChild(self._goPlayerInfo, "#go_Buff")
+	self._goBuffItem = gohelper.findChild(self._goBuffRoot, "#go_Buff")
+	self._txtRemainTime = gohelper.findChildText(self._goPlayerInfo, "Remain/#txt_RemainValue")
+	self._txtGotPairNum = gohelper.findChildText(self._goPlayerInfo, "Pairs/#txt_PairsValue")
+	self._skillRoot = gohelper.findChild(self._goPlayerInfo, "#go_ViewSkillTips")
+	self._skillItemRoot = gohelper.findChild(self._goPlayerInfo, "#go_ViewSkillTips/image_TipsBG")
+	self._skillItem = gohelper.findChild(self._skillRoot, "image_TipsBG/#go_Item")
+	self._btnPlayerIcon = gohelper.findChildButtonWithAudio(self._goPlayerInfo, "Role/image/#simage_Role")
+	self._btnSkill = gohelper.findChildButtonWithAudio(self._goPlayerInfo, "Role/#btn_Skill")
+	self._btnSkillTipsHide = gohelper.findChildButtonWithAudio(self._skillRoot, "#btnSkillTipsHide")
+	self._skillTipsAnimator = ZProj.ProjAnimatorPlayer.Get(self._skillRoot)
+	self._btnBuff = gohelper.findChildButtonWithAudio(self._goPlayerInfo, "#go_Buff")
+	self._buffInfoRoot = gohelper.findChild(self._goPlayerInfo, "bufftipsview")
+	self._goBuffInfoContent = gohelper.findChild(self._buffInfoRoot, "root/#go_buffinfocontainer/buff/#scroll_buff/viewport/content")
+	self._goBuffInfoItem = gohelper.findChild(self._buffInfoRoot, "root/#go_buffinfocontainer/buff/#scroll_buff/viewport/content/#go_buffitem")
+	self._btnBuffInfoClose = gohelper.findChildButtonWithAudio(self._buffInfoRoot, "#btn_buffTipsHide")
+	self._goDamageEffect = gohelper.findChild(self._goPlayerInfo, "#go_damage")
+	self._viewAnimator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnPlayerIcon:AddClickListener(arg_2_0._onPlayerIconClick, arg_2_0)
-	arg_2_0._btnSkill:AddClickListener(arg_2_0._onSkillClick, arg_2_0)
-	arg_2_0._btnBuff:AddClickListener(arg_2_0._onBuffClick, arg_2_0)
-	arg_2_0._btnSkillTipsHide:AddClickListener(arg_2_0._onSkillHideClick, arg_2_0)
-	arg_2_0._btnBuffInfoClose:AddClickListener(arg_2_0._onBuffInfoCloseClick, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.HpUpdated, arg_2_0._onHpUpdated, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.OperateTimeUpdated, arg_2_0._onOperateCard, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.TurnChanged, arg_2_0._onTurnChanged, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.GotActiveCard, arg_2_0._refreshCardPair, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.BuffUpdated, arg_2_0._onBuffsUpdated, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.GameRestart, arg_2_0._onGameReStart, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.AutoShowSkillTips, arg_2_0._onShowGameTips, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.AutoHideSkillTips, arg_2_0._autoHideSkillTips, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.NewCards, arg_2_0._onRefreshCards, arg_2_0)
+function XugoujiGamePlayerInfoView:addEvents()
+	self._btnPlayerIcon:AddClickListener(self._onPlayerIconClick, self)
+	self._btnSkill:AddClickListener(self._onSkillClick, self)
+	self._btnBuff:AddClickListener(self._onBuffClick, self)
+	self._btnSkillTipsHide:AddClickListener(self._onSkillHideClick, self)
+	self._btnBuffInfoClose:AddClickListener(self._onBuffInfoCloseClick, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.HpUpdated, self._onHpUpdated, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.OperateTimeUpdated, self._onOperateCard, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.TurnChanged, self._onTurnChanged, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.GotActiveCard, self._refreshCardPair, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.BuffUpdated, self._onBuffsUpdated, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.GameRestart, self._onGameReStart, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.AutoShowSkillTips, self._onShowGameTips, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.AutoHideSkillTips, self._autoHideSkillTips, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.NewCards, self._onRefreshCards, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnPlayerIcon:RemoveClickListener()
-	arg_3_0._btnSkill:RemoveClickListener()
-	arg_3_0._btnBuff:RemoveClickListener()
-	arg_3_0._btnSkillTipsHide:RemoveClickListener()
-	arg_3_0._btnBuffInfoClose:RemoveClickListener()
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.HpUpdated, arg_3_0._onHpUpdated, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.OperateTimeUpdated, arg_3_0._onOperateCard, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.TurnChanged, arg_3_0._onTurnChanged, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.GotActiveCard, arg_3_0._refreshCardPair, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.BuffUpdated, arg_3_0._onBuffsUpdated, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.GameRestart, arg_3_0._onGameReStart, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.AutoShowSkillTips, arg_3_0._onShowGameTips, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.AutoHideSkillTips, arg_3_0._autoHideSkillTips, arg_3_0)
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.NewCards, arg_3_0._onRefreshCards, arg_3_0)
+function XugoujiGamePlayerInfoView:removeEvents()
+	self._btnPlayerIcon:RemoveClickListener()
+	self._btnSkill:RemoveClickListener()
+	self._btnBuff:RemoveClickListener()
+	self._btnSkillTipsHide:RemoveClickListener()
+	self._btnBuffInfoClose:RemoveClickListener()
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.HpUpdated, self._onHpUpdated, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.OperateTimeUpdated, self._onOperateCard, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.TurnChanged, self._onTurnChanged, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.GotActiveCard, self._refreshCardPair, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.BuffUpdated, self._onBuffsUpdated, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.GameRestart, self._onGameReStart, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.AutoShowSkillTips, self._onShowGameTips, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.AutoHideSkillTips, self._autoHideSkillTips, self)
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.NewCards, self._onRefreshCards, self)
 end
 
-function var_0_0._onPlayerIconClick(arg_4_0)
-	local var_4_0 = XugoujiGameStepController.instance
+function XugoujiGamePlayerInfoView:_onPlayerIconClick()
+	local stepCtrl = XugoujiGameStepController.instance
 
-	if var_4_0 then
-		var_4_0:nextStep()
+	if stepCtrl then
+		stepCtrl:nextStep()
 	end
 end
 
-function var_0_0._onSkillClick(arg_5_0)
-	if not arg_5_0._gameCfg then
-		local var_5_0 = Activity188Model.instance:getCurGameId()
+function XugoujiGamePlayerInfoView:_onSkillClick()
+	if not self._gameCfg then
+		local curGameId = Activity188Model.instance:getCurGameId()
 
-		arg_5_0._gameCfg = Activity188Config.instance:getGameCfg(var_0_1, var_5_0)
+		self._gameCfg = Activity188Config.instance:getGameCfg(actId, curGameId)
 	end
 
-	arg_5_0._abilityCfgList = {
+	self._abilityCfgList = {
 		{
 			title = true
 		}
 	}
-	arg_5_0._abilityIdList = Activity188Model.instance:getPlayerAbilityIds()
+	self._abilityIdList = Activity188Model.instance:getPlayerAbilityIds()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._abilityIdList) do
-		local var_5_1 = Activity188Config.instance:getAbilityCfg(var_0_1, iter_5_1)
+	for idx, abilityId in ipairs(self._abilityIdList) do
+		local abilityCfg = Activity188Config.instance:getAbilityCfg(actId, abilityId)
 
-		arg_5_0._abilityCfgList[iter_5_0 + 1] = var_5_1
+		self._abilityCfgList[idx + 1] = abilityCfg
 	end
 
-	gohelper.setActive(arg_5_0._skillRoot, true)
-	gohelper.setActive(arg_5_0._btnSkillTipsHide.gameObject, true)
-	arg_5_0._skillTipsAnimator:Play(UIAnimationName.Open, nil, nil)
-	gohelper.CreateObjList(arg_5_0, arg_5_0._createSkillItem, arg_5_0._abilityCfgList, arg_5_0._skillItemRoot, arg_5_0._skillItem)
+	gohelper.setActive(self._skillRoot, true)
+	gohelper.setActive(self._btnSkillTipsHide.gameObject, true)
+	self._skillTipsAnimator:Play(UIAnimationName.Open, nil, nil)
+	gohelper.CreateObjList(self, self._createSkillItem, self._abilityCfgList, self._skillItemRoot, self._skillItem)
 end
 
-function var_0_0._onSkillHideClick(arg_6_0)
+function XugoujiGamePlayerInfoView:_onSkillHideClick()
 	XugoujiController.instance:dispatchEvent(XugoujiEvent.HideSkillTips)
-	gohelper.setActive(arg_6_0._btnSkillTipsHide.gameObject, false)
-	arg_6_0._skillTipsAnimator:Play(UIAnimationName.Close, arg_6_0.onSkillTipsCloseAniFinish, arg_6_0)
+	gohelper.setActive(self._btnSkillTipsHide.gameObject, false)
+	self._skillTipsAnimator:Play(UIAnimationName.Close, self.onSkillTipsCloseAniFinish, self)
 end
 
-function var_0_0.onSkillTipsCloseAniFinish(arg_7_0)
-	gohelper.setActive(arg_7_0._skillRoot, false)
+function XugoujiGamePlayerInfoView:onSkillTipsCloseAniFinish()
+	gohelper.setActive(self._skillRoot, false)
 end
 
-function var_0_0._onBuffClick(arg_8_0)
-	arg_8_0._buffDataList = Activity188Model.instance:getBuffs(true)
+function XugoujiGamePlayerInfoView:_onBuffClick()
+	self._buffDataList = Activity188Model.instance:getBuffs(true)
 
-	if not arg_8_0._buffDataList or #arg_8_0._buffDataList == 0 then
+	if not self._buffDataList or #self._buffDataList == 0 then
 		return
 	end
 
-	local var_8_0 = {
+	local buffInfoDataList = {
 		{
 			bg = true
 		}
 	}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._buffDataList) do
-		var_8_0[iter_8_0 + 1] = iter_8_1
+	for idx, buffData in ipairs(self._buffDataList) do
+		buffInfoDataList[idx + 1] = buffData
 	end
 
-	gohelper.setActive(arg_8_0._buffInfoRoot, true)
-	gohelper.CreateObjList(arg_8_0, arg_8_0._createBuffInfoItem, var_8_0, arg_8_0._goBuffInfoContent, arg_8_0._goBuffInfoItem)
+	gohelper.setActive(self._buffInfoRoot, true)
+	gohelper.CreateObjList(self, self._createBuffInfoItem, buffInfoDataList, self._goBuffInfoContent, self._goBuffInfoItem)
 end
 
-function var_0_0._onBuffInfoCloseClick(arg_9_0)
-	gohelper.setActive(arg_9_0._buffInfoRoot, false)
+function XugoujiGamePlayerInfoView:_onBuffInfoCloseClick()
+	gohelper.setActive(self._buffInfoRoot, false)
 end
 
-function var_0_0._onHpUpdated(arg_10_0)
-	arg_10_0:_refreshPlayerHP()
+function XugoujiGamePlayerInfoView:_onHpUpdated()
+	self:_refreshPlayerHP()
 end
 
-function var_0_0._onOperateCard(arg_11_0)
-	arg_11_0:_refreshOperateLeftTime()
+function XugoujiGamePlayerInfoView:_onOperateCard()
+	self:_refreshOperateLeftTime()
 end
 
-function var_0_0._onTurnChanged(arg_12_0)
-	arg_12_0:_refreshOperateLeftTime()
+function XugoujiGamePlayerInfoView:_onTurnChanged()
+	self:_refreshOperateLeftTime()
 end
 
-function var_0_0._onGotCardPair(arg_13_0)
-	arg_13_0:_refreshOperateLeftTime()
+function XugoujiGamePlayerInfoView:_onGotCardPair()
+	self:_refreshOperateLeftTime()
 end
 
-function var_0_0._onBuffsUpdated(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function XugoujiGamePlayerInfoView:_onBuffsUpdated(isPlayer)
+	if not isPlayer then
 		return
 	end
 
-	arg_14_0:_refreshBuffList()
+	self:_refreshBuffList()
 end
 
-function var_0_0._onGameReStart(arg_15_0)
-	arg_15_0:_refreshBuffList()
-	arg_15_0:_refreshOperateLeftTime()
+function XugoujiGamePlayerInfoView:_onGameReStart()
+	self:_refreshBuffList()
+	self:_refreshOperateLeftTime()
 
-	arg_15_0._initialHP = Activity188Model.instance:getPlayerInitialHP()
+	self._initialHP = Activity188Model.instance:getPlayerInitialHP()
 
-	arg_15_0:_refreshPlayerHP()
-	arg_15_0:_refreshSkillBtn()
+	self:_refreshPlayerHP()
+	self:_refreshSkillBtn()
 end
 
-function var_0_0._onShowGameTips(arg_16_0)
-	arg_16_0:_onSkillClick()
+function XugoujiGamePlayerInfoView:_onShowGameTips()
+	self:_onSkillClick()
 end
 
-function var_0_0._autoHideSkillTips(arg_17_0)
-	arg_17_0:_onSkillHideClick()
+function XugoujiGamePlayerInfoView:_autoHideSkillTips()
+	self:_onSkillHideClick()
 end
 
-function var_0_0._onRefreshCards(arg_18_0)
-	arg_18_0:_refreshCardPair()
+function XugoujiGamePlayerInfoView:_onRefreshCards()
+	self:_refreshCardPair()
 end
 
-function var_0_0._editableInitView(arg_19_0)
+function XugoujiGamePlayerInfoView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:_refreshBuffList()
-	arg_20_0:_refreshOperateLeftTime()
+function XugoujiGamePlayerInfoView:onOpen()
+	self:_refreshBuffList()
+	self:_refreshOperateLeftTime()
 
-	arg_20_0._initialHP = Activity188Model.instance:getPlayerInitialHP()
-	arg_20_0._txtPlayerHP.text = Activity188Model.instance:getCurHP()
-	arg_20_0._imagePlayerHP.fillAmount = 1
+	self._initialHP = Activity188Model.instance:getPlayerInitialHP()
+	self._txtPlayerHP.text = Activity188Model.instance:getCurHP()
+	self._imagePlayerHP.fillAmount = 1
 
-	arg_20_0:_refreshPlayerHP()
-	arg_20_0:_refreshSkillBtn()
+	self:_refreshPlayerHP()
+	self:_refreshSkillBtn()
 end
 
-function var_0_0._refreshPlayerHP(arg_21_0)
-	local var_21_0 = tonumber(arg_21_0._txtPlayerHP.text)
-	local var_21_1 = tonumber(Activity188Model.instance:getCurHP())
+function XugoujiGamePlayerInfoView:_refreshPlayerHP()
+	local oriValue = tonumber(self._txtPlayerHP.text)
+	local newValue = tonumber(Activity188Model.instance:getCurHP())
 
-	if var_21_0 == var_21_1 then
+	if oriValue == newValue then
 		return
 	end
 
-	if var_21_1 < var_21_0 and not arg_21_0._showingDamage then
-		arg_21_0._showingDamage = true
+	if newValue < oriValue and not self._showingDamage then
+		self._showingDamage = true
 
-		TaskDispatcher.runDelay(arg_21_0._resetShowDemageEffect, arg_21_0, 2.5)
-		gohelper.setActive(arg_21_0._goDamageEffect, false)
-		gohelper.setActive(arg_21_0._goDamageEffect, true)
+		TaskDispatcher.runDelay(self._resetShowDemageEffect, self, 2.5)
+		gohelper.setActive(self._goDamageEffect, false)
+		gohelper.setActive(self._goDamageEffect, true)
 		AudioMgr.instance:trigger(AudioEnum2_6.Xugouji.playerDamage)
-		arg_21_0._viewAnimator:Play("damage2", nil, nil)
+		self._viewAnimator:Play("damage2", nil, nil)
 	end
 
-	arg_21_0._txtPlayerHP.text = var_21_1
+	self._txtPlayerHP.text = newValue
 
-	local var_21_2 = var_21_1 / arg_21_0._initialHP
+	local fillAmount = newValue / self._initialHP
 
-	ZProj.TweenHelper.DOFillAmount(arg_21_0._imagePlayerHP, var_21_2, var_0_2)
-	gohelper.setActive(arg_21_0._goHp, true)
+	ZProj.TweenHelper.DOFillAmount(self._imagePlayerHP, fillAmount, hpTweenDuration)
+	gohelper.setActive(self._goHp, true)
 
-	local var_21_3 = var_21_1 - var_21_0
+	local diffValue = newValue - oriValue
 
-	arg_21_0._textHpDiff.text = var_21_3 < 0 and var_21_3 or "+" .. var_21_3
+	self._textHpDiff.text = diffValue < 0 and diffValue or "+" .. diffValue
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_21_0._textHpDiff, var_21_3 < 0 and "#E57279" or "#7AC886")
-	TaskDispatcher.cancelTask(arg_21_0._delayHideHpChange, arg_21_0)
-	TaskDispatcher.runDelay(arg_21_0._delayHideHpChange, arg_21_0, 1)
+	SLFramework.UGUI.GuiHelper.SetColor(self._textHpDiff, diffValue < 0 and "#E57279" or "#7AC886")
+	TaskDispatcher.cancelTask(self._delayHideHpChange, self)
+	TaskDispatcher.runDelay(self._delayHideHpChange, self, 1)
 end
 
-function var_0_0._resetShowDemageEffect(arg_22_0)
-	arg_22_0._showingDamage = false
+function XugoujiGamePlayerInfoView:_resetShowDemageEffect()
+	self._showingDamage = false
 end
 
-function var_0_0._delayHideHpChange(arg_23_0)
-	gohelper.setActive(arg_23_0._goHp, false)
+function XugoujiGamePlayerInfoView:_delayHideHpChange()
+	gohelper.setActive(self._goHp, false)
 end
 
-function var_0_0._refreshOperateLeftTime(arg_24_0)
-	local var_24_0 = Activity188Model.instance:getCurTurnOperateTime()
+function XugoujiGamePlayerInfoView:_refreshOperateLeftTime()
+	local operateLeftTime = Activity188Model.instance:getCurTurnOperateTime()
 
-	arg_24_0._txtRemainTime.text = var_24_0
+	self._txtRemainTime.text = operateLeftTime
 end
 
-function var_0_0._refreshSkillBtn(arg_25_0)
-	if not arg_25_0._gameCfg then
-		local var_25_0 = Activity188Model.instance:getCurGameId()
+function XugoujiGamePlayerInfoView:_refreshSkillBtn()
+	if not self._gameCfg then
+		local curGameId = Activity188Model.instance:getCurGameId()
 
-		arg_25_0._gameCfg = Activity188Config.instance:getGameCfg(var_0_1, var_25_0)
+		self._gameCfg = Activity188Config.instance:getGameCfg(actId, curGameId)
 	end
 
-	arg_25_0._abilityIdList = Activity188Model.instance:getPlayerAbilityIds()
+	self._abilityIdList = Activity188Model.instance:getPlayerAbilityIds()
 
-	gohelper.setActive(arg_25_0._btnSkill.gameObject, #arg_25_0._abilityIdList > 0)
+	gohelper.setActive(self._btnSkill.gameObject, #self._abilityIdList > 0)
 end
 
-function var_0_0._refreshCardPair(arg_26_0)
-	local var_26_0 = Activity188Model.instance:getCurPairCount()
+function XugoujiGamePlayerInfoView:_refreshCardPair()
+	local curPairNum = Activity188Model.instance:getCurPairCount()
 
-	arg_26_0._txtGotPairNum.text = var_26_0
+	self._txtGotPairNum.text = curPairNum
 end
 
-function var_0_0._refreshBuffList(arg_27_0)
-	arg_27_0._buffDataList = Activity188Model.instance:getBuffs(true)
+function XugoujiGamePlayerInfoView:_refreshBuffList()
+	self._buffDataList = Activity188Model.instance:getBuffs(true)
 
-	gohelper.CreateObjList(arg_27_0, arg_27_0._createBuffItem, arg_27_0._buffDataList, arg_27_0._goBuffRoot, arg_27_0._goBuffItem)
+	gohelper.CreateObjList(self, self._createBuffItem, self._buffDataList, self._goBuffRoot, self._goBuffItem)
 end
 
-function var_0_0._createBuffItem(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	gohelper.setActive(arg_28_1, true)
+function XugoujiGamePlayerInfoView:_createBuffItem(itemGo, buffData, index)
+	gohelper.setActive(itemGo, true)
 
-	local var_28_0 = gohelper.findChildImage(arg_28_1, "#image_BuffIcon")
-	local var_28_1 = Activity188Config.instance:getBuffCfg(var_0_1, arg_28_2.buffId)
-	local var_28_2 = var_28_1.icon
+	local icon = gohelper.findChildImage(itemGo, "#image_BuffIcon")
+	local buffCfg = Activity188Config.instance:getBuffCfg(actId, buffData.buffId)
+	local buffIconId = buffCfg.icon
 
-	if string.nilorempty(var_28_2) or var_28_2 == "0" then
+	if string.nilorempty(buffIconId) or buffIconId == "0" then
 		-- block empty
 	else
-		UISpriteSetMgr.instance:setBuffSprite(var_28_0, tonumber(var_28_2))
+		UISpriteSetMgr.instance:setBuffSprite(icon, tonumber(buffIconId))
 	end
 
-	local var_28_3 = arg_28_2.layer
-	local var_28_4 = gohelper.findChildText(arg_28_1, "#txt_Num")
+	local layerNum = buffData.layer
+	local buffNumText = gohelper.findChildText(itemGo, "#txt_Num")
 
-	gohelper.setActive(var_28_4.gameObject, var_28_1.laminate == XugoujiEnum.BuffType.Round or var_28_1.laminate == XugoujiEnum.BuffType.Layer)
+	gohelper.setActive(buffNumText.gameObject, buffCfg.laminate == XugoujiEnum.BuffType.Round or buffCfg.laminate == XugoujiEnum.BuffType.Layer)
 
-	var_28_4.text = var_28_3
+	buffNumText.text = layerNum
 end
 
-function var_0_0._createSkillItem(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	gohelper.setActive(arg_29_1, true)
+function XugoujiGamePlayerInfoView:_createSkillItem(itemGo, abilityCfg, index)
+	gohelper.setActive(itemGo, true)
 
-	if arg_29_2.title then
+	local isTitle = abilityCfg.title
+
+	if isTitle then
 		return
 	end
 
-	local var_29_0 = gohelper.findChildText(arg_29_1, "txt_Descr")
-	local var_29_1 = gohelper.findChildImage(arg_29_1, "#image_Icon")
+	local descText = gohelper.findChildText(itemGo, "txt_Descr")
+	local icon = gohelper.findChildImage(itemGo, "#image_Icon")
 
-	var_29_0.text = arg_29_2.desc
+	descText.text = abilityCfg.desc
 end
 
-function var_0_0._createBuffInfoItem(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	gohelper.setActive(arg_30_1, true)
+function XugoujiGamePlayerInfoView:_createBuffInfoItem(itemGo, buffData, index)
+	gohelper.setActive(itemGo, true)
 
-	if arg_30_2.bg then
+	if buffData.bg then
 		return
 	end
 
-	local var_30_0 = Activity188Config.instance:getBuffCfg(var_0_1, arg_30_2.buffId)
-	local var_30_1 = var_30_0.icon
-	local var_30_2 = gohelper.findChildText(arg_30_1, "title/txt_name")
-	local var_30_3 = gohelper.findChildImage(arg_30_1, "title/simage_Icon")
+	local buffCfg = Activity188Config.instance:getBuffCfg(actId, buffData.buffId)
+	local buffIconId = buffCfg.icon
+	local titleText = gohelper.findChildText(itemGo, "title/txt_name")
+	local icon = gohelper.findChildImage(itemGo, "title/simage_Icon")
 
-	var_30_2.text = var_30_0.name
+	titleText.text = buffCfg.name
 
-	if not string.nilorempty(var_30_1) and var_30_1 == "0" then
-		UISpriteSetMgr.instance:setBuffSprite(var_30_3, tonumber(var_30_1))
+	if not string.nilorempty(buffIconId) and buffIconId == "0" then
+		UISpriteSetMgr.instance:setBuffSprite(icon, tonumber(buffIconId))
 	end
 
-	gohelper.findChildText(arg_30_1, "txt_desc").text = var_30_0.desc
+	local descText = gohelper.findChildText(itemGo, "txt_desc")
 
-	local var_30_4 = gohelper.findChildText(arg_30_1, "title/txt_name/go_tag/bg/txt_tagname")
-	local var_30_5 = arg_30_2.layer
-	local var_30_6 = ""
+	descText.text = buffCfg.desc
 
-	if var_30_0.laminate == XugoujiEnum.BuffType.Round then
-		var_30_6 = formatLuaLang("x_round", var_30_5)
-	elseif var_30_0.laminate == XugoujiEnum.BuffType.Layer then
-		var_30_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("activity188_mopup_layer"), {
-			var_30_5
+	local layerText = gohelper.findChildText(itemGo, "title/txt_name/go_tag/bg/txt_tagname")
+	local layerNum = buffData.layer
+	local layerStr = ""
+
+	if buffCfg.laminate == XugoujiEnum.BuffType.Round then
+		layerStr = formatLuaLang("x_round", layerNum)
+	elseif buffCfg.laminate == XugoujiEnum.BuffType.Layer then
+		layerStr = GameUtil.getSubPlaceholderLuaLang(luaLang("activity188_mopup_layer"), {
+			layerNum
 		})
 	else
-		local var_30_7 = gohelper.findChild(arg_30_1, "title/txt_name/go_tag")
+		local goTag = gohelper.findChild(itemGo, "title/txt_name/go_tag")
 
-		gohelper.setActive(var_30_7, false)
+		gohelper.setActive(goTag, false)
 	end
 
-	var_30_4.text = var_30_6
+	layerText.text = layerStr
 end
 
-function var_0_0.onClose(arg_31_0)
+function XugoujiGamePlayerInfoView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_32_0)
+function XugoujiGamePlayerInfoView:onDestroyView()
 	return
 end
 
-return var_0_0
+return XugoujiGamePlayerInfoView

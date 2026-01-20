@@ -1,192 +1,197 @@
-﻿module("modules.logic.social.controller.SocialMessageController", package.seeall)
+﻿-- chunkname: @modules/logic/social/controller/SocialMessageController.lua
 
-local var_0_0 = class("SocialMessageController", BaseController)
+module("modules.logic.social.controller.SocialMessageController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._tempListDict = {}
-	arg_1_0._tempListDict[SocialEnum.ChannelType.Friend] = {}
+local SocialMessageController = class("SocialMessageController", BaseController)
+
+function SocialMessageController:onInit()
+	self._tempListDict = {}
+	self._tempListDict[SocialEnum.ChannelType.Friend] = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._tempListDict = {}
-	arg_2_0._tempListDict[SocialEnum.ChannelType.Friend] = {}
+function SocialMessageController:reInit()
+	self._tempListDict = {}
+	self._tempListDict[SocialEnum.ChannelType.Friend] = {}
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function SocialMessageController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function SocialMessageController:addConstEvents()
 	return
 end
 
-function var_0_0.readSocialMessages(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = SocialConfig.instance:getSocialMessagesKey(arg_5_1, arg_5_2)
-	local var_5_1 = PlayerPrefsHelper.getString(var_5_0, nil)
-	local var_5_2 = {}
+function SocialMessageController:readSocialMessages(channelType, id)
+	local key = SocialConfig.instance:getSocialMessagesKey(channelType, id)
+	local socialMessagesPrefs = PlayerPrefsHelper.getString(key, nil)
+	local socialMessagesList = {}
 
-	if not string.nilorempty(var_5_1) then
-		var_5_2 = arg_5_0:_convertToList(arg_5_1, arg_5_2, var_5_1)
+	if not string.nilorempty(socialMessagesPrefs) then
+		socialMessagesList = self:_convertToList(channelType, id, socialMessagesPrefs)
 	end
 
-	SocialMessageModel.instance:loadSocialMessages(arg_5_1, arg_5_2, var_5_2)
+	SocialMessageModel.instance:loadSocialMessages(channelType, id, socialMessagesList)
 end
 
-function var_0_0.writeSocialMessages(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = SocialConfig.instance:getSocialMessagesKey(arg_6_1, arg_6_2)
-	local var_6_1 = ""
+function SocialMessageController:writeSocialMessages(channelType, id, socialMessageMOList)
+	local key = SocialConfig.instance:getSocialMessagesKey(channelType, id)
+	local socialMessagesPrefs = ""
 
-	if arg_6_3 and #arg_6_3 > 0 then
-		var_6_1 = arg_6_0:_convertToPrefs(arg_6_1, arg_6_2, arg_6_3)
+	if socialMessageMOList and #socialMessageMOList > 0 then
+		socialMessagesPrefs = self:_convertToPrefs(channelType, id, socialMessageMOList)
 	end
 
-	if not string.nilorempty(var_6_1) then
-		PlayerPrefsHelper.setString(var_6_0, var_6_1)
+	if not string.nilorempty(socialMessagesPrefs) then
+		PlayerPrefsHelper.setString(key, socialMessagesPrefs)
 	else
-		PlayerPrefsHelper.deleteKey(var_6_0)
+		PlayerPrefsHelper.deleteKey(key)
 	end
 end
 
-function var_0_0._convertToList(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = cjson.decode(arg_7_3)
-	local var_7_1 = SocialConfig.instance:getSocialMessageFields()
-	local var_7_2 = {
-		__index = function(arg_8_0, arg_8_1)
-			local var_8_0 = var_7_1[arg_8_1]
-			local var_8_1 = rawget(arg_8_0, var_8_0)
+function SocialMessageController:_convertToList(channelType, id, socialMessagesPrefs)
+	local json = cjson.decode(socialMessagesPrefs)
+	local socialMessagesList = json
+	local fields = SocialConfig.instance:getSocialMessageFields()
+	local metatable = {}
 
-			if var_8_1 == cjson.null then
-				var_8_1 = nil
-			end
+	function metatable.__index(t, key)
+		local fieldIndex = fields[key]
+		local value = rawget(t, fieldIndex)
 
-			return var_8_1
+		if value == cjson.null then
+			value = nil
 		end
-	}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		setmetatable(iter_7_1, var_7_2)
+		return value
 	end
 
-	arg_7_0._tempListDict[arg_7_1][arg_7_2] = var_7_0
+	for _, friendMessage in ipairs(socialMessagesList) do
+		setmetatable(friendMessage, metatable)
+	end
 
-	return var_7_0
+	self._tempListDict[channelType][id] = socialMessagesList
+
+	return socialMessagesList
 end
 
-function var_0_0._convertToPrefs(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = SocialConfig.instance:getSocialMessageFields()
-	local var_9_1 = {}
-	local var_9_2 = 1
+function SocialMessageController:_convertToPrefs(channelType, id, socialMessageMOList)
+	local fields = SocialConfig.instance:getSocialMessageFields()
+	local socialMessagesList = {}
+	local start = 1
 
-	if arg_9_0._tempListDict[arg_9_1][arg_9_2] and #arg_9_3 > #arg_9_0._tempListDict[arg_9_1][arg_9_2] then
-		var_9_2 = #arg_9_0._tempListDict[arg_9_1][arg_9_2] + 1
-		var_9_1 = arg_9_0._tempListDict[arg_9_1][arg_9_2]
+	if self._tempListDict[channelType][id] and #socialMessageMOList > #self._tempListDict[channelType][id] then
+		start = #self._tempListDict[channelType][id] + 1
+		socialMessagesList = self._tempListDict[channelType][id]
 	end
 
-	for iter_9_0 = var_9_2, #arg_9_3 do
-		local var_9_3 = arg_9_3[iter_9_0]
-		local var_9_4 = {}
+	for i = start, #socialMessageMOList do
+		local socialMessageMO = socialMessageMOList[i]
+		local socialMessage = {}
 
-		for iter_9_1, iter_9_2 in pairs(var_9_3) do
-			if var_9_0[iter_9_1] then
-				var_9_4[var_9_0[iter_9_1]] = iter_9_2
+		for key, value in pairs(socialMessageMO) do
+			if fields[key] then
+				local fieldIndex = fields[key]
+
+				socialMessage[fieldIndex] = value
 			end
 		end
 
-		table.insert(var_9_1, var_9_4)
+		table.insert(socialMessagesList, socialMessage)
 	end
 
-	local var_9_5 = {}
-	local var_9_6 = #var_9_1
-	local var_9_7 = SocialEnum.MaxSaveMessageCount
+	local newMessagesList = {}
+	local count = #socialMessagesList
+	local maxsave = SocialEnum.MaxSaveMessageCount
 
-	if var_9_7 < var_9_6 then
-		for iter_9_3 = 1, var_9_7 do
-			var_9_5[iter_9_3] = var_9_1[var_9_6 - var_9_7 + iter_9_3]
+	if maxsave < count then
+		for i = 1, maxsave do
+			newMessagesList[i] = socialMessagesList[count - maxsave + i]
 		end
 	else
-		var_9_5 = var_9_1
+		newMessagesList = socialMessagesList
 	end
 
-	local var_9_8 = cjson.encode(var_9_5)
+	local socialMessagesPrefs = cjson.encode(newMessagesList)
 
-	arg_9_0._tempListDict[arg_9_1][arg_9_2] = var_9_1
+	self._tempListDict[channelType][id] = socialMessagesList
 
-	return var_9_8
+	return socialMessagesPrefs
 end
 
-function var_0_0.readMessageUnread(arg_10_0)
-	local var_10_0 = SocialConfig.instance:getMessageUnreadKey()
-	local var_10_1 = PlayerPrefsHelper.getString(var_10_0, nil)
-	local var_10_2 = {}
+function SocialMessageController:readMessageUnread()
+	local key = SocialConfig.instance:getMessageUnreadKey()
+	local messageUnreadPrefs = PlayerPrefsHelper.getString(key, nil)
+	local messageUnreadDict = {}
 
-	if not string.nilorempty(var_10_1) then
-		local var_10_3 = GameUtil.splitString2(var_10_1, false, "|", "#")
+	if not string.nilorempty(messageUnreadPrefs) then
+		local array = GameUtil.splitString2(messageUnreadPrefs, false, "|", "#")
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_3) do
-			if #iter_10_1 >= 4 then
-				var_10_2[tonumber(iter_10_1[1])] = var_10_2[tonumber(iter_10_1[1])] or {}
+		for i, params in ipairs(array) do
+			if #params >= 4 then
+				messageUnreadDict[tonumber(params[1])] = messageUnreadDict[tonumber(params[1])] or {}
 
-				local var_10_4 = {
-					count = tonumber(iter_10_1[3]) or 0,
-					lastTime = tonumber(iter_10_1[4]) or 0
+				local info = {
+					count = tonumber(params[3]) or 0,
+					lastTime = tonumber(params[4]) or 0
 				}
 
-				var_10_2[tonumber(iter_10_1[1])][iter_10_1[2]] = var_10_4
+				messageUnreadDict[tonumber(params[1])][params[2]] = info
 			end
 		end
 	end
 
-	SocialMessageModel.instance:loadMessageUnread(var_10_2)
+	SocialMessageModel.instance:loadMessageUnread(messageUnreadDict)
 end
 
-function var_0_0.writeMessageUnread(arg_11_0, arg_11_1)
-	local var_11_0 = SocialConfig.instance:getMessageUnreadKey()
-	local var_11_1 = ""
-	local var_11_2 = true
+function SocialMessageController:writeMessageUnread(messageUnreadDict)
+	local key = SocialConfig.instance:getMessageUnreadKey()
+	local messageUnreadPrefs = ""
+	local first = true
 
-	if arg_11_1 then
-		for iter_11_0, iter_11_1 in pairs(arg_11_1) do
-			for iter_11_2, iter_11_3 in pairs(iter_11_1) do
-				if not var_11_2 then
-					var_11_1 = var_11_1 .. "|"
+	if messageUnreadDict then
+		for channelType, ids in pairs(messageUnreadDict) do
+			for id, info in pairs(ids) do
+				if not first then
+					messageUnreadPrefs = messageUnreadPrefs .. "|"
 				end
 
-				var_11_2 = false
-				var_11_1 = string.format("%s%s#%s#%s#%s", var_11_1, iter_11_0, iter_11_2, iter_11_3.count, iter_11_3.lastTime)
+				first = false
+				messageUnreadPrefs = string.format("%s%s#%s#%s#%s", messageUnreadPrefs, channelType, id, info.count, info.lastTime)
 			end
 		end
 	end
 
-	PlayerPrefsHelper.setString(var_11_0, var_11_1)
+	PlayerPrefsHelper.setString(key, messageUnreadPrefs)
 end
 
-function var_0_0.opMessageOnClick(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function SocialMessageController:opMessageOnClick(socialMessageMO)
+	if not socialMessageMO then
 		return
 	end
 
-	local var_12_0 = arg_12_0:_getOpFuncByMsgType(arg_12_1.msgType)
+	local func = self:_getOpFuncByMsgType(socialMessageMO.msgType)
 
-	if var_12_0 then
-		var_12_0(arg_12_1)
+	if func then
+		func(socialMessageMO)
 	end
 end
 
-function var_0_0._getOpFuncByMsgType(arg_13_0, arg_13_1)
-	if not arg_13_0._opFuncMsgDict then
-		arg_13_0._opFuncMsgDict = {
-			[ChatEnum.MsgType.RoomSeekShare] = function(arg_14_0)
-				RoomChatShareController.instance:chatSeekShare(arg_14_0)
+function SocialMessageController:_getOpFuncByMsgType(msgType)
+	if not self._opFuncMsgDict then
+		self._opFuncMsgDict = {
+			[ChatEnum.MsgType.RoomSeekShare] = function(socialMessageMO)
+				RoomChatShareController.instance:chatSeekShare(socialMessageMO)
 			end,
-			[ChatEnum.MsgType.RoomShareCode] = function(arg_15_0)
-				RoomChatShareController.instance:chatShareCode(arg_15_0)
+			[ChatEnum.MsgType.RoomShareCode] = function(socialMessageMO)
+				RoomChatShareController.instance:chatShareCode(socialMessageMO)
 			end
 		}
 	end
 
-	return arg_13_0._opFuncMsgDict[arg_13_1]
+	return self._opFuncMsgDict[msgType]
 end
 
-var_0_0.instance = var_0_0.New()
+SocialMessageController.instance = SocialMessageController.New()
 
-return var_0_0
+return SocialMessageController

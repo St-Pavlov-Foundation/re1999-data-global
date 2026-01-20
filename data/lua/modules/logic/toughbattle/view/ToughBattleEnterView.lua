@@ -1,338 +1,347 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleEnterView.lua
 
-local var_0_0 = class("ToughBattleEnterView", BaseView)
+module("modules.logic.toughbattle.view.ToughBattleEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/left/top/#txt_desc")
-	arg_1_0._gosmalltxt = gohelper.findChild(arg_1_0.viewGO, "root/left/top/titlesmalltxt")
-	arg_1_0._goprop = gohelper.findChild(arg_1_0.viewGO, "root/right/top/prop")
-	arg_1_0._txtpropnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/top/prop/#txt_num")
-	arg_1_0._propicon = gohelper.findChildImage(arg_1_0.viewGO, "root/right/top/prop/propicon")
-	arg_1_0._btnProp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/top/#btn_prop")
-	arg_1_0._godiffcult = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/difficulty")
-	arg_1_0._animdiffcult = arg_1_0._godiffcult:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._imgdiffcult = gohelper.findChildImage(arg_1_0.viewGO, "root/right/bottom/difficulty/bg")
-	arg_1_0._imgdiffculticon = gohelper.findChildImage(arg_1_0.viewGO, "root/right/bottom/difficulty/#simage_icon")
-	arg_1_0._txtdiffcult = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/bottom/difficulty/#txt_diff")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/bottom/difficulty/#go_leftchoosebtn")
-	arg_1_0._btnleftlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/bottom/difficulty/#go_leftlockbtn")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/bottom/difficulty/#go_rightchoosebtn")
-	arg_1_0._btnrightlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/bottom/difficulty/#go_rightlockbtn")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/bottom/#btn_startbtn")
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/#btn_startbtn/#go_reddot")
-	arg_1_0._gored2 = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/difficulty/#go_reddot")
-	arg_1_0._txtstart = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/bottom/#btn_startbtn/txt_start")
-	arg_1_0._propbottomicon = gohelper.findChildImage(arg_1_0.viewGO, "root/right/bottom/prop")
-	arg_1_0._txtpropcost = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/bottom/prop/#txt_num")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/bottom/#btn_rewardbtn")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/RewardTips")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/RewardTips/image_RewardTipsBG/#scroll_Rewards/Viewport/#go_rewards/item")
-	arg_1_0._gorewardbg = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/RewardTips/image_RewardTipsBG")
-	arg_1_0._gorewardscroll = gohelper.findChild(arg_1_0.viewGO, "root/right/bottom/RewardTips/image_RewardTipsBG/#scroll_Rewards")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "root/left/top/timebg")
-	arg_1_0._txttime = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/left/top/timebg/#txt_time")
+local ToughBattleEnterView = class("ToughBattleEnterView", BaseView)
+
+function ToughBattleEnterView:onInitView()
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "root/left/top/#txt_desc")
+	self._gosmalltxt = gohelper.findChild(self.viewGO, "root/left/top/titlesmalltxt")
+	self._goprop = gohelper.findChild(self.viewGO, "root/right/top/prop")
+	self._txtpropnum = gohelper.findChildTextMesh(self.viewGO, "root/right/top/prop/#txt_num")
+	self._propicon = gohelper.findChildImage(self.viewGO, "root/right/top/prop/propicon")
+	self._btnProp = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/top/#btn_prop")
+	self._godiffcult = gohelper.findChild(self.viewGO, "root/right/bottom/difficulty")
+	self._animdiffcult = self._godiffcult:GetComponent(typeof(UnityEngine.Animator))
+	self._imgdiffcult = gohelper.findChildImage(self.viewGO, "root/right/bottom/difficulty/bg")
+	self._imgdiffculticon = gohelper.findChildImage(self.viewGO, "root/right/bottom/difficulty/#simage_icon")
+	self._txtdiffcult = gohelper.findChildTextMesh(self.viewGO, "root/right/bottom/difficulty/#txt_diff")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/bottom/difficulty/#go_leftchoosebtn")
+	self._btnleftlock = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/bottom/difficulty/#go_leftlockbtn")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/bottom/difficulty/#go_rightchoosebtn")
+	self._btnrightlock = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/bottom/difficulty/#go_rightlockbtn")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/bottom/#btn_startbtn")
+	self._gored = gohelper.findChild(self.viewGO, "root/right/bottom/#btn_startbtn/#go_reddot")
+	self._gored2 = gohelper.findChild(self.viewGO, "root/right/bottom/difficulty/#go_reddot")
+	self._txtstart = gohelper.findChildTextMesh(self.viewGO, "root/right/bottom/#btn_startbtn/txt_start")
+	self._propbottomicon = gohelper.findChildImage(self.viewGO, "root/right/bottom/prop")
+	self._txtpropcost = gohelper.findChildTextMesh(self.viewGO, "root/right/bottom/prop/#txt_num")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/bottom/#btn_rewardbtn")
+	self._goreward = gohelper.findChild(self.viewGO, "root/right/bottom/RewardTips")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "root/right/bottom/RewardTips/image_RewardTipsBG/#scroll_Rewards/Viewport/#go_rewards/item")
+	self._gorewardbg = gohelper.findChild(self.viewGO, "root/right/bottom/RewardTips/image_RewardTipsBG")
+	self._gorewardscroll = gohelper.findChild(self.viewGO, "root/right/bottom/RewardTips/image_RewardTipsBG/#scroll_Rewards")
+	self._gotime = gohelper.findChild(self.viewGO, "root/left/top/timebg")
+	self._txttime = gohelper.findChildTextMesh(self.viewGO, "root/left/top/timebg/#txt_time")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._onEnter, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0.onClickChangeDiffcult, arg_2_0, false)
-	arg_2_0._btnright:AddClickListener(arg_2_0.onClickChangeDiffcult, arg_2_0, true)
-	arg_2_0._btnrightlock:AddClickListener(arg_2_0.onClickLock, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0.onShowReward, arg_2_0)
-	arg_2_0._btnProp:AddClickListener(arg_2_0.onClickProp, arg_2_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, arg_2_0._onTouchScreen, arg_2_0)
+function ToughBattleEnterView:addEvents()
+	self._btnstart:AddClickListener(self._onEnter, self)
+	self._btnleft:AddClickListener(self.onClickChangeDiffcult, self, false)
+	self._btnright:AddClickListener(self.onClickChangeDiffcult, self, true)
+	self._btnrightlock:AddClickListener(self.onClickLock, self)
+	self._btnreward:AddClickListener(self.onShowReward, self)
+	self._btnProp:AddClickListener(self.onClickProp, self)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnrightlock:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnProp:RemoveClickListener()
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_3_0._onTouchScreen, arg_3_0)
+function ToughBattleEnterView:removeEvents()
+	self._btnstart:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._btnrightlock:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
+	self._btnProp:RemoveClickListener()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function ToughBattleEnterView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.play_ui_wulu_aizila_level_enter)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, false, DungeonEnum.EpisodeListVisibleSource.ToughBattle)
-	gohelper.setActive(arg_4_0._gorewarditem, false)
-	gohelper.setActive(arg_4_0._goreward, false)
-	gohelper.setActive(arg_4_0._btnleftlock, false)
-	gohelper.setActive(arg_4_0._goprop, arg_4_0.viewParam.mode == ToughBattleEnum.Mode.Act)
-	gohelper.setActive(arg_4_0._propbottomicon, arg_4_0.viewParam.mode == ToughBattleEnum.Mode.Act)
-	gohelper.setActive(arg_4_0._godiffcult, arg_4_0.viewParam.mode == ToughBattleEnum.Mode.Act)
-	gohelper.setActive(arg_4_0._gosmalltxt, arg_4_0.viewParam.mode == ToughBattleEnum.Mode.Act)
+	gohelper.setActive(self._gorewarditem, false)
+	gohelper.setActive(self._goreward, false)
+	gohelper.setActive(self._btnleftlock, false)
+	gohelper.setActive(self._goprop, self.viewParam.mode == ToughBattleEnum.Mode.Act)
+	gohelper.setActive(self._propbottomicon, self.viewParam.mode == ToughBattleEnum.Mode.Act)
+	gohelper.setActive(self._godiffcult, self.viewParam.mode == ToughBattleEnum.Mode.Act)
+	gohelper.setActive(self._gosmalltxt, self.viewParam.mode == ToughBattleEnum.Mode.Act)
 
-	arg_4_0._txtstart.text = luaLang("toughbattle_mainview_txt_start")
+	self._txtstart.text = luaLang("toughbattle_mainview_txt_start")
 
-	if arg_4_0.viewParam.mode == ToughBattleEnum.Mode.Act then
-		RedDotController.instance:addRedDot(arg_4_0._gored, RedDotEnum.DotNode.V1a9ToughBattle)
-		RedDotController.instance:addRedDot(arg_4_0._gored2, RedDotEnum.DotNode.V1a9ToughBattle)
-		arg_4_0:autoSelectDiffcult()
-		arg_4_0:updateCost()
+	if self.viewParam.mode == ToughBattleEnum.Mode.Act then
+		RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V1a9ToughBattle)
+		RedDotController.instance:addRedDot(self._gored2, RedDotEnum.DotNode.V1a9ToughBattle)
+		self:autoSelectDiffcult()
+		self:updateCost()
 
-		arg_4_0._txtdesc.text = luaLang("toughbattle_mainview_act_title_desc")
+		self._txtdesc.text = luaLang("toughbattle_mainview_act_title_desc")
 	else
-		arg_4_0._txtdesc.text = luaLang("toughbattle_mainview_normal_title_desc")
+		self._txtdesc.text = luaLang("toughbattle_mainview_normal_title_desc")
 	end
 
-	arg_4_0:updateTime()
+	self:updateTime()
 end
 
-function var_0_0.onClose(arg_5_0)
+function ToughBattleEnterView:onClose()
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true, DungeonEnum.EpisodeListVisibleSource.ToughBattle)
 end
 
-function var_0_0.updateReward(arg_6_0)
-	local var_6_0
+function ToughBattleEnterView:updateReward()
+	local co
 
-	if arg_6_0.viewParam.mode == ToughBattleEnum.Mode.Act then
-		var_6_0 = ToughBattleConfig.instance:getCOByDiffcult(arg_6_0._nowDiff).stage2
+	if self.viewParam.mode == ToughBattleEnum.Mode.Act then
+		co = ToughBattleConfig.instance:getCOByDiffcult(self._nowDiff).stage2
 	else
-		var_6_0 = ToughBattleConfig.instance:getStoryCO().stage2
+		co = ToughBattleConfig.instance:getStoryCO().stage2
 	end
 
-	local var_6_1 = lua_episode.configDict[var_6_0.episodeId]
+	local episodeCo = lua_episode.configDict[co.episodeId]
 
-	if not var_6_1 then
-		logError("没有关卡配置" .. var_6_0.episodeId)
+	if not episodeCo then
+		logError("没有关卡配置" .. co.episodeId)
 
 		return
 	end
 
-	local var_6_2 = false
+	local isPass = false
 
-	if arg_6_0.viewParam.mode == ToughBattleEnum.Mode.Act then
-		local var_6_3 = arg_6_0:getInfo()
+	if self.viewParam.mode == ToughBattleEnum.Mode.Act then
+		local info = self:getInfo()
 
-		var_6_2 = tabletool.indexOf(var_6_3.passDifficulty, arg_6_0._nowDiff)
+		isPass = tabletool.indexOf(info.passDifficulty, self._nowDiff)
 	end
 
-	local var_6_4 = lua_bonus.configDict[var_6_1.firstBonus]
+	local rewardCo = lua_bonus.configDict[episodeCo.firstBonus]
 
-	if not var_6_4 then
-		logError("没有奖励配置" .. var_6_0.episodeId .. " >> " .. var_6_1.firstBonus)
+	if not rewardCo then
+		logError("没有奖励配置" .. co.episodeId .. " >> " .. episodeCo.firstBonus)
 
 		return
 	end
 
-	local var_6_5 = GameUtil.splitString2(var_6_4.fixBonus, true)
-	local var_6_6 = #var_6_5
+	local rewardInfo = GameUtil.splitString2(rewardCo.fixBonus, true)
+	local rewardCount = #rewardInfo
 
-	recthelper.setWidth(arg_6_0._gorewardbg.transform, math.min(var_6_6 * 126 + 58, 465))
-	recthelper.setWidth(arg_6_0._gorewardscroll.transform, math.min(var_6_6 * 126 + 58, 495))
+	recthelper.setWidth(self._gorewardbg.transform, math.min(rewardCount * 126 + 58, 465))
+	recthelper.setWidth(self._gorewardscroll.transform, math.min(rewardCount * 126 + 58, 495))
 
-	arg_6_0._rewardItems = arg_6_0._rewardItems or {}
+	self._rewardItems = self._rewardItems or {}
 
-	for iter_6_0 = 1, var_6_6 do
-		if not arg_6_0._rewardItems[iter_6_0] then
-			arg_6_0._rewardItems[iter_6_0] = {}
+	for i = 1, rewardCount do
+		if not self._rewardItems[i] then
+			self._rewardItems[i] = {}
 
-			local var_6_7 = gohelper.cloneInPlace(arg_6_0._gorewarditem, "item" .. iter_6_0)
+			local cloneGo = gohelper.cloneInPlace(self._gorewarditem, "item" .. i)
 
-			gohelper.setActive(var_6_7, true)
+			gohelper.setActive(cloneGo, true)
 
-			local var_6_8 = gohelper.findChild(var_6_7, "itemicon")
+			local iconParent = gohelper.findChild(cloneGo, "itemicon")
 
-			arg_6_0._rewardItems[iter_6_0].item = IconMgr.instance:getCommonPropItemIcon(var_6_8)
-			arg_6_0._rewardItems[iter_6_0].go = var_6_7
-			arg_6_0._rewardItems[iter_6_0].finished = gohelper.findChild(var_6_7, "finished")
+			self._rewardItems[i].item = IconMgr.instance:getCommonPropItemIcon(iconParent)
+			self._rewardItems[i].go = cloneGo
+			self._rewardItems[i].finished = gohelper.findChild(cloneGo, "finished")
 		end
 
-		gohelper.setActive(arg_6_0._rewardItems[iter_6_0].go, true)
+		gohelper.setActive(self._rewardItems[i].go, true)
 
-		local var_6_9 = var_6_5[iter_6_0]
+		local data = rewardInfo[i]
 
-		arg_6_0._rewardItems[iter_6_0].item:setMOValue(var_6_9[1], var_6_9[2], var_6_9[3], nil, true)
-		arg_6_0._rewardItems[iter_6_0].item:setCountFontSize(46)
-		arg_6_0._rewardItems[iter_6_0].item:SetCountBgHeight(31)
-		gohelper.setActive(arg_6_0._rewardItems[iter_6_0].finished, var_6_2)
+		self._rewardItems[i].item:setMOValue(data[1], data[2], data[3], nil, true)
+		self._rewardItems[i].item:setCountFontSize(46)
+		self._rewardItems[i].item:SetCountBgHeight(31)
+		gohelper.setActive(self._rewardItems[i].finished, isPass)
 	end
 
-	for iter_6_1 = var_6_6 + 1, #arg_6_0._rewardItems do
-		gohelper.setActive(arg_6_0._rewardItems[iter_6_1].go.transform.parent, false)
+	for i = rewardCount + 1, #self._rewardItems do
+		gohelper.setActive(self._rewardItems[i].go.transform.parent, false)
 	end
 end
 
-function var_0_0.updateTime(arg_7_0)
-	if arg_7_0.viewParam.mode == ToughBattleEnum.Mode.Act then
-		local var_7_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_9Enum.ActivityId.ToughBattle]
+function ToughBattleEnterView:updateTime()
+	if self.viewParam.mode == ToughBattleEnum.Mode.Act then
+		local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_9Enum.ActivityId.ToughBattle]
 
-		if not var_7_0 then
-			gohelper.setActive(arg_7_0._gotime, false)
+		if not actInfoMo then
+			gohelper.setActive(self._gotime, false)
 
 			return
 		end
 
-		local var_7_1 = var_7_0:getRealEndTimeStamp() - ServerTime.now()
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		arg_7_0._txttime.text = TimeUtil.SecondToActivityTimeFormat(var_7_1)
+		self._txttime.text = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-		gohelper.setActive(arg_7_0._gotime, true)
+		gohelper.setActive(self._gotime, true)
 	else
-		gohelper.setActive(arg_7_0._gotime, false)
+		gohelper.setActive(self._gotime, false)
 	end
 end
 
-function var_0_0.updateCost(arg_8_0)
-	local var_8_0 = ToughBattleConfig.instance:getConstValue(ToughBattleEnum.HoldTicketMaxLimitConstId, true)
-	local var_8_1 = arg_8_0:getCostNum()
-	local var_8_2 = arg_8_0:getNowNum()
+function ToughBattleEnterView:updateCost()
+	local limit = ToughBattleConfig.instance:getConstValue(ToughBattleEnum.HoldTicketMaxLimitConstId, true)
+	local cost = self:getCostNum()
+	local nowNum = self:getNowNum()
 
-	if var_8_1 <= var_8_2 then
-		arg_8_0._txtpropcost.text = "<color=#ffffff>-" .. var_8_1
+	if cost <= nowNum then
+		self._txtpropcost.text = "<color=#ffffff>-" .. cost
 	else
-		arg_8_0._txtpropcost.text = "<color=#e44646>-" .. var_8_1
+		self._txtpropcost.text = "<color=#e44646>-" .. cost
 	end
 
-	arg_8_0._txtpropnum.text = var_8_2 .. "/" .. var_8_0
+	self._txtpropnum.text = nowNum .. "/" .. limit
 
-	local var_8_3 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a9ToughEnter).icon
+	local currencyCO = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a9ToughEnter)
+	local currencyname = currencyCO.icon
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_8_0._propicon, var_8_3 .. "_1")
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_8_0._propbottomicon, var_8_3 .. "_1")
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._propicon, currencyname .. "_1")
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._propbottomicon, currencyname .. "_1")
 end
 
-function var_0_0.onClickProp(arg_9_0)
+function ToughBattleEnterView:onClickProp()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.V1a9ToughEnter, false, nil, false)
 end
 
-function var_0_0.onClickChangeDiffcult(arg_10_0, arg_10_1)
-	if not arg_10_0._nowDiff then
+function ToughBattleEnterView:onClickChangeDiffcult(isAdd)
+	if not self._nowDiff then
 		return
 	end
 
-	arg_10_0:selectDiffcult(arg_10_1 and arg_10_0._nowDiff + 1 or arg_10_0._nowDiff - 1, false)
+	self:selectDiffcult(isAdd and self._nowDiff + 1 or self._nowDiff - 1, false)
 end
 
-function var_0_0.onClickLock(arg_11_0)
+function ToughBattleEnterView:onClickLock()
 	GameFacade.showToast(ToastEnum.ToughBattleDiffcultLock)
 end
 
-function var_0_0.onShowReward(arg_12_0)
-	if arg_12_0._goreward.activeSelf then
-		gohelper.setActive(arg_12_0._goreward, false)
+function ToughBattleEnterView:onShowReward()
+	if self._goreward.activeSelf then
+		gohelper.setActive(self._goreward, false)
 	else
-		arg_12_0:updateReward()
-		gohelper.setActive(arg_12_0._goreward, true)
+		self:updateReward()
+		gohelper.setActive(self._goreward, true)
 	end
 end
 
-function var_0_0._onTouchScreen(arg_13_0)
-	if not gohelper.isMouseOverGo(arg_13_0._btnreward) and not gohelper.isMouseOverGo(arg_13_0._gorewardbg) then
-		gohelper.setActive(arg_13_0._goreward, false)
+function ToughBattleEnterView:_onTouchScreen()
+	if not gohelper.isMouseOverGo(self._btnreward) and not gohelper.isMouseOverGo(self._gorewardbg) then
+		gohelper.setActive(self._goreward, false)
 	end
 end
 
-function var_0_0.autoSelectDiffcult(arg_14_0)
-	local var_14_0 = #arg_14_0:getInfo().passDifficulty + 1
+function ToughBattleEnterView:autoSelectDiffcult()
+	local info = self:getInfo()
+	local nowUnlockMax = #info.passDifficulty + 1
 
-	if var_14_0 > 3 then
-		var_14_0 = 3
+	if nowUnlockMax > 3 then
+		nowUnlockMax = 3
 	end
 
-	local var_14_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ToughBattleLastUnlockDiffcult)
-	local var_14_2 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ToughBattleLastSelectDiffcult)
-	local var_14_3 = PlayerPrefsHelper.getNumber(var_14_1, 0)
-	local var_14_4 = PlayerPrefsHelper.getNumber(var_14_2, 0)
-	local var_14_5
-	local var_14_6 = 1
+	local unlockKey = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ToughBattleLastUnlockDiffcult)
+	local selectKey = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ToughBattleLastSelectDiffcult)
+	local unlockNum = PlayerPrefsHelper.getNumber(unlockKey, 0)
+	local selectNum = PlayerPrefsHelper.getNumber(selectKey, 0)
+	local isShowUnlockAnim
+	local finialSelect = 1
 
-	if var_14_0 > 1 and var_14_3 < var_14_0 then
-		var_14_6 = var_14_0
-		var_14_5 = true
+	if nowUnlockMax > 1 and unlockNum < nowUnlockMax then
+		finialSelect = nowUnlockMax
+		isShowUnlockAnim = true
 
-		GameFacade.showToast(ToastEnum.ToughBattleDiffcultUnLock, luaLang("toughbattle_diffcult_" .. var_14_0))
-	elseif var_14_4 > 0 and var_14_4 <= var_14_0 then
-		var_14_6 = var_14_4
+		GameFacade.showToast(ToastEnum.ToughBattleDiffcultUnLock, luaLang("toughbattle_diffcult_" .. nowUnlockMax))
+	elseif selectNum > 0 and selectNum <= nowUnlockMax then
+		finialSelect = selectNum
 	else
-		var_14_6 = var_14_0
+		finialSelect = nowUnlockMax
 	end
 
-	PlayerPrefsHelper.setNumber(var_14_1, var_14_0)
-	PlayerPrefsHelper.setNumber(var_14_2, var_14_6)
-	arg_14_0:selectDiffcult(var_14_6, var_14_5)
+	PlayerPrefsHelper.setNumber(unlockKey, nowUnlockMax)
+	PlayerPrefsHelper.setNumber(selectKey, finialSelect)
+	self:selectDiffcult(finialSelect, isShowUnlockAnim)
 end
 
-function var_0_0.selectDiffcult(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 then
-		arg_15_0._animdiffcult:Play("unlock", 0, 0)
+function ToughBattleEnterView:selectDiffcult(difficulty, isPlayAnim)
+	if isPlayAnim then
+		self._animdiffcult:Play("unlock", 0, 0)
 	end
 
-	arg_15_0._nowDiff = arg_15_1
+	self._nowDiff = difficulty
 
-	local var_15_0 = arg_15_0:getInfo()
-	local var_15_1 = #var_15_0.passDifficulty + 1
+	local info = self:getInfo()
+	local nowUnlockMax = #info.passDifficulty + 1
 
-	gohelper.setActive(arg_15_0._btnleft, arg_15_1 > 1)
-	gohelper.setActive(arg_15_0._btnright, arg_15_1 < 3 and var_15_1 ~= arg_15_1)
-	gohelper.setActive(arg_15_0._btnrightlock, arg_15_1 < 3 and var_15_1 == arg_15_1)
-	gohelper.setActive(arg_15_0._gored, var_15_1 == arg_15_1)
-	gohelper.setActive(arg_15_0._gored2, arg_15_1 < var_15_1)
+	gohelper.setActive(self._btnleft, difficulty > 1)
+	gohelper.setActive(self._btnright, difficulty < 3 and nowUnlockMax ~= difficulty)
+	gohelper.setActive(self._btnrightlock, difficulty < 3 and nowUnlockMax == difficulty)
+	gohelper.setActive(self._gored, nowUnlockMax == difficulty)
+	gohelper.setActive(self._gored2, difficulty < nowUnlockMax)
 
-	local var_15_2 = tabletool.indexOf(var_15_0.enterDifficulty, arg_15_1)
+	local isEntered = tabletool.indexOf(info.enterDifficulty, difficulty)
 
-	gohelper.setActive(arg_15_0._propbottomicon, not var_15_2)
+	gohelper.setActive(self._propbottomicon, not isEntered)
 
-	if var_15_2 then
-		arg_15_0._txtstart.text = luaLang("toughbattle_mainview_txt_continue")
+	if isEntered then
+		self._txtstart.text = luaLang("toughbattle_mainview_txt_continue")
 	else
-		arg_15_0._txtstart.text = luaLang("toughbattle_mainview_txt_start")
+		self._txtstart.text = luaLang("toughbattle_mainview_txt_start")
 	end
 
-	arg_15_0._txtdiffcult.text = luaLang("toughbattle_diffcult_" .. arg_15_1)
+	self._txtdiffcult.text = luaLang("toughbattle_diffcult_" .. difficulty)
 
-	UISpriteSetMgr.instance:setToughBattleSprite(arg_15_0._imgdiffcult, "toughbattle_difficultychoosebg" .. arg_15_1)
-	UISpriteSetMgr.instance:setToughBattleSprite(arg_15_0._imgdiffculticon, "toughbattle_difficulty" .. arg_15_1)
+	UISpriteSetMgr.instance:setToughBattleSprite(self._imgdiffcult, "toughbattle_difficultychoosebg" .. difficulty)
+	UISpriteSetMgr.instance:setToughBattleSprite(self._imgdiffculticon, "toughbattle_difficulty" .. difficulty)
 end
 
-function var_0_0.getInfo(arg_16_0)
-	return arg_16_0.viewParam.mode == ToughBattleEnum.Mode.Act and ToughBattleModel.instance:getActInfo() or ToughBattleModel.instance:getStoryInfo()
+function ToughBattleEnterView:getInfo()
+	local info = self.viewParam.mode == ToughBattleEnum.Mode.Act and ToughBattleModel.instance:getActInfo() or ToughBattleModel.instance:getStoryInfo()
+
+	return info
 end
 
-function var_0_0._onEnter(arg_17_0)
-	if arg_17_0.viewParam.mode == ToughBattleEnum.Mode.Story then
-		SiegeBattleRpc.instance:sendStartSiegeBattleRequest(arg_17_0.onEnterFinish, arg_17_0)
+function ToughBattleEnterView:_onEnter()
+	if self.viewParam.mode == ToughBattleEnum.Mode.Story then
+		SiegeBattleRpc.instance:sendStartSiegeBattleRequest(self.onEnterFinish, self)
 	else
-		local var_17_0 = arg_17_0:getInfo()
+		local info = self:getInfo()
+		local isEntered = tabletool.indexOf(info.enterDifficulty, self._nowDiff)
 
-		if not tabletool.indexOf(var_17_0.enterDifficulty, arg_17_0._nowDiff) and arg_17_0:getNowNum() < arg_17_0:getCostNum() then
+		if not isEntered and self:getNowNum() < self:getCostNum() then
 			GameFacade.showToast(ToastEnum.ToughBattleCostNoEnough)
 
 			return
 		end
 
-		Activity158Rpc.instance:sendAct158StartChallengeRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, arg_17_0._nowDiff, arg_17_0.onEnterFinish, arg_17_0)
+		Activity158Rpc.instance:sendAct158StartChallengeRequest(VersionActivity1_9Enum.ActivityId.ToughBattle, self._nowDiff, self.onEnterFinish, self)
 	end
 end
 
-function var_0_0.getNowNum(arg_18_0)
-	local var_18_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a9ToughEnter)
+function ToughBattleEnterView:getNowNum()
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a9ToughEnter)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	return var_18_0 and var_18_0.quantity or 0
+	return quantity
 end
 
-function var_0_0.getCostNum(arg_19_0)
-	local var_19_0 = ToughBattleConfig.instance:getConstValue(ToughBattleEnum.TicketConstId)
+function ToughBattleEnterView:getCostNum()
+	local costStr = ToughBattleConfig.instance:getConstValue(ToughBattleEnum.TicketConstId)
+	local cost = string.splitToNumber(costStr, "#")[3] or 0
 
-	return string.splitToNumber(var_19_0, "#")[3] or 0
+	return cost
 end
 
-function var_0_0.onEnterFinish(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if arg_20_2 == 0 then
-		local var_20_0 = arg_20_0.viewParam.mode == ToughBattleEnum.Mode.Act
-		local var_20_1 = var_20_0 and ViewName.ToughBattleActLoadingView or ViewName.ToughBattleLoadingView
-		local var_20_2 = var_20_0 and ViewName.ToughBattleActMapView or ViewName.ToughBattleMapView
+function ToughBattleEnterView:onEnterFinish(cmd, resultCode, msg)
+	if resultCode == 0 then
+		local isAct = self.viewParam.mode == ToughBattleEnum.Mode.Act
+		local loadingView = isAct and ViewName.ToughBattleActLoadingView or ViewName.ToughBattleLoadingView
+		local mapView = isAct and ViewName.ToughBattleActMapView or ViewName.ToughBattleMapView
 
-		arg_20_0.viewParam.lastFightSuccIndex = nil
+		self.viewParam.lastFightSuccIndex = nil
 
-		ViewMgr.instance:openView(var_20_2, arg_20_0.viewParam)
-		ViewMgr.instance:openView(var_20_1, {
+		ViewMgr.instance:openView(mapView, self.viewParam)
+		ViewMgr.instance:openView(loadingView, {
 			stage = 1
 		})
-		arg_20_0:closeThis()
+		self:closeThis()
 	end
 end
 
-return var_0_0
+return ToughBattleEnterView

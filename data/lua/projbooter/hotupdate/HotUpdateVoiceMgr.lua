@@ -1,22 +1,24 @@
-﻿module("projbooter.hotupdate.HotUpdateVoiceMgr", package.seeall)
+﻿-- chunkname: @projbooter/hotupdate/HotUpdateVoiceMgr.lua
 
-local var_0_0 = class("HotUpdateVoiceMgr")
+module("projbooter.hotupdate.HotUpdateVoiceMgr", package.seeall)
 
-var_0_0.EnableEditorDebug = false
+local HotUpdateVoiceMgr = class("HotUpdateVoiceMgr")
 
-local var_0_1 = 50001
+HotUpdateVoiceMgr.EnableEditorDebug = false
 
-var_0_0.IsGuoFu = false
-var_0_0.LangEn = "en"
-var_0_0.LangZh = "zh"
-var_0_0.HD = "res-HD"
-var_0_0.LangSortOrderDefault = {
+local GuoFuGameId = 50001
+
+HotUpdateVoiceMgr.IsGuoFu = false
+HotUpdateVoiceMgr.LangEn = "en"
+HotUpdateVoiceMgr.LangZh = "zh"
+HotUpdateVoiceMgr.HD = "res-HD"
+HotUpdateVoiceMgr.LangSortOrderDefault = {
 	jp = 3,
 	kr = 4,
 	zh = 2,
 	en = 1
 }
-var_0_0.LangSortOrderDict = {
+HotUpdateVoiceMgr.LangSortOrderDict = {
 	en = {
 		jp = 2,
 		kr = 4,
@@ -42,293 +44,301 @@ var_0_0.LangSortOrderDict = {
 		en = 2
 	}
 }
-var_0_0.ForceSelect = {
-	[var_0_0.LangEn] = true,
-	[var_0_0.LangZh] = true
+HotUpdateVoiceMgr.ForceSelect = {
+	[HotUpdateVoiceMgr.LangEn] = true,
+	[HotUpdateVoiceMgr.LangZh] = true
 }
 
-function var_0_0.init(arg_1_0)
-	arg_1_0._optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+function HotUpdateVoiceMgr:init()
+	self._optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
 
-	arg_1_0._optionalUpdateInst:Init()
+	self._optionalUpdateInst:Init()
 
-	arg_1_0._httpGetter = VoiceHttpGetter.New()
-	arg_1_0._downloader = VoiceDownloader.New()
-	var_0_0.IsGuoFu = tonumber(SDKMgr.instance:getGameId()) == var_0_1
+	self._httpGetter = VoiceHttpGetter.New()
+	self._downloader = VoiceDownloader.New()
+	HotUpdateVoiceMgr.IsGuoFu = tonumber(SDKMgr.instance:getGameId()) == GuoFuGameId
 
-	if not var_0_0.IsGuoFu then
-		var_0_0.ForceSelect = {}
+	if not HotUpdateVoiceMgr.IsGuoFu then
+		HotUpdateVoiceMgr.ForceSelect = {}
 	end
 
 	if BootNativeUtil.isWindows() then
-		var_0_0.ForceSelect[var_0_0.HD] = true
+		HotUpdateVoiceMgr.ForceSelect[HotUpdateVoiceMgr.HD] = true
 	end
 end
 
-local var_0_2
-local var_0_3
-local var_0_4 = {}
+local defaultVoice, orderDict
+local sameOrderSortOrder = {}
 
-function var_0_0.getSupportVoiceLangs(arg_2_0)
-	local var_2_0 = GameConfig:GetSupportedVoiceShortcuts()
-	local var_2_1 = var_2_0.Length
-	local var_2_2 = {}
-	local var_2_3 = GameConfig:GetDefaultLangShortcut()
+function HotUpdateVoiceMgr:getSupportVoiceLangs()
+	local cSharpArr = GameConfig:GetSupportedVoiceShortcuts()
+	local length = cSharpArr.Length
+	local list = {}
+	local defaultLang = GameConfig:GetDefaultLangShortcut()
 
-	var_0_2 = GameConfig:GetDefaultVoiceShortcut()
-	var_0_3 = var_0_0.LangSortOrderDict[var_2_3] or var_0_0.LangSortOrderDefault
+	defaultVoice = GameConfig:GetDefaultVoiceShortcut()
+	orderDict = HotUpdateVoiceMgr.LangSortOrderDict[defaultLang] or HotUpdateVoiceMgr.LangSortOrderDefault
 
-	for iter_2_0 = 0, var_2_1 - 1 do
-		local var_2_4 = var_2_0[iter_2_0]
+	for i = 0, length - 1 do
+		local lang = cSharpArr[i]
 
-		table.insert(var_2_2, var_2_4)
+		table.insert(list, lang)
 
-		var_0_4[var_2_4] = iter_2_0 + 1
+		sameOrderSortOrder[lang] = i + 1
 	end
 
-	table.sort(var_2_2, var_0_0._sortLang)
+	table.sort(list, HotUpdateVoiceMgr._sortLang)
 
-	local var_2_5
+	cSharpArr = nil
 
-	return var_2_2
+	return list
 end
 
-function var_0_0._sortLang(arg_3_0, arg_3_1)
-	if arg_3_0 == var_0_2 then
+function HotUpdateVoiceMgr._sortLang(lang1, lang2)
+	if lang1 == defaultVoice then
 		return true
-	elseif arg_3_1 == var_0_2 then
+	elseif lang2 == defaultVoice then
 		return false
 	else
-		local var_3_0 = var_0_3[arg_3_0] or 999
-		local var_3_1 = var_0_3[arg_3_1] or 999
+		local order1 = orderDict[lang1] or 999
+		local order2 = orderDict[lang2] or 999
 
-		if var_3_0 ~= var_3_1 then
-			return var_3_0 < var_3_1
+		if order1 ~= order2 then
+			return order1 < order2
 		end
 
-		return var_0_4[arg_3_0] < var_0_4[arg_3_1]
+		order1 = sameOrderSortOrder[lang1]
+		order2 = sameOrderSortOrder[lang2]
+
+		return order1 < order2
 	end
 end
 
-function var_0_0.showDownload(arg_4_0, arg_4_1, arg_4_2)
+function HotUpdateVoiceMgr:showDownload(onFinish, finishObj)
 	if VersionValidator.instance:isInReviewing() then
-		arg_4_1(arg_4_2)
-	elseif GameResMgr.IsFromEditorDir and not var_0_0.EnableEditorDebug then
-		arg_4_1(arg_4_2)
+		onFinish(finishObj)
+	elseif GameResMgr.IsFromEditorDir and not HotUpdateVoiceMgr.EnableEditorDebug then
+		onFinish(finishObj)
 	else
-		arg_4_0._httpGetter:start(arg_4_1, arg_4_2)
+		self._httpGetter:start(onFinish, finishObj)
 	end
 end
 
-function var_0_0.startDownload(arg_5_0, arg_5_1, arg_5_2)
+function HotUpdateVoiceMgr:startDownload(onFinish, finishObj)
 	if VersionValidator.instance:isInReviewing() then
-		arg_5_1(arg_5_2)
-	elseif GameResMgr.IsFromEditorDir and not var_0_0.EnableEditorDebug then
-		arg_5_1(arg_5_2)
+		onFinish(finishObj)
+	elseif GameResMgr.IsFromEditorDir and not HotUpdateVoiceMgr.EnableEditorDebug then
+		onFinish(finishObj)
 	elseif BootNativeUtil.isIOS() and HotUpdateMgr.instance:hasHotUpdate() then
 		logNormal("热更新紧接着语音更新，延迟开始")
-		Timer.New(function()
+
+		local timer = Timer.New(function()
 			logNormal("语音更新开始")
-			arg_5_0._downloader:start(arg_5_1, arg_5_2)
-		end, 1.5):Start()
+			self._downloader:start(onFinish, finishObj)
+		end, 1.5)
+
+		timer:Start()
 	else
-		arg_5_0._downloader:start(arg_5_1, arg_5_2)
+		self._downloader:start(onFinish, finishObj)
 	end
 end
 
-function var_0_0.getHttpResult(arg_7_0)
-	return arg_7_0._httpGetter:getHttpResult()
+function HotUpdateVoiceMgr:getHttpResult()
+	return self._httpGetter:getHttpResult()
 end
 
-function var_0_0.getLangSize(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getHttpResult()
+function HotUpdateVoiceMgr:getLangSize(lang)
+	local result = self:getHttpResult()
 
-	if not var_8_0 then
+	if not result then
 		return 0
 	end
 
-	local var_8_1 = var_8_0[arg_8_1]
+	local langTb = result[lang]
 
-	if not var_8_1 or not var_8_1.res then
+	if not langTb or not langTb.res then
 		return 0
 	end
 
-	local var_8_2 = 0
+	local size = 0
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1.res) do
-		var_8_2 = var_8_2 + iter_8_1.length
+	for _, oneRes in ipairs(langTb.res) do
+		size = size + oneRes.length
 	end
 
-	return var_8_2
+	return size
 end
 
-function var_0_0.getTotalSize(arg_9_0)
-	local var_9_0 = arg_9_0:getHttpResult()
+function HotUpdateVoiceMgr:getTotalSize()
+	local result = self:getHttpResult()
 
-	if not var_9_0 then
+	if not result then
 		return 0
 	end
 
-	local var_9_1 = BootVoiceView.instance:isFirstDownloadDone()
-	local var_9_2 = 0
-	local var_9_3 = BootVoiceView.instance:getDownloadChoices()
+	local isFirstDownloadDone = BootVoiceView.instance:isFirstDownloadDone()
+	local size = 0
+	local choices = BootVoiceView.instance:getDownloadChoices()
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		local var_9_4 = false
+	for lang, langTb in pairs(result) do
+		local needDownload = false
 
-		if var_9_1 then
-			local var_9_5 = arg_9_0._optionalUpdateInst:GetLocalVersion(iter_9_0)
+		if isFirstDownloadDone then
+			local localVersion = self._optionalUpdateInst:GetLocalVersion(lang)
+			local hasLocalVersion = not string.nilorempty(localVersion)
 
-			var_9_4 = not string.nilorempty(var_9_5)
+			needDownload = hasLocalVersion
 		else
-			var_9_4 = tabletool.indexOf(var_9_3, iter_9_0)
+			needDownload = tabletool.indexOf(choices, lang)
 		end
 
-		if iter_9_1.res and var_9_4 then
-			for iter_9_2, iter_9_3 in ipairs(iter_9_1.res) do
-				var_9_2 = var_9_2 + iter_9_3.length
+		if langTb.res and needDownload then
+			for _, oneRes in ipairs(langTb.res) do
+				size = size + oneRes.length
 			end
 		end
 	end
 
-	return var_9_2
+	return size
 end
 
-function var_0_0.getNeedDownloadSize(arg_10_0)
-	local var_10_0 = arg_10_0:getHttpResult()
+function HotUpdateVoiceMgr:getNeedDownloadSize()
+	local result = self:getHttpResult()
 
-	if not var_10_0 then
+	if not result then
 		return 0
 	end
 
-	local var_10_1 = arg_10_0:getTotalSize()
+	local size = self:getTotalSize()
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		local var_10_2 = arg_10_0:getDownloadList(iter_10_0)
+	for lang, langTb in pairs(result) do
+		local downloadList = self:getDownloadList(lang)
 
-		if var_10_2 then
-			local var_10_3 = {}
-			local var_10_4 = {}
-			local var_10_5 = {}
-			local var_10_6 = {}
+		if downloadList then
+			local names = {}
+			local hashs = {}
+			local orders = {}
+			local lengths = {}
 
-			for iter_10_2, iter_10_3 in ipairs(var_10_2) do
-				table.insert(var_10_3, iter_10_3.name)
-				table.insert(var_10_4, iter_10_3.hash)
-				table.insert(var_10_5, iter_10_3.order)
-				table.insert(var_10_6, iter_10_3.length)
+			for _, one in ipairs(downloadList) do
+				table.insert(names, one.name)
+				table.insert(hashs, one.hash)
+				table.insert(orders, one.order)
+				table.insert(lengths, one.length)
 			end
 
-			arg_10_0._optionalUpdateInst:InitBreakPointInfo(var_10_3, var_10_4, var_10_5, var_10_6)
+			self._optionalUpdateInst:InitBreakPointInfo(names, hashs, orders, lengths)
 
-			local var_10_7 = arg_10_0._optionalUpdateInst:GetRecvSize()
+			local recvSize = self._optionalUpdateInst:GetRecvSize()
 
-			var_10_1 = var_10_1 - tonumber(var_10_7)
+			recvSize = tonumber(recvSize)
+			size = size - recvSize
 		end
 	end
 
-	return var_10_1
+	return size
 end
 
-function var_0_0.getDownloadUrl(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getHttpResult()
+function HotUpdateVoiceMgr:getDownloadUrl(lang)
+	local result = self:getHttpResult()
 
-	if not var_11_0 then
+	if not result then
 		return
 	end
 
-	local var_11_1 = var_11_0[arg_11_1]
+	local langInfo = result[lang]
 
-	if var_11_1 then
-		return var_11_1.download_url, var_11_1.download_url_bak
+	if langInfo then
+		return langInfo.download_url, langInfo.download_url_bak
 	end
 end
 
-function var_0_0.getDownloadList(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getHttpResult()
+function HotUpdateVoiceMgr:getDownloadList(lang)
+	local result = self:getHttpResult()
 
-	if not var_12_0 then
+	if not result then
 		return
 	end
 
-	local var_12_1 = var_12_0[arg_12_1]
+	local langInfo = result[lang]
 
-	if #var_12_1.res > 0 then
-		local var_12_2 = {}
+	if #langInfo.res > 0 then
+		local langDownloadList = {}
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_1.res) do
-			local var_12_3 = {
-				latest_ver = var_12_1.latest_ver,
-				name = iter_12_1.name,
-				hash = iter_12_1.hash,
-				order = iter_12_1.order,
-				length = iter_12_1.length
-			}
+		for _, oneRes in ipairs(langInfo.res) do
+			local downloadInfo = {}
 
-			table.insert(var_12_2, var_12_3)
+			downloadInfo.latest_ver = langInfo.latest_ver
+			downloadInfo.name = oneRes.name
+			downloadInfo.hash = oneRes.hash
+			downloadInfo.order = oneRes.order
+			downloadInfo.length = oneRes.length
+
+			table.insert(langDownloadList, downloadInfo)
 		end
 
-		table.sort(var_12_2, var_0_0._sortByOrder)
+		table.sort(langDownloadList, HotUpdateVoiceMgr._sortByOrder)
 
-		return var_12_2
+		return langDownloadList
 	end
 end
 
-function var_0_0.stop(arg_13_0)
-	arg_13_0._downloader:cancelDownload()
+function HotUpdateVoiceMgr:stop()
+	self._downloader:cancelDownload()
 end
 
-function var_0_0.getAllLangDownloadList(arg_14_0)
-	local var_14_0 = BootVoiceView.instance:isFirstDownloadDone()
-	local var_14_1 = BootVoiceView.instance:getDownloadChoices()
-	local var_14_2 = arg_14_0:getHttpResult()
+function HotUpdateVoiceMgr:getAllLangDownloadList()
+	local isFirstDownloadDone = BootVoiceView.instance:isFirstDownloadDone()
+	local choices = BootVoiceView.instance:getDownloadChoices()
+	local result = self:getHttpResult()
 
-	if not var_14_2 then
+	if not result then
 		return {}
 	end
 
-	local var_14_3 = {}
-	local var_14_4 = GameConfig:GetCurVoiceShortcut()
+	local ret = {}
+	local curLang = GameConfig:GetCurVoiceShortcut()
 
-	for iter_14_0, iter_14_1 in pairs(var_14_2) do
-		local var_14_5 = false
+	for lang, langInfo in pairs(result) do
+		local needDownload = false
 
-		if var_14_0 then
-			local var_14_6 = arg_14_0._optionalUpdateInst:GetLocalVersion(iter_14_0)
+		if isFirstDownloadDone then
+			local localVersion = self._optionalUpdateInst:GetLocalVersion(lang)
+			local hasLocalVersion = not string.nilorempty(localVersion)
 
-			var_14_5 = not string.nilorempty(var_14_6) or var_14_4 == iter_14_0
+			needDownload = hasLocalVersion or curLang == lang
 		else
-			var_14_5 = tabletool.indexOf(var_14_1, iter_14_0)
+			needDownload = tabletool.indexOf(choices, lang)
 		end
 
-		if #iter_14_1.res > 0 and var_14_5 then
-			local var_14_7 = {}
+		if #langInfo.res > 0 and needDownload then
+			local langDownloadList = {}
 
-			for iter_14_2, iter_14_3 in ipairs(iter_14_1.res) do
-				local var_14_8 = {
-					latest_ver = iter_14_1.latest_ver,
-					name = iter_14_3.name,
-					hash = iter_14_3.hash,
-					order = iter_14_3.order,
-					length = iter_14_3.length
-				}
+			for _, oneRes in ipairs(langInfo.res) do
+				local downloadInfo = {}
 
-				table.insert(var_14_7, var_14_8)
+				downloadInfo.latest_ver = langInfo.latest_ver
+				downloadInfo.name = oneRes.name
+				downloadInfo.hash = oneRes.hash
+				downloadInfo.order = oneRes.order
+				downloadInfo.length = oneRes.length
+
+				table.insert(langDownloadList, downloadInfo)
 			end
 
-			table.sort(var_14_7, var_0_0._sortByOrder)
+			table.sort(langDownloadList, HotUpdateVoiceMgr._sortByOrder)
 
-			var_14_3[iter_14_0] = var_14_7
+			ret[lang] = langDownloadList
 		end
 	end
 
-	return var_14_3
+	return ret
 end
 
-function var_0_0._sortByOrder(arg_15_0, arg_15_1)
-	return arg_15_0.order < arg_15_1.order
+function HotUpdateVoiceMgr._sortByOrder(info1, info2)
+	return info1.order < info2.order
 end
 
-var_0_0.instance = var_0_0.New()
+HotUpdateVoiceMgr.instance = HotUpdateVoiceMgr.New()
 
-return var_0_0
+return HotUpdateVoiceMgr

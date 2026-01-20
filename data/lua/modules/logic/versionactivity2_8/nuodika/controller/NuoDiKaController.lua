@@ -1,52 +1,54 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.controller.NuoDiKaController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/controller/NuoDiKaController.lua
 
-local var_0_0 = class("NuoDiKaController", BaseController)
+module("modules.logic.versionactivity2_8.nuodika.controller.NuoDiKaController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local NuoDiKaController = class("NuoDiKaController", BaseController)
+
+function NuoDiKaController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function NuoDiKaController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function NuoDiKaController:addConstEvents()
 	return
 end
 
-function var_0_0.enterLevelView(arg_4_0, arg_4_1)
-	arg_4_0._levelData = arg_4_1
+function NuoDiKaController:enterLevelView(data)
+	self._levelData = data
 
-	Activity180Rpc.instance:sendGet180InfosRequest(VersionActivity2_8Enum.ActivityId.NuoDiKa, arg_4_0._onRecInfo, arg_4_0)
+	Activity180Rpc.instance:sendGet180InfosRequest(VersionActivity2_8Enum.ActivityId.NuoDiKa, self._onRecInfo, self)
 end
 
-function var_0_0._onRecInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == 0 and arg_5_3.activityId == VersionActivity2_8Enum.ActivityId.NuoDiKa then
-		NuoDiKaModel.instance:initInfos(arg_5_3.act180EpisodeNO)
-		ViewMgr.instance:openView(ViewName.NuoDiKaLevelView, arg_5_0._levelData)
+function NuoDiKaController:_onRecInfo(cmd, resultCode, msg)
+	if resultCode == 0 and msg.activityId == VersionActivity2_8Enum.ActivityId.NuoDiKa then
+		NuoDiKaModel.instance:initInfos(msg.act180EpisodeNO)
+		ViewMgr.instance:openView(ViewName.NuoDiKaLevelView, self._levelData)
 	end
 end
 
-function var_0_0.enterEpisode(arg_6_0, arg_6_1)
-	arg_6_0:dispatchEvent(NuoDiKaEvent.JumpToEpisode, arg_6_1.episodeId)
+function NuoDiKaController:enterEpisode(data)
+	self:dispatchEvent(NuoDiKaEvent.JumpToEpisode, data.episodeId)
 end
 
-function var_0_0.enterGameView(arg_7_0, arg_7_1)
-	ViewMgr.instance:openView(ViewName.NuoDiKaGameView, arg_7_1)
+function NuoDiKaController:enterGameView(data)
+	ViewMgr.instance:openView(ViewName.NuoDiKaGameView, data)
 end
 
-function var_0_0.enterInfosView(arg_8_0)
+function NuoDiKaController:enterInfosView()
 	ViewMgr.instance:openView(ViewName.NuoDiKaInfosView)
 end
 
-function var_0_0.enterEnemyDetailView(arg_9_0, arg_9_1)
-	ViewMgr.instance:openView(ViewName.NuoDiKaGameUnitDetailView, arg_9_1)
+function NuoDiKaController:enterEnemyDetailView(data)
+	ViewMgr.instance:openView(ViewName.NuoDiKaGameUnitDetailView, data)
 end
 
-function var_0_0.enterGameResultView(arg_10_0, arg_10_1)
-	ViewMgr.instance:openView(ViewName.NuoDiKaGameResultView, arg_10_1)
+function NuoDiKaController:enterGameResultView(data)
+	ViewMgr.instance:openView(ViewName.NuoDiKaGameResultView, data)
 end
 
-var_0_0.instance = var_0_0.New()
+NuoDiKaController.instance = NuoDiKaController.New()
 
-return var_0_0
+return NuoDiKaController

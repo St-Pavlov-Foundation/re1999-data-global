@@ -1,11 +1,15 @@
-﻿module("modules.logic.help.view.LawDescriptionViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/help/view/LawDescriptionViewContainer.lua
 
-local var_0_0 = class("LawDescriptionViewContainer", BaseViewContainer)
+module("modules.logic.help.view.LawDescriptionViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local LawDescriptionViewContainer = class("LawDescriptionViewContainer", BaseViewContainer)
+
+function LawDescriptionViewContainer:buildViews()
+	local views = {
 		(LawDescriptionView.New())
 	}
+
+	return views
 end
 
-return var_0_0
+return LawDescriptionViewContainer

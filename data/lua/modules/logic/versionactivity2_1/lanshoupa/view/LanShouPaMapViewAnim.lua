@@ -1,115 +1,120 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewAnim", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaMapViewAnim.lua
 
-local var_0_0 = class("LanShouPaMapViewAnim", BaseView)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewAnim", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goexcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
+local LanShouPaMapViewAnim = class("LanShouPaMapViewAnim", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LanShouPaMapViewAnim:onInitView()
+	self._goexcessive = gohelper.findChild(self.viewGO, "#go_excessive")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function LanShouPaMapViewAnim:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function LanShouPaMapViewAnim:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._checkTaskMO = Activity164TaskMO.New()
-	arg_4_0._viewAnimator = arg_4_0.viewGO:GetComponent(LanShouPaEnum.ComponentType.Animator)
-	arg_4_0._rewardAnimator = arg_4_0:_findAnimator("RightTop/ani")
-	arg_4_0._swicthSceneAnimator = arg_4_0:_findAnimator("#go_excessive")
-	arg_4_0._path1Mterials = arg_4_0:_findUIMeshMaterIals("Map/Path1/path_go1")
-	arg_4_0._path2Mterials = arg_4_0:_findUIMeshMaterIals("Map/Path2/path_go1")
-	arg_4_0._pathMaterialDict = {
-		[LanShouPaEnum.Chapter.One] = arg_4_0._path1Mterials,
-		[LanShouPaEnum.Chapter.Two] = arg_4_0._path2Mterials
+function LanShouPaMapViewAnim:_editableInitView()
+	self._checkTaskMO = Activity164TaskMO.New()
+	self._viewAnimator = self.viewGO:GetComponent(LanShouPaEnum.ComponentType.Animator)
+	self._rewardAnimator = self:_findAnimator("RightTop/ani")
+	self._swicthSceneAnimator = self:_findAnimator("#go_excessive")
+	self._path1Mterials = self:_findUIMeshMaterIals("Map/Path1/path_go1")
+	self._path2Mterials = self:_findUIMeshMaterIals("Map/Path2/path_go1")
+	self._pathMaterialDict = {
+		[LanShouPaEnum.Chapter.One] = self._path1Mterials,
+		[LanShouPaEnum.Chapter.Two] = self._path2Mterials
 	}
-	arg_4_0._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	self._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
 
-	arg_4_0:_initPathAnimParams()
+	self:_initPathAnimParams()
 end
 
-function var_0_0._findAnimator(arg_5_0, arg_5_1)
-	return gohelper.findChild(arg_5_0.viewGO, arg_5_1):GetComponent(LanShouPaEnum.ComponentType.Animator)
+function LanShouPaMapViewAnim:_findAnimator(path)
+	local go = gohelper.findChild(self.viewGO, path)
+
+	return go:GetComponent(LanShouPaEnum.ComponentType.Animator)
 end
 
-function var_0_0._findUIMeshMaterIals(arg_6_0, arg_6_1)
-	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, arg_6_1):GetComponentsInChildren(LanShouPaEnum.ComponentType.UIMesh, true)
-	local var_6_1 = arg_6_0:getUserDataTb_()
+function LanShouPaMapViewAnim:_findUIMeshMaterIals(path)
+	local go = gohelper.findChild(self.viewGO, path)
+	local carray = go:GetComponentsInChildren(LanShouPaEnum.ComponentType.UIMesh, true)
+	local luaList = self:getUserDataTb_()
 
-	RoomHelper.cArrayToLuaTable(var_6_0, var_6_1)
+	RoomHelper.cArrayToLuaTable(carray, luaList)
 
-	local var_6_2 = arg_6_0:getUserDataTb_()
+	local materials = self:getUserDataTb_()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		local var_6_3 = iter_6_1.material
+	for i, uiMesh in ipairs(luaList) do
+		local material = uiMesh.material
 
-		if var_6_3 then
-			table.insert(var_6_2, var_6_3)
+		if material then
+			table.insert(materials, material)
 		end
 	end
 
-	return var_6_2
+	return materials
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(LanShouPaController.instance, LanShouPaEvent.SelectEpisode, arg_7_0._onSelectEpisode, arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_7_0._refreshRewardAnim, arg_7_0)
-	arg_7_0:_refreshUI()
-	arg_7_0:refreshPathPoin()
-	arg_7_0._viewAnimator:Play(UIAnimationName.Open)
+function LanShouPaMapViewAnim:onOpen()
+	self:addEventCb(LanShouPaController.instance, LanShouPaEvent.SelectEpisode, self._onSelectEpisode, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshRewardAnim, self)
+	self:_refreshUI()
+	self:refreshPathPoin()
+	self._viewAnimator:Play(UIAnimationName.Open)
 end
 
-function var_0_0._onSelectEpisode(arg_8_0)
-	arg_8_0:_refreshRewardAnim()
+function LanShouPaMapViewAnim:_onSelectEpisode()
+	self:_refreshRewardAnim()
 end
 
-function var_0_0._refreshUI(arg_9_0)
-	arg_9_0:_refreshRewardAnim()
+function LanShouPaMapViewAnim:_refreshUI()
+	self:_refreshRewardAnim()
 end
 
-function var_0_0._refreshRewardAnim(arg_10_0)
-	local var_10_0 = arg_10_0:_isHasReward()
+function LanShouPaMapViewAnim:_refreshRewardAnim()
+	local isHas = self:_isHasReward()
 
-	if arg_10_0._lastIsHasReward ~= var_10_0 then
-		arg_10_0._lastIsHasReward = var_10_0
+	if self._lastIsHasReward ~= isHas then
+		self._lastIsHasReward = isHas
 
-		arg_10_0._rewardAnimator:Play(var_10_0 and "loop" or "idle")
+		self._rewardAnimator:Play(isHas and "loop" or "idle")
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function LanShouPaMapViewAnim:onClose()
 	return
 end
 
-function var_0_0.playViewAnimator(arg_12_0, arg_12_1)
-	arg_12_0._viewAnimator:Play(arg_12_1, 0, 0)
+function LanShouPaMapViewAnim:playViewAnimator(viewName)
+	self._viewAnimator:Play(viewName, 0, 0)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	if arg_13_0._pathTweenId then
-		ZProj.TweenHelper.KillById(arg_13_0._pathTweenId)
+function LanShouPaMapViewAnim:onDestroyView()
+	if self._pathTweenId then
+		ZProj.TweenHelper.KillById(self._pathTweenId)
 
-		arg_13_0._pathTweenId = nil
+		self._pathTweenId = nil
 	end
 end
 
-function var_0_0._isHasReward(arg_14_0)
-	local var_14_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity164)
+function LanShouPaMapViewAnim:_isHasReward()
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity164)
 
-	if var_14_0 ~= nil then
-		local var_14_1 = Activity164Config.instance:getTaskByActId(ChessGameEnum.ActivityId.Act164)
-		local var_14_2 = arg_14_0._checkTaskMO
+	if taskDict ~= nil then
+		local taskCfgList = Activity164Config.instance:getTaskByActId(ChessGameEnum.ActivityId.Act164)
+		local mo = self._checkTaskMO
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-			var_14_2:init(iter_14_1, var_14_0[iter_14_1.id])
+		for _, taskCfg in ipairs(taskCfgList) do
+			mo:init(taskCfg, taskDict[taskCfg.id])
 
-			if var_14_2:alreadyGotReward() then
+			if mo:alreadyGotReward() then
 				return true
 			end
 		end
@@ -118,171 +123,171 @@ function var_0_0._isHasReward(arg_14_0)
 	return false
 end
 
-var_0_0.SWIRCH_SCENE_BLOCK_KEY = "LanShouPaMapViewAnim_switchScene_Key"
+LanShouPaMapViewAnim.SWIRCH_SCENE_BLOCK_KEY = "LanShouPaMapViewAnim_switchScene_Key"
 
-function var_0_0.switchScene(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1 == true
+function LanShouPaMapViewAnim:switchScene(isNext)
+	local tempStart = isNext == true
 
-	if arg_15_0._isLastSwitchStart ~= var_15_0 then
-		arg_15_0._isLastSwitchStart = var_15_0
+	if self._isLastSwitchStart ~= tempStart then
+		self._isLastSwitchStart = tempStart
 
-		gohelper.setActive(arg_15_0._goexcessive, true)
-		arg_15_0._swicthSceneAnimator:Play(var_15_0 and "story" or "hard")
+		gohelper.setActive(self._goexcessive, true)
+		self._swicthSceneAnimator:Play(tempStart and "story" or "hard")
 
-		if not arg_15_0._isSwitchSceneStartBlock then
-			arg_15_0._isSwitchSceneStartBlock = true
+		if not self._isSwitchSceneStartBlock then
+			self._isSwitchSceneStartBlock = true
 
-			UIBlockMgr.instance:startBlock(var_0_0.SWIRCH_SCENE_BLOCK_KEY)
+			UIBlockMgr.instance:startBlock(LanShouPaMapViewAnim.SWIRCH_SCENE_BLOCK_KEY)
 		else
-			TaskDispatcher.cancelTask(arg_15_0._onHideSwitchScene, arg_15_0)
+			TaskDispatcher.cancelTask(self._onHideSwitchScene, self)
 		end
 
-		TaskDispatcher.runDelay(arg_15_0._onHideSwitchScene, arg_15_0, 1)
+		TaskDispatcher.runDelay(self._onHideSwitchScene, self, 1)
 	end
 end
 
-function var_0_0._onHideSwitchScene(arg_16_0)
-	arg_16_0._isSwitchSceneStartBlock = false
+function LanShouPaMapViewAnim:_onHideSwitchScene()
+	self._isSwitchSceneStartBlock = false
 
-	UIBlockMgr.instance:endBlock(var_0_0.SWIRCH_SCENE_BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(LanShouPaMapViewAnim.SWIRCH_SCENE_BLOCK_KEY)
 end
 
-function var_0_0._initPathAnimParams(arg_17_0)
-	arg_17_0._pathConsDict = {}
+function LanShouPaMapViewAnim:_initPathAnimParams()
+	self._pathConsDict = {}
 
-	local var_17_0 = ChessGameEnum.ActivityId.Act164
-	local var_17_1 = Activity164Config.instance
+	local actId = ChessGameEnum.ActivityId.Act164
+	local tActivity164Config = Activity164Config.instance
 
-	for iter_17_0, iter_17_1 in pairs(LanShouPaEnum.ChapterPathAnimParam) do
-		local var_17_2 = var_17_1:getChapterEpisodeList(var_17_0, iter_17_0)
+	for chapterId, paramsList in pairs(LanShouPaEnum.ChapterPathAnimParam) do
+		local episodeCfgList = tActivity164Config:getChapterEpisodeList(actId, chapterId)
 
-		if var_17_2 then
-			local var_17_3 = var_17_1:getChapterEpisodeList(var_17_0, iter_17_0 - 1)
-			local var_17_4 = var_17_1:getChapterEpisodeList(var_17_0, iter_17_0 + 1)
-			local var_17_5 = {}
+		if episodeCfgList then
+			local preCfgList = tActivity164Config:getChapterEpisodeList(actId, chapterId - 1)
+			local nextCfgList = tActivity164Config:getChapterEpisodeList(actId, chapterId + 1)
+			local consList = {}
 
-			arg_17_0._pathConsDict[iter_17_0] = var_17_5
+			self._pathConsDict[chapterId] = consList
 
-			if var_17_3 and #var_17_3 > 0 then
-				arg_17_0:_addPathAnimParams(var_17_5, iter_17_1, var_17_3[#var_17_3], false)
+			if preCfgList and #preCfgList > 0 then
+				self:_addPathAnimParams(consList, paramsList, preCfgList[#preCfgList], false)
 			end
 
-			for iter_17_2, iter_17_3 in ipairs(var_17_2) do
-				arg_17_0:_addPathAnimParams(var_17_5, iter_17_1, iter_17_3, true)
+			for index, episodeCfg in ipairs(episodeCfgList) do
+				self:_addPathAnimParams(consList, paramsList, episodeCfg, true)
 			end
 
-			if var_17_4 and #var_17_4 > 0 then
-				arg_17_0:_addPathAnimParams(var_17_5, iter_17_1, var_17_4[1], false)
+			if nextCfgList and #nextCfgList > 0 then
+				self:_addPathAnimParams(consList, paramsList, nextCfgList[1], false)
 			end
 		end
 	end
 end
 
-function var_0_0._addPathAnimParams(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = #arg_18_1 + 1
+function LanShouPaMapViewAnim:_addPathAnimParams(consList, paramsList, episodeCfg, isEpisode)
+	local index = #consList + 1
 
-	if var_18_0 <= #arg_18_2 then
-		local var_18_1 = {
-			pathParams = arg_18_2[var_18_0],
-			isEpisode = arg_18_4,
-			episodeCfg = arg_18_3
+	if index <= #paramsList then
+		local consData = {
+			pathParams = paramsList[index],
+			isEpisode = isEpisode,
+			episodeCfg = episodeCfg
 		}
 
-		table.insert(arg_18_1, var_18_1)
+		table.insert(consList, consData)
 	end
 end
 
-function var_0_0._getPathPatams(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._pathConsDict[arg_19_1]
-	local var_19_1 = 0
-	local var_19_2
+function LanShouPaMapViewAnim:_getPathPatams(chapterId)
+	local consList = self._pathConsDict[chapterId]
+	local index = 0
+	local curCon
 
-	if var_19_0 then
-		local var_19_3 = Activity164Model.instance
+	if consList then
+		local tActivity164Model = Activity164Model.instance
 
-		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-			if var_19_3:isEpisodeClear(iter_19_1.episodeCfg.id) or iter_19_1.episodeCfg.preEpisode == 0 or var_19_3:isEpisodeClear(iter_19_1.episodeCfg.preEpisode) and LanShouPaHelper.isOpenChapterDay(iter_19_1.episodeCfg.chapterId) then
-				var_19_1 = iter_19_0
-				var_19_2 = iter_19_1
+		for i, conData in ipairs(consList) do
+			if tActivity164Model:isEpisodeClear(conData.episodeCfg.id) or conData.episodeCfg.preEpisode == 0 or tActivity164Model:isEpisodeClear(conData.episodeCfg.preEpisode) and LanShouPaHelper.isOpenChapterDay(conData.episodeCfg.chapterId) then
+				index = i
+				curCon = conData
 			end
 		end
 	end
 
-	if var_19_2 then
-		return var_19_2.pathParams, var_19_1
+	if curCon then
+		return curCon.pathParams, index
 	end
 
-	return nil, var_19_1
+	return nil, index
 end
 
-function var_0_0.refreshPathPoin(arg_20_0)
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._pathMaterialDict) do
-		local var_20_0, var_20_1 = arg_20_0:_getPathPatams(iter_20_0)
+function LanShouPaMapViewAnim:refreshPathPoin()
+	for chapterId, materials in pairs(self._pathMaterialDict) do
+		local params, index = self:_getPathPatams(chapterId)
 
-		if var_20_0 and var_20_1 > 0 then
-			arg_20_0:_setPathMaterialsValue(iter_20_1, var_20_0[2])
+		if params and index > 0 then
+			self:_setPathMaterialsValue(materials, params[2])
 		else
-			arg_20_0:_setPathMaterialsValue(iter_20_1, 1)
+			self:_setPathMaterialsValue(materials, 1)
 		end
 	end
 end
 
-function var_0_0.playPathAnim(arg_21_0)
-	local var_21_0 = ChessGameEnum.ActivityId.Act164
-	local var_21_1 = Activity164Model.instance:getCurEpisodeId()
-	local var_21_2 = Activity164Config.instance:getEpisodeCo(var_21_0, var_21_1)
+function LanShouPaMapViewAnim:playPathAnim()
+	local actId = ChessGameEnum.ActivityId.Act164
+	local curEpisodeId = Activity164Model.instance:getCurEpisodeId()
+	local episodeCfg = Activity164Config.instance:getEpisodeCo(actId, curEpisodeId)
 
-	if var_21_2 then
-		local var_21_3, var_21_4 = arg_21_0:_getPathPatams(var_21_2.chapterId)
+	if episodeCfg then
+		local params, index = self:_getPathPatams(episodeCfg.chapterId)
 
-		if var_21_3 and var_21_4 > 0 then
-			arg_21_0:_playPathAnim(arg_21_0._pathMaterialDict[var_21_2.chapterId], var_21_3)
+		if params and index > 0 then
+			self:_playPathAnim(self._pathMaterialDict[episodeCfg.chapterId], params)
 		end
 	end
 end
 
-function var_0_0._playPathAnim(arg_22_0, arg_22_1, arg_22_2)
-	if not arg_22_1 or not arg_22_2 then
+function LanShouPaMapViewAnim:_playPathAnim(materials, params)
+	if not materials or not params then
 		return
 	end
 
-	if arg_22_0._tweenMaterials and arg_22_0._tweenParams then
-		arg_22_0:_onPathFinish()
+	if self._tweenMaterials and self._tweenParams then
+		self:_onPathFinish()
 	end
 
-	if arg_22_0._pathTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0._pathTweenId)
+	if self._pathTweenId then
+		ZProj.TweenHelper.KillById(self._pathTweenId)
 
-		arg_22_0._pathTweenId = nil
+		self._pathTweenId = nil
 	end
 
-	arg_22_0._tweenMaterials = arg_22_1
-	arg_22_0._tweenParams = arg_22_2
-	arg_22_0._pathTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, LanShouPaEnum.AnimatorTime.ChapterPath or 1, arg_22_0._onPathFrame, arg_22_0._onPathFinish, arg_22_0, nil, EaseType.Linear)
+	self._tweenMaterials = materials
+	self._tweenParams = params
+	self._pathTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, LanShouPaEnum.AnimatorTime.ChapterPath or 1, self._onPathFrame, self._onPathFinish, self, nil, EaseType.Linear)
 end
 
-function var_0_0._onPathFrame(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0._tweenParams[1] + (arg_23_0._tweenParams[2] - arg_23_0._tweenParams[1]) * arg_23_1
+function LanShouPaMapViewAnim:_onPathFrame(t)
+	local tempVale = self._tweenParams[1] + (self._tweenParams[2] - self._tweenParams[1]) * t
 
-	arg_23_0:_setPathMaterialsValue(arg_23_0._tweenMaterials, var_23_0)
+	self:_setPathMaterialsValue(self._tweenMaterials, tempVale)
 end
 
-function var_0_0._onPathFinish(arg_24_0)
-	local var_24_0 = arg_24_0._tweenParams[2]
-	local var_24_1 = arg_24_0._tweenMaterials
+function LanShouPaMapViewAnim:_onPathFinish()
+	local tempVale = self._tweenParams[2]
+	local materials = self._tweenMaterials
 
-	arg_24_0._tweenMaterials = nil
-	arg_24_0._tweenParams = nil
+	self._tweenMaterials = nil
+	self._tweenParams = nil
 
-	arg_24_0:_setPathMaterialsValue(var_24_1, var_24_0)
+	self:_setPathMaterialsValue(materials, tempVale)
 end
 
-function var_0_0._setPathMaterialsValue(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = Vector4.New(arg_25_2, 0.01, 0, 0)
+function LanShouPaMapViewAnim:_setPathMaterialsValue(materials, value)
+	local vector = Vector4.New(value, 0.01, 0, 0)
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
-		iter_25_1:SetVector("_DissolveControl", var_25_0)
+	for i, material in ipairs(materials) do
+		material:SetVector("_DissolveControl", vector)
 	end
 end
 
-return var_0_0
+return LanShouPaMapViewAnim

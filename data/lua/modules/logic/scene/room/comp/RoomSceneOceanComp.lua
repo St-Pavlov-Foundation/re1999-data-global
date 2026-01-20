@@ -1,64 +1,67 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneOceanComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneOceanComp.lua
 
-local var_0_0 = class("RoomSceneOceanComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneOceanComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneOceanComp = class("RoomSceneOceanComp", BaseSceneComp)
+
+function RoomSceneOceanComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneOceanComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
-	arg_2_0._scene.loader:makeSureLoaded({
+	self._scene.loader:makeSureLoaded({
 		RoomScenePreloader.ResOcean
-	}, arg_2_0._OnGetInstance, arg_2_0)
+	}, self._OnGetInstance, self)
 end
 
-function var_0_0._OnGetInstance(arg_3_0, arg_3_1)
-	arg_3_0._oceanGO = RoomGOPool.getInstance(RoomScenePreloader.ResOcean, arg_3_0._scene.go.waterRoot, "ocean")
-	arg_3_0._oceanFogGO = gohelper.findChild(arg_3_0._oceanGO, "bxhy_ground_water_fog")
-	arg_3_0._fogAngle = nil
+function RoomSceneOceanComp:_OnGetInstance(go)
+	self._oceanGO = RoomGOPool.getInstance(RoomScenePreloader.ResOcean, self._scene.go.waterRoot, "ocean")
+	self._oceanFogGO = gohelper.findChild(self._oceanGO, "bxhy_ground_water_fog")
+	self._fogAngle = nil
 
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_3_0._cameraTransformUpdate, arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
 end
 
-function var_0_0._cameraTransformUpdate(arg_4_0)
-	arg_4_0:_refreshPosition()
-	arg_4_0:_refreshFogRotation()
+function RoomSceneOceanComp:_cameraTransformUpdate()
+	self:_refreshPosition()
+	self:_refreshFogRotation()
 end
 
-function var_0_0.setOceanFog(arg_5_0, arg_5_1)
-	if not arg_5_0._oceanFogGO then
+function RoomSceneOceanComp:setOceanFog(oceanFog)
+	if not self._oceanFogGO then
 		return
 	end
 
-	local var_5_0, var_5_1, var_5_2 = transformhelper.getLocalPos(arg_5_0._oceanFogGO.transform)
+	local posX, posY, posZ = transformhelper.getLocalPos(self._oceanFogGO.transform)
 
-	transformhelper.setLocalPos(arg_5_0._oceanFogGO.transform, var_5_0, arg_5_1, var_5_2)
+	transformhelper.setLocalPos(self._oceanFogGO.transform, posX, oceanFog, posZ)
 end
 
-function var_0_0._refreshPosition(arg_6_0)
-	local var_6_0 = arg_6_0._scene.camera:getCameraPosition()
+function RoomSceneOceanComp:_refreshPosition()
+	local cameraPosition = self._scene.camera:getCameraPosition()
 
-	transformhelper.setLocalPos(arg_6_0._oceanGO.transform, var_6_0.x, 0, var_6_0.z)
+	transformhelper.setLocalPos(self._oceanGO.transform, cameraPosition.x, 0, cameraPosition.z)
 end
 
-function var_0_0._refreshFogRotation(arg_7_0)
-	if not arg_7_0._oceanFogGO then
+function RoomSceneOceanComp:_refreshFogRotation()
+	if not self._oceanFogGO then
 		return
 	end
 
-	local var_7_0 = CameraMgr.instance:getMainCameraGO().transform.eulerAngles
-	local var_7_1 = arg_7_0._fogAngle or arg_7_0._oceanFogGO.transform.localEulerAngles
+	local cameraGO = CameraMgr.instance:getMainCameraGO()
+	local cameraRotation = cameraGO.transform.eulerAngles
+	local angle = self._fogAngle or self._oceanFogGO.transform.localEulerAngles
 
-	arg_7_0._fogAngle = Vector3(var_7_1.x, var_7_1.y, var_7_0.y + 94.4)
-	arg_7_0._oceanFogGO.transform.localEulerAngles = arg_7_0._fogAngle
+	self._fogAngle = Vector3(angle.x, angle.y, cameraRotation.y + 94.4)
+	self._oceanFogGO.transform.localEulerAngles = self._fogAngle
 end
 
-function var_0_0.onSceneClose(arg_8_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_8_0._cameraTransformUpdate, arg_8_0)
+function RoomSceneOceanComp:onSceneClose()
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
 
-	arg_8_0._oceanGO = nil
+	self._oceanGO = nil
 end
 
-return var_0_0
+return RoomSceneOceanComp

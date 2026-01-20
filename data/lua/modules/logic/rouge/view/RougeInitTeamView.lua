@@ -1,48 +1,50 @@
-﻿module("modules.logic.rouge.view.RougeInitTeamView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeInitTeamView.lua
 
-local var_0_0 = class("RougeInitTeamView", BaseView)
+module("modules.logic.rouge.view.RougeInitTeamView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "Title/bg/volume/#go_point")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Title/bg/volume/#txt_num")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "Scroll View/Viewport/#go_content")
-	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "Scroll View/Viewport/#go_content/#go_item1")
-	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "Scroll View/Viewport/#go_content/#go_item2")
-	arg_1_0._btnhelp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_help")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_help/#go_unselect")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_help/#go_selected")
-	arg_1_0._gofull = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_help/#go_full")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_start")
-	arg_1_0._godifficultytips = gohelper.findChild(arg_1_0.viewGO, "#go_difficultytips")
-	arg_1_0._txtdifficulty = gohelper.findChildText(arg_1_0.viewGO, "#go_difficultytips/#txt_difficulty")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local RougeInitTeamView = class("RougeInitTeamView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeInitTeamView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._gopoint = gohelper.findChild(self.viewGO, "Title/bg/volume/#go_point")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Title/bg/volume/#txt_num")
+	self._goprogress = gohelper.findChild(self.viewGO, "#go_progress")
+	self._gocontent = gohelper.findChild(self.viewGO, "Scroll View/Viewport/#go_content")
+	self._goitem1 = gohelper.findChild(self.viewGO, "Scroll View/Viewport/#go_content/#go_item1")
+	self._goitem2 = gohelper.findChild(self.viewGO, "Scroll View/Viewport/#go_content/#go_item2")
+	self._btnhelp = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_help")
+	self._gounselect = gohelper.findChild(self.viewGO, "Left/#btn_help/#go_unselect")
+	self._goselected = gohelper.findChild(self.viewGO, "Left/#btn_help/#go_selected")
+	self._gofull = gohelper.findChild(self.viewGO, "Left/#btn_help/#go_full")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_start")
+	self._godifficultytips = gohelper.findChild(self.viewGO, "#go_difficultytips")
+	self._txtdifficulty = gohelper.findChildText(self.viewGO, "#go_difficultytips/#txt_difficulty")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnhelp:AddClickListener(arg_2_0._btnhelpOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+function RougeInitTeamView:addEvents()
+	self._btnhelp:AddClickListener(self._btnhelpOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnhelp:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
+function RougeInitTeamView:removeEvents()
+	self._btnhelp:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
 end
 
-function var_0_0._btnhelpOnClick(arg_4_0)
-	if arg_4_0._helpState == RougeEnum.HelpState.Full then
-		if arg_4_0._capacityFull then
+function RougeInitTeamView:_btnhelpOnClick()
+	if self._helpState == RougeEnum.HelpState.Full then
+		if self._capacityFull then
 			GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 			return
 		end
 
-		if arg_4_0._heroFull then
+		if self._heroFull then
 			GameFacade.showToast(ToastEnum.RougeTeamFull)
 
 			return
@@ -51,305 +53,312 @@ function var_0_0._btnhelpOnClick(arg_4_0)
 		return
 	end
 
-	if arg_4_0._helpState == RougeEnum.HelpState.Selected then
-		arg_4_0._assistMo = nil
+	if self._helpState == RougeEnum.HelpState.Selected then
+		self._assistMo = nil
 
-		arg_4_0:_modifyHeroGroup()
+		self:_modifyHeroGroup()
 
 		return
 	end
 
-	RougeController.instance:setPickAssistViewParams(arg_4_0._curCapacity, arg_4_0._maxCapacity)
-	PickAssistController.instance:openPickAssistView(PickAssistEnum.Type.Rouge, 1, nil, arg_4_0._onPickHandler, arg_4_0, true)
+	RougeController.instance:setPickAssistViewParams(self._curCapacity, self._maxCapacity)
+	PickAssistController.instance:openPickAssistView(PickAssistEnum.Type.Rouge, 1, nil, self._onPickHandler, self, true)
 end
 
-function var_0_0._onPickHandler(arg_5_0, arg_5_1)
-	if not arg_5_1 then
-		arg_5_0._assistMo = nil
+function RougeInitTeamView:_onPickHandler(mo)
+	if not mo then
+		self._assistMo = nil
 
 		return
 	end
 
-	local var_5_0 = arg_5_0._assistMo and arg_5_0._assistMo.id or arg_5_0:_getAssistIndex(arg_5_1.heroMO.heroId)
+	local assistIndex = self._assistMo and self._assistMo.id or self:_getAssistIndex(mo.heroMO.heroId)
 
-	if not var_5_0 then
+	if not assistIndex then
 		return
 	end
 
-	arg_5_0._assistMo = arg_5_0._assistMo or RougeAssistHeroSingleGroupMO.New()
+	self._assistMo = self._assistMo or RougeAssistHeroSingleGroupMO.New()
 
-	arg_5_0._assistMo:init(var_5_0, arg_5_1.heroMO.uid, arg_5_1.heroMO)
-	arg_5_0:_modifyHeroGroup()
+	self._assistMo:init(assistIndex, mo.heroMO.uid, mo.heroMO)
+	self:_modifyHeroGroup()
 end
 
-function var_0_0._getAssistIndex(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._heroItemList) do
-		local var_6_0 = RougeHeroSingleGroupModel.instance:getById(iter_6_0):getHeroMO()
+function RougeInitTeamView:_getAssistIndex(assistHeroId)
+	for i, heroItem in ipairs(self._heroItemList) do
+		local mo = RougeHeroSingleGroupModel.instance:getById(i)
+		local heroMo = mo:getHeroMO()
 
-		if var_6_0 and var_6_0.heroId == arg_6_1 and arg_6_1 then
-			RougeHeroSingleGroupModel.instance:removeFrom(iter_6_0)
+		if heroMo and heroMo.heroId == assistHeroId and assistHeroId then
+			RougeHeroSingleGroupModel.instance:removeFrom(i)
 
-			return iter_6_0
+			return i
 		end
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(arg_6_0._heroItemList) do
-		if not RougeHeroSingleGroupModel.instance:getById(iter_6_2):getHeroMO() then
-			return iter_6_2
+	for i, heroItem in ipairs(self._heroItemList) do
+		local mo = RougeHeroSingleGroupModel.instance:getById(i)
+		local heroMo = mo:getHeroMO()
+
+		if not heroMo then
+			return i
 		end
 	end
 end
 
-function var_0_0._checkHelpState(arg_7_0)
-	if arg_7_0._assistMo then
-		arg_7_0:_updateHelpState(RougeEnum.HelpState.Selected)
+function RougeInitTeamView:_checkHelpState()
+	if self._assistMo then
+		self:_updateHelpState(RougeEnum.HelpState.Selected)
 
 		return
 	end
 
-	arg_7_0._capacityFull = arg_7_0._curCapacity >= arg_7_0._maxCapacity
-	arg_7_0._heroFull = arg_7_0._heroNum >= RougeEnum.InitTeamHeroNum
+	self._capacityFull = self._curCapacity >= self._maxCapacity
+	self._heroFull = self._heroNum >= RougeEnum.InitTeamHeroNum
 
-	if arg_7_0._capacityFull or arg_7_0._heroFull then
-		arg_7_0:_updateHelpState(RougeEnum.HelpState.Full)
+	if self._capacityFull or self._heroFull then
+		self:_updateHelpState(RougeEnum.HelpState.Full)
 
 		return
 	end
 
-	arg_7_0:_updateHelpState(RougeEnum.HelpState.UnSelected)
+	self:_updateHelpState(RougeEnum.HelpState.UnSelected)
 end
 
-function var_0_0._updateHelpState(arg_8_0, arg_8_1)
-	arg_8_0._helpState = arg_8_1
+function RougeInitTeamView:_updateHelpState(state)
+	self._helpState = state
 
-	gohelper.setActive(arg_8_0._gounselect, arg_8_1 == RougeEnum.HelpState.UnSelected)
-	gohelper.setActive(arg_8_0._goselected, arg_8_1 == RougeEnum.HelpState.Selected)
-	gohelper.setActive(arg_8_0._gofull, arg_8_1 == RougeEnum.HelpState.Full)
+	gohelper.setActive(self._gounselect, state == RougeEnum.HelpState.UnSelected)
+	gohelper.setActive(self._goselected, state == RougeEnum.HelpState.Selected)
+	gohelper.setActive(self._gofull, state == RougeEnum.HelpState.Full)
 end
 
-function var_0_0._btnstartOnClick(arg_9_0)
-	local var_9_0 = RougeConfig1.instance:season()
-	local var_9_1 = {}
-	local var_9_2 = {}
+function RougeInitTeamView:_btnstartOnClick()
+	local season = RougeConfig1.instance:season()
+	local heroList = {}
+	local heroMoList = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._heroItemList) do
-		local var_9_3 = RougeHeroSingleGroupModel.instance:getById(iter_9_0):getHeroMO()
+	for i, heroItem in ipairs(self._heroItemList) do
+		local mo = RougeHeroSingleGroupModel.instance:getById(i)
+		local heroMo = mo:getHeroMO()
 
-		if var_9_3 then
-			table.insert(var_9_1, var_9_3.heroId)
-			table.insert(var_9_2, var_9_3)
+		if heroMo then
+			table.insert(heroList, heroMo.heroId)
+			table.insert(heroMoList, heroMo)
 		end
 	end
 
-	local var_9_4 = arg_9_0._assistMo and arg_9_0._assistMo.heroUid
-	local var_9_5 = arg_9_0._assistMo
+	local assistHeroUid = self._assistMo and self._assistMo.heroUid
+	local assistHeroMo = self._assistMo
 
-	RougeRpc.instance:sendEnterRougeSelectHeroesRequest(var_9_0, var_9_1, var_9_4, function(arg_10_0, arg_10_1, arg_10_2)
-		if arg_10_1 ~= 0 then
+	RougeRpc.instance:sendEnterRougeSelectHeroesRequest(season, heroList, assistHeroUid, function(cmd, resultCode, msg)
+		if resultCode ~= 0 then
 			return
 		end
 
 		RougeController.instance:enterRouge()
 		RougeMapModel.instance:setFirstEnterMap(true)
-		RougeStatController.instance:selectInitHeroGroup(var_9_2, var_9_5)
+		RougeStatController.instance:selectInitHeroGroup(heroMoList, assistHeroMo)
 	end)
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._heroNum = 0
+function RougeInitTeamView:_editableInitView()
+	self._heroNum = 0
 
-	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_11_0._onCloseOtherView, arg_11_0)
-	arg_11_0:_initHeroItemList()
-	arg_11_0:_updateHeroList()
-	arg_11_0:_initPageProgress()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseOtherView, self)
+	self:_initHeroItemList()
+	self:_updateHeroList()
+	self:_initPageProgress()
 end
 
-function var_0_0._initPageProgress(arg_12_0)
-	local var_12_0 = RougePageProgress
-	local var_12_1 = arg_12_0.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, arg_12_0._goprogress, var_12_0.__cname)
+function RougeInitTeamView:_initPageProgress()
+	local itemClass = RougePageProgress
+	local go = self.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, self._goprogress, itemClass.__cname)
 
-	arg_12_0._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1, var_12_0)
+	self._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 
-	arg_12_0._pageProgress:setData()
+	self._pageProgress:setData()
 end
 
-function var_0_0._initHeroItemList(arg_13_0)
-	arg_13_0._heroItemList = arg_13_0:getUserDataTb_()
+function RougeInitTeamView:_initHeroItemList()
+	self._heroItemList = self:getUserDataTb_()
 
-	local var_13_0 = arg_13_0.viewContainer:getSetting().otherRes[1]
-	local var_13_1 = arg_13_0.viewContainer:getRes(var_13_0)
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local itemPrefab = self.viewContainer:getRes(path)
 
-	for iter_13_0 = 1, RougeEnum.InitTeamHeroNum do
-		local var_13_2 = gohelper.cloneInPlace(iter_13_0 % 2 == 1 and arg_13_0._goitem1 or arg_13_0._goitem2)
+	for i = 1, RougeEnum.InitTeamHeroNum do
+		local itemGo = gohelper.cloneInPlace(i % 2 == 1 and self._goitem1 or self._goitem2)
 
-		var_13_2.name = "item_" .. tostring(iter_13_0)
+		itemGo.name = "item_" .. tostring(i)
 
-		gohelper.setActive(var_13_2, true)
+		gohelper.setActive(itemGo, true)
 
-		local var_13_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_2, RougeInitTeamHeroItem)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, RougeInitTeamHeroItem)
 
-		var_13_3:setIndex(iter_13_0)
-		var_13_3:setRougeInitTeamView(arg_13_0)
-		var_13_3:setHeroItem(var_13_1)
-		table.insert(arg_13_0._heroItemList, var_13_3)
+		item:setIndex(i)
+		item:setRougeInitTeamView(self)
+		item:setHeroItem(itemPrefab)
+		table.insert(self._heroItemList, item)
 	end
 end
 
-function var_0_0._updateHeroList(arg_14_0)
-	local var_14_0 = 0
-	local var_14_1 = 0
-	local var_14_2 = 0
+function RougeInitTeamView:_updateHeroList()
+	local capacity = 0
+	local assistCapacity = 0
+	local noneAssistCapacity = 0
 
-	arg_14_0._heroNum = 0
+	self._heroNum = 0
 
-	local var_14_3 = false
+	local isTrial = false
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._heroItemList) do
-		local var_14_4 = RougeHeroSingleGroupModel.instance:getById(iter_14_0)
-		local var_14_5 = false
+	for i, heroItem in ipairs(self._heroItemList) do
+		local mo = RougeHeroSingleGroupModel.instance:getById(i)
 
-		if arg_14_0._assistMo and arg_14_0._assistMo.id == iter_14_0 then
-			var_14_4 = arg_14_0._assistMo
-			var_14_5 = true
+		isTrial = false
+
+		if self._assistMo and self._assistMo.id == i then
+			mo = self._assistMo
+			isTrial = true
 		end
 
-		local var_14_6 = var_14_4:getHeroMO()
-		local var_14_7 = arg_14_0._isModify and var_14_6 and iter_14_1:getHeroMo() ~= var_14_6
+		local heroMo = mo:getHeroMO()
+		local showSelectEffect = self._isModify and heroMo and heroItem:getHeroMo() ~= heroMo
 
-		iter_14_1:setTrialValue(var_14_5)
-		iter_14_1:onUpdateMO(var_14_4)
+		heroItem:setTrialValue(isTrial)
+		heroItem:onUpdateMO(mo)
 
-		if var_14_7 then
-			iter_14_1:showSelectEffect()
+		if showSelectEffect then
+			heroItem:showSelectEffect()
 		end
 
-		if var_14_6 then
-			arg_14_0._heroNum = arg_14_0._heroNum + 1
+		if heroMo then
+			self._heroNum = self._heroNum + 1
 		end
 
-		var_14_0 = var_14_0 + iter_14_1:getCapacity()
+		capacity = capacity + heroItem:getCapacity()
 
-		if var_14_5 then
-			var_14_1 = iter_14_1:getCapacity()
+		if isTrial then
+			assistCapacity = heroItem:getCapacity()
 		else
-			var_14_2 = var_14_2 + iter_14_1:getCapacity()
+			noneAssistCapacity = noneAssistCapacity + heroItem:getCapacity()
 		end
 	end
 
-	arg_14_0._assistCapacity = var_14_1
-	arg_14_0._noneAssistCurCapacity = var_14_2
+	self._assistCapacity = assistCapacity
+	self._noneAssistCurCapacity = noneAssistCapacity
 
-	arg_14_0:_updateCurNum(var_14_0)
+	self:_updateCurNum(capacity)
 end
 
-function var_0_0.getAssistCapacity(arg_15_0)
-	return arg_15_0._assistCapacity
+function RougeInitTeamView:getAssistCapacity()
+	return self._assistCapacity
 end
 
-function var_0_0.getAssistPos(arg_16_0)
-	return arg_16_0._assistMo and arg_16_0._assistMo.id or nil
+function RougeInitTeamView:getAssistPos()
+	return self._assistMo and self._assistMo.id or nil
 end
 
-function var_0_0.getAssistHeroId(arg_17_0)
-	return arg_17_0._assistMo and arg_17_0._assistMo.heroId or nil
+function RougeInitTeamView:getAssistHeroId()
+	return self._assistMo and self._assistMo.heroId or nil
 end
 
-function var_0_0._updateCurNum(arg_18_0, arg_18_1)
-	arg_18_0._curCapacity = arg_18_1
+function RougeInitTeamView:_updateCurNum(capacity)
+	self._curCapacity = capacity
 
-	if arg_18_0._capacityComp then
-		arg_18_0._capacityComp:updateCurNum(arg_18_1)
+	if self._capacityComp then
+		self._capacityComp:updateCurNum(capacity)
 	end
 
-	gohelper.setActive(arg_18_0._btnstart, arg_18_1 ~= 0)
+	gohelper.setActive(self._btnstart, capacity ~= 0)
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function RougeInitTeamView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_20_0._modifyHeroGroup, arg_20_0)
+function RougeInitTeamView:onOpen()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._modifyHeroGroup, self)
 
-	local var_20_0 = RougeModel.instance:getStyle()
+	local styleId = RougeModel.instance:getStyle()
 
-	arg_20_0._styleConfig = RougeConfig1.instance:getStyleConfig(var_20_0)
+	self._styleConfig = RougeConfig1.instance:getStyleConfig(styleId)
 
-	arg_20_0:_initCapacity()
-	arg_20_0:_initDifficultyTips()
-	arg_20_0:_updateHelpState(RougeEnum.HelpState.UnSelected)
+	self:_initCapacity()
+	self:_initDifficultyTips()
+	self:_updateHelpState(RougeEnum.HelpState.UnSelected)
 end
 
-function var_0_0._initDifficultyTips(arg_21_0)
-	local var_21_0 = RougeModel.instance:getDifficulty()
+function RougeInitTeamView:_initDifficultyTips()
+	local difficulty = RougeModel.instance:getDifficulty()
 
-	arg_21_0._txtdifficulty.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rougefactionview_txtDifficultyTiitle"), RougeConfig1.instance:getDifficultyCOTitle(var_21_0))
+	self._txtdifficulty.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rougefactionview_txtDifficultyTiitle"), RougeConfig1.instance:getDifficultyCOTitle(difficulty))
 
-	local var_21_1 = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(var_21_0)
-	local var_21_2 = gohelper.findChild(arg_21_0._godifficultytips, "red")
-	local var_21_3 = gohelper.findChild(arg_21_0._godifficultytips, "orange")
-	local var_21_4 = gohelper.findChild(arg_21_0._godifficultytips, "green")
+	local styleIndex = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(difficulty)
+	local red = gohelper.findChild(self._godifficultytips, "red")
+	local orange = gohelper.findChild(self._godifficultytips, "orange")
+	local green = gohelper.findChild(self._godifficultytips, "green")
 
-	gohelper.setActive(var_21_4, var_21_1 == 1)
-	gohelper.setActive(var_21_3, var_21_1 == 2)
-	gohelper.setActive(var_21_2, var_21_1 == 3)
+	gohelper.setActive(green, styleIndex == 1)
+	gohelper.setActive(orange, styleIndex == 2)
+	gohelper.setActive(red, styleIndex == 3)
 end
 
-function var_0_0._initCapacity(arg_22_0)
-	arg_22_0._maxCapacity = RougeModel.instance:getTeamCapacity()
+function RougeInitTeamView:_initCapacity()
+	self._maxCapacity = RougeModel.instance:getTeamCapacity()
 
-	gohelper.setActive(arg_22_0._gopoint, false)
+	gohelper.setActive(self._gopoint, false)
 
-	arg_22_0._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_22_0.viewGO, RougeCapacityComp)
+	self._capacityComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, RougeCapacityComp)
 
-	arg_22_0._capacityComp:setMaxNum(arg_22_0._maxCapacity)
-	arg_22_0._capacityComp:setPoint(arg_22_0._gopoint)
-	arg_22_0._capacityComp:setTxt(arg_22_0._txtnum)
-	arg_22_0._capacityComp:initCapacity()
-	arg_22_0._capacityComp:showChangeEffect(true)
+	self._capacityComp:setMaxNum(self._maxCapacity)
+	self._capacityComp:setPoint(self._gopoint)
+	self._capacityComp:setTxt(self._txtnum)
+	self._capacityComp:initCapacity()
+	self._capacityComp:showChangeEffect(true)
 end
 
-function var_0_0.getCapacityProgress(arg_23_0)
-	return arg_23_0._curCapacity, arg_23_0._maxCapacity
+function RougeInitTeamView:getCapacityProgress()
+	return self._curCapacity, self._maxCapacity
 end
 
-function var_0_0.getNoneAssistCapacityProgress(arg_24_0)
-	return arg_24_0._noneAssistCurCapacity, arg_24_0._maxCapacity
+function RougeInitTeamView:getNoneAssistCapacityProgress()
+	return self._noneAssistCurCapacity, self._maxCapacity
 end
 
-function var_0_0.onOpenFinish(arg_25_0)
+function RougeInitTeamView:onOpenFinish()
 	ViewMgr.instance:closeView(ViewName.RougeFactionView)
-	arg_25_0:_checkFocusCurView()
+	self:_checkFocusCurView()
 end
 
-function var_0_0._modifyHeroGroup(arg_26_0)
-	arg_26_0._isModify = true
+function RougeInitTeamView:_modifyHeroGroup()
+	self._isModify = true
 
-	arg_26_0:_updateHeroList()
+	self:_updateHeroList()
 
-	arg_26_0._isModify = false
+	self._isModify = false
 
-	arg_26_0:_checkHelpState()
+	self:_checkHelpState()
 end
 
-function var_0_0.onClose(arg_27_0)
+function RougeInitTeamView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_28_0)
+function RougeInitTeamView:onDestroyView()
 	return
 end
 
-function var_0_0._onCloseOtherView(arg_29_0)
-	arg_29_0:_checkFocusCurView()
+function RougeInitTeamView:_onCloseOtherView()
+	self:_checkFocusCurView()
 end
 
-function var_0_0._checkFocusCurView(arg_30_0)
-	local var_30_0 = ViewMgr.instance:getOpenViewNameList()
+function RougeInitTeamView:_checkFocusCurView()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
+	local topViewName = openViewNameList[#openViewNameList]
 
-	if var_30_0[#var_30_0] == ViewName.RougeInitTeamView then
+	if topViewName == ViewName.RougeInitTeamView then
 		RougeController.instance:dispatchEvent(RougeEvent.FocusOnView, "RougeInitTeamView")
 	end
 end
 
-return var_0_0
+return RougeInitTeamView

@@ -1,15 +1,17 @@
-﻿module("modules.logic.survival.view.map.SurvivalCommonTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalCommonTipsViewContainer.lua
 
-local var_0_0 = class("SurvivalCommonTipsViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalCommonTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalCommonTipsViewContainer = class("SurvivalCommonTipsViewContainer", BaseViewContainer)
+
+function SurvivalCommonTipsViewContainer:buildViews()
 	return {
 		SurvivalCommonTipsView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function SurvivalCommonTipsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return SurvivalCommonTipsViewContainer

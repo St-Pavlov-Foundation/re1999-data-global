@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_7.act191.model.Act191NodeDetailMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/model/Act191NodeDetailMO.lua
 
-local var_0_0 = pureTable("Act191NodeDetailMO")
+module("modules.logic.versionactivity2_7.act191.model.Act191NodeDetailMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = cjson.decode(arg_1_1)
+local Act191NodeDetailMO = pureTable("Act191NodeDetailMO")
 
-	arg_1_0.type = var_1_0.type
-	arg_1_0.shopId = var_1_0.shopId
-	arg_1_0.shopFreshNum = var_1_0.shopFreshNum
-	arg_1_0.shopPosMap = var_1_0.shopPosMap
-	arg_1_0.boughtSet = var_1_0.boughtSet
-	arg_1_0.enhanceList = var_1_0.enhanceList
-	arg_1_0.enhanceNumList = var_1_0.enhanceNumList
-	arg_1_0.eventId = var_1_0.eventId
-	arg_1_0.fightEventId = var_1_0.fightEventId
+function Act191NodeDetailMO:init(str)
+	local tbl = cjson.decode(str)
 
-	if var_1_0.matchInfo then
-		arg_1_0.matchInfo = Act191MatchMO.New()
+	self.type = tbl.type
+	self.shopId = tbl.shopId
+	self.shopFreshNum = tbl.shopFreshNum
+	self.shopPosMap = tbl.shopPosMap
+	self.boughtSet = tbl.boughtSet
+	self.enhanceList = tbl.enhanceList
+	self.enhanceNumList = tbl.enhanceNumList
+	self.eventId = tbl.eventId
+	self.fightEventId = tbl.fightEventId
 
-		arg_1_0.matchInfo:init(var_1_0.matchInfo)
+	if tbl.matchInfo then
+		self.matchInfo = Act191MatchMO.New()
+
+		self.matchInfo:init(tbl.matchInfo)
 	end
 
-	arg_1_0.replaceNum = var_1_0.replaceNum
-	arg_1_0.changeItemList = var_1_0.changeItemList
+	self.replaceNum = tbl.replaceNum
+	self.changeItemList = tbl.changeItemList
 end
 
-return var_0_0
+return Act191NodeDetailMO

@@ -1,42 +1,44 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/view/WuErLiXiLevelViewContainer.lua
 
-local var_0_0 = class("WuErLiXiLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WuErLiXiLevelViewContainer = class("WuErLiXiLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, WuErLiXiLevelView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function WuErLiXiLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, WuErLiXiLevelView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function WuErLiXiLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonsView:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
+		self._navigateButtonsView:setOverrideClose(self.overrideOnCloseClick, self)
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function WuErLiXiLevelViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity2_4Enum.ActivityId.WuErLiXi)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity2_4Enum.ActivityId.WuErLiXi
 	})
 end
 
-function var_0_0.overrideOnCloseClick(arg_4_0)
+function WuErLiXiLevelViewContainer:overrideOnCloseClick()
 	WuErLiXiModel.instance:setCurEpisodeIndex(0)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return WuErLiXiLevelViewContainer

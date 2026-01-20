@@ -1,13 +1,15 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneViewComp.lua
 
-local var_0_0 = class("FightSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+local FightSceneViewComp = class("FightSceneViewComp", BaseSceneComp)
+
+function FightSceneViewComp:onScenePrepared(sceneId, levelId)
 	ViewMgr.instance:openView(ViewName.FightSkillSelectView)
 	ViewMgr.instance:openView(ViewName.FightView)
 end
 
-function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
+function FightSceneViewComp:onSceneClose(sceneId, levelId)
 	ViewMgr.instance:closeView(ViewName.FightView)
 	ViewMgr.instance:closeView(ViewName.FightSkillSelectView, true)
 	ViewMgr.instance:closeView(ViewName.FightTechniqueView, true)
@@ -35,6 +37,7 @@ function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
 	ViewMgr.instance:closeView(ViewName.FightAiJiAoQteSelectView, true)
 	ViewMgr.instance:closeView(ViewName.FightPlayChoiceCardView, true)
 	ViewMgr.instance:closeView(ViewName.FightNuoDiKaQteView, true)
+	ViewMgr.instance:closeView(ViewName.FightBLESelectCrystalView, true)
 end
 
-return var_0_0
+return FightSceneViewComp

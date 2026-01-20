@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.base.MaLiAnNaLaLevelMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/mo/base/MaLiAnNaLaLevelMo.lua
 
-local var_0_0 = class("MaLiAnNaLaLevelMo")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.base.MaLiAnNaLaLevelMo", package.seeall)
 
-function var_0_0.create(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local MaLiAnNaLaLevelMo = class("MaLiAnNaLaLevelMo")
 
-	var_1_0.id = arg_1_0
+function MaLiAnNaLaLevelMo.create(id)
+	local instance = MaLiAnNaLaLevelMo.New()
 
-	return var_1_0
+	instance.id = id
+
+	return instance
 end
 
-function var_0_0.ctor(arg_2_0)
-	arg_2_0.id = 0
-	arg_2_0.slots = {}
-	arg_2_0.roads = {}
+function MaLiAnNaLaLevelMo:ctor()
+	self.id = 0
+	self.slots = {}
+	self.roads = {}
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	if arg_3_1 == nil then
+function MaLiAnNaLaLevelMo:init(data)
+	if data == nil then
 		return
 	end
 
-	arg_3_0.id = arg_3_1.id
+	self.id = data.id
 
-	arg_3_0:_initSlot(arg_3_1)
-	arg_3_0:_initRoad(arg_3_1)
+	self:_initSlot(data)
+	self:_initRoad(data)
 end
 
-function var_0_0._initSlot(arg_4_0, arg_4_1)
-	if arg_4_1.slots ~= nil then
-		for iter_4_0, iter_4_1 in pairs(arg_4_1.slots) do
-			local var_4_0 = MaLiAnNaLaLevelMoSlot.create(iter_4_1.configId, iter_4_1.id)
+function MaLiAnNaLaLevelMo:_initSlot(data)
+	if data.slots ~= nil then
+		for _, slotData in pairs(data.slots) do
+			local slot = MaLiAnNaLaLevelMoSlot.create(slotData.configId, slotData.id)
 
-			var_4_0:updateHeroId(iter_4_1.heroId)
-			var_4_0:updatePos(iter_4_1.posX, iter_4_1.posY)
-			table.insert(arg_4_0.slots, var_4_0)
+			slot:updateHeroId(slotData.heroId)
+			slot:updatePos(slotData.posX, slotData.posY)
+			table.insert(self.slots, slot)
 		end
 	end
 end
 
-function var_0_0._initRoad(arg_5_0, arg_5_1)
-	if arg_5_1.roads ~= nil then
-		for iter_5_0, iter_5_1 in pairs(arg_5_1.roads) do
-			local var_5_0 = MaLiAnNaLaLevelMoRoad.create(iter_5_1.id, iter_5_1.roadType)
+function MaLiAnNaLaLevelMo:_initRoad(data)
+	if data.roads ~= nil then
+		for _, roadData in pairs(data.roads) do
+			local road = MaLiAnNaLaLevelMoRoad.create(roadData.id, roadData.roadType)
 
-			var_5_0:updatePos(iter_5_1.beginPosX, iter_5_1.beginPosY, iter_5_1.endPosX, iter_5_1.endPosY)
-			var_5_0:updateSlot(iter_5_1.beginSlotId, iter_5_1.endSlotId)
-			table.insert(arg_5_0.roads, var_5_0)
+			road:updatePos(roadData.beginPosX, roadData.beginPosY, roadData.endPosX, roadData.endPosY)
+			road:updateSlot(roadData.beginSlotId, roadData.endSlotId)
+			table.insert(self.roads, road)
 		end
 	end
 end
 
-function var_0_0.getStr(arg_6_0)
-	local var_6_0 = string.format("id = %d ,", arg_6_0.id)
+function MaLiAnNaLaLevelMo:getStr()
+	local str = string.format("id = %d ,", self.id)
 
-	if arg_6_0.slots ~= nil then
-		var_6_0 = var_6_0 .. "slots = { "
+	if self.slots ~= nil then
+		str = str .. "slots = { "
 
-		for iter_6_0, iter_6_1 in pairs(arg_6_0.slots) do
-			var_6_0 = var_6_0 .. "{ " .. iter_6_1:getStr() .. " }, "
+		for _, slot in pairs(self.slots) do
+			str = str .. "{ " .. slot:getStr() .. " }, "
 		end
 
-		var_6_0 = var_6_0 .. "}, "
+		str = str .. "}, "
 	end
 
-	if arg_6_0.roads ~= nil then
-		var_6_0 = var_6_0 .. "roads = { "
+	if self.roads ~= nil then
+		str = str .. "roads = { "
 
-		for iter_6_2, iter_6_3 in pairs(arg_6_0.roads) do
-			var_6_0 = var_6_0 .. "{ " .. iter_6_3:getStr() .. " }, "
+		for _, road in pairs(self.roads) do
+			str = str .. "{ " .. road:getStr() .. " }, "
 		end
 
-		var_6_0 = var_6_0 .. "}, "
+		str = str .. "}, "
 	end
 
-	return var_6_0
+	return str
 end
 
-return var_0_0
+return MaLiAnNaLaLevelMo

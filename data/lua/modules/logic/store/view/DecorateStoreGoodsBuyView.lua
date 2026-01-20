@@ -1,332 +1,334 @@
-﻿module("modules.logic.store.view.DecorateStoreGoodsBuyView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/DecorateStoreGoodsBuyView.lua
 
-local var_0_0 = class("DecorateStoreGoodsBuyView", BaseView)
+module("modules.logic.store.view.DecorateStoreGoodsBuyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
-	arg_1_0._btntheme = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_theme")
-	arg_1_0._txttheme = gohelper.findChildText(arg_1_0.viewGO, "left/#btn_theme/txt")
-	arg_1_0._gocobrand = gohelper.findChild(arg_1_0.viewGO, "left/#go_cobrand")
-	arg_1_0._gobuyContent = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent")
-	arg_1_0._goblockInfoItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_blockInfoItem")
-	arg_1_0._gochange = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_change")
-	arg_1_0._txtchange = gohelper.findChildText(arg_1_0.viewGO, "right/#go_buyContent/#go_change/#txt_desc")
-	arg_1_0._imagechangeicon = gohelper.findChildImage(arg_1_0.viewGO, "right/#go_buyContent/#go_change/#txt_desc/simage_icon")
-	arg_1_0._gopaynoraml = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_change/go_normalbg")
-	arg_1_0._gopayselect = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_change/go_selectbg")
-	arg_1_0._btnticket = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_buyContent/#go_change/btn_pay")
-	arg_1_0._gopay = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_pay")
-	arg_1_0._gopayitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_pay/#go_payitem")
-	arg_1_0._btninsight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_buyContent/buy/#btn_insight")
-	arg_1_0._txtcostnum = gohelper.findChildText(arg_1_0.viewGO, "right/#go_buyContent/buy/#txt_costnum")
-	arg_1_0._imagecosticon = gohelper.findChildImage(arg_1_0.viewGO, "right/#go_buyContent/buy/#txt_costnum/#simage_costicon")
-	arg_1_0._gosource = gohelper.findChild(arg_1_0.viewGO, "right/#go_source")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local DecorateStoreGoodsBuyView = class("DecorateStoreGoodsBuyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DecorateStoreGoodsBuyView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
+	self._btntheme = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_theme")
+	self._txttheme = gohelper.findChildText(self.viewGO, "left/#btn_theme/txt")
+	self._gocobrand = gohelper.findChild(self.viewGO, "left/#go_cobrand")
+	self._gobuyContent = gohelper.findChild(self.viewGO, "right/#go_buyContent")
+	self._goblockInfoItem = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_blockInfoItem")
+	self._gochange = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_change")
+	self._txtchange = gohelper.findChildText(self.viewGO, "right/#go_buyContent/#go_change/#txt_desc")
+	self._imagechangeicon = gohelper.findChildImage(self.viewGO, "right/#go_buyContent/#go_change/#txt_desc/simage_icon")
+	self._gopaynoraml = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_change/go_normalbg")
+	self._gopayselect = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_change/go_selectbg")
+	self._btnticket = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_buyContent/#go_change/btn_pay")
+	self._gopay = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_pay")
+	self._gopayitem = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_pay/#go_payitem")
+	self._btninsight = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_buyContent/buy/#btn_insight")
+	self._txtcostnum = gohelper.findChildText(self.viewGO, "right/#go_buyContent/buy/#txt_costnum")
+	self._imagecosticon = gohelper.findChildImage(self.viewGO, "right/#go_buyContent/buy/#txt_costnum/#simage_costicon")
+	self._gosource = gohelper.findChild(self.viewGO, "right/#go_source")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntheme:AddClickListener(arg_2_0._btnthemeOnClick, arg_2_0)
-	arg_2_0._btninsight:AddClickListener(arg_2_0._btninsightOnClick, arg_2_0)
-	arg_2_0._btnticket:AddClickListener(arg_2_0._btnClickUseTicket, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function DecorateStoreGoodsBuyView:addEvents()
+	self._btntheme:AddClickListener(self._btnthemeOnClick, self)
+	self._btninsight:AddClickListener(self._btninsightOnClick, self)
+	self._btnticket:AddClickListener(self._btnClickUseTicket, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntheme:RemoveClickListener()
-	arg_3_0._btninsight:RemoveClickListener()
-	arg_3_0._btnticket:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function DecorateStoreGoodsBuyView:removeEvents()
+	self._btntheme:RemoveClickListener()
+	self._btninsight:RemoveClickListener()
+	self._btnticket:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnthemeOnClick(arg_4_0)
+function DecorateStoreGoodsBuyView:_btnthemeOnClick()
 	return
 end
 
-function var_0_0._btninsightOnClick(arg_5_0)
-	local var_5_0 = DecorateStoreModel.instance:getCurCostIndex()
-	local var_5_1 = arg_5_0._currencyParam[var_5_0]
+function DecorateStoreGoodsBuyView:_btninsightOnClick()
+	local curIndex = DecorateStoreModel.instance:getCurCostIndex()
+	local costParam = self._currencyParam[curIndex]
 
-	if var_5_1[1] == MaterialEnum.MaterialType.Currency and var_5_1[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-		if CurrencyController.instance:checkFreeDiamondEnough(var_5_1[3], CurrencyEnum.PayDiamondExchangeSource.Store, nil, arg_5_0._buyGood, arg_5_0, arg_5_0.closeThis, arg_5_0) then
-			arg_5_0:_buyGood(var_5_0)
+	if costParam[1] == MaterialEnum.MaterialType.Currency and costParam[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+		if CurrencyController.instance:checkFreeDiamondEnough(costParam[3], CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._buyGood, self, self.closeThis, self) then
+			self:_buyGood(curIndex)
 		end
-	elseif var_5_1[1] == MaterialEnum.MaterialType.Currency and var_5_1[2] == CurrencyEnum.CurrencyType.Diamond then
-		if CurrencyController.instance:checkDiamondEnough(var_5_1[3], arg_5_0.closeThis, arg_5_0) then
-			arg_5_0:_buyGood(var_5_0)
+	elseif costParam[1] == MaterialEnum.MaterialType.Currency and costParam[2] == CurrencyEnum.CurrencyType.Diamond then
+		if CurrencyController.instance:checkDiamondEnough(costParam[3], self.closeThis, self) then
+			self:_buyGood(curIndex)
 		end
-	elseif var_5_1[1] == MaterialEnum.MaterialType.Currency and var_5_1[2] == CurrencyEnum.CurrencyType.OldTravelTicket then
-		local var_5_2 = CurrencyModel.instance:getCurrency(var_5_1[2])
+	elseif costParam[1] == MaterialEnum.MaterialType.Currency and costParam[2] == CurrencyEnum.CurrencyType.OldTravelTicket then
+		local currencyMo = CurrencyModel.instance:getCurrency(costParam[2])
 
-		if var_5_2 then
-			if var_5_2.quantity >= var_5_1[3] then
-				arg_5_0:_buyGood(var_5_0)
+		if currencyMo then
+			if currencyMo.quantity >= costParam[3] then
+				self:_buyGood(curIndex)
 			else
 				GameFacade.showToast(ToastEnum.CurrencyNotEnough)
 
 				return false
 			end
 		end
-	elseif ItemModel.instance:goodsIsEnough(var_5_1[1], var_5_1[2], var_5_1[3]) then
-		arg_5_0:_buyGood(var_5_0)
+	elseif ItemModel.instance:goodsIsEnough(costParam[1], costParam[2], costParam[3]) then
+		self:_buyGood(curIndex)
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.DecorateStoreCurrencyNotEnough, MsgBoxEnum.BoxType.Yes_No, arg_5_0._storeCurrencyNotEnoughCallback, nil, nil, arg_5_0, nil)
+		GameFacade.showMessageBox(MessageBoxIdDefine.DecorateStoreCurrencyNotEnough, MsgBoxEnum.BoxType.Yes_No, self._storeCurrencyNotEnoughCallback, nil, nil, self, nil)
 	end
 end
 
-function var_0_0._storeCurrencyNotEnoughCallback(arg_6_0)
+function DecorateStoreGoodsBuyView:_storeCurrencyNotEnoughCallback()
 	GameFacade.jump(JumpEnum.JumpId.GlowCharge)
 end
 
-function var_0_0._buyGood(arg_7_0, arg_7_1)
-	StoreController.instance:buyGoods(arg_7_0._mo, 1, arg_7_0._buyCallback, arg_7_0, arg_7_1)
+function DecorateStoreGoodsBuyView:_buyGood(index)
+	StoreController.instance:buyGoods(self._mo, 1, self._buyCallback, self, index)
 end
 
-function var_0_0._buyCallback(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 == 0 then
-		arg_8_0:closeThis()
+function DecorateStoreGoodsBuyView:_buyCallback(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:closeThis()
 	end
 end
 
-function var_0_0._btnClickUseTicket(arg_9_0)
+function DecorateStoreGoodsBuyView:_btnClickUseTicket()
 	return
 end
 
-function var_0_0._btncloseOnClick(arg_10_0)
-	arg_10_0:closeThis()
+function DecorateStoreGoodsBuyView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._simagetheme = gohelper.findChildSingleImage(arg_11_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/iconmask/simage_theme")
-	arg_11_0._goitemContent = gohelper.findChildSingleImage(arg_11_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/go_itemContent")
-	arg_11_0._simageinfobg = gohelper.findChildSingleImage(arg_11_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/simage_infobg")
-	arg_11_0._txtdesc = gohelper.findChildText(arg_11_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc")
-	arg_11_0._txtname = gohelper.findChildText(arg_11_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc/txt_name")
-	arg_11_0._goslider = gohelper.findChild(arg_11_0.viewGO, "left/banner/#go_slider")
-	arg_11_0._payItemTbList = {}
-	arg_11_0._infoItemTbList = {}
+function DecorateStoreGoodsBuyView:_editableInitView()
+	self._simagetheme = gohelper.findChildSingleImage(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/iconmask/simage_theme")
+	self._goitemContent = gohelper.findChildSingleImage(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/go_itemContent")
+	self._simageinfobg = gohelper.findChildSingleImage(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/simage_infobg")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc")
+	self._txtname = gohelper.findChildText(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc/txt_name")
+	self._goslider = gohelper.findChild(self.viewGO, "left/banner/#go_slider")
+	self._payItemTbList = {}
+	self._infoItemTbList = {}
 
-	gohelper.setActive(arg_11_0._goblockInfoItem, false)
-	gohelper.setActive(arg_11_0._btntheme.gameObject, false)
-	gohelper.setActive(arg_11_0._goitemContent.gameObject, false)
-	gohelper.setActive(arg_11_0._goslider.gameObject, false)
-	gohelper.setActive(arg_11_0._gobuyContent, true)
-	gohelper.setActive(arg_11_0._gosource, false)
-	arg_11_0:_createPayItemUserDataTb_(arg_11_0._gopayitem, 1)
-	arg_11_0:_createInfoItemUserDataTb_(arg_11_0._goblockInfoItem, 1)
-	arg_11_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_11_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	gohelper.removeUIClickAudio(arg_11_0._btnclose.gameObject)
-	gohelper.addUIClickAudio(arg_11_0._btninsight.gameObject, AudioEnum.HeroGroupUI.Play_UI_Action_Mainstart)
-	arg_11_0._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
+	gohelper.setActive(self._goblockInfoItem, false)
+	gohelper.setActive(self._btntheme.gameObject, false)
+	gohelper.setActive(self._goitemContent.gameObject, false)
+	gohelper.setActive(self._goslider.gameObject, false)
+	gohelper.setActive(self._gobuyContent, true)
+	gohelper.setActive(self._gosource, false)
+	self:_createPayItemUserDataTb_(self._gopayitem, 1)
+	self:_createInfoItemUserDataTb_(self._goblockInfoItem, 1)
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	gohelper.removeUIClickAudio(self._btnclose.gameObject)
+	gohelper.addUIClickAudio(self._btninsight.gameObject, AudioEnum.HeroGroupUI.Play_UI_Action_Mainstart)
+	self._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._mo = arg_12_0.viewParam.goodsMo
+function DecorateStoreGoodsBuyView:onOpen()
+	self._mo = self.viewParam.goodsMo
 
 	DecorateStoreModel.instance:setCurCostIndex(1)
-	arg_12_0:_setCurrency()
-	arg_12_0:_refreshUI()
+	self:_setCurrency()
+	self:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
-	StoreController.instance:statOpenChargeGoods(arg_12_0._mo.belongStoreId, arg_12_0._mo.config)
+	StoreController.instance:statOpenChargeGoods(self._mo.belongStoreId, self._mo.config)
 end
 
-function var_0_0._setCurrency(arg_13_0)
-	local var_13_0 = {}
+function DecorateStoreGoodsBuyView:_setCurrency()
+	local currencyParam = {}
 
-	arg_13_0._currencyParam = {}
+	self._currencyParam = {}
 
-	if arg_13_0._mo.config.cost ~= "" then
-		local var_13_1 = string.splitToNumber(arg_13_0._mo.config.cost, "#")
+	if self._mo.config.cost ~= "" then
+		local costs = string.splitToNumber(self._mo.config.cost, "#")
 
-		table.insert(var_13_0, var_13_1[2])
-		table.insert(arg_13_0._currencyParam, var_13_1)
+		table.insert(currencyParam, costs[2])
+		table.insert(self._currencyParam, costs)
 	end
 
-	if arg_13_0._mo.config.cost2 ~= "" then
-		local var_13_2 = string.splitToNumber(arg_13_0._mo.config.cost2, "#")
+	if self._mo.config.cost2 ~= "" then
+		local cost2s = string.splitToNumber(self._mo.config.cost2, "#")
 
-		table.insert(var_13_0, var_13_2[2])
-		table.insert(arg_13_0._currencyParam, var_13_2)
+		table.insert(currencyParam, cost2s[2])
+		table.insert(self._currencyParam, cost2s)
 	end
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		if iter_13_1 == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-			table.insert(var_13_0, CurrencyEnum.CurrencyType.Diamond)
+	for _, v in pairs(currencyParam) do
+		if v == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			table.insert(currencyParam, CurrencyEnum.CurrencyType.Diamond)
 		end
 	end
 
-	local var_13_3 = LuaUtil.getReverseArrTab(var_13_0)
+	local result = LuaUtil.getReverseArrTab(currencyParam)
 
-	arg_13_0.viewContainer:setCurrencyType(var_13_3)
+	self.viewContainer:setCurrencyType(result)
 end
 
-function var_0_0._refreshUI(arg_14_0)
-	arg_14_0._goodConfig = StoreConfig.instance:getGoodsConfig(arg_14_0._mo.goodsId)
-	arg_14_0._curItemType = DecorateStoreModel.getItemType(tonumber(arg_14_0._goodConfig.storeId))
-	arg_14_0._products = string.splitToNumber(arg_14_0._goodConfig.product, "#")
-	arg_14_0._itemCo = ItemModel.instance:getItemConfig(arg_14_0._products[1], arg_14_0._products[2])
+function DecorateStoreGoodsBuyView:_refreshUI()
+	self._goodConfig = StoreConfig.instance:getGoodsConfig(self._mo.goodsId)
+	self._curItemType = DecorateStoreModel.getItemType(tonumber(self._goodConfig.storeId))
+	self._products = string.splitToNumber(self._goodConfig.product, "#")
+	self._itemCo = ItemModel.instance:getItemConfig(self._products[1], self._products[2])
 
-	arg_14_0:_refreshIcon()
-	arg_14_0:_refreshCost()
-	arg_14_0._simagetheme:LoadImage(ResUrl.getDecorateStoreBuyBannerFullPath(arg_14_0._itemCo.id), function()
-		ZProj.UGUIHelper.SetImageSize(arg_14_0._simagetheme.gameObject)
-	end, arg_14_0)
+	self:_refreshIcon()
+	self:_refreshCost()
+	self._simagetheme:LoadImage(ResUrl.getDecorateStoreBuyBannerFullPath(self._itemCo.id), function()
+		ZProj.UGUIHelper.SetImageSize(self._simagetheme.gameObject)
+	end, self)
 
-	arg_14_0._txtdesc.text = arg_14_0._itemCo.desc
-	arg_14_0._txtname.text = arg_14_0._itemCo.name
+	self._txtdesc.text = self._itemCo.desc
+	self._txtname.text = self._itemCo.name
 end
 
-function var_0_0._createPayItemUserDataTb_(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0:getUserDataTb_()
+function DecorateStoreGoodsBuyView:_createPayItemUserDataTb_(goItem, index)
+	local item = self:getUserDataTb_()
 
-	var_16_0._go = arg_16_1
-	var_16_0._index = arg_16_2
-	var_16_0._gonormalbg = gohelper.findChild(arg_16_1, "go_normalbg")
-	var_16_0._goselectbg = gohelper.findChild(arg_16_1, "go_selectbg")
-	var_16_0._imageicon = gohelper.findChildImage(arg_16_1, "txt_desc/simage_icon")
-	var_16_0._txtdesc = gohelper.findChildText(arg_16_1, "txt_desc")
-	var_16_0._btnpay = gohelper.findChildButtonWithAudio(arg_16_1, "btn_pay")
+	item._go = goItem
+	item._index = index
+	item._gonormalbg = gohelper.findChild(goItem, "go_normalbg")
+	item._goselectbg = gohelper.findChild(goItem, "go_selectbg")
+	item._imageicon = gohelper.findChildImage(goItem, "txt_desc/simage_icon")
+	item._txtdesc = gohelper.findChildText(goItem, "txt_desc")
+	item._btnpay = gohelper.findChildButtonWithAudio(goItem, "btn_pay")
 
-	var_16_0._btnpay:AddClickListener(arg_16_0._onClickPlay, arg_16_0, arg_16_2)
-	table.insert(arg_16_0._payItemTbList, var_16_0)
+	item._btnpay:AddClickListener(self._onClickPlay, self, index)
+	table.insert(self._payItemTbList, item)
 
-	return var_16_0
+	return item
 end
 
-function var_0_0._onClickPlay(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._payItemTbList) do
-		arg_17_0:_onSelectPayItemUI(iter_17_1, iter_17_1._index == arg_17_1)
+function DecorateStoreGoodsBuyView:_onClickPlay(index)
+	for _, item in ipairs(self._payItemTbList) do
+		self:_onSelectPayItemUI(item, item._index == index)
 	end
 
-	DecorateStoreModel.instance:setCurCostIndex(arg_17_1)
-	arg_17_0:_refreshCost()
+	DecorateStoreModel.instance:setCurCostIndex(index)
+	self:_refreshCost()
 end
 
-function var_0_0._createInfoItemUserDataTb_(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0:getUserDataTb_()
+function DecorateStoreGoodsBuyView:_createInfoItemUserDataTb_(goItem, index)
+	local item = self:getUserDataTb_()
 
-	var_18_0._go = arg_18_1
-	var_18_0._index = arg_18_2
-	var_18_0._goeprice = gohelper.findChild(arg_18_1, "go_price")
-	var_18_0._gofinish = gohelper.findChild(arg_18_1, "go_finish")
-	var_18_0._txtgold = gohelper.findChildText(arg_18_1, "go_price/txt_gold")
-	var_18_0._imagegold = gohelper.findChildImage(arg_18_1, "go_price/image_gold")
-	var_18_0._txtname = gohelper.findChildText(arg_18_1, "txt_name")
-	var_18_0._txtnum = gohelper.findChildText(arg_18_1, "txt_num")
-	var_18_0._gobg = gohelper.findChild(arg_18_1, "go_bg")
-	var_18_0._txtowner = gohelper.findChildText(arg_18_1, "go_finish/txt_owner")
+	item._go = goItem
+	item._index = index
+	item._goeprice = gohelper.findChild(goItem, "go_price")
+	item._gofinish = gohelper.findChild(goItem, "go_finish")
+	item._txtgold = gohelper.findChildText(goItem, "go_price/txt_gold")
+	item._imagegold = gohelper.findChildImage(goItem, "go_price/image_gold")
+	item._txtname = gohelper.findChildText(goItem, "txt_name")
+	item._txtnum = gohelper.findChildText(goItem, "txt_num")
+	item._gobg = gohelper.findChild(goItem, "go_bg")
+	item._txtowner = gohelper.findChildText(goItem, "go_finish/txt_owner")
 
-	table.insert(arg_18_0._infoItemTbList, var_18_0)
+	table.insert(self._infoItemTbList, item)
 
-	return var_18_0
+	return item
 end
 
-function var_0_0._refreshPayItemUI(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	arg_19_1.costId = arg_19_2
+function DecorateStoreGoodsBuyView:_refreshPayItemUI(item, costId, itemType, itemId)
+	item.costId = costId
 
-	local var_19_0 = arg_19_0:_getCurrencyIconStr(arg_19_3, arg_19_4)
+	local str = self:_getCurrencyIconStr(itemType, itemId)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_19_1._imageicon, var_19_0)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(item._imageicon, str)
 
-	local var_19_1, var_19_2 = ItemModel.instance:getItemConfigAndIcon(arg_19_3, arg_19_4, true)
+	local itemCfg, iconPath = ItemModel.instance:getItemConfigAndIcon(itemType, itemId, true)
 
-	arg_19_1._txtdesc.text = var_19_1 and var_19_1.name or nil
+	item._txtdesc.text = itemCfg and itemCfg.name or nil
 end
 
-function var_0_0._getCurrencyIconStr(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = 0
+function DecorateStoreGoodsBuyView:_getCurrencyIconStr(itemType, itemId)
+	local id = 0
 
-	if string.len(arg_20_2) == 1 then
-		var_20_0 = arg_20_1 .. "0" .. arg_20_2
+	if string.len(itemId) == 1 then
+		id = itemType .. "0" .. itemId
 	else
-		var_20_0 = arg_20_1 .. arg_20_2
+		id = itemType .. itemId
 	end
 
-	return string.format("%s_1", var_20_0)
+	return string.format("%s_1", id)
 end
 
-function var_0_0._onSelectPayItemUI(arg_21_0, arg_21_1, arg_21_2)
-	gohelper.setActive(arg_21_1._goselectbg, arg_21_2)
-	gohelper.setActive(arg_21_1._gonormalbg, not arg_21_2)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_21_1._txtdesc, arg_21_2 and "#FFFFFF" or "#4C4341")
+function DecorateStoreGoodsBuyView:_onSelectPayItemUI(item, isSelect)
+	gohelper.setActive(item._goselectbg, isSelect)
+	gohelper.setActive(item._gonormalbg, not isSelect)
+	SLFramework.UGUI.GuiHelper.SetColor(item._txtdesc, isSelect and "#FFFFFF" or "#4C4341")
 end
 
-function var_0_0._refreshIcon(arg_22_0)
-	local var_22_0 = DecorateStoreModel.instance:getCurCostIndex()
+function DecorateStoreGoodsBuyView:_refreshIcon()
+	local curIndex = DecorateStoreModel.instance:getCurCostIndex()
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._currencyParam) do
-		local var_22_1 = arg_22_0._payItemTbList[iter_22_0]
+	for index, currency in ipairs(self._currencyParam) do
+		local item = self._payItemTbList[index]
 
-		if not var_22_1 then
-			local var_22_2 = gohelper.cloneInPlace(arg_22_0._gopayitem, "go_payitem" .. iter_22_0)
+		if not item then
+			local goItem = gohelper.cloneInPlace(self._gopayitem, "go_payitem" .. index)
 
-			var_22_1 = arg_22_0:_createPayItemUserDataTb_(var_22_2, iter_22_0)
+			item = self:_createPayItemUserDataTb_(goItem, index)
 		end
 
-		arg_22_0:_onSelectPayItemUI(var_22_1, var_22_1._index == var_22_0)
-		gohelper.setActive(var_22_1._go, true)
-		arg_22_0:_refreshPayItemUI(var_22_1, iter_22_0, iter_22_1[1], iter_22_1[2])
+		self:_onSelectPayItemUI(item, item._index == curIndex)
+		gohelper.setActive(item._go, true)
+		self:_refreshPayItemUI(item, index, currency[1], currency[2])
 	end
 end
 
-function var_0_0._refreshCost(arg_23_0)
-	local var_23_0 = DecorateStoreModel.instance:getCurCostIndex()
-	local var_23_1 = arg_23_0._currencyParam[var_23_0]
+function DecorateStoreGoodsBuyView:_refreshCost()
+	local curIndex = DecorateStoreModel.instance:getCurCostIndex()
+	local costParam = self._currencyParam[curIndex]
 
-	if var_23_1 then
-		local var_23_2 = arg_23_0:_getCurrencyIconStr(var_23_1[1], var_23_1[2])
+	if costParam then
+		local str = self:_getCurrencyIconStr(costParam[1], costParam[2])
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_23_0._imagecosticon, var_23_2)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagecosticon, str)
 
-		local var_23_3 = ItemModel.instance:getItemQuantity(var_23_1[1], var_23_1[2])
+		local quantity = ItemModel.instance:getItemQuantity(costParam[1], costParam[2])
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_23_0._txtcostnum, var_23_3 and var_23_3 >= var_23_1[3] and "#595959" or "#BF2E11")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtcostnum, quantity and quantity >= costParam[3] and "#595959" or "#BF2E11")
 
-		arg_23_0._txtcostnum.text = var_23_1[3]
+		self._txtcostnum.text = costParam[3]
 
-		local var_23_4 = arg_23_0._infoItemTbList[1]
+		local item = self._infoItemTbList[1]
 
-		if not var_23_4 then
-			local var_23_5 = gohelper.cloneInPlace(arg_23_0._goblockInfoItem, "go_payitem" .. var_23_0)
+		if not item then
+			local goItem = gohelper.cloneInPlace(self._goblockInfoItem, "go_payitem" .. curIndex)
 
-			var_23_4 = arg_23_0:_createInfoItemUserDataTb_(var_23_5, var_23_0)
+			item = self:_createInfoItemUserDataTb_(goItem, curIndex)
 		end
 
-		var_23_4._txtname.text = arg_23_0._goodConfig.name
+		item._txtname.text = self._goodConfig.name
 
-		local var_23_6 = ItemModel.instance:getItemQuantity(arg_23_0._products[1], arg_23_0._products[2])
+		local count = ItemModel.instance:getItemQuantity(self._products[1], self._products[2])
 
-		var_23_4._txtnum.text = string.format("%s/%s", var_23_6, arg_23_0._products[3])
-		var_23_4._txtgold.text = var_23_1[3]
+		item._txtnum.text = string.format("%s/%s", count, self._products[3])
+		item._txtgold.text = costParam[3]
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(var_23_4._imagegold, var_23_2)
-		gohelper.setActive(var_23_4._go, true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(item._imagegold, str)
+		gohelper.setActive(item._go, true)
 	else
 		logError("消耗货币数据出错")
 	end
 end
 
-function var_0_0.onClickModalMask(arg_24_0)
-	arg_24_0:closeThis()
+function DecorateStoreGoodsBuyView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_25_0)
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._payItemTbList) do
-		iter_25_1._btnpay:RemoveClickListener()
+function DecorateStoreGoodsBuyView:onClose()
+	for _, item in ipairs(self._payItemTbList) do
+		item._btnpay:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0._simagebg1:UnLoadImage()
-	arg_26_0._simagebg2:UnLoadImage()
-	arg_26_0._simagetheme:UnLoadImage()
-	arg_26_0._simageinfobg:UnLoadImage()
+function DecorateStoreGoodsBuyView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
+	self._simagetheme:UnLoadImage()
+	self._simageinfobg:UnLoadImage()
 end
 
-return var_0_0
+return DecorateStoreGoodsBuyView

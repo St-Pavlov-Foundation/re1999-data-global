@@ -1,24 +1,26 @@
-﻿module("modules.logic.survival.view.map.SurvivalHeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalHeroGroupFightViewContainer.lua
 
-local var_0_0 = class("SurvivalHeroGroupFightViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.survival.view.map.SurvivalHeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.defineFightView(arg_1_0)
-	var_0_0.super.defineFightView(arg_1_0)
+local SurvivalHeroGroupFightViewContainer = class("SurvivalHeroGroupFightViewContainer", HeroGroupFightViewContainer)
 
-	arg_1_0._heroGroupFightView = SurvivalHeroGroupFightView.New()
-	arg_1_0._heroGroupFightListView = SurvivalHeroGroupListView.New()
+function SurvivalHeroGroupFightViewContainer:defineFightView()
+	SurvivalHeroGroupFightViewContainer.super.defineFightView(self)
+
+	self._heroGroupFightView = SurvivalHeroGroupFightView.New()
+	self._heroGroupFightListView = SurvivalHeroGroupListView.New()
 end
 
-function var_0_0.getFightRuleView(arg_2_0)
+function SurvivalHeroGroupFightViewContainer:getFightRuleView()
 	return SurvivalHeroGroupFightView_Rule.New()
 end
 
-function var_0_0.getFightLevelView(arg_3_0)
+function SurvivalHeroGroupFightViewContainer:getFightLevelView()
 	return SurvivalHeroGroupFightView_Level.New()
 end
 
-function var_0_0.addLastViews(arg_4_0, arg_4_1)
-	table.insert(arg_4_1, SurvivalHeroGroupEquipView.New())
+function SurvivalHeroGroupFightViewContainer:addLastViews(views)
+	table.insert(views, SurvivalHeroGroupEquipView.New())
 end
 
-return var_0_0
+return SurvivalHeroGroupFightViewContainer

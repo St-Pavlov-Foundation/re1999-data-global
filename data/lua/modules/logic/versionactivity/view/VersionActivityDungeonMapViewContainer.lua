@@ -1,77 +1,79 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityDungeonMapViewContainer.lua
 
-local var_0_0 = class("VersionActivityDungeonMapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityDungeonMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivityDungeonMapViewContainer = class("VersionActivityDungeonMapViewContainer", BaseViewContainer)
 
-	arg_1_0.mapScene = VersionActivityDungeonMapScene.New()
-	arg_1_0.mapView = VersionActivityDungeonMapView.New()
-	arg_1_0.mapEpisodeView = VersionActivityDungeonMapEpisodeView.New()
+function VersionActivityDungeonMapViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.mapView)
-	table.insert(var_1_0, VersionActivityDungeonMapSceneElements.New())
-	table.insert(var_1_0, arg_1_0.mapScene)
-	table.insert(var_1_0, arg_1_0.mapEpisodeView)
-	table.insert(var_1_0, DungeonMapElementReward.New())
-	table.insert(var_1_0, VersionActivityDungeonAudioView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	self.mapScene = VersionActivityDungeonMapScene.New()
+	self.mapView = VersionActivityDungeonMapView.New()
+	self.mapEpisodeView = VersionActivityDungeonMapEpisodeView.New()
 
-	return var_1_0
+	table.insert(views, self.mapView)
+	table.insert(views, VersionActivityDungeonMapSceneElements.New())
+	table.insert(views, self.mapScene)
+	table.insert(views, self.mapEpisodeView)
+	table.insert(views, DungeonMapElementReward.New())
+	table.insert(views, VersionActivityDungeonAudioView.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.getMapScene(arg_2_0)
-	return arg_2_0.mapScene
+function VersionActivityDungeonMapViewContainer:getMapScene()
+	return self.mapScene
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	arg_3_0.navigateView = NavigateButtonsView.New({
+function VersionActivityDungeonMapViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
-	}, nil, nil, arg_3_0.homeCallback, nil, arg_3_0)
+	}, nil, nil, self.homeCallback, nil, self)
 
 	return {
-		arg_3_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0.onContainerInit(arg_4_0)
+function VersionActivityDungeonMapViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivityEnum.ActivityId.Act113)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivityEnum.ActivityId.Act113
 	})
 
-	arg_4_0.versionActivityDungeonBaseMo = VersionActivityDungeonBaseMo.New()
+	self.versionActivityDungeonBaseMo = VersionActivityDungeonBaseMo.New()
 
-	arg_4_0.versionActivityDungeonBaseMo:init(VersionActivityEnum.ActivityId.Act113, arg_4_0.viewParam.chapterId, arg_4_0.viewParam.episodeId)
-	arg_4_0.versionActivityDungeonBaseMo:setLayoutClass(VersionActivityDungeonMapChapterLayout)
-	arg_4_0.versionActivityDungeonBaseMo:setMapEpisodeItemClass(VersionActivityMapEpisodeItem)
+	self.versionActivityDungeonBaseMo:init(VersionActivityEnum.ActivityId.Act113, self.viewParam.chapterId, self.viewParam.episodeId)
+	self.versionActivityDungeonBaseMo:setLayoutClass(VersionActivityDungeonMapChapterLayout)
+	self.versionActivityDungeonBaseMo:setMapEpisodeItemClass(VersionActivityMapEpisodeItem)
 end
 
-function var_0_0.onUpdateParamInternal(arg_5_0, arg_5_1)
-	arg_5_0.viewParam = arg_5_1
+function VersionActivityDungeonMapViewContainer:onUpdateParamInternal(viewParam)
+	self.viewParam = viewParam
 
-	arg_5_0:onContainerUpdateParam()
-	arg_5_0:_setVisible(true)
+	self:onContainerUpdateParam()
+	self:_setVisible(true)
 
-	if arg_5_0._views then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._views) do
-			iter_5_1.viewParam = arg_5_1
+	if self._views then
+		for _, item in ipairs(self._views) do
+			item.viewParam = viewParam
 
-			iter_5_1:onUpdateParamInternal()
+			item:onUpdateParamInternal()
 		end
 	end
 end
 
-function var_0_0.onContainerUpdateParam(arg_6_0)
-	arg_6_0.mapScene:setVisible(true)
-	arg_6_0.versionActivityDungeonBaseMo:update(arg_6_0.viewParam.chapterId, arg_6_0.viewParam.episodeId)
+function VersionActivityDungeonMapViewContainer:onContainerUpdateParam()
+	self.mapScene:setVisible(true)
+	self.versionActivityDungeonBaseMo:update(self.viewParam.chapterId, self.viewParam.episodeId)
 end
 
-function var_0_0.setVisibleInternal(arg_7_0, arg_7_1)
-	var_0_0.super.setVisibleInternal(arg_7_0, arg_7_1)
-	arg_7_0.mapScene:setVisible(arg_7_1)
+function VersionActivityDungeonMapViewContainer:setVisibleInternal(isVisible)
+	VersionActivityDungeonMapViewContainer.super.setVisibleInternal(self, isVisible)
+	self.mapScene:setVisible(isVisible)
 end
 
-return var_0_0
+return VersionActivityDungeonMapViewContainer

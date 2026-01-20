@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.info.Act174ItemTipView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/info/Act174ItemTipView.lua
 
-local var_0_0 = class("Act174ItemTipView", BaseView)
+module("modules.logic.versionactivity2_3.act174.view.info.Act174ItemTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gobuff = gohelper.findChild(arg_1_0.viewGO, "#go_buff")
-	arg_1_0._gocollection = gohelper.findChild(arg_1_0.viewGO, "#go_collection")
-	arg_1_0._gobuynode1 = gohelper.findChild(arg_1_0.viewGO, "#go_collection/#go_buynode")
-	arg_1_0._btnunequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_collection/#btn_unequip")
-	arg_1_0._gocharacterinfo = gohelper.findChild(arg_1_0.viewGO, "#go_characterinfo")
-	arg_1_0._gocharacterinfo2 = gohelper.findChild(arg_1_0.viewGO, "#go_characterinfo2")
-	arg_1_0._gobuynode2 = gohelper.findChild(arg_1_0.viewGO, "#go_characterinfo2/#go_buynode")
-	arg_1_0._btnBuy = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "btn_buy")
-	arg_1_0.txtCost = gohelper.findChildText(arg_1_0.viewGO, "btn_buy/#txt_num")
+local Act174ItemTipView = class("Act174ItemTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act174ItemTipView:onInitView()
+	self._goleft = gohelper.findChild(self.viewGO, "#go_left")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gobuff = gohelper.findChild(self.viewGO, "#go_buff")
+	self._gocollection = gohelper.findChild(self.viewGO, "#go_collection")
+	self._gobuynode1 = gohelper.findChild(self.viewGO, "#go_collection/#go_buynode")
+	self._btnunequip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_collection/#btn_unequip")
+	self._gocharacterinfo = gohelper.findChild(self.viewGO, "#go_characterinfo")
+	self._gocharacterinfo2 = gohelper.findChild(self.viewGO, "#go_characterinfo2")
+	self._gobuynode2 = gohelper.findChild(self.viewGO, "#go_characterinfo2/#go_buynode")
+	self._btnBuy = gohelper.findChildClickWithDefaultAudio(self.viewGO, "btn_buy")
+	self.txtCost = gohelper.findChildText(self.viewGO, "btn_buy/#txt_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnBuy:AddClickListener(arg_2_0.clickBuy, arg_2_0)
-	arg_2_0._btnunequip:AddClickListener(arg_2_0.clickUnEquip, arg_2_0)
-	arg_2_0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, arg_2_0.refreshCost, arg_2_0)
+function Act174ItemTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnBuy:AddClickListener(self.clickBuy, self)
+	self._btnunequip:AddClickListener(self.clickUnEquip, self)
+	self:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, self.refreshCost, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnBuy:RemoveClickListener()
-	arg_3_0._btnunequip:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, arg_3_0.refreshCost, arg_3_0)
+function Act174ItemTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnBuy:RemoveClickListener()
+	self._btnunequip:RemoveClickListener()
+	self:removeEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, self.refreshCost, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Act174ItemTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.clickBuy(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam and arg_5_0.viewParam.goodInfo
+function Act174ItemTipView:clickBuy()
+	local goodInfo = self.viewParam and self.viewParam.goodInfo
 
-	if not var_5_0 then
+	if not goodInfo then
 		return
 	end
 
-	if var_5_0.finish then
+	if goodInfo.finish then
 		return
 	end
 
-	local var_5_1 = Activity174Model.instance:getActInfo():getGameInfo()
+	local gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
 
-	if var_5_0.buyCost > var_5_1.coin then
+	if goodInfo.buyCost > gameInfo.coin then
 		GameFacade.showToast(ToastEnum.Act174CoinNotEnough)
 
 		return
@@ -60,267 +62,265 @@ function var_0_0.clickBuy(arg_5_0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("Act174ItemTipViewBuy")
 
-	arg_5_0.expectCoin = var_5_1.coin - var_5_0.buyCost
+	self.expectCoin = gameInfo.coin - goodInfo.buyCost
 
-	local var_5_2 = Activity174Model.instance:getCurActId()
+	local actId = Activity174Model.instance:getCurActId()
 
-	Activity174Rpc.instance:sendBuyIn174ShopRequest(var_5_2, var_5_0.index, arg_5_0.buyReply, arg_5_0)
+	Activity174Rpc.instance:sendBuyIn174ShopRequest(actId, goodInfo.index, self.buyReply, self)
 end
 
-function var_0_0.buyReply(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function Act174ItemTipView:buyReply(cmd, resultCode, msg)
 	UIBlockMgr.instance:endBlock("Act174ItemTipViewBuy")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 
-	if arg_6_2 == 0 then
-		local var_6_0 = Activity174Model.instance:getActInfo():getGameInfo()
+	if resultCode == 0 then
+		local gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
 
-		if arg_6_0.expectCoin and arg_6_0.expectCoin ~= var_6_0.coin then
+		if self.expectCoin and self.expectCoin ~= gameInfo.coin then
 			GameFacade.showToast(ToastEnum.Act174BuyReturnCoin)
 		end
 
-		arg_6_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0.clickUnEquip(arg_7_0)
-	Activity174Controller.instance:dispatchEvent(Activity174Event.UnEquipCollection, arg_7_0.viewParam.index)
-	arg_7_0:closeThis()
+function Act174ItemTipView:clickUnEquip()
+	Activity174Controller.instance:dispatchEvent(Activity174Event.UnEquipCollection, self.viewParam.index)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.cIcon = gohelper.findChildSingleImage(arg_8_0._gocollection, "simage_collection")
-	arg_8_0.cName = gohelper.findChildText(arg_8_0._gocollection, "txt_name")
-	arg_8_0.cDesc = gohelper.findChildText(arg_8_0._gocollection, "scroll_desc/Viewport/go_desccontent/txt_desc")
-	arg_8_0.bIcon = gohelper.findChildSingleImage(arg_8_0._gobuff, "simage_bufficon")
-	arg_8_0.bName = gohelper.findChildText(arg_8_0._gobuff, "txt_name")
-	arg_8_0.bDesc = gohelper.findChildText(arg_8_0._gobuff, "scroll_desc/Viewport/go_desccontent/txt_desc")
-	arg_8_0._animBuff = arg_8_0._gobuff:GetComponent(gohelper.Type_Animator)
-	arg_8_0._animCollection = arg_8_0._gocollection:GetComponent(gohelper.Type_Animator)
-	arg_8_0._animCharacter = arg_8_0._gocharacterinfo:GetComponent(gohelper.Type_Animator)
+function Act174ItemTipView:_editableInitView()
+	self.cIcon = gohelper.findChildSingleImage(self._gocollection, "simage_collection")
+	self.cName = gohelper.findChildText(self._gocollection, "txt_name")
+	self.cDesc = gohelper.findChildText(self._gocollection, "scroll_desc/Viewport/go_desccontent/txt_desc")
+	self.bIcon = gohelper.findChildSingleImage(self._gobuff, "simage_bufficon")
+	self.bName = gohelper.findChildText(self._gobuff, "txt_name")
+	self.bDesc = gohelper.findChildText(self._gobuff, "scroll_desc/Viewport/go_desccontent/txt_desc")
+	self._animBuff = self._gobuff:GetComponent(gohelper.Type_Animator)
+	self._animCollection = self._gocollection:GetComponent(gohelper.Type_Animator)
+	self._animCharacter = self._gocharacterinfo:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:refreshUI()
+function Act174ItemTipView:onUpdateParam()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	local var_10_0 = arg_10_0.viewParam and arg_10_0.viewParam.showMask
+function Act174ItemTipView:onOpen()
+	local showMask = self.viewParam and self.viewParam.showMask
 
-	gohelper.setActive(arg_10_0._btnclose, var_10_0)
+	gohelper.setActive(self._btnclose, showMask)
 
-	local var_10_1 = var_10_0 and arg_10_0.viewGO.transform or arg_10_0._goleft.transform
+	local parent = showMask and self.viewGO.transform or self._goleft.transform
 
-	arg_10_0._gobuff.transform:SetParent(var_10_1)
-	arg_10_0._gocollection.transform:SetParent(var_10_1)
-	arg_10_0._gocharacterinfo.transform:SetParent(var_10_1)
-	arg_10_0:refreshUI()
+	self._gobuff.transform:SetParent(parent)
+	self._gocollection.transform:SetParent(parent)
+	self._gocharacterinfo.transform:SetParent(parent)
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_mln_page_turn)
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0.type = arg_11_0.viewParam.type
+function Act174ItemTipView:refreshUI()
+	self.type = self.viewParam.type
 
-	local var_11_0 = arg_11_0.viewParam.pos or Vector2.New(0, 0)
+	local pos = self.viewParam.pos or Vector2.New(0, 0)
 
-	gohelper.setActive(arg_11_0._gobuff, arg_11_0.type == Activity174Enum.ItemTipType.Buff)
-	gohelper.setActive(arg_11_0._gocollection, arg_11_0.type == Activity174Enum.ItemTipType.Collection or arg_11_0.type == Activity174Enum.ItemTipType.Character2)
-	gohelper.setActive(arg_11_0._gocharacterinfo, arg_11_0.type == Activity174Enum.ItemTipType.Character)
-	gohelper.setActive(arg_11_0._gocharacterinfo2, arg_11_0.type == Activity174Enum.ItemTipType.Character1 or arg_11_0.type == Activity174Enum.ItemTipType.Character3)
+	gohelper.setActive(self._gobuff, self.type == Activity174Enum.ItemTipType.Buff)
+	gohelper.setActive(self._gocollection, self.type == Activity174Enum.ItemTipType.Collection or self.type == Activity174Enum.ItemTipType.Character2)
+	gohelper.setActive(self._gocharacterinfo, self.type == Activity174Enum.ItemTipType.Character)
+	gohelper.setActive(self._gocharacterinfo2, self.type == Activity174Enum.ItemTipType.Character1 or self.type == Activity174Enum.ItemTipType.Character3)
 
-	if arg_11_0.type == Activity174Enum.ItemTipType.Character then
-		recthelper.setAnchor(arg_11_0._gocharacterinfo.transform, var_11_0.x, var_11_0.y)
+	if self.type == Activity174Enum.ItemTipType.Character then
+		recthelper.setAnchor(self._gocharacterinfo.transform, pos.x, pos.y)
 
-		if not arg_11_0.characterItem then
-			arg_11_0.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._gocharacterinfo, Act174CharacterInfo)
+		if not self.characterItem then
+			self.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gocharacterinfo, Act174CharacterInfo)
 		end
 
-		arg_11_0.characterItem:setData(arg_11_0.viewParam.co)
-	elseif arg_11_0.type == Activity174Enum.ItemTipType.Collection or arg_11_0.type == Activity174Enum.ItemTipType.Character2 then
-		recthelper.setAnchor(arg_11_0._gocollection.transform, var_11_0.x, var_11_0.y)
-		arg_11_0:refreshSimpleInfo(arg_11_0.viewParam.co)
-	elseif arg_11_0.type == Activity174Enum.ItemTipType.Buff then
-		recthelper.setAnchor(arg_11_0._gobuff.transform, var_11_0.x, var_11_0.y)
-		arg_11_0:refreshBuffInfo(arg_11_0.viewParam.co)
+		self.characterItem:setData(self.viewParam.co)
+	elseif self.type == Activity174Enum.ItemTipType.Collection or self.type == Activity174Enum.ItemTipType.Character2 then
+		recthelper.setAnchor(self._gocollection.transform, pos.x, pos.y)
+		self:refreshSimpleInfo(self.viewParam.co)
+	elseif self.type == Activity174Enum.ItemTipType.Buff then
+		recthelper.setAnchor(self._gobuff.transform, pos.x, pos.y)
+		self:refreshBuffInfo(self.viewParam.co)
 	else
-		recthelper.setAnchor(arg_11_0._gocharacterinfo2.transform, var_11_0.x, var_11_0.y)
+		recthelper.setAnchor(self._gocharacterinfo2.transform, pos.x, pos.y)
 
-		if not arg_11_0.characterItem then
-			arg_11_0.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._gocharacterinfo2, Act174CharacterInfo)
+		if not self.characterItem then
+			self.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gocharacterinfo2, Act174CharacterInfo)
 		end
 
-		arg_11_0:refreshCharacterInfo2(arg_11_0.viewParam.co)
+		self:refreshCharacterInfo2(self.viewParam.co)
 	end
 
-	arg_11_0:refreshBuy()
-	gohelper.setActive(arg_11_0._btnunequip, arg_11_0.viewParam.index)
+	self:refreshBuy()
+	gohelper.setActive(self._btnunequip, self.viewParam.index)
 end
 
-function var_0_0.refreshBuy(arg_12_0)
-	local var_12_0 = arg_12_0.viewParam and arg_12_0.viewParam.goodInfo
+function Act174ItemTipView:refreshBuy()
+	local goodInfo = self.viewParam and self.viewParam.goodInfo
 
-	if var_12_0 then
-		local var_12_1
+	if goodInfo then
+		local parent
 
-		if arg_12_0.type == Activity174Enum.ItemTipType.Collection or arg_12_0.type == Activity174Enum.ItemTipType.Character2 then
-			var_12_1 = arg_12_0._gobuynode1.transform
-		elseif arg_12_0.type == Activity174Enum.ItemTipType.Character1 then
-			var_12_1 = arg_12_0._gobuynode2.transform
+		if self.type == Activity174Enum.ItemTipType.Collection or self.type == Activity174Enum.ItemTipType.Character2 then
+			parent = self._gobuynode1.transform
+		elseif self.type == Activity174Enum.ItemTipType.Character1 then
+			parent = self._gobuynode2.transform
 		end
 
-		if var_12_1 then
-			arg_12_0._btnBuy.transform:SetParent(var_12_1, false)
-		end
-	end
-
-	arg_12_0:refreshCost()
-	gohelper.setActive(arg_12_0._btnBuy, var_12_0)
-end
-
-function var_0_0.refreshCost(arg_13_0)
-	local var_13_0 = ""
-	local var_13_1 = "#211F1F"
-	local var_13_2 = arg_13_0.viewParam and arg_13_0.viewParam.goodInfo
-	local var_13_3 = Activity174Model.instance:getActInfo():getGameInfo()
-
-	if var_13_2 and var_13_3 then
-		var_13_0 = var_13_2.buyCost
-
-		if var_13_0 > var_13_3.coin then
-			var_13_1 = "#be4343"
+		if parent then
+			self._btnBuy.transform:SetParent(parent, false)
 		end
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_13_0.txtCost, var_13_1)
-
-	arg_13_0.txtCost.text = var_13_0
+	self:refreshCost()
+	gohelper.setActive(self._btnBuy, goodInfo)
 end
 
-function var_0_0.refreshSimpleInfo(arg_14_0, arg_14_1)
-	local var_14_0
-	local var_14_1
-	local var_14_2
+function Act174ItemTipView:refreshCost()
+	local cost = ""
+	local color = "#211F1F"
+	local goodInfo = self.viewParam and self.viewParam.goodInfo
+	local gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
 
-	if arg_14_0.type == Activity174Enum.ItemTipType.Collection then
-		var_14_0 = arg_14_1.icon
+	if goodInfo and gameInfo then
+		cost = goodInfo.buyCost
 
-		local var_14_3 = Activity174Enum.CollectionColor[arg_14_1.rare]
+		if cost > gameInfo.coin then
+			color = "#be4343"
+		end
+	end
 
-		var_14_1 = string.format("<#%s>%s</color>", var_14_3, arg_14_1.title)
-		var_14_2 = SkillHelper.buildDesc(arg_14_1.desc)
-	elseif arg_14_0.type == Activity174Enum.ItemTipType.Character2 then
-		local var_14_4 = arg_14_0.viewParam and arg_14_0.viewParam.goodInfo
+	SLFramework.UGUI.GuiHelper.SetColor(self.txtCost, color)
 
-		if var_14_4 then
-			local var_14_5 = var_14_4.bagInfo
+	self.txtCost.text = cost
+end
 
-			var_14_0 = Activity174Enum.heroBagIcon[#var_14_5.heroId]
+function Act174ItemTipView:refreshSimpleInfo(co)
+	local icon, name, desc
+
+	if self.type == Activity174Enum.ItemTipType.Collection then
+		icon = co.icon
+
+		local rareColor = Activity174Enum.CollectionColor[co.rare]
+
+		name = string.format("<#%s>%s</color>", rareColor, co.title)
+		desc = SkillHelper.buildDesc(co.desc)
+	elseif self.type == Activity174Enum.ItemTipType.Character2 then
+		local goodInfo = self.viewParam and self.viewParam.goodInfo
+
+		if goodInfo then
+			local bagInfo = goodInfo.bagInfo
+
+			icon = Activity174Enum.heroBagIcon[#bagInfo.heroId]
 		end
 
-		var_14_1 = arg_14_1.bagTitle
-		var_14_2 = arg_14_1.bagDesc
+		name = co.bagTitle
+		desc = co.bagDesc
 	end
 
-	if var_14_0 then
-		arg_14_0.cIcon:LoadImage(ResUrl.getRougeSingleBgCollection(var_14_0))
+	if icon then
+		self.cIcon:LoadImage(ResUrl.getRougeSingleBgCollection(icon))
 	end
 
-	arg_14_0.cName.text = var_14_1 or ""
-	arg_14_0.cDesc.text = var_14_2 or ""
+	self.cName.text = name or ""
+	self.cDesc.text = desc or ""
 
-	SkillHelper.addHyperLinkClick(arg_14_0.cDesc)
+	SkillHelper.addHyperLinkClick(self.cDesc)
 end
 
-function var_0_0.refreshBuffInfo(arg_15_0, arg_15_1)
-	arg_15_0.bIcon:LoadImage(ResUrl.getAct174BuffIcon(arg_15_1.icon))
+function Act174ItemTipView:refreshBuffInfo(buffCo)
+	self.bIcon:LoadImage(ResUrl.getAct174BuffIcon(buffCo.icon))
 
-	arg_15_0.bName.text = arg_15_1.title
-	arg_15_0.bDesc.text = arg_15_1.desc
+	self.bName.text = buffCo.title
+	self.bDesc.text = buffCo.desc
 end
 
-function var_0_0.refreshCharacterInfo2(arg_16_0, arg_16_1)
-	arg_16_0.roleIdList = arg_16_1
-	arg_16_0.characterItemList = {}
+function Act174ItemTipView:refreshCharacterInfo2(roleIdList)
+	self.roleIdList = roleIdList
+	self.characterItemList = {}
 
-	for iter_16_0 = 1, 3 do
-		local var_16_0 = arg_16_0:getUserDataTb_()
+	for i = 1, 3 do
+		local characterItem = self:getUserDataTb_()
 
-		var_16_0.frame = gohelper.findChild(arg_16_0._gocharacterinfo2, "selectframe/selectframe" .. iter_16_0)
-		var_16_0.go = gohelper.findChild(arg_16_0._gocharacterinfo2, "character" .. iter_16_0)
+		characterItem.frame = gohelper.findChild(self._gocharacterinfo2, "selectframe/selectframe" .. i)
+		characterItem.go = gohelper.findChild(self._gocharacterinfo2, "character" .. i)
 
-		local var_16_1 = arg_16_0.roleIdList[iter_16_0]
-		local var_16_2 = var_16_1 and Activity174Config.instance:getRoleCo(var_16_1)
+		local roleId = self.roleIdList[i]
+		local roleCo = roleId and Activity174Config.instance:getRoleCo(roleId)
 
-		if var_16_2 then
-			var_16_0.rare = gohelper.findChildImage(var_16_0.go, "rare")
-			var_16_0.heroIcon = gohelper.findChildSingleImage(var_16_0.go, "heroicon")
-			var_16_0.career = gohelper.findChildImage(var_16_0.go, "career")
+		if roleCo then
+			characterItem.rare = gohelper.findChildImage(characterItem.go, "rare")
+			characterItem.heroIcon = gohelper.findChildSingleImage(characterItem.go, "heroicon")
+			characterItem.career = gohelper.findChildImage(characterItem.go, "career")
 
-			local var_16_3 = gohelper.findButtonWithAudio(var_16_0.go)
+			local btnClick = gohelper.findButtonWithAudio(characterItem.go)
 
-			arg_16_0:addClickCb(var_16_3, arg_16_0.clickRole, arg_16_0, iter_16_0)
-			UISpriteSetMgr.instance:setCommonSprite(var_16_0.rare, "bgequip" .. tostring(CharacterEnum.Color[var_16_2.rare]))
-			UISpriteSetMgr.instance:setCommonSprite(var_16_0.career, "lssx_" .. var_16_2.career)
+			self:addClickCb(btnClick, self.clickRole, self, i)
+			UISpriteSetMgr.instance:setCommonSprite(characterItem.rare, "bgequip" .. tostring(CharacterEnum.Color[roleCo.rare]))
+			UISpriteSetMgr.instance:setCommonSprite(characterItem.career, "lssx_" .. roleCo.career)
 
-			if var_16_2.type == Activity174Enum.CharacterType.Hero then
-				local var_16_4 = ResUrl.getHeadIconSmall(var_16_2.skinId)
+			if roleCo.type == Activity174Enum.CharacterType.Hero then
+				local path = ResUrl.getHeadIconSmall(roleCo.skinId)
 
-				var_16_0.heroIcon:LoadImage(var_16_4)
+				characterItem.heroIcon:LoadImage(path)
 			else
-				local var_16_5 = ResUrl.monsterHeadIcon(var_16_2.skinId)
+				local path = ResUrl.monsterHeadIcon(roleCo.skinId)
 
-				var_16_0.heroIcon:LoadImage(var_16_5)
+				characterItem.heroIcon:LoadImage(path)
 			end
 		else
-			gohelper.setActive(var_16_0.go, false)
+			gohelper.setActive(characterItem.go, false)
 		end
 
-		table.insert(arg_16_0.characterItemList, var_16_0)
+		table.insert(self.characterItemList, characterItem)
 	end
 
-	arg_16_0:clickRole(1)
+	self:clickRole(1)
 end
 
-function var_0_0.clickRole(arg_17_0, arg_17_1)
-	if arg_17_1 == arg_17_0.selectedIndex then
+function Act174ItemTipView:clickRole(index)
+	if index == self.selectedIndex then
 		return
 	end
 
-	local var_17_0 = arg_17_0.characterItemList[arg_17_1]
-	local var_17_1 = var_17_0 and var_17_0.frame
+	local characterItem = self.characterItemList[index]
+	local frame = characterItem and characterItem.frame
 
-	if not gohelper.isNil(var_17_1) then
-		gohelper.setAsLastSibling(var_17_1)
+	if not gohelper.isNil(frame) then
+		gohelper.setAsLastSibling(frame)
 	end
 
-	arg_17_0.selectedIndex = arg_17_1
+	self.selectedIndex = index
 
-	local var_17_2 = arg_17_0.roleIdList[arg_17_1]
-	local var_17_3 = Activity174Config.instance:getRoleCo(var_17_2)
+	local roleId = self.roleIdList[index]
+	local roleCo = Activity174Config.instance:getRoleCo(roleId)
 
-	arg_17_0.characterItem:setData(var_17_3)
+	self.characterItem:setData(roleCo)
 end
 
-function var_0_0.onClose(arg_18_0)
+function Act174ItemTipView:onClose()
 	return
 end
 
-function var_0_0.playCloseAnim(arg_19_0)
-	if arg_19_0._gocharacterinfo.activeInHierarchy then
-		arg_19_0._animCharacter:Play(UIAnimationName.Close)
+function Act174ItemTipView:playCloseAnim()
+	if self._gocharacterinfo.activeInHierarchy then
+		self._animCharacter:Play(UIAnimationName.Close)
 	end
 
-	if arg_19_0._gocollection.activeInHierarchy then
-		arg_19_0._animCollection:Play(UIAnimationName.Close)
+	if self._gocollection.activeInHierarchy then
+		self._animCollection:Play(UIAnimationName.Close)
 	end
 
-	if arg_19_0._gobuff.activeInHierarchy then
-		arg_19_0._animBuff:Play(UIAnimationName.Close)
+	if self._gobuff.activeInHierarchy then
+		self._animBuff:Play(UIAnimationName.Close)
 	end
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0.cIcon:UnLoadImage()
-	arg_20_0.bIcon:UnLoadImage()
+function Act174ItemTipView:onDestroyView()
+	self.cIcon:UnLoadImage()
+	self.bIcon:UnLoadImage()
 end
 
-return var_0_0
+return Act174ItemTipView

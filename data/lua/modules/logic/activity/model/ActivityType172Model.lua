@@ -1,45 +1,47 @@
-﻿module("modules.logic.activity.model.ActivityType172Model", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityType172Model.lua
 
-local var_0_0 = class("ActivityType172Model", BaseModel)
-local var_0_1 = 0
-local var_0_2 = 1
-local var_0_3 = 2
+module("modules.logic.activity.model.ActivityType172Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local ActivityType172Model = class("ActivityType172Model", BaseModel)
+local kState_None = 0
+local kState_Available = 1
+local kState_Received = 2
+
+function ActivityType172Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._type172Info = {}
+function ActivityType172Model:reInit()
+	self._type172Info = {}
 end
 
-function var_0_0.setType172Info(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = ActivityType172InfoMo.New()
+function ActivityType172Model:setType172Info(activityId, info)
+	local data = ActivityType172InfoMo.New()
 
-	var_3_0:init(arg_3_2.useItemTaskIds)
+	data:init(info.useItemTaskIds)
 
-	arg_3_0._type172Info[arg_3_1] = var_3_0
+	self._type172Info[activityId] = data
 end
 
-function var_0_0.updateType172Info(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._type172Info[arg_4_1] then
-		local var_4_0 = ActivityType172InfoMo.New()
+function ActivityType172Model:updateType172Info(activityId, taskIds)
+	if not self._type172Info[activityId] then
+		local data = ActivityType172InfoMo.New()
 
-		var_4_0:init(arg_4_2)
+		data:init(taskIds)
 
-		arg_4_0._type172Info[arg_4_1] = var_4_0
+		self._type172Info[activityId] = data
 	else
-		arg_4_0._type172Info[arg_4_1]:update(arg_4_2)
+		self._type172Info[activityId]:update(taskIds)
 	end
 end
 
-function var_0_0.isTaskHasUsed(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0._type172Info[arg_5_1] then
+function ActivityType172Model:isTaskHasUsed(activityId, taskId)
+	if not self._type172Info[activityId] then
 		return false
 	end
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._type172Info[arg_5_1].useItemTaskIds) do
-		if iter_5_1 == arg_5_2 then
+	for _, v in pairs(self._type172Info[activityId].useItemTaskIds) do
+		if v == taskId then
 			return true
 		end
 	end
@@ -47,6 +49,6 @@ function var_0_0.isTaskHasUsed(arg_5_0, arg_5_1, arg_5_2)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityType172Model.instance = ActivityType172Model.New()
 
-return var_0_0
+return ActivityType172Model

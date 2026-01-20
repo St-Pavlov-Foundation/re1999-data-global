@@ -1,20 +1,22 @@
-﻿module("modules.logic.survival.view.shelter.ShelterRestHeroSelectEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterRestHeroSelectEditItem.lua
 
-local var_0_0 = class("ShelterRestHeroSelectEditItem", SurvivalInitHeroSelectEditItem)
+module("modules.logic.survival.view.shelter.ShelterRestHeroSelectEditItem", package.seeall)
 
-function var_0_0.getGroupModel(arg_1_0)
+local ShelterRestHeroSelectEditItem = class("ShelterRestHeroSelectEditItem", SurvivalInitHeroSelectEditItem)
+
+function ShelterRestHeroSelectEditItem:getGroupModel()
 	return ShelterRestGroupModel.instance
 end
 
-function var_0_0._onItemClick(arg_2_0)
+function ShelterRestHeroSelectEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_2_0._isSelect then
-		arg_2_0._view:selectCell(arg_2_0._index, false)
+	if self._isSelect then
+		self._view:selectCell(self._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		arg_2_0._view:selectCell(arg_2_0._index, true)
+		self._view:selectCell(self._index, true)
 	end
 end
 
-return var_0_0
+return ShelterRestHeroSelectEditItem

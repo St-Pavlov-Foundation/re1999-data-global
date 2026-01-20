@@ -1,173 +1,175 @@
-﻿module("modules.logic.room.view.RoomBuildingFilterView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomBuildingFilterView.lua
 
-local var_0_0 = class("RoomBuildingFilterView", BaseView)
+module("modules.logic.room.view.RoomBuildingFilterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goraredownselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/rare/go_raredown/beselected")
-	arg_1_0._goraredownunselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/rare/go_raredown/unselected")
-	arg_1_0._gorareupselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/rare/go_rareup/beselected")
-	arg_1_0._gorareupunselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/rare/go_rareup/unselected")
-	arg_1_0._goplacedselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/placingstate/go_placed/beselected")
-	arg_1_0._goplacedunselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/placingstate/go_placed/unselected")
-	arg_1_0._gonotplacedselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/placingstate/go_notplaced/beselected")
-	arg_1_0._gonotplacedunselect = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/placingstate/go_notplaced/unselected")
-	arg_1_0._gorange = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/go_range")
-	arg_1_0._gorangeitem = gohelper.findChild(arg_1_0.viewGO, "#scrollview/viewport/content/go_range/go_rangeitem")
-	arg_1_0._btnraredown = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scrollview/viewport/content/rare/go_raredown/click")
-	arg_1_0._btnrareup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scrollview/viewport/content/rare/go_rareup/click")
-	arg_1_0._btnplaced = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scrollview/viewport/content/placingstate/go_placed/click")
-	arg_1_0._btnnotplaced = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scrollview/viewport/content/placingstate/go_notplaced/click")
+local RoomBuildingFilterView = class("RoomBuildingFilterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBuildingFilterView:onInitView()
+	self._goraredownselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/rare/go_raredown/beselected")
+	self._goraredownunselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/rare/go_raredown/unselected")
+	self._gorareupselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/rare/go_rareup/beselected")
+	self._gorareupunselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/rare/go_rareup/unselected")
+	self._goplacedselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/placingstate/go_placed/beselected")
+	self._goplacedunselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/placingstate/go_placed/unselected")
+	self._gonotplacedselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/placingstate/go_notplaced/beselected")
+	self._gonotplacedunselect = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/placingstate/go_notplaced/unselected")
+	self._gorange = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/go_range")
+	self._gorangeitem = gohelper.findChild(self.viewGO, "#scrollview/viewport/content/go_range/go_rangeitem")
+	self._btnraredown = gohelper.findChildButtonWithAudio(self.viewGO, "#scrollview/viewport/content/rare/go_raredown/click")
+	self._btnrareup = gohelper.findChildButtonWithAudio(self.viewGO, "#scrollview/viewport/content/rare/go_rareup/click")
+	self._btnplaced = gohelper.findChildButtonWithAudio(self.viewGO, "#scrollview/viewport/content/placingstate/go_placed/click")
+	self._btnnotplaced = gohelper.findChildButtonWithAudio(self.viewGO, "#scrollview/viewport/content/placingstate/go_notplaced/click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnraredown:AddClickListener(arg_2_0._btnraredownOnClick, arg_2_0)
-	arg_2_0._btnrareup:AddClickListener(arg_2_0._btnrareupOnClick, arg_2_0)
-	arg_2_0._btnplaced:AddClickListener(arg_2_0._btnplacedOnClick, arg_2_0)
-	arg_2_0._btnnotplaced:AddClickListener(arg_2_0._btnnotplacedOnClick, arg_2_0)
+function RoomBuildingFilterView:addEvents()
+	self._btnraredown:AddClickListener(self._btnraredownOnClick, self)
+	self._btnrareup:AddClickListener(self._btnrareupOnClick, self)
+	self._btnplaced:AddClickListener(self._btnplacedOnClick, self)
+	self._btnnotplaced:AddClickListener(self._btnnotplacedOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnraredown:RemoveClickListener()
-	arg_3_0._btnrareup:RemoveClickListener()
-	arg_3_0._btnplaced:RemoveClickListener()
-	arg_3_0._btnnotplaced:RemoveClickListener()
+function RoomBuildingFilterView:removeEvents()
+	self._btnraredown:RemoveClickListener()
+	self._btnrareup:RemoveClickListener()
+	self._btnplaced:RemoveClickListener()
+	self._btnnotplaced:RemoveClickListener()
 end
 
-function var_0_0._btnraredownOnClick(arg_4_0)
+function RoomBuildingFilterView:_btnraredownOnClick()
 	if not RoomShowBuildingListModel.instance:isRareDown() then
 		RoomShowBuildingListModel.instance:setRareDown(true)
 	end
 
 	RoomShowBuildingListModel.instance:setShowBuildingList()
-	arg_4_0:_refreshFilter()
+	self:_refreshFilter()
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingFilterChanged)
 end
 
-function var_0_0._btnrareupOnClick(arg_5_0)
+function RoomBuildingFilterView:_btnrareupOnClick()
 	if RoomShowBuildingListModel.instance:isRareDown() then
 		RoomShowBuildingListModel.instance:setRareDown(false)
 	end
 
 	RoomShowBuildingListModel.instance:setShowBuildingList()
-	arg_5_0:_refreshFilter()
+	self:_refreshFilter()
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingFilterChanged)
 end
 
-function var_0_0._btnnotplacedOnClick(arg_6_0)
-	arg_6_0:_setFilterUse(0)
+function RoomBuildingFilterView:_btnnotplacedOnClick()
+	self:_setFilterUse(0)
 end
 
-function var_0_0._btnplacedOnClick(arg_7_0)
-	arg_7_0:_setFilterUse(1)
+function RoomBuildingFilterView:_btnplacedOnClick()
+	self:_setFilterUse(1)
 end
 
-function var_0_0._setFilterUse(arg_8_0, arg_8_1)
-	if RoomShowBuildingListModel.instance:isFilterUse(arg_8_1) then
-		RoomShowBuildingListModel.instance:removeFilterUse(arg_8_1)
+function RoomBuildingFilterView:_setFilterUse(use)
+	if RoomShowBuildingListModel.instance:isFilterUse(use) then
+		RoomShowBuildingListModel.instance:removeFilterUse(use)
 	else
-		RoomShowBuildingListModel.instance:addFilterUse(arg_8_1)
+		RoomShowBuildingListModel.instance:addFilterUse(use)
 	end
 
 	RoomShowBuildingListModel.instance:setShowBuildingList()
-	arg_8_0:_refreshFilter()
+	self:_refreshFilter()
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingFilterChanged)
 end
 
-function var_0_0._btnrangeOnClick(arg_9_0, arg_9_1)
-	if RoomShowBuildingListModel.instance:isFilterOccupy(arg_9_1) then
-		RoomShowBuildingListModel.instance:removeFilterOccupy(arg_9_1)
+function RoomBuildingFilterView:_btnrangeOnClick(occupyId)
+	if RoomShowBuildingListModel.instance:isFilterOccupy(occupyId) then
+		RoomShowBuildingListModel.instance:removeFilterOccupy(occupyId)
 	else
-		RoomShowBuildingListModel.instance:addFilterOccupy(arg_9_1)
+		RoomShowBuildingListModel.instance:addFilterOccupy(occupyId)
 	end
 
 	RoomShowBuildingListModel.instance:setShowBuildingList()
-	arg_9_0:_refreshFilter()
+	self:_refreshFilter()
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingFilterChanged)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	gohelper.setActive(arg_10_0._gorangeitem, false)
+function RoomBuildingFilterView:_editableInitView()
+	gohelper.setActive(self._gorangeitem, false)
 
-	arg_10_0._rangeItemList = {}
+	self._rangeItemList = {}
 
-	local var_10_0 = RoomConfig.instance:getBuildingOccupyList()
+	local occupyList = RoomConfig.instance:getBuildingOccupyList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = arg_10_0:_createTbItem(arg_10_0._gorange, "rangeitem" .. iter_10_1)
+	for _, occupyId in ipairs(occupyList) do
+		local rangeItem = self:_createTbItem(self._gorange, "rangeitem" .. occupyId)
 
-		var_10_1.occupyId = iter_10_1
+		rangeItem.occupyId = occupyId
 
-		local var_10_2 = RoomConfig.instance:getBuildingOccupyNum(iter_10_1)
-		local var_10_3 = RoomConfig.instance:getBuildingOccupyIcon(iter_10_1)
+		local num = RoomConfig.instance:getBuildingOccupyNum(occupyId)
+		local icon = RoomConfig.instance:getBuildingOccupyIcon(occupyId)
 
-		var_10_1.txtnum.text = var_10_2
+		rangeItem.txtnum.text = num
 
-		UISpriteSetMgr.instance:setRoomSprite(var_10_1.imageicon, var_10_3)
-		var_10_1.btnclick:AddClickListener(arg_10_0._btnrangeOnClick, arg_10_0, var_10_1.occupyId)
-		table.insert(arg_10_0._rangeItemList, var_10_1)
+		UISpriteSetMgr.instance:setRoomSprite(rangeItem.imageicon, icon)
+		rangeItem.btnclick:AddClickListener(self._btnrangeOnClick, self, rangeItem.occupyId)
+		table.insert(self._rangeItemList, rangeItem)
 	end
 end
 
-function var_0_0._createTbItem(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function RoomBuildingFilterView:_createTbItem(parentGO, name)
+	local rangeItem = self:getUserDataTb_()
 
-	var_11_0.go = gohelper.clone(arg_11_0._gorangeitem, arg_11_1, arg_11_2)
-	var_11_0.goselect = gohelper.findChild(var_11_0.go, "beselected")
-	var_11_0.gounselect = gohelper.findChild(var_11_0.go, "unselected")
-	var_11_0.imageicon = gohelper.findChildImage(var_11_0.go, "layout/num/icon")
-	var_11_0.txtnum = gohelper.findChildText(var_11_0.go, "layout/num")
-	var_11_0.btnclick = gohelper.findChildButtonWithAudio(var_11_0.go, "click")
+	rangeItem.go = gohelper.clone(self._gorangeitem, parentGO, name)
+	rangeItem.goselect = gohelper.findChild(rangeItem.go, "beselected")
+	rangeItem.gounselect = gohelper.findChild(rangeItem.go, "unselected")
+	rangeItem.imageicon = gohelper.findChildImage(rangeItem.go, "layout/num/icon")
+	rangeItem.txtnum = gohelper.findChildText(rangeItem.go, "layout/num")
+	rangeItem.btnclick = gohelper.findChildButtonWithAudio(rangeItem.go, "click")
 
-	gohelper.addUIClickAudio(var_11_0.btnclick.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
-	gohelper.setActive(var_11_0.go, true)
+	gohelper.addUIClickAudio(rangeItem.btnclick.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+	gohelper.setActive(rangeItem.go, true)
 
-	return var_11_0
+	return rangeItem
 end
 
-function var_0_0._refreshFilter(arg_12_0)
-	gohelper.setActive(arg_12_0._goraredownselect, RoomShowBuildingListModel.instance:isRareDown())
-	gohelper.setActive(arg_12_0._goraredownunselect, not RoomShowBuildingListModel.instance:isRareDown())
-	gohelper.setActive(arg_12_0._gorareupselect, not RoomShowBuildingListModel.instance:isRareDown())
-	gohelper.setActive(arg_12_0._gorareupunselect, RoomShowBuildingListModel.instance:isRareDown())
-	gohelper.setActive(arg_12_0._goplacedselect, RoomShowBuildingListModel.instance:isFilterUse(1))
-	gohelper.setActive(arg_12_0._goplacedunselect, not RoomShowBuildingListModel.instance:isFilterUse(1))
-	gohelper.setActive(arg_12_0._gonotplacedselect, RoomShowBuildingListModel.instance:isFilterUse(0))
-	gohelper.setActive(arg_12_0._gonotplacedunselect, not RoomShowBuildingListModel.instance:isFilterUse(0))
+function RoomBuildingFilterView:_refreshFilter()
+	gohelper.setActive(self._goraredownselect, RoomShowBuildingListModel.instance:isRareDown())
+	gohelper.setActive(self._goraredownunselect, not RoomShowBuildingListModel.instance:isRareDown())
+	gohelper.setActive(self._gorareupselect, not RoomShowBuildingListModel.instance:isRareDown())
+	gohelper.setActive(self._gorareupunselect, RoomShowBuildingListModel.instance:isRareDown())
+	gohelper.setActive(self._goplacedselect, RoomShowBuildingListModel.instance:isFilterUse(1))
+	gohelper.setActive(self._goplacedunselect, not RoomShowBuildingListModel.instance:isFilterUse(1))
+	gohelper.setActive(self._gonotplacedselect, RoomShowBuildingListModel.instance:isFilterUse(0))
+	gohelper.setActive(self._gonotplacedunselect, not RoomShowBuildingListModel.instance:isFilterUse(0))
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._rangeItemList) do
-		local var_12_0 = RoomShowBuildingListModel.instance:isFilterOccupy(iter_12_1.occupyId)
+	for i, rangeItem in ipairs(self._rangeItemList) do
+		local isSelected = RoomShowBuildingListModel.instance:isFilterOccupy(rangeItem.occupyId)
 
-		SLFramework.UGUI.GuiHelper.SetColor(iter_12_1.imageicon, var_12_0 and "#EC7E4B" or "#E5E5E5")
-		SLFramework.UGUI.GuiHelper.SetColor(iter_12_1.txtnum, var_12_0 and "#EC7E4B" or "#E5E5E5")
-		gohelper.setActive(iter_12_1.goselect, var_12_0)
-		gohelper.setActive(iter_12_1.gounselect, not var_12_0)
+		SLFramework.UGUI.GuiHelper.SetColor(rangeItem.imageicon, isSelected and "#EC7E4B" or "#E5E5E5")
+		SLFramework.UGUI.GuiHelper.SetColor(rangeItem.txtnum, isSelected and "#EC7E4B" or "#E5E5E5")
+		gohelper.setActive(rangeItem.goselect, isSelected)
+		gohelper.setActive(rangeItem.gounselect, not isSelected)
 	end
 end
 
-function var_0_0._addBtnAudio(arg_13_0)
-	gohelper.addUIClickAudio(arg_13_0._btnraredown.gameObject, AudioEnum.UI.play_ui_role_open)
-	gohelper.addUIClickAudio(arg_13_0._btnrareup.gameObject, AudioEnum.UI.play_ui_role_open)
-	gohelper.addUIClickAudio(arg_13_0._btnplaced.gameObject, AudioEnum.UI.play_ui_role_open)
-	gohelper.addUIClickAudio(arg_13_0._btnnotplaced.gameObject, AudioEnum.UI.play_ui_role_open)
+function RoomBuildingFilterView:_addBtnAudio()
+	gohelper.addUIClickAudio(self._btnraredown.gameObject, AudioEnum.UI.play_ui_role_open)
+	gohelper.addUIClickAudio(self._btnrareup.gameObject, AudioEnum.UI.play_ui_role_open)
+	gohelper.addUIClickAudio(self._btnplaced.gameObject, AudioEnum.UI.play_ui_role_open)
+	gohelper.addUIClickAudio(self._btnnotplaced.gameObject, AudioEnum.UI.play_ui_role_open)
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:_addBtnAudio()
-	arg_14_0:_refreshFilter()
+function RoomBuildingFilterView:onOpen()
+	self:_addBtnAudio()
+	self:_refreshFilter()
 end
 
-function var_0_0.onClose(arg_15_0)
+function RoomBuildingFilterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._rangeItemList) do
-		iter_16_1.btnclick:RemoveClickListener()
+function RoomBuildingFilterView:onDestroyView()
+	for i, rangeItem in ipairs(self._rangeItemList) do
+		rangeItem.btnclick:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return RoomBuildingFilterView

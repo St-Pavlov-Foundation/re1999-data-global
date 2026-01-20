@@ -1,55 +1,57 @@
-﻿module("modules.logic.reactivity.view.ReactivityRuleView", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/view/ReactivityRuleView.lua
 
-local var_0_0 = class("ReactivityRuleView", BaseView)
+module("modules.logic.reactivity.view.ReactivityRuleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_go")
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Mask")
-	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local ReactivityRuleView = class("ReactivityRuleView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ReactivityRuleView:onInitView()
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_go")
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "Mask")
+	self._btnclose2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._onClickJump, arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._onClickClose, arg_2_0)
-	arg_2_0._btnclose2:AddClickListener(arg_2_0._onClickClose, arg_2_0)
+function ReactivityRuleView:addEvents()
+	self._btnjump:AddClickListener(self._onClickJump, self)
+	self._btnclose1:AddClickListener(self._onClickClose, self)
+	self._btnclose2:AddClickListener(self._onClickClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnjump:RemoveClickListener()
-	arg_3_0._btnclose1:RemoveClickListener()
-	arg_3_0._btnclose2:RemoveClickListener()
+function ReactivityRuleView:removeEvents()
+	self._btnjump:RemoveClickListener()
+	self._btnclose1:RemoveClickListener()
+	self._btnclose2:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ReactivityRuleView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
+function ReactivityRuleView:onOpen()
 	ReactivityRuleModel.instance:refreshList()
 end
 
-function var_0_0.onClose(arg_6_0)
+function ReactivityRuleView:onClose()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function ReactivityRuleView:onUpdateParam()
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function ReactivityRuleView:onDestroyView()
 	return
 end
 
-function var_0_0._onClickJump(arg_9_0)
+function ReactivityRuleView:_onClickJump()
 	JumpController.instance:jumpByParam("1#180")
 end
 
-function var_0_0._onClickClose(arg_10_0)
-	arg_10_0:closeThis()
+function ReactivityRuleView:_onClickClose()
+	self:closeThis()
 end
 
-return var_0_0
+return ReactivityRuleView

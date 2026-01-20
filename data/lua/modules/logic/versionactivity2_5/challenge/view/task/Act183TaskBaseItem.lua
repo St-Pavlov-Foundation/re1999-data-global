@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskBaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/task/Act183TaskBaseItem.lua
 
-local var_0_0 = class("Act183TaskBaseItem", MixScrollCell)
+module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskBaseItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0.go)
+local Act183TaskBaseItem = class("Act183TaskBaseItem", MixScrollCell)
+
+function Act183TaskBaseItem:init(go)
+	self.go = go
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.go)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._mo = arg_2_1
+function Act183TaskBaseItem:onUpdateMO(mo, mixType, param)
+	self._mo = mo
 
-	arg_2_0:playAnim()
+	self:playAnim()
 end
 
-function var_0_0.playAnim(arg_3_0)
-	local var_3_0 = UnityEngine.Time.frameCount - Act183TaskListModel.instance.startFrameCount < 10
+function Act183TaskBaseItem:playAnim()
+	local isPlayOpenAnim = UnityEngine.Time.frameCount - Act183TaskListModel.instance.startFrameCount < 10
 
-	arg_3_0._animName = var_3_0 and UIAnimationName.Open or UIAnimationName.Idle
+	self._animName = isPlayOpenAnim and UIAnimationName.Open or UIAnimationName.Idle
 
-	gohelper.setActive(arg_3_0.go, false)
-	TaskDispatcher.cancelTask(arg_3_0._playAnimByName, arg_3_0)
+	gohelper.setActive(self.go, false)
+	TaskDispatcher.cancelTask(self._playAnimByName, self)
 
-	if var_3_0 then
-		TaskDispatcher.runDelay(arg_3_0._playAnimByName, arg_3_0, (arg_3_0._index - 1) * 0.03)
+	if isPlayOpenAnim then
+		TaskDispatcher.runDelay(self._playAnimByName, self, (self._index - 1) * 0.03)
 
 		return
 	end
 
-	arg_3_0:_playAnimByName()
+	self:_playAnimByName()
 end
 
-function var_0_0._playAnimByName(arg_4_0)
-	gohelper.setActive(arg_4_0.go, true)
+function Act183TaskBaseItem:_playAnimByName()
+	gohelper.setActive(self.go, true)
 
-	if not arg_4_0._animName or not arg_4_0.go.activeInHierarchy then
+	if not self._animName or not self.go.activeInHierarchy then
 		return
 	end
 
-	arg_4_0._animatorPlayer:Play(arg_4_0._animName, arg_4_0._onPlayAnimDone, arg_4_0)
+	self._animatorPlayer:Play(self._animName, self._onPlayAnimDone, self)
 end
 
-function var_0_0._onPlayAnimDone(arg_5_0)
+function Act183TaskBaseItem:_onPlayAnimDone()
 	return
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._playAnimByName, arg_6_0)
-	arg_6_0:setBlock(false)
+function Act183TaskBaseItem:onDestroy()
+	TaskDispatcher.cancelTask(self._playAnimByName, self)
+	self:setBlock(false)
 end
 
-function var_0_0.setBlock(arg_7_0, arg_7_1)
-	if arg_7_1 then
+function Act183TaskBaseItem:setBlock(isblock)
+	if isblock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("Act183TaskBaseItem_ReceiveReward")
 	else
@@ -59,4 +61,4 @@ function var_0_0.setBlock(arg_7_0, arg_7_1)
 	end
 end
 
-return var_0_0
+return Act183TaskBaseItem

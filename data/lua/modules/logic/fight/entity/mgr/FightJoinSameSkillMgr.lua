@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.entity.mgr.FightJoinSameSkillMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/mgr/FightJoinSameSkillMgr.lua
 
-local var_0_0 = class("FightJoinSameSkillMgr")
+module("modules.logic.fight.entity.mgr.FightJoinSameSkillMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightJoinSameSkillMgr = class("FightJoinSameSkillMgr")
+
+function FightJoinSameSkillMgr:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0)
+function FightJoinSameSkillMgr:init()
 	return
 end
 
-function var_0_0.dispose(arg_3_0)
+function FightJoinSameSkillMgr:dispose()
 	return
 end
 
-function var_0_0.checkJoinNextSkill(arg_4_0, arg_4_1)
+function FightJoinSameSkillMgr:checkJoinNextSkill(fightStepData)
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+FightJoinSameSkillMgr.instance = FightJoinSameSkillMgr.New()
 
-return var_0_0
+return FightJoinSameSkillMgr

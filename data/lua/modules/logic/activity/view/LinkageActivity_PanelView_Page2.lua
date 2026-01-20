@@ -1,172 +1,178 @@
-﻿module("modules.logic.activity.view.LinkageActivity_PanelView_Page2", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_PanelView_Page2.lua
 
-local var_0_0 = class("LinkageActivity_PanelView_Page2", LinkageActivity_Page2)
+module("modules.logic.activity.view.LinkageActivity_PanelView_Page2", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#txt_Descr")
-	arg_1_0._btnArrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Video/#btn_Arrow")
-	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Video/#simage_Icon")
+local LinkageActivity_PanelView_Page2 = class("LinkageActivity_PanelView_Page2", LinkageActivity_Page2)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LinkageActivity_PanelView_Page2:onInitView()
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#txt_Descr")
+	self._btnArrow = gohelper.findChildButtonWithAudio(self.viewGO, "Video/#btn_Arrow")
+	self._simageIcon = gohelper.findChildSingleImage(self.viewGO, "Video/#simage_Icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnArrow:AddClickListener(arg_2_0._btnArrowOnClick, arg_2_0)
+function LinkageActivity_PanelView_Page2:addEvents()
+	self._btnArrow:AddClickListener(self._btnArrowOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnArrow:RemoveClickListener()
+function LinkageActivity_PanelView_Page2:removeEvents()
+	self._btnArrow:RemoveClickListener()
 end
 
-local var_0_1 = 2
-local var_0_2 = "switch"
+local kDefaultIndex = 2
+local kAnimEvt = "switch"
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function LinkageActivity_PanelView_Page2:ctor(...)
+	LinkageActivity_PanelView_Page2.super.ctor(self, ...)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	arg_5_0._animEvent_video:AddEventListener(var_0_2, arg_5_0._onSwitch, arg_5_0)
-	arg_5_0._clickIcon:AddClickListener(arg_5_0._onClickIcon, arg_5_0)
+function LinkageActivity_PanelView_Page2:_editableAddEvents()
+	self._animEvent_video:AddEventListener(kAnimEvt, self._onSwitch, self)
+	self._clickIcon:AddClickListener(self._onClickIcon, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	arg_6_0._clickIcon:RemoveClickListener()
-	arg_6_0._animEvent_video:RemoveEventListener(var_0_2)
+function LinkageActivity_PanelView_Page2:_editableRemoveEvents()
+	self._clickIcon:RemoveClickListener()
+	self._animEvent_video:RemoveEventListener(kAnimEvt)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	var_0_0.super._editableInitView(arg_7_0)
+function LinkageActivity_PanelView_Page2:_editableInitView()
+	LinkageActivity_PanelView_Page2.super._editableInitView(self)
 
-	local var_7_0 = arg_7_0:getDataList()
+	local dataList = self:getDataList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		arg_7_0:addReward(iter_7_0, gohelper.findChild(arg_7_0.viewGO, "Reward/" .. iter_7_0), LinkageActivity_Page2Reward)
+	for i, mo in ipairs(dataList) do
+		self:addReward(i, gohelper.findChild(self.viewGO, "Reward/" .. i), LinkageActivity_Page2Reward)
 	end
 
-	local var_7_1 = gohelper.findChild(arg_7_0.viewGO, "Video")
+	local videoGo = gohelper.findChild(self.viewGO, "Video")
 
-	arg_7_0._txtTips = gohelper.findChildText(var_7_1, "image_TipsBG/txt_Tips")
+	self._txtTips = gohelper.findChildText(videoGo, "image_TipsBG/txt_Tips")
 
-	arg_7_0:addVideo(1, gohelper.findChild(var_7_1, "av/1"), LinkageActivity_Page2Video)
-	arg_7_0:addVideo(2, gohelper.findChild(var_7_1, "av/2"), LinkageActivity_Page2Video)
+	self:addVideo(1, gohelper.findChild(videoGo, "av/1"), LinkageActivity_Page2Video)
+	self:addVideo(2, gohelper.findChild(videoGo, "av/2"), LinkageActivity_Page2Video)
 
-	arg_7_0._clickIcon = gohelper.getClick(arg_7_0._simageIcon.gameObject)
-	arg_7_0._anim_video = var_7_1:GetComponent(gohelper.Type_Animator)
-	arg_7_0._animEvent_video = gohelper.onceAddComponent(var_7_1, gohelper.Type_AnimationEventWrap)
-	arg_7_0._s_isReceiveGetian = ActivityType101Model.instance:isType101RewardGet(arg_7_0:actId(), 1)
+	self._clickIcon = gohelper.getClick(self._simageIcon.gameObject)
+	self._anim_video = videoGo:GetComponent(gohelper.Type_Animator)
+	self._animEvent_video = gohelper.onceAddComponent(videoGo, gohelper.Type_AnimationEventWrap)
+	self._s_isReceiveGetian = ActivityType101Model.instance:isType101RewardGet(self:actId(), 1)
 
-	arg_7_0:setActive(false)
+	self:setActive(false)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	GameUtil.onDestroyViewMember_SImage(arg_8_0, "_simageIcon")
-	var_0_0.super.onDestroyView(arg_8_0)
+function LinkageActivity_PanelView_Page2:onDestroyView()
+	GameUtil.onDestroyViewMember_SImage(self, "_simageIcon")
+	LinkageActivity_PanelView_Page2.super.onDestroyView(self)
 end
 
-function var_0_0._btnArrowOnClick(arg_9_0)
-	local var_9_0 = 3 - arg_9_0:_currentVideoIndex()
+function LinkageActivity_PanelView_Page2:_btnArrowOnClick()
+	local curIndex = self:_currentVideoIndex()
+	local nextIndex = 3 - curIndex
 
-	arg_9_0:selectedVideo(var_9_0)
+	self:selectedVideo(nextIndex)
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	var_0_0.super.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0:selectedVideo(arg_10_0:_currentVideoIndex())
+function LinkageActivity_PanelView_Page2:onUpdateMO(mo)
+	LinkageActivity_PanelView_Page2.super.onUpdateMO(self, mo)
+	self:selectedVideo(self:_currentVideoIndex())
 end
 
-function var_0_0.onSelectedVideo(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_3 then
-		arg_11_0._anim_video:Play(UIAnimationName.Idle, 0, 1)
-		arg_11_0:_refreshByIndex(arg_11_1)
+function LinkageActivity_PanelView_Page2:onSelectedVideo(index, lastIndex, isFirst)
+	if isFirst then
+		self._anim_video:Play(UIAnimationName.Idle, 0, 1)
+		self:_refreshByIndex(index)
 
 		return
 	end
 
-	arg_11_0:_playAnim_switchTo(arg_11_1)
+	self:_playAnim_switchTo(index)
 end
 
-function var_0_0._currentVideoIndex(arg_12_0)
-	return arg_12_0:curVideoIndex() or var_0_1
+function LinkageActivity_PanelView_Page2:_currentVideoIndex()
+	return self:curVideoIndex() or kDefaultIndex
 end
 
-function var_0_0._onClickIcon(arg_13_0)
-	local var_13_0 = arg_13_0:_getCurConfigIndex()
-	local var_13_1, var_13_2 = arg_13_0:itemCo2TIQ(var_13_0)
+function LinkageActivity_PanelView_Page2:_onClickIcon()
+	local index = self:_getCurConfigIndex()
+	local type_, id_ = self:itemCo2TIQ(index)
 
-	MaterialTipController.instance:showMaterialInfo(var_13_1, var_13_2)
+	MaterialTipController.instance:showMaterialInfo(type_, id_)
 end
 
-function var_0_0._playAnim_switchTo(arg_14_0, arg_14_1)
-	local var_14_0 = "switch" .. tostring(arg_14_1)
+function LinkageActivity_PanelView_Page2:_playAnim_switchTo(index)
+	local animName = "switch" .. tostring(index)
 
-	arg_14_0._anim_video:Play(var_14_0, 0, 0)
+	self._anim_video:Play(animName, 0, 0)
 end
 
-function var_0_0._onSwitch(arg_15_0)
-	local var_15_0 = arg_15_0:_currentVideoIndex()
+function LinkageActivity_PanelView_Page2:_onSwitch()
+	local index = self:_currentVideoIndex()
+	local curVideoItem = self:getVideo(index)
 
-	arg_15_0:getVideo(var_15_0):setAsLastSibling()
-	arg_15_0:_refreshByIndex(var_15_0)
+	curVideoItem:setAsLastSibling()
+	self:_refreshByIndex(index)
 end
 
-function var_0_0._refreshByIndex(arg_16_0, arg_16_1)
-	arg_16_1 = arg_16_0:_getCurConfigIndex(arg_16_1)
+function LinkageActivity_PanelView_Page2:_refreshByIndex(index)
+	index = self:_getCurConfigIndex(index)
 
-	local var_16_0 = arg_16_0:getItemIconResUrl(arg_16_1)
+	local resUrl = self:getItemIconResUrl(index)
 
-	GameUtil.loadSImage(arg_16_0._simageIcon, var_16_0)
+	GameUtil.loadSImage(self._simageIcon, resUrl)
 
-	arg_16_0._txtTips.text = arg_16_0:getLinkageActivityCO_desc(arg_16_1)
+	self._txtTips.text = self:getLinkageActivityCO_desc(index)
 end
 
-function var_0_0._onUpdateMO_videoList(arg_17_0)
-	local var_17_0 = arg_17_0:_isReceiveGetian()
+function LinkageActivity_PanelView_Page2:_onUpdateMO_videoList()
+	local isReceiveGetian = self:_isReceiveGetian()
 
-	assert(#arg_17_0._videoItemList == 2)
+	assert(#self._videoItemList == 2)
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._videoItemList) do
-		local var_17_1 = arg_17_0:getLinkageActivityCO_res_video(var_17_0 and iter_17_0 or 3 - iter_17_0)
-		local var_17_2 = {
-			videoName = var_17_1
+	for i, item in ipairs(self._videoItemList) do
+		local videoName = self:getLinkageActivityCO_res_video(isReceiveGetian and i or 3 - i)
+		local data = {
+			videoName = videoName
 		}
 
-		iter_17_1:onUpdateMO(var_17_2)
+		item:onUpdateMO(data)
 	end
 end
 
-function var_0_0._isReceiveGetian(arg_18_0)
-	return arg_18_0._s_isReceiveGetian
+function LinkageActivity_PanelView_Page2:_isReceiveGetian()
+	return self._s_isReceiveGetian
 end
 
-function var_0_0._selectedVideo_slient(arg_19_0, arg_19_1)
-	arg_19_0._curVideoIndex = arg_19_1
+function LinkageActivity_PanelView_Page2:_selectedVideo_slient(index)
+	self._curVideoIndex = index
 
-	arg_19_0:_onSwitch()
+	self:_onSwitch()
 end
 
-function var_0_0.onPostSelectedPage(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_0 ~= arg_20_1 then
-		if arg_20_0._s_isReceiveGetian then
-			local var_20_0 = ActivityType101Model.instance:isType101RewardGet(arg_20_0:actId(), 1)
+function LinkageActivity_PanelView_Page2:onPostSelectedPage(curPage, lastPage)
+	if self ~= curPage then
+		if self._s_isReceiveGetian then
+			local isType101RewardGet = ActivityType101Model.instance:isType101RewardGet(self:actId(), 1)
 
-			if arg_20_0._s_isReceiveGetian ~= var_20_0 then
-				arg_20_0._s_isReceiveGetian = var_20_0
+			if self._s_isReceiveGetian ~= isType101RewardGet then
+				self._s_isReceiveGetian = isType101RewardGet
 			end
 		end
 
-		arg_20_0:_selectedVideo_slient(var_0_1)
+		self:_selectedVideo_slient(kDefaultIndex)
 	end
 
-	var_0_0.super.onPostSelectedPage(arg_20_0, arg_20_1, arg_20_2)
+	LinkageActivity_PanelView_Page2.super.onPostSelectedPage(self, curPage, lastPage)
 end
 
-function var_0_0._getCurConfigIndex(arg_21_0, arg_21_1)
-	arg_21_1 = arg_21_1 or arg_21_0:_currentVideoIndex()
+function LinkageActivity_PanelView_Page2:_getCurConfigIndex(index)
+	index = index or self:_currentVideoIndex()
 
-	return arg_21_0:_isReceiveGetian() and arg_21_1 or 3 - arg_21_1
+	local isReceiveGetian = self:_isReceiveGetian()
+
+	return isReceiveGetian and index or 3 - index
 end
 
-return var_0_0
+return LinkageActivity_PanelView_Page2

@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.view.FightTopView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightTopView.lua
 
-local var_0_0 = class("FightTopView", FightBaseView)
+module("modules.logic.fight.view.FightTopView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local FightTopView = class("FightTopView", FightBaseView)
+
+function FightTopView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightTopView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightTopView:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
+function FightTopView:onOpen()
+	self:com_openSubView(FightCheckShowPower10View, self.viewGO)
+end
+
+function FightTopView:onClose()
 	return
 end
 
-function var_0_0.onClose(arg_5_0)
+function FightTopView:onDestroyView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	return
-end
-
-return var_0_0
+return FightTopView

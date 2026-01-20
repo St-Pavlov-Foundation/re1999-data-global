@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.system.work.FightWorkAct174MonsterAiCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAct174MonsterAiCard.lua
 
-local var_0_0 = class("FightWorkAct174MonsterAiCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkAct174MonsterAiCard", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendMsg(FightMsgId.Act174MonsterAiCard)
-	arg_1_0:onDone(true)
+local FightWorkAct174MonsterAiCard = class("FightWorkAct174MonsterAiCard", FightEffectBase)
+
+function FightWorkAct174MonsterAiCard:onStart()
+	self:com_sendMsg(FightMsgId.Act174MonsterAiCard)
+	self:onDone(true)
 end
 
-function var_0_0._onPlayCardOver(arg_2_0)
+function FightWorkAct174MonsterAiCard:_onPlayCardOver()
 	return
 end
 
-return var_0_0
+return FightWorkAct174MonsterAiCard

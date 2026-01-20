@@ -1,154 +1,164 @@
-﻿module("modules.logic.room.model.map.building.RoomFormulaModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/building/RoomFormulaModel.lua
 
-local var_0_0 = class("RoomFormulaModel", BaseModel)
+module("modules.logic.room.model.map.building.RoomFormulaModel", package.seeall)
 
-var_0_0.DEFAULT_TREE_LEVEL = 1
-var_0_0.MAX_FORMULA_TREE_LEVEL = 4
+local RoomFormulaModel = class("RoomFormulaModel", BaseModel)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+RoomFormulaModel.DEFAULT_TREE_LEVEL = 1
+RoomFormulaModel.MAX_FORMULA_TREE_LEVEL = 4
+
+function RoomFormulaModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomFormulaModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomFormulaModel:clear()
+	RoomFormulaModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
+function RoomFormulaModel:_clearData()
 	return
 end
 
-function var_0_0.initFormula(arg_5_0)
-	arg_5_0:clear()
+function RoomFormulaModel:initFormula()
+	self:clear()
 
-	local var_5_0 = {}
+	local formulaInfoList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(lua_formula.configList) do
-		local var_5_1 = RoomProductionHelper.getFormulaStrUID(iter_5_1.id, var_0_0.DEFAULT_TREE_LEVEL)
+	for _, config in ipairs(lua_formula.configList) do
+		local strUID = RoomProductionHelper.getFormulaStrUID(config.id, RoomFormulaModel.DEFAULT_TREE_LEVEL)
 
-		table.insert(var_5_0, {
-			id = var_5_1
+		table.insert(formulaInfoList, {
+			id = strUID
 		})
 	end
 
-	arg_5_0:addFormulaList(var_5_0)
+	self:addFormulaList(formulaInfoList)
 end
 
-function var_0_0.addFormulaList(arg_6_0, arg_6_1)
-	if not arg_6_1 or #arg_6_1 <= 0 then
+function RoomFormulaModel:addFormulaList(infoList)
+	if not infoList or #infoList <= 0 then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		arg_6_0:addFormula(iter_6_1)
+	for _, info in ipairs(infoList) do
+		self:addFormula(info)
 	end
 end
 
-function var_0_0.addFormula(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function RoomFormulaModel:addFormula(info)
+	if not info then
 		return
 	end
 
-	local var_7_0 = RoomFormulaMO.New()
+	local formulaMO = RoomFormulaMO.New()
 
-	var_7_0:init(arg_7_1)
+	formulaMO:init(info)
 
-	if not var_7_0:getConfig() then
+	local config = formulaMO:getConfig()
+
+	if not config then
 		return
 	end
 
-	arg_7_0:addAtLast(var_7_0)
+	self:addAtLast(formulaMO)
 
-	return var_7_0
+	return formulaMO
 end
 
-function var_0_0.getAllTopTreeLevelFormulaMoList(arg_8_0)
-	local var_8_0 = {}
-	local var_8_1 = arg_8_0:getList()
+function RoomFormulaModel:getAllTopTreeLevelFormulaMoList()
+	local result = {}
+	local list = self:getList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		if iter_8_1:getFormulaTreeLevel() == var_0_0.DEFAULT_TREE_LEVEL then
-			table.insert(var_8_0, iter_8_1)
+	for _, mo in ipairs(list) do
+		local treeLevel = mo:getFormulaTreeLevel()
+
+		if treeLevel == RoomFormulaModel.DEFAULT_TREE_LEVEL then
+			table.insert(result, mo)
 		end
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getAllTopTreeLevelCount(arg_9_0)
-	return #arg_9_0:getAllTopTreeLevelFormulaMoList()
+function RoomFormulaModel:getAllTopTreeLevelCount()
+	local allTopTreeLevelFormulaMOList = self:getAllTopTreeLevelFormulaMoList()
+
+	return #allTopTreeLevelFormulaMOList
 end
 
-function var_0_0.getTopTreeLevelFormulaMoList(arg_10_0, arg_10_1)
-	local var_10_0 = {}
-	local var_10_1 = arg_10_0:getAllTopTreeLevelFormulaMoList()
+function RoomFormulaModel:getTopTreeLevelFormulaMoList(formulaShowType)
+	local formulaMOList = {}
+	local allTopTreeLevelFormulaMOList = self:getAllTopTreeLevelFormulaMoList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-		if iter_10_1.config.showType == arg_10_1 then
-			table.insert(var_10_0, iter_10_1)
+	for _, formulaMO in ipairs(allTopTreeLevelFormulaMOList) do
+		if formulaMO.config.showType == formulaShowType then
+			table.insert(formulaMOList, formulaMO)
 		end
 	end
 
-	return var_10_0
+	return formulaMOList
 end
 
-function var_0_0.getTopTreeLevelFormulaCount(arg_11_0, arg_11_1)
-	return #arg_11_0:getTopTreeLevelFormulaMoList(arg_11_1)
+function RoomFormulaModel:getTopTreeLevelFormulaCount(formulaShowType)
+	local topTreeLevelFormulaMOList = self:getTopTreeLevelFormulaMoList(formulaShowType)
+
+	return #topTreeLevelFormulaMOList
 end
 
-function var_0_0.getFormulaMo(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getById(arg_12_1)
+function RoomFormulaModel:getFormulaMo(formulaStrId, notError)
+	local formulaMo = self:getById(formulaStrId)
 
-	if not var_12_0 and not arg_12_2 then
-		logError("RoomFormulaModel:getFormulaMo error, can't find RoomFormulaMo:" .. (arg_12_1 or "nil"))
+	if not formulaMo and not notError then
+		logError("RoomFormulaModel:getFormulaMo error, can't find RoomFormulaMo:" .. (formulaStrId or "nil"))
 	end
 
-	return var_12_0
+	return formulaMo
 end
 
-function var_0_0.getFormulaMoWithInfo(arg_13_0, arg_13_1, arg_13_2)
-	if string.nilorempty(arg_13_1) then
+function RoomFormulaModel:getFormulaMoWithInfo(formulaStrId, info)
+	if string.nilorempty(formulaStrId) then
 		return
 	end
 
-	local var_13_0 = arg_13_0:getById(arg_13_1)
+	local formulaMo = self:getById(formulaStrId)
 
-	if var_13_0 then
-		var_13_0:init(arg_13_2)
-		var_13_0:resetFormulaCombineCount()
+	if formulaMo then
+		formulaMo:init(info)
+		formulaMo:resetFormulaCombineCount()
 	else
-		var_13_0 = arg_13_0:addFormula(arg_13_2)
+		formulaMo = self:addFormula(info)
 	end
 
-	return var_13_0
+	return formulaMo
 end
 
-function var_0_0.getFormulaIsLast(arg_14_0, arg_14_1)
-	local var_14_0 = true
-	local var_14_1 = arg_14_0:getFormulaMo(arg_14_1)
+function RoomFormulaModel:getFormulaIsLast(formulaStrId)
+	local result = true
+	local formulaMo = self:getFormulaMo(formulaStrId)
 
-	if var_14_1 then
-		var_14_0 = var_14_1:getIsLast()
+	if formulaMo then
+		result = formulaMo:getIsLast()
 	end
 
-	return var_14_0
+	return result
 end
 
-function var_0_0.getFormulaParentStrId(arg_15_0, arg_15_1)
-	local var_15_0
-	local var_15_1 = var_0_0.instance:getFormulaMo(arg_15_1)
+function RoomFormulaModel:getFormulaParentStrId(formulaStrId)
+	local parentStrId
+	local formulaMO = RoomFormulaModel.instance:getFormulaMo(formulaStrId)
 
-	if var_15_1 then
-		var_15_0 = var_15_1:getParentStrId()
+	if formulaMO then
+		parentStrId = formulaMO:getParentStrId()
 	end
 
-	return var_15_0
+	return parentStrId
 end
 
-var_0_0.instance = var_0_0.New()
+RoomFormulaModel.instance = RoomFormulaModel.New()
 
-return var_0_0
+return RoomFormulaModel

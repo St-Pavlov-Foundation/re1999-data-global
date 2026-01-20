@@ -1,61 +1,66 @@
-﻿module("modules.logic.fight.view.FightGuideItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightGuideItem.lua
 
-local var_0_0 = class("FightGuideItem", LuaCompBase)
+module("modules.logic.fight.view.FightGuideItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_1, "#simage_icon")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_close")
+local FightGuideItem = class("FightGuideItem", LuaCompBase)
 
-	arg_1_0._btnclose:AddClickListener(arg_1_0._btncloseOnClick, arg_1_0)
+function FightGuideItem:init(go)
+	self.go = go
+	self._simagebg = gohelper.findChildSingleImage(go, "#simage_icon")
+	self._btnclose = gohelper.findChildButtonWithAudio(go, "#btn_close")
 
-	arg_1_0._customGODict = arg_1_0:getUserDataTb_()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 
-	local var_1_0 = gohelper.findChild(arg_1_1, "#go_customList").transform
-	local var_1_1 = var_1_0.childCount
+	self._customGODict = self:getUserDataTb_()
 
-	for iter_1_0 = 1, var_1_1 do
-		local var_1_2 = var_1_0:GetChild(iter_1_0 - 1)
-		local var_1_3 = tonumber(var_1_2.name)
+	local customParentGO = gohelper.findChild(go, "#go_customList")
+	local customParentTr = customParentGO.transform
+	local childCount = customParentTr.childCount
 
-		if var_1_3 then
-			arg_1_0._customGODict[var_1_3] = var_1_2.gameObject
+	for i = 1, childCount do
+		local childTr = customParentTr:GetChild(i - 1)
+		local id = tonumber(childTr.name)
+
+		if id then
+			self._customGODict[id] = childTr.gameObject
 		end
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_2_0)
+function FightGuideItem:_btncloseOnClick()
 	ViewMgr.instance:closeView(ViewName.FightGuideView)
 end
 
-function var_0_0.updateItem(arg_3_0, arg_3_1)
-	arg_3_0._index = arg_3_1.index
-	arg_3_0._maxIndex = arg_3_1.maxIndex
-	arg_3_0._id = arg_3_1.id
+function FightGuideItem:updateItem(param)
+	self._index = param.index
+	self._maxIndex = param.maxIndex
+	self._id = param.id
 
-	transformhelper.setLocalPos(arg_3_0.go.transform, arg_3_1.pos, 0, 0)
-	arg_3_0._simagebg:LoadImage(ResUrl.getFightGuideIcon(arg_3_0._id))
-	gohelper.setActive(arg_3_0._customGODict[arg_3_0._id], true)
-	gohelper.setActive(arg_3_0._btnclose.gameObject, arg_3_0._maxIndex == arg_3_0._index)
+	transformhelper.setLocalPos(self.go.transform, param.pos, 0, 0)
+	self._simagebg:LoadImage(ResUrl.getFightGuideIcon(self._id))
+	gohelper.setActive(self._customGODict[self._id], true)
+	gohelper.setActive(self._btnclose.gameObject, self._maxIndex == self._index)
 end
 
-function var_0_0.setSelect(arg_4_0, arg_4_1)
-	if arg_4_0._index == arg_4_1 then
-		gohelper.setActive(arg_4_0.go, true)
-		TaskDispatcher.cancelTask(arg_4_0._hideGO, arg_4_0)
-	elseif arg_4_0.go.activeInHierarchy then
-		TaskDispatcher.runDelay(arg_4_0._hideGO, arg_4_0, 0.25)
+function FightGuideItem:setSelect(index)
+	local isSelect = self._index == index
+
+	if isSelect then
+		gohelper.setActive(self.go, true)
+		TaskDispatcher.cancelTask(self._hideGO, self)
+	elseif self.go.activeInHierarchy then
+		TaskDispatcher.runDelay(self._hideGO, self, 0.25)
 	end
 end
 
-function var_0_0._hideGO(arg_5_0)
-	gohelper.setActive(arg_5_0.go, false)
+function FightGuideItem:_hideGO()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	arg_6_0._btnclose:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_6_0._hideGO, arg_6_0)
-	arg_6_0._simagebg:UnLoadImage()
+function FightGuideItem:onDestroy()
+	self._btnclose:RemoveClickListener()
+	TaskDispatcher.cancelTask(self._hideGO, self)
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return FightGuideItem

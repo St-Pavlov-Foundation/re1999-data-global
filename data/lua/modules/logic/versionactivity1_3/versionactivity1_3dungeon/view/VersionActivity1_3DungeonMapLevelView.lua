@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/view/VersionActivity1_3DungeonMapLevelView.lua
 
-local var_0_0 = class("VersionActivity1_3DungeonMapLevelView", VersionActivity1_3DungeonBaseMapLevelView)
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapLevelView", package.seeall)
 
-function var_0_0.getEpisodeIndex(arg_1_0)
-	return VersionActivity1_3DungeonController.instance:getEpisodeIndex(arg_1_0.originEpisodeConfig.id)
+local VersionActivity1_3DungeonMapLevelView = class("VersionActivity1_3DungeonMapLevelView", VersionActivity1_3DungeonBaseMapLevelView)
+
+function VersionActivity1_3DungeonMapLevelView:getEpisodeIndex()
+	return VersionActivity1_3DungeonController.instance:getEpisodeIndex(self.originEpisodeConfig.id)
 end
 
-return var_0_0
+return VersionActivity1_3DungeonMapLevelView

@@ -1,19 +1,21 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepDead", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepDead.lua
 
-local var_0_0 = class("ChessStepDead", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepDead", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepDead = class("ChessStepDead", BaseWork)
+
+function ChessStepDead:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:_onFail()
+function ChessStepDead:onStart()
+	self:_onFail()
 end
 
-function var_0_0._onFail(arg_3_0)
+function ChessStepDead:_onFail()
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.OnFail)
 	ChessGameController.instance:gameOver()
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ChessStepDead

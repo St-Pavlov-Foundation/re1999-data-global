@@ -1,184 +1,183 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRushMainView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRushMainView.lua
 
-local var_0_0 = class("V1a4_BossRushMainView", BaseView)
+module("modules.logic.bossrush.view.V1a4_BossRushMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "LimitTime/#txt_LimitTime")
-	arg_1_0._scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "Rewards/#scroll_Rewards")
-	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "Rewards/#scroll_Rewards/Viewport/#go_Rewards")
-	arg_1_0._btnStore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Store/#btn_Store")
-	arg_1_0._simageProp = gohelper.findChildImage(arg_1_0.viewGO, "Store/#btn_Store/#simage_Prop")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "Store/#btn_Store/#txt_Num")
-	arg_1_0._scrollChapterList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ChapterList")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_ChapterList/Viewport/#go_Content")
-	arg_1_0._btnAchievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "TopRight/#btn_Achievement")
-	arg_1_0._txtAchievement = gohelper.findChildText(arg_1_0.viewGO, "TopRight/#txt_Achievement")
-	arg_1_0._goStoreTip = gohelper.findChild(arg_1_0.viewGO, "Store/image_Tips")
-	arg_1_0._txtStore = gohelper.findChildText(arg_1_0.viewGO, "Store/#btn_Store/txt_Store")
-	arg_1_0._txtActDesc = gohelper.findChildText(arg_1_0.viewGO, "txtDescr")
+local V1a4_BossRushMainView = class("V1a4_BossRushMainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a4_BossRushMainView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "LimitTime/#txt_LimitTime")
+	self._scrollRewards = gohelper.findChildScrollRect(self.viewGO, "Rewards/#scroll_Rewards")
+	self._goRewards = gohelper.findChild(self.viewGO, "Rewards/#scroll_Rewards/Viewport/#go_Rewards")
+	self._btnStore = gohelper.findChildButtonWithAudio(self.viewGO, "Store/#btn_Store")
+	self._simageProp = gohelper.findChildImage(self.viewGO, "Store/#btn_Store/#simage_Prop")
+	self._txtNum = gohelper.findChildText(self.viewGO, "Store/#btn_Store/#txt_Num")
+	self._scrollChapterList = gohelper.findChildScrollRect(self.viewGO, "#scroll_ChapterList")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_ChapterList/Viewport/#go_Content")
+	self._btnAchievement = gohelper.findChildButtonWithAudio(self.viewGO, "TopRight/#btn_Achievement")
+	self._txtAchievement = gohelper.findChildText(self.viewGO, "TopRight/#txt_Achievement")
+	self._goStoreTip = gohelper.findChild(self.viewGO, "Store/image_Tips")
+	self._txtStore = gohelper.findChildText(self.viewGO, "Store/#btn_Store/txt_Store")
+	self._txtActDesc = gohelper.findChildText(self.viewGO, "txtDescr")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnStore:AddClickListener(arg_2_0._btnStoreOnClick, arg_2_0)
-	arg_2_0._btnAchievement:AddClickListener(arg_2_0._btnAchievementOnClick, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._refreshCurrency, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0._refreshStoreTag, arg_2_0)
-	arg_2_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_2_0._refreshStoreTag, arg_2_0)
-	arg_2_0:addEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, arg_2_0._refreshStoreTag, arg_2_0)
+function V1a4_BossRushMainView:addEvents()
+	self._btnStore:AddClickListener(self._btnStoreOnClick, self)
+	self._btnAchievement:AddClickListener(self._btnAchievementOnClick, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshStoreTag, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, self._refreshStoreTag, self)
+	self:addEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, self._refreshStoreTag, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnStore:RemoveClickListener()
-	arg_3_0._btnAchievement:RemoveClickListener()
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._refreshCurrency, arg_3_0)
-	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0._refreshStoreTag, arg_3_0)
-	arg_3_0:removeEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_3_0._refreshStoreTag, arg_3_0)
-	arg_3_0:removeEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, arg_3_0._refreshStoreTag, arg_3_0)
+function V1a4_BossRushMainView:removeEvents()
+	self._btnStore:RemoveClickListener()
+	self._btnAchievement:RemoveClickListener()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshStoreTag, self)
+	self:removeEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, self._refreshStoreTag, self)
+	self:removeEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, self._refreshStoreTag, self)
 end
 
-function var_0_0._btnStoreOnClick(arg_4_0)
-	BossRushController.instance:openBossRushStoreView(arg_4_0.actId)
+function V1a4_BossRushMainView:_btnStoreOnClick()
+	BossRushController.instance:openBossRushStoreView(self.actId)
 end
 
-function var_0_0._btnAchievementOnClick(arg_5_0)
-	local var_5_0 = ActivityConfig.instance:getActivityCo(arg_5_0.actId)
-	local var_5_1 = var_5_0 and var_5_0.achievementJumpId
+function V1a4_BossRushMainView:_btnAchievementOnClick()
+	local activityCfg = ActivityConfig.instance:getActivityCo(self.actId)
+	local achievementJumpId = activityCfg and activityCfg.achievementJumpId
 
-	JumpController.instance:jump(var_5_1)
+	JumpController.instance:jump(achievementJumpId)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._txtLimitTime.text = ""
+function V1a4_BossRushMainView:_editableInitView()
+	self._txtLimitTime.text = ""
+	self._txtAchievement.text = luaLang("achievement_name")
 
-	arg_6_0._simagebg:LoadImage(ResUrl.getV1a4BossRushSinglebg("v1a4_bossrush_mainfullbg"))
+	local nameCn, nameEn = V1a6_BossRush_StoreModel.instance:getStoreGroupName(StoreEnum.BossRushStore.ManeTrust)
 
-	arg_6_0._txtAchievement.text = luaLang("achievement_name")
-
-	local var_6_0, var_6_1 = V1a6_BossRush_StoreModel.instance:getStoreGroupName(StoreEnum.BossRushStore.ManeTrust)
-
-	arg_6_0._txtStore.text = var_6_0
+	self._txtStore.text = nameCn
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function V1a4_BossRushMainView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.actId = BossRushConfig.instance:getActivityId()
+function V1a4_BossRushMainView:onOpen()
+	self.actId = BossRushConfig.instance:getActivityId()
 
-	if arg_8_0.viewParam and arg_8_0.viewParam.isOpenLevelDetail then
-		local var_8_0 = arg_8_0.viewParam.stage
-		local var_8_1 = arg_8_0.viewParam.layer
-		local var_8_2 = {
-			stage = var_8_0,
-			layer = var_8_1
+	if self.viewParam and self.viewParam.isOpenLevelDetail then
+		local stage = self.viewParam.stage
+		local layer = self.viewParam.layer
+		local viewParam = {
+			stage = stage,
+			layer = layer
 		}
 
-		BossRushController.instance:openLevelDetailView(var_8_2)
+		BossRushController.instance:openLevelDetailView(viewParam)
 	end
 
-	arg_8_0:_refresh()
-	TaskDispatcher.runRepeat(arg_8_0._onRefreshDeadline, arg_8_0, 1)
-	arg_8_0:_refreshCurrency()
-	arg_8_0:_refreshStoreTag()
+	self:_refresh()
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
+	self:_refreshCurrency()
+	self:_refreshStoreTag()
 end
 
-function var_0_0._refreshStoreTag(arg_9_0)
-	local var_9_0 = V1a6_BossRush_StoreModel.instance:isHasNewGoodsInStore()
+function V1a4_BossRushMainView:_refreshStoreTag()
+	local isNew = V1a6_BossRush_StoreModel.instance:isHasNewGoodsInStore()
 
-	gohelper.setActive(arg_9_0._goStoreTip, var_9_0)
+	gohelper.setActive(self._goStoreTip, isNew)
 end
 
-function var_0_0.onOpenFinish(arg_10_0)
+function V1a4_BossRushMainView:onOpenFinish()
 	BossRushRedModel.instance:setIsOpenActivity(false)
 end
 
-function var_0_0.onClose(arg_11_0)
-	GameUtil.onDestroyViewMemberList(arg_11_0, "_itemList")
-	TaskDispatcher.cancelTask(arg_11_0._onRefreshDeadline, arg_11_0)
+function V1a4_BossRushMainView:onClose()
+	GameUtil.onDestroyViewMemberList(self, "_itemList")
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onRefreshDeadline, arg_12_0)
-	arg_12_0._simagebg:UnLoadImage()
+function V1a4_BossRushMainView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	self._simagebg:UnLoadImage()
 end
 
-function var_0_0._onRefreshDeadline(arg_13_0)
-	arg_13_0._txtLimitTime.text = BossRushModel.instance:getRemainTimeStr()
+function V1a4_BossRushMainView:_onRefreshDeadline()
+	self._txtLimitTime.text = BossRushModel.instance:getRemainTimeStr()
 end
 
-function var_0_0._refresh(arg_14_0)
-	arg_14_0:_refreshLeft()
-	arg_14_0:_refreshRight()
+function V1a4_BossRushMainView:_refresh()
+	self:_refreshLeft()
+	self:_refreshRight()
 end
 
-function var_0_0._refreshLeft(arg_15_0)
-	arg_15_0:_refreshLeftTop()
-	arg_15_0:_refreshLeftBottom()
+function V1a4_BossRushMainView:_refreshLeft()
+	self:_refreshLeftTop()
+	self:_refreshLeftBottom()
 end
 
-function var_0_0._refreshCurrency(arg_16_0)
-	local var_16_0 = V1a6_BossRush_StoreModel.instance:getCurrencyCount(arg_16_0.actId)
+function V1a4_BossRushMainView:_refreshCurrency()
+	local count = V1a6_BossRush_StoreModel.instance:getCurrencyCount(self.actId)
 
-	if var_16_0 then
-		arg_16_0._txtNum.text = var_16_0
+	if count then
+		self._txtNum.text = count
 	end
 end
 
-function var_0_0._create_V1a4_BossRushMainItem(arg_17_0)
-	local var_17_0 = V1a4_BossRushMainItem
-	local var_17_1 = arg_17_0.viewContainer:getResInst(BossRushModel.instance:getActivityMainViewItemPath(), arg_17_0._goContent, var_17_0.__cname)
+function V1a4_BossRushMainView:_create_V1a4_BossRushMainItem()
+	local itemClass = V1a4_BossRushMainItem
+	local go = self.viewContainer:getResInst(BossRushModel.instance:getActivityMainViewItemPath(), self._goContent, itemClass.__cname)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, var_17_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 end
 
-function var_0_0._initItemList(arg_18_0, arg_18_1)
-	if arg_18_0._itemList then
+function V1a4_BossRushMainView:_initItemList(dataList)
+	if self._itemList then
 		return
 	end
 
-	arg_18_0._itemList = {}
+	self._itemList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		local var_18_0 = arg_18_0:_create_V1a4_BossRushMainItem()
+	for i, mo in ipairs(dataList) do
+		local item = self:_create_V1a4_BossRushMainItem()
 
-		var_18_0._index = iter_18_0
+		item._index = i
 
-		var_18_0:setData(iter_18_1, true)
-		table.insert(arg_18_0._itemList, var_18_0)
+		item:setData(mo, true)
+		table.insert(self._itemList, item)
 	end
 end
 
-function var_0_0._refreshRight(arg_19_0)
-	local var_19_0 = BossRushModel.instance:getStagesInfo()
+function V1a4_BossRushMainView:_refreshRight()
+	local dataList = BossRushModel.instance:getStagesInfo()
 
-	arg_19_0:_initItemList(var_19_0)
+	self:_initItemList(dataList)
 end
 
-function var_0_0._refreshLeftTop(arg_20_0)
-	arg_20_0:_onRefreshDeadline()
+function V1a4_BossRushMainView:_refreshLeftTop()
+	self:_onRefreshDeadline()
 end
 
-function var_0_0._refreshLeftBottom(arg_21_0)
-	local var_21_0 = BossRushConfig.instance:getActivityRewardStr()
-	local var_21_1 = ItemModel.instance:getItemDataListByConfigStr(var_21_0)
+function V1a4_BossRushMainView:_refreshLeftBottom()
+	local str = BossRushConfig.instance:getActivityRewardStr()
+	local item_list = ItemModel.instance:getItemDataListByConfigStr(str)
 
-	IconMgr.instance:getCommonPropItemIconList(arg_21_0, arg_21_0._onRewardItemShow, var_21_1, arg_21_0._goRewards)
+	IconMgr.instance:getCommonPropItemIconList(self, self._onRewardItemShow, item_list, self._goRewards)
 end
 
-function var_0_0._onRewardItemShow(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	arg_22_1:onUpdateMO(arg_22_2)
-	arg_22_1:setConsume(true)
-	arg_22_1:showStackableNum2()
-	arg_22_1:isShowEffect(true)
-	arg_22_1:setAutoPlay(true)
-	arg_22_1:setCountFontSize(48)
-	arg_22_1:isShowEquipAndItemCount(false)
+function V1a4_BossRushMainView:_onRewardItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
+	cell_component:isShowEquipAndItemCount(false)
 end
 
-return var_0_0
+return V1a4_BossRushMainView

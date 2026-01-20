@@ -1,38 +1,41 @@
-﻿module("modules.logic.sp01.assassin2.outside.model.AssassinItemMO", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/model/AssassinItemMO.lua
 
-local var_0_0 = class("AssassinItemMO")
+module("modules.logic.sp01.assassin2.outside.model.AssassinItemMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.itemId
-	arg_1_0.count = arg_1_1.count
+local AssassinItemMO = class("AssassinItemMO")
+
+function AssassinItemMO:ctor(itemData)
+	self.id = itemData.itemId
+	self.count = itemData.count
 end
 
-function var_0_0.getId(arg_2_0)
-	return arg_2_0.id
+function AssassinItemMO:getId()
+	return self.id
 end
 
-function var_0_0.getCount(arg_3_0)
-	return arg_3_0.count
+function AssassinItemMO:getCount()
+	return self.count
 end
 
-function var_0_0.addCount(arg_4_0, arg_4_1)
-	arg_4_0.count = arg_4_0.count + arg_4_1
+function AssassinItemMO:addCount(count)
+	self.count = self.count + count
 end
 
-function var_0_0.subCount(arg_5_0, arg_5_1)
-	if arg_5_1 > arg_5_0.count then
-		logError(string.format("AssassinItemMO:subCount error, count not enough, itemId:%s, curCount:%s, subCount:%s", arg_5_0.id, arg_5_0.count, arg_5_1))
+function AssassinItemMO:subCount(count)
+	if count > self.count then
+		logError(string.format("AssassinItemMO:subCount error, count not enough, itemId:%s, curCount:%s, subCount:%s", self.id, self.count, count))
 
-		arg_5_0.count = 0
+		self.count = 0
 	else
-		arg_5_0.count = arg_5_0.count - arg_5_1
+		self.count = self.count - count
 	end
 end
 
-function var_0_0.isNew(arg_6_0)
-	local var_6_0 = AssassinHelper.getPlayerCacheDataKey(AssassinEnum.PlayerCacheDataKey.NewAssassinItem, arg_6_0.id)
+function AssassinItemMO:isNew()
+	local cacheKey = AssassinHelper.getPlayerCacheDataKey(AssassinEnum.PlayerCacheDataKey.NewAssassinItem, self.id)
+	local isNew = AssassinOutsideModel.instance:getCacheKeyData(cacheKey)
 
-	return (AssassinOutsideModel.instance:getCacheKeyData(var_6_0))
+	return isNew
 end
 
-return var_0_0
+return AssassinItemMO

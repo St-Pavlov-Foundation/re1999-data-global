@@ -1,196 +1,200 @@
-﻿module("modules.logic.room.model.mainview.RoomTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/mainview/RoomTaskModel.lua
 
-local var_0_0 = class("RoomTaskModel", BaseModel)
+module("modules.logic.room.model.mainview.RoomTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomTaskModel = class("RoomTaskModel", BaseModel)
+
+function RoomTaskModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomTaskModel:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
+function RoomTaskModel:clear()
+	RoomTaskModel.super.clear(self)
 
-	arg_3_0._taskDatas = nil
-	arg_3_0._taskMap = nil
-	arg_3_0._showList = nil
-	arg_3_0._taskFinishMap = nil
-	arg_3_0.hasTask = false
-	arg_3_0._isRunning = false
+	self._taskDatas = nil
+	self._taskMap = nil
+	self._showList = nil
+	self._taskFinishMap = nil
+	self.hasTask = false
+	self._isRunning = false
 end
 
-function var_0_0.buildDatas(arg_4_0)
-	arg_4_0._isRunning = true
-	arg_4_0.hasTask = false
+function RoomTaskModel:buildDatas()
+	self._isRunning = true
+	self.hasTask = false
 
-	arg_4_0:initData()
-	arg_4_0:initConfig()
+	self:initData()
+	self:initConfig()
 end
 
-function var_0_0.handleTaskUpdate(arg_5_0)
-	if arg_5_0._isRunning then
-		arg_5_0.hasTask = false
+function RoomTaskModel:handleTaskUpdate()
+	if self._isRunning then
+		self.hasTask = false
 
-		return arg_5_0:updateData()
+		return self:updateData()
 	end
 end
 
-function var_0_0.initData(arg_6_0)
-	local var_6_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room)
-	local var_6_1 = {}
-	local var_6_2 = {}
-	local var_6_3 = {}
+function RoomTaskModel:initData()
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room)
+	local result = {}
+	local taskIDDict = {}
+	local taskFinishedIDDict = {}
 
-	if var_6_0 then
-		for iter_6_0, iter_6_1 in pairs(var_6_0) do
-			if iter_6_1.config ~= nil then
-				if iter_6_1.finishCount <= 0 then
-					arg_6_0.hasTask = true
+	if taskDict then
+		for taskId, mo in pairs(taskDict) do
+			if mo.config ~= nil then
+				local running = mo.finishCount <= 0
 
-					table.insert(var_6_1, iter_6_1)
+				if running then
+					self.hasTask = true
 
-					var_6_2[iter_6_1.id] = iter_6_1
+					table.insert(result, mo)
+
+					taskIDDict[mo.id] = mo
 				else
-					var_6_3[iter_6_1.id] = iter_6_1
+					taskFinishedIDDict[mo.id] = mo
 				end
 			end
 		end
 	end
 
-	table.sort(var_6_1, RoomSceneTaskController.sortTask)
+	table.sort(result, RoomSceneTaskController.sortTask)
 
-	arg_6_0._taskDatas = var_6_1
-	arg_6_0._taskMap = var_6_2
-	arg_6_0._taskFinishMap = var_6_3
+	self._taskDatas = result
+	self._taskMap = taskIDDict
+	self._taskFinishMap = taskFinishedIDDict
 end
 
-function var_0_0.initConfig(arg_7_0)
-	local var_7_0 = TaskConfig.instance:gettaskroomlist()
-	local var_7_1 = {}
-	local var_7_2 = false
+function RoomTaskModel:initConfig()
+	local cfgList = TaskConfig.instance:gettaskroomlist()
+	local showList = {}
+	local isStartFocus = false
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_3 = iter_7_1.id
+	for _, taskCo in ipairs(cfgList) do
+		local taskId = taskCo.id
 
-		if not var_7_2 and (arg_7_0._taskFinishMap[var_7_3] or arg_7_0._taskMap[var_7_3]) and iter_7_1.isOnline == 1 then
-			var_7_2 = true
+		if not isStartFocus and (self._taskFinishMap[taskId] or self._taskMap[taskId]) and taskCo.isOnline == 1 then
+			isStartFocus = true
 		end
 
-		local var_7_4 = arg_7_0._taskFinishMap[var_7_3] == nil
+		local notFinish = self._taskFinishMap[taskId] == nil
 
-		if var_7_2 and var_7_4 then
-			table.insert(var_7_1, iter_7_1)
+		if isStartFocus and notFinish then
+			table.insert(showList, taskCo)
 		end
 	end
 
-	table.sort(var_7_1, RoomSceneTaskController.sortTaskConfig)
+	table.sort(showList, RoomSceneTaskController.sortTaskConfig)
 
-	arg_7_0._showList = var_7_1
+	self._showList = showList
 end
 
-function var_0_0.updateData(arg_8_0)
-	local var_8_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room)
-	local var_8_1
+function RoomTaskModel:updateData()
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Room)
+	local deleteList
 
-	if var_8_0 then
-		local var_8_2 = false
+	if taskDict then
+		local needSort = false
 
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			if iter_8_1.config ~= nil then
-				local var_8_3 = iter_8_1.finishCount <= 0
+		for taskId, mo in pairs(taskDict) do
+			if mo.config ~= nil then
+				local running = mo.finishCount <= 0
 
-				if not var_8_3 then
-					if arg_8_0._taskMap[iter_8_0] then
-						var_8_1 = var_8_1 or {}
+				if not running then
+					if self._taskMap[taskId] then
+						deleteList = deleteList or {}
 
-						table.insert(var_8_1, iter_8_1)
-						arg_8_0:deleteTaskData(iter_8_1)
+						table.insert(deleteList, mo)
+						self:deleteTaskData(mo)
 					end
 
-					arg_8_0._taskFinishMap[iter_8_1.id] = iter_8_1
-				elseif var_8_3 then
-					if not arg_8_0._taskMap[iter_8_0] then
-						arg_8_0:addTaskData(iter_8_1)
+					self._taskFinishMap[mo.id] = mo
+				elseif running then
+					if not self._taskMap[taskId] then
+						self:addTaskData(mo)
 
-						var_8_2 = true
+						needSort = true
 					else
-						arg_8_0:updateTaskData(iter_8_1)
+						self:updateTaskData(mo)
 					end
 				end
 			end
 		end
 
-		if var_8_2 then
-			table.sort(arg_8_0._taskDatas, RoomSceneTaskController.sortTask)
-			arg_8_0:initConfig()
+		if needSort then
+			table.sort(self._taskDatas, RoomSceneTaskController.sortTask)
+			self:initConfig()
 		end
 	end
 
-	return var_8_1
+	return deleteList
 end
 
-function var_0_0.deleteTaskData(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1.config.id
+function RoomTaskModel:deleteTaskData(taskMO)
+	local taskId = taskMO.config.id
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._taskDatas) do
-		if iter_9_1.config.id == var_9_0 then
-			table.remove(arg_9_0._taskDatas, iter_9_0)
+	for index, mo in pairs(self._taskDatas) do
+		if mo.config.id == taskId then
+			table.remove(self._taskDatas, index)
 		end
 	end
 
-	for iter_9_2, iter_9_3 in pairs(arg_9_0._showList) do
-		if var_9_0 == iter_9_3.id then
-			table.remove(arg_9_0._showList, iter_9_2)
+	for index, co in pairs(self._showList) do
+		if taskId == co.id then
+			table.remove(self._showList, index)
 		end
 	end
 
-	arg_9_0._taskMap[var_9_0] = nil
+	self._taskMap[taskId] = nil
 end
 
-function var_0_0.addTaskData(arg_10_0, arg_10_1)
-	table.insert(arg_10_0._taskDatas, arg_10_1)
+function RoomTaskModel:addTaskData(taskMO)
+	table.insert(self._taskDatas, taskMO)
 
-	arg_10_0._taskMap[arg_10_1.id] = arg_10_1
+	self._taskMap[taskMO.id] = taskMO
 end
 
-function var_0_0.updateTaskData(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1.config.id
+function RoomTaskModel:updateTaskData(taskMO)
+	local taskId = taskMO.config.id
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._taskDatas) do
-		if iter_11_1.config.id == var_11_0 then
-			arg_11_0._taskDatas[iter_11_0] = arg_11_1
+	for index, mo in pairs(self._taskDatas) do
+		if mo.config.id == taskId then
+			self._taskDatas[index] = taskMO
 
 			break
 		end
 	end
 
-	arg_11_0._taskMap[var_11_0] = arg_11_1
+	self._taskMap[taskId] = taskMO
 end
 
-function var_0_0.getTaskDatas(arg_12_0)
-	return arg_12_0._taskDatas
+function RoomTaskModel:getTaskDatas()
+	return self._taskDatas
 end
 
-function var_0_0.getNextTaskConfig(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._showList) do
-		if not arg_13_0._taskMap[iter_13_1.id] and not arg_13_0._taskFinishMap[iter_13_1.id] then
-			return iter_13_1
+function RoomTaskModel:getNextTaskConfig()
+	for _, taskCo in ipairs(self._showList) do
+		if not self._taskMap[taskCo.id] and not self._taskFinishMap[taskCo.id] then
+			return taskCo
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.tryGetTaskMO(arg_14_0, arg_14_1)
-	return arg_14_0._taskMap[arg_14_1]
+function RoomTaskModel:tryGetTaskMO(taskId)
+	return self._taskMap[taskId]
 end
 
-function var_0_0.getShowList(arg_15_0)
-	return arg_15_0._showList
+function RoomTaskModel:getShowList()
+	return self._showList
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTaskModel.instance = RoomTaskModel.New()
 
-return var_0_0
+return RoomTaskModel

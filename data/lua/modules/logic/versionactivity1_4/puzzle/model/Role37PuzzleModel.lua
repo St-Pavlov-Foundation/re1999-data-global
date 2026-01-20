@@ -1,76 +1,78 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.model.Role37PuzzleModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/model/Role37PuzzleModel.lua
 
-local var_0_0 = class("Role37PuzzleModel", BaseModel)
+module("modules.logic.versionactivity1_4.puzzle.model.Role37PuzzleModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Role37PuzzleModel = class("Role37PuzzleModel", BaseModel)
+
+function Role37PuzzleModel:onInit()
 	return
 end
 
-function var_0_0.clear(arg_2_0)
-	arg_2_0.puzzleCfg = nil
-	arg_2_0.maxStep = nil
-	arg_2_0.maxOper = nil
-	arg_2_0.operGroupId = nil
-	arg_2_0.operGroupCfg = nil
-	arg_2_0.operGroupList = nil
-	arg_2_0.matchList = nil
-	arg_2_0.operList = nil
-	arg_2_0.recordList = nil
-	arg_2_0.controllRecords = nil
-	arg_2_0.isSucess = nil
+function Role37PuzzleModel:clear()
+	self.puzzleCfg = nil
+	self.maxStep = nil
+	self.maxOper = nil
+	self.operGroupId = nil
+	self.operGroupCfg = nil
+	self.operGroupList = nil
+	self.matchList = nil
+	self.operList = nil
+	self.recordList = nil
+	self.controllRecords = nil
+	self.isSucess = nil
 end
 
-function var_0_0.setPuzzleId(arg_3_0, arg_3_1)
-	arg_3_0.puzzleId = arg_3_1
+function Role37PuzzleModel:setPuzzleId(_puzzleId)
+	self.puzzleId = _puzzleId
 
-	arg_3_0:initCfg()
-	arg_3_0:initParam()
+	self:initCfg()
+	self:initParam()
 end
 
-function var_0_0.initCfg(arg_4_0)
-	arg_4_0.puzzleCfg = Activity130Config.instance:getActivity130DecryptCo(Activity130Enum.ActivityId.Act130, arg_4_0.puzzleId)
-	arg_4_0.maxStep = arg_4_0.puzzleCfg.maxStep
-	arg_4_0.maxOper = arg_4_0.puzzleCfg.maxOper
-	arg_4_0.operGroupId = arg_4_0.puzzleCfg.operGroupId
-	arg_4_0.operGroupCfg = Activity130Config.instance:getOperGroup(Activity130Enum.ActivityId.Act130, arg_4_0.operGroupId)
-	arg_4_0.operGroupList = {}
+function Role37PuzzleModel:initCfg()
+	self.puzzleCfg = Activity130Config.instance:getActivity130DecryptCo(Activity130Enum.ActivityId.Act130, self.puzzleId)
+	self.maxStep = self.puzzleCfg.maxStep
+	self.maxOper = self.puzzleCfg.maxOper
+	self.operGroupId = self.puzzleCfg.operGroupId
+	self.operGroupCfg = Activity130Config.instance:getOperGroup(Activity130Enum.ActivityId.Act130, self.operGroupId)
+	self.operGroupList = {}
 
-	local var_4_0 = Activity130Config.instance:getOperGroup(Activity130Enum.ActivityId.Act130, arg_4_0.operGroupId)
+	local operGroupCfg = Activity130Config.instance:getOperGroup(Activity130Enum.ActivityId.Act130, self.operGroupId)
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		table.insert(arg_4_0.operGroupList, iter_4_1)
+	for k, v in pairs(operGroupCfg) do
+		table.insert(self.operGroupList, v)
 	end
 
-	table.sort(arg_4_0.operGroupList, function(arg_5_0, arg_5_1)
-		return arg_5_0.operType < arg_5_1.operType
+	table.sort(self.operGroupList, function(a, b)
+		return a.operType < b.operType
 	end)
 
-	arg_4_0.matchList = string.splitToNumber(arg_4_0.puzzleCfg.answer, "|")
+	self.matchList = string.splitToNumber(self.puzzleCfg.answer, "|")
 end
 
-function var_0_0.initParam(arg_6_0)
-	arg_6_0.operList = {}
-	arg_6_0.recordList = {}
+function Role37PuzzleModel:initParam()
+	self.operList = {}
+	self.recordList = {}
 
 	PuzzleRecordListModel.instance:clearRecord()
 
-	arg_6_0.controllRecords = {}
+	self.controllRecords = {}
 
-	arg_6_0:initVariable()
-	arg_6_0:setCurErrorIndex(0)
+	self:initVariable()
+	self:setCurErrorIndex(0)
 
-	arg_6_0.isSucess = false
+	self.isSucess = false
 end
 
-function var_0_0.initVariable(arg_7_0)
-	arg_7_0.maxDis = 8
-	arg_7_0.remainDis = arg_7_0.maxDis
-	arg_7_0.passDay = 1
-	arg_7_0.handleBa = 0
-	arg_7_0.maxHandle = 6
-	arg_7_0.curPos = 1
-	arg_7_0.maxPos = 7
-	arg_7_0.routeBaList = {
+function Role37PuzzleModel:initVariable()
+	self.maxDis = 8
+	self.remainDis = self.maxDis
+	self.passDay = 1
+	self.handleBa = 0
+	self.maxHandle = 6
+	self.curPos = 1
+	self.maxPos = 7
+	self.routeBaList = {
 		12,
 		0,
 		0,
@@ -79,59 +81,59 @@ function var_0_0.initVariable(arg_7_0)
 		0,
 		0
 	}
-	arg_7_0.leftBank = {
+	self.leftBank = {
 		1,
 		2,
 		3
 	}
-	arg_7_0.rightBank = {}
-	arg_7_0.boat = {}
-	arg_7_0.curBank = arg_7_0.leftBank
-	arg_7_0.moveCnt = 0
+	self.rightBank = {}
+	self.boat = {}
+	self.curBank = self.leftBank
+	self.moveCnt = 0
 end
 
-function var_0_0._addRecord(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:getResultDesc(arg_8_1, arg_8_2)
+function Role37PuzzleModel:_addRecord(operType, operIndex)
+	local resultDesc = self:getResultDesc(operType, operIndex)
 
-	table.insert(arg_8_0.recordList, var_8_0)
+	table.insert(self.recordList, resultDesc)
 end
 
-function var_0_0._directAddRecord(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_2 = arg_9_2 or false
+function Role37PuzzleModel:_directAddRecord(desc, needUpdate)
+	needUpdate = needUpdate or false
 
-	table.insert(arg_9_0.recordList, arg_9_1)
+	table.insert(self.recordList, desc)
 
-	if arg_9_2 then
-		arg_9_0:_updateRecord()
+	if needUpdate then
+		self:_updateRecord()
 	end
 end
 
-function var_0_0._repelaceRecord(arg_10_0, arg_10_1)
-	arg_10_0.recordList[#arg_10_0.recordList] = arg_10_1
+function Role37PuzzleModel:_repelaceRecord(desc)
+	self.recordList[#self.recordList] = desc
 
-	arg_10_0:_updateRecord()
+	self:_updateRecord()
 end
 
-function var_0_0._updateRecord(arg_11_0)
-	PuzzleRecordListModel.instance:setRecordList(arg_11_0.recordList)
+function Role37PuzzleModel:_updateRecord()
+	PuzzleRecordListModel.instance:setRecordList(self.recordList)
 end
 
-function var_0_0.getRecordMo(arg_12_0, arg_12_1)
-	local var_12_0 = PuzzleRecordMO.New()
-	local var_12_1 = arg_12_0.recordList[arg_12_1]
+function Role37PuzzleModel:getRecordMo(index)
+	local mo = PuzzleRecordMO.New()
+	local desc = self.recordList[index]
 
-	if arg_12_1 < 10 then
-		arg_12_1 = "0" .. arg_12_1
+	if index < 10 then
+		index = "0" .. index
 	end
 
-	var_12_0:init(arg_12_1, var_12_1)
+	mo:init(index, desc)
 
-	return var_12_0
+	return mo
 end
 
-function var_0_0.addOption(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_0.curErrorIndex ~= 0 and not arg_13_3 then
-		if arg_13_0.curErrorIndex == 999 then
+function Role37PuzzleModel:addOption(option, pos, isRollback)
+	if self.curErrorIndex ~= 0 and not isRollback then
+		if self.curErrorIndex == 999 then
 			GameFacade.showToastString(luaLang("v1a4_role37_puzzle_monkeybanana_not_enough"))
 		else
 			GameFacade.showToastString(luaLang("v1a4_role37_puzzle_error_tip"))
@@ -140,363 +142,365 @@ function var_0_0.addOption(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 		return
 	end
 
-	if arg_13_0.operList[arg_13_2] then
-		arg_13_0:repleaceOption(arg_13_1, arg_13_2)
+	if self.operList[pos] then
+		self:repleaceOption(option, pos)
 
 		return
 	end
 
-	if tabletool.len(arg_13_0.operList) >= arg_13_0.maxOper then
+	if tabletool.len(self.operList) >= self.maxOper then
 		GameFacade.showToastString(luaLang("v1a4_role37_puzzle_oper_full"))
 
 		return
 	end
 
-	arg_13_0.operList[arg_13_2] = arg_13_1
+	self.operList[pos] = option
 
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.AddOption, arg_13_2)
-	arg_13_0:recalculate()
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.AddOption, pos)
+	self:recalculate()
 
-	if not arg_13_3 then
-		table.insert(arg_13_0.controllRecords, {
+	if not isRollback then
+		table.insert(self.controllRecords, {
 			Role37PuzzleEnum.ControlType.Add,
-			arg_13_2
+			pos
 		})
 	end
 
-	arg_13_0:checkReply()
+	self:checkReply()
 end
 
-function var_0_0.exchangeOption(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if not arg_14_0.operList[arg_14_2] then
-		arg_14_0:moveOption(arg_14_1, arg_14_2)
+function Role37PuzzleModel:exchangeOption(a, b, isRollback)
+	if not self.operList[b] then
+		self:moveOption(a, b)
 
 		return
 	end
 
-	local var_14_0 = arg_14_0.operList[arg_14_1]
+	local temp = self.operList[a]
 
-	arg_14_0.operList[arg_14_1] = arg_14_0.operList[arg_14_2]
-	arg_14_0.operList[arg_14_2] = var_14_0
+	self.operList[a] = self.operList[b]
+	self.operList[b] = temp
 
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ExchangeOption, arg_14_1, arg_14_2)
-	arg_14_0:recalculate()
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ExchangeOption, a, b)
+	self:recalculate()
 
-	if not arg_14_3 then
-		table.insert(arg_14_0.controllRecords, {
+	if not isRollback then
+		table.insert(self.controllRecords, {
 			Role37PuzzleEnum.ControlType.Exchange,
-			arg_14_2,
-			arg_14_1
+			b,
+			a
 		})
 	end
 
-	arg_14_0:checkReply()
+	self:checkReply()
 end
 
-function var_0_0.removeOption(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0.operList[arg_15_1]
+function Role37PuzzleModel:removeOption(pos, isRollback)
+	local operType = self.operList[pos]
 
-	arg_15_0.operList[arg_15_1] = nil
+	self.operList[pos] = nil
 
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RemoveOption, arg_15_1)
-	arg_15_0:recalculate()
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RemoveOption, pos)
+	self:recalculate()
 
-	if not arg_15_2 then
-		table.insert(arg_15_0.controllRecords, {
+	if not isRollback then
+		table.insert(self.controllRecords, {
 			Role37PuzzleEnum.ControlType.Remove,
-			var_15_0,
-			arg_15_1
+			operType,
+			pos
 		})
 	end
 
-	arg_15_0:checkReply()
+	self:checkReply()
 end
 
-function var_0_0.repleaceOption(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = arg_16_0.operList[arg_16_2]
+function Role37PuzzleModel:repleaceOption(option, pos, isRollback)
+	local oldOption = self.operList[pos]
 
-	arg_16_0.operList[arg_16_2] = arg_16_1
+	self.operList[pos] = option
 
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RepleaceOption, arg_16_1, arg_16_2)
-	arg_16_0:recalculate()
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RepleaceOption, option, pos)
+	self:recalculate()
 
-	if not arg_16_3 then
-		table.insert(arg_16_0.controllRecords, {
+	if not isRollback then
+		table.insert(self.controllRecords, {
 			Role37PuzzleEnum.ControlType.Repleace,
-			var_16_0,
-			arg_16_2
+			oldOption,
+			pos
 		})
 	end
 
-	arg_16_0:checkReply()
+	self:checkReply()
 end
 
-function var_0_0.moveOption(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_0.operList[arg_17_2] = arg_17_0.operList[arg_17_1]
-	arg_17_0.operList[arg_17_1] = nil
+function Role37PuzzleModel:moveOption(from, to, isRollback)
+	self.operList[to] = self.operList[from]
+	self.operList[from] = nil
 
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.MoveOption, arg_17_1, arg_17_2)
-	arg_17_0:recalculate()
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.MoveOption, from, to)
+	self:recalculate()
 
-	if not arg_17_3 then
-		table.insert(arg_17_0.controllRecords, {
+	if not isRollback then
+		table.insert(self.controllRecords, {
 			Role37PuzzleEnum.ControlType.Move,
-			arg_17_2,
-			arg_17_1
+			to,
+			from
 		})
 	end
 
-	arg_17_0:checkReply()
+	self:checkReply()
 end
 
-function var_0_0.rollBack(arg_18_0)
-	if #arg_18_0.controllRecords == 0 then
+function Role37PuzzleModel:rollBack()
+	if #self.controllRecords == 0 then
 		return
 	end
 
-	local var_18_0 = arg_18_0.controllRecords[#arg_18_0.controllRecords]
-	local var_18_1 = var_18_0[1]
+	local lastRecord = self.controllRecords[#self.controllRecords]
+	local operateType = lastRecord[1]
 
-	arg_18_0.controllRecords[#arg_18_0.controllRecords] = nil
+	self.controllRecords[#self.controllRecords] = nil
 
-	if var_18_1 == Role37PuzzleEnum.ControlType.Add then
-		arg_18_0:removeOption(var_18_0[2], true)
-	elseif var_18_1 == Role37PuzzleEnum.ControlType.Exchange then
-		arg_18_0:exchangeOption(var_18_0[2], var_18_0[3], true)
-	elseif var_18_1 == Role37PuzzleEnum.ControlType.Remove then
-		arg_18_0:addOption(var_18_0[2], var_18_0[3], true)
-	elseif var_18_1 == Role37PuzzleEnum.ControlType.Repleace then
-		arg_18_0:repleaceOption(var_18_0[2], var_18_0[3], true)
-	elseif var_18_1 == Role37PuzzleEnum.ControlType.Move then
-		arg_18_0:moveOption(var_18_0[2], var_18_0[3], true)
+	if operateType == Role37PuzzleEnum.ControlType.Add then
+		self:removeOption(lastRecord[2], true)
+	elseif operateType == Role37PuzzleEnum.ControlType.Exchange then
+		self:exchangeOption(lastRecord[2], lastRecord[3], true)
+	elseif operateType == Role37PuzzleEnum.ControlType.Remove then
+		self:addOption(lastRecord[2], lastRecord[3], true)
+	elseif operateType == Role37PuzzleEnum.ControlType.Repleace then
+		self:repleaceOption(lastRecord[2], lastRecord[3], true)
+	elseif operateType == Role37PuzzleEnum.ControlType.Move then
+		self:moveOption(lastRecord[2], lastRecord[3], true)
 	end
 end
 
-function var_0_0.reset(arg_19_0)
-	arg_19_0:initParam()
+function Role37PuzzleModel:reset()
+	self:initParam()
 	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.Reset)
 end
 
-function var_0_0.recalculate(arg_20_0)
-	arg_20_0:initVariable()
+function Role37PuzzleModel:recalculate()
+	self:initVariable()
 
-	arg_20_0.recordList = {}
+	self.recordList = {}
 
-	local var_20_0 = tabletool.len(arg_20_0.operList)
+	local operCnt = tabletool.len(self.operList)
 
-	if var_20_0 == 0 then
-		if arg_20_0.curErrorIndex ~= 0 then
-			arg_20_0:setCurErrorIndex(0)
-			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, arg_20_0.curErrorIndex)
+	if operCnt == 0 then
+		if self.curErrorIndex ~= 0 then
+			self:setCurErrorIndex(0)
+			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, self.curErrorIndex)
 		end
 	else
-		local var_20_1 = 0
+		local offset = 0
 
-		for iter_20_0 = 1, var_20_0 do
-			local var_20_2 = arg_20_0.operList[iter_20_0 + var_20_1]
+		for i = 1, operCnt do
+			local operType = self.operList[i + offset]
 
-			while var_20_2 == nil do
-				var_20_1 = var_20_1 + 1
-				var_20_2 = arg_20_0.operList[iter_20_0 + var_20_1]
+			while operType == nil do
+				offset = offset + 1
+				operType = self.operList[i + offset]
 			end
 
-			if arg_20_0:RunLogic(var_20_2, var_20_1 + iter_20_0) then
-				arg_20_0:_addRecord(var_20_2, var_20_1 + iter_20_0)
+			local result = self:RunLogic(operType, offset + i)
+
+			if result then
+				self:_addRecord(operType, offset + i)
 			else
 				break
 			end
 		end
 	end
 
-	arg_20_0:_updateRecord()
+	self:_updateRecord()
 end
 
-function var_0_0.getOperList(arg_21_0)
-	return arg_21_0.operList
+function Role37PuzzleModel:getOperList()
+	return self.operList
 end
 
-function var_0_0.getFirstGapIndex(arg_22_0)
-	local var_22_0 = tabletool.len(arg_22_0.operList)
+function Role37PuzzleModel:getFirstGapIndex()
+	local len = tabletool.len(self.operList)
 
-	for iter_22_0 = 1, var_22_0 do
-		if not arg_22_0.operList[iter_22_0] then
-			return iter_22_0
+	for i = 1, len do
+		if not self.operList[i] then
+			return i
 		end
 	end
 
-	return var_22_0 + 1
+	return len + 1
 end
 
-function var_0_0.RunLogic(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_0.puzzleId == Role37PuzzleEnum.PuzzleId.SnailMove then
-		arg_23_0:_snailMove(arg_23_1, arg_23_2)
+function Role37PuzzleModel:RunLogic(option, operIndex)
+	if self.puzzleId == Role37PuzzleEnum.PuzzleId.SnailMove then
+		self:_snailMove(option, operIndex)
 
 		return true
-	elseif arg_23_0.puzzleId == Role37PuzzleEnum.PuzzleId.MonkeyBanana then
-		return arg_23_0:_monkeyBanana(arg_23_1, arg_23_2)
-	elseif arg_23_0.puzzleId == Role37PuzzleEnum.PuzzleId.WolfSheepDish then
-		return arg_23_0:_wolfSheepDish(arg_23_1, arg_23_2)
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.MonkeyBanana then
+		return self:_monkeyBanana(option, operIndex)
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.WolfSheepDish then
+		return self:_wolfSheepDish(option, operIndex)
 	else
 		return true
 	end
 end
 
-function var_0_0._snailMove(arg_24_0, arg_24_1)
-	if arg_24_1 == Role37PuzzleEnum.OperType.One then
-		arg_24_0.remainDis = arg_24_0.remainDis - 3
+function Role37PuzzleModel:_snailMove(option)
+	if option == Role37PuzzleEnum.OperType.One then
+		self.remainDis = self.remainDis - 3
 
-		if arg_24_0.remainDis < 0 then
-			arg_24_0.remainDis = 0
+		if self.remainDis < 0 then
+			self.remainDis = 0
 		end
-	elseif arg_24_1 == Role37PuzzleEnum.OperType.Two then
-		arg_24_0.remainDis = arg_24_0.remainDis + 2
+	elseif option == Role37PuzzleEnum.OperType.Two then
+		self.remainDis = self.remainDis + 2
 
-		if arg_24_0.remainDis > arg_24_0.maxDis then
-			arg_24_0.remainDis = arg_24_0.maxDis
+		if self.remainDis > self.maxDis then
+			self.remainDis = self.maxDis
 		end
-	elseif arg_24_1 == Role37PuzzleEnum.OperType.Three then
-		arg_24_0.passDay = arg_24_0.passDay + 1
+	elseif option == Role37PuzzleEnum.OperType.Three then
+		self.passDay = self.passDay + 1
 	end
 end
 
-function var_0_0._monkeyBanana(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = 0
+function Role37PuzzleModel:_monkeyBanana(option, operIndex)
+	local errorOper = 0
 
-	if arg_25_1 == Role37PuzzleEnum.OperType.One then
-		local var_25_1 = arg_25_0.maxHandle - arg_25_0.handleBa
-		local var_25_2 = arg_25_0.routeBaList[arg_25_0.curPos] - var_25_1
+	if option == Role37PuzzleEnum.OperType.One then
+		local canPick = self.maxHandle - self.handleBa
+		local remain = self.routeBaList[self.curPos] - canPick
 
-		if var_25_2 < 0 then
-			arg_25_0.handleBa = arg_25_0.handleBa + arg_25_0.routeBaList[arg_25_0.curPos]
-			arg_25_0.routeBaList[arg_25_0.curPos] = 0
+		if remain < 0 then
+			self.handleBa = self.handleBa + self.routeBaList[self.curPos]
+			self.routeBaList[self.curPos] = 0
 		else
-			arg_25_0.handleBa = arg_25_0.maxHandle
-			arg_25_0.routeBaList[arg_25_0.curPos] = var_25_2
+			self.handleBa = self.maxHandle
+			self.routeBaList[self.curPos] = remain
 		end
-	elseif arg_25_1 == Role37PuzzleEnum.OperType.Two then
-		if arg_25_0.curPos + 3 <= arg_25_0.maxPos then
-			arg_25_0.curPos = arg_25_0.curPos + 3
+	elseif option == Role37PuzzleEnum.OperType.Two then
+		if self.curPos + 3 <= self.maxPos then
+			self.curPos = self.curPos + 3
 
-			local var_25_3 = arg_25_0.handleBa - 3
+			local remainBa = self.handleBa - 3
 
-			if var_25_3 >= 0 then
-				arg_25_0.handleBa = var_25_3
+			if remainBa >= 0 then
+				self.handleBa = remainBa
 			else
-				arg_25_0.handleBa = 0
+				self.handleBa = 0
 			end
 		else
-			var_25_0 = arg_25_2
+			errorOper = operIndex
 
-			arg_25_0:_directAddRecord(luaLang("v1a4_role37_puzzle_monkeybanana_arrive_destination"))
+			self:_directAddRecord(luaLang("v1a4_role37_puzzle_monkeybanana_arrive_destination"))
 		end
-	elseif arg_25_1 == Role37PuzzleEnum.OperType.Four then
-		local var_25_4 = arg_25_0.curPos - 1
+	elseif option == Role37PuzzleEnum.OperType.Four then
+		local dif = self.curPos - 1
 
-		arg_25_0.curPos = 1
-		arg_25_0.handleBa = arg_25_0.handleBa - var_25_4
+		self.curPos = 1
+		self.handleBa = self.handleBa - dif
 
-		if arg_25_0.handleBa < 0 then
-			arg_25_0.handleBa = 0
+		if self.handleBa < 0 then
+			self.handleBa = 0
 		end
-	elseif arg_25_1 == Role37PuzzleEnum.OperType.Five then
-		arg_25_0.routeBaList[arg_25_0.curPos] = arg_25_0.routeBaList[arg_25_0.curPos] + arg_25_0.handleBa
-		arg_25_0.handleBa = 0
+	elseif option == Role37PuzzleEnum.OperType.Five then
+		self.routeBaList[self.curPos] = self.routeBaList[self.curPos] + self.handleBa
+		self.handleBa = 0
 	end
 
-	if arg_25_0.curErrorIndex ~= var_25_0 then
-		arg_25_0:setCurErrorIndex(var_25_0)
-		Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, arg_25_0.curErrorIndex)
+	if self.curErrorIndex ~= errorOper then
+		self:setCurErrorIndex(errorOper)
+		Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, self.curErrorIndex)
 	end
 
-	return arg_25_0.curErrorIndex == 0
+	return self.curErrorIndex == 0
 end
 
-function var_0_0._wolfSheepDish(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = 0
+function Role37PuzzleModel:_wolfSheepDish(option, operIndex)
+	local errorOper = 0
 
-	if arg_26_1 == Role37PuzzleEnum.OperType.One or arg_26_1 == Role37PuzzleEnum.OperType.Two or arg_26_1 == Role37PuzzleEnum.OperType.Three then
-		local var_26_1 = tabletool.indexOf(arg_26_0.curBank, Role37PuzzleEnum.AnimalRules[arg_26_1])
+	if option == Role37PuzzleEnum.OperType.One or option == Role37PuzzleEnum.OperType.Two or option == Role37PuzzleEnum.OperType.Three then
+		local index = tabletool.indexOf(self.curBank, Role37PuzzleEnum.AnimalRules[option])
 
-		if var_26_1 and #arg_26_0.boat == 0 then
-			table.remove(arg_26_0.curBank, var_26_1)
+		if index and #self.boat == 0 then
+			table.remove(self.curBank, index)
 
-			arg_26_0.boat[1] = Role37PuzzleEnum.AnimalRules[arg_26_1]
-			arg_26_0.lastPick = arg_26_0.curBank
+			self.boat[1] = Role37PuzzleEnum.AnimalRules[option]
+			self.lastPick = self.curBank
 		else
-			var_26_0 = arg_26_2
+			errorOper = operIndex
 
-			if not var_26_1 then
-				arg_26_0:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_pick_fault"))
+			if not index then
+				self:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_pick_fault"))
 			else
-				arg_26_0:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_boat_full"), false)
+				self:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_boat_full"), false)
 			end
 		end
-	elseif arg_26_1 == Role37PuzzleEnum.OperType.Four then
-		arg_26_0.curBank = arg_26_0.leftBank
+	elseif option == Role37PuzzleEnum.OperType.Four then
+		self.curBank = self.leftBank
 
-		if #arg_26_0.rightBank == 2 and math.abs(arg_26_0.rightBank[2] - arg_26_0.rightBank[1]) == 1 then
-			var_26_0 = arg_26_2
+		if #self.rightBank == 2 and math.abs(self.rightBank[2] - self.rightBank[1]) == 1 then
+			errorOper = operIndex
 
-			arg_26_0:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_eat"), false)
+			self:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_eat"), false)
 		end
-	elseif arg_26_1 == Role37PuzzleEnum.OperType.Five then
-		arg_26_0.curBank = arg_26_0.rightBank
+	elseif option == Role37PuzzleEnum.OperType.Five then
+		self.curBank = self.rightBank
 
-		if #arg_26_0.leftBank == 2 and math.abs(arg_26_0.leftBank[2] - arg_26_0.leftBank[1]) == 1 then
-			var_26_0 = arg_26_2
+		if #self.leftBank == 2 and math.abs(self.leftBank[2] - self.leftBank[1]) == 1 then
+			errorOper = operIndex
 
-			arg_26_0:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_eat"), false)
+			self:_directAddRecord(luaLang("v1a4_role37_puzzle_animal_eat"), false)
 		end
-	elseif arg_26_1 == Role37PuzzleEnum.OperType.Six and arg_26_0.boat[1] then
-		table.insert(arg_26_0.curBank, arg_26_0.boat[1])
+	elseif option == Role37PuzzleEnum.OperType.Six and self.boat[1] then
+		table.insert(self.curBank, self.boat[1])
 
-		arg_26_0.boat[1] = nil
+		self.boat[1] = nil
 
-		if arg_26_0.lastPick and arg_26_0.lastPick ~= arg_26_0.curBank then
-			arg_26_0.lastPick = nil
-			arg_26_0.moveCnt = arg_26_0.moveCnt + 1
+		if self.lastPick and self.lastPick ~= self.curBank then
+			self.lastPick = nil
+			self.moveCnt = self.moveCnt + 1
 		end
 	end
 
-	if arg_26_0.curErrorIndex ~= var_26_0 then
-		arg_26_0:setCurErrorIndex(var_26_0)
-		Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, arg_26_0.curErrorIndex)
+	if self.curErrorIndex ~= errorOper then
+		self:setCurErrorIndex(errorOper)
+		Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, self.curErrorIndex)
 	end
 
-	return arg_26_0.curErrorIndex == 0
+	return self.curErrorIndex == 0
 end
 
-function var_0_0.getBankDesc(arg_27_0, arg_27_1)
-	local var_27_0 = ""
+function Role37PuzzleModel:getBankDesc(bank)
+	local str = ""
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_1) do
-		local var_27_1 = luaLang(Role37PuzzleEnum.AnimalStr[iter_27_1])
+	for _, v in ipairs(bank) do
+		local temp = luaLang(Role37PuzzleEnum.AnimalStr[v])
 
-		if var_27_0 ~= "" then
-			var_27_0 = var_27_0 .. " "
+		if str ~= "" then
+			str = str .. " "
 		end
 
-		var_27_0 = var_27_0 .. var_27_1
+		str = str .. temp
 	end
 
-	local var_27_2 = arg_27_0:getSentenceSep()
+	local sep = self:getSentenceSep()
 
-	if arg_27_1 == arg_27_0.leftBank then
-		if not string.nilorempty(var_27_0) then
-			var_27_0 = formatLuaLang("v1a4_role37_puzzle_leftbank_leave", var_27_0) .. var_27_2
+	if bank == self.leftBank then
+		if not string.nilorempty(str) then
+			str = formatLuaLang("v1a4_role37_puzzle_leftbank_leave", str) .. sep
 		end
-	elseif arg_27_1 == arg_27_0.rightBank then
-		if not string.nilorempty(var_27_0) then
-			var_27_0 = formatLuaLang("v1a4_role37_puzzle_rightbank_leave", var_27_0) .. var_27_2
+	elseif bank == self.rightBank then
+		if not string.nilorempty(str) then
+			str = formatLuaLang("v1a4_role37_puzzle_rightbank_leave", str) .. sep
 		end
-	elseif not string.nilorempty(var_27_0) then
-		var_27_0 = formatLuaLang("v1a4_role37_puzzle_boat_leave", var_27_0) .. var_27_2
+	elseif not string.nilorempty(str) then
+		str = formatLuaLang("v1a4_role37_puzzle_boat_leave", str) .. sep
 	end
 
-	return var_27_0
+	return str
 end
 
-function var_0_0.getSentenceSep(arg_28_0)
+function Role37PuzzleModel:getSentenceSep()
 	if LangSettings.instance:isJp() then
 		return " "
 	elseif LangSettings.instance:isEn() or LangSettings.instance:isKr() then
@@ -506,81 +510,81 @@ function var_0_0.getSentenceSep(arg_28_0)
 	end
 end
 
-function var_0_0.getSortError5(arg_29_0)
-	local var_29_0 = arg_29_0:getErrorSep()
-	local var_29_1 = ""
-	local var_29_2 = tabletool.indexOf(arg_29_0.operList, 1)
-	local var_29_3 = tabletool.indexOf(arg_29_0.operList, 2)
-	local var_29_4 = tabletool.indexOf(arg_29_0.operList, 4)
-	local var_29_5 = tabletool.indexOf(arg_29_0.operList, 5)
-	local var_29_6 = tabletool.indexOf(arg_29_0.operList, 6)
+function Role37PuzzleModel:getSortError5()
+	local sep = self:getErrorSep()
+	local result = ""
+	local index1 = tabletool.indexOf(self.operList, 1)
+	local index2 = tabletool.indexOf(self.operList, 2)
+	local index4 = tabletool.indexOf(self.operList, 4)
+	local index5 = tabletool.indexOf(self.operList, 5)
+	local index6 = tabletool.indexOf(self.operList, 6)
 
-	if var_29_2 ~= 5 then
-		var_29_1 = var_29_1 .. var_29_0 .. arg_29_0.operGroupCfg[1].name
+	if index1 ~= 5 then
+		result = result .. sep .. self.operGroupCfg[1].name
 	end
 
-	if var_29_3 > 3 then
-		var_29_1 = var_29_1 .. var_29_0 .. arg_29_0.operGroupCfg[2].name
+	if index2 > 3 then
+		result = result .. sep .. self.operGroupCfg[2].name
 	end
 
-	if var_29_4 == 1 or var_29_4 == 5 or math.abs(var_29_4 - var_29_2) == 1 then
-		var_29_1 = var_29_1 .. var_29_0 .. arg_29_0.operGroupCfg[4].name
+	if index4 == 1 or index4 == 5 or math.abs(index4 - index1) == 1 then
+		result = result .. sep .. self.operGroupCfg[4].name
 	end
 
-	if not arg_29_0.operList[var_29_5 - 1] or arg_29_0.operList[var_29_5 - 1] ~= 2 then
-		var_29_1 = var_29_1 .. var_29_0 .. arg_29_0.operGroupCfg[5].name
+	if not self.operList[index5 - 1] or self.operList[index5 - 1] ~= 2 then
+		result = result .. sep .. self.operGroupCfg[5].name
 	end
 
-	if var_29_6 == 1 or var_29_6 == 5 then
-		var_29_1 = var_29_1 .. var_29_0 .. arg_29_0.operGroupCfg[6].name
+	if index6 == 1 or index6 == 5 then
+		result = result .. sep .. self.operGroupCfg[6].name
 	end
 
-	return var_29_1
+	return result
 end
 
-function var_0_0.getSortError7(arg_30_0)
-	local var_30_0 = arg_30_0:getErrorSep()
-	local var_30_1 = ""
-	local var_30_2 = tabletool.indexOf(arg_30_0.operList, 1)
-	local var_30_3 = tabletool.indexOf(arg_30_0.operList, 2)
-	local var_30_4 = tabletool.indexOf(arg_30_0.operList, 3)
-	local var_30_5 = tabletool.indexOf(arg_30_0.operList, 4)
-	local var_30_6 = tabletool.indexOf(arg_30_0.operList, 5)
-	local var_30_7 = tabletool.indexOf(arg_30_0.operList, 6)
-	local var_30_8 = tabletool.indexOf(arg_30_0.operList, 7)
+function Role37PuzzleModel:getSortError7()
+	local sep = self:getErrorSep()
+	local result = ""
+	local index1 = tabletool.indexOf(self.operList, 1)
+	local index2 = tabletool.indexOf(self.operList, 2)
+	local index3 = tabletool.indexOf(self.operList, 3)
+	local index4 = tabletool.indexOf(self.operList, 4)
+	local index5 = tabletool.indexOf(self.operList, 5)
+	local index6 = tabletool.indexOf(self.operList, 6)
+	local index7 = tabletool.indexOf(self.operList, 7)
 
-	if math.abs(var_30_2 - var_30_3) == 1 then
-		var_30_1 = var_30_1 .. var_30_0 .. arg_30_0.operGroupCfg[1].name
+	if math.abs(index1 - index2) == 1 then
+		result = result .. sep .. self.operGroupCfg[1].name
 	end
 
-	if math.abs(var_30_3 - var_30_2) ~= math.abs(var_30_4 - var_30_6) then
-		var_30_1 = var_30_1 .. var_30_0 .. arg_30_0.operGroupCfg[2].name
+	if math.abs(index2 - index1) ~= math.abs(index3 - index5) then
+		result = result .. sep .. self.operGroupCfg[2].name
 	end
 
-	if math.abs(var_30_6 - var_30_4) < 4 then
-		var_30_1 = var_30_1 .. var_30_0 .. arg_30_0.operGroupCfg[3].name
+	if math.abs(index5 - index3) < 4 then
+		result = result .. sep .. self.operGroupCfg[3].name
 	end
 
-	if var_30_5 == 1 or var_30_5 > 3 then
-		var_30_1 = var_30_1 .. var_30_0 .. arg_30_0.operGroupCfg[4].name
+	if index4 == 1 or index4 > 3 then
+		result = result .. sep .. self.operGroupCfg[4].name
 	end
 
-	if math.abs(var_30_6 - var_30_4) == 1 then
-		var_30_1 = var_30_1 .. var_30_0 .. arg_30_0.operGroupCfg[5].name
+	if math.abs(index5 - index3) == 1 then
+		result = result .. sep .. self.operGroupCfg[5].name
 	end
 
-	if math.abs(var_30_7 - var_30_8) ~= 1 then
-		var_30_1 = var_30_1 .. var_30_0 .. arg_30_0.operGroupCfg[6].name
+	if math.abs(index6 - index7) ~= 1 then
+		result = result .. sep .. self.operGroupCfg[6].name
 	end
 
-	if var_30_7 < var_30_8 then
-		var_30_1 = var_30_1 .. var_30_0 .. arg_30_0.operGroupCfg[7].name
+	if index6 < index7 then
+		result = result .. sep .. self.operGroupCfg[7].name
 	end
 
-	return var_30_1
+	return result
 end
 
-function var_0_0.getErrorSep(arg_31_0)
+function Role37PuzzleModel:getErrorSep()
 	if LangSettings.instance:isEn() then
 		return ", "
 	end
@@ -588,341 +592,341 @@ function var_0_0.getErrorSep(arg_31_0)
 	return " "
 end
 
-function var_0_0.getResultDesc(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0:getSentenceSep()
-	local var_32_1 = arg_32_0.operGroupCfg[arg_32_1].operDesc .. var_32_0
+function Role37PuzzleModel:getResultDesc(operType, operIndex)
+	local sep = self:getSentenceSep()
+	local operDesc = self.operGroupCfg[operType].operDesc .. sep
 
-	if arg_32_0.puzzleId == Role37PuzzleEnum.PuzzleId.SnailMove then
-		local var_32_2 = {
-			arg_32_0.remainDis,
-			arg_32_0.passDay
+	if self.puzzleId == Role37PuzzleEnum.PuzzleId.SnailMove then
+		local tag = {
+			self.remainDis,
+			self.passDay
 		}
 
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_snailmove_result"), var_32_2)
-	elseif arg_32_0.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules5 then
-		local var_32_3 = arg_32_0.operGroupCfg[arg_32_1].name
-		local var_32_4 = {
-			var_32_3,
-			arg_32_2
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_snailmove_result"), tag)
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules5 then
+		local optionName = self.operGroupCfg[operType].name
+		local tag = {
+			optionName,
+			operIndex
 		}
 
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_sortbyrules_result"), var_32_4)
-	elseif arg_32_0.puzzleId == Role37PuzzleEnum.PuzzleId.MonkeyBanana then
-		local var_32_5
-		local var_32_6 = arg_32_0.routeBaList[1]
-		local var_32_7 = arg_32_0.routeBaList[4]
-		local var_32_8 = arg_32_0.maxPos - arg_32_0.curPos
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_sortbyrules_result"), tag)
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.MonkeyBanana then
+		local resultDesc
+		local startCnt = self.routeBaList[1]
+		local midCnt = self.routeBaList[4]
+		local remainDis = self.maxPos - self.curPos
 
-		if var_32_6 > 0 and var_32_7 > 0 then
-			local var_32_9 = {
-				var_32_8,
-				arg_32_0.handleBa,
-				var_32_6,
-				var_32_7
+		if startCnt > 0 and midCnt > 0 then
+			local tag = {
+				remainDis,
+				self.handleBa,
+				startCnt,
+				midCnt
 			}
 
-			var_32_5 = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result1"), var_32_9)
-		elseif var_32_6 > 0 and var_32_7 == 0 then
-			local var_32_10 = {
-				var_32_8,
-				arg_32_0.handleBa,
-				var_32_6
+			resultDesc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result1"), tag)
+		elseif startCnt > 0 and midCnt == 0 then
+			local tag = {
+				remainDis,
+				self.handleBa,
+				startCnt
 			}
 
-			var_32_5 = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result2"), var_32_10)
-		elseif var_32_6 == 0 and var_32_7 > 0 then
-			local var_32_11 = {
-				var_32_8,
-				arg_32_0.handleBa,
-				var_32_7
+			resultDesc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result2"), tag)
+		elseif startCnt == 0 and midCnt > 0 then
+			local tag = {
+				remainDis,
+				self.handleBa,
+				midCnt
 			}
 
-			var_32_5 = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result3"), var_32_11)
+			resultDesc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result3"), tag)
 		else
-			local var_32_12 = {
-				var_32_8,
-				arg_32_0.handleBa
+			local tag = {
+				remainDis,
+				self.handleBa
 			}
 
-			var_32_5 = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result4"), var_32_12)
+			resultDesc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_monkeybanana_result4"), tag)
 		end
 
-		return var_32_1 .. var_32_5
-	elseif arg_32_0.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules7 then
-		local var_32_13 = arg_32_0.operGroupCfg[arg_32_1].name
-		local var_32_14 = {
-			var_32_13,
-			arg_32_2
+		return operDesc .. resultDesc
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules7 then
+		local optionName = self.operGroupCfg[operType].name
+		local tag = {
+			optionName,
+			operIndex
 		}
 
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_sortbyrules_result"), var_32_14)
-	elseif arg_32_0.puzzleId == Role37PuzzleEnum.PuzzleId.WolfSheepDish then
-		local var_32_15
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_sortbyrules_result"), tag)
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.WolfSheepDish then
+		local bankDesc
 
-		if arg_32_0.curBank == arg_32_0.leftBank then
-			var_32_15 = luaLang("v1a4_role37_puzzle_animal_leftbank") .. var_32_0
+		if self.curBank == self.leftBank then
+			bankDesc = luaLang("v1a4_role37_puzzle_animal_leftbank") .. sep
 		else
-			var_32_15 = luaLang("v1a4_role37_puzzle_animal_rightbank") .. var_32_0
+			bankDesc = luaLang("v1a4_role37_puzzle_animal_rightbank") .. sep
 		end
 
-		local var_32_16 = arg_32_0:getBankDesc(arg_32_0.leftBank)
-		local var_32_17 = arg_32_0:getBankDesc(arg_32_0.rightBank)
-		local var_32_18 = arg_32_0:getBankDesc(arg_32_0.boat)
-		local var_32_19 = string.format(luaLang("v1a4_role37_puzzle_animal_movecnt"), arg_32_0.moveCnt)
+		local leftBankDesc = self:getBankDesc(self.leftBank)
+		local rightBankDesc = self:getBankDesc(self.rightBank)
+		local boatDesc = self:getBankDesc(self.boat)
+		local moveCntDesc = string.format(luaLang("v1a4_role37_puzzle_animal_movecnt"), self.moveCnt)
 
-		return var_32_1 .. var_32_15 .. var_32_16 .. var_32_18 .. var_32_17 .. var_32_19
-	elseif arg_32_0.puzzleId == Role37PuzzleEnum.PuzzleId.Final then
-		local var_32_20 = arg_32_0.operGroupCfg[arg_32_1].name
-		local var_32_21 = {
-			var_32_20,
-			arg_32_2
+		return operDesc .. bankDesc .. leftBankDesc .. boatDesc .. rightBankDesc .. moveCntDesc
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.Final then
+		local optionName = self.operGroupCfg[operType].name
+		local tag = {
+			optionName,
+			operIndex
 		}
 
-		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_sortbyrules_result"), var_32_21)
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_role37_puzzle_sortbyrules_result"), tag)
 	end
 
 	return ""
 end
 
-function var_0_0.checkReply(arg_33_0)
-	local var_33_0 = tabletool.len(arg_33_0.operList)
+function Role37PuzzleModel:checkReply()
+	local operCnt = tabletool.len(self.operList)
 
-	if arg_33_0.puzzleId == Role37PuzzleEnum.PuzzleId.SnailMove then
-		local var_33_1 = 0
-		local var_33_2 = 3
-		local var_33_3 = 0
+	if self.puzzleId == Role37PuzzleEnum.PuzzleId.SnailMove then
+		local offset = 0
+		local lastOper = 3
+		local errorOper = 0
 
-		for iter_33_0 = 1, var_33_0 do
-			local var_33_4 = arg_33_0.operList[iter_33_0 + var_33_1]
+		for i = 1, operCnt do
+			local oper = self.operList[i + offset]
 
-			while var_33_4 == nil do
-				var_33_1 = var_33_1 + 1
-				var_33_4 = arg_33_0.operList[iter_33_0 + var_33_1]
+			while oper == nil do
+				offset = offset + 1
+				oper = self.operList[i + offset]
 			end
 
-			local var_33_5 = var_33_4 - var_33_2
+			local operDif = oper - lastOper
 
-			if var_33_5 == 0 then
-				if var_33_4 == 3 then
-					arg_33_0:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_updown"))
+			if operDif == 0 then
+				if oper == 3 then
+					self:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_updown"))
 				else
-					arg_33_0:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_single"))
+					self:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_single"))
 				end
 
-				var_33_3 = iter_33_0 + var_33_1
+				errorOper = i + offset
 
 				break
-			elseif var_33_5 == 2 then
-				arg_33_0:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_down"))
+			elseif operDif == 2 then
+				self:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_down"))
 
-				var_33_3 = iter_33_0 + var_33_1
+				errorOper = i + offset
 
 				break
-			elseif var_33_5 == -1 then
-				if var_33_4 == 1 then
-					arg_33_0:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_single"))
-				elseif var_33_4 == 2 then
-					arg_33_0:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_up"))
+			elseif operDif == -1 then
+				if oper == 1 then
+					self:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_single"))
+				elseif oper == 2 then
+					self:_repelaceRecord(luaLang("v1a4_role37_puzzle_snailmove_up"))
 				end
 
-				var_33_3 = iter_33_0 + var_33_1
+				errorOper = i + offset
 
 				break
 			else
-				var_33_3 = 0
+				errorOper = 0
 			end
 
-			var_33_2 = var_33_4
+			lastOper = oper
 		end
 
-		if arg_33_0.curErrorIndex ~= var_33_3 then
-			arg_33_0:setCurErrorIndex(var_33_3)
-			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, arg_33_0.curErrorIndex)
+		if self.curErrorIndex ~= errorOper then
+			self:setCurErrorIndex(errorOper)
+			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, self.curErrorIndex)
 		end
 
-		if arg_33_0.remainDis == 0 and arg_33_0.passDay == 6 then
-			arg_33_0:Finish(true)
+		if self.remainDis == 0 and self.passDay == 6 then
+			self:Finish(true)
 
 			return
 		end
-	elseif arg_33_0.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules5 then
-		local var_33_6 = {}
-		local var_33_7 = 0
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules5 then
+		local passList = {}
+		local errorOper = 0
 
-		for iter_33_1, iter_33_2 in pairs(arg_33_0.operList) do
-			if var_33_6[iter_33_2] then
-				arg_33_0:_repelaceRecord(luaLang("v1a4_role37_puzzle_sortbyrules_only"))
+		for pos, value in pairs(self.operList) do
+			if passList[value] then
+				self:_repelaceRecord(luaLang("v1a4_role37_puzzle_sortbyrules_only"))
 
-				var_33_7 = iter_33_1
-
-				break
-			else
-				var_33_6[iter_33_2] = 1
-				var_33_7 = 0
-			end
-		end
-
-		if arg_33_0.curErrorIndex ~= var_33_7 then
-			arg_33_0:setCurErrorIndex(var_33_7)
-			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, arg_33_0.curErrorIndex)
-		end
-
-		if var_33_0 == 5 and arg_33_0.curErrorIndex == 0 then
-			local var_33_8 = arg_33_0:getSortError5()
-
-			if string.nilorempty(var_33_8) then
-				arg_33_0:Finish(true)
-
-				return
-			else
-				local var_33_9 = string.format(luaLang("v1a4_role37_puzzle_sortbyrules_error"), var_33_8)
-
-				arg_33_0:_directAddRecord(var_33_9, true)
-			end
-		end
-	elseif arg_33_0.puzzleId == Role37PuzzleEnum.PuzzleId.MonkeyBanana then
-		if arg_33_0.curPos == 7 then
-			if arg_33_0.handleBa >= 3 then
-				arg_33_0:Finish(true)
-
-				return
-			else
-				arg_33_0:setCurErrorIndex(999)
-				arg_33_0:_directAddRecord(luaLang("v1a4_role37_puzzle_monkeybanana_not_enough"), true)
-			end
-		end
-	elseif arg_33_0.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules7 then
-		local var_33_10 = {}
-		local var_33_11 = 0
-
-		for iter_33_3, iter_33_4 in pairs(arg_33_0.operList) do
-			if var_33_10[iter_33_4] then
-				arg_33_0:_repelaceRecord(luaLang("v1a4_role37_puzzle_sortbyrules_only"))
-
-				var_33_11 = iter_33_3
+				errorOper = pos
 
 				break
 			else
-				var_33_10[iter_33_4] = 1
-				var_33_11 = 0
+				passList[value] = 1
+				errorOper = 0
 			end
 		end
 
-		if arg_33_0.curErrorIndex ~= var_33_11 then
-			arg_33_0:setCurErrorIndex(var_33_11)
-			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, arg_33_0.curErrorIndex)
+		if self.curErrorIndex ~= errorOper then
+			self:setCurErrorIndex(errorOper)
+			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, self.curErrorIndex)
 		end
 
-		if var_33_0 == 7 and arg_33_0.curErrorIndex == 0 then
-			local var_33_12 = arg_33_0:getSortError7()
+		if operCnt == 5 and self.curErrorIndex == 0 then
+			local str = self:getSortError5()
 
-			if string.nilorempty(var_33_12) then
-				arg_33_0:Finish(true)
+			if string.nilorempty(str) then
+				self:Finish(true)
 
 				return
 			else
-				local var_33_13 = string.format(luaLang("v1a4_role37_puzzle_sortbyrules_error"), var_33_12)
+				local extraTip = string.format(luaLang("v1a4_role37_puzzle_sortbyrules_error"), str)
 
-				arg_33_0:_directAddRecord(var_33_13, true)
+				self:_directAddRecord(extraTip, true)
 			end
 		end
-	elseif arg_33_0.puzzleId == Role37PuzzleEnum.PuzzleId.WolfSheepDish then
-		if #arg_33_0.rightBank == 3 then
-			if arg_33_0.moveCnt > 5 then
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.MonkeyBanana then
+		if self.curPos == 7 then
+			if self.handleBa >= 3 then
+				self:Finish(true)
+
+				return
+			else
+				self:setCurErrorIndex(999)
+				self:_directAddRecord(luaLang("v1a4_role37_puzzle_monkeybanana_not_enough"), true)
+			end
+		end
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.SortByRules7 then
+		local passList = {}
+		local errorOper = 0
+
+		for pos, value in pairs(self.operList) do
+			if passList[value] then
+				self:_repelaceRecord(luaLang("v1a4_role37_puzzle_sortbyrules_only"))
+
+				errorOper = pos
+
+				break
+			else
+				passList[value] = 1
+				errorOper = 0
+			end
+		end
+
+		if self.curErrorIndex ~= errorOper then
+			self:setCurErrorIndex(errorOper)
+			Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.ErrorOperChange, self.curErrorIndex)
+		end
+
+		if operCnt == 7 and self.curErrorIndex == 0 then
+			local str = self:getSortError7()
+
+			if string.nilorempty(str) then
+				self:Finish(true)
+
+				return
+			else
+				local extraTip = string.format(luaLang("v1a4_role37_puzzle_sortbyrules_error"), str)
+
+				self:_directAddRecord(extraTip, true)
+			end
+		end
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.WolfSheepDish then
+		if #self.rightBank == 3 then
+			if self.moveCnt > 5 then
 				GameFacade.showToastString(luaLang("v1a4_role37_puzzle_animal_movecnt_notenough"))
 
 				return
 			end
 
-			arg_33_0:Finish(true)
+			self:Finish(true)
 
 			return
 		end
-	elseif arg_33_0.puzzleId == Role37PuzzleEnum.PuzzleId.Final and var_33_0 == 10 and arg_33_0:matchOperList() then
-		arg_33_0:Finish(true)
+	elseif self.puzzleId == Role37PuzzleEnum.PuzzleId.Final and operCnt == 10 and self:matchOperList() then
+		self:Finish(true)
 
 		return
 	end
 
-	if arg_33_0.puzzleCfg.puzzleType == Role37PuzzleEnum.PuzzleType.Logic and arg_33_0:isOperateFull() then
-		arg_33_0:Finish(false)
+	if self.puzzleCfg.puzzleType == Role37PuzzleEnum.PuzzleType.Logic and self:isOperateFull() then
+		self:Finish(false)
 
 		return
 	end
 end
 
-function var_0_0.matchOperList(arg_34_0)
-	local var_34_0 = true
+function Role37PuzzleModel:matchOperList()
+	local result = true
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_0.matchList) do
-		if arg_34_0.operList[iter_34_0] ~= iter_34_1 then
-			var_34_0 = false
+	for k, v in ipairs(self.matchList) do
+		if self.operList[k] ~= v then
+			result = false
 
 			break
 		end
 	end
 
-	return var_34_0
+	return result
 end
 
-function var_0_0.Finish(arg_35_0, arg_35_1)
-	arg_35_0.isSucess = arg_35_1
+function Role37PuzzleModel:Finish(isSucess)
+	self.isSucess = isSucess
 
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.PuzzleResult, arg_35_1)
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.PuzzleResult, isSucess)
 end
 
-function var_0_0.isOperateFull(arg_36_0)
-	return tabletool.len(arg_36_0.operList) >= arg_36_0.maxStep
+function Role37PuzzleModel:isOperateFull()
+	return tabletool.len(self.operList) >= self.maxStep
 end
 
-function var_0_0.getResult(arg_37_0)
-	return arg_37_0.isSucess
+function Role37PuzzleModel:getResult()
+	return self.isSucess
 end
 
-function var_0_0.getPuzzleCfg(arg_38_0)
-	return arg_38_0.puzzleCfg
+function Role37PuzzleModel:getPuzzleCfg()
+	return self.puzzleCfg
 end
 
-function var_0_0.getOperGroupCfg(arg_39_0)
-	return arg_39_0.operGroupCfg
+function Role37PuzzleModel:getOperGroupCfg()
+	return self.operGroupCfg
 end
 
-function var_0_0.getOperGroupList(arg_40_0)
-	return arg_40_0.operGroupList
+function Role37PuzzleModel:getOperGroupList()
+	return self.operGroupList
 end
 
-function var_0_0.getShapeImage(arg_41_0, arg_41_1)
-	return arg_41_0.operGroupCfg[arg_41_1].shapeImg
+function Role37PuzzleModel:getShapeImage(operType)
+	return self.operGroupCfg[operType].shapeImg
 end
 
-function var_0_0.getMaxOper(arg_42_0)
-	return arg_42_0.maxOper
+function Role37PuzzleModel:getMaxOper()
+	return self.maxOper
 end
 
-function var_0_0.setCurErrorIndex(arg_43_0, arg_43_1)
-	arg_43_0.curErrorIndex = arg_43_1
+function Role37PuzzleModel:setCurErrorIndex(index)
+	self.curErrorIndex = index
 
-	if arg_43_1 ~= 0 then
-		arg_43_0.errorCnt = arg_43_0.errorCnt + 1
+	if index ~= 0 then
+		self.errorCnt = self.errorCnt + 1
 	end
 end
 
-function var_0_0.getCurErrorIndex(arg_44_0)
-	return arg_44_0.curErrorIndex
+function Role37PuzzleModel:getCurErrorIndex()
+	return self.curErrorIndex
 end
 
-function var_0_0.setErrorCnt(arg_45_0, arg_45_1)
-	arg_45_0.errorCnt = arg_45_1
+function Role37PuzzleModel:setErrorCnt(cnt)
+	self.errorCnt = cnt
 end
 
-function var_0_0.getErrorCnt(arg_46_0)
-	return arg_46_0.errorCnt
+function Role37PuzzleModel:getErrorCnt()
+	return self.errorCnt
 end
 
-function var_0_0.getOperAudioId(arg_47_0, arg_47_1)
-	return arg_47_0.operGroupCfg[arg_47_1].audioId
+function Role37PuzzleModel:getOperAudioId(operType)
+	return self.operGroupCfg[operType].audioId
 end
 
-var_0_0.instance = var_0_0.New()
+Role37PuzzleModel.instance = Role37PuzzleModel.New()
 
-return var_0_0
+return Role37PuzzleModel

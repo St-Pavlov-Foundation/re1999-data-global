@@ -1,116 +1,124 @@
-﻿module("modules.logic.sp01.act204.view.Activity204EntranceView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/view/Activity204EntranceView.lua
 
-local var_0_0 = class("Activity204EntranceView", BaseView)
+module("modules.logic.sp01.act204.view.Activity204EntranceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Page1/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Page1/#txt_LimitTime")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local Activity204EntranceView = class("Activity204EntranceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity204EntranceView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Page1/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Page1/#txt_LimitTime")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity204EntranceView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity204EntranceView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0._updateActivity, arg_4_0)
+function Activity204EntranceView:_editableInitView()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._updateActivity, self)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Activity204EntranceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._actId = arg_6_0.viewParam and arg_6_0.viewParam.actId
-	arg_6_0._entranceIds = arg_6_0.viewParam and arg_6_0.viewParam.entranceIds
-	arg_6_0.actEntranceItemMap = arg_6_0:getUserDataTb_()
+function Activity204EntranceView:onOpen()
+	self._actId = self.viewParam and self.viewParam.actId
+	self._entranceIds = self.viewParam and self.viewParam.entranceIds
+	self.actEntranceItemMap = self:getUserDataTb_()
 
-	arg_6_0:refresh()
-	arg_6_0:checkActivityState()
+	self:refresh()
+	self:checkActivityState()
 	AudioMgr.instance:trigger(AudioEnum2_9.Activity204.EnterEntrance)
 end
 
-function var_0_0.refresh(arg_7_0)
-	arg_7_0:refreshAllEntrances()
-	arg_7_0:refreshBubbleItem()
-	arg_7_0:refreshRemainTime()
-	TaskDispatcher.cancelTask(arg_7_0.refreshRemainTime, arg_7_0)
-	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, 1)
+function Activity204EntranceView:refresh()
+	self:refreshAllEntrances()
+	self:refreshBubbleItem()
+	self:refreshRemainTime()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, 1)
 end
 
-function var_0_0.refreshAllEntrances(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._entranceIds or {}) do
-		local var_8_0 = gohelper.findChild(arg_8_0.viewGO, "Page1/Entrance" .. iter_8_0)
-		local var_8_1 = Activity204Enum.ActId2EntranceCls[iter_8_1]
+function Activity204EntranceView:refreshAllEntrances()
+	for index, actId in ipairs(self._entranceIds or {}) do
+		local goentrance = gohelper.findChild(self.viewGO, "Page1/Entrance" .. index)
+		local cls = Activity204Enum.ActId2EntranceCls[actId]
 
-		if gohelper.isNil(var_8_0) then
-			logError(string.format("缺少活动入口 index = %s actId = %s", iter_8_0, iter_8_1))
-		elseif not var_8_1 then
-			logError(string.format("缺少活动入口类(Activity204Enum.ActId2EntranceCls) index = %s actId = %s", iter_8_0, iter_8_1))
+		if gohelper.isNil(goentrance) then
+			logError(string.format("缺少活动入口 index = %s actId = %s", index, actId))
+		elseif not cls then
+			logError(string.format("缺少活动入口类(Activity204Enum.ActId2EntranceCls) index = %s actId = %s", index, actId))
 		else
-			local var_8_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_0, var_8_1)
+			local entranceItem = MonoHelper.addNoUpdateLuaComOnceToGo(goentrance, cls)
 
-			var_8_2:onUpdateMO(iter_8_1)
+			entranceItem:onUpdateMO(actId)
 
-			arg_8_0.actEntranceItemMap[iter_8_1] = var_8_2
+			self.actEntranceItemMap[actId] = entranceItem
 		end
 	end
 end
 
-function var_0_0.refreshBubbleItem(arg_9_0)
-	local var_9_0 = Activity204Controller.instance:getBubbleActIdList()
-	local var_9_1 = gohelper.findChild(arg_9_0.viewGO, "Page1/Entrance5")
+function Activity204EntranceView:refreshBubbleItem()
+	local bubbleActIds = Activity204Controller.instance:getBubbleActIdList()
+	local gobubbleItem = gohelper.findChild(self.viewGO, "Page1/Entrance5")
+	local bubbleItem = MonoHelper.addNoUpdateLuaComOnceToGo(gobubbleItem, Activity204BubbleItem)
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, Activity204BubbleItem):onUpdateMO(var_9_0)
+	bubbleItem:onUpdateMO(bubbleActIds)
 end
 
-function var_0_0.refreshRemainTime(arg_10_0)
-	if not arg_10_0._actId then
+function Activity204EntranceView:refreshRemainTime()
+	if not self._actId then
 		return
 	end
 
-	local var_10_0 = ActivityHelper.getActivityRemainTimeStr(arg_10_0._actId)
+	local remainTimeStr = ActivityHelper.getActivityRemainTimeStr(self._actId)
 
-	arg_10_0._txtLimitTime.text = var_10_0
+	self._txtLimitTime.text = remainTimeStr
 end
 
-function var_0_0._updateActivity(arg_11_0)
-	arg_11_0:checkActivityState()
-	Activity204Controller.instance:getAllEntranceActInfo(arg_11_0.refresh, arg_11_0)
+function Activity204EntranceView:_updateActivity()
+	self:checkActivityState()
+	Activity204Controller.instance:getAllEntranceActInfo(self.refresh, self)
 end
 
-function var_0_0.checkActivityState(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.actEntranceItemMap) do
-		if (iter_12_1 and iter_12_1:_getActivityStatus(iter_12_0)) == ActivityEnum.ActivityStatus.Expired then
-			local var_12_0 = Activity204Enum.ActId2ViewList[iter_12_0]
+function Activity204EntranceView:checkActivityState()
+	for actId, entranceItem in pairs(self.actEntranceItemMap) do
+		local status = entranceItem and entranceItem:_getActivityStatus(actId)
+		local isActFinish = status == ActivityEnum.ActivityStatus.Expired
 
-			arg_12_0:checkFinishViewList(var_12_0)
+		if isActFinish then
+			local actViewList = Activity204Enum.ActId2ViewList[actId]
+
+			self:checkFinishViewList(actViewList)
 		end
 	end
 
-	for iter_12_2 = Act205Enum.GameStageId.Card, Act205Enum.GameStageId.Ocean do
-		if not Act205Model.instance:isGameStageOpen(iter_12_2, false) then
-			local var_12_1 = Activity204Enum.Act205StageView[iter_12_2]
+	for stageId = Act205Enum.GameStageId.Card, Act205Enum.GameStageId.Ocean do
+		local isOpen = Act205Model.instance:isGameStageOpen(stageId, false)
 
-			arg_12_0:checkFinishViewList(var_12_1)
+		if not isOpen then
+			local viewList = Activity204Enum.Act205StageView[stageId]
+
+			self:checkFinishViewList(viewList)
 		end
 	end
 end
 
-function var_0_0.checkFinishViewList(arg_13_0, arg_13_1)
-	if arg_13_1 and #arg_13_1 > 0 then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-			if ViewMgr.instance:isOpen(iter_13_1) then
-				MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, var_0_0.yesCallback)
+function Activity204EntranceView:checkFinishViewList(actViewList)
+	if actViewList and #actViewList > 0 then
+		for _, viewName in ipairs(actViewList) do
+			if ViewMgr.instance:isOpen(viewName) then
+				MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, Activity204EntranceView.yesCallback)
 
 				return
 			end
@@ -118,17 +126,17 @@ function var_0_0.checkFinishViewList(arg_13_0, arg_13_1)
 	end
 end
 
-function var_0_0.yesCallback()
+function Activity204EntranceView.yesCallback()
 	ActivityController.instance:dispatchEvent(ActivityEvent.CheckGuideOnEndActivity)
 	NavigateButtonsView.homeClick()
 end
 
-function var_0_0.onClose(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0.refreshRemainTime, arg_15_0)
+function Activity204EntranceView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function Activity204EntranceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity204EntranceView

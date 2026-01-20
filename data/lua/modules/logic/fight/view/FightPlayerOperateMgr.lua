@@ -1,47 +1,49 @@
-﻿module("modules.logic.fight.view.FightPlayerOperateMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightPlayerOperateMgr.lua
 
-local var_0_0 = class("FightPlayerOperateMgr", FightBaseView)
+module("modules.logic.fight.view.FightPlayerOperateMgr", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local FightPlayerOperateMgr = class("FightPlayerOperateMgr", FightBaseView)
+
+function FightPlayerOperateMgr:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightPlayerOperateMgr:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightPlayerOperateMgr:removeEvents()
 	return
 end
 
-function var_0_0._onRoundSequenceFinish(arg_4_0)
-	arg_4_0:checkNeedPlayerOperate()
+function FightPlayerOperateMgr:_onRoundSequenceFinish()
+	self:checkNeedPlayerOperate()
 end
 
-function var_0_0._onClothSkillRoundSequenceFinish(arg_5_0)
-	arg_5_0:checkNeedPlayerOperate()
+function FightPlayerOperateMgr:_onClothSkillRoundSequenceFinish()
+	self:checkNeedPlayerOperate()
 end
 
-function var_0_0._onStartSequenceFinish(arg_6_0)
-	arg_6_0:checkNeedPlayerOperate()
+function FightPlayerOperateMgr:_onStartSequenceFinish()
+	self:checkNeedPlayerOperate()
 
-	if arg_6_0.aiJiAoToId then
+	if self.aiJiAoToId then
 		FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
 
-		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(arg_6_0.aiJiAoToId, arg_6_0.aiJiAoTotalDamage)
-		FightController.instance:dispatchEvent(FightEvent.AiJiAoFakeDecreaseHp, arg_6_0.aiJiAoToId)
+		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(self.aiJiAoToId, self.aiJiAoTotalDamage)
+		FightController.instance:dispatchEvent(FightEvent.AiJiAoFakeDecreaseHp, self.aiJiAoToId)
 
-		arg_6_0.aiJiAoToId = nil
-		arg_6_0.aiJiAoTotalDamage = nil
+		self.aiJiAoToId = nil
+		self.aiJiAoTotalDamage = nil
 	end
 end
 
-function var_0_0.checkNeedPlayerOperate(arg_7_0)
+function FightPlayerOperateMgr:checkNeedPlayerOperate()
 	if FightDataHelper.fieldMgr:isDouQuQu() then
 		return
 	end
 
-	if arg_7_0:checkAiJiAoQte() then
+	if self:checkAiJiAoQte() then
 		return
 	else
 		FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
@@ -51,41 +53,41 @@ function var_0_0.checkNeedPlayerOperate(arg_7_0)
 		FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
 	end
 
-	if arg_7_0:_checkChangeHeroNeedUseSkill() then
+	if self:_checkChangeHeroNeedUseSkill() then
 		return
 	end
 
-	if arg_7_0:_checkBindContract() then
+	if self:_checkBindContract() then
 		return
 	end
 
-	arg_7_0:_checkHeroUpgrade()
+	self:_checkHeroUpgrade()
 
-	local var_7_0 = arg_7_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_7_0:registWork(FightWorkGuideAfterPlay)
-	var_7_0:registWork(FightWorkFunction, arg_7_0.showUIPart, arg_7_0)
-	var_7_0:start()
+	flow:registWork(FightWorkGuideAfterPlay)
+	flow:registWork(FightWorkFunction, self.showUIPart, self)
+	flow:start()
 end
 
-function var_0_0.showUIPart(arg_8_0)
+function FightPlayerOperateMgr:showUIPart()
 	if not FightModel.instance:isFinish() then
 		FightViewPartVisible.set(true, true, true, false, false)
 	end
 end
 
-function var_0_0.sortEntity(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getMO()
-	local var_9_1 = arg_9_1:getMO()
+function FightPlayerOperateMgr.sortEntity(item1, item2)
+	local entityMO1 = item1:getMO()
+	local entityMO2 = item2:getMO()
 
-	if var_9_0 and var_9_1 then
-		return var_9_0.position < var_9_1.position
+	if entityMO1 and entityMO2 then
+		return entityMO1.position < entityMO2.position
 	end
 
 	return false
 end
 
-function var_0_0._checkHeroUpgrade(arg_10_0)
+function FightPlayerOperateMgr:_checkHeroUpgrade()
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
@@ -110,71 +112,72 @@ function var_0_0._checkHeroUpgrade(arg_10_0)
 		return
 	end
 
-	local var_10_0 = var_0_0.detectUpgrade()
+	local upgradeDataList = FightPlayerOperateMgr.detectUpgrade()
 
-	if #var_10_0 > 0 then
-		for iter_10_0 = #var_10_0, 1, -1 do
-			local var_10_1 = var_10_0[iter_10_0]
+	if #upgradeDataList > 0 then
+		for i = #upgradeDataList, 1, -1 do
+			local data = upgradeDataList[i]
+			local config = lua_hero_upgrade.configDict[data.id]
 
-			if lua_hero_upgrade.configDict[var_10_1.id].type == 1 then
-				FightRpc.instance:sendUseClothSkillRequest(var_10_1.id, var_10_1.entityId, var_10_1.optionIds[1], FightEnum.ClothSkillType.HeroUpgrade)
-				table.remove(var_10_0, iter_10_0)
+			if config.type == 1 then
+				FightRpc.instance:sendUseClothSkillRequest(data.id, data.entityId, data.optionIds[1], FightEnum.ClothSkillType.HeroUpgrade)
+				table.remove(upgradeDataList, i)
 			end
 		end
 
-		if #var_10_0 > 0 then
-			arg_10_0._upgradeDataList = var_10_0
+		if #upgradeDataList > 0 then
+			self._upgradeDataList = upgradeDataList
 
-			ViewMgr.instance:openView(ViewName.FightSkillStrengthenView, var_10_0)
+			ViewMgr.instance:openView(ViewName.FightSkillStrengthenView, upgradeDataList)
 		end
 	end
 end
 
-function var_0_0.detectUpgrade()
+function FightPlayerOperateMgr.detectUpgrade()
 	if FightModel.instance:isFinish() then
 		return {}
 	end
 
-	local var_11_0 = {}
-	local var_11_1 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+	local upgradeDataList = {}
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
 
-	table.sort(var_11_1, var_0_0.sortEntity)
+	table.sort(entityList, FightPlayerOperateMgr.sortEntity)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		local var_11_2 = iter_11_1:getMO()
+	for i, v in ipairs(entityList) do
+		local entityMO = v:getMO()
 
-		if var_11_2 and var_11_2.canUpgradeIds and tabletool.len(var_11_2.canUpgradeIds) > 0 then
-			for iter_11_2, iter_11_3 in pairs(var_11_2.canUpgradeIds) do
-				local var_11_3 = lua_hero_upgrade.configDict[iter_11_3]
+		if entityMO and entityMO.canUpgradeIds and tabletool.len(entityMO.canUpgradeIds) > 0 then
+			for index, id in pairs(entityMO.canUpgradeIds) do
+				local config = lua_hero_upgrade.configDict[id]
 
-				if var_11_3 then
-					local var_11_4 = {}
-					local var_11_5 = string.splitToNumber(var_11_3.options, "#")
+				if config then
+					local optionIds = {}
+					local options = string.splitToNumber(config.options, "#")
 
-					for iter_11_4, iter_11_5 in ipairs(var_11_5) do
-						if not var_11_2.upgradedOptions[iter_11_5] then
-							table.insert(var_11_4, iter_11_5)
+					for k, optionId in ipairs(options) do
+						if not entityMO.upgradedOptions[optionId] then
+							table.insert(optionIds, optionId)
 						end
 					end
 
-					if #var_11_4 > 0 then
-						local var_11_6 = {
-							id = iter_11_3,
-							entityId = var_11_2.id,
-							optionIds = var_11_4
-						}
+					if #optionIds > 0 then
+						local data = {}
 
-						table.insert(var_11_0, var_11_6)
+						data.id = id
+						data.entityId = entityMO.id
+						data.optionIds = optionIds
+
+						table.insert(upgradeDataList, data)
 					end
 				end
 			end
 		end
 	end
 
-	return var_11_0
+	return upgradeDataList
 end
 
-function var_0_0._checkChangeHeroNeedUseSkill(arg_12_0)
+function FightPlayerOperateMgr:_checkChangeHeroNeedUseSkill()
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
@@ -203,42 +206,43 @@ function var_0_0._checkChangeHeroNeedUseSkill(arg_12_0)
 		return
 	end
 
-	local var_12_0 = FightDataHelper.roundMgr:getRoundData()
+	local roundData = FightDataHelper.roundMgr:getRoundData()
 
-	if not var_12_0 then
+	if not roundData then
 		return
 	end
 
-	local var_12_1 = FightDataHelper.entityMgr:getById(var_12_0.lastChangeHeroUid)
+	local tarEntityMO = FightDataHelper.entityMgr:getById(roundData.lastChangeHeroUid)
 
-	if not var_12_1 then
+	if not tarEntityMO then
 		return
 	end
 
-	local var_12_2 = lua_skill.configDict[var_12_1.exSkill]
+	local skillConfig = lua_skill.configDict[tarEntityMO.exSkill]
 
-	if not var_12_2 then
+	if not skillConfig then
 		return
 	end
 
-	if FightEnum.ShowLogicTargetView[var_12_2.logicTarget] and var_12_2.targetLimit == FightEnum.TargetLimit.MySide then
-		local var_12_3 = FightDataHelper.entityMgr:getMyNormalList()
-		local var_12_4 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+	if FightEnum.ShowLogicTargetView[skillConfig.logicTarget] and skillConfig.targetLimit == FightEnum.TargetLimit.MySide then
+		local mySideList = FightDataHelper.entityMgr:getMyNormalList()
+		local mySideSpList = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+		local mySideEntityCount = #mySideList + #mySideSpList
 
-		if #var_12_3 + #var_12_4 == 0 then
+		if mySideEntityCount == 0 then
 			return
 		end
 	end
 
 	ViewMgr.instance:openView(ViewName.FightChangeHeroSelectSkillTargetView, {
-		skillConfig = var_12_2,
-		fromId = var_12_1.id
+		skillConfig = skillConfig,
+		fromId = tarEntityMO.id
 	})
 
 	return true
 end
 
-function var_0_0._checkBindContract(arg_13_0)
+function FightPlayerOperateMgr:_checkBindContract()
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
@@ -269,19 +273,21 @@ function var_0_0._checkBindContract(arg_13_0)
 		return
 	end
 
-	local var_13_0 = FightModel.instance.notifyEntityId
+	local notifyEntityId = FightModel.instance.notifyEntityId
 
-	if string.nilorempty(var_13_0) then
+	if string.nilorempty(notifyEntityId) then
 		return
 	end
 
-	if not FightHelper.getEntity(var_13_0) then
+	local entity = FightHelper.getEntity(notifyEntityId)
+
+	if not entity then
 		return
 	end
 
-	local var_13_1 = FightModel.instance.canContractList
+	local canContractList = FightModel.instance.canContractList
 
-	if not var_13_1 or #var_13_1 < 1 then
+	if not canContractList or #canContractList < 1 then
 		return
 	end
 
@@ -291,7 +297,7 @@ function var_0_0._checkBindContract(arg_13_0)
 	return true
 end
 
-function var_0_0.checkAiJiAoQte(arg_14_0)
+function FightPlayerOperateMgr:checkAiJiAoQte()
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
@@ -316,150 +322,153 @@ function var_0_0.checkAiJiAoQte(arg_14_0)
 		return
 	end
 
-	local var_14_0 = FightDataHelper.entityMgr.entityDataDic
-	local var_14_1 = FightEnum.BuffFeature.EzioBigSkill
-	local var_14_2 = FightDataHelper.stateMgr:getIsAuto()
+	local entityDataDic = FightDataHelper.entityMgr.entityDataDic
+	local buffFeature = FightEnum.BuffFeature.EzioBigSkill
+	local isAuto = FightDataHelper.stateMgr:getIsAuto()
 
-	for iter_14_0, iter_14_1 in pairs(var_14_0) do
-		if iter_14_1.side == FightEnum.EntitySide.MySide then
-			local var_14_3, var_14_4 = iter_14_1:hasBuffFeature(var_14_1)
+	for entityId, entityData in pairs(entityDataDic) do
+		if entityData.side == FightEnum.EntitySide.MySide then
+			local hasFeature, buffMO = entityData:hasBuffFeature(buffFeature)
 
-			if var_14_3 then
-				local var_14_5 = var_14_4.actCommonParams
-				local var_14_6 = string.split(var_14_5, "|")
+			if hasFeature then
+				local actCommonParams = buffMO.actCommonParams
+				local arr = string.split(actCommonParams, "|")
 
-				for iter_14_2, iter_14_3 in ipairs(var_14_6) do
-					local var_14_7 = string.split(iter_14_3, "#")
-					local var_14_8 = tonumber(var_14_7[1])
-					local var_14_9 = lua_buff_act.configDict[var_14_8]
+				for _, v in ipairs(arr) do
+					local paramArray = string.split(v, "#")
+					local featureId = tonumber(paramArray[1])
+					local buffActConfig = lua_buff_act.configDict[featureId]
 
-					if var_14_9 and var_14_9.type == var_14_1 then
-						local var_14_10 = string.split(var_14_7[2], ",")
-						local var_14_11 = tonumber(var_14_10[1]) or 0
-						local var_14_12 = tonumber(var_14_10[2])
-						local var_14_13 = var_14_10[3]
+					if buffActConfig and buffActConfig.type == buffFeature then
+						local splitList = string.split(paramArray[2], ",")
+						local count = tonumber(splitList[1]) or 0
+						local totalDamage = tonumber(splitList[2])
+						local toId = splitList[3]
 
-						if var_14_11 and var_14_11 > 0 then
-							if var_14_11 == FightDataHelper.tempMgr.aiJiAoQteCount then
-								local var_14_14 = (FightDataHelper.tempMgr.aiJiAoQteEndlessLoop or 0) + 1
+						if count and count > 0 then
+							if count == FightDataHelper.tempMgr.aiJiAoQteCount then
+								local loopCount = FightDataHelper.tempMgr.aiJiAoQteEndlessLoop or 0
 
-								FightDataHelper.tempMgr.aiJiAoQteEndlessLoop = var_14_14
+								loopCount = loopCount + 1
+								FightDataHelper.tempMgr.aiJiAoQteEndlessLoop = loopCount
 
-								if var_14_14 > 2 then
-									local var_14_15 = FightHelper.getEntity(iter_14_0)
+								if loopCount > 2 then
+									local playEntity = FightHelper.getEntity(entityId)
 
-									if var_14_15 then
-										local var_14_16 = FightStepData.New(FightDef_pb.FightStep())
+									if playEntity then
+										local fightStepData = FightStepData.New(FightDef_pb.FightStep())
 
-										var_14_16.isFakeStep = true
-										var_14_16.fromId = var_14_15.id
-										var_14_16.toId = var_14_15:isMySide() and FightEntityScene.EnemySideId or FightEntityScene.MySideId
-										var_14_16.actType = FightEnum.ActType.SKILL
+										fightStepData.isFakeStep = true
+										fightStepData.fromId = playEntity.id
+										fightStepData.toId = playEntity:isMySide() and FightEntityScene.EnemySideId or FightEntityScene.MySideId
+										fightStepData.actType = FightEnum.ActType.SKILL
 
-										var_14_15.skill:registTimelineWork("aijiao_312301_unique_direct_exit", var_14_16):start()
+										local work = playEntity.skill:registTimelineWork("aijiao_312301_unique_direct_exit", fightStepData)
+
+										work:start()
 									end
 
 									return false
 								end
 							end
 
-							FightDataHelper.tempMgr.aiJiAoQteCount = var_14_11
+							FightDataHelper.tempMgr.aiJiAoQteCount = count
 
-							if var_14_13 == "0" then
-								arg_14_0.playAiJiAoPreTimeline = true
+							if toId == "0" then
+								self.playAiJiAoPreTimeline = true
 
-								local var_14_17 = FightAiJiAoQteSelectView.getTargetLimit(229002, iter_14_0)
+								local targetLimit = FightAiJiAoQteSelectView.getTargetLimit(229002, entityId)
 
-								if #var_14_17 == 0 then
+								if #targetLimit == 0 then
 									return false
 								end
 
-								local var_14_18 = {
+								local tab = {
 									mustSelect = true,
 									skillId = 229002,
-									fromId = iter_14_0,
-									callback = arg_14_0.afterAiJiAoSelectToId,
-									handle = arg_14_0,
-									targetLimit = var_14_17
+									fromId = entityId,
+									callback = self.afterAiJiAoSelectToId,
+									handle = self,
+									targetLimit = targetLimit
 								}
 
-								arg_14_0.aiJiAoFromId = iter_14_0
+								self.aiJiAoFromId = entityId
 
-								local var_14_19 = arg_14_0:com_registFlowSequence()
+								local workFlow = self:com_registFlowSequence()
 
-								if var_14_2 then
-									local var_14_20 = FightHelper.getEntity(iter_14_0)
-									local var_14_21 = FightDataHelper.operationDataMgr.curSelectEntityId
+								if isAuto then
+									local playEntity = FightHelper.getEntity(entityId)
+									local curSelectEntityId = FightDataHelper.operationDataMgr.curSelectEntityId
 
-									var_14_21 = (not var_14_21 or var_14_21 ~= 0) and var_14_21
+									curSelectEntityId = (not curSelectEntityId or curSelectEntityId ~= 0) and curSelectEntityId
 
-									if not FightHelper.getEntity(var_14_21) then
-										var_14_21 = nil
+									if not FightHelper.getEntity(curSelectEntityId) then
+										curSelectEntityId = nil
 									end
 
-									if not var_14_21 then
-										local var_14_22 = FightHelper.getCurBossId()
+									if not curSelectEntityId then
+										local bossId = FightHelper.getCurBossId()
 
-										for iter_14_4, iter_14_5 in ipairs(var_14_17) do
-											local var_14_23 = FightDataHelper.entityMgr:getById(iter_14_5)
+										for i, targetId in ipairs(targetLimit) do
+											local targetEntityData = FightDataHelper.entityMgr:getById(targetId)
 
-											if var_14_23 and FightHelper.isBossId(var_14_22, var_14_23.modelId) then
-												var_14_21 = iter_14_5
+											if targetEntityData and FightHelper.isBossId(bossId, targetEntityData.modelId) then
+												curSelectEntityId = targetId
 
 												break
 											end
 										end
 
-										var_14_21 = var_14_21 or var_14_17[1]
+										curSelectEntityId = curSelectEntityId or targetLimit[1]
 									end
 
-									if not var_14_21 or not FightHelper.getEntity(var_14_21) then
+									if not curSelectEntityId or not FightHelper.getEntity(curSelectEntityId) then
 										return false
 									end
 
-									var_14_19:registWork(Work2FightWork, FightWorkPlayTimeline, var_14_20, "aijiao_312301_unique_pre", var_14_21)
-									var_14_19:registWork(FightWorkFunction, FightAiJiAoQteView.autoQte, iter_14_0, var_14_21)
-									var_14_19:start()
+									workFlow:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", curSelectEntityId)
+									workFlow:registWork(FightWorkFunction, FightAiJiAoQteView.autoQte, entityId, curSelectEntityId)
+									workFlow:start()
 
 									return true
 								end
 
-								local var_14_24 = FightMsgMgr.sendMsg(FightMsgId.ShowAiJiAoExpointEffectBeforeUniqueSkill, iter_14_0)
+								local exPointObj = FightMsgMgr.sendMsg(FightMsgId.ShowAiJiAoExpointEffectBeforeUniqueSkill, entityId)
 
-								if var_14_24 then
+								if exPointObj then
 									AudioMgr.instance:trigger(20305032)
-									var_14_19:registWork(FightWorkPlayAnimator, var_14_24, "dazhao")
+									workFlow:registWork(FightWorkPlayAnimator, exPointObj, "dazhao")
 								end
 
-								var_14_19:registWork(FightWorkFunction, arg_14_0.openFightAiJiAoQteSelectView, arg_14_0, var_14_18)
-								var_14_19:start()
+								workFlow:registWork(FightWorkFunction, self.openFightAiJiAoQteSelectView, self, tab)
+								workFlow:start()
 							else
-								arg_14_0.aiJiAoToId = var_14_13
-								arg_14_0.aiJiAoTotalDamage = var_14_12
+								self.aiJiAoToId = toId
+								self.aiJiAoTotalDamage = totalDamage
 
-								local var_14_25 = {
-									fromId = iter_14_0,
-									toId = var_14_13
+								local viewParam = {
+									fromId = entityId,
+									toId = toId
 								}
-								local var_14_26 = arg_14_0:com_registFlowSequence()
+								local workFlow = self:com_registFlowSequence()
 
-								if not arg_14_0.playAiJiAoPreTimeline then
-									arg_14_0.playAiJiAoPreTimeline = true
+								if not self.playAiJiAoPreTimeline then
+									self.playAiJiAoPreTimeline = true
 
-									local var_14_27 = FightHelper.getEntity(iter_14_0)
+									local playEntity = FightHelper.getEntity(entityId)
 
-									var_14_26:registWork(Work2FightWork, FightWorkPlayTimeline, var_14_27, "aijiao_312301_unique_pre", var_14_13)
+									workFlow:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", toId)
 								end
 
-								if var_14_2 then
-									var_14_26:registWork(FightWorkFunction, FightAiJiAoQteView.autoQte, iter_14_0, var_14_13)
-									var_14_26:start()
+								if isAuto then
+									workFlow:registWork(FightWorkFunction, FightAiJiAoQteView.autoQte, entityId, toId)
+									workFlow:start()
 
 									return true
 								end
 
-								var_14_26:registWork(FightWorkFunction, arg_14_0.openAiJiAoQteView, arg_14_0, var_14_25)
-								var_14_26:start()
+								workFlow:registWork(FightWorkFunction, self.openAiJiAoQteView, self, viewParam)
+								workFlow:start()
 							end
 
 							return true
@@ -471,25 +480,25 @@ function var_0_0.checkAiJiAoQte(arg_14_0)
 	end
 end
 
-function var_0_0.openFightAiJiAoQteSelectView(arg_15_0, arg_15_1)
-	ViewMgr.instance:openView(ViewName.FightAiJiAoQteSelectView, arg_15_1)
+function FightPlayerOperateMgr:openFightAiJiAoQteSelectView(tab)
+	ViewMgr.instance:openView(ViewName.FightAiJiAoQteSelectView, tab)
 end
 
-function var_0_0.afterAiJiAoSelectToId(arg_16_0, arg_16_1)
-	local var_16_0 = {
-		fromId = arg_16_0.aiJiAoFromId,
-		toId = arg_16_1
+function FightPlayerOperateMgr:afterAiJiAoSelectToId(toId)
+	local viewParam = {
+		fromId = self.aiJiAoFromId,
+		toId = toId
 	}
-	local var_16_1 = arg_16_0:com_registFlowSequence()
-	local var_16_2 = FightHelper.getEntity(arg_16_0.aiJiAoFromId)
+	local workFlow = self:com_registFlowSequence()
+	local playEntity = FightHelper.getEntity(self.aiJiAoFromId)
 
-	var_16_1:registWork(Work2FightWork, FightWorkPlayTimeline, var_16_2, "aijiao_312301_unique_pre", arg_16_1)
-	var_16_1:registWork(FightWorkFunction, arg_16_0.openAiJiAoQteView, arg_16_0, var_16_0)
-	var_16_1:start()
+	workFlow:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", toId)
+	workFlow:registWork(FightWorkFunction, self.openAiJiAoQteView, self, viewParam)
+	workFlow:start()
 end
 
-function var_0_0.openAiJiAoQteView(arg_17_0, arg_17_1)
-	ViewMgr.instance:openView(ViewName.FightAiJiAoQteView, arg_17_1)
+function FightPlayerOperateMgr:openAiJiAoQteView(viewParam)
+	ViewMgr.instance:openView(ViewName.FightAiJiAoQteView, viewParam)
 end
 
-return var_0_0
+return FightPlayerOperateMgr

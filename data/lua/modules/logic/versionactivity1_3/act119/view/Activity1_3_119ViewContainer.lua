@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119ViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act119/view/Activity1_3_119ViewContainer.lua
 
-local var_0_0 = class("Activity1_3_119ViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119ViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity1_3_119ViewContainer = class("Activity1_3_119ViewContainer", BaseViewContainer)
 
-	arg_1_0._view = Activity1_3_119View.New()
+function Activity1_3_119ViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._view)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	self._view = Activity1_3_119View.New()
 
-	return var_1_0
+	table.insert(views, self._view)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = NavigateButtonsView.New({
+function Activity1_3_119ViewContainer:buildTabViews(tabContainerId)
+	local navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		true
 	}, HelpEnum.HelpId.VersionActivity_1_3_119)
 
 	return {
-		var_2_0
+		navigateView
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function Activity1_3_119ViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_3Enum.ActivityId.Act307)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_3Enum.ActivityId.Act307
 	})
 end
 
-function var_0_0.playOpenTransition(arg_4_0)
-	local var_4_0 = Activity119Model.instance:getData()
-	local var_4_1 = Activity119Config.instance:getConfig(VersionActivity1_3Enum.ActivityId.Act307, var_4_0.lastSelectDay)
-	local var_4_2 = "normal"
+function Activity1_3_119ViewContainer:playOpenTransition()
+	local data = Activity119Model.instance:getData()
+	local config = Activity119Config.instance:getConfig(VersionActivity1_3Enum.ActivityId.Act307, data.lastSelectDay)
+	local anim = "normal"
 
-	if var_4_0.lastSelectModel == 2 and DungeonModel.instance:hasPassLevel(var_4_1.normalCO.id) then
-		var_4_2 = "hard"
+	if data.lastSelectModel == 2 and DungeonModel.instance:hasPassLevel(config.normalCO.id) then
+		anim = "hard"
 	end
 
-	var_0_0.super.playOpenTransition(arg_4_0, {
-		anim = var_4_2
+	Activity1_3_119ViewContainer.super.playOpenTransition(self, {
+		anim = anim
 	})
 end
 
-function var_0_0.playCloseTransition(arg_5_0)
-	local var_5_0 = Activity119Model.instance:getData()
-	local var_5_1 = "normalclose"
+function Activity1_3_119ViewContainer:playCloseTransition()
+	local data = Activity119Model.instance:getData()
+	local anim = "normalclose"
 
-	if var_5_0.lastSelectModel == 2 then
-		var_5_1 = "hardclose"
+	if data.lastSelectModel == 2 then
+		anim = "hardclose"
 	end
 
-	var_0_0.super.playCloseTransition(arg_5_0, {
-		anim = var_5_1
+	Activity1_3_119ViewContainer.super.playCloseTransition(self, {
+		anim = anim
 	})
 end
 
-return var_0_0
+return Activity1_3_119ViewContainer

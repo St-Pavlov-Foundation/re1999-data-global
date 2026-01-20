@@ -1,40 +1,42 @@
-﻿module("modules.logic.handbook.view.HandBookCharacterSwitchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandBookCharacterSwitchViewContainer.lua
 
-local var_0_0 = class("HandBookCharacterSwitchViewContainer", BaseViewContainer)
+module("modules.logic.handbook.view.HandBookCharacterSwitchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local HandBookCharacterSwitchViewContainer = class("HandBookCharacterSwitchViewContainer", BaseViewContainer)
 
-	arg_1_0.navigateHandleView = HandBookCharacterNavigateHandleView.New()
+function HandBookCharacterSwitchViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.navigateHandleView)
-	table.insert(var_1_0, HandBookCharacterSwitchView.New())
-	table.insert(var_1_0, HandBookCharacterView.New())
-	table.insert(var_1_0, HandBookCharacterSwitchViewEffect.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	self.navigateHandleView = HandBookCharacterNavigateHandleView.New()
 
-	return var_1_0
+	table.insert(views, self.navigateHandleView)
+	table.insert(views, HandBookCharacterSwitchView.New())
+	table.insert(views, HandBookCharacterView.New())
+	table.insert(views, HandBookCharacterSwitchViewEffect.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function HandBookCharacterSwitchViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.navigateHandleView.onCloseBtnClick, arg_2_0.navigateHandleView)
+		self.navigateView:setOverrideClose(self.navigateHandleView.onCloseBtnClick, self.navigateHandleView)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
-	arg_3_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+function HandBookCharacterSwitchViewContainer:onContainerOpenFinish()
+	self.navigateView:resetCloseBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+	self.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
 end
 
-return var_0_0
+return HandBookCharacterSwitchViewContainer

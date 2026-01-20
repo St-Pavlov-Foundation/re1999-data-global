@@ -1,68 +1,70 @@
-﻿module("modules.logic.fight.view.work.FightWorkAutoSeason2ChangeHero", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/work/FightWorkAutoSeason2ChangeHero.lua
 
-local var_0_0 = class("FightWorkAutoSeason2ChangeHero", BaseWork)
+module("modules.logic.fight.view.work.FightWorkAutoSeason2ChangeHero", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._opList = arg_1_1
-	arg_1_0._index = arg_1_2
-	arg_1_0._beginRoundOp = arg_1_0._opList[arg_1_2]
+local FightWorkAutoSeason2ChangeHero = class("FightWorkAutoSeason2ChangeHero", BaseWork)
+
+function FightWorkAutoSeason2ChangeHero:ctor(opeList, index)
+	self._opList = opeList
+	self._index = index
+	self._beginRoundOp = self._opList[index]
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._beginRoundOp then
-		arg_2_0:onDone(true)
+function FightWorkAutoSeason2ChangeHero:onStart()
+	if not self._beginRoundOp then
+		self:onDone(true)
 
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 30)
+	TaskDispatcher.runDelay(self._delayDone, self, 30)
 
-	local var_2_0 = arg_2_0._opList[arg_2_0._index - 2].toId
-	local var_2_1 = arg_2_0._opList[arg_2_0._index - 1].toId
+	local subUid = self._opList[self._index - 2].toId
+	local changedUid = self._opList[self._index - 1].toId
 
-	arg_2_0._toId = arg_2_0._beginRoundOp.toId
+	self._toId = self._beginRoundOp.toId
 
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0, LuaEventSystem.Low)
-	FightController.instance:registerCallback(FightEvent.ReceiveChangeSubHeroReply, arg_2_0._onReceiveChangeSubHeroReply, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.ChangeSubHeroExSkillReply, arg_2_0._onChangeSubHeroExSkillReply, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self, LuaEventSystem.Low)
+	FightController.instance:registerCallback(FightEvent.ReceiveChangeSubHeroReply, self._onReceiveChangeSubHeroReply, self)
+	FightController.instance:registerCallback(FightEvent.ChangeSubHeroExSkillReply, self._onChangeSubHeroExSkillReply, self)
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.Season2AutoChangeHero)
-	FightRpc.instance:sendChangeSubHeroRequest(var_2_0, var_2_1)
+	FightRpc.instance:sendChangeSubHeroRequest(subUid, changedUid)
 end
 
-function var_0_0._onRoundSequenceFinish(arg_3_0)
-	if not arg_3_0._changedSkill then
-		arg_3_0._changedSkill = true
+function FightWorkAutoSeason2ChangeHero:_onRoundSequenceFinish()
+	if not self._changedSkill then
+		self._changedSkill = true
 	else
-		arg_3_0:clearWork()
+		self:clearWork()
 
 		return
 	end
 
-	FightRpc.instance:sendChangeSubHeroExSkillRequest(arg_3_0._toId)
+	FightRpc.instance:sendChangeSubHeroExSkillRequest(self._toId)
 end
 
-function var_0_0._onReceiveChangeSubHeroReply(arg_4_0, arg_4_1)
-	if arg_4_1 ~= 0 then
-		arg_4_0:onDone(true)
+function FightWorkAutoSeason2ChangeHero:_onReceiveChangeSubHeroReply(resultCode)
+	if resultCode ~= 0 then
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onChangeSubHeroExSkillReply(arg_5_0, arg_5_1)
-	if arg_5_1 ~= 0 then
-		arg_5_0:onDone(true)
+function FightWorkAutoSeason2ChangeHero:_onChangeSubHeroExSkillReply(resultCode)
+	if resultCode ~= 0 then
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_6_0)
-	arg_6_0:onDone(true)
+function FightWorkAutoSeason2ChangeHero:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_7_0)
+function FightWorkAutoSeason2ChangeHero:clearWork()
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.Season2AutoChangeHero)
-	TaskDispatcher.cancelTask(arg_7_0._delayDone, arg_7_0)
-	FightController.instance:unregisterCallback(FightEvent.ReceiveChangeSubHeroReply, arg_7_0._onReceiveChangeSubHeroReply, arg_7_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_7_0._onRoundSequenceFinish, arg_7_0)
-	FightController.instance:unregisterCallback(FightEvent.ChangeSubHeroExSkillReply, arg_7_0._onChangeSubHeroExSkillReply, arg_7_0)
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	FightController.instance:unregisterCallback(FightEvent.ReceiveChangeSubHeroReply, self._onReceiveChangeSubHeroReply, self)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.ChangeSubHeroExSkillReply, self._onChangeSubHeroExSkillReply, self)
 end
 
-return var_0_0
+return FightWorkAutoSeason2ChangeHero

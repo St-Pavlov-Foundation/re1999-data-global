@@ -1,172 +1,172 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErEventItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErEventItem.lua
 
-local var_0_0 = class("MoLiDeErEventItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErEventItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._imagePoint = gohelper.findChildImage(arg_1_0.viewGO, "#image_Point")
-	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "#image_Icon")
-	arg_1_0._imageStar = gohelper.findChildImage(arg_1_0.viewGO, "#image_Star")
-	arg_1_0._imageLine = gohelper.findChildImage(arg_1_0.viewGO, "#image_Line")
-	arg_1_0._imagePointFinish = gohelper.findChildImage(arg_1_0.viewGO, "#image_Pointfinish")
-	arg_1_0._imageIconFinish = gohelper.findChildImage(arg_1_0.viewGO, "#image_Iconfinish")
-	arg_1_0._imageStarFinish = gohelper.findChildImage(arg_1_0.viewGO, "#image_Starfinish")
-	arg_1_0._imageLineFinish = gohelper.findChildImage(arg_1_0.viewGO, "#image_Linefinish")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "#txt_Num")
-	arg_1_0._simageHead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Dispatch/image_HeadBG/image/#simage_Head")
-	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "#go_Dispatch/#txt_Time")
-	arg_1_0._goDispatch = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch")
-	arg_1_0._btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Detail")
+local MoLiDeErEventItem = class("MoLiDeErEventItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErEventItem:init(go)
+	self.viewGO = go
+	self._imagePoint = gohelper.findChildImage(self.viewGO, "#image_Point")
+	self._imageIcon = gohelper.findChildImage(self.viewGO, "#image_Icon")
+	self._imageStar = gohelper.findChildImage(self.viewGO, "#image_Star")
+	self._imageLine = gohelper.findChildImage(self.viewGO, "#image_Line")
+	self._imagePointFinish = gohelper.findChildImage(self.viewGO, "#image_Pointfinish")
+	self._imageIconFinish = gohelper.findChildImage(self.viewGO, "#image_Iconfinish")
+	self._imageStarFinish = gohelper.findChildImage(self.viewGO, "#image_Starfinish")
+	self._imageLineFinish = gohelper.findChildImage(self.viewGO, "#image_Linefinish")
+	self._txtNum = gohelper.findChildText(self.viewGO, "#txt_Num")
+	self._simageHead = gohelper.findChildSingleImage(self.viewGO, "#go_Dispatch/image_HeadBG/image/#simage_Head")
+	self._txtTime = gohelper.findChildText(self.viewGO, "#go_Dispatch/#txt_Time")
+	self._goDispatch = gohelper.findChild(self.viewGO, "#go_Dispatch")
+	self._btnDetail = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Detail")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._animator = gohelper.findChildComponent(arg_2_0.viewGO, "", gohelper.Type_Animator)
-	arg_2_0._roleAnimator = gohelper.findChildComponent(arg_2_0.viewGO, "#go_Dispatch", gohelper.Type_Animator)
+function MoLiDeErEventItem:_editableInitView()
+	self._animator = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
+	self._roleAnimator = gohelper.findChildComponent(self.viewGO, "#go_Dispatch", gohelper.Type_Animator)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnDetail:AddClickListener(arg_3_0.onDetailClick, arg_3_0)
+function MoLiDeErEventItem:addEventListeners()
+	self._btnDetail:AddClickListener(self.onDetailClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnDetail:RemoveClickListener()
+function MoLiDeErEventItem:removeEventListeners()
+	self._btnDetail:RemoveClickListener()
 end
 
-function var_0_0.onDetailClick(arg_5_0)
-	local var_5_0 = MoLiDeErGameModel.instance:getSelectEventId()
-	local var_5_1 = arg_5_0._eventId
+function MoLiDeErEventItem:onDetailClick()
+	local eventId = MoLiDeErGameModel.instance:getSelectEventId()
+	local selfEventId = self._eventId
 
-	if var_5_0 == var_5_1 then
+	if eventId == selfEventId then
 		return
 	end
 
-	MoLiDeErGameModel.instance:setSelectEventId(var_5_1)
+	MoLiDeErGameModel.instance:setSelectEventId(selfEventId)
 end
 
-function var_0_0.setData(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-	arg_6_0._eventId = arg_6_1
-	arg_6_0._isChose = arg_6_2
-	arg_6_0._currentRound = arg_6_4
-	arg_6_0._eventEndRound = arg_6_3
-	arg_6_0._teamId = arg_6_5
+function MoLiDeErEventItem:setData(eventId, isChose, eventEndRound, currentRound, teamId, showAnim)
+	self._eventId = eventId
+	self._isChose = isChose
+	self._currentRound = currentRound
+	self._eventEndRound = eventEndRound
+	self._teamId = teamId
 
-	arg_6_0:refreshUI(arg_6_6)
+	self:refreshUI(showAnim)
 end
 
-function var_0_0.setActive(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0.viewGO, arg_7_1)
+function MoLiDeErEventItem:setActive(active)
+	gohelper.setActive(self.viewGO, active)
 end
 
-function var_0_0.setAtFirst(arg_8_0)
-	gohelper.setAsFirstSibling(arg_8_0.viewGO)
+function MoLiDeErEventItem:setAtFirst()
+	gohelper.setAsFirstSibling(self.viewGO)
 end
 
-function var_0_0.showAnim(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_2 and 0 or 1
+function MoLiDeErEventItem:showAnim(animName, playAnim)
+	local animTime = playAnim and 0 or 1
 
-	arg_9_0._animator:Play(arg_9_1, 0, var_9_0)
+	self._animator:Play(animName, 0, animTime)
 end
 
-function var_0_0.showRoleAnim(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_2 and 0 or 1
+function MoLiDeErEventItem:showRoleAnim(animName, playAnim)
+	local animTime = playAnim and 0 or 1
 
-	arg_10_0._roleAnimator:Play(arg_10_1, 0, var_10_0)
+	self._roleAnimator:Play(animName, 0, animTime)
 end
 
-function var_0_0.refreshUI(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._isChose
-	local var_11_1 = arg_11_0._eventEndRound
-	local var_11_2 = arg_11_0._currentRound
-	local var_11_3 = var_11_1 ~= 0 and var_11_1 <= var_11_2
-	local var_11_4 = var_11_0 and var_11_2 < var_11_1 and arg_11_0._teamId ~= nil and arg_11_0._teamId ~= 0
-	local var_11_5 = MoLiDeErGameModel.instance:getCurGameInfo()
-	local var_11_6 = arg_11_1 and var_11_5.newBackTeamEventDic[arg_11_0._eventId] and not var_11_4
-	local var_11_7 = var_11_3 and MoLiDeErEnum.EventState.Complete or MoLiDeErEnum.EventState.Unlock
-	local var_11_8 = tostring(var_11_7)
-	local var_11_9 = tostring(MoLiDeErEnum.EventState.Complete)
-	local var_11_10 = MoLiDeErConfig.instance:getEventConfig(arg_11_0._eventId)
+function MoLiDeErEventItem:refreshUI(showAnim)
+	local isChose = self._isChose
+	local eventEndRound = self._eventEndRound
+	local currentRound = self._currentRound
+	local isComplete = eventEndRound ~= 0 and eventEndRound <= currentRound
+	local isDispatch = isChose and currentRound < eventEndRound and self._teamId ~= nil and self._teamId ~= 0
+	local curGameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
+	local isWithDraw = showAnim and curGameInfo.newBackTeamEventDic[self._eventId] and not isDispatch
+	local state = isComplete and MoLiDeErEnum.EventState.Complete or MoLiDeErEnum.EventState.Unlock
+	local suffix = tostring(state)
+	local finishSuffix = tostring(MoLiDeErEnum.EventState.Complete)
+	local config = MoLiDeErConfig.instance:getEventConfig(self._eventId)
 
-	UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imageIcon, string.format("v2a8_molideer_game_stage_%s_%s", var_11_10.eventType, var_11_8))
-	UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imageStar, "v2a8_molideer_game_stage_star_" .. var_11_8)
-	UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imageLine, "v2a8_molideer_game_stage_line_" .. var_11_8)
-	UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imagePoint, "v2a8_molideer_game_stage_point_" .. var_11_8)
+	UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageIcon, string.format("v2a8_molideer_game_stage_%s_%s", config.eventType, suffix))
+	UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageStar, "v2a8_molideer_game_stage_star_" .. suffix)
+	UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageLine, "v2a8_molideer_game_stage_line_" .. suffix)
+	UISpriteSetMgr.instance:setMoLiDeErSprite(self._imagePoint, "v2a8_molideer_game_stage_point_" .. suffix)
 
-	if var_11_3 then
-		UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imageIconFinish, string.format("v2a8_molideer_game_stage_%s_%s", var_11_10.eventType, var_11_9))
-		UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imageStarFinish, "v2a8_molideer_game_stage_star_" .. var_11_9)
-		UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imageLineFinish, "v2a8_molideer_game_stage_line_" .. var_11_9)
-		UISpriteSetMgr.instance:setMoLiDeErSprite(arg_11_0._imagePointFinish, "v2a8_molideer_game_stage_point_" .. var_11_9)
+	if isComplete then
+		UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageIconFinish, string.format("v2a8_molideer_game_stage_%s_%s", config.eventType, finishSuffix))
+		UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageStarFinish, "v2a8_molideer_game_stage_star_" .. finishSuffix)
+		UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageLineFinish, "v2a8_molideer_game_stage_line_" .. finishSuffix)
+		UISpriteSetMgr.instance:setMoLiDeErSprite(self._imagePointFinish, "v2a8_molideer_game_stage_point_" .. finishSuffix)
 	end
 
-	gohelper.setActive(arg_11_0._imageIconFinish.gameObject, var_11_3)
-	gohelper.setActive(arg_11_0._imageStarFinish.gameObject, var_11_3)
-	gohelper.setActive(arg_11_0._imageLineFinish.gameObject, var_11_3)
-	gohelper.setActive(arg_11_0._imagePointFinish.gameObject, var_11_3)
+	gohelper.setActive(self._imageIconFinish.gameObject, isComplete)
+	gohelper.setActive(self._imageStarFinish.gameObject, isComplete)
+	gohelper.setActive(self._imageLineFinish.gameObject, isComplete)
+	gohelper.setActive(self._imagePointFinish.gameObject, isComplete)
 
-	local var_11_11
-	local var_11_12
+	local titleColor, iconColor
 
-	if var_11_4 then
-		var_11_11 = MoLiDeErEnum.EventTitleColor.Dispatching
-		var_11_12 = MoLiDeErEnum.EventBgColor.Dispatching
+	if isDispatch then
+		titleColor = MoLiDeErEnum.EventTitleColor.Dispatching
+		iconColor = MoLiDeErEnum.EventBgColor.Dispatching
 	else
-		var_11_11 = var_11_3 and MoLiDeErEnum.EventTitleColor.Complete or MoLiDeErEnum.EventTitleColor.NoComplete
-		var_11_12 = MoLiDeErEnum.EventBgColor.Normal
+		titleColor = isComplete and MoLiDeErEnum.EventTitleColor.Complete or MoLiDeErEnum.EventTitleColor.NoComplete
+		iconColor = MoLiDeErEnum.EventBgColor.Normal
 	end
 
-	UIColorHelper.set(arg_11_0._imageIcon, var_11_12)
+	UIColorHelper.set(self._imageIcon, iconColor)
 
-	local var_11_13 = MoLiDeErModel.instance:getCurActId()
-	local var_11_14 = MoLiDeErEnum.EventName[var_11_10.eventType]
-	local var_11_15 = MoLiDeErConfig.instance:getConstConfig(var_11_13, var_11_14)
-	local var_11_16 = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_15.value2, var_11_10.number)
+	local actId = MoLiDeErModel.instance:getCurActId()
+	local titleId = MoLiDeErEnum.EventName[config.eventType]
+	local titleConfig = MoLiDeErConfig.instance:getConstConfig(actId, titleId)
+	local titleStr = GameUtil.getSubPlaceholderLuaLangOneParam(titleConfig.value2, config.number)
 
-	arg_11_0._txtNum.text = string.format("<color=%s>%s</color>", var_11_11, var_11_16)
-	arg_11_0.viewGO.name = var_11_10.eventId
+	self._txtNum.text = string.format("<color=%s>%s</color>", titleColor, titleStr)
+	self.viewGO.name = config.eventId
 
-	gohelper.setActive(arg_11_0._goDispatch, not var_11_3 and var_11_4 or var_11_6)
+	gohelper.setActive(self._goDispatch, not isComplete and isDispatch or isWithDraw)
 
-	local var_11_17 = string.splitToNumber(var_11_10.position, "#")
+	local positionData = string.splitToNumber(config.position, "#")
 
-	transformhelper.setLocalPosXY(arg_11_0.viewGO.transform, var_11_17[1], var_11_17[2])
-	arg_11_0:showAnim(MoLiDeErEnum.AnimName.GameViewEventItemOpen, false)
+	transformhelper.setLocalPosXY(self.viewGO.transform, positionData[1], positionData[2])
+	self:showAnim(MoLiDeErEnum.AnimName.GameViewEventItemOpen, false)
 
-	if not var_11_4 and not var_11_6 then
+	if not isDispatch and not isWithDraw then
 		return
 	end
 
-	local var_11_18
-	local var_11_19
-	local var_11_20 = var_11_4 and MoLiDeErEnum.AnimName.GameViewEventRoleIn or MoLiDeErEnum.AnimName.GameViewEventRoleOut
+	local teamId, reduceRound
+	local animName = isDispatch and MoLiDeErEnum.AnimName.GameViewEventRoleIn or MoLiDeErEnum.AnimName.GameViewEventRoleOut
 
-	if var_11_4 then
-		var_11_19 = var_11_1 - var_11_2
-		var_11_18 = arg_11_0._teamId
-	elseif var_11_6 then
-		var_11_18 = var_11_5.newBackTeamEventDic[arg_11_0._eventId]
-		arg_11_0._txtTime.text = tostring(var_11_19)
+	if isDispatch then
+		reduceRound = eventEndRound - currentRound
+		teamId = self._teamId
+	elseif isWithDraw then
+		teamId = curGameInfo.newBackTeamEventDic[self._eventId]
+		self._txtTime.text = tostring(reduceRound)
 	end
 
-	arg_11_0._txtTime.text = tostring(var_11_19)
+	self._txtTime.text = tostring(reduceRound)
 
-	local var_11_21 = MoLiDeErConfig.instance:getTeamConfig(var_11_18)
+	local teamConfig = MoLiDeErConfig.instance:getTeamConfig(teamId)
 
-	if not string.nilorempty(var_11_21.picture) then
-		arg_11_0._simageHead:LoadImage(var_11_21.picture, MoLiDeErHelper.handleImage, {
-			imgTransform = arg_11_0._simageHead.transform,
-			offsetParam = var_11_21.iconOffset
+	if not string.nilorempty(teamConfig.picture) then
+		self._simageHead:LoadImage(teamConfig.picture, MoLiDeErHelper.handleImage, {
+			imgTransform = self._simageHead.transform,
+			offsetParam = teamConfig.iconOffset
 		})
 	end
 
-	arg_11_0:showRoleAnim(var_11_20, arg_11_1)
+	self:showRoleAnim(animName, showAnim)
 end
 
-function var_0_0.onDestroy(arg_12_0)
+function MoLiDeErEventItem:onDestroy()
 	return
 end
 
-return var_0_0
+return MoLiDeErEventItem

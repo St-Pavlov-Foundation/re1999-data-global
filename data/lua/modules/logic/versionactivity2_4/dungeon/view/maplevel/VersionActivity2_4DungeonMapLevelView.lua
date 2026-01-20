@@ -1,965 +1,980 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.view.maplevel.VersionActivity2_4DungeonMapLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/view/maplevel/VersionActivity2_4DungeonMapLevelView.lua
 
-local var_0_0 = class("VersionActivity2_4DungeonMapLevelView", BaseView)
-local var_0_1 = {
+module("modules.logic.versionactivity2_4.dungeon.view.maplevel.VersionActivity2_4DungeonMapLevelView", package.seeall)
+
+local VersionActivity2_4DungeonMapLevelView = class("VersionActivity2_4DungeonMapLevelView", BaseView)
+local k_jp_110_60 = {
 	2410123
 }
-local var_0_2 = {
+local k_jp_first_bracket = {
 	2410102
 }
 
-function var_0_0._buildEpisodeName_overseas(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = LangSettings.instance:isJp()
-	local var_1_1 = arg_1_0.showEpisodeCo.id
-	local var_1_2 = false
-	local var_1_3 = false
+function VersionActivity2_4DungeonMapLevelView:_buildEpisodeName_overseas(firstName, remainName)
+	local isJp = LangSettings.instance:isJp()
+	local episodeId = self.showEpisodeCo.id
+	local isjpTooBig = false
+	local isBracket = false
 
-	if var_1_0 then
-		for iter_1_0, iter_1_1 in ipairs(var_0_1) do
-			if iter_1_1 == var_1_1 then
-				var_1_2 = true
+	if isJp then
+		for _, v in ipairs(k_jp_110_60) do
+			if v == episodeId then
+				isjpTooBig = true
 			end
 		end
 
-		if not var_1_2 then
-			for iter_1_2, iter_1_3 in ipairs(var_0_2) do
-				if iter_1_3 == var_1_1 then
-					var_1_3 = true
+		if not isjpTooBig then
+			for _, v in ipairs(k_jp_first_bracket) do
+				if v == episodeId then
+					isBracket = true
 				end
 			end
 		end
 	end
 
-	local var_1_4 = arg_1_0._txtmapName.transform
+	local trans = self._txtmapName.transform
 
-	if var_1_3 then
-		recthelper.setHeight(var_1_4, 140)
+	if isBracket then
+		recthelper.setHeight(trans, 140)
 
-		return string.format("<size=74>%s</size>%s", arg_1_1, arg_1_2)
-	elseif var_1_2 then
-		recthelper.setHeight(var_1_4, 110)
+		return string.format("<size=74>%s</size>%s", firstName, remainName)
+	elseif isjpTooBig then
+		recthelper.setHeight(trans, 110)
 
-		return string.format("<size=80>%s</size>%s", arg_1_1, arg_1_2)
+		return string.format("<size=80>%s</size>%s", firstName, remainName)
 	else
-		recthelper.setHeight(var_1_4, 160)
+		recthelper.setHeight(trans, 160)
 
-		return string.format("<size=112>%s</size>%s", arg_1_1, arg_1_2)
+		return string.format("<size=112>%s</size>%s", firstName, remainName)
 	end
 end
 
-local var_0_3 = 0.4
-local var_0_4 = 2.7
+local OPEN_ANIM_TIME = 0.4
+local UNLOCK_ANIM_TIME = 2.7
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.goVersionActivity = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity")
-	arg_2_0.animator = arg_2_0.goVersionActivity:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0.animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_2_0.goVersionActivity)
-	arg_2_0.animationEventWrap = arg_2_0.goVersionActivity:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_2_0._simageactivitynormalbg = gohelper.findChildSingleImage(arg_2_0.viewGO, "anim/versionactivity/bgmask/#simage_activitynormalbg")
-	arg_2_0._simageactivityhardbg = gohelper.findChildSingleImage(arg_2_0.viewGO, "anim/versionactivity/bgmask/#simage_activityhardbg")
-	arg_2_0._txtmapName = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName")
-	arg_2_0._txtmapNameEn = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNameEn")
-	arg_2_0._txtmapNum = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum")
-	arg_2_0._txtmapChapterIndex = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/#txt_mapChapterIndex")
-	arg_2_0._gonormaleye = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/#image_normal")
-	arg_2_0._gohardeye = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/#image_hard")
-	arg_2_0._imagestar1 = gohelper.findChildImage(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/stars/starLayout/#image_star1")
-	arg_2_0._imagestar2 = gohelper.findChildImage(arg_2_0.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/stars/starLayout/#image_star2")
-	arg_2_0._goswitch = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch")
-	arg_2_0._gotype1 = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type1")
-	arg_2_0._gotype2 = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type2")
-	arg_2_0._gotype3 = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type3")
-	arg_2_0._gotype4 = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type4")
-	arg_2_0._gotype0 = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type0")
-	arg_2_0._btnleftarrow = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch/#btn_leftarrow")
-	arg_2_0._btnrightarrow = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_switch/#btn_rightarrow")
-	arg_2_0._gorecommend = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_recommend")
-	arg_2_0._txtrecommendlv = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/content/#go_recommend/txt/#txt_recommendlv")
-	arg_2_0._txtactivitydesc = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/content/#txt_activitydesc")
-	arg_2_0._gorewards = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/#go_rewards")
-	arg_2_0._goactivityrewarditem = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/#go_rewards/rewardList/#go_activityrewarditem")
-	arg_2_0._btnactivityreward = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "anim/versionactivity/right/#go_rewards/#btn_activityreward")
-	arg_2_0._gonorewards = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/#go_norewards")
-	arg_2_0.startBtnAnimator = gohelper.findChild(arg_2_0.viewGO, "anim/versionactivity/right/startBtn"):GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._btnnormalStart = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart")
-	arg_2_0._txtusepowernormal = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart/#txt_usepowernormal")
-	arg_2_0._txtnorstarttext = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart/#txt_norstarttext")
-	arg_2_0._txtnorstarttexten = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart/#txt_norstarttexten")
-	arg_2_0._btnhardStart = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_hardStart")
-	arg_2_0._txtusepowerhard = gohelper.findChildText(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_hardStart/#txt_usepowerhard")
-	arg_2_0._btnlockStart = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_lock")
-	arg_2_0._simagepower = gohelper.findChildSingleImage(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#simage_power")
-	arg_2_0._btnreplayStory = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "anim/versionactivity/right/startBtn/#btn_replayStory")
-	arg_2_0._gorighttop = gohelper.findChild(arg_2_0.viewGO, "anim/#go_righttop")
-	arg_2_0._golefttop = gohelper.findChild(arg_2_0.viewGO, "anim/#go_lefttop")
+function VersionActivity2_4DungeonMapLevelView:onInitView()
+	self.goVersionActivity = gohelper.findChild(self.viewGO, "anim/versionactivity")
+	self.animator = self.goVersionActivity:GetComponent(typeof(UnityEngine.Animator))
+	self.animatorPlayer = SLFramework.AnimatorPlayer.Get(self.goVersionActivity)
+	self.animationEventWrap = self.goVersionActivity:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._simageactivitynormalbg = gohelper.findChildSingleImage(self.viewGO, "anim/versionactivity/bgmask/#simage_activitynormalbg")
+	self._simageactivityhardbg = gohelper.findChildSingleImage(self.viewGO, "anim/versionactivity/bgmask/#simage_activityhardbg")
+	self._txtmapName = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/title/#txt_mapName")
+	self._txtmapNameEn = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNameEn")
+	self._txtmapNum = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum")
+	self._txtmapChapterIndex = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/#txt_mapChapterIndex")
+	self._gonormaleye = gohelper.findChild(self.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/#image_normal")
+	self._gohardeye = gohelper.findChild(self.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/#image_hard")
+	self._imagestar1 = gohelper.findChildImage(self.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/stars/starLayout/#image_star1")
+	self._imagestar2 = gohelper.findChildImage(self.viewGO, "anim/versionactivity/right/title/#txt_mapName/#txt_mapNum/stars/starLayout/#image_star2")
+	self._goswitch = gohelper.findChild(self.viewGO, "anim/versionactivity/right/content/#go_switch")
+	self._gotype1 = gohelper.findChild(self.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type1")
+	self._gotype2 = gohelper.findChild(self.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type2")
+	self._gotype3 = gohelper.findChild(self.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type3")
+	self._gotype4 = gohelper.findChild(self.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type4")
+	self._gotype0 = gohelper.findChild(self.viewGO, "anim/versionactivity/right/content/#go_switch/#go_type0")
+	self._btnleftarrow = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/content/#go_switch/#btn_leftarrow")
+	self._btnrightarrow = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/content/#go_switch/#btn_rightarrow")
+	self._gorecommend = gohelper.findChild(self.viewGO, "anim/versionactivity/right/content/#go_recommend")
+	self._txtrecommendlv = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/content/#go_recommend/txt/#txt_recommendlv")
+	self._txtactivitydesc = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/content/#txt_activitydesc")
+	self._gorewards = gohelper.findChild(self.viewGO, "anim/versionactivity/right/#go_rewards")
+	self._goactivityrewarditem = gohelper.findChild(self.viewGO, "anim/versionactivity/right/#go_rewards/rewardList/#go_activityrewarditem")
+	self._btnactivityreward = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/#go_rewards/#btn_activityreward")
+	self._gonorewards = gohelper.findChild(self.viewGO, "anim/versionactivity/right/#go_norewards")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	local goStartBtnRoot = gohelper.findChild(self.viewGO, "anim/versionactivity/right/startBtn")
+
+	self.startBtnAnimator = goStartBtnRoot:GetComponent(typeof(UnityEngine.Animator))
+	self._btnnormalStart = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart")
+	self._txtusepowernormal = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart/#txt_usepowernormal")
+	self._txtnorstarttext = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart/#txt_norstarttext")
+	self._txtnorstarttexten = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/startBtn/#btn_normalStart/#txt_norstarttexten")
+	self._btnhardStart = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/startBtn/#btn_hardStart")
+	self._txtusepowerhard = gohelper.findChildText(self.viewGO, "anim/versionactivity/right/startBtn/#btn_hardStart/#txt_usepowerhard")
+	self._btnlockStart = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/startBtn/#btn_lock")
+	self._simagepower = gohelper.findChildSingleImage(self.viewGO, "anim/versionactivity/right/startBtn/#simage_power")
+	self._btnreplayStory = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/startBtn/#btn_replayStory")
+	self._gorighttop = gohelper.findChild(self.viewGO, "anim/#go_righttop")
+	self._golefttop = gohelper.findChild(self.viewGO, "anim/#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
-	arg_3_0:addEventCb(VersionActivity2_4SudokuController.instance, VersionActivity2_4DungeonEvent.SudokuCompleted, arg_3_0._onSudokuCompleted, arg_3_0)
-	arg_3_0._btnleftarrow:AddClickListener(arg_3_0._btnleftarrowOnClick, arg_3_0)
-	arg_3_0._btnrightarrow:AddClickListener(arg_3_0._btnrightarrowOnClick, arg_3_0)
-	arg_3_0._btnactivityreward:AddClickListener(arg_3_0._btnactivityrewardOnClick, arg_3_0)
-	arg_3_0._btnnormalStart:AddClickListener(arg_3_0._btnnormalStartOnClick, arg_3_0)
-	arg_3_0._btnhardStart:AddClickListener(arg_3_0._btnhardStartOnClick, arg_3_0)
-	arg_3_0._btnlockStart:AddClickListener(arg_3_0._btnlockStartOnClick, arg_3_0)
-	arg_3_0._btnreplayStory:AddClickListener(arg_3_0._btnreplayStoryOnClick, arg_3_0)
-	arg_3_0.animationEventWrap:AddEventListener("refresh", arg_3_0.refreshUI, arg_3_0)
+function VersionActivity2_4DungeonMapLevelView:addEvents()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(VersionActivity2_4SudokuController.instance, VersionActivity2_4DungeonEvent.SudokuCompleted, self._onSudokuCompleted, self)
+	self._btnleftarrow:AddClickListener(self._btnleftarrowOnClick, self)
+	self._btnrightarrow:AddClickListener(self._btnrightarrowOnClick, self)
+	self._btnactivityreward:AddClickListener(self._btnactivityrewardOnClick, self)
+	self._btnnormalStart:AddClickListener(self._btnnormalStartOnClick, self)
+	self._btnhardStart:AddClickListener(self._btnhardStartOnClick, self)
+	self._btnlockStart:AddClickListener(self._btnlockStartOnClick, self)
+	self._btnreplayStory:AddClickListener(self._btnreplayStoryOnClick, self)
+	self.animationEventWrap:AddEventListener("refresh", self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0._onCurrencyChange, arg_4_0)
-	arg_4_0:removeEventCb(VersionActivity2_4SudokuController.instance, VersionActivity2_4DungeonEvent.SudokuCompleted, arg_4_0._onSudokuCompleted, arg_4_0)
-	arg_4_0._btnleftarrow:RemoveClickListener()
-	arg_4_0._btnrightarrow:RemoveClickListener()
-	arg_4_0._btnactivityreward:RemoveClickListener()
-	arg_4_0._btnnormalStart:RemoveClickListener()
-	arg_4_0._btnhardStart:RemoveClickListener()
-	arg_4_0._btnlockStart:RemoveClickListener()
-	arg_4_0._btnreplayStory:RemoveClickListener()
-	arg_4_0.animationEventWrap:RemoveAllEventListener()
+function VersionActivity2_4DungeonMapLevelView:removeEvents()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:removeEventCb(VersionActivity2_4SudokuController.instance, VersionActivity2_4DungeonEvent.SudokuCompleted, self._onSudokuCompleted, self)
+	self._btnleftarrow:RemoveClickListener()
+	self._btnrightarrow:RemoveClickListener()
+	self._btnactivityreward:RemoveClickListener()
+	self._btnnormalStart:RemoveClickListener()
+	self._btnhardStart:RemoveClickListener()
+	self._btnlockStart:RemoveClickListener()
+	self._btnreplayStory:RemoveClickListener()
+	self.animationEventWrap:RemoveAllEventListener()
 end
 
-function var_0_0._onCurrencyChange(arg_5_0, arg_5_1)
-	if not arg_5_1[CurrencyEnum.CurrencyType.Power] then
+function VersionActivity2_4DungeonMapLevelView:_onCurrencyChange(changeIds)
+	if not changeIds[CurrencyEnum.CurrencyType.Power] then
 		return
 	end
 
-	arg_5_0:refreshCostPower()
+	self:refreshCostPower()
 end
 
-function var_0_0._onSudokuCompleted(arg_6_0)
-	if arg_6_0.showEpisodeCo.id ~= VersionActivity2_4Enum.SudokuEpisodeId then
+function VersionActivity2_4DungeonMapLevelView:_onSudokuCompleted()
+	if self.showEpisodeCo.id ~= VersionActivity2_4Enum.SudokuEpisodeId then
 		return
 	end
 
 	DungeonRpc.instance:sendEndDungeonRequest(false)
 
-	if not StoryModel.instance:isStoryFinished(arg_6_0.showEpisodeCo.afterStory) then
-		arg_6_0:playSudokuAfterStory(arg_6_0.showEpisodeCo.afterStory)
+	if not StoryModel.instance:isStoryFinished(self.showEpisodeCo.afterStory) then
+		self:playSudokuAfterStory(self.showEpisodeCo.afterStory)
 
 		return
 	end
 end
 
-function var_0_0._btnleftarrowOnClick(arg_7_0)
-	if arg_7_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard or #arg_7_0.mode2EpisodeDict == 1 or arg_7_0.modeIndex <= 1 then
+function VersionActivity2_4DungeonMapLevelView:_btnleftarrowOnClick()
+	local isHardMode = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
+
+	if isHardMode or #self.mode2EpisodeDict == 1 or self.modeIndex <= 1 then
 		return
 	end
 
-	arg_7_0.modeIndex = arg_7_0.modeIndex - 1
+	self.modeIndex = self.modeIndex - 1
 
-	arg_7_0:refreshUIByMode(arg_7_0.modeList[arg_7_0.modeIndex])
+	self:refreshUIByMode(self.modeList[self.modeIndex])
 end
 
-function var_0_0._btnrightarrowOnClick(arg_8_0)
-	if arg_8_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard or #arg_8_0.mode2EpisodeDict == 1 or arg_8_0.modeIndex >= #arg_8_0.modeList then
+function VersionActivity2_4DungeonMapLevelView:_btnrightarrowOnClick()
+	local isHardMode = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
+
+	if isHardMode or #self.mode2EpisodeDict == 1 or self.modeIndex >= #self.modeList then
 		return
 	end
 
-	arg_8_0.modeIndex = arg_8_0.modeIndex + 1
+	self.modeIndex = self.modeIndex + 1
 
-	arg_8_0:refreshUIByMode(arg_8_0.modeList[arg_8_0.modeIndex])
+	self:refreshUIByMode(self.modeList[self.modeIndex])
 end
 
-function var_0_0.refreshUIByMode(arg_9_0, arg_9_1)
-	if arg_9_0.mode == arg_9_1 then
+function VersionActivity2_4DungeonMapLevelView:refreshUIByMode(mode)
+	if self.mode == mode then
 		return
 	end
 
-	arg_9_0.animator:Play(UIAnimationName.Switch, 0, 0)
+	self.animator:Play(UIAnimationName.Switch, 0, 0)
 
-	arg_9_0.mode = arg_9_1
-	arg_9_0.showEpisodeCo = arg_9_0.mode2EpisodeDict[arg_9_0.mode]
-	arg_9_0.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(arg_9_0.showEpisodeCo.id)
+	self.mode = mode
+	self.showEpisodeCo = self.mode2EpisodeDict[self.mode]
+	self.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(self.showEpisodeCo.id)
 
-	if not arg_9_0.showEpisodeMo then
-		arg_9_0.showEpisodeMo = UserDungeonMO.New()
+	if not self.showEpisodeMo then
+		self.showEpisodeMo = UserDungeonMO.New()
 
-		arg_9_0.showEpisodeMo:initFromManual(arg_9_0.showEpisodeCo.chapterId, arg_9_0.showEpisodeCo.id, 0, 0)
+		self.showEpisodeMo:initFromManual(self.showEpisodeCo.chapterId, self.showEpisodeCo.id, 0, 0)
 	end
 end
 
-function var_0_0._btnactivityrewardOnClick(arg_10_0)
-	DungeonController.instance:openDungeonRewardView(arg_10_0.showEpisodeCo)
+function VersionActivity2_4DungeonMapLevelView:_btnactivityrewardOnClick()
+	DungeonController.instance:openDungeonRewardView(self.showEpisodeCo)
 end
 
-function var_0_0._btnnormalStartOnClick(arg_11_0)
-	if arg_11_0.modeCanFight then
-		arg_11_0:startBattle()
+function VersionActivity2_4DungeonMapLevelView:_btnnormalStartOnClick()
+	if self.modeCanFight then
+		self:startBattle()
 	else
-		arg_11_0:_btnlockStartOnClick()
+		self:_btnlockStartOnClick()
 	end
 end
 
-function var_0_0._btnhardStartOnClick(arg_12_0)
-	arg_12_0:startBattle()
+function VersionActivity2_4DungeonMapLevelView:_btnhardStartOnClick()
+	self:startBattle()
 end
 
-function var_0_0.startBattle(arg_13_0)
-	if arg_13_0.showEpisodeCo.id == VersionActivity2_4Enum.SudokuEpisodeId then
-		arg_13_0:_playStoryAndOpenSudoku(arg_13_0.showEpisodeCo.beforeStory)
+function VersionActivity2_4DungeonMapLevelView:startBattle()
+	if self.showEpisodeCo.id == VersionActivity2_4Enum.SudokuEpisodeId then
+		self:_playStoryAndOpenSudoku(self.showEpisodeCo.beforeStory)
 
 		return
-	elseif arg_13_0.showEpisodeCo.type == DungeonEnum.EpisodeType.Story then
-		if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SkipStroy) or arg_13_0.showEpisodeCo.beforeStory == 0 then
-			arg_13_0:_playSkipMainStory()
+	elseif self.showEpisodeCo.type == DungeonEnum.EpisodeType.Story then
+		local skipStory = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SkipStroy) or self.showEpisodeCo.beforeStory == 0
+
+		if skipStory then
+			self:_playSkipMainStory()
 		else
-			arg_13_0:_playMainStory()
+			self:_playMainStory()
 		end
 
 		return
 	end
 
-	if arg_13_0.isSpecialEpisode then
-		arg_13_0.lastEpisodeSelectModeDict[tostring(arg_13_0.specialEpisodeId)] = arg_13_0.mode
+	if self.isSpecialEpisode then
+		self.lastEpisodeSelectModeDict[tostring(self.specialEpisodeId)] = self.mode
 
-		local var_13_0 = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
-		local var_13_1 = cjson.encode(arg_13_0.lastEpisodeSelectModeDict)
+		local prefsKey = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
+		local strLastSelectMode = cjson.encode(self.lastEpisodeSelectModeDict)
 
-		VersionActivity2_4DungeonController.instance:savePlayerPrefs(var_13_0, var_13_1)
+		VersionActivity2_4DungeonController.instance:savePlayerPrefs(prefsKey, strLastSelectMode)
 	end
 
-	if DungeonModel.instance:hasPassLevelAndStory(arg_13_0.showEpisodeCo.id) then
-		arg_13_0:_enterFight()
+	if DungeonModel.instance:hasPassLevelAndStory(self.showEpisodeCo.id) then
+		self:_enterFight()
 
 		return
 	end
 
-	if arg_13_0.showEpisodeCo.beforeStory > 0 then
-		if not StoryModel.instance:isStoryFinished(arg_13_0.showEpisodeCo.beforeStory) then
-			arg_13_0:_playStoryAndEnterFight(arg_13_0.showEpisodeCo.beforeStory)
+	if self.showEpisodeCo.beforeStory > 0 then
+		if not StoryModel.instance:isStoryFinished(self.showEpisodeCo.beforeStory) then
+			self:_playStoryAndEnterFight(self.showEpisodeCo.beforeStory)
 
 			return
 		end
 
-		if arg_13_0.showEpisodeMo.star <= DungeonEnum.StarType.None then
-			arg_13_0:_enterFight()
+		if self.showEpisodeMo.star <= DungeonEnum.StarType.None then
+			self:_enterFight()
 
 			return
 		end
 
-		if arg_13_0.showEpisodeCo.afterStory > 0 and not StoryModel.instance:isStoryFinished(arg_13_0.showEpisodeCo.afterStory) then
-			arg_13_0:playAfterStory(arg_13_0.showEpisodeCo.afterStory)
+		if self.showEpisodeCo.afterStory > 0 and not StoryModel.instance:isStoryFinished(self.showEpisodeCo.afterStory) then
+			self:playAfterStory(self.showEpisodeCo.afterStory)
 
 			return
 		end
 	end
 
-	arg_13_0:_enterFight()
+	self:_enterFight()
 end
 
-function var_0_0._playSkipMainStory(arg_14_0)
-	DungeonRpc.instance:sendStartDungeonRequest(arg_14_0.showEpisodeCo.chapterId, arg_14_0.showEpisodeCo.id)
-	arg_14_0:onStoryFinished()
+function VersionActivity2_4DungeonMapLevelView:_playSkipMainStory()
+	DungeonRpc.instance:sendStartDungeonRequest(self.showEpisodeCo.chapterId, self.showEpisodeCo.id)
+	self:onStoryFinished()
 end
 
-function var_0_0._playMainStory(arg_15_0)
-	DungeonRpc.instance:sendStartDungeonRequest(arg_15_0.showEpisodeCo.chapterId, arg_15_0.showEpisodeCo.id)
+function VersionActivity2_4DungeonMapLevelView:_playMainStory()
+	DungeonRpc.instance:sendStartDungeonRequest(self.showEpisodeCo.chapterId, self.showEpisodeCo.id)
 
-	local var_15_0 = {}
+	local param = {}
 
-	var_15_0.mark = true
-	var_15_0.episodeId = arg_15_0.showEpisodeCo.id
+	param.mark = true
+	param.episodeId = self.showEpisodeCo.id
 
-	StoryController.instance:playStory(arg_15_0.showEpisodeCo.beforeStory, var_15_0, arg_15_0.onStoryFinished, arg_15_0)
+	StoryController.instance:playStory(self.showEpisodeCo.beforeStory, param, self.onStoryFinished, self)
 end
 
-function var_0_0.onStoryFinished(arg_16_0)
+function VersionActivity2_4DungeonMapLevelView:onStoryFinished()
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(arg_16_0.showEpisodeCo.id)
+	DungeonModel.instance:setLastSendEpisodeId(self.showEpisodeCo.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
-	arg_16_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._playStoryAndEnterFight(arg_17_0, arg_17_1)
-	if StoryModel.instance:isStoryFinished(arg_17_1) then
-		arg_17_0:_enterFight()
+function VersionActivity2_4DungeonMapLevelView:_playStoryAndEnterFight(storyId)
+	if StoryModel.instance:isStoryFinished(storyId) then
+		self:_enterFight()
 
 		return
 	end
 
-	local var_17_0 = {}
+	local param = {}
 
-	var_17_0.mark = true
-	var_17_0.episodeId = arg_17_0.showEpisodeCo.id
+	param.mark = true
+	param.episodeId = self.showEpisodeCo.id
 
-	StoryController.instance:playStory(arg_17_1, var_17_0, arg_17_0._enterFight, arg_17_0)
+	StoryController.instance:playStory(storyId, param, self._enterFight, self)
 end
 
-function var_0_0._enterFight(arg_18_0)
-	DungeonFightController.instance:enterFight(arg_18_0.showEpisodeCo.chapterId, arg_18_0.showEpisodeCo.id, 1)
+function VersionActivity2_4DungeonMapLevelView:_enterFight()
+	DungeonFightController.instance:enterFight(self.showEpisodeCo.chapterId, self.showEpisodeCo.id, 1)
 end
 
-function var_0_0.playAfterStory(arg_19_0, arg_19_1)
-	local var_19_0 = {}
+function VersionActivity2_4DungeonMapLevelView:playAfterStory(storyId)
+	local param = {}
 
-	var_19_0.mark = true
-	var_19_0.episodeId = arg_19_0.showEpisodeCo.id
+	param.mark = true
+	param.episodeId = self.showEpisodeCo.id
 
-	StoryController.instance:playStory(arg_19_1, var_19_0, function()
+	StoryController.instance:playStory(storyId, param, function()
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo, nil)
 
 		DungeonMapModel.instance.playAfterStory = true
 
-		arg_19_0:closeThis()
-	end, arg_19_0)
+		self:closeThis()
+	end, self)
 end
 
-function var_0_0._playStoryAndOpenSudoku(arg_21_0, arg_21_1)
-	DungeonRpc.instance:sendStartDungeonRequest(arg_21_0.showEpisodeCo.chapterId, arg_21_0.showEpisodeCo.id)
+function VersionActivity2_4DungeonMapLevelView:_playStoryAndOpenSudoku(storyId)
+	DungeonRpc.instance:sendStartDungeonRequest(self.showEpisodeCo.chapterId, self.showEpisodeCo.id)
 
-	if StoryModel.instance:isStoryFinished(arg_21_1) then
-		arg_21_0:_openSudokuView()
+	if StoryModel.instance:isStoryFinished(storyId) then
+		self:_openSudokuView()
 
 		return
 	end
 
-	local var_21_0 = {}
+	local param = {}
 
-	var_21_0.mark = true
-	var_21_0.episodeId = arg_21_0.showEpisodeCo.id
+	param.mark = true
+	param.episodeId = self.showEpisodeCo.id
 
-	StoryController.instance:playStory(arg_21_1, var_21_0, arg_21_0._openSudokuView, arg_21_0)
+	StoryController.instance:playStory(storyId, param, self._openSudokuView, self)
 end
 
-function var_0_0._openSudokuView(arg_22_0)
+function VersionActivity2_4DungeonMapLevelView:_openSudokuView()
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(arg_22_0.showEpisodeCo.id)
+	DungeonModel.instance:setLastSendEpisodeId(self.showEpisodeCo.id)
 	VersionActivity2_4SudokuController.instance:openSudokuView()
 end
 
-function var_0_0.playSudokuAfterStory(arg_23_0, arg_23_1)
-	local var_23_0 = {}
+function VersionActivity2_4DungeonMapLevelView:playSudokuAfterStory(storyId)
+	local param = {}
 
-	var_23_0.mark = true
-	var_23_0.episodeId = arg_23_0.showEpisodeCo.id
+	param.mark = true
+	param.episodeId = self.showEpisodeCo.id
 
-	StoryController.instance:playStory(arg_23_1, var_23_0, function()
+	StoryController.instance:playStory(storyId, param, function()
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnUpdateDungeonInfo, nil)
 
 		DungeonMapModel.instance.playAfterStory = true
 
-		arg_23_0:closeThis()
-	end, arg_23_0)
+		self:closeThis()
+	end, self)
 end
 
-function var_0_0._btnlockStartOnClick(arg_25_0)
-	local var_25_0 = arg_25_0:getPreModeName()
+function VersionActivity2_4DungeonMapLevelView:_btnlockStartOnClick()
+	local preModeName = self:getPreModeName()
 
-	GameFacade.showToast(ToastEnum.VersionActivityCanFight, var_25_0)
+	GameFacade.showToast(ToastEnum.VersionActivityCanFight, preModeName)
 end
 
-function var_0_0.getPreModeName(arg_26_0)
-	local var_26_0 = arg_26_0.modeIndex - 1
-	local var_26_1 = arg_26_0.modeList[var_26_0]
+function VersionActivity2_4DungeonMapLevelView:getPreModeName()
+	local modeIndex = self.modeIndex - 1
+	local mode = self.modeList[modeIndex]
 
-	if not var_26_1 then
-		logWarn("not modeIndex mode : " .. var_26_0)
+	if not mode then
+		logWarn("not modeIndex mode : " .. modeIndex)
 
 		return ""
 	end
 
-	return luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[var_26_1])
+	return luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[mode])
 end
 
-function var_0_0._btnreplayStoryOnClick(arg_27_0)
-	if not arg_27_0.storyIdList or #arg_27_0.storyIdList < 1 then
+function VersionActivity2_4DungeonMapLevelView:_btnreplayStoryOnClick()
+	if not self.storyIdList or #self.storyIdList < 1 then
 		return
 	end
 
-	StoryController.instance:playStories(arg_27_0.storyIdList)
+	StoryController.instance:playStories(self.storyIdList)
 
-	local var_27_0 = {}
+	local param = {}
 
-	var_27_0.isLeiMiTeActivityStory = true
+	param.isLeiMiTeActivityStory = true
 
-	StoryController.instance:resetStoryParam(var_27_0)
+	StoryController.instance:resetStoryParam(param)
 end
 
-function var_0_0._editableInitView(arg_28_0)
-	arg_28_0.rewardItems = {}
+function VersionActivity2_4DungeonMapLevelView:_editableInitView()
+	self.rewardItems = {}
 
-	gohelper.setActive(arg_28_0._goactivityrewarditem, false)
-	gohelper.setActive(arg_28_0._gonormaleye, false)
-	gohelper.setActive(arg_28_0._gohardeye, false)
+	gohelper.setActive(self._goactivityrewarditem, false)
+	gohelper.setActive(self._gonormaleye, false)
+	gohelper.setActive(self._gohardeye, false)
 
-	arg_28_0.lockTypeAnimator = arg_28_0._gotype0:GetComponent(typeof(UnityEngine.Animator))
-	arg_28_0.txtLockType = gohelper.findChildText(arg_28_0._gotype0, "txt")
-	arg_28_0.lockTypeIconGo = gohelper.findChild(arg_28_0._gotype0, "txt/icon")
-	arg_28_0.leftArrowLight = gohelper.findChild(arg_28_0._btnleftarrow.gameObject, "left_arrow")
-	arg_28_0.leftArrowDisable = gohelper.findChild(arg_28_0._btnleftarrow.gameObject, "left_arrow_disable")
-	arg_28_0.rightArrowLight = gohelper.findChild(arg_28_0._btnrightarrow.gameObject, "right_arrow")
-	arg_28_0.rightArrowDisable = gohelper.findChild(arg_28_0._btnrightarrow.gameObject, "right_arrow_disable")
+	self.lockTypeAnimator = self._gotype0:GetComponent(typeof(UnityEngine.Animator))
+	self.txtLockType = gohelper.findChildText(self._gotype0, "txt")
+	self.lockTypeIconGo = gohelper.findChild(self._gotype0, "txt/icon")
+	self.leftArrowLight = gohelper.findChild(self._btnleftarrow.gameObject, "left_arrow")
+	self.leftArrowDisable = gohelper.findChild(self._btnleftarrow.gameObject, "left_arrow_disable")
+	self.rightArrowLight = gohelper.findChild(self._btnrightarrow.gameObject, "right_arrow")
+	self.rightArrowDisable = gohelper.findChild(self._btnrightarrow.gameObject, "right_arrow_disable")
 
-	arg_28_0:initLocalEpisodeMode()
+	self:initLocalEpisodeMode()
 end
 
-function var_0_0.initLocalEpisodeMode(arg_29_0)
-	local var_29_0 = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
-	local var_29_1 = VersionActivity2_4DungeonController.instance:getPlayerPrefs(var_29_0, "")
+function VersionActivity2_4DungeonMapLevelView:initLocalEpisodeMode()
+	local unlockModePrefsKey = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
+	local strLastUnlockModeValue = VersionActivity2_4DungeonController.instance:getPlayerPrefs(unlockModePrefsKey, "")
 
-	arg_29_0.unlockedEpisodeModeDict = VersionActivity2_4DungeonController.instance:loadDictFromStr(var_29_1)
+	self.unlockedEpisodeModeDict = VersionActivity2_4DungeonController.instance:loadDictFromStr(strLastUnlockModeValue)
 
-	local var_29_2 = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
-	local var_29_3 = VersionActivity2_4DungeonController.instance:getPlayerPrefs(var_29_2, "")
+	local lastSelectModePrefsKey = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastSelectMode
+	local strLastSelectModeValue = VersionActivity2_4DungeonController.instance:getPlayerPrefs(lastSelectModePrefsKey, "")
 
-	arg_29_0.lastEpisodeSelectModeDict = VersionActivity2_4DungeonController.instance:loadDictFromStr(var_29_3)
+	self.lastEpisodeSelectModeDict = VersionActivity2_4DungeonController.instance:loadDictFromStr(strLastSelectModeValue)
 end
 
-function var_0_0.onUpdateParam(arg_30_0)
-	arg_30_0:onOpen()
-	arg_30_0.animator:Play(UIAnimationName.Open, 0, 0)
+function VersionActivity2_4DungeonMapLevelView:onUpdateParam()
+	self:onOpen()
+	self.animator:Play(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0.onOpen(arg_31_0)
+function VersionActivity2_4DungeonMapLevelView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_pagesopen)
-	arg_31_0:initViewParam()
-	arg_31_0:initMode()
-	arg_31_0:markSelectEpisode()
-	arg_31_0:refreshStoryIdList()
-	arg_31_0:refreshBg()
-	arg_31_0:refreshUI()
-	arg_31_0.animator:Play(UIAnimationName.Open, 0, 0)
+	self:initViewParam()
+	self:initMode()
+	self:markSelectEpisode()
+	self:refreshStoryIdList()
+	self:refreshBg()
+	self:refreshUI()
+	self.animator:Play(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0.initViewParam(arg_32_0)
-	arg_32_0.originEpisodeId = arg_32_0.viewParam.episodeId
-	arg_32_0.originEpisodeConfig = DungeonConfig.instance:getEpisodeCO(arg_32_0.originEpisodeId)
-	arg_32_0.isFromJump = arg_32_0.viewParam.isJump
-	arg_32_0.index = VersionActivity2_4DungeonConfig.instance:getEpisodeIndex(arg_32_0.originEpisodeId)
+function VersionActivity2_4DungeonMapLevelView:initViewParam()
+	self.originEpisodeId = self.viewParam.episodeId
+	self.originEpisodeConfig = DungeonConfig.instance:getEpisodeCO(self.originEpisodeId)
+	self.isFromJump = self.viewParam.isJump
+	self.index = VersionActivity2_4DungeonConfig.instance:getEpisodeIndex(self.originEpisodeId)
 
-	arg_32_0.viewContainer:setOpenedEpisodeId(arg_32_0.originEpisodeId)
+	self.viewContainer:setOpenedEpisodeId(self.originEpisodeId)
 
-	arg_32_0.showEpisodeCo = DungeonConfig.instance:getEpisodeCO(arg_32_0.originEpisodeId)
-	arg_32_0.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(arg_32_0.originEpisodeId)
+	self.showEpisodeCo = DungeonConfig.instance:getEpisodeCO(self.originEpisodeId)
+	self.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(self.originEpisodeId)
 end
 
-function var_0_0.initMode(arg_33_0)
-	arg_33_0.mode = ActivityConfig.instance:getChapterIdMode(arg_33_0.originEpisodeConfig.chapterId)
-	arg_33_0.modeIndex = 1
+function VersionActivity2_4DungeonMapLevelView:initMode()
+	self.mode = ActivityConfig.instance:getChapterIdMode(self.originEpisodeConfig.chapterId)
+	self.modeIndex = 1
 
-	if arg_33_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
+	if self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
 		return
 	end
 
-	arg_33_0.modeList = {
+	self.modeList = {
 		VersionActivityDungeonBaseEnum.DungeonMode.Story,
 		VersionActivityDungeonBaseEnum.DungeonMode.Story2,
 		VersionActivityDungeonBaseEnum.DungeonMode.Story3
 	}
 
-	local var_33_0 = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(arg_33_0.originEpisodeConfig)
+	local episodeList = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(self.originEpisodeConfig)
 
-	arg_33_0.mode2EpisodeDict = {}
+	self.mode2EpisodeDict = {}
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
-		local var_33_1 = ActivityConfig.instance:getChapterIdMode(iter_33_1.chapterId)
+	for _, episodeCo in ipairs(episodeList) do
+		local chapterMode = ActivityConfig.instance:getChapterIdMode(episodeCo.chapterId)
 
-		arg_33_0.mode2EpisodeDict[var_33_1] = iter_33_1
+		self.mode2EpisodeDict[chapterMode] = episodeCo
 	end
 
-	arg_33_0.isSpecialEpisode = #var_33_0 > 1
-	arg_33_0.specialEpisodeId = var_33_0[1].id
+	self.isSpecialEpisode = #episodeList > 1
+	self.specialEpisodeId = episodeList[1].id
 
-	if not arg_33_0.isSpecialEpisode then
+	if not self.isSpecialEpisode then
 		return
 	end
 
-	if arg_33_0.isFromJump then
-		arg_33_0:checkNeedPlayModeUnLockAnimation()
+	if self.isFromJump then
+		self:checkNeedPlayModeUnLockAnimation()
 	else
-		local var_33_2
+		local episodeCo
 
-		for iter_33_2 = #var_33_0, 1, -1 do
-			local var_33_3 = var_33_0[iter_33_2]
+		for i = #episodeList, 1, -1 do
+			episodeCo = episodeList[i]
 
-			if DungeonModel.instance:hasPassLevelAndStory(var_33_3.preEpisode) then
-				arg_33_0.mode = arg_33_0.modeList[iter_33_2]
+			if DungeonModel.instance:hasPassLevelAndStory(episodeCo.preEpisode) then
+				self.mode = self.modeList[i]
 
 				break
 			end
 		end
 
-		arg_33_0:checkNeedPlayModeUnLockAnimation()
+		self:checkNeedPlayModeUnLockAnimation()
 
-		if not arg_33_0.needPlayUnlockModeAnimation then
-			arg_33_0.mode = arg_33_0.lastEpisodeSelectModeDict[tostring(arg_33_0.specialEpisodeId)] or VersionActivityDungeonBaseEnum.DungeonMode.Story
+		if not self.needPlayUnlockModeAnimation then
+			self.mode = self.lastEpisodeSelectModeDict[tostring(self.specialEpisodeId)] or VersionActivityDungeonBaseEnum.DungeonMode.Story
 		end
 	end
 
-	for iter_33_3, iter_33_4 in ipairs(arg_33_0.modeList) do
-		if iter_33_4 == arg_33_0.mode then
-			arg_33_0.modeIndex = iter_33_3
+	for index, mode in ipairs(self.modeList) do
+		if mode == self.mode then
+			self.modeIndex = index
 
 			break
 		end
 	end
 
-	arg_33_0.showEpisodeCo = arg_33_0.mode2EpisodeDict[arg_33_0.mode]
-	arg_33_0.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(arg_33_0.showEpisodeCo.id)
+	self.showEpisodeCo = self.mode2EpisodeDict[self.mode]
+	self.showEpisodeMo = DungeonModel.instance:getEpisodeInfo(self.showEpisodeCo.id)
 
-	if not arg_33_0.showEpisodeMo then
-		arg_33_0.showEpisodeMo = UserDungeonMO.New()
+	if not self.showEpisodeMo then
+		self.showEpisodeMo = UserDungeonMO.New()
 
-		arg_33_0.showEpisodeMo:initFromManual(arg_33_0.showEpisodeCo.chapterId, arg_33_0.showEpisodeCo.id, 0, 0)
+		self.showEpisodeMo:initFromManual(self.showEpisodeCo.chapterId, self.showEpisodeCo.id, 0, 0)
 	end
 end
 
-function var_0_0.checkNeedPlayModeUnLockAnimation(arg_34_0)
-	local var_34_0 = arg_34_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story
+function VersionActivity2_4DungeonMapLevelView:checkNeedPlayModeUnLockAnimation()
+	local isStoryMode = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story
+	local isHardMode = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
 
-	if arg_34_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard or arg_34_0.mode == var_34_0 then
-		arg_34_0.needPlayUnlockModeAnimation = false
+	if isHardMode or self.mode == isStoryMode then
+		self.needPlayUnlockModeAnimation = false
 	else
-		arg_34_0.needPlayUnlockModeAnimation = (arg_34_0.unlockedEpisodeModeDict[tostring(arg_34_0.specialEpisodeId)] or VersionActivityDungeonBaseEnum.DungeonMode.Story) < arg_34_0.mode
+		local unLockedMode = self.unlockedEpisodeModeDict[tostring(self.specialEpisodeId)] or VersionActivityDungeonBaseEnum.DungeonMode.Story
+
+		self.needPlayUnlockModeAnimation = unLockedMode < self.mode
 	end
 end
 
-function var_0_0.markSelectEpisode(arg_35_0)
-	if arg_35_0.originEpisodeConfig.type == DungeonEnum.EpisodeType.Normal then
-		VersionActivityDungeonBaseController.instance:setChapterIdLastSelectEpisodeId(arg_35_0.originEpisodeConfig.chapterId, arg_35_0.originEpisodeId)
+function VersionActivity2_4DungeonMapLevelView:markSelectEpisode()
+	if self.originEpisodeConfig.type == DungeonEnum.EpisodeType.Normal then
+		VersionActivityDungeonBaseController.instance:setChapterIdLastSelectEpisodeId(self.originEpisodeConfig.chapterId, self.originEpisodeId)
 	end
 end
 
-function var_0_0.refreshStoryIdList(arg_36_0)
-	local var_36_0 = arg_36_0.originEpisodeConfig.type == DungeonEnum.EpisodeType.Story
-	local var_36_1 = arg_36_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
+function VersionActivity2_4DungeonMapLevelView:refreshStoryIdList()
+	local isStoryEpisode = self.originEpisodeConfig.type == DungeonEnum.EpisodeType.Story
+	local isHardMode = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
+	local isSudokuEpisode = self.showEpisodeCo.id == VersionActivity2_4Enum.SudokuEpisodeId
 
-	if arg_36_0.showEpisodeCo.id == VersionActivity2_4Enum.SudokuEpisodeId then
-		arg_36_0.storyIdList = {}
+	if isSudokuEpisode then
+		self.storyIdList = {}
 
-		local var_36_2 = arg_36_0.originEpisodeConfig.beforeStory
+		local beforeStory = self.originEpisodeConfig.beforeStory
 
-		if var_36_2 > 0 and StoryModel.instance:isStoryHasPlayed(var_36_2) then
-			table.insert(arg_36_0.storyIdList, var_36_2)
+		if beforeStory > 0 and StoryModel.instance:isStoryHasPlayed(beforeStory) then
+			table.insert(self.storyIdList, beforeStory)
 		end
 
-		local var_36_3 = arg_36_0.originEpisodeConfig.afterStory
+		local afterStory = self.originEpisodeConfig.afterStory
 
-		if var_36_3 > 0 and StoryModel.instance:isStoryHasPlayed(var_36_3) then
-			table.insert(arg_36_0.storyIdList, var_36_3)
+		if afterStory > 0 and StoryModel.instance:isStoryHasPlayed(afterStory) then
+			table.insert(self.storyIdList, afterStory)
 		end
-	elseif var_36_0 or var_36_1 then
-		arg_36_0.storyIdList = nil
+	elseif isStoryEpisode or isHardMode then
+		self.storyIdList = nil
 
 		return
 	else
-		local var_36_4 = arg_36_0.originEpisodeConfig
-		local var_36_5 = VersionActivityDungeonBaseEnum.DungeonMode.Story
-		local var_36_6 = arg_36_0.mode2EpisodeDict and arg_36_0.mode2EpisodeDict[var_36_5]
+		local checkStoryEpisodeCfg = self.originEpisodeConfig
+		local storyMode = VersionActivityDungeonBaseEnum.DungeonMode.Story
+		local storyModeEpisodeCfg = self.mode2EpisodeDict and self.mode2EpisodeDict[storyMode]
 
-		if var_36_6 then
-			var_36_4 = var_36_6
+		if storyModeEpisodeCfg then
+			checkStoryEpisodeCfg = storyModeEpisodeCfg
 		end
 
-		arg_36_0.storyIdList = {}
+		self.storyIdList = {}
 
-		local var_36_7 = var_36_4.beforeStory
+		local beforeStory = checkStoryEpisodeCfg.beforeStory
 
-		if var_36_7 > 0 and StoryModel.instance:isStoryHasPlayed(var_36_7) then
-			table.insert(arg_36_0.storyIdList, var_36_7)
+		if beforeStory > 0 and StoryModel.instance:isStoryHasPlayed(beforeStory) then
+			table.insert(self.storyIdList, beforeStory)
 		end
 
-		local var_36_8 = var_36_4.afterStory
+		local afterStory = checkStoryEpisodeCfg.afterStory
 
-		if var_36_8 > 0 and StoryModel.instance:isStoryHasPlayed(var_36_8) then
-			table.insert(arg_36_0.storyIdList, var_36_8)
+		if afterStory > 0 and StoryModel.instance:isStoryHasPlayed(afterStory) then
+			table.insert(self.storyIdList, afterStory)
 		end
 	end
 end
 
-function var_0_0.refreshBg(arg_37_0)
-	gohelper.setActive(arg_37_0._simageactivitynormalbg.gameObject, arg_37_0.mode ~= VersionActivityDungeonBaseEnum.DungeonMode.Hard)
-	gohelper.setActive(arg_37_0._simageactivityhardbg.gameObject, arg_37_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard)
+function VersionActivity2_4DungeonMapLevelView:refreshBg()
+	gohelper.setActive(self._simageactivitynormalbg.gameObject, self.mode ~= VersionActivityDungeonBaseEnum.DungeonMode.Hard)
+	gohelper.setActive(self._simageactivityhardbg.gameObject, self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard)
 end
 
-function var_0_0.refreshUI(arg_38_0)
-	arg_38_0:refreshModeCanFight()
-	arg_38_0:refreshEpisodeTextInfo()
-	arg_38_0:refreshStar()
-	arg_38_0:refreshMode()
-	arg_38_0:refreshArrow()
-	arg_38_0:refreshReward()
-	arg_38_0:refreshStartBtn()
-	arg_38_0:refreshEye()
+function VersionActivity2_4DungeonMapLevelView:refreshUI()
+	self:refreshModeCanFight()
+	self:refreshEpisodeTextInfo()
+	self:refreshStar()
+	self:refreshMode()
+	self:refreshArrow()
+	self:refreshReward()
+	self:refreshStartBtn()
+	self:refreshEye()
 
-	if arg_38_0.needPlayUnlockModeAnimation then
-		TaskDispatcher.runDelay(arg_38_0.playModeUnlockAnimation, arg_38_0, var_0_3)
+	if self.needPlayUnlockModeAnimation then
+		TaskDispatcher.runDelay(self.playModeUnlockAnimation, self, OPEN_ANIM_TIME)
 	end
 end
 
-function var_0_0.refreshModeCanFight(arg_39_0)
-	if arg_39_0.showEpisodeCo.preEpisode == 0 then
-		arg_39_0.modeCanFight = true
+function VersionActivity2_4DungeonMapLevelView:refreshModeCanFight()
+	if self.showEpisodeCo.preEpisode == 0 then
+		self.modeCanFight = true
 
 		return
 	end
 
-	arg_39_0.modeCanFight = DungeonModel.instance:hasPassLevelAndStory(arg_39_0.showEpisodeCo.preEpisode)
+	self.modeCanFight = DungeonModel.instance:hasPassLevelAndStory(self.showEpisodeCo.preEpisode)
 end
 
-function var_0_0.refreshEpisodeTextInfo(arg_40_0)
-	local var_40_0 = DungeonConfig.instance:getChapterCO(arg_40_0.showEpisodeCo.chapterId)
-	local var_40_1
+function VersionActivity2_4DungeonMapLevelView:refreshEpisodeTextInfo()
+	local chapterCo = DungeonConfig.instance:getChapterCO(self.showEpisodeCo.chapterId)
+	local targetConfig
 
-	if var_40_0.id == VersionActivity2_4DungeonEnum.DungeonChapterId.Story then
-		var_40_1 = arg_40_0.showEpisodeCo
+	if chapterCo.id == VersionActivity2_4DungeonEnum.DungeonChapterId.Story then
+		targetConfig = self.showEpisodeCo
 	else
-		var_40_1 = VersionActivity2_4DungeonConfig.instance:getStoryEpisodeCo(arg_40_0.showEpisodeCo.id)
+		targetConfig = VersionActivity2_4DungeonConfig.instance:getStoryEpisodeCo(self.showEpisodeCo.id)
 	end
 
-	arg_40_0._txtmapName.text = arg_40_0:buildEpisodeName(var_40_1)
+	self._txtmapName.text = self:buildEpisodeName(targetConfig)
 
-	local var_40_2 = arg_40_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#cfccc9" or "#cfccc9"
+	local txtColor = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#cfccc9" or "#cfccc9"
 
-	arg_40_0._txtmapNameEn.text = arg_40_0:buildColorText(var_40_1.name_En, var_40_2)
-	arg_40_0._txtmapNum.text = arg_40_0:buildColorText(string.format("%02d", arg_40_0.index), var_40_2)
-	arg_40_0._txtmapChapterIndex.text = arg_40_0:buildColorText(var_40_0.chapterIndex .. " .", var_40_2)
-	arg_40_0._txtactivitydesc.text = var_40_1.desc
+	self._txtmapNameEn.text = self:buildColorText(targetConfig.name_En, txtColor)
+	self._txtmapNum.text = self:buildColorText(string.format("%02d", self.index), txtColor)
+	self._txtmapChapterIndex.text = self:buildColorText(chapterCo.chapterIndex .. " .", txtColor)
+	self._txtactivitydesc.text = targetConfig.desc
 
-	local var_40_3 = DungeonHelper.getEpisodeRecommendLevel(arg_40_0.showEpisodeCo.id)
+	local recommendLevel = DungeonHelper.getEpisodeRecommendLevel(self.showEpisodeCo.id)
 
-	gohelper.setActive(arg_40_0._gorecommend, var_40_3 > 0)
+	gohelper.setActive(self._gorecommend, recommendLevel > 0)
 
-	if var_40_3 > 0 then
-		arg_40_0._txtrecommendlv.text = HeroConfig.instance:getCommonLevelDisplay(var_40_3)
+	if recommendLevel > 0 then
+		self._txtrecommendlv.text = HeroConfig.instance:getCommonLevelDisplay(recommendLevel)
 	end
 end
 
-function var_0_0.buildEpisodeName(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_1.name
-	local var_41_1 = GameUtil.utf8sub(var_41_0, 1, 1)
-	local var_41_2 = ""
-	local var_41_3 = GameUtil.utf8len(var_41_0)
+function VersionActivity2_4DungeonMapLevelView:buildEpisodeName(episodeCo)
+	local name = episodeCo.name
+	local firstName = GameUtil.utf8sub(name, 1, 1)
+	local remainName = ""
+	local nameLen = GameUtil.utf8len(name)
 
-	if var_41_3 > 1 then
-		var_41_2 = GameUtil.utf8sub(var_41_0, 2, var_41_3 - 1)
+	if nameLen > 1 then
+		remainName = GameUtil.utf8sub(name, 2, nameLen - 1)
 	end
 
-	local var_41_4 = arg_41_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#cfccc9" or "#cfccc9"
+	local txtColor = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#cfccc9" or "#cfccc9"
 
-	return arg_41_0:buildColorText(arg_41_0:_buildEpisodeName_overseas(var_41_1, var_41_2), var_41_4)
+	return self:buildColorText(self:_buildEpisodeName_overseas(firstName, remainName), txtColor)
 end
 
-function var_0_0.buildColorText(arg_42_0, arg_42_1, arg_42_2)
-	return string.format("<color=%s>%s</color>", arg_42_2, arg_42_1)
+function VersionActivity2_4DungeonMapLevelView:buildColorText(text, color)
+	return string.format("<color=%s>%s</color>", color, text)
 end
 
-function var_0_0.refreshStar(arg_43_0)
-	local var_43_0 = arg_43_0.showEpisodeCo.id
-	local var_43_1 = var_43_0 and DungeonModel.instance:hasPassLevelAndStory(var_43_0)
-	local var_43_2 = DungeonConfig.instance:getEpisodeAdvancedConditionText(var_43_0)
+function VersionActivity2_4DungeonMapLevelView:refreshStar()
+	local normalEpisodeId = self.showEpisodeCo.id
+	local passStory = normalEpisodeId and DungeonModel.instance:hasPassLevelAndStory(normalEpisodeId)
+	local advancedConditionText = DungeonConfig.instance:getEpisodeAdvancedConditionText(normalEpisodeId)
 
-	arg_43_0:setStarImage(arg_43_0._imagestar1, var_43_1, var_43_0)
+	self:setStarImage(self._imagestar1, passStory, normalEpisodeId)
 
-	if string.nilorempty(var_43_2) then
-		gohelper.setActive(arg_43_0._imagestar2.gameObject, false)
+	if string.nilorempty(advancedConditionText) then
+		gohelper.setActive(self._imagestar2.gameObject, false)
 	else
-		gohelper.setActive(arg_43_0._imagestar2.gameObject, true)
-		arg_43_0:setStarImage(arg_43_0._imagestar2, var_43_1 and arg_43_0.showEpisodeMo.star >= DungeonEnum.StarType.Advanced, var_43_0)
+		gohelper.setActive(self._imagestar2.gameObject, true)
+		self:setStarImage(self._imagestar2, passStory and self.showEpisodeMo.star >= DungeonEnum.StarType.Advanced, normalEpisodeId)
 	end
 end
 
-function var_0_0.setStarImage(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	local var_44_0 = DungeonConfig.instance:getEpisodeCO(arg_44_3)
-	local var_44_1 = VersionActivity2_4DungeonEnum.EpisodeStarType[var_44_0.chapterId]
+function VersionActivity2_4DungeonMapLevelView:setStarImage(image, light, episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local starTypeData = VersionActivity2_4DungeonEnum.EpisodeStarType[episodeConfig.chapterId]
 
-	if arg_44_2 then
-		local var_44_2 = var_44_1.light
+	if light then
+		local starType = starTypeData.light
 
-		UISpriteSetMgr.instance:setV2a4DungeonSprite(arg_44_1, var_44_2)
+		UISpriteSetMgr.instance:setV2a4DungeonSprite(image, starType)
 	else
-		local var_44_3 = var_44_1.empty
+		local starType = starTypeData.empty
 
-		UISpriteSetMgr.instance:setV2a4DungeonSprite(arg_44_1, var_44_3)
+		UISpriteSetMgr.instance:setV2a4DungeonSprite(image, starType)
 	end
 end
 
-function var_0_0.refreshMode(arg_45_0)
-	gohelper.setActive(arg_45_0._gotype1, arg_45_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story)
-	gohelper.setActive(arg_45_0._gotype2, arg_45_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story2)
-	gohelper.setActive(arg_45_0._gotype3, arg_45_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story3)
-	gohelper.setActive(arg_45_0._gotype4, arg_45_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard)
+function VersionActivity2_4DungeonMapLevelView:refreshMode()
+	gohelper.setActive(self._gotype1, self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story)
+	gohelper.setActive(self._gotype2, self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story2)
+	gohelper.setActive(self._gotype3, self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story3)
+	gohelper.setActive(self._gotype4, self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard)
 
-	local var_45_0 = not arg_45_0.modeCanFight or arg_45_0.needPlayUnlockModeAnimation
+	local needShowLockNode = not self.modeCanFight or self.needPlayUnlockModeAnimation
 
-	gohelper.setActive(arg_45_0._gotype0, var_45_0)
+	gohelper.setActive(self._gotype0, needShowLockNode)
 
-	if var_45_0 then
-		arg_45_0.lockTypeAnimator.enabled = true
-		arg_45_0.txtLockType.text = luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[arg_45_0.mode])
+	if needShowLockNode then
+		self.lockTypeAnimator.enabled = true
+		self.txtLockType.text = luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[self.mode])
 
-		if arg_45_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story2 then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_45_0.txtLockType, "#757563")
-		elseif arg_45_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story3 then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_45_0.txtLockType, "#757563")
+		if self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story2 then
+			SLFramework.UGUI.GuiHelper.SetColor(self.txtLockType, "#757563")
+		elseif self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story3 then
+			SLFramework.UGUI.GuiHelper.SetColor(self.txtLockType, "#757563")
 		end
 	end
 
-	gohelper.setActive(arg_45_0.lockTypeIconGo, var_45_0)
+	gohelper.setActive(self.lockTypeIconGo, needShowLockNode)
 end
 
-function var_0_0.refreshArrow(arg_46_0)
-	local var_46_0 = arg_46_0.mode ~= VersionActivityDungeonBaseEnum.DungeonMode.Hard and arg_46_0.isSpecialEpisode
+function VersionActivity2_4DungeonMapLevelView:refreshArrow()
+	local showArrow = self.mode ~= VersionActivityDungeonBaseEnum.DungeonMode.Hard and self.isSpecialEpisode
 
-	gohelper.setActive(arg_46_0._btnleftarrow.gameObject, var_46_0)
-	gohelper.setActive(arg_46_0._btnrightarrow.gameObject, var_46_0)
+	gohelper.setActive(self._btnleftarrow.gameObject, showArrow)
+	gohelper.setActive(self._btnrightarrow.gameObject, showArrow)
 
-	if var_46_0 then
-		gohelper.setActive(arg_46_0.leftArrowLight, arg_46_0.modeIndex ~= 1)
-		gohelper.setActive(arg_46_0.leftArrowDisable, arg_46_0.modeIndex == 1)
+	if showArrow then
+		gohelper.setActive(self.leftArrowLight, self.modeIndex ~= 1)
+		gohelper.setActive(self.leftArrowDisable, self.modeIndex == 1)
 
-		local var_46_1 = #arg_46_0.modeList == arg_46_0.modeIndex
+		local isLast = #self.modeList == self.modeIndex
 
-		gohelper.setActive(arg_46_0.rightArrowLight, not var_46_1)
-		gohelper.setActive(arg_46_0.rightArrowDisable, var_46_1)
+		gohelper.setActive(self.rightArrowLight, not isLast)
+		gohelper.setActive(self.rightArrowDisable, isLast)
 	end
 end
 
-function var_0_0.refreshReward(arg_47_0)
-	local var_47_0 = {}
-	local var_47_1 = 0
-	local var_47_2 = 0
+function VersionActivity2_4DungeonMapLevelView:refreshReward()
+	local rewardList = {}
+	local firstRewardIndex = 0
+	local advancedRewardIndex = 0
 
-	if arg_47_0.showEpisodeMo.star ~= DungeonEnum.StarType.Advanced then
-		tabletool.addValues(var_47_0, DungeonModel.instance:getEpisodeAdvancedBonus(arg_47_0.showEpisodeCo.id))
+	if self.showEpisodeMo.star ~= DungeonEnum.StarType.Advanced then
+		tabletool.addValues(rewardList, DungeonModel.instance:getEpisodeAdvancedBonus(self.showEpisodeCo.id))
 
-		var_47_2 = #var_47_0
+		advancedRewardIndex = #rewardList
 	end
 
-	if arg_47_0.showEpisodeMo.star == DungeonEnum.StarType.None then
-		tabletool.addValues(var_47_0, DungeonModel.instance:getEpisodeFirstBonus(arg_47_0.showEpisodeCo.id))
+	if self.showEpisodeMo.star == DungeonEnum.StarType.None then
+		tabletool.addValues(rewardList, DungeonModel.instance:getEpisodeFirstBonus(self.showEpisodeCo.id))
 
-		var_47_1 = #var_47_0
+		firstRewardIndex = #rewardList
 	end
 
-	tabletool.addValues(var_47_0, DungeonModel.instance:getEpisodeReward(arg_47_0.showEpisodeCo.id))
-	tabletool.addValues(var_47_0, DungeonModel.instance:getEpisodeRewardDisplayList(arg_47_0.showEpisodeCo.id))
+	tabletool.addValues(rewardList, DungeonModel.instance:getEpisodeReward(self.showEpisodeCo.id))
+	tabletool.addValues(rewardList, DungeonModel.instance:getEpisodeRewardDisplayList(self.showEpisodeCo.id))
 
-	local var_47_3 = #var_47_0
+	local rewardCount = #rewardList
 
-	gohelper.setActive(arg_47_0._gorewards, var_47_3 > 0)
-	gohelper.setActive(arg_47_0._gonorewards, var_47_3 == 0)
+	gohelper.setActive(self._gorewards, rewardCount > 0)
+	gohelper.setActive(self._gonorewards, rewardCount == 0)
 
-	if var_47_3 == 0 then
+	if rewardCount == 0 then
 		return
 	end
 
-	local var_47_4 = math.min(#var_47_0, 3)
-	local var_47_5
-	local var_47_6
+	local count = math.min(#rewardList, 3)
+	local reward, rewardItem
 
-	for iter_47_0 = 1, var_47_4 do
-		local var_47_7 = arg_47_0.rewardItems[iter_47_0]
+	for i = 1, count do
+		rewardItem = self.rewardItems[i]
 
-		if not var_47_7 then
-			var_47_7 = arg_47_0:getUserDataTb_()
-			var_47_7.go = gohelper.cloneInPlace(arg_47_0._goactivityrewarditem, "item" .. iter_47_0)
-			var_47_7.iconItem = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(var_47_7.go, "itemicon"))
-			var_47_7.gonormal = gohelper.findChild(var_47_7.go, "rare/#go_rare1")
-			var_47_7.gofirst = gohelper.findChild(var_47_7.go, "rare/#go_rare2")
-			var_47_7.goadvance = gohelper.findChild(var_47_7.go, "rare/#go_rare3")
-			var_47_7.gofirsthard = gohelper.findChild(var_47_7.go, "rare/#go_rare4")
-			var_47_7.txtnormal = gohelper.findChildText(var_47_7.go, "rare/#go_rare1/txt")
+		if not rewardItem then
+			rewardItem = self:getUserDataTb_()
+			rewardItem.go = gohelper.cloneInPlace(self._goactivityrewarditem, "item" .. i)
+			rewardItem.iconItem = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(rewardItem.go, "itemicon"))
+			rewardItem.gonormal = gohelper.findChild(rewardItem.go, "rare/#go_rare1")
+			rewardItem.gofirst = gohelper.findChild(rewardItem.go, "rare/#go_rare2")
+			rewardItem.goadvance = gohelper.findChild(rewardItem.go, "rare/#go_rare3")
+			rewardItem.gofirsthard = gohelper.findChild(rewardItem.go, "rare/#go_rare4")
+			rewardItem.txtnormal = gohelper.findChildText(rewardItem.go, "rare/#go_rare1/txt")
 
-			table.insert(arg_47_0.rewardItems, var_47_7)
+			table.insert(self.rewardItems, rewardItem)
 		end
 
-		local var_47_8 = var_47_0[iter_47_0]
+		reward = rewardList[i]
 
-		gohelper.setActive(var_47_7.gonormal, false)
-		gohelper.setActive(var_47_7.gofirst, false)
-		gohelper.setActive(var_47_7.goadvance, false)
-		gohelper.setActive(var_47_7.gofirsthard, false)
+		gohelper.setActive(rewardItem.gonormal, false)
+		gohelper.setActive(rewardItem.gofirst, false)
+		gohelper.setActive(rewardItem.goadvance, false)
+		gohelper.setActive(rewardItem.gofirsthard, false)
 
-		local var_47_9
-		local var_47_10
-		local var_47_11 = var_47_8[3]
-		local var_47_12 = true
+		local goFirstRare, goAdvanceRare
+		local quantity = reward[3]
+		local isShowCount = true
 
-		if arg_47_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
-			var_47_9 = var_47_7.gofirsthard
-			var_47_10 = var_47_7.goadvance
+		if self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
+			goFirstRare = rewardItem.gofirsthard
+			goAdvanceRare = rewardItem.goadvance
 		else
-			var_47_9 = var_47_7.gofirst
-			var_47_10 = var_47_7.goadvance
+			goFirstRare = rewardItem.gofirst
+			goAdvanceRare = rewardItem.goadvance
 		end
 
-		if iter_47_0 <= var_47_2 then
-			gohelper.setActive(var_47_10, true)
-		elseif iter_47_0 <= var_47_1 then
-			gohelper.setActive(var_47_9, true)
+		if i <= advancedRewardIndex then
+			gohelper.setActive(goAdvanceRare, true)
+		elseif i <= firstRewardIndex then
+			gohelper.setActive(goFirstRare, true)
 		else
-			gohelper.setActive(var_47_7.gonormal, true)
+			gohelper.setActive(rewardItem.gonormal, true)
 
-			local var_47_13 = var_47_8[3]
+			local tagType = reward[3]
 
-			var_47_12 = true
+			isShowCount = true
 
-			if var_47_8.tagType then
-				var_47_13 = var_47_8.tagType
-				var_47_12 = var_47_11 ~= 0
-			elseif #var_47_8 >= 4 then
-				var_47_11 = var_47_8[4]
+			if reward.tagType then
+				tagType = reward.tagType
+				isShowCount = quantity ~= 0
+			elseif #reward >= 4 then
+				quantity = reward[4]
 			else
-				var_47_12 = false
+				isShowCount = false
 			end
 
-			var_47_7.txtnormal.text = luaLang("dungeon_prob_flag" .. var_47_13)
+			rewardItem.txtnormal.text = luaLang("dungeon_prob_flag" .. tagType)
 		end
 
-		var_47_7.iconItem:setMOValue(var_47_8[1], var_47_8[2], var_47_11, nil, true)
-		var_47_7.iconItem:setCountFontSize(40)
-		var_47_7.iconItem:setHideLvAndBreakFlag(true)
-		var_47_7.iconItem:hideEquipLvAndBreak(true)
-		var_47_7.iconItem:isShowCount(var_47_12)
-		gohelper.setActive(var_47_7.go, true)
+		rewardItem.iconItem:setMOValue(reward[1], reward[2], quantity, nil, true)
+		rewardItem.iconItem:setCountFontSize(40)
+		rewardItem.iconItem:setHideLvAndBreakFlag(true)
+		rewardItem.iconItem:hideEquipLvAndBreak(true)
+		rewardItem.iconItem:isShowCount(isShowCount)
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_47_1 = var_47_4 + 1, #arg_47_0.rewardItems do
-		gohelper.setActive(arg_47_0.rewardItems[iter_47_1].go, false)
+	for i = count + 1, #self.rewardItems do
+		gohelper.setActive(self.rewardItems[i].go, false)
 	end
 end
 
-function var_0_0.refreshStartBtn(arg_48_0)
-	arg_48_0:refreshCostPower()
+function VersionActivity2_4DungeonMapLevelView:refreshStartBtn()
+	self:refreshCostPower()
 
-	local var_48_0 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
-	local var_48_1 = ResUrl.getCurrencyItemIcon(var_48_0.icon .. "_btn")
+	local currencyCo = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+	local powerIcon = ResUrl.getCurrencyItemIcon(currencyCo.icon .. "_btn")
 
-	arg_48_0._simagepower:LoadImage(var_48_1)
+	self._simagepower:LoadImage(powerIcon)
 
-	local var_48_2 = arg_48_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
-	local var_48_3 = not var_48_2
+	local isHardMode = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
+	local notHardMode = not isHardMode
 
-	gohelper.setActive(arg_48_0._btnnormalStart.gameObject, arg_48_0.modeCanFight and var_48_3)
-	gohelper.setActive(arg_48_0._btnhardStart.gameObject, var_48_2)
-	gohelper.setActive(arg_48_0._btnlockStart.gameObject, not arg_48_0.modeCanFight or arg_48_0.needPlayUnlockModeAnimation)
+	gohelper.setActive(self._btnnormalStart.gameObject, self.modeCanFight and notHardMode)
+	gohelper.setActive(self._btnhardStart.gameObject, isHardMode)
+	gohelper.setActive(self._btnlockStart.gameObject, not self.modeCanFight or self.needPlayUnlockModeAnimation)
 
-	local var_48_4 = arg_48_0.storyIdList and #arg_48_0.storyIdList > 0
-	local var_48_5 = VersionActivityDungeonBaseEnum.DungeonMode.Story
-	local var_48_6 = arg_48_0.mode2EpisodeDict and arg_48_0.mode2EpisodeDict[var_48_5]
-	local var_48_7 = var_48_6 and var_48_6.id or arg_48_0.originEpisodeConfig.id
-	local var_48_8 = DungeonModel.instance:hasPassLevelAndStory(var_48_7)
+	local hasStory = self.storyIdList and #self.storyIdList > 0
+	local storyMode = VersionActivityDungeonBaseEnum.DungeonMode.Story
+	local storyModeEpisodeCfg = self.mode2EpisodeDict and self.mode2EpisodeDict[storyMode]
+	local checkPassEpisodeId = storyModeEpisodeCfg and storyModeEpisodeCfg.id or self.originEpisodeConfig.id
+	local hasPassLevelAndStory = DungeonModel.instance:hasPassLevelAndStory(checkPassEpisodeId)
 
-	gohelper.setActive(arg_48_0._btnreplayStory.gameObject, var_48_8 and var_48_4)
+	gohelper.setActive(self._btnreplayStory.gameObject, hasPassLevelAndStory and hasStory)
 
-	if var_48_2 then
+	if isHardMode then
 		return
 	end
 
-	if arg_48_0.modeCanFight then
-		local var_48_9 = DungeonModel.instance:hasPassLevel(arg_48_0.showEpisodeCo.id)
-		local var_48_10 = StoryModel.instance:isStoryFinished(arg_48_0.showEpisodeCo.afterStory)
+	if self.modeCanFight then
+		local hasPassLevel = DungeonModel.instance:hasPassLevel(self.showEpisodeCo.id)
+		local isStoryFinished = StoryModel.instance:isStoryFinished(self.showEpisodeCo.afterStory)
 
-		if var_48_9 and arg_48_0.showEpisodeCo.afterStory > 0 and not var_48_10 then
-			arg_48_0._txtnorstarttext.text = luaLang("p_dungeonlevelview_continuestory")
+		if hasPassLevel and self.showEpisodeCo.afterStory > 0 and not isStoryFinished then
+			self._txtnorstarttext.text = luaLang("p_dungeonlevelview_continuestory")
 
-			recthelper.setAnchorX(arg_48_0._txtnorstarttext.gameObject.transform, 0)
-			recthelper.setAnchorX(arg_48_0._txtnorstarttexten.gameObject.transform, 0)
-			gohelper.setActive(arg_48_0._txtusepowernormal.gameObject, false)
-			gohelper.setActive(arg_48_0._simagepower.gameObject, false)
+			recthelper.setAnchorX(self._txtnorstarttext.gameObject.transform, 0)
+			recthelper.setAnchorX(self._txtnorstarttexten.gameObject.transform, 0)
+			gohelper.setActive(self._txtusepowernormal.gameObject, false)
+			gohelper.setActive(self._simagepower.gameObject, false)
 		else
-			arg_48_0._txtnorstarttext.text = luaLang("p_dungeonlevelview_startfight")
+			self._txtnorstarttext.text = luaLang("p_dungeonlevelview_startfight")
 
-			recthelper.setAnchorX(arg_48_0._txtnorstarttext.gameObject.transform, 121)
-			recthelper.setAnchorX(arg_48_0._txtnorstarttexten.gameObject.transform, 121)
-			gohelper.setActive(arg_48_0._txtusepowernormal.gameObject, true)
-			gohelper.setActive(arg_48_0._simagepower.gameObject, true)
+			recthelper.setAnchorX(self._txtnorstarttext.gameObject.transform, 121)
+			recthelper.setAnchorX(self._txtnorstarttexten.gameObject.transform, 121)
+			gohelper.setActive(self._txtusepowernormal.gameObject, true)
+			gohelper.setActive(self._simagepower.gameObject, true)
 		end
 	else
-		gohelper.setActive(arg_48_0._simagepower.gameObject, false)
-		gohelper.setActive(arg_48_0._txtusepowernormal.gameObject, false)
+		gohelper.setActive(self._simagepower.gameObject, false)
+		gohelper.setActive(self._txtusepowernormal.gameObject, false)
 	end
 end
 
-function var_0_0.refreshCostPower(arg_49_0)
-	local var_49_0 = 0
+function VersionActivity2_4DungeonMapLevelView:refreshCostPower()
+	local cost = 0
 
-	if not string.nilorempty(arg_49_0.showEpisodeCo.cost) then
-		var_49_0 = string.splitToNumber(arg_49_0.showEpisodeCo.cost, "#")[3]
+	if not string.nilorempty(self.showEpisodeCo.cost) then
+		cost = string.splitToNumber(self.showEpisodeCo.cost, "#")[3]
 	end
 
-	arg_49_0._txtusepowernormal.text = "-" .. var_49_0
-	arg_49_0._txtusepowerhard.text = "-" .. var_49_0
+	self._txtusepowernormal.text = "-" .. cost
+	self._txtusepowerhard.text = "-" .. cost
 
-	if var_49_0 <= CurrencyModel.instance:getPower() then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_49_0._txtusepowernormal, "#070706")
-		SLFramework.UGUI.GuiHelper.SetColor(arg_49_0._txtusepowerhard, "#FFEAEA")
+	if cost <= CurrencyModel.instance:getPower() then
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowernormal, "#070706")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowerhard, "#FFEAEA")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_49_0._txtusepowernormal, "#800015")
-		SLFramework.UGUI.GuiHelper.SetColor(arg_49_0._txtusepowerhard, "#C44945")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowernormal, "#800015")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowerhard, "#C44945")
 	end
 end
 
-function var_0_0.refreshEye(arg_50_0)
-	if not (arg_50_0.originEpisodeConfig.displayMark == 1) then
-		gohelper.setActive(arg_50_0._gonormaleye, false)
-		gohelper.setActive(arg_50_0._gohardeye, false)
+function VersionActivity2_4DungeonMapLevelView:refreshEye()
+	local showEye = self.originEpisodeConfig.displayMark == 1
+
+	if not showEye then
+		gohelper.setActive(self._gonormaleye, false)
+		gohelper.setActive(self._gohardeye, false)
 
 		return
 	end
 
-	local var_50_0 = arg_50_0.originEpisodeConfig.chapterId == VersionActivity2_4DungeonEnum.DungeonChapterId.Hard
+	local isHard = self.originEpisodeConfig.chapterId == VersionActivity2_4DungeonEnum.DungeonChapterId.Hard
 
-	gohelper.setActive(arg_50_0._gonormaleye, not var_50_0)
-	gohelper.setActive(arg_50_0._gohardeye, var_50_0)
+	gohelper.setActive(self._gonormaleye, not isHard)
+	gohelper.setActive(self._gohardeye, isHard)
 end
 
-function var_0_0.playModeUnlockAnimation(arg_51_0)
-	if not arg_51_0.needPlayUnlockModeAnimation then
+function VersionActivity2_4DungeonMapLevelView:playModeUnlockAnimation()
+	if not self.needPlayUnlockModeAnimation then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_difficulty)
-	arg_51_0:_playModeUnLockAnimation(UIAnimationName.Unlock)
+	self:_playModeUnLockAnimation(UIAnimationName.Unlock)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock(VersionActivity2_4DungeonEnum.BlockKey.MapLevelViewPlayUnlockAnim)
-	TaskDispatcher.runDelay(arg_51_0.onModeUnlockAnimationPlayDone, arg_51_0, var_0_4)
+	TaskDispatcher.runDelay(self.onModeUnlockAnimationPlayDone, self, UNLOCK_ANIM_TIME)
 end
 
-function var_0_0._playModeUnLockAnimation(arg_52_0, arg_52_1)
-	arg_52_0.lockTypeAnimator.enabled = true
+function VersionActivity2_4DungeonMapLevelView:_playModeUnLockAnimation(animationName)
+	self.lockTypeAnimator.enabled = true
 
-	arg_52_0.lockTypeAnimator:Play(arg_52_1)
-	arg_52_0.startBtnAnimator:Play(arg_52_1)
+	self.lockTypeAnimator:Play(animationName)
+	self.startBtnAnimator:Play(animationName)
 end
 
-function var_0_0.onModeUnlockAnimationPlayDone(arg_53_0)
-	arg_53_0:_playModeUnLockAnimation(UIAnimationName.Idle)
+function VersionActivity2_4DungeonMapLevelView:onModeUnlockAnimationPlayDone()
+	self:_playModeUnLockAnimation(UIAnimationName.Idle)
 
-	arg_53_0.unlockedEpisodeModeDict[tostring(arg_53_0.specialEpisodeId)] = arg_53_0.mode
+	self.unlockedEpisodeModeDict[tostring(self.specialEpisodeId)] = self.mode
 
-	local var_53_0 = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
-	local var_53_1 = cjson.encode(arg_53_0.unlockedEpisodeModeDict)
+	local prefsKey = VersionActivity2_4DungeonEnum.PlayerPrefsKey.ActivityDungeonSpecialEpisodeLastUnLockMode
+	local strLastUnlockMode = cjson.encode(self.unlockedEpisodeModeDict)
 
-	VersionActivity2_4DungeonController.instance:savePlayerPrefs(var_53_0, var_53_1)
+	VersionActivity2_4DungeonController.instance:savePlayerPrefs(prefsKey, strLastUnlockMode)
 
-	arg_53_0.needPlayUnlockModeAnimation = false
+	self.needPlayUnlockModeAnimation = false
 
-	arg_53_0:refreshMode()
-	arg_53_0:refreshStartBtn()
+	self:refreshMode()
+	self:refreshStartBtn()
 	UIBlockMgr.instance:endBlock(VersionActivity2_4DungeonEnum.BlockKey.MapLevelViewPlayUnlockAnim)
 end
 
-function var_0_0.onClose(arg_54_0)
-	TaskDispatcher.cancelTask(arg_54_0.playModeUnlockAnimation, arg_54_0)
-	TaskDispatcher.cancelTask(arg_54_0.onModeUnlockAnimationPlayDone, arg_54_0)
+function VersionActivity2_4DungeonMapLevelView:onClose()
+	TaskDispatcher.cancelTask(self.playModeUnlockAnimation, self)
+	TaskDispatcher.cancelTask(self.onModeUnlockAnimationPlayDone, self)
 	UIBlockMgr.instance:endBlock(VersionActivity2_4DungeonEnum.BlockKey.MapLevelViewPlayUnlockAnim)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.onDestroyView(arg_55_0)
-	arg_55_0.rewardItems = nil
+function VersionActivity2_4DungeonMapLevelView:onDestroyView()
+	self.rewardItems = nil
 
-	arg_55_0._simagepower:UnLoadImage()
+	self._simagepower:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity2_4DungeonMapLevelView

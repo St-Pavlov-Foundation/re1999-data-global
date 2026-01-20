@@ -1,186 +1,192 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryClueAniWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_StoryClueAniWork.lua
 
-local var_0_0 = class("VersionActivity_1_2_StoryClueAniWork", BaseWork)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_StoryClueAniWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0._signObjList = arg_1_1
-	arg_1_0._viewClass = arg_1_2
-	arg_1_0._index = arg_1_3
-	arg_1_0._clueId = arg_1_4
+local VersionActivity_1_2_StoryClueAniWork = class("VersionActivity_1_2_StoryClueAniWork", BaseWork)
 
-	arg_1_0:_buildFlow()
+function VersionActivity_1_2_StoryClueAniWork:ctor(signObj, viewClass, index, clueId)
+	self._signObjList = signObj
+	self._viewClass = viewClass
+	self._index = index
+	self._clueId = clueId
+
+	self:_buildFlow()
 end
 
-function var_0_0._buildFlow(arg_2_0)
-	arg_2_0._aniFlow = FlowSequence.New()
+function VersionActivity_1_2_StoryClueAniWork:_buildFlow()
+	self._aniFlow = FlowSequence.New()
 
-	local var_2_0 = 100
+	local speed = 100
 
-	arg_2_0._tweenValue = {}
+	self._tweenValue = {}
 
-	local var_2_1 = arg_2_0._viewClass._gomask
-	local var_2_2 = var_2_1.transform
-	local var_2_3 = gohelper.findChild(arg_2_0._viewClass.viewGO, "root").transform
+	local goMask = self._viewClass._gomask
+	local maskTransform = goMask.transform
+	local rootTransform = gohelper.findChild(self._viewClass.viewGO, "root").transform
 
-	var_0_0.lastNoteId = 0
+	VersionActivity_1_2_StoryClueAniWork.lastNoteId = 0
 
-	for iter_2_0 = 1, #arg_2_0._signObjList do
-		local var_2_4 = arg_2_0._signObjList[iter_2_0]
+	for i = 1, #self._signObjList do
+		local objList = self._signObjList[i]
 
-		for iter_2_1, iter_2_2 in ipairs(var_2_4) do
-			local var_2_5 = iter_2_2.transform
-			local var_2_6 = recthelper.getWidth(var_2_5)
-			local var_2_7 = var_2_6 / var_2_0
+		for index, obj in ipairs(objList) do
+			local lineTransform = obj.transform
+			local toValue = recthelper.getWidth(lineTransform)
+			local duration = toValue / speed
 
-			recthelper.setWidth(var_2_5, 0)
+			recthelper.setWidth(lineTransform, 0)
 
-			local var_2_8 = var_2_5.parent.parent.gameObject.transform
-			local var_2_9 = var_2_8.name
+			local noteObj = lineTransform.parent.parent.gameObject
+			local noteTransform = noteObj.transform
+			local noteId = noteTransform.name
 
-			if var_0_0.lastNoteId == 0 then
+			if VersionActivity_1_2_StoryClueAniWork.lastNoteId == 0 then
 				-- block empty
-			elseif var_0_0.lastNoteId ~= var_2_9 then
-				arg_2_0._aniFlow:addWork(WorkWaitSeconds.New(0.16))
-				arg_2_0._aniFlow:addWork(TweenWork.New({
+			elseif VersionActivity_1_2_StoryClueAniWork.lastNoteId ~= noteId then
+				self._aniFlow:addWork(WorkWaitSeconds.New(0.16))
+				self._aniFlow:addWork(TweenWork.New({
 					from = 1,
 					type = "DOFadeCanvasGroup",
 					to = 0,
 					t = 0.3,
-					go = var_2_1
+					go = goMask
 				}))
 			end
 
-			if iter_2_1 == 1 then
-				local var_2_10 = gohelper.findChild(var_2_8.gameObject, "title/go_titleNormal")
-				local var_2_11 = recthelper.rectToRelativeAnchorPos(var_2_10.transform.position, arg_2_0._viewClass.viewGO.transform)
-				local var_2_12 = -var_2_11.x * 1.5 - 200
-				local var_2_13 = -var_2_11.y * 1.5 + 80
-				local var_2_14 = FlowParallel.New()
+			if index == 1 then
+				local title = gohelper.findChild(noteTransform.gameObject, "title/go_titleNormal")
+				local tarPos = recthelper.rectToRelativeAnchorPos(title.transform.position, self._viewClass.viewGO.transform)
+				local tarPosX = -tarPos.x * 1.5 - 200
+				local tarPosY = -tarPos.y * 1.5 + 80
+				local flow = FlowParallel.New()
 
-				var_2_14:addWork(TweenWork.New({
+				flow:addWork(TweenWork.New({
 					toz = 1,
 					type = "DOScale",
 					tox = 1.5,
 					toy = 1.5,
 					t = 0.3,
-					tr = var_2_3
+					tr = rootTransform
 				}))
-				var_2_14:addWork(TweenWork.New({
+				flow:addWork(TweenWork.New({
 					type = "DOAnchorPos",
 					t = 0.3,
-					tr = var_2_3,
-					tox = var_2_12,
-					toy = var_2_13
+					tr = rootTransform,
+					tox = tarPosX,
+					toy = tarPosY
 				}))
-				arg_2_0._aniFlow:addWork(var_2_14)
+				self._aniFlow:addWork(flow)
 
-				if var_0_0.lastNoteId ~= var_2_9 then
-					arg_2_0._aniFlow:addWork(FunctionWork.New(function()
-						recthelper.setWidth(var_2_2, 5200)
-						recthelper.setHeight(var_2_2, 2500)
-						gohelper.setActive(var_2_1, true)
+				if VersionActivity_1_2_StoryClueAniWork.lastNoteId ~= noteId then
+					self._aniFlow:addWork(FunctionWork.New(function()
+						recthelper.setWidth(maskTransform, 5200)
+						recthelper.setHeight(maskTransform, 2500)
+						gohelper.setActive(goMask, true)
 					end))
 
-					local var_2_15 = FlowParallel.New()
-					local var_2_16 = (gohelper.findChildText(var_2_5.parent.gameObject, ""):GetPreferredValues().y - 112) * 1.5
-					local var_2_17 = 1250 + var_2_16
+					flow = FlowParallel.New()
 
-					var_2_15:addWork(FunctionWork.New(function()
-						recthelper.setAnchorY(var_2_2, 0 - var_2_16 / 2)
+					local sizeValue = gohelper.findChildText(lineTransform.parent.gameObject, ""):GetPreferredValues()
+					local offsetHeight = (sizeValue.y - 112) * 1.5
+					local maskHeight = 1250 + offsetHeight
+
+					flow:addWork(FunctionWork.New(function()
+						recthelper.setAnchorY(maskTransform, 0 - offsetHeight / 2)
 					end))
-					var_2_15:addWork(TweenWork.New({
+					flow:addWork(TweenWork.New({
 						type = "DOSizeDelta",
 						tox = 2600,
 						t = 0.6,
-						tr = var_2_2,
-						toy = var_2_17
+						tr = maskTransform,
+						toy = maskHeight
 					}))
-					var_2_15:addWork(TweenWork.New({
+					flow:addWork(TweenWork.New({
 						from = 0,
 						type = "DOFadeCanvasGroup",
 						to = 1,
 						t = 0.6,
-						go = var_2_1
+						go = goMask
 					}))
-					arg_2_0._aniFlow:addWork(var_2_15)
+					self._aniFlow:addWork(flow)
 				end
 			end
 
-			var_0_0.lastNoteId = var_2_9
+			VersionActivity_1_2_StoryClueAniWork.lastNoteId = noteId
 
-			arg_2_0._aniFlow:addWork(VersionActivity_1_2_StoryClueLineWork.New(var_2_5, var_2_6, var_2_7, arg_2_0._clueId))
+			self._aniFlow:addWork(VersionActivity_1_2_StoryClueLineWork.New(lineTransform, toValue, duration, self._clueId))
 
-			if iter_2_1 == #var_2_4 then
-				arg_2_0._aniFlow:addWork(WorkWaitSeconds.New(0.6))
+			if index == #objList then
+				self._aniFlow:addWork(WorkWaitSeconds.New(0.6))
 			end
 
-			table.insert(arg_2_0._tweenValue, {
-				tr = var_2_5,
-				to = var_2_6
+			table.insert(self._tweenValue, {
+				tr = lineTransform,
+				to = toValue
 			})
 		end
 	end
 
-	var_0_0.lastNoteId = 0
+	VersionActivity_1_2_StoryClueAniWork.lastNoteId = 0
 
-	arg_2_0._aniFlow:addWork(TweenWork.New({
+	self._aniFlow:addWork(TweenWork.New({
 		from = 1,
 		type = "DOFadeCanvasGroup",
 		to = 0,
 		t = 0.3,
-		go = var_2_1
+		go = goMask
 	}))
-	arg_2_0._aniFlow:addWork(TweenWork.New({
+	self._aniFlow:addWork(TweenWork.New({
 		type = "DOAnchorPos",
 		tox = -556,
 		toy = 466,
 		t = 0.3,
-		tr = var_2_3
+		tr = rootTransform
 	}))
 
-	local var_2_18 = arg_2_0._viewClass._gocollectNote.transform:GetChild(arg_2_0._index - 1).gameObject
+	local collectNoteTtran = self._viewClass._gocollectNote.transform
+	local collectNoteItem = collectNoteTtran:GetChild(self._index - 1).gameObject
 
-	arg_2_0._aniFlow:addWork(FunctionWork.New(function()
-		gohelper.setActive(var_2_18, true)
+	self._aniFlow:addWork(FunctionWork.New(function()
+		gohelper.setActive(collectNoteItem, true)
 	end))
 
-	local var_2_19 = gohelper.findChild(var_2_18, VersionActivity_1_2_StoryCollectView._signTypeName[arg_2_0._clueId]).transform
-	local var_2_20 = recthelper.getWidth(var_2_19)
-	local var_2_21 = var_2_20 / var_2_0
+	local sign = gohelper.findChild(collectNoteItem, VersionActivity_1_2_StoryCollectView._signTypeName[self._clueId]).transform
+	local toValue = recthelper.getWidth(sign)
+	local duration = toValue / speed
 
-	recthelper.setWidth(var_2_19, 0)
-	arg_2_0._aniFlow:addWork(VersionActivity_1_2_StoryClueLineWork.New(var_2_19, var_2_20, var_2_21, arg_2_0._clueId))
-	arg_2_0._aniFlow:addWork(WorkWaitSeconds.New(1))
-	table.insert(arg_2_0._tweenValue, {
-		tr = var_2_19,
-		to = var_2_20,
-		collectNoteItem = var_2_18
+	recthelper.setWidth(sign, 0)
+	self._aniFlow:addWork(VersionActivity_1_2_StoryClueLineWork.New(sign, toValue, duration, self._clueId))
+	self._aniFlow:addWork(WorkWaitSeconds.New(1))
+	table.insert(self._tweenValue, {
+		tr = sign,
+		to = toValue,
+		collectNoteItem = collectNoteItem
 	})
 end
 
-function var_0_0.onStart(arg_6_0)
-	arg_6_0._aniFlow:registerDoneListener(arg_6_0._onAniFlowDone, arg_6_0)
-	arg_6_0._aniFlow:start()
+function VersionActivity_1_2_StoryClueAniWork:onStart()
+	self._aniFlow:registerDoneListener(self._onAniFlowDone, self)
+	self._aniFlow:start()
 end
 
-function var_0_0._onAniFlowDone(arg_7_0)
-	if arg_7_0._aniFlow then
-		arg_7_0._aniFlow:unregisterDoneListener(arg_7_0._onAniFlowDone, arg_7_0)
-		arg_7_0._aniFlow:destroy()
+function VersionActivity_1_2_StoryClueAniWork:_onAniFlowDone()
+	if self._aniFlow then
+		self._aniFlow:unregisterDoneListener(self._onAniFlowDone, self)
+		self._aniFlow:destroy()
 
-		arg_7_0._aniFlow = nil
+		self._aniFlow = nil
 	end
 
-	arg_7_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_8_0)
-	if arg_8_0._aniFlow then
-		arg_8_0._aniFlow:unregisterDoneListener(arg_8_0._onAniFlowDone, arg_8_0)
-		arg_8_0._aniFlow:destroy()
+function VersionActivity_1_2_StoryClueAniWork:clearWork()
+	if self._aniFlow then
+		self._aniFlow:unregisterDoneListener(self._onAniFlowDone, self)
+		self._aniFlow:destroy()
 
-		arg_8_0._aniFlow = nil
+		self._aniFlow = nil
 	end
 end
 
-return var_0_0
+return VersionActivity_1_2_StoryClueAniWork

@@ -1,82 +1,84 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryLoadingView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8BossStoryLoadingView.lua
 
-local var_0_0 = class("VersionActivity2_8BossStoryLoadingView", BaseView)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryLoadingView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosnow = gohelper.findChild(arg_1_0.viewGO, "#go_snow")
+local VersionActivity2_8BossStoryLoadingView = class("VersionActivity2_8BossStoryLoadingView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_8BossStoryLoadingView:onInitView()
+	self._gosnow = gohelper.findChild(self.viewGO, "#go_snow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_8BossStoryLoadingView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_8BossStoryLoadingView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(GameSceneMgr.instance, SceneEventName.CanCloseLoading, arg_4_0._onCanCloseLoading, arg_4_0)
+function VersionActivity2_8BossStoryLoadingView:_editableInitView()
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.CanCloseLoading, self._onCanCloseLoading, self)
 end
 
-function var_0_0._onCanCloseLoading(arg_5_0)
-	arg_5_0._canClose = true
+function VersionActivity2_8BossStoryLoadingView:_onCanCloseLoading()
+	self._canClose = true
 
-	arg_5_0:_checkClose()
+	self:_checkClose()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function VersionActivity2_8BossStoryLoadingView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:_showSnowEffect()
-	TaskDispatcher.cancelTask(arg_7_0.closeThis, arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0.closeThis, arg_7_0, 10)
+function VersionActivity2_8BossStoryLoadingView:onOpen()
+	self:_showSnowEffect()
+	TaskDispatcher.cancelTask(self.closeThis, self)
+	TaskDispatcher.runDelay(self.closeThis, self, 10)
 end
 
-function var_0_0._showSnowEffect(arg_8_0)
-	if not arg_8_0._snowGo then
-		local var_8_0 = arg_8_0.viewContainer._viewSetting.otherRes[1]
+function VersionActivity2_8BossStoryLoadingView:_showSnowEffect()
+	if not self._snowGo then
+		local path = self.viewContainer._viewSetting.otherRes[1]
 
-		arg_8_0._snowGo = arg_8_0:getResInst(var_8_0, arg_8_0._gosnow)
+		self._snowGo = self:getResInst(path, self._gosnow)
 	end
 
-	gohelper.setActive(arg_8_0._gosnow, true)
+	gohelper.setActive(self._gosnow, true)
 
-	arg_8_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_8_0._snowGo)
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self._snowGo)
 
-	arg_8_0._animatorPlayer:Play("start", arg_8_0._onStartDone, arg_8_0)
+	self._animatorPlayer:Play("start", self._onStartDone, self)
 	AudioMgr.instance:trigger(AudioEnum2_8.BossStory.play_ui_fuleyuan_boss_snow)
 end
 
-function var_0_0._onStartDone(arg_9_0)
-	arg_9_0._startAnimDone = true
+function VersionActivity2_8BossStoryLoadingView:_onStartDone()
+	self._startAnimDone = true
 
-	arg_9_0:_checkClose()
+	self:_checkClose()
 end
 
-function var_0_0._checkClose(arg_10_0)
-	if arg_10_0._canClose and arg_10_0._startAnimDone then
-		TaskDispatcher.cancelTask(arg_10_0.closeThis, arg_10_0)
-		TaskDispatcher.runDelay(arg_10_0.closeThis, arg_10_0, 1)
-		arg_10_0._animatorPlayer:Play("end", arg_10_0._onEndDone, arg_10_0)
+function VersionActivity2_8BossStoryLoadingView:_checkClose()
+	if self._canClose and self._startAnimDone then
+		TaskDispatcher.cancelTask(self.closeThis, self)
+		TaskDispatcher.runDelay(self.closeThis, self, 1)
+		self._animatorPlayer:Play("end", self._onEndDone, self)
 	end
 end
 
-function var_0_0._onEndDone(arg_11_0)
-	arg_11_0:closeThis()
+function VersionActivity2_8BossStoryLoadingView:_onEndDone()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.closeThis, arg_12_0)
+function VersionActivity2_8BossStoryLoadingView:onClose()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function VersionActivity2_8BossStoryLoadingView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_8BossStoryLoadingView

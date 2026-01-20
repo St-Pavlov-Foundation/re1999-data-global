@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.define.YaXianGameEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/define/YaXianGameEnum.lua
 
-local var_0_0 = YaXianEnum
+module("modules.logic.versionactivity1_2.yaxian.define.YaXianGameEnum", package.seeall)
 
-var_0_0.TileBaseType = {
+local YaXianGameEnum = YaXianEnum
+
+YaXianGameEnum.TileBaseType = {
 	Normal = 1,
 	None = 0
 }
-var_0_0.SelectPosStatus = {
+YaXianGameEnum.SelectPosStatus = {
 	SelectObjWaitPos = 2,
 	None = 1
 }
-var_0_0.TileSetting = {
+YaXianGameEnum.TileSetting = {
 	baffleOffsetX = 0.64,
 	height = 1.619276,
 	width = 2.563867,
 	baffleOffsetY = 0.44
 }
-var_0_0.TileSetting.halfWidth = var_0_0.TileSetting.width / 2
-var_0_0.TileSetting.halfHeight = var_0_0.TileSetting.height / 2
-var_0_0.InteractType = {
+YaXianGameEnum.TileSetting.halfWidth = YaXianGameEnum.TileSetting.width / 2
+YaXianGameEnum.TileSetting.halfHeight = YaXianGameEnum.TileSetting.height / 2
+YaXianGameEnum.InteractType = {
 	PickUpItem = 7,
 	TriggerFail = 5,
 	Enemy = 4,
@@ -28,56 +30,56 @@ var_0_0.InteractType = {
 	Obstacle = 2,
 	NoEffectItem = 8
 }
-var_0_0.MoveDirection = {
+YaXianGameEnum.MoveDirection = {
 	Top = 8,
 	Right = 6,
 	Left = 4,
 	Bottom = 2
 }
-var_0_0.OppositeDirection = {
-	[var_0_0.MoveDirection.Bottom] = var_0_0.MoveDirection.Top,
-	[var_0_0.MoveDirection.Left] = var_0_0.MoveDirection.Right,
-	[var_0_0.MoveDirection.Right] = var_0_0.MoveDirection.Left,
-	[var_0_0.MoveDirection.Top] = var_0_0.MoveDirection.Bottom
+YaXianGameEnum.OppositeDirection = {
+	[YaXianGameEnum.MoveDirection.Bottom] = YaXianGameEnum.MoveDirection.Top,
+	[YaXianGameEnum.MoveDirection.Left] = YaXianGameEnum.MoveDirection.Right,
+	[YaXianGameEnum.MoveDirection.Right] = YaXianGameEnum.MoveDirection.Left,
+	[YaXianGameEnum.MoveDirection.Top] = YaXianGameEnum.MoveDirection.Bottom
 }
-var_0_0.BaffleDirection = {
+YaXianGameEnum.BaffleDirection = {
 	Top = 8,
 	Right = 6,
 	Left = 4,
 	Bottom = 2
 }
-var_0_0.DirectionName = {
-	[var_0_0.MoveDirection.Bottom] = "down",
-	[var_0_0.MoveDirection.Left] = "left",
-	[var_0_0.MoveDirection.Right] = "right",
-	[var_0_0.MoveDirection.Top] = "up"
+YaXianGameEnum.DirectionName = {
+	[YaXianGameEnum.MoveDirection.Bottom] = "down",
+	[YaXianGameEnum.MoveDirection.Left] = "left",
+	[YaXianGameEnum.MoveDirection.Right] = "right",
+	[YaXianGameEnum.MoveDirection.Top] = "up"
 }
-var_0_0.BaffleDirectionPowerPos = {
+YaXianGameEnum.BaffleDirectionPowerPos = {
 	Top = 8,
 	Right = 6,
 	Left = 4,
 	Bottom = 2
 }
-var_0_0.BaffleType = {
+YaXianGameEnum.BaffleType = {
 	Second = 2,
 	First = 1
 }
-var_0_0.ClickRangeX = 125
-var_0_0.ClickRangeY = 80
-var_0_0.ClickYWeight = 1.2
-var_0_0.ChessBoardOffsetX = -7.85
-var_0_0.ChessBoardOffsetY = -0.2
-var_0_0.InteractSelectPriority = {
-	[var_0_0.InteractType.Player] = 1
+YaXianGameEnum.ClickRangeX = 125
+YaXianGameEnum.ClickRangeY = 80
+YaXianGameEnum.ClickYWeight = 1.2
+YaXianGameEnum.ChessBoardOffsetX = -7.85
+YaXianGameEnum.ChessBoardOffsetY = -0.2
+YaXianGameEnum.InteractSelectPriority = {
+	[YaXianGameEnum.InteractType.Player] = 1
 }
-var_0_0.GameStateType = {
+YaXianGameEnum.GameStateType = {
 	FinishEvent = 3,
 	Battle = 1,
 	UseItem = 2,
 	Lock = -1,
 	Normal = 0
 }
-var_0_0.GameStepType = {
+YaXianGameEnum.GameStepType = {
 	GameFinish = 2,
 	CallEvent = 4,
 	DeleteObject = 6,
@@ -88,21 +90,21 @@ var_0_0.GameStepType = {
 	UpdateObjectData = 9,
 	Move = 3
 }
-var_0_0.SkillId = {
+YaXianGameEnum.SkillId = {
 	InVisible = 1,
 	ThroughWall = 2
 }
-var_0_0.SkillType = {
+YaXianGameEnum.SkillType = {
 	InVisible = 1,
 	ThroughWall = 2
 }
-var_0_0.ConditionType = {
+YaXianGameEnum.ConditionType = {
 	FinishAllInteract = 3,
 	FinishInteract = 2,
 	PassEpisode = 0,
 	Round = 1
 }
-var_0_0.SceneResPath = {
+YaXianGameEnum.SceneResPath = {
 	GreedLineHalf = "scenes/m_s12_dfw_yaxian/prefab/tou_green.prefab",
 	LRBaffle1 = "scenes/m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_zl_r_b_1x1.prefab",
 	FightEffect = "scenes/m_s12_dfw_yaxian/prefab/yanxian_zhandou.prefab",
@@ -125,60 +127,60 @@ var_0_0.SceneResPath = {
 	MonsterStatus = "scenes/m_s12_dfw_yaxian/prefab/picpe/yaxian_icon.prefab",
 	TargetItem = "scenes/m_s12_dfw_yaxian/prefab/picpe/m_s12_diban_mubiao.prefab"
 }
-var_0_0.InteractHeight = {
+YaXianGameEnum.InteractHeight = {
 	[10001] = 1,
 	[10006] = 1
 }
-var_0_0.MinShowPriority = 0
-var_0_0.InteractShowPriority = {
-	[var_0_0.InteractType.TriggerVictory] = 1,
-	[var_0_0.InteractType.Enemy] = 2,
-	[var_0_0.InteractType.Player] = 3
+YaXianGameEnum.MinShowPriority = 0
+YaXianGameEnum.InteractShowPriority = {
+	[YaXianGameEnum.InteractType.TriggerVictory] = 1,
+	[YaXianGameEnum.InteractType.Enemy] = 2,
+	[YaXianGameEnum.InteractType.Player] = 3
 }
-var_0_0.IconStatus = {
+YaXianGameEnum.IconStatus = {
 	Fight = 2,
 	Assassinate = 1,
 	PlayerAssassinate = 5,
 	ThroughWall = 4,
 	InVisible = 3
 }
-var_0_0.DirectionIcon = {
-	[var_0_0.IconStatus.PlayerAssassinate] = true,
-	[var_0_0.IconStatus.Fight] = true
+YaXianGameEnum.DirectionIcon = {
+	[YaXianGameEnum.IconStatus.PlayerAssassinate] = true,
+	[YaXianGameEnum.IconStatus.Fight] = true
 }
-var_0_0.AIType = {
+YaXianGameEnum.AIType = {
 	NotLoop = 2,
 	Loop = 1
 }
-var_0_0.AlertType = {
+YaXianGameEnum.AlertType = {
 	SingleWay = 1,
 	FourWay = 3
 }
-var_0_0.ContainerOffsetZ = {
+YaXianGameEnum.ContainerOffsetZ = {
 	Interact = -2,
 	Background = -0.5,
 	TipArea = -1,
 	Path = -1.5
 }
-var_0_0.AlertOffsetZ = -0.01
-var_0_0.EffectType = {
+YaXianGameEnum.AlertOffsetZ = -0.01
+YaXianGameEnum.EffectType = {
 	Fight = 1,
 	Die = 3,
 	Assassinate = 2,
 	FightSuccess = 4,
 	PlayerAssassinateEffect = 5
 }
-var_0_0.DefaultEffectDuration = 0.5
-var_0_0.EffectDuration = {
-	[var_0_0.EffectType.Die] = 0.8,
-	[var_0_0.EffectType.FightSuccess] = 1.2
+YaXianGameEnum.DefaultEffectDuration = 0.5
+YaXianGameEnum.EffectDuration = {
+	[YaXianGameEnum.EffectType.Die] = 0.8,
+	[YaXianGameEnum.EffectType.FightSuccess] = 1.2
 }
-var_0_0.MoveDuration = 0.3
-var_0_0.SmallMoveDuration = 0.2
-var_0_0.IconAnimationSwitchInterval = 1
-var_0_0.IconAnimationDuration = 0.333
-var_0_0.StopAnimationDuration = 0.333
-var_0_0.InteractAnimationName = {
+YaXianGameEnum.MoveDuration = 0.3
+YaXianGameEnum.SmallMoveDuration = 0.2
+YaXianGameEnum.IconAnimationSwitchInterval = 1
+YaXianGameEnum.IconAnimationDuration = 0.333
+YaXianGameEnum.StopAnimationDuration = 0.333
+YaXianGameEnum.InteractAnimationName = {
 	TwoEffect = "skill_two_open",
 	TwoEffectClose = "skill_two_close",
 	CloseInVisible = "skill_ys_close",
@@ -187,44 +189,44 @@ var_0_0.InteractAnimationName = {
 	Die = "die",
 	CloseThroughWall = "skill_cq_close"
 }
-var_0_0.CloseAnimationName = {
-	[var_0_0.InteractAnimationName.InVisible] = var_0_0.InteractAnimationName.CloseInVisible,
-	[var_0_0.InteractAnimationName.ThroughWall] = var_0_0.InteractAnimationName.CloseThroughWall,
-	[var_0_0.InteractAnimationName.TwoEffect] = var_0_0.InteractAnimationName.TwoEffectClose
+YaXianGameEnum.CloseAnimationName = {
+	[YaXianGameEnum.InteractAnimationName.InVisible] = YaXianGameEnum.InteractAnimationName.CloseInVisible,
+	[YaXianGameEnum.InteractAnimationName.ThroughWall] = YaXianGameEnum.InteractAnimationName.CloseThroughWall,
+	[YaXianGameEnum.InteractAnimationName.TwoEffect] = YaXianGameEnum.InteractAnimationName.TwoEffectClose
 }
-var_0_0.InteractDefaultTopPosOffset = Vector3(0, 1.04, 0)
-var_0_0.ResultSimageName = {
+YaXianGameEnum.InteractDefaultTopPosOffset = Vector3(0, 1.04, 0)
+YaXianGameEnum.ResultSimageName = {
 	FightFail = "img_zi1",
 	RoundUseUp = "img_zi3",
 	Success = "img_zi2"
 }
-var_0_0.EndTxtAnchorY = {
+YaXianGameEnum.EndTxtAnchorY = {
 	HadTxt = Vector2(0.5, 0.2),
 	NoneTxt = Vector2(0.5, 0.5)
 }
-var_0_0.DeleteInteractReason = {
+YaXianGameEnum.DeleteInteractReason = {
 	AssassinateKill = 1,
 	FightKill = 3,
 	Win = 2
 }
-var_0_0.LastEpisodeId = 21
-var_0_0.BossInteractId = 30501
-var_0_0.FakeBossStartPos = {
+YaXianGameEnum.LastEpisodeId = 21
+YaXianGameEnum.BossInteractId = 30501
+YaXianGameEnum.FakeBossStartPos = {
 	posY = 3,
 	posX = 0
 }
-var_0_0.FakeBossDirection = var_0_0.MoveDirection.Right
-var_0_0.StepFinishDelay = 0.3
-var_0_0.ScenePosYRange = {
+YaXianGameEnum.FakeBossDirection = YaXianGameEnum.MoveDirection.Right
+YaXianGameEnum.StepFinishDelay = 0.3
+YaXianGameEnum.ScenePosYRange = {
 	Max = 10,
 	Min = -10
 }
-var_0_0.ScenePosYRangeArea = var_0_0.ScenePosYRange.Max - var_0_0.ScenePosYRange.Min
-var_0_0.LevelScenePosZRange = {
+YaXianGameEnum.ScenePosYRangeArea = YaXianGameEnum.ScenePosYRange.Max - YaXianGameEnum.ScenePosYRange.Min
+YaXianGameEnum.LevelScenePosZRange = {
 	Max = 0,
 	Min = -0.4
 }
-var_0_0.SwitchDirectionDelay = 0.15
-var_0_0.EffectInterval = 1
+YaXianGameEnum.SwitchDirectionDelay = 0.15
+YaXianGameEnum.EffectInterval = 1
 
-return var_0_0
+return YaXianGameEnum

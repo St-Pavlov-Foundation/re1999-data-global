@@ -1,56 +1,58 @@
-﻿module("modules.logic.survival.view.reputation.shop.SurvivalReputationShopBagItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/reputation/shop/SurvivalReputationShopBagItem.lua
 
-local var_0_0 = class("SurvivalReputationShopBagItem", LuaCompBase)
+module("modules.logic.survival.view.reputation.shop.SurvivalReputationShopBagItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SurvivalReputationShopBagItem = class("SurvivalReputationShopBagItem", LuaCompBase)
+
+function SurvivalReputationShopBagItem:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0.go_item = gohelper.findChild(arg_2_0.viewGO, "#go_item")
-	arg_2_0.btn_click = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#btn_click")
+function SurvivalReputationShopBagItem:init(viewGO)
+	self.viewGO = viewGO
+	self.go_item = gohelper.findChild(self.viewGO, "#go_item")
+	self.btn_click = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addClickCb(arg_3_0.btn_click, arg_3_0.onClick, arg_3_0)
+function SurvivalReputationShopBagItem:addEventListeners()
+	self:addClickCb(self.btn_click, self.onClick, self)
 end
 
-function var_0_0.onClick(arg_4_0)
-	if arg_4_0.onClickCallBack then
-		arg_4_0.onClickCallBack(arg_4_0.onClickContext, arg_4_0)
+function SurvivalReputationShopBagItem:onClick()
+	if self.onClickCallBack then
+		self.onClickCallBack(self.onClickContext, self)
 	end
 end
 
-function var_0_0.updateMo(arg_5_0, arg_5_1)
-	arg_5_0.viewContainer = arg_5_1.viewContainer
-	arg_5_0.onClickCallBack = arg_5_1.onClickCallBack
-	arg_5_0.onClickContext = arg_5_1.onClickContext
+function SurvivalReputationShopBagItem:updateMo(data)
+	self.viewContainer = data.viewContainer
+	self.onClickCallBack = data.onClickCallBack
+	self.onClickContext = data.onClickContext
 
-	arg_5_0:refreshBagItem(arg_5_1.survivalShopItemMo)
+	self:refreshBagItem(data.survivalShopItemMo)
 end
 
-function var_0_0.refreshBagItem(arg_6_0, arg_6_1)
-	arg_6_0.survivalShopItemMo = arg_6_1
+function SurvivalReputationShopBagItem:refreshBagItem(survivalShopItemMo)
+	self.survivalShopItemMo = survivalShopItemMo
 
-	if not arg_6_0.survivalBagItem then
-		local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes.survivalmapbagitem
-		local var_6_1 = arg_6_0.viewContainer:getResInst(var_6_0, arg_6_0.go_item)
+	if not self.survivalBagItem then
+		local resPath = self.viewContainer:getSetting().otherRes.survivalmapbagitem
+		local obj = self.viewContainer:getResInst(resPath, self.go_item)
 
-		arg_6_0.survivalBagItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, SurvivalBagItem)
+		self.survivalBagItem = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SurvivalBagItem)
 	end
 
-	arg_6_0.survivalBagItem:updateMo(arg_6_0.survivalShopItemMo, {
+	self.survivalBagItem:updateMo(self.survivalShopItemMo, {
 		jumpAdd = true
 	})
-	arg_6_0.survivalBagItem:setReputationShopStyle({
+	self.survivalBagItem:setReputationShopStyle({
 		isShowFreeReward = false,
 		isCanGet = false,
-		isReceive = arg_6_0.survivalShopItemMo.count <= 0,
-		price = arg_6_0.survivalShopItemMo:getBuyPrice()
+		isReceive = self.survivalShopItemMo.count <= 0,
+		price = self.survivalShopItemMo:getBuyPrice()
 	})
 
-	arg_6_0.survivalShopItemMo = arg_6_1
+	self.survivalShopItemMo = survivalShopItemMo
 end
 
-return var_0_0
+return SurvivalReputationShopBagItem

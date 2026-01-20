@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity1_7.lantern.define.LanternFestivalEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/lantern/define/LanternFestivalEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_7.lantern.define.LanternFestivalEnum", package.seeall)
 
-var_0_0.PuzzleState = {
+local LanternFestivalEnum = _M
+
+LanternFestivalEnum.PuzzleState = {
 	Lock = 0,
 	RewardGet = 4,
 	Answering = 2,
 	UnAnswer = 1,
 	Solved = 3
 }
-var_0_0.OptionState = {
+LanternFestivalEnum.OptionState = {
 	UnAnswer = 0,
 	Wrong = 1,
 	Right = 2
 }
 
-return var_0_0
+return LanternFestivalEnum

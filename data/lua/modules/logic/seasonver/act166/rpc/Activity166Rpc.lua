@@ -1,47 +1,49 @@
-﻿module("modules.logic.seasonver.act166.rpc.Activity166Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/rpc/Activity166Rpc.lua
 
-local var_0_0 = class("Activity166Rpc", BaseRpc)
+module("modules.logic.seasonver.act166.rpc.Activity166Rpc", package.seeall)
 
-function var_0_0.sendGet166InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity166Module_pb.Get166InfosRequest()
+local Activity166Rpc = class("Activity166Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity166Rpc:sendGet166InfosRequest(activityId, callback, callbackObj)
+	local req = Activity166Module_pb.Get166InfosRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet166InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity166Rpc:onReceiveGet166InfosReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season166Model.instance:setActInfo(arg_2_2)
+	Season166Model.instance:setActInfo(msg)
 end
 
-function var_0_0.sendStartAct166BattleRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7, arg_3_8, arg_3_9, arg_3_10, arg_3_11, arg_3_12, arg_3_13)
-	local var_3_0 = Activity166Module_pb.StartAct166BattleRequest()
+function Activity166Rpc:sendStartAct166BattleRequest(activityId, episodeType, configId, talentId, chapterId, episodeId, fightParam, multiplication, endAdventure, useRecord, isRestart, callback, callbackObj)
+	local req = Activity166Module_pb.StartAct166BattleRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.episodeType = arg_3_2
-	var_3_0.id = arg_3_3
-	var_3_0.talentId = arg_3_4
+	req.activityId = activityId
+	req.episodeType = episodeType
+	req.id = configId
+	req.talentId = talentId
 
-	Season166HeroGroupUtils.buildFightGroupAssistHero(Season166HeroGroupModel.instance.heroGroupType, var_3_0.startDungeonRequest.fightGroup)
-	DungeonRpc.instance:packStartDungeonRequest(var_3_0.startDungeonRequest, arg_3_5, arg_3_6, arg_3_7, arg_3_8, arg_3_9, arg_3_10, arg_3_11)
+	Season166HeroGroupUtils.buildFightGroupAssistHero(Season166HeroGroupModel.instance.heroGroupType, req.startDungeonRequest.fightGroup)
+	DungeonRpc.instance:packStartDungeonRequest(req.startDungeonRequest, chapterId, episodeId, fightParam, multiplication, endAdventure, useRecord, isRestart)
 
-	return arg_3_0:sendMsg(var_3_0, arg_3_12, arg_3_13)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveStartAct166BattleReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		local var_4_0 = Season166Model.instance:getBattleContext()
-		local var_4_1 = Season166HeroGroupModel.instance:getEpisodeConfigId(var_4_0.episodeId)
+function Activity166Rpc:onReceiveStartAct166BattleReply(resultCode, msg)
+	if resultCode == 0 then
+		local battleContext = Season166Model.instance:getBattleContext()
+		local configId = Season166HeroGroupModel.instance:getEpisodeConfigId(battleContext.episodeId)
 
-		if var_4_0.actId == arg_4_2.activityId and var_4_1 == arg_4_2.id and var_4_0.episodeType == arg_4_2.episodeType then
-			local var_4_2 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+		if battleContext.actId == msg.activityId and configId == msg.id and battleContext.episodeType == msg.episodeType then
+			local co = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-			if var_4_2 and DungeonModel.isBattleEpisode(var_4_2) then
-				DungeonFightController.instance:onReceiveStartDungeonReply(arg_4_1, arg_4_2.startDungeonReply)
+			if co and DungeonModel.isBattleEpisode(co) then
+				DungeonFightController.instance:onReceiveStartDungeonReply(resultCode, msg.startDungeonReply)
 			end
 		end
 	else
@@ -49,107 +51,107 @@ function var_0_0.onReceiveStartAct166BattleReply(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function var_0_0.sendAct166AnalyInfoRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = Activity166Module_pb.Act166AnalyInfoRequest()
+function Activity166Rpc:sendAct166AnalyInfoRequest(activityId, infoId, callback, callbackObj)
+	local req = Activity166Module_pb.Act166AnalyInfoRequest()
 
-	var_5_0.activityId = arg_5_1
-	var_5_0.infoId = arg_5_2
+	req.activityId = activityId
+	req.infoId = infoId
 
-	return arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct166AnalyInfoReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
-		Season166Model.instance:onReceiveAnalyInfo(arg_6_2)
-		Season166Controller.instance:dispatchEvent(Season166Event.OnAnalyInfoSuccess, arg_6_2)
+function Activity166Rpc:onReceiveAct166AnalyInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveAnalyInfo(msg)
+		Season166Controller.instance:dispatchEvent(Season166Event.OnAnalyInfoSuccess, msg)
 	end
 end
 
-function var_0_0.sendAct166ReceiveInformationBonusRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = Activity166Module_pb.Act166ReceiveInformationBonusRequest()
+function Activity166Rpc:sendAct166ReceiveInformationBonusRequest(activityId, callback, callbackObj)
+	local req = Activity166Module_pb.Act166ReceiveInformationBonusRequest()
 
-	var_7_0.activityId = arg_7_1
+	req.activityId = activityId
 
-	return arg_7_0:sendMsg(var_7_0, arg_7_2, arg_7_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct166ReceiveInformationBonusReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == 0 then
-		Season166Model.instance:onReceiveInformationBonus(arg_8_2)
+function Activity166Rpc:onReceiveAct166ReceiveInformationBonusReply(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveInformationBonus(msg)
 		Season166Controller.instance:dispatchEvent(Season166Event.OnGetInformationBonus)
 	end
 end
 
-function var_0_0.sendAct166ReceiveInfoBonusRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = Activity166Module_pb.Act166ReceiveInfoBonusRequest()
+function Activity166Rpc:sendAct166ReceiveInfoBonusRequest(activityId, infoId, callback, callbackObj)
+	local req = Activity166Module_pb.Act166ReceiveInfoBonusRequest()
 
-	var_9_0.activityId = arg_9_1
-	var_9_0.infoId = arg_9_2
+	req.activityId = activityId
+	req.infoId = infoId
 
-	return arg_9_0:sendMsg(var_9_0, arg_9_3, arg_9_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct166ReceiveInfoBonusReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == 0 then
-		Season166Model.instance:onReceiveInfoBonus(arg_10_2)
+function Activity166Rpc:onReceiveAct166ReceiveInfoBonusReply(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveInfoBonus(msg)
 		Season166Controller.instance:dispatchEvent(Season166Event.OnGetInfoBonus)
 	end
 end
 
-function var_0_0.onReceiveAct166InfoPush(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 == 0 then
-		Season166Model.instance:onReceiveUpdateInfos(arg_11_2)
+function Activity166Rpc:onReceiveAct166InfoPush(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveUpdateInfos(msg)
 		Season166Controller.instance:dispatchEvent(Season166Event.OnInformationUpdate)
 	end
 end
 
-function var_0_0.SendAct166SetTalentSkillRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = Activity166Module_pb.Act166SetTalentSkillRequest()
+function Activity166Rpc:SendAct166SetTalentSkillRequest(activityId, talentId, skillIds)
+	local req = Activity166Module_pb.Act166SetTalentSkillRequest()
 
-	var_12_0.activityId = arg_12_1
-	var_12_0.talentId = arg_12_2
+	req.activityId = activityId
+	req.talentId = talentId
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_3) do
-		table.insert(var_12_0.skillIds, iter_12_1)
+	for _, skillId in ipairs(skillIds) do
+		table.insert(req.skillIds, skillId)
 	end
 
-	arg_12_0:sendMsg(var_12_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct166SetTalentSkillReply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
-		Season166Model.instance:onReceiveSetTalentSkill(arg_13_2)
+function Activity166Rpc:onReceiveAct166SetTalentSkillReply(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveSetTalentSkill(msg)
 	end
 end
 
-function var_0_0.onReceiveAct166TalentPush(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == 0 then
-		Season166Model.instance:onReceiveAct166TalentPush(arg_14_2)
+function Activity166Rpc:onReceiveAct166TalentPush(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveAct166TalentPush(msg)
 		Season166Controller.instance:showToast(Season166Enum.ToastType.Talent)
 	end
 end
 
-function var_0_0.sendAct166EnterBaseRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	local var_15_0 = Activity166Module_pb.Act166EnterBaseRequest()
+function Activity166Rpc:sendAct166EnterBaseRequest(activityId, baseId, callback, callbackObj)
+	local req = Activity166Module_pb.Act166EnterBaseRequest()
 
-	var_15_0.activityId = arg_15_1
-	var_15_0.baseId = arg_15_2
+	req.activityId = activityId
+	req.baseId = baseId
 
-	arg_15_0:sendMsg(var_15_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct166EnterBaseReply(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 == 0 then
-		Season166Model.instance:onReceiveAct166EnterBaseReply(arg_16_2)
+function Activity166Rpc:onReceiveAct166EnterBaseReply(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveAct166EnterBaseReply(msg)
 	end
 end
 
-function var_0_0.onReceiveAct166BattleFinishPush(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_1 == 0 then
-		Season166Model.instance:onReceiveBattleFinishPush(arg_17_2)
+function Activity166Rpc:onReceiveAct166BattleFinishPush(resultCode, msg)
+	if resultCode == 0 then
+		Season166Model.instance:onReceiveBattleFinishPush(msg)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity166Rpc.instance = Activity166Rpc.New()
 
-return var_0_0
+return Activity166Rpc

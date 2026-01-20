@@ -1,116 +1,119 @@
-﻿module("modules.logic.dungeon.view.maze.DungeonMazeWordEffectView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/maze/DungeonMazeWordEffectView.lua
 
-local var_0_0 = class("DungeonMazeWordEffectView", BaseViewExtended)
-local var_0_1 = {
+module("modules.logic.dungeon.view.maze.DungeonMazeWordEffectView", package.seeall)
+
+local DungeonMazeWordEffectView = class("DungeonMazeWordEffectView", BaseViewExtended)
+local testWordPosCfg = {
 	{
 		id = 1,
 		pos = "0#0"
 	}
 }
-local var_0_2 = 6
+local WordInterval = 6
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._leftWordRoot = gohelper.findChild(arg_1_0.viewGO, "Road/road1/obstacleDialog")
-	arg_1_0._rightWordRoot = gohelper.findChild(arg_1_0.viewGO, "Road/road2/obstacleDialog")
-	arg_1_0._bottomWordRoot = gohelper.findChild(arg_1_0.viewGO, "Road/road3/obstacleDialog")
-	arg_1_0._topWordRoot = gohelper.findChild(arg_1_0.viewGO, "Road/road4/obstacleDialog")
+function DungeonMazeWordEffectView:onInitView()
+	self._leftWordRoot = gohelper.findChild(self.viewGO, "Road/road1/obstacleDialog")
+	self._rightWordRoot = gohelper.findChild(self.viewGO, "Road/road2/obstacleDialog")
+	self._bottomWordRoot = gohelper.findChild(self.viewGO, "Road/road3/obstacleDialog")
+	self._topWordRoot = gohelper.findChild(self.viewGO, "Road/road4/obstacleDialog")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0.rightWordContentGO = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[1], arg_2_0._rightWordRoot)
-	arg_2_0.rightWordEffect = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[2], arg_2_0.rightWordContentGO)
-	arg_2_0.leftWordContentGO = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[1], arg_2_0._leftWordRoot)
-	arg_2_0.leftWordEffect = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[2], arg_2_0.leftWordContentGO)
-	arg_2_0.bottomWordContentGO = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[1], arg_2_0._bottomWordRoot)
-	arg_2_0.bottomWordEffect = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[2], arg_2_0.bottomWordContentGO)
-	arg_2_0.topWordContentGO = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[1], arg_2_0._topWordRoot)
-	arg_2_0.topWordEffect = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[2], arg_2_0.topWordContentGO)
+function DungeonMazeWordEffectView:onOpen()
+	self.rightWordContentGO = self:getResInst(self.viewContainer._viewSetting.otherRes[1], self._rightWordRoot)
+	self.rightWordEffect = self:getResInst(self.viewContainer._viewSetting.otherRes[2], self.rightWordContentGO)
+	self.leftWordContentGO = self:getResInst(self.viewContainer._viewSetting.otherRes[1], self._leftWordRoot)
+	self.leftWordEffect = self:getResInst(self.viewContainer._viewSetting.otherRes[2], self.leftWordContentGO)
+	self.bottomWordContentGO = self:getResInst(self.viewContainer._viewSetting.otherRes[1], self._bottomWordRoot)
+	self.bottomWordEffect = self:getResInst(self.viewContainer._viewSetting.otherRes[2], self.bottomWordContentGO)
+	self.topWordContentGO = self:getResInst(self.viewContainer._viewSetting.otherRes[1], self._topWordRoot)
+	self.topWordEffect = self:getResInst(self.viewContainer._viewSetting.otherRes[2], self.topWordContentGO)
 
-	gohelper.setActive(arg_2_0.leftWordContentGO, false)
-	gohelper.setActive(arg_2_0.leftWordEffect, false)
-	gohelper.setActive(arg_2_0.rightWordContentGO, false)
-	gohelper.setActive(arg_2_0.rightWordEffect, false)
-	gohelper.setActive(arg_2_0.bottomWordContentGO, false)
-	gohelper.setActive(arg_2_0.bottomWordEffect, false)
-	gohelper.setActive(arg_2_0.topWordContentGO, false)
-	gohelper.setActive(arg_2_0.topWordEffect, false)
+	gohelper.setActive(self.leftWordContentGO, false)
+	gohelper.setActive(self.leftWordEffect, false)
+	gohelper.setActive(self.rightWordContentGO, false)
+	gohelper.setActive(self.rightWordEffect, false)
+	gohelper.setActive(self.bottomWordContentGO, false)
+	gohelper.setActive(self.bottomWordEffect, false)
+	gohelper.setActive(self.topWordContentGO, false)
+	gohelper.setActive(self.topWordEffect, false)
 
-	arg_2_0._dirDialogRootMap = arg_2_0:getUserDataTb_()
-	arg_2_0._dirDialogRootMap[DungeonMazeEnum.dir.left] = arg_2_0._leftWordRoot
-	arg_2_0._dirDialogRootMap[DungeonMazeEnum.dir.right] = arg_2_0._rightWordRoot
-	arg_2_0._dirDialogRootMap[DungeonMazeEnum.dir.down] = arg_2_0._bottomWordRoot
-	arg_2_0._dirDialogRootMap[DungeonMazeEnum.dir.up] = arg_2_0._topWordRoot
-	arg_2_0._dirWordObjMap = arg_2_0:getUserDataTb_()
-	arg_2_0._dirWordObjMap[DungeonMazeEnum.dir.left] = arg_2_0.leftWordContentGO
-	arg_2_0._dirWordObjMap[DungeonMazeEnum.dir.right] = arg_2_0.rightWordContentGO
-	arg_2_0._dirWordObjMap[DungeonMazeEnum.dir.down] = arg_2_0.bottomWordContentGO
-	arg_2_0._dirWordObjMap[DungeonMazeEnum.dir.up] = arg_2_0.topWordContentGO
-	arg_2_0._dirWordEffectObjMap = arg_2_0:getUserDataTb_()
-	arg_2_0._dirWordEffectObjMap[DungeonMazeEnum.dir.left] = arg_2_0.leftWordEffect
-	arg_2_0._dirWordEffectObjMap[DungeonMazeEnum.dir.right] = arg_2_0.rightWordEffect
-	arg_2_0._dirWordEffectObjMap[DungeonMazeEnum.dir.down] = arg_2_0.bottomWordEffect
-	arg_2_0._dirWordEffectObjMap[DungeonMazeEnum.dir.up] = arg_2_0.topWordEffect
-	arg_2_0._showEffectDirs = {}
+	self._dirDialogRootMap = self:getUserDataTb_()
+	self._dirDialogRootMap[DungeonMazeEnum.dir.left] = self._leftWordRoot
+	self._dirDialogRootMap[DungeonMazeEnum.dir.right] = self._rightWordRoot
+	self._dirDialogRootMap[DungeonMazeEnum.dir.down] = self._bottomWordRoot
+	self._dirDialogRootMap[DungeonMazeEnum.dir.up] = self._topWordRoot
+	self._dirWordObjMap = self:getUserDataTb_()
+	self._dirWordObjMap[DungeonMazeEnum.dir.left] = self.leftWordContentGO
+	self._dirWordObjMap[DungeonMazeEnum.dir.right] = self.rightWordContentGO
+	self._dirWordObjMap[DungeonMazeEnum.dir.down] = self.bottomWordContentGO
+	self._dirWordObjMap[DungeonMazeEnum.dir.up] = self.topWordContentGO
+	self._dirWordEffectObjMap = self:getUserDataTb_()
+	self._dirWordEffectObjMap[DungeonMazeEnum.dir.left] = self.leftWordEffect
+	self._dirWordEffectObjMap[DungeonMazeEnum.dir.right] = self.rightWordEffect
+	self._dirWordEffectObjMap[DungeonMazeEnum.dir.down] = self.bottomWordEffect
+	self._dirWordEffectObjMap[DungeonMazeEnum.dir.up] = self.topWordEffect
+	self._showEffectDirs = {}
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addEventCb(DungeonMazeController.instance, DungeonMazeEvent.ShowMazeObstacleDialog, arg_3_0.showWordEffect, arg_3_0)
+function DungeonMazeWordEffectView:addEvents()
+	self:addEventCb(DungeonMazeController.instance, DungeonMazeEvent.ShowMazeObstacleDialog, self.showWordEffect, self)
 end
 
-function var_0_0.showWordEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._showEffectDirs = arg_4_0._showEffectDirs or {}
-	arg_4_0._showEffectDone = arg_4_0._showEffectDone and arg_4_0._showEffectDone or {}
-	arg_4_0._showEffectDirs[arg_4_1] = arg_4_2
-	arg_4_0._showEffectDone[arg_4_1] = arg_4_3
+function DungeonMazeWordEffectView:showWordEffect(dir, showDialog, done)
+	self._showEffectDirs = self._showEffectDirs or {}
+	self._showEffectDone = self._showEffectDone and self._showEffectDone or {}
+	self._showEffectDirs[dir] = showDialog
+	self._showEffectDone[dir] = done
 
-	arg_4_0:_refreshWordEffect()
+	self:_refreshWordEffect()
 end
 
-function var_0_0._refreshWordEffect(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(DungeonMazeEnum.dir) do
-		gohelper.setActive(arg_5_0._dirDialogRootMap[iter_5_1], arg_5_0._showEffectDirs[iter_5_1])
+function DungeonMazeWordEffectView:_refreshWordEffect()
+	for _, dir in pairs(DungeonMazeEnum.dir) do
+		gohelper.setActive(self._dirDialogRootMap[dir], self._showEffectDirs[dir])
 
-		if not string.nilorempty(arg_5_0._showEffectDirs[iter_5_1]) then
-			if arg_5_0._wordEffectGo then
-				gohelper.destroy(arg_5_0._wordEffectGo)
+		if not string.nilorempty(self._showEffectDirs[dir]) then
+			if self._wordEffectGo then
+				gohelper.destroy(self._wordEffectGo)
 
-				arg_5_0._wordEffectGo = nil
+				self._wordEffectGo = nil
 			end
 
-			local var_5_0 = arg_5_0._dirWordObjMap[iter_5_1]
-			local var_5_1 = arg_5_0._dirWordEffectObjMap[iter_5_1]
+			local contentGo = self._dirWordObjMap[dir]
+			local wordEffectGo = self._dirWordEffectObjMap[dir]
 
-			arg_5_0._wordEffectGo = gohelper.cloneInPlace(var_5_0)
+			self._wordEffectGo = gohelper.cloneInPlace(contentGo)
 
-			gohelper.setActive(arg_5_0._wordEffectGo, true)
+			gohelper.setActive(self._wordEffectGo, true)
 
-			local var_5_2 = {
+			local wordParams = {
 				tpye = 1,
-				desc = arg_5_0._showEffectDirs[iter_5_1]
+				desc = self._showEffectDirs[dir]
 			}
-			local var_5_3 = var_0_1[1]
-			local var_5_4 = string.splitToNumber(var_5_3.pos, "#")
+			local wordEffectCofig = wordParams
+			local wordEffectPosConfig = testWordPosCfg[1]
+			local pos = string.splitToNumber(wordEffectPosConfig.pos, "#")
 
-			recthelper.setAnchor(arg_5_0._wordEffectGo.transform, var_5_4[1], var_5_4[2])
-			MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._wordEffectGo, DungeonMazeWordEffectComp, {
-				dir = iter_5_1,
-				parent = arg_5_0,
-				co = var_5_2,
-				res = var_5_1,
-				done = arg_5_0._showEffectDone[iter_5_1]
+			recthelper.setAnchor(self._wordEffectGo.transform, pos[1], pos[2])
+			MonoHelper.addNoUpdateLuaComOnceToGo(self._wordEffectGo, DungeonMazeWordEffectComp, {
+				dir = dir,
+				parent = self,
+				co = wordEffectCofig,
+				res = wordEffectGo,
+				done = self._showEffectDone[dir]
 			})
 		else
-			local var_5_5 = arg_5_0._dirWordObjMap[iter_5_1]
-			local var_5_6 = arg_5_0._dirWordEffectObjMap[iter_5_1]
+			local contentGo = self._dirWordObjMap[dir]
+			local wordEffectGo = self._dirWordEffectObjMap[dir]
 
-			gohelper.setActive(var_5_5, false)
-			gohelper.setActive(var_5_6, false)
+			gohelper.setActive(contentGo, false)
+			gohelper.setActive(wordEffectGo, false)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_6_0)
+function DungeonMazeWordEffectView:onClose()
 	return
 end
 
-return var_0_0
+return DungeonMazeWordEffectView

@@ -1,570 +1,575 @@
-﻿module("modules.logic.settings.view.SettingsRoleVoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsRoleVoiceView.lua
 
-local var_0_0 = class("SettingsRoleVoiceView", BaseView)
+module("modules.logic.settings.view.SettingsRoleVoiceView", package.seeall)
 
-function var_0_0._refreshVoiceItemList(arg_1_0)
-	local var_1_0 = GameConfig:GetDefaultVoiceShortcut()
-	local var_1_1 = arg_1_0:_getVoiceItemList()
+local SettingsRoleVoiceView = class("SettingsRoleVoiceView", BaseView)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2
+function SettingsRoleVoiceView:_refreshVoiceItemList()
+	local defaultLang = GameConfig:GetDefaultVoiceShortcut()
+	local dataList = self:_getVoiceItemList()
 
-		if iter_1_0 > #arg_1_0._voiceItemObjList then
-			var_1_2 = arg_1_0:_create_SettingsRoleVoiceViewLangBtn(iter_1_0)
+	for i, data in ipairs(dataList) do
+		local item
 
-			table.insert(arg_1_0._voiceItemObjList, var_1_2)
+		if i > #self._voiceItemObjList then
+			item = self:_create_SettingsRoleVoiceViewLangBtn(i)
+
+			table.insert(self._voiceItemObjList, item)
 		else
-			var_1_2 = arg_1_0._voiceItemObjList[iter_1_0]
+			item = self._voiceItemObjList[i]
 		end
 
-		var_1_2:onUpdateMO(iter_1_1)
-		var_1_2:setActive(true)
-		var_1_2:setSelected(var_1_0 == iter_1_1.lang)
+		item:onUpdateMO(data)
+		item:setActive(true)
+		item:setSelected(defaultLang == data.lang)
 	end
 
-	for iter_1_2 = #var_1_1 + 1, #arg_1_0._voiceItemObjList do
-		arg_1_0._voiceItemObjList[iter_1_2]:setActive(false)
+	for i = #dataList + 1, #self._voiceItemObjList do
+		local item = self._voiceItemObjList[i]
+
+		item:setActive(false)
 	end
 end
 
-function var_0_0._getVoiceItemList(arg_2_0)
-	if not arg_2_0._tmpVoiceItemList then
-		arg_2_0._tmpVoiceItemList = arg_2_0:_voiceItemList()
+function SettingsRoleVoiceView:_getVoiceItemList()
+	if not self._tmpVoiceItemList then
+		self._tmpVoiceItemList = self:_voiceItemList()
 	end
 
-	return arg_2_0._tmpVoiceItemList
+	return self._tmpVoiceItemList
 end
 
-function var_0_0._voiceItemList(arg_3_0)
-	if not arg_3_0.viewParam then
-		return arg_3_0:_getVoiceItemDataList()
+function SettingsRoleVoiceView:_voiceItemList()
+	if not self.viewParam then
+		return self:_getVoiceItemDataList()
 	end
 
-	return arg_3_0.viewParam.voiceItemList or arg_3_0:_getVoiceItemDataList()
+	return self.viewParam.voiceItemList or self:_getVoiceItemDataList()
 end
 
-function var_0_0._getVoiceItemDataList(arg_4_0)
-	local var_4_0 = {}
-	local var_4_1 = SettingsVoicePackageModel.instance:getSupportVoiceLangs()
+function SettingsRoleVoiceView:_getVoiceItemDataList()
+	local list = {}
+	local supportLangList = SettingsVoicePackageModel.instance:getSupportVoiceLangs()
 
-	for iter_4_0 = 1, #var_4_1 do
-		local var_4_2 = var_4_1[iter_4_0]
-		local var_4_3 = SettingsVoicePackageModel.instance:getPackInfo(var_4_2)
-		local var_4_4 = var_4_3 and not var_4_3:needDownload() or false
+	for i = 1, #supportLangList do
+		local shortcutLangStr = supportLangList[i]
+		local packInfo = SettingsVoicePackageModel.instance:getPackInfo(shortcutLangStr)
+		local available = packInfo and not packInfo:needDownload() or false
 
-		table.insert(var_4_0, {
-			lang = var_4_2,
-			langId = LangSettings.shortCut2LangIdxTab[var_4_2],
-			available = var_4_4
+		table.insert(list, {
+			lang = shortcutLangStr,
+			langId = LangSettings.shortCut2LangIdxTab[shortcutLangStr],
+			available = available
 		})
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0._create_SettingsRoleVoiceViewLangBtn(arg_5_0)
-	local var_5_0 = SettingsRoleVoiceViewLangBtn
-	local var_5_1 = gohelper.cloneInPlace(arg_5_0._golangoverseas, var_5_0.__cname)
+function SettingsRoleVoiceView:_create_SettingsRoleVoiceViewLangBtn()
+	local itemClass = SettingsRoleVoiceViewLangBtn
+	local go = gohelper.cloneInPlace(self._golangoverseas, itemClass.__cname)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, var_5_0, {
-		parent = arg_5_0,
-		baseViewContainer = arg_5_0.viewContainer
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass, {
+		parent = self,
+		baseViewContainer = self.viewContainer
 	})
 end
 
-function var_0_0.setcurSelectLang(arg_6_0, arg_6_1)
-	arg_6_0._curSelectLang = arg_6_1 or 0
+function SettingsRoleVoiceView:setcurSelectLang(langId)
+	self._curSelectLang = langId or 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._voiceItemObjList or {}) do
-		iter_6_1:refreshSelected(arg_6_1)
+	for _, item in ipairs(self._voiceItemObjList or {}) do
+		item:refreshSelected(langId)
 	end
 end
 
-function var_0_0._refreshLangOptionSelectState_overseas(arg_7_0, arg_7_1, arg_7_2)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._voiceItemObjList or {}) do
-		iter_7_1:refreshLangOptionSelectState(arg_7_1, arg_7_2)
+function SettingsRoleVoiceView:_refreshLangOptionSelectState_overseas(langId, active)
+	for _, item in ipairs(self._voiceItemObjList or {}) do
+		item:refreshLangOptionSelectState(langId, active)
 	end
 end
 
-function var_0_0._refreshLangMode_overseas(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._voiceItemObjList or {}) do
-		local var_8_0 = arg_8_0._selectedCharMos[1].heroId
-		local var_8_1 = SettingsRoleVoiceModel.instance:isHeroSp01(var_8_0)
-		local var_8_2 = true
+function SettingsRoleVoiceView:_refreshLangMode_overseas(langId)
+	for _, item in ipairs(self._voiceItemObjList or {}) do
+		local heroId = self._selectedCharMos[1].heroId
+		local isIn = SettingsRoleVoiceModel.instance:isHeroSp01(heroId)
+		local active = true
 
-		if not var_8_1 and LangSettings.instance:isOverseas() == false and (iter_8_1:getLangId() == LangSettings.jp or iter_8_1:getLangId() == LangSettings.kr) then
-			var_8_2 = false
+		if not isIn and LangSettings.instance:isOverseas() == false and (item:getLangId() == LangSettings.jp or item:getLangId() == LangSettings.kr) then
+			active = false
 		end
 
-		iter_8_1:refreshLangMode(arg_8_1, var_8_2)
+		item:refreshLangMode(langId, active)
 	end
 end
 
-function var_0_0.afterSelectedNewLang(arg_9_0)
-	if not arg_9_0._batchEditMode then
-		local var_9_0 = SettingsModel.instance:getVoiceValue()
+function SettingsRoleVoiceView:afterSelectedNewLang()
+	if not self._batchEditMode then
+		local voiceValue = SettingsModel.instance:getVoiceValue()
 
-		arg_9_0:_refreshLangOptionSelectState(arg_9_0._curSelectLang, var_9_0 == 0)
-		arg_9_0:_playGreetingVoice()
+		self:_refreshLangOptionSelectState(self._curSelectLang, voiceValue == 0)
+		self:_playGreetingVoice()
 	else
-		arg_9_0:_refreshLangOptionSelectState(arg_9_0._curSelectLang, true)
+		self:_refreshLangOptionSelectState(self._curSelectLang, true)
 	end
 end
 
-function var_0_0.onInitView(arg_10_0)
-	arg_10_0._golangoverseas = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang_overseas")
-	arg_10_0._voiceItemObjList = {}
+function SettingsRoleVoiceView:onInitView()
+	self._golangoverseas = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang_overseas")
+	self._voiceItemObjList = {}
 
-	arg_10_0:_refreshVoiceItemList()
+	self:_refreshVoiceItemList()
 
-	arg_10_0._gocharacterinfo = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo")
-	arg_10_0._goops = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_ops")
-	arg_10_0._gononecharacter = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_nonecharacter")
-	arg_10_0._langInfoAnimator = gohelper.onceAddComponent(arg_10_0._gocharacterinfo, gohelper.Type_Animator)
-	arg_10_0._selectCharInfoAnimator = gohelper.onceAddComponent(arg_10_0._gononecharacter, gohelper.Type_Animator)
-	arg_10_0._btnbatchedit = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_batchedit")
-	arg_10_0._btnselectall = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall")
-	arg_10_0._gobatcheditUnSelected = gohelper.findChild(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_batchedit/btn1")
-	arg_10_0._gobatcheditSelected = gohelper.findChild(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_batchedit/btn2")
-	arg_10_0._goselectAllBtn = gohelper.findChild(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall")
-	arg_10_0._goselectAllUnSelected = gohelper.findChild(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall/btn1")
-	arg_10_0._goselectAllSelected = gohelper.findChild(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall/btn2")
-	arg_10_0._btnCN = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/click")
-	arg_10_0._btnEN = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/click")
-	arg_10_0._goCNUnSelected = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/unselected")
-	arg_10_0._goCNSelected = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/selected")
-	arg_10_0._goCNSelectPoint = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/selected/point")
-	arg_10_0._goENUnSelected = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/unselected")
-	arg_10_0._goENSelected = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/selected")
-	arg_10_0._goENSelectPoint = gohelper.findChild(arg_10_0.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/selected/point")
-	arg_10_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "characterinfo/#go_ops/#btn_confirm")
-	arg_10_0._btncancel = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "characterinfo/#go_ops/#btn_cancel")
-	arg_10_0._txtchoose = gohelper.findChildText(arg_10_0.viewGO, "characterinfo/#go_characterinfo/#txt_choose")
+	self._gocharacterinfo = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo")
+	self._goops = gohelper.findChild(self.viewGO, "characterinfo/#go_ops")
+	self._gononecharacter = gohelper.findChild(self.viewGO, "characterinfo/#go_nonecharacter")
+	self._langInfoAnimator = gohelper.onceAddComponent(self._gocharacterinfo, gohelper.Type_Animator)
+	self._selectCharInfoAnimator = gohelper.onceAddComponent(self._gononecharacter, gohelper.Type_Animator)
+	self._btnbatchedit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_batchedit")
+	self._btnselectall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall")
+	self._gobatcheditUnSelected = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_batchedit/btn1")
+	self._gobatcheditSelected = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_batchedit/btn2")
+	self._goselectAllBtn = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall")
+	self._goselectAllUnSelected = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall/btn1")
+	self._goselectAllSelected = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_selectall/btn2")
+	self._btnCN = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/click")
+	self._btnEN = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/click")
+	self._goCNUnSelected = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/unselected")
+	self._goCNSelected = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/selected")
+	self._goCNSelectPoint = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang2/selected/point")
+	self._goENUnSelected = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/unselected")
+	self._goENSelected = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/selected")
+	self._goENSelectPoint = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/LangContainer/#go_lang1/selected/point")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_ops/#btn_confirm")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_ops/#btn_cancel")
+	self._txtchoose = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/#txt_choose")
 
-	if arg_10_0._editableInitView then
-		arg_10_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_11_0)
-	arg_11_0._btnbatchedit:AddClickListener(arg_11_0._btnbatcheditOnClick, arg_11_0)
-	arg_11_0._btnselectall:AddClickListener(arg_11_0._btnselectallOnClick, arg_11_0)
-	arg_11_0._btnconfirm:AddClickListener(arg_11_0._btnconfirmOnClick, arg_11_0)
-	arg_11_0._btncancel:AddClickListener(arg_11_0._btncancelOnClick, arg_11_0)
-	arg_11_0._btnCN:AddClickListener(arg_11_0._btnCNOnClick, arg_11_0)
-	arg_11_0._btnEN:AddClickListener(arg_11_0._btnENOnClick, arg_11_0)
+function SettingsRoleVoiceView:addEvents()
+	self._btnbatchedit:AddClickListener(self._btnbatcheditOnClick, self)
+	self._btnselectall:AddClickListener(self._btnselectallOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnCN:AddClickListener(self._btnCNOnClick, self)
+	self._btnEN:AddClickListener(self._btnENOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_12_0)
-	arg_12_0._btnbatchedit:RemoveClickListener()
-	arg_12_0._btnselectall:RemoveClickListener()
-	arg_12_0._btnconfirm:RemoveClickListener()
-	arg_12_0._btncancel:RemoveClickListener()
-	arg_12_0._btnCN:RemoveClickListener()
-	arg_12_0._btnEN:RemoveClickListener()
+function SettingsRoleVoiceView:removeEvents()
+	self._btnbatchedit:RemoveClickListener()
+	self._btnselectall:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnCN:RemoveClickListener()
+	self._btnEN:RemoveClickListener()
 end
 
-function var_0_0._btnbatcheditOnClick(arg_13_0)
-	arg_13_0._batchEditMode = not arg_13_0._batchEditMode
+function SettingsRoleVoiceView:_btnbatcheditOnClick()
+	self._batchEditMode = not self._batchEditMode
 
-	gohelper.setActive(arg_13_0._gobatcheditUnSelected, not arg_13_0._batchEditMode)
-	gohelper.setActive(arg_13_0._gobatcheditSelected, arg_13_0._batchEditMode)
-	gohelper.setActive(arg_13_0._goselectAllBtn, arg_13_0._batchEditMode)
+	gohelper.setActive(self._gobatcheditUnSelected, not self._batchEditMode)
+	gohelper.setActive(self._gobatcheditSelected, self._batchEditMode)
+	gohelper.setActive(self._goselectAllBtn, self._batchEditMode)
 
-	if not arg_13_0._batchEditMode then
-		arg_13_0._selectAll = false
+	if not self._batchEditMode then
+		self._selectAll = false
 
-		arg_13_0:_refreshAllBtnState()
+		self:_refreshAllBtnState()
 	end
 
-	arg_13_0.viewContainer:clearSelectedItems()
+	self.viewContainer:clearSelectedItems()
 
-	if not arg_13_0._voiceEnd then
-		arg_13_0:_stopVoice()
+	if not self._voiceEnd then
+		self:_stopVoice()
 	end
 
-	arg_13_0:_onSelectedChar(false, false)
-	arg_13_0.viewContainer:setBatchEditMode(arg_13_0._batchEditMode)
+	self:_onSelectedChar(false, false)
+	self.viewContainer:setBatchEditMode(self._batchEditMode)
 end
 
-function var_0_0._btnselectallOnClick(arg_14_0)
-	arg_14_0._selectAll = not arg_14_0._selectAll
+function SettingsRoleVoiceView:_btnselectallOnClick()
+	self._selectAll = not self._selectAll
 
-	if arg_14_0._selectAll then
-		arg_14_0.viewContainer:selectedAllItems()
+	if self._selectAll then
+		self.viewContainer:selectedAllItems()
 
-		local var_14_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+		local allItemMos = CharacterBackpackCardListModel.instance:getCharacterCardList()
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-			arg_14_0._selectedCharMos[#arg_14_0._selectedCharMos + 1] = iter_14_1
+		for idx, mo in ipairs(allItemMos) do
+			self._selectedCharMos[#self._selectedCharMos + 1] = mo
 		end
 
-		arg_14_0:_refreshOptionView(#arg_14_0._selectedCharMos > 0)
+		self:_refreshOptionView(#self._selectedCharMos > 0)
 	else
-		arg_14_0.viewContainer:clearSelectedItems()
-		arg_14_0:_onSelectedChar(false, false)
+		self.viewContainer:clearSelectedItems()
+		self:_onSelectedChar(false, false)
 	end
 
-	arg_14_0:_refreshAllBtnState()
+	self:_refreshAllBtnState()
 end
 
-function var_0_0._btnCNOnClick(arg_15_0)
-	if arg_15_0._curSelectLang == LangSettings.zh then
+function SettingsRoleVoiceView:_btnCNOnClick()
+	if self._curSelectLang == LangSettings.zh then
 		return
 	end
 
-	local var_15_0 = LangSettings.shortcutTab[LangSettings.zh]
-	local var_15_1 = SettingsVoicePackageModel.instance:getPackInfo(var_15_0)
+	local curSelectLangStr = LangSettings.shortcutTab[LangSettings.zh]
+	local packInfo = SettingsVoicePackageModel.instance:getPackInfo(curSelectLangStr)
 
-	if var_15_1 and var_15_1:needDownload() then
+	if packInfo and packInfo:needDownload() then
 		GameFacade.showToast(ToastEnum.CharVoiceLangLost)
 
 		return
 	end
 
-	arg_15_0._curSelectLang = LangSettings.zh
+	self._curSelectLang = LangSettings.zh
 
-	arg_15_0:_refreshLangMode(arg_15_0._curSelectLang)
+	self:_refreshLangMode(self._curSelectLang)
 
-	if not arg_15_0._batchEditMode then
-		local var_15_2 = SettingsModel.instance:getVoiceValue()
+	if not self._batchEditMode then
+		local voiceValue = SettingsModel.instance:getVoiceValue()
 
-		arg_15_0:_refreshLangOptionSelectState(arg_15_0._curSelectLang, var_15_2 == 0)
-		arg_15_0:_playGreetingVoice()
+		self:_refreshLangOptionSelectState(self._curSelectLang, voiceValue == 0)
+		self:_playGreetingVoice()
 	else
-		arg_15_0:_refreshLangOptionSelectState(arg_15_0._curSelectLang, true)
+		self:_refreshLangOptionSelectState(self._curSelectLang, true)
 	end
 end
 
-function var_0_0._btnENOnClick(arg_16_0)
-	if arg_16_0._curSelectLang == LangSettings.en then
+function SettingsRoleVoiceView:_btnENOnClick()
+	if self._curSelectLang == LangSettings.en then
 		return
 	end
 
-	local var_16_0 = LangSettings.shortcutTab[LangSettings.en]
-	local var_16_1 = SettingsVoicePackageModel.instance:getPackInfo(var_16_0)
+	local curSelectLangStr = LangSettings.shortcutTab[LangSettings.en]
+	local packInfo = SettingsVoicePackageModel.instance:getPackInfo(curSelectLangStr)
 
-	if var_16_1 and var_16_1:needDownload() then
+	if packInfo and packInfo:needDownload() then
 		GameFacade.showToast(ToastEnum.CharVoiceLangLost)
 
 		return
 	end
 
-	arg_16_0._curSelectLang = LangSettings.en
+	self._curSelectLang = LangSettings.en
 
-	arg_16_0:_refreshLangMode(arg_16_0._curSelectLang)
+	self:_refreshLangMode(self._curSelectLang)
 
-	if not arg_16_0._batchEditMode then
-		local var_16_2 = SettingsModel.instance:getVoiceValue()
+	if not self._batchEditMode then
+		local voiceValue = SettingsModel.instance:getVoiceValue()
 
-		arg_16_0:_refreshLangOptionSelectState(arg_16_0._curSelectLang, var_16_2 == 0)
-		arg_16_0:_playGreetingVoice()
+		self:_refreshLangOptionSelectState(self._curSelectLang, voiceValue == 0)
+		self:_playGreetingVoice()
 	else
-		arg_16_0:_refreshLangOptionSelectState(arg_16_0._curSelectLang, true)
+		self:_refreshLangOptionSelectState(self._curSelectLang, true)
 	end
 end
 
-function var_0_0._btnconfirmOnClick(arg_17_0)
-	local var_17_0 = false
+function SettingsRoleVoiceView:_btnconfirmOnClick()
+	local hasChanged = false
 
-	if arg_17_0._curSelectLang == 0 then
-		var_17_0 = false
+	if self._curSelectLang == 0 then
+		hasChanged = false
 	else
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._selectedCharMos) do
-			local var_17_1 = iter_17_1.heroId
-			local var_17_2, var_17_3 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_17_1)
+		for _, charMo in ipairs(self._selectedCharMos) do
+			local heroId = charMo.heroId
+			local langId, langStr = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
 
-			if arg_17_0._curSelectLang ~= var_17_2 then
-				var_17_0 = true
+			if self._curSelectLang ~= langId then
+				hasChanged = true
 
 				break
 			end
 		end
 	end
 
-	if var_17_0 then
-		SettingsRoleVoiceController.instance:setCharVoiceLangPrefValue(arg_17_0._selectedCharMos, arg_17_0._curSelectLang)
+	if hasChanged then
+		SettingsRoleVoiceController.instance:setCharVoiceLangPrefValue(self._selectedCharMos, self._curSelectLang)
 	end
 
-	arg_17_0.viewContainer:clearSelectedItems()
-	arg_17_0:_onSelectedChar(false, false)
+	self.viewContainer:clearSelectedItems()
+	self:_onSelectedChar(false, false)
 end
 
-function var_0_0._btncancelOnClick(arg_18_0)
-	arg_18_0.viewContainer:clearSelectedItems()
-	arg_18_0:_onSelectedChar(false, false)
+function SettingsRoleVoiceView:_btncancelOnClick()
+	self.viewContainer:clearSelectedItems()
+	self:_onSelectedChar(false, false)
 end
 
-function var_0_0._editableInitView(arg_19_0)
-	arg_19_0._voiceEnd = true
-	arg_19_0._imgBg = gohelper.findChildSingleImage(arg_19_0.viewGO, "bg/bgimg")
-	arg_19_0._simageredlight = gohelper.findChildSingleImage(arg_19_0.viewGO, "bg/#simage_redlight")
+function SettingsRoleVoiceView:_editableInitView()
+	self._voiceEnd = true
+	self._imgBg = gohelper.findChildSingleImage(self.viewGO, "bg/bgimg")
+	self._simageredlight = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_redlight")
 
-	arg_19_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
-	arg_19_0._simageredlight:LoadImage(ResUrl.getHeroGroupBg("guang_027"))
-	gohelper.setActive(arg_19_0._gocharacterinfo, false)
+	self._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
+	self._simageredlight:LoadImage(ResUrl.getHeroGroupBg("guang_027"))
+	gohelper.setActive(self._gocharacterinfo, false)
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:addEventCb(SettingsRoleVoiceController.instance, SettingsEvent.OnSetVoiceRoleSelected, arg_20_0._onSelectedChar, arg_20_0)
-	arg_20_0:addEventCb(SettingsRoleVoiceController.instance, SettingsEvent.OnSetVoiceRoleFiltered, arg_20_0._onCharFiltered, arg_20_0)
-	arg_20_0:_refreshOptionView(false)
-	arg_20_0:_refreshBtnStateView(false, false)
-	arg_20_0:_refreshLangOptionDownloadState(LangSettings.zh, arg_20_0._goCNUnSelected)
-	arg_20_0:_refreshLangOptionDownloadState(LangSettings.en, arg_20_0._goENUnSelected)
+function SettingsRoleVoiceView:onOpen()
+	self:addEventCb(SettingsRoleVoiceController.instance, SettingsEvent.OnSetVoiceRoleSelected, self._onSelectedChar, self)
+	self:addEventCb(SettingsRoleVoiceController.instance, SettingsEvent.OnSetVoiceRoleFiltered, self._onCharFiltered, self)
+	self:_refreshOptionView(false)
+	self:_refreshBtnStateView(false, false)
+	self:_refreshLangOptionDownloadState(LangSettings.zh, self._goCNUnSelected)
+	self:_refreshLangOptionDownloadState(LangSettings.en, self._goENUnSelected)
 end
 
-function var_0_0.onClose(arg_21_0)
-	GameUtil.onDestroyViewMemberList(arg_21_0, "_voiceItemObjList")
+function SettingsRoleVoiceView:onClose()
+	GameUtil.onDestroyViewMemberList(self, "_voiceItemObjList")
 
-	if not arg_21_0._voiceEnd then
-		arg_21_0:_stopVoice()
+	if not self._voiceEnd then
+		self:_stopVoice()
 	end
 
-	TaskDispatcher.cancelTask(arg_21_0._playVoice, arg_21_0)
+	TaskDispatcher.cancelTask(self._playVoice, self)
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function SettingsRoleVoiceView:onDestroyView()
 	return
 end
 
-function var_0_0._onSelectedChar(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_0._selectAll and not arg_23_2 then
-		arg_23_0._selectAll = false
+function SettingsRoleVoiceView:_onSelectedChar(charMo, selected)
+	if self._selectAll and not selected then
+		self._selectAll = false
 
-		arg_23_0:_refreshAllBtnState()
+		self:_refreshAllBtnState()
 	end
 
-	if arg_23_0._batchEditMode then
-		if not arg_23_1 then
-			arg_23_0._selectedCharMos = {}
+	if self._batchEditMode then
+		if not charMo then
+			self._selectedCharMos = {}
 
-			arg_23_0:setcurSelectLang(0)
-		elseif arg_23_2 then
-			arg_23_0._selectedCharMos = arg_23_0._selectedCharMos or {}
+			self:setcurSelectLang(0)
+		elseif selected then
+			self._selectedCharMos = self._selectedCharMos or {}
 
-			if #arg_23_0._selectedCharMos == 0 then
-				arg_23_0:setcurSelectLang(0)
+			if #self._selectedCharMos == 0 then
+				self:setcurSelectLang(0)
 			end
 
-			arg_23_0._selectedCharMos[#arg_23_0._selectedCharMos + 1] = arg_23_1
+			self._selectedCharMos[#self._selectedCharMos + 1] = charMo
 		else
-			tabletool.removeValue(arg_23_0._selectedCharMos, arg_23_1)
+			tabletool.removeValue(self._selectedCharMos, charMo)
 		end
 	else
-		arg_23_0._selectedCharMos = arg_23_2 and {
-			arg_23_1
+		self._selectedCharMos = selected and {
+			charMo
 		} or {}
 
-		if not arg_23_2 and not arg_23_0._voiceEnd then
-			arg_23_0:_stopVoice()
+		if not selected and not self._voiceEnd then
+			self:_stopVoice()
 		end
 	end
 
-	arg_23_0:_refreshOptionView(#arg_23_0._selectedCharMos > 0)
+	self:_refreshOptionView(#self._selectedCharMos > 0)
 end
 
-function var_0_0._onCharFiltered(arg_24_0)
-	if not arg_24_0._voiceEnd then
-		arg_24_0:_stopVoice()
+function SettingsRoleVoiceView:_onCharFiltered()
+	if not self._voiceEnd then
+		self:_stopVoice()
 	end
 
-	arg_24_0.viewContainer:clearSelectedItems()
-	arg_24_0:_onSelectedChar(false, false)
+	self.viewContainer:clearSelectedItems()
+	self:_onSelectedChar(false, false)
 end
 
-function var_0_0._refreshOptionView(arg_25_0, arg_25_1)
-	if arg_25_1 then
-		gohelper.setActive(arg_25_0._gocharacterinfo, true)
+function SettingsRoleVoiceView:_refreshOptionView(selected)
+	if selected then
+		gohelper.setActive(self._gocharacterinfo, true)
 	end
 
-	arg_25_0._langInfoAnimator:Play(arg_25_1 and UIAnimationName.Open or UIAnimationName.Close)
-	arg_25_0._selectCharInfoAnimator:Play(arg_25_1 and UIAnimationName.Close or UIAnimationName.Open)
-	gohelper.setActive(arg_25_0._goops, arg_25_1)
-	gohelper.setActive(arg_25_0._gononecharacter, not arg_25_1)
+	self._langInfoAnimator:Play(selected and UIAnimationName.Open or UIAnimationName.Close)
+	self._selectCharInfoAnimator:Play(selected and UIAnimationName.Close or UIAnimationName.Open)
+	gohelper.setActive(self._goops, selected)
+	gohelper.setActive(self._gononecharacter, not selected)
 
-	if arg_25_0._batchEditMode then
-		arg_25_0._txtchoose.text = luaLang("p_herovoiceedityiew_selectcharlistlang")
+	if self._batchEditMode then
+		self._txtchoose.text = luaLang("p_herovoiceedityiew_selectcharlistlang")
 
-		arg_25_0:_refreshLangMode(arg_25_0._curSelectLang)
-	elseif arg_25_1 then
-		arg_25_0._curSelectLang = 0
+		self:_refreshLangMode(self._curSelectLang)
+	elseif selected then
+		self._curSelectLang = 0
 
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0._selectedCharMos) do
-			if #arg_25_0._selectedCharMos == 1 then
-				local var_25_0 = iter_25_1.heroId
-				local var_25_1, var_25_2 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_25_0)
+		for _, charMo in ipairs(self._selectedCharMos) do
+			if #self._selectedCharMos == 1 then
+				local heroId = charMo.heroId
+				local langId, langStr = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
 
-				arg_25_0._curSelectLang = var_25_1
+				self._curSelectLang = langId
 			end
 		end
 
-		arg_25_0:setcurSelectLang(arg_25_0._curSelectLang)
+		self:setcurSelectLang(self._curSelectLang)
 
-		local var_25_3 = arg_25_0._selectedCharMos[1]
+		local charMo = self._selectedCharMos[1]
 
-		arg_25_0._txtchoose.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_herovoiceeditview_selectcharlang"), {
-			var_25_3.config.name
+		self._txtchoose.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_herovoiceeditview_selectcharlang"), {
+			charMo.config.name
 		})
 
-		local var_25_4 = SettingsModel.instance:getVoiceValue()
+		local voiceValue = SettingsModel.instance:getVoiceValue()
 
-		arg_25_0:_refreshLangOptionSelectState(arg_25_0._curSelectLang, var_25_4 == 0)
-		arg_25_0:_playGreetingVoice()
-		arg_25_0:_refreshLangMode(arg_25_0._curSelectLang)
+		self:_refreshLangOptionSelectState(self._curSelectLang, voiceValue == 0)
+		self:_playGreetingVoice()
+		self:_refreshLangMode(self._curSelectLang)
 	end
 end
 
-function var_0_0._refreshBtnStateView(arg_26_0, arg_26_1, arg_26_2)
-	gohelper.setActive(arg_26_0._gobatcheditUnSelected, not arg_26_1)
-	gohelper.setActive(arg_26_0._gobatcheditSelected, arg_26_1)
-	gohelper.setActive(arg_26_0._goselectAllBtn, arg_26_1)
-	gohelper.setActive(arg_26_0._goselectAllSelected, arg_26_2)
-	gohelper.setActive(arg_26_0._goselectAllUnSelected, not arg_26_2)
+function SettingsRoleVoiceView:_refreshBtnStateView(batchEdit, selectAll)
+	gohelper.setActive(self._gobatcheditUnSelected, not batchEdit)
+	gohelper.setActive(self._gobatcheditSelected, batchEdit)
+	gohelper.setActive(self._goselectAllBtn, batchEdit)
+	gohelper.setActive(self._goselectAllSelected, selectAll)
+	gohelper.setActive(self._goselectAllUnSelected, not selectAll)
 end
 
-function var_0_0._refreshLangMode(arg_27_0, arg_27_1)
-	do return arg_27_0:_refreshLangMode_overseas(arg_27_1) end
+function SettingsRoleVoiceView:_refreshLangMode(langId)
+	do return self:_refreshLangMode_overseas(langId) end
 
-	gohelper.setActive(arg_27_0._goCNUnSelected, arg_27_1 ~= LangSettings.zh)
-	gohelper.setActive(arg_27_0._goCNSelected, arg_27_1 == LangSettings.zh)
-	gohelper.setActive(arg_27_0._goENUnSelected, arg_27_1 ~= LangSettings.en)
-	gohelper.setActive(arg_27_0._goENSelected, arg_27_1 == LangSettings.en)
+	gohelper.setActive(self._goCNUnSelected, langId ~= LangSettings.zh)
+	gohelper.setActive(self._goCNSelected, langId == LangSettings.zh)
+	gohelper.setActive(self._goENUnSelected, langId ~= LangSettings.en)
+	gohelper.setActive(self._goENSelected, langId == LangSettings.en)
 end
 
-function var_0_0._refreshAllBtnState(arg_28_0)
-	gohelper.setActive(arg_28_0._goselectAllSelected, arg_28_0._selectAll)
-	gohelper.setActive(arg_28_0._goselectAllUnSelected, not arg_28_0._selectAll)
+function SettingsRoleVoiceView:_refreshAllBtnState()
+	gohelper.setActive(self._goselectAllSelected, self._selectAll)
+	gohelper.setActive(self._goselectAllUnSelected, not self._selectAll)
 end
 
-function var_0_0._refreshLangOptionSelectState(arg_29_0, arg_29_1, arg_29_2)
-	do return arg_29_0:_refreshLangOptionSelectState_overseas(arg_29_1, arg_29_2) end
+function SettingsRoleVoiceView:_refreshLangOptionSelectState(langId, active)
+	do return self:_refreshLangOptionSelectState_overseas(langId, active) end
 
-	if arg_29_1 == LangSettings.en then
-		gohelper.setActive(arg_29_0._goENSelectPoint, arg_29_2)
-	elseif arg_29_1 == LangSettings.zh then
-		gohelper.setActive(arg_29_0._goCNSelectPoint, arg_29_2)
+	if langId == LangSettings.en then
+		gohelper.setActive(self._goENSelectPoint, active)
+	elseif langId == LangSettings.zh then
+		gohelper.setActive(self._goCNSelectPoint, active)
 	end
 end
 
-function var_0_0._refreshLangOptionDownloadState(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = LangSettings.shortcutTab[arg_30_1]
-	local var_30_1 = SettingsVoicePackageModel.instance:getPackInfo(var_30_0)
+function SettingsRoleVoiceView:_refreshLangOptionDownloadState(langId, btnGo)
+	local curSelectLangStr = LangSettings.shortcutTab[langId]
+	local packInfo = SettingsVoicePackageModel.instance:getPackInfo(curSelectLangStr)
 
-	if var_30_1 and var_30_1:needDownload() then
-		local var_30_2 = gohelper.findChildText(arg_30_2, "info1")
-		local var_30_3 = gohelper.findChildImage(arg_30_2, "point")
+	if packInfo and packInfo:needDownload() then
+		local optionText = gohelper.findChildText(btnGo, "info1")
+		local optionPoint = gohelper.findChildImage(btnGo, "point")
 
-		var_30_2.alpha = 0.4
+		optionText.alpha = 0.4
 
-		local var_30_4 = var_30_3.color
+		local color = optionPoint.color
 
-		var_30_4.a = 0.4
-		var_30_3.color = var_30_4
+		color.a = 0.4
+		optionPoint.color = color
 	end
 end
 
-function var_0_0.isBatchEditMode(arg_31_0)
-	return arg_31_0._batchEditMode
+function SettingsRoleVoiceView:isBatchEditMode()
+	return self._batchEditMode
 end
 
-function var_0_0._playVoice(arg_32_0)
-	local var_32_0 = LangSettings.shortcutTab[arg_32_0._curSelectLang]
-	local var_32_1 = arg_32_0:_getVoiceEmitter()
+function SettingsRoleVoiceView:_playVoice()
+	local lang = LangSettings.shortcutTab[self._curSelectLang]
+	local emitter = self:_getVoiceEmitter()
 
-	if not arg_32_0._voiceEnd then
-		arg_32_0:_stopVoice()
+	if not self._voiceEnd then
+		self:_stopVoice()
 
-		arg_32_0._voiceEarlyStop = true
+		self._voiceEarlyStop = true
 
-		TaskDispatcher.runDelay(arg_32_0._playVoice, arg_32_0, 0.33)
+		TaskDispatcher.runDelay(self._playVoice, self, 0.33)
 	else
-		arg_32_0._voiceBnkName = AudioConfig.instance:getAudioCOById(arg_32_0._curVoiceCfg.audio).bankName
-		arg_32_0._voiceEnd = false
+		local audioCfg = AudioConfig.instance:getAudioCOById(self._curVoiceCfg.audio)
 
-		ZProj.AudioManager.Instance:LoadBank(arg_32_0._voiceBnkName, var_32_0)
-		var_32_1:Emitter(arg_32_0._curVoiceCfg.audio, var_32_0, arg_32_0._onEmitterCallback, arg_32_0)
-		ZProj.AudioManager.Instance:UnloadBank(arg_32_0._voiceBnkName)
+		self._voiceBnkName = audioCfg.bankName
+		self._voiceEnd = false
+
+		ZProj.AudioManager.Instance:LoadBank(self._voiceBnkName, lang)
+		emitter:Emitter(self._curVoiceCfg.audio, lang, self._onEmitterCallback, self)
+		ZProj.AudioManager.Instance:UnloadBank(self._voiceBnkName)
 	end
 end
 
-function var_0_0._playGreetingVoice(arg_33_0)
-	if arg_33_0._selectedCharMos and #arg_33_0._selectedCharMos == 1 then
-		local var_33_0 = CharacterDataConfig.instance:getCharacterVoicesCo(arg_33_0._selectedCharMos[1].heroId)
-		local var_33_1 = arg_33_0._selectedCharMos[1].skin
-		local var_33_2
-		local var_33_3
+function SettingsRoleVoiceView:_playGreetingVoice()
+	if self._selectedCharMos and #self._selectedCharMos == 1 then
+		local voiceCfgs = CharacterDataConfig.instance:getCharacterVoicesCo(self._selectedCharMos[1].heroId)
+		local charSkinId = self._selectedCharMos[1].skin
+		local greetingVoiceCfg, noSkinIdVoiceCfg
 
-		for iter_33_0, iter_33_1 in pairs(var_33_0) do
-			if iter_33_1.type == CharacterEnum.VoiceType.Greeting then
-				local var_33_4 = iter_33_1.skins
+		for _, cfg in pairs(voiceCfgs) do
+			if cfg.type == CharacterEnum.VoiceType.Greeting then
+				local skins = cfg.skins
 
-				if not var_33_4 or string.nilorempty(var_33_4) then
-					var_33_3 = iter_33_1
+				if not skins or string.nilorempty(skins) then
+					noSkinIdVoiceCfg = cfg
 				else
-					local var_33_5 = string.splitToNumber(var_33_4, "#")
+					local skinList = string.splitToNumber(skins, "#")
 
-					for iter_33_2, iter_33_3 in ipairs(var_33_5) do
-						if iter_33_3 == var_33_1 then
-							var_33_2 = iter_33_1
+					for _, skinId in ipairs(skinList) do
+						if skinId == charSkinId then
+							greetingVoiceCfg = cfg
 
 							break
 						end
 					end
 				end
 
-				if var_33_2 then
+				if greetingVoiceCfg then
 					break
 				end
 			end
 		end
 
-		arg_33_0._curVoiceCfg = var_33_2 and var_33_2 or var_33_3
+		self._curVoiceCfg = greetingVoiceCfg and greetingVoiceCfg or noSkinIdVoiceCfg
 
-		arg_33_0:_playVoice()
+		self:_playVoice()
 	end
 end
 
-function var_0_0._stopVoice(arg_34_0)
+function SettingsRoleVoiceView:_stopVoice()
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_Hero_Voc_Bus)
 
-	arg_34_0._voiceEnd = true
+	self._voiceEnd = true
 
-	arg_34_0:_unloadBnk()
+	self:_unloadBnk()
 end
 
-function var_0_0._getVoiceEmitter(arg_35_0)
-	if not arg_35_0._emitter then
-		arg_35_0._emitter = ZProj.AudioEmitter.Get(arg_35_0.viewGO)
+function SettingsRoleVoiceView:_getVoiceEmitter()
+	if not self._emitter then
+		self._emitter = ZProj.AudioEmitter.Get(self.viewGO)
 	end
 
-	return arg_35_0._emitter
+	return self._emitter
 end
 
-function var_0_0._onEmitterCallback(arg_36_0, arg_36_1, arg_36_2)
-	if arg_36_1 == AudioEnum.AkCallbackType.AK_Duration then
+function SettingsRoleVoiceView:_onEmitterCallback(callbackType, value)
+	if callbackType == AudioEnum.AkCallbackType.AK_Duration then
 		-- block empty
-	elseif arg_36_1 == AudioEnum.AkCallbackType.AK_EndOfEvent then
-		arg_36_0:_emitterVoiceEnd()
+	elseif callbackType == AudioEnum.AkCallbackType.AK_EndOfEvent then
+		self:_emitterVoiceEnd()
 	end
 end
 
-function var_0_0._emitterVoiceEnd(arg_37_0)
-	if arg_37_0._voiceEarlyStop then
-		arg_37_0._voiceEarlyStop = false
+function SettingsRoleVoiceView:_emitterVoiceEnd()
+	if self._voiceEarlyStop then
+		self._voiceEarlyStop = false
 	else
-		arg_37_0._voiceEnd = true
+		self._voiceEnd = true
 
-		arg_37_0:_unloadBnk()
-		arg_37_0:_refreshLangOptionSelectState(arg_37_0._curSelectLang, true)
+		self:_unloadBnk()
+		self:_refreshLangOptionSelectState(self._curSelectLang, true)
 	end
 end
 
-function var_0_0._unloadBnk(arg_38_0)
-	if arg_38_0._voiceBnkName then
-		ZProj.AudioManager.Instance:UnloadBank(arg_38_0._voiceBnkName)
+function SettingsRoleVoiceView:_unloadBnk()
+	if self._voiceBnkName then
+		ZProj.AudioManager.Instance:UnloadBank(self._voiceBnkName)
 		AudioMgr.instance:clearUnusedBanks()
 	end
 end
 
-return var_0_0
+return SettingsRoleVoiceView

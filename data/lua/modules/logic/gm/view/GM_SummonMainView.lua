@@ -1,44 +1,46 @@
-﻿module("modules.logic.gm.view.GM_SummonMainView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_SummonMainView.lua
 
-local var_0_0 = class("GM_SummonMainView", BaseView)
+module("modules.logic.gm.view.GM_SummonMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
-	arg_1_0._item1Toggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item1/Toggle")
+local GM_SummonMainView = class("GM_SummonMainView", BaseView)
+
+function GM_SummonMainView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._item1Toggle:AddOnValueChanged(arg_2_0._onItem1ToggleValueChanged, arg_2_0)
+function GM_SummonMainView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._item1Toggle:RemoveOnValueChanged()
+function GM_SummonMainView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_refreshItem1()
+function GM_SummonMainView:onOpen()
+	self:_refreshItem1()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function GM_SummonMainView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_SummonMainView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem1(arg_6_0)
-	local var_6_0 = var_0_0.s_ShowAllTabId
+function GM_SummonMainView:_refreshItem1()
+	local isOn = GM_SummonMainView.s_ShowAllTabId
 
-	arg_6_0._item1Toggle.isOn = var_6_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_7_0)
-	local var_7_0 = arg_7_0._item1Toggle.isOn
+function GM_SummonMainView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_7_0
+	GM_SummonMainView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.SummonMainView_ShowAllTabIdUpdate, var_7_0)
+	GMController.instance:dispatchEvent(GMEvent.SummonMainView_ShowAllTabIdUpdate, isOn)
 end
 
-return var_0_0
+return GM_SummonMainView

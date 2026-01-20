@@ -1,32 +1,34 @@
-﻿module("modules.logic.room.view.RoomSceneTaskDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomSceneTaskDetailViewContainer.lua
 
-local var_0_0 = class("RoomSceneTaskDetailViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomSceneTaskDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomSceneTaskDetailViewContainer = class("RoomSceneTaskDetailViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomSceneTaskDetailView.New())
-	table.insert(var_1_0, RoomViewTopRight.New())
+function RoomSceneTaskDetailViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomSceneTaskDetailView.New())
+	table.insert(views, RoomViewTopRight.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function RoomSceneTaskDetailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
-	arg_3_0:closeThis()
+function RoomSceneTaskDetailViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomSceneTaskDetailViewContainer

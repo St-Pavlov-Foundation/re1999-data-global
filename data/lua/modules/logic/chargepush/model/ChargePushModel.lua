@@ -1,43 +1,49 @@
-﻿module("modules.logic.chargepush.model.ChargePushModel", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/model/ChargePushModel.lua
 
-local var_0_0 = class("ChargePushModel", BaseModel)
+module("modules.logic.chargepush.model.ChargePushModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
+local ChargePushModel = class("ChargePushModel", BaseModel)
+
+function ChargePushModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function ChargePushModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
+function ChargePushModel:clearData()
 	return
 end
 
-function var_0_0.onReceivePushInfo(arg_4_0, arg_4_1)
-	arg_4_0:clear()
+function ChargePushModel:onReceivePushInfo(info)
+	self:clear()
 
-	for iter_4_0 = 1, #arg_4_1.pushId do
-		arg_4_0:addPushInfo(arg_4_1.pushId[iter_4_0])
+	for i = 1, #info.pushId do
+		self:addPushInfo(info.pushId[i])
 	end
 
-	arg_4_0:sort(ChargePushMO.sortFunction)
+	self:sort(ChargePushMO.sortFunction)
 end
 
-function var_0_0.addPushInfo(arg_5_0, arg_5_1)
-	if not arg_5_0:getById(arg_5_1) then
-		local var_5_0 = ChargePushMO.New()
+function ChargePushModel:addPushInfo(pushId)
+	local mo = self:getById(pushId)
 
-		var_5_0:init(arg_5_1)
-		arg_5_0:addAtLast(var_5_0)
+	if not mo then
+		mo = ChargePushMO.New()
+
+		mo:init(pushId)
+		self:addAtLast(mo)
 	end
 end
 
-function var_0_0.popNextPushInfo(arg_6_0)
-	return (arg_6_0:removeFirst())
+function ChargePushModel:popNextPushInfo()
+	local mo = self:removeFirst()
+
+	return mo
 end
 
-var_0_0.instance = var_0_0.New()
+ChargePushModel.instance = ChargePushModel.New()
 
-return var_0_0
+return ChargePushModel

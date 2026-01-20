@@ -1,29 +1,31 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreArchiveUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreArchiveUnitMO.lua
 
-local var_0_0 = class("ExploreArchiveUnitMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreArchiveUnitMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0.archiveId = tonumber(arg_1_0.specialDatas[1])
-	arg_1_0.triggerEffects = tabletool.copy(arg_1_0.triggerEffects)
+local ExploreArchiveUnitMO = class("ExploreArchiveUnitMO", ExploreBaseUnitMO)
 
-	local var_1_0 = {
+function ExploreArchiveUnitMO:initTypeData()
+	self.archiveId = tonumber(self.specialDatas[1])
+	self.triggerEffects = tabletool.copy(self.triggerEffects)
+
+	local data = {
 		ExploreEnum.TriggerEvent.OpenArchiveView
 	}
-	local var_1_1
+	local dialogueIndex
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0.triggerEffects) do
-		if iter_1_1[1] == ExploreEnum.TriggerEvent.Dialogue then
-			var_1_1 = iter_1_0
+	for index, arr in ipairs(self.triggerEffects) do
+		if arr[1] == ExploreEnum.TriggerEvent.Dialogue then
+			dialogueIndex = index
 
 			break
 		end
 	end
 
-	if var_1_1 then
-		table.insert(arg_1_0.triggerEffects, var_1_1 + 1, var_1_0)
+	if dialogueIndex then
+		table.insert(self.triggerEffects, dialogueIndex + 1, data)
 	else
-		table.insert(arg_1_0.triggerEffects, 1, var_1_0)
+		table.insert(self.triggerEffects, 1, data)
 	end
 end
 
-return var_0_0
+return ExploreArchiveUnitMO

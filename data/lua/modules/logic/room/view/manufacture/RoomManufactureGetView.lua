@@ -1,100 +1,102 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureGetView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureGetView.lua
 
-local var_0_0 = class("RoomManufactureGetView", BaseView)
+module("modules.logic.room.view.manufacture.RoomManufactureGetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._scrollproduct = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_product")
-	arg_1_0._goproductitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_product/Viewport/Content/#go_productitem")
-	arg_1_0._gonormalLayout = gohelper.findChild(arg_1_0.viewGO, "#scroll_product/Viewport/Content/#go_normalLayout")
-	arg_1_0._gousedTitle = gohelper.findChild(arg_1_0.viewGO, "#scroll_product/Viewport/Content/txt_tips")
-	arg_1_0._gousedLayout = gohelper.findChild(arg_1_0.viewGO, "#scroll_product/Viewport/Content/#go_usedLayout")
+local RoomManufactureGetView = class("RoomManufactureGetView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomManufactureGetView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._scrollproduct = gohelper.findChildScrollRect(self.viewGO, "#scroll_product")
+	self._goproductitem = gohelper.findChild(self.viewGO, "#scroll_product/Viewport/Content/#go_productitem")
+	self._gonormalLayout = gohelper.findChild(self.viewGO, "#scroll_product/Viewport/Content/#go_normalLayout")
+	self._gousedTitle = gohelper.findChild(self.viewGO, "#scroll_product/Viewport/Content/txt_tips")
+	self._gousedLayout = gohelper.findChild(self.viewGO, "#scroll_product/Viewport/Content/#go_usedLayout")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomManufactureGetView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomManufactureGetView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomManufactureGetView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._goproductitem, false)
+function RoomManufactureGetView:_editableInitView()
+	gohelper.setActive(self._goproductitem, false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	if arg_6_0.viewParam then
-		arg_6_0.normalList = arg_6_0.viewParam.normalList
-		arg_6_0.usedList = arg_6_0.viewParam.usedList
+function RoomManufactureGetView:onUpdateParam()
+	if self.viewParam then
+		self.normalList = self.viewParam.normalList
+		self.usedList = self.viewParam.usedList
 	end
 
-	arg_6_0.normalList = arg_6_0.normalList or {}
-	arg_6_0.usedList = arg_6_0.usedList or {}
+	self.normalList = self.normalList or {}
+	self.usedList = self.usedList or {}
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:onUpdateParam()
-	arg_7_0:setNormalList()
-	arg_7_0:setUsedList()
+function RoomManufactureGetView:onOpen()
+	self:onUpdateParam()
+	self:setNormalList()
+	self:setUsedList()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_shouhuo_2_2)
 end
 
-function var_0_0.setNormalList(arg_8_0)
-	gohelper.CreateObjList(arg_8_0, arg_8_0._onSeItem, arg_8_0.normalList, arg_8_0._gonormalLayout, arg_8_0._goproductitem)
+function RoomManufactureGetView:setNormalList()
+	gohelper.CreateObjList(self, self._onSeItem, self.normalList, self._gonormalLayout, self._goproductitem)
 end
 
-function var_0_0.setUsedList(arg_9_0)
-	local var_9_0 = arg_9_0.usedList and #arg_9_0.usedList > 0
+function RoomManufactureGetView:setUsedList()
+	local isHasUsed = self.usedList and #self.usedList > 0
 
-	gohelper.setActive(arg_9_0._gousedTitle, var_9_0)
-	gohelper.setActive(arg_9_0._gousedLayout, var_9_0)
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onSeItem, arg_9_0.usedList, arg_9_0._gousedLayout, arg_9_0._goproductitem)
+	gohelper.setActive(self._gousedTitle, isHasUsed)
+	gohelper.setActive(self._gousedLayout, isHasUsed)
+	gohelper.CreateObjList(self, self._onSeItem, self.usedList, self._gousedLayout, self._goproductitem)
 end
 
-function var_0_0._onSeItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_2.isShowExtra
-	local var_10_1 = gohelper.findChild(arg_10_1, "tag_extra")
-	local var_10_2 = gohelper.findChild(arg_10_1, "#baoji")
+function RoomManufactureGetView:_onSeItem(obj, data, index)
+	local isShowExtra = data.isShowExtra
+	local goExtra = gohelper.findChild(obj, "tag_extra")
+	local goExtraEff = gohelper.findChild(obj, "#baoji")
 
-	gohelper.setActive(var_10_1, var_10_0)
-	gohelper.setActive(var_10_2, var_10_0)
+	gohelper.setActive(goExtra, isShowExtra)
+	gohelper.setActive(goExtraEff, isShowExtra)
 
-	local var_10_3 = gohelper.findChild(arg_10_1, "go_icon")
-	local var_10_4 = IconMgr.instance:getCommonItemIcon(var_10_3)
+	local goIcon = gohelper.findChild(obj, "go_icon")
+	local itemIcon = IconMgr.instance:getCommonItemIcon(goIcon)
 
-	var_10_4:isShowQuality(false)
+	itemIcon:isShowQuality(false)
 
-	local var_10_5 = var_10_4:getCountBg()
-	local var_10_6 = var_10_4:getCount()
-	local var_10_7 = var_10_5.transform
-	local var_10_8 = var_10_6.transform
+	local countBg = itemIcon:getCountBg()
+	local count = itemIcon:getCount()
+	local transCountBg = countBg.transform
+	local transCount = count.transform
 
-	recthelper.setAnchorY(var_10_7, RoomManufactureEnum.ItemCountBgY)
-	recthelper.setAnchorY(var_10_8, RoomManufactureEnum.ItemCountY)
-	var_10_4:onUpdateMO(arg_10_2)
+	recthelper.setAnchorY(transCountBg, RoomManufactureEnum.ItemCountBgY)
+	recthelper.setAnchorY(transCount, RoomManufactureEnum.ItemCountY)
+	itemIcon:onUpdateMO(data)
 
-	local var_10_9 = gohelper.findChildImage(arg_10_1, "#image_quality")
-	local var_10_10 = var_10_4:getRare()
-	local var_10_11 = RoomManufactureEnum.RareImageMap[var_10_10]
+	local imgquality = gohelper.findChildImage(obj, "#image_quality")
+	local rare = itemIcon:getRare()
+	local qualityImg = RoomManufactureEnum.RareImageMap[rare]
 
-	UISpriteSetMgr.instance:setCritterSprite(var_10_9, var_10_11)
+	UISpriteSetMgr.instance:setCritterSprite(imgquality, qualityImg)
 end
 
-function var_0_0.onClose(arg_11_0)
+function RoomManufactureGetView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function RoomManufactureGetView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomManufactureGetView

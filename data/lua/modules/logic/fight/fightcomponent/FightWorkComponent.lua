@@ -1,75 +1,77 @@
-﻿module("modules.logic.fight.fightcomponent.FightWorkComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightWorkComponent.lua
 
-local var_0_0 = class("FightWorkComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightWorkComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.workList = {}
-	arg_1_0.count = 0
+local FightWorkComponent = class("FightWorkComponent", FightBaseClass)
+
+function FightWorkComponent:onConstructor()
+	self.workList = {}
+	self.count = 0
 end
 
-function var_0_0.registWork(arg_2_0, arg_2_1, ...)
-	local var_2_0 = arg_2_0:newClass(arg_2_1, ...)
+function FightWorkComponent:registWork(class, ...)
+	local work = self:newClass(class, ...)
 
-	arg_2_0.count = arg_2_0.count + 1
-	arg_2_0.workList[arg_2_0.count] = var_2_0
+	self.count = self.count + 1
+	self.workList[self.count] = work
 
-	var_2_0:registFinishCallback(arg_2_0.onWorkFinish, arg_2_0)
+	work:registFinishCallback(self.onWorkFinish, self)
 
-	return var_2_0
+	return work
 end
 
-function var_0_0.playWork(arg_3_0, arg_3_1, ...)
-	local var_3_0 = arg_3_0:newClass(arg_3_1, ...)
+function FightWorkComponent:playWork(class, ...)
+	local work = self:newClass(class, ...)
 
-	arg_3_0.count = arg_3_0.count + 1
-	arg_3_0.workList[arg_3_0.count] = var_3_0
+	self.count = self.count + 1
+	self.workList[self.count] = work
 
-	var_3_0:registFinishCallback(arg_3_0.onWorkFinish, arg_3_0)
+	work:registFinishCallback(self.onWorkFinish, self)
 
-	return var_3_0:start()
+	return work:start()
 end
 
-function var_0_0.addWork(arg_4_0, arg_4_1)
-	arg_4_0.count = arg_4_0.count + 1
-	arg_4_0.workList[arg_4_0.count] = arg_4_1
+function FightWorkComponent:addWork(work)
+	self.count = self.count + 1
+	self.workList[self.count] = work
 
-	arg_4_1:registFinishCallback(arg_4_0.onWorkFinish, arg_4_0)
+	work:registFinishCallback(self.onWorkFinish, self)
 
-	return arg_4_1
+	return work
 end
 
-function var_0_0.onWorkFinish(arg_5_0)
-	arg_5_0:com_registSingleTimer(arg_5_0.clearDeadWork, 1)
+function FightWorkComponent:onWorkFinish()
+	self:com_registSingleTimer(self.clearDeadWork, 1)
 end
 
-function var_0_0.clearDeadWork(arg_6_0)
-	local var_6_0 = 1
+function FightWorkComponent:clearDeadWork()
+	local j = 1
 
-	for iter_6_0 = 1, arg_6_0.count do
-		local var_6_1 = arg_6_0.workList[iter_6_0]
+	for i = 1, self.count do
+		local item = self.workList[i]
 
-		if not var_6_1.IS_DISPOSED then
-			if iter_6_0 ~= var_6_0 then
-				arg_6_0.workList[var_6_0] = var_6_1
-				arg_6_0.workList[iter_6_0] = nil
+		if not item.IS_DISPOSED then
+			if i ~= j then
+				self.workList[j] = item
+				self.workList[i] = nil
 			end
 
-			var_6_0 = var_6_0 + 1
+			j = j + 1
 		else
-			arg_6_0.workList[iter_6_0] = nil
+			self.workList[i] = nil
 		end
 	end
 
-	arg_6_0.count = var_6_0 - 1
+	self.count = j - 1
 end
 
-function var_0_0.getWorkList(arg_7_0)
-	return arg_7_0.workList
+function FightWorkComponent:getWorkList()
+	return self.workList
 end
 
-function var_0_0.hasAliveWork(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.workList) do
-		if iter_8_1:isAlive() then
+function FightWorkComponent:hasAliveWork()
+	for i, work in ipairs(self.workList) do
+		if work:isAlive() then
 			return true
 		end
 	end
@@ -77,20 +79,20 @@ function var_0_0.hasAliveWork(arg_8_0)
 	return false
 end
 
-function var_0_0.disposeAllWork(arg_9_0)
-	for iter_9_0 = arg_9_0.count, 1, -1 do
-		arg_9_0.workList[iter_9_0]:disposeSelf()
+function FightWorkComponent:disposeAllWork()
+	for i = self.count, 1, -1 do
+		self.workList[i]:disposeSelf()
 	end
 
-	arg_9_0:com_registSingleTimer(arg_9_0.clearDeadWork, 1)
+	self:com_registSingleTimer(self.clearDeadWork, 1)
 end
 
-function var_0_0.onDestructor(arg_10_0)
-	for iter_10_0 = arg_10_0.count, 1, -1 do
-		arg_10_0.workList[iter_10_0]:disposeSelf()
+function FightWorkComponent:onDestructor()
+	for i = self.count, 1, -1 do
+		self.workList[i]:disposeSelf()
 	end
 
-	arg_10_0.workList = nil
+	self.workList = nil
 end
 
-return var_0_0
+return FightWorkComponent

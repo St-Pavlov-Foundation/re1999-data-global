@@ -1,13 +1,15 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalAddTalentWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalAddTalentWork.lua
 
-local var_0_0 = class("SurvivalAddTalentWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalAddTalentWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
+local SurvivalAddTalentWork = class("SurvivalAddTalentWork", SurvivalStepBaseWork)
 
-	tabletool.addValues(var_1_0.talents, arg_1_0._stepMo.paramInt)
+function SurvivalAddTalentWork:onStart(context)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	tabletool.addValues(weekInfo.talents, self._stepMo.paramInt)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTalentChange)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalAddTalentWork

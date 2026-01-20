@@ -1,165 +1,169 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyItemModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyItemModel.lua
 
-local var_0_0 = class("OdysseyItemModel", BaseModel)
+module("modules.logic.sp01.odyssey.model.OdysseyItemModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local OdysseyItemModel = class("OdysseyItemModel", BaseModel)
+
+function OdysseyItemModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.itemMoMap = {}
-	arg_2_0.itemMoUidMap = {}
-	arg_2_0.itemMoList = {}
-	arg_2_0.itemSuitCountDic = {}
-	arg_2_0.taskItemCount = 0
-	arg_2_0.equipItemCount = 0
-	arg_2_0.reddotShowMap = {}
-	arg_2_0.hasClickItemMap = {}
-	arg_2_0.addOuterItemMap = {}
+function OdysseyItemModel:reInit()
+	self.itemMoMap = {}
+	self.itemMoUidMap = {}
+	self.itemMoList = {}
+	self.itemSuitCountDic = {}
+	self.taskItemCount = 0
+	self.equipItemCount = 0
+	self.reddotShowMap = {}
+	self.hasClickItemMap = {}
+	self.addOuterItemMap = {}
 end
 
-function var_0_0.updateBagInfo(arg_3_0, arg_3_1)
-	arg_3_0:updateItemInfo(arg_3_1.items)
+function OdysseyItemModel:updateBagInfo(bagInfo)
+	self:updateItemInfo(bagInfo.items)
 end
 
-function var_0_0.updateItemInfo(arg_4_0, arg_4_1, arg_4_2)
-	tabletool.clear(arg_4_0.itemMoList)
-	tabletool.clear(arg_4_0.itemSuitCountDic)
+function OdysseyItemModel:updateItemInfo(itemInfoList, isPush)
+	tabletool.clear(self.itemMoList)
+	tabletool.clear(self.itemSuitCountDic)
 
-	arg_4_0.taskItemCount = 0
-	arg_4_0.equipItemCount = 0
-	arg_4_0.reddotShowMap = {}
+	self.taskItemCount = 0
+	self.equipItemCount = 0
+	self.reddotShowMap = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = arg_4_0.itemMoMap[iter_4_1.id]
+	for index, itemInfo in ipairs(itemInfoList) do
+		local itemMoList = self.itemMoMap[itemInfo.id]
 
-		if not var_4_0 then
-			var_4_0 = {}
-			arg_4_0.itemMoMap[iter_4_1.id] = var_4_0
+		if not itemMoList then
+			itemMoList = {}
+			self.itemMoMap[itemInfo.id] = itemMoList
 		end
 
-		local var_4_1 = var_4_0[iter_4_1.uid]
+		local itemMo = itemMoList[itemInfo.uid]
 
-		if not var_4_1 then
-			var_4_1 = OdysseyItemMo.New()
+		if not itemMo then
+			itemMo = OdysseyItemMo.New()
 
-			var_4_1:init(iter_4_1.id)
+			itemMo:init(itemInfo.id)
 
-			var_4_0[iter_4_1.uid] = var_4_1
-			arg_4_0.itemMoUidMap[iter_4_1.uid] = var_4_1
+			itemMoList[itemInfo.uid] = itemMo
+			self.itemMoUidMap[itemInfo.uid] = itemMo
 		end
 
-		var_4_1:updateInfo(iter_4_1, arg_4_2)
+		itemMo:updateInfo(itemInfo, isPush)
 
-		if var_4_1.config.type == OdysseyEnum.ItemType.Item then
-			arg_4_0.taskItemCount = arg_4_0.taskItemCount + iter_4_1.count
-		elseif var_4_1.config.type == OdysseyEnum.ItemType.Equip then
-			arg_4_0.equipItemCount = arg_4_0.equipItemCount + iter_4_1.count
+		if itemMo.config.type == OdysseyEnum.ItemType.Item then
+			self.taskItemCount = self.taskItemCount + itemInfo.count
+		elseif itemMo.config.type == OdysseyEnum.ItemType.Equip then
+			self.equipItemCount = self.equipItemCount + itemInfo.count
 		end
 
-		table.insert(arg_4_0.itemMoList, var_4_1)
+		table.insert(self.itemMoList, itemMo)
 
-		local var_4_2 = OdysseyConfig.instance:getItemConfig(iter_4_1.id)
+		local itemConfig = OdysseyConfig.instance:getItemConfig(itemInfo.id)
 
-		if not arg_4_0.itemSuitCountDic[var_4_2.suitId] then
-			arg_4_0.itemSuitCountDic[var_4_2.suitId] = 1
+		if not self.itemSuitCountDic[itemConfig.suitId] then
+			self.itemSuitCountDic[itemConfig.suitId] = 1
 		else
-			arg_4_0.itemSuitCountDic[var_4_2.suitId] = arg_4_0.itemSuitCountDic[var_4_2.suitId] + 1
+			self.itemSuitCountDic[itemConfig.suitId] = self.itemSuitCountDic[itemConfig.suitId] + 1
 		end
 
-		arg_4_0:buildReddotShowInfo(var_4_1)
+		self:buildReddotShowInfo(itemMo)
 	end
 end
 
-function var_0_0.buildReddotShowInfo(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.reddotShowMap[arg_5_1.config.type] or {}
+function OdysseyItemModel:buildReddotShowInfo(itemMo)
+	local reddotTypeMap = self.reddotShowMap[itemMo.config.type]
 
-	if arg_5_1:isNew() then
-		var_5_0[arg_5_1.uid] = arg_5_1
+	reddotTypeMap = reddotTypeMap or {}
+
+	if itemMo:isNew() then
+		reddotTypeMap[itemMo.uid] = itemMo
 	else
-		var_5_0[arg_5_1.uid] = nil
+		reddotTypeMap[itemMo.uid] = nil
 	end
 
-	arg_5_0.reddotShowMap[arg_5_1.config.type] = var_5_0
+	self.reddotShowMap[itemMo.config.type] = reddotTypeMap
 end
 
-function var_0_0.refreshItemInfo(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		local var_6_0 = arg_6_0.itemMoUidMap[iter_6_1.uid]
+function OdysseyItemModel:refreshItemInfo(itemInfoList)
+	for index, itemInfo in ipairs(itemInfoList) do
+		local itemMo = self.itemMoUidMap[itemInfo.uid]
 
-		if var_6_0 then
-			var_6_0:updateInfo(iter_6_1)
+		if itemMo then
+			itemMo:updateInfo(itemInfo)
 		end
 	end
 
-	for iter_6_2, iter_6_3 in pairs(arg_6_0.itemMoUidMap) do
-		arg_6_0:buildReddotShowInfo(iter_6_3)
+	for uid, itemMo in pairs(self.itemMoUidMap) do
+		self:buildReddotShowInfo(itemMo)
 	end
 end
 
-function var_0_0.getItemCount(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.itemMoMap[arg_7_1]
+function OdysseyItemModel:getItemCount(itemId)
+	local itemMoList = self.itemMoMap[itemId]
 
-	if not var_7_0 then
+	if not itemMoList then
 		return 0
 	end
 
-	local var_7_1 = 0
+	local itemCount = 0
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		var_7_1 = var_7_1 + iter_7_1.count
+	for _, itemMo in pairs(itemMoList) do
+		itemCount = itemCount + itemMo.count
 	end
 
-	return var_7_1
+	return itemCount
 end
 
-function var_0_0.getItemMoUidMap(arg_8_0)
-	return arg_8_0.itemMoUidMap
+function OdysseyItemModel:getItemMoUidMap()
+	return self.itemMoUidMap
 end
 
-function var_0_0.getItemMoByUid(arg_9_0, arg_9_1)
-	return arg_9_0.itemMoUidMap[arg_9_1]
+function OdysseyItemModel:getItemMoByUid(equipUid)
+	return self.itemMoUidMap[equipUid]
 end
 
-function var_0_0.cleanAllAddCount(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.itemMoUidMap) do
-		iter_10_1:cleanAddCount()
+function OdysseyItemModel:cleanAllAddCount()
+	for uid, itemMo in pairs(self.itemMoUidMap) do
+		itemMo:cleanAddCount()
 	end
 
-	arg_10_0.addOuterItemMap = {}
+	self.addOuterItemMap = {}
 end
 
-function var_0_0.getItemMoList(arg_11_0)
-	return arg_11_0.itemMoList
+function OdysseyItemModel:getItemMoList()
+	return self.itemMoList
 end
 
-function var_0_0.haveSuitItem(arg_12_0, arg_12_1)
-	return arg_12_0.itemSuitCountDic[arg_12_1] and arg_12_0.itemSuitCountDic[arg_12_1] > 0
+function OdysseyItemModel:haveSuitItem(suitId)
+	return self.itemSuitCountDic[suitId] and self.itemSuitCountDic[suitId] > 0
 end
 
-function var_0_0.haveTaskItem(arg_13_0)
-	return arg_13_0.taskItemCount and arg_13_0.taskItemCount > 0
+function OdysseyItemModel:haveTaskItem()
+	return self.taskItemCount and self.taskItemCount > 0
 end
 
-function var_0_0.haveEquipItem(arg_14_0)
-	return arg_14_0.equipItemCount and arg_14_0.equipItemCount > 0
+function OdysseyItemModel:haveEquipItem()
+	return self.equipItemCount and self.equipItemCount > 0
 end
 
-function var_0_0.checkIsItemNewFlag(arg_15_0, arg_15_1)
-	if arg_15_1 then
-		local var_15_0 = arg_15_0.reddotShowMap[arg_15_1]
+function OdysseyItemModel:checkIsItemNewFlag(itemType)
+	if itemType then
+		local reddotTypeMap = self.reddotShowMap[itemType]
 
-		if var_15_0 and next(var_15_0) then
-			return true, var_15_0 or {}
+		if reddotTypeMap and next(reddotTypeMap) then
+			return true, reddotTypeMap or {}
 		end
 
 		return false
 	else
-		for iter_15_0 = OdysseyEnum.ItemType.Item, OdysseyEnum.ItemType.Equip do
-			local var_15_1 = arg_15_0.reddotShowMap[iter_15_0]
+		for type = OdysseyEnum.ItemType.Item, OdysseyEnum.ItemType.Equip do
+			local reddotTypeMap = self.reddotShowMap[type]
 
-			if var_15_1 and next(var_15_1) then
-				return true, var_15_1 or {}
+			if reddotTypeMap and next(reddotTypeMap) then
+				return true, reddotTypeMap or {}
 			end
 		end
 	end
@@ -167,75 +171,79 @@ function var_0_0.checkIsItemNewFlag(arg_15_0, arg_15_1)
 	return false
 end
 
-function var_0_0.setHasClickItem(arg_16_0, arg_16_1)
-	arg_16_0.hasClickItemMap[arg_16_1] = arg_16_1
+function OdysseyItemModel:setHasClickItem(itemUid)
+	self.hasClickItemMap[itemUid] = itemUid
 end
 
-function var_0_0.isHasClickItem(arg_17_0, arg_17_1)
-	return arg_17_0.hasClickItemMap[arg_17_1]
+function OdysseyItemModel:isHasClickItem(itemUid)
+	return self.hasClickItemMap[itemUid]
 end
 
-function var_0_0.cleanHasClickItemState(arg_18_0)
-	arg_18_0.hasClickItemMap = {}
+function OdysseyItemModel:cleanHasClickItemState()
+	self.hasClickItemMap = {}
 end
 
-function var_0_0.checkBagTagShowReddot(arg_19_0, arg_19_1)
-	local var_19_0, var_19_1 = arg_19_0:checkIsItemNewFlag(arg_19_1)
-	local var_19_2 = var_19_0
-	local var_19_3 = false
+function OdysseyItemModel:checkBagTagShowReddot(itemType)
+	local equipReddotShow, reddotTypeMap = self:checkIsItemNewFlag(itemType)
+	local canShowEquipReddot = equipReddotShow
+	local isExitNotClickItem = false
 
-	if var_19_0 then
-		for iter_19_0, iter_19_1 in pairs(var_19_1) do
-			if not arg_19_0:isHasClickItem(iter_19_0) then
-				var_19_3 = true
+	if equipReddotShow then
+		for uid, itemMo in pairs(reddotTypeMap) do
+			local isHasClickItem = self:isHasClickItem(uid)
+
+			if not isHasClickItem then
+				isExitNotClickItem = true
 
 				break
 			end
 		end
 	end
 
-	return var_19_2 and var_19_3
+	return canShowEquipReddot and isExitNotClickItem
 end
 
-function var_0_0.getHasClickItemList(arg_20_0)
-	local var_20_0 = {}
+function OdysseyItemModel:getHasClickItemList()
+	local itemUidList = {}
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0.hasClickItemMap) do
-		if arg_20_0:getItemMoByUid(iter_20_0):isNew() then
-			table.insert(var_20_0, iter_20_0)
+	for itemUid, _ in pairs(self.hasClickItemMap) do
+		local itemMo = self:getItemMoByUid(itemUid)
+
+		if itemMo:isNew() then
+			table.insert(itemUidList, itemUid)
 		end
 	end
 
-	return var_20_0
+	return itemUidList
 end
 
-function var_0_0.setAddOuterItem(arg_21_0, arg_21_1)
-	arg_21_0.addOuterItemMap = {}
+function OdysseyItemModel:setAddOuterItem(addItemList)
+	self.addOuterItemMap = {}
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
-		local var_21_0 = arg_21_0.addOuterItemMap[iter_21_1.materilId]
+	for index, itemData in ipairs(addItemList) do
+		local itemMo = self.addOuterItemMap[itemData.materilId]
 
-		if not var_21_0 then
-			var_21_0 = OdysseyOuterItemMo.New()
-			arg_21_0.addOuterItemMap[iter_21_1.materilId] = var_21_0
+		if not itemMo then
+			itemMo = OdysseyOuterItemMo.New()
+			self.addOuterItemMap[itemData.materilId] = itemMo
 		end
 
-		var_21_0:updateInfo(iter_21_1)
+		itemMo:updateInfo(itemData)
 	end
 end
 
-function var_0_0.getAddOuterItemList(arg_22_0)
-	local var_22_0 = {}
+function OdysseyItemModel:getAddOuterItemList()
+	local addOuterItemList = {}
 
-	for iter_22_0, iter_22_1 in pairs(arg_22_0.addOuterItemMap) do
-		if iter_22_1.addCount > 0 then
-			table.insert(var_22_0, iter_22_1)
+	for itemUid, itemMo in pairs(self.addOuterItemMap) do
+		if itemMo.addCount > 0 then
+			table.insert(addOuterItemList, itemMo)
 		end
 	end
 
-	return var_22_0
+	return addOuterItemList
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyItemModel.instance = OdysseyItemModel.New()
 
-return var_0_0
+return OdysseyItemModel

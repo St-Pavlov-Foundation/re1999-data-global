@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueAttributeDescItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/view/LiangYueAttributeDescItem.lua
 
-local var_0_0 = class("LiangYueAttributeDescItem")
+module("modules.logic.versionactivity2_5.liangyue.view.LiangYueAttributeDescItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._txt_Num = gohelper.findChildText(arg_1_1, "#txt_Num")
-	arg_1_0._txt_NumChanged = gohelper.findChildText(arg_1_1, "#txt_Num1")
+local LiangYueAttributeDescItem = class("LiangYueAttributeDescItem")
+
+function LiangYueAttributeDescItem:init(go)
+	self.go = go
+	self._txt_Num = gohelper.findChildText(go, "#txt_Num")
+	self._txt_NumChanged = gohelper.findChildText(go, "#txt_Num1")
 end
 
-function var_0_0.setActive(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0.go, arg_2_1)
+function LiangYueAttributeDescItem:setActive(active)
+	gohelper.setActive(self.go, active)
 end
 
-function var_0_0.setInfo(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = string.format("%s%s", LiangYueEnum.CalculateSymbol[arg_3_1], arg_3_2)
+function LiangYueAttributeDescItem:setInfo(type, num)
+	local text = string.format("%s%s", LiangYueEnum.CalculateSymbol[type], num)
 
-	arg_3_0._txt_Num.text = var_3_0
+	self._txt_Num.text = text
 
-	if arg_3_0._txt_NumChanged then
-		arg_3_0._txt_NumChanged.text = var_3_0
+	if self._txt_NumChanged then
+		self._txt_NumChanged.text = text
 	end
 end
 
-function var_0_0.setTargetInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = string.format("%s/%s", arg_4_1, arg_4_2)
+function LiangYueAttributeDescItem:setTargetInfo(current, target, color)
+	local text = string.format("%s/%s", current, target)
 
-	arg_4_0._txt_Num.text = var_4_0
+	self._txt_Num.text = text
 
-	if arg_4_0._txt_NumChanged then
-		arg_4_0._txt_NumChanged.text = var_4_0
+	if self._txt_NumChanged then
+		self._txt_NumChanged.text = text
 	end
 
-	arg_4_0:setTxtColor(arg_4_3)
+	self:setTxtColor(color)
 end
 
-function var_0_0.setTxtColor(arg_5_0, arg_5_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._txt_Num, arg_5_1)
+function LiangYueAttributeDescItem:setTxtColor(color)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txt_Num, color)
 
-	if arg_5_0._txt_NumChanged then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_5_0._txt_NumChanged, arg_5_1)
+	if self._txt_NumChanged then
+		SLFramework.UGUI.GuiHelper.SetColor(self._txt_NumChanged, color)
 	end
 end
 
-return var_0_0
+return LiangYueAttributeDescItem

@@ -1,139 +1,147 @@
-﻿module("modules.logic.sp01.act204.model.Activity204MileStoneListModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/model/Activity204MileStoneListModel.lua
 
-local var_0_0 = class("Activity204MileStoneListModel", MixScrollModel)
-local var_0_1 = 21
+module("modules.logic.sp01.act204.model.Activity204MileStoneListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.actMo = arg_1_1
+local Activity204MileStoneListModel = class("Activity204MileStoneListModel", MixScrollModel)
+local startSpace = 21
+
+function Activity204MileStoneListModel:init(actMo)
+	self.actMo = actMo
 end
 
-function var_0_0.refresh(arg_2_0)
-	local var_2_0 = Activity204Config.instance:getMileStoneList(arg_2_0.actMo.id)
-	local var_2_1 = {}
+function Activity204MileStoneListModel:refresh()
+	local list = Activity204Config.instance:getMileStoneList(self.actMo.id)
+	local dataList = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_2 = {
-			id = iter_2_1.rewardId,
-			rewardId = iter_2_1.rewardId,
-			activityId = iter_2_1.activityId,
-			isLoopBonus = iter_2_1.isLoopBonus,
-			bonus = iter_2_1.bonus,
-			isSpBonus = iter_2_1.isSpBonus
-		}
+	for i, v in ipairs(list) do
+		local mo = {}
 
-		table.insert(var_2_1, var_2_2)
+		mo.id = v.rewardId
+		mo.rewardId = v.rewardId
+		mo.activityId = v.activityId
+		mo.isLoopBonus = v.isLoopBonus
+		mo.bonus = v.bonus
+		mo.isSpBonus = v.isSpBonus
+
+		table.insert(dataList, mo)
 	end
 
-	arg_2_0:setList(var_2_1)
+	self:setList(dataList)
 end
 
-function var_0_0.caleProgressIndex(arg_3_0)
-	local var_3_0 = Activity204Config.instance:getMileStoneList(arg_3_0.actMo.id)
-	local var_3_1 = 0
-	local var_3_2 = Activity204Config.instance:getConstNum(Activity204Enum.ConstId.CurrencyId)
-	local var_3_3 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_3_2)
-	local var_3_4 = 0
+function Activity204MileStoneListModel:caleProgressIndex()
+	local list = Activity204Config.instance:getMileStoneList(self.actMo.id)
+	local index = 0
+	local currencyId = Activity204Config.instance:getConstNum(Activity204Enum.ConstId.CurrencyId)
+	local hasCurrencyNum = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, currencyId)
+	local lastCoinNum = 0
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		local var_3_5 = iter_3_1.coinNum
+	for i, v in ipairs(list) do
+		local coinNum = v.coinNum
 
-		if var_3_3 < var_3_5 then
-			var_3_1 = iter_3_0 + (var_3_3 - var_3_4) / (var_3_5 - var_3_4) - 1
+		if hasCurrencyNum < coinNum then
+			index = i + (hasCurrencyNum - lastCoinNum) / (coinNum - lastCoinNum) - 1
 
-			return var_3_1
+			return index
 		end
 
-		var_3_4 = var_3_5
+		lastCoinNum = coinNum
 	end
 
-	local var_3_6 = #var_3_0
-	local var_3_7
+	local listLen = #list
 
-	var_3_7 = var_3_0[var_3_6 - 1] and var_3_0[var_3_6 - 1].coinNum or 0
+	lastCoinNum = list[listLen - 1] and list[listLen - 1].coinNum or 0
 
-	local var_3_8 = var_3_0[var_3_6]
-	local var_3_9 = arg_3_0.actMo.getMilestoneProgress
-	local var_3_10 = var_3_8.loopBonusIntervalNum or 1
-	local var_3_11 = var_3_8.coinNum
+	local loopConfig = list[listLen]
+	local progress = self.actMo.getMilestoneProgress
+	local loopNum = loopConfig.loopBonusIntervalNum or 1
+	local coinNum = loopConfig.coinNum
 
-	if var_3_9 < var_3_11 then
-		var_3_1 = var_3_6
+	if progress < coinNum then
+		index = listLen
 	else
-		local var_3_12 = (var_3_3 - var_3_11) / var_3_10
-		local var_3_13 = math.floor(var_3_12)
+		local canGetTimesValue = (hasCurrencyNum - coinNum) / loopNum
+		local canGetTimes = math.floor(canGetTimesValue)
+		local getTimes = math.floor((progress - coinNum) / loopNum)
 
-		if var_3_13 > math.floor((var_3_9 - var_3_11) / var_3_10) then
-			var_3_1 = var_3_6
+		if getTimes < canGetTimes then
+			index = listLen
 		else
-			var_3_1 = var_3_6 - 1 + var_3_12 - var_3_13
+			index = listLen - 1 + canGetTimesValue - canGetTimes
 		end
 	end
 
-	return var_3_1
+	return index
 end
 
-function var_0_0.getMaxMileStoneValue(arg_4_0)
-	for iter_4_0 = arg_4_0:getCount(), 1, -1 do
-		local var_4_0 = arg_4_0:getByIndex(iter_4_0)
-		local var_4_1 = Activity204Model.instance:getById(var_4_0.activityId)
+function Activity204MileStoneListModel:getMaxMileStoneValue()
+	local count = self:getCount()
 
-		if var_4_1 and not var_4_0.isLoopBonus then
-			return var_4_1:getMilestoneValue(var_4_0.rewardId)
+	for i = count, 1, -1 do
+		local mo = self:getByIndex(i)
+		local actMo = Activity204Model.instance:getById(mo.activityId)
+
+		if actMo and not mo.isLoopBonus then
+			return actMo:getMilestoneValue(mo.rewardId)
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.getInfoList(arg_5_0, arg_5_1)
-	arg_5_0._mixCellInfo = {}
+function Activity204MileStoneListModel:getInfoList(scrollGO)
+	self._mixCellInfo = {}
 
-	local var_5_0 = arg_5_0:getList()
+	local list = self:getList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_1 = GameUtil.splitString2(iter_5_1.bonus, true)
-		local var_5_2 = (var_5_1 and #var_5_1 or 0) * 215
-		local var_5_3 = SLFramework.UGUI.MixCellInfo.New(iter_5_0, var_5_2, iter_5_0)
+	for i, mo in ipairs(list) do
+		local rewards = GameUtil.splitString2(mo.bonus, true)
+		local rewardCount = rewards and #rewards or 0
+		local width = rewardCount * 215
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(i, width, i)
 
-		table.insert(arg_5_0._mixCellInfo, var_5_3)
+		table.insert(self._mixCellInfo, mixCellInfo)
 	end
 
-	return arg_5_0._mixCellInfo
+	return self._mixCellInfo
 end
 
-function var_0_0.getItemPosX(arg_6_0, arg_6_1)
-	if arg_6_1 <= 0 then
+function Activity204MileStoneListModel:getItemPosX(index)
+	if index <= 0 then
 		return 0
 	end
 
-	local var_6_0 = var_0_1
-	local var_6_1 = 0
+	local posX = startSpace
+	local cellWidth = 0
 
-	for iter_6_0 = 1, arg_6_1 - 1 do
-		var_6_0 = var_6_0 + arg_6_0:getItemWidth(iter_6_0)
+	for i = 1, index - 1 do
+		posX = posX + self:getItemWidth(i)
 	end
 
-	local var_6_2 = arg_6_0:getItemWidth(arg_6_1)
+	local lastItemWidth = self:getItemWidth(index)
 
-	return var_6_0 + var_6_1 / 2 + var_6_2 / 2
+	posX = posX + cellWidth / 2 + lastItemWidth / 2
+
+	return posX
 end
 
-function var_0_0.getItemWidth(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function Activity204MileStoneListModel:getItemWidth(index)
+	if not index then
 		return 0
 	end
 
-	local var_7_0 = arg_7_0._mixCellInfo and arg_7_0._mixCellInfo[arg_7_1]
+	local cellInfo = self._mixCellInfo and self._mixCellInfo[index]
 
-	return var_7_0 and var_7_0.lineLength or 0
+	return cellInfo and cellInfo.lineLength or 0
 end
 
-function var_0_0.getItemFocusPosX(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getItemWidth(arg_8_1 - 1)
+function Activity204MileStoneListModel:getItemFocusPosX(index)
+	local itemWidth = self:getItemWidth(index - 1)
+	local focusPosX = self:getItemPosX(index - 1) + itemWidth / 2
 
-	return arg_8_0:getItemPosX(arg_8_1 - 1) + var_8_0 / 2
+	return focusPosX
 end
 
-var_0_0.instance = var_0_0.New()
+Activity204MileStoneListModel.instance = Activity204MileStoneListModel.New()
 
-return var_0_0
+return Activity204MileStoneListModel

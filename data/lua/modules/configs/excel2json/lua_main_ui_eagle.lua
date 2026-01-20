@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_main_ui_eagle", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_main_ui_eagle.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_main_ui_eagle", package.seeall)
+
+local lua_main_ui_eagle = {}
+local fields = {
 	animName = 5,
 	location = 8,
 	odds_nextstep = 2,
@@ -13,13 +15,13 @@ local var_0_1 = {
 	id = 1,
 	option_nextstep = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_main_ui_eagle.onLoad(json)
+	lua_main_ui_eagle.configList, lua_main_ui_eagle.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_main_ui_eagle

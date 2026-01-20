@@ -1,112 +1,114 @@
-﻿module("modules.logic.teach.view.TeachNoteDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/teach/view/TeachNoteDetailView.lua
 
-local var_0_0 = class("TeachNoteDetailView", BaseView)
+module("modules.logic.teach.view.TeachNoteDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
-	arg_1_0._simagebg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg3")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "#txt_nameen")
-	arg_1_0._goitemdescs = gohelper.findChild(arg_1_0.viewGO, "#go_itemdescs")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "#go_itemdescs/#go_descitem")
-	arg_1_0._gonotetip = gohelper.findChild(arg_1_0.viewGO, "#go_notetip")
-	arg_1_0._txtnotedesc = gohelper.findChildText(arg_1_0.viewGO, "#go_notetip/#txt_notedesc")
-	arg_1_0._btnlearn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_learn")
-	arg_1_0._txtlearnstart = gohelper.findChildText(arg_1_0.viewGO, "#btn_learn/start")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local TeachNoteDetailView = class("TeachNoteDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TeachNoteDetailView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
+	self._simagebg3 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg3")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "#txt_nameen")
+	self._goitemdescs = gohelper.findChild(self.viewGO, "#go_itemdescs")
+	self._godescitem = gohelper.findChild(self.viewGO, "#go_itemdescs/#go_descitem")
+	self._gonotetip = gohelper.findChild(self.viewGO, "#go_notetip")
+	self._txtnotedesc = gohelper.findChildText(self.viewGO, "#go_notetip/#txt_notedesc")
+	self._btnlearn = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_learn")
+	self._txtlearnstart = gohelper.findChildText(self.viewGO, "#btn_learn/start")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlearn:AddClickListener(arg_2_0._btnlearnOnClick, arg_2_0)
+function TeachNoteDetailView:addEvents()
+	self._btnlearn:AddClickListener(self._btnlearnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlearn:RemoveClickListener()
+function TeachNoteDetailView:removeEvents()
+	self._btnlearn:RemoveClickListener()
 end
 
-function var_0_0._btnlearnOnClick(arg_4_0)
-	local var_4_0 = DungeonConfig.instance:getEpisodeCO(arg_4_0.viewParam)
+function TeachNoteDetailView:_btnlearnOnClick()
+	local config = DungeonConfig.instance:getEpisodeCO(self.viewParam)
 
 	TeachNoteModel.instance:setTeachNoteEnterFight(true, true)
-	DungeonFightController.instance:enterFight(var_4_0.chapterId, arg_4_0.viewParam)
+	DungeonFightController.instance:enterFight(config.chapterId, self.viewParam)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_5.png"))
-	arg_5_0._simagebg2:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_5_1.png"))
-	arg_5_0._simagebg3:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_5_2.png"))
+function TeachNoteDetailView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_5.png"))
+	self._simagebg2:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_5_1.png"))
+	self._simagebg3:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_5_2.png"))
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function TeachNoteDetailView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._descItems = {}
+function TeachNoteDetailView:onOpen()
+	self._descItems = {}
 
-	arg_7_0:_refreshView()
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_8_0)
-	local var_8_0 = DungeonConfig.instance:getEpisodeCO(arg_8_0.viewParam)
+function TeachNoteDetailView:_refreshView()
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(self.viewParam)
 
-	arg_8_0._txtname.text = var_8_0.name
-	arg_8_0._txtnameen.text = var_8_0.name_En
+	self._txtname.text = episodeCo.name
+	self._txtnameen.text = episodeCo.name_En
 
-	local var_8_1 = TeachNoteModel.instance:getTeachNoteInstructionLevelCo(arg_8_0.viewParam)
+	local lvCo = TeachNoteModel.instance:getTeachNoteInstructionLevelCo(self.viewParam)
 
-	arg_8_0._simageicon:LoadImage(ResUrl.getTeachNoteImage(var_8_1.picRes .. ".png"))
+	self._simageicon:LoadImage(ResUrl.getTeachNoteImage(lvCo.picRes .. ".png"))
 
-	arg_8_0._txtnotedesc.text = var_8_1.instructionDesc
+	self._txtnotedesc.text = lvCo.instructionDesc
 
-	if arg_8_0._descItems then
-		for iter_8_0, iter_8_1 in pairs(arg_8_0._descItems) do
-			iter_8_1:onDestroyView()
+	if self._descItems then
+		for _, v in pairs(self._descItems) do
+			v:onDestroyView()
 		end
 	end
 
-	arg_8_0._descItems = {}
+	self._descItems = {}
 
-	local var_8_2 = string.split(TeachNoteConfig.instance:getInstructionLevelCO(var_8_1.id).desc, "#")
-	local var_8_3
+	local descCos = string.split(TeachNoteConfig.instance:getInstructionLevelCO(lvCo.id).desc, "#")
+	local item
 
-	for iter_8_2 = 1, #var_8_2 do
-		local var_8_4 = gohelper.cloneInPlace(arg_8_0._godescitem)
+	for i = 1, #descCos do
+		local child = gohelper.cloneInPlace(self._godescitem)
 
-		gohelper.setActive(var_8_4, true)
+		gohelper.setActive(child, true)
 
-		local var_8_5 = TeachNoteDescItem.New()
+		item = TeachNoteDescItem.New()
 
-		var_8_5:init(var_8_4, iter_8_2, var_8_1.id)
-		table.insert(arg_8_0._descItems, var_8_5)
+		item:init(child, i, lvCo.id)
+		table.insert(self._descItems, item)
 	end
 
-	arg_8_0._txtlearnstart.text = luaLang("teachnoteview_start")
+	self._txtlearnstart.text = luaLang("teachnoteview_start")
 end
 
-function var_0_0.onClose(arg_9_0)
+function TeachNoteDetailView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	if arg_10_0._descItems then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0._descItems) do
-			iter_10_1:onDestroyView()
+function TeachNoteDetailView:onDestroyView()
+	if self._descItems then
+		for _, v in pairs(self._descItems) do
+			v:onDestroyView()
 		end
 	end
 
-	arg_10_0._descItems = {}
+	self._descItems = {}
 
-	arg_10_0._simageicon:UnLoadImage()
-	arg_10_0._simagebg:UnLoadImage()
-	arg_10_0._simagebg2:UnLoadImage()
-	arg_10_0._simagebg3:UnLoadImage()
+	self._simageicon:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagebg2:UnLoadImage()
+	self._simagebg3:UnLoadImage()
 end
 
-return var_0_0
+return TeachNoteDetailView

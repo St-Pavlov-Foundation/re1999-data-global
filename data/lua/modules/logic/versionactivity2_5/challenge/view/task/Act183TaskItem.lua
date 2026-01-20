@@ -1,144 +1,146 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/task/Act183TaskItem.lua
 
-local var_0_0 = class("Act183TaskItem", Act183TaskBaseItem)
+module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183TaskItem = class("Act183TaskItem", Act183TaskBaseItem)
 
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.go, "txt_desc")
-	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.go, "image_point")
-	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_canget")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.go, "go_hasget")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_jump")
-	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/Content")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/Content/go_rewarditem")
+function Act183TaskItem:init(go)
+	Act183TaskItem.super.init(self, go)
+
+	self._txtdesc = gohelper.findChildText(self.go, "txt_desc")
+	self._imagepoint = gohelper.findChildImage(self.go, "image_point")
+	self._btncanget = gohelper.findChildButtonWithAudio(self.go, "btn_canget")
+	self._gohasget = gohelper.findChild(self.go, "go_hasget")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.go, "btn_jump")
+	self._goscrollcontent = gohelper.findChild(self.go, "scroll_reward/Viewport/Content")
+	self._gorewarditem = gohelper.findChild(self.go, "scroll_reward/Viewport/Content/go_rewarditem")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	var_0_0.super.addEventListeners(arg_2_0)
-	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.ClickToGetReward, arg_2_0._onReceiveGetRewardInfo, arg_2_0)
+function Act183TaskItem:addEventListeners()
+	Act183TaskItem.super.addEventListeners(self)
+	self._btncanget:AddClickListener(self._btncangetOnClick, self)
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
+	self:addEventCb(Act183Controller.instance, Act183Event.ClickToGetReward, self._onReceiveGetRewardInfo, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	var_0_0.super.removeEventListeners(arg_3_0)
-	arg_3_0._btncanget:RemoveClickListener()
-	arg_3_0._btnjump:RemoveClickListener()
+function Act183TaskItem:removeEventListeners()
+	Act183TaskItem.super.removeEventListeners(self)
+	self._btncanget:RemoveClickListener()
+	self._btnjump:RemoveClickListener()
 end
 
-function var_0_0._btncangetOnClick(arg_4_0)
-	if not arg_4_0._canGet then
+function Act183TaskItem:_btncangetOnClick()
+	if not self._canGet then
 		return
 	end
 
-	arg_4_0:setBlock(true)
-	arg_4_0._animatorPlayer:Play("finish", arg_4_0._sendRpcToFinishTask, arg_4_0)
+	self:setBlock(true)
+	self._animatorPlayer:Play("finish", self._sendRpcToFinishTask, self)
 end
 
-function var_0_0._sendRpcToFinishTask(arg_5_0)
-	local var_5_0 = arg_5_0._taskId
+function Act183TaskItem:_sendRpcToFinishTask()
+	local taskId = self._taskId
 
-	TaskRpc.instance:sendFinishTaskRequest(arg_5_0._taskId, function(arg_6_0, arg_6_1)
-		if arg_6_1 ~= 0 then
+	TaskRpc.instance:sendFinishTaskRequest(self._taskId, function(__, resultCode)
+		if resultCode ~= 0 then
 			return
 		end
 
 		Act183Helper.showToastWhileGetTaskRewards({
-			var_5_0
+			taskId
 		})
 	end)
-	arg_5_0:setBlock(false)
+	self:setBlock(false)
 end
 
-function var_0_0._btnjumpOnClick(arg_7_0)
-	GameFacade.jump(arg_7_0._config.jumpId)
+function Act183TaskItem:_btnjumpOnClick()
+	GameFacade.jump(self._config.jumpId)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	var_0_0.super.onUpdateMO(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function Act183TaskItem:onUpdateMO(mo, mixType, param)
+	Act183TaskItem.super.onUpdateMO(self, mo, mixType, param)
 
-	arg_8_0._taskMo = arg_8_1.data
-	arg_8_0._config = arg_8_1.data and arg_8_1.data.config
-	arg_8_0._taskId = arg_8_1.data and arg_8_1.data.id
-	arg_8_0._canGet = Act183Helper.isTaskCanGetReward(arg_8_0._taskId)
-	arg_8_0._hasGet = Act183Helper.isTaskHasGetReward(arg_8_0._taskId)
+	self._taskMo = mo.data
+	self._config = mo.data and mo.data.config
+	self._taskId = mo.data and mo.data.id
+	self._canGet = Act183Helper.isTaskCanGetReward(self._taskId)
+	self._hasGet = Act183Helper.isTaskHasGetReward(self._taskId)
 
-	arg_8_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_9_0)
-	arg_9_0._txtdesc.text = arg_9_0._config.desc
+function Act183TaskItem:refresh()
+	self._txtdesc.text = self._config.desc
 
-	gohelper.setActive(arg_9_0._btncanget.gameObject, arg_9_0._canGet)
-	gohelper.setActive(arg_9_0._btnjump.gameObject, not arg_9_0._canGet and not arg_9_0._hasGet)
-	gohelper.setActive(arg_9_0._gohasget, arg_9_0._hasGet)
+	gohelper.setActive(self._btncanget.gameObject, self._canGet)
+	gohelper.setActive(self._btnjump.gameObject, not self._canGet and not self._hasGet)
+	gohelper.setActive(self._gohasget, self._hasGet)
 
-	if not string.nilorempty(arg_9_0._config.bonus) then
-		local var_9_0 = DungeonConfig.instance:getRewardItems(tonumber(arg_9_0._config.bonus))
-		local var_9_1 = {}
-		local var_9_2 = arg_9_0:_generateBadgeItemConfig()
+	if not string.nilorempty(self._config.bonus) then
+		local list = DungeonConfig.instance:getRewardItems(tonumber(self._config.bonus))
+		local item_list = {}
+		local badgeItemCo = self:_generateBadgeItemConfig()
 
-		table.insert(var_9_1, var_9_2)
+		table.insert(item_list, badgeItemCo)
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			table.insert(var_9_1, {
+		for _, v in ipairs(list) do
+			table.insert(item_list, {
 				isIcon = true,
-				materilType = iter_9_1[1],
-				materilId = iter_9_1[2],
-				quantity = iter_9_1[3]
+				materilType = v[1],
+				materilId = v[2],
+				quantity = v[3]
 			})
 		end
 
-		IconMgr.instance:getCommonPropItemIconList(arg_9_0, arg_9_0._onItemShow, var_9_1, arg_9_0._goscrollcontent)
+		IconMgr.instance:getCommonPropItemIconList(self, self._onItemShow, item_list, self._goscrollcontent)
 	else
-		logError(string.format("任务缺少奖励配置 taskId = %s", arg_9_0._config.id))
+		logError(string.format("任务缺少奖励配置 taskId = %s", self._config.id))
 	end
 end
 
-function var_0_0._generateBadgeItemConfig(arg_10_0)
-	if arg_10_0._config.badgeNum > 0 then
-		local var_10_0, var_10_1 = Act183Helper.getBadgeItemConfig()
+function Act183TaskItem:_generateBadgeItemConfig()
+	if self._config.badgeNum > 0 then
+		local materilType, materilId = Act183Helper.getBadgeItemConfig()
 
-		if var_10_0 and var_10_1 then
-			arg_10_0._badgeMaterilType = var_10_0
-			arg_10_0._badgeMaterilId = var_10_1
+		if materilType and materilId then
+			self._badgeMaterilType = materilType
+			self._badgeMaterilId = materilId
 
 			return {
 				isIcon = true,
-				materilType = var_10_0,
-				materilId = var_10_1,
-				quantity = arg_10_0._config.badgeNum
+				materilType = materilType,
+				materilId = materilId,
+				quantity = self._config.badgeNum
 			}
 		end
 	end
 end
 
-function var_0_0._onItemShow(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_1:onUpdateMO(arg_11_2)
-	arg_11_1:setConsume(true)
-	arg_11_1:showStackableNum2()
-	arg_11_1:isShowEffect(true)
-	arg_11_1:isShowQuality(true)
-	arg_11_1:setAutoPlay(true)
-	arg_11_1:setCountFontSize(48)
-	arg_11_1:customOnClickCallback(function()
-		if arg_11_2.materilType == arg_11_0._badgeMaterilType and arg_11_2.materilId == arg_11_0._badgeMaterilId then
+function Act183TaskItem:_onItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:isShowQuality(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
+	cell_component:customOnClickCallback(function()
+		if data.materilType == self._badgeMaterilType and data.materilId == self._badgeMaterilId then
 			return
 		end
 
-		MaterialTipController.instance:showMaterialInfo(tonumber(arg_11_2.materilType), arg_11_2.materilId)
+		MaterialTipController.instance:showMaterialInfo(tonumber(data.materilType), data.materilId)
 	end)
 end
 
-function var_0_0._onReceiveGetRewardInfo(arg_13_0, arg_13_1)
-	if arg_13_0._taskId ~= arg_13_1 or not arg_13_0.go.activeInHierarchy then
+function Act183TaskItem:_onReceiveGetRewardInfo(taskId)
+	if self._taskId ~= taskId or not self.go.activeInHierarchy then
 		return
 	end
 
-	arg_13_0._animatorPlayer:Play("finish", function()
+	self._animatorPlayer:Play("finish", function()
 		return
-	end, arg_13_0)
+	end, self)
 end
 
-return var_0_0
+return Act183TaskItem

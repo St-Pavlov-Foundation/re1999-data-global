@@ -1,41 +1,43 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndCollectionPageViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/Activity2ndCollectionPageViewContainer.lua
 
-local var_0_0 = class("Activity2ndCollectionPageViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndCollectionPageViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity2ndCollectionPageViewContainer = class("Activity2ndCollectionPageViewContainer", BaseViewContainer)
 
-	arg_1_0._view = Activity2ndCollectionPageView.New()
+function Activity2ndCollectionPageViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._view)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	self._view = Activity2ndCollectionPageView.New()
 
-	return var_1_0
+	table.insert(views, self._view)
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Activity2ndCollectionPageViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_3_0)
+function Activity2ndCollectionPageViewContainer:_overrideCloseFunc()
 	if Activity2ndModel.instance:getShowTypeMechine() then
 		Activity2ndModel.instance:changeShowTypeMechine()
-		arg_3_0._view:switchTyepMechine()
+		self._view:switchTyepMechine()
 	else
-		arg_3_0:closeThis()
+		self:closeThis()
 	end
 end
 
-return var_0_0
+return Activity2ndCollectionPageViewContainer

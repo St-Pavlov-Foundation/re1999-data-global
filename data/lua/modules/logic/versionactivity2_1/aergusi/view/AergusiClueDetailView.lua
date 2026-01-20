@@ -1,204 +1,208 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiClueDetailView.lua
 
-local var_0_0 = class("AergusiClueDetailView", BaseView)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocluedetail = gohelper.findChild(arg_1_0.viewGO, "Right/#go_cluedetail")
-	arg_1_0._goevidence = gohelper.findChild(arg_1_0.viewGO, "Right/#go_cluedetail/evidence")
-	arg_1_0._simageclueitem = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_cluedetail/evidence/#simage_clueitem")
-	arg_1_0._txtcluename = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_cluedetail/evidence/#txt_cluename")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#go_cluedetail/#scroll_desc")
-	arg_1_0._godesccontent = gohelper.findChild(arg_1_0.viewGO, "Right/#go_cluedetail/#scroll_desc/Viewport/#go_desccontent")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_cluedetail/#scroll_desc/Viewport/#go_desccontent/#go_descitem")
-	arg_1_0._btnevidence = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_cluedetail/#btn_evidence")
-	arg_1_0._imageEvidence = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_cluedetail/#btn_evidence")
+local AergusiClueDetailView = class("AergusiClueDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AergusiClueDetailView:onInitView()
+	self._gocluedetail = gohelper.findChild(self.viewGO, "Right/#go_cluedetail")
+	self._goevidence = gohelper.findChild(self.viewGO, "Right/#go_cluedetail/evidence")
+	self._simageclueitem = gohelper.findChildSingleImage(self.viewGO, "Right/#go_cluedetail/evidence/#simage_clueitem")
+	self._txtcluename = gohelper.findChildText(self.viewGO, "Right/#go_cluedetail/evidence/#txt_cluename")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "Right/#go_cluedetail/#scroll_desc")
+	self._godesccontent = gohelper.findChild(self.viewGO, "Right/#go_cluedetail/#scroll_desc/Viewport/#go_desccontent")
+	self._godescitem = gohelper.findChild(self.viewGO, "Right/#go_cluedetail/#scroll_desc/Viewport/#go_desccontent/#go_descitem")
+	self._btnevidence = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_cluedetail/#btn_evidence")
+	self._imageEvidence = gohelper.findChildImage(self.viewGO, "Right/#go_cluedetail/#btn_evidence")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnevidence:AddClickListener(arg_2_0._btnevidenceOnClick, arg_2_0)
+function AergusiClueDetailView:addEvents()
+	self._btnevidence:AddClickListener(self._btnevidenceOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnevidence:RemoveClickListener()
+function AergusiClueDetailView:removeEvents()
+	self._btnevidence:RemoveClickListener()
 end
 
-function var_0_0._btnevidenceOnClick(arg_4_0)
-	local var_4_0 = VersionActivity2_1Enum.ActivityId.Aergusi
-	local var_4_1 = arg_4_0.viewParam.episodeId
-	local var_4_2 = arg_4_0.viewParam.type
-	local var_4_3 = arg_4_0.viewParam.stepId
-	local var_4_4 = string.format("%s#%s", var_4_3, AergusiModel.instance:getCurClueId())
+function AergusiClueDetailView:_btnevidenceOnClick()
+	local actId = VersionActivity2_1Enum.ActivityId.Aergusi
+	local episodeId = self.viewParam.episodeId
+	local operationType = self.viewParam.type
+	local curStep = self.viewParam.stepId
+	local params = string.format("%s#%s", curStep, AergusiModel.instance:getCurClueId())
 
-	Activity163Rpc.instance:sendAct163EvidenceOperationRequest(var_4_0, var_4_1, var_4_2, var_4_4, arg_4_0._evidenceFinished, arg_4_0)
+	Activity163Rpc.instance:sendAct163EvidenceOperationRequest(actId, episodeId, operationType, params, self._evidenceFinished, self)
 end
 
-function var_0_0._evidenceFinished(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 ~= 0 then
+function AergusiClueDetailView:_evidenceFinished(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_5_0 = 0
-	local var_5_1 = {}
-	local var_5_2 = AergusiModel.instance.instance:getEpisodeClueConfigs(arg_5_0.viewParam.episodeId, true)
+	local groupId = 0
+	local clueList = {}
+	local clueConfigs = AergusiModel.instance.instance:getEpisodeClueConfigs(self.viewParam.episodeId, true)
 
-	for iter_5_0, iter_5_1 in pairs(var_5_2) do
-		table.insert(var_5_1, iter_5_1.clueName)
+	for _, v in pairs(clueConfigs) do
+		table.insert(clueList, v.clueName)
 	end
 
-	local var_5_3 = AergusiModel.instance:getCurClueId()
-	local var_5_4 = AergusiDialogModel.instance:getCurDialogGroup()
+	local clueId = AergusiModel.instance:getCurClueId()
+	local curGroupId = AergusiDialogModel.instance:getCurDialogGroup()
 
-	if arg_5_3.operationResult == "0" then
-		var_5_0 = arg_5_0.viewParam.groupId
+	if msg.operationResult == "0" then
+		groupId = self.viewParam.groupId
 
 		StatController.instance:track(StatEnum.EventName.AergusiClueInteractive, {
-			[StatEnum.EventProperties.EpisodeId] = tostring(arg_5_0.viewParam.episodeId),
-			[StatEnum.EventProperties.ClueInteractiveType] = arg_5_0.viewParam.type == AergusiEnum.OperationType.Refutation and "Refute" or "Evidence",
-			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(var_5_4).conditionStr,
-			[StatEnum.EventProperties.ClueId] = tostring(var_5_3),
-			[StatEnum.EventProperties.ClueName] = AergusiConfig.instance:getClueConfig(var_5_3).clueName,
-			[StatEnum.EventProperties.RefuteDialogId] = tostring(var_5_4),
-			[StatEnum.EventProperties.RefuteStepId] = tostring(arg_5_0.viewParam.stepId),
+			[StatEnum.EventProperties.EpisodeId] = tostring(self.viewParam.episodeId),
+			[StatEnum.EventProperties.ClueInteractiveType] = self.viewParam.type == AergusiEnum.OperationType.Refutation and "Refute" or "Evidence",
+			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(curGroupId).conditionStr,
+			[StatEnum.EventProperties.ClueId] = tostring(clueId),
+			[StatEnum.EventProperties.ClueName] = AergusiConfig.instance:getClueConfig(clueId).clueName,
+			[StatEnum.EventProperties.RefuteDialogId] = tostring(curGroupId),
+			[StatEnum.EventProperties.RefuteStepId] = tostring(self.viewParam.stepId),
 			[StatEnum.EventProperties.ClueInteractiveResult] = "Success",
 			[StatEnum.EventProperties.PatienceNum] = AergusiDialogModel.instance:getLeftErrorTimes(),
-			[StatEnum.EventProperties.HoldClueName] = var_5_1
+			[StatEnum.EventProperties.HoldClueName] = clueList
 		})
 	else
 		StatController.instance:track(StatEnum.EventName.AergusiClueInteractive, {
-			[StatEnum.EventProperties.EpisodeId] = tostring(arg_5_0.viewParam.episodeId),
-			[StatEnum.EventProperties.ClueInteractiveType] = arg_5_0.viewParam.type == AergusiEnum.OperationType.Refutation and "Refute" or "Evidence",
-			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(var_5_4).conditionStr,
-			[StatEnum.EventProperties.ClueId] = tostring(var_5_3),
-			[StatEnum.EventProperties.ClueName] = AergusiConfig.instance:getClueConfig(var_5_3).clueName,
-			[StatEnum.EventProperties.RefuteDialogId] = tostring(var_5_4),
-			[StatEnum.EventProperties.RefuteStepId] = tostring(arg_5_0.viewParam.stepId),
+			[StatEnum.EventProperties.EpisodeId] = tostring(self.viewParam.episodeId),
+			[StatEnum.EventProperties.ClueInteractiveType] = self.viewParam.type == AergusiEnum.OperationType.Refutation and "Refute" or "Evidence",
+			[StatEnum.EventProperties.TargetTip] = AergusiConfig.instance:getEvidenceConfig(curGroupId).conditionStr,
+			[StatEnum.EventProperties.ClueId] = tostring(clueId),
+			[StatEnum.EventProperties.ClueName] = AergusiConfig.instance:getClueConfig(clueId).clueName,
+			[StatEnum.EventProperties.RefuteDialogId] = tostring(curGroupId),
+			[StatEnum.EventProperties.RefuteStepId] = tostring(self.viewParam.stepId),
 			[StatEnum.EventProperties.ClueInteractiveResult] = "Fail",
 			[StatEnum.EventProperties.PatienceNum] = AergusiDialogModel.instance:getLeftErrorTimes(),
-			[StatEnum.EventProperties.HoldClueName] = var_5_1
+			[StatEnum.EventProperties.HoldClueName] = clueList
 		})
 
-		local var_5_5 = {
-			groupId = var_5_4,
-			stepId = arg_5_0.viewParam.stepId,
-			type = arg_5_0.viewParam.type,
-			clueId = var_5_3
-		}
+		local data = {}
 
-		AergusiDialogModel.instance:addErrorOperate(var_5_5)
+		data.groupId = curGroupId
+		data.stepId = self.viewParam.stepId
+		data.type = self.viewParam.type
+		data.clueId = clueId
+
+		AergusiDialogModel.instance:addErrorOperate(data)
 		GameFacade.showToast(ToastEnum.Act163EvidenceWrongClue)
 	end
 
-	if arg_5_0.viewParam.callback then
-		arg_5_0.viewParam.callback(arg_5_0.viewParam.callbackObj, var_5_0)
+	if self.viewParam.callback then
+		self.viewParam.callback(self.viewParam.callbackObj, groupId)
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._evidenceAnim = arg_6_0._goevidence:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._descItems = {}
+function AergusiClueDetailView:_editableInitView()
+	self._evidenceAnim = self._goevidence:GetComponent(typeof(UnityEngine.Animator))
+	self._descItems = {}
 
-	arg_6_0:_addEvents()
+	self:_addEvents()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	gohelper.setActive(arg_7_0._gocluedetail, true)
+function AergusiClueDetailView:onOpen()
+	gohelper.setActive(self._gocluedetail, true)
 
-	arg_7_0._isInEpisode = arg_7_0.viewParam and arg_7_0.viewParam.episodeId > 0
+	self._isInEpisode = self.viewParam and self.viewParam.episodeId > 0
 
-	arg_7_0:_refreshDetail()
+	self:_refreshDetail()
 end
 
-function var_0_0._refreshDetail(arg_8_0)
-	local var_8_0 = false
+function AergusiClueDetailView:_refreshDetail()
+	local evidenceShow = false
 
-	if arg_8_0.viewParam and arg_8_0.viewParam.type and (arg_8_0.viewParam.type == AergusiEnum.OperationType.Submit or arg_8_0.viewParam.type == AergusiEnum.OperationType.Refutation) then
-		var_8_0 = true
+	if self.viewParam and self.viewParam.type and (self.viewParam.type == AergusiEnum.OperationType.Submit or self.viewParam.type == AergusiEnum.OperationType.Refutation) then
+		evidenceShow = true
 	end
 
-	gohelper.setActive(arg_8_0._btnevidence.gameObject, var_8_0)
+	gohelper.setActive(self._btnevidence.gameObject, evidenceShow)
 
-	local var_8_1 = AergusiModel.instance:getCurClueId()
-	local var_8_2 = AergusiConfig.instance:getClueConfig(var_8_1)
+	local curClueId = AergusiModel.instance:getCurClueId()
+	local clueCo = AergusiConfig.instance:getClueConfig(curClueId)
 
-	arg_8_0._simageclueitem:LoadImage(ResUrl.getV2a1AergusiSingleBg(var_8_2.clueIcon))
+	self._simageclueitem:LoadImage(ResUrl.getV2a1AergusiSingleBg(clueCo.clueIcon))
 
-	arg_8_0._txtcluename.text = var_8_2.clueName
+	self._txtcluename.text = clueCo.clueName
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._descItems) do
-		iter_8_1:hide()
+	for _, v in ipairs(self._descItems) do
+		v:hide()
 	end
 
-	local var_8_3 = string.split(var_8_2.clueDesc, "|")
+	local descCos = string.split(clueCo.clueDesc, "|")
 
-	for iter_8_2 = 1, #var_8_3 do
-		if not arg_8_0._descItems[iter_8_2] then
-			local var_8_4 = gohelper.cloneInPlace(arg_8_0._godescitem, "item" .. iter_8_2)
+	for i = 1, #descCos do
+		if not self._descItems[i] then
+			local itemGo = gohelper.cloneInPlace(self._godescitem, "item" .. i)
 
-			arg_8_0._descItems[iter_8_2] = AergusiClueDescItem.New()
+			self._descItems[i] = AergusiClueDescItem.New()
 
-			arg_8_0._descItems[iter_8_2]:init(var_8_4)
+			self._descItems[i]:init(itemGo)
 		end
 
-		arg_8_0._descItems[iter_8_2]:refreshItem(var_8_3[iter_8_2])
+		self._descItems[i]:refreshItem(descCos[i])
 	end
 
-	if arg_8_0._isInEpisode and AergusiDialogModel.instance:isCurClueHasOperateError(arg_8_0.viewParam.stepId, var_8_1) or false then
-		UISpriteSetMgr.instance:setV2a1AergusiSprite(arg_8_0._imageEvidence, "v2a1_aergusi_clue_btn2")
+	local hasErrorTiped = self._isInEpisode and AergusiDialogModel.instance:isCurClueHasOperateError(self.viewParam.stepId, curClueId) or false
+
+	if hasErrorTiped then
+		UISpriteSetMgr.instance:setV2a1AergusiSprite(self._imageEvidence, "v2a1_aergusi_clue_btn2")
 	else
-		UISpriteSetMgr.instance:setV2a1AergusiSprite(arg_8_0._imageEvidence, "v2a1_aergusi_clue_btn1")
+		UISpriteSetMgr.instance:setV2a1AergusiSprite(self._imageEvidence, "v2a1_aergusi_clue_btn1")
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function AergusiClueDetailView:onClose()
 	return
 end
 
-function var_0_0._addEvents(arg_10_0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnClickClueItem, arg_10_0._onClickClue, arg_10_0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnPlayMergeSuccess, arg_10_0._onPlayMergeSuccess, arg_10_0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnPlayPromptTip, arg_10_0._refreshDetail, arg_10_0)
+function AergusiClueDetailView:_addEvents()
+	AergusiController.instance:registerCallback(AergusiEvent.OnClickClueItem, self._onClickClue, self)
+	AergusiController.instance:registerCallback(AergusiEvent.OnPlayMergeSuccess, self._onPlayMergeSuccess, self)
+	AergusiController.instance:registerCallback(AergusiEvent.OnPlayPromptTip, self._refreshDetail, self)
 end
 
-function var_0_0._removeEvents(arg_11_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnClickClueItem, arg_11_0._onClickClue, arg_11_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnPlayMergeSuccess, arg_11_0._onPlayMergeSuccess, arg_11_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnPlayPromptTip, arg_11_0._refreshDetail, arg_11_0)
+function AergusiClueDetailView:_removeEvents()
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnClickClueItem, self._onClickClue, self)
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnPlayMergeSuccess, self._onPlayMergeSuccess, self)
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnPlayPromptTip, self._refreshDetail, self)
 end
 
-function var_0_0._onClickClue(arg_12_0)
-	arg_12_0._evidenceAnim:Play("switch", 0, 0)
-	TaskDispatcher.runDelay(arg_12_0._refreshDetail, arg_12_0, 0.2)
+function AergusiClueDetailView:_onClickClue()
+	self._evidenceAnim:Play("switch", 0, 0)
+	TaskDispatcher.runDelay(self._refreshDetail, self, 0.2)
 end
 
-function var_0_0._onPlayMergeSuccess(arg_13_0, arg_13_1)
-	arg_13_0._evidenceAnim:Play("open", 0, 0)
-	arg_13_0:_refreshDetail()
+function AergusiClueDetailView:_onPlayMergeSuccess(clueId)
+	self._evidenceAnim:Play("open", 0, 0)
+	self:_refreshDetail()
 	UIBlockMgr.instance:startBlock("waitOpen")
 	TaskDispatcher.runDelay(function()
 		UIBlockMgr.instance:endBlock("waitOpen")
-		AergusiController.instance:dispatchEvent(AergusiEvent.OnPlayClueItemNewMerge, arg_13_1)
+		AergusiController.instance:dispatchEvent(AergusiEvent.OnPlayClueItemNewMerge, clueId)
 	end, nil, 0.5)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function AergusiClueDetailView:onDestroyView()
 	UIBlockMgr.instance:endBlock("waitOpen")
-	TaskDispatcher.cancelTask(arg_15_0._refreshDetail, arg_15_0)
-	arg_15_0._simageclueitem:UnLoadImage()
-	arg_15_0:_removeEvents()
+	TaskDispatcher.cancelTask(self._refreshDetail, self)
+	self._simageclueitem:UnLoadImage()
+	self:_removeEvents()
 
-	if arg_15_0._descItems then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._descItems) do
-			iter_15_1:destroy()
+	if self._descItems then
+		for _, descItem in pairs(self._descItems) do
+			descItem:destroy()
 		end
 
-		arg_15_0._descItems = nil
+		self._descItems = nil
 	end
 end
 
-return var_0_0
+return AergusiClueDetailView

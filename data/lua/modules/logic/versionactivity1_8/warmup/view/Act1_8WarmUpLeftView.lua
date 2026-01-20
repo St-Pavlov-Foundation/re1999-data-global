@@ -1,205 +1,216 @@
-﻿module("modules.logic.versionactivity1_8.warmup.view.Act1_8WarmUpLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/warmup/view/Act1_8WarmUpLeftView.lua
 
-local var_0_0 = class("Act1_8WarmUpLeftView", BaseView)
-local var_0_1 = "v1a8_warmup_img_pic"
-local var_0_2 = "v1a8_warmup_img_test"
+module("modules.logic.versionactivity1_8.warmup.view.Act1_8WarmUpLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#image_icon")
-	arg_1_0._imagetest = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#image_test")
-	arg_1_0._gocorrect = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_correct")
-	arg_1_0._btncorrect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#go_correct/#btn_correct")
-	arg_1_0._goerror = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_error")
-	arg_1_0._btnerror = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#go_error/#btn_error")
-	arg_1_0._gofile = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_file")
-	arg_1_0._btnfile = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#go_file/#btn_file")
-	arg_1_0._goinput = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_input")
-	arg_1_0._btnbubblemask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#go_input/#btn_bubblemask")
-	arg_1_0._inputanswer = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "Middle/#go_input/#input_answer")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#go_input/#btn_confirm")
-	arg_1_0._btntips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#go_input/#btn_tips")
-	arg_1_0._gobubble = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_input/#btn_tips/bubble")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "Middle/#go_input/#btn_tips/bubble/#txt_tips")
-	arg_1_0._btnbubble = gohelper.findChildButtonWithAudio(arg_1_0._gobubble, "")
-	arg_1_0._flashAnim = gohelper.findChild(arg_1_0.viewGO, "Middle/eff_badtv"):GetComponent(gohelper.Type_Animator)
+local Act1_8WarmUpLeftView = class("Act1_8WarmUpLeftView", BaseView)
+local iconName = "v1a8_warmup_img_pic"
+local testName = "v1a8_warmup_img_test"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act1_8WarmUpLeftView:onInitView()
+	self._imageicon = gohelper.findChildImage(self.viewGO, "Middle/#image_icon")
+	self._imagetest = gohelper.findChildImage(self.viewGO, "Middle/#image_test")
+	self._gocorrect = gohelper.findChild(self.viewGO, "Middle/#go_correct")
+	self._btncorrect = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#go_correct/#btn_correct")
+	self._goerror = gohelper.findChild(self.viewGO, "Middle/#go_error")
+	self._btnerror = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#go_error/#btn_error")
+	self._gofile = gohelper.findChild(self.viewGO, "Middle/#go_file")
+	self._btnfile = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#go_file/#btn_file")
+	self._goinput = gohelper.findChild(self.viewGO, "Middle/#go_input")
+	self._btnbubblemask = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#go_input/#btn_bubblemask")
+	self._inputanswer = gohelper.findChildTextMeshInputField(self.viewGO, "Middle/#go_input/#input_answer")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#go_input/#btn_confirm")
+	self._btntips = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#go_input/#btn_tips")
+	self._gobubble = gohelper.findChild(self.viewGO, "Middle/#go_input/#btn_tips/bubble")
+	self._txttips = gohelper.findChildText(self.viewGO, "Middle/#go_input/#btn_tips/bubble/#txt_tips")
+	self._btnbubble = gohelper.findChildButtonWithAudio(self._gobubble, "")
+
+	local go = gohelper.findChild(self.viewGO, "Middle/eff_badtv")
+
+	self._flashAnim = go:GetComponent(gohelper.Type_Animator)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncorrect:AddClickListener(arg_2_0._btnCorrectOnClick, arg_2_0)
-	arg_2_0._btnerror:AddClickListener(arg_2_0._btnErrorOnClick, arg_2_0)
-	arg_2_0._btnfile:AddClickListener(arg_2_0._btnFileOnClick, arg_2_0)
-	arg_2_0._btnbubblemask:AddClickListener(arg_2_0._btnMaskOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnConfirmOnClick, arg_2_0)
-	arg_2_0._btntips:AddClickListener(arg_2_0._btnTipsOnClick, arg_2_0)
-	arg_2_0._btnbubble:AddClickListener(arg_2_0._btnBubbleOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_2_0._refreshUI, arg_2_0)
-	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.SwitchEpisode, arg_2_0._onSwitchEpisode, arg_2_0)
+function Act1_8WarmUpLeftView:addEvents()
+	self._btncorrect:AddClickListener(self._btnCorrectOnClick, self)
+	self._btnerror:AddClickListener(self._btnErrorOnClick, self)
+	self._btnfile:AddClickListener(self._btnFileOnClick, self)
+	self._btnbubblemask:AddClickListener(self._btnMaskOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnConfirmOnClick, self)
+	self._btntips:AddClickListener(self._btnTipsOnClick, self)
+	self._btnbubble:AddClickListener(self._btnBubbleOnClick, self)
+	self:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, self._refreshUI, self)
+	self:addEventCb(Activity125Controller.instance, Activity125Event.SwitchEpisode, self._onSwitchEpisode, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncorrect:RemoveClickListener()
-	arg_3_0._btnerror:RemoveClickListener()
-	arg_3_0._btnfile:RemoveClickListener()
-	arg_3_0._btnbubblemask:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btntips:RemoveClickListener()
-	arg_3_0._btnbubble:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_3_0._refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.SwitchEpisode, arg_3_0._onSwitchEpisode, arg_3_0)
+function Act1_8WarmUpLeftView:removeEvents()
+	self._btncorrect:RemoveClickListener()
+	self._btnerror:RemoveClickListener()
+	self._btnfile:RemoveClickListener()
+	self._btnbubblemask:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btntips:RemoveClickListener()
+	self._btnbubble:RemoveClickListener()
+	self:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, self._refreshUI, self)
+	self:removeEventCb(Activity125Controller.instance, Activity125Event.SwitchEpisode, self._onSwitchEpisode, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Act1_8WarmUpLeftView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
+function Act1_8WarmUpLeftView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Warmup1_8.play_noise)
 
-	arg_5_0.userId = PlayerModel.instance:getMyUserId()
-	arg_5_0._actId = ActivityEnum.Activity.Activity1_8WarmUp
+	self.userId = PlayerModel.instance:getMyUserId()
+	self._actId = ActivityEnum.Activity.Activity1_8WarmUp
 
-	if Activity125Model.instance:getById(arg_5_0._actId) then
-		arg_5_0:_refreshUI()
+	local mo = Activity125Model.instance:getById(self._actId)
+
+	if mo then
+		self:_refreshUI()
 	end
 end
 
-function var_0_0.onClose(arg_6_0)
+function Act1_8WarmUpLeftView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_7_0)
+function Act1_8WarmUpLeftView:onDestroyView()
 	return
 end
 
-function var_0_0._refreshUI(arg_8_0)
-	arg_8_0._curLvl = Activity125Model.instance:getSelectEpisodeId(arg_8_0._actId)
-	arg_8_0._errorTimesKey = string.format("%s_%s_%s_%s", arg_8_0.userId, "1_8WarmUpErrorTime", arg_8_0._actId, arg_8_0._curLvl)
-	arg_8_0._episodeCfg = Activity125Config.instance:getEpisodeConfig(arg_8_0._actId, arg_8_0._curLvl)
+function Act1_8WarmUpLeftView:_refreshUI()
+	self._curLvl = Activity125Model.instance:getSelectEpisodeId(self._actId)
+	self._errorTimesKey = string.format("%s_%s_%s_%s", self.userId, "1_8WarmUpErrorTime", self._actId, self._curLvl)
+	self._episodeCfg = Activity125Config.instance:getEpisodeConfig(self._actId, self._curLvl)
 
-	UISpriteSetMgr.instance:setV1a8WarmUpSprite(arg_8_0._imageicon, var_0_1 .. arg_8_0._curLvl)
-	UISpriteSetMgr.instance:setV1a8WarmUpSprite(arg_8_0._imagetest, var_0_2 .. arg_8_0._curLvl)
+	UISpriteSetMgr.instance:setV1a8WarmUpSprite(self._imageicon, iconName .. self._curLvl)
+	UISpriteSetMgr.instance:setV1a8WarmUpSprite(self._imagetest, testName .. self._curLvl)
 
-	arg_8_0._txttips.text = arg_8_0._episodeCfg.key
+	self._txttips.text = self._episodeCfg.key
 
-	arg_8_0._inputanswer:SetText("")
-	arg_8_0:_refreshActiveStatus()
+	self._inputanswer:SetText("")
+	self:_refreshActiveStatus()
 end
 
-function var_0_0._refreshActiveStatus(arg_9_0)
-	local var_9_0 = Activity125Model.instance:isEpisodeFinished(arg_9_0._actId, arg_9_0._curLvl)
-	local var_9_1 = Activity125Model.instance:checkIsOldEpisode(arg_9_0._actId, arg_9_0._curLvl)
-	local var_9_2 = Activity125Model.instance:checkLocalIsPlay(arg_9_0._actId, arg_9_0._curLvl)
-	local var_9_3 = var_9_0 or var_9_2 or var_9_1
-	local var_9_4 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.Act1_8WarmUpClickFile .. arg_9_0.userId, 0)
-	local var_9_5 = arg_9_0._curLvl == 1 and var_9_4 == 0
+function Act1_8WarmUpLeftView:_refreshActiveStatus()
+	local isRecevied = Activity125Model.instance:isEpisodeFinished(self._actId, self._curLvl)
+	local isOld = Activity125Model.instance:checkIsOldEpisode(self._actId, self._curLvl)
+	local localPlay = Activity125Model.instance:checkLocalIsPlay(self._actId, self._curLvl)
+	local isFinished = isRecevied or localPlay or isOld
+	local clickFilePrefs = PlayerPrefsHelper.getNumber(PlayerPrefsKey.Act1_8WarmUpClickFile .. self.userId, 0)
+	local showFile = self._curLvl == 1 and clickFilePrefs == 0
 
-	gohelper.setActive(arg_9_0._imageicon, var_9_3)
-	gohelper.setActive(arg_9_0._gofile, not var_9_3 and var_9_5)
-	gohelper.setActive(arg_9_0._imagetest, not var_9_3 and not var_9_5)
-	gohelper.setActive(arg_9_0._goinput, not var_9_3 and not var_9_5)
-	gohelper.setActive(arg_9_0._gocorrect, false)
-	gohelper.setActive(arg_9_0._goerror, false)
+	gohelper.setActive(self._imageicon, isFinished)
+	gohelper.setActive(self._gofile, not isFinished and showFile)
+	gohelper.setActive(self._imagetest, not isFinished and not showFile)
+	gohelper.setActive(self._goinput, not isFinished and not showFile)
+	gohelper.setActive(self._gocorrect, false)
+	gohelper.setActive(self._goerror, false)
 
-	if arg_9_0:_getErrorTimes(arg_9_0._actId, arg_9_0._curLvl) < 3 then
-		gohelper.setActive(arg_9_0._btntips, false)
+	local errorTimes = self:_getErrorTimes(self._actId, self._curLvl)
+
+	if errorTimes < 3 then
+		gohelper.setActive(self._btntips, false)
 	else
-		gohelper.setActive(arg_9_0._btntips, true)
+		gohelper.setActive(self._btntips, true)
 	end
 end
 
-function var_0_0._btnCorrectOnClick(arg_10_0)
-	arg_10_0._flashAnim:Play("switch", 0, 0)
+function Act1_8WarmUpLeftView:_btnCorrectOnClick()
+	self._flashAnim:Play("switch", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Warmup1_8.play_noise)
 	Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate)
 end
 
-function var_0_0._btnErrorOnClick(arg_11_0)
-	gohelper.setActive(arg_11_0._imagetest, true)
-	gohelper.setActive(arg_11_0._goinput, true)
-	gohelper.setActive(arg_11_0._goerror, false)
+function Act1_8WarmUpLeftView:_btnErrorOnClick()
+	gohelper.setActive(self._imagetest, true)
+	gohelper.setActive(self._goinput, true)
+	gohelper.setActive(self._goerror, false)
 
-	if arg_11_0:_getErrorTimes(arg_11_0._actId, arg_11_0._curLvl) >= 3 then
-		gohelper.setActive(arg_11_0._btntips, true)
+	local errorTimes = self:_getErrorTimes(self._actId, self._curLvl)
+
+	if errorTimes >= 3 then
+		gohelper.setActive(self._btntips, true)
 	end
 end
 
-function var_0_0._btnFileOnClick(arg_12_0)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.Act1_8WarmUpClickFile .. arg_12_0.userId, 1)
-	gohelper.setActive(arg_12_0._gofile, false)
-	gohelper.setActive(arg_12_0._imagetest, true)
-	gohelper.setActive(arg_12_0._goinput, true)
+function Act1_8WarmUpLeftView:_btnFileOnClick()
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.Act1_8WarmUpClickFile .. self.userId, 1)
+	gohelper.setActive(self._gofile, false)
+	gohelper.setActive(self._imagetest, true)
+	gohelper.setActive(self._goinput, true)
 	Activity125Controller.instance:dispatchEvent(Activity125Event.OnClickFile)
 end
 
-function var_0_0._btnMaskOnClick(arg_13_0)
-	gohelper.setActive(arg_13_0._gobubble, false)
-	gohelper.setActive(arg_13_0._btnbubblemask, false)
+function Act1_8WarmUpLeftView:_btnMaskOnClick()
+	gohelper.setActive(self._gobubble, false)
+	gohelper.setActive(self._btnbubblemask, false)
 end
 
-function var_0_0._btnConfirmOnClick(arg_14_0)
-	local var_14_0 = LuaUtil.full2HalfWidth(arg_14_0._inputanswer:GetText())
-	local var_14_1 = string.lower(arg_14_0._episodeCfg.key)
+function Act1_8WarmUpLeftView:_btnConfirmOnClick()
+	local answer = LuaUtil.full2HalfWidth(self._inputanswer:GetText())
+	local key = string.lower(self._episodeCfg.key)
 
-	if string.lower(var_14_0) == var_14_1 then
-		arg_14_0:_delErrorTimes()
-		arg_14_0:_showRight()
+	if string.lower(answer) == key then
+		self:_delErrorTimes()
+		self:_showRight()
 	else
-		arg_14_0:_upErrorTimes()
-		arg_14_0:_showError()
+		self:_upErrorTimes()
+		self:_showError()
 	end
 end
 
-function var_0_0._btnTipsOnClick(arg_15_0)
-	local var_15_0 = arg_15_0._gobubble.activeInHierarchy
+function Act1_8WarmUpLeftView:_btnTipsOnClick()
+	local isActive = self._gobubble.activeInHierarchy
 
-	gohelper.setActive(arg_15_0._gobubble, not var_15_0)
-	gohelper.setActive(arg_15_0._btnbubblemask, not var_15_0)
+	gohelper.setActive(self._gobubble, not isActive)
+	gohelper.setActive(self._btnbubblemask, not isActive)
 end
 
-function var_0_0._btnBubbleOnClick(arg_16_0)
-	gohelper.setActive(arg_16_0._gobubble, false)
-	gohelper.setActive(arg_16_0._btnbubblemask, false)
-	arg_16_0._inputanswer:SetText(arg_16_0._episodeCfg.key)
+function Act1_8WarmUpLeftView:_btnBubbleOnClick()
+	gohelper.setActive(self._gobubble, false)
+	gohelper.setActive(self._btnbubblemask, false)
+	self._inputanswer:SetText(self._episodeCfg.key)
 end
 
-function var_0_0._showRight(arg_17_0)
-	gohelper.setActive(arg_17_0._gobubble, false)
-	gohelper.setActive(arg_17_0._btnbubblemask, false)
-	gohelper.setActive(arg_17_0._imagetest, false)
-	gohelper.setActive(arg_17_0._gocorrect, true)
-	gohelper.setActive(arg_17_0._goinput, false)
-	Activity125Model.instance:setOldEpisode(arg_17_0._actId, arg_17_0._curLvl)
+function Act1_8WarmUpLeftView:_showRight()
+	gohelper.setActive(self._gobubble, false)
+	gohelper.setActive(self._btnbubblemask, false)
+	gohelper.setActive(self._imagetest, false)
+	gohelper.setActive(self._gocorrect, true)
+	gohelper.setActive(self._goinput, false)
+	Activity125Model.instance:setOldEpisode(self._actId, self._curLvl)
 end
 
-function var_0_0._showError(arg_18_0)
+function Act1_8WarmUpLeftView:_showError()
 	AudioMgr.instance:trigger(AudioEnum.Warmup1_8.play_wrong)
-	gohelper.setActive(arg_18_0._imagetest, false)
-	gohelper.setActive(arg_18_0._goinput, false)
-	gohelper.setActive(arg_18_0._goerror, true)
+	gohelper.setActive(self._imagetest, false)
+	gohelper.setActive(self._goinput, false)
+	gohelper.setActive(self._goerror, true)
 end
 
-function var_0_0._upErrorTimes(arg_19_0)
-	local var_19_0 = arg_19_0:_getErrorTimes()
+function Act1_8WarmUpLeftView:_upErrorTimes()
+	local value = self:_getErrorTimes()
 
-	PlayerPrefsHelper.setNumber(arg_19_0._errorTimesKey, var_19_0 + 1)
+	PlayerPrefsHelper.setNumber(self._errorTimesKey, value + 1)
 end
 
-function var_0_0._getErrorTimes(arg_20_0)
-	return PlayerPrefsHelper.getNumber(arg_20_0._errorTimesKey, 0)
+function Act1_8WarmUpLeftView:_getErrorTimes()
+	return PlayerPrefsHelper.getNumber(self._errorTimesKey, 0)
 end
 
-function var_0_0._delErrorTimes(arg_21_0)
-	PlayerPrefsHelper.deleteKey(arg_21_0._errorTimesKey)
+function Act1_8WarmUpLeftView:_delErrorTimes()
+	PlayerPrefsHelper.deleteKey(self._errorTimesKey)
 end
 
-function var_0_0._onSwitchEpisode(arg_22_0)
-	arg_22_0._flashAnim:Play("switch", 0, 0)
+function Act1_8WarmUpLeftView:_onSwitchEpisode()
+	self._flashAnim:Play("switch", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Warmup1_8.play_noise)
-	arg_22_0:_refreshUI()
+	self:_refreshUI()
 end
 
-return var_0_0
+return Act1_8WarmUpLeftView

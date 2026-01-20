@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_8.act199.view.V2a8_SelfSelectCharacterFullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act199/view/V2a8_SelfSelectCharacterFullViewContainer.lua
 
-local var_0_0 = class("V2a8_SelfSelectCharacterFullViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.act199.view.V2a8_SelfSelectCharacterFullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a8_SelfSelectCharacterFullViewContainer = class("V2a8_SelfSelectCharacterFullViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V2a8_SelfSelectCharacterFullView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function V2a8_SelfSelectCharacterFullViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V2a8_SelfSelectCharacterFullView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function V2a8_SelfSelectCharacterFullViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return V2a8_SelfSelectCharacterFullViewContainer

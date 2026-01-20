@@ -1,132 +1,139 @@
-﻿module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologyResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/astrology/view/VersionActivity1_3AstrologyResultView.lua
 
-local var_0_0 = class("VersionActivity1_3AstrologyResultView", BaseView)
+module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologyResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goAnalyze = gohelper.findChild(arg_1_0.viewGO, "#go_Analyze")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_Analyze/#txt_Desc")
-	arg_1_0._simageAbstractSystem = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem")
-	arg_1_0._imagePlanetSun = gohelper.findChildImage(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem/#image_PlanetSun")
-	arg_1_0._goshuixing = gohelper.findChild(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_shuixing")
-	arg_1_0._gojinxing = gohelper.findChild(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_jinxing")
-	arg_1_0._goyueliang = gohelper.findChild(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_yueliang")
-	arg_1_0._gohuoxing = gohelper.findChild(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_huoxing")
-	arg_1_0._gomuxing = gohelper.findChild(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_muxing")
-	arg_1_0._gotuxing = gohelper.findChild(arg_1_0.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_tuxing")
-	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "#go_Rewards")
-	arg_1_0._scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_Rewards/#scroll_Rewards")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_Rewards/#scroll_Rewards/Viewport/#go_content")
-	arg_1_0._btnAstrologyAgain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Rewards/#btn_AstrologyAgain")
-	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Rewards/#btn_Claim")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_Rewards/#btn_Claim/#go_reddot")
+local VersionActivity1_3AstrologyResultView = class("VersionActivity1_3AstrologyResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_3AstrologyResultView:onInitView()
+	self._goAnalyze = gohelper.findChild(self.viewGO, "#go_Analyze")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "#go_Analyze/#txt_Desc")
+	self._simageAbstractSystem = gohelper.findChildSingleImage(self.viewGO, "#go_Analyze/#simage_AbstractSystem")
+	self._imagePlanetSun = gohelper.findChildImage(self.viewGO, "#go_Analyze/#simage_AbstractSystem/#image_PlanetSun")
+	self._goshuixing = gohelper.findChild(self.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_shuixing")
+	self._gojinxing = gohelper.findChild(self.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_jinxing")
+	self._goyueliang = gohelper.findChild(self.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_yueliang")
+	self._gohuoxing = gohelper.findChild(self.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_huoxing")
+	self._gomuxing = gohelper.findChild(self.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_muxing")
+	self._gotuxing = gohelper.findChild(self.viewGO, "#go_Analyze/#simage_AbstractSystem/#go_tuxing")
+	self._goRewards = gohelper.findChild(self.viewGO, "#go_Rewards")
+	self._scrollRewards = gohelper.findChildScrollRect(self.viewGO, "#go_Rewards/#scroll_Rewards")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_Rewards/#scroll_Rewards/Viewport/#go_content")
+	self._btnAstrologyAgain = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Rewards/#btn_AstrologyAgain")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Rewards/#btn_Claim")
+	self._goreddot = gohelper.findChild(self.viewGO, "#go_Rewards/#btn_Claim/#go_reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnAstrologyAgain:AddClickListener(arg_2_0._btnAstrologyAgainOnClick, arg_2_0)
-	arg_2_0._btnClaim:AddClickListener(arg_2_0._btnClaimOnClick, arg_2_0)
+function VersionActivity1_3AstrologyResultView:addEvents()
+	self._btnAstrologyAgain:AddClickListener(self._btnAstrologyAgainOnClick, self)
+	self._btnClaim:AddClickListener(self._btnClaimOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnAstrologyAgain:RemoveClickListener()
-	arg_3_0._btnClaim:RemoveClickListener()
+function VersionActivity1_3AstrologyResultView:removeEvents()
+	self._btnAstrologyAgain:RemoveClickListener()
+	self._btnClaim:RemoveClickListener()
 end
 
-function var_0_0._btnAstrologyAgainOnClick(arg_4_0)
+function VersionActivity1_3AstrologyResultView:_btnAstrologyAgainOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.Activity126_msg1, MsgBoxEnum.BoxType.Yes_No, function()
 		Activity126Rpc.instance:sendResetProgressRequest(VersionActivity1_3Enum.ActivityId.Act310)
 	end)
 end
 
-function var_0_0._btnClaimOnClick(arg_6_0)
+function VersionActivity1_3AstrologyResultView:_btnClaimOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.Activity126_msg3, MsgBoxEnum.BoxType.Yes_No, function()
-		local var_7_0 = Activity126Model.instance:receiveHoroscope()
+		local resultId = Activity126Model.instance:receiveHoroscope()
 
-		Activity126Rpc.instance:sendGetHoroscopeRequest(VersionActivity1_3Enum.ActivityId.Act310, var_7_0)
+		Activity126Rpc.instance:sendGetHoroscopeRequest(VersionActivity1_3Enum.ActivityId.Act310, resultId)
 	end)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:_initPlanets()
-	arg_8_0:addEventCb(Activity126Controller.instance, Activity126Event.onResetProgressReply, arg_8_0._onResetProgressReply, arg_8_0)
-	arg_8_0:addEventCb(Activity126Controller.instance, Activity126Event.onGetHoroscopeReply, arg_8_0._onGetHoroscopeReply, arg_8_0)
-	RedDotController.instance:addRedDot(arg_8_0._goreddot, RedDotEnum.DotNode.Activity1_3RedDot5)
+function VersionActivity1_3AstrologyResultView:_editableInitView()
+	self:_initPlanets()
+	self:addEventCb(Activity126Controller.instance, Activity126Event.onResetProgressReply, self._onResetProgressReply, self)
+	self:addEventCb(Activity126Controller.instance, Activity126Event.onGetHoroscopeReply, self._onGetHoroscopeReply, self)
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.Activity1_3RedDot5)
 end
 
-function var_0_0._initPlanets(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(VersionActivity1_3AstrologyEnum.Planet) do
-		if iter_9_1 >= VersionActivity1_3AstrologyEnum.Planet.shuixing then
-			local var_9_0 = arg_9_0["_go" .. iter_9_0]
-			local var_9_1 = VersionActivity1_3AstrologyModel.instance:getPlanetMo(iter_9_1)
+function VersionActivity1_3AstrologyResultView:_initPlanets()
+	for name, id in pairs(VersionActivity1_3AstrologyEnum.Planet) do
+		if id >= VersionActivity1_3AstrologyEnum.Planet.shuixing then
+			local go = self["_go" .. name]
+			local mo = VersionActivity1_3AstrologyModel.instance:getPlanetMo(id)
 
-			arg_9_0:_rotate(var_9_0, var_9_1.angle)
+			self:_rotate(go, mo.angle)
 		end
 	end
 end
 
-function var_0_0._rotate(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = (360 - arg_10_2) * Mathf.Deg2Rad
-	local var_10_1 = math.abs(recthelper.getAnchorY(arg_10_1.transform))
-	local var_10_2 = var_10_1 * Mathf.Cos(var_10_0)
-	local var_10_3 = var_10_1 * Mathf.Sin(var_10_0)
+function VersionActivity1_3AstrologyResultView:_rotate(go, angle)
+	local rad = (360 - angle) * Mathf.Deg2Rad
+	local radius = math.abs(recthelper.getAnchorY(go.transform))
+	local x = radius * Mathf.Cos(rad)
+	local y = radius * Mathf.Sin(rad)
 
-	recthelper.setAnchor(arg_10_1.transform, var_10_2, var_10_3)
+	recthelper.setAnchor(go.transform, x, y)
 end
 
-function var_0_0._onGetHoroscopeReply(arg_11_0)
-	arg_11_0:_checkResult()
+function VersionActivity1_3AstrologyResultView:_onGetHoroscopeReply()
+	self:_checkResult()
 end
 
-function var_0_0._onResetProgressReply(arg_12_0)
-	arg_12_0.viewContainer:switchTab(1)
+function VersionActivity1_3AstrologyResultView:_onResetProgressReply()
+	self.viewContainer:switchTab(1)
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
+function VersionActivity1_3AstrologyResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:_checkResult()
-	arg_14_0:_showRewardList()
-	arg_14_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play("open", 0, 0)
+function VersionActivity1_3AstrologyResultView:onOpen()
+	self:_checkResult()
+	self:_showRewardList()
+
+	local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	animator:Play("open", 0, 0)
 end
 
-function var_0_0._checkResult(arg_15_0)
-	local var_15_0 = Activity126Model.instance:receiveGetHoroscope()
-	local var_15_1 = var_15_0 and var_15_0 > 0
+function VersionActivity1_3AstrologyResultView:_checkResult()
+	local result = Activity126Model.instance:receiveGetHoroscope()
+	local finish = result and result > 0
 
-	gohelper.setActive(arg_15_0._btnAstrologyAgain, not var_15_1)
-	gohelper.setActive(arg_15_0._btnClaim, not var_15_1)
+	gohelper.setActive(self._btnAstrologyAgain, not finish)
+	gohelper.setActive(self._btnClaim, not finish)
 end
 
-function var_0_0._showRewardList(arg_16_0)
-	local var_16_0 = Activity126Model.instance:receiveHoroscope()
+function VersionActivity1_3AstrologyResultView:_showRewardList()
+	local rewardId = Activity126Model.instance:receiveHoroscope()
 
-	if not var_16_0 or var_16_0 <= 0 then
+	if not rewardId or rewardId <= 0 then
 		return
 	end
 
-	gohelper.destroyAllChildren(arg_16_0._gocontent)
+	gohelper.destroyAllChildren(self._gocontent)
 
-	local var_16_1 = Activity126Config.instance:getHoroscopeConfig(VersionActivity1_3Enum.ActivityId.Act310, var_16_0)
-	local var_16_2 = GameUtil.splitString2(var_16_1.bonus, true)
+	local config = Activity126Config.instance:getHoroscopeConfig(VersionActivity1_3Enum.ActivityId.Act310, rewardId)
+	local bonusList = GameUtil.splitString2(config.bonus, true)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_2) do
-		IconMgr.instance:getCommonPropItemIcon(arg_16_0._gocontent):setMOValue(iter_16_1[1], iter_16_1[2], iter_16_1[3])
+	for i, itemConfig in ipairs(bonusList) do
+		local rewardItem = IconMgr.instance:getCommonPropItemIcon(self._gocontent)
+
+		rewardItem:setMOValue(itemConfig[1], itemConfig[2], itemConfig[3])
 	end
 
-	arg_16_0._txtDesc.text = var_16_1.desc
+	self._txtDesc.text = config.desc
 end
 
-function var_0_0.onClose(arg_17_0)
+function VersionActivity1_3AstrologyResultView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function VersionActivity1_3AstrologyResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity1_3AstrologyResultView

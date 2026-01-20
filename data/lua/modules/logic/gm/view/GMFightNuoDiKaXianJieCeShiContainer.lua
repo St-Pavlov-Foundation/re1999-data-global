@@ -1,13 +1,15 @@
-﻿module("modules.logic.gm.view.GMFightNuoDiKaXianJieCeShiContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightNuoDiKaXianJieCeShiContainer.lua
 
-local var_0_0 = class("GMFightNuoDiKaXianJieCeShiContainer", BaseViewContainer)
+module("modules.logic.gm.view.GMFightNuoDiKaXianJieCeShiContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local GMFightNuoDiKaXianJieCeShiContainer = class("GMFightNuoDiKaXianJieCeShiContainer", BaseViewContainer)
 
-	table.insert(var_1_0, GMFightNuoDiKaXianJieCeShi.New())
+function GMFightNuoDiKaXianJieCeShiContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, GMFightNuoDiKaXianJieCeShi.New())
+
+	return views
 end
 
-return var_0_0
+return GMFightNuoDiKaXianJieCeShiContainer

@@ -1,124 +1,126 @@
-﻿module("modules.logic.survival.view.map.SurvivalToastView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalToastView.lua
 
-local var_0_0 = class("SurvivalToastView", BaseView)
-local var_0_1 = 10000
+module("modules.logic.survival.view.map.SurvivalToastView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotemplate = gohelper.findChild(arg_1_0.viewGO, "#go_item")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "#go_root")
+local SurvivalToastView = class("SurvivalToastView", BaseView)
+local OutSidePos = 10000
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalToastView:onInitView()
+	self._gotemplate = gohelper.findChild(self.viewGO, "#go_item")
+	self._gopoint = gohelper.findChild(self.viewGO, "#go_root")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._usingList = {}
-	arg_2_0._freeList = {}
-	arg_2_0._cacheMsgList = {}
-	arg_2_0._maxCount = 3
-	arg_2_0._showNextToastInterval = 0.1
-	arg_2_0.hadTask = false
+function SurvivalToastView:_editableInitView()
+	self._usingList = {}
+	self._freeList = {}
+	self._cacheMsgList = {}
+	self._maxCount = 3
+	self._showNextToastInterval = 0.1
+	self.hadTask = false
 
-	recthelper.setAnchor(arg_2_0._gotemplate.transform, var_0_1, var_0_1)
+	recthelper.setAnchor(self._gotemplate.transform, OutSidePos, OutSidePos)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	tabletool.addValues(arg_3_0._cacheMsgList, SurvivalMapModel.instance.showToastList)
+function SurvivalToastView:onOpen()
+	tabletool.addValues(self._cacheMsgList, SurvivalMapModel.instance.showToastList)
 	tabletool.clear(SurvivalMapModel.instance.showToastList)
-	arg_3_0:addToastMsg()
-	arg_3_0:addEventCb(SurvivalController.instance, SurvivalEvent.ShowToast, arg_3_0.addToastMsg, arg_3_0)
-	arg_3_0:addEventCb(SurvivalController.instance, SurvivalEvent.RecycleToast, arg_3_0._doRecycleAnimation, arg_3_0)
+	self:addToastMsg()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.ShowToast, self.addToastMsg, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.RecycleToast, self._doRecycleAnimation, self)
 end
 
-function var_0_0.onClose(arg_4_0)
-	arg_4_0:removeEventCb(SurvivalController.instance, SurvivalEvent.ShowToast, arg_4_0.addToastMsg, arg_4_0)
-	arg_4_0:removeEventCb(SurvivalController.instance, SurvivalEvent.RecycleToast, arg_4_0._doRecycleAnimation, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._showToast, arg_4_0)
+function SurvivalToastView:onClose()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.ShowToast, self.addToastMsg, self)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.RecycleToast, self._doRecycleAnimation, self)
+	TaskDispatcher.cancelTask(self._showToast, self)
 
-	arg_4_0.hadTask = false
+	self.hadTask = false
 end
 
-function var_0_0.addToastMsg(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		table.insert(arg_5_0._cacheMsgList, arg_5_1)
+function SurvivalToastView:addToastMsg(msg)
+	if msg then
+		table.insert(self._cacheMsgList, msg)
 	end
 
-	if not arg_5_0.hadTask and arg_5_0._cacheMsgList[1] then
-		arg_5_0:_showToast()
-		TaskDispatcher.runRepeat(arg_5_0._showToast, arg_5_0, arg_5_0._showNextToastInterval)
+	if not self.hadTask and self._cacheMsgList[1] then
+		self:_showToast()
+		TaskDispatcher.runRepeat(self._showToast, self, self._showNextToastInterval)
 
-		arg_5_0.hadTask = true
+		self.hadTask = true
 	end
 end
 
-function var_0_0._showToast(arg_6_0)
-	local var_6_0 = table.remove(arg_6_0._cacheMsgList, 1)
+function SurvivalToastView:_showToast()
+	local msg = table.remove(self._cacheMsgList, 1)
 
-	if not var_6_0 then
-		TaskDispatcher.cancelTask(arg_6_0._showToast, arg_6_0)
+	if not msg then
+		TaskDispatcher.cancelTask(self._showToast, self)
 
-		arg_6_0.hadTask = false
+		self.hadTask = false
 
 		return
 	end
 
-	local var_6_1 = table.remove(arg_6_0._freeList, 1)
+	local newItem = table.remove(self._freeList, 1)
 
-	if not var_6_1 then
-		local var_6_2 = gohelper.clone(arg_6_0._gotemplate, arg_6_0._gopoint)
+	if not newItem then
+		local go = gohelper.clone(self._gotemplate, self._gopoint)
 
-		var_6_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_2, SurvivalToastItem)
+		newItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalToastItem)
 	end
 
-	local var_6_3
+	local item
 
-	if #arg_6_0._usingList >= arg_6_0._maxCount then
-		local var_6_4 = arg_6_0._usingList[1]
+	if #self._usingList >= self._maxCount then
+		item = self._usingList[1]
 
-		arg_6_0:_doRecycleAnimation(var_6_4, true)
+		self:_doRecycleAnimation(item, true)
 	end
 
-	table.insert(arg_6_0._usingList, var_6_1)
-	var_6_1:setMsg(var_6_0)
-	var_6_1:appearAnimation(var_6_0)
-	arg_6_0:_refreshAllItemsAnimation()
+	table.insert(self._usingList, newItem)
+	newItem:setMsg(msg)
+	newItem:appearAnimation(msg)
+	self:_refreshAllItemsAnimation()
 end
 
-function var_0_0._doRecycleAnimation(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = tabletool.indexOf(arg_7_0._usingList, arg_7_1)
+function SurvivalToastView:_doRecycleAnimation(item, isManualRecycle)
+	local index = tabletool.indexOf(self._usingList, item)
 
-	if var_7_0 then
-		table.remove(arg_7_0._usingList, var_7_0)
+	if index then
+		table.remove(self._usingList, index)
 	end
 
-	arg_7_1:clearAllTask()
-	arg_7_1:quitAnimation(arg_7_0._recycleToast, arg_7_0)
+	item:clearAllTask()
+	item:quitAnimation(self._recycleToast, self)
 end
 
-function var_0_0._recycleToast(arg_8_0, arg_8_1)
-	arg_8_1:reset()
-	table.insert(arg_8_0._freeList, arg_8_1)
+function SurvivalToastView:_recycleToast(item)
+	item:reset()
+	table.insert(self._freeList, item)
 end
 
-function var_0_0._refreshAllItemsAnimation(arg_9_0)
-	local var_9_0 = 0
+function SurvivalToastView:_refreshAllItemsAnimation()
+	local anchorY = 0
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._usingList) do
-		local var_9_1 = iter_9_1:getHeight()
+	for i, item in ipairs(self._usingList) do
+		local itemHeight = item:getHeight()
 
-		if iter_9_0 == 1 then
-			var_9_0 = var_9_0 - var_9_1 / 2
+		if i == 1 then
+			anchorY = anchorY - itemHeight / 2
 		end
 
-		if iter_9_0 == #arg_9_0._usingList then
-			recthelper.setAnchorY(iter_9_1.tr, var_9_0 + var_9_1 / 2)
+		if i == #self._usingList then
+			recthelper.setAnchorY(item.tr, anchorY + itemHeight / 2)
 		else
-			iter_9_1:upAnimation(var_9_0 + var_9_1 / 2)
+			item:upAnimation(anchorY + itemHeight / 2)
 		end
 
-		var_9_0 = var_9_0 + var_9_1 + 10
+		anchorY = anchorY + itemHeight + 10
 	end
 end
 
-return var_0_0
+return SurvivalToastView

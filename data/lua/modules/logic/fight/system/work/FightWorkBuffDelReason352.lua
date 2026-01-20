@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.system.work.FightWorkBuffDelReason352", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBuffDelReason352.lua
 
-local var_0_0 = class("FightWorkBuffDelReason352", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkBuffDelReason352", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.targetId
-	local var_1_1 = arg_1_0.actEffectData.reserveId
-	local var_1_2 = arg_1_0.actEffectData.effectNum
+local FightWorkBuffDelReason352 = class("FightWorkBuffDelReason352", FightEffectBase)
 
-	FightController.instance:dispatchEvent(FightEvent.OnPushBuffDeleteReason, var_1_0, var_1_1, var_1_2)
+function FightWorkBuffDelReason352:onStart()
+	local targetId = self.actEffectData.targetId
+	local buffUid = self.actEffectData.reserveId
+	local reason = self.actEffectData.effectNum
 
-	return arg_1_0:onDone(true)
+	FightController.instance:dispatchEvent(FightEvent.OnPushBuffDeleteReason, targetId, buffUid, reason)
+
+	return self:onDone(true)
 end
 
-return var_0_0
+return FightWorkBuffDelReason352

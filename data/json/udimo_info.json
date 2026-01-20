@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "langId": "v3a2_udimo_info_herocoverday",
+    "icon": "udimo_info_target_03"
+  },
+  {
+    "id": 2,
+    "langId": "v3a2_udimo_info_assistcount",
+    "icon": "udimo_info_target_01"
+  },
+  {
+    "id": 3,
+    "langId": "v3a2_udimo_info_traincrittercount",
+    "icon": "udimo_info_target_02"
+  },
+  {
+    "id": 4,
+    "langId": "v3a2_udimo_info_fightcount",
+    "icon": "udimo_info_target_04"
+  }
+]

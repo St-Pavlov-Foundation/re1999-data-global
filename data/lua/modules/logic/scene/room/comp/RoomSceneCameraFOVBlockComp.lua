@@ -1,363 +1,369 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneCameraFOVBlockComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneCameraFOVBlockComp.lua
 
-local var_0_0 = class("RoomSceneCameraFOVBlockComp", BaseSceneComp)
-local var_0_1 = {
+module("modules.logic.scene.room.comp.RoomSceneCameraFOVBlockComp", package.seeall)
+
+local RoomSceneCameraFOVBlockComp = class("RoomSceneCameraFOVBlockComp", BaseSceneComp)
+local _BLOCK_TYP = {
 	Building = 2,
 	Hero = 1,
 	Vehicle = 3
 }
-local var_0_2 = {
+local _KEY_WORLD = {
 	_SCREENCOORD = "_SCREENCOORD"
 }
-local var_0_3 = UnityEngine.Shader
-local var_0_4 = {
-	alphaThreshold = var_0_3.PropertyToID("_AlphaThreshold")
+local Shader = UnityEngine.Shader
+local ShaderIDMap = {
+	alphaThreshold = Shader.PropertyToID("_AlphaThreshold")
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+function RoomSceneCameraFOVBlockComp:ctor(scene)
+	RoomSceneCameraFOVBlockComp.super.ctor(self, scene)
 
-	arg_1_0._v3PoolList = {}
-	arg_1_0._meshReaderBoundsCacheDict = {}
+	self._v3PoolList = {}
+	self._meshReaderBoundsCacheDict = {}
 end
 
-function var_0_0.onInit(arg_2_0)
+function RoomSceneCameraFOVBlockComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._scene = arg_3_0:getCurScene()
+function RoomSceneCameraFOVBlockComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
-	TaskDispatcher.runRepeat(arg_3_0._onUpdate, arg_3_0, 0.1)
+	TaskDispatcher.runRepeat(self._onUpdate, self, 0.1)
 
-	arg_3_0._buildingPosListMap = nil
+	self._buildingPosListMap = nil
 end
 
-function var_0_0._onUpdate(arg_4_0)
+function RoomSceneCameraFOVBlockComp:_onUpdate()
 	if RoomController.instance:isEditMode() then
 		return
 	end
 
-	arg_4_0:_updateEntityFovBlock()
+	self:_updateEntityFovBlock()
 end
 
-function var_0_0._checkIsNeedUpdateBlock(arg_5_0)
-	if arg_5_0:_getPlayingInteractionParam() then
-		if arg_5_0._isCameraChange then
+function RoomSceneCameraFOVBlockComp:_checkIsNeedUpdateBlock()
+	local playingInteractionParam = self:_getPlayingInteractionParam()
+
+	if playingInteractionParam then
+		if self._isCameraChange then
 			return true
 		end
-	elseif not arg_5_0._lastOpenNum or arg_5_0._lastOpenNum == 0 then
+	elseif not self._lastOpenNum or self._lastOpenNum == 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._updateEntityFovBlock(arg_6_0)
-	if not arg_6_0:_getPlayingInteractionParam() and (not arg_6_0._lastOpenNum or arg_6_0._lastOpenNum == 0) then
+function RoomSceneCameraFOVBlockComp:_updateEntityFovBlock()
+	local playingInteractionParam = self:_getPlayingInteractionParam()
+
+	if not playingInteractionParam and (not self._lastOpenNum or self._lastOpenNum == 0) then
 		return
 	end
 
-	arg_6_0._lastOpenNum = 0
+	self._lastOpenNum = 0
 
-	local var_6_0 = GameSceneMgr.instance:getCurScene()
-	local var_6_1 = RoomCharacterHelper.getAllBlockMeshRendererList()
-	local var_6_2 = {}
+	local scene = GameSceneMgr.instance:getCurScene()
+	local meshRendererList = RoomCharacterHelper.getAllBlockMeshRendererList()
+	local meshInstanceIdList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		table.insert(var_6_2, iter_6_1:GetInstanceID())
+	for i, meshRenderer in ipairs(meshRendererList) do
+		table.insert(meshInstanceIdList, meshRenderer:GetInstanceID())
 	end
 
-	local var_6_3 = arg_6_0:_getBlockMeshRendererDict(var_6_1, var_6_2)
-	local var_6_4
-	local var_6_5 = arg_6_0._lastMeshReaderDic or {}
-	local var_6_6 = {}
+	local blockMeshRendererInstanceIdDict = self:_getBlockMeshRendererDict(meshRendererList, meshInstanceIdList)
+	local mpb
+	local lastMeshReaderDic = self._lastMeshReaderDic or {}
+	local curMeshReaderDic = {}
 
-	arg_6_0._lastMeshReaderDic = var_6_6
+	self._lastMeshReaderDic = curMeshReaderDic
 
-	local var_6_7 = var_0_2._SCREENCOORD
-	local var_6_8 = var_0_4.alphaThreshold
+	local keyword = _KEY_WORLD._SCREENCOORD
+	local alphaThresholdID = ShaderIDMap.alphaThreshold
 
-	for iter_6_2, iter_6_3 in ipairs(var_6_1) do
-		local var_6_9 = var_6_2[iter_6_2]
-		local var_6_10 = var_6_3[var_6_9]
+	for i, meshRenderer in ipairs(meshRendererList) do
+		local instanceId = meshInstanceIdList[i]
+		local blockValue = blockMeshRendererInstanceIdDict[instanceId]
 
-		if var_6_10 and var_6_10 > 0 then
-			arg_6_0._lastOpenNum = arg_6_0._lastOpenNum + 1
+		if blockValue and blockValue > 0 then
+			self._lastOpenNum = self._lastOpenNum + 1
 
-			if var_6_5[var_6_9] ~= var_6_10 then
-				if not var_6_4 then
-					var_6_4 = var_6_0.mapmgr:getPropertyBlock()
+			if lastMeshReaderDic[instanceId] ~= blockValue then
+				if not mpb then
+					mpb = scene.mapmgr:getPropertyBlock()
 
-					var_6_4:Clear()
-					var_6_4:SetFloat(var_6_8, var_6_10)
+					mpb:Clear()
+					mpb:SetFloat(alphaThresholdID, blockValue)
 				end
 
-				MaterialReplaceHelper.SetRendererKeyworld(iter_6_3, var_6_7, true)
-				iter_6_3:SetPropertyBlock(var_6_4)
+				MaterialReplaceHelper.SetRendererKeyworld(meshRenderer, keyword, true)
+				meshRenderer:SetPropertyBlock(mpb)
 			end
 
-			var_6_6[var_6_9] = var_6_10
-		elseif var_6_5[var_6_9] then
-			MaterialReplaceHelper.SetRendererKeyworld(iter_6_3, var_6_7, false)
-			iter_6_3:SetPropertyBlock(nil)
+			curMeshReaderDic[instanceId] = blockValue
+		elseif lastMeshReaderDic[instanceId] then
+			MaterialReplaceHelper.SetRendererKeyworld(meshRenderer, keyword, false)
+			meshRenderer:SetPropertyBlock(nil)
 		end
 	end
 end
 
-local var_0_5 = {}
+local _EmptyIstanceIdDict = {}
 
-function var_0_0._getBlockMeshRendererDict(arg_7_0, arg_7_1, arg_7_2)
+function RoomSceneCameraFOVBlockComp:_getBlockMeshRendererDict(meshRendererList, meshInstanceIdList)
 	if not RoomController.instance:isObMode() then
-		return var_0_5
+		return _EmptyIstanceIdDict
 	end
 
-	local var_7_0, var_7_1 = arg_7_0:_getPlayingInteractionParam()
+	local playingInteractionParam, blockTypeId = self:_getPlayingInteractionParam()
 
-	if not var_7_0 then
-		return var_0_5
+	if not playingInteractionParam then
+		return _EmptyIstanceIdDict
 	end
 
-	local var_7_2 = {}
+	local posList = {}
 
-	arg_7_0:_addBlockPositionById(var_7_1, var_7_0, var_7_2)
+	self:_addBlockPositionById(blockTypeId, playingInteractionParam, posList)
 
-	if #arg_7_1 <= 0 or #var_7_2 <= 0 then
-		return var_0_5
+	if #meshRendererList <= 0 or #posList <= 0 then
+		return _EmptyIstanceIdDict
 	end
 
-	local var_7_3 = arg_7_0._scene.camera:getCameraPosition()
-	local var_7_4 = {}
-	local var_7_5 = {}
+	local cameraPosition = self._scene.camera:getCameraPosition()
+	local rayList = {}
+	local distanceList = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_2) do
-		local var_7_6 = RoomBendingHelper.worldToBendingSimple(iter_7_1)
-		local var_7_7 = Vector3.Distance(var_7_3, var_7_6)
-		local var_7_8 = Vector3.Normalize(var_7_6 - var_7_3)
-		local var_7_9 = Ray(var_7_8, var_7_3)
+	for i, pos in pairs(posList) do
+		local characterPosition = RoomBendingHelper.worldToBendingSimple(pos)
+		local distance = Vector3.Distance(cameraPosition, characterPosition)
+		local direction = Vector3.Normalize(characterPosition - cameraPosition)
+		local ray = Ray(direction, cameraPosition)
 
-		table.insert(var_7_4, var_7_9)
-		table.insert(var_7_5, var_7_7)
+		table.insert(rayList, ray)
+		table.insert(distanceList, distance)
 	end
 
-	arg_7_0:_pushVector3List(var_7_2)
+	self:_pushVector3List(posList)
 
-	local var_7_10
+	local buildingUid
 
-	if var_0_1.Hero == var_7_1 then
-		var_7_10 = var_7_0.buildingUid
-	elseif var_0_1.Building == var_7_1 then
-		var_7_10 = var_7_0
+	if _BLOCK_TYP.Hero == blockTypeId then
+		buildingUid = playingInteractionParam.buildingUid
+	elseif _BLOCK_TYP.Building == blockTypeId then
+		buildingUid = playingInteractionParam
 	end
 
-	arg_7_0._blockMeshRendererInstanceIdDict = arg_7_0._blockMeshRendererInstanceIdDict or {}
+	self._blockMeshRendererInstanceIdDict = self._blockMeshRendererInstanceIdDict or {}
 
-	local var_7_11 = arg_7_0._blockMeshRendererInstanceIdDict
-	local var_7_12 = arg_7_0._meshReaderBoundsCacheDict
+	local blockMeshRendererInstanceIdDict = self._blockMeshRendererInstanceIdDict
+	local bounsCacheDict = self._meshReaderBoundsCacheDict
 
-	if #var_7_4 > 0 then
-		local var_7_13 = {}
-		local var_7_14 = Time.time
+	if #rayList > 0 then
+		local dic = {}
+		local curTime = Time.time
 
-		arg_7_0:_addBuildingMeshRendererIdDict(var_7_10, var_7_13)
+		self:_addBuildingMeshRendererIdDict(buildingUid, dic)
 
-		for iter_7_2, iter_7_3 in ipairs(arg_7_1) do
-			local var_7_15 = arg_7_2[iter_7_2]
-			local var_7_16 = var_7_12[var_7_15]
+		for j, meshRenderer in ipairs(meshRendererList) do
+			local instanceId = meshInstanceIdList[j]
+			local boundsParam = bounsCacheDict[instanceId]
 
-			if not var_7_16 then
-				local var_7_17 = iter_7_3.bounds
+			if not boundsParam then
+				local bounds = meshRenderer.bounds
 
-				var_7_16 = {
-					bounds = var_7_17,
-					extents = var_7_17.extents,
-					center = var_7_17.center
+				boundsParam = {
+					bounds = bounds,
+					extents = bounds.extents,
+					center = bounds.center
 				}
-				var_7_12[var_7_15] = var_7_16
+				bounsCacheDict[instanceId] = boundsParam
 			end
 
-			if not var_7_13[var_7_15] and RoomCharacterHelper.isBlockCharacter(var_7_4, var_7_5, var_7_16) then
-				var_7_11[var_7_15] = 0.6
+			if not dic[instanceId] and RoomCharacterHelper.isBlockCharacter(rayList, distanceList, boundsParam) then
+				blockMeshRendererInstanceIdDict[instanceId] = 0.6
 			else
-				var_7_11[var_7_15] = 0
+				blockMeshRendererInstanceIdDict[instanceId] = 0
 			end
 		end
 
-		for iter_7_4, iter_7_5 in ipairs(var_7_4) do
-			rawset(var_7_4, iter_7_4, nil)
+		for idx, tb in ipairs(rayList) do
+			rawset(rayList, idx, nil)
 		end
 	end
 
-	return var_7_11
+	return blockMeshRendererInstanceIdDict
 end
 
-function var_0_0._addBlockPositionById(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if not arg_8_0._blockTypeFuncMap then
-		arg_8_0._blockTypeFuncMap = {
-			[var_0_1.Hero] = arg_8_0._addHeroPosFunc,
-			[var_0_1.Building] = arg_8_0._addBuildingPosFunc,
-			[var_0_1.Vehicle] = arg_8_0._addVehiclePosFunc
+function RoomSceneCameraFOVBlockComp:_addBlockPositionById(blockTypeId, param, posList)
+	if not self._blockTypeFuncMap then
+		self._blockTypeFuncMap = {
+			[_BLOCK_TYP.Hero] = self._addHeroPosFunc,
+			[_BLOCK_TYP.Building] = self._addBuildingPosFunc,
+			[_BLOCK_TYP.Vehicle] = self._addVehiclePosFunc
 		}
 	end
 
-	local var_8_0 = arg_8_0._blockTypeFuncMap[arg_8_1]
+	local func = self._blockTypeFuncMap[blockTypeId]
 
-	if var_8_0 then
-		var_8_0(arg_8_0, arg_8_2, arg_8_3)
+	if func then
+		func(self, param, posList)
 	end
 end
 
-function var_0_0._addVehiclePosFunc(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0._scene.vehiclemgr:getVehicleEntity(arg_9_1)
+function RoomSceneCameraFOVBlockComp:_addVehiclePosFunc(vehicleUid, posList)
+	local entity = self._scene.vehiclemgr:getVehicleEntity(vehicleUid)
 
-	if var_9_0 then
-		local var_9_1, var_9_2, var_9_3 = transformhelper.getPos(var_9_0.goTrs)
+	if entity then
+		local x, y, z = transformhelper.getPos(entity.goTrs)
 
-		table.insert(arg_9_2, arg_9_0:_popVector3(var_9_1, var_9_2, var_9_3))
+		table.insert(posList, self:_popVector3(x, y, z))
 
-		local var_9_4, var_9_5, var_9_6 = var_9_0.cameraFollowTargetComp:getPositionXYZ()
+		local fx, fy, fz = entity.cameraFollowTargetComp:getPositionXYZ()
 
-		table.insert(arg_9_2, arg_9_0:_popVector3(var_9_4, var_9_5, var_9_6))
+		table.insert(posList, self:_popVector3(fx, fy, fz))
 	end
 end
 
-function var_0_0._popVector3(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0
-	local var_10_1 = #arg_10_0._v3PoolList
+function RoomSceneCameraFOVBlockComp:_popVector3(x, y, z)
+	local v3
+	local len = #self._v3PoolList
 
-	if var_10_1 > 0 then
-		local var_10_2 = arg_10_0._v3PoolList[var_10_1]
+	if len > 0 then
+		v3 = self._v3PoolList[len]
 
-		table.remove(arg_10_0._v3PoolList, var_10_1)
-		var_10_2:Set(arg_10_1, arg_10_2, arg_10_3)
+		table.remove(self._v3PoolList, len)
+		v3:Set(x, y, z)
 
-		return var_10_2
+		return v3
 	end
 
-	return Vector3(arg_10_1, arg_10_2, arg_10_3)
+	return Vector3(x, y, z)
 end
 
-function var_0_0._pushVector3List(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		table.insert(arg_11_0._v3PoolList, iter_11_1)
+function RoomSceneCameraFOVBlockComp:_pushVector3List(v3List)
+	for _, ve3 in ipairs(v3List) do
+		table.insert(self._v3PoolList, ve3)
 	end
 end
 
-function var_0_0._addBuildingPosFunc(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._buildingPosListMap = arg_12_0._buildingPosListMap or {}
+function RoomSceneCameraFOVBlockComp:_addBuildingPosFunc(buildingUid, posList)
+	self._buildingPosListMap = self._buildingPosListMap or {}
 
-	local var_12_0 = arg_12_0._buildingPosListMap[arg_12_1]
+	local bPosList = self._buildingPosListMap[buildingUid]
 
-	if not var_12_0 then
-		var_12_0 = {}
-		arg_12_0._buildingPosListMap[arg_12_1] = var_12_0
+	if not bPosList then
+		bPosList = {}
+		self._buildingPosListMap[buildingUid] = bPosList
 
-		local var_12_1 = arg_12_0._scene.buildingmgr:getBuildingEntity(arg_12_1, SceneTag.RoomBuilding)
+		local entity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-		if var_12_1 then
-			local var_12_2 = var_12_1:getBodyGO()
+		if entity then
+			local bodyGO = entity:getBodyGO()
 
-			if var_12_2 then
-				local var_12_3, var_12_4, var_12_5 = transformhelper.getPos(var_12_2.transform)
+			if bodyGO then
+				local x, y, z = transformhelper.getPos(bodyGO.transform)
 
-				table.insert(var_12_0, arg_12_0:_popVector3(var_12_3, var_12_4, var_12_5))
+				table.insert(bPosList, self:_popVector3(x, y, z))
 			end
 		end
 
-		local var_12_6 = RoomMapBuildingModel.instance:getBuildingMOById(arg_12_1)
-		local var_12_7 = var_12_6 and RoomMapModel.instance:getBuildingPointList(var_12_6.buildingId, var_12_6.rotate)
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+		local pointList = buildingMO and RoomMapModel.instance:getBuildingPointList(buildingMO.buildingId, buildingMO.rotate)
 
-		if var_12_7 and var_12_6 then
-			for iter_12_0, iter_12_1 in ipairs(var_12_7) do
-				local var_12_8, var_12_9 = HexMath.hexXYToPosXY(iter_12_1.x + var_12_6.hexPoint.x, iter_12_1.y + var_12_6.hexPoint.y, RoomBlockEnum.BlockSize)
+		if pointList and buildingMO then
+			for _, point in ipairs(pointList) do
+				local tX, tZ = HexMath.hexXYToPosXY(point.x + buildingMO.hexPoint.x, point.y + buildingMO.hexPoint.y, RoomBlockEnum.BlockSize)
 
-				table.insert(var_12_0, arg_12_0:_popVector3(var_12_8, 0.11, var_12_9))
+				table.insert(bPosList, self:_popVector3(tX, 0.11, tZ))
 			end
 		end
 	end
 
-	tabletool.addValues(arg_12_2, var_12_0)
+	tabletool.addValues(posList, bPosList)
 end
 
-function var_0_0._addHeroPosFunc(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0:_addCharacterPosById(arg_13_1.heroId, arg_13_2)
-	arg_13_0:_addCharacterPosById(arg_13_1.relateHeroId, arg_13_2)
+function RoomSceneCameraFOVBlockComp:_addHeroPosFunc(param, posList)
+	self:_addCharacterPosById(param.heroId, posList)
+	self:_addCharacterPosById(param.relateHeroId, posList)
 end
 
-function var_0_0._addCharacterPosById(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0._scene.charactermgr:getCharacterEntity(arg_14_1, SceneTag.RoomCharacter)
+function RoomSceneCameraFOVBlockComp:_addCharacterPosById(heroId, posList)
+	local characterEntity = self._scene.charactermgr:getCharacterEntity(heroId, SceneTag.RoomCharacter)
 
-	if var_14_0 then
-		local var_14_1, var_14_2, var_14_3 = transformhelper.getPos(var_14_0.goTrs)
+	if characterEntity then
+		local x, y, z = transformhelper.getPos(characterEntity.goTrs)
 
-		table.insert(arg_14_2, arg_14_0:_popVector3(var_14_1, var_14_2, var_14_3))
+		table.insert(posList, self:_popVector3(x, y, z))
 	end
 end
 
-function var_0_0._addBuildingMeshRendererIdDict(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0._scene.buildingmgr:getBuildingEntity(arg_15_1, SceneTag.RoomBuilding)
-	local var_15_1 = var_15_0 and var_15_0:getCharacterMeshRendererList()
+function RoomSceneCameraFOVBlockComp:_addBuildingMeshRendererIdDict(buildingUid, dic)
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
+	local meshRendererList = buildingEntity and buildingEntity:getCharacterMeshRendererList()
 
-	if var_15_1 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-			arg_15_2[iter_15_1:GetInstanceID()] = true
+	if meshRendererList then
+		for j, meshRenderer in ipairs(meshRendererList) do
+			dic[meshRenderer:GetInstanceID()] = true
 		end
 	end
 end
 
-function var_0_0._getPlayingInteractionParam(arg_16_0)
-	local var_16_0 = RoomCharacterController.instance:getPlayingInteractionParam()
+function RoomSceneCameraFOVBlockComp:_getPlayingInteractionParam()
+	local playingInteractionParam = RoomCharacterController.instance:getPlayingInteractionParam()
 
-	if var_16_0 == nil then
-		var_16_0 = RoomCritterController.instance:getPlayingInteractionParam()
+	if playingInteractionParam == nil then
+		playingInteractionParam = RoomCritterController.instance:getPlayingInteractionParam()
 	end
 
-	if var_16_0 == nil then
-		local var_16_1 = arg_16_0._scene.camera:getCameraState()
+	if playingInteractionParam == nil then
+		local cameraState = self._scene.camera:getCameraState()
 
-		if arg_16_0._lookCaneraState == var_16_1 then
-			return arg_16_0._lookEntityUid, arg_16_0._lookLockType
+		if self._lookCaneraState == cameraState then
+			return self._lookEntityUid, self._lookLockType
 		end
 	end
 
-	return var_16_0, var_0_1.Hero
+	return playingInteractionParam, _BLOCK_TYP.Hero
 end
 
-function var_0_0.setLookBuildingUid(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_0._buildingPosListMap and arg_17_2 then
-		arg_17_0._buildingPosListMap[arg_17_2] = nil
+function RoomSceneCameraFOVBlockComp:setLookBuildingUid(cameraState, lookBuildingUid)
+	if self._buildingPosListMap and lookBuildingUid then
+		self._buildingPosListMap[lookBuildingUid] = nil
 	end
 
-	arg_17_0:_setLookEntityUid(arg_17_1, arg_17_2, var_0_1.Building)
+	self:_setLookEntityUid(cameraState, lookBuildingUid, _BLOCK_TYP.Building)
 end
 
-function var_0_0.setLookVehicleUid(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0:_setLookEntityUid(arg_18_1, arg_18_2, var_0_1.Vehicle)
+function RoomSceneCameraFOVBlockComp:setLookVehicleUid(cameraState, lookVehicleUid)
+	self:_setLookEntityUid(cameraState, lookVehicleUid, _BLOCK_TYP.Vehicle)
 end
 
-function var_0_0.clearLookParam(arg_19_0)
-	arg_19_0:_setLookEntityUid(nil, nil, nil)
+function RoomSceneCameraFOVBlockComp:clearLookParam()
+	self:_setLookEntityUid(nil, nil, nil)
 end
 
-function var_0_0._setLookEntityUid(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	arg_20_0._lookCaneraState = arg_20_1
-	arg_20_0._lookEntityUid = arg_20_2
-	arg_20_0._lookLockType = arg_20_3
+function RoomSceneCameraFOVBlockComp:_setLookEntityUid(cameraState, lookEntityUid, lockType)
+	self._lookCaneraState = cameraState
+	self._lookEntityUid = lookEntityUid
+	self._lookLockType = lockType
 end
 
-function var_0_0.onSceneClose(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._onUpdate, arg_21_0)
-	arg_21_0:_setLookEntityUid(nil, nil, nil)
+function RoomSceneCameraFOVBlockComp:onSceneClose()
+	TaskDispatcher.cancelTask(self._onUpdate, self)
+	self:_setLookEntityUid(nil, nil, nil)
 
-	local var_21_0 = arg_21_0._meshReaderBoundsCacheDict
+	local boundsDict = self._meshReaderBoundsCacheDict
 
-	for iter_21_0, iter_21_1 in pairs(var_21_0) do
-		for iter_21_2, iter_21_3 in pairs(iter_21_1) do
-			rawset(iter_21_1, iter_21_2, nil)
+	for idx, tb in pairs(boundsDict) do
+		for tbKey, tbV in pairs(tb) do
+			rawset(tb, tbKey, nil)
 		end
 
-		rawset(var_21_0, iter_21_0, nil)
+		rawset(boundsDict, idx, nil)
 	end
 end
 
-return var_0_0
+return RoomSceneCameraFOVBlockComp

@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandOptionViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/FairyLandOptionViewContainer.lua
 
-local var_0_0 = class("FairyLandOptionViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.fairyland.view.FairyLandOptionViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FairyLandOptionViewContainer = class("FairyLandOptionViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FairyLandOptionView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_LeftTop"))
+function FairyLandOptionViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FairyLandOptionView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_LeftTop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function FairyLandOptionViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self.overrideCloseFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.overrideCloseFunc(arg_3_0)
-	arg_3_0:closeThis()
+function FairyLandOptionViewContainer:overrideCloseFunc()
+	self:closeThis()
 	ViewMgr.instance:closeView(ViewName.FairyLandView)
 end
 
-return var_0_0
+return FairyLandOptionViewContainer

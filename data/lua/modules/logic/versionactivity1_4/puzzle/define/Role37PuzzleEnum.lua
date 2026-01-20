@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.define.Role37PuzzleEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/define/Role37PuzzleEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.puzzle.define.Role37PuzzleEnum", package.seeall)
 
-var_0_0.ControlType = {
+local Role37PuzzleEnum = _M
+
+Role37PuzzleEnum.ControlType = {
 	Repleace = 4,
 	Add = 1,
 	Exchange = 3,
 	Remove = 2,
 	Move = 5
 }
-var_0_0.OperType = {
+Role37PuzzleEnum.OperType = {
 	Two = 2,
 	Five = 5,
 	Seven = 7,
@@ -18,17 +20,17 @@ var_0_0.OperType = {
 	One = 1,
 	Six = 6
 }
-var_0_0.AnimalRules = {
-	[var_0_0.OperType.Three] = 1,
-	[var_0_0.OperType.One] = 2,
-	[var_0_0.OperType.Two] = 3
+Role37PuzzleEnum.AnimalRules = {
+	[Role37PuzzleEnum.OperType.Three] = 1,
+	[Role37PuzzleEnum.OperType.One] = 2,
+	[Role37PuzzleEnum.OperType.Two] = 3
 }
-var_0_0.AnimalStr = {
-	[var_0_0.AnimalRules[3]] = "v1a4_role37_puzzle_animal_wolf",
-	[var_0_0.AnimalRules[1]] = "v1a4_role37_puzzle_animal_sheep",
-	[var_0_0.AnimalRules[2]] = "v1a4_role37_puzzle_animal_dish"
+Role37PuzzleEnum.AnimalStr = {
+	[Role37PuzzleEnum.AnimalRules[3]] = "v1a4_role37_puzzle_animal_wolf",
+	[Role37PuzzleEnum.AnimalRules[1]] = "v1a4_role37_puzzle_animal_sheep",
+	[Role37PuzzleEnum.AnimalRules[2]] = "v1a4_role37_puzzle_animal_dish"
 }
-var_0_0.PuzzleId = {
+Role37PuzzleEnum.PuzzleId = {
 	Final = 801,
 	WolfSheepDish = 601,
 	SnailMove = 101,
@@ -36,9 +38,9 @@ var_0_0.PuzzleId = {
 	SortByRules7 = 501,
 	SortByRules5 = 301
 }
-var_0_0.PuzzleType = {
+Role37PuzzleEnum.PuzzleType = {
 	Sort = 2,
 	Logic = 1
 }
 
-return var_0_0
+return Role37PuzzleEnum

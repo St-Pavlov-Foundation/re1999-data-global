@@ -1,95 +1,98 @@
-﻿module("modules.logic.fight.model.mo.FightEntitySummonedInfo", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightEntitySummonedInfo.lua
 
-local var_0_0 = pureTable("FightEntitySummonedInfo")
+module("modules.logic.fight.model.mo.FightEntitySummonedInfo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.stanceDic = {}
-	arg_1_0.dataDic = {}
+local FightEntitySummonedInfo = pureTable("FightEntitySummonedInfo")
+
+function FightEntitySummonedInfo:ctor()
+	self.stanceDic = {}
+	self.dataDic = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.stanceDic = {}
-	arg_2_0.dataDic = {}
+function FightEntitySummonedInfo:init(list)
+	self.stanceDic = {}
+	self.dataDic = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		arg_2_0:addData(iter_2_1)
+	for i, v in ipairs(list) do
+		self:addData(v)
 	end
 end
 
-function var_0_0.addData(arg_3_0, arg_3_1)
-	local var_3_0 = {
-		summonedId = arg_3_1.summonedId,
-		level = arg_3_1.level,
-		uid = arg_3_1.uid,
-		fromUid = arg_3_1.fromUid
-	}
+function FightEntitySummonedInfo:addData(info)
+	local data = {}
 
-	arg_3_0.dataDic[arg_3_1.uid] = var_3_0
+	data.summonedId = info.summonedId
+	data.level = info.level
+	data.uid = info.uid
+	data.fromUid = info.fromUid
+	self.dataDic[info.uid] = data
 
-	local var_3_1 = FightConfig.instance:getSummonedConfig(var_3_0.summonedId, var_3_0.level).stanceId
-	local var_3_2 = lua_fight_summoned_stance.configDict[var_3_1]
+	local config = FightConfig.instance:getSummonedConfig(data.summonedId, data.level)
+	local stanceId = config.stanceId
+	local stanceConfig = lua_fight_summoned_stance.configDict[stanceId]
 
-	if var_3_2 then
-		arg_3_0.stanceDic[var_3_1] = arg_3_0.stanceDic[var_3_1] or {}
+	if stanceConfig then
+		self.stanceDic[stanceId] = self.stanceDic[stanceId] or {}
 
-		for iter_3_0 = 1, 20 do
-			if not var_3_2["pos" .. iter_3_0] then
+		for i = 1, 20 do
+			if not stanceConfig["pos" .. i] then
 				break
 			end
 
-			if #var_3_2["pos" .. iter_3_0] == 0 then
+			if #stanceConfig["pos" .. i] == 0 then
 				break
 			end
 
-			if not arg_3_0.stanceDic[var_3_1][iter_3_0] then
-				arg_3_0.stanceDic[var_3_1][iter_3_0] = var_3_0.uid
-				var_3_0.stanceIndex = iter_3_0
-
-				break
-			end
-		end
-	end
-
-	if not var_3_0.stanceIndex then
-		logError("挂件位置都被占用了,或者坐标数据没有配置,或者位置表找不到id:" .. var_3_1)
-
-		var_3_0.stanceIndex = 1
-	end
-
-	return var_3_0
-end
-
-function var_0_0.removeData(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getData(arg_4_1)
-	local var_4_1 = FightConfig.instance:getSummonedConfig(var_4_0.summonedId, var_4_0.level).stanceId
-
-	if arg_4_0.stanceDic[var_4_1] then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0.stanceDic[var_4_1]) do
-			if iter_4_1 == arg_4_1 then
-				arg_4_0.stanceDic[var_4_1][iter_4_0] = nil
+			if not self.stanceDic[stanceId][i] then
+				self.stanceDic[stanceId][i] = data.uid
+				data.stanceIndex = i
 
 				break
 			end
 		end
 	end
 
-	arg_4_0.dataDic[arg_4_1] = nil
+	if not data.stanceIndex then
+		logError("挂件位置都被占用了,或者坐标数据没有配置,或者位置表找不到id:" .. stanceId)
+
+		data.stanceIndex = 1
+	end
+
+	return data
 end
 
-function var_0_0.getDataDic(arg_5_0)
-	return arg_5_0.dataDic
+function FightEntitySummonedInfo:removeData(uid)
+	local data = self:getData(uid)
+	local config = FightConfig.instance:getSummonedConfig(data.summonedId, data.level)
+	local stanceId = config.stanceId
+
+	if self.stanceDic[stanceId] then
+		for k, v in pairs(self.stanceDic[stanceId]) do
+			if v == uid then
+				self.stanceDic[stanceId][k] = nil
+
+				break
+			end
+		end
+	end
+
+	self.dataDic[uid] = nil
 end
 
-function var_0_0.getData(arg_6_0, arg_6_1)
-	return arg_6_0.dataDic[arg_6_1]
+function FightEntitySummonedInfo:getDataDic()
+	return self.dataDic
 end
 
-function var_0_0.setLevel(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0.dataDic[arg_7_1]
+function FightEntitySummonedInfo:getData(uid)
+	return self.dataDic[uid]
+end
 
-	if var_7_0 then
-		var_7_0.level = arg_7_2
+function FightEntitySummonedInfo:setLevel(uid, level)
+	local info = self.dataDic[uid]
+
+	if info then
+		info.level = level
 	end
 end
 
-return var_0_0
+return FightEntitySummonedInfo

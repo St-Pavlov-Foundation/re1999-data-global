@@ -1,22 +1,24 @@
-﻿module("modules.logic.room.define.RoomEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomEnum", package.seeall)
 
-var_0_0.RoomSceneId = 601
-var_0_0.FSMEditState = {
+local RoomEnum = _M
+
+RoomEnum.RoomSceneId = 601
+RoomEnum.FSMEditState = {
 	PlaceConfirm = "EditPlaceConfirm",
 	BackConfirm = "EditBackConfirm",
 	Idle = "EditIdle",
 	WaterReform = "EditWaterReform",
 	PlaceBuildingConfirm = "EditPlaceBuildingConfirm"
 }
-var_0_0.FSMObState = {
+RoomEnum.FSMObState = {
 	CharacterBuildingShowTime = "ObCharacterBuildingShowTime",
 	PlaceCharacterConfirm = "ObPlaceCharacterConfirm",
 	PlaceBuildingConfirm = "ObPlaceBuildingConfirm",
 	Idle = "ObIdle"
 }
-var_0_0.TouchTab = {
+RoomEnum.TouchTab = {
 	RoomPartBuilding = 2,
 	RoomCritter = 5,
 	RoomTransportSite = 6,
@@ -24,7 +26,7 @@ var_0_0.TouchTab = {
 	RoomInitBuilding = 1,
 	RoomCharacter = 4
 }
-var_0_0.GameMode = {
+RoomEnum.GameMode = {
 	Ob = 1,
 	DebugPackage = 6,
 	VisitShare = 7,
@@ -35,7 +37,7 @@ var_0_0.GameMode = {
 	FishingVisit = 9,
 	Fishing = 8
 }
-var_0_0.CameraState = {
+RoomEnum.CameraState = {
 	Character = 3,
 	FirstPerson = 6,
 	InteractionCharacterBuilding = 4,
@@ -46,46 +48,46 @@ var_0_0.CameraState = {
 	Overlook = 1,
 	Normal = 2
 }
-var_0_0.ChangeCameraParamDict = {
-	[var_0_0.CameraState.InteractionCharacterBuilding] = true,
-	[var_0_0.CameraState.FirstPerson] = true,
-	[var_0_0.CameraState.ThirdPerson] = true,
-	[var_0_0.CameraState.Manufacture] = true,
-	[var_0_0.CameraState.InteractBuilding] = true
+RoomEnum.ChangeCameraParamDict = {
+	[RoomEnum.CameraState.InteractionCharacterBuilding] = true,
+	[RoomEnum.CameraState.FirstPerson] = true,
+	[RoomEnum.CameraState.ThirdPerson] = true,
+	[RoomEnum.CameraState.Manufacture] = true,
+	[RoomEnum.CameraState.InteractBuilding] = true
 }
-var_0_0.CameraOverlooks = {
-	var_0_0.CameraState.Overlook,
-	var_0_0.CameraState.OverlookAll
+RoomEnum.CameraOverlooks = {
+	RoomEnum.CameraState.Overlook,
+	RoomEnum.CameraState.OverlookAll
 }
-var_0_0.CameraCanScaleMap = {
-	[var_0_0.CameraState.Normal] = true,
-	[var_0_0.CameraState.Overlook] = true,
-	[var_0_0.CameraState.OverlookAll] = true
+RoomEnum.CameraCanScaleMap = {
+	[RoomEnum.CameraState.Normal] = true,
+	[RoomEnum.CameraState.Overlook] = true,
+	[RoomEnum.CameraState.OverlookAll] = true
 }
-var_0_0.CameraShowSpineMap = {
-	[var_0_0.CameraState.Overlook] = true,
-	[var_0_0.CameraState.Normal] = true,
-	[var_0_0.CameraState.Character] = true,
-	[var_0_0.CameraState.InteractionCharacterBuilding] = true,
-	[var_0_0.CameraState.FirstPerson] = true,
-	[var_0_0.CameraState.ThirdPerson] = true,
-	[var_0_0.CameraState.Manufacture] = true,
-	[var_0_0.CameraState.InteractBuilding] = true
+RoomEnum.CameraShowSpineMap = {
+	[RoomEnum.CameraState.Overlook] = true,
+	[RoomEnum.CameraState.Normal] = true,
+	[RoomEnum.CameraState.Character] = true,
+	[RoomEnum.CameraState.InteractionCharacterBuilding] = true,
+	[RoomEnum.CameraState.FirstPerson] = true,
+	[RoomEnum.CameraState.ThirdPerson] = true,
+	[RoomEnum.CameraState.Manufacture] = true,
+	[RoomEnum.CameraState.InteractBuilding] = true
 }
-var_0_0.CameraFollowType = {
+RoomEnum.CameraFollowType = {
 	FirstPerson = 2,
 	Normal = 1
 }
-var_0_0.IsShowUICharacterInteraction = false
-var_0_0.BlockPathEditor = "room/configs/json_block.json"
-var_0_0.InitMapConfigPathEditor = "room/configs/json_block_init.json"
-var_0_0.BlockPath = "configs/excel2json/json_block.json"
-var_0_0.InitMapConfigPath = "configs/excel2json/json_block_init.json"
-var_0_0.BlockPackageMapPath = "room/configs/json_block_package_map.json"
-var_0_0.BlockPackageDataPath = "configs/excel2json/json_block_package_data.json"
-var_0_0.FishingMapBlockPath = "configs/excel2json/json_fishing_map_block.json"
-var_0_0.FishingMapBuildingPath = "configs/excel2json/json_fishing_map_building.json"
-var_0_0.DefaultCameraParam = {
+RoomEnum.IsShowUICharacterInteraction = false
+RoomEnum.BlockPathEditor = "room/configs/json_block.json"
+RoomEnum.InitMapConfigPathEditor = "room/configs/json_block_init.json"
+RoomEnum.BlockPath = "configs/excel2json/json_block.json"
+RoomEnum.InitMapConfigPath = "configs/excel2json/json_block_init.json"
+RoomEnum.BlockPackageMapPath = "room/configs/json_block_package_map.json"
+RoomEnum.BlockPackageDataPath = "configs/excel2json/json_block_package_data.json"
+RoomEnum.FishingMapBlockPath = "configs/excel2json/json_fishing_map_block.json"
+RoomEnum.FishingMapBuildingPath = "configs/excel2json/json_fishing_map_building.json"
+RoomEnum.DefaultCameraParam = {
 	Angle = 25,
 	Height = 0,
 	Distance = 2.72,
@@ -96,8 +98,8 @@ var_0_0.DefaultCameraParam = {
 	Blur = 2,
 	OffsetY = 0
 }
-var_0_0.GuideForbidEscapeToast = 2634
-var_0_0.Toast = {
+RoomEnum.GuideForbidEscapeToast = 2634
+RoomEnum.Toast = {
 	LayoutPlanNotDelete = 2695,
 	InventoryBlockUnBack = 2651,
 	InventBlockMapPositionMax = 2644,
@@ -144,11 +146,11 @@ var_0_0.Toast = {
 	LayoutPlanUse = 2698,
 	InventoryBlockOneBackMax = 2653
 }
-var_0_0.ConstNum = {
+RoomEnum.ConstNum = {
 	InventoryBlockOneBackMax = 20
 }
-var_0_0.UseAStarPath = true
-var_0_0.AStarLayerTag = {
+RoomEnum.UseAStarPath = true
+RoomEnum.AStarLayerTag = {
 	Default = 0,
 	Water = 2,
 	AirVehicle = 11,
@@ -160,12 +162,12 @@ var_0_0.AStarLayerTag = {
 	Coast = 8,
 	NoWalkRoad = 1
 }
-var_0_0.ObtainReadState = {
+RoomEnum.ObtainReadState = {
 	FristObtain = 1,
 	ClickToView = 2,
 	None = 0
 }
-var_0_0.ComponentName = {
+RoomEnum.ComponentName = {
 	BatchRendererEntity = "BatchRendererEntity",
 	Renderer = "Renderer",
 	BoxCollider = "BoxCollider",
@@ -173,7 +175,7 @@ var_0_0.ComponentName = {
 	MeshRenderer = "MeshRenderer",
 	AnimationEventWrap = "AnimationEventWrap"
 }
-var_0_0.ComponentType = {
+RoomEnum.ComponentType = {
 	MeshRenderer = typeof(UnityEngine.MeshRenderer),
 	Transform = typeof(UnityEngine.Transform),
 	BatchRendererEntity = typeof(UrpCustom.BatchRendererEntity),
@@ -183,7 +185,7 @@ var_0_0.ComponentType = {
 	Animator = typeof(UnityEngine.Animator),
 	AnimationEventWrap = typeof(ZProj.AnimationEventWrap)
 }
-var_0_0.EffectKey = {
+RoomEnum.EffectKey = {
 	BuildingOccupyCanJudgeKey = "canJudgeOccupyEffect",
 	CharacterFootPrintGOKey = "footprintGO",
 	CharacterChatKey = "characterChatKey",
@@ -268,7 +270,7 @@ var_0_0.EffectKey = {
 		"occupyNotSide_6"
 	}
 }
-var_0_0.EffectPath = {
+RoomEnum.EffectPath = {
 	PartWorkingPath = "anim/#job",
 	LightMeshPath = "mesh/light",
 	BuildingLevelPath = "1/#level_%s",
@@ -282,7 +284,7 @@ var_0_0.EffectPath = {
 		"6/light"
 	}
 }
-var_0_0.EntityChildKey = {
+RoomEnum.EntityChildKey = {
 	ProduceGOKey = "produce",
 	BuildingLinkBlockGOKey = "#linkblock",
 	BodyGOKey = "body",
@@ -319,8 +321,8 @@ var_0_0.EntityChildKey = {
 		"interact_start_6"
 	}
 }
-var_0_0.InteractSpineAnimName = "interact"
-var_0_0.EffectRebuildCompNames = {
+RoomEnum.InteractSpineAnimName = "interact"
+RoomEnum.EffectRebuildCompNames = {
 	"vehiclefollow",
 	"nightlight",
 	"buildingLinkBlockComp",
@@ -336,41 +338,41 @@ var_0_0.EffectRebuildCompNames = {
 	"atmosphere",
 	"changeColorComp"
 }
-var_0_0.AtmosphereCacheKey = "RoomAtmosphereCacheKey_v2a5"
-var_0_0.AtmosphereTriggerType = {
+RoomEnum.AtmosphereCacheKey = "RoomAtmosphereCacheKey_v2a5"
+RoomEnum.AtmosphereTriggerType = {
 	IntegralPoint = 2,
 	CDTime = 3,
 	Disposable = 1,
 	None = 0
 }
-var_0_0.AtmosphereAudioFadeView = {
+RoomEnum.AtmosphereAudioFadeView = {
 	RoomProductLineLevelUpView = true,
 	RoomLevelUpTipsView = true,
 	RoomLevelUpView = true
 }
-var_0_0.RoomViewBlockOpMode = {
+RoomEnum.RoomViewBlockOpMode = {
 	WaterReform = 2,
 	BackBlock = 1
 }
-var_0_0.ReformMode = {
+RoomEnum.ReformMode = {
 	Water = 1,
 	Block = 2
 }
-var_0_0.BlockColorReformSelectMode = {
+RoomEnum.BlockColorReformSelectMode = {
 	All = 1,
 	Single = 2,
 	Multiple = 3
 }
-var_0_0.BlockColorReformSelectModeName = {
-	[var_0_0.BlockColorReformSelectMode.All] = "Room_block_reform_select_all",
-	[var_0_0.BlockColorReformSelectMode.Single] = "Room_block_reform_select_single",
-	[var_0_0.BlockColorReformSelectMode.Multiple] = "Room_block_reform_select_multiple"
+RoomEnum.BlockColorReformSelectModeName = {
+	[RoomEnum.BlockColorReformSelectMode.All] = "Room_block_reform_select_all",
+	[RoomEnum.BlockColorReformSelectMode.Single] = "Room_block_reform_select_single",
+	[RoomEnum.BlockColorReformSelectMode.Multiple] = "Room_block_reform_select_multiple"
 }
-var_0_0.DialogSpeakerType = {
+RoomEnum.DialogSpeakerType = {
 	Critter = 2,
 	Hero = 1
 }
-var_0_0.LayoutPlanDefaultNames = {
+RoomEnum.LayoutPlanDefaultNames = {
 	"A",
 	"B",
 	"C",
@@ -398,21 +400,21 @@ var_0_0.LayoutPlanDefaultNames = {
 	"Y",
 	"Z"
 }
-var_0_0.LayoutCopyShowNameMaxCount = 5
-var_0_0.LayoutUsedPlanId = 0
-var_0_0.IsCloseLayouCopy = true
-var_0_0.IsBlockNeedConnInit = false
-var_0_0.LayoutPlanShareCodeLimit = 12
-var_0_0.MeshUseOptimize = true
-var_0_0.AStarMeshMaxWidthOrDepth = 500
-var_0_0.WorldPosToAStarMeshWidth = 20
-var_0_0.WorldPosToAStarMeshDepth = 19.5
-var_0_0.CameraParamId = {
+RoomEnum.LayoutCopyShowNameMaxCount = 5
+RoomEnum.LayoutUsedPlanId = 0
+RoomEnum.IsCloseLayouCopy = true
+RoomEnum.IsBlockNeedConnInit = false
+RoomEnum.LayoutPlanShareCodeLimit = 12
+RoomEnum.MeshUseOptimize = true
+RoomEnum.AStarMeshMaxWidthOrDepth = 500
+RoomEnum.WorldPosToAStarMeshWidth = 20
+RoomEnum.WorldPosToAStarMeshDepth = 19.5
+RoomEnum.CameraParamId = {
 	CritterTrainHeroFollow = 2251
 }
-var_0_0.SourcesShowType = {
+RoomEnum.SourcesShowType = {
 	Cobrand = 1,
 	Normal = 0
 }
 
-return var_0_0
+return RoomEnum

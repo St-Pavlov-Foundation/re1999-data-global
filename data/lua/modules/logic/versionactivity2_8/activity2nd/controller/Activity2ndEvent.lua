@@ -1,7 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.controller.Activity2ndEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/controller/Activity2ndEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_8.activity2nd.controller.Activity2ndEvent", package.seeall)
 
-var_0_0.InputErrorOrHasReward = GameUtil.getUniqueTb()()
+local Activity2ndEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+Activity2ndEvent.InputErrorOrHasReward = _get()
+
+return Activity2ndEvent

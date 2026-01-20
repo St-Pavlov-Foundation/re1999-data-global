@@ -1,205 +1,210 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyBagView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyBagView.lua
 
-local var_0_0 = class("OdysseyBagView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyBagView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_fullbg")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Top/#btn_equip")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Top/#btn_task")
-	arg_1_0._goequipReddot = gohelper.findChild(arg_1_0.viewGO, "root/Top/#btn_equip/go_reddot")
-	arg_1_0._gotaskReddot = gohelper.findChild(arg_1_0.viewGO, "root/Top/#btn_task/go_reddot")
-	arg_1_0._scrollLeftTab = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/Equip/#scroll_LeftTab")
-	arg_1_0._goTabItem = gohelper.findChild(arg_1_0.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem/#image_icon")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem/#go_select")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem/#btn_click")
-	arg_1_0._scrollEquip = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/Equip/#scroll_Equip")
-	arg_1_0._goDetailEquip = gohelper.findChild(arg_1_0.viewGO, "root/Equip/#go_DetailEquip")
-	arg_1_0._goDetailItem = gohelper.findChild(arg_1_0.viewGO, "root/Equip/#go_DetailItem")
+local OdysseyBagView = class("OdysseyBagView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyBagView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_fullbg")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "root/Top/#btn_equip")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "root/Top/#btn_task")
+	self._goequipReddot = gohelper.findChild(self.viewGO, "root/Top/#btn_equip/go_reddot")
+	self._gotaskReddot = gohelper.findChild(self.viewGO, "root/Top/#btn_task/go_reddot")
+	self._scrollLeftTab = gohelper.findChildScrollRect(self.viewGO, "root/Equip/#scroll_LeftTab")
+	self._goTabItem = gohelper.findChild(self.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem/#image_icon")
+	self._goselect = gohelper.findChild(self.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem/#go_select")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "root/Equip/#scroll_LeftTab/Viewport/Content/#go_TabItem/#btn_click")
+	self._scrollEquip = gohelper.findChildScrollRect(self.viewGO, "root/Equip/#scroll_Equip")
+	self._goDetailEquip = gohelper.findChild(self.viewGO, "root/Equip/#go_DetailEquip")
+	self._goDetailItem = gohelper.findChild(self.viewGO, "root/Equip/#go_DetailItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, arg_2_0.onItemSelect, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, arg_2_0.OnEquipSuitSelect, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_2_0.refreshList, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshBagReddot, arg_2_0.refreshReddot, arg_2_0)
+function OdysseyBagView:addEvents()
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, self.onItemSelect, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, self.OnEquipSuitSelect, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnHeroGroupUpdate, self.refreshList, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshBagReddot, self.refreshReddot, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, arg_3_0.onItemSelect, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, arg_3_0.OnEquipSuitSelect, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_3_0.refreshList, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshBagReddot, arg_3_0.refreshReddot, arg_3_0)
+function OdysseyBagView:removeEvents()
+	self._btnequip:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipItemSelect, self.onItemSelect, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnEquipSuitSelect, self.OnEquipSuitSelect, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnHeroGroupUpdate, self.refreshList, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshBagReddot, self.refreshReddot, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function OdysseyBagView:_editableInitView()
 	OdysseyEquipSuitTabListModel.instance:initList()
 
-	arg_4_0._goEquipUnSelect = gohelper.findChild(arg_4_0.viewGO, "root/Top/#btn_equip/unselect")
-	arg_4_0._goEquipSelected = gohelper.findChild(arg_4_0.viewGO, "root/Top/#btn_equip/selected")
-	arg_4_0._goItemUnSelect = gohelper.findChild(arg_4_0.viewGO, "root/Top/#btn_task/unselect")
-	arg_4_0._goItemSelected = gohelper.findChild(arg_4_0.viewGO, "root/Top/#btn_task/selected")
-	arg_4_0._equipDetailItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goDetailEquip, OdysseyBagEquipDetailItem)
-	arg_4_0._itemDetailItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goDetailItem, OdysseyBagItemDetailItem)
-	arg_4_0._animView = gohelper.findChildComponent(arg_4_0.viewGO, "", gohelper.Type_Animator)
-	arg_4_0._animEquip = gohelper.findChildComponent(arg_4_0.viewGO, "root/Equip/#go_DetailEquip", gohelper.Type_Animator)
-	arg_4_0._animItem = gohelper.findChildComponent(arg_4_0.viewGO, "root/Equip/#go_DetailItem", gohelper.Type_Animator)
-	arg_4_0._animScroll = gohelper.findChildComponent(arg_4_0.viewGO, "root/Equip/#scroll_Equip", gohelper.Type_Animator)
+	self._goEquipUnSelect = gohelper.findChild(self.viewGO, "root/Top/#btn_equip/unselect")
+	self._goEquipSelected = gohelper.findChild(self.viewGO, "root/Top/#btn_equip/selected")
+	self._goItemUnSelect = gohelper.findChild(self.viewGO, "root/Top/#btn_task/unselect")
+	self._goItemSelected = gohelper.findChild(self.viewGO, "root/Top/#btn_task/selected")
+	self._equipDetailItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goDetailEquip, OdysseyBagEquipDetailItem)
+	self._itemDetailItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goDetailItem, OdysseyBagItemDetailItem)
+	self._animView = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
+	self._animEquip = gohelper.findChildComponent(self.viewGO, "root/Equip/#go_DetailEquip", gohelper.Type_Animator)
+	self._animItem = gohelper.findChildComponent(self.viewGO, "root/Equip/#go_DetailItem", gohelper.Type_Animator)
+	self._animScroll = gohelper.findChildComponent(self.viewGO, "root/Equip/#scroll_Equip", gohelper.Type_Animator)
 end
 
-function var_0_0._btnequipOnClick(arg_5_0)
-	arg_5_0:switchList(OdysseyEnum.ItemType.Equip)
+function OdysseyBagView:_btnequipOnClick()
+	self:switchList(OdysseyEnum.ItemType.Equip)
 end
 
-function var_0_0._btntaskOnClick(arg_6_0)
+function OdysseyBagView:_btntaskOnClick()
 	if not OdysseyItemModel.instance:haveTaskItem() then
 		logError("奥德赛下半角色活动 暂无任务道具")
 
 		return
 	end
 
-	arg_6_0:switchList(OdysseyEnum.ItemType.Item)
+	self:switchList(OdysseyEnum.ItemType.Item)
 end
 
-function var_0_0.switchList(arg_7_0, arg_7_1)
-	if arg_7_0._itemType == arg_7_1 then
+function OdysseyBagView:switchList(targetType)
+	if self._itemType == targetType then
 		return
 	end
 
-	arg_7_0._itemType = arg_7_1
-	arg_7_0._equipFilterType = nil
+	self._itemType = targetType
+	self._equipFilterType = nil
 
 	OdysseyEquipSuitTabListModel.instance:clearSelect()
 
-	if arg_7_1 == OdysseyEnum.ItemType.Equip then
+	if targetType == OdysseyEnum.ItemType.Equip then
 		OdysseyEquipSuitTabListModel.instance:selectAllTag()
 	end
 
-	arg_7_0:refreshList()
-	arg_7_0:refreshItemBtnState()
+	self:refreshList()
+	self:refreshItemBtnState()
 
-	local var_7_0 = OdysseyEquipListModel.instance:getFirstMo()
+	local firstMo = OdysseyEquipListModel.instance:getFirstMo()
 
-	if var_7_0 then
-		OdysseyEquipListModel.instance:setSelect(var_7_0.itemMo.uid)
+	if firstMo then
+		OdysseyEquipListModel.instance:setSelect(firstMo.itemMo.uid)
 	else
-		arg_7_0:onItemSelect(nil)
+		self:onItemSelect(nil)
 	end
 end
 
-function var_0_0.refreshItemBtnState(arg_8_0)
-	local var_8_0 = arg_8_0._itemType == OdysseyEnum.ItemType.Equip
-	local var_8_1 = OdysseyItemModel.instance:haveTaskItem()
+function OdysseyBagView:refreshItemBtnState()
+	local isEquip = self._itemType == OdysseyEnum.ItemType.Equip
+	local haveTaskItem = OdysseyItemModel.instance:haveTaskItem()
 
-	gohelper.setActive(arg_8_0._btntask, var_8_1)
-	gohelper.setActive(arg_8_0._goItemSelected, not var_8_0)
-	gohelper.setActive(arg_8_0._goItemUnSelect, var_8_0)
-	gohelper.setActive(arg_8_0._goEquipSelected, var_8_0)
-	gohelper.setActive(arg_8_0._goEquipUnSelect, not var_8_0)
-	gohelper.setActive(arg_8_0._scrollLeftTab, var_8_0)
+	gohelper.setActive(self._btntask, haveTaskItem)
+	gohelper.setActive(self._goItemSelected, not isEquip)
+	gohelper.setActive(self._goItemUnSelect, isEquip)
+	gohelper.setActive(self._goEquipSelected, isEquip)
+	gohelper.setActive(self._goEquipUnSelect, not isEquip)
+	gohelper.setActive(self._scrollLeftTab, isEquip)
 end
 
-function var_0_0._btnclickOnClick(arg_9_0)
+function OdysseyBagView:_btnclickOnClick()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function OdysseyBagView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	local var_11_0 = arg_11_0.viewParam
-	local var_11_1 = var_11_0 and var_11_0.itemType and var_11_0.itemType or OdysseyEnum.ItemType.Equip
+function OdysseyBagView:onOpen()
+	local viewParam = self.viewParam
+	local itemType = viewParam and viewParam.itemType and viewParam.itemType or OdysseyEnum.ItemType.Equip
 
-	if var_11_1 == OdysseyEnum.ItemType.Item and not OdysseyItemModel.instance:haveTaskItem() then
+	if itemType == OdysseyEnum.ItemType.Item and not OdysseyItemModel.instance:haveTaskItem() then
 		logError("奥德赛下半角色活动 暂无任务道具")
 
-		var_11_1 = OdysseyEnum.ItemType.Equip
+		itemType = OdysseyEnum.ItemType.Equip
 	end
 
-	arg_11_0:switchList(var_11_1)
+	self:switchList(itemType)
 	OdysseyStatHelper.instance:initViewStartTime()
 end
 
-function var_0_0.refreshList(arg_12_0)
-	OdysseyEquipListModel.instance:copyListFromEquipModel(arg_12_0._itemType, arg_12_0._equipFilterType, OdysseyEnum.BagType.Bag)
-	arg_12_0:refreshReddot()
-	arg_12_0._animScroll:Play("flash", 0, 0)
+function OdysseyBagView:refreshList()
+	OdysseyEquipListModel.instance:copyListFromEquipModel(self._itemType, self._equipFilterType, OdysseyEnum.BagType.Bag)
+	self:refreshReddot()
+	self._animScroll:Play("flash", 0, 0)
 end
 
-function var_0_0.onItemSelect(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1 ~= nil
-	local var_13_1 = arg_13_0._itemType == OdysseyEnum.ItemType.Equip
+function OdysseyBagView:onItemSelect(mo)
+	local isSelect = mo ~= nil
+	local currentType = self._itemType
+	local isEquip = currentType == OdysseyEnum.ItemType.Equip
 
-	gohelper.setActive(arg_13_0._goDetailEquip, var_13_0 and var_13_1)
-	gohelper.setActive(arg_13_0._goDetailItem, var_13_0 and not var_13_1)
+	gohelper.setActive(self._goDetailEquip, isSelect and isEquip)
+	gohelper.setActive(self._goDetailItem, isSelect and not isEquip)
 
-	if var_13_0 and var_13_1 then
-		arg_13_0._animEquip:Play("open", 0, 0)
-	elseif var_13_0 and not var_13_1 then
-		arg_13_0._animItem:Play("open", 0, 0)
+	if isSelect and isEquip then
+		self._animEquip:Play("open", 0, 0)
+	elseif isSelect and not isEquip then
+		self._animItem:Play("open", 0, 0)
 	end
 
-	if var_13_0 then
-		(var_13_1 and arg_13_0._equipDetailItem or arg_13_0._itemDetailItem):setInfo(arg_13_1.itemMo)
+	if isSelect then
+		local item = isEquip and self._equipDetailItem or self._itemDetailItem
+
+		item:setInfo(mo.itemMo)
 	end
 
-	arg_13_0:refreshReddot()
+	self:refreshReddot()
 end
 
-function var_0_0.OnEquipSuitSelect(arg_14_0, arg_14_1)
-	local var_14_0
+function OdysseyBagView:OnEquipSuitSelect(mo)
+	local suitType
 
-	if arg_14_1.type == OdysseyEnum.EquipSuitType.All then
+	if mo.type == OdysseyEnum.EquipSuitType.All then
 		-- block empty
 	else
-		var_14_0 = arg_14_1 and arg_14_1.suitId
+		suitType = mo and mo.suitId
 
-		if arg_14_0._equipFilterType == var_14_0 then
+		if self._equipFilterType == suitType then
 			return
 		end
 	end
 
-	arg_14_0._equipFilterType = var_14_0
+	self._equipFilterType = suitType
 
-	local var_14_1 = OdysseyEquipListModel.instance:getSelectMo()
+	local selectMo = OdysseyEquipListModel.instance:getSelectMo()
 
-	arg_14_0:refreshList()
-	OdysseyEquipListModel.instance:setSelect(var_14_1.uid)
+	self:refreshList()
+	OdysseyEquipListModel.instance:setSelect(selectMo.uid)
 end
 
-function var_0_0.refreshReddot(arg_15_0)
-	local var_15_0 = OdysseyItemModel.instance:checkBagTagShowReddot(OdysseyEnum.ItemType.Equip)
+function OdysseyBagView:refreshReddot()
+	local canShowEquipReddot = OdysseyItemModel.instance:checkBagTagShowReddot(OdysseyEnum.ItemType.Equip)
 
-	gohelper.setActive(arg_15_0._goequipReddot, var_15_0)
+	gohelper.setActive(self._goequipReddot, canShowEquipReddot)
 
-	local var_15_1 = OdysseyItemModel.instance:checkBagTagShowReddot(OdysseyEnum.ItemType.Item)
+	local canShowTaskReddot = OdysseyItemModel.instance:checkBagTagShowReddot(OdysseyEnum.ItemType.Item)
 
-	gohelper.setActive(arg_15_0._gotaskReddot, var_15_1)
+	gohelper.setActive(self._gotaskReddot, canShowTaskReddot)
 end
 
-function var_0_0.onClose(arg_16_0)
-	local var_16_0 = OdysseyItemModel.instance:getHasClickItemList()
+function OdysseyBagView:onClose()
+	local hasClickItemList = OdysseyItemModel.instance:getHasClickItemList()
 
-	if #var_16_0 > 0 then
-		OdysseyRpc.instance:sendOdysseyBagUpdateItemNewFlagRequest(var_16_0)
+	if #hasClickItemList > 0 then
+		OdysseyRpc.instance:sendOdysseyBagUpdateItemNewFlagRequest(hasClickItemList)
 	end
 
 	OdysseyStatHelper.instance:sendOdysseyViewStayTime("OdysseyBagView")
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function OdysseyBagView:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseyBagView

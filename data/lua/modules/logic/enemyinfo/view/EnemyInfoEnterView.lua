@@ -1,140 +1,147 @@
-﻿module("modules.logic.enemyinfo.view.EnemyInfoEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/view/EnemyInfoEnterView.lua
 
-local var_0_0 = class("EnemyInfoEnterView", BaseViewExtended)
+module("modules.logic.enemyinfo.view.EnemyInfoEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local EnemyInfoEnterView = class("EnemyInfoEnterView", BaseViewExtended)
+
+function EnemyInfoEnterView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EnemyInfoEnterView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EnemyInfoEnterView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.simageRightBg = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg_container/#simage_rightbg")
+function EnemyInfoEnterView:_editableInitView()
+	self.simageRightBg = gohelper.findChildSingleImage(self.viewGO, "bg_container/#simage_rightbg")
 
-	arg_4_0.simageRightBg:LoadImage("singlebg/dungeon/bg_battledetail.png")
+	self.simageRightBg:LoadImage("singlebg/dungeon/bg_battledetail.png")
 
-	arg_4_0.trTabContainer = gohelper.findChildComponent(arg_4_0.viewGO, "#go_tab_container", gohelper.Type_Transform)
+	self.trTabContainer = gohelper.findChildComponent(self.viewGO, "#go_tab_container", gohelper.Type_Transform)
 
-	for iter_4_0 = 0, arg_4_0.trTabContainer.childCount - 1 do
-		local var_4_0 = arg_4_0.trTabContainer:GetChild(iter_4_0)
+	for i = 0, self.trTabContainer.childCount - 1 do
+		local tr = self.trTabContainer:GetChild(i)
 
-		gohelper.setActive(var_4_0.gameObject, false)
+		gohelper.setActive(tr.gameObject, false)
 	end
 end
 
-function var_0_0.initHandleDict(arg_5_0)
-	if arg_5_0.tabEnum2HandleFunc then
+function EnemyInfoEnterView:initHandleDict()
+	if self.tabEnum2HandleFunc then
 		return
 	end
 
-	arg_5_0.tabEnum2HandleFunc = {
-		[EnemyInfoEnum.TabEnum.Normal] = arg_5_0.refreshNormal,
-		[EnemyInfoEnum.TabEnum.WeekWalk] = arg_5_0.refreshWeekWalk,
-		[EnemyInfoEnum.TabEnum.WeekWalk_2] = arg_5_0.refreshWeekWalk_2,
-		[EnemyInfoEnum.TabEnum.Season123] = arg_5_0.refreshSeason,
-		[EnemyInfoEnum.TabEnum.BossRush] = arg_5_0.refreshBossRush,
-		[EnemyInfoEnum.TabEnum.Act191] = arg_5_0.refreshNormal
+	self.tabEnum2HandleFunc = {
+		[EnemyInfoEnum.TabEnum.Normal] = self.refreshNormal,
+		[EnemyInfoEnum.TabEnum.WeekWalk] = self.refreshWeekWalk,
+		[EnemyInfoEnum.TabEnum.WeekWalk_2] = self.refreshWeekWalk_2,
+		[EnemyInfoEnum.TabEnum.Season123] = self.refreshSeason,
+		[EnemyInfoEnum.TabEnum.BossRush] = self.refreshBossRush,
+		[EnemyInfoEnum.TabEnum.Act191] = self.refreshNormal
 	}
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.enemyInfoMo
+function EnemyInfoEnterView:onOpen()
+	local enemyInfoMo = self.enemyInfoMo
 
-	var_6_0:setTabEnum(arg_6_0.viewParam.tabEnum)
-	arg_6_0:initHandleDict()
-	;(arg_6_0.tabEnum2HandleFunc[var_6_0.tabEnum] or arg_6_0.refreshNormal)(arg_6_0)
+	enemyInfoMo:setTabEnum(self.viewParam.tabEnum)
+	self:initHandleDict()
+
+	local handleFunc = self.tabEnum2HandleFunc[enemyInfoMo.tabEnum]
+
+	handleFunc = handleFunc or self.refreshNormal
+
+	handleFunc(self)
 end
 
-function var_0_0.refreshNormal(arg_7_0)
-	local var_7_0 = arg_7_0.enemyInfoMo
+function EnemyInfoEnterView:refreshNormal()
+	local enemyInfoMo = self.enemyInfoMo
 
-	var_7_0:setShowLeftTab(false)
-	var_7_0:updateBattleId(arg_7_0.viewParam.battleId)
+	enemyInfoMo:setShowLeftTab(false)
+	enemyInfoMo:updateBattleId(self.viewParam.battleId)
 end
 
-function var_0_0.refreshWeekWalk(arg_8_0)
-	arg_8_0.tabView = arg_8_0:createTabView(EnemyInfoWeekWalkTabView)
+function EnemyInfoEnterView:refreshWeekWalk()
+	self.tabView = self:createTabView(EnemyInfoWeekWalkTabView)
 
-	arg_8_0.tabView:onOpen()
+	self.tabView:onOpen()
 end
 
-function var_0_0.refreshWeekWalk_2(arg_9_0)
-	arg_9_0.tabView = arg_9_0:createTabView(EnemyInfoWeekWalk_2TabView)
+function EnemyInfoEnterView:refreshWeekWalk_2()
+	self.tabView = self:createTabView(EnemyInfoWeekWalk_2TabView)
 
-	arg_9_0.tabView:onOpen()
+	self.tabView:onOpen()
 end
 
-function var_0_0.refreshSeason(arg_10_0)
-	local var_10_0 = arg_10_0.enemyInfoMo
+function EnemyInfoEnterView:refreshSeason()
+	local enemyInfoMo = self.enemyInfoMo
 
-	if arg_10_0.viewParam.showLeftTab then
-		var_10_0:setShowLeftTab(true)
+	if self.viewParam.showLeftTab then
+		enemyInfoMo:setShowLeftTab(true)
 
-		arg_10_0.tabView = arg_10_0:createTabView(EnemyInfoSeason123TabView)
+		self.tabView = self:createTabView(EnemyInfoSeason123TabView)
 
-		arg_10_0.tabView:onOpen()
+		self.tabView:onOpen()
 	else
-		var_10_0:setShowLeftTab(false)
-		var_10_0:updateBattleId(arg_10_0.viewParam.battleId)
+		enemyInfoMo:setShowLeftTab(false)
+		enemyInfoMo:updateBattleId(self.viewParam.battleId)
 	end
 end
 
-function var_0_0.refreshBossRush(arg_11_0)
-	local var_11_0 = arg_11_0.enemyInfoMo
+function EnemyInfoEnterView:refreshBossRush()
+	local enemyInfoMo = self.enemyInfoMo
 
-	var_11_0:setShowLeftTab(false)
+	enemyInfoMo:setShowLeftTab(false)
 
-	local var_11_1 = arg_11_0.viewParam.activityId
-	local var_11_2 = arg_11_0.viewParam.stage
-	local var_11_3 = arg_11_0.viewParam.layer
-	local var_11_4 = lua_activity128_episode.configDict[var_11_1][var_11_2][var_11_3]
-	local var_11_5 = DungeonConfig.instance:getEpisodeCO(var_11_4.episodeId)
+	local activityId = self.viewParam.activityId
+	local stage = self.viewParam.stage
+	local layer = self.viewParam.layer
+	local co = lua_activity128_episode.configDict[activityId][stage][layer]
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(co.episodeId)
 
-	var_11_0:updateBattleId(var_11_5.battleId)
+	enemyInfoMo:updateBattleId(episodeCo.battleId)
 end
 
-function var_0_0.createTabView(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1.New()
+function EnemyInfoEnterView:createTabView(viewCls)
+	local view = viewCls.New()
 
-	var_12_0:__onInit()
+	view:__onInit()
 
-	var_12_0.viewGO = arg_12_0.viewGO
-	var_12_0.viewContainer = arg_12_0.viewContainer
-	var_12_0.tabParentView = arg_12_0
-	var_12_0.viewName = arg_12_0.viewName
+	view.viewGO = self.viewGO
+	view.viewContainer = self.viewContainer
+	view.tabParentView = self
+	view.viewName = self.viewName
 
-	var_12_0:onInitView()
-	var_12_0:addEvents()
+	view:onInitView()
+	view:addEvents()
 
-	var_12_0.layoutMo = arg_12_0.layoutMo
-	var_12_0.enemyInfoMo = arg_12_0.enemyInfoMo
-	var_12_0.viewParam = arg_12_0.viewParam
+	view.layoutMo = self.layoutMo
+	view.enemyInfoMo = self.enemyInfoMo
+	view.viewParam = self.viewParam
 
-	return var_12_0
+	return view
 end
 
-function var_0_0.onClose(arg_13_0)
-	if arg_13_0.tabView then
-		arg_13_0.tabView:onClose()
+function EnemyInfoEnterView:onClose()
+	if self.tabView then
+		self.tabView:onClose()
 	end
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	if arg_14_0.tabView then
-		arg_14_0.tabView:removeEvents()
-		arg_14_0.tabView:onDestroyView()
-		arg_14_0.tabView:__onDispose()
+function EnemyInfoEnterView:onDestroyView()
+	if self.tabView then
+		self.tabView:removeEvents()
+		self.tabView:onDestroyView()
+		self.tabView:__onDispose()
 	end
 
-	arg_14_0.simageRightBg:UnLoadImage()
+	self.simageRightBg:UnLoadImage()
 end
 
-return var_0_0
+return EnemyInfoEnterView

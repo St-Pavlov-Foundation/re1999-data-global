@@ -1,17 +1,19 @@
-﻿module("modules.logic.explore.view.ExploreBlackView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBlackView.lua
 
-local var_0_0 = class("ExploreBlackView", BaseView)
+module("modules.logic.explore.view.ExploreBlackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local ExploreBlackView = class("ExploreBlackView", BaseView)
+
+function ExploreBlackView:onInitView()
+	self.anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onOpenFinish(arg_2_0)
-	if arg_2_0._has_onOpen then
-		arg_2_0.anim.enabled = true
+function ExploreBlackView:onOpenFinish()
+	if self._has_onOpen then
+		self.anim.enabled = true
 
-		arg_2_0.anim:Play("loop", 0, 0)
+		self.anim:Play("loop", 0, 0)
 	end
 end
 
-return var_0_0
+return ExploreBlackView

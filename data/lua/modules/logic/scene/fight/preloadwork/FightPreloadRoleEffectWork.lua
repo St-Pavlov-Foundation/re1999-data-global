@@ -1,125 +1,128 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadRoleEffectWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadRoleEffectWork.lua
 
-local var_0_0 = class("FightPreloadRoleEffectWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadRoleEffectWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local FightPreloadRoleEffectWork = class("FightPreloadRoleEffectWork", BaseWork)
+
+function FightPreloadRoleEffectWork:onStart(context)
 	if GameResMgr.IsFromEditorDir then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
 	if FightEffectPool.isForbidEffect then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._startTime = Time.time
+	self._startTime = Time.time
 
-	local var_1_0, var_1_1 = arg_1_0:_analyseEffectUrlList()
+	local effectUrlList, replayAb2EffectUrlList = self:_analyseEffectUrlList()
 
-	arg_1_0._replayAb2EffectUrlList = var_1_1
-	arg_1_0._loader = SequenceAbLoader.New()
+	self._replayAb2EffectUrlList = replayAb2EffectUrlList
+	self._loader = SequenceAbLoader.New()
 
-	arg_1_0._loader:setPathList(var_1_0)
-	arg_1_0._loader:setConcurrentCount(1)
-	arg_1_0._loader:setInterval(0.01)
-	arg_1_0._loader:setOneFinishCallback(arg_1_0._onPreloadOneFinish, arg_1_0)
-	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail, arg_1_0)
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:setPathList(effectUrlList)
+	self._loader:setConcurrentCount(1)
+	self._loader:setInterval(0.01)
+	self._loader:setOneFinishCallback(self._onPreloadOneFinish, self)
+	self._loader:setLoadFailCallback(self._onPreloadOneFail, self)
+	self._loader:startLoad(self._onPreloadFinish, self)
 	logNormal("preload 开始预加载角色特效 " .. Time.time)
 end
 
-function var_0_0._onPreloadOneFinish(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = Time.time
-	local var_2_1 = var_2_0 - arg_2_0._startTime
+function FightPreloadRoleEffectWork:_onPreloadOneFinish(loader, assetItem)
+	local now = Time.time
+	local elapse = now - self._startTime
 
-	logNormal(string.format("preload %.2f_%.2f %s", Time.time, var_2_1, arg_2_2.ResPath))
+	logNormal(string.format("preload %.2f_%.2f %s", Time.time, elapse, assetItem.ResPath))
 
-	arg_2_0._startTime = var_2_0
+	self._startTime = now
 
-	local var_2_2 = arg_2_0._replayAb2EffectUrlList[arg_2_2.ResPath]
+	local effectUrlList = self._replayAb2EffectUrlList[assetItem.ResPath]
 
-	if var_2_2 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-			local var_2_3 = FightEffectPool.getEffect(iter_2_1, FightEnum.EntitySide.MySide, nil, nil, nil, true)
+	if effectUrlList then
+		for _, effectUrl in ipairs(effectUrlList) do
+			local effectWrap = FightEffectPool.getEffect(effectUrl, FightEnum.EntitySide.MySide, nil, nil, nil, true)
 
-			FightEffectPool.returnEffect(var_2_3)
+			FightEffectPool.returnEffect(effectWrap)
 		end
 	end
 end
 
-function var_0_0._onPreloadFinish(arg_3_0)
-	local var_3_0 = arg_3_0._loader:getAssetItemDict()
+function FightPreloadRoleEffectWork:_onPreloadFinish()
+	local assetItemDict = self._loader:getAssetItemDict()
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		arg_3_0.context.callback(arg_3_0.context.callbackObj, iter_3_1)
+	for url, assetItem in pairs(assetItemDict) do
+		self.context.callback(self.context.callbackObj, assetItem)
 	end
 
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_4_0, arg_4_1, arg_4_2)
-	logError("战斗资源加载失败：" .. arg_4_2.ResPath)
+function FightPreloadRoleEffectWork:_onPreloadOneFail(loader, assetItem)
+	logError("战斗资源加载失败：" .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	if arg_5_0._loader then
-		arg_5_0._loader:dispose()
+function FightPreloadRoleEffectWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_5_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._analyseEffectUrlList(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = {}
-	local var_6_2 = FightDataHelper.entityMgr:getMyNormalList()
+function FightPreloadRoleEffectWork:_analyseEffectUrlList()
+	local skillId2UrlList = {}
+	local otherUrlList = {}
+	local mySideList = FightDataHelper.entityMgr:getMyNormalList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_2) do
-		local var_6_3 = iter_6_1.id
-		local var_6_4 = iter_6_1.skillList
+	for _, entityMO in ipairs(mySideList) do
+		local entityId = entityMO.id
+		local skillList = entityMO.skillList
 
-		for iter_6_2, iter_6_3 in ipairs(var_6_4) do
-			if iter_6_1:isActiveSkill(iter_6_3) then
-				local var_6_5 = FightConfig.instance:getSkinSkillTimeline(iter_6_1.skin, iter_6_3)
-				local var_6_6 = FightHelper.getTimelineListByName(var_6_5, iter_6_1.skin)
+		for _, skillId in ipairs(skillList) do
+			if entityMO:isActiveSkill(skillId) then
+				local timeline = FightConfig.instance:getSkinSkillTimeline(entityMO.skin, skillId)
+				local timelineList = FightHelper.getTimelineListByName(timeline, entityMO.skin)
 
-				for iter_6_4, iter_6_5 in ipairs(var_6_6) do
-					local var_6_7 = iter_6_5
+				for i, v in ipairs(timelineList) do
+					timeline = v
 
-					if not string.nilorempty(var_6_7) then
-						local var_6_8, var_6_9 = arg_6_0:_analyseSingleTimeline(var_6_7)
+					if not string.nilorempty(timeline) then
+						local timelineEffectUrlList, othersList = self:_analyseSingleTimeline(timeline)
 
-						var_6_0[iter_6_3] = var_6_0[iter_6_3] or {}
+						skillId2UrlList[skillId] = skillId2UrlList[skillId] or {}
 
-						tabletool.addValues(var_6_0[iter_6_3], var_6_8)
-						tabletool.addValues(var_6_1, var_6_9)
+						tabletool.addValues(skillId2UrlList[skillId], timelineEffectUrlList)
+						tabletool.addValues(otherUrlList, othersList)
 					end
 				end
 			end
 		end
 	end
 
-	local var_6_10 = {}
+	local replayEffectUrlList = {}
+	local fightParam = FightModel.instance:getFightParam()
 
-	if FightModel.instance:getFightParam().isReplay then
-		local var_6_11 = FightDataHelper.handCardMgr.handCard
-		local var_6_12 = FightReplayModel.instance:getList()
-		local var_6_13 = var_6_12 and var_6_12[1]
+	if fightParam.isReplay then
+		local handCards = FightDataHelper.handCardMgr.handCard
+		local replayList = FightReplayModel.instance:getList()
+		local firstOperRecordMO = replayList and replayList[1]
 
-		if var_6_13 then
-			for iter_6_6, iter_6_7 in ipairs(var_6_13.opers) do
-				if iter_6_7.operType == FightEnum.CardOpType.PlayCard then
-					local var_6_14 = var_6_11 and var_6_11[iter_6_7.param1]
-					local var_6_15 = var_6_14 and var_6_14.skillId
-					local var_6_16 = var_6_15 and var_6_0[var_6_15]
+		if firstOperRecordMO then
+			for _, beginRoundOp in ipairs(firstOperRecordMO.opers) do
+				if beginRoundOp.operType == FightEnum.CardOpType.PlayCard then
+					local cardMO = handCards and handCards[beginRoundOp.param1]
+					local skillId = cardMO and cardMO.skillId
+					local list1 = skillId and skillId2UrlList[skillId]
 
-					if var_6_16 then
-						tabletool.addValues(var_6_10, var_6_16)
+					if list1 then
+						tabletool.addValues(replayEffectUrlList, list1)
 
-						var_6_0[var_6_15] = nil
+						skillId2UrlList[skillId] = nil
 					end
 				end
 
@@ -128,43 +131,43 @@ function var_0_0._analyseEffectUrlList(arg_6_0)
 		end
 	end
 
-	local var_6_17 = {}
-	local var_6_18 = {}
+	local abPathList = {}
+	local replayAb2EffectUrlList = {}
 
-	for iter_6_8, iter_6_9 in ipairs(var_6_10) do
-		arg_6_0:_addAbByEffectUrl(var_6_17, iter_6_9)
+	for _, effectUrl in ipairs(replayEffectUrlList) do
+		self:_addAbByEffectUrl(abPathList, effectUrl)
 
-		local var_6_19 = FightHelper.getEffectAbPath(iter_6_9)
+		local abPath = FightHelper.getEffectAbPath(effectUrl)
 
-		var_6_18[var_6_19] = var_6_18[var_6_19] or {}
+		replayAb2EffectUrlList[abPath] = replayAb2EffectUrlList[abPath] or {}
 
-		if not tabletool.indexOf(var_6_18[var_6_19], iter_6_9) then
-			table.insert(var_6_18[var_6_19], iter_6_9)
+		if not tabletool.indexOf(replayAb2EffectUrlList[abPath], effectUrl) then
+			table.insert(replayAb2EffectUrlList[abPath], effectUrl)
 		end
 	end
 
-	for iter_6_10, iter_6_11 in pairs(var_6_0) do
-		for iter_6_12, iter_6_13 in ipairs(iter_6_11) do
-			arg_6_0:_addAbByEffectUrl(var_6_17, iter_6_13)
+	for skillId, urlList in pairs(skillId2UrlList) do
+		for _, effectUrl in ipairs(urlList) do
+			self:_addAbByEffectUrl(abPathList, effectUrl)
 		end
 	end
 
-	for iter_6_14, iter_6_15 in ipairs(var_6_1) do
-		arg_6_0:_addAbByEffectUrl(var_6_17, iter_6_15)
+	for _, effectUrl in ipairs(otherUrlList) do
+		self:_addAbByEffectUrl(abPathList, effectUrl)
 	end
 
-	return var_6_17, var_6_18
+	return abPathList, replayAb2EffectUrlList
 end
 
-function var_0_0._addAbByEffectUrl(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = FightHelper.getEffectAbPath(arg_7_2)
+function FightPreloadRoleEffectWork:_addAbByEffectUrl(abPathList, effectUrl)
+	local abPath = FightHelper.getEffectAbPath(effectUrl)
 
-	if not tabletool.indexOf(arg_7_1, var_7_0) then
-		table.insert(arg_7_1, var_7_0)
+	if not tabletool.indexOf(abPathList, abPath) then
+		table.insert(abPathList, abPath)
 	end
 end
 
-local var_0_1 = {
+local TimelineEffectType = {
 	"FightTLEventTargetEffect",
 	nil,
 	nil,
@@ -176,40 +179,41 @@ local var_0_1 = {
 	[28] = "FightTLEventDefEffect"
 }
 
-function var_0_0._analyseSingleTimeline(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1 = {}
-	local var_8_2
-	local var_8_3 = ResUrl.getSkillTimeline(arg_8_1)
+function FightPreloadRoleEffectWork:_analyseSingleTimeline(timeline)
+	local list = {}
+	local list2 = {}
+	local tlAssetItem
+	local timelineUrl = ResUrl.getSkillTimeline(timeline)
 
 	if GameResMgr.IsFromEditorDir then
-		var_8_2 = FightPreloadController.instance:getFightAssetItem(ResUrl.getSkillTimeline(arg_8_1))
+		tlAssetItem = FightPreloadController.instance:getFightAssetItem(ResUrl.getSkillTimeline(timeline))
 	else
-		var_8_2 = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
+		tlAssetItem = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
 	end
 
-	local var_8_4 = ZProj.SkillTimelineAssetHelper.GeAssetJson(var_8_2, var_8_3)
+	local jsonStr = ZProj.SkillTimelineAssetHelper.GeAssetJson(tlAssetItem, timelineUrl)
 
-	if not string.nilorempty(var_8_4) then
-		local var_8_5 = cjson.decode(var_8_4)
+	if not string.nilorempty(jsonStr) then
+		local jsonArr = cjson.decode(jsonStr)
 
-		for iter_8_0 = 1, #var_8_5, 2 do
-			local var_8_6 = tonumber(var_8_5[iter_8_0])
-			local var_8_7 = var_8_5[iter_8_0 + 1][1]
+		for i = 1, #jsonArr, 2 do
+			local tlType = tonumber(jsonArr[i])
+			local paramList = jsonArr[i + 1]
+			local effectName = paramList[1]
 
-			if var_0_1[var_8_6] and not string.nilorempty(var_8_7) then
-				local var_8_8 = FightHelper.getEffectUrlWithLod(var_8_7)
+			if TimelineEffectType[tlType] and not string.nilorempty(effectName) then
+				local effectUrl = FightHelper.getEffectUrlWithLod(effectName)
 
-				if not string.find(var_8_8, "/buff/") and not string.find(var_8_8, "/roleeffects/") then
-					table.insert(var_8_0, var_8_8)
+				if not string.find(effectUrl, "/buff/") and not string.find(effectUrl, "/roleeffects/") then
+					table.insert(list, effectUrl)
 				else
-					table.insert(var_8_1, var_8_8)
+					table.insert(list2, effectUrl)
 				end
 			end
 		end
 	end
 
-	return var_8_0, var_8_1
+	return list, list2
 end
 
-return var_0_0
+return FightPreloadRoleEffectWork

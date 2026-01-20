@@ -1,61 +1,63 @@
-﻿module("modules.logic.store.view.StoreTipView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreTipView.lua
 
-local var_0_0 = class("StoreTipView", BaseView)
+module("modules.logic.store.view.StoreTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._gomonthcardtip = gohelper.findChild(arg_1_0.viewGO, "#go_monthcardtip")
-	arg_1_0._gotipcontent = gohelper.findChild(arg_1_0.viewGO, "#go_monthcardtip/tipscroll/Viewport/#go_tipcontent")
-	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "#go_monthcardtip/tipscroll/Viewport/#go_tipcontent/#txt_tip")
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_monthcardtip/bg/#simage_icon1")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_monthcardtip/bg/#simage_icon2")
+local StoreTipView = class("StoreTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreTipView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._gomonthcardtip = gohelper.findChild(self.viewGO, "#go_monthcardtip")
+	self._gotipcontent = gohelper.findChild(self.viewGO, "#go_monthcardtip/tipscroll/Viewport/#go_tipcontent")
+	self._txttip = gohelper.findChildText(self.viewGO, "#go_monthcardtip/tipscroll/Viewport/#go_tipcontent/#txt_tip")
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "#go_monthcardtip/bg/#simage_icon1")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "#go_monthcardtip/bg/#simage_icon2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function StoreTipView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function StoreTipView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageicon2:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_4_0._simageicon1:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function StoreTipView:_editableInitView()
+	self._simageicon2:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simageicon1:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	arg_4_0._txtTitle = gohelper.findChildText(arg_4_0.viewGO, "#go_monthcardtip/title")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#go_monthcardtip/title")
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
-	arg_5_0:closeThis()
+function StoreTipView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._desc(arg_6_0)
-	return arg_6_0.viewParam.desc or ""
+function StoreTipView:_desc()
+	return self.viewParam.desc or ""
 end
 
-function var_0_0._title(arg_7_0)
-	return arg_7_0.viewParam.title or luaLang("p_storetipview_title")
+function StoreTipView:_title()
+	return self.viewParam.title or luaLang("p_storetipview_title")
 end
 
-function var_0_0.onOpen(arg_8_0)
+function StoreTipView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_help_open)
 
-	arg_8_0._txttip.text = arg_8_0:_desc()
-	arg_8_0._txtTitle.text = arg_8_0:_title()
+	self._txttip.text = self:_desc()
+	self._txtTitle.text = self:_title()
 end
 
-function var_0_0.onClose(arg_9_0)
+function StoreTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageicon1:UnLoadImage()
-	arg_10_0._simageicon2:UnLoadImage()
+function StoreTipView:onDestroyView()
+	self._simageicon1:UnLoadImage()
+	self._simageicon2:UnLoadImage()
 end
 
-return var_0_0
+return StoreTipView

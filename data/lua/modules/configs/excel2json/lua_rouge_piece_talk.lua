@@ -1,24 +1,26 @@
-﻿module("modules.configs.excel2json.lua_rouge_piece_talk", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_piece_talk.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_piece_talk", package.seeall)
+
+local lua_rouge_piece_talk = {}
+local fields = {
 	title = 2,
 	exitDesc = 5,
 	id = 1,
 	selectIds = 4,
 	content = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	title = 1,
 	content = 2,
 	exitDesc = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_piece_talk.onLoad(json)
+	lua_rouge_piece_talk.configList, lua_rouge_piece_talk.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_piece_talk

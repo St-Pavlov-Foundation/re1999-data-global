@@ -1,78 +1,80 @@
-﻿module("modules.logic.summon.view.SummonMainPreloadView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonMainPreloadView.lua
 
-local var_0_0 = class("SummonMainPreloadView", TabViewGroup)
+module("modules.logic.summon.view.SummonMainPreloadView", package.seeall)
 
-function var_0_0.preloadTab(arg_1_0, arg_1_1)
-	arg_1_0._tabIdPreloadList = arg_1_1
-	arg_1_0._tabAbPreloaders = {}
+local SummonMainPreloadView = class("SummonMainPreloadView", TabViewGroup)
+
+function SummonMainPreloadView:preloadTab(tabIdList)
+	self._tabIdPreloadList = tabIdList
+	self._tabAbPreloaders = {}
 end
 
-function var_0_0.onOpen(arg_2_0)
-	if not arg_2_0._tabIdPreloadList then
+function SummonMainPreloadView:onOpen()
+	if not self._tabIdPreloadList then
 		return
 	end
 
-	arg_2_0:addPreloadTab(arg_2_0._tabIdPreloadList[1])
-	var_0_0.super.onOpen(arg_2_0)
+	self:addPreloadTab(self._tabIdPreloadList[1])
+	SummonMainPreloadView.super.onOpen(self)
 end
 
-function var_0_0.checkPreload(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._tabIdPreloadList) do
-		arg_3_0:addPreloadTab(iter_3_1)
+function SummonMainPreloadView:checkPreload()
+	for _, tabId in ipairs(self._tabIdPreloadList) do
+		self:addPreloadTab(tabId)
 	end
 end
 
-function var_0_0.addPreloadTab(arg_4_0, arg_4_1)
-	if not arg_4_0._tabAbLoaders[arg_4_1] and not arg_4_0._tabAbPreloaders[arg_4_1] then
-		local var_4_0 = MultiAbLoader.New()
+function SummonMainPreloadView:addPreloadTab(tabId)
+	if not self._tabAbLoaders[tabId] and not self._tabAbPreloaders[tabId] then
+		local loader = MultiAbLoader.New()
 
-		arg_4_0._tabAbPreloaders[arg_4_1] = var_4_0
+		self._tabAbPreloaders[tabId] = loader
 
-		local var_4_1 = arg_4_0.viewContainer:getSetting().tabRes
-		local var_4_2 = var_4_1 and var_4_1[arg_4_0._tabContainerId] and var_4_1[arg_4_0._tabContainerId][arg_4_1]
+		local tabRes = self.viewContainer:getSetting().tabRes
+		local curTabRes = tabRes and tabRes[self._tabContainerId] and tabRes[self._tabContainerId][tabId]
 
-		if var_4_2 then
-			var_4_0:setPathList(var_4_2)
-			var_4_0:startLoad(arg_4_0._onItemPreloaded, arg_4_0)
+		if curTabRes then
+			loader:setPathList(curTabRes)
+			loader:startLoad(self._onItemPreloaded, self)
 		else
-			logError(string.format("SummonMainPreloadView no res: tabContainerId_%d, tabId_%d", arg_4_0._tabContainerId, arg_4_1))
+			logError(string.format("SummonMainPreloadView no res: tabContainerId_%d, tabId_%d", self._tabContainerId, tabId))
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._tabAbPreloaders) do
-		if arg_5_0._tabAbLoaders[iter_5_0] ~= iter_5_1 then
-			iter_5_1:dispose()
+function SummonMainPreloadView:onDestroyView()
+	for tabId, tabLoader in pairs(self._tabAbPreloaders) do
+		if self._tabAbLoaders[tabId] ~= tabLoader then
+			tabLoader:dispose()
 		end
 	end
 
-	arg_5_0._tabAbPreloaders = nil
+	self._tabAbPreloaders = nil
 
-	var_0_0.super.onDestroyView(arg_5_0)
+	SummonMainPreloadView.super.onDestroyView(self)
 end
 
-function var_0_0._openTabView(arg_6_0, arg_6_1)
-	if not arg_6_0._tabAbLoaders[arg_6_1] then
-		local var_6_0 = arg_6_0._tabAbPreloaders[arg_6_1]
+function SummonMainPreloadView:_openTabView(tabId)
+	if not self._tabAbLoaders[tabId] then
+		local loader = self._tabAbPreloaders[tabId]
 
-		if var_6_0 and not var_6_0.isLoading then
-			arg_6_0:_closeTabView()
+		if loader and not loader.isLoading then
+			self:_closeTabView()
 
-			arg_6_0._curTabId = arg_6_1
-			arg_6_0._tabAbLoaders[arg_6_0._curTabId] = var_6_0
+			self._curTabId = tabId
+			self._tabAbLoaders[self._curTabId] = loader
 
-			arg_6_0:_finishCallback(var_6_0)
+			self:_finishCallback(loader)
 
 			return
 		end
 	end
 
-	var_0_0.super._openTabView(arg_6_0, arg_6_1)
+	SummonMainPreloadView.super._openTabView(self, tabId)
 end
 
-function var_0_0._onItemPreloaded(arg_7_0, arg_7_1)
+function SummonMainPreloadView:_onItemPreloaded(loader)
 	return
 end
 
-return var_0_0
+return SummonMainPreloadView

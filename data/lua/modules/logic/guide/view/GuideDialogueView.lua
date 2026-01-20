@@ -1,108 +1,112 @@
-﻿module("modules.logic.guide.view.GuideDialogueView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/view/GuideDialogueView.lua
 
-local var_0_0 = class("GuideDialogueView", BaseView)
+module("modules.logic.guide.view.GuideDialogueView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotipsmask = gohelper.findChild(arg_1_0.viewGO, "#go_tipsmask")
-	arg_1_0._gotype4 = gohelper.findChild(arg_1_0.viewGO, "#go_type4")
-	arg_1_0._godialogue = gohelper.findChild(arg_1_0.viewGO, "#go_dialogue")
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#go_dialogue/#txt_content")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_dialogue/#txt_name")
-	arg_1_0._simageleft = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_dialogue/left/#simage_left")
-	arg_1_0._simageright = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_dialogue/right/#simage_right")
+local GuideDialogueView = class("GuideDialogueView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function GuideDialogueView:onInitView()
+	self._gotipsmask = gohelper.findChild(self.viewGO, "#go_tipsmask")
+	self._gotype4 = gohelper.findChild(self.viewGO, "#go_type4")
+	self._godialogue = gohelper.findChild(self.viewGO, "#go_dialogue")
+	self._txtcontent = gohelper.findChildText(self.viewGO, "#go_dialogue/#txt_content")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_dialogue/#txt_name")
+	self._simageleft = gohelper.findChildSingleImage(self.viewGO, "#go_dialogue/left/#simage_left")
+	self._simageright = gohelper.findChildSingleImage(self.viewGO, "#go_dialogue/right/#simage_right")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function GuideDialogueView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function GuideDialogueView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._dialogueTr = arg_4_0._godialogue.transform
+function GuideDialogueView:_editableInitView()
+	self._dialogueTr = self._godialogue.transform
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function GuideDialogueView:onDestroyView()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_updateUI()
-	arg_6_0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_6_0._updateUI, arg_6_0)
+function GuideDialogueView:onOpen()
+	self:_updateUI()
+	self:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, self._updateUI, self)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:_updateUI()
-	arg_7_0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_7_0._updateUI, arg_7_0)
+function GuideDialogueView:onUpdateParam()
+	self:_updateUI()
+	self:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, self._updateUI, self)
 end
 
-function var_0_0._updateUI(arg_8_0)
-	if not arg_8_0.viewParam then
+function GuideDialogueView:_updateUI()
+	if not self.viewParam then
 		return
 	end
 
-	gohelper.setActive(arg_8_0._godialogue, arg_8_0.viewParam.hasDialogue)
+	gohelper.setActive(self._godialogue, self.viewParam.hasDialogue)
 
-	if not arg_8_0.viewParam.hasDialogue then
+	if not self.viewParam.hasDialogue then
 		return
 	end
 
 	if LangSettings.instance:getCurLang() == LangSettings.kr or LangSettings.instance:isEn() then
-		arg_8_0._txtcontent.text = arg_8_0.viewParam.tipsContent
+		self._txtcontent.text = self.viewParam.tipsContent
 	else
-		arg_8_0._txtcontent.text = string.gsub(arg_8_0.viewParam.tipsContent, " ", " ")
+		self._txtcontent.text = string.gsub(self.viewParam.tipsContent, " ", " ")
 	end
 
-	arg_8_0._txtname.text = arg_8_0.viewParam.tipsTalker
+	self._txtname.text = self.viewParam.tipsTalker
 
-	gohelper.setActive(arg_8_0._simageleft.gameObject, false)
-	gohelper.setActive(arg_8_0._simageright.gameObject, false)
+	gohelper.setActive(self._simageleft.gameObject, false)
+	gohelper.setActive(self._simageright.gameObject, false)
 
-	if string.nilorempty(arg_8_0.viewParam.tipsHead) then
+	if string.nilorempty(self.viewParam.tipsHead) then
 		return
 	end
 
-	if arg_8_0.viewParam.portraitPos == 0 then
-		arg_8_0._simageTemp = arg_8_0._simageleft
+	local isLeft = self.viewParam.portraitPos == 0
+
+	if isLeft then
+		self._simageTemp = self._simageleft
 	else
-		arg_8_0._simageTemp = arg_8_0._simageright
+		self._simageTemp = self._simageright
 	end
 
-	gohelper.setActive(arg_8_0._simageTemp.gameObject, true)
-	arg_8_0._simageTemp:LoadImage(ResUrl.getHeadIconImg(arg_8_0.viewParam.tipsHead), arg_8_0._loadFinish, arg_8_0)
+	gohelper.setActive(self._simageTemp.gameObject, true)
+	self._simageTemp:LoadImage(ResUrl.getHeadIconImg(self.viewParam.tipsHead), self._loadFinish, self)
 end
 
-function var_0_0._loadFinish(arg_9_0)
-	ZProj.UGUIHelper.SetImageSize(arg_9_0._simageTemp.gameObject)
-	arg_9_0:_setPortraitOffset(arg_9_0._simageTemp.gameObject)
+function GuideDialogueView:_loadFinish()
+	ZProj.UGUIHelper.SetImageSize(self._simageTemp.gameObject)
+	self:_setPortraitOffset(self._simageTemp.gameObject)
 end
 
-function var_0_0._setPortraitOffset(arg_10_0, arg_10_1)
-	local var_10_0 = SkinConfig.instance:getSkinCo(tonumber(arg_10_0.viewParam.tipsHead))
+function GuideDialogueView:_setPortraitOffset(go)
+	local skinCfg = SkinConfig.instance:getSkinCo(tonumber(self.viewParam.tipsHead))
 
-	if not var_10_0 then
-		logError("no skin skinId:" .. arg_10_0.viewParam.tipsHead)
+	if not skinCfg then
+		logError("no skin skinId:" .. self.viewParam.tipsHead)
 
 		return
 	end
 
-	local var_10_1 = arg_10_0.viewParam.portraitPos == 0
-	local var_10_2 = SkinConfig.instance:getSkinOffset(var_10_1 and var_10_0.guideLeftPortraitOffset or var_10_0.guideRightPortraitOffset)
-	local var_10_3 = arg_10_1.transform
+	local isLeft = self.viewParam.portraitPos == 0
+	local offsets = SkinConfig.instance:getSkinOffset(isLeft and skinCfg.guideLeftPortraitOffset or skinCfg.guideRightPortraitOffset)
+	local transform = go.transform
 
-	recthelper.setAnchor(var_10_3, tonumber(var_10_2[1]), tonumber(var_10_2[2]))
-	transformhelper.setLocalScale(var_10_3, tonumber(var_10_2[3]), tonumber(var_10_2[3]), tonumber(var_10_2[3]))
+	recthelper.setAnchor(transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0._simageright:UnLoadImage()
-	arg_11_0._simageleft:UnLoadImage()
+function GuideDialogueView:onClose()
+	self._simageright:UnLoadImage()
+	self._simageleft:UnLoadImage()
 end
 
-return var_0_0
+return GuideDialogueView

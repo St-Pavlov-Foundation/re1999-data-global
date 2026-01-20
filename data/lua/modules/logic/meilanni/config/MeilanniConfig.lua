@@ -1,8 +1,10 @@
-﻿module("modules.logic.meilanni.config.MeilanniConfig", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/config/MeilanniConfig.lua
 
-local var_0_0 = class("MeilanniConfig", BaseConfig)
+module("modules.logic.meilanni.config.MeilanniConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local MeilanniConfig = class("MeilanniConfig", BaseConfig)
+
+function MeilanniConfig:reqConfigNames()
 	return {
 		"activity108_map",
 		"activity108_episode",
@@ -15,209 +17,209 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function MeilanniConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity108_dialog" then
-		arg_3_0:_initDialog()
-	elseif arg_3_1 == "activity108_episode" then
-		arg_3_0._episodeConfig = arg_3_2
+function MeilanniConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity108_dialog" then
+		self:_initDialog()
+	elseif configName == "activity108_episode" then
+		self._episodeConfig = configTable
 
-		arg_3_0:_initEpisode()
-	elseif arg_3_1 == "activity108_event" then
-		arg_3_0:_initEvent()
-	elseif arg_3_1 == "activity108_story" then
-		arg_3_0:_initStory()
-	elseif arg_3_1 == "activity108_grade" then
-		arg_3_0:_initGrade()
-	elseif arg_3_1 == "activity108_score" then
+		self:_initEpisode()
+	elseif configName == "activity108_event" then
+		self:_initEvent()
+	elseif configName == "activity108_story" then
+		self:_initStory()
+	elseif configName == "activity108_grade" then
+		self:_initGrade()
+	elseif configName == "activity108_score" then
 		-- block empty
 	end
 end
 
-function var_0_0._initEpisode(arg_4_0)
-	arg_4_0._mapLastEpisode = {}
+function MeilanniConfig:_initEpisode()
+	self._mapLastEpisode = {}
 
-	for iter_4_0, iter_4_1 in ipairs(lua_activity108_episode.configList) do
-		local var_4_0 = arg_4_0._mapLastEpisode[iter_4_1.mapId] or iter_4_1
+	for i, v in ipairs(lua_activity108_episode.configList) do
+		local lastConfig = self._mapLastEpisode[v.mapId] or v
 
-		if iter_4_1.id > var_4_0.id then
-			var_4_0 = iter_4_1
+		if v.id > lastConfig.id then
+			lastConfig = v
 		end
 
-		arg_4_0._mapLastEpisode[var_4_0.mapId] = var_4_0
+		self._mapLastEpisode[lastConfig.mapId] = lastConfig
 	end
 end
 
-function var_0_0.getLastEpisode(arg_5_0, arg_5_1)
-	return arg_5_0._mapLastEpisode[arg_5_1]
+function MeilanniConfig:getLastEpisode(mapId)
+	return self._mapLastEpisode[mapId]
 end
 
-function var_0_0.getLastEvent(arg_6_0, arg_6_1)
-	return arg_6_0._mapLastEvent[arg_6_1]
+function MeilanniConfig:getLastEvent(mapId)
+	return self._mapLastEvent[mapId]
 end
 
-function var_0_0._initEvent(arg_7_0)
-	local var_7_0 = {}
+function MeilanniConfig:_initEvent()
+	local lastEpisodeId = {}
 
-	for iter_7_0, iter_7_1 in ipairs(lua_activity108_map.configList) do
-		local var_7_1 = arg_7_0:getLastEpisode(iter_7_1.id)
+	for i, v in ipairs(lua_activity108_map.configList) do
+		local lastEpisodeConfig = self:getLastEpisode(v.id)
 
-		if var_7_1 then
-			var_7_0[var_7_1.id] = var_7_1
+		if lastEpisodeConfig then
+			lastEpisodeId[lastEpisodeConfig.id] = lastEpisodeConfig
 		end
 	end
 
-	arg_7_0._mapLastEvent = {}
+	self._mapLastEvent = {}
 
-	for iter_7_2, iter_7_3 in ipairs(lua_activity108_event.configList) do
-		local var_7_2 = var_7_0[iter_7_3.episodeId]
+	for i, v in ipairs(lua_activity108_event.configList) do
+		local lastEpisodeConfig = lastEpisodeId[v.episodeId]
 
-		if var_7_2 then
-			arg_7_0._mapLastEvent[var_7_2.mapId] = iter_7_3
+		if lastEpisodeConfig then
+			self._mapLastEvent[lastEpisodeConfig.mapId] = v
 		end
 	end
 end
 
-function var_0_0._initStory(arg_8_0)
-	arg_8_0._storyList = {}
+function MeilanniConfig:_initStory()
+	self._storyList = {}
 
-	for iter_8_0, iter_8_1 in ipairs(lua_activity108_story.configList) do
-		local var_8_0 = string.splitToNumber(iter_8_1.params, "#")
-		local var_8_1 = var_8_0[1]
-		local var_8_2 = var_8_0[2]
-		local var_8_3 = var_8_0[3]
-		local var_8_4 = arg_8_0._storyList[var_8_1] or {}
+	for i, v in ipairs(lua_activity108_story.configList) do
+		local paramList = string.splitToNumber(v.params, "#")
+		local type = paramList[1]
+		local param = paramList[2]
+		local param2 = paramList[3]
+		local list = self._storyList[type] or {}
 
-		arg_8_0._storyList[var_8_1] = var_8_4
+		self._storyList[type] = list
 
-		table.insert(var_8_4, {
-			iter_8_1,
-			var_8_2,
-			var_8_3
+		table.insert(list, {
+			v,
+			param,
+			param2
 		})
 	end
 end
 
-function var_0_0.getStoryList(arg_9_0, arg_9_1)
-	return arg_9_0._storyList[arg_9_1]
+function MeilanniConfig:getStoryList(type)
+	return self._storyList[type]
 end
 
-function var_0_0._initGrade(arg_10_0)
-	arg_10_0._gradleList = {}
+function MeilanniConfig:_initGrade()
+	self._gradleList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(lua_activity108_grade.configList) do
-		local var_10_0 = arg_10_0._gradleList[iter_10_1.mapId] or {}
+	for i, v in ipairs(lua_activity108_grade.configList) do
+		local list = self._gradleList[v.mapId] or {}
 
-		table.insert(var_10_0, 1, iter_10_1)
+		table.insert(list, 1, v)
 
-		arg_10_0._gradleList[iter_10_1.mapId] = var_10_0
+		self._gradleList[v.mapId] = list
 	end
 end
 
-function var_0_0.getScoreIndex(arg_11_0, arg_11_1)
-	arg_11_1 = math.min(arg_11_1, 100)
+function MeilanniConfig:getScoreIndex(score)
+	score = math.min(score, 100)
 
-	local var_11_0 = #lua_activity108_score.configList
+	local len = #lua_activity108_score.configList
 
-	for iter_11_0, iter_11_1 in ipairs(lua_activity108_score.configList) do
-		if arg_11_1 >= iter_11_1.minScore and arg_11_1 <= iter_11_1.maxScore then
-			return var_11_0 - iter_11_0 + 1
+	for i, v in ipairs(lua_activity108_score.configList) do
+		if score >= v.minScore and score <= v.maxScore then
+			return len - i + 1
 		end
 	end
 
-	return var_11_0
+	return len
 end
 
-function var_0_0.getGradleIndex(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._gradleList[arg_12_1]
+function MeilanniConfig:getGradleIndex(mapId, score)
+	local list = self._gradleList[mapId]
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		if arg_12_2 >= iter_12_1.score then
-			return iter_12_0
+	for i, v in ipairs(list) do
+		if score >= v.score then
+			return i
 		end
 	end
 
-	return #var_12_0
+	return #list
 end
 
-function var_0_0.getGradleList(arg_13_0, arg_13_1)
-	return arg_13_0._gradleList[arg_13_1]
+function MeilanniConfig:getGradleList(mapId)
+	return self._gradleList[mapId]
 end
 
-function var_0_0._initDialog(arg_14_0)
-	arg_14_0._dialogList = {}
+function MeilanniConfig:_initDialog()
+	self._dialogList = {}
 
-	local var_14_0
-	local var_14_1 = "0"
+	local sectionId
+	local defaultId = "0"
 
-	for iter_14_0, iter_14_1 in ipairs(lua_activity108_dialog.configList) do
-		local var_14_2 = arg_14_0._dialogList[iter_14_1.id]
+	for i, v in ipairs(lua_activity108_dialog.configList) do
+		local group = self._dialogList[v.id]
 
-		if not var_14_2 then
-			var_14_2 = {}
-			var_14_0 = var_14_1
-			arg_14_0._dialogList[iter_14_1.id] = var_14_2
+		if not group then
+			group = {}
+			sectionId = defaultId
+			self._dialogList[v.id] = group
 		end
 
-		if iter_14_1.type == "selector" then
-			var_14_0 = iter_14_1.param
-			var_14_2[var_14_0] = var_14_2[var_14_0] or {}
-			var_14_2[var_14_0].type = iter_14_1.type
-			var_14_2[var_14_0].option_param = iter_14_1.option_param
-			var_14_2[var_14_0].result = iter_14_1.result
-		elseif iter_14_1.type == "selectorend" then
-			var_14_0 = var_14_1
-		elseif iter_14_1.type == "random" then
-			local var_14_3 = iter_14_1.param
+		if v.type == "selector" then
+			sectionId = v.param
+			group[sectionId] = group[sectionId] or {}
+			group[sectionId].type = v.type
+			group[sectionId].option_param = v.option_param
+			group[sectionId].result = v.result
+		elseif v.type == "selectorend" then
+			sectionId = defaultId
+		elseif v.type == "random" then
+			local sectionId = v.param
 
-			var_14_2[var_14_3] = var_14_2[var_14_3] or {}
-			var_14_2[var_14_3].type = iter_14_1.type
-			var_14_2[var_14_3].option_param = iter_14_1.option_param
+			group[sectionId] = group[sectionId] or {}
+			group[sectionId].type = v.type
+			group[sectionId].option_param = v.option_param
 
-			table.insert(var_14_2[var_14_3], iter_14_1)
-		elseif iter_14_1.stepId > 0 then
-			var_14_2[var_14_0] = var_14_2[var_14_0] or {}
+			table.insert(group[sectionId], v)
+		elseif v.stepId > 0 then
+			group[sectionId] = group[sectionId] or {}
 
-			table.insert(var_14_2[var_14_0], iter_14_1)
+			table.insert(group[sectionId], v)
 		end
 	end
 end
 
-function var_0_0.getDialog(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0._dialogList[arg_15_1]
+function MeilanniConfig:getDialog(groupId, sectionId)
+	local group = self._dialogList[groupId]
 
-	return var_15_0 and var_15_0[arg_15_2]
+	return group and group[sectionId]
 end
 
-function var_0_0.getElementConfig(arg_16_0, arg_16_1)
-	local var_16_0 = lua_activity108_event.configDict[arg_16_1]
+function MeilanniConfig:getElementConfig(id)
+	local config = lua_activity108_event.configDict[id]
 
-	if not var_16_0 then
-		logError(string.format("getElementConfig no config id:%s", arg_16_1))
+	if not config then
+		logError(string.format("getElementConfig no config id:%s", id))
 	end
 
-	return var_16_0
+	return config
 end
 
-function var_0_0.getEpisodeConfig(arg_17_0, arg_17_1)
-	return arg_17_0._episodeConfig.configDict[arg_17_1]
+function MeilanniConfig:getEpisodeConfig(episodeId)
+	return self._episodeConfig.configDict[episodeId]
 end
 
-function var_0_0.getEpisodeConfigListByMapId(arg_18_0, arg_18_1)
-	local var_18_0 = {}
+function MeilanniConfig:getEpisodeConfigListByMapId(mapId)
+	local episodeConfigList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._episodeConfig.configList) do
-		if iter_18_1.mapId == arg_18_1 then
-			table.insert(var_18_0, iter_18_1)
+	for i, episodeConfig in ipairs(self._episodeConfig.configList) do
+		if episodeConfig.mapId == mapId then
+			table.insert(episodeConfigList, episodeConfig)
 		end
 	end
 
-	return var_18_0
+	return episodeConfigList
 end
 
-var_0_0.instance = var_0_0.New()
+MeilanniConfig.instance = MeilanniConfig.New()
 
-return var_0_0
+return MeilanniConfig

@@ -1,196 +1,199 @@
-﻿module("modules.logic.chargepush.view.ChargePushLevelGoodsView", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/view/ChargePushLevelGoodsView.lua
 
-local var_0_0 = class("ChargePushLevelGoodsView", BaseView)
+module("modules.logic.chargepush.view.ChargePushLevelGoodsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_Close")
-	arg_1_0.btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyLeft")
-	arg_1_0.btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyRight")
-	arg_1_0.btnTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyTop")
-	arg_1_0.btnBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyBottom")
-	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/info/#scroll_desc/Viewport/#txt_desc")
-	arg_1_0.txtLevel = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/info/level/#txt_level")
-	arg_1_0.goGiftItem = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_gift/Viewport/Content/#go_giftitem")
+local ChargePushLevelGoodsView = class("ChargePushLevelGoodsView", BaseView)
 
-	gohelper.setActive(arg_1_0.goGiftItem, false)
+function ChargePushLevelGoodsView:onInitView()
+	self.btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_Close")
+	self.btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyLeft")
+	self.btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyRight")
+	self.btnTop = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyTop")
+	self.btnBottom = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyBottom")
+	self.txtDesc = gohelper.findChildTextMesh(self.viewGO, "root/info/#scroll_desc/Viewport/#txt_desc")
+	self.txtLevel = gohelper.findChildTextMesh(self.viewGO, "root/info/level/#txt_level")
+	self.goGiftItem = gohelper.findChild(self.viewGO, "root/#scroll_gift/Viewport/Content/#go_giftitem")
 
-	arg_1_0.goodsItemList = {}
+	gohelper.setActive(self.goGiftItem, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.goodsItemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnLeft, arg_2_0.onClickClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnRight, arg_2_0.onClickClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnTop, arg_2_0.onClickClose, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnBottom, arg_2_0.onClickClose, arg_2_0)
-	arg_2_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_2_0._payFinished, arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_2_0._payFinished, arg_2_0)
+function ChargePushLevelGoodsView:addEvents()
+	self:addClickCb(self.btnClose, self.onClickClose, self)
+	self:addClickCb(self.btnLeft, self.onClickClose, self)
+	self:addClickCb(self.btnRight, self.onClickClose, self)
+	self:addClickCb(self.btnTop, self.onClickClose, self)
+	self:addClickCb(self.btnBottom, self.onClickClose, self)
+	self:addEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._payFinished, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnClose)
-	arg_3_0:removeClickCb(arg_3_0.btnLeft)
-	arg_3_0:removeClickCb(arg_3_0.btnRight)
-	arg_3_0:removeClickCb(arg_3_0.btnTop)
-	arg_3_0:removeClickCb(arg_3_0.btnBottom)
-	arg_3_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_3_0._payFinished, arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_3_0._payFinished, arg_3_0)
+function ChargePushLevelGoodsView:removeEvents()
+	self:removeClickCb(self.btnClose)
+	self:removeClickCb(self.btnLeft)
+	self:removeClickCb(self.btnRight)
+	self:removeClickCb(self.btnTop)
+	self:removeClickCb(self.btnBottom)
+	self:removeEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._payFinished, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ChargePushLevelGoodsView:_editableInitView()
 	return
 end
 
-function var_0_0._payFinished(arg_5_0)
-	if not arg_5_0.config then
+function ChargePushLevelGoodsView:_payFinished()
+	if not self.config then
 		return
 	end
 
-	local var_5_0 = string.splitToNumber(arg_5_0.config.containedgoodsId, "#")
-	local var_5_1 = false
+	local goodsIds = string.splitToNumber(self.config.containedgoodsId, "#")
+	local hasNotBuyGoods = false
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_2 = StoreModel.instance:getGoodsMO(iter_5_1)
+	for _, goodsId in ipairs(goodsIds) do
+		local goodsMO = StoreModel.instance:getGoodsMO(goodsId)
 
-		if var_5_2 and not var_5_2:isSoldOut() then
-			var_5_1 = true
+		if goodsMO and not goodsMO:isSoldOut() then
+			hasNotBuyGoods = true
 
 			break
 		end
 	end
 
-	if var_5_1 then
-		arg_5_0:refreshView()
+	if hasNotBuyGoods then
+		self:refreshView()
 
 		return
 	end
 
-	if ChargePushController.instance:tryShowNextPush(arg_5_0.config.className) then
+	if ChargePushController.instance:tryShowNextPush(self.config.className) then
 		return
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshParam()
-	arg_6_0:refreshView()
+function ChargePushLevelGoodsView:onOpen()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function ChargePushLevelGoodsView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_8_0)
-	arg_8_0.config = arg_8_0.viewParam and arg_8_0.viewParam.config
+function ChargePushLevelGoodsView:refreshParam()
+	self.config = self.viewParam and self.viewParam.config
 end
 
-function var_0_0.refreshView(arg_9_0)
-	if not arg_9_0.config then
+function ChargePushLevelGoodsView:refreshView()
+	if not self.config then
 		return
 	end
 
-	arg_9_0.txtDesc.text = arg_9_0.config.desc
-	arg_9_0.txtLevel.text = PlayerModel.instance:getPlayerLevel()
+	self.txtDesc.text = self.config.desc
+	self.txtLevel.text = PlayerModel.instance:getPlayerLevel()
 
-	local var_9_0 = {}
-	local var_9_1 = string.splitToNumber(arg_9_0.config.containedgoodsId, "#")
+	local availableGoodsIds = {}
+	local goodsIds = string.splitToNumber(self.config.containedgoodsId, "#")
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		local var_9_2 = StoreModel.instance:getGoodsMO(iter_9_1)
+	for i, v in ipairs(goodsIds) do
+		local goodsMO = StoreModel.instance:getGoodsMO(v)
 
-		if var_9_2 and not var_9_2:isSoldOut() then
-			table.insert(var_9_0, iter_9_1)
+		if goodsMO and not goodsMO:isSoldOut() then
+			table.insert(availableGoodsIds, v)
 		end
 	end
 
-	for iter_9_2 = 1, 2 do
-		if not var_9_0[iter_9_2] then
-			var_9_0[iter_9_2] = 0
+	for i = 1, 2 do
+		if not availableGoodsIds[i] then
+			availableGoodsIds[i] = 0
 		end
 	end
 
-	for iter_9_3 = 1, math.max(#var_9_0, #arg_9_0.goodsItemList) do
-		local var_9_3 = arg_9_0:getItem(iter_9_3)
+	for i = 1, math.max(#availableGoodsIds, #self.goodsItemList) do
+		local item = self:getItem(i)
 
-		arg_9_0:updateItem(var_9_3, var_9_0[iter_9_3])
+		self:updateItem(item, availableGoodsIds[i])
 	end
 end
 
-function var_0_0.getItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.goodsItemList[arg_10_1]
+function ChargePushLevelGoodsView:getItem(index)
+	local item = self.goodsItemList[index]
 
-	if not var_10_0 then
-		var_10_0 = arg_10_0:getUserDataTb_()
-		arg_10_0.goodsItemList[arg_10_1] = var_10_0
-		var_10_0.go = gohelper.cloneInPlace(arg_10_0.goGiftItem, tostring(arg_10_1))
-		var_10_0.goHas = gohelper.findChild(var_10_0.go, "#go_has")
-		var_10_0.goEmpty = gohelper.findChild(var_10_0.go, "#go_empty")
+	if not item then
+		item = self:getUserDataTb_()
+		self.goodsItemList[index] = item
+		item.go = gohelper.cloneInPlace(self.goGiftItem, tostring(index))
+		item.goHas = gohelper.findChild(item.go, "#go_has")
+		item.goEmpty = gohelper.findChild(item.go, "#go_empty")
 	end
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.updateItem(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_1.goodsId = arg_11_2
+function ChargePushLevelGoodsView:updateItem(item, goodsId)
+	item.goodsId = goodsId
 
-	if not arg_11_2 then
-		gohelper.setActive(arg_11_1.go, false)
+	if not goodsId then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_11_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_11_0 = StoreConfig.instance:getGoodsConfig(arg_11_2, true) == nil
+	local config = StoreConfig.instance:getGoodsConfig(goodsId, true)
+	local isEmpty = config == nil
 
-	gohelper.setActive(arg_11_1.goEmpty, var_11_0)
-	gohelper.setActive(arg_11_1.goHas, not var_11_0)
+	gohelper.setActive(item.goEmpty, isEmpty)
+	gohelper.setActive(item.goHas, not isEmpty)
 
-	if var_11_0 then
+	if isEmpty then
 		return
 	end
 
-	local var_11_1 = StoreModel.instance:getGoodsMO(arg_11_2)
+	local goodsMO = StoreModel.instance:getGoodsMO(goodsId)
 
-	if not arg_11_1.goodsItem then
-		local var_11_2 = arg_11_0.viewContainer:getSetting().otherRes.itemRes
-		local var_11_3 = arg_11_0.viewContainer:getResInst(var_11_2, arg_11_1.goHas, "goodsItem")
+	if not item.goodsItem then
+		local resPath = self.viewContainer:getSetting().otherRes.itemRes
+		local go = self.viewContainer:getResInst(resPath, item.goHas, "goodsItem")
 
-		arg_11_1.goodsItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_3, PackageStoreGoodsItem)
+		item.goodsItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, PackageStoreGoodsItem)
 
-		arg_11_1.goodsItem:setClickCallback(arg_11_0.onClickGoodsItem, arg_11_0)
+		item.goodsItem:setClickCallback(self.onClickGoodsItem, self)
 	end
 
-	local var_11_4 = StorePackageGoodsMO.New()
+	local packageMo = StorePackageGoodsMO.New()
 
-	var_11_4:init(var_11_1.belongStoreId, var_11_1.goodsId, var_11_1.buyCount, var_11_1.offlineTime)
-	arg_11_1.goodsItem:onUpdateMO(var_11_4)
+	packageMo:init(goodsMO.belongStoreId, goodsMO.goodsId, goodsMO.buyCount, goodsMO.offlineTime)
+	item.goodsItem:onUpdateMO(packageMo)
 end
 
-function var_0_0.onClickGoodsItem(arg_12_0, arg_12_1)
+function ChargePushLevelGoodsView:onClickGoodsItem(goodsMo)
 	return
 end
 
-function var_0_0.onClose(arg_13_0)
+function ChargePushLevelGoodsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function ChargePushLevelGoodsView:onDestroyView()
 	return
 end
 
-function var_0_0.onClickClose(arg_15_0)
-	arg_15_0:closeThis()
+function ChargePushLevelGoodsView:onClickClose()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_16_0)
-	arg_16_0:closeThis()
+function ChargePushLevelGoodsView:onClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return ChargePushLevelGoodsView

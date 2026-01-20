@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyMythResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyMythResultViewContainer.lua
 
-local var_0_0 = class("OdysseyMythResultViewContainer", BaseViewContainer)
+module("modules.logic.sp01.odyssey.view.OdysseyMythResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseyMythResultViewContainer = class("OdysseyMythResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OdysseyMythResultView.New())
+function OdysseyMythResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OdysseyMythResultView.New())
+
+	return views
 end
 
-return var_0_0
+return OdysseyMythResultViewContainer

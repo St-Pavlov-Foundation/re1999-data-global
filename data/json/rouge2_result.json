@@ -1,0 +1,154 @@
+[
+  {
+    "id": 1,
+    "type": 1,
+    "desc": "language_10100866",
+    "priority": 0,
+    "trigger": "1",
+    "triggerParam": ""
+  },
+  {
+    "id": 2,
+    "type": 1,
+    "desc": "language_10100867",
+    "priority": 1,
+    "trigger": "2",
+    "triggerParam": ""
+  },
+  {
+    "id": 3,
+    "type": 1,
+    "desc": "language_10100868",
+    "priority": 2,
+    "trigger": "3",
+    "triggerParam": ""
+  },
+  {
+    "id": 4,
+    "type": 1,
+    "desc": "language_10100869",
+    "priority": 3,
+    "trigger": "4",
+    "triggerParam": ""
+  },
+  {
+    "id": 5,
+    "type": 1,
+    "desc": "language_10100870",
+    "priority": 4,
+    "trigger": "5",
+    "triggerParam": "1"
+  },
+  {
+    "id": 6,
+    "type": 1,
+    "desc": "language_10100871",
+    "priority": 5,
+    "trigger": "5",
+    "triggerParam": "2"
+  },
+  {
+    "id": 7,
+    "type": 2,
+    "desc": "language_10100872",
+    "priority": 2,
+    "trigger": "6",
+    "triggerParam": " "
+  },
+  {
+    "id": 8,
+    "type": 3,
+    "desc": "language_10043720",
+    "priority": 0,
+    "trigger": "7",
+    "triggerParam": ""
+  },
+  {
+    "id": 9,
+    "type": 6,
+    "desc": "language_10043724",
+    "priority": 1,
+    "trigger": "13",
+    "triggerParam": "101"
+  },
+  {
+    "id": 10,
+    "type": 6,
+    "desc": "language_10043725",
+    "priority": 1,
+    "trigger": "13",
+    "triggerParam": "102"
+  },
+  {
+    "id": 11,
+    "type": 6,
+    "desc": "language_10043726",
+    "priority": 1,
+    "trigger": "14",
+    "triggerParam": "101"
+  },
+  {
+    "id": 12,
+    "type": 6,
+    "desc": "language_10043727",
+    "priority": 1,
+    "trigger": "14",
+    "triggerParam": "102"
+  },
+  {
+    "id": 13,
+    "type": 6,
+    "desc": "language_10043728",
+    "priority": 1,
+    "trigger": "15",
+    "triggerParam": ""
+  },
+  {
+    "id": 14,
+    "type": 6,
+    "desc": "language_10043729",
+    "priority": 1,
+    "trigger": "16",
+    "triggerParam": ""
+  },
+  {
+    "id": 15,
+    "type": 6,
+    "desc": "language_10064657",
+    "priority": 1,
+    "trigger": "13",
+    "triggerParam": "103"
+  },
+  {
+    "id": 16,
+    "type": 6,
+    "desc": "language_10064658",
+    "priority": 1,
+    "trigger": "14",
+    "triggerParam": "103"
+  },
+  {
+    "id": 17,
+    "type": 6,
+    "desc": "language_10072022",
+    "priority": 1,
+    "trigger": "13",
+    "triggerParam": "104"
+  },
+  {
+    "id": 18,
+    "type": 6,
+    "desc": "language_10072023",
+    "priority": 1,
+    "trigger": "14",
+    "triggerParam": "104"
+  },
+  {
+    "id": 19,
+    "type": 2,
+    "desc": "language_10100873",
+    "priority": 1,
+    "trigger": "17",
+    "triggerParam": " "
+  }
+]

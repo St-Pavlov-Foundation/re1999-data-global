@@ -1,73 +1,75 @@
-﻿module("modules.logic.season.view3_0.Season3_0FightCardView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0FightCardView.lua
 
-local var_0_0 = class("Season3_0FightCardView", BaseView)
+module("modules.logic.season.view3_0.Season3_0FightCardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goCardItem = gohelper.findChild(arg_1_0.viewGO, "mask/Scroll View/Viewport/Content/#go_carditem")
+local Season3_0FightCardView = class("Season3_0FightCardView", BaseView)
 
-	gohelper.setActive(arg_1_0._goCardItem, false)
+function Season3_0FightCardView:onInitView()
+	self._goCardItem = gohelper.findChild(self.viewGO, "mask/Scroll View/Viewport/Content/#go_carditem")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	gohelper.setActive(self._goCardItem, false)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season3_0FightCardView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season3_0FightCardView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Season3_0FightCardView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = Activity104Model.instance:getFightCardDataList()
+function Season3_0FightCardView:onOpen()
+	local dataList = Activity104Model.instance:getFightCardDataList()
 
-	if not arg_5_0.itemList then
-		arg_5_0.itemList = {}
+	if not self.itemList then
+		self.itemList = {}
 	end
 
-	for iter_5_0 = 1, math.max(#arg_5_0.itemList, #var_5_0) do
-		local var_5_1 = var_5_0[iter_5_0]
-		local var_5_2 = arg_5_0.itemList[iter_5_0] or arg_5_0:createItem(iter_5_0)
+	for i = 1, math.max(#self.itemList, #dataList) do
+		local data = dataList[i]
+		local item = self.itemList[i] or self:createItem(i)
 
-		arg_5_0:updateItem(var_5_2, var_5_1)
+		self:updateItem(item, data)
 	end
 end
 
-function var_0_0.createItem(arg_6_0, arg_6_1)
-	local var_6_0 = gohelper.cloneInPlace(arg_6_0._goCardItem, string.format("card%s", arg_6_1))
-	local var_6_1 = Season3_0FightCardItem.New(var_6_0)
+function Season3_0FightCardView:createItem(index)
+	local go = gohelper.cloneInPlace(self._goCardItem, string.format("card%s", index))
+	local item = Season3_0FightCardItem.New(go)
 
-	arg_6_0.itemList[arg_6_1] = var_6_1
+	self.itemList[index] = item
 
-	return var_6_1
+	return item
 end
 
-function var_0_0.updateItem(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_1:setData(arg_7_2)
+function Season3_0FightCardView:updateItem(item, data)
+	item:setData(data)
 end
 
-function var_0_0.destroyItem(arg_8_0, arg_8_1)
-	arg_8_1:destroy()
+function Season3_0FightCardView:destroyItem(item)
+	item:destroy()
 end
 
-function var_0_0.onClose(arg_9_0)
+function Season3_0FightCardView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	if arg_10_0.itemList then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0.itemList) do
-			arg_10_0:destroyItem(iter_10_1)
+function Season3_0FightCardView:onDestroyView()
+	if self.itemList then
+		for k, v in pairs(self.itemList) do
+			self:destroyItem(v)
 		end
 
-		arg_10_0.itemList = nil
+		self.itemList = nil
 	end
 end
 
-return var_0_0
+return Season3_0FightCardView

@@ -1,150 +1,152 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.LengZhou6TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/LengZhou6TaskListModel.lua
 
-local var_0_0 = class("LengZhou6TaskListModel", ListScrollModel)
+module("modules.logic.versionactivity2_7.lengzhou6.model.LengZhou6TaskListModel", package.seeall)
 
-local function var_0_1(arg_1_0)
-	if arg_1_0.id == LengZhou6Enum.TaskMOAllFinishId then
+local LengZhou6TaskListModel = class("LengZhou6TaskListModel", ListScrollModel)
+
+local function _getSortIndex(objA)
+	if objA.id == LengZhou6Enum.TaskMOAllFinishId then
 		return 1
-	elseif arg_1_0:isFinished() then
+	elseif objA:isFinished() then
 		return 100
-	elseif arg_1_0:alreadyGotReward() then
+	elseif objA:alreadyGotReward() then
 		return 2
 	end
 
 	return 50
 end
 
-local function var_0_2(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_1(arg_2_0)
-	local var_2_1 = var_0_1(arg_2_1)
+local function _sortMO(objA, objB)
+	local sidxA = _getSortIndex(objA)
+	local sidxB = _getSortIndex(objB)
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_0 < var_2_1
-	elseif arg_2_0.id ~= arg_2_1.id then
-		return arg_2_0.id < arg_2_1.id
+	if sidxA ~= sidxB then
+		return sidxA < sidxB
+	elseif objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.init(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = 0
-	local var_3_2 = LengZhou6Model.instance:getAct190Id()
-	local var_3_3 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity190)
+function LengZhou6TaskListModel:init()
+	local dataList = {}
+	local rewardCount = 0
+	local actId = LengZhou6Model.instance:getAct190Id()
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity190)
 
-	if var_3_3 ~= nil then
-		local var_3_4 = LengZhou6Config.instance:getTaskByActId(var_3_2)
+	if taskDict ~= nil then
+		local taskCfgList = LengZhou6Config.instance:getTaskByActId(actId)
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_4) do
-			local var_3_5 = LengZhou6TaskMo.New()
+		for _, taskCfg in ipairs(taskCfgList) do
+			local mo = LengZhou6TaskMo.New()
 
-			var_3_5:init(iter_3_1, var_3_3[iter_3_1.id])
+			mo:init(taskCfg, taskDict[taskCfg.id])
 
-			if var_3_5:alreadyGotReward() then
-				var_3_1 = var_3_1 + 1
+			if mo:alreadyGotReward() then
+				rewardCount = rewardCount + 1
 			end
 
-			table.insert(var_3_0, var_3_5)
+			table.insert(dataList, mo)
 		end
 	end
 
-	if var_3_1 > 1 then
-		local var_3_6 = LengZhou6TaskMo.New()
+	if rewardCount > 1 then
+		local allMO = LengZhou6TaskMo.New()
 
-		var_3_6.id = LengZhou6Enum.TaskMOAllFinishId
-		var_3_6.activityId = var_3_2
+		allMO.id = LengZhou6Enum.TaskMOAllFinishId
+		allMO.activityId = actId
 
-		table.insert(var_3_0, var_3_6)
+		table.insert(dataList, allMO)
 	end
 
-	table.sort(var_3_0, var_0_2)
+	table.sort(dataList, _sortMO)
 
-	arg_3_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_3_0:setList(var_3_0)
+	self:setList(dataList)
 end
 
-function var_0_0.getRankDiff(arg_4_0, arg_4_1)
-	if arg_4_0._hasRankDiff and arg_4_1 then
-		local var_4_0 = tabletool.indexOf(arg_4_0._idIdxList, arg_4_1.id)
-		local var_4_1 = arg_4_0:getIndex(arg_4_1)
+function LengZhou6TaskListModel:getRankDiff(mo)
+	if self._hasRankDiff and mo then
+		local oldIdx = tabletool.indexOf(self._idIdxList, mo.id)
+		local curIdx = self:getIndex(mo)
 
-		if var_4_0 and var_4_1 then
-			arg_4_0._idIdxList[var_4_0] = -2
+		if oldIdx and curIdx then
+			self._idIdxList[oldIdx] = -2
 
-			return var_4_1 - var_4_0
+			return curIdx - oldIdx
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.refreshRankDiff(arg_5_0)
-	arg_5_0._idIdxList = {}
+function LengZhou6TaskListModel:refreshRankDiff()
+	self._idIdxList = {}
 
-	local var_5_0 = arg_5_0:getList()
+	local dataList = self:getList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		table.insert(arg_5_0._idIdxList, iter_5_1.id)
+	for _, mo in ipairs(dataList) do
+		table.insert(self._idIdxList, mo.id)
 	end
 end
 
-function var_0_0.preFinish(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function LengZhou6TaskListModel:preFinish(taskMO)
+	if not taskMO then
 		return
 	end
 
-	local var_6_0 = false
+	local isCanSort = false
 
-	arg_6_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_6_0:refreshRankDiff()
+	self:refreshRankDiff()
 
-	local var_6_1 = 0
-	local var_6_2 = arg_6_0:getList()
+	local preCount = 0
+	local taskMOList = self:getList()
 
-	if arg_6_1.id == LengZhou6Enum.TaskMOAllFinishId then
-		for iter_6_0, iter_6_1 in ipairs(var_6_2) do
-			if iter_6_1:alreadyGotReward() and iter_6_1.id ~= LengZhou6Enum.TaskMOAllFinishId then
-				iter_6_1.preFinish = true
-				var_6_0 = true
-				var_6_1 = var_6_1 + 1
+	if taskMO.id == LengZhou6Enum.TaskMOAllFinishId then
+		for _, tempMO in ipairs(taskMOList) do
+			if tempMO:alreadyGotReward() and tempMO.id ~= LengZhou6Enum.TaskMOAllFinishId then
+				tempMO.preFinish = true
+				isCanSort = true
+				preCount = preCount + 1
 			end
 		end
-	elseif arg_6_1:alreadyGotReward() then
-		arg_6_1.preFinish = true
-		var_6_0 = true
-		var_6_1 = var_6_1 + 1
+	elseif taskMO:alreadyGotReward() then
+		taskMO.preFinish = true
+		isCanSort = true
+		preCount = preCount + 1
 	end
 
-	if var_6_0 then
-		local var_6_3 = arg_6_0:getById(LengZhou6Enum.TaskMOAllFinishId)
+	if isCanSort then
+		local allMO = self:getById(LengZhou6Enum.TaskMOAllFinishId)
 
-		if var_6_3 and arg_6_0:getGotRewardCount() < var_6_1 + 1 then
-			tabletool.removeValue(var_6_2, var_6_3)
+		if allMO and self:getGotRewardCount() < preCount + 1 then
+			tabletool.removeValue(taskMOList, allMO)
 		end
 
-		arg_6_0._hasRankDiff = true
+		self._hasRankDiff = true
 
-		table.sort(var_6_2, var_0_2)
-		arg_6_0:setList(var_6_2)
+		table.sort(taskMOList, _sortMO)
+		self:setList(taskMOList)
 
-		arg_6_0._hasRankDiff = false
+		self._hasRankDiff = false
 	end
 end
 
-function var_0_0.getGotRewardCount(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1 or arg_7_0:getList()
-	local var_7_1 = 0
+function LengZhou6TaskListModel:getGotRewardCount(moList)
+	local taskMOList = moList or self:getList()
+	local count = 0
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1:alreadyGotReward() and not iter_7_1.preFinish and iter_7_1.id ~= LengZhou6Enum.TaskMOAllFinishId then
-			var_7_1 = var_7_1 + 1
+	for _, tempMO in ipairs(taskMOList) do
+		if tempMO:alreadyGotReward() and not tempMO.preFinish and tempMO.id ~= LengZhou6Enum.TaskMOAllFinishId then
+			count = count + 1
 		end
 	end
 
-	return var_7_1
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+LengZhou6TaskListModel.instance = LengZhou6TaskListModel.New()
 
-return var_0_0
+return LengZhou6TaskListModel

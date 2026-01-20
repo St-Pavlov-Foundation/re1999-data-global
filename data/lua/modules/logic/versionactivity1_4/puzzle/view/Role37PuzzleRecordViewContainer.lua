@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleRecordViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/view/Role37PuzzleRecordViewContainer.lua
 
-local var_0_0 = class("Role37PuzzleRecordViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleRecordViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Role37PuzzleRecordViewContainer = class("Role37PuzzleRecordViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Role37PuzzleRecordView.New())
+function Role37PuzzleRecordViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Role37PuzzleRecordView.New())
+
+	return views
 end
 
-return var_0_0
+return Role37PuzzleRecordViewContainer

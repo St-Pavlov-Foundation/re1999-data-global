@@ -1,17 +1,19 @@
-﻿module("modules.logic.season.view1_2.Season1_2TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_2/Season1_2TaskViewContainer.lua
 
-local var_0_0 = class("Season1_2TaskViewContainer", BaseViewContainer)
+module("modules.logic.season.view1_2.Season1_2TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season1_2TaskViewContainer = class("Season1_2TaskViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season1_2TaskView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function Season1_2TaskViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season1_2TaskView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function Season1_2TaskViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -21,4 +23,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return Season1_2TaskViewContainer

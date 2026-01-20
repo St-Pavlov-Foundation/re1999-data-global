@@ -1,36 +1,40 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/view/ArmRewardViewContainer.lua
 
-local var_0_0 = class("ArmRewardViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local ArmRewardViewContainer = class("ArmRewardViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Root/#scroll_TaskList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = ArmRewardViewTaskItem.prefabPath
-	var_1_1.cellClass = ArmRewardViewTaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 824
-	var_1_1.cellHeight = 158
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function ArmRewardViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "Root/#scroll_TaskList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = ArmRewardViewTaskItem.prefabPath
+	scrollParam.cellClass = ArmRewardViewTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 824
+	scrollParam.cellHeight = 158
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	for iter_1_0 = 1, 10 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06 + 0.3
+	local animationDelayTimes = {}
+
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.06 + 0.3
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(Activity124RewardListModel.instance, var_1_1, var_1_2))
-	table.insert(var_1_0, ArmRewardView.New())
+	table.insert(views, LuaListScrollViewWithAnimator.New(Activity124RewardListModel.instance, scrollParam, animationDelayTimes))
+	table.insert(views, ArmRewardView.New())
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function ArmRewardViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -40,4 +44,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return ArmRewardViewContainer

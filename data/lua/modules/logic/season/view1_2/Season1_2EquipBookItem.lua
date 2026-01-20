@@ -1,99 +1,101 @@
-﻿module("modules.logic.season.view1_2.Season1_2EquipBookItem", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_2/Season1_2EquipBookItem.lua
 
-local var_0_0 = class("Season1_2EquipBookItem", ListScrollCellExtend)
+module("modules.logic.season.view1_2.Season1_2EquipBookItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Season1_2EquipBookItem = class("Season1_2EquipBookItem", ListScrollCellExtend)
 
-	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_pos")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
-	arg_1_0._simageroleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "image_roleicon")
-	arg_1_0._txtcountvalue = gohelper.findChildText(arg_1_0.viewGO, "go_count/bg/#txt_countvalue")
-	arg_1_0._gocount = gohelper.findChild(arg_1_0.viewGO, "go_count")
-	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "#go_new")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function Season1_2EquipBookItem:init(go)
+	Season1_2EquipBookItem.super.init(self, go)
+
+	self._gopos = gohelper.findChild(self.viewGO, "go_pos")
+	self._goselect = gohelper.findChild(self.viewGO, "go_select")
+	self._simageroleicon = gohelper.findChildSingleImage(self.viewGO, "image_roleicon")
+	self._txtcountvalue = gohelper.findChildText(self.viewGO, "go_count/bg/#txt_countvalue")
+	self._gocount = gohelper.findChild(self.viewGO, "go_count")
+	self._gonew = gohelper.findChild(self.viewGO, "#go_new")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
-	arg_2_0._cfg = SeasonConfig.instance:getSeasonEquipCo(arg_2_0._mo.id)
+function Season1_2EquipBookItem:onUpdateMO(mo)
+	self._mo = mo
+	self._cfg = SeasonConfig.instance:getSeasonEquipCo(self._mo.id)
 
-	if arg_2_0._cfg then
-		arg_2_0:refreshUI()
+	if self._cfg then
+		self:refreshUI()
 	end
 
-	arg_2_0:checkPlayAnim()
+	self:checkPlayAnim()
 end
 
-var_0_0.ColumnCount = 6
-var_0_0.AnimRowCount = 4
-var_0_0.OpenAnimTime = 0.06
-var_0_0.OpenAnimStartTime = 0.05
+Season1_2EquipBookItem.ColumnCount = 6
+Season1_2EquipBookItem.AnimRowCount = 4
+Season1_2EquipBookItem.OpenAnimTime = 0.06
+Season1_2EquipBookItem.OpenAnimStartTime = 0.05
 
-function var_0_0.refreshUI(arg_3_0)
-	arg_3_0:checkCreateIcon()
-	arg_3_0.icon:updateData(arg_3_0._mo.id)
-	arg_3_0.icon:setColorDark(arg_3_0._mo.count <= 0)
-	gohelper.setActive(arg_3_0._goselect, Activity104EquipItemBookModel.instance.curSelectItemId == arg_3_0._mo.id)
-	gohelper.setActive(arg_3_0._gonew, arg_3_0._mo.isNew)
+function Season1_2EquipBookItem:refreshUI()
+	self:checkCreateIcon()
+	self.icon:updateData(self._mo.id)
+	self.icon:setColorDark(self._mo.count <= 0)
+	gohelper.setActive(self._goselect, Activity104EquipItemBookModel.instance.curSelectItemId == self._mo.id)
+	gohelper.setActive(self._gonew, self._mo.isNew)
 
-	if arg_3_0._mo.count > 0 then
-		gohelper.setActive(arg_3_0._gocount, true)
+	if self._mo.count > 0 then
+		gohelper.setActive(self._gocount, true)
 
-		arg_3_0._txtcountvalue.text = luaLang("multiple") .. tostring(arg_3_0._mo.count)
+		self._txtcountvalue.text = luaLang("multiple") .. tostring(self._mo.count)
 	else
-		gohelper.setActive(arg_3_0._gocount, false)
+		gohelper.setActive(self._gocount, false)
 	end
 end
 
-function var_0_0.checkPlayAnim(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.onDelayPlayOpen, arg_4_0)
+function Season1_2EquipBookItem:checkPlayAnim()
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
 
-	local var_4_0 = Activity104EquipItemBookModel.instance:getDelayPlayTime(arg_4_0._mo)
+	local delayTime = Activity104EquipItemBookModel.instance:getDelayPlayTime(self._mo)
 
-	if var_4_0 == -1 then
-		arg_4_0._animator:Play("idle", 0, 0)
+	if delayTime == -1 then
+		self._animator:Play("idle", 0, 0)
 
-		arg_4_0._animator.speed = 1
+		self._animator.speed = 1
 	else
-		arg_4_0._animator:Play("open", 0, 0)
+		self._animator:Play("open", 0, 0)
 
-		arg_4_0._animator.speed = 0
+		self._animator.speed = 0
 
-		TaskDispatcher.runDelay(arg_4_0.onDelayPlayOpen, arg_4_0, var_4_0)
+		TaskDispatcher.runDelay(self.onDelayPlayOpen, self, delayTime)
 	end
 end
 
-function var_0_0.onDelayPlayOpen(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.onDelayPlayOpen, arg_5_0)
-	arg_5_0._animator:Play("open", 0, 0)
+function Season1_2EquipBookItem:onDelayPlayOpen()
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
+	self._animator:Play("open", 0, 0)
 
-	arg_5_0._animator.speed = 1
+	self._animator.speed = 1
 end
 
-function var_0_0.checkCreateIcon(arg_6_0)
-	if not arg_6_0.icon then
-		local var_6_0 = arg_6_0._view.viewContainer:getSetting().otherRes[2]
-		local var_6_1 = arg_6_0._view:getResInst(var_6_0, arg_6_0._gopos, "icon")
+function Season1_2EquipBookItem:checkCreateIcon()
+	if not self.icon then
+		local path = self._view.viewContainer:getSetting().otherRes[2]
+		local go = self._view:getResInst(path, self._gopos, "icon")
 
-		arg_6_0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, Season1_2CelebrityCardEquip)
+		self.icon = MonoHelper.addNoUpdateLuaComOnceToGo(go, Season1_2CelebrityCardEquip)
 
-		arg_6_0.icon:setClickCall(arg_6_0.onClickSelf, arg_6_0)
+		self.icon:setClickCall(self.onClickSelf, self)
 	end
 end
 
-function var_0_0.onClickSelf(arg_7_0)
-	if arg_7_0._mo then
-		Activity104EquipBookController.instance:changeSelect(arg_7_0._mo.id)
+function Season1_2EquipBookItem:onClickSelf()
+	if self._mo then
+		Activity104EquipBookController.instance:changeSelect(self._mo.id)
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	if arg_8_0.icon then
-		arg_8_0.icon:disposeUI()
+function Season1_2EquipBookItem:onDestroyView()
+	if self.icon then
+		self.icon:disposeUI()
 	end
 
-	TaskDispatcher.cancelTask(arg_8_0.onDelayPlayOpen, arg_8_0)
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
 end
 
-return var_0_0
+return Season1_2EquipBookItem

@@ -1,53 +1,55 @@
-﻿module("modules.logic.versionactivity1_9.roomgift.view.RoomGiftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/roomgift/view/RoomGiftView.lua
 
-local var_0_0 = class("RoomGiftView", BaseView)
+module("modules.logic.versionactivity1_9.roomgift.view.RoomGiftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "LimitTime/image_LimitTimeBG/#txt_LimitTime")
+local RoomGiftView = class("RoomGiftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomGiftView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "LimitTime/image_LimitTimeBG/#txt_LimitTime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomGiftView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomGiftView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoomGiftView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RoomGiftView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.parent
+function RoomGiftView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	if var_6_0 then
-		gohelper.addChild(var_6_0, arg_6_0.viewGO)
+	if parentGO then
+		gohelper.addChild(parentGO, self.viewGO)
 	end
 
-	arg_6_0:_refreshTimeTick()
-	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
-	TaskDispatcher.runRepeat(arg_6_0._refreshTimeTick, arg_6_0, TimeUtil.OneMinuteSecond)
+	self:_refreshTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0._refreshTimeTick(arg_7_0)
-	arg_7_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(ActivityEnum.Activity.RoomGift)
+function RoomGiftView:_refreshTimeTick()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(ActivityEnum.Activity.RoomGift)
 end
 
-function var_0_0.onClose(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._refreshTimeTick, arg_8_0)
+function RoomGiftView:onClose()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RoomGiftView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomGiftView

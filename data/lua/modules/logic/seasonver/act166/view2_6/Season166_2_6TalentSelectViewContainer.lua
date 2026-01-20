@@ -1,28 +1,30 @@
-﻿module("modules.logic.seasonver.act166.view2_6.Season166_2_6TalentSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view2_6/Season166_2_6TalentSelectViewContainer.lua
 
-local var_0_0 = class("Season166_2_6TalentSelectViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act166.view2_6.Season166_2_6TalentSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season166_2_6TalentSelectViewContainer = class("Season166_2_6TalentSelectViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season166_2_6TalentSelectView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Season166_2_6TalentSelectViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season166_2_6TalentSelectView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Season166_2_6TalentSelectViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Season166TalentTreeHelp)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Season166_2_6TalentSelectViewContainer

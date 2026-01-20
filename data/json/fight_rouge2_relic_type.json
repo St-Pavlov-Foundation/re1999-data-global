@@ -1,0 +1,23 @@
+[
+  {
+    "id": 101,
+    "progressIcon": "fight_rouge2_baseprogress_1",
+    "bigIcon": "fight_rouge2_baseicon_1",
+    "icon": "fight_rouge2_base_1",
+    "color": "D9D683"
+  },
+  {
+    "id": 102,
+    "progressIcon": "fight_rouge2_baseprogress_2",
+    "bigIcon": "fight_rouge2_baseicon_1",
+    "icon": "fight_rouge2_base_2",
+    "color": "798DFF"
+  },
+  {
+    "id": 103,
+    "progressIcon": "fight_rouge2_baseprogress_3",
+    "bigIcon": "fight_rouge2_baseicon_1",
+    "icon": "fight_rouge2_base_3",
+    "color": "C57FEE"
+  }
+]

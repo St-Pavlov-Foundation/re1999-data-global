@@ -1,505 +1,524 @@
-﻿module("modules.logic.summonsimulationpick.view.SummonSimulationResultView", package.seeall)
+﻿-- chunkname: @modules/logic/summonsimulationpick/view/SummonSimulationResultView.lua
 
-local var_0_0 = class("SummonSimulationResultView", BaseView)
+module("modules.logic.summonsimulationpick.view.SummonSimulationResultView", package.seeall)
 
-var_0_0.SAVED_ANIM_NAME = "open"
-var_0_0.IDLE_ANIM_NAME = "idle"
-var_0_0.FIRST_SAVE_ANIM_DELAY = 0.5
-var_0_0.SUMMON_CONFIRM_TEXT = "p_summonpickresultview_txt_confirm"
-var_0_0.SUMMON_AGAIN_TEXT = "p_summonpickresultview_txt_again"
+local SummonSimulationResultView = class("SummonSimulationResultView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagebg0 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg0")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._simageline1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_line1")
-	arg_1_0._simageline2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_line2")
-	arg_1_0._simageline3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_line3")
-	arg_1_0._goheroitem10 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem10")
-	arg_1_0._goheroitem5 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem5")
-	arg_1_0._goheroitem2 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem2")
-	arg_1_0._goheroitem4 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem4")
-	arg_1_0._goheroitem7 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem7")
-	arg_1_0._goheroitem8 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem8")
-	arg_1_0._goheroitem3 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem3")
-	arg_1_0._goheroitem1 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem1")
-	arg_1_0._goheroitem6 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem6")
-	arg_1_0._goheroitem9 = gohelper.findChild(arg_1_0.viewGO, "herocontent/#go_heroitem9")
-	arg_1_0._btnsave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_save")
-	arg_1_0._gosaved = gohelper.findChild(arg_1_0.viewGO, "Btn/#go_saved")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_confirm")
-	arg_1_0._btnagain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_again")
-	arg_1_0._btntips = gohelper.findChildButton(arg_1_0.viewGO, "#btn_tips")
-	arg_1_0._txtresttime = gohelper.findChildText(arg_1_0.viewGO, "Btn/rest/#txt_resttime")
-	arg_1_0._txtagain = gohelper.findChildText(arg_1_0.viewGO, "Btn/#btn_again/#txt_again")
+SummonSimulationResultView.SAVED_ANIM_NAME = "open"
+SummonSimulationResultView.IDLE_ANIM_NAME = "idle"
+SummonSimulationResultView.FIRST_SAVE_ANIM_DELAY = 0.5
+SummonSimulationResultView.SUMMON_CONFIRM_TEXT = "p_summonpickresultview_txt_confirm"
+SummonSimulationResultView.SUMMON_AGAIN_TEXT = "p_summonpickresultview_txt_again"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonSimulationResultView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagebg0 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg0")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._simageline1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_line1")
+	self._simageline2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_line2")
+	self._simageline3 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_line3")
+	self._goheroitem10 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem10")
+	self._goheroitem5 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem5")
+	self._goheroitem2 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem2")
+	self._goheroitem4 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem4")
+	self._goheroitem7 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem7")
+	self._goheroitem8 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem8")
+	self._goheroitem3 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem3")
+	self._goheroitem1 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem1")
+	self._goheroitem6 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem6")
+	self._goheroitem9 = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem9")
+	self._btnsave = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_save")
+	self._gosaved = gohelper.findChild(self.viewGO, "Btn/#go_saved")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_confirm")
+	self._btnagain = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_again")
+	self._btntips = gohelper.findChildButton(self.viewGO, "#btn_tips")
+	self._txtresttime = gohelper.findChildText(self.viewGO, "Btn/rest/#txt_resttime")
+	self._txtagain = gohelper.findChildText(self.viewGO, "Btn/#btn_again/#txt_again")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsave:AddClickListener(arg_2_0._btnsaveOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btnagain:AddClickListener(arg_2_0._btnagainOnClick, arg_2_0)
-	arg_2_0._btntips:AddClickListener(arg_2_0._btntipsOnClick, arg_2_0)
-	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSummonSimulation, arg_2_0.onSummonSimulation, arg_2_0)
-	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSaveResult, arg_2_0.onSummonSave, arg_2_0)
-	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSelectResult, arg_2_0.closeThis, arg_2_0)
+function SummonSimulationResultView:addEvents()
+	self._btnsave:AddClickListener(self._btnsaveOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btnagain:AddClickListener(self._btnagainOnClick, self)
+	self._btntips:AddClickListener(self._btntipsOnClick, self)
+	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSummonSimulation, self.onSummonSimulation, self)
+	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSaveResult, self.onSummonSave, self)
+	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onSelectResult, self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsave:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btnagain:RemoveClickListener()
-	arg_3_0._btntips:RemoveClickListener()
-	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSummonSimulation, arg_3_0.onSummonSimulation, arg_3_0)
-	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSaveResult, arg_3_0.onSummonSave, arg_3_0)
-	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSelectResult, arg_3_0.closeThis, arg_3_0)
+function SummonSimulationResultView:removeEvents()
+	self._btnsave:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btnagain:RemoveClickListener()
+	self._btntips:RemoveClickListener()
+	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSummonSimulation, self.onSummonSimulation, self)
+	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSaveResult, self.onSummonSave, self)
+	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onSelectResult, self.closeThis, self)
 end
 
-function var_0_0._btnsaveOnClick(arg_4_0)
-	if arg_4_0._cantClose then
+function SummonSimulationResultView:_btnsaveOnClick()
+	if self._cantClose then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.SummonSimulationPickView, {
-		activityId = arg_4_0._activityId,
-		pickType = SummonSimulationEnum.PickType.SaveResult
+		activityId = self._activityId
 	})
 end
 
-function var_0_0._btnconfirmOnClick(arg_5_0)
-	if arg_5_0._cantClose then
+function SummonSimulationResultView:_onclickEsc()
+	return
+end
+
+function SummonSimulationResultView:_btnconfirmOnClick()
+	if self._cantClose then
 		return
 	end
 
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onViewOpenFinish, self)
 	ViewMgr.instance:openView(ViewName.SummonSimulationPickView, {
-		activityId = arg_5_0._activityId,
-		pickType = SummonSimulationEnum.PickType.SelectResult
+		isFromMaterialTipView = true,
+		activityId = self._activityId
 	})
 end
 
-function var_0_0._btnagainOnClick(arg_6_0)
-	if arg_6_0._cantClose then
+function SummonSimulationResultView:onViewOpenFinish(viewName)
+	if viewName == ViewName.SummonSimulationPickView then
+		self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onViewOpenFinish, self)
+		self:closeThis()
+	end
+end
+
+function SummonSimulationResultView:_btnagainOnClick()
+	if self._cantClose then
 		return
 	end
 
-	if SummonSimulationPickModel.instance:getActInfo(arg_6_0._activityId).leftTimes > 0 then
-		SummonSimulationPickController.instance:summonSimulation(arg_6_0._activityId)
+	local info = SummonSimulationPickModel.instance:getActInfo(self._activityId)
+
+	if info.leftTimes > 0 then
+		SummonSimulationPickController.instance:summonSimulation(self._activityId, false)
 	else
+		self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onViewOpenFinish, self)
 		ViewMgr.instance:openView(ViewName.SummonSimulationPickView, {
-			activityId = arg_6_0._activityId,
-			pickType = SummonSimulationEnum.PickType.SelectResult
+			isFromMaterialTipView = true,
+			activityId = self._activityId
 		})
 	end
 end
 
-function var_0_0._btntipsOnClick(arg_7_0)
-	if arg_7_0._cantClose then
+function SummonSimulationResultView:_btntipsOnClick()
+	if self._cantClose then
 		return
 	end
 
-	SummonSimulationPickController.instance:openSummonTips(arg_7_0._activityId)
+	SummonSimulationPickController.instance:openSummonTips(self._activityId)
 end
 
-function var_0_0._btncloseOnClick(arg_8_0)
-	if arg_8_0._cantClose then
+function SummonSimulationResultView:_btncloseOnClick()
+	if self._cantClose then
 		return
 	end
 
-	local var_8_0 = MessageBoxIdDefine.SummonSimulationExit
+	local msgId = MessageBoxIdDefine.SummonSimulationExit
 
-	GameFacade.showMessageBox(var_8_0, MsgBoxEnum.BoxType.Yes_No, arg_8_0._confirmExit, nil, nil, arg_8_0)
+	GameFacade.showMessageBox(msgId, MsgBoxEnum.BoxType.Yes_No, self._confirmExit, nil, nil, self)
 end
 
-function var_0_0._confirmExit(arg_9_0)
-	if arg_9_0._isReprint == false then
-		local var_9_0 = SummonSimulationPickController.instance
+function SummonSimulationResultView:_confirmExit()
+	if self._isReprint == false then
+		local instance = SummonSimulationPickController.instance
 
-		SummonController.instance:setSummonEndOpenCallBack(var_9_0.backHome, var_9_0)
+		SummonController.instance:setSummonEndOpenCallBack(instance.backHome, instance)
 	end
 
-	arg_9_0.isClickBack = true
+	self.isClickBack = true
 
-	arg_9_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onSummonSimulation(arg_10_0)
-	arg_10_0.isSummon = true
+function SummonSimulationResultView:onSummonSimulation()
+	self.isSummon = true
 
 	SummonSimulationPickController.instance:startBlack()
-	arg_10_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	gohelper.setActive(arg_11_0._goheroitem, false)
+function SummonSimulationResultView:_editableInitView()
+	gohelper.setActive(self._goheroitem, false)
 
-	arg_11_0._heroItemTables = {}
+	self._heroItemTables = {}
 
-	for iter_11_0 = 1, 10 do
-		local var_11_0 = arg_11_0:getUserDataTb_()
+	for i = 1, 10 do
+		local heroItemTable = self:getUserDataTb_()
 
-		var_11_0.go = gohelper.findChild(arg_11_0.viewGO, "herocontent/#go_heroitem" .. iter_11_0)
-		var_11_0.txtname = gohelper.findChildText(var_11_0.go, "name")
-		var_11_0.txtnameen = gohelper.findChildText(var_11_0.go, "nameen")
-		var_11_0.imagerare = gohelper.findChildImage(var_11_0.go, "rare")
-		var_11_0.equiprare = gohelper.findChildImage(var_11_0.go, "equiprare")
-		var_11_0.imagecareer = gohelper.findChildImage(var_11_0.go, "career")
-		var_11_0.imageequipcareer = gohelper.findChildImage(var_11_0.go, "equipcareer")
-		var_11_0.goHeroIcon = gohelper.findChild(var_11_0.go, "heroicon")
-		var_11_0.simageicon = gohelper.findChildSingleImage(var_11_0.go, "heroicon/icon")
-		var_11_0.simageequipicon = gohelper.findChildSingleImage(var_11_0.go, "equipicon")
-		var_11_0.imageicon = gohelper.findChildImage(var_11_0.go, "heroicon/icon")
-		var_11_0.goeffect = gohelper.findChild(var_11_0.go, "effect")
-		var_11_0.btnself = gohelper.findChildButtonWithAudio(var_11_0.go, "btn_self")
-		var_11_0.goluckybag = gohelper.findChild(var_11_0.go, "luckybag")
-		var_11_0.txtluckybagname = gohelper.findChildText(var_11_0.goluckybag, "name")
-		var_11_0.txtluckybagnameen = gohelper.findChildText(var_11_0.goluckybag, "nameen")
-		var_11_0.simageluckgbagicon = gohelper.findChildSingleImage(var_11_0.goluckybag, "icon")
+		heroItemTable.go = gohelper.findChild(self.viewGO, "herocontent/#go_heroitem" .. i)
+		heroItemTable.txtname = gohelper.findChildText(heroItemTable.go, "name")
+		heroItemTable.txtnameen = gohelper.findChildText(heroItemTable.go, "nameen")
+		heroItemTable.imagerare = gohelper.findChildImage(heroItemTable.go, "rare")
+		heroItemTable.equiprare = gohelper.findChildImage(heroItemTable.go, "equiprare")
+		heroItemTable.imagecareer = gohelper.findChildImage(heroItemTable.go, "career")
+		heroItemTable.imageequipcareer = gohelper.findChildImage(heroItemTable.go, "equipcareer")
+		heroItemTable.goHeroIcon = gohelper.findChild(heroItemTable.go, "heroicon")
+		heroItemTable.simageicon = gohelper.findChildSingleImage(heroItemTable.go, "heroicon/icon")
+		heroItemTable.simageequipicon = gohelper.findChildSingleImage(heroItemTable.go, "equipicon")
+		heroItemTable.imageicon = gohelper.findChildImage(heroItemTable.go, "heroicon/icon")
+		heroItemTable.goeffect = gohelper.findChild(heroItemTable.go, "effect")
+		heroItemTable.btnself = gohelper.findChildButtonWithAudio(heroItemTable.go, "btn_self")
+		heroItemTable.goluckybag = gohelper.findChild(heroItemTable.go, "luckybag")
+		heroItemTable.txtluckybagname = gohelper.findChildText(heroItemTable.goluckybag, "name")
+		heroItemTable.txtluckybagnameen = gohelper.findChildText(heroItemTable.goluckybag, "nameen")
+		heroItemTable.simageluckgbagicon = gohelper.findChildSingleImage(heroItemTable.goluckybag, "icon")
 
-		var_11_0.btnself:AddClickListener(arg_11_0.onClickItem, {
-			view = arg_11_0,
-			index = iter_11_0
+		heroItemTable.btnself:AddClickListener(self.onClickItem, {
+			view = self,
+			index = i
 		})
-		table.insert(arg_11_0._heroItemTables, var_11_0)
+		table.insert(self._heroItemTables, heroItemTable)
 	end
 
-	arg_11_0._cantClose = true
-	arg_11_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, nil, arg_11_0._tweenFinish, arg_11_0, nil, EaseType.Linear)
-	arg_11_0._goSaveAnimator = gohelper.findChildComponent(arg_11_0._gosaved.gameObject, "", gohelper.Type_Animator)
+	self._cantClose = true
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, nil, self._tweenFinish, self, nil, EaseType.Linear)
+	self._goSaveAnimator = gohelper.findChildComponent(self._gosaved.gameObject, "", gohelper.Type_Animator)
+
+	gohelper.setActive(self._btnconfirm, false)
+	gohelper.setActive(self._btnsave, false)
+
+	self._goRest = gohelper.findChild(self.viewGO, "Btn/rest")
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	for iter_12_0 = 1, 10 do
-		local var_12_0 = arg_12_0._heroItemTables[iter_12_0]
+function SummonSimulationResultView:onDestroyView()
+	for i = 1, 10 do
+		local heroItemTable = self._heroItemTables[i]
 
-		if var_12_0 then
-			if var_12_0.simageicon then
-				var_12_0.simageicon:UnLoadImage()
+		if heroItemTable then
+			if heroItemTable.simageicon then
+				heroItemTable.simageicon:UnLoadImage()
 			end
 
-			if var_12_0.simageequipicon then
-				var_12_0.simageequipicon:UnLoadImage()
+			if heroItemTable.simageequipicon then
+				heroItemTable.simageequipicon:UnLoadImage()
 			end
 
-			if var_12_0.btnself then
-				var_12_0.btnself:RemoveClickListener()
+			if heroItemTable.btnself then
+				heroItemTable.btnself:RemoveClickListener()
 			end
 
-			if var_12_0.simageluckgbagicon then
-				var_12_0.simageluckgbagicon:UnLoadImage()
+			if heroItemTable.simageluckgbagicon then
+				heroItemTable.simageluckgbagicon:UnLoadImage()
 			end
 		end
 	end
 
-	if arg_12_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_12_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 end
 
-function var_0_0.onOpen(arg_13_0)
+function SummonSimulationResultView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_LuckDraw_TenHero_OpenAll)
 
-	local var_13_0 = arg_13_0.viewParam.summonResultList
+	local summonResultList = self.viewParam.summonResultList
 
-	arg_13_0._curPool = arg_13_0.viewParam.curPool
-	arg_13_0._summonResultList = {}
-	arg_13_0._isReprint = arg_13_0.viewParam.isReprint ~= nil and arg_13_0.viewParam.isReprint or false
+	self._curPool = self.viewParam.curPool
+	self._summonResultList = {}
+	self._isReprint = self.viewParam.isReprint ~= nil and self.viewParam.isReprint or false
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		table.insert(arg_13_0._summonResultList, iter_13_1)
+	for i, v in ipairs(summonResultList) do
+		table.insert(self._summonResultList, v)
 	end
 
-	if arg_13_0._curPool then
-		SummonModel.sortResult(arg_13_0._summonResultList, arg_13_0._curPool.id)
+	if self._curPool then
+		SummonModel.sortResult(self._summonResultList, self._curPool.id)
 	end
 
-	arg_13_0.viewContainer.navigateView:setOverrideClose(arg_13_0._btncloseOnClick, arg_13_0)
-	arg_13_0:_refreshUI()
-	NavigateMgr.instance:addEscape(ViewName.SummonSimulationResultView, arg_13_0._btnconfirmOnClick, arg_13_0)
+	self:_refreshUI()
+	NavigateMgr.instance:addEscape(ViewName.SummonSimulationResultView, self._onclickEsc, self)
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0.viewContainer.navigateView:setOverrideClose(nil, nil)
-	arg_14_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_14_0.onSummonReply, arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.delayPlayBtnAnim, arg_14_0)
+function SummonSimulationResultView:onClose()
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onViewOpenFinish, self)
+	TaskDispatcher.cancelTask(self.delayPlayBtnAnim, self)
 end
 
-function var_0_0.onCloseFinish(arg_15_0)
-	if not arg_15_0:_showCommonPropView() then
+function SummonSimulationResultView:onCloseFinish()
+	if not self:_showCommonPropView() then
 		SummonController.instance:dispatchEvent(SummonEvent.onSummonResultClose)
 	end
 end
 
-function var_0_0.onClickItem(arg_16_0)
-	local var_16_0 = arg_16_0.view
-	local var_16_1 = arg_16_0.index
-	local var_16_2 = var_16_0._summonResultList[var_16_1]
+function SummonSimulationResultView.onClickItem(params)
+	local view = params.view
+	local index = params.index
+	local summonReward = view._summonResultList[index]
 
-	if var_16_2.heroId and var_16_2.heroId ~= 0 then
+	if summonReward.heroId and summonReward.heroId ~= 0 then
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
 			showHome = false,
-			heroId = var_16_2.heroId
+			heroId = summonReward.heroId
 		})
-	elseif var_16_2.equipId and var_16_2.equipId ~= 0 then
+	elseif summonReward.equipId and summonReward.equipId ~= 0 then
 		EquipController.instance:openEquipView({
-			equipId = var_16_2.equipId
+			equipId = summonReward.equipId
 		})
-	elseif var_16_2:isLuckyBag() then
+	elseif summonReward:isLuckyBag() then
 		GameFacade.showToast(ToastEnum.SummonLuckyBagGoMainViewOpen)
 	end
 end
 
-function var_0_0._tweenFinish(arg_17_0)
-	arg_17_0._cantClose = false
+function SummonSimulationResultView:_tweenFinish()
+	self._cantClose = false
 end
 
-function var_0_0.onSummonReply(arg_18_0)
-	arg_18_0:closeThis()
+function SummonSimulationResultView:onSummonReply()
+	self:closeThis()
 end
 
-function var_0_0.onSummonSave(arg_19_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_19_0.onSaveViewClose, arg_19_0)
+function SummonSimulationResultView:onSummonSave()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onSaveViewClose, self)
 end
 
-function var_0_0.onSaveViewClose(arg_20_0, arg_20_1)
-	if arg_20_1 == ViewName.SummonSimulationPickView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_20_0.onSaveViewClose, arg_20_0)
+function SummonSimulationResultView:onSaveViewClose(viewName)
+	if viewName == ViewName.SummonSimulationPickView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onSaveViewClose, self)
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2SummonSimulation.play_ui_checkpoint_doom_disappear)
-		arg_20_0:_refreshSelectState()
+		self:_refreshSelectState()
 	end
 end
 
-function var_0_0._refreshUI(arg_21_0)
-	local var_21_0 = VirtualSummonScene.instance:isOpen()
+function SummonSimulationResultView:_refreshUI()
+	local openSummonScene = VirtualSummonScene.instance:isOpen()
 
-	gohelper.setActive(arg_21_0._simagebg0, not var_21_0)
+	gohelper.setActive(self._simagebg0, not openSummonScene)
 
-	for iter_21_0 = 1, #arg_21_0._summonResultList do
-		local var_21_1 = arg_21_0._summonResultList[iter_21_0]
+	for i = 1, #self._summonResultList do
+		local summonReward = self._summonResultList[i]
 
-		if var_21_1.heroId and var_21_1.heroId ~= 0 then
-			arg_21_0:_refreshHeroItem(arg_21_0._heroItemTables[iter_21_0], var_21_1)
-		elseif var_21_1.equipId and var_21_1.equipId ~= 0 then
-			arg_21_0:_refreshEquipItem(arg_21_0._heroItemTables[iter_21_0], var_21_1)
-		elseif var_21_1:isLuckyBag() then
-			arg_21_0:_refreshLuckyBagItem(arg_21_0._heroItemTables[iter_21_0], var_21_1)
+		if summonReward.heroId and summonReward.heroId ~= 0 then
+			self:_refreshHeroItem(self._heroItemTables[i], summonReward)
+		elseif summonReward.equipId and summonReward.equipId ~= 0 then
+			self:_refreshEquipItem(self._heroItemTables[i], summonReward)
+		elseif summonReward:isLuckyBag() then
+			self:_refreshLuckyBagItem(self._heroItemTables[i], summonReward)
 		else
-			gohelper.setActive(arg_21_0._heroItemTables[iter_21_0].go, false)
+			gohelper.setActive(self._heroItemTables[i].go, false)
 		end
 	end
 
-	for iter_21_1 = #arg_21_0._summonResultList + 1, #arg_21_0._heroItemTables do
-		gohelper.setActive(arg_21_0._heroItemTables[iter_21_1].go, false)
+	for i = #self._summonResultList + 1, #self._heroItemTables do
+		gohelper.setActive(self._heroItemTables[i].go, false)
 	end
 
-	arg_21_0:_refreshSelectState()
+	self:_refreshSelectState()
 end
 
-function var_0_0._refreshSelectState(arg_22_0)
-	local var_22_0 = SummonSimulationPickController.instance:getCurrentSummonActivityId()
+function SummonSimulationResultView:_refreshSelectState()
+	local activityId = SummonSimulationPickController.instance:getCurrentSummonActivityId()
 
-	arg_22_0._activityId = var_22_0
+	self._activityId = activityId
 
-	local var_22_1 = SummonSimulationPickModel.instance:getActInfo(var_22_0)
+	local info = SummonSimulationPickModel.instance:getActInfo(activityId)
 
-	if not var_22_1 then
+	if not info then
 		return
 	end
 
-	local var_22_2 = SummonSimulationPickModel.instance:getActivityMaxSummonCount(var_22_0)
-	local var_22_3 = var_22_1.leftTimes
+	local maxTime = SummonSimulationPickModel.instance:getActivityMaxSummonCount(activityId)
+	local remainTime = info.leftTimes
 
-	arg_22_0._txtresttime.text = string.format("<size=46><#C66030>%s</color></size>/%s", var_22_3, var_22_2)
+	self._txtresttime.text = string.format("<size=46><#C66030>%s</color></size>/%s", remainTime, maxTime)
 
-	local var_22_4 = var_22_3 <= 0
-	local var_22_5 = var_22_1:haveSaveCurrent()
+	local isEnd = remainTime <= 0
 
-	gohelper.setActive(arg_22_0._btnsave, not var_22_4)
-	gohelper.setActive(arg_22_0._btnconfirm, not var_22_4)
-	gohelper.setActive(arg_22_0._gosaved, var_22_5 and not var_22_4)
+	gohelper.setActive(self._goRest, not isEnd)
 
-	local var_22_6 = var_22_4 and luaLang(arg_22_0.SUMMON_CONFIRM_TEXT) or luaLang(arg_22_0.SUMMON_AGAIN_TEXT)
+	local againText = isEnd and luaLang(self.SUMMON_CONFIRM_TEXT) or luaLang(self.SUMMON_AGAIN_TEXT)
 
-	arg_22_0._txtagain.text = var_22_6
+	self._txtagain.text = againText
 
-	local var_22_7 = var_22_5 and not arg_22_0._isReprint
-	local var_22_8 = arg_22_0._goSaveAnimator
+	local showAnimation = not self._isReprint
+	local animator = self._goSaveAnimator
 
-	var_22_8.enabled = var_22_7
+	animator.enabled = showAnimation
 
-	if var_22_7 then
-		if var_22_3 == var_22_2 - 1 then
-			local var_22_9 = arg_22_0.FIRST_SAVE_ANIM_DELAY
+	if showAnimation then
+		if self._isReprint == false then
+			local delay = self.FIRST_SAVE_ANIM_DELAY
 
-			TaskDispatcher.runDelay(arg_22_0.delayPlayBtnAnim, arg_22_0, var_22_9)
+			TaskDispatcher.runDelay(self.delayPlayBtnAnim, self, delay)
 		else
-			var_22_8:Play(arg_22_0.SAVED_ANIM_NAME, 0, 0)
+			animator:Play(self.SAVED_ANIM_NAME, 0, 0)
 		end
 	end
 end
 
-function var_0_0.delayPlayBtnAnim(arg_23_0)
-	arg_23_0._goSaveAnimator:Play(arg_23_0.SAVED_ANIM_NAME, 0, 0)
+function SummonSimulationResultView:delayPlayBtnAnim()
+	self._goSaveAnimator:Play(self.SAVED_ANIM_NAME, 0, 0)
 	GameFacade.showToast(ToastEnum.SummonSimulationSaveResult)
-	TaskDispatcher.cancelTask(arg_23_0.delayPlayBtnAnim, arg_23_0)
+	TaskDispatcher.cancelTask(self.delayPlayBtnAnim, self)
 end
 
-local function var_0_1(arg_24_0)
-	if not gohelper.isNil(arg_24_0.imageicon) then
-		arg_24_0.imageicon:SetNativeSize()
+local function onImageLoaded(heroItemTable)
+	if not gohelper.isNil(heroItemTable.imageicon) then
+		heroItemTable.imageicon:SetNativeSize()
 	end
 end
 
-function var_0_0._refreshEquipItem(arg_25_0, arg_25_1, arg_25_2)
-	gohelper.setActive(arg_25_1.goHeroIcon, false)
-	gohelper.setActive(arg_25_1.simageequipicon.gameObject, true)
-	gohelper.setActive(arg_25_1.goluckybag, false)
-	gohelper.setActive(arg_25_1.txtname, true)
-	gohelper.setActive(arg_25_1.txtnameen, true)
+function SummonSimulationResultView:_refreshEquipItem(heroItemTable, summonReward)
+	gohelper.setActive(heroItemTable.goHeroIcon, false)
+	gohelper.setActive(heroItemTable.simageequipicon.gameObject, true)
+	gohelper.setActive(heroItemTable.goluckybag, false)
+	gohelper.setActive(heroItemTable.txtname, true)
+	gohelper.setActive(heroItemTable.txtnameen, LangSettings.instance:isCn())
 
-	local var_25_0 = arg_25_2.equipId
-	local var_25_1 = EquipConfig.instance:getEquipCo(var_25_0)
+	local equipId = summonReward.equipId
+	local equipCo = EquipConfig.instance:getEquipCo(equipId)
 
-	arg_25_1.txtname.text = var_25_1.name
-	arg_25_1.txtnameen.text = var_25_1.name_en
+	heroItemTable.txtname.text = equipCo.name
+	heroItemTable.txtnameen.text = equipCo.name_en
 
-	UISpriteSetMgr.instance:setSummonSprite(arg_25_1.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[var_25_1.rare]))
-	UISpriteSetMgr.instance:setSummonSprite(arg_25_1.equiprare, "equiprare_" .. tostring(CharacterEnum.Color[var_25_1.rare]))
-	gohelper.setActive(arg_25_1.imagecareer.gameObject, false)
-	gohelper.setActive(arg_25_1.simageicon.gameObject, false)
-	arg_25_1.simageequipicon:LoadImage(ResUrl.getSummonEquipGetIcon(var_25_1.icon), var_0_1, arg_25_1)
-	EquipHelper.loadEquipCareerNewIcon(var_25_1, arg_25_1.imageequipcareer, 1, "lssx")
-	arg_25_0:_refreshEffect(var_25_1.rare, arg_25_1)
-	gohelper.setActive(arg_25_1.go, true)
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[equipCo.rare]))
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.equiprare, "equiprare_" .. tostring(CharacterEnum.Color[equipCo.rare]))
+	gohelper.setActive(heroItemTable.imagecareer.gameObject, false)
+	gohelper.setActive(heroItemTable.simageicon.gameObject, false)
+	heroItemTable.simageequipicon:LoadImage(ResUrl.getSummonEquipGetIcon(equipCo.icon), onImageLoaded, heroItemTable)
+	EquipHelper.loadEquipCareerNewIcon(equipCo, heroItemTable.imageequipcareer, 1, "lssx")
+	self:_refreshEffect(equipCo.rare, heroItemTable)
+	gohelper.setActive(heroItemTable.go, true)
 end
 
-function var_0_0._refreshHeroItem(arg_26_0, arg_26_1, arg_26_2)
-	gohelper.setActive(arg_26_1.imageequipcareer.gameObject, false)
-	gohelper.setActive(arg_26_1.goHeroIcon, true)
-	gohelper.setActive(arg_26_1.goluckybag, false)
-	gohelper.setActive(arg_26_1.txtname, true)
-	gohelper.setActive(arg_26_1.txtnameen, true)
+function SummonSimulationResultView:_refreshHeroItem(heroItemTable, summonReward)
+	gohelper.setActive(heroItemTable.imageequipcareer.gameObject, false)
+	gohelper.setActive(heroItemTable.goHeroIcon, true)
+	gohelper.setActive(heroItemTable.goluckybag, false)
+	gohelper.setActive(heroItemTable.txtname, true)
+	gohelper.setActive(heroItemTable.txtnameen, LangSettings.instance:isCn())
 
-	local var_26_0 = arg_26_2.heroId
-	local var_26_1 = HeroConfig.instance:getHeroCO(var_26_0)
-	local var_26_2 = SkinConfig.instance:getSkinCo(var_26_1.skinId)
+	local heroId = summonReward.heroId
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroConfig.skinId)
 
-	gohelper.setActive(arg_26_1.equiprare.gameObject, false)
-	gohelper.setActive(arg_26_1.simageequipicon.gameObject, false)
+	gohelper.setActive(heroItemTable.equiprare.gameObject, false)
+	gohelper.setActive(heroItemTable.simageequipicon.gameObject, false)
 
-	arg_26_1.txtname.text = var_26_1.name
-	arg_26_1.txtnameen.text = var_26_1.nameEng
+	heroItemTable.txtname.text = heroConfig.name
+	heroItemTable.txtnameen.text = heroConfig.nameEng
 
-	UISpriteSetMgr.instance:setSummonSprite(arg_26_1.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[var_26_1.rare]))
-	UISpriteSetMgr.instance:setCommonSprite(arg_26_1.imagecareer, "lssx_" .. tostring(var_26_1.career))
-	arg_26_1.simageicon:LoadImage(ResUrl.getHeadIconMiddle(var_26_2.retangleIcon))
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[heroConfig.rare]))
+	UISpriteSetMgr.instance:setCommonSprite(heroItemTable.imagecareer, "lssx_" .. tostring(heroConfig.career))
+	heroItemTable.simageicon:LoadImage(ResUrl.getHeadIconMiddle(skinConfig.retangleIcon))
 
-	if arg_26_1.effect then
-		gohelper.destroy(arg_26_1.effect)
+	if heroItemTable.effect then
+		gohelper.destroy(heroItemTable.effect)
 
-		arg_26_1.effect = nil
+		heroItemTable.effect = nil
 	end
 
-	arg_26_0:_refreshEffect(var_26_1.rare, arg_26_1)
-	gohelper.setActive(arg_26_1.go, true)
+	self:_refreshEffect(heroConfig.rare, heroItemTable)
+	gohelper.setActive(heroItemTable.go, true)
 end
 
-function var_0_0._refreshLuckyBagItem(arg_27_0, arg_27_1, arg_27_2)
-	gohelper.setActive(arg_27_1.goluckybag, true)
-	gohelper.setActive(arg_27_1.equiprare.gameObject, false)
-	gohelper.setActive(arg_27_1.simageequipicon.gameObject, false)
-	gohelper.setActive(arg_27_1.imagecareer.gameObject, false)
-	gohelper.setActive(arg_27_1.simageicon.gameObject, false)
-	gohelper.setActive(arg_27_1.txtname, false)
-	gohelper.setActive(arg_27_1.txtnameen, false)
+function SummonSimulationResultView:_refreshLuckyBagItem(heroItemTable, summonReward)
+	gohelper.setActive(heroItemTable.goluckybag, true)
+	gohelper.setActive(heroItemTable.equiprare.gameObject, false)
+	gohelper.setActive(heroItemTable.simageequipicon.gameObject, false)
+	gohelper.setActive(heroItemTable.imagecareer.gameObject, false)
+	gohelper.setActive(heroItemTable.simageicon.gameObject, false)
+	gohelper.setActive(heroItemTable.txtname, false)
+	gohelper.setActive(heroItemTable.txtnameen, false)
 
-	local var_27_0 = arg_27_2.luckyBagId
+	local luckyBagId = summonReward.luckyBagId
 
-	if not arg_27_0._curPool then
+	if not self._curPool then
 		return
 	end
 
-	local var_27_1 = SummonConfig.instance:getLuckyBag(arg_27_0._curPool.id, var_27_0)
+	local co = SummonConfig.instance:getLuckyBag(self._curPool.id, luckyBagId)
 
-	arg_27_1.txtluckybagname.text = var_27_1.name
-	arg_27_1.txtluckybagnameen.text = var_27_1.nameEn or ""
+	heroItemTable.txtluckybagname.text = co.name
+	heroItemTable.txtluckybagnameen.text = co.nameEn or ""
 
-	arg_27_1.simageluckgbagicon:LoadImage(ResUrl.getSummonCoverBg(var_27_1.icon))
-	UISpriteSetMgr.instance:setSummonSprite(arg_27_1.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[SummonEnum.LuckyBagRare]))
-	arg_27_0:_refreshEffect(SummonEnum.LuckyBagRare, arg_27_1)
-	gohelper.setActive(arg_27_1.go, true)
+	heroItemTable.simageluckgbagicon:LoadImage(ResUrl.getSummonCoverBg(co.icon))
+	UISpriteSetMgr.instance:setSummonSprite(heroItemTable.imagerare, "pingzhi_" .. tostring(CharacterEnum.Color[SummonEnum.LuckyBagRare]))
+	self:_refreshEffect(SummonEnum.LuckyBagRare, heroItemTable)
+	gohelper.setActive(heroItemTable.go, true)
 end
 
-function var_0_0._refreshEffect(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0
+function SummonSimulationResultView:_refreshEffect(rare, heroItemTable)
+	local effectPath
 
-	if arg_28_1 == 3 then
-		var_28_0 = arg_28_0.viewContainer:getSetting().otherRes[1]
-	elseif arg_28_1 == 4 then
-		var_28_0 = arg_28_0.viewContainer:getSetting().otherRes[2]
-	elseif arg_28_1 == 5 then
-		var_28_0 = arg_28_0.viewContainer:getSetting().otherRes[3]
+	if rare == 3 then
+		effectPath = self.viewContainer:getSetting().otherRes[1]
+	elseif rare == 4 then
+		effectPath = self.viewContainer:getSetting().otherRes[2]
+	elseif rare == 5 then
+		effectPath = self.viewContainer:getSetting().otherRes[3]
 	end
 
-	if var_28_0 then
-		arg_28_2.effect = arg_28_0.viewContainer:getResInst(var_28_0, arg_28_2.goeffect, "effect")
+	if effectPath then
+		heroItemTable.effect = self.viewContainer:getResInst(effectPath, heroItemTable.goeffect, "effect")
 
-		arg_28_2.effect:GetComponent(typeof(UnityEngine.Animation)):PlayQueued("ssr_loop", UnityEngine.QueueMode.CompleteOthers)
+		local animation = heroItemTable.effect:GetComponent(typeof(UnityEngine.Animation))
+
+		animation:PlayQueued("ssr_loop", UnityEngine.QueueMode.CompleteOthers)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_29_0)
-	local var_29_0 = arg_29_0.viewParam.summonResultList
+function SummonSimulationResultView:onUpdateParam()
+	local paramResultList = self.viewParam.summonResultList
 
-	arg_29_0._summonResultList = {}
-	arg_29_0._curPool = arg_29_0.viewParam.curPool
+	self._summonResultList = {}
+	self._curPool = self.viewParam.curPool
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-		table.insert(arg_29_0._summonResultList, iter_29_1)
+	for i, v in ipairs(paramResultList) do
+		table.insert(self._summonResultList, v)
 	end
 
-	if arg_29_0._curPool then
-		SummonModel.sortResult(arg_29_0._summonResultList, arg_29_0._curPool.id)
+	if self._curPool then
+		SummonModel.sortResult(self._summonResultList, self._curPool.id)
 	end
 
-	arg_29_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._showCommonPropView(arg_30_0)
-	local var_30_0 = arg_30_0._activityId
-	local var_30_1 = SummonSimulationPickModel.instance:getActInfo(var_30_0)
+function SummonSimulationResultView:_showCommonPropView()
+	local activityId = self._activityId
+	local info = SummonSimulationPickModel.instance:getActInfo(activityId)
 
-	if var_30_1.isSelect == false then
+	if info.isSelect == false then
 		if VirtualSummonScene.instance:isOpen() then
-			if arg_30_0.isClickBack then
+			if self.isClickBack then
 				return false
-			elseif arg_30_0.isSummon then
+			elseif self.isSummon then
 				return true
 			end
 		end
 
-		return not arg_30_0._isReprint
+		return not self._isReprint
 	end
 
-	local var_30_2 = var_30_1.saveHeroIds
-	local var_30_3 = SummonController.instance:getVirtualSummonResult(var_30_2, false, true)
+	local heroIds = info.saveHeroIds[info.selectIndex]
+	local rewards = SummonController.instance:getVirtualSummonResult(heroIds, false, true)
 
-	if var_30_3 == nil then
+	if rewards == nil then
 		return false
 	end
 
-	local var_30_4 = SummonSimulationPickController.instance
+	local instance = SummonSimulationPickController.instance
 
-	SummonController.instance:setSummonEndOpenCallBack(var_30_4.backHome, var_30_4)
+	SummonController.instance:setSummonEndOpenCallBack(instance.backHome, instance)
 
-	local var_30_5 = SummonModel.getRewardList(var_30_3, true)
+	local rewardMos = SummonModel.getRewardList(rewards, true)
 
-	table.sort(var_30_5, SummonModel.sortRewards)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_30_5)
+	table.sort(rewardMos, SummonModel.sortRewards)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, rewardMos)
 
 	return true
 end
 
-return var_0_0
+return SummonSimulationResultView

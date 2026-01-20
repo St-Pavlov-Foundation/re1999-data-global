@@ -1,128 +1,131 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalSimpleListPart", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalSimpleListPart.lua
 
-local var_0_0 = class("SurvivalSimpleListPart", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalSimpleListPart", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_1 = arg_1_1 or {}
-	arg_1_0._minUpdate = arg_1_1.minUpdate or 1
+local SurvivalSimpleListPart = class("SurvivalSimpleListPart", LuaCompBase)
+
+function SurvivalSimpleListPart:ctor(param)
+	param = param or {}
+	self._minUpdate = param.minUpdate or 1
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1:GetComponentInChildren(typeof(UnityEngine.UI.GridLayoutGroup))
-	local var_2_1 = var_2_0.cellSize
-	local var_2_2 = var_2_0.spacing
-	local var_2_3 = var_2_0.padding
+function SurvivalSimpleListPart:init(go)
+	local gridLayout = go:GetComponentInChildren(typeof(UnityEngine.UI.GridLayoutGroup))
+	local cellSize = gridLayout.cellSize
+	local spacing = gridLayout.spacing
+	local padding = gridLayout.padding
 
-	var_2_0.enabled = false
+	gridLayout.enabled = false
 
-	local var_2_4 = recthelper.getWidth(var_2_0.transform) - var_2_3.left - var_2_3.right
-	local var_2_5 = math.floor(var_2_4 / (var_2_1.x + var_2_2.x))
+	local width = recthelper.getWidth(gridLayout.transform) - padding.left - padding.right
+	local count = math.floor(width / (cellSize.x + spacing.x))
 
-	if var_2_4 - var_2_5 * (var_2_1.x + var_2_2.x) > var_2_1.x then
-		var_2_5 = var_2_5 + 1
+	if width - count * (cellSize.x + spacing.x) > cellSize.x then
+		count = count + 1
 	end
 
-	if var_2_5 < 1 then
-		var_2_5 = 1
+	if count < 1 then
+		count = 1
 	end
 
-	arg_2_0._leftOffset = var_2_3.left
-	arg_2_0._csListScroll = SLFramework.UGUI.ListScrollView.Get(arg_2_1)
+	self._leftOffset = padding.left
+	self._csListScroll = SLFramework.UGUI.ListScrollView.Get(go)
 
-	arg_2_0._csListScroll:Init(ScrollEnum.ScrollDirV, var_2_5, var_2_1.x, var_2_1.y, var_2_2.x, var_2_2.y, var_2_3.top, var_2_3.bottom, ScrollEnum.ScrollSortNone, 10, arg_2_0._minUpdate, arg_2_0._onUpdateCell, arg_2_0.onUpdateFinish, arg_2_0._onSelectCell, arg_2_0)
+	self._csListScroll:Init(ScrollEnum.ScrollDirV, count, cellSize.x, cellSize.y, spacing.x, spacing.y, padding.top, padding.bottom, ScrollEnum.ScrollSortNone, 10, self._minUpdate, self._onUpdateCell, self.onUpdateFinish, self._onSelectCell, self)
 end
 
-function var_0_0.setList(arg_3_0, arg_3_1)
-	arg_3_0._allCellComps = {}
-	arg_3_0._allCellGos = {}
-	arg_3_0._list = arg_3_1
+function SurvivalSimpleListPart:setList(list)
+	self._allCellComps = {}
+	self._allCellGos = {}
+	self._list = list
 
-	arg_3_0._csListScroll:UpdateTotalCount(#arg_3_1)
+	self._csListScroll:UpdateTotalCount(#list)
 end
 
-function var_0_0.setOpenAnimation(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._animInterval = arg_4_1
-	arg_4_0._animationStartTime = Time.time
-	arg_4_0._groupNum = arg_4_2 or 1
+function SurvivalSimpleListPart:setOpenAnimation(interval, groupNum)
+	self._animInterval = interval
+	self._animationStartTime = Time.time
+	self._groupNum = groupNum or 1
 end
 
-function var_0_0.setCellUpdateCallBack(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_0._updateCallback = arg_5_1
-	arg_5_0._updateCallobj = arg_5_2
-	arg_5_0._cellCls = arg_5_3
-	arg_5_0._instGo = arg_5_4
+function SurvivalSimpleListPart:setCellUpdateCallBack(callback, callobj, cellCls, instGo)
+	self._updateCallback = callback
+	self._updateCallobj = callobj
+	self._cellCls = cellCls
+	self._instGo = instGo
 end
 
-function var_0_0.setRecycleCallBack(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._recycleCallback = arg_6_1
-	arg_6_0._recycleCallobj = arg_6_2
+function SurvivalSimpleListPart:setRecycleCallBack(recycleCallback, callobj)
+	self._recycleCallback = recycleCallback
+	self._recycleCallobj = callobj
 end
 
-function var_0_0._onUpdateCell(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = gohelper.findChild(arg_7_1, "instGo")
-	local var_7_1
+function SurvivalSimpleListPart:_onUpdateCell(cellGO, index)
+	local go = gohelper.findChild(cellGO, "instGo")
+	local comp
 
-	if not var_7_0 then
-		var_7_0 = gohelper.clone(arg_7_0._instGo, arg_7_1, "instGo")
+	if not go then
+		go = gohelper.clone(self._instGo, cellGO, "instGo")
 
-		gohelper.setActive(var_7_0, true)
-		transformhelper.setLocalPos(var_7_0.transform, arg_7_0._leftOffset, 0, 0)
+		gohelper.setActive(go, true)
+		transformhelper.setLocalPos(go.transform, self._leftOffset, 0, 0)
 
-		if arg_7_0._cellCls then
-			var_7_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, arg_7_0._cellCls)
-			arg_7_0._allCellComps[var_7_1] = arg_7_2
+		if self._cellCls then
+			comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, self._cellCls)
+			self._allCellComps[comp] = index
 		end
-	elseif arg_7_0._cellCls then
-		var_7_1 = MonoHelper.getLuaComFromGo(var_7_0, arg_7_0._cellCls)
-		arg_7_0._allCellComps[var_7_1] = arg_7_2
+	elseif self._cellCls then
+		comp = MonoHelper.getLuaComFromGo(go, self._cellCls)
+		self._allCellComps[comp] = index
 	end
 
-	if arg_7_0._allCellGos[var_7_0] and arg_7_0._allCellGos[var_7_0] ~= arg_7_2 and arg_7_0._recycleCallback then
-		arg_7_0._recycleCallback(arg_7_0._recycleCallobj, var_7_0, arg_7_0._allCellGos[var_7_0], arg_7_2)
+	if self._allCellGos[go] and self._allCellGos[go] ~= index and self._recycleCallback then
+		self._recycleCallback(self._recycleCallobj, go, self._allCellGos[go], index)
 	end
 
-	arg_7_0._allCellGos[var_7_0] = arg_7_2
+	self._allCellGos[go] = index
 
-	if arg_7_0._updateCallback then
-		if var_7_1 then
-			arg_7_0._updateCallback(arg_7_0._updateCallobj, var_7_1, arg_7_0._list[arg_7_2 + 1], arg_7_2 + 1)
+	if self._updateCallback then
+		if comp then
+			self._updateCallback(self._updateCallobj, comp, self._list[index + 1], index + 1)
 		else
-			arg_7_0._updateCallback(arg_7_0._updateCallobj, var_7_0, arg_7_0._list[arg_7_2 + 1], arg_7_2 + 1)
+			self._updateCallback(self._updateCallobj, go, self._list[index + 1], index + 1)
 		end
 	end
 
-	if arg_7_0._animationStartTime then
-		local var_7_2 = var_7_1:getItemAnimators()
+	if self._animationStartTime then
+		local animators = comp:getItemAnimators()
 
-		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-			iter_7_1:Play(UIAnimationName.Open, 0, 0)
-			iter_7_1:Update(0)
+		for i, animator in ipairs(animators) do
+			animator:Play(UIAnimationName.Open, 0, 0)
+			animator:Update(0)
 
-			local var_7_3 = math.floor(arg_7_2 / arg_7_0._groupNum)
-			local var_7_4 = arg_7_0._animationStartTime + arg_7_0._animInterval * var_7_3
-			local var_7_5 = iter_7_1:GetCurrentAnimatorStateInfo(0).length
-			local var_7_6 = (Time.time - var_7_4) / var_7_5
+			local num = math.floor(index / self._groupNum)
+			local openAnimTime = self._animationStartTime + self._animInterval * num
+			local currentAnimatorStateInfo = animator:GetCurrentAnimatorStateInfo(0)
+			local length = currentAnimatorStateInfo.length
+			local nor = (Time.time - openAnimTime) / length
 
-			iter_7_1:Play(UIAnimationName.Open, 0, var_7_6)
-			iter_7_1:Update(0)
+			animator:Play(UIAnimationName.Open, 0, nor)
+			animator:Update(0)
 		end
 	end
 end
 
-function var_0_0.getAllComps(arg_8_0)
-	return arg_8_0._allCellComps
+function SurvivalSimpleListPart:getAllComps()
+	return self._allCellComps
 end
 
-function var_0_0.getAllGos(arg_9_0)
-	return arg_9_0._allCellGos
+function SurvivalSimpleListPart:getAllGos()
+	return self._allCellGos
 end
 
-function var_0_0.onUpdateFinish(arg_10_0)
+function SurvivalSimpleListPart:onUpdateFinish()
 	return
 end
 
-function var_0_0._onSelectCell(arg_11_0, arg_11_1, arg_11_2)
+function SurvivalSimpleListPart:_onSelectCell(cellGO, isSelect)
 	return
 end
 
-return var_0_0
+return SurvivalSimpleListPart

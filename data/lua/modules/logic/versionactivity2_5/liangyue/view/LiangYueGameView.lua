@@ -1,811 +1,822 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/view/LiangYueGameView.lua
 
-local var_0_0 = class("LiangYueGameView", BaseView)
+module("modules.logic.versionactivity2_5.liangyue.view.LiangYueGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
-	arg_1_0._simagePanelPaper = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_PanelPaper")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/#txt_Descr")
-	arg_1_0._txtTarget = gohelper.findChildText(arg_1_0.viewGO, "Left/Game/Target/#txt_Target")
-	arg_1_0._goTick = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Target/#go_Tick")
-	arg_1_0._goGridBg = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/image_Grid")
-	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
-	arg_1_0._txtattribute = gohelper.findChildText(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer/image/#txt_attribute")
-	arg_1_0._goillustrationContainer = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer")
-	arg_1_0._godragItem = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer/#go_dragItem")
-	arg_1_0._goPiecesList = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList")
-	arg_1_0._scrollPieces = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
-	arg_1_0._goillstrationItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem")
-	arg_1_0._imagePiece = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#image_Piece")
-	arg_1_0._goLine = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#go_Line")
-	arg_1_0._scrollText = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#scroll_Text")
-	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "Right/#scroll_Text/Viewport/Content/#go_Item")
-	arg_1_0._goCompleted = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Completed")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
-	arg_1_0._btnfinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Finished")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Reset")
-	arg_1_0._txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Title")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content")
-	arg_1_0._goScrollIllustration = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
-	arg_1_0._goScrollText = gohelper.findChild(arg_1_0.viewGO, "Right/#scroll_Text")
-	arg_1_0._goImageBg = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/image_Grid")
-	arg_1_0._clickMeshContainer = gohelper.findChildClick(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
-	arg_1_0._txtYear = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/txt_1999")
-	arg_1_0._txtMonth = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/txt_Month")
-	arg_1_0._txtDay = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/txt_Day")
-	arg_1_0._txtStory = gohelper.findChildTextMesh(arg_1_0._goItem, "")
-	arg_1_0._goVxEnable = gohelper.findChild(arg_1_0.viewGO, "Left/Game/vx_enough")
+local LiangYueGameView = class("LiangYueGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LiangYueGameView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "#simage_PanelBG")
+	self._simagePanelPaper = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_PanelPaper")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Left/Top/#txt_Descr")
+	self._txtTarget = gohelper.findChildText(self.viewGO, "Left/Game/Target/#txt_Target")
+	self._goTick = gohelper.findChild(self.viewGO, "Left/Game/Target/#go_Tick")
+	self._goGridBg = gohelper.findChild(self.viewGO, "Left/Game/Grid/image_Grid")
+	self._gomeshContainer = gohelper.findChild(self.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
+	self._txtattribute = gohelper.findChildText(self.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer/image/#txt_attribute")
+	self._goillustrationContainer = gohelper.findChild(self.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer")
+	self._godragItem = gohelper.findChild(self.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer/#go_dragItem")
+	self._goPiecesList = gohelper.findChild(self.viewGO, "Right/#go_PiecesList")
+	self._scrollPieces = gohelper.findChildScrollRect(self.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
+	self._goillstrationItem = gohelper.findChild(self.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem")
+	self._imagePiece = gohelper.findChildImage(self.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#image_Piece")
+	self._goLine = gohelper.findChild(self.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#go_Line")
+	self._scrollText = gohelper.findChildScrollRect(self.viewGO, "Right/#scroll_Text")
+	self._goItem = gohelper.findChild(self.viewGO, "Right/#scroll_Text/Viewport/Content/#go_Item")
+	self._goCompleted = gohelper.findChild(self.viewGO, "Right/#go_Completed")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._btnfinished = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Finished")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Reset")
+	self._txtTitle = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_Title")
+	self._goContent = gohelper.findChild(self.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content")
+	self._goScrollIllustration = gohelper.findChild(self.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
+	self._goScrollText = gohelper.findChild(self.viewGO, "Right/#scroll_Text")
+	self._goImageBg = gohelper.findChild(self.viewGO, "Left/Game/Grid/image_Grid")
+	self._clickMeshContainer = gohelper.findChildClick(self.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
+	self._txtYear = gohelper.findChildText(self.viewGO, "Left/Top/txt_1999")
+	self._txtMonth = gohelper.findChildText(self.viewGO, "Left/Top/txt_Month")
+	self._txtDay = gohelper.findChildText(self.viewGO, "Left/Top/txt_Day")
+	self._txtStory = gohelper.findChildTextMesh(self._goItem, "")
+	self._goVxEnable = gohelper.findChild(self.viewGO, "Left/Game/vx_enough")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._clickMeshContainer:AddClickListener(arg_2_0._onMeshContainerClick, arg_2_0)
-	arg_2_0._btnfinished:AddClickListener(arg_2_0.onClickFinished, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0.onBtnResetClick, arg_2_0)
-	arg_2_0:addEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, arg_2_0.onEpisodeFinish, arg_2_0)
-	arg_2_0:addEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, arg_2_0._refreshView, arg_2_0)
-	arg_2_0._illustrationDragListener:AddDragBeginListener(arg_2_0._onItemBeginDrag, arg_2_0)
-	arg_2_0._illustrationDragListener:AddDragListener(arg_2_0._onItemDrag, arg_2_0)
-	arg_2_0._illustrationDragListener:AddDragEndListener(arg_2_0._onItemEndDrag, arg_2_0)
+function LiangYueGameView:addEvents()
+	self._clickMeshContainer:AddClickListener(self._onMeshContainerClick, self)
+	self._btnfinished:AddClickListener(self.onClickFinished, self)
+	self._btnreset:AddClickListener(self.onBtnResetClick, self)
+	self:addEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, self.onEpisodeFinish, self)
+	self:addEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, self._refreshView, self)
+	self._illustrationDragListener:AddDragBeginListener(self._onItemBeginDrag, self)
+	self._illustrationDragListener:AddDragListener(self._onItemDrag, self)
+	self._illustrationDragListener:AddDragEndListener(self._onItemEndDrag, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._clickMeshContainer:RemoveClickListener()
-	arg_3_0._btnfinished:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0:removeEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, arg_3_0.onEpisodeFinish, arg_3_0)
-	arg_3_0:removeEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, arg_3_0._refreshView, arg_3_0)
-	arg_3_0._illustrationDragListener:RemoveDragBeginListener()
-	arg_3_0._illustrationDragListener:RemoveDragListener()
-	arg_3_0._illustrationDragListener:RemoveDragEndListener()
+function LiangYueGameView:removeEvents()
+	self._clickMeshContainer:RemoveClickListener()
+	self._btnfinished:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self:removeEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, self.onEpisodeFinish, self)
+	self:removeEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, self._refreshView, self)
+	self._illustrationDragListener:RemoveDragBeginListener()
+	self._illustrationDragListener:RemoveDragListener()
+	self._illustrationDragListener:RemoveDragEndListener()
 end
 
-function var_0_0.onClickFinished(arg_4_0)
-	if arg_4_0._isDrag then
+function LiangYueGameView:onClickFinished()
+	if self._isDrag then
 		return
 	end
 
-	local var_4_0 = arg_4_0._meshSize[1]
-	local var_4_1 = {}
+	local meshWidth = self._meshSize[1]
+	local result = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._illustrationIndexDic) do
-		if not arg_4_0:_isStaticIllustration(iter_4_0) then
-			local var_4_2 = (iter_4_0 - 1) % var_4_0 + 1
-			local var_4_3 = math.floor((iter_4_0 - 1) / var_4_0) + 1
-			local var_4_4 = string.format("%s#%s#%s", var_4_2, var_4_3, iter_4_1)
+	for index, id in pairs(self._illustrationIndexDic) do
+		if not self:_isStaticIllustration(index) then
+			local tempX = (index - 1) % meshWidth + 1
+			local tempY = math.floor((index - 1) / meshWidth) + 1
+			local param = string.format("%s#%s#%s", tempX, tempY, id)
 
-			table.insert(var_4_1, var_4_4)
+			table.insert(result, param)
 		end
 	end
 
-	local var_4_5 = table.concat(var_4_1, "|")
+	local resultStr = table.concat(result, "|")
 
-	logNormal("Result: " .. var_4_5)
-	LiangYueController.instance:finishEpisode(arg_4_0._actId, arg_4_0._episodeId, var_4_5)
+	logNormal("Result: " .. resultStr)
+	LiangYueController.instance:finishEpisode(self._actId, self._episodeId, resultStr)
 end
 
-function var_0_0.onEpisodeFinish(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._actId ~= arg_5_1 or arg_5_0._episodeId ~= arg_5_2 then
+function LiangYueGameView:onEpisodeFinish(actId, episodeId)
+	if self._actId ~= actId or self._episodeId ~= episodeId then
 		return
 	end
 
-	local var_5_0 = LiangYueModel.instance:isEpisodeFinish(arg_5_1, arg_5_2)
+	local isFinish = LiangYueModel.instance:isEpisodeFinish(actId, episodeId)
 
-	if var_5_0 then
-		arg_5_0:statData(LiangYueEnum.StatGameState.Finish)
+	if isFinish then
+		self:statData(LiangYueEnum.StatGameState.Finish)
 	end
 
-	arg_5_0._animator:Play("finish", 0, 0)
+	self._animator:Play("finish", 0, 0)
 
-	arg_5_0._isFinish = var_5_0
+	self._isFinish = isFinish
 
-	arg_5_0:_lockScreen(true)
+	self:_lockScreen(true)
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_wulu_aizila_forward_paper)
-	TaskDispatcher.runDelay(arg_5_0.delayFinishAnim, arg_5_0, LiangYueEnum.FinishAnimDelayTime)
-	TaskDispatcher.runDelay(arg_5_0.delayFinishAnimEnd, arg_5_0, LiangYueEnum.FinishAnimDelayTimeEnd)
+	TaskDispatcher.runDelay(self.delayFinishAnim, self, LiangYueEnum.FinishAnimDelayTime)
+	TaskDispatcher.runDelay(self.delayFinishAnimEnd, self, LiangYueEnum.FinishAnimDelayTimeEnd)
 end
 
-function var_0_0.delayFinishAnim(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.delayFinishAnim, arg_6_0)
+function LiangYueGameView:delayFinishAnim()
+	TaskDispatcher.cancelTask(self.delayFinishAnim, self)
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._usedDragItemDic) do
-		iter_6_1:setAttributeState(false)
+	for _, item in pairs(self._usedDragItemDic) do
+		item:setAttributeState(false)
 	end
 
-	arg_6_0:_refreshCompleteState()
+	self:_refreshCompleteState()
 end
 
-function var_0_0.delayFinishAnimEnd(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.delayFinishAnimEnd, arg_7_0)
-	arg_7_0:_lockScreen(false)
-	arg_7_0:_refreshFinishBtnState()
+function LiangYueGameView:delayFinishAnimEnd()
+	TaskDispatcher.cancelTask(self.delayFinishAnimEnd, self)
+	self:_lockScreen(false)
+	self:_refreshFinishBtnState()
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_pen2)
 end
 
-function var_0_0.onBtnResetClick(arg_8_0)
-	if arg_8_0._isDrag then
+function LiangYueGameView:onBtnResetClick()
+	if self._isDrag then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.LiangYueResetTip, MsgBoxEnum.BoxType.Yes_No, arg_8_0.resetGame, nil, nil, arg_8_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.LiangYueResetTip, MsgBoxEnum.BoxType.Yes_No, self.resetGame, nil, nil, self)
 end
 
-function var_0_0.resetGame(arg_9_0)
-	if next(arg_9_0._illustrationUseDic) == nil then
+function LiangYueGameView:resetGame()
+	if next(self._illustrationUseDic) == nil then
 		return
 	end
 
-	arg_9_0:_beforeAttributeChanged()
-	arg_9_0:statData(LiangYueEnum.StatGameState.Restart)
+	self:_beforeAttributeChanged()
+	self:statData(LiangYueEnum.StatGameState.Restart)
 
-	arg_9_0._resetTime = ServerTime.now()
-	arg_9_0._enterTime = ServerTime.now()
+	self._resetTime = ServerTime.now()
+	self._enterTime = ServerTime.now()
 
-	local var_9_0 = arg_9_0._meshSize[1]
+	local meshWidth = self._meshSize[1]
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._illustrationIndexDic) do
-		if not arg_9_0:_isStaticIllustration(iter_9_0) then
-			local var_9_1 = (iter_9_0 - 1) % var_9_0 + 1
-			local var_9_2 = math.floor((iter_9_0 - 1) / var_9_0) + 1
+	for index, id in pairs(self._illustrationIndexDic) do
+		if not self:_isStaticIllustration(index) then
+			local tempX = (index - 1) % meshWidth + 1
+			local tempY = math.floor((index - 1) / meshWidth) + 1
 
-			arg_9_0:_ClearMesh(var_9_1, var_9_2, iter_9_1)
+			self:_ClearMesh(tempX, tempY, id)
 		end
 	end
 
-	arg_9_0:_afterAttributeChanged()
+	self:_afterAttributeChanged()
 end
 
-function var_0_0._beforeAttributeChanged(arg_10_0)
-	arg_10_0._tempParam = tabletool.copy(arg_10_0._paramDic)
+function LiangYueGameView:_beforeAttributeChanged()
+	self._tempParam = tabletool.copy(self._paramDic)
 
-	TaskDispatcher.cancelTask(arg_10_0._resetAttributeState, arg_10_0)
+	TaskDispatcher.cancelTask(self._resetAttributeState, self)
 end
 
-function var_0_0._afterAttributeChanged(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._attributeAnimList) do
-		local var_11_0 = arg_11_0._tempParam[iter_11_0] or 0
-		local var_11_1 = arg_11_0._paramDic[iter_11_0] or 0
-		local var_11_2
+function LiangYueGameView:_afterAttributeChanged()
+	for id, animComp in ipairs(self._attributeAnimList) do
+		local previousNum = self._tempParam[id] or 0
+		local currentNum = self._paramDic[id] or 0
+		local animName
 
-		if var_11_0 < var_11_1 then
-			var_11_2 = LiangYueEnum.AttributeAnim.Up
-		elseif var_11_1 < var_11_0 then
-			var_11_2 = LiangYueEnum.AttributeAnim.Down
+		if previousNum < currentNum then
+			animName = LiangYueEnum.AttributeAnim.Up
+		elseif currentNum < previousNum then
+			animName = LiangYueEnum.AttributeAnim.Down
 
-			local var_11_3 = arg_11_0._targetDescItemList[iter_11_0]
+			local item = self._targetDescItemList[id]
 
-			if var_11_3 == nil then
+			if item == nil then
 				logError("动画组件和实际lua脚本组件数量不对应")
 			else
-				var_11_3:setTxtColor(LiangYueEnum.AttributeDownColor)
+				item:setTxtColor(LiangYueEnum.AttributeDownColor)
 			end
 		else
-			var_11_2 = LiangYueEnum.AttributeAnim.Empty
+			animName = LiangYueEnum.AttributeAnim.Empty
 		end
 
-		iter_11_1.enabled = true
+		animComp.enabled = true
 
-		iter_11_1:Play(var_11_2, 0, 0)
+		animComp:Play(animName, 0, 0)
 	end
 
-	TaskDispatcher.runDelay(arg_11_0._resetAttributeState, arg_11_0, LiangYueEnum.AttributeAnimRevertTime)
+	TaskDispatcher.runDelay(self._resetAttributeState, self, LiangYueEnum.AttributeAnimRevertTime)
 
-	arg_11_0._tempParam = nil
+	self._tempParam = nil
 end
 
-function var_0_0._resetAttributeState(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._resetAttributeState, arg_12_0)
+function LiangYueGameView:_resetAttributeState()
+	TaskDispatcher.cancelTask(self._resetAttributeState, self)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._attributeAnimList) do
-		if iter_12_1.gameObject.activeSelf == true then
-			local var_12_0 = arg_12_0._paramDic[iter_12_0] or 0
-			local var_12_1 = arg_12_0._targetParamDic[iter_12_0] or 0
-			local var_12_2 = arg_12_0._targetDescItemList[iter_12_0]
-			local var_12_3 = var_12_1 <= var_12_0 and LiangYueEnum.AttributeColor[iter_12_0] or LiangYueEnum.AttributeNotEnoughColor
+	for id, animComp in ipairs(self._attributeAnimList) do
+		if animComp.gameObject.activeSelf == true then
+			local currentNum = self._paramDic[id] or 0
+			local targetParam = self._targetParamDic[id] or 0
+			local item = self._targetDescItemList[id]
+			local color = targetParam <= currentNum and LiangYueEnum.AttributeColor[id] or LiangYueEnum.AttributeNotEnoughColor
 
-			iter_12_1:Play(LiangYueEnum.AttributeAnim.Empty, 0, 0)
-			var_12_2:setTxtColor(var_12_3)
+			animComp:Play(LiangYueEnum.AttributeAnim.Empty, 0, 0)
+			item:setTxtColor(color)
 		end
 	end
 end
 
-function var_0_0._onMeshContainerClick(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	if arg_13_0._isFinish or arg_13_0._isDrag then
+function LiangYueGameView:_onMeshContainerClick(param, pointerEventData, offset, ignoreAudio)
+	if self._isFinish or self._isDrag then
 		return nil, nil, nil
 	end
 
-	local var_13_0 = recthelper.screenPosToAnchorPos(arg_13_2, arg_13_0._gomeshContainer.transform)
-	local var_13_1, var_13_2 = arg_13_0:_getMeshPosByIndex(var_13_0.x, var_13_0.y)
+	local currentDragPos = recthelper.screenPosToAnchorPos(pointerEventData, self._gomeshContainer.transform)
+	local x, y = self:_getMeshPosByIndex(currentDragPos.x, currentDragPos.y)
 
-	if not arg_13_0._meshData[var_13_2] or not arg_13_0._meshData[var_13_2][var_13_1] then
+	if not self._meshData[y] or not self._meshData[y][x] then
 		return nil, nil, nil
 	end
 
-	local var_13_3 = arg_13_0._meshData[var_13_2][var_13_1]
+	local illustrationIndex = self._meshData[y][x]
 
-	if arg_13_0:_isStaticIllustration(var_13_3) then
+	if self:_isStaticIllustration(illustrationIndex) then
 		ToastController.instance:showToast(ToastEnum.Act184PuzzleCanNotMove)
 
 		return nil, nil, nil
 	end
 
-	if not arg_13_4 then
+	if not ignoreAudio then
 		AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_delete)
 	end
 
-	local var_13_4 = arg_13_0._illustrationPosDic[var_13_3]
-	local var_13_5 = arg_13_0._illustrationIndexDic[var_13_3]
+	local illustrationPos = self._illustrationPosDic[illustrationIndex]
+	local illustrationId = self._illustrationIndexDic[illustrationIndex]
 
-	arg_13_0:_beforeAttributeChanged()
-	arg_13_0:_ClearMesh(var_13_4[1], var_13_4[2], var_13_5)
-	arg_13_0:_afterAttributeChanged()
+	self:_beforeAttributeChanged()
+	self:_ClearMesh(illustrationPos[1], illustrationPos[2], illustrationId)
+	self:_afterAttributeChanged()
 
-	return var_13_5, var_13_4[1], var_13_4[2]
+	return illustrationId, illustrationPos[1], illustrationPos[2]
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._illustrationDragListener = SLFramework.UGUI.UIDragListener.Get(arg_14_0._gomeshContainer)
+function LiangYueGameView:_editableInitView()
+	self._illustrationDragListener = SLFramework.UGUI.UIDragListener.Get(self._gomeshContainer)
 
-	gohelper.setActive(arg_14_0._godragItem, false)
-	gohelper.setActive(arg_14_0._goillstrationItem, false)
-	arg_14_0:_initAttributeComp()
+	gohelper.setActive(self._godragItem, false)
+	gohelper.setActive(self._goillstrationItem, false)
+	self:_initAttributeComp()
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function LiangYueGameView:onUpdateParam()
 	return
 end
 
-function var_0_0._initAttributeComp(arg_16_0)
-	arg_16_0._targetDescItemList = {}
+function LiangYueGameView:_initAttributeComp()
+	self._targetDescItemList = {}
 
-	local var_16_0 = gohelper.findChild(arg_16_0.viewGO, "Left/Game/TargetIcon")
+	local goTarget = gohelper.findChild(self.viewGO, "Left/Game/TargetIcon")
 
-	arg_16_0._goTarget = var_16_0
-	arg_16_0._attributeAnimList = {}
+	self._goTarget = goTarget
+	self._attributeAnimList = {}
 
-	local var_16_1 = arg_16_0._goTarget.transform.childCount
+	local childCount = self._goTarget.transform.childCount
 
-	for iter_16_0 = 1, var_16_1 do
-		local var_16_2 = var_16_0.transform:GetChild(iter_16_0 - 1)
-		local var_16_3 = LiangYueAttributeDescItem.New()
+	for i = 1, childCount do
+		local child = goTarget.transform:GetChild(i - 1)
+		local item = LiangYueAttributeDescItem.New()
 
-		var_16_3:init(var_16_2.gameObject)
-		table.insert(arg_16_0._targetDescItemList, var_16_3)
+		item:init(child.gameObject)
+		table.insert(self._targetDescItemList, item)
 
-		local var_16_4 = gohelper.findChildAnim(var_16_2.gameObject, "")
+		local anim = gohelper.findChildAnim(child.gameObject, "")
 
-		table.insert(arg_16_0._attributeAnimList, var_16_4)
+		table.insert(self._attributeAnimList, anim)
 	end
 
-	arg_16_0._animator = gohelper.findChildAnim(arg_16_0.viewGO, "")
+	self._animator = gohelper.findChildAnim(self.viewGO, "")
 end
 
-function var_0_0._initGameData(arg_17_0)
-	arg_17_0._actId = arg_17_0.viewParam.actId
-	arg_17_0._episodeId = arg_17_0.viewParam.episodeId
-	arg_17_0._episodeGameId = arg_17_0.viewParam.episodeGameId
-	arg_17_0._enterTime = ServerTime.now()
-	arg_17_0._resetTime = ServerTime.now()
-	arg_17_0._meshItemList = {}
-	arg_17_0._dyeingMeshItemList = {}
-	arg_17_0._dyeingMeshItemCount = 0
-	arg_17_0._meshData = {}
-	arg_17_0._illustrationIndexDic = {}
-	arg_17_0._illustrationIndexList = {}
-	arg_17_0._illustrationCountDic = {}
-	arg_17_0._illustrationUseDic = {}
-	arg_17_0._illustrationScrollItemList = {}
-	arg_17_0._unusedDragItemList = {}
-	arg_17_0._usedDragItemDic = {}
-	arg_17_0._illustrationPosDic = {}
-	arg_17_0._staticIllustrationDic = {}
-	arg_17_0._paramDic = {}
-	arg_17_0._targetParamDic = {}
+function LiangYueGameView:_initGameData()
+	self._actId = self.viewParam.actId
+	self._episodeId = self.viewParam.episodeId
+	self._episodeGameId = self.viewParam.episodeGameId
+	self._enterTime = ServerTime.now()
+	self._resetTime = ServerTime.now()
+	self._meshItemList = {}
+	self._dyeingMeshItemList = {}
+	self._dyeingMeshItemCount = 0
+	self._meshData = {}
+	self._illustrationIndexDic = {}
+	self._illustrationIndexList = {}
+	self._illustrationCountDic = {}
+	self._illustrationUseDic = {}
+	self._illustrationScrollItemList = {}
+	self._unusedDragItemList = {}
+	self._usedDragItemDic = {}
+	self._illustrationPosDic = {}
+	self._staticIllustrationDic = {}
+	self._paramDic = {}
+	self._targetParamDic = {}
 end
 
-function var_0_0.onOpen(arg_18_0)
-	arg_18_0._animator:Play("open", 0, 0)
+function LiangYueGameView:onOpen()
+	self._animator:Play("open", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_wulu_aizila_forward_paper)
-	arg_18_0:_initGameData()
-	arg_18_0:_refreshView()
+	self:_initGameData()
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_19_0)
-	local var_19_0 = LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(arg_19_0._actId, arg_19_0._episodeGameId)
+function LiangYueGameView:_refreshView()
+	local episodeConfig = LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(self._actId, self._episodeGameId)
 
-	if var_19_0 == nil then
+	if episodeConfig == nil then
 		return
 	end
 
-	arg_19_0._episodeConfig = var_19_0
+	self._episodeConfig = episodeConfig
 
-	local var_19_1 = LiangYueModel.instance:isEpisodeFinish(arg_19_0._actId, arg_19_0._episodeId)
+	local isFinish = LiangYueModel.instance:isEpisodeFinish(self._actId, self._episodeId)
 
-	arg_19_0._isEnable = var_19_1
-	arg_19_0._isFinish = var_19_1
+	self._isEnable = isFinish
+	self._isFinish = isFinish
 
-	if not var_19_1 then
-		arg_19_0:_refreshIllustration(var_19_0)
+	if not isFinish then
+		self:_refreshIllustration(episodeConfig)
 	end
 
-	arg_19_0:_refreshTargetParam(var_19_0)
-	arg_19_0:_resetMeshContent(var_19_0)
-	arg_19_0:_refreshTitle(var_19_0)
-	arg_19_0:_refreshFinishBtnState()
-	arg_19_0:_refreshCompleteState()
+	self:_refreshTargetParam(episodeConfig)
+	self:_resetMeshContent(episodeConfig)
+	self:_refreshTitle(episodeConfig)
+	self:_refreshFinishBtnState()
+	self:_refreshCompleteState()
 end
 
-function var_0_0._resetMeshContent(arg_20_0, arg_20_1)
-	arg_20_0._meshSize = string.splitToNumber(arg_20_1.size, "#")
+function LiangYueGameView:_resetMeshContent(episodeConfig)
+	local currentSize = string.splitToNumber(episodeConfig.size, "#")
 
-	arg_20_0:_rebuildMesh()
-	arg_20_0:_refreshMeshData()
+	self._meshSize = currentSize
+
+	self:_rebuildMesh()
+	self:_refreshMeshData()
 end
 
-function var_0_0._refreshTitle(arg_21_0, arg_21_1)
-	arg_21_0._txtDescr.text = arg_21_1.titleTxt
+function LiangYueGameView:_refreshTitle(episodeConfig)
+	self._txtDescr.text = episodeConfig.titleTxt
 
-	local var_21_0 = TimeUtil.stringToTimestamp(arg_21_1.date)
-	local var_21_1 = TimeUtil.timestampToTable(var_21_0)
+	local timeStamp = TimeUtil.stringToTimestamp(episodeConfig.date)
+	local timeParam = TimeUtil.timestampToTable(timeStamp)
 
-	arg_21_0._txtYear.text = var_21_1.year
-	arg_21_0._txtMonth.text = string.upper(LiangYueEnum.MonthEn[var_21_1.month])
-	arg_21_0._txtDay.text = var_21_1.day
-	arg_21_0._txtStory.text = arg_21_1.txt
+	self._txtYear.text = timeParam.year
+	self._txtMonth.text = string.upper(LiangYueEnum.MonthEn[timeParam.month])
+	self._txtDay.text = timeParam.day
+	self._txtStory.text = episodeConfig.txt
 end
 
-function var_0_0._refreshTargetParam(arg_22_0, arg_22_1)
-	tabletool.clear(arg_22_0._targetParamDic)
+function LiangYueGameView:_refreshTargetParam(episodeConfig)
+	tabletool.clear(self._targetParamDic)
 
-	local var_22_0 = arg_22_1.target
-	local var_22_1 = string.split(var_22_0, "|")
+	local param = episodeConfig.target
+	local singleTargets = string.split(param, "|")
 
-	if #var_22_1 <= 0 then
+	if #singleTargets <= 0 then
 		logError("no target param")
 
 		return
 	end
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_1) do
-		local var_22_2 = string.splitToNumber(iter_22_1, "#")
+	for _, singleTarget in ipairs(singleTargets) do
+		local singleParam = string.splitToNumber(singleTarget, "#")
 
-		if not arg_22_0._targetParamDic[var_22_2[1]] then
-			arg_22_0._targetParamDic[var_22_2[1]] = var_22_2[2]
+		if not self._targetParamDic[singleParam[1]] then
+			self._targetParamDic[singleParam[1]] = singleParam[2]
 		end
 	end
 
-	for iter_22_2, iter_22_3 in ipairs(arg_22_0._targetDescItemList) do
-		iter_22_3:setActive(arg_22_0._targetParamDic[iter_22_2] ~= nil)
+	for type, item in ipairs(self._targetDescItemList) do
+		item:setActive(self._targetParamDic[type] ~= nil)
 	end
 
-	arg_22_0:_updateAttributeInfo()
+	self:_updateAttributeInfo()
 end
 
-function var_0_0._refreshIllustration(arg_23_0, arg_23_1)
-	arg_23_0:_refreshIllustrationData(arg_23_1)
-	arg_23_0:_refreshIllustrationContent()
+function LiangYueGameView:_refreshIllustration(episodeConfig)
+	self:_refreshIllustrationData(episodeConfig)
+	self:_refreshIllustrationContent()
 end
 
-function var_0_0._refreshIllustrationData(arg_24_0, arg_24_1)
-	tabletool.clear(arg_24_0._illustrationCountDic)
-	tabletool.clear(arg_24_0._illustrationUseDic)
+function LiangYueGameView:_refreshIllustrationData(episodeConfig)
+	tabletool.clear(self._illustrationCountDic)
+	tabletool.clear(self._illustrationUseDic)
 
-	local var_24_0 = arg_24_1.illustrationCount
+	local param = episodeConfig.illustrationCount
 
-	if string.nilorempty(var_24_0) then
+	if string.nilorempty(param) then
 		logError("episode puzzle count data is nil")
 
 		return
 	end
 
-	local var_24_1 = string.split(var_24_0, "|")
+	local countDatas = string.split(param, "|")
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_1) do
-		local var_24_2 = string.splitToNumber(iter_24_1, "#")
+	for _, countData in ipairs(countDatas) do
+		local data = string.splitToNumber(countData, "#")
 
-		arg_24_0._illustrationCountDic[var_24_2[1]] = var_24_2[2]
+		self._illustrationCountDic[data[1]] = data[2]
 	end
 end
 
-function var_0_0._refreshIllustrationContent(arg_25_0)
-	local var_25_0 = 0
-	local var_25_1 = #arg_25_0._illustrationScrollItemList
+function LiangYueGameView:_refreshIllustrationContent()
+	local index = 0
+	local illustrationItemCount = #self._illustrationScrollItemList
 
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._illustrationCountDic) do
-		var_25_0 = var_25_0 + 1
+	for id, count in pairs(self._illustrationCountDic) do
+		index = index + 1
 
-		local var_25_2
+		local item
 
-		if var_25_1 < var_25_0 then
-			var_25_2 = arg_25_0:_createIllustrationItem(iter_25_0, var_25_0)
+		if illustrationItemCount < index then
+			item = self:_createIllustrationItem(id, index)
 		else
-			var_25_2 = arg_25_0._illustrationScrollItemList[var_25_0]
+			item = self._illustrationScrollItemList[index]
 		end
 
-		local var_25_3 = LiangYueConfig.instance:getIllustrationConfigById(arg_25_0._actId, iter_25_0)
-		local var_25_4 = LiangYueConfig.instance:getIllustrationShape(arg_25_0._actId, iter_25_0)
-		local var_25_5 = #var_25_4 / #var_25_4[1]
+		local config = LiangYueConfig.instance:getIllustrationConfigById(self._actId, id)
+		local meshSize = LiangYueConfig.instance:getIllustrationShape(self._actId, id)
+		local aspect = #meshSize / #meshSize[1]
 
-		if var_25_2 == nil then
-			logError("have no item index :" .. var_25_0)
+		if item == nil then
+			logError("have no item index :" .. index)
 		else
-			var_25_2:setActive(true)
-			var_25_2:setInfo(iter_25_0, var_25_0, iter_25_1, var_25_3.imageId, var_25_5, arg_25_0._actId)
+			item:setActive(true)
+			item:setInfo(id, index, count, config.imageId, aspect, self._actId)
 		end
 	end
 
-	if var_25_0 < var_25_1 then
-		for iter_25_2 = var_25_0 + 1, var_25_1 do
-			arg_25_0._illustrationScrollItemList[iter_25_2]:setActive(false)
+	if index < illustrationItemCount then
+		for i = index + 1, illustrationItemCount do
+			local item = self._illustrationScrollItemList[i]
+
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0._refreshMeshData(arg_26_0)
-	arg_26_0._meshData = {}
+function LiangYueGameView:_refreshMeshData()
+	self._meshData = {}
 
-	local var_26_0 = LiangYueConfig.instance:getEpisodeStaticIllustrationDic(arg_26_0._actId, arg_26_0._episodeGameId)
+	local staticIllustrationDic = LiangYueConfig.instance:getEpisodeStaticIllustrationDic(self._actId, self._episodeGameId)
 
-	if var_26_0 ~= nil then
-		for iter_26_0, iter_26_1 in pairs(var_26_0) do
-			for iter_26_2, iter_26_3 in pairs(iter_26_1) do
-				if arg_26_0._meshData[iter_26_0] and arg_26_0._meshData[iter_26_0][iter_26_2] then
-					logError("固定格子位置重复 位置: x:" .. iter_26_0 .. "y:" .. iter_26_2)
+	if staticIllustrationDic ~= nil then
+		for y, horizontalDic in pairs(staticIllustrationDic) do
+			for x, id in pairs(horizontalDic) do
+				if self._meshData[y] and self._meshData[y][x] then
+					logError("固定格子位置重复 位置: x:" .. y .. "y:" .. x)
 				else
-					arg_26_0:_fillMesh(iter_26_0, iter_26_2, iter_26_3, true)
+					self:_fillMesh(y, x, id, true)
 				end
 			end
 		end
 	end
 
-	local var_26_1 = LiangYueModel.instance:getEpisodeInfoMo(arg_26_0._actId, arg_26_0._episodeId)
+	local mo = LiangYueModel.instance:getEpisodeInfoMo(self._actId, self._episodeId)
 
-	if string.nilorempty(var_26_1.puzzle) then
+	if string.nilorempty(mo.puzzle) then
 		return
 	end
 
-	local var_26_2 = string.split(var_26_1.puzzle, "|")
+	local params = string.split(mo.puzzle, "|")
 
-	for iter_26_4, iter_26_5 in ipairs(var_26_2) do
-		local var_26_3 = string.splitToNumber(iter_26_5, "#")
+	for _, param in ipairs(params) do
+		local data = string.splitToNumber(param, "#")
 
-		if var_26_3 ~= nil then
-			arg_26_0:_fillMesh(var_26_3[1], var_26_3[2], var_26_3[3])
+		if data ~= nil then
+			self:_fillMesh(data[1], data[2], data[3])
 		else
-			logError("玩家插画数据错误： 数据格式：" .. var_26_1.puzzle)
+			logError("玩家插画数据错误： 数据格式：" .. mo.puzzle)
 		end
 	end
 end
 
-function var_0_0._refreshCompleteState(arg_27_0)
-	local var_27_0 = LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(arg_27_0._actId, arg_27_0._episodeGameId)
-	local var_27_1 = arg_27_0._isFinish
+function LiangYueGameView:_refreshCompleteState()
+	local episodeConfig = LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(self._actId, self._episodeGameId)
+	local isFinish = self._isFinish
 
-	gohelper.setActive(arg_27_0._goPiecesList, not var_27_1)
-	gohelper.setActive(arg_27_0._goScrollText, var_27_1)
-	gohelper.setActive(arg_27_0._goCompleted, var_27_1)
-	gohelper.setActive(arg_27_0._btnreset, not var_27_1)
-	gohelper.setActive(arg_27_0._goGridBg.gameObject, not var_27_1)
+	gohelper.setActive(self._goPiecesList, not isFinish)
+	gohelper.setActive(self._goScrollText, isFinish)
+	gohelper.setActive(self._goCompleted, isFinish)
+	gohelper.setActive(self._btnreset, not isFinish)
+	gohelper.setActive(self._goGridBg.gameObject, not isFinish)
 
-	local var_27_2 = arg_27_0._isFinish and luaLang("act184_target_complete") or luaLang("act184_target_not_complete")
+	local targetTitle = self._isFinish and luaLang("act184_target_complete") or luaLang("act184_target_not_complete")
 
-	arg_27_0._txtTarget.text = var_27_2
+	self._txtTarget.text = targetTitle
 
-	local var_27_3 = arg_27_0._isFinish and var_27_0.titile or luaLang("act184_puzzle_title")
+	local rightTitle = self._isFinish and episodeConfig.titile or luaLang("act184_puzzle_title")
 
-	arg_27_0._txtTitle.text = var_27_3
+	self._txtTitle.text = rightTitle
 end
 
-function var_0_0._refreshFinishBtnState(arg_28_0)
-	local var_28_0 = arg_28_0._isEnable and not arg_28_0._isFinish
+function LiangYueGameView:_refreshFinishBtnState()
+	local show = self._isEnable and not self._isFinish
 
-	gohelper.setActive(arg_28_0._btnfinished, var_28_0)
-	gohelper.setActive(arg_28_0._goVxEnable, var_28_0)
-	gohelper.setActive(arg_28_0._goTick, arg_28_0._isFinish)
+	gohelper.setActive(self._btnfinished, show)
+	gohelper.setActive(self._goVxEnable, show)
+	gohelper.setActive(self._goTick, self._isFinish)
 
-	if var_28_0 then
+	if show then
 		AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_pen1)
 	end
 end
 
-function var_0_0._fillMesh(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
-	local var_29_0 = arg_29_0._meshData
-	local var_29_1 = 0
-	local var_29_2 = 0
-	local var_29_3 = false
-	local var_29_4 = LiangYueConfig.instance:getIllustrationShape(arg_29_0._actId, arg_29_3)
-	local var_29_5 = #var_29_4
-	local var_29_6 = #var_29_4[1]
-	local var_29_7 = (arg_29_2 - 1) * arg_29_0._meshSize[1] + arg_29_1
+function LiangYueGameView:_fillMesh(posX, posY, id, isStatic, item)
+	local meshData = self._meshData
+	local offsetX = 0
+	local offsetY = 0
+	local isPos = false
+	local params = LiangYueConfig.instance:getIllustrationShape(self._actId, id)
+	local columnLength = #params
+	local rowLength = #params[1]
+	local illustrationIndex = (posY - 1) * self._meshSize[1] + posX
 
-	for iter_29_0 = 1, var_29_5 do
-		local var_29_8 = var_29_4[iter_29_0]
+	for y = 1, columnLength do
+		local data = params[y]
 
-		for iter_29_1 = 1, var_29_6 do
-			local var_29_9 = var_29_8[iter_29_1] == 1
+		for x = 1, rowLength do
+			local fill = data[x] == 1
 
-			if not var_29_3 and var_29_9 then
-				var_29_1 = iter_29_1 - 1
-				var_29_2 = iter_29_0 - 1
-				var_29_3 = true
+			if not isPos and fill then
+				offsetX = x - 1
+				offsetY = y - 1
+				isPos = true
 			end
 
-			if var_29_3 and var_29_9 then
-				local var_29_10 = arg_29_2 - var_29_2 + iter_29_0 - 1
-				local var_29_11 = arg_29_1 - var_29_1 + iter_29_1 - 1
+			if isPos and fill then
+				local meshPosY = posY - offsetY + y - 1
+				local meshPosX = posX - offsetX + x - 1
 
-				if not var_29_0[var_29_10] then
-					var_29_0[var_29_10] = {}
+				if not meshData[meshPosY] then
+					local lineData = {}
+
+					meshData[meshPosY] = lineData
 				end
 
-				if var_29_0[var_29_10][var_29_11] then
-					logError("meshFill failed posX: " .. var_29_11 .. " Y " .. var_29_10)
+				if meshData[meshPosY][meshPosX] then
+					logError("meshFill failed posX: " .. meshPosX .. " Y " .. meshPosY)
 				else
-					var_29_0[var_29_10][var_29_11] = var_29_7
+					meshData[meshPosY][meshPosX] = illustrationIndex
 				end
 			end
 		end
 	end
 
-	local var_29_12 = arg_29_1 - var_29_1
-	local var_29_13 = ((var_29_12 - 1) * arg_29_0._meshWidth + (var_29_12 - 1 + var_29_6) * arg_29_0._meshWidth) * 0.5 - arg_29_0._meshMaxX
-	local var_29_14 = arg_29_2 - var_29_2
-	local var_29_15 = arg_29_0._meshSize[2] - var_29_14 + 1
-	local var_29_16 = (var_29_15 * arg_29_0._meshHeight + (var_29_15 - var_29_5) * arg_29_0._meshHeight) * 0.5 - arg_29_0._meshMaxY
+	local rectangleBeginPosX = posX - offsetX
+	local dragItemPosStartX = (rectangleBeginPosX - 1) * self._meshWidth
+	local dragItemPosEndX = (rectangleBeginPosX - 1 + rowLength) * self._meshWidth
+	local centerX = (dragItemPosStartX + dragItemPosEndX) * 0.5 - self._meshMaxX
+	local rectangleBeginPosY = posY - offsetY
+	local startY = self._meshSize[2] - rectangleBeginPosY + 1
+	local dragItemPosStartY = startY * self._meshHeight
+	local endY = startY - columnLength
+	local dragItemPosEndY = endY * self._meshHeight
+	local centerY = (dragItemPosStartY + dragItemPosEndY) * 0.5 - self._meshMaxY
 
-	arg_29_5 = arg_29_5 or arg_29_0:_getDragItem(arg_29_3, arg_29_4, arg_29_0._isFinish)
-	arg_29_0._illustrationIndexDic[var_29_7] = arg_29_3
+	item = item or self:_getDragItem(id, isStatic, self._isFinish)
+	self._illustrationIndexDic[illustrationIndex] = id
 
-	table.insert(arg_29_0._illustrationIndexList, var_29_7)
+	table.insert(self._illustrationIndexList, illustrationIndex)
 
-	arg_29_0._illustrationPosDic[var_29_7] = {
-		arg_29_1,
-		arg_29_2
+	self._illustrationPosDic[illustrationIndex] = {
+		posX,
+		posY
 	}
-	arg_29_0._usedDragItemDic[var_29_7] = arg_29_5
+	self._usedDragItemDic[illustrationIndex] = item
 
-	if arg_29_4 then
-		arg_29_0._staticIllustrationDic[var_29_7] = arg_29_3
-	elseif not arg_29_0._illustrationUseDic[arg_29_3] then
-		arg_29_0._illustrationUseDic[arg_29_3] = 1
+	if isStatic then
+		self._staticIllustrationDic[illustrationIndex] = id
+	elseif not self._illustrationUseDic[id] then
+		self._illustrationUseDic[id] = 1
 	else
-		arg_29_0._illustrationUseDic[arg_29_3] = arg_29_0._illustrationUseDic[arg_29_3] + 1
+		self._illustrationUseDic[id] = self._illustrationUseDic[id] + 1
 	end
 
-	arg_29_0:_refreshIllustrationIndex()
-	arg_29_0:_refreshIllustrationCount()
+	self:_refreshIllustrationIndex()
+	self:_refreshIllustrationCount()
 
-	if arg_29_4 or arg_29_0._isFinish == true then
-		recthelper.setAnchor(arg_29_5.go.transform, var_29_13, var_29_16)
+	if isStatic or self._isFinish == true then
+		recthelper.setAnchor(item.go.transform, centerX, centerY)
 	else
-		arg_29_0._tweenItem = arg_29_5
+		self._tweenItem = item
 
-		arg_29_5:setAttributeInfo(arg_29_0._actId, arg_29_5.id)
+		item:setAttributeInfo(self._actId, item.id)
 
-		arg_29_0._tweenPos = ZProj.TweenHelper.DOAnchorPos(arg_29_5.go.transform, var_29_13, var_29_16, LiangYueEnum.TweenDuration, arg_29_0._onTweenEnd, arg_29_0)
+		self._tweenPos = ZProj.TweenHelper.DOAnchorPos(item.go.transform, centerX, centerY, LiangYueEnum.TweenDuration, self._onTweenEnd, self)
 	end
 
-	logNormal(string.format("fill illustration: pos x:%s y:%s index : x: %s y: %s", var_29_13, var_29_16, arg_29_1, arg_29_2))
+	logNormal(string.format("fill illustration: pos x:%s y:%s index : x: %s y: %s", centerX, centerY, posX, posY))
 end
 
-function var_0_0._onTweenEnd(arg_30_0)
-	local var_30_0 = arg_30_0._tweenItem
+function LiangYueGameView:_onTweenEnd()
+	local item = self._tweenItem
 
-	if var_30_0 ~= nil then
-		var_30_0:setItemPosY()
+	if item ~= nil then
+		item:setItemPosY()
 	end
 
-	arg_30_0._tweenItem = nil
-	arg_30_0._tweenPos = nil
+	self._tweenItem = nil
+	self._tweenPos = nil
 end
 
-function var_0_0._ClearMesh(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	local var_31_0 = arg_31_0._meshData
-	local var_31_1 = 0
-	local var_31_2 = 0
-	local var_31_3 = false
-	local var_31_4 = LiangYueConfig.instance:getIllustrationShape(arg_31_0._actId, arg_31_3)
-	local var_31_5 = #var_31_4
-	local var_31_6 = #var_31_4[1]
+function LiangYueGameView:_ClearMesh(posX, posY, id)
+	local meshData = self._meshData
+	local offsetX = 0
+	local offsetY = 0
+	local isPos = false
+	local params = LiangYueConfig.instance:getIllustrationShape(self._actId, id)
+	local columnLength = #params
+	local rowLength = #params[1]
 
-	for iter_31_0 = 1, var_31_5 do
-		local var_31_7 = var_31_4[iter_31_0]
+	for y = 1, columnLength do
+		local data = params[y]
 
-		for iter_31_1 = 1, var_31_6 do
-			local var_31_8 = var_31_7[iter_31_1] == 1
+		for x = 1, rowLength do
+			local fill = data[x] == 1
 
-			if not var_31_3 and var_31_8 then
-				var_31_1 = iter_31_1 - 1
-				var_31_2 = iter_31_0 - 1
-				var_31_3 = true
+			if not isPos and fill then
+				offsetX = x - 1
+				offsetY = y - 1
+				isPos = true
 			end
 
-			if var_31_3 and var_31_8 then
-				local var_31_9 = arg_31_2 - var_31_2 + iter_31_0 - 1
-				local var_31_10 = arg_31_1 - var_31_1 + iter_31_1 - 1
+			if isPos and fill then
+				local meshPosY = posY - offsetY + y - 1
+				local meshPosX = posX - offsetX + x - 1
 
-				if not var_31_0[var_31_9] or not var_31_0[var_31_9][var_31_10] then
-					logError("clear mesh failed posX: " .. var_31_10 .. " Y " .. var_31_9)
+				if not meshData[meshPosY] or not meshData[meshPosY][meshPosX] then
+					logError("clear mesh failed posX: " .. meshPosX .. " Y " .. meshPosY)
 				else
-					var_31_0[var_31_9][var_31_10] = nil
+					meshData[meshPosY][meshPosX] = nil
 
-					local var_31_11 = (var_31_9 - 1) * arg_31_0._meshSize[1] + var_31_10
+					local index = (meshPosY - 1) * self._meshSize[1] + meshPosX
 				end
 			end
 		end
 	end
 
-	local var_31_12 = (arg_31_2 - 1) * arg_31_0._meshSize[1] + arg_31_1
+	local illustrationIndex = (posY - 1) * self._meshSize[1] + posX
 
-	arg_31_0._illustrationIndexDic[var_31_12] = nil
+	self._illustrationIndexDic[illustrationIndex] = nil
 
-	tabletool.removeValue(arg_31_0._illustrationIndexList, var_31_12)
+	tabletool.removeValue(self._illustrationIndexList, illustrationIndex)
 
-	local var_31_13 = arg_31_0._usedDragItemDic[var_31_12]
+	local item = self._usedDragItemDic[illustrationIndex]
 
-	arg_31_0._usedDragItemDic[var_31_12] = nil
-	arg_31_0._illustrationPosDic[var_31_12] = nil
+	self._usedDragItemDic[illustrationIndex] = nil
+	self._illustrationPosDic[illustrationIndex] = nil
 
-	if not arg_31_0._illustrationUseDic[arg_31_3] then
+	if not self._illustrationUseDic[id] then
 		logError("not such illustration use")
 	else
-		local var_31_14 = arg_31_0._illustrationUseDic[arg_31_3] - 1
+		local count = self._illustrationUseDic[id] - 1
 
-		if var_31_14 <= 0 then
-			arg_31_0._illustrationUseDic[arg_31_3] = nil
+		if count <= 0 then
+			self._illustrationUseDic[id] = nil
 		else
-			arg_31_0._illustrationUseDic[arg_31_3] = var_31_14
+			self._illustrationUseDic[id] = count
 		end
 	end
 
-	arg_31_0:_recycleDragItem(var_31_13)
-	arg_31_0:_refreshIllustrationIndex()
-	arg_31_0:_refreshIllustrationCount()
+	self:_recycleDragItem(item)
+	self:_refreshIllustrationIndex()
+	self:_refreshIllustrationCount()
 end
 
-function var_0_0._refreshIllustrationCount(arg_32_0)
-	for iter_32_0, iter_32_1 in pairs(arg_32_0._illustrationScrollItemList) do
-		if arg_32_0._illustrationCountDic[iter_32_1.id] and arg_32_0._illustrationCountDic[iter_32_1.id] ~= 0 then
-			local var_32_0 = arg_32_0._illustrationUseDic[iter_32_1.id] or 0
-			local var_32_1 = arg_32_0._illustrationCountDic[iter_32_1.id] - var_32_0
+function LiangYueGameView:_refreshIllustrationCount()
+	for _, item in pairs(self._illustrationScrollItemList) do
+		if self._illustrationCountDic[item.id] and self._illustrationCountDic[item.id] ~= 0 then
+			local useCount = self._illustrationUseDic[item.id] or 0
+			local remainCount = self._illustrationCountDic[item.id] - useCount
 
-			iter_32_1:setCount(var_32_1)
-			iter_32_1:setEnoughState(var_32_1 > 0)
+			item:setCount(remainCount)
+			item:setEnoughState(remainCount > 0)
 		end
 	end
 end
 
-function var_0_0._getMeshPosByIndex(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = 1
-	local var_33_1 = arg_33_0._meshSize[1]
-	local var_33_2 = arg_33_0._meshSize[2]
-	local var_33_3 = Mathf.Clamp(math.floor((arg_33_1 + arg_33_0._meshMaxX) / arg_33_0._meshWidth) + 1, var_33_0, var_33_1)
-	local var_33_4 = Mathf.Clamp(var_33_2 - math.floor((arg_33_2 + arg_33_0._meshMaxY) / arg_33_0._meshHeight), var_33_0, var_33_2)
+function LiangYueGameView:_getMeshPosByIndex(posX, posY)
+	local minIndex = 1
+	local maxIndexX = self._meshSize[1]
+	local maxIndexY = self._meshSize[2]
+	local mesh_X = Mathf.Clamp(math.floor((posX + self._meshMaxX) / self._meshWidth) + 1, minIndex, maxIndexX)
+	local mesh_Y = Mathf.Clamp(maxIndexY - math.floor((posY + self._meshMaxY) / self._meshHeight), minIndex, maxIndexY)
 
-	logNormal("button click mesh x:" .. var_33_3 .. "mesh y:" .. var_33_4)
+	logNormal("button click mesh x:" .. mesh_X .. "mesh y:" .. mesh_Y)
 
-	return var_33_3, var_33_4
+	return mesh_X, mesh_Y
 end
 
-function var_0_0._refreshIllustrationIndex(arg_34_0)
-	table.sort(arg_34_0._illustrationIndexList)
-	tabletool.clear(arg_34_0._paramDic)
+function LiangYueGameView:_refreshIllustrationIndex()
+	table.sort(self._illustrationIndexList)
+	tabletool.clear(self._paramDic)
 
-	local var_34_0 = 0
+	local count = 0
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_0._illustrationIndexList) do
-		local var_34_1 = arg_34_0._usedDragItemDic[iter_34_1]
+	for index, illustrationIndex in ipairs(self._illustrationIndexList) do
+		local item = self._usedDragItemDic[illustrationIndex]
 
-		if var_34_1 == nil then
-			logError("item is null index:" .. iter_34_1)
+		if item == nil then
+			logError("item is null index:" .. illustrationIndex)
 		else
-			var_34_1:setIndex(iter_34_0)
+			item:setIndex(index)
 
-			local var_34_2 = arg_34_0._illustrationIndexDic[iter_34_1]
-			local var_34_3 = LiangYueConfig.instance:getIllustrationConfigById(arg_34_0._actId, var_34_2).attribute
+			local illustrationId = self._illustrationIndexDic[illustrationIndex]
+			local config = LiangYueConfig.instance:getIllustrationConfigById(self._actId, illustrationId)
+			local param = config.attribute
 
-			arg_34_0:_calculateAttribute(var_34_3, arg_34_0._paramDic)
+			self:_calculateAttribute(param, self._paramDic)
 
-			if not arg_34_0._staticIllustrationDic[iter_34_0] then
-				var_34_0 = var_34_0 + 1
+			if not self._staticIllustrationDic[index] then
+				count = count + 1
 			end
 		end
 	end
 
-	if not arg_34_0._isFinish then
-		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnDragIllustration, var_34_0)
-		logNormal("OnDragIllustration Count: " .. tostring(var_34_0))
+	if not self._isFinish then
+		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnDragIllustration, count)
+		logNormal("OnDragIllustration Count: " .. tostring(count))
 	end
 
-	arg_34_0:_updateAttributeInfo()
+	self:_updateAttributeInfo()
 end
 
-function var_0_0._updateAttributeInfo(arg_35_0)
-	local var_35_0 = arg_35_0._paramDic
-	local var_35_1 = 0
+function LiangYueGameView:_updateAttributeInfo()
+	local currentParamDic = self._paramDic
+	local disableCount = 0
 
-	for iter_35_0, iter_35_1 in pairs(arg_35_0._targetParamDic) do
-		local var_35_2 = var_35_0[iter_35_0] or 0
-		local var_35_3 = iter_35_1 <= var_35_2
+	for attributeType, target in pairs(self._targetParamDic) do
+		local currentNum = currentParamDic[attributeType] or 0
+		local enable = target <= currentNum
 
-		if not var_35_3 then
-			var_35_1 = var_35_1 + 1
+		if not enable then
+			disableCount = disableCount + 1
 		end
 
-		local var_35_4 = arg_35_0._targetDescItemList[iter_35_0]
-		local var_35_5 = var_35_3 and LiangYueEnum.AttributeColor[iter_35_0] or LiangYueEnum.AttributeNotEnoughColor
+		local item = self._targetDescItemList[attributeType]
+		local color = enable and LiangYueEnum.AttributeColor[attributeType] or LiangYueEnum.AttributeNotEnoughColor
 
-		var_35_4:setTargetInfo(var_35_2, iter_35_1, var_35_5)
+		item:setTargetInfo(currentNum, target, color)
 	end
 
-	arg_35_0._isEnable = var_35_1 <= 0
+	self._isEnable = disableCount <= 0
 
-	if not arg_35_0._isFinish and arg_35_0._isEnable then
-		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnAttributeMeetConditions, arg_35_0._episodeId)
-		logNormal("OnAttributeMeetConditions  episodeId:" .. tostring(arg_35_0._episodeId))
+	if not self._isFinish and self._isEnable then
+		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnAttributeMeetConditions, self._episodeId)
+		logNormal("OnAttributeMeetConditions  episodeId:" .. tostring(self._episodeId))
 	end
 
-	arg_35_0:_refreshFinishBtnState()
+	self:_refreshFinishBtnState()
 end
 
-function var_0_0._calculateAttribute(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = string.split(arg_36_1, "|")
+function LiangYueGameView:_calculateAttribute(param, paramDic)
+	local singleParams = string.split(param, "|")
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_0) do
-		local var_36_1 = string.splitToNumber(iter_36_1, "#")
-		local var_36_2 = var_36_1[1]
-		local var_36_3 = var_36_1[2]
-		local var_36_4 = var_36_1[3]
+	for _, singleParam in ipairs(singleParams) do
+		local attributeParam = string.splitToNumber(singleParam, "#")
+		local attributeType = attributeParam[1]
+		local calculateType = attributeParam[2]
+		local attribute = attributeParam[3]
 
-		if arg_36_2[var_36_2] == nil then
-			arg_36_2[var_36_2] = 0
+		if paramDic[attributeType] == nil then
+			paramDic[attributeType] = 0
 		end
 
-		local var_36_5 = arg_36_2[var_36_2]
+		local tempNum = paramDic[attributeType]
 
-		if var_36_3 == LiangYueEnum.CalculateType.Add then
-			var_36_5 = var_36_5 + var_36_4
-		elseif var_36_3 == LiangYueEnum.CalculateType.Minus then
-			var_36_5 = var_36_5 - var_36_4
-		elseif var_36_3 == LiangYueEnum.CalculateType.Multiply then
-			var_36_5 = var_36_5 * var_36_4
-		elseif var_36_3 == LiangYueEnum.CalculateType.Divide then
-			var_36_5 = var_36_5 / var_36_4
+		if calculateType == LiangYueEnum.CalculateType.Add then
+			tempNum = tempNum + attribute
+		elseif calculateType == LiangYueEnum.CalculateType.Minus then
+			tempNum = tempNum - attribute
+		elseif calculateType == LiangYueEnum.CalculateType.Multiply then
+			tempNum = tempNum * attribute
+		elseif calculateType == LiangYueEnum.CalculateType.Divide then
+			tempNum = tempNum / attribute
 		end
 
-		arg_36_2[var_36_2] = math.floor(var_36_5)
+		paramDic[attributeType] = math.floor(tempNum)
 	end
 end
 
-function var_0_0._onItemBeginDrag(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	if arg_37_0._isFinish then
+function LiangYueGameView:_onItemBeginDrag(param, pointerEventData, id)
+	if self._isFinish then
 		return
 	end
 
-	local var_37_0
-	local var_37_1 = recthelper.screenPosToAnchorPos(arg_37_2.position, arg_37_0._goillustrationContainer.transform)
-	local var_37_2
-	local var_37_3
-	local var_37_4 = arg_37_3 == nil
+	local currentItem
+	local currentDragPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._goillustrationContainer.transform)
+	local posX, posY
+	local isExistIllustration = id == nil
 
-	if var_37_4 then
-		local var_37_5, var_37_6
+	if isExistIllustration then
+		id, posX, posY = self:_onMeshContainerClick(param, pointerEventData.position, nil, true)
 
-		arg_37_3, var_37_5, var_37_6 = arg_37_0:_onMeshContainerClick(arg_37_1, arg_37_2.position, nil, true)
-
-		if arg_37_3 == nil then
+		if id == nil then
 			return
 		end
 
-		arg_37_0._previousPosX = var_37_5
-		arg_37_0._previousPosY = var_37_6
+		self._previousPosX = posX
+		self._previousPosY = posY
 	end
 
-	if arg_37_0:_CheckDragItemCount(arg_37_3) then
+	if self:_CheckDragItemCount(id) then
 		GameFacade.showToast(ToastEnum.Act184PuzzleNotEnough)
 
 		return
@@ -813,374 +824,388 @@ function var_0_0._onItemBeginDrag(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
 
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_anzhu)
 
-	local var_37_7 = var_37_4 and LiangYueEnum.NormalAlpha or LiangYueEnum.DragAlpha
+	local alpha = isExistIllustration and LiangYueEnum.NormalAlpha or LiangYueEnum.DragAlpha
 
-	arg_37_0:_setScrollItemAlpha(arg_37_3, var_37_7)
+	self:_setScrollItemAlpha(id, alpha)
 
-	local var_37_8 = arg_37_0:_getDragItem(arg_37_3)
+	currentItem = self:_getDragItem(id)
 
 	logNormal("Start Drag")
-	gohelper.setAsLastSibling(var_37_8.go)
+	gohelper.setAsLastSibling(currentItem.go)
 
-	arg_37_0._currentDragItem = var_37_8
-	arg_37_0._isDrag = true
-	arg_37_0._dragShapeId = arg_37_3
+	self._currentDragItem = currentItem
+	self._isDrag = true
+	self._dragShapeId = id
 
-	recthelper.setAnchor(var_37_8.rectTran, var_37_1.x, var_37_1.y)
+	recthelper.setAnchor(currentItem.rectTran, currentDragPos.x, currentDragPos.y)
 
-	arg_37_0._previousDragPos = var_37_1
+	self._previousDragPos = currentDragPos
 
-	arg_37_0:_onSelectShape(arg_37_3)
-	arg_37_0:_resetMeshItemEnableState()
+	self:_onSelectShape(id)
+	self:_resetMeshItemEnableState()
 end
 
-function var_0_0._onSelectShape(arg_38_0, arg_38_1)
-	local var_38_0 = LiangYueConfig.instance:getIllustrationShape(arg_38_0._actId, arg_38_1)
-	local var_38_1 = #var_38_0
-	local var_38_2 = #var_38_0[1]
-	local var_38_3 = var_38_1 * arg_38_0._meshHeight
-	local var_38_4 = var_38_2 * arg_38_0._meshWidth
+function LiangYueGameView:_onSelectShape(shapeId)
+	local params = LiangYueConfig.instance:getIllustrationShape(self._actId, shapeId)
+	local yCount = #params
+	local xCount = #params[1]
+	local height = yCount * self._meshHeight
+	local width = xCount * self._meshWidth
 
-	arg_38_0._dragItemMaxX = var_38_4 * 0.5
-	arg_38_0._dragItemMinX = -arg_38_0._dragItemMaxX
-	arg_38_0._dragItemMaxY = var_38_3 * 0.5
-	arg_38_0._dragItemMinY = -arg_38_0._dragItemMaxY
-	arg_38_0._dragItemHeight = var_38_3
-	arg_38_0._dragItemWidth = var_38_4
-	arg_38_0._currentDragCheckList = var_38_0
-	arg_38_0._dragItemSize = {
-		var_38_2,
-		var_38_1
+	self._dragItemMaxX = width * 0.5
+	self._dragItemMinX = -self._dragItemMaxX
+	self._dragItemMaxY = height * 0.5
+	self._dragItemMinY = -self._dragItemMaxY
+	self._dragItemHeight = height
+	self._dragItemWidth = width
+	self._currentDragCheckList = params
+	self._dragItemSize = {
+		xCount,
+		yCount
 	}
-	arg_38_0._needCheckMeshCount = LiangYueConfig.instance:getIllustrationShapeCount(arg_38_0._actId, arg_38_1)
+	self._needCheckMeshCount = LiangYueConfig.instance:getIllustrationShapeCount(self._actId, shapeId)
 end
 
-function var_0_0._setScrollItemAlpha(arg_39_0, arg_39_1, arg_39_2)
-	for iter_39_0, iter_39_1 in ipairs(arg_39_0._illustrationScrollItemList) do
-		if iter_39_1.id == arg_39_1 then
-			iter_39_1:setAlpha(arg_39_2)
+function LiangYueGameView:_setScrollItemAlpha(id, alpha)
+	for _, item in ipairs(self._illustrationScrollItemList) do
+		if item.id == id then
+			item:setAlpha(alpha)
 
 			return
 		end
 	end
 end
 
-function var_0_0._CheckDragItemCount(arg_40_0, arg_40_1)
-	local var_40_0 = arg_40_0._illustrationCountDic[arg_40_1]
+function LiangYueGameView:_CheckDragItemCount(id)
+	local limitCount = self._illustrationCountDic[id]
 
-	if not var_40_0 or var_40_0 == 0 then
+	if not limitCount or limitCount == 0 then
 		return false
 	end
 
-	return var_40_0 <= (arg_40_0._illustrationUseDic[arg_40_1] or 0)
+	local useCount = self._illustrationUseDic[id] or 0
+
+	return limitCount <= useCount
 end
 
-function var_0_0._updateItemPos(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_0._currentDragItem.rectTran
-	local var_41_1 = recthelper.screenPosToAnchorPos(arg_41_1.position, arg_41_0._gomeshContainer.transform)
-	local var_41_2 = var_41_1.x - arg_41_0._previousDragPos.x
-	local var_41_3 = var_41_1.y - arg_41_0._previousDragPos.y
-	local var_41_4, var_41_5 = recthelper.getAnchor(var_41_0)
-	local var_41_6 = var_41_4 + var_41_2
-	local var_41_7 = var_41_5 + var_41_3
+function LiangYueGameView:_updateItemPos(pointerEventData)
+	local rectTran = self._currentDragItem.rectTran
+	local currentDragPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._gomeshContainer.transform)
+	local offsetX = currentDragPos.x - self._previousDragPos.x
+	local offsetY = currentDragPos.y - self._previousDragPos.y
+	local positionX, positionY = recthelper.getAnchor(rectTran)
+	local finalPositionX = positionX + offsetX
+	local finalPositionY = positionY + offsetY
 
-	recthelper.setAnchor(var_41_0, var_41_6, var_41_7)
+	recthelper.setAnchor(rectTran, finalPositionX, finalPositionY)
 
-	arg_41_0._previousDragPos = var_41_1
+	self._previousDragPos = currentDragPos
 
-	return var_41_6, var_41_7
+	return finalPositionX, finalPositionY
 end
 
-function var_0_0._onItemDrag(arg_42_0, arg_42_1, arg_42_2)
-	if arg_42_0._currentDragItem == nil then
+function LiangYueGameView:_onItemDrag(param, pointerEventData)
+	if self._currentDragItem == nil then
 		return
 	end
 
-	arg_42_0:_resetMeshItemEnableState()
-	arg_42_0:_onItemMove(arg_42_2)
+	self:_resetMeshItemEnableState()
+	self:_onItemMove(pointerEventData)
 end
 
-function var_0_0._onItemMove(arg_43_0, arg_43_1)
-	local var_43_0, var_43_1 = arg_43_0:_updateItemPos(arg_43_1)
-	local var_43_2 = arg_43_0._dragItemMinX + var_43_0
-	local var_43_3 = arg_43_0._dragItemMaxX + var_43_0
-	local var_43_4 = arg_43_0._dragItemMinY + var_43_1
-	local var_43_5 = arg_43_0._dragItemMaxY + var_43_1
-	local var_43_6 = arg_43_0._meshWidth * 0.5
-	local var_43_7 = arg_43_0._meshHeight * 0.5
-	local var_43_8 = arg_43_0._meshMaxX
-	local var_43_9 = arg_43_0._meshMaxY
+function LiangYueGameView:_onItemMove(pointerEventData)
+	local finalPositionX, finalPositionY = self:_updateItemPos(pointerEventData)
+	local itemMinX = self._dragItemMinX + finalPositionX
+	local itemMaxX = self._dragItemMaxX + finalPositionX
+	local itemMinY = self._dragItemMinY + finalPositionY
+	local itemMaxY = self._dragItemMaxY + finalPositionY
+	local halfItemWidth = self._meshWidth * 0.5
+	local halfItemHeight = self._meshHeight * 0.5
+	local halfMeshWidth = self._meshMaxX
+	local halfMeshHeight = self._meshMaxY
 
-	if var_43_3 < -var_43_8 + var_43_6 or var_43_2 > var_43_8 - var_43_6 or var_43_5 < -var_43_9 + var_43_7 or var_43_4 > var_43_9 - var_43_7 then
+	if itemMaxX < -halfMeshWidth + halfItemWidth or itemMinX > halfMeshWidth - halfItemWidth or itemMaxY < -halfMeshHeight + halfItemHeight or itemMinY > halfMeshHeight - halfItemHeight then
 		return false, nil, nil
 	end
 
-	local var_43_10 = math.max(var_43_2, -var_43_8) - var_43_0 + arg_43_0._dragItemMaxX
-	local var_43_11 = math.min(var_43_3, var_43_8) - var_43_0 + arg_43_0._dragItemMaxX
-	local var_43_12 = math.max(var_43_4, -var_43_9) - var_43_1 + arg_43_0._dragItemMaxY
-	local var_43_13 = math.min(var_43_5, var_43_9) - var_43_1 + arg_43_0._dragItemMaxY
-	local var_43_14 = 1
-	local var_43_15 = arg_43_0._dragItemSize[1]
-	local var_43_16 = arg_43_0._dragItemSize[2]
-	local var_43_17, var_43_18, var_43_19, var_43_20 = arg_43_0:_calculateOverlapMeshBoundary(var_43_10, var_43_11, var_43_12, var_43_13, arg_43_0._meshWidth, arg_43_0._meshHeight, var_43_15, var_43_16)
-	local var_43_21 = arg_43_0._meshSize[1]
-	local var_43_22 = arg_43_0._meshSize[2]
-	local var_43_23 = 0
-	local var_43_24 = 0
-	local var_43_25
-	local var_43_26
-	local var_43_27 = false
+	local intersection_x_min = math.max(itemMinX, -halfMeshWidth) - finalPositionX + self._dragItemMaxX
+	local intersection_x_max = math.min(itemMaxX, halfMeshWidth) - finalPositionX + self._dragItemMaxX
+	local intersection_y_min = math.max(itemMinY, -halfMeshHeight) - finalPositionY + self._dragItemMaxY
+	local intersection_y_max = math.min(itemMaxY, halfMeshHeight) - finalPositionY + self._dragItemMaxY
+	local minIndex = 1
+	local maxIndexX = self._dragItemSize[1]
+	local maxIndexY = self._dragItemSize[2]
+	local start_Index_X, end_Index_X, start_Index_Y, end_Index_Y = self:_calculateOverlapMeshBoundary(intersection_x_min, intersection_x_max, intersection_y_min, intersection_y_max, self._meshWidth, self._meshHeight, maxIndexX, maxIndexY)
+	local meshMaxIndexX = self._meshSize[1]
+	local meshMaxIndexY = self._meshSize[2]
+	local dyeingCount = 0
+	local enableCount = 0
+	local dragItemPosX, dragItemPosY
+	local isPosDragItem = false
 
-	for iter_43_0 = var_43_19, var_43_20 do
-		for iter_43_1 = var_43_17, var_43_18 do
-			if arg_43_0._currentDragCheckList[iter_43_0] and arg_43_0._currentDragCheckList[iter_43_0][iter_43_1] == 1 then
-				local var_43_28 = (iter_43_1 - 1) * arg_43_0._meshWidth + arg_43_0._dragItemMinX + var_43_6 + var_43_0 + arg_43_0._meshMaxX
-				local var_43_29 = (var_43_16 - iter_43_0 + 1) * arg_43_0._meshHeight + arg_43_0._dragItemMinY + var_43_1 + arg_43_0._meshMaxY
-				local var_43_30 = math.floor(var_43_28 / arg_43_0._meshWidth) + 1
-				local var_43_31 = Mathf.Clamp(var_43_30, var_43_14, var_43_21)
-				local var_43_32 = math.floor(var_43_29 / arg_43_0._meshWidth + 0.5)
-				local var_43_33 = var_43_22 - Mathf.Clamp(var_43_32, var_43_14, var_43_22) + 1
-				local var_43_34 = var_43_21 * (var_43_33 - 1) + var_43_31
-				local var_43_35 = arg_43_0._meshItemList[var_43_34]
+	for y = start_Index_Y, end_Index_Y do
+		for x = start_Index_X, end_Index_X do
+			if self._currentDragCheckList[y] and self._currentDragCheckList[y][x] == 1 then
+				local meshItemPosX = (x - 1) * self._meshWidth + self._dragItemMinX + halfItemWidth
 
-				if var_43_35 then
-					if not var_43_27 then
-						var_43_25 = var_43_31
-						var_43_26 = var_43_33
-						var_43_27 = true
+				meshItemPosX = meshItemPosX + finalPositionX + self._meshMaxX
+
+				local meshItemPosY = (maxIndexY - y + 1) * self._meshHeight + self._dragItemMinY
+
+				meshItemPosY = meshItemPosY + finalPositionY + self._meshMaxY
+
+				local index_x = math.floor(meshItemPosX / self._meshWidth) + 1
+
+				index_x = Mathf.Clamp(index_x, minIndex, meshMaxIndexX)
+
+				local index_y = math.floor(meshItemPosY / self._meshWidth + 0.5)
+
+				index_y = Mathf.Clamp(index_y, minIndex, meshMaxIndexY)
+				index_y = meshMaxIndexY - index_y + 1
+
+				local index = meshMaxIndexX * (index_y - 1) + index_x
+				local item = self._meshItemList[index]
+
+				if item then
+					if not isPosDragItem then
+						dragItemPosX = index_x
+						dragItemPosY = index_y
+						isPosDragItem = true
 					end
 
-					local var_43_36 = arg_43_0._meshData[var_43_33] and arg_43_0._meshData[var_43_33][var_43_31] ~= nil
+					local haveFilled = self._meshData[index_y] and self._meshData[index_y][index_x] ~= nil
 
-					table.insert(arg_43_0._dyeingMeshItemList, var_43_35)
+					table.insert(self._dyeingMeshItemList, item)
 
-					var_43_23 = var_43_23 + 1
+					dyeingCount = dyeingCount + 1
 
-					if not var_43_36 then
-						var_43_24 = var_43_24 + 1
+					if not haveFilled then
+						enableCount = enableCount + 1
 					end
 				end
 			end
 		end
 	end
 
-	local var_43_37 = var_43_24 >= arg_43_0._needCheckMeshCount
-	local var_43_38 = var_43_37 and LiangYueEnum.MeshItemColor.Enable or LiangYueEnum.MeshItemColor.Disable
+	local enable = enableCount >= self._needCheckMeshCount
+	local color = enable and LiangYueEnum.MeshItemColor.Enable or LiangYueEnum.MeshItemColor.Disable
 
-	if var_43_23 > 0 then
-		for iter_43_2, iter_43_3 in ipairs(arg_43_0._dyeingMeshItemList) do
-			iter_43_3:setActive(true)
-			iter_43_3:setBgColor(var_43_38)
+	if dyeingCount > 0 then
+		for _, item in ipairs(self._dyeingMeshItemList) do
+			item:setActive(true)
+			item:setBgColor(color)
 		end
 	end
 
-	arg_43_0._dyeingMeshItemCount = var_43_23
+	self._dyeingMeshItemCount = dyeingCount
 
-	if not var_43_37 then
+	if not enable then
 		return true, nil, nil
 	end
 
-	return true, var_43_25, var_43_26
+	return true, dragItemPosX, dragItemPosY
 end
 
-function var_0_0._calculateOverlapMeshBoundary(arg_44_0, arg_44_1, arg_44_2, arg_44_3, arg_44_4, arg_44_5, arg_44_6, arg_44_7, arg_44_8)
-	local var_44_0 = 1
-	local var_44_1 = arg_44_1 / arg_44_5
-	local var_44_2 = arg_44_2 / arg_44_5
-	local var_44_3 = arg_44_3 / arg_44_6
-	local var_44_4 = arg_44_4 / arg_44_6
-	local var_44_5 = Mathf.Clamp(math.floor(var_44_1 + 0.5) + 1, var_44_0, arg_44_7)
-	local var_44_6 = Mathf.Clamp(math.floor(var_44_2 + 0.5), var_44_0, arg_44_7)
-	local var_44_7 = arg_44_8 - Mathf.Clamp(math.floor(var_44_4 + 0.5), var_44_0, arg_44_8) + 1
-	local var_44_8 = arg_44_8 - Mathf.Clamp(math.floor(var_44_3 + 0.5) + 1, var_44_0, arg_44_8) + 1
+function LiangYueGameView:_calculateOverlapMeshBoundary(min_x, max_x, min_y, max_y, width, height, maxIndexX, maxIndexY)
+	local minIndex = 1
+	local temp_Start_Index_X = min_x / width
+	local temp_End_Index_X = max_x / width
+	local temp_Start_Index_Y = min_y / height
+	local temp_End_Index_Y = max_y / height
+	local start_Index_X = Mathf.Clamp(math.floor(temp_Start_Index_X + 0.5) + 1, minIndex, maxIndexX)
+	local end_Index_X = Mathf.Clamp(math.floor(temp_End_Index_X + 0.5), minIndex, maxIndexX)
+	local start_Index_Y = maxIndexY - Mathf.Clamp(math.floor(temp_End_Index_Y + 0.5), minIndex, maxIndexY) + 1
+	local end_Index_Y = maxIndexY - Mathf.Clamp(math.floor(temp_Start_Index_Y + 0.5) + 1, minIndex, maxIndexY) + 1
 
-	return var_44_5, var_44_6, var_44_7, var_44_8
+	return start_Index_X, end_Index_X, start_Index_Y, end_Index_Y
 end
 
-function var_0_0._resetMeshItemEnableState(arg_45_0)
-	if arg_45_0._dyeingMeshItemCount > 0 then
-		for iter_45_0, iter_45_1 in ipairs(arg_45_0._dyeingMeshItemList) do
-			iter_45_1:setActive(false)
+function LiangYueGameView:_resetMeshItemEnableState()
+	if self._dyeingMeshItemCount > 0 then
+		for _, item in ipairs(self._dyeingMeshItemList) do
+			item:setActive(false)
 		end
 
-		tabletool.clear(arg_45_0._dyeingMeshItemList)
+		tabletool.clear(self._dyeingMeshItemList)
 
-		arg_45_0._dyeingMeshItemCount = 0
+		self._dyeingMeshItemCount = 0
 	end
 end
 
-function var_0_0._onItemEndDrag(arg_46_0, arg_46_1, arg_46_2)
-	if arg_46_0._currentDragItem == nil then
+function LiangYueGameView:_onItemEndDrag(param, pointerEventData)
+	if self._currentDragItem == nil then
 		return
 	end
 
 	logNormal("End Drag")
 
-	arg_46_0._isDrag = false
+	self._isDrag = false
 
-	local var_46_0, var_46_1, var_46_2 = arg_46_0:_onItemMove(arg_46_2)
+	local isOverlap, itemPosX, itemPosY = self:_onItemMove(pointerEventData)
 
-	var_46_1 = var_46_1 or arg_46_0._previousPosX
-	var_46_2 = var_46_2 or arg_46_0._previousPosY
+	itemPosX = itemPosX or self._previousPosX
+	itemPosY = itemPosY or self._previousPosY
 
-	arg_46_0:_setScrollItemAlpha(arg_46_0._dragShapeId, LiangYueEnum.NormalAlpha)
-	arg_46_0:_beforeAttributeChanged()
+	self:_setScrollItemAlpha(self._dragShapeId, LiangYueEnum.NormalAlpha)
+	self:_beforeAttributeChanged()
 
-	if var_46_0 and var_46_1 and var_46_2 then
+	if isOverlap and itemPosX and itemPosY then
 		logNormal("放置插画")
-		arg_46_0:_fillMesh(var_46_1, var_46_2, arg_46_0._dragShapeId, false, arg_46_0._currentDragItem)
+		self:_fillMesh(itemPosX, itemPosY, self._dragShapeId, false, self._currentDragItem)
 		AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_fangru)
 	else
 		logNormal("回收插画")
-		arg_46_0:_recycleDragItem(arg_46_0._currentDragItem)
+		self:_recycleDragItem(self._currentDragItem)
 	end
 
-	arg_46_0:_afterAttributeChanged()
+	self:_afterAttributeChanged()
 
-	arg_46_0._dragShapeId = nil
-	arg_46_0._previousPosX = nil
-	arg_46_0._previousPosX = nil
-	arg_46_0._currentDragItem = nil
+	self._dragShapeId = nil
+	self._previousPosX = nil
+	self._previousPosX = nil
+	self._currentDragItem = nil
 
-	arg_46_0:_resetMeshItemEnableState()
+	self:_resetMeshItemEnableState()
 end
 
-function var_0_0._rebuildMesh(arg_47_0)
-	local var_47_0 = recthelper.getWidth(arg_47_0._goImageBg.transform)
-	local var_47_1 = recthelper.getHeight(arg_47_0._goImageBg.transform)
-	local var_47_2 = arg_47_0._meshSize[1]
-	local var_47_3 = arg_47_0._meshSize[2]
+function LiangYueGameView:_rebuildMesh()
+	local imageWidth = recthelper.getWidth(self._goImageBg.transform)
+	local imageHeight = recthelper.getHeight(self._goImageBg.transform)
+	local xCount = self._meshSize[1]
+	local yCount = self._meshSize[2]
 
-	arg_47_0._meshWidth = var_47_0 / var_47_2
-	arg_47_0._meshHeight = var_47_1 / var_47_3
+	self._meshWidth = imageWidth / xCount
+	self._meshHeight = imageHeight / yCount
 
-	local var_47_4 = arg_47_0._meshWidth * var_47_2
-	local var_47_5 = arg_47_0._meshHeight * var_47_3
-	local var_47_6 = (var_47_4 + arg_47_0._meshWidth) * 0.5
-	local var_47_7 = (var_47_5 + arg_47_0._meshHeight) * 0.5
+	local meshWidth = self._meshWidth * xCount
+	local meshHeight = self._meshHeight * yCount
+	local xOffset = (meshWidth + self._meshWidth) * 0.5
+	local yOffset = (meshHeight + self._meshHeight) * 0.5
 
-	recthelper.setSize(arg_47_0._gomeshContainer.transform, var_47_4, var_47_5)
-	recthelper.setSize(arg_47_0._goillustrationContainer.transform, var_47_4, var_47_5)
-	recthelper.setAnchor(arg_47_0._gomeshContainer.transform, 0, 0)
-	recthelper.setAnchor(arg_47_0._goillustrationContainer.transform, 0, 0)
+	recthelper.setSize(self._gomeshContainer.transform, meshWidth, meshHeight)
+	recthelper.setSize(self._goillustrationContainer.transform, meshWidth, meshHeight)
+	recthelper.setAnchor(self._gomeshContainer.transform, 0, 0)
+	recthelper.setAnchor(self._goillustrationContainer.transform, 0, 0)
 
-	arg_47_0._meshMaxX = var_47_4 * 0.5
-	arg_47_0._meshMinX = -arg_47_0._meshMaxX
-	arg_47_0._meshMaxY = var_47_5 * 0.5
-	arg_47_0._meshMinY = -arg_47_0._meshMaxY
+	self._meshMaxX = meshWidth * 0.5
+	self._meshMinX = -self._meshMaxX
+	self._meshMaxY = meshHeight * 0.5
+	self._meshMinY = -self._meshMaxY
 
-	local var_47_8 = var_47_2 * var_47_3
-	local var_47_9 = #arg_47_0._meshItemList
+	local needCount = xCount * yCount
+	local itemCount = #self._meshItemList
 
-	for iter_47_0 = 1, var_47_3 do
-		for iter_47_1 = 1, var_47_2 do
-			local var_47_10 = (iter_47_0 - 1) * var_47_2 + iter_47_1
-			local var_47_11
+	for y = 1, yCount do
+		for x = 1, xCount do
+			local index = (y - 1) * xCount + x
+			local item
 
-			if var_47_9 < var_47_10 then
-				var_47_11 = arg_47_0:_createMeshItem(var_47_10)
+			if itemCount < index then
+				item = self:_createMeshItem(index)
 			else
-				var_47_11 = arg_47_0._meshItemList[var_47_10]
+				item = self._meshItemList[index]
 			end
 
-			local var_47_12 = iter_47_1 * arg_47_0._meshWidth - var_47_6
-			local var_47_13 = var_47_5 - (iter_47_0 - 1) * arg_47_0._meshHeight - var_47_7
+			local itemPosX = x * self._meshWidth - xOffset
+			local itemPosY = meshHeight - (y - 1) * self._meshHeight - yOffset
 
-			var_47_11:setPos(var_47_12, var_47_13)
-			var_47_11:setActive(false)
+			item:setPos(itemPosX, itemPosY)
+			item:setActive(false)
 		end
 	end
 
-	if var_47_8 < var_47_9 then
-		for iter_47_2 = var_47_8 + 1, var_47_9 do
-			arg_47_0._meshItemList[iter_47_2]:setActive(false)
+	if needCount < itemCount then
+		for i = needCount + 1, itemCount do
+			local item = self._meshItemList[i]
+
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0._createIllustrationItem(arg_48_0, arg_48_1, arg_48_2)
-	local var_48_0 = string.format("item_%s_%s", arg_48_1, arg_48_2)
-	local var_48_1 = gohelper.clone(arg_48_0._goillstrationItem, arg_48_0._goContent, var_48_0)
-	local var_48_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_48_1, LiangYueScrollItem)
+function LiangYueGameView:_createIllustrationItem(id, index)
+	local name = string.format("item_%s_%s", id, index)
+	local itemInstance = gohelper.clone(self._goillstrationItem, self._goContent, name)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(itemInstance, LiangYueScrollItem)
 
-	var_48_2:setParentView(arg_48_0)
-	table.insert(arg_48_0._illustrationScrollItemList, var_48_2)
+	item:setParentView(self)
+	table.insert(self._illustrationScrollItemList, item)
 
-	return var_48_2
+	return item
 end
 
-function var_0_0._createMeshItem(arg_49_0, arg_49_1)
-	local var_49_0 = arg_49_0:getResInst(arg_49_0.viewContainer._viewSetting.otherRes[1], arg_49_0._gomeshContainer, "meshItem" .. arg_49_1)
+function LiangYueGameView:_createMeshItem(index)
+	local itemObj = self:getResInst(self.viewContainer._viewSetting.otherRes[1], self._gomeshContainer, "meshItem" .. index)
 
-	recthelper.setSize(var_49_0.transform, arg_49_0._meshHeight, arg_49_0._meshHeight)
+	recthelper.setSize(itemObj.transform, self._meshHeight, self._meshHeight)
 
-	local var_49_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_49_0, LiangYueMeshItem)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(itemObj, LiangYueMeshItem)
 
-	table.insert(arg_49_0._meshItemList, var_49_1)
+	table.insert(self._meshItemList, item)
 
-	return var_49_1
+	return item
 end
 
-function var_0_0._getDragItem(arg_50_0, arg_50_1, arg_50_2, arg_50_3)
-	local var_50_0
-	local var_50_1 = #arg_50_0._unusedDragItemList
+function LiangYueGameView:_getDragItem(id, isStatic, isFinish)
+	local item
+	local itemCount = #self._unusedDragItemList
 
-	if var_50_1 <= 0 then
-		local var_50_2 = gohelper.clone(arg_50_0._godragItem, arg_50_0._goillustrationContainer)
+	if itemCount <= 0 then
+		local itemObj = gohelper.clone(self._godragItem, self._goillustrationContainer)
 
-		var_50_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_50_2, LiangYueDragItem)
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(itemObj, LiangYueDragItem)
 	else
-		var_50_0 = arg_50_0._unusedDragItemList[var_50_1]
-		arg_50_0._unusedDragItemList[var_50_1] = nil
+		item = self._unusedDragItemList[itemCount]
+		self._unusedDragItemList[itemCount] = nil
 	end
 
-	local var_50_3 = LiangYueConfig.instance:getIllustrationConfigById(arg_50_0._actId, arg_50_1)
+	local config = LiangYueConfig.instance:getIllustrationConfigById(self._actId, id)
 
-	var_50_0:setActive(true)
-	var_50_0:setInfo(arg_50_1, var_50_3, arg_50_2, arg_50_3)
+	item:setActive(true)
+	item:setInfo(id, config, isStatic, isFinish)
 
-	return var_50_0
+	return item
 end
 
-function var_0_0._recycleDragItem(arg_51_0, arg_51_1)
-	if arg_51_1 ~= nil then
-		arg_51_1:setActive(false)
-		table.insert(arg_51_0._unusedDragItemList, arg_51_1)
+function LiangYueGameView:_recycleDragItem(item)
+	if item ~= nil then
+		item:setActive(false)
+		table.insert(self._unusedDragItemList, item)
 	end
 end
 
-function var_0_0._isStaticIllustration(arg_52_0, arg_52_1)
-	if arg_52_0._staticIllustrationDic[arg_52_1] then
+function LiangYueGameView:_isStaticIllustration(index)
+	if self._staticIllustrationDic[index] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.statData(arg_53_0, arg_53_1)
-	local var_53_0 = {}
+function LiangYueGameView:statData(state)
+	local illustrationList = {}
 
-	for iter_53_0, iter_53_1 in pairs(arg_53_0._illustrationIndexList) do
-		local var_53_1 = arg_53_0._illustrationIndexDic[iter_53_1]
+	for _, index in pairs(self._illustrationIndexList) do
+		local id = self._illustrationIndexDic[index]
 
-		if not arg_53_0:_isStaticIllustration(iter_53_1) then
-			table.insert(var_53_0, var_53_1)
+		if not self:_isStaticIllustration(index) then
+			table.insert(illustrationList, id)
 		end
 	end
 
-	local var_53_2
+	local statStartTime
 
-	if arg_53_1 == LiangYueEnum.StatGameState.Restart then
-		var_53_2 = arg_53_0._resetTime
+	if state == LiangYueEnum.StatGameState.Restart then
+		statStartTime = self._resetTime
 	else
-		var_53_2 = arg_53_0._enterTime
+		statStartTime = self._enterTime
 	end
 
-	LiangYueController.instance:statExitData(var_53_2, arg_53_0._episodeGameId, arg_53_1, var_53_0)
+	LiangYueController.instance:statExitData(statStartTime, self._episodeGameId, state, illustrationList)
 end
 
-function var_0_0._lockScreen(arg_54_0, arg_54_1)
-	if arg_54_1 then
+function LiangYueGameView:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("LiangYueGameLock")
 	else
@@ -1189,22 +1214,22 @@ function var_0_0._lockScreen(arg_54_0, arg_54_1)
 	end
 end
 
-function var_0_0.onClose(arg_55_0)
+function LiangYueGameView:onClose()
 	LiangYueModel.instance:setCurActId(nil)
 	LiangYueModel.instance:setCurEpisodeId(nil)
-	TaskDispatcher.cancelTask(arg_55_0.delayFinishAnim, arg_55_0)
-	TaskDispatcher.cancelTask(arg_55_0.delayFinishAnimEnd, arg_55_0)
-	TaskDispatcher.cancelTask(arg_55_0._resetAttributeState, arg_55_0)
+	TaskDispatcher.cancelTask(self.delayFinishAnim, self)
+	TaskDispatcher.cancelTask(self.delayFinishAnimEnd, self)
+	TaskDispatcher.cancelTask(self._resetAttributeState, self)
 
-	if arg_55_0._tweenPos then
-		ZProj.TweenHelper.KillById(arg_55_0._tweenPos)
+	if self._tweenPos then
+		ZProj.TweenHelper.KillById(self._tweenPos)
 
-		arg_55_0._tweenPos = nil
+		self._tweenPos = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_56_0)
+function LiangYueGameView:onDestroyView()
 	return
 end
 
-return var_0_0
+return LiangYueGameView

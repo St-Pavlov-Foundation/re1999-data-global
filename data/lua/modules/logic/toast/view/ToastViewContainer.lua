@@ -1,11 +1,13 @@
-﻿module("modules.logic.toast.view.ToastViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/toast/view/ToastViewContainer.lua
 
-local var_0_0 = class("ToastViewContainer", BaseViewContainer)
+module("modules.logic.toast.view.ToastViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ToastViewContainer = class("ToastViewContainer", BaseViewContainer)
+
+function ToastViewContainer:buildViews()
 	return {
 		ToastView.New()
 	}
 end
 
-return var_0_0
+return ToastViewContainer

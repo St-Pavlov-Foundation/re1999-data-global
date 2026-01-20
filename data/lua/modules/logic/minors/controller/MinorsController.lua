@@ -1,47 +1,52 @@
-﻿module("modules.logic.minors.controller.MinorsController", package.seeall)
+﻿-- chunkname: @modules/logic/minors/controller/MinorsController.lua
 
-local var_0_0 = class("MinorsController", BaseController)
+module("modules.logic.minors.controller.MinorsController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local MinorsController = class("MinorsController", BaseController)
+
+function MinorsController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function MinorsController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function MinorsController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function MinorsController:addConstEvents()
 	if SettingsModel.instance:isJpRegion() then
-		PlayerController.instance:registerCallback(PlayerEvent.PlayerbassinfoChange, arg_4_0._onPlayerbassinfoChange, arg_4_0)
+		PlayerController.instance:registerCallback(PlayerEvent.PlayerbassinfoChange, self._onPlayerbassinfoChange, self)
 	end
 end
 
-function var_0_0.confirmDateOfBirthVerify(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = string.format("%s-%s-%s", arg_5_1, arg_5_2, arg_5_3)
+function MinorsController:confirmDateOfBirthVerify(year, month, day)
+	local birthday = string.format("%s-%s-%s", year, month, day)
 
-	PlayerRpc.instance:sendSetBirthdayRequest(var_5_0)
+	PlayerRpc.instance:sendSetBirthdayRequest(birthday)
 end
 
-function var_0_0._onPlayerbassinfoChange(arg_6_0)
-	if arg_6_0._isPayLimit ~= arg_6_0:isPayLimit() then
-		arg_6_0:dispatchEvent(MinorsEvent.PayLimitFlagUpdate)
+function MinorsController:_onPlayerbassinfoChange()
+	local last = self._isPayLimit
+	local now = self:isPayLimit()
+
+	if last ~= now then
+		self:dispatchEvent(MinorsEvent.PayLimitFlagUpdate)
 	end
 end
 
-function var_0_0.isPayLimit(arg_7_0)
+function MinorsController:isPayLimit()
 	if SettingsModel.instance:isJpRegion() then
-		arg_7_0._isPayLimit = string.nilorempty(PlayerModel.instance:getPlayerBirthday())
+		self._isPayLimit = string.nilorempty(PlayerModel.instance:getPlayerBirthday())
 
-		return arg_7_0._isPayLimit
+		return self._isPayLimit
 	end
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+MinorsController.instance = MinorsController.New()
 
-return var_0_0
+return MinorsController

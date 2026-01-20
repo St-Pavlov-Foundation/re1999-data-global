@@ -1,323 +1,338 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/skill/VersionActivity1_6SkillView.lua
 
-local var_0_0 = "#E4C599"
-local var_0_1 = class("VersionActivity1_6SkillView", BaseView)
-local var_0_2 = 4
+module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillView", package.seeall)
 
-function var_0_1.onInitView(arg_1_0)
-	arg_1_0._goItem1 = gohelper.findChild(arg_1_0.viewGO, "#go_Item1")
-	arg_1_0._goItem2 = gohelper.findChild(arg_1_0.viewGO, "#go_Item2")
-	arg_1_0._goItem3 = gohelper.findChild(arg_1_0.viewGO, "#go_Item3")
-	arg_1_0._goItem4 = gohelper.findChild(arg_1_0.viewGO, "#go_Item4")
-	arg_1_0._goDetailPanel = gohelper.findChild(arg_1_0.viewGO, "SkillPanel")
-	arg_1_0._detailAnimator = arg_1_0._goDetailPanel:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goSkillEffectDesc = gohelper.findChild(arg_1_0.viewGO, "SkillPanel/Skill/Scroll View/Viewport/Content/#go_SkillDescr")
-	arg_1_0._goSkillAttrDesc = gohelper.findChild(arg_1_0.viewGO, "SkillPanel/Value/Layout/#go_Attri")
-	arg_1_0._goSkillEffectEmpty = gohelper.findChild(arg_1_0.viewGO, "SkillPanel/Skill/#go_Empty")
-	arg_1_0._goSkillAttrEmpty = gohelper.findChild(arg_1_0.viewGO, "SkillPanel/Value/#go_Empty")
-	arg_1_0._goBuffItemTemplate = gohelper.findChild(arg_1_0.viewGO, "v1a6_talent_lvupitem")
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Reset")
-	arg_1_0._btnPreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Wish")
-	arg_1_0._btnClosePreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "SkillPanel/#btn_close")
-	arg_1_0._btnSkillPointArea = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "SkillPoint/#btn_Info/Click")
-	arg_1_0._btnSkillPointTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "SkillPoint/#btn_Info")
-	arg_1_0._btnTipsClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "SkillPoint/#btn_Info/image_TipsBG/#btn_Tips_Close")
-	arg_1_0._goSkilPointTips = gohelper.findChild(arg_1_0.viewGO, "SkillPoint/#btn_Info/image_TipsBG")
-	arg_1_0._txtSkillPointNum = gohelper.findChildText(arg_1_0.viewGO, "SkillPoint/#btn_Info/image_TipsBG/txt_Tips_Num")
-	arg_1_0._txtRemainSkillPointNum = gohelper.findChildText(arg_1_0.viewGO, "SkillPoint/txt_Skill_Num")
-	arg_1_0._imageSkillPoint = gohelper.findChildImage(arg_1_0.viewGO, "SkillPoint/#simage_Prop")
-	arg_1_0._goSkillPointEffect = gohelper.findChild(arg_1_0.viewGO, "SkillPoint/eff")
+local remainSkillPointNumColor = "#E4C599"
+local VersionActivity1_6SkillView = class("VersionActivity1_6SkillView", BaseView)
+local SkillItemNum = 4
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_6SkillView:onInitView()
+	self._goItem1 = gohelper.findChild(self.viewGO, "#go_Item1")
+	self._goItem2 = gohelper.findChild(self.viewGO, "#go_Item2")
+	self._goItem3 = gohelper.findChild(self.viewGO, "#go_Item3")
+	self._goItem4 = gohelper.findChild(self.viewGO, "#go_Item4")
+	self._goDetailPanel = gohelper.findChild(self.viewGO, "SkillPanel")
+	self._detailAnimator = self._goDetailPanel:GetComponent(typeof(UnityEngine.Animator))
+	self._goSkillEffectDesc = gohelper.findChild(self.viewGO, "SkillPanel/Skill/Scroll View/Viewport/Content/#go_SkillDescr")
+	self._goSkillAttrDesc = gohelper.findChild(self.viewGO, "SkillPanel/Value/Layout/#go_Attri")
+	self._goSkillEffectEmpty = gohelper.findChild(self.viewGO, "SkillPanel/Skill/#go_Empty")
+	self._goSkillAttrEmpty = gohelper.findChild(self.viewGO, "SkillPanel/Value/#go_Empty")
+	self._goBuffItemTemplate = gohelper.findChild(self.viewGO, "v1a6_talent_lvupitem")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Reset")
+	self._btnPreview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Wish")
+	self._btnClosePreview = gohelper.findChildButtonWithAudio(self.viewGO, "SkillPanel/#btn_close")
+	self._btnSkillPointArea = gohelper.findChildButtonWithAudio(self.viewGO, "SkillPoint/#btn_Info/Click")
+	self._btnSkillPointTips = gohelper.findChildButtonWithAudio(self.viewGO, "SkillPoint/#btn_Info")
+	self._btnTipsClose = gohelper.findChildButtonWithAudio(self.viewGO, "SkillPoint/#btn_Info/image_TipsBG/#btn_Tips_Close")
+	self._goSkilPointTips = gohelper.findChild(self.viewGO, "SkillPoint/#btn_Info/image_TipsBG")
+	self._txtSkillPointNum = gohelper.findChildText(self.viewGO, "SkillPoint/#btn_Info/image_TipsBG/txt_Tips_Num")
+	self._txtRemainSkillPointNum = gohelper.findChildText(self.viewGO, "SkillPoint/txt_Skill_Num")
+	self._imageSkillPoint = gohelper.findChildImage(self.viewGO, "SkillPoint/#simage_Prop")
+	self._goSkillPointEffect = gohelper.findChild(self.viewGO, "SkillPoint/eff")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_1.addEvents(arg_2_0)
-	arg_2_0._btnPreview:AddClickListener(arg_2_0._btnPreviewOnClick, arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0._btnResetOnClick, arg_2_0)
-	arg_2_0._btnClosePreview:AddClickListener(arg_2_0._btnPreviewCloseOnClick, arg_2_0)
-	arg_2_0._btnSkillPointArea:AddClickListener(arg_2_0._btnSkillPointOnClick, arg_2_0)
-	arg_2_0._btnSkillPointTips:AddClickListener(arg_2_0._btnSkillPointTipsOnClick, arg_2_0)
-	arg_2_0._btnTipsClose:AddClickListener(arg_2_0._btnSkillPointTipsCloseOnClick, arg_2_0)
+function VersionActivity1_6SkillView:addEvents()
+	self._btnPreview:AddClickListener(self._btnPreviewOnClick, self)
+	self._btnReset:AddClickListener(self._btnResetOnClick, self)
+	self._btnClosePreview:AddClickListener(self._btnPreviewCloseOnClick, self)
+	self._btnSkillPointArea:AddClickListener(self._btnSkillPointOnClick, self)
+	self._btnSkillPointTips:AddClickListener(self._btnSkillPointTipsOnClick, self)
+	self._btnTipsClose:AddClickListener(self._btnSkillPointTipsCloseOnClick, self)
 end
 
-function var_0_1.removeEvents(arg_3_0)
-	arg_3_0._btnPreview:RemoveClickListener()
-	arg_3_0._btnReset:RemoveClickListener()
-	arg_3_0._btnClosePreview:RemoveClickListener()
-	arg_3_0._btnSkillPointTips:RemoveClickListener()
-	arg_3_0._btnSkillPointArea:RemoveClickListener()
-	arg_3_0._btnTipsClose:RemoveClickListener()
+function VersionActivity1_6SkillView:removeEvents()
+	self._btnPreview:RemoveClickListener()
+	self._btnReset:RemoveClickListener()
+	self._btnClosePreview:RemoveClickListener()
+	self._btnSkillPointTips:RemoveClickListener()
+	self._btnSkillPointArea:RemoveClickListener()
+	self._btnTipsClose:RemoveClickListener()
 end
 
-function var_0_1._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goBuffItemTemplate, false)
-	gohelper.setActive(arg_4_0._goDetailPanel, false)
-	gohelper.setActive(arg_4_0._goSkilPointTips, false)
-	gohelper.setActive(arg_4_0._goSkillEffectDesc, false)
-	gohelper.setActive(arg_4_0._goSkillAttrDesc, false)
+function VersionActivity1_6SkillView:_editableInitView()
+	gohelper.setActive(self._goBuffItemTemplate, false)
+	gohelper.setActive(self._goDetailPanel, false)
+	gohelper.setActive(self._goSkilPointTips, false)
+	gohelper.setActive(self._goSkillEffectDesc, false)
+	gohelper.setActive(self._goSkillAttrDesc, false)
 
-	arg_4_0._buffItemList = {}
+	self._buffItemList = {}
 end
 
-function var_0_1.onUpdateParam(arg_5_0)
+function VersionActivity1_6SkillView:onUpdateParam()
 	return
 end
 
-function var_0_1.onOpen(arg_6_0)
-	arg_6_0:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillReset, arg_6_0._onSkillReset, arg_6_0)
-	arg_6_0:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvDown, arg_6_0._onLvChange, arg_6_0)
-	arg_6_0:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvUp, arg_6_0._onLvChange, arg_6_0)
-	arg_6_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_6_0._onCurrencyChange, arg_6_0)
-	arg_6_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_6_0.closeThis, arg_6_0)
+function VersionActivity1_6SkillView:onOpen()
+	self:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillReset, self._onSkillReset, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvDown, self._onLvChange, self)
+	self:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvUp, self._onLvChange, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(JumpController.instance, JumpEvent.BeforeJump, self.closeThis, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterSkillView)
 end
 
-function var_0_1.onOpenFinish(arg_7_0)
-	arg_7_0:_initSkillItem()
-	arg_7_0:_refreshSkillPoint()
-	arg_7_0:_refreshSkillEffects()
-	arg_7_0:_refreshSkillAttrs()
+function VersionActivity1_6SkillView:onOpenFinish()
+	self:_initSkillItem()
+	self:_refreshSkillPoint()
+	self:_refreshSkillEffects()
+	self:_refreshSkillAttrs()
 end
 
-function var_0_1._initSkillItem(arg_8_0)
-	for iter_8_0 = 1, var_0_2 do
-		local var_8_0 = VersionActivity1_6SkillItem.New()
-		local var_8_1 = gohelper.cloneInPlace(arg_8_0._goBuffItemTemplate)
+function VersionActivity1_6SkillView:_initSkillItem()
+	for i = 1, SkillItemNum do
+		local buffItem = VersionActivity1_6SkillItem.New()
+		local buffItemGo = gohelper.cloneInPlace(self._goBuffItemTemplate)
 
-		gohelper.setActive(var_8_1, true)
-		var_8_1.transform:SetParent(arg_8_0["_goItem" .. iter_8_0].transform)
-		transformhelper.setLocalPos(var_8_1.transform, 0, 0, 0)
-		var_8_0:init(var_8_1, iter_8_0)
+		gohelper.setActive(buffItemGo, true)
+		buffItemGo.transform:SetParent(self["_goItem" .. i].transform)
+		transformhelper.setLocalPos(buffItemGo.transform, 0, 0, 0)
+		buffItem:init(buffItemGo, i)
 
-		arg_8_0._buffItemList[iter_8_0] = var_8_0
+		self._buffItemList[i] = buffItem
 	end
 end
 
-function var_0_1._refreshSkillItems(arg_9_0)
-	for iter_9_0 = 1, var_0_2 do
-		arg_9_0._buffItemList[iter_9_0]:refreshItemUI()
+function VersionActivity1_6SkillView:_refreshSkillItems()
+	for i = 1, SkillItemNum do
+		self._buffItemList[i]:refreshItemUI()
 	end
 end
 
-function var_0_1._refreshSkillPoint(arg_10_0)
-	local var_10_0 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.MaxSkillPointNum)
-	local var_10_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
-	local var_10_2 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
+function VersionActivity1_6SkillView:_refreshSkillPoint()
+	local maxSkillPointNum = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.MaxSkillPointNum)
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
+	local currencyCfg = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
 
-	if var_10_2 then
-		local var_10_3 = string.format("%s_1", var_10_2 and var_10_2.icon)
+	if currencyCfg then
+		local currencyname = string.format("%s_1", currencyCfg and currencyCfg.icon)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_10_0._imageSkillPoint, var_10_3)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageSkillPoint, currencyname)
 	end
 
-	local var_10_4 = var_10_1 and var_10_1.quantity or 0
+	local curSkillPointNum = currencyMO and currencyMO.quantity or 0
 
 	if LangSettings.instance:isEn() then
-		arg_10_0._txtRemainSkillPointNum.text = " " .. var_10_4
+		self._txtRemainSkillPointNum.text = " " .. curSkillPointNum
 	else
-		arg_10_0._txtRemainSkillPointNum.text = var_10_4
+		self._txtRemainSkillPointNum.text = curSkillPointNum
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtRemainSkillPointNum, var_0_0)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtRemainSkillPointNum, remainSkillPointNumColor)
 
-	local var_10_5 = VersionActivity1_6DungeonSkillModel.instance:getTotalGotSkillPointNum()
-	local var_10_6 = string.format("<color=#EB5F34>%s</color>/%s", var_10_5 or 0, var_10_0)
+	local totalGotSkillPointNum = VersionActivity1_6DungeonSkillModel.instance:getTotalGotSkillPointNum()
+	local totalGotSkillPointStr = string.format("<color=#EB5F34>%s</color>/%s", totalGotSkillPointNum or 0, maxSkillPointNum)
 
 	if LangSettings.instance:isEn() then
-		arg_10_0._txtSkillPointNum.text = " " .. var_10_6
+		self._txtSkillPointNum.text = " " .. totalGotSkillPointStr
 	else
-		arg_10_0._txtSkillPointNum.text = var_10_6
+		self._txtSkillPointNum.text = totalGotSkillPointStr
 	end
 end
 
-function var_0_1.refreshSkillDetailPanel(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._goDetailPanel, true)
-	gohelper.setActive(arg_11_0._btnClosePreview.gameObject, arg_11_1)
-	arg_11_0._detailAnimator:Play(arg_11_1 and UIAnimationName.Open or UIAnimationName.Close, 0, 0)
+function VersionActivity1_6SkillView:refreshSkillDetailPanel(show)
+	gohelper.setActive(self._goDetailPanel, true)
+	gohelper.setActive(self._btnClosePreview.gameObject, show)
+	self._detailAnimator:Play(show and UIAnimationName.Open or UIAnimationName.Close, 0, 0)
 end
 
-function var_0_1._refreshSkillEffects(arg_12_0)
-	local var_12_0 = {}
+function VersionActivity1_6SkillView:_refreshSkillEffects()
+	local skillEffects = {}
 
-	for iter_12_0 = 1, var_0_2 do
-		local var_12_1 = iter_12_0
-		local var_12_2 = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(var_12_1)
-		local var_12_3 = var_12_2 and var_12_2:getLevel() or 0
+	for i = 1, SkillItemNum do
+		local skillType = i
+		local skillMo = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(skillType)
+		local skillLv = skillMo and skillMo:getLevel() or 0
 
-		for iter_12_1 = 1, var_12_3 do
-			if VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[iter_12_1] then
-				local var_12_4 = Activity148Config.instance:getAct148CfgByTypeLv(var_12_1, iter_12_1)
+		for j = 1, skillLv do
+			local isKeyPoint = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[j]
 
-				var_12_0[#var_12_0 + 1] = var_12_4
+			if isKeyPoint then
+				local skillCfg = Activity148Config.instance:getAct148CfgByTypeLv(skillType, j)
+
+				skillEffects[#skillEffects + 1] = skillCfg
 			end
 		end
 	end
 
-	arg_12_0._skillEffectItemList = {}
+	self._skillEffectItemList = {}
 
-	for iter_12_2 = 1, #var_12_0 do
-		local var_12_5 = var_12_0[iter_12_2]
-		local var_12_6 = Activity148Config.instance:getAct148SkillTypeCfg(var_12_5.type)
-		local var_12_7 = gohelper.cloneInPlace(arg_12_0._goSkillEffectDesc)
+	for i = 1, #skillEffects do
+		local skillCfg = skillEffects[i]
+		local skillTypeCfg = Activity148Config.instance:getAct148SkillTypeCfg(skillCfg.type)
+		local skillEffectGo = gohelper.cloneInPlace(self._goSkillEffectDesc)
 
-		gohelper.setActive(var_12_7, true)
+		gohelper.setActive(skillEffectGo, true)
 
-		arg_12_0._skillEffectItemList[iter_12_2] = arg_12_0:getUserDataTb_()
-		arg_12_0._skillEffectItemList[iter_12_2].go = var_12_7
+		self._skillEffectItemList[i] = self:getUserDataTb_()
+		self._skillEffectItemList[i].go = skillEffectGo
 
-		local var_12_8 = var_12_7:GetComponent(gohelper.Type_TextMesh)
-		local var_12_9 = FightConfig.instance:getSkillEffectCO(var_12_5.skillId)
-		local var_12_10 = var_12_9 and FightConfig.instance:getSkillEffectDesc(nil, var_12_9)
-		local var_12_11 = GameUtil.getSubPlaceholderLuaLang(luaLang("versionactivity1_6skillview_skilleff_overseas"), {
-			var_12_6.skillName,
-			var_12_5.level
+		local textEffect = skillEffectGo:GetComponent(gohelper.Type_TextMesh)
+		local skillEffectCfg = FightConfig.instance:getSkillEffectCO(skillCfg.skillId)
+		local effectDesc = skillEffectCfg and FightConfig.instance:getSkillEffectDesc(nil, skillEffectCfg)
+		local effNameStr = GameUtil.getSubPlaceholderLuaLang(luaLang("versionactivity1_6skillview_skilleff_overseas"), {
+			skillTypeCfg.skillName,
+			skillCfg.level
 		})
+		local effectNameLvStr = gohelper.getRichColorText(effNameStr, "#E99B56")
+		local effectStr = effectNameLvStr .. effectDesc
 
-		var_12_8.text = gohelper.getRichColorText(var_12_11, "#E99B56") .. var_12_10
+		textEffect.text = effectStr
 	end
 
-	gohelper.setActive(arg_12_0._goSkillEffectEmpty, #var_12_0 == 0)
+	gohelper.setActive(self._goSkillEffectEmpty, #skillEffects == 0)
 end
 
-function var_0_1._refreshSkillAttrs(arg_13_0)
-	local var_13_0 = {}
+function VersionActivity1_6SkillView:_refreshSkillAttrs()
+	local skillAttrs = {}
 
-	for iter_13_0 = 1, var_0_2 do
-		local var_13_1 = iter_13_0
-		local var_13_2 = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(var_13_1)
-		local var_13_3 = var_13_2 and var_13_2:getLevel() or 0
+	for i = 1, SkillItemNum do
+		local skillType = i
+		local skillMo = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(skillType)
+		local skillLv = skillMo and skillMo:getLevel() or 0
 
-		for iter_13_1 = 1, var_13_3 do
-			if not VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[iter_13_1] then
-				local var_13_4 = Activity148Config.instance:getAct148CfgByTypeLv(var_13_1, iter_13_1).attrs
-				local var_13_5 = string.splitToNumber(var_13_4, "#")
-				local var_13_6 = var_13_5[1]
-				local var_13_7 = var_13_5[2]
+		for j = 1, skillLv do
+			local isKeyPoint = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[j]
 
-				if not var_13_0[var_13_6] then
-					var_13_0[var_13_6] = 0
+			if not isKeyPoint then
+				local skillCfg = Activity148Config.instance:getAct148CfgByTypeLv(skillType, j)
+				local attrStr = skillCfg.attrs
+				local attributeArr = string.splitToNumber(attrStr, "#")
+				local attrId = attributeArr[1]
+				local attrValue = attributeArr[2]
+
+				if not skillAttrs[attrId] then
+					skillAttrs[attrId] = 0
 				end
 
-				var_13_0[var_13_6] = var_13_0[var_13_6] + var_13_7
+				skillAttrs[attrId] = skillAttrs[attrId] + attrValue
 			end
 		end
 	end
 
-	arg_13_0._skillAttrItemList = {}
+	self._skillAttrItemList = {}
 
-	local var_13_8 = 0
+	local attrCount = 0
 
-	for iter_13_2, iter_13_3 in pairs(var_13_0) do
-		local var_13_9 = HeroConfig.instance:getHeroAttributeCO(iter_13_2)
-		local var_13_10 = gohelper.cloneInPlace(arg_13_0._goSkillAttrDesc)
+	for attrId, value in pairs(skillAttrs) do
+		local attrCfg = HeroConfig.instance:getHeroAttributeCO(attrId)
+		local skillAttrGo = gohelper.cloneInPlace(self._goSkillAttrDesc)
 
-		gohelper.setActive(var_13_10, true)
+		gohelper.setActive(skillAttrGo, true)
 
-		arg_13_0._skillAttrItemList[iter_13_2] = arg_13_0:getUserDataTb_()
-		arg_13_0._skillAttrItemList[iter_13_2].go = var_13_10
-		var_13_10:GetComponent(gohelper.Type_TextMesh).text = var_13_9.name
-		iter_13_3 = tonumber(string.format("%.3f", iter_13_3 / 10)) .. "%"
-		gohelper.findChildText(var_13_10, "#go_AttriNum").text = "+" .. iter_13_3
+		self._skillAttrItemList[attrId] = self:getUserDataTb_()
+		self._skillAttrItemList[attrId].go = skillAttrGo
 
-		local var_13_11 = gohelper.findChildImage(var_13_10, "#image_Icon")
+		local txtAttrName = skillAttrGo:GetComponent(gohelper.Type_TextMesh)
 
-		UISpriteSetMgr.instance:setCommonSprite(var_13_11, "icon_att_" .. var_13_9.id, true)
+		txtAttrName.text = attrCfg.name
+		value = tonumber(string.format("%.3f", value / 10)) .. "%"
 
-		var_13_8 = var_13_8 + 1
+		local txtAttrValue = gohelper.findChildText(skillAttrGo, "#go_AttriNum")
+
+		txtAttrValue.text = "+" .. value
+
+		local image = gohelper.findChildImage(skillAttrGo, "#image_Icon")
+
+		UISpriteSetMgr.instance:setCommonSprite(image, "icon_att_" .. attrCfg.id, true)
+
+		attrCount = attrCount + 1
 	end
 
-	gohelper.setActive(arg_13_0._goSkillAttrEmpty, var_13_8 == 0)
+	gohelper.setActive(self._goSkillAttrEmpty, attrCount == 0)
 end
 
-function var_0_1._clearSkillDetailItems(arg_14_0)
-	if arg_14_0._skillEffectItemList then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._skillEffectItemList) do
-			gohelper.destroy(iter_14_1.go)
+function VersionActivity1_6SkillView:_clearSkillDetailItems()
+	if self._skillEffectItemList then
+		for k, item in pairs(self._skillEffectItemList) do
+			gohelper.destroy(item.go)
 
-			iter_14_1.go = nil
+			item.go = nil
 		end
 	end
 
-	arg_14_0._skillEffectItemList = nil
+	self._skillEffectItemList = nil
 
-	if arg_14_0._skillAttrItemList then
-		for iter_14_2, iter_14_3 in pairs(arg_14_0._skillAttrItemList) do
-			gohelper.destroy(iter_14_3.go)
+	if self._skillAttrItemList then
+		for k, item in pairs(self._skillAttrItemList) do
+			gohelper.destroy(item.go)
 
-			iter_14_3.go = nil
+			item.go = nil
 		end
 	end
 
-	arg_14_0._skillAttrItemList = nil
+	self._skillAttrItemList = nil
 end
 
-function var_0_1.refreshSkillPointTips(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0._goSkilPointTips, arg_15_1)
+function VersionActivity1_6SkillView:refreshSkillPointTips(show)
+	gohelper.setActive(self._goSkilPointTips, show)
 end
 
-function var_0_1.onClose(arg_16_0)
+function VersionActivity1_6SkillView:onClose()
 	return
 end
 
-function var_0_1.onDestroyView(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._buffItemList) do
-		iter_17_1:onDestroyItem()
+function VersionActivity1_6SkillView:onDestroyView()
+	for _, item in ipairs(self._buffItemList) do
+		item:onDestroyItem()
 	end
 
-	arg_17_0._buffItemList = nil
+	self._buffItemList = nil
 end
 
-function var_0_1._onCurrencyChange(arg_18_0)
-	arg_18_0:_refreshSkillPoint()
+function VersionActivity1_6SkillView:_onCurrencyChange()
+	self:_refreshSkillPoint()
 end
 
-function var_0_1._onSkillReset(arg_19_0)
-	for iter_19_0 = 1, var_0_2 do
-		arg_19_0._buffItemList[iter_19_0]:refreshResetEffect()
+function VersionActivity1_6SkillView:_onSkillReset()
+	for i = 1, SkillItemNum do
+		self._buffItemList[i]:refreshResetEffect()
 	end
 
-	gohelper.setActive(arg_19_0._goSkillPointEffect, false)
-	gohelper.setActive(arg_19_0._goSkillPointEffect, true)
+	gohelper.setActive(self._goSkillPointEffect, false)
+	gohelper.setActive(self._goSkillPointEffect, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonSkillViewReset)
-	arg_19_0:_onLvChange()
+	self:_onLvChange()
 end
 
-function var_0_1._onLvChange(arg_20_0)
-	arg_20_0:_refreshSkillItems()
-	arg_20_0:_refreshSkillPoint()
-	arg_20_0:_clearSkillDetailItems()
-	arg_20_0:_refreshSkillEffects()
-	arg_20_0:_refreshSkillAttrs()
+function VersionActivity1_6SkillView:_onLvChange()
+	self:_refreshSkillItems()
+	self:_refreshSkillPoint()
+	self:_clearSkillDetailItems()
+	self:_refreshSkillEffects()
+	self:_refreshSkillAttrs()
 end
 
-function var_0_1._btnPreviewOnClick(arg_21_0)
-	arg_21_0:refreshSkillDetailPanel(true)
+function VersionActivity1_6SkillView:_btnPreviewOnClick()
+	self:refreshSkillDetailPanel(true)
 end
 
-function var_0_1._btnPreviewCloseOnClick(arg_22_0)
-	arg_22_0:refreshSkillDetailPanel(false)
+function VersionActivity1_6SkillView:_btnPreviewCloseOnClick()
+	self:refreshSkillDetailPanel(false)
 end
 
-function var_0_1._btnSkillPointOnClick(arg_23_0)
+function VersionActivity1_6SkillView:_btnSkillPointOnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.V1a6DungeonSkill, false, nil, false)
 end
 
-function var_0_1._btnSkillPointTipsOnClick(arg_24_0)
-	arg_24_0:refreshSkillPointTips(true)
+function VersionActivity1_6SkillView:_btnSkillPointTipsOnClick()
+	self:refreshSkillPointTips(true)
 end
 
-function var_0_1._btnSkillPointTipsCloseOnClick(arg_25_0)
-	arg_25_0:refreshSkillPointTips(false)
+function VersionActivity1_6SkillView:_btnSkillPointTipsCloseOnClick()
+	self:refreshSkillPointTips(false)
 end
 
-function var_0_1._btnResetOnClick(arg_26_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6ResetSkill, MsgBoxEnum.BoxType.Yes_No, arg_26_0.btnResetFunc, nil, nil, arg_26_0)
+function VersionActivity1_6SkillView:_btnResetOnClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6ResetSkill, MsgBoxEnum.BoxType.Yes_No, self.btnResetFunc, nil, nil, self)
 end
 
-function var_0_1.btnResetFunc(arg_27_0)
+function VersionActivity1_6SkillView:btnResetFunc()
 	VersionActivity1_6DungeonRpc.instance:sendAct148ResetRequest()
 end
 
-return var_0_1
+return VersionActivity1_6SkillView

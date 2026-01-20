@@ -1,154 +1,161 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonCompMgr", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonCompMgr.lua
 
-local var_0_0 = class("Act183DungeonCompMgr", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonCompMgr", package.seeall)
+
+local Act183DungeonCompMgr = class("Act183DungeonCompMgr", LuaCompBase)
+local StatusEnum = {
 	Running = 3,
 	Idle = 2,
 	Init = 1
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+function Act183DungeonCompMgr:init(go)
+	self:__onInit()
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.compInstMap = {}
-	arg_1_0.compInstList = {}
-	arg_1_0.layoutCompInstMap = {}
-	arg_1_0.layoutCompInstList = {}
-	arg_1_0._scrolldetail = gohelper.findChildScrollRect(arg_1_0.go, "#scroll_detail")
-	arg_1_0._goScrollContent = gohelper.findChild(arg_1_0.go, "#scroll_detail/Viewport/Content")
-	arg_1_0._status = var_0_1.Init
+	self.go = go
+	self.compInstMap = {}
+	self.compInstList = {}
+	self.layoutCompInstMap = {}
+	self.layoutCompInstList = {}
+	self._scrolldetail = gohelper.findChildScrollRect(self.go, "#scroll_detail")
+	self._goScrollContent = gohelper.findChild(self.go, "#scroll_detail/Viewport/Content")
+	self._status = StatusEnum.Init
 end
 
-function var_0_0.addComp(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_0.compInstMap[arg_2_2] then
-		logError(string.format("重复挂载 clsDefine = %s", arg_2_2))
+function Act183DungeonCompMgr:addComp(go, clsDefine, useLayout)
+	if self.compInstMap[clsDefine] then
+		logError(string.format("重复挂载 clsDefine = %s", clsDefine))
 
 		return
 	end
 
-	local var_2_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_1, arg_2_2)
+	local clsInst = MonoHelper.addNoUpdateLuaComOnceToGo(go, clsDefine)
 
-	var_2_0.mgr = arg_2_0
-	arg_2_0.compInstMap[arg_2_2] = var_2_0
+	clsInst.mgr = self
+	self.compInstMap[clsDefine] = clsInst
 
-	table.insert(arg_2_0.compInstList, var_2_0)
+	table.insert(self.compInstList, clsInst)
 
-	if arg_2_3 then
-		arg_2_0.layoutCompInstMap[arg_2_2] = var_2_0
+	if useLayout then
+		self.layoutCompInstMap[clsDefine] = clsInst
 
-		table.insert(arg_2_0.layoutCompInstList, var_2_0)
+		table.insert(self.layoutCompInstList, clsInst)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0._status = var_0_1.Running
+function Act183DungeonCompMgr:onUpdateMO(episodeMo)
+	self._status = StatusEnum.Running
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.compInstList) do
-		iter_3_1:onUpdateMO(arg_3_1)
+	for _, detailComp in ipairs(self.compInstList) do
+		detailComp:onUpdateMO(episodeMo)
 	end
 
-	arg_3_0._status = var_0_1.Idle
+	self._status = StatusEnum.Idle
 
-	arg_3_0:_reallyFocus()
+	self:_reallyFocus()
 end
 
-function var_0_0.getComp(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.compInstMap[arg_4_1]
+function Act183DungeonCompMgr:getComp(clsDefine)
+	local compInst = self.compInstMap[clsDefine]
 
-	if not var_4_0 then
-		logError("组件不存在" .. arg_4_1.__cname)
+	if not compInst then
+		logError("组件不存在" .. clsDefine.__cname)
 	end
 
-	return var_4_0
+	return compInst
 end
 
-function var_0_0.getFuncValue(arg_5_0, arg_5_1, arg_5_2, ...)
-	local var_5_0 = arg_5_0:getComp(arg_5_1)
+function Act183DungeonCompMgr:getFuncValue(clsDefine, funcName, ...)
+	local compInst = self:getComp(clsDefine)
 
-	if var_5_0 then
-		local var_5_1 = var_5_0[arg_5_2]
+	if compInst then
+		local func = compInst[funcName]
 
-		if not var_5_1 then
-			logError(string.format("方法不存在 clsDefine = %s, funcName = %s", arg_5_1.__cname, arg_5_2))
+		if not func then
+			logError(string.format("方法不存在 clsDefine = %s, funcName = %s", clsDefine.__cname, funcName))
 
 			return
 		end
 
-		return var_5_1(var_5_0, ...)
+		return func(compInst, ...)
 	end
 end
 
-function var_0_0.getFieldValue(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0:getComp(arg_6_1)
+function Act183DungeonCompMgr:getFieldValue(clsDefine, fieldName)
+	local compInst = self:getComp(clsDefine)
+	local fieldVal = compInst and compInst[fieldName]
 
-	return var_6_0 and var_6_0[arg_6_2]
+	return fieldVal
 end
 
-function var_0_0.isCompVisible(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getComp(arg_7_1)
+function Act183DungeonCompMgr:isCompVisible(clsDefine)
+	local compInst = self:getComp(clsDefine)
 
-	return var_7_0 and var_7_0:checkIsVisible()
+	return compInst and compInst:checkIsVisible()
 end
 
-function var_0_0.focus(arg_8_0, arg_8_1, ...)
-	local var_8_0 = arg_8_0.layoutCompInstMap[arg_8_1]
+function Act183DungeonCompMgr:focus(targetCompCls, ...)
+	local focusTargetInst = self.layoutCompInstMap[targetCompCls]
 
-	if not var_8_0 then
-		local var_8_1 = arg_8_1 and arg_8_1.__cname
+	if not focusTargetInst then
+		local clsDefName = targetCompCls and targetCompCls.__cname
 
-		logError(string.format("定位失败, 定位目标组件不存在!!! cls = %s", var_8_1))
+		logError(string.format("定位失败, 定位目标组件不存在!!! cls = %s", clsDefName))
 
 		return
 	end
 
-	arg_8_0._focusTargetInst = var_8_0
-	arg_8_0._focusParams = {
+	self._focusTargetInst = focusTargetInst
+	self._focusParams = {
 		...
 	}
-	arg_8_0._waitFocus = true
+	self._waitFocus = true
 
-	if arg_8_0._status ~= var_0_1.Idle then
+	if self._status ~= StatusEnum.Idle then
 		return
 	end
 
-	arg_8_0:_reallyFocus()
+	self:_reallyFocus()
 end
 
-function var_0_0._reallyFocus(arg_9_0)
-	if not arg_9_0._waitFocus then
+function Act183DungeonCompMgr:_reallyFocus()
+	if not self._waitFocus then
 		return
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_9_0._goScrollContent.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._goScrollContent.transform)
 
-	local var_9_0 = 0
-	local var_9_1 = false
+	local scrollPixelY = 0
+	local find = false
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.layoutCompInstList) do
-		if iter_9_1 == arg_9_0._focusTargetInst then
-			var_9_0 = var_9_0 + (iter_9_1:focus(unpack(arg_9_0._focusParams)) or 0)
-			var_9_1 = true
+	for _, compInst in ipairs(self.layoutCompInstList) do
+		if compInst == self._focusTargetInst then
+			local offset = compInst:focus(unpack(self._focusParams)) or 0
+
+			scrollPixelY = scrollPixelY + offset
+			find = true
 
 			break
 		end
 
-		var_9_0 = var_9_0 + (iter_9_1:getHeight() or 0)
+		local height = compInst:getHeight() or 0
+
+		scrollPixelY = scrollPixelY + height
 	end
 
-	var_9_0 = var_9_1 and var_9_0 or 0
+	scrollPixelY = find and scrollPixelY or 0
 
-	local var_9_2 = recthelper.getHeight(arg_9_0._goScrollContent.transform)
-	local var_9_3 = recthelper.getHeight(arg_9_0._scrolldetail.transform)
+	local scrollContentHeight = recthelper.getHeight(self._goScrollContent.transform)
+	local scrollHeight = recthelper.getHeight(self._scrolldetail.transform)
 
-	arg_9_0._scrolldetail.verticalNormalizedPosition = 1 - math.abs(var_9_0) / (var_9_2 - var_9_3)
-	arg_9_0._waitFocus = false
-	arg_9_0._focusTargetInst = nil
-	arg_9_0._focusParams = nil
+	self._scrolldetail.verticalNormalizedPosition = 1 - math.abs(scrollPixelY) / (scrollContentHeight - scrollHeight)
+	self._waitFocus = false
+	self._focusTargetInst = nil
+	self._focusParams = nil
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	arg_10_0:__onDispose()
+function Act183DungeonCompMgr:onDestroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return Act183DungeonCompMgr

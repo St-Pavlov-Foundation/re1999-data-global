@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepInteractFinish", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepInteractFinish.lua
 
-local var_0_0 = class("Va3ChessStepInteractFinish", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepInteractFinish", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.id
-	local var_1_1 = arg_1_0.originData.finishedId
+local Va3ChessStepInteractFinish = class("Va3ChessStepInteractFinish", Va3ChessStepBase)
 
-	Va3ChessGameModel.instance:addFinishInteract(var_1_0)
+function Va3ChessStepInteractFinish:start()
+	local objId = self.originData.id
+	local finishedId = self.originData.finishedId
 
-	if var_1_1 then
-		Va3ChessGameModel.instance:addAllMapFinishInteract(var_1_1)
+	Va3ChessGameModel.instance:addFinishInteract(objId)
+
+	if finishedId then
+		Va3ChessGameModel.instance:addAllMapFinishInteract(finishedId)
 	end
 
-	TaskDispatcher.cancelTask(arg_1_0._onDelayFinish, arg_1_0)
+	TaskDispatcher.cancelTask(self._onDelayFinish, self)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.CurrentConditionUpdate)
-	TaskDispatcher.runDelay(arg_1_0._onDelayFinish, arg_1_0, 0.2)
+	TaskDispatcher.runDelay(self._onDelayFinish, self, 0.2)
 end
 
-function var_0_0._onDelayFinish(arg_2_0)
-	arg_2_0:finish()
+function Va3ChessStepInteractFinish:_onDelayFinish()
+	self:finish()
 end
 
-function var_0_0.finish(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._onDelayFinish, arg_3_0)
-	var_0_0.super.finish(arg_3_0)
+function Va3ChessStepInteractFinish:finish()
+	TaskDispatcher.cancelTask(self._onDelayFinish, self)
+	Va3ChessStepInteractFinish.super.finish(self)
 end
 
-function var_0_0.dispose(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onDelayFinish, arg_4_0)
-	var_0_0.super.dispose(arg_4_0)
+function Va3ChessStepInteractFinish:dispose()
+	TaskDispatcher.cancelTask(self._onDelayFinish, self)
+	Va3ChessStepInteractFinish.super.dispose(self)
 end
 
-return var_0_0
+return Va3ChessStepInteractFinish

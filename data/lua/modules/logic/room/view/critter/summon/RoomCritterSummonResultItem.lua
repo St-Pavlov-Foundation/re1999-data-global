@@ -1,147 +1,149 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonResultItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonResultItem.lua
 
-local var_0_0 = class("RoomCritterSummonResultItem", ListScrollCellExtend)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonResultItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goegg = gohelper.findChild(arg_1_0.viewGO, "#go_egg")
-	arg_1_0._gocritter = gohelper.findChild(arg_1_0.viewGO, "#go_critter")
-	arg_1_0._imagequality = gohelper.findChildImage(arg_1_0.viewGO, "#go_critter/#image_quality")
-	arg_1_0._imagequalitylight = gohelper.findChildImage(arg_1_0.viewGO, "#go_critter/#image_qualitylight")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#simage_icon")
-	arg_1_0._simagecard = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_critter/#simage_card")
-	arg_1_0._btnopenEgg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_openEgg")
+local RoomCritterSummonResultItem = class("RoomCritterSummonResultItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterSummonResultItem:onInitView()
+	self._goegg = gohelper.findChild(self.viewGO, "#go_egg")
+	self._gocritter = gohelper.findChild(self.viewGO, "#go_critter")
+	self._imagequality = gohelper.findChildImage(self.viewGO, "#go_critter/#image_quality")
+	self._imagequalitylight = gohelper.findChildImage(self.viewGO, "#go_critter/#image_qualitylight")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_critter/#simage_icon")
+	self._simagecard = gohelper.findChildSingleImage(self.viewGO, "#go_critter/#simage_card")
+	self._btnopenEgg = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_openEgg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnopenEgg:AddClickListener(arg_2_0._btnopenEggOnClick, arg_2_0)
+function RoomCritterSummonResultItem:addEvents()
+	self._btnopenEgg:AddClickListener(self._btnopenEggOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnopenEgg:RemoveClickListener()
+function RoomCritterSummonResultItem:removeEvents()
+	self._btnopenEgg:RemoveClickListener()
 end
 
-function var_0_0._btnopenEggOnClick(arg_4_0)
-	if not arg_4_0.critterMO or arg_4_0:_isLockOp() then
+function RoomCritterSummonResultItem:_btnopenEggOnClick()
+	if not self.critterMO or self:_isLockOp() then
 		return
 	end
 
-	arg_4_0:_setLockTime(0.5)
+	self:_setLockTime(0.5)
 
-	if arg_4_0._isOpenEgg then
-		local var_4_0 = arg_4_0.critterMO:isMaturity()
+	if self._isOpenEgg then
+		local isMaturity = self.critterMO:isMaturity()
 
-		CritterController.instance:openRoomCritterDetailView(not var_4_0, arg_4_0.critterMO)
+		CritterController.instance:openRoomCritterDetailView(not isMaturity, self.critterMO)
 
 		return
 	end
 
-	local var_4_1 = {
+	local param = {
 		mode = RoomSummonEnum.SummonType.Summon,
-		critterMo = arg_4_0.critterMO
+		critterMo = self.critterMO
 	}
 
-	CritterSummonController.instance:openSummonGetCritterView(var_4_1, true)
-	arg_4_0:setOpenEgg(true)
+	CritterSummonController.instance:openSummonGetCritterView(param, true)
+	self:setOpenEgg(true)
 end
 
-function var_0_0._isLockOp(arg_5_0)
-	if arg_5_0._nextLockTime and arg_5_0._nextLockTime > Time.time then
+function RoomCritterSummonResultItem:_isLockOp()
+	if self._nextLockTime and self._nextLockTime > Time.time then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._setLockTime(arg_6_0, arg_6_1)
-	arg_6_0._nextLockTime = Time.time + tonumber(arg_6_1)
+function RoomCritterSummonResultItem:_setLockTime(lockTime)
+	self._nextLockTime = Time.time + tonumber(lockTime)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._iconRareScaleMap = {
+function RoomCritterSummonResultItem:_editableInitView()
+	self._iconRareScaleMap = {
 		1.3,
 		1.3,
 		1.3,
 		1.8,
 		1.8
 	}
-	arg_7_0._isOpenEgg = false
-	arg_7_0._eggDict = {}
-	arg_7_0._simageiconTrs = arg_7_0._simageicon.transform
-	arg_7_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_7_0.viewGO)
+	self._isOpenEgg = false
+	self._eggDict = {}
+	self._simageiconTrs = self._simageicon.transform
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 
-	arg_7_0:setOpenEgg(arg_7_0._isOpenEgg)
+	self:setOpenEgg(self._isOpenEgg)
 end
 
-function var_0_0._editableAddEvents(arg_8_0)
+function RoomCritterSummonResultItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_9_0)
+function RoomCritterSummonResultItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0.critterMO = arg_10_1
+function RoomCritterSummonResultItem:onUpdateMO(mo)
+	self.critterMO = mo
 
-	gohelper.setActive(arg_10_0.viewGO, arg_10_1)
-	arg_10_0:_refreshUI()
+	gohelper.setActive(self.viewGO, mo)
+	self:_refreshUI()
 end
 
-function var_0_0.setOpenEgg(arg_11_0, arg_11_1)
-	local var_11_0 = false
+function RoomCritterSummonResultItem:setOpenEgg(isOpen)
+	local temp = false
 
-	if arg_11_1 == true then
-		var_11_0 = true
+	if isOpen == true then
+		temp = true
 	end
 
-	arg_11_0._isOpenEgg = var_11_0
+	self._isOpenEgg = temp
 
-	gohelper.setActive(arg_11_0._gocritter, arg_11_0._isOpenEgg and arg_11_0._isLaseOpenEgg)
+	gohelper.setActive(self._gocritter, self._isOpenEgg and self._isLaseOpenEgg)
 end
 
-function var_0_0.playAnim(arg_12_0, arg_12_1)
-	local var_12_0 = false
+function RoomCritterSummonResultItem:playAnim(isOpen)
+	local temp = false
 
-	if arg_12_1 == true then
-		var_12_0 = true
+	if isOpen == true then
+		temp = true
 	end
 
-	if arg_12_0._isLaseOpenEgg == var_12_0 then
+	if self._isLaseOpenEgg == temp then
 		return false
 	end
 
-	arg_12_0._isLaseOpenEgg = var_12_0
+	self._isLaseOpenEgg = temp
 
-	local var_12_1 = arg_12_0._eggDict[arg_12_0._lastRate]
+	local eggComp = self._eggDict[self._lastRate]
 
-	if var_12_1 then
-		if arg_12_0._isLaseOpenEgg then
-			var_12_1:playOpenAnim()
+	if eggComp then
+		if self._isLaseOpenEgg then
+			eggComp:playOpenAnim()
 		else
-			var_12_1:playIdleAnim()
+			eggComp:playIdleAnim()
 		end
 	end
 
-	gohelper.setActive(arg_12_0._gocritter, arg_12_0._isLaseOpenEgg)
-	arg_12_0._animatorPlayer:Play(arg_12_0._isLaseOpenEgg and "open" or "close", nil, nil)
-	arg_12_0:_setLockTime(0.5)
+	gohelper.setActive(self._gocritter, self._isLaseOpenEgg)
+	self._animatorPlayer:Play(self._isLaseOpenEgg and "open" or "close", nil, nil)
+	self:_setLockTime(0.5)
 
 	return true
 end
 
-function var_0_0.isOpenEgg(arg_13_0)
-	return arg_13_0._isOpenEgg
+function RoomCritterSummonResultItem:isOpenEgg()
+	return self._isOpenEgg
 end
 
-function var_0_0.onSelect(arg_14_0, arg_14_1)
+function RoomCritterSummonResultItem:onSelect(isSelect)
 	return
 end
 
-var_0_0._EGG_NAME_DICT = {
+RoomCritterSummonResultItem._EGG_NAME_DICT = {
 	"roomcrittersummonresult_egg1.prefab",
 	"roomcrittersummonresult_egg1.prefab",
 	"roomcrittersummonresult_egg1.prefab",
@@ -149,81 +151,81 @@ var_0_0._EGG_NAME_DICT = {
 	"roomcrittersummonresult_egg3.prefab"
 }
 
-function var_0_0._setShowCompByRare(arg_15_0, arg_15_1)
-	if arg_15_0._lastRate == arg_15_1 then
+function RoomCritterSummonResultItem:_setShowCompByRare(rare)
+	if self._lastRate == rare then
 		return
 	end
 
-	arg_15_0._lastRate = arg_15_1
+	self._lastRate = rare
 
-	if not arg_15_0._eggDict[arg_15_1] then
-		local var_15_0 = CritterEnum.QualityEggSummomResNameMap[arg_15_1]
+	if not self._eggDict[rare] then
+		local eggRes = CritterEnum.QualityEggSummomResNameMap[rare]
 
-		if var_15_0 then
-			local var_15_1 = ResUrl.getRoomCritterEggPrefab(var_15_0)
-			local var_15_2 = arg_15_0._view:getResInst(var_15_1, arg_15_0._goegg)
+		if eggRes then
+			local path = ResUrl.getRoomCritterEggPrefab(eggRes)
+			local childGO = self._view:getResInst(path, self._goegg)
 
-			transformhelper.setLocalScale(var_15_2.transform, 0.55, 0.55, 0.55)
+			transformhelper.setLocalScale(childGO.transform, 0.55, 0.55, 0.55)
 
-			local var_15_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_2, RoomGetCritterEgg)
+			local eggComp = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, RoomGetCritterEgg)
 
-			var_15_3.eggRare = arg_15_1
-			arg_15_0._eggDict[arg_15_1] = var_15_3
+			eggComp.eggRare = rare
+			self._eggDict[rare] = eggComp
 
-			if arg_15_0._isLaseOpenEgg then
-				var_15_3:playOpenAnim()
+			if self._isLaseOpenEgg then
+				eggComp:playOpenAnim()
 			else
-				var_15_3:playIdleAnim()
+				eggComp:playIdleAnim()
 			end
 		end
 	end
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._eggDict) do
-		gohelper.setActive(iter_15_1.go, iter_15_0 == arg_15_1)
+	for trare, eggComp in pairs(self._eggDict) do
+		gohelper.setActive(eggComp.go, trare == rare)
 	end
 end
 
-function var_0_0.openEggAnim(arg_16_0)
+function RoomCritterSummonResultItem:openEggAnim()
 	return
 end
 
-function var_0_0._refreshUI(arg_17_0)
-	if not arg_17_0.critterMO then
+function RoomCritterSummonResultItem:_refreshUI()
+	if not self.critterMO then
 		return
 	end
 
-	local var_17_0 = CritterConfig.instance:getCritterRare(arg_17_0.critterMO.defineId)
+	local rare = CritterConfig.instance:getCritterRare(self.critterMO.defineId)
 
-	if var_17_0 then
-		UISpriteSetMgr.instance:setCritterSprite(arg_17_0._imagequality, CritterEnum.QualityEggImageNameMap[var_17_0])
-		UISpriteSetMgr.instance:setCritterSprite(arg_17_0._imagequalitylight, CritterEnum.QualityEggLightImageNameMap[var_17_0])
+	if rare then
+		UISpriteSetMgr.instance:setCritterSprite(self._imagequality, CritterEnum.QualityEggImageNameMap[rare])
+		UISpriteSetMgr.instance:setCritterSprite(self._imagequalitylight, CritterEnum.QualityEggLightImageNameMap[rare])
 
-		local var_17_1 = arg_17_0._iconRareScaleMap[var_17_0] or 1
+		local scale = self._iconRareScaleMap[rare] or 1
 
-		transformhelper.setLocalScale(arg_17_0._simageiconTrs, var_17_1, var_17_1, var_17_1)
-		arg_17_0:_setShowCompByRare(var_17_0)
+		transformhelper.setLocalScale(self._simageiconTrs, scale, scale, scale)
+		self:_setShowCompByRare(rare)
 	end
 
-	local var_17_2 = CritterConfig.instance:getCritterHeadIcon(arg_17_0.critterMO:getSkinId())
+	local iconName = CritterConfig.instance:getCritterHeadIcon(self.critterMO:getSkinId())
 
-	if not string.nilorempty(var_17_2) then
-		arg_17_0._simageicon:LoadImage(ResUrl.getCritterLargeIcon(var_17_2))
+	if not string.nilorempty(iconName) then
+		self._simageicon:LoadImage(ResUrl.getCritterLargeIcon(iconName))
 	end
 
-	local var_17_3 = CritterConfig.instance:getCritterRareCfg(var_17_0)
+	local rareCfg = CritterConfig.instance:getCritterRareCfg(rare)
 
-	if var_17_3 then
-		arg_17_0._simagecard:LoadImage(ResUrl.getRoomCritterIcon(var_17_3.cardRes))
-	end
-end
-
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0._simageicon:UnLoadImage()
-	arg_18_0._simagecard:UnLoadImage()
-
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._eggDict) do
-		iter_18_1:onDestroy()
+	if rareCfg then
+		self._simagecard:LoadImage(ResUrl.getRoomCritterIcon(rareCfg.cardRes))
 	end
 end
 
-return var_0_0
+function RoomCritterSummonResultItem:onDestroyView()
+	self._simageicon:UnLoadImage()
+	self._simagecard:UnLoadImage()
+
+	for _, eggComp in pairs(self._eggDict) do
+		eggComp:onDestroy()
+	end
+end
+
+return RoomCritterSummonResultItem

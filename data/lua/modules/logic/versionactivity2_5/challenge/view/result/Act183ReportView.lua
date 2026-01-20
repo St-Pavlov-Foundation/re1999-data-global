@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183ReportView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/result/Act183ReportView.lua
 
-local var_0_0 = class("Act183ReportView", BaseView)
+module("modules.logic.versionactivity2_5.challenge.view.result.Act183ReportView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
-	arg_1_0._scrollreview = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_review")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "root/#go_empty")
+local Act183ReportView = class("Act183ReportView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183ReportView:onInitView()
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+	self._scrollreview = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_review")
+	self._goempty = gohelper.findChild(self.viewGO, "root/#go_empty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act183ReportView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act183ReportView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Act183ReportView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Act183ReportView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = Act183ReportListModel.instance:getCount()
+function Act183ReportView:onOpen()
+	local count = Act183ReportListModel.instance:getCount()
 
-	gohelper.setActive(arg_6_0._goempty, var_6_0 <= 0)
+	gohelper.setActive(self._goempty, count <= 0)
 end
 
-function var_0_0.onClose(arg_7_0)
+function Act183ReportView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function Act183ReportView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act183ReportView

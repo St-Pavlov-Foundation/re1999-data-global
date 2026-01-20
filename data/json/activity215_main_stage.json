@@ -1,0 +1,14 @@
+[
+  {
+    "activityId": 13213,
+    "stageId": 1,
+    "startDayOffset": 0,
+    "endDayOffset": 12
+  },
+  {
+    "activityId": 13213,
+    "stageId": 2,
+    "startDayOffset": 12,
+    "endDayOffset": 23
+  }
+]

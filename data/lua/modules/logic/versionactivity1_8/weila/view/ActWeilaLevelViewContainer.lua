@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_8.weila.view.ActWeilaLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/weila/view/ActWeilaLevelViewContainer.lua
 
-local var_0_0 = class("ActWeilaLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_8.weila.view.ActWeilaLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActWeilaLevelViewContainer = class("ActWeilaLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActWeilaLevelView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function ActWeilaLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActWeilaLevelView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function ActWeilaLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function ActWeilaLevelViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_8Enum.ActivityId.Weila)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_8Enum.ActivityId.Weila
 	})
 end
 
-return var_0_0
+return ActWeilaLevelViewContainer

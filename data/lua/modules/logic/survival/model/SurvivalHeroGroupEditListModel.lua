@@ -1,117 +1,125 @@
-﻿module("modules.logic.survival.model.SurvivalHeroGroupEditListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/SurvivalHeroGroupEditListModel.lua
 
-local var_0_0 = class("SurvivalHeroGroupEditListModel", HeroGroupEditListModel)
+module("modules.logic.survival.model.SurvivalHeroGroupEditListModel", package.seeall)
 
-function var_0_0.copyCharacterCardList(arg_1_0, arg_1_1)
-	local var_1_0
-	local var_1_1 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_1_2 = var_1_1.inSurvival
-	local var_1_3
+local SurvivalHeroGroupEditListModel = class("SurvivalHeroGroupEditListModel", HeroGroupEditListModel)
+
+function SurvivalHeroGroupEditListModel:copyCharacterCardList(init)
+	local moList
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local inSurvival = weekInfo.inSurvival
+	local teamInfo
 
 	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
-		var_1_0 = {}
-	elseif var_1_2 then
-		var_1_3 = SurvivalMapModel.instance:getSceneMo().teamInfo
-		var_1_0 = {}
+		moList = {}
+	elseif inSurvival then
+		teamInfo = SurvivalMapModel.instance:getSceneMo().teamInfo
+		moList = {}
 
-		for iter_1_0 in pairs(var_1_3.heroUids) do
-			table.insert(var_1_0, (var_1_3:getHeroMo(iter_1_0)))
+		for uid in pairs(teamInfo.heroUids) do
+			table.insert(moList, (teamInfo:getHeroMo(uid)))
 		end
 	else
-		var_1_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+		moList = CharacterBackpackCardListModel.instance:getCharacterCardList()
 	end
 
-	local var_1_4 = {}
-	local var_1_5 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_1_0._inTeamHeroUids = {}
+	self._inTeamHeroUids = {}
 
-	local var_1_6 = 1
-	local var_1_7 = 1
-	local var_1_8 = HeroSingleGroupModel.instance:getList()
+	local selectIndex = 1
+	local index = 1
+	local alreadyList = HeroSingleGroupModel.instance:getList()
 
-	for iter_1_1, iter_1_2 in ipairs(var_1_8) do
-		if iter_1_2.trial or not iter_1_2.aid and tonumber(iter_1_2.heroUid) > 0 and not var_1_5[iter_1_2.heroUid] then
-			if iter_1_2.trial then
-				table.insert(var_1_4, HeroGroupTrialModel.instance:getById(iter_1_2.heroUid))
-			elseif var_1_2 then
-				table.insert(var_1_4, (var_1_3:getHeroMo(iter_1_2.heroUid)))
+	for i, heroSingleGroupMO in ipairs(alreadyList) do
+		if heroSingleGroupMO.trial or not heroSingleGroupMO.aid and tonumber(heroSingleGroupMO.heroUid) > 0 and not repeatHero[heroSingleGroupMO.heroUid] then
+			if heroSingleGroupMO.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroSingleGroupMO.heroUid))
+			elseif inSurvival then
+				table.insert(newMOList, (teamInfo:getHeroMo(heroSingleGroupMO.heroUid)))
 			else
-				table.insert(var_1_4, HeroModel.instance:getById(iter_1_2.heroUid))
+				table.insert(newMOList, HeroModel.instance:getById(heroSingleGroupMO.heroUid))
 			end
 
-			if arg_1_0.specialHero == iter_1_2.heroUid then
-				arg_1_0._inTeamHeroUids[iter_1_2.heroUid] = 2
-				var_1_6 = var_1_7
+			if self.specialHero == heroSingleGroupMO.heroUid then
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 2
+				selectIndex = index
 			else
-				arg_1_0._inTeamHeroUids[iter_1_2.heroUid] = 1
-				var_1_7 = var_1_7 + 1
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 1
+				index = index + 1
 			end
 
-			var_1_5[iter_1_2.heroUid] = true
+			repeatHero[heroSingleGroupMO.heroUid] = true
 		end
 	end
 
-	local var_1_9 = CharacterModel.instance:getRankState()
-	local var_1_10 = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
+	local state = CharacterModel.instance:getRankState()
+	local tag = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
 
-	HeroGroupTrialModel.instance:sortByLevelAndRare(var_1_10 == 1, var_1_9[var_1_10] == 1)
+	HeroGroupTrialModel.instance:sortByLevelAndRare(tag == 1, state[tag] == 1)
 
-	local var_1_11 = HeroGroupTrialModel.instance:getFilterList()
+	local trialList = HeroGroupTrialModel.instance:getFilterList()
 
-	for iter_1_3, iter_1_4 in ipairs(var_1_11) do
-		if not var_1_5[iter_1_4.uid] then
-			table.insert(var_1_4, iter_1_4)
+	for i, heroMo in ipairs(trialList) do
+		if not repeatHero[heroMo.uid] then
+			table.insert(newMOList, heroMo)
 		end
 	end
 
-	for iter_1_5, iter_1_6 in ipairs(var_1_4) do
-		if arg_1_0._moveHeroId and iter_1_6.heroId == arg_1_0._moveHeroId then
-			arg_1_0._moveHeroId = nil
-			arg_1_0._moveHeroIndex = iter_1_5
+	for i, mo in ipairs(newMOList) do
+		if self._moveHeroId and mo.heroId == self._moveHeroId then
+			self._moveHeroId = nil
+			self._moveHeroIndex = i
 
 			break
 		end
 	end
 
-	local var_1_12 = {}
+	local deathList = {}
 
-	for iter_1_7, iter_1_8 in ipairs(var_1_0) do
-		if not var_1_5[iter_1_8.uid] then
-			var_1_5[iter_1_8.uid] = true
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
 
-			if var_1_1:getHeroMo(iter_1_8.heroId).health <= 0 or arg_1_0:getSelectByIndex(iter_1_8.heroId) ~= nil then
-				table.insert(var_1_12, iter_1_8)
+			local healthMo = weekInfo:getHeroMo(mo.heroId)
+
+			if healthMo.health <= 0 or self:getSelectByIndex(mo.heroId) ~= nil then
+				table.insert(deathList, mo)
 			else
-				table.insert(var_1_4, iter_1_8)
+				table.insert(newMOList, mo)
 			end
 		end
 	end
 
-	tabletool.addValues(var_1_4, var_1_12)
-	arg_1_0:setList(var_1_4)
+	tabletool.addValues(newMOList, deathList)
+	self:setList(newMOList)
 
-	if arg_1_1 and #var_1_4 > 0 and var_1_6 > 0 and #arg_1_0._scrollViews > 0 then
-		for iter_1_9, iter_1_10 in ipairs(arg_1_0._scrollViews) do
-			iter_1_10:selectCell(var_1_6, true)
+	if init and #newMOList > 0 and selectIndex > 0 and #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
 		end
 
-		if var_1_4[var_1_6] then
-			return var_1_4[var_1_6]
+		if newMOList[selectIndex] then
+			return newMOList[selectIndex]
 		end
 	end
 end
 
-function var_0_0.getSelectByIndex(arg_2_0, arg_2_1)
-	local var_2_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalHeroGroupEditListModel:getSelectByIndex(heroId)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local inSurvival = weekInfo.inSurvival
 
-	if not var_2_0.inSurvival then
-		return (var_2_0:getMonsterFight():getUseRoundByHeroId(arg_2_1))
+	if not inSurvival then
+		local fight = weekInfo:getMonsterFight()
+		local round = fight:getUseRoundByHeroId(heroId)
+
+		return round
 	end
 
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalHeroGroupEditListModel.instance = SurvivalHeroGroupEditListModel.New()
 
-return var_0_0
+return SurvivalHeroGroupEditListModel

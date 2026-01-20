@@ -1,72 +1,74 @@
-﻿module("modules.logic.meilanni.model.MeilanniTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/model/MeilanniTaskListModel.lua
 
-local var_0_0 = class("MeilanniTaskListModel", ListScrollModel)
+module("modules.logic.meilanni.model.MeilanniTaskListModel", package.seeall)
 
-function var_0_0.setTaskRewardList(arg_1_0, arg_1_1)
-	arg_1_0._rewardList = arg_1_1
+local MeilanniTaskListModel = class("MeilanniTaskListModel", ListScrollModel)
+
+function MeilanniTaskListModel:setTaskRewardList(value)
+	self._rewardList = value
 end
 
-function var_0_0.getTaskRewardList(arg_2_0)
-	return arg_2_0._rewardList
+function MeilanniTaskListModel:getTaskRewardList()
+	return self._rewardList
 end
 
-function var_0_0.showTaskList(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = false
+function MeilanniTaskListModel:showTaskList()
+	local result = {}
+	local getAll = false
 
-	for iter_3_0, iter_3_1 in ipairs(lua_activity108_grade.configList) do
-		local var_3_2, var_3_3 = var_0_0._getTaskStatus(iter_3_1)
+	for i, v in ipairs(lua_activity108_grade.configList) do
+		local get, finish = MeilanniTaskListModel._getTaskStatus(v)
 
-		if var_3_2 == 0 and var_3_3 == 0 then
-			var_3_1 = true
+		if get == 0 and finish == 0 then
+			getAll = true
 		end
 
-		table.insert(var_3_0, iter_3_1)
+		table.insert(result, v)
 	end
 
-	table.sort(var_3_0, var_0_0._sort)
+	table.sort(result, MeilanniTaskListModel._sort)
 
-	if var_3_1 then
-		table.insert(var_3_0, 1, {
+	if getAll then
+		table.insert(result, 1, {
 			id = 0,
 			isGetAll = true
 		})
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(result)
 end
 
-function var_0_0._sort(arg_4_0, arg_4_1)
-	local var_4_0, var_4_1 = var_0_0._getTaskStatus(arg_4_0)
-	local var_4_2, var_4_3 = var_0_0._getTaskStatus(arg_4_1)
+function MeilanniTaskListModel._sort(a, b)
+	local a_get, a_finish = MeilanniTaskListModel._getTaskStatus(a)
+	local b_get, b_finish = MeilanniTaskListModel._getTaskStatus(b)
 
-	if var_4_0 ~= var_4_2 then
-		return var_4_0 < var_4_2
+	if a_get ~= b_get then
+		return a_get < b_get
 	end
 
-	if var_4_1 ~= var_4_3 then
-		return var_4_1 < var_4_3
+	if a_finish ~= b_finish then
+		return a_finish < b_finish
 	end
 
-	return arg_4_0.id < arg_4_1.id
+	return a.id < b.id
 end
 
-function var_0_0._getTaskStatus(arg_5_0)
-	local var_5_0, var_5_1 = var_0_0.getTaskStatus(arg_5_0)
+function MeilanniTaskListModel._getTaskStatus(mo)
+	local isGet, isFinish = MeilanniTaskListModel.getTaskStatus(mo)
 
-	return var_5_0 and 1 or 0, var_5_1 and 0 or 1
+	return isGet and 1 or 0, isFinish and 0 or 1
 end
 
-function var_0_0.getTaskStatus(arg_6_0)
-	local var_6_0 = MeilanniModel.instance:getMapInfo(arg_6_0.mapId)
-	local var_6_1 = var_6_0 and var_6_0:getMaxScore() or 0
-	local var_6_2 = arg_6_0.score
-	local var_6_3 = var_6_0 and var_6_0:isGetReward(arg_6_0.id)
-	local var_6_4 = var_6_2 <= var_6_1
+function MeilanniTaskListModel.getTaskStatus(mo)
+	local mapInfo = MeilanniModel.instance:getMapInfo(mo.mapId)
+	local curScore = mapInfo and mapInfo:getMaxScore() or 0
+	local totalScore = mo.score
+	local isGet = mapInfo and mapInfo:isGetReward(mo.id)
+	local isFinish = totalScore <= curScore
 
-	return var_6_3, var_6_4
+	return isGet, isFinish
 end
 
-var_0_0.instance = var_0_0.New()
+MeilanniTaskListModel.instance = MeilanniTaskListModel.New()
 
-return var_0_0
+return MeilanniTaskListModel

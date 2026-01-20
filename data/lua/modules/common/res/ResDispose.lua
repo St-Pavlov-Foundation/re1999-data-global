@@ -1,51 +1,53 @@
-﻿module("modules.common.res.ResDispose", package.seeall)
+﻿-- chunkname: @modules/common/res/ResDispose.lua
 
-local var_0_0 = _M
-local var_0_1 = 4
-local var_0_2 = {}
+module("modules.common.res.ResDispose", package.seeall)
 
-function var_0_0.dispose()
-	var_0_2 = {}
+local ResDispose = _M
+local CHECK_INTERVAL = 4
+local waitList = {}
+
+function ResDispose.dispose()
+	waitList = {}
 end
 
-function var_0_0.open()
-	TaskDispatcher.runRepeat(var_0_0._loop, nil, var_0_1)
+function ResDispose.open()
+	TaskDispatcher.runRepeat(ResDispose._loop, nil, CHECK_INTERVAL)
 end
 
-function var_0_0.close()
-	TaskDispatcher.cancelTask(var_0_0._loop, nil)
+function ResDispose.close()
+	TaskDispatcher.cancelTask(ResDispose._loop, nil)
 end
 
-function var_0_0.unloadTrue()
-	local var_4_0 = ResMgr.getAssetPool()
+function ResDispose.unloadTrue()
+	local assetPool = ResMgr.getAssetPool()
 
-	var_0_2 = {}
+	waitList = {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		if iter_4_1:canRelease() then
-			table.insert(var_0_2, iter_4_1)
+	for url, assetMO in pairs(assetPool) do
+		if assetMO:canRelease() then
+			table.insert(waitList, assetMO)
 		end
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(var_0_2) do
-		iter_4_3:tryDispose()
+	for i, v in ipairs(waitList) do
+		v:tryDispose()
 	end
 end
 
-function var_0_0._loop()
-	local var_5_0 = ResMgr.getAssetPool()
+function ResDispose._loop()
+	local assetPool = ResMgr.getAssetPool()
 
-	var_0_2 = {}
+	waitList = {}
 
-	for iter_5_0, iter_5_1 in pairs(var_5_0) do
-		if iter_5_1:canRelease() then
-			table.insert(var_0_2, iter_5_1)
+	for url, assetMO in pairs(assetPool) do
+		if assetMO:canRelease() then
+			table.insert(waitList, assetMO)
 		end
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(var_0_2) do
-		iter_5_3:tryDispose()
+	for i, v in ipairs(waitList) do
+		v:tryDispose()
 	end
 end
 
-return var_0_0
+return ResDispose

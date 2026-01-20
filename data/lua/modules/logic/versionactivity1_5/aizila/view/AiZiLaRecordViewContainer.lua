@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaRecordViewContainer.lua
 
-local var_0_0 = class("AiZiLaRecordViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaRecordViewContainer = class("AiZiLaRecordViewContainer", BaseViewContainer)
 
-	arg_1_0._equipView = AiZiLaRecordView.New()
+function AiZiLaRecordViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._equipView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	self._equipView = AiZiLaRecordView.New()
 
-	return var_1_0
+	table.insert(views, self._equipView)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaRecordViewContainer:onContainerClickModalMask()
 	return
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function AiZiLaRecordViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-return var_0_0
+return AiZiLaRecordViewContainer

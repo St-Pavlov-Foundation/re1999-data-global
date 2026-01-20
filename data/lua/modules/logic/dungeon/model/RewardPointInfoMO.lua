@@ -1,15 +1,17 @@
-﻿module("modules.logic.dungeon.model.RewardPointInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/RewardPointInfoMO.lua
 
-local var_0_0 = pureTable("RewardPointInfoMO")
+module("modules.logic.dungeon.model.RewardPointInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.chapterId = arg_1_1.chapterId
-	arg_1_0.rewardPoint = arg_1_1.rewardPoint
-	arg_1_0.hasGetPointRewardIds = arg_1_1.hasGetPointRewardIds or {}
+local RewardPointInfoMO = pureTable("RewardPointInfoMO")
+
+function RewardPointInfoMO:init(info)
+	self.chapterId = info.chapterId
+	self.rewardPoint = info.rewardPoint
+	self.hasGetPointRewardIds = info.hasGetPointRewardIds or {}
 end
 
-function var_0_0.setRewardPoint(arg_2_0, arg_2_1)
-	arg_2_0.rewardPoint = arg_2_1
+function RewardPointInfoMO:setRewardPoint(value)
+	self.rewardPoint = value
 end
 
-return var_0_0
+return RewardPointInfoMO

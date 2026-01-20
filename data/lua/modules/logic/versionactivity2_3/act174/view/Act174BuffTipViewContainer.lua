@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174BuffTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174BuffTipViewContainer.lua
 
-local var_0_0 = class("Act174BuffTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.Act174BuffTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act174BuffTipViewContainer = class("Act174BuffTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act174BuffTipView.New())
+function Act174BuffTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act174BuffTipView.New())
+
+	return views
 end
 
-return var_0_0
+return Act174BuffTipViewContainer

@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_6.act148.config.Activity148Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act148/config/Activity148Config.lua
 
-local var_0_0 = class("Activity148Config", BaseConfig)
+module("modules.logic.versionactivity1_6.act148.config.Activity148Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._cfgDict = {}
-	arg_1_0._activityConstDict = {}
-	arg_1_0._skillTypeCfgDict = {}
+local Activity148Config = class("Activity148Config", BaseConfig)
+
+function Activity148Config:ctor()
+	self._cfgDict = {}
+	self._activityConstDict = {}
+	self._skillTypeCfgDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity148Config:reqConfigNames()
 	return {
 		"activity148",
 		"activity148_const",
@@ -16,89 +18,94 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity148" then
-		arg_3_0:initAct148CfgDict(arg_3_2)
-	elseif arg_3_1 == "activity148_const" then
-		arg_3_0._activityConstDict = arg_3_2.configDict
-	elseif arg_3_1 == "activity148_skill_type" then
-		arg_3_0._skillTypeCfgDict = arg_3_2.configDict
+function Activity148Config:onConfigLoaded(configName, configTable)
+	if configName == "activity148" then
+		self:initAct148CfgDict(configTable)
+	elseif configName == "activity148_const" then
+		self._activityConstDict = configTable.configDict
+	elseif configName == "activity148_skill_type" then
+		self._skillTypeCfgDict = configTable.configDict
 	end
 end
 
-function var_0_0.initAct148CfgDict(arg_4_0, arg_4_1)
-	arg_4_0._cfgDict = arg_4_1.configDict
-	arg_4_0._skillTypeDict = {}
+function Activity148Config:initAct148CfgDict(configTable)
+	self._cfgDict = configTable.configDict
+	self._skillTypeDict = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._cfgDict) do
-		local var_4_0 = iter_4_1.type
+	for _, cfg in pairs(self._cfgDict) do
+		local type = cfg.type
 
-		if not arg_4_0._skillTypeDict[var_4_0] then
-			arg_4_0._skillTypeDict[var_4_0] = {}
+		if not self._skillTypeDict[type] then
+			self._skillTypeDict[type] = {}
 		end
 
-		local var_4_1 = iter_4_1.level
+		local lv = cfg.level
+		local skillTypeDict = self._skillTypeDict[type]
 
-		arg_4_0._skillTypeDict[var_4_0][var_4_1] = iter_4_1
+		skillTypeDict[lv] = cfg
 	end
 end
 
-function var_0_0.getAct148Cfg(arg_5_0, arg_5_1)
-	return arg_5_0._cfgDict[arg_5_1]
+function Activity148Config:getAct148Cfg(id)
+	return self._cfgDict[id]
 end
 
-function var_0_0.getAct148CfgByTypeLv(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_2 or not arg_6_1 then
+function Activity148Config:getAct148CfgByTypeLv(type, lv)
+	if not lv or not type then
 		return nil
 	end
 
-	local var_6_0 = arg_6_0._skillTypeDict[arg_6_1]
+	local skillLvDict = self._skillTypeDict[type]
 
-	return var_6_0 and var_6_0[arg_6_2]
+	return skillLvDict and skillLvDict[lv]
 end
 
-function var_0_0.getAct148ConstValue(arg_7_0, arg_7_1, arg_7_2)
-	return arg_7_0._activityConstDict[arg_7_2][arg_7_1].value
+function Activity148Config:getAct148ConstValue(activityId, id)
+	local cfg = self._activityConstDict[id][activityId]
+
+	return cfg.value
 end
 
-function var_0_0.getAct148CfgDictByType(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function Activity148Config:getAct148CfgDictByType(type)
+	if not type then
 		return nil
 	end
 
-	return arg_8_0._skillTypeDict[arg_8_1]
+	return self._skillTypeDict[type]
 end
 
-function var_0_0.getAct148SkillTypeCfg(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function Activity148Config:getAct148SkillTypeCfg(type)
+	if not type then
 		return nil
 	end
 
-	return arg_9_0._skillTypeCfgDict[arg_9_1]
+	return self._skillTypeCfgDict[type]
 end
 
-function var_0_0.getAct148SkillPointCost(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = 0
+function Activity148Config:getAct148SkillPointCost(type, lv)
+	local totalCost = 0
 
-	if arg_10_2 == 0 then
-		return var_10_0
+	if lv == 0 then
+		return totalCost
 	end
 
-	local var_10_1 = arg_10_0._skillTypeDict[arg_10_1]
+	local skillTypeList = self._skillTypeDict[type]
 
-	if not var_10_1 then
-		return var_10_0
+	if not skillTypeList then
+		return totalCost
 	end
 
-	for iter_10_0 = 1, arg_10_2 do
-		local var_10_2 = var_10_1[iter_10_0].cost
+	for i = 1, lv do
+		local skillCfg = skillTypeList[i]
+		local costStr = skillCfg.cost
+		local attribute = string.splitToNumber(costStr, "#")
 
-		var_10_0 = var_10_0 + string.splitToNumber(var_10_2, "#")[3]
+		totalCost = totalCost + attribute[3]
 	end
 
-	return var_10_0
+	return totalCost
 end
 
-var_0_0.instance = var_0_0.New()
+Activity148Config.instance = Activity148Config.New()
 
-return var_0_0
+return Activity148Config

@@ -1,58 +1,67 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepInitialCard", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/controller/gamestep/XugoujiGameStepInitialCard.lua
 
-local var_0_0 = VersionActivity2_6Enum.ActivityId.Xugouji
-local var_0_1 = class("XugoujiGameStepInitialCard", XugoujiGameStepBase)
+module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepInitialCard", package.seeall)
 
-function var_0_1.start(arg_1_0)
-	local var_1_0 = Activity188Model.instance:getCardsInfoList()
-	local var_1_1 = Activity188Model.instance:getCurGameId()
-	local var_1_2 = Activity188Config.instance:getGameCfg(var_0_0, var_1_1).readNum
+local actId = VersionActivity2_6Enum.ActivityId.Xugouji
+local XugoujiGameStepInitialCard = class("XugoujiGameStepInitialCard", XugoujiGameStepBase)
 
-	var_1_2 = var_1_2 > #var_1_0 and #var_1_0 or var_1_2
-	arg_1_0._randomCardIdxs = {}
+function XugoujiGameStepInitialCard:start()
+	local cardList = Activity188Model.instance:getCardsInfoList()
+	local curGameId = Activity188Model.instance:getCurGameId()
+	local gameCfg = Activity188Config.instance:getGameCfg(actId, curGameId)
+	local initialCardNum = gameCfg.readNum
 
-	for iter_1_0 = 1, var_1_2 do
-		local var_1_3 = math.random(1, #var_1_0)
+	initialCardNum = initialCardNum > #cardList and #cardList or initialCardNum
+	self._randomCardIdxs = {}
 
-		while tabletool.indexOf(arg_1_0._randomCardIdxs, var_1_3) do
-			var_1_3 = math.random(1, #var_1_0)
+	for i = 1, initialCardNum do
+		local randomIdx = math.random(1, #cardList)
+
+		while tabletool.indexOf(self._randomCardIdxs, randomIdx) do
+			randomIdx = math.random(1, #cardList)
 		end
 
-		table.insert(arg_1_0._randomCardIdxs, var_1_3)
+		table.insert(self._randomCardIdxs, randomIdx)
 	end
 
-	for iter_1_1 = 1, #arg_1_0._randomCardIdxs do
-		local var_1_4 = var_1_0[arg_1_0._randomCardIdxs[iter_1_1]].uid
+	for i = 1, #self._randomCardIdxs do
+		local cardIdx = self._randomCardIdxs[i]
+		local cardInfo = cardList[cardIdx]
+		local cardUid = cardInfo.uid
 
-		Activity188Model.instance:updateCardStatus(var_1_4, XugoujiEnum.CardStatus.Front)
-		XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, var_1_4)
+		Activity188Model.instance:updateCardStatus(cardUid, XugoujiEnum.CardStatus.Front)
+		XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, cardUid)
 	end
 
-	if not Activity188Model.instance:isGameGuideMode() then
-		TaskDispatcher.runDelay(arg_1_0._onCardInitailDone, arg_1_0, 2)
+	local isDoingXugoujiGuide = Activity188Model.instance:isGameGuideMode()
+
+	if not isDoingXugoujiGuide then
+		TaskDispatcher.runDelay(self._onCardInitailDone, self, 2)
 	end
 
-	XugoujiController.instance:registerCallback(XugoujiEvent.FinishInitialCardShow, arg_1_0._onCardInitailDone, arg_1_0)
+	XugoujiController.instance:registerCallback(XugoujiEvent.FinishInitialCardShow, self._onCardInitailDone, self)
 end
 
-function var_0_1._onCardInitailDone(arg_2_0)
-	local var_2_0 = Activity188Model.instance:getCardsInfoList()
+function XugoujiGameStepInitialCard:_onCardInitailDone()
+	local cardList = Activity188Model.instance:getCardsInfoList()
 
-	for iter_2_0 = 1, #arg_2_0._randomCardIdxs do
-		local var_2_1 = var_2_0[arg_2_0._randomCardIdxs[iter_2_0]].uid
+	for i = 1, #self._randomCardIdxs do
+		local cardIdx = self._randomCardIdxs[i]
+		local cardInfo = cardList[cardIdx]
+		local cardUid = cardInfo.uid
 
-		Activity188Model.instance:updateCardStatus(var_2_1, XugoujiEnum.CardStatus.Back)
-		XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, var_2_1)
+		Activity188Model.instance:updateCardStatus(cardUid, XugoujiEnum.CardStatus.Back)
+		XugoujiController.instance:dispatchEvent(XugoujiEvent.CardStatusUpdated, cardUid)
 	end
 
 	Activity188Model.instance:setGameState(XugoujiEnum.GameStatus.Operatable)
-	TaskDispatcher.runDelay(arg_2_0.finish, arg_2_0, 1)
+	TaskDispatcher.runDelay(self.finish, self, 1)
 end
 
-function var_0_1.dispose(arg_3_0)
-	XugoujiController.instance:unregisterCallback(XugoujiEvent.FinishInitialCardShow, arg_3_0._onCardInitailDone, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._onCardInitailDone, arg_3_0)
-	XugoujiGameStepBase.dispose(arg_3_0)
+function XugoujiGameStepInitialCard:dispose()
+	XugoujiController.instance:unregisterCallback(XugoujiEvent.FinishInitialCardShow, self._onCardInitailDone, self)
+	TaskDispatcher.cancelTask(self._onCardInitailDone, self)
+	XugoujiGameStepBase.dispose(self)
 end
 
-return var_0_1
+return XugoujiGameStepInitialCard

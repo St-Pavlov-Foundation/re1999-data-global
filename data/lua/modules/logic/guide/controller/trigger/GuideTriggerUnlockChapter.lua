@@ -1,29 +1,31 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerUnlockChapter", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerUnlockChapter.lua
 
-local var_0_0 = class("GuideTriggerUnlockChapter", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerUnlockChapter", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateRewardPoint, arg_1_0._checkStartGuide, arg_1_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, arg_1_0._checkStartGuide, arg_1_0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, arg_1_0._checkStartGuide, arg_1_0)
-	GameSceneMgr.instance:registerCallback(SceneType.Main, arg_1_0._onMainScene, arg_1_0)
+local GuideTriggerUnlockChapter = class("GuideTriggerUnlockChapter", BaseGuideTrigger)
+
+function GuideTriggerUnlockChapter:ctor(triggerKey)
+	GuideTriggerUnlockChapter.super.ctor(self, triggerKey)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateRewardPoint, self._checkStartGuide, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, self._checkStartGuide, self)
+	StoryController.instance:registerCallback(StoryEvent.Finish, self._checkStartGuide, self)
+	GameSceneMgr.instance:registerCallback(SceneType.Main, self._onMainScene, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = tonumber(arg_2_2)
+function GuideTriggerUnlockChapter:assertGuideSatisfy(param, configParam)
+	local chapterId = tonumber(configParam)
 
-	return not DungeonModel.instance:chapterIsLock(var_2_0)
+	return not DungeonModel.instance:chapterIsLock(chapterId)
 end
 
-function var_0_0._onMainScene(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_2 == 1 then
-		arg_3_0:checkStartGuide()
+function GuideTriggerUnlockChapter:_onMainScene(sceneLevelId, Exit0Enter1)
+	if Exit0Enter1 == 1 then
+		self:checkStartGuide()
 	end
 end
 
-function var_0_0._checkStartGuide(arg_4_0)
-	arg_4_0:checkStartGuide()
+function GuideTriggerUnlockChapter:_checkStartGuide()
+	self:checkStartGuide()
 end
 
-return var_0_0
+return GuideTriggerUnlockChapter

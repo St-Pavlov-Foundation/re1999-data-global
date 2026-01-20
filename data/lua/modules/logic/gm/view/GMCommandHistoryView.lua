@@ -1,133 +1,135 @@
-﻿module("modules.logic.gm.view.GMCommandHistoryView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMCommandHistoryView.lua
 
-local var_0_0 = class("GMCommandHistoryView", BaseView)
+module("modules.logic.gm.view.GMCommandHistoryView", package.seeall)
 
-var_0_0.LevelType = "人物等级"
-var_0_0.HeroAttr = "英雄提升"
-var_0_0.ClickItem = "ClickItem"
-var_0_0.Return = "Return"
+local GMCommandHistoryView = class("GMCommandHistoryView", BaseView)
 
-function var_0_0.ctor(arg_1_0)
+GMCommandHistoryView.LevelType = "人物等级"
+GMCommandHistoryView.HeroAttr = "英雄提升"
+GMCommandHistoryView.ClickItem = "ClickItem"
+GMCommandHistoryView.Return = "Return"
+
+function GMCommandHistoryView:ctor()
 	return
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._maskGO = gohelper.findChild(arg_2_0.viewGO, "addItem")
-	arg_2_0._inpItem = SLFramework.UGUI.InputFieldWrap.GetWithPath(arg_2_0.viewGO, "viewport/content/item1/inpText")
+function GMCommandHistoryView:onInitView()
+	self._maskGO = gohelper.findChild(self.viewGO, "addItem")
+	self._inpItem = SLFramework.UGUI.InputFieldWrap.GetWithPath(self.viewGO, "viewport/content/item1/inpText")
 
-	arg_2_0:_hideScroll()
+	self:_hideScroll()
 end
 
-function var_0_0.addEvents(arg_3_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._inpItem.gameObject):AddClickListener(arg_3_0._onClickInpItem, arg_3_0, nil)
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._maskGO):AddClickListener(arg_3_0._onClickMask, arg_3_0, nil)
-	arg_3_0._inpItem:AddOnValueChanged(arg_3_0._onInpValueChanged, arg_3_0)
+function GMCommandHistoryView:addEvents()
+	SLFramework.UGUI.UIClickListener.Get(self._inpItem.gameObject):AddClickListener(self._onClickInpItem, self, nil)
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):AddClickListener(self._onClickMask, self, nil)
+	self._inpItem:AddOnValueChanged(self._onInpValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_4_0._inpItem.gameObject):RemoveClickListener()
-	SLFramework.UGUI.UIClickListener.Get(arg_4_0._maskGO):RemoveClickListener()
-	arg_4_0._inpItem:RemoveOnValueChanged()
+function GMCommandHistoryView:removeEvents()
+	SLFramework.UGUI.UIClickListener.Get(self._inpItem.gameObject):RemoveClickListener()
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):RemoveClickListener()
+	self._inpItem:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	GMController.instance:registerCallback(var_0_0.ClickItem, arg_5_0._onClickItem, arg_5_0)
+function GMCommandHistoryView:onOpen()
+	GMController.instance:registerCallback(GMCommandHistoryView.ClickItem, self._onClickItem, self)
 end
 
-function var_0_0.onClose(arg_6_0)
-	GMController.instance:unregisterCallback(var_0_0.ClickItem, arg_6_0._onClickItem, arg_6_0)
+function GMCommandHistoryView:onClose()
+	GMController.instance:unregisterCallback(GMCommandHistoryView.ClickItem, self._onClickItem, self)
 end
 
-function var_0_0._onClickInpItem(arg_7_0)
-	arg_7_0:_showScroll()
+function GMCommandHistoryView:_onClickInpItem()
+	self:_showScroll()
 end
 
-function var_0_0._onClickMask(arg_8_0)
-	arg_8_0:_hideScroll()
+function GMCommandHistoryView:_onClickMask()
+	self:_hideScroll()
 end
 
-function var_0_0._showScroll(arg_9_0)
-	gohelper.setActive(arg_9_0._maskGO, true)
-	recthelper.setAnchorX(arg_9_0._maskGO.transform, -600)
-	arg_9_0:_showDefaultItems()
+function GMCommandHistoryView:_showScroll()
+	gohelper.setActive(self._maskGO, true)
+	recthelper.setAnchorX(self._maskGO.transform, -600)
+	self:_showDefaultItems()
 end
 
-function var_0_0._hideScroll(arg_10_0)
-	gohelper.setActive(arg_10_0._maskGO, false)
-	recthelper.setAnchorX(arg_10_0._maskGO.transform, 0)
+function GMCommandHistoryView:_hideScroll()
+	gohelper.setActive(self._maskGO, false)
+	recthelper.setAnchorX(self._maskGO.transform, 0)
 	GMAddItemModel.instance:clear()
 end
 
-local var_0_1 = "左ctrl + 点击删除对应记录"
+local deleteTip = "左ctrl + 点击删除对应记录"
 
-function var_0_0._onClickItem(arg_11_0, arg_11_1)
-	if arg_11_1.type then
+function GMCommandHistoryView:_onClickItem(mo)
+	if mo.type then
 		return
 	end
 
-	if arg_11_1.name == var_0_1 then
+	if mo.name == deleteTip then
 		return
 	end
 
 	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
-		GMCommandHistoryModel.instance:removeCommandHistory(arg_11_1.name)
-		arg_11_0:_showDefaultItems()
+		GMCommandHistoryModel.instance:removeCommandHistory(mo.name)
+		self:_showDefaultItems()
 
 		return
 	end
 
-	arg_11_0._inpItem:SetText(arg_11_1.name)
-	arg_11_0:_hideScroll()
+	self._inpItem:SetText(mo.name)
+	self:_hideScroll()
 end
 
-function var_0_0._onInpValueChanged(arg_12_0, arg_12_1)
-	if string.nilorempty(arg_12_1) then
-		arg_12_0:_showDefaultItems()
+function GMCommandHistoryView:_onInpValueChanged(inputStr)
+	if string.nilorempty(inputStr) then
+		self:_showDefaultItems()
 	else
-		arg_12_0:_showTargetItems()
+		self:_showTargetItems()
 	end
 end
 
-function var_0_0._showDefaultItems(arg_13_0)
-	local var_13_0 = GMCommandHistoryModel.instance:getCommandHistory()
+function GMCommandHistoryView:_showDefaultItems()
+	local list = GMCommandHistoryModel.instance:getCommandHistory()
 
-	if #var_13_0 == 0 then
-		arg_13_0:_hideScroll()
+	if #list == 0 then
+		self:_hideScroll()
 
 		return
 	end
 
-	local var_13_1 = {
+	local result = {
 		{
-			name = var_0_1
+			name = deleteTip
 		}
 	}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		table.insert(var_13_1, {
-			name = iter_13_1
+	for i, v in ipairs(list) do
+		table.insert(result, {
+			name = v
 		})
 	end
 
-	GMAddItemModel.instance:setList(var_13_1)
+	GMAddItemModel.instance:setList(result)
 end
 
-function var_0_0._showTargetItems(arg_14_0)
-	local var_14_0 = GMCommandHistoryModel.instance:getCommandHistory()
-	local var_14_1 = arg_14_0._inpItem:GetText()
-	local var_14_2 = {}
+function GMCommandHistoryView:_showTargetItems()
+	local list = GMCommandHistoryModel.instance:getCommandHistory()
+	local itemIdStr = self._inpItem:GetText()
+	local toShowItems = {}
 
-	for iter_14_0 = 1, #var_14_0 do
-		local var_14_3 = var_14_0[iter_14_0]
+	for i = 1, #list do
+		local item = list[i]
 
-		if string.find(var_14_3, var_14_1) then
-			table.insert(var_14_2, {
-				name = var_14_3
+		if string.find(item, itemIdStr) then
+			table.insert(toShowItems, {
+				name = item
 			})
 		end
 	end
 
-	GMAddItemModel.instance:setList(var_14_2)
+	GMAddItemModel.instance:setList(toShowItems)
 end
 
-return var_0_0
+return GMCommandHistoryView

@@ -1,407 +1,462 @@
-﻿module("modules.logic.mail.view.MailView", package.seeall)
+﻿-- chunkname: @modules/logic/mail/view/MailView.lua
 
-local var_0_0 = class("MailView", BaseView)
+module("modules.logic.mail.view.MailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
-	arg_1_0._simagebgleft = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bgleft")
-	arg_1_0._simagewave = gohelper.findChildSingleImage(arg_1_0.viewGO, "mailtipview/#go_right/#simage_wave")
-	arg_1_0._btndeleteallmail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_deleteallmail")
-	arg_1_0._btngetallbatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_getallbatch")
-	arg_1_0._txtmailcount = gohelper.findChildText(arg_1_0.viewGO, "mailtipview/mailcount/mailcount/#txt_mailcount")
-	arg_1_0._txtunreadmailcount = gohelper.findChildText(arg_1_0.viewGO, "mailtipview/mailcount/#txt_unreadmailcount")
-	arg_1_0._goemptyleft = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_emptyleft")
-	arg_1_0._goemptyright = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_emptyright")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right")
-	arg_1_0._imgstamp = gohelper.findChildImage(arg_1_0.viewGO, "mailtipview/#go_right/#image_stamp")
-	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "mailtipview/#go_right/#scroll_content")
-	arg_1_0._sccontent = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#scroll_content/viewport/content")
-	arg_1_0._txtmailTitle = gohelper.findChildText(arg_1_0.viewGO, "mailtipview/#go_right/#txt_mailTitle")
-	arg_1_0._txtsender = gohelper.findChildText(arg_1_0.viewGO, "mailtipview/#go_right/sender/#txt_sender")
-	arg_1_0._txtsendtxt = gohelper.findChildText(arg_1_0.viewGO, "mailtipview/#go_right/senddate/#txt_sendtxt")
-	arg_1_0._txtexpireTime = gohelper.findChildText(arg_1_0.viewGO, "mailtipview/#go_right/time/#txt_expireTime")
-	arg_1_0._gosignature = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#scroll_content/viewport/content/#go_signature")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "mailtipview/#go_right/#go_rewards/#scroll_reward")
-	arg_1_0._btnget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mailtipview/#go_right/#btn_get")
-	arg_1_0._gohasgotten = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#go_rewards/#go_hasgotten")
-	arg_1_0._imagehasgottenbg = gohelper.findChildImage(arg_1_0.viewGO, "mailtipview/#go_right/#go_rewards/#go_hasgotten/#image_hasgottenbg")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#scroll_enclosure/Viewport/Content/#go_rewardItem")
-	arg_1_0._goselectone = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_selectone")
-	arg_1_0._imagetopicon = gohelper.findChildImage(arg_1_0.viewGO, "mailtipview/#go_left/#image_topicon")
-	arg_1_0._rewardContent = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#go_rewards/#scroll_reward/viewport/content")
-	arg_1_0._contentTrs = arg_1_0._rewardContent.transform
-	arg_1_0._gorewardsBg = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#go_rewards/#go_rewardsBg")
-	arg_1_0._gojump = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#go_jump")
-	arg_1_0._txtjump = gohelper.findChildText(arg_1_0.viewGO, "mailtipview/#go_right/#go_jump/#txt_jump")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mailtipview/#go_right/#go_jump/#txt_jump/#btn_jump")
-	arg_1_0._scrollmail = gohelper.findChildScrollRect(arg_1_0.viewGO, "mailtipview/#go_left/#scroll_mail")
-	arg_1_0._gomonthcard = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#go_monthcard")
-	arg_1_0._btnrenew = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mailtipview/#go_right/#go_monthcard/#btn_renew")
-	arg_1_0._simagecardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "mailtipview/#go_right/#go_monthcard/#simage_cardicon")
-	arg_1_0._gomodifyname = gohelper.findChild(arg_1_0.viewGO, "mailtipview/#go_right/#go_modifyname")
-	arg_1_0._btnmodifyname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mailtipview/#go_right/#go_modifyname/#btn_modifyname")
+local MailView = class("MailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MailView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._simagebgleft = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bgleft")
+	self._simagewave = gohelper.findChildSingleImage(self.viewGO, "mailtipview/#go_right/#simage_wave")
+	self._btndeleteallmail = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_deleteallmail")
+	self._btngetallbatch = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_getallbatch")
+	self._txtmailcount = gohelper.findChildText(self.viewGO, "mailtipview/mailcount/mailcount/#txt_mailcount")
+	self._txtunreadmailcount = gohelper.findChildText(self.viewGO, "mailtipview/mailcount/#txt_unreadmailcount")
+	self._goemptyleft = gohelper.findChild(self.viewGO, "mailtipview/#go_emptyleft")
+	self._goemptyright = gohelper.findChild(self.viewGO, "mailtipview/#go_emptyright")
+	self._goright = gohelper.findChild(self.viewGO, "mailtipview/#go_right")
+	self._imgstamp = gohelper.findChildImage(self.viewGO, "mailtipview/#go_right/#image_stamp")
+	self._scrollcontent = gohelper.findChildScrollRect(self.viewGO, "mailtipview/#go_right/#scroll_content")
+	self._sccontent = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#scroll_content/viewport/content")
+	self._txtmailTitle = gohelper.findChildText(self.viewGO, "mailtipview/#go_right/#txt_mailTitle")
+	self._txtsender = gohelper.findChildText(self.viewGO, "mailtipview/#go_right/sender/#txt_sender")
+	self._txtsendtxt = gohelper.findChildText(self.viewGO, "mailtipview/#go_right/senddate/#txt_sendtxt")
+	self._txtexpireTime = gohelper.findChildText(self.viewGO, "mailtipview/#go_right/time/#txt_expireTime")
+	self._gosignature = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#scroll_content/viewport/content/#go_signature")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "mailtipview/#go_right/#go_rewards/#scroll_reward")
+	self._btnget = gohelper.findChildButtonWithAudio(self.viewGO, "mailtipview/#go_right/#btn_get")
+	self._gohasgotten = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#go_rewards/#go_hasgotten")
+	self._imagehasgottenbg = gohelper.findChildImage(self.viewGO, "mailtipview/#go_right/#go_rewards/#go_hasgotten/#image_hasgottenbg")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#scroll_enclosure/Viewport/Content/#go_rewardItem")
+	self._goselectone = gohelper.findChild(self.viewGO, "mailtipview/#go_selectone")
+	self._imagetopicon = gohelper.findChildImage(self.viewGO, "mailtipview/#go_left/#image_topicon")
+	self._rewardContent = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#go_rewards/#scroll_reward/viewport/content")
+	self._contentTrs = self._rewardContent.transform
+	self._gorewardsBg = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#go_rewards/#go_rewardsBg")
+	self._gojump = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#go_jump")
+	self._txtjump = gohelper.findChildText(self.viewGO, "mailtipview/#go_right/#go_jump/#txt_jump")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "mailtipview/#go_right/#go_jump/#txt_jump/#btn_jump")
+	self._scrollmail = gohelper.findChildScrollRect(self.viewGO, "mailtipview/#go_left/#scroll_mail")
+	self._gomonthcard = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#go_monthcard")
+	self._btnrenew = gohelper.findChildButtonWithAudio(self.viewGO, "mailtipview/#go_right/#go_monthcard/#btn_renew")
+	self._simagecardicon = gohelper.findChildSingleImage(self.viewGO, "mailtipview/#go_right/#go_monthcard/#simage_cardicon")
+	self._gomodifyname = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#go_modifyname")
+	self._btnmodifyname = gohelper.findChildButtonWithAudio(self.viewGO, "mailtipview/#go_right/#go_modifyname/#btn_modifyname")
+	self._btnLock = gohelper.findChildButtonWithAudio(self.viewGO, "mailtipview/#go_right/#txt_mailTitle/#btn_Lock")
+	self._goLock = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#txt_mailTitle/#btn_Lock/#go_Lock")
+	self._goUnlock = gohelper.findChild(self.viewGO, "mailtipview/#go_right/#txt_mailTitle/#btn_Lock/#go_Unlock")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btndeleteallmail:AddClickListener(arg_2_0._btndeleteallmailOnClick, arg_2_0)
-	arg_2_0._btngetallbatch:AddClickListener(arg_2_0._btngetallbatchOnClick, arg_2_0)
-	arg_2_0._btnget:AddClickListener(arg_2_0._btngetOnClick, arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0._btnrenew:AddClickListener(arg_2_0._btnrenewOnClick, arg_2_0)
-	arg_2_0._btnmodifyname:AddClickListener(arg_2_0._btnmodifynameOnClick, arg_2_0)
+function MailView:addEvents()
+	self._btndeleteallmail:AddClickListener(self._btndeleteallmailOnClick, self)
+	self._btngetallbatch:AddClickListener(self._btngetallbatchOnClick, self)
+	self._btnget:AddClickListener(self._btngetOnClick, self)
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
+	self._btnrenew:AddClickListener(self._btnrenewOnClick, self)
+	self._btnmodifyname:AddClickListener(self._btnmodifynameOnClick, self)
+	self._btnLock:AddClickListener(self._btnLockOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btndeleteallmail:RemoveClickListener()
-	arg_3_0._btngetallbatch:RemoveClickListener()
-	arg_3_0._btnget:RemoveClickListener()
-	arg_3_0._btnjump:RemoveClickListener()
-	arg_3_0._btnrenew:RemoveClickListener()
-	arg_3_0._btnmodifyname:RemoveClickListener()
-	arg_3_0._scrollcontent:RemoveOnValueChanged()
+function MailView:removeEvents()
+	self._btndeleteallmail:RemoveClickListener()
+	self._btngetallbatch:RemoveClickListener()
+	self._btnget:RemoveClickListener()
+	self._btnjump:RemoveClickListener()
+	self._btnrenew:RemoveClickListener()
+	self._btnmodifyname:RemoveClickListener()
+	self._btnLock:RemoveClickListener()
+	self._scrollcontent:RemoveOnValueChanged()
 end
 
-function var_0_0._btndeleteallmailOnClick(arg_4_0)
+function MailView:_btndeleteallmailOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.MailSureToDeleteAll, MsgBoxEnum.BoxType.Yes_No, function()
 		MailRpc.instance:sendDeleteMailBatchRequest(1)
 	end)
 end
 
-function var_0_0._btngetallbatchOnClick(arg_6_0)
+function MailView:_btngetallbatchOnClick()
 	MailRpc.instance:sendReadMailBatchRequest(1)
 end
 
-function var_0_0._btnrenewOnClick(arg_7_0)
+function MailView:_btnrenewOnClick()
 	StoreController.instance:openStoreView(StoreEnum.StoreId.Package, StoreEnum.MonthCardGoodsId)
 end
 
-function var_0_0._btnmodifynameOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function MailView:_btnmodifynameOnClick()
+	self:closeThis()
 
-	local var_8_0 = PlayerModel.instance:getPlayinfo()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
 
-	PlayerController.instance:openPlayerView(var_8_0, true)
+	PlayerController.instance:openPlayerView(playerInfo, true)
 	ViewMgr.instance:openView(ViewName.PlayerModifyNameView)
 end
 
-function var_0_0._btngetOnClick(arg_9_0)
-	if arg_9_0._selectMO and arg_9_0._selectMO.state ~= MailEnum.ReadStatus.Read then
-		MailRpc.instance:sendReadMailRequest(arg_9_0._selectMO.id)
+function MailView:_btngetOnClick()
+	if self._selectMO and self._selectMO.state ~= MailEnum.ReadStatus.Read then
+		MailRpc.instance:sendReadMailRequest(self._selectMO.id)
 	end
 end
 
-function var_0_0._btnjumpOnClick(arg_10_0)
-	local var_10_0 = arg_10_0._selectMO:getJumpLink()
+function MailView:_btnjumpOnClick()
+	local jump = self._selectMO:getJumpLink()
 
-	if arg_10_0._selectMO and not string.nilorempty(var_10_0) then
-		local var_10_1, var_10_2 = string.match(var_10_0, "^SoJump#(.+)#(.+)$")
+	if self._selectMO and not string.nilorempty(jump) then
+		local rawUrl, id = string.match(jump, "^SoJump#(.+)#(.+)$")
 
-		if var_10_1 then
-			local var_10_3 = {
-				url = var_10_1,
-				id = var_10_2
-			}
-			local var_10_4 = cjson.encode(var_10_3)
+		if rawUrl then
+			local data = {}
 
-			SDKMgr.instance:openSoJump(var_10_4)
+			data.url = rawUrl
+			data.id = id
+
+			local resultJson = cjson.encode(data)
+
+			SDKMgr.instance:openSoJump(resultJson)
 		else
-			GameUtil.openURL(var_10_0)
+			GameUtil.openURL(jump)
 		end
 
-		MailRpc.instance:sendMarkMailJumpRequest(arg_10_0._selectMO.id)
+		MailRpc.instance:sendMarkMailJumpRequest(self._selectMO.id)
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0:addEventCb(MailController.instance, MailEvent.OnMailCountChange, arg_11_0._refreshCount, arg_11_0)
-	arg_11_0:addEventCb(MailController.instance, MailEvent.UpdateSelectMail, arg_11_0._updateSelectMail, arg_11_0)
-	arg_11_0:addEventCb(MailController.instance, MailEvent.OnMailRead, arg_11_0._onMailRead, arg_11_0)
-	arg_11_0:addEventCb(MailController.instance, MailEvent.OnMailDel, arg_11_0._onMailDel, arg_11_0)
-	gohelper.setActive(arg_11_0._gomodifyname, false)
+function MailView:_btnLockOnClick()
+	if self._selectMO and self._selectMO:hasLockOp() then
+		local isLock = true
 
-	arg_11_0.orginalPos = arg_11_0._scrollreward.transform.localPosition
-	arg_11_0._txtsignature = arg_11_0._gosignature:GetComponent(typeof(TMPro.TMP_Text))
-	arg_11_0._rectmask2DOneWay = arg_11_0._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2DOneWay))
-	arg_11_0._rectmask2DOneWay.enabled = true
+		if self._selectMO.isLock == true then
+			isLock = false
+		end
 
-	arg_11_0._simagebg:LoadImage(ResUrl.getMailBg("mail_bg2"))
-	arg_11_0._simagebgleft:LoadImage(ResUrl.getMailBg("mail_bg1"))
-	arg_11_0._simagewave:LoadImage(ResUrl.getMailBg("huawen_003"))
-	arg_11_0._simagecardicon:LoadImage(ResUrl.getMailBg("bg_youjiantishi"))
-	gohelper.setActive(arg_11_0._goright, false)
-	gohelper.setActive(arg_11_0._gorewardItem, false)
+		if isLock and MailModel.instance:getLockCount() >= MailModel.instance:getLockMax() then
+			GameFacade.showToast(ToastEnum.V3a2MailMaxLock)
+
+			return
+		end
+
+		MailRpc.instance:sendMailLockRequest(self._selectMO.id, isLock)
+	end
+end
+
+function MailView:_editableInitView()
+	self:addEventCb(MailController.instance, MailEvent.OnMailCountChange, self._refreshCount, self)
+	self:addEventCb(MailController.instance, MailEvent.UpdateSelectMail, self._updateSelectMail, self)
+	self:addEventCb(MailController.instance, MailEvent.OnMailRead, self._onMailRead, self)
+	self:addEventCb(MailController.instance, MailEvent.OnMailDel, self._onMailDel, self)
+	self:addEventCb(MailController.instance, MailEvent.OnMailLockReply, self._onMailLock, self)
+	gohelper.setActive(self._gomodifyname, false)
+
+	self.orginalPos = self._scrollreward.transform.localPosition
+	self._txtsignature = self._gosignature:GetComponent(typeof(TMPro.TMP_Text))
+	self._rectmask2DOneWay = self._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2DOneWay))
+	self._rectmask2DOneWay.enabled = true
+
+	self._simagebg:LoadImage(ResUrl.getMailBg("mail_bg2"))
+	self._simagebgleft:LoadImage(ResUrl.getMailBg("mail_bg1"))
+	self._simagewave:LoadImage(ResUrl.getMailBg("huawen_003"))
+	self._simagecardicon:LoadImage(ResUrl.getMailBg("bg_youjiantishi"))
+	gohelper.setActive(self._goright, false)
+	gohelper.setActive(self._gorewardItem, false)
 	MailModel.instance:setMailList()
-	arg_11_0:_refreshCount()
-	gohelper.addUIClickAudio(arg_11_0._btndeleteallmail.gameObject, AudioEnum.UI.UI_Mail_delete)
+	self:_refreshCount()
+	gohelper.addUIClickAudio(self._btndeleteallmail.gameObject, AudioEnum.UI.UI_Mail_delete)
 
-	arg_11_0._hyperLinkClick = arg_11_0._txtsignature:GetComponent(typeof(ZProj.TMPHyperLinkClick))
+	self._hyperLinkClick = self._txtsignature:GetComponent(typeof(ZProj.TMPHyperLinkClick))
 
-	arg_11_0._hyperLinkClick:SetClickListener(arg_11_0._onHyperLinkClick, arg_11_0)
+	self._hyperLinkClick:SetClickListener(self._onHyperLinkClick, self)
 end
 
-function var_0_0._onHyperLinkClick(arg_12_0, arg_12_1)
-	if not string.nilorempty(arg_12_1) then
-		local var_12_0, var_12_1 = string.match(arg_12_1, "^SoJump#(.+)#(.+)$")
+function MailView:_onHyperLinkClick(url)
+	if not string.nilorempty(url) then
+		local rawUrl, id = string.match(url, "^SoJump#(.+)#(.+)$")
 
-		if var_12_0 then
-			local var_12_2 = {
-				url = var_12_0,
-				id = var_12_1
-			}
-			local var_12_3 = cjson.encode(var_12_2)
+		if rawUrl then
+			local data = {}
 
-			SDKMgr.instance:openSoJump(var_12_3)
+			data.url = rawUrl
+			data.id = id
+
+			local resultJson = cjson.encode(data)
+
+			SDKMgr.instance:openSoJump(resultJson)
 		else
-			GameUtil.openURL(arg_12_1)
+			GameUtil.openURL(url)
 		end
 	end
 end
 
-function var_0_0._refreshCount(arg_13_0)
-	arg_13_0:_trySelectFirstMail()
+function MailView:_refreshCount()
+	self:_trySelectFirstMail()
 
-	local var_13_0 = MailModel.instance:getCount()
-	local var_13_1 = MailModel.instance:getUnreadCount()
+	local count = MailModel.instance:getCount()
+	local unreadCount = MailModel.instance:getUnreadCount()
 
-	arg_13_0._txtmailcount.text = var_13_0 .. "/" .. CommonConfig.instance:getConstStr(ConstEnum.MailMaxCount)
-	arg_13_0._txtunreadmailcount.text = var_13_1
+	self._txtmailcount.text = count .. "/" .. CommonConfig.instance:getConstStr(ConstEnum.MailMaxCount)
+	self._txtunreadmailcount.text = unreadCount
 
-	gohelper.setActive(arg_13_0._goemptyright, var_13_0 <= 0)
-	gohelper.setActive(arg_13_0._goemptyleft, var_13_0 <= 0)
-	gohelper.setActive(arg_13_0._imagetopicon.gameObject, var_13_0 > 0)
-	gohelper.setActive(arg_13_0._goselectone, not arg_13_0._selectMO and var_13_0 > 0)
+	gohelper.setActive(self._goemptyright, count <= 0)
+	gohelper.setActive(self._goemptyleft, count <= 0)
+	gohelper.setActive(self._imagetopicon.gameObject, count > 0)
+	gohelper.setActive(self._goselectone, not self._selectMO and count > 0)
 end
 
-function var_0_0._trySelectFirstMail(arg_14_0)
-	local var_14_0 = MailCategroyModel.instance:getList()
+function MailView:_trySelectFirstMail()
+	local mailList = MailCategroyModel.instance:getList()
 
-	if not arg_14_0._selectMO and #var_14_0 > 0 then
-		arg_14_0._scrollmail.verticalNormalizedPosition = 1
+	if not self._selectMO and #mailList > 0 then
+		self._scrollmail.verticalNormalizedPosition = 1
 
 		MailCategroyModel.instance:selectCell(1, true)
 	end
 end
 
-function var_0_0._updateSelectMail(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._selectMO and arg_15_0._selectMO.id == arg_15_1.id
+function MailView:_updateSelectMail(mo)
+	local update = self._selectMO and self._selectMO.id == mo.id
 
-	arg_15_0._selectMO = arg_15_1
+	self._selectMO = mo
 
-	gohelper.setActive(arg_15_0._goright, arg_15_0._selectMO)
+	gohelper.setActive(self._goright, self._selectMO)
 
-	local var_15_1 = MailModel.instance:getCount()
+	local count = MailModel.instance:getCount()
 
-	gohelper.setActive(arg_15_0._goselectone, not arg_15_0._selectMO and var_15_1 > 0)
+	gohelper.setActive(self._goselectone, not self._selectMO and count > 0)
 
-	if not var_15_0 then
-		arg_15_0._txtmailTitle.text = GameUtil.getBriefNameByWidth(arg_15_1:getLangTitle(), arg_15_0._txtmailTitle)
-		arg_15_0._txtsender.text = arg_15_1:getLangSender()
-		arg_15_0._txtsendtxt.text = TimeUtil.langTimestampToString3(arg_15_1.createTime / 1000)
-		arg_15_0._txtexpireTime.text = arg_15_0:_getExpireTimeString(arg_15_1.expireTime)
-		arg_15_0._txtsignature.text = arg_15_1:getLangContent()
-		arg_15_0.senderType = "img_yp_" .. arg_15_1:getSenderType()
+	if not update then
+		self._txtmailTitle.text = mo:getLangTitle()
+		self._txtsender.text = mo:getLangSender()
+		self._txtsendtxt.text = TimeUtil.langTimestampToString3(mo.createTime / 1000)
+		self._txtexpireTime.text = self:_getExpireTimeString(mo.expireTime)
+		self._txtsignature.text = mo:getLangContent()
+		self.senderType = "img_yp_" .. mo:getSenderType()
 
-		UISpriteSetMgr.instance:setMailSprite(arg_15_0._imgstamp, arg_15_0.senderType, true)
+		UISpriteSetMgr.instance:setMailSprite(self._imgstamp, self.senderType, true)
 
-		if string.nilorempty(arg_15_1:getJumpLink()) then
-			gohelper.setActive(arg_15_0._gojump.gameObject, false)
+		if string.nilorempty(mo:getJumpLink()) then
+			gohelper.setActive(self._gojump.gameObject, false)
 		else
-			gohelper.setActive(arg_15_0._gojump.gameObject, true)
+			gohelper.setActive(self._gojump.gameObject, true)
 
-			if type(arg_15_1.jumpTitle) ~= "table" and string.nilorempty(arg_15_1.jumpTitle) then
-				arg_15_0._txtjump.text = luaLang("mail_jump_title")
+			if type(mo.jumpTitle) ~= "table" and string.nilorempty(mo.jumpTitle) then
+				self._txtjump.text = luaLang("mail_jump_title")
 			else
-				arg_15_0._txtjump.text = arg_15_1:getTemplateJumpTitle()
+				self._txtjump.text = mo:getTemplateJumpTitle()
 			end
 		end
 
-		arg_15_0._scrollcontent.verticalNormalizedPosition = 1
-		arg_15_0._scrollreward.horizontalNormalizedPosition = 0
+		self._scrollcontent.verticalNormalizedPosition = 1
+		self._scrollreward.horizontalNormalizedPosition = 0
 
-		if arg_15_1:haveBonus() then
-			gohelper.setActive(arg_15_0._scrollreward.gameObject, true)
+		if mo:haveBonus() then
+			gohelper.setActive(self._scrollreward.gameObject, true)
 		else
-			if arg_15_1.state ~= MailEnum.ReadStatus.Read then
-				MailRpc.instance:sendReadMailRequest(arg_15_1.id)
+			if mo.state ~= MailEnum.ReadStatus.Read then
+				MailRpc.instance:sendReadMailRequest(mo.id)
 			end
 
-			gohelper.setActive(arg_15_0._scrollreward.gameObject, false)
+			gohelper.setActive(self._scrollreward.gameObject, false)
 		end
 
-		arg_15_0:handleSpecialTag(arg_15_1)
+		self:handleSpecialTag(mo)
 	end
 
-	if arg_15_1:haveBonus() then
-		gohelper.setActive(arg_15_0._btnget.gameObject, arg_15_1.state ~= MailEnum.ReadStatus.Read)
-		gohelper.setActive(arg_15_0._gohasgotten.gameObject, arg_15_1.state == MailEnum.ReadStatus.Read)
-		gohelper.setActive(arg_15_0._gorewardsBg, true)
+	if mo:haveBonus() then
+		gohelper.setActive(self._btnget.gameObject, mo.state ~= MailEnum.ReadStatus.Read)
+		gohelper.setActive(self._gohasgotten.gameObject, mo.state == MailEnum.ReadStatus.Read)
+		gohelper.setActive(self._gorewardsBg, true)
 
-		local var_15_2 = ItemConfig.instance:getStackItemList(arg_15_1.itemGroup)
+		local itemList = ItemConfig.instance:getStackItemList(mo.itemGroup)
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_2) do
-			iter_15_1.state = arg_15_1.state
+		for i, item in ipairs(itemList) do
+			item.state = mo.state
 		end
 
-		recthelper.setWidth(arg_15_0._imagehasgottenbg.transform, 318 + 60 * math.min(5, #var_15_2 - 1))
+		recthelper.setWidth(self._imagehasgottenbg.transform, 318 + 60 * math.min(5, #itemList - 1))
 
-		local var_15_3 = arg_15_0.viewContainer._viewSetting.otherRes[2]
+		local rewardRes = self.viewContainer._viewSetting.otherRes[2]
 
-		if not arg_15_0._rewards then
-			arg_15_0._rewards = {}
+		if not self._rewards then
+			self._rewards = {}
 		end
 
-		for iter_15_2 = 1, #var_15_2 do
-			if not arg_15_0._rewards[iter_15_2] then
-				local var_15_4 = arg_15_0:getResInst(var_15_3, arg_15_0._rewardContent)
+		for i = 1, #itemList do
+			if not self._rewards[i] then
+				local go = self:getResInst(rewardRes, self._rewardContent)
 
-				arg_15_0._rewards[iter_15_2] = MailRewardItem.New()
+				self._rewards[i] = MailRewardItem.New()
 
-				arg_15_0._rewards[iter_15_2]:init(var_15_4)
+				self._rewards[i]:init(go)
 			end
 
-			gohelper.setActive(arg_15_0._rewards[iter_15_2].go, true)
-			arg_15_0._rewards[iter_15_2]:onUpdateMO(var_15_2[iter_15_2])
+			gohelper.setActive(self._rewards[i].go, true)
+			self._rewards[i]:onUpdateMO(itemList[i])
 		end
 
-		for iter_15_3 = #var_15_2 + 1, #arg_15_0._rewards do
-			gohelper.setActive(arg_15_0._rewards[iter_15_3].go, false)
+		for i = #itemList + 1, #self._rewards do
+			gohelper.setActive(self._rewards[i].go, false)
 		end
 
-		transformhelper.setLocalPosXY(arg_15_0._scrollreward.transform, 999999, 999999)
-		TaskDispatcher.runDelay(arg_15_0.setRewardsPos, arg_15_0, 0)
+		transformhelper.setLocalPosXY(self._scrollreward.transform, 999999, 999999)
+		TaskDispatcher.runDelay(self.setRewardsPos, self, 0)
 	else
-		gohelper.setActive(arg_15_0._btnget.gameObject, false)
-		gohelper.setActive(arg_15_0._gohasgotten.gameObject, false)
-		gohelper.setActive(arg_15_0._gorewardsBg.gameObject, false)
+		gohelper.setActive(self._btnget.gameObject, false)
+		gohelper.setActive(self._gohasgotten.gameObject, false)
+		gohelper.setActive(self._gorewardsBg.gameObject, false)
 	end
 
-	local var_15_5 = 335
+	local scrollContentHeight = 335
 
-	if string.nilorempty(arg_15_1:getJumpLink()) then
-		var_15_5 = not arg_15_1:haveBonus() and arg_15_1.specialTag ~= MailEnum.SpecialTag.MonthExpired and 570 or 375
+	if string.nilorempty(mo:getJumpLink()) then
+		scrollContentHeight = not mo:haveBonus() and mo.specialTag ~= MailEnum.SpecialTag.MonthExpired and 570 or 375
 	end
 
-	arg_15_0:_setMailScrollHeight(var_15_5)
-	arg_15_0:_setContentHeight()
+	self:_setMailScrollHeight(scrollContentHeight)
+	self:_setContentHeight()
 
-	if recthelper.getHeight(arg_15_0._scrollcontent.transform) < recthelper.getHeight(arg_15_0._sccontent.transform) then
-		arg_15_0._rectmask2DOneWay.enabled = true
+	local scrollheight = recthelper.getHeight(self._scrollcontent.transform)
+	local contentheight = recthelper.getHeight(self._sccontent.transform)
+
+	if scrollheight < contentheight then
+		self._rectmask2DOneWay.enabled = true
 	else
-		arg_15_0._rectmask2DOneWay.enabled = false
+		self._rectmask2DOneWay.enabled = false
+	end
+
+	self:_updateMailLockUI()
+end
+
+function MailView:_updateMailLockUI()
+	local hasLockOp = self._selectMO and self._selectMO:hasLockOp()
+
+	gohelper.setActive(self._btnLock, hasLockOp)
+
+	if hasLockOp then
+		local isLock = self._selectMO.isLock
+
+		gohelper.setActive(self._goLock, isLock)
+		gohelper.setActive(self._goUnlock, not isLock)
 	end
 end
 
-function var_0_0._setContentHeight(arg_16_0)
-	local var_16_0 = 10
-	local var_16_1 = recthelper.getHeight(arg_16_0._txtsignature.transform) + var_16_0
+function MailView:_setContentHeight()
+	local padding = 10
+	local goheight = recthelper.getHeight(self._txtsignature.transform)
+	local height = goheight + padding
 
-	recthelper.setHeight(arg_16_0._sccontent.transform, var_16_1)
+	recthelper.setHeight(self._sccontent.transform, height)
 end
 
-function var_0_0.handleSpecialTag(arg_17_0, arg_17_1)
-	if arg_17_1 ~= nil and arg_17_1.specialTag ~= 0 then
-		gohelper.setActive(arg_17_0._gomonthcard, arg_17_1.specialTag == MailEnum.SpecialTag.MonthExpired)
-		gohelper.setActive(arg_17_0._gomodifyname, arg_17_1.specialTag == MailEnum.SpecialTag.ModifyName)
+function MailView:handleSpecialTag(mo)
+	if mo ~= nil and mo.specialTag ~= 0 then
+		gohelper.setActive(self._gomonthcard, mo.specialTag == MailEnum.SpecialTag.MonthExpired)
+		gohelper.setActive(self._gomodifyname, mo.specialTag == MailEnum.SpecialTag.ModifyName)
 	else
-		gohelper.setActive(arg_17_0._gomonthcard, false)
-		gohelper.setActive(arg_17_0._gomodifyname, false)
+		gohelper.setActive(self._gomonthcard, false)
+		gohelper.setActive(self._gomodifyname, false)
 	end
 end
 
-function var_0_0.setRewardsPos(arg_18_0)
-	if not arg_18_0._contentTrs then
+function MailView:setRewardsPos()
+	if not self._contentTrs then
 		return
 	end
 
-	local var_18_0 = 0
-	local var_18_1 = recthelper.getWidth(arg_18_0._contentTrs)
-	local var_18_2 = recthelper.getWidth(arg_18_0._scrollreward.transform)
+	local targetPosX = 0
+	local contentWidth = recthelper.getWidth(self._contentTrs)
+	local maxWidth = recthelper.getWidth(self._scrollreward.transform)
 
-	if var_18_2 <= var_18_1 then
-		var_18_0 = arg_18_0.orginalPos.x
+	if maxWidth <= contentWidth then
+		targetPosX = self.orginalPos.x
 	else
-		var_18_0 = arg_18_0.orginalPos.x + (var_18_2 - var_18_1) / 2
+		targetPosX = self.orginalPos.x + (maxWidth - contentWidth) / 2
 	end
 
-	transformhelper.setLocalPosXY(arg_18_0._scrollreward.transform, var_18_0, arg_18_0.orginalPos.y)
+	transformhelper.setLocalPosXY(self._scrollreward.transform, targetPosX, self.orginalPos.y)
 end
 
-function var_0_0._onMailRead(arg_19_0, arg_19_1)
-	if arg_19_0._selectMO then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
-			if arg_19_0._selectMO.id == iter_19_1 then
-				arg_19_0:_updateSelectMail(arg_19_0._selectMO)
+function MailView:_onMailRead(ids)
+	if self._selectMO then
+		for i, id in ipairs(ids) do
+			if self._selectMO.id == id then
+				self:_updateSelectMail(self._selectMO)
 			end
 		end
 	end
 end
 
-function var_0_0._onMailDel(arg_20_0, arg_20_1)
-	if arg_20_0._selectMO then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_1) do
-			if arg_20_0._selectMO and arg_20_0._selectMO.id == iter_20_1 then
-				gohelper.setActive(arg_20_0._goright, false)
+function MailView:_onMailDel(ids)
+	if self._selectMO then
+		for i, id in ipairs(ids) do
+			if self._selectMO and self._selectMO.id == id then
+				gohelper.setActive(self._goright, false)
 
-				arg_20_0._selectMO = nil
+				self._selectMO = nil
 			end
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_21_0)
+function MailView:_onMailLock(id, isLock)
+	MailCategroyModel.instance:onModelUpdate()
+	self:_updateMailLockUI()
+end
+
+function MailView:onUpdateParam()
 	return
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	if arg_22_0._rewards then
-		for iter_22_0 = 1, #arg_22_0._rewards do
-			arg_22_0._rewards[iter_22_0]:onDestroy()
+function MailView:onDestroyView()
+	if self._rewards then
+		for i = 1, #self._rewards do
+			self._rewards[i]:onDestroy()
 		end
 	end
 
-	arg_22_0._simagebg:UnLoadImage()
-	arg_22_0._simagebgleft:UnLoadImage()
-	arg_22_0._simagewave:UnLoadImage()
-	arg_22_0._simagecardicon:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagebgleft:UnLoadImage()
+	self._simagewave:UnLoadImage()
+	self._simagecardicon:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_23_0)
+function MailView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_24_0)
+function MailView:onClose()
 	return
 end
 
-function var_0_0._getExpireTimeString(arg_25_0, arg_25_1)
-	if arg_25_1 == 0 then
+function MailView:_getExpireTimeString(time)
+	if time == 0 then
 		return ""
 	end
 
-	local var_25_0 = arg_25_1 / 1000 - ServerTime.now()
+	local time1 = time / 1000
+	local expTime1 = time1 - ServerTime.now()
 
-	if var_25_0 <= 0 then
+	if expTime1 <= 0 then
 		return ""
 	end
 
-	local var_25_1 = var_25_0 / 86400
+	expTime1 = expTime1 / 86400
 
-	if var_25_1 > 1 then
-		return string.format("%d", var_25_1) .. luaLang("mail_dayslate")
+	local day = expTime1
+
+	if day > 1 then
+		return string.format("%d", day) .. luaLang("mail_dayslate")
 	else
-		local var_25_2 = var_25_1 * 24
+		local hour = day * 24
 
-		if var_25_2 > 1 then
-			return string.format("%d", var_25_2) .. luaLang("mail_hourlate")
+		if hour > 1 then
+			return string.format("%d", hour) .. luaLang("mail_hourlate")
 		else
-			local var_25_3 = var_25_2 * 60
+			local minute = hour * 60
 
-			if var_25_3 > 1 then
-				return string.format("%d", var_25_3) .. luaLang("mail_minutelate")
+			if minute > 1 then
+				return string.format("%d", minute) .. luaLang("mail_minutelate")
 			else
 				return 1 .. luaLang("mail_minutelate")
 			end
@@ -409,16 +464,16 @@ function var_0_0._getExpireTimeString(arg_25_0, arg_25_1)
 	end
 end
 
-function var_0_0._setMailScrollHeight(arg_26_0, arg_26_1)
-	local var_26_0 = gohelper.findChild(arg_26_0._scrollcontent.gameObject, "viewport/content")
+function MailView:_setMailScrollHeight(_perfectScrollHeight)
+	local _gomailcontent = gohelper.findChild(self._scrollcontent.gameObject, "viewport/content")
 
-	ZProj.UGUIHelper.RebuildLayout(var_26_0.transform)
+	ZProj.UGUIHelper.RebuildLayout(_gomailcontent.transform)
 
-	local var_26_1 = recthelper.getHeight(var_26_0.transform)
+	local _curmailcontentHeight = recthelper.getHeight(_gomailcontent.transform)
 
-	recthelper.setHeight(arg_26_0._scrollcontent.transform, arg_26_1)
+	recthelper.setHeight(self._scrollcontent.transform, _perfectScrollHeight)
 
-	arg_26_0.couldScroll = arg_26_1 < var_26_1 and true or false
+	self.couldScroll = _perfectScrollHeight < _curmailcontentHeight and true or false
 end
 
-return var_0_0
+return MailView

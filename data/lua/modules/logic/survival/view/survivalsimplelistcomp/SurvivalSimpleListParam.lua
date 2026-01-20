@@ -1,19 +1,21 @@
-﻿module("modules.logic.survival.view.survivalsimplelistcomp.SurvivalSimpleListParam", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/survivalsimplelistcomp/SurvivalSimpleListParam.lua
 
-local var_0_0 = pureTable("SurvivalSimpleListParam")
+module("modules.logic.survival.view.survivalsimplelistcomp.SurvivalSimpleListParam", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.cellClass = nil
-	arg_1_0.lineCount = 1
-	arg_1_0.cellWidth = 100
-	arg_1_0.cellHeight = 100
-	arg_1_0.cellSpaceH = 0
-	arg_1_0.cellSpaceV = 0
-	arg_1_0.startSpace = 0
-	arg_1_0.endSpace = 0
-	arg_1_0.sortMode = ScrollEnum.ScrollSortNone
-	arg_1_0.frameUpdateMs = 10
-	arg_1_0.minUpdateCountInFrame = 1
+local SurvivalSimpleListParam = pureTable("SurvivalSimpleListParam")
+
+function SurvivalSimpleListParam:ctor()
+	self.cellClass = nil
+	self.lineCount = 1
+	self.cellWidth = 100
+	self.cellHeight = 100
+	self.cellSpaceH = 0
+	self.cellSpaceV = 0
+	self.startSpace = 0
+	self.endSpace = 0
+	self.sortMode = ScrollEnum.ScrollSortNone
+	self.frameUpdateMs = 10
+	self.minUpdateCountInFrame = 1
 end
 
-return var_0_0
+return SurvivalSimpleListParam

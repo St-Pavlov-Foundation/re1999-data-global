@@ -1,166 +1,173 @@
-﻿module("modules.logic.character.view.destiny.CharacterDestinyUnlockStoneComp", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/destiny/CharacterDestinyUnlockStoneComp.lua
 
-local var_0_0 = class("CharacterDestinyUnlockStoneComp", LuaCompBase)
+module("modules.logic.character.view.destiny.CharacterDestinyUnlockStoneComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._txtdragtip = gohelper.findChildText(arg_1_0.viewGO, "txt_dragtip")
-	arg_1_0._gostone = gohelper.findChild(arg_1_0.viewGO, "#go_stone")
-	arg_1_0._simagestone = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_stone/#simage_stone")
+local CharacterDestinyUnlockStoneComp = class("CharacterDestinyUnlockStoneComp", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterDestinyUnlockStoneComp:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._txtdragtip = gohelper.findChildText(self.viewGO, "txt_dragtip")
+	self._gostone = gohelper.findChild(self.viewGO, "#go_stone")
+	self._simagestone = gohelper.findChildSingleImage(self.viewGO, "#go_stone/#simage_stone")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CharacterDestinyUnlockStoneComp:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CharacterDestinyUnlockStoneComp:removeEvents()
 	return
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	arg_4_0.viewGO = arg_4_1
+function CharacterDestinyUnlockStoneComp:init(go)
+	self.viewGO = go
 
-	arg_4_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	arg_5_0:addEvents()
+function CharacterDestinyUnlockStoneComp:addEventListeners()
+	self:addEvents()
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	arg_6_0:removeEvents()
+function CharacterDestinyUnlockStoneComp:removeEventListeners()
+	self:removeEvents()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._goeffect = gohelper.findChild(arg_7_0.viewGO, "effectItem")
-	arg_7_0._effectItems = arg_7_0:getUserDataTb_()
+function CharacterDestinyUnlockStoneComp:_editableInitView()
+	self._goeffect = gohelper.findChild(self.viewGO, "effectItem")
+	self._effectItems = self:getUserDataTb_()
 
-	for iter_7_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		local var_7_0 = arg_7_0:getEffectItem(iter_7_0)
-		local var_7_1, var_7_2 = recthelper.getAnchor(var_7_0.go.transform)
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		local item = self:getEffectItem(i)
+		local x, y = recthelper.getAnchor(item.go.transform)
 
-		var_7_0.orignAnchor = {
-			x = var_7_1,
-			y = var_7_2
+		item.orignAnchor = {
+			x = x,
+			y = y
 		}
 	end
 
-	arg_7_0._imagestone = gohelper.findChildImage(arg_7_0.viewGO, "#go_stone/#simage_stone")
-	arg_7_0._imagestone.color = Color(0.5, 0.5, 0.5, 1)
-	arg_7_0._linempc = gohelper.findChild(arg_7_0.viewGO, "#go_line"):GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	arg_7_0._effectmpc = arg_7_0._goeffect:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self._imagestone = gohelper.findChildImage(self.viewGO, "#go_stone/#simage_stone")
+	self._imagestone.color = Color(0.5, 0.5, 0.5, 1)
+
+	local goLine = gohelper.findChild(self.viewGO, "#go_line")
+
+	self._linempc = goLine:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self._effectmpc = self._goeffect:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 end
 
-function var_0_0._onDragBegin(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_1 then
+function CharacterDestinyUnlockStoneComp:_onDragBegin(param, pointerEventData)
+	if not param then
 		return
 	end
 
-	if arg_8_0._isSuccessUnlock[arg_8_1] then
+	if self._isSuccessUnlock[param] then
 		return
 	end
 
-	local var_8_0 = arg_8_0._effectItems[arg_8_1]
+	local item = self._effectItems[param]
 
-	if not var_8_0 or not var_8_0.isCanDrag then
+	if not item or not item.isCanDrag then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_resonate_property_click)
 end
 
-function var_0_0._onDrag(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_1 then
+function CharacterDestinyUnlockStoneComp:_onDrag(param, pointerEventData)
+	if not param then
 		return
 	end
 
-	if arg_9_0._isSuccessUnlock[arg_9_1] then
+	if self._isSuccessUnlock[param] then
 		return
 	end
 
-	local var_9_0 = arg_9_0._effectItems[arg_9_1]
+	local item = self._effectItems[param]
 
-	if not var_9_0 or not var_9_0.isCanDrag then
+	if not item or not item.isCanDrag then
 		return
 	end
 
-	local var_9_1 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_9_0.viewGO.transform)
+	local _dragPos = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), self.viewGO.transform)
 
-	recthelper.setAnchor(var_9_0.go.transform, var_9_1.x, var_9_1.y)
+	recthelper.setAnchor(item.go.transform, _dragPos.x, _dragPos.y)
 end
 
-function var_0_0._onDragEnd(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_1 then
+function CharacterDestinyUnlockStoneComp:_onDragEnd(param, pointerEventData)
+	if not param then
 		return
 	end
 
-	local var_10_0 = arg_10_1
+	local index = param
 
-	if arg_10_0._isSuccessUnlock[var_10_0] then
+	if self._isSuccessUnlock[index] then
 		return
 	end
 
-	local var_10_1 = arg_10_0._effectItems[var_10_0]
+	local item = self._effectItems[index]
 
-	if not var_10_1 or not var_10_1.isCanDrag then
+	if not item or not item.isCanDrag then
 		return
 	end
 
-	if Vector2.Distance(var_10_1.go.transform.anchoredPosition, Vector2.zero) < 300 then
-		arg_10_0:_finishDrag(var_10_0)
+	local dis = Vector2.Distance(item.go.transform.anchoredPosition, Vector2.zero)
+
+	if dis < 300 then
+		self:_finishDrag(index)
 	else
-		arg_10_0:_returnOrginPos(var_10_0)
+		self:_returnOrginPos(index)
 	end
 end
 
-function var_0_0._returnOrginPos(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._effectItems[arg_11_1]
-	local var_11_1 = var_11_0.go.transform.anchoredPosition
-	local var_11_2 = var_11_0.orignAnchor
-	local var_11_3 = Vector2.Distance(var_11_1, Vector2(var_11_2.x, var_11_2.y)) * 0.001
-	local var_11_4 = Mathf.Clamp(var_11_3, 0.5, 1)
+function CharacterDestinyUnlockStoneComp:_returnOrginPos(index)
+	local item = self._effectItems[index]
+	local nowAnchor = item.go.transform.anchoredPosition
+	local anchor = item.orignAnchor
+	local time = Vector2.Distance(nowAnchor, Vector2(anchor.x, anchor.y)) * 0.001
 
-	var_11_0.tweenId = ZProj.TweenHelper.DOAnchorPos(var_11_0.go.transform, var_11_2.x, var_11_2.y, var_11_4)
+	time = Mathf.Clamp(time, 0.5, 1)
+	item.tweenId = ZProj.TweenHelper.DOAnchorPos(item.go.transform, anchor.x, anchor.y, time)
 end
 
-function var_0_0._finishDrag(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._effectItems[arg_12_1]
+function CharacterDestinyUnlockStoneComp:_finishDrag(index)
+	local item = self._effectItems[index]
 
-	var_12_0.anim:Play(CharacterDestinyEnum.StoneViewAnim.Close, 0, 0)
-	gohelper.setActive(var_12_0.glow, true)
+	item.anim:Play(CharacterDestinyEnum.StoneViewAnim.Close, 0, 0)
+	gohelper.setActive(item.glow, true)
 
-	arg_12_0._isSuccessUnlock[arg_12_1] = true
+	self._isSuccessUnlock[index] = true
 
-	TaskDispatcher.runDelay(arg_12_0._checkAllFinish, arg_12_0, 0.9)
+	TaskDispatcher.runDelay(self._checkAllFinish, self, 0.9)
 
-	var_12_0.isCanDrag = false
+	item.isCanDrag = false
 
 	AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_fate_runes_put)
 end
 
-function var_0_0._checkAllFinish(arg_13_0)
-	if arg_13_0:_checkAllDragFinish() then
-		if arg_13_0._stoneView then
+function CharacterDestinyUnlockStoneComp:_checkAllFinish()
+	if self:_checkAllDragFinish() then
+		if self._stoneView then
 			AudioMgr.instance:trigger(AudioEnum.CharacterDestinyStone.play_ui_fate_lifestone_unlock)
-			arg_13_0._stoneView:playUnlockstoneAnim(CharacterDestinyEnum.StoneViewAnim.LevelUp, arg_13_0._onUnlockStone, arg_13_0)
-			arg_13_0._stoneView:onUnlockStone()
+			self._stoneView:playUnlockstoneAnim(CharacterDestinyEnum.StoneViewAnim.LevelUp, self._onUnlockStone, self)
+			self._stoneView:onUnlockStone()
 		else
-			arg_13_0:_onUnlockStone()
+			self:_onUnlockStone()
 		end
 	end
 end
 
-function var_0_0._onUnlockStone(arg_14_0)
-	CharacterDestinyController.instance:onUnlockStone(arg_14_0.heroId, arg_14_0.stoneId)
+function CharacterDestinyUnlockStoneComp:_onUnlockStone()
+	CharacterDestinyController.instance:onUnlockStone(self.heroId, self.stoneId)
 end
 
-function var_0_0._checkAllDragFinish(arg_15_0)
-	for iter_15_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		if not arg_15_0._isSuccessUnlock[iter_15_0] then
+function CharacterDestinyUnlockStoneComp:_checkAllDragFinish()
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		if not self._isSuccessUnlock[i] then
 			return false
 		end
 	end
@@ -168,108 +175,110 @@ function var_0_0._checkAllDragFinish(arg_15_0)
 	return true
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function CharacterDestinyUnlockStoneComp:onUpdateParam()
 	return
 end
 
-function var_0_0.onUpdateMo(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._isSuccessUnlock = {}
-	arg_17_0.heroId = arg_17_1
-	arg_17_0.stoneId = arg_17_2
+function CharacterDestinyUnlockStoneComp:onUpdateMo(heroId, stoneId)
+	self._isSuccessUnlock = {}
+	self.heroId = heroId
+	self.stoneId = stoneId
 
-	local var_17_0 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_17_2)
+	local co = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(stoneId)
 
-	arg_17_0._simagestone:LoadImage(ResUrl.getDestinyIcon(var_17_0.icon))
+	self._simagestone:LoadImage(ResUrl.getDestinyIcon(co.icon))
 
-	for iter_17_0 = 1, CharacterDestinyEnum.EffectItemCount do
-		local var_17_1 = arg_17_0:getEffectItem(iter_17_0)
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		local item = self:getEffectItem(i)
 
-		var_17_1.isCanDrag = true
+		item.isCanDrag = true
 
-		var_17_1.anim:Play(CharacterDestinyEnum.StoneViewAnim.Idle, 0, 0)
+		item.anim:Play(CharacterDestinyEnum.StoneViewAnim.Idle, 0, 0)
 
-		if var_17_1.tweenId then
-			ZProj.TweenHelper.KillById(var_17_1.tweenId)
+		if item.tweenId then
+			ZProj.TweenHelper.KillById(item.tweenId)
 
-			var_17_1.tweenId = nil
+			item.tweenId = nil
 		end
 
-		if var_17_1.orignAnchor then
-			recthelper.setAnchor(var_17_1.go.transform, var_17_1.orignAnchor.x, var_17_1.orignAnchor.y)
+		if item.orignAnchor then
+			recthelper.setAnchor(item.go.transform, item.orignAnchor.x, item.orignAnchor.y)
 		end
 
-		local var_17_2 = CharacterDestinyEnum.SlotTend[var_17_0.tend].RuneColor
+		local tenp = CharacterDestinyEnum.SlotTend[co.tend]
+		local color = tenp.RuneColor
 
-		if arg_17_0._linempc.color_01 ~= var_17_2 then
-			arg_17_0._linempc.color_01 = var_17_2
+		if self._linempc.color_01 ~= color then
+			self._linempc.color_01 = color
 
-			arg_17_0._linempc:SetProps()
+			self._linempc:SetProps()
 		end
 
-		if arg_17_0._effectmpc.color_01 ~= var_17_2 then
-			arg_17_0._effectmpc.color_01 = var_17_2
+		if self._effectmpc.color_01 ~= color then
+			self._effectmpc.color_01 = color
 
-			arg_17_0._effectmpc:SetProps()
+			self._effectmpc:SetProps()
 		end
 
-		gohelper.setActive(var_17_1.glow, false)
+		gohelper.setActive(item.glow, false)
 	end
 
-	TaskDispatcher.cancelTask(arg_17_0._checkAllFinish, arg_17_0)
+	TaskDispatcher.cancelTask(self._checkAllFinish, self)
 end
 
-function var_0_0.setStoneView(arg_18_0, arg_18_1)
-	arg_18_0._stoneView = arg_18_1
+function CharacterDestinyUnlockStoneComp:setStoneView(view)
+	self._stoneView = view
 end
 
-function var_0_0.getEffectItem(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._effectItems[arg_19_1]
+function CharacterDestinyUnlockStoneComp:getEffectItem(index)
+	local item = self._effectItems[index]
 
-	if not var_19_0 then
-		local var_19_1 = gohelper.findChild(arg_19_0._goeffect, arg_19_1)
-		local var_19_2 = gohelper.findChild(var_19_1, "txt")
+	if not item then
+		local go = gohelper.findChild(self._goeffect, index)
+		local txt = gohelper.findChild(go, "txt")
 
-		var_19_0 = arg_19_0:getUserDataTb_()
-		var_19_0.go = var_19_1
-		var_19_0.txt = var_19_2
-		var_19_0.txtglow = gohelper.findChildImage(var_19_1, "#txt_glow")
-		var_19_0.drag = SLFramework.UGUI.UIDragListener.Get(var_19_2.gameObject)
+		item = self:getUserDataTb_()
+		item.go = go
+		item.txt = txt
+		item.txtglow = gohelper.findChildImage(go, "#txt_glow")
+		item.drag = SLFramework.UGUI.UIDragListener.Get(txt.gameObject)
 
-		var_19_0.drag:AddDragBeginListener(arg_19_0._onDragBegin, arg_19_0, arg_19_1)
-		var_19_0.drag:AddDragListener(arg_19_0._onDrag, arg_19_0, arg_19_1)
-		var_19_0.drag:AddDragEndListener(arg_19_0._onDragEnd, arg_19_0, arg_19_1)
+		item.drag:AddDragBeginListener(self._onDragBegin, self, index)
+		item.drag:AddDragListener(self._onDrag, self, index)
+		item.drag:AddDragEndListener(self._onDragEnd, self, index)
 
-		var_19_0.anim = var_19_1:GetComponent(typeof(UnityEngine.Animator))
+		item.anim = go:GetComponent(typeof(UnityEngine.Animator))
 
-		local var_19_3 = gohelper.findChild(arg_19_0.viewGO, "#go_line/#mesh0" .. arg_19_1)
+		local goglow = gohelper.findChild(self.viewGO, "#go_line/#mesh0" .. index)
+		local glow = gohelper.findChild(goglow, "#glow")
 
-		var_19_0.glow = gohelper.findChild(var_19_3, "#glow")
-		var_19_0.isCanDrag = true
-		arg_19_0._effectItems[arg_19_1] = var_19_0
+		item.glow = glow
+		item.isCanDrag = true
+		self._effectItems[index] = item
 	end
 
-	return var_19_0
+	return item
 end
 
-function var_0_0.onClose(arg_20_0)
+function CharacterDestinyUnlockStoneComp:onClose()
 	return
 end
 
-function var_0_0.onDestroy(arg_21_0)
-	for iter_21_0, iter_21_1 in pairs(arg_21_0._effectItems) do
-		iter_21_1.drag:RemoveDragBeginListener()
-		iter_21_1.drag:RemoveDragListener()
-		iter_21_1.drag:RemoveDragEndListener()
+function CharacterDestinyUnlockStoneComp:onDestroy()
+	for _, item in pairs(self._effectItems) do
+		item.drag:RemoveDragBeginListener()
+		item.drag:RemoveDragListener()
+		item.drag:RemoveDragEndListener()
 
-		if iter_21_1.tweenId then
-			ZProj.TweenHelper.KillById(iter_21_1.tweenId)
+		if item.tweenId then
+			ZProj.TweenHelper.KillById(item.tweenId)
 
-			iter_21_1.tweenId = nil
+			item.tweenId = nil
 		end
 	end
 
-	arg_21_0._simagestone:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_21_0._checkAllFinish, arg_21_0)
+	self._simagestone:UnLoadImage()
+	TaskDispatcher.cancelTask(self._checkAllFinish, self)
 end
 
-return var_0_0
+return CharacterDestinyUnlockStoneComp

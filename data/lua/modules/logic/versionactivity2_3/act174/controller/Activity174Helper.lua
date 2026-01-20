@@ -1,87 +1,90 @@
-﻿module("modules.logic.versionactivity2_3.act174.controller.Activity174Helper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/controller/Activity174Helper.lua
 
-local var_0_0 = class("Activity174Helper")
+module("modules.logic.versionactivity2_3.act174.controller.Activity174Helper", package.seeall)
 
-function var_0_0.MatchKeyInArray(arg_1_0, arg_1_1, arg_1_2)
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
-		if iter_1_1[arg_1_2] == arg_1_1 then
-			return iter_1_1
+local Activity174Helper = class("Activity174Helper")
+
+function Activity174Helper.MatchKeyInArray(array, value, key)
+	for _, v in ipairs(array) do
+		if v[key] == value then
+			return v
 		end
 	end
 end
 
-function var_0_0.CalculateRowColumn(arg_2_0)
-	local var_2_0 = math.ceil(arg_2_0 / 4)
-	local var_2_1 = arg_2_0 % 4
+function Activity174Helper.CalculateRowColumn(index)
+	local row = math.ceil(index / 4)
+	local column = index % 4
 
-	var_2_1 = var_2_1 ~= 0 and var_2_1 or 4
+	column = column ~= 0 and column or 4
 
-	return var_2_0, var_2_1
+	return row, column
 end
 
-function var_0_0.sortActivity174RoleCo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.type == Activity174Enum.CharacterType.Hero
+function Activity174Helper.sortActivity174RoleCo(aRoleCo, bRoleCo)
+	local aIsHero = aRoleCo.type == Activity174Enum.CharacterType.Hero
+	local bIsHero = bRoleCo.type == Activity174Enum.CharacterType.Hero
 
-	if var_3_0 ~= (arg_3_1.type == Activity174Enum.CharacterType.Hero) then
-		return var_3_0
+	if aIsHero ~= bIsHero then
+		return aIsHero
 	end
 
-	if arg_3_0.rare ~= arg_3_1.rare then
-		return arg_3_0.rare > arg_3_1.rare
+	if aRoleCo.rare ~= bRoleCo.rare then
+		return aRoleCo.rare > bRoleCo.rare
 	end
 
-	return arg_3_0.heroId < arg_3_1.heroId
+	return aRoleCo.heroId < bRoleCo.heroId
 end
 
-function var_0_0.getEmptyFightEntityMO(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function Activity174Helper.getEmptyFightEntityMO(heroUid, roleCo)
+	if not roleCo then
 		return
 	end
 
-	local var_4_0 = FightEntityMO.New()
+	local fightEntityMO = FightEntityMO.New()
 
-	var_4_0.id = tostring(arg_4_0)
-	var_4_0.uid = var_4_0.id
-	var_4_0.modelId = arg_4_1.heroId or 0
-	var_4_0.entityType = 1
-	var_4_0.exPoint = 0
-	var_4_0.side = FightEnum.EntitySide.MySide
-	var_4_0.currentHp = 0
-	var_4_0.attrMO = FightHelper._buildAttr(arg_4_1)
-	var_4_0.skillIds = var_0_0.buildRoleSkills(arg_4_1)
-	var_4_0.shieldValue = 0
-	var_4_0.level = 1
-	var_4_0.skin = arg_4_1.skinId
+	fightEntityMO.id = tostring(heroUid)
+	fightEntityMO.uid = fightEntityMO.id
+	fightEntityMO.modelId = roleCo.heroId or 0
+	fightEntityMO.entityType = 1
+	fightEntityMO.exPoint = 0
+	fightEntityMO.side = FightEnum.EntitySide.MySide
+	fightEntityMO.currentHp = 0
+	fightEntityMO.attrMO = FightHelper._buildAttr(roleCo)
+	fightEntityMO.skillIds = Activity174Helper.buildRoleSkills(roleCo)
+	fightEntityMO.shieldValue = 0
+	fightEntityMO.level = 1
+	fightEntityMO.skin = roleCo.skinId
 
-	return var_4_0
+	return fightEntityMO
 end
 
-function var_0_0.buildRoleSkills(arg_5_0)
-	local var_5_0 = {}
+function Activity174Helper.buildRoleSkills(roleCo)
+	local arr = {}
 
-	if arg_5_0 then
-		local var_5_1 = string.splitToNumber(arg_5_0.passiveSkill, "|")
+	if roleCo then
+		local passiveSkills = string.splitToNumber(roleCo.passiveSkill, "|")
 
-		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-			var_5_0[#var_5_0 + 1] = iter_5_1
+		for _, skillId in ipairs(passiveSkills) do
+			arr[#arr + 1] = skillId
 		end
 
-		local var_5_2 = string.splitToNumber(arg_5_0.activeSkill1, "#")
+		local skills1 = string.splitToNumber(roleCo.activeSkill1, "#")
 
-		for iter_5_2, iter_5_3 in ipairs(var_5_2) do
-			var_5_0[#var_5_0 + 1] = iter_5_3
+		for _, skillId in ipairs(skills1) do
+			arr[#arr + 1] = skillId
 		end
 
-		local var_5_3 = string.splitToNumber(arg_5_0.activeSkill2, "#")
+		local skills2 = string.splitToNumber(roleCo.activeSkill2, "#")
 
-		for iter_5_4, iter_5_5 in ipairs(var_5_3) do
-			var_5_0[#var_5_0 + 1] = iter_5_5
+		for _, skillId in ipairs(skills2) do
+			arr[#arr + 1] = skillId
 		end
 
-		var_5_0[#var_5_0 + 1] = arg_5_0.uniqueSkill
+		arr[#arr + 1] = roleCo.uniqueSkill
 	end
 
-	return var_5_0
+	return arr
 end
 
-return var_0_0
+return Activity174Helper

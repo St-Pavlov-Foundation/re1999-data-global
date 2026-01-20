@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 2,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 3,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 4,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 5,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 6,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 7,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 8,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 9,
+    "trigger": 1,
+    "rate": 1000
+  },
+  {
+    "id": 10,
+    "trigger": 7,
+    "rate": 200
+  },
+  {
+    "id": 11,
+    "trigger": 6,
+    "rate": 500
+  },
+  {
+    "id": 12,
+    "trigger": 6,
+    "rate": 500
+  },
+  {
+    "id": 13,
+    "trigger": 6,
+    "rate": 500
+  },
+  {
+    "id": 14,
+    "trigger": 6,
+    "rate": 500
+  },
+  {
+    "id": 15,
+    "trigger": 6,
+    "rate": 500
+  },
+  {
+    "id": 16,
+    "trigger": 6,
+    "rate": 500
+  },
+  {
+    "id": 17,
+    "trigger": 6,
+    "rate": 500
+  },
+  {
+    "id": 18,
+    "trigger": 2,
+    "rate": 1000
+  },
+  {
+    "id": 19,
+    "trigger": 2,
+    "rate": 1000
+  },
+  {
+    "id": 20,
+    "trigger": 2,
+    "rate": 1000
+  },
+  {
+    "id": 21,
+    "trigger": 2,
+    "rate": 1000
+  },
+  {
+    "id": 22,
+    "trigger": 3,
+    "rate": 500
+  },
+  {
+    "id": 23,
+    "trigger": 4,
+    "rate": 200
+  },
+  {
+    "id": 24,
+    "trigger": 5,
+    "rate": 200
+  },
+  {
+    "id": 25,
+    "trigger": 3,
+    "rate": 500
+  },
+  {
+    "id": 26,
+    "trigger": 3,
+    "rate": 500
+  },
+  {
+    "id": 27,
+    "trigger": 3,
+    "rate": 500
+  },
+  {
+    "id": 28,
+    "trigger": 3,
+    "rate": 500
+  }
+]

@@ -1,63 +1,69 @@
-﻿module("modules.logic.act189.model.Activity189Model", package.seeall)
+﻿-- chunkname: @modules/logic/act189/model/Activity189Model.lua
 
-local var_0_0 = class("Activity189Model", BaseModel)
+module("modules.logic.act189.model.Activity189Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Activity189Model = class("Activity189Model", BaseModel)
+
+function Activity189Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._actInfo = {}
+function Activity189Model:reInit()
+	self._actInfo = {}
 end
 
-function var_0_0.getActMO(arg_3_0, arg_3_1)
-	return ActivityModel.instance:getActMO(arg_3_1)
+function Activity189Model:getActMO(activityId)
+	return ActivityModel.instance:getActMO(activityId)
 end
 
-function var_0_0.getRealStartTimeStamp(arg_4_0, arg_4_1)
-	return arg_4_0:getActMO(arg_4_1):getRealStartTimeStamp()
+function Activity189Model:getRealStartTimeStamp(activityId)
+	return self:getActMO(activityId):getRealStartTimeStamp()
 end
 
-function var_0_0.getRealEndTimeStamp(arg_5_0, arg_5_1)
-	return arg_5_0:getActMO(arg_5_1):getRealEndTimeStamp()
+function Activity189Model:getRealEndTimeStamp(activityId)
+	return self:getActMO(activityId):getRealEndTimeStamp()
 end
 
-function var_0_0.getRemainTimeSec(arg_6_0, arg_6_1)
-	return ActivityModel.instance:getRemainTimeSec(arg_6_1) or 0
+function Activity189Model:getRemainTimeSec(activityId)
+	local remainTimeSec = ActivityModel.instance:getRemainTimeSec(activityId)
+
+	return remainTimeSec or 0
 end
 
-function var_0_0.onReceiveGetAct189InfoReply(arg_7_0, arg_7_1)
-	arg_7_0._actInfo[arg_7_1.activityId] = arg_7_1
+function Activity189Model:onReceiveGetAct189InfoReply(msg)
+	self._actInfo[msg.activityId] = msg
 end
 
-function var_0_0.onReceiveGetAct189OnceBonusReply(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._actInfo[arg_8_1.activityId]
+function Activity189Model:onReceiveGetAct189OnceBonusReply(msg)
+	local actInfo = self._actInfo[msg.activityId]
 
-	if not var_8_0 then
+	if not actInfo then
 		return
 	end
 
-	rawset(var_8_0, "hasGetOnceBonus", true)
+	rawset(actInfo, "hasGetOnceBonus", true)
 end
 
-function var_0_0.isClaimed(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._actInfo[arg_9_1]
+function Activity189Model:isClaimed(activityId)
+	local actInfo = self._actInfo[activityId]
 
-	if not var_9_0 then
+	if not actInfo then
 		return false
 	end
 
-	return var_9_0.hasGetOnceBonus
+	return actInfo.hasGetOnceBonus
 end
 
-function var_0_0.isClaimable(arg_10_0, arg_10_1)
-	if not arg_10_0._actInfo[arg_10_1] then
+function Activity189Model:isClaimable(activityId)
+	local actInfo = self._actInfo[activityId]
+
+	if not actInfo then
 		return false
 	end
 
-	return not arg_10_0:isClaimed(arg_10_1)
+	return not self:isClaimed(activityId)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity189Model.instance = Activity189Model.New()
 
-return var_0_0
+return Activity189Model

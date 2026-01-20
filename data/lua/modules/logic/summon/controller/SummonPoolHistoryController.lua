@@ -1,109 +1,110 @@
-﻿module("modules.logic.summon.controller.SummonPoolHistoryController", package.seeall)
+﻿-- chunkname: @modules/logic/summon/controller/SummonPoolHistoryController.lua
 
-local var_0_0 = class("SummonPoolHistoryController", BaseController)
+module("modules.logic.summon.controller.SummonPoolHistoryController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SummonPoolHistoryController = class("SummonPoolHistoryController", BaseController)
+
+function SummonPoolHistoryController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function SummonPoolHistoryController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function SummonPoolHistoryController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function SummonPoolHistoryController:addConstEvents()
 	return
 end
 
-function var_0_0.updateSummonQueryToken(arg_5_0, arg_5_1)
-	SummonPoolHistoryModel.instance:setToken(arg_5_1.token)
-	arg_5_0:_requestWeb()
+function SummonPoolHistoryController:updateSummonQueryToken(info)
+	SummonPoolHistoryModel.instance:setToken(info.token)
+	self:_requestWeb()
 end
 
-function var_0_0.request(arg_6_0)
+function SummonPoolHistoryController:request()
 	if LoginModel.instance.serverIp == nil or LoginModel.instance.serverPort == nil then
 		logNormal("serverIp is nil, or serverPort is nil")
 
 		return
 	end
 
-	if arg_6_0._httpWebRequestId then
+	if self._httpWebRequestId then
 		return
 	end
 
 	if SummonPoolHistoryModel.instance:isTokenValidity() then
-		arg_6_0:_requestWeb()
+		self:_requestWeb()
 	else
 		SummonRpc.instance:sendSummonQueryTokenRequest()
 	end
 end
 
-function var_0_0._requestWeb(arg_7_0)
-	if arg_7_0._httpWebRequestId then
+function SummonPoolHistoryController:_requestWeb()
+	if self._httpWebRequestId then
 		return
 	end
 
-	local var_7_0
-	local var_7_1 = UrlConfig.getConfig().login
+	local httpLoginUrl
+	local httpLoginUrlInfo = UrlConfig.getConfig().login
 
-	if type(var_7_1) == "table" then
-		local var_7_2 = tostring(SDKMgr.instance:getChannelId()) or "100"
+	if type(httpLoginUrlInfo) == "table" then
+		local channelId = tostring(SDKMgr.instance:getChannelId()) or "100"
 
-		var_7_0 = var_7_1[var_7_2]
+		httpLoginUrl = httpLoginUrlInfo[channelId]
 
-		if not var_7_0 then
-			for iter_7_0, iter_7_1 in pairs(var_7_1) do
-				var_7_0 = iter_7_1
+		if not httpLoginUrl then
+			for cid, url in pairs(httpLoginUrlInfo) do
+				httpLoginUrl = url
 
-				logError(string.format("httpLoginUrl not exist, channelId=%s\nuse %s:%s", var_7_2, iter_7_0, var_7_0 or "nil"))
+				logError(string.format("httpLoginUrl not exist, channelId=%s\nuse %s:%s", channelId, cid, httpLoginUrl or "nil"))
 
 				break
 			end
 		end
 	else
-		var_7_0 = var_7_1
+		httpLoginUrl = httpLoginUrlInfo
 	end
 
-	local var_7_3 = string.format("%s/query/summon", var_7_0)
-	local var_7_4 = {}
+	local url = string.format("%s/query/summon", httpLoginUrl)
+	local data = {}
 
-	table.insert(var_7_4, string.format("userId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(var_7_4, string.format("token=%s", SummonPoolHistoryModel.instance:getToken()))
+	table.insert(data, string.format("userId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(data, string.format("token=%s", SummonPoolHistoryModel.instance:getToken()))
 
-	local var_7_5 = var_7_3 .. "?" .. table.concat(var_7_4, "&")
+	url = url .. "?" .. table.concat(data, "&")
+	self._httpWebRequestId = SLFramework.SLWebRequestClient.Instance:Get(url, self._onHttpWebHistoryDataResponse, self)
 
-	arg_7_0._httpWebRequestId = SLFramework.SLWebRequest.Instance:Get(var_7_5, arg_7_0._onHttpWebHistoryDataResponse, arg_7_0)
-
-	logNormal(var_7_5)
+	logNormal(url)
 end
 
-function var_0_0._onHttpWebHistoryDataResponse(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._httpWebRequestId = nil
+function SummonPoolHistoryController:_onHttpWebHistoryDataResponse(isSuccess, msg)
+	self._httpWebRequestId = nil
 
-	if not arg_8_1 or string.nilorempty(arg_8_2) then
+	if not isSuccess or string.nilorempty(msg) then
 		logNormal(string.format("获取卡池历史失败"))
 
 		return
 	end
 
-	local var_8_0 = cjson.decode(arg_8_2)
+	local data = cjson.decode(msg)
 
-	if var_8_0 and var_8_0.code and var_8_0.code == 200 then
-		arg_8_0._lastGetTime = Time.time
+	if data and data.code and data.code == 200 then
+		self._lastGetTime = Time.time
 
 		logNormal(string.format("获取卡池历史成功！！"))
-		SummonPoolHistoryModel.instance:onGetInfo(var_8_0.data)
+		SummonPoolHistoryModel.instance:onGetInfo(data.data)
 		SummonController.instance:dispatchEvent(SummonEvent.onGetSummonPoolHistoryData)
-	elseif var_8_0 then
-		logNormal(string.format("获取卡池历史出错了 code = %d", var_8_0.code))
+	elseif data then
+		logNormal(string.format("获取卡池历史出错了 code = %d", data.code))
 	else
 		logNormal(string.format("获取卡池历史出错了"))
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SummonPoolHistoryController.instance = SummonPoolHistoryController.New()
 
-return var_0_0
+return SummonPoolHistoryController

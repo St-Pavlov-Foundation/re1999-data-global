@@ -1,202 +1,206 @@
-﻿module("modules.logic.gm.view.FightGMDouQuQuTest", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/FightGMDouQuQuTest.lua
 
-local var_0_0 = class("FightGMDouQuQuTest", FightBaseView)
+module("modules.logic.gm.view.FightGMDouQuQuTest", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "btn_close")
-	arg_1_0._btnEnemyAddSelect = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "centre/enemy/btn_add")
-	arg_1_0._btnPlayerAddSelect = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "centre/player/btn_add")
-	arg_1_0._btnEnterFight = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "centre/btn_enter_fight")
-	arg_1_0._btnMultiSimulate = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "centre/btn_multi_simulate")
-	arg_1_0._enemySelectItemContent = gohelper.findChild(arg_1_0.viewGO, "centre/enemy/Scroll View/Viewport/Content")
-	arg_1_0._playerSelectItemContent = gohelper.findChild(arg_1_0.viewGO, "centre/player/Scroll View/Viewport/Content")
-	arg_1_0._enemySelectedItemContent = gohelper.findChild(arg_1_0.viewGO, "centre/selected/enemy_selected/Viewport/Content")
-	arg_1_0._playerSelectedItemContent = gohelper.findChild(arg_1_0.viewGO, "centre/selected/player_selected/Viewport/Content")
-	arg_1_0._selectItem = gohelper.findChild(arg_1_0.viewGO, "centre/enemy/Scroll View/Viewport/Content/item")
-	arg_1_0._pathInput = gohelper.findChildInputField(arg_1_0.viewGO, "topLeft/InputField")
-	arg_1_0._battleIdInput = gohelper.findChildInputField(arg_1_0.viewGO, "centre/battleIdInput/InputField")
-	arg_1_0._battleCountInput = gohelper.findChildInputField(arg_1_0.viewGO, "centre/battleCountInput/InputField")
-	arg_1_0._logText = gohelper.findChildText(arg_1_0.viewGO, "bottom/Scroll View/Viewport/Content/Text")
+local FightGMDouQuQuTest = class("FightGMDouQuQuTest", FightBaseView)
+
+function FightGMDouQuQuTest:onInitView()
+	self._btnClose = gohelper.findChildClickWithDefaultAudio(self.viewGO, "btn_close")
+	self._btnEnemyAddSelect = gohelper.findChildClickWithDefaultAudio(self.viewGO, "centre/enemy/btn_add")
+	self._btnPlayerAddSelect = gohelper.findChildClickWithDefaultAudio(self.viewGO, "centre/player/btn_add")
+	self._btnEnterFight = gohelper.findChildClickWithDefaultAudio(self.viewGO, "centre/btn_enter_fight")
+	self._btnMultiSimulate = gohelper.findChildClickWithDefaultAudio(self.viewGO, "centre/btn_multi_simulate")
+	self._enemySelectItemContent = gohelper.findChild(self.viewGO, "centre/enemy/Scroll View/Viewport/Content")
+	self._playerSelectItemContent = gohelper.findChild(self.viewGO, "centre/player/Scroll View/Viewport/Content")
+	self._enemySelectedItemContent = gohelper.findChild(self.viewGO, "centre/selected/enemy_selected/Viewport/Content")
+	self._playerSelectedItemContent = gohelper.findChild(self.viewGO, "centre/selected/player_selected/Viewport/Content")
+	self._selectItem = gohelper.findChild(self.viewGO, "centre/enemy/Scroll View/Viewport/Content/item")
+	self._pathInput = gohelper.findChildInputField(self.viewGO, "topLeft/InputField")
+	self._battleIdInput = gohelper.findChildInputField(self.viewGO, "centre/battleIdInput/InputField")
+	self._battleCountInput = gohelper.findChildInputField(self.viewGO, "centre/battleCountInput/InputField")
+	self._logText = gohelper.findChildText(self.viewGO, "bottom/Scroll View/Viewport/Content/Text")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0._btnClose, arg_2_0.closeThis)
-	arg_2_0:com_registClick(arg_2_0._btnEnemyAddSelect, arg_2_0._onBtnEnemyAddSelect)
-	arg_2_0:com_registClick(arg_2_0._btnPlayerAddSelect, arg_2_0._onBtnPlayerAddSelect)
-	arg_2_0:com_registClick(arg_2_0._btnEnterFight, arg_2_0._onBtnEnterFight)
-	arg_2_0:com_registClick(arg_2_0._btnMultiSimulate, arg_2_0._onBtnMultiSimulate)
-	arg_2_0._pathInput:AddOnValueChanged(arg_2_0._onPathInputChange, arg_2_0)
-	arg_2_0._battleIdInput:AddOnValueChanged(arg_2_0._onBattleIdInputChange, arg_2_0)
-	arg_2_0._battleCountInput:AddOnValueChanged(arg_2_0._onBattleCountInputChange, arg_2_0)
+function FightGMDouQuQuTest:addEvents()
+	self:com_registClick(self._btnClose, self.closeThis)
+	self:com_registClick(self._btnEnemyAddSelect, self._onBtnEnemyAddSelect)
+	self:com_registClick(self._btnPlayerAddSelect, self._onBtnPlayerAddSelect)
+	self:com_registClick(self._btnEnterFight, self._onBtnEnterFight)
+	self:com_registClick(self._btnMultiSimulate, self._onBtnMultiSimulate)
+	self._pathInput:AddOnValueChanged(self._onPathInputChange, self)
+	self._battleIdInput:AddOnValueChanged(self._onBattleIdInputChange, self)
+	self._battleCountInput:AddOnValueChanged(self._onBattleCountInputChange, self)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0._pathInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.FightGMDouQuQuTestLogPath))
-	arg_3_0._battleIdInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.FightGMDouQuQuTestBattleId))
-	arg_3_0._battleCountInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.FightGMDouQuQuTestBattleCount))
+function FightGMDouQuQuTest:onOpen()
+	self._pathInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.FightGMDouQuQuTestLogPath))
+	self._battleIdInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.FightGMDouQuQuTestBattleId))
+	self._battleCountInput:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.FightGMDouQuQuTestBattleCount))
 
-	arg_3_0._enemySelectList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._enemySelectItemContent)
-	arg_3_0._playerSelectList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._playerSelectItemContent)
-	arg_3_0._enemySelectedList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._enemySelectedItemContent)
-	arg_3_0._playerSelectedList = arg_3_0:com_registViewItemList(arg_3_0._selectItem, FightGMDouQuQuTestSelectItem, arg_3_0._playerSelectedItemContent)
-	arg_3_0._enemySelectList.listType = "_enemySelectList"
-	arg_3_0._playerSelectList.listType = "_playerSelectList"
-	arg_3_0._enemySelectedList.listType = "_enemySelectedList"
-	arg_3_0._playerSelectedList.listType = "_playerSelectedList"
-	arg_3_0._configList = {}
+	self._enemySelectList = self:com_registViewItemList(self._selectItem, FightGMDouQuQuTestSelectItem, self._enemySelectItemContent)
+	self._playerSelectList = self:com_registViewItemList(self._selectItem, FightGMDouQuQuTestSelectItem, self._playerSelectItemContent)
+	self._enemySelectedList = self:com_registViewItemList(self._selectItem, FightGMDouQuQuTestSelectItem, self._enemySelectedItemContent)
+	self._playerSelectedList = self:com_registViewItemList(self._selectItem, FightGMDouQuQuTestSelectItem, self._playerSelectedItemContent)
+	self._enemySelectList.listType = "_enemySelectList"
+	self._playerSelectList.listType = "_playerSelectList"
+	self._enemySelectedList.listType = "_enemySelectedList"
+	self._playerSelectedList.listType = "_playerSelectedList"
+	self._configList = {}
 
-	for iter_3_0, iter_3_1 in ipairs(lua_activity174_test_bot.configList) do
-		table.insert(arg_3_0._configList, iter_3_1)
+	for i, v in ipairs(lua_activity174_test_bot.configList) do
+		table.insert(self._configList, v)
 	end
 
-	arg_3_0._enemySelectList:setDataList(arg_3_0._configList)
-	arg_3_0._playerSelectList:setDataList(arg_3_0._configList)
+	self._enemySelectList:setDataList(self._configList)
+	self._playerSelectList:setDataList(self._configList)
 end
 
-function var_0_0._onPathInputChange(arg_4_0)
-	local var_4_0 = arg_4_0._pathInput:GetText()
+function FightGMDouQuQuTest:_onPathInputChange()
+	local text = self._pathInput:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.FightGMDouQuQuTestLogPath, var_4_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.FightGMDouQuQuTestLogPath, text)
 end
 
-function var_0_0._onBattleIdInputChange(arg_5_0)
-	local var_5_0 = arg_5_0._battleIdInput:GetText()
+function FightGMDouQuQuTest:_onBattleIdInputChange()
+	local text = self._battleIdInput:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.FightGMDouQuQuTestBattleId, var_5_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.FightGMDouQuQuTestBattleId, text)
 end
 
-function var_0_0._onBattleCountInputChange(arg_6_0)
-	local var_6_0 = arg_6_0._battleCountInput:GetText()
+function FightGMDouQuQuTest:_onBattleCountInputChange()
+	local text = self._battleCountInput:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.FightGMDouQuQuTestBattleCount, var_6_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.FightGMDouQuQuTestBattleCount, text)
 end
 
-function var_0_0._onBtnEnemyAddSelect(arg_7_0)
-	local var_7_0 = {}
+function FightGMDouQuQuTest:_onBtnEnemyAddSelect()
+	local enemySelectedList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._enemySelectedList) do
-		table.insert(var_7_0, iter_7_1.config)
+	for i, v in ipairs(self._enemySelectedList) do
+		table.insert(enemySelectedList, v.config)
 	end
 
-	for iter_7_2 = #arg_7_0._enemySelectList, 1, -1 do
-		if arg_7_0._enemySelectList[iter_7_2].selecting then
-			local var_7_1 = arg_7_0._enemySelectList:removeIndex(iter_7_2)
+	for i = #self._enemySelectList, 1, -1 do
+		if self._enemySelectList[i].selecting then
+			local item = self._enemySelectList:removeIndex(i)
 
-			table.insert(var_7_0, var_7_1.config)
+			table.insert(enemySelectedList, item.config)
 		end
 	end
 
-	table.sort(var_7_0, function(arg_8_0, arg_8_1)
-		return arg_8_0.robotId < arg_8_1.robotId
+	table.sort(enemySelectedList, function(item1, item2)
+		return item1.robotId < item2.robotId
 	end)
-	arg_7_0._enemySelectedList:setDataList(var_7_0)
+	self._enemySelectedList:setDataList(enemySelectedList)
 
-	arg_7_0._enemySelectList.lastSelectIndex = nil
+	self._enemySelectList.lastSelectIndex = nil
 end
 
-function var_0_0._onBtnPlayerAddSelect(arg_9_0)
-	local var_9_0 = {}
+function FightGMDouQuQuTest:_onBtnPlayerAddSelect()
+	local playerSelectedList = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._playerSelectedList) do
-		table.insert(var_9_0, iter_9_1.config)
+	for i, v in ipairs(self._playerSelectedList) do
+		table.insert(playerSelectedList, v.config)
 	end
 
-	for iter_9_2 = #arg_9_0._playerSelectList, 1, -1 do
-		if arg_9_0._playerSelectList[iter_9_2].selecting then
-			local var_9_1 = arg_9_0._playerSelectList:removeIndex(iter_9_2)
+	for i = #self._playerSelectList, 1, -1 do
+		if self._playerSelectList[i].selecting then
+			local item = self._playerSelectList:removeIndex(i)
 
-			table.insert(var_9_0, var_9_1.config)
+			table.insert(playerSelectedList, item.config)
 		end
 	end
 
-	table.sort(var_9_0, function(arg_10_0, arg_10_1)
-		return arg_10_0.robotId < arg_10_1.robotId
+	table.sort(playerSelectedList, function(item1, item2)
+		return item1.robotId < item2.robotId
 	end)
-	arg_9_0._playerSelectedList:setDataList(var_9_0)
+	self._playerSelectedList:setDataList(playerSelectedList)
 
-	arg_9_0._playerSelectList.lastSelectIndex = nil
+	self._playerSelectList.lastSelectIndex = nil
 end
 
-function var_0_0._getGMStr(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._pathInput:GetText()
+function FightGMDouQuQuTest:_getGMStr(fightType)
+	local path = self._pathInput:GetText()
 
-	if arg_11_1 == 2 and string.nilorempty(var_11_0) then
-		arg_11_0._logText.text = "未配置导出路径"
-
-		return
-	end
-
-	local var_11_1 = ""
-
-	if #arg_11_0._playerSelectedList < 1 or #arg_11_0._enemySelectedList < 1 then
-		arg_11_0._logText.text = "未选择对战机器人"
+	if fightType == 2 and string.nilorempty(path) then
+		self._logText.text = "未配置导出路径"
 
 		return
 	end
 
-	if arg_11_1 == 1 and (#arg_11_0._playerSelectedList > 1 or #arg_11_0._enemySelectedList > 1) then
-		arg_11_0._logText.text = "多个机器人无法进入战斗"
+	local player = ""
+
+	if #self._playerSelectedList < 1 or #self._enemySelectedList < 1 then
+		self._logText.text = "未选择对战机器人"
 
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._playerSelectedList) do
-		if iter_11_0 > 1 then
-			var_11_1 = var_11_1 .. "#"
+	if fightType == 1 and (#self._playerSelectedList > 1 or #self._enemySelectedList > 1) then
+		self._logText.text = "多个机器人无法进入战斗"
+
+		return
+	end
+
+	for i, v in ipairs(self._playerSelectedList) do
+		if i > 1 then
+			player = player .. "#"
 		end
 
-		var_11_1 = var_11_1 .. iter_11_1.config.robotId
+		player = player .. v.config.robotId
 	end
 
-	local var_11_2 = ""
+	local enemy = ""
 
-	for iter_11_2, iter_11_3 in ipairs(arg_11_0._enemySelectedList) do
-		if iter_11_2 > 1 then
-			var_11_2 = var_11_2 .. "#"
+	for i, v in ipairs(self._enemySelectedList) do
+		if i > 1 then
+			enemy = enemy .. "#"
 		end
 
-		var_11_2 = var_11_2 .. iter_11_3.config.robotId
+		enemy = enemy .. v.config.robotId
 	end
 
-	local var_11_3 = tonumber(arg_11_0._battleIdInput:GetText())
+	local battleId = tonumber(self._battleIdInput:GetText())
 
-	if not lua_battle.configDict[var_11_3] then
-		arg_11_0._logText.text = "战斗id不存在"
+	if not lua_battle.configDict[battleId] then
+		self._logText.text = "战斗id不存在"
 
 		return
 	end
 
-	local var_11_4 = tonumber(arg_11_0._battleCountInput:GetText())
+	local count = tonumber(self._battleCountInput:GetText())
 
-	if not var_11_4 then
-		arg_11_0._logText.text = "对战次数未配置"
+	if not count then
+		self._logText.text = "对战次数未配置"
 
 		return
 	end
 
-	return (string.format("act174Test %s %s %s %s %s %s", var_11_0, var_11_1, var_11_2, var_11_3, var_11_4, arg_11_1))
+	local str = string.format("act174Test %s %s %s %s %s %s", path, player, enemy, battleId, count, fightType)
+
+	return str
 end
 
-function var_0_0._onBtnEnterFight(arg_12_0)
-	local var_12_0 = arg_12_0:_getGMStr(1)
+function FightGMDouQuQuTest:_onBtnEnterFight()
+	local str = self:_getGMStr(1)
 
-	if var_12_0 then
-		GMRpc.instance:sendGMRequest(var_12_0)
+	if str then
+		GMRpc.instance:sendGMRequest(str)
 	end
 end
 
-function var_0_0._onBtnMultiSimulate(arg_13_0)
-	local var_13_0 = arg_13_0:_getGMStr(2)
+function FightGMDouQuQuTest:_onBtnMultiSimulate()
+	local str = self:_getGMStr(2)
 
-	if var_13_0 then
-		GMRpc.instance:sendGMRequest(var_13_0)
+	if str then
+		GMRpc.instance:sendGMRequest(str)
 	end
 end
 
-function var_0_0.onDestructor(arg_14_0)
-	arg_14_0._pathInput:RemoveOnValueChanged()
-	arg_14_0._battleIdInput:RemoveOnValueChanged()
-	arg_14_0._battleCountInput:RemoveOnValueChanged()
+function FightGMDouQuQuTest:onDestructor()
+	self._pathInput:RemoveOnValueChanged()
+	self._battleIdInput:RemoveOnValueChanged()
+	self._battleCountInput:RemoveOnValueChanged()
 end
 
-return var_0_0
+return FightGMDouQuQuTest

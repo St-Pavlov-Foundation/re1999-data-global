@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.enter.Act183MainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/enter/Act183MainViewContainer.lua
 
-local var_0_0 = class("Act183MainViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.challenge.view.enter.Act183MainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act183MainViewContainer = class("Act183MainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act183MainView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(var_1_0, TabViewGroup.New(2, "root/left/#go_store"))
+function Act183MainViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = HelpShowView.New()
+	table.insert(views, Act183MainView.New())
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(views, TabViewGroup.New(2, "root/left/#go_store"))
 
-	var_1_1:setHelpId(HelpEnum.HelpId.Act183EnterMain)
-	table.insert(var_1_0, var_1_1)
+	local helpView = HelpShowView.New()
 
-	return var_1_0
+	helpView:setHelpId(HelpEnum.HelpId.Act183EnterMain)
+	table.insert(views, helpView)
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Act183MainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Act183EnterMain)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			Act183StoreEntry.New()
 		}
 	end
 end
 
-return var_0_0
+return Act183MainViewContainer

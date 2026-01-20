@@ -1,21 +1,23 @@
-﻿module("modules.spine.rolefaceeffect.BaseSpineRoleFaceEffect", package.seeall)
+﻿-- chunkname: @modules/spine/rolefaceeffect/BaseSpineRoleFaceEffect.lua
 
-local var_0_0 = class("BaseSpineRoleFaceEffect")
+module("modules.spine.rolefaceeffect.BaseSpineRoleFaceEffect", package.seeall)
 
-function var_0_0.setSpine(arg_1_0, arg_1_1)
-	arg_1_0._spine = arg_1_1
+local BaseSpineRoleFaceEffect = class("BaseSpineRoleFaceEffect")
+
+function BaseSpineRoleFaceEffect:setSpine(spine)
+	self._spine = spine
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
+function BaseSpineRoleFaceEffect:init(config)
 	return
 end
 
-function var_0_0.showFaceEffect(arg_3_0, arg_3_1)
+function BaseSpineRoleFaceEffect:showFaceEffect(name)
 	return
 end
 
-function var_0_0.onDestroy(arg_4_0)
+function BaseSpineRoleFaceEffect:onDestroy()
 	return
 end
 
-return var_0_0
+return BaseSpineRoleFaceEffect

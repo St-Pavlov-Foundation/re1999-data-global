@@ -1,51 +1,53 @@
-﻿module("modules.logic.antique.view.AntiqueView", package.seeall)
+﻿-- chunkname: @modules/logic/antique/view/AntiqueView.lua
 
-local var_0_0 = class("AntiqueView", BaseView)
+module("modules.logic.antique.view.AntiqueView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagegifticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Item/#simage_gifticon")
-	arg_1_0._simagesign = gohelper.findChildSingleImage(arg_1_0.viewGO, "Item/#simage_sign")
-	arg_1_0._imgsignIcon = gohelper.findChildImage(arg_1_0.viewGO, "Item/#txt_name/#image_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "Item/#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "Item/#txt_name/#txt_nameen")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._txttitleen = gohelper.findChildText(arg_1_0.viewGO, "#txt_title/#txt_titleen")
-	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#txt_title/#btn_Play")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc/#txt_time")
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#go_effect")
+local AntiqueView = class("AntiqueView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AntiqueView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagegifticon = gohelper.findChildSingleImage(self.viewGO, "Item/#simage_gifticon")
+	self._simagesign = gohelper.findChildSingleImage(self.viewGO, "Item/#simage_sign")
+	self._imgsignIcon = gohelper.findChildImage(self.viewGO, "Item/#txt_name/#image_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "Item/#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "Item/#txt_name/#txt_nameen")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._txttitleen = gohelper.findChildText(self.viewGO, "#txt_title/#txt_titleen")
+	self._btnPlay = gohelper.findChildButtonWithAudio(self.viewGO, "#txt_title/#btn_Play")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._txttime = gohelper.findChildText(self.viewGO, "#txt_desc/#txt_time")
+	self._goeffect = gohelper.findChild(self.viewGO, "#go_effect")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnPlay:AddClickListener(arg_2_0._onClickPlayBtn, arg_2_0)
+function AntiqueView:addEvents()
+	self._btnPlay:AddClickListener(self._onClickPlayBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnPlay:RemoveClickListener()
+function AntiqueView:removeEvents()
+	self._btnPlay:RemoveClickListener()
 end
 
-function var_0_0._onClickPlayBtn(arg_4_0)
-	local var_4_0 = AntiqueConfig.instance:getAntiqueCo(arg_4_0._antiqueId)
+function AntiqueView:_onClickPlayBtn()
+	local config = AntiqueConfig.instance:getAntiqueCo(self._antiqueId)
 
-	StoryController.instance:playStory(var_4_0.storyId)
+	StoryController.instance:playStory(config.storyId)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getAntiqueIcon("antique_fullbg"))
+function AntiqueView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getAntiqueIcon("antique_fullbg"))
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._antiqueId = arg_6_0.viewParam
+function AntiqueView:onOpen()
+	self._antiqueId = self.viewParam
 
-	arg_6_0:_refreshUI()
+	self:_refreshUI()
 end
 
-local var_0_1 = {
+local iconAreaType = {
 	{
 		x = -80,
 		y = -10,
@@ -72,90 +74,92 @@ local var_0_1 = {
 	}
 }
 
-function var_0_0._refreshUI(arg_7_0)
-	local var_7_0 = AntiqueConfig.instance:getAntiqueCo(arg_7_0._antiqueId)
+function AntiqueView:_refreshUI()
+	local config = AntiqueConfig.instance:getAntiqueCo(self._antiqueId)
 
-	arg_7_0._txtname.text = var_7_0.name
-	arg_7_0._txtnameen.text = var_7_0.nameen
-	arg_7_0._txttitle.text = var_7_0.title
-	arg_7_0._txttitleen.text = var_7_0.titleen
-	arg_7_0._txtdesc.text = var_7_0.desc
+	self._txtname.text = config.name
+	self._txtnameen.text = config.nameen
+	self._txttitle.text = config.title
+	self._txttitleen.text = config.titleen
+	self._txtdesc.text = config.desc
 
-	local var_7_1 = AntiqueModel.instance:getAntique(arg_7_0._antiqueId)
+	local mo = AntiqueModel.instance:getAntique(self._antiqueId)
 
-	if not var_7_1 then
-		gohelper.setActive(arg_7_0._btnPlay.gameObject, false)
+	if not mo then
+		gohelper.setActive(self._btnPlay.gameObject, false)
 
-		arg_7_0._txttime.text = ""
+		self._txttime.text = ""
 	else
-		gohelper.setActive(arg_7_0._btnPlay.gameObject, var_7_0.storyId and var_7_0.storyId > 0)
+		gohelper.setActive(self._btnPlay.gameObject, config.storyId and config.storyId > 0)
 
-		local var_7_2 = TimeUtil.localTime2ServerTimeString(math.floor(var_7_1.getTime / 1000))
+		local time = TimeUtil.localTime2ServerTimeString(math.floor(mo.getTime / 1000))
 
-		arg_7_0._txttime.text = "——" .. string.format(luaLang("receive_time"), var_7_2)
+		self._txttime.text = "——" .. string.format(luaLang("receive_time"), time)
 	end
 
-	arg_7_0._simagegifticon:LoadImage(ResUrl.getAntiqueIcon(var_7_0.gifticon))
+	self._simagegifticon:LoadImage(ResUrl.getAntiqueIcon(config.gifticon))
 
-	local var_7_3 = var_7_0.iconArea
+	local iconArea = config.iconArea
 
-	if var_7_3 > 0 then
-		local var_7_4 = var_0_1[var_7_3]
+	if iconArea > 0 then
+		local _iconAreaType = iconAreaType[iconArea]
 
-		arg_7_0._imgsignIcon.transform.anchorMax = var_7_4.anchorMax
-		arg_7_0._imgsignIcon.transform.anchorMin = var_7_4.anchorMin
+		self._imgsignIcon.transform.anchorMax = _iconAreaType.anchorMax
+		self._imgsignIcon.transform.anchorMin = _iconAreaType.anchorMin
 
-		recthelper.setAnchor(arg_7_0._imgsignIcon.transform, var_7_4.x, var_7_4.y)
-		gohelper.setActive(arg_7_0._imgsignIcon.gameObject, true)
-		gohelper.setActive(arg_7_0._simagesign.gameObject, false)
-		UISpriteSetMgr.instance:setAntiqueSprite(arg_7_0._imgsignIcon, var_7_0.sign, true)
+		recthelper.setAnchor(self._imgsignIcon.transform, _iconAreaType.x, _iconAreaType.y)
+		gohelper.setActive(self._imgsignIcon.gameObject, true)
+		gohelper.setActive(self._simagesign.gameObject, false)
+		UISpriteSetMgr.instance:setAntiqueSprite(self._imgsignIcon, config.sign, true)
 	else
-		gohelper.setActive(arg_7_0._imgsignIcon.gameObject, false)
-		gohelper.setActive(arg_7_0._simagesign.gameObject, true)
-		arg_7_0._simagesign:LoadImage(ResUrl.getSignature(var_7_0.sign))
+		gohelper.setActive(self._imgsignIcon.gameObject, false)
+		gohelper.setActive(self._simagesign.gameObject, true)
+		self._simagesign:LoadImage(ResUrl.getSignature(config.sign))
 	end
 
-	local var_7_5 = var_7_0.effect
-	local var_7_6 = not string.nilorempty(var_7_5)
+	local effectName = config.effect
+	local showEffect = not string.nilorempty(effectName)
 
-	gohelper.setActive(arg_7_0._goeffect, var_7_6)
+	gohelper.setActive(self._goeffect, showEffect)
 
-	if var_7_6 then
-		local var_7_7 = ResUrl.getAntiqueEffect(var_7_5)
+	if showEffect then
+		local effectPath = ResUrl.getAntiqueEffect(effectName)
 
-		if not arg_7_0._loader then
-			arg_7_0._loader = PrefabInstantiate.Create(arg_7_0._goeffect)
+		if not self._loader then
+			self._loader = PrefabInstantiate.Create(self._goeffect)
 		end
 
-		if arg_7_0._effectPrefab then
-			gohelper.destroy(arg_7_0._effectPrefab)
-			arg_7_0._loader:dispose()
+		if self._effectPrefab then
+			gohelper.destroy(self._effectPrefab)
+			self._loader:dispose()
 
-			arg_7_0._effectPrefab = nil
+			self._effectPrefab = nil
 		end
 
-		arg_7_0._loader:startLoad(var_7_7, arg_7_0.onLoadCallBack, arg_7_0)
+		self._loader:startLoad(effectPath, self.onLoadCallBack, self)
 	end
 end
 
-function var_0_0.onLoadCallBack(arg_8_0)
-	arg_8_0._effectPrefab = arg_8_0._loader:getInstGO()
+function AntiqueView:onLoadCallBack()
+	local effectPrefab = self._loader:getInstGO()
+
+	self._effectPrefab = effectPrefab
 end
 
-function var_0_0.onClose(arg_9_0)
+function AntiqueView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagebg:UnLoadImage()
-	arg_10_0._simagegifticon:UnLoadImage()
-	arg_10_0._simagesign:UnLoadImage()
+function AntiqueView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagegifticon:UnLoadImage()
+	self._simagesign:UnLoadImage()
 
-	if arg_10_0._loader then
-		arg_10_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_10_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return AntiqueView

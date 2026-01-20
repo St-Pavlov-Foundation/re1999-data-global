@@ -1,112 +1,116 @@
-﻿module("modules.logic.room.utils.pathfinding.BaseAStarFinder", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/pathfinding/BaseAStarFinder.lua
 
-local var_0_0 = class("BaseAStarFinder")
+module("modules.logic.room.utils.pathfinding.BaseAStarFinder", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local BaseAStarFinder = class("BaseAStarFinder")
+
+function BaseAStarFinder:ctor()
 	return
 end
 
-function var_0_0.pathFinding(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == arg_2_2 then
+function BaseAStarFinder:pathFinding(startPoint, targetPoint)
+	if startPoint == targetPoint then
 		return {}
 	end
 
-	if not arg_2_0:isWalkable(arg_2_1) or not arg_2_0:isWalkable(arg_2_2) then
+	if not self:isWalkable(startPoint) or not self:isWalkable(targetPoint) then
 		return nil
 	end
 
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = {
+	local openNodeDict = {}
+	local closeNodeDict = {}
+	local startNode = {
 		cost = 0,
-		point = arg_2_1,
-		heuristic = arg_2_0:heuristic(arg_2_1, arg_2_2)
+		point = startPoint,
+		heuristic = self:heuristic(startPoint, targetPoint)
 	}
 
-	var_2_0[tostring(var_2_2.point)] = var_2_2
+	openNodeDict[tostring(startNode.point)] = startNode
 
-	return (arg_2_0:_pathFinding(arg_2_1, arg_2_2, var_2_0, var_2_1))
+	local pathPointList = self:_pathFinding(startPoint, targetPoint, openNodeDict, closeNodeDict)
+
+	return pathPointList
 end
 
-function var_0_0._pathFinding(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	while LuaUtil.tableNotEmpty(arg_3_3) do
-		local var_3_0 = arg_3_0:_getNextNode(arg_3_3)
-		local var_3_1 = var_3_0.point
-		local var_3_2, var_3_3 = arg_3_0:getConnectPointsAndCost(var_3_1)
+function BaseAStarFinder:_pathFinding(startPoint, targetPoint, openNodeDict, closeNodeDict)
+	while LuaUtil.tableNotEmpty(openNodeDict) do
+		local node = self:_getNextNode(openNodeDict)
+		local point = node.point
+		local connectPoints, connectCosts = self:getConnectPointsAndCost(point)
 
-		for iter_3_0 = 1, #var_3_2 do
-			local var_3_4 = var_3_2[iter_3_0]
-			local var_3_5 = var_3_3[iter_3_0] or 0
+		for i = 1, #connectPoints do
+			local connectPoint = connectPoints[i]
+			local connectCost = connectCosts[i] or 0
 
-			if not arg_3_4[tostring(var_3_4)] and arg_3_0:isWalkable(var_3_4) then
-				local var_3_6 = var_3_0.cost + var_3_5
-				local var_3_7 = arg_3_3[tostring(var_3_4)]
+			if not closeNodeDict[tostring(connectPoint)] and self:isWalkable(connectPoint) then
+				local cost = node.cost + connectCost
+				local connectNode = openNodeDict[tostring(connectPoint)]
 
-				if not var_3_7 or var_3_6 < var_3_7.cost then
-					var_3_7 = {
-						point = var_3_4,
-						cost = var_3_0.cost + var_3_5,
-						heuristic = arg_3_0:heuristic(var_3_4, arg_3_2),
-						last = var_3_0
+				if not connectNode or cost < connectNode.cost then
+					connectNode = {
+						point = connectPoint,
+						cost = node.cost + connectCost,
+						heuristic = self:heuristic(connectPoint, targetPoint),
+						last = node
 					}
-					arg_3_3[tostring(var_3_7.point)] = var_3_7
+					openNodeDict[tostring(connectNode.point)] = connectNode
 				end
 
-				if var_3_7.point == arg_3_2 then
-					return arg_3_0:_makePath(var_3_7)
+				if connectNode.point == targetPoint then
+					return self:_makePath(connectNode)
 				end
 			end
 		end
 
-		arg_3_4[tostring(var_3_0.point)] = var_3_0
+		closeNodeDict[tostring(node.point)] = node
 	end
 
 	return nil
 end
 
-function var_0_0._getNextNode(arg_4_0, arg_4_1)
-	local var_4_0
+function BaseAStarFinder:_getNextNode(openNodeDict)
+	local nextNode
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_1) do
-		if not var_4_0 or iter_4_1.cost + iter_4_1.heuristic < var_4_0.cost + var_4_0.heuristic then
-			var_4_0 = iter_4_1
+	for _, node in pairs(openNodeDict) do
+		if not nextNode or node.cost + node.heuristic < nextNode.cost + nextNode.heuristic then
+			nextNode = node
 		end
 	end
 
-	arg_4_1[tostring(var_4_0.point)] = nil
+	openNodeDict[tostring(nextNode.point)] = nil
 
-	return var_4_0
+	return nextNode
 end
 
-function var_0_0._makePath(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = arg_5_1
+function BaseAStarFinder:_makePath(targetNode)
+	local reversePathPointList = {}
+	local node = targetNode
 
-	while var_5_1.last ~= nil do
-		table.insert(var_5_0, var_5_1.point)
+	while node.last ~= nil do
+		table.insert(reversePathPointList, node.point)
 
-		var_5_1 = var_5_1.last
+		node = node.last
 	end
 
-	local var_5_2 = {}
+	local pathPointList = {}
 
-	for iter_5_0 = #var_5_0, 1, -1 do
-		table.insert(var_5_2, var_5_0[iter_5_0])
+	for i = #reversePathPointList, 1, -1 do
+		table.insert(pathPointList, reversePathPointList[i])
 	end
 
-	return var_5_2
+	return pathPointList
 end
 
-function var_0_0.getConnectPointsAndCost(arg_6_0, arg_6_1)
+function BaseAStarFinder:getConnectPointsAndCost(point)
 	return
 end
 
-function var_0_0.heuristic(arg_7_0, arg_7_1, arg_7_2)
+function BaseAStarFinder:heuristic(point, targetPoint)
 	return
 end
 
-function var_0_0.isWalkable(arg_8_0, arg_8_1)
+function BaseAStarFinder:isWalkable(point)
 	return
 end
 
-return var_0_0
+return BaseAStarFinder

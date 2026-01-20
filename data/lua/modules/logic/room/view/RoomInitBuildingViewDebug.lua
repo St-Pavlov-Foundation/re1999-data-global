@@ -1,139 +1,141 @@
-﻿module("modules.logic.room.view.RoomInitBuildingViewDebug", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomInitBuildingViewDebug.lua
 
-local var_0_0 = class("RoomInitBuildingViewDebug", BaseView)
+module("modules.logic.room.view.RoomInitBuildingViewDebug", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomInitBuildingViewDebug = class("RoomInitBuildingViewDebug", BaseView)
+
+function RoomInitBuildingViewDebug:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomInitBuildingViewDebug:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomInitBuildingViewDebug:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_4_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_4_0.viewGO)
+function RoomInitBuildingViewDebug:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(self.viewGO)
 
-	arg_4_0._touchEventMgr:SetIgnoreUI(true)
-	arg_4_0._touchEventMgr:SetOnlyTouch(true)
-	arg_4_0._touchEventMgr:SetOnDragBeginCb(arg_4_0._onDragBegin, arg_4_0)
-	arg_4_0._touchEventMgr:SetOnDragCb(arg_4_0._onDrag, arg_4_0)
-	arg_4_0._touchEventMgr:SetOnDragEndCb(arg_4_0._onDragEnd, arg_4_0)
-	arg_4_0._touchEventMgr:SetScrollWheelCb(arg_4_0._onScrollWheel, arg_4_0)
+	self._touchEventMgr:SetIgnoreUI(true)
+	self._touchEventMgr:SetOnlyTouch(true)
+	self._touchEventMgr:SetOnDragBeginCb(self._onDragBegin, self)
+	self._touchEventMgr:SetOnDragCb(self._onDrag, self)
+	self._touchEventMgr:SetOnDragEndCb(self._onDragEnd, self)
+	self._touchEventMgr:SetScrollWheelCb(self._onScrollWheel, self)
 	logNormal("鼠标左键点击滑动旋转角度")
 	logNormal("鼠标滑轮调整距离")
 	logNormal("Shift+鼠标左键点击滑动调整高度")
 	logNormal("Shift+G输出参数")
-	TaskDispatcher.runRepeat(arg_4_0._onFrame, arg_4_0, 0.01)
+	TaskDispatcher.runRepeat(self._onFrame, self, 0.01)
 end
 
-function var_0_0._onFrame(arg_5_0)
+function RoomInitBuildingViewDebug:_onFrame()
 	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.G) then
-		local var_5_0 = arg_5_0._scene.camera:getRealCameraParam()
+		local realCameraParam = self._scene.camera:getRealCameraParam()
 
 		logNormal("部件初始镜头参数:")
 
-		local var_5_1 = {
-			string.format("%.3f", var_5_0.rotate),
-			string.format("%.3f", var_5_0.angle),
-			string.format("%.3f", var_5_0.distance),
-			string.format("%.3f", var_5_0.height)
+		local paramList = {
+			string.format("%.3f", realCameraParam.rotate),
+			string.format("%.3f", realCameraParam.angle),
+			string.format("%.3f", realCameraParam.distance),
+			string.format("%.3f", realCameraParam.height)
 		}
-		local var_5_2 = table.concat(var_5_1, "#")
+		local paramStr = table.concat(paramList, "#")
 
-		logNormal(var_5_2)
+		logNormal(paramStr)
 	end
 end
 
-function var_0_0._onDragBegin(arg_6_0, arg_6_1)
-	arg_6_0._curPos = arg_6_1
+function RoomInitBuildingViewDebug:_onDragBegin(screenPos)
+	self._curPos = screenPos
 end
 
-function var_0_0._onDrag(arg_7_0, arg_7_1)
-	if arg_7_0._curPos then
-		local var_7_0 = arg_7_0:_getNormalizedDrag(arg_7_1 - arg_7_0._curPos)
+function RoomInitBuildingViewDebug:_onDrag(screenPos)
+	if self._curPos then
+		local dragPos = self:_getNormalizedDrag(screenPos - self._curPos)
 
 		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) then
-			arg_7_0:_raiseCamera(var_7_0)
+			self:_raiseCamera(dragPos)
 		else
-			arg_7_0:_rotateCamera(var_7_0)
+			self:_rotateCamera(dragPos)
 		end
 	end
 
-	arg_7_0._curPos = arg_7_1
+	self._curPos = screenPos
 end
 
-function var_0_0._onDragEnd(arg_8_0, arg_8_1)
-	arg_8_0._curPos = nil
+function RoomInitBuildingViewDebug:_onDragEnd(screenPos)
+	self._curPos = nil
 end
 
-function var_0_0._onScrollWheel(arg_9_0, arg_9_1)
-	arg_9_0:_zoomCamera(arg_9_1)
+function RoomInitBuildingViewDebug:_onScrollWheel(delta)
+	self:_zoomCamera(delta)
 end
 
-function var_0_0._rotateCamera(arg_10_0, arg_10_1)
-	local var_10_0 = LuaUtil.deepCopy(arg_10_0._scene.camera:getRealCameraParam())
+function RoomInitBuildingViewDebug:_rotateCamera(dragPos)
+	local realCameraParam = LuaUtil.deepCopy(self._scene.camera:getRealCameraParam())
 
-	var_10_0.rotate = var_10_0.rotate + arg_10_1.x * 0.005
-	var_10_0.angle = var_10_0.angle - arg_10_1.y * 0.005
-	var_10_0.rotate = RoomRotateHelper.getMod(var_10_0.rotate, Mathf.PI * 2)
-	var_10_0.angle = RoomRotateHelper.getMod(var_10_0.angle, Mathf.PI * 2)
-	var_10_0.angle = Mathf.Clamp(var_10_0.angle, 10 * Mathf.Deg2Rad, 80 * Mathf.Deg2Rad)
+	realCameraParam.rotate = realCameraParam.rotate + dragPos.x * 0.005
+	realCameraParam.angle = realCameraParam.angle - dragPos.y * 0.005
+	realCameraParam.rotate = RoomRotateHelper.getMod(realCameraParam.rotate, Mathf.PI * 2)
+	realCameraParam.angle = RoomRotateHelper.getMod(realCameraParam.angle, Mathf.PI * 2)
+	realCameraParam.angle = Mathf.Clamp(realCameraParam.angle, 10 * Mathf.Deg2Rad, 80 * Mathf.Deg2Rad)
 
-	arg_10_0._scene.camera:tweenRealCamera(var_10_0, nil, nil, nil, true)
+	self._scene.camera:tweenRealCamera(realCameraParam, nil, nil, nil, true)
 end
 
-function var_0_0._raiseCamera(arg_11_0, arg_11_1)
-	local var_11_0 = LuaUtil.deepCopy(arg_11_0._scene.camera:getRealCameraParam())
+function RoomInitBuildingViewDebug:_raiseCamera(dragPos)
+	local realCameraParam = LuaUtil.deepCopy(self._scene.camera:getRealCameraParam())
 
-	var_11_0.height = var_11_0.height - arg_11_1.y * 0.005
-	var_11_0.height = Mathf.Clamp(var_11_0.height, -0.2, 1)
+	realCameraParam.height = realCameraParam.height - dragPos.y * 0.005
+	realCameraParam.height = Mathf.Clamp(realCameraParam.height, -0.2, 1)
 
-	arg_11_0._scene.camera:tweenRealCamera(var_11_0, nil, nil, nil, true)
+	self._scene.camera:tweenRealCamera(realCameraParam, nil, nil, nil, true)
 end
 
-function var_0_0._zoomCamera(arg_12_0, arg_12_1)
-	local var_12_0 = LuaUtil.deepCopy(arg_12_0._scene.camera:getRealCameraParam())
+function RoomInitBuildingViewDebug:_zoomCamera(delta)
+	local realCameraParam = LuaUtil.deepCopy(self._scene.camera:getRealCameraParam())
 
-	var_12_0.distance = var_12_0.distance - arg_12_1 * 0.2
-	var_12_0.distance = Mathf.Clamp(var_12_0.distance, 0.5, 3)
+	realCameraParam.distance = realCameraParam.distance - delta * 0.2
+	realCameraParam.distance = Mathf.Clamp(realCameraParam.distance, 0.5, 3)
 
-	arg_12_0._scene.camera:tweenRealCamera(var_12_0, nil, nil, nil, true)
+	self._scene.camera:tweenRealCamera(realCameraParam, nil, nil, nil, true)
 end
 
-function var_0_0._refeshUI(arg_13_0)
+function RoomInitBuildingViewDebug:_refeshUI()
 	return
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:_refeshUI()
+function RoomInitBuildingViewDebug:onOpen()
+	self:_refeshUI()
 end
 
-function var_0_0.onClose(arg_15_0)
+function RoomInitBuildingViewDebug:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._onFrame, arg_16_0)
+function RoomInitBuildingViewDebug:onDestroyView()
+	TaskDispatcher.cancelTask(self._onFrame, self)
 
-	if arg_16_0._touchEventMgr then
-		TouchEventMgrHepler.remove(arg_16_0._touchEventMgr)
+	if self._touchEventMgr then
+		TouchEventMgrHepler.remove(self._touchEventMgr)
 
-		arg_16_0._touchEventMgr = nil
+		self._touchEventMgr = nil
 	end
 end
 
-function var_0_0._getNormalizedDrag(arg_17_0, arg_17_1)
-	local var_17_0 = 1920 / UnityEngine.Screen.width
-	local var_17_1 = 1920 / UnityEngine.Screen.height
+function RoomInitBuildingViewDebug:_getNormalizedDrag(deltaPos)
+	local screenScaleX = 1920 / UnityEngine.Screen.width
+	local screenScaleY = 1920 / UnityEngine.Screen.height
 
-	return Vector2(arg_17_1.x * var_17_0, arg_17_1.y * var_17_1)
+	return Vector2(deltaPos.x * screenScaleX, deltaPos.y * screenScaleY)
 end
 
-return var_0_0
+return RoomInitBuildingViewDebug

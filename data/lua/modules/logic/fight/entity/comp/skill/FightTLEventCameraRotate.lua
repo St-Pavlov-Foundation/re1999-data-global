@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCameraRotate", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventCameraRotate.lua
 
-local var_0_0 = class("FightTLEventCameraRotate", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventCameraRotate", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = tonumber(arg_1_3[1]) or 0
-	local var_1_1 = tonumber(arg_1_3[2]) or 0
-	local var_1_2 = arg_1_3[3] == "1"
+local FightTLEventCameraRotate = class("FightTLEventCameraRotate", FightTimelineTrackItem)
+
+function FightTLEventCameraRotate:onTrackStart(fightStepData, duration, paramsArr)
+	local yaw = tonumber(paramsArr[1]) or 0
+	local pitch = tonumber(paramsArr[2]) or 0
+	local isImmediate = paramsArr[3] == "1"
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		local var_1_3 = GameSceneMgr.instance:getCurScene().camera
+		local sceneCameraComp = GameSceneMgr.instance:getCurScene().camera
 
-		var_1_3:setEaseTime(var_1_2 and 0 or arg_1_2)
-		var_1_3:setRotate(var_1_0, var_1_1)
+		sceneCameraComp:setEaseTime(isImmediate and 0 or duration)
+		sceneCameraComp:setRotate(yaw, pitch)
 	end
 end
 
-return var_0_0
+return FightTLEventCameraRotate

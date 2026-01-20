@@ -1,12 +1,14 @@
-﻿module("modules.logic.activity.config.ActivityType101Config", package.seeall)
+﻿-- chunkname: @modules/logic/activity/config/ActivityType101Config.lua
 
-local var_0_0 = class("ActivityType101Config", BaseConfig)
+module("modules.logic.activity.config.ActivityType101Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local ActivityType101Config = class("ActivityType101Config", BaseConfig)
+
+function ActivityType101Config:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ActivityType101Config:reqConfigNames()
 	return {
 		"activity101_doublefestival",
 		"activity101_springsign",
@@ -17,266 +19,268 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity101_doublefestival" then
-		arg_3_0.__activity101_doublefestivals = nil
+function ActivityType101Config:onConfigLoaded(configName, configTable)
+	if configName == "activity101_doublefestival" then
+		self.__activity101_doublefestivals = nil
 
-		arg_3_0:__initDoubleFestival()
-	elseif arg_3_1 == "activity101_springsign" then
-		arg_3_0.__activity101_springsign = nil
+		self:__initDoubleFestival()
+	elseif configName == "activity101_springsign" then
+		self.__activity101_springsign = nil
 
-		arg_3_0:__initSpringSign()
-	elseif arg_3_1 == "v2a1_activity101_moonfestivalsign" then
-		arg_3_0.__v2a1_activity101_moonfestivalsign = nil
+		self:__initSpringSign()
+	elseif configName == "v2a1_activity101_moonfestivalsign" then
+		self.__v2a1_activity101_moonfestivalsign = nil
 
-		arg_3_0:__initMoonFestivalSign()
-	elseif arg_3_1 == "linkage_activity" then
-		arg_3_0.__linkage_activity = nil
+		self:__initMoonFestivalSign()
+	elseif configName == "linkage_activity" then
+		self.__linkage_activity = nil
 
-		arg_3_0:__linkageActivity()
+		self:__linkageActivity()
 	end
 end
 
-local function var_0_1(arg_4_0)
+local function _constCO(id)
 	if not _G.lua_activity101_festival_const then
 		return
 	end
 
-	return lua_activity101_festival_const.configDict[arg_4_0]
+	return lua_activity101_festival_const.configDict[id]
 end
 
-function var_0_0.__initDoubleFestival(arg_5_0)
-	local var_5_0 = arg_5_0.__activity101_doublefestivals
+function ActivityType101Config:__initDoubleFestival()
+	local activity101_doublefestivals = self.__activity101_doublefestivals
 
-	if var_5_0 then
-		return var_5_0
+	if activity101_doublefestivals then
+		return activity101_doublefestivals
 	end
 
-	local var_5_1 = {}
+	local res = {}
 
-	arg_5_0.__activity101_doublefestivals = var_5_1
+	self.__activity101_doublefestivals = res
 
-	for iter_5_0, iter_5_1 in ipairs(lua_activity101_doublefestival.configList) do
-		local var_5_2 = iter_5_1.activityId
-		local var_5_3 = iter_5_1.day
+	for _, v in ipairs(lua_activity101_doublefestival.configList) do
+		local activityId = v.activityId
+		local day = v.day
 
-		var_5_1[var_5_2] = var_5_1[var_5_2] or {}
-		var_5_1[var_5_2][var_5_3] = iter_5_1
+		res[activityId] = res[activityId] or {}
+		res[activityId][day] = v
 	end
 
-	return var_5_1
+	return res
 end
 
-function var_0_0.getDoubleFestivalCOByDay(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0:__initDoubleFestival()
+function ActivityType101Config:getDoubleFestivalCOByDay(actId, day)
+	self:__initDoubleFestival()
 
-	local var_6_0 = arg_6_0.__activity101_doublefestivals[arg_6_1]
+	local actCO = self.__activity101_doublefestivals[actId]
 
-	if not var_6_0 then
+	if not actCO then
 		return
 	end
 
-	return var_6_0[arg_6_2]
+	return actCO[day]
 end
 
-function var_0_0.__initSpringSign(arg_7_0)
-	local var_7_0 = arg_7_0.__activity101_springsign
+function ActivityType101Config:__initSpringSign()
+	local activity101_doublefestivals = self.__activity101_springsign
 
-	if var_7_0 then
-		return var_7_0
+	if activity101_doublefestivals then
+		return activity101_doublefestivals
 	end
 
-	local var_7_1 = {}
+	local res = {}
 
-	arg_7_0.__activity101_springsign = var_7_1
+	self.__activity101_springsign = res
 
-	for iter_7_0, iter_7_1 in ipairs(lua_activity101_springsign.configList) do
-		local var_7_2 = iter_7_1.activityId
-		local var_7_3 = iter_7_1.day
+	for _, v in ipairs(lua_activity101_springsign.configList) do
+		local activityId = v.activityId
+		local day = v.day
 
-		var_7_1[var_7_2] = var_7_1[var_7_2] or {}
-		var_7_1[var_7_2][var_7_3] = iter_7_1
+		res[activityId] = res[activityId] or {}
+		res[activityId][day] = v
 	end
 
-	return var_7_1
+	return res
 end
 
-function var_0_0.getSpringSignByDay(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:__initSpringSign()
+function ActivityType101Config:getSpringSignByDay(actId, day)
+	self:__initSpringSign()
 
-	local var_8_0 = arg_8_0.__activity101_springsign[arg_8_1]
+	local actCO = self.__activity101_springsign[actId]
 
-	if not var_8_0 then
+	if not actCO then
 		return
 	end
 
-	return var_8_0[arg_8_2]
+	return actCO[day]
 end
 
-function var_0_0.getSpringSignMaxDay(arg_9_0, arg_9_1)
-	arg_9_0:__initSpringSign()
+function ActivityType101Config:getSpringSignMaxDay(actId)
+	self:__initSpringSign()
 
-	local var_9_0 = arg_9_0.__activity101_springsign[arg_9_1]
+	local actCO = self.__activity101_springsign[actId]
 
-	if not var_9_0 then
+	if not actCO then
 		return 0
 	end
 
-	return #var_9_0
+	return #actCO
 end
 
-function var_0_0.__initMoonFestivalSign(arg_10_0)
-	local var_10_0 = arg_10_0.__v2a1_activity101_moonfestivalsign
+function ActivityType101Config:__initMoonFestivalSign()
+	local activity101_moonfestivalsign = self.__v2a1_activity101_moonfestivalsign
 
-	if var_10_0 then
-		return var_10_0
+	if activity101_moonfestivalsign then
+		return activity101_moonfestivalsign
 	end
 
-	local var_10_1 = {}
+	local res = {}
 
-	arg_10_0.__v2a1_activity101_moonfestivalsign = var_10_1
+	self.__v2a1_activity101_moonfestivalsign = res
 
-	for iter_10_0, iter_10_1 in ipairs(v2a1_activity101_moonfestivalsign.configList) do
-		local var_10_2 = iter_10_1.activityId
-		local var_10_3 = iter_10_1.day
+	for _, v in ipairs(v2a1_activity101_moonfestivalsign.configList) do
+		local activityId = v.activityId
+		local day = v.day
 
-		var_10_1[var_10_2] = var_10_1[var_10_2] or {}
-		var_10_1[var_10_2][var_10_3] = iter_10_1
+		res[activityId] = res[activityId] or {}
+		res[activityId][day] = v
 	end
 
-	return var_10_1
+	return res
 end
 
-function var_0_0.getMoonFestivalSignMaxDay(arg_11_0, arg_11_1)
-	arg_11_0:__initSpringSign()
+function ActivityType101Config:getMoonFestivalSignMaxDay(actId)
+	self:__initSpringSign()
 
-	local var_11_0 = arg_11_0.__v2a1_activity101_moonfestivalsign[arg_11_1]
+	local actCO = self.__v2a1_activity101_moonfestivalsign[actId]
 
-	if not var_11_0 then
+	if not actCO then
 		return 0
 	end
 
-	return #var_11_0
+	return #actCO
 end
 
-function var_0_0.getMoonFestivalByDay(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0:__initMoonFestivalSign()
+function ActivityType101Config:getMoonFestivalByDay(actId, day)
+	self:__initMoonFestivalSign()
 
-	local var_12_0 = arg_12_0.__v2a1_activity101_moonfestivalsign[arg_12_1]
+	local actCO = self.__v2a1_activity101_moonfestivalsign[actId]
 
-	if not var_12_0 then
+	if not actCO then
 		return
 	end
 
-	return var_12_0[arg_12_2]
+	return actCO[day]
 end
 
-function var_0_0.getMoonFestivalTaskCO(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getSpBonusCO(arg_13_1)
+function ActivityType101Config:getMoonFestivalTaskCO(actId)
+	local actCO = self:getSpBonusCO(actId)
 
-	if not var_13_0 then
+	if not actCO then
 		return
 	end
 
-	return var_13_0[1]
+	return actCO[1]
 end
 
-function var_0_0.getSpBonusCO(arg_14_0, arg_14_1)
-	return lua_activity101_sp_bonus.configDict[arg_14_1]
+function ActivityType101Config:getSpBonusCO(actId)
+	return lua_activity101_sp_bonus.configDict[actId]
 end
 
-function var_0_0.__linkageActivity(arg_15_0)
-	local var_15_0 = arg_15_0.__linkage_activity
+function ActivityType101Config:__linkageActivity()
+	local _linkage_activity = self.__linkage_activity
 
-	if var_15_0 then
-		return var_15_0
+	if _linkage_activity then
+		return _linkage_activity
 	end
 
-	local var_15_1 = {}
+	local res = {}
 
-	arg_15_0.__linkage_activity = var_15_1
+	self.__linkage_activity = res
 
-	for iter_15_0, iter_15_1 in ipairs(lua_linkage_activity.configList) do
-		var_15_1[iter_15_1.activityId] = iter_15_1
+	for _, v in ipairs(lua_linkage_activity.configList) do
+		local activityId = v.activityId
+
+		res[activityId] = v
 	end
 
-	return var_15_1
+	return res
 end
 
-function var_0_0.getLinkageActivityCO(arg_16_0, arg_16_1)
-	arg_16_0:__linkageActivity()
+function ActivityType101Config:getLinkageActivityCO(actId)
+	self:__linkageActivity()
 
-	return arg_16_0.__linkage_activity[arg_16_1]
+	return self.__linkage_activity[actId]
 end
 
-function var_0_0.getRoleSignActIdList(arg_17_0)
+function ActivityType101Config:getRoleSignActIdList()
 	return ActivityConfig.instance:getConstAsNumList(1, "#", {})
 end
 
-function var_0_0.getVersionSummonActIdList(arg_18_0)
+function ActivityType101Config:getVersionSummonActIdList()
 	return ActivityConfig.instance:getConstAsNumList(6, "#", {})
 end
 
-function var_0_0.getConstAsNum(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = var_0_1(arg_19_1)
+function ActivityType101Config:getConstAsNum(id, fallback)
+	local CO = _constCO(id)
 
-	if not var_19_0 then
-		return arg_19_2
+	if not CO then
+		return fallback
 	end
 
-	return tonumber(var_19_0.strValue) or arg_19_2
+	return tonumber(CO.strValue) or fallback
 end
 
-function var_0_0.getDayCOs(arg_20_0, arg_20_1)
-	return lua_activity101.configDict[arg_20_1]
+function ActivityType101Config:getDayCOs(actId)
+	return lua_activity101.configDict[actId]
 end
 
-function var_0_0.getDayCO(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0:getDayCOs(arg_21_1)
+function ActivityType101Config:getDayCO(actId, id)
+	local act101COs = self:getDayCOs(actId)
 
-	if not var_21_0 then
+	if not act101COs then
 		return
 	end
 
-	return var_21_0[arg_21_2]
+	return act101COs[id]
 end
 
-function var_0_0.getSignMaxDay(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getDayCOs(arg_22_1)
+function ActivityType101Config:getSignMaxDay(actId)
+	local act101COs = self:getDayCOs(actId)
 
-	if not var_22_0 then
+	if not act101COs then
 		return 0
 	end
 
-	return #var_22_0
+	return #act101COs
 end
 
-function var_0_0.getDayBonusList(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = arg_23_0:getDayCO(arg_23_1, arg_23_2)
+function ActivityType101Config:getDayBonusList(actId, id)
+	local dayCO = self:getDayCO(actId, id)
 
-	if not var_23_0 then
+	if not dayCO then
 		return {}
 	end
 
-	if string.nilorempty(var_23_0.bonus) then
+	if string.nilorempty(dayCO.bonus) then
 		return {}
 	end
 
-	return GameUtil.splitString2(var_23_0.bonus, true)
+	return GameUtil.splitString2(dayCO.bonus, true)
 end
 
-function var_0_0.getDoubleDanJumpId(arg_24_0)
-	return arg_24_0:getConstAsNum(1, 0)
+function ActivityType101Config:getDoubleDanJumpId()
+	return self:getConstAsNum(1, 0)
 end
 
-function var_0_0.getDoubleDanSkinId(arg_25_0)
-	return arg_25_0:getConstAsNum(2, 309502)
+function ActivityType101Config:getDoubleDanSkinId()
+	return self:getConstAsNum(2, 309502)
 end
 
-function var_0_0.getDoubleDanActId(arg_26_0)
+function ActivityType101Config:getDoubleDanActId()
 	return ActivityConfig.instance:getConstAsNum(8, 13311)
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityType101Config.instance = ActivityType101Config.New()
 
-return var_0_0
+return ActivityType101Config

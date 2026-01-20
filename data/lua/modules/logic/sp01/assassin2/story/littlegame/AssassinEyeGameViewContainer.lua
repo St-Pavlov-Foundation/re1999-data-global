@@ -1,48 +1,50 @@
-﻿module("modules.logic.sp01.assassin2.story.littlegame.AssassinEyeGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/littlegame/AssassinEyeGameViewContainer.lua
 
-local var_0_0 = class("AssassinEyeGameViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassin2.story.littlegame.AssassinEyeGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AssassinEyeGameViewContainer = class("AssassinEyeGameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(var_1_0, AssassinEyeGameView.New())
+function AssassinEyeGameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(views, AssassinEyeGameView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function AssassinEyeGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
-		}, nil, arg_2_0._closeCallback, nil, nil, arg_2_0)
+		}, nil, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_3_0)
-	arg_3_0:stat(StatEnum.Result.Abort)
-	arg_3_0:closeThis()
+function AssassinEyeGameViewContainer:_closeCallback()
+	self:stat(StatEnum.Result.Abort)
+	self:closeThis()
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	var_0_0.super.onContainerOpenFinish(arg_4_0)
+function AssassinEyeGameViewContainer:onContainerOpenFinish()
+	AssassinEyeGameViewContainer.super.onContainerOpenFinish(self)
 
-	arg_4_0._startTime = Time.realtimeSinceStartup
-	arg_4_0._episodeId = arg_4_0.viewParam and arg_4_0.viewParam.episodeId
+	self._startTime = Time.realtimeSinceStartup
+	self._episodeId = self.viewParam and self.viewParam.episodeId
 end
 
-function var_0_0.stat(arg_5_0, arg_5_1)
+function AssassinEyeGameViewContainer:stat(result)
 	StatController.instance:track(StatEnum.EventName.S01_mini_game, {
-		[StatEnum.EventProperties.UseTime] = Mathf.Floor(Time.realtimeSinceStartup - arg_5_0._startTime),
-		[StatEnum.EventProperties.EpisodeId] = tostring(arg_5_0._episodeId),
-		[StatEnum.EventProperties.Result] = StatEnum.Result2Cn[arg_5_1]
+		[StatEnum.EventProperties.UseTime] = Mathf.Floor(Time.realtimeSinceStartup - self._startTime),
+		[StatEnum.EventProperties.EpisodeId] = tostring(self._episodeId),
+		[StatEnum.EventProperties.Result] = StatEnum.Result2Cn[result]
 	})
 end
 
-return var_0_0
+return AssassinEyeGameViewContainer

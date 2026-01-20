@@ -1,157 +1,159 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/HeroInvitationModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.HeroInvitationModule_pb", package.seeall)
 
-local var_0_1 = {
-	HEROINVITATIONINFO_MSG = var_0_0.Descriptor(),
-	HEROINVITATIONINFOOPENEDINVITEFIELD = var_0_0.FieldDescriptor(),
-	HEROINVITATIONINFOGAINREWARDFIELD = var_0_0.FieldDescriptor(),
-	HEROINVITATIONINFOFINALREWARDFIELD = var_0_0.FieldDescriptor(),
-	GAININVITEREWARDREPLY_MSG = var_0_0.Descriptor(),
-	GAININVITEREWARDREPLYINFOFIELD = var_0_0.FieldDescriptor(),
-	GAINFINALINVITEREWARDREQUEST_MSG = var_0_0.Descriptor(),
-	GAININVITEREWARDREQUEST_MSG = var_0_0.Descriptor(),
-	GAININVITEREWARDREQUESTIDFIELD = var_0_0.FieldDescriptor(),
-	GETHEROINVITATIONINFOREPLY_MSG = var_0_0.Descriptor(),
-	GETHEROINVITATIONINFOREPLYINFOFIELD = var_0_0.FieldDescriptor(),
-	GAINFINALINVITEREWARDREPLY_MSG = var_0_0.Descriptor(),
-	GAINFINALINVITEREWARDREPLYINFOFIELD = var_0_0.FieldDescriptor(),
-	GETHEROINVITATIONINFOREQUEST_MSG = var_0_0.Descriptor()
-}
+local HeroInvitationModule_pb = {}
 
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.name = "openedInvite"
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.full_name = ".HeroInvitationInfo.openedInvite"
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.number = 1
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.index = 0
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.label = 3
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.has_default_value = false
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.default_value = {}
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.type = 5
-var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD.cpp_type = 1
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.name = "gainReward"
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.full_name = ".HeroInvitationInfo.gainReward"
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.number = 2
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.index = 1
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.label = 3
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.has_default_value = false
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.default_value = {}
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.type = 5
-var_0_1.HEROINVITATIONINFOGAINREWARDFIELD.cpp_type = 1
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.name = "finalReward"
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.full_name = ".HeroInvitationInfo.finalReward"
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.number = 3
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.index = 2
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.label = 1
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.has_default_value = false
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.default_value = false
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.type = 8
-var_0_1.HEROINVITATIONINFOFINALREWARDFIELD.cpp_type = 7
-var_0_1.HEROINVITATIONINFO_MSG.name = "HeroInvitationInfo"
-var_0_1.HEROINVITATIONINFO_MSG.full_name = ".HeroInvitationInfo"
-var_0_1.HEROINVITATIONINFO_MSG.nested_types = {}
-var_0_1.HEROINVITATIONINFO_MSG.enum_types = {}
-var_0_1.HEROINVITATIONINFO_MSG.fields = {
-	var_0_1.HEROINVITATIONINFOOPENEDINVITEFIELD,
-	var_0_1.HEROINVITATIONINFOGAINREWARDFIELD,
-	var_0_1.HEROINVITATIONINFOFINALREWARDFIELD
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG = protobuf.Descriptor()
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD = protobuf.FieldDescriptor()
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD = protobuf.FieldDescriptor()
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD = protobuf.FieldDescriptor()
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG = protobuf.Descriptor()
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD = protobuf.FieldDescriptor()
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG = protobuf.Descriptor()
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG = protobuf.Descriptor()
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD = protobuf.FieldDescriptor()
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG = protobuf.Descriptor()
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD = protobuf.FieldDescriptor()
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG = protobuf.Descriptor()
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD = protobuf.FieldDescriptor()
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG = protobuf.Descriptor()
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.name = "openedInvite"
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.full_name = ".HeroInvitationInfo.openedInvite"
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.number = 1
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.index = 0
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.label = 3
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.has_default_value = false
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.default_value = {}
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.type = 5
+HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD.cpp_type = 1
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.name = "gainReward"
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.full_name = ".HeroInvitationInfo.gainReward"
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.number = 2
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.index = 1
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.label = 3
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.has_default_value = false
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.default_value = {}
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.type = 5
+HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD.cpp_type = 1
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.name = "finalReward"
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.full_name = ".HeroInvitationInfo.finalReward"
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.number = 3
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.index = 2
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.label = 1
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.has_default_value = false
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.default_value = false
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.type = 8
+HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD.cpp_type = 7
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG.name = "HeroInvitationInfo"
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG.full_name = ".HeroInvitationInfo"
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG.nested_types = {}
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG.enum_types = {}
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG.fields = {
+	HeroInvitationModule_pb.HEROINVITATIONINFOOPENEDINVITEFIELD,
+	HeroInvitationModule_pb.HEROINVITATIONINFOGAINREWARDFIELD,
+	HeroInvitationModule_pb.HEROINVITATIONINFOFINALREWARDFIELD
 }
-var_0_1.HEROINVITATIONINFO_MSG.is_extendable = false
-var_0_1.HEROINVITATIONINFO_MSG.extensions = {}
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.name = "info"
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.full_name = ".GainInviteRewardReply.info"
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.number = 1
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.index = 0
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.label = 1
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.has_default_value = false
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.default_value = nil
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.message_type = var_0_1.HEROINVITATIONINFO_MSG
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.type = 11
-var_0_1.GAININVITEREWARDREPLYINFOFIELD.cpp_type = 10
-var_0_1.GAININVITEREWARDREPLY_MSG.name = "GainInviteRewardReply"
-var_0_1.GAININVITEREWARDREPLY_MSG.full_name = ".GainInviteRewardReply"
-var_0_1.GAININVITEREWARDREPLY_MSG.nested_types = {}
-var_0_1.GAININVITEREWARDREPLY_MSG.enum_types = {}
-var_0_1.GAININVITEREWARDREPLY_MSG.fields = {
-	var_0_1.GAININVITEREWARDREPLYINFOFIELD
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG.is_extendable = false
+HeroInvitationModule_pb.HEROINVITATIONINFO_MSG.extensions = {}
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.name = "info"
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.full_name = ".GainInviteRewardReply.info"
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.number = 1
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.index = 0
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.label = 1
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.has_default_value = false
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.default_value = nil
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.message_type = HeroInvitationModule_pb.HEROINVITATIONINFO_MSG
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.type = 11
+HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD.cpp_type = 10
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG.name = "GainInviteRewardReply"
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG.full_name = ".GainInviteRewardReply"
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG.nested_types = {}
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG.enum_types = {}
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG.fields = {
+	HeroInvitationModule_pb.GAININVITEREWARDREPLYINFOFIELD
 }
-var_0_1.GAININVITEREWARDREPLY_MSG.is_extendable = false
-var_0_1.GAININVITEREWARDREPLY_MSG.extensions = {}
-var_0_1.GAINFINALINVITEREWARDREQUEST_MSG.name = "GainFinalInviteRewardRequest"
-var_0_1.GAINFINALINVITEREWARDREQUEST_MSG.full_name = ".GainFinalInviteRewardRequest"
-var_0_1.GAINFINALINVITEREWARDREQUEST_MSG.nested_types = {}
-var_0_1.GAINFINALINVITEREWARDREQUEST_MSG.enum_types = {}
-var_0_1.GAINFINALINVITEREWARDREQUEST_MSG.fields = {}
-var_0_1.GAINFINALINVITEREWARDREQUEST_MSG.is_extendable = false
-var_0_1.GAINFINALINVITEREWARDREQUEST_MSG.extensions = {}
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.name = "id"
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.full_name = ".GainInviteRewardRequest.id"
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.number = 1
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.index = 0
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.label = 1
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.has_default_value = false
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.default_value = 0
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.type = 5
-var_0_1.GAININVITEREWARDREQUESTIDFIELD.cpp_type = 1
-var_0_1.GAININVITEREWARDREQUEST_MSG.name = "GainInviteRewardRequest"
-var_0_1.GAININVITEREWARDREQUEST_MSG.full_name = ".GainInviteRewardRequest"
-var_0_1.GAININVITEREWARDREQUEST_MSG.nested_types = {}
-var_0_1.GAININVITEREWARDREQUEST_MSG.enum_types = {}
-var_0_1.GAININVITEREWARDREQUEST_MSG.fields = {
-	var_0_1.GAININVITEREWARDREQUESTIDFIELD
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG.is_extendable = false
+HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG.extensions = {}
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG.name = "GainFinalInviteRewardRequest"
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG.full_name = ".GainFinalInviteRewardRequest"
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG.nested_types = {}
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG.enum_types = {}
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG.fields = {}
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG.is_extendable = false
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG.extensions = {}
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.name = "id"
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.full_name = ".GainInviteRewardRequest.id"
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.number = 1
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.index = 0
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.label = 1
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.has_default_value = false
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.default_value = 0
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.type = 5
+HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD.cpp_type = 1
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG.name = "GainInviteRewardRequest"
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG.full_name = ".GainInviteRewardRequest"
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG.nested_types = {}
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG.enum_types = {}
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG.fields = {
+	HeroInvitationModule_pb.GAININVITEREWARDREQUESTIDFIELD
 }
-var_0_1.GAININVITEREWARDREQUEST_MSG.is_extendable = false
-var_0_1.GAININVITEREWARDREQUEST_MSG.extensions = {}
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.name = "info"
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.full_name = ".GetHeroInvitationInfoReply.info"
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.number = 1
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.index = 0
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.label = 1
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.has_default_value = false
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.default_value = nil
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.message_type = var_0_1.HEROINVITATIONINFO_MSG
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.type = 11
-var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD.cpp_type = 10
-var_0_1.GETHEROINVITATIONINFOREPLY_MSG.name = "GetHeroInvitationInfoReply"
-var_0_1.GETHEROINVITATIONINFOREPLY_MSG.full_name = ".GetHeroInvitationInfoReply"
-var_0_1.GETHEROINVITATIONINFOREPLY_MSG.nested_types = {}
-var_0_1.GETHEROINVITATIONINFOREPLY_MSG.enum_types = {}
-var_0_1.GETHEROINVITATIONINFOREPLY_MSG.fields = {
-	var_0_1.GETHEROINVITATIONINFOREPLYINFOFIELD
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG.is_extendable = false
+HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG.extensions = {}
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.name = "info"
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.full_name = ".GetHeroInvitationInfoReply.info"
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.number = 1
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.index = 0
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.label = 1
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.has_default_value = false
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.default_value = nil
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.message_type = HeroInvitationModule_pb.HEROINVITATIONINFO_MSG
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.type = 11
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD.cpp_type = 10
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG.name = "GetHeroInvitationInfoReply"
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG.full_name = ".GetHeroInvitationInfoReply"
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG.nested_types = {}
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG.enum_types = {}
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG.fields = {
+	HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLYINFOFIELD
 }
-var_0_1.GETHEROINVITATIONINFOREPLY_MSG.is_extendable = false
-var_0_1.GETHEROINVITATIONINFOREPLY_MSG.extensions = {}
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.name = "info"
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.full_name = ".GainFinalInviteRewardReply.info"
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.number = 1
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.index = 0
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.label = 1
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.has_default_value = false
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.default_value = nil
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.message_type = var_0_1.HEROINVITATIONINFO_MSG
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.type = 11
-var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD.cpp_type = 10
-var_0_1.GAINFINALINVITEREWARDREPLY_MSG.name = "GainFinalInviteRewardReply"
-var_0_1.GAINFINALINVITEREWARDREPLY_MSG.full_name = ".GainFinalInviteRewardReply"
-var_0_1.GAINFINALINVITEREWARDREPLY_MSG.nested_types = {}
-var_0_1.GAINFINALINVITEREWARDREPLY_MSG.enum_types = {}
-var_0_1.GAINFINALINVITEREWARDREPLY_MSG.fields = {
-	var_0_1.GAINFINALINVITEREWARDREPLYINFOFIELD
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG.is_extendable = false
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG.extensions = {}
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.name = "info"
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.full_name = ".GainFinalInviteRewardReply.info"
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.number = 1
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.index = 0
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.label = 1
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.has_default_value = false
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.default_value = nil
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.message_type = HeroInvitationModule_pb.HEROINVITATIONINFO_MSG
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.type = 11
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD.cpp_type = 10
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG.name = "GainFinalInviteRewardReply"
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG.full_name = ".GainFinalInviteRewardReply"
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG.nested_types = {}
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG.enum_types = {}
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG.fields = {
+	HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLYINFOFIELD
 }
-var_0_1.GAINFINALINVITEREWARDREPLY_MSG.is_extendable = false
-var_0_1.GAINFINALINVITEREWARDREPLY_MSG.extensions = {}
-var_0_1.GETHEROINVITATIONINFOREQUEST_MSG.name = "GetHeroInvitationInfoRequest"
-var_0_1.GETHEROINVITATIONINFOREQUEST_MSG.full_name = ".GetHeroInvitationInfoRequest"
-var_0_1.GETHEROINVITATIONINFOREQUEST_MSG.nested_types = {}
-var_0_1.GETHEROINVITATIONINFOREQUEST_MSG.enum_types = {}
-var_0_1.GETHEROINVITATIONINFOREQUEST_MSG.fields = {}
-var_0_1.GETHEROINVITATIONINFOREQUEST_MSG.is_extendable = false
-var_0_1.GETHEROINVITATIONINFOREQUEST_MSG.extensions = {}
-var_0_1.GainFinalInviteRewardReply = var_0_0.Message(var_0_1.GAINFINALINVITEREWARDREPLY_MSG)
-var_0_1.GainFinalInviteRewardRequest = var_0_0.Message(var_0_1.GAINFINALINVITEREWARDREQUEST_MSG)
-var_0_1.GainInviteRewardReply = var_0_0.Message(var_0_1.GAININVITEREWARDREPLY_MSG)
-var_0_1.GainInviteRewardRequest = var_0_0.Message(var_0_1.GAININVITEREWARDREQUEST_MSG)
-var_0_1.GetHeroInvitationInfoReply = var_0_0.Message(var_0_1.GETHEROINVITATIONINFOREPLY_MSG)
-var_0_1.GetHeroInvitationInfoRequest = var_0_0.Message(var_0_1.GETHEROINVITATIONINFOREQUEST_MSG)
-var_0_1.HeroInvitationInfo = var_0_0.Message(var_0_1.HEROINVITATIONINFO_MSG)
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG.is_extendable = false
+HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG.extensions = {}
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG.name = "GetHeroInvitationInfoRequest"
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG.full_name = ".GetHeroInvitationInfoRequest"
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG.nested_types = {}
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG.enum_types = {}
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG.fields = {}
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG.is_extendable = false
+HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG.extensions = {}
+HeroInvitationModule_pb.GainFinalInviteRewardReply = protobuf.Message(HeroInvitationModule_pb.GAINFINALINVITEREWARDREPLY_MSG)
+HeroInvitationModule_pb.GainFinalInviteRewardRequest = protobuf.Message(HeroInvitationModule_pb.GAINFINALINVITEREWARDREQUEST_MSG)
+HeroInvitationModule_pb.GainInviteRewardReply = protobuf.Message(HeroInvitationModule_pb.GAININVITEREWARDREPLY_MSG)
+HeroInvitationModule_pb.GainInviteRewardRequest = protobuf.Message(HeroInvitationModule_pb.GAININVITEREWARDREQUEST_MSG)
+HeroInvitationModule_pb.GetHeroInvitationInfoReply = protobuf.Message(HeroInvitationModule_pb.GETHEROINVITATIONINFOREPLY_MSG)
+HeroInvitationModule_pb.GetHeroInvitationInfoRequest = protobuf.Message(HeroInvitationModule_pb.GETHEROINVITATIONINFOREQUEST_MSG)
+HeroInvitationModule_pb.HeroInvitationInfo = protobuf.Message(HeroInvitationModule_pb.HEROINVITATIONINFO_MSG)
 
-return var_0_1
+return HeroInvitationModule_pb

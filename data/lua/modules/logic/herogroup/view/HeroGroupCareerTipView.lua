@@ -1,123 +1,125 @@
-﻿module("modules.logic.herogroup.view.HeroGroupCareerTipView", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupCareerTipView.lua
 
-local var_0_0 = class("HeroGroupCareerTipView", BaseView)
+module("modules.logic.herogroup.view.HeroGroupCareerTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnmask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_mask")
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
-	arg_1_0._imagecareer1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_bg/container/#image_career1")
-	arg_1_0._imagecareer2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_bg/container/#image_career2")
-	arg_1_0._imagecareer3 = gohelper.findChildImage(arg_1_0.viewGO, "#go_bg/container/#image_career3")
-	arg_1_0._imagecareer4 = gohelper.findChildImage(arg_1_0.viewGO, "#go_bg/container/#image_career4")
-	arg_1_0._imagecareer5 = gohelper.findChildImage(arg_1_0.viewGO, "#go_bg/restrain2/#image_career5")
-	arg_1_0._imagecareer6 = gohelper.findChildImage(arg_1_0.viewGO, "#go_bg/restrain2/#image_career6")
+local HeroGroupCareerTipView = class("HeroGroupCareerTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupCareerTipView:onInitView()
+	self._btnmask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_mask")
+	self._gobg = gohelper.findChild(self.viewGO, "#go_bg")
+	self._imagecareer1 = gohelper.findChildImage(self.viewGO, "#go_bg/container/#image_career1")
+	self._imagecareer2 = gohelper.findChildImage(self.viewGO, "#go_bg/container/#image_career2")
+	self._imagecareer3 = gohelper.findChildImage(self.viewGO, "#go_bg/container/#image_career3")
+	self._imagecareer4 = gohelper.findChildImage(self.viewGO, "#go_bg/container/#image_career4")
+	self._imagecareer5 = gohelper.findChildImage(self.viewGO, "#go_bg/restrain2/#image_career5")
+	self._imagecareer6 = gohelper.findChildImage(self.viewGO, "#go_bg/restrain2/#image_career6")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnmask:AddClickListener(arg_2_0._btnmaskOnClick, arg_2_0)
+function HeroGroupCareerTipView:addEvents()
+	self._btnmask:AddClickListener(self._btnmaskOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnmask:RemoveClickListener()
+function HeroGroupCareerTipView:removeEvents()
+	self._btnmask:RemoveClickListener()
 end
 
-function var_0_0._btnmaskOnClick(arg_4_0)
-	if arg_4_0._closing then
+function HeroGroupCareerTipView:_btnmaskOnClick()
+	if self._closing then
 		return
 	end
 
-	if not arg_4_0._isGuide then
-		arg_4_0:closeThis()
-
-		return
-	end
-
-	local var_4_0 = "UIRoot/HUD/FightView/root/btnRestraintInfo"
-	local var_4_1 = gohelper.find(var_4_0)
-
-	if not var_4_1 then
-		arg_4_0:closeThis()
+	if not self._isGuide then
+		self:closeThis()
 
 		return
 	end
 
-	arg_4_0:_clearTween()
+	local containerName = "UIRoot/HUD/FightView/root/btnRestraintInfo"
+	local container = gohelper.find(containerName)
 
-	arg_4_0._closing = true
+	if not container then
+		self:closeThis()
 
-	local var_4_2 = 0.5
-	local var_4_3 = recthelper.rectToRelativeAnchorPos(var_4_1.transform.position, arg_4_0.viewGO.transform)
+		return
+	end
 
-	arg_4_0._anchorPosId = ZProj.TweenHelper.DOAnchorPos(arg_4_0._gobg.transform, var_4_3.x, var_4_3.y, var_4_2, function()
-		gohelper.setActive(var_4_1, true)
-		ViewMgr.instance:closeView(arg_4_0.viewName, true)
+	self:_clearTween()
+
+	self._closing = true
+
+	local duration = 0.5
+	local targetPos = recthelper.rectToRelativeAnchorPos(container.transform.position, self.viewGO.transform)
+
+	self._anchorPosId = ZProj.TweenHelper.DOAnchorPos(self._gobg.transform, targetPos.x, targetPos.y, duration, function()
+		gohelper.setActive(container, true)
+		ViewMgr.instance:closeView(self.viewName, true)
 	end, nil)
 
-	local var_4_4 = 0.2
+	local scale = 0.2
 
-	arg_4_0._scaleId = ZProj.TweenHelper.DOScale(arg_4_0._gobg.transform, var_4_4, var_4_4, var_4_4, var_4_2)
+	self._scaleId = ZProj.TweenHelper.DOScale(self._gobg.transform, scale, scale, scale, duration)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._fightBlurMask = gohelper.findChild(arg_6_0.viewGO, "#go_bg/uiblurmask_infightscene")
-	arg_6_0._normalBlurMask = gohelper.findChild(arg_6_0.viewGO, "#go_bg/uiblurmask")
+function HeroGroupCareerTipView:_editableInitView()
+	self._fightBlurMask = gohelper.findChild(self.viewGO, "#go_bg/uiblurmask_infightscene")
+	self._normalBlurMask = gohelper.findChild(self.viewGO, "#go_bg/uiblurmask")
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function HeroGroupCareerTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer1, "lssx_1")
-	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer2, "lssx_2")
-	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer3, "lssx_3")
-	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer4, "lssx_4")
-	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer5, "lssx_5")
-	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer6, "lssx_6")
-	arg_8_0:_onGuide()
+function HeroGroupCareerTipView:onOpen()
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer1, "lssx_1")
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer2, "lssx_2")
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer3, "lssx_3")
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer4, "lssx_4")
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer5, "lssx_5")
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer6, "lssx_6")
+	self:_onGuide()
 
-	local var_8_0 = GameSceneMgr.instance:getCurScene()
+	local curScene = GameSceneMgr.instance:getCurScene()
 
-	gohelper.setActive(arg_8_0._fightBlurMask, var_8_0 == SceneType.Fight)
-	gohelper.setActive(arg_8_0._normalBlurMask, var_8_0 ~= SceneType.Fight)
+	gohelper.setActive(self._fightBlurMask, curScene == SceneType.Fight)
+	gohelper.setActive(self._normalBlurMask, curScene ~= SceneType.Fight)
 end
 
-function var_0_0._onGuide(arg_9_0)
-	if arg_9_0.viewParam then
-		arg_9_0._isGuide = arg_9_0.viewParam.isGuide
+function HeroGroupCareerTipView:_onGuide()
+	if self.viewParam then
+		self._isGuide = self.viewParam.isGuide
 	end
 
-	if not arg_9_0._isGuide then
+	if not self._isGuide then
 		return
 	end
 
-	recthelper.setAnchorX(arg_9_0._gobg.transform, -220)
+	recthelper.setAnchorX(self._gobg.transform, -220)
 end
 
-function var_0_0.onClose(arg_10_0)
-	arg_10_0:_clearTween()
+function HeroGroupCareerTipView:onClose()
+	self:_clearTween()
 end
 
-function var_0_0._clearTween(arg_11_0)
-	if arg_11_0._anchorPosId then
-		ZProj.TweenHelper.KillById(arg_11_0._anchorPosId)
+function HeroGroupCareerTipView:_clearTween()
+	if self._anchorPosId then
+		ZProj.TweenHelper.KillById(self._anchorPosId)
 
-		arg_11_0._anchorPosId = nil
+		self._anchorPosId = nil
 	end
 
-	if arg_11_0._scaleId then
-		ZProj.TweenHelper.KillById(arg_11_0._scaleId)
+	if self._scaleId then
+		ZProj.TweenHelper.KillById(self._scaleId)
 
-		arg_11_0._scaleId = nil
+		self._scaleId = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function HeroGroupCareerTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return HeroGroupCareerTipView

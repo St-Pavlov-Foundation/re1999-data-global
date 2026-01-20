@@ -1,19 +1,21 @@
-﻿module("modules.logic.survival.model.map.SurvivalHexCellMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalHexCellMo.lua
 
-local var_0_0 = class("SurvivalHexCellMo")
+module("modules.logic.survival.model.map.SurvivalHexCellMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.pos = SurvivalHexNode.New(arg_1_1.hex.hex.q, arg_1_1.hex.hex.r)
-	arg_1_0.dir = arg_1_1.hex.dir
-	arg_1_0.style = arg_1_1.style
+local SurvivalHexCellMo = class("SurvivalHexCellMo")
 
-	local var_1_0 = lua_survival_walkable.configDict
+function SurvivalHexCellMo:init(data, mapType)
+	self.pos = SurvivalHexNode.New(data.hex.hex.q, data.hex.hex.r)
+	self.dir = data.hex.dir
+	self.style = data.style
 
-	arg_1_0.co = var_1_0[arg_1_2] and var_1_0[arg_1_2][arg_1_0.style] or nil
+	local dict = lua_survival_walkable.configDict
 
-	if not arg_1_0.co then
-		logError("可走格子配置不存在" .. tostring(arg_1_2) .. " >> " .. tostring(arg_1_0.style))
+	self.co = dict[mapType] and dict[mapType][self.style] or nil
+
+	if not self.co then
+		logError("可走格子配置不存在" .. tostring(mapType) .. " >> " .. tostring(self.style))
 	end
 end
 
-return var_0_0
+return SurvivalHexCellMo

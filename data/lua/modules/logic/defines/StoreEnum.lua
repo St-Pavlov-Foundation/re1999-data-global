@@ -1,15 +1,17 @@
-﻿module("modules.logic.defines.StoreEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/StoreEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.StoreEnum", package.seeall)
 
-var_0_0.ChargeStoreTabId = 410
-var_0_0.LimitType = {
+local StoreEnum = _M
+
+StoreEnum.ChargeStoreTabId = 410
+StoreEnum.LimitType = {
 	Default = 1,
 	Currency = 3,
 	CurrencyChanged = 4,
 	BuyLimit = 2
 }
-var_0_0.Discount = {
+StoreEnum.Discount = {
 	Recommend = "101",
 	Activity = "103",
 	Hot = "102",
@@ -18,13 +20,13 @@ var_0_0.Discount = {
 	Flash = "104",
 	Super = "105"
 }
-var_0_0.RefreshTime = {
+StoreEnum.RefreshTime = {
 	Day = 1,
 	Week = 2,
 	Month = 3,
 	Forever = 0
 }
-var_0_0.ChargeRefreshTime = {
+StoreEnum.ChargeRefreshTime = {
 	Day = 3,
 	Week = 4,
 	Month = 5,
@@ -33,8 +35,8 @@ var_0_0.ChargeRefreshTime = {
 	Level = 7,
 	None = 0
 }
-var_0_0.LittleMonthCardGoodsId = 811512
-var_0_0.StoreId = {
+StoreEnum.LittleMonthCardGoodsId = 811512
+StoreEnum.StoreId = {
 	PubbleCharge = 411,
 	LimitStore = 112,
 	EventPackage = 615,
@@ -62,16 +64,17 @@ var_0_0.StoreId = {
 	Skin = 510,
 	GlowCharge = 412
 }
-var_0_0.DefaultTabId = var_0_0.StoreId.RecommendStore
-var_0_0.RecommendPackageStoreIdList = {
-	var_0_0.StoreId.VersionPackage,
-	var_0_0.StoreId.OneTimePackage,
-	var_0_0.StoreId.NormalPackage,
-	var_0_0.StoreId.EventPackage,
-	var_0_0.StoreId.MediciPackage
+StoreEnum.DefaultTabId = StoreEnum.StoreId.RecommendStore
+StoreEnum.RecommendPackageStoreIdList = {
+	StoreEnum.StoreId.VersionPackage,
+	StoreEnum.StoreId.OneTimePackage,
+	StoreEnum.StoreId.NormalPackage,
+	StoreEnum.StoreId.EventPackage,
+	StoreEnum.StoreId.MediciPackage
 }
-var_0_0.RecommendSubStoreId = {
+StoreEnum.RecommendSubStoreId = {
 	StoreRoleSkinView = 801,
+	SummonSimulationPick = 822,
 	GiftrecommendView1 = 803,
 	MonthCardId = 711,
 	GiftrecommendView2 = 804,
@@ -82,7 +85,7 @@ var_0_0.RecommendSubStoreId = {
 	GiftPacksView = 713,
 	ChargeView = 712
 }
-var_0_0.RecommendRelationType = {
+StoreEnum.RecommendRelationType = {
 	OtherRecommendClose = 3,
 	PackageStoreGoodsNoBuy = 6,
 	StoreGoods = 5,
@@ -90,58 +93,66 @@ var_0_0.RecommendRelationType = {
 	Summon = 1,
 	PackageStoreGoods = 2
 }
-var_0_0.AdjustOrderType = {
+StoreEnum.AdjustOrderType = {
 	MonthCard = 1,
 	BattlePass = 2,
+	SeasonCard = 3,
 	Normal = 0
 }
-var_0_0.GroupOrderType = {
+StoreEnum.GroupOrderType = {
 	GroupC = 3,
 	GroupA = 1,
 	GroupD = 4,
 	GroupB = 2
 }
-var_0_0.MonthCardGoodsId = 610001
-var_0_0.SeasonCardGoodsId = 811532
-var_0_0.NewbiePackId = 811461
-var_0_0.NormalRoomTicket = 600001
-var_0_0.TopRoomTicket = 600002
-var_0_0.SummonSimulationPick = "v2a2_03"
-var_0_0.MonthCardStatus = {
+StoreEnum.MonthCardGoodsId = 610001
+StoreEnum.SeasonCardGoodsId = 832004
+StoreEnum.SupplementMonthCardItemId = 2929001
+StoreEnum.V3a2_SummonSimulationPickItemId = 832005
+StoreEnum.NewbiePackId = 811461
+StoreEnum.NormalRoomTicket = 600001
+StoreEnum.TopRoomTicket = 600002
+StoreEnum.SummonSimulationPick = "v2a2_03"
+StoreEnum.SummonSimulationPick2 = "v3a2_01"
+StoreEnum.MonthCardStatus = {
 	NotEnoughOneDay = 0,
 	NotEnoughThreeDay = 3,
 	NotPurchase = -1
 }
-var_0_0.Need4RDEpisodeId = 9999
-var_0_0.StoreChargeType = {
+StoreEnum.Need4RDEpisodeId = 9999
+StoreEnum.StoreChargeType = {
 	LinkGiftGoods = 8,
 	DailyReleasePackage = 4,
 	NationalGift = 9,
 	MonthCard = 2,
 	Optional = 5
 }
-var_0_0.Prefab = {
+StoreEnum.Prefab = {
 	RoomStore = 6,
 	ChargeStore = 2,
 	PackageStore = 4,
 	NormalStore = 1,
 	SkinStore = 3
 }
-var_0_0.BossRushStore = {
+StoreEnum.BossRushStore = {
 	NormalStore = 901,
 	ManeTrust = 900,
 	UpdateStore = 902
 }
-var_0_0.TowerStore = {
+StoreEnum.TowerStore = {
 	UpdateStore = 302,
 	NormalStore = 301,
 	MainStore = 300
 }
-var_0_0.StoreTabId = {
+StoreEnum.StoreTabId = {
 	Skin = 500
 }
-var_0_0.StoreId2TabId = {
-	[var_0_0.StoreId.Skin] = var_0_0.StoreTabId.Skin
+StoreEnum.StoreId2TabId = {
+	[StoreEnum.StoreId.Skin] = StoreEnum.StoreTabId.Skin
+}
+StoreEnum.chargeOptionalType = {
+	GroupOption = 1,
+	PosOption = 0
 }
 
-return var_0_0
+return StoreEnum

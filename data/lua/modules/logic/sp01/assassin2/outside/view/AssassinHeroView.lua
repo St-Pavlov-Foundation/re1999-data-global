@@ -1,511 +1,528 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinHeroView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinHeroView.lua
 
-local var_0_0 = class("AssassinHeroView", BaseView)
+module("modules.logic.sp01.assassin2.outside.view.AssassinHeroView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gopick = gohelper.findChild(arg_1_0.viewGO, "root/#go_pick")
-	arg_1_0._txtpicktitle = gohelper.findChildText(arg_1_0.viewGO, "root/#go_pick/txt_pick")
-	arg_1_0._goheroContent = gohelper.findChild(arg_1_0.viewGO, "root/left/#scroll_hero/Viewport/Content")
-	arg_1_0._goheroItem = gohelper.findChild(arg_1_0.viewGO, "root/left/#scroll_hero/Viewport/Content/#go_heroItem")
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "root/heroInfo/#txt_namecn")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "root/heroInfo/#txt_namecn/#txt_nameen")
-	arg_1_0._imagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "root/heroInfo/#image_careericon")
-	arg_1_0._simagehero = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/heroInfo/Mask/#simage_hero")
-	arg_1_0._goequipcontainer = gohelper.findChild(arg_1_0.viewGO, "root/heroInfo/#go_equipcontainer")
-	arg_1_0._simageequipicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/heroInfo/#go_equipcontainer/#simage_equipicon")
-	arg_1_0._txtequiplv = gohelper.findChildText(arg_1_0.viewGO, "root/heroInfo/#go_equipcontainer/#txt_lv")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#simage_icon")
-	arg_1_0._goswitch = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#switch_equip")
-	arg_1_0._txtEquipName = gohelper.findChildText(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#txt_name")
-	arg_1_0._txtcareer = gohelper.findChildText(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/career/#txt_career")
-	arg_1_0._goattrLayout = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_attrLayout")
-	arg_1_0._goattrItem = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_attrLayout/#go_attrItem")
-	arg_1_0._gochange = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_change")
-	arg_1_0._btnchange = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_change/#btn_change", AudioEnum2_9.StealthGame.play_ui_cikeshang_skillopen)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/right/#go_assassinCareer/#go_assassinSkill/ScrollView/Viewport/#txt_desc")
-	arg_1_0._goitemLayout = gohelper.findChild(arg_1_0.viewGO, "root/right/Layout/#go_itemLayout")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "root/right/Layout/#go_itemLayout/#go_item")
-	arg_1_0._goenterGame = gohelper.findChild(arg_1_0.viewGO, "root/right/Layout/#go_enterGame")
-	arg_1_0._goAble = gohelper.findChild(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_Able")
-	arg_1_0._btnenter1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_Able/#btn_enter", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._txtenter1 = gohelper.findChildText(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_Able/#btn_enter/txt_Enter")
-	arg_1_0._txtpick1 = gohelper.findChildText(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_Able/#txt_pick")
-	arg_1_0._goDisAble = gohelper.findChild(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble")
-	arg_1_0._btnenter2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble/#btn_enter", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._txtenter2 = gohelper.findChildText(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble/#btn_enter/txt_Enter")
-	arg_1_0._txtpick2 = gohelper.findChildText(arg_1_0.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble/#txt_pick")
-	arg_1_0._btnInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/heroInfo/#btn_Info", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+local AssassinHeroView = class("AssassinHeroView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinHeroView:onInitView()
+	self._gopick = gohelper.findChild(self.viewGO, "root/#go_pick")
+	self._txtpicktitle = gohelper.findChildText(self.viewGO, "root/#go_pick/txt_pick")
+	self._goheroContent = gohelper.findChild(self.viewGO, "root/left/#scroll_hero/Viewport/Content")
+	self._goheroItem = gohelper.findChild(self.viewGO, "root/left/#scroll_hero/Viewport/Content/#go_heroItem")
+	self._txtnamecn = gohelper.findChildText(self.viewGO, "root/heroInfo/#txt_namecn")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "root/heroInfo/#txt_namecn/#txt_nameen")
+	self._imagecareericon = gohelper.findChildImage(self.viewGO, "root/heroInfo/#image_careericon")
+	self._simagehero = gohelper.findChildSingleImage(self.viewGO, "root/heroInfo/Mask/#simage_hero")
+	self._goequipcontainer = gohelper.findChild(self.viewGO, "root/heroInfo/#go_equipcontainer")
+	self._simageequipicon = gohelper.findChildSingleImage(self.viewGO, "root/heroInfo/#go_equipcontainer/#simage_equipicon")
+	self._txtequiplv = gohelper.findChildText(self.viewGO, "root/heroInfo/#go_equipcontainer/#txt_lv")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#simage_icon")
+	self._goswitch = gohelper.findChild(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#switch_equip")
+	self._txtEquipName = gohelper.findChildText(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#txt_name")
+	self._txtcareer = gohelper.findChildText(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/career/#txt_career")
+	self._goattrLayout = gohelper.findChild(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_attrLayout")
+	self._goattrItem = gohelper.findChild(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_attrLayout/#go_attrItem")
+	self._gochange = gohelper.findChild(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_change")
+	self._btnchange = gohelper.findChildClickWithAudio(self.viewGO, "root/right/#go_assassinCareer/#go_assassinEquip/#go_change/#btn_change", AudioEnum2_9.StealthGame.play_ui_cikeshang_skillopen)
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/right/#go_assassinCareer/#go_assassinSkill/ScrollView/Viewport/#txt_desc")
+	self._goitemLayout = gohelper.findChild(self.viewGO, "root/right/Layout/#go_itemLayout")
+	self._goitem = gohelper.findChild(self.viewGO, "root/right/Layout/#go_itemLayout/#go_item")
+	self._goenterGame = gohelper.findChild(self.viewGO, "root/right/Layout/#go_enterGame")
+	self._goAble = gohelper.findChild(self.viewGO, "root/right/Layout/#go_enterGame/#go_Able")
+	self._btnenter1 = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/Layout/#go_enterGame/#go_Able/#btn_enter", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._txtenter1 = gohelper.findChildText(self.viewGO, "root/right/Layout/#go_enterGame/#go_Able/#btn_enter/txt_Enter")
+	self._txtpick1 = gohelper.findChildText(self.viewGO, "root/right/Layout/#go_enterGame/#go_Able/#txt_pick")
+	self._goDisAble = gohelper.findChild(self.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble")
+	self._btnenter2 = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble/#btn_enter", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._txtenter2 = gohelper.findChildText(self.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble/#btn_enter/txt_Enter")
+	self._txtpick2 = gohelper.findChildText(self.viewGO, "root/right/Layout/#go_enterGame/#go_DisAble/#txt_pick")
+	self._btnInfo = gohelper.findChildButtonWithAudio(self.viewGO, "root/heroInfo/#btn_Info", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnInfo:AddClickListener(arg_2_0._btnInfoOnClick, arg_2_0)
-	arg_2_0._btnchange:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
-	arg_2_0._btnenter1:AddClickListener(arg_2_0._btnenterOnClick, arg_2_0)
-	arg_2_0._btnenter2:AddClickListener(arg_2_0._btnenterOnClick, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._animEventWrap:AddEventListener("changeHero", arg_2_0._onChangeHero, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.OnChangeAssassinHeroCareer, arg_2_0._onChangeAssassinHeroCareer, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.OnChangeEquippedItem, arg_2_0._onChangeEquippedItem, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.OnUnlockQuestContent, arg_2_0._onUnlockQuestContent, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, arg_2_0.onEnterFightSetParams, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0.onOpenViewFinish, arg_2_0)
+function AssassinHeroView:addEvents()
+	self._btnInfo:AddClickListener(self._btnInfoOnClick, self)
+	self._btnchange:AddClickListener(self._btnchangeOnClick, self)
+	self._btnenter1:AddClickListener(self._btnenterOnClick, self)
+	self._btnenter2:AddClickListener(self._btnenterOnClick, self)
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._animEventWrap:AddEventListener("changeHero", self._onChangeHero, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.OnChangeAssassinHeroCareer, self._onChangeAssassinHeroCareer, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.OnChangeEquippedItem, self._onChangeEquippedItem, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.OnUnlockQuestContent, self._onUnlockQuestContent, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, self.onEnterFightSetParams, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnInfo:RemoveClickListener()
-	arg_3_0._btnchange:RemoveClickListener()
-	arg_3_0._btnenter1:RemoveClickListener()
-	arg_3_0._btnenter2:RemoveClickListener()
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._animEventWrap:RemoveAllEventListener()
+function AssassinHeroView:removeEvents()
+	self._btnInfo:RemoveClickListener()
+	self._btnchange:RemoveClickListener()
+	self._btnenter1:RemoveClickListener()
+	self._btnenter2:RemoveClickListener()
+	self._btnequip:RemoveClickListener()
+	self._animEventWrap:RemoveAllEventListener()
 
-	if arg_3_0._heroItemList then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._heroItemList) do
-			iter_3_1.btnClick:RemoveClickListener()
+	if self._heroItemList then
+		for _, heroItem in ipairs(self._heroItemList) do
+			heroItem.btnClick:RemoveClickListener()
 		end
 	end
 
-	if arg_3_0._itemGridList then
-		for iter_3_2, iter_3_3 in ipairs(arg_3_0._itemGridList) do
-			iter_3_3.btnClick:RemoveClickListener()
+	if self._itemGridList then
+		for _, itemGrid in ipairs(self._itemGridList) do
+			itemGrid.btnClick:RemoveClickListener()
 		end
 	end
 
-	arg_3_0:removeEventCb(AssassinController.instance, AssassinEvent.OnChangeAssassinHeroCareer, arg_3_0._onChangeAssassinHeroCareer, arg_3_0)
-	arg_3_0:removeEventCb(AssassinController.instance, AssassinEvent.OnChangeEquippedItem, arg_3_0._onChangeEquippedItem, arg_3_0)
-	arg_3_0:removeEventCb(AssassinController.instance, AssassinEvent.OnUnlockQuestContent, arg_3_0._onUnlockQuestContent, arg_3_0)
-	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, arg_3_0.onEnterFightSetParams, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_3_0.onOpenViewFinish, arg_3_0)
+	self:removeEventCb(AssassinController.instance, AssassinEvent.OnChangeAssassinHeroCareer, self._onChangeAssassinHeroCareer, self)
+	self:removeEventCb(AssassinController.instance, AssassinEvent.OnChangeEquippedItem, self._onChangeEquippedItem, self)
+	self:removeEventCb(AssassinController.instance, AssassinEvent.OnUnlockQuestContent, self._onUnlockQuestContent, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, self.onEnterFightSetParams, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 end
 
-function var_0_0._btnInfoOnClick(arg_4_0)
-	local var_4_0 = arg_4_0:getCurShowAssassinHeroId()
+function AssassinHeroView:_btnInfoOnClick()
+	local curShowAssassinHeroId = self:getCurShowAssassinHeroId()
 
 	AssassinController.instance:openHeroStatsView({
-		assassinHeroId = var_4_0
+		assassinHeroId = curShowAssassinHeroId
 	})
 end
 
-function var_0_0._btnchangeOnClick(arg_5_0)
-	local var_5_0 = arg_5_0:getCurShowAssassinHeroId()
+function AssassinHeroView:_btnchangeOnClick()
+	local curShowAssassinHeroId = self:getCurShowAssassinHeroId()
+	local isHasSecondCareer = AssassinConfig.instance:isAssassinHeroHasSecondCareer(curShowAssassinHeroId)
 
-	if not AssassinConfig.instance:isAssassinHeroHasSecondCareer(var_5_0) then
+	if not isHasSecondCareer then
 		return
 	end
 
 	AssassinController.instance:openAssassinEquipView({
-		assassinHeroId = var_5_0
+		assassinHeroId = curShowAssassinHeroId
 	})
 end
 
-function var_0_0._btnenterOnClick(arg_6_0)
-	if not arg_6_0._questId then
+function AssassinHeroView:_btnenterOnClick()
+	if not self._questId then
 		return
 	end
 
-	if arg_6_0._isFightQuest then
-		AssassinController.instance:enterQuestFight(arg_6_0._questId)
-		arg_6_0:saveHeroCache()
+	if self._isFightQuest then
+		AssassinController.instance:enterQuestFight(self._questId)
+		self:saveHeroCache()
 	else
-		if AssassinStealthGameModel.instance:getPickHeroCount() < arg_6_0.needHeroCount then
+		local pickCount = AssassinStealthGameModel.instance:getPickHeroCount()
+
+		if pickCount < self.needHeroCount then
 			return
 		end
 
 		AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnterStealthGameEff, true)
-		arg_6_0._animatorPlayer:Play("to_game", arg_6_0._enterAssassinStealthGame, arg_6_0)
+		self._animatorPlayer:Play("to_game", self._enterAssassinStealthGame, self)
 		AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_movestart)
-		arg_6_0:saveHeroCache()
+		self:saveHeroCache()
 	end
 end
 
-function var_0_0._enterAssassinStealthGame(arg_7_0)
-	AssassinStealthGameController.instance:startStealthGame(arg_7_0._questId)
+function AssassinHeroView:_enterAssassinStealthGame()
+	AssassinStealthGameController.instance:startStealthGame(self._questId)
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnterStealthGameEff, false)
 end
 
-function var_0_0._btnHeroItemOnClick(arg_8_0, arg_8_1)
-	arg_8_0:_selectHero(arg_8_1, true)
+function AssassinHeroView:_btnHeroItemOnClick(index)
+	self:_selectHero(index, true)
 end
 
-function var_0_0._selectHero(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getAssassinHeroId(arg_9_1)
+function AssassinHeroView:_selectHero(index, checkAnim)
+	local assassinHeroId = self:getAssassinHeroId(index)
+	local isUnlocked = AssassinHeroModel.instance:isUnlockAssassinHero(assassinHeroId)
 
-	if not AssassinHeroModel.instance:isUnlockAssassinHero(var_9_0) then
+	if not isUnlocked then
 		return
 	end
 
-	if AssassinStealthGameController.instance:pickAssassinHeroItemInHeroView(arg_9_0._questId, var_9_0, arg_9_0._isFightQuest) then
-		local var_9_1 = arg_9_2 and arg_9_0._curShowIndex ~= arg_9_1
+	local isChangShowHero = AssassinStealthGameController.instance:pickAssassinHeroItemInHeroView(self._questId, assassinHeroId, self._isFightQuest)
 
-		arg_9_0._curShowIndex = arg_9_1
+	if isChangShowHero then
+		local playAnim = checkAnim and self._curShowIndex ~= index
 
-		if var_9_1 then
-			arg_9_0._animatorPlayer:Play("switch")
+		self._curShowIndex = index
+
+		if playAnim then
+			self._animatorPlayer:Play("switch")
 		else
-			arg_9_0:refresh()
+			self:refresh()
 		end
 	end
 end
 
-function var_0_0._btnItemOnClick(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getCurShowAssassinHeroId()
-	local var_10_1 = AssassinHeroModel.instance:getAssassinCareerId(var_10_0)
+function AssassinHeroView:_btnItemOnClick(index)
+	local curShowAssassinHeroId = self:getCurShowAssassinHeroId()
+	local assassinCareerId = AssassinHeroModel.instance:getAssassinCareerId(curShowAssassinHeroId)
+	local bagCapacity = AssassinConfig.instance:getAssassinCareerCapacity(assassinCareerId)
 
-	if arg_10_1 > AssassinConfig.instance:getAssassinCareerCapacity(var_10_1) then
+	if bagCapacity < index then
 		return
 	end
 
 	AssassinController.instance:openAssassinBackpackView({
-		assassinHeroId = var_10_0,
-		carryIndex = arg_10_1
+		assassinHeroId = curShowAssassinHeroId,
+		carryIndex = index
 	})
 end
 
-function var_0_0._btnequipOnClick(arg_11_0)
-	local var_11_0 = arg_11_0:getCurShowAssassinHeroId()
-	local var_11_1 = AssassinHeroModel.instance:getHeroMo(var_11_0)
-	local var_11_2 = AssassinHeroModel.instance:getAssassinHeroEquipMo(var_11_0)
-	local var_11_3 = {
-		heroMo = var_11_1,
-		equipMo = var_11_2,
+function AssassinHeroView:_btnequipOnClick()
+	local curShowAssassinHeroId = self:getCurShowAssassinHeroId()
+	local heroMo = AssassinHeroModel.instance:getHeroMo(curShowAssassinHeroId)
+	local equipMo = AssassinHeroModel.instance:getAssassinHeroEquipMo(curShowAssassinHeroId)
+	local viewParam = {
+		heroMo = heroMo,
+		equipMo = equipMo,
 		fromView = EquipEnum.FromViewEnum.FromAssassinHeroView
 	}
 
-	EquipController.instance:openEquipInfoTeamView(var_11_3)
+	EquipController.instance:openEquipInfoTeamView(viewParam)
 end
 
-function var_0_0._onChangeHero(arg_12_0)
-	arg_12_0:refresh()
+function AssassinHeroView:_onChangeHero()
+	self:refresh()
 end
 
-function var_0_0._onChangeAssassinHeroCareer(arg_13_0)
-	arg_13_0:refreshCareerEquipInfo(true)
-	arg_13_0:refreshItemGridList()
+function AssassinHeroView:_onChangeAssassinHeroCareer()
+	self:refreshCareerEquipInfo(true)
+	self:refreshItemGridList()
 end
 
-function var_0_0._onChangeEquippedItem(arg_14_0)
-	arg_14_0:refreshItemGridList()
+function AssassinHeroView:_onChangeEquippedItem()
+	self:refreshItemGridList()
 end
 
-function var_0_0._onUnlockQuestContent(arg_15_0)
-	arg_15_0:refreshHeroItemIsUnlocked()
-	arg_15_0:refreshHeroItemSelected()
+function AssassinHeroView:_onUnlockQuestContent()
+	self:refreshHeroItemIsUnlocked()
+	self:refreshHeroItemSelected()
 end
 
-function var_0_0.onEnterFightSetParams(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_0._isFightQuest then
+function AssassinHeroView:onEnterFightSetParams(req, episodeConfig)
+	if not self._isFightQuest then
 		return
 	end
 
-	if arg_16_2 and arg_16_2.type == DungeonEnum.EpisodeType.Assassin2Outside then
-		local var_16_0 = AssassinOutsideModel.instance:getEnterFightQuest()
+	if episodeConfig and episodeConfig.type == DungeonEnum.EpisodeType.Assassin2Outside then
+		local questId = AssassinOutsideModel.instance:getEnterFightQuest()
 
-		arg_16_1.params = tostring(var_16_0)
+		req.params = tostring(questId)
 	end
 end
 
-function var_0_0.onOpenViewFinish(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.AssassinStealthGameView then
-		arg_17_0:closeThis()
+function AssassinHeroView:onOpenViewFinish(viewName)
+	if viewName == ViewName.AssassinStealthGameView then
+		self:closeThis()
 	end
 end
 
-local var_0_1 = 1
+local DEFAULT_SELECTED_INDEX = 1
 
-function var_0_0._editableInitView(arg_18_0)
-	arg_18_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_18_0.viewGO)
-	arg_18_0._animEventWrap = arg_18_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_18_0._btnequip = gohelper.getClick(arg_18_0._goequipcontainer)
-	arg_18_0._goranks = arg_18_0:getUserDataTb_()
+function AssassinHeroView:_editableInitView()
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._animEventWrap = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._btnequip = gohelper.getClick(self._goequipcontainer)
+	self._goranks = self:getUserDataTb_()
 
-	for iter_18_0 = 1, 3 do
-		arg_18_0._goranks[iter_18_0] = gohelper.findChild(arg_18_0.viewGO, "root/heroInfo/level/rankobj/rank" .. iter_18_0)
+	for i = 1, 3 do
+		self._goranks[i] = gohelper.findChild(self.viewGO, "root/heroInfo/level/rankobj/rank" .. i)
 	end
 
-	arg_18_0._txtherolv = gohelper.findChildText(arg_18_0.viewGO, "root/heroInfo/level/lv/lvltxt")
-	arg_18_0._goexskill = gohelper.findChild(arg_18_0.viewGO, "root/heroInfo/#go_exskill")
-	arg_18_0._imageexskill = gohelper.findChildImage(arg_18_0.viewGO, "root/heroInfo/#go_exskill/#image_exskill")
+	self._txtherolv = gohelper.findChildText(self.viewGO, "root/heroInfo/level/lv/lvltxt")
+	self._goexskill = gohelper.findChild(self.viewGO, "root/heroInfo/#go_exskill")
+	self._imageexskill = gohelper.findChildImage(self.viewGO, "root/heroInfo/#go_exskill/#image_exskill")
 
 	AssassinStealthGameModel.instance:clearPickHeroData()
-	gohelper.setActive(arg_18_0._goswitch, false)
+	gohelper.setActive(self._goswitch, false)
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
-	arg_19_0._questId = arg_19_0.viewParam and arg_19_0.viewParam.questId
+function AssassinHeroView:onUpdateParam()
+	self._questId = self.viewParam and self.viewParam.questId
 
-	if arg_19_0._questId then
-		arg_19_0._isFightQuest = AssassinConfig.instance:getQuestType(arg_19_0._questId) == AssassinEnum.QuestType.Fight
-		arg_19_0._recommendHeroList = AssassinConfig.instance:getQuestRecommendHeroList(arg_19_0._questId)
+	if self._questId then
+		local questType = AssassinConfig.instance:getQuestType(self._questId)
 
-		if arg_19_0._isFightQuest then
-			local var_19_0 = AssassinConfig.instance:getQuestParam(arg_19_0._questId)
-			local var_19_1 = tonumber(var_19_0)
-			local var_19_2 = var_19_1 and lua_episode.configDict[var_19_1]
-			local var_19_3 = var_19_2 and lua_battle.configDict[var_19_2.battleId]
+		self._isFightQuest = questType == AssassinEnum.QuestType.Fight
+		self._recommendHeroList = AssassinConfig.instance:getQuestRecommendHeroList(self._questId)
 
-			arg_19_0.needHeroCount = var_19_3 and var_19_3.playerMax or ModuleEnum.HeroCountInGroup
+		if self._isFightQuest then
+			local strEpisodeId = AssassinConfig.instance:getQuestParam(self._questId)
+			local episodeId = tonumber(strEpisodeId)
+			local episodeCO = episodeId and lua_episode.configDict[episodeId]
+			local battleCO = episodeCO and lua_battle.configDict[episodeCO.battleId]
+
+			self.needHeroCount = battleCO and battleCO.playerMax or ModuleEnum.HeroCountInGroup
 		else
-			local var_19_4 = AssassinConfig.instance:getQuestParam(arg_19_0._questId)
+			local strMapId = AssassinConfig.instance:getQuestParam(self._questId)
 
-			arg_19_0.needHeroCount = AssassinConfig.instance:getStealthMapNeedHeroCount(tonumber(var_19_4))
+			self.needHeroCount = AssassinConfig.instance:getStealthMapNeedHeroCount(tonumber(strMapId))
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:onUpdateParam()
-	arg_20_0:initBagItemGrid()
-	arg_20_0:initAssassinHeroList()
-	arg_20_0:checkIsPickMode()
-	arg_20_0:_selectHero(var_0_1)
+function AssassinHeroView:onOpen()
+	self:onUpdateParam()
+	self:initBagItemGrid()
+	self:initAssassinHeroList()
+	self:checkIsPickMode()
+	self:_selectHero(DEFAULT_SELECTED_INDEX)
 	AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_training)
 end
 
-function var_0_0.initBagItemGrid(arg_21_0)
-	arg_21_0._itemGridList = {}
+function AssassinHeroView:initBagItemGrid()
+	self._itemGridList = {}
 
-	local var_21_0 = {}
-	local var_21_1 = AssassinConfig.instance:getAssassinConst(AssassinEnum.ConstId.MaxBagCapacity, true)
+	local gridList = {}
+	local maxBagCapacity = AssassinConfig.instance:getAssassinConst(AssassinEnum.ConstId.MaxBagCapacity, true)
 
-	for iter_21_0 = 1, var_21_1 do
-		var_21_0[iter_21_0] = {
-			index = iter_21_0
+	for i = 1, maxBagCapacity do
+		gridList[i] = {
+			index = i
 		}
 	end
 
-	gohelper.CreateObjList(arg_21_0, arg_21_0._onCreateItemGrid, var_21_0, arg_21_0._goitemLayout, arg_21_0._goitem)
+	gohelper.CreateObjList(self, self._onCreateItemGrid, gridList, self._goitemLayout, self._goitem)
 end
 
-function var_0_0._onCreateItemGrid(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = arg_22_0:getUserDataTb_()
+function AssassinHeroView:_onCreateItemGrid(obj, data, index)
+	local itemGrid = self:getUserDataTb_()
 
-	var_22_0.go = arg_22_1
-	var_22_0.index = arg_22_2
-	var_22_0.golocked = gohelper.findChild(var_22_0.go, "#go_locked")
-	var_22_0.gounlocked = gohelper.findChild(var_22_0.go, "#go_unlocked")
-	var_22_0.goaddIcon = gohelper.findChild(var_22_0.go, "#go_unlocked/#go_addIcon")
-	var_22_0.imageitem = gohelper.findChildImage(var_22_0.go, "#go_unlocked/#simage_item")
-	var_22_0.goitemicon = var_22_0.imageitem.gameObject
-	var_22_0.txtnum = gohelper.findChildText(var_22_0.go, "#go_unlocked/#simage_item/#txt_num")
-	var_22_0.goswitch = gohelper.findChild(var_22_0.go, "#go_unlocked/#switch_item")
-	var_22_0.btnClick = gohelper.findChildClickWithAudio(var_22_0.go, "#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	itemGrid.go = obj
+	itemGrid.index = data
+	itemGrid.golocked = gohelper.findChild(itemGrid.go, "#go_locked")
+	itemGrid.gounlocked = gohelper.findChild(itemGrid.go, "#go_unlocked")
+	itemGrid.goaddIcon = gohelper.findChild(itemGrid.go, "#go_unlocked/#go_addIcon")
+	itemGrid.imageitem = gohelper.findChildImage(itemGrid.go, "#go_unlocked/#simage_item")
+	itemGrid.goitemicon = itemGrid.imageitem.gameObject
+	itemGrid.txtnum = gohelper.findChildText(itemGrid.go, "#go_unlocked/#simage_item/#txt_num")
+	itemGrid.goswitch = gohelper.findChild(itemGrid.go, "#go_unlocked/#switch_item")
+	itemGrid.btnClick = gohelper.findChildClickWithAudio(itemGrid.go, "#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
 
-	var_22_0.btnClick:AddClickListener(arg_22_0._btnItemOnClick, arg_22_0, arg_22_3)
-	gohelper.setActive(var_22_0.golocked, true)
-	gohelper.setActive(var_22_0.gounlocked, false)
-	gohelper.setActive(var_22_0.goswitch, false)
+	itemGrid.btnClick:AddClickListener(self._btnItemOnClick, self, index)
+	gohelper.setActive(itemGrid.golocked, true)
+	gohelper.setActive(itemGrid.gounlocked, false)
+	gohelper.setActive(itemGrid.goswitch, false)
 
-	arg_22_0._itemGridList[arg_22_3] = var_22_0
+	self._itemGridList[index] = itemGrid
 end
 
-function var_0_0.initAssassinHeroList(arg_23_0)
-	arg_23_0._heroItemList = {}
+function AssassinHeroView:initAssassinHeroList()
+	self._heroItemList = {}
 
-	local var_23_0 = AssassinHeroModel.instance:getAssassinHeroIdList()
+	local assassinHeroList = AssassinHeroModel.instance:getAssassinHeroIdList()
 
-	gohelper.CreateObjList(arg_23_0, arg_23_0._onCreateAssassinHeroItem, var_23_0, arg_23_0._goheroContent, arg_23_0._goheroItem)
+	gohelper.CreateObjList(self, self._onCreateAssassinHeroItem, assassinHeroList, self._goheroContent, self._goheroItem)
 end
 
-function var_0_0._onCreateAssassinHeroItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_0:getUserDataTb_()
+function AssassinHeroView:_onCreateAssassinHeroItem(obj, data, index)
+	local heroItem = self:getUserDataTb_()
 
-	var_24_0.go = arg_24_1
-	var_24_0.id = arg_24_2
-	var_24_0.gounselected = gohelper.findChild(var_24_0.go, "#go_unselected")
-	var_24_0.goframe1 = gohelper.findChild(var_24_0.go, "#go_unselected/#go_frame")
-	var_24_0.gonormalFrame1 = gohelper.findChild(var_24_0.go, "#go_unselected/#go_frame/#go_normalFrame")
-	var_24_0.gorequiredFrame1 = gohelper.findChild(var_24_0.go, "#go_unselected/#go_frame/#go_requiredFrame")
-	var_24_0.simageheroIcon1 = gohelper.findChildSingleImage(var_24_0.go, "#go_unselected/#simage_heroIcon")
-	var_24_0.txtindex1 = gohelper.findChildText(var_24_0.go, "#go_unselected/#txt_index")
-	var_24_0.goRecommand1 = gohelper.findChild(var_24_0.go, "#go_unselected/#go_Recommand")
-	var_24_0.goselected = gohelper.findChild(var_24_0.go, "#go_selected")
-	var_24_0.goframe2 = gohelper.findChild(var_24_0.go, "#go_selected/#go_frame")
-	var_24_0.gonormalFrame2 = gohelper.findChild(var_24_0.go, "#go_selected/#go_frame/#go_normalFrame")
-	var_24_0.gorequiredFrame2 = gohelper.findChild(var_24_0.go, "#go_selected/#go_frame/#go_requiredFrame")
-	var_24_0.simageheroIcon2 = gohelper.findChildSingleImage(var_24_0.go, "#go_selected/#simage_heroIcon")
-	var_24_0.txtindex2 = gohelper.findChildText(var_24_0.go, "#go_selected/#txt_index")
-	var_24_0.goRecommand2 = gohelper.findChild(var_24_0.go, "#go_selected/#go_Recommand")
-	var_24_0.golocked = gohelper.findChild(var_24_0.go, "#go_locked")
-	var_24_0.simageheroIcon3 = gohelper.findChildSingleImage(var_24_0.go, "#go_locked/#simage_heroIcon")
-	var_24_0.btnClick = gohelper.findChildClickWithAudio(var_24_0.go, "#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_herochoose)
+	heroItem.go = obj
+	heroItem.id = data
+	heroItem.gounselected = gohelper.findChild(heroItem.go, "#go_unselected")
+	heroItem.goframe1 = gohelper.findChild(heroItem.go, "#go_unselected/#go_frame")
+	heroItem.gonormalFrame1 = gohelper.findChild(heroItem.go, "#go_unselected/#go_frame/#go_normalFrame")
+	heroItem.gorequiredFrame1 = gohelper.findChild(heroItem.go, "#go_unselected/#go_frame/#go_requiredFrame")
+	heroItem.simageheroIcon1 = gohelper.findChildSingleImage(heroItem.go, "#go_unselected/#simage_heroIcon")
+	heroItem.txtindex1 = gohelper.findChildText(heroItem.go, "#go_unselected/#txt_index")
+	heroItem.goRecommand1 = gohelper.findChild(heroItem.go, "#go_unselected/#go_Recommand")
+	heroItem.goselected = gohelper.findChild(heroItem.go, "#go_selected")
+	heroItem.goframe2 = gohelper.findChild(heroItem.go, "#go_selected/#go_frame")
+	heroItem.gonormalFrame2 = gohelper.findChild(heroItem.go, "#go_selected/#go_frame/#go_normalFrame")
+	heroItem.gorequiredFrame2 = gohelper.findChild(heroItem.go, "#go_selected/#go_frame/#go_requiredFrame")
+	heroItem.simageheroIcon2 = gohelper.findChildSingleImage(heroItem.go, "#go_selected/#simage_heroIcon")
+	heroItem.txtindex2 = gohelper.findChildText(heroItem.go, "#go_selected/#txt_index")
+	heroItem.goRecommand2 = gohelper.findChild(heroItem.go, "#go_selected/#go_Recommand")
+	heroItem.golocked = gohelper.findChild(heroItem.go, "#go_locked")
+	heroItem.simageheroIcon3 = gohelper.findChildSingleImage(heroItem.go, "#go_locked/#simage_heroIcon")
+	heroItem.btnClick = gohelper.findChildClickWithAudio(heroItem.go, "#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_herochoose)
 
-	var_24_0.btnClick:AddClickListener(arg_24_0._btnHeroItemOnClick, arg_24_0, arg_24_3)
+	heroItem.btnClick:AddClickListener(self._btnHeroItemOnClick, self, index)
 
-	local var_24_1 = AssassinConfig.instance:getAssassinHeroIcon(var_24_0.id)
+	local heroIcon = AssassinConfig.instance:getAssassinHeroIcon(heroItem.id)
 
-	if not string.nilorempty(var_24_1) then
-		local var_24_2 = ResUrl.getSp01AssassinSingleBg("hero/headicon/" .. var_24_1)
+	if not string.nilorempty(heroIcon) then
+		local iconPath = ResUrl.getSp01AssassinSingleBg("hero/headicon/" .. heroIcon)
 
-		var_24_0.simageheroIcon1:LoadImage(var_24_2)
-		var_24_0.simageheroIcon2:LoadImage(var_24_2)
-		var_24_0.simageheroIcon3:LoadImage(var_24_2)
+		heroItem.simageheroIcon1:LoadImage(iconPath)
+		heroItem.simageheroIcon2:LoadImage(iconPath)
+		heroItem.simageheroIcon3:LoadImage(iconPath)
 	end
 
-	if AssassinHeroModel.instance:isRequiredAssassin(var_24_0.id) then
-		AssassinStealthGameController.instance:pickAssassinHeroItemInHeroView(arg_24_0._questId, var_24_0.id, arg_24_0._isFightQuest)
+	local isRequired = AssassinHeroModel.instance:isRequiredAssassin(heroItem.id)
+
+	if isRequired then
+		AssassinStealthGameController.instance:pickAssassinHeroItemInHeroView(self._questId, heroItem.id, self._isFightQuest)
 	end
 
-	gohelper.setActive(var_24_0.gorequiredFrame1, false)
-	gohelper.setActive(var_24_0.gorequiredFrame2, false)
-	gohelper.setActive(var_24_0.gonormalFrame1, false)
-	gohelper.setActive(var_24_0.gonormalFrame2, false)
-	gohelper.setActive(var_24_0.gounselected, false)
-	gohelper.setActive(var_24_0.goselected, false)
-	gohelper.setActive(var_24_0.golocked, true)
+	gohelper.setActive(heroItem.gorequiredFrame1, false)
+	gohelper.setActive(heroItem.gorequiredFrame2, false)
+	gohelper.setActive(heroItem.gonormalFrame1, false)
+	gohelper.setActive(heroItem.gonormalFrame2, false)
+	gohelper.setActive(heroItem.gounselected, false)
+	gohelper.setActive(heroItem.goselected, false)
+	gohelper.setActive(heroItem.golocked, true)
 
-	local var_24_3 = arg_24_0._recommendHeroList and tabletool.indexOf(arg_24_0._recommendHeroList, arg_24_2)
+	local isRecommend = self._recommendHeroList and tabletool.indexOf(self._recommendHeroList, data)
 
-	gohelper.setActive(var_24_0.goRecommand1, var_24_3)
-	gohelper.setActive(var_24_0.goRecommand2, var_24_3)
+	gohelper.setActive(heroItem.goRecommand1, isRecommend)
+	gohelper.setActive(heroItem.goRecommand2, isRecommend)
 
-	arg_24_0._heroItemList[arg_24_3] = var_24_0
+	self._heroItemList[index] = heroItem
 end
 
-function var_0_0.checkIsPickMode(arg_25_0)
-	if arg_25_0._questId then
-		local var_25_0 = ""
-		local var_25_1 = ""
+function AssassinHeroView:checkIsPickMode()
+	if self._questId then
+		local pickTitleStr = ""
+		local enterText = ""
 
-		if arg_25_0._isFightQuest then
-			var_25_0 = luaLang("assassin_quest_fight_pick_hero")
-			var_25_1 = luaLang("assassin_quest_fight_begin")
+		if self._isFightQuest then
+			pickTitleStr = luaLang("assassin_quest_fight_pick_hero")
+			enterText = luaLang("assassin_quest_fight_begin")
 		else
-			local var_25_2 = AssassinConfig.instance:getQuestParam(arg_25_0._questId)
-			local var_25_3 = AssassinConfig.instance:getStealthMapNeedHeroCount(tonumber(var_25_2))
+			local strMapId = AssassinConfig.instance:getQuestParam(self._questId)
+			local needHeroCount = AssassinConfig.instance:getStealthMapNeedHeroCount(tonumber(strMapId))
 
-			var_25_0 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("assassin_stealth_game_pick_hero"), var_25_3)
-			var_25_1 = luaLang("assassin_stealth_game_begin")
+			pickTitleStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("assassin_stealth_game_pick_hero"), needHeroCount)
+			enterText = luaLang("assassin_stealth_game_begin")
 		end
 
-		arg_25_0._txtpicktitle.text = var_25_0
-		arg_25_0._txtenter1.text = var_25_1
-		arg_25_0._txtenter2.text = var_25_1
+		self._txtpicktitle.text = pickTitleStr
+		self._txtenter1.text = enterText
+		self._txtenter2.text = enterText
 
-		arg_25_0:fillHeroCache()
+		self:fillHeroCache()
 	end
 
-	gohelper.setActive(arg_25_0._gopick, arg_25_0._questId)
-	gohelper.setActive(arg_25_0._goenterGame, arg_25_0._questId)
+	gohelper.setActive(self._gopick, self._questId)
+	gohelper.setActive(self._goenterGame, self._questId)
 end
 
-function var_0_0.getAssassinHeroId(arg_26_0, arg_26_1)
-	local var_26_0
+function AssassinHeroView:getAssassinHeroId(index)
+	local result
 
-	if arg_26_0._heroItemList then
-		local var_26_1 = arg_26_0._heroItemList[arg_26_1]
+	if self._heroItemList then
+		local heroItem = self._heroItemList[index]
 
-		if var_26_1 then
-			var_26_0 = var_26_1.id
+		if heroItem then
+			result = heroItem.id
 		else
-			logError(string.format("AssassinHeroView:getAssassinHeroId error, no heroItem, index:%s", arg_26_1))
+			logError(string.format("AssassinHeroView:getAssassinHeroId error, no heroItem, index:%s", index))
 		end
 	end
 
-	return var_26_0
+	return result
 end
 
-function var_0_0.getCurShowAssassinHeroId(arg_27_0)
-	return (arg_27_0:getAssassinHeroId(arg_27_0._curShowIndex))
+function AssassinHeroView:getCurShowAssassinHeroId()
+	local assassinHeroId = self:getAssassinHeroId(self._curShowIndex)
+
+	return assassinHeroId
 end
 
-function var_0_0.refresh(arg_28_0)
-	arg_28_0:refreshHeroItemIsUnlocked()
-	arg_28_0:refreshHeroItemSelected()
-	arg_28_0:refreshHeroInfo()
-	arg_28_0:refreshCareerEquipInfo()
-	arg_28_0:refreshItemGridList()
+function AssassinHeroView:refresh()
+	self:refreshHeroItemIsUnlocked()
+	self:refreshHeroItemSelected()
+	self:refreshHeroInfo()
+	self:refreshCareerEquipInfo()
+	self:refreshItemGridList()
 end
 
-function var_0_0.refreshHeroItemSelected(arg_29_0)
-	if not arg_29_0._heroItemList then
+function AssassinHeroView:refreshHeroItemSelected()
+	if not self._heroItemList then
 		return
 	end
 
-	for iter_29_0, iter_29_1 in ipairs(arg_29_0._heroItemList) do
-		local var_29_0 = iter_29_1.id
+	for i, heroItem in ipairs(self._heroItemList) do
+		local assassinHeroId = heroItem.id
+		local isUnlocked = AssassinHeroModel.instance:isUnlockAssassinHero(assassinHeroId)
 
-		if AssassinHeroModel.instance:isUnlockAssassinHero(var_29_0) then
-			local var_29_1 = iter_29_0 == arg_29_0._curShowIndex
+		if isUnlocked then
+			local isCurShow = i == self._curShowIndex
 
-			if arg_29_0._questId then
-				local var_29_2 = AssassinStealthGameModel.instance:getHeroPickIndex(var_29_0)
+			if self._questId then
+				local pickIndex = AssassinStealthGameModel.instance:getHeroPickIndex(assassinHeroId)
 
-				if var_29_2 then
-					local var_29_3 = AssassinHeroModel.instance:isRequiredAssassin(var_29_0)
+				if pickIndex then
+					local isRequired = AssassinHeroModel.instance:isRequiredAssassin(assassinHeroId)
 
-					gohelper.setActive(iter_29_1.gorequiredFrame1, var_29_3)
-					gohelper.setActive(iter_29_1.gorequiredFrame2, var_29_3)
-					gohelper.setActive(iter_29_1.gonormalFrame1, not var_29_3)
-					gohelper.setActive(iter_29_1.gonormalFrame2, not var_29_3)
+					gohelper.setActive(heroItem.gorequiredFrame1, isRequired)
+					gohelper.setActive(heroItem.gorequiredFrame2, isRequired)
+					gohelper.setActive(heroItem.gonormalFrame1, not isRequired)
+					gohelper.setActive(heroItem.gonormalFrame2, not isRequired)
 				end
 
-				iter_29_1.txtindex1.text = var_29_2 or ""
-				iter_29_1.txtindex2.text = var_29_2 or ""
+				heroItem.txtindex1.text = pickIndex or ""
+				heroItem.txtindex2.text = pickIndex or ""
 
-				gohelper.setActive(iter_29_1.goframe1, var_29_2)
-				gohelper.setActive(iter_29_1.goframe2, var_29_2)
+				gohelper.setActive(heroItem.goframe1, pickIndex)
+				gohelper.setActive(heroItem.goframe2, pickIndex)
 			else
-				iter_29_1.txtindex1.text = ""
-				iter_29_1.txtindex2.text = ""
+				heroItem.txtindex1.text = ""
+				heroItem.txtindex2.text = ""
 
-				gohelper.setActive(iter_29_1.gonormalFrame1, var_29_1)
-				gohelper.setActive(iter_29_1.gonormalFrame2, var_29_1)
+				gohelper.setActive(heroItem.gonormalFrame1, isCurShow)
+				gohelper.setActive(heroItem.gonormalFrame2, isCurShow)
 			end
 
-			gohelper.setActive(iter_29_1.goselected, var_29_1)
-			gohelper.setActive(iter_29_1.gounselected, not var_29_1)
+			gohelper.setActive(heroItem.goselected, isCurShow)
+			gohelper.setActive(heroItem.gounselected, not isCurShow)
 		else
-			gohelper.setActive(iter_29_1.goselected, false)
-			gohelper.setActive(iter_29_1.gounselected, false)
+			gohelper.setActive(heroItem.goselected, false)
+			gohelper.setActive(heroItem.gounselected, false)
 		end
 	end
 
-	if arg_29_0._questId then
-		local var_29_4 = ""
-		local var_29_5 = AssassinStealthGameModel.instance:getPickHeroCount()
-		local var_29_6 = false
+	if self._questId then
+		local pickText = ""
+		local pickCount = AssassinStealthGameModel.instance:getPickHeroCount()
+		local isCanEnter = false
 
-		if arg_29_0._isFightQuest then
-			var_29_4 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassin_stealth_game_fight_has_pick_hero"), var_29_5, arg_29_0.needHeroCount)
-			var_29_6 = var_29_5 > 0
+		if self._isFightQuest then
+			pickText = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassin_stealth_game_fight_has_pick_hero"), pickCount, self.needHeroCount)
+			isCanEnter = pickCount > 0
 		else
-			var_29_4 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassin_stealth_game_has_pick_hero"), var_29_5, arg_29_0.needHeroCount)
-			var_29_6 = var_29_5 >= arg_29_0.needHeroCount
+			pickText = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassin_stealth_game_has_pick_hero"), pickCount, self.needHeroCount)
+			isCanEnter = pickCount >= self.needHeroCount
 		end
 
-		arg_29_0._txtpick1.text = var_29_4
-		arg_29_0._txtpick2.text = var_29_4
+		self._txtpick1.text = pickText
+		self._txtpick2.text = pickText
 
-		gohelper.setActive(arg_29_0._goAble, var_29_6)
-		gohelper.setActive(arg_29_0._goDisAble, not var_29_6)
+		gohelper.setActive(self._goAble, isCanEnter)
+		gohelper.setActive(self._goDisAble, not isCanEnter)
 	end
 end
 
-function var_0_0.refreshHeroItemIsUnlocked(arg_30_0)
-	if not arg_30_0._heroItemList then
+function AssassinHeroView:refreshHeroItemIsUnlocked()
+	if not self._heroItemList then
 		return
 	end
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0._heroItemList) do
-		local var_30_0 = iter_30_1.id
+	for _, heroItem in ipairs(self._heroItemList) do
+		local assassinHeroId = heroItem.id
+		local isUnlocked = AssassinHeroModel.instance:isUnlockAssassinHero(assassinHeroId)
 
-		if AssassinHeroModel.instance:isUnlockAssassinHero(var_30_0) then
-			gohelper.setActive(iter_30_1.golocked, false)
-			gohelper.setActive(iter_30_1.goselected, false)
-			gohelper.setActive(iter_30_1.gounselected, false)
+		if isUnlocked then
+			gohelper.setActive(heroItem.golocked, false)
+			gohelper.setActive(heroItem.goselected, false)
+			gohelper.setActive(heroItem.gounselected, false)
 		else
-			gohelper.setActive(iter_30_1.golocked, true)
-			gohelper.setActive(iter_30_1.goselected, false)
-			gohelper.setActive(iter_30_1.gounselected, false)
+			gohelper.setActive(heroItem.golocked, true)
+			gohelper.setActive(heroItem.goselected, false)
+			gohelper.setActive(heroItem.gounselected, false)
 		end
 	end
 end
 
-local var_0_2 = {
+local exSkillFillAmount = {
 	0.2,
 	0.4,
 	0.6,
@@ -513,177 +530,177 @@ local var_0_2 = {
 	1
 }
 
-function var_0_0.refreshHeroInfo(arg_31_0)
-	local var_31_0 = arg_31_0:getCurShowAssassinHeroId()
-	local var_31_1, var_31_2 = AssassinHeroModel.instance:getAssassinHeroName(var_31_0)
+function AssassinHeroView:refreshHeroInfo()
+	local curShowAssassinHeroId = self:getCurShowAssassinHeroId()
+	local nameCN, nameEn = AssassinHeroModel.instance:getAssassinHeroName(curShowAssassinHeroId)
 
-	arg_31_0._txtnamecn.text = var_31_1
-	arg_31_0._txtnameen.text = var_31_2
+	self._txtnamecn.text = nameCN
+	self._txtnameen.text = nameEn
 
-	local var_31_3 = AssassinConfig.instance:getAssassinHeroImg(var_31_0)
+	local heroImg = AssassinConfig.instance:getAssassinHeroImg(curShowAssassinHeroId)
 
-	if not string.nilorempty(var_31_3) then
-		local var_31_4 = ResUrl.getSp01AssassinSingleBg("hero/headicon/" .. var_31_3)
+	if not string.nilorempty(heroImg) then
+		local imgPath = ResUrl.getSp01AssassinSingleBg("hero/headicon/" .. heroImg)
 
-		arg_31_0._simagehero:LoadImage(var_31_4)
+		self._simagehero:LoadImage(imgPath)
 	end
 
-	local var_31_5 = AssassinHeroModel.instance:getAssassinHeroCommonCareer(var_31_0)
+	local career = AssassinHeroModel.instance:getAssassinHeroCommonCareer(curShowAssassinHeroId)
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_31_0._imagecareericon, "lssx_" .. tostring(var_31_5))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "lssx_" .. tostring(career))
 
-	local var_31_6 = AssassinHeroModel.instance:getAssassinHeroEquipMo(var_31_0)
+	local equipMo = AssassinHeroModel.instance:getAssassinHeroEquipMo(curShowAssassinHeroId)
 
-	if var_31_6 then
-		arg_31_0._simageequipicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(var_31_6.config.icon))
+	if equipMo then
+		self._simageequipicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(equipMo.config.icon))
 
-		arg_31_0._txtequiplv.text = var_31_6.level
+		self._txtequiplv.text = equipMo.level
 	end
 
-	gohelper.setActive(arg_31_0._goequipcontainer, var_31_6)
+	gohelper.setActive(self._goequipcontainer, equipMo)
 
-	local var_31_7, var_31_8 = AssassinHeroModel.instance:getAssassinHeroShowLevel(var_31_0)
+	local level, rank = AssassinHeroModel.instance:getAssassinHeroShowLevel(curShowAssassinHeroId)
 
-	arg_31_0._txtherolv.text = var_31_7
+	self._txtherolv.text = level
 
-	for iter_31_0 = 1, 3 do
-		gohelper.setActive(arg_31_0._goranks[iter_31_0], var_31_8 and iter_31_0 == var_31_8 - 1)
+	for i = 1, 3 do
+		gohelper.setActive(self._goranks[i], rank and i == rank - 1)
 	end
 
-	local var_31_9 = AssassinHeroModel.instance:getAssassinHeroSkillLevel(var_31_0)
+	local skillLv = AssassinHeroModel.instance:getAssassinHeroSkillLevel(curShowAssassinHeroId)
 
-	if var_31_9 > 0 then
-		arg_31_0._imageexskill.fillAmount = var_0_2[var_31_9] or 1
+	if skillLv > 0 then
+		self._imageexskill.fillAmount = exSkillFillAmount[skillLv] or 1
 
-		gohelper.setActive(arg_31_0._goexskill, true)
+		gohelper.setActive(self._goexskill, true)
 	else
-		gohelper.setActive(arg_31_0._goexskill, false)
+		gohelper.setActive(self._goexskill, false)
 	end
 end
 
-function var_0_0.refreshCareerEquipInfo(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_0:getCurShowAssassinHeroId()
-	local var_32_1 = AssassinHeroModel.instance:getAssassinCareerId(var_32_0)
-	local var_32_2 = AssassinConfig.instance:getAssassinCareerEquipPic(var_32_1)
-	local var_32_3 = ResUrl.getSp01AssassinSingleBg("weapon/" .. var_32_2)
+function AssassinHeroView:refreshCareerEquipInfo(playSwitch)
+	local curShowAssassinHeroId = self:getCurShowAssassinHeroId()
+	local assassinCareerId = AssassinHeroModel.instance:getAssassinCareerId(curShowAssassinHeroId)
+	local pic = AssassinConfig.instance:getAssassinCareerEquipPic(assassinCareerId)
+	local picPath = ResUrl.getSp01AssassinSingleBg("weapon/" .. pic)
 
-	arg_32_0._simageicon:LoadImage(var_32_3)
+	self._simageicon:LoadImage(picPath)
 
-	arg_32_0._txtEquipName.text = AssassinConfig.instance:getAssassinCareerEquipName(var_32_1)
-	arg_32_0._txtcareer.text = AssassinConfig.instance:getAssassinCareerTitle(var_32_1)
+	self._txtEquipName.text = AssassinConfig.instance:getAssassinCareerEquipName(assassinCareerId)
+	self._txtcareer.text = AssassinConfig.instance:getAssassinCareerTitle(assassinCareerId)
 
-	local var_32_4 = AssassinConfig.instance:isAssassinHeroHasSecondCareer(var_32_0)
+	local isHasSecondCareer = AssassinConfig.instance:isAssassinHeroHasSecondCareer(curShowAssassinHeroId)
 
-	gohelper.setActive(arg_32_0._gochange, var_32_4)
+	gohelper.setActive(self._gochange, isHasSecondCareer)
 
-	local var_32_5 = AssassinConfig.instance:getAssassinSkillIdByHeroCareer(var_32_0, var_32_1)
+	local skillId = AssassinConfig.instance:getAssassinSkillIdByHeroCareer(curShowAssassinHeroId, assassinCareerId)
 
-	arg_32_0._txtdesc.text = AssassinConfig.instance:getAssassinCareerSkillDesc(var_32_5)
+	self._txtdesc.text = AssassinConfig.instance:getAssassinCareerSkillDesc(skillId)
 
-	local var_32_6 = AssassinConfig.instance:getAssassinCareerAttrList(var_32_1)
+	local equipAttrList = AssassinConfig.instance:getAssassinCareerAttrList(assassinCareerId)
 
-	gohelper.CreateObjList(arg_32_0, arg_32_0._onCreateCareerEquipAttrItem, var_32_6, arg_32_0._goattrLayout, arg_32_0._goattrItem)
+	gohelper.CreateObjList(self, self._onCreateCareerEquipAttrItem, equipAttrList, self._goattrLayout, self._goattrItem)
 
-	if arg_32_1 then
-		gohelper.setActive(arg_32_0._goswitch, false)
-		gohelper.setActive(arg_32_0._goswitch, true)
+	if playSwitch then
+		gohelper.setActive(self._goswitch, false)
+		gohelper.setActive(self._goswitch, true)
 	end
 end
 
-function var_0_0._onCreateCareerEquipAttrItem(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	local var_33_0 = gohelper.findChildImage(arg_33_1, "icon")
-	local var_33_1 = gohelper.findChildText(arg_33_1, "#txt_attrName")
-	local var_33_2 = gohelper.findChildText(arg_33_1, "#txt_attrValue")
-	local var_33_3 = arg_33_2[1]
-	local var_33_4 = HeroConfig.instance:getHeroAttributeCO(var_33_3)
+function AssassinHeroView:_onCreateCareerEquipAttrItem(obj, data, index)
+	local attrIcon = gohelper.findChildImage(obj, "icon")
+	local attrName = gohelper.findChildText(obj, "#txt_attrName")
+	local attrValue = gohelper.findChildText(obj, "#txt_attrValue")
+	local attrId = data[1]
+	local attrCO = HeroConfig.instance:getHeroAttributeCO(attrId)
 
-	CharacterController.instance:SetAttriIcon(var_33_0, var_33_3, GameUtil.parseColor("#675C58"))
+	CharacterController.instance:SetAttriIcon(attrIcon, attrId, GameUtil.parseColor("#675C58"))
 
-	var_33_1.text = var_33_4.name
-	var_33_2.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("add_percent_value"), (arg_33_2[2] or 0) / 10)
+	attrName.text = attrCO.name
+	attrValue.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("add_percent_value"), (data[2] or 0) / 10)
 end
 
-function var_0_0.refreshItemGridList(arg_34_0)
-	local var_34_0 = arg_34_0:getCurShowAssassinHeroId()
-	local var_34_1 = AssassinHeroModel.instance:getAssassinCareerId(var_34_0)
-	local var_34_2 = AssassinConfig.instance:getAssassinCareerCapacity(var_34_1)
+function AssassinHeroView:refreshItemGridList()
+	local curShowAssassinHeroId = self:getCurShowAssassinHeroId()
+	local assassinCareerId = AssassinHeroModel.instance:getAssassinCareerId(curShowAssassinHeroId)
+	local bagCapacity = AssassinConfig.instance:getAssassinCareerCapacity(assassinCareerId)
 
-	for iter_34_0, iter_34_1 in ipairs(arg_34_0._itemGridList) do
-		local var_34_3 = iter_34_0 <= var_34_2
+	for index, itemGrid in ipairs(self._itemGridList) do
+		local isUnlocked = index <= bagCapacity
 
-		if var_34_3 then
-			local var_34_4 = AssassinHeroModel.instance:getCarryItemId(var_34_0, iter_34_0)
+		if isUnlocked then
+			local assassinItemId = AssassinHeroModel.instance:getCarryItemId(curShowAssassinHeroId, index)
 
-			if var_34_4 then
-				AssassinHelper.setAssassinItemIcon(var_34_4, iter_34_1.imageitem)
+			if assassinItemId then
+				AssassinHelper.setAssassinItemIcon(assassinItemId, itemGrid.imageitem)
 
-				iter_34_1.txtnum.text = AssassinItemModel.instance:getAssassinItemCount(var_34_4)
+				itemGrid.txtnum.text = AssassinItemModel.instance:getAssassinItemCount(assassinItemId)
 			end
 
-			gohelper.setActive(iter_34_1.goaddIcon, not var_34_4)
-			gohelper.setActive(iter_34_1.goitemicon, var_34_4)
+			gohelper.setActive(itemGrid.goaddIcon, not assassinItemId)
+			gohelper.setActive(itemGrid.goitemicon, assassinItemId)
 		end
 
-		gohelper.setActive(iter_34_1.golocked, not var_34_3)
-		gohelper.setActive(iter_34_1.gounlocked, var_34_3)
+		gohelper.setActive(itemGrid.golocked, not isUnlocked)
+		gohelper.setActive(itemGrid.gounlocked, isUnlocked)
 	end
 end
 
-function var_0_0.onClose(arg_35_0)
+function AssassinHeroView:onClose()
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.EnterStealthGameEff, false)
 end
 
-function var_0_0.onDestroyView(arg_36_0)
-	if arg_36_0._heroItemList then
-		for iter_36_0, iter_36_1 in ipairs(arg_36_0._heroItemList) do
-			if iter_36_1.simageheroIcon1 then
-				iter_36_1.simageheroIcon1:UnLoadImage()
+function AssassinHeroView:onDestroyView()
+	if self._heroItemList then
+		for _, heroItem in ipairs(self._heroItemList) do
+			if heroItem.simageheroIcon1 then
+				heroItem.simageheroIcon1:UnLoadImage()
 			end
 
-			if iter_36_1.simageheroIcon2 then
-				iter_36_1.simageheroIcon2:UnLoadImage()
+			if heroItem.simageheroIcon2 then
+				heroItem.simageheroIcon2:UnLoadImage()
 			end
 
-			if iter_36_1.simageheroIcon3 then
-				iter_36_1.simageheroIcon3:UnLoadImage()
+			if heroItem.simageheroIcon3 then
+				heroItem.simageheroIcon3:UnLoadImage()
 			end
 		end
 	end
 
-	arg_36_0._simagehero:UnLoadImage()
-	arg_36_0._simageicon:UnLoadImage()
-	arg_36_0._simageequipicon:UnLoadImage()
+	self._simagehero:UnLoadImage()
+	self._simageicon:UnLoadImage()
+	self._simageequipicon:UnLoadImage()
 end
 
-function var_0_0.saveHeroCache(arg_37_0)
-	local var_37_0 = {}
-	local var_37_1 = AssassinStealthGameModel.instance:getPickHeroList()
+function AssassinHeroView:saveHeroCache()
+	local cacheHeroDic = {}
+	local heroList = AssassinStealthGameModel.instance:getPickHeroList()
 
-	for iter_37_0 = 2, #var_37_1 do
-		var_37_0[tostring(iter_37_0 - 1)] = var_37_1[iter_37_0]
+	for i = 2, #heroList do
+		cacheHeroDic[tostring(i - 1)] = heroList[i]
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(AssassinEnum.PlayerCacheDataKey.AssassinHeroGroupCache, cjson.encode(var_37_0))
+	GameUtil.playerPrefsSetStringByUserId(AssassinEnum.PlayerCacheDataKey.AssassinHeroGroupCache, cjson.encode(cacheHeroDic))
 end
 
-function var_0_0.fillHeroCache(arg_38_0)
-	if arg_38_0.needHeroCount <= 1 then
+function AssassinHeroView:fillHeroCache()
+	if self.needHeroCount <= 1 then
 		return
 	end
 
-	local var_38_0 = GameUtil.playerPrefsGetStringByUserId(AssassinEnum.PlayerCacheDataKey.AssassinHeroGroupCache, "")
+	local dataStr = GameUtil.playerPrefsGetStringByUserId(AssassinEnum.PlayerCacheDataKey.AssassinHeroGroupCache, "")
 
-	if not string.nilorempty(var_38_0) then
-		local var_38_1 = cjson.decode(var_38_0)
+	if not string.nilorempty(dataStr) then
+		local cacheHeroDic = cjson.decode(dataStr)
 
-		for iter_38_0 = 1, arg_38_0.needHeroCount - 1 do
-			local var_38_2 = var_38_1[tostring(iter_38_0)]
+		for i = 1, self.needHeroCount - 1 do
+			local assassinHeroId = cacheHeroDic[tostring(i)]
 
-			if var_38_2 then
-				AssassinStealthGameController.instance:pickAssassinHeroItemInHeroView(arg_38_0._questId, var_38_2, arg_38_0._isFightQuest)
+			if assassinHeroId then
+				AssassinStealthGameController.instance:pickAssassinHeroItemInHeroView(self._questId, assassinHeroId, self._isFightQuest)
 			end
 		end
 	end
 end
 
-return var_0_0
+return AssassinHeroView

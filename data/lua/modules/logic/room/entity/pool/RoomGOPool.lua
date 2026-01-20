@@ -1,194 +1,203 @@
-﻿module("modules.logic.room.entity.pool.RoomGOPool", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/pool/RoomGOPool.lua
 
-local var_0_0 = _M
-local var_0_1 = false
-local var_0_2
-local var_0_3
-local var_0_4 = {}
-local var_0_5 = {}
-local var_0_6 = {}
-local var_0_7
+module("modules.logic.room.entity.pool.RoomGOPool", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0._reset()
+local RoomGOPool = _M
+local _initialized = false
+local _prefabDict, _poolContainerGO
+local _poolDictList = {}
+local _instanceDictList = {}
+local _res2AbDict = {}
+local _countDict
 
-	var_0_2 = arg_1_0
-	var_0_7 = arg_1_1
-	var_0_1 = true
+function RoomGOPool.init(prefabDict, countDict)
+	RoomGOPool._reset()
+
+	_prefabDict = prefabDict
+	_countDict = countDict
+	_initialized = true
 end
 
-function var_0_0.addPrefab(arg_2_0, arg_2_1, arg_2_2)
-	if var_0_2 then
-		var_0_2[arg_2_0] = arg_2_1
-		var_0_7[arg_2_0] = arg_2_2
+function RoomGOPool.addPrefab(resPath, prefab, count)
+	if _prefabDict then
+		_prefabDict[resPath] = prefab
+		_countDict[resPath] = count
 	end
 end
 
-function var_0_0.getInstance(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not var_0_1 then
+function RoomGOPool.getInstance(res, containerGO, name, ab)
+	if not _initialized then
 		return
 	end
 
-	local var_3_0 = var_0_2[arg_3_0] or GameSceneMgr.instance:getCurScene().preloader:getResource(arg_3_0, arg_3_3)
+	local prefab = _prefabDict[res]
 
-	if not var_3_0 then
-		logError(string.format("找不到资源: %s", arg_3_0))
+	if not prefab then
+		local scene = GameSceneMgr.instance:getCurScene()
+
+		prefab = scene.preloader:getResource(res, ab)
+	end
+
+	if not prefab then
+		logError(string.format("找不到资源: %s", res))
 
 		return
 	end
 
-	if not var_0_6[arg_3_0] then
-		var_0_6[arg_3_0] = arg_3_3 or arg_3_0
+	if not _res2AbDict[res] then
+		_res2AbDict[res] = ab or res
 	end
 
-	local var_3_1 = var_0_4[arg_3_0]
+	local poolList = _poolDictList[res]
 
-	if not var_3_1 then
-		var_3_1 = {}
-		var_0_4[arg_3_0] = var_3_1
+	if not poolList then
+		poolList = {}
+		_poolDictList[res] = poolList
 	end
 
-	local var_3_2 = var_0_5[arg_3_0]
+	local instanceList = _instanceDictList[res]
 
-	if not var_3_2 then
-		var_3_2 = {}
-		var_0_5[arg_3_0] = var_3_2
+	if not instanceList then
+		instanceList = {}
+		_instanceDictList[res] = instanceList
 	end
 
-	local var_3_3
+	local go
 
-	if #var_3_1 > 0 then
-		var_3_3 = var_3_1[#var_3_1]
+	if #poolList > 0 then
+		go = poolList[#poolList]
 
-		gohelper.addChild(arg_3_1, var_3_3)
+		gohelper.addChild(containerGO, go)
 
-		var_3_3.name = arg_3_2 or "instance"
+		go.name = name or "instance"
 
-		table.remove(var_3_1, #var_3_1)
+		table.remove(poolList, #poolList)
 	else
-		var_3_3 = gohelper.clone(var_3_0, arg_3_1, arg_3_2 or "instance")
+		go = gohelper.clone(prefab, containerGO, name or "instance")
 	end
 
-	table.insert(var_3_2, var_3_3)
+	table.insert(instanceList, go)
 
-	return var_3_3
+	return go
 end
 
-function var_0_0.returnInstance(arg_4_0, arg_4_1)
-	if not var_0_1 then
+function RoomGOPool.returnInstance(res, go)
+	if not _initialized then
 		return
 	end
 
-	local var_4_0 = var_0_4[arg_4_0]
+	local poolList = _poolDictList[res]
 
-	if not var_4_0 then
-		var_4_0 = {}
-		var_0_4[arg_4_0] = var_4_0
+	if not poolList then
+		poolList = {}
+		_poolDictList[res] = poolList
 	end
 
-	local var_4_1 = var_0_5[arg_4_0]
+	local instanceList = _instanceDictList[res]
 
-	if not var_4_1 then
-		var_4_1 = {}
-		var_0_5[arg_4_0] = var_4_1
+	if not instanceList then
+		instanceList = {}
+		_instanceDictList[res] = instanceList
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		if iter_4_1 == arg_4_1 then
-			table.remove(var_4_1, iter_4_0)
+	for i, one in ipairs(instanceList) do
+		if one == go then
+			table.remove(instanceList, i)
 
 			break
 		end
 	end
 
-	if var_0_7[arg_4_0] and var_0_7[arg_4_0] >= 0 and var_0_7[arg_4_0] <= #var_4_0 then
-		gohelper.addChild(var_0_0.getPoolContainerGO(), arg_4_1)
-		gohelper.destroy(arg_4_1)
+	if _countDict[res] and _countDict[res] >= 0 and _countDict[res] <= #poolList then
+		gohelper.addChild(RoomGOPool.getPoolContainerGO(), go)
+		gohelper.destroy(go)
 	else
-		gohelper.addChild(var_0_0.getPoolContainerGO(), arg_4_1)
-		table.insert(var_4_0, arg_4_1)
+		gohelper.addChild(RoomGOPool.getPoolContainerGO(), go)
+		table.insert(poolList, go)
 	end
 end
 
-function var_0_0.clearPool()
-	local var_5_0 = var_0_4
+function RoomGOPool.clearPool()
+	local tempPoolDictList = _poolDictList
 
-	var_0_4 = {}
+	_poolDictList = {}
 
-	for iter_5_0, iter_5_1 in pairs(var_5_0) do
-		for iter_5_2, iter_5_3 in ipairs(iter_5_1) do
-			gohelper.destroy(iter_5_3)
+	for res, poolList in pairs(tempPoolDictList) do
+		for i, go in ipairs(poolList) do
+			gohelper.destroy(go)
 		end
 	end
 end
 
-function var_0_0.existABPath(arg_6_0)
-	local var_6_0
+function RoomGOPool.existABPath(abPath)
+	local resout
 
-	for iter_6_0, iter_6_1 in pairs(var_0_6) do
-		if iter_6_1 == arg_6_0 then
-			var_6_0 = false
+	for res, ab in pairs(_res2AbDict) do
+		if ab == abPath then
+			resout = false
 
-			if var_0_0.existResPath(iter_6_0) == true then
+			if RoomGOPool.existResPath(res) == true then
 				return true
 			end
 		end
 	end
 
-	return var_6_0
+	return resout
 end
 
-function var_0_0.existResPath(arg_7_0)
-	local var_7_0 = var_0_4[arg_7_0]
+function RoomGOPool.existResPath(resPath)
+	local poolList = _poolDictList[resPath]
 
-	if var_7_0 and #var_7_0 > 0 then
+	if poolList and #poolList > 0 then
 		return true
 	end
 
-	local var_7_1 = var_0_5[arg_7_0]
+	local instanceList = _instanceDictList[resPath]
 
-	if var_7_1 and #var_7_1 > 0 then
+	if instanceList and #instanceList > 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.dispose()
-	var_0_1 = false
+function RoomGOPool.dispose()
+	_initialized = false
 
-	for iter_8_0, iter_8_1 in pairs(var_0_5) do
-		for iter_8_2, iter_8_3 in ipairs(iter_8_1) do
-			gohelper.destroy(iter_8_3)
+	for res, instanceList in pairs(_instanceDictList) do
+		for i, go in ipairs(instanceList) do
+			gohelper.destroy(go)
 		end
 	end
 
-	for iter_8_4, iter_8_5 in pairs(var_0_4) do
-		for iter_8_6, iter_8_7 in ipairs(iter_8_5) do
-			gohelper.destroy(iter_8_7)
+	for res, poolList in pairs(_poolDictList) do
+		for i, go in ipairs(poolList) do
+			gohelper.destroy(go)
 		end
 	end
 
-	var_0_0._reset()
+	RoomGOPool._reset()
 end
 
-function var_0_0._reset()
-	var_0_1 = false
-	var_0_2 = nil
-	var_0_3 = nil
-	var_0_4 = {}
-	var_0_5 = {}
-	var_0_6 = {}
+function RoomGOPool._reset()
+	_initialized = false
+	_prefabDict = nil
+	_poolContainerGO = nil
+	_poolDictList = {}
+	_instanceDictList = {}
+	_res2AbDict = {}
 end
 
-function var_0_0.getPoolContainerGO()
-	if not var_0_3 then
-		var_0_3 = GameSceneMgr.instance:getCurScene().go.poolContainerGO
+function RoomGOPool.getPoolContainerGO()
+	if not _poolContainerGO then
+		local scene = GameSceneMgr.instance:getCurScene()
 
-		gohelper.setActive(var_0_3, false)
+		_poolContainerGO = scene.go.poolContainerGO
+
+		gohelper.setActive(_poolContainerGO, false)
 	end
 
-	return var_0_3
+	return _poolContainerGO
 end
 
-return var_0_0
+return RoomGOPool

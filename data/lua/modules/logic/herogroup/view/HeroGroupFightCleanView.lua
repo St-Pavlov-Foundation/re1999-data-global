@@ -1,13 +1,15 @@
-﻿module("modules.logic.herogroup.view.HeroGroupFightCleanView", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupFightCleanView.lua
 
-local var_0_0 = class("HeroGroupFightCleanView", BaseView)
+module("modules.logic.herogroup.view.HeroGroupFightCleanView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local HeroGroupFightCleanView = class("HeroGroupFightCleanView", BaseView)
+
+function HeroGroupFightCleanView:onInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_2_0)
+function HeroGroupFightCleanView:onOpen()
 	return
 end
 
-return var_0_0
+return HeroGroupFightCleanView

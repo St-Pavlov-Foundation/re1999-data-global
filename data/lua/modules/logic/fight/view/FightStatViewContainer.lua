@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.view.FightStatViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightStatViewContainer.lua
 
-local var_0_0 = class("FightStatViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightStatViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local FightStatViewContainer = class("FightStatViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "view/scroll"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "view/scroll/item"
-	var_1_0.cellClass = FightStatItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 1660
-	var_1_0.cellHeight = 146
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 6.5
+function FightStatViewContainer:buildViews()
+	local listParam = ListScrollParam.New()
 
-	local var_1_1 = LuaListScrollView.New(FightStatModel.instance, var_1_0)
+	listParam.scrollGOPath = "view/scroll"
+	listParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	listParam.prefabUrl = "view/scroll/item"
+	listParam.cellClass = FightStatItem
+	listParam.scrollDir = ScrollEnum.ScrollDirV
+	listParam.lineCount = 1
+	listParam.cellWidth = 1660
+	listParam.cellHeight = 146
+	listParam.cellSpaceH = 0
+	listParam.cellSpaceV = 6.5
 
-	arg_1_0.fightStatView = FightStatView.New()
+	local listView = LuaListScrollView.New(FightStatModel.instance, listParam)
+
+	self.fightStatView = FightStatView.New()
 
 	return {
-		arg_1_0.fightStatView,
-		var_1_1
+		self.fightStatView,
+		listView
 	}
 end
 
-return var_0_0
+return FightStatViewContainer

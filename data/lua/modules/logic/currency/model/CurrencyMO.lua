@@ -1,19 +1,21 @@
-﻿module("modules.logic.currency.model.CurrencyMO", package.seeall)
+﻿-- chunkname: @modules/logic/currency/model/CurrencyMO.lua
 
-local var_0_0 = pureTable("CurrencyMO")
+module("modules.logic.currency.model.CurrencyMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.currencyId = 0
-	arg_1_0.quantity = 0
-	arg_1_0.lastRecoverTime = 0
-	arg_1_0.expiredTime = 0
+local CurrencyMO = pureTable("CurrencyMO")
+
+function CurrencyMO:ctor()
+	self.currencyId = 0
+	self.quantity = 0
+	self.lastRecoverTime = 0
+	self.expiredTime = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.currencyId = arg_2_1.currencyId
-	arg_2_0.quantity = arg_2_1.quantity
-	arg_2_0.lastRecoverTime = arg_2_1.lastRecoverTime
-	arg_2_0.expiredTime = arg_2_1.expiredTime
+function CurrencyMO:init(info)
+	self.currencyId = info.currencyId
+	self.quantity = info.quantity
+	self.lastRecoverTime = info.lastRecoverTime
+	self.expiredTime = info.expiredTime
 end
 
-return var_0_0
+return CurrencyMO

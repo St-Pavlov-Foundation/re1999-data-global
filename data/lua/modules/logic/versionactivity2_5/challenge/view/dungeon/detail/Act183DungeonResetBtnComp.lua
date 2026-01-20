@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonResetBtnComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonResetBtnComp.lua
 
-local var_0_0 = class("Act183DungeonResetBtnComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonResetBtnComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonResetBtnComp = class("Act183DungeonResetBtnComp", Act183DungeonBaseComp)
 
-	arg_1_0._btnresetepisode = gohelper.getClickWithDefaultAudio(arg_1_0.go)
+function Act183DungeonResetBtnComp:init(go)
+	Act183DungeonResetBtnComp.super.init(self, go)
+
+	self._btnresetepisode = gohelper.getClickWithDefaultAudio(self.go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnresetepisode:AddClickListener(arg_2_0._btnresetepisodeOnClick, arg_2_0)
+function Act183DungeonResetBtnComp:addEventListeners()
+	self._btnresetepisode:AddClickListener(self._btnresetepisodeOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnresetepisode:RemoveClickListener()
+function Act183DungeonResetBtnComp:removeEventListeners()
+	self._btnresetepisode:RemoveClickListener()
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	var_0_0.super.updateInfo(arg_4_0, arg_4_1)
+function Act183DungeonResetBtnComp:updateInfo(episodeMo)
+	Act183DungeonResetBtnComp.super.updateInfo(self, episodeMo)
 
-	arg_4_0._isCanReset = arg_4_0._groupEpisodeMo:isEpisodeCanReset(arg_4_0._episodeId)
+	self._isCanReset = self._groupEpisodeMo:isEpisodeCanReset(self._episodeId)
 end
 
-function var_0_0._btnresetepisodeOnClick(arg_5_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act183ResetEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0._startResetEpisode, nil, nil, arg_5_0)
+function Act183DungeonResetBtnComp:_btnresetepisodeOnClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act183ResetEpisode, MsgBoxEnum.BoxType.Yes_No, self._startResetEpisode, nil, nil, self)
 end
 
-function var_0_0._startResetEpisode(arg_6_0)
-	Act183Controller.instance:resetEpisode(arg_6_0._activityId, arg_6_0._episodeId)
+function Act183DungeonResetBtnComp:_startResetEpisode()
+	Act183Controller.instance:resetEpisode(self._activityId, self._episodeId)
 end
 
-function var_0_0.checkIsVisible(arg_7_0)
-	return arg_7_0._isCanReset
+function Act183DungeonResetBtnComp:checkIsVisible()
+	return self._isCanReset
 end
 
-function var_0_0.show(arg_8_0)
-	var_0_0.super.show(arg_8_0)
+function Act183DungeonResetBtnComp:show()
+	Act183DungeonResetBtnComp.super.show(self)
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	var_0_0.super.onDestroy(arg_9_0)
+function Act183DungeonResetBtnComp:onDestroy()
+	Act183DungeonResetBtnComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonResetBtnComp

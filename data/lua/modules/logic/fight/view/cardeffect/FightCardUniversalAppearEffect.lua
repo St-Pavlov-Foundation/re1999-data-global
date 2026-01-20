@@ -1,53 +1,55 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardUniversalAppearEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardUniversalAppearEffect.lua
 
-local var_0_0 = class("FightCardUniversalAppearEffect", BaseWork)
-local var_0_1 = "ui/viewres/fight/ui_effect_dna_a.prefab"
+module("modules.logic.fight.view.cardeffect.FightCardUniversalAppearEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local FightCardUniversalAppearEffect = class("FightCardUniversalAppearEffect", BaseWork)
+local DownEffectPath = "ui/viewres/fight/ui_effect_dna_a.prefab"
 
-	local var_1_0 = 1.2 / FightModel.instance:getUISpeed()
-	local var_1_1 = FightDataHelper.handCardMgr.handCard
-	local var_1_2 = arg_1_1.handCardItemList[#var_1_1]
-	local var_1_3 = gohelper.findChild(var_1_2.go, "downEffect") or gohelper.create2d(var_1_2.go, "downEffect")
+function FightCardUniversalAppearEffect:onStart(context)
+	FightCardUniversalAppearEffect.super.onStart(self, context)
 
-	arg_1_0._forAnimGO = gohelper.findChild(var_1_2.go, "foranim")
-	arg_1_0._canvasGroup = gohelper.onceAddComponent(arg_1_0._forAnimGO, typeof(UnityEngine.CanvasGroup))
-	arg_1_0._canvasGroup.alpha = 0
-	arg_1_0._downEffectLoader = PrefabInstantiate.Create(var_1_3)
+	local animTime = 1.2 / FightModel.instance:getUISpeed()
+	local cards = FightDataHelper.handCardMgr.handCard
+	local handCardItem = context.handCardItemList[#cards]
+	local downEffectGO = gohelper.findChild(handCardItem.go, "downEffect") or gohelper.create2d(handCardItem.go, "downEffect")
 
-	arg_1_0._downEffectLoader:startLoad(var_0_1, function(arg_2_0)
-		arg_1_0._tweenId = ZProj.TweenHelper.DOFadeCanvasGroup(arg_1_0._forAnimGO, 0, 1, var_1_0)
+	self._forAnimGO = gohelper.findChild(handCardItem.go, "foranim")
+	self._canvasGroup = gohelper.onceAddComponent(self._forAnimGO, typeof(UnityEngine.CanvasGroup))
+	self._canvasGroup.alpha = 0
+	self._downEffectLoader = PrefabInstantiate.Create(downEffectGO)
+
+	self._downEffectLoader:startLoad(DownEffectPath, function(_)
+		self._tweenId = ZProj.TweenHelper.DOFadeCanvasGroup(self._forAnimGO, 0, 1, animTime)
 	end)
-	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, var_1_0)
+	TaskDispatcher.runDelay(self._delayDone, self, animTime)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightCardUniversalAppearEffect:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	arg_4_0._forAnimGO = nil
+function FightCardUniversalAppearEffect:clearWork()
+	self._forAnimGO = nil
 
-	if not gohelper.isNil(arg_4_0._canvasGroup) then
-		arg_4_0._canvasGroup.alpha = 1
+	if not gohelper.isNil(self._canvasGroup) then
+		self._canvasGroup.alpha = 1
 	end
 
-	arg_4_0._canvasGroup = nil
+	self._canvasGroup = nil
 
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+	TaskDispatcher.cancelTask(self._delayDone, self)
 
-	if arg_4_0._downEffectLoader then
-		arg_4_0._downEffectLoader:dispose()
+	if self._downEffectLoader then
+		self._downEffectLoader:dispose()
 	end
 
-	arg_4_0._downEffectLoader = nil
+	self._downEffectLoader = nil
 
-	if arg_4_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_4_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	arg_4_0._tweenId = nil
+	self._tweenId = nil
 end
 
-return var_0_0
+return FightCardUniversalAppearEffect

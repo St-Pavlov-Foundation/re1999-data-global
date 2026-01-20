@@ -1,65 +1,67 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterMapCo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterMapCo.lua
 
-local var_0_0 = pureTable("SurvivalShelterMapCo")
-local var_0_1 = math.sqrt(3)
+module("modules.logic.survival.model.shelter.SurvivalShelterMapCo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.allBlocks = {}
-	arg_1_0.allBlockPaths = arg_1_1[2]
-	arg_1_0.walkables = {}
-	arg_1_0.allBuildings = {}
-	arg_1_0.buildingDict = {}
-	arg_1_0.allBuildingPaths = arg_1_1[4]
+local SurvivalShelterMapCo = pureTable("SurvivalShelterMapCo")
+local sqrt3 = math.sqrt(3)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1[1]) do
-		local var_1_0 = SurvivalBlockCo.New()
+function SurvivalShelterMapCo:init(data)
+	self.allBlocks = {}
+	self.allBlockPaths = data[2]
+	self.walkables = {}
+	self.allBuildings = {}
+	self.buildingDict = {}
+	self.allBuildingPaths = data[4]
 
-		var_1_0:init(iter_1_1, arg_1_0.allBlockPaths)
-		table.insert(arg_1_0.allBlocks, var_1_0)
+	for _, block in ipairs(data[1]) do
+		local blockCo = SurvivalBlockCo.New()
 
-		if var_1_0.walkable then
-			SurvivalHelper.instance:addNodeToDict(arg_1_0.walkables, var_1_0.pos)
+		blockCo:init(block, self.allBlockPaths)
+		table.insert(self.allBlocks, blockCo)
+
+		if blockCo.walkable then
+			SurvivalHelper.instance:addNodeToDict(self.walkables, blockCo.pos)
 		end
 
-		arg_1_0.minX, arg_1_0.maxX, arg_1_0.minY, arg_1_0.maxY = var_1_0:getRange(arg_1_0.minX, arg_1_0.maxX, arg_1_0.minY, arg_1_0.maxY)
+		self.minX, self.maxX, self.minY, self.maxY = blockCo:getRange(self.minX, self.maxX, self.minY, self.maxY)
 	end
 
-	if not arg_1_0.minX then
-		arg_1_0.minX, arg_1_0.maxX, arg_1_0.minY, arg_1_0.maxY = 0, 0, 0, 0
+	if not self.minX then
+		self.minX, self.maxX, self.minY, self.maxY = 0, 0, 0, 0
 	end
 
-	arg_1_0.minX = arg_1_0.minX * var_0_1 / 2
-	arg_1_0.maxX = arg_1_0.maxX * var_0_1 / 2
-	arg_1_0.minY = arg_1_0.minY * 3 / 4
-	arg_1_0.maxY = arg_1_0.maxY * 3 / 4
+	self.minX = self.minX * sqrt3 / 2
+	self.maxX = self.maxX * sqrt3 / 2
+	self.minY = self.minY * 3 / 4
+	self.maxY = self.maxY * 3 / 4
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1[3]) do
-		local var_1_1 = SurvivalShelterBuildingCo.New()
+	for _, building in ipairs(data[3]) do
+		local buildingCo = SurvivalShelterBuildingCo.New()
 
-		var_1_1:init(iter_1_3, arg_1_0.allBuildingPaths)
-		table.insert(arg_1_0.allBuildings, var_1_1)
+		buildingCo:init(building, self.allBuildingPaths)
+		table.insert(self.allBuildings, buildingCo)
 
-		arg_1_0.buildingDict[var_1_1.id] = var_1_1
+		self.buildingDict[buildingCo.id] = buildingCo
 	end
 end
 
-function var_0_0.getBuildingById(arg_2_0, arg_2_1)
-	return arg_2_0.buildingDict[arg_2_1]
+function SurvivalShelterMapCo:getBuildingById(id)
+	return self.buildingDict[id]
 end
 
-function var_0_0.getMainBuild(arg_3_0)
-	if arg_3_0.buildingDict == nil then
+function SurvivalShelterMapCo:getMainBuild()
+	if self.buildingDict == nil then
 		return nil
 	end
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.buildingDict) do
-		if iter_3_1 then
-			local var_3_0 = lua_survival_building.configDict[iter_3_1.cfgId]
+	for _, build in pairs(self.buildingDict) do
+		if build then
+			local allLevelBuilding = lua_survival_building.configDict[build.cfgId]
 
-			if var_3_0 then
-				for iter_3_2, iter_3_3 in pairs(var_3_0) do
-					if iter_3_3 and iter_3_3.type == SurvivalEnum.BuildingType.Base then
-						return iter_3_1
+			if allLevelBuilding then
+				for _, buildCo in pairs(allLevelBuilding) do
+					if buildCo and buildCo.type == SurvivalEnum.BuildingType.Base then
+						return build
 					end
 				end
 			end
@@ -69,4 +71,4 @@ function var_0_0.getMainBuild(arg_3_0)
 	return nil
 end
 
-return var_0_0
+return SurvivalShelterMapCo

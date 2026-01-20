@@ -1,13 +1,15 @@
-﻿module("modules.logic.investigate.view.InvestigateRoleStoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateRoleStoryViewContainer.lua
 
-local var_0_0 = class("InvestigateRoleStoryViewContainer", BaseViewContainer)
+module("modules.logic.investigate.view.InvestigateRoleStoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local InvestigateRoleStoryViewContainer = class("InvestigateRoleStoryViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, InvestigateRoleStoryView.New())
+function InvestigateRoleStoryViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, InvestigateRoleStoryView.New())
+
+	return views
 end
 
-return var_0_0
+return InvestigateRoleStoryViewContainer

@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_7.isolde.define.ActIsoldeEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/isolde/define/ActIsoldeEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_7.isolde.define.ActIsoldeEnum", package.seeall)
 
-var_0_0.TaskMOAllFinishId = -100
-var_0_0.AnimatorTime = {
+local ActIsoldeEnum = _M
+
+ActIsoldeEnum.TaskMOAllFinishId = -100
+ActIsoldeEnum.AnimatorTime = {
 	TaskReward = 0.5,
 	TaskRewardMoveUp = 0.15
 }
-var_0_0.AnimEvt = {
+ActIsoldeEnum.AnimEvt = {
 	OnGoStoryEnd = "goStoryEnd",
 	OnStoryOpenEnd = "storyOpenEnd",
 	OnFightOpenEnd = "fightOpenEnd"
 }
 
-return var_0_0
+return ActIsoldeEnum

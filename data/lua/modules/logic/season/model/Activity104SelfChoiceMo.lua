@@ -1,12 +1,14 @@
-﻿local var_0_0 = pureTable("Activity104SelfChoiceMo")
+﻿-- chunkname: @modules/logic/season/model/Activity104SelfChoiceMo.lua
 
-function var_0_0.ctor(arg_1_0)
+local Activity104SelfChoiceMo = pureTable("Activity104SelfChoiceMo")
+
+function Activity104SelfChoiceMo:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.equipId
-	arg_2_0.cfg = arg_2_1
+function Activity104SelfChoiceMo:init(cfg)
+	self.id = cfg.equipId
+	self.cfg = cfg
 end
 
-return var_0_0
+return Activity104SelfChoiceMo

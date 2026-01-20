@@ -1,51 +1,53 @@
-﻿module("modules.logic.activity.model.chessmap.Activity109ChessModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/chessmap/Activity109ChessModel.lua
 
-local var_0_0 = class("Activity109ChessModel", BaseModel)
+module("modules.logic.activity.model.chessmap.Activity109ChessModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity109ChessModel = class("Activity109ChessModel", BaseModel)
+
+function Activity109ChessModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity109ChessModel:reInit()
 	return
 end
 
-function var_0_0.setEpisodeId(arg_3_0, arg_3_1)
-	arg_3_0._currentEpisodeId = arg_3_1
+function Activity109ChessModel:setEpisodeId(episodeId)
+	self._currentEpisodeId = episodeId
 
-	if not arg_3_1 then
-		arg_3_0._currentMapId = nil
+	if not episodeId then
+		self._currentMapId = nil
 
 		return
 	end
 
-	local var_3_0 = Activity109Config.instance:getEpisodeCo(arg_3_0._activityId, arg_3_1)
+	local episodeCfg = Activity109Config.instance:getEpisodeCo(self._activityId, episodeId)
 
-	if var_3_0 then
-		arg_3_0._currentMapId = var_3_0.mapId
+	if episodeCfg then
+		self._currentMapId = episodeCfg.mapId
 	else
-		logError("activity109_episode not found! id = " .. tostring(arg_3_1) .. ", in act = " .. tostring(arg_3_0._activityId))
+		logError("activity109_episode not found! id = " .. tostring(episodeId) .. ", in act = " .. tostring(self._activityId))
 
-		arg_3_0._currentMapId = nil
+		self._currentMapId = nil
 	end
 end
 
-function var_0_0.setActId(arg_4_0, arg_4_1)
-	arg_4_0._activityId = arg_4_1
+function Activity109ChessModel:setActId(actId)
+	self._activityId = actId
 end
 
-function var_0_0.getActId(arg_5_0)
-	return arg_5_0._activityId
+function Activity109ChessModel:getActId()
+	return self._activityId
 end
 
-function var_0_0.getEpisodeId(arg_6_0)
-	return arg_6_0._currentEpisodeId
+function Activity109ChessModel:getEpisodeId()
+	return self._currentEpisodeId
 end
 
-function var_0_0.getMapId(arg_7_0)
-	return arg_7_0._currentMapId
+function Activity109ChessModel:getMapId()
+	return self._currentMapId
 end
 
-var_0_0.instance = var_0_0.New()
+Activity109ChessModel.instance = Activity109ChessModel.New()
 
-return var_0_0
+return Activity109ChessModel

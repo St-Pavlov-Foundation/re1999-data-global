@@ -1,89 +1,91 @@
-﻿module("modules.logic.sp01.assassin2.outside.model.AssassinItemModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/model/AssassinItemModel.lua
 
-local var_0_0 = class("AssassinItemModel", BaseModel)
+module("modules.logic.sp01.assassin2.outside.model.AssassinItemModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local AssassinItemModel = class("AssassinItemModel", BaseModel)
+
+function AssassinItemModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
+function AssassinItemModel:reInit()
 	return
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
+function AssassinItemModel:clear()
+	AssassinItemModel.super.clear(self)
 
-	arg_3_0._itemTypeDict = {}
+	self._itemTypeDict = {}
 end
 
-function var_0_0.updateAllInfo(arg_4_0, arg_4_1)
-	arg_4_0:clear()
+function AssassinItemModel:updateAllInfo(itemInfoList)
+	self:clear()
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = iter_4_1.itemId
-		local var_4_1 = AssassinConfig.instance:getAssassinItemType(var_4_0)
-		local var_4_2 = arg_4_0._itemTypeDict[var_4_1]
+	for _, itemInfo in ipairs(itemInfoList) do
+		local itemId = itemInfo.itemId
+		local itemType = AssassinConfig.instance:getAssassinItemType(itemId)
+		local repeatedMo = self._itemTypeDict[itemType]
 
-		if var_4_2 then
-			local var_4_3 = var_4_2:getId()
+		if repeatedMo then
+			local repeatedId = repeatedMo:getId()
 
-			logError(string.format("AssassinItemModel:updateAllInfo error, item type repeated, itemType:%s, item1:%s, item2:%s", var_4_1, var_4_3, var_4_0))
-		elseif var_4_1 then
-			local var_4_4 = AssassinItemMO.New(iter_4_1)
+			logError(string.format("AssassinItemModel:updateAllInfo error, item type repeated, itemType:%s, item1:%s, item2:%s", itemType, repeatedId, itemId))
+		elseif itemType then
+			local itemMo = AssassinItemMO.New(itemInfo)
 
-			arg_4_0._itemTypeDict[var_4_1] = var_4_4
+			self._itemTypeDict[itemType] = itemMo
 
-			arg_4_0:addAtLast(var_4_4)
+			self:addAtLast(itemMo)
 		end
 	end
 end
 
-function var_0_0.unlockNewItems(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_0 = iter_5_1.itemId
-		local var_5_1 = AssassinConfig.instance:getAssassinItemType(var_5_0)
-		local var_5_2 = arg_5_0._itemTypeDict[var_5_1]
+function AssassinItemModel:unlockNewItems(itemInfoList)
+	for _, itemInfo in ipairs(itemInfoList) do
+		local itemId = itemInfo.itemId
+		local itemType = AssassinConfig.instance:getAssassinItemType(itemId)
+		local repeatedMo = self._itemTypeDict[itemType]
 
-		if var_5_2 then
-			arg_5_0:remove(var_5_2)
+		if repeatedMo then
+			self:remove(repeatedMo)
 
-			arg_5_0._itemTypeDict[var_5_1] = nil
+			self._itemTypeDict[itemType] = nil
 		end
 
-		local var_5_3 = AssassinItemMO.New(iter_5_1)
+		local itemMo = AssassinItemMO.New(itemInfo)
 
-		arg_5_0._itemTypeDict[var_5_1] = var_5_3
+		self._itemTypeDict[itemType] = itemMo
 
-		arg_5_0:addAtLast(var_5_3)
+		self:addAtLast(itemMo)
 	end
 end
 
-function var_0_0.getAssassinItemMoList(arg_6_0)
-	return arg_6_0:getList()
+function AssassinItemModel:getAssassinItemMoList()
+	return self:getList()
 end
 
-function var_0_0.getAssassinItemMo(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0:getById(arg_7_1)
+function AssassinItemModel:getAssassinItemMo(itemId, nilError)
+	local assassinItemMo = self:getById(itemId)
 
-	if not var_7_0 and arg_7_2 then
-		logError(string.format("AssassinItemModel:getAssassinItemMo error, not find assassinHeroMo, itemId:%s", arg_7_1))
+	if not assassinItemMo and nilError then
+		logError(string.format("AssassinItemModel:getAssassinItemMo error, not find assassinHeroMo, itemId:%s", itemId))
 	end
 
-	return var_7_0
+	return assassinItemMo
 end
 
-function var_0_0.getAssassinItemCount(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getAssassinItemMo(arg_8_1)
+function AssassinItemModel:getAssassinItemCount(itemId)
+	local itemMo = self:getAssassinItemMo(itemId)
 
-	return var_8_0 and var_8_0:getCount() or 0
+	return itemMo and itemMo:getCount() or 0
 end
 
-function var_0_0.getItemIdByItemType(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._itemTypeDict[arg_9_1]
+function AssassinItemModel:getItemIdByItemType(itemType)
+	local itemMo = self._itemTypeDict[itemType]
 
-	return var_9_0 and var_9_0:getId()
+	return itemMo and itemMo:getId()
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinItemModel.instance = AssassinItemModel.New()
 
-return var_0_0
+return AssassinItemModel

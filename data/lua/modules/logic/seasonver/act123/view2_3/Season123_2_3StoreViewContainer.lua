@@ -1,22 +1,24 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3StoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3StoreViewContainer.lua
 
-local var_0_0 = class("Season123_2_3StoreViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3StoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0:buildScrollViews()
+local Season123_2_3StoreViewContainer = class("Season123_2_3StoreViewContainer", BaseViewContainer)
 
-	local var_1_0 = {}
+function Season123_2_3StoreViewContainer:buildViews()
+	self:buildScrollViews()
 
-	table.insert(var_1_0, arg_1_0.scrollView)
-	table.insert(var_1_0, Season123_2_3StoreView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_righttop"))
+	local views = {}
 
-	return var_1_0
+	table.insert(views, self.scrollView)
+	table.insert(views, Season123_2_3StoreView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, TabViewGroup.New(2, "#go_righttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function Season123_2_3StoreViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -26,37 +28,37 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	end
 
-	if arg_2_1 == 2 then
-		local var_2_0 = Season123Model.instance:getCurSeasonId() or VersionActivity2_3Enum.ActivityId.Season
-		local var_2_1 = Season123Config.instance:getSeasonConstNum(var_2_0, Activity123Enum.Const.StoreCoinId)
-		local var_2_2 = CurrencyView.New({
-			var_2_1
+	if tabContainerId == 2 then
+		local actId = Season123Model.instance:getCurSeasonId() or VersionActivity2_3Enum.ActivityId.Season
+		local storeCoinId = Season123Config.instance:getSeasonConstNum(actId, Activity123Enum.Const.StoreCoinId)
+		local currencyview = CurrencyView.New({
+			storeCoinId
 		})
 
-		var_2_2.foreHideBtn = true
+		currencyview.foreHideBtn = true
 
 		return {
-			var_2_2
+			currencyview
 		}
 	end
 end
 
-function var_0_0.buildScrollViews(arg_3_0)
-	local var_3_0 = ListScrollParam.New()
+function Season123_2_3StoreViewContainer:buildScrollViews()
+	local scrollParam = ListScrollParam.New()
 
-	var_3_0.scrollGOPath = "mask/#scroll_store"
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
-	var_3_0.cellClass = Season123_2_3StoreItem
-	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.lineCount = 5
-	var_3_0.cellWidth = 356
-	var_3_0.cellHeight = 376
-	var_3_0.cellSpaceH = 4.26
-	var_3_0.cellSpaceV = 15.73
-	var_3_0.startSpace = 39
-	var_3_0.frameUpdateMs = 100
-	arg_3_0.scrollView = LuaListScrollView.New(Season123StoreModel.instance, var_3_0)
+	scrollParam.scrollGOPath = "mask/#scroll_store"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Season123_2_3StoreItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 5
+	scrollParam.cellWidth = 356
+	scrollParam.cellHeight = 376
+	scrollParam.cellSpaceH = 4.26
+	scrollParam.cellSpaceV = 15.73
+	scrollParam.startSpace = 39
+	scrollParam.frameUpdateMs = 100
+	self.scrollView = LuaListScrollView.New(Season123StoreModel.instance, scrollParam)
 end
 
-return var_0_0
+return Season123_2_3StoreViewContainer

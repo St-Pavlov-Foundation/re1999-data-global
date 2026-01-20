@@ -1,175 +1,179 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_ScoreTaskAchievementItem", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_ScoreTaskAchievementItem.lua
 
-local var_0_0 = class("V1a4_BossRush_ScoreTaskAchievementItem", ListScrollCellExtend)
+module("modules.logic.bossrush.view.V1a4_BossRush_ScoreTaskAchievementItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageAssessIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#image_AssessIcon")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Descr")
-	arg_1_0._scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_Rewards")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "Root/#scroll_Rewards/Viewport/#go_rewards")
-	arg_1_0._btnNotFinish = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_NotFinish")
-	arg_1_0._btnFinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Finished", AudioEnum.ui_task.play_ui_task_slide)
-	arg_1_0._goAllFinished = gohelper.findChild(arg_1_0.viewGO, "Root/#go_AllFinished")
+local V1a4_BossRush_ScoreTaskAchievementItem = class("V1a4_BossRush_ScoreTaskAchievementItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a4_BossRush_ScoreTaskAchievementItem:onInitView()
+	self._imageAssessIcon = gohelper.findChildSingleImage(self.viewGO, "Root/#image_AssessIcon")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Root/#txt_Descr")
+	self._scrollRewards = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_Rewards")
+	self._gorewards = gohelper.findChild(self.viewGO, "Root/#scroll_Rewards/Viewport/#go_rewards")
+	self._btnNotFinish = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_NotFinish")
+	self._btnFinished = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Finished", AudioEnum.ui_task.play_ui_task_slide)
+	self._goAllFinished = gohelper.findChild(self.viewGO, "Root/#go_AllFinished")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnNotFinish:AddClickListener(arg_2_0._btnNotFinishOnClick, arg_2_0)
-	arg_2_0._btnFinished:AddClickListener(arg_2_0._btnFinishedOnClick, arg_2_0)
+function V1a4_BossRush_ScoreTaskAchievementItem:addEvents()
+	self._btnNotFinish:AddClickListener(self._btnNotFinishOnClick, self)
+	self._btnFinished:AddClickListener(self._btnFinishedOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnNotFinish:RemoveClickListener()
-	arg_3_0._btnFinished:RemoveClickListener()
+function V1a4_BossRush_ScoreTaskAchievementItem:removeEvents()
+	self._btnNotFinish:RemoveClickListener()
+	self._btnFinished:RemoveClickListener()
 end
 
-local var_0_1 = BossRushEnum.AnimEvtAchievementItem
+local eAnimEvt = BossRushEnum.AnimEvtAchievementItem
 
-function var_0_0._btnNotFinishOnClick(arg_4_0)
+function V1a4_BossRush_ScoreTaskAchievementItem:_btnNotFinishOnClick()
 	return
 end
 
-function var_0_0._btnFinishedOnClick(arg_5_0)
-	arg_5_0:_playFinish()
+function V1a4_BossRush_ScoreTaskAchievementItem:_btnFinishedOnClick()
+	self:_playFinish()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._goRootGo = gohelper.findChild(arg_6_0.viewGO, "Root")
-	arg_6_0._anim = arg_6_0._goRootGo:GetComponent(gohelper.Type_Animator)
-	arg_6_0._animEvent = arg_6_0._goRootGo:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_6_0._imageAssessIconGo = arg_6_0._imageAssessIcon.gameObject
-	arg_6_0._btnNotFinishGo = arg_6_0._btnNotFinish.gameObject
-	arg_6_0._btnFinishedGo = arg_6_0._btnFinished.gameObject
-	arg_6_0._scrollrewardLimitScollRect = arg_6_0._scrollRewards:GetComponent(gohelper.Type_LimitedScrollRect)
-	arg_6_0._txtDescr.text = ""
+function V1a4_BossRush_ScoreTaskAchievementItem:_editableInitView()
+	self._goRootGo = gohelper.findChild(self.viewGO, "Root")
+	self._anim = self._goRootGo:GetComponent(gohelper.Type_Animator)
+	self._animEvent = self._goRootGo:GetComponent(gohelper.Type_AnimationEventWrap)
+	self._imageAssessIconGo = self._imageAssessIcon.gameObject
+	self._btnNotFinishGo = self._btnNotFinish.gameObject
+	self._btnFinishedGo = self._btnFinished.gameObject
+	self._scrollrewardLimitScollRect = self._scrollRewards:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._txtDescr.text = ""
 end
 
-function var_0_0._editableAddEvents(arg_7_0)
-	arg_7_0._animEvent:AddEventListener(var_0_1.onEndBlock, arg_7_0._onEndBlock, arg_7_0)
-	arg_7_0._animEvent:AddEventListener(var_0_1.onFinishEnd, arg_7_0._onFinishEnd, arg_7_0)
+function V1a4_BossRush_ScoreTaskAchievementItem:_editableAddEvents()
+	self._animEvent:AddEventListener(eAnimEvt.onEndBlock, self._onEndBlock, self)
+	self._animEvent:AddEventListener(eAnimEvt.onFinishEnd, self._onFinishEnd, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_8_0)
-	arg_8_0._animEvent:RemoveEventListener(var_0_1.onEndBlock)
-	arg_8_0._animEvent:RemoveEventListener(var_0_1.onFinishEnd)
-	TaskDispatcher.cancelTask(arg_8_0._playOpenInner, arg_8_0)
+function V1a4_BossRush_ScoreTaskAchievementItem:_editableRemoveEvents()
+	self._animEvent:RemoveEventListener(eAnimEvt.onEndBlock)
+	self._animEvent:RemoveEventListener(eAnimEvt.onFinishEnd)
+	TaskDispatcher.cancelTask(self._playOpenInner, self)
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0:_initScollParentGameObject()
+function V1a4_BossRush_ScoreTaskAchievementItem:onUpdateMO(mo)
+	self:_initScollParentGameObject()
 
-	arg_9_0._mo = arg_9_1
+	self._mo = mo
 
-	arg_9_0:_setActiveBlock(true, true)
-	arg_9_0:_playOpen()
-	arg_9_0:_refresh()
+	self:_setActiveBlock(true, true)
+	self:_playOpen()
+	self:_refresh()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._playOpenInner, arg_10_0)
-	arg_10_0._imageAssessIcon:UnLoadImage()
+function V1a4_BossRush_ScoreTaskAchievementItem:onDestroyView()
+	TaskDispatcher.cancelTask(self._playOpenInner, self)
+	self._imageAssessIcon:UnLoadImage()
 end
 
-function var_0_0._refresh(arg_11_0)
-	local var_11_0 = arg_11_0._mo
-	local var_11_1 = var_11_0.config
-	local var_11_2 = var_11_1.stage
-	local var_11_3 = var_11_1.bonus
-	local var_11_4 = var_11_1.achievementRes
-	local var_11_5 = var_11_1.maxProgress
-	local var_11_6 = var_11_0.finishCount >= var_11_1.maxFinishCount
-	local var_11_7 = not var_11_6 and var_11_0.hasFinished
-	local var_11_8 = not var_11_6 and not var_11_7
-	local var_11_9 = var_11_4 == ""
-	local var_11_10 = ItemModel.instance:getItemDataListByConfigStr(var_11_3)
+function V1a4_BossRush_ScoreTaskAchievementItem:_refresh()
+	local mo = self._mo
+	local config = mo.config
+	local stage = config.stage
+	local bonus = config.bonus
+	local achievementRes = config.achievementRes
+	local maxProgress = config.maxProgress
+	local isAllFinished = mo.finishCount >= config.maxFinishCount
+	local isFinish = not isAllFinished and mo.hasFinished
+	local isNotFinish = not isAllFinished and not isFinish
+	local isEmptySprite = achievementRes == ""
+	local itemDataList = ItemModel.instance:getItemDataListByConfigStr(bonus)
 
-	if not var_11_9 then
-		arg_11_0._imageAssessIcon:LoadImage(ResUrl.getV1a4BossRushAssessIcon(var_11_4))
+	if not isEmptySprite then
+		self._imageAssessIcon:LoadImage(ResUrl.getV1a4BossRushAssessIcon(achievementRes))
 	end
 
-	gohelper.setActive(arg_11_0._imageAssessIconGo, not var_11_9)
-	gohelper.setActive(arg_11_0._btnNotFinishGo, var_11_8)
-	gohelper.setActive(arg_11_0._btnFinishedGo, var_11_7)
-	gohelper.setActive(arg_11_0._goAllFinished, var_11_6)
-	IconMgr.instance:getCommonPropItemIconList(arg_11_0, arg_11_0._onRewardItemShow, var_11_10, arg_11_0._gorewards)
+	gohelper.setActive(self._imageAssessIconGo, not isEmptySprite)
+	gohelper.setActive(self._btnNotFinishGo, isNotFinish)
+	gohelper.setActive(self._btnFinishedGo, isFinish)
+	gohelper.setActive(self._goAllFinished, isAllFinished)
+	IconMgr.instance:getCommonPropItemIconList(self, self._onRewardItemShow, itemDataList, self._gorewards)
 
-	arg_11_0._txtDescr.text = BossRushConfig.instance:getScoreStr(var_11_5)
+	self._txtDescr.text = BossRushConfig.instance:getScoreStr(maxProgress)
 end
 
-function var_0_0._onRewardItemShow(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	arg_12_1:onUpdateMO(arg_12_2)
-	arg_12_1:setConsume(true)
-	arg_12_1:showStackableNum2()
-	arg_12_1:isShowEffect(true)
-	arg_12_1:setCountFontSize(48)
+function V1a4_BossRush_ScoreTaskAchievementItem:_onRewardItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:setCountFontSize(48)
 end
 
-function var_0_0._playOpenInner(arg_13_0)
-	arg_13_0:_setActive(true)
-	arg_13_0:_playAnim(UIAnimationName.Open)
+function V1a4_BossRush_ScoreTaskAchievementItem:_playOpenInner()
+	self:_setActive(true)
+	self:_playAnim(UIAnimationName.Open)
 end
 
-function var_0_0._playOpen(arg_14_0)
-	if V1a4_BossRush_ScoreTaskAchievementListModel.instance:getStaticData() then
-		arg_14_0:_playIdle()
+function V1a4_BossRush_ScoreTaskAchievementItem:_playOpen()
+	local openAnim = V1a4_BossRush_ScoreTaskAchievementListModel.instance:getStaticData()
+
+	if openAnim then
+		self:_playIdle()
 
 		return
 	end
 
-	arg_14_0:_setActive(false)
-	TaskDispatcher.runDelay(arg_14_0._playOpenInner, arg_14_0, arg_14_0._index * 0.06)
+	self:_setActive(false)
+	TaskDispatcher.runDelay(self._playOpenInner, self, self._index * 0.06)
 end
 
-function var_0_0._playFinish(arg_15_0)
-	arg_15_0:_setActiveBlock(true)
-	arg_15_0:_playAnim(UIAnimationName.Finish)
+function V1a4_BossRush_ScoreTaskAchievementItem:_playFinish()
+	self:_setActiveBlock(true)
+	self:_playAnim(UIAnimationName.Finish)
 end
 
-function var_0_0._playIdle(arg_16_0)
-	arg_16_0:_playAnim(UIAnimationName.Idle, 0, 1)
+function V1a4_BossRush_ScoreTaskAchievementItem:_playIdle()
+	self:_playAnim(UIAnimationName.Idle, 0, 1)
 end
 
-function var_0_0._playAnim(arg_17_0, arg_17_1, ...)
-	arg_17_0._anim:Play(arg_17_1, ...)
+function V1a4_BossRush_ScoreTaskAchievementItem:_playAnim(eUIAnimationName, ...)
+	self._anim:Play(eUIAnimationName, ...)
 end
 
-function var_0_0._setActive(arg_18_0, arg_18_1)
-	gohelper.setActive(arg_18_0.viewGO, arg_18_1)
+function V1a4_BossRush_ScoreTaskAchievementItem:_setActive(bool)
+	gohelper.setActive(self.viewGO, bool)
 end
 
-function var_0_0._onEndBlock(arg_19_0)
-	arg_19_0:_setActiveBlock(false, true)
+function V1a4_BossRush_ScoreTaskAchievementItem:_onEndBlock()
+	self:_setActiveBlock(false, true)
 	V1a4_BossRush_ScoreTaskAchievementListModel.instance:setStaticData(true)
 end
 
-function var_0_0._setActiveBlock(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = ViewMgr.instance:getContainer(ViewName.V1a4_BossRush_ScoreTaskAchievement)
+function V1a4_BossRush_ScoreTaskAchievementItem:_setActiveBlock(isActive, isOnce)
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.V1a4_BossRush_ScoreTaskAchievement)
 
-	if not var_20_0 then
+	if not viewContainer then
 		return
 	end
 
-	var_20_0:setActiveBlock(arg_20_1, arg_20_2)
+	viewContainer:setActiveBlock(isActive, isOnce)
 end
 
-function var_0_0._onFinishEnd(arg_21_0)
-	arg_21_0._view.viewContainer.taskAnimRemoveItem:removeByIndex(arg_21_0._index, arg_21_0._onFinishTweenEnd, arg_21_0)
+function V1a4_BossRush_ScoreTaskAchievementItem:_onFinishEnd()
+	self._view.viewContainer.taskAnimRemoveItem:removeByIndex(self._index, self._onFinishTweenEnd, self)
 end
 
-function var_0_0._onFinishTweenEnd(arg_22_0)
-	arg_22_0:_playIdle()
-	V1a4_BossRush_ScoreTaskAchievementListModel.instance:claimRewardByIndex(arg_22_0._index)
-	arg_22_0:_setActiveBlock(false)
+function V1a4_BossRush_ScoreTaskAchievementItem:_onFinishTweenEnd()
+	self:_playIdle()
+	V1a4_BossRush_ScoreTaskAchievementListModel.instance:claimRewardByIndex(self._index)
+	self:_setActiveBlock(false)
 end
 
-function var_0_0._initScollParentGameObject(arg_23_0)
-	if not arg_23_0._isSetParent then
-		arg_23_0._scrollrewardLimitScollRect.parentGameObject = arg_23_0._view:getCsListScroll().gameObject
-		arg_23_0._isSetParent = true
+function V1a4_BossRush_ScoreTaskAchievementItem:_initScollParentGameObject()
+	if not self._isSetParent then
+		self._scrollrewardLimitScollRect.parentGameObject = self._view:getCsListScroll().gameObject
+		self._isSetParent = true
 	end
 end
 
-return var_0_0
+return V1a4_BossRush_ScoreTaskAchievementItem

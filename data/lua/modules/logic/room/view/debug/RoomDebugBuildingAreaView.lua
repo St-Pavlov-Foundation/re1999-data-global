@@ -1,132 +1,136 @@
-﻿module("modules.logic.room.view.debug.RoomDebugBuildingAreaView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugBuildingAreaView.lua
 
-local var_0_0 = class("RoomDebugBuildingAreaView", BaseView)
+module("modules.logic.room.view.debug.RoomDebugBuildingAreaView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_close")
-	arg_1_0._goarearoot = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_arearoot")
-	arg_1_0._goareaitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_arearoot/#go_areaitem")
+local RoomDebugBuildingAreaView = class("RoomDebugBuildingAreaView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomDebugBuildingAreaView:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#btn_close")
+	self._goarearoot = gohelper.findChild(self.viewGO, "#go_content/#go_arearoot")
+	self._goareaitem = gohelper.findChild(self.viewGO, "#go_content/#go_arearoot/#go_areaitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomDebugBuildingAreaView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomDebugBuildingAreaView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomDebugBuildingAreaView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._goarearootTrs = arg_5_0._goarearoot.transform
-	arg_5_0._itemTbList = {}
-	arg_5_0._lastIndex = 1
+function RoomDebugBuildingAreaView:_editableInitView()
+	self._goarearootTrs = self._goarearoot.transform
+	self._itemTbList = {}
+	self._lastIndex = 1
 
-	table.insert(arg_5_0._itemTbList, arg_5_0:_createTbByGO(arg_5_0._goareaitem))
+	table.insert(self._itemTbList, self:_createTbByGO(self._goareaitem))
 end
 
-function var_0_0._createTbByGO(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getUserDataTb_()
+function RoomDebugBuildingAreaView:_createTbByGO(go)
+	local tb = self:getUserDataTb_()
 
-	var_6_0.go = arg_6_1
-	var_6_0.goTrs = arg_6_1.transform
-	var_6_0.txtname = gohelper.findChildText(arg_6_1, "txt_name")
-	var_6_0._canvasGroup = arg_6_1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	tb.go = go
+	tb.goTrs = go.transform
+	tb.txtname = gohelper.findChildText(go, "txt_name")
+	tb._canvasGroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	return var_6_0
+	return tb
 end
 
-function var_0_0.onOpen(arg_7_0)
+function RoomDebugBuildingAreaView:onOpen()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
-		arg_7_0:closeThis()
+		self:closeThis()
 
 		return
 	end
 
-	arg_7_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_7_0._refreshUI, arg_7_0)
+	self:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, self._refreshUI, self)
 
-	arg_7_0._scene = GameSceneMgr.instance:getCurScene()
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	arg_7_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:removeEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_8_0._refreshUI, arg_8_0)
+function RoomDebugBuildingAreaView:onClose()
+	self:removeEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, self._refreshUI, self)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RoomDebugBuildingAreaView:onDestroyView()
 	return
 end
 
-function var_0_0._refreshUI(arg_10_0)
-	arg_10_0._focusPos = arg_10_0._scene.camera:getCameraFocus()
+function RoomDebugBuildingAreaView:_refreshUI()
+	self._focusPos = self._scene.camera:getCameraFocus()
 
-	local var_10_0 = RoomMapBuildingModel.instance:getAllOccupyDict()
-	local var_10_1 = 1
+	local allOccupyDict = RoomMapBuildingModel.instance:getAllOccupyDict()
+	local index = 1
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		for iter_10_2, iter_10_3 in pairs(iter_10_1) do
-			if var_10_1 > #arg_10_0._itemTbList then
-				local var_10_2 = gohelper.cloneInPlace(arg_10_0._goareaitem)
+	for x, dict in pairs(allOccupyDict) do
+		for y, param in pairs(dict) do
+			if index > #self._itemTbList then
+				local cloneGo = gohelper.cloneInPlace(self._goareaitem)
 
-				table.insert(arg_10_0._itemTbList, arg_10_0:_createTbByGO(var_10_2))
+				table.insert(self._itemTbList, self:_createTbByGO(cloneGo))
 			end
 
-			local var_10_3 = arg_10_0._itemTbList[var_10_1]
+			local tbItem = self._itemTbList[index]
 
-			var_10_1 = var_10_1 + 1
+			index = index + 1
 
-			arg_10_0:_setTbItemAvtive(var_10_3, true)
-			arg_10_0:_refreshByParam(var_10_3, iter_10_3)
+			self:_setTbItemAvtive(tbItem, true)
+			self:_refreshByParam(tbItem, param)
 		end
 	end
 
-	for iter_10_4 = var_10_1, #arg_10_0._itemTbList do
-		arg_10_0:_setTbItemAvtive(arg_10_0._itemTbList[iter_10_4], false)
+	for i = index, #self._itemTbList do
+		self:_setTbItemAvtive(self._itemTbList[i], false)
 	end
 end
 
-function var_0_0._setTbItemAvtive(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1.isActive ~= arg_11_2 then
-		arg_11_1.isActive = arg_11_2
+function RoomDebugBuildingAreaView:_setTbItemAvtive(tbItem, active)
+	if tbItem.isActive ~= active then
+		tbItem.isActive = active
 
-		gohelper.setActive(arg_11_1.go, arg_11_2)
+		gohelper.setActive(tbItem.go, active)
 	end
 end
 
-function var_0_0._refreshByParam(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1.buildingId ~= arg_12_2.buildingId or arg_12_1.posindex ~= arg_12_2.index then
-		arg_12_1.buildingId = arg_12_2.buildingId
-		arg_12_1.posindex = arg_12_2.index
+function RoomDebugBuildingAreaView:_refreshByParam(tbItem, param)
+	if tbItem.buildingId ~= param.buildingId or tbItem.posindex ~= param.index then
+		tbItem.buildingId = param.buildingId
+		tbItem.posindex = param.index
 
-		local var_12_0 = RoomMapModel.instance:getBuildingConfigParam(arg_12_2.buildingId).pointList[arg_12_2.index]
+		local buildingConfigParam = RoomMapModel.instance:getBuildingConfigParam(param.buildingId)
+		local pointList = buildingConfigParam.pointList
+		local point = pointList[param.index]
 
-		arg_12_1.txtname.text = var_12_0.x .. "#" .. var_12_0.y
+		tbItem.txtname.text = point.x .. "#" .. point.y
 	end
 
-	local var_12_1 = HexMath.hexToPosition(arg_12_2.hexPoint, RoomBlockEnum.BlockSize)
+	local bendingPos = HexMath.hexToPosition(param.hexPoint, RoomBlockEnum.BlockSize)
 
-	arg_12_0:_setTbItemPos(var_12_1, arg_12_1, arg_12_0._goarearootTrs)
+	self:_setTbItemPos(bendingPos, tbItem, self._goarearootTrs)
 end
 
-function var_0_0._setTbItemPos(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = Vector3(arg_13_1.x, 0.12, arg_13_1.y)
-	local var_13_1 = recthelper.worldPosToAnchorPos(var_13_0, arg_13_3)
-	local var_13_2 = Vector2.Distance(arg_13_0._focusPos, arg_13_1)
-	local var_13_3 = 1
-	local var_13_4 = var_13_2 <= 2.5 and 1 or var_13_2 >= 3.5 and 0 or 3.5 - var_13_2
+function RoomDebugBuildingAreaView:_setTbItemPos(bendingPos, tbItem, parentUIGOTrs)
+	local worldPos = Vector3(bendingPos.x, 0.12, bendingPos.y)
+	local localPos = recthelper.worldPosToAnchorPos(worldPos, parentUIGOTrs)
+	local focusDistance = Vector2.Distance(self._focusPos, bendingPos)
+	local curAlpha = 1
 
-	arg_13_2._canvasGroup.alpha = var_13_4
+	curAlpha = focusDistance <= 2.5 and 1 or focusDistance >= 3.5 and 0 or 3.5 - focusDistance
+	tbItem._canvasGroup.alpha = curAlpha
 
-	recthelper.setAnchor(arg_13_2.goTrs, var_13_1.x, var_13_1.y)
+	recthelper.setAnchor(tbItem.goTrs, localPos.x, localPos.y)
 end
 
-return var_0_0
+return RoomDebugBuildingAreaView

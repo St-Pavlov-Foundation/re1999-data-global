@@ -1,17 +1,19 @@
-﻿module("modules.logic.scene.cachot.CachotScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/CachotScene.lua
 
-local var_0_0 = class("CachotScene", BaseScene)
+module("modules.logic.scene.cachot.CachotScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("bgm", CachotBGMComp)
-	arg_1_0:_addComp("player", CachotPlayerComp)
-	arg_1_0:_addComp("camera", CachotSceneCamera)
-	arg_1_0:_addComp("director", CachotSceneDirector)
-	arg_1_0:_addComp("level", CachotSceneLevel)
-	arg_1_0:_addComp("preloader", CachotScenePreloader)
-	arg_1_0:_addComp("view", CachotSceneViewComp)
-	arg_1_0:_addComp("event", CachotEventComp)
-	arg_1_0:_addComp("light", CachotLightComp)
+local CachotScene = class("CachotScene", BaseScene)
+
+function CachotScene:_createAllComps()
+	self:_addComp("bgm", CachotBGMComp)
+	self:_addComp("player", CachotPlayerComp)
+	self:_addComp("camera", CachotSceneCamera)
+	self:_addComp("director", CachotSceneDirector)
+	self:_addComp("level", CachotSceneLevel)
+	self:_addComp("preloader", CachotScenePreloader)
+	self:_addComp("view", CachotSceneViewComp)
+	self:_addComp("event", CachotEventComp)
+	self:_addComp("light", CachotLightComp)
 end
 
-return var_0_0
+return CachotScene

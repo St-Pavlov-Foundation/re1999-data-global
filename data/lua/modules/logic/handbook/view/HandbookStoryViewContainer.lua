@@ -1,33 +1,35 @@
-﻿module("modules.logic.handbook.view.HandbookStoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookStoryViewContainer.lua
 
-local var_0_0 = class("HandbookStoryViewContainer", BaseViewContainer)
+module("modules.logic.handbook.view.HandbookStoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local HandbookStoryViewContainer = class("HandbookStoryViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, HandbookStoryView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function HandbookStoryViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, HandbookStoryView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function HandbookStoryViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.play_ui_checkpoint_story_close)
-	arg_3_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
+function HandbookStoryViewContainer:onContainerOpenFinish()
+	self.navigateView:resetCloseBtnAudioId(AudioEnum.UI.play_ui_checkpoint_story_close)
+	self.navigateView:resetHomeBtnAudioId(AudioEnum.UI.UI_checkpoint_story_close)
 end
 
-return var_0_0
+return HandbookStoryViewContainer

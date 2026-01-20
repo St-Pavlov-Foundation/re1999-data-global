@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity191_event", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity191_event.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity191_event", package.seeall)
+
+local lua_activity191_event = {}
+local fields = {
 	skinId = 10,
 	outDesc = 6,
 	type = 3,
@@ -14,18 +16,18 @@ local var_0_1 = {
 	stage = 4,
 	activityId = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	outDesc = 2,
 	title = 1,
 	task = 4,
 	desc = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity191_event.onLoad(json)
+	lua_activity191_event.configList, lua_activity191_event.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity191_event

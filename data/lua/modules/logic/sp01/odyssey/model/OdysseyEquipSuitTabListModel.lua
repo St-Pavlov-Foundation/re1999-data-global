@@ -1,68 +1,72 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyEquipSuitTabListModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyEquipSuitTabListModel.lua
 
-local var_0_0 = class("OdysseyEquipSuitTabListModel", ListScrollModel)
+module("modules.logic.sp01.odyssey.model.OdysseyEquipSuitTabListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local OdysseyEquipSuitTabListModel = class("OdysseyEquipSuitTabListModel", ListScrollModel)
+
+function OdysseyEquipSuitTabListModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function OdysseyEquipSuitTabListModel:reInit()
 	return
 end
 
-function var_0_0.initList(arg_3_0)
-	local var_3_0 = OdysseyConfig.instance:getEquipSuitConfigList()
-	local var_3_1 = {}
-	local var_3_2 = OdysseyEquipSuitMo.New()
+function OdysseyEquipSuitTabListModel:initList()
+	local allConfigList = OdysseyConfig.instance:getEquipSuitConfigList()
+	local tempMoList = {}
+	local allMo = OdysseyEquipSuitMo.New()
 
-	var_3_2:init(nil, nil, OdysseyEnum.EquipSuitType.All)
-	table.insert(var_3_1, var_3_2)
+	allMo:init(nil, nil, OdysseyEnum.EquipSuitType.All)
+	table.insert(tempMoList, allMo)
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		if OdysseyItemModel.instance:haveSuitItem(iter_3_1.id) then
-			local var_3_3 = OdysseyEquipSuitMo.New()
+	for _, config in ipairs(allConfigList) do
+		if OdysseyItemModel.instance:haveSuitItem(config.id) then
+			local mo = OdysseyEquipSuitMo.New()
 
-			var_3_3:init(iter_3_1.id, iter_3_1, OdysseyEnum.EquipSuitType.SingleType)
-			table.insert(var_3_1, var_3_3)
+			mo:init(config.id, config, OdysseyEnum.EquipSuitType.SingleType)
+			table.insert(tempMoList, mo)
 		end
 	end
 
-	arg_3_0:setList(var_3_1)
+	self:setList(tempMoList)
 end
 
-function var_0_0.clearSelect(arg_4_0)
-	local var_4_0 = arg_4_0:getSelect()
-	local var_4_1 = arg_4_0._scrollViews[1]
+function OdysseyEquipSuitTabListModel:clearSelect()
+	local mo = self:getSelect()
+	local view = self._scrollViews[1]
 
-	if var_4_0 then
-		var_4_1:selectCell(var_4_0.id, false)
+	if mo then
+		view:selectCell(mo.id, false)
 	end
 end
 
-function var_0_0.getSelect(arg_5_0)
-	local var_5_0 = arg_5_0._scrollViews[1]
+function OdysseyEquipSuitTabListModel:getSelect()
+	local view = self._scrollViews[1]
 
-	if var_5_0 then
-		return (var_5_0:getFirstSelect())
+	if view then
+		local mo = view:getFirstSelect()
+
+		return mo
 	end
 end
 
-function var_0_0.selectAllTag(arg_6_0, arg_6_1)
-	arg_6_0:clearSelect()
+function OdysseyEquipSuitTabListModel:selectAllTag(dispatchEvent)
+	self:clearSelect()
 
-	local var_6_0 = arg_6_0._scrollViews[1]
+	local view = self._scrollViews[1]
 
-	if var_6_0 then
-		var_6_0:selectCell(1, true)
+	if view then
+		view:selectCell(1, true)
 
-		if arg_6_1 then
-			local var_6_1 = arg_6_0:getByIndex(1)
+		if dispatchEvent then
+			local allMo = self:getByIndex(1)
 
-			OdysseyController.instance:dispatchEvent(OdysseyEvent.OnEquipSuitSelect, var_6_1)
+			OdysseyController.instance:dispatchEvent(OdysseyEvent.OnEquipSuitSelect, allMo)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyEquipSuitTabListModel.instance = OdysseyEquipSuitTabListModel.New()
 
-return var_0_0
+return OdysseyEquipSuitTabListModel

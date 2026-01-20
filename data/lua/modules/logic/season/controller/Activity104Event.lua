@@ -1,26 +1,28 @@
-﻿module("modules.logic.season.controller.Activity104Event", package.seeall)
+﻿-- chunkname: @modules/logic/season/controller/Activity104Event.lua
 
-local var_0_0 = _M
+module("modules.logic.season.controller.Activity104Event", package.seeall)
 
-var_0_0.GetAct104Info = 1001
-var_0_0.GetAct104ItemChange = 1002
-var_0_0.GetAct104BattleFinish = 1003
-var_0_0.StartAct104BattleReply = 1004
-var_0_0.RefreshRetail = 1005
-var_0_0.OptionalEquip = 1006
-var_0_0.SwitchSnapshotSubId = 1007
-var_0_0.SwitchSpecialEpisode = 1008
-var_0_0.ChangeCameraSize = 1009
-var_0_0.SelectRetail = 1010
-var_0_0.SelectSelfChoiceCard = 1011
-var_0_0.OnUpdateSeasonTask = 2002
-var_0_0.OnSeasonTaskReward = 2003
-var_0_0.OnComposeDataChanged = 3001
-var_0_0.OnComposeSuccess = 3002
-var_0_0.OnBookUpdateNotify = 3101
-var_0_0.OnBookChangeSelectNotify = 3102
-var_0_0.OnPlayerPrefNewUpdate = 3103
-var_0_0.OnCoverItemClick = 3104
-var_0_0.EnterSeasonMainView = 9001
+local Activity104Event = _M
 
-return var_0_0
+Activity104Event.GetAct104Info = 1001
+Activity104Event.GetAct104ItemChange = 1002
+Activity104Event.GetAct104BattleFinish = 1003
+Activity104Event.StartAct104BattleReply = 1004
+Activity104Event.RefreshRetail = 1005
+Activity104Event.OptionalEquip = 1006
+Activity104Event.SwitchSnapshotSubId = 1007
+Activity104Event.SwitchSpecialEpisode = 1008
+Activity104Event.ChangeCameraSize = 1009
+Activity104Event.SelectRetail = 1010
+Activity104Event.SelectSelfChoiceCard = 1011
+Activity104Event.OnUpdateSeasonTask = 2002
+Activity104Event.OnSeasonTaskReward = 2003
+Activity104Event.OnComposeDataChanged = 3001
+Activity104Event.OnComposeSuccess = 3002
+Activity104Event.OnBookUpdateNotify = 3101
+Activity104Event.OnBookChangeSelectNotify = 3102
+Activity104Event.OnPlayerPrefNewUpdate = 3103
+Activity104Event.OnCoverItemClick = 3104
+Activity104Event.EnterSeasonMainView = 9001
+
+return Activity104Event

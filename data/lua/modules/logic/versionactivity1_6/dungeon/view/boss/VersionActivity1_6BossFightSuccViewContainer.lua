@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6BossFightSuccViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6BossFightSuccViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_6BossFightSuccViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6BossFightSuccViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity1_6BossFightSuccViewContainer = class("VersionActivity1_6BossFightSuccViewContainer", BaseViewContainer)
+
+function VersionActivity1_6BossFightSuccViewContainer:buildViews()
 	return {
 		VersionActivity1_6BossFightSuccView.New()
 	}
 end
 
-return var_0_0
+return VersionActivity1_6BossFightSuccViewContainer

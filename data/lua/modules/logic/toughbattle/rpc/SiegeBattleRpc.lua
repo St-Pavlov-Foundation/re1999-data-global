@@ -1,43 +1,45 @@
-﻿module("modules.logic.toughbattle.rpc.SiegeBattleRpc", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/rpc/SiegeBattleRpc.lua
 
-local var_0_0 = class("SiegeBattleRpc", BaseRpc)
+module("modules.logic.toughbattle.rpc.SiegeBattleRpc", package.seeall)
 
-function var_0_0.sendGetSiegeBattleInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = SiegeBattleModule_pb.GetSiegeBattleInfoRequest()
+local SiegeBattleRpc = class("SiegeBattleRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function SiegeBattleRpc:sendGetSiegeBattleInfoRequest(callback, callbackobj)
+	local req = SiegeBattleModule_pb.GetSiegeBattleInfoRequest()
+
+	return self:sendMsg(req, callback, callbackobj)
 end
 
-function var_0_0.onReceiveGetSiegeBattleInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		ToughBattleModel.instance:onGetStoryInfo(arg_2_2.info)
+function SiegeBattleRpc:onReceiveGetSiegeBattleInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		ToughBattleModel.instance:onGetStoryInfo(msg.info)
 	end
 end
 
-function var_0_0.sendStartSiegeBattleRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = SiegeBattleModule_pb.StartSiegeBattleRequest()
+function SiegeBattleRpc:sendStartSiegeBattleRequest(callback, callbackobj)
+	local req = SiegeBattleModule_pb.StartSiegeBattleRequest()
 
-	return arg_3_0:sendMsg(var_3_0, arg_3_1, arg_3_2)
+	return self:sendMsg(req, callback, callbackobj)
 end
 
-function var_0_0.onReceiveStartSiegeBattleReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		ToughBattleModel.instance:onGetStoryInfo(arg_4_2.info)
+function SiegeBattleRpc:onReceiveStartSiegeBattleReply(resultCode, msg)
+	if resultCode == 0 then
+		ToughBattleModel.instance:onGetStoryInfo(msg.info)
 	end
 end
 
-function var_0_0.sendAbandonSiegeBattleRequest(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = SiegeBattleModule_pb.AbandonSiegeBattleRequest()
+function SiegeBattleRpc:sendAbandonSiegeBattleRequest(callback, callbackobj)
+	local req = SiegeBattleModule_pb.AbandonSiegeBattleRequest()
 
-	return arg_5_0:sendMsg(var_5_0, arg_5_1, arg_5_2)
+	return self:sendMsg(req, callback, callbackobj)
 end
 
-function var_0_0.onReceiveAbandonSiegeBattleReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
-		ToughBattleModel.instance:onGetStoryInfo(arg_6_2.info)
+function SiegeBattleRpc:onReceiveAbandonSiegeBattleReply(resultCode, msg)
+	if resultCode == 0 then
+		ToughBattleModel.instance:onGetStoryInfo(msg.info)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SiegeBattleRpc.instance = SiegeBattleRpc.New()
 
-return var_0_0
+return SiegeBattleRpc

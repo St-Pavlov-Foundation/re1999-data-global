@@ -1,37 +1,39 @@
-﻿module("modules.logic.gm.model.GMResetCardsModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMResetCardsModel.lua
 
-local var_0_0 = class("GMResetCardsModel", BaseModel)
+module("modules.logic.gm.model.GMResetCardsModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local GMResetCardsModel = class("GMResetCardsModel", BaseModel)
 
-	arg_1_0._model1 = ListScrollModel.New()
-	arg_1_0._model2 = ListScrollModel.New()
+function GMResetCardsModel:ctor()
+	GMResetCardsModel.super.ctor(self)
+
+	self._model1 = ListScrollModel.New()
+	self._model2 = ListScrollModel.New()
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._model1:onInit()
-	arg_2_0._model2:onInit()
+function GMResetCardsModel:onInit()
+	self._model1:onInit()
+	self._model2:onInit()
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0._model1:reInit()
-	arg_3_0._model2:reInit()
+function GMResetCardsModel:reInit()
+	self._model1:reInit()
+	self._model2:reInit()
 end
 
-function var_0_0.clear(arg_4_0)
-	arg_4_0._model1:clear()
-	arg_4_0._model2:clear()
+function GMResetCardsModel:clear()
+	self._model1:clear()
+	self._model2:clear()
 end
 
-function var_0_0.getModel1(arg_5_0)
-	return arg_5_0._model1
+function GMResetCardsModel:getModel1()
+	return self._model1
 end
 
-function var_0_0.getModel2(arg_6_0)
-	return arg_6_0._model2
+function GMResetCardsModel:getModel2()
+	return self._model2
 end
 
-var_0_0.instance = var_0_0.New()
+GMResetCardsModel.instance = GMResetCardsModel.New()
 
-return var_0_0
+return GMResetCardsModel

@@ -1,63 +1,67 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroLevelView.lua
 
-local var_0_0 = class("DiceHeroLevelView", BaseView)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_Normal")
-	arg_1_0._goinfinite = gohelper.findChild(arg_1_0.viewGO, "#go_Endless")
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Reset")
-	arg_1_0._txtTitle1 = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_Normal/Title/#txt_Title")
-	arg_1_0._txtTitle2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_Endless/Title/#txt_Title")
+local DiceHeroLevelView = class("DiceHeroLevelView", BaseView)
+
+function DiceHeroLevelView:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_Normal")
+	self._goinfinite = gohelper.findChild(self.viewGO, "#go_Endless")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Reset")
+	self._txtTitle1 = gohelper.findChildTextMesh(self.viewGO, "#go_Normal/Title/#txt_Title")
+	self._txtTitle2 = gohelper.findChildTextMesh(self.viewGO, "#go_Endless/Title/#txt_Title")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0._onResetClick, arg_2_0)
+function DiceHeroLevelView:addEvents()
+	self._btnReset:AddClickListener(self._onResetClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnReset:RemoveClickListener()
+function DiceHeroLevelView:removeEvents()
+	self._btnReset:RemoveClickListener()
 end
 
-function var_0_0._onResetClick(arg_4_0)
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.DiceHeroReset, MsgBoxEnum.BoxType.Yes_No, arg_4_0._onSendReset, nil, nil, arg_4_0)
+function DiceHeroLevelView:_onResetClick()
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.DiceHeroReset, MsgBoxEnum.BoxType.Yes_No, self._onSendReset, nil, nil, self)
 end
 
-function var_0_0._onSendReset(arg_5_0)
+function DiceHeroLevelView:_onSendReset()
 	DiceHeroRpc.instance:sendDiceGiveUp(5)
 end
 
-function var_0_0.onOpen(arg_6_0)
+function DiceHeroLevelView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_alaifuchapter)
-	gohelper.setActive(arg_6_0._gonormal, not arg_6_0.viewParam.isInfinite)
-	gohelper.setActive(arg_6_0._goinfinite, arg_6_0.viewParam.isInfinite)
-	gohelper.setActive(arg_6_0._btnReset, arg_6_0.viewParam.isInfinite)
+	gohelper.setActive(self._gonormal, not self.viewParam.isInfinite)
+	gohelper.setActive(self._goinfinite, self.viewParam.isInfinite)
+	gohelper.setActive(self._btnReset, self.viewParam.isInfinite)
 
-	local var_6_0 = arg_6_0.viewContainer._viewSetting.otherRes.roleinfoitem
-	local var_6_1 = arg_6_0.viewParam and arg_6_0.viewParam.chapterId or 1
+	local roleitemPath = self.viewContainer._viewSetting.otherRes.roleinfoitem
+	local chapter = self.viewParam and self.viewParam.chapterId or 1
 
-	for iter_6_0 = 1, 6 do
-		local var_6_2 = gohelper.findChild(arg_6_0.viewGO, "#btn_stage" .. iter_6_0)
-		local var_6_3 = iter_6_0
-		local var_6_4 = DiceHeroConfig.instance:getLevelCo(var_6_1, var_6_3)
+	for i = 1, 6 do
+		local go = gohelper.findChild(self.viewGO, "#btn_stage" .. i)
+		local room = i
+		local co = DiceHeroConfig.instance:getLevelCo(chapter, room)
 
-		if not var_6_4 then
+		if not co then
 			break
 		end
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_6_2, DiceHeroStageItem):initData(var_6_4, arg_6_0.viewParam.isInfinite)
+		local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, DiceHeroStageItem)
 
-		if iter_6_0 == 1 then
-			arg_6_0._txtTitle1.text = var_6_4.chapterName
-			arg_6_0._txtTitle2.text = var_6_4.chapterName
+		comp:initData(co, self.viewParam.isInfinite)
+
+		if i == 1 then
+			self._txtTitle1.text = co.chapterName
+			self._txtTitle2.text = co.chapterName
 		end
 	end
 
-	local var_6_5 = gohelper.findChild(arg_6_0.viewGO, "#go_roleinfoitem")
-	local var_6_6 = arg_6_0:getResInst(var_6_0, var_6_5)
+	local roleGo = gohelper.findChild(self.viewGO, "#go_roleinfoitem")
+	local roleInstGo = self:getResInst(roleitemPath, roleGo)
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(var_6_6, DiceHeroRoleItem, {
-		chapter = var_6_1
+	MonoHelper.addNoUpdateLuaComOnceToGo(roleInstGo, DiceHeroRoleItem, {
+		chapter = chapter
 	})
 end
 
-return var_0_0
+return DiceHeroLevelView

@@ -1,61 +1,63 @@
-﻿module("modules.logic.store.view.StoreSkinDefaultShowView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinDefaultShowView.lua
 
-local var_0_0 = class("StoreSkinDefaultShowView", BaseView)
+module("modules.logic.store.view.StoreSkinDefaultShowView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
-	arg_1_0._goview = gohelper.findChild(arg_1_0.viewGO, "#go_view")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local StoreSkinDefaultShowView = class("StoreSkinDefaultShowView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreSkinDefaultShowView:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "#go_bg")
+	self._goview = gohelper.findChild(self.viewGO, "#go_view")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function StoreSkinDefaultShowView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function StoreSkinDefaultShowView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function StoreSkinDefaultShowView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function StoreSkinDefaultShowView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function StoreSkinDefaultShowView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.viewParam.contentBg.transform:SetParent(arg_7_0._goview.transform, false)
+function StoreSkinDefaultShowView:onOpen()
+	self.viewParam.contentBg.transform:SetParent(self._goview.transform, false)
 end
 
-function var_0_0.onClose(arg_8_0)
-	if arg_8_0.viewParam.callback then
-		arg_8_0.viewParam.callback(arg_8_0.viewParam.callbackObj, arg_8_0.viewParam)
+function StoreSkinDefaultShowView:onClose()
+	if self.viewParam.callback then
+		self.viewParam.callback(self.viewParam.callbackObj, self.viewParam)
 
-		arg_8_0.viewParam.callback = nil
+		self.viewParam.callback = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	if arg_9_0._bgGo then
-		gohelper.destroy(arg_9_0._bgGo)
+function StoreSkinDefaultShowView:onDestroyView()
+	if self._bgGo then
+		gohelper.destroy(self._bgGo)
 
-		arg_9_0._bgGo = nil
+		self._bgGo = nil
 	end
 
-	if arg_9_0._viewGo then
-		gohelper.destroy(arg_9_0._viewGo)
+	if self._viewGo then
+		gohelper.destroy(self._viewGo)
 
-		arg_9_0._viewGo = nil
+		self._viewGo = nil
 	end
 end
 
-return var_0_0
+return StoreSkinDefaultShowView

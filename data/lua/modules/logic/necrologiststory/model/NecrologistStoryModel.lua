@@ -1,110 +1,113 @@
-﻿module("modules.logic.necrologiststory.model.NecrologistStoryModel", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/model/NecrologistStoryModel.lua
 
-local var_0_0 = class("NecrologistStoryModel", BaseModel)
+module("modules.logic.necrologiststory.model.NecrologistStoryModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.storyGroupClientMos = {}
-	arg_1_0._curStoryGroupId = nil
+local NecrologistStoryModel = class("NecrologistStoryModel", BaseModel)
+
+function NecrologistStoryModel:onInit()
+	self.storyGroupClientMos = {}
+	self._curStoryGroupId = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.storyGroupClientMos = {}
-	arg_2_0._curStoryGroupId = nil
+function NecrologistStoryModel:reInit()
+	self.storyGroupClientMos = {}
+	self._curStoryGroupId = nil
 end
 
-function var_0_0.getCurStoryMO(arg_3_0)
-	return arg_3_0:getStoryMO(arg_3_0._curStoryGroupId)
+function NecrologistStoryModel:getCurStoryMO()
+	return self:getStoryMO(self._curStoryGroupId)
 end
 
-function var_0_0.getStoryMO(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function NecrologistStoryModel:getStoryMO(id)
+	if not id then
 		return
 	end
 
-	local var_4_0 = arg_4_0.storyGroupClientMos[arg_4_1]
+	local mo = self.storyGroupClientMos[id]
 
-	if not var_4_0 then
-		var_4_0 = NecrologistStoryMO.New()
+	if not mo then
+		mo = NecrologistStoryMO.New()
 
-		var_4_0:init(arg_4_1)
+		mo:init(id)
 
-		arg_4_0.storyGroupClientMos[arg_4_1] = var_4_0
+		self.storyGroupClientMos[id] = mo
 	end
 
-	arg_4_0._curStoryGroupId = arg_4_1
+	self._curStoryGroupId = id
 
-	return var_4_0
+	return mo
 end
 
-function var_0_0.getGameMO(arg_5_0, arg_5_1)
-	return arg_5_0:getMOById(arg_5_1)
+function NecrologistStoryModel:getGameMO(id)
+	return self:getMOById(id)
 end
 
-function var_0_0.getMOById(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getById(arg_6_1)
+function NecrologistStoryModel:getMOById(id)
+	local mo = self:getById(id)
 
-	if not var_6_0 then
-		local var_6_1 = NecrologistStoryEnum.RoleStoryId2MOCls[arg_6_1]
+	if not mo then
+		local clsName = NecrologistStoryEnum.RoleStoryId2MOCls[id]
+		local cls = _G[clsName] or NecrologistStoryGameBaseMO
 
-		var_6_0 = (_G[var_6_1] or NecrologistStoryGameBaseMO).New()
+		mo = cls.New()
 
-		var_6_0:init(arg_6_1)
-		arg_6_0:addAtLast(var_6_0)
+		mo:init(id)
+		self:addAtLast(mo)
 	end
 
-	return var_6_0
+	return mo
 end
 
-function var_0_0.updateStoryInfos(arg_7_0, arg_7_1)
-	for iter_7_0 = 1, #arg_7_1 do
-		arg_7_0:updateStoryInfo(arg_7_1[iter_7_0])
+function NecrologistStoryModel:updateStoryInfos(infos)
+	for i = 1, #infos do
+		self:updateStoryInfo(infos[i])
 	end
 end
 
-function var_0_0.updateStoryInfo(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.storyId
-	local var_8_1 = arg_8_0:getMOById(var_8_0)
+function NecrologistStoryModel:updateStoryInfo(info)
+	local id = info.storyId
+	local mo = self:getMOById(id)
 
-	if not var_8_1 then
+	if not mo then
 		return
 	end
 
-	var_8_1:updateInfo(arg_8_1)
+	mo:updateInfo(info)
 end
 
-function var_0_0.saveGameData(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_0:getById(arg_9_1)
+function NecrologistStoryModel:saveGameData(id, callback, callbackObj)
+	local mo = self:getById(id)
 
-	if not var_9_0 then
+	if not mo then
 		return
 	end
 
-	var_9_0:saveData(arg_9_2, arg_9_3)
+	mo:saveData(callback, callbackObj)
 end
 
-function var_0_0.isReviewCanShow(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getGameMO(arg_10_1)
+function NecrologistStoryModel:isReviewCanShow(storyId)
+	local mo = self:getGameMO(storyId)
 
-	if not var_10_0 then
+	if not mo then
 		return false
 	end
 
-	local var_10_1 = NecrologistStoryConfig.instance:getPlotListByStoryId(arg_10_1)
-	local var_10_2 = false
+	local plotList = NecrologistStoryConfig.instance:getPlotListByStoryId(storyId)
+	local hasPlotFinish = false
 
-	if var_10_1 then
-		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-			if var_10_0:isStoryFinish(iter_10_1.id) then
-				var_10_2 = true
+	if plotList then
+		for i, v in ipairs(plotList) do
+			if mo:isStoryFinish(v.id) then
+				hasPlotFinish = true
 
 				break
 			end
 		end
 	end
 
-	return var_10_2
+	return hasPlotFinish
 end
 
-var_0_0.instance = var_0_0.New()
+NecrologistStoryModel.instance = NecrologistStoryModel.New()
 
-return var_0_0
+return NecrologistStoryModel

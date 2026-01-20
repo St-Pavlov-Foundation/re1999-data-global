@@ -1,27 +1,29 @@
-﻿module("modules.logic.scene.room.fsm.action.RoomBaseFsmAction", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/action/RoomBaseFsmAction.lua
 
-local var_0_0 = class("RoomBaseFsmAction")
+module("modules.logic.scene.room.fsm.action.RoomBaseFsmAction", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fsmTransition = arg_1_1
+local RoomBaseFsmAction = class("RoomBaseFsmAction")
+
+function RoomBaseFsmAction:ctor(fsmTransition)
+	self.fsmTransition = fsmTransition
 end
 
-function var_0_0.start(arg_2_0, arg_2_1)
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+function RoomBaseFsmAction:start(param)
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	arg_2_0:onStart(arg_2_1)
+	self:onStart(param)
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
+function RoomBaseFsmAction:onStart(param)
 	return
 end
 
-function var_0_0.stop(arg_4_0)
+function RoomBaseFsmAction:stop()
 	return
 end
 
-function var_0_0.clear(arg_5_0)
+function RoomBaseFsmAction:clear()
 	return
 end
 
-return var_0_0
+return RoomBaseFsmAction

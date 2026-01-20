@@ -1,76 +1,79 @@
-﻿module("modules.logic.versionactivity1_6.act147.view.FurnaceTreasureBuyView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act147/view/FurnaceTreasureBuyView.lua
 
-local var_0_0 = class("FurnaceTreasureBuyView", BaseView)
+module("modules.logic.versionactivity1_6.act147.view.FurnaceTreasureBuyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "#go_spine")
-	arg_1_0._txtcontentcn = gohelper.findChildText(arg_1_0.viewGO, "#go_contents/txt_contentcn")
+local FurnaceTreasureBuyView = class("FurnaceTreasureBuyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FurnaceTreasureBuyView:onInitView()
+	self._gospine = gohelper.findChild(self.viewGO, "#go_spine")
+	self._txtcontentcn = gohelper.findChildText(self.viewGO, "#go_contents/txt_contentcn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._uiSpine = GuiSpine.Create(arg_2_0._gospine, true)
+function FurnaceTreasureBuyView:_editableInitView()
+	self._uiSpine = GuiSpine.Create(self._gospine, true)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0._storeId = arg_3_0.viewParam and arg_3_0.viewParam.storeId
-	arg_3_0._goodsId = arg_3_0.viewParam and arg_3_0.viewParam.goodsId
+function FurnaceTreasureBuyView:onOpen()
+	self._storeId = self.viewParam and self.viewParam.storeId
+	self._goodsId = self.viewParam and self.viewParam.goodsId
 
-	local var_3_0 = FurnaceTreasureModel.instance:getActId()
-	local var_3_1 = FurnaceTreasureConfig.instance:getDialogList(var_3_0)
+	local actId = FurnaceTreasureModel.instance:getActId()
+	local dialogList = FurnaceTreasureConfig.instance:getDialogList(actId)
+	local dialogCount = #dialogList
 
-	if #var_3_1 > 0 and arg_3_0._txtcontentcn then
-		local var_3_2 = math.random(1, #var_3_1)
+	if dialogCount > 0 and self._txtcontentcn then
+		local index = math.random(1, #dialogList)
 
-		arg_3_0._txtcontentcn.text = var_3_1[var_3_2]
+		self._txtcontentcn.text = dialogList[index]
 	end
 
-	local var_3_3 = FurnaceTreasureConfig.instance:getSpineRes(var_3_0)
+	local spineRes = FurnaceTreasureConfig.instance:getSpineRes(actId)
 
-	if not arg_3_0._uiSpine or string.nilorempty(var_3_3) then
+	if not self._uiSpine or string.nilorempty(spineRes) then
 		return
 	end
 
-	arg_3_0._uiSpine:setResPath(var_3_3, arg_3_0._onSpineLoaded, arg_3_0)
+	self._uiSpine:setResPath(spineRes, self._onSpineLoaded, self)
 end
 
-function var_0_0._onSpineLoaded(arg_4_0)
-	if not arg_4_0._uiSpine then
+function FurnaceTreasureBuyView:_onSpineLoaded()
+	if not self._uiSpine then
 		return
 	end
 
-	arg_4_0._uiSpine:changeLookDir(SpineLookDir.Left)
+	self._uiSpine:changeLookDir(SpineLookDir.Left)
 
-	local var_4_0 = FurnaceTreasureModel.instance:getGoodsPoolId(arg_4_0._storeId, arg_4_0._goodsId)
-	local var_4_1 = FurnaceTreasureModel.instance:getSpinePlayData(var_4_0)
+	local poolId = FurnaceTreasureModel.instance:getGoodsPoolId(self._storeId, self._goodsId)
+	local co = FurnaceTreasureModel.instance:getSpinePlayData(poolId)
 
-	arg_4_0._uiSpine:playVoice(var_4_1)
+	self._uiSpine:playVoice(co)
 
-	local var_4_2 = var_4_0 == FurnaceTreasureEnum.ActGoodsPool.Great
-	local var_4_3 = AudioEnum.UI.FurnaceTreasureBuyViewNormalSpine
+	local isGreatGoods = poolId == FurnaceTreasureEnum.ActGoodsPool.Great
+	local audioName = AudioEnum.UI.FurnaceTreasureBuyViewNormalSpine
 
-	if var_4_2 then
-		var_4_3 = AudioEnum.UI.FurnaceTreasureBuyViewGreatSpine
+	if isGreatGoods then
+		audioName = AudioEnum.UI.FurnaceTreasureBuyViewGreatSpine
 	end
 
-	AudioMgr.instance:trigger(var_4_3)
+	AudioMgr.instance:trigger(audioName)
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
-	FurnaceTreasureController.instance:BuyFurnaceTreasureGoods(arg_5_0._storeId, arg_5_0._goodsId, arg_5_0.closeThis, arg_5_0)
+function FurnaceTreasureBuyView:onClickModalMask()
+	FurnaceTreasureController.instance:BuyFurnaceTreasureGoods(self._storeId, self._goodsId, self.closeThis, self)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	if arg_6_0._uiSpine then
-		arg_6_0._uiSpine:doClear()
+function FurnaceTreasureBuyView:onDestroyView()
+	if self._uiSpine then
+		self._uiSpine:doClear()
 	end
 
-	arg_6_0._uiSpine = false
+	self._uiSpine = false
 
 	AudioMgr.instance:trigger(AudioEnum.UI.FurnaceTreasureBuyViewFinish)
 end
 
-return var_0_0
+return FurnaceTreasureBuyView

@@ -1,19 +1,21 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreTransferFinish", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionExploreTransferFinish.lua
 
-local var_0_0 = class("WaitGuideActionExploreTransferFinish", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreTransferFinish", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	ExploreController.instance:registerCallback(ExploreEvent.HeroStatuEnd, arg_1_0._onHeroStatuEnd, arg_1_0)
+local WaitGuideActionExploreTransferFinish = class("WaitGuideActionExploreTransferFinish", BaseGuideAction)
+
+function WaitGuideActionExploreTransferFinish:onStart(context)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroStatuEnd, self._onHeroStatuEnd, self)
 end
 
-function var_0_0._onHeroStatuEnd(arg_2_0, arg_2_1)
-	if arg_2_1 == ExploreAnimEnum.RoleAnimStatus.Entry then
-		arg_2_0:onDone(true)
+function WaitGuideActionExploreTransferFinish:_onHeroStatuEnd(status)
+	if status == ExploreAnimEnum.RoleAnimStatus.Entry then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroStatuEnd, arg_3_0._onHeroStatuEnd, arg_3_0)
+function WaitGuideActionExploreTransferFinish:clearWork()
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroStatuEnd, self._onHeroStatuEnd, self)
 end
 
-return var_0_0
+return WaitGuideActionExploreTransferFinish

@@ -1,23 +1,25 @@
-﻿module("modules.logic.scene.room.work.RoomSceneWaitOneFrameWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/work/RoomSceneWaitOneFrameWork.lua
 
-local var_0_0 = class("RoomSceneWaitOneFrameWork", BaseWork)
+module("modules.logic.scene.room.work.RoomSceneWaitOneFrameWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._scene = arg_1_1
+local RoomSceneWaitOneFrameWork = class("RoomSceneWaitOneFrameWork", BaseWork)
+
+function RoomSceneWaitOneFrameWork:ctor(scene)
+	self._scene = scene
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._oneFrame, arg_2_0, 0)
+function RoomSceneWaitOneFrameWork:onStart()
+	TaskDispatcher.runDelay(self._oneFrame, self, 0)
 end
 
-function var_0_0._oneFrame(arg_3_0)
-	arg_3_0._scene = nil
+function RoomSceneWaitOneFrameWork:_oneFrame()
+	self._scene = nil
 
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	arg_4_0._scene = nil
+function RoomSceneWaitOneFrameWork:clearWork()
+	self._scene = nil
 end
 
-return var_0_0
+return RoomSceneWaitOneFrameWork

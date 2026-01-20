@@ -1,88 +1,91 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.view.XugoujiCardInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/view/XugoujiCardInfoView.lua
 
-local var_0_0 = class("XugoujiCardInfoView", BaseView)
-local var_0_1 = Vector2(-530, -60)
-local var_0_2 = Vector2(530, -60)
-local var_0_3 = VersionActivity2_6Enum.ActivityId.Xugouji
+module("modules.logic.versionactivity2_6.xugouji.view.XugoujiCardInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goInfo = gohelper.findChild(arg_1_0.viewGO, "#go_Tips")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0._goInfo, "Scroll View/Viewport/#txt_Descr")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0._goInfo, "Info/#txt_ChessName")
-	arg_1_0._cardIcon = gohelper.findChildImage(arg_1_0._goInfo, "Info/#image_Skill")
-	arg_1_0._viewAnimator = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
+local XugoujiCardInfoView = class("XugoujiCardInfoView", BaseView)
+local leftAnchorPos = Vector2(-530, -60)
+local rightAnchorPos = Vector2(530, -60)
+local actId = VersionActivity2_6Enum.ActivityId.Xugouji
 
-	arg_1_0:addEventCb(XugoujiController.instance, XugoujiEvent.ManualExitGame, arg_1_0.closeThis, arg_1_0)
-	arg_1_0:addEventCb(XugoujiController.instance, XugoujiEvent.OnOpenGameResultView, arg_1_0.closeThis, arg_1_0)
+function XugoujiCardInfoView:onInitView()
+	self._goInfo = gohelper.findChild(self.viewGO, "#go_Tips")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._txtDesc = gohelper.findChildText(self._goInfo, "Scroll View/Viewport/#txt_Descr")
+	self._txtName = gohelper.findChildText(self._goInfo, "Info/#txt_ChessName")
+	self._cardIcon = gohelper.findChildImage(self._goInfo, "Info/#image_Skill")
+	self._viewAnimator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.ManualExitGame, self.closeThis, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.OnOpenGameResultView, self.closeThis, self)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._onCloseClick, arg_2_0)
-	arg_2_0:addEventCb(XugoujiController.instance, XugoujiEvent.GuideCloseCardInfoView, arg_2_0._closeByGuide, arg_2_0)
+function XugoujiCardInfoView:addEvents()
+	self._btnClose:AddClickListener(self._onCloseClick, self)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.GuideCloseCardInfoView, self._closeByGuide, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0:removeEventCb(XugoujiController.instance, XugoujiEvent.GuideCloseCardInfoView, arg_3_0._closeByGuide, arg_3_0)
+function XugoujiCardInfoView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self:removeEventCb(XugoujiController.instance, XugoujiEvent.GuideCloseCardInfoView, self._closeByGuide, self)
 end
 
-function var_0_0.closeThis(arg_4_0)
-	BaseView.closeThis(arg_4_0)
+function XugoujiCardInfoView:closeThis()
+	BaseView.closeThis(self)
 end
 
-function var_0_0._onCloseClick(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onCloseClick, arg_5_0)
-	gohelper.setActive(arg_5_0._btnClose.gameObject, false)
-	arg_5_0._viewAnimator:Play(UIAnimationName.Close, arg_5_0.closeThis, arg_5_0)
+function XugoujiCardInfoView:_onCloseClick()
+	TaskDispatcher.cancelTask(self._onCloseClick, self)
+	gohelper.setActive(self._btnClose.gameObject, false)
+	self._viewAnimator:Play(UIAnimationName.Close, self.closeThis, self)
 end
 
-function var_0_0._closeByGuide(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._onCloseClick, arg_6_0)
-	gohelper.setActive(arg_6_0._btnClose.gameObject, false)
-	arg_6_0._viewAnimator:Play(UIAnimationName.Close, arg_6_0.closeThis, arg_6_0)
+function XugoujiCardInfoView:_closeByGuide()
+	TaskDispatcher.cancelTask(self._onCloseClick, self)
+	gohelper.setActive(self._btnClose.gameObject, false)
+	self._viewAnimator:Play(UIAnimationName.Close, self.closeThis, self)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function XugoujiCardInfoView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam.cardId
-	local var_8_1 = Activity188Model.instance:isMyTurn()
-	local var_8_2 = arg_8_0._goInfo.transform
-	local var_8_3 = var_8_1 and var_0_1 or var_0_2
-	local var_8_4 = Activity188Config.instance:getCardCfg(var_0_3, var_8_0)
+function XugoujiCardInfoView:onOpen()
+	local viewParam = self.viewParam
+	local cardId = viewParam.cardId
+	local isMyTurn = Activity188Model.instance:isMyTurn()
+	local trans = self._goInfo.transform
+	local anchorPos = isMyTurn and leftAnchorPos or rightAnchorPos
+	local cardCfg = Activity188Config.instance:getCardCfg(actId, cardId)
 
-	recthelper.setAnchor(var_8_2, var_8_3.x, var_8_3.y)
+	recthelper.setAnchor(trans, anchorPos.x, anchorPos.y)
 
-	arg_8_0._txtDesc.text = var_8_4.desc
-	arg_8_0._txtName.text = var_8_4.name
+	self._txtDesc.text = cardCfg.desc
+	self._txtName.text = cardCfg.name
 
-	local var_8_5 = var_8_4.resource
+	local cardIconPath = cardCfg.resource
 
-	if var_8_5 and var_8_5 ~= "" then
-		UISpriteSetMgr.instance:setXugoujiSprite(arg_8_0._cardIcon, var_8_5)
+	if cardIconPath and cardIconPath ~= "" then
+		UISpriteSetMgr.instance:setXugoujiSprite(self._cardIcon, cardIconPath)
 	end
 
-	if not var_8_1 then
-		TaskDispatcher.runDelay(arg_8_0._onCloseClick, arg_8_0, 2)
+	if not isMyTurn then
+		TaskDispatcher.runDelay(self._onCloseClick, self, 2)
 	end
 
-	gohelper.setActive(arg_8_0._btnClose.gameObject, true)
+	gohelper.setActive(self._btnClose.gameObject, true)
 end
 
-function var_0_0.onClose(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._onCloseClick, arg_9_0)
+function XugoujiCardInfoView:onClose()
+	TaskDispatcher.cancelTask(self._onCloseClick, self)
 	XugoujiController.instance:dispatchEvent(XugoujiEvent.CloseCardInfoView)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function XugoujiCardInfoView:onDestroyView()
 	return
 end
 
-return var_0_0
+return XugoujiCardInfoView

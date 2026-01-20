@@ -1,58 +1,60 @@
-﻿module("modules.logic.playercard.config.PlayerCardConfig", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/config/PlayerCardConfig.lua
 
-local var_0_0 = class("PlayerCardConfig", BaseConfig)
+module("modules.logic.playercard.config.PlayerCardConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local PlayerCardConfig = class("PlayerCardConfig", BaseConfig)
+
+function PlayerCardConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function PlayerCardConfig:reqConfigNames()
 	return {
 		"playercard",
 		"player_newspaper"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "playercard" then
-		arg_3_0.playcardBaseInfoConfig = arg_3_2
-	elseif arg_3_1 == "player_newspaper" then
-		arg_3_0.playcardProgressConfig = arg_3_2
+function PlayerCardConfig:onConfigLoaded(configName, configTable)
+	if configName == "playercard" then
+		self.playcardBaseInfoConfig = configTable
+	elseif configName == "player_newspaper" then
+		self.playcardProgressConfig = configTable
 	end
 end
 
-function var_0_0.getCardBaseInfoList(arg_4_0)
-	return arg_4_0.playcardBaseInfoConfig.configList
+function PlayerCardConfig:getCardBaseInfoList()
+	return self.playcardBaseInfoConfig.configList
 end
 
-function var_0_0.getCardBaseInfoById(arg_5_0, arg_5_1)
-	return arg_5_0.playcardBaseInfoConfig.configList[arg_5_1]
+function PlayerCardConfig:getCardBaseInfoById(id)
+	return self.playcardBaseInfoConfig.configList[id]
 end
 
-function var_0_0.getCardProgressList(arg_6_0)
-	return arg_6_0.playcardProgressConfig.configList
+function PlayerCardConfig:getCardProgressList()
+	return self.playcardProgressConfig.configList
 end
 
-function var_0_0.getCardProgressById(arg_7_0, arg_7_1)
-	return arg_7_0.playcardProgressConfig.configList[arg_7_1]
+function PlayerCardConfig:getCardProgressById(id)
+	return self.playcardProgressConfig.configList[id]
 end
 
-function var_0_0.getBgPath(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function PlayerCardConfig:getBgPath(name)
+	if not name then
 		return "ui/viewres/player/playercard/playercardview_bg.prefab"
 	else
-		return string.format("ui/viewres/player/playercard/playercardview_bg_%s.prefab", arg_8_1)
+		return string.format("ui/viewres/player/playercard/playercardview_bg_%s.prefab", name)
 	end
 end
 
-function var_0_0.getTopEffectPath(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function PlayerCardConfig:getTopEffectPath(name)
+	if not name then
 		return "ui/viewres/player/playercard/playercardview_effect.prefab"
 	else
-		return string.format("ui/viewres/player/playercard/playercardview_playercardview_effect_%s.prefab", arg_9_1)
+		return string.format("ui/viewres/player/playercard/playercardview_playercardview_effect_%s.prefab", name)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerCardConfig.instance = PlayerCardConfig.New()
 
-return var_0_0
+return PlayerCardConfig

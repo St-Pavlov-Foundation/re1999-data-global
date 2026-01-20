@@ -1,61 +1,63 @@
-﻿module("modules.logic.gm.view.GMCommandView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMCommandView.lua
+
+module("modules.logic.gm.view.GMCommandView", package.seeall)
 require("modules/logic/gm/view/GMToolCommands")
 
-local var_0_0 = class("GMCommandView", BaseView)
+local GMCommandView = class("GMCommandView", BaseView)
 
-var_0_0.OpenCommand = 1910
-var_0_0.ClickItem = 1911
-var_0_0.ClickItemAgain = 1912
+GMCommandView.OpenCommand = 1910
+GMCommandView.ClickItem = 1911
+GMCommandView.ClickItemAgain = 1912
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._maskGO = gohelper.findChild(arg_1_0.viewGO, "gmcommand")
-	arg_1_0._inpCommand = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/item1/inpText")
-	arg_1_0._txtCommandStr = gohelper.findChildText(arg_1_0.viewGO, "gmcommand/txtCommandStr")
-	arg_1_0._txtCommandName = gohelper.findChildText(arg_1_0.viewGO, "gmcommand/txtCommandName")
-	arg_1_0._txtCommandDesc = gohelper.findChildText(arg_1_0.viewGO, "gmcommand/txtCommandDesc")
+function GMCommandView:onInitView()
+	self._maskGO = gohelper.findChild(self.viewGO, "gmcommand")
+	self._inpCommand = gohelper.findChildInputField(self.viewGO, "viewport/content/item1/inpText")
+	self._txtCommandStr = gohelper.findChildText(self.viewGO, "gmcommand/txtCommandStr")
+	self._txtCommandName = gohelper.findChildText(self.viewGO, "gmcommand/txtCommandName")
+	self._txtCommandDesc = gohelper.findChildText(self.viewGO, "gmcommand/txtCommandDesc")
 
-	arg_1_0:_hideScroll()
+	self:_hideScroll()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_2_0._maskGO):AddClickListener(arg_2_0._onClickMask, arg_2_0, nil)
+function GMCommandView:addEvents()
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):AddClickListener(self._onClickMask, self, nil)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._maskGO):RemoveClickListener()
+function GMCommandView:removeEvents()
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	GMController.instance:registerCallback(var_0_0.OpenCommand, arg_4_0._showScroll, arg_4_0)
-	GMController.instance:registerCallback(var_0_0.ClickItem, arg_4_0._onClickItem, arg_4_0)
-	GMController.instance:registerCallback(var_0_0.ClickItemAgain, arg_4_0._hideScroll, arg_4_0)
+function GMCommandView:onOpen()
+	GMController.instance:registerCallback(GMCommandView.OpenCommand, self._showScroll, self)
+	GMController.instance:registerCallback(GMCommandView.ClickItem, self._onClickItem, self)
+	GMController.instance:registerCallback(GMCommandView.ClickItemAgain, self._hideScroll, self)
 end
 
-function var_0_0.onClose(arg_5_0)
-	GMController.instance:unregisterCallback(var_0_0.OpenCommand, arg_5_0._showScroll, arg_5_0)
-	GMController.instance:unregisterCallback(var_0_0.ClickItem, arg_5_0._onClickItem, arg_5_0)
-	GMController.instance:unregisterCallback(var_0_0.ClickItemAgain, arg_5_0._hideScroll, arg_5_0)
+function GMCommandView:onClose()
+	GMController.instance:unregisterCallback(GMCommandView.OpenCommand, self._showScroll, self)
+	GMController.instance:unregisterCallback(GMCommandView.ClickItem, self._onClickItem, self)
+	GMController.instance:unregisterCallback(GMCommandView.ClickItemAgain, self._hideScroll, self)
 end
 
-function var_0_0._onClickMask(arg_6_0)
-	arg_6_0:_hideScroll()
+function GMCommandView:_onClickMask()
+	self:_hideScroll()
 end
 
-function var_0_0._onClickItem(arg_7_0, arg_7_1)
-	arg_7_0._txtCommandStr.text = arg_7_1.command
-	arg_7_0._txtCommandName.text = arg_7_1.name
-	arg_7_0._txtCommandDesc.text = arg_7_1.desc
+function GMCommandView:_onClickItem(mo)
+	self._txtCommandStr.text = mo.command
+	self._txtCommandName.text = mo.name
+	self._txtCommandDesc.text = mo.desc
 
-	arg_7_0._inpCommand:SetText(arg_7_1.command)
+	self._inpCommand:SetText(mo.command)
 end
 
-function var_0_0._showScroll(arg_8_0)
-	gohelper.setActive(arg_8_0._maskGO, true)
+function GMCommandView:_showScroll()
+	gohelper.setActive(self._maskGO, true)
 	GMCommandModel.instance:checkInitList()
 end
 
-function var_0_0._hideScroll(arg_9_0)
-	gohelper.setActive(arg_9_0._maskGO, false)
+function GMCommandView:_hideScroll()
+	gohelper.setActive(self._maskGO, false)
 end
 
-return var_0_0
+return GMCommandView

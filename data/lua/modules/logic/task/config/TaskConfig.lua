@@ -1,20 +1,22 @@
-﻿module("modules.logic.task.config.TaskConfig", package.seeall)
+﻿-- chunkname: @modules/logic/task/config/TaskConfig.lua
 
-local var_0_0 = string.format
-local var_0_1 = class("TaskConfig", BaseConfig)
+module("modules.logic.task.config.TaskConfig", package.seeall)
 
-function var_0_1.ctor(arg_1_0)
-	arg_1_0.taskdailyConfig = nil
-	arg_1_0.taskweeklyConfig = nil
-	arg_1_0.taskactivitybonusConfig = nil
-	arg_1_0.taskachievementConfig = nil
-	arg_1_0.tasknoviceConfig = nil
-	arg_1_0.tasktypeConfig = nil
-	arg_1_0.taskseasonConfig = nil
-	arg_1_0.taskactivityshowConfig = nil
+local sf = string.format
+local TaskConfig = class("TaskConfig", BaseConfig)
+
+function TaskConfig:ctor()
+	self.taskdailyConfig = nil
+	self.taskweeklyConfig = nil
+	self.taskactivitybonusConfig = nil
+	self.taskachievementConfig = nil
+	self.tasknoviceConfig = nil
+	self.tasktypeConfig = nil
+	self.taskseasonConfig = nil
+	self.taskactivityshowConfig = nil
 end
 
-function var_0_1.reqConfigNames(arg_2_0)
+function TaskConfig:reqConfigNames()
 	return {
 		"task_daily",
 		"task_weekly",
@@ -29,225 +31,224 @@ function var_0_1.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_1.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "task_daily" then
-		arg_3_0.taskdailyConfig = arg_3_2
-	elseif arg_3_1 == "task_weekly" then
-		arg_3_0.taskweeklyConfig = arg_3_2
-	elseif arg_3_1 == "task_activity_bonus" then
-		arg_3_0.taskactivitybonusConfig = arg_3_2
-	elseif arg_3_1 == "task_achievement" then
-		arg_3_0.taskachievementConfig = arg_3_2
-	elseif arg_3_1 == "task_guide" then
-		arg_3_0.tasknoviceConfig = arg_3_2
-	elseif arg_3_1 == "task_type" then
-		arg_3_0.tasktypeConfig = arg_3_2
-	elseif arg_3_1 == "task_room" then
-		arg_3_0.taskroomConfig = arg_3_2
-	elseif arg_3_1 == "task_weekwalk" then
-		arg_3_0:_initWeekWalkTask()
-	elseif arg_3_1 == "task_season" then
-		arg_3_0.taskseasonConfig = arg_3_2
-	elseif arg_3_1 == "task_activity_show" then
-		arg_3_0.taskactivityshowConfig = arg_3_2
+function TaskConfig:onConfigLoaded(configName, configTable)
+	if configName == "task_daily" then
+		self.taskdailyConfig = configTable
+	elseif configName == "task_weekly" then
+		self.taskweeklyConfig = configTable
+	elseif configName == "task_activity_bonus" then
+		self.taskactivitybonusConfig = configTable
+	elseif configName == "task_achievement" then
+		self.taskachievementConfig = configTable
+	elseif configName == "task_guide" then
+		self.tasknoviceConfig = configTable
+	elseif configName == "task_type" then
+		self.tasktypeConfig = configTable
+	elseif configName == "task_room" then
+		self.taskroomConfig = configTable
+	elseif configName == "task_weekwalk" then
+		self:_initWeekWalkTask()
+	elseif configName == "task_season" then
+		self.taskseasonConfig = configTable
+	elseif configName == "task_activity_show" then
+		self.taskactivityshowConfig = configTable
 	end
 end
 
-function var_0_1.getSeasonTaskCo(arg_4_0, arg_4_1)
-	return arg_4_0.taskseasonConfig.configDict[arg_4_1]
+function TaskConfig:getSeasonTaskCo(taskId)
+	return self.taskseasonConfig.configDict[taskId]
 end
 
-function var_0_1.getWeekWalkTaskList(arg_5_0, arg_5_1)
-	return arg_5_0._taskTypeList[arg_5_1]
+function TaskConfig:getWeekWalkTaskList(type)
+	return self._taskTypeList[type]
 end
 
-function var_0_1._initWeekWalkTask(arg_6_0)
-	arg_6_0._taskRewardList = {}
-	arg_6_0._taskTypeList = {}
+function TaskConfig:_initWeekWalkTask()
+	self._taskRewardList = {}
+	self._taskTypeList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(lua_task_weekwalk.configList) do
-		local var_6_0 = arg_6_0._taskTypeList[iter_6_1.minTypeId] or {}
+	for i, v in ipairs(lua_task_weekwalk.configList) do
+		local t = self._taskTypeList[v.minTypeId] or {}
 
-		table.insert(var_6_0, iter_6_1)
+		table.insert(t, v)
 
-		arg_6_0._taskTypeList[iter_6_1.minTypeId] = var_6_0
+		self._taskTypeList[v.minTypeId] = t
 
-		arg_6_0:_initTaskReward(iter_6_1)
+		self:_initTaskReward(v)
 	end
 end
 
-function var_0_1._initTaskReward(arg_7_0, arg_7_1)
-	local var_7_0
+function TaskConfig:_initTaskReward(config)
+	local listenerParam
 
-	if arg_7_1.listenerType == "WeekwalkBattle" then
-		local var_7_1 = string.split(arg_7_1.listenerParam, "#")
+	if config.listenerType == "WeekwalkBattle" then
+		local list = string.split(config.listenerParam, "#")
 
-		var_7_0 = tonumber(var_7_1[1])
+		listenerParam = tonumber(list[1])
 	else
-		var_7_0 = tonumber(arg_7_1.listenerParam)
+		listenerParam = tonumber(config.listenerParam)
 	end
 
-	if not var_7_0 then
+	if not listenerParam then
 		return
 	end
 
-	local var_7_2 = arg_7_1.bonus
+	local bonus = config.bonus
 
-	arg_7_0._taskRewardList[var_7_0] = arg_7_0._taskRewardList[var_7_0] or {}
+	self._taskRewardList[listenerParam] = self._taskRewardList[listenerParam] or {}
 
-	local var_7_3 = string.split(var_7_2, "|")
+	local rewards = string.split(bonus, "|")
 
-	for iter_7_0 = 1, #var_7_3 do
-		local var_7_4 = string.splitToNumber(var_7_3[iter_7_0], "#")
+	for i = 1, #rewards do
+		local itemCo = string.splitToNumber(rewards[i], "#")
 
-		if var_7_4[1] == MaterialEnum.MaterialType.Currency and var_7_4[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-			arg_7_0._taskRewardList[var_7_0][arg_7_1.id] = var_7_4[3]
+		if itemCo[1] == MaterialEnum.MaterialType.Currency and itemCo[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			self._taskRewardList[listenerParam][config.id] = itemCo[3]
 		end
 	end
 end
 
-function var_0_1.getWeekWalkRewardList(arg_8_0, arg_8_1)
-	return arg_8_0._taskRewardList[arg_8_1]
+function TaskConfig:getWeekWalkRewardList(layerId)
+	return self._taskRewardList[layerId]
 end
 
-function var_0_1.gettaskdailyCO(arg_9_0, arg_9_1)
-	return arg_9_0.taskdailyConfig.configDict[arg_9_1]
+function TaskConfig:gettaskdailyCO(id)
+	return self.taskdailyConfig.configDict[id]
 end
 
-function var_0_1.gettaskweeklyCO(arg_10_0, arg_10_1)
-	return arg_10_0.taskweeklyConfig.configDict[arg_10_1]
+function TaskConfig:gettaskweeklyCO(id)
+	return self.taskweeklyConfig.configDict[id]
 end
 
-function var_0_1.gettaskNoviceConfigs(arg_11_0)
-	return arg_11_0.tasknoviceConfig.configDict
+function TaskConfig:gettaskNoviceConfigs()
+	return self.tasknoviceConfig.configDict
 end
 
-function var_0_1.gettaskNoviceConfig(arg_12_0, arg_12_1)
-	return arg_12_0.tasknoviceConfig.configDict[arg_12_1]
+function TaskConfig:gettaskNoviceConfig(id)
+	return self.tasknoviceConfig.configDict[id]
 end
 
-function var_0_1.gettaskactivitybonusCO(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0.taskactivitybonusConfig.configDict[arg_13_1]
+function TaskConfig:gettaskactivitybonusCO(tasktype, id)
+	local taskBonus = self.taskactivitybonusConfig.configDict[tasktype]
 
-	if var_13_0 then
-		return var_13_0[arg_13_2]
+	if taskBonus then
+		return taskBonus[id]
 	end
 end
 
-function var_0_1.getTaskActivityBonusConfig(arg_14_0, arg_14_1)
-	return arg_14_0.taskactivitybonusConfig.configDict[arg_14_1]
+function TaskConfig:getTaskActivityBonusConfig(taskType)
+	return self.taskactivitybonusConfig.configDict[taskType]
 end
 
-function var_0_1.getTaskBonusValue(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	arg_15_0.taskBonusValueDict = arg_15_0.taskBonusValueDict or {}
+function TaskConfig:getTaskBonusValue(taskType, id, num)
+	self.taskBonusValueDict = self.taskBonusValueDict or {}
 
-	if not arg_15_0.taskBonusValueDict[arg_15_1] then
-		arg_15_0.taskBonusValueDict[arg_15_1] = {}
+	if not self.taskBonusValueDict[taskType] then
+		self.taskBonusValueDict[taskType] = {}
 
-		local var_15_0 = arg_15_0:getTaskActivityBonusConfig(arg_15_1)
+		local taskBonusCoDict = self:getTaskActivityBonusConfig(taskType)
 
-		if not var_15_0 then
-			logError("not found task bonus , type : " .. tostring(arg_15_1))
+		if not taskBonusCoDict then
+			logError("not found task bonus , type : " .. tostring(taskType))
 
 			return 0
 		end
 
-		local var_15_1 = {}
+		local taskBonusCoList = {}
 
-		for iter_15_0, iter_15_1 in pairs(var_15_0) do
-			table.insert(var_15_1, iter_15_1)
+		for _, taskBonusCo in pairs(taskBonusCoDict) do
+			table.insert(taskBonusCoList, taskBonusCo)
 		end
 
-		table.sort(var_15_1, function(arg_16_0, arg_16_1)
-			return arg_16_0.id < arg_16_1.id
+		table.sort(taskBonusCoList, function(a, b)
+			return a.id < b.id
 		end)
 
-		local var_15_2
+		local preId
 
-		for iter_15_2, iter_15_3 in ipairs(var_15_1) do
-			arg_15_0.taskBonusValueDict[arg_15_1][iter_15_2] = (var_15_2 and arg_15_0.taskBonusValueDict[arg_15_1][var_15_2] or 0) + iter_15_3.needActivity
-			var_15_2 = iter_15_2
+		for _id, taskBonusCo in ipairs(taskBonusCoList) do
+			self.taskBonusValueDict[taskType][_id] = (preId and self.taskBonusValueDict[taskType][preId] or 0) + taskBonusCo.needActivity
+			preId = _id
 		end
 	end
 
-	return (arg_15_0.taskBonusValueDict[arg_15_1][arg_15_2 - 1] or 0) + arg_15_3
+	return (self.taskBonusValueDict[taskType][id - 1] or 0) + num
 end
 
-function var_0_1.gettaskachievementCO(arg_17_0, arg_17_1)
-	return arg_17_0.taskachievementConfig.configDict[arg_17_1]
+function TaskConfig:gettaskachievementCO(id)
+	return self.taskachievementConfig.configDict[id]
 end
 
-function var_0_1.gettasktypeCO(arg_18_0, arg_18_1)
-	return arg_18_0.tasktypeConfig.configDict[arg_18_1]
+function TaskConfig:gettasktypeCO(id)
+	return self.tasktypeConfig.configDict[id]
 end
 
-function var_0_1.gettaskRoomCO(arg_19_0, arg_19_1)
-	return arg_19_0.taskroomConfig.configDict[arg_19_1]
+function TaskConfig:gettaskRoomCO(id)
+	return self.taskroomConfig.configDict[id]
 end
 
-function var_0_1.gettaskroomlist(arg_20_0)
-	return arg_20_0.taskroomConfig.configList
+function TaskConfig:gettaskroomlist()
+	return self.taskroomConfig.configList
 end
 
-function var_0_1.getTaskActivityShowConfig(arg_21_0, arg_21_1)
-	return arg_21_0.taskactivityshowConfig.configDict[arg_21_1]
+function TaskConfig:getTaskActivityShowConfig(actId)
+	return self.taskactivityshowConfig.configDict[actId]
 end
 
-local var_0_2 = "ReadTask"
+local kListenerType_ReadTask = "ReadTask"
 
-function var_0_1.initReadTaskList(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	local var_22_0
-	local var_22_1
+function TaskConfig:initReadTaskList(source, refReadTaskCODict, inTaskTagEnumDefine, configTable)
+	local errmsg, sb
 
 	if isDebugBuild then
-		var_22_1 = ConfigsCheckerMgr.instance:createStrBuf(arg_22_1)
+		sb = ConfigsCheckerMgr.instance:createStrBuf(source)
 	end
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_4.configList) do
-		local var_22_2 = iter_22_1.activityId
-		local var_22_3 = arg_22_2[var_22_2]
+	for _, CO in ipairs(configTable.configList) do
+		local actId = CO.activityId
+		local actTable = refReadTaskCODict[actId]
 
-		if not var_22_3 then
-			var_22_3 = {}
+		if not actTable then
+			actTable = {}
 
-			for iter_22_2, iter_22_3 in pairs(arg_22_3) do
+			for k, v in pairs(inTaskTagEnumDefine) do
 				if isDebugBuild then
-					var_22_1:appendLineIfOK(var_22_3[iter_22_3], var_0_0("redefined enum enumKey: %s, enumValue: %s", iter_22_2, iter_22_3))
+					sb:appendLineIfOK(actTable[v], sf("redefined enum enumKey: %s, enumValue: %s", k, v))
 				end
 
-				var_22_3[iter_22_3] = {}
+				actTable[v] = {}
 			end
 
-			arg_22_2[var_22_2] = var_22_3
+			refReadTaskCODict[actId] = actTable
 		end
 
-		if iter_22_1.isOnline then
-			local var_22_4 = iter_22_1.id
+		if CO.isOnline then
+			local taskId = CO.id
 
-			if iter_22_1.listenerType == var_0_2 then
-				local var_22_5 = arg_22_3[iter_22_1.tag]
+			if CO.listenerType == kListenerType_ReadTask then
+				local tag = inTaskTagEnumDefine[CO.tag]
 
-				if not var_22_5 then
-					local var_22_6 = var_0_0("[TaskConfig]: error actId: %s, taskId: %s", var_22_2, var_22_4)
+				if not tag then
+					errmsg = sf("[TaskConfig]: error actId: %s, taskId: %s", actId, taskId)
 
 					if isDebugBuild then
-						var_22_1:appendLine(var_22_6)
+						sb:appendLine(errmsg)
 					end
 
-					logError(var_22_6)
+					logError(errmsg)
 				else
-					local var_22_7 = var_22_3[var_22_5]
+					local tagTable = actTable[tag]
 
-					if var_22_7 then
-						var_22_7[var_22_4] = iter_22_1
+					if tagTable then
+						tagTable[taskId] = CO
 					else
-						local var_22_8 = var_0_0("[TaskConfig]: unsupported actId: %s, tag: %s", var_22_2, iter_22_1.tag)
+						errmsg = sf("[TaskConfig]: unsupported actId: %s, tag: %s", actId, CO.tag)
 
 						if isDebugBuild then
-							var_22_1:appendLine(var_22_8)
+							sb:appendLine(errmsg)
 						end
 
-						logError(var_22_8)
+						logError(errmsg)
 					end
 				end
 			end
@@ -255,10 +256,10 @@ function var_0_1.initReadTaskList(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22
 	end
 
 	if isDebugBuild then
-		var_22_1:logErrorIfGot()
+		sb:logErrorIfGot()
 	end
 end
 
-var_0_1.instance = var_0_1.New()
+TaskConfig.instance = TaskConfig.New()
 
-return var_0_1
+return TaskConfig

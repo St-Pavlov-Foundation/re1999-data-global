@@ -1,233 +1,237 @@
-﻿module("modules.logic.versionactivity3_1.warmup.view.V3a1_WarmUpLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/warmup/view/V3a1_WarmUpLeftView.lua
 
-local var_0_0 = class("V3a1_WarmUpLeftView", BaseView)
+module("modules.logic.versionactivity3_1.warmup.view.V3a1_WarmUpLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePaper = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/Map/#simage_Paper")
-	arg_1_0._simageMapMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/Map/#simage_MapMask")
-	arg_1_0._simageMap1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/Map/#simage_MapMask/Map/#simage_Map1")
-	arg_1_0._simageMap2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/Map/#simage_MapMask/Map/#simage_Map2")
-	arg_1_0._goPath1 = gohelper.findChild(arg_1_0.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path1")
-	arg_1_0._goPath2 = gohelper.findChild(arg_1_0.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path2")
-	arg_1_0._goPath3 = gohelper.findChild(arg_1_0.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path3")
-	arg_1_0._goPath4 = gohelper.findChild(arg_1_0.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path4")
-	arg_1_0._goPath5 = gohelper.findChild(arg_1_0.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path5")
-	arg_1_0._simageShadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/Map/#simage_Shadow")
-	arg_1_0._simagepicsmall = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/Map/#simage_pic_small")
-	arg_1_0._gopoints = gohelper.findChild(arg_1_0.viewGO, "Middle/Map/#go_points")
-	arg_1_0._simagebgclick = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/#simage_bg_click")
-	arg_1_0._simagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/#simage_pic")
-	arg_1_0._gotips = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/#go_tips")
+local V3a1_WarmUpLeftView = class("V3a1_WarmUpLeftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V3a1_WarmUpLeftView:onInitView()
+	self._simagePaper = gohelper.findChildSingleImage(self.viewGO, "Middle/Map/#simage_Paper")
+	self._simageMapMask = gohelper.findChildSingleImage(self.viewGO, "Middle/Map/#simage_MapMask")
+	self._simageMap1 = gohelper.findChildSingleImage(self.viewGO, "Middle/Map/#simage_MapMask/Map/#simage_Map1")
+	self._simageMap2 = gohelper.findChildSingleImage(self.viewGO, "Middle/Map/#simage_MapMask/Map/#simage_Map2")
+	self._goPath1 = gohelper.findChild(self.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path1")
+	self._goPath2 = gohelper.findChild(self.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path2")
+	self._goPath3 = gohelper.findChild(self.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path3")
+	self._goPath4 = gohelper.findChild(self.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path4")
+	self._goPath5 = gohelper.findChild(self.viewGO, "Middle/Map/#simage_MapMask/Map/Path/#go_Path5")
+	self._simageShadow = gohelper.findChildSingleImage(self.viewGO, "Middle/Map/#simage_Shadow")
+	self._simagepicsmall = gohelper.findChildSingleImage(self.viewGO, "Middle/Map/#simage_pic_small")
+	self._gopoints = gohelper.findChild(self.viewGO, "Middle/Map/#go_points")
+	self._simagebgclick = gohelper.findChildSingleImage(self.viewGO, "Middle/#simage_bg_click")
+	self._simagepic = gohelper.findChildSingleImage(self.viewGO, "Middle/#simage_pic")
+	self._gotips = gohelper.findChildSingleImage(self.viewGO, "Middle/#go_tips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+function V3a1_WarmUpLeftView:addEvents()
+	self._itemClick:AddClickListener(self._onItemClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._itemClick:RemoveClickListener()
+function V3a1_WarmUpLeftView:removeEvents()
+	self._itemClick:RemoveClickListener()
 end
 
-local var_0_1 = -1
-local var_0_2 = 0
-local var_0_3 = 1
-local var_0_4 = SLFramework.AnimatorPlayer
-local var_0_5 = {
+local kFirstLocked = -1
+local kFirstUnlocked = 0
+local kHasDragged = 1
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
+local States = {
 	Clicked = 1
 }
-local var_0_6 = 5
+local kCount = 5
 
-function var_0_0.ctor(arg_4_0)
-	arg_4_0._draggedState = var_0_1
+function V3a1_WarmUpLeftView:ctor()
+	self._draggedState = kFirstLocked
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._middleGo = gohelper.findChild(arg_5_0.viewGO, "Middle")
-	arg_5_0._godrag = arg_5_0._simagepicsmall.gameObject
-	arg_5_0._guideGo = gohelper.findChild(arg_5_0._godrag, "image_Drag")
-	arg_5_0._animatorPlayer = var_0_4.Get(arg_5_0._middleGo)
-	arg_5_0._animtor = arg_5_0._animatorPlayer.animator
-	arg_5_0._animEvent = gohelper.onceAddComponent(arg_5_0._middleGo, gohelper.Type_AnimationEventWrap)
-	arg_5_0._itemClick = gohelper.getClickWithAudio(arg_5_0._godrag, AudioEnum.UI.Play_UI_Universal_Click)
+function V3a1_WarmUpLeftView:_editableInitView()
+	self._middleGo = gohelper.findChild(self.viewGO, "Middle")
+	self._godrag = self._simagepicsmall.gameObject
+	self._guideGo = gohelper.findChild(self._godrag, "image_Drag")
+	self._animatorPlayer = csAnimatorPlayer.Get(self._middleGo)
+	self._animtor = self._animatorPlayer.animator
+	self._animEvent = gohelper.onceAddComponent(self._middleGo, gohelper.Type_AnimationEventWrap)
+	self._itemClick = gohelper.getClickWithAudio(self._godrag, AudioEnum.UI.Play_UI_Universal_Click)
 
-	arg_5_0:_setActive_drag(true)
+	self:_setActive_drag(true)
 
-	arg_5_0._gopointsTrans = arg_5_0._gopoints.gameObject.transform
+	self._gopointsTrans = self._gopoints.gameObject.transform
 
-	local var_5_0 = arg_5_0._gopointsTrans.childCount
+	local n = self._gopointsTrans.childCount
 
-	arg_5_0._posTranList = arg_5_0:getUserDataTb_()
+	self._posTranList = self:getUserDataTb_()
 
-	for iter_5_0 = 0, var_5_0 - 1 do
-		table.insert(arg_5_0._posTranList, arg_5_0._gopointsTrans:GetChild(iter_5_0))
+	for i = 0, n - 1 do
+		table.insert(self._posTranList, self._gopointsTrans:GetChild(i))
 	end
 
-	arg_5_0._godragTrans = arg_5_0._godrag.transform
+	self._godragTrans = self._godrag.transform
 end
 
-function var_0_0.onOpen(arg_6_0)
+function V3a1_WarmUpLeftView:onOpen()
 	return
 end
 
-function var_0_0.onDataUpdateFirst(arg_7_0)
+function V3a1_WarmUpLeftView:onDataUpdateFirst()
 	if isDebugBuild then
-		assert(arg_7_0.viewContainer:getEpisodeCount() <= var_0_6, "invalid config json_activity125 actId: " .. arg_7_0.viewContainer:actId())
+		assert(self.viewContainer:getEpisodeCount() <= kCount, "invalid config json_activity125 actId: " .. self.viewContainer:actId())
 	end
 
-	arg_7_0._draggedState = arg_7_0:_checkIsDone() and var_0_2 or var_0_1
+	local isDone = self:_checkIsDone()
+
+	self._draggedState = isDone and kFirstUnlocked or kFirstLocked
 end
 
-function var_0_0.onDataUpdate(arg_8_0)
-	arg_8_0:_refresh()
+function V3a1_WarmUpLeftView:onDataUpdate()
+	self:_refresh()
 end
 
-function var_0_0.onSwitchEpisode(arg_9_0)
-	local var_9_0 = arg_9_0:_checkIsDone()
+function V3a1_WarmUpLeftView:onSwitchEpisode()
+	local isDone = self:_checkIsDone()
 
-	if arg_9_0._draggedState == var_0_2 and not var_9_0 then
-		arg_9_0._draggedState = var_0_1 - 1
-	elseif arg_9_0._draggedState < var_0_1 and var_9_0 then
-		arg_9_0._draggedState = var_0_2
+	if self._draggedState == kFirstUnlocked and not isDone then
+		self._draggedState = kFirstLocked - 1
+	elseif self._draggedState < kFirstLocked and isDone then
+		self._draggedState = kFirstUnlocked
 	end
 
-	arg_9_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0._episodeId(arg_10_0)
-	return arg_10_0.viewContainer:getCurSelectedEpisode()
+function V3a1_WarmUpLeftView:_episodeId()
+	return self.viewContainer:getCurSelectedEpisode()
 end
 
-function var_0_0._episode2Index(arg_11_0, arg_11_1)
-	return arg_11_0.viewContainer:episode2Index(arg_11_1 or arg_11_0:_episodeId())
+function V3a1_WarmUpLeftView:_episode2Index(episodeId)
+	return self.viewContainer:episode2Index(episodeId or self:_episodeId())
 end
 
-function var_0_0._checkIsDone(arg_12_0, arg_12_1)
-	return arg_12_0.viewContainer:checkIsDone(arg_12_1 or arg_12_0:_episodeId())
+function V3a1_WarmUpLeftView:_checkIsDone(episodeId)
+	return self.viewContainer:checkIsDone(episodeId or self:_episodeId())
 end
 
-function var_0_0._saveStateDone(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0.viewContainer:saveStateDone(arg_13_2 or arg_13_0:_episodeId(), arg_13_1)
+function V3a1_WarmUpLeftView:_saveStateDone(isDone, episodeId)
+	self.viewContainer:saveStateDone(episodeId or self:_episodeId(), isDone)
 end
 
-function var_0_0._saveState(arg_14_0, arg_14_1, arg_14_2)
-	assert(arg_14_1 ~= 1999, "please call _saveStateDone instead")
-	arg_14_0.viewContainer:saveState(arg_14_2 or arg_14_0:_episodeId(), arg_14_1)
+function V3a1_WarmUpLeftView:_saveState(value, episodeId)
+	assert(value ~= 1999, "please call _saveStateDone instead")
+	self.viewContainer:saveState(episodeId or self:_episodeId(), value)
 end
 
-function var_0_0._getState(arg_15_0, arg_15_1, arg_15_2)
-	return arg_15_0.viewContainer:getState(arg_15_2 or arg_15_0:_episodeId(), arg_15_1)
+function V3a1_WarmUpLeftView:_getState(defaultValue, episodeId)
+	return self.viewContainer:getState(episodeId or self:_episodeId(), defaultValue)
 end
 
-function var_0_0._setActive_drag(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._godrag, arg_16_1)
-	gohelper.setActive(arg_16_0._gotips, arg_16_1)
+function V3a1_WarmUpLeftView:_setActive_drag(isActive)
+	gohelper.setActive(self._godrag, isActive)
+	gohelper.setActive(self._gotips, isActive)
 end
 
-function var_0_0._setActive_guide(arg_17_0, arg_17_1)
-	gohelper.setActive(arg_17_0._guideGo, arg_17_1)
+function V3a1_WarmUpLeftView:_setActive_guide(isActive)
+	gohelper.setActive(self._guideGo, isActive)
 end
 
-function var_0_0._refresh(arg_18_0)
-	local var_18_0 = arg_18_0:_checkIsDone()
-	local var_18_1 = arg_18_0:_episode2Index()
-	local var_18_2 = arg_18_0.viewContainer:getImgResUrl(var_18_1)
+function V3a1_WarmUpLeftView:_refresh()
+	local isDone = self:_checkIsDone()
+	local index = self:_episode2Index()
+	local resUrl = self.viewContainer:getImgResUrl(index)
 
-	arg_18_0._simagepicsmall:LoadImage(var_18_2)
-	arg_18_0._simagepic:LoadImage(var_18_2)
-	arg_18_0:_dock(var_18_1)
+	self._simagepicsmall:LoadImage(resUrl)
+	self._simagepic:LoadImage(resUrl)
+	self:_dock(index)
 
-	if var_18_0 then
-		arg_18_0:_setActive_guide(false)
-		arg_18_0:_setActive_drag(false)
-		arg_18_0:_playAnimOpened()
+	if isDone then
+		self:_setActive_guide(false)
+		self:_setActive_drag(false)
+		self:_playAnimOpened()
 	else
-		local var_18_3 = arg_18_0:_getState()
+		local state = self:_getState()
 
-		if var_18_3 == 0 then
-			arg_18_0:_setActive_guide(arg_18_0._draggedState <= var_0_1)
-			arg_18_0:_setActive_drag(true)
-			arg_18_0:_playAnimIdle()
-		elseif var_0_5.Clicked == var_18_3 then
-			arg_18_0:_setActive_guide(false)
-			arg_18_0:_setActive_drag(false)
-			arg_18_0:_playAnimOpened()
-			arg_18_0:_playAnimAfterClicked()
+		if state == 0 then
+			self:_setActive_guide(self._draggedState <= kFirstLocked)
+			self:_setActive_drag(true)
+			self:_playAnimIdle()
+		elseif States.Clicked == state then
+			self:_setActive_guide(false)
+			self:_setActive_drag(false)
+			self:_playAnimOpened()
+			self:_playAnimAfterClicked()
 		else
-			logError("[V3a1_WarmUpLeftView] invalid state: " .. tostring(var_18_3))
+			logError("[V3a1_WarmUpLeftView] invalid state: " .. tostring(state))
 		end
 	end
 end
 
-function var_0_0.onClose(arg_19_0)
-	arg_19_0._animEvent:RemoveAllEventListener()
+function V3a1_WarmUpLeftView:onClose()
+	self._animEvent:RemoveAllEventListener()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function V3a1_WarmUpLeftView:onDestroyView()
 	return
 end
 
-function var_0_0._playAnimIdle(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0:_playAnim("map", arg_21_1, arg_21_2)
+function V3a1_WarmUpLeftView:_playAnimIdle(cb, cbObj)
+	self:_playAnim("map", cb, cbObj)
 end
 
-function var_0_0._playAnimOpened(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0:_playAnim("pic", arg_22_1, arg_22_2)
+function V3a1_WarmUpLeftView:_playAnimOpened(cb, cbObj)
+	self:_playAnim("pic", cb, cbObj)
 end
 
-function var_0_0._playAnimClick(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_0:_playAnim(UIAnimationName.Click, arg_23_1, arg_23_2)
+function V3a1_WarmUpLeftView:_playAnimClick(cb, cbObj)
+	self:_playAnim(UIAnimationName.Click, cb, cbObj)
 end
 
-function var_0_0._playAnim(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	arg_24_0._animatorPlayer:Play(arg_24_1, arg_24_2 or function()
+function V3a1_WarmUpLeftView:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb or function()
 		return
-	end, arg_24_3)
+	end, cbObj)
 end
 
-function var_0_0._onItemClick(arg_26_0)
-	arg_26_0:_setActive_drag(false)
-	arg_26_0:_saveState(var_0_5.Clicked)
-	arg_26_0:_playAnimAfterClicked()
-	arg_26_0.viewContainer:setLocalIsPlayCurByUser()
+function V3a1_WarmUpLeftView:_onItemClick()
+	self:_setActive_drag(false)
+	self:_saveState(States.Clicked)
+	self:_playAnimAfterClicked()
+	self.viewContainer:setLocalIsPlayCurByUser()
 end
 
-local var_0_7 = "V3a1_WarmUpLeftView:kBlock_Click"
-local var_0_8 = 9.99
+local kBlock_Click = "V3a1_WarmUpLeftView:kBlock_Click"
+local kTimeout = 9.99
 
-function var_0_0._playAnimAfterClicked(arg_27_0)
+function V3a1_WarmUpLeftView:_playAnimAfterClicked()
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockHelper.instance:startBlock(var_0_7, var_0_8, arg_27_0.viewName)
-	arg_27_0.viewContainer:addNeedWaitCount()
+	UIBlockHelper.instance:startBlock(kBlock_Click, kTimeout, self.viewName)
+	self.viewContainer:addNeedWaitCount()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_details_open)
-	arg_27_0:_playAnimClick(function()
-		UIBlockHelper.instance:endBlock(var_0_7)
+	self:_playAnimClick(function()
+		UIBlockHelper.instance:endBlock(kBlock_Click)
 		UIBlockMgrExtend.setNeedCircleMv(true)
-		arg_27_0:_saveStateDone(true)
+		self:_saveStateDone(true)
 	end)
-	arg_27_0.viewContainer:openDesc()
+	self.viewContainer:openDesc()
 end
 
-function var_0_0._play_ui_fuleyuan_yure_open(arg_29_0)
+function V3a1_WarmUpLeftView:_play_ui_fuleyuan_yure_open()
 	return
 end
 
-function var_0_0._play_ui_fuleyuan_yure_paper(arg_30_0)
+function V3a1_WarmUpLeftView:_play_ui_fuleyuan_yure_paper()
 	return
 end
 
-function var_0_0._play_ui_fuleyuan_yure_whoosh(arg_31_0)
+function V3a1_WarmUpLeftView:_play_ui_fuleyuan_yure_whoosh()
 	return
 end
 
-function var_0_0._dock(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_0._posTranList[arg_32_1]
+function V3a1_WarmUpLeftView:_dock(index)
+	local p = self._posTranList[index]
 
-	arg_32_0._godragTrans:SetParent(var_32_0)
-	transformhelper.setLocalPos(arg_32_0._godragTrans, 0, 0, 0)
+	self._godragTrans:SetParent(p)
+	transformhelper.setLocalPos(self._godragTrans, 0, 0, 0)
 end
 
-return var_0_0
+return V3a1_WarmUpLeftView

@@ -1,112 +1,116 @@
-﻿module("modules.logic.guide.controller.GuideStepController", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideStepController.lua
 
-local var_0_0 = class("GuideStepController", BaseController)
+module("modules.logic.guide.controller.GuideStepController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._guideId = nil
-	arg_1_0._stepId = nil
-	arg_1_0._againGuideId = nil
-	arg_1_0._actionFlow = nil
-	arg_1_0._actionFlowsParallel = {}
-	arg_1_0._actionBuilder = GuideActionBuilder.New()
-	arg_1_0._startTime = 0
+local GuideStepController = class("GuideStepController", BaseController)
+
+function GuideStepController:onInit()
+	self._guideId = nil
+	self._stepId = nil
+	self._againGuideId = nil
+	self._actionFlow = nil
+	self._actionFlowsParallel = {}
+	self._actionBuilder = GuideActionBuilder.New()
+	self._startTime = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearStep()
+function GuideStepController:reInit()
+	self:clearStep()
 end
 
-function var_0_0.execStep(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	GuideAudioPreloadController.instance:preload(arg_3_1)
+function GuideStepController:execStep(guideId, stepId, againGuideId)
+	GuideAudioPreloadController.instance:preload(guideId)
 
-	arg_3_0._guideId = arg_3_1
-	arg_3_0._stepId = arg_3_2
-	arg_3_0._againGuideId = arg_3_3
+	self._guideId = guideId
+	self._stepId = stepId
+	self._againGuideId = againGuideId
 
-	if GuideConfig.instance:getGuideCO(arg_3_1).parallel == 1 or arg_3_0._actionFlow == nil then
-		arg_3_0:_reallyStartGuide({})
+	local guideCO = GuideConfig.instance:getGuideCO(guideId)
 
-		if not GuideModel.instance:isStepFinish(arg_3_1, arg_3_2) then
-			local var_3_0 = arg_3_0._againGuideId > 0 and arg_3_0._againGuideId or arg_3_0._guideId
+	if guideCO.parallel == 1 or self._actionFlow == nil then
+		self:_reallyStartGuide({})
 
-			GuideExceptionController.instance:checkStep(var_3_0, arg_3_2)
+		if not GuideModel.instance:isStepFinish(guideId, stepId) then
+			local stepGuideId = self._againGuideId > 0 and self._againGuideId or self._guideId
+
+			GuideExceptionController.instance:checkStep(stepGuideId, stepId)
 		end
 	end
 end
 
-function var_0_0.clearFlow(arg_4_0, arg_4_1)
+function GuideStepController:clearFlow(guideId)
 	GuideExceptionController.instance:stopCheck()
 
-	if arg_4_0._actionFlowsParallel[arg_4_1] then
-		arg_4_0._actionFlowsParallel[arg_4_1]:destroy()
+	if self._actionFlowsParallel[guideId] then
+		self._actionFlowsParallel[guideId]:destroy()
 
-		arg_4_0._actionFlowsParallel[arg_4_1] = nil
-	elseif arg_4_0._actionFlow and arg_4_0._actionFlow.guideId == arg_4_1 then
-		local var_4_0 = arg_4_0._actionFlow
+		self._actionFlowsParallel[guideId] = nil
+	elseif self._actionFlow and self._actionFlow.guideId == guideId then
+		local flow = self._actionFlow
 
-		arg_4_0._actionFlow = nil
+		self._actionFlow = nil
 
-		var_4_0:destroy()
+		flow:destroy()
 	end
 end
 
-function var_0_0.clearStep(arg_5_0)
+function GuideStepController:clearStep()
 	GuideExceptionController.instance:stopCheck()
 
-	if arg_5_0._actionFlow then
-		local var_5_0 = arg_5_0._actionFlow
+	if self._actionFlow then
+		local flow = self._actionFlow
 
-		arg_5_0._actionFlow = nil
+		self._actionFlow = nil
 
-		var_5_0:destroy()
+		flow:destroy()
 	end
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._actionFlowsParallel) do
-		iter_5_1:destroy()
+	for _, flow in pairs(self._actionFlowsParallel) do
+		flow:destroy()
 	end
 
-	arg_5_0._actionFlowsParallel = {}
+	self._actionFlowsParallel = {}
 end
 
-function var_0_0._reallyStartGuide(arg_6_0, arg_6_1)
-	local var_6_0 = GuideConfig.instance:getGuideCO(arg_6_0._guideId)
+function GuideStepController:_reallyStartGuide(param)
+	local guideCO = GuideConfig.instance:getGuideCO(self._guideId)
 
-	if var_6_0.parallel and arg_6_0._actionFlowsParallel[arg_6_0._guideId] or not var_6_0.parallel and arg_6_0._actionFlow then
+	if guideCO.parallel and self._actionFlowsParallel[self._guideId] or not guideCO.parallel and self._actionFlow then
 		return
 	end
 
-	local var_6_1 = arg_6_0._actionBuilder:buildActionFlow(arg_6_0._guideId, arg_6_0._stepId, arg_6_0._againGuideId)
+	local actionFlow = self._actionBuilder:buildActionFlow(self._guideId, self._stepId, self._againGuideId)
 
-	if var_6_1 then
-		if var_6_0.parallel == 1 then
-			arg_6_0._actionFlowsParallel[arg_6_0._guideId] = var_6_1
+	if actionFlow then
+		if guideCO.parallel == 1 then
+			self._actionFlowsParallel[self._guideId] = actionFlow
 		else
-			arg_6_0._actionFlow = var_6_1
+			self._actionFlow = actionFlow
 		end
 
-		local var_6_2 = arg_6_0._againGuideId > 0 and arg_6_0._againGuideId or arg_6_0._guideId
+		local stepGuideId = self._againGuideId > 0 and self._againGuideId or self._guideId
 
-		GuideController.instance:dispatchEvent(GuideEvent.StartGuideStep, var_6_2, arg_6_0._stepId)
-		var_6_1:start(arg_6_1)
+		GuideController.instance:dispatchEvent(GuideEvent.StartGuideStep, stepGuideId, self._stepId)
+		actionFlow:start(param)
 	else
-		logNormal(string.format("<color=#FFA500>guide_%d_%d</color> has no action", arg_6_0._guideId, arg_6_0._stepId))
+		logNormal(string.format("<color=#FFA500>guide_%d_%d</color> has no action", self._guideId, self._stepId))
 	end
 end
 
-function var_0_0.getActionBuilder(arg_7_0)
-	return arg_7_0._actionBuilder
+function GuideStepController:getActionBuilder()
+	return self._actionBuilder
 end
 
-function var_0_0.getActionFlow(arg_8_0, arg_8_1)
-	local var_8_0 = GuideConfig.instance:getGuideCO(arg_8_1)
+function GuideStepController:getActionFlow(guideId)
+	local guideCO = GuideConfig.instance:getGuideCO(guideId)
 
-	if var_8_0 and var_8_0.parallel == 1 then
-		return arg_8_0._actionFlowsParallel[arg_8_1]
+	if guideCO and guideCO.parallel == 1 then
+		return self._actionFlowsParallel[guideId]
 	else
-		return arg_8_0._actionFlow
+		return self._actionFlow
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GuideStepController.instance = GuideStepController.New()
 
-return var_0_0
+return GuideStepController

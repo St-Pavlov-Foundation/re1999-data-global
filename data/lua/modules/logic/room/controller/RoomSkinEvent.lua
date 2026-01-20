@@ -1,10 +1,12 @@
-﻿module("modules.logic.room.controller.RoomSkinEvent", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomSkinEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.room.controller.RoomSkinEvent", package.seeall)
 
-var_0_0.SkinListViewShowChange = 1
-var_0_0.ChangePreviewRoomSkin = 2
-var_0_0.ChangeEquipRoomSkin = 3
-var_0_0.RoomSkinMarkUpdate = 4
+local RoomSkinEvent = _M
 
-return var_0_0
+RoomSkinEvent.SkinListViewShowChange = 1
+RoomSkinEvent.ChangePreviewRoomSkin = 2
+RoomSkinEvent.ChangeEquipRoomSkin = 3
+RoomSkinEvent.RoomSkinMarkUpdate = 4
+
+return RoomSkinEvent

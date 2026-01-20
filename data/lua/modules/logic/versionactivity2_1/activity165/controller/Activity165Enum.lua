@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_1.activity165.controller.Activity165Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/activity165/controller/Activity165Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_1.activity165.controller.Activity165Enum", package.seeall)
 
-var_0_0.StoryStage = {
+local Activity165Enum = _M
+
+Activity165Enum.StoryStage = {
 	Filling = 0,
 	isEndFill = 1,
 	Ending = 2
 }
-var_0_0.StepOffsetObj = {
+Activity165Enum.StepOffsetObj = {
 	{
 		goleft = {
 			PosX = -118.32,
@@ -45,17 +47,17 @@ var_0_0.StepOffsetObj = {
 		}
 	}
 }
-var_0_0.EndingAssessment = {
+Activity165Enum.EndingAssessment = {
 	A = "a",
 	S = "s",
 	C = "c",
 	B = "b"
 }
-var_0_0.StoryItemAnim = {
+Activity165Enum.StoryItemAnim = {
 	Idle = "idle",
 	Unlock = "unlock"
 }
-var_0_0.EditViewAnim = {
+Activity165Enum.EditViewAnim = {
 	Idle = "idle",
 	Play = "play",
 	Close = "close",
@@ -64,10 +66,10 @@ var_0_0.EditViewAnim = {
 	Unlock = "unlock",
 	Open = "open"
 }
-var_0_0.ReviewViewAnim = {
+Activity165Enum.ReviewViewAnim = {
 	Switch = "switch"
 }
-var_0_0.EditStepMoveAnim = {
+Activity165Enum.EditStepMoveAnim = {
 	{
 		Back = "1_back",
 		Move = "1_move"
@@ -94,4 +96,4 @@ var_0_0.EditStepMoveAnim = {
 	}
 }
 
-return var_0_0
+return Activity165Enum

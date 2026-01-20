@@ -1,103 +1,105 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8EquipTagSelect", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8EquipTagSelect.lua
 
-local var_0_0 = class("Season123_1_8EquipTagSelect", BaseView)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8EquipTagSelect", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local Season123_1_8EquipTagSelect = class("Season123_1_8EquipTagSelect", BaseView)
+
+function Season123_1_8EquipTagSelect:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season123_1_8EquipTagSelect:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season123_1_8EquipTagSelect:removeEvents()
 	return
 end
 
-function var_0_0.init(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._controller = arg_4_1
-	arg_4_0._dropListPath = arg_4_2
-	arg_4_0._defaultColor = arg_4_3 or "#cac8c5"
+function Season123_1_8EquipTagSelect:init(ctrl, dropListPath, defaultColor)
+	self._controller = ctrl
+	self._dropListPath = dropListPath
+	self._defaultColor = defaultColor or "#cac8c5"
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._dropdowntag = gohelper.findChildDropdown(arg_5_0.viewGO, arg_5_0._dropListPath)
-	arg_5_0._txtlabel = gohelper.findChildText(arg_5_0._dropdowntag.gameObject, "Label")
-	arg_5_0._imagearrow = gohelper.findChildImage(arg_5_0._dropdowntag.gameObject, "arrow")
+function Season123_1_8EquipTagSelect:_editableInitView()
+	self._dropdowntag = gohelper.findChildDropdown(self.viewGO, self._dropListPath)
+	self._txtlabel = gohelper.findChildText(self._dropdowntag.gameObject, "Label")
+	self._imagearrow = gohelper.findChildImage(self._dropdowntag.gameObject, "arrow")
 
-	arg_5_0._dropdowntag:AddOnValueChanged(arg_5_0.handleDropValueChanged, arg_5_0)
+	self._dropdowntag:AddOnValueChanged(self.handleDropValueChanged, self)
 
-	arg_5_0._clicktag = gohelper.getClick(arg_5_0._dropdowntag.gameObject)
+	self._clicktag = gohelper.getClick(self._dropdowntag.gameObject)
 
-	arg_5_0._clicktag:AddClickListener(arg_5_0.handleClickTag, arg_5_0)
+	self._clicktag:AddClickListener(self.handleClickTag, self)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	if arg_6_0._dropdowntag then
-		arg_6_0._dropdowntag:RemoveOnValueChanged()
+function Season123_1_8EquipTagSelect:onDestroyView()
+	if self._dropdowntag then
+		self._dropdowntag:RemoveOnValueChanged()
 
-		arg_6_0._dropdowntag = nil
+		self._dropdowntag = nil
 	end
 
-	if arg_6_0._clicktag then
-		arg_6_0._clicktag:RemoveClickListener()
+	if self._clicktag then
+		self._clicktag:RemoveClickListener()
 
-		arg_6_0._clicktag = nil
+		self._clicktag = nil
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	if arg_7_0._controller.getFilterModel then
-		arg_7_0.equipTagModel = arg_7_0._controller:getFilterModel()
+function Season123_1_8EquipTagSelect:onOpen()
+	if self._controller.getFilterModel then
+		self.equipTagModel = self._controller:getFilterModel()
 	else
-		arg_7_0.equipTagModel = Season123EquipBookModel.instance.tagModel
+		self.equipTagModel = Season123EquipBookModel.instance.tagModel
 	end
 
-	if not arg_7_0.equipTagModel then
+	if not self.equipTagModel then
 		return
 	end
 
-	arg_7_0._dropdowntag:ClearOptions()
-	arg_7_0._dropdowntag:AddOptions(arg_7_0.equipTagModel:getOptions())
-	arg_7_0._dropdowntag:SetValue(0)
-	arg_7_0:refreshSelected()
+	self._dropdowntag:ClearOptions()
+	self._dropdowntag:AddOptions(self.equipTagModel:getOptions())
+	self._dropdowntag:SetValue(0)
+	self:refreshSelected()
 end
 
-function var_0_0.onClose(arg_8_0)
+function Season123_1_8EquipTagSelect:onClose()
 	return
 end
 
-function var_0_0.handleClickTag(arg_9_0)
+function Season123_1_8EquipTagSelect:handleClickTag()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.handleDropValueChanged(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1
+function Season123_1_8EquipTagSelect:handleDropValueChanged(index)
+	local selectIndex = index
 
-	if arg_10_0._controller.setSelectTag and arg_10_0.equipTagModel then
-		arg_10_0._controller:setSelectTag(var_10_0)
+	if self._controller.setSelectTag and self.equipTagModel then
+		self._controller:setSelectTag(selectIndex)
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-		arg_10_0:refreshSelected()
+		self:refreshSelected()
 	else
 		logError("controller setSelectTag not implement!")
 	end
 end
 
-function var_0_0.refreshSelected(arg_11_0)
-	local var_11_0 = arg_11_0.equipTagModel:getCurTagId()
-	local var_11_1
+function Season123_1_8EquipTagSelect:refreshSelected()
+	local tagId = self.equipTagModel:getCurTagId()
+	local colorSelect
 
-	if var_11_0 == Season123EquipTagModel.NoTagId then
-		var_11_1 = arg_11_0._defaultColor
+	if tagId == Season123EquipTagModel.NoTagId then
+		colorSelect = self._defaultColor
 	else
-		var_11_1 = "#c66030"
+		colorSelect = "#c66030"
 	end
 
-	arg_11_0._txtlabel.color = GameUtil.parseColor(var_11_1)
+	self._txtlabel.color = GameUtil.parseColor(colorSelect)
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._imagearrow, var_11_1)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagearrow, colorSelect)
 end
 
-return var_0_0
+return Season123_1_8EquipTagSelect

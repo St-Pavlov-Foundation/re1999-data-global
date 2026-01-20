@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkEzioBigSkillOriginDamage1001", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEzioBigSkillOriginDamage1001.lua
 
-local var_0_0 = class("FightWorkEzioBigSkillOriginDamage1001", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEzioBigSkillOriginDamage1001", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkEzioBigSkillOriginDamage1001 = class("FightWorkEzioBigSkillOriginDamage1001", FightEffectBase)
+
+function FightWorkEzioBigSkillOriginDamage1001:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEzioBigSkillOriginDamage1001

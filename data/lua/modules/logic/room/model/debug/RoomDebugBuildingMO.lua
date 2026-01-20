@@ -1,11 +1,13 @@
-﻿module("modules.logic.room.model.debug.RoomDebugBuildingMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/debug/RoomDebugBuildingMO.lua
 
-local var_0_0 = pureTable("RoomDebugBuildingMO")
+module("modules.logic.room.model.debug.RoomDebugBuildingMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.buildingId = arg_1_1.id
-	arg_1_0.config = RoomConfig.instance:getBuildingConfig(arg_1_0.buildingId)
+local RoomDebugBuildingMO = pureTable("RoomDebugBuildingMO")
+
+function RoomDebugBuildingMO:init(info)
+	self.id = info.id
+	self.buildingId = info.id
+	self.config = RoomConfig.instance:getBuildingConfig(self.buildingId)
 end
 
-return var_0_0
+return RoomDebugBuildingMO

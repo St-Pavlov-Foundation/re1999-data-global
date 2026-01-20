@@ -1,188 +1,189 @@
-﻿module("modules.logic.scene.summon.comp.SummonSceneSelector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/comp/SummonSceneSelector.lua
 
-local var_0_0 = class("SummonSceneSelector", BaseSceneComp)
+module("modules.logic.scene.summon.comp.SummonSceneSelector", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._curSelectType = nil
-	arg_1_0._curSelectGo = nil
+local SummonSceneSelector = class("SummonSceneSelector", BaseSceneComp)
+
+function SummonSceneSelector:onSceneStart(sceneId, levelId)
+	self._curSelectType = nil
+	self._curSelectGo = nil
 
 	logNormal("SummonSceneSelector:onSceneStart")
-	SummonController.instance:registerCallback(SummonEvent.onSummonTabSet, arg_1_0._handleSelectScene, arg_1_0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0._onSceneResize, arg_1_0)
-	arg_1_0:_handleSelectScene()
+	SummonController.instance:registerCallback(SummonEvent.onSummonTabSet, self._handleSelectScene, self)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, self._onSceneResize, self)
+	self:_handleSelectScene()
 end
 
-function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:_handleSelectScene()
-	arg_2_0:_refreshSelectScene()
+function SummonSceneSelector:onScenePrepared(sceneId, levelId)
+	self:_handleSelectScene()
+	self:_refreshSelectScene()
 end
 
-function var_0_0._onSceneResize(arg_3_0)
-	if arg_3_0._curSelectType == SummonEnum.ResultType.Equip then
-		arg_3_0._sceneObj.cameraAnim:switchToEquip()
+function SummonSceneSelector:_onSceneResize()
+	if self._curSelectType == SummonEnum.ResultType.Equip then
+		self._sceneObj.cameraAnim:switchToEquip()
 	else
-		arg_3_0._sceneObj.cameraAnim:switchToChar()
+		self._sceneObj.cameraAnim:switchToChar()
 	end
 end
 
-function var_0_0._handleSelectScene(arg_4_0)
-	local var_4_0 = SummonController.instance:getLastPoolId()
+function SummonSceneSelector:_handleSelectScene()
+	local poolId = SummonController.instance:getLastPoolId()
 
-	if not var_4_0 then
+	if not poolId then
 		logNormal("LastPoolId is empty, Maybe call from guide.")
 	end
 
-	local var_4_1 = SummonMainModel.getResultTypeById(var_4_0)
+	local resultType = SummonMainModel.getResultTypeById(poolId)
 
-	if var_4_1 ~= arg_4_0._curSelectType then
-		arg_4_0._curSelectType = var_4_1
+	if resultType ~= self._curSelectType then
+		self._curSelectType = resultType
 
-		arg_4_0:_refreshSelectScene()
+		self:_refreshSelectScene()
 	end
 end
 
-function var_0_0._refreshSelectScene(arg_5_0)
-	local var_5_0
-	local var_5_1
+function SummonSceneSelector:_refreshSelectScene()
+	local goShow, goHide
 
-	if arg_5_0._curSelectType == SummonEnum.ResultType.Equip then
-		var_5_0 = arg_5_0._goSceneEquip
-		var_5_1 = arg_5_0._goSceneChar
+	if self._curSelectType == SummonEnum.ResultType.Equip then
+		goShow = self._goSceneEquip
+		goHide = self._goSceneChar
 
-		arg_5_0._sceneObj.cameraAnim:switchToEquip()
+		self._sceneObj.cameraAnim:switchToEquip()
 	else
-		var_5_0 = arg_5_0._goSceneChar
-		var_5_1 = arg_5_0._goSceneEquip
+		goShow = self._goSceneChar
+		goHide = self._goSceneEquip
 
-		arg_5_0._sceneObj.cameraAnim:switchToChar()
+		self._sceneObj.cameraAnim:switchToChar()
 	end
 
-	arg_5_0._sceneObj.bgm:Play(arg_5_0._curSelectType)
+	self._sceneObj.bgm:Play(self._curSelectType)
 
-	arg_5_0._curSelectGo = var_5_0
+	self._curSelectGo = goShow
 
 	SummonController.instance:resetAnimScale()
 
-	local var_5_2 = arg_5_0:getNoSelectedRootGo().transform
-	local var_5_3 = arg_5_0._sceneObj:getSceneContainerGO().transform
+	local hideTf = self:getNoSelectedRootGo().transform
+	local rootTf = self._sceneObj:getSceneContainerGO().transform
 
-	if not gohelper.isNil(var_5_1) then
-		var_5_1.transform:SetParent(var_5_2, false)
+	if not gohelper.isNil(goHide) then
+		goHide.transform:SetParent(hideTf, false)
 	end
 
-	if not gohelper.isNil(var_5_0) then
-		var_5_0.transform:SetParent(var_5_3, false)
-	end
-end
-
-function var_0_0.initEquipSceneGo(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._assetItemEquip
-
-	arg_6_0._assetItemEquip = arg_6_1
-
-	arg_6_0._assetItemEquip:Retain()
-
-	if var_6_0 then
-		var_6_0:Release()
+	if not gohelper.isNil(goShow) then
+		goShow.transform:SetParent(rootTf, false)
 	end
 end
 
-function var_0_0.initCharSceneGo(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._assetItemChar
+function SummonSceneSelector:initEquipSceneGo(assetItem)
+	local oldAsstet = self._assetItemEquip
 
-	arg_7_0._assetItemChar = arg_7_1
+	self._assetItemEquip = assetItem
 
-	arg_7_0._assetItemChar:Retain()
+	self._assetItemEquip:Retain()
 
-	if var_7_0 then
-		var_7_0:Release()
+	if oldAsstet then
+		oldAsstet:Release()
 	end
 end
 
-function var_0_0.isSceneGOInited(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		return not gohelper.isNil(arg_8_0._goSceneChar)
+function SummonSceneSelector:initCharSceneGo(assetItem)
+	local oldAsstet = self._assetItemChar
+
+	self._assetItemChar = assetItem
+
+	self._assetItemChar:Retain()
+
+	if oldAsstet then
+		oldAsstet:Release()
+	end
+end
+
+function SummonSceneSelector:isSceneGOInited(isChar)
+	if isChar then
+		return not gohelper.isNil(self._goSceneChar)
 	else
-		return not gohelper.isNil(arg_8_0._goSceneEquip)
+		return not gohelper.isNil(self._goSceneEquip)
 	end
 end
 
-function var_0_0.initSceneGO(arg_9_0, arg_9_1)
-	local var_9_0 = false
+function SummonSceneSelector:initSceneGO(isChar)
+	local isDirty = false
 
-	if arg_9_1 then
-		if gohelper.isNil(arg_9_0._goSceneChar) and arg_9_0._assetItemChar then
-			arg_9_0._goSceneChar = gohelper.clone(arg_9_0._assetItemChar:GetResource(), arg_9_0:getNoSelectedRootGo(), "char_scene_go")
-			var_9_0 = true
+	if isChar then
+		if gohelper.isNil(self._goSceneChar) and self._assetItemChar then
+			self._goSceneChar = gohelper.clone(self._assetItemChar:GetResource(), self:getNoSelectedRootGo(), "char_scene_go")
+			isDirty = true
 		end
-	elseif gohelper.isNil(arg_9_0._goSceneEquip) and arg_9_0._assetItemEquip then
-		arg_9_0._goSceneEquip = gohelper.clone(arg_9_0._assetItemEquip:GetResource(), arg_9_0:getNoSelectedRootGo(), "equip_scene_go")
-		var_9_0 = true
+	elseif gohelper.isNil(self._goSceneEquip) and self._assetItemEquip then
+		self._goSceneEquip = gohelper.clone(self._assetItemEquip:GetResource(), self:getNoSelectedRootGo(), "equip_scene_go")
+		isDirty = true
 	end
 
-	if var_9_0 then
-		arg_9_0:_refreshSelectScene()
-		arg_9_0:dispatchEvent(SummonSceneEvent.OnSceneGOInited, arg_9_1)
+	if isDirty then
+		self:_refreshSelectScene()
+		self:dispatchEvent(SummonSceneEvent.OnSceneGOInited, isChar)
 
-		if not gohelper.isNil(arg_9_0._goSceneChar) and not gohelper.isNil(arg_9_0._goSceneEquip) then
-			arg_9_0:dispatchEvent(SummonSceneEvent.OnSceneAllGOInited)
+		if not gohelper.isNil(self._goSceneChar) and not gohelper.isNil(self._goSceneEquip) then
+			self:dispatchEvent(SummonSceneEvent.OnSceneAllGOInited)
 		end
 	end
 end
 
-function var_0_0.getNoSelectedRootGo(arg_10_0)
-	if not arg_10_0._goSelectorRoot then
-		local var_10_0 = arg_10_0._sceneObj:getSceneContainerGO()
+function SummonSceneSelector:getNoSelectedRootGo()
+	if not self._goSelectorRoot then
+		local SummonSceneRoot = self._sceneObj:getSceneContainerGO()
 
-		arg_10_0._goSelectorRoot = gohelper.create3d(var_10_0, "SceneSelector")
+		self._goSelectorRoot = gohelper.create3d(SummonSceneRoot, "SceneSelector")
 
-		gohelper.setActive(arg_10_0._goSelectorRoot, false)
+		gohelper.setActive(self._goSelectorRoot, false)
 	end
 
-	return arg_10_0._goSelectorRoot
+	return self._goSelectorRoot
 end
 
-function var_0_0.getEquipSceneGo(arg_11_0)
-	return arg_11_0._goSceneEquip
+function SummonSceneSelector:getEquipSceneGo()
+	return self._goSceneEquip
 end
 
-function var_0_0.getCharSceneGo(arg_12_0)
-	return arg_12_0._goSceneChar
+function SummonSceneSelector:getCharSceneGo()
+	return self._goSceneChar
 end
 
-function var_0_0.getCurSceneGo(arg_13_0)
-	return arg_13_0._curSelectGo
+function SummonSceneSelector:getCurSceneGo()
+	return self._curSelectGo
 end
 
-function var_0_0.onSceneClose(arg_14_0)
-	arg_14_0:onSceneHide()
-	gohelper.setActive(arg_14_0._goSelectorRoot, true)
-	gohelper.destroy(arg_14_0._goSceneEquip)
-	gohelper.destroy(arg_14_0._goSceneChar)
-	gohelper.destroy(arg_14_0._goSelectorRoot)
+function SummonSceneSelector:onSceneClose()
+	self:onSceneHide()
+	gohelper.setActive(self._goSelectorRoot, true)
+	gohelper.destroy(self._goSceneEquip)
+	gohelper.destroy(self._goSceneChar)
+	gohelper.destroy(self._goSelectorRoot)
 
-	arg_14_0._goSceneEquip = nil
-	arg_14_0._goSelectorRoot = nil
-	arg_14_0._goSceneChar = nil
-	arg_14_0._curSelectGo = nil
+	self._goSceneEquip = nil
+	self._goSelectorRoot = nil
+	self._goSceneChar = nil
+	self._curSelectGo = nil
 
-	if arg_14_0._assetItemEquip then
-		arg_14_0._assetItemEquip:Release()
+	if self._assetItemEquip then
+		self._assetItemEquip:Release()
 
-		arg_14_0._assetItemEquip = nil
+		self._assetItemEquip = nil
 	end
 
-	if arg_14_0._assetItemChar then
-		arg_14_0._assetItemChar:Release()
+	if self._assetItemChar then
+		self._assetItemChar:Release()
 
-		arg_14_0._assetItemChar = nil
+		self._assetItemChar = nil
 	end
 end
 
-function var_0_0.onSceneHide(arg_15_0)
+function SummonSceneSelector:onSceneHide()
 	logNormal("onSceneHide")
-	SummonController.instance:unregisterCallback(SummonEvent.onSummonTabSet, arg_15_0._handleSelectScene, arg_15_0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_15_0._onSceneResize, arg_15_0)
+	SummonController.instance:unregisterCallback(SummonEvent.onSummonTabSet, self._handleSelectScene, self)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, self._onSceneResize, self)
 end
 
-return var_0_0
+return SummonSceneSelector

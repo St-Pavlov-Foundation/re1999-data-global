@@ -1,203 +1,225 @@
-﻿module("modules.logic.sp01.act205.controller.Act205CardController", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/controller/Act205CardController.lua
 
-local var_0_0 = class("Act205CardController", BaseController)
+module("modules.logic.sp01.act205.controller.Act205CardController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Act205CardController = class("Act205CardController", BaseController)
+
+function Act205CardController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Act205CardController:reInit()
 	return
 end
 
-function var_0_0.openCardEnterView(arg_3_0)
-	local var_3_0 = Act205CardModel.instance:getGameStageId()
+function Act205CardController:openCardEnterView()
+	local gameStageId = Act205CardModel.instance:getGameStageId()
+	local isGameStageOpen = Act205Model.instance:isGameStageOpen(gameStageId, true)
 
-	if not Act205Model.instance:isGameStageOpen(var_3_0, true) then
+	if not isGameStageOpen then
 		return
 	end
 
-	local var_3_1 = Act205Model.instance:getAct205Id()
+	local actId = Act205Model.instance:getAct205Id()
 
-	Activity205Rpc.instance:sendAct205GetInfoRequest(var_3_1, arg_3_0._realOpenCardEnterView, arg_3_0)
+	Activity205Rpc.instance:sendAct205GetInfoRequest(actId, self._realOpenCardEnterView, self)
 end
 
-function var_0_0._realOpenCardEnterView(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_2 ~= 0 then
+function Act205CardController:_realOpenCardEnterView(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = {}
-	local var_4_1 = Act205Model.instance:getAct205Id()
+	local viewParam = {}
+	local actId = Act205Model.instance:getAct205Id()
 
-	var_4_0.activityId = var_4_1
-	var_4_0.gameStageId = Act205CardModel.instance:getGameStageId()
+	viewParam.activityId = actId
+	viewParam.gameStageId = Act205CardModel.instance:getGameStageId()
 
-	Activity205Rpc.instance:sendAct205GetGameInfoRequest(var_4_1)
-	ViewMgr.instance:openView(ViewName.Act205GameStartView, var_4_0)
+	Activity205Rpc.instance:sendAct205GetGameInfoRequest(actId)
+	ViewMgr.instance:openView(ViewName.Act205GameStartView, viewParam)
 end
 
-function var_0_0.enterCardGame(arg_5_0)
+function Act205CardController:enterCardGame()
 	Act205CardModel.instance:clearSelectedCard()
 
-	local var_5_0 = Act205CardModel.instance:getGameStageId()
+	local gameStageId = Act205CardModel.instance:getGameStageId()
+	local isGameStageOpen = Act205Model.instance:isGameStageOpen(gameStageId, true)
 
-	if not Act205Model.instance:isGameStageOpen(var_5_0, true) then
+	if not isGameStageOpen then
 		return
 	end
 
-	if Act205CardModel.instance:getGameCount() <= 0 then
+	local gameCount = Act205CardModel.instance:getGameCount()
+
+	if gameCount <= 0 then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.Act205CardSelectView)
 end
 
-function var_0_0.openCardShowView(arg_6_0)
+function Act205CardController:openCardShowView()
 	ViewMgr.instance:openView(ViewName.Act205CardShowView)
 	ViewMgr.instance:closeView(ViewName.Act205CardSelectView)
 end
 
-function var_0_0.openCardResultView(arg_7_0, arg_7_1, arg_7_2)
+function Act205CardController:openCardResultView(resultPoint, rewardId)
 	ViewMgr.instance:openView(ViewName.Act205CardResultView, {
-		point = arg_7_1,
-		rewardId = arg_7_2
+		point = resultPoint,
+		rewardId = rewardId
 	})
 end
 
-function var_0_0.beginNewCardGame(arg_8_0)
-	local var_8_0 = Act205CardModel.instance:getGameStageId()
+function Act205CardController:beginNewCardGame()
+	local gameStageId = Act205CardModel.instance:getGameStageId()
+	local isGameStageOpen = Act205Model.instance:isGameStageOpen(gameStageId, true)
 
-	if not Act205Model.instance:isGameStageOpen(var_8_0, true) then
+	if not isGameStageOpen then
 		return
 	end
 
-	local var_8_1 = Act205Model.instance:getAct205Id()
+	local actId = Act205Model.instance:getAct205Id()
 
-	Activity205Rpc.instance:sendAct205GetInfoRequest(var_8_1, arg_8_0._onBeginNewCardGame, arg_8_0)
+	Activity205Rpc.instance:sendAct205GetInfoRequest(actId, self._onBeginNewCardGame, self)
 end
 
-function var_0_0._onBeginNewCardGame(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 ~= 0 then
+function Act205CardController:_onBeginNewCardGame(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_9_0 = Act205Model.instance:getAct205Id()
+	local actId = Act205Model.instance:getAct205Id()
 
-	Activity205Rpc.instance:sendAct205GetGameInfoRequest(var_9_0)
-	arg_9_0:enterCardGame()
+	Activity205Rpc.instance:sendAct205GetGameInfoRequest(actId)
+	self:enterCardGame()
 	ViewMgr.instance:closeView(ViewName.Act205CardShowView)
 	ViewMgr.instance:closeView(ViewName.Act205CardResultView)
 end
 
-function var_0_0.getEnemyCardIdList(arg_10_0)
-	return Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard) or arg_10_0:_generateCardIdList(false)
+function Act205CardController:getEnemyCardIdList()
+	local result = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard)
+
+	result = result or self:_generateCardIdList(false)
+
+	return result
 end
 
-function var_0_0.getPlayerCardIdList(arg_11_0)
-	return Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.PlayerCard) or arg_11_0:_generateCardIdList(true)
+function Act205CardController:getPlayerCardIdList()
+	local result = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.PlayerCard)
+
+	result = result or self:_generateCardIdList(true)
+
+	return result
 end
 
-local function var_0_1(arg_12_0, arg_12_1)
-	local var_12_0 = Act205Config.instance:getCardType(arg_12_0)
-	local var_12_1 = Act205Config.instance:getCardType(arg_12_1)
+local function _sortCard(cardA, cardB)
+	local cardTypeA = Act205Config.instance:getCardType(cardA)
+	local cardTypeB = Act205Config.instance:getCardType(cardB)
 
-	if var_12_0 ~= var_12_1 then
-		return var_12_1 < var_12_0
+	if cardTypeA ~= cardTypeB then
+		return cardTypeB < cardTypeA
 	end
 
-	return arg_12_0 < arg_12_1
+	return cardA < cardB
 end
 
-function var_0_0._generateCardIdList(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = {}
-	local var_13_1 = arg_13_1 and Act205Enum.ConstId.CardGamePlayerCardCount or Act205Enum.ConstId.CardGameEnemyCardCount
-	local var_13_2 = Act205Config.instance:getAct205Const(var_13_1, true)
+function Act205CardController:_generateCardIdList(isPlayer, hasAppearedCardList)
+	local result = {}
+	local needCardConstId = isPlayer and Act205Enum.ConstId.CardGamePlayerCardCount or Act205Enum.ConstId.CardGameEnemyCardCount
+	local needCardCount = Act205Config.instance:getAct205Const(needCardConstId, true)
 
-	if not var_13_2 or var_13_2 < 0 then
-		return var_13_0
+	if not needCardCount or needCardCount < 0 then
+		return result
 	end
 
-	local var_13_3 = {}
+	local hasAppearedCardDict = {}
 
-	if arg_13_2 then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_2) do
-			var_13_3[iter_13_1] = true
+	if hasAppearedCardList then
+		for _, cardId in ipairs(hasAppearedCardList) do
+			hasAppearedCardDict[cardId] = true
 		end
 	end
 
-	local var_13_4 = {}
+	local enemyCardDict = {}
 
-	if arg_13_1 then
-		local var_13_5 = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard)
+	if isPlayer then
+		local enemyCardList = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard)
 
-		if var_13_5 then
-			for iter_13_2, iter_13_3 in ipairs(var_13_5) do
-				var_13_4[Act205Config.instance:getCardType(iter_13_3)] = iter_13_3
+		if enemyCardList then
+			for _, enemyCardId in ipairs(enemyCardList) do
+				local enemyCardType = Act205Config.instance:getCardType(enemyCardId)
+
+				enemyCardDict[enemyCardType] = enemyCardId
 			end
 		end
 	end
 
-	local var_13_6 = Act205Config.instance:getAct205Const(Act205Enum.ConstId.MinimumGuaranteeCard)
-	local var_13_7 = string.splitToNumber(var_13_6, "#")
-	local var_13_8 = var_13_7[1]
-	local var_13_9 = var_13_7[2]
+	local strGuarantee = Act205Config.instance:getAct205Const(Act205Enum.ConstId.MinimumGuaranteeCard)
+	local arr = string.splitToNumber(strGuarantee, "#")
+	local guaranteeFailCount, guaranteeCardId = arr[1], arr[2]
+	local continueFailCount = Act205CardModel.instance:getContinueFailCount()
 
-	if var_13_8 > Act205CardModel.instance:getContinueFailCount() then
-		var_13_9 = nil
+	if continueFailCount < guaranteeFailCount then
+		guaranteeCardId = nil
 	end
 
-	local var_13_10 = Act205Config.instance:getCardTypeDict()
+	local type2CardDict = Act205Config.instance:getCardTypeDict()
 
-	for iter_13_4, iter_13_5 in pairs(var_13_10) do
-		local var_13_11
-		local var_13_12 = var_13_4[iter_13_4]
+	for cardType, cardList in pairs(type2CardDict) do
+		local restrainEnemyCardId
+		local enemyCardId = enemyCardDict[cardType]
 
-		if var_13_12 then
-			var_13_11 = Act205Config.instance:getBeRestrainedCard(var_13_12)
+		if enemyCardId then
+			restrainEnemyCardId = Act205Config.instance:getBeRestrainedCard(enemyCardId)
 		end
 
-		local var_13_13 = {}
-		local var_13_14 = 0
-		local var_13_15 = var_13_2
+		local indices = {}
+		local totalWeight = 0
+		local tmpNeedCardCount = needCardCount
 
-		for iter_13_6, iter_13_7 in ipairs(iter_13_5) do
-			if not Act205Config.instance:isSpCard(iter_13_7) or arg_13_1 then
-				if iter_13_7 == var_13_11 or iter_13_7 == var_13_9 then
-					table.insert(var_13_0, iter_13_7)
+		for i, cardId in ipairs(cardList) do
+			local isSp = Act205Config.instance:isSpCard(cardId)
 
-					var_13_15 = var_13_15 - 1
+			if not isSp or isPlayer then
+				if cardId == restrainEnemyCardId or cardId == guaranteeCardId then
+					table.insert(result, cardId)
+
+					tmpNeedCardCount = tmpNeedCardCount - 1
 				else
-					var_13_14 = var_13_14 + Act205Config.instance:getCardWeight(iter_13_7, var_13_3[iter_13_7])
-					var_13_13[#var_13_13 + 1] = iter_13_6
+					local weight = Act205Config.instance:getCardWeight(cardId, hasAppearedCardDict[cardId])
+
+					totalWeight = totalWeight + weight
+					indices[#indices + 1] = i
 				end
 			end
 		end
 
-		for iter_13_8 = 1, var_13_15 do
-			local var_13_16 = #var_13_13
+		for _ = 1, tmpNeedCardCount do
+			local remainCardCount = #indices
 
-			if var_13_16 == 0 or var_13_14 <= 0 then
-				logError("Act205CardController:_generateCardIdList error, card not enough, cardType:%s, hasCount:%s, needCount:%s", iter_13_4, #iter_13_5, var_13_15)
+			if remainCardCount == 0 or totalWeight <= 0 then
+				logError("Act205CardController:_generateCardIdList error, card not enough, cardType:%s, hasCount:%s, needCount:%s", cardType, #cardList, tmpNeedCardCount)
 
 				break
 			end
 
-			local var_13_17 = math.random(var_13_14)
-			local var_13_18 = 0
+			local randomWeight = math.random(totalWeight)
+			local compareWeight = 0
 
-			for iter_13_9 = 1, var_13_16 do
-				local var_13_19 = iter_13_5[var_13_13[iter_13_9]]
-				local var_13_20 = Act205Config.instance:getCardWeight(var_13_19, var_13_3[var_13_19])
+			for i = 1, remainCardCount do
+				local idx = indices[i]
+				local cardId = cardList[idx]
+				local cardWeight = Act205Config.instance:getCardWeight(cardId, hasAppearedCardDict[cardId])
 
-				var_13_18 = var_13_18 + var_13_20
+				compareWeight = compareWeight + cardWeight
 
-				if var_13_17 <= var_13_18 then
-					table.insert(var_13_0, var_13_19)
+				if randomWeight <= compareWeight then
+					table.insert(result, cardId)
 
-					var_13_14 = var_13_14 - var_13_20
+					totalWeight = totalWeight - cardWeight
 
-					table.remove(var_13_13, iter_13_9)
+					table.remove(indices, i)
 
 					break
 				end
@@ -205,159 +227,168 @@ function var_0_0._generateCardIdList(arg_13_0, arg_13_1, arg_13_2)
 		end
 	end
 
-	table.sort(var_13_0, var_0_1)
+	table.sort(result, _sortCard)
 
-	local var_13_21 = arg_13_1 and Act205Enum.CardGameCacheKey.PlayerCard or Act205Enum.CardGameCacheKey.EnemyCard
+	local cacheKey = isPlayer and Act205Enum.CardGameCacheKey.PlayerCard or Act205Enum.CardGameCacheKey.EnemyCard
 
-	Act205CardModel.instance:setCacheKeyData(var_13_21, var_13_0)
+	Act205CardModel.instance:setCacheKeyData(cacheKey, result)
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.playerClickCard(arg_14_0, arg_14_1)
-	local var_14_0 = Act205CardModel.instance:isCardSelected(arg_14_1)
+function Act205CardController:playerClickCard(cardId)
+	local curIsSelected = Act205CardModel.instance:isCardSelected(cardId)
 
-	Act205CardModel.instance:setSelectedCard(arg_14_1, not var_14_0)
-	arg_14_0:dispatchEvent(Act205Event.PlayerSelectCard, arg_14_1)
+	Act205CardModel.instance:setSelectedCard(cardId, not curIsSelected)
+	self:dispatchEvent(Act205Event.PlayerSelectCard, cardId)
 end
 
-function var_0_0.checkPkPoint(arg_15_0)
-	local var_15_0 = Act205CardModel.instance:getGameStageId()
+function Act205CardController:checkPkPoint()
+	local gameStageId = Act205CardModel.instance:getGameStageId()
+	local isGameStageOpen = Act205Model.instance:isGameStageOpen(gameStageId, true)
 
-	if not Act205Model.instance:isGameStageOpen(var_15_0, true) then
+	if not isGameStageOpen then
 		return
 	end
 
-	local var_15_1 = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard)
+	local enemyCardList = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard)
 
-	if not var_15_1 then
+	if not enemyCardList then
 		logError("Act205CardController.checkPkPoint error, no enemyCardList")
 
 		return
 	end
 
-	if not Act205CardModel.instance:getIsCanBeginPK() then
+	local isCanPK = Act205CardModel.instance:getIsCanBeginPK()
+
+	if not isCanPK then
 		return
 	end
 
-	local var_15_2 = Act205Config.instance:getAct205Const(Act205Enum.ConstId.CardGameBasePoint, true)
+	local resultPoint = Act205Config.instance:getAct205Const(Act205Enum.ConstId.CardGameBasePoint, true)
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-		local var_15_3 = Act205Config.instance:getCardType(iter_15_1)
-		local var_15_4 = Act205CardModel.instance:getSelectedCard(var_15_3)
+	for _, enemyCardId in ipairs(enemyCardList) do
+		local cardType = Act205Config.instance:getCardType(enemyCardId)
+		local playerCardId = Act205CardModel.instance:getSelectedCard(cardType)
 
-		if not var_15_4 then
+		if not playerCardId then
 			return
 		end
 
-		local var_15_5 = arg_15_0:getCardPKResult(var_15_4, iter_15_1)
+		local pkResult = self:getCardPKResult(playerCardId, enemyCardId)
 
-		Act205CardModel.instance:setPkResult(var_15_3, var_15_5)
+		Act205CardModel.instance:setPkResult(cardType, pkResult)
 
-		var_15_2 = var_15_2 + var_15_5
+		resultPoint = resultPoint + pkResult
 	end
 
-	Act205CardModel.instance:setResultPoint(var_15_2)
+	Act205CardModel.instance:setResultPoint(resultPoint)
 
-	return var_15_2
+	return resultPoint
 end
 
-function var_0_0.getCardPKResult(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = Act205Enum.CardPKResult
-	local var_16_1 = var_16_0.Draw
+function Act205CardController:getCardPKResult(cardId, targetCardId)
+	local PKResult = Act205Enum.CardPKResult
+	local result = PKResult.Draw
+	local isSpCard = Act205Config.instance:isSpCard(cardId)
 
-	if Act205Config.instance:isSpCard(arg_16_1) then
-		local var_16_2 = Act205Config.instance:getSpEff(arg_16_1)
+	if isSpCard then
+		local spEff = Act205Config.instance:getSpEff(cardId)
 
-		if var_16_2 == Act205Enum.SpEffType.All then
-			var_16_1 = var_16_0.Restrain
-		elseif var_16_2 == Act205Enum.SpEffType.Half then
-			var_16_1 = math.random() < 0.5 and var_16_0.Restrain or var_16_0.BeRestrained
+		if spEff == Act205Enum.SpEffType.All then
+			result = PKResult.Restrain
+		elseif spEff == Act205Enum.SpEffType.Half then
+			local isRestrained = math.random() < 0.5
+
+			result = isRestrained and PKResult.Restrain or PKResult.BeRestrained
 		else
-			logError(string.format("Act205CardController:getCardPKResult error, spEff not support, spEff:%s", var_16_2))
+			logError(string.format("Act205CardController:getCardPKResult error, spEff not support, spEff:%s", spEff))
 		end
 	else
-		local var_16_3 = Act205Config.instance:getIsCardRestrain(arg_16_1, arg_16_2)
-		local var_16_4 = Act205Config.instance:getIsCardBeRestrained(arg_16_1, arg_16_2)
+		local restrained = Act205Config.instance:getIsCardRestrain(cardId, targetCardId)
+		local beRestrained = Act205Config.instance:getIsCardBeRestrained(cardId, targetCardId)
 
-		if var_16_3 then
-			var_16_1 = var_16_0.Restrain
-		elseif var_16_4 then
-			var_16_1 = var_16_0.BeRestrained
+		if restrained then
+			result = PKResult.Restrain
+		elseif beRestrained then
+			result = PKResult.BeRestrained
 		end
 	end
 
-	return var_16_1
+	return result
 end
 
-local var_0_2 = 0.5
+local GET_REWARD_INTERVAL_TIME = 0.5
 
-function var_0_0.cardGameFinishGetReward(arg_17_0)
-	local var_17_0 = ServerTime.now()
-	local var_17_1 = Act205CardModel.instance:getRecordRewardTime()
+function Act205CardController:cardGameFinishGetReward()
+	local nowTime = ServerTime.now()
+	local lastGetTime = Act205CardModel.instance:getRecordRewardTime()
 
-	if var_17_1 and var_17_0 - var_17_1 < var_0_2 then
+	if lastGetTime and nowTime - lastGetTime < GET_REWARD_INTERVAL_TIME then
 		return
 	end
 
-	local var_17_2 = Act205CardModel.instance:getGameStageId()
+	local gameStageId = Act205CardModel.instance:getGameStageId()
+	local isGameStageOpen = Act205Model.instance:isGameStageOpen(gameStageId, true)
 
-	if not Act205Model.instance:isGameStageOpen(var_17_2, true) then
+	if not isGameStageOpen then
 		return
 	end
 
-	local var_17_3 = Act205CardModel.instance:getResultPoint() or arg_17_0:checkPkPoint()
+	local resultPoint = Act205CardModel.instance:getResultPoint() or self:checkPkPoint()
 
-	if not var_17_3 then
-		var_17_3 = Act205Config.instance:getMaxPoint()
+	if not resultPoint then
+		resultPoint = Act205Config.instance:getMaxPoint()
 
-		Act205CardModel.instance:setResultPoint(var_17_3)
+		Act205CardModel.instance:setResultPoint(resultPoint)
 	end
 
-	local var_17_4 = var_17_3 > Act205Enum.CardGameFailPoint
-	local var_17_5 = 0
+	local isWin = resultPoint > Act205Enum.CardGameFailPoint
+	local failCount = 0
 
-	if not var_17_4 then
-		var_17_5 = Act205CardModel.instance:getContinueFailCount() + 1
+	if not isWin then
+		local curFailCount = Act205CardModel.instance:getContinueFailCount()
+
+		failCount = curFailCount + 1
 	end
 
-	local var_17_6 = Act205Config.instance:getRewardId(var_17_3)
-	local var_17_7 = {
-		activityId = Act205Model.instance:getAct205Id(),
-		gameType = var_17_2,
-		gameInfo = tostring(var_17_5),
-		rewardId = var_17_6
-	}
+	local rewardId = Act205Config.instance:getRewardId(resultPoint)
+	local param = {}
 
-	Activity205Rpc.instance:sendAct205FinishGameRequest(var_17_7, arg_17_0._onGetCardGameReward, arg_17_0)
-	Act205CardModel.instance:setGetRewardTime(var_17_0)
+	param.activityId = Act205Model.instance:getAct205Id()
+	param.gameType = gameStageId
+	param.gameInfo = tostring(failCount)
+	param.rewardId = rewardId
+
+	Activity205Rpc.instance:sendAct205FinishGameRequest(param, self._onGetCardGameReward, self)
+	Act205CardModel.instance:setGetRewardTime(nowTime)
 end
 
-function var_0_0._onGetCardGameReward(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_2 ~= 0 then
+function Act205CardController:_onGetCardGameReward(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_18_0 = Act205CardModel.instance:getResultPoint()
+	local resultPoint = Act205CardModel.instance:getResultPoint()
 
-	arg_18_0:openCardResultView(var_18_0, arg_18_3.rewardId)
+	self:openCardResultView(resultPoint, msg.rewardId)
 	Act205CardModel.instance:setResultPoint()
 
-	local var_18_1 = Act205Model.instance:getAct205Id()
+	local actId = Act205Model.instance:getAct205Id()
 
-	Activity205Rpc.instance:sendAct205GetGameInfoRequest(var_18_1, arg_18_0._generateCard, arg_18_0)
+	Activity205Rpc.instance:sendAct205GetGameInfoRequest(actId, self._generateCard, self)
 end
 
-function var_0_0._generateCard(arg_19_0)
-	local var_19_0 = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard)
+function Act205CardController:_generateCard()
+	local enemyAppearedCardList = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.EnemyCard)
 
-	arg_19_0:_generateCardIdList(false, var_19_0)
+	self:_generateCardIdList(false, enemyAppearedCardList)
 
-	local var_19_1 = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.PlayerCard)
+	local playerAppearedCardList = Act205CardModel.instance:getCacheKeyData(Act205Enum.CardGameCacheKey.PlayerCard)
 
-	arg_19_0:_generateCardIdList(true, var_19_1)
+	self:_generateCardIdList(true, playerAppearedCardList)
 end
 
-var_0_0.instance = var_0_0.New()
+Act205CardController.instance = Act205CardController.New()
 
-return var_0_0
+return Act205CardController

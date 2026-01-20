@@ -1,74 +1,78 @@
-﻿module("modules.logic.dungeon.view.DungeonMapGuidepost", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMapGuidepost.lua
 
-local var_0_0 = class("DungeonMapGuidepost", LuaCompBase)
+module("modules.logic.dungeon.view.DungeonMapGuidepost", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local DungeonMapGuidepost = class("DungeonMapGuidepost", LuaCompBase)
+
+function DungeonMapGuidepost:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonMapGuidepost:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonMapGuidepost:removeEvents()
 	return
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1)
-	arg_4_0._scene = arg_4_1
+function DungeonMapGuidepost:ctor(scene)
+	self._scene = scene
 end
 
-function var_0_0.setConfig(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._config = arg_5_1
-	arg_5_0._episodeId = arg_5_2
+function DungeonMapGuidepost:setConfig(config, episodeId)
+	self._config = config
+	self._episodeId = episodeId
 
-	if not string.nilorempty(arg_5_0._config.pos) then
-		local var_5_0 = string.splitToNumber(arg_5_0._config.pos, "#")
+	if not string.nilorempty(self._config.pos) then
+		local pos = string.splitToNumber(self._config.pos, "#")
 
-		transformhelper.setLocalPos(arg_5_0.viewGO.transform, var_5_0[1], var_5_0[2], -5)
+		transformhelper.setLocalPos(self.viewGO.transform, pos[1], pos[2], -5)
 	end
 
-	local var_5_1 = DungeonConfig.instance:getElementList(arg_5_2)
-	local var_5_2 = string.splitToNumber(var_5_1, "#")
+	local listStr = DungeonConfig.instance:getElementList(episodeId)
+	local list = string.splitToNumber(listStr, "#")
 
-	for iter_5_0 = 1, 3 do
-		local var_5_3 = var_5_2[iter_5_0]
-		local var_5_4 = arg_5_0._goList[iter_5_0]
+	for i = 1, 3 do
+		local id = list[i]
+		local go = self._goList[i]
 
-		gohelper.setActive(var_5_4, var_5_3)
+		gohelper.setActive(go, id)
 
-		if var_5_3 then
-			local var_5_5 = var_5_4:GetComponent(typeof(UnityEngine.Renderer))
-			local var_5_6 = gohelper.findChild(var_5_4, "click")
-			local var_5_7 = var_5_5.material
-			local var_5_8 = DungeonMapModel.instance:elementIsFinished(var_5_3)
+		if id then
+			local renderer = go:GetComponent(typeof(UnityEngine.Renderer))
+			local anim = gohelper.findChild(go, "click")
+			local mat = renderer.material
+			local isFinish = DungeonMapModel.instance:elementIsFinished(id)
 
-			if var_5_8 then
-				var_5_7:SetColor("_MainCol", GameUtil.parseColor("#c66030ff"))
+			if isFinish then
+				mat:SetColor("_MainCol", GameUtil.parseColor("#c66030ff"))
 			else
-				var_5_7:SetColor("_MainCol", GameUtil.parseColor("#ffffff99"))
+				mat:SetColor("_MainCol", GameUtil.parseColor("#ffffff99"))
 			end
 
-			gohelper.setActive(var_5_6, var_5_8)
+			gohelper.setActive(anim, isFinish)
 
-			local var_5_9 = lua_chapter_map_element.configDict[var_5_3]
-			local var_5_10 = var_5_7:GetVector("_Frame")
+			local elementConfig = lua_chapter_map_element.configDict[id]
+			local vec4 = mat:GetVector("_Frame")
 
-			var_5_10.w = DungeonEnum.ElementTypeIconIndex[string.format("%s", var_5_9.type .. (var_5_8 and 1 or 0))]
+			vec4.w = DungeonEnum.ElementTypeIconIndex[string.format("%s", elementConfig.type .. (isFinish and 1 or 0))]
 
-			var_5_7:SetVector("_Frame", var_5_10)
+			mat:SetVector("_Frame", vec4)
 		end
 	end
 end
 
-function var_0_0.allElementsFinished(arg_6_0)
-	local var_6_0 = DungeonConfig.instance:getElementList(arg_6_0)
-	local var_6_1 = string.splitToNumber(var_6_0, "#")
+function DungeonMapGuidepost.allElementsFinished(episodeId)
+	local listStr = DungeonConfig.instance:getElementList(episodeId)
+	local list = string.splitToNumber(listStr, "#")
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		if not DungeonMapModel.instance:elementIsFinished(iter_6_1) then
+	for i, id in ipairs(list) do
+		local isFinish = DungeonMapModel.instance:elementIsFinished(id)
+
+		if not isFinish then
 			return false
 		end
 	end
@@ -76,21 +80,21 @@ function var_0_0.allElementsFinished(arg_6_0)
 	return true
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._goList = arg_7_0:getUserDataTb_()
+function DungeonMapGuidepost:_editableInitView()
+	self._goList = self:getUserDataTb_()
 
-	arg_7_0:_initElementGo(gohelper.findChild(arg_7_0.viewGO, "ani/plane_a"))
-	arg_7_0:_initElementGo(gohelper.findChild(arg_7_0.viewGO, "ani/plane_b"))
-	arg_7_0:_initElementGo(gohelper.findChild(arg_7_0.viewGO, "ani/plane_c"))
+	self:_initElementGo(gohelper.findChild(self.viewGO, "ani/plane_a"))
+	self:_initElementGo(gohelper.findChild(self.viewGO, "ani/plane_b"))
+	self:_initElementGo(gohelper.findChild(self.viewGO, "ani/plane_c"))
 end
 
-function var_0_0._initElementGo(arg_8_0, arg_8_1)
-	table.insert(arg_8_0._goList, arg_8_1)
-	DungeonMapElement.addBoxColliderListener(arg_8_1, arg_8_0._onDown, arg_8_0)
+function DungeonMapGuidepost:_initElementGo(go)
+	table.insert(self._goList, go)
+	DungeonMapElement.addBoxColliderListener(go, self._onDown, self)
 end
 
-function var_0_0._onDown(arg_9_0)
-	if arg_9_0._scene:showInteractiveItem() then
+function DungeonMapGuidepost:_onDown()
+	if self._scene:showInteractiveItem() then
 		return
 	end
 
@@ -99,29 +103,30 @@ function var_0_0._onDown(arg_9_0)
 	end
 
 	DungeonController.instance:openDungeonMapTaskView({
-		viewParam = arg_9_0._episodeId
+		isMain = true,
+		viewParam = self._episodeId
 	})
 end
 
-function var_0_0.init(arg_10_0, arg_10_1)
-	arg_10_0.viewGO = arg_10_1
+function DungeonMapGuidepost:init(go)
+	self.viewGO = go
 
-	arg_10_0:onInitView()
-	arg_10_0:addEvents()
-	arg_10_0:_editableAddEvents()
+	self:onInitView()
+	self:addEvents()
+	self:_editableAddEvents()
 end
 
-function var_0_0._editableAddEvents(arg_11_0)
+function DungeonMapGuidepost:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_12_0)
+function DungeonMapGuidepost:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	arg_13_0:removeEvents()
-	arg_13_0:_editableRemoveEvents()
+function DungeonMapGuidepost:onDestroy()
+	self:removeEvents()
+	self:_editableRemoveEvents()
 end
 
-return var_0_0
+return DungeonMapGuidepost

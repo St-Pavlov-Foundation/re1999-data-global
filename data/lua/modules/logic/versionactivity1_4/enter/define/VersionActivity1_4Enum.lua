@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_4.enter.define.VersionActivity1_4Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/enter/define/VersionActivity1_4Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.enter.define.VersionActivity1_4Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity1_4Enum = _M
+
+VersionActivity1_4Enum.ActivityId = {
 	Dungeon = 11407,
 	Task = 11408,
 	Role6 = 11403,
@@ -18,26 +20,26 @@ var_0_0.ActivityId = {
 	EnterView = 11401,
 	LimitFirstFall = 11421
 }
-var_0_0.EnterViewActIdList = {
-	var_0_0.ActivityId.ShipRepair,
-	var_0_0.ActivityId.Role37,
-	var_0_0.ActivityId.BossRush,
-	var_0_0.ActivityId.Task,
-	var_0_0.ActivityId.DungeonStore,
-	var_0_0.ActivityId.Dungeon,
-	var_0_0.ActivityId.BossRush,
-	var_0_0.ActivityId.Season,
-	var_0_0.ActivityId.DustyRecords,
-	var_0_0.ActivityId.Role6,
-	var_0_0.ActivityId.DungeonStore,
-	var_0_0.ActivityId.Dungeon
+VersionActivity1_4Enum.EnterViewActIdList = {
+	VersionActivity1_4Enum.ActivityId.ShipRepair,
+	VersionActivity1_4Enum.ActivityId.Role37,
+	VersionActivity1_4Enum.ActivityId.BossRush,
+	VersionActivity1_4Enum.ActivityId.Task,
+	VersionActivity1_4Enum.ActivityId.DungeonStore,
+	VersionActivity1_4Enum.ActivityId.Dungeon,
+	VersionActivity1_4Enum.ActivityId.BossRush,
+	VersionActivity1_4Enum.ActivityId.Season,
+	VersionActivity1_4Enum.ActivityId.DustyRecords,
+	VersionActivity1_4Enum.ActivityId.Role6,
+	VersionActivity1_4Enum.ActivityId.DungeonStore,
+	VersionActivity1_4Enum.ActivityId.Dungeon
 }
-var_0_0.TabEnum = {
+VersionActivity1_4Enum.TabEnum = {
 	Second = 2,
 	First = 1
 }
-var_0_0.TabActivityList = {
-	[var_0_0.TabEnum.First] = {
+VersionActivity1_4Enum.TabActivityList = {
+	[VersionActivity1_4Enum.TabEnum.First] = {
 		1,
 		2,
 		3,
@@ -45,7 +47,7 @@ var_0_0.TabActivityList = {
 		5,
 		6
 	},
-	[var_0_0.TabEnum.Second] = {
+	[VersionActivity1_4Enum.TabEnum.Second] = {
 		7,
 		8,
 		9,
@@ -55,4 +57,4 @@ var_0_0.TabActivityList = {
 	}
 }
 
-return var_0_0
+return VersionActivity1_4Enum

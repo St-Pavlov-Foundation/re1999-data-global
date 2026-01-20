@@ -1,117 +1,119 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateTeamChessItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/EliminateTeamChessItem.lua
 
-local var_0_0 = class("EliminateTeamChessItem", EliminateTeamChessDetailItem)
-local var_0_1 = SLFramework.UGUI.UILongPressListener
-local var_0_2 = SLFramework.UGUI.UIDragListener
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateTeamChessItem", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._longClick = var_0_1.Get(arg_1_0.viewGO)
+local EliminateTeamChessItem = class("EliminateTeamChessItem", EliminateTeamChessDetailItem)
+local UILongPressListener = SLFramework.UGUI.UILongPressListener
+local UIDragListener = SLFramework.UGUI.UIDragListener
 
-	arg_1_0._longClick:SetLongPressTime({
+function EliminateTeamChessItem:_editableInitView()
+	self._longClick = UILongPressListener.Get(self.viewGO)
+
+	self._longClick:SetLongPressTime({
 		0.5,
 		99999
 	})
 
-	arg_1_0._dragClick = var_0_2.Get(arg_1_0.viewGO)
+	self._dragClick = UIDragListener.Get(self.viewGO)
 end
 
-function var_0_0._editableAddEvents(arg_2_0)
-	arg_2_0._longClick:AddClickListener(arg_2_0._onLongClick, arg_2_0)
-	arg_2_0._longClick:AddLongPressListener(arg_2_0._onLongPress, arg_2_0)
-	arg_2_0._dragClick:AddDragListener(arg_2_0._onDrag, arg_2_0)
-	arg_2_0._dragClick:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._dragClick:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
+function EliminateTeamChessItem:_editableAddEvents()
+	self._longClick:AddClickListener(self._onLongClick, self)
+	self._longClick:AddLongPressListener(self._onLongPress, self)
+	self._dragClick:AddDragListener(self._onDrag, self)
+	self._dragClick:AddDragBeginListener(self._onDragBegin, self)
+	self._dragClick:AddDragEndListener(self._onDragEnd, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_3_0)
-	if arg_3_0._longClick then
-		arg_3_0._longClick:RemoveClickListener()
-		arg_3_0._longClick:RemoveLongPressListener()
+function EliminateTeamChessItem:_editableRemoveEvents()
+	if self._longClick then
+		self._longClick:RemoveClickListener()
+		self._longClick:RemoveLongPressListener()
 	end
 
-	if arg_3_0._dragClick then
-		arg_3_0._dragClick:RemoveDragBeginListener()
-		arg_3_0._dragClick:RemoveDragEndListener()
-		arg_3_0._dragClick:RemoveDragListener()
+	if self._dragClick then
+		self._dragClick:RemoveDragBeginListener()
+		self._dragClick:RemoveDragEndListener()
+		self._dragClick:RemoveDragListener()
 	end
 end
 
-function var_0_0._onDragBegin(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._canUse or not arg_4_0._isLongPress then
+function EliminateTeamChessItem:_onDragBegin(_, eventData)
+	if not self._canUse or not self._isLongPress then
 		return
 	end
 
-	arg_4_0._beginDragX = arg_4_2.position.x
-	arg_4_0._beginDragY = arg_4_2.position.y
+	self._beginDragX = eventData.position.x
+	self._beginDragY = eventData.position.y
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_mln_drag)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemBeginDrag, arg_4_0._soliderId, arg_4_0._beginDragX, arg_4_0._beginDragY)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemBeginDrag, self._soliderId, self._beginDragX, self._beginDragY)
 end
 
-function var_0_0._onDrag(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0._canUse or not arg_5_0._isLongPress or not arg_5_0._beginDragX or not arg_5_0._beginDragY then
+function EliminateTeamChessItem:_onDrag(_, eventData)
+	if not self._canUse or not self._isLongPress or not self._beginDragX or not self._beginDragY then
 		return
 	end
 
-	local var_5_0 = arg_5_2.position
-	local var_5_1 = var_5_0.x
-	local var_5_2 = var_5_0.y
-	local var_5_3 = var_5_1 - arg_5_0._beginDragX
-	local var_5_4 = var_5_2 - arg_5_0._beginDragY
+	local pos = eventData.position
+	local x = pos.x
+	local y = pos.y
+	local offsetX = x - self._beginDragX
+	local offsetY = y - self._beginDragY
 
-	if math.abs(var_5_3) < 10 and math.abs(var_5_4) < 10 then
+	if math.abs(offsetX) < 10 and math.abs(offsetY) < 10 then
 		return
 	end
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDrag, arg_5_0._soliderId, nil, nil, var_5_1, var_5_2)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDrag, self._soliderId, nil, nil, x, y)
 end
 
-function var_0_0._onDragEnd(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0._canUse or not arg_6_0._isLongPress or not arg_6_0._beginDragX or not arg_6_0._beginDragY then
+function EliminateTeamChessItem:_onDragEnd(_, eventData)
+	if not self._canUse or not self._isLongPress or not self._beginDragX or not self._beginDragY then
 		return
 	end
 
-	local var_6_0 = arg_6_2.position
-	local var_6_1 = var_6_0.x
-	local var_6_2 = var_6_0.y
+	local pos = eventData.position
+	local x = pos.x
+	local y = pos.y
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragEnd, arg_6_0._soliderId, nil, nil, var_6_1, var_6_2)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragEnd, self._soliderId, nil, nil, x, y)
 end
 
-function var_0_0._onLongClick(arg_7_0)
+function EliminateTeamChessItem:_onLongClick()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_activity_open)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessView, arg_7_0._soliderId, nil, nil, EliminateTeamChessEnum.ChessTipType.showDesc, arg_7_0, {
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessView, self._soliderId, nil, nil, EliminateTeamChessEnum.ChessTipType.showDesc, self, {
 		soliderTipOffsetX = EliminateTeamChessEnum.soliderItemTipOffsetX,
 		soliderTipOffsetY = EliminateTeamChessEnum.soliderItemTipOffsetY
 	})
 end
 
-function var_0_0.getPosXYZ(arg_8_0)
-	return transformhelper.getPos(arg_8_0.viewGO.transform)
+function EliminateTeamChessItem:getPosXYZ()
+	return transformhelper.getPos(self.viewGO.transform)
 end
 
-function var_0_0._onLongPress(arg_9_0)
-	if not arg_9_0._canUse then
+function EliminateTeamChessItem:_onLongPress()
+	if not self._canUse then
 		return
 	end
 
 	logNormal("EliminateTeamChessItem:_onLongPress")
 end
 
-function var_0_0.setSoliderId(arg_10_0, arg_10_1)
-	var_0_0.super.setSoliderId(arg_10_0, arg_10_1)
+function EliminateTeamChessItem:setSoliderId(id)
+	EliminateTeamChessItem.super.setSoliderId(self, id)
 
-	arg_10_0._isLongPress = true
+	self._isLongPress = true
 end
 
-function var_0_0.setChildIndex(arg_11_0, arg_11_1)
-	arg_11_0.viewGO.transform:SetSiblingIndex(arg_11_1)
+function EliminateTeamChessItem:setChildIndex(i)
+	self.viewGO.transform:SetSiblingIndex(i)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	var_0_0.super.onDestroyView(arg_12_0)
+function EliminateTeamChessItem:onDestroyView()
+	EliminateTeamChessItem.super.onDestroyView(self)
 
-	arg_12_0._effectCollection = nil
+	self._effectCollection = nil
 end
 
-return var_0_0
+return EliminateTeamChessItem

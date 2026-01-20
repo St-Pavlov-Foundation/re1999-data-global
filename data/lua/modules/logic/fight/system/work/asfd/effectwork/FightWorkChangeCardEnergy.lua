@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.system.work.asfd.effectwork.FightWorkChangeCardEnergy", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/effectwork/FightWorkChangeCardEnergy.lua
 
-local var_0_0 = class("FightWorkChangeCardEnergy", FightEffectBase)
+module("modules.logic.fight.system.work.asfd.effectwork.FightWorkChangeCardEnergy", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.SAFETIME = 1.5
+local FightWorkChangeCardEnergy = class("FightWorkChangeCardEnergy", FightEffectBase)
+
+function FightWorkChangeCardEnergy:onConstructor()
+	self.SAFETIME = 1.5
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = FightStrUtil.instance:getSplitString2Cache(arg_2_0.actEffectData.reserveStr, true)
+function FightWorkChangeCardEnergy:onStart()
+	local changeList = FightStrUtil.instance:getSplitString2Cache(self.actEffectData.reserveStr, true)
 
-	FightController.instance:dispatchEvent(FightEvent.ASFD_OnChangeCardEnergy, var_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 1 / FightModel.instance:getUISpeed())
+	FightController.instance:dispatchEvent(FightEvent.ASFD_OnChangeCardEnergy, changeList)
+	TaskDispatcher.runDelay(self._delayDone, self, 1 / FightModel.instance:getUISpeed())
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
+function FightWorkChangeCardEnergy:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightWorkChangeCardEnergy

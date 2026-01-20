@@ -1,166 +1,340 @@
-﻿module("modules.common.others.SkillHelper", package.seeall)
+﻿-- chunkname: @modules/common/others/SkillHelper.lua
 
-local var_0_0 = class("SkillHelper")
+module("modules.common.others.SkillHelper", package.seeall)
 
-function var_0_0.getTagDescRecursion(arg_1_0, arg_1_1)
-	arg_1_1 = arg_1_1 or "#6680bd"
+local SkillHelper = class("SkillHelper")
+local ti = table.insert
 
-	local var_1_0 = HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(arg_1_0)
-	local var_1_1 = ""
-	local var_1_2 = {}
+function SkillHelper.addNumColor_overseas(desc, percentColor)
+	if string.nilorempty(percentColor) then
+		percentColor = "#C66030"
+	end
 
-	for iter_1_0 = 1, #var_1_0 do
-		local var_1_3 = SkillConfig.instance:getSkillEffectDescCo(var_1_0[iter_1_0])
+	local filtered = SkillHelper.filterRichText(desc)
+	local parts = {}
+	local buffer = ""
+	local inNumber = false
 
-		if var_1_3 then
-			local var_1_4 = var_1_3.name
+	local function flushBuffer()
+		if buffer ~= "" then
+			if inNumber then
+				if buffer:sub(-1) == "." and not buffer:match("%.%d") then
+					local num = buffer:sub(1, -2)
 
-			if (not var_1_3.notAddLink or var_1_3.notAddLink == 0) and not var_1_2[var_1_4] then
-				var_1_2[var_1_4] = true
+					ti(parts, "<color=" .. percentColor .. ">" .. num .. "</color>.")
+				else
+					ti(parts, "<color=" .. percentColor .. ">" .. buffer .. "</color>")
+				end
+			else
+				ti(parts, buffer)
+			end
 
-				local var_1_5 = var_0_0.buildDesc(var_1_3.desc)
+			buffer = ""
+		end
+	end
+
+	local i = 1
+
+	while i <= #filtered do
+		local char = filtered:sub(i, i)
+		local nextChar = filtered:sub(i + 1, i + 1)
+		local isDigit = char:match("%d")
+		local isSign = char:match("[+-]")
+		local isDot = char == "."
+		local isSlash = char == "/"
+		local isPercent = char == "%"
+
+		if not inNumber then
+			if isDigit or isSign and nextChar and nextChar:match("%d") then
+				flushBuffer()
+
+				buffer = char
+				inNumber = true
+			else
+				buffer = buffer .. char
+			end
+
+			i = i + 1
+		elseif isDigit then
+			buffer = buffer .. char
+			i = i + 1
+		elseif isDot and nextChar and nextChar:match("%d") then
+			buffer = buffer .. char
+			i = i + 1
+		elseif isSlash then
+			local j = i + 1
+			local validAfterSlash = false
+
+			while j <= #filtered and filtered:sub(j, j):match("[+-]") do
+				j = j + 1
+			end
+
+			if j <= #filtered and filtered:sub(j, j):match("%d") then
+				validAfterSlash = true
+			end
+
+			if validAfterSlash then
+				buffer = buffer .. char
+				i = i + 1
+			else
+				flushBuffer()
+
+				buffer = "/"
+				inNumber = false
+				i = i + 1
+			end
+		elseif isPercent then
+			buffer = buffer .. char
+
+			if nextChar == "/" then
+				local j = i + 2
+
+				while j <= #filtered and filtered:sub(j, j):match("[+-]") do
+					j = j + 1
+				end
+
+				if j <= #filtered and filtered:sub(j, j):match("%d") then
+					buffer = buffer .. "/"
+					i = i + 2
+				else
+					flushBuffer()
+
+					inNumber = false
+					i = i + 1
+				end
+			else
+				flushBuffer()
+
+				inNumber = false
+				i = i + 1
+			end
+		elseif isSign and buffer:sub(-1) == "/" and nextChar and nextChar:match("%d") then
+			buffer = buffer .. char
+			i = i + 1
+		else
+			flushBuffer()
+
+			buffer = char
+			inNumber = false
+			i = i + 1
+		end
+	end
+
+	flushBuffer()
+
+	return SkillHelper.revertRichText(table.concat(parts))
+end
+
+function SkillHelper.removeAllColorRichTags(text)
+	if string.nilorempty(text) then
+		return text
+	end
+
+	text = text:gsub("<color=#[0-9a-fA-F]+>", "")
+	text = text:gsub("<#[0-9a-fA-F]+>", "")
+	text = text:gsub("</color>", "")
+
+	return text
+end
+
+function SkillHelper.getTagDescRecursion(desc, nameColor)
+	nameColor = nameColor or "#6680bd"
+
+	local matches = HeroSkillModel.instance:getEffectTagIDsFromDescRecursion(desc)
+	local wordContent = ""
+	local tagNameExistDict = {}
+
+	for k = 1, #matches do
+		local co = SkillConfig.instance:getSkillEffectDescCo(matches[k])
+
+		if co then
+			local name = co.name
+
+			if (not co.notAddLink or co.notAddLink == 0) and not tagNameExistDict[name] then
+				tagNameExistDict[name] = true
+
+				local tagDesc = SkillHelper.buildDesc(co.desc)
 
 				if LangSettings.instance:isEn() then
-					var_1_1 = var_1_1 .. string.format("<color=%s>[%s]</color>: %s\n", arg_1_1, var_1_4, var_1_5)
+					wordContent = wordContent .. string.format("<color=%s>[%s]</color>: %s\n", nameColor, name, tagDesc)
 				else
-					var_1_1 = var_1_1 .. string.format("<color=%s>[%s]</color>:%s\n", arg_1_1, var_1_4, var_1_5)
+					wordContent = wordContent .. string.format("<color=%s>[%s]</color>:%s\n", nameColor, name, tagDesc)
 				end
 			end
 		end
 	end
 
-	return var_1_1
+	return wordContent
 end
 
-function var_0_0.addHyperLinkClick(arg_2_0, arg_2_1, arg_2_2)
-	if gohelper.isNil(arg_2_0) then
+function SkillHelper.addHyperLinkClick(textComp, clickCallback, clickCallbackObj)
+	if gohelper.isNil(textComp) then
 		logError("textComp is nil, please check !!!")
 
 		return
 	end
 
-	gohelper.onceAddComponent(arg_2_0, typeof(ZProj.TMPHyperLinkClick)):SetClickListener(arg_2_1 or var_0_0.defaultClick, arg_2_2)
+	local hyperLinkClick = gohelper.onceAddComponent(textComp, typeof(ZProj.TMPHyperLinkClick))
+
+	hyperLinkClick:SetClickListener(clickCallback or SkillHelper.defaultClick, clickCallbackObj)
 end
 
-function var_0_0.defaultClick(arg_3_0, arg_3_1)
-	CommonBuffTipController.instance:openCommonTipView(arg_3_0, arg_3_1)
+function SkillHelper.defaultClick(effId, clickPosition)
+	CommonBuffTipController.instance:openCommonTipView(effId, clickPosition)
 end
 
-function var_0_0.getSkillDesc(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = FightConfig.instance:getSkillEffectDesc(arg_4_0, arg_4_1)
+function SkillHelper.getSkillDesc(monsterName, effectCo, percentColor, bracketColor)
+	local desc = FightConfig.instance:getSkillEffectDesc(monsterName, effectCo)
 
-	return var_0_0.buildDesc(var_4_0, arg_4_2, arg_4_3)
+	return SkillHelper.buildDesc(desc, percentColor, bracketColor)
 end
 
-function var_0_0.buildDesc(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0 = var_0_0.addLink(arg_5_0)
-	arg_5_0 = var_0_0.addColor(arg_5_0, arg_5_1, arg_5_2)
+function SkillHelper.buildDesc(desc, percentColor, bracketColor)
+	desc = SkillHelper.addLink(desc)
+	desc = SkillHelper.addColor(desc, percentColor, bracketColor)
 
-	return arg_5_0
+	return desc
 end
 
-function var_0_0.getEntityDescBySkillCo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = FightConfig.instance:getEntityName(arg_6_0)
+function SkillHelper.getEntityDescBySkillCo(entityId, skillCo, percentColor, bracketColor)
+	local entityName = FightConfig.instance:getEntityName(entityId)
 
-	return var_0_0.getSkillDesc(var_6_0, arg_6_1, arg_6_2, arg_6_3)
+	return SkillHelper.getSkillDesc(entityName, skillCo, percentColor, bracketColor)
 end
 
-function var_0_0.getEntityDescBySkillId(arg_7_0, arg_7_1)
-	local var_7_0 = lua_skill.configDict[arg_7_1]
+function SkillHelper.getEntityDescBySkillId(entityId, skillId)
+	local skillCo = lua_skill.configDict[skillId]
 
-	if not var_7_0 then
-		logError("技能表找不到id : " .. tostring(arg_7_1))
+	if not skillCo then
+		logError("技能表找不到id : " .. tostring(skillId))
 
 		return ""
 	end
 
-	local var_7_1 = FightConfig.instance:getEntityName(arg_7_0)
+	local entityName = FightConfig.instance:getEntityName(entityId)
 
-	return var_0_0.getSkillDesc(var_7_1, var_7_0)
+	return SkillHelper.getSkillDesc(entityName, skillCo)
 end
 
-function var_0_0.addColor(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0 = var_0_0.addNumColor(arg_8_0, arg_8_1)
-	arg_8_0 = var_0_0.addBracketColor(arg_8_0, arg_8_2)
+function SkillHelper.addColor(desc, percentColor, bracketColor)
+	desc = SkillHelper.addNumColor(desc, percentColor)
+	desc = SkillHelper.addBracketColor(desc, bracketColor)
 
-	return arg_8_0
+	return desc
 end
 
-function var_0_0.addBracketColor(arg_9_0, arg_9_1)
-	if string.nilorempty(arg_9_1) then
-		arg_9_1 = "#4e6698"
+function SkillHelper.addBracketColor(desc, bracketColor)
+	if string.nilorempty(bracketColor) then
+		bracketColor = "#4e6698"
 	end
 
-	local var_9_0 = var_0_0.getColorFormat(arg_9_1, "%1")
+	local bracketColorFormat = SkillHelper.getColorFormat(bracketColor, "%1")
 
-	arg_9_0 = string.gsub(arg_9_0, "%[.-%]", var_9_0)
-	arg_9_0 = string.gsub(arg_9_0, "【.-】", var_9_0)
+	desc = string.gsub(desc, "%[.-%]", bracketColorFormat)
+	desc = string.gsub(desc, "【.-】", bracketColorFormat)
 
-	return arg_9_0
+	return desc
 end
 
-function var_0_0.addNumColor(arg_10_0, arg_10_1)
-	if string.nilorempty(arg_10_1) then
-		arg_10_1 = "#C66030"
+local richTextList = {}
+local replaceRichIndex = 0
+local replaceRichText = "▩rich_replace▩"
+
+function SkillHelper.filterRichText(desc)
+	tabletool.clear(richTextList)
+
+	desc = string.gsub(desc, "(<.->)", SkillHelper._filterRichText)
+
+	return desc
+end
+
+function SkillHelper._filterRichText(richText)
+	table.insert(richTextList, richText)
+
+	return replaceRichText
+end
+
+function SkillHelper.revertRichText(desc)
+	replaceRichIndex = 0
+	desc = string.gsub(desc, replaceRichText, SkillHelper._revertRichText)
+
+	tabletool.clear(richTextList)
+
+	return desc
+end
+
+function SkillHelper._revertRichText(text)
+	replaceRichIndex = replaceRichIndex + 1
+
+	return richTextList[replaceRichIndex] or ""
+end
+
+function SkillHelper.addNumColor(desc, percentColor)
+	do return SkillHelper.addNumColor_overseas(desc, percentColor) end
+
+	if string.nilorempty(percentColor) then
+		percentColor = "#C66030"
 	end
 
-	local var_10_0 = var_0_0.getColorFormat(arg_10_1, "%1")
+	desc = SkillHelper.filterRichText(desc)
 
-	arg_10_0 = string.gsub(arg_10_0, "[+-]?%d+%.%d+%%", var_10_0)
-	arg_10_0 = string.gsub(arg_10_0, "[+-]?%d+%%", var_10_0)
+	local percentColorFormat = SkillHelper.getColorFormat(percentColor, "%1")
 
-	return arg_10_0
+	desc = string.gsub(desc, "[+-]?[%d%./%%]+", percentColorFormat)
+	desc = SkillHelper.revertRichText(desc)
+
+	return desc
 end
 
-function var_0_0.getColorFormat(arg_11_0, arg_11_1)
-	return string.format("<color=%s>%s</color>", arg_11_0, arg_11_1)
+function SkillHelper.getColorFormat(color, text)
+	return string.format("<color=%s>%s</color>", color, text)
 end
 
-function var_0_0.addLink(arg_12_0)
-	arg_12_0 = string.gsub(arg_12_0, "%[(.-)%]", var_0_0._replaceDescTagFunc1)
-	arg_12_0 = string.gsub(arg_12_0, "【(.-)】", var_0_0._replaceDescTagFunc2)
+function SkillHelper.addLink(desc)
+	desc = string.gsub(desc, "%[(.-)%]", SkillHelper._replaceDescTagFunc1)
+	desc = string.gsub(desc, "【(.-)】", SkillHelper._replaceDescTagFunc2)
 
-	return arg_12_0
+	return desc
 end
 
-function var_0_0._replaceDescTagFunc1(arg_13_0)
-	local var_13_0 = SkillConfig.instance:getSkillEffectDescCoByName(arg_13_0)
+function SkillHelper._replaceDescTagFunc1(skillName)
+	local co = SkillConfig.instance:getSkillEffectDescCoByName(skillName)
 
-	arg_13_0 = var_0_0.removeRichTag(arg_13_0)
+	skillName = SkillHelper.removeRichTag(skillName)
 
-	if not var_13_0 then
-		return string.format("[%s]", arg_13_0)
+	if not co then
+		return string.format("[%s]", skillName)
 	end
 
-	if not var_13_0.notAddLink or var_13_0.notAddLink == 0 then
-		return string.format("[<u><link=%s>%s</link></u>]", var_13_0.id, arg_13_0)
+	if not co.notAddLink or co.notAddLink == 0 then
+		return string.format("[<u><link=%s>%s</link></u>]", co.id, skillName)
 	end
 
-	return string.format("[%s]", arg_13_0)
+	return string.format("[%s]", skillName)
 end
 
-function var_0_0._replaceDescTagFunc2(arg_14_0)
-	local var_14_0 = SkillConfig.instance:getSkillEffectDescCoByName(arg_14_0)
+function SkillHelper._replaceDescTagFunc2(skillName)
+	local co = SkillConfig.instance:getSkillEffectDescCoByName(skillName)
 
-	arg_14_0 = var_0_0.removeRichTag(arg_14_0)
+	skillName = SkillHelper.removeRichTag(skillName)
 
-	if not var_14_0 then
-		return string.format("【%s】", arg_14_0)
+	if not co then
+		return string.format("【%s】", skillName)
 	end
 
-	if not var_14_0.notAddLink or var_14_0.notAddLink == 0 then
-		return string.format("【<u><link=%s>%s</link></u>】", var_14_0.id, arg_14_0)
+	if not co.notAddLink or co.notAddLink == 0 then
+		return string.format("【<u><link=%s>%s</link></u>】", co.id, skillName)
 	end
 
-	return string.format("【%s】", arg_14_0)
+	return string.format("【%s】", skillName)
 end
 
-function var_0_0.removeRichTag(arg_15_0)
-	return string.gsub(arg_15_0, "<.->", "")
+function SkillHelper.removeRichTag(name)
+	return string.gsub(name, "<.->", "")
 end
 
-function var_0_0.canShowTag(arg_16_0)
-	return arg_16_0 and (not arg_16_0.notAddLink or arg_16_0.notAddLink == 0)
+function SkillHelper.canShowTag(tagCo)
+	return tagCo and (not tagCo.notAddLink or tagCo.notAddLink == 0)
 end
 
-return var_0_0
+return SkillHelper

@@ -1,118 +1,124 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneViewComp.lua
 
-local var_0_0 = class("SurvivalSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	if not SurvivalMapModel.instance.isFightEnter or not arg_1_0._beginDt then
-		arg_1_0._beginDt = ServerTime.now()
+local SurvivalSceneViewComp = class("SurvivalSceneViewComp", BaseSceneComp)
+
+function SurvivalSceneViewComp:onScenePrepared(sceneId, levelId)
+	if not SurvivalMapModel.instance.isFightEnter or not self._beginDt then
+		self._beginDt = ServerTime.now()
 	end
 
 	SurvivalMapModel.instance.isFightEnter = false
 
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if var_1_0.battleInfo.status ~= SurvivalEnum.FightStatu.None then
+	if sceneMo.battleInfo.status ~= SurvivalEnum.FightStatu.None then
 		SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.FightBack, "")
 	else
-		SurvivalMapHelper.instance:tryShowServerPanel(var_1_0.panel)
+		SurvivalMapHelper.instance:tryShowServerPanel(sceneMo.panel)
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._processGuideEvent, arg_1_0, 0.3)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._processGuideEvent, arg_1_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.onFlowEnd, arg_1_0._processGuideEvent, arg_1_0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_1_0._processGuideEvent, arg_1_0)
+	TaskDispatcher.runDelay(self._processGuideEvent, self, 0.3)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._processGuideEvent, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.onFlowEnd, self._processGuideEvent, self)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._processGuideEvent, self)
 end
 
-function var_0_0._processGuideEvent(arg_2_0)
-	if ViewHelper.instance:checkViewOnTheTop(ViewName.SurvivalMapMainView, {
+function SurvivalSceneViewComp:_processGuideEvent()
+	local isInTopView = ViewHelper.instance:checkViewOnTheTop(ViewName.SurvivalMapMainView, {
 		ViewName.SurvivalToastView,
 		ViewName.SurvivalCommonTipsView,
 		ViewName.GuideView,
 		ViewName.GuideView2,
 		ViewName.GuideStepEditor
-	}) and not SurvivalMapHelper.instance:isInFlow() then
-		if not arg_2_0:isGuideLock() and arg_2_0:isHaveEquip() then
+	})
+
+	if isInTopView and not SurvivalMapHelper.instance:isInFlow() then
+		if not self:isGuideLock() and self:isHaveEquip() then
 			SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitHaveEquip)
 		end
 
-		if not arg_2_0:isGuideLock() and arg_2_0:isInSpRain() then
-			local var_2_0 = SurvivalMapModel.instance:getSceneMo()
+		if not self:isGuideLock() and self:isInSpRain() then
+			local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-			SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitSpRain, tostring(var_2_0._mapInfo.rainCo.type))
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitSpRain, tostring(sceneMo._mapInfo.rainCo.type))
 		end
 
-		if not arg_2_0:isGuideLock() then
-			arg_2_0:processSpBlockGuide()
+		if not self:isGuideLock() then
+			self:processSpBlockGuide()
 		end
 	end
 end
 
-function var_0_0.isHaveEquip(arg_3_0)
-	local var_3_0 = false
-	local var_3_1 = SurvivalMapHelper.instance:getBagMo()
+function SurvivalSceneViewComp:isHaveEquip()
+	local haveEquip = false
+	local bagMo = SurvivalMapHelper.instance:getBagMo()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1.items) do
-		if iter_3_1.equipCo then
-			var_3_0 = true
+	for i, v in ipairs(bagMo.items) do
+		if v.equipCo then
+			haveEquip = true
 
 			break
 		end
 	end
 
-	return var_3_0
+	return haveEquip
 end
 
-function var_0_0.isInSpRain(arg_4_0)
-	local var_4_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalSceneViewComp:isInSpRain()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if not var_4_0._mapInfo.rainCo then
+	if not sceneMo._mapInfo.rainCo then
 		return false
 	end
 
-	return var_4_0._mapInfo.rainCo.type ~= 1
+	return sceneMo._mapInfo.rainCo.type ~= 1
 end
 
-function var_0_0.processSpBlockGuide(arg_5_0)
-	local var_5_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalSceneViewComp:processSpBlockGuide()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	for iter_5_0, iter_5_1 in ipairs(SurvivalHelper.instance:getAllPointsByDis(var_5_0.player.pos, 2)) do
-		local var_5_1 = var_5_0:getBlockTypeByPos(iter_5_1)
+	for i, v in ipairs(SurvivalHelper.instance:getAllPointsByDis(sceneMo.player.pos, 2)) do
+		local blockType = sceneMo:getBlockTypeByPos(v)
 
-		if var_5_1 and var_5_1 ~= SurvivalEnum.UnitSubType.Block then
-			SurvivalMapModel.instance.guideSpBlockPos = iter_5_1:clone()
+		if blockType and blockType ~= SurvivalEnum.UnitSubType.Block then
+			SurvivalMapModel.instance.guideSpBlockPos = v:clone()
 
-			SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitSpBlock, tostring(var_5_1))
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitSpBlock, tostring(blockType))
 		end
 
-		if arg_5_0:isGuideLock() then
+		if self:isGuideLock() then
 			return
 		end
 	end
 end
 
-function var_0_0.isGuideLock(arg_6_0)
+function SurvivalSceneViewComp:isGuideLock()
 	return GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SurvivalGuideLock)
 end
 
-function var_0_0.onSceneClose(arg_7_0, arg_7_1, arg_7_2)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_7_0._processGuideEvent, arg_7_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_7_0._processGuideEvent, arg_7_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.onFlowEnd, arg_7_0._processGuideEvent, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._processGuideEvent, arg_7_0)
+function SurvivalSceneViewComp:onSceneClose(sceneId, levelId)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._processGuideEvent, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._processGuideEvent, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.onFlowEnd, self._processGuideEvent, self)
+	TaskDispatcher.cancelTask(self._processGuideEvent, self)
 	ViewMgr.instance:closeView(ViewName.SurvivalMapMainView)
 	ViewMgr.instance:closeView(ViewName.SurvivalToastView)
 	ViewMgr.instance:closeAllPopupViews()
 
-	if GameSceneMgr.instance:getNextSceneType() ~= SceneType.Fight then
-		local var_7_0 = SurvivalShelterModel.instance:getWeekInfo()
-		local var_7_1 = "settle"
+	local nextSceneType = GameSceneMgr.instance:getNextSceneType()
 
-		if var_7_0 and var_7_0.inSurvival then
-			var_7_1 = "topleft"
+	if nextSceneType ~= SceneType.Fight then
+		local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+		local type = "settle"
+
+		if weekMo and weekMo.inSurvival then
+			type = "topleft"
 		end
 
-		SurvivalStatHelper.instance:statMapClose(ServerTime.now() - arg_7_0._beginDt, var_7_1)
+		SurvivalStatHelper.instance:statMapClose(ServerTime.now() - self._beginDt, type)
 	end
 end
 
-return var_0_0
+return SurvivalSceneViewComp

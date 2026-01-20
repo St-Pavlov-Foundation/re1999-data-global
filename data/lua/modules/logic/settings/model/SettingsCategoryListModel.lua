@@ -1,16 +1,18 @@
-﻿module("modules.logic.settings.model.SettingsCategoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/settings/model/SettingsCategoryListModel.lua
 
-local var_0_0 = class("SettingsCategoryListModel", ListScrollModel)
+module("modules.logic.settings.model.SettingsCategoryListModel", package.seeall)
 
-function var_0_0.setCategoryList(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1 and arg_1_1 or {}
+local SettingsCategoryListModel = class("SettingsCategoryListModel", ListScrollModel)
 
-	table.sort(var_1_0, function(arg_2_0, arg_2_1)
-		return arg_2_0.id < arg_2_1.id
+function SettingsCategoryListModel:setCategoryList(infos)
+	local moList = infos and infos or {}
+
+	table.sort(moList, function(a, b)
+		return a.id < b.id
 	end)
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+SettingsCategoryListModel.instance = SettingsCategoryListModel.New()
 
-return var_0_0
+return SettingsCategoryListModel

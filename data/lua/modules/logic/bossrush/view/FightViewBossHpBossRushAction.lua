@@ -1,86 +1,88 @@
-﻿module("modules.logic.bossrush.view.FightViewBossHpBossRushAction", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/FightViewBossHpBossRushAction.lua
 
-local var_0_0 = class("FightViewBossHpBossRushAction", FightBaseView)
+module("modules.logic.bossrush.view.FightViewBossHpBossRushAction", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._moveRoot = gohelper.findChild(arg_1_0.viewGO, "mask/moveRoot/moveRootScript").transform
-	arg_1_0._content = gohelper.findChild(arg_1_0.viewGO, "mask/moveRoot/moveRootScript/root/Content")
-	arg_1_0._opItem = gohelper.findChild(arg_1_0.viewGO, "mask/moveRoot/moveRootScript/root/Content/op")
-	arg_1_0._btn = gohelper.findChildButton(arg_1_0.viewGO, "btn")
-	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(arg_1_0.viewGO)
+local FightViewBossHpBossRushAction = class("FightViewBossHpBossRushAction", FightBaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightViewBossHpBossRushAction:onInitView()
+	self._moveRoot = gohelper.findChild(self.viewGO, "mask/moveRoot/moveRootScript").transform
+	self._content = gohelper.findChild(self.viewGO, "mask/moveRoot/moveRootScript/root/Content")
+	self._opItem = gohelper.findChild(self.viewGO, "mask/moveRoot/moveRootScript/root/Content/op")
+	self._btn = gohelper.findChildButton(self.viewGO, "btn")
+	self._ani = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.OnMonsterChange, arg_2_0._onMonsterChange)
-	arg_2_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish)
-	arg_2_0:com_registFightEvent(FightEvent.OnEntityDead, arg_2_0._onEntityDead)
-	arg_2_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate)
-	arg_2_0:com_registClick(arg_2_0._btn, arg_2_0._ontBtnClick)
+function FightViewBossHpBossRushAction:addEvents()
+	self:com_registFightEvent(FightEvent.OnMonsterChange, self._onMonsterChange)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish)
+	self:com_registFightEvent(FightEvent.OnEntityDead, self._onEntityDead)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registClick(self._btn, self._ontBtnClick)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewBossHpBossRushAction:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0.viewGO, true)
+function FightViewBossHpBossRushAction:_editableInitView()
+	gohelper.setActive(self.viewGO, true)
 end
 
-function var_0_0._ontBtnClick(arg_5_0)
+function FightViewBossHpBossRushAction:_ontBtnClick()
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
-	if not arg_5_0._curDataList or #arg_5_0._curDataList == 0 then
+	if not self._curDataList or #self._curDataList == 0 then
 		return
 	end
 
-	if not arg_5_0._bossEntityMO then
+	if not self._bossEntityMO then
 		return
 	end
 
-	local var_5_0 = {
-		entityId = arg_5_0._bossEntityMO.id,
-		dataList = LuaUtil.deepCopySimple(arg_5_0._curDataList)
+	local data = {
+		entityId = self._bossEntityMO.id,
+		dataList = LuaUtil.deepCopySimple(self._curDataList)
 	}
 
-	ViewMgr.instance:openView(ViewName.FightActionBarPopView, var_5_0)
+	ViewMgr.instance:openView(ViewName.FightActionBarPopView, data)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_refreshActData()
-	arg_6_0:_refreshRoundShow()
+function FightViewBossHpBossRushAction:onOpen()
+	self:_refreshActData()
+	self:_refreshRoundShow()
 end
 
-function var_0_0._onMonsterChange(arg_7_0, arg_7_1)
-	if arg_7_0._bossEntityMO and arg_7_1.id == arg_7_0._bossEntityMO.id then
-		arg_7_0:_refreshActData(1)
+function FightViewBossHpBossRushAction:_onMonsterChange(oldEntityMO)
+	if self._bossEntityMO and oldEntityMO.id == self._bossEntityMO.id then
+		self:_refreshActData(1)
 	end
 end
 
-function var_0_0._onEntityDead(arg_8_0, arg_8_1)
-	if arg_8_0._bossEntityMO and arg_8_0._bossEntityMO.id == arg_8_1 then
-		arg_8_0:_refreshActData(1)
+function FightViewBossHpBossRushAction:_onEntityDead(entityId)
+	if self._bossEntityMO and self._bossEntityMO.id == entityId then
+		self:_refreshActData(1)
 	end
 end
 
-function var_0_0._onBuffUpdate(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	if arg_9_0._bossEntityMO and arg_9_0._bossEntityMO.id == arg_9_1 and arg_9_2 == FightEnum.EffectType.BUFFADD and arg_9_3 == 514000102 then
-		local var_9_0 = {}
+function FightViewBossHpBossRushAction:_onBuffUpdate(targetId, effectType, buffId, buffUid)
+	if self._bossEntityMO and self._bossEntityMO.id == targetId and effectType == FightEnum.EffectType.BUFFADD and buffId == 514000102 then
+		local list = {}
 
-		tabletool.addValues(var_9_0, arg_9_0._curDataList)
-		tabletool.addValues(var_9_0, arg_9_0._actList)
+		tabletool.addValues(list, self._curDataList)
+		tabletool.addValues(list, self._actList)
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			for iter_9_2, iter_9_3 in ipairs(iter_9_1) do
-				if iter_9_3.isChannelPosedSkill then
-					iter_9_3.forbidden = true
+		for i, v in ipairs(list) do
+			for index, skillData in ipairs(v) do
+				if skillData.isChannelPosedSkill then
+					skillData.forbidden = true
 
-					FightController.instance:dispatchEvent(FightEvent.ForbidBossRushHpChannelSkillOpItem, iter_9_3)
+					FightController.instance:dispatchEvent(FightEvent.ForbidBossRushHpChannelSkillOpItem, skillData)
 
 					return
 				end
@@ -89,90 +91,92 @@ function var_0_0._onBuffUpdate(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	end
 end
 
-function var_0_0._refreshActData(arg_10_0, arg_10_1)
-	arg_10_0._curRound = FightModel.instance:getCurRoundId() + (arg_10_1 or 0)
-	arg_10_0._maxRound = FightModel.instance:getMaxRound()
-	arg_10_0._actList = {}
-	arg_10_0._curDataList = {}
+function FightViewBossHpBossRushAction:_refreshActData(offsetRound)
+	self._curRound = FightModel.instance:getCurRoundId() + (offsetRound or 0)
+	self._maxRound = FightModel.instance:getMaxRound()
+	self._actList = {}
+	self._curDataList = {}
 
-	local var_10_0 = FightModel.instance:getBattleId()
+	local battleId = FightModel.instance:getBattleId()
+	local parentView = self.PARENT_VIEW
 
-	arg_10_0._bossEntityMO = arg_10_0.PARENT_VIEW._bossEntityMO
+	self._bossEntityMO = parentView._bossEntityMO
 
-	if arg_10_0._bossEntityMO then
-		local var_10_1 = arg_10_0._bossEntityMO.modelId
-		local var_10_2 = lua_boss_action.configDict[var_10_0] and lua_boss_action.configDict[var_10_0][var_10_1]
+	if self._bossEntityMO then
+		local monsterId = self._bossEntityMO.modelId
+		local config = lua_boss_action.configDict[battleId] and lua_boss_action.configDict[battleId][monsterId]
 
-		if var_10_2 then
-			local var_10_3 = var_10_2.actionId
-			local var_10_4 = lua_boss_action_list.configDict[var_10_3]
+		if config then
+			local actionId = config.actionId
 
-			if var_10_4 then
-				local var_10_5 = 0
-				local var_10_6 = arg_10_0._curRound
+			config = lua_boss_action_list.configDict[actionId]
 
-				while var_10_6 <= arg_10_0._maxRound do
-					for iter_10_0 = 1, var_10_4.circle do
-						var_10_5 = var_10_5 + 1
+			if config then
+				local index = 0
+				local curRound = self._curRound
 
-						local var_10_7 = arg_10_0._actList[var_10_5] or {}
-						local var_10_8 = var_10_4["actionId" .. iter_10_0]
+				while curRound <= self._maxRound do
+					for i = 1, config.circle do
+						index = index + 1
 
-						if var_10_8 == "noAction" then
-							if #var_10_7 == 0 then
-								table.insert(var_10_7, {
+						local skillList = self._actList[index] or {}
+						local action = config["actionId" .. i]
+
+						if action == "noAction" then
+							if #skillList == 0 then
+								table.insert(skillList, {
 									skillId = 0
 								})
 							end
 						else
-							local var_10_9 = FightStrUtil.instance:getSplitCache(var_10_8, "#")
-							local var_10_10
+							local strArr = FightStrUtil.instance:getSplitCache(action, "#")
+							local skillArr
 
-							if not tonumber(var_10_9[1]) then
-								var_10_10 = {}
+							if not tonumber(strArr[1]) then
+								skillArr = {}
 
-								local var_10_11 = FightStrUtil.instance:getSplitCache(var_10_8, "|")
-								local var_10_12 = tonumber(var_10_11[#var_10_11])
+								local arr = FightStrUtil.instance:getSplitCache(action, "|")
+								local skillId = tonumber(arr[#arr])
 
-								if var_10_12 then
-									var_10_10[1] = var_10_12
+								if skillId then
+									skillArr[1] = skillId
 								end
 							else
-								var_10_10 = FightStrUtil.instance:getSplitToNumberCache(var_10_8, "#")
+								skillArr = FightStrUtil.instance:getSplitToNumberCache(action, "#")
 							end
 
-							for iter_10_1, iter_10_2 in ipairs(var_10_10) do
-								local var_10_13, var_10_14, var_10_15 = FightHelper.isBossRushChannelSkill(iter_10_2)
+							for _, skillId in ipairs(skillArr) do
+								local isChannel, channelSkillId, channelRound = FightHelper.isBossRushChannelSkill(skillId)
 
-								if var_10_13 then
-									local var_10_16 = var_10_5 + var_10_15
+								if isChannel then
+									local playRound = index + channelRound
 
-									if var_10_16 <= arg_10_0._maxRound then
-										arg_10_0._actList[var_10_16] = arg_10_0._actList[var_10_16] or {}
+									if playRound <= self._maxRound then
+										self._actList[playRound] = self._actList[playRound] or {}
 
-										table.insert(arg_10_0._actList[var_10_16], {
+										table.insert(self._actList[playRound], {
 											isChannelPosedSkill = true,
-											skillId = var_10_14
+											skillId = channelSkillId
 										})
 									end
 
-									table.insert(var_10_7, {
+									table.insert(skillList, {
 										isChannelSkill = true,
-										round = var_10_15,
-										skillId = iter_10_2
+										round = channelRound,
+										skillId = skillId
 									})
 								else
-									table.insert(var_10_7, {
-										skillId = iter_10_2
+									table.insert(skillList, {
+										skillId = skillId
 									})
 								end
 							end
 						end
 
-						arg_10_0._actList[var_10_5] = var_10_7
-						var_10_6 = var_10_6 + 1
+						self._actList[index] = skillList
+						curRound = curRound + 1
 
-						if var_10_6 > arg_10_0._maxRound then
+						if curRound > self._maxRound then
 							break
 						end
 					end
@@ -182,108 +186,108 @@ function var_0_0._refreshActData(arg_10_0, arg_10_1)
 	end
 end
 
-local var_0_1 = 10
+local maxCard = 10
 
-function var_0_0._refreshRoundShow(arg_11_0)
-	arg_11_0._cardCount = 0
+function FightViewBossHpBossRushAction:_refreshRoundShow()
+	self._cardCount = 0
 
-	for iter_11_0 = 1, var_0_1 do
-		if not arg_11_0._curDataList[iter_11_0] then
-			local var_11_0 = table.remove(arg_11_0._actList, 1)
+	for i = 1, maxCard do
+		if not self._curDataList[i] then
+			local act = table.remove(self._actList, 1)
 
-			if var_11_0 then
-				table.insert(arg_11_0._curDataList, var_11_0)
+			if act then
+				table.insert(self._curDataList, act)
 			end
 		end
 	end
 
-	arg_11_0:com_createObjList(arg_11_0._onRoundSkillShow, arg_11_0._curDataList, arg_11_0._content, arg_11_0._opItem)
+	self:com_createObjList(self._onRoundSkillShow, self._curDataList, self._content, self._opItem)
 end
 
-function var_0_0._releaseTween(arg_12_0)
-	if arg_12_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_12_0._tweenId)
+function FightViewBossHpBossRushAction:_releaseTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_12_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0._onRoundSequenceFinish(arg_13_0)
-	if #arg_13_0._curDataList > 0 then
-		local var_13_0 = table.remove(arg_13_0._curDataList, 1)
+function FightViewBossHpBossRushAction:_onRoundSequenceFinish()
+	if #self._curDataList > 0 then
+		local skillList = table.remove(self._curDataList, 1)
 
-		arg_13_0:_releaseTween()
+		self:_releaseTween()
 
-		local var_13_1 = recthelper.getWidth(arg_13_0._content.transform:GetChild(0))
+		local posX = recthelper.getWidth(self._content.transform:GetChild(0))
 
-		arg_13_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_13_0._moveRoot, -var_13_1, 0.3, arg_13_0._onTweenEnd, arg_13_0)
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._moveRoot, -posX, 0.3, self._onTweenEnd, self)
 	else
-		if arg_13_0.viewGO.activeInHierarchy then
-			arg_13_0._ani:Play("update", nil, nil)
+		if self.viewGO.activeInHierarchy then
+			self._ani:Play("update", nil, nil)
 		end
 
-		TaskDispatcher.runDelay(arg_13_0._refreshRoundShow, arg_13_0, 0.16)
+		TaskDispatcher.runDelay(self._refreshRoundShow, self, 0.16)
 	end
 end
 
-function var_0_0._onTweenEnd(arg_14_0)
-	arg_14_0:_refreshRoundShow()
-	recthelper.setAnchorX(arg_14_0._moveRoot, 0)
+function FightViewBossHpBossRushAction:_onTweenEnd()
+	self:_refreshRoundShow()
+	recthelper.setAnchorX(self._moveRoot, 0)
 end
 
-function var_0_0._onRoundSkillShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_0._cardCount >= var_0_1 then
-		gohelper.setActive(arg_15_1, false)
+function FightViewBossHpBossRushAction:_onRoundSkillShow(obj, data, index)
+	if self._cardCount >= maxCard then
+		gohelper.setActive(obj, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_15_1, true)
+	gohelper.setActive(obj, true)
 
-	local var_15_0 = {
+	local list = {
 		0
 	}
 
-	tabletool.addValues(var_15_0, arg_15_2)
+	tabletool.addValues(list, data)
 
-	local var_15_1 = gohelper.findChild(arg_15_1, "item")
+	local item = gohelper.findChild(obj, "item")
 
-	arg_15_0:com_createObjList(arg_15_0._onOpSkillShow, var_15_0, arg_15_1, var_15_1)
+	self:com_createObjList(self._onOpSkillShow, list, obj, item)
 end
 
-function var_0_0._onOpSkillShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if arg_16_3 == 1 then
+function FightViewBossHpBossRushAction:_onOpSkillShow(obj, data, index)
+	if index == 1 then
 		return
 	end
 
-	arg_16_0._cardCount = arg_16_0._cardCount + 1
+	self._cardCount = self._cardCount + 1
 
-	if arg_16_0._cardCount > var_0_1 then
-		gohelper.setActive(arg_16_1, false)
+	if self._cardCount > maxCard then
+		gohelper.setActive(obj, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_16_1, true)
+	gohelper.setActive(obj, true)
 
-	if not arg_16_0._opItemClassDic then
-		arg_16_0._opItemClassDic = {}
+	if not self._opItemClassDic then
+		self._opItemClassDic = {}
 	end
 
-	if not arg_16_0._opItemClassDic[arg_16_0._cardCount] then
-		arg_16_0._opItemClassDic[arg_16_0._cardCount] = arg_16_0:com_openSubView(FightViewBossHpBossRushActionOpItem)
+	if not self._opItemClassDic[self._cardCount] then
+		self._opItemClassDic[self._cardCount] = self:com_openSubView(FightViewBossHpBossRushActionOpItem)
 	end
 
-	arg_16_0._opItemClassDic[arg_16_0._cardCount]:refreshUI(arg_16_1, arg_16_2)
+	self._opItemClassDic[self._cardCount]:refreshUI(obj, data)
 end
 
-function var_0_0.onClose(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._refreshRoundShow, arg_17_0)
-	arg_17_0:_releaseTween()
+function FightViewBossHpBossRushAction:onClose()
+	TaskDispatcher.cancelTask(self._refreshRoundShow, self)
+	self:_releaseTween()
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function FightViewBossHpBossRushAction:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightViewBossHpBossRushAction

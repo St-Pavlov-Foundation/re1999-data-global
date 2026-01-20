@@ -1,28 +1,32 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6LevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6LevelViewContainer.lua
 
-local var_0_0 = class("LengZhou6LevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6LevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local LengZhou6LevelViewContainer = class("LengZhou6LevelViewContainer", BaseViewContainer)
+
+function LengZhou6LevelViewContainer:buildViews()
+	local views = {
 		LengZhou6LevelView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+function LengZhou6LevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigationView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+		self.navigationView:setOverrideClose(self._overrideClose, self)
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-return var_0_0
+return LengZhou6LevelViewContainer

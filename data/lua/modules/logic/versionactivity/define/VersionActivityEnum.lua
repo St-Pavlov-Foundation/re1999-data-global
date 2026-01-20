@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity.define.VersionActivityEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/define/VersionActivityEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity.define.VersionActivityEnum", package.seeall)
 
-var_0_0.DungeonMapCameraSize = 6.75
-var_0_0.PuzzleColorEnum = {
+local VersionActivityEnum = _M
+
+VersionActivityEnum.DungeonMapCameraSize = 6.75
+VersionActivityEnum.PuzzleColorEnum = {
 	MatchErrorColor = "#725f5a",
 	MatchCorrectColor = "#833d00"
 }
-var_0_0.ActivityId = {
+VersionActivityEnum.ActivityId = {
 	Act111 = 11113,
 	Act108 = 11102,
 	SeasonStore = 11115,
@@ -20,30 +22,30 @@ var_0_0.ActivityId = {
 	Act105 = 11101,
 	Act107 = 11112
 }
-var_0_0.EnterViewActIdList = {
-	var_0_0.ActivityId.Act113,
-	var_0_0.ActivityId.Act104,
-	var_0_0.ActivityId.Act112,
-	var_0_0.ActivityId.Act109,
-	var_0_0.ActivityId.Act111,
-	var_0_0.ActivityId.Act108
+VersionActivityEnum.EnterViewActIdList = {
+	VersionActivityEnum.ActivityId.Act113,
+	VersionActivityEnum.ActivityId.Act104,
+	VersionActivityEnum.ActivityId.Act112,
+	VersionActivityEnum.ActivityId.Act109,
+	VersionActivityEnum.ActivityId.Act111,
+	VersionActivityEnum.ActivityId.Act108
 }
-var_0_0.DungeonChapterId = {
+VersionActivityEnum.DungeonChapterId = {
 	LeiMiTeBei4 = 11401,
 	LeiMiTeBeiHard = 11201,
 	LeiMiTeBei3 = 11301,
 	ElementFight = 11102,
 	LeiMiTeBei = 11101
 }
-var_0_0.ZeroEpisodeId = {
+VersionActivityEnum.ZeroEpisodeId = {
 	Hard = 1120100,
 	Story = 1110100
 }
-var_0_0.EpisodeItemMinWidth = 300
-var_0_0.FirstVersionActivityPuzzleElementId = 11101061
-var_0_0.EnterViewNormalAnimationPath = {
-	[var_0_0.ActivityId.Act113] = "normal",
-	[var_0_0.ActivityId.Act104] = "normal/changeColorContainer"
+VersionActivityEnum.EpisodeItemMinWidth = 300
+VersionActivityEnum.FirstVersionActivityPuzzleElementId = 11101061
+VersionActivityEnum.EnterViewNormalAnimationPath = {
+	[VersionActivityEnum.ActivityId.Act113] = "normal",
+	[VersionActivityEnum.ActivityId.Act104] = "normal/changeColorContainer"
 }
 
-return var_0_0
+return VersionActivityEnum

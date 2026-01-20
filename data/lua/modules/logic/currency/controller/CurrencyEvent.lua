@@ -1,12 +1,14 @@
-﻿module("modules.logic.currency.controller.CurrencyEvent", package.seeall)
+﻿-- chunkname: @modules/logic/currency/controller/CurrencyEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.currency.controller.CurrencyEvent", package.seeall)
 
-var_0_0.CurrencyChange = 1
-var_0_0.PowerBuyCountChange = 2
-var_0_0.GetCurrencyInfoSuccess = 3
-var_0_0.PowerBuyTipToggleOn = 4
-var_0_0.PowerBuySuccess = 5
-var_0_0.RefreshPowerMakerInfo = 6
+local CurrencyEvent = _M
 
-return var_0_0
+CurrencyEvent.CurrencyChange = 1
+CurrencyEvent.PowerBuyCountChange = 2
+CurrencyEvent.GetCurrencyInfoSuccess = 3
+CurrencyEvent.PowerBuyTipToggleOn = 4
+CurrencyEvent.PowerBuySuccess = 5
+CurrencyEvent.RefreshPowerMakerInfo = 6
+
+return CurrencyEvent

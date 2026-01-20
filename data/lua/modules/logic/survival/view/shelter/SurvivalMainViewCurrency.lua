@@ -1,132 +1,138 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalMainViewCurrency", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalMainViewCurrency.lua
 
-local var_0_0 = class("SurvivalMainViewCurrency", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalMainViewCurrency", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnCurrency = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/Top/#go_currency")
-	arg_1_0.imgCurrency = gohelper.findChildImage(arg_1_0.viewGO, "go_normalroot/Top/#go_currency/#image_icon")
-	arg_1_0.txtCurrency = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_normalroot/Top/#go_currency/#txt_currency")
-	arg_1_0.goArrow = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/Top/#go_currency/arrow")
-	arg_1_0.goTips = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/Top/#go_currency/go_tips")
-	arg_1_0.txtSpeed = gohelper.findChildTextMesh(arg_1_0.goTips, "#txt_speed")
-	arg_1_0.imgSpeedIcon = gohelper.findChildImage(arg_1_0.goTips, "#txt_speed/#image_icon")
-	arg_1_0.btnCloseTips = gohelper.findChildButtonWithAudio(arg_1_0.goTips, "#btn_close")
-	arg_1_0.itemType = SurvivalEnum.ItemType.Currency
-	arg_1_0.currencyList = {
+local SurvivalMainViewCurrency = class("SurvivalMainViewCurrency", BaseView)
+
+function SurvivalMainViewCurrency:onInitView()
+	self.btnCurrency = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/Top/#go_currency")
+	self.imgCurrency = gohelper.findChildImage(self.viewGO, "go_normalroot/Top/#go_currency/#image_icon")
+	self.txtCurrency = gohelper.findChildTextMesh(self.viewGO, "go_normalroot/Top/#go_currency/#txt_currency")
+	self.goArrow = gohelper.findChild(self.viewGO, "go_normalroot/Top/#go_currency/arrow")
+	self.goTips = gohelper.findChild(self.viewGO, "go_normalroot/Top/#go_currency/go_tips")
+	self.txtSpeed = gohelper.findChildTextMesh(self.goTips, "#txt_speed")
+	self.imgSpeedIcon = gohelper.findChildImage(self.goTips, "#txt_speed/#image_icon")
+	self.btnCloseTips = gohelper.findChildButtonWithAudio(self.goTips, "#btn_close")
+	self.itemType = SurvivalEnum.ItemType.Currency
+	self.currencyList = {
 		SurvivalEnum.CurrencyType.Food,
 		SurvivalEnum.CurrencyType.Build
 	}
-	arg_1_0.currencyItemList = {}
+	self.currencyItemList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCurrency, arg_2_0.onClickCurrency, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCloseTips, arg_2_0.onClickCloseTips, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_2_0.onShelterBagUpdate, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnWeekInfoUpdate, arg_2_0.onWeekInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnAttrUpdate, arg_2_0.onAttrUpdate, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, arg_2_0.onNpcPostionChange, arg_2_0)
+function SurvivalMainViewCurrency:addEvents()
+	self:addClickCb(self.btnCurrency, self.onClickCurrency, self)
+	self:addClickCb(self.btnCloseTips, self.onClickCloseTips, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnWeekInfoUpdate, self.onWeekInfoUpdate, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnAttrUpdate, self.onAttrUpdate, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, self.onNpcPostionChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnCurrency)
-	arg_3_0:removeClickCb(arg_3_0.btnCloseTips)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_3_0.onShelterBagUpdate, arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnWeekInfoUpdate, arg_3_0.onWeekInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnAttrUpdate, arg_3_0.onAttrUpdate, arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, arg_3_0.onNpcPostionChange, arg_3_0)
+function SurvivalMainViewCurrency:removeEvents()
+	self:removeClickCb(self.btnCurrency)
+	self:removeClickCb(self.btnCloseTips)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnWeekInfoUpdate, self.onWeekInfoUpdate, self)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnAttrUpdate, self.onAttrUpdate, self)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnNpcPostionChange, self.onNpcPostionChange, self)
 end
 
-function var_0_0.onWeekInfoUpdate(arg_4_0)
-	arg_4_0:refreshCurrency()
+function SurvivalMainViewCurrency:onWeekInfoUpdate()
+	self:refreshCurrency()
 end
 
-function var_0_0.onAttrUpdate(arg_5_0)
-	arg_5_0:refreshCurrency()
+function SurvivalMainViewCurrency:onAttrUpdate()
+	self:refreshCurrency()
 end
 
-function var_0_0.onNpcPostionChange(arg_6_0)
-	arg_6_0:refreshCurrency()
+function SurvivalMainViewCurrency:onNpcPostionChange()
+	self:refreshCurrency()
 end
 
-function var_0_0.onShelterBagUpdate(arg_7_0)
-	arg_7_0:refreshCurrency()
+function SurvivalMainViewCurrency:onShelterBagUpdate()
+	self:refreshCurrency()
 end
 
-function var_0_0.onClickCurrency(arg_8_0)
-	arg_8_0:setTipsVisible(true)
+function SurvivalMainViewCurrency:onClickCurrency()
+	self:setTipsVisible(true)
 end
 
-function var_0_0.onClickCloseTips(arg_9_0)
-	arg_9_0:setTipsVisible(false)
+function SurvivalMainViewCurrency:onClickCloseTips()
+	self:setTipsVisible(false)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:setTipsVisible(false)
-	arg_10_0:refreshCurrency()
+function SurvivalMainViewCurrency:onOpen()
+	self:setTipsVisible(false)
+	self:refreshCurrency()
 end
 
-function var_0_0.setTipsVisible(arg_11_0, arg_11_1)
-	if arg_11_0._tipsVisible == arg_11_1 then
+function SurvivalMainViewCurrency:setTipsVisible(isVisible)
+	if self._tipsVisible == isVisible then
 		return
 	end
 
-	arg_11_0._tipsVisible = arg_11_1
+	self._tipsVisible = isVisible
 
-	gohelper.setActive(arg_11_0.goArrow, not arg_11_1)
-	gohelper.setActive(arg_11_0.goTips, arg_11_1)
+	gohelper.setActive(self.goArrow, not isVisible)
+	gohelper.setActive(self.goTips, isVisible)
 
-	if arg_11_1 then
-		arg_11_0:refreshSpeed()
+	if isVisible then
+		self:refreshSpeed()
 	end
 end
 
-function var_0_0.refreshCurrency(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.currencyList) do
-		local var_12_0 = arg_12_0:getCurrencyItem(iter_12_0)
+function SurvivalMainViewCurrency:refreshCurrency()
+	for i, v in ipairs(self.currencyList) do
+		local item = self:getCurrencyItem(i)
 
-		arg_12_0:refreshCurrencyItem(var_12_0, iter_12_1)
+		self:refreshCurrencyItem(item, v)
 	end
 
-	arg_12_0:refreshSpeed()
+	self:refreshSpeed()
 end
 
-function var_0_0.getCurrencyItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0.currencyItemList[arg_13_1]
+function SurvivalMainViewCurrency:getCurrencyItem(index)
+	local item = self.currencyItemList[index]
 
-	if not var_13_0 then
-		var_13_0 = arg_13_0:getUserDataTb_()
-		var_13_0.go = gohelper.findChild(arg_13_0.viewGO, "go_normalroot/Top/#go_currency/#go_tag/tag" .. arg_13_1)
-		var_13_0.txtNum = gohelper.findChildTextMesh(var_13_0.go, "#txt_tag")
-		arg_13_0.currencyItemList[arg_13_1] = var_13_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.findChild(self.viewGO, "go_normalroot/Top/#go_currency/#go_tag/tag" .. index)
+		item.txtNum = gohelper.findChildTextMesh(item.go, "#txt_tag")
+		self.currencyItemList[index] = item
 	end
 
-	return var_13_0
+	return item
 end
 
-function var_0_0.refreshCurrencyItem(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_14_1 = var_14_0:getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(arg_14_2)
+function SurvivalMainViewCurrency:refreshCurrencyItem(item, currencyId)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local itemCount = weekInfo:getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(currencyId)
 
-	if arg_14_2 == SurvivalEnum.CurrencyType.Food then
-		if var_14_1 >= var_14_0:getNpcCost() then
-			arg_14_1.txtNum.text = var_14_1
+	if currencyId == SurvivalEnum.CurrencyType.Food then
+		local npcCost = weekInfo:getNpcCost()
+		local enough = npcCost <= itemCount
+
+		if enough then
+			item.txtNum.text = itemCount
 		else
-			arg_14_1.txtNum.text = string.format("<color=#ff0000>%s</color>", var_14_1)
+			item.txtNum.text = string.format("<color=#ff0000>%s</color>", itemCount)
 		end
 	else
-		arg_14_1.txtNum.text = var_14_1
+		item.txtNum.text = itemCount
 	end
 end
 
-function var_0_0.refreshSpeed(arg_15_0)
-	if not arg_15_0._tipsVisible then
+function SurvivalMainViewCurrency:refreshSpeed()
+	if not self._tipsVisible then
 		return
 	end
 
-	local var_15_0 = SurvivalShelterModel.instance:getWeekInfo():getNpcCost()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local npcCost = weekInfo:getNpcCost()
 
-	arg_15_0.txtSpeed.text = formatLuaLang("survival_mainview_foodcost_speed", var_15_0)
+	self.txtSpeed.text = formatLuaLang("survival_mainview_foodcost_speed", npcCost)
 end
 
-return var_0_0
+return SurvivalMainViewCurrency

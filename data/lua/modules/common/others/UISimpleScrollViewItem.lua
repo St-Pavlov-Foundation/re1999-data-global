@@ -1,114 +1,116 @@
-﻿module("modules.common.others.UISimpleScrollViewItem", package.seeall)
+﻿-- chunkname: @modules/common/others/UISimpleScrollViewItem.lua
 
-local var_0_0 = class("UISimpleScrollViewItem", UserDataDispose)
+module("modules.common.others.UISimpleScrollViewItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._parentClass = arg_1_1
+local UISimpleScrollViewItem = class("UISimpleScrollViewItem", UserDataDispose)
+
+function UISimpleScrollViewItem:ctor(parentClass)
+	self._parentClass = parentClass
 end
 
-function var_0_0.startLogic(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._obj_root = arg_2_1
-	arg_2_0._csListScroll = SLFramework.UGUI.ListScrollView.Get(arg_2_1)
-	arg_2_0._scroll_param = arg_2_2 or ListScrollParam.New()
+function UISimpleScrollViewItem:startLogic(obj_root, scroll_param)
+	self._obj_root = obj_root
+	self._csListScroll = SLFramework.UGUI.ListScrollView.Get(obj_root)
+	self._scroll_param = scroll_param or ListScrollParam.New()
 end
 
-function var_0_0.useDefaultParam(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._scroll_param.scrollDir = arg_3_1
-	arg_3_0._scroll_param.lineCount = arg_3_2
-	arg_3_3 = arg_3_3 or arg_3_0._obj_root:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
-	arg_3_0._scroll_param.cellWidth = arg_3_3.cellSize.x
-	arg_3_0._scroll_param.cellHeight = arg_3_3.cellSize.y
-	arg_3_0._scroll_param.cellSpaceH = arg_3_3.spacing.x
-	arg_3_0._scroll_param.cellSpaceV = arg_3_3.spacing.y
+function UISimpleScrollViewItem:useDefaultParam(scrollDir, lineCount, grid)
+	self._scroll_param.scrollDir = scrollDir
+	self._scroll_param.lineCount = lineCount
+	grid = grid or self._obj_root:GetComponentInChildren(gohelper.Type_GridLayoutGroup)
+	self._scroll_param.cellWidth = grid.cellSize.x
+	self._scroll_param.cellHeight = grid.cellSize.y
+	self._scroll_param.cellSpaceH = grid.spacing.x
+	self._scroll_param.cellSpaceV = grid.spacing.y
 
-	arg_3_0:setSpace(0, 0)
+	self:setSpace(0, 0)
 end
 
-function var_0_0.setCreateParam(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._scroll_param.frameUpdateMs = arg_4_1
-	arg_4_0._scroll_param.minUpdateCountInFrame = arg_4_2
+function UISimpleScrollViewItem:setCreateParam(frameUpdateMs, minUpdateCountInFrame)
+	self._scroll_param.frameUpdateMs = frameUpdateMs
+	self._scroll_param.minUpdateCountInFrame = minUpdateCountInFrame
 end
 
-function var_0_0.setSpace(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._scroll_param.startSpace = arg_5_1
-	arg_5_0._scroll_param.endSpace = arg_5_2
+function UISimpleScrollViewItem:setSpace(startSpace, endSpace)
+	self._scroll_param.startSpace = startSpace
+	self._scroll_param.endSpace = endSpace
 end
 
-function var_0_0.setClass(arg_6_0, arg_6_1)
-	arg_6_0._tar_class = arg_6_1
+function UISimpleScrollViewItem:setClass(tar_class)
+	self._tar_class = tar_class
 end
 
-function var_0_0.setData(arg_7_0, arg_7_1)
-	arg_7_0._data = arg_7_1
+function UISimpleScrollViewItem:setData(data)
+	self._data = data
 
-	if not arg_7_0._init_finish then
-		arg_7_0._init_finish = true
+	if not self._init_finish then
+		self._init_finish = true
 
-		arg_7_0:useScrollParam()
+		self:useScrollParam()
 	end
 
-	arg_7_0._csListScroll:UpdateTotalCount(#arg_7_0._data)
+	self._csListScroll:UpdateTotalCount(#self._data)
 end
 
-function var_0_0.useScrollParam(arg_8_0)
-	arg_8_0._csListScroll:Init(arg_8_0._scroll_param.scrollDir, arg_8_0._scroll_param.lineCount, arg_8_0._scroll_param.cellWidth, arg_8_0._scroll_param.cellHeight, arg_8_0._scroll_param.cellSpaceH, arg_8_0._scroll_param.cellSpaceV, arg_8_0._scroll_param.startSpace, arg_8_0._scroll_param.endSpace, arg_8_0._scroll_param.sortMode, arg_8_0._scroll_param.frameUpdateMs, arg_8_0._scroll_param.minUpdateCountInFrame, arg_8_0._onUpdateCell, arg_8_0.onUpdateFinish, nil, arg_8_0)
+function UISimpleScrollViewItem:useScrollParam()
+	self._csListScroll:Init(self._scroll_param.scrollDir, self._scroll_param.lineCount, self._scroll_param.cellWidth, self._scroll_param.cellHeight, self._scroll_param.cellSpaceH, self._scroll_param.cellSpaceV, self._scroll_param.startSpace, self._scroll_param.endSpace, self._scroll_param.sortMode, self._scroll_param.frameUpdateMs, self._scroll_param.minUpdateCountInFrame, self._onUpdateCell, self.onUpdateFinish, nil, self)
 end
 
-function var_0_0.setObjItem(arg_9_0, arg_9_1)
-	arg_9_0._obj_item = arg_9_1
+function UISimpleScrollViewItem:setObjItem(obj_item)
+	self._obj_item = obj_item
 end
 
-function var_0_0.setItemViewGOPath(arg_10_0, arg_10_1)
-	arg_10_0._viewGO_path = arg_10_1
+function UISimpleScrollViewItem:setItemViewGOPath(viewGO_path)
+	self._viewGO_path = viewGO_path
 end
 
-function var_0_0.setUpdateFinishCallback(arg_11_0, arg_11_1)
-	arg_11_0._finish_callback = arg_11_1
+function UISimpleScrollViewItem:setUpdateFinishCallback(finish_callback)
+	self._finish_callback = finish_callback
 end
 
-function var_0_0._onUpdateCell(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._item_list = arg_12_0._item_list or {}
+function UISimpleScrollViewItem:_onUpdateCell(cellGO, index)
+	self._item_list = self._item_list or {}
 
-	local var_12_0 = arg_12_2 + 1
-	local var_12_1 = arg_12_0._item_list[var_12_0]
+	local lua_index = index + 1
+	local item_class = self._item_list[lua_index]
 
-	if not var_12_1 then
-		if arg_12_0._obj_item then
-			local var_12_2 = gohelper.clone(arg_12_0._obj_item, arg_12_1, LuaListScrollView.PrefabInstName)
+	if not item_class then
+		if self._obj_item then
+			local tar_obj = gohelper.clone(self._obj_item, cellGO, LuaListScrollView.PrefabInstName)
 
-			if arg_12_0._viewGO_path then
-				var_12_2 = gohelper.findChild(var_12_2, arg_12_0._viewGO_path)
+			if self._viewGO_path then
+				tar_obj = gohelper.findChild(tar_obj, self._viewGO_path)
 			end
 
-			var_12_1 = arg_12_0._parentClass:openSubView(arg_12_0._tar_class, var_12_2)
+			item_class = self._parentClass:openSubView(self._tar_class, tar_obj)
 		else
-			var_12_1 = arg_12_0._parentClass:openSubView(arg_12_0._tar_class, arg_12_1)
+			item_class = self._parentClass:openSubView(self._tar_class, cellGO)
 		end
 
-		arg_12_0._item_list[var_12_0] = var_12_1
+		self._item_list[lua_index] = item_class
 	end
 
-	var_12_1._index = var_12_0
+	item_class._index = lua_index
 
-	var_12_1:onScrollItemRefreshData(arg_12_0._data[var_12_0])
+	item_class:onScrollItemRefreshData(self._data[lua_index])
 end
 
-function var_0_0.onUpdateFinish(arg_13_0)
-	if arg_13_0._finish_callback then
-		arg_13_0._finish_callback(arg_13_0._parentClass)
+function UISimpleScrollViewItem:onUpdateFinish()
+	if self._finish_callback then
+		self._finish_callback(self._parentClass)
 	end
 end
 
-function var_0_0.releaseSelf(arg_14_0)
-	arg_14_0._item_list = nil
-	arg_14_0.tar_class = nil
-	arg_14_0._parentClass = nil
-	arg_14_0._finish_callback = nil
-	arg_14_0._data = nil
-	arg_14_0._tar_class = nil
-	arg_14_0._scroll_param = nil
+function UISimpleScrollViewItem:releaseSelf()
+	self._item_list = nil
+	self.tar_class = nil
+	self._parentClass = nil
+	self._finish_callback = nil
+	self._data = nil
+	self._tar_class = nil
+	self._scroll_param = nil
 
-	arg_14_0._csListScroll:Clear()
+	self._csListScroll:Clear()
 end
 
-return var_0_0
+return UISimpleScrollViewItem

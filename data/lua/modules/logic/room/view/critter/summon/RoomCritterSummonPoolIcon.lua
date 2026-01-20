@@ -1,78 +1,80 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonPoolIcon", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonPoolIcon.lua
 
-local var_0_0 = class("RoomCritterSummonPoolIcon", CommonCritterIcon)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonPoolIcon", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagequality = gohelper.findChildImage(arg_1_0.viewGO, "#simage_quality")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._gomood = gohelper.findChild(arg_1_0.viewGO, "#go_mood")
-	arg_1_0._gohasMood = gohelper.findChild(arg_1_0.viewGO, "#go_mood/#go_hasMood")
-	arg_1_0._simagemood = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_mood/#go_hasMood/#simage_mood")
-	arg_1_0._simageprogress = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_mood/#go_hasMood/#simage_progress")
-	arg_1_0._txtmood = gohelper.findChildText(arg_1_0.viewGO, "#go_mood/#go_hasMood/#txt_mood")
-	arg_1_0._gonoMood = gohelper.findChild(arg_1_0.viewGO, "#go_mood/#go_noMood")
-	arg_1_0._gobuildingIcon = gohelper.findChild(arg_1_0.viewGO, "#go_buildingIcon")
-	arg_1_0._simagebuildingIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_buildingIcon/#simage_buildingIcon")
-	arg_1_0._goindex = gohelper.findChild(arg_1_0.viewGO, "#go_index")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "#go_index/#txt_index")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "#go_num")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_num/#txt_num")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
-	arg_1_0._btnclick = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#btn_click")
+local RoomCritterSummonPoolIcon = class("RoomCritterSummonPoolIcon", CommonCritterIcon)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterSummonPoolIcon:onInitView()
+	self._imagequality = gohelper.findChildImage(self.viewGO, "#simage_quality")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._gomood = gohelper.findChild(self.viewGO, "#go_mood")
+	self._gohasMood = gohelper.findChild(self.viewGO, "#go_mood/#go_hasMood")
+	self._simagemood = gohelper.findChildSingleImage(self.viewGO, "#go_mood/#go_hasMood/#simage_mood")
+	self._simageprogress = gohelper.findChildSingleImage(self.viewGO, "#go_mood/#go_hasMood/#simage_progress")
+	self._txtmood = gohelper.findChildText(self.viewGO, "#go_mood/#go_hasMood/#txt_mood")
+	self._gonoMood = gohelper.findChild(self.viewGO, "#go_mood/#go_noMood")
+	self._gobuildingIcon = gohelper.findChild(self.viewGO, "#go_buildingIcon")
+	self._simagebuildingIcon = gohelper.findChildSingleImage(self.viewGO, "#go_buildingIcon/#simage_buildingIcon")
+	self._goindex = gohelper.findChild(self.viewGO, "#go_index")
+	self._txtindex = gohelper.findChildText(self.viewGO, "#go_index/#txt_index")
+	self._gonum = gohelper.findChild(self.viewGO, "#go_num")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_num/#txt_num")
+	self._gofinish = gohelper.findChild(self.viewGO, "#go_finish")
+	self._btnclick = gohelper.findChildClickWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0.mo = arg_2_1
+function RoomCritterSummonPoolIcon:onUpdateMO(mo)
+	self.mo = mo
 
-	arg_2_0:setMOValue()
-	arg_2_0:activeGo()
+	self:setMOValue()
+	self:activeGo()
 end
 
-function var_0_0.setMOValue(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0.critterId = arg_3_0.mo.critterId
+function RoomCritterSummonPoolIcon:setMOValue(critterUid, critterId, isShowSelectUI, index)
+	self.critterId = self.mo.critterId
 
-	arg_3_0:setSelectUIVisible(arg_3_3)
-	arg_3_0:refresh()
+	self:setSelectUIVisible(isShowSelectUI)
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_4_0)
-	var_0_0.super.refresh(arg_4_0)
-	arg_4_0:refrshNum()
-	arg_4_0:refrshNull()
+function RoomCritterSummonPoolIcon:refresh()
+	RoomCritterSummonPoolIcon.super.refresh(self)
+	self:refrshNum()
+	self:refrshNull()
 end
 
-function var_0_0.refreshIcon(arg_5_0)
-	local var_5_0 = arg_5_0.mo:getCritterMo():getSkinId()
-	local var_5_1 = CritterConfig.instance:getCritterHeadIcon(var_5_0)
+function RoomCritterSummonPoolIcon:refreshIcon()
+	local skinId = self.mo:getCritterMo():getSkinId()
+	local iconName = CritterConfig.instance:getCritterHeadIcon(skinId)
 
-	if not string.nilorempty(var_5_1) then
-		local var_5_2 = ResUrl.getCritterHedaIcon(var_5_1)
+	if not string.nilorempty(iconName) then
+		local iconPath = ResUrl.getCritterHedaIcon(iconName)
 
-		arg_5_0:_loadIcon(var_5_2)
+		self:_loadIcon(iconPath)
 	end
 end
 
-function var_0_0.activeGo(arg_6_0)
-	gohelper.setActive(arg_6_0._gomood, false)
-	gohelper.setActive(arg_6_0._goindex, false)
-	gohelper.setActive(arg_6_0._gonum, true)
+function RoomCritterSummonPoolIcon:activeGo()
+	gohelper.setActive(self._gomood, false)
+	gohelper.setActive(self._goindex, false)
+	gohelper.setActive(self._gonum, true)
 end
 
-function var_0_0.refrshNum(arg_7_0)
-	arg_7_0._txtnum.text = arg_7_0.mo:getPoolCount()
+function RoomCritterSummonPoolIcon:refrshNum()
+	self._txtnum.text = self.mo:getPoolCount()
 end
 
-function var_0_0.refrshNull(arg_8_0)
-	local var_8_0 = arg_8_0.mo:getPoolCount() <= 0
+function RoomCritterSummonPoolIcon:refrshNull()
+	local isFinish = self.mo:getPoolCount() <= 0
 
-	gohelper.setActive(arg_8_0._gofinish, var_8_0)
-	ZProj.UGUIHelper.SetGrayscale(arg_8_0._imagequality.gameObject, var_8_0)
-	ZProj.UGUIHelper.SetGrayscale(arg_8_0._simageicon.gameObject, var_8_0)
+	gohelper.setActive(self._gofinish, isFinish)
+	ZProj.UGUIHelper.SetGrayscale(self._imagequality.gameObject, isFinish)
+	ZProj.UGUIHelper.SetGrayscale(self._simageicon.gameObject, isFinish)
 end
 
-return var_0_0
+return RoomCritterSummonPoolIcon

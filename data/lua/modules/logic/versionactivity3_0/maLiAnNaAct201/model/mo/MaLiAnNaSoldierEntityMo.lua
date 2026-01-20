@@ -1,501 +1,515 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.MaLiAnNaSoldierEntityMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/mo/MaLiAnNaSoldierEntityMo.lua
 
-local var_0_0 = class("MaLiAnNaSoldierEntityMo")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.MaLiAnNaSoldierEntityMo", package.seeall)
 
-function var_0_0.create()
-	return (var_0_0.New())
+local MaLiAnNaSoldierEntityMo = class("MaLiAnNaSoldierEntityMo")
+
+function MaLiAnNaSoldierEntityMo.create()
+	local instance = MaLiAnNaSoldierEntityMo.New()
+
+	return instance
 end
 
-function var_0_0.ctor(arg_2_0)
-	arg_2_0._id = 0
-	arg_2_0._soliderId = -1
-	arg_2_0._localPosX = 0
-	arg_2_0._localPosY = 0
-	arg_2_0._state = Activity201MaLiAnNaEnum.SoliderState.InSlot
-	arg_2_0._config = nil
-	arg_2_0._targetSlotId = nil
-	arg_2_0._moveSlotPathPoint = {}
-	arg_2_0._hp = 0
-	arg_2_0._stateMachine = StateMachine.Create()
+function MaLiAnNaSoldierEntityMo:ctor()
+	self._id = 0
+	self._soliderId = -1
+	self._localPosX = 0
+	self._localPosY = 0
+	self._state = Activity201MaLiAnNaEnum.SoliderState.InSlot
+	self._config = nil
+	self._targetSlotId = nil
+	self._moveSlotPathPoint = {}
+	self._hp = 0
+	self._stateMachine = StateMachine.Create()
 
-	arg_2_0._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.Moving, arg_2_0._moveEnter, arg_2_0._moveUpdate, nil, arg_2_0)
-	arg_2_0._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.InSlot, arg_2_0._inSlotEnter, arg_2_0._inSlotUpdate, nil, arg_2_0)
-	arg_2_0._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.Attack, arg_2_0._attackEnter, arg_2_0._attackUpdate, nil, arg_2_0)
-	arg_2_0._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.Dead, arg_2_0._deadEnter, nil, nil, arg_2_0)
-	arg_2_0._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.AttackSlot, arg_2_0._attackSlotEnter, arg_2_0._attackSlotUpdate, nil, arg_2_0)
+	self._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.Moving, self._moveEnter, self._moveUpdate, nil, self)
+	self._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.InSlot, self._inSlotEnter, self._inSlotUpdate, nil, self)
+	self._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.Attack, self._attackEnter, self._attackUpdate, nil, self)
+	self._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.Dead, self._deadEnter, nil, nil, self)
+	self._stateMachine:addState(Activity201MaLiAnNaEnum.SoliderState.AttackSlot, self._attackSlotEnter, self._attackSlotUpdate, nil, self)
 end
 
-function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._soliderId = arg_3_2
-	arg_3_0._id = arg_3_1
-	arg_3_0._config = Activity201MaLiAnNaConfig.instance:getSoldierById(arg_3_2)
-	arg_3_0._hp = arg_3_0._config.hP
-	arg_3_0._speed = arg_3_0._config.speed
-	arg_3_0._moveDirX = 0
-	arg_3_0._moveDirY = 0
-	arg_3_0._camp = Activity201MaLiAnNaEnum.CampType.Player
-	arg_3_0._dispatchGroupId = nil
-	arg_3_0._attackTime = nil
-	arg_3_0._soliderSkill = {}
+function MaLiAnNaSoldierEntityMo:init(id, configId)
+	self._soliderId = configId
+	self._id = id
+	self._config = Activity201MaLiAnNaConfig.instance:getSoldierById(configId)
+	self._hp = self._config.hP
+	self._speed = self._config.speed
+	self._moveDirX = 0
+	self._moveDirY = 0
+	self._camp = Activity201MaLiAnNaEnum.CampType.Player
+	self._dispatchGroupId = nil
+	self._attackTime = nil
+	self._soliderSkill = {}
 
-	arg_3_0._stateMachine:setInitialState(Activity201MaLiAnNaEnum.SoliderState.InSlot)
-	arg_3_0:initSkill()
+	self._stateMachine:setInitialState(Activity201MaLiAnNaEnum.SoliderState.InSlot)
+	self:initSkill()
 end
 
-function var_0_0.getId(arg_4_0)
-	return arg_4_0._id
+function MaLiAnNaSoldierEntityMo:getId()
+	return self._id
 end
 
-function var_0_0.getConfigId(arg_5_0)
-	return arg_5_0._soliderId
+function MaLiAnNaSoldierEntityMo:getConfigId()
+	return self._soliderId
 end
 
-function var_0_0.getConfig(arg_6_0)
-	return arg_6_0._config
+function MaLiAnNaSoldierEntityMo:getConfig()
+	return self._config
 end
 
-function var_0_0.getTargetSlotId(arg_7_0)
-	return arg_7_0._targetSlotId
+function MaLiAnNaSoldierEntityMo:getTargetSlotId()
+	return self._targetSlotId
 end
 
-function var_0_0.setCamp(arg_8_0, arg_8_1)
-	arg_8_0._camp = arg_8_1
+function MaLiAnNaSoldierEntityMo:setCamp(camp)
+	self._camp = camp
 end
 
-function var_0_0.getCamp(arg_9_0)
-	return arg_9_0._camp
+function MaLiAnNaSoldierEntityMo:getCamp()
+	return self._camp
 end
 
-function var_0_0.getHp(arg_10_0)
-	return arg_10_0._hp
+function MaLiAnNaSoldierEntityMo:getHp()
+	return self._hp
 end
 
-function var_0_0.getMoveDir(arg_11_0)
-	return arg_11_0._moveDirX, arg_11_0._moveDirY
+function MaLiAnNaSoldierEntityMo:getMoveDir()
+	return self._moveDirX, self._moveDirY
 end
 
-function var_0_0.isHero(arg_12_0)
-	return arg_12_0._config.type == Activity201MaLiAnNaEnum.SoldierType.hero
+function MaLiAnNaSoldierEntityMo:isHero()
+	return self._config.type == Activity201MaLiAnNaEnum.SoldierType.hero
 end
 
-function var_0_0.getLocalPos(arg_13_0)
-	return arg_13_0._localPosX, arg_13_0._localPosY
+function MaLiAnNaSoldierEntityMo:getLocalPos()
+	return self._localPosX, self._localPosY
 end
 
-function var_0_0.setLocalPos(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._localPosX, arg_14_0._localPosY = arg_14_1, arg_14_2
+function MaLiAnNaSoldierEntityMo:setLocalPos(x, y)
+	self._localPosX, self._localPosY = x, y
 end
 
-function var_0_0.setDispatchGroupId(arg_15_0, arg_15_1)
-	arg_15_0._dispatchGroupId = arg_15_1
+function MaLiAnNaSoldierEntityMo:setDispatchGroupId(dispatchGroupId)
+	self._dispatchGroupId = dispatchGroupId
 end
 
-function var_0_0.getDispatchGroupId(arg_16_0)
-	return arg_16_0._dispatchGroupId
+function MaLiAnNaSoldierEntityMo:getDispatchGroupId()
+	return self._dispatchGroupId
 end
 
-function var_0_0.getMoveSlotPathPoint(arg_17_0)
-	return arg_17_0._moveSlotPathPoint
+function MaLiAnNaSoldierEntityMo:getMoveSlotPathPoint()
+	return self._moveSlotPathPoint
 end
 
-function var_0_0.getCurMoveIndex(arg_18_0)
-	return arg_18_0._targetIndex
+function MaLiAnNaSoldierEntityMo:getCurMoveIndex()
+	return self._targetIndex
 end
 
-function var_0_0.getDisPatchList(arg_19_0)
+function MaLiAnNaSoldierEntityMo:getDisPatchList()
 	return
 end
 
-function var_0_0.setMovePointPath(arg_20_0, arg_20_1)
-	if arg_20_1 == nil then
+function MaLiAnNaSoldierEntityMo:setMovePointPath(moveSlotPath)
+	if moveSlotPath == nil then
 		return
 	end
 
-	if arg_20_0._moveSlotPathPoint ~= nil then
-		tabletool.clear(arg_20_0._moveSlotPathPoint)
-		tabletool.addValues(arg_20_0._moveSlotPathPoint, arg_20_1)
+	if self._moveSlotPathPoint ~= nil then
+		tabletool.clear(self._moveSlotPathPoint)
+		tabletool.addValues(self._moveSlotPathPoint, moveSlotPath)
 	end
 
-	arg_20_0._targetSlotId = arg_20_1[#arg_20_1]
+	self._targetSlotId = moveSlotPath[#moveSlotPath]
 
-	local var_20_0 = arg_20_1[1]
-	local var_20_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_20_0)
+	local firstSlotId = moveSlotPath[1]
+	local firstSlot = Activity201MaLiAnNaGameModel.instance:getSlotById(firstSlotId)
 
-	if var_20_1 then
-		local var_20_2, var_20_3 = var_20_1:getBasePosXY()
+	if firstSlot then
+		local x, y = firstSlot:getBasePosXY()
 
-		arg_20_0:setLocalPos(var_20_2, var_20_3)
+		self:setLocalPos(x, y)
 	end
 
-	arg_20_0:_setDisPatchDir()
+	self:_setDisPatchDir()
 end
 
-function var_0_0._setDisPatchDir(arg_21_0)
-	arg_21_0._targetIndex = 2
+function MaLiAnNaSoldierEntityMo:_setDisPatchDir()
+	self._targetIndex = 2
 
-	arg_21_0:updateDir(arg_21_0._targetIndex)
+	self:updateDir(self._targetIndex)
 end
 
-function var_0_0.changeState(arg_22_0, arg_22_1)
-	arg_22_0._state = arg_22_1
+function MaLiAnNaSoldierEntityMo:changeState(state)
+	self._state = state
 
-	arg_22_0._stateMachine:transitionTo(arg_22_1)
+	self._stateMachine:transitionTo(state)
 end
 
-function var_0_0.getCurState(arg_23_0)
-	return arg_23_0._state
+function MaLiAnNaSoldierEntityMo:getCurState()
+	return self._state
 end
 
-function var_0_0.isDead(arg_24_0)
-	return arg_24_0._state == Activity201MaLiAnNaEnum.SoliderState.Dead or arg_24_0._hp <= 0
+function MaLiAnNaSoldierEntityMo:isDead()
+	return self._state == Activity201MaLiAnNaEnum.SoliderState.Dead or self._hp <= 0
 end
 
-function var_0_0.update(arg_25_0, arg_25_1)
-	if arg_25_0._isReset then
+function MaLiAnNaSoldierEntityMo:update(deltaTime)
+	if self._isReset then
 		return
 	end
 
-	if arg_25_0._stateMachine then
-		arg_25_0._stateMachine:update(arg_25_1)
+	if self._stateMachine then
+		self._stateMachine:update(deltaTime)
 	end
 end
 
-function var_0_0.updateHp(arg_26_0, arg_26_1, arg_26_2)
-	arg_26_0._hp = math.max(0, arg_26_0._hp + arg_26_1)
+function MaLiAnNaSoldierEntityMo:updateHp(diff, fastChange)
+	self._hp = math.max(0, self._hp + diff)
 
-	if arg_26_0:isHero() and arg_26_1 ~= 0 then
-		Activity201MaLiAnNaGameController.instance:dispatchEvent(Activity201MaLiAnNaEvent.SoliderHpChange, arg_26_0:getId(), arg_26_1)
+	if self:isHero() and diff ~= 0 then
+		Activity201MaLiAnNaGameController.instance:dispatchEvent(Activity201MaLiAnNaEvent.SoliderHpChange, self:getId(), diff)
 	end
 
-	if arg_26_0._hp <= 0 and arg_26_2 then
-		arg_26_0:changeState(Activity201MaLiAnNaEnum.SoliderState.Dead)
+	if self._hp <= 0 and fastChange then
+		self:changeState(Activity201MaLiAnNaEnum.SoliderState.Dead)
 	end
 end
 
-function var_0_0.getMovePointIndex(arg_27_0)
-	if arg_27_0._moveSlotPathPoint then
-		local var_27_0 = #arg_27_0._moveSlotPathPoint
-		local var_27_1 = arg_27_0._moveSlotPathPoint[arg_27_0._targetIndex]
+function MaLiAnNaSoldierEntityMo:getMovePointIndex()
+	if self._moveSlotPathPoint then
+		local count = #self._moveSlotPathPoint
+		local targetSlotId = self._moveSlotPathPoint[self._targetIndex]
 
-		if var_27_1 then
-			local var_27_2 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_27_1)
-			local var_27_3, var_27_4 = var_27_2:getBasePosXY()
-			local var_27_5, var_27_6, var_27_7, var_27_8 = var_27_2:getSlotConstValue()
-			local var_27_9
+		if targetSlotId then
+			local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(targetSlotId)
+			local x, y = slot:getBasePosXY()
+			local _, slotHideRange, _, _ = slot:getSlotConstValue()
+			local targetIndex
 
-			if MathUtil.isPointInCircleRange(arg_27_0._localPosX, arg_27_0._localPosY, var_27_6, var_27_3, var_27_4) then
-				var_27_9 = arg_27_0._targetIndex
+			if MathUtil.isPointInCircleRange(self._localPosX, self._localPosY, slotHideRange, x, y) then
+				targetIndex = self._targetIndex
 			end
 
-			if MathUtil.hasPassedPoint(arg_27_0._localPosX, arg_27_0._localPosY, var_27_3, var_27_4, arg_27_0._moveDirX, arg_27_0._moveDirY) then
-				var_27_9 = arg_27_0._targetIndex
+			if MathUtil.hasPassedPoint(self._localPosX, self._localPosY, x, y, self._moveDirX, self._moveDirY) then
+				targetIndex = self._targetIndex
 
-				arg_27_0:setLocalPos(var_27_3, var_27_4)
-				arg_27_0:updateDir(var_27_9 + 1)
+				self:setLocalPos(x, y)
+				self:updateDir(targetIndex + 1)
 			end
 
-			return var_27_9
+			return targetIndex
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.updateDir(arg_28_0, arg_28_1)
-	if arg_28_1 > #arg_28_0._moveSlotPathPoint then
+function MaLiAnNaSoldierEntityMo:updateDir(endIndex)
+	if endIndex > #self._moveSlotPathPoint then
 		return
 	end
 
-	local var_28_0, var_28_1 = arg_28_0:getLocalPos()
+	local startX, startY = self:getLocalPos()
 
-	if arg_28_1 > 1 then
-		local var_28_2 = arg_28_0._moveSlotPathPoint[arg_28_1 - 1]
+	if endIndex > 1 then
+		local slotId = self._moveSlotPathPoint[endIndex - 1]
+		local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
 
-		var_28_0, var_28_1 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_28_2):getBasePosXY()
+		startX, startY = slot:getBasePosXY()
 	end
 
-	if arg_28_0._moveSlotPathPoint and arg_28_0._moveSlotPathPoint[arg_28_1] then
-		local var_28_3, var_28_4 = Activity201MaLiAnNaGameModel.instance:getSlotById(arg_28_0._moveSlotPathPoint[arg_28_1]):getBasePosXY()
+	if self._moveSlotPathPoint and self._moveSlotPathPoint[endIndex] then
+		local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(self._moveSlotPathPoint[endIndex])
+		local endX, endY = slot:getBasePosXY()
 
-		arg_28_0._moveDirX, arg_28_0._moveDirY = MathUtil.vec2_normalize(var_28_3 - var_28_0, var_28_4 - var_28_1)
+		self._moveDirX, self._moveDirY = MathUtil.vec2_normalize(endX - startX, endY - startY)
 	end
 
-	arg_28_0._targetIndex = arg_28_1
+	self._targetIndex = endIndex
 end
 
-function var_0_0._isNeedEnterSlot(arg_29_0)
-	local var_29_0 = arg_29_0:getMovePointIndex()
+function MaLiAnNaSoldierEntityMo:_isNeedEnterSlot()
+	local index = self:getMovePointIndex()
 
-	if var_29_0 then
-		local var_29_1 = #arg_29_0._moveSlotPathPoint
-		local var_29_2 = arg_29_0._moveSlotPathPoint[var_29_0]
-		local var_29_3 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_29_2)
-		local var_29_4 = false
+	if index then
+		local count = #self._moveSlotPathPoint
+		local curSlotId = self._moveSlotPathPoint[index]
+		local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(curSlotId)
+		local needEnter = false
 
-		if var_29_2 == arg_29_0._targetSlotId or var_29_3 and var_29_3:getSlotCamp() ~= arg_29_0._camp then
-			var_29_4 = true
+		if curSlotId == self._targetSlotId or slot and slot:getSlotCamp() ~= self._camp then
+			needEnter = true
 		end
 
-		return var_29_4, var_29_2, var_29_1 ~= var_29_0
+		return needEnter, curSlotId, count ~= index
 	end
 
 	return false, nil, false
 end
 
-function var_0_0._moveEnter(arg_30_0)
-	arg_30_0:changeRecordSoliderState(false)
+function MaLiAnNaSoldierEntityMo:_moveEnter()
+	self:changeRecordSoliderState(false)
 end
 
-function var_0_0.isMoveEnd(arg_31_0)
-	local var_31_0 = #arg_31_0._moveSlotPathPoint
+function MaLiAnNaSoldierEntityMo:isMoveEnd()
+	local count = #self._moveSlotPathPoint
 
-	return arg_31_0._targetIndex == var_31_0
+	return self._targetIndex == count
 end
 
-function var_0_0._moveUpdate(arg_32_0, arg_32_1)
-	arg_32_0:skillUpdate(arg_32_1)
+function MaLiAnNaSoldierEntityMo:_moveUpdate(deltaTime)
+	self:skillUpdate(deltaTime)
 
-	local var_32_0, var_32_1, var_32_2 = arg_32_0:_isNeedEnterSlot()
+	local needEnterSlot, slotId, needHide = self:_isNeedEnterSlot()
 
-	if arg_32_0:isHero() and var_32_2 then
-		local var_32_3 = Activity201MaLiAnNaGameModel.instance:getSlotById(var_32_1)
+	if self:isHero() and needHide then
+		local slot = Activity201MaLiAnNaGameModel.instance:getSlotById(slotId)
 
-		if var_32_3 and var_32_3:getSlotCamp() ~= arg_32_0._camp then
-			var_32_2 = false
+		if slot and slot:getSlotCamp() ~= self._camp then
+			needHide = false
 		end
 	end
 
-	MaliAnNaSoliderEntityMgr.instance:setHideEntity(arg_32_0, not var_32_2)
+	MaliAnNaSoliderEntityMgr.instance:setHideEntity(self, not needHide)
 
-	if var_32_0 then
-		Activity201MaLiAnNaGameController.instance:soliderEnterSlot(arg_32_0, var_32_1)
+	if needEnterSlot then
+		Activity201MaLiAnNaGameController.instance:soliderEnterSlot(self, slotId)
 
 		return
 	end
 
-	local var_32_4 = arg_32_0._speed * arg_32_1
+	local speed = self._speed * deltaTime
 
-	arg_32_0:setLocalPos(arg_32_0._localPosX + arg_32_0._moveDirX * var_32_4, arg_32_0._localPosY + arg_32_0._moveDirY * var_32_4)
+	self:setLocalPos(self._localPosX + self._moveDirX * speed, self._localPosY + self._moveDirY * speed)
 end
 
-function var_0_0._inSlotEnter(arg_33_0)
-	if arg_33_0._targetSlotId ~= nil then
+function MaLiAnNaSoldierEntityMo:_inSlotEnter()
+	if self._targetSlotId ~= nil then
 		-- block empty
 	end
 
-	Activity201MaLiAnNaGameModel.instance:removeDisPatchSolider(arg_33_0:getId())
-	MaliAnNaSoliderEntityMgr.instance:recycleEntity(arg_33_0)
+	Activity201MaLiAnNaGameModel.instance:removeDisPatchSolider(self:getId())
+	MaliAnNaSoliderEntityMgr.instance:recycleEntity(self)
 end
 
-function var_0_0._inSlotUpdate(arg_34_0, arg_34_1)
-	arg_34_0:skillUpdate(arg_34_1)
+function MaLiAnNaSoldierEntityMo:_inSlotUpdate(deltaTime)
+	self:skillUpdate(deltaTime)
 end
 
-function var_0_0._attackEnter(arg_35_0)
-	arg_35_0._attackTime = Activity201MaLiAnNaEnum.attackTime
+function MaLiAnNaSoldierEntityMo:_attackEnter()
+	self._attackTime = Activity201MaLiAnNaEnum.attackTime
 end
 
-function var_0_0._attackUpdate(arg_36_0, arg_36_1)
-	arg_36_0:skillUpdate(arg_36_1)
+function MaLiAnNaSoldierEntityMo:_attackUpdate(deltaTime)
+	self:skillUpdate(deltaTime)
 
-	if arg_36_0._attackTime == nil then
+	if self._attackTime == nil then
 		return
 	end
 
-	arg_36_0._attackTime = arg_36_0._attackTime - arg_36_1
+	self._attackTime = self._attackTime - deltaTime
 
-	if arg_36_0._attackTime <= 0 then
-		arg_36_0:updateHp(0, true)
+	if self._attackTime <= 0 then
+		self:updateHp(0, true)
 
-		if arg_36_0._hp and arg_36_0._hp > 0 then
-			arg_36_0:changeState(Activity201MaLiAnNaEnum.SoliderState.Moving)
+		if self._hp and self._hp > 0 then
+			self:changeState(Activity201MaLiAnNaEnum.SoliderState.Moving)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum3_0.MaLiAnNa.stop_ui_lushang_warring_loop)
 
-		arg_36_0._attackTime = nil
+		self._attackTime = nil
 	end
 end
 
-function var_0_0._deadEnter(arg_37_0)
-	Activity201MaLiAnNaGameController.instance:soliderDead(arg_37_0)
+function MaLiAnNaSoldierEntityMo:_deadEnter()
+	Activity201MaLiAnNaGameController.instance:soliderDead(self)
 end
 
-function var_0_0._attackSlotEnter(arg_38_0)
-	arg_38_0._attackSlotTime = Activity201MaLiAnNaEnum.attackSlotTime
+function MaLiAnNaSoldierEntityMo:_attackSlotEnter()
+	self._attackSlotTime = Activity201MaLiAnNaEnum.attackSlotTime
 end
 
-function var_0_0._attackSlotUpdate(arg_39_0, arg_39_1)
-	arg_39_0:skillUpdate(arg_39_1)
+function MaLiAnNaSoldierEntityMo:_attackSlotUpdate(deltaTime)
+	self:skillUpdate(deltaTime)
 
-	if arg_39_0._attackSlotTime == nil then
+	if self._attackSlotTime == nil then
 		return
 	end
 
-	arg_39_0._attackSlotTime = arg_39_0._attackSlotTime - arg_39_1
+	self._attackSlotTime = self._attackSlotTime - deltaTime
 
-	if arg_39_0._attackSlotTime <= 0 then
-		arg_39_0:updateHp(0, true)
+	if self._attackSlotTime <= 0 then
+		self:updateHp(0, true)
 
-		if arg_39_0._hp and arg_39_0._hp > 0 then
-			arg_39_0:changeState(Activity201MaLiAnNaEnum.SoliderState.Moving)
+		if self._hp and self._hp > 0 then
+			self:changeState(Activity201MaLiAnNaEnum.SoliderState.Moving)
 		end
 
-		arg_39_0._attackSlotTime = nil
+		self._attackSlotTime = nil
 	end
 end
 
-function var_0_0.initSkill(arg_40_0)
-	if arg_40_0._soliderSkill == nil then
-		arg_40_0._soliderSkill = {}
+function MaLiAnNaSoldierEntityMo:initSkill()
+	if self._soliderSkill == nil then
+		self._soliderSkill = {}
 	end
 
-	local var_40_0 = arg_40_0._config.passiveSkill
+	local passiveSkillConfigId = self._config.passiveSkill
 
-	if var_40_0 ~= 0 then
-		local var_40_1 = MaLiAnNaSkillUtils.instance.createSkill(var_40_0)
+	if passiveSkillConfigId ~= 0 then
+		local passiveSkill = MaLiAnNaSkillUtils.instance.createSkill(passiveSkillConfigId)
 
-		var_40_1:setUseSoliderId(arg_40_0:getId())
-		table.insert(arg_40_0._soliderSkill, var_40_1)
+		passiveSkill:setUseSoliderId(self:getId())
+		table.insert(self._soliderSkill, passiveSkill)
 	end
 end
 
-function var_0_0.skillUpdate(arg_41_0, arg_41_1)
-	if arg_41_0._soliderSkill == nil then
+function MaLiAnNaSoldierEntityMo:skillUpdate(deltaTime)
+	if self._soliderSkill == nil then
 		return
 	end
 
-	for iter_41_0 = 1, #arg_41_0._soliderSkill do
-		local var_41_0 = arg_41_0._soliderSkill[iter_41_0]
+	for i = 1, #self._soliderSkill do
+		local skill = self._soliderSkill[i]
 
-		if var_41_0 then
-			var_41_0:update(arg_41_1)
+		if skill then
+			skill:update(deltaTime)
 		end
 	end
 end
 
-function var_0_0.getSkillSpeedUp(arg_42_0)
-	if arg_42_0._soliderSkill == nil or #arg_42_0._soliderSkill <= 0 then
+function MaLiAnNaSoldierEntityMo:getSkillSpeedUp()
+	if self._soliderSkill == nil or #self._soliderSkill <= 0 then
 		return 0
 	end
 
-	for iter_42_0 = 1, #arg_42_0._soliderSkill do
-		local var_42_0 = arg_42_0._soliderSkill[iter_42_0]
+	for i = 1, #self._soliderSkill do
+		local skill = self._soliderSkill[i]
 
-		if var_42_0:getSkillActionType() == Activity201MaLiAnNaEnum.SkillAction.upSlotGenerateSoliderSpeed then
-			local var_42_1 = var_42_0:getEffect()
+		if skill:getSkillActionType() == Activity201MaLiAnNaEnum.SkillAction.upSlotGenerateSoliderSpeed then
+			local effect = skill:getEffect()
 
-			return tonumber(var_42_1[2])
+			return tonumber(effect[2])
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.getEnterSlotSkillValue(arg_43_0)
-	if arg_43_0._soliderSkill == nil or #arg_43_0._soliderSkill <= 0 then
+function MaLiAnNaSoldierEntityMo:getEnterSlotSkillValue()
+	if self._soliderSkill == nil or #self._soliderSkill <= 0 then
 		return nil, nil
 	end
 
-	for iter_43_0 = 1, #arg_43_0._soliderSkill do
-		local var_43_0 = arg_43_0._soliderSkill[iter_43_0]
+	for i = 1, #self._soliderSkill do
+		local skill = self._soliderSkill[i]
 
-		if var_43_0:getSkillActionType() == Activity201MaLiAnNaEnum.SkillAction.enterSlotAddSolider then
-			local var_43_1 = var_43_0:getEffect()
+		if skill:getSkillActionType() == Activity201MaLiAnNaEnum.SkillAction.enterSlotAddSolider then
+			local effect = skill:getEffect()
 
-			return arg_43_0._camp, tonumber(var_43_1[2])
+			return self._camp, tonumber(effect[2])
 		end
 	end
 
 	return nil, nil
 end
 
-function var_0_0.setCurViewPos(arg_44_0, arg_44_1, arg_44_2)
-	arg_44_0._viewPosX = arg_44_1
-	arg_44_0._viewPosY = arg_44_2
+function MaLiAnNaSoldierEntityMo:setCurViewPos(x, y)
+	self._viewPosX = x
+	self._viewPosY = y
 end
 
-function var_0_0.getCurViewPos(arg_45_0)
-	return arg_45_0._viewPosX, arg_45_0._viewPosY
+function MaLiAnNaSoldierEntityMo:getCurViewPos()
+	return self._viewPosX, self._viewPosY
 end
 
-function var_0_0.getBulletPos(arg_46_0)
-	if arg_46_0._state == Activity201MaLiAnNaEnum.SoliderState.InSlot then
-		return arg_46_0:getCurViewPos()
+function MaLiAnNaSoldierEntityMo:getBulletPos()
+	if self._state == Activity201MaLiAnNaEnum.SoliderState.InSlot then
+		return self:getCurViewPos()
 	end
 
-	local var_46_0, var_46_1 = arg_46_0:getLocalPos()
+	local x, y = self:getLocalPos()
 
-	return var_46_0, var_46_1 + 40
+	return x, y + 40
 end
 
-function var_0_0.setRecordSolider(arg_47_0, arg_47_1)
-	if arg_47_0._exSoliderMoList == nil then
-		arg_47_0._exSoliderMoList = {}
+function MaLiAnNaSoldierEntityMo:setRecordSolider(soliderMo)
+	if self._exSoliderMoList == nil then
+		self._exSoliderMoList = {}
 	end
 
-	table.insert(arg_47_0._exSoliderMoList, arg_47_1)
+	table.insert(self._exSoliderMoList, soliderMo)
 end
 
-function var_0_0.changeRecordSoliderState(arg_48_0, arg_48_1)
-	if arg_48_0._exSoliderMoList == nil then
+function MaLiAnNaSoldierEntityMo:changeRecordSoliderState(stop)
+	if self._exSoliderMoList == nil then
 		return
 	end
 
-	local var_48_0 = arg_48_1 and Activity201MaLiAnNaEnum.SoliderState.StopMove or Activity201MaLiAnNaEnum.SoliderState.Moving
+	local state = stop and Activity201MaLiAnNaEnum.SoliderState.StopMove or Activity201MaLiAnNaEnum.SoliderState.Moving
 
-	for iter_48_0 = 1, #arg_48_0._exSoliderMoList do
-		local var_48_1 = arg_48_0._exSoliderMoList[iter_48_0]
+	for i = 1, #self._exSoliderMoList do
+		local soliderMo = self._exSoliderMoList[i]
 
-		if not var_48_1:isDead() then
-			var_48_1:changeState(var_48_0)
+		if not soliderMo:isDead() then
+			soliderMo:changeState(state)
 		end
 	end
 
-	if not arg_48_1 then
-		tabletool.clear(arg_48_0._exSoliderMoList)
+	if not stop then
+		tabletool.clear(self._exSoliderMoList)
 	end
 end
 
-function var_0_0.reset(arg_49_0)
-	arg_49_0._soliderId = nil
-	arg_49_0._id = nil
-	arg_49_0._config = nil
-	arg_49_0._hp = nil
-	arg_49_0._speed = nil
-	arg_49_0._moveDirX = nil
-	arg_49_0._moveDirY = nil
-	arg_49_0._camp = nil
-	arg_49_0._dispatchGroupId = nil
-	arg_49_0._attackTime = nil
-	arg_49_0._soliderSkill = nil
+function MaLiAnNaSoldierEntityMo:reset()
+	self._soliderId = nil
+	self._id = nil
+	self._config = nil
+	self._hp = nil
+	self._speed = nil
+	self._moveDirX = nil
+	self._moveDirY = nil
+	self._camp = nil
+	self._dispatchGroupId = nil
+	self._attackTime = nil
+	self._soliderSkill = nil
 end
 
-function var_0_0.clear(arg_50_0)
-	arg_50_0:reset()
+function MaLiAnNaSoldierEntityMo:clear()
+	self:reset()
 
-	if arg_50_0._stateMachine ~= nil then
-		arg_50_0._stateMachine:onDestroy()
+	if self._stateMachine ~= nil then
+		self._stateMachine:onDestroy()
 
-		arg_50_0._stateMachine = nil
+		self._stateMachine = nil
 	end
 end
 
-function var_0_0.getSmallIcon(arg_51_0)
-	local var_51_0 = ""
-	local var_51_1 = arg_51_0._config.icon
+function MaLiAnNaSoldierEntityMo:getSmallIcon()
+	local res = ""
+	local icon = self._config.icon
 
-	if arg_51_0:isHero() and var_51_1 == 312601 then
-		local var_51_2 = ResUrl.getHeadIconSmall(var_51_1)
+	if self:isHero() and icon == 312601 then
+		res = ResUrl.getHeadIconSmall(icon)
 	end
 
-	return (ResUrl.monsterHeadIcon(var_51_1))
+	res = ResUrl.monsterHeadIcon(icon)
+
+	return res
 end
 
-function var_0_0.dump(arg_52_0)
-	local var_52_0 = (((("" .. "士兵ID:" .. tostring(arg_52_0._id) .. "\n") .. "士兵配置ID:" .. tostring(arg_52_0._soliderId) .. "\n") .. "士兵位置X:" .. tostring(arg_52_0._localPosX) .. "\n") .. "士兵位置Y:" .. tostring(arg_52_0._localPosY) .. "\n") .. "士兵状态:" .. tostring(arg_52_0._state) .. "\n"
+function MaLiAnNaSoldierEntityMo:dump()
+	local info = ""
 
-	logNormal("MaLiAnNaSoldierEntityMo->:", var_52_0)
+	info = info .. "士兵ID:" .. tostring(self._id) .. "\n"
+	info = info .. "士兵配置ID:" .. tostring(self._soliderId) .. "\n"
+	info = info .. "士兵位置X:" .. tostring(self._localPosX) .. "\n"
+	info = info .. "士兵位置Y:" .. tostring(self._localPosY) .. "\n"
+	info = info .. "士兵状态:" .. tostring(self._state) .. "\n"
+
+	logNormal("MaLiAnNaSoldierEntityMo->:", info)
 end
 
-return var_0_0
+return MaLiAnNaSoldierEntityMo

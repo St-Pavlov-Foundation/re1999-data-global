@@ -1,10 +1,12 @@
-﻿module("modules.logic.activity.view.V2a1_Role_FullSignView_Part2", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a1_Role_FullSignView_Part2.lua
 
-local var_0_0 = class("V2a1_Role_FullSignView_Part2", V2a1_Role_FullSignView)
+module("modules.logic.activity.view.V2a1_Role_FullSignView_Part2", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simageFullBG:LoadImage(ResUrl.getV2a1SignSingleBg("v2a1_sign_fullbg2"))
-	arg_1_0._simageTitle:LoadImage(ResUrl.getV2a1SignSingleBgLang("v2a1_sign_title2"))
+local V2a1_Role_FullSignView_Part2 = class("V2a1_Role_FullSignView_Part2", V2a1_Role_FullSignView)
+
+function V2a1_Role_FullSignView_Part2:_editableInitView()
+	self._simageFullBG:LoadImage(ResUrl.getV2a1SignSingleBg("v2a1_sign_fullbg2"))
+	self._simageTitle:LoadImage(ResUrl.getV2a1SignSingleBgLang("v2a1_sign_title2"))
 end
 
-return var_0_0
+return V2a1_Role_FullSignView_Part2

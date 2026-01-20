@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessEventMgr", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/Va3ChessEventMgr.lua
 
-local var_0_0 = class("Va3ChessEventMgr")
+module("modules.logic.versionactivity1_3.va3chess.game.Va3ChessEventMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._stepList = {}
-	arg_1_0._stepPool = nil
-	arg_1_0._curStep = nil
-	arg_1_0._curEventData = nil
-	arg_1_0._curEvent = nil
+local Va3ChessEventMgr = class("Va3ChessEventMgr")
+
+function Va3ChessEventMgr:ctor()
+	self._stepList = {}
+	self._stepPool = nil
+	self._curStep = nil
+	self._curEventData = nil
+	self._curEvent = nil
 end
 
-var_0_0.EventClzMap = {
+Va3ChessEventMgr.EventClzMap = {
 	[Va3ChessEnum.GameEventType.Lock] = Va3ChessStateLock,
 	[Va3ChessEnum.GameEventType.Normal] = Va3ChessStateNormal,
 	[Va3ChessEnum.GameEventType.Battle] = Va3ChessStateBattle,
@@ -18,118 +20,118 @@ var_0_0.EventClzMap = {
 	[Va3ChessEnum.GameEventType.FinishEvent] = Va3ChessStateFinishEvent
 }
 
-function var_0_0.setCurEvent(arg_2_0, arg_2_1)
-	if arg_2_1 ~= nil and not string.nilorempty(arg_2_1.param) then
-		arg_2_0._curEventData = cjson.decode(arg_2_1.param)
+function Va3ChessEventMgr:setCurEvent(serverEvt)
+	if serverEvt ~= nil and not string.nilorempty(serverEvt.param) then
+		self._curEventData = cjson.decode(serverEvt.param)
 	else
-		arg_2_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_2_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.setCurEventByObj(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0._curEventData = arg_3_1
+function Va3ChessEventMgr:setCurEventByObj(obj)
+	if obj then
+		self._curEventData = obj
 	else
-		arg_3_0._curEventData = nil
+		self._curEventData = nil
 	end
 
-	arg_3_0:buildEventState()
+	self:buildEventState()
 end
 
-function var_0_0.buildEventState(arg_4_0)
-	local var_4_0
+function Va3ChessEventMgr:buildEventState()
+	local eventType
 
-	if not arg_4_0._curEventData then
-		var_4_0 = Va3ChessEnum.GameEventType.Normal
+	if not self._curEventData then
+		eventType = Va3ChessEnum.GameEventType.Normal
 	else
-		var_4_0 = arg_4_0._curEventData.eventType
+		eventType = self._curEventData.eventType
 	end
 
-	if arg_4_0._curEvent and arg_4_0._curEvent:getStateType() == var_4_0 then
+	if self._curEvent and self._curEvent:getStateType() == eventType then
 		return
 	end
 
-	local var_4_1 = var_0_0.EventClzMap[var_4_0]
+	local clz = Va3ChessEventMgr.EventClzMap[eventType]
 
-	if var_4_1 then
-		arg_4_0:disposeEventState()
+	if clz then
+		self:disposeEventState()
 
-		arg_4_0._curEvent = var_4_1.New()
+		self._curEvent = clz.New()
 
-		arg_4_0._curEvent:init(var_4_0, arg_4_0._curEventData)
-		arg_4_0._curEvent:start()
+		self._curEvent:init(eventType, self._curEventData)
+		self._curEvent:start()
 	end
 end
 
-function var_0_0.setLockEvent(arg_5_0)
-	arg_5_0:disposeEventState()
+function Va3ChessEventMgr:setLockEvent()
+	self:disposeEventState()
 
-	arg_5_0._curEventData = nil
-	arg_5_0._curEvent = Va3ChessStateLock.New()
+	self._curEventData = nil
+	self._curEvent = Va3ChessStateLock.New()
 
-	arg_5_0._curEvent:init()
-	arg_5_0._curEvent:start()
+	self._curEvent:init()
+	self._curEvent:start()
 end
 
-function var_0_0.disposeEventState(arg_6_0)
-	if arg_6_0._curEvent ~= nil then
-		arg_6_0._curEvent:dispose()
+function Va3ChessEventMgr:disposeEventState()
+	if self._curEvent ~= nil then
+		self._curEvent:dispose()
 
-		arg_6_0._curEvent = nil
+		self._curEvent = nil
 	end
 end
 
-function var_0_0.getCurEvent(arg_7_0)
-	return arg_7_0._curEvent
+function Va3ChessEventMgr:getCurEvent()
+	return self._curEvent
 end
 
-function var_0_0.insertStepList(arg_8_0, arg_8_1)
-	local var_8_0 = #arg_8_1
+function Va3ChessEventMgr:insertStepList(serverData)
+	local len = #serverData
 
-	for iter_8_0 = 1, var_8_0 do
-		local var_8_1 = arg_8_1[iter_8_0]
+	for i = 1, len do
+		local stepData = serverData[i]
 
-		arg_8_0:insertStep(var_8_1)
+		self:insertStep(stepData)
 	end
 end
 
-function var_0_0.insertStep(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:buildStep(arg_9_1)
+function Va3ChessEventMgr:insertStep(serverData)
+	local step = self:buildStep(serverData)
 
-	if var_9_0 then
-		arg_9_0._stepList = arg_9_0._stepList or {}
+	if step then
+		self._stepList = self._stepList or {}
 
-		table.insert(arg_9_0._stepList, var_9_0)
+		table.insert(self._stepList, step)
 	end
 
-	if arg_9_0._curStep == nil then
-		arg_9_0:nextStep()
+	if self._curStep == nil then
+		self:nextStep()
 	end
 end
 
-function var_0_0.isNeedBlock(arg_10_0)
-	if arg_10_0._stepList then
-		for iter_10_0 = 1, #arg_10_0._stepList do
-			if arg_10_0:_chekNeedBlock(arg_10_0._stepList[iter_10_0]) then
+function Va3ChessEventMgr:isNeedBlock()
+	if self._stepList then
+		for i = 1, #self._stepList do
+			if self:_chekNeedBlock(self._stepList[i]) then
 				return true
 			end
 		end
 	end
 
-	if arg_10_0:_chekNeedBlock(arg_10_0._curStep) then
+	if self:_chekNeedBlock(self._curStep) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._chekNeedBlock(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1 and arg_11_1.originData and arg_11_1.originData.stepType
+function Va3ChessEventMgr:_chekNeedBlock(stepObj)
+	local stepId = stepObj and stepObj.originData and stepObj.originData.stepType
 
-	if not arg_11_0._needBlockStepMap then
-		arg_11_0._needBlockStepMap = {
+	if not self._needBlockStepMap then
+		self._needBlockStepMap = {
 			[Va3ChessEnum.GameStepType.Story] = true,
 			[Va3ChessEnum.GameStepType.Move] = true,
 			[Va3ChessEnum.GameStepType.DeleteObject] = true,
@@ -138,10 +140,10 @@ function var_0_0._chekNeedBlock(arg_11_0, arg_11_1)
 		}
 	end
 
-	return arg_11_0._needBlockStepMap[var_11_0]
+	return self._needBlockStepMap[stepId]
 end
 
-var_0_0.StepClzMap = {
+Va3ChessEventMgr.StepClzMap = {
 	[Va3ChessEnum.GameStepType.GameFinish] = Va3ChessStepGameFinish,
 	[Va3ChessEnum.GameStepType.Move] = Va3ChessStepMove,
 	[Va3ChessEnum.GameStepType.NextRound] = Va3ChessStepNextRound,
@@ -161,7 +163,7 @@ var_0_0.StepClzMap = {
 	[Va3ChessEnum.GameStepType.BrazierTrigger] = Va3ChessStepBrazierTrigger,
 	[Va3ChessEnum.GameStepType.RefreshPedalStatus] = Va3ChessStepRefreshPedal
 }
-var_0_0.ActStepClzMap = {
+Va3ChessEventMgr.ActStepClzMap = {
 	[Va3ChessEnum.ActivityId.Act120] = {
 		[Va3ChessEnum.GameStepType.NextMap] = Va3ChessStepNextMapAct120,
 		[Va3ChessEnum.Act120StepType.TilePosui] = Va3ChessStepTilePoSui
@@ -172,90 +174,90 @@ var_0_0.ActStepClzMap = {
 	}
 }
 
-function var_0_0.buildStep(arg_12_0, arg_12_1)
-	local var_12_0 = cjson.decode(arg_12_1.param)
-	local var_12_1 = Va3ChessGameModel.instance:getActId()
-	local var_12_2 = var_0_0.ActStepClzMap[var_12_1]
-	local var_12_3 = var_12_2 and var_12_2[var_12_0.stepType] or var_0_0.StepClzMap[var_12_0.stepType]
+function Va3ChessEventMgr:buildStep(serverData)
+	local data = cjson.decode(serverData.param)
+	local actId = Va3ChessGameModel.instance:getActId()
+	local acttClzMap = Va3ChessEventMgr.ActStepClzMap[actId]
+	local stepClz = acttClzMap and acttClzMap[data.stepType] or Va3ChessEventMgr.StepClzMap[data.stepType]
 
-	if var_12_0.stepType == Va3ChessEnum.GameStepType.NextMap then
-		logNormal("stepClz actId = " .. var_12_1)
+	if data.stepType == Va3ChessEnum.GameStepType.NextMap then
+		logNormal("stepClz actId = " .. actId)
 	end
 
-	if var_12_3 then
-		local var_12_4
+	if stepClz then
+		local stepObj
 
-		arg_12_0._stepPool = arg_12_0._stepPool or {}
+		self._stepPool = self._stepPool or {}
 
-		if arg_12_0._stepPool[var_12_3] ~= nil and #arg_12_0._stepPool[var_12_3] >= 1 then
-			local var_12_5 = #arg_12_0._stepPool[var_12_3]
+		if self._stepPool[stepClz] ~= nil and #self._stepPool[stepClz] >= 1 then
+			local len = #self._stepPool[stepClz]
 
-			var_12_4 = arg_12_0._stepPool[var_12_3][var_12_5]
-			arg_12_0._stepPool[var_12_3][var_12_5] = nil
+			stepObj = self._stepPool[stepClz][len]
+			self._stepPool[stepClz][len] = nil
 		else
-			var_12_4 = var_12_3.New()
+			stepObj = stepClz.New()
 		end
 
-		var_12_4:init(var_12_0)
+		stepObj:init(data)
 
-		return var_12_4
+		return stepObj
 	end
 end
 
-function var_0_0.nextStep(arg_13_0)
-	arg_13_0:recycleCurStep()
+function Va3ChessEventMgr:nextStep()
+	self:recycleCurStep()
 
-	if not arg_13_0._isStepStarting then
-		arg_13_0._isStepStarting = true
+	if not self._isStepStarting then
+		self._isStepStarting = true
 
-		while arg_13_0._stepList and #arg_13_0._stepList > 0 and arg_13_0._curStep == nil do
-			arg_13_0._curStep = arg_13_0._stepList[1]
+		while self._stepList and #self._stepList > 0 and self._curStep == nil do
+			self._curStep = self._stepList[1]
 
-			table.remove(arg_13_0._stepList, 1)
-			arg_13_0._curStep:start()
+			table.remove(self._stepList, 1)
+			self._curStep:start()
 		end
 
-		arg_13_0._isStepStarting = false
+		self._isStepStarting = false
 	end
 end
 
-function var_0_0.recycleCurStep(arg_14_0)
-	if arg_14_0._curStep then
-		arg_14_0._curStep:dispose()
+function Va3ChessEventMgr:recycleCurStep()
+	if self._curStep then
+		self._curStep:dispose()
 
-		arg_14_0._stepPool[arg_14_0._curStep.class] = arg_14_0._stepPool[arg_14_0._curStep.class] or {}
+		self._stepPool[self._curStep.class] = self._stepPool[self._curStep.class] or {}
 
-		table.insert(arg_14_0._stepPool[arg_14_0._curStep.class], arg_14_0._curStep)
+		table.insert(self._stepPool[self._curStep.class], self._curStep)
 
-		arg_14_0._curStep = nil
+		self._curStep = nil
 	end
 end
 
-function var_0_0.disposeAllStep(arg_15_0)
-	if arg_15_0._curStep then
-		arg_15_0._curStep:dispose()
+function Va3ChessEventMgr:disposeAllStep()
+	if self._curStep then
+		self._curStep:dispose()
 
-		arg_15_0._curStep = nil
+		self._curStep = nil
 	end
 
-	if arg_15_0._stepList then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._stepList) do
-			iter_15_1:dispose()
+	if self._stepList then
+		for _, step in pairs(self._stepList) do
+			step:dispose()
 		end
 
-		arg_15_0._stepList = nil
+		self._stepList = nil
 	end
 
-	arg_15_0._stepPool = nil
-	arg_15_0._isStepStarting = false
+	self._stepPool = nil
+	self._isStepStarting = false
 end
 
-function var_0_0.removeAll(arg_16_0)
-	arg_16_0._stepList = nil
-	arg_16_0._curStep = nil
+function Va3ChessEventMgr:removeAll()
+	self._stepList = nil
+	self._curStep = nil
 
-	arg_16_0:disposeAllStep()
-	arg_16_0:disposeEventState()
+	self:disposeAllStep()
+	self:disposeEventState()
 end
 
-return var_0_0
+return Va3ChessEventMgr

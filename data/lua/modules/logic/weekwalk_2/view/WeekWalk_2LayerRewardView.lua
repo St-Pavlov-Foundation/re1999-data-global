@@ -1,188 +1,190 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2LayerRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2LayerRewardView.lua
 
-local var_0_0 = class("WeekWalk_2LayerRewardView", BaseView)
+module("modules.logic.weekwalk_2.view.WeekWalk_2LayerRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goicons1 = gohelper.findChild(arg_1_0.viewGO, "go_star/starlist/#go_icons1")
-	arg_1_0._txtchapternum1 = gohelper.findChildText(arg_1_0.viewGO, "go_star/starlist/#go_icons1/#txt_chapternum1")
-	arg_1_0._goicons2 = gohelper.findChild(arg_1_0.viewGO, "go_star/starlist/#go_icons2")
-	arg_1_0._txtchapternum2 = gohelper.findChildText(arg_1_0.viewGO, "go_star/starlist/#go_icons2/#txt_chapternum2")
-	arg_1_0._txttitlecn = gohelper.findChildText(arg_1_0.viewGO, "#txt_titlecn")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_titlecn/#txt_name")
-	arg_1_0._txtmaintitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_maintitle")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#scroll_reward")
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_reward/fade/viewport/#go_rewardcontent")
+local WeekWalk_2LayerRewardView = class("WeekWalk_2LayerRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalk_2LayerRewardView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goicons1 = gohelper.findChild(self.viewGO, "go_star/starlist/#go_icons1")
+	self._txtchapternum1 = gohelper.findChildText(self.viewGO, "go_star/starlist/#go_icons1/#txt_chapternum1")
+	self._goicons2 = gohelper.findChild(self.viewGO, "go_star/starlist/#go_icons2")
+	self._txtchapternum2 = gohelper.findChildText(self.viewGO, "go_star/starlist/#go_icons2/#txt_chapternum2")
+	self._txttitlecn = gohelper.findChildText(self.viewGO, "#txt_titlecn")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_titlecn/#txt_name")
+	self._txtmaintitle = gohelper.findChildText(self.viewGO, "#txt_maintitle")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "right/#scroll_reward")
+	self._gorewardcontent = gohelper.findChild(self.viewGO, "right/#scroll_reward/fade/viewport/#go_rewardcontent")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function WeekWalk_2LayerRewardView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function WeekWalk_2LayerRewardView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function WeekWalk_2LayerRewardView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0:addEventCb(WeekWalk_2Controller.instance, WeekWalk_2Event.OnWeekwalkTaskUpdate, arg_5_0._onWeekwalkTaskUpdate, arg_5_0)
-	arg_5_0:addEventCb(WeekWalk_2Controller.instance, WeekWalk_2Event.OnGetTaskReward, arg_5_0._getTaskBouns, arg_5_0)
-	arg_5_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeLayerRewardMapId, arg_5_0._onChangeLayerRewardMapId, arg_5_0)
-	arg_5_0:addEventCb(WeekWalk_2Controller.instance, WeekWalk_2Event.OnWeekwalkInfoChange, arg_5_0._onChangeInfo, arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("img_bg_black.png"))
+function WeekWalk_2LayerRewardView:_editableInitView()
+	self:addEventCb(WeekWalk_2Controller.instance, WeekWalk_2Event.OnWeekwalkTaskUpdate, self._onWeekwalkTaskUpdate, self)
+	self:addEventCb(WeekWalk_2Controller.instance, WeekWalk_2Event.OnGetTaskReward, self._getTaskBouns, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeLayerRewardMapId, self._onChangeLayerRewardMapId, self)
+	self:addEventCb(WeekWalk_2Controller.instance, WeekWalk_2Event.OnWeekwalkInfoChange, self._onChangeInfo, self)
+	self._simagebg:LoadImage(ResUrl.getWeekWalkBg("img_bg_black.png"))
 
-	arg_5_0._gotop = gohelper.findChild(arg_5_0.viewGO, "top")
+	self._gotop = gohelper.findChild(self.viewGO, "top")
 end
 
-function var_0_0._updateTask(arg_6_0)
-	local var_6_0 = arg_6_0._mapId == 0 and WeekWalk_2Enum.TaskType.Once or WeekWalk_2Enum.TaskType.Season
+function WeekWalk_2LayerRewardView:_updateTask()
+	local type = self._mapId == 0 and WeekWalk_2Enum.TaskType.Once or WeekWalk_2Enum.TaskType.Season
 
-	WeekWalk_2TaskListModel.instance:showLayerTaskList(var_6_0, arg_6_0._mapId)
+	WeekWalk_2TaskListModel.instance:showLayerTaskList(type, self._mapId)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function WeekWalk_2LayerRewardView:onUpdateParam()
 	return
 end
 
-function var_0_0._onChangeInfo(arg_8_0)
-	arg_8_0:_onChangeLayerRewardMapId(arg_8_0._mapId)
+function WeekWalk_2LayerRewardView:_onChangeInfo()
+	self:_onChangeLayerRewardMapId(self._mapId)
 end
 
-function var_0_0._onChangeLayerRewardMapId(arg_9_0, arg_9_1)
-	arg_9_0._mapId = arg_9_1
+function WeekWalk_2LayerRewardView:_onChangeLayerRewardMapId(mapId)
+	self._mapId = mapId
 
-	arg_9_0:_updateTask()
-	arg_9_0:_updateInfo()
-	arg_9_0:_showBattleInfo()
+	self:_updateTask()
+	self:_updateInfo()
+	self:_showBattleInfo()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_onChangeLayerRewardMapId(arg_10_0.viewParam.mapId)
-	gohelper.setActive(arg_10_0._gotop, arg_10_0._mapId ~= 0)
+function WeekWalk_2LayerRewardView:onOpen()
+	self:_onChangeLayerRewardMapId(self.viewParam.mapId)
+	gohelper.setActive(self._gotop, self._mapId ~= 0)
 end
 
-function var_0_0._showBattleInfo(arg_11_0)
-	arg_11_0._mapInfo = WeekWalk_2Model.instance:getLayerInfo(arg_11_0._mapId)
+function WeekWalk_2LayerRewardView:_showBattleInfo()
+	self._mapInfo = WeekWalk_2Model.instance:getLayerInfo(self._mapId)
 
-	gohelper.setActive(arg_11_0._txtmaintitle, arg_11_0._mapId == 0)
-	gohelper.setActive(arg_11_0._txttitlecn, arg_11_0._mapId ~= 0)
+	gohelper.setActive(self._txtmaintitle, self._mapId == 0)
+	gohelper.setActive(self._txttitlecn, self._mapId ~= 0)
 
-	if not arg_11_0._mapInfo then
-		local var_11_0 = gohelper.findChild(arg_11_0.viewGO, "go_star")
+	if not self._mapInfo then
+		local startGo = gohelper.findChild(self.viewGO, "go_star")
 
-		gohelper.setActive(var_11_0, false)
+		gohelper.setActive(startGo, false)
 
-		local var_11_1 = gohelper.findChild(arg_11_0.viewGO, "txt_deeptip")
+		local deepTipGo = gohelper.findChild(self.viewGO, "txt_deeptip")
 
-		gohelper.setActive(var_11_1, false)
+		gohelper.setActive(deepTipGo, false)
 
 		return
 	end
 
-	arg_11_0._iconList1 = arg_11_0._iconList1 or arg_11_0:getUserDataTb_()
-	arg_11_0._iconList2 = arg_11_0._iconList2 or arg_11_0:getUserDataTb_()
+	self._iconList1 = self._iconList1 or self:getUserDataTb_()
+	self._iconList2 = self._iconList2 or self:getUserDataTb_()
 
-	arg_11_0:_showBattle(arg_11_0._goicons1, arg_11_0._mapInfo:getBattleInfo(WeekWalk_2Enum.BattleIndex.First), arg_11_0._iconList1)
-	arg_11_0:_showBattle(arg_11_0._goicons2, arg_11_0._mapInfo:getBattleInfo(WeekWalk_2Enum.BattleIndex.Second), arg_11_0._iconList2)
+	self:_showBattle(self._goicons1, self._mapInfo:getBattleInfo(WeekWalk_2Enum.BattleIndex.First), self._iconList1)
+	self:_showBattle(self._goicons2, self._mapInfo:getBattleInfo(WeekWalk_2Enum.BattleIndex.Second), self._iconList2)
 end
 
-function var_0_0._showBattle(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = gohelper.findChild(arg_12_1, "icon")
+function WeekWalk_2LayerRewardView:_showBattle(go, battleInfo, iconList)
+	local iconGo = gohelper.findChild(go, "icon")
 
-	gohelper.setActive(var_12_0, false)
+	gohelper.setActive(iconGo, false)
 
-	for iter_12_0 = 1, WeekWalk_2Enum.MaxStar do
-		gohelper.destroy(arg_12_3[iter_12_0])
+	for i = 1, WeekWalk_2Enum.MaxStar do
+		gohelper.destroy(iconList[i])
 
-		local var_12_1 = gohelper.cloneInPlace(var_12_0)
+		local imgGo = gohelper.cloneInPlace(iconGo)
 
-		arg_12_3[iter_12_0] = var_12_1
+		iconList[i] = imgGo
 
-		gohelper.setActive(var_12_1, true)
+		gohelper.setActive(imgGo, true)
 
-		local var_12_2 = gohelper.findChildImage(var_12_1, "icon")
+		local img = gohelper.findChildImage(imgGo, "icon")
 
-		var_12_2.enabled = false
+		img.enabled = false
 
-		local var_12_3 = arg_12_0:getResInst(arg_12_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_12_2.gameObject)
-		local var_12_4 = arg_12_2:getCupInfo(iter_12_0)
-		local var_12_5 = var_12_4 and var_12_4.result or WeekWalk_2Enum.CupType.None
+		local iconEffect = self:getResInst(self.viewContainer._viewSetting.otherRes.weekwalkheart_star, img.gameObject)
+		local cupInfo = battleInfo:getCupInfo(i)
+		local result = cupInfo and cupInfo.result or WeekWalk_2Enum.CupType.None
 
-		if var_12_5 == WeekWalk_2Enum.CupType.None then
-			var_12_5 = WeekWalk_2Enum.CupType.None2
+		if result == WeekWalk_2Enum.CupType.None then
+			result = WeekWalk_2Enum.CupType.None2
 		end
 
-		WeekWalk_2Helper.setCupEffectByResult(var_12_3, var_12_5)
+		WeekWalk_2Helper.setCupEffectByResult(iconEffect, result)
 	end
 
-	local var_12_6 = gohelper.findChild(arg_12_1, "go_finished")
-	local var_12_7 = gohelper.findChild(arg_12_1, "go_unfinish")
-	local var_12_8 = arg_12_2.status == WeekWalk_2Enum.BattleStatus.Finished
+	local finishedGo = gohelper.findChild(go, "go_finished")
+	local unFinishedGo = gohelper.findChild(go, "go_unfinish")
+	local isFinished = battleInfo.status == WeekWalk_2Enum.BattleStatus.Finished
 
-	gohelper.setActive(var_12_6, var_12_8)
-	gohelper.setActive(var_12_7, not var_12_8)
+	gohelper.setActive(finishedGo, isFinished)
+	gohelper.setActive(unFinishedGo, not isFinished)
 end
 
-function var_0_0._onWeekwalkTaskUpdate(arg_13_0)
-	if not arg_13_0._getTaskBonusItem then
+function WeekWalk_2LayerRewardView:_onWeekwalkTaskUpdate()
+	if not self._getTaskBonusItem then
 		return
 	end
 
-	arg_13_0._getTaskBonusItem:playOutAnim()
+	self._getTaskBonusItem:playOutAnim()
 
-	arg_13_0._getTaskBonusItem = nil
+	self._getTaskBonusItem = nil
 
 	UIBlockMgr.instance:startBlock("WeekWalk_2LayerRewardView bonus")
-	TaskDispatcher.runDelay(arg_13_0._showRewards, arg_13_0, 0.3)
+	TaskDispatcher.runDelay(self._showRewards, self, 0.3)
 end
 
-function var_0_0._getTaskBouns(arg_14_0, arg_14_1)
-	arg_14_0._getTaskBonusItem = arg_14_1
+function WeekWalk_2LayerRewardView:_getTaskBouns(taskItem)
+	self._getTaskBonusItem = taskItem
 end
 
-function var_0_0._showRewards(arg_15_0)
-	arg_15_0:_updateTask()
-	arg_15_0:_updateInfo()
+function WeekWalk_2LayerRewardView:_showRewards()
+	self:_updateTask()
+	self:_updateInfo()
 	UIBlockMgr.instance:endBlock("WeekWalk_2LayerRewardView bonus")
 
-	local var_15_0 = WeekWalk_2TaskListModel.instance:getTaskRewardList()
+	local list = WeekWalk_2TaskListModel.instance:getTaskRewardList()
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_15_0)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, list)
 end
 
-function var_0_0._updateInfo(arg_16_0)
-	local var_16_0 = WeekWalk_2TaskListModel.instance:getList()
-	local var_16_1 = 0
-	local var_16_2 = 0
+function WeekWalk_2LayerRewardView:_updateInfo()
+	local list = WeekWalk_2TaskListModel.instance:getList()
+	local curNum = 0
+	local maxNum = 0
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if iter_16_1.maxProgress then
-			var_16_2 = math.max(var_16_2, iter_16_1.maxProgress)
+	for i, v in ipairs(list) do
+		if v.maxProgress then
+			maxNum = math.max(maxNum, v.maxProgress)
 		end
 	end
 
-	arg_16_0._mapInfo = WeekWalk_2Model.instance:getLayerInfo(arg_16_0._mapId)
+	self._mapInfo = WeekWalk_2Model.instance:getLayerInfo(self._mapId)
 
-	if arg_16_0._mapInfo then
-		arg_16_0._txttitlecn.text = arg_16_0._mapInfo.sceneConfig.battleName
-		arg_16_0._txtname.text = arg_16_0._mapInfo.sceneConfig.name
+	if self._mapInfo then
+		self._txttitlecn.text = self._mapInfo.sceneConfig.battleName
+		self._txtname.text = self._mapInfo.sceneConfig.name
 	end
 end
 
-function var_0_0.onClose(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0._showRewards, arg_17_0)
+function WeekWalk_2LayerRewardView:onClose()
+	TaskDispatcher.cancelTask(self._showRewards, self)
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0._simagebg:UnLoadImage()
+function WeekWalk_2LayerRewardView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalk_2LayerRewardView

@@ -1,62 +1,64 @@
-﻿module("modules.logic.fight.view.cardeffect.FigthMasterCardRemoveEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FigthMasterCardRemoveEffect.lua
 
-local var_0_0 = class("FigthMasterCardRemoveEffect", BaseWork)
-local var_0_1 = {
+module("modules.logic.fight.view.cardeffect.FigthMasterCardRemoveEffect", package.seeall)
+
+local FigthMasterCardRemoveEffect = class("FigthMasterCardRemoveEffect", BaseWork)
+local pathList = {
 	"ui/viewres/fight/ui_effect_wuduquan_a.prefab"
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0._loader = arg_1_0._loader or LoaderComponent.New()
+function FigthMasterCardRemoveEffect:onStart(context)
+	self._loader = self._loader or LoaderComponent.New()
 
-	arg_1_0._loader:loadListAsset(var_0_1, arg_1_0._onLoaded, arg_1_0._onAllLoaded, arg_1_0)
+	self._loader:loadListAsset(pathList, self._onLoaded, self._onAllLoaded, self)
 end
 
-function var_0_0._onLoaded(arg_2_0)
+function FigthMasterCardRemoveEffect:_onLoaded()
 	return
 end
 
-function var_0_0._onAllLoaded(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(var_0_1) do
-		local var_3_0 = arg_3_0._loader:getAssetItem(iter_3_1)
+function FigthMasterCardRemoveEffect:_onAllLoaded()
+	for i, v in ipairs(pathList) do
+		local loader = self._loader:getAssetItem(v)
 
-		if var_3_0 then
-			local var_3_1 = var_3_0:GetResource()
+		if loader then
+			local tarPrefab = loader:GetResource()
 
-			if iter_3_0 == 1 then
-				arg_3_0.context.card:playAni(ViewAnim.FightCardWuDuQuan, UIAnimationName.Close)
+			if i == 1 then
+				self.context.card:playAni(ViewAnim.FightCardWuDuQuan, UIAnimationName.Close)
 
-				arg_3_0._clonePrefab = gohelper.clone(var_3_1, arg_3_0.context.card.go)
+				self._clonePrefab = gohelper.clone(tarPrefab, self.context.card.go)
 
-				gohelper.onceAddComponent(arg_3_0._clonePrefab, typeof(UnityEngine.Animator)):Play("close", 0, 0)
+				gohelper.onceAddComponent(self._clonePrefab, typeof(UnityEngine.Animator)):Play("close", 0, 0)
 			end
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 0.8 / FightModel.instance:getUISpeed())
+	TaskDispatcher.runDelay(self._delayDone, self, 0.8 / FightModel.instance:getUISpeed())
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FigthMasterCardRemoveEffect:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	local var_5_0 = arg_5_0.context.card._forAnimGO
+function FigthMasterCardRemoveEffect:clearWork()
+	local cardObj = self.context.card._forAnimGO
 
-	if not gohelper.isNil(var_5_0) then
-		gohelper.onceAddComponent(var_5_0, gohelper.Type_CanvasGroup).alpha = 1
+	if not gohelper.isNil(cardObj) then
+		gohelper.onceAddComponent(cardObj, gohelper.Type_CanvasGroup).alpha = 1
 	end
 
-	if not gohelper.isNil(arg_5_0._clonePrefab) then
-		gohelper.destroy(arg_5_0._clonePrefab)
+	if not gohelper.isNil(self._clonePrefab) then
+		gohelper.destroy(self._clonePrefab)
 	end
 
-	gohelper.setActive(arg_5_0.context.card.go, false)
+	gohelper.setActive(self.context.card.go, false)
 
-	if arg_5_0._loader then
-		arg_5_0._loader:releaseSelf()
+	if self._loader then
+		self._loader:releaseSelf()
 
-		arg_5_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return FigthMasterCardRemoveEffect

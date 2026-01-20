@@ -1,204 +1,214 @@
-﻿module("modules.logic.survival.model.map.SurvivalInitGroupModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalInitGroupModel.lua
 
-local var_0_0 = class("SurvivalInitGroupModel", ListScrollModel)
+module("modules.logic.survival.model.map.SurvivalInitGroupModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.allSelectHeroMos = {}
-	arg_1_0.assistHeroMo = nil
-	arg_1_0.allSelectNpcs = {}
-	arg_1_0.selectMapIndex = 0
-	arg_1_0.curClickHeroIndex = 1
+local SurvivalInitGroupModel = class("SurvivalInitGroupModel", ListScrollModel)
 
-	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalInitGroupModel:init()
+	self.allSelectHeroMos = {}
+	self.assistHeroMo = nil
+	self.allSelectNpcs = {}
+	self.selectMapIndex = 0
+	self.curClickHeroIndex = 1
 
-	if var_1_0 then
-		local var_1_1 = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SurvivalTeamSave, "")
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-		if not string.nilorempty(var_1_1) then
-			local var_1_2 = GameUtil.splitString2(var_1_1)
-			local var_1_3 = var_1_2[1] or {}
-			local var_1_4 = var_1_2[2] or {}
-			local var_1_5 = arg_1_0:getCarryHeroCount()
-			local var_1_6 = arg_1_0:getCarryNPCCount()
+	if weekInfo then
+		local str = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SurvivalTeamSave, "")
 
-			for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-				if var_1_5 <= 0 then
+		if not string.nilorempty(str) then
+			local dict = GameUtil.splitString2(str)
+			local heroUids = dict[1] or {}
+			local npcIds = dict[2] or {}
+			local carryHeroCount = self:getCarryHeroCount()
+			local carryNpcCount = self:getCarryNPCCount()
+
+			for _, uid in ipairs(heroUids) do
+				if carryHeroCount <= 0 then
 					break
 				end
 
-				local var_1_7 = HeroModel.instance:getById(iter_1_1)
+				local heroMo = HeroModel.instance:getById(uid)
 
-				if var_1_7 and var_1_0:getHeroMo(var_1_7.heroId).health > 0 then
-					table.insert(arg_1_0.allSelectHeroMos, var_1_7)
+				if heroMo and weekInfo:getHeroMo(heroMo.heroId).health > 0 then
+					table.insert(self.allSelectHeroMos, heroMo)
 
-					var_1_5 = var_1_5 - 1
+					carryHeroCount = carryHeroCount - 1
 				end
 			end
 
-			for iter_1_2, iter_1_3 in ipairs(var_1_4) do
-				if var_1_6 <= 0 then
+			for _, npcId in ipairs(npcIds) do
+				if carryNpcCount <= 0 then
 					break
 				end
 
-				local var_1_8 = var_1_0.npcDict[tonumber(iter_1_3)]
+				local npcMo = weekInfo.npcDict[tonumber(npcId)]
 
-				if var_1_8 then
-					table.insert(arg_1_0.allSelectNpcs, var_1_8)
+				if npcMo then
+					table.insert(self.allSelectNpcs, npcMo)
 
-					var_1_6 = var_1_6 - 1
+					carryNpcCount = carryNpcCount - 1
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.initHeroList(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = {}
-	local var_2_3
+function SurvivalInitGroupModel:initHeroList()
+	local moList = {}
+	local deathList = {}
+	local repeatHero = {}
+	local selectIndex
 
-	for iter_2_0 = 1, arg_2_0:getCarryHeroCount() do
-		if arg_2_0.allSelectHeroMos[iter_2_0] and (not arg_2_0.assistHeroMo or arg_2_0.assistHeroMo.heroMO ~= arg_2_0.allSelectHeroMos[iter_2_0]) then
-			table.insert(var_2_0, arg_2_0.allSelectHeroMos[iter_2_0])
+	for i = 1, self:getCarryHeroCount() do
+		if self.allSelectHeroMos[i] and (not self.assistHeroMo or self.assistHeroMo.heroMO ~= self.allSelectHeroMos[i]) then
+			table.insert(moList, self.allSelectHeroMos[i])
 
-			var_2_2[arg_2_0.allSelectHeroMos[iter_2_0].uid] = true
-			var_2_3 = #var_2_0
+			repeatHero[self.allSelectHeroMos[i].uid] = true
+			selectIndex = #moList
 		end
 	end
 
-	local var_2_4 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	for iter_2_1, iter_2_2 in ipairs(CharacterBackpackCardListModel.instance:getCharacterCardList()) do
-		if not var_2_2[iter_2_2.uid] then
-			var_2_2[iter_2_2.uid] = true
+	for i, mo in ipairs(CharacterBackpackCardListModel.instance:getCharacterCardList()) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
 
-			if var_2_4:getHeroMo(iter_2_2.heroId).health == 0 then
-				table.insert(var_2_1, iter_2_2)
+			if weekInfo:getHeroMo(mo.heroId).health == 0 then
+				table.insert(deathList, mo)
 			else
-				table.insert(var_2_0, iter_2_2)
+				table.insert(moList, mo)
 			end
 		end
 	end
 
-	tabletool.addValues(var_2_0, var_2_1)
-	arg_2_0:setList(var_2_0)
+	tabletool.addValues(moList, deathList)
+	self:setList(moList)
 
-	if var_2_3 then
-		arg_2_0:selectCell(var_2_3, true)
+	if selectIndex then
+		self:selectCell(selectIndex, true)
 	end
 
-	arg_2_0.defaultIndex = var_2_3
+	self.defaultIndex = selectIndex
 end
 
-function var_0_0.getMoIndex(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.allSelectHeroMos) do
-		if iter_3_1 == arg_3_1 then
-			return iter_3_0
+function SurvivalInitGroupModel:getMoIndex(heroMo)
+	for index, mo in pairs(self.allSelectHeroMos) do
+		if mo == heroMo then
+			return index
 		end
 	end
 
 	return -1
 end
 
-function var_0_0.trySetHeroMo(arg_4_0, arg_4_1)
-	if arg_4_1 then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0.allSelectHeroMos) do
-			if iter_4_1 and iter_4_1.heroId == arg_4_1.heroId then
-				arg_4_0.allSelectHeroMos[iter_4_0] = nil
+function SurvivalInitGroupModel:trySetHeroMo(heroMo)
+	if heroMo then
+		for index, mo in pairs(self.allSelectHeroMos) do
+			if mo and mo.heroId == heroMo.heroId then
+				self.allSelectHeroMos[index] = nil
 
-				if arg_4_0.assistHeroMo and iter_4_1 == arg_4_0.assistHeroMo.heroMO then
-					arg_4_0.assistHeroMo = nil
+				if self.assistHeroMo and mo == self.assistHeroMo.heroMO then
+					self.assistHeroMo = nil
 				end
 			end
 		end
 	end
 
-	arg_4_0.allSelectHeroMos[arg_4_0.curClickHeroIndex] = arg_4_1
+	self.allSelectHeroMos[self.curClickHeroIndex] = heroMo
 end
 
-function var_0_0.tryAddHeroMo(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0.allSelectHeroMos) do
-		if arg_5_1 == iter_5_1 then
+function SurvivalInitGroupModel:tryAddHeroMo(heroMo)
+	for index, mo in pairs(self.allSelectHeroMos) do
+		if heroMo == mo then
 			return false
 		end
 
-		if iter_5_1 and iter_5_1.heroId == arg_5_1.heroId then
-			arg_5_0.allSelectHeroMos[iter_5_0] = nil
+		if mo and mo.heroId == heroMo.heroId then
+			self.allSelectHeroMos[index] = nil
 
-			if arg_5_0.assistHeroMo and iter_5_1 == arg_5_0.assistHeroMo.heroMO then
-				arg_5_0.assistHeroMo = nil
+			if self.assistHeroMo and mo == self.assistHeroMo.heroMO then
+				self.assistHeroMo = nil
 			end
 		end
 	end
 
-	for iter_5_2 = 1, arg_5_0:getCarryHeroCount() do
-		if not arg_5_0.allSelectHeroMos[iter_5_2] then
-			arg_5_0.allSelectHeroMos[iter_5_2] = arg_5_1
+	for i = 1, self:getCarryHeroCount() do
+		if not self.allSelectHeroMos[i] then
+			self.allSelectHeroMos[i] = heroMo
 
-			return iter_5_2
+			return i
 		end
 	end
 end
 
-function var_0_0.getCarryHeroCount(arg_6_0)
-	return SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.ExploreRoleNum)
+function SurvivalInitGroupModel:getCarryHeroCount()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	return weekInfo:getAttr(SurvivalEnum.AttrType.ExploreRoleNum)
 end
 
-function var_0_0.getCarryNPCCount(arg_7_0)
-	return SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.ExploreNpcNum)
+function SurvivalInitGroupModel:getCarryNPCCount()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	return weekInfo:getAttr(SurvivalEnum.AttrType.ExploreNpcNum)
 end
 
-function var_0_0.getCarryHeroMax(arg_8_0)
-	return tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.CarryHeroMax))) or 0
+function SurvivalInitGroupModel:getCarryHeroMax()
+	local value = tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.CarryHeroMax))) or 0
+
+	return value
 end
 
-function var_0_0.getCarryNPCMax(arg_9_0)
-	return tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.CarryNpcMax))) or 0
+function SurvivalInitGroupModel:getCarryNPCMax()
+	local value = tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.CarryNpcMax))) or 0
+
+	return value
 end
 
-function var_0_0.hasAssistHeroMo(arg_10_0)
-	return arg_10_0.assistHeroMo ~= nil
+function SurvivalInitGroupModel:hasAssistHeroMo()
+	return self.assistHeroMo ~= nil
 end
 
-function var_0_0.addAssistHeroMo(arg_11_0, arg_11_1)
-	arg_11_0.assistHeroMo = arg_11_1
+function SurvivalInitGroupModel:addAssistHeroMo(assistHeroMo)
+	self.assistHeroMo = assistHeroMo
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.allSelectHeroMos) do
-		if iter_11_1 and iter_11_1.heroId == arg_11_1.heroMO.heroId then
-			arg_11_0.allSelectHeroMos[iter_11_0] = arg_11_1.heroMO
+	for index, heroMo in pairs(self.allSelectHeroMos) do
+		if heroMo and heroMo.heroId == assistHeroMo.heroMO.heroId then
+			self.allSelectHeroMos[index] = assistHeroMo.heroMO
 
 			return
 		end
 	end
 
-	for iter_11_2 = 1, arg_11_0:getCarryHeroCount() do
-		if not arg_11_0.allSelectHeroMos[iter_11_2] then
-			arg_11_0.allSelectHeroMos[iter_11_2] = arg_11_1.heroMO
+	for i = 1, self:getCarryHeroCount() do
+		if not self.allSelectHeroMos[i] then
+			self.allSelectHeroMos[i] = assistHeroMo.heroMO
 
 			return
 		end
 	end
 end
 
-function var_0_0.removeAssistMo(arg_12_0)
-	if not arg_12_0.assistHeroMo then
+function SurvivalInitGroupModel:removeAssistMo()
+	if not self.assistHeroMo then
 		return
 	end
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.allSelectHeroMos) do
-		if iter_12_1 and iter_12_1.heroId == arg_12_0.assistHeroMo.heroId then
-			arg_12_0.allSelectHeroMos[iter_12_0] = nil
+	for index, heroMo in pairs(self.allSelectHeroMos) do
+		if heroMo and heroMo.heroId == self.assistHeroMo.heroId then
+			self.allSelectHeroMos[index] = nil
 
 			break
 		end
 	end
 
-	arg_12_0.assistHeroMo = nil
+	self.assistHeroMo = nil
 end
 
-function var_0_0.isHeroFull(arg_13_0)
-	return tabletool.len(arg_13_0.allSelectHeroMos) == arg_13_0:getCarryHeroCount()
+function SurvivalInitGroupModel:isHeroFull()
+	return tabletool.len(self.allSelectHeroMos) == self:getCarryHeroCount()
 end
 
-return var_0_0
+return SurvivalInitGroupModel

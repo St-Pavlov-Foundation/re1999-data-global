@@ -1,69 +1,72 @@
-﻿module("modules.logic.explore.map.ExploreMapWhirl", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/ExploreMapWhirl.lua
 
-local var_0_0 = class("ExploreMapWhirl")
+module("modules.logic.explore.map.ExploreMapWhirl", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._whirlDict = {}
-	arg_1_0.typeToCls = {
+local ExploreMapWhirl = class("ExploreMapWhirl")
+
+function ExploreMapWhirl:ctor()
+	self._whirlDict = {}
+	self.typeToCls = {
 		[ExploreEnum.WhirlType.Rune] = ExploreWhirlRune
 	}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._mapGo = arg_2_1
-	arg_2_0._whirlRoot = gohelper.create3d(arg_2_1, "whirl")
+function ExploreMapWhirl:init(mapGo)
+	self._mapGo = mapGo
+	self._whirlRoot = gohelper.create3d(mapGo, "whirl")
 
-	ExploreController.instance:registerCallback(ExploreEvent.UseItemChanged, arg_2_0._onUseItemChange, arg_2_0)
-	arg_2_0:_onUseItemChange(ExploreModel.instance:getUseItemUid())
+	ExploreController.instance:registerCallback(ExploreEvent.UseItemChanged, self._onUseItemChange, self)
+	self:_onUseItemChange(ExploreModel.instance:getUseItemUid())
 end
 
-function var_0_0._onUseItemChange(arg_3_0, arg_3_1)
-	local var_3_0 = ExploreBackpackModel.instance:getById(arg_3_1)
+function ExploreMapWhirl:_onUseItemChange(itemUid)
+	local itemMo = ExploreBackpackModel.instance:getById(itemUid)
 
-	if var_3_0 and var_3_0.config.type == ExploreEnum.BackPackItemType.Rune then
-		arg_3_0:addWhirl(ExploreEnum.WhirlType.Rune)
+	if itemMo and itemMo.config.type == ExploreEnum.BackPackItemType.Rune then
+		self:addWhirl(ExploreEnum.WhirlType.Rune)
 	else
-		arg_3_0:removeWhirl(ExploreEnum.WhirlType.Rune)
+		self:removeWhirl(ExploreEnum.WhirlType.Rune)
 	end
 end
 
-function var_0_0.addWhirl(arg_4_0, arg_4_1)
-	if arg_4_0._whirlDict[arg_4_1] then
-		return arg_4_0._whirlDict[arg_4_1]
+function ExploreMapWhirl:addWhirl(whirlType)
+	if self._whirlDict[whirlType] then
+		return self._whirlDict[whirlType]
 	end
 
-	local var_4_0 = arg_4_0.typeToCls[arg_4_1] or ExploreWhirlBase
+	local cls = self.typeToCls[whirlType]
 
-	arg_4_0._whirlDict[arg_4_1] = var_4_0.New(arg_4_0._whirlRoot, arg_4_1)
+	cls = cls or ExploreWhirlBase
+	self._whirlDict[whirlType] = cls.New(self._whirlRoot, whirlType)
 
-	return arg_4_0._whirlDict[arg_4_1]
+	return self._whirlDict[whirlType]
 end
 
-function var_0_0.removeWhirl(arg_5_0, arg_5_1)
-	if arg_5_0._whirlDict[arg_5_1] then
-		arg_5_0._whirlDict[arg_5_1]:destroy()
+function ExploreMapWhirl:removeWhirl(whirlType)
+	if self._whirlDict[whirlType] then
+		self._whirlDict[whirlType]:destroy()
 
-		arg_5_0._whirlDict[arg_5_1] = nil
+		self._whirlDict[whirlType] = nil
 	end
 end
 
-function var_0_0.getWhirl(arg_6_0, arg_6_1)
-	return arg_6_0._whirlDict[arg_6_1] or nil
+function ExploreMapWhirl:getWhirl(whirlType)
+	return self._whirlDict[whirlType] or nil
 end
 
-function var_0_0.unloadMap(arg_7_0)
-	arg_7_0:destroy()
+function ExploreMapWhirl:unloadMap()
+	self:destroy()
 end
 
-function var_0_0.destroy(arg_8_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.UseItemChanged, arg_8_0._onUseItemChange, arg_8_0)
+function ExploreMapWhirl:destroy()
+	ExploreController.instance:unregisterCallback(ExploreEvent.UseItemChanged, self._onUseItemChange, self)
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._whirlDict) do
-		iter_8_1:destroy()
+	for _, v in pairs(self._whirlDict) do
+		v:destroy()
 	end
 
-	arg_8_0._whirlDict = {}
-	arg_8_0._mapGo = nil
+	self._whirlDict = {}
+	self._mapGo = nil
 end
 
-return var_0_0
+return ExploreMapWhirl

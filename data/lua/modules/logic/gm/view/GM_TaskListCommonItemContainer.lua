@@ -1,25 +1,27 @@
-﻿module("modules.logic.gm.view.GM_TaskListCommonItemContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_TaskListCommonItemContainer.lua
 
-local var_0_0 = class("GM_TaskListCommonItemContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_TaskListCommonItemContainer", package.seeall)
 
-function var_0_0.onContainerClickModalMask(arg_1_0)
-	ViewMgr.instance:closeView(arg_1_0.viewName)
+local GM_TaskListCommonItemContainer = class("GM_TaskListCommonItemContainer", BaseViewContainer)
+
+function GM_TaskListCommonItemContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.buildViews(arg_2_0)
+function GM_TaskListCommonItemContainer:buildViews()
 	assert(false)
 end
 
-function var_0_0._gm_showAllTabIdUpdate(arg_3_0)
+function GM_TaskListCommonItemContainer:_gm_showAllTabIdUpdate()
 	assert(false, "please override this function")
 end
 
-function var_0_0._gm_enableFinishOnSelect(arg_4_0)
+function GM_TaskListCommonItemContainer:_gm_enableFinishOnSelect()
 	assert(false, "please override this function")
 end
 
-function var_0_0._gm_onClickFinishAll(arg_5_0)
+function GM_TaskListCommonItemContainer:_gm_onClickFinishAll()
 	assert(false, "please override this function")
 end
 
-return var_0_0
+return GM_TaskListCommonItemContainer

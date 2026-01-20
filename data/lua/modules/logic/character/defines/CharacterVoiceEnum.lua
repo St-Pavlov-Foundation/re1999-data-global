@@ -1,46 +1,53 @@
-﻿module("modules.logic.character.defines.CharacterVoiceEnum", package.seeall)
+﻿-- chunkname: @modules/logic/character/defines/CharacterVoiceEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.character.defines.CharacterVoiceEnum", package.seeall)
 
-var_0_0.Hero = {
+local CharacterVoiceEnum = _M
+
+CharacterVoiceEnum.Hero = {
 	Luxi = 3086
 }
-var_0_0.LuxiState = {
+CharacterVoiceEnum.LuxiState = {
 	HumanFace = 2,
 	MetalFace = 1
 }
-var_0_0.LuxiSkin2 = 308602
-var_0_0.PlayType = {
+CharacterVoiceEnum.LuxiSkin2 = 308602
+CharacterVoiceEnum.PlayType = {
 	Auto = 2,
 	Click = 1
 }
-var_0_0.StatusParams = {
+CharacterVoiceEnum.StatusParams = {
 	Luxi_NoChangeStatus = "noChangeStatus"
 }
-var_0_0.RankUpResultShowMask = {
+CharacterVoiceEnum.SkinInteraction = {
+	[313402] = "BleSkinInteraction"
+}
+CharacterVoiceEnum.RankUpResultShowMask = {
 	[3120] = true
 }
-var_0_0.UIBloomView = {
+CharacterVoiceEnum.UIBloomView = {
 	CharacterDataView = "view_CharacterDataView"
 }
-var_0_0.RTShareType = {
+CharacterVoiceEnum.RTShareType = {
 	BloomClose = 2,
 	BloomOpen = 3,
 	BloomAuto = 100,
 	FullScreen = 4,
 	Normal = 1
 }
-var_0_0.BloomCameraSize = {
+CharacterVoiceEnum.BloomCameraSize = {
 	[3116] = 10,
 	[3107] = 10,
 	[3108] = 10,
 	[3122] = 10,
+	[3134] = 10,
+	[3070] = 10,
 	[3128] = 10,
 	[3120] = 10
 }
-var_0_0.NormalTypeCameraSize = 13
-var_0_0.NormalFullScreenEffectCameraSize = 13
-var_0_0.BloomFullScreenEffectCameraSize = 13
-var_0_0.DelayFrame = 5
+CharacterVoiceEnum.NormalTypeCameraSize = 13
+CharacterVoiceEnum.NormalFullScreenEffectCameraSize = 13
+CharacterVoiceEnum.BloomFullScreenEffectCameraSize = 13
+CharacterVoiceEnum.DelayFrame = 5
 
-return var_0_0
+return CharacterVoiceEnum

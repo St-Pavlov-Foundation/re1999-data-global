@@ -1,8 +1,10 @@
-﻿module("modules.logic.custompickchoice.controller.CustomPickChoiceEvent", package.seeall)
+﻿-- chunkname: @modules/logic/custompickchoice/controller/CustomPickChoiceEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.custompickchoice.controller.CustomPickChoiceEvent", package.seeall)
 
-var_0_0.onCustomPickComplete = 1
-var_0_0.onCustomPickListChanged = 2
+local CustomPickChoiceEvent = _M
 
-return var_0_0
+CustomPickChoiceEvent.onCustomPickComplete = 1
+CustomPickChoiceEvent.onCustomPickListChanged = 2
+
+return CustomPickChoiceEvent

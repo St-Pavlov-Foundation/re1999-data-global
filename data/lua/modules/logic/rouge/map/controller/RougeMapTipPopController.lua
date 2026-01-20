@@ -1,55 +1,59 @@
-﻿module("modules.logic.rouge.map.controller.RougeMapTipPopController", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/controller/RougeMapTipPopController.lua
 
-local var_0_0 = class("RougeMapTipPopController")
+module("modules.logic.rouge.map.controller.RougeMapTipPopController", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	if arg_1_0.inited then
+local RougeMapTipPopController = class("RougeMapTipPopController")
+
+function RougeMapTipPopController:init()
+	if self.inited then
 		return
 	end
 
-	arg_1_0.inited = true
-	arg_1_0.waitTipsList = {}
-	arg_1_0.showing = false
+	self.inited = true
+	self.waitTipsList = {}
+	self.showing = false
 
-	RougeMapController.instance:registerCallback(RougeMapEvent.onCreateMapDoneFlowDone, arg_1_0.popNextTip, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0.popNextTip, arg_1_0)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onCreateMapDoneFlowDone, self.popNextTip, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.popNextTip, self)
 end
 
-function var_0_0.addPopTip(arg_2_0, arg_2_1)
-	if not arg_2_0.waitTipsList or string.nilorempty(arg_2_1) then
+function RougeMapTipPopController:addPopTip(text)
+	if not self.waitTipsList or string.nilorempty(text) then
 		return
 	end
 
-	table.insert(arg_2_0.waitTipsList, arg_2_1)
-	arg_2_0:popNextTip()
+	table.insert(self.waitTipsList, text)
+	self:popNextTip()
 end
 
-function var_0_0.addPopTipByInteractId(arg_3_0, arg_3_1)
-	local var_3_0 = lua_rouge_interactive.configDict[arg_3_1]
+function RougeMapTipPopController:addPopTipByInteractId(interactId)
+	local interactCo = lua_rouge_interactive.configDict[interactId]
 
-	if not var_3_0 then
-		logError("not found interact id .. " .. tostring(arg_3_1))
+	if not interactCo then
+		logError("not found interact id .. " .. tostring(interactId))
 
 		return
 	end
 
-	arg_3_0:addPopTip(var_3_0.tips)
+	self:addPopTip(interactCo.tips)
 end
 
-function var_0_0.addPopTipByEffect(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = lua_rouge_effect.configDict[iter_4_1]
+function RougeMapTipPopController:addPopTipByEffect(effectList)
+	for _, effectId in ipairs(effectList) do
+		local effectCo = lua_rouge_effect.configDict[effectId]
 
-		if not var_4_0 then
-			logError("not found effect id .. " .. tostring(iter_4_1))
+		if not effectCo then
+			logError("not found effect id .. " .. tostring(effectId))
 		else
-			arg_4_0:addPopTip(var_4_0.tips)
+			self:addPopTip(effectCo.tips)
 		end
 	end
 end
 
-function var_0_0.popNextTip(arg_5_0)
-	if RougeMapModel.instance:getMapState() <= RougeMapEnum.MapState.WaitFlow then
+function RougeMapTipPopController:popNextTip()
+	local state = RougeMapModel.instance:getMapState()
+
+	if state <= RougeMapEnum.MapState.WaitFlow then
 		return
 	end
 
@@ -57,49 +61,51 @@ function var_0_0.popNextTip(arg_5_0)
 		return
 	end
 
-	if arg_5_0.showing then
+	if self.showing then
 		return
 	end
 
-	local var_5_0 = table.remove(arg_5_0.waitTipsList, 1)
+	local tip = table.remove(self.waitTipsList, 1)
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(tip) then
 		return
 	end
 
-	arg_5_0.showing = true
+	self.showing = true
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onShowTip, var_5_0)
-	TaskDispatcher.runDelay(arg_5_0._onHideTip, arg_5_0, RougeMapEnum.TipShowDuration)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onShowTip, tip)
+	TaskDispatcher.runDelay(self._onHideTip, self, RougeMapEnum.TipShowDuration)
 end
 
-function var_0_0._onHideTip(arg_6_0)
-	arg_6_0.showing = false
+function RougeMapTipPopController:_onHideTip()
+	self.showing = false
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onHideTip)
-	TaskDispatcher.runDelay(arg_6_0.popNextTip, arg_6_0, RougeMapEnum.TipShowInterval)
+	TaskDispatcher.runDelay(self.popNextTip, self, RougeMapEnum.TipShowInterval)
 end
 
-function var_0_0.clear(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.onHideTip, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.popNextTip, arg_7_0)
+function RougeMapTipPopController:clear()
+	TaskDispatcher.cancelTask(self.onHideTip, self)
+	TaskDispatcher.cancelTask(self.popNextTip, self)
 
-	arg_7_0.showing = false
+	self.showing = false
 
-	if arg_7_0.waitTipsList then
-		tabletool.clear(arg_7_0.waitTipsList)
+	if self.waitTipsList then
+		tabletool.clear(self.waitTipsList)
 	end
 
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onCreateMapDoneFlowDone, arg_7_0.popNextTip, arg_7_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_7_0.popNextTip, arg_7_0)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onCreateMapDoneFlowDone, self.popNextTip, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.popNextTip, self)
 
-	arg_7_0.inited = nil
+	self.inited = nil
 end
 
-function var_0_0.getTipsByEffectId(arg_8_0)
-	return lua_rouge_effect.configDict[arg_8_0].tips
+function RougeMapTipPopController.getTipsByEffectId(effectId)
+	local effectCo = lua_rouge_effect.configDict[effectId]
+
+	return effectCo.tips
 end
 
-var_0_0.instance = var_0_0.New()
+RougeMapTipPopController.instance = RougeMapTipPopController.New()
 
-return var_0_0
+return RougeMapTipPopController

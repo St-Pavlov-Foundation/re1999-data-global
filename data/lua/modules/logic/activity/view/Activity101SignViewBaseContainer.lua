@@ -1,233 +1,243 @@
-﻿module("modules.logic.activity.view.Activity101SignViewBaseContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Activity101SignViewBaseContainer.lua
 
-local var_0_0 = class("Activity101SignViewBaseContainer", BaseViewContainer)
+module("modules.logic.activity.view.Activity101SignViewBaseContainer", package.seeall)
 
-function var_0_0.actId(arg_1_0)
-	return arg_1_0.viewParam.actId
+local Activity101SignViewBaseContainer = class("Activity101SignViewBaseContainer", BaseViewContainer)
+
+function Activity101SignViewBaseContainer:actId()
+	return self.viewParam.actId
 end
 
-function var_0_0._getScrollView(arg_2_0)
-	local var_2_0 = arg_2_0:onGetListScrollModelClassType().New()
-	local var_2_1 = ListScrollParam.New()
+function Activity101SignViewBaseContainer:_getScrollView()
+	local classType = self:onGetListScrollModelClassType()
+	local scrollModel = classType.New()
+	local listScrollParam = ListScrollParam.New()
 
-	var_2_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_1.scrollDir = ScrollEnum.ScrollDirH
-	var_2_1.sortMode = ScrollEnum.ScrollSortDown
-	var_2_1.lineCount = 1
-	var_2_1.cellSpaceV = 0
-	var_2_1.startSpace = 0
-	var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-	var_2_1.rectMaskSoftness = {
+	listScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	listScrollParam.scrollDir = ScrollEnum.ScrollDirH
+	listScrollParam.sortMode = ScrollEnum.ScrollSortDown
+	listScrollParam.lineCount = 1
+	listScrollParam.cellSpaceV = 0
+	listScrollParam.startSpace = 0
+	listScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	listScrollParam.rectMaskSoftness = {
 		0,
 		0
 	}
 
-	arg_2_0:onModifyListScrollParam(var_2_1)
-	assert(var_2_1.cellClass)
-	assert(var_2_1.scrollGOPath)
-	assert(var_2_1.prefabUrl)
+	self:onModifyListScrollParam(listScrollParam)
+	assert(listScrollParam.cellClass)
+	assert(listScrollParam.scrollGOPath)
+	assert(listScrollParam.prefabUrl)
 
-	return var_2_0, var_2_1
+	return scrollModel, listScrollParam
 end
 
-function var_0_0._createMainView(arg_3_0)
-	local var_3_0 = arg_3_0:onGetMainViewClassType()
+function Activity101SignViewBaseContainer:_createMainView()
+	local classType = self:onGetMainViewClassType()
 
-	if var_3_0 then
-		return var_3_0.New()
+	if classType then
+		return classType.New()
 	end
 end
 
-function var_0_0.buildViews(arg_4_0)
-	local var_4_0, var_4_1 = arg_4_0:_getScrollView()
+function Activity101SignViewBaseContainer:buildViews()
+	local scrollModel, listScrollParam = self:_getScrollView()
 
-	arg_4_0.__scrollModel = var_4_0
-	arg_4_0.__listScrollParam = var_4_1
-	arg_4_0.__mainView = arg_4_0:_createMainView()
+	self.__scrollModel = scrollModel
+	self.__listScrollParam = listScrollParam
+	self.__mainView = self:_createMainView()
 
-	return arg_4_0:onBuildViews()
+	return self:onBuildViews()
 end
 
-function var_0_0.onContainerInit(arg_5_0)
-	var_0_0.super.onContainerInit(arg_5_0)
+function Activity101SignViewBaseContainer:onContainerInit()
+	Activity101SignViewBaseContainer.super.onContainerInit(self)
 
-	local var_5_0 = arg_5_0:getScrollRect()
-	local var_5_1 = var_5_0:GetComponent(gohelper.Type_RectTransform)
+	local scrollRect = self:getScrollRect()
+	local rectTransform = scrollRect:GetComponent(gohelper.Type_RectTransform)
 
-	arg_5_0.__scrollContentTrans = var_5_0.content
-	arg_5_0.__scrollContentGo = arg_5_0.__scrollContentTrans.gameObject
-	arg_5_0.__viewPortHeight = recthelper.getHeight(var_5_1)
-	arg_5_0.__viewPortWidth = recthelper.getWidth(var_5_1)
-	arg_5_0.__onceGotRewardFetch101Infos = false
+	self.__scrollContentTrans = scrollRect.content
+	self.__scrollContentGo = self.__scrollContentTrans.gameObject
+	self.__viewPortHeight = recthelper.getHeight(rectTransform)
+	self.__viewPortWidth = recthelper.getWidth(rectTransform)
+	self.__onceGotRewardFetch101Infos = false
 
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_5_0._onRefreshNorSignActivity, arg_5_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self._onRefreshNorSignActivity, self)
 end
 
-function var_0_0.onContainerClose(arg_6_0)
-	var_0_0.super.onContainerClose(arg_6_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_6_0._onRefreshNorSignActivity, arg_6_0)
+function Activity101SignViewBaseContainer:onContainerClose()
+	Activity101SignViewBaseContainer.super.onContainerClose(self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self._onRefreshNorSignActivity, self)
 
-	arg_6_0.__onceGotRewardFetch101Infos = false
+	self.__onceGotRewardFetch101Infos = false
 end
 
-function var_0_0.getScrollModel(arg_7_0)
-	return arg_7_0.__scrollModel
+function Activity101SignViewBaseContainer:getScrollModel()
+	return self.__scrollModel
 end
 
-function var_0_0.getScrollView(arg_8_0)
-	return arg_8_0.__scrollView
+function Activity101SignViewBaseContainer:getScrollView()
+	return self.__scrollView
 end
 
-function var_0_0.getMainView(arg_9_0)
-	return arg_9_0.__mainView
+function Activity101SignViewBaseContainer:getMainView()
+	return self.__mainView
 end
 
-function var_0_0.isLimitedScrollView(arg_10_0)
-	return arg_10_0.__scrollView ~= nil
+function Activity101SignViewBaseContainer:isLimitedScrollView()
+	return self.__scrollView ~= nil
 end
 
-function var_0_0.getCsListScroll(arg_11_0)
-	if not arg_11_0:isLimitedScrollView() then
-		local var_11_0 = arg_11_0:getScrollRect()
+function Activity101SignViewBaseContainer:getCsListScroll()
+	if not self:isLimitedScrollView() then
+		local scrollRect = self:getScrollRect()
 
-		if not var_11_0 then
+		if not scrollRect then
 			return nil
 		end
 
-		local var_11_1 = var_11_0.gameObject
+		local go = scrollRect.gameObject
 
-		if gohelper.isNil(var_11_1) then
+		if gohelper.isNil(go) then
 			return nil
 		end
 
-		return var_11_1:GetComponent(gohelper.Type_LimitedScrollRect)
+		return go:GetComponent(gohelper.Type_LimitedScrollRect)
 	end
 
-	return arg_11_0:getScrollView():getCsListScroll()
+	local scrollView = self:getScrollView()
+
+	return scrollView:getCsListScroll()
 end
 
-function var_0_0.getScrollRect(arg_12_0)
-	if arg_12_0.__scrollRect then
-		return arg_12_0.__scrollRect
+function Activity101SignViewBaseContainer:getScrollRect()
+	if self.__scrollRect then
+		return self.__scrollRect
 	end
 
-	local var_12_0
+	local ret
 
-	if arg_12_0:isLimitedScrollView() then
-		var_12_0 = arg_12_0:getCsListScroll():GetComponent(gohelper.Type_ScrollRect)
+	if self:isLimitedScrollView() then
+		local csListView = self:getCsListScroll()
+
+		ret = csListView:GetComponent(gohelper.Type_ScrollRect)
 	else
-		local var_12_1 = arg_12_0:getMainView().viewGO
-		local var_12_2 = arg_12_0:getListScrollParam()
+		local mainView = self:getMainView()
+		local viewGO = mainView.viewGO
+		local listScrollParam = self:getListScrollParam()
 
-		var_12_0 = gohelper.findChildScrollRect(var_12_1, var_12_2.scrollGOPath)
+		ret = gohelper.findChildScrollRect(viewGO, listScrollParam.scrollGOPath)
 	end
 
-	arg_12_0.__scrollRect = var_12_0
+	self.__scrollRect = ret
 
-	return var_12_0
+	return ret
 end
 
-function var_0_0.getScrollContentTranform(arg_13_0)
-	return arg_13_0.__scrollContentTrans
+function Activity101SignViewBaseContainer:getScrollContentTranform()
+	return self.__scrollContentTrans
 end
 
-function var_0_0.getListScrollParam(arg_14_0)
-	return arg_14_0.__listScrollParam
+function Activity101SignViewBaseContainer:getListScrollParam()
+	return self.__listScrollParam
 end
 
-function var_0_0.getViewportWH(arg_15_0)
-	return arg_15_0.__viewPortWidth, arg_15_0.__viewPortHeight
+function Activity101SignViewBaseContainer:getViewportWH()
+	return self.__viewPortWidth, self.__viewPortHeight
 end
 
-function var_0_0.getScrollContentGo(arg_16_0)
-	return arg_16_0.__scrollContentGo
+function Activity101SignViewBaseContainer:getScrollContentGo()
+	return self.__scrollContentGo
 end
 
-function var_0_0.createItemInst(arg_17_0)
-	local var_17_0 = arg_17_0:getListScrollParam()
-	local var_17_1 = var_17_0.cellClass
-	local var_17_2 = var_17_0.prefabUrl
-	local var_17_3 = arg_17_0:getScrollContentGo()
-	local var_17_4 = arg_17_0:getResInst(var_17_2, var_17_3, var_17_1.__cname)
+function Activity101SignViewBaseContainer:createItemInst()
+	local listScrollParam = self:getListScrollParam()
+	local itemClass = listScrollParam.cellClass
+	local itemUrl = listScrollParam.prefabUrl
+	local parentGo = self:getScrollContentGo()
+	local go = self:getResInst(itemUrl, parentGo, itemClass.__cname)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_17_4, var_17_1)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 end
 
-function var_0_0.onGetListScrollModelClassType(arg_18_0)
+function Activity101SignViewBaseContainer:onGetListScrollModelClassType()
 	return Activity101SignViewListModelBase
 end
 
-function var_0_0.onGetMainViewClassType(arg_19_0)
+function Activity101SignViewBaseContainer:onGetMainViewClassType()
 	assert(false, "please overeide this function!")
 end
 
-function var_0_0.onModifyListScrollParam(arg_20_0, arg_20_1)
+function Activity101SignViewBaseContainer:onModifyListScrollParam(refListScrollParam)
 	assert(false, "please overeide this function!")
 end
 
-function var_0_0.onBuildViews(arg_21_0)
-	local var_21_0, var_21_1 = arg_21_0:_getScrollView()
+function Activity101SignViewBaseContainer:onBuildViews()
+	local scrollModel, listScrollParam = self:_getScrollView()
 
-	arg_21_0.__scrollView = LuaListScrollView.New(var_21_0, var_21_1)
+	self.__scrollView = LuaListScrollView.New(scrollModel, listScrollParam)
 
-	return {
-		arg_21_0.__scrollView,
-		arg_21_0.__mainView
+	local views = {
+		self.__scrollView,
+		self.__mainView
 	}
+
+	return views
 end
 
-function var_0_0.setOnceGotRewardFetch101Infos(arg_22_0, arg_22_1)
-	arg_22_0.__onceGotRewardFetch101Infos = arg_22_1 and true or false
+function Activity101SignViewBaseContainer:setOnceGotRewardFetch101Infos(bool)
+	self.__onceGotRewardFetch101Infos = bool and true or false
 end
 
-function var_0_0._onRefreshNorSignActivity(arg_23_0)
-	if arg_23_0.__onceGotRewardFetch101Infos then
-		Activity101Rpc.instance:sendGet101InfosRequest(arg_23_0:actId())
+function Activity101SignViewBaseContainer:_onRefreshNorSignActivity()
+	if self.__onceGotRewardFetch101Infos then
+		Activity101Rpc.instance:sendGet101InfosRequest(self:actId())
 
-		arg_23_0.__onceGotRewardFetch101Infos = false
+		self.__onceGotRewardFetch101Infos = false
 	end
 end
 
-local var_0_1 = "Activity101|"
+local kPrefix = "Activity101|"
 
-function var_0_0.getPrefsKeyPrefix(arg_24_0)
-	return var_0_1 .. tostring(arg_24_0:actId())
+function Activity101SignViewBaseContainer:getPrefsKeyPrefix()
+	return kPrefix .. tostring(self:actId())
 end
 
-function var_0_0.saveInt(arg_25_0, arg_25_1, arg_25_2)
-	GameUtil.playerPrefsSetNumberByUserId(arg_25_1, arg_25_2)
+function Activity101SignViewBaseContainer:saveInt(key, value)
+	GameUtil.playerPrefsSetNumberByUserId(key, value)
 end
 
-function var_0_0.getInt(arg_26_0, arg_26_1, arg_26_2)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_26_1, arg_26_2)
+function Activity101SignViewBaseContainer:getInt(key, defaultValue)
+	return GameUtil.playerPrefsGetNumberByUserId(key, defaultValue)
 end
 
-function var_0_0.getMoonFestivalSignMaxDay(arg_27_0)
-	return ActivityType101Config.instance:getMoonFestivalSignMaxDay(arg_27_0:actId())
+function Activity101SignViewBaseContainer:getMoonFestivalSignMaxDay()
+	return ActivityType101Config.instance:getMoonFestivalSignMaxDay(self:actId())
 end
 
-function var_0_0.getType101LoginCount(arg_28_0)
-	return ActivityType101Model.instance:getType101LoginCount(arg_28_0:actId())
+function Activity101SignViewBaseContainer:getType101LoginCount()
+	return ActivityType101Model.instance:getType101LoginCount(self:actId())
 end
 
-function var_0_0.getLastGetIndex(arg_29_0)
-	return ActivityType101Model.instance:getLastGetIndex(arg_29_0:actId())
+function Activity101SignViewBaseContainer:getLastGetIndex()
+	return ActivityType101Model.instance:getLastGetIndex(self:actId())
 end
 
-function var_0_0.isType101RewardCouldGetAnyOne(arg_30_0)
-	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(arg_30_0:actId())
+function Activity101SignViewBaseContainer:isType101RewardCouldGetAnyOne()
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(self:actId())
 end
 
-function var_0_0.isType101RewardCouldGet(arg_31_0, arg_31_1)
-	return ActivityType101Model.instance:isType101RewardCouldGet(arg_31_0:actId(), arg_31_1)
+function Activity101SignViewBaseContainer:isType101RewardCouldGet(index)
+	return ActivityType101Model.instance:isType101RewardCouldGet(self:actId(), index)
 end
 
-function var_0_0.isType101RewardGet(arg_32_0, arg_32_1)
-	return ActivityType101Model.instance:isType101RewardGet(arg_32_0:actId(), arg_32_1)
+function Activity101SignViewBaseContainer:isType101RewardGet(index)
+	return ActivityType101Model.instance:isType101RewardGet(self:actId(), index)
 end
 
-function var_0_0.getFirstAvailableIndex(arg_33_0)
-	return ActivityType101Model.instance:getFirstAvailableIndex(arg_33_0:actId())
+function Activity101SignViewBaseContainer:getFirstAvailableIndex()
+	return ActivityType101Model.instance:getFirstAvailableIndex(self:actId())
 end
 
-return var_0_0
+return Activity101SignViewBaseContainer

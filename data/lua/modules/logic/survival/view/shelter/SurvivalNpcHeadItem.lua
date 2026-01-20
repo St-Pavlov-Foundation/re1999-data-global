@@ -1,91 +1,93 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalNpcHeadItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalNpcHeadItem.lua
 
-local var_0_0 = class("SurvivalNpcHeadItem", LuaCompBase)
+module("modules.logic.survival.view.shelter.SurvivalNpcHeadItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SurvivalNpcHeadItem = class("SurvivalNpcHeadItem", LuaCompBase)
+
+function SurvivalNpcHeadItem:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0._goempty = gohelper.findChild(arg_2_0.viewGO, "#go_empty")
-	arg_2_0._gohas = gohelper.findChild(arg_2_0.viewGO, "#go_has")
-	arg_2_0._goput = gohelper.findChild(arg_2_0.viewGO, "#go_has/#go_put")
-	arg_2_0._simage_icon = gohelper.findChildSingleImage(arg_2_0.viewGO, "#go_has/go_icon/#simage_icon")
-	arg_2_0._txtname = gohelper.findChildText(arg_2_0.viewGO, "#go_has/#txt_name")
-	arg_2_0._goSelected = gohelper.findChild(arg_2_0.viewGO, "#go_Selected")
-	arg_2_0._btnclick = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#btn_click")
-	arg_2_0._btnremove = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_has/#btn_remove")
+function SurvivalNpcHeadItem:init(viewGO)
+	self.viewGO = viewGO
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self._gohas = gohelper.findChild(self.viewGO, "#go_has")
+	self._goput = gohelper.findChild(self.viewGO, "#go_has/#go_put")
+	self._simage_icon = gohelper.findChildSingleImage(self.viewGO, "#go_has/go_icon/#simage_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_has/#txt_name")
+	self._goSelected = gohelper.findChild(self.viewGO, "#go_Selected")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._btnremove = gohelper.findChildButtonWithAudio(self.viewGO, "#go_has/#btn_remove")
 end
 
-function var_0_0.onStart(arg_3_0)
+function SurvivalNpcHeadItem:onStart()
 	return
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0:addClickCb(arg_4_0._btnclick, arg_4_0.onClickBtnClick, arg_4_0)
-	arg_4_0:addClickCb(arg_4_0._btnremove, arg_4_0.onClickBtnRemove, arg_4_0)
+function SurvivalNpcHeadItem:addEventListeners()
+	self:addClickCb(self._btnclick, self.onClickBtnClick, self)
+	self:addClickCb(self._btnremove, self.onClickBtnRemove, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
+function SurvivalNpcHeadItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onDestroy(arg_6_0)
+function SurvivalNpcHeadItem:onDestroy()
 	return
 end
 
-function var_0_0.onClickBtnClick(arg_7_0)
+function SurvivalNpcHeadItem:onClickBtnClick()
 	return
 end
 
-function var_0_0.onClickBtnRemove(arg_8_0)
-	if arg_8_0.onClickBtnRemoveCallBack then
-		arg_8_0.onClickBtnRemoveCallBack(arg_8_0.onClickContext, arg_8_0)
+function SurvivalNpcHeadItem:onClickBtnRemove()
+	if self.onClickBtnRemoveCallBack then
+		self.onClickBtnRemoveCallBack(self.onClickContext, self)
 	end
 end
 
-function var_0_0.setData(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.npcId
+function SurvivalNpcHeadItem:setData(param)
+	local oldNpcId = self.npcId
 
-	arg_9_0.pos = arg_9_1.pos
-	arg_9_0.isFirst = arg_9_1.isFirst
-	arg_9_0.npcId = arg_9_1.npcId
-	arg_9_0.isSelect = arg_9_1.isSelect or false
-	arg_9_0.isPlayPutEffect = arg_9_1.isPlayPutEffect or false
-	arg_9_0.isShowBtnRemove = arg_9_1.isShowBtnRemove or false
-	arg_9_0.onClickBtnRemoveCallBack = arg_9_1.onClickBtnRemoveCallBack
-	arg_9_0.onClickContext = arg_9_1.onClickContext
+	self.pos = param.pos
+	self.isFirst = param.isFirst
+	self.npcId = param.npcId
+	self.isSelect = param.isSelect or false
+	self.isPlayPutEffect = param.isPlayPutEffect or false
+	self.isShowBtnRemove = param.isShowBtnRemove or false
+	self.onClickBtnRemoveCallBack = param.onClickBtnRemoveCallBack
+	self.onClickContext = param.onClickContext
 
-	gohelper.setActive(arg_9_0._goSelected, arg_9_0.isSelect)
+	gohelper.setActive(self._goSelected, self.isSelect)
 
-	if not arg_9_0.npcId then
-		gohelper.setActive(arg_9_0._goempty, true)
-		gohelper.setActive(arg_9_0._gohas, false)
+	if not self.npcId then
+		gohelper.setActive(self._goempty, true)
+		gohelper.setActive(self._gohas, false)
 
 		return
 	end
 
-	if arg_9_0.isPlayPutEffect and not arg_9_0.isFirst and arg_9_0.npcId and arg_9_0.npcId ~= var_9_0 then
-		arg_9_0:playPutEffect()
+	if self.isPlayPutEffect and not self.isFirst and self.npcId and self.npcId ~= oldNpcId then
+		self:playPutEffect()
 	end
 
-	arg_9_0.config = SurvivalConfig.instance:getNpcConfig(arg_9_0.npcId)
+	self.config = SurvivalConfig.instance:getNpcConfig(self.npcId)
 
-	gohelper.setActive(arg_9_0._btnremove, arg_9_0.isShowBtnRemove)
-	gohelper.setActive(arg_9_0._goempty, false)
-	gohelper.setActive(arg_9_0._gohas, true)
+	gohelper.setActive(self._btnremove, self.isShowBtnRemove)
+	gohelper.setActive(self._goempty, false)
+	gohelper.setActive(self._gohas, true)
 
-	local var_9_1 = ResUrl.getSurvivalNpcIcon(arg_9_0.config.smallIcon)
+	local path = ResUrl.getSurvivalNpcIcon(self.config.smallIcon)
 
-	arg_9_0._simage_icon:LoadImage(var_9_1)
+	self._simage_icon:LoadImage(path)
 
-	arg_9_0._txtname.text = arg_9_0.config.name
+	self._txtname.text = self.config.name
 end
 
-function var_0_0.playPutEffect(arg_10_0)
-	gohelper.setActive(arg_10_0._goput, false)
-	gohelper.setActive(arg_10_0._goput, true)
+function SurvivalNpcHeadItem:playPutEffect()
+	gohelper.setActive(self._goput, false)
+	gohelper.setActive(self._goput, true)
 end
 
-return var_0_0
+return SurvivalNpcHeadItem

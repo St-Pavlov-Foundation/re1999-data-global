@@ -1,17 +1,19 @@
-﻿module("modules.logic.room.view.RoomLevelUpTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomLevelUpTipsViewContainer.lua
 
-local var_0_0 = class("RoomLevelUpTipsViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomLevelUpTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomLevelUpTipsViewContainer = class("RoomLevelUpTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomLevelUpTipsView.New())
+function RoomLevelUpTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomLevelUpTipsView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function RoomLevelUpTipsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomLevelUpTipsViewContainer

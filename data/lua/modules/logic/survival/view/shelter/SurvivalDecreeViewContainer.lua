@@ -1,31 +1,33 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalDecreeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalDecreeViewContainer.lua
 
-local var_0_0 = class("SurvivalDecreeViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalDecreeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SurvivalDecreeViewContainer = class("SurvivalDecreeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SurvivalDecreeView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
-	table.insert(var_1_0, ShelterCurrencyView.New({
+function SurvivalDecreeViewContainer:buildViews()
+	local views = {}
+
+	table.insert(views, SurvivalDecreeView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+	table.insert(views, ShelterCurrencyView.New({
 		SurvivalEnum.CurrencyType.Build
 	}, "#go_topright"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function SurvivalDecreeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-return var_0_0
+return SurvivalDecreeViewContainer

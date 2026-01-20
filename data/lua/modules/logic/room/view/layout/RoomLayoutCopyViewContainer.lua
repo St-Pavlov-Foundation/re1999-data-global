@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutCopyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutCopyViewContainer.lua
 
-local var_0_0 = class("RoomLayoutCopyViewContainer", BaseViewContainer)
+module("modules.logic.room.view.layout.RoomLayoutCopyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomLayoutCopyViewContainer = class("RoomLayoutCopyViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomLayoutCopyView.New())
+function RoomLayoutCopyViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomLayoutCopyView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomLayoutCopyViewContainer

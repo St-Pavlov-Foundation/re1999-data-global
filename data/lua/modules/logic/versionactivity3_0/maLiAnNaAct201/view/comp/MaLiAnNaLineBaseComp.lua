@@ -1,22 +1,24 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.comp.MaLiAnNaLineBaseComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/comp/MaLiAnNaLineBaseComp.lua
 
-local var_0_0 = class("MaLiAnNaLineBaseComp", LuaCompBase)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.comp.MaLiAnNaLineBaseComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
+local MaLiAnNaLineBaseComp = class("MaLiAnNaLineBaseComp", LuaCompBase)
+
+function MaLiAnNaLineBaseComp:init(go)
+	self.go = go
+	self._tr = go.transform
 end
 
-function var_0_0.updateItem(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	transformhelper.setLocalPosXY(arg_2_0._tr, arg_2_1, arg_2_2)
+function MaLiAnNaLineBaseComp:updateItem(beginX, beginY, endX, endY)
+	transformhelper.setLocalPosXY(self._tr, beginX, beginY)
 
-	local var_2_0 = MathUtil.vec2_length(arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local width = MathUtil.vec2_length(beginX, beginY, endX, endY)
 
-	recthelper.setWidth(arg_2_0._tr, var_2_0)
+	recthelper.setWidth(self._tr, width)
 
-	local var_2_1 = MathUtil.calculateV2Angle(arg_2_3, arg_2_4, arg_2_1, arg_2_2)
+	local angle = MathUtil.calculateV2Angle(endX, endY, beginX, beginY)
 
-	transformhelper.setEulerAngles(arg_2_0._tr, 0, 0, var_2_1)
+	transformhelper.setEulerAngles(self._tr, 0, 0, angle)
 end
 
-return var_0_0
+return MaLiAnNaLineBaseComp

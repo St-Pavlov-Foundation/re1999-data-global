@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.system.work.FightWork2Work", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWork2Work.lua
 
-local var_0_0 = class("FightWork2Work", BaseWork)
+module("modules.logic.fight.system.work.FightWork2Work", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, ...)
-	arg_1_0._param = {
+local FightWork2Work = class("FightWork2Work", BaseWork)
+
+function FightWork2Work:ctor(class, ...)
+	self._param = {
 		...
 	}
-	arg_1_0._paramCount = select("#", ...)
-	arg_1_0._class = arg_1_1
+	self._paramCount = select("#", ...)
+	self._class = class
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._work = arg_2_0._class.New(unpack(arg_2_0._param, 1, arg_2_0._paramCount))
+function FightWork2Work:onStart()
+	self._work = self._class.New(unpack(self._param, 1, self._paramCount))
 
-	arg_2_0._work:registFinishCallback(arg_2_0.onWorkItemDone, arg_2_0)
+	self._work:registFinishCallback(self.onWorkItemDone, self)
 
-	return arg_2_0._work:start()
+	return self._work:start()
 end
 
-function var_0_0.onWorkItemDone(arg_3_0)
-	return arg_3_0:onDone(true)
+function FightWork2Work:onWorkItemDone()
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._work then
-		arg_4_0._work:disposeSelf()
+function FightWork2Work:clearWork()
+	if self._work then
+		self._work:disposeSelf()
 
-		arg_4_0._work = nil
+		self._work = nil
 	end
 end
 
-return var_0_0
+return FightWork2Work

@@ -1,3 +1,7 @@
-﻿module("modules.logic.tipdialog.controller.TipDialogEvent", package.seeall)
+﻿-- chunkname: @modules/logic/tipdialog/controller/TipDialogEvent.lua
 
-return _M
+module("modules.logic.tipdialog.controller.TipDialogEvent", package.seeall)
+
+local TipDialogEvent = _M
+
+return TipDialogEvent

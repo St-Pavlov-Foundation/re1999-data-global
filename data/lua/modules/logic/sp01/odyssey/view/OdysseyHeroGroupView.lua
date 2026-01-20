@@ -1,115 +1,121 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyHeroGroupView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyHeroGroupView.lua
 
-local var_0_0 = class("OdysseyHeroGroupView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyHeroGroupView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclosemult = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closemult")
-	arg_1_0._btnenemy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_enemy")
-	arg_1_0._btntalent = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_talent")
-	arg_1_0._gotalentLocked = gohelper.findChild(arg_1_0.viewGO, "#btn_talent/locked")
-	arg_1_0._gotalentUnlock = gohelper.findChild(arg_1_0.viewGO, "#btn_talent/unlock")
-	arg_1_0._gotalentReddot = gohelper.findChild(arg_1_0.viewGO, "#btn_talent/unlock/#go_talentReddot")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
-	arg_1_0._gotopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_topbtns")
-	arg_1_0._btnRestraintInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_topbtns/#btn_RestraintInfo")
-	arg_1_0._btnchangename = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
-	arg_1_0._btncloth = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/btnCloth")
-	arg_1_0._txtclothName = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName")
-	arg_1_0._txtclothNameEn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName/#txt_clothNameEn")
-	arg_1_0._scrollSuit = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Suit")
-	arg_1_0._gosuit = gohelper.findChild(arg_1_0.viewGO, "#scroll_Suit/Viewport/Content/#go_suit")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scroll_Suit/Viewport/Content/#go_suit/#btn_click")
-	arg_1_0._btnunpowerstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerStart")
-	arg_1_0._btnrecommend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_topbtns/btn_recommend")
-	arg_1_0._dropherogroup = gohelper.findChildDropdown(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
-	arg_1_0._simagefullBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fullbg")
+local OdysseyHeroGroupView = class("OdysseyHeroGroupView", BaseView)
 
-	arg_1_0._dropherogroup:AddOnValueChanged(arg_1_0._groupDropValueChanged, arg_1_0)
+function OdysseyHeroGroupView:onInitView()
+	self._btnclosemult = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closemult")
+	self._btnenemy = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_enemy")
+	self._btntalent = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_talent")
+	self._gotalentLocked = gohelper.findChild(self.viewGO, "#btn_talent/locked")
+	self._gotalentUnlock = gohelper.findChild(self.viewGO, "#btn_talent/unlock")
+	self._gotalentReddot = gohelper.findChild(self.viewGO, "#btn_talent/unlock/#go_talentReddot")
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+	self._gotopbtns = gohelper.findChild(self.viewGO, "#go_container/#go_topbtns")
+	self._btnRestraintInfo = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_topbtns/#btn_RestraintInfo")
+	self._btnchangename = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
+	self._btncloth = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/btnCloth")
+	self._txtclothName = gohelper.findChildText(self.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName")
+	self._txtclothNameEn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName/#txt_clothNameEn")
+	self._scrollSuit = gohelper.findChildScrollRect(self.viewGO, "#scroll_Suit")
+	self._gosuit = gohelper.findChild(self.viewGO, "#scroll_Suit/Viewport/Content/#go_suit")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#scroll_Suit/Viewport/Content/#go_suit/#btn_click")
+	self._btnunpowerstart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerStart")
+	self._btnrecommend = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_topbtns/btn_recommend")
+	self._dropherogroup = gohelper.findChildDropdown(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
+	self._simagefullBg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_fullbg")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._dropherogroup:AddOnValueChanged(self._groupDropValueChanged, self)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_2_0._onModifyHeroGroup, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_2_0.onClickHeroGroupItem, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, arg_2_0.onEnterFightSetParams, arg_2_0)
-	arg_2_0:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_2_0._onModifyHeroGroup, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshReddot, arg_2_0.refreshReddot, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_2_0._respBeginFight, arg_2_0)
-	arg_2_0._btnclosemult:AddClickListener(arg_2_0._btnclosemultOnClick, arg_2_0)
-	arg_2_0._btnenemy:AddClickListener(arg_2_0._btnenemyOnClick, arg_2_0)
-	arg_2_0._btntalent:AddClickListener(arg_2_0._btntalentOnClick, arg_2_0)
-	arg_2_0._btnRestraintInfo:AddClickListener(arg_2_0._btnRestraintInfoOnClick, arg_2_0)
-	arg_2_0._btnchangename:AddClickListener(arg_2_0._btnchangenameOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnunpowerstart:AddClickListener(arg_2_0._btnunpowerstartOnClick, arg_2_0)
-	arg_2_0._btnrecommend:AddClickListener(arg_2_0._btnrecommendOnClick, arg_2_0)
-	arg_2_0._btncloth:AddClickListener(arg_2_0._btnclothOnClock, arg_2_0)
+function OdysseyHeroGroupView:addEvents()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onModifyHeroGroup, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, self.onClickHeroGroupItem, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, self.onEnterFightSetParams, self)
+	self:addEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self._onModifyHeroGroup, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshReddot, self.refreshReddot, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
+	self._btnclosemult:AddClickListener(self._btnclosemultOnClick, self)
+	self._btnenemy:AddClickListener(self._btnenemyOnClick, self)
+	self._btntalent:AddClickListener(self._btntalentOnClick, self)
+	self._btnRestraintInfo:AddClickListener(self._btnRestraintInfoOnClick, self)
+	self._btnchangename:AddClickListener(self._btnchangenameOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnunpowerstart:AddClickListener(self._btnunpowerstartOnClick, self)
+	self._btnrecommend:AddClickListener(self._btnrecommendOnClick, self)
+	self._btncloth:AddClickListener(self._btnclothOnClock, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_3_0.onClickHeroGroupItem, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_3_0._onModifyHeroGroup, arg_3_0)
-	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, arg_3_0.onEnterFightSetParams, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, arg_3_0._onModifyHeroGroup, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshReddot, arg_3_0.refreshReddot, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.RespBeginFight, arg_3_0._respBeginFight, arg_3_0)
-	arg_3_0._btnclosemult:RemoveClickListener()
-	arg_3_0._btnenemy:RemoveClickListener()
-	arg_3_0._btntalent:RemoveClickListener()
-	arg_3_0._btnRestraintInfo:RemoveClickListener()
-	arg_3_0._btnchangename:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnunpowerstart:RemoveClickListener()
-	arg_3_0._btnrecommend:RemoveClickListener()
-	arg_3_0._btncloth:RemoveClickListener()
+function OdysseyHeroGroupView:removeEvents()
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, self.onClickHeroGroupItem, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onModifyHeroGroup, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnStartDungeonExtraParams, self.onEnterFightSetParams, self)
+	self:removeEventCb(OdysseyHeroGroupController.instance, OdysseyEvent.OnHeroGroupUpdate, self._onModifyHeroGroup, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnRefreshReddot, self.refreshReddot, self)
+	self:removeEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
+	self._btnclosemult:RemoveClickListener()
+	self._btnenemy:RemoveClickListener()
+	self._btntalent:RemoveClickListener()
+	self._btnRestraintInfo:RemoveClickListener()
+	self._btnchangename:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
+	self._btnunpowerstart:RemoveClickListener()
+	self._btnrecommend:RemoveClickListener()
+	self._btncloth:RemoveClickListener()
 end
 
-function var_0_0._btnclosemultOnClick(arg_4_0)
+function OdysseyHeroGroupView:_btnclosemultOnClick()
 	return
 end
 
-function var_0_0._btnenemyOnClick(arg_5_0)
+function OdysseyHeroGroupView:_btnenemyOnClick()
 	EnemyInfoController.instance:openEnemyInfoViewByBattleId(HeroGroupModel.instance.battleId)
 end
 
-function var_0_0._btntalentOnClick(arg_6_0)
-	if OdysseyTalentModel.instance:isTalentUnlock() == false then
+function OdysseyHeroGroupView:_btntalentOnClick()
+	local isUnlock = OdysseyTalentModel.instance:isTalentUnlock()
+
+	if isUnlock == false then
 		return
 	end
 
 	OdysseyController.instance:openTalentTreeView()
 end
 
-function var_0_0._btnRestraintInfoOnClick(arg_7_0)
+function OdysseyHeroGroupView:_btnRestraintInfoOnClick()
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView)
 end
 
-function var_0_0._btnchangenameOnClick(arg_8_0)
+function OdysseyHeroGroupView:_btnchangenameOnClick()
 	return
 end
 
-function var_0_0._btnclickOnClick(arg_9_0)
+function OdysseyHeroGroupView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._btnunpowerstartOnClick(arg_10_0)
-	if arg_10_0._heroGroupType == OdysseyEnum.HeroGroupType.Prepare then
+function OdysseyHeroGroupView:_btnunpowerstartOnClick()
+	if self._heroGroupType == OdysseyEnum.HeroGroupType.Prepare then
 		logError("编队模式不能进入战斗")
 
 		return
 	end
 
 	if HeroGroupModel.instance.episodeId then
-		if OdysseyDungeonController.instance:setFightHeroGroup() then
-			local var_10_0 = FightModel.instance:getFightParam()
+		local result = OdysseyDungeonController.instance:setFightHeroGroup()
 
-			var_10_0.isReplay = false
-			var_10_0.multiplication = 1
+		if result then
+			local fightParam = FightModel.instance:getFightParam()
 
-			DungeonFightController.instance:sendStartDungeonRequest(var_10_0.chapterId, var_10_0.episodeId, var_10_0, 1)
+			fightParam.isReplay = false
+			fightParam.multiplication = 1
+
+			DungeonFightController.instance:sendStartDungeonRequest(fightParam.chapterId, fightParam.episodeId, fightParam, 1)
 			AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 		end
 	else
@@ -117,189 +123,192 @@ function var_0_0._btnunpowerstartOnClick(arg_10_0)
 	end
 end
 
-function var_0_0._btnrecommendOnClick(arg_11_0)
+function OdysseyHeroGroupView:_btnrecommendOnClick()
 	return
 end
 
-function var_0_0._btnclothOnClock(arg_12_0)
+function OdysseyHeroGroupView:_btnclothOnClock()
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) or PlayerClothModel.instance:getSpEpisodeClothID() then
+	local clothUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if clothUnlock or PlayerClothModel.instance:getSpEpisodeClothID() then
 		ViewMgr.instance:openView(ViewName.PlayerClothView)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.LeadRoleSkill))
 	end
 end
 
-function var_0_0._respBeginFight(arg_13_0)
-	gohelper.setActive(arg_13_0._gomask, true)
+function OdysseyHeroGroupView:_respBeginFight()
+	gohelper.setActive(self._gomask, true)
 end
 
-function var_0_0.onClickHeroGroupItem(arg_14_0, arg_14_1)
-	local var_14_0 = HeroGroupModel.instance:getCurGroupMO():getPosEquips(arg_14_1 - 1).equipUid
-	local var_14_1 = {
-		fight_param = FightParam.New(),
-		singleGroupMOId = arg_14_1,
-		originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(arg_14_1),
-		equips = var_14_0
-	}
+function OdysseyHeroGroupView:onClickHeroGroupItem(id)
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local equips = heroGroupMO:getPosEquips(id - 1).equipUid
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.OdysseyHeroGroupEditView, var_14_1)
+	param.fight_param = FightParam.New()
+	param.singleGroupMOId = id
+	param.originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(id)
+	param.equips = equips
+
+	ViewMgr.instance:openView(ViewName.OdysseyHeroGroupEditView, param)
 end
 
-function var_0_0._editableInitView(arg_15_0)
-	arg_15_0._gomask = gohelper.findChild(arg_15_0.viewGO, "#go_container2/#go_mask")
-	arg_15_0._goherogroupcontain = gohelper.findChild(arg_15_0.viewGO, "herogroupcontain")
-	arg_15_0._iconGO = arg_15_0:getResInst(arg_15_0.viewContainer:getSetting().otherRes[1], arg_15_0._btncloth.gameObject)
+function OdysseyHeroGroupView:_editableInitView()
+	self._gomask = gohelper.findChild(self.viewGO, "#go_container2/#go_mask")
+	self._goherogroupcontain = gohelper.findChild(self.viewGO, "herogroupcontain")
+	self._iconGO = self:getResInst(self.viewContainer:getSetting().otherRes[1], self._btncloth.gameObject)
 
-	recthelper.setAnchor(arg_15_0._iconGO.transform, -100, 1)
-	gohelper.setActive(arg_15_0._gomask, false)
+	recthelper.setAnchor(self._iconGO.transform, -100, 1)
+	gohelper.setActive(self._gomask, false)
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function OdysseyHeroGroupView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_17_0)
-	local var_17_0 = arg_17_0.viewParam
-	local var_17_1
+function OdysseyHeroGroupView:onOpen()
+	local viewParam = self.viewParam
+	local heroGroupType
 
-	if var_17_0 == nil then
-		var_17_1 = OdysseyEnum.HeroGroupType.Fight
-		arg_17_0._episodeId = HeroGroupModel.instance.episodeId
-		arg_17_0.episodeConfig = DungeonConfig.instance:getEpisodeCO(arg_17_0._episodeId)
-		arg_17_0._chapterConfig = DungeonConfig.instance:getChapterCO(arg_17_0.episodeConfig.chapterId)
-		var_17_1 = OdysseyEnum.HeroGroupType.Fight
+	if viewParam == nil then
+		heroGroupType = OdysseyEnum.HeroGroupType.Fight
+		self._episodeId = HeroGroupModel.instance.episodeId
+		self.episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
+		self._chapterConfig = DungeonConfig.instance:getChapterCO(self.episodeConfig.chapterId)
+		heroGroupType = OdysseyEnum.HeroGroupType.Fight
 	else
-		var_17_1 = var_17_0.heroGroupType ~= nil and var_17_0.heroGroupType or OdysseyEnum.HeroGroupType.Prepare
+		heroGroupType = viewParam.heroGroupType ~= nil and viewParam.heroGroupType or OdysseyEnum.HeroGroupType.Prepare
 	end
 
-	arg_17_0._heroGroupType = var_17_1
+	self._heroGroupType = heroGroupType
 
-	HeroGroupModel.instance:setHeroGroupType(var_17_1)
+	HeroGroupModel.instance:setHeroGroupType(heroGroupType)
 
-	local var_17_2 = HeroGroupModel.instance:getCurGroupMO()
+	local groupHeroMo = HeroGroupModel.instance:getCurGroupMO()
 
-	HeroGroupTrialModel.instance:setTrialByOdysseyGroupMo(var_17_2)
-	arg_17_0:initState()
-	arg_17_0:_initFightGroupDrop()
-	arg_17_0:_refreshCloth()
-	arg_17_0:_refreshTalentState()
-	arg_17_0:refreshReddot()
+	HeroGroupTrialModel.instance:setTrialByOdysseyGroupMo(groupHeroMo)
+	self:initState()
+	self:_initFightGroupDrop()
+	self:_refreshCloth()
+	self:_refreshTalentState()
+	self:refreshReddot()
 	OdysseyStatHelper.instance:initViewStartTime()
-	NavigateMgr.instance:addEscape(arg_17_0.viewName, arg_17_0._onEscapeBtnClick, arg_17_0)
+	NavigateMgr.instance:addEscape(self.viewName, self._onEscapeBtnClick, self)
 end
 
-function var_0_0.initState(arg_18_0)
-	local var_18_0 = arg_18_0._heroGroupType == OdysseyEnum.HeroGroupType.Fight
+function OdysseyHeroGroupView:initState()
+	local isFight = self._heroGroupType == OdysseyEnum.HeroGroupType.Fight
 
-	gohelper.setActive(arg_18_0._btnenemy, var_18_0)
-	gohelper.setActive(arg_18_0._btnrecommend, false)
-	gohelper.setActive(arg_18_0._btnunpowerstart, var_18_0)
-	gohelper.setActive(arg_18_0._btnRestraintInfo, false)
-	gohelper.setActive(arg_18_0._simagefullBg, not var_18_0)
+	gohelper.setActive(self._btnenemy, isFight)
+	gohelper.setActive(self._btnrecommend, false)
+	gohelper.setActive(self._btnunpowerstart, isFight)
+	gohelper.setActive(self._btnRestraintInfo, false)
+	gohelper.setActive(self._simagefullBg, not isFight)
 end
 
-function var_0_0._refreshTalentState(arg_19_0)
-	local var_19_0 = OdysseyTalentModel.instance:isTalentUnlock()
+function OdysseyHeroGroupView:_refreshTalentState()
+	local isUnlock = OdysseyTalentModel.instance:isTalentUnlock()
 
-	gohelper.setActive(arg_19_0._btntalent.gameObject, var_19_0)
-	gohelper.setActive(arg_19_0._gotalentLocked, not var_19_0)
-	gohelper.setActive(arg_19_0._gotalentUnlock, var_19_0)
+	gohelper.setActive(self._btntalent.gameObject, isUnlock)
+	gohelper.setActive(self._gotalentLocked, not isUnlock)
+	gohelper.setActive(self._gotalentUnlock, isUnlock)
 end
 
-function var_0_0._refreshCloth(arg_20_0)
-	local var_20_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
-	local var_20_1 = HeroGroupModel.instance:getCurGroupMO().clothId
+function OdysseyHeroGroupView:_refreshCloth()
+	local clothShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local cloth_id = curGroupMO.clothId
 
-	var_20_1 = PlayerClothModel.instance:getSpEpisodeClothID() or var_20_1
+	cloth_id = PlayerClothModel.instance:getSpEpisodeClothID() or cloth_id
 
-	local var_20_2 = PlayerClothModel.instance:getById(var_20_1)
+	local clothMO = PlayerClothModel.instance:getById(cloth_id)
 
-	gohelper.setActive(arg_20_0._txtclothName.gameObject, var_20_2)
+	gohelper.setActive(self._txtclothName.gameObject, clothMO)
 
-	if var_20_2 then
-		local var_20_3 = lua_cloth.configDict[var_20_2.clothId]
+	if clothMO then
+		local clothConfig = lua_cloth.configDict[clothMO.clothId]
+		local clothLv = clothMO.level or 0
 
-		if not var_20_2.level then
-			local var_20_4 = 0
-		end
-
-		arg_20_0._txtclothName.text = var_20_3.name
-		arg_20_0._txtclothNameEn.text = var_20_3.enname
+		self._txtclothName.text = clothConfig.name
+		self._txtclothNameEn.text = clothConfig.enname
 	end
 
-	for iter_20_0, iter_20_1 in ipairs(lua_cloth.configList) do
-		local var_20_5 = gohelper.findChild(arg_20_0._iconGO, tostring(iter_20_1.id))
+	for _, clothCO in ipairs(lua_cloth.configList) do
+		local icon = gohelper.findChild(self._iconGO, tostring(clothCO.id))
 
-		if not gohelper.isNil(var_20_5) then
-			gohelper.setActive(var_20_5, iter_20_1.id == var_20_1)
+		if not gohelper.isNil(icon) then
+			gohelper.setActive(icon, clothCO.id == cloth_id)
 		end
 	end
 
-	gohelper.setActive(arg_20_0._btncloth.gameObject, var_0_0.showCloth())
+	gohelper.setActive(self._btncloth.gameObject, OdysseyHeroGroupView.showCloth())
 end
 
-function var_0_0._getEpisodeConfigAndBattleConfig()
-	local var_21_0 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
-	local var_21_1
+function OdysseyHeroGroupView._getEpisodeConfigAndBattleConfig()
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local battleCO
 
 	if HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 then
-		var_21_1 = lua_battle.configDict[HeroGroupModel.instance.battleId]
+		battleCO = lua_battle.configDict[HeroGroupModel.instance.battleId]
 	else
-		var_21_1 = DungeonConfig.instance:getBattleCo(HeroGroupModel.instance.episodeId)
+		battleCO = DungeonConfig.instance:getBattleCo(HeroGroupModel.instance.episodeId)
 	end
 
-	return var_21_0, var_21_1
+	return episodeCO, battleCO
 end
 
-function var_0_0.showCloth()
+function OdysseyHeroGroupView.showCloth()
 	if PlayerClothModel.instance:getSpEpisodeClothID() then
 		return true
 	end
 
-	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill) then
+	local clothShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if not clothShow then
 		return false
 	end
 
-	local var_22_0, var_22_1 = var_0_0._getEpisodeConfigAndBattleConfig()
+	local episodeCO, battleCO = OdysseyHeroGroupView._getEpisodeConfigAndBattleConfig()
 
-	if var_22_1 and var_22_1.noClothSkill == 1 then
+	if battleCO and battleCO.noClothSkill == 1 then
 		return false
 	end
 
-	local var_22_2 = HeroGroupModel.instance:getCurGroupMO()
-	local var_22_3 = PlayerClothModel.instance:getById(var_22_2.clothId)
-	local var_22_4 = PlayerClothModel.instance:getList()
-	local var_22_5 = false
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local clothMO = PlayerClothModel.instance:getById(curGroupMO.clothId)
+	local list = PlayerClothModel.instance:getList()
+	local hasUnlock = false
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_4) do
-		var_22_5 = true
+	for _, clothMO in ipairs(list) do
+		hasUnlock = true
 
 		break
 	end
 
-	return var_22_5
+	return hasUnlock
 end
 
-function var_0_0._checkEquipClothSkill(arg_23_0)
+function OdysseyHeroGroupView:_checkEquipClothSkill()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
 		return
 	end
 
-	local var_23_0 = HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	if PlayerClothModel.instance:getById(var_23_0.clothId) then
+	if PlayerClothModel.instance:getById(curGroupMO.clothId) then
 		return
 	end
 
-	local var_23_1 = PlayerClothModel.instance:getList()
+	local list = PlayerClothModel.instance:getList()
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		if PlayerClothModel.instance:hasCloth(iter_23_1.id) then
-			HeroGroupModel.instance:replaceCloth(iter_23_1.id)
+	for _, clothMO in ipairs(list) do
+		if PlayerClothModel.instance:hasCloth(clothMO.id) then
+			HeroGroupModel.instance:replaceCloth(clothMO.id)
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 			HeroGroupModel.instance:saveCurGroupData()
 
@@ -308,69 +317,69 @@ function var_0_0._checkEquipClothSkill(arg_23_0)
 	end
 end
 
-function var_0_0._onEscapeBtnClick(arg_24_0)
-	if not arg_24_0._gomask.gameObject.activeInHierarchy then
-		arg_24_0.viewContainer:_closeCallback()
+function OdysseyHeroGroupView:_onEscapeBtnClick()
+	if not self._gomask.gameObject.activeInHierarchy then
+		self.viewContainer:_closeCallback()
 	end
 end
 
-function var_0_0._initFightGroupDrop(arg_25_0)
-	local var_25_0 = {}
+function OdysseyHeroGroupView:_initFightGroupDrop()
+	local list = {}
 
-	for iter_25_0 = 1, 4 do
-		var_25_0[iter_25_0] = OdysseyHeroGroupModel.instance:getCommonGroupName(iter_25_0)
+	for i = 1, 4 do
+		list[i] = OdysseyHeroGroupModel.instance:getCommonGroupName(i)
 	end
 
-	local var_25_1 = OdysseyHeroGroupModel.instance:getCurIndex()
+	local selectIndex = OdysseyHeroGroupModel.instance:getCurIndex()
 
-	gohelper.setActive(arg_25_0._btnchangename, false)
-	arg_25_0._dropherogroup:ClearOptions()
-	arg_25_0._dropherogroup:AddOptions(var_25_0)
-	arg_25_0._dropherogroup:SetValue(var_25_1 - 1)
+	gohelper.setActive(self._btnchangename, false)
+	self._dropherogroup:ClearOptions()
+	self._dropherogroup:AddOptions(list)
+	self._dropherogroup:SetValue(selectIndex - 1)
 end
 
-function var_0_0._groupDropValueChanged(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_1 + 1
+function OdysseyHeroGroupView:_groupDropValueChanged(value)
+	local selectIndex = value + 1
 
-	if OdysseyHeroGroupModel.instance:canSwitchHeroGroupSelectIndex(var_26_0) then
-		OdysseyHeroGroupController.instance:switchHeroGroup(var_26_0, arg_26_0.onSwitchHeroGroup, arg_26_0)
+	if OdysseyHeroGroupModel.instance:canSwitchHeroGroupSelectIndex(selectIndex) then
+		OdysseyHeroGroupController.instance:switchHeroGroup(selectIndex, self.onSwitchHeroGroup, self)
 	end
 end
 
-function var_0_0.onSwitchHeroGroup(arg_27_0)
-	GameFacade.showToast(arg_27_0._changeToastId or ToastEnum.SeasonGroupChanged)
+function OdysseyHeroGroupView:onSwitchHeroGroup()
+	GameFacade.showToast(self._changeToastId or ToastEnum.SeasonGroupChanged)
 	HeroGroupModel.instance:setHeroGroupSelectIndex()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-	gohelper.setActive(arg_27_0._goherogroupcontain, false)
-	gohelper.setActive(arg_27_0._goherogroupcontain, true)
+	gohelper.setActive(self._goherogroupcontain, false)
+	gohelper.setActive(self._goherogroupcontain, true)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupSelectIndex)
 end
 
-function var_0_0._onModifyHeroGroup(arg_28_0)
-	arg_28_0:_refreshCloth()
+function OdysseyHeroGroupView:_onModifyHeroGroup()
+	self:_refreshCloth()
 end
 
-function var_0_0.onEnterFightSetParams(arg_29_0, arg_29_1, arg_29_2)
-	if arg_29_2 and arg_29_2.type == DungeonEnum.EpisodeType.Odyssey then
-		arg_29_1.params = tostring(OdysseyDungeonModel.instance:getCurInElementId())
+function OdysseyHeroGroupView:onEnterFightSetParams(req, episodeConfig)
+	if episodeConfig and episodeConfig.type == DungeonEnum.EpisodeType.Odyssey then
+		req.params = tostring(OdysseyDungeonModel.instance:getCurInElementId())
 	end
 end
 
-function var_0_0.refreshReddot(arg_30_0)
-	local var_30_0 = OdysseyTalentModel.instance:checkHasNotUsedTalentPoint()
+function OdysseyHeroGroupView:refreshReddot()
+	local isHasNotUseTalentPoint = OdysseyTalentModel.instance:checkHasNotUsedTalentPoint()
 
-	gohelper.setActive(arg_30_0._gotalentReddot, var_30_0)
+	gohelper.setActive(self._gotalentReddot, isHasNotUseTalentPoint)
 end
 
-function var_0_0.onClose(arg_31_0)
-	arg_31_0._dropherogroup:RemoveOnValueChanged()
+function OdysseyHeroGroupView:onClose()
+	self._dropherogroup:RemoveOnValueChanged()
 	OdysseyStatHelper.instance:sendOdysseyViewStayTime("OdysseyHeroGroupView")
 	HeroSingleGroupModel.instance:setMaxHeroCount()
 	HeroGroupTrialModel.instance:clear()
 end
 
-function var_0_0.onDestroyView(arg_32_0)
+function OdysseyHeroGroupView:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseyHeroGroupView

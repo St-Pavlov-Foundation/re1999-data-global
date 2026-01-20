@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.system.FightSystem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/FightSystem.lua
 
-local var_0_0 = class("FightSystem")
+module("modules.logic.fight.system.FightSystem", package.seeall)
 
-function var_0_0.dispose(arg_1_0)
+local FightSystem = class("FightSystem")
+
+function FightSystem:dispose()
 	FightPlayCardModel.instance:onEndRound()
 	FightModel.instance:clear()
 end
 
-var_0_0.instance = var_0_0.New()
+FightSystem.instance = FightSystem.New()
 
-return var_0_0
+return FightSystem

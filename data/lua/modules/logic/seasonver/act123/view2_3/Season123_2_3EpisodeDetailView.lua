@@ -1,423 +1,426 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3EpisodeDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3EpisodeDetailView.lua
 
-local var_0_0 = class("Season123_2_3EpisodeDetailView", BaseView)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3EpisodeDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "#go_info")
-	arg_1_0._simagestageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/left/#simage_stageicon")
-	arg_1_0._animatorRight = gohelper.findChildComponent(arg_1_0.viewGO, "#go_info/right", typeof(UnityEngine.Animator))
-	arg_1_0._txtlevelnamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_info/left/#txt_levelnamecn")
-	arg_1_0._descScroll = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/Scroll View")
-	arg_1_0._animScroll = arg_1_0._descScroll:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._descContent = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/Scroll View/Viewport/Content")
-	arg_1_0._goDescItem = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/Scroll View/Viewport/Content/#go_descitem")
-	arg_1_0._txtcurindex = gohelper.findChildText(arg_1_0.viewGO, "#go_info/right/position/center/#txt_curindex")
-	arg_1_0._txtmaxindex = gohelper.findChildText(arg_1_0.viewGO, "#go_info/right/position/center/#txt_maxindex")
-	arg_1_0._btnlast = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/right/position/#btn_last")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/right/position/#btn_next")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_info/right/#txt_desc")
-	arg_1_0._txtenemylv = gohelper.findChildText(arg_1_0.viewGO, "#go_info/right/enemylv/enemylv/#txt_enemylv")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/right/btns/#btn_start")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/right/btns/#btn_reset")
-	arg_1_0._btnReplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/right/btns/#btn_storyreplay")
-	arg_1_0._gopart = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/#go_part")
-	arg_1_0._gostage = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/#go_part/#go_stage")
-	arg_1_0._gostagelvlitem = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/#go_part/#go_stage/list/#go_stagelvlitem")
-	arg_1_0._gounlocktype1 = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype1")
-	arg_1_0._gounlocktype2 = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype2")
-	arg_1_0._gounlocktype3 = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype3")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_rewarditem")
-	arg_1_0._godecorate = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/decorate")
-	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/position/center")
-	arg_1_0._gopartempty = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/#go_partempty")
-	arg_1_0._simageempty = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/right/layout/#go_partempty/#simage_empty")
-	arg_1_0._goleftscrolltopmask = gohelper.findChild(arg_1_0.viewGO, "#go_info/left/Scroll View/mask2")
-	arg_1_0._goreset = gohelper.findChild(arg_1_0.viewGO, "#go_info/right/layout/#go_reset")
-	arg_1_0._txtresettime = gohelper.findChildText(arg_1_0.viewGO, "#go_info/right/layout/#go_reset/#txt_title/#txt_time")
+local Season123_2_3EpisodeDetailView = class("Season123_2_3EpisodeDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_3EpisodeDetailView:onInitView()
+	self._goinfo = gohelper.findChild(self.viewGO, "#go_info")
+	self._simagestageicon = gohelper.findChildSingleImage(self.viewGO, "#go_info/left/#simage_stageicon")
+	self._animatorRight = gohelper.findChildComponent(self.viewGO, "#go_info/right", typeof(UnityEngine.Animator))
+	self._txtlevelnamecn = gohelper.findChildText(self.viewGO, "#go_info/left/#txt_levelnamecn")
+	self._descScroll = gohelper.findChild(self.viewGO, "#go_info/left/Scroll View")
+	self._animScroll = self._descScroll:GetComponent(typeof(UnityEngine.Animator))
+	self._descContent = gohelper.findChild(self.viewGO, "#go_info/left/Scroll View/Viewport/Content")
+	self._goDescItem = gohelper.findChild(self.viewGO, "#go_info/left/Scroll View/Viewport/Content/#go_descitem")
+	self._txtcurindex = gohelper.findChildText(self.viewGO, "#go_info/right/position/center/#txt_curindex")
+	self._txtmaxindex = gohelper.findChildText(self.viewGO, "#go_info/right/position/center/#txt_maxindex")
+	self._btnlast = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/right/position/#btn_last")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/right/position/#btn_next")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_info/right/#txt_desc")
+	self._txtenemylv = gohelper.findChildText(self.viewGO, "#go_info/right/enemylv/enemylv/#txt_enemylv")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/right/btns/#btn_start")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/right/btns/#btn_reset")
+	self._btnReplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/right/btns/#btn_storyreplay")
+	self._gopart = gohelper.findChild(self.viewGO, "#go_info/right/layout/#go_part")
+	self._gostage = gohelper.findChild(self.viewGO, "#go_info/right/layout/#go_part/#go_stage")
+	self._gostagelvlitem = gohelper.findChild(self.viewGO, "#go_info/right/layout/#go_part/#go_stage/list/#go_stagelvlitem")
+	self._gounlocktype1 = gohelper.findChild(self.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype1")
+	self._gounlocktype2 = gohelper.findChild(self.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype2")
+	self._gounlocktype3 = gohelper.findChild(self.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_unlocktype3")
+	self._scrollrewards = gohelper.findChildScrollRect(self.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "#go_info/right/layout/root/mask/#scroll_rewards/Viewport/Content/#go_rewarditem")
+	self._godecorate = gohelper.findChild(self.viewGO, "#go_info/right/decorate")
+	self._gocenter = gohelper.findChild(self.viewGO, "#go_info/right/position/center")
+	self._gopartempty = gohelper.findChild(self.viewGO, "#go_info/right/layout/#go_partempty")
+	self._simageempty = gohelper.findChildSingleImage(self.viewGO, "#go_info/right/layout/#go_partempty/#simage_empty")
+	self._goleftscrolltopmask = gohelper.findChild(self.viewGO, "#go_info/left/Scroll View/mask2")
+	self._goreset = gohelper.findChild(self.viewGO, "#go_info/right/layout/#go_reset")
+	self._txtresettime = gohelper.findChildText(self.viewGO, "#go_info/right/layout/#go_reset/#txt_title/#txt_time")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlast:AddClickListener(arg_2_0._btnlastOnClick, arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function Season123_2_3EpisodeDetailView:addEvents()
+	self._btnlast:AddClickListener(self._btnlastOnClick, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlast:RemoveClickListener()
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
+function Season123_2_3EpisodeDetailView:removeEvents()
+	self._btnlast:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gostagelvlitem, false)
+function Season123_2_3EpisodeDetailView:_editableInitView()
+	gohelper.setActive(self._gostagelvlitem, false)
 
-	arg_4_0._txtseasondesc = gohelper.findChildText(arg_4_0.viewGO, "#go_info/left/Scroll View/Viewport/Content/#go_descitem/txt_desc")
+	self._txtseasondesc = gohelper.findChildText(self.viewGO, "#go_info/left/Scroll View/Viewport/Content/#go_descitem/txt_desc")
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function Season123_2_3EpisodeDetailView:onDestroyView()
 	Season123EpisodeDetailController.instance:onCloseView()
-	arg_5_0._simagestageicon:UnLoadImage()
+	self._simagestageicon:UnLoadImage()
 
-	if arg_5_0._showLvItems then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._showLvItems) do
-			iter_5_1:destroy()
+	if self._showLvItems then
+		for _, v in pairs(self._showLvItems) do
+			v:destroy()
 		end
 
-		arg_5_0._showLvItems = nil
+		self._showLvItems = nil
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.DetailSwitchLayer, arg_6_0.handleDetailSwitchLayer, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.RefreshDetailView, arg_6_0.refreshShowInfo, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.ResetStageFinished, arg_6_0.closeThis, arg_6_0)
-	Season123EpisodeDetailController.instance:onOpenView(arg_6_0.viewParam.actId, arg_6_0.viewParam.stage, arg_6_0.viewParam.layer)
+function Season123_2_3EpisodeDetailView:onOpen()
+	self:addEventCb(Season123Controller.instance, Season123Event.DetailSwitchLayer, self.handleDetailSwitchLayer, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.RefreshDetailView, self.refreshShowInfo, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.ResetStageFinished, self.closeThis, self)
+	Season123EpisodeDetailController.instance:onOpenView(self.viewParam.actId, self.viewParam.stage, self.viewParam.layer)
 
-	local var_6_0 = ActivityModel.instance:getActMO(arg_6_0.viewParam.actId)
+	local actMO = ActivityModel.instance:getActMO(self.viewParam.actId)
 
-	if not var_6_0 or not var_6_0:isOpen() or var_6_0:isExpired() then
+	if not actMO or not actMO:isOpen() or actMO:isExpired() then
 		return
 	end
 
-	local var_6_1 = Season123EpisodeDetailModel.instance.layer
+	local layer = Season123EpisodeDetailModel.instance.layer
 
-	arg_6_0:resetData()
-	arg_6_0:noAudioShowInfoByOpen()
-	arg_6_0._simageempty:LoadImage(Season123Controller.getSeasonIcon("kongzhuangtai.png", arg_6_0.viewParam.actId))
+	self:resetData()
+	self:noAudioShowInfoByOpen()
+	self._simageempty:LoadImage(Season123Controller.getSeasonIcon("kongzhuangtai.png", self.viewParam.actId))
 end
 
-function var_0_0.onOpenFinish(arg_7_0)
-	local var_7_0 = Season123Controller.instance:getEpisodeLoadingViewName()
+function Season123_2_3EpisodeDetailView:onOpenFinish()
+	local loadingViewName = Season123Controller.instance:getEpisodeLoadingViewName()
 
-	ViewMgr.instance:closeView(var_7_0, true)
+	ViewMgr.instance:closeView(loadingViewName, true)
 end
 
-function var_0_0.onClose(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._delayShowInfo, arg_8_0)
+function Season123_2_3EpisodeDetailView:onClose()
+	TaskDispatcher.cancelTask(self._delayShowInfo, self)
 end
 
-function var_0_0.handleDetailSwitchLayer(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1.isNext
+function Season123_2_3EpisodeDetailView:handleDetailSwitchLayer(param)
+	local isNext = param.isNext
 
-	arg_9_0._animatorRight:Play(UIAnimationName.Switch, 0, 0)
-	arg_9_0._animScroll:Play(UIAnimationName.Switch, 0, 0)
-	TaskDispatcher.cancelTask(arg_9_0._delayShowInfo, arg_9_0)
-	TaskDispatcher.runDelay(arg_9_0._delayShowInfo, arg_9_0, 0.2)
+	self._animatorRight:Play(UIAnimationName.Switch, 0, 0)
+	self._animScroll:Play(UIAnimationName.Switch, 0, 0)
+	TaskDispatcher.cancelTask(self._delayShowInfo, self)
+	TaskDispatcher.runDelay(self._delayShowInfo, self, 0.2)
 end
 
-function var_0_0._delayShowInfo(arg_10_0)
-	arg_10_0:_showInfo()
+function Season123_2_3EpisodeDetailView:_delayShowInfo()
+	self:_showInfo()
 end
 
-function var_0_0.refreshShowInfo(arg_11_0)
-	arg_11_0:_showInfo()
+function Season123_2_3EpisodeDetailView:refreshShowInfo()
+	self:_showInfo()
 end
 
-function var_0_0._btnstartOnClick(arg_12_0)
-	local var_12_0 = Season123EpisodeDetailModel.instance.activityId
-	local var_12_1 = Season123EpisodeDetailModel.instance.stage
-	local var_12_2 = Season123EpisodeDetailModel.instance.layer
-	local var_12_3 = Season123Config.instance:getSeasonEpisodeCo(var_12_0, var_12_1, var_12_2).episodeId
+function Season123_2_3EpisodeDetailView:_btnstartOnClick()
+	local actId = Season123EpisodeDetailModel.instance.activityId
+	local stage = Season123EpisodeDetailModel.instance.stage
+	local layer = Season123EpisodeDetailModel.instance.layer
+	local episodeId = Season123Config.instance:getSeasonEpisodeCo(actId, stage, layer).episodeId
 
 	Season123EpisodeDetailController.instance:checkEnterFightScene()
 end
 
-function var_0_0.resetData(arg_13_0)
-	arg_13_0._showLvItems = {}
-	arg_13_0._showStageItems = {}
-	arg_13_0._infoStageItems = {}
-	arg_13_0._equipReward = {}
-	arg_13_0._rewardItems = {}
-	arg_13_0._partStageItems = {}
+function Season123_2_3EpisodeDetailView:resetData()
+	self._showLvItems = {}
+	self._showStageItems = {}
+	self._infoStageItems = {}
+	self._equipReward = {}
+	self._rewardItems = {}
+	self._partStageItems = {}
 end
 
-function var_0_0.noAudioShowInfoByOpen(arg_14_0)
+function Season123_2_3EpisodeDetailView:noAudioShowInfoByOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
-	gohelper.setActive(arg_14_0._goinfo, true)
-	arg_14_0:_showInfo()
+	gohelper.setActive(self._goinfo, true)
+	self:_showInfo()
 end
 
-function var_0_0._showInfo(arg_15_0)
-	arg_15_0:_setInfo()
-	arg_15_0:_setParts()
-	arg_15_0:_setButton()
-	arg_15_0:_setResetInfo()
+function Season123_2_3EpisodeDetailView:_showInfo()
+	self:_setInfo()
+	self:_setParts()
+	self:_setButton()
+	self:_setResetInfo()
 end
 
-function var_0_0._setButton(arg_16_0)
-	local var_16_0 = Season123EpisodeDetailController.instance:isStageNeedClean() or Season123EpisodeDetailController.instance:isNextLayersNeedClean()
+function Season123_2_3EpisodeDetailView:_setButton()
+	local needShowReset = Season123EpisodeDetailController.instance:isStageNeedClean() or Season123EpisodeDetailController.instance:isNextLayersNeedClean()
 
-	gohelper.setActive(arg_16_0._btnreset, var_16_0)
-	gohelper.setActive(arg_16_0._btnstart, not var_16_0)
+	gohelper.setActive(self._btnreset, needShowReset)
+	gohelper.setActive(self._btnstart, not needShowReset)
 end
 
-function var_0_0._setResetInfo(arg_17_0)
-	local var_17_0 = Season123EpisodeDetailController.instance:isStageNeedClean() or Season123EpisodeDetailController.instance:isNextLayersNeedClean()
+function Season123_2_3EpisodeDetailView:_setResetInfo()
+	local needShowReset = Season123EpisodeDetailController.instance:isStageNeedClean() or Season123EpisodeDetailController.instance:isNextLayersNeedClean()
 
-	gohelper.setActive(arg_17_0._goreset, var_17_0)
-	gohelper.setActive(arg_17_0._txtresettime, var_17_0)
+	gohelper.setActive(self._goreset, needShowReset)
+	gohelper.setActive(self._txtresettime, needShowReset)
 
-	if var_17_0 then
-		local var_17_1 = Season123EpisodeDetailModel.instance:getCurFinishRound()
+	if needShowReset then
+		local round = Season123EpisodeDetailModel.instance:getCurFinishRound()
 
-		if var_17_1 and var_17_1 > 0 then
-			local var_17_2 = Season123EpisodeDetailModel.instance.activityId
-			local var_17_3 = Season123EpisodeDetailModel.instance.stage
-			local var_17_4 = Season123EpisodeDetailModel.instance.layer
-			local var_17_5 = Season123Controller.instance:isReduceRound(var_17_2, var_17_3, var_17_4) and "<color=#eecd8c>%s</color>" or "%s"
+		if round and round > 0 then
+			local actId = Season123EpisodeDetailModel.instance.activityId
+			local stage = Season123EpisodeDetailModel.instance.stage
+			local layer = Season123EpisodeDetailModel.instance.layer
+			local isReduceRound = Season123Controller.instance:isReduceRound(actId, stage, layer)
+			local passRoundFormat = isReduceRound and "<color=#eecd8c>%s</color>" or "%s"
 
-			arg_17_0._txtresettime.text = string.format(var_17_5, tostring(var_17_1))
+			self._txtresettime.text = string.format(passRoundFormat, tostring(round))
 		else
-			arg_17_0._txtresettime.text = "--"
+			self._txtresettime.text = "--"
 		end
 	end
 end
 
-var_0_0.NomalStageTagPos = Vector2(46.3, 2.7)
-var_0_0.NewStageTagPos = Vector2(4.37, 2.7)
+Season123_2_3EpisodeDetailView.NomalStageTagPos = Vector2(46.3, 2.7)
+Season123_2_3EpisodeDetailView.NewStageTagPos = Vector2(4.37, 2.7)
 
-function var_0_0._setInfo(arg_18_0)
-	local var_18_0 = Season123EpisodeDetailModel.instance.activityId
-	local var_18_1 = Season123EpisodeDetailModel.instance.stage
-	local var_18_2 = Season123EpisodeDetailModel.instance.layer
-	local var_18_3 = Season123Config.instance:getSeasonEpisodeCo(var_18_0, var_18_1, var_18_2)
+function Season123_2_3EpisodeDetailView:_setInfo()
+	local actId = Season123EpisodeDetailModel.instance.activityId
+	local stage = Season123EpisodeDetailModel.instance.stage
+	local layer = Season123EpisodeDetailModel.instance.layer
+	local episodeCo = Season123Config.instance:getSeasonEpisodeCo(actId, stage, layer)
 
-	if not var_18_3 then
+	if not episodeCo then
 		return
 	end
 
-	local var_18_4 = Season123Model.instance:isEpisodeAfterStory(var_18_0, var_18_1, var_18_2)
+	local afterStory = Season123Model.instance:isEpisodeAfterStory(actId, stage, layer)
 
-	gohelper.setActive(arg_18_0._btnReplay, var_18_4 and var_18_3.afterStoryId and var_18_3.afterStoryId ~= 0 or false)
+	gohelper.setActive(self._btnReplay, afterStory and episodeCo.afterStoryId and episodeCo.afterStoryId ~= 0 or false)
 
-	arg_18_0._txtlevelnamecn.text = var_18_3.layerName
-	arg_18_0._txtseasondesc.text = var_18_3.desc
-	arg_18_0._txtdesc.text = DungeonConfig.instance:getEpisodeCO(var_18_3.episodeId).desc
-	arg_18_0._txtcurindex.text = string.format("%02d", var_18_2)
+	self._txtlevelnamecn.text = episodeCo.layerName
+	self._txtseasondesc.text = episodeCo.desc
+	self._txtdesc.text = DungeonConfig.instance:getEpisodeCO(episodeCo.episodeId).desc
+	self._txtcurindex.text = string.format("%02d", layer)
 
-	local var_18_5 = Season123ProgressUtils.getMaxLayer(var_18_0, var_18_1)
+	local maxLayer = Season123ProgressUtils.getMaxLayer(actId, stage)
 
-	arg_18_0._txtmaxindex.text = string.format("%02d", var_18_5)
+	self._txtmaxindex.text = string.format("%02d", maxLayer)
 
-	local var_18_6 = Season123EpisodeDetailModel.instance:isNextLayerNewStarGroup(var_18_2)
+	local isNewStage = Season123EpisodeDetailModel.instance:isNextLayerNewStarGroup(layer)
 
-	gohelper.setActive(arg_18_0._godecorate, var_18_6)
+	gohelper.setActive(self._godecorate, isNewStage)
 
-	local var_18_7 = var_18_6 and var_0_0.NewStageTagPos or var_0_0.NomalStageTagPos
+	local targetStageTagPos = isNewStage and Season123_2_3EpisodeDetailView.NewStageTagPos or Season123_2_3EpisodeDetailView.NomalStageTagPos
 
-	recthelper.setAnchor(arg_18_0._gocenter.transform, var_18_7.x, var_18_7.y)
+	recthelper.setAnchor(self._gocenter.transform, targetStageTagPos.x, targetStageTagPos.y)
 
-	local var_18_8 = Season123Model.instance:getSingleBgFolder()
-	local var_18_9 = ResUrl.getSeason123LayerDetailBg(var_18_8, var_18_3.layerPicture)
+	local folder = Season123Model.instance:getSingleBgFolder()
+	local urlStr = ResUrl.getSeason123LayerDetailBg(folder, episodeCo.layerPicture)
 
-	if not string.nilorempty(var_18_9) then
-		arg_18_0._simagestageicon:LoadImage(var_18_9)
+	if not string.nilorempty(urlStr) then
+		self._simagestageicon:LoadImage(urlStr)
 	end
 
-	gohelper.setActive(arg_18_0._gorewarditem, false)
+	gohelper.setActive(self._gorewarditem, false)
 
-	local var_18_10 = DungeonModel.instance:getEpisodeFirstBonus(var_18_3.episodeId)
+	local rewards = DungeonModel.instance:getEpisodeFirstBonus(episodeCo.episodeId)
 
-	for iter_18_0 = 2, math.max(#arg_18_0._rewardItems - 1, #var_18_10) + 1 do
-		local var_18_11 = arg_18_0._rewardItems[iter_18_0] or arg_18_0:createRewardItem(iter_18_0)
+	for i = 2, math.max(#self._rewardItems - 1, #rewards) + 1 do
+		local item = self._rewardItems[i] or self:createRewardItem(i)
 
-		arg_18_0:refreshRewardItem(var_18_11, var_18_10[iter_18_0 - 1])
+		self:refreshRewardItem(item, rewards[i - 1])
 	end
 
-	arg_18_0:refreshEquipCardItem()
+	self:refreshEquipCardItem()
 
-	arg_18_0._btnlast.button.interactable = var_18_2 > 1
-	arg_18_0._btnnext.button.interactable = var_18_2 < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer()
+	self._btnlast.button.interactable = layer > 1
+	self._btnnext.button.interactable = layer < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer()
 end
 
-function var_0_0.refreshEquipCardItem(arg_19_0)
-	if not arg_19_0._rewardItems[1] then
-		arg_19_0._rewardItems[1] = arg_19_0:createRewardItem(1)
+function Season123_2_3EpisodeDetailView:refreshEquipCardItem()
+	if not self._rewardItems[1] then
+		self._rewardItems[1] = self:createRewardItem(1)
 	end
 
-	local var_19_0 = Season123EpisodeDetailModel.instance.activityId
-	local var_19_1 = Season123EpisodeDetailModel.instance.stage
-	local var_19_2 = Season123EpisodeDetailModel.instance.layer
-	local var_19_3 = Season123Config.instance:getSeasonEpisodeCo(var_19_0, var_19_1, var_19_2)
+	local actId = Season123EpisodeDetailModel.instance.activityId
+	local stage = Season123EpisodeDetailModel.instance.stage
+	local layer = Season123EpisodeDetailModel.instance.layer
+	local episodeCo = Season123Config.instance:getSeasonEpisodeCo(actId, stage, layer)
 
-	gohelper.setActive(arg_19_0._rewardItems[1].go, var_19_3.firstPassEquipId and var_19_3.firstPassEquipId > 0)
+	gohelper.setActive(self._rewardItems[1].go, episodeCo.firstPassEquipId and episodeCo.firstPassEquipId > 0)
 
-	if var_19_3.firstPassEquipId and var_19_3.firstPassEquipId > 0 then
-		local var_19_4 = var_19_2 < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer() or Season123EpisodeDetailModel.instance:alreadyPassEpisode(var_19_2)
+	if episodeCo.firstPassEquipId and episodeCo.firstPassEquipId > 0 then
+		local hasGetReward = layer < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer() or Season123EpisodeDetailModel.instance:alreadyPassEpisode(layer)
 
-		if not arg_19_0._rewardItems[1].itemIcon then
-			arg_19_0._rewardItems[1].itemIcon = Season123_2_3CelebrityCardItem.New()
+		if not self._rewardItems[1].itemIcon then
+			self._rewardItems[1].itemIcon = Season123_2_3CelebrityCardItem.New()
 
-			arg_19_0._rewardItems[1].itemIcon:setColorDark(var_19_4)
-			arg_19_0._rewardItems[1].itemIcon:init(arg_19_0._rewardItems[1].cardParent, var_19_3.firstPassEquipId)
+			self._rewardItems[1].itemIcon:setColorDark(hasGetReward)
+			self._rewardItems[1].itemIcon:init(self._rewardItems[1].cardParent, episodeCo.firstPassEquipId)
 		else
-			arg_19_0._rewardItems[1].itemIcon:setColorDark(var_19_4)
-			arg_19_0._rewardItems[1].itemIcon:reset(var_19_3.firstPassEquipId)
+			self._rewardItems[1].itemIcon:setColorDark(hasGetReward)
+			self._rewardItems[1].itemIcon:reset(episodeCo.firstPassEquipId)
 		end
 
-		gohelper.setActive(arg_19_0._rewardItems[1].cardParent, true)
-		gohelper.setActive(arg_19_0._rewardItems[1].itemParent, false)
-		gohelper.setActive(arg_19_0._rewardItems[1].receive, var_19_4)
+		gohelper.setActive(self._rewardItems[1].cardParent, true)
+		gohelper.setActive(self._rewardItems[1].itemParent, false)
+		gohelper.setActive(self._rewardItems[1].receive, hasGetReward)
 	end
 end
 
-function var_0_0.createRewardItem(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getUserDataTb_()
-	local var_20_1 = gohelper.cloneInPlace(arg_20_0._gorewarditem, "reward_" .. tostring(arg_20_1))
+function Season123_2_3EpisodeDetailView:createRewardItem(index)
+	local item = self:getUserDataTb_()
+	local itemGo = gohelper.cloneInPlace(self._gorewarditem, "reward_" .. tostring(index))
 
-	var_20_0.go = var_20_1
-	var_20_0.itemParent = gohelper.findChild(var_20_1, "go_prop")
-	var_20_0.cardParent = gohelper.findChild(var_20_1, "go_card")
-	var_20_0.receive = gohelper.findChild(var_20_1, "go_receive")
-	arg_20_0._rewardItems[arg_20_1] = var_20_0
+	item.go = itemGo
+	item.itemParent = gohelper.findChild(itemGo, "go_prop")
+	item.cardParent = gohelper.findChild(itemGo, "go_card")
+	item.receive = gohelper.findChild(itemGo, "go_receive")
+	self._rewardItems[index] = item
 
-	return var_20_0
+	return item
 end
 
-function var_0_0.refreshRewardItem(arg_21_0, arg_21_1, arg_21_2)
-	if not arg_21_2 or not next(arg_21_2) then
-		gohelper.setActive(arg_21_1.go, false)
+function Season123_2_3EpisodeDetailView:refreshRewardItem(item, itemInfo)
+	if not itemInfo or not next(itemInfo) then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	if not arg_21_1.itemIcon then
-		arg_21_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_21_1.itemParent)
+	if not item.itemIcon then
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.itemParent)
 	end
 
-	gohelper.setActive(arg_21_1.cardParent, false)
-	gohelper.setActive(arg_21_1.itemParent, true)
-	arg_21_1.itemIcon:setMOValue(tonumber(arg_21_2[1]), tonumber(arg_21_2[2]), tonumber(arg_21_2[3]), nil, true)
-	arg_21_1.itemIcon:isShowCount(tonumber(arg_21_2[1]) ~= MaterialEnum.MaterialType.Hero)
-	arg_21_1.itemIcon:setCountFontSize(40)
-	arg_21_1.itemIcon:showStackableNum2()
-	arg_21_1.itemIcon:setHideLvAndBreakFlag(true)
-	arg_21_1.itemIcon:hideEquipLvAndBreak(true)
-	gohelper.setActive(arg_21_1.go, true)
+	gohelper.setActive(item.cardParent, false)
+	gohelper.setActive(item.itemParent, true)
+	item.itemIcon:setMOValue(tonumber(itemInfo[1]), tonumber(itemInfo[2]), tonumber(itemInfo[3]), nil, true)
+	item.itemIcon:isShowCount(tonumber(itemInfo[1]) ~= MaterialEnum.MaterialType.Hero)
+	item.itemIcon:setCountFontSize(40)
+	item.itemIcon:showStackableNum2()
+	item.itemIcon:setHideLvAndBreakFlag(true)
+	item.itemIcon:hideEquipLvAndBreak(true)
+	gohelper.setActive(item.go, true)
 
-	local var_21_0 = Season123EpisodeDetailModel.instance.layer
-	local var_21_1 = var_21_0 < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer() or Season123EpisodeDetailModel.instance:alreadyPassEpisode(var_21_0)
+	local layer = Season123EpisodeDetailModel.instance.layer
+	local hasGetReward = layer < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer() or Season123EpisodeDetailModel.instance:alreadyPassEpisode(layer)
 
-	gohelper.setActive(arg_21_1.receive, var_21_1)
+	gohelper.setActive(item.receive, hasGetReward)
 
-	local var_21_2 = var_21_1 and "#7b7b7b" or "#ffffff"
+	local color = hasGetReward and "#7b7b7b" or "#ffffff"
 
-	arg_21_1.itemIcon:setItemColor(var_21_2)
+	item.itemIcon:setItemColor(color)
 end
 
-function var_0_0._setParts(arg_22_0)
-	local var_22_0 = Season123EpisodeDetailModel.instance.activityId
-	local var_22_1 = Season123EpisodeDetailModel.instance.stage
-	local var_22_2 = Season123EpisodeDetailModel.instance.layer
-	local var_22_3 = Season123Config.instance:getSeasonEpisodeCo(var_22_0, var_22_1, var_22_2)
+function Season123_2_3EpisodeDetailView:_setParts()
+	local actId = Season123EpisodeDetailModel.instance.activityId
+	local stage = Season123EpisodeDetailModel.instance.stage
+	local layer = Season123EpisodeDetailModel.instance.layer
+	local episodeCo = Season123Config.instance:getSeasonEpisodeCo(actId, stage, layer)
 
-	arg_22_0._txtenemylv.text = HeroConfig.instance:getCommonLevelDisplay(var_22_3.level)
+	self._txtenemylv.text = HeroConfig.instance:getCommonLevelDisplay(episodeCo.level)
 
-	if var_22_2 < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer() or var_22_2 > Season123ProgressUtils.getMaxLayer(var_22_0, var_22_1) then
-		gohelper.setActive(arg_22_0._gopart, false)
-		gohelper.setActive(arg_22_0._gopartempty, true)
-		gohelper.setActive(arg_22_0._gounlocktype1, false)
-		gohelper.setActive(arg_22_0._gounlocktype2, false)
-		gohelper.setActive(arg_22_0._gounlocktype3, false)
+	if layer < Season123EpisodeDetailModel.instance:getCurrentChallengeLayer() or layer > Season123ProgressUtils.getMaxLayer(actId, stage) then
+		gohelper.setActive(self._gopart, false)
+		gohelper.setActive(self._gopartempty, true)
+		gohelper.setActive(self._gounlocktype1, false)
+		gohelper.setActive(self._gounlocktype2, false)
+		gohelper.setActive(self._gounlocktype3, false)
 	else
-		local var_22_4 = Season123EpisodeDetailModel.instance:isNextLayerNewStarGroup(var_22_2)
+		local isNewStage = Season123EpisodeDetailModel.instance:isNextLayerNewStarGroup(layer)
 
-		gohelper.setActive(arg_22_0._gostage, var_22_4)
+		gohelper.setActive(self._gostage, isNewStage)
 
-		if var_22_4 then
-			local var_22_5 = Season123EpisodeDetailModel.instance:getCurStarGroup(var_22_0, var_22_2)
+		if isNewStage then
+			local starGrop = Season123EpisodeDetailModel.instance:getCurStarGroup(actId, layer)
 
-			arg_22_0:_showPartStarGroupItem(var_22_5 + 1)
+			self:_showPartStarGroupItem(starGrop + 1)
 		end
 
-		local var_22_6 = string.splitToNumber(var_22_3.unlockEquipIndex, "#")
+		local newUnlocks = string.splitToNumber(episodeCo.unlockEquipIndex, "#")
 
-		if #var_22_6 > 0 then
-			local var_22_7 = var_22_6[1]
+		if #newUnlocks > 0 then
+			local newUnlockIndex = newUnlocks[1]
 
-			gohelper.setActive(arg_22_0._gounlocktype1, Season123HeroGroupUtils.getUnlockIndexSlot(var_22_7) == 1)
-			gohelper.setActive(arg_22_0._gounlocktype2, Season123HeroGroupUtils.getUnlockIndexSlot(var_22_7) == 2)
-			gohelper.setActive(arg_22_0._gounlocktype3, Season123HeroGroupUtils.getUnlockIndexSlot(var_22_7) == 3)
+			gohelper.setActive(self._gounlocktype1, Season123HeroGroupUtils.getUnlockIndexSlot(newUnlockIndex) == 1)
+			gohelper.setActive(self._gounlocktype2, Season123HeroGroupUtils.getUnlockIndexSlot(newUnlockIndex) == 2)
+			gohelper.setActive(self._gounlocktype3, Season123HeroGroupUtils.getUnlockIndexSlot(newUnlockIndex) == 3)
 		else
-			gohelper.setActive(arg_22_0._gounlocktype1, false)
-			gohelper.setActive(arg_22_0._gounlocktype2, false)
-			gohelper.setActive(arg_22_0._gounlocktype3, false)
+			gohelper.setActive(self._gounlocktype1, false)
+			gohelper.setActive(self._gounlocktype2, false)
+			gohelper.setActive(self._gounlocktype3, false)
 		end
 
-		gohelper.setActive(arg_22_0._gopart, var_22_4 or #var_22_6 > 0)
-		gohelper.setActive(arg_22_0._gopartempty, not var_22_4 and not (#var_22_6 > 0))
+		gohelper.setActive(self._gopart, isNewStage or #newUnlocks > 0)
+		gohelper.setActive(self._gopartempty, not isNewStage and not (#newUnlocks > 0))
 	end
 end
 
-var_0_0.UnLockStageItemAlpha = 1
-var_0_0.LockStageItemAlpha = 0.3
+Season123_2_3EpisodeDetailView.UnLockStageItemAlpha = 1
+Season123_2_3EpisodeDetailView.LockStageItemAlpha = 0.3
 
-function var_0_0._showPartStarGroupItem(arg_23_0, arg_23_1)
-	if arg_23_1 < 7 then
-		if arg_23_0._partStageItems[7] then
-			gohelper.setActive(arg_23_0._partStageItems[7].go, false)
+function Season123_2_3EpisodeDetailView:_showPartStarGroupItem(starGroup)
+	if starGroup < 7 then
+		if self._partStageItems[7] then
+			gohelper.setActive(self._partStageItems[7].go, false)
 		end
 
-		for iter_23_0 = 1, 6 do
-			if not arg_23_0._partStageItems[iter_23_0] then
-				local var_23_0 = arg_23_0:getUserDataTb_()
-				local var_23_1 = gohelper.cloneInPlace(arg_23_0._gostagelvlitem, "partstageitem_" .. tostring(iter_23_0))
+		for i = 1, 6 do
+			if not self._partStageItems[i] then
+				local item = self:getUserDataTb_()
+				local itemGo = gohelper.cloneInPlace(self._gostagelvlitem, "partstageitem_" .. tostring(i))
 
-				var_23_0.go = var_23_1
-				var_23_0.current = gohelper.findChild(var_23_1, "current")
-				var_23_0.next = gohelper.findChild(var_23_1, "next")
-				var_23_0.canvasgroup = gohelper.onceAddComponent(var_23_1, typeof(UnityEngine.CanvasGroup))
-				arg_23_0._partStageItems[iter_23_0] = var_23_0
+				item.go = itemGo
+				item.current = gohelper.findChild(itemGo, "current")
+				item.next = gohelper.findChild(itemGo, "next")
+				item.canvasgroup = gohelper.onceAddComponent(itemGo, typeof(UnityEngine.CanvasGroup))
+				self._partStageItems[i] = item
 			end
 
-			gohelper.setActive(arg_23_0._partStageItems[iter_23_0].go, true)
-			gohelper.setActive(arg_23_0._partStageItems[iter_23_0].next, iter_23_0 == arg_23_1)
-			gohelper.setActive(arg_23_0._partStageItems[iter_23_0].current, iter_23_0 ~= arg_23_1)
+			gohelper.setActive(self._partStageItems[i].go, true)
+			gohelper.setActive(self._partStageItems[i].next, i == starGroup)
+			gohelper.setActive(self._partStageItems[i].current, i ~= starGroup)
 
-			arg_23_0._partStageItems[iter_23_0].canvasgroup.alpha = iter_23_0 <= arg_23_1 and var_0_0.UnLockStageItemAlpha or var_0_0.LockStageItemAlpha
+			self._partStageItems[i].canvasgroup.alpha = i <= starGroup and Season123_2_3EpisodeDetailView.UnLockStageItemAlpha or Season123_2_3EpisodeDetailView.LockStageItemAlpha
 		end
 	else
-		for iter_23_1 = 1, 7 do
-			if not arg_23_0._partStageItems[iter_23_1] then
-				local var_23_2 = arg_23_0:getUserDataTb_()
-				local var_23_3 = gohelper.cloneInPlace(arg_23_0._gostagelvlitem, "partstageitem_" .. tostring(iter_23_1))
+		for i = 1, 7 do
+			if not self._partStageItems[i] then
+				local item = self:getUserDataTb_()
+				local itemGo = gohelper.cloneInPlace(self._gostagelvlitem, "partstageitem_" .. tostring(i))
 
-				var_23_2.go = var_23_3
-				var_23_2.current = gohelper.findChild(var_23_3, "current")
-				var_23_2.next = gohelper.findChild(var_23_3, "next")
-				var_23_2.canvasgroup = gohelper.onceAddComponent(var_23_3, typeof(UnityEngine.CanvasGroup))
-				arg_23_0._partStageItems[iter_23_1] = var_23_2
+				item.go = itemGo
+				item.current = gohelper.findChild(itemGo, "current")
+				item.next = gohelper.findChild(itemGo, "next")
+				item.canvasgroup = gohelper.onceAddComponent(itemGo, typeof(UnityEngine.CanvasGroup))
+				self._partStageItems[i] = item
 			end
 
-			gohelper.setActive(arg_23_0._partStageItems[iter_23_1].go, true)
-			gohelper.setActive(arg_23_0._partStageItems[iter_23_1].next, iter_23_1 == arg_23_1)
-			gohelper.setActive(arg_23_0._partStageItems[iter_23_1].current, iter_23_1 ~= arg_23_1)
+			gohelper.setActive(self._partStageItems[i].go, true)
+			gohelper.setActive(self._partStageItems[i].next, i == starGroup)
+			gohelper.setActive(self._partStageItems[i].current, i ~= starGroup)
 
-			arg_23_0._partStageItems[iter_23_1].canvasgroup.alpha = iter_23_1 <= arg_23_1 and var_0_0.UnLockStageItemAlpha or var_0_0.LockStageItemAlpha
+			self._partStageItems[i].canvasgroup.alpha = i <= starGroup and Season123_2_3EpisodeDetailView.UnLockStageItemAlpha or Season123_2_3EpisodeDetailView.LockStageItemAlpha
 		end
 	end
 end
 
-function var_0_0._btnlastOnClick(arg_24_0)
+function Season123_2_3EpisodeDetailView:_btnlastOnClick()
 	if Season123EpisodeDetailController.instance:canSwitchLayer(false) then
 		Season123EpisodeDetailController.instance:switchLayer(false)
 	end
 end
 
-function var_0_0._btnnextOnClick(arg_25_0)
+function Season123_2_3EpisodeDetailView:_btnnextOnClick()
 	if Season123EpisodeDetailController.instance:canSwitchLayer(true) then
 		Season123EpisodeDetailController.instance:switchLayer(true)
 	end
 end
 
-function var_0_0._btnresetOnClick(arg_26_0)
+function Season123_2_3EpisodeDetailView:_btnresetOnClick()
 	Season123Controller.instance:openResetView({
 		actId = Season123EpisodeDetailModel.instance.activityId,
 		stage = Season123EpisodeDetailModel.instance.stage,
@@ -425,4 +428,4 @@ function var_0_0._btnresetOnClick(arg_26_0)
 	})
 end
 
-return var_0_0
+return Season123_2_3EpisodeDetailView

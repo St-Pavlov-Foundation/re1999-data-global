@@ -1,32 +1,34 @@
-﻿module("modules.logic.fight.system.work.FightGuideBeforeSkill", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightGuideBeforeSkill.lua
 
-local var_0_0 = class("FightGuideBeforeSkill", BaseWork)
+module("modules.logic.fight.system.work.FightGuideBeforeSkill", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightGuideBeforeSkill = class("FightGuideBeforeSkill", BaseWork)
+
+function FightGuideBeforeSkill:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if arg_2_0.fightStepData.fromId == FightEntityScene.MySideId or arg_2_0.fightStepData.fromId == FightEntityScene.EnemySideId then
-		arg_2_0:_done()
+function FightGuideBeforeSkill:onStart(context)
+	if self.fightStepData.fromId == FightEntityScene.MySideId or self.fightStepData.fromId == FightEntityScene.EnemySideId then
+		self:_done()
 
 		return
 	end
 
-	arg_2_0._attacker = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
-	arg_2_0._skillId = arg_2_0.fightStepData.actId
+	self._attacker = FightHelper.getEntity(self.fightStepData.fromId)
+	self._skillId = self.fightStepData.actId
 
-	if arg_2_0._attacker == nil then
-		arg_2_0:_done()
+	if self._attacker == nil then
+		self:_done()
 
 		return
 	end
 
-	local var_2_0 = FightController.instance:GuideFlowPauseAndContinue("OnGuideBeforeSkillPause", FightEvent.OnGuideBeforeSkillPause, FightEvent.OnGuideBeforeSkillContinue, arg_2_0._done, arg_2_0, arg_2_0._attacker:getMO().modelId, arg_2_0._skillId)
+	local result = FightController.instance:GuideFlowPauseAndContinue("OnGuideBeforeSkillPause", FightEvent.OnGuideBeforeSkillPause, FightEvent.OnGuideBeforeSkillContinue, self._done, self, self._attacker:getMO().modelId, self._skillId)
 end
 
-function var_0_0._done(arg_3_0)
-	arg_3_0:onDone(true)
+function FightGuideBeforeSkill:_done()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightGuideBeforeSkill

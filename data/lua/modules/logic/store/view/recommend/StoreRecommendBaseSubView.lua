@@ -1,65 +1,67 @@
-﻿module("modules.logic.store.view.recommend.StoreRecommendBaseSubView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/StoreRecommendBaseSubView.lua
 
-local var_0_0 = class("StoreRecommendBaseSubView", BaseView)
+module("modules.logic.store.view.recommend.StoreRecommendBaseSubView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local StoreRecommendBaseSubView = class("StoreRecommendBaseSubView", BaseView)
+
+function StoreRecommendBaseSubView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btn:AddClickListener(arg_2_0._onClick, arg_2_0)
+function StoreRecommendBaseSubView:addEvents()
+	self._btn:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btn:RemoveClickListener()
+function StoreRecommendBaseSubView:removeEvents()
+	self._btn:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_4_0.viewGO)
+function StoreRecommendBaseSubView:_editableInitView()
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	if arg_5_0._animator then
-		arg_5_0._animator.enabled = true
+function StoreRecommendBaseSubView:onOpen()
+	if self._animator then
+		self._animator.enabled = true
 
-		arg_5_0._animator:Play(UIAnimationName.Open, 0, 0)
-		arg_5_0._animator:Update(0)
+		self._animator:Play(UIAnimationName.Open, 0, 0)
+		self._animator:Update(0)
 	end
 end
 
-function var_0_0.switchClose(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._animator then
-		arg_6_0._animator.enabled = false
+function StoreRecommendBaseSubView:switchClose(callBack, callBackObj)
+	if self._animator then
+		self._animator.enabled = false
 	end
 
-	if arg_6_0._animatorPlayer then
-		arg_6_0._animatorPlayer:Play(UIAnimationName.Close, arg_6_1, arg_6_2)
-	end
-end
-
-function var_0_0.stopAnimator(arg_7_0)
-	if arg_7_0._animatorPlayer then
-		arg_7_0._animatorPlayer:Stop()
-	end
-
-	if arg_7_0._animator then
-		arg_7_0._animator.enabled = false
+	if self._animatorPlayer then
+		self._animatorPlayer:Play(UIAnimationName.Close, callBack, callBackObj)
 	end
 end
 
-function var_0_0.getTabIndex(arg_8_0, arg_8_1)
-	if arg_8_0.viewContainer and arg_8_0.viewContainer.getRecommendTabIndex and (arg_8_0.config or arg_8_1) then
-		return arg_8_0.viewContainer:getRecommendTabIndex(arg_8_1 or arg_8_0.config.id)
+function StoreRecommendBaseSubView:stopAnimator()
+	if self._animatorPlayer then
+		self._animatorPlayer:Stop()
+	end
+
+	if self._animator then
+		self._animator.enabled = false
+	end
+end
+
+function StoreRecommendBaseSubView:getTabIndex(id)
+	if self.viewContainer and self.viewContainer.getRecommendTabIndex and (self.config or id) then
+		return self.viewContainer:getRecommendTabIndex(id or self.config.id)
 	end
 
 	return 1
 end
 
-function var_0_0.onClose(arg_9_0)
+function StoreRecommendBaseSubView:onClose()
 	return
 end
 
-return var_0_0
+return StoreRecommendBaseSubView

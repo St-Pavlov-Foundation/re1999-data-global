@@ -1,13 +1,15 @@
-﻿module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupFightViewLevel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v2a9/V2a9_BossRushHeroGroupFightViewLevel.lua
 
-local var_0_0 = class("V2a9_BossRushHeroGroupFightViewLevel", HeroGroupFightViewLevel)
+module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupFightViewLevel", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local V2a9_BossRushHeroGroupFightViewLevel = class("V2a9_BossRushHeroGroupFightViewLevel", HeroGroupFightViewLevel)
 
-	local var_1_0 = gohelper.findChild(arg_1_0._gonormalcondition, "star")
+function V2a9_BossRushHeroGroupFightViewLevel:_editableInitView()
+	V2a9_BossRushHeroGroupFightViewLevel.super._editableInitView(self)
 
-	gohelper.setActive(var_1_0, false)
+	local normalconditionstar = gohelper.findChild(self._gonormalcondition, "star")
+
+	gohelper.setActive(normalconditionstar, false)
 end
 
-return var_0_0
+return V2a9_BossRushHeroGroupFightViewLevel

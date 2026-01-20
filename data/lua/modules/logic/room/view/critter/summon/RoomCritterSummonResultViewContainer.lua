@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonResultViewContainer.lua
 
-local var_0_0 = class("RoomCritterSummonResultViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterSummonResultViewContainer = class("RoomCritterSummonResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterSummonResultView.New())
+function RoomCritterSummonResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCritterSummonResultView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomCritterSummonResultViewContainer

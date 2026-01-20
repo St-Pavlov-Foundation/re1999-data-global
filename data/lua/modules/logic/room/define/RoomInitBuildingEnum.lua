@@ -1,29 +1,31 @@
-﻿module("modules.logic.room.define.RoomInitBuildingEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomInitBuildingEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomInitBuildingEnum", package.seeall)
 
-var_0_0.InitBuildingId = {
+local RoomInitBuildingEnum = _M
+
+RoomInitBuildingEnum.InitBuildingId = {
 	Market = 2,
 	Spring = 3,
 	BellTower = 1,
 	Hall = 0
 }
-var_0_0.InitRoomSkinId = {
-	[var_0_0.InitBuildingId.Hall] = 23100102,
-	[var_0_0.InitBuildingId.BellTower] = 23100101,
-	[var_0_0.InitBuildingId.Market] = 23100103,
-	[var_0_0.InitBuildingId.Spring] = 23100104
+RoomInitBuildingEnum.InitRoomSkinId = {
+	[RoomInitBuildingEnum.InitBuildingId.Hall] = 23100102,
+	[RoomInitBuildingEnum.InitBuildingId.BellTower] = 23100101,
+	[RoomInitBuildingEnum.InitBuildingId.Market] = 23100103,
+	[RoomInitBuildingEnum.InitBuildingId.Spring] = 23100104
 }
-var_0_0.InitBuildingSkinReddot = {
-	[var_0_0.InitBuildingId.Hall] = RedDotEnum.DotNode.RoomInitBuildingHall,
-	[var_0_0.InitBuildingId.BellTower] = RedDotEnum.DotNode.RoomInitBuildingBellTower,
-	[var_0_0.InitBuildingId.Market] = RedDotEnum.DotNode.RoomInitBuildingMarket,
-	[var_0_0.InitBuildingId.Spring] = RedDotEnum.DotNode.RoomInitBuildingSpring
+RoomInitBuildingEnum.InitBuildingSkinReddot = {
+	[RoomInitBuildingEnum.InitBuildingId.Hall] = RedDotEnum.DotNode.RoomInitBuildingHall,
+	[RoomInitBuildingEnum.InitBuildingId.BellTower] = RedDotEnum.DotNode.RoomInitBuildingBellTower,
+	[RoomInitBuildingEnum.InitBuildingId.Market] = RedDotEnum.DotNode.RoomInitBuildingMarket,
+	[RoomInitBuildingEnum.InitBuildingId.Spring] = RedDotEnum.DotNode.RoomInitBuildingSpring
 }
-var_0_0.CanLevelUpErrorCode = {
+RoomInitBuildingEnum.CanLevelUpErrorCode = {
 	MaxLevel = -1,
 	NotEnoughBlock = -3,
 	NotEnoughItem = -2
 }
 
-return var_0_0
+return RoomInitBuildingEnum

@@ -1,37 +1,39 @@
-﻿module("modules.logic.currency.config.CurrencyConfig", package.seeall)
+﻿-- chunkname: @modules/logic/currency/config/CurrencyConfig.lua
 
-local var_0_0 = class("CurrencyConfig", BaseConfig)
+module("modules.logic.currency.config.CurrencyConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._currencyConfig = nil
+local CurrencyConfig = class("CurrencyConfig", BaseConfig)
+
+function CurrencyConfig:ctor()
+	self._currencyConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function CurrencyConfig:reqConfigNames()
 	return {
 		"currency"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "currency" then
-		arg_3_0._currencyConfig = arg_3_2
+function CurrencyConfig:onConfigLoaded(configName, configTable)
+	if configName == "currency" then
+		self._currencyConfig = configTable
 	end
 end
 
-function var_0_0.getCurrencyCo(arg_4_0, arg_4_1)
-	return arg_4_0._currencyConfig.configDict[arg_4_1]
+function CurrencyConfig:getCurrencyCo(currencyId)
+	return self._currencyConfig.configDict[currencyId]
 end
 
-function var_0_0.getAllCurrency(arg_5_0)
-	local var_5_0 = {}
+function CurrencyConfig:getAllCurrency()
+	local allCurrency = {}
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._currencyConfig.configDict) do
-		table.insert(var_5_0, iter_5_0)
+	for key, config in pairs(self._currencyConfig.configDict) do
+		table.insert(allCurrency, key)
 	end
 
-	return var_5_0
+	return allCurrency
 end
 
-var_0_0.instance = var_0_0.New()
+CurrencyConfig.instance = CurrencyConfig.New()
 
-return var_0_0
+return CurrencyConfig

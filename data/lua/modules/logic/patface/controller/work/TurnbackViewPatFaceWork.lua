@@ -1,40 +1,52 @@
-﻿module("modules.logic.patface.controller.work.TurnbackViewPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/patface/controller/work/TurnbackViewPatFaceWork.lua
 
-local var_0_0 = class("TurnbackViewPatFaceWork", PatFaceWorkBase)
+module("modules.logic.patface.controller.work.TurnbackViewPatFaceWork", package.seeall)
 
-function var_0_0.checkCanPat(arg_1_0)
-	local var_1_0 = TurnbackModel.instance:canShowTurnbackPop()
-	local var_1_1 = TurnbackModel.instance:isInOpenTime()
+local TurnbackViewPatFaceWork = class("TurnbackViewPatFaceWork", PatFaceWorkBase)
 
-	return var_1_0 and var_1_1
+function TurnbackViewPatFaceWork:checkCanPat()
+	local canShowPop = false
+
+	if TurnbackModel.instance:getCurTurnbackId() > 2 then
+		canShowPop = TurnbackModel.instance:haveOnceBonusReward()
+	else
+		canShowPop = TurnbackModel.instance:canShowTurnbackPop()
+	end
+
+	local isInOpenTime = TurnbackModel.instance:isInOpenTime()
+	local result = canShowPop and isInOpenTime
+
+	return result
 end
 
-function var_0_0.startPat(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
+function TurnbackViewPatFaceWork:startPat()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 
-	arg_2_0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	self.turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	arg_2_0:_openView()
-	TurnbackRpc.instance:sendTurnbackFirstShowRequest(arg_2_0.turnbackId)
+	self:_openView()
+	TurnbackRpc.instance:sendTurnbackFirstShowRequest(self.turnbackId)
 end
 
-function var_0_0._openView(arg_3_0)
-	if TurnbackModel.instance:isNewType() then
+function TurnbackViewPatFaceWork:_openView()
+	local isNewType = TurnbackModel.instance:isNewType()
+
+	if isNewType then
 		ViewMgr.instance:openView(ViewName.TurnbackNewLatterView)
 	else
-		ViewMgr.instance:openView(arg_3_0._patViewName)
+		ViewMgr.instance:openView(self._patViewName)
 	end
 end
 
-function var_0_0.onCloseViewFinish(arg_4_0, arg_4_1)
-	if string.nilorempty(arg_4_0._patViewName) or arg_4_0._patViewName == arg_4_1 or arg_4_1 == ViewName.TurnbackNewLatterView then
-		arg_4_0:patComplete()
-		TurnbackRpc.instance:sendTurnbackFirstShowRequest(arg_4_0.turnbackId)
+function TurnbackViewPatFaceWork:onCloseViewFinish(viewName)
+	if string.nilorempty(self._patViewName) or self._patViewName == viewName or viewName == ViewName.TurnbackNewLatterView then
+		self:patComplete()
+		TurnbackRpc.instance:sendTurnbackFirstShowRequest(self.turnbackId)
 	end
 end
 
-function var_0_0.customerClearWork(arg_5_0)
-	arg_5_0.turnbackId = nil
+function TurnbackViewPatFaceWork:customerClearWork()
+	self.turnbackId = nil
 end
 
-return var_0_0
+return TurnbackViewPatFaceWork

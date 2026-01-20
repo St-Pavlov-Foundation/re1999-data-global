@@ -1,277 +1,297 @@
-﻿module("modules.logic.fight.model.FightResultModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/FightResultModel.lua
 
-local var_0_0 = class("FightResultModel", ListScrollModel)
+module("modules.logic.fight.model.FightResultModel", package.seeall)
 
-function var_0_0.onEndDungeonPush(arg_1_0, arg_1_1)
-	arg_1_0.chapterId = arg_1_1.chapterId
-	arg_1_0.episodeId = arg_1_1.episodeId
-	arg_1_0.playerExp = arg_1_1.playerExp
-	arg_1_0.star = arg_1_1.star
-	arg_1_0.firstPass = arg_1_1.firstPass
-	arg_1_0._materialDataList = {}
+local FightResultModel = class("FightResultModel", ListScrollModel)
 
-	arg_1_0:_initFirstBonus(arg_1_1)
-	arg_1_0:_initNormalBonus(arg_1_1)
-	var_0_0._addMaterialDatasToList(arg_1_1.advencedBonus, arg_1_0._materialDataList, FightEnum.FightBonusTag.AdvencedBonus)
-	arg_1_0:_initAdditionBonus(arg_1_1)
-	arg_1_0:_initTimeFirstBonus(arg_1_1)
-	arg_1_0:_initCommonDropBonus(arg_1_1)
-	arg_1_0:_addExp(arg_1_1.firstBonus)
-	arg_1_0:_addExp(arg_1_1.normalBonus)
-	arg_1_0:_addExp(arg_1_1.advencedBonus)
-	arg_1_0:_addExp(arg_1_1.additionBonus)
-	arg_1_0:_addExp(arg_1_1.timeFirstBonus)
-	table.sort(arg_1_0._materialDataList, var_0_0._sortMaterial)
-	arg_1_0:_setLastEpisodePass()
+function FightResultModel:onEndDungeonPush(msg)
+	self.chapterId = msg.chapterId
+	self.episodeId = msg.episodeId
+	self.playerExp = msg.playerExp
+	self.star = msg.star
+	self.firstPass = msg.firstPass
+	self._materialDataList = {}
 
-	arg_1_0.updateDungeonRecord = arg_1_1.updateDungeonRecord
-	arg_1_0.canUpdateDungeonRecord = arg_1_1.canUpdateDungeonRecord
-	arg_1_0.oldRecordRound = arg_1_1.oldRecordRound
-	arg_1_0.newRecordRound = arg_1_1.newRecordRound
-	arg_1_0.assistUserId = arg_1_1.assistUserId
-	arg_1_0.assistNickname = arg_1_1.assistNickname
-	arg_1_0.totalRound = arg_1_1.totalRound
+	self:_initFirstBonus(msg)
+	self:_initNormalBonus(msg)
+	FightResultModel._addMaterialDatasToList(msg.advencedBonus, self._materialDataList, FightEnum.FightBonusTag.AdvencedBonus)
+	self:_initAdditionBonus(msg)
+	self:_initTimeFirstBonus(msg)
+	self:_initCommonDropBonus(msg)
+	self:_addExp(msg.firstBonus)
+	self:_addExp(msg.normalBonus)
+	self:_addExp(msg.advencedBonus)
+	self:_addExp(msg.additionBonus)
+	self:_addExp(msg.timeFirstBonus)
+	table.sort(self._materialDataList, FightResultModel._sortMaterial)
+	self:_setLastEpisodePass()
+
+	self.updateDungeonRecord = msg.updateDungeonRecord
+	self.canUpdateDungeonRecord = msg.canUpdateDungeonRecord
+	self.oldRecordRound = msg.oldRecordRound
+	self.newRecordRound = msg.newRecordRound
+	self.assistUserId = msg.assistUserId
+	self.assistNickname = msg.assistNickname
+	self.totalRound = msg.totalRound
 
 	if BossRushController.instance:isInBossRushFight(true) then
-		BossRushModel.instance:onEndDungeonExtraStr(arg_1_1.extraStr)
+		BossRushModel.instance:onEndDungeonExtraStr(msg.extraStr)
 	end
 end
 
-function var_0_0._initCommonDropBonus(arg_2_0, arg_2_1)
-	arg_2_0.act155BonusList = {}
-	arg_2_0.act153BonusList = {}
-	arg_2_0.normal2SimpleList = {}
+function FightResultModel:_initCommonDropBonus(msg)
+	self.act155BonusList = {}
+	self.act153BonusList = {}
+	self.act217BonusList = {}
+	self.normal2SimpleList = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.dropBonus) do
-		local var_2_0 = iter_2_1.type
+	for _, dropBonus in ipairs(msg.dropBonus) do
+		local dropType = dropBonus.type
 
-		if var_2_0 == FightEnum.DropType.Act155 or var_2_0 == FightEnum.DropType.Act158 then
-			for iter_2_2, iter_2_3 in ipairs(iter_2_1.bonus) do
-				if iter_2_3.materilType ~= MaterialEnum.MaterialType.Faith and iter_2_3.materilType ~= MaterialEnum.MaterialType.Exp then
-					local var_2_1 = MaterialDataMO.New()
+		if dropType == FightEnum.DropType.Act155 or dropType == FightEnum.DropType.Act158 then
+			for _, bonus in ipairs(dropBonus.bonus) do
+				if bonus.materilType ~= MaterialEnum.MaterialType.Faith and bonus.materilType ~= MaterialEnum.MaterialType.Exp then
+					local materialDataMO = MaterialDataMO.New()
 
-					var_2_1.bonusTag = FightEnum.FightBonusTag.ActBonus
+					materialDataMO.bonusTag = FightEnum.FightBonusTag.ActBonus
 
-					var_2_1:init(iter_2_3)
-					table.insert(arg_2_0.act155BonusList, var_2_1)
+					materialDataMO:init(bonus)
+					table.insert(self.act155BonusList, materialDataMO)
 				end
 			end
-		elseif var_2_0 == FightEnum.DropType.Act153 then
-			for iter_2_4, iter_2_5 in ipairs(iter_2_1.bonus) do
-				if iter_2_5.materilType ~= MaterialEnum.MaterialType.Faith and iter_2_5.materilType ~= MaterialEnum.MaterialType.Exp then
-					local var_2_2 = MaterialDataMO.New()
+		elseif dropType == FightEnum.DropType.Act153 then
+			for _, bonus in ipairs(dropBonus.bonus) do
+				if bonus.materilType ~= MaterialEnum.MaterialType.Faith and bonus.materilType ~= MaterialEnum.MaterialType.Exp then
+					local materialDataMO = MaterialDataMO.New()
 
-					var_2_2.bonusTag = FightEnum.FightBonusTag.AdditionBonus
+					materialDataMO.bonusTag = FightEnum.FightBonusTag.AdditionBonus
 
-					var_2_2:init(iter_2_5)
-					table.insert(arg_2_0.act153BonusList, var_2_2)
+					materialDataMO:init(bonus)
+					table.insert(self.act153BonusList, materialDataMO)
 				end
 			end
 
-			table.sort(arg_2_0.act153BonusList, var_0_0._sortMaterial)
-		elseif var_2_0 == FightEnum.DropType.Normal2Simple then
-			for iter_2_6, iter_2_7 in ipairs(iter_2_1.bonus) do
-				if iter_2_7.materilType ~= MaterialEnum.MaterialType.Faith and iter_2_7.materilType ~= MaterialEnum.MaterialType.Exp then
-					local var_2_3 = MaterialDataMO.New()
+			table.sort(self.act153BonusList, FightResultModel._sortMaterial)
+		elseif dropType == FightEnum.DropType.Act217 then
+			for _, bonus in ipairs(dropBonus.bonus) do
+				if bonus.materilType ~= MaterialEnum.MaterialType.Faith and bonus.materilType ~= MaterialEnum.MaterialType.Exp then
+					local materialDataMO = MaterialDataMO.New()
 
-					var_2_3.bonusTag = FightEnum.FightBonusTag.SimpleBouns
+					materialDataMO.bonusTag = FightEnum.FightBonusTag.AdditionBonus
 
-					var_2_3:init(iter_2_7)
-					table.insert(arg_2_0.normal2SimpleList, var_2_3)
+					materialDataMO:init(bonus)
+					table.insert(self.act217BonusList, materialDataMO)
+				end
+			end
+
+			table.sort(self.act217BonusList, FightResultModel._sortMaterial)
+		elseif dropType == FightEnum.DropType.Normal2Simple then
+			for _, bonus in ipairs(dropBonus.bonus) do
+				if bonus.materilType ~= MaterialEnum.MaterialType.Faith and bonus.materilType ~= MaterialEnum.MaterialType.Exp then
+					local materialDataMO = MaterialDataMO.New()
+
+					materialDataMO.bonusTag = FightEnum.FightBonusTag.SimpleBouns
+
+					materialDataMO:init(bonus)
+					table.insert(self.normal2SimpleList, materialDataMO)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._initFirstBonus(arg_3_0, arg_3_1)
-	arg_3_0._firstList = {}
+function FightResultModel:_initFirstBonus(msg)
+	self._firstList = {}
 
-	var_0_0._addMaterialDatasToList(arg_3_1.firstBonus, arg_3_0._firstList, FightEnum.FightBonusTag.FirstBonus)
-	table.sort(arg_3_0._firstList, var_0_0._sortMaterial)
+	FightResultModel._addMaterialDatasToList(msg.firstBonus, self._firstList, FightEnum.FightBonusTag.FirstBonus)
+	table.sort(self._firstList, FightResultModel._sortMaterial)
 end
 
-function var_0_0._initAdditionBonus(arg_4_0, arg_4_1)
-	arg_4_0._additionList = {}
+function FightResultModel:_initAdditionBonus(msg)
+	self._additionList = {}
 
-	var_0_0._addMaterialDatasToList(arg_4_1.additionBonus, arg_4_0._additionList, FightEnum.FightBonusTag.AdditionBonus)
-	table.sort(arg_4_0._additionList, var_0_0._sortMaterial)
+	FightResultModel._addMaterialDatasToList(msg.additionBonus, self._additionList, FightEnum.FightBonusTag.AdditionBonus)
+	table.sort(self._additionList, FightResultModel._sortMaterial)
 end
 
-function var_0_0._initTimeFirstBonus(arg_5_0, arg_5_1)
-	arg_5_0._timeFirstList = {}
+function FightResultModel:_initTimeFirstBonus(msg)
+	self._timeFirstList = {}
 
-	var_0_0._addMaterialDatasToList(arg_5_1.timeFirstBonus, arg_5_0._timeFirstList, FightEnum.FightBonusTag.TimeFirstBonus)
-	table.sort(arg_5_0._timeFirstList, var_0_0._sortMaterial)
+	FightResultModel._addMaterialDatasToList(msg.timeFirstBonus, self._timeFirstList, FightEnum.FightBonusTag.TimeFirstBonus)
+	table.sort(self._timeFirstList, FightResultModel._sortMaterial)
 end
 
-function var_0_0._initNormalBonus(arg_6_0, arg_6_1)
-	arg_6_0._extraList = nil
+function FightResultModel:_initNormalBonus(msg)
+	self._extraList = nil
 
 	if not FightModel.instance:isEnterUseFreeLimit() then
-		var_0_0._addMaterialDatasToList(arg_6_1.normalBonus, arg_6_0._materialDataList, FightEnum.FightBonusTag.NormalBonus)
+		FightResultModel._addMaterialDatasToList(msg.normalBonus, self._materialDataList, FightEnum.FightBonusTag.NormalBonus)
 
 		return
 	end
 
-	local var_6_0 = {}
+	local normalList = {}
 
-	var_0_0._addMaterialDatasToList(arg_6_1.normalBonus, var_6_0, FightEnum.FightBonusTag.NormalBonus)
+	FightResultModel._addMaterialDatasToList(msg.normalBonus, normalList, FightEnum.FightBonusTag.NormalBonus)
 
-	local var_6_1 = {}
+	local extraList = {}
 
-	table.sort(var_6_0, var_0_0._sortMaterial)
+	table.sort(normalList, FightResultModel._sortMaterial)
 
-	for iter_6_0, iter_6_1 in pairs(var_6_0) do
-		if #var_6_1 < 3 and (iter_6_1.materilType == MaterialEnum.MaterialType.Currency or iter_6_1.materilType == MaterialEnum.MaterialType.Equip) then
-			table.insert(var_6_1, iter_6_1)
+	for k, v in pairs(normalList) do
+		if #extraList < 3 and (v.materilType == MaterialEnum.MaterialType.Currency or v.materilType == MaterialEnum.MaterialType.Equip) then
+			table.insert(extraList, v)
 		else
-			table.insert(arg_6_0._materialDataList, iter_6_1)
+			table.insert(self._materialDataList, v)
 		end
 	end
 
-	arg_6_0._extraList = var_6_1
+	self._extraList = extraList
 end
 
-function var_0_0.clear(arg_7_0)
-	var_0_0.super.clear(arg_7_0)
+function FightResultModel:clear()
+	FightResultModel.super.clear(self)
 
-	arg_7_0.chapterId = nil
-	arg_7_0.episodeId = nil
-	arg_7_0.playerExp = nil
-	arg_7_0.star = nil
-	arg_7_0._firstList = nil
-	arg_7_0._extraList = nil
-	arg_7_0._materialDataList = nil
-	arg_7_0._additionList = nil
-	arg_7_0._timeFirstList = nil
-	arg_7_0.updateDungeonRecord = nil
-	arg_7_0.curSendEpisodePass = nil
+	self.chapterId = nil
+	self.episodeId = nil
+	self.playerExp = nil
+	self.star = nil
+	self._firstList = nil
+	self._extraList = nil
+	self._materialDataList = nil
+	self._additionList = nil
+	self._timeFirstList = nil
+	self.updateDungeonRecord = nil
+	self.curSendEpisodePass = nil
 end
 
-function var_0_0.getChapterId(arg_8_0)
-	return arg_8_0.chapterId or DungeonModel.instance.curSendChapterId
+function FightResultModel:getChapterId()
+	return self.chapterId or DungeonModel.instance.curSendChapterId
 end
 
-function var_0_0.getEpisodeId(arg_9_0)
-	return arg_9_0.episodeId or DungeonModel.instance.curSendEpisodeId
+function FightResultModel:getEpisodeId()
+	return self.episodeId or DungeonModel.instance.curSendEpisodeId
 end
 
-function var_0_0.getPlayerExp(arg_10_0)
-	return arg_10_0.playerExp or 0
+function FightResultModel:getPlayerExp()
+	return self.playerExp or 0
 end
 
-function var_0_0.getMaterialDataList(arg_11_0)
-	return arg_11_0._materialDataList
+function FightResultModel:getMaterialDataList()
+	return self._materialDataList
 end
 
-function var_0_0.getExtraMaterialDataList(arg_12_0)
-	return arg_12_0._extraList
+function FightResultModel:getExtraMaterialDataList()
+	return self._extraList
 end
 
-function var_0_0.getFirstMaterialDataList(arg_13_0)
-	return arg_13_0._firstList
+function FightResultModel:getFirstMaterialDataList()
+	return self._firstList
 end
 
-function var_0_0.getAdditionMaterialDataList(arg_14_0)
-	return arg_14_0._additionList
+function FightResultModel:getAdditionMaterialDataList()
+	return self._additionList
 end
 
-function var_0_0.getTimeFirstMaterialDataList(arg_15_0)
-	return arg_15_0._timeFirstList
+function FightResultModel:getTimeFirstMaterialDataList()
+	return self._timeFirstList
 end
 
-function var_0_0.getAct155MaterialDataList(arg_16_0)
-	return arg_16_0.act155BonusList
+function FightResultModel:getAct155MaterialDataList()
+	return self.act155BonusList
 end
 
-function var_0_0.getAct153MaterialDataList(arg_17_0)
-	return arg_17_0.act153BonusList
+function FightResultModel:getAct153MaterialDataList()
+	return self.act153BonusList
 end
 
-function var_0_0._addExp(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		if iter_18_1.materilType == MaterialEnum.MaterialType.Exp then
-			arg_18_0.playerExp = arg_18_0.playerExp + iter_18_1.quantity
+function FightResultModel:getAct217MaterialDataList()
+	return self.act217BonusList
+end
+
+function FightResultModel:_addExp(materialDataList)
+	for _, bonus in ipairs(materialDataList) do
+		if bonus.materilType == MaterialEnum.MaterialType.Exp then
+			self.playerExp = self.playerExp + bonus.quantity
 		end
 	end
 end
 
-function var_0_0._setLastEpisodePass(arg_19_0)
-	local var_19_0 = DungeonModel.instance.curSendEpisodeId
+function FightResultModel:_setLastEpisodePass()
+	local sendEpisodeId = DungeonModel.instance.curSendEpisodeId
 
-	if var_19_0 then
-		local var_19_1 = DungeonConfig.instance:getEpisodeCO(var_19_0)
+	if sendEpisodeId then
+		local episodeCo = DungeonConfig.instance:getEpisodeCO(sendEpisodeId)
 
-		if arg_19_0.episodeId == var_19_0 or var_19_1 and arg_19_0.episodeId == var_19_1.chainEpisode then
-			local var_19_2 = not DungeonModel.instance.curSendEpisodePrePass and arg_19_0.star > 0
+		if self.episodeId == sendEpisodeId or episodeCo and self.episodeId == episodeCo.chainEpisode then
+			local pass = not DungeonModel.instance.curSendEpisodePrePass and self.star > 0
 
-			DungeonModel.instance.curSendEpisodePass = var_19_2
+			DungeonModel.instance.curSendEpisodePass = pass
 
 			return
 		end
 	end
 
-	arg_19_0.curSendEpisodePass = false
+	self.curSendEpisodePass = false
 end
 
-function var_0_0._addMaterialDatasToList(arg_20_0, arg_20_1, arg_20_2)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0) do
-		if iter_20_1.materilType ~= MaterialEnum.MaterialType.Faith and iter_20_1.materilType ~= MaterialEnum.MaterialType.Exp then
-			local var_20_0 = MaterialDataMO.New()
+function FightResultModel._addMaterialDatasToList(materialDataList, toList, bonusTag)
+	for _, bonus in ipairs(materialDataList) do
+		if bonus.materilType ~= MaterialEnum.MaterialType.Faith and bonus.materilType ~= MaterialEnum.MaterialType.Exp then
+			local materialDataMO = MaterialDataMO.New()
 
-			var_20_0.bonusTag = arg_20_2
+			materialDataMO.bonusTag = bonusTag
 
-			var_20_0:init(iter_20_1)
-			table.insert(arg_20_1, var_20_0)
+			materialDataMO:init(bonus)
+			table.insert(toList, materialDataMO)
 		end
 	end
 end
 
-function var_0_0._sortMaterial(arg_21_0, arg_21_1)
-	local var_21_0 = ItemModel.instance:getItemConfig(arg_21_0.materilType, arg_21_0.materilId)
-	local var_21_1 = ItemModel.instance:getItemConfig(arg_21_1.materilType, arg_21_1.materilId)
-	local var_21_2 = var_0_0._sortMaterialByBonusTag(arg_21_0, arg_21_1)
+function FightResultModel._sortMaterial(xMaterialDataMO, yMaterialDataMO)
+	local xConfig = ItemModel.instance:getItemConfig(xMaterialDataMO.materilType, xMaterialDataMO.materilId)
+	local yConfig = ItemModel.instance:getItemConfig(yMaterialDataMO.materilType, yMaterialDataMO.materilId)
+	local result = FightResultModel._sortMaterialByBonusTag(xMaterialDataMO, yMaterialDataMO)
 
-	if var_21_2 == nil then
-		var_21_2 = var_0_0._sortMaterialByRare(var_21_0, var_21_1)
+	if result == nil then
+		result = FightResultModel._sortMaterialByRare(xConfig, yConfig)
 	end
 
-	if var_21_2 == nil then
-		var_21_2 = var_0_0._sortMaterialByType(arg_21_0, arg_21_1)
+	if result == nil then
+		result = FightResultModel._sortMaterialByType(xMaterialDataMO, yMaterialDataMO)
 	end
 
-	if var_21_2 == nil then
-		var_21_2 = arg_21_0.materilId < arg_21_1.materilId
+	if result == nil then
+		result = xMaterialDataMO.materilId < yMaterialDataMO.materilId
 	end
 
-	return var_21_2
+	return result
 end
 
-function var_0_0._sortMaterialByBonusTag(arg_22_0, arg_22_1)
-	local var_22_0 = FightEnum.FightBonusTagPriority[arg_22_0.bonusTag] or 0
-	local var_22_1 = FightEnum.FightBonusTagPriority[arg_22_1.bonusTag] or 0
+function FightResultModel._sortMaterialByBonusTag(xMaterialDataMO, yMaterialDataMO)
+	local xBonusScore = FightEnum.FightBonusTagPriority[xMaterialDataMO.bonusTag] or 0
+	local yBonusScore = FightEnum.FightBonusTagPriority[yMaterialDataMO.bonusTag] or 0
 
-	if var_22_0 == var_22_1 then
+	if xBonusScore == yBonusScore then
 		return nil
 	end
 
-	return var_22_1 < var_22_0
+	return yBonusScore < xBonusScore
 end
 
-function var_0_0._sortMaterialByRare(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0 and arg_23_0.rare or 0
-	local var_23_1 = arg_23_1 and arg_23_1.rare or 0
+function FightResultModel._sortMaterialByRare(xConfig, yConfig)
+	local xRare = xConfig and xConfig.rare or 0
+	local yRare = yConfig and yConfig.rare or 0
 
-	if var_23_0 == var_23_1 then
+	if xRare == yRare then
 		return nil
 	end
 
-	return var_23_1 < var_23_0
+	return yRare < xRare
 end
 
-function var_0_0._sortMaterialByType(arg_24_0, arg_24_1)
-	var_0_0.MaterialTypePriority = var_0_0.MaterialTypePriority or {
+function FightResultModel._sortMaterialByType(xMaterialDataMO, yMaterialDataMO)
+	FightResultModel.MaterialTypePriority = FightResultModel.MaterialTypePriority or {
 		[MaterialEnum.MaterialType.Item] = 1,
 		[MaterialEnum.MaterialType.Currency] = 5,
 		[MaterialEnum.MaterialType.Hero] = 4,
@@ -279,20 +299,20 @@ function var_0_0._sortMaterialByType(arg_24_0, arg_24_1)
 		[MaterialEnum.MaterialType.PowerPotion] = 2
 	}
 
-	local var_24_0 = var_0_0.MaterialTypePriority[arg_24_0.materilType] or 0
-	local var_24_1 = var_0_0.MaterialTypePriority[arg_24_1.materilType] or 0
+	local xTypeScore = FightResultModel.MaterialTypePriority[xMaterialDataMO.materilType] or 0
+	local yTypeScore = FightResultModel.MaterialTypePriority[yMaterialDataMO.materilType] or 0
 
-	if var_24_0 == var_24_1 then
+	if xTypeScore == yTypeScore then
 		return nil
 	end
 
-	return var_24_1 < var_24_0
+	return yTypeScore < xTypeScore
 end
 
-function var_0_0.getNormal2SimpleMaterialDataList(arg_25_0)
-	return arg_25_0.normal2SimpleList
+function FightResultModel:getNormal2SimpleMaterialDataList()
+	return self.normal2SimpleList
 end
 
-var_0_0.instance = var_0_0.New()
+FightResultModel.instance = FightResultModel.New()
 
-return var_0_0
+return FightResultModel

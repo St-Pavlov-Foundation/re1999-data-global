@@ -1,182 +1,187 @@
-﻿module("modules.logic.activity.view.V1a6_Spring_PanelSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a6_Spring_PanelSignView.lua
 
-local var_0_0 = class("V1a6_Spring_PanelSignView", Activity101SignViewBase)
+module("modules.logic.activity.view.V1a6_Spring_PanelSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
-	arg_1_0._txtDate = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Date")
-	arg_1_0._txtgoodDesc = gohelper.findChildText(arg_1_0.viewGO, "Root/image_yi/image_Mood/#txt_goodDesc")
-	arg_1_0._txtbadDesc = gohelper.findChildText(arg_1_0.viewGO, "Root/image_ji/image_Mood/#txt_badDesc")
-	arg_1_0._txtSmallTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/image_SmallTitle/#txt_SmallTitle")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "Root/ScrollView/Viewport/#txt_Desc")
-	arg_1_0._btnemptyTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyTop")
-	arg_1_0._btnemptyBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBottom")
-	arg_1_0._btnemptyLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyLeft")
-	arg_1_0._btnemptyRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyRight")
+local V1a6_Spring_PanelSignView = class("V1a6_Spring_PanelSignView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_Spring_PanelSignView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Close")
+	self._txtDate = gohelper.findChildText(self.viewGO, "Root/#txt_Date")
+	self._txtgoodDesc = gohelper.findChildText(self.viewGO, "Root/image_yi/image_Mood/#txt_goodDesc")
+	self._txtbadDesc = gohelper.findChildText(self.viewGO, "Root/image_ji/image_Mood/#txt_badDesc")
+	self._txtSmallTitle = gohelper.findChildText(self.viewGO, "Root/image_SmallTitle/#txt_SmallTitle")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "Root/ScrollView/Viewport/#txt_Desc")
+	self._btnemptyTop = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyTop")
+	self._btnemptyBottom = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyBottom")
+	self._btnemptyLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyLeft")
+	self._btnemptyRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyRight")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnemptyTop:AddClickListener(arg_2_0._btnemptyTopOnClick, arg_2_0)
-	arg_2_0._btnemptyBottom:AddClickListener(arg_2_0._btnemptyBottomOnClick, arg_2_0)
-	arg_2_0._btnemptyLeft:AddClickListener(arg_2_0._btnemptyLeftOnClick, arg_2_0)
-	arg_2_0._btnemptyRight:AddClickListener(arg_2_0._btnemptyRightOnClick, arg_2_0)
+function V1a6_Spring_PanelSignView:addEvents()
+	Activity101SignViewBase.addEvents(self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnemptyTop:AddClickListener(self._btnemptyTopOnClick, self)
+	self._btnemptyBottom:AddClickListener(self._btnemptyBottomOnClick, self)
+	self._btnemptyLeft:AddClickListener(self._btnemptyLeftOnClick, self)
+	self._btnemptyRight:AddClickListener(self._btnemptyRightOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnemptyTop:RemoveClickListener()
-	arg_3_0._btnemptyBottom:RemoveClickListener()
-	arg_3_0._btnemptyLeft:RemoveClickListener()
-	arg_3_0._btnemptyRight:RemoveClickListener()
+function V1a6_Spring_PanelSignView:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
+	self._btnClose:RemoveClickListener()
+	self._btnemptyTop:RemoveClickListener()
+	self._btnemptyBottom:RemoveClickListener()
+	self._btnemptyLeft:RemoveClickListener()
+	self._btnemptyRight:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function V1a6_Spring_PanelSignView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyTopOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function V1a6_Spring_PanelSignView:_btnemptyTopOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyBottomOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function V1a6_Spring_PanelSignView:_btnemptyBottomOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyLeftOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function V1a6_Spring_PanelSignView:_btnemptyLeftOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyRightOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function V1a6_Spring_PanelSignView:_btnemptyRightOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._anims = arg_9_0:getUserDataTb_()
+function V1a6_Spring_PanelSignView:_editableInitView()
+	self._anims = self:getUserDataTb_()
 
-	table.insert(arg_9_0._anims, arg_9_0:_findAnimCmp("Root/image_yi/image_Mood"))
-	table.insert(arg_9_0._anims, arg_9_0:_findAnimCmp("Root/image_ji/image_Mood"))
+	table.insert(self._anims, self:_findAnimCmp("Root/image_yi/image_Mood"))
+	table.insert(self._anims, self:_findAnimCmp("Root/image_ji/image_Mood"))
 end
 
-function var_0_0._findAnimCmp(arg_10_0, arg_10_1)
-	return gohelper.findChild(arg_10_0.viewGO, arg_10_1):GetComponent(gohelper.Type_Animator)
+function V1a6_Spring_PanelSignView:_findAnimCmp(pathFromViewGO)
+	local go = gohelper.findChild(self.viewGO, pathFromViewGO)
+
+	return go:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._txtLimitTime.text = ""
-	arg_11_0._txtDate.text = ""
-	arg_11_0._txtSmallTitle.text = ""
-	arg_11_0._txtDesc.text = ""
-	arg_11_0._txtgoodDesc.text = ""
-	arg_11_0._txtbadDesc.text = ""
+function V1a6_Spring_PanelSignView:onOpen()
+	self._txtLimitTime.text = ""
+	self._txtDate.text = ""
+	self._txtSmallTitle.text = ""
+	self._txtDesc.text = ""
+	self._txtgoodDesc.text = ""
+	self._txtbadDesc.text = ""
 
-	arg_11_0:internal_set_actId(arg_11_0.viewParam.actId)
-	arg_11_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
-	arg_11_0:internal_onOpen()
-	TaskDispatcher.runRepeat(arg_11_0._refreshTimeTick, arg_11_0, 1)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_11_0._onDailyRefresh, arg_11_0)
+	self:internal_set_actId(self.viewParam.actId)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
+	self:internal_onOpen()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-local var_0_1 = "Key_V1a6_Spring_PanelSignView"
+local kplayerPrefsKey = "Key_V1a6_Spring_PanelSignView"
 
-function var_0_0.onOpenFinish(arg_12_0)
-	local var_12_0 = arg_12_0:_getCurrentDayCO()
+function V1a6_Spring_PanelSignView:onOpenFinish()
+	local CO = self:_getCurrentDayCO()
 
-	if not var_12_0 then
+	if not CO then
 		return
 	end
 
-	local var_12_1 = var_12_0.day
+	local day = CO.day
+	local lastDay = GameUtil.playerPrefsGetNumberByUserId(kplayerPrefsKey, -1)
 
-	if GameUtil.playerPrefsGetNumberByUserId(var_0_1, -1) ~= var_12_1 then
-		for iter_12_0, iter_12_1 in ipairs(arg_12_0._anims or {}) do
-			iter_12_1:Play(UIAnimationName.Open, 0, 0)
+	if lastDay ~= day then
+		for _, anim in ipairs(self._anims or {}) do
+			anim:Play(UIAnimationName.Open, 0, 0)
 		end
 
-		GameUtil.playerPrefsSetNumberByUserId(var_0_1, var_12_1)
+		GameUtil.playerPrefsSetNumberByUserId(kplayerPrefsKey, day)
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._refreshTimeTick, arg_13_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_13_0._onDailyRefresh, arg_13_0)
+function V1a6_Spring_PanelSignView:onClose()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	Activity101SignViewBase._internal_onDestroy(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._refreshTimeTick, arg_14_0)
+function V1a6_Spring_PanelSignView:onDestroyView()
+	Activity101SignViewBase._internal_onDestroy(self)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_15_0)
-	arg_15_0:_refreshList()
-	arg_15_0:_refreshTimeTick()
-	arg_15_0:_refreshDesc()
+function V1a6_Spring_PanelSignView:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
+	self:_refreshDesc()
 end
 
-function var_0_0._refreshDesc(arg_16_0)
-	local var_16_0 = arg_16_0:_getCurrentDayCO()
+function V1a6_Spring_PanelSignView:_refreshDesc()
+	local CO = self:_getCurrentDayCO()
 
-	if not var_16_0 then
+	if not CO then
 		return
 	end
 
-	arg_16_0._txtDate.text = var_16_0.name
-	arg_16_0._txtSmallTitle.text = var_16_0.simpleDesc
-	arg_16_0._txtDesc.text = var_16_0.detailDesc
-	arg_16_0._txtgoodDesc.text = var_16_0.goodDesc
-	arg_16_0._txtbadDesc.text = var_16_0.badDesc
+	self._txtDate.text = CO.name
+	self._txtSmallTitle.text = CO.simpleDesc
+	self._txtDesc.text = CO.detailDesc
+	self._txtgoodDesc.text = CO.goodDesc
+	self._txtbadDesc.text = CO.badDesc
 end
 
-function var_0_0._refreshTimeTick(arg_17_0)
-	arg_17_0._txtLimitTime.text = arg_17_0:getRemainTimeStr()
+function V1a6_Spring_PanelSignView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0._getCurrentDayCO(arg_18_0)
-	local var_18_0 = arg_18_0:actId()
-	local var_18_1 = ActivityModel.instance:getActMO(var_18_0)
+function V1a6_Spring_PanelSignView:_getCurrentDayCO()
+	local actId = self:actId()
+	local actMO = ActivityModel.instance:getActMO(actId)
 
-	if not var_18_1 then
+	if not actMO then
 		return
 	end
 
-	local var_18_2 = ActivityType101Config.instance:getSpringSignMaxDay(var_18_0)
+	local maxDay = ActivityType101Config.instance:getSpringSignMaxDay(actId)
 
-	if not var_18_2 or var_18_2 <= 0 then
+	if not maxDay or maxDay <= 0 then
 		return
 	end
 
-	local var_18_3 = var_18_1.startTime / 1000
-	local var_18_4 = var_18_1.endTime / 1000
-	local var_18_5 = ServerTime.now()
+	local st = actMO.startTime / 1000
+	local ed = actMO.endTime / 1000
+	local now = ServerTime.now()
 
-	if var_18_5 < var_18_3 or var_18_4 < var_18_5 then
+	if now < st or ed < now then
 		return
 	end
 
-	local var_18_6 = var_18_5 - var_18_3
-	local var_18_7 = TimeUtil.secondsToDDHHMMSS(var_18_6)
+	local durationSecondFromSt = now - st
+	local durationDay = TimeUtil.secondsToDDHHMMSS(durationSecondFromSt)
 
-	if var_18_2 <= var_18_7 then
-		var_18_7 = var_18_7 % var_18_2
+	if maxDay <= durationDay then
+		durationDay = durationDay % maxDay
 	end
 
-	local var_18_8 = var_18_7 + 1
+	local day = durationDay + 1
 
-	return ActivityType101Config.instance:getSpringSignByDay(var_18_0, var_18_8)
+	return ActivityType101Config.instance:getSpringSignByDay(actId, day)
 end
 
-function var_0_0._onDailyRefresh(arg_19_0)
-	arg_19_0:_refreshDesc()
+function V1a6_Spring_PanelSignView:_onDailyRefresh()
+	self:_refreshDesc()
 end
 
-return var_0_0
+return V1a6_Spring_PanelSignView

@@ -1,7 +1,9 @@
-﻿module("modules.logic.weather.rpc.WeatherRpc", package.seeall)
+﻿-- chunkname: @modules/logic/weather/rpc/WeatherRpc.lua
 
-local var_0_0 = class("WeatherRpc", BaseRpc)
+module("modules.logic.weather.rpc.WeatherRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local WeatherRpc = class("WeatherRpc", BaseRpc)
 
-return var_0_0
+WeatherRpc.instance = WeatherRpc.New()
+
+return WeatherRpc

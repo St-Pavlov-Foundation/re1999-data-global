@@ -1,61 +1,63 @@
-﻿module("modules.logic.fight.system.work.FightWorkShowEquipSkillEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkShowEquipSkillEffect.lua
 
-local var_0_0 = class("FightWorkShowEquipSkillEffect", BaseWork)
+module("modules.logic.fight.system.work.FightWorkShowEquipSkillEffect", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkShowEquipSkillEffect = class("FightWorkShowEquipSkillEffect", BaseWork)
 
-	local var_1_0 = FightDataHelper.roundMgr:getRoundData()
-	local var_1_1 = var_1_0 and var_1_0.fightStep
-	local var_1_2
+function FightWorkShowEquipSkillEffect:ctor(fightStepData)
+	self.fightStepData = fightStepData
 
-	if arg_1_0.fightStepData.custom_stepIndex then
-		var_1_2 = arg_1_0.fightStepData.custom_stepIndex + 1
+	local roundData = FightDataHelper.roundMgr:getRoundData()
+	local fightStepList = roundData and roundData.fightStep
+	local index
+
+	if self.fightStepData.custom_stepIndex then
+		index = self.fightStepData.custom_stepIndex + 1
 	end
 
-	arg_1_0._nextStepData = var_1_1 and var_1_1[var_1_2]
+	self._nextStepData = fightStepList and fightStepList[index]
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
+function FightWorkShowEquipSkillEffect:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 0.5)
 
-	if arg_2_0.fightStepData.actType == FightEnum.ActType.SKILL and not FightDataHelper.stateMgr.isReplay then
-		local var_2_0 = EquipConfig.instance:isEquipSkill(arg_2_0.fightStepData.actId)
+	if self.fightStepData.actType == FightEnum.ActType.SKILL and not FightDataHelper.stateMgr.isReplay then
+		local equip_skill_config = EquipConfig.instance:isEquipSkill(self.fightStepData.actId)
 
-		if var_2_0 then
-			if arg_2_0.fightStepData.actEffect and #arg_2_0.fightStepData.actEffect == 1 then
-				local var_2_1 = arg_2_0.fightStepData.actEffect[1]
+		if equip_skill_config then
+			if self.fightStepData.actEffect and #self.fightStepData.actEffect == 1 then
+				local actEffectData = self.fightStepData.actEffect[1]
 
-				if var_2_1.effectType == FightEnum.EffectType.BUFFADD and var_2_1.buff then
-					local var_2_2 = lua_skill_buff.configDict[var_2_1.buff.buffId]
+				if actEffectData.effectType == FightEnum.EffectType.BUFFADD and actEffectData.buff then
+					local buffConfig = lua_skill_buff.configDict[actEffectData.buff.buffId]
 
-					if var_2_2 and string.nilorempty(var_2_2.features) then
-						arg_2_0:onDone(true)
+					if buffConfig and string.nilorempty(buffConfig.features) then
+						self:onDone(true)
 
 						return
 					end
 				end
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.OnFloatEquipEffect, arg_2_0.fightStepData.fromId, var_2_0)
+			FightController.instance:dispatchEvent(FightEvent.OnFloatEquipEffect, self.fightStepData.fromId, equip_skill_config)
 
-			if arg_2_0._nextStepData and arg_2_0._nextStepData.fromId == arg_2_0.fightStepData.fromId and FightCardDataHelper.isActiveSkill(arg_2_0._nextStepData.fromId, arg_2_0._nextStepData.actId) then
-				TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5 / FightModel.instance:getUISpeed())
+			if self._nextStepData and self._nextStepData.fromId == self.fightStepData.fromId and FightCardDataHelper.isActiveSkill(self._nextStepData.fromId, self._nextStepData.actId) then
+				TaskDispatcher.runDelay(self._delayDone, self, 0.5 / FightModel.instance:getUISpeed())
 
 				return
 			end
 		end
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkShowEquipSkillEffect:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+function FightWorkShowEquipSkillEffect:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightWorkShowEquipSkillEffect

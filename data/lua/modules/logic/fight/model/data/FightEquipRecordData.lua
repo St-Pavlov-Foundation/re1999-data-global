@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.model.data.FightEquipRecordData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightEquipRecordData.lua
 
-local var_0_0 = FightDataClass("FightEquipRecordData")
+module("modules.logic.fight.model.data.FightEquipRecordData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.equipUid = arg_1_1.equipUid
-	arg_1_0.equipId = arg_1_1.equipId
-	arg_1_0.equipLv = arg_1_1.equipLv
-	arg_1_0.refineLv = arg_1_1.refineLv
+local FightEquipRecordData = FightDataClass("FightEquipRecordData")
+
+function FightEquipRecordData:onConstructor(proto)
+	self.equipUid = proto.equipUid
+	self.equipId = proto.equipId
+	self.equipLv = proto.equipLv
+	self.refineLv = proto.refineLv
 end
 
-return var_0_0
+return FightEquipRecordData

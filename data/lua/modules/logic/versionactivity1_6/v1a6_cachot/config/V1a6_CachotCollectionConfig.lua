@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotCollectionConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/config/V1a6_CachotCollectionConfig.lua
 
-local var_0_0 = class("V1a6_CachotCollectionConfig", BaseConfig)
+module("modules.logic.versionactivity1_6.v1a6_cachot.config.V1a6_CachotCollectionConfig", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._collectionConfigTable = nil
+local V1a6_CachotCollectionConfig = class("V1a6_CachotCollectionConfig", BaseConfig)
+
+function V1a6_CachotCollectionConfig:onInit()
+	self._collectionConfigTable = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function V1a6_CachotCollectionConfig:reqConfigNames()
 	return {
 		"rogue_collection",
 		"rogue_collection_enchant",
@@ -14,87 +16,87 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "rogue_collection" then
-		arg_3_0:onRogueCollectionConfigLoaded(arg_3_2)
-	elseif arg_3_1 == "rogue_collection_enchant" then
-		arg_3_0._enchantConfigTable = arg_3_2
+function V1a6_CachotCollectionConfig:onConfigLoaded(configName, configTable)
+	if configName == "rogue_collection" then
+		self:onRogueCollectionConfigLoaded(configTable)
+	elseif configName == "rogue_collection_enchant" then
+		self._enchantConfigTable = configTable
 	end
 end
 
-function var_0_0.onRogueCollectionConfigLoaded(arg_4_0, arg_4_1)
-	arg_4_0._collectionConfigTable = arg_4_1
-	arg_4_0._collectionTypeMap = arg_4_0._collectionTypeMap or {}
-	arg_4_0._collectionGroupMap = arg_4_0._collectionGroupMap or {}
+function V1a6_CachotCollectionConfig:onRogueCollectionConfigLoaded(configTab)
+	self._collectionConfigTable = configTab
+	self._collectionTypeMap = self._collectionTypeMap or {}
+	self._collectionGroupMap = self._collectionGroupMap or {}
 
-	if arg_4_1.configDict then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1.configList) do
-			arg_4_0._collectionTypeMap[iter_4_1.type] = arg_4_0._collectionTypeMap[iter_4_1.type] or {}
-			arg_4_0._collectionGroupMap[iter_4_1.group] = arg_4_0._collectionGroupMap[iter_4_1.group] or {}
+	if configTab.configDict then
+		for _, v in ipairs(configTab.configList) do
+			self._collectionTypeMap[v.type] = self._collectionTypeMap[v.type] or {}
+			self._collectionGroupMap[v.group] = self._collectionGroupMap[v.group] or {}
 
-			table.insert(arg_4_0._collectionTypeMap[iter_4_1.type], iter_4_1)
-			table.insert(arg_4_0._collectionGroupMap[iter_4_1.group], iter_4_1)
+			table.insert(self._collectionTypeMap[v.type], v)
+			table.insert(self._collectionGroupMap[v.group], v)
 		end
 	end
 end
 
-function var_0_0.getAllConfig(arg_5_0)
-	return arg_5_0._collectionConfigTable.configList
+function V1a6_CachotCollectionConfig:getAllConfig()
+	return self._collectionConfigTable.configList
 end
 
-function var_0_0.getCollectionConfig(arg_6_0, arg_6_1)
-	if arg_6_0._collectionConfigTable.configDict then
-		return arg_6_0._collectionConfigTable.configDict[arg_6_1]
+function V1a6_CachotCollectionConfig:getCollectionConfig(id)
+	if self._collectionConfigTable.configDict then
+		return self._collectionConfigTable.configDict[id]
 	end
 end
 
-function var_0_0.getCollectionConfigsByType(arg_7_0, arg_7_1)
-	return arg_7_0._collectionTypeMap and arg_7_0._collectionTypeMap[arg_7_1]
+function V1a6_CachotCollectionConfig:getCollectionConfigsByType(type)
+	return self._collectionTypeMap and self._collectionTypeMap[type]
 end
 
-function var_0_0.getCollectionSkillsByConfig(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 and arg_8_1.skills
+function V1a6_CachotCollectionConfig:getCollectionSkillsByConfig(collectionCfg)
+	local skillCfgs = collectionCfg and collectionCfg.skills
 
-	if var_8_0 then
-		local var_8_1 = {}
-		local var_8_2 = GameUtil.splitString2(var_8_0, true)
+	if skillCfgs then
+		local skills = {}
+		local skillList = GameUtil.splitString2(skillCfgs, true)
 
-		if var_8_2 then
-			for iter_8_0 = 1, #var_8_2 do
-				local var_8_3 = var_8_2[iter_8_0][3]
+		if skillList then
+			for i = 1, #skillList do
+				local skillId = skillList[i][3]
 
-				table.insert(var_8_1, var_8_3)
+				table.insert(skills, skillId)
 			end
 		end
 
-		return var_8_1
+		return skills
 	end
 end
 
-function var_0_0.getCollectionSkillsInfo(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1 and arg_9_1.skills
-	local var_9_1 = {}
-	local var_9_2 = {}
-	local var_9_3 = {}
+function V1a6_CachotCollectionConfig:getCollectionSkillsInfo(collectionCfg)
+	local skillCfgs = collectionCfg and collectionCfg.skills
+	local skillTab = {}
+	local effectTab = {}
+	local effectMap = {}
 
-	if var_9_0 then
-		local var_9_4 = GameUtil.splitString2(var_9_0, true)
+	if skillCfgs then
+		local skillList = GameUtil.splitString2(skillCfgs, true)
 
-		if var_9_4 then
-			for iter_9_0 = 1, #var_9_4 do
-				local var_9_5 = var_9_4[iter_9_0][3]
-				local var_9_6 = lua_rule.configDict[var_9_5]
-				local var_9_7 = var_9_6 and var_9_6.desc
-				local var_9_8 = HeroSkillModel.instance:getEffectTagDescIdList(var_9_7)
+		if skillList then
+			for i = 1, #skillList do
+				local skillId = skillList[i][3]
+				local skillCfg = lua_rule.configDict[skillId]
+				local skillDesc = skillCfg and skillCfg.desc
+				local descList = HeroSkillModel.instance:getEffectTagDescIdList(skillDesc)
 
-				table.insert(var_9_1, var_9_5)
+				table.insert(skillTab, skillId)
 
-				if var_9_8 then
-					for iter_9_1, iter_9_2 in ipairs(var_9_8) do
-						if not var_9_3[iter_9_2] then
-							table.insert(var_9_2, iter_9_2)
+				if descList then
+					for _, effectDescId in ipairs(descList) do
+						if not effectMap[effectDescId] then
+							table.insert(effectTab, effectDescId)
 
-							var_9_3[iter_9_2] = true
+							effectMap[effectDescId] = true
 						end
 					end
 				end
@@ -102,57 +104,59 @@ function var_0_0.getCollectionSkillsInfo(arg_9_0, arg_9_1)
 		end
 	end
 
-	return var_9_1, var_9_2
+	return skillTab, effectTab
 end
 
-function var_0_0.getCollectionSkillsContent(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	arg_10_2 = arg_10_2 or "#4e6698"
+function V1a6_CachotCollectionConfig:getCollectionSkillsContent(collectionCfg, effectTagColor, percentColor, bracketColor)
+	effectTagColor = effectTagColor or "#4e6698"
 
-	local var_10_0 = arg_10_1 and arg_10_1.skills
-	local var_10_1 = ""
+	local skillCfgs = collectionCfg and collectionCfg.skills
+	local skillContentStr = ""
 
-	if var_10_0 then
-		local var_10_2 = {}
-		local var_10_3 = GameUtil.splitString2(var_10_0, true)
+	if skillCfgs then
+		local skills = {}
+		local skillList = GameUtil.splitString2(skillCfgs, true)
 
-		if var_10_3 then
-			for iter_10_0 = 1, #var_10_3 do
-				local var_10_4 = var_10_3[iter_10_0][3]
-				local var_10_5 = lua_rule.configDict[var_10_4]
+		if skillList then
+			for i = 1, #skillList do
+				local skillId = skillList[i][3]
+				local skillCfg = lua_rule.configDict[skillId]
 
-				if var_10_5 then
-					table.insert(var_10_2, var_10_5.desc)
+				if skillCfg then
+					table.insert(skills, skillCfg.desc)
 				end
 			end
 		end
 
-		var_10_1 = table.concat(var_10_2, "\n")
+		skillContentStr = table.concat(skills, "\n")
 	end
 
-	local var_10_6 = HeroSkillModel.instance:getEffectTagDescFromDescRecursion(var_10_1, arg_10_2)
+	local effectDesc = HeroSkillModel.instance:getEffectTagDescFromDescRecursion(skillContentStr, effectTagColor)
 
-	if not string.nilorempty(var_10_6) then
-		var_10_1 = var_10_1 .. "\n" .. var_10_6
+	if not string.nilorempty(effectDesc) then
+		skillContentStr = skillContentStr .. "\n" .. effectDesc
 	end
 
-	return (HeroSkillModel.instance:skillDesToSpot(var_10_1, arg_10_3, arg_10_4))
+	skillContentStr = HeroSkillModel.instance:skillDesToSpot(skillContentStr, percentColor, bracketColor)
+
+	return skillContentStr
 end
 
-function var_0_0.getCollectionSpDescsByConfig(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1 and arg_11_1.spdesc
-	local var_11_1 = {}
+function V1a6_CachotCollectionConfig:getCollectionSpDescsByConfig(collectionCfg)
+	local spDesc = collectionCfg and collectionCfg.spdesc
+	local spDescList = {}
 
-	if not string.nilorempty(var_11_0) then
-		var_11_1 = string.split(var_11_0, "#")
+	if not string.nilorempty(spDesc) then
+		spDescList = string.split(spDesc, "#")
 	end
 
-	return var_11_1
+	return spDescList
 end
 
-function var_0_0.getCollectionsByGroupId(arg_12_0, arg_12_1)
-	return arg_12_0._collectionGroupMap and arg_12_0._collectionGroupMap[arg_12_1]
+function V1a6_CachotCollectionConfig:getCollectionsByGroupId(groupId)
+	return self._collectionGroupMap and self._collectionGroupMap[groupId]
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotCollectionConfig.instance = V1a6_CachotCollectionConfig.New()
 
-return var_0_0
+return V1a6_CachotCollectionConfig

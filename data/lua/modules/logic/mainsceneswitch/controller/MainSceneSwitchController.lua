@@ -1,87 +1,95 @@
-﻿module("modules.logic.mainsceneswitch.controller.MainSceneSwitchController", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/controller/MainSceneSwitchController.lua
 
-local var_0_0 = class("MainSceneSwitchController", BaseController)
+module("modules.logic.mainsceneswitch.controller.MainSceneSwitchController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local MainSceneSwitchController = class("MainSceneSwitchController", BaseController)
+
+function MainSceneSwitchController:onInit()
+	self:reInit()
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function MainSceneSwitchController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_3_0._onGetInfoFinish, arg_3_0)
+function MainSceneSwitchController:addConstEvents()
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onGetInfoFinish, self)
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0._startSwitchTime = 0
+function MainSceneSwitchController:reInit()
+	self._startSwitchTime = 0
 
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_4_0._onLevelLoaded, arg_4_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0._onGetInfoFinish(arg_5_0)
+function MainSceneSwitchController:_onGetInfoFinish()
 	MainSceneSwitchModel.instance:initSceneId()
 end
 
-function var_0_0.isSwitching(arg_6_0)
-	return Time.realtimeSinceStartup - arg_6_0._startSwitchTime <= 10
+function MainSceneSwitchController:isSwitching()
+	return Time.realtimeSinceStartup - self._startSwitchTime <= 10
 end
 
-function var_0_0.switchScene(arg_7_0)
+function MainSceneSwitchController:switchScene()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
 		return
 	end
 
-	arg_7_0:dispatchEvent(MainSceneSwitchEvent.StartSwitchScene)
+	self:dispatchEvent(MainSceneSwitchEvent.StartSwitchScene)
 
-	arg_7_0._startSwitchTime = Time.realtimeSinceStartup
+	self._startSwitchTime = Time.realtimeSinceStartup
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_7_0._onLevelLoaded, arg_7_0)
-	GameSceneMgr.instance:getCurScene().level:switchLevel()
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+
+	local scene = GameSceneMgr.instance:getCurScene()
+
+	scene.level:switchLevel()
 end
 
-function var_0_0._onLevelLoaded(arg_8_0)
-	local var_8_0 = Time.realtimeSinceStartup - arg_8_0._startSwitchTime
+function MainSceneSwitchController:_onLevelLoaded()
+	local deltaTime = Time.realtimeSinceStartup - self._startSwitchTime
 
-	arg_8_0._startSwitchTime = 0
+	self._startSwitchTime = 0
 
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_8_0._onLevelLoaded, arg_8_0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
 		return
 	end
 
-	arg_8_0:dispatchEvent(MainSceneSwitchEvent.SwitchSceneFinish)
+	self:dispatchEvent(MainSceneSwitchEvent.SwitchSceneFinish)
 end
 
-function var_0_0.getLightColor(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1
+function MainSceneSwitchController.getLightColor(lightMode, id)
+	local sceneId = id
+	local settingsConfig = lua_scene_settings.configDict[sceneId]
 
-	return lua_scene_settings.configDict[var_9_0]["lightColor" .. arg_9_0]
+	return settingsConfig["lightColor" .. lightMode]
 end
 
-function var_0_0.getPrefabLightStartRotation(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1
+function MainSceneSwitchController.getPrefabLightStartRotation(lightMode, id)
+	local sceneId = id
+	local settingsConfig = lua_scene_settings.configDict[sceneId]
 
-	return lua_scene_settings.configDict[var_10_0].prefabLightStartRotation[arg_10_0]
+	return settingsConfig.prefabLightStartRotation[lightMode]
 end
 
-function var_0_0.getEffectLightStartRotation(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1
+function MainSceneSwitchController.getEffectLightStartRotation(lightMode, id)
+	local sceneId = id
+	local settingsConfig = lua_scene_settings.configDict[sceneId]
 
-	return lua_scene_settings.configDict[var_11_0].effectLightStartRotation[arg_11_0]
+	return settingsConfig.effectLightStartRotation[lightMode]
 end
 
-function var_0_0.closeReddot()
+function MainSceneSwitchController.closeReddot()
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0) then
 		RedDotRpc.instance:sendShowRedDotRequest(RedDotEnum.DotNode.MainSceneSwitch, false)
 	end
 end
 
-function var_0_0.AnySceneHasReddot()
-	for iter_13_0, iter_13_1 in ipairs(lua_scene_switch.configList) do
-		if iter_13_1.defaultUnlock ~= 1 and var_0_0.sceneHasReddot(iter_13_1.id) then
+function MainSceneSwitchController.AnySceneHasReddot()
+	for i, v in ipairs(lua_scene_switch.configList) do
+		if v.defaultUnlock ~= 1 and MainSceneSwitchController.sceneHasReddot(v.id) then
 			return true
 		end
 	end
@@ -89,14 +97,14 @@ function var_0_0.AnySceneHasReddot()
 	return false
 end
 
-function var_0_0.sceneHasReddot(arg_14_0)
+function MainSceneSwitchController.sceneHasReddot(sceneId)
 	return false
 end
 
-function var_0_0.closeSceneReddot(arg_15_0)
+function MainSceneSwitchController.closeSceneReddot(sceneId)
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+MainSceneSwitchController.instance = MainSceneSwitchController.New()
 
-return var_0_0
+return MainSceneSwitchController

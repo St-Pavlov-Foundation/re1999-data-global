@@ -1,31 +1,33 @@
-﻿module("modules.logic.dungeon.defines.DungeonMainStoryEnum", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/defines/DungeonMainStoryEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.dungeon.defines.DungeonMainStoryEnum", package.seeall)
 
-var_0_0.ChapterWidth = {
+local DungeonMainStoryEnum = _M
+
+DungeonMainStoryEnum.ChapterWidth = {
 	Special = 270,
 	Section = 410,
 	Normal = 340
 }
-var_0_0.ChapterPosY = {
+DungeonMainStoryEnum.ChapterPosY = {
 	Special = -110,
 	Section = -100,
 	Normal = -100
 }
-var_0_0.ChapterStartPosX = 80
-var_0_0.SectionSpace = 100
-var_0_0.ChapterSpace = 0
-var_0_0.TipLineWidthOffsetX = -67
-var_0_0.FlowTipOffsetX = -80
-var_0_0.FlowLineOffsetWidth = 44
-var_0_0.FlowLineMinWidth = 392
-var_0_0.AnimTime = 0.16
-var_0_0.SectionAnimTime = 0.4
-var_0_0.FirstSectionId = 1
-var_0_0.PreviewOffsetX = 20
-var_0_0.Guide = {
+DungeonMainStoryEnum.ChapterStartPosX = 80
+DungeonMainStoryEnum.SectionSpace = 100
+DungeonMainStoryEnum.ChapterSpace = 0
+DungeonMainStoryEnum.TipLineWidthOffsetX = -67
+DungeonMainStoryEnum.FlowTipOffsetX = -80
+DungeonMainStoryEnum.FlowLineOffsetWidth = 44
+DungeonMainStoryEnum.FlowLineMinWidth = 392
+DungeonMainStoryEnum.AnimTime = 0.16
+DungeonMainStoryEnum.SectionAnimTime = 0.4
+DungeonMainStoryEnum.FirstSectionId = 1
+DungeonMainStoryEnum.PreviewOffsetX = 20
+DungeonMainStoryEnum.Guide = {
 	EarlyAccess = 28006,
 	PreviouslyOn = 28005
 }
 
-return var_0_0
+return DungeonMainStoryEnum

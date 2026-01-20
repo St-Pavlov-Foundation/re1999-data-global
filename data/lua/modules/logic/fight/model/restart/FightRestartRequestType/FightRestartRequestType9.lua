@@ -1,26 +1,28 @@
-﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType9", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartRequestType/FightRestartRequestType9.lua
 
-local var_0_0 = class("FightRestartRequestType9", UserDataDispose)
+module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType9", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightRestartRequestType9 = class("FightRestartRequestType9", UserDataDispose)
 
-	arg_1_0._fight_work = arg_1_1
-	arg_1_0._fightParam = arg_1_2
-	arg_1_0._episode_config = arg_1_3
-	arg_1_0._chapter_config = arg_1_4
+function FightRestartRequestType9:ctor(fight_work, fightParam, episode_config, chapter_config)
+	self:__onInit()
+
+	self._fight_work = fight_work
+	self._fightParam = fightParam
+	self._episode_config = episode_config
+	self._chapter_config = chapter_config
 end
 
-function var_0_0.requestFight(arg_2_0)
-	arg_2_0._fight_work:onDone(true)
+function FightRestartRequestType9:requestFight()
+	self._fight_work:onDone(true)
 
-	local var_2_0 = WeekWalkModel.instance:getBattleElementId()
+	local elementId = WeekWalkModel.instance:getBattleElementId()
 
-	WeekwalkRpc.instance:sendBeforeStartWeekwalkBattleRequest(var_2_0, nil, arg_2_0._onReceiveBeforeStartWeekwalkBattleReply, arg_2_0)
+	WeekwalkRpc.instance:sendBeforeStartWeekwalkBattleRequest(elementId, nil, self._onReceiveBeforeStartWeekwalkBattleReply, self)
 end
 
-function var_0_0._onReceiveBeforeStartWeekwalkBattleReply(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_2 ~= 0 then
+function FightRestartRequestType9:_onReceiveBeforeStartWeekwalkBattleReply(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		FightGameMgr.restartMgr:restartFightFail()
 
 		return
@@ -29,8 +31,8 @@ function var_0_0._onReceiveBeforeStartWeekwalkBattleReply(arg_3_0, arg_3_1, arg_
 	DungeonFightController.instance:restartStage()
 end
 
-function var_0_0.releaseSelf(arg_4_0)
-	arg_4_0:__onDispose()
+function FightRestartRequestType9:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightRestartRequestType9

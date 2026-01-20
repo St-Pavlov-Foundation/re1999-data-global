@@ -1,17 +1,19 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0DecomposeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0DecomposeViewContainer.lua
 
-local var_0_0 = class("Season123_2_0DecomposeViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0DecomposeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_2_0DecomposeViewContainer = class("Season123_2_0DecomposeViewContainer", BaseViewContainer)
+
+function Season123_2_0DecomposeViewContainer:buildViews()
 	return {
 		CommonViewFrame.New(),
 		Season123_2_0DecomposeView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Season123_2_0DecomposeViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return Season123_2_0DecomposeViewContainer

@@ -1,152 +1,154 @@
-﻿module("modules.logic.room.utils.fsm.SimpleFSM", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/fsm/SimpleFSM.lua
 
-local var_0_0 = class("SimpleFSM")
+module("modules.logic.room.utils.fsm.SimpleFSM", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.context = arg_1_1
-	arg_1_0.states = {}
-	arg_1_0.transitions = {}
-	arg_1_0.isRunning = false
-	arg_1_0.isTransitioning = false
-	arg_1_0.curStateName = nil
+local SimpleFSM = class("SimpleFSM")
+
+function SimpleFSM:ctor(context)
+	self.context = context
+	self.states = {}
+	self.transitions = {}
+	self.isRunning = false
+	self.isTransitioning = false
+	self.curStateName = nil
 end
 
-function var_0_0.registerState(arg_2_0, arg_2_1)
-	if arg_2_1.fsm then
+function SimpleFSM:registerState(state)
+	if state.fsm then
 		return
 	end
 
-	if arg_2_0.states[arg_2_1.name] then
+	if self.states[state.name] then
 		return
 	end
 
-	arg_2_1:register(arg_2_0, arg_2_0.context)
+	state:register(self, self.context)
 
-	arg_2_0.states[arg_2_1.name] = arg_2_1
+	self.states[state.name] = state
 end
 
-function var_0_0.registerTransition(arg_3_0, arg_3_1)
-	if arg_3_1.fsm then
+function SimpleFSM:registerTransition(transition)
+	if transition.fsm then
 		return
 	end
 
-	if arg_3_0.transitions[arg_3_1.name] then
+	if self.transitions[transition.name] then
 		return
 	end
 
-	if string.nilorempty(arg_3_1.fromStateName) or string.nilorempty(arg_3_1.toStateName) or not arg_3_1.eventId then
+	if string.nilorempty(transition.fromStateName) or string.nilorempty(transition.toStateName) or not transition.eventId then
 		return
 	end
 
-	if not arg_3_0.states[arg_3_1.fromStateName] or not arg_3_0.states[arg_3_1.toStateName] then
+	if not self.states[transition.fromStateName] or not self.states[transition.toStateName] then
 		return
 	end
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.transitions) do
-		if iter_3_1.fromStateName == arg_3_1.fromStateName and iter_3_1.eventId == arg_3_1.eventId then
+	for _, one in pairs(self.transitions) do
+		if one.fromStateName == transition.fromStateName and one.eventId == transition.eventId then
 			return
 		end
 	end
 
-	arg_3_1:register(arg_3_0, arg_3_0.context)
+	transition:register(self, self.context)
 
-	arg_3_0.transitions[arg_3_1.name] = arg_3_1
+	self.transitions[transition.name] = transition
 end
 
-function var_0_0.triggerEvent(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0.isRunning or arg_4_0.isTransitioning then
+function SimpleFSM:triggerEvent(eventId, param)
+	if not self.isRunning or self.isTransitioning then
 		return
 	end
 
-	if string.nilorempty(arg_4_0.curStateName) then
+	if string.nilorempty(self.curStateName) then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.transitions) do
-		if iter_4_1.fromStateName == arg_4_0.curStateName and iter_4_1.eventId == arg_4_1 and iter_4_1:check() then
-			arg_4_0:startTransition(iter_4_1, arg_4_2)
+	for name, transition in pairs(self.transitions) do
+		if transition.fromStateName == self.curStateName and transition.eventId == eventId and transition:check() then
+			self:startTransition(transition, param)
 
 			break
 		end
 	end
 end
 
-function var_0_0.startTransition(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.isTransitioning = true
+function SimpleFSM:startTransition(transition, param)
+	self.isTransitioning = true
 
-	arg_5_0:leaveState(arg_5_0.curStateName)
-	arg_5_1:onStart(arg_5_2)
+	self:leaveState(self.curStateName)
+	transition:onStart(param)
 end
 
-function var_0_0.endTransition(arg_6_0, arg_6_1)
-	arg_6_0.isTransitioning = false
+function SimpleFSM:endTransition(toStateName)
+	self.isTransitioning = false
 
-	arg_6_0:enterState(arg_6_1)
+	self:enterState(toStateName)
 end
 
-function var_0_0.enterState(arg_7_0, arg_7_1)
-	arg_7_0.curStateName = arg_7_1
+function SimpleFSM:enterState(stateName)
+	self.curStateName = stateName
 
-	arg_7_0.states[arg_7_0.curStateName]:onEnter()
+	self.states[self.curStateName]:onEnter()
 end
 
-function var_0_0.leaveState(arg_8_0)
-	local var_8_0 = arg_8_0.curStateName
+function SimpleFSM:leaveState()
+	local previousStateName = self.curStateName
 
-	arg_8_0.curStateName = nil
+	self.curStateName = nil
 
-	arg_8_0.states[var_8_0]:onLeave()
+	self.states[previousStateName]:onLeave()
 end
 
-function var_0_0.start(arg_9_0, arg_9_1)
-	if arg_9_0.isRunning then
+function SimpleFSM:start(stateName)
+	if self.isRunning then
 		return
 	end
 
-	if string.nilorempty(arg_9_1) then
+	if string.nilorempty(stateName) then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0.states) do
-		iter_9_1:start()
+	for _, state in pairs(self.states) do
+		state:start()
 	end
 
-	for iter_9_2, iter_9_3 in pairs(arg_9_0.transitions) do
-		iter_9_3:start()
+	for _, transition in pairs(self.transitions) do
+		transition:start()
 	end
 
-	arg_9_0.isRunning = true
-	arg_9_0.isTransitioning = false
+	self.isRunning = true
+	self.isTransitioning = false
 
-	arg_9_0:enterState(arg_9_1)
+	self:enterState(stateName)
 end
 
-function var_0_0.stop(arg_10_0)
-	if not arg_10_0.isRunning then
+function SimpleFSM:stop()
+	if not self.isRunning then
 		return
 	end
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.states) do
-		iter_10_1:stop()
+	for _, state in pairs(self.states) do
+		state:stop()
 	end
 
-	for iter_10_2, iter_10_3 in pairs(arg_10_0.transitions) do
-		iter_10_3:stop()
+	for _, transition in pairs(self.transitions) do
+		transition:stop()
 	end
 
-	arg_10_0.isRunning = false
-	arg_10_0.isTransitioning = false
-	arg_10_0.curStateName = nil
+	self.isRunning = false
+	self.isTransitioning = false
+	self.curStateName = nil
 end
 
-function var_0_0.clear(arg_11_0)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.states) do
-		iter_11_1:clear()
+function SimpleFSM:clear()
+	for _, state in pairs(self.states) do
+		state:clear()
 	end
 
-	for iter_11_2, iter_11_3 in pairs(arg_11_0.transitions) do
-		iter_11_3:clear()
+	for _, transition in pairs(self.transitions) do
+		transition:clear()
 	end
 end
 
-return var_0_0
+return SimpleFSM

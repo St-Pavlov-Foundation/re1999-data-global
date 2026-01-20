@@ -1,192 +1,211 @@
-﻿module("modules.logic.room.controller.RoomWaterReformController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomWaterReformController.lua
 
-local var_0_0 = class("RoomWaterReformController", BaseController)
+module("modules.logic.room.controller.RoomWaterReformController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomWaterReformController = class("RoomWaterReformController", BaseController)
+
+function RoomWaterReformController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomWaterReformController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
+function RoomWaterReformController:clear()
 	return
 end
 
-function var_0_0.getBlockReformPermanentInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	RoomRpc.instance:sendGetBlockPermanentInfoRequest(arg_4_1, arg_4_2, arg_4_3)
+function RoomWaterReformController:getBlockReformPermanentInfo(blockIds, cb, cbObj)
+	RoomRpc.instance:sendGetBlockPermanentInfoRequest(blockIds, cb, cbObj)
 end
 
-function var_0_0.onGetBlockReformPermanentInfo(arg_5_0, arg_5_1)
-	RoomWaterReformModel.instance:setBlockPermanentInfo(arg_5_1)
-	arg_5_0:dispatchEvent(RoomEvent.OnGetBlockReformPermanentInfo)
+function RoomWaterReformController:onGetBlockReformPermanentInfo(infos)
+	RoomWaterReformModel.instance:setBlockPermanentInfo(infos)
+	self:dispatchEvent(RoomEvent.OnGetBlockReformPermanentInfo)
 end
 
-function var_0_0.onClickBlock(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_1 or not arg_6_2 then
+function RoomWaterReformController:onClickBlock(blockMO, hexPoint)
+	if not blockMO or not hexPoint then
 		return
 	end
 
-	if RoomConfig.instance:getInitBlock(arg_6_1.blockId) then
+	if RoomConfig.instance:getInitBlock(blockMO.blockId) then
 		return
 	end
 
-	local var_6_0 = arg_6_1:isInMapBlock()
+	local isInMapBlock = blockMO:isInMapBlock()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
 
-	if not RoomWaterReformModel.instance:isWaterReform() or not var_6_0 then
+	if not isWaterReform or not isInMapBlock then
 		return
 	end
 
-	if arg_6_1:hasRiver() then
-		arg_6_0:changeReformMode(RoomEnum.ReformMode.Water)
-		arg_6_0:selectWater(arg_6_1, arg_6_2)
+	local hasRiver = blockMO:hasRiver()
+
+	if hasRiver then
+		self:changeReformMode(RoomEnum.ReformMode.Water)
+		self:selectWater(blockMO, hexPoint)
 	else
-		arg_6_0:changeReformMode(RoomEnum.ReformMode.Block)
-		arg_6_0:selectBlock(arg_6_1, arg_6_2)
+		self:changeReformMode(RoomEnum.ReformMode.Block)
+		self:selectBlock(blockMO, hexPoint)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function var_0_0.changeReformMode(arg_7_0, arg_7_1)
-	if arg_7_1 == RoomWaterReformModel.instance:getReformMode() then
+function RoomWaterReformController:changeReformMode(newReformMode)
+	local curReformMode = RoomWaterReformModel.instance:getReformMode()
+
+	if newReformMode == curReformMode then
 		return
 	end
 
-	RoomWaterReformModel.instance:setReformMode(arg_7_1)
+	RoomWaterReformModel.instance:setReformMode(newReformMode)
 
-	if arg_7_1 ~= RoomEnum.ReformMode.Water then
-		arg_7_0:clearSelectWater()
+	if newReformMode ~= RoomEnum.ReformMode.Water then
+		self:clearSelectWater()
 	end
 
-	if arg_7_1 ~= RoomEnum.ReformMode.Block then
-		arg_7_0:clearSelectBlock()
+	if newReformMode ~= RoomEnum.ReformMode.Block then
+		self:clearSelectBlock()
 	end
 
 	RoomWaterReformListModel.instance:setShowBlockList()
-	arg_7_0:dispatchEvent(RoomEvent.OnChangReformMode)
+	self:dispatchEvent(RoomEvent.OnChangReformMode)
 end
 
-function var_0_0.saveReform(arg_8_0)
-	if RoomWaterReformModel.instance:hasChangedBlockColor() then
-		local var_8_0 = {}
-		local var_8_1 = RoomWaterReformModel.instance:getRecordChangeBlockColor()
+function RoomWaterReformController:saveReform()
+	local hasChangeBlockColor = RoomWaterReformModel.instance:hasChangedBlockColor()
 
-		for iter_8_0, iter_8_1 in pairs(var_8_1) do
-			if not var_8_0[iter_8_1] then
-				if not RoomWaterReformModel.instance:isUnlockBlockColor(iter_8_1) then
-					GameFacade.showMessageBox(MessageBoxIdDefine.UsedLockedWaterReform, MsgBoxEnum.BoxType.Yes_No, arg_8_0._resetAndExitReform, nil, nil, arg_8_0)
+	if hasChangeBlockColor then
+		local verifyColorDict = {}
+		local recordChangeBlockColor = RoomWaterReformModel.instance:getRecordChangeBlockColor()
+
+		for _, blockColor in pairs(recordChangeBlockColor) do
+			if not verifyColorDict[blockColor] then
+				local isUnlock = RoomWaterReformModel.instance:isUnlockBlockColor(blockColor)
+
+				if not isUnlock then
+					GameFacade.showMessageBox(MessageBoxIdDefine.UsedLockedWaterReform, MsgBoxEnum.BoxType.Yes_No, self._resetAndExitReform, nil, nil, self)
 
 					return
 				end
 
-				var_8_0[iter_8_1] = true
+				verifyColorDict[blockColor] = true
 			end
 		end
 
-		local var_8_2 = UnlockVoucherConfig.instance:getRoomColorConst(UnlockVoucherEnum.ConstId.RoomBlockColorReformCostItem, "#", true)
-		local var_8_3 = ItemModel.instance:getItemQuantity(var_8_2[1], var_8_2[2])
-		local var_8_4 = RoomWaterReformModel.instance:getChangedBlockColorCount(nil, RoomWaterReformModel.InitBlockColor)
+		local costItem = UnlockVoucherConfig.instance:getRoomColorConst(UnlockVoucherEnum.ConstId.RoomBlockColorReformCostItem, "#", true)
+		local hasQuantity = ItemModel.instance:getItemQuantity(costItem[1], costItem[2])
+		local changeCount = RoomWaterReformModel.instance:getChangedBlockColorCount(nil, RoomWaterReformModel.InitBlockColor)
 
-		if var_8_4 <= var_8_3 then
-			local var_8_5 = var_8_4 > 0 and MessageBoxIdDefine.ConfirmChangeBlockColorCost or MessageBoxIdDefine.ConfirmChangeBlockColor
+		if changeCount <= hasQuantity then
+			local msg = changeCount > 0 and MessageBoxIdDefine.ConfirmChangeBlockColorCost or MessageBoxIdDefine.ConfirmChangeBlockColor
 
-			GameFacade.showMessageBox(var_8_5, MsgBoxEnum.BoxType.Yes_No, arg_8_0._confirmBlockColorReform, nil, nil, arg_8_0, nil, nil, var_8_4)
+			GameFacade.showMessageBox(msg, MsgBoxEnum.BoxType.Yes_No, self._confirmBlockColorReform, nil, nil, self, nil, nil, changeCount)
 
 			return
 		else
-			GameFacade.showMessageBox(MessageBoxIdDefine.ChangeBlockColorCostItemNotEnough, MsgBoxEnum.BoxType.Yes_No, arg_8_0._resetAndExitReform, nil, nil, arg_8_0)
+			GameFacade.showMessageBox(MessageBoxIdDefine.ChangeBlockColorCostItemNotEnough, MsgBoxEnum.BoxType.Yes_No, self._resetAndExitReform, nil, nil, self)
 
 			return
 		end
 	else
-		arg_8_0:_saveWaterReform()
+		self:_saveWaterReform()
 	end
 end
 
-function var_0_0._confirmBlockColorReform(arg_9_0)
-	local var_9_0 = RoomWaterReformModel.instance:getRecordChangeBlockColor()
+function RoomWaterReformController:_confirmBlockColorReform()
+	local recordChangeBlockColor = RoomWaterReformModel.instance:getRecordChangeBlockColor()
 
-	RoomRpc.instance:sendSetBlockColorRequest(var_9_0)
-	arg_9_0:_saveWaterReform()
+	RoomRpc.instance:sendSetBlockColorRequest(recordChangeBlockColor)
+	self:_saveWaterReform()
 end
 
-function var_0_0._saveWaterReform(arg_10_0)
-	if RoomWaterReformModel.instance:hasChangedWaterType() then
-		local var_10_0 = {}
-		local var_10_1 = RoomWaterReformModel.instance:getRecordChangeWaterType()
+function RoomWaterReformController:_saveWaterReform()
+	local hasChangeWaterType = RoomWaterReformModel.instance:hasChangedWaterType()
 
-		for iter_10_0, iter_10_1 in pairs(var_10_1) do
-			if not var_10_0[iter_10_1] then
-				if not RoomWaterReformModel.instance:isUnlockWaterReform(iter_10_1) then
-					GameFacade.showMessageBox(MessageBoxIdDefine.UsedLockedWaterReform, MsgBoxEnum.BoxType.Yes_No, arg_10_0._resetAndExitReform, nil, nil, arg_10_0)
+	if hasChangeWaterType then
+		local verifyTypeDict = {}
+		local recordChangeWaterType = RoomWaterReformModel.instance:getRecordChangeWaterType()
+
+		for _, waterType in pairs(recordChangeWaterType) do
+			if not verifyTypeDict[waterType] then
+				local isUnlock = RoomWaterReformModel.instance:isUnlockWaterReform(waterType)
+
+				if not isUnlock then
+					GameFacade.showMessageBox(MessageBoxIdDefine.UsedLockedWaterReform, MsgBoxEnum.BoxType.Yes_No, self._resetAndExitReform, nil, nil, self)
 
 					return
 				end
 
-				var_10_0[iter_10_1] = true
+				verifyTypeDict[waterType] = true
 			end
 		end
 
-		RoomRpc.instance:sendSetWaterTypeRequest(var_10_1)
+		RoomRpc.instance:sendSetWaterTypeRequest(recordChangeWaterType)
 	end
 
 	RoomMapController.instance:switchWaterReform(false)
 end
 
-function var_0_0._resetAndExitReform(arg_11_0)
-	arg_11_0:resetReform()
+function RoomWaterReformController:_resetAndExitReform()
+	self:resetReform()
 	RoomMapController.instance:switchWaterReform(false)
 end
 
-function var_0_0.resetReform(arg_12_0)
-	if not RoomWaterReformModel.instance:isWaterReform() then
+function RoomWaterReformController:resetReform()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+
+	if not isWaterReform then
 		return
 	end
 
 	RoomWaterReformModel.instance:resetChangeWaterType()
 
-	local var_12_0 = arg_12_0:getAllWaterBlockEntityList()
+	local allWaterBlockEntityList = self:getAllWaterBlockEntityList()
 
-	RoomBlockHelper.refreshBlockEntity(var_12_0, "refreshBlock")
+	RoomBlockHelper.refreshBlockEntity(allWaterBlockEntityList, "refreshBlock")
 	RoomWaterReformModel.instance:resetChangeBlockColor()
 
-	local var_12_1, var_12_2 = arg_12_0:getAllBlockEntityListWithoutRiver()
+	local allBlockEntityList, selectBlockDict = self:getAllBlockEntityListWithoutRiver()
 
-	RoomBlockHelper.refreshBlockEntity(var_12_1, "refreshBlock")
-	arg_12_0:refreshSelectedNearBlock(var_12_1, var_12_2)
+	RoomBlockHelper.refreshBlockEntity(allBlockEntityList, "refreshBlock")
+	self:refreshSelectedNearBlock(allBlockEntityList, selectBlockDict)
 
-	local var_12_3 = RoomWaterReformModel.instance:getReformMode()
+	local curReformMode = RoomWaterReformModel.instance:getReformMode()
 
-	if var_12_3 == RoomEnum.ReformMode.Water then
-		local var_12_4 = RoomWaterReformListModel.instance:getDefaultSelectWaterType()
+	if curReformMode == RoomEnum.ReformMode.Water then
+		local defaultSelectWaterType = RoomWaterReformListModel.instance:getDefaultSelectWaterType()
 
-		RoomWaterReformListModel.instance:setSelectWaterType(var_12_4)
-	elseif var_12_3 == RoomEnum.ReformMode.Block then
-		local var_12_5 = RoomWaterReformListModel.instance:getDefaultSelectBlockColor()
+		RoomWaterReformListModel.instance:setSelectWaterType(defaultSelectWaterType)
+	elseif curReformMode == RoomEnum.ReformMode.Block then
+		local defaultBlockColor = RoomWaterReformListModel.instance:getDefaultSelectBlockColor()
 
-		RoomWaterReformListModel.instance:setSelectBlockColor(var_12_5)
+		RoomWaterReformListModel.instance:setSelectBlockColor(defaultBlockColor)
 	end
 
-	arg_12_0:dispatchEvent(RoomEvent.OnRoomBlockReform)
+	self:dispatchEvent(RoomEvent.OnRoomBlockReform)
 end
 
-function var_0_0.refreshHighlightWaterBlock(arg_13_0)
+function RoomWaterReformController:refreshHighlightWaterBlock()
 	RoomResourceModel.instance:clearLightResourcePoint()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ResourceLight)
 end
 
-function var_0_0.selectWater(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_1 or not arg_14_2 then
+function RoomWaterReformController:selectWater(blockMO, hexPoint)
+	if not blockMO or not hexPoint then
 		return
 	end
 
-	local var_14_0
+	local waterDirection
 
-	for iter_14_0 = 0, 6 do
-		if arg_14_1:getResourceId(iter_14_0) == RoomResourceEnum.ResourceId.River then
-			var_14_0 = iter_14_0
+	for direction = 0, 6 do
+		local resourceId = blockMO:getResourceId(direction)
+
+		if resourceId == RoomResourceEnum.ResourceId.River then
+			waterDirection = direction
 
 			break
 		end
@@ -194,339 +213,365 @@ function var_0_0.selectWater(arg_14_0, arg_14_1, arg_14_2)
 
 	RoomResourceModel.instance:clearLightResourcePoint()
 
-	local var_14_1 = RoomWaterReformModel.instance:getWaterAreaId(arg_14_2.x, arg_14_2.y, var_14_0)
+	local newAreaId = RoomWaterReformModel.instance:getWaterAreaId(hexPoint.x, hexPoint.y, waterDirection)
+	local selectAreaId = RoomWaterReformModel.instance:getSelectAreaId()
 
-	if var_14_1 ~= RoomWaterReformModel.instance:getSelectAreaId() then
-		local var_14_2 = arg_14_0:getSelectWaterBlockEntityList()
+	if newAreaId ~= selectAreaId then
+		local oldWaterBlockEntityList = self:getSelectWaterBlockEntityList()
 
-		RoomWaterReformModel.instance:setSelectWaterArea(var_14_1)
-		RoomBlockHelper.refreshBlockEntity(var_14_2, "refreshBlock")
-		arg_14_0:refreshSelectWaterBlockEntity()
-		arg_14_0:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
+		RoomWaterReformModel.instance:setSelectWaterArea(newAreaId)
+		RoomBlockHelper.refreshBlockEntity(oldWaterBlockEntityList, "refreshBlock")
+		self:refreshSelectWaterBlockEntity()
+		self:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
 	else
-		arg_14_0:clearSelectWater()
+		self:clearSelectWater()
 	end
 end
 
-function var_0_0.clearSelectWater(arg_15_0)
-	local var_15_0 = arg_15_0:getSelectWaterBlockEntityList()
+function RoomWaterReformController:clearSelectWater()
+	local oldWaterBlockEntityList = self:getSelectWaterBlockEntityList()
 
 	RoomWaterReformModel.instance:setSelectWaterArea()
-	RoomBlockHelper.refreshBlockEntity(var_15_0, "refreshBlock")
-	arg_15_0:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
+	RoomBlockHelper.refreshBlockEntity(oldWaterBlockEntityList, "refreshBlock")
+	self:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
 end
 
-function var_0_0.selectWaterType(arg_16_0, arg_16_1)
-	if not RoomConfig.instance:getWaterReformTypeBlockId(arg_16_1) then
+function RoomWaterReformController:selectWaterType(waterType)
+	local blockId = RoomConfig.instance:getWaterReformTypeBlockId(waterType)
+
+	if not blockId then
 		return
 	end
 
-	local var_16_0 = arg_16_0:getSelectWaterBlockEntityList()
+	local selectWaterBlockEntityList = self:getSelectWaterBlockEntityList()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_1 = iter_16_1:getMO()
+	for _, blockEntity in ipairs(selectWaterBlockEntityList) do
+		local blockMO = blockEntity:getMO()
 
-		if var_16_1 then
-			if arg_16_1 ~= var_16_1:getTempWaterType() then
-				var_16_1:setTempWaterType(arg_16_1)
-				RoomWaterReformModel.instance:recordChangeWaterType(var_16_1.id, arg_16_1)
+		if blockMO then
+			local tempWaterType = blockMO:getTempWaterType()
+
+			if waterType ~= tempWaterType then
+				blockMO:setTempWaterType(waterType)
+				RoomWaterReformModel.instance:recordChangeWaterType(blockMO.id, waterType)
 			end
 
-			if (iter_16_1:isHasWaterGradient() and var_16_1:getWaterType() or var_16_1:getOriginalWaterType()) == arg_16_1 then
-				RoomWaterReformModel.instance:clearChangeWaterRecord(var_16_1.id)
+			local hasWaterGradient = blockEntity:isHasWaterGradient()
+			local checkWaterType = hasWaterGradient and blockMO:getWaterType() or blockMO:getOriginalWaterType()
+
+			if checkWaterType == waterType then
+				RoomWaterReformModel.instance:clearChangeWaterRecord(blockMO.id)
 			end
 		end
 	end
 
-	RoomWaterReformListModel.instance:setSelectWaterType(arg_16_1)
-	arg_16_0:refreshSelectWaterBlockEntity()
-	arg_16_0:dispatchEvent(RoomEvent.OnRoomBlockReform)
+	RoomWaterReformListModel.instance:setSelectWaterType(waterType)
+	self:refreshSelectWaterBlockEntity()
+	self:dispatchEvent(RoomEvent.OnRoomBlockReform)
 end
 
-function var_0_0.refreshSelectWaterBlockEntity(arg_17_0)
-	if not RoomWaterReformModel.instance:isWaterReform() then
+function RoomWaterReformController:refreshSelectWaterBlockEntity()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+
+	if not isWaterReform then
 		return
 	end
 
-	local var_17_0 = arg_17_0:getSelectWaterBlockEntityList()
+	local selectWaterBlockEntityList = self:getSelectWaterBlockEntityList()
 
-	RoomBlockHelper.refreshBlockEntity(var_17_0, "refreshBlock")
+	RoomBlockHelper.refreshBlockEntity(selectWaterBlockEntityList, "refreshBlock")
 end
 
-function var_0_0.getSelectWaterBlockEntityList(arg_18_0)
-	local var_18_0 = {}
+function RoomWaterReformController:getSelectWaterBlockEntityList()
+	local result = {}
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
-		return var_18_0
+	if curSceneType ~= SceneType.Room then
+		return result
 	end
 
-	if not RoomWaterReformModel.instance:hasSelectWaterArea() then
-		return var_18_0
+	local hasSelect = RoomWaterReformModel.instance:hasSelectWaterArea()
+
+	if not hasSelect then
+		return result
 	end
 
-	local var_18_1 = GameSceneMgr.instance:getCurScene()
-	local var_18_2 = RoomWaterReformModel.instance:getSelectWaterResourcePointList()
+	local scene = GameSceneMgr.instance:getCurScene()
+	local resourcePointList = RoomWaterReformModel.instance:getSelectWaterResourcePointList()
 
-	if not var_18_2 or not var_18_1 then
-		return var_18_0
+	if not resourcePointList or not scene then
+		return result
 	end
 
-	local var_18_3 = {}
+	local hasFindDict = {}
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_2) do
-		local var_18_4 = iter_18_1.x
-		local var_18_5 = iter_18_1.y
+	for _, resPoint in ipairs(resourcePointList) do
+		local x = resPoint.x
+		local y = resPoint.y
 
-		if not var_18_3[var_18_4] or not var_18_3[var_18_4][var_18_5] then
-			var_18_3[var_18_4] = var_18_3[var_18_4] or {}
-			var_18_3[var_18_4][var_18_5] = true
+		if not hasFindDict[x] or not hasFindDict[x][y] then
+			hasFindDict[x] = hasFindDict[x] or {}
+			hasFindDict[x][y] = true
 
-			local var_18_6 = RoomMapBlockModel.instance:getBlockMO(var_18_4, var_18_5)
-			local var_18_7 = var_18_6 and var_18_1.mapmgr:getBlockEntity(var_18_6.id, SceneTag.RoomMapBlock)
+			local blockMO = RoomMapBlockModel.instance:getBlockMO(x, y)
+			local blockEntity = blockMO and scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-			var_18_0[#var_18_0 + 1] = var_18_7
+			result[#result + 1] = blockEntity
 		end
 	end
 
-	return var_18_0
+	return result
 end
 
-function var_0_0.getAllWaterBlockEntityList(arg_19_0)
-	local var_19_0 = {}
+function RoomWaterReformController:getAllWaterBlockEntityList()
+	local result = {}
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Room then
-		return var_19_0
+	if curSceneType ~= SceneType.Room then
+		return result
 	end
 
-	local var_19_1 = GameSceneMgr.instance:getCurScene()
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if not var_19_1 then
-		return var_19_0
+	if not scene then
+		return result
 	end
 
-	local var_19_2 = {}
-	local var_19_3 = RoomWaterReformModel.instance:getWaterAreaList()
+	local hasFindDict = {}
+	local areaList = RoomWaterReformModel.instance:getWaterAreaList()
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_3) do
-		for iter_19_2, iter_19_3 in ipairs(iter_19_1) do
-			local var_19_4 = iter_19_3.x
-			local var_19_5 = iter_19_3.y
+	for _, resourcePointList in ipairs(areaList) do
+		for _, resPoint in ipairs(resourcePointList) do
+			local x = resPoint.x
+			local y = resPoint.y
 
-			if not var_19_2[var_19_4] or not var_19_2[var_19_4][var_19_5] then
-				var_19_2[var_19_4] = var_19_2[var_19_4] or {}
-				var_19_2[var_19_4][var_19_5] = true
+			if not hasFindDict[x] or not hasFindDict[x][y] then
+				hasFindDict[x] = hasFindDict[x] or {}
+				hasFindDict[x][y] = true
 
-				local var_19_6 = RoomMapBlockModel.instance:getBlockMO(var_19_4, var_19_5)
-				local var_19_7 = var_19_6 and var_19_1.mapmgr:getBlockEntity(var_19_6.id, SceneTag.RoomMapBlock)
+				local blockMO = RoomMapBlockModel.instance:getBlockMO(x, y)
+				local blockEntity = blockMO and scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-				var_19_0[#var_19_0 + 1] = var_19_7
+				result[#result + 1] = blockEntity
 			end
 		end
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.selectBlock(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = RoomWaterReformModel.instance:getBlockColorReformSelectMode()
+function RoomWaterReformController:selectBlock(blockMO, hexPoint)
+	local selectMode = RoomWaterReformModel.instance:getBlockColorReformSelectMode()
+	local isSelected = RoomWaterReformModel.instance:isBlockInSelect(blockMO)
 
-	if not RoomWaterReformModel.instance:isBlockInSelect(arg_20_1) then
-		if var_20_0 == RoomEnum.BlockColorReformSelectMode.All then
-			local var_20_1 = RoomMapBlockModel.instance:getFullBlockMOList()
+	if not isSelected then
+		if selectMode == RoomEnum.BlockColorReformSelectMode.All then
+			local blockMOList = RoomMapBlockModel.instance:getFullBlockMOList()
 
-			for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-				local var_20_2 = iter_20_1.blockId
-				local var_20_3 = iter_20_1:hasRiver()
-				local var_20_4 = RoomConfig.instance:getInitBlock(var_20_2)
+			for _, tempBlockMO in ipairs(blockMOList) do
+				local tmpBlockId = tempBlockMO.blockId
+				local hasRiver = tempBlockMO:hasRiver()
+				local isInitBlock = RoomConfig.instance:getInitBlock(tmpBlockId)
 
-				if not var_20_3 and not var_20_4 then
-					RoomWaterReformModel.instance:setBlockSelected(var_20_2, true)
+				if not hasRiver and not isInitBlock then
+					RoomWaterReformModel.instance:setBlockSelected(tmpBlockId, true)
 				end
 			end
-		elseif var_20_0 == RoomEnum.BlockColorReformSelectMode.Multiple then
-			local var_20_5 = {}
-			local var_20_6 = {
-				arg_20_1.blockId
+		elseif selectMode == RoomEnum.BlockColorReformSelectMode.Multiple then
+			local repeatDict = {}
+			local selectBlockList = {
+				blockMO.blockId
 			}
 
-			RoomBlockHelper.getNearSameBlockTypeEntity(arg_20_1, var_20_5, var_20_6)
+			RoomBlockHelper.getNearSameBlockTypeEntity(blockMO, repeatDict, selectBlockList)
 
-			local var_20_7 = arg_20_0:getSelectBlockEntityList()
+			local oldBlockEntityList = self:getSelectBlockEntityList()
 
-			RoomWaterReformModel.instance:setBlockSelectedByList(var_20_6, true, true)
-			RoomBlockHelper.refreshBlockEntity(var_20_7, "refreshBlock")
+			RoomWaterReformModel.instance:setBlockSelectedByList(selectBlockList, true, true)
+			RoomBlockHelper.refreshBlockEntity(oldBlockEntityList, "refreshBlock")
 		else
-			RoomWaterReformModel.instance:setBlockSelected(arg_20_1.blockId, true)
+			RoomWaterReformModel.instance:setBlockSelected(blockMO.blockId, true)
 		end
 
-		arg_20_0:refreshSelectedBlockEntity()
-		arg_20_0:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
-	elseif var_20_0 == RoomEnum.BlockColorReformSelectMode.Single then
-		arg_20_0:clearSelectBlock(arg_20_1)
+		self:refreshSelectedBlockEntity()
+		self:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
+	elseif selectMode == RoomEnum.BlockColorReformSelectMode.Single then
+		self:clearSelectBlock(blockMO)
 	else
-		arg_20_0:clearSelectBlock()
+		self:clearSelectBlock()
 	end
 end
 
-function var_0_0.clearSelectBlock(arg_21_0, arg_21_1)
-	local var_21_0 = {}
+function RoomWaterReformController:clearSelectBlock(blockMO)
+	local oldBlockEntityList = {}
 
-	if arg_21_1 then
-		local var_21_1 = arg_21_1.blockId
+	if blockMO then
+		local blockId = blockMO.blockId
 
-		var_21_0 = arg_21_0:getSelectBlockEntityList(var_21_1)
+		oldBlockEntityList = self:getSelectBlockEntityList(blockId)
 
-		RoomWaterReformModel.instance:setBlockSelected(var_21_1, false)
+		RoomWaterReformModel.instance:setBlockSelected(blockId, false)
 	else
-		var_21_0 = arg_21_0:getSelectBlockEntityList()
+		oldBlockEntityList = self:getSelectBlockEntityList()
 
 		RoomWaterReformModel.instance:setBlockSelectedByList(nil, false, true)
 	end
 
-	RoomBlockHelper.refreshBlockEntity(var_21_0, "refreshBlock")
-	arg_21_0:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
+	RoomBlockHelper.refreshBlockEntity(oldBlockEntityList, "refreshBlock")
+	self:dispatchEvent(RoomEvent.OnReformChangeSelectedEntity)
 end
 
-function var_0_0.selectBlockColorType(arg_22_0, arg_22_1)
-	if arg_22_1 ~= RoomWaterReformModel.InitBlockColor and not RoomConfig.instance:getBlockColorReformBlockId(arg_22_1) then
-		return
-	end
+function RoomWaterReformController:selectBlockColorType(blockColorType)
+	if blockColorType ~= RoomWaterReformModel.InitBlockColor then
+		local blockId = RoomConfig.instance:getBlockColorReformBlockId(blockColorType)
 
-	local var_22_0 = {}
-	local var_22_1 = arg_22_0:getSelectBlockEntityList()
-
-	for iter_22_0, iter_22_1 in ipairs(var_22_1) do
-		local var_22_2 = iter_22_1:getMO()
-
-		if var_22_2 then
-			if arg_22_1 ~= var_22_2:getTempBlockColorType() then
-				var_22_2:setTempBlockColorType(arg_22_1)
-				RoomWaterReformModel.instance:recordChangeBlockColor(var_22_2.id, arg_22_1)
-			end
-
-			if var_22_2:getOriginalBlockType() == arg_22_1 then
-				RoomWaterReformModel.instance:clearChangeBlockColorRecord(var_22_2.id)
-			end
-
-			local var_22_3 = var_22_2.hexPoint
-
-			var_22_0[#var_22_0 + 1] = var_22_3
+		if not blockId then
+			return
 		end
 	end
 
-	RoomMapBlockModel.instance:refreshNearRiverByHexPointList(var_22_0, 1)
-	RoomWaterReformListModel.instance:setSelectBlockColor(arg_22_1)
-	arg_22_0:refreshSelectedBlockEntity()
-	arg_22_0:dispatchEvent(RoomEvent.OnRoomBlockReform)
+	local hexPointList = {}
+	local selectBlockEntityList = self:getSelectBlockEntityList()
+
+	for _, blockEntity in ipairs(selectBlockEntityList) do
+		local blockMO = blockEntity:getMO()
+
+		if blockMO then
+			local tempColorType = blockMO:getTempBlockColorType()
+
+			if blockColorType ~= tempColorType then
+				blockMO:setTempBlockColorType(blockColorType)
+				RoomWaterReformModel.instance:recordChangeBlockColor(blockMO.id, blockColorType)
+			end
+
+			local checkBlockType = blockMO:getOriginalBlockType()
+
+			if checkBlockType == blockColorType then
+				RoomWaterReformModel.instance:clearChangeBlockColorRecord(blockMO.id)
+			end
+
+			local hexPoint = blockMO.hexPoint
+
+			hexPointList[#hexPointList + 1] = hexPoint
+		end
+	end
+
+	RoomMapBlockModel.instance:refreshNearRiverByHexPointList(hexPointList, 1)
+	RoomWaterReformListModel.instance:setSelectBlockColor(blockColorType)
+	self:refreshSelectedBlockEntity()
+	self:dispatchEvent(RoomEvent.OnRoomBlockReform)
 end
 
-function var_0_0.refreshSelectedBlockEntity(arg_23_0)
-	if not RoomWaterReformModel.instance:isWaterReform() then
+function RoomWaterReformController:refreshSelectedBlockEntity()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+
+	if not isWaterReform then
 		return
 	end
 
-	local var_23_0, var_23_1 = arg_23_0:getSelectBlockEntityList()
+	local selectBlockEntityList, selectBlockDict = self:getSelectBlockEntityList()
 
-	RoomBlockHelper.refreshBlockEntity(var_23_0, "refreshBlock")
-	arg_23_0:refreshSelectedNearBlock(var_23_0, var_23_1)
+	RoomBlockHelper.refreshBlockEntity(selectBlockEntityList, "refreshBlock")
+	self:refreshSelectedNearBlock(selectBlockEntityList, selectBlockDict)
 end
 
-function var_0_0.refreshSelectedNearBlock(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = {}
+function RoomWaterReformController:refreshSelectedNearBlock(selectBlockEntityList, selectBlockDict)
+	local nearBlockEntityDict = {}
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_1) do
-		local var_24_1 = iter_24_1:getMO()
+	for _, blockEntity in ipairs(selectBlockEntityList) do
+		local blockMO = blockEntity:getMO()
 
-		if var_24_1 then
-			local var_24_2 = RoomBlockHelper.getNearBlockEntity(false, var_24_1.hexPoint, 1, true, false)
+		if blockMO then
+			local nearMapEntityList = RoomBlockHelper.getNearBlockEntity(false, blockMO.hexPoint, 1, true, false)
 
-			for iter_24_2, iter_24_3 in ipairs(var_24_2) do
-				local var_24_3 = iter_24_3:getMO()
-				local var_24_4 = var_24_3.blockId
+			for _, nearBlockEntity in ipairs(nearMapEntityList) do
+				local nearBlockMO = nearBlockEntity:getMO()
+				local nearBlockId = nearBlockMO.blockId
 
-				if var_24_3 and not arg_24_2[var_24_4] and not var_24_0[var_24_4] then
-					var_24_0[var_24_4] = iter_24_3
+				if nearBlockMO and not selectBlockDict[nearBlockId] and not nearBlockEntityDict[nearBlockId] then
+					nearBlockEntityDict[nearBlockId] = nearBlockEntity
 				end
 			end
 		end
 	end
 
-	local var_24_5 = {}
+	local nearBlockEntityList = {}
 
-	for iter_24_4, iter_24_5 in pairs(var_24_0) do
-		var_24_5[#var_24_5 + 1] = iter_24_5
+	for _, nearBlockEntity in pairs(nearBlockEntityDict) do
+		nearBlockEntityList[#nearBlockEntityList + 1] = nearBlockEntity
 	end
 
-	RoomBlockHelper.refreshBlockEntity(var_24_5, "refreshLand")
+	RoomBlockHelper.refreshBlockEntity(nearBlockEntityList, "refreshLand")
 end
 
-function var_0_0.getSelectBlockEntityList(arg_25_0, arg_25_1)
-	local var_25_0 = {}
-	local var_25_1 = {}
-	local var_25_2 = GameSceneMgr.instance:getCurSceneType()
-	local var_25_3 = GameSceneMgr.instance:getCurScene()
+function RoomWaterReformController:getSelectBlockEntityList(blockId)
+	local list = {}
+	local dict = {}
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if var_25_2 ~= SceneType.Room or not var_25_3 then
-		return var_25_0, var_25_1
+	if curSceneType ~= SceneType.Room or not scene then
+		return list, dict
 	end
 
-	if arg_25_1 then
-		local var_25_4 = var_25_3.mapmgr:getBlockEntity(arg_25_1, SceneTag.RoomMapBlock)
+	if blockId then
+		local blockEntity = scene.mapmgr:getBlockEntity(blockId, SceneTag.RoomMapBlock)
 
-		var_25_0[#var_25_0 + 1] = var_25_4
-		var_25_1[arg_25_1] = true
+		list[#list + 1] = blockEntity
+		dict[blockId] = true
 	else
-		local var_25_5 = RoomWaterReformModel.instance:getSelectedBlocks()
+		local selectedBlocks = RoomWaterReformModel.instance:getSelectedBlocks()
 
-		if var_25_5 then
-			for iter_25_0, iter_25_1 in pairs(var_25_5) do
-				local var_25_6 = var_25_3.mapmgr:getBlockEntity(iter_25_0, SceneTag.RoomMapBlock)
+		if selectedBlocks then
+			for selectedBlockId, _ in pairs(selectedBlocks) do
+				local blockEntity = scene.mapmgr:getBlockEntity(selectedBlockId, SceneTag.RoomMapBlock)
 
-				var_25_0[#var_25_0 + 1] = var_25_6
-				var_25_1[iter_25_0] = true
+				list[#list + 1] = blockEntity
+				dict[selectedBlockId] = true
 			end
 		end
 	end
 
-	return var_25_0, var_25_1
+	return list, dict
 end
 
-function var_0_0.getAllBlockEntityListWithoutRiver(arg_26_0)
-	local var_26_0 = {}
-	local var_26_1 = {}
-	local var_26_2 = GameSceneMgr.instance:getCurScene()
-	local var_26_3 = GameSceneMgr.instance:getCurSceneType()
+function RoomWaterReformController:getAllBlockEntityListWithoutRiver()
+	local list = {}
+	local dict = {}
+	local scene = GameSceneMgr.instance:getCurScene()
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if not var_26_2 or var_26_3 ~= SceneType.Room then
-		return var_26_0, var_26_1
+	if not scene or curSceneType ~= SceneType.Room then
+		return list, dict
 	end
 
-	local var_26_4 = var_26_2.mapmgr:getMapBlockEntityDict()
+	local blockEntityDict = scene.mapmgr:getMapBlockEntityDict()
 
-	if var_26_4 then
-		for iter_26_0, iter_26_1 in pairs(var_26_4) do
-			local var_26_5 = iter_26_1:getMO()
+	if blockEntityDict then
+		for _, blockEntity in pairs(blockEntityDict) do
+			local blockMO = blockEntity:getMO()
+			local hasRiver = blockMO:hasRiver()
 
-			if not var_26_5:hasRiver() then
-				var_26_0[#var_26_0 + 1] = iter_26_1
-				var_26_1[var_26_5.blockId] = true
+			if not hasRiver then
+				list[#list + 1] = blockEntity
+				dict[blockMO.blockId] = true
 			end
 		end
 	end
 
-	return var_26_0, var_26_1
+	return list, dict
 end
 
-function var_0_0.changeBlockSelectMode(arg_27_0, arg_27_1)
-	local var_27_0 = RoomWaterReformModel.instance:getBlockColorReformSelectMode()
+function RoomWaterReformController:changeBlockSelectMode(selectMode)
+	local curSelectMode = RoomWaterReformModel.instance:getBlockColorReformSelectMode()
 
-	if not arg_27_1 or var_27_0 == arg_27_1 then
+	if not selectMode or curSelectMode == selectMode then
 		return
 	end
 
-	RoomWaterReformModel.instance:setBlockColorReformSelectMode(arg_27_1)
+	RoomWaterReformModel.instance:setBlockColorReformSelectMode(selectMode)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomWaterReformController.instance = RoomWaterReformController.New()
 
-return var_0_0
+return RoomWaterReformController

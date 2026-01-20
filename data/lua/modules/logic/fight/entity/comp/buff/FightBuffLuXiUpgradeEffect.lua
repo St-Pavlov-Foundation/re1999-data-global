@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffLuXiUpgradeEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffLuXiUpgradeEffect.lua
 
-local var_0_0 = class("FightBuffLuXiUpgradeEffect", FightBaseClass)
+module("modules.logic.fight.entity.comp.buff.FightBuffLuXiUpgradeEffect", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = 1
+local FightBuffLuXiUpgradeEffect = class("FightBuffLuXiUpgradeEffect", FightBaseClass)
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_3) do
-		var_1_0 = iter_1_1.effectType
+function FightBuffLuXiUpgradeEffect:onConstructor(entity, entityData, luxiUpgradeEffectConfig)
+	local effectType = 1
+
+	for k, v in pairs(luxiUpgradeEffectConfig) do
+		effectType = v.effectType
 
 		break
 	end
 
-	local var_1_1 = var_1_0 == 1 and FightBuffLuXiUpgradeEffect1 or FightBuffLuXiUpgradeEffect2
+	local class = effectType == 1 and FightBuffLuXiUpgradeEffect1 or FightBuffLuXiUpgradeEffect2
 
-	arg_1_0:newClass(var_1_1, arg_1_1, arg_1_2, arg_1_3)
+	self:newClass(class, entity, entityData, luxiUpgradeEffectConfig)
 end
 
-return var_0_0
+return FightBuffLuXiUpgradeEffect

@@ -1,113 +1,115 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinQuestItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinQuestItem.lua
 
-local var_0_0 = class("AssassinQuestItem", LuaCompBase)
+module("modules.logic.sp01.assassin2.outside.view.AssassinQuestItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_1.transform
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.go, "image_icon")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.go, "go_select")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.go, "go_unselect")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._animator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.go)
-	arg_1_0._questId = nil
+local AssassinQuestItem = class("AssassinQuestItem", LuaCompBase)
+
+function AssassinQuestItem:init(go)
+	self.go = go
+	self.trans = go.transform
+	self._imageicon = gohelper.findChildImage(self.go, "image_icon")
+	self._goselect = gohelper.findChild(self.go, "go_select")
+	self._gounselect = gohelper.findChild(self.go, "go_unselect")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._animator = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.go)
+	self._questId = nil
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function AssassinQuestItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function AssassinQuestItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._questId then
-		AssassinController.instance:clickQuestItem(arg_4_0._questId, false, true)
+function AssassinQuestItem:_btnclickOnClick()
+	if self._questId then
+		AssassinController.instance:clickQuestItem(self._questId, false, true)
 	end
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1)
-	arg_5_0._questId = arg_5_1
+function AssassinQuestItem:setData(questId)
+	self._questId = questId
 
-	arg_5_0:setIcon()
-	arg_5_0:setCfgPos()
-	arg_5_0:refreshSelected(false)
-	gohelper.setActive(arg_5_0.go, true)
+	self:setIcon()
+	self:setCfgPos()
+	self:refreshSelected(false)
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.setIcon(arg_6_0)
-	local var_6_0 = AssassinConfig.instance:getQuestType(arg_6_0._questId)
+function AssassinQuestItem:setIcon()
+	local questType = AssassinConfig.instance:getQuestType(self._questId)
 
-	AssassinHelper.setQuestTypeIcon(var_6_0, arg_6_0._imageicon)
+	AssassinHelper.setQuestTypeIcon(questType, self._imageicon)
 end
 
-function var_0_0.setCfgPos(arg_7_0)
-	local var_7_0 = AssassinConfig.instance:getQuestPos(arg_7_0._questId)
+function AssassinQuestItem:setCfgPos()
+	local pos = AssassinConfig.instance:getQuestPos(self._questId)
 
-	if not string.nilorempty(var_7_0) then
-		local var_7_1 = string.splitToNumber(var_7_0, "#")
+	if not string.nilorempty(pos) then
+		local posParam = string.splitToNumber(pos, "#")
 
-		arg_7_0:setPosition(var_7_1[1], var_7_1[2])
+		self:setPosition(posParam[1], posParam[2])
 	else
-		logError(string.format("AssassinQuestItem:setCfgPos error, pos is nil, questId = %s", arg_7_0._questId))
+		logError(string.format("AssassinQuestItem:setCfgPos error, pos is nil, questId = %s", self._questId))
 	end
 end
 
-function var_0_0.setPosition(arg_8_0, arg_8_1, arg_8_2)
-	recthelper.setAnchor(arg_8_0.trans, arg_8_1 or 0, arg_8_2 or 0)
+function AssassinQuestItem:setPosition(posX, posY)
+	recthelper.setAnchor(self.trans, posX or 0, posY or 0)
 end
 
-function var_0_0.refreshSelected(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._goselect, arg_9_1)
-	gohelper.setActive(arg_9_0._gounselect, not arg_9_1)
+function AssassinQuestItem:refreshSelected(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
+	gohelper.setActive(self._gounselect, not isSelect)
 end
 
-function var_0_0.remove(arg_10_0, arg_10_1)
-	if arg_10_1 then
-		if arg_10_0._animatorPlayer then
-			arg_10_0._animatorPlayer:Play(UIAnimationName.Close, arg_10_0.disableItem, arg_10_0)
+function AssassinQuestItem:remove(isPlayAnim)
+	if isPlayAnim then
+		if self._animatorPlayer then
+			self._animatorPlayer:Play(UIAnimationName.Close, self.disableItem, self)
 
-			local var_10_0 = AssassinHelper.getPlayerCacheDataKey(AssassinEnum.PlayerCacheDataKey.QuestItemFinishAnim, arg_10_0._questId)
+			local cacheKey = AssassinHelper.getPlayerCacheDataKey(AssassinEnum.PlayerCacheDataKey.QuestItemFinishAnim, self._questId)
 
-			AssassinController.instance:setHasPlayedAnimation(var_10_0)
+			AssassinController.instance:setHasPlayedAnimation(cacheKey)
 		end
 	else
-		arg_10_0:disableItem()
+		self:disableItem()
 	end
 
-	arg_10_0._questId = nil
+	self._questId = nil
 end
 
-function var_0_0.disableItem(arg_11_0)
-	gohelper.setActive(arg_11_0.go, false)
+function AssassinQuestItem:disableItem()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.playOpen(arg_12_0)
-	gohelper.setActive(arg_12_0.go, true)
+function AssassinQuestItem:playOpen()
+	gohelper.setActive(self.go, true)
 
-	if arg_12_0._questId and arg_12_0._animatorPlayer then
-		arg_12_0._animatorPlayer:Play(UIAnimationName.Open)
+	if self._questId and self._animatorPlayer then
+		self._animatorPlayer:Play(UIAnimationName.Open)
 	end
 end
 
-function var_0_0.getQuestId(arg_13_0)
-	return arg_13_0._questId
+function AssassinQuestItem:getQuestId()
+	return self._questId
 end
 
-function var_0_0.getPosition(arg_14_0)
-	local var_14_0, var_14_1 = recthelper.getAnchor(arg_14_0.trans)
+function AssassinQuestItem:getPosition()
+	local posX, posY = recthelper.getAnchor(self.trans)
 
-	return var_14_0, var_14_1
+	return posX, posY
 end
 
-function var_0_0.getGoPosition(arg_15_0)
-	return arg_15_0.trans.position
+function AssassinQuestItem:getGoPosition()
+	return self.trans.position
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	arg_16_0._questId = nil
+function AssassinQuestItem:onDestroy()
+	self._questId = nil
 end
 
-return var_0_0
+return AssassinQuestItem

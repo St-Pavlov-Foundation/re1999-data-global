@@ -1,104 +1,106 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneLoader", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneLoader.lua
 
-local var_0_0 = class("RoomSceneLoader", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneLoader", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._assetItemDict = {}
-	arg_1_0._loader = nil
-	arg_1_0._needLoadList = {}
-	arg_1_0._needLoadDict = {}
-	arg_1_0._callbackList = {}
-	arg_1_0._loaderList = {}
-	arg_1_0._initialized = false
+local RoomSceneLoader = class("RoomSceneLoader", BaseSceneComp)
+
+function RoomSceneLoader:onInit()
+	self._assetItemDict = {}
+	self._loader = nil
+	self._needLoadList = {}
+	self._needLoadDict = {}
+	self._callbackList = {}
+	self._loaderList = {}
+	self._initialized = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._initialized = true
+function RoomSceneLoader:init(sceneId, levelId)
+	self._initialized = true
 end
 
-function var_0_0.isLoaderInProgress(arg_3_0)
-	if arg_3_0._loader then
+function RoomSceneLoader:isLoaderInProgress()
+	if self._loader then
 		return true
 	end
 
-	if arg_3_0._needLoadList and #arg_3_0._needLoadList > 0 then
+	if self._needLoadList and #self._needLoadList > 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.makeSureLoaded(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0._initialized then
+function RoomSceneLoader:makeSureLoaded(resPathList, callback, callbackObj)
+	if not self._initialized then
 		return
 	end
 
-	local var_4_0
-	local var_4_1 = arg_4_0:getCurScene().preloader
+	local needLoadList
+	local preloader = self:getCurScene().preloader
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		if not var_4_1:exist(iter_4_1) then
-			var_4_0 = var_4_0 or {}
+	for _, resPath in ipairs(resPathList) do
+		if not preloader:exist(resPath) then
+			needLoadList = needLoadList or {}
 
-			table.insert(var_4_0, iter_4_1)
+			table.insert(needLoadList, resPath)
 		end
 	end
 
-	if not var_4_0 then
-		arg_4_2(arg_4_3)
+	if not needLoadList then
+		callback(callbackObj)
 
 		return
 	end
 
-	local var_4_2 = MultiAbLoader.New()
+	local loader = MultiAbLoader.New()
 
-	table.insert(arg_4_0._loaderList, var_4_2)
-	var_4_2:setPathList(var_4_0)
-	var_4_2:startLoad(function(...)
-		arg_4_0:_onLoadFinish(var_4_2)
-		arg_4_2(arg_4_3)
-	end, arg_4_0)
+	table.insert(self._loaderList, loader)
+	loader:setPathList(needLoadList)
+	loader:startLoad(function(...)
+		self:_onLoadFinish(loader)
+		callback(callbackObj)
+	end, self)
 end
 
-function var_0_0._delayStartLoad(arg_6_0)
-	local var_6_0 = arg_6_0._needLoadList
+function RoomSceneLoader:_delayStartLoad()
+	local list = self._needLoadList
 
-	arg_6_0._needLoadList = {}
-	arg_6_0._needLoadDict = {}
-	arg_6_0._loader = MultiAbLoader.New()
+	self._needLoadList = {}
+	self._needLoadDict = {}
+	self._loader = MultiAbLoader.New()
 
-	arg_6_0._loader:setPathList(var_6_0)
-	arg_6_0._loader:startLoad(arg_6_0._onLoadFinish, arg_6_0)
+	self._loader:setPathList(list)
+	self._loader:startLoad(self._onLoadFinish, self)
 end
 
-function var_0_0._onLoadFinish(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1:getAssetItemDict()
-	local var_7_1 = arg_7_0:getCurScene().preloader
+function RoomSceneLoader:_onLoadFinish(loader)
+	local dict = loader:getAssetItemDict()
+	local preloader = self:getCurScene().preloader
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		var_7_1:addAssetItem(iter_7_0, iter_7_1)
+	for url, assetItem in pairs(dict) do
+		preloader:addAssetItem(url, assetItem)
 	end
 
-	tabletool.removeValue(arg_7_0._loaderList, arg_7_1)
-	arg_7_1:dispose()
+	tabletool.removeValue(self._loaderList, loader)
+	loader:dispose()
 end
 
-function var_0_0.onSceneClose(arg_8_0)
-	arg_8_0._initialized = false
+function RoomSceneLoader:onSceneClose()
+	self._initialized = false
 
-	TaskDispatcher.cancelTask(arg_8_0._delayStartLoad, arg_8_0)
+	TaskDispatcher.cancelTask(self._delayStartLoad, self)
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._loaderList) do
-		iter_8_1:dispose()
+	for i, v in ipairs(self._loaderList) do
+		v:dispose()
 	end
 
-	arg_8_0._loaderList = {}
+	self._loaderList = {}
 
-	if arg_8_0._loader then
-		arg_8_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_8_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return RoomSceneLoader

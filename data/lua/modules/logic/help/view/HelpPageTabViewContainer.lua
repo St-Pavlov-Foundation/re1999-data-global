@@ -1,94 +1,96 @@
-﻿module("modules.logic.help.view.HelpPageTabViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/help/view/HelpPageTabViewContainer.lua
 
-local var_0_0 = class("HelpPageTabViewContainer", BaseViewContainer)
+module("modules.logic.help.view.HelpPageTabViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._helpPageTabView = HelpPageTabView.New()
+local HelpPageTabViewContainer = class("HelpPageTabViewContainer", BaseViewContainer)
+
+function HelpPageTabViewContainer:buildViews()
+	self._helpPageTabView = HelpPageTabView.New()
 
 	return {
-		arg_1_0._helpPageTabView,
+		self._helpPageTabView,
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_helpview"),
 		TabViewGroup.New(3, "#go_voidepage")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function HelpPageTabViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			HelpPageHelpView.New()
 		}
-	elseif arg_2_1 == 3 then
+	elseif tabContainerId == 3 then
 		return {
 			HelpPageVideoView.New()
 		}
 	end
 end
 
-function var_0_0.setBtnShow(arg_3_0, arg_3_1)
-	if arg_3_0._navigateButtonsView then
-		arg_3_0._navigateButtonsView:setParam({
-			arg_3_1,
-			arg_3_1,
+function HelpPageTabViewContainer:setBtnShow(isShow)
+	if self._navigateButtonsView then
+		self._navigateButtonsView:setParam({
+			isShow,
+			isShow,
 			false
 		})
 	end
 end
 
-function var_0_0.setVideoFullScreen(arg_4_0, arg_4_1)
-	if arg_4_0._helpPageTabView then
-		arg_4_0._helpPageTabView:setVideoFullScreen(arg_4_1)
+function HelpPageTabViewContainer:setVideoFullScreen(isFull)
+	if self._helpPageTabView then
+		self._helpPageTabView:setVideoFullScreen(isFull)
 	end
 end
 
-function var_0_0.checkHelpPageCfg(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_1 then
+function HelpPageTabViewContainer:checkHelpPageCfg(pageCfg, isAll, guideId)
+	if not pageCfg then
 		return false
 	end
 
-	if arg_5_2 then
-		if HelpController.instance:canShowPage(arg_5_1) or arg_5_1.unlockGuideId == arg_5_0._matchGuideId then
+	if isAll then
+		if HelpController.instance:canShowPage(pageCfg) or pageCfg.unlockGuideId == self._matchGuideId then
 			return true
 		end
-	elseif arg_5_3 then
-		if arg_5_1.unlockGuideId == arg_5_3 then
+	elseif guideId then
+		if pageCfg.unlockGuideId == guideId then
 			return true
 		end
-	elseif HelpController.instance:canShowPage(arg_5_1) then
+	elseif HelpController.instance:canShowPage(pageCfg) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.checkHelpVideoCfg(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if not arg_6_1 then
+function HelpPageTabViewContainer:checkHelpVideoCfg(videoCfg, isAll, guideId)
+	if not videoCfg then
 		return false
 	end
 
-	if arg_6_2 then
-		if HelpController.instance:canShowVideo(arg_6_1) or arg_6_1.unlockGuideId == arg_6_0._matchGuideId then
+	if isAll then
+		if HelpController.instance:canShowVideo(videoCfg) or videoCfg.unlockGuideId == self._matchGuideId then
 			return true
 		end
-	elseif arg_6_3 then
-		if arg_6_1.unlockGuideId == arg_6_3 then
+	elseif guideId then
+		if videoCfg.unlockGuideId == guideId then
 			return true
 		end
-	elseif HelpController.instance:canShowVideo(arg_6_1) then
+	elseif HelpController.instance:canShowVideo(videoCfg) then
 		return true
 	end
 
 	return false
 end
 
-return var_0_0
+return HelpPageTabViewContainer

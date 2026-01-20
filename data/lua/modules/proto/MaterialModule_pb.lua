@@ -1,128 +1,130 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/MaterialModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.MaterialModule_pb", package.seeall)
 
-local var_0_1 = {
-	MATERIALCHANGEPUSH_MSG = var_0_0.Descriptor(),
-	MATERIALCHANGEPUSHDATALISTFIELD = var_0_0.FieldDescriptor(),
-	MATERIALCHANGEPUSHGETAPPROACHFIELD = var_0_0.FieldDescriptor(),
-	MATERIALDATA_MSG = var_0_0.Descriptor(),
-	MATERIALDATAMATERILTYPEFIELD = var_0_0.FieldDescriptor(),
-	MATERIALDATAMATERILIDFIELD = var_0_0.FieldDescriptor(),
-	MATERIALDATAQUANTITYFIELD = var_0_0.FieldDescriptor(),
-	M2QENTRY_MSG = var_0_0.Descriptor(),
-	M2QENTRYMATERIALIDFIELD = var_0_0.FieldDescriptor(),
-	M2QENTRYQUANTITYFIELD = var_0_0.FieldDescriptor(),
-	M2QENTRYTIMEFIELD = var_0_0.FieldDescriptor()
-}
+local MaterialModule_pb = {}
 
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.name = "dataList"
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.full_name = ".MaterialChangePush.dataList"
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.number = 1
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.index = 0
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.label = 3
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.has_default_value = false
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.default_value = {}
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.message_type = var_0_1.MATERIALDATA_MSG
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.type = 11
-var_0_1.MATERIALCHANGEPUSHDATALISTFIELD.cpp_type = 10
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.name = "getApproach"
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.full_name = ".MaterialChangePush.getApproach"
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.number = 2
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.index = 1
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.label = 1
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.has_default_value = false
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.default_value = 0
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.type = 13
-var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD.cpp_type = 3
-var_0_1.MATERIALCHANGEPUSH_MSG.name = "MaterialChangePush"
-var_0_1.MATERIALCHANGEPUSH_MSG.full_name = ".MaterialChangePush"
-var_0_1.MATERIALCHANGEPUSH_MSG.nested_types = {}
-var_0_1.MATERIALCHANGEPUSH_MSG.enum_types = {}
-var_0_1.MATERIALCHANGEPUSH_MSG.fields = {
-	var_0_1.MATERIALCHANGEPUSHDATALISTFIELD,
-	var_0_1.MATERIALCHANGEPUSHGETAPPROACHFIELD
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG = protobuf.Descriptor()
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.MATERIALDATA_MSG = protobuf.Descriptor()
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.M2QENTRY_MSG = protobuf.Descriptor()
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.M2QENTRYQUANTITYFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.M2QENTRYTIMEFIELD = protobuf.FieldDescriptor()
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.name = "dataList"
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.full_name = ".MaterialChangePush.dataList"
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.number = 1
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.index = 0
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.label = 3
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.has_default_value = false
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.default_value = {}
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.message_type = MaterialModule_pb.MATERIALDATA_MSG
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.type = 11
+MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD.cpp_type = 10
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.name = "getApproach"
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.full_name = ".MaterialChangePush.getApproach"
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.number = 2
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.index = 1
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.label = 1
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.has_default_value = false
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.default_value = 0
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.type = 13
+MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD.cpp_type = 3
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG.name = "MaterialChangePush"
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG.full_name = ".MaterialChangePush"
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG.nested_types = {}
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG.enum_types = {}
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG.fields = {
+	MaterialModule_pb.MATERIALCHANGEPUSHDATALISTFIELD,
+	MaterialModule_pb.MATERIALCHANGEPUSHGETAPPROACHFIELD
 }
-var_0_1.MATERIALCHANGEPUSH_MSG.is_extendable = false
-var_0_1.MATERIALCHANGEPUSH_MSG.extensions = {}
-var_0_1.MATERIALDATAMATERILTYPEFIELD.name = "materilType"
-var_0_1.MATERIALDATAMATERILTYPEFIELD.full_name = ".MaterialData.materilType"
-var_0_1.MATERIALDATAMATERILTYPEFIELD.number = 1
-var_0_1.MATERIALDATAMATERILTYPEFIELD.index = 0
-var_0_1.MATERIALDATAMATERILTYPEFIELD.label = 1
-var_0_1.MATERIALDATAMATERILTYPEFIELD.has_default_value = false
-var_0_1.MATERIALDATAMATERILTYPEFIELD.default_value = 0
-var_0_1.MATERIALDATAMATERILTYPEFIELD.type = 13
-var_0_1.MATERIALDATAMATERILTYPEFIELD.cpp_type = 3
-var_0_1.MATERIALDATAMATERILIDFIELD.name = "materilId"
-var_0_1.MATERIALDATAMATERILIDFIELD.full_name = ".MaterialData.materilId"
-var_0_1.MATERIALDATAMATERILIDFIELD.number = 2
-var_0_1.MATERIALDATAMATERILIDFIELD.index = 1
-var_0_1.MATERIALDATAMATERILIDFIELD.label = 1
-var_0_1.MATERIALDATAMATERILIDFIELD.has_default_value = false
-var_0_1.MATERIALDATAMATERILIDFIELD.default_value = 0
-var_0_1.MATERIALDATAMATERILIDFIELD.type = 13
-var_0_1.MATERIALDATAMATERILIDFIELD.cpp_type = 3
-var_0_1.MATERIALDATAQUANTITYFIELD.name = "quantity"
-var_0_1.MATERIALDATAQUANTITYFIELD.full_name = ".MaterialData.quantity"
-var_0_1.MATERIALDATAQUANTITYFIELD.number = 3
-var_0_1.MATERIALDATAQUANTITYFIELD.index = 2
-var_0_1.MATERIALDATAQUANTITYFIELD.label = 1
-var_0_1.MATERIALDATAQUANTITYFIELD.has_default_value = false
-var_0_1.MATERIALDATAQUANTITYFIELD.default_value = 0
-var_0_1.MATERIALDATAQUANTITYFIELD.type = 5
-var_0_1.MATERIALDATAQUANTITYFIELD.cpp_type = 1
-var_0_1.MATERIALDATA_MSG.name = "MaterialData"
-var_0_1.MATERIALDATA_MSG.full_name = ".MaterialData"
-var_0_1.MATERIALDATA_MSG.nested_types = {}
-var_0_1.MATERIALDATA_MSG.enum_types = {}
-var_0_1.MATERIALDATA_MSG.fields = {
-	var_0_1.MATERIALDATAMATERILTYPEFIELD,
-	var_0_1.MATERIALDATAMATERILIDFIELD,
-	var_0_1.MATERIALDATAQUANTITYFIELD
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG.is_extendable = false
+MaterialModule_pb.MATERIALCHANGEPUSH_MSG.extensions = {}
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.name = "materilType"
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.full_name = ".MaterialData.materilType"
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.number = 1
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.index = 0
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.label = 1
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.has_default_value = false
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.default_value = 0
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.type = 13
+MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD.cpp_type = 3
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.name = "materilId"
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.full_name = ".MaterialData.materilId"
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.number = 2
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.index = 1
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.label = 1
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.has_default_value = false
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.default_value = 0
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.type = 13
+MaterialModule_pb.MATERIALDATAMATERILIDFIELD.cpp_type = 3
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.name = "quantity"
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.full_name = ".MaterialData.quantity"
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.number = 3
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.index = 2
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.label = 1
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.has_default_value = false
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.default_value = 0
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.type = 5
+MaterialModule_pb.MATERIALDATAQUANTITYFIELD.cpp_type = 1
+MaterialModule_pb.MATERIALDATA_MSG.name = "MaterialData"
+MaterialModule_pb.MATERIALDATA_MSG.full_name = ".MaterialData"
+MaterialModule_pb.MATERIALDATA_MSG.nested_types = {}
+MaterialModule_pb.MATERIALDATA_MSG.enum_types = {}
+MaterialModule_pb.MATERIALDATA_MSG.fields = {
+	MaterialModule_pb.MATERIALDATAMATERILTYPEFIELD,
+	MaterialModule_pb.MATERIALDATAMATERILIDFIELD,
+	MaterialModule_pb.MATERIALDATAQUANTITYFIELD
 }
-var_0_1.MATERIALDATA_MSG.is_extendable = false
-var_0_1.MATERIALDATA_MSG.extensions = {}
-var_0_1.M2QENTRYMATERIALIDFIELD.name = "materialId"
-var_0_1.M2QENTRYMATERIALIDFIELD.full_name = ".M2QEntry.materialId"
-var_0_1.M2QENTRYMATERIALIDFIELD.number = 1
-var_0_1.M2QENTRYMATERIALIDFIELD.index = 0
-var_0_1.M2QENTRYMATERIALIDFIELD.label = 1
-var_0_1.M2QENTRYMATERIALIDFIELD.has_default_value = false
-var_0_1.M2QENTRYMATERIALIDFIELD.default_value = 0
-var_0_1.M2QENTRYMATERIALIDFIELD.type = 13
-var_0_1.M2QENTRYMATERIALIDFIELD.cpp_type = 3
-var_0_1.M2QENTRYQUANTITYFIELD.name = "quantity"
-var_0_1.M2QENTRYQUANTITYFIELD.full_name = ".M2QEntry.quantity"
-var_0_1.M2QENTRYQUANTITYFIELD.number = 2
-var_0_1.M2QENTRYQUANTITYFIELD.index = 1
-var_0_1.M2QENTRYQUANTITYFIELD.label = 1
-var_0_1.M2QENTRYQUANTITYFIELD.has_default_value = false
-var_0_1.M2QENTRYQUANTITYFIELD.default_value = 0
-var_0_1.M2QENTRYQUANTITYFIELD.type = 5
-var_0_1.M2QENTRYQUANTITYFIELD.cpp_type = 1
-var_0_1.M2QENTRYTIMEFIELD.name = "time"
-var_0_1.M2QENTRYTIMEFIELD.full_name = ".M2QEntry.time"
-var_0_1.M2QENTRYTIMEFIELD.number = 3
-var_0_1.M2QENTRYTIMEFIELD.index = 2
-var_0_1.M2QENTRYTIMEFIELD.label = 1
-var_0_1.M2QENTRYTIMEFIELD.has_default_value = false
-var_0_1.M2QENTRYTIMEFIELD.default_value = 0
-var_0_1.M2QENTRYTIMEFIELD.type = 3
-var_0_1.M2QENTRYTIMEFIELD.cpp_type = 2
-var_0_1.M2QENTRY_MSG.name = "M2QEntry"
-var_0_1.M2QENTRY_MSG.full_name = ".M2QEntry"
-var_0_1.M2QENTRY_MSG.nested_types = {}
-var_0_1.M2QENTRY_MSG.enum_types = {}
-var_0_1.M2QENTRY_MSG.fields = {
-	var_0_1.M2QENTRYMATERIALIDFIELD,
-	var_0_1.M2QENTRYQUANTITYFIELD,
-	var_0_1.M2QENTRYTIMEFIELD
+MaterialModule_pb.MATERIALDATA_MSG.is_extendable = false
+MaterialModule_pb.MATERIALDATA_MSG.extensions = {}
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.name = "materialId"
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.full_name = ".M2QEntry.materialId"
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.number = 1
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.index = 0
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.label = 1
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.has_default_value = false
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.default_value = 0
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.type = 13
+MaterialModule_pb.M2QENTRYMATERIALIDFIELD.cpp_type = 3
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.name = "quantity"
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.full_name = ".M2QEntry.quantity"
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.number = 2
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.index = 1
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.label = 1
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.has_default_value = false
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.default_value = 0
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.type = 5
+MaterialModule_pb.M2QENTRYQUANTITYFIELD.cpp_type = 1
+MaterialModule_pb.M2QENTRYTIMEFIELD.name = "time"
+MaterialModule_pb.M2QENTRYTIMEFIELD.full_name = ".M2QEntry.time"
+MaterialModule_pb.M2QENTRYTIMEFIELD.number = 3
+MaterialModule_pb.M2QENTRYTIMEFIELD.index = 2
+MaterialModule_pb.M2QENTRYTIMEFIELD.label = 1
+MaterialModule_pb.M2QENTRYTIMEFIELD.has_default_value = false
+MaterialModule_pb.M2QENTRYTIMEFIELD.default_value = 0
+MaterialModule_pb.M2QENTRYTIMEFIELD.type = 3
+MaterialModule_pb.M2QENTRYTIMEFIELD.cpp_type = 2
+MaterialModule_pb.M2QENTRY_MSG.name = "M2QEntry"
+MaterialModule_pb.M2QENTRY_MSG.full_name = ".M2QEntry"
+MaterialModule_pb.M2QENTRY_MSG.nested_types = {}
+MaterialModule_pb.M2QENTRY_MSG.enum_types = {}
+MaterialModule_pb.M2QENTRY_MSG.fields = {
+	MaterialModule_pb.M2QENTRYMATERIALIDFIELD,
+	MaterialModule_pb.M2QENTRYQUANTITYFIELD,
+	MaterialModule_pb.M2QENTRYTIMEFIELD
 }
-var_0_1.M2QENTRY_MSG.is_extendable = false
-var_0_1.M2QENTRY_MSG.extensions = {}
-var_0_1.M2QEntry = var_0_0.Message(var_0_1.M2QENTRY_MSG)
-var_0_1.MaterialChangePush = var_0_0.Message(var_0_1.MATERIALCHANGEPUSH_MSG)
-var_0_1.MaterialData = var_0_0.Message(var_0_1.MATERIALDATA_MSG)
+MaterialModule_pb.M2QENTRY_MSG.is_extendable = false
+MaterialModule_pb.M2QENTRY_MSG.extensions = {}
+MaterialModule_pb.M2QEntry = protobuf.Message(MaterialModule_pb.M2QENTRY_MSG)
+MaterialModule_pb.MaterialChangePush = protobuf.Message(MaterialModule_pb.MATERIALCHANGEPUSH_MSG)
+MaterialModule_pb.MaterialData = protobuf.Message(MaterialModule_pb.MATERIALDATA_MSG)
 
-return var_0_1
+return MaterialModule_pb

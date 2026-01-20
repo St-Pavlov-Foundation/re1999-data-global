@@ -1,142 +1,146 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.model.LiangYueModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/model/LiangYueModel.lua
 
-local var_0_0 = class("LiangYueModel", BaseModel)
+module("modules.logic.versionactivity2_5.liangyue.model.LiangYueModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._actInfoDic = {}
-	arg_1_0._afterGameEpisodeDic = {}
+local LiangYueModel = class("LiangYueModel", BaseModel)
+
+function LiangYueModel:onInit()
+	self._actInfoDic = {}
+	self._afterGameEpisodeDic = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._actInfoDic = {}
+function LiangYueModel:reInit()
+	self._actInfoDic = {}
 end
 
-function var_0_0.onGetActInfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1.activityId
-	local var_3_1
+function LiangYueModel:onGetActInfo(msg)
+	local actId = msg.activityId
+	local episodeDic
 
-	if not arg_3_0._actInfoDic[var_3_0] then
-		var_3_1 = {}
-		arg_3_0._actInfoDic[var_3_0] = var_3_1
+	if not self._actInfoDic[actId] then
+		episodeDic = {}
+		self._actInfoDic[actId] = episodeDic
 	else
-		var_3_1 = arg_3_0._actInfoDic[var_3_0]
+		episodeDic = self._actInfoDic[actId]
 
-		tabletool.clear(var_3_1)
+		tabletool.clear(episodeDic)
 	end
 
-	local var_3_2 = arg_3_1.episodes
+	local infos = msg.episodes
 
-	if not var_3_2 or #var_3_2 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_2) do
-		local var_3_3
+	for _, info in ipairs(infos) do
+		local mo
 
-		if LiangYueConfig.instance:getEpisodeConfigByActAndId(var_3_0, iter_3_1.episodeId) == nil then
-			logError("episodeConfig not exist id: " .. iter_3_1.episodeId)
-		elseif var_3_1[iter_3_1.episodeId] then
-			logError("episodeId has exist id: " .. iter_3_1.episodeId)
+		if LiangYueConfig.instance:getEpisodeConfigByActAndId(actId, info.episodeId) == nil then
+			logError("episodeConfig not exist id: " .. info.episodeId)
+		elseif episodeDic[info.episodeId] then
+			logError("episodeId has exist id: " .. info.episodeId)
 		else
-			local var_3_4 = LiangYueInfoMo.New()
+			mo = LiangYueInfoMo.New()
 
-			var_3_4:init(var_3_0, iter_3_1.episodeId, iter_3_1.isFinished, iter_3_1.puzzle)
+			mo:init(actId, info.episodeId, info.isFinished, info.puzzle)
 
-			var_3_1[iter_3_1.episodeId] = var_3_4
+			episodeDic[info.episodeId] = mo
 		end
 	end
 end
 
-function var_0_0.onActInfoPush(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.activityId
-	local var_4_1
+function LiangYueModel:onActInfoPush(msg)
+	local actId = msg.activityId
+	local episodeDic
 
-	if not arg_4_0._actInfoDic[var_4_0] then
-		var_4_1 = {}
-		arg_4_0._actInfoDic[var_4_0] = var_4_1
+	if not self._actInfoDic[actId] then
+		episodeDic = {}
+		self._actInfoDic[actId] = episodeDic
 	else
-		var_4_1 = arg_4_0._actInfoDic[var_4_0]
+		episodeDic = self._actInfoDic[actId]
 	end
 
-	local var_4_2 = arg_4_1.episodes
+	local infos = msg.episodes
 
-	if not var_4_2 or #var_4_2 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_2) do
-		local var_4_3
+	for _, info in ipairs(infos) do
+		local mo
 
-		if var_4_1[iter_4_1.episodeId] then
-			var_4_1[iter_4_1.episodeId]:updateMO(iter_4_1.isFinished, iter_4_1.puzzle)
+		if episodeDic[info.episodeId] then
+			mo = episodeDic[info.episodeId]
+
+			mo:updateMO(info.isFinished, info.puzzle)
 		else
-			local var_4_4 = LiangYueInfoMo.New()
+			mo = LiangYueInfoMo.New()
 
-			var_4_4:init(var_4_0, iter_4_1.episodeId, iter_4_1.isFinished, iter_4_1.puzzle)
+			mo:init(actId, info.episodeId, info.isFinished, info.puzzle)
 
-			var_4_1[iter_4_1.episodeId] = var_4_4
+			episodeDic[info.episodeId] = mo
 		end
 	end
 end
 
-function var_0_0.getEpisodeInfoMo(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0._actInfoDic[arg_5_1] then
+function LiangYueModel:getEpisodeInfoMo(actId, episodeId)
+	if not self._actInfoDic[actId] then
 		return nil
 	end
 
-	return arg_5_0._actInfoDic[arg_5_1][arg_5_2]
+	return self._actInfoDic[actId][episodeId]
 end
 
-function var_0_0.getActInfoDic(arg_6_0, arg_6_1)
-	return arg_6_0._actInfoDic[arg_6_1]
+function LiangYueModel:getActInfoDic(actId)
+	return self._actInfoDic[actId]
 end
 
-function var_0_0.setEpisodeInfo(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getActInfoDic(arg_7_1.activityId)
+function LiangYueModel:setEpisodeInfo(msg)
+	local actInfoDic = self:getActInfoDic(msg.activityId)
 
-	if var_7_0 == nil then
+	if actInfoDic == nil then
 		return
 	end
 
-	local var_7_1 = var_7_0[arg_7_1.episodeId]
+	local mo = actInfoDic[msg.episodeId]
 
-	if not var_7_1 then
-		var_7_1 = LiangYueInfoMo.New()
+	if not mo then
+		mo = LiangYueInfoMo.New()
 
-		var_7_1:init(arg_7_1.activityId, arg_7_1.episodeId, true, arg_7_1.puzzle)
+		mo:init(msg.activityId, msg.episodeId, true, msg.puzzle)
 
 		return
 	end
 
-	var_7_1:updateMO(true, arg_7_1.puzzle)
+	mo:updateMO(true, msg.puzzle)
 end
 
-function var_0_0.isEpisodeFinish(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:getEpisodeInfoMo(arg_8_1, arg_8_2)
+function LiangYueModel:isEpisodeFinish(actId, episodeId)
+	local episodeMo = self:getEpisodeInfoMo(actId, episodeId)
 
-	if not var_8_0 then
+	if not episodeMo then
 		return false
 	end
 
-	return var_8_0.isFinish
+	return episodeMo.isFinish
 end
 
-function var_0_0.setCurEpisodeId(arg_9_0, arg_9_1)
-	arg_9_0._curEpisodeId = arg_9_1
+function LiangYueModel:setCurEpisodeId(id)
+	self._curEpisodeId = id
 end
 
-function var_0_0.getCurEpisodeId(arg_10_0)
-	return arg_10_0._curEpisodeId
+function LiangYueModel:getCurEpisodeId()
+	return self._curEpisodeId
 end
 
-function var_0_0.setCurActId(arg_11_0, arg_11_1)
-	arg_11_0._curActId = arg_11_1
+function LiangYueModel:setCurActId(id)
+	self._curActId = id
 end
 
-function var_0_0.getCurActId(arg_12_0)
-	return arg_12_0._curActId
+function LiangYueModel:getCurActId()
+	return self._curActId
 end
 
-var_0_0.instance = var_0_0.New()
+LiangYueModel.instance = LiangYueModel.New()
 
-return var_0_0
+return LiangYueModel

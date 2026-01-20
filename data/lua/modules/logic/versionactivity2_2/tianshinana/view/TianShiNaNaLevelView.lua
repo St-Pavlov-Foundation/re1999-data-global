@@ -1,203 +1,205 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/view/TianShiNaNaLevelView.lua
 
-local var_0_0 = class("TianShiNaNaLevelView", BaseView)
+module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._animTips = gohelper.findChild(arg_1_0.viewGO, "Top/Tips"):GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtRound = gohelper.findChildTextMesh(arg_1_0.viewGO, "Top/Tips/image_TipsBG/#txt_round")
-	arg_1_0._sliderRound = gohelper.findChildSlider(arg_1_0.viewGO, "Top/Tips/image_TipsBG/#slider_round")
-	arg_1_0._goTips2 = gohelper.findChild(arg_1_0.viewGO, "Top/Tips2")
-	arg_1_0._txtTips2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "Top/Tips2/image_TipsBG/#txt_Tips")
-	arg_1_0._mainTarget = gohelper.findChild(arg_1_0.viewGO, "TargetList/mainTarget")
-	arg_1_0._mainTargetDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "TargetList/mainTarget/#txt_TargetDesc")
-	arg_1_0._mainTargetIcon = gohelper.findChild(arg_1_0.viewGO, "TargetList/mainTarget/#go_TargetIcon")
-	arg_1_0._subTarget = gohelper.findChild(arg_1_0.viewGO, "TargetList/subTarget")
-	arg_1_0._headTips = gohelper.findChild(arg_1_0.viewGO, "#go_HeadTips")
-	arg_1_0._headTips1 = gohelper.findChild(arg_1_0.viewGO, "#go_HeadTips/1")
-	arg_1_0._headTips2 = gohelper.findChild(arg_1_0.viewGO, "#go_HeadTips/2")
+local TianShiNaNaLevelView = class("TianShiNaNaLevelView", BaseView)
+
+function TianShiNaNaLevelView:onInitView()
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._animTips = gohelper.findChild(self.viewGO, "Top/Tips"):GetComponent(typeof(UnityEngine.Animator))
+	self._txtRound = gohelper.findChildTextMesh(self.viewGO, "Top/Tips/image_TipsBG/#txt_round")
+	self._sliderRound = gohelper.findChildSlider(self.viewGO, "Top/Tips/image_TipsBG/#slider_round")
+	self._goTips2 = gohelper.findChild(self.viewGO, "Top/Tips2")
+	self._txtTips2 = gohelper.findChildTextMesh(self.viewGO, "Top/Tips2/image_TipsBG/#txt_Tips")
+	self._mainTarget = gohelper.findChild(self.viewGO, "TargetList/mainTarget")
+	self._mainTargetDesc = gohelper.findChildTextMesh(self.viewGO, "TargetList/mainTarget/#txt_TargetDesc")
+	self._mainTargetIcon = gohelper.findChild(self.viewGO, "TargetList/mainTarget/#go_TargetIcon")
+	self._subTarget = gohelper.findChild(self.viewGO, "TargetList/subTarget")
+	self._headTips = gohelper.findChild(self.viewGO, "#go_HeadTips")
+	self._headTips1 = gohelper.findChild(self.viewGO, "#go_HeadTips/1")
+	self._headTips2 = gohelper.findChild(self.viewGO, "#go_HeadTips/2")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0._onResetClick, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.RoundUpdate, arg_2_0._refreshRound, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.ResetScene, arg_2_0._refreshRound, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.StatuChange, arg_2_0._onStatuChange, arg_2_0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.WaitClickJumpRound, arg_2_0._onClickJumpRound, arg_2_0)
+function TianShiNaNaLevelView:addEvents()
+	self._btnReset:AddClickListener(self._onResetClick, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.RoundUpdate, self._refreshRound, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.ResetScene, self._refreshRound, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.StatuChange, self._onStatuChange, self)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.WaitClickJumpRound, self._onClickJumpRound, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnReset:RemoveClickListener()
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.RoundUpdate, arg_3_0._refreshRound, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.ResetScene, arg_3_0._refreshRound, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.StatuChange, arg_3_0._onStatuChange, arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.WaitClickJumpRound, arg_3_0._onClickJumpRound, arg_3_0)
+function TianShiNaNaLevelView:removeEvents()
+	self._btnReset:RemoveClickListener()
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.RoundUpdate, self._refreshRound, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.ResetScene, self._refreshRound, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.StatuChange, self._onStatuChange, self)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.WaitClickJumpRound, self._onClickJumpRound, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function TianShiNaNaLevelView:onOpen()
 	GuideModel.instance:setFlag(GuideModel.GuideFlag.MaskUseMainCamera, 1)
 
-	arg_4_0._targetIcons = arg_4_0:getUserDataTb_()
+	self._targetIcons = self:getUserDataTb_()
 
-	local var_4_0 = TianShiNaNaModel.instance.episodeCo
-	local var_4_1 = string.split(var_4_0.conditionStr, "#")
-	local var_4_2 = #var_4_1
+	local episodeCo = TianShiNaNaModel.instance.episodeCo
+	local arr = string.split(episodeCo.conditionStr, "#")
+	local len = #arr
 
-	gohelper.setActive(arg_4_0._subTarget, false)
+	gohelper.setActive(self._subTarget, false)
 
-	if var_4_2 == 0 then
-		gohelper.setActive(arg_4_0._mainTarget, false)
-	elseif var_4_2 == 1 then
-		gohelper.setActive(arg_4_0._mainTarget, true)
+	if len == 0 then
+		gohelper.setActive(self._mainTarget, false)
+	elseif len == 1 then
+		gohelper.setActive(self._mainTarget, true)
 	else
-		gohelper.setActive(arg_4_0._mainTarget, true)
+		gohelper.setActive(self._mainTarget, true)
 
-		for iter_4_0 = 2, #var_4_1 do
-			local var_4_3 = gohelper.cloneInPlace(arg_4_0._subTarget)
+		for i = 2, #arr do
+			local go = gohelper.cloneInPlace(self._subTarget)
 
-			gohelper.setActive(var_4_3, true)
+			gohelper.setActive(go, true)
 
-			local var_4_4 = gohelper.findChildTextMesh(var_4_3, "#txt_TargetDesc")
-			local var_4_5 = gohelper.findChild(var_4_3, "#go_TargetIcon")
+			local text = gohelper.findChildTextMesh(go, "#txt_TargetDesc")
+			local icon = gohelper.findChild(go, "#go_TargetIcon")
 
-			var_4_4.text = var_4_1[iter_4_0]
-			arg_4_0._targetIcons[iter_4_0] = var_4_5
+			text.text = arr[i]
+			self._targetIcons[i] = icon
 
-			ZProj.UGUIHelper.SetGrayFactor(var_4_5, 1)
+			ZProj.UGUIHelper.SetGrayFactor(icon, 1)
 		end
 	end
 
-	arg_4_0._mainTargetTxt = var_4_1[1] or ""
-	arg_4_0._subTargetConditionTxts = string.split(var_4_0.subConditionStr, "|") or {}
-	arg_4_0._subTargetConditions = GameUtil.splitString2(var_4_0.subCondition, true) or {}
+	self._mainTargetTxt = arr[1] or ""
+	self._subTargetConditionTxts = string.split(episodeCo.subConditionStr, "|") or {}
+	self._subTargetConditions = GameUtil.splitString2(episodeCo.subCondition, true) or {}
 
-	if not string.nilorempty(var_4_0.exStarCondition) then
-		arg_4_0._conditions = GameUtil.splitString2(var_4_0.exStarCondition, true)
+	if not string.nilorempty(episodeCo.exStarCondition) then
+		self._conditions = GameUtil.splitString2(episodeCo.exStarCondition, true)
 	else
-		arg_4_0._conditions = {}
+		self._conditions = {}
 	end
 
-	ZProj.UGUIHelper.SetGrayFactor(arg_4_0._mainTargetIcon, 1)
-	arg_4_0:_refreshRound()
+	ZProj.UGUIHelper.SetGrayFactor(self._mainTargetIcon, 1)
+	self:_refreshRound()
 end
 
-function var_0_0._refreshRound(arg_5_0)
-	local var_5_0 = TianShiNaNaModel.instance.totalRound or 0
-	local var_5_1 = var_5_0 - TianShiNaNaModel.instance.nowRound
-	local var_5_2 = false
+function TianShiNaNaLevelView:_refreshRound()
+	local totalRound = TianShiNaNaModel.instance.totalRound or 0
+	local nowRound = totalRound - TianShiNaNaModel.instance.nowRound
+	local isRoundAdd = false
 
-	if arg_5_0._nowRound and var_5_1 + 1 == arg_5_0._nowRound then
-		var_5_2 = true
+	if self._nowRound and nowRound + 1 == self._nowRound then
+		isRoundAdd = true
 	end
 
-	arg_5_0._nowRound = var_5_1
-	arg_5_0._txtRound.text = string.format("<color=#e99b56>%d</color>/%d", var_5_1, var_5_0)
+	self._nowRound = nowRound
+	self._txtRound.text = string.format("<color=#e99b56>%d</color>/%d", nowRound, totalRound)
 
-	arg_5_0._sliderRound:SetValue(var_5_1 / var_5_0)
+	self._sliderRound:SetValue(nowRound / totalRound)
 
 	if TianShiNaNaModel.instance:isWaitClick() then
-		arg_5_0._txtTips2.text = luaLang("act167_cantplace")
+		self._txtTips2.text = luaLang("act167_cantplace")
 
-		gohelper.setActive(arg_5_0._goTips2, true)
-		arg_5_0:setHeadTips(true)
+		gohelper.setActive(self._goTips2, true)
+		self:setHeadTips(true)
 	end
 
-	arg_5_0:_refreshMainTarget()
+	self:_refreshMainTarget()
 
-	if var_5_2 then
-		arg_5_0._animTips:Play("open", 0, 0)
+	if isRoundAdd then
+		self._animTips:Play("open", 0, 0)
 	end
 end
 
-function var_0_0._refreshMainTarget(arg_6_0)
-	local var_6_0 = 0
+function TianShiNaNaLevelView:_refreshMainTarget()
+	local nowProgress = 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._subTargetConditions) do
-		local var_6_1 = false
+	for index, arr in ipairs(self._subTargetConditions) do
+		local isNoFinish = false
 
-		for iter_6_2, iter_6_3 in ipairs(iter_6_1) do
-			if TianShiNaNaModel.instance.unitMos[iter_6_3] then
-				var_6_1 = true
+		for _, id in ipairs(arr) do
+			if TianShiNaNaModel.instance.unitMos[id] then
+				isNoFinish = true
 
 				break
 			end
 		end
 
-		if var_6_1 then
-			var_6_0 = iter_6_0
+		if isNoFinish then
+			nowProgress = index
 
 			break
 		end
 	end
 
-	if not arg_6_0._mainTargetProgress then
+	if not self._mainTargetProgress then
 		-- block empty
-	elseif arg_6_0._mainTargetProgress == var_6_0 then
+	elseif self._mainTargetProgress == nowProgress then
 		return
-	elseif var_6_0 > arg_6_0._mainTargetProgress then
+	elseif nowProgress > self._mainTargetProgress then
 		-- block empty
 	end
 
-	arg_6_0._mainTargetProgress = var_6_0
+	self._mainTargetProgress = nowProgress
 
-	if var_6_0 == 0 then
-		arg_6_0._mainTargetDesc.text = arg_6_0._mainTargetTxt
+	if nowProgress == 0 then
+		self._mainTargetDesc.text = self._mainTargetTxt
 	else
-		arg_6_0._mainTargetDesc.text = arg_6_0._subTargetConditionTxts[var_6_0]
+		self._mainTargetDesc.text = self._subTargetConditionTxts[nowProgress]
 	end
 end
 
-function var_0_0._onResetClick(arg_7_0)
+function TianShiNaNaLevelView:_onResetClick()
 	if TianShiNaNaHelper.isBanOper() then
 		return
 	end
 
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.Act167Reset, MsgBoxEnum.BoxType.Yes_No, arg_7_0._sendReset, nil, nil, arg_7_0)
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.Act167Reset, MsgBoxEnum.BoxType.Yes_No, self._sendReset, nil, nil, self)
 end
 
-function var_0_0._sendReset(arg_8_0)
+function TianShiNaNaLevelView:_sendReset()
 	Activity167Rpc.instance:sendAct167ReStartEpisodeRequest(VersionActivity2_2Enum.ActivityId.TianShiNaNa, TianShiNaNaModel.instance.episodeCo.id)
 end
 
-function var_0_0._onStatuChange(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_2 == TianShiNaNaEnum.CurState.SelectDir then
-		arg_9_0._txtTips2.text = luaLang("act167_place")
+function TianShiNaNaLevelView:_onStatuChange(preStatu, nowStatu)
+	if nowStatu == TianShiNaNaEnum.CurState.SelectDir then
+		self._txtTips2.text = luaLang("act167_place")
 
-		gohelper.setActive(arg_9_0._goTips2, true)
-		arg_9_0:setHeadTips(true)
-	elseif arg_9_2 == TianShiNaNaEnum.CurState.Rotate then
-		arg_9_0._txtTips2.text = luaLang("act167_slide")
+		gohelper.setActive(self._goTips2, true)
+		self:setHeadTips(true)
+	elseif nowStatu == TianShiNaNaEnum.CurState.Rotate then
+		self._txtTips2.text = luaLang("act167_slide")
 
-		gohelper.setActive(arg_9_0._goTips2, true)
-		arg_9_0:setHeadTips(true)
+		gohelper.setActive(self._goTips2, true)
+		self:setHeadTips(true)
 	else
-		arg_9_0:setHeadTips(false)
-		gohelper.setActive(arg_9_0._goTips2, false)
+		self:setHeadTips(false)
+		gohelper.setActive(self._goTips2, false)
 	end
 end
 
-function var_0_0._onClickJumpRound(arg_10_0)
-	arg_10_0:setHeadTips(false)
-	gohelper.setActive(arg_10_0._goTips2, false)
+function TianShiNaNaLevelView:_onClickJumpRound()
+	self:setHeadTips(false)
+	gohelper.setActive(self._goTips2, false)
 end
 
-function var_0_0.setHeadTips(arg_11_0, arg_11_1)
-	if arg_11_1 then
-		gohelper.setActive(arg_11_0._headTips, true)
+function TianShiNaNaLevelView:setHeadTips(isShow)
+	if isShow then
+		gohelper.setActive(self._headTips, true)
 
-		local var_11_0 = TianShiNaNaModel.instance:getNextCubeType()
+		local nextCubeType = TianShiNaNaModel.instance:getNextCubeType()
 
-		gohelper.setActive(arg_11_0._headTips1, var_11_0 == 2)
-		gohelper.setActive(arg_11_0._headTips2, var_11_0 == 1)
+		gohelper.setActive(self._headTips1, nextCubeType == 2)
+		gohelper.setActive(self._headTips2, nextCubeType == 1)
 	else
-		gohelper.setActive(arg_11_0._headTips, false)
+		gohelper.setActive(self._headTips, false)
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function TianShiNaNaLevelView:onClose()
 	GuideModel.instance:setFlag(GuideModel.GuideFlag.MaskUseMainCamera, nil)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.stop_ui_youyu_foot)
 	TianShiNaNaModel.instance:sendStat("主动中断")
 end
 
-return var_0_0
+return TianShiNaNaLevelView

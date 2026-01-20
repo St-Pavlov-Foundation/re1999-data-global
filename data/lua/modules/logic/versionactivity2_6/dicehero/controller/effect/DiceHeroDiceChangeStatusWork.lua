@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroDiceChangeStatusWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/effect/DiceHeroDiceChangeStatusWork.lua
 
-local var_0_0 = class("DiceHeroDiceChangeStatusWork", DiceHeroBaseEffectWork)
+module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroDiceChangeStatusWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = DiceHeroHelper.instance:getDice(arg_1_0._effectMo.targetId)
+local DiceHeroDiceChangeStatusWork = class("DiceHeroDiceChangeStatusWork", DiceHeroBaseEffectWork)
 
-	if not var_1_0 or not var_1_0.diceMo then
-		logError("骰子uid不存在" .. arg_1_0._effectMo.targetId)
+function DiceHeroDiceChangeStatusWork:onStart(context)
+	local diceItem = DiceHeroHelper.instance:getDice(self._effectMo.targetId)
 
-		return arg_1_0:onDone(true)
+	if not diceItem or not diceItem.diceMo then
+		logError("骰子uid不存在" .. self._effectMo.targetId)
+
+		return self:onDone(true)
 	end
 
-	var_1_0.diceMo.status = arg_1_0._effectMo.effectNum
+	diceItem.diceMo.status = self._effectMo.effectNum
 
-	var_1_0:refreshLock()
-	arg_1_0:onDone(true)
+	diceItem:refreshLock()
+	self:onDone(true)
 end
 
-return var_0_0
+return DiceHeroDiceChangeStatusWork

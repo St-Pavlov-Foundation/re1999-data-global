@@ -1,28 +1,30 @@
-﻿module("modules.logic.rouge.dlc.101.model.RougeLimiterDebuffOverListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/model/RougeLimiterDebuffOverListModel.lua
 
-local var_0_0 = class("RougeLimiterDebuffOverListModel", ListScrollModel)
+module("modules.logic.rouge.dlc.101.model.RougeLimiterDebuffOverListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0, arg_1_1)
-	arg_1_0:initLimiterGroupList(arg_1_1)
+local RougeLimiterDebuffOverListModel = class("RougeLimiterDebuffOverListModel", ListScrollModel)
+
+function RougeLimiterDebuffOverListModel:onInit(limiterIds)
+	self:initLimiterGroupList(limiterIds)
 end
 
-function var_0_0.initLimiterGroupList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function RougeLimiterDebuffOverListModel:initLimiterGroupList(limiterIds)
+	local list = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1 or {}) do
-		local var_2_1 = RougeDLCConfig101.instance:getLimiterCo(iter_2_1)
+	for _, limiterId in ipairs(limiterIds or {}) do
+		local limiterCo = RougeDLCConfig101.instance:getLimiterCo(limiterId)
 
-		table.insert(var_2_0, var_2_1)
+		table.insert(list, limiterCo)
 	end
 
-	table.sort(var_2_0, arg_2_0._debuffSortFunc)
-	arg_2_0:setList(var_2_0)
+	table.sort(list, self._debuffSortFunc)
+	self:setList(list)
 end
 
-function var_0_0._debuffSortFunc(arg_3_0, arg_3_1)
-	return arg_3_0.id < arg_3_1.id
+function RougeLimiterDebuffOverListModel._debuffSortFunc(aLimiterCo, bLimiterCo)
+	return aLimiterCo.id < bLimiterCo.id
 end
 
-var_0_0.instance = var_0_0.New()
+RougeLimiterDebuffOverListModel.instance = RougeLimiterDebuffOverListModel.New()
 
-return var_0_0
+return RougeLimiterDebuffOverListModel

@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotRoomController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/controller/V1a6_CachotRoomController.lua
 
-local var_0_0 = class("V1a6_CachotRoomController", BaseController)
+module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotRoomController", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0._isSwitchLevel = nil
+local V1a6_CachotRoomController = class("V1a6_CachotRoomController", BaseController)
 
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, arg_1_0._switchLevel, arg_1_0)
+function V1a6_CachotRoomController:reInit()
+	self._isSwitchLevel = nil
+
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, self._switchLevel, self)
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChange, arg_2_0._checkAndSwitchLevel, arg_2_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_2_0._playRoomViewOpenAnim, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._checkAndSwitchLevel, arg_2_0)
+function V1a6_CachotRoomController:addConstEvents()
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomChange, self._checkAndSwitchLevel, self)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._playRoomViewOpenAnim, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._checkAndSwitchLevel, self)
 end
 
-function var_0_0._checkAndSwitchLevel(arg_3_0)
+function V1a6_CachotRoomController:_checkAndSwitchLevel()
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Cachot then
 		return
 	end
@@ -23,9 +25,9 @@ function var_0_0._checkAndSwitchLevel(arg_3_0)
 		return
 	end
 
-	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not var_3_0 then
+	if not rogueInfo then
 		return
 	end
 
@@ -39,44 +41,44 @@ function var_0_0._checkAndSwitchLevel(arg_3_0)
 
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomChangeBegin)
 
-	local var_3_1 = V1a6_CachotConfig.instance:getSceneLevelId(var_3_0.sceneId)
+	local levelId = V1a6_CachotConfig.instance:getSceneLevelId(rogueInfo.sceneId)
 
 	if V1a6_CachotRoomModel.instance:getLayerIsChange() then
 		V1a6_CachotRoomModel.instance:clearRoomChangeStatus()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingCachotChangeView)
-		GameSceneMgr.instance:startScene(SceneType.Cachot, 90001, var_3_1, true, true)
+		GameSceneMgr.instance:startScene(SceneType.Cachot, 90001, levelId, true, true)
 	else
 		V1a6_CachotRoomModel.instance:clearRoomChangeStatus()
-		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, arg_3_0._switchLevel, arg_3_0)
+		V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, self._switchLevel, self)
 	end
 end
 
-function var_0_0._switchLevel(arg_4_0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, arg_4_0._switchLevel, arg_4_0)
+function V1a6_CachotRoomController:_switchLevel()
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.RoomViewOpenAnimEnd, self._switchLevel, self)
 
-	local var_4_0 = V1a6_CachotModel.instance:getRogueInfo()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not var_4_0 then
+	if not rogueInfo then
 		return
 	end
 
-	local var_4_1 = V1a6_CachotConfig.instance:getSceneLevelId(var_4_0.sceneId)
+	local levelId = V1a6_CachotConfig.instance:getSceneLevelId(rogueInfo.sceneId)
 
-	arg_4_0._isSwitchLevel = true
+	self._isSwitchLevel = true
 
-	GameSceneMgr.instance:getCurScene().level:switchLevel(var_4_1)
+	GameSceneMgr.instance:getCurScene().level:switchLevel(levelId)
 end
 
-function var_0_0._playRoomViewOpenAnim(arg_5_0, arg_5_1)
+function V1a6_CachotRoomController:_playRoomViewOpenAnim(levelId)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Cachot then
 		return
 	end
 
-	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomChangePlayAnim, arg_5_0._isSwitchLevel)
+	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.RoomChangePlayAnim, self._isSwitchLevel)
 
-	arg_5_0._isSwitchLevel = nil
+	self._isSwitchLevel = nil
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotRoomController.instance = V1a6_CachotRoomController.New()
 
-return var_0_0
+return V1a6_CachotRoomController

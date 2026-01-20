@@ -1,95 +1,97 @@
-﻿module("modules.logic.gm.view.GM_SummonPoolHistoryView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_SummonPoolHistoryView.lua
 
-local var_0_0 = class("GM_SummonPoolHistoryView", BaseView)
-local var_0_1 = "#00FF00"
+module("modules.logic.gm.view.GM_SummonPoolHistoryView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.SummonPoolHistoryView_register(SummonPoolHistoryView)
-	var_0_0.SummonPoolHistoryTypeItem_register(SummonPoolHistoryTypeItem)
+local GM_SummonPoolHistoryView = class("GM_SummonPoolHistoryView", BaseView)
+local kGreen = "#00FF00"
+
+function GM_SummonPoolHistoryView.register()
+	GM_SummonPoolHistoryView.SummonPoolHistoryView_register(SummonPoolHistoryView)
+	GM_SummonPoolHistoryView.SummonPoolHistoryTypeItem_register(SummonPoolHistoryTypeItem)
 end
 
-function var_0_0.SummonPoolHistoryView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+function GM_SummonPoolHistoryView.SummonPoolHistoryView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_3_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
-		GM_SummonPoolHistoryViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_SummonPoolHistoryViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_SummonPoolHistoryViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_SummonPoolHistoryViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
+	function T._gm_showAllTabIdUpdate(selfObj)
 		SummonPoolHistoryTypeListModel.instance:onModelUpdate()
 	end
 end
 
-function var_0_0.SummonPoolHistoryTypeItem_register(arg_7_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "onUpdateMO")
+function GM_SummonPoolHistoryView.SummonPoolHistoryTypeItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "onUpdateMO")
 
-	function arg_7_0.onUpdateMO(arg_8_0, arg_8_1, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "onUpdateMO", arg_8_1, ...)
+	function T.onUpdateMO(selfObj, mo, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "onUpdateMO", mo, ...)
 
-		if not var_0_0.s_ShowAllTabId then
+		if not GM_SummonPoolHistoryView.s_ShowAllTabId then
 			return
 		end
 
-		local var_8_0 = arg_8_1.config
-		local var_8_1 = var_8_0.name .. gohelper.getRichColorText(var_8_0.id, var_0_1)
+		local config = mo.config
+		local desc = config.name .. gohelper.getRichColorText(config.id, kGreen)
 
-		arg_8_0._txtunname.text = var_8_1
-		arg_8_0._txtname.text = var_8_1
+		selfObj._txtunname.text = desc
+		selfObj._txtname.text = desc
 	end
 end
 
-function var_0_0.onInitView(arg_9_0)
-	arg_9_0._btnClose = gohelper.findChildButtonWithAudio(arg_9_0.viewGO, "btnClose")
-	arg_9_0._item1Toggle = gohelper.findChildToggle(arg_9_0.viewGO, "viewport/content/item1/Toggle")
+function GM_SummonPoolHistoryView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
 end
 
-function var_0_0.addEvents(arg_10_0)
-	arg_10_0._btnClose:AddClickListener(arg_10_0.closeThis, arg_10_0)
-	arg_10_0._item1Toggle:AddOnValueChanged(arg_10_0._onItem1ToggleValueChanged, arg_10_0)
+function GM_SummonPoolHistoryView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_11_0)
-	arg_11_0._btnClose:RemoveClickListener()
-	arg_11_0._item1Toggle:RemoveOnValueChanged()
+function GM_SummonPoolHistoryView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:_refreshItem1()
+function GM_SummonPoolHistoryView:onOpen()
+	self:_refreshItem1()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function GM_SummonPoolHistoryView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_SummonPoolHistoryView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem1(arg_14_0)
-	local var_14_0 = var_0_0.s_ShowAllTabId
+function GM_SummonPoolHistoryView:_refreshItem1()
+	local isOn = GM_SummonPoolHistoryView.s_ShowAllTabId
 
-	arg_14_0._item1Toggle.isOn = var_14_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_15_0)
-	local var_15_0 = arg_15_0._item1Toggle.isOn
+function GM_SummonPoolHistoryView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_15_0
+	GM_SummonPoolHistoryView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.SummonPoolHistoryView_ShowAllTabIdUpdate, var_15_0)
+	GMController.instance:dispatchEvent(GMEvent.SummonPoolHistoryView_ShowAllTabIdUpdate, isOn)
 end
 
-return var_0_0
+return GM_SummonPoolHistoryView

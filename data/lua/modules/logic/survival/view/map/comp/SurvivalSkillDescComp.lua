@@ -1,13 +1,15 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalSkillDescComp", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalSkillDescComp.lua
 
-local var_0_0 = class("SurvivalSkillDescComp", SkillDescComp)
+module("modules.logic.survival.view.map.comp.SurvivalSkillDescComp", package.seeall)
 
-function var_0_0.getNumberColor(arg_1_0)
+local SurvivalSkillDescComp = class("SurvivalSkillDescComp", SkillDescComp)
+
+function SurvivalSkillDescComp:getNumberColor()
 	return "#A74D23"
 end
 
-function var_0_0.getLinkColor(arg_2_0)
+function SurvivalSkillDescComp:getLinkColor()
 	return "#4E6698"
 end
 
-return var_0_0
+return SurvivalSkillDescComp

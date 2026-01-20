@@ -1,167 +1,177 @@
-﻿module("modules.logic.mainuiswitch.view.MainUIPartView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUIPartView.lua
 
-local var_0_0 = class("MainUIPartView", BaseView)
+module("modules.logic.mainuiswitch.view.MainUIPartView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goactbottomDec = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_contentbg/act_bottomDec")
+local MainUIPartView = class("MainUIPartView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainUIPartView:onInitView()
+	self._goactbottomDec = gohelper.findChild(self.viewGO, "bottom/#go_contentbg/act_bottomDec")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, arg_2_0.refreshMainUI, arg_2_0)
-	arg_2_0:addEventCb(MainController.instance, MainEvent.SetMainViewVisible, arg_2_0._setViewVisible, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._OnCloseViewFinish, arg_2_0, LuaEventSystem.Low)
+function MainUIPartView:addEvents()
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshMainUI, self)
+	self:addEventCb(MainController.instance, MainEvent.SetMainViewVisible, self._setViewVisible, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, arg_3_0.refreshMainUI, arg_3_0)
-	arg_3_0:removeEventCb(MainController.instance, MainEvent.SetMainViewVisible, arg_3_0._setViewVisible, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._OnCloseViewFinish, arg_3_0, LuaEventSystem.Low)
+function MainUIPartView:removeEvents()
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshMainUI, self)
+	self:removeEventCb(MainController.instance, MainEvent.SetMainViewVisible, self._setViewVisible, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0._OnCloseViewFinish(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.LoadingView then
-		arg_4_0:_setViewVisible(true)
+function MainUIPartView:_OnCloseViewFinish(viewName)
+	if viewName == ViewName.LoadingView then
+		self:_setViewVisible(true)
 	end
 end
 
-function var_0_0._setViewVisible(arg_5_0, arg_5_1)
-	if arg_5_1 and arg_5_0._uiId then
-		if arg_5_0._uiId == MainUISwitchEnum.Skin.Normal then
-			if not arg_5_0._aniroommask then
-				arg_5_0._aniroommask = gohelper.findChild(arg_5_0.viewGO, "right/#btn_summon/1/mask/image"):GetComponent(typeof(UnityEngine.Animation))
+function MainUIPartView:_setViewVisible(value)
+	if value and self._uiId then
+		if self._uiId == MainUISwitchEnum.Skin.Normal then
+			if not self._aniroommask then
+				local goani = gohelper.findChild(self.viewGO, "right/#btn_summon/1/mask/image")
+
+				self._aniroommask = goani:GetComponent(typeof(UnityEngine.Animation))
 			end
 
-			arg_5_0._aniroommask:Play()
+			self._aniroommask:Play()
 		else
-			if not arg_5_0._aniroommask1 then
-				arg_5_0._aniroommask1 = gohelper.findChild(arg_5_0.viewGO, "right/#btn_summon/2/icon/mask1/image"):GetComponent(typeof(UnityEngine.Animator))
+			if not self._aniroommask1 then
+				local goani = gohelper.findChild(self.viewGO, "right/#btn_summon/2/icon/mask1/image")
+
+				self._aniroommask1 = goani:GetComponent(typeof(UnityEngine.Animator))
 			end
 
-			arg_5_0._aniroommask1:Play("in", 0, 0)
+			self._aniroommask1:Play("in", 0, 0)
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam and arg_6_0.viewParam.SkinId
+function MainUIPartView:onOpen()
+	local skinId = self.viewParam and self.viewParam.SkinId
 
-	arg_6_0:refreshMainUI(var_6_0)
+	self:refreshMainUI(skinId)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "right/#btn_role/2/act_rolehead/ani")
+function MainUIPartView:_editableInitView()
+	local anim = gohelper.findChild(self.viewGO, "right/#btn_role/2/act_rolehead/ani")
 
-	arg_7_0._imagerolehead = gohelper.findChildImage(var_7_0, "act_rolehead")
-	arg_7_0._animrolehead = var_7_0:GetComponent(typeof(UnityEngine.Animator))
+	self._imagerolehead = gohelper.findChildImage(anim, "act_rolehead")
+	self._animrolehead = anim:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0._initMainUIPart(arg_8_0)
-	local var_8_0 = gohelper.findChild(arg_8_0.viewGO, "left/#btn_mail")
-	local var_8_1 = gohelper.findChild(arg_8_0.viewGO, "left/#btn_storage")
-	local var_8_2 = gohelper.findChild(arg_8_0.viewGO, "left/#btn_quest/btn")
-	local var_8_3 = gohelper.findChild(arg_8_0.viewGO, "left/#btn_bank")
-	local var_8_4 = gohelper.findChild(arg_8_0.viewGO, "right/#btn_room")
-	local var_8_5 = gohelper.findChild(arg_8_0.viewGO, "right/#btn_role")
-	local var_8_6 = gohelper.findChild(arg_8_0.viewGO, "right/#btn_summon")
-	local var_8_7 = gohelper.findChild(arg_8_0.viewGO, "right/#btn_power")
-	local var_8_8 = gohelper.findChild(arg_8_0.viewGO, "right/go_fight")
-	local var_8_9 = gohelper.findChild(arg_8_0.viewGO, "right/go_fight/#go_activityfight/#btn_fight")
-	local var_8_10 = gohelper.findChild(arg_8_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight")
-	local var_8_11 = gohelper.findChild(arg_8_0.viewGO, "right/go_fight/#go_normalfight/#btn_fight")
+function MainUIPartView:_initMainUIPart()
+	local gomail = gohelper.findChild(self.viewGO, "left/#btn_mail")
+	local gostorage = gohelper.findChild(self.viewGO, "left/#btn_storage")
+	local goquest = gohelper.findChild(self.viewGO, "left/#btn_quest/btn")
+	local gobank = gohelper.findChild(self.viewGO, "left/#btn_bank")
+	local gobankeffect = gohelper.findChild(self.viewGO, "left/#btn_bank/#go_bankeffect")
+	local goroom = gohelper.findChild(self.viewGO, "right/#btn_room")
+	local gorole = gohelper.findChild(self.viewGO, "right/#btn_role")
+	local gosummon = gohelper.findChild(self.viewGO, "right/#btn_summon")
+	local gopower = gohelper.findChild(self.viewGO, "right/#btn_power")
+	local gofight = gohelper.findChild(self.viewGO, "right/go_fight")
+	local goactivityfight = gohelper.findChild(self.viewGO, "right/go_fight/#go_activityfight/#btn_fight")
+	local gonormaljumpfight = gohelper.findChild(self.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight")
+	local gonormalfight = gohelper.findChild(self.viewGO, "right/go_fight/#go_normalfight/#btn_fight")
 
-	arg_8_0._mainUIParts = arg_8_0:getUserDataTb_()
+	self._mainUIParts = self:getUserDataTb_()
 
-	for iter_8_0, iter_8_1 in pairs(MainUISwitchEnum.Skin) do
-		local var_8_12 = arg_8_0._mainUIParts[iter_8_1]
+	for _, skinId in pairs(MainUISwitchEnum.Skin) do
+		local skinTb = self._mainUIParts[skinId]
 
-		if not var_8_12 then
-			var_8_12 = arg_8_0:getUserDataTb_()
-			arg_8_0._mainUIParts[iter_8_1] = var_8_12
+		if not skinTb then
+			skinTb = self:getUserDataTb_()
+			self._mainUIParts[skinId] = skinTb
 		end
 
-		var_8_12[MainUISwitchEnum.MainUIPart.Mail] = gohelper.findChild(var_8_0, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Quest] = gohelper.findChild(var_8_1, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Storage] = gohelper.findChild(var_8_2, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Bank] = gohelper.findChild(var_8_3, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Room] = gohelper.findChild(var_8_4, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Role] = gohelper.findChild(var_8_5, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Summon] = gohelper.findChild(var_8_6, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Power] = gohelper.findChild(var_8_7, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.Fight] = gohelper.findChild(var_8_8, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.ActivityFight] = gohelper.findChild(var_8_9, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.NormalFight] = gohelper.findChild(var_8_11, iter_8_1)
-		var_8_12[MainUISwitchEnum.MainUIPart.NormalJumpFight] = gohelper.findChild(var_8_10, iter_8_1)
+		skinTb[MainUISwitchEnum.MainUIPart.Mail] = gohelper.findChild(gomail, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Quest] = gohelper.findChild(gostorage, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Storage] = gohelper.findChild(goquest, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Bank] = gohelper.findChild(gobank, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Room] = gohelper.findChild(goroom, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Role] = gohelper.findChild(gorole, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Summon] = gohelper.findChild(gosummon, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Power] = gohelper.findChild(gopower, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.Fight] = gohelper.findChild(gofight, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.ActivityFight] = gohelper.findChild(goactivityfight, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.NormalFight] = gohelper.findChild(gonormalfight, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.NormalJumpFight] = gohelper.findChild(gonormaljumpfight, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.BankEffect] = gohelper.findChild(gobankeffect, skinId)
 	end
 end
 
-function var_0_0.refreshMainUI(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or MainUISwitchModel.instance:getCurUseUI()
+function MainUIPartView:refreshMainUI(id)
+	id = id or MainUISwitchModel.instance:getCurUseUI()
 
-	if arg_9_0._uiId == arg_9_1 then
+	if self._uiId == id then
 		return
 	end
 
-	arg_9_0._uiId = arg_9_1
-	arg_9_0._bankeffect = 1
+	self._uiId = id
+	self._bankeffect = 1
 
-	if not arg_9_0._mainUIParts then
-		arg_9_0:_initMainUIPart()
+	if not self._mainUIParts then
+		self:_initMainUIPart()
 	end
 
-	for iter_9_0, iter_9_1 in pairs(MainUISwitchEnum.Skin) do
-		local var_9_0 = arg_9_0._mainUIParts[iter_9_1]
+	for _, skinId in pairs(MainUISwitchEnum.Skin) do
+		local skinTb = self._mainUIParts[skinId]
 
-		for iter_9_2, iter_9_3 in pairs(MainUISwitchEnum.MainUIPart) do
-			local var_9_1 = var_9_0[iter_9_3]
+		for _, part in pairs(MainUISwitchEnum.MainUIPart) do
+			local obj = skinTb[part]
 
-			if arg_9_1 == iter_9_1 then
-				var_9_1 = var_9_1 or arg_9_0._mainUIParts[MainUISwitchEnum.Skin.Normal][iter_9_3]
+			if id == skinId then
+				obj = obj or self._mainUIParts[MainUISwitchEnum.Skin.Normal][part]
 
-				gohelper.setActive(var_9_1, true)
-			else
-				local var_9_2 = arg_9_0._mainUIParts[arg_9_1][iter_9_3]
+				gohelper.setActive(obj, true)
+			elseif self._mainUIParts[id] then
+				local skinObj = self._mainUIParts[id][part]
 
-				if var_9_1 and var_9_2 ~= var_9_1 then
-					gohelper.setActive(var_9_1, false)
+				skinObj = skinObj or self._mainUIParts[MainUISwitchEnum.Skin.Normal][part]
+
+				if obj and skinObj and skinObj ~= obj then
+					gohelper.setActive(obj, false)
 				end
 			end
 		end
 	end
 
-	gohelper.setActive(arg_9_0._goactbottomDec, arg_9_1 == MainUISwitchEnum.Skin.Sp01)
-	TaskDispatcher.cancelTask(arg_9_0._cutRoleHead, arg_9_0)
+	gohelper.setActive(self._goactbottomDec, id == MainUISwitchEnum.Skin.Sp01)
+	TaskDispatcher.cancelTask(self._cutRoleHead, self)
 
-	if arg_9_1 == MainUISwitchEnum.Skin.Sp01 then
-		arg_9_0:_delayCutHead()
-		TaskDispatcher.runRepeat(arg_9_0._cutRoleHead, arg_9_0, MainUISwitchEnum.HeadCutTime)
+	if id == MainUISwitchEnum.Skin.Sp01 then
+		self:_delayCutHead()
+		TaskDispatcher.runRepeat(self._cutRoleHead, self, MainUISwitchEnum.HeadCutTime)
 	end
 
-	arg_9_0:_setViewVisible(true)
+	self:_setViewVisible(true)
 end
 
-function var_0_0._cutRoleHead(arg_10_0)
-	arg_10_0._animrolehead:Play(MainUISwitchEnum.AnimName.Switch, 0, 0)
-	TaskDispatcher.cancelTask(arg_10_0._delayCutHead, arg_10_0)
-	TaskDispatcher.runDelay(arg_10_0._delayCutHead, arg_10_0, MainUISwitchEnum.HeadCutLoadime)
+function MainUIPartView:_cutRoleHead()
+	self._animrolehead:Play(MainUISwitchEnum.AnimName.Switch, 0, 0)
+	TaskDispatcher.cancelTask(self._delayCutHead, self)
+	TaskDispatcher.runDelay(self._delayCutHead, self, MainUISwitchEnum.HeadCutLoadime)
 end
 
-function var_0_0._delayCutHead(arg_11_0)
-	local var_11_0 = math.random(1, 3)
+function MainUIPartView:_delayCutHead()
+	local random = math.random(1, 3)
 
-	UISpriteSetMgr.instance:setMainSprite(arg_11_0._imagerolehead, "main_act_rolehead_" .. var_11_0, true)
+	UISpriteSetMgr.instance:setMainSprite(self._imagerolehead, "main_act_rolehead_" .. random, true)
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._cutRoleHead, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._delayCutHead, arg_12_0)
+function MainUIPartView:onClose()
+	TaskDispatcher.cancelTask(self._cutRoleHead, self)
+	TaskDispatcher.cancelTask(self._delayCutHead, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function MainUIPartView:onDestroyView()
 	return
 end
 
-return var_0_0
+return MainUIPartView

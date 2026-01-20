@@ -1,87 +1,90 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyLevelRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyLevelRewardView.lua
 
-local var_0_0 = class("OdysseyLevelRewardView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyLevelRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollRewardList = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/Reward/#scroll_RewardList")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "root/Reward/#scroll_RewardList/Viewport/#go_Content")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "root/Reward/#scroll_RewardList/Viewport/#go_Content/#go_rewarditem")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "root/Level/image_level/#txt_level")
-	arg_1_0._imageexpProgress = gohelper.findChildImage(arg_1_0.viewGO, "root/Level/image_level/#image_expProgress")
-	arg_1_0._txtexp = gohelper.findChildText(arg_1_0.viewGO, "root/Level/image_exp/#txt_exp")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+local OdysseyLevelRewardView = class("OdysseyLevelRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyLevelRewardView:onInitView()
+	self._scrollRewardList = gohelper.findChildScrollRect(self.viewGO, "root/Reward/#scroll_RewardList")
+	self._goContent = gohelper.findChild(self.viewGO, "root/Reward/#scroll_RewardList/Viewport/#go_Content")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "root/Reward/#scroll_RewardList/Viewport/#go_Content/#go_rewarditem")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "root/Level/image_level/#txt_level")
+	self._imageexpProgress = gohelper.findChildImage(self.viewGO, "root/Level/image_level/#image_expProgress")
+	self._txtexp = gohelper.findChildText(self.viewGO, "root/Level/image_exp/#txt_exp")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, arg_2_0.refreshUI, arg_2_0)
+function OdysseyLevelRewardView:addEvents()
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, arg_3_0.refreshUI, arg_3_0)
+function OdysseyLevelRewardView:removeEvents()
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, self.refreshUI, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gorewarditem, false)
+function OdysseyLevelRewardView:_editableInitView()
+	gohelper.setActive(self._gorewarditem, false)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function OdysseyLevelRewardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function OdysseyLevelRewardView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_award)
-	arg_6_0:refreshUI()
-	arg_6_0:setScrollMove()
+	self:refreshUI()
+	self:setScrollMove()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	arg_7_0.curLevel, arg_7_0.curExp = OdysseyModel.instance:getHeroCurLevelAndExp()
+function OdysseyLevelRewardView:refreshUI()
+	self.curLevel, self.curExp = OdysseyModel.instance:getHeroCurLevelAndExp()
 
-	local var_7_0 = OdysseyConfig.instance:getLevelConfig(arg_7_0.curLevel)
+	local curLevelConfig = OdysseyConfig.instance:getLevelConfig(self.curLevel)
 
-	arg_7_0._txtlevel.text = arg_7_0.curLevel
-	arg_7_0._imageexpProgress.fillAmount = var_7_0 and var_7_0.needExp > 0 and arg_7_0.curExp / var_7_0.needExp or 1
-	arg_7_0._txtexp.text = var_7_0 and var_7_0.needExp > 0 and string.format("XP: <#ffac54>%s</color>/%s", arg_7_0.curExp, var_7_0.needExp) or "XP: MAX"
+	self._txtlevel.text = self.curLevel
+	self._imageexpProgress.fillAmount = curLevelConfig and curLevelConfig.needExp > 0 and self.curExp / curLevelConfig.needExp or 1
+	self._txtexp.text = curLevelConfig and curLevelConfig.needExp > 0 and string.format("XP: <#ffac54>%s</color>/%s", self.curExp, curLevelConfig.needExp) or "XP: MAX"
 end
 
-var_0_0.rewardItemWidth = 384
-var_0_0.rewardItemSpace = 42
-var_0_0.leftOffset = 18
+OdysseyLevelRewardView.rewardItemWidth = 384
+OdysseyLevelRewardView.rewardItemSpace = 42
+OdysseyLevelRewardView.leftOffset = 18
 
-function var_0_0.setScrollMove(arg_8_0)
-	local var_8_0 = recthelper.getWidth(arg_8_0._scrollRewardList.gameObject.transform)
-	local var_8_1 = var_0_0.rewardItemWidth + var_0_0.rewardItemSpace
+function OdysseyLevelRewardView:setScrollMove()
+	local scrollWidth = recthelper.getWidth(self._scrollRewardList.gameObject.transform)
+	local itemWidth = OdysseyLevelRewardView.rewardItemWidth + OdysseyLevelRewardView.rewardItemSpace
 
-	arg_8_0.taskList = OdysseyTaskModel.instance:getCurTaskList(OdysseyEnum.TaskType.LevelReward)
+	self.taskList = OdysseyTaskModel.instance:getCurTaskList(OdysseyEnum.TaskType.LevelReward)
 
-	if #arg_8_0.taskList == 0 then
-		recthelper.setAnchorX(arg_8_0._goContent.transform, 0)
+	if #self.taskList == 0 then
+		recthelper.setAnchorX(self._goContent.transform, 0)
 
 		return
 	end
 
-	local var_8_2 = #arg_8_0.taskList * var_8_1 - var_0_0.rewardItemSpace + var_0_0.leftOffset - var_8_0
-	local var_8_3 = OdysseyTaskModel.instance:getAllCanGetMoList(OdysseyEnum.TaskType.LevelReward)
+	local scrollMaxMoveX = #self.taskList * itemWidth - OdysseyLevelRewardView.rewardItemSpace + OdysseyLevelRewardView.leftOffset - scrollWidth
+	local allCanGetList = OdysseyTaskModel.instance:getAllCanGetMoList(OdysseyEnum.TaskType.LevelReward)
 
-	if #var_8_3 > 0 then
-		local var_8_4 = var_8_3[1].config.maxProgress
+	if #allCanGetList > 0 then
+		local firstCanGetMo = allCanGetList[1]
+		local firstCanGetLevel = firstCanGetMo.config.maxProgress
 
-		recthelper.setAnchorX(arg_8_0._goContent.transform, Mathf.Max(-Mathf.Max(var_8_4 - 3, 0) * var_8_1), -var_8_2)
+		recthelper.setAnchorX(self._goContent.transform, Mathf.Max(-Mathf.Max(firstCanGetLevel - 3, 0) * itemWidth), -scrollMaxMoveX)
 	else
-		recthelper.setAnchorX(arg_8_0._goContent.transform, Mathf.Max(-Mathf.Max(arg_8_0.curLevel - 2, 0) * var_8_1), -var_8_2)
+		recthelper.setAnchorX(self._goContent.transform, Mathf.Max(-Mathf.Max(self.curLevel - 2, 0) * itemWidth), -scrollMaxMoveX)
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function OdysseyLevelRewardView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function OdysseyLevelRewardView:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseyLevelRewardView

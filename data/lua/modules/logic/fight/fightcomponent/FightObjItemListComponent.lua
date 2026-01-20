@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.fightcomponent.FightObjItemListComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightObjItemListComponent.lua
 
-local var_0_0 = class("FightObjItemListComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightObjItemListComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightObjItemListComponent = class("FightObjItemListComponent", FightBaseClass)
+
+function FightObjItemListComponent:onConstructor()
 	return
 end
 
-function var_0_0.registObjItemList(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	return arg_2_0:newClass(FightObjItemListItem, arg_2_1, arg_2_2, arg_2_3)
+function FightObjItemListComponent:registObjItemList(gameObject, itemClass, parentObject)
+	return self:newClass(FightObjItemListItem, gameObject, itemClass, parentObject)
 end
 
-function var_0_0.registViewItemList(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	return arg_3_0:newClass(FightViewItemListItem, arg_3_1, arg_3_2, arg_3_3)
+function FightObjItemListComponent:registViewItemList(gameObject, itemClass, parentObject)
+	return self:newClass(FightViewItemListItem, gameObject, itemClass, parentObject)
 end
 
-function var_0_0.onDestructor(arg_4_0)
+function FightObjItemListComponent:onDestructor()
 	return
 end
 
-return var_0_0
+return FightObjItemListComponent

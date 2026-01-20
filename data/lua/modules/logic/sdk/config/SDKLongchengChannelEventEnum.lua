@@ -1,29 +1,31 @@
-﻿module("modules.logic.sdk.config.SDKLongchengChannelEventEnum", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/config/SDKLongchengChannelEventEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.sdk.config.SDKLongchengChannelEventEnum", package.seeall)
 
-var_0_0.EpisodePass = {}
-var_0_0.PlayerLevelUp = {
+local SDKLongchengChannelEventEnum = _M
+
+SDKLongchengChannelEventEnum.EpisodePass = {}
+SDKLongchengChannelEventEnum.PlayerLevelUp = {
 	[5] = "stdlevel"
 }
-var_0_0.FirstSummon = "stdhour1"
-var_0_0.FirstPurchase = "firstpurchase"
-var_0_0.GetMaxRareHero = "stdhour3"
-var_0_0.FirstBuyPower = "stdexhausted"
-var_0_0.FirstExchangeDiamond = "stdlackofdiamonds"
-var_0_0.AppReviewePisodeId = 10115
-var_0_0.Purchase = {}
-var_0_0.DailyTaskActive = {}
-var_0_0.TotalChargeAmount = {}
-var_0_0.ConsumeItem = {}
-var_0_0.Summon = {
+SDKLongchengChannelEventEnum.FirstSummon = "stdhour1"
+SDKLongchengChannelEventEnum.FirstPurchase = "firstpurchase"
+SDKLongchengChannelEventEnum.GetMaxRareHero = "stdhour3"
+SDKLongchengChannelEventEnum.FirstBuyPower = "stdexhausted"
+SDKLongchengChannelEventEnum.FirstExchangeDiamond = "stdlackofdiamonds"
+SDKLongchengChannelEventEnum.AppReviewePisodeId = 10115
+SDKLongchengChannelEventEnum.Purchase = {}
+SDKLongchengChannelEventEnum.DailyTaskActive = {}
+SDKLongchengChannelEventEnum.TotalChargeAmount = {}
+SDKLongchengChannelEventEnum.ConsumeItem = {}
+SDKLongchengChannelEventEnum.Summon = {
 	[100] = "stdstaminapurchase"
 }
-var_0_0.HeroRankUp = {
+SDKLongchengChannelEventEnum.HeroRankUp = {
 	nil,
 	"stdrechargeprompt",
 	"stdrecharge",
 	"stdmonthly"
 }
 
-return var_0_0
+return SDKLongchengChannelEventEnum

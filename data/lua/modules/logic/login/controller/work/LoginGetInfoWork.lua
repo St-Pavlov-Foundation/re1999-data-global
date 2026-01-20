@@ -1,9 +1,11 @@
-﻿module("modules.logic.login.controller.work.LoginGetInfoWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/work/LoginGetInfoWork.lua
 
-local var_0_0 = class("LoginGetInfoWork", BaseWork)
+module("modules.logic.login.controller.work.LoginGetInfoWork", package.seeall)
 
-function var_0_0._initInfo(arg_1_0)
-	arg_1_0.GetInfoFuncList = {
+local LoginGetInfoWork = class("LoginGetInfoWork", BaseWork)
+
+function LoginGetInfoWork:_initInfo()
+	self.GetInfoFuncList = {
 		{
 			PlayerRpc.sendGetSimplePropertyRequest,
 			PlayerRpc.instance,
@@ -139,13 +141,13 @@ function var_0_0._initInfo(arg_1_0)
 	}
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.WeekWalk) then
-		table.insert(arg_1_0.GetInfoFuncList, {
+		table.insert(self.GetInfoFuncList, {
 			WeekwalkRpc.sendGetWeekwalkInfoRequest,
 			WeekwalkRpc.instance,
 			"sendGetWeekwalkInfoRequest",
 			false
 		})
-		table.insert(arg_1_0.GetInfoFuncList, {
+		table.insert(self.GetInfoFuncList, {
 			Weekwalk_2Rpc.sendWeekwalkVer2GetInfoRequest,
 			Weekwalk_2Rpc.instance,
 			"sendWeekwalkVer2GetInfoRequest",
@@ -154,7 +156,7 @@ function var_0_0._initInfo(arg_1_0)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Explore) then
-		table.insert(arg_1_0.GetInfoFuncList, {
+		table.insert(self.GetInfoFuncList, {
 			ExploreRpc.sendGetExploreSimpleInfoRequest,
 			ExploreRpc.instance,
 			"sendGetExploreSimpleInfoRequest",
@@ -163,7 +165,7 @@ function var_0_0._initInfo(arg_1_0)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
-		table.insert(arg_1_0.GetInfoFuncList, {
+		table.insert(self.GetInfoFuncList, {
 			TowerRpc.sendGetTowerInfoRequest,
 			TowerRpc.instance,
 			"sendGetTowerInfoRequest",
@@ -172,7 +174,7 @@ function var_0_0._initInfo(arg_1_0)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
-		table.insert(arg_1_0.GetInfoFuncList, {
+		table.insert(self.GetInfoFuncList, {
 			PlayerCardRpc.sendGetPlayerCardInfoRequest,
 			PlayerCardRpc.instance,
 			"sendGetPlayerCardInfoRequest",
@@ -181,7 +183,7 @@ function var_0_0._initInfo(arg_1_0)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.CommandStation) then
-		table.insert(arg_1_0.GetInfoFuncList, {
+		table.insert(self.GetInfoFuncList, {
 			CommandStationRpc.sendGetCommandPostInfoRequest,
 			CommandStationRpc.instance,
 			"sendGetCommandPostInfoRequest",
@@ -190,131 +192,134 @@ function var_0_0._initInfo(arg_1_0)
 	end
 
 	if RougeOutsideController.instance:isOpen() then
-		local var_1_0 = RougeOutsideModel.instance:season()
+		local season = RougeOutsideModel.instance:season()
 
-		table.insert(arg_1_0.GetInfoFuncList, {
+		table.insert(self.GetInfoFuncList, {
 			RougeOutsideRpc.sendGetRougeOutSideInfoRequest,
 			RougeOutsideRpc.instance,
 			"sendGetRougeOutSideInfoRequest",
 			false,
-			var_1_0
+			season
 		})
 	end
 
-	arg_1_0._callbackIdDict = {}
+	self._callbackIdDict = {}
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	arg_2_0:_initInfo()
+function LoginGetInfoWork:onStart(context)
+	self:_initInfo()
 
-	arg_2_0._leftInfoCount = #arg_2_0.GetInfoFuncList
-	arg_2_0._waitCount = 0
-	arg_2_0._waitCount = arg_2_0._waitCount + 1
+	self._leftInfoCount = #self.GetInfoFuncList
+	self._waitCount = 0
+	self._waitCount = self._waitCount + 1
 
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_2_0._onDungeonInfoUpdateAll, arg_2_0)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, self._onDungeonInfoUpdateAll, self)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.GetInfoFuncList) do
-		local var_2_0 = iter_2_1[1]
-		local var_2_1 = iter_2_1[2]
-		local var_2_2 = iter_2_1[3]
-		local var_2_3 = iter_2_1[4]
-		local var_2_4 = iter_2_1[5]
+	for i, requestCfg in ipairs(self.GetInfoFuncList) do
+		local reqFun = requestCfg[1]
+		local rpcObj = requestCfg[2]
+		local reqLog = requestCfg[3]
+		local ignoreRetCode = requestCfg[4]
+		local optionalParam = requestCfg[5]
 
-		local function var_2_5(arg_3_0, arg_3_1, arg_3_2)
-			if not var_2_3 and arg_3_1 ~= 0 then
-				logError((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 服务端报错了 resultCode = " .. arg_3_1)
+		local function tempCallbackFunc(cmd, resultCode, msg)
+			if not ignoreRetCode and resultCode ~= 0 then
+				logError((rpcObj.__cname or "nil") .. " " .. reqLog .. " 服务端报错了 resultCode = " .. resultCode)
 			end
 
-			arg_2_0:_onGetInfo(iter_2_0)
+			self:_onGetInfo(i)
 		end
 
-		local var_2_6
+		local callbackId
 
-		if var_2_4 ~= nil then
-			var_2_6 = var_2_0(var_2_1, var_2_4, var_2_5)
+		if optionalParam ~= nil then
+			callbackId = reqFun(rpcObj, optionalParam, tempCallbackFunc)
 		else
-			var_2_6 = var_2_0(var_2_1, var_2_5)
+			callbackId = reqFun(rpcObj, tempCallbackFunc)
 		end
 
-		if var_2_6 then
-			arg_2_0._callbackIdDict[iter_2_0] = var_2_6
+		if callbackId then
+			self._callbackIdDict[i] = callbackId
 		else
-			logError((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 不支持callback")
-			arg_2_0:_onGetInfo(iter_2_0)
+			logError((rpcObj.__cname or "nil") .. " " .. reqLog .. " 不支持callback")
+			self:_onGetInfo(i)
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_2_0._getInfoTimeout, arg_2_0, 30)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, arg_2_0._onLostConnect, arg_2_0)
+	TaskDispatcher.runDelay(self._getInfoTimeout, self, 30)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, self._onLostConnect, self)
 end
 
-function var_0_0._onGetInfo(arg_4_0, arg_4_1)
-	if arg_4_0._callbackIdDict[arg_4_1] == nil then
-		logError("登录流程有问题 index:" .. arg_4_1)
+function LoginGetInfoWork:_onGetInfo(index)
+	if self._callbackIdDict[index] == nil then
+		logError("登录流程有问题 index:" .. index)
 
 		return
 	end
 
-	arg_4_0._leftInfoCount = arg_4_0._leftInfoCount - 1
-	arg_4_0._callbackIdDict[arg_4_1] = nil
+	self._leftInfoCount = self._leftInfoCount - 1
+	self._callbackIdDict[index] = nil
 
-	arg_4_0:_checkIsDone()
+	self:_checkIsDone()
 end
 
-function var_0_0._checkIsDone(arg_5_0)
-	if arg_5_0._leftInfoCount == 0 and arg_5_0._waitCount == 0 then
+function LoginGetInfoWork:_checkIsDone()
+	if self._leftInfoCount == 0 and self._waitCount == 0 then
 		LoginController.instance:dispatchEvent(LoginEvent.OnGetInfoFinish)
-		arg_5_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onDungeonInfoUpdateAll(arg_6_0)
-	arg_6_0._waitCount = arg_6_0._waitCount - 1
+function LoginGetInfoWork:_onDungeonInfoUpdateAll()
+	self._waitCount = self._waitCount - 1
 
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_6_0._onDungeonInfoUpdateAll, arg_6_0)
-	arg_6_0:_checkIsDone()
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, self._onDungeonInfoUpdateAll, self)
+	self:_checkIsDone()
 end
 
-function var_0_0._getInfoTimeout(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._callbackIdDict) do
-		local var_7_0 = arg_7_0.GetInfoFuncList[iter_7_0]
-		local var_7_1 = var_7_0[2]
-		local var_7_2 = var_7_0[3]
+function LoginGetInfoWork:_getInfoTimeout()
+	for index, callbackId in pairs(self._callbackIdDict) do
+		local requestCfg = self.GetInfoFuncList[index]
+		local rpcObj = requestCfg[2]
+		local reqLog = requestCfg[3]
 
-		var_7_1:removeCallbackById(iter_7_1)
-		logError("获取信息超时，跳过保证不卡登录流程：" .. var_7_2)
+		rpcObj:removeCallbackById(callbackId)
+		logError("获取信息超时，跳过保证不卡登录流程：" .. reqLog)
 	end
 
 	PayController.instance:clearAllQueryProductDetailsCallBack()
 
-	arg_7_0._callbackIdDict = {}
+	self._callbackIdDict = {}
 
 	LoginController.instance:stopHeartBeat()
 	ConnectAliveMgr.instance:stopReconnect()
 	MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.LoginLostConnect1, MsgBoxEnum.BoxType.Yes, function()
 		LoginController.instance:logout()
 	end)
-	arg_7_0:onDone(false)
+	self:onDone(false)
 end
 
-function var_0_0._onLostConnect(arg_9_0)
+function LoginGetInfoWork:_onLostConnect()
 	return
 end
 
-function var_0_0.clearWork(arg_10_0)
-	arg_10_0:_removeEvents()
+function LoginGetInfoWork:clearWork()
+	self:_removeEvents()
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._callbackIdDict) do
-		arg_10_0.GetInfoFuncList[iter_10_0][2]:removeCallbackById(iter_10_1)
+	for index, callbackId in pairs(self._callbackIdDict) do
+		local requestCfg = self.GetInfoFuncList[index]
+		local rpcObj = requestCfg[2]
+
+		rpcObj:removeCallbackById(callbackId)
 	end
 
-	arg_10_0._callbackIdDict = {}
+	self._callbackIdDict = {}
 end
 
-function var_0_0._removeEvents(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._getInfoTimeout, arg_11_0)
-	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostConnect, arg_11_0._onLostConnect, arg_11_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, arg_11_0._onDungeonInfoUpdateAll, arg_11_0)
+function LoginGetInfoWork:_removeEvents()
+	TaskDispatcher.cancelTask(self._getInfoTimeout, self)
+	ConnectAliveMgr.instance:unregisterCallback(ConnectEvent.OnLostConnect, self._onLostConnect, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnUpdateDungeonInfo, self._onDungeonInfoUpdateAll, self)
 end
 
-return var_0_0
+return LoginGetInfoWork

@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.view.FightAttributeTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightAttributeTipViewContainer.lua
 
-local var_0_0 = class("FightAttributeTipViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightAttributeTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightAttributeTipViewContainer = class("FightAttributeTipViewContainer", BaseViewContainer)
+
+function FightAttributeTipViewContainer:buildViews()
 	return {
 		FightAttributeTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function FightAttributeTipViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return FightAttributeTipViewContainer

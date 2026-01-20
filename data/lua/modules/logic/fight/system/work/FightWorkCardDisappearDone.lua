@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardDisappearDone", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardDisappearDone.lua
 
-local var_0_0 = class("FightWorkCardDisappearDone", BaseWork)
+module("modules.logic.fight.system.work.FightWorkCardDisappearDone", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightWorkCardDisappearDone = class("FightWorkCardDisappearDone", BaseWork)
+
+function FightWorkCardDisappearDone:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
-	FightController.instance:registerCallback(FightEvent.CardDisappearFinish, arg_2_0._onCardDisappearFinish, arg_2_0)
+function FightWorkCardDisappearDone:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 10)
+	FightController.instance:registerCallback(FightEvent.CardDisappearFinish, self._onCardDisappearFinish, self)
 end
 
-function var_0_0._onCardDisappearFinish(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.CardDisappearFinish, arg_3_0._onCardDisappearFinish, arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkCardDisappearDone:_onCardDisappearFinish()
+	FightController.instance:unregisterCallback(FightEvent.CardDisappearFinish, self._onCardDisappearFinish, self)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_4_0)
+function FightWorkCardDisappearDone:_delayDone()
 	logError("卡牌消失超时，isChanging=false")
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.CardDisappearFinish, arg_5_0._onCardDisappearFinish, arg_5_0)
+function FightWorkCardDisappearDone:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	FightController.instance:unregisterCallback(FightEvent.CardDisappearFinish, self._onCardDisappearFinish, self)
 end
 
-return var_0_0
+return FightWorkCardDisappearDone

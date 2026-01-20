@@ -1,41 +1,43 @@
-﻿module("modules.logic.gift.model.GiftMultipleChoiceListModel", package.seeall)
+﻿-- chunkname: @modules/logic/gift/model/GiftMultipleChoiceListModel.lua
 
-local var_0_0 = class("GiftMultipleChoiceListModel", ListScrollModel)
+module("modules.logic.gift.model.GiftMultipleChoiceListModel", package.seeall)
 
-function var_0_0.setPropList(arg_1_0, arg_1_1)
-	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
+local GiftMultipleChoiceListModel = class("GiftMultipleChoiceListModel", ListScrollModel)
 
-	arg_1_0:setList(arg_1_0._moList)
+function GiftMultipleChoiceListModel:setPropList(Infos)
+	self._moList = Infos and Infos or {}
+
+	self:setList(self._moList)
 end
 
-function var_0_0.getOptionalGiftIdList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
-	local var_2_1 = ItemModel.instance:getOptionalGiftMaterialSubTypeList(arg_2_1)
+function GiftMultipleChoiceListModel:getOptionalGiftIdList(giftId)
+	local materialsIds = {}
+	local ids = ItemModel.instance:getOptionalGiftMaterialSubTypeList(giftId)
 
-	for iter_2_0, iter_2_1 in pairs(var_2_1) do
-		table.insert(var_2_0, iter_2_1)
+	for _, id in pairs(ids) do
+		table.insert(materialsIds, id)
 	end
 
-	return var_2_0
+	return materialsIds
 end
 
-function var_0_0.getOptionalGiftInfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:getOptionalGiftIdList(arg_3_1)
-	local var_3_1 = {}
+function GiftMultipleChoiceListModel:getOptionalGiftInfo(giftId)
+	local materialsIds = self:getOptionalGiftIdList(giftId)
+	local info = {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		local var_3_2 = {
+	for _, id in pairs(materialsIds) do
+		local material = {
 			1,
-			iter_3_1,
+			id,
 			1
 		}
 
-		table.insert(var_3_1, var_3_2)
+		table.insert(info, material)
 	end
 
-	return var_3_1
+	return info
 end
 
-var_0_0.instance = var_0_0.New()
+GiftMultipleChoiceListModel.instance = GiftMultipleChoiceListModel.New()
 
-return var_0_0
+return GiftMultipleChoiceListModel

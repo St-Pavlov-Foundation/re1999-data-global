@@ -1,72 +1,74 @@
-﻿module("modules.logic.versionactivity2_1.dungeon.view.map.scene.VersionActivity2_1DungeonMapHoleView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/dungeon/view/map/scene/VersionActivity2_1DungeonMapHoleView.lua
 
-local var_0_0 = class("VersionActivity2_1DungeonMapHoleView", DungeonMapHoleView)
+module("modules.logic.versionactivity2_1.dungeon.view.map.scene.VersionActivity2_1DungeonMapHoleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local VersionActivity2_1DungeonMapHoleView = class("VersionActivity2_1DungeonMapHoleView", DungeonMapHoleView)
+
+function VersionActivity2_1DungeonMapHoleView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, arg_2_0.loadSceneFinish, arg_2_0)
-	arg_2_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_2_0.initCameraParam, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnMapPosChanged, arg_2_0.onMapPosChanged, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnAddOneElement, arg_2_0.onAddOneElement, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRemoveElement, arg_2_0.onRemoveElement, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRecycleAllElement, arg_2_0.onRecycleAllElement, arg_2_0)
+function VersionActivity2_1DungeonMapHoleView:addEvents()
+	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, self.loadSceneFinish, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self.initCameraParam, self)
+	self:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnMapPosChanged, self.onMapPosChanged, self)
+	self:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnAddOneElement, self.onAddOneElement, self)
+	self:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRemoveElement, self.onRemoveElement, self)
+	self:addEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRecycleAllElement, self.onRecycleAllElement, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, arg_3_0.loadSceneFinish, arg_3_0)
-	arg_3_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0.initCameraParam, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnMapPosChanged, arg_3_0.onMapPosChanged, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnAddOneElement, arg_3_0.onAddOneElement, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRemoveElement, arg_3_0.onRemoveElement, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRecycleAllElement, arg_3_0.onRecycleAllElement, arg_3_0)
+function VersionActivity2_1DungeonMapHoleView:removeEvents()
+	self:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, self.loadSceneFinish, self)
+	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self.initCameraParam, self)
+	self:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnMapPosChanged, self.onMapPosChanged, self)
+	self:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnAddOneElement, self.onAddOneElement, self)
+	self:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRemoveElement, self.onRemoveElement, self)
+	self:removeEventCb(VersionActivity2_1DungeonController.instance, VersionActivity2_1DungeonEvent.OnRecycleAllElement, self.onRecycleAllElement, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function VersionActivity2_1DungeonMapHoleView:_editableInitView()
 	return
 end
 
-function var_0_0.loadSceneFinish(arg_5_0, arg_5_1)
-	local var_5_0 = {
-		arg_5_1.mapConfig,
-		arg_5_1.mapSceneGo
+function VersionActivity2_1DungeonMapHoleView:loadSceneFinish(param)
+	local holeParam = {
+		param.mapConfig,
+		param.mapSceneGo
 	}
 
-	var_0_0.super.loadSceneFinish(arg_5_0, var_5_0)
+	VersionActivity2_1DungeonMapHoleView.super.loadSceneFinish(self, holeParam)
 end
 
-function var_0_0.onMapPosChanged(arg_6_0, arg_6_1, arg_6_2)
-	var_0_0.super.onMapPosChanged(arg_6_0, arg_6_1, arg_6_2)
+function VersionActivity2_1DungeonMapHoleView:onMapPosChanged(targetPos, isTween)
+	VersionActivity2_1DungeonMapHoleView.super.onMapPosChanged(self, targetPos, isTween)
 end
 
-function var_0_0.initCameraParam(arg_7_0)
-	var_0_0.super.initCameraParam(arg_7_0)
+function VersionActivity2_1DungeonMapHoleView:initCameraParam()
+	VersionActivity2_1DungeonMapHoleView.super.initCameraParam(self)
 end
 
-function var_0_0.onAddOneElement(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		local var_8_0 = arg_8_1:getElementId()
+function VersionActivity2_1DungeonMapHoleView:onAddOneElement(elementComp)
+	if elementComp then
+		local elementId = elementComp:getElementId()
 
-		arg_8_0:_onAddElement(var_8_0)
+		self:_onAddElement(elementId)
 	end
 end
 
-function var_0_0.onRemoveElement(arg_9_0, arg_9_1)
-	if arg_9_1 and arg_9_1._config.fragment == 0 then
-		local var_9_0 = arg_9_1:getElementId()
+function VersionActivity2_1DungeonMapHoleView:onRemoveElement(elementComp)
+	if elementComp and elementComp._config.fragment == 0 then
+		local elementId = elementComp:getElementId()
 
-		arg_9_0:_onRemoveElement(var_9_0)
+		self:_onRemoveElement(elementId)
 	end
 end
 
-function var_0_0.onRecycleAllElement(arg_10_0)
-	arg_10_0.holdCoList = {}
+function VersionActivity2_1DungeonMapHoleView:onRecycleAllElement()
+	self.holdCoList = {}
 
-	arg_10_0:refreshHoles()
+	self:refreshHoles()
 end
 
-return var_0_0
+return VersionActivity2_1DungeonMapHoleView

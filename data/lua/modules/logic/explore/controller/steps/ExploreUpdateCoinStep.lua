@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.controller.steps.ExploreUpdateCoinStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreUpdateCoinStep.lua
 
-local var_0_0 = class("ExploreUpdateCoinStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreUpdateCoinStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ExploreSimpleModel.instance:onGetCoin(arg_1_0._data.id, arg_1_0._data.num)
+local ExploreUpdateCoinStep = class("ExploreUpdateCoinStep", ExploreStepBase)
+
+function ExploreUpdateCoinStep:onStart()
+	ExploreSimpleModel.instance:onGetCoin(self._data.id, self._data.num)
 	ExploreController.instance:dispatchEvent(ExploreEvent.CoinCountUpdate)
-	arg_1_0:onDone()
+	self:onDone()
 end
 
-return var_0_0
+return ExploreUpdateCoinStep

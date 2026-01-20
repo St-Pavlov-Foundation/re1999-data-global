@@ -1,146 +1,148 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutInputBaseView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutInputBaseView.lua
 
-local var_0_0 = class("RoomLayoutInputBaseView", BaseView)
+module("modules.logic.room.view.layout.RoomLayoutInputBaseView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/#simage_rightbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/#simage_leftbg")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_close")
-	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_sure")
-	arg_1_0._txtdes = gohelper.findChildText(arg_1_0.viewGO, "message/#txt_des")
-	arg_1_0._inputsignature = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "message/#input_signature")
-	arg_1_0._txttext = gohelper.findChildText(arg_1_0.viewGO, "message/#input_signature/textarea/#txt_text")
-	arg_1_0._btncleanname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "message/#input_signature/#btn_cleanname")
+local RoomLayoutInputBaseView = class("RoomLayoutInputBaseView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomLayoutInputBaseView:onInitView()
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "window/#simage_rightbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "window/#simage_leftbg")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_close")
+	self._btnsure = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_sure")
+	self._txtdes = gohelper.findChildText(self.viewGO, "message/#txt_des")
+	self._inputsignature = gohelper.findChildTextMeshInputField(self.viewGO, "message/#input_signature")
+	self._txttext = gohelper.findChildText(self.viewGO, "message/#input_signature/textarea/#txt_text")
+	self._btncleanname = gohelper.findChildButtonWithAudio(self.viewGO, "message/#input_signature/#btn_cleanname")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
-	arg_2_0._btncleanname:AddClickListener(arg_2_0._btncleannameOnClick, arg_2_0)
-	arg_2_0._inputsignature:AddOnEndEdit(arg_2_0._onInputNameEndEdit, arg_2_0)
-	arg_2_0._inputsignature:AddOnValueChanged(arg_2_0._onInputNameValueChange, arg_2_0)
+function RoomLayoutInputBaseView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnsure:AddClickListener(self._btnsureOnClick, self)
+	self._btncleanname:AddClickListener(self._btncleannameOnClick, self)
+	self._inputsignature:AddOnEndEdit(self._onInputNameEndEdit, self)
+	self._inputsignature:AddOnValueChanged(self._onInputNameValueChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnsure:RemoveClickListener()
-	arg_3_0._btncleanname:RemoveClickListener()
-	arg_3_0._inputsignature:RemoveOnEndEdit()
-	arg_3_0._inputsignature:RemoveOnValueChanged()
+function RoomLayoutInputBaseView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnsure:RemoveClickListener()
+	self._btncleanname:RemoveClickListener()
+	self._inputsignature:RemoveOnEndEdit()
+	self._inputsignature:RemoveOnValueChanged()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
-	arg_4_0:_closeInvokeCallback(false)
+function RoomLayoutInputBaseView:_btncloseOnClick()
+	self:closeThis()
+	self:_closeInvokeCallback(false)
 end
 
-function var_0_0._btnsureOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._inputsignature:GetText()
+function RoomLayoutInputBaseView:_btnsureOnClick()
+	local inputStr = self._inputsignature:GetText()
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(inputStr) then
 		-- block empty
 	else
-		arg_5_0:closeThis()
-		arg_5_0:_closeInvokeCallback(true, var_5_0)
+		self:closeThis()
+		self:_closeInvokeCallback(true, inputStr)
 	end
 end
 
-function var_0_0._btncleannameOnClick(arg_6_0)
-	arg_6_0._inputsignature:SetText("")
+function RoomLayoutInputBaseView:_btncleannameOnClick()
+	self._inputsignature:SetText("")
 end
 
-function var_0_0._onInputNameEndEdit(arg_7_0)
-	arg_7_0:_checkLimit()
+function RoomLayoutInputBaseView:_onInputNameEndEdit()
+	self:_checkLimit()
 end
 
-function var_0_0._onInputNameValueChange(arg_8_0)
+function RoomLayoutInputBaseView:_onInputNameValueChange()
 	if not BootNativeUtil.isIOS() then
-		arg_8_0:_checkLimit()
+		self:_checkLimit()
 	end
 end
 
-function var_0_0._checkLimit(arg_9_0)
-	local var_9_0 = arg_9_0._inputsignature:GetText()
-	local var_9_1 = arg_9_0:_getInputLimit()
-	local var_9_2 = GameUtil.utf8sub(var_9_0, 1, math.min(GameUtil.utf8len(var_9_0), var_9_1))
+function RoomLayoutInputBaseView:_checkLimit()
+	local inputValue = self._inputsignature:GetText()
+	local limit = self:_getInputLimit()
+	local newInput = GameUtil.utf8sub(inputValue, 1, math.min(GameUtil.utf8len(inputValue), limit))
 
-	if var_9_2 ~= var_9_0 then
-		arg_9_0._inputsignature:SetText(var_9_2)
+	if newInput ~= inputValue then
+		self._inputsignature:SetText(newInput)
 	end
 end
 
-function var_0_0._getInputLimit(arg_10_0)
+function RoomLayoutInputBaseView:_getInputLimit()
 	return CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutNameLimit)
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._txttitlecn = gohelper.findChildText(arg_11_0.viewGO, "titlecn")
-	arg_11_0._txttitleen = gohelper.findChildText(arg_11_0.viewGO, "titlecn/titleen")
-	arg_11_0._txtbtnsurecn = gohelper.findChildText(arg_11_0.viewGO, "bottom/#btn_sure/text")
-	arg_11_0._txtbtnsureed = gohelper.findChildText(arg_11_0.viewGO, "bottom/#btn_sure/texten")
-	arg_11_0._txtinputlang = gohelper.findChildText(arg_11_0.viewGO, "message/#input_signature/textarea/lang_txt")
+function RoomLayoutInputBaseView:_editableInitView()
+	self._txttitlecn = gohelper.findChildText(self.viewGO, "titlecn")
+	self._txttitleen = gohelper.findChildText(self.viewGO, "titlecn/titleen")
+	self._txtbtnsurecn = gohelper.findChildText(self.viewGO, "bottom/#btn_sure/text")
+	self._txtbtnsureed = gohelper.findChildText(self.viewGO, "bottom/#btn_sure/texten")
+	self._txtinputlang = gohelper.findChildText(self.viewGO, "message/#input_signature/textarea/lang_txt")
 
-	arg_11_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_11_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
-	arg_12_0:_refreshInitUI()
+function RoomLayoutInputBaseView:onUpdateParam()
+	self:_refreshInitUI()
 end
 
-function var_0_0.onOpen(arg_13_0)
-	if arg_13_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_13_0.viewContainer.viewName, arg_13_0._onEscape, arg_13_0)
+function RoomLayoutInputBaseView:onOpen()
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onEscape, self)
 	end
 
-	arg_13_0:_refreshInitUI()
+	self:_refreshInitUI()
 end
 
-function var_0_0._onEscape(arg_14_0)
-	arg_14_0:_btncloseOnClick()
+function RoomLayoutInputBaseView:_onEscape()
+	self:_btncloseOnClick()
 end
 
-function var_0_0._refreshInitUI(arg_15_0)
-	if arg_15_0.viewParam then
-		local var_15_0 = arg_15_0.viewParam.defaultName
+function RoomLayoutInputBaseView:_refreshInitUI()
+	if self.viewParam then
+		local defaultName = self.viewParam.defaultName
 
-		if string.nilorempty(var_15_0) then
-			arg_15_0._inputsignature:SetText("")
+		if string.nilorempty(defaultName) then
+			self._inputsignature:SetText("")
 		else
-			arg_15_0._inputsignature:SetText(var_15_0)
+			self._inputsignature:SetText(defaultName)
 		end
 	end
 end
 
-function var_0_0._closeInvokeCallback(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_0.viewParam then
+function RoomLayoutInputBaseView:_closeInvokeCallback(isYes, contentStr)
+	if not self.viewParam then
 		return
 	end
 
-	if arg_16_1 then
-		if arg_16_0.viewParam.yesCallback then
-			if arg_16_0.viewParam.callbockObj then
-				arg_16_0.viewParam.yesCallback(arg_16_0.viewParam.callbockObj, arg_16_2)
+	if isYes then
+		if self.viewParam.yesCallback then
+			if self.viewParam.callbockObj then
+				self.viewParam.yesCallback(self.viewParam.callbockObj, contentStr)
 			else
-				arg_16_0.viewParam.yesCallback(arg_16_2)
+				self.viewParam.yesCallback(contentStr)
 			end
 		end
-	elseif arg_16_0.viewParam.noCallback then
-		arg_16_0.viewParam.noCallback(arg_16_0.viewParam.noCallbackObj)
+	elseif self.viewParam.noCallback then
+		self.viewParam.noCallback(self.viewParam.noCallbackObj)
 	end
 end
 
-function var_0_0.onClose(arg_17_0)
+function RoomLayoutInputBaseView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0._simagerightbg:UnLoadImage()
-	arg_18_0._simageleftbg:UnLoadImage()
+function RoomLayoutInputBaseView:onDestroyView()
+	self._simagerightbg:UnLoadImage()
+	self._simageleftbg:UnLoadImage()
 end
 
-return var_0_0
+return RoomLayoutInputBaseView

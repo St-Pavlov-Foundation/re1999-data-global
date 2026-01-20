@@ -1,130 +1,151 @@
-﻿module("modules.logic.main.view.skininteraction.CommonSkinInteraction", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/skininteraction/CommonSkinInteraction.lua
 
-local var_0_0 = class("CommonSkinInteraction", BaseSkinInteraction)
+module("modules.logic.main.view.skininteraction.CommonSkinInteraction", package.seeall)
 
-function var_0_0._onClick(arg_1_0, arg_1_1)
-	arg_1_0:_clickDefault(arg_1_1)
-end
+local CommonSkinInteraction = class("CommonSkinInteraction", BaseSkinInteraction)
 
-function var_0_0._isSpecialRespondType(arg_2_0, arg_2_1)
-	return arg_2_1 == CharacterEnum.VoiceType.MainViewSpecialRespond or arg_2_1 == CharacterEnum.VoiceType.MainViewDragSpecialRespond
-end
+function CommonSkinInteraction:_onInit()
+	CommonSkinInteraction.super._onInit(self)
 
-function var_0_0._beforePlayVoice(arg_3_0, arg_3_1)
-	arg_3_0._isRespondType = arg_3_0._isSpecialInteraction and arg_3_0:_isSpecialRespondType(arg_3_1.type)
-	arg_3_0._changeValue = nil
+	local config = lua_skin_body_camera.configDict[self._skinId]
 
-	local var_3_0 = arg_3_1 and arg_3_1.audio == arg_3_0._waitVoice and not arg_3_0._skipChangeStatus
+	if config then
+		local behavior = config.behavior
+		local cls = _G[behavior]
 
-	if var_3_0 then
-		arg_3_0._changeValue = CharacterVoiceController.instance:getChangeValue(arg_3_1)
-	end
-
-	if arg_3_0:_isSpecialRespondType(arg_3_1.type) then
-		CharacterVoiceController.instance:trackSpecialInteraction(arg_3_1.heroId, arg_3_1.audio, var_3_0 and CharacterVoiceEnum.PlayType.Click or CharacterVoiceEnum.PlayType.Auto)
+		self:_addBehavior(cls.New())
 	end
 end
 
-function var_0_0._afterPlayVoice(arg_4_0, arg_4_1)
-	if arg_4_0._changeValue then
-		PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_4_1.heroId, arg_4_0._changeValue)
+function CommonSkinInteraction:_onClick(pos)
+	self:_clickDefault(pos)
+end
 
-		local var_4_0 = PlayerModel.instance:getPropKeyValueString(PlayerEnum.SimpleProperty.SkinState)
+function CommonSkinInteraction:_isSpecialRespondType(type)
+	return type == CharacterEnum.VoiceType.MainViewSpecialRespond or type == CharacterEnum.VoiceType.MainViewDragSpecialRespond
+end
 
-		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.SkinState, var_4_0)
+function CommonSkinInteraction:_beforePlayVoice(config)
+	self._isRespondType = self._isSpecialInteraction and self:_isSpecialRespondType(config.type)
+	self._changeValue = nil
+
+	local isWaitVoice = config and config.audio == self._waitVoice and not self._skipChangeStatus
+
+	if isWaitVoice then
+		local value = CharacterVoiceController.instance:getChangeValue(config)
+
+		self._changeValue = value
+	end
+
+	if self:_isSpecialRespondType(config.type) then
+		CharacterVoiceController.instance:trackSpecialInteraction(config.heroId, config.audio, isWaitVoice and CharacterVoiceEnum.PlayType.Click or CharacterVoiceEnum.PlayType.Auto)
 	end
 end
 
-function var_0_0._onPlayVoiceFinish(arg_5_0, arg_5_1)
-	if arg_5_0._isDragging then
+function CommonSkinInteraction:_afterPlayVoice(config)
+	if self._changeValue then
+		PlayerModel.instance:setPropKeyValue(PlayerEnum.SimpleProperty.SkinState, config.heroId, self._changeValue)
+
+		local propertyStr = PlayerModel.instance:getPropKeyValueString(PlayerEnum.SimpleProperty.SkinState)
+
+		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.SkinState, propertyStr)
+	end
+end
+
+function CommonSkinInteraction:_onPlayVoiceFinish(config)
+	if self._isDragging then
 		return
 	end
 
-	if arg_5_0._isSpecialInteraction then
-		TaskDispatcher.runDelay(arg_5_0._waitTimeout, arg_5_0, arg_5_0._waitTime)
+	if self._isSpecialInteraction then
+		TaskDispatcher.runDelay(self._waitTimeout, self, self._waitTime)
 	end
 
-	arg_5_0._voiceConfig = nil
+	self._voiceConfig = nil
 end
 
-function var_0_0.beginDrag(arg_6_0)
-	arg_6_0._isDragging = true
+function CommonSkinInteraction:beginDrag()
+	self._isDragging = true
 
-	TaskDispatcher.cancelTask(arg_6_0._waitTimeout, arg_6_0)
+	TaskDispatcher.cancelTask(self._waitTimeout, self)
 end
 
-function var_0_0.endDrag(arg_7_0)
-	arg_7_0._isDragging = false
+function CommonSkinInteraction:endDrag()
+	self._isDragging = false
 
-	if arg_7_0._isSpecialInteraction then
-		TaskDispatcher.runDelay(arg_7_0._waitTimeout, arg_7_0, arg_7_0._waitTime)
+	if self._isSpecialInteraction then
+		TaskDispatcher.runDelay(self._waitTimeout, self, self._waitTime)
 	end
 end
 
-function var_0_0._onPlayVoice(arg_8_0)
-	arg_8_0:_onStopVoice()
+function CommonSkinInteraction:_onPlayVoice()
+	self:_onStopVoice()
 
-	arg_8_0._isSpecialInteraction = arg_8_0._voiceConfig.type == CharacterEnum.VoiceType.MainViewSpecialInteraction
+	self._isSpecialInteraction = self._voiceConfig.type == CharacterEnum.VoiceType.MainViewSpecialInteraction
 
-	if arg_8_0._isSpecialInteraction then
-		local var_8_0 = tonumber(arg_8_0._voiceConfig.param2)
+	if self._isSpecialInteraction then
+		local id = tonumber(self._voiceConfig.param2)
 
-		if not var_8_0 then
-			logError(string.format("CommonSkinInteraction _onPlayVoice param2:%s is error, voiceConfig: %s", arg_8_0._voiceConfig.param2, tostring(arg_8_0._voiceConfig.audio)))
+		if not id then
+			logError(string.format("CommonSkinInteraction _onPlayVoice param2:%s is error, voiceConfig: %s", self._voiceConfig.param2, tostring(self._voiceConfig.audio)))
 
 			return
 		end
 
-		local var_8_1 = lua_character_special_interaction_voice.configDict[var_8_0]
+		local config = lua_character_special_interaction_voice.configDict[id]
 
-		arg_8_0._startTime = Time.time
-		arg_8_0._protectionTime = var_8_1.protectionTime or 0
-		arg_8_0._waitTime = var_8_1.time
-		arg_8_0._waitVoice = var_8_1.waitVoice
-		arg_8_0._timeoutVoiceConfig = lua_character_voice.configDict[arg_8_0._voiceConfig.heroId][var_8_1.timeoutVoice]
-		arg_8_0._skipChangeStatus = var_8_1.statusParams == CharacterVoiceEnum.StatusParams.Luxi_NoChangeStatus
+		self._startTime = Time.time
+		self._protectionTime = config.protectionTime or 0
+		self._waitTime = config.time
+		self._waitVoice = config.waitVoice
+		self._timeoutVoiceConfig = lua_character_voice.configDict[self._voiceConfig.heroId][config.timeoutVoice]
+		self._skipChangeStatus = config.statusParams == CharacterVoiceEnum.StatusParams.Luxi_NoChangeStatus
 
-		CharacterVoiceController.instance:trackSpecialInteraction(arg_8_0._voiceConfig.heroId, arg_8_0._voiceConfig.audio, CharacterVoiceController.instance:getSpecialInteractionPlayType())
+		CharacterVoiceController.instance:trackSpecialInteraction(self._voiceConfig.heroId, self._voiceConfig.audio, CharacterVoiceController.instance:getSpecialInteractionPlayType())
 	end
 end
 
-function var_0_0._waitTimeout(arg_9_0)
-	arg_9_0._isSpecialInteraction = nil
+function CommonSkinInteraction:_waitTimeout()
+	self._isSpecialInteraction = nil
 
-	arg_9_0:playVoice(arg_9_0._timeoutVoiceConfig)
+	self:playVoice(self._timeoutVoiceConfig)
 end
 
-function var_0_0._onStopVoice(arg_10_0)
-	arg_10_0._isSpecialInteraction = nil
-	arg_10_0._waitVoice = nil
-	arg_10_0._timeoutVoiceConfig = nil
-	arg_10_0._skipChangeStatus = nil
+function CommonSkinInteraction:_onStopVoice()
+	self._isSpecialInteraction = nil
+	self._waitVoice = nil
+	self._timeoutVoiceConfig = nil
+	self._skipChangeStatus = nil
 
-	TaskDispatcher.cancelTask(arg_10_0._waitTimeout, arg_10_0)
+	TaskDispatcher.cancelTask(self._waitTimeout, self)
 end
 
-function var_0_0.needRespond(arg_11_0)
-	return arg_11_0._isSpecialInteraction
+function CommonSkinInteraction:needRespond()
+	return self._isSpecialInteraction
 end
 
-function var_0_0.canPlay(arg_12_0, arg_12_1)
-	if arg_12_0._isSpecialInteraction then
-		if Time.time - arg_12_0._startTime <= arg_12_0._protectionTime then
+function CommonSkinInteraction:inProtectionTime()
+	return self._isSpecialInteraction and Time.time - self._startTime <= self._protectionTime
+end
+
+function CommonSkinInteraction:canPlay(config)
+	if self._isSpecialInteraction then
+		if Time.time - self._startTime <= self._protectionTime then
 			return false
 		end
 
-		return arg_12_1.audio == arg_12_0._waitVoice
+		return config.audio == self._waitVoice
 	end
 
-	if arg_12_0._voiceConfig and arg_12_0._isRespondType then
+	if self._voiceConfig and self._isRespondType then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._onDestroy(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._waitTimeout, arg_13_0)
+function CommonSkinInteraction:_onDestroy()
+	TaskDispatcher.cancelTask(self._waitTimeout, self)
 end
 
-return var_0_0
+return CommonSkinInteraction

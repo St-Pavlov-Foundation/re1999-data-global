@@ -1,23 +1,25 @@
-﻿module("modules.logic.gm.view.GM_VersionActivity_EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_VersionActivity_EnterViewContainer.lua
 
-local var_0_0 = class("GM_VersionActivity_EnterViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_VersionActivity_EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_VersionActivity_EnterViewContainer = class("GM_VersionActivity_EnterViewContainer", BaseViewContainer)
+
+function GM_VersionActivity_EnterViewContainer:buildViews()
 	return {
 		GM_VersionActivity_EnterView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_VersionActivity_EnterViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.VersionActivity_EnterView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
+function GM_VersionActivity_EnterViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.VersionActivity_EnterView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.VersionActivity_EnterView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
+function GM_VersionActivity_EnterViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.VersionActivity_EnterView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-return var_0_0
+return GM_VersionActivity_EnterViewContainer

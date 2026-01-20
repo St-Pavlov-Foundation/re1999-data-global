@@ -1,102 +1,109 @@
-﻿module("modules.logic.versionactivity1_5.act146.controller.Activity146Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act146/controller/Activity146Controller.lua
 
-local var_0_0 = class("Activity146Controller", BaseController)
+module("modules.logic.versionactivity1_5.act146.controller.Activity146Controller", package.seeall)
 
-function var_0_0.getAct146InfoFromServer(arg_1_0, arg_1_1)
-	arg_1_1 = arg_1_1 or ActivityEnum.Activity.Activity1_5WarmUp
+local Activity146Controller = class("Activity146Controller", BaseController)
 
-	Activity146Rpc.instance:sendGetAct146InfosRequest(arg_1_1)
+function Activity146Controller:getAct146InfoFromServer(actId)
+	actId = actId or ActivityEnum.Activity.Activity1_5WarmUp
+
+	Activity146Rpc.instance:sendGetAct146InfosRequest(actId)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function Activity146Controller:onCloseView()
 	Activity146Model.instance:setCurSelectedEpisode(nil)
 end
 
-function var_0_0.onFinishActEpisode(arg_3_0, arg_3_1)
-	arg_3_1 = arg_3_1 or ActivityEnum.Activity.Activity1_5WarmUpId
+function Activity146Controller:onFinishActEpisode(actId)
+	actId = actId or ActivityEnum.Activity.Activity1_5WarmUpId
 
-	local var_3_0 = Activity146Model.instance:getCurSelectedEpisode()
+	local episodeId = Activity146Model.instance:getCurSelectedEpisode()
 
-	Activity146Rpc.instance:sendFinishAct146EpisodeRequest(arg_3_1, var_3_0)
+	Activity146Rpc.instance:sendFinishAct146EpisodeRequest(actId, episodeId)
 end
 
-function var_0_0.tryReceiveEpisodeRewards(arg_4_0, arg_4_1)
-	arg_4_1 = arg_4_1 or ActivityEnum.Activity.Activity1_5WarmUpId
+function Activity146Controller:tryReceiveEpisodeRewards(actId)
+	actId = actId or ActivityEnum.Activity.Activity1_5WarmUpId
 
-	local var_4_0 = Activity146Model.instance:getCurSelectedEpisode()
+	local episodeId = Activity146Model.instance:getCurSelectedEpisode()
 
-	Activity146Rpc.instance:sendAct146EpisodeBonusRequest(arg_4_1, var_4_0)
+	Activity146Rpc.instance:sendAct146EpisodeBonusRequest(actId, episodeId)
 end
 
-local var_0_1 = "Activity146"
+local signal = "Activity146"
 
-function var_0_0.isActFirstEnterToday(arg_5_0)
-	return TimeUtil.getDayFirstLoginRed(var_0_1)
+function Activity146Controller:isActFirstEnterToday()
+	return TimeUtil.getDayFirstLoginRed(signal)
 end
 
-function var_0_0.saveEnterActDateInfo(arg_6_0)
-	TimeUtil.setDayFirstLoginRed(var_0_1)
+function Activity146Controller:saveEnterActDateInfo()
+	TimeUtil.setDayFirstLoginRed(signal)
 end
 
-function var_0_0.setCurSelectedEpisode(arg_7_0, arg_7_1)
-	if arg_7_1 ~= Activity146Model.instance:getCurSelectedEpisode() then
-		if Activity146Model.instance:isEpisodeUnLock(arg_7_1) then
-			Activity146Model.instance:setCurSelectedEpisode(arg_7_1)
-			arg_7_0:notifyUpdateView()
+function Activity146Controller:setCurSelectedEpisode(episodeId)
+	local isCurEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
+
+	if episodeId ~= isCurEpisodeId then
+		local isUnLock = Activity146Model.instance:isEpisodeUnLock(episodeId)
+
+		if isUnLock then
+			Activity146Model.instance:setCurSelectedEpisode(episodeId)
+			self:notifyUpdateView()
 		else
 			GameFacade.showToast(ToastEnum.ConditionLock)
 		end
 	end
 end
 
-function var_0_0.onActModelUpdate(arg_8_0)
-	local var_8_0 = arg_8_0:computeCurNeedSelectEpisode()
+function Activity146Controller:onActModelUpdate()
+	local couldSelectEpisode = self:computeCurNeedSelectEpisode()
 
-	Activity146Model.instance:setCurSelectedEpisode(var_8_0)
-	arg_8_0:notifyUpdateView()
+	Activity146Model.instance:setCurSelectedEpisode(couldSelectEpisode)
+	self:notifyUpdateView()
 end
 
-function var_0_0.computeCurNeedSelectEpisode(arg_9_0)
-	local var_9_0 = Activity146Model.instance:getCurSelectedEpisode()
+function Activity146Controller:computeCurNeedSelectEpisode()
+	local curSelectEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
 
-	if var_9_0 then
-		return var_9_0
+	if curSelectEpisodeId then
+		return curSelectEpisodeId
 	end
 
-	local var_9_1 = Activity146Config.instance:getAllEpisodeConfigs(ActivityEnum.Activity.Activity1_5WarmUp)
+	local episodeCfgList = Activity146Config.instance:getAllEpisodeConfigs(ActivityEnum.Activity.Activity1_5WarmUp)
 
-	if var_9_1 then
-		local var_9_2 = #var_9_1
-		local var_9_3
+	if episodeCfgList then
+		local episodeCount = #episodeCfgList
+		local lastUnLockEpisodeId
 
-		for iter_9_0 = 1, var_9_2 do
-			local var_9_4 = var_9_1[iter_9_0].id
-			local var_9_5 = Activity146Model.instance:isEpisodeFinishedButUnReceive(var_9_4)
-			local var_9_6 = Activity146Model.instance:isEpisodeUnLockAndUnFinish(var_9_4)
+		for i = 1, episodeCount do
+			local episodeId = episodeCfgList[i].id
+			local finishButUnReceive = Activity146Model.instance:isEpisodeFinishedButUnReceive(episodeId)
+			local unLockAndUnFinish = Activity146Model.instance:isEpisodeUnLockAndUnFinish(episodeId)
+			local isUnLock = Activity146Model.instance:isEpisodeUnLock(episodeId)
 
-			if Activity146Model.instance:isEpisodeUnLock(var_9_4) then
-				var_9_3 = var_9_4
+			if isUnLock then
+				lastUnLockEpisodeId = episodeId
 			end
 
-			if var_9_5 or var_9_6 then
-				return var_9_4
+			if finishButUnReceive or unLockAndUnFinish then
+				return episodeId
 			end
 		end
 
-		return var_9_3
+		return lastUnLockEpisodeId
 	end
 end
 
-function var_0_0.markHasEnterEpisode(arg_10_0)
-	local var_10_0 = Activity146Model.instance:getCurSelectedEpisode()
+function Activity146Controller:markHasEnterEpisode()
+	local episodeId = Activity146Model.instance:getCurSelectedEpisode()
 
-	Activity146Model.instance:markHasEnterEpisode(var_10_0)
+	Activity146Model.instance:markHasEnterEpisode(episodeId)
 end
 
-function var_0_0.notifyUpdateView(arg_11_0)
-	var_0_0.instance:dispatchEvent(Activity146Event.DataUpdate)
+function Activity146Controller:notifyUpdateView()
+	Activity146Controller.instance:dispatchEvent(Activity146Event.DataUpdate)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity146Controller.instance = Activity146Controller.New()
 
-return var_0_0
+return Activity146Controller

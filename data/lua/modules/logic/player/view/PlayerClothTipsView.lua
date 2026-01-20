@@ -1,9 +1,11 @@
-﻿module("modules.logic.player.view.PlayerClothTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerClothTipsView.lua
 
-local var_0_0 = class("PlayerClothTipsView", BaseView)
+module("modules.logic.player.view.PlayerClothTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local PlayerClothTipsView = class("PlayerClothTipsView", BaseView)
+
+function PlayerClothTipsView:onInitView()
 	return
 end
 
-return var_0_0
+return PlayerClothTipsView

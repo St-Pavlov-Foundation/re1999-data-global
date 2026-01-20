@@ -1,89 +1,94 @@
-﻿module("modules.logic.sp01.library.AssassinLibraryDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/AssassinLibraryDetailView.lua
 
-local var_0_0 = class("AssassinLibraryDetailView", BaseView)
+module("modules.logic.sp01.library.AssassinLibraryDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._simagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_Pic")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_title")
-	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_content")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_content/Viewport/#go_content")
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "root/#scroll_content/Viewport/#go_content/#txt_content")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_content/#go_arrow")
-	arg_1_0._btndialogue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_Dialogue")
+local AssassinLibraryDetailView = class("AssassinLibraryDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinLibraryDetailView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._simagepic = gohelper.findChildSingleImage(self.viewGO, "root/#simage_Pic")
+	self._txttitle = gohelper.findChildText(self.viewGO, "root/#txt_title")
+	self._scrollcontent = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_content")
+	self._gocontent = gohelper.findChild(self.viewGO, "root/#scroll_content/Viewport/#go_content")
+	self._txtcontent = gohelper.findChildText(self.viewGO, "root/#scroll_content/Viewport/#go_content/#txt_content")
+	self._goarrow = gohelper.findChild(self.viewGO, "root/#scroll_content/#go_arrow")
+	self._btndialogue = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_Dialogue")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btndialogue:AddClickListener(arg_2_0._btndialogueOnClick, arg_2_0)
-	arg_2_0._scrollcontent:AddOnValueChanged(arg_2_0._onContentScrollValueChanged, arg_2_0)
+function AssassinLibraryDetailView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btndialogue:AddClickListener(self._btndialogueOnClick, self)
+	self._scrollcontent:AddOnValueChanged(self._onContentScrollValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btndialogue:RemoveClickListener()
-	arg_3_0._scrollcontent:RemoveOnValueChanged()
+function AssassinLibraryDetailView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btndialogue:RemoveClickListener()
+	self._scrollcontent:RemoveOnValueChanged()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function AssassinLibraryDetailView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btndialogueOnClick(arg_5_0)
-	if arg_5_0._dialogId and arg_5_0._dialogId ~= 0 then
-		DialogueController.instance:enterDialogue(arg_5_0._dialogId)
-		OdysseyStatHelper.instance:sendLibraryDialogueClick("_btndialogueOnClick#" .. arg_5_0._libraryId)
+function AssassinLibraryDetailView:_btndialogueOnClick()
+	if self._dialogId and self._dialogId ~= 0 then
+		DialogueController.instance:enterDialogue(self._dialogId)
+		OdysseyStatHelper.instance:sendLibraryDialogueClick("_btndialogueOnClick#" .. self._libraryId)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function AssassinLibraryDetailView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function AssassinLibraryDetailView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_openmap)
-	arg_7_0:refresh()
+	self:refresh()
 	OdysseyStatHelper.instance:initViewStartTime()
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0:refresh()
+function AssassinLibraryDetailView:onUpdateParam()
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_9_0)
-	arg_9_0._libraryId = arg_9_0.viewParam and arg_9_0.viewParam.libraryId
-	arg_9_0._libraryCo = AssassinConfig.instance:getLibrarConfig(arg_9_0._libraryId)
-	arg_9_0._txttitle.text = arg_9_0._libraryCo and arg_9_0._libraryCo.title or ""
-	arg_9_0._txtcontent.text = arg_9_0._libraryCo and arg_9_0._libraryCo.content or ""
+function AssassinLibraryDetailView:refresh()
+	self._libraryId = self.viewParam and self.viewParam.libraryId
+	self._libraryCo = AssassinConfig.instance:getLibrarConfig(self._libraryId)
+	self._txttitle.text = self._libraryCo and self._libraryCo.title or ""
+	self._txtcontent.text = self._libraryCo and self._libraryCo.content or ""
 
-	arg_9_0._simagepic:LoadImage(ResUrl.getSp01AssassinSingleBg("library/assassinlibrary_detail_pic/" .. arg_9_0._libraryCo.detail))
-	ZProj.UGUIHelper.RebuildLayout(arg_9_0._gocontent.transform)
+	self._simagepic:LoadImage(ResUrl.getSp01AssassinSingleBg("library/assassinlibrary_detail_pic/" .. self._libraryCo.detail))
+	ZProj.UGUIHelper.RebuildLayout(self._gocontent.transform)
 
-	arg_9_0._couldScroll = recthelper.getHeight(arg_9_0._gocontent.transform) > recthelper.getHeight(arg_9_0._scrollcontent.transform)
+	local contentHeight = recthelper.getHeight(self._gocontent.transform)
+	local scrollHeight = recthelper.getHeight(self._scrollcontent.transform)
 
-	gohelper.setActive(arg_9_0._goarrow, arg_9_0._couldScroll)
+	self._couldScroll = scrollHeight < contentHeight
 
-	arg_9_0._dialogId = arg_9_0._libraryCo and arg_9_0._libraryCo.talk
+	gohelper.setActive(self._goarrow, self._couldScroll)
 
-	gohelper.setActive(arg_9_0._btndialogue.gameObject, arg_9_0._dialogId and arg_9_0._dialogId ~= 0)
+	self._dialogId = self._libraryCo and self._libraryCo.talk
+
+	gohelper.setActive(self._btndialogue.gameObject, self._dialogId and self._dialogId ~= 0)
 end
 
-function var_0_0._onContentScrollValueChanged(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goarrow, arg_10_0._couldScroll and not (gohelper.getRemindFourNumberFloat(arg_10_0._scrollcontent.verticalNormalizedPosition) <= 0))
+function AssassinLibraryDetailView:_onContentScrollValueChanged(value)
+	gohelper.setActive(self._goarrow, self._couldScroll and not (gohelper.getRemindFourNumberFloat(self._scrollcontent.verticalNormalizedPosition) <= 0))
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0._simagepic:UnLoadImage()
-	AssassinLibraryModel.instance:readLibrary(arg_11_0._libraryId)
-	OdysseyStatHelper.instance:sendOdysseyViewStayTime("AssassinLibraryDetailView", arg_11_0._libraryId)
+function AssassinLibraryDetailView:onClose()
+	self._simagepic:UnLoadImage()
+	AssassinLibraryModel.instance:readLibrary(self._libraryId)
+	OdysseyStatHelper.instance:sendOdysseyViewStayTime("AssassinLibraryDetailView", self._libraryId)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function AssassinLibraryDetailView:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinLibraryDetailView

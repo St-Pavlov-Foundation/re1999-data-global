@@ -1,312 +1,322 @@
-﻿module("modules.logic.room.view.RoomSceneTaskDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomSceneTaskDetailView.lua
 
-local var_0_0 = class("RoomSceneTaskDetailView", BaseView)
+module("modules.logic.room.view.RoomSceneTaskDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotask1 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task1")
-	arg_1_0._gotask2 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task2")
-	arg_1_0._gotask3 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task3")
-	arg_1_0._gotask4 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task4")
-	arg_1_0._gotask5 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task5")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local RoomSceneTaskDetailView = class("RoomSceneTaskDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomSceneTaskDetailView:onInitView()
+	self._gotask1 = gohelper.findChild(self.viewGO, "taskContent/#go_task1")
+	self._gotask2 = gohelper.findChild(self.viewGO, "taskContent/#go_task2")
+	self._gotask3 = gohelper.findChild(self.viewGO, "taskContent/#go_task3")
+	self._gotask4 = gohelper.findChild(self.viewGO, "taskContent/#go_task4")
+	self._gotask5 = gohelper.findChild(self.viewGO, "taskContent/#go_task5")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomSceneTaskDetailView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomSceneTaskDetailView:removeEvents()
 	return
 end
 
-var_0_0.PageShowNum = 5
+RoomSceneTaskDetailView.PageShowNum = 5
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._itemObjs = {}
-	arg_4_0._bgmask = gohelper.findChildSingleImage(arg_4_0.viewGO, "#bg_mask")
+function RoomSceneTaskDetailView:_editableInitView()
+	self._itemObjs = {}
+	self._bgmask = gohelper.findChildSingleImage(self.viewGO, "#bg_mask")
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._itemObjs) do
-		if not gohelper.isNil(iter_5_1.btntouch) then
-			iter_5_1.btntouch:RemoveClickListener()
+function RoomSceneTaskDetailView:onDestroyView()
+	for index, itemObj in pairs(self._itemObjs) do
+		if not gohelper.isNil(itemObj.btntouch) then
+			itemObj.btntouch:RemoveClickListener()
 		end
 
-		if not gohelper.isNil(iter_5_1.simagebonus) then
-			iter_5_1.simagebonus:UnLoadImage()
+		if not gohelper.isNil(itemObj.simagebonus) then
+			itemObj.simagebonus:UnLoadImage()
 		end
 
-		if iter_5_0 == 1 then
-			iter_5_1.btnEdit:RemoveClickListener()
-			iter_5_1.btnExpansion:RemoveClickListener()
+		if index == 1 then
+			itemObj.btnEdit:RemoveClickListener()
+			itemObj.btnExpansion:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._curPage = 1
+function RoomSceneTaskDetailView:onOpen()
+	self._curPage = 1
 
-	arg_6_0:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskUpdate, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:refreshUI()
+	self:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskUpdate, self.refreshUI, self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
+function RoomSceneTaskDetailView:onClose()
 	return
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	for iter_8_0 = 1, var_0_0.PageShowNum do
-		arg_8_0:refreshItem(iter_8_0)
+function RoomSceneTaskDetailView:refreshUI()
+	for i = 1, RoomSceneTaskDetailView.PageShowNum do
+		self:refreshItem(i)
 	end
 end
 
-function var_0_0.onClickTask(arg_9_0)
-	local var_9_0 = arg_9_0.self
-	local var_9_1 = arg_9_0.index
-	local var_9_2 = var_9_1 + (var_9_0._curPage - 1) * var_0_0.PageShowNum
-	local var_9_3 = RoomTaskModel.instance:getShowList()[var_9_2]
+function RoomSceneTaskDetailView.onClickTask(param)
+	local self = param.self
+	local index = param.index
+	local curIndex = index + (self._curPage - 1) * RoomSceneTaskDetailView.PageShowNum
+	local taskCOList = RoomTaskModel.instance:getShowList()
+	local taskCO = taskCOList[curIndex]
 
-	if not var_9_3 then
+	if not taskCO then
 		return
 	end
 
-	if RoomTaskModel.instance:tryGetTaskMO(var_9_3.id) and var_9_1 == 1 then
-		var_9_0:showMaterialInfoByTaskConfig(var_9_3)
-	elseif var_9_3 then
-		if RoomSceneTaskController.isTaskOverUnlockLevel(var_9_3) then
+	local taskMO = RoomTaskModel.instance:tryGetTaskMO(taskCO.id)
+
+	if taskMO and index == 1 then
+		self:showMaterialInfoByTaskConfig(taskCO)
+	elseif taskCO then
+		if RoomSceneTaskController.isTaskOverUnlockLevel(taskCO) then
 			GameFacade.showToast(ToastEnum.RoomTaskUnlock)
 		else
-			GameFacade.showToast(ToastEnum.RoomSceneTaskOpen, var_9_3.name)
+			GameFacade.showToast(ToastEnum.RoomSceneTaskOpen, taskCO.name)
 		end
 	end
 end
 
-function var_0_0.onClickJump(arg_10_0)
-	local var_10_0 = RoomTaskModel.instance:getShowList()
+function RoomSceneTaskDetailView:onClickJump()
+	local taskCOList = RoomTaskModel.instance:getShowList()
 
-	if var_10_0 and #var_10_0 > 0 then
-		local var_10_1 = var_10_0[1]
+	if taskCOList and #taskCOList > 0 then
+		local taskCO = taskCOList[1]
+		local taskMO = RoomTaskModel.instance:tryGetTaskMO(taskCO.id)
 
-		if RoomTaskModel.instance:tryGetTaskMO(var_10_1.id) and not RoomSceneTaskDetailController.instance:goToTask(var_10_1) then
-			arg_10_0:closeThis()
+		if taskMO then
+			local needStay = RoomSceneTaskDetailController.instance:goToTask(taskCO)
+
+			if not needStay then
+				self:closeThis()
+			end
 		end
 	end
 end
 
-function var_0_0.showMaterialInfoByTaskConfig(arg_11_0, arg_11_1)
-	local var_11_0 = string.split(arg_11_1.bonus, "|")
+function RoomSceneTaskDetailView:showMaterialInfoByTaskConfig(taskCO)
+	local bonusArr = string.split(taskCO.bonus, "|")
 
-	if #var_11_0 > 0 then
-		local var_11_1 = string.splitToNumber(var_11_0[1], "#")
-		local var_11_2 = tonumber(var_11_1[1])
-		local var_11_3 = tonumber(var_11_1[2])
-		local var_11_4, var_11_5 = ItemModel.instance:getItemConfigAndIcon(var_11_2, var_11_3)
+	if #bonusArr > 0 then
+		local bonusArr = string.splitToNumber(bonusArr[1], "#")
+		local itemType, itemId = tonumber(bonusArr[1]), tonumber(bonusArr[2])
+		local itemCo, icon = ItemModel.instance:getItemConfigAndIcon(itemType, itemId)
 
-		MaterialTipController.instance:showMaterialInfo(var_11_2, var_11_3, false, nil, true)
+		MaterialTipController.instance:showMaterialInfo(itemType, itemId, false, nil, true)
 	end
 end
 
-function var_0_0.getOrCreateItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._itemObjs[arg_12_1]
+function RoomSceneTaskDetailView:getOrCreateItem(index)
+	local itemObj = self._itemObjs[index]
 
-	if not var_12_0 then
-		var_12_0 = arg_12_0:getUserDataTb_()
-		var_12_0.go = arg_12_0["_gotask" .. tostring(arg_12_1)]
-		var_12_0.gofinish = gohelper.findChild(var_12_0.go, "go_finish")
-		var_12_0.gounfinish = gohelper.findChild(var_12_0.go, "go_unfinish")
-		var_12_0.golock = gohelper.findChild(var_12_0.go, "go_unfinish/go_lock")
-		var_12_0.txtlock = gohelper.findChildText(var_12_0.go, "go_unfinish/go_lock/txt_lock")
-		var_12_0.gorunning = gohelper.findChild(var_12_0.go, "go_running")
-		var_12_0.goorderbg = gohelper.findChild(var_12_0.go, "go_lightbg")
-		var_12_0.txtid = gohelper.findChildText(var_12_0.go, "txt_id")
+	if not itemObj then
+		itemObj = self:getUserDataTb_()
+		itemObj.go = self["_gotask" .. tostring(index)]
+		itemObj.gofinish = gohelper.findChild(itemObj.go, "go_finish")
+		itemObj.gounfinish = gohelper.findChild(itemObj.go, "go_unfinish")
+		itemObj.golock = gohelper.findChild(itemObj.go, "go_unfinish/go_lock")
+		itemObj.txtlock = gohelper.findChildText(itemObj.go, "go_unfinish/go_lock/txt_lock")
+		itemObj.gorunning = gohelper.findChild(itemObj.go, "go_running")
+		itemObj.goorderbg = gohelper.findChild(itemObj.go, "go_lightbg")
+		itemObj.txtid = gohelper.findChildText(itemObj.go, "txt_id")
 
-		if arg_12_1 == 1 then
-			var_12_0.goJump = gohelper.findChild(var_12_0.go, "#go_jump")
-			var_12_0.txtnum = gohelper.findChildText(var_12_0.goJump, "txt_rewardnum")
-			var_12_0.txtdesc = gohelper.findChildText(var_12_0.goJump, "txt_taskdesc")
-			var_12_0.txtRunningTips = gohelper.findChildText(var_12_0.goJump, "txt_rewardtip")
-			var_12_0.simagebonus = gohelper.findChildSingleImage(var_12_0.goJump, "simage_reward")
-			var_12_0.imagebonus = gohelper.findChildImage(var_12_0.goJump, "simage_reward")
-			var_12_0.btnEdit = gohelper.findChildButtonWithAudio(var_12_0.goJump, "btn_edit")
-			var_12_0.btnExpansion = gohelper.findChildButtonWithAudio(var_12_0.goJump, "btn_expansion")
-			var_12_0.btntouch = gohelper.findChildButtonWithAudio(var_12_0.goJump, "btn_touch")
+		if index == 1 then
+			itemObj.goJump = gohelper.findChild(itemObj.go, "#go_jump")
+			itemObj.txtnum = gohelper.findChildText(itemObj.goJump, "txt_rewardnum")
+			itemObj.txtdesc = gohelper.findChildText(itemObj.goJump, "txt_taskdesc")
+			itemObj.txtRunningTips = gohelper.findChildText(itemObj.goJump, "txt_rewardtip")
+			itemObj.simagebonus = gohelper.findChildSingleImage(itemObj.goJump, "simage_reward")
+			itemObj.imagebonus = gohelper.findChildImage(itemObj.goJump, "simage_reward")
+			itemObj.btnEdit = gohelper.findChildButtonWithAudio(itemObj.goJump, "btn_edit")
+			itemObj.btnExpansion = gohelper.findChildButtonWithAudio(itemObj.goJump, "btn_expansion")
+			itemObj.btntouch = gohelper.findChildButtonWithAudio(itemObj.goJump, "btn_touch")
 
-			var_12_0.btnEdit:AddClickListener(arg_12_0.onClickJump, arg_12_0)
-			var_12_0.btnExpansion:AddClickListener(arg_12_0.onClickJump, arg_12_0)
+			itemObj.btnEdit:AddClickListener(self.onClickJump, self)
+			itemObj.btnExpansion:AddClickListener(self.onClickJump, self)
 
-			local var_12_1 = gohelper.findChild(var_12_0.go, "btn_touch")
+			local btnTouchOutside = gohelper.findChild(itemObj.go, "btn_touch")
 
-			gohelper.setActive(var_12_1, false)
+			gohelper.setActive(btnTouchOutside, false)
 		else
-			var_12_0.txtnum = gohelper.findChildText(var_12_0.go, "go_unfinish/txt_num")
-			var_12_0.txtdesc = gohelper.findChildText(var_12_0.go, "go_unfinish/txt_desc")
-			var_12_0.simagebonus = gohelper.findChildSingleImage(var_12_0.go, "go_unfinish/simage_build")
-			var_12_0.imagebonus = gohelper.findChildImage(var_12_0.go, "go_unfinish/simage_build")
-			var_12_0.btntouch = gohelper.findChildButtonWithAudio(var_12_0.go, "btn_touch")
+			itemObj.txtnum = gohelper.findChildText(itemObj.go, "go_unfinish/txt_num")
+			itemObj.txtdesc = gohelper.findChildText(itemObj.go, "go_unfinish/txt_desc")
+			itemObj.simagebonus = gohelper.findChildSingleImage(itemObj.go, "go_unfinish/simage_build")
+			itemObj.imagebonus = gohelper.findChildImage(itemObj.go, "go_unfinish/simage_build")
+			itemObj.btntouch = gohelper.findChildButtonWithAudio(itemObj.go, "btn_touch")
 		end
 
-		var_12_0.btntouch:AddClickListener(arg_12_0.onClickTask, {
-			self = arg_12_0,
-			index = arg_12_1
+		itemObj.btntouch:AddClickListener(self.onClickTask, {
+			self = self,
+			index = index
 		})
 
-		arg_12_0._itemObjs[arg_12_1] = var_12_0
+		self._itemObjs[index] = itemObj
 	end
 
-	return var_12_0
+	return itemObj
 end
 
-local var_0_1 = Color.New(0.090196, 0.08627451, 0.08627451, 1)
-local var_0_2 = Color.New(0.8980392, 0.8980392, 0.8980392, 0.5)
-local var_0_3 = Color.New(0.5372549, 0.5215687, 0.5176471, 1)
-local var_0_4 = Color.New(0.8980392, 0.8980392, 0.8980392, 1)
+local _colorLock = Color.New(0.090196, 0.08627451, 0.08627451, 1)
+local _colorLockTxt = Color.New(0.8980392, 0.8980392, 0.8980392, 0.5)
+local _colorIdLockTxt = Color.New(0.5372549, 0.5215687, 0.5176471, 1)
+local _colorIdTxt = Color.New(0.8980392, 0.8980392, 0.8980392, 1)
 
-function var_0_0.refreshItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getOrCreateItem(arg_13_1)
-	local var_13_1 = arg_13_1 + (arg_13_0._curPage - 1) * var_0_0.PageShowNum
-	local var_13_2 = RoomTaskModel.instance:getShowList()[var_13_1]
-	local var_13_3
+function RoomSceneTaskDetailView:refreshItem(index)
+	local itemObj = self:getOrCreateItem(index)
+	local curIndex = index + (self._curPage - 1) * RoomSceneTaskDetailView.PageShowNum
+	local taskCOList = RoomTaskModel.instance:getShowList()
+	local taskCO = taskCOList[curIndex]
+	local taskMO
 
-	if var_13_2 then
-		var_13_3 = RoomTaskModel.instance:tryGetTaskMO(var_13_2.id)
+	if taskCO then
+		taskMO = RoomTaskModel.instance:tryGetTaskMO(taskCO.id)
 	end
 
-	local var_13_4 = false
+	local showRunning = false
 
-	if var_13_3 and arg_13_1 == 1 then
-		arg_13_0:refreshWhenRunning(var_13_0, var_13_3, var_13_2)
+	if taskMO and index == 1 then
+		self:refreshWhenRunning(itemObj, taskMO, taskCO)
 
-		var_13_4 = true
-	elseif not var_13_2 then
-		arg_13_0:refreshWhenFinish(var_13_0)
+		showRunning = true
+	elseif not taskCO then
+		self:refreshWhenFinish(itemObj)
 	else
-		arg_13_0:refreshWhenLock(var_13_0, var_13_2)
+		self:refreshWhenLock(itemObj, taskCO)
 	end
 
-	if not gohelper.isNil(var_13_0.gorunning) then
-		gohelper.setActive(var_13_0.gorunning, var_13_4)
+	if not gohelper.isNil(itemObj.gorunning) then
+		gohelper.setActive(itemObj.gorunning, showRunning)
 	end
 end
 
-function var_0_0.refreshWhenRunning(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	gohelper.setActive(arg_14_1.gofinish, false)
-	gohelper.setActive(arg_14_1.gounfinish, false)
-	gohelper.setActive(arg_14_1.goJump, true)
-	gohelper.setActive(arg_14_1.golock, false)
-	gohelper.setActive(arg_14_1.goorderbg, true)
+function RoomSceneTaskDetailView:refreshWhenRunning(itemObj, taskMO, taskCO)
+	gohelper.setActive(itemObj.gofinish, false)
+	gohelper.setActive(itemObj.gounfinish, false)
+	gohelper.setActive(itemObj.goJump, true)
+	gohelper.setActive(itemObj.golock, false)
+	gohelper.setActive(itemObj.goorderbg, true)
 
-	local var_14_0 = arg_14_2.hasFinished == true and "%s(%s/%s)" or "%s(<color=#b26161>%s</color>/%s)"
+	local descStr = taskMO.hasFinished == true and "%s(%s/%s)" or "%s(<color=#b26161>%s</color>/%s)"
 
-	arg_14_1.txtdesc.text = string.format(var_14_0, arg_14_3.desc, arg_14_2.progress, arg_14_3.maxProgress)
+	itemObj.txtdesc.text = string.format(descStr, taskCO.desc, taskMO.progress, taskCO.maxProgress)
 
-	arg_14_0:setRewardIcon(arg_14_3, arg_14_1, true)
+	self:setRewardIcon(taskCO, itemObj, true)
 
-	local var_14_1 = false
-	local var_14_2 = false
-	local var_14_3 = arg_14_3.tips or ""
+	local goToExpansion = false
+	local goToEdit = false
+	local tipsStr = taskCO.tips or ""
 
-	if arg_14_3.listenerType == RoomSceneTaskEnum.ListenerType.EditResArea or arg_14_3.listenerType == RoomSceneTaskEnum.ListenerType.EditHasResBlockCount then
-		var_14_2 = true
-	elseif arg_14_3.listenerType == RoomSceneTaskEnum.ListenerType.RoomLevel then
-		var_14_1 = true
+	if taskCO.listenerType == RoomSceneTaskEnum.ListenerType.EditResArea or taskCO.listenerType == RoomSceneTaskEnum.ListenerType.EditHasResBlockCount then
+		goToEdit = true
+	elseif taskCO.listenerType == RoomSceneTaskEnum.ListenerType.RoomLevel then
+		goToExpansion = true
 
-		local var_14_4 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, RoomSceneTaskEnum.RoomLevelUpItem)
-		local var_14_5 = tostring(var_14_4)
+		local levelItemCount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, RoomSceneTaskEnum.RoomLevelUpItem)
+		local txtStr = tostring(levelItemCount)
 
-		if var_14_4 > 0 then
-			var_14_5 = string.format("<color=#ffffff>%s</color>", var_14_4)
+		if levelItemCount > 0 then
+			txtStr = string.format("<color=#ffffff>%s</color>", levelItemCount)
 		end
 
-		if not string.nilorempty(var_14_3) then
-			var_14_3 = string.format(var_14_3, var_14_5)
+		if not string.nilorempty(tipsStr) then
+			tipsStr = string.format(tipsStr, txtStr)
 		end
 	end
 
-	if not string.nilorempty(var_14_3) then
-		arg_14_1.txtRunningTips.text = var_14_3
+	if not string.nilorempty(tipsStr) then
+		itemObj.txtRunningTips.text = tipsStr
 
-		gohelper.setActive(arg_14_1.txtRunningTips, true)
+		gohelper.setActive(itemObj.txtRunningTips, true)
 	else
-		gohelper.setActive(arg_14_1.txtRunningTips, false)
+		gohelper.setActive(itemObj.txtRunningTips, false)
 	end
 
-	gohelper.setActive(arg_14_1.btnExpansion, var_14_1)
-	gohelper.setActive(arg_14_1.btnEdit, var_14_2)
+	gohelper.setActive(itemObj.btnExpansion, goToExpansion)
+	gohelper.setActive(itemObj.btnEdit, goToEdit)
 
-	arg_14_1.imagebonus.color = Color.white
-	arg_14_1.txtdesc.color = Color.white
-	arg_14_1.txtid.color = var_0_4
-	arg_14_1.txtid.text = arg_14_3.order
+	itemObj.imagebonus.color = Color.white
+	itemObj.txtdesc.color = Color.white
+	itemObj.txtid.color = _colorIdTxt
+	itemObj.txtid.text = taskCO.order
 end
 
-function var_0_0.refreshWhenFinish(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_1.gofinish, true)
-	gohelper.setActive(arg_15_1.gounfinish, false)
-	gohelper.setActive(arg_15_1.goorderbg, false)
+function RoomSceneTaskDetailView:refreshWhenFinish(itemObj)
+	gohelper.setActive(itemObj.gofinish, true)
+	gohelper.setActive(itemObj.gounfinish, false)
+	gohelper.setActive(itemObj.goorderbg, false)
 
-	if arg_15_1.goJump then
-		gohelper.setActive(arg_15_1.goJump, false)
+	if itemObj.goJump then
+		gohelper.setActive(itemObj.goJump, false)
 	end
 
-	arg_15_1.txtid.text = ""
+	itemObj.txtid.text = ""
 end
 
-function var_0_0.refreshWhenLock(arg_16_0, arg_16_1, arg_16_2)
-	gohelper.setActive(arg_16_1.gofinish, false)
-	gohelper.setActive(arg_16_1.gounfinish, true)
-	gohelper.setActive(arg_16_1.golock, true)
-	gohelper.setActive(arg_16_1.goorderbg, false)
+function RoomSceneTaskDetailView:refreshWhenLock(itemObj, taskCO)
+	gohelper.setActive(itemObj.gofinish, false)
+	gohelper.setActive(itemObj.gounfinish, true)
+	gohelper.setActive(itemObj.golock, true)
+	gohelper.setActive(itemObj.goorderbg, false)
 
-	if arg_16_1.goJump then
-		gohelper.setActive(arg_16_1.goJump, false)
+	if itemObj.goJump then
+		gohelper.setActive(itemObj.goJump, false)
 	end
 
-	arg_16_1.txtdesc.text = arg_16_2.desc
+	itemObj.txtdesc.text = taskCO.desc
 
-	if not gohelper.isNil(arg_16_1.txtlock) then
-		if RoomSceneTaskController.isTaskOverUnlockLevel(arg_16_2) then
-			arg_16_1.txtlock.text = luaLang("room_task_lock_by_task")
+	if not gohelper.isNil(itemObj.txtlock) then
+		if RoomSceneTaskController.isTaskOverUnlockLevel(taskCO) then
+			itemObj.txtlock.text = luaLang("room_task_lock_by_task")
 		else
-			arg_16_1.txtlock.text = string.format(luaLang("room_task_lock_by_level"), RoomSceneTaskController.getTaskUnlockLevel(arg_16_2.openLimit))
+			itemObj.txtlock.text = string.format(luaLang("room_task_lock_by_level"), RoomSceneTaskController.getTaskUnlockLevel(taskCO.openLimit))
 		end
 	end
 
-	arg_16_0:setRewardIcon(arg_16_2, arg_16_1, false)
+	self:setRewardIcon(taskCO, itemObj, false)
 
-	arg_16_1.imagebonus.color = var_0_1
-	arg_16_1.txtdesc.color = var_0_2
-	arg_16_1.txtid.color = var_0_3
-	arg_16_1.txtid.text = arg_16_2.order
+	itemObj.imagebonus.color = _colorLock
+	itemObj.txtdesc.color = _colorLockTxt
+	itemObj.txtid.color = _colorIdLockTxt
+	itemObj.txtid.text = taskCO.order
 end
 
-function var_0_0.setRewardIcon(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0, var_17_1, var_17_2 = RoomSceneTaskController.getRewardConfigAndIcon(arg_17_1)
+function RoomSceneTaskDetailView:setRewardIcon(taskCO, itemObj, showCount)
+	local itemCo, icon, count = RoomSceneTaskController.getRewardConfigAndIcon(taskCO)
 
-	if not string.nilorempty(arg_17_1.bonusIcon) then
-		var_17_1 = ResUrl.getRoomTaskBonusIcon(arg_17_1.bonusIcon)
+	if not string.nilorempty(taskCO.bonusIcon) then
+		icon = ResUrl.getRoomTaskBonusIcon(taskCO.bonusIcon)
 	end
 
-	if not string.nilorempty(var_17_1) then
-		arg_17_2.simagebonus:LoadImage(var_17_1)
+	if not string.nilorempty(icon) then
+		itemObj.simagebonus:LoadImage(icon)
 	end
 
-	if var_17_2 and arg_17_3 then
-		gohelper.setActive(arg_17_2.txtnum.gameObject, true)
+	if count and showCount then
+		gohelper.setActive(itemObj.txtnum.gameObject, true)
 
-		arg_17_2.txtnum.text = tostring(GameUtil.numberDisplay(var_17_2))
+		itemObj.txtnum.text = tostring(GameUtil.numberDisplay(count))
 	else
-		gohelper.setActive(arg_17_2.txtnum.gameObject, false)
+		gohelper.setActive(itemObj.txtnum.gameObject, false)
 	end
 end
 
-function var_0_0.getMaxPage(arg_18_0)
-	local var_18_0 = RoomTaskModel.instance:getShowList()
+function RoomSceneTaskDetailView:getMaxPage()
+	local showList = RoomTaskModel.instance:getShowList()
 
-	return math.ceil(#var_18_0 / var_0_0.PageShowNum)
+	return math.ceil(#showList / RoomSceneTaskDetailView.PageShowNum)
 end
 
-return var_0_0
+return RoomSceneTaskDetailView

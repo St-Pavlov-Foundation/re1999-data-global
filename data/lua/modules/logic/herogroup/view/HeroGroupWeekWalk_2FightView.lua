@@ -1,750 +1,770 @@
-﻿module("modules.logic.herogroup.view.HeroGroupWeekWalk_2FightView", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupWeekWalk_2FightView.lua
 
-local var_0_0 = class("HeroGroupWeekWalk_2FightView", BaseView)
-local var_0_1 = 4
+module("modules.logic.herogroup.view.HeroGroupWeekWalk_2FightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStart")
-	arg_1_0._btnBalanceStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnBalance")
-	arg_1_0._btnUnPowerBalanceStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerBalance")
-	arg_1_0._btnstarthard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStartHard")
-	arg_1_0._btnstartreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStartReplay")
-	arg_1_0._goreplaybtnframe = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_replaybtnframe")
-	arg_1_0._goReplayBtn = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn")
-	arg_1_0._btnReplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay")
-	arg_1_0._imagereplayicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replayicon")
-	arg_1_0._imgbtnReplayBg = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replaybg")
-	arg_1_0._goreplayready = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_replayready")
-	arg_1_0._btnmultispeed = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed")
-	arg_1_0._txtmultispeed = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/Label")
-	arg_1_0._btnclosemult = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closemult")
-	arg_1_0._gomultPos = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/#go_multpos")
-	arg_1_0._gomultispeed = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed")
-	arg_1_0._gomultContent = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed/Viewport/Content")
-	arg_1_0._gomultitem = gohelper.findChild(arg_1_0.viewGO, "#go_multispeed/Viewport/Content/#go_multitem")
-	arg_1_0._simagereplayframe = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_container/#go_replayready/#simage_replayframe")
-	arg_1_0._btncloth = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/btnCloth")
-	arg_1_0._txtclothname = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/bg/#txt_clothName")
-	arg_1_0._txtclothnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/bg/#txt_clothName/#txt_clothNameEn")
-	arg_1_0._btncareerrestrain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_topbtns/#btn_RestraintInfo")
-	arg_1_0._btnrecommend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_topbtns/btn_recommend")
-	arg_1_0._btnTry = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_topbtns/btn_Try")
-	arg_1_0._goRecommendEffect = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_topbtns/btn_recommend/recommend")
-	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_cost")
-	arg_1_0._gopower = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_power")
-	arg_1_0._simagepower = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_power/#simage_power")
-	arg_1_0._txtusepower = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/#go_cost/#go_power/#txt_usepower")
-	arg_1_0._gopowercontent = gohelper.findChild(arg_1_0.viewGO, "#go_righttop/#go_power")
-	arg_1_0._gofightCount = gohelper.findChild(arg_1_0.viewGO, "#go_righttop/fightcount")
-	arg_1_0._txtfightCount = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_righttop/fightcount/#txt_fightcount")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "#go_container2/#go_mask")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
-	arg_1_0._gocontainer2 = gohelper.findChild(arg_1_0.viewGO, "#go_container2")
-	arg_1_0._txtreplaycn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnStartReplay/#txt_replaycn")
-	arg_1_0._gotopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_topbtns")
-	arg_1_0._btnunpowerstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerStart")
-	arg_1_0._btnunpowerreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay")
-	arg_1_0._btnhardreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnHardReplay")
-	arg_1_0._txtreplayhardcn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnHardReplay/#txt_replayhardcn")
-	arg_1_0._txtreplayunpowercn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay/#txt_replayunpowercn")
-	arg_1_0._gonormallackpower = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_normallackpower")
-	arg_1_0._goreplaylackpower = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/#go_replaylackpower")
-	arg_1_0._gospace = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_space")
-	arg_1_0._goTrialTips = gohelper.findChild(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips")
-	arg_1_0._goTrialTipsBg = gohelper.findChild(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg")
-	arg_1_0._goTrialTipsItem = gohelper.findChild(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg/#go_tipsitem")
-	arg_1_0._btnTrialTips = gohelper.findChildButton(arg_1_0.viewGO, "#go_container/trialContainer/#go_trialTips/#btn_tips")
-	arg_1_0._btnSwitchBalance = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance")
-	arg_1_0._goBalanceEnter = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_enter")
-	arg_1_0._goBalanceExit = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_exit")
-	arg_1_0._dropherogroup = gohelper.findChildDropdown(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
-	arg_1_0._btnmodifyname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
-	arg_1_0._dropherogrouparrow = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/arrow").transform
-	arg_1_0._btncoststart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostStart")
-	arg_1_0._txtCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostStart/#txt_num")
-	arg_1_0._btncostreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostReplay")
-	arg_1_0._txtreplaycostcn = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_replaycostcn")
-	arg_1_0._txtReplayCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_num")
-	arg_1_0._godoubledroptimes = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_doubletimes")
-	arg_1_0._txtdoubledroptimes = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_doubletimes/#txt_doubletimes")
-	arg_1_0._gomemorytimes = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes")
-	arg_1_0._txtmemorytimes = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes/bg/#txt_memorytimes")
+local HeroGroupWeekWalk_2FightView = class("HeroGroupWeekWalk_2FightView", BaseView)
+local MaxMultiplication = 4
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupWeekWalk_2FightView:onInitView()
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnStart")
+	self._btnBalanceStart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnBalance")
+	self._btnUnPowerBalanceStart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerBalance")
+	self._btnstarthard = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnStartHard")
+	self._btnstartreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnStartReplay")
+	self._goreplaybtnframe = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_replaybtnframe")
+	self._goReplayBtn = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn")
+	self._btnReplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay")
+	self._imagereplayicon = gohelper.findChildImage(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replayicon")
+	self._imgbtnReplayBg = gohelper.findChildImage(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay/#image_replaybg")
+	self._goreplayready = gohelper.findChild(self.viewGO, "#go_container/#go_replayready")
+	self._btnmultispeed = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed")
+	self._txtmultispeed = gohelper.findChildTextMesh(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/Label")
+	self._btnclosemult = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closemult")
+	self._gomultPos = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#btn_multispeed/#go_multpos")
+	self._gomultispeed = gohelper.findChild(self.viewGO, "#go_multispeed")
+	self._gomultContent = gohelper.findChild(self.viewGO, "#go_multispeed/Viewport/Content")
+	self._gomultitem = gohelper.findChild(self.viewGO, "#go_multispeed/Viewport/Content/#go_multitem")
+	self._simagereplayframe = gohelper.findChildSingleImage(self.viewGO, "#go_container/#go_replayready/#simage_replayframe")
+	self._btncloth = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/btnCloth")
+	self._txtclothname = gohelper.findChildText(self.viewGO, "#go_container/btnContain/btnCloth/bg/#txt_clothName")
+	self._txtclothnameen = gohelper.findChildText(self.viewGO, "#go_container/btnContain/btnCloth/bg/#txt_clothName/#txt_clothNameEn")
+	self._btncareerrestrain = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_topbtns/#btn_RestraintInfo")
+	self._btnrecommend = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_topbtns/btn_recommend")
+	self._btnTry = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#go_topbtns/btn_Try")
+	self._goRecommendEffect = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_topbtns/btn_recommend/recommend")
+	self._gocost = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_cost")
+	self._gopower = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_cost/#go_power")
+	self._simagepower = gohelper.findChildSingleImage(self.viewGO, "#go_container/btnContain/#go_cost/#go_power/#simage_power")
+	self._txtusepower = gohelper.findChildText(self.viewGO, "#go_container/btnContain/#go_cost/#go_power/#txt_usepower")
+	self._gopowercontent = gohelper.findChild(self.viewGO, "#go_righttop/#go_power")
+	self._gofightCount = gohelper.findChild(self.viewGO, "#go_righttop/fightcount")
+	self._txtfightCount = gohelper.findChildTextMesh(self.viewGO, "#go_righttop/fightcount/#txt_fightcount")
+	self._gomask = gohelper.findChild(self.viewGO, "#go_container2/#go_mask")
+	self._gocontainer = gohelper.findChild(self.viewGO, "#go_container")
+	self._gocontainer2 = gohelper.findChild(self.viewGO, "#go_container2")
+	self._txtreplaycn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnStartReplay/#txt_replaycn")
+	self._gotopbtns = gohelper.findChild(self.viewGO, "#go_container/#go_topbtns")
+	self._btnunpowerstart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerStart")
+	self._btnunpowerreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay")
+	self._btnhardreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnHardReplay")
+	self._txtreplayhardcn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnHardReplay/#txt_replayhardcn")
+	self._txtreplayunpowercn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnUnPowerReplay/#txt_replayunpowercn")
+	self._gonormallackpower = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_normallackpower")
+	self._goreplaylackpower = gohelper.findChild(self.viewGO, "#go_container/btnContain/#go_replaylackpower")
+	self._gospace = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_space")
+	self._goTrialTips = gohelper.findChild(self.viewGO, "#go_container/trialContainer/#go_trialTips")
+	self._goTrialTipsBg = gohelper.findChild(self.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg")
+	self._goTrialTipsItem = gohelper.findChild(self.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg/#go_tipsitem")
+	self._btnTrialTips = gohelper.findChildButton(self.viewGO, "#go_container/trialContainer/#go_trialTips/#btn_tips")
+	self._btnSwitchBalance = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance")
+	self._goBalanceEnter = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_enter")
+	self._goBalanceExit = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#btn_switchBalance/#btn_exit")
+	self._dropherogroup = gohelper.findChildDropdown(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
+	self._btnmodifyname = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
+	self._dropherogrouparrow = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/arrow").transform
+	self._btncoststart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnCostStart")
+	self._txtCostNum = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnCostStart/#txt_num")
+	self._btncostreplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/btnCostReplay")
+	self._txtreplaycostcn = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_replaycostcn")
+	self._txtReplayCostNum = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/btnCostReplay/#txt_num")
+	self._godoubledroptimes = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_doubletimes")
+	self._txtdoubledroptimes = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/#go_doubletimes/#txt_doubletimes")
+	self._gomemorytimes = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes")
+	self._txtmemorytimes = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes/bg/#txt_memorytimes")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnTrialTips:AddClickListener(arg_2_0._switchTrialTips, arg_2_0)
-	arg_2_0._btnSwitchBalance:AddClickListener(arg_2_0._btnSwitchBalanceOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnstarthard:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnstartreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnReplay:AddClickListener(arg_2_0._onClickReplay, arg_2_0)
-	arg_2_0._btncloth:AddClickListener(arg_2_0._btnclothOnClock, arg_2_0)
-	arg_2_0._btncareerrestrain:AddClickListener(arg_2_0._btncareerrestrainOnClick, arg_2_0)
-	arg_2_0._btnrecommend:AddClickListener(arg_2_0._btnrecommendOnClick, arg_2_0)
+function HeroGroupWeekWalk_2FightView:addEvents()
+	self._btnTrialTips:AddClickListener(self._switchTrialTips, self)
+	self._btnSwitchBalance:AddClickListener(self._btnSwitchBalanceOnClick, self)
+	self._btnstart:AddClickListener(self._onClickStart, self)
+	self._btnstarthard:AddClickListener(self._onClickStart, self)
+	self._btnstartreplay:AddClickListener(self._onClickStart, self)
+	self._btnReplay:AddClickListener(self._onClickReplay, self)
+	self._btncloth:AddClickListener(self._btnclothOnClock, self)
+	self._btncareerrestrain:AddClickListener(self._btncareerrestrainOnClick, self)
+	self._btnrecommend:AddClickListener(self._btnrecommendOnClick, self)
 
-	if arg_2_0._btnTry then
-		arg_2_0._btnTry:AddClickListener(arg_2_0._btnTryOnClick, arg_2_0)
+	if self._btnTry then
+		self._btnTry:AddClickListener(self._btnTryOnClick, self)
 	end
 
-	arg_2_0._btnunpowerstart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btncoststart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnBalanceStart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnUnPowerBalanceStart:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnunpowerreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btncostreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnhardreplay:AddClickListener(arg_2_0._onClickStart, arg_2_0)
-	arg_2_0._btnmultispeed:AddClickListener(arg_2_0._openmultcontent, arg_2_0)
-	arg_2_0._btnclosemult:AddClickListener(arg_2_0._closemultcontent, arg_2_0)
-	arg_2_0._btnmodifyname:AddClickListener(arg_2_0._modifyName, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0._onTouch, arg_2_0)
-	arg_2_0._dropherogroup:AddOnValueChanged(arg_2_0._groupDropValueChanged, arg_2_0)
+	self._btnunpowerstart:AddClickListener(self._onClickStart, self)
+	self._btncoststart:AddClickListener(self._onClickStart, self)
+	self._btnBalanceStart:AddClickListener(self._onClickStart, self)
+	self._btnUnPowerBalanceStart:AddClickListener(self._onClickStart, self)
+	self._btnunpowerreplay:AddClickListener(self._onClickStart, self)
+	self._btncostreplay:AddClickListener(self._onClickStart, self)
+	self._btnhardreplay:AddClickListener(self._onClickStart, self)
+	self._btnmultispeed:AddClickListener(self._openmultcontent, self)
+	self._btnclosemult:AddClickListener(self._closemultcontent, self)
+	self._btnmodifyname:AddClickListener(self._modifyName, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
+	self._dropherogroup:AddOnValueChanged(self._groupDropValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_3_0._onTouch, arg_3_0)
-	arg_3_0._btnTrialTips:RemoveClickListener()
-	arg_3_0._btnSwitchBalance:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnBalanceStart:RemoveClickListener()
-	arg_3_0._btnUnPowerBalanceStart:RemoveClickListener()
-	arg_3_0._btnstarthard:RemoveClickListener()
-	arg_3_0._btnstartreplay:RemoveClickListener()
-	arg_3_0._btnReplay:RemoveClickListener()
-	arg_3_0._btncloth:RemoveClickListener()
-	arg_3_0._btncareerrestrain:RemoveClickListener()
-	arg_3_0._btnrecommend:RemoveClickListener()
+function HeroGroupWeekWalk_2FightView:removeEvents()
+	self:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
+	self._btnTrialTips:RemoveClickListener()
+	self._btnSwitchBalance:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self._btnBalanceStart:RemoveClickListener()
+	self._btnUnPowerBalanceStart:RemoveClickListener()
+	self._btnstarthard:RemoveClickListener()
+	self._btnstartreplay:RemoveClickListener()
+	self._btnReplay:RemoveClickListener()
+	self._btncloth:RemoveClickListener()
+	self._btncareerrestrain:RemoveClickListener()
+	self._btnrecommend:RemoveClickListener()
 
-	if arg_3_0._btnTry then
-		arg_3_0._btnTry:RemoveClickListener()
+	if self._btnTry then
+		self._btnTry:RemoveClickListener()
 	end
 
-	arg_3_0._btnunpowerstart:RemoveClickListener()
-	arg_3_0._btnunpowerreplay:RemoveClickListener()
-	arg_3_0._btncoststart:RemoveClickListener()
-	arg_3_0._btncostreplay:RemoveClickListener()
-	arg_3_0._btnhardreplay:RemoveClickListener()
-	arg_3_0._btnmultispeed:RemoveClickListener()
-	arg_3_0._btnclosemult:RemoveClickListener()
-	arg_3_0._btnmodifyname:RemoveClickListener()
-	arg_3_0._dropherogroup:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_3_0._onGetFightRecordGroupReply, arg_3_0)
+	self._btnunpowerstart:RemoveClickListener()
+	self._btnunpowerreplay:RemoveClickListener()
+	self._btncoststart:RemoveClickListener()
+	self._btncostreplay:RemoveClickListener()
+	self._btnhardreplay:RemoveClickListener()
+	self._btnmultispeed:RemoveClickListener()
+	self._btnclosemult:RemoveClickListener()
+	self._btnmodifyname:RemoveClickListener()
+	self._dropherogroup:RemoveOnValueChanged()
+	self:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
 end
 
-function var_0_0._openmultcontent(arg_4_0)
-	gohelper.setActive(arg_4_0._gomultispeed, not arg_4_0._gomultispeed.activeSelf)
+function HeroGroupWeekWalk_2FightView:_openmultcontent()
+	gohelper.setActive(self._gomultispeed, not self._gomultispeed.activeSelf)
 
-	arg_4_0._gomultispeed.transform.position = arg_4_0._gomultPos.transform.position
+	self._gomultispeed.transform.position = self._gomultPos.transform.position
 end
 
-function var_0_0._closemultcontent(arg_5_0)
-	gohelper.setActive(arg_5_0._gomultispeed, false)
+function HeroGroupWeekWalk_2FightView:_closemultcontent()
+	gohelper.setActive(self._gomultispeed, false)
 end
 
-function var_0_0._btnSwitchBalanceOnClick(arg_6_0)
+function HeroGroupWeekWalk_2FightView:_btnSwitchBalanceOnClick()
 	HeroGroupBalanceHelper.switchBalanceMode()
 	HeroGroupModel.instance:setParam(HeroGroupModel.instance.battleId, HeroGroupModel.instance.episodeId, HeroGroupModel.instance.adventure)
-	arg_6_0.viewContainer:dispatchEvent(HeroGroupEvent.SwitchBalance)
-	gohelper.setActive(arg_6_0._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
-	gohelper.setActive(arg_6_0._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
+	self.viewContainer:dispatchEvent(HeroGroupEvent.SwitchBalance)
+	gohelper.setActive(self._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
+	gohelper.setActive(self._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
 
-	if arg_6_0._replayMode then
-		arg_6_0:_closemultcontent()
+	if self._replayMode then
+		self:_closemultcontent()
 
-		arg_6_0._replayMode = false
-		arg_6_0._multiplication = 1
+		self._replayMode = false
+		self._multiplication = 1
 
-		arg_6_0:_refreshCost(true)
-		arg_6_0:_switchReplayGroup()
+		self:_refreshCost(true)
+		self:_switchReplayGroup()
 	else
-		gohelper.setActive(arg_6_0._goherogroupcontain, false)
-		gohelper.setActive(arg_6_0._goherogroupcontain, true)
-		arg_6_0:_refreshUI()
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
+		self:_refreshUI()
 	end
 
-	arg_6_0.viewContainer:refreshHelpBtnIcon()
-	arg_6_0:isShowHelpBtnIcon()
-	arg_6_0:_initFightGroupDrop()
+	self.viewContainer:refreshHelpBtnIcon()
+	self:isShowHelpBtnIcon()
+	self:_initFightGroupDrop()
 
 	if HeroGroupBalanceHelper.getIsBalanceMode() then
 		ViewMgr.instance:openView(ViewName.HeroGroupBalanceTipView)
 	end
 end
 
-function var_0_0._btnclothOnClock(arg_7_0)
+function HeroGroupWeekWalk_2FightView:_btnclothOnClock()
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) or PlayerClothModel.instance:getSpEpisodeClothID() then
+	local clothUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if clothUnlock or PlayerClothModel.instance:getSpEpisodeClothID() then
 		ViewMgr.instance:openView(ViewName.PlayerClothView)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.LeadRoleSkill))
 	end
 end
 
-function var_0_0._btncareerrestrainOnClick(arg_8_0)
+function HeroGroupWeekWalk_2FightView:_btncareerrestrainOnClick()
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView)
 end
 
-function var_0_0._btnrecommendOnClick(arg_9_0)
+function HeroGroupWeekWalk_2FightView:_btnrecommendOnClick()
 	FightFailRecommendController.instance:onClickRecommend()
-	arg_9_0:_udpateRecommendEffect()
+	self:_udpateRecommendEffect()
 
-	if arg_9_0._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
-		local var_9_0 = WeekWalkModel.instance:getBattleElementId()
+	if self._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
+		local elementId = WeekWalkModel.instance:getBattleElementId()
 
-		WeekwalkRpc.instance:sendWeekwalkHeroRecommendRequest(var_9_0, arg_9_0._receiveRecommend, arg_9_0)
-
-		return
-	end
-
-	if arg_9_0._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk_2 then
-		local var_9_1 = WeekWalk_2Model.instance:getBattleElementId()
-
-		Weekwalk_2Rpc.instance:sendWeekwalkVer2HeroRecommendRequest(var_9_1, WeekWalk_2Model.instance:getCurMapId(), arg_9_0._receiveRecommend, arg_9_0)
+		WeekwalkRpc.instance:sendWeekwalkHeroRecommendRequest(elementId, self._receiveRecommend, self)
 
 		return
 	end
 
-	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(arg_9_0._episodeId, arg_9_0._receiveRecommend, arg_9_0)
+	if self._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk_2 then
+		local elementId = WeekWalk_2Model.instance:getBattleElementId()
+
+		Weekwalk_2Rpc.instance:sendWeekwalkVer2HeroRecommendRequest(elementId, WeekWalk_2Model.instance:getCurMapId(), self._receiveRecommend, self)
+
+		return
+	end
+
+	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(self._episodeId, self._receiveRecommend, self)
 end
 
-function var_0_0._btnTryOnClick(arg_10_0)
-	local var_10_0 = arg_10_0:_getTryoutCharacter()
+function HeroGroupWeekWalk_2FightView:_btnTryOnClick()
+	local tryoutcharacter = self:_getTryoutCharacter()
 
-	if not var_10_0 then
+	if not tryoutcharacter then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.CommonTrialHeroDetailView, {
-		heroId = var_10_0
+		heroId = tryoutcharacter
 	})
 end
 
-function var_0_0._getTryoutCharacter(arg_11_0)
-	if arg_11_0._chapterConfig.actId <= 0 then
+function HeroGroupWeekWalk_2FightView:_getTryoutCharacter()
+	if self._chapterConfig.actId <= 0 then
 		return
 	end
 
-	local var_11_0 = ActivityConfig.instance:getActivityCo(arg_11_0._chapterConfig.actId)
+	local actCo = ActivityConfig.instance:getActivityCo(self._chapterConfig.actId)
 
-	if not var_11_0 or var_11_0.tryoutcharacter <= 0 then
+	if not actCo or actCo.tryoutcharacter <= 0 then
 		return
 	end
 
-	return var_11_0.tryoutcharacter
+	return actCo.tryoutcharacter
 end
 
-function var_0_0._receiveRecommend(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_2 ~= 0 then
+function HeroGroupWeekWalk_2FightView:_receiveRecommend(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, arg_12_3)
+	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, msg)
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	var_0_1 = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication) or var_0_1
-	arg_13_0._multiplication = 1
-	arg_13_0._goherogroupcontain = gohelper.findChild(arg_13_0.viewGO, "herogroupcontain")
-	arg_13_0._goBtnContain = gohelper.findChild(arg_13_0.viewGO, "#go_container/btnContain")
-	arg_13_0._btnContainAnim = arg_13_0._goBtnContain:GetComponent(typeof(UnityEngine.Animator))
+function HeroGroupWeekWalk_2FightView:_editableInitView()
+	MaxMultiplication = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication) or MaxMultiplication
+	self._multiplication = 1
+	self._goherogroupcontain = gohelper.findChild(self.viewGO, "herogroupcontain")
+	self._goBtnContain = gohelper.findChild(self.viewGO, "#go_container/btnContain")
+	self._btnContainAnim = self._goBtnContain:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_13_0._gomask, false)
-	arg_13_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_13_0._onOpenFullView, arg_13_0)
-	arg_13_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_13_0._onCloseView, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_13_0._onModifyHeroGroup, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupName, arg_13_0._initFightGroupDrop, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_13_0._onModifySnapshot, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_13_0._onClickHeroGroupItem, arg_13_0)
-	arg_13_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_13_0._respBeginFight, arg_13_0)
-	arg_13_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_13_0.isShowHelpBtnIcon, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, arg_13_0._onUseRecommendGroup, arg_13_0)
-	arg_13_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_13_0._onCurrencyChange, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, arg_13_0._showGuideDragEffect, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUpdateRecommendLevel, arg_13_0._refreshTips, arg_13_0)
-	arg_13_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, arg_13_0._heroMoveForward, arg_13_0)
-	arg_13_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, arg_13_0.refreshDoubleDropTips, arg_13_0)
+	gohelper.setActive(self._gomask, false)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onModifyHeroGroup, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupName, self._initFightGroupDrop, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onModifySnapshot, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, self._onClickHeroGroupItem, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
+	self:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.isShowHelpBtnIcon, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, self._onUseRecommendGroup, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, self._showGuideDragEffect, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUpdateRecommendLevel, self._refreshTips, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, self._heroMoveForward, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, self.refreshDoubleDropTips, self)
 
 	if BossRushController.instance:isInBossRushFight() then
-		gohelper.addUIClickAudio(arg_13_0._btnstart.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
-		gohelper.addUIClickAudio(arg_13_0._btnstarthard.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
-		gohelper.addUIClickAudio(arg_13_0._btnstartreplay.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstarthard.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstartreplay.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
 	else
-		gohelper.addUIClickAudio(arg_13_0._btnstart.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-		gohelper.addUIClickAudio(arg_13_0._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-		gohelper.addUIClickAudio(arg_13_0._btnstartreplay.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstartreplay.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
 	end
 
-	gohelper.addUIClickAudio(arg_13_0._btnReplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
+	gohelper.addUIClickAudio(self._btnReplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
 
-	arg_13_0._iconGO = arg_13_0:getResInst(arg_13_0.viewContainer:getSetting().otherRes[1], arg_13_0._btncloth.gameObject)
+	self._iconGO = self:getResInst(self.viewContainer:getSetting().otherRes[1], self._btncloth.gameObject)
 
-	recthelper.setAnchor(arg_13_0._iconGO.transform, -150, 1)
+	recthelper.setAnchor(self._iconGO.transform, -150, 1)
 
-	arg_13_0._tweeningId = 0
-	arg_13_0._replayMode = false
-	arg_13_0._multSpeedItems = {}
+	self._tweeningId = 0
+	self._replayMode = false
+	self._multSpeedItems = {}
 
-	local var_13_0 = arg_13_0._gomultContent.transform
+	local parent = self._gomultContent.transform
 
-	for iter_13_0 = 1, var_0_1 do
-		local var_13_1 = var_13_0:GetChild(iter_13_0 - 1)
+	for i = 1, MaxMultiplication do
+		local item = parent:GetChild(i - 1)
 
-		arg_13_0:_setMultSpeedItem(var_13_1.gameObject, var_0_1 - iter_13_0 + 1)
+		self:_setMultSpeedItem(item.gameObject, MaxMultiplication - i + 1)
 	end
 
-	gohelper.setActive(arg_13_0._gomultispeed, false)
-	arg_13_0._simagereplayframe:LoadImage(ResUrl.getHeroGroupBg("fuxian_zhegai"))
+	gohelper.setActive(self._gomultispeed, false)
+	self._simagereplayframe:LoadImage(ResUrl.getHeroGroupBg("fuxian_zhegai"))
 end
 
-function var_0_0._setMultSpeedItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = gohelper.findChild(arg_14_1, "line")
-	local var_14_1 = gohelper.findChildTextMesh(arg_14_1, "num")
-	local var_14_2 = gohelper.findChild(arg_14_1, "selecticon")
+function HeroGroupWeekWalk_2FightView:_setMultSpeedItem(go, multispeed, index)
+	local line = gohelper.findChild(go, "line")
+	local num = gohelper.findChildTextMesh(go, "num")
+	local selecticon = gohelper.findChild(go, "selecticon")
 
-	arg_14_0:addClickCb(gohelper.getClick(arg_14_1), arg_14_0.setMultSpeed, arg_14_0, arg_14_2)
+	self:addClickCb(gohelper.getClick(go), self.setMultSpeed, self, multispeed)
 
-	var_14_1.text = luaLang("multiple") .. arg_14_2
+	num.text = luaLang("multiple") .. multispeed
 
-	gohelper.setActive(var_14_0, arg_14_2 ~= var_0_1)
+	gohelper.setActive(line, multispeed ~= MaxMultiplication)
 
-	arg_14_0._multSpeedItems[arg_14_2] = arg_14_0:getUserDataTb_()
-	arg_14_0._multSpeedItems[arg_14_2].num = var_14_1
-	arg_14_0._multSpeedItems[arg_14_2].selecticon = var_14_2
+	self._multSpeedItems[multispeed] = self:getUserDataTb_()
+	self._multSpeedItems[multispeed].num = num
+	self._multSpeedItems[multispeed].selecticon = selecticon
 end
 
-local var_0_2 = GameUtil.parseColor("#efb785")
-local var_0_3 = GameUtil.parseColor("#C3BEB6")
+local selectColor = GameUtil.parseColor("#efb785")
+local unSelectColor = GameUtil.parseColor("#C3BEB6")
 
-function var_0_0.setMultSpeed(arg_15_0, arg_15_1)
-	for iter_15_0 = 1, var_0_1 do
-		arg_15_0._multSpeedItems[iter_15_0].num.color = arg_15_1 == iter_15_0 and var_0_2 or var_0_3
+function HeroGroupWeekWalk_2FightView:setMultSpeed(speed)
+	for i = 1, MaxMultiplication do
+		self._multSpeedItems[i].num.color = speed == i and selectColor or unSelectColor
 
-		gohelper.setActive(arg_15_0._multSpeedItems[iter_15_0].selecticon, arg_15_1 == iter_15_0)
+		gohelper.setActive(self._multSpeedItems[i].selecticon, speed == i)
 	end
 
-	arg_15_0._txtmultispeed.text = luaLang("multiple") .. arg_15_1
-	arg_15_0._multiplication = arg_15_1
+	self._txtmultispeed.text = luaLang("multiple") .. speed
+	self._multiplication = speed
 
-	PlayerPrefsHelper.setNumber(arg_15_0:_getMultiplicationKey(), arg_15_0._multiplication)
-	arg_15_0:_refreshUI()
-	arg_15_0:_refreshTips()
+	PlayerPrefsHelper.setNumber(self:_getMultiplicationKey(), self._multiplication)
+	self:_refreshUI()
+	self:_refreshTips()
 
-	local var_15_0 = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(arg_15_0._multiplication))
+	local replayCn = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(self._multiplication))
 
-	arg_15_0._txtreplaycn.text = var_15_0
-	arg_15_0._txtreplayhardcn.text = var_15_0
-	arg_15_0._txtreplayunpowercn.text = var_15_0
-	arg_15_0._txtreplaycostcn.text = var_15_0
+	self._txtreplaycn.text = replayCn
+	self._txtreplayhardcn.text = replayCn
+	self._txtreplayunpowercn.text = replayCn
+	self._txtreplaycostcn.text = replayCn
 
-	arg_15_0:_refreshPowerShow()
-	arg_15_0:_closemultcontent()
+	self:_refreshPowerShow()
+	self:_closemultcontent()
 end
 
-function var_0_0._heroMoveForward(arg_16_0, arg_16_1)
-	HeroGroupEditListModel.instance:setMoveHeroId(tonumber(arg_16_1))
+function HeroGroupWeekWalk_2FightView:_heroMoveForward(heroId)
+	HeroGroupEditListModel.instance:setMoveHeroId(tonumber(heroId))
 end
 
-function var_0_0.isReplayMode(arg_17_0)
-	return arg_17_0._replayMode
+function HeroGroupWeekWalk_2FightView:isReplayMode()
+	return self._replayMode
 end
 
-function var_0_0._onCurrencyChange(arg_18_0, arg_18_1)
-	if not arg_18_1[CurrencyEnum.CurrencyType.Power] then
+function HeroGroupWeekWalk_2FightView:_onCurrencyChange(changeIds)
+	if not changeIds[CurrencyEnum.CurrencyType.Power] then
 		return
 	end
 
-	arg_18_0:_refreshCostPower()
+	self:_refreshCostPower()
 end
 
-function var_0_0._respBeginFight(arg_19_0)
-	gohelper.setActive(arg_19_0._gomask, true)
+function HeroGroupWeekWalk_2FightView:_respBeginFight()
+	gohelper.setActive(self._gomask, true)
 end
 
-function var_0_0._onOpenFullView(arg_20_0, arg_20_1)
+function HeroGroupWeekWalk_2FightView:_onOpenFullView(viewName)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 end
 
-function var_0_0._onCloseView(arg_21_0, arg_21_1)
-	if arg_21_1 == ViewName.EquipInfoTeamShowView then
-		arg_21_0:_checkFirstPosHasEquip()
+function HeroGroupWeekWalk_2FightView:_onCloseView(viewName)
+	if viewName == ViewName.EquipInfoTeamShowView then
+		self:_checkFirstPosHasEquip()
 	end
 end
 
-function var_0_0.onOpen(arg_22_0)
+function HeroGroupWeekWalk_2FightView:onOpen()
 	if HeroGroupBalanceHelper.getIsBalanceMode() then
 		ViewMgr.instance:openView(ViewName.HeroGroupBalanceTipView)
 	end
 
 	HeroGroupTrialModel.instance:setTrialByBattleId(HeroGroupModel.instance.battleId)
-	arg_22_0:_checkFirstPosHasEquip()
-	arg_22_0:_checkEquipClothSkill()
-	gohelper.setActive(arg_22_0._btnSwitchBalance, HeroGroupBalanceHelper.canShowBalanceSwitchBtn())
-	gohelper.setActive(arg_22_0._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
-	gohelper.setActive(arg_22_0._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
-	arg_22_0:_refreshUI()
-	gohelper.addUIClickAudio(arg_22_0._btncareerrestrain.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
-	NavigateMgr.instance:addEscape(arg_22_0.viewName, arg_22_0._onEscapeBtnClick, arg_22_0)
-	arg_22_0:isShowHelpBtnIcon()
+	self:_checkFirstPosHasEquip()
+	self:_checkEquipClothSkill()
+	gohelper.setActive(self._btnSwitchBalance, HeroGroupBalanceHelper.canShowBalanceSwitchBtn())
+	gohelper.setActive(self._goBalanceEnter, not HeroGroupBalanceHelper.getIsBalanceMode())
+	gohelper.setActive(self._goBalanceExit, HeroGroupBalanceHelper.getIsBalanceMode())
+	self:_refreshUI()
+	gohelper.addUIClickAudio(self._btncareerrestrain.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	NavigateMgr.instance:addEscape(self.viewName, self._onEscapeBtnClick, self)
+	self:isShowHelpBtnIcon()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Action_Cardsopen)
 
-	local var_22_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
-	local var_22_1 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-	local var_22_2 = var_22_1 and var_22_1.star == DungeonEnum.StarType.Advanced and var_22_1.hasRecord
-	local var_22_3 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+	local hasUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local hasRecord = userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced and userDungeonMO.hasRecord
+	local pass_model_record = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
 
-	if var_22_0 and var_22_2 and not string.nilorempty(var_22_3) and cjson.decode(var_22_3)[tostring(arg_22_0._episodeId)] and not arg_22_0._replayMode then
-		arg_22_0._replayMode = true
-		arg_22_0._multiplication = PlayerPrefsHelper.getNumber(arg_22_0:_getMultiplicationKey(), 1)
+	if hasUnlock and hasRecord and not string.nilorempty(pass_model_record) then
+		pass_model_record = cjson.decode(pass_model_record)
 
-		arg_22_0:_refreshCost(true)
+		if pass_model_record[tostring(self._episodeId)] and not self._replayMode then
+			self._replayMode = true
+			self._multiplication = PlayerPrefsHelper.getNumber(self:_getMultiplicationKey(), 1)
 
-		arg_22_0._replayFightGroupMO = HeroGroupModel.instance:getReplayParam()
+			self:_refreshCost(true)
 
-		if not arg_22_0._replayFightGroupMO then
-			arg_22_0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_22_0._onGetFightRecordGroupReply, arg_22_0)
-			FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
-		else
-			arg_22_0:_switchReplayGroup()
+			self._replayFightGroupMO = HeroGroupModel.instance:getReplayParam()
+
+			if not self._replayFightGroupMO then
+				self:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
+				FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
+			else
+				self:_switchReplayGroup()
+			end
 		end
 	end
 
-	arg_22_0:setMultSpeed(arg_22_0._multiplication)
-	gohelper.setActive(arg_22_0._goreplaybtnframe, arg_22_0._replayMode)
-	arg_22_0:_dispatchGuideEvent()
+	self:setMultSpeed(self._multiplication)
+	gohelper.setActive(self._goreplaybtnframe, self._replayMode)
+	self:_dispatchGuideEvent()
 
-	arg_22_0._dropgroupchildcount = arg_22_0._dropherogroup.transform.childCount
+	self._dropgroupchildcount = self._dropherogroup.transform.childCount
 
-	arg_22_0:_refreshReplay()
-	arg_22_0:_refreshTips()
-	arg_22_0:_refreshPowerShow()
-	arg_22_0:_udpateRecommendEffect()
+	self:_refreshReplay()
+	self:_refreshTips()
+	self:_refreshPowerShow()
+	self:_udpateRecommendEffect()
 	FightHelper.detectAttributeCounter()
-	arg_22_0:_initFightGroupDrop()
+	self:_initFightGroupDrop()
 
-	if arg_22_0._goTrialTips.activeSelf and not BossRushModel.instance:isSpecialLayerCurBattle() then
-		gohelper.setActive(arg_22_0._goTrialTipsBg, true)
+	if self._goTrialTips.activeSelf and not BossRushModel.instance:isSpecialLayerCurBattle() then
+		gohelper.setActive(self._goTrialTipsBg, true)
 	end
 
-	if arg_22_0._chapterConfig.type == DungeonEnum.ChapterType.TrialHero then
-		local var_22_4 = arg_22_0:_getTryoutCharacter()
+	if self._chapterConfig.type == DungeonEnum.ChapterType.TrialHero then
+		local tryoutcharacter = self:_getTryoutCharacter()
 
-		if not var_22_4 then
+		if not tryoutcharacter then
 			return
 		end
 
-		if GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.HeroGroupFightView_TrialHeroAlert .. var_22_4, "0") == "0" then
-			GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.HeroGroupFightView_TrialHeroAlert .. var_22_4, "1")
-			TaskDispatcher.runDelay(arg_22_0._btnTryOnClick, arg_22_0, 0.5)
+		local alert = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.HeroGroupFightView_TrialHeroAlert .. tryoutcharacter, "0")
+
+		if alert == "0" then
+			GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.HeroGroupFightView_TrialHeroAlert .. tryoutcharacter, "1")
+			TaskDispatcher.runDelay(self._btnTryOnClick, self, 0.5)
 		end
 	end
 end
 
-function var_0_0.refreshFightCount(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0:_getfreeCount()
+function HeroGroupWeekWalk_2FightView:refreshFightCount(showPower)
+	local freeNum = self:_getfreeCount()
 
-	if var_23_0 > 0 then
-		local var_23_1 = math.min(var_23_0, arg_23_0._multiplication)
+	if freeNum > 0 then
+		local useTimes = math.min(freeNum, self._multiplication)
 
-		arg_23_0._txtfightCount.text = string.format("%s<color=#E45A57> -%s</color>", var_23_0, var_23_1)
+		self._txtfightCount.text = string.format("%s<color=#E45A57> -%s</color>", freeNum, useTimes)
 	end
 
-	gohelper.setActive(arg_23_0._gofightCount, var_23_0 > 0)
+	gohelper.setActive(self._gofightCount, freeNum > 0)
 
-	if arg_23_1 then
-		recthelper.setAnchorX(arg_23_0._gofightCount.transform, -410)
+	if showPower then
+		recthelper.setAnchorX(self._gofightCount.transform, -410)
 	else
-		recthelper.setAnchorX(arg_23_0._gofightCount.transform, -196)
+		recthelper.setAnchorX(self._gofightCount.transform, -196)
 	end
 end
 
-function var_0_0.onOpenFinish(arg_24_0)
-	arg_24_0:_dispatchGuideEventOnOpenFinish()
+function HeroGroupWeekWalk_2FightView:onOpenFinish()
+	self:_dispatchGuideEventOnOpenFinish()
 end
 
-function var_0_0._setTrialNumTips(arg_25_0)
-	local var_25_0, var_25_1 = var_0_0._getEpisodeConfigAndBattleConfig()
-	local var_25_2 = {}
-	local var_25_3 = HeroGroupTrialModel.instance:getLimitNum() or 0
+function HeroGroupWeekWalk_2FightView:_setTrialNumTips()
+	local _, battleCO = HeroGroupWeekWalk_2FightView._getEpisodeConfigAndBattleConfig()
+	local tips = {}
+	local limitNum = HeroGroupTrialModel.instance:getLimitNum() or 0
 
-	if var_25_3 > 0 then
-		if var_25_3 >= 4 then
-			var_25_2[1] = luaLang("herogroup_trial_tip")
+	if limitNum > 0 then
+		if limitNum >= 4 then
+			tips[1] = luaLang("herogroup_trial_tip")
 		else
-			var_25_2[1] = formatLuaLang("herogroup_trial_limit_tip", var_25_3)
+			tips[1] = formatLuaLang("herogroup_trial_limit_tip", limitNum)
 		end
 	end
 
-	if var_25_1 and not string.nilorempty(var_25_1.trialEquips) then
-		table.insert(var_25_2, luaLang("herogroup_trial_equip_tip"))
+	if battleCO and not string.nilorempty(battleCO.trialEquips) then
+		table.insert(tips, luaLang("herogroup_trial_equip_tip"))
 	end
 
-	gohelper.setActive(arg_25_0._goTrialTips, #var_25_2 > 0)
+	gohelper.setActive(self._goTrialTips, #tips > 0)
 
-	if #var_25_2 > 0 then
-		gohelper.CreateObjList(arg_25_0, arg_25_0._setTrialTipsTxt, var_25_2, arg_25_0._goTrialTipsBg, arg_25_0._goTrialTipsItem)
-	end
-end
-
-function var_0_0._onTouch(arg_26_0)
-	if arg_26_0._goTrialTips.activeSelf and arg_26_0._clickTrialFrame ~= UnityEngine.Time.frameCount and not ViewMgr.instance:isOpen(ViewName.HeroGroupBalanceTipView) then
-		gohelper.setActive(arg_26_0._goTrialTipsBg, false)
+	if #tips > 0 then
+		gohelper.CreateObjList(self, self._setTrialTipsTxt, tips, self._goTrialTipsBg, self._goTrialTipsItem)
 	end
 end
 
-function var_0_0._setTrialTipsTxt(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	gohelper.findChildTextMesh(arg_27_1, "desc").text = arg_27_2
-end
-
-function var_0_0._switchTrialTips(arg_28_0)
-	gohelper.setActive(arg_28_0._goTrialTipsBg, not arg_28_0._goTrialTipsBg.activeSelf)
-
-	arg_28_0._clickTrialFrame = UnityEngine.Time.frameCount
-end
-
-function var_0_0._refreshPowerShow(arg_29_0)
-	local var_29_0 = true
-	local var_29_1 = HeroGroupModel.instance.episodeId
-	local var_29_2 = DungeonConfig.instance:getEpisodeCO(var_29_1)
-	local var_29_3 = DungeonConfig.instance:getChapterCO(var_29_2.chapterId)
-
-	if var_29_3 and var_29_3.enterAfterFreeLimit > 0 and DungeonModel.instance:getChapterRemainingNum(var_29_3.type) >= arg_29_0._multiplication then
-		var_29_0 = false
-	end
-
-	gohelper.setActive(arg_29_0._gopowercontent, var_29_0)
-	arg_29_0:refreshFightCount(var_29_0)
-end
-
-function var_0_0._getMultiplicationKey(arg_30_0)
-	return string.format("%s#%d", PlayerPrefsKey.Multiplication .. PlayerModel.instance:getMyUserId(), arg_30_0._episodeId)
-end
-
-function var_0_0._udpateRecommendEffect(arg_31_0)
-	gohelper.setActive(arg_31_0._goRecommendEffect, FightFailRecommendController.instance:needShowRecommend(arg_31_0._episodeId))
-end
-
-function var_0_0.isShowHelpBtnIcon(arg_32_0)
-	local var_32_0 = arg_32_0.viewContainer:getHelpId()
-
-	recthelper.setAnchorX(arg_32_0._gotopbtns.transform, var_32_0 and 568.56 or 419.88)
-end
-
-function var_0_0._onEscapeBtnClick(arg_33_0)
-	if not arg_33_0._gomask.gameObject.activeInHierarchy then
-		arg_33_0.viewContainer:_closeCallback()
+function HeroGroupWeekWalk_2FightView:_onTouch()
+	if self._goTrialTips.activeSelf and self._clickTrialFrame ~= UnityEngine.Time.frameCount and not ViewMgr.instance:isOpen(ViewName.HeroGroupBalanceTipView) then
+		gohelper.setActive(self._goTrialTipsBg, false)
 	end
 end
 
-function var_0_0._getfreeCount(arg_34_0)
-	if not arg_34_0._chapterConfig or arg_34_0._chapterConfig.enterAfterFreeLimit <= 0 then
+function HeroGroupWeekWalk_2FightView:_setTrialTipsTxt(obj, data, index)
+	gohelper.findChildTextMesh(obj, "desc").text = data
+end
+
+function HeroGroupWeekWalk_2FightView:_switchTrialTips()
+	gohelper.setActive(self._goTrialTipsBg, not self._goTrialTipsBg.activeSelf)
+
+	self._clickTrialFrame = UnityEngine.Time.frameCount
+end
+
+function HeroGroupWeekWalk_2FightView:_refreshPowerShow()
+	local showPower = true
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+
+	if chapterConfig and chapterConfig.enterAfterFreeLimit > 0 then
+		local num = DungeonModel.instance:getChapterRemainingNum(chapterConfig.type)
+
+		if num >= self._multiplication then
+			showPower = false
+		end
+	end
+
+	gohelper.setActive(self._gopowercontent, showPower)
+	self:refreshFightCount(showPower)
+end
+
+function HeroGroupWeekWalk_2FightView:_getMultiplicationKey()
+	return string.format("%s#%d", PlayerPrefsKey.Multiplication .. PlayerModel.instance:getMyUserId(), self._episodeId)
+end
+
+function HeroGroupWeekWalk_2FightView:_udpateRecommendEffect()
+	gohelper.setActive(self._goRecommendEffect, FightFailRecommendController.instance:needShowRecommend(self._episodeId))
+end
+
+function HeroGroupWeekWalk_2FightView:isShowHelpBtnIcon()
+	local helpId = self.viewContainer:getHelpId()
+
+	recthelper.setAnchorX(self._gotopbtns.transform, helpId and 568.56 or 419.88)
+end
+
+function HeroGroupWeekWalk_2FightView:_onEscapeBtnClick()
+	if not self._gomask.gameObject.activeInHierarchy then
+		self.viewContainer:_closeCallback()
+	end
+end
+
+function HeroGroupWeekWalk_2FightView:_getfreeCount()
+	if not self._chapterConfig or self._chapterConfig.enterAfterFreeLimit <= 0 then
 		return 0
 	end
 
-	return (DungeonModel.instance:getChapterRemainingNum(arg_34_0._chapterConfig.type))
+	local freeNum = DungeonModel.instance:getChapterRemainingNum(self._chapterConfig.type)
+
+	return freeNum
 end
 
-function var_0_0.setGroupChangeToast(arg_35_0, arg_35_1)
-	arg_35_0._changeToastId = arg_35_1
+function HeroGroupWeekWalk_2FightView:setGroupChangeToast(id)
+	self._changeToastId = id
 end
 
-function var_0_0._groupDropValueChanged(arg_36_0, arg_36_1)
-	local var_36_0
+function HeroGroupWeekWalk_2FightView:_groupDropValueChanged(value)
+	local selectIndex
 
 	if HeroGroupModel.instance:getGroupTypeName() then
-		var_36_0 = arg_36_1
+		selectIndex = value
 	else
-		var_36_0 = arg_36_1 + 1
+		selectIndex = value + 1
 	end
 
-	gohelper.setActive(arg_36_0._btnmodifyname, var_36_0 ~= 0)
+	gohelper.setActive(self._btnmodifyname, selectIndex ~= 0)
 
-	if HeroGroupModel.instance:setHeroGroupSelectIndex(var_36_0) then
-		arg_36_0:_checkEquipClothSkill()
-		GameFacade.showToast(arg_36_0._changeToastId or ToastEnum.SeasonGroupChanged)
+	if HeroGroupModel.instance:setHeroGroupSelectIndex(selectIndex) then
+		self:_checkEquipClothSkill()
+		GameFacade.showToast(self._changeToastId or ToastEnum.SeasonGroupChanged)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-		gohelper.setActive(arg_36_0._goherogroupcontain, false)
-		gohelper.setActive(arg_36_0._goherogroupcontain, true)
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupSelectIndex)
 	end
 end
 
-function var_0_0._initFightGroupDrop(arg_37_0)
-	if not arg_37_0:_noAidHero() then
+function HeroGroupWeekWalk_2FightView:_initFightGroupDrop()
+	if not self:_noAidHero() then
 		return
 	end
 
-	if HeroGroupModel.instance:getPresetHeroGroupType() then
-		arg_37_0._dropherogroup.dropDown.enabled = false
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
+
+	if heroGroupType then
+		self._dropherogroup.dropDown.enabled = false
 
 		return
 	end
 
-	local var_37_0 = {}
+	local list = {}
 
-	for iter_37_0 = 1, 4 do
-		var_37_0[iter_37_0] = HeroGroupModel.instance:getCommonGroupName(iter_37_0)
+	for i = 1, 4 do
+		list[i] = HeroGroupModel.instance:getCommonGroupName(i)
 	end
 
-	local var_37_1 = HeroGroupModel.instance.curGroupSelectIndex
+	local selectIndex = HeroGroupModel.instance.curGroupSelectIndex
 
-	gohelper.setActive(arg_37_0._btnmodifyname, var_37_1 ~= 0)
+	gohelper.setActive(self._btnmodifyname, selectIndex ~= 0)
 
-	local var_37_2 = HeroGroupModel.instance:getGroupTypeName()
+	local name = HeroGroupModel.instance:getGroupTypeName()
 
-	if var_37_2 then
-		table.insert(var_37_0, 1, var_37_2)
+	if name then
+		table.insert(list, 1, name)
 	else
-		var_37_1 = var_37_1 - 1
+		selectIndex = selectIndex - 1
 	end
 
-	arg_37_0._dropherogroup:ClearOptions()
-	arg_37_0._dropherogroup:AddOptions(var_37_0)
-	arg_37_0._dropherogroup:SetValue(var_37_1)
+	self._dropherogroup:ClearOptions()
+	self._dropherogroup:AddOptions(list)
+	self._dropherogroup:SetValue(selectIndex)
 end
 
-function var_0_0._modifyName(arg_38_0)
+function HeroGroupWeekWalk_2FightView:_modifyName()
 	ViewMgr.instance:openView(ViewName.HeroGroupModifyNameView)
 end
 
-function var_0_0._refreshUI(arg_39_0)
-	local var_39_0 = HeroGroupModel.instance:getCurGroupId()
+function HeroGroupWeekWalk_2FightView:_refreshUI()
+	local heroGroupId = HeroGroupModel.instance:getCurGroupId()
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, var_39_0)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, heroGroupId)
 
-	arg_39_0._episodeId = HeroGroupModel.instance.episodeId
-	arg_39_0.episodeConfig = DungeonConfig.instance:getEpisodeCO(arg_39_0._episodeId)
-	arg_39_0._chapterConfig = DungeonConfig.instance:getChapterCO(arg_39_0.episodeConfig.chapterId)
+	self._episodeId = HeroGroupModel.instance.episodeId
+	self.episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
+	self._chapterConfig = DungeonConfig.instance:getChapterCO(self.episodeConfig.chapterId)
 
-	local var_39_1 = arg_39_0:_getfreeCount()
+	local freeNum = self:_getfreeCount()
 
-	arg_39_0._enterAfterFreeLimit = var_39_1 - arg_39_0._multiplication >= 0 and var_39_1 - arg_39_0._multiplication or false
+	self._enterAfterFreeLimit = freeNum - self._multiplication >= 0 and freeNum - self._multiplication or false
 
-	if arg_39_0._btnTry then
-		gohelper.setActive(arg_39_0._btnTry, arg_39_0._chapterConfig.type == DungeonEnum.ChapterType.TrialHero)
+	if self._btnTry then
+		gohelper.setActive(self._btnTry, self._chapterConfig.type == DungeonEnum.ChapterType.TrialHero)
 	end
 
-	gohelper.setActive(arg_39_0._btnrecommend.gameObject, arg_39_0._chapterConfig.isHeroRecommend == 1)
-	arg_39_0:_refreshCost(true)
-	arg_39_0:_refreshCloth()
-	arg_39_0:_setTrialNumTips()
-	arg_39_0:refreshDoubleDropTips()
-	arg_39_0.viewContainer:setNavigateOverrideClose()
-	gohelper.setActive(arg_39_0._goReplayBtn, not HeroGroupBalanceHelper.getIsBalanceMode() and arg_39_0.episodeConfig and arg_39_0.episodeConfig.canUseRecord == 1 and arg_39_0._chapterConfig.type ~= DungeonEnum.ChapterType.WeekWalk)
+	gohelper.setActive(self._btnrecommend.gameObject, self._chapterConfig.isHeroRecommend == 1)
+	self:_refreshCost(true)
+	self:_refreshCloth()
+	self:_setTrialNumTips()
+	self:refreshDoubleDropTips()
+	self.viewContainer:setNavigateOverrideClose()
+	gohelper.setActive(self._goReplayBtn, not HeroGroupBalanceHelper.getIsBalanceMode() and self.episodeConfig and self.episodeConfig.canUseRecord == 1 and self._chapterConfig.type ~= DungeonEnum.ChapterType.WeekWalk)
 end
 
-function var_0_0._refreshCost(arg_40_0, arg_40_1)
-	gohelper.setActive(arg_40_0._gocost, arg_40_1)
+function HeroGroupWeekWalk_2FightView:_refreshCost(visible)
+	gohelper.setActive(self._gocost, visible)
 
-	local var_40_0 = arg_40_0:_getfreeCount()
+	local remainCount = self:_getfreeCount()
 
-	gohelper.setActive(arg_40_0._gopower, not arg_40_0._enterAfterFreeLimit)
-	gohelper.setActive(arg_40_0._gonormallackpower, false)
-	gohelper.setActive(arg_40_0._goreplaylackpower, false)
+	gohelper.setActive(self._gopower, not self._enterAfterFreeLimit)
+	gohelper.setActive(self._gonormallackpower, false)
+	gohelper.setActive(self._goreplaylackpower, false)
 
-	if arg_40_0._enterAfterFreeLimit or var_40_0 > 0 then
-		local var_40_1 = tostring(-1 * math.min(arg_40_0._multiplication, var_40_0))
+	if self._enterAfterFreeLimit or remainCount > 0 then
+		local str = tostring(-1 * math.min(self._multiplication, remainCount))
 
-		arg_40_0._txtCostNum.text = var_40_1
-		arg_40_0._txtReplayCostNum.text = var_40_1
+		self._txtCostNum.text = str
+		self._txtReplayCostNum.text = str
 
-		if var_40_0 >= arg_40_0._multiplication then
-			arg_40_0:_refreshBtns(false)
+		if remainCount >= self._multiplication then
+			self:_refreshBtns(false)
 
 			return
 		end
 	end
 
-	local var_40_2 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
-	local var_40_3 = ResUrl.getCurrencyItemIcon(var_40_2.icon .. "_btn")
+	local currencyCo = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+	local powerIcon = ResUrl.getCurrencyItemIcon(currencyCo.icon .. "_btn")
 
-	arg_40_0._simagepower:LoadImage(var_40_3)
-	arg_40_0:_refreshCostPower()
+	self._simagepower:LoadImage(powerIcon)
+	self:_refreshCostPower()
 end
 
-function var_0_0._refreshTips(arg_41_0)
-	gohelper.setActive(arg_41_0._btnmultispeed.gameObject, arg_41_0._replayMode)
+function HeroGroupWeekWalk_2FightView:_refreshTips()
+	gohelper.setActive(self._btnmultispeed.gameObject, self._replayMode)
 
-	arg_41_0._gomultispeed.transform.position = arg_41_0._gomultPos.transform.position
+	self._gomultispeed.transform.position = self._gomultPos.transform.position
 end
 
-function var_0_0._refreshCostPower(arg_42_0)
-	local var_42_0 = string.split(arg_42_0.episodeConfig.cost, "|")
-	local var_42_1 = string.split(var_42_0[1], "#")
-	local var_42_2 = tonumber(var_42_1[3] or 0)
-	local var_42_3 = var_42_2 > 0
+function HeroGroupWeekWalk_2FightView:_refreshCostPower()
+	local costs = string.split(self.episodeConfig.cost, "|")
+	local cost1 = string.split(costs[1], "#")
+	local value = tonumber(cost1[3] or 0)
+	local showPower = value > 0
 
-	if arg_42_0._enterAfterFreeLimit then
-		var_42_3 = false
+	if self._enterAfterFreeLimit then
+		showPower = false
 	end
 
-	gohelper.setActive(arg_42_0._gopower, var_42_3)
-	arg_42_0:_refreshBtns(var_42_3)
+	gohelper.setActive(self._gopower, showPower)
+	self:_refreshBtns(showPower)
 
-	if not var_42_3 then
+	if not showPower then
 		return
 	end
 
-	local var_42_4 = var_42_2 * ((arg_42_0._multiplication or 1) - arg_42_0:_getfreeCount())
+	local multiCost = value * ((self._multiplication or 1) - self:_getfreeCount())
 
-	arg_42_0._txtusepower.text = string.format("-%s", var_42_4)
+	self._txtusepower.text = string.format("-%s", multiCost)
 
-	local var_42_5 = arg_42_0._chapterConfig.type == DungeonEnum.ChapterType.Hard
+	local isHardChapter = self._chapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	if var_42_4 <= CurrencyModel.instance:getPower() then
-		gohelper.setActive(arg_42_0._gonormallackpower, false)
-		gohelper.setActive(arg_42_0._goreplaylackpower, false)
+	if multiCost <= CurrencyModel.instance:getPower() then
+		gohelper.setActive(self._gonormallackpower, false)
+		gohelper.setActive(self._goreplaylackpower, false)
 
-		local var_42_6 = var_42_5 and "#FFFFFF" or "#070706"
+		local usePowerColor = isHardChapter and "#FFFFFF" or "#070706"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_42_0._txtusepower, arg_42_0._replayMode and "#070706" or var_42_6)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepower, self._replayMode and "#070706" or usePowerColor)
 	else
-		local var_42_7 = var_42_5 and "#C44945" or "#800015"
+		local usePowerColor = isHardChapter and "#C44945" or "#800015"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_42_0._txtusepower, arg_42_0._replayMode and "#800015" or var_42_7)
-		gohelper.setActive(arg_42_0._gonormallackpower, not arg_42_0._replayMode)
-		gohelper.setActive(arg_42_0._goreplaylackpower, arg_42_0._replayMode)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepower, self._replayMode and "#800015" or usePowerColor)
+		gohelper.setActive(self._gonormallackpower, not self._replayMode)
+		gohelper.setActive(self._goreplaylackpower, self._replayMode)
 	end
 end
 
-function var_0_0._dispatchGuideEvent(arg_43_0)
-	if arg_43_0._replayMode then
+function HeroGroupWeekWalk_2FightView:_dispatchGuideEvent()
+	if self._replayMode then
 		return
 	end
 
-	if not arg_43_0:_isSpType(arg_43_0._chapterConfig.type) then
+	if not self:_isSpType(self._chapterConfig.type) then
 		if not GuideInvalidCondition.checkAllGroupSetEquip() then
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnEnteryEquipType)
 		end
 
-		arg_43_0:_dispatchRecordEvent()
-		arg_43_0:_dispatchNoEquipEvent()
+		self:_dispatchRecordEvent()
+		self:_dispatchNoEquipEvent()
 	end
 end
 
-function var_0_0._dispatchGuideEventOnOpenFinish(arg_44_0)
-	if arg_44_0._episodeId then
-		local var_44_0 = arg_44_0.episodeConfig.chapterId
-		local var_44_1 = arg_44_0.episodeConfig.type
+function HeroGroupWeekWalk_2FightView:_dispatchGuideEventOnOpenFinish()
+	if self._episodeId then
+		local chapterId = self.episodeConfig.chapterId
+		local episodeType = self.episodeConfig.type
 
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithEpisodeId, arg_44_0._episodeId)
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithChapterId, var_44_0)
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithEpisodeType, var_44_1)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithEpisodeId, self._episodeId)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithChapterId, chapterId)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OpenHeroGroupFinishWithEpisodeType, episodeType)
 	end
 end
 
-function var_0_0._dispatchNoEquipEvent(arg_45_0)
-	local var_45_0 = HeroGroupModel.instance:getCurGroupMO()
+function HeroGroupWeekWalk_2FightView:_dispatchNoEquipEvent()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	for iter_45_0 = 1, 4 do
-		local var_45_1 = var_45_0:getPosEquips(iter_45_0 - 1).equipUid[1]
+	for i = 1, 4 do
+		local equips = curGroupMO:getPosEquips(i - 1).equipUid
+		local equipId = equips[1]
+		local equipMO = EquipModel.instance:getEquip(equipId)
 
-		if EquipModel.instance:getEquip(var_45_1) then
+		if equipMO then
 			return
 		end
 	end
@@ -752,112 +772,110 @@ function var_0_0._dispatchNoEquipEvent(arg_45_0)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnEnteryNormalType)
 end
 
-function var_0_0._isSpType(arg_46_0, arg_46_1)
-	return arg_46_1 == DungeonEnum.ChapterType.Sp or arg_46_1 == DungeonEnum.ChapterType.TeachNote
+function HeroGroupWeekWalk_2FightView:_isSpType(type)
+	return type == DungeonEnum.ChapterType.Sp or type == DungeonEnum.ChapterType.TeachNote
 end
 
-function var_0_0._dispatchRecordEvent(arg_47_0)
-	local var_47_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
-	local var_47_1 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-	local var_47_2 = var_47_1 and var_47_1.hasRecord
+function HeroGroupWeekWalk_2FightView:_dispatchRecordEvent()
+	local showReplayBtn = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local hasRecord = userDungeonMO and userDungeonMO.hasRecord
 
-	if var_47_0 and var_47_2 then
+	if showReplayBtn and hasRecord then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHasRecord)
 	end
 end
 
-function var_0_0.onClose(arg_48_0)
+function HeroGroupWeekWalk_2FightView:onClose()
 	ViewMgr.instance:closeView(ViewName.CommonTrialHeroDetailView)
-	TaskDispatcher.cancelTask(arg_48_0._btnTryOnClick, arg_48_0)
-	arg_48_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_48_0._onModifySnapshot, arg_48_0)
-	arg_48_0:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_48_0.isShowHelpBtnIcon, arg_48_0)
-	TaskDispatcher.cancelTask(arg_48_0._checkDropArrow, arg_48_0)
+	TaskDispatcher.cancelTask(self._btnTryOnClick, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onModifySnapshot, self)
+	self:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.isShowHelpBtnIcon, self)
+	TaskDispatcher.cancelTask(self._checkDropArrow, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
-	ZProj.TweenHelper.KillById(arg_48_0._tweeningId)
+	ZProj.TweenHelper.KillById(self._tweeningId)
 	HeroGroupBalanceHelper.clearBalanceStatus()
 
-	if arg_48_0._dragEffectLoader then
-		arg_48_0._dragEffectLoader:dispose()
+	if self._dragEffectLoader then
+		self._dragEffectLoader:dispose()
 
-		arg_48_0._dragEffectLoader = nil
+		self._dragEffectLoader = nil
 	end
 
-	arg_48_0:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_48_0.isShowHelpBtnIcon, arg_48_0)
+	self:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.isShowHelpBtnIcon, self)
 end
 
-function var_0_0._refreshReplay(arg_49_0)
-	if arg_49_0._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
-		gohelper.setActive(arg_49_0._goReplayBtn, false)
-		gohelper.setActive(arg_49_0._gomemorytimes, false)
+function HeroGroupWeekWalk_2FightView:_refreshReplay()
+	if self._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk then
+		gohelper.setActive(self._goReplayBtn, false)
+		gohelper.setActive(self._gomemorytimes, false)
 	else
-		gohelper.setActive(arg_49_0._gomemorytimes, arg_49_0._replayMode)
+		gohelper.setActive(self._gomemorytimes, self._replayMode)
 
-		local var_49_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
-		local var_49_1 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
-		local var_49_2 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-		local var_49_3 = var_49_2 and var_49_2.hasRecord
+		local showReplayBtn = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
+		local replay_is_unlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+		local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+		local hasRecord = userDungeonMO and userDungeonMO.hasRecord
 
-		ZProj.UGUIHelper.SetColorAlpha(arg_49_0._imgbtnReplayBg, var_49_1 and var_49_3 and 1 or 0.75)
+		ZProj.UGUIHelper.SetColorAlpha(self._imgbtnReplayBg, replay_is_unlock and hasRecord and 1 or 0.75)
 
-		local var_49_4 = arg_49_0._replayMode and "btn_replay_pause" or "btn_replay_play"
+		local normalIcon = self._replayMode and "btn_replay_pause" or "btn_replay_play"
 
-		UISpriteSetMgr.instance:setHeroGroupSprite(arg_49_0._imagereplayicon, var_49_1 and var_49_3 and var_49_4 or "btn_replay_lack")
-		recthelper.setWidth(arg_49_0._goReplayBtn.transform, arg_49_0._replayMode and 416 or 83)
+		UISpriteSetMgr.instance:setHeroGroupSprite(self._imagereplayicon, replay_is_unlock and hasRecord and normalIcon or "btn_replay_lack")
+		recthelper.setWidth(self._goReplayBtn.transform, self._replayMode and 416 or 83)
 
-		if var_49_0 and var_49_3 and not arg_49_0._replayMode then
+		if showReplayBtn and hasRecord and not self._replayMode then
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHasRecord)
 		end
 	end
 end
 
-function var_0_0._refreshCloth(arg_50_0)
-	local var_50_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
-	local var_50_1 = HeroGroupModel.instance:getCurGroupMO().clothId
+function HeroGroupWeekWalk_2FightView:_refreshCloth()
+	local clothShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local cloth_id = curGroupMO.clothId
 
-	var_50_1 = PlayerClothModel.instance:getSpEpisodeClothID() or var_50_1
+	cloth_id = PlayerClothModel.instance:getSpEpisodeClothID() or cloth_id
 
-	local var_50_2 = PlayerClothModel.instance:getById(var_50_1)
+	local clothMO = PlayerClothModel.instance:getById(cloth_id)
 
-	gohelper.setActive(arg_50_0._txtclothname.gameObject, var_50_2)
+	gohelper.setActive(self._txtclothname.gameObject, clothMO)
 
-	if var_50_2 then
-		local var_50_3 = lua_cloth.configDict[var_50_2.clothId]
+	if clothMO then
+		local clothConfig = lua_cloth.configDict[clothMO.clothId]
+		local clothLv = clothMO.level or 0
 
-		if not var_50_2.level then
-			local var_50_4 = 0
-		end
-
-		arg_50_0._txtclothname.text = var_50_3.name
-		arg_50_0._txtclothnameen.text = var_50_3.enname
+		self._txtclothname.text = clothConfig.name
+		self._txtclothnameen.text = clothConfig.enname
 	end
 
-	for iter_50_0, iter_50_1 in ipairs(lua_cloth.configList) do
-		local var_50_5 = gohelper.findChild(arg_50_0._iconGO, tostring(iter_50_1.id))
+	for _, clothCO in ipairs(lua_cloth.configList) do
+		local icon = gohelper.findChild(self._iconGO, tostring(clothCO.id))
 
-		if not gohelper.isNil(var_50_5) then
-			gohelper.setActive(var_50_5, iter_50_1.id == var_50_1)
+		if not gohelper.isNil(icon) then
+			gohelper.setActive(icon, clothCO.id == cloth_id)
 		end
 	end
 
-	gohelper.setActive(arg_50_0._btncloth.gameObject, var_0_0.showCloth())
+	gohelper.setActive(self._btncloth.gameObject, HeroGroupWeekWalk_2FightView.showCloth())
 end
 
-function var_0_0._checkEquipClothSkill(arg_51_0)
+function HeroGroupWeekWalk_2FightView:_checkEquipClothSkill()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
 		return
 	end
 
-	local var_51_0 = HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	if PlayerClothModel.instance:getById(var_51_0.clothId) then
+	if PlayerClothModel.instance:getById(curGroupMO.clothId) then
 		return
 	end
 
-	local var_51_1 = PlayerClothModel.instance:getList()
+	local list = PlayerClothModel.instance:getList()
 
-	for iter_51_0, iter_51_1 in ipairs(var_51_1) do
-		if PlayerClothModel.instance:hasCloth(iter_51_1.id) then
-			HeroGroupModel.instance:replaceCloth(iter_51_1.id)
+	for _, clothMO in ipairs(list) do
+		if PlayerClothModel.instance:hasCloth(clothMO.id) then
+			HeroGroupModel.instance:replaceCloth(clothMO.id)
 			HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 			HeroGroupModel.instance:saveCurGroupData()
 
@@ -866,163 +884,177 @@ function var_0_0._checkEquipClothSkill(arg_51_0)
 	end
 end
 
-function var_0_0._getEpisodeConfigAndBattleConfig()
-	local var_52_0 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
-	local var_52_1
+function HeroGroupWeekWalk_2FightView._getEpisodeConfigAndBattleConfig()
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local battleCO
 
 	if HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 then
-		var_52_1 = lua_battle.configDict[HeroGroupModel.instance.battleId]
+		battleCO = lua_battle.configDict[HeroGroupModel.instance.battleId]
 	else
-		var_52_1 = DungeonConfig.instance:getBattleCo(HeroGroupModel.instance.episodeId)
+		battleCO = DungeonConfig.instance:getBattleCo(HeroGroupModel.instance.episodeId)
 	end
 
-	return var_52_0, var_52_1
+	return episodeCO, battleCO
 end
 
-function var_0_0.showCloth()
+function HeroGroupWeekWalk_2FightView.showCloth()
 	if PlayerClothModel.instance:getSpEpisodeClothID() then
 		return true
 	end
 
-	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill) then
+	local clothShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+
+	if not clothShow then
 		return false
 	end
 
-	local var_53_0, var_53_1 = var_0_0._getEpisodeConfigAndBattleConfig()
+	local episodeCO, battleCO = HeroGroupWeekWalk_2FightView._getEpisodeConfigAndBattleConfig()
 
-	if var_53_1 and var_53_1.noClothSkill == 1 then
+	if battleCO and battleCO.noClothSkill == 1 then
 		return false
 	end
 
-	local var_53_2 = HeroGroupModel.instance:getCurGroupMO()
-	local var_53_3 = PlayerClothModel.instance:getById(var_53_2.clothId)
-	local var_53_4 = PlayerClothModel.instance:getList()
-	local var_53_5 = false
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local clothMO = PlayerClothModel.instance:getById(curGroupMO.clothId)
+	local list = PlayerClothModel.instance:getList()
+	local hasUnlock = false
 
-	for iter_53_0, iter_53_1 in ipairs(var_53_4) do
-		var_53_5 = true
+	for _, clothMO in ipairs(list) do
+		hasUnlock = true
 
 		break
 	end
 
-	return var_53_5
+	return hasUnlock
 end
 
-function var_0_0._onModifyHeroGroup(arg_54_0)
-	arg_54_0:_refreshCloth()
+function HeroGroupWeekWalk_2FightView:_onModifyHeroGroup()
+	self:_refreshCloth()
 end
 
-function var_0_0._onModifySnapshot(arg_55_0)
-	arg_55_0:_refreshCloth()
+function HeroGroupWeekWalk_2FightView:_onModifySnapshot()
+	self:_refreshCloth()
 end
 
-function var_0_0._onClickHeroGroupItem(arg_56_0, arg_56_1)
-	local var_56_0 = HeroGroupModel.instance:getCurGroupMO():getPosEquips(arg_56_1 - 1).equipUid
+function HeroGroupWeekWalk_2FightView:_onClickHeroGroupItem(id)
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local equips = heroGroupMO:getPosEquips(id - 1).equipUid
 
-	arg_56_0._param = {}
-	arg_56_0._param.singleGroupMOId = arg_56_1
-	arg_56_0._param.originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(arg_56_1)
-	arg_56_0._param.adventure = HeroGroupModel.instance:isAdventureOrWeekWalk()
-	arg_56_0._param.equips = var_56_0
+	self._param = {}
+	self._param.singleGroupMOId = id
+	self._param.originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(id)
+	self._param.adventure = HeroGroupModel.instance:isAdventureOrWeekWalk()
+	self._param.equips = equips
 
-	arg_56_0:openHeroGroupEditView()
+	self:openHeroGroupEditView()
 end
 
-function var_0_0.openHeroGroupEditView(arg_57_0)
-	ViewMgr.instance:openView(ViewName.HeroGroupEditView, arg_57_0._param)
+function HeroGroupWeekWalk_2FightView:openHeroGroupEditView()
+	ViewMgr.instance:openView(ViewName.HeroGroupEditView, self._param)
 end
 
-function var_0_0._checkFirstPosHasEquip(arg_58_0)
-	local var_58_0 = HeroGroupModel.instance:getCurGroupMO():getPosEquips(0).equipUid
-	local var_58_1 = var_58_0 and var_58_0[1]
+function HeroGroupWeekWalk_2FightView:_checkFirstPosHasEquip()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local equips = curGroupMO:getPosEquips(0).equipUid
+	local equipId = equips and equips[1]
+	local equipMO = equipId and EquipModel.instance:getEquip(equipId)
 
-	if var_58_1 and EquipModel.instance:getEquip(var_58_1) then
+	if equipMO then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnFirstPosHasEquip)
 	end
 end
 
-function var_0_0._showGuideDragEffect(arg_59_0, arg_59_1)
-	if arg_59_0._dragEffectLoader then
-		arg_59_0._dragEffectLoader:dispose()
+function HeroGroupWeekWalk_2FightView:_showGuideDragEffect(param)
+	if self._dragEffectLoader then
+		self._dragEffectLoader:dispose()
 
-		arg_59_0._dragEffectLoader = nil
+		self._dragEffectLoader = nil
 	end
 
-	if tonumber(arg_59_1) == 1 then
-		arg_59_0._dragEffectLoader = PrefabInstantiate.Create(arg_59_0.viewGO)
+	local visible = tonumber(param) == 1
 
-		arg_59_0._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
+	if visible then
+		self._dragEffectLoader = PrefabInstantiate.Create(self.viewGO)
+
+		self._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
 	end
 end
 
-function var_0_0._onClickStart(arg_60_0)
-	local var_60_0 = string.split(arg_60_0.episodeConfig.cost, "|")
-	local var_60_1 = string.split(var_60_0[1], "#")
-	local var_60_2 = tonumber(var_60_1[3] or 0)
-	local var_60_3 = arg_60_0:_getfreeCount()
+function HeroGroupWeekWalk_2FightView:_onClickStart()
+	local costs = string.split(self.episodeConfig.cost, "|")
+	local cost1 = string.split(costs[1], "#")
+	local value = tonumber(cost1[3] or 0)
+	local remainCount = self:_getfreeCount()
+	local multiCost = value * ((self._multiplication or 1) - remainCount)
 
-	if var_60_2 * ((arg_60_0._multiplication or 1) - var_60_3) > CurrencyModel.instance:getPower() then
+	if multiCost > CurrencyModel.instance:getPower() then
 		CurrencyController.instance:openPowerView()
 
 		return
 	end
 
-	local var_60_4 = 10104
+	local guideEpisodeId = 10104
 
-	if HeroGroupModel.instance.episodeId == var_60_4 and not DungeonModel.instance:hasPassLevel(var_60_4) then
-		local var_60_5 = HeroSingleGroupModel.instance:getList()
-		local var_60_6 = 0
+	if HeroGroupModel.instance.episodeId == guideEpisodeId and not DungeonModel.instance:hasPassLevel(guideEpisodeId) then
+		local list = HeroSingleGroupModel.instance:getList()
+		local count = 0
 
-		for iter_60_0, iter_60_1 in ipairs(var_60_5) do
-			if not iter_60_1:isEmpty() then
-				var_60_6 = var_60_6 + 1
+		for i, v in ipairs(list) do
+			if not v:isEmpty() then
+				count = count + 1
 			end
 		end
 
-		if var_60_6 < 2 then
+		if count < 2 then
 			GameFacade.showToast(ToastEnum.HeroSingleGroupCount)
 
 			return
 		end
 	end
 
-	arg_60_0:_closemultcontent()
-	arg_60_0:_checkEnterFight()
+	self:_closemultcontent()
+	self:_checkEnterFight()
 end
 
-function var_0_0._checkEnterFight(arg_61_0)
-	if not FightController.instance:setFightHeroSingleGroup() then
+function HeroGroupWeekWalk_2FightView:_checkEnterFight()
+	local result = FightController.instance:setFightHeroSingleGroup()
+
+	if not result then
 		return
 	end
 
-	if not WeekWalk_2BuffListModel.getCurHeroGroupSkillId() then
-		MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.WeekWalk_2NoBuff, MsgBoxEnum.BoxType.Yes_No, arg_61_0._enterFight, nil, nil, arg_61_0)
+	local selectedSkillId = WeekWalk_2BuffListModel.getCurHeroGroupSkillId()
+
+	if not selectedSkillId then
+		MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.WeekWalk_2NoBuff, MsgBoxEnum.BoxType.Yes_No, self._enterFight, nil, nil, self)
 
 		return
 	end
 
-	arg_61_0:_enterFight()
+	self:_enterFight()
 end
 
-function var_0_0._enterFight(arg_62_0)
+function HeroGroupWeekWalk_2FightView:_enterFight()
 	if HeroGroupModel.instance.episodeId then
-		arg_62_0._closeWithEnteringFight = true
+		self._closeWithEnteringFight = true
 
-		if FightController.instance:setFightHeroSingleGroup() then
-			arg_62_0.viewContainer:dispatchEvent(HeroGroupEvent.BeforeEnterFight)
+		local result = FightController.instance:setFightHeroSingleGroup()
 
-			local var_62_0 = FightModel.instance:getFightParam()
+		if result then
+			self.viewContainer:dispatchEvent(HeroGroupEvent.BeforeEnterFight)
 
-			if arg_62_0._replayMode then
-				var_62_0.isReplay = true
-				var_62_0.multiplication = arg_62_0._multiplication
+			local fightParam = FightModel.instance:getFightParam()
 
-				DungeonFightController.instance:sendStartDungeonRequest(var_62_0.chapterId, var_62_0.episodeId, var_62_0, arg_62_0._multiplication, nil, true)
+			if self._replayMode then
+				fightParam.isReplay = true
+				fightParam.multiplication = self._multiplication
+
+				DungeonFightController.instance:sendStartDungeonRequest(fightParam.chapterId, fightParam.episodeId, fightParam, self._multiplication, nil, true)
 			else
-				var_62_0.isReplay = false
-				var_62_0.multiplication = 1
+				fightParam.isReplay = false
+				fightParam.multiplication = 1
 
-				DungeonFightController.instance:sendStartDungeonRequest(var_62_0.chapterId, var_62_0.episodeId, var_62_0, 1)
+				DungeonFightController.instance:sendStartDungeonRequest(fightParam.chapterId, fightParam.episodeId, fightParam, 1)
 			end
 
 			AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
@@ -1032,23 +1064,23 @@ function var_0_0._enterFight(arg_62_0)
 	end
 end
 
-function var_0_0._onUseRecommendGroup(arg_63_0)
-	if arg_63_0._replayMode then
-		arg_63_0:_closemultcontent()
+function HeroGroupWeekWalk_2FightView:_onUseRecommendGroup()
+	if self._replayMode then
+		self:_closemultcontent()
 
-		arg_63_0._replayMode = false
-		arg_63_0._multiplication = 1
+		self._replayMode = false
+		self._multiplication = 1
 
-		arg_63_0:_refreshCost(true)
-		arg_63_0:_switchReplayGroup()
+		self:_refreshCost(true)
+		self:_switchReplayGroup()
 	end
 end
 
-function var_0_0._onClickReplay(arg_64_0)
+function HeroGroupWeekWalk_2FightView:_onClickReplay()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) then
-		local var_64_0, var_64_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightReplay)
+		local desc, param = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightReplay)
 
-		GameFacade.showToast(var_64_0, var_64_1)
+		GameFacade.showToast(desc, param)
 
 		return
 	end
@@ -1057,175 +1089,175 @@ function var_0_0._onClickReplay(arg_64_0)
 		return
 	end
 
-	local var_64_2 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
-	local var_64_3 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
-	local var_64_4 = var_64_3 and var_64_3.hasRecord
-	local var_64_5 = var_64_3 and var_64_3.star == DungeonEnum.StarType.Advanced
-	local var_64_6 = var_64_2 and var_64_2.firstBattleId > 0
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local hasRecord = userDungeonMO and userDungeonMO.hasRecord
+	local hasPass = userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced
+	local hasFirstBattle = episodeConfig and episodeConfig.firstBattleId > 0
 
-	if not var_64_4 and var_64_5 and var_64_6 then
+	if not hasRecord and hasPass and hasFirstBattle then
 		GameFacade.showToast(ToastEnum.CantRecordReplay)
 
 		return
 	end
 
-	if var_64_3 and var_64_3.star == DungeonEnum.StarType.Advanced and not var_64_3.hasRecord then
+	if userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced and not userDungeonMO.hasRecord then
 		GameFacade.showToast(ToastEnum.HeroGroupStarAdvanced)
 
 		return
 	end
 
-	if not var_64_3 or var_64_3 and var_64_3.star ~= DungeonEnum.StarType.Advanced then
+	if not userDungeonMO or userDungeonMO and userDungeonMO.star ~= DungeonEnum.StarType.Advanced then
 		GameFacade.showToast(ToastEnum.HeroGroupStarNoAdvanced)
 
 		return
 	end
 
-	local var_64_7 = arg_64_0._replayMode
+	local lastRelayMode = self._replayMode
 
-	if arg_64_0._replayMode then
-		arg_64_0._replayMode = false
-		arg_64_0._multiplication = 1
+	if self._replayMode then
+		self._replayMode = false
+		self._multiplication = 1
 
-		arg_64_0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
-		gohelper.setActive(arg_64_0._gomultispeed, false)
+		self._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
+		gohelper.setActive(self._gomultispeed, false)
 	else
-		arg_64_0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
+		self._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
 
-		arg_64_0._replayMode = true
-		arg_64_0._multiplication = 1
+		self._replayMode = true
+		self._multiplication = 1
 	end
 
-	PlayerPrefsHelper.setNumber(arg_64_0:_getMultiplicationKey(), arg_64_0._multiplication)
-	arg_64_0:_refreshCost(true)
+	PlayerPrefsHelper.setNumber(self:_getMultiplicationKey(), self._multiplication)
+	self:_refreshCost(true)
 
-	if arg_64_0._replayMode and not arg_64_0._replayFightGroupMO then
-		arg_64_0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_64_0._onGetFightRecordGroupReply, arg_64_0)
+	if self._replayMode and not self._replayFightGroupMO then
+		self:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
 		FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
 
 		return
 	end
 
-	arg_64_0:_switchReplayGroup(var_64_7)
+	self:_switchReplayGroup(lastRelayMode)
 end
 
-function var_0_0._switchReplayGroup(arg_65_0, arg_65_1)
-	arg_65_0:_switchReplayMul()
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupHeroEffect, arg_65_0._replayMode and "swicth" or UIAnimationName.Open)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SwitchReplay, arg_65_0._replayMode)
-	gohelper.setActive(arg_65_0._gomemorytimes, arg_65_0._replayMode)
+function HeroGroupWeekWalk_2FightView:_switchReplayGroup(lastRelayMode)
+	self:_switchReplayMul()
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupHeroEffect, self._replayMode and "swicth" or UIAnimationName.Open)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SwitchReplay, self._replayMode)
+	gohelper.setActive(self._gomemorytimes, self._replayMode)
 
-	if arg_65_0._replayMode then
-		arg_65_0:_updateReplayHeroGorupList()
+	if self._replayMode then
+		self:_updateReplayHeroGorupList()
 
-		local var_65_0 = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(arg_65_0._multiplication))
+		local replayCn = formatLuaLang("herogroupview_replaycn", GameUtil.getNum2Chinese(self._multiplication))
 
-		arg_65_0._txtreplaycn.text = var_65_0
-		arg_65_0._txtreplayhardcn.text = var_65_0
-		arg_65_0._txtreplayunpowercn.text = var_65_0
-		arg_65_0._txtmemorytimes.text = arg_65_0._replayFightGroupMO.recordRound
+		self._txtreplaycn.text = replayCn
+		self._txtreplayhardcn.text = replayCn
+		self._txtreplayunpowercn.text = replayCn
+		self._txtmemorytimes.text = self._replayFightGroupMO.recordRound
 	else
 		HeroGroupModel.instance:setParam(HeroGroupModel.instance.battleId, HeroGroupModel.instance.episodeId, HeroGroupModel.instance.adventure)
 
-		local var_65_1 = HeroGroupModel.instance:getCurGroupMO().id
+		local heroGroupId = HeroGroupModel.instance:getCurGroupMO().id
 
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, var_65_1)
-		arg_65_0:_refreshCloth()
-		gohelper.setActive(arg_65_0._goherogroupcontain, false)
-		gohelper.setActive(arg_65_0._goherogroupcontain, true)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, heroGroupId)
+		self:_refreshCloth()
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
 	end
 end
 
-function var_0_0._switchReplayMul(arg_66_0)
-	if arg_66_0._replayMode then
-		arg_66_0:setMultSpeed(arg_66_0._multiplication)
+function HeroGroupWeekWalk_2FightView:_switchReplayMul()
+	if self._replayMode then
+		self:setMultSpeed(self._multiplication)
 	else
-		arg_66_0:_refreshUI()
-		arg_66_0:_refreshTips()
+		self:_refreshUI()
+		self:_refreshTips()
 	end
 
-	arg_66_0:_refreshCost(true)
-	arg_66_0:_refreshPowerShow()
-	gohelper.setActive(arg_66_0._goreplayready, arg_66_0._replayMode)
+	self:_refreshCost(true)
+	self:_refreshPowerShow()
+	gohelper.setActive(self._goreplayready, self._replayMode)
 
-	local var_66_0 = arg_66_0:_haveRecord()
+	local haveRecord = self:_haveRecord()
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(arg_66_0._imagereplayicon, not var_66_0 and "btn_replay_lack" or arg_66_0._replayMode and "btn_replay_pause" or "btn_replay_play")
-	recthelper.setWidth(arg_66_0._goReplayBtn.transform, arg_66_0._replayMode and 416 or 83)
-	ZProj.UGUIHelper.RebuildLayout(arg_66_0._goReplayBtn.transform.parent)
-	gohelper.setActive(arg_66_0._goreplaybtnframe, arg_66_0._replayMode)
+	UISpriteSetMgr.instance:setHeroGroupSprite(self._imagereplayicon, not haveRecord and "btn_replay_lack" or self._replayMode and "btn_replay_pause" or "btn_replay_play")
+	recthelper.setWidth(self._goReplayBtn.transform, self._replayMode and 416 or 83)
+	ZProj.UGUIHelper.RebuildLayout(self._goReplayBtn.transform.parent)
+	gohelper.setActive(self._goreplaybtnframe, self._replayMode)
 end
 
-function var_0_0._haveRecord(arg_67_0)
+function HeroGroupWeekWalk_2FightView:_haveRecord()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) then
 		return false
 	end
 
-	local var_67_0 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
 
-	if var_67_0 and var_67_0.star == DungeonEnum.StarType.Advanced and not var_67_0.hasRecord then
+	if userDungeonMO and userDungeonMO.star == DungeonEnum.StarType.Advanced and not userDungeonMO.hasRecord then
 		return false
 	end
 
-	if not var_67_0 or var_67_0 and var_67_0.star ~= DungeonEnum.StarType.Advanced then
+	if not userDungeonMO or userDungeonMO and userDungeonMO.star ~= DungeonEnum.StarType.Advanced then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._refreshBtns(arg_68_0, arg_68_1)
-	local var_68_0 = HeroGroupBalanceHelper.getIsBalanceMode()
+function HeroGroupWeekWalk_2FightView:_refreshBtns(isCostPower)
+	local isBlance = HeroGroupBalanceHelper.getIsBalanceMode()
 
-	gohelper.setActive(arg_68_0._btnBalanceStart, var_68_0 and not arg_68_0._replayMode and arg_68_0._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_68_0._btnUnPowerBalanceStart, var_68_0 and not arg_68_0._replayMode and arg_68_0._chapterConfig.type == DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnBalanceStart, isBlance and not self._replayMode and self._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnUnPowerBalanceStart, isBlance and not self._replayMode and self._chapterConfig.type == DungeonEnum.ChapterType.Hard)
 
-	local var_68_1 = arg_68_0._enterAfterFreeLimit or arg_68_0:_getfreeCount() > 0
+	local hasLimitCount = self._enterAfterFreeLimit or self:_getfreeCount() > 0
 
-	gohelper.setActive(arg_68_0._btnstartreplay.gameObject, arg_68_1 and arg_68_0._replayMode and arg_68_0._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_68_0._btnunpowerreplay.gameObject, not arg_68_1 and not var_68_1 and arg_68_0._replayMode)
-	gohelper.setActive(arg_68_0._btnunpowerstart.gameObject, not var_68_0 and not arg_68_1 and not var_68_1 and not arg_68_0._replayMode)
-	gohelper.setActive(arg_68_0._btncostreplay.gameObject, not arg_68_1 and var_68_1 and arg_68_0._replayMode)
-	gohelper.setActive(arg_68_0._btncoststart.gameObject, not var_68_0 and not arg_68_1 and var_68_1 and not arg_68_0._replayMode)
-	gohelper.setActive(arg_68_0._gospace, not arg_68_0._replayMode and arg_68_1)
-	gohelper.setActive(arg_68_0._btnhardreplay.gameObject, arg_68_1 and arg_68_0._replayMode and arg_68_0._chapterConfig.type == DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_68_0._btnstart.gameObject, not var_68_0 and arg_68_1 and not arg_68_0._replayMode and arg_68_0._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_68_0._btnstarthard.gameObject, not var_68_0 and arg_68_1 and not arg_68_0._replayMode and arg_68_0._chapterConfig.type == DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnstartreplay.gameObject, isCostPower and self._replayMode and self._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnunpowerreplay.gameObject, not isCostPower and not hasLimitCount and self._replayMode)
+	gohelper.setActive(self._btnunpowerstart.gameObject, not isBlance and not isCostPower and not hasLimitCount and not self._replayMode)
+	gohelper.setActive(self._btncostreplay.gameObject, not isCostPower and hasLimitCount and self._replayMode)
+	gohelper.setActive(self._btncoststart.gameObject, not isBlance and not isCostPower and hasLimitCount and not self._replayMode)
+	gohelper.setActive(self._gospace, not self._replayMode and isCostPower)
+	gohelper.setActive(self._btnhardreplay.gameObject, isCostPower and self._replayMode and self._chapterConfig.type == DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnstart.gameObject, not isBlance and isCostPower and not self._replayMode and self._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(self._btnstarthard.gameObject, not isBlance and isCostPower and not self._replayMode and self._chapterConfig.type == DungeonEnum.ChapterType.Hard)
 
-	local var_68_2 = not arg_68_0._replayMode and arg_68_0:_noAidHero()
+	local showDrop = not self._replayMode and self:_noAidHero()
 
-	gohelper.setActive(arg_68_0._dropherogroup, var_68_2)
+	gohelper.setActive(self._dropherogroup, showDrop)
 
-	if var_68_2 then
-		TaskDispatcher.runRepeat(arg_68_0._checkDropArrow, arg_68_0, 0)
+	if showDrop then
+		TaskDispatcher.runRepeat(self._checkDropArrow, self, 0)
 	else
-		TaskDispatcher.cancelTask(arg_68_0._checkDropArrow, arg_68_0)
+		TaskDispatcher.cancelTask(self._checkDropArrow, self)
 	end
 end
 
-function var_0_0._checkDropArrow(arg_69_0)
-	if not arg_69_0._dropherogrouparrow then
-		TaskDispatcher.cancelTask(arg_69_0._checkDropArrow, arg_69_0)
+function HeroGroupWeekWalk_2FightView:_checkDropArrow()
+	if not self._dropherogrouparrow then
+		TaskDispatcher.cancelTask(self._checkDropArrow, self)
 
 		return
 	end
 
-	local var_69_0 = arg_69_0._dropherogroup.transform.childCount
+	local childCount = self._dropherogroup.transform.childCount
 
-	if var_69_0 ~= arg_69_0._dropDownChildCount then
-		arg_69_0._dropDownChildCount = var_69_0
+	if childCount ~= self._dropDownChildCount then
+		self._dropDownChildCount = childCount
 
-		local var_69_1 = arg_69_0._dropgroupchildcount ~= var_69_0
+		local isOpen = self._dropgroupchildcount ~= childCount
 
-		transformhelper.setLocalScale(arg_69_0._dropherogrouparrow, 1, var_69_1 and -1 or 1, 1)
+		transformhelper.setLocalScale(self._dropherogrouparrow, 1, isOpen and -1 or 1, 1)
 	end
 end
 
-function var_0_0._noAidHero(arg_70_0)
-	local var_70_0 = HeroGroupModel.instance.battleId
-	local var_70_1 = lua_battle.configDict[var_70_0]
+function HeroGroupWeekWalk_2FightView:_noAidHero()
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCo = lua_battle.configDict[battleId]
 
-	if not var_70_1 then
+	if not battleCo then
 		return
 	end
 
@@ -1233,43 +1265,43 @@ function var_0_0._noAidHero(arg_70_0)
 		return
 	end
 
-	return var_70_1.trialLimit <= 0 and string.nilorempty(var_70_1.aid) and string.nilorempty(var_70_1.trialHeros) and string.nilorempty(var_70_1.trialEquips)
+	return battleCo.trialLimit <= 0 and string.nilorempty(battleCo.aid) and string.nilorempty(battleCo.trialHeros) and string.nilorempty(battleCo.trialEquips)
 end
 
-function var_0_0._onGetFightRecordGroupReply(arg_71_0, arg_71_1)
-	arg_71_0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_71_0._onGetFightRecordGroupReply, arg_71_0)
+function HeroGroupWeekWalk_2FightView:_onGetFightRecordGroupReply(fightGroupMO)
+	self:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
 
-	arg_71_0._replayFightGroupMO = arg_71_1
+	self._replayFightGroupMO = fightGroupMO
 
-	if not arg_71_0._replayMode then
+	if not self._replayMode then
 		return
 	end
 
-	arg_71_0:_switchReplayGroup()
-	arg_71_0:_updateReplayHeroGorupList()
+	self:_switchReplayGroup()
+	self:_updateReplayHeroGorupList()
 end
 
-function var_0_0._updateReplayHeroGorupList(arg_72_0)
-	HeroGroupModel.instance:setReplayParam(arg_72_0._replayFightGroupMO)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, arg_72_0._replayFightGroupMO.id)
-	arg_72_0:_refreshCloth()
-	gohelper.setActive(arg_72_0._goherogroupcontain, false)
-	gohelper.setActive(arg_72_0._goherogroupcontain, true)
+function HeroGroupWeekWalk_2FightView:_updateReplayHeroGorupList()
+	HeroGroupModel.instance:setReplayParam(self._replayFightGroupMO)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, self._replayFightGroupMO.id)
+	self:_refreshCloth()
+	gohelper.setActive(self._goherogroupcontain, false)
+	gohelper.setActive(self._goherogroupcontain, true)
 end
 
-function var_0_0.refreshDoubleDropTips(arg_73_0)
-	local var_73_0, var_73_1, var_73_2 = DoubleDropModel.instance:isShowDoubleByEpisode(arg_73_0._episodeId, true)
+function HeroGroupWeekWalk_2FightView:refreshDoubleDropTips()
+	local episodeShow, remainTimes, dailyLimit = DoubleDropModel.instance:isShowDoubleByEpisode(self._episodeId, true)
 
-	gohelper.setActive(arg_73_0._godoubledroptimes, var_73_0)
+	gohelper.setActive(self._godoubledroptimes, episodeShow)
 
-	if var_73_0 then
-		local var_73_3 = {
-			var_73_1,
-			var_73_2
+	if episodeShow then
+		local tag = {
+			remainTimes,
+			dailyLimit
 		}
 
-		arg_73_0._txtdoubledroptimes.text = GameUtil.getSubPlaceholderLuaLang(luaLang("double_drop_remain_times"), var_73_3)
+		self._txtdoubledroptimes.text = GameUtil.getSubPlaceholderLuaLang(luaLang("double_drop_remain_times"), tag)
 	end
 end
 
-return var_0_0
+return HeroGroupWeekWalk_2FightView

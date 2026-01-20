@@ -1,181 +1,185 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkView.lua
 
-local var_0_0 = class("WeekWalkView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
-	arg_1_0._simagefinishbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_finish/#simage_finishbg")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "GameObject/#btn_reward")
-	arg_1_0._gorewardredpoint = gohelper.findChild(arg_1_0.viewGO, "GameObject/#btn_reward/#go_rewardredpoint")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "GameObject/#btn_detail")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "GameObject/#btn_reset")
-	arg_1_0._txtcurprogress = gohelper.findChildText(arg_1_0.viewGO, "levelbg/#txt_curprogress")
-	arg_1_0._simagebgimgnext = gohelper.findChildSingleImage(arg_1_0.viewGO, "transition/ani/#simage_bgimg_next")
+local WeekWalkView = class("WeekWalkView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkView:onInitView()
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._simagefinishbg = gohelper.findChildSingleImage(self.viewGO, "#go_finish/#simage_finishbg")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "GameObject/#btn_reward")
+	self._gorewardredpoint = gohelper.findChild(self.viewGO, "GameObject/#btn_reward/#go_rewardredpoint")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "GameObject/#btn_detail")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "GameObject/#btn_reset")
+	self._txtcurprogress = gohelper.findChildText(self.viewGO, "levelbg/#txt_curprogress")
+	self._simagebgimgnext = gohelper.findChildSingleImage(self.viewGO, "transition/ani/#simage_bgimg_next")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function WeekWalkView:addEvents()
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
+function WeekWalkView:removeEvents()
+	self._btnreward:RemoveClickListener()
+	self._btndetail:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
+function WeekWalkView:_btnresetOnClick()
 	WeekWalkController.instance:openWeekWalkResetView()
 end
 
-function var_0_0._btnrewardOnClick(arg_5_0)
+function WeekWalkView:_btnrewardOnClick()
 	WeekWalkController.instance:openWeekWalkLayerRewardView({
-		mapId = arg_5_0._mapInfo.id
+		mapId = self._mapInfo.id
 	})
 end
 
-function var_0_0._btndetailOnClick(arg_6_0)
-	EnemyInfoController.instance:openWeekWalkEnemyInfoView(arg_6_0._mapInfo.id)
+function WeekWalkView:_btndetailOnClick()
+	EnemyInfoController.instance:openWeekWalkEnemyInfoView(self._mapInfo.id)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._mapId = WeekWalkModel.instance:getCurMapId()
-	arg_7_0._mapInfo = WeekWalkModel.instance:getOldOrNewCurMapInfo()
-	arg_7_0._mapConfig = WeekWalkConfig.instance:getMapConfig(arg_7_0._mapId)
-	arg_7_0._viewAnim = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function WeekWalkView:_editableInitView()
+	self._mapId = WeekWalkModel.instance:getCurMapId()
+	self._mapInfo = WeekWalkModel.instance:getOldOrNewCurMapInfo()
+	self._mapConfig = WeekWalkConfig.instance:getMapConfig(self._mapId)
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_7_0._simagefinishbg:LoadImage(ResUrl.getWeekWalkBg("bg_di.png"))
-	arg_7_0._simagebgimgnext:LoadImage(ResUrl.getWeekWalkBg("bg3.png"))
-	arg_7_0:_showDetail()
-	arg_7_0:_updateReward()
-	gohelper.addUIClickAudio(arg_7_0._btndetail.gameObject, AudioEnum.UI.play_ui_action_explore)
-	gohelper.addUIClickAudio(arg_7_0._btnreward.gameObject, AudioEnum.UI.Play_UI_Mainback)
-	gohelper.addUIClickAudio(arg_7_0._btnreset.gameObject, AudioEnum.UI.UI_checkpoint_detailed_tabs_click)
+	self._simagefinishbg:LoadImage(ResUrl.getWeekWalkBg("bg_di.png"))
+	self._simagebgimgnext:LoadImage(ResUrl.getWeekWalkBg("bg3.png"))
+	self:_showDetail()
+	self:_updateReward()
+	gohelper.addUIClickAudio(self._btndetail.gameObject, AudioEnum.UI.play_ui_action_explore)
+	gohelper.addUIClickAudio(self._btnreward.gameObject, AudioEnum.UI.Play_UI_Mainback)
+	gohelper.addUIClickAudio(self._btnreset.gameObject, AudioEnum.UI.UI_checkpoint_detailed_tabs_click)
 end
 
-function var_0_0._showDetail(arg_8_0)
-	local var_8_0 = WeekWalkModel.instance:getCurMapInfo()
-	local var_8_1 = lua_weekwalk_type.configDict[arg_8_0._mapConfig.type]
+function WeekWalkView:_showDetail()
+	local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+	local typeConfig = lua_weekwalk_type.configDict[self._mapConfig.type]
 
-	gohelper.setActive(arg_8_0._btndetail.gameObject, var_8_1.showDetail > 0 or var_8_0.isFinish > 0)
+	gohelper.setActive(self._btndetail.gameObject, typeConfig.showDetail > 0 or mapInfo.isFinish > 0)
 end
 
-function var_0_0._updateReward(arg_9_0)
-	local var_9_0 = arg_9_0._mapConfig.id
-	local var_9_1 = WeekWalkRewardView.getTaskType(var_9_0)
-	local var_9_2, var_9_3 = WeekWalkTaskListModel.instance:canGetRewardNum(var_9_1, var_9_0)
-	local var_9_4 = var_9_2 > 0
+function WeekWalkView:_updateReward()
+	local mapId = self._mapConfig.id
+	local taskType = WeekWalkRewardView.getTaskType(mapId)
+	local canGetNum, unFinishNum = WeekWalkTaskListModel.instance:canGetRewardNum(taskType, mapId)
+	local canGetReward = canGetNum > 0
 
-	gohelper.setActive(arg_9_0._gorewardredpoint, var_9_4)
+	gohelper.setActive(self._gorewardredpoint, canGetReward)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function WeekWalkView:onUpdateParam()
 	return
 end
 
-function var_0_0._showRevive(arg_11_0)
-	if arg_11_0._mapInfo.isShowSelectCd then
+function WeekWalkView:_showRevive()
+	if self._mapInfo.isShowSelectCd then
 		WeekWalkController.instance:openWeekWalkReviveView()
 	end
 end
 
-function var_0_0._showBuff(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._mapInfo.buffId
+function WeekWalkView:_showBuff(delayShow)
+	local buffId = self._mapInfo.buffId
 
-	if var_12_0 and var_12_0 > 0 and arg_12_0._mapInfo.isShowBuff then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_12_0._onSelectTarotViewClose, arg_12_0)
+	if buffId and buffId > 0 and self._mapInfo.isShowBuff then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onSelectTarotViewClose, self)
 
-		if arg_12_1 then
-			TaskDispatcher.runDelay(arg_12_0._delayShowTarotView, arg_12_0, 0)
+		if delayShow then
+			TaskDispatcher.runDelay(self._delayShowTarotView, self, 0)
 		else
-			arg_12_0:_delayShowTarotView()
+			self:_delayShowTarotView()
 		end
 
 		return
 	end
 
-	arg_12_0:_onWeekWalkSelectTarotViewClose()
+	self:_onWeekWalkSelectTarotViewClose()
 end
 
-function var_0_0._delayShowTarotView(arg_13_0)
-	local var_13_0 = arg_13_0._mapInfo.buffId
+function WeekWalkView:_delayShowTarotView()
+	local buffId = self._mapInfo.buffId
 
 	ViewMgr.instance:openView(ViewName.WeekWalkSelectTarotView, {
-		buffId = var_13_0
+		buffId = buffId
 	})
 end
 
-function var_0_0._onSelectTarotViewClose(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == ViewName.WeekWalkSelectTarotView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_14_0._onSelectTarotViewClose, arg_14_0)
-		arg_14_0:_onWeekWalkSelectTarotViewClose()
+function WeekWalkView:_onSelectTarotViewClose(viewName, viewParam)
+	if viewName == ViewName.WeekWalkSelectTarotView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onSelectTarotViewClose, self)
+		self:_onWeekWalkSelectTarotViewClose()
 	end
 end
 
-function var_0_0._onWeekWalkSelectTarotViewClose(arg_15_0)
-	arg_15_0.viewContainer:getWeekWalkMap():_playEnterAnim()
+function WeekWalkView:_onWeekWalkSelectTarotViewClose()
+	self.viewContainer:getWeekWalkMap():_playEnterAnim()
 end
 
-function var_0_0.onOpen(arg_16_0)
+function WeekWalkView:onOpen()
 	GuideModel.instance:setFlag(GuideModel.GuideFlag.MaskUseMainCamera, 1)
-	arg_16_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetBuffReward, arg_16_0._OnGetBuffReward, arg_16_0)
-	arg_16_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkInfoUpdate, arg_16_0._onWeekwalkInfoUpdate, arg_16_0)
-	arg_16_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_16_0._onGetInfo, arg_16_0)
-	arg_16_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSetEpisodeListVisible, arg_16_0._setEpisodeListVisible, arg_16_0)
-	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_16_0._onCloseFullView, arg_16_0, LuaEventSystem.Low)
-	arg_16_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkResetLayer, arg_16_0._onWeekwalkResetLayer, arg_16_0)
-	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_16_0._onCloseViewFinish, arg_16_0)
-	arg_16_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_16_0._onWeekwalkTaskUpdate, arg_16_0)
-	arg_16_0:_checkExpire()
-	arg_16_0:_showBuff(true)
-	arg_16_0:_showRevive()
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetBuffReward, self._OnGetBuffReward, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkInfoUpdate, self._onWeekwalkInfoUpdate, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, self._onGetInfo, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSetEpisodeListVisible, self._setEpisodeListVisible, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self, LuaEventSystem.Low)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkResetLayer, self._onWeekwalkResetLayer, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, self._onWeekwalkTaskUpdate, self)
+	self:_checkExpire()
+	self:_showBuff(true)
+	self:_showRevive()
 end
 
-function var_0_0.onOpenFinish(arg_17_0)
-	arg_17_0.viewContainer:getNavBtnView():setHelpId(arg_17_0._mapId <= 105 and 11302 or 11303)
+function WeekWalkView:onOpenFinish()
+	local navBtnView = self.viewContainer:getNavBtnView()
+
+	navBtnView:setHelpId(self._mapId <= 105 and 11302 or 11303)
 end
 
-function var_0_0._onWeekwalkTaskUpdate(arg_18_0)
-	arg_18_0:_updateReward()
+function WeekWalkView:_onWeekwalkTaskUpdate()
+	self:_updateReward()
 end
 
-function var_0_0._onWeekwalkResetLayer(arg_19_0)
-	arg_19_0._mapInfo = WeekWalkModel.instance:getMapInfo(arg_19_0._mapId)
-	arg_19_0._viewAnim.enabled = true
+function WeekWalkView:_onWeekwalkResetLayer()
+	self._mapInfo = WeekWalkModel.instance:getMapInfo(self._mapId)
+	self._viewAnim.enabled = true
 
-	arg_19_0._viewAnim:Play("transition", 0, 0)
+	self._viewAnim:Play("transition", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_mist)
 end
 
-function var_0_0._onCloseViewFinish(arg_20_0, arg_20_1)
-	if arg_20_1 == ViewName.WeekWalkResetView then
-		arg_20_0:_showBuff()
+function WeekWalkView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.WeekWalkResetView then
+		self:_showBuff()
 	end
 end
 
-function var_0_0._onGetInfo(arg_21_0)
-	arg_21_0:_checkExpire(true)
+function WeekWalkView:_onGetInfo()
+	self:_checkExpire(true)
 end
 
-function var_0_0._checkExpire(arg_22_0, arg_22_1)
-	if WeekWalkModel.instance:infoNeedUpdate() or arg_22_1 then
+function WeekWalkView:_checkExpire(force)
+	if WeekWalkModel.instance:infoNeedUpdate() or force then
 		WeekWalkModel.instance:clearOldInfo()
 
-		if WeekWalkModel.isShallowLayer(arg_22_0._mapConfig.layer) then
+		if WeekWalkModel.isShallowLayer(self._mapConfig.layer) then
 			return
 		end
 
 		UIBlockMgr.instance:startBlock("WeekWalkView _checkExpire")
-		TaskDispatcher.runDelay(arg_22_0._exitView, arg_22_0, 0.5)
+		TaskDispatcher.runDelay(self._exitView, self, 0.5)
 	end
 end
 
-function var_0_0._exitView(arg_23_0)
+function WeekWalkView:_exitView()
 	UIBlockMgr.instance:endBlock("WeekWalkView _checkExpire")
 	GameFacade.showMessageBox(MessageBoxIdDefine.WeekWalkExpire, MsgBoxEnum.BoxType.Yes, function()
 		ViewMgr.instance:closeAllPopupViews({
@@ -185,72 +189,76 @@ function var_0_0._exitView(arg_23_0)
 	end, nil, nil)
 end
 
-function var_0_0._setEpisodeListVisible(arg_25_0, arg_25_1)
-	gohelper.setActive(arg_25_0._gofullscreen, arg_25_1)
+function WeekWalkView:_setEpisodeListVisible(value)
+	gohelper.setActive(self._gofullscreen, value)
 end
 
-function var_0_0._onWeekwalkInfoUpdate(arg_26_0)
-	arg_26_0:_showDetail()
+function WeekWalkView:_onWeekwalkInfoUpdate()
+	self:_showDetail()
 end
 
-function var_0_0._canShowFinishAnim(arg_27_0)
-	local var_27_0 = WeekWalkModel.instance:getMapInfo(arg_27_0)
+function WeekWalkView._canShowFinishAnim(mapId)
+	local mapInfo = WeekWalkModel.instance:getMapInfo(mapId)
 
-	if not var_27_0 then
+	if not mapInfo then
 		return true
 	end
 
-	if not (var_27_0.isFinish == 1) then
+	local isFinish = mapInfo.isFinish == 1
+
+	if not isFinish then
 		return
 	end
 
-	if not var_27_0.isShowFinished then
+	if not mapInfo.isShowFinished then
 		return
 	end
 
 	return true
 end
 
-function var_0_0._OnGetBuffReward(arg_28_0)
-	TaskDispatcher.runDelay(arg_28_0._showBuff, arg_28_0, 1.4)
+function WeekWalkView:_OnGetBuffReward()
+	TaskDispatcher.runDelay(self._showBuff, self, 1.4)
 end
 
-function var_0_0._showCurProgress(arg_29_0)
-	local var_29_0 = WeekWalkModel.instance:getCurMapInfo()
-	local var_29_1 = lua_weekwalk_scene.configDict[var_29_0.sceneId]
+function WeekWalkView:_showCurProgress()
+	local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+	local sceneConfig = lua_weekwalk_scene.configDict[mapInfo.sceneId]
 
-	arg_29_0._txtcurprogress.text = var_29_1.name
+	self._txtcurprogress.text = sceneConfig.name
 end
 
-function var_0_0._onCloseFullView(arg_30_0, arg_30_1)
-	if arg_30_0._viewAnim and arg_30_0:isEnterWeekWalkView() then
-		arg_30_0._viewAnim:Play(UIAnimationName.Open, 0, 0)
+function WeekWalkView:_onCloseFullView(viewName)
+	if self._viewAnim and self:isEnterWeekWalkView() then
+		self._viewAnim:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function var_0_0.isEnterWeekWalkView(arg_31_0)
-	local var_31_0 = ViewMgr.instance:getOpenViewNameList()
+function WeekWalkView:isEnterWeekWalkView()
+	local viewlist = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_31_0 = #var_31_0, 1, -1 do
-		if ViewMgr.instance:getSetting(var_31_0[iter_31_0]).layer == ViewMgr.instance:getSetting(arg_31_0.viewName).layer then
-			return var_31_0[iter_31_0] == arg_31_0.viewName
+	for i = #viewlist, 1, -1 do
+		local setting = ViewMgr.instance:getSetting(viewlist[i])
+
+		if setting.layer == ViewMgr.instance:getSetting(self.viewName).layer then
+			return viewlist[i] == self.viewName
 		end
 	end
 
 	return false
 end
 
-function var_0_0.onClose(arg_32_0)
+function WeekWalkView:onClose()
 	GuideModel.instance:setFlag(GuideModel.GuideFlag.MaskUseMainCamera, nil)
-	TaskDispatcher.cancelTask(arg_32_0._exitView, arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._showBuff, arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._delayShowTarotView, arg_32_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_32_0._onSelectTarotViewClose, arg_32_0)
+	TaskDispatcher.cancelTask(self._exitView, self)
+	TaskDispatcher.cancelTask(self._showBuff, self)
+	TaskDispatcher.cancelTask(self._delayShowTarotView, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onSelectTarotViewClose, self)
 end
 
-function var_0_0.onDestroyView(arg_33_0)
-	arg_33_0._simagefinishbg:UnLoadImage()
-	arg_33_0._simagebgimgnext:UnLoadImage()
+function WeekWalkView:onDestroyView()
+	self._simagefinishbg:UnLoadImage()
+	self._simagebgimgnext:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkView

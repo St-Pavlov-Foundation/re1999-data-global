@@ -1,41 +1,43 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessDebugStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessDebugStep.lua
 
-local var_0_0 = class("EliminateChessDebugStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessDebugStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = EliminateChessItemController.instance:getChess()
-	local var_1_1 = EliminateChessModel.instance:getChessMoList()
-	local var_1_2 = "\n"
+local EliminateChessDebugStep = class("EliminateChessDebugStep", EliminateChessStepBase)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		for iter_1_2, iter_1_3 in ipairs(iter_1_1) do
-			if iter_1_3._data then
-				var_1_2 = var_1_2 .. " " .. tostring(iter_1_3._data.id)
+function EliminateChessDebugStep:onStart()
+	local chess = EliminateChessItemController.instance:getChess()
+	local chessMo = EliminateChessModel.instance:getChessMoList()
+	local chessStr = "\n"
+
+	for _, row in ipairs(chess) do
+		for j, data in ipairs(row) do
+			if data._data then
+				chessStr = chessStr .. " " .. tostring(data._data.id)
 			else
-				var_1_2 = var_1_2 .. " " .. "-1"
+				chessStr = chessStr .. " " .. "-1"
 			end
 		end
 
-		var_1_2 = var_1_2 .. "\n"
+		chessStr = chessStr .. "\n"
 	end
 
-	local var_1_3 = "\n"
+	local chessMOStr = "\n"
 
-	for iter_1_4, iter_1_5 in ipairs(var_1_1) do
-		for iter_1_6, iter_1_7 in ipairs(iter_1_5) do
-			if iter_1_7 then
-				var_1_3 = var_1_3 .. " " .. tostring(iter_1_7.id)
+	for _, row in ipairs(chessMo) do
+		for j, data in ipairs(row) do
+			if data then
+				chessMOStr = chessMOStr .. " " .. tostring(data.id)
 			else
-				var_1_3 = var_1_3 .. " " .. "-1"
+				chessMOStr = chessMOStr .. " " .. "-1"
 			end
 		end
 
-		var_1_3 = var_1_3 .. "\n"
+		chessMOStr = chessMOStr .. "\n"
 	end
 
-	logNormal("chessStr = " .. var_1_2)
-	logNormal("chessMOStr = " .. var_1_3)
-	arg_1_0:onDone(true)
+	logNormal("chessStr = " .. chessStr)
+	logNormal("chessMOStr = " .. chessMOStr)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessDebugStep

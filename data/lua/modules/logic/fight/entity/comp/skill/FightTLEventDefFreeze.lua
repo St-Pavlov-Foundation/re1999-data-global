@@ -1,7 +1,9 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventDefFreeze", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventDefFreeze.lua
 
-local var_0_0 = class("FightTLEventDefFreeze", FightTimelineTrackItem)
-local var_0_1 = {
+module("modules.logic.fight.entity.comp.skill.FightTLEventDefFreeze", package.seeall)
+
+local FightTLEventDefFreeze = class("FightTLEventDefFreeze", FightTimelineTrackItem)
+local FreezeEffectActType = {
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
@@ -12,136 +14,136 @@ local var_0_1 = {
 	[FightEnum.EffectType.SHIELD] = true
 }
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_2 * FightModel.instance:getSpeed()
+function FightTLEventDefFreeze:onTrackStart(fightStepData, duration, paramsArr)
+	local durationFix = duration * FightModel.instance:getSpeed()
 
-	arg_1_0._action = arg_1_3[1]
+	self._action = paramsArr[1]
 
-	local var_1_1 = tonumber(arg_1_3[2]) or 0
+	local startTime = tonumber(paramsArr[2]) or 0
 
-	arg_1_0._defenders = arg_1_0:_getDefenders(arg_1_1, arg_1_3[3])
+	self._defenders = self:_getDefenders(fightStepData, paramsArr[3])
 
-	if not string.nilorempty(arg_1_0._action) then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_0._defenders) do
-			iter_1_1.spine:play(arg_1_0._action, false, true)
+	if not string.nilorempty(self._action) then
+		for _, oneDefender in ipairs(self._defenders) do
+			oneDefender.spine:play(self._action, false, true)
 		end
 	end
 
-	if var_1_1 < var_1_0 then
-		if var_1_1 == 0 then
-			arg_1_0:_startFreeze()
+	if startTime < durationFix then
+		if startTime == 0 then
+			self:_startFreeze()
 		else
-			local var_1_2 = var_1_1 / FightModel.instance:getSpeed()
+			local startTimeFix = startTime / FightModel.instance:getSpeed()
 
-			TaskDispatcher.runDelay(arg_1_0._startFreeze, arg_1_0, var_1_2)
+			TaskDispatcher.runDelay(self._startFreeze, self, startTimeFix)
 		end
 	else
 		logWarn("Skill Freeze param invalid, startTime >= duration")
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	arg_2_0:_onDurationEnd()
+function FightTLEventDefFreeze:onTrackEnd()
+	self:_onDurationEnd()
 end
 
-function var_0_0._getDefenders(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = 2
-	local var_3_1 = {}
+function FightTLEventDefFreeze:_getDefenders(fightStepData, filter_type)
+	local _type = 2
+	local target_dic = {}
 
-	if not string.nilorempty(arg_3_2) then
-		var_3_0 = tonumber(string.split(arg_3_2, "#")[1])
+	if not string.nilorempty(filter_type) then
+		_type = tonumber(string.split(filter_type, "#")[1])
 	end
 
-	local var_3_2 = {}
+	local defenders = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffect) do
-		if var_0_1[iter_3_1.effectType] then
-			if var_3_0 == 1 then
-				local var_3_3 = FightHelper.getEntity(arg_3_1.fromId)
+	for _, actEffectData in ipairs(fightStepData.actEffect) do
+		if FreezeEffectActType[actEffectData.effectType] then
+			if _type == 1 then
+				local oneDefender = FightHelper.getEntity(fightStepData.fromId)
 
-				var_3_1[var_3_3.id] = var_3_3
-			elseif var_3_0 == 2 then
-				local var_3_4 = FightHelper.getEntity(arg_3_1.fromId):getSide()
-				local var_3_5 = FightHelper.getEntity(iter_3_1.targetId)
+				target_dic[oneDefender.id] = oneDefender
+			elseif _type == 2 then
+				local self_side = FightHelper.getEntity(fightStepData.fromId):getSide()
+				local oneDefender = FightHelper.getEntity(actEffectData.targetId)
 
-				if var_3_4 ~= var_3_5:getSide() then
-					var_3_1[var_3_5.id] = var_3_5
+				if self_side ~= oneDefender:getSide() then
+					target_dic[oneDefender.id] = oneDefender
 				end
-			elseif var_3_0 == 3 then
-				local var_3_6 = FightHelper.getEntity(arg_3_1.fromId)
-				local var_3_7 = FightHelper.getSideEntitys(var_3_6:getSide())
+			elseif _type == 3 then
+				local oneDefender = FightHelper.getEntity(fightStepData.fromId)
+				local list = FightHelper.getSideEntitys(oneDefender:getSide())
 
-				for iter_3_2, iter_3_3 in ipairs(var_3_7) do
-					var_3_1[iter_3_3.id] = iter_3_3
+				for i, v in ipairs(list) do
+					target_dic[v.id] = v
 				end
-			elseif var_3_0 == 4 then
-				local var_3_8 = FightHelper.getEntity(arg_3_1.toId)
-				local var_3_9 = FightHelper.getSideEntitys(var_3_8:getSide())
+			elseif _type == 4 then
+				local oneDefender = FightHelper.getEntity(fightStepData.toId)
+				local list = FightHelper.getSideEntitys(oneDefender:getSide())
 
-				for iter_3_4, iter_3_5 in ipairs(var_3_9) do
-					var_3_1[iter_3_5.id] = iter_3_5
+				for i, v in ipairs(list) do
+					target_dic[v.id] = v
 				end
-			elseif var_3_0 == 5 then
-				local var_3_10 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+			elseif _type == 5 then
+				local list = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
 
-				for iter_3_6, iter_3_7 in ipairs(var_3_10) do
-					var_3_1[iter_3_7.id] = iter_3_7
+				for i, v in ipairs(list) do
+					target_dic[v.id] = v
 				end
 
-				local var_3_11 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+				list = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
-				for iter_3_8, iter_3_9 in ipairs(var_3_11) do
-					var_3_1[iter_3_9.id] = iter_3_9
+				for i, v in ipairs(list) do
+					target_dic[v.id] = v
 				end
-			elseif var_3_0 == 6 then
-				local var_3_12 = FightHelper.getEntity(arg_3_1.toId)
+			elseif _type == 6 then
+				local oneDefender = FightHelper.getEntity(fightStepData.toId)
 
-				var_3_1[var_3_12.id] = var_3_12
-			elseif var_3_0 == 7 then
-				local var_3_13 = string.splitToNumber(arg_3_2, "#")
+				target_dic[oneDefender.id] = oneDefender
+			elseif _type == 7 then
+				local list = string.splitToNumber(filter_type, "#")
 
-				for iter_3_10 = 2, #var_3_13 do
-					local var_3_14 = FightHelper.getEntity(var_3_13[iter_3_10])
+				for i = 2, #list do
+					local oneDefender = FightHelper.getEntity(list[i])
 
-					var_3_1[var_3_14.id] = var_3_14
+					target_dic[oneDefender.id] = oneDefender
 				end
 			end
 		end
 	end
 
-	for iter_3_11, iter_3_12 in pairs(var_3_1) do
-		table.insert(var_3_2, iter_3_12)
+	for k, v in pairs(target_dic) do
+		table.insert(defenders, v)
 	end
 
-	return var_3_2
+	return defenders
 end
 
-function var_0_0._startFreeze(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._defenders) do
-		iter_4_1.spine:setFreeze(true)
+function FightTLEventDefFreeze:_startFreeze()
+	for _, defender in ipairs(self._defenders) do
+		defender.spine:setFreeze(true)
 	end
 end
 
-function var_0_0._onDurationEnd(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._defenders) do
-		if iter_5_1.spine:getAnimState() == arg_5_0._action then
-			iter_5_1:resetAnimState()
+function FightTLEventDefFreeze:_onDurationEnd()
+	for _, defender in ipairs(self._defenders) do
+		if defender.spine:getAnimState() == self._action then
+			defender:resetAnimState()
 		end
 	end
 
-	arg_5_0:onDestructor()
+	self:onDestructor()
 end
 
-function var_0_0.onDestructor(arg_6_0)
-	if arg_6_0._defenders then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._defenders) do
-			iter_6_1.spine:setFreeze(false)
+function FightTLEventDefFreeze:onDestructor()
+	if self._defenders then
+		for _, defender in ipairs(self._defenders) do
+			defender.spine:setFreeze(false)
 		end
 	end
 
-	arg_6_0._defenders = nil
+	self._defenders = nil
 
-	TaskDispatcher.cancelTask(arg_6_0._startFreeze, arg_6_0)
+	TaskDispatcher.cancelTask(self._startFreeze, self)
 end
 
-return var_0_0
+return FightTLEventDefFreeze

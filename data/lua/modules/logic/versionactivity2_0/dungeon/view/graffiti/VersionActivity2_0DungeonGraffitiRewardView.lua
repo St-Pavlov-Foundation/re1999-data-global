@@ -1,306 +1,310 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/view/graffiti/VersionActivity2_0DungeonGraffitiRewardView.lua
 
-local var_0_0 = class("VersionActivity2_0DungeonGraffitiRewardView", BaseView)
+module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorewardwindow = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rewardwindow/#btn_close")
-	arg_1_0._imageprogressBar = gohelper.findChildImage(arg_1_0.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar")
-	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar/#image_progress")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_rewarditem")
-	arg_1_0._gofinalrewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem")
-	arg_1_0._gofinalreward = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem/#go_finalreward")
-	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._gorewardwindow)
+local VersionActivity2_0DungeonGraffitiRewardView = class("VersionActivity2_0DungeonGraffitiRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_0DungeonGraffitiRewardView:onInitView()
+	self._gorewardwindow = gohelper.findChild(self.viewGO, "#go_rewardwindow")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rewardwindow/#btn_close")
+	self._imageprogressBar = gohelper.findChildImage(self.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "#go_rewardwindow/Content/bg/#image_progressBar/#image_progress")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "#go_rewardwindow/Content/#go_rewardContent")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_rewarditem")
+	self._gofinalrewardItem = gohelper.findChild(self.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem")
+	self._gofinalreward = gohelper.findChild(self.viewGO, "#go_rewardwindow/Content/#go_rewardContent/#go_finalrewarditem/#go_finalreward")
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gorewardwindow)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, arg_2_0.playHasGetEffect, arg_2_0)
+function VersionActivity2_0DungeonGraffitiRewardView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, self.refreshUI, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, self.refreshUI, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, self.playHasGetEffect, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, arg_3_0.playHasGetEffect, arg_3_0)
+function VersionActivity2_0DungeonGraffitiRewardView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.GetGraffitiReward, self.refreshUI, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnUpdateMapElementState, self.refreshUI, self)
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.PlayGraffitiRewardGetAnim, self.playHasGetEffect, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0._animatorPlayer:Play(UIAnimationName.Close, arg_4_0.onCloseAnimDone, arg_4_0)
-	gohelper.setActive(arg_4_0._btnclose.gameObject, false)
+function VersionActivity2_0DungeonGraffitiRewardView:_btncloseOnClick()
+	self._animatorPlayer:Play(UIAnimationName.Close, self.onCloseAnimDone, self)
+	gohelper.setActive(self._btnclose.gameObject, false)
 end
 
-function var_0_0.onCloseAnimDone(arg_5_0)
-	gohelper.setActive(arg_5_0._gorewardwindow, false)
+function VersionActivity2_0DungeonGraffitiRewardView:onCloseAnimDone()
+	gohelper.setActive(self._gorewardwindow, false)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.setActive(arg_6_0._gorewardwindow, false)
-	gohelper.setActive(arg_6_0._gorewardItem, false)
+function VersionActivity2_0DungeonGraffitiRewardView:_editableInitView()
+	gohelper.setActive(self._gorewardwindow, false)
+	gohelper.setActive(self._gorewardItem, false)
 
-	arg_6_0.rewardItemTab = arg_6_0:getUserDataTb_()
-	arg_6_0.stageRewardItems = arg_6_0:getUserDataTb_()
-	arg_6_0.finalItemTab = arg_6_0:getUserDataTb_()
+	self.rewardItemTab = self:getUserDataTb_()
+	self.stageRewardItems = self:getUserDataTb_()
+	self.finalItemTab = self:getUserDataTb_()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.actId = arg_7_0.viewParam.actId
-	arg_7_0.allRewardConfig = Activity161Config.instance:getAllRewardCos(arg_7_0.actId)
-	arg_7_0.finalRewardList, arg_7_0.finalRewardInfo = Activity161Config.instance:getFinalReward(arg_7_0.actId)
-	arg_7_0.lastHasGetRewardMap = tabletool.copy(Activity161Model.instance.curHasGetRewardMap)
+function VersionActivity2_0DungeonGraffitiRewardView:onOpen()
+	self.actId = self.viewParam.actId
+	self.allRewardConfig = Activity161Config.instance:getAllRewardCos(self.actId)
+	self.finalRewardList, self.finalRewardInfo = Activity161Config.instance:getFinalReward(self.actId)
+	self.lastHasGetRewardMap = tabletool.copy(Activity161Model.instance.curHasGetRewardMap)
 
-	arg_7_0:createRewardItem()
-	arg_7_0:createFinalRewardItem()
-	arg_7_0:refreshUI()
+	self:createRewardItem()
+	self:createFinalRewardItem()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:refreshItemState()
-	arg_8_0:refreshProgress()
+function VersionActivity2_0DungeonGraffitiRewardView:refreshUI()
+	self:refreshItemState()
+	self:refreshProgress()
 end
 
-function var_0_0.createRewardItem(arg_9_0)
-	arg_9_0.rewardsConfig = tabletool.copy(arg_9_0.allRewardConfig)
-	arg_9_0.rewardCount = GameUtil.getTabLen(arg_9_0.rewardsConfig)
-	arg_9_0.lastStageRewardConfig = table.remove(arg_9_0.rewardsConfig, #arg_9_0.rewardsConfig)
+function VersionActivity2_0DungeonGraffitiRewardView:createRewardItem()
+	self.rewardsConfig = tabletool.copy(self.allRewardConfig)
+	self.rewardCount = GameUtil.getTabLen(self.rewardsConfig)
+	self.lastStageRewardConfig = table.remove(self.rewardsConfig, #self.rewardsConfig)
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0.rewardsConfig) do
-		local var_9_0 = arg_9_0.rewardItemTab[iter_9_0]
+	for index, config in pairs(self.rewardsConfig) do
+		local rewardItem = self.rewardItemTab[index]
 
-		if not var_9_0 then
-			var_9_0 = {
-				go = gohelper.clone(arg_9_0._gorewardItem, arg_9_0._gorewardContent, "rewardItem" .. iter_9_0),
-				config = iter_9_1
+		if not rewardItem then
+			rewardItem = {
+				go = gohelper.clone(self._gorewardItem, self._gorewardContent, "rewardItem" .. index),
+				config = config
 			}
-			var_9_0 = arg_9_0:initWholeRewardItemComp(var_9_0, var_9_0.go)
-			arg_9_0.rewardItemTab[iter_9_0] = var_9_0
+			rewardItem = self:initWholeRewardItemComp(rewardItem, rewardItem.go)
+			self.rewardItemTab[index] = rewardItem
 		end
 
-		arg_9_0:initRewardItemData(var_9_0, iter_9_1, iter_9_0)
+		self:initRewardItemData(rewardItem, config, index)
 	end
 
-	local var_9_1 = arg_9_0.rewardItemTab[arg_9_0.rewardCount]
+	local finalItem = self.rewardItemTab[self.rewardCount]
 
-	if not var_9_1 then
-		var_9_1 = {
-			go = arg_9_0._gofinalrewardItem,
-			config = arg_9_0.lastStageRewardConfig
+	if not finalItem then
+		finalItem = {
+			go = self._gofinalrewardItem,
+			config = self.lastStageRewardConfig
 		}
-		var_9_1 = arg_9_0:initWholeRewardItemComp(var_9_1, var_9_1.go)
-		arg_9_0.rewardItemTab[arg_9_0.rewardCount] = var_9_1
+		finalItem = self:initWholeRewardItemComp(finalItem, finalItem.go)
+		self.rewardItemTab[self.rewardCount] = finalItem
 	end
 
-	gohelper.setAsLastSibling(var_9_1.go)
-	arg_9_0:initRewardItemData(var_9_1, arg_9_0.lastStageRewardConfig, arg_9_0.rewardCount)
+	gohelper.setAsLastSibling(finalItem.go)
+	self:initRewardItemData(finalItem, self.lastStageRewardConfig, self.rewardCount)
 end
 
-function var_0_0.initWholeRewardItemComp(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_1.txtpaintedNum = gohelper.findChildTextMesh(arg_10_2, "txt_paintedNum")
-	arg_10_1.godarkPoint = gohelper.findChild(arg_10_2, "darkpoint")
-	arg_10_1.golightPoint = gohelper.findChild(arg_10_2, "lightpoint")
-	arg_10_1.goreward = gohelper.findChild(arg_10_2, "layout/go_reward")
+function VersionActivity2_0DungeonGraffitiRewardView:initWholeRewardItemComp(rewardItem, itemGO)
+	rewardItem.txtpaintedNum = gohelper.findChildTextMesh(itemGO, "txt_paintedNum")
+	rewardItem.godarkPoint = gohelper.findChild(itemGO, "darkpoint")
+	rewardItem.golightPoint = gohelper.findChild(itemGO, "lightpoint")
+	rewardItem.goreward = gohelper.findChild(itemGO, "layout/go_reward")
 
-	gohelper.setActive(arg_10_1.goreward, false)
+	gohelper.setActive(rewardItem.goreward, false)
 
-	return arg_10_1
+	return rewardItem
 end
 
-function var_0_0.initRewardItemData(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	gohelper.setActive(arg_11_1.go, true)
+function VersionActivity2_0DungeonGraffitiRewardView:initRewardItemData(rewardItem, config, index)
+	gohelper.setActive(rewardItem.go, true)
 
-	arg_11_1.txtpaintedNum.text = arg_11_2.paintedNum
+	rewardItem.txtpaintedNum.text = config.paintedNum
 
-	local var_11_0 = {}
+	local stageRewardList = {}
 
-	if arg_11_3 == arg_11_0.rewardCount then
-		var_11_0 = arg_11_0.finalRewardList
+	if index == self.rewardCount then
+		stageRewardList = self.finalRewardList
 	else
-		var_11_0 = GameUtil.splitString2(arg_11_2.bonus, true)
+		stageRewardList = GameUtil.splitString2(config.bonus, true)
 	end
 
-	if not arg_11_0.stageRewardItems[arg_11_3] then
-		local var_11_1 = {}
+	local rewardItems = self.stageRewardItems[index]
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-			local var_11_2 = {
-				itemGO = gohelper.cloneInPlace(arg_11_1.goreward, "item" .. tostring(iter_11_0))
-			}
-			local var_11_3 = arg_11_0:initRewardItemComp(var_11_2, var_11_2.itemGO, iter_11_1)
+	if not rewardItems then
+		rewardItems = {}
 
-			gohelper.setActive(var_11_3.itemGO, true)
-			arg_11_0:initItemIconInfo(var_11_3, iter_11_1)
+		for itemIndex, rewardInfo in ipairs(stageRewardList) do
+			local itemTab = {}
 
-			var_11_1[iter_11_0] = var_11_3
+			itemTab.itemGO = gohelper.cloneInPlace(rewardItem.goreward, "item" .. tostring(itemIndex))
+			itemTab = self:initRewardItemComp(itemTab, itemTab.itemGO, rewardInfo)
+
+			gohelper.setActive(itemTab.itemGO, true)
+			self:initItemIconInfo(itemTab, rewardInfo)
+
+			rewardItems[itemIndex] = itemTab
 		end
 
-		arg_11_0.stageRewardItems[arg_11_3] = var_11_1
+		self.stageRewardItems[index] = rewardItems
 	end
 end
 
-function var_0_0.createFinalRewardItem(arg_12_0)
-	if GameUtil.getTabLen(arg_12_0.finalItemTab) == 0 then
-		arg_12_0:initRewardItemComp(arg_12_0.finalItemTab, arg_12_0._gofinalreward, arg_12_0.finalRewardInfo, true)
+function VersionActivity2_0DungeonGraffitiRewardView:createFinalRewardItem()
+	if GameUtil.getTabLen(self.finalItemTab) == 0 then
+		self:initRewardItemComp(self.finalItemTab, self._gofinalreward, self.finalRewardInfo, true)
 	end
 
-	arg_12_0:initItemIconInfo(arg_12_0.finalItemTab, arg_12_0.finalRewardInfo)
+	self:initItemIconInfo(self.finalItemTab, self.finalRewardInfo)
 end
 
-function var_0_0.initRewardItemComp(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	arg_13_1.itemGO = arg_13_2
-	arg_13_1.itemRare = gohelper.findChildImage(arg_13_1.itemGO, "item/image_rare")
-	arg_13_1.itemIcon = gohelper.findChildSingleImage(arg_13_1.itemGO, "item/simage_icon")
-	arg_13_1.itemNum = gohelper.findChildText(arg_13_1.itemGO, "item/txt_num")
-	arg_13_1.goHasGet = gohelper.findChild(arg_13_1.itemGO, "go_hasget")
-	arg_13_1.goCanGet = gohelper.findChild(arg_13_1.itemGO, "go_canget")
-	arg_13_1.goLock = gohelper.findChild(arg_13_1.itemGO, "go_lock")
-	arg_13_1.hasGetAnim = arg_13_1.goHasGet:GetComponent(gohelper.Type_Animator)
-	arg_13_1.btnClick = gohelper.findChildButtonWithAudio(arg_13_1.itemGO, "item/btn_click")
+function VersionActivity2_0DungeonGraffitiRewardView:initRewardItemComp(itemTab, itemGO, rewardInfo, isFinalReward)
+	itemTab.itemGO = itemGO
+	itemTab.itemRare = gohelper.findChildImage(itemTab.itemGO, "item/image_rare")
+	itemTab.itemIcon = gohelper.findChildSingleImage(itemTab.itemGO, "item/simage_icon")
+	itemTab.itemNum = gohelper.findChildText(itemTab.itemGO, "item/txt_num")
+	itemTab.goHasGet = gohelper.findChild(itemTab.itemGO, "go_hasget")
+	itemTab.goCanGet = gohelper.findChild(itemTab.itemGO, "go_canget")
+	itemTab.goLock = gohelper.findChild(itemTab.itemGO, "go_lock")
+	itemTab.hasGetAnim = itemTab.goHasGet:GetComponent(gohelper.Type_Animator)
+	itemTab.btnClick = gohelper.findChildButtonWithAudio(itemTab.itemGO, "item/btn_click")
 
-	arg_13_1.btnClick:AddClickListener(arg_13_0.rewardItemClick, arg_13_0, arg_13_3)
+	itemTab.btnClick:AddClickListener(self.rewardItemClick, self, rewardInfo)
 
-	arg_13_1.isFinalReward = arg_13_4
+	itemTab.isFinalReward = isFinalReward
 
-	return arg_13_1
+	return itemTab
 end
 
-function var_0_0.initItemIconInfo(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0, var_14_1 = ItemModel.instance:getItemConfigAndIcon(arg_14_2[1], arg_14_2[2], true)
+function VersionActivity2_0DungeonGraffitiRewardView:initItemIconInfo(itemTab, rewardInfo)
+	local itemConfig, icon = ItemModel.instance:getItemConfigAndIcon(rewardInfo[1], rewardInfo[2], true)
 
-	arg_14_1.itemIcon:LoadImage(var_14_1)
+	itemTab.itemIcon:LoadImage(icon)
 
-	if var_14_0.rare == 0 then
-		gohelper.setActive(arg_14_1.itemRare.gameObject, false)
-	elseif var_14_0.rare < 5 and not arg_14_1.isFinalReward then
-		UISpriteSetMgr.instance:setV2a0PaintSprite(arg_14_1.itemRare, "v2a0_paint_rewardbg_" .. var_14_0.rare)
+	if itemConfig.rare == 0 then
+		gohelper.setActive(itemTab.itemRare.gameObject, false)
+	elseif itemConfig.rare < 5 and not itemTab.isFinalReward then
+		UISpriteSetMgr.instance:setV2a0PaintSprite(itemTab.itemRare, "v2a0_paint_rewardbg_" .. itemConfig.rare)
 	end
 
-	arg_14_1.itemNum.text = luaLang("multiple") .. arg_14_2[3]
+	itemTab.itemNum.text = luaLang("multiple") .. rewardInfo[3]
 end
 
-function var_0_0.rewardItemClick(arg_15_0, arg_15_1)
-	MaterialTipController.instance:showMaterialInfo(arg_15_1[1], arg_15_1[2])
+function VersionActivity2_0DungeonGraffitiRewardView:rewardItemClick(rewardInfo)
+	MaterialTipController.instance:showMaterialInfo(rewardInfo[1], rewardInfo[2])
 end
 
-function var_0_0.refreshItemState(arg_16_0)
-	arg_16_0.curHasGetRewardMap = Activity161Model.instance.curHasGetRewardMap
+function VersionActivity2_0DungeonGraffitiRewardView:refreshItemState()
+	self.curHasGetRewardMap = Activity161Model.instance.curHasGetRewardMap
 
-	local var_16_0 = Activity161Model.instance:getCurPaintedNum()
+	local curPaintedNum = Activity161Model.instance:getCurPaintedNum()
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_0.rewardItemTab) do
-		local var_16_1 = iter_16_1.config.paintedNum
+	for index, wholeRewardItem in pairs(self.rewardItemTab) do
+		local paintedNum = wholeRewardItem.config.paintedNum
 
-		gohelper.setActive(iter_16_1.godarkPoint, var_16_0 < var_16_1)
-		gohelper.setActive(iter_16_1.golightPoint, var_16_1 <= var_16_0)
-		SLFramework.UGUI.GuiHelper.SetColor(iter_16_1.txtpaintedNum, var_16_1 <= var_16_0 and "#E9842A" or "#666767")
+		gohelper.setActive(wholeRewardItem.godarkPoint, curPaintedNum < paintedNum)
+		gohelper.setActive(wholeRewardItem.golightPoint, paintedNum <= curPaintedNum)
+		SLFramework.UGUI.GuiHelper.SetColor(wholeRewardItem.txtpaintedNum, paintedNum <= curPaintedNum and "#E9842A" or "#666767")
 	end
 
-	for iter_16_2, iter_16_3 in pairs(arg_16_0.stageRewardItems) do
-		local var_16_2 = arg_16_0.rewardItemTab[iter_16_2].config.paintedNum
+	for index, rewardItems in pairs(self.stageRewardItems) do
+		local paintedNum = self.rewardItemTab[index].config.paintedNum
 
-		for iter_16_4, iter_16_5 in pairs(iter_16_3) do
-			gohelper.setActive(iter_16_5.goHasGet, arg_16_0.curHasGetRewardMap[iter_16_2])
-			gohelper.setActive(iter_16_5.goCanGet, not arg_16_0.curHasGetRewardMap[iter_16_2] and var_16_2 <= var_16_0)
-			gohelper.setActive(iter_16_5.goLock, not arg_16_0.curHasGetRewardMap[iter_16_2] and var_16_0 < var_16_2)
-		end
-	end
-
-	gohelper.setActive(arg_16_0.finalItemTab.goHasGet, arg_16_0.curHasGetRewardMap[arg_16_0.rewardCount])
-	gohelper.setActive(arg_16_0.finalItemTab.goCanGet, not arg_16_0.curHasGetRewardMap[arg_16_0.rewardCount] and var_16_0 >= arg_16_0.lastStageRewardConfig.paintedNum)
-	gohelper.setActive(arg_16_0.finalItemTab.goLock, not arg_16_0.curHasGetRewardMap[arg_16_0.rewardCount] and var_16_0 < arg_16_0.lastStageRewardConfig.paintedNum)
-end
-
-function var_0_0.playHasGetEffect(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in pairs(arg_17_1) do
-		local var_17_0 = arg_17_0.stageRewardItems[iter_17_1.rewardId]
-
-		for iter_17_2, iter_17_3 in pairs(var_17_0) do
-			gohelper.setActive(iter_17_3.goHasGet, true)
-			gohelper.setActive(iter_17_3.goCanGet, false)
-			iter_17_3.hasGetAnim:Play("go_hasget_in", 0, 0)
-		end
-
-		if iter_17_1.rewardId == arg_17_0.rewardCount then
-			gohelper.setActive(arg_17_0.finalItemTab.goHasGet, true)
-			gohelper.setActive(arg_17_0.finalItemTab.goCanGet, false)
-			arg_17_0.finalItemTab.hasGetAnim:Play("go_hasget_in", 0, 0)
+		for _, itemTab in pairs(rewardItems) do
+			gohelper.setActive(itemTab.goHasGet, self.curHasGetRewardMap[index])
+			gohelper.setActive(itemTab.goCanGet, not self.curHasGetRewardMap[index] and paintedNum <= curPaintedNum)
+			gohelper.setActive(itemTab.goLock, not self.curHasGetRewardMap[index] and curPaintedNum < paintedNum)
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_17_0.rewardCanGetClick, arg_17_0, 1)
+	gohelper.setActive(self.finalItemTab.goHasGet, self.curHasGetRewardMap[self.rewardCount])
+	gohelper.setActive(self.finalItemTab.goCanGet, not self.curHasGetRewardMap[self.rewardCount] and curPaintedNum >= self.lastStageRewardConfig.paintedNum)
+	gohelper.setActive(self.finalItemTab.goLock, not self.curHasGetRewardMap[self.rewardCount] and curPaintedNum < self.lastStageRewardConfig.paintedNum)
 end
 
-function var_0_0.rewardCanGetClick(arg_18_0)
-	Activity161Rpc.instance:sendAct161GainMilestoneRewardRequest(arg_18_0.actId)
+function VersionActivity2_0DungeonGraffitiRewardView:playHasGetEffect(canGetRewardList)
+	for _, canGetRewardCo in pairs(canGetRewardList) do
+		local rewardItems = self.stageRewardItems[canGetRewardCo.rewardId]
+
+		for _, itemTab in pairs(rewardItems) do
+			gohelper.setActive(itemTab.goHasGet, true)
+			gohelper.setActive(itemTab.goCanGet, false)
+			itemTab.hasGetAnim:Play("go_hasget_in", 0, 0)
+		end
+
+		if canGetRewardCo.rewardId == self.rewardCount then
+			gohelper.setActive(self.finalItemTab.goHasGet, true)
+			gohelper.setActive(self.finalItemTab.goCanGet, false)
+			self.finalItemTab.hasGetAnim:Play("go_hasget_in", 0, 0)
+		end
+	end
+
+	TaskDispatcher.runDelay(self.rewardCanGetClick, self, 1)
+end
+
+function VersionActivity2_0DungeonGraffitiRewardView:rewardCanGetClick()
+	Activity161Rpc.instance:sendAct161GainMilestoneRewardRequest(self.actId)
 	UIBlockMgr.instance:endBlock("GraffitiRewardViewPlayHasGetEffect")
 end
 
-function var_0_0.refreshProgress(arg_19_0)
-	local var_19_0 = 66
-	local var_19_1 = 177
-	local var_19_2 = 278
-	local var_19_3 = 24
-	local var_19_4 = var_19_0 + var_19_1 * Mathf.Max(0, arg_19_0.rewardCount - 2) + var_19_3 * arg_19_0.rewardCount + var_19_2
+function VersionActivity2_0DungeonGraffitiRewardView:refreshProgress()
+	local firstWidth = 66
+	local normalWidth = 177
+	local lastWidth = 278
+	local tagWidth = 24
+	local totalWidth = firstWidth + normalWidth * Mathf.Max(0, self.rewardCount - 2) + tagWidth * self.rewardCount + lastWidth
 
-	recthelper.setWidth(arg_19_0._imageprogressBar.transform, var_19_4)
+	recthelper.setWidth(self._imageprogressBar.transform, totalWidth)
 
-	local var_19_5 = 0
-	local var_19_6 = Activity161Model.instance:getCurPaintedNum()
-	local var_19_7 = 0
-	local var_19_8 = 0
-	local var_19_9 = 0
-	local var_19_10 = 0
+	local progressWith = 0
+	local curPaintedNum = Activity161Model.instance:getCurPaintedNum()
+	local curIndex = 0
+	local curIndexValue = 0
+	local nextIndexValue = 0
+	local offsetValue = 0
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0.allRewardConfig) do
-		if var_19_6 >= iter_19_1.paintedNum then
-			var_19_7 = iter_19_0
-			var_19_8 = iter_19_1.paintedNum
-			var_19_9 = iter_19_1.paintedNum
-		elseif var_19_8 <= var_19_9 then
-			var_19_9 = iter_19_1.paintedNum
+	for index, config in pairs(self.allRewardConfig) do
+		if curPaintedNum >= config.paintedNum then
+			curIndex = index
+			curIndexValue = config.paintedNum
+			nextIndexValue = config.paintedNum
+		elseif curIndexValue <= nextIndexValue then
+			nextIndexValue = config.paintedNum
 
 			break
 		end
 	end
 
-	if var_19_9 ~= var_19_8 then
-		var_19_10 = (var_19_6 - var_19_8) / (var_19_9 - var_19_8)
+	if nextIndexValue ~= curIndexValue then
+		offsetValue = (curPaintedNum - curIndexValue) / (nextIndexValue - curIndexValue)
 	end
 
-	if var_19_7 == 0 then
-		var_19_5 = var_19_0 * var_19_6 / var_19_9
-	elseif var_19_7 >= 1 and var_19_7 < arg_19_0.rewardCount - 1 then
-		var_19_5 = var_19_0 + var_19_1 * (var_19_7 - 1) + var_19_7 * var_19_3 + var_19_10 * var_19_1
-	elseif var_19_7 == arg_19_0.rewardCount - 1 then
-		var_19_5 = var_19_0 + var_19_1 * (var_19_7 - 1) + var_19_7 * var_19_3 + var_19_10 * var_19_2
-	elseif var_19_7 == arg_19_0.rewardCount then
-		var_19_5 = var_19_4
+	if curIndex == 0 then
+		progressWith = firstWidth * curPaintedNum / nextIndexValue
+	elseif curIndex >= 1 and curIndex < self.rewardCount - 1 then
+		progressWith = firstWidth + normalWidth * (curIndex - 1) + curIndex * tagWidth + offsetValue * normalWidth
+	elseif curIndex == self.rewardCount - 1 then
+		progressWith = firstWidth + normalWidth * (curIndex - 1) + curIndex * tagWidth + offsetValue * lastWidth
+	elseif curIndex == self.rewardCount then
+		progressWith = totalWidth
 	end
 
-	recthelper.setWidth(arg_19_0._imageprogress.transform, var_19_5)
+	recthelper.setWidth(self._imageprogress.transform, progressWith)
 end
 
-function var_0_0.onClose(arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0.rewardCanGetClick, arg_20_0)
+function VersionActivity2_0DungeonGraffitiRewardView:onClose()
+	TaskDispatcher.cancelTask(self.rewardCanGetClick, self)
 	UIBlockMgr.instance:endBlock("GraffitiRewardViewPlayHasGetEffect")
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	for iter_21_0, iter_21_1 in pairs(arg_21_0.stageRewardItems) do
-		for iter_21_2, iter_21_3 in pairs(iter_21_1) do
-			iter_21_3.btnClick:RemoveClickListener()
-			iter_21_3.itemIcon:UnLoadImage()
+function VersionActivity2_0DungeonGraffitiRewardView:onDestroyView()
+	for index, rewardItems in pairs(self.stageRewardItems) do
+		for itemIndex, itemTab in pairs(rewardItems) do
+			itemTab.btnClick:RemoveClickListener()
+			itemTab.itemIcon:UnLoadImage()
 		end
 	end
 
-	arg_21_0.finalItemTab.btnClick:RemoveClickListener()
-	arg_21_0.finalItemTab.itemIcon:UnLoadImage()
+	self.finalItemTab.btnClick:RemoveClickListener()
+	self.finalItemTab.itemIcon:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity2_0DungeonGraffitiRewardView

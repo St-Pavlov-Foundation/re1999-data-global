@@ -1,45 +1,47 @@
-﻿module("modules.logic.mainswitchclassify.view.MainSwitchClassifyInfoItem", package.seeall)
+﻿-- chunkname: @modules/logic/mainswitchclassify/view/MainSwitchClassifyInfoItem.lua
 
-local var_0_0 = class("MainSwitchClassifyInfoItem", MainSwitchClassifyItem)
+module("modules.logic.mainswitchclassify.view.MainSwitchClassifyInfoItem", package.seeall)
 
-function var_0_0.initInternal(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._go = arg_1_1
-	arg_1_0._view = arg_1_2
-	arg_1_0._viewContainer = arg_1_0._view.viewContainer
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0._go, "reddot")
+local MainSwitchClassifyInfoItem = class("MainSwitchClassifyInfoItem", MainSwitchClassifyItem)
+
+function MainSwitchClassifyInfoItem:initInternal(go, view)
+	self._go = go
+	self._view = view
+	self._viewContainer = self._view.viewContainer
+	self._goreddot = gohelper.findChild(self._go, "reddot")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
-	arg_2_0._index = arg_2_1.Sort
+function MainSwitchClassifyInfoItem:onUpdateMO(mo)
+	self._mo = mo
+	self._index = mo.Sort
 
-	arg_2_0:setTxt(luaLang(arg_2_1.Title))
+	self:setTxt(luaLang(mo.Title))
 
-	local var_2_0 = #MainSwitchClassifyListModel.instance:getList()
+	local count = #MainSwitchClassifyListModel.instance:getList()
 
-	arg_2_0:showLine(var_2_0 > arg_2_0._index)
+	self:showLine(count > self._index)
 
-	local var_2_1 = arg_2_0:_checkReddot()
+	local isShowReddot = self:_checkReddot()
 
-	gohelper.setActive(arg_2_0._goreddot, var_2_1)
+	gohelper.setActive(self._goreddot, isShowReddot)
 end
 
-function var_0_0._btnclickOnClick(arg_3_0)
-	var_0_0.super._btnclickOnClick(arg_3_0)
-	MainSwitchClassifyListModel.instance:selectCell(arg_3_0._index, true)
-	arg_3_0._viewContainer:switchClassifyTab(arg_3_0._index)
+function MainSwitchClassifyInfoItem:_btnclickOnClick()
+	MainSwitchClassifyInfoItem.super._btnclickOnClick(self)
+	MainSwitchClassifyListModel.instance:selectCell(self._index, true)
+	self._viewContainer:switchClassifyTab(self._index)
 
-	if arg_3_0._mo.Classify == MainSwitchClassifyEnum.Classify.Click and ClickUISwitchModel.instance:hasReddot() then
+	if self._mo.Classify == MainSwitchClassifyEnum.Classify.Click and ClickUISwitchModel.instance:hasReddot() then
 		ClickUISwitchModel.instance:cancelReddot()
 		ClickUISwitchController.instance:dispatchEvent(ClickUISwitchEvent.CancelReddot)
 		MainSwitchClassifyListModel.instance:onModelUpdate()
 	end
 end
 
-function var_0_0._checkReddot(arg_4_0)
-	if arg_4_0._mo.Classify == MainSwitchClassifyEnum.Classify.Click and ClickUISwitchModel.instance:hasReddot() then
+function MainSwitchClassifyInfoItem:_checkReddot()
+	if self._mo.Classify == MainSwitchClassifyEnum.Classify.Click and ClickUISwitchModel.instance:hasReddot() then
 		return true
 	end
 end
 
-return var_0_0
+return MainSwitchClassifyInfoItem

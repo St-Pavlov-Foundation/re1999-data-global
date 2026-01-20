@@ -1,54 +1,56 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzle4", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/puzzle/FairyLandPuzzle4.lua
 
-local var_0_0 = class("FairyLandPuzzle4", FairyLandPuzzleBase)
-local var_0_1 = "0123456789%+%-%*%/%.１２３４５６７８９０×"
+module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzle4", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._shapeGO = gohelper.findChild(arg_1_0.viewGO, "main/#go_Shape/4")
-	arg_1_0.goPuzzle = gohelper.findChild(arg_1_0._shapeGO, "#go_NumPuzzleBG")
-	arg_1_0.txtQuestion = gohelper.findChildTextMesh(arg_1_0.goPuzzle, "#txt_Equation")
-	arg_1_0.goInput = gohelper.findChild(arg_1_0._shapeGO, "#go_Input")
-	arg_1_0.btnConfirm = gohelper.findChildButtonWithAudio(arg_1_0.goInput, "#go_SelectFrame/#go_Confirm")
-	arg_1_0.goInputNum = gohelper.findChild(arg_1_0.goInput, "#inputNum")
-	arg_1_0.inputNum = gohelper.findChildTextMeshInputField(arg_1_0.goInput, "#inputNum")
+local FairyLandPuzzle4 = class("FairyLandPuzzle4", FairyLandPuzzleBase)
+local allowedCharacters = "0123456789%+%-%*%/%.１２３４５６７８９０×"
 
-	arg_1_0.inputNum:AddOnValueChanged(arg_1_0.onAddOnValueChanged, arg_1_0)
+function FairyLandPuzzle4:onInitView()
+	self._shapeGO = gohelper.findChild(self.viewGO, "main/#go_Shape/4")
+	self.goPuzzle = gohelper.findChild(self._shapeGO, "#go_NumPuzzleBG")
+	self.txtQuestion = gohelper.findChildTextMesh(self.goPuzzle, "#txt_Equation")
+	self.goInput = gohelper.findChild(self._shapeGO, "#go_Input")
+	self.btnConfirm = gohelper.findChildButtonWithAudio(self.goInput, "#go_SelectFrame/#go_Confirm")
+	self.goInputNum = gohelper.findChild(self.goInput, "#inputNum")
+	self.inputNum = gohelper.findChildTextMeshInputField(self.goInput, "#inputNum")
 
-	arg_1_0.inputTxtGO = gohelper.findChild(arg_1_0.goInput, "#inputNum/Text Area/Text")
-	arg_1_0.animInput = SLFramework.AnimatorPlayer.Get(arg_1_0.inputTxtGO)
-	arg_1_0.numComp = FairyLandFullScreenNumber.New()
+	self.inputNum:AddOnValueChanged(self.onAddOnValueChanged, self)
 
-	local var_1_0 = {
-		viewGO = arg_1_0.viewGO
-	}
+	self.inputTxtGO = gohelper.findChild(self.goInput, "#inputNum/Text Area/Text")
+	self.animInput = SLFramework.AnimatorPlayer.Get(self.inputTxtGO)
+	self.numComp = FairyLandFullScreenNumber.New()
 
-	arg_1_0.numComp:init(var_1_0)
-	arg_1_0:addClickCb(arg_1_0.btnConfirm, arg_1_0.onClickBtnConfirm, arg_1_0)
-	gohelper.setActive(arg_1_0.btnConfirm, false)
+	local param = {}
 
-	local var_1_1 = string.gsub(var_0_1, "[%-%[%]%^]", "%%%1")
+	param.viewGO = self.viewGO
 
-	arg_1_0.pattern = string.format("^[%s]*$", var_1_1)
-	arg_1_0.clearPattern = string.format("[^%s]", var_1_1)
+	self.numComp:init(param)
+	self:addClickCb(self.btnConfirm, self.onClickBtnConfirm, self)
+	gohelper.setActive(self.btnConfirm, false)
+
+	local s = string.gsub(allowedCharacters, "[%-%[%]%^]", "%%%1")
+
+	self.pattern = string.format("^[%s]*$", s)
+	self.clearPattern = string.format("[^%s]", s)
 end
 
-function var_0_0.onAddOnValueChanged(arg_2_0, arg_2_1)
-	if not string.match(arg_2_1, arg_2_0.pattern) then
-		local var_2_0 = string.gsub(arg_2_1, arg_2_0.clearPattern, "")
+function FairyLandPuzzle4:onAddOnValueChanged(newText)
+	if not string.match(newText, self.pattern) then
+		local str = string.gsub(newText, self.clearPattern, "")
 
-		arg_2_0.inputNum:SetText(var_2_0)
+		self.inputNum:SetText(str)
 
 		return
 	end
 
-	local var_2_1 = arg_2_0.inputNum:GetText()
+	local text = self.inputNum:GetText()
 
-	gohelper.setActive(arg_2_0.btnConfirm, not string.nilorempty(var_2_1))
+	gohelper.setActive(self.btnConfirm, not string.nilorempty(text))
 end
 
-function var_0_0.onClickBtnConfirm(arg_3_0)
-	local var_3_0 = arg_3_0.inputNum:GetText()
-	local var_3_1 = {
+function FairyLandPuzzle4:onClickBtnConfirm()
+	local inpText = self.inputNum:GetText()
+	local tmp = {
 		"１",
 		"２",
 		"３",
@@ -60,7 +62,7 @@ function var_0_0.onClickBtnConfirm(arg_3_0)
 		"９",
 		"０"
 	}
-	local var_3_2 = {
+	local tmp2 = {
 		"1",
 		"2",
 		"3",
@@ -73,191 +75,191 @@ function var_0_0.onClickBtnConfirm(arg_3_0)
 		"0"
 	}
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		var_3_0 = string.gsub(var_3_0, iter_3_1, var_3_2[iter_3_0])
+	for i, v in ipairs(tmp) do
+		inpText = string.gsub(inpText, v, tmp2[i])
 	end
 
-	if var_3_0 == arg_3_0.config.answer then
-		gohelper.setActive(arg_3_0.btnConfirm, false)
+	if inpText == self.config.answer then
+		gohelper.setActive(self.btnConfirm, false)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_input_right)
-		arg_3_0.animInput:Play("correct", arg_3_0.onCorrectAnimEnd, arg_3_0)
+		self.animInput:Play("correct", self.onCorrectAnimEnd, self)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_input_mistake)
-		arg_3_0.animInput:Play("error", arg_3_0.onErrorAnimEnd, arg_3_0)
+		self.animInput:Play("error", self.onErrorAnimEnd, self)
 	end
 end
 
-function var_0_0.onCorrectAnimEnd(arg_4_0)
-	arg_4_0.inputNum:SetText("")
-	arg_4_0.animInput:Play("idle", arg_4_0.onAnimEnd, arg_4_0)
-	arg_4_0:finished()
+function FairyLandPuzzle4:onCorrectAnimEnd()
+	self.inputNum:SetText("")
+	self.animInput:Play("idle", self.onAnimEnd, self)
+	self:finished()
 end
 
-function var_0_0.onErrorAnimEnd(arg_5_0)
-	arg_5_0.inputNum:SetText("")
-	arg_5_0.animInput:Play("idle", arg_5_0.onAnimEnd, arg_5_0)
-	arg_5_0:playErrorTalk()
-	arg_5_0:startCheckTips()
+function FairyLandPuzzle4:onErrorAnimEnd()
+	self.inputNum:SetText("")
+	self.animInput:Play("idle", self.onAnimEnd, self)
+	self:playErrorTalk()
+	self:startCheckTips()
 end
 
-function var_0_0.onAnimEnd(arg_6_0)
+function FairyLandPuzzle4:onAnimEnd()
 	return
 end
 
-function var_0_0.onStart(arg_7_0)
-	arg_7_0.txtQuestion.text = arg_7_0:getQuestion()
+function FairyLandPuzzle4:onStart()
+	self.txtQuestion.text = self:getQuestion()
 
-	arg_7_0.inputNum:SetText("")
+	self.inputNum:SetText("")
 
-	local var_7_0 = arg_7_0:isEndPuzzle()
+	local isEnd = self:isEndPuzzle()
 
-	gohelper.setActive(arg_7_0.goPuzzle, not var_7_0)
+	gohelper.setActive(self.goPuzzle, not isEnd)
 
-	if var_7_0 then
-		recthelper.setAnchor(arg_7_0.goInput.transform, 0, 180)
+	if isEnd then
+		recthelper.setAnchor(self.goInput.transform, 0, 180)
 	else
-		arg_7_0:layoutContent()
-		TaskDispatcher.runDelay(arg_7_0.layoutContent, arg_7_0, 0.1)
+		self:layoutContent()
+		TaskDispatcher.runDelay(self.layoutContent, self, 0.1)
 	end
 
-	local var_7_1 = FairyLandModel.instance:isPassPuzzle(arg_7_0.config.id)
+	local isPass = FairyLandModel.instance:isPassPuzzle(self.config.id)
 
-	gohelper.setActive(arg_7_0._shapeGO, false)
-	gohelper.setActive(arg_7_0._shapeGO, not var_7_1 or not var_7_0)
-	gohelper.setActive(arg_7_0.goInputNum, not var_7_1)
+	gohelper.setActive(self._shapeGO, false)
+	gohelper.setActive(self._shapeGO, not isPass or not isEnd)
+	gohelper.setActive(self.goInputNum, not isPass)
 
-	if var_7_0 and not var_7_1 then
-		arg_7_0:showNumberText()
+	if isEnd and not isPass then
+		self:showNumberText()
 	end
 
-	arg_7_0:startCheckTips()
+	self:startCheckTips()
 end
 
-function var_0_0.onRefreshView(arg_8_0)
-	arg_8_0.txtQuestion.text = arg_8_0:getQuestion()
+function FairyLandPuzzle4:onRefreshView()
+	self.txtQuestion.text = self:getQuestion()
 
-	local var_8_0 = arg_8_0:isEndPuzzle()
-	local var_8_1 = FairyLandModel.instance:isPassPuzzle(arg_8_0.config.id)
+	local isEnd = self:isEndPuzzle()
+	local isPass = FairyLandModel.instance:isPassPuzzle(self.config.id)
 
-	gohelper.setActive(arg_8_0._shapeGO, false)
-	gohelper.setActive(arg_8_0._shapeGO, not var_8_1 or not var_8_0)
-	gohelper.setActive(arg_8_0.goInputNum, not var_8_1)
+	gohelper.setActive(self._shapeGO, false)
+	gohelper.setActive(self._shapeGO, not isPass or not isEnd)
+	gohelper.setActive(self.goInputNum, not isPass)
 
-	if not var_8_1 then
-		gohelper.setActive(arg_8_0.goPuzzle, not var_8_0)
+	if not isPass then
+		gohelper.setActive(self.goPuzzle, not isEnd)
 
-		if var_8_0 then
-			arg_8_0.tweenId = ZProj.TweenHelper.DOAnchorPos(arg_8_0.goInput.transform, 0, 180, 1)
+		if isEnd then
+			self.tweenId = ZProj.TweenHelper.DOAnchorPos(self.goInput.transform, 0, 180, 1)
 
-			arg_8_0:showNumberText()
+			self:showNumberText()
 		else
-			arg_8_0:layoutContent()
+			self:layoutContent()
 		end
 	end
 
-	arg_8_0:startCheckTips()
+	self:startCheckTips()
 end
 
-function var_0_0.layoutContent(arg_9_0)
-	local var_9_0 = arg_9_0.txtQuestion.preferredWidth
-	local var_9_1 = 346
-	local var_9_2 = -var_9_1 * 0.5
-	local var_9_3 = var_9_0 * 0.5
+function FairyLandPuzzle4:layoutContent()
+	local width = self.txtQuestion.preferredWidth
+	local inputWidth = 346
+	local txtPos = -inputWidth * 0.5
+	local inputPos = width * 0.5
 
-	recthelper.setAnchor(arg_9_0.txtQuestion.transform, var_9_2, 0)
-	recthelper.setAnchor(arg_9_0.goInput.transform, var_9_3, 350)
+	recthelper.setAnchor(self.txtQuestion.transform, txtPos, 0)
+	recthelper.setAnchor(self.goInput.transform, inputPos, 350)
 end
 
-function var_0_0.isEndPuzzle(arg_10_0)
-	return arg_10_0.config.id == 10
+function FairyLandPuzzle4:isEndPuzzle()
+	return self.config.id == 10
 end
 
-function var_0_0.getQuestion(arg_11_0)
-	local var_11_0 = arg_11_0.config.id
+function FairyLandPuzzle4:getQuestion()
+	local id = self.config.id
 
-	if var_11_0 == 4 then
+	if id == 4 then
 		return "1+2+3=1×2×3="
 	end
 
-	if var_11_0 == 5 then
+	if id == 5 then
 		return "1+2+3=1+2+3=6"
 	end
 
-	if var_11_0 == 6 then
+	if id == 6 then
 		return "111÷3="
 	end
 
-	if var_11_0 == 7 then
+	if id == 7 then
 		return "111÷3=37"
 	end
 
-	if var_11_0 == 8 then
+	if id == 8 then
 		return "2×3×5×7="
 	end
 
-	if var_11_0 == 9 then
+	if id == 9 then
 		return "2×3×5×7=210"
 	end
 
 	return ""
 end
 
-function var_0_0.finished(arg_12_0)
-	arg_12_0:stopCheckTips()
-	gohelper.setActive(arg_12_0.goInputNum, false)
+function FairyLandPuzzle4:finished()
+	self:stopCheckTips()
+	gohelper.setActive(self.goInputNum, false)
 	FairyLandController.instance:closeDialogView()
 
-	if arg_12_0:isEndPuzzle() then
-		arg_12_0:showZeroText()
+	if self:isEndPuzzle() then
+		self:showZeroText()
 	else
-		arg_12_0:playSuccessTalk()
+		self:playSuccessTalk()
 	end
 end
 
-function var_0_0.playSuccessTalk(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.playTipsTalk, arg_13_0)
+function FairyLandPuzzle4:playSuccessTalk()
+	TaskDispatcher.cancelTask(self.playTipsTalk, self)
 
-	if not FairyLandModel.instance:isPassPuzzle(arg_13_0.config.id) then
-		FairyLandRpc.instance:sendResolvePuzzleRequest(arg_13_0.config.id, arg_13_0.config.answer)
+	if not FairyLandModel.instance:isPassPuzzle(self.config.id) then
+		FairyLandRpc.instance:sendResolvePuzzleRequest(self.config.id, self.config.answer)
 	end
 
-	arg_13_0:playTalk(arg_13_0.config.successTalkId, arg_13_0.onSuccessTalkCallback, arg_13_0)
+	self:playTalk(self.config.successTalkId, self.onSuccessTalkCallback, self)
 end
 
-function var_0_0.onSuccessTalkCallback(arg_14_0)
-	if arg_14_0:isEndPuzzle() then
-		gohelper.setActive(arg_14_0._shapeGO, false)
-		arg_14_0:clearNumTween()
-		arg_14_0:openCompleteView()
-	end
-end
-
-function var_0_0.showNumberText(arg_15_0)
-	if arg_15_0.numComp then
-		arg_15_0.numComp:playShowTween()
+function FairyLandPuzzle4:onSuccessTalkCallback()
+	if self:isEndPuzzle() then
+		gohelper.setActive(self._shapeGO, false)
+		self:clearNumTween()
+		self:openCompleteView()
 	end
 end
 
-function var_0_0.showZeroText(arg_16_0)
-	if arg_16_0.numComp then
-		arg_16_0.numComp:playZeroTween(arg_16_0.playSuccessTalk, arg_16_0)
+function FairyLandPuzzle4:showNumberText()
+	if self.numComp then
+		self.numComp:playShowTween()
 	end
 end
 
-function var_0_0.clearNumTween(arg_17_0)
-	if arg_17_0.numComp then
-		arg_17_0.numComp:clear()
+function FairyLandPuzzle4:showZeroText()
+	if self.numComp then
+		self.numComp:playZeroTween(self.playSuccessTalk, self)
 	end
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0.inputNum:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(arg_18_0.layoutContent, arg_18_0)
-	gohelper.setActive(arg_18_0._shapeGO, false)
-
-	if arg_18_0.numComp then
-		arg_18_0.numComp:destory()
+function FairyLandPuzzle4:clearNumTween()
+	if self.numComp then
+		self.numComp:clear()
 	end
 end
 
-return var_0_0
+function FairyLandPuzzle4:onDestroyView()
+	self.inputNum:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(self.layoutContent, self)
+	gohelper.setActive(self._shapeGO, false)
+
+	if self.numComp then
+		self.numComp:destory()
+	end
+end
+
+return FairyLandPuzzle4

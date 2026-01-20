@@ -1,147 +1,149 @@
-﻿module("modules.logic.activity.controller.warmup.ActivityWarmUpController", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/warmup/ActivityWarmUpController.lua
 
-local var_0_0 = class("ActivityWarmUpController", BaseController)
+module("modules.logic.activity.controller.warmup.ActivityWarmUpController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ActivityWarmUpController = class("ActivityWarmUpController", BaseController)
+
+function ActivityWarmUpController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function ActivityWarmUpController:reInit()
 	return
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	logNormal("ActivityWarmUpController init actId = " .. tostring(arg_3_1))
+function ActivityWarmUpController:init(actId)
+	logNormal("ActivityWarmUpController init actId = " .. tostring(actId))
 
-	local var_3_0 = ActivityModel.instance:getActMO(arg_3_1)
+	local actMO = ActivityModel.instance:getActMO(actId)
 
-	ActivityWarmUpModel.instance:init(arg_3_1)
+	ActivityWarmUpModel.instance:init(actId)
 
-	if var_3_0 then
-		ActivityWarmUpModel.instance:setStartTime(var_3_0.startTime)
+	if actMO then
+		ActivityWarmUpModel.instance:setStartTime(actMO.startTime)
 	end
 
-	local var_3_1 = ActivityWarmUpModel.instance:getCurrentDay()
+	local curDay = ActivityWarmUpModel.instance:getCurrentDay()
 
-	arg_3_0:switchTab(var_3_1 or 1)
+	self:switchTab(curDay or 1)
 end
 
-function var_0_0.onReceiveInfos(arg_4_0, arg_4_1, arg_4_2)
-	if ActivityWarmUpModel.instance:getActId() == arg_4_1 then
-		ActivityWarmUpModel.instance:setServerOrderInfos(arg_4_2)
-		arg_4_0:dispatchEvent(ActivityWarmUpEvent.InfoReceived)
-		arg_4_0:dispatchEvent(ActivityWarmUpEvent.OnInfosReply)
-	end
-end
-
-function var_0_0.onUpdateSingleOrder(arg_5_0, arg_5_1, arg_5_2)
-	if ActivityWarmUpModel.instance:getActId() == arg_5_1 then
-		ActivityWarmUpModel.instance:updateSingleOrder(arg_5_2)
-		arg_5_0:dispatchEvent(ActivityWarmUpEvent.InfoReceived)
+function ActivityWarmUpController:onReceiveInfos(actId, orderInfos)
+	if ActivityWarmUpModel.instance:getActId() == actId then
+		ActivityWarmUpModel.instance:setServerOrderInfos(orderInfos)
+		self:dispatchEvent(ActivityWarmUpEvent.InfoReceived)
+		self:dispatchEvent(ActivityWarmUpEvent.OnInfosReply)
 	end
 end
 
-function var_0_0.onOrderPush(arg_6_0, arg_6_1, arg_6_2)
-	if ActivityWarmUpModel.instance:getActId() == arg_6_1 then
-		ActivityWarmUpModel.instance:updateSingleOrder(arg_6_2)
-		arg_6_0:dispatchEvent(ActivityWarmUpEvent.InfoReceived)
-	end
-
-	local var_6_0 = Activity106Config.instance:getActivityWarmUpOrderCo(arg_6_1, arg_6_2.orderId)
-
-	if var_6_0 and arg_6_2.process >= var_6_0.maxProgress then
-		GameFacade.showToast(ToastEnum.WarmUpOrderPush, var_6_0.name, string.format("%s/%s", arg_6_2.process, var_6_0.maxProgress))
+function ActivityWarmUpController:onUpdateSingleOrder(actId, orderInfo)
+	if ActivityWarmUpModel.instance:getActId() == actId then
+		ActivityWarmUpModel.instance:updateSingleOrder(orderInfo)
+		self:dispatchEvent(ActivityWarmUpEvent.InfoReceived)
 	end
 end
 
-function var_0_0.focusOrderGame(arg_7_0, arg_7_1)
+function ActivityWarmUpController:onOrderPush(actId, orderInfo)
+	if ActivityWarmUpModel.instance:getActId() == actId then
+		ActivityWarmUpModel.instance:updateSingleOrder(orderInfo)
+		self:dispatchEvent(ActivityWarmUpEvent.InfoReceived)
+	end
+
+	local cfg = Activity106Config.instance:getActivityWarmUpOrderCo(actId, orderInfo.orderId)
+
+	if cfg and orderInfo.process >= cfg.maxProgress then
+		GameFacade.showToast(ToastEnum.WarmUpOrderPush, cfg.name, string.format("%s/%s", orderInfo.process, cfg.maxProgress))
+	end
+end
+
+function ActivityWarmUpController:focusOrderGame(orderId)
 	logNormal("focusOrderGame")
 
-	arg_7_0._focusActId = ActivityWarmUpModel.instance:getActId()
-	arg_7_0._focusOrderId = arg_7_1
+	self._focusActId = ActivityWarmUpModel.instance:getActId()
+	self._focusOrderId = orderId
 
-	ActivityWarmUpGameController.instance:registerCallback(ActivityWarmUpEvent.NotifyGameClear, arg_7_0.finishOrderGame, arg_7_0)
-	ActivityWarmUpGameController.instance:registerCallback(ActivityWarmUpEvent.NotifyGameCancel, arg_7_0.cancelOrderGame, arg_7_0)
+	ActivityWarmUpGameController.instance:registerCallback(ActivityWarmUpEvent.NotifyGameClear, self.finishOrderGame, self)
+	ActivityWarmUpGameController.instance:registerCallback(ActivityWarmUpEvent.NotifyGameCancel, self.cancelOrderGame, self)
 end
 
-function var_0_0.cancelOrderGame(arg_8_0)
+function ActivityWarmUpController:cancelOrderGame()
 	logNormal("cancelOrderGame")
-	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameClear, arg_8_0.finishOrderGame, arg_8_0)
-	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameCancel, arg_8_0.cancelOrderGame, arg_8_0)
+	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameClear, self.finishOrderGame, self)
+	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameCancel, self.cancelOrderGame, self)
 
-	arg_8_0._focusActId = nil
-	arg_8_0._focusOrderId = nil
+	self._focusActId = nil
+	self._focusOrderId = nil
 
-	arg_8_0:dispatchEvent(ActivityWarmUpEvent.PlayOrderCancel)
+	self:dispatchEvent(ActivityWarmUpEvent.PlayOrderCancel)
 end
 
-function var_0_0.finishOrderGame(arg_9_0)
+function ActivityWarmUpController:finishOrderGame()
 	logNormal("finishOrderGame")
-	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameClear, arg_9_0.finishOrderGame, arg_9_0)
-	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameCancel, arg_9_0.cancelOrderGame, arg_9_0)
+	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameClear, self.finishOrderGame, self)
+	ActivityWarmUpGameController.instance:unregisterCallback(ActivityWarmUpEvent.NotifyGameCancel, self.cancelOrderGame, self)
 
-	if arg_9_0._focusActId ~= nil and arg_9_0._focusOrderId ~= nil then
-		Activity106Rpc.instance:sendGet106OrderBonusRequest(arg_9_0._focusActId, arg_9_0._focusOrderId, ActivityWarmUpGameController.instance:getGameCostTime(), arg_9_0.onFinishReceive, arg_9_0)
+	if self._focusActId ~= nil and self._focusOrderId ~= nil then
+		Activity106Rpc.instance:sendGet106OrderBonusRequest(self._focusActId, self._focusOrderId, ActivityWarmUpGameController.instance:getGameCostTime(), self.onFinishReceive, self)
 		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity106)
 	end
 end
 
-function var_0_0.onFinishReceive(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_2 ~= 0 then
+function ActivityWarmUpController:onFinishReceive(cmd, resultCode)
+	if resultCode ~= 0 then
 		return
 	end
 
-	if arg_10_0._focusActId ~= nil and arg_10_0._focusOrderId ~= nil then
-		arg_10_0:dispatchEvent(ActivityWarmUpEvent.PlayOrderFinish, {
-			actId = arg_10_0._focusActId,
-			orderId = arg_10_0._focusOrderId
+	if self._focusActId ~= nil and self._focusOrderId ~= nil then
+		self:dispatchEvent(ActivityWarmUpEvent.PlayOrderFinish, {
+			actId = self._focusActId,
+			orderId = self._focusOrderId
 		})
 	end
 end
 
-function var_0_0.getRedDotParam(arg_11_0)
-	local var_11_0 = ActivityWarmUpModel.instance:getActId()
-	local var_11_1 = ActivityConfig.instance:getActivityCo(var_11_0)
+function ActivityWarmUpController:getRedDotParam()
+	local actId = ActivityWarmUpModel.instance:getActId()
+	local actCfg = ActivityConfig.instance:getActivityCo(actId)
 
-	if var_11_1 then
-		local var_11_2 = ActivityConfig.instance:getActivityCenterCo(var_11_1.showCenter)
+	if actCfg then
+		local centerCfg = ActivityConfig.instance:getActivityCenterCo(actCfg.showCenter)
 
-		if var_11_2 then
-			return var_11_2.reddotid, var_11_0
+		if centerCfg then
+			return centerCfg.reddotid, actId
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.cantJumpDungeonGetName(arg_12_0, arg_12_1)
-	local var_12_0 = JumpConfig.instance:getJumpConfig(arg_12_1)
+function ActivityWarmUpController:cantJumpDungeonGetName(jumpId)
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
 
-	if not var_12_0 then
+	if not jumpConfig then
 		return false
 	end
 
-	local var_12_1 = var_12_0.param
+	local jumpParam = jumpConfig.param
 
-	if JumpController.instance:cantJump(var_12_1) then
-		local var_12_2 = string.split(var_12_1, "#")
-		local var_12_3 = tonumber(var_12_2[#var_12_2])
-		local var_12_4 = DungeonConfig.instance:getEpisodeCO(var_12_3)
-		local var_12_5 = DungeonController.getEpisodeName(var_12_4)
+	if JumpController.instance:cantJump(jumpParam) then
+		local jumps = string.split(jumpParam, "#")
+		local episodeId = tonumber(jumps[#jumps])
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+		local cantJumpName = DungeonController.getEpisodeName(episodeConfig)
 
-		return true, var_12_5
+		return true, cantJumpName
 	end
 
 	return false
 end
 
-function var_0_0.switchTab(arg_13_0, arg_13_1)
-	ActivityWarmUpModel.instance:selectDayTab(arg_13_1)
-	arg_13_0:dispatchEvent(ActivityWarmUpEvent.ViewSwitchTab)
+function ActivityWarmUpController:switchTab(index)
+	ActivityWarmUpModel.instance:selectDayTab(index)
+	self:dispatchEvent(ActivityWarmUpEvent.ViewSwitchTab)
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityWarmUpController.instance = ActivityWarmUpController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(ActivityWarmUpController.instance)
 
-return var_0_0
+return ActivityWarmUpController

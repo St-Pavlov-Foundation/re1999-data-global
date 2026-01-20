@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.config.Activity161Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/config/Activity161Config.lua
 
-local var_0_0 = class("Activity161Config", BaseConfig)
+module("modules.logic.versionactivity2_0.dungeon.config.Activity161Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._activity161GraffitiConfig = nil
-	arg_1_0._activity161RewardConfig = nil
-	arg_1_0._activity161DialogConfig = nil
-	arg_1_0._activity161ChessConfig = nil
-	arg_1_0.graffitiPicList = {}
+local Activity161Config = class("Activity161Config", BaseConfig)
+
+function Activity161Config:ctor()
+	self._activity161GraffitiConfig = nil
+	self._activity161RewardConfig = nil
+	self._activity161DialogConfig = nil
+	self._activity161ChessConfig = nil
+	self.graffitiPicList = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity161Config:reqConfigNames()
 	return {
 		"activity161_graffiti",
 		"activity161_reward",
@@ -20,139 +22,138 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity161_graffiti" then
-		arg_3_0._activity161GraffitiConfig = arg_3_2
-	elseif arg_3_1 == "activity161_reward" then
-		arg_3_0._activity161RewardConfig = arg_3_2
-	elseif arg_3_1 == "activity161_graffiti_dialog" then
-		arg_3_0._activity161DialogConfig = arg_3_2
-	elseif arg_3_1 == "activity161_graffiti_chess" then
-		arg_3_0._activity161ChessConfig = arg_3_2
+function Activity161Config:onConfigLoaded(configName, configTable)
+	if configName == "activity161_graffiti" then
+		self._activity161GraffitiConfig = configTable
+	elseif configName == "activity161_reward" then
+		self._activity161RewardConfig = configTable
+	elseif configName == "activity161_graffiti_dialog" then
+		self._activity161DialogConfig = configTable
+	elseif configName == "activity161_graffiti_chess" then
+		self._activity161ChessConfig = configTable
 	end
 end
 
-function var_0_0.getAllGraffitiCo(arg_4_0, arg_4_1)
-	return arg_4_0._activity161GraffitiConfig.configDict[arg_4_1]
+function Activity161Config:getAllGraffitiCo(activityId)
+	return self._activity161GraffitiConfig.configDict[activityId]
 end
 
-function var_0_0.getGraffitiCo(arg_5_0, arg_5_1, arg_5_2)
-	return arg_5_0._activity161GraffitiConfig.configDict[arg_5_1][arg_5_2]
+function Activity161Config:getGraffitiCo(activityId, elementId)
+	return self._activity161GraffitiConfig.configDict[activityId][elementId]
 end
 
-function var_0_0.getGraffitiCount(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getAllGraffitiCo(arg_6_1)
+function Activity161Config:getGraffitiCount(activityId)
+	local allCos = self:getAllGraffitiCo(activityId)
 
-	return GameUtil.getTabLen(var_6_0)
+	return GameUtil.getTabLen(allCos)
 end
 
-function var_0_0.getAllRewardCos(arg_7_0, arg_7_1)
-	local var_7_0 = {}
-	local var_7_1 = arg_7_0._activity161RewardConfig.configDict[arg_7_1]
+function Activity161Config:getAllRewardCos(activityId)
+	local allRewardCoList = {}
+	local allRewardCoDict = self._activity161RewardConfig.configDict[activityId]
 
-	for iter_7_0, iter_7_1 in pairs(var_7_1) do
-		table.insert(var_7_0, iter_7_1)
+	for _, rewardCo in pairs(allRewardCoDict) do
+		table.insert(allRewardCoList, rewardCo)
 	end
 
-	table.sort(var_7_0, var_0_0.sortReward)
+	table.sort(allRewardCoList, Activity161Config.sortReward)
 
-	return var_7_0
+	return allRewardCoList
 end
 
-function var_0_0.sortReward(arg_8_0, arg_8_1)
-	return arg_8_0.rewardId < arg_8_1.rewardId
+function Activity161Config.sortReward(a, b)
+	return a.rewardId < b.rewardId
 end
 
-function var_0_0.getRewardCo(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0._activity161RewardConfig.configDict[arg_9_1][arg_9_2]
+function Activity161Config:getRewardCo(activityId, finishNum)
+	return self._activity161RewardConfig.configDict[activityId][finishNum]
 end
 
-function var_0_0.getFinalReward(arg_10_0, arg_10_1)
-	local var_10_0 = tabletool.copy(arg_10_0:getAllRewardCos(arg_10_1))
-	local var_10_1 = var_10_0[#var_10_0]
-	local var_10_2 = GameUtil.splitString2(var_10_1.bonus, true)
-	local var_10_3 = table.remove(var_10_2, #var_10_2)
+function Activity161Config:getFinalReward(activityId)
+	local rewardCoList = tabletool.copy(self:getAllRewardCos(activityId))
+	local finalCo = rewardCoList[#rewardCoList]
+	local rewardList = GameUtil.splitString2(finalCo.bonus, true)
+	local finalReward = table.remove(rewardList, #rewardList)
 
-	return var_10_2, var_10_3
+	return rewardList, finalReward
 end
 
-function var_0_0.getUnlockCondition(arg_11_0, arg_11_1)
-	local var_11_0 = DungeonConfig.instance:getChapterMapElement(arg_11_1)
-	local var_11_1
-	local var_11_2
-	local var_11_3
+function Activity161Config:getUnlockCondition(elementId)
+	local elementCo = DungeonConfig.instance:getChapterMapElement(elementId)
+	local needFinishEpisode, preElement, cdFinishElement
 
-	if not string.nilorempty(var_11_0.condition) then
-		var_11_1 = arg_11_0:extractConditionValue(var_11_0.condition, "EpisodeFinish")
-		var_11_2 = arg_11_0:extractConditionValue(var_11_0.condition, "ChapterMapElement")
-		var_11_3 = arg_11_0:extractConditionValue(var_11_0.condition, "Act161CdFinish")
+	if not string.nilorempty(elementCo.condition) then
+		needFinishEpisode = self:extractConditionValue(elementCo.condition, "EpisodeFinish")
+		preElement = self:extractConditionValue(elementCo.condition, "ChapterMapElement")
+		cdFinishElement = self:extractConditionValue(elementCo.condition, "Act161CdFinish")
 	end
 
-	return var_11_1, var_11_2, var_11_3
+	return needFinishEpisode, preElement, cdFinishElement
 end
 
-function var_0_0.extractConditionValue(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_2 .. "=(%d+)"
+function Activity161Config:extractConditionValue(str, key)
+	local pattern = key .. "=(%d+)"
+	local valueMatch = string.match(str, pattern)
 
-	return string.match(arg_12_1, var_12_0) or nil
+	return valueMatch or nil
 end
 
-function var_0_0.getAllDialogMapCoByGraoupId(arg_13_0, arg_13_1)
-	return arg_13_0._activity161DialogConfig.configDict[arg_13_1]
+function Activity161Config:getAllDialogMapCoByGraoupId(groupId)
+	return self._activity161DialogConfig.configDict[groupId]
 end
 
-function var_0_0.getDialogConfig(arg_14_0, arg_14_1, arg_14_2)
-	return arg_14_0._activity161DialogConfig.configDict[arg_14_1][arg_14_2]
+function Activity161Config:getDialogConfig(groupId, stepId)
+	return self._activity161DialogConfig.configDict[groupId][stepId]
 end
 
-function var_0_0.getChessConfig(arg_15_0, arg_15_1)
-	return arg_15_0._activity161ChessConfig.configDict[arg_15_1]
+function Activity161Config:getChessConfig(chessId)
+	return self._activity161ChessConfig.configDict[chessId]
 end
 
-function var_0_0.getGraffitiRelevantElementMap(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getAllGraffitiCo(arg_16_1)
-	local var_16_1 = {}
-	local var_16_2 = {}
+function Activity161Config:getGraffitiRelevantElementMap(activityId)
+	local graffitiMap = self:getAllGraffitiCo(activityId)
+	local relevantElementMap = {}
+	local mainElementMap = {}
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		local var_16_3 = {}
+	for index, graffitiCo in pairs(graffitiMap) do
+		local relevantElementList = {}
 
-		if not string.nilorempty(iter_16_1.subElementIds) then
-			local var_16_4 = string.splitToNumber(iter_16_1.subElementIds, "#")
+		if not string.nilorempty(graffitiCo.subElementIds) then
+			relevantElementList = string.splitToNumber(graffitiCo.subElementIds, "#")
 
-			for iter_16_2, iter_16_3 in pairs(var_16_4) do
-				var_16_1[iter_16_3] = iter_16_1
+			for _, elementId in pairs(relevantElementList) do
+				relevantElementMap[elementId] = graffitiCo
 			end
 		end
 
-		if not string.nilorempty(iter_16_1.mainElementId) then
-			var_16_2[iter_16_1.mainElementId] = iter_16_1
+		if not string.nilorempty(graffitiCo.mainElementId) then
+			mainElementMap[graffitiCo.mainElementId] = graffitiCo
 		end
 	end
 
-	return var_16_1, var_16_2
+	return relevantElementMap, mainElementMap
 end
 
-function var_0_0.getGraffitiRelevantElement(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getGraffitiCo(arg_17_1, arg_17_2)
-	local var_17_1 = {}
+function Activity161Config:getGraffitiRelevantElement(activityId, elementId)
+	local graffitiCo = self:getGraffitiCo(activityId, elementId)
+	local relevantElementList = {}
 
-	if not string.nilorempty(var_17_0.subElementIds) then
-		var_17_1 = string.splitToNumber(var_17_0.subElementIds, "#")
+	if not string.nilorempty(graffitiCo.subElementIds) then
+		relevantElementList = string.splitToNumber(graffitiCo.subElementIds, "#")
 	end
 
-	return var_17_1
+	return relevantElementList
 end
 
-function var_0_0.isPreMainElementFinish(arg_18_0, arg_18_1)
-	local var_18_0 = string.splitToNumber(arg_18_1.preMainElementIds, "#") or {}
+function Activity161Config:isPreMainElementFinish(graffitiConfig)
+	local preMainElementIds = string.splitToNumber(graffitiConfig.preMainElementIds, "#") or {}
 
-	if #var_18_0 == 0 then
+	if #preMainElementIds == 0 then
 		return true
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		if not DungeonMapModel.instance:elementIsFinished(iter_18_1) then
+	for index, elementId in ipairs(preMainElementIds) do
+		if not DungeonMapModel.instance:elementIsFinished(elementId) then
 			return false
 		end
 	end
@@ -160,34 +161,34 @@ function var_0_0.isPreMainElementFinish(arg_18_0, arg_18_1)
 	return true
 end
 
-function var_0_0.initGraffitiPicMap(arg_19_0, arg_19_1)
-	if #arg_19_0.graffitiPicList == 0 then
-		local var_19_0 = arg_19_0:getAllGraffitiCo(arg_19_1)
+function Activity161Config:initGraffitiPicMap(activityId)
+	if #self.graffitiPicList == 0 then
+		local allGraffitiCos = self:getAllGraffitiCo(activityId)
 
-		for iter_19_0, iter_19_1 in pairs(var_19_0) do
-			table.insert(arg_19_0.graffitiPicList, iter_19_1)
+		for elementId, graffitiCo in pairs(allGraffitiCos) do
+			table.insert(self.graffitiPicList, graffitiCo)
 		end
 
-		table.sort(arg_19_0.graffitiPicList, arg_19_0.sortGraffitiPic)
+		table.sort(self.graffitiPicList, self.sortGraffitiPic)
 	end
 end
 
-function var_0_0.sortGraffitiPic(arg_20_0, arg_20_1)
-	return arg_20_0.sort < arg_20_1.sort
+function Activity161Config.sortGraffitiPic(configA, configB)
+	return configA.sort < configB.sort
 end
 
-function var_0_0.checkIsGraffitiMainElement(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0:getAllGraffitiCo(arg_21_1)
+function Activity161Config:checkIsGraffitiMainElement(activityId, elementId)
+	local allGraffitiCos = self:getAllGraffitiCo(activityId)
 
-	for iter_21_0, iter_21_1 in pairs(var_21_0) do
-		if iter_21_1.mainElementId == arg_21_2 then
-			return true, iter_21_1
+	for _, graffitiCo in pairs(allGraffitiCos) do
+		if graffitiCo.mainElementId == elementId then
+			return true, graffitiCo
 		end
 	end
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+Activity161Config.instance = Activity161Config.New()
 
-return var_0_0
+return Activity161Config

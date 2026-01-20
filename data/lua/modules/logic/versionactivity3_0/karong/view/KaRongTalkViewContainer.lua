@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.KaRongTalkViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/KaRongTalkViewContainer.lua
 
-local var_0_0 = class("KaRongTalkViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.karong.view.KaRongTalkViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local KaRongTalkViewContainer = class("KaRongTalkViewContainer", BaseViewContainer)
+
+function KaRongTalkViewContainer:buildViews()
 	return {
 		KaRongTalkView.New()
 	}
 end
 
-return var_0_0
+return KaRongTalkViewContainer

@@ -1,226 +1,232 @@
-﻿module("modules.logic.tower.view.fight.TowerDeepTeamSaveView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerDeepTeamSaveView.lua
 
-local var_0_0 = class("TowerDeepTeamSaveView", BaseView)
+module("modules.logic.tower.view.fight.TowerDeepTeamSaveView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncloseFullView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeFullView")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_title")
-	arg_1_0._scrolllist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_list")
-	arg_1_0._goteamContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_list/Viewport/#go_teamContent")
-	arg_1_0._goteamitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_list/Viewport/#go_teamContent/#go_teamitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local TowerDeepTeamSaveView = class("TowerDeepTeamSaveView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerDeepTeamSaveView:onInitView()
+	self._btncloseFullView = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeFullView")
+	self._txttitle = gohelper.findChildText(self.viewGO, "title/#txt_title")
+	self._scrolllist = gohelper.findChildScrollRect(self.viewGO, "#scroll_list")
+	self._goteamContent = gohelper.findChild(self.viewGO, "#scroll_list/Viewport/#go_teamContent")
+	self._goteamitem = gohelper.findChild(self.viewGO, "#scroll_list/Viewport/#go_teamContent/#go_teamitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseFullView:AddClickListener(arg_2_0._btncloseFullViewOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnSaveTeamSuccess, arg_2_0.onSaveTeamSuccess, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, arg_2_0.onLoadTeamSuccess, arg_2_0)
+function TowerDeepTeamSaveView:addEvents()
+	self._btncloseFullView:AddClickListener(self._btncloseFullViewOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnSaveTeamSuccess, self.onSaveTeamSuccess, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, self.onLoadTeamSuccess, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseFullView:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnSaveTeamSuccess, arg_3_0.onSaveTeamSuccess, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, arg_3_0.onLoadTeamSuccess, arg_3_0)
+function TowerDeepTeamSaveView:removeEvents()
+	self._btncloseFullView:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(TowerController.instance, TowerEvent.OnSaveTeamSuccess, self.onSaveTeamSuccess, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnLoadTeamSuccess, self.onLoadTeamSuccess, self)
 end
 
-function var_0_0.onTeamItemCoverClick(arg_4_0, arg_4_1)
-	if not arg_4_1.saveGroupMo then
+function TowerDeepTeamSaveView:onTeamItemCoverClick(teamItem)
+	if not teamItem.saveGroupMo then
 		return
 	end
 
 	GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerDeepCoverCurSaveData, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function()
-		TowerDeepRpc.instance:sendTowerDeepSaveArchiveRequest(arg_4_1.saveGroupMo.archiveId)
-	end, nil, nil, arg_4_0)
+		TowerDeepRpc.instance:sendTowerDeepSaveArchiveRequest(teamItem.saveGroupMo.archiveId)
+	end, nil, nil, self)
 end
 
-function var_0_0.onTeamItembtnLoadClick(arg_6_0, arg_6_1)
-	if not arg_6_1.saveGroupMo then
+function TowerDeepTeamSaveView:onTeamItembtnLoadClick(teamItem)
+	if not teamItem.saveGroupMo then
 		return
 	end
 
 	GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerDeepLoadCurSaveData, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function()
-		TowerDeepRpc.instance:sendTowerDeepLoadArchiveRequest(arg_6_1.saveGroupMo.archiveId)
+		TowerDeepRpc.instance:sendTowerDeepLoadArchiveRequest(teamItem.saveGroupMo.archiveId)
 	end)
 end
 
-function var_0_0.onTeamItembtnSaveClick(arg_8_0, arg_8_1)
-	TowerDeepRpc.instance:sendTowerDeepSaveArchiveRequest(arg_8_1.index)
+function TowerDeepTeamSaveView:onTeamItembtnSaveClick(teamItem)
+	TowerDeepRpc.instance:sendTowerDeepSaveArchiveRequest(teamItem.index)
 end
 
-function var_0_0._btncloseFullViewOnClick(arg_9_0)
-	arg_9_0:closeThis()
+function TowerDeepTeamSaveView:_btncloseFullViewOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_10_0)
-	arg_10_0:closeThis()
+function TowerDeepTeamSaveView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0.teamItemMap = arg_11_0:getUserDataTb_()
+function TowerDeepTeamSaveView:_editableInitView()
+	self.teamItemMap = self:getUserDataTb_()
 
-	gohelper.setActive(arg_11_0._goteamitem, false)
+	gohelper.setActive(self._goteamitem, false)
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function TowerDeepTeamSaveView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0.curOperateType = arg_13_0.viewParam.teamOperateType
-	arg_13_0.teamSaveCount = TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.HeroGroupSaveCount)
+function TowerDeepTeamSaveView:onOpen()
+	self.curOperateType = self.viewParam.teamOperateType
+	self.teamSaveCount = TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.HeroGroupSaveCount)
 
-	arg_13_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0._txttitle.text = arg_14_0.curOperateType == TowerDeepEnum.TeamOperateType.Save and luaLang("TowerDeep_teamSave_save") or luaLang("TowerDeep_teamSave_load")
+function TowerDeepTeamSaveView:refreshUI()
+	self._txttitle.text = self.curOperateType == TowerDeepEnum.TeamOperateType.Save and luaLang("TowerDeep_teamSave_save") or luaLang("TowerDeep_teamSave_load")
 
-	arg_14_0:createAndRefreshTeamsItem()
+	self:createAndRefreshTeamsItem()
 end
 
-function var_0_0.createAndRefreshTeamsItem(arg_15_0)
-	arg_15_0.saveDeepGroupMoMap = TowerPermanentDeepModel.instance:getSaveDeepGroupMoMap()
+function TowerDeepTeamSaveView:createAndRefreshTeamsItem()
+	self.saveDeepGroupMoMap = TowerPermanentDeepModel.instance:getSaveDeepGroupMoMap()
 
-	for iter_15_0 = 1, arg_15_0.teamSaveCount do
-		local var_15_0 = arg_15_0.teamItemMap[iter_15_0]
+	for index = 1, self.teamSaveCount do
+		local teamItem = self.teamItemMap[index]
 
-		if not var_15_0 then
-			var_15_0 = {
-				index = iter_15_0,
-				go = gohelper.clone(arg_15_0._goteamitem, arg_15_0._goteamContent, "teamItem" .. iter_15_0)
+		if not teamItem then
+			teamItem = {
+				index = index,
+				go = gohelper.clone(self._goteamitem, self._goteamContent, "teamItem" .. index)
 			}
-			var_15_0.goTeamInfo = gohelper.findChild(var_15_0.go, "go_teamInfo")
-			var_15_0.imageDeepBg = gohelper.findChildImage(var_15_0.goTeamInfo, "depth/image_deepBg")
-			var_15_0.txtDepth = gohelper.findChildText(var_15_0.goTeamInfo, "depth/txt_depth")
-			var_15_0.txtRound = gohelper.findChildText(var_15_0.goTeamInfo, "round/txt_round")
-			var_15_0.txtSaveTime = gohelper.findChildText(var_15_0.goTeamInfo, "time/txt_saveTime")
-			var_15_0.goHeroContent = gohelper.findChild(var_15_0.goTeamInfo, "go_heroContent")
-			var_15_0.goHeroItem = gohelper.findChild(var_15_0.goTeamInfo, "go_heroContent/go_heroItem")
-			var_15_0.btnCover = gohelper.findChildButtonWithAudio(var_15_0.goTeamInfo, "btn_cover")
+			teamItem.goTeamInfo = gohelper.findChild(teamItem.go, "go_teamInfo")
+			teamItem.imageDeepBg = gohelper.findChildImage(teamItem.goTeamInfo, "depth/image_deepBg")
+			teamItem.txtDepth = gohelper.findChildText(teamItem.goTeamInfo, "depth/txt_depth")
+			teamItem.txtRound = gohelper.findChildText(teamItem.goTeamInfo, "round/txt_round")
+			teamItem.txtSaveTime = gohelper.findChildText(teamItem.goTeamInfo, "time/txt_saveTime")
+			teamItem.goHeroContent = gohelper.findChild(teamItem.goTeamInfo, "go_heroContent")
+			teamItem.goHeroItem = gohelper.findChild(teamItem.goTeamInfo, "go_heroContent/go_heroItem")
+			teamItem.btnCover = gohelper.findChildButtonWithAudio(teamItem.goTeamInfo, "btn_cover")
 
-			var_15_0.btnCover:AddClickListener(arg_15_0.onTeamItemCoverClick, arg_15_0, var_15_0)
+			teamItem.btnCover:AddClickListener(self.onTeamItemCoverClick, self, teamItem)
 
-			var_15_0.btnLoad = gohelper.findChildButtonWithAudio(var_15_0.goTeamInfo, "btn_load")
+			teamItem.btnLoad = gohelper.findChildButtonWithAudio(teamItem.goTeamInfo, "btn_load")
 
-			var_15_0.btnLoad:AddClickListener(arg_15_0.onTeamItembtnLoadClick, arg_15_0, var_15_0)
+			teamItem.btnLoad:AddClickListener(self.onTeamItembtnLoadClick, self, teamItem)
 
-			var_15_0.goEmptySave = gohelper.findChild(var_15_0.go, "go_emptySave")
-			var_15_0.btnEmptySave = gohelper.findChildButtonWithAudio(var_15_0.goEmptySave, "btn_save")
+			teamItem.goEmptySave = gohelper.findChild(teamItem.go, "go_emptySave")
+			teamItem.btnEmptySave = gohelper.findChildButtonWithAudio(teamItem.goEmptySave, "btn_save")
 
-			var_15_0.btnEmptySave:AddClickListener(arg_15_0.onTeamItembtnSaveClick, arg_15_0, var_15_0)
+			teamItem.btnEmptySave:AddClickListener(self.onTeamItembtnSaveClick, self, teamItem)
 
-			var_15_0.goEmptyLoad = gohelper.findChild(var_15_0.go, "go_emptyLoad")
-			var_15_0.gorefreshAnim = gohelper.findChild(var_15_0.go, "ani_refresh")
-			var_15_0.heroItemList = {}
-			arg_15_0.teamItemMap[iter_15_0] = var_15_0
+			teamItem.goEmptyLoad = gohelper.findChild(teamItem.go, "go_emptyLoad")
+			teamItem.gorefreshAnim = gohelper.findChild(teamItem.go, "ani_refresh")
+			teamItem.heroItemList = {}
+			self.teamItemMap[index] = teamItem
 		end
 
-		gohelper.setActive(var_15_0.gorefreshAnim, false)
-		gohelper.setActive(var_15_0.go, true)
+		gohelper.setActive(teamItem.gorefreshAnim, false)
+		gohelper.setActive(teamItem.go, true)
 
-		var_15_0.saveGroupMo = arg_15_0.saveDeepGroupMoMap[var_15_0.index]
+		teamItem.saveGroupMo = self.saveDeepGroupMoMap[teamItem.index]
 
-		gohelper.setActive(var_15_0.goTeamInfo, var_15_0.saveGroupMo)
-		gohelper.setActive(var_15_0.goEmptyLoad, not var_15_0.saveGroupMo and arg_15_0.curOperateType == TowerDeepEnum.TeamOperateType.Load)
-		gohelper.setActive(var_15_0.goEmptySave, not var_15_0.saveGroupMo and arg_15_0.curOperateType == TowerDeepEnum.TeamOperateType.Save)
-		gohelper.setActive(var_15_0.btnCover.gameObject, var_15_0.saveGroupMo and arg_15_0.curOperateType == TowerDeepEnum.TeamOperateType.Save)
-		gohelper.setActive(var_15_0.btnLoad.gameObject, var_15_0.saveGroupMo and arg_15_0.curOperateType == TowerDeepEnum.TeamOperateType.Load)
+		gohelper.setActive(teamItem.goTeamInfo, teamItem.saveGroupMo)
+		gohelper.setActive(teamItem.goEmptyLoad, not teamItem.saveGroupMo and self.curOperateType == TowerDeepEnum.TeamOperateType.Load)
+		gohelper.setActive(teamItem.goEmptySave, not teamItem.saveGroupMo and self.curOperateType == TowerDeepEnum.TeamOperateType.Save)
+		gohelper.setActive(teamItem.btnCover.gameObject, teamItem.saveGroupMo and self.curOperateType == TowerDeepEnum.TeamOperateType.Save)
+		gohelper.setActive(teamItem.btnLoad.gameObject, teamItem.saveGroupMo and self.curOperateType == TowerDeepEnum.TeamOperateType.Load)
 
-		if var_15_0.saveGroupMo then
-			local var_15_1 = TowerPermanentDeepModel.instance:getDeepRare(var_15_0.saveGroupMo.curDeep)
+		if teamItem.saveGroupMo then
+			local deepRare = TowerPermanentDeepModel.instance:getDeepRare(teamItem.saveGroupMo.curDeep)
 
-			UISpriteSetMgr.instance:setFightTowerSprite(var_15_0.imageDeepBg, "fight_tower_numbg_" .. var_15_1)
+			UISpriteSetMgr.instance:setFightTowerSprite(teamItem.imageDeepBg, "fight_tower_numbg_" .. deepRare)
 
-			var_15_0.txtDepth.text = string.format("%sM", var_15_0.saveGroupMo.curDeep)
+			teamItem.txtDepth.text = string.format("%sM", teamItem.saveGroupMo.curDeep)
 
-			local var_15_2 = var_15_0.saveGroupMo:getTeamDataList()
+			local teamDataList = teamItem.saveGroupMo:getTeamDataList()
 
-			var_15_0.txtRound.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("TowerDeep_teamSave_round"), GameUtil.getNum2Chinese(#var_15_2))
-			var_15_0.txtSaveTime.text = os.date("%Y.%m.%d %H:%M:%S", var_15_0.saveGroupMo.createTime)
+			teamItem.txtRound.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("TowerDeep_teamSave_round"), GameUtil.getNum2Chinese(#teamDataList))
+			teamItem.txtSaveTime.text = os.date("%Y.%m.%d %H:%M:%S", teamItem.saveGroupMo.createTime)
 
-			arg_15_0:createHeroItem(var_15_0)
+			self:createHeroItem(teamItem)
 		end
 	end
 end
 
-function var_0_0.createHeroItem(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.saveGroupMo:getAllHeroData()
+function TowerDeepTeamSaveView:createHeroItem(teamItem)
+	local allHeroDataList = teamItem.saveGroupMo:getAllHeroData()
 
-	gohelper.setActive(arg_16_1.goHeroItem, false)
+	gohelper.setActive(teamItem.goHeroItem, false)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_1 = arg_16_1.heroItemList[iter_16_0]
+	for index, heroData in ipairs(allHeroDataList) do
+		local heroItem = teamItem.heroItemList[index]
 
-		if not var_16_1 then
-			var_16_1 = {
-				go = gohelper.clone(arg_16_1.goHeroItem, arg_16_1.goHeroContent, "heroItem" .. iter_16_0)
+		if not heroItem then
+			heroItem = {
+				go = gohelper.clone(teamItem.goHeroItem, teamItem.goHeroContent, "heroItem" .. index)
 			}
-			var_16_1.simageRole = gohelper.findChildSingleImage(var_16_1.go, "simage_role")
-			arg_16_1.heroItemList[iter_16_0] = var_16_1
+			heroItem.simageRole = gohelper.findChildSingleImage(heroItem.go, "simage_role")
+			teamItem.heroItemList[index] = heroItem
 		end
 
-		gohelper.setActive(var_16_1.go, true)
+		gohelper.setActive(heroItem.go, true)
 
-		local var_16_2 = 0
+		local skinId = 0
 
-		if iter_16_1.trialId and iter_16_1.trialId > 0 then
-			var_16_2 = lua_hero_trial.configDict[iter_16_1.trialId][0].skin
-		elseif iter_16_1.heroId and iter_16_1.heroId > 0 then
-			var_16_2 = HeroConfig.instance:getHeroCO(iter_16_1.heroId).skinId
+		if heroData.trialId and heroData.trialId > 0 then
+			local trialConfig = lua_hero_trial.configDict[heroData.trialId][0]
+
+			skinId = trialConfig.skin
+		elseif heroData.heroId and heroData.heroId > 0 then
+			local heroConfig = HeroConfig.instance:getHeroCO(heroData.heroId)
+
+			skinId = heroConfig.skinId
 		end
 
-		local var_16_3 = SkinConfig.instance:getSkinCo(var_16_2)
+		local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
-		var_16_1.simageRole:LoadImage(ResUrl.getHeadIconSmall(var_16_3.retangleIcon))
+		heroItem.simageRole:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
 	end
 
-	for iter_16_2 = #var_16_0 + 1, #arg_16_1.heroItemList do
-		local var_16_4 = arg_16_1.heroItemList[iter_16_2]
+	for index = #allHeroDataList + 1, #teamItem.heroItemList do
+		local heroItem = teamItem.heroItemList[index]
 
-		if var_16_4 then
-			gohelper.setActive(var_16_4.go, false)
+		if heroItem then
+			gohelper.setActive(heroItem.go, false)
 		end
-	end
-end
-
-function var_0_0.onSaveTeamSuccess(arg_17_0, arg_17_1)
-	arg_17_0:createAndRefreshTeamsItem()
-
-	local var_17_0 = arg_17_1.archiveNo
-	local var_17_1 = arg_17_0.teamItemMap[var_17_0]
-
-	if var_17_1 then
-		gohelper.setActive(var_17_1.gorefreshAnim, false)
-		gohelper.setActive(var_17_1.gorefreshAnim, true)
 	end
 end
 
-function var_0_0.onLoadTeamSuccess(arg_18_0, arg_18_1)
-	arg_18_0:createAndRefreshTeamsItem()
+function TowerDeepTeamSaveView:onSaveTeamSuccess(archiveInfo)
+	self:createAndRefreshTeamsItem()
+
+	local index = archiveInfo.archiveNo
+	local teamItem = self.teamItemMap[index]
+
+	if teamItem then
+		gohelper.setActive(teamItem.gorefreshAnim, false)
+		gohelper.setActive(teamItem.gorefreshAnim, true)
+	end
+end
+
+function TowerDeepTeamSaveView:onLoadTeamSuccess(archiveInfo)
+	self:createAndRefreshTeamsItem()
 	GameFacade.showToast(ToastEnum.TowerDeepLoadDataSuccess)
-	arg_18_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_19_0)
+function TowerDeepTeamSaveView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	for iter_20_0, iter_20_1 in pairs(arg_20_0.teamItemMap) do
-		for iter_20_2, iter_20_3 in ipairs(iter_20_1.heroItemList) do
-			iter_20_3.simageRole:UnLoadImage()
+function TowerDeepTeamSaveView:onDestroyView()
+	for _, teamItem in pairs(self.teamItemMap) do
+		for _, heroItem in ipairs(teamItem.heroItemList) do
+			heroItem.simageRole:UnLoadImage()
 		end
 
-		iter_20_1.btnCover:RemoveClickListener()
-		iter_20_1.btnLoad:RemoveClickListener()
-		iter_20_1.btnEmptySave:RemoveClickListener()
+		teamItem.btnCover:RemoveClickListener()
+		teamItem.btnLoad:RemoveClickListener()
+		teamItem.btnEmptySave:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return TowerDeepTeamSaveView

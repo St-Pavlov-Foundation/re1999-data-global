@@ -1,105 +1,109 @@
-﻿module("modules.logic.achievement.view.AchievementMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementMainViewContainer.lua
 
-local var_0_0 = class("AchievementMainViewContainer", BaseViewContainer)
+module("modules.logic.achievement.view.AchievementMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._scrollListView = LuaMixScrollView.New(AchievementMainListModel.instance, arg_1_0:getListContentParam())
+local AchievementMainViewContainer = class("AchievementMainViewContainer", BaseViewContainer)
 
-	arg_1_0._scrollListView:setDynamicGetItem(arg_1_0._dynamicGetItem, arg_1_0)
+function AchievementMainViewContainer:buildViews()
+	self._scrollListView = LuaMixScrollView.New(AchievementMainListModel.instance, self:getListContentParam())
 
-	arg_1_0._scrollNamePlateView = LuaMixScrollView.New(AchievementMainListModel.instance, arg_1_0:getNamePlateParam())
-	arg_1_0._scrollTileView = LuaMixScrollView.New(AchievementMainTileModel.instance, arg_1_0:getMixContentParam())
-	arg_1_0._poolView = AchievementMainViewPool.New(AchievementEnum.MainIconPath)
+	self._scrollListView:setDynamicGetItem(self._dynamicGetItem, self)
+
+	self._scrollNamePlateView = LuaMixScrollView.New(AchievementMainListModel.instance, self:getNamePlateParam())
+	self._scrollTileView = LuaMixScrollView.New(AchievementMainTileModel.instance, self:getMixContentParam())
+	self._poolView = AchievementMainViewPool.New(AchievementEnum.MainIconPath)
 
 	return {
 		AchievementMainView.New(),
 		TabViewGroup.New(1, "#go_btns"),
-		arg_1_0._scrollTileView,
-		arg_1_0._scrollListView,
-		arg_1_0._scrollNamePlateView,
-		arg_1_0._poolView,
+		self._scrollTileView,
+		self._scrollListView,
+		self._scrollNamePlateView,
+		self._poolView,
 		AchievementMainViewFocus.New(),
 		AchievementMainTopView.New(),
 		AchievementMainViewFold.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function AchievementMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._dynamicGetItem(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function AchievementMainViewContainer:_dynamicGetItem(mo)
+	if not mo then
 		return
 	end
 
-	if AchievementMainCommonModel.instance:checkIsNamePlate() then
+	local isNamePlate = AchievementMainCommonModel.instance:checkIsNamePlate()
+
+	if isNamePlate then
 		return "nameplate", AchievementNamePlateListItem, "#go_container/#scroll_list/Viewport/content/#go_listitem"
 	end
 end
 
-function var_0_0.getMixContentParam(arg_4_0)
-	local var_4_0 = MixScrollParam.New()
+function AchievementMainViewContainer:getMixContentParam()
+	local scrollParam = MixScrollParam.New()
 
-	var_4_0.scrollGOPath = "#go_container/#scroll_content"
-	var_4_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_4_0.prefabUrl = arg_4_0._viewSetting.otherRes[1]
-	var_4_0.cellClass = AchievementMainItem
-	var_4_0.scrollDir = ScrollEnum.ScrollDirV
-	var_4_0.startSpace = 0
-	var_4_0.endSpace = 50
+	scrollParam.scrollGOPath = "#go_container/#scroll_content"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = AchievementMainItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 50
 
-	return var_4_0
+	return scrollParam
 end
 
-function var_0_0.getListContentParam(arg_5_0)
-	local var_5_0 = MixScrollParam.New()
+function AchievementMainViewContainer:getListContentParam()
+	local scrollParam = MixScrollParam.New()
 
-	var_5_0.scrollGOPath = "#go_container/#scroll_list"
-	var_5_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_5_0.prefabUrl = "#go_container/#scroll_list/Viewport/content/#go_listitem"
-	var_5_0.cellClass = AchievementMainListItem
-	var_5_0.scrollDir = ScrollEnum.ScrollDirV
-	var_5_0.startSpace = 0
-	var_5_0.endSpace = 50
+	scrollParam.scrollGOPath = "#go_container/#scroll_list"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_container/#scroll_list/Viewport/content/#go_listitem"
+	scrollParam.cellClass = AchievementMainListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 50
 
-	return var_5_0
+	return scrollParam
 end
 
-function var_0_0.getNamePlateParam(arg_6_0)
-	local var_6_0 = MixScrollParam.New()
+function AchievementMainViewContainer:getNamePlateParam()
+	local scrollParam = MixScrollParam.New()
 
-	var_6_0.scrollGOPath = "#go_container/#scroll_content_misihai"
-	var_6_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_6_0.prefabUrl = arg_6_0._viewSetting.otherRes[3]
-	var_6_0.cellClass = AchievementMainNamePlateItem
-	var_6_0.scrollDir = ScrollEnum.ScrollDirV
-	var_6_0.startSpace = 0
-	var_6_0.endSpace = 50
+	scrollParam.scrollGOPath = "#go_container/#scroll_content_misihai"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[3]
+	scrollParam.cellClass = AchievementMainNamePlateItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 50
 
-	return var_6_0
+	return scrollParam
 end
 
-function var_0_0.getScrollView(arg_7_0, arg_7_1)
-	if arg_7_1 == AchievementEnum.ViewType.Tile then
-		return arg_7_0._scrollTileView
+function AchievementMainViewContainer:getScrollView(viewType)
+	if viewType == AchievementEnum.ViewType.Tile then
+		return self._scrollTileView
 	else
-		return arg_7_0._scrollListView
+		return self._scrollListView
 	end
 end
 
-function var_0_0.getPoolView(arg_8_0)
-	return arg_8_0._poolView
+function AchievementMainViewContainer:getPoolView()
+	return self._poolView
 end
 
-return var_0_0
+return AchievementMainViewContainer

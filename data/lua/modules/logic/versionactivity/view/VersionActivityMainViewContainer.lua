@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityMainViewContainer.lua
 
-local var_0_0 = class("VersionActivityMainViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityMainViewContainer = class("VersionActivityMainViewContainer", BaseViewContainer)
+
+function VersionActivityMainViewContainer:buildViews()
 	return {
 		VersionActivityMainView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigateView = NavigateButtonsView.New({
+function VersionActivityMainViewContainer:buildTabViews(tabContainerId)
+	self.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
-	arg_2_0.navigateView:setOverrideClose(arg_2_0.overClose, arg_2_0)
+	self.navigateView:setOverrideClose(self.overClose, self)
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0.overClose(arg_3_0)
-	arg_3_0:closeThis()
+function VersionActivityMainViewContainer:overClose()
+	self:closeThis()
 	ViewMgr.instance:closeView(ViewName.VersionActivityDungeonMapView)
 end
 
-return var_0_0
+return VersionActivityMainViewContainer

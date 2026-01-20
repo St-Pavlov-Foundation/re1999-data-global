@@ -1,53 +1,55 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeEntitySpine", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeEntitySpine.lua
 
-local var_0_0 = class("FightWorkChangeEntitySpine", BaseWork)
+module("modules.logic.fight.system.work.FightWorkChangeEntitySpine", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._entity = arg_1_1
-	arg_1_0._url = arg_1_2
+local FightWorkChangeEntitySpine = class("FightWorkChangeEntitySpine", BaseWork)
+
+function FightWorkChangeEntitySpine:ctor(entity, url)
+	self._entity = entity
+	self._url = url
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
+function FightWorkChangeEntitySpine:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 10)
 
-	arg_2_0._lastSpineObj = arg_2_0._entity.spine:getSpineGO()
+	self._lastSpineObj = self._entity.spine:getSpineGO()
 
-	arg_2_0._entity:loadSpine(arg_2_0._onLoaded, arg_2_0, arg_2_0._url)
+	self._entity:loadSpine(self._onLoaded, self, self._url)
 end
 
-function var_0_0._onLoaded(arg_3_0)
-	if arg_3_0._entity then
-		arg_3_0._entity:initHangPointDict()
-		FightRenderOrderMgr.instance:_resetRenderOrder(arg_3_0._entity.id)
+function FightWorkChangeEntitySpine:_onLoaded()
+	if self._entity then
+		self._entity:initHangPointDict()
+		FightRenderOrderMgr.instance:_resetRenderOrder(self._entity.id)
 
-		local var_3_0 = arg_3_0._entity.effect:getHangEffect()
+		local effects = self._entity.effect:getHangEffect()
 
-		if var_3_0 then
-			for iter_3_0, iter_3_1 in pairs(var_3_0) do
-				local var_3_1 = iter_3_1.effectWrap
-				local var_3_2 = iter_3_1.hangPoint
-				local var_3_3, var_3_4, var_3_5 = transformhelper.getLocalPos(var_3_1.containerTr)
-				local var_3_6 = arg_3_0._entity:getHangPoint(var_3_2)
+		if effects then
+			for k, v in pairs(effects) do
+				local effectWrap = v.effectWrap
+				local hangPoint = v.hangPoint
+				local x, y, z = transformhelper.getLocalPos(effectWrap.containerTr)
+				local hangObj = self._entity:getHangPoint(hangPoint)
 
-				gohelper.addChild(var_3_6, var_3_1.containerGO)
-				transformhelper.setLocalPos(var_3_1.containerTr, var_3_3, var_3_4, var_3_5)
+				gohelper.addChild(hangObj, effectWrap.containerGO)
+				transformhelper.setLocalPos(effectWrap.containerTr, x, y, z)
 			end
 		end
 
-		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, arg_3_0._entity.spine)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, arg_3_0._entity.spine)
+		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, self._entity.spine)
+		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, self._entity.spine)
 	end
 
-	gohelper.destroy(arg_3_0._lastSpineObj)
-	arg_3_0:onDone(true)
+	gohelper.destroy(self._lastSpineObj)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkChangeEntitySpine:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
+function FightWorkChangeEntitySpine:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-return var_0_0
+return FightWorkChangeEntitySpine

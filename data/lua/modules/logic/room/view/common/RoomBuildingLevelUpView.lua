@@ -1,293 +1,298 @@
-﻿module("modules.logic.room.view.common.RoomBuildingLevelUpView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomBuildingLevelUpView.lua
 
-local var_0_0 = class("RoomBuildingLevelUpView", BaseView)
-local var_0_1 = 43
+module("modules.logic.room.view.common.RoomBuildingLevelUpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageproductIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/info/#simage_productIcon")
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "root/info/#txt_namecn")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "root/info/#txt_namecn/#txt_nameen")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/info/#txt_namecn/#image_icon")
-	arg_1_0._golevelupInfoItem = gohelper.findChild(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem")
-	arg_1_0._txtlevelupInfo = gohelper.findChildText(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_levelupInfo")
-	arg_1_0._txtcurNum = gohelper.findChildText(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_curNum")
-	arg_1_0._txtnextNum = gohelper.findChildText(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_nextNum")
-	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "root/costs")
-	arg_1_0._gocostitem = gohelper.findChild(arg_1_0.viewGO, "root/costs/content/#go_costitem")
-	arg_1_0._btnlevelup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_levelup")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_levelup/#go_reddot")
-	arg_1_0._golevelupbeffect = gohelper.findChild(arg_1_0.viewGO, "root/#btn_levelup/#go_reddot/#go_levelupbeffect")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._txtNeed = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_need")
+local RoomBuildingLevelUpView = class("RoomBuildingLevelUpView", BaseView)
+local COST_FONT_SIZE = 43
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBuildingLevelUpView:onInitView()
+	self._simageproductIcon = gohelper.findChildSingleImage(self.viewGO, "root/info/#simage_productIcon")
+	self._txtnamecn = gohelper.findChildText(self.viewGO, "root/info/#txt_namecn")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "root/info/#txt_namecn/#txt_nameen")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/info/#txt_namecn/#image_icon")
+	self._golevelupInfoItem = gohelper.findChild(self.viewGO, "root/levelupInfo/#go_levelupInfoItem")
+	self._txtlevelupInfo = gohelper.findChildText(self.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_levelupInfo")
+	self._txtcurNum = gohelper.findChildText(self.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_curNum")
+	self._txtnextNum = gohelper.findChildText(self.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_nextNum")
+	self._gocost = gohelper.findChild(self.viewGO, "root/costs")
+	self._gocostitem = gohelper.findChild(self.viewGO, "root/costs/content/#go_costitem")
+	self._btnlevelup = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_levelup")
+	self._goreddot = gohelper.findChild(self.viewGO, "root/#btn_levelup/#go_reddot")
+	self._golevelupbeffect = gohelper.findChild(self.viewGO, "root/#btn_levelup/#go_reddot/#go_levelupbeffect")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._txtNeed = gohelper.findChildText(self.viewGO, "root/#txt_need")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlevelup:AddClickListener(arg_2_0._btnlevelupOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, arg_2_0._onBuildingLevelUp, arg_2_0)
-	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_2_0._onTradeLevelChange, arg_2_0)
+function RoomBuildingLevelUpView:addEvents()
+	self._btnlevelup:AddClickListener(self._btnlevelupOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, self._onBuildingLevelUp, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, self._onTradeLevelChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlevelup:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, arg_3_0._onBuildingLevelUp, arg_3_0)
-	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_3_0._onTradeLevelChange, arg_3_0)
+function RoomBuildingLevelUpView:removeEvents()
+	self._btnlevelup:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, self._onBuildingLevelUp, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, self._onTradeLevelChange, self)
 end
 
-function var_0_0._btnlevelupOnClick(arg_4_0)
-	if not arg_4_0._isCanUpgrade then
-		if not arg_4_0._costEnough then
+function RoomBuildingLevelUpView:_btnlevelupOnClick()
+	if not self._isCanUpgrade then
+		if not self._costEnough then
 			GameFacade.showToast(ToastEnum.RoomUpgradeFailByNotEnough)
-		elseif arg_4_0._extraCheckFailToast then
-			GameFacade.showToast(arg_4_0._extraCheckFailToast)
+		elseif self._extraCheckFailToast then
+			GameFacade.showToast(self._extraCheckFailToast)
 		end
 
 		return
 	end
 
-	if arg_4_0._costInfoList and #arg_4_0._costInfoList > 0 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomUpgradeManufactureBuilding, MsgBoxEnum.BoxType.Yes_No, arg_4_0._confirmLevelUp, nil, nil, arg_4_0)
+	local hasCost = self._costInfoList and #self._costInfoList > 0
+
+	if hasCost then
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomUpgradeManufactureBuilding, MsgBoxEnum.BoxType.Yes_No, self._confirmLevelUp, nil, nil, self)
 	else
-		arg_4_0:_confirmLevelUp()
+		self:_confirmLevelUp()
 	end
 end
 
-function var_0_0._confirmLevelUp(arg_5_0)
-	ManufactureController.instance:upgradeManufactureBuilding(arg_5_0._buildingUid)
+function RoomBuildingLevelUpView:_confirmLevelUp()
+	ManufactureController.instance:upgradeManufactureBuilding(self._buildingUid)
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function RoomBuildingLevelUpView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._onItemChanged(arg_7_0)
-	arg_7_0:refreshCost()
-	arg_7_0:refreshCanUpgrade()
+function RoomBuildingLevelUpView:_onItemChanged()
+	self:refreshCost()
+	self:refreshCanUpgrade()
 end
 
-function var_0_0._onBuildingLevelUp(arg_8_0, arg_8_1)
-	if not arg_8_1 or not arg_8_1[arg_8_0._buildingUid] then
+function RoomBuildingLevelUpView:_onBuildingLevelUp(levelUpBuildingDict)
+	if not levelUpBuildingDict or not levelUpBuildingDict[self._buildingUid] then
 		return
 	end
 
 	ViewMgr.instance:closeView(ViewName.RoomBuildingLevelUpView, true, false)
 	ViewMgr.instance:openView(ViewName.RoomManufactureBuildingLevelUpTipsView, {
-		buildingUid = arg_8_0._buildingUid
+		buildingUid = self._buildingUid
 	})
 end
 
-function var_0_0._onTradeLevelChange(arg_9_0)
-	arg_9_0:refreshCanUpgrade()
+function RoomBuildingLevelUpView:_onTradeLevelChange()
+	self:refreshCanUpgrade()
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	gohelper.setActive(arg_10_0._golevelupInfoItem, false)
-	gohelper.setActive(arg_10_0._gocostitem, false)
+function RoomBuildingLevelUpView:_editableInitView()
+	gohelper.setActive(self._golevelupInfoItem, false)
+	gohelper.setActive(self._gocostitem, false)
 
-	arg_10_0._levelUpInfoItemList = {}
-	arg_10_0._costItemList = {}
+	self._levelUpInfoItemList = {}
+	self._costItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
-	arg_11_0._buildingUid = arg_11_0.viewParam.buildingUid
-	arg_11_0._levelUpInfoList = arg_11_0.viewParam.levelUpInfoList
-	arg_11_0._costInfoList = arg_11_0.viewParam.costInfoList or {}
-	arg_11_0._extraCheckFunc = arg_11_0.viewParam.extraCheckFunc
-	arg_11_0._extraCheckFuncObj = arg_11_0.viewParam.extraCheckFuncObj
+function RoomBuildingLevelUpView:onUpdateParam()
+	self._buildingUid = self.viewParam.buildingUid
+	self._levelUpInfoList = self.viewParam.levelUpInfoList
+	self._costInfoList = self.viewParam.costInfoList or {}
+	self._extraCheckFunc = self.viewParam.extraCheckFunc
+	self._extraCheckFuncObj = self.viewParam.extraCheckFuncObj
 
-	arg_11_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:onUpdateParam()
+function RoomBuildingLevelUpView:onOpen()
+	self:onUpdateParam()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_open)
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0:refreshTitleInfo()
-	arg_13_0:refreshLevelUpInfo()
-	arg_13_0:refreshCost()
-	arg_13_0:refreshCanUpgrade()
+function RoomBuildingLevelUpView:refreshUI()
+	self:refreshTitleInfo()
+	self:refreshLevelUpInfo()
+	self:refreshCost()
+	self:refreshCanUpgrade()
 end
 
-function var_0_0.refreshTitleInfo(arg_14_0)
-	local var_14_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_14_0._buildingUid)
+function RoomBuildingLevelUpView:refreshTitleInfo()
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self._buildingUid)
 
-	arg_14_0._txtnamecn.text = var_14_0.config.name
-	arg_14_0._txtnameen.text = var_14_0.config.nameEn
+	self._txtnamecn.text = buildingMO.config.name
+	self._txtnameen.text = buildingMO.config.nameEn
 
-	local var_14_1 = ManufactureConfig.instance:getManufactureBuildingIcon(var_14_0.buildingId)
+	local manuBuildingIcon = ManufactureConfig.instance:getManufactureBuildingIcon(buildingMO.buildingId)
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_14_0._imageicon, var_14_1)
+	UISpriteSetMgr.instance:setRoomSprite(self._imageicon, manuBuildingIcon)
 
-	local var_14_2 = var_14_0:getLevelUpIcon()
+	local icon = buildingMO:getLevelUpIcon()
 
-	if not string.nilorempty(var_14_2) then
-		arg_14_0._simageproductIcon:LoadImage(ResUrl.getRoomImage("critter/" .. var_14_2))
+	if not string.nilorempty(icon) then
+		self._simageproductIcon:LoadImage(ResUrl.getRoomImage("critter/" .. icon))
 	else
-		local var_14_3 = var_14_0:getIcon()
+		icon = buildingMO:getIcon()
 
-		arg_14_0._simageproductIcon:LoadImage(ResUrl.getRoomImage("building/" .. var_14_3))
+		self._simageproductIcon:LoadImage(ResUrl.getRoomImage("building/" .. icon))
 	end
 end
 
-function var_0_0.refreshLevelUpInfo(arg_15_0)
-	if not arg_15_0._levelUpInfoList then
+function RoomBuildingLevelUpView:refreshLevelUpInfo()
+	if not self._levelUpInfoList then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._levelUpInfoList) do
-		local var_15_0 = arg_15_0._levelUpInfoItemList[iter_15_0]
+	for i, levelUpInfo in ipairs(self._levelUpInfoList) do
+		local levelUpInfoItem = self._levelUpInfoItemList[i]
 
-		if not var_15_0 then
-			var_15_0 = arg_15_0:getUserDataTb_()
-			var_15_0.go = gohelper.cloneInPlace(arg_15_0._golevelupInfoItem, "item" .. iter_15_0)
-			var_15_0.trans = var_15_0.go.transform
-			var_15_0.bg = gohelper.findChild(var_15_0.go, "go_bg")
-			var_15_0.txtdesc = gohelper.findChildText(var_15_0.go, "#txt_levelupInfo")
-			var_15_0.goDesc = gohelper.findChild(var_15_0.go, "#go_desc")
-			var_15_0.curNum = gohelper.findChildText(var_15_0.go, "#go_desc/#txt_curNum")
-			var_15_0.nextNum = gohelper.findChildText(var_15_0.go, "#go_desc/#txt_nextNum")
-			var_15_0.goNewItemLayout = gohelper.findChild(var_15_0.go, "#go_newItemLayout")
-			var_15_0.goNewItem = gohelper.findChild(var_15_0.go, "#go_newItemLayout/#go_newItem")
+		if not levelUpInfoItem then
+			levelUpInfoItem = self:getUserDataTb_()
+			levelUpInfoItem.go = gohelper.cloneInPlace(self._golevelupInfoItem, "item" .. i)
+			levelUpInfoItem.trans = levelUpInfoItem.go.transform
+			levelUpInfoItem.bg = gohelper.findChild(levelUpInfoItem.go, "go_bg")
+			levelUpInfoItem.txtdesc = gohelper.findChildText(levelUpInfoItem.go, "#txt_levelupInfo")
+			levelUpInfoItem.goDesc = gohelper.findChild(levelUpInfoItem.go, "#go_desc")
+			levelUpInfoItem.curNum = gohelper.findChildText(levelUpInfoItem.go, "#go_desc/#txt_curNum")
+			levelUpInfoItem.nextNum = gohelper.findChildText(levelUpInfoItem.go, "#go_desc/#txt_nextNum")
+			levelUpInfoItem.goNewItemLayout = gohelper.findChild(levelUpInfoItem.go, "#go_newItemLayout")
+			levelUpInfoItem.goNewItem = gohelper.findChild(levelUpInfoItem.go, "#go_newItemLayout/#go_newItem")
 
-			table.insert(arg_15_0._levelUpInfoItemList, var_15_0)
+			table.insert(self._levelUpInfoItemList, levelUpInfoItem)
 		end
 
-		var_15_0.txtdesc.text = iter_15_1.desc
+		levelUpInfoItem.txtdesc.text = levelUpInfo.desc
 
-		local var_15_1 = recthelper.getHeight(var_15_0.trans)
-		local var_15_2 = iter_15_1.newItemInfoList and true or false
+		local infoItemHeight = recthelper.getHeight(levelUpInfoItem.trans)
+		local isShowNewItem = levelUpInfo.newItemInfoList and true or false
 
-		if var_15_2 then
-			gohelper.CreateObjList(arg_15_0, arg_15_0._onSetNewItem, iter_15_1.newItemInfoList, var_15_0.goNewItemLayout, var_15_0.goNewItem)
+		if isShowNewItem then
+			gohelper.CreateObjList(self, self._onSetNewItem, levelUpInfo.newItemInfoList, levelUpInfoItem.goNewItemLayout, levelUpInfoItem.goNewItem)
 
-			var_15_1 = recthelper.getHeight(var_15_0.goNewItemLayout.transform)
+			infoItemHeight = recthelper.getHeight(levelUpInfoItem.goNewItemLayout.transform)
 		else
-			var_15_0.curNum.text = iter_15_1.currentDesc
-			var_15_0.nextNum.text = iter_15_1.nextDesc
+			levelUpInfoItem.curNum.text = levelUpInfo.currentDesc
+			levelUpInfoItem.nextNum.text = levelUpInfo.nextDesc
 		end
 
-		recthelper.setHeight(var_15_0.trans, var_15_1)
-		gohelper.setActive(var_15_0.goDesc, not var_15_2)
-		gohelper.setActive(var_15_0.goNewItemLayout, var_15_2)
-		gohelper.setActive(var_15_0.bg, iter_15_0 % 2 ~= 0)
-		gohelper.setActive(var_15_0.go, true)
+		recthelper.setHeight(levelUpInfoItem.trans, infoItemHeight)
+		gohelper.setActive(levelUpInfoItem.goDesc, not isShowNewItem)
+		gohelper.setActive(levelUpInfoItem.goNewItemLayout, isShowNewItem)
+		gohelper.setActive(levelUpInfoItem.bg, i % 2 ~= 0)
+		gohelper.setActive(levelUpInfoItem.go, true)
 	end
 
-	for iter_15_2 = #arg_15_0._levelUpInfoList + 1, #arg_15_0._levelUpInfoItemList do
-		local var_15_3 = arg_15_0._levelUpInfoItemList[iter_15_2]
+	for i = #self._levelUpInfoList + 1, #self._levelUpInfoItemList do
+		local levelUpInfoItem = self._levelUpInfoItemList[i]
 
-		gohelper.setActive(var_15_3.go, false)
+		gohelper.setActive(levelUpInfoItem.go, false)
 	end
 end
 
-function var_0_0._onSetNewItem(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = arg_16_2.type
-	local var_16_1 = arg_16_2.id
-	local var_16_2 = arg_16_2.quantity or 0
-	local var_16_3 = IconMgr.instance:getCommonItemIcon(arg_16_1)
+function RoomBuildingLevelUpView:_onSetNewItem(obj, data, index)
+	local newItemType = data.type
+	local newItemId = data.id
+	local newItemQuantity = data.quantity or 0
+	local itemIcon = IconMgr.instance:getCommonItemIcon(obj)
 
-	var_16_3:setCountFontSize(var_0_1)
-	var_16_3:setMOValue(var_16_0, var_16_1, var_16_2)
-	var_16_3:isShowCount(var_16_2 ~= 0)
+	itemIcon:setCountFontSize(COST_FONT_SIZE)
+	itemIcon:setMOValue(newItemType, newItemId, newItemQuantity)
+	itemIcon:isShowCount(newItemQuantity ~= 0)
 end
 
-function var_0_0.refreshCost(arg_17_0)
-	arg_17_0._costEnough = true
+function RoomBuildingLevelUpView:refreshCost()
+	self._costEnough = true
 
-	local var_17_0 = arg_17_0._costInfoList and #arg_17_0._costInfoList > 0
+	local hasCost = self._costInfoList and #self._costInfoList > 0
 
-	gohelper.setActive(arg_17_0._gocost, var_17_0)
+	gohelper.setActive(self._gocost, hasCost)
 
-	if not var_17_0 then
+	if not hasCost then
 		return
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._costInfoList) do
-		local var_17_1 = iter_17_1.type
-		local var_17_2 = iter_17_1.id
-		local var_17_3 = iter_17_1.quantity
-		local var_17_4 = ItemModel.instance:getItemQuantity(var_17_1, var_17_2)
-		local var_17_5 = var_17_3 <= var_17_4
-		local var_17_6 = arg_17_0._costItemList[iter_17_0]
+	for i, costInfo in ipairs(self._costInfoList) do
+		local costType = costInfo.type
+		local costId = costInfo.id
+		local costNum = costInfo.quantity
+		local hasQuantity = ItemModel.instance:getItemQuantity(costType, costId)
+		local enough = costNum <= hasQuantity
+		local costItem = self._costItemList[i]
 
-		if not var_17_6 then
-			var_17_6 = arg_17_0:getUserDataTb_()
-			var_17_6.index = iter_17_0
-			var_17_6.go = gohelper.cloneInPlace(arg_17_0._gocostitem, "item" .. iter_17_0)
-			var_17_6.parent = gohelper.findChild(var_17_6.go, "go_itempos")
-			var_17_6.itemIcon = IconMgr.instance:getCommonItemIcon(var_17_6.parent)
+		if not costItem then
+			costItem = self:getUserDataTb_()
+			costItem.index = i
+			costItem.go = gohelper.cloneInPlace(self._gocostitem, "item" .. i)
+			costItem.parent = gohelper.findChild(costItem.go, "go_itempos")
+			costItem.itemIcon = IconMgr.instance:getCommonItemIcon(costItem.parent)
 
-			table.insert(arg_17_0._costItemList, var_17_6)
+			table.insert(self._costItemList, costItem)
 		end
 
-		var_17_6.itemIcon:setMOValue(var_17_1, var_17_2, var_17_3)
-		var_17_6.itemIcon:setCountFontSize(var_0_1)
-		var_17_6.itemIcon:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, arg_17_0)
+		costItem.itemIcon:setMOValue(costType, costId, costNum)
+		costItem.itemIcon:setCountFontSize(COST_FONT_SIZE)
+		costItem.itemIcon:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, self)
 
-		local var_17_7 = var_17_1 == MaterialEnum.MaterialType.Currency
-		local var_17_8 = ""
+		local isCurrency = costType == MaterialEnum.MaterialType.Currency
+		local countStr = ""
 
-		if var_17_5 then
-			if var_17_7 then
-				var_17_8 = GameUtil.numberDisplay(var_17_3)
+		if enough then
+			if isCurrency then
+				countStr = GameUtil.numberDisplay(costNum)
 			else
-				var_17_8 = string.format("%s/%s", GameUtil.numberDisplay(var_17_4), GameUtil.numberDisplay(var_17_3))
+				countStr = string.format("%s/%s", GameUtil.numberDisplay(hasQuantity), GameUtil.numberDisplay(costNum))
 			end
-		elseif var_17_7 then
-			var_17_8 = string.format("<color=#d97373>%s</color>", GameUtil.numberDisplay(var_17_3))
+		elseif isCurrency then
+			countStr = string.format("<color=#d97373>%s</color>", GameUtil.numberDisplay(costNum))
 		else
-			var_17_8 = string.format("<color=#d97373>%s</color>/%s", GameUtil.numberDisplay(var_17_4), GameUtil.numberDisplay(var_17_3))
+			countStr = string.format("<color=#d97373>%s</color>/%s", GameUtil.numberDisplay(hasQuantity), GameUtil.numberDisplay(costNum))
 		end
 
-		var_17_6.itemIcon:getCount().text = var_17_8
-		arg_17_0._costEnough = arg_17_0._costEnough and var_17_5
+		local countText = costItem.itemIcon:getCount()
 
-		gohelper.setActive(var_17_6.go, true)
+		countText.text = countStr
+		self._costEnough = self._costEnough and enough
+
+		gohelper.setActive(costItem.go, true)
 	end
 
-	for iter_17_2 = #arg_17_0._costInfoList + 1, #arg_17_0._costItemList do
-		local var_17_9 = arg_17_0._costItemList[iter_17_2]
+	for i = #self._costInfoList + 1, #self._costItemList do
+		local costItem = self._costItemList[i]
 
-		gohelper.setActive(var_17_9.go, false)
+		gohelper.setActive(costItem.go, false)
 	end
 end
 
-function var_0_0.refreshCanUpgrade(arg_18_0)
-	local var_18_0 = true
-	local var_18_1
-	local var_18_2
+function RoomBuildingLevelUpView:refreshCanUpgrade()
+	local extraCheckResult = true
+	local extraCheckFailToast, needDesc
 
-	if arg_18_0._extraCheckFunc then
-		var_18_0, var_18_1, var_18_2 = arg_18_0._extraCheckFunc(arg_18_0._extraCheckFuncObj, arg_18_0._buildingUid)
-		arg_18_0._txtNeed.text = var_18_2 or ""
+	if self._extraCheckFunc then
+		extraCheckResult, extraCheckFailToast, needDesc = self._extraCheckFunc(self._extraCheckFuncObj, self._buildingUid)
+		self._txtNeed.text = needDesc or ""
 	end
 
-	gohelper.setActive(arg_18_0._txtNeed, var_18_2)
+	gohelper.setActive(self._txtNeed, needDesc)
 
-	arg_18_0._isCanUpgrade = var_18_0 and arg_18_0._costEnough
-	arg_18_0._extraCheckFailToast = var_18_1
+	self._isCanUpgrade = extraCheckResult and self._costEnough
+	self._extraCheckFailToast = extraCheckFailToast
 
-	ZProj.UGUIHelper.SetGrayscale(arg_18_0._btnlevelup.gameObject, not arg_18_0._isCanUpgrade)
-	gohelper.setActive(arg_18_0._golevelupbeffect, arg_18_0._isCanUpgrade)
+	ZProj.UGUIHelper.SetGrayscale(self._btnlevelup.gameObject, not self._isCanUpgrade)
+	gohelper.setActive(self._golevelupbeffect, self._isCanUpgrade)
 end
 
-function var_0_0.onClose(arg_19_0)
+function RoomBuildingLevelUpView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0._simageproductIcon:UnLoadImage()
+function RoomBuildingLevelUpView:onDestroyView()
+	self._simageproductIcon:UnLoadImage()
 end
 
-return var_0_0
+return RoomBuildingLevelUpView

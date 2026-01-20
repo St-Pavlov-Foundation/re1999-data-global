@@ -1,51 +1,53 @@
-﻿module("modules.logic.battlepass.view.BpSPViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpSPViewContainer.lua
 
-local var_0_0 = class("BpSPViewContainer", BaseViewContainer)
-local var_0_1 = 1
-local var_0_2 = 2
+module("modules.logic.battlepass.view.BpSPViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpSPViewContainer = class("BpSPViewContainer", BaseViewContainer)
+local TabView_Navigation = 1
+local TabView_BonusOrTask = 2
+
+function BpSPViewContainer:buildViews()
 	return {
 		BpBuyBtn.New(),
-		TabViewGroup.New(var_0_1, "#go_btns"),
-		BPTabViewGroup.New(var_0_2, "#go_container"),
+		TabViewGroup.New(TabView_Navigation, "#go_btns"),
+		BPTabViewGroup.New(TabView_BonusOrTask, "#go_container"),
 		BpSPView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == var_0_1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function BpSPViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == TabView_Navigation then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == var_0_2 then
+	elseif tabContainerId == TabView_BonusOrTask then
 		return {
 			BpSPBonusView.New()
 		}
 	end
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	local var_3_0 = "open"
+function BpSPViewContainer:playOpenTransition()
+	local anim = "open"
 
-	if arg_3_0.viewParam and arg_3_0.viewParam.isSwitch then
-		var_3_0 = "switch"
+	if self.viewParam and self.viewParam.isSwitch then
+		anim = "switch"
 	end
 
-	var_0_0.super.playOpenTransition(arg_3_0, {
+	BpSPViewContainer.super.playOpenTransition(self, {
 		duration = 1,
-		anim = var_3_0
+		anim = anim
 	})
 end
 
-function var_0_0.playCloseTransition(arg_4_0)
-	arg_4_0:onPlayCloseTransitionFinish()
+function BpSPViewContainer:playCloseTransition()
+	self:onPlayCloseTransitionFinish()
 end
 
-return var_0_0
+return BpSPViewContainer

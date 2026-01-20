@@ -1,0 +1,38 @@
+[
+  {
+    "id": 101,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_kuaile"
+  },
+  {
+    "id": 102,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_jingya"
+  },
+  {
+    "id": 103,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_yiwen"
+  },
+  {
+    "id": 104,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_nanguo"
+  },
+  {
+    "id": 105,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_weisir"
+  },
+  {
+    "id": 106,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_xiangji"
+  },
+  {
+    "id": 107,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_yinfu"
+  },
+  {
+    "id": 108,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_heiye"
+  },
+  {
+    "id": 109,
+    "resource": "v3a2_m_s19_ytm/prefabs/v3a2_ytm_icon_huli"
+  }
+]

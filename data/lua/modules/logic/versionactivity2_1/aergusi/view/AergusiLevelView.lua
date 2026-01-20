@@ -1,316 +1,324 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiLevelView.lua
 
-local var_0_0 = class("AergusiLevelView", BaseView)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._gopath = gohelper.findChild(arg_1_0.viewGO, "#go_path")
-	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "#go_path/#go_scrollcontent")
-	arg_1_0._gostages = gohelper.findChild(arg_1_0.viewGO, "#go_path/#go_scrollcontent/#go_stages")
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#go_time/#txt_limittime")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
-	arg_1_0._gotaskAni = gohelper.findChild(arg_1_0.viewGO, "#btn_task/ani")
-	arg_1_0._goreddotreward = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_reddotreward")
-	arg_1_0._btnClue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Clue")
-	arg_1_0._goeyelight = gohelper.findChild(arg_1_0.viewGO, "#btn_Clue/eye_light")
-	arg_1_0._govxget = gohelper.findChild(arg_1_0.viewGO, "#btn_Clue/vx_get")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local AergusiLevelView = class("AergusiLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AergusiLevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gopath = gohelper.findChild(self.viewGO, "#go_path")
+	self._goscrollcontent = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent")
+	self._gostages = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent/#go_stages")
+	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "#go_title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_title/#go_time/#txt_limittime")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
+	self._gotaskAni = gohelper.findChild(self.viewGO, "#btn_task/ani")
+	self._goreddotreward = gohelper.findChild(self.viewGO, "#btn_task/#go_reddotreward")
+	self._btnClue = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Clue")
+	self._goeyelight = gohelper.findChild(self.viewGO, "#btn_Clue/eye_light")
+	self._govxget = gohelper.findChild(self.viewGO, "#btn_Clue/vx_get")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btnClue:AddClickListener(arg_2_0._btnClueOnClick, arg_2_0)
-	arg_2_0._btnimage_TryBtn:AddClickListener(arg_2_0._btnimage_TryBtnOnClick, arg_2_0)
+function AergusiLevelView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnClue:AddClickListener(self._btnClueOnClick, self)
+	self._btnimage_TryBtn:AddClickListener(self._btnimage_TryBtnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnClue:RemoveClickListener()
-	arg_3_0._btnimage_TryBtn:RemoveClickListener()
+function AergusiLevelView:removeEvents()
+	self._btntask:RemoveClickListener()
+	self._btnClue:RemoveClickListener()
+	self._btnimage_TryBtn:RemoveClickListener()
 end
 
-function var_0_0._btnClueOnClick(arg_4_0)
+function AergusiLevelView:_btnClueOnClick()
 	AergusiController.instance:openAergusiClueView()
 end
 
-function var_0_0._btntaskOnClick(arg_5_0)
+function AergusiLevelView:_btntaskOnClick()
 	AergusiController.instance:openAergusiTaskView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	RedDotController.instance:addRedDot(arg_6_0._goreddotreward, RedDotEnum.DotNode.V2a1AergusiTaskRed, VersionActivity2_1Enum.ActivityId.Aergusi)
+function AergusiLevelView:_editableInitView()
+	RedDotController.instance:addRedDot(self._goreddotreward, RedDotEnum.DotNode.V2a1AergusiTaskRed, VersionActivity2_1Enum.ActivityId.Aergusi)
 
-	arg_6_0._viewAnimator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._stageAnimator = arg_6_0._gostages:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._taskAnimator = arg_6_0._gotaskAni:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._scrollcontent = arg_6_0._gopath:GetComponent(gohelper.Type_LimitedScrollRect)
-	arg_6_0._drag = UIDragListenerHelper.New()
+	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._stageAnimator = self._gostages:GetComponent(typeof(UnityEngine.Animator))
+	self._taskAnimator = self._gotaskAni:GetComponent(typeof(UnityEngine.Animator))
+	self._scrollcontent = self._gopath:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._drag = UIDragListenerHelper.New()
 
-	arg_6_0._drag:createByScrollRect(arg_6_0._scrollcontent)
+	self._drag:createByScrollRect(self._scrollcontent)
 
-	arg_6_0._levelItems = {}
+	self._levelItems = {}
 
-	gohelper.setActive(arg_6_0._gotime, false)
+	gohelper.setActive(self._gotime, false)
 
-	arg_6_0._btnimage_TryBtn = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "#go_Try/image_TryBtn")
+	self._btnimage_TryBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 end
 
-function var_0_0._setInitLevelPos(arg_7_0)
-	local var_7_0 = AergusiModel.instance:getMaxUnlockEpisodeIndex()
-	local var_7_1 = transformhelper.getLocalPos(arg_7_0._goscrollcontent.transform)
+function AergusiLevelView:_setInitLevelPos()
+	local maxUnlockIndex = AergusiModel.instance:getMaxUnlockEpisodeIndex()
+	local posX = transformhelper.getLocalPos(self._goscrollcontent.transform)
 
-	var_7_1 = 0.2 * (var_7_0 - 3) * AergusiEnum.LevelScrollWidth < 0 and var_7_1 or var_7_1 - 0.2 * (var_7_0 - 3) * AergusiEnum.LevelScrollWidth
+	posX = 0.2 * (maxUnlockIndex - 3) * AergusiEnum.LevelScrollWidth < 0 and posX or posX - 0.2 * (maxUnlockIndex - 3) * AergusiEnum.LevelScrollWidth
 
-	transformhelper.setLocalPos(arg_7_0._goscrollcontent.transform, var_7_1, 0, 0)
+	transformhelper.setLocalPos(self._goscrollcontent.transform, posX, 0, 0)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function AergusiLevelView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._viewCanvasGroup = arg_9_0.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_9_0._viewCanvasGroup.enabled = false
+function AergusiLevelView:onOpen()
+	self._viewCanvasGroup = self.viewGO:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._viewCanvasGroup.enabled = false
 
-	TaskDispatcher.runDelay(arg_9_0._enableCanvasgroup, arg_9_0, 0.7)
-	arg_9_0:_addEvents()
-	arg_9_0:_checkFirstEnter()
-	arg_9_0:_refreshItems()
-	arg_9_0:_refreshButtons()
-	arg_9_0:_refreshDeadline()
-	arg_9_0:_setInitLevelPos()
-	TaskDispatcher.runRepeat(arg_9_0._refreshDeadline, arg_9_0, TimeUtil.OneMinuteSecond)
+	TaskDispatcher.runDelay(self._enableCanvasgroup, self, 0.7)
+	self:_addEvents()
+	self:_checkFirstEnter()
+	self:_refreshItems()
+	self:_refreshButtons()
+	self:_refreshDeadline()
+	self:_setInitLevelPos()
+	TaskDispatcher.runRepeat(self._refreshDeadline, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0._enableCanvasgroup(arg_10_0)
-	arg_10_0._viewCanvasGroup.enabled = true
+function AergusiLevelView:_enableCanvasgroup()
+	self._viewCanvasGroup.enabled = true
 end
 
-function var_0_0._checkFirstEnter(arg_11_0)
-	local var_11_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.Version2_1FirstTimeEnter, 0)
-	local var_11_1 = AergusiModel.instance:getFirstEpisode()
-	local var_11_2 = AergusiModel.instance:getEpisodeInfo(var_11_1)
+function AergusiLevelView:_checkFirstEnter()
+	local firstEnter = PlayerPrefsHelper.getNumber(PlayerPrefsKey.Version2_1FirstTimeEnter, 0)
+	local firstEpisode = AergusiModel.instance:getFirstEpisode()
+	local episodeMo = AergusiModel.instance:getEpisodeInfo(firstEpisode)
 
-	if var_11_0 == 0 and not var_11_2.passBeforeStory then
-		AergusiModel.instance:setNewUnlockEpisode(var_11_1)
+	if firstEnter == 0 and not episodeMo.passBeforeStory then
+		AergusiModel.instance:setNewUnlockEpisode(firstEpisode)
 	end
 
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.Version2_1FirstTimeEnter, 1)
 
-	local var_11_3 = AergusiModel.instance:getNewFinishEpisode()
-	local var_11_4 = AergusiModel.instance:getAllClues(false)
-	local var_11_5 = AergusiModel.instance:hasClueNotRead(var_11_4)
+	local newFinishEpisode = AergusiModel.instance:getNewFinishEpisode()
+	local clueconfigs = AergusiModel.instance:getAllClues(false)
+	local hasClueNotRead = AergusiModel.instance:hasClueNotRead(clueconfigs)
 
-	gohelper.setActive(arg_11_0._goeyelight, var_11_3 > 0 or var_11_5)
-	gohelper.setActive(arg_11_0._govxget, var_11_3 > 0)
+	gohelper.setActive(self._goeyelight, newFinishEpisode > 0 or hasClueNotRead)
+	gohelper.setActive(self._govxget, newFinishEpisode > 0)
 end
 
-function var_0_0._refreshButtons(arg_12_0)
-	local var_12_0 = AergusiModel.instance:getFirstEpisode()
-	local var_12_1 = AergusiModel.instance:isEpisodePassed(var_12_0)
+function AergusiLevelView:_refreshButtons()
+	local firstEpisode = AergusiModel.instance:getFirstEpisode()
+	local isClueUnlock = AergusiModel.instance:isEpisodePassed(firstEpisode)
 
-	gohelper.setActive(arg_12_0._btnClue.gameObject, var_12_1)
+	gohelper.setActive(self._btnClue.gameObject, isClueUnlock)
 
-	local var_12_2 = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a1AergusiTaskRed, VersionActivity2_1Enum.ActivityId.Aergusi)
+	local hasRewards = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a1AergusiTaskRed, VersionActivity2_1Enum.ActivityId.Aergusi)
 
-	gohelper.setActive(arg_12_0._gotaskAni, var_12_2)
+	gohelper.setActive(self._gotaskAni, hasRewards)
 
-	if var_12_2 then
-		arg_12_0._taskAnimator:Play("loop", 0, 0)
+	if hasRewards then
+		self._taskAnimator:Play("loop", 0, 0)
 	end
 end
 
-function var_0_0._refreshItems(arg_13_0)
-	local var_13_0 = AergusiModel.instance:getEpisodeInfos()
-	local var_13_1 = arg_13_0.viewContainer:getSetting().otherRes[1]
+function AergusiLevelView:_refreshItems()
+	local levelCos = AergusiModel.instance:getEpisodeInfos()
+	local prefabPath = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if not arg_13_0._levelItems[iter_13_1.episodeId] then
-			local var_13_2 = gohelper.findChild(arg_13_0._gostages, "stage" .. iter_13_0)
-			local var_13_3 = arg_13_0:getResInst(var_13_1, var_13_2)
+	for i, v in ipairs(levelCos) do
+		if not self._levelItems[v.episodeId] then
+			local stageGo = gohelper.findChild(self._gostages, "stage" .. i)
+			local cloneGo = self:getResInst(prefabPath, stageGo)
 
-			arg_13_0._levelItems[iter_13_1.episodeId] = AergusiLevelItem.New()
+			self._levelItems[v.episodeId] = AergusiLevelItem.New()
 
-			arg_13_0._levelItems[iter_13_1.episodeId]:init(var_13_3)
+			self._levelItems[v.episodeId]:init(cloneGo)
 		end
 
-		arg_13_0._levelItems[iter_13_1.episodeId]:refreshItem(iter_13_1, iter_13_0)
+		self._levelItems[v.episodeId]:refreshItem(v, i)
 	end
 end
 
-function var_0_0._refreshDeadline(arg_14_0)
-	arg_14_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity2_1Enum.ActivityId.Aergusi)
+function AergusiLevelView:_refreshDeadline()
+	self._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity2_1Enum.ActivityId.Aergusi)
 end
 
-function var_0_0._onEnterEpisode(arg_15_0, arg_15_1)
-	arg_15_0._isRestart = false
+function AergusiLevelView:_onEnterEpisode(episodeId)
+	self._isRestart = false
 
-	AergusiModel.instance:setCurEpisode(arg_15_1)
+	AergusiModel.instance:setCurEpisode(episodeId)
 
-	arg_15_0._config = AergusiConfig.instance:getEpisodeConfig(nil, arg_15_1)
-	arg_15_0._isEpisodePassed = AergusiModel.instance:isEpisodePassed(arg_15_0._config.episodeId)
+	self._config = AergusiConfig.instance:getEpisodeConfig(nil, episodeId)
+	self._isEpisodePassed = AergusiModel.instance:isEpisodePassed(self._config.episodeId)
 
-	arg_15_0:_startEnterGame()
+	self:_startEnterGame()
 end
 
-function var_0_0._startEnterGame(arg_16_0)
-	if AergusiModel.instance:isStoryEpisode(arg_16_0._config.episodeId) then
-		arg_16_0:_enterBeforeStory()
+function AergusiLevelView:_startEnterGame()
+	local isStoryEpisode = AergusiModel.instance:isStoryEpisode(self._config.episodeId)
+
+	if isStoryEpisode then
+		self:_enterBeforeStory()
 	else
-		Activity163Rpc.instance:sendAct163StartEvidenceRequest(arg_16_0._config.activityId, arg_16_0._config.episodeId, arg_16_0._enterBeforeStory, arg_16_0)
+		Activity163Rpc.instance:sendAct163StartEvidenceRequest(self._config.activityId, self._config.episodeId, self._enterBeforeStory, self)
 	end
 end
 
-function var_0_0._enterBeforeStory(arg_17_0)
-	if arg_17_0._config.beforeStoryId > 0 and not arg_17_0._isRestart then
-		local var_17_0 = {}
+function AergusiLevelView:_enterBeforeStory()
+	if self._config.beforeStoryId > 0 and not self._isRestart then
+		local data = {}
 
-		if not StoryModel.instance:isStoryFinished(arg_17_0._config.beforeStoryId) then
-			var_17_0.skipMessageId = MessageBoxIdDefine.Act163StorySkip
+		if not StoryModel.instance:isStoryFinished(self._config.beforeStoryId) then
+			data.skipMessageId = MessageBoxIdDefine.Act163StorySkip
 		end
 
-		StoryController.instance:playStory(arg_17_0._config.beforeStoryId, var_17_0, arg_17_0._enterEvidence, arg_17_0)
+		StoryController.instance:playStory(self._config.beforeStoryId, data, self._enterEvidence, self)
 	else
-		arg_17_0:_enterEvidence()
+		self:_enterEvidence()
 	end
 end
 
-function var_0_0._enterEvidence(arg_18_0)
-	if not AergusiModel.instance:isStoryEpisode(arg_18_0._config.episodeId) then
-		local var_18_0 = {
-			episodeId = arg_18_0._config.episodeId,
-			callback = arg_18_0._enterAfterStory,
-			callbackObj = arg_18_0
-		}
+function AergusiLevelView:_enterEvidence()
+	local isStoryEpisode = AergusiModel.instance:isStoryEpisode(self._config.episodeId)
 
-		AergusiController.instance:openAergusiDialogView(var_18_0)
+	if not isStoryEpisode then
+		local data = {}
+
+		data.episodeId = self._config.episodeId
+		data.callback = self._enterAfterStory
+		data.callbackObj = self
+
+		AergusiController.instance:openAergusiDialogView(data)
 	else
-		TaskDispatcher.runDelay(arg_18_0._episodeFinished, arg_18_0, 0.5)
-		arg_18_0:_enterAfterStory()
+		TaskDispatcher.runDelay(self._episodeFinished, self, 0.5)
+		self:_enterAfterStory()
 	end
 end
 
-function var_0_0._onRestartEvidence(arg_19_0)
-	arg_19_0._isRestart = true
+function AergusiLevelView:_onRestartEvidence()
+	self._isRestart = true
 
-	arg_19_0:_startEnterGame()
+	self:_startEnterGame()
 end
 
-function var_0_0._enterAfterStory(arg_20_0)
-	if arg_20_0._config.afterStoryId > 0 then
-		local var_20_0 = {}
+function AergusiLevelView:_enterAfterStory()
+	if self._config.afterStoryId > 0 then
+		local data = {}
 
-		if not StoryModel.instance:isStoryFinished(arg_20_0._config.afterStoryId) then
-			var_20_0.skipMessageId = MessageBoxIdDefine.Act163StorySkip
+		if not StoryModel.instance:isStoryFinished(self._config.afterStoryId) then
+			data.skipMessageId = MessageBoxIdDefine.Act163StorySkip
 		end
 
-		StoryController.instance:playStory(arg_20_0._config.afterStoryId, var_20_0, arg_20_0._afterStoryFinished, arg_20_0)
+		StoryController.instance:playStory(self._config.afterStoryId, data, self._afterStoryFinished, self)
 	else
-		arg_20_0:_episodeFinished()
+		self:_episodeFinished()
 	end
 end
 
-function var_0_0._afterStoryFinished(arg_21_0)
-	TaskDispatcher.runDelay(arg_21_0._episodeFinished, arg_21_0, 0.5)
+function AergusiLevelView:_afterStoryFinished()
+	TaskDispatcher.runDelay(self._episodeFinished, self, 0.5)
 end
 
-function var_0_0._episodeFinished(arg_22_0)
-	if not arg_22_0._isEpisodePassed then
-		AergusiModel.instance:setNewFinishEpisode(arg_22_0._config.episodeId)
+function AergusiLevelView:_episodeFinished()
+	if not self._isEpisodePassed then
+		AergusiModel.instance:setNewFinishEpisode(self._config.episodeId)
 
-		local var_22_0 = AergusiModel.instance:getEpisodeNextEpisode(arg_22_0._config.episodeId)
+		local nextEpisode = AergusiModel.instance:getEpisodeNextEpisode(self._config.episodeId)
 
-		if var_22_0 > 0 then
-			AergusiModel.instance:setNewUnlockEpisode(var_22_0)
+		if nextEpisode > 0 then
+			AergusiModel.instance:setNewUnlockEpisode(nextEpisode)
 		end
 	end
 
-	arg_22_0._viewAnimator:Play("open", 0, 0)
-	arg_22_0._stageAnimator:Play("open", 0, 0)
+	self._viewAnimator:Play("open", 0, 0)
+	self._stageAnimator:Play("open", 0, 0)
 
-	arg_22_0._viewCanvasGroup.enabled = false
+	self._viewCanvasGroup.enabled = false
 
-	arg_22_0:_setInitLevelPos()
-	TaskDispatcher.runDelay(arg_22_0._backLevel, arg_22_0, 0.7)
+	self:_setInitLevelPos()
+	TaskDispatcher.runDelay(self._backLevel, self, 0.7)
 end
 
-function var_0_0._backLevel(arg_23_0)
-	arg_23_0._viewCanvasGroup.enabled = true
+function AergusiLevelView:_backLevel()
+	self._viewCanvasGroup.enabled = true
 
-	arg_23_0:_checkFirstEnter()
-	arg_23_0:_refreshItems()
-	arg_23_0:_refreshButtons()
+	self:_checkFirstEnter()
+	self:_refreshItems()
+	self:_refreshButtons()
 end
 
-function var_0_0._onOperationFinished(arg_24_0)
-	arg_24_0:_refreshItems()
-	arg_24_0:_refreshButtons()
+function AergusiLevelView:_onOperationFinished()
+	self:_refreshItems()
+	self:_refreshButtons()
 end
 
-function var_0_0._addEvents(arg_25_0)
-	AergusiController.instance:registerCallback(AergusiEvent.EnterEpisode, arg_25_0._onEnterEpisode, arg_25_0)
-	AergusiController.instance:registerCallback(AergusiEvent.EvidenceFinished, arg_25_0._enterAfterStory, arg_25_0)
-	AergusiController.instance:registerCallback(AergusiEvent.StartOperation, arg_25_0._onOperationFinished, arg_25_0)
-	AergusiController.instance:registerCallback(AergusiEvent.RestartEvidence, arg_25_0._onRestartEvidence, arg_25_0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnClueReadUpdate, arg_25_0._refreshButtons, arg_25_0)
-	arg_25_0._drag:registerCallback(arg_25_0._drag.EventBegin, arg_25_0._onDragBegin, arg_25_0)
-	arg_25_0._drag:registerCallback(arg_25_0._drag.EventEnd, arg_25_0._onDragEnd, arg_25_0)
+function AergusiLevelView:_addEvents()
+	AergusiController.instance:registerCallback(AergusiEvent.EnterEpisode, self._onEnterEpisode, self)
+	AergusiController.instance:registerCallback(AergusiEvent.EvidenceFinished, self._enterAfterStory, self)
+	AergusiController.instance:registerCallback(AergusiEvent.StartOperation, self._onOperationFinished, self)
+	AergusiController.instance:registerCallback(AergusiEvent.RestartEvidence, self._onRestartEvidence, self)
+	AergusiController.instance:registerCallback(AergusiEvent.OnClueReadUpdate, self._refreshButtons, self)
+	self._drag:registerCallback(self._drag.EventBegin, self._onDragBegin, self)
+	self._drag:registerCallback(self._drag.EventEnd, self._onDragEnd, self)
 end
 
-function var_0_0._onDragBegin(arg_26_0)
-	arg_26_0._positionX = transformhelper.getPos(arg_26_0._goscrollcontent.transform)
+function AergusiLevelView:_onDragBegin()
+	self._positionX = transformhelper.getPos(self._goscrollcontent.transform)
 
 	AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_slide)
 end
 
-function var_0_0._onDragEnd(arg_27_0)
-	if transformhelper.getPos(arg_27_0._goscrollcontent.transform) < arg_27_0._positionX then
-		arg_27_0._stageAnimator:Play("slipleft", 0, 0)
+function AergusiLevelView:_onDragEnd()
+	local posX = transformhelper.getPos(self._goscrollcontent.transform)
+
+	if posX < self._positionX then
+		self._stageAnimator:Play("slipleft", 0, 0)
 	else
-		arg_27_0._stageAnimator:Play("slipright", 0, 0)
+		self._stageAnimator:Play("slipright", 0, 0)
 	end
 end
 
-function var_0_0._removeEvents(arg_28_0)
-	arg_28_0._drag:release()
-	AergusiController.instance:unregisterCallback(AergusiEvent.EnterEpisode, arg_28_0._onEnterEpisode, arg_28_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.EvidenceFinished, arg_28_0._enterAfterStory, arg_28_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.StartOperation, arg_28_0._onOperationFinished, arg_28_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.RestartEvidence, arg_28_0._onRestartEvidence, arg_28_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnClueReadUpdate, arg_28_0._refreshButtons, arg_28_0)
+function AergusiLevelView:_removeEvents()
+	self._drag:release()
+	AergusiController.instance:unregisterCallback(AergusiEvent.EnterEpisode, self._onEnterEpisode, self)
+	AergusiController.instance:unregisterCallback(AergusiEvent.EvidenceFinished, self._enterAfterStory, self)
+	AergusiController.instance:unregisterCallback(AergusiEvent.StartOperation, self._onOperationFinished, self)
+	AergusiController.instance:unregisterCallback(AergusiEvent.RestartEvidence, self._onRestartEvidence, self)
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnClueReadUpdate, self._refreshButtons, self)
 end
 
-function var_0_0.onClose(arg_29_0)
-	arg_29_0._viewCanvasGroup.enabled = false
+function AergusiLevelView:onClose()
+	self._viewCanvasGroup.enabled = false
 
-	arg_29_0:_removeEvents()
+	self:_removeEvents()
 end
 
-function var_0_0.onDestroyView(arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._refreshDeadline, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._backLevel, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._episodeFinished, arg_30_0)
+function AergusiLevelView:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshDeadline, self)
+	TaskDispatcher.cancelTask(self._backLevel, self)
+	TaskDispatcher.cancelTask(self._episodeFinished, self)
 
-	if arg_30_0._levelItems then
-		for iter_30_0, iter_30_1 in pairs(arg_30_0._levelItems) do
-			iter_30_1:destroy()
+	if self._levelItems then
+		for _, v in pairs(self._levelItems) do
+			v:destroy()
 		end
 
-		arg_30_0._levelItems = nil
+		self._levelItems = nil
 	end
 end
 
-local var_0_1 = 10012118
+local kJumpId = 10012118
 
-function var_0_0._btnimage_TryBtnOnClick(arg_31_0)
-	GameFacade.jump(var_0_1)
+function AergusiLevelView:_btnimage_TryBtnOnClick()
+	GameFacade.jump(kJumpId)
 end
 
-return var_0_0
+return AergusiLevelView

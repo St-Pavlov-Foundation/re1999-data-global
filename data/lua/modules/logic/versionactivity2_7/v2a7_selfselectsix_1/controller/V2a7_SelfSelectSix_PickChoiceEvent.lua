@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.controller.V2a7_SelfSelectSix_PickChoiceEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/v2a7_selfselectsix_1/controller/V2a7_SelfSelectSix_PickChoiceEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.controller.V2a7_SelfSelectSix_PickChoiceEvent", package.seeall)
 
-var_0_0.onCustomPickComplete = 1
-var_0_0.onCustomPickListChanged = 2
+local V2a7_SelfSelectSix_PickChoiceEvent = _M
 
-return var_0_0
+V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickComplete = 1
+V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged = 2
+
+return V2a7_SelfSelectSix_PickChoiceEvent

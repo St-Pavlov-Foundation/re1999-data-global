@@ -1,44 +1,53 @@
-﻿module("modules.logic.activity.model.V2a9FreeMonthCardModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/V2a9FreeMonthCardModel.lua
 
-local var_0_0 = class("V2a9FreeMonthCardModel", BaseModel)
+module("modules.logic.activity.model.V2a9FreeMonthCardModel", package.seeall)
 
-var_0_0.LoginMaxDay = 30
+local V2a9FreeMonthCardModel = class("V2a9FreeMonthCardModel", BaseModel)
 
-function var_0_0.onInit(arg_1_0)
+V2a9FreeMonthCardModel.LoginMaxDay = 30
+
+function V2a9FreeMonthCardModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function V2a9FreeMonthCardModel:reInit()
 	return
 end
 
-function var_0_0.getRewardTotalDay(arg_3_0)
-	local var_3_0 = 0
-	local var_3_1 = ActivityEnum.Activity.V2a9_FreeMonthCard
-	local var_3_2 = ActivityType101Model.instance:getType101LoginCount(var_3_1)
+function V2a9FreeMonthCardModel:getRewardTotalDay()
+	local dayCount = 0
+	local actId = ActivityEnum.Activity.V2a9_FreeMonthCard
+	local loginDay = ActivityType101Model.instance:getType101LoginCount(actId)
+	local countMaxDay = loginDay <= V2a9FreeMonthCardModel.LoginMaxDay and loginDay or V2a9FreeMonthCardModel.LoginMaxDay
 
-	for iter_3_0 = var_3_2 <= var_0_0.LoginMaxDay and var_3_2 or var_0_0.LoginMaxDay, 1, -1 do
-		if not ActivityType101Model.instance:isType101RewardCouldGet(var_3_1, iter_3_0) then
-			var_3_0 = var_3_0 + 1
+	for i = countMaxDay, 1, -1 do
+		local curGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, i)
+
+		if not curGet then
+			dayCount = dayCount + 1
 		end
 	end
 
-	return var_3_0
+	return dayCount
 end
 
-function var_0_0.getCurDay(arg_4_0)
-	local var_4_0 = ActivityEnum.Activity.V2a9_FreeMonthCard
-	local var_4_1 = ActivityType101Model.instance:getType101LoginCount(var_4_0)
-	local var_4_2 = ActivityType101Model.instance:isType101RewardCouldGet(var_4_0, var_4_1)
+function V2a9FreeMonthCardModel:getCurDay()
+	local actId = ActivityEnum.Activity.V2a9_FreeMonthCard
+	local loginDay = ActivityType101Model.instance:getType101LoginCount(actId)
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, loginDay)
 
-	if var_4_1 <= var_0_0.LoginMaxDay then
-		return var_4_1
+	if loginDay <= V2a9FreeMonthCardModel.LoginMaxDay then
+		return loginDay
 	end
 
-	if var_4_2 then
-		for iter_4_0 = var_4_1 <= var_0_0.LoginMaxDay and var_4_1 or var_0_0.LoginMaxDay, 1, -1 do
-			if ActivityType101Model.instance:isType101RewardCouldGet(var_4_0, iter_4_0) then
-				return iter_4_0
+	if couldGet then
+		local countMaxDay = loginDay <= V2a9FreeMonthCardModel.LoginMaxDay and loginDay or V2a9FreeMonthCardModel.LoginMaxDay
+
+		for i = countMaxDay, 1, -1 do
+			local curGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, i)
+
+			if curGet then
+				return i
 			end
 		end
 	end
@@ -46,27 +55,29 @@ function var_0_0.getCurDay(arg_4_0)
 	return 0
 end
 
-function var_0_0.isCurDayCouldGet(arg_5_0)
-	local var_5_0 = ActivityEnum.Activity.V2a9_FreeMonthCard
-	local var_5_1 = ActivityType101Model.instance:getType101LoginCount(var_5_0)
+function V2a9FreeMonthCardModel:isCurDayCouldGet()
+	local actId = ActivityEnum.Activity.V2a9_FreeMonthCard
+	local loginDay = ActivityType101Model.instance:getType101LoginCount(actId)
 
-	if var_5_1 <= 0 then
+	if loginDay <= 0 then
 		return false
 	end
 
-	local var_5_2 = var_0_0.instance:getCurDay()
+	local curDay = V2a9FreeMonthCardModel.instance:getCurDay()
 
-	if var_5_2 <= 0 then
+	if curDay <= 0 then
 		return false
 	end
 
-	if ActivityType101Model.instance:isType101RewardCouldGet(var_5_0, var_5_1) and var_5_2 <= var_0_0.LoginMaxDay then
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, loginDay)
+
+	if couldGet and curDay <= V2a9FreeMonthCardModel.LoginMaxDay then
 		return true
 	end
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+V2a9FreeMonthCardModel.instance = V2a9FreeMonthCardModel.New()
 
-return var_0_0
+return V2a9FreeMonthCardModel

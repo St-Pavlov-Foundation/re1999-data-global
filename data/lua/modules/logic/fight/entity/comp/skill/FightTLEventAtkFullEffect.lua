@@ -1,170 +1,172 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkFullEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventAtkFullEffect.lua
 
-local var_0_0 = class("FightTLEventAtkFullEffect", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventAtkFullEffect", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[4]) then
+local FightTLEventAtkFullEffect = class("FightTLEventAtkFullEffect", FightTimelineTrackItem)
+
+function FightTLEventAtkFullEffect:onTrackStart(fightStepData, duration, paramsArr)
+	if not FightHelper.detectTimelinePlayEffectCondition(fightStepData, paramsArr[4]) then
 		return
 	end
 
-	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
+	self._attacker = FightHelper.getEntity(fightStepData.fromId)
 
-	if not arg_1_0._attacker then
+	if not self._attacker then
 		return
 	end
 
-	if not string.nilorempty(arg_1_3[10]) then
-		arg_1_0._attacker.effect:_onInvokeTokenRelease(arg_1_3[10])
+	if not string.nilorempty(paramsArr[10]) then
+		self._attacker.effect:_onInvokeTokenRelease(paramsArr[10])
 
 		return
 	end
 
-	local var_1_0 = arg_1_3[1]
-	local var_1_1 = 0
-	local var_1_2 = 0
-	local var_1_3 = 0
+	local effectName = paramsArr[1]
+	local offsetX, offsetY, offsetZ = 0, 0, 0
 
-	if arg_1_3[2] then
-		local var_1_4 = string.split(arg_1_3[2], ",")
+	if paramsArr[2] then
+		local arr = string.split(paramsArr[2], ",")
 
-		var_1_1 = var_1_4[1] and tonumber(var_1_4[1]) or var_1_1
+		offsetX = arr[1] and tonumber(arr[1]) or offsetX
 
-		if not arg_1_0._attacker:isMySide() and arg_1_3[5] ~= "1" then
-			var_1_1 = -var_1_1
+		if not self._attacker:isMySide() and paramsArr[5] ~= "1" then
+			offsetX = -offsetX
 		end
 
-		var_1_2 = var_1_4[2] and tonumber(var_1_4[2]) or var_1_2
-		var_1_3 = var_1_4[3] and tonumber(var_1_4[3]) or var_1_3
+		offsetY = arr[2] and tonumber(arr[2]) or offsetY
+		offsetZ = arr[3] and tonumber(arr[3]) or offsetZ
 	end
 
-	if not string.nilorempty(arg_1_3[6]) then
-		local var_1_5 = GameUtil.splitString2(arg_1_3[6], true)
-		local var_1_6 = GameSceneMgr.instance:getCurScene():getCurLevelId()
-		local var_1_7 = FightHelper.getEntityStanceId(arg_1_0._attacker:getMO())
+	if not string.nilorempty(paramsArr[6]) then
+		local arr = GameUtil.splitString2(paramsArr[6], true)
+		local fightScene = GameSceneMgr.instance:getCurScene()
+		local levelId = fightScene:getCurLevelId()
+		local stanceId = FightHelper.getEntityStanceId(self._attacker:getMO())
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_5) do
-			if var_1_6 == iter_1_1[1] and var_1_7 == iter_1_1[2] then
-				var_1_1 = var_1_1 + iter_1_1[3] or 0
-				var_1_2 = var_1_2 + iter_1_1[4] or 0
-				var_1_3 = var_1_3 + iter_1_1[5] or 0
+		for i, v in ipairs(arr) do
+			if levelId == v[1] and stanceId == v[2] then
+				offsetX = offsetX + v[3] or 0
+				offsetY = offsetY + v[4] or 0
+				offsetZ = offsetZ + v[5] or 0
 			end
 		end
 	end
 
-	if not string.nilorempty(arg_1_3[7]) then
-		local var_1_8 = arg_1_0._attacker:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
-		local var_1_9 = FightDataHelper.entityMgr:getNormalList(var_1_8)[1]
+	if not string.nilorempty(paramsArr[7]) then
+		local tempSide = self._attacker:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+		local entityMO = FightDataHelper.entityMgr:getNormalList(tempSide)[1]
 
-		if var_1_9 then
-			local var_1_10 = GameUtil.splitString2(arg_1_3[7], true)
-			local var_1_11 = GameSceneMgr.instance:getCurScene():getCurLevelId()
-			local var_1_12 = FightHelper.getEntityStanceId(var_1_9)
+		if entityMO then
+			local arr = GameUtil.splitString2(paramsArr[7], true)
+			local fightScene = GameSceneMgr.instance:getCurScene()
+			local levelId = fightScene:getCurLevelId()
+			local stanceId = FightHelper.getEntityStanceId(entityMO)
 
-			for iter_1_2, iter_1_3 in ipairs(var_1_10) do
-				if var_1_11 == iter_1_3[1] and var_1_12 == iter_1_3[2] then
-					var_1_1 = var_1_1 + iter_1_3[3] or 0
-					var_1_2 = var_1_2 + iter_1_3[4] or 0
-					var_1_3 = var_1_3 + iter_1_3[5] or 0
+			for i, v in ipairs(arr) do
+				if levelId == v[1] and stanceId == v[2] then
+					offsetX = offsetX + v[3] or 0
+					offsetY = offsetY + v[4] or 0
+					offsetZ = offsetZ + v[5] or 0
 				end
 			end
 		end
 	end
 
-	if string.nilorempty(var_1_0) then
+	if string.nilorempty(effectName) then
 		logError("atk effect name is nil")
 	else
-		arg_1_0._releaseTime = nil
+		self._releaseTime = nil
 
-		if not string.nilorempty(arg_1_3[11]) and arg_1_3[11] ~= "0" then
-			arg_1_0._releaseTime = tonumber(arg_1_3[11]) / FightModel.instance:getSpeed()
+		if not string.nilorempty(paramsArr[11]) and paramsArr[11] ~= "0" then
+			self._releaseTime = tonumber(paramsArr[11]) / FightModel.instance:getSpeed()
 		end
 
-		arg_1_0._effectWrap = arg_1_0._attacker.effect:addGlobalEffect(var_1_0, nil, arg_1_0._releaseTime)
+		self._effectWrap = self._attacker.effect:addGlobalEffect(effectName, nil, self._releaseTime)
 
-		local var_1_13 = true
+		local useWorldPos = true
 
-		if arg_1_3[13] == "1" then
-			local var_1_14 = CameraMgr.instance:getMainCameraGO()
+		if paramsArr[13] == "1" then
+			local mainCamera = CameraMgr.instance:getMainCameraGO()
 
-			gohelper.addChild(var_1_14, arg_1_0._effectWrap.containerGO)
+			gohelper.addChild(mainCamera, self._effectWrap.containerGO)
 
-			var_1_13 = false
+			useWorldPos = false
 		end
 
-		local var_1_15 = tonumber(arg_1_3[3]) or -1
+		local order = tonumber(paramsArr[3]) or -1
 
-		if var_1_15 == -1 then
-			FightRenderOrderMgr.instance:onAddEffectWrap(arg_1_0._attacker.id, arg_1_0._effectWrap)
+		if order == -1 then
+			FightRenderOrderMgr.instance:onAddEffectWrap(self._attacker.id, self._effectWrap)
 		else
-			FightRenderOrderMgr.instance:setEffectOrder(arg_1_0._effectWrap, var_1_15)
+			FightRenderOrderMgr.instance:setEffectOrder(self._effectWrap, order)
 		end
 
-		if var_1_13 then
-			arg_1_0._effectWrap:setWorldPos(var_1_1, var_1_2, var_1_3)
+		if useWorldPos then
+			self._effectWrap:setWorldPos(offsetX, offsetY, offsetZ)
 		else
-			arg_1_0._effectWrap:setLocalPos(var_1_1, var_1_2, var_1_3)
+			self._effectWrap:setLocalPos(offsetX, offsetY, offsetZ)
 		end
 
-		arg_1_0._releaseByServer = tonumber(arg_1_3[8])
+		self._releaseByServer = tonumber(paramsArr[8])
 
-		if arg_1_0._releaseByServer then
-			arg_1_0._attacker.effect:addServerRelease(arg_1_0._releaseByServer, arg_1_0._effectWrap)
+		if self._releaseByServer then
+			self._attacker.effect:addServerRelease(self._releaseByServer, self._effectWrap)
 		end
 
-		arg_1_0._tokenRelease = not string.nilorempty(arg_1_3[9])
+		self._tokenRelease = not string.nilorempty(paramsArr[9])
 
-		if arg_1_0._tokenRelease then
-			arg_1_0._attacker.effect:addTokenRelease(arg_1_3[9], arg_1_0._effectWrap)
+		if self._tokenRelease then
+			self._attacker.effect:addTokenRelease(paramsArr[9], self._effectWrap)
 		end
 
-		arg_1_0._roundRelease = not string.nilorempty(arg_1_3[12])
+		self._roundRelease = not string.nilorempty(paramsArr[12])
 
-		if arg_1_0._roundRelease then
-			arg_1_0._attacker.effect:addRoundRelease(tonumber(arg_1_3[12]), arg_1_0._effectWrap)
+		if self._roundRelease then
+			self._attacker.effect:addRoundRelease(tonumber(paramsArr[12]), self._effectWrap)
 		end
 	end
 
-	local var_1_16 = tonumber(arg_1_3[14])
+	local audioId = tonumber(paramsArr[14])
 
-	if var_1_16 then
-		AudioMgr.instance:trigger(var_1_16)
+	if audioId then
+		AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	arg_2_0:_removeEffect()
+function FightTLEventAtkFullEffect:onTrackEnd()
+	self:_removeEffect()
 end
 
-function var_0_0.onDestructor(arg_3_0)
-	arg_3_0:_removeEffect()
+function FightTLEventAtkFullEffect:onDestructor()
+	self:_removeEffect()
 end
 
-function var_0_0._removeEffect(arg_4_0)
-	local var_4_0 = true
+function FightTLEventAtkFullEffect:_removeEffect()
+	local canRelease = true
 
-	if arg_4_0._releaseByServer then
-		var_4_0 = false
+	if self._releaseByServer then
+		canRelease = false
 	end
 
-	if arg_4_0._tokenRelease then
-		var_4_0 = false
+	if self._tokenRelease then
+		canRelease = false
 	end
 
-	if arg_4_0._releaseTime then
-		var_4_0 = false
+	if self._releaseTime then
+		canRelease = false
 	end
 
-	if arg_4_0._roundRelease then
-		var_4_0 = false
+	if self._roundRelease then
+		canRelease = false
 	end
 
-	if var_4_0 and arg_4_0._effectWrap then
-		arg_4_0._attacker.effect:removeEffect(arg_4_0._effectWrap)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_4_0._attacker.id, arg_4_0._effectWrap)
+	if canRelease and self._effectWrap then
+		self._attacker.effect:removeEffect(self._effectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(self._attacker.id, self._effectWrap)
 	end
 
-	arg_4_0._effectWrap = nil
-	arg_4_0._attacker = nil
+	self._effectWrap = nil
+	self._attacker = nil
 end
 
-return var_0_0
+return FightTLEventAtkFullEffect

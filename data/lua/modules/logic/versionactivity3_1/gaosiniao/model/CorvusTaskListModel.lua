@@ -1,117 +1,121 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.model.CorvusTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/model/CorvusTaskListModel.lua
 
-local var_0_0 = class("CorvusTaskListModel", ListScrollModel)
+module("modules.logic.versionactivity3_1.gaosiniao.model.CorvusTaskListModel", package.seeall)
 
-function var_0_0._getTaskMoList(arg_1_0, arg_1_1, arg_1_2)
-	assert(arg_1_1)
-	assert(arg_1_2)
+local CorvusTaskListModel = class("CorvusTaskListModel", ListScrollModel)
 
-	local var_1_0 = TaskModel.instance:getTaskMoList(arg_1_1, arg_1_2)
+function CorvusTaskListModel:_getTaskMoList(taskType, actId)
+	assert(taskType)
+	assert(actId)
 
-	table.sort(var_1_0, function(arg_2_0, arg_2_1)
-		local var_2_0 = arg_2_0.config.sorting
-		local var_2_1 = arg_2_1.config.sorting
-		local var_2_2 = arg_2_0.hasFinished and 1 or 0
-		local var_2_3 = arg_2_1.hasFinished and 1 or 0
+	local taskMoList = TaskModel.instance:getTaskMoList(taskType, actId)
 
-		if var_2_2 ~= var_2_3 then
-			return var_2_3 < var_2_2
+	table.sort(taskMoList, function(a, b)
+		local a_sorting = a.config.sorting
+		local b_sorting = b.config.sorting
+		local a_hasFinished = a.hasFinished and 1 or 0
+		local b_hasFinished = b.hasFinished and 1 or 0
+
+		if a_hasFinished ~= b_hasFinished then
+			return b_hasFinished < a_hasFinished
 		end
 
-		local var_2_4 = arg_2_0:isClaimed() and 1 or 0
-		local var_2_5 = arg_2_1:isClaimed() and 1 or 0
+		local a_isClaimed = a:isClaimed() and 1 or 0
+		local b_isClaimed = b:isClaimed() and 1 or 0
 
-		if var_2_4 ~= var_2_5 then
-			return var_2_4 < var_2_5
+		if a_isClaimed ~= b_isClaimed then
+			return a_isClaimed < b_isClaimed
 		end
 
-		if var_2_0 ~= var_2_1 then
-			return var_2_0 < var_2_1
+		if a_sorting ~= b_sorting then
+			return a_sorting < b_sorting
 		end
 
-		return arg_2_0.id < arg_2_1.id
+		return a.id < b.id
 	end)
 
-	return var_1_0
+	return taskMoList
 end
 
-function var_0_0.setTaskList(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._taskMoList = arg_3_0:_getTaskMoList(arg_3_1, arg_3_2)
+function CorvusTaskListModel:setTaskList(taskType, actId)
+	self._taskMoList = self:_getTaskMoList(taskType, actId)
 
-	arg_3_0:setList(arg_3_0._taskMoList)
+	self:setList(self._taskMoList)
 
-	arg_3_0._hasGetAllFlag = false
+	self._hasGetAllFlag = false
 end
 
-function var_0_0.setTaskListWithGetAll(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._taskMoList = arg_4_0:_getTaskMoList(arg_4_1, arg_4_2)
+function CorvusTaskListModel:setTaskListWithGetAll(taskType, actId)
+	self._taskMoList = self:_getTaskMoList(taskType, actId)
 
-	if arg_4_0:getFinishTaskCount() > 1 then
-		table.insert(arg_4_0._taskMoList, 1, {
+	local finishTaskCount = self:getFinishTaskCount()
+
+	if finishTaskCount > 1 then
+		table.insert(self._taskMoList, 1, {
 			getAll = true
 		})
 	end
 
-	arg_4_0:setList(arg_4_0._taskMoList)
+	self:setList(self._taskMoList)
 
-	arg_4_0._hasGetAllFlag = true
+	self._hasGetAllFlag = true
 end
 
-function var_0_0.refreshList(arg_5_0, arg_5_1)
-	if arg_5_1 == nil then
-		arg_5_1 = arg_5_0._hasGetAllFlag
+function CorvusTaskListModel:refreshList(hasGetAll)
+	if hasGetAll == nil then
+		hasGetAll = self._hasGetAllFlag
 	end
 
-	local var_5_0 = arg_5_0:getFinishTaskCount()
+	local finishTaskCount = self:getFinishTaskCount()
 
-	if arg_5_1 and var_5_0 > 1 then
-		local var_5_1 = tabletool.copy(arg_5_0._taskMoList)
+	if hasGetAll and finishTaskCount > 1 then
+		local moList = tabletool.copy(self._taskMoList)
 
-		table.insert(var_5_1, 1, {
+		table.insert(moList, 1, {
 			getAll = true
 		})
-		arg_5_0:setList(var_5_1)
+		self:setList(moList)
 	else
-		arg_5_0:setList(arg_5_0._taskMoList)
+		self:setList(self._taskMoList)
 	end
 end
 
-function var_0_0.getFinishTaskCount(arg_6_0)
-	local var_6_0 = 0
+function CorvusTaskListModel:getFinishTaskCount()
+	local count = 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._taskMoList) do
-		if iter_6_1.hasFinished and iter_6_1.finishCount < iter_6_1:getMaxFinishCount() then
-			var_6_0 = var_6_0 + 1
+	for _, taskMo in ipairs(self._taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo:getMaxFinishCount() then
+			count = count + 1
 		end
 	end
 
-	return var_6_0
+	return count
 end
 
-function var_0_0.getFinishTaskActivityCount(arg_7_0)
-	local var_7_0 = 0
+function CorvusTaskListModel:getFinishTaskActivityCount()
+	local count = 0
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._taskMoList) do
-		if iter_7_1.hasFinished and iter_7_1.finishCount < iter_7_1:getMaxFinishCount() then
-			var_7_0 = var_7_0 + iter_7_1.config.activity
+	for _, taskMo in ipairs(self._taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo:getMaxFinishCount() then
+			count = count + taskMo.config.activity
 		end
 	end
 
-	return var_7_0
+	return count
 end
 
-function var_0_0.getGetRewardTaskCount(arg_8_0)
-	local var_8_0 = 0
+function CorvusTaskListModel:getGetRewardTaskCount()
+	local count = 0
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._taskMoList) do
-		if iter_8_1:isClaimed() then
-			var_8_0 = var_8_0 + 1
+	for _, taskMo in ipairs(self._taskMoList) do
+		if taskMo:isClaimed() then
+			count = count + 1
 		end
 	end
 
-	return var_8_0
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+CorvusTaskListModel.instance = CorvusTaskListModel.New()
 
-return var_0_0
+return CorvusTaskListModel

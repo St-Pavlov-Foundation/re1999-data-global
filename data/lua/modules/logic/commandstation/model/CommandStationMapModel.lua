@@ -1,217 +1,223 @@
-﻿module("modules.logic.commandstation.model.CommandStationMapModel", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/model/CommandStationMapModel.lua
 
-local var_0_0 = class("CommandStationMapModel", BaseModel)
+module("modules.logic.commandstation.model.CommandStationMapModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local CommandStationMapModel = class("CommandStationMapModel", BaseModel)
+
+function CommandStationMapModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._eventCategory = nil
-	arg_2_0._timeId = nil
-	arg_2_0._versionId = nil
-	arg_2_0._timelineIsCharacterMode = false
-	arg_2_0._characterId = nil
-	arg_2_0._preloadScene = nil
-	arg_2_0._preloadSceneLoader = nil
-	arg_2_0._preloadView = nil
+function CommandStationMapModel:reInit()
+	self._eventCategory = nil
+	self._timeId = nil
+	self._versionId = nil
+	self._timelineIsCharacterMode = false
+	self._characterId = nil
+	self._preloadScene = nil
+	self._preloadSceneLoader = nil
+	self._preloadView = nil
 end
 
-function var_0_0.setVersionId(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		CommandStationController.setSaveNumber(CommandStationEnum.PrefsKey.Version, arg_3_1)
+function CommandStationMapModel:setVersionId(versionId)
+	if versionId then
+		CommandStationController.setSaveNumber(CommandStationEnum.PrefsKey.Version, versionId)
 	end
 
-	arg_3_0._versionId = arg_3_1
+	self._versionId = versionId
 end
 
-function var_0_0.getVersionId(arg_4_0)
-	if not arg_4_0._versionId then
-		local var_4_0 = CommandStationController.getSaveNumber(CommandStationEnum.PrefsKey.Version)
+function CommandStationMapModel:getVersionId()
+	if not self._versionId then
+		local versionId = CommandStationController.getSaveNumber(CommandStationEnum.PrefsKey.Version)
 
-		if var_4_0 and lua_copost_version.configDict[var_4_0] then
-			arg_4_0._versionId = var_4_0
+		if versionId and lua_copost_version.configDict[versionId] then
+			self._versionId = versionId
 		end
 	end
 
-	return arg_4_0._versionId or CommandStationEnum.AllVersion
+	return self._versionId or CommandStationEnum.AllVersion
 end
 
-function var_0_0.setEventCategory(arg_5_0, arg_5_1)
-	arg_5_0._eventCategory = arg_5_1
+function CommandStationMapModel:setEventCategory(eventCategory)
+	self._eventCategory = eventCategory
 end
 
-function var_0_0.getEventCategory(arg_6_0)
-	return arg_6_0._eventCategory
+function CommandStationMapModel:getEventCategory()
+	return self._eventCategory
 end
 
-function var_0_0.getVersionTimeline(arg_7_0, arg_7_1)
-	local var_7_0 = CommandStationConfig.instance:getVersionTimeline(arg_7_1)
+function CommandStationMapModel:getVersionTimeline(versionId)
+	local timeline = CommandStationConfig.instance:getVersionTimeline(versionId)
 
-	return arg_7_0:checkTimeline(var_7_0)
+	return self:checkTimeline(timeline)
 end
 
-function var_0_0.checkTimeline(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1
+function CommandStationMapModel:checkTimeline(timeline)
+	local result = {}
+	local firstTimeId
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		local var_8_2 = {}
+	for _, v in ipairs(timeline) do
+		local timeIdList = {}
 
-		for iter_8_2, iter_8_3 in ipairs(iter_8_1.timeId) do
-			local var_8_3 = CommandStationConfig.instance:getTimePointEpisodeId(iter_8_3)
+		for i, timeId in ipairs(v.timeId) do
+			local episodeId = CommandStationConfig.instance:getTimePointEpisodeId(timeId)
 
-			if DungeonModel.instance:hasPassLevelAndStory(var_8_3) then
-				table.insert(var_8_2, iter_8_3)
+			if DungeonModel.instance:hasPassLevelAndStory(episodeId) then
+				table.insert(timeIdList, timeId)
 			end
 
-			var_8_1 = var_8_1 or iter_8_3
+			firstTimeId = firstTimeId or timeId
 		end
 
-		if #var_8_2 > 0 then
-			table.insert(var_8_0, {
-				id = iter_8_1.id,
-				timeId = var_8_2
+		if #timeIdList > 0 then
+			table.insert(result, {
+				id = v.id,
+				timeId = timeIdList
 			})
 		end
 	end
 
-	return var_8_0, var_8_1
+	return result, firstTimeId
 end
 
-function var_0_0.initTimeId(arg_9_0)
-	local var_9_0, var_9_1 = pcall(arg_9_0._internalInitTimeId, arg_9_0)
+function CommandStationMapModel:initTimeId()
+	local result, resultString = pcall(self._internalInitTimeId, self)
 
-	if not var_9_0 then
-		arg_9_0:setVersionId(CommandStationEnum.AllVersion)
-		arg_9_0:setTimeId(CommandStationEnum.FirstTimeId)
-		logError(string.format("CommandStationMapModel:initTimeId error:%s", var_9_1))
+	if not result then
+		self:setVersionId(CommandStationEnum.AllVersion)
+		self:setTimeId(CommandStationEnum.FirstTimeId)
+		logError(string.format("CommandStationMapModel:initTimeId error:%s", resultString))
 	end
 end
 
-function var_0_0._internalInitTimeId(arg_10_0)
-	local var_10_0, var_10_1 = arg_10_0:getVersionTimeline(arg_10_0:getVersionId())
-	local var_10_2 = arg_10_0._timeId or CommandStationController.getSaveNumber(CommandStationEnum.PrefsKey.TimeId)
+function CommandStationMapModel:_internalInitTimeId()
+	local timeline, firstTimeId = self:getVersionTimeline(self:getVersionId())
+	local timeId = self._timeId or CommandStationController.getSaveNumber(CommandStationEnum.PrefsKey.TimeId)
 
-	arg_10_0._timeId = nil
+	self._timeId = nil
 
-	if var_10_2 then
-		local var_10_3 = false
+	if timeId then
+		local isFind = false
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-			if tabletool.indexOf(iter_10_1.timeId, var_10_2) then
-				var_10_3 = true
+		for i, v in ipairs(timeline) do
+			local index = tabletool.indexOf(v.timeId, timeId)
+
+			if index then
+				isFind = true
 
 				break
 			end
 		end
 
-		if not var_10_3 then
-			var_10_2 = nil
+		if not isFind then
+			timeId = nil
 		end
 	end
 
-	if not var_10_2 then
-		local var_10_4 = var_10_0[1]
+	if not timeId then
+		local firstTimeGroup = timeline[1]
 
-		if var_10_4 then
-			var_10_2 = var_10_4.timeId[1]
+		if firstTimeGroup then
+			timeId = firstTimeGroup.timeId[1]
 		end
 	end
 
-	var_10_2 = var_10_2 or var_10_1
-	arg_10_0._timeId = var_10_2
+	timeId = timeId or firstTimeId
+	self._timeId = timeId
 end
 
-function var_0_0.setTimeId(arg_11_0, arg_11_1)
-	arg_11_0._timeId = arg_11_1
+function CommandStationMapModel:setTimeId(timeId)
+	self._timeId = timeId
 
-	if arg_11_1 then
-		CommandStationController.setSaveNumber(CommandStationEnum.PrefsKey.TimeId, arg_11_1)
+	if timeId then
+		CommandStationController.setSaveNumber(CommandStationEnum.PrefsKey.TimeId, timeId)
 	end
 end
 
-function var_0_0.getTimeId(arg_12_0)
-	return arg_12_0._timeId
+function CommandStationMapModel:getTimeId()
+	return self._timeId
 end
 
-function var_0_0.getCurTimeIdScene(arg_13_0)
-	local var_13_0 = arg_13_0._timeId
-	local var_13_1 = CommandStationConfig.instance:getTimeGroupByTimeId(var_13_0).sceneId
+function CommandStationMapModel:getCurTimeIdScene()
+	local timeId = self._timeId
+	local timeGroupConfig = CommandStationConfig.instance:getTimeGroupByTimeId(timeId)
+	local sceneId = timeGroupConfig.sceneId
+	local sceneConfig = CommandStationConfig.instance:getSceneConfig(sceneId)
 
-	return (CommandStationConfig.instance:getSceneConfig(var_13_1))
+	return sceneConfig
 end
 
-function var_0_0.setTimelineCharacterMode(arg_14_0, arg_14_1)
-	arg_14_0._timelineCharacterMode = arg_14_1
+function CommandStationMapModel:setTimelineCharacterMode(value)
+	self._timelineCharacterMode = value
 end
 
-function var_0_0.isTimelineCharacterMode(arg_15_0)
-	return arg_15_0._timelineCharacterMode
+function CommandStationMapModel:isTimelineCharacterMode()
+	return self._timelineCharacterMode
 end
 
-function var_0_0.setCharacterId(arg_16_0, arg_16_1)
-	arg_16_0._characterId = arg_16_1
+function CommandStationMapModel:setCharacterId(id)
+	self._characterId = id
 end
 
-function var_0_0.getCharacterId(arg_17_0)
-	return arg_17_0._characterId
+function CommandStationMapModel:getCharacterId()
+	return self._characterId
 end
 
-function var_0_0.clearSceneInfo(arg_18_0)
-	arg_18_0._sceneGo = nil
+function CommandStationMapModel:clearSceneInfo()
+	self._sceneGo = nil
 
-	arg_18_0:clearSceneNodeList()
+	self:clearSceneNodeList()
 end
 
-function var_0_0.clearSceneNodeList(arg_19_0)
-	if arg_19_0._sceneNodeList then
-		tabletool.clear(arg_19_0._sceneNodeList)
+function CommandStationMapModel:clearSceneNodeList()
+	if self._sceneNodeList then
+		tabletool.clear(self._sceneNodeList)
 	end
 end
 
-function var_0_0.setSceneGo(arg_20_0, arg_20_1)
-	arg_20_0:clearSceneInfo()
+function CommandStationMapModel:setSceneGo(sceneGo)
+	self:clearSceneInfo()
 
-	arg_20_0._sceneGo = arg_20_1
-	arg_20_0._sceneNodeList = {}
+	self._sceneGo = sceneGo
+	self._sceneNodeList = {}
 end
 
-function var_0_0.getSceneNode(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0._sceneNodeList[arg_21_1]
+function CommandStationMapModel:getSceneNode(name)
+	local node = self._sceneNodeList[name]
 
-	if gohelper.isNil(var_21_0) then
-		var_21_0 = UnityEngine.GameObject.New(tostring(arg_21_1))
+	if gohelper.isNil(node) then
+		node = UnityEngine.GameObject.New(tostring(name))
 
-		gohelper.addChild(arg_21_0._sceneGo, var_21_0)
+		gohelper.addChild(self._sceneGo, node)
 
-		arg_21_0._sceneNodeList[arg_21_1] = var_21_0
+		self._sceneNodeList[name] = node
 	end
 
-	return var_21_0
+	return node
 end
 
-function var_0_0.setPreloadScene(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0._preloadScene = arg_22_2
-	arg_22_0._preloadSceneLoader = arg_22_1
+function CommandStationMapModel:setPreloadScene(loader, sceneGo)
+	self._preloadScene = sceneGo
+	self._preloadSceneLoader = loader
 end
 
-function var_0_0.getPreloadScene(arg_23_0)
-	return arg_23_0._preloadScene
+function CommandStationMapModel:getPreloadScene()
+	return self._preloadScene
 end
 
-function var_0_0.getPreloadSceneLoader(arg_24_0)
-	return arg_24_0._preloadSceneLoader
+function CommandStationMapModel:getPreloadSceneLoader()
+	return self._preloadSceneLoader
 end
 
-function var_0_0.setPreloadView(arg_25_0, arg_25_1)
-	arg_25_0._preloadView = arg_25_1
+function CommandStationMapModel:setPreloadView(go)
+	self._preloadView = go
 end
 
-function var_0_0.getPreloadView(arg_26_0)
-	return arg_26_0._preloadView
+function CommandStationMapModel:getPreloadView()
+	return self._preloadView
 end
 
-var_0_0.instance = var_0_0.New()
+CommandStationMapModel.instance = CommandStationMapModel.New()
 
-return var_0_0
+return CommandStationMapModel

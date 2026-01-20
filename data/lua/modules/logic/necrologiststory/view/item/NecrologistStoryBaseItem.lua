@@ -1,132 +1,142 @@
-﻿module("modules.logic.necrologiststory.view.item.NecrologistStoryBaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/item/NecrologistStoryBaseItem.lua
 
-local var_0_0 = class("NecrologistStoryBaseItem", LuaCompBase)
+module("modules.logic.necrologiststory.view.item.NecrologistStoryBaseItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.storyView = arg_1_1
+local NecrologistStoryBaseItem = class("NecrologistStoryBaseItem", LuaCompBase)
+
+function NecrologistStoryBaseItem:ctor(storyView)
+	self.storyView = storyView
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0.transform = arg_2_1.transform
-	arg_2_0._height = 0
-	arg_2_0._posY = 0
+function NecrologistStoryBaseItem:init(go)
+	self.viewGO = go
+	self.transform = go.transform
+	self._height = 0
+	self._posY = 0
 
-	arg_2_0:onInit()
+	self:onInit()
 end
 
-function var_0_0.setCallback(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0.playFinishCallback = arg_3_1
-	arg_3_0.playFinishCallbackObj = arg_3_2
-	arg_3_0.refreshHeightCallback = arg_3_3
-	arg_3_0.callbackObj = arg_3_4
+function NecrologistStoryBaseItem:setCallback(playFinishCallback, playFinishCallbackObj, refreshHeightCallback, callbackObj)
+	self.playFinishCallback = playFinishCallback
+	self.playFinishCallbackObj = playFinishCallbackObj
+	self.refreshHeightCallback = refreshHeightCallback
+	self.callbackObj = callbackObj
 end
 
-function var_0_0.playStory(arg_4_0, arg_4_1, arg_4_2, ...)
-	arg_4_0._storyConfig = arg_4_1
+function NecrologistStoryBaseItem:playStory(storyConfig, isSkip, ...)
+	self._storyConfig = storyConfig
 
-	arg_4_0:setCallback(...)
-	arg_4_0.storyView:addControl(arg_4_1, arg_4_2, true)
-	arg_4_0:onPlayStory(arg_4_2)
-	arg_4_0:refreshHeight()
+	self:setCallback(...)
+	self.storyView:addControl(storyConfig, isSkip, true)
+	self:onPlayStory(isSkip)
+	self:refreshHeight()
 end
 
-function var_0_0.onPlayFinish(arg_5_0)
-	arg_5_0:refreshHeight()
+function NecrologistStoryBaseItem:onPlayFinish(isAutoNext)
+	self:refreshHeight()
 
-	if arg_5_0._storyConfig then
-		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnStoryItemFinish, arg_5_0._storyConfig.id)
+	if self._storyConfig then
+		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnStoryItemFinish, self._storyConfig.id)
 	end
 
-	if arg_5_0.playFinishCallback then
-		arg_5_0.playFinishCallback(arg_5_0.playFinishCallbackObj)
-	end
-end
-
-function var_0_0.onClickNext(arg_6_0)
-	if arg_6_0._storyConfig then
-		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnStoryItemClickNext, arg_6_0._storyConfig.id)
+	if self.playFinishCallback then
+		self.playFinishCallback(self.playFinishCallbackObj, isAutoNext)
 	end
 end
 
-function var_0_0.refreshHeight(arg_7_0)
-	if gohelper.isNil(arg_7_0.viewGO) then
+function NecrologistStoryBaseItem:onClickNext()
+	if self._storyConfig then
+		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnStoryItemClickNext, self._storyConfig.id)
+	end
+end
+
+function NecrologistStoryBaseItem:refreshHeight()
+	if gohelper.isNil(self.viewGO) then
 		return
 	end
 
-	local var_7_0 = arg_7_0:caleHeight()
+	local caleHeight = self:caleHeight()
 
-	arg_7_0:setHeight(var_7_0)
+	self:setHeight(caleHeight)
 
-	if arg_7_0.refreshHeightCallback then
-		arg_7_0.refreshHeightCallback(arg_7_0.callbackObj, arg_7_0)
+	if self.refreshHeightCallback then
+		self.refreshHeightCallback(self.callbackObj, self)
 	end
 end
 
-function var_0_0.getItemType(arg_8_0)
-	return arg_8_0._storyConfig.type
+function NecrologistStoryBaseItem:getItemType()
+	return self._storyConfig.type
 end
 
-function var_0_0.getStoryConfig(arg_9_0)
-	return arg_9_0._storyConfig
+function NecrologistStoryBaseItem:getStoryConfig()
+	return self._storyConfig
 end
 
-function var_0_0.getHeight(arg_10_0)
-	return arg_10_0._height
+function NecrologistStoryBaseItem:getStoryId()
+	return self._storyConfig.id
 end
 
-function var_0_0.setHeight(arg_11_0, arg_11_1)
-	arg_11_0._height = arg_11_1
-
-	recthelper.setHeight(arg_11_0.transform, arg_11_1)
+function NecrologistStoryBaseItem:getHeight()
+	return self._height
 end
 
-function var_0_0.getPosY(arg_12_0)
-	return arg_12_0._posY
+function NecrologistStoryBaseItem:setHeight(height)
+	self._height = height
+
+	recthelper.setHeight(self.transform, height)
 end
 
-function var_0_0.setPosY(arg_13_0, arg_13_1)
-	arg_13_0._posY = arg_13_1
-
-	recthelper.setAnchorY(arg_13_0.transform, arg_13_1)
+function NecrologistStoryBaseItem:getPosY()
+	return self._posY
 end
 
-function var_0_0.onInit(arg_14_0)
+function NecrologistStoryBaseItem:setPosY(posY)
+	if self._posY == posY then
+		return
+	end
+
+	self._posY = posY
+
+	recthelper.setAnchorY(self.transform, posY)
+end
+
+function NecrologistStoryBaseItem:onInit()
 	return
 end
 
-function var_0_0.onPlayStory(arg_15_0, arg_15_1)
+function NecrologistStoryBaseItem:onPlayStory(isSkip)
 	return
 end
 
-function var_0_0.caleHeight(arg_16_0)
+function NecrologistStoryBaseItem:caleHeight()
 	return 0
 end
 
-function var_0_0.getResPath()
+function NecrologistStoryBaseItem.getResPath()
 	logError("need override getResPath")
 end
 
-function var_0_0.isDone(arg_18_0)
+function NecrologistStoryBaseItem:isDone()
 	return true
 end
 
-function var_0_0.justDone(arg_19_0)
+function NecrologistStoryBaseItem:justDone()
 	return
 end
 
-function var_0_0.getTextStr(arg_20_0)
+function NecrologistStoryBaseItem:getTextStr()
 	return
 end
 
-function var_0_0.destory(arg_21_0)
-	if gohelper.isNil(arg_21_0.viewGO) then
+function NecrologistStoryBaseItem:destory()
+	if gohelper.isNil(self.viewGO) then
 		return
 	end
 
-	gohelper.destroy(arg_21_0.viewGO)
+	gohelper.destroy(self.viewGO)
 
-	arg_21_0.viewGO = nil
+	self.viewGO = nil
 end
 
-return var_0_0
+return NecrologistStoryBaseItem

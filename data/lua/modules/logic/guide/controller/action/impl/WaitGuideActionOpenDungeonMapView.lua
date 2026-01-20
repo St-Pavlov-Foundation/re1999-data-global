@@ -1,47 +1,50 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenDungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionOpenDungeonMapView.lua
 
-local var_0_0 = class("WaitGuideActionOpenDungeonMapView", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenDungeonMapView", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionOpenDungeonMapView = class("WaitGuideActionOpenDungeonMapView", BaseGuideAction)
 
-	arg_1_0._viewName = ViewName.DungeonMapView
+function WaitGuideActionOpenDungeonMapView:onStart(context)
+	WaitGuideActionOpenDungeonMapView.super.onStart(self, context)
 
-	if not ViewMgr.instance:isOpen(arg_1_0._viewName) then
-		arg_1_0:onDone(true)
+	self._viewName = ViewName.DungeonMapView
 
-		return
-	end
-
-	local var_1_0 = ViewMgr.instance:getContainer(arg_1_0._viewName):getMapScene()
-	local var_1_1 = var_1_0 and var_1_0:getSceneGo()
-
-	if not gohelper.isNil(var_1_1) then
-		arg_1_0:onDone(true)
+	if not ViewMgr.instance:isOpen(self._viewName) then
+		self:onDone(true)
 
 		return
 	end
 
-	DungeonController.instance:registerCallback(DungeonEvent.OnShowMap, arg_1_0._onShowMap, arg_1_0)
+	local container = ViewMgr.instance:getContainer(self._viewName)
+	local mapSceneView = container:getMapScene()
+	local sceneGo = mapSceneView and mapSceneView:getSceneGo()
 
-	local var_1_2 = 2
+	if not gohelper.isNil(sceneGo) then
+		self:onDone(true)
 
-	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, var_1_2)
+		return
+	end
+
+	DungeonController.instance:registerCallback(DungeonEvent.OnShowMap, self._onShowMap, self)
+
+	local timeoutSecond = 2
+
+	TaskDispatcher.runDelay(self._delayDone, self, timeoutSecond)
 end
 
-function var_0_0._onShowMap(arg_2_0)
-	arg_2_0:clearWork()
-	arg_2_0:onDone(true)
+function WaitGuideActionOpenDungeonMapView:_onShowMap()
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:clearWork()
-	arg_3_0:onDone(true)
+function WaitGuideActionOpenDungeonMapView:_delayDone()
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnShowMap, arg_4_0._onShowMap, arg_4_0)
+function WaitGuideActionOpenDungeonMapView:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnShowMap, self._onShowMap, self)
 end
 
-return var_0_0
+return WaitGuideActionOpenDungeonMapView

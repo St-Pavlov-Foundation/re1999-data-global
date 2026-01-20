@@ -1,21 +1,23 @@
-﻿module("modules.common.work.PlayStoryWork", package.seeall)
+﻿-- chunkname: @modules/common/work/PlayStoryWork.lua
 
-local var_0_0 = class("PlayStoryWork", BaseWork)
+module("modules.common.work.PlayStoryWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.storyId = arg_1_1
+local PlayStoryWork = class("PlayStoryWork", BaseWork)
+
+function PlayStoryWork:ctor(storyId)
+	self.storyId = storyId
 end
 
-function var_0_0.onStart(arg_2_0)
-	StoryController.instance:playStory(arg_2_0.storyId, nil, arg_2_0.onPlayStoryDone, arg_2_0)
+function PlayStoryWork:onStart()
+	StoryController.instance:playStory(self.storyId, nil, self.onPlayStoryDone, self)
 end
 
-function var_0_0.onPlayStoryDone(arg_3_0)
-	arg_3_0:onDone(true)
+function PlayStoryWork:onPlayStoryDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
+function PlayStoryWork:clearWork()
 	return
 end
 
-return var_0_0
+return PlayStoryWork

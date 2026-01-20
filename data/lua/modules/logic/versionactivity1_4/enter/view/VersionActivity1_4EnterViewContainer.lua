@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_4.enter.view.VersionActivity1_4EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/enter/view/VersionActivity1_4EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_4EnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.enter.view.VersionActivity1_4EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity1_4EnterViewContainer = class("VersionActivity1_4EnterViewContainer", BaseViewContainer)
+
+function VersionActivity1_4EnterViewContainer:buildViews()
 	return {
 		VersionActivity1_4EnterView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function VersionActivity1_4EnterViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,14 +21,14 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	ActivityStageHelper.recordActivityStage(arg_3_0.viewParam.activityIdList)
+function VersionActivity1_4EnterViewContainer:onContainerInit()
+	ActivityStageHelper.recordActivityStage(self.viewParam.activityIdList)
 end
 
-function var_0_0.onContainerClose(arg_4_0)
-	if arg_4_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
+function VersionActivity1_4EnterViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-return var_0_0
+return VersionActivity1_4EnterViewContainer

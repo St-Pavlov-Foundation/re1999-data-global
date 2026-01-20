@@ -1,182 +1,186 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzleBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/puzzle/FairyLandPuzzleBase.lua
 
-local var_0_0 = class("FairyLandPuzzleBase", UserDataDispose)
+module("modules.logic.versionactivity1_9.fairyland.view.puzzle.FairyLandPuzzleBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FairyLandPuzzleBase = class("FairyLandPuzzleBase", UserDataDispose)
 
-	arg_1_0.config = arg_1_1.config
-	arg_1_0.viewGO = arg_1_1.viewGO
+function FairyLandPuzzleBase:init(param)
+	self:__onInit()
 
-	arg_1_0:onInitView()
-	arg_1_0:start()
+	self.config = param.config
+	self.viewGO = param.viewGO
 
-	if FairyLandModel.instance:isPassPuzzle(arg_1_0.config.id) then
-		if not FairyLandModel.instance:isFinishDialog(arg_1_0.config.successTalkId) then
-			arg_1_0:playSuccessTalk()
-		elseif not FairyLandModel.instance:isFinishDialog(arg_1_0.config.storyTalkId) then
-			arg_1_0:playStoryTalk()
+	self:onInitView()
+	self:start()
+
+	local isFinish = FairyLandModel.instance:isPassPuzzle(self.config.id)
+
+	if isFinish then
+		if not FairyLandModel.instance:isFinishDialog(self.config.successTalkId) then
+			self:playSuccessTalk()
+		elseif not FairyLandModel.instance:isFinishDialog(self.config.storyTalkId) then
+			self:playStoryTalk()
 		end
-	elseif not FairyLandModel.instance:isFinishDialog(arg_1_0.config.afterTalkId) then
-		arg_1_0:playAfterTalk()
+	elseif not FairyLandModel.instance:isFinishDialog(self.config.afterTalkId) then
+		self:playAfterTalk()
 	end
 end
 
-function var_0_0.start(arg_2_0)
-	arg_2_0:onStart()
+function FairyLandPuzzleBase:start()
+	self:onStart()
 end
 
-function var_0_0.refresh(arg_3_0, arg_3_1)
-	arg_3_0.config = arg_3_1
+function FairyLandPuzzleBase:refresh(config)
+	self.config = config
 
-	arg_3_0:onRefreshView()
+	self:onRefreshView()
 end
 
-function var_0_0.destory(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.playTipsAnim, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.playTipsTalk, arg_4_0)
-	arg_4_0:onDestroyView()
-	arg_4_0:__onDispose()
+function FairyLandPuzzleBase:destory()
+	TaskDispatcher.cancelTask(self.playTipsAnim, self)
+	TaskDispatcher.cancelTask(self.playTipsTalk, self)
+	self:onDestroyView()
+	self:__onDispose()
 end
 
-function var_0_0.stopCheckTips(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.playTipsAnim, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.playTipsTalk, arg_5_0)
+function FairyLandPuzzleBase:stopCheckTips()
+	TaskDispatcher.cancelTask(self.playTipsAnim, self)
+	TaskDispatcher.cancelTask(self.playTipsTalk, self)
 end
 
-function var_0_0.startCheckTips(arg_6_0)
-	arg_6_0:startCheckAnim()
-	arg_6_0:startCheckTalk()
+function FairyLandPuzzleBase:startCheckTips()
+	self:startCheckAnim()
+	self:startCheckTalk()
 end
 
-function var_0_0.startCheckAnim(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.playTipsAnim, arg_7_0)
+function FairyLandPuzzleBase:startCheckAnim()
+	TaskDispatcher.cancelTask(self.playTipsAnim, self)
 
-	if not FairyLandModel.instance:isFinishDialog(arg_7_0.config.afterTalkId) then
+	if not FairyLandModel.instance:isFinishDialog(self.config.afterTalkId) then
 		return
 	end
 
-	if FairyLandModel.instance:isPassPuzzle(arg_7_0.config.id) then
+	if FairyLandModel.instance:isPassPuzzle(self.config.id) then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_7_0.playTipsAnim, arg_7_0, 4)
+	TaskDispatcher.runDelay(self.playTipsAnim, self, 4)
 end
 
-function var_0_0.startCheckTalk(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.playTipsTalk, arg_8_0)
+function FairyLandPuzzleBase:startCheckTalk()
+	TaskDispatcher.cancelTask(self.playTipsTalk, self)
 
-	if not FairyLandModel.instance:isFinishDialog(arg_8_0.config.afterTalkId) then
+	if not FairyLandModel.instance:isFinishDialog(self.config.afterTalkId) then
 		return
 	end
 
-	if FairyLandModel.instance:isPassPuzzle(arg_8_0.config.id) then
+	if FairyLandModel.instance:isPassPuzzle(self.config.id) then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_8_0.playTipsTalk, arg_8_0, 5)
+	TaskDispatcher.runDelay(self.playTipsTalk, self, 5)
 end
 
-function var_0_0.playAfterTalk(arg_9_0)
-	arg_9_0:playTalk(arg_9_0.config.afterTalkId, arg_9_0.startCheckTips, arg_9_0)
+function FairyLandPuzzleBase:playAfterTalk()
+	self:playTalk(self.config.afterTalkId, self.startCheckTips, self)
 end
 
-function var_0_0.playSuccessTalk(arg_10_0)
-	arg_10_0:stopCheckTips()
+function FairyLandPuzzleBase:playSuccessTalk()
+	self:stopCheckTips()
 
-	if not FairyLandModel.instance:isPassPuzzle(arg_10_0.config.id) then
-		FairyLandRpc.instance:sendResolvePuzzleRequest(arg_10_0.config.id, arg_10_0.config.answer)
+	if not FairyLandModel.instance:isPassPuzzle(self.config.id) then
+		FairyLandRpc.instance:sendResolvePuzzleRequest(self.config.id, self.config.answer)
 	end
 
-	arg_10_0:playTalk(arg_10_0.config.successTalkId, arg_10_0.openCompleteView, arg_10_0)
+	self:playTalk(self.config.successTalkId, self.openCompleteView, self)
 end
 
-function var_0_0.playErrorTalk(arg_11_0)
-	arg_11_0:stopCheckTips()
-	arg_11_0:playTalk(arg_11_0.config.errorTalkId, arg_11_0.startCheckTips, arg_11_0, true)
+function FairyLandPuzzleBase:playErrorTalk()
+	self:stopCheckTips()
+	self:playTalk(self.config.errorTalkId, self.startCheckTips, self, true)
 end
 
-function var_0_0.playTipsTalk(arg_12_0)
-	arg_12_0:playTalk(arg_12_0.config.tipsTalkId, arg_12_0.startCheckTalk, arg_12_0, true)
+function FairyLandPuzzleBase:playTipsTalk()
+	self:playTalk(self.config.tipsTalkId, self.startCheckTalk, self, true)
 end
 
-function var_0_0.playTipsAnim(arg_13_0)
-	if not arg_13_0.tipAnim then
+function FairyLandPuzzleBase:playTipsAnim()
+	if not self.tipAnim then
 		return
 	end
 
-	arg_13_0.tipAnim:Stop()
+	self.tipAnim:Stop()
 
-	if not arg_13_0.tipAnim.isActiveAndEnabled then
+	if not self.tipAnim.isActiveAndEnabled then
 		return
 	end
 
-	arg_13_0.tipAnim:Play("open", arg_13_0.startCheckAnim, arg_13_0)
+	self.tipAnim:Play("open", self.startCheckAnim, self)
 end
 
-function var_0_0.playStoryTalk(arg_14_0)
-	if FairyLandModel.instance:isPassPuzzle(arg_14_0.config.id) then
-		if arg_14_0.config.storyTalkId == 0 then
+function FairyLandPuzzleBase:playStoryTalk()
+	if FairyLandModel.instance:isPassPuzzle(self.config.id) then
+		if self.config.storyTalkId == 0 then
 			return
 		end
 
-		if not FairyLandModel.instance:isFinishDialog(arg_14_0.config.storyTalkId) then
-			local var_14_0 = {
-				dialogId = arg_14_0.config.storyTalkId,
-				dialogType = FairyLandEnum.DialogType.Option
-			}
+		if not FairyLandModel.instance:isFinishDialog(self.config.storyTalkId) then
+			local param = {}
 
-			FairyLandController.instance:openDialogView(var_14_0)
+			param.dialogId = self.config.storyTalkId
+			param.dialogType = FairyLandEnum.DialogType.Option
+
+			FairyLandController.instance:openDialogView(param)
 		end
 	end
 end
 
-function var_0_0.openCompleteView(arg_15_0)
-	local var_15_0 = FairyLandModel.instance:getDialogElement(arg_15_0.config.elementId)
+function FairyLandPuzzleBase:openCompleteView()
+	local element = FairyLandModel.instance:getDialogElement(self.config.elementId)
 
-	if var_15_0 then
-		var_15_0:setFinish()
+	if element then
+		element:setFinish()
 	end
 
-	FairyLandController.instance:openCompleteView(arg_15_0.config.id, arg_15_0.playStoryTalk, arg_15_0)
+	FairyLandController.instance:openCompleteView(self.config.id, self.playStoryTalk, self)
 end
 
-function var_0_0.playTalk(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
+function FairyLandPuzzleBase:playTalk(dialogId, callback, callbackObj, noCheckFinish, noTween)
 	if ViewMgr.instance:isOpen(ViewName.FairyLandCompleteView) then
 		return
 	end
 
-	if arg_16_1 > 0 and (arg_16_4 or not FairyLandModel.instance:isFinishDialog(arg_16_1)) then
-		local var_16_0 = {
-			dialogId = arg_16_1,
-			dialogType = FairyLandEnum.DialogType.Bubble,
-			leftElement = FairyLandModel.instance:getDialogElement(),
-			rightElement = FairyLandModel.instance:getDialogElement(arg_16_0.config.elementId),
-			callback = arg_16_2,
-			callbackObj = arg_16_3,
-			noTween = arg_16_5
-		}
+	if dialogId > 0 and (noCheckFinish or not FairyLandModel.instance:isFinishDialog(dialogId)) then
+		local param = {}
 
-		FairyLandController.instance:openDialogView(var_16_0)
-	elseif arg_16_2 then
-		arg_16_2(arg_16_3)
+		param.dialogId = dialogId
+		param.dialogType = FairyLandEnum.DialogType.Bubble
+		param.leftElement = FairyLandModel.instance:getDialogElement()
+		param.rightElement = FairyLandModel.instance:getDialogElement(self.config.elementId)
+		param.callback = callback
+		param.callbackObj = callbackObj
+		param.noTween = noTween
+
+		FairyLandController.instance:openDialogView(param)
+	elseif callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.onInitView(arg_17_0)
+function FairyLandPuzzleBase:onInitView()
 	return
 end
 
-function var_0_0.onStart(arg_18_0)
+function FairyLandPuzzleBase:onStart()
 	return
 end
 
-function var_0_0.onRefreshView(arg_19_0)
+function FairyLandPuzzleBase:onRefreshView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function FairyLandPuzzleBase:onDestroyView()
 	return
 end
 
-return var_0_0
+return FairyLandPuzzleBase

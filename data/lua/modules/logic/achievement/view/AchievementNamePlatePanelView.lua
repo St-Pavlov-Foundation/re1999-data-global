@@ -1,149 +1,148 @@
-﻿module("modules.logic.achievement.view.AchievementNamePlatePanelView", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementNamePlatePanelView.lua
 
-local var_0_0 = class("AchievementNamePlatePanelView", BaseView)
+module("modules.logic.achievement.view.AchievementNamePlatePanelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goIcon = gohelper.findChild(arg_1_0.viewGO, "go_icon")
-	arg_1_0._btnView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_view")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._btnImage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_icon/#btn_image")
+local AchievementNamePlatePanelView = class("AchievementNamePlatePanelView", BaseView)
 
-	arg_1_0:_initLevelItems()
+function AchievementNamePlatePanelView:onInitView()
+	self._goIcon = gohelper.findChild(self.viewGO, "go_icon")
+	self._btnView = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_view")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._btnImage = gohelper.findChildButtonWithAudio(self.viewGO, "go_icon/#btn_image")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self:_initLevelItems()
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnView:AddClickListener(arg_2_0._btnViewOnClick, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnImage:AddClickListener(arg_2_0._btnImageOnClick, arg_2_0)
+function AchievementNamePlatePanelView:addEvents()
+	self._btnView:AddClickListener(self._btnViewOnClick, self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnImage:AddClickListener(self._btnImageOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnView:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnImage:RemoveClickListener()
+function AchievementNamePlatePanelView:removeEvents()
+	self._btnView:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
+	self._btnImage:RemoveClickListener()
 end
 
-function var_0_0._initLevelItems(arg_4_0)
-	arg_4_0.levelItemList = {}
+function AchievementNamePlatePanelView:_initLevelItems()
+	self.levelItemList = {}
 
-	for iter_4_0 = 1, 3 do
-		local var_4_0 = {
-			go = gohelper.findChild(arg_4_0._goIcon, "level" .. iter_4_0)
-		}
+	for i = 1, 3 do
+		local item = {}
 
-		var_4_0.unlock = gohelper.findChild(var_4_0.go, "#go_UnLocked")
-		var_4_0.lock = gohelper.findChild(var_4_0.go, "#go_Locked")
-		var_4_0.gounlockbg = gohelper.findChild(var_4_0.unlock, "#simage_bg")
-		var_4_0.simageunlocktitle = gohelper.findChildSingleImage(var_4_0.unlock, "#simage_title")
-		var_4_0.txtunlocklevel = gohelper.findChildText(var_4_0.unlock, "#txt_level")
-		var_4_0.simagelockbg = gohelper.findChildSingleImage(var_4_0.lock, "#simage_bg")
-		var_4_0.simagelocktitle = gohelper.findChildSingleImage(var_4_0.lock, "#simage_title")
-		var_4_0.txtlocklevel = gohelper.findChildText(var_4_0.lock, "#txt_level")
+		item.go = gohelper.findChild(self._goIcon, "level" .. i)
+		item.unlock = gohelper.findChild(item.go, "#go_UnLocked")
+		item.lock = gohelper.findChild(item.go, "#go_Locked")
+		item.gounlockbg = gohelper.findChild(item.unlock, "#simage_bg")
+		item.simageunlocktitle = gohelper.findChildSingleImage(item.unlock, "#simage_title")
+		item.txtunlocklevel = gohelper.findChildText(item.unlock, "#txt_level")
+		item.simagelockbg = gohelper.findChildSingleImage(item.lock, "#simage_bg")
+		item.simagelocktitle = gohelper.findChildSingleImage(item.lock, "#simage_title")
+		item.txtlocklevel = gohelper.findChildText(item.lock, "#txt_level")
 
-		gohelper.setActive(var_4_0.go, false)
-		table.insert(arg_4_0.levelItemList, var_4_0)
+		gohelper.setActive(item.go, false)
+		table.insert(self.levelItemList, item)
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._co = arg_5_0.viewParam.taskCo
-	arg_5_0._id = arg_5_0._co.achievementId
+function AchievementNamePlatePanelView:onOpen()
+	self._co = self.viewParam.taskCo
+	self._id = self._co.achievementId
 
-	arg_5_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	local var_6_0 = arg_6_0._co.level
-	local var_6_1 = AchievementConfig.instance:getAchievement(arg_6_0._id)
-	local var_6_2 = arg_6_0.levelItemList[var_6_0]
-	local var_6_3 = AchievementModel.instance:getById(arg_6_0._co.id)
-	local var_6_4 = var_6_3 and var_6_3.hasFinished
+function AchievementNamePlatePanelView:refreshUI()
+	local level = self._co.level
+	local achievementCfg = AchievementConfig.instance:getAchievement(self._id)
+	local item = self.levelItemList[level]
+	local taskMO = AchievementModel.instance:getById(self._co.id)
+	local taskHasFinished = taskMO and taskMO.hasFinished
 
-	gohelper.setActive(var_6_2.unlock, var_6_4)
-	gohelper.setActive(var_6_2.lock, not var_6_4)
+	gohelper.setActive(item.unlock, taskHasFinished)
+	gohelper.setActive(item.lock, not taskHasFinished)
 
-	local var_6_5
-	local var_6_6
-	local var_6_7
+	local prefabName, titlebgName, bgName
 
-	if arg_6_0._co.image and not string.nilorempty(arg_6_0._co.image) then
-		local var_6_8 = string.split(arg_6_0._co.image, "#")
+	if self._co.image and not string.nilorempty(self._co.image) then
+		local temp = string.split(self._co.image, "#")
 
-		var_6_5 = var_6_8[1]
-		var_6_6 = var_6_8[2]
-		var_6_7 = var_6_8[3]
+		prefabName = temp[1]
+		titlebgName = temp[2]
+		bgName = temp[3]
 	end
 
-	if var_6_4 then
-		local function var_6_9()
-			local var_7_0 = var_6_2._bgLoader:getInstGO()
+	if taskHasFinished then
+		local function callback()
+			local go = item._bgLoader:getInstGO()
 		end
 
-		var_6_2._bgLoader = PrefabInstantiate.Create(var_6_2.gounlockbg)
+		item._bgLoader = PrefabInstantiate.Create(item.gounlockbg)
 
-		var_6_2._bgLoader:startLoad(AchievementUtils.getBgPrefabUrl(var_6_5), var_6_9, arg_6_0)
-		var_6_2.simageunlocktitle:LoadImage(ResUrl.getAchievementLangIcon(var_6_6))
+		item._bgLoader:startLoad(AchievementUtils.getBgPrefabUrl(prefabName), callback, self)
+		item.simageunlocktitle:LoadImage(ResUrl.getAchievementLangIcon(titlebgName))
 	else
-		var_6_2.simagelockbg:LoadImage(ResUrl.getAchievementIcon(var_6_7))
-		var_6_2.simagelocktitle:LoadImage(ResUrl.getAchievementLangIcon(var_6_6))
+		item.simagelockbg:LoadImage(ResUrl.getAchievementIcon(bgName))
+		item.simagelocktitle:LoadImage(ResUrl.getAchievementLangIcon(titlebgName))
 	end
 
-	local var_6_10 = arg_6_0._co.listenerType
-	local var_6_11 = AchievementUtils.getAchievementProgressBySourceType(var_6_1.rule)
-	local var_6_12
+	local listenerType = self._co.listenerType
+	local maxProgress = AchievementUtils.getAchievementProgressBySourceType(achievementCfg.rule)
+	local num
 
-	if var_6_10 and var_6_10 == "TowerPassLayer" then
-		if arg_6_0._co.listenerParam and not string.nilorempty(arg_6_0._co.listenerParam) then
-			local var_6_13 = string.split(arg_6_0._co.listenerParam, "#")
+	if listenerType and listenerType == "TowerPassLayer" then
+		if self._co.listenerParam and not string.nilorempty(self._co.listenerParam) then
+			local temp = string.split(self._co.listenerParam, "#")
 
-			var_6_12 = var_6_13 and var_6_13[3]
-			var_6_12 = var_6_12 * 10
+			num = temp and temp[3]
+			num = num * 10
 		end
 	else
-		var_6_12 = arg_6_0._co and arg_6_0._co.maxProgress
+		num = self._co and self._co.maxProgress
 	end
 
-	if var_6_4 then
-		var_6_2.txtunlocklevel.text = var_6_12 < var_6_11 and var_6_11 or var_6_12
-		var_6_2.txtlocklevel.text = var_6_12 < var_6_11 and var_6_11 or var_6_12
+	if taskHasFinished then
+		item.txtunlocklevel.text = num < maxProgress and maxProgress or num
+		item.txtlocklevel.text = num < maxProgress and maxProgress or num
 	else
-		var_6_2.txtunlocklevel.text = var_6_12 < var_6_11 and var_6_12 or var_6_11
-		var_6_2.txtlocklevel.text = var_6_12 < var_6_11 and var_6_12 or var_6_11
+		item.txtunlocklevel.text = num < maxProgress and num or maxProgress
+		item.txtlocklevel.text = num < maxProgress and num or maxProgress
 	end
 
-	gohelper.setActive(var_6_2.go, true)
+	gohelper.setActive(item.go, true)
 end
 
-function var_0_0._btnCloseOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function AchievementNamePlatePanelView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnViewOnClick(arg_9_0)
-	AchievementController.instance:openAchievementMainViewAndFocus(AchievementEnum.AchievementType.Single, arg_9_0._id, false)
+function AchievementNamePlatePanelView:_btnViewOnClick()
+	AchievementController.instance:openAchievementMainViewAndFocus(AchievementEnum.AchievementType.Single, self._id, false)
 end
 
-function var_0_0._btnImageOnClick(arg_10_0)
-	local var_10_0 = AchievementConfig.instance:getTasksByAchievementId(arg_10_0._id)
-	local var_10_1 = {}
+function AchievementNamePlatePanelView:_btnImageOnClick()
+	local taskCoList = AchievementConfig.instance:getTasksByAchievementId(self._id)
+	local taskIds = {}
 
-	if var_10_0 then
-		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-			if iter_10_1 then
-				table.insert(var_10_1, iter_10_1.id)
+	if taskCoList then
+		for _, taskCo in ipairs(taskCoList) do
+			if taskCo then
+				table.insert(taskIds, taskCo.id)
 			end
 		end
 	end
 
-	local var_10_2 = {
-		achievementId = arg_10_0._id,
-		achievementIds = var_10_1
-	}
+	local viewParam = {}
 
-	ViewMgr.instance:openView(ViewName.AchievementNamePlateLevelView, var_10_2)
+	viewParam.achievementId = self._id
+	viewParam.achievementIds = taskIds
+
+	ViewMgr.instance:openView(ViewName.AchievementNamePlateLevelView, viewParam)
 end
 
-return var_0_0
+return AchievementNamePlatePanelView

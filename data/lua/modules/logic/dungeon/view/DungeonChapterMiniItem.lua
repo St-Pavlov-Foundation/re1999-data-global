@@ -1,41 +1,43 @@
-﻿module("modules.logic.dungeon.view.DungeonChapterMiniItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonChapterMiniItem.lua
 
-local var_0_0 = class("DungeonChapterMiniItem", DungeonChapterItem)
+module("modules.logic.dungeon.view.DungeonChapterMiniItem", package.seeall)
 
-function var_0_0._setLockStatus(arg_1_0, arg_1_1)
-	var_0_0.super._setLockStatus(arg_1_0, arg_1_1)
+local DungeonChapterMiniItem = class("DungeonChapterMiniItem", DungeonChapterItem)
 
-	if not arg_1_0._goSpecial then
-		arg_1_0._goSpecial = gohelper.findChild(arg_1_0.viewGO, "anim/image_Special")
+function DungeonChapterMiniItem:_setLockStatus(isLock)
+	DungeonChapterMiniItem.super._setLockStatus(self, isLock)
+
+	if not self._goSpecial then
+		self._goSpecial = gohelper.findChild(self.viewGO, "anim/image_Special")
 	end
 
-	if not arg_1_1 then
-		local var_1_0 = luaLang(DungeonEnum.SpecialMainPlot[arg_1_0._mo.id])
+	if not isLock then
+		local specialTxt = luaLang(DungeonEnum.SpecialMainPlot[self._mo.id])
 
-		if not arg_1_0._txtSpecial then
-			arg_1_0._txtSpecial = gohelper.findChildTextMesh(arg_1_0.viewGO, "anim/image_Special/txt_Special")
+		if not self._txtSpecial then
+			self._txtSpecial = gohelper.findChildTextMesh(self.viewGO, "anim/image_Special/txt_Special")
 		end
 
-		arg_1_0._txtSpecial.text = var_1_0
+		self._txtSpecial.text = specialTxt
 	end
 
-	gohelper.setActive(arg_1_0._goSpecial, not arg_1_1)
+	gohelper.setActive(self._goSpecial, not isLock)
 end
 
-function var_0_0._getInAnimName(arg_2_0)
+function DungeonChapterMiniItem:_getInAnimName()
 	return "dungeonchapterminiitem_in"
 end
 
-function var_0_0._getUnlockAnimName(arg_3_0)
+function DungeonChapterMiniItem:_getUnlockAnimName()
 	return "dungeonchapterminiitem_unlock"
 end
 
-function var_0_0._getIdleAnimName(arg_4_0)
+function DungeonChapterMiniItem:_getIdleAnimName()
 	return "dungeonchapterminiitem_idle"
 end
 
-function var_0_0._getCloseAnimName(arg_5_0)
+function DungeonChapterMiniItem:_getCloseAnimName()
 	return "dungeonchapterminiitem_close"
 end
 
-return var_0_0
+return DungeonChapterMiniItem

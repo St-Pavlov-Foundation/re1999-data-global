@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepNextRound", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/step/YaXianStepNextRound.lua
 
-local var_0_0 = class("YaXianStepNextRound", YaXianStepBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepNextRound", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = YaXianGameController.instance.state
+local YaXianStepNextRound = class("YaXianStepNextRound", YaXianStepBase)
 
-	if var_1_0 then
-		var_1_0:setCurEvent(nil)
+function YaXianStepNextRound:start()
+	local stateMgr = YaXianGameController.instance.state
+
+	if stateMgr then
+		stateMgr:setCurEvent(nil)
 	end
 
-	local var_1_1 = arg_1_0.originData.currentRound
+	local curRound = self.originData.currentRound
 
-	YaXianGameModel.instance:setRound(var_1_1)
+	YaXianGameModel.instance:setRound(curRound)
 	YaXianGameController.instance:dispatchEvent(YaXianEvent.UpdateRound)
-	arg_1_0:finish()
+	self:finish()
 end
 
-return var_0_0
+return YaXianStepNextRound

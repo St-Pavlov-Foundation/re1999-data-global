@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectRoundEnd", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectRoundEnd.lua
 
-local var_0_0 = class("FightWorkEffectRoundEnd", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectRoundEnd", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkEffectRoundEnd = class("FightWorkEffectRoundEnd", FightEffectBase)
+
+function FightWorkEffectRoundEnd:onStart()
 	FightController.instance:dispatchEvent(FightEvent.OnMySideRoundEnd)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectRoundEnd

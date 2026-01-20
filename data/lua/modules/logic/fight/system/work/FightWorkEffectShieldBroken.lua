@@ -1,49 +1,52 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectShieldBroken", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectShieldBroken.lua
 
-local var_0_0 = class("FightWorkEffectShieldBroken", FightEffectBase)
-local var_0_1 = "buff_rush_break"
-local var_0_2 = {
+module("modules.logic.fight.system.work.FightWorkEffectShieldBroken", package.seeall)
+
+local FightWorkEffectShieldBroken = class("FightWorkEffectShieldBroken", FightEffectBase)
+local TimelineName = "buff_rush_break"
+local BossRushShieldBuff = {
 	[51400021] = true,
 	[514000111] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+function FightWorkEffectShieldBroken:onStart()
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
 
-	if var_1_0 and var_1_0.skill then
-		if arg_1_0:_isBossRushBossShieldBroken(var_1_0) then
-			FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillEnd, arg_1_0, LuaEventSystem.Low)
-			var_1_0.skill:playTimeline(var_0_1, arg_1_0.fightStepData)
-			arg_1_0:com_registTimer(arg_1_0._delayDone, 10)
+	if entity and entity.skill then
+		if self:_isBossRushBossShieldBroken(entity) then
+			FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillEnd, self, LuaEventSystem.Low)
+			entity.skill:playTimeline(TimelineName, self.fightStepData)
+			self:com_registTimer(self._delayDone, 10)
 		else
-			arg_1_0:onDone(true)
+			self:onDone(true)
 		end
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._isBossRushBossShieldBroken(arg_2_0, arg_2_1)
+function FightWorkEffectShieldBroken:_isBossRushBossShieldBroken(entity)
 	if not BossRushController.instance:isInBossRushFight() then
 		return false
 	end
 
-	if not arg_2_1:isEnemySide() then
+	if not entity:isEnemySide() then
 		return false
 	end
 
-	local var_2_0 = FightModel.instance:getCurMonsterGroupId()
-	local var_2_1 = var_2_0 and lua_monster_group.configDict[var_2_0]
-	local var_2_2 = var_2_1 and var_2_1.bossId
+	local monsterGroupId = FightModel.instance:getCurMonsterGroupId()
+	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]
+	local bossIds = monsterGroupCO and monsterGroupCO.bossId
+	local isBoss = bossIds and FightHelper.isBossId(bossIds, entity:getMO().modelId)
 
-	if not (var_2_2 and FightHelper.isBossId(var_2_2, arg_2_1:getMO().modelId)) then
+	if not isBoss then
 		return false
 	end
 
-	local var_2_3 = arg_2_1:getMO():getBuffDic()
+	local buffDic = entity:getMO():getBuffDic()
 
-	for iter_2_0, iter_2_1 in pairs(var_2_3) do
-		if var_0_2[iter_2_1.buffId] then
+	for _, buffMO in pairs(buffDic) do
+		if BossRushShieldBuff[buffMO.buffId] then
 			return true
 		end
 	end
@@ -51,17 +54,17 @@ function var_0_0._isBossRushBossShieldBroken(arg_2_0, arg_2_1)
 	return false
 end
 
-function var_0_0._onSkillEnd(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:onDone(true)
+function FightWorkEffectShieldBroken:_onSkillEnd(attacker, skillId)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_4_0)
+function FightWorkEffectShieldBroken:_delayDone()
 	logError("播放破盾Timeline超时")
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_5_0._onSkillEnd, arg_5_0)
+function FightWorkEffectShieldBroken:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillEnd, self)
 end
 
-return var_0_0
+return FightWorkEffectShieldBroken

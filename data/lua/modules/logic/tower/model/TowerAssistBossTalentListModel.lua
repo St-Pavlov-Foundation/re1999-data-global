@@ -1,81 +1,85 @@
-﻿module("modules.logic.tower.model.TowerAssistBossTalentListModel", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerAssistBossTalentListModel.lua
 
-local var_0_0 = class("TowerAssistBossTalentListModel", ListScrollModel)
+module("modules.logic.tower.model.TowerAssistBossTalentListModel", package.seeall)
 
-function var_0_0.initBoss(arg_1_0, arg_1_1)
-	arg_1_0.bossId = arg_1_1
-	arg_1_0.selectTalentId = nil
+local TowerAssistBossTalentListModel = class("TowerAssistBossTalentListModel", ListScrollModel)
+
+function TowerAssistBossTalentListModel:initBoss(bossId)
+	self.bossId = bossId
+	self.selectTalentId = nil
 end
 
-function var_0_0.refreshList(arg_2_0)
-	if #arg_2_0._scrollViews == 0 then
+function TowerAssistBossTalentListModel:refreshList()
+	if #self._scrollViews == 0 then
 		return
 	end
 
-	local var_2_0 = TowerAssistBossModel.instance:getById(arg_2_0.bossId)
+	local bossMo = TowerAssistBossModel.instance:getById(self.bossId)
 
-	if not var_2_0 then
+	if not bossMo then
 		return
 	end
 
-	local var_2_1 = var_2_0:getTalentTree():getList()
+	local talentTree = bossMo:getTalentTree()
+	local list = talentTree:getList()
 
-	arg_2_0:setList(var_2_1)
+	self:setList(list)
 end
 
-function var_0_0.getSelectTalent(arg_3_0)
-	return arg_3_0.selectTalentId
+function TowerAssistBossTalentListModel:getSelectTalent()
+	return self.selectTalentId
 end
 
-function var_0_0.isSelectTalent(arg_4_0, arg_4_1)
-	return arg_4_0.selectTalentId == arg_4_1
+function TowerAssistBossTalentListModel:isSelectTalent(talentId)
+	return self.selectTalentId == talentId
 end
 
-function var_0_0.setSelectTalent(arg_5_0, arg_5_1)
-	if arg_5_0:isSelectTalent(arg_5_1) then
+function TowerAssistBossTalentListModel:setSelectTalent(talentId)
+	if self:isSelectTalent(talentId) then
 		return
 	end
 
-	arg_5_0.selectTalentId = arg_5_1
+	self.selectTalentId = talentId
 
-	arg_5_0:refreshList()
+	self:refreshList()
 	TowerController.instance:dispatchEvent(TowerEvent.SelectTalentItem)
 end
 
-function var_0_0.isTalentCanReset(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_1 = arg_6_1 or arg_6_0.selectTalentId
+function TowerAssistBossTalentListModel:isTalentCanReset(talentId, showToast)
+	talentId = talentId or self.selectTalentId
 
-	if not arg_6_1 then
+	if not talentId then
 		return false
 	end
 
-	local var_6_0 = TowerAssistBossModel.instance:getById(arg_6_0.bossId)
+	local bossMo = TowerAssistBossModel.instance:getById(self.bossId)
 
-	if not var_6_0:isActiveTalent(arg_6_1) then
+	if not bossMo:isActiveTalent(talentId) then
 		return false
 	end
 
-	local var_6_1 = var_6_0:getTalentTree():getNode(arg_6_1)
+	local talentTree = bossMo:getTalentTree()
+	local node = talentTree:getNode(talentId)
 
-	if not var_6_1 then
+	if not node then
 		return false
 	end
 
-	if not var_6_1:isLeafNode() then
+	if not node:isLeafNode() then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.setAutoTalentState(arg_7_0, arg_7_1)
-	arg_7_0.isAutoTalent = arg_7_1
+function TowerAssistBossTalentListModel:setAutoTalentState(isAutoTalent)
+	self.isAutoTalent = isAutoTalent
 end
 
-function var_0_0.getAutoTalentState(arg_8_0)
-	return arg_8_0.isAutoTalent
+function TowerAssistBossTalentListModel:getAutoTalentState()
+	return self.isAutoTalent
 end
 
-var_0_0.instance = var_0_0.New()
+TowerAssistBossTalentListModel.instance = TowerAssistBossTalentListModel.New()
 
-return var_0_0
+return TowerAssistBossTalentListModel

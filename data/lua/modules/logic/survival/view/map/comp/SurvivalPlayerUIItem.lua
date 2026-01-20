@@ -1,86 +1,88 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalPlayerUIItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalPlayerUIItem.lua
 
-local var_0_0 = class("SurvivalPlayerUIItem", SurvivalUnitUIItem)
+module("modules.logic.survival.view.map.comp.SurvivalPlayerUIItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._gohero = gohelper.findChild(arg_1_1, "hero")
-	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_1, "hero/#image_progress")
-	arg_1_0._imageprogressbg = gohelper.findChildImage(arg_1_1, "hero/image_progressbg")
+local SurvivalPlayerUIItem = class("SurvivalPlayerUIItem", SurvivalUnitUIItem)
 
-	var_0_0.super.init(arg_1_0, arg_1_1)
-	arg_1_0:setIconEnable()
+function SurvivalPlayerUIItem:init(go)
+	self._gohero = gohelper.findChild(go, "hero")
+	self._imageprogress = gohelper.findChildImage(go, "hero/#image_progress")
+	self._imageprogressbg = gohelper.findChildImage(go, "hero/image_progressbg")
+
+	SurvivalPlayerUIItem.super.init(self, go)
+	self:setIconEnable()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	var_0_0.super.addEventListeners(arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.ShowSurvivalHeroTick, arg_2_0._showHeroTick, arg_2_0)
+function SurvivalPlayerUIItem:addEventListeners()
+	SurvivalPlayerUIItem.super.addEventListeners(self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.ShowSurvivalHeroTick, self._showHeroTick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	var_0_0.super.removeEventListeners(arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.ShowSurvivalHeroTick, arg_3_0._showHeroTick, arg_3_0)
+function SurvivalPlayerUIItem:removeEventListeners()
+	SurvivalPlayerUIItem.super.removeEventListeners(self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.ShowSurvivalHeroTick, self._showHeroTick, self)
 end
 
-function var_0_0.refreshInfo(arg_4_0)
-	gohelper.setActive(arg_4_0._golevel, false)
-	gohelper.setActive(arg_4_0._imageicon, false)
-	gohelper.setActive(arg_4_0._imagebubble, false)
-	gohelper.setActive(arg_4_0._imageprogressbg, false)
-	gohelper.setActive(arg_4_0._imageprogress, false)
+function SurvivalPlayerUIItem:refreshInfo()
+	gohelper.setActive(self._golevel, false)
+	gohelper.setActive(self._imageicon, false)
+	gohelper.setActive(self._imagebubble, false)
+	gohelper.setActive(self._imageprogressbg, false)
+	gohelper.setActive(self._imageprogress, false)
 end
 
-function var_0_0._showHeroTick(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:setIconEnable(true)
-	gohelper.setActive(arg_5_0._imageprogressbg, true)
-	gohelper.setActive(arg_5_0._imageprogress, true)
+function SurvivalPlayerUIItem:_showHeroTick(curVal, totalVal)
+	self:setIconEnable(true)
+	gohelper.setActive(self._imageprogressbg, true)
+	gohelper.setActive(self._imageprogress, true)
 
-	arg_5_0._curVal = arg_5_1
-	arg_5_0._totalVal = arg_5_2
-	arg_5_0._imageprogress.fillAmount = (arg_5_1 - 1) / arg_5_2
-	arg_5_0._tweenId = ZProj.TweenHelper.DOFillAmount(arg_5_0._imageprogress, arg_5_1 / arg_5_2, SurvivalConst.PlayerMoveSpeed, arg_5_0._onTweenEnd, arg_5_0, nil, EaseType.Linear)
+	self._curVal = curVal
+	self._totalVal = totalVal
+	self._imageprogress.fillAmount = (curVal - 1) / totalVal
+	self._tweenId = ZProj.TweenHelper.DOFillAmount(self._imageprogress, curVal / totalVal, SurvivalConst.PlayerMoveSpeed, self._onTweenEnd, self, nil, EaseType.Linear)
 end
 
-function var_0_0._onTweenEnd(arg_6_0)
-	if arg_6_0._curVal == arg_6_0._totalVal then
-		gohelper.setActive(arg_6_0._imageprogressbg, false)
-		gohelper.setActive(arg_6_0._imageprogress, false)
+function SurvivalPlayerUIItem:_onTweenEnd()
+	if self._curVal == self._totalVal then
+		gohelper.setActive(self._imageprogressbg, false)
+		gohelper.setActive(self._imageprogress, false)
 
-		local var_6_0 = SurvivalMapHelper.instance:getEntity(0)
+		local entity = SurvivalMapHelper.instance:getEntity(0)
 
-		if var_6_0 then
-			arg_6_0:setIconEnable(not var_6_0.isShow)
+		if entity then
+			self:setIconEnable(not entity.isShow)
 		end
 	end
 
-	arg_6_0._tweenId = nil
+	self._tweenId = nil
 end
 
-function var_0_0.setIconEnable(arg_7_0, arg_7_1)
-	arg_7_0._isIconEnabled = arg_7_1
+function SurvivalPlayerUIItem:setIconEnable(isEnabled)
+	self._isIconEnabled = isEnabled
 
-	arg_7_0:updateIconShow()
+	self:updateIconShow()
 end
 
-function var_0_0._onArrowChange(arg_8_0, arg_8_1)
-	var_0_0.super._onArrowChange(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._imagebubble, false)
-	arg_8_0:updateIconShow()
+function SurvivalPlayerUIItem:_onArrowChange(show)
+	SurvivalPlayerUIItem.super._onArrowChange(self, show)
+	gohelper.setActive(self._imagebubble, false)
+	self:updateIconShow()
 end
 
-function var_0_0.updateIconShow(arg_9_0)
-	gohelper.setActive(arg_9_0._gohero, arg_9_0._isIconEnabled or arg_9_0._isArrowShow)
+function SurvivalPlayerUIItem:updateIconShow()
+	gohelper.setActive(self._gohero, self._isIconEnabled or self._isArrowShow)
 end
 
-function var_0_0.checkEnabled(arg_10_0)
+function SurvivalPlayerUIItem:checkEnabled()
 	return
 end
 
-function var_0_0.onDestroy(arg_11_0)
-	if arg_11_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._tweenId)
+function SurvivalPlayerUIItem:onDestroy()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_11_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return SurvivalPlayerUIItem

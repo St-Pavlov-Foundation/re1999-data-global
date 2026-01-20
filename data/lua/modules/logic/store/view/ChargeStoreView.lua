@@ -1,202 +1,204 @@
-﻿module("modules.logic.store.view.ChargeStoreView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/ChargeStoreView.lua
 
-local var_0_0 = class("ChargeStoreView", BaseView)
+module("modules.logic.store.view.ChargeStoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagelefticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_lefticon")
-	arg_1_0._simagerighticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_righticon")
-	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "scroll_category/viewport/categorycontent/#go_storecategoryitem")
-	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
+local ChargeStoreView = class("ChargeStoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ChargeStoreView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "#simage_lefticon")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "#simage_righticon")
+	self._gostorecategoryitem = gohelper.findChild(self.viewGO, "scroll_category/viewport/categorycontent/#go_storecategoryitem")
+	self._scrollprop = gohelper.findChildScrollRect(self.viewGO, "#scroll_prop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ChargeStoreView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ChargeStoreView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gostorecategoryitem, false)
+function ChargeStoreView:_editableInitView()
+	gohelper.setActive(self._gostorecategoryitem, false)
 
-	arg_4_0._categoryItemContainer = {}
+	self._categoryItemContainer = {}
 
-	arg_4_0._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("full/shangcheng_bj"))
-	arg_4_0._simagelefticon:LoadImage(ResUrl.getStoreBottomBgIcon("bg_leftdown2"))
-	arg_4_0._simagerighticon:LoadImage(ResUrl.getStoreBottomBgIcon("bg_right3"))
+	self._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("full/shangcheng_bj"))
+	self._simagelefticon:LoadImage(ResUrl.getStoreBottomBgIcon("bg_leftdown2"))
+	self._simagerighticon:LoadImage(ResUrl.getStoreBottomBgIcon("bg_right3"))
 end
 
-function var_0_0._refreshAllSecondTabs(arg_5_0)
-	local var_5_0 = StoreModel.instance:getSecondTabs(arg_5_0._selectFirstTabId, true, true)
+function ChargeStoreView:_refreshAllSecondTabs()
+	local secondTabConfigs = StoreModel.instance:getSecondTabs(self._selectFirstTabId, true, true)
 
-	if var_5_0 and #var_5_0 > 0 then
-		for iter_5_0 = 1, #var_5_0 do
-			arg_5_0:_refreshSecondTabs(iter_5_0, var_5_0[iter_5_0])
-			gohelper.setActive(arg_5_0._categoryItemContainer[iter_5_0].go, true)
+	if secondTabConfigs and #secondTabConfigs > 0 then
+		for i = 1, #secondTabConfigs do
+			self:_refreshSecondTabs(i, secondTabConfigs[i])
+			gohelper.setActive(self._categoryItemContainer[i].go, true)
 		end
 
-		for iter_5_1 = #var_5_0 + 1, #arg_5_0._categoryItemContainer do
-			gohelper.setActive(arg_5_0._categoryItemContainer[iter_5_1].go, false)
+		for i = #secondTabConfigs + 1, #self._categoryItemContainer do
+			gohelper.setActive(self._categoryItemContainer[i].go, false)
 		end
 	else
-		for iter_5_2 = 1, #arg_5_0._categoryItemContainer do
-			gohelper.setActive(arg_5_0._categoryItemContainer[iter_5_2].go, false)
+		for i = 1, #self._categoryItemContainer do
+			gohelper.setActive(self._categoryItemContainer[i].go, false)
 		end
 	end
 end
 
-function var_0_0._refreshTabs(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0._selectSecondTabId
+function ChargeStoreView:_refreshTabs(selectTabId, openUpdate, isChild)
+	local preSelectSecondTabId = self._selectSecondTabId
 
-	arg_6_0._selectSecondTabId = 0
+	self._selectSecondTabId = 0
 
-	if not StoreModel.instance:isTabOpen(arg_6_1) then
-		arg_6_1 = arg_6_0.viewContainer:getSelectFirstTabId()
+	if not StoreModel.instance:isTabOpen(selectTabId) then
+		selectTabId = self.viewContainer:getSelectFirstTabId()
 	end
 
-	local var_6_1
-	local var_6_2, var_6_3
+	local _
 
-	var_6_2, arg_6_0._selectSecondTabId, var_6_3 = StoreModel.instance:jumpTabIdToSelectTabId(arg_6_1)
+	_, self._selectSecondTabId, _ = StoreModel.instance:jumpTabIdToSelectTabId(selectTabId)
 
-	local var_6_4 = StoreConfig.instance:getTabConfig(arg_6_0._selectSecondTabId)
-	local var_6_5 = StoreConfig.instance:getTabConfig(arg_6_0.viewContainer:getSelectFirstTabId())
+	local secondConfig = StoreConfig.instance:getTabConfig(self._selectSecondTabId)
+	local firstConfig = StoreConfig.instance:getTabConfig(self.viewContainer:getSelectFirstTabId())
 
-	if var_6_4 and not string.nilorempty(var_6_4.showCost) then
-		arg_6_0.viewContainer:setCurrencyType(var_6_4.showCost)
-	elseif var_6_5 and not string.nilorempty(var_6_5.showCost) then
-		arg_6_0.viewContainer:setCurrencyType(var_6_5.showCost)
+	if secondConfig and not string.nilorempty(secondConfig.showCost) then
+		self.viewContainer:setCurrencyType(secondConfig.showCost)
+	elseif firstConfig and not string.nilorempty(firstConfig.showCost) then
+		self.viewContainer:setCurrencyType(firstConfig.showCost)
 	else
-		arg_6_0.viewContainer:setCurrencyType(nil)
+		self.viewContainer:setCurrencyType(nil)
 	end
 
-	if not arg_6_2 and var_6_0 == arg_6_0._selectSecondTabId then
+	if not openUpdate and preSelectSecondTabId == self._selectSecondTabId then
 		return
 	end
 
-	arg_6_0:_refreshAllSecondTabs()
-	StoreController.instance:readTab(arg_6_1)
-	arg_6_0:_onRefreshRedDot()
+	self:_refreshAllSecondTabs()
+	StoreController.instance:readTab(selectTabId)
+	self:_onRefreshRedDot()
 
-	arg_6_0._resetScrollPos = true
+	self._resetScrollPos = true
 
-	arg_6_0:_refreshGood()
+	self:_refreshGood()
 end
 
-function var_0_0._onRefreshRedDot(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._categoryItemContainer) do
-		gohelper.setActive(iter_7_1.go_reddot, StoreModel.instance:isTabFirstRedDotShow(iter_7_1.tabId))
+function ChargeStoreView:_onRefreshRedDot()
+	for _, v in pairs(self._categoryItemContainer) do
+		gohelper.setActive(v.go_reddot, StoreModel.instance:isTabFirstRedDotShow(v.tabId))
 	end
 end
 
-function var_0_0._refreshSecondTabs(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._categoryItemContainer[arg_8_1] or arg_8_0:initCategoryItemTable(arg_8_1)
+function ChargeStoreView:_refreshSecondTabs(index, secondTabConfig)
+	local categoryItemTable = self._categoryItemContainer[index]
 
-	var_8_0.tabId = arg_8_2.id
-	var_8_0.txt_itemcn1.text = arg_8_2.name
-	var_8_0.txt_itemcn2.text = arg_8_2.name
-	var_8_0.txt_itemen1.text = arg_8_2.nameEn
-	var_8_0.txt_itemen2.text = arg_8_2.nameEn
+	categoryItemTable = categoryItemTable or self:initCategoryItemTable(index)
+	categoryItemTable.tabId = secondTabConfig.id
+	categoryItemTable.txt_itemcn1.text = secondTabConfig.name
+	categoryItemTable.txt_itemcn2.text = secondTabConfig.name
+	categoryItemTable.txt_itemen1.text = secondTabConfig.nameEn
+	categoryItemTable.txt_itemen2.text = secondTabConfig.nameEn
 
-	local var_8_1 = arg_8_0._selectSecondTabId == arg_8_2.id
+	local select = self._selectSecondTabId == secondTabConfig.id
 
-	gohelper.setActive(var_8_0.go_unselected, not var_8_1)
-	gohelper.setActive(var_8_0.go_selected, var_8_1)
+	gohelper.setActive(categoryItemTable.go_unselected, not select)
+	gohelper.setActive(categoryItemTable.go_selected, select)
 end
 
-function var_0_0.initCategoryItemTable(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getUserDataTb_()
+function ChargeStoreView:initCategoryItemTable(index)
+	local categoryItemTable = self:getUserDataTb_()
 
-	var_9_0.go = gohelper.cloneInPlace(arg_9_0._gostorecategoryitem, "item" .. arg_9_1)
-	var_9_0.go_unselected = gohelper.findChild(var_9_0.go, "go_unselected")
-	var_9_0.go_selected = gohelper.findChild(var_9_0.go, "go_selected")
-	var_9_0.go_line = gohelper.findChild(var_9_0.go, "go_line")
-	var_9_0.go_reddot = gohelper.findChild(var_9_0.go, "#go_tabreddot1")
-	var_9_0.txt_itemcn1 = gohelper.findChildText(var_9_0.go, "go_unselected/txt_itemcn1")
-	var_9_0.txt_itemen1 = gohelper.findChildText(var_9_0.go, "go_unselected/txt_itemen1")
-	var_9_0.txt_itemcn2 = gohelper.findChildText(var_9_0.go, "go_selected/txt_itemcn2")
-	var_9_0.txt_itemen2 = gohelper.findChildText(var_9_0.go, "go_selected/txt_itemen2")
-	var_9_0.go_childcategory = gohelper.findChild(var_9_0.go, "go_childcategory")
-	var_9_0.go_childItem = gohelper.findChild(var_9_0.go, "go_childcategory/go_childitem")
-	var_9_0.childItemContainer = {}
-	var_9_0.btnGO = gohelper.findChild(var_9_0.go, "clickArea")
-	var_9_0.btn = gohelper.getClickWithAudio(var_9_0.go, AudioEnum.UI.play_ui_bank_open)
-	var_9_0.tabId = 0
+	categoryItemTable.go = gohelper.cloneInPlace(self._gostorecategoryitem, "item" .. index)
+	categoryItemTable.go_unselected = gohelper.findChild(categoryItemTable.go, "go_unselected")
+	categoryItemTable.go_selected = gohelper.findChild(categoryItemTable.go, "go_selected")
+	categoryItemTable.go_line = gohelper.findChild(categoryItemTable.go, "go_line")
+	categoryItemTable.go_reddot = gohelper.findChild(categoryItemTable.go, "#go_tabreddot1")
+	categoryItemTable.txt_itemcn1 = gohelper.findChildText(categoryItemTable.go, "go_unselected/txt_itemcn1")
+	categoryItemTable.txt_itemen1 = gohelper.findChildText(categoryItemTable.go, "go_unselected/txt_itemen1")
+	categoryItemTable.txt_itemcn2 = gohelper.findChildText(categoryItemTable.go, "go_selected/txt_itemcn2")
+	categoryItemTable.txt_itemen2 = gohelper.findChildText(categoryItemTable.go, "go_selected/txt_itemen2")
+	categoryItemTable.go_childcategory = gohelper.findChild(categoryItemTable.go, "go_childcategory")
+	categoryItemTable.go_childItem = gohelper.findChild(categoryItemTable.go, "go_childcategory/go_childitem")
+	categoryItemTable.childItemContainer = {}
+	categoryItemTable.btnGO = gohelper.findChild(categoryItemTable.go, "clickArea")
+	categoryItemTable.btn = gohelper.getClickWithAudio(categoryItemTable.go, AudioEnum.UI.play_ui_bank_open)
+	categoryItemTable.tabId = 0
 
-	var_9_0.btn:AddClickListener(function(arg_10_0)
-		local var_10_0 = arg_10_0.tabId
+	categoryItemTable.btn:AddClickListener(function(categoryItemTable)
+		local jumpTab = categoryItemTable.tabId
 
-		arg_9_0:_refreshTabs(var_10_0)
-		StoreController.instance:statSwitchStore(var_10_0)
-	end, var_9_0)
-	table.insert(arg_9_0._categoryItemContainer, var_9_0)
-	gohelper.setActive(var_9_0.go_childItem, false)
+		self:_refreshTabs(jumpTab)
+		StoreController.instance:statSwitchStore(jumpTab)
+	end, categoryItemTable)
+	table.insert(self._categoryItemContainer, categoryItemTable)
+	gohelper.setActive(categoryItemTable.go_childItem, false)
 
-	return var_9_0
+	return categoryItemTable
 end
 
-function var_0_0._refreshGood(arg_11_0)
-	StoreModel.instance:setCurChargeStoreId(arg_11_0._selectSecondTabId)
+function ChargeStoreView:_refreshGood()
+	StoreModel.instance:setCurChargeStoreId(self._selectSecondTabId)
 
-	local var_11_0 = StoreModel.instance:getChargeGoods()
+	local chargeStoreGoods = StoreModel.instance:getChargeGoods()
 
-	StoreChargeGoodsItemListModel.instance:setMOList(var_11_0, arg_11_0._selectSecondTabId)
+	StoreChargeGoodsItemListModel.instance:setMOList(chargeStoreGoods, self._selectSecondTabId)
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._selectFirstTabId = arg_12_0.viewContainer:getSelectFirstTabId()
+function ChargeStoreView:onOpen()
+	self._selectFirstTabId = self.viewContainer:getSelectFirstTabId()
 
-	local var_12_0 = arg_12_0.viewContainer:getJumpTabId()
+	local jumpTabId = self.viewContainer:getJumpTabId()
 
-	arg_12_0:_refreshTabs(var_12_0, true)
-	arg_12_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_12_0._updateInfo, arg_12_0)
-	arg_12_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_12_0._updateInfo, arg_12_0)
-	arg_12_0:addEventCb(PayController.instance, PayEvent.PayInfoChanged, arg_12_0._updateInfo, arg_12_0)
+	self:_refreshTabs(jumpTabId, true)
+	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._updateInfo, self)
+	self:addEventCb(PayController.instance, PayEvent.PayInfoChanged, self._updateInfo, self)
 	ChargeRpc.instance:sendGetChargeInfoRequest()
 end
 
-function var_0_0._updateInfo(arg_13_0)
-	arg_13_0:_refreshGood()
+function ChargeStoreView:_updateInfo()
+	self:_refreshGood()
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_14_0._updateInfo, arg_14_0)
-	arg_14_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_14_0._updateInfo, arg_14_0)
-	arg_14_0:removeEventCb(PayController.instance, PayEvent.PayInfoChanged, arg_14_0._updateInfo, arg_14_0)
+function ChargeStoreView:onClose()
+	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._updateInfo, self)
+	self:removeEventCb(PayController.instance, PayEvent.PayInfoChanged, self._updateInfo, self)
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
-	arg_15_0._selectFirstTabId = arg_15_0.viewContainer:getSelectFirstTabId()
+function ChargeStoreView:onUpdateParam()
+	self._selectFirstTabId = self.viewContainer:getSelectFirstTabId()
 
-	local var_15_0 = arg_15_0.viewContainer:getJumpTabId()
+	local jumpTabId = self.viewContainer:getJumpTabId()
 
-	arg_15_0:_refreshTabs(var_15_0)
+	self:_refreshTabs(jumpTabId)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	if arg_16_0._categoryItemContainer and #arg_16_0._categoryItemContainer > 0 then
-		for iter_16_0 = 1, #arg_16_0._categoryItemContainer do
-			local var_16_0 = arg_16_0._categoryItemContainer[iter_16_0]
+function ChargeStoreView:onDestroyView()
+	if self._categoryItemContainer and #self._categoryItemContainer > 0 then
+		for i = 1, #self._categoryItemContainer do
+			local categotyItem = self._categoryItemContainer[i]
 
-			var_16_0.btn:RemoveClickListener()
+			categotyItem.btn:RemoveClickListener()
 
-			if var_16_0.childItemContainer and #var_16_0.childItemContainer > 0 then
-				for iter_16_1 = 1, #var_16_0.childItemContainer do
-					var_16_0.childItemContainer[iter_16_1].btn:RemoveClickListener()
+			if categotyItem.childItemContainer and #categotyItem.childItemContainer > 0 then
+				for j = 1, #categotyItem.childItemContainer do
+					categotyItem.childItemContainer[j].btn:RemoveClickListener()
 				end
 			end
 		end
 	end
 
-	arg_16_0._simagebg:UnLoadImage()
-	arg_16_0._simagelefticon:UnLoadImage()
-	arg_16_0._simagerighticon:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
 end
 
-return var_0_0
+return ChargeStoreView

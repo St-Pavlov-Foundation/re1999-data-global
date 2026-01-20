@@ -1,78 +1,80 @@
-﻿module("modules.logic.gm.model.GMLangTxtModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMLangTxtModel.lua
 
-local var_0_0 = class("GMLangTxtModel", ListScrollModel)
+module("modules.logic.gm.model.GMLangTxtModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local GMLangTxtModel = class("GMLangTxtModel", ListScrollModel)
 
-	arg_1_0._allText = {}
-	arg_1_0._txtIndex = 1
-	arg_1_0.search = ""
+function GMLangTxtModel:ctor()
+	GMLangTxtModel.super.ctor(self)
+
+	self._allText = {}
+	self._txtIndex = 1
+	self.search = ""
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._hasInit = nil
+function GMLangTxtModel:reInit()
+	self._hasInit = nil
 end
 
-function var_0_0.setSearch(arg_3_0, arg_3_1)
-	arg_3_0.search = arg_3_1
+function GMLangTxtModel:setSearch(text)
+	self.search = text
 
-	arg_3_0:reInit()
-	arg_3_0:updateModel()
+	self:reInit()
+	self:updateModel()
 end
 
-function var_0_0.getSearch(arg_4_0)
-	return arg_4_0.search
+function GMLangTxtModel:getSearch()
+	return self.search
 end
 
-function var_0_0.clearAll(arg_5_0, arg_5_1)
-	arg_5_0._allText = {}
-	arg_5_0._txtIndex = 1
+function GMLangTxtModel:clearAll(txt)
+	self._allText = {}
+	self._txtIndex = 1
 
-	arg_5_0:setList({})
+	self:setList({})
 end
 
-function var_0_0.addLangTxt(arg_6_0, arg_6_1)
-	if arg_6_0._allText[arg_6_1] then
+function GMLangTxtModel:addLangTxt(txt)
+	if self._allText[txt] then
 		return
 	end
 
-	arg_6_0._allText[arg_6_1] = {
-		id = arg_6_0._txtIndex,
-		txt = arg_6_1
+	self._allText[txt] = {
+		id = self._txtIndex,
+		txt = txt
 	}
-	arg_6_0._txtIndex = arg_6_0._txtIndex + 1
+	self._txtIndex = self._txtIndex + 1
 
-	arg_6_0:addAtLast(arg_6_0._allText[arg_6_1])
+	self:addAtLast(self._allText[txt])
 end
 
-function var_0_0.updateModel(arg_7_0)
-	if not arg_7_0._hasInit then
-		arg_7_0._hasInit = true
+function GMLangTxtModel:updateModel()
+	if not self._hasInit then
+		self._hasInit = true
 
-		local var_7_0 = {}
+		local list = {}
 
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._allText) do
-			local var_7_1 = true
+		for txt, mo in pairs(self._allText) do
+			local match = true
 
-			if arg_7_0.search then
-				var_7_1 = string.find(iter_7_0, arg_7_0.search)
+			if self.search then
+				match = string.find(txt, self.search)
 			end
 
-			if var_7_1 then
-				table.insert(var_7_0, iter_7_1)
+			if match then
+				table.insert(list, mo)
 			end
 		end
 
-		table.sort(var_7_0, function(arg_8_0, arg_8_1)
-			return arg_8_0.id < arg_8_1.id
+		table.sort(list, function(mo1, mo2)
+			return mo1.id < mo2.id
 		end)
-		arg_7_0:setList(var_7_0)
+		self:setList(list)
 	else
-		arg_7_0:onModelUpdate()
+		self:onModelUpdate()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GMLangTxtModel.instance = GMLangTxtModel.New()
 
-return var_0_0
+return GMLangTxtModel

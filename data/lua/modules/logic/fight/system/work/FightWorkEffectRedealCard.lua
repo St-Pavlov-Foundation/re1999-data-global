@@ -1,28 +1,30 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectRedealCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectRedealCard.lua
 
-local var_0_0 = class("FightWorkEffectRedealCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectRedealCard", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0.oldHandCard = FightDataUtil.copyData(FightDataHelper.handCardMgr.handCard)
+local FightWorkEffectRedealCard = class("FightWorkEffectRedealCard", FightEffectBase)
+
+function FightWorkEffectRedealCard:beforePlayEffectData()
+	self.oldHandCard = FightDataUtil.copyData(FightDataHelper.handCardMgr.handCard)
 end
 
-function var_0_0.onStart(arg_2_0)
+function FightWorkEffectRedealCard:onStart()
 	FightController.instance:dispatchEvent(FightEvent.PushCardInfo)
-	arg_2_0:_playRedealCardEffect()
+	self:_playRedealCardEffect()
 end
 
-function var_0_0._playRedealCardEffect(arg_3_0)
+function FightWorkEffectRedealCard:_playRedealCardEffect()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_shuffle_allcard)
 
-	local var_3_0 = arg_3_0.oldHandCard
-	local var_3_1 = FightDataHelper.handCardMgr.handCard
+	local oldCards = self.oldHandCard
+	local newCards = FightDataHelper.handCardMgr.handCard
 
-	arg_3_0:com_registTimer(arg_3_0._delayAfterPerformance, 1.5 / FightModel.instance:getUISpeed())
-	FightController.instance:dispatchEvent(FightEvent.PlayRedealCardEffect, var_3_0, var_3_1)
+	self:com_registTimer(self._delayAfterPerformance, 1.5 / FightModel.instance:getUISpeed())
+	FightController.instance:dispatchEvent(FightEvent.PlayRedealCardEffect, oldCards, newCards)
 end
 
-function var_0_0.clearWork(arg_4_0)
+function FightWorkEffectRedealCard:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEffectRedealCard

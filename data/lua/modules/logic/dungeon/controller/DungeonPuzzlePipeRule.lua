@@ -1,13 +1,15 @@
-﻿module("modules.logic.dungeon.controller.DungeonPuzzlePipeRule", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/controller/DungeonPuzzlePipeRule.lua
 
-local var_0_0 = class("DungeonPuzzlePipeRule")
-local var_0_1 = DungeonPuzzleEnum.dir.left
-local var_0_2 = DungeonPuzzleEnum.dir.right
-local var_0_3 = DungeonPuzzleEnum.dir.down
-local var_0_4 = DungeonPuzzleEnum.dir.up
+module("modules.logic.dungeon.controller.DungeonPuzzlePipeRule", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._ruleChange = {
+local DungeonPuzzlePipeRule = class("DungeonPuzzlePipeRule")
+local LEFT = DungeonPuzzleEnum.dir.left
+local RIGHT = DungeonPuzzleEnum.dir.right
+local DOWN = DungeonPuzzleEnum.dir.down
+local UP = DungeonPuzzleEnum.dir.up
+
+function DungeonPuzzlePipeRule:ctor()
+	self._ruleChange = {
 		[28] = 46,
 		[248] = 468,
 		[24] = 48,
@@ -20,40 +22,40 @@ function var_0_0.ctor(arg_1_0)
 		[68] = 26,
 		[DungeonPuzzlePipeModel.constEntry] = DungeonPuzzlePipeModel.constEntry
 	}
-	arg_1_0._ruleConnect = {}
+	self._ruleConnect = {}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0._ruleChange) do
-		if iter_1_0 ~= 0 then
-			local var_1_0 = {}
-			local var_1_1 = iter_1_0
+	for k, v in pairs(self._ruleChange) do
+		if k ~= 0 then
+			local rule = {}
+			local val = k
 
-			while var_1_1 > 0 do
-				local var_1_2 = var_1_1 % 10
+			while val > 0 do
+				local mod = val % 10
 
-				var_1_1 = (var_1_1 - var_1_2) / 10
-				var_1_0[var_1_2] = true
+				val = (val - mod) / 10
+				rule[mod] = true
 			end
 
-			arg_1_0._ruleConnect[iter_1_0] = var_1_0
+			self._ruleConnect[k] = rule
 		end
 	end
 
-	arg_1_0._ruleConnect[DungeonPuzzlePipeModel.constEntry] = {
-		[var_0_2] = true,
-		[var_0_1] = true,
-		[var_0_3] = true,
-		[var_0_4] = true
+	self._ruleConnect[DungeonPuzzlePipeModel.constEntry] = {
+		[RIGHT] = true,
+		[LEFT] = true,
+		[DOWN] = true,
+		[UP] = true
 	}
 end
 
-function var_0_0.setGameSize(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._gameWidth = arg_2_1
-	arg_2_0._gameHeight = arg_2_2
+function DungeonPuzzlePipeRule:setGameSize(w, h)
+	self._gameWidth = w
+	self._gameHeight = h
 end
 
-function var_0_0.isGameClear(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		if not arg_3_0:getIsEntryClear(iter_3_0) then
+function DungeonPuzzlePipeRule:isGameClear(resultTable)
+	for entryMo, result in pairs(resultTable) do
+		if not self:getIsEntryClear(entryMo) then
 			return false
 		end
 	end
@@ -61,208 +63,205 @@ function var_0_0.isGameClear(arg_3_0, arg_3_1)
 	return true
 end
 
-function var_0_0.getIsEntryClear(arg_4_0, arg_4_1)
-	return arg_4_1.entryCount >= DungeonPuzzleEnum.pipeEntryClearCount and arg_4_1:getConnectValue() >= DungeonPuzzleEnum.pipeEntryClearDecimal
+function DungeonPuzzlePipeRule:getIsEntryClear(entryMo)
+	return entryMo.entryCount >= DungeonPuzzleEnum.pipeEntryClearCount and entryMo:getConnectValue() >= DungeonPuzzleEnum.pipeEntryClearDecimal
 end
 
-function var_0_0.getReachTable(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = {}
-	local var_5_2 = {}
-	local var_5_3 = DungeonPuzzlePipeModel.instance:getEntryList()
+function DungeonPuzzlePipeRule:getReachTable()
+	local entryTable, resultTable = {}, {}
+	local openSet = {}
+	local entryList = DungeonPuzzlePipeModel.instance:getEntryList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_3) do
-		table.insert(var_5_2, iter_5_1)
+	for i, entryMo in ipairs(entryList) do
+		table.insert(openSet, entryMo)
 
-		local var_5_4, var_5_5 = arg_5_0:_getSearchPipeResult(iter_5_1, var_5_2)
+		local traceTable, resultEntry = self:_getSearchPipeResult(entryMo, openSet)
 
-		var_5_1[iter_5_1] = var_5_5
-		var_5_0[iter_5_1] = var_5_4
-		iter_5_1.entryCount = #var_5_5
+		resultTable[entryMo] = resultEntry
+		entryTable[entryMo] = traceTable
+		entryMo.entryCount = #resultEntry
 	end
 
-	return var_5_0, var_5_1
+	return entryTable, resultTable
 end
 
-function var_0_0._getSearchPipeResult(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = {}
-	local var_6_1 = {}
+function DungeonPuzzlePipeRule:_getSearchPipeResult(entryMo, openSet)
+	local resultTable = {}
+	local traceSet = {}
 
-	while #arg_6_2 > 0 do
-		local var_6_2 = table.remove(arg_6_2)
+	while #openSet > 0 do
+		local tmpMo = table.remove(openSet)
 
-		if var_6_2:isEntry() and var_6_2 ~= arg_6_1 then
-			if not var_6_1[var_6_2] then
-				table.insert(var_6_0, var_6_2)
+		if tmpMo:isEntry() and tmpMo ~= entryMo then
+			if not traceSet[tmpMo] then
+				table.insert(resultTable, tmpMo)
 			end
 		else
-			arg_6_0:_addToOpenSet(var_6_2, var_6_1, arg_6_2)
+			self:_addToOpenSet(tmpMo, traceSet, openSet)
 		end
 
-		var_6_1[var_6_2] = true
+		traceSet[tmpMo] = true
 	end
 
-	return var_6_1, var_6_0
+	return traceSet, resultTable
 end
 
-function var_0_0._addToOpenSet(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	for iter_7_0, iter_7_1 in pairs(arg_7_1.connectSet) do
-		local var_7_0, var_7_1, var_7_2 = var_0_0.getIndexByDir(arg_7_1.x, arg_7_1.y, iter_7_0)
+function DungeonPuzzlePipeRule:_addToOpenSet(tmpMo, traceSet, openSet)
+	for dir, _ in pairs(tmpMo.connectSet) do
+		local nextX, nextY, reverse = DungeonPuzzlePipeRule.getIndexByDir(tmpMo.x, tmpMo.y, dir)
 
-		if var_7_0 > 0 and var_7_0 <= arg_7_0._gameWidth and var_7_1 > 0 and var_7_1 <= arg_7_0._gameHeight then
-			local var_7_3 = DungeonPuzzlePipeModel.instance:getData(var_7_0, var_7_1)
+		if nextX > 0 and nextX <= self._gameWidth and nextY > 0 and nextY <= self._gameHeight then
+			local nextMo = DungeonPuzzlePipeModel.instance:getData(nextX, nextY)
 
-			if not arg_7_2[var_7_3] then
-				table.insert(arg_7_3, var_7_3)
+			if not traceSet[nextMo] then
+				table.insert(openSet, nextMo)
 			end
 		end
 	end
 end
 
-function var_0_0._mergeReachDir(arg_8_0, arg_8_1)
-	local var_8_0 = {}
+function DungeonPuzzlePipeRule:_mergeReachDir(entryTable)
+	local compareList = {}
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
-		table.insert(var_8_0, iter_8_1)
+	for entryMo, reachMap in pairs(entryTable) do
+		table.insert(compareList, reachMap)
 	end
 
-	local var_8_1 = #var_8_0
+	local len = #compareList
 
-	for iter_8_2 = 1, var_8_1 do
-		local var_8_2 = {}
+	for i = 1, len do
+		local mergeMap = {}
 
-		for iter_8_3 = iter_8_2 + 1, var_8_1 do
-			local var_8_3 = var_8_0[iter_8_2]
-			local var_8_4 = var_8_0[iter_8_3]
+		for j = i + 1, len do
+			local map_i, map_j = compareList[i], compareList[j]
 
-			for iter_8_4, iter_8_5 in pairs(var_8_3) do
-				if var_8_4[iter_8_4] then
-					var_8_2[iter_8_4] = 1
+			for mo, _ in pairs(map_i) do
+				if map_j[mo] then
+					mergeMap[mo] = 1
 				end
 			end
 
-			arg_8_0:_markReachDir(var_8_2)
+			self:_markReachDir(mergeMap)
 		end
 	end
 end
 
-function var_0_0._markReachDir(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in pairs(arg_9_1) do
-		for iter_9_2, iter_9_3 in pairs(iter_9_0.connectSet) do
-			local var_9_0, var_9_1, var_9_2 = var_0_0.getIndexByDir(iter_9_0.x, iter_9_0.y, iter_9_2)
+function DungeonPuzzlePipeRule:_markReachDir(mergeMap)
+	for mo, _ in pairs(mergeMap) do
+		for dir, _ in pairs(mo.connectSet) do
+			local connectX, connectY, reverse = DungeonPuzzlePipeRule.getIndexByDir(mo.x, mo.y, dir)
 
-			if var_9_0 > 0 and var_9_0 <= arg_9_0._gameWidth and var_9_1 > 0 and var_9_1 <= arg_9_0._gameHeight then
-				local var_9_3 = DungeonPuzzlePipeModel.instance:getData(var_9_0, var_9_1)
+			if connectX > 0 and connectX <= self._gameWidth and connectY > 0 and connectY <= self._gameHeight then
+				local connectMo = DungeonPuzzlePipeModel.instance:getData(connectX, connectY)
 
-				if arg_9_1[var_9_3] then
-					iter_9_0.entryConnect[iter_9_2] = true
-					var_9_3.entryConnect[var_9_2] = true
+				if mergeMap[connectMo] then
+					mo.entryConnect[dir] = true
+					connectMo.entryConnect[reverse] = true
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._unmarkBranch(arg_10_0)
-	for iter_10_0 = 1, arg_10_0._gameWidth do
-		for iter_10_1 = 1, arg_10_0._gameHeight do
-			local var_10_0 = DungeonPuzzlePipeModel.instance:getData(iter_10_0, iter_10_1)
+function DungeonPuzzlePipeRule:_unmarkBranch()
+	for x = 1, self._gameWidth do
+		for y = 1, self._gameHeight do
+			local mo = DungeonPuzzlePipeModel.instance:getData(x, y)
 
-			arg_10_0:_unmarkSearchNode(var_10_0)
+			self:_unmarkSearchNode(mo)
 		end
 	end
 end
 
-function var_0_0._unmarkSearchNode(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1
+function DungeonPuzzlePipeRule:_unmarkSearchNode(mo)
+	local searchMo = mo
 
-	while var_11_0 ~= nil do
-		if tabletool.len(var_11_0.entryConnect) == 1 and not var_11_0:isEntry() then
-			local var_11_1
+	while searchMo ~= nil do
+		if tabletool.len(searchMo.entryConnect) == 1 and not searchMo:isEntry() then
+			local dir
 
-			for iter_11_0, iter_11_1 in pairs(var_11_0.entryConnect) do
-				var_11_1 = iter_11_0
+			for k, _ in pairs(searchMo.entryConnect) do
+				dir = k
 			end
 
-			local var_11_2, var_11_3, var_11_4 = var_0_0.getIndexByDir(var_11_0.x, var_11_0.y, var_11_1)
-			local var_11_5 = DungeonPuzzlePipeModel.instance:getData(var_11_2, var_11_3)
+			local nextX, nextY, reverse = DungeonPuzzlePipeRule.getIndexByDir(searchMo.x, searchMo.y, dir)
+			local nextMo = DungeonPuzzlePipeModel.instance:getData(nextX, nextY)
 
-			var_11_0.entryConnect[var_11_1] = nil
-			var_11_5.entryConnect[var_11_4] = nil
-			var_11_0 = var_11_5
+			searchMo.entryConnect[dir] = nil
+			nextMo.entryConnect[reverse] = nil
+			searchMo = nextMo
 		else
-			var_11_0 = nil
+			searchMo = nil
 		end
 	end
 end
 
-function var_0_0.setSingleConnection(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
-	if arg_12_1 > 0 and arg_12_1 <= arg_12_0._gameWidth and arg_12_2 > 0 and arg_12_2 <= arg_12_0._gameHeight then
-		local var_12_0 = DungeonPuzzlePipeModel.instance:getData(arg_12_1, arg_12_2)
-		local var_12_1 = arg_12_0._ruleConnect[var_12_0.value]
-		local var_12_2 = arg_12_0._ruleConnect[arg_12_5.value]
-		local var_12_3 = var_12_1[arg_12_3] and var_12_2[arg_12_4]
-		local var_12_4
+function DungeonPuzzlePipeRule:setSingleConnection(x, y, dir, reverse, centerMO)
+	if x > 0 and x <= self._gameWidth and y > 0 and y <= self._gameHeight then
+		local targetMO = DungeonPuzzlePipeModel.instance:getData(x, y)
+		local targetRule = self._ruleConnect[targetMO.value]
+		local selfRule = self._ruleConnect[centerMO.value]
+		local result = targetRule[dir] and selfRule[reverse]
+		local oldSet = targetMO.connectSet[dir] == true
 
-		var_12_4 = var_12_0.connectSet[arg_12_3] == true
-
-		if var_12_3 then
-			var_12_0.connectSet[arg_12_3] = true
-			arg_12_5.connectSet[arg_12_4] = true
+		if result then
+			targetMO.connectSet[dir] = true
+			centerMO.connectSet[reverse] = true
 		else
-			var_12_0.connectSet[arg_12_3] = nil
-			arg_12_5.connectSet[arg_12_4] = nil
+			targetMO.connectSet[dir] = nil
+			centerMO.connectSet[reverse] = nil
 		end
 	end
 end
 
-function var_0_0.changeDirection(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = DungeonPuzzlePipeModel.instance:getData(arg_13_1, arg_13_2)
-	local var_13_1 = arg_13_0._ruleChange[var_13_0.value]
+function DungeonPuzzlePipeRule:changeDirection(x, y)
+	local mo = DungeonPuzzlePipeModel.instance:getData(x, y)
+	local nextVal = self._ruleChange[mo.value]
 
-	if var_13_1 then
-		var_13_0.value = var_13_1
+	if nextVal then
+		mo.value = nextVal
 	end
 
-	return var_13_0
+	return mo
 end
 
-function var_0_0.getRandomSkipSet(arg_14_0)
-	local var_14_0 = {}
-	local var_14_1 = DungeonPuzzlePipeModel.instance:getEntryList()
-	local var_14_2, var_14_3 = DungeonPuzzlePipeModel.instance:getGameSize()
+function DungeonPuzzlePipeRule:getRandomSkipSet()
+	local skipSet = {}
+	local entryList = DungeonPuzzlePipeModel.instance:getEntryList()
+	local w, h = DungeonPuzzlePipeModel.instance:getGameSize()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		var_14_0[iter_14_1] = true
+	for _, entry in ipairs(entryList) do
+		skipSet[entry] = true
 
-		local var_14_4 = iter_14_1.x
-		local var_14_5 = iter_14_1.y
+		local x, y = entry.x, entry.y
 
-		arg_14_0:_insertToSet(var_14_4 - 1, var_14_5, var_14_0)
-		arg_14_0:_insertToSet(var_14_4 + 1, var_14_5, var_14_0)
-		arg_14_0:_insertToSet(var_14_4, var_14_5 - 1, var_14_0)
-		arg_14_0:_insertToSet(var_14_4, var_14_5 + 1, var_14_0)
+		self:_insertToSet(x - 1, y, skipSet)
+		self:_insertToSet(x + 1, y, skipSet)
+		self:_insertToSet(x, y - 1, skipSet)
+		self:_insertToSet(x, y + 1, skipSet)
 	end
 
-	return var_14_0
+	return skipSet
 end
 
-function var_0_0._insertToSet(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_1 > 0 and arg_15_1 <= arg_15_0._gameWidth and arg_15_2 > 0 and arg_15_2 <= arg_15_0._gameHeight then
-		arg_15_3[DungeonPuzzlePipeModel.instance:getData(arg_15_1, arg_15_2)] = true
-	end
-end
+function DungeonPuzzlePipeRule:_insertToSet(x, y, targetSet)
+	if x > 0 and x <= self._gameWidth and y > 0 and y <= self._gameHeight then
+		local mo = DungeonPuzzlePipeModel.instance:getData(x, y)
 
-function var_0_0.getIndexByDir(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_2 == var_0_1 then
-		return arg_16_0 - 1, arg_16_1, var_0_2
-	elseif arg_16_2 == var_0_2 then
-		return arg_16_0 + 1, arg_16_1, var_0_1
-	elseif arg_16_2 == var_0_4 then
-		return arg_16_0, arg_16_1 + 1, var_0_3
-	elseif arg_16_2 == var_0_3 then
-		return arg_16_0, arg_16_1 - 1, var_0_4
+		targetSet[mo] = true
 	end
 end
 
-return var_0_0
+function DungeonPuzzlePipeRule.getIndexByDir(x, y, dir)
+	if dir == LEFT then
+		return x - 1, y, RIGHT
+	elseif dir == RIGHT then
+		return x + 1, y, LEFT
+	elseif dir == UP then
+		return x, y + 1, DOWN
+	elseif dir == DOWN then
+		return x, y - 1, UP
+	end
+end
+
+return DungeonPuzzlePipeRule

@@ -1,27 +1,29 @@
-﻿module("modules.live2d.Live2dSpecialLogic", package.seeall)
+﻿-- chunkname: @modules/live2d/Live2dSpecialLogic.lua
 
-local var_0_0 = class("Live2dSpecialLogic")
-local var_0_1 = {
+module("modules.live2d.Live2dSpecialLogic", package.seeall)
+
+local Live2dSpecialLogic = class("Live2dSpecialLogic")
+local _alwaysFadeList = {
 	"pikelesi"
 }
 
-function var_0_0.setAlwaysFade(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = false
+function Live2dSpecialLogic.setAlwaysFade(cubismController, resPath, value)
+	local fade = false
 
-	if arg_1_2 then
-		for iter_1_0, iter_1_1 in ipairs(var_0_1) do
-			if string.find(arg_1_1, iter_1_1) then
-				var_1_0 = true
+	if value then
+		for i, v in ipairs(_alwaysFadeList) do
+			if string.find(resPath, v) then
+				fade = true
 
 				break
 			end
 		end
 	end
 
-	arg_1_0:SetAlwaysFade(var_1_0)
+	cubismController:SetAlwaysFade(fade)
 end
 
-local var_0_2 = {
+local fakeUIEffectList = {
 	{
 		id = 306501,
 		effect = "Drawables/bone/effect-Bone",
@@ -34,12 +36,12 @@ local var_0_2 = {
 	}
 }
 
-function var_0_0.getFakeUIEffect(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(var_0_2) do
-		if string.find(arg_2_0, iter_2_1.id) then
-			return iter_2_1, string.split(iter_2_1.effect, "|")
+function Live2dSpecialLogic.getFakeUIEffect(resPath)
+	for i, v in ipairs(fakeUIEffectList) do
+		if string.find(resPath, v.id) then
+			return v, string.split(v.effect, "|")
 		end
 	end
 end
 
-return var_0_0
+return Live2dSpecialLogic

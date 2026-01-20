@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/task/Act183TaskView.lua
 
-local var_0_0 = class("Act183TaskView", BaseView)
-local var_0_1 = {
+module("modules.logic.versionactivity2_5.challenge.view.task.Act183TaskView", package.seeall)
+
+local Act183TaskView = class("Act183TaskView", BaseView)
+local TaskCategorySelectConfigMap = {
 	[Act183Enum.TaskType.Daily] = {
 		"#D2D0D0",
 		"v2a5_challenge_reward_btn1_1"
@@ -15,7 +17,7 @@ local var_0_1 = {
 		"v2a5_challenge_reward_btn3_1"
 	}
 }
-local var_0_2 = {
+local TaskCategoryUnselectConfigMap = {
 	[Act183Enum.TaskType.Daily] = {
 		"#9B9899",
 		"v2a5_challenge_reward_btn1_2"
@@ -29,257 +31,263 @@ local var_0_2 = {
 		"v2a5_challenge_reward_btn3_2"
 	}
 }
-local var_0_3 = 740
-local var_0_4 = 893
-local var_0_5 = -106
-local var_0_6 = -25
+local TaskScrollHeight_HasOneKey = 740
+local TaskScrollHeight_NoneOneKey = 893
+local TaskScrollPosY_HasOneKey = -106
+local TaskScrollPosY_NoneOneKey = -25
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
-	arg_1_0._gocategorys = gohelper.findChild(arg_1_0.viewGO, "root/left/#go_categorys")
-	arg_1_0._gocategoryitem = gohelper.findChild(arg_1_0.viewGO, "root/left/#go_categorys/#go_categoryitem")
-	arg_1_0._scrolltask = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#scroll_task")
-	arg_1_0._goonekeypos = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_onekeypos")
+function Act183TaskView:onInitView()
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+	self._gocategorys = gohelper.findChild(self.viewGO, "root/left/#go_categorys")
+	self._gocategoryitem = gohelper.findChild(self.viewGO, "root/left/#go_categorys/#go_categoryitem")
+	self._scrolltask = gohelper.findChildScrollRect(self.viewGO, "root/right/#scroll_task")
+	self._goonekeypos = gohelper.findChild(self.viewGO, "root/right/#go_onekeypos")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act183TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act183TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_4_0._onFinishTask, arg_4_0)
-	arg_4_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_4_0._onFinishTask, arg_4_0)
+function Act183TaskView:_editableInitView()
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._onFinishTask, self)
 
-	arg_4_0._taskTypes = {
+	self._taskTypes = {
 		Act183Enum.TaskType.Daily,
 		Act183Enum.TaskType.NormalMain,
 		Act183Enum.TaskType.HardMain
 	}
-	arg_4_0._defaultSelectTaskType = arg_4_0._taskTypes[1]
-	arg_4_0._categoryItemTab = arg_4_0:getUserDataTb_()
+	self._defaultSelectTaskType = self._taskTypes[1]
+	self._categoryItemTab = self:getUserDataTb_()
 	Act183TaskListModel.instance.startFrameCount = UnityEngine.Time.frameCount
 end
 
-function var_0_0._onFinishTask(arg_5_0)
+function Act183TaskView:_onFinishTask()
 	Act183TaskListModel.instance:refresh()
-	arg_5_0:initOrRefreshOneKeyTaskItem()
-	arg_5_0:refreshAllCategoryItemReddot()
+	self:initOrRefreshOneKeyTaskItem()
+	self:refreshAllCategoryItemReddot()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Act183TaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function Act183TaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_OpenTaskView)
-	arg_7_0:initInfo()
-	arg_7_0:refresh()
+	self:initInfo()
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_8_0)
-	Act183TaskListModel.instance:init(arg_8_0._activityId, arg_8_0._selectTaskType)
-	arg_8_0:_initCategorys()
-	arg_8_0:initOrRefreshOneKeyTaskItem()
+function Act183TaskView:refresh()
+	Act183TaskListModel.instance:init(self._activityId, self._selectTaskType)
+	self:_initCategorys()
+	self:initOrRefreshOneKeyTaskItem()
 end
 
-function var_0_0.initInfo(arg_9_0)
-	if arg_9_0.viewParam then
-		arg_9_0._selectGroupType = arg_9_0.viewParam.selectGroupType
-		arg_9_0._selectGroupId = arg_9_0.viewParam.selectGroupId
+function Act183TaskView:initInfo()
+	if self.viewParam then
+		self._selectGroupType = self.viewParam.selectGroupType
+		self._selectGroupId = self.viewParam.selectGroupId
 
-		if arg_9_0._selectGroupType then
-			arg_9_0._selectTaskType = Act183Enum.GroupTypeToTaskType[arg_9_0._selectGroupType]
+		if self._selectGroupType then
+			self._selectTaskType = Act183Enum.GroupTypeToTaskType[self._selectGroupType]
 		end
 	end
 
-	arg_9_0._selectTaskType = arg_9_0._selectTaskType or arg_9_0._defaultSelectTaskType
-	arg_9_0._activityId = Act183Model.instance:getActivityId()
+	self._selectTaskType = self._selectTaskType or self._defaultSelectTaskType
+	self._activityId = Act183Model.instance:getActivityId()
 end
 
-function var_0_0.initOrRefreshOneKeyTaskItem(arg_10_0)
-	local var_10_0 = Act183TaskListModel.instance:getOneKeyTaskItem()
-	local var_10_1 = var_10_0 ~= nil
+function Act183TaskView:initOrRefreshOneKeyTaskItem()
+	local oneKeyMo = Act183TaskListModel.instance:getOneKeyTaskItem()
+	local needOneKeyItem = oneKeyMo ~= nil
 
-	if arg_10_0._oneKeyTaskItem then
-		gohelper.setActive(arg_10_0._oneKeyTaskItem.go, false)
+	if self._oneKeyTaskItem then
+		gohelper.setActive(self._oneKeyTaskItem.go, false)
 	end
 
-	recthelper.setHeight(arg_10_0._scrolltask.transform, var_10_1 and var_0_3 or var_0_4)
-	recthelper.setAnchorY(arg_10_0._scrolltask.transform, var_10_1 and var_0_5 or var_0_6)
+	recthelper.setHeight(self._scrolltask.transform, needOneKeyItem and TaskScrollHeight_HasOneKey or TaskScrollHeight_NoneOneKey)
+	recthelper.setAnchorY(self._scrolltask.transform, needOneKeyItem and TaskScrollPosY_HasOneKey or TaskScrollPosY_NoneOneKey)
 
-	if not var_10_1 then
+	if not needOneKeyItem then
 		return
 	end
 
-	if not arg_10_0._oneKeyTaskItem then
-		local var_10_2 = arg_10_0.viewContainer._viewSetting.otherRes[3]
-		local var_10_3 = arg_10_0:getResInst(var_10_2, arg_10_0._goonekeypos)
+	if not self._oneKeyTaskItem then
+		local oneKeyItemResUrl = self.viewContainer._viewSetting.otherRes[3]
+		local oneKeyItemGo = self:getResInst(oneKeyItemResUrl, self._goonekeypos)
 
-		arg_10_0._oneKeyTaskItem = MonoHelper.addLuaComOnceToGo(var_10_3, Act183TaskOneKeyItem)
-		arg_10_0._oneKeyTaskItem._index = 1
+		self._oneKeyTaskItem = MonoHelper.addLuaComOnceToGo(oneKeyItemGo, Act183TaskOneKeyItem)
+		self._oneKeyTaskItem._index = 1
 	end
 
-	gohelper.setActive(arg_10_0._oneKeyTaskItem.go, true)
-	arg_10_0._oneKeyTaskItem:onUpdateMO(var_10_0)
+	gohelper.setActive(self._oneKeyTaskItem.go, true)
+	self._oneKeyTaskItem:onUpdateMO(oneKeyMo)
 end
 
-function var_0_0.onOpenFinish(arg_11_0)
-	arg_11_0:focusTargetGroupTasks()
+function Act183TaskView:onOpenFinish()
+	self:focusTargetGroupTasks()
 end
 
-function var_0_0.focusTargetGroupTasks(arg_12_0)
-	if arg_12_0._selectGroupType ~= Act183Enum.TaskType.Daily or not arg_12_0._selectGroupId then
+function Act183TaskView:focusTargetGroupTasks()
+	if self._selectGroupType ~= Act183Enum.TaskType.Daily or not self._selectGroupId then
 		return
 	end
 
-	local var_12_0 = 0
-	local var_12_1 = Act183TaskListModel.instance:getList()
-	local var_12_2 = false
+	local scrollOffsetY = 0
+	local list = Act183TaskListModel.instance:getList()
+	local isFocusSucc = false
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		local var_12_3 = Act183Enum.TaskItemHeightMap[iter_12_1.type] or 0
-		local var_12_4 = iter_12_1.data and iter_12_1.data.config
+	for _, cellInfo in ipairs(list) do
+		local taskItemHeight = Act183Enum.TaskItemHeightMap[cellInfo.type] or 0
+		local cellConfig = cellInfo.data and cellInfo.data.config
 
-		if iter_12_1.type == Act183Enum.TaskListItemType.Head and var_12_4 ~= nil and var_12_4.groupId == arg_12_0._selectGroupId then
-			var_12_2 = true
+		if cellInfo.type == Act183Enum.TaskListItemType.Head and cellConfig ~= nil and cellConfig.groupId == self._selectGroupId then
+			isFocusSucc = true
 
 			break
 		end
 
-		var_12_0 = var_12_0 + var_12_3
+		scrollOffsetY = scrollOffsetY + taskItemHeight
 	end
 
-	local var_12_5 = var_12_2 and var_12_0 or 0
+	local resultOffsetY = isFocusSucc and scrollOffsetY or 0
 
-	arg_12_0:setTaskVerticalScrollPixel(var_12_5)
+	self:setTaskVerticalScrollPixel(resultOffsetY)
 end
 
-function var_0_0.setTaskVerticalScrollPixel(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0.viewContainer:getTaskScrollView()
-	local var_13_1 = var_13_0 and var_13_0:getCsScroll()
+function Act183TaskView:setTaskVerticalScrollPixel(scrollOffsetY)
+	local taskScrollView = self.viewContainer:getTaskScrollView()
+	local csMixScrollView = taskScrollView and taskScrollView:getCsScroll()
 
-	if var_13_1 then
-		var_13_1.VerticalScrollPixel = arg_13_1
-	end
-end
-
-function var_0_0._initCategorys(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._taskTypes) do
-		local var_14_0 = arg_14_0:_getOrCreateCategoryItem(iter_14_0)
-
-		var_14_0.txtselecttitle.text = luaLang(Act183Enum.TaskNameLangId[iter_14_1])
-		var_14_0.txtunselecttitle.text = luaLang(Act183Enum.TaskNameLangId[iter_14_1])
-		var_14_0.reddot = RedDotController.instance:addRedDot(var_14_0.goreddot, RedDotEnum.DotNode.V2a5_Act183Task, iter_14_1, arg_14_0._categoryReddotOverrideFunc, iter_14_1)
-
-		local var_14_1 = iter_14_1 == arg_14_0._selectTaskType
-
-		gohelper.setActive(var_14_0.goselect, var_14_1)
-		gohelper.setActive(var_14_0.gounselect, not var_14_1)
-		gohelper.setActive(var_14_0.viewGO, true)
-
-		local var_14_2 = var_0_1[iter_14_1]
-		local var_14_3 = var_0_2[iter_14_1]
-
-		SLFramework.UGUI.GuiHelper.SetColor(var_14_0.txtselecttitle, var_14_2[1])
-		SLFramework.UGUI.GuiHelper.SetColor(var_14_0.txtunselecttitle, var_14_3[1])
-		UISpriteSetMgr.instance:setChallengeSprite(var_14_0.imageselectbg, var_14_2[2])
-		UISpriteSetMgr.instance:setChallengeSprite(var_14_0.imageunselectbg, var_14_3[2])
-		gohelper.setActive(var_14_0.goselect_normaleffect, var_14_1 and iter_14_1 ~= Act183Enum.TaskType.HardMain)
-		gohelper.setActive(var_14_0.goselect_hardeffect, var_14_1 and iter_14_1 == Act183Enum.TaskType.HardMain)
+	if csMixScrollView then
+		csMixScrollView.VerticalScrollPixel = scrollOffsetY
 	end
 end
 
-function var_0_0._categoryReddotOverrideFunc(arg_15_0, arg_15_1)
-	local var_15_0 = false
-	local var_15_1 = Act183TaskListModel.instance:getTaskMosByType(arg_15_0)
+function Act183TaskView:_initCategorys()
+	for index, taskType in ipairs(self._taskTypes) do
+		local categoryItem = self:_getOrCreateCategoryItem(index)
 
-	if var_15_1 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-			if Act183Helper.isTaskCanGetReward(iter_15_1.id) then
-				var_15_0 = true
+		categoryItem.txtselecttitle.text = luaLang(Act183Enum.TaskNameLangId[taskType])
+		categoryItem.txtunselecttitle.text = luaLang(Act183Enum.TaskNameLangId[taskType])
+		categoryItem.reddot = RedDotController.instance:addRedDot(categoryItem.goreddot, RedDotEnum.DotNode.V2a5_Act183Task, taskType, self._categoryReddotOverrideFunc, taskType)
+
+		local isSelect = taskType == self._selectTaskType
+
+		gohelper.setActive(categoryItem.goselect, isSelect)
+		gohelper.setActive(categoryItem.gounselect, not isSelect)
+		gohelper.setActive(categoryItem.viewGO, true)
+
+		local selectCategoryCo = TaskCategorySelectConfigMap[taskType]
+		local unselectCategoryCo = TaskCategoryUnselectConfigMap[taskType]
+
+		SLFramework.UGUI.GuiHelper.SetColor(categoryItem.txtselecttitle, selectCategoryCo[1])
+		SLFramework.UGUI.GuiHelper.SetColor(categoryItem.txtunselecttitle, unselectCategoryCo[1])
+		UISpriteSetMgr.instance:setChallengeSprite(categoryItem.imageselectbg, selectCategoryCo[2])
+		UISpriteSetMgr.instance:setChallengeSprite(categoryItem.imageunselectbg, unselectCategoryCo[2])
+		gohelper.setActive(categoryItem.goselect_normaleffect, isSelect and taskType ~= Act183Enum.TaskType.HardMain)
+		gohelper.setActive(categoryItem.goselect_hardeffect, isSelect and taskType == Act183Enum.TaskType.HardMain)
+	end
+end
+
+function Act183TaskView._categoryReddotOverrideFunc(taskType, reddotIcon)
+	local isDotShow = false
+	local taskMoList = Act183TaskListModel.instance:getTaskMosByType(taskType)
+
+	if taskMoList then
+		for _, taskMo in ipairs(taskMoList) do
+			local canGetReward = Act183Helper.isTaskCanGetReward(taskMo.id)
+
+			if canGetReward then
+				isDotShow = true
 
 				break
 			end
 		end
 	end
 
-	arg_15_1.show = var_15_0
+	reddotIcon.show = isDotShow
 
-	arg_15_1:showRedDot(RedDotEnum.Style.Normal)
+	reddotIcon:showRedDot(RedDotEnum.Style.Normal)
 end
 
-function var_0_0.refreshAllCategoryItemReddot(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._taskTypes) do
-		arg_16_0:_getOrCreateCategoryItem(iter_16_0).reddot:refreshDot()
+function Act183TaskView:refreshAllCategoryItemReddot()
+	for index, taskType in ipairs(self._taskTypes) do
+		local categoryItem = self:_getOrCreateCategoryItem(index)
+
+		categoryItem.reddot:refreshDot()
 	end
 end
 
-function var_0_0._getOrCreateCategoryItem(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._categoryItemTab[arg_17_1]
+function Act183TaskView:_getOrCreateCategoryItem(index)
+	local categoryItem = self._categoryItemTab[index]
 
-	if not var_17_0 then
-		var_17_0 = arg_17_0:getUserDataTb_()
-		var_17_0.viewGO = gohelper.cloneInPlace(arg_17_0._gocategoryitem, "categoryitem_" .. arg_17_1)
-		var_17_0.goselect = gohelper.findChild(var_17_0.viewGO, "go_select")
-		var_17_0.gounselect = gohelper.findChild(var_17_0.viewGO, "go_unselect")
-		var_17_0.imageselectbg = gohelper.findChildImage(var_17_0.viewGO, "go_select/bg")
-		var_17_0.imageunselectbg = gohelper.findChildImage(var_17_0.viewGO, "go_unselect/bg")
-		var_17_0.txtselecttitle = gohelper.findChildText(var_17_0.viewGO, "go_select/txt_title")
-		var_17_0.txtunselecttitle = gohelper.findChildText(var_17_0.viewGO, "go_unselect/txt_title")
-		var_17_0.goreddot = gohelper.findChild(var_17_0.viewGO, "go_reddot")
-		var_17_0.goselect_normaleffect = gohelper.findChild(var_17_0.viewGO, "go_select/vx_normal")
-		var_17_0.goselect_hardeffect = gohelper.findChild(var_17_0.viewGO, "go_select/vx_hard")
-		var_17_0.btnclick = gohelper.findChildButtonWithAudio(var_17_0.viewGO, "btn_click")
+	if not categoryItem then
+		categoryItem = self:getUserDataTb_()
+		categoryItem.viewGO = gohelper.cloneInPlace(self._gocategoryitem, "categoryitem_" .. index)
+		categoryItem.goselect = gohelper.findChild(categoryItem.viewGO, "go_select")
+		categoryItem.gounselect = gohelper.findChild(categoryItem.viewGO, "go_unselect")
+		categoryItem.imageselectbg = gohelper.findChildImage(categoryItem.viewGO, "go_select/bg")
+		categoryItem.imageunselectbg = gohelper.findChildImage(categoryItem.viewGO, "go_unselect/bg")
+		categoryItem.txtselecttitle = gohelper.findChildText(categoryItem.viewGO, "go_select/txt_title")
+		categoryItem.txtunselecttitle = gohelper.findChildText(categoryItem.viewGO, "go_unselect/txt_title")
+		categoryItem.goreddot = gohelper.findChild(categoryItem.viewGO, "go_reddot")
+		categoryItem.goselect_normaleffect = gohelper.findChild(categoryItem.viewGO, "go_select/vx_normal")
+		categoryItem.goselect_hardeffect = gohelper.findChild(categoryItem.viewGO, "go_select/vx_hard")
+		categoryItem.btnclick = gohelper.findChildButtonWithAudio(categoryItem.viewGO, "btn_click")
 
-		var_17_0.btnclick:AddClickListener(arg_17_0._onClickCategoryItem, arg_17_0, arg_17_1)
+		categoryItem.btnclick:AddClickListener(self._onClickCategoryItem, self, index)
 
-		arg_17_0._categoryItemTab[arg_17_1] = var_17_0
+		self._categoryItemTab[index] = categoryItem
 	end
 
-	return var_17_0
+	return categoryItem
 end
 
-function var_0_0._onClickCategoryItem(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._taskTypes[arg_18_1]
+function Act183TaskView:_onClickCategoryItem(index)
+	local taskType = self._taskTypes[index]
 
-	if not var_18_0 or arg_18_0._selectTaskType == var_18_0 then
+	if not taskType or self._selectTaskType == taskType then
 		return
 	end
 
-	arg_18_0._selectTaskType = var_18_0
+	self._selectTaskType = taskType
 
-	arg_18_0:setTaskVerticalScrollPixel(0)
-	arg_18_0:refresh()
+	self:setTaskVerticalScrollPixel(0)
+	self:refresh()
 end
 
-function var_0_0.relreaseAllCategoryItems(arg_19_0)
-	if arg_19_0._categoryItemTab then
-		for iter_19_0, iter_19_1 in pairs(arg_19_0._categoryItemTab) do
-			iter_19_1.btnclick:RemoveClickListener()
+function Act183TaskView:relreaseAllCategoryItems()
+	if self._categoryItemTab then
+		for _, categoryItem in pairs(self._categoryItemTab) do
+			categoryItem.btnclick:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0.playTaskItmeAnimation(arg_20_0)
-	if not arg_20_0.viewContainer:getTaskScrollView() then
+function Act183TaskView:playTaskItmeAnimation()
+	local taskScrollView = self.viewContainer:getTaskScrollView()
+
+	if not taskScrollView then
 		return
 	end
 end
 
-function var_0_0.onClose(arg_21_0)
-	arg_21_0:relreaseAllCategoryItems()
+function Act183TaskView:onClose()
+	self:relreaseAllCategoryItems()
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function Act183TaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act183TaskView

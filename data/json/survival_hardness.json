@@ -1738,7 +1738,7 @@
     "isShow": 0,
     "icon": "21051",
     "titile": "虚弱体质Ⅰ",
-    "desc": "language_10095337",
+    "desc": "language_10103673",
     "scoreRate": 50,
     "extendScoreFix": 0,
     "lockDesc": ""
@@ -1754,7 +1754,7 @@
     "isShow": 0,
     "icon": "21052",
     "titile": "虚弱体质Ⅱ",
-    "desc": "language_10095339",
+    "desc": "language_10103674",
     "scoreRate": 100,
     "extendScoreFix": 0,
     "lockDesc": ""
@@ -1770,7 +1770,7 @@
     "isShow": 0,
     "icon": "21053",
     "titile": "虚弱体质Ⅲ",
-    "desc": "language_10095341",
+    "desc": "language_10103675",
     "scoreRate": 150,
     "extendScoreFix": 0,
     "lockDesc": ""
@@ -1786,7 +1786,7 @@
     "isShow": 0,
     "icon": "21054",
     "titile": "虚弱体质Ⅳ",
-    "desc": "language_10095343",
+    "desc": "language_10103676",
     "scoreRate": 200,
     "extendScoreFix": 0,
     "lockDesc": "language_10087203"
@@ -1802,7 +1802,7 @@
     "isShow": 0,
     "icon": "21055",
     "titile": "虚弱体质Ⅴ",
-    "desc": "language_10095345",
+    "desc": "language_10103677",
     "scoreRate": 250,
     "extendScoreFix": 0,
     "lockDesc": "language_10087180"
@@ -2714,7 +2714,7 @@
     "isShow": 0,
     "icon": "21052",
     "titile": "虚弱体质Ⅱ",
-    "desc": "language_10095339",
+    "desc": "language_10103674",
     "scoreRate": 0,
     "extendScoreFix": 0,
     "lockDesc": ""
@@ -2762,7 +2762,7 @@
     "isShow": 0,
     "icon": "21053",
     "titile": "虚弱体质Ⅲ",
-    "desc": "language_10095341",
+    "desc": "language_10103675",
     "scoreRate": 0,
     "extendScoreFix": 0,
     "lockDesc": ""
@@ -2826,7 +2826,7 @@
     "isShow": 0,
     "icon": "21054",
     "titile": "虚弱体质Ⅳ",
-    "desc": "language_10095343",
+    "desc": "language_10103676",
     "scoreRate": 0,
     "extendScoreFix": 0,
     "lockDesc": ""
@@ -2906,7 +2906,7 @@
     "isShow": 0,
     "icon": "21055",
     "titile": "虚弱体质Ⅴ",
-    "desc": "language_10095345",
+    "desc": "language_10103677",
     "scoreRate": 0,
     "extendScoreFix": 0,
     "lockDesc": ""

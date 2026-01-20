@@ -1,13 +1,15 @@
-﻿module("modules.logic.pay.controller.PayEvent", package.seeall)
+﻿-- chunkname: @modules/logic/pay/controller/PayEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.pay.controller.PayEvent", package.seeall)
 
-var_0_0.UpdateProductDetails = 21
-var_0_0.GetSignFailed = 1
-var_0_0.GetSignSuccess = 2
-var_0_0.PayFinished = 11
-var_0_0.PayFailed = 12
-var_0_0.PayInfoChanged = 13
-var_0_0.UpdateProductDetails = 21
+local PayEvent = _M
 
-return var_0_0
+PayEvent.UpdateProductDetails = 21
+PayEvent.GetSignFailed = 1
+PayEvent.GetSignSuccess = 2
+PayEvent.PayFinished = 11
+PayEvent.PayFailed = 12
+PayEvent.PayInfoChanged = 13
+PayEvent.UpdateProductDetails = 21
+
+return PayEvent

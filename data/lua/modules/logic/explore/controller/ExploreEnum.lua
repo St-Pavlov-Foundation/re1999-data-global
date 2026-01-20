@@ -1,27 +1,29 @@
-﻿module("modules.logic.explore.controller.ExploreEnum", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/ExploreEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.explore.controller.ExploreEnum", package.seeall)
 
-var_0_0.RoleMoveDir = {
+local ExploreEnum = _M
+
+ExploreEnum.RoleMoveDir = {
 	None = false,
 	Up = Vector2.New(0, 1),
 	Down = Vector2.New(0, -1),
 	Left = Vector2.New(-1, 0),
 	Right = Vector2.New(1, 0)
 }
-var_0_0.RoleMoveRotateDirIndex = {
-	[var_0_0.RoleMoveDir.Up] = 0,
-	[var_0_0.RoleMoveDir.Right] = 1,
-	[var_0_0.RoleMoveDir.Down] = 2,
-	[var_0_0.RoleMoveDir.Left] = 3
+ExploreEnum.RoleMoveRotateDirIndex = {
+	[ExploreEnum.RoleMoveDir.Up] = 0,
+	[ExploreEnum.RoleMoveDir.Right] = 1,
+	[ExploreEnum.RoleMoveDir.Down] = 2,
+	[ExploreEnum.RoleMoveDir.Left] = 3
 }
-var_0_0.RoleMoveRotateDir = {
+ExploreEnum.RoleMoveRotateDir = {
 	[0] = Vector2.New(0, 1),
 	Vector2.New(1, 0),
 	Vector2.New(0, -1),
 	(Vector2.New(-1, 0))
 }
-var_0_0.ItemType = {
+ExploreEnum.ItemType = {
 	PipePot = 224,
 	Magic = 101,
 	Currency = 221,
@@ -66,31 +68,31 @@ var_0_0.ItemType = {
 	StepOnce = 211,
 	Elevator = 208
 }
-var_0_0.ItemTypeToName = {}
+ExploreEnum.ItemTypeToName = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.ItemType) do
-	var_0_0.ItemTypeToName[iter_0_1] = iter_0_0
+for k, v in pairs(ExploreEnum.ItemType) do
+	ExploreEnum.ItemTypeToName[v] = k
 end
 
-var_0_0.WhirlType = {
+ExploreEnum.WhirlType = {
 	Rune = 1
 }
-var_0_0.RuneTriggerType = {
+ExploreEnum.RuneTriggerType = {
 	ItemActive = 1,
 	RuneActive = 2,
 	None = 0
 }
-var_0_0.BackPackItemType = {
+ExploreEnum.BackPackItemType = {
 	Rune = 2,
 	Normal = 1
 }
-var_0_0.TriggerDir = {
+ExploreEnum.TriggerDir = {
 	Down = 4,
 	Up = 3,
 	Right = 2,
 	Left = 1
 }
-var_0_0.TriggerEvent = {
+ExploreEnum.TriggerEvent = {
 	CatchUnit = 30,
 	MiniGame = 17,
 	ChangeInteractActive = 21,
@@ -128,91 +130,91 @@ var_0_0.TriggerEvent = {
 	Dialogue = 31,
 	BubbleDialogue = 34
 }
-var_0_0.ServerTriggerType = {
-	[var_0_0.ItemType.Door] = 1,
-	[var_0_0.ItemType.Step] = 1,
-	[var_0_0.ItemType.StepOnce] = 1,
-	[var_0_0.ItemType.Currency] = 1,
-	[var_0_0.ItemType.GravityGear] = 1,
-	[var_0_0.ItemType.Ice] = 1,
-	[var_0_0.ItemType.Obstacle] = 1,
-	[var_0_0.ItemType.Elevator] = 1,
-	[var_0_0.ItemType.LightReceiver] = 1,
-	[var_0_0.ItemType.Rock] = 1,
-	[var_0_0.ItemType.LightBall] = 1,
-	[var_0_0.ItemType.BonusScene] = 1
+ExploreEnum.ServerTriggerType = {
+	[ExploreEnum.ItemType.Door] = 1,
+	[ExploreEnum.ItemType.Step] = 1,
+	[ExploreEnum.ItemType.StepOnce] = 1,
+	[ExploreEnum.ItemType.Currency] = 1,
+	[ExploreEnum.ItemType.GravityGear] = 1,
+	[ExploreEnum.ItemType.Ice] = 1,
+	[ExploreEnum.ItemType.Obstacle] = 1,
+	[ExploreEnum.ItemType.Elevator] = 1,
+	[ExploreEnum.ItemType.LightReceiver] = 1,
+	[ExploreEnum.ItemType.Rock] = 1,
+	[ExploreEnum.ItemType.LightBall] = 1,
+	[ExploreEnum.ItemType.BonusScene] = 1
 }
-var_0_0.ItemEffect = {
+ExploreEnum.ItemEffect = {
 	CreateUnit2 = "3",
 	CreateUnit = "1",
 	Fix = "4",
 	Active = "2"
 }
-var_0_0.ItemEffectRange = {
+ExploreEnum.ItemEffectRange = {
 	Round = 1
 }
-var_0_0.EnterMode = {
+ExploreEnum.EnterMode = {
 	Normal = 2,
 	Battle = 3,
 	First = 1
 }
-var_0_0.ProgressType = {
-	[var_0_0.ItemType.Battle] = true,
-	[var_0_0.ItemType.Bonus] = true
+ExploreEnum.ProgressType = {
+	[ExploreEnum.ItemType.Battle] = true,
+	[ExploreEnum.ItemType.Bonus] = true
 }
-var_0_0.InteractIndex = {
+ExploreEnum.InteractIndex = {
 	InteractEnabled = 2,
 	IsFinish = 4,
 	ActiveState = 3,
 	IsEnter = 1
 }
-var_0_0.LightRecvType = {
+ExploreEnum.LightRecvType = {
 	Photic = 2,
 	Barricade = 1,
 	Custom = 3
 }
-var_0_0.RuneStatus = {
+ExploreEnum.RuneStatus = {
 	Inactive = 0,
 	Active = 1
 }
-var_0_0.ExplorePipePotHangType = {
+ExploreEnum.ExplorePipePotHangType = {
 	UnCarry = 2,
 	Put = 4,
 	Carry = 1,
 	Pick = 3
 }
-var_0_0.SceneCheckMode = {
+ExploreEnum.SceneCheckMode = {
 	Rage = 0,
 	Planes = 2,
 	Camera = 1
 }
-var_0_0.PipeColor = {
+ExploreEnum.PipeColor = {
 	Color3 = 4,
 	Color2 = 2,
 	Color1 = 1,
 	None = 0
 }
-var_0_0.PipeColorDef = {
-	[var_0_0.PipeColor.None] = Color.New(),
-	[var_0_0.PipeColor.Color1] = Color.New(0.7735849, 0.2799217, 0.2152901),
-	[var_0_0.PipeColor.Color2] = Color.New(0.199134, 0.4504557, 0.851),
-	[var_0_0.PipeColor.Color3] = Color.New(0.16775, 0.61, 0.2614471)
+ExploreEnum.PipeColorDef = {
+	[ExploreEnum.PipeColor.None] = Color.New(),
+	[ExploreEnum.PipeColor.Color1] = Color.New(0.7735849, 0.2799217, 0.2152901),
+	[ExploreEnum.PipeColor.Color2] = Color.New(0.199134, 0.4504557, 0.851),
+	[ExploreEnum.PipeColor.Color3] = Color.New(0.16775, 0.61, 0.2614471)
 }
-var_0_0.PipeGoNode = {
+ExploreEnum.PipeGoNode = {
 	Pipe4 = 5,
 	Pipe3 = 4,
 	Pipe2 = 3,
 	Pipe1 = 2,
 	Center = 1
 }
-var_0_0.PipeGoNodeName = {
-	[var_0_0.PipeGoNode.Center] = "#go_center",
-	[var_0_0.PipeGoNode.Pipe1] = "#go_pipe1",
-	[var_0_0.PipeGoNode.Pipe2] = "#go_pipe2",
-	[var_0_0.PipeGoNode.Pipe3] = "#go_pipe3",
-	[var_0_0.PipeGoNode.Pipe4] = "#go_pipe4"
+ExploreEnum.PipeGoNodeName = {
+	[ExploreEnum.PipeGoNode.Center] = "#go_center",
+	[ExploreEnum.PipeGoNode.Pipe1] = "#go_pipe1",
+	[ExploreEnum.PipeGoNode.Pipe2] = "#go_pipe2",
+	[ExploreEnum.PipeGoNode.Pipe3] = "#go_pipe3",
+	[ExploreEnum.PipeGoNode.Pipe4] = "#go_pipe4"
 }
-var_0_0.PipeShape = {
+ExploreEnum.PipeShape = {
 	Shape5 = 5,
 	Shape6 = 6,
 	Shape2 = 2,
@@ -220,28 +222,28 @@ var_0_0.PipeShape = {
 	Shape4 = 4,
 	Shape1 = 1
 }
-var_0_0.PipeDirMatchMode = {
+ExploreEnum.PipeDirMatchMode = {
 	All = 3,
 	Single = 1,
 	Both = 2
 }
-var_0_0.MapStatus = {
+ExploreEnum.MapStatus = {
 	RotateUnit = 3,
 	UseItem = 1,
 	MoveUnit = 2,
 	Normal = 0
 }
-var_0_0.PipeTypes = {
-	[var_0_0.ItemType.PipeEntrance] = true,
-	[var_0_0.ItemType.Pipe] = true,
-	[var_0_0.ItemType.PipeSensor] = true,
-	[var_0_0.ItemType.PipeMemory] = true
+ExploreEnum.PipeTypes = {
+	[ExploreEnum.ItemType.PipeEntrance] = true,
+	[ExploreEnum.ItemType.Pipe] = true,
+	[ExploreEnum.ItemType.PipeSensor] = true,
+	[ExploreEnum.ItemType.PipeMemory] = true
 }
-var_0_0.PrismTypes = {
-	[var_0_0.ItemType.Prism] = true,
-	[var_0_0.ItemType.DichroicPrism] = true
+ExploreEnum.PrismTypes = {
+	[ExploreEnum.ItemType.Prism] = true,
+	[ExploreEnum.ItemType.DichroicPrism] = true
 }
-var_0_0.StepType = {
+ExploreEnum.StepType = {
 	ResetBegin = -7,
 	ArchiveClient = -4,
 	DelUnit = 3,
@@ -269,29 +271,29 @@ var_0_0.StepType = {
 	Elevator = 9,
 	TriggerAudio = -9
 }
-var_0_0.MustDoStep = {
-	[var_0_0.StepType.UpdateCoin] = true,
-	[var_0_0.StepType.Archive] = true,
-	[var_0_0.StepType.BonusScene] = true
+ExploreEnum.MustDoStep = {
+	[ExploreEnum.StepType.UpdateCoin] = true,
+	[ExploreEnum.StepType.Archive] = true,
+	[ExploreEnum.StepType.BonusScene] = true
 }
-var_0_0.StepTypeToName = {}
+ExploreEnum.StepTypeToName = {}
 
-for iter_0_2, iter_0_3 in pairs(var_0_0.StepType) do
-	var_0_0.StepTypeToName[iter_0_3] = iter_0_2
+for k, v in pairs(ExploreEnum.StepType) do
+	ExploreEnum.StepTypeToName[v] = k
 end
 
-var_0_0.MapCompType = {
+ExploreEnum.MapCompType = {
 	Pipe = 4,
 	Whirl = 3,
 	Light = 2,
 	Map = 1
 }
-var_0_0.CoinType = {
+ExploreEnum.CoinType = {
 	GoldCoin = 1,
 	Bonus = 0,
 	PurpleCoin = 2
 }
-var_0_0.HeroLock = {
+ExploreEnum.HeroLock = {
 	Spike = 8,
 	Rune = 6,
 	Teleport = 12,
@@ -310,15 +312,15 @@ var_0_0.HeroLock = {
 	ShowArea = 2,
 	Reset = 11
 }
-var_0_0.WalkAudioType = {
+ExploreEnum.WalkAudioType = {
 	Normal = 1,
 	Ice = 2,
 	None = 0
 }
-var_0_0.NodeType = {
+ExploreEnum.NodeType = {
 	Ice = 2,
 	Obstacle = 3,
 	Normal = 1
 }
 
-return var_0_0
+return ExploreEnum

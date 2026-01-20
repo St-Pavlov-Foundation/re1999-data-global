@@ -1,40 +1,42 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerCachotEnterRoom", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerCachotEnterRoom.lua
 
-local var_0_0 = class("GuideTriggerCachotEnterRoom", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerCachotEnterRoom", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_1_0._onUpdateRogueInfo, arg_1_0)
+local GuideTriggerCachotEnterRoom = class("GuideTriggerCachotEnterRoom", BaseGuideTrigger)
+
+function GuideTriggerCachotEnterRoom:ctor(triggerKey)
+	GuideTriggerCachotEnterRoom.super.ctor(self, triggerKey)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, self._onUpdateRogueInfo, self)
 end
 
-function var_0_0._onUpdateRogueInfo(arg_2_0)
-	arg_2_0:checkStartGuide()
+function GuideTriggerCachotEnterRoom:_onUpdateRogueInfo()
+	self:checkStartGuide()
 end
 
-function var_0_0.assertGuideSatisfy(arg_3_0, arg_3_1, arg_3_2)
+function GuideTriggerCachotEnterRoom:assertGuideSatisfy(param, configParam)
 	if not ViewMgr.instance:isOpen(ViewName.V1a6_CachotRoomView) then
 		return
 	end
 
-	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not var_3_0 then
+	if not rogueInfo then
 		return
 	end
 
-	local var_3_1, var_3_2 = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(var_3_0.room)
-	local var_3_3 = string.splitToNumber(arg_3_2, "_")
-	local var_3_4 = var_3_3[1]
-	local var_3_5 = var_3_3[2]
+	local roomIndex, total = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(rogueInfo.room)
+	local paramList = string.splitToNumber(configParam, "_")
+	local paramLayer = paramList[1]
+	local paramRoomIndex = paramList[2]
 
-	return var_3_4 == var_3_0.layer and var_3_5 == var_3_1
+	return paramLayer == rogueInfo.layer and paramRoomIndex == roomIndex
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == ViewName.V1a6_CachotRoomView then
-		arg_4_0:checkStartGuide()
+function GuideTriggerCachotEnterRoom:_onOpenView(viewName, viewParam)
+	if viewName == ViewName.V1a6_CachotRoomView then
+		self:checkStartGuide()
 	end
 end
 
-return var_0_0
+return GuideTriggerCachotEnterRoom

@@ -1,46 +1,48 @@
-﻿module("modules.logic.fight.system.work.FightWorkSummonedLevelUp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSummonedLevelUp.lua
 
-local var_0_0 = class("FightWorkSummonedLevelUp", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkSummonedLevelUp", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._uid = arg_1_0.actEffectData.reserveId
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
+local FightWorkSummonedLevelUp = class("FightWorkSummonedLevelUp", FightEffectBase)
 
-	local var_1_0 = arg_1_0._entityMO and arg_1_0._entityMO:getSummonedInfo()
+function FightWorkSummonedLevelUp:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._uid = self.actEffectData.reserveId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
 
-	arg_1_0._summonedData = var_1_0 and var_1_0:getData(arg_1_0._uid)
-	arg_1_0._oldLevel = arg_1_0._summonedData and arg_1_0._summonedData.level
+	local summonedInfo = self._entityMO and self._entityMO:getSummonedInfo()
+
+	self._summonedData = summonedInfo and summonedInfo:getData(self._uid)
+	self._oldLevel = self._summonedData and self._summonedData.level
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._summonedData then
-		arg_2_0:onDone(true)
+function FightWorkSummonedLevelUp:onStart()
+	if not self._summonedData then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_2_0._newLevel = arg_2_0._summonedData.level
+	self._newLevel = self._summonedData.level
 
-	local var_2_0 = FightConfig.instance:getSummonedConfig(arg_2_0._summonedData.summonedId, arg_2_0._summonedData.level)
+	local config = FightConfig.instance:getSummonedConfig(self._summonedData.summonedId, self._summonedData.level)
 
-	if var_2_0 then
-		arg_2_0:com_registTimer(arg_2_0._delayDone, var_2_0.enterTime / 1000 / FightModel.instance:getSpeed())
-		FightController.instance:dispatchEvent(FightEvent.SummonedLevelChange, arg_2_0._entityId, arg_2_0._uid, arg_2_0._oldLevel, arg_2_0._newLevel)
+	if config then
+		self:com_registTimer(self._delayDone, config.enterTime / 1000 / FightModel.instance:getSpeed())
+		FightController.instance:dispatchEvent(FightEvent.SummonedLevelChange, self._entityId, self._uid, self._oldLevel, self._newLevel)
 
 		return
 	end
 
-	logError("挂件表找不到id:" .. arg_2_0._summonedData.summonedId .. "  等级:" .. arg_2_0._summonedData.level)
-	arg_2_0:onDone(true)
+	logError("挂件表找不到id:" .. self._summonedData.summonedId .. "  等级:" .. self._summonedData.level)
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkSummonedLevelUp:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
+function FightWorkSummonedLevelUp:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkSummonedLevelUp

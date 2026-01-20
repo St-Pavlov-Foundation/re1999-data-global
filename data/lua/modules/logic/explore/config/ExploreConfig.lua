@@ -1,8 +1,10 @@
-﻿module("modules.logic.explore.config.ExploreConfig", package.seeall)
+﻿-- chunkname: @modules/logic/explore/config/ExploreConfig.lua
 
-local var_0_0 = class("ExploreConfig", BaseConfig)
+module("modules.logic.explore.config.ExploreConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local ExploreConfig = class("ExploreConfig", BaseConfig)
+
+function ExploreConfig:reqConfigNames()
 	return {
 		"explore_scene",
 		"explore_dialogue",
@@ -19,231 +21,231 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._chapterToMapIds = {}
-	arg_2_0._taskCos = {}
-	arg_2_0._rewardCos = {}
+function ExploreConfig:onInit()
+	self._chapterToMapIds = {}
+	self._taskCos = {}
+	self._rewardCos = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "explore_scene" then
-		arg_3_0.sceneConfig = arg_3_2
-		arg_3_0.mapIdConfig = {}
+function ExploreConfig:onConfigLoaded(configName, configTable)
+	if configName == "explore_scene" then
+		self.sceneConfig = configTable
+		self.mapIdConfig = {}
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0.sceneConfig.configList) do
-			arg_3_0.mapIdConfig[iter_3_1.id] = iter_3_1
+		for i, v in ipairs(self.sceneConfig.configList) do
+			self.mapIdConfig[v.id] = v
 
-			if not arg_3_0._chapterToMapIds[iter_3_1.chapterId] then
-				arg_3_0._chapterToMapIds[iter_3_1.chapterId] = {}
+			if not self._chapterToMapIds[v.chapterId] then
+				self._chapterToMapIds[v.chapterId] = {}
 			end
 
-			table.insert(arg_3_0._chapterToMapIds[iter_3_1.chapterId], iter_3_1.id)
+			table.insert(self._chapterToMapIds[v.chapterId], v.id)
 		end
-	elseif arg_3_1 == "explore_item" then
-		arg_3_0.itemConfig = arg_3_2
-	elseif arg_3_1 == "explore_item_type" then
-		arg_3_0.itemTypeConfig = arg_3_2
-	elseif arg_3_1 == "explore_unit" then
-		arg_3_0.unitConfig = arg_3_2
-	elseif arg_3_1 == "explore_dialogue" then
-		arg_3_0.dialogueConfig = arg_3_2
-	elseif arg_3_1 == "explore_unit_effect" then
-		arg_3_0.unitEffectConfig = arg_3_2
-	elseif arg_3_1 == "task_explore" then
-		arg_3_0:_buildTaskConfig()
-	elseif arg_3_1 == "explore_chest" then
-		arg_3_0:_buildRewardConfig()
+	elseif configName == "explore_item" then
+		self.itemConfig = configTable
+	elseif configName == "explore_item_type" then
+		self.itemTypeConfig = configTable
+	elseif configName == "explore_unit" then
+		self.unitConfig = configTable
+	elseif configName == "explore_dialogue" then
+		self.dialogueConfig = configTable
+	elseif configName == "explore_unit_effect" then
+		self.unitEffectConfig = configTable
+	elseif configName == "task_explore" then
+		self:_buildTaskConfig()
+	elseif configName == "explore_chest" then
+		self:_buildRewardConfig()
 	end
 end
 
-function var_0_0.loadExploreConfig(arg_4_0, arg_4_1)
-	arg_4_0._mapConfig = addGlobalModule("modules.configs.explore.lua_explore_map_" .. tostring(arg_4_1), "lua_explore_map_" .. tostring(arg_4_1))
+function ExploreConfig:loadExploreConfig(mapId)
+	self._mapConfig = addGlobalModule("modules.configs.explore.lua_explore_map_" .. tostring(mapId), "lua_explore_map_" .. tostring(mapId))
 end
 
-local function var_0_1(arg_5_0, arg_5_1)
-	return arg_5_0.maxProgress < arg_5_1.maxProgress
+local function sorttaskFunc(a, b)
+	return a.maxProgress < b.maxProgress
 end
 
-local function var_0_2(arg_6_0, arg_6_1)
-	return arg_6_0.id < arg_6_1.id
+local function sortrewardFunc(a, b)
+	return a.id < b.id
 end
 
-function var_0_0._buildRewardConfig(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(lua_explore_chest.configList) do
-		arg_7_0._rewardCos[iter_7_1.chapterId] = arg_7_0._rewardCos[iter_7_1.chapterId] or {}
-		arg_7_0._rewardCos[iter_7_1.chapterId][iter_7_1.episodeId] = arg_7_0._rewardCos[iter_7_1.chapterId][iter_7_1.episodeId] or {}
+function ExploreConfig:_buildRewardConfig()
+	for id, co in ipairs(lua_explore_chest.configList) do
+		self._rewardCos[co.chapterId] = self._rewardCos[co.chapterId] or {}
+		self._rewardCos[co.chapterId][co.episodeId] = self._rewardCos[co.chapterId][co.episodeId] or {}
 
-		if iter_7_1.isCount == 1 then
-			table.insert(arg_7_0._rewardCos[iter_7_1.chapterId][iter_7_1.episodeId], iter_7_1)
+		if co.isCount == 1 then
+			table.insert(self._rewardCos[co.chapterId][co.episodeId], co)
 		end
 	end
 
-	for iter_7_2, iter_7_3 in pairs(arg_7_0._rewardCos) do
-		for iter_7_4, iter_7_5 in pairs(iter_7_3) do
-			table.sort(iter_7_5, var_0_2)
+	for chapterId, dict in pairs(self._rewardCos) do
+		for episodeId, arr in pairs(dict) do
+			table.sort(arr, sortrewardFunc)
 		end
 	end
 end
 
-function var_0_0.getRewardConfig(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._rewardCos[arg_8_1] then
+function ExploreConfig:getRewardConfig(chapterId, episodeId)
+	if not self._rewardCos[chapterId] then
 		return {}
 	end
 
-	return arg_8_0._rewardCos[arg_8_1][arg_8_2] or {}
+	return self._rewardCos[chapterId][episodeId] or {}
 end
 
-function var_0_0._buildTaskConfig(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(lua_task_explore.configList) do
-		local var_9_0 = string.splitToNumber(iter_9_1.listenerParam, "#")
+function ExploreConfig:_buildTaskConfig()
+	for i, v in ipairs(lua_task_explore.configList) do
+		local arr = string.splitToNumber(v.listenerParam, "#")
 
-		if not arg_9_0._taskCos[var_9_0[1]] then
-			arg_9_0._taskCos[var_9_0[1]] = {}
+		if not self._taskCos[arr[1]] then
+			self._taskCos[arr[1]] = {}
 		end
 
-		if not arg_9_0._taskCos[var_9_0[1]][var_9_0[2]] then
-			arg_9_0._taskCos[var_9_0[1]][var_9_0[2]] = {}
+		if not self._taskCos[arr[1]][arr[2]] then
+			self._taskCos[arr[1]][arr[2]] = {}
 		end
 
-		table.insert(arg_9_0._taskCos[var_9_0[1]][var_9_0[2]], iter_9_1)
+		table.insert(self._taskCos[arr[1]][arr[2]], v)
 	end
 
-	for iter_9_2, iter_9_3 in pairs(arg_9_0._taskCos) do
-		for iter_9_4, iter_9_5 in pairs(iter_9_3) do
-			table.sort(iter_9_5, var_0_1)
+	for chapterId, dict in pairs(self._taskCos) do
+		for coinType, list in pairs(dict) do
+			table.sort(list, sorttaskFunc)
 		end
 	end
 end
 
-function var_0_0.getTaskList(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_0._taskCos[arg_10_1] or not arg_10_0._taskCos[arg_10_1][arg_10_2] then
+function ExploreConfig:getTaskList(chapterId, coinType)
+	if not self._taskCos[chapterId] or not self._taskCos[chapterId][coinType] then
 		return {}
 	end
 
-	return arg_10_0._taskCos[arg_10_1][arg_10_2]
+	return self._taskCos[chapterId][coinType]
 end
 
-function var_0_0.getMapConfig(arg_11_0)
-	return arg_11_0._mapConfig
+function ExploreConfig:getMapConfig()
+	return self._mapConfig
 end
 
-function var_0_0.getSceneId(arg_12_0, arg_12_1)
-	return arg_12_0.mapIdConfig[arg_12_1].sceneId
+function ExploreConfig:getSceneId(id)
+	return self.mapIdConfig[id].sceneId
 end
 
-function var_0_0.getMapIdsByChapter(arg_13_0, arg_13_1)
-	return arg_13_0._chapterToMapIds[arg_13_1] or {}
+function ExploreConfig:getMapIdsByChapter(chapterId)
+	return self._chapterToMapIds[chapterId] or {}
 end
 
-function var_0_0.getAnimLength(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = lua_explore_anim_length[arg_14_1]
+function ExploreConfig:getAnimLength(goName, animName)
+	local co = lua_explore_anim_length[goName]
 
-	if not var_14_0 then
+	if not co then
 		return
 	end
 
-	return var_14_0[arg_14_2]
+	return co[animName]
 end
 
-function var_0_0.getMapIdConfig(arg_15_0, arg_15_1)
-	return arg_15_0.mapIdConfig[arg_15_1]
+function ExploreConfig:getMapIdConfig(id)
+	return self.mapIdConfig[id]
 end
 
-function var_0_0.getEpisodeId(arg_16_0, arg_16_1)
-	return arg_16_0.mapIdConfig[arg_16_1].episodeId
+function ExploreConfig:getEpisodeId(mapId)
+	return self.mapIdConfig[mapId].episodeId
 end
 
-function var_0_0.getDialogueConfig(arg_17_0, arg_17_1)
-	return arg_17_0.dialogueConfig.configDict[arg_17_1]
+function ExploreConfig:getDialogueConfig(id)
+	return self.dialogueConfig.configDict[id]
 end
 
-function var_0_0.getItemCo(arg_18_0, arg_18_1)
-	return arg_18_0.itemConfig.configDict[arg_18_1]
+function ExploreConfig:getItemCo(itemId)
+	return self.itemConfig.configDict[itemId]
 end
 
-function var_0_0.isStackableItem(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.itemConfig.configDict[arg_19_1]
+function ExploreConfig:isStackableItem(itemId)
+	local conifg = self.itemConfig.configDict[itemId]
 
-	return var_19_0 and var_19_0.isClientStackable or false
+	return conifg and conifg.isClientStackable or false
 end
 
-function var_0_0.isActiveTypeItem(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0.itemTypeConfig.configDict[arg_20_1]
+function ExploreConfig:isActiveTypeItem(type)
+	local co = self.itemTypeConfig.configDict[type]
 
-	return var_20_0 and var_20_0.isActiveType or false
+	return co and co.isActiveType or false
 end
 
-function var_0_0.getUnitName(arg_21_0, arg_21_1)
-	if arg_21_0.unitConfig.configDict[arg_21_1] then
-		return arg_21_0.unitConfig.configDict[arg_21_1].name
+function ExploreConfig:getUnitName(type)
+	if self.unitConfig.configDict[type] then
+		return self.unitConfig.configDict[type].name
 	end
 
-	return arg_21_1
+	return type
 end
 
-function var_0_0.getUnitNeedShowName(arg_22_0, arg_22_1)
-	if arg_22_0.unitConfig.configDict[arg_22_1] then
-		return arg_22_0.unitConfig.configDict[arg_22_1].isShow
+function ExploreConfig:getUnitNeedShowName(type)
+	if self.unitConfig.configDict[type] then
+		return self.unitConfig.configDict[type].isShow
 	end
 
 	return false
 end
 
-function var_0_0.getUnitEffectConfig(arg_23_0, arg_23_1, arg_23_2)
-	if not arg_23_1 then
+function ExploreConfig:getUnitEffectConfig(prefabPath, animName)
+	if not prefabPath then
 		return
 	end
 
-	local var_23_0 = string.match(arg_23_1, "/([0-9a-zA-Z_]+)%.prefab$")
-	local var_23_1 = arg_23_0.unitEffectConfig.configDict[var_23_0]
+	local name = string.match(prefabPath, "/([0-9a-zA-Z_]+)%.prefab$")
+	local config = self.unitEffectConfig.configDict[name]
 
-	if var_23_1 and var_23_1[arg_23_2] then
-		return var_23_1[arg_23_2].effectPath, var_23_1[arg_23_2].isOnce == 1, var_23_1[arg_23_2].audioId, var_23_1[arg_23_2].isBindGo == 1, var_23_1[arg_23_2].isLoopAudio == 1
+	if config and config[animName] then
+		return config[animName].effectPath, config[animName].isOnce == 1, config[animName].audioId, config[animName].isBindGo == 1, config[animName].isLoopAudio == 1
 	end
 end
 
-function var_0_0.getAssetNeedAkGo(arg_24_0, arg_24_1)
-	if not arg_24_1 then
+function ExploreConfig:getAssetNeedAkGo(prefabPath)
+	if not prefabPath then
 		return false
 	end
 
-	arg_24_0._pathNeedAkDict = arg_24_0._pathNeedAkDict or {}
+	self._pathNeedAkDict = self._pathNeedAkDict or {}
 
-	if arg_24_0._pathNeedAkDict[arg_24_1] ~= nil then
-		return arg_24_0._pathNeedAkDict[arg_24_1]
+	if self._pathNeedAkDict[prefabPath] ~= nil then
+		return self._pathNeedAkDict[prefabPath]
 	end
 
-	local var_24_0 = false
-	local var_24_1 = string.match(arg_24_1, "/([0-9a-zA-Z_]+)%.prefab$")
-	local var_24_2 = arg_24_0.unitEffectConfig.configDict[var_24_1]
+	local needAk = false
+	local name = string.match(prefabPath, "/([0-9a-zA-Z_]+)%.prefab$")
+	local config = self.unitEffectConfig.configDict[name]
 
-	if var_24_2 then
-		for iter_24_0, iter_24_1 in pairs(var_24_2) do
-			if iter_24_1.isBindGo then
-				var_24_0 = true
+	if config then
+		for _, co in pairs(config) do
+			if co.isBindGo then
+				needAk = true
 
 				break
 			end
 		end
 	end
 
-	arg_24_0._pathNeedAkDict[arg_24_1] = var_24_0
+	self._pathNeedAkDict[prefabPath] = needAk
 
-	return var_24_0
+	return needAk
 end
 
-function var_0_0.getArchiveTotalCount(arg_25_0, arg_25_1)
-	if not arg_25_0._archiveCountDict then
-		arg_25_0._archiveCountDict = {}
+function ExploreConfig:getArchiveTotalCount(chapterId)
+	if not self._archiveCountDict then
+		self._archiveCountDict = {}
 
-		for iter_25_0, iter_25_1 in pairs(lua_explore_story.configDict) do
-			arg_25_0._archiveCountDict[iter_25_0] = tabletool.len(iter_25_1)
+		for chapter, dict in pairs(lua_explore_story.configDict) do
+			self._archiveCountDict[chapter] = tabletool.len(dict)
 		end
 	end
 
-	return arg_25_0._archiveCountDict[arg_25_1] or 0
+	return self._archiveCountDict[chapterId] or 0
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreConfig.instance = ExploreConfig.New()
 
-return var_0_0
+return ExploreConfig

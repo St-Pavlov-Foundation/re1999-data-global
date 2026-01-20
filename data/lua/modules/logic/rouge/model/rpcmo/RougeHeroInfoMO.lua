@@ -1,29 +1,31 @@
-﻿module("modules.logic.rouge.model.rpcmo.RougeHeroInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/rpcmo/RougeHeroInfoMO.lua
 
-local var_0_0 = pureTable("RougeHeroInfoMO")
+module("modules.logic.rouge.model.rpcmo.RougeHeroInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:update(arg_1_1)
+local RougeHeroInfoMO = pureTable("RougeHeroInfoMO")
+
+function RougeHeroInfoMO:init(info)
+	self:update(info)
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	arg_2_0.heroId = arg_2_1.heroId
-	arg_2_0.stressValue = arg_2_1.stressValue
-	arg_2_0.stressValueLimit = arg_2_1.stressValueLimit
+function RougeHeroInfoMO:update(info)
+	self.heroId = info.heroId
+	self.stressValue = info.stressValue
+	self.stressValueLimit = info.stressValueLimit
 end
 
-function var_0_0.getStressValue(arg_3_0)
-	return arg_3_0.stressValue or 0
+function RougeHeroInfoMO:getStressValue()
+	return self.stressValue or 0
 end
 
-function var_0_0.getStressRange(arg_4_0)
-	local var_4_0 = arg_4_0:getStressValueLimit()
+function RougeHeroInfoMO:getStressRange()
+	local stressLimitValue = self:getStressValueLimit()
 
-	return 0, var_4_0
+	return 0, stressLimitValue
 end
 
-function var_0_0.getStressValueLimit(arg_5_0)
-	return arg_5_0.stressValueLimit or 0
+function RougeHeroInfoMO:getStressValueLimit()
+	return self.stressValueLimit or 0
 end
 
-return var_0_0
+return RougeHeroInfoMO

@@ -1,12 +1,14 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapBagViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapBagViewContainer.lua
 
-local var_0_0 = class("SurvivalMapBagViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalMapBagViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalMapBagViewContainer = class("SurvivalMapBagViewContainer", BaseViewContainer)
+
+function SurvivalMapBagViewContainer:buildViews()
 	return {
 		SurvivalMapBagView.New(),
 		ToggleListView.New(1, "root/toggleGroup")
 	}
 end
 
-return var_0_0
+return SurvivalMapBagViewContainer

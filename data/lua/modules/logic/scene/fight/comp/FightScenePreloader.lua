@@ -1,67 +1,69 @@
-﻿module("modules.logic.scene.fight.comp.FightScenePreloader", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightScenePreloader.lua
 
-local var_0_0 = class("FightScenePreloader", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightScenePreloader", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+local FightScenePreloader = class("FightScenePreloader", BaseSceneComp)
+
+function FightScenePreloader:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.startPreload(arg_2_0, arg_2_1)
-	local var_2_0 = FightModel.instance:getFightParam()
-	local var_2_1 = var_2_0 and var_2_0.episodeId
-	local var_2_2 = var_2_0 and var_2_0.battleId or var_2_1 and DungeonConfig.instance:getEpisodeBattleId(var_2_1)
+function FightScenePreloader:startPreload(second)
+	local fightParam = FightModel.instance:getFightParam()
+	local episodeId = fightParam and fightParam.episodeId
+	local battleId = fightParam and fightParam.battleId or episodeId and DungeonConfig.instance:getEpisodeBattleId(episodeId)
 
-	if not arg_2_1 and FightPreloadController.instance:hasPreload(var_2_2) then
-		arg_2_0:_onPreloadFinish()
+	if not second and FightPreloadController.instance:hasPreload(battleId) then
+		self:_onPreloadFinish()
 
 		return
 	end
 
-	local var_2_3 = {}
-	local var_2_4 = {}
-	local var_2_5 = {}
-	local var_2_6 = {}
-	local var_2_7 = {}
-	local var_2_8 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_2_9 = FightDataHelper.entityMgr:getEnemyNormalList()
-	local var_2_10 = FightDataHelper.entityMgr:getMySubList()
+	local myModelIds = {}
+	local mySkinIds = {}
+	local enemyModelIds = {}
+	local enemySkinIds = {}
+	local subSkinIds = {}
+	local mySideList = FightDataHelper.entityMgr:getMyNormalList()
+	local enemySideList = FightDataHelper.entityMgr:getEnemyNormalList()
+	local mySideSubList = FightDataHelper.entityMgr:getMySubList()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_8) do
-		table.insert(var_2_3, iter_2_1.modelId)
-		table.insert(var_2_4, iter_2_1.skin)
+	for _, one in ipairs(mySideList) do
+		table.insert(myModelIds, one.modelId)
+		table.insert(mySkinIds, one.skin)
 	end
 
-	for iter_2_2, iter_2_3 in ipairs(var_2_9) do
-		table.insert(var_2_5, iter_2_3.modelId)
-		table.insert(var_2_6, iter_2_3.skin)
+	for _, one in ipairs(enemySideList) do
+		table.insert(enemyModelIds, one.modelId)
+		table.insert(enemySkinIds, one.skin)
 	end
 
-	for iter_2_4, iter_2_5 in ipairs(var_2_10) do
-		table.insert(var_2_7, iter_2_5.skin)
+	for _, one in ipairs(mySideSubList) do
+		table.insert(subSkinIds, one.skin)
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnPreloadFinish, self._onPreloadFinish, self)
 
 	if FightModel.instance.needFightReconnect then
-		FightPreloadController.instance:preloadReconnect(var_2_2, var_2_3, var_2_4, var_2_5, var_2_6, var_2_7)
-	elseif arg_2_1 then
-		FightPreloadController.instance:preloadSecond(var_2_2, var_2_3, var_2_4, var_2_5, var_2_6, var_2_7)
+		FightPreloadController.instance:preloadReconnect(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
+	elseif second then
+		FightPreloadController.instance:preloadSecond(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
 	else
-		FightPreloadController.instance:preloadFirst(var_2_2, var_2_3, var_2_4, var_2_5, var_2_6, var_2_7)
+		FightPreloadController.instance:preloadFirst(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
 	end
 
 	FightRoundPreloadController.instance:registStageEvent()
 end
 
-function var_0_0._onPreloadFinish(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, arg_3_0._onPreloadFinish, arg_3_0)
-	arg_3_0:dispatchEvent(FightSceneEvent.OnPreloadFinish)
+function FightScenePreloader:_onPreloadFinish()
+	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, self._onPreloadFinish, self)
+	self:dispatchEvent(FightSceneEvent.OnPreloadFinish)
 end
 
-function var_0_0.onSceneClose(arg_4_0)
+function FightScenePreloader:onSceneClose()
 	FightPreloadController.instance:dispose()
 	FightRoundPreloadController.instance:dispose()
-	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, arg_4_0._onPreloadFinish, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, self._onPreloadFinish, self)
 end
 
-return var_0_0
+return FightScenePreloader

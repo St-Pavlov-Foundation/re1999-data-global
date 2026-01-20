@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174MatchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174MatchViewContainer.lua
 
-local var_0_0 = class("Act174MatchViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.Act174MatchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act174MatchViewContainer = class("Act174MatchViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act174MatchView.New())
+function Act174MatchViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act174MatchView.New())
+
+	return views
 end
 
-return var_0_0
+return Act174MatchViewContainer

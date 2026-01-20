@@ -1,115 +1,119 @@
-﻿module("modules.logic.herogroup.view.HeroGroupFightLayoutView", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupFightLayoutView.lua
 
-local var_0_0 = class("HeroGroupFightLayoutView", BaseView)
+module("modules.logic.herogroup.view.HeroGroupFightLayoutView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local HeroGroupFightLayoutView = class("HeroGroupFightLayoutView", BaseView)
+
+function HeroGroupFightLayoutView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HeroGroupFightLayoutView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HeroGroupFightLayoutView:removeEvents()
 	return
 end
 
-var_0_0.DefaultOffsetX = -130
+HeroGroupFightLayoutView.DefaultOffsetX = -130
 
-function var_0_0.checkNeedSetOffset(arg_4_0)
+function HeroGroupFightLayoutView:checkNeedSetOffset()
 	return false
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.goHeroGroupContain = gohelper.findChild(arg_5_0.viewGO, "herogroupcontain")
-	arg_5_0.heroGroupContainRectTr = arg_5_0.goHeroGroupContain:GetComponent(gohelper.Type_RectTransform)
-	arg_5_0.containerAnimator = arg_5_0.goHeroGroupContain:GetComponent(typeof(UnityEngine.Animator))
-	arg_5_0.heroItemList = {}
+function HeroGroupFightLayoutView:_editableInitView()
+	self.goHeroGroupContain = gohelper.findChild(self.viewGO, "herogroupcontain")
+	self.heroGroupContainRectTr = self.goHeroGroupContain:GetComponent(gohelper.Type_RectTransform)
+	self.containerAnimator = self.goHeroGroupContain:GetComponent(typeof(UnityEngine.Animator))
+	self.heroItemList = {}
 
-	for iter_5_0 = 1, 4 do
-		local var_5_0 = arg_5_0:getUserDataTb_()
+	for i = 1, 4 do
+		local heroItem = self:getUserDataTb_()
 
-		var_5_0.bgRectTr = gohelper.findChildComponent(arg_5_0.viewGO, "herogroupcontain/hero/bg" .. iter_5_0, gohelper.Type_RectTransform)
-		var_5_0.posGoTr = gohelper.findChildComponent(arg_5_0.viewGO, "herogroupcontain/area/pos" .. iter_5_0, gohelper.Type_RectTransform)
-		var_5_0.bgX = recthelper.getAnchorX(var_5_0.bgRectTr)
-		var_5_0.posX = recthelper.getAnchorX(var_5_0.posGoTr)
+		heroItem.bgRectTr = gohelper.findChildComponent(self.viewGO, "herogroupcontain/hero/bg" .. i, gohelper.Type_RectTransform)
+		heroItem.posGoTr = gohelper.findChildComponent(self.viewGO, "herogroupcontain/area/pos" .. i, gohelper.Type_RectTransform)
+		heroItem.bgX = recthelper.getAnchorX(heroItem.bgRectTr)
+		heroItem.posX = recthelper.getAnchorX(heroItem.posGoTr)
 
-		table.insert(arg_5_0.heroItemList, var_5_0)
+		table.insert(self.heroItemList, heroItem)
 	end
 
-	arg_5_0.replayFrameRectTr = gohelper.findChildComponent(arg_5_0.viewGO, "#go_container/#go_replayready/#simage_replayframe", gohelper.Type_RectTransform)
-	arg_5_0.replayFrameWidth = recthelper.getWidth(arg_5_0.replayFrameRectTr)
-	arg_5_0.replayFrameX = recthelper.getAnchorX(arg_5_0.replayFrameRectTr)
-	arg_5_0.tipRectTr = gohelper.findChildComponent(arg_5_0.viewGO, "#go_container/#go_replayready/tip", gohelper.Type_RectTransform)
-	arg_5_0.tipX = recthelper.getAnchorX(arg_5_0.tipRectTr)
+	self.replayFrameRectTr = gohelper.findChildComponent(self.viewGO, "#go_container/#go_replayready/#simage_replayframe", gohelper.Type_RectTransform)
+	self.replayFrameWidth = recthelper.getWidth(self.replayFrameRectTr)
+	self.replayFrameX = recthelper.getAnchorX(self.replayFrameRectTr)
+	self.tipRectTr = gohelper.findChildComponent(self.viewGO, "#go_container/#go_replayready/tip", gohelper.Type_RectTransform)
+	self.tipX = recthelper.getAnchorX(self.tipRectTr)
 
-	arg_5_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCreateHeroItemDone, arg_5_0.onCreateHeroItemDone, arg_5_0)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnCreateHeroItemDone, self.onCreateHeroItemDone, self)
 end
 
-function var_0_0.onCreateHeroItemDone(arg_6_0)
-	for iter_6_0 = 1, 4 do
-		arg_6_0.heroItemList[iter_6_0].heroItemRectTr = gohelper.findChildComponent(arg_6_0.goHeroGroupContain, "hero/item" .. iter_6_0, gohelper.Type_RectTransform)
+function HeroGroupFightLayoutView:onCreateHeroItemDone()
+	for i = 1, 4 do
+		local heroItem = self.heroItemList[i]
+
+		heroItem.heroItemRectTr = gohelper.findChildComponent(self.goHeroGroupContain, "hero/item" .. i, gohelper.Type_RectTransform)
 	end
 
-	arg_6_0:setUIPos()
+	self:setUIPos()
 end
 
-function var_0_0.setUIPos(arg_7_0)
-	if not arg_7_0:checkNeedSetOffset() then
+function HeroGroupFightLayoutView:setUIPos()
+	if not self:checkNeedSetOffset() then
 		return
 	end
 
-	arg_7_0.containerAnimator.enabled = false
+	self.containerAnimator.enabled = false
 
-	for iter_7_0 = 1, 4 do
-		local var_7_0 = arg_7_0.heroItemList[iter_7_0]
+	for i = 1, 4 do
+		local heroItem = self.heroItemList[i]
 
-		recthelper.setAnchorX(var_7_0.bgRectTr, var_7_0.bgX + var_0_0.DefaultOffsetX)
-		recthelper.setAnchorX(var_7_0.posGoTr, var_7_0.posX + var_0_0.DefaultOffsetX)
+		recthelper.setAnchorX(heroItem.bgRectTr, heroItem.bgX + HeroGroupFightLayoutView.DefaultOffsetX)
+		recthelper.setAnchorX(heroItem.posGoTr, heroItem.posX + HeroGroupFightLayoutView.DefaultOffsetX)
 
-		local var_7_1 = var_7_0.heroItemRectTr
+		local heroItemTr = heroItem.heroItemRectTr
 
-		if not gohelper.isNil(var_7_1) then
-			local var_7_2 = recthelper.rectToRelativeAnchorPos(var_7_0.posGoTr.position, arg_7_0.heroGroupContainRectTr)
+		if not gohelper.isNil(heroItemTr) then
+			local anchorPos = recthelper.rectToRelativeAnchorPos(heroItem.posGoTr.position, self.heroGroupContainRectTr)
 
-			recthelper.setAnchor(var_7_1, var_7_2.x, var_7_2.y)
+			recthelper.setAnchor(heroItemTr, anchorPos.x, anchorPos.y)
 		end
 	end
 
-	recthelper.setWidth(arg_7_0.replayFrameRectTr, 1340)
-	recthelper.setAnchorX(arg_7_0.replayFrameRectTr, -60)
-	recthelper.setAnchorX(arg_7_0.tipRectTr, -630)
+	recthelper.setWidth(self.replayFrameRectTr, 1340)
+	recthelper.setAnchorX(self.replayFrameRectTr, -60)
+	recthelper.setAnchorX(self.tipRectTr, -630)
 end
 
-function var_0_0.resetUIPos(arg_8_0)
-	for iter_8_0 = 1, 4 do
-		local var_8_0 = arg_8_0.heroItemList[iter_8_0]
+function HeroGroupFightLayoutView:resetUIPos()
+	for i = 1, 4 do
+		local heroItem = self.heroItemList[i]
 
-		recthelper.setAnchorX(var_8_0.bgRectTr, var_8_0.bgX)
-		recthelper.setAnchorX(var_8_0.posGoTr, var_8_0.posX)
+		recthelper.setAnchorX(heroItem.bgRectTr, heroItem.bgX)
+		recthelper.setAnchorX(heroItem.posGoTr, heroItem.posX)
 
-		local var_8_1 = var_8_0.heroItemRectTr
+		local heroItemTr = heroItem.heroItemRectTr
 
-		if not gohelper.isNil(var_8_1) then
-			local var_8_2 = recthelper.rectToRelativeAnchorPos(var_8_0.posGoTr.position, arg_8_0.heroGroupContainRectTr)
+		if not gohelper.isNil(heroItemTr) then
+			local anchorPos = recthelper.rectToRelativeAnchorPos(heroItem.posGoTr.position, self.heroGroupContainRectTr)
 
-			recthelper.setAnchor(var_8_1, var_8_2.x, var_8_2.y)
+			recthelper.setAnchor(heroItemTr, anchorPos.x, anchorPos.y)
 		end
 	end
 
-	recthelper.setWidth(arg_8_0.replayFrameRectTr, arg_8_0.replayFrameWidth)
-	recthelper.setAnchorX(arg_8_0.replayFrameRectTr, arg_8_0.replayFrameX)
-	recthelper.setAnchorX(arg_8_0.tipRectTr, arg_8_0.tipX)
+	recthelper.setWidth(self.replayFrameRectTr, self.replayFrameWidth)
+	recthelper.setAnchorX(self.replayFrameRectTr, self.replayFrameX)
+	recthelper.setAnchorX(self.tipRectTr, self.tipX)
 end
 
-function var_0_0.onClose(arg_9_0)
+function HeroGroupFightLayoutView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function HeroGroupFightLayoutView:onDestroyView()
 	return
 end
 
-return var_0_0
+return HeroGroupFightLayoutView

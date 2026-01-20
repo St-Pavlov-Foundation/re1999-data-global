@@ -1,28 +1,30 @@
-﻿module("modules.logic.fight.system.work.FightWorkDelayTimer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDelayTimer.lua
 
-local var_0_0 = class("FightWorkDelayTimer", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkDelayTimer", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1)
-	arg_1_0._waitSeconds = arg_1_1 or 0.01
+local FightWorkDelayTimer = class("FightWorkDelayTimer", FightWorkItem)
+
+function FightWorkDelayTimer:onLogicEnter(waitSeconds)
+	self._waitSeconds = waitSeconds or 0.01
 end
 
-function var_0_0.onStart(arg_2_0)
-	if arg_2_0._waitSeconds == 0 then
-		arg_2_0:onDone(true)
+function FightWorkDelayTimer:onStart()
+	if self._waitSeconds == 0 then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_2_0:cancelFightWorkSafeTimer()
-	arg_2_0:com_registTimer(arg_2_0._onTimeEnd, arg_2_0._waitSeconds)
+	self:cancelFightWorkSafeTimer()
+	self:com_registTimer(self._onTimeEnd, self._waitSeconds)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkDelayTimer:clearWork()
 	return
 end
 
-function var_0_0._onTimeEnd(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkDelayTimer:_onTimeEnd()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkDelayTimer

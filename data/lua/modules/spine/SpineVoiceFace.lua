@@ -1,240 +1,242 @@
-﻿module("modules.spine.SpineVoiceFace", package.seeall)
+﻿-- chunkname: @modules/spine/SpineVoiceFace.lua
 
-local var_0_0 = class("SpineVoiceFace")
-local var_0_1 = "_biyan"
+module("modules.spine.SpineVoiceFace", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SpineVoiceFace = class("SpineVoiceFace")
+local biYanName = "_biyan"
+
+function SpineVoiceFace:ctor()
 	return
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	arg_2_0:removeTaskActions()
-	TaskDispatcher.cancelTask(arg_2_0._stopTransition, arg_2_0)
+function SpineVoiceFace:onDestroy()
+	self:removeTaskActions()
+	TaskDispatcher.cancelTask(self._stopTransition, self)
 
-	arg_2_0._spineVoice = nil
-	arg_2_0._voiceConfig = nil
-	arg_2_0._spine = nil
+	self._spineVoice = nil
+	self._voiceConfig = nil
+	self._spine = nil
 end
 
-function var_0_0.setFaceAnimation(arg_3_0, arg_3_1, arg_3_2)
-	if string.find(arg_3_1, var_0_1) then
-		arg_3_2 = false
+function SpineVoiceFace:setFaceAnimation(name, loop)
+	if string.find(name, biYanName) then
+		loop = false
 	end
 
-	arg_3_0._loop = arg_3_2
+	self._loop = loop
 
-	TaskDispatcher.cancelTask(arg_3_0._nonLoopFaceEnd, arg_3_0)
+	TaskDispatcher.cancelTask(self._nonLoopFaceEnd, self)
 
-	arg_3_0._lastFaceName = arg_3_1
+	self._lastFaceName = name
 
-	arg_3_0:_doSetFaceAnimation(arg_3_1, arg_3_2)
+	self:_doSetFaceAnimation(name, loop)
 end
 
-function var_0_0._doSetFaceAnimation(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= arg_4_0._spine:getCurFace() then
-		local var_4_0 = arg_4_0._mixTime or 0.5
+function SpineVoiceFace:_doSetFaceAnimation(name, loop)
+	if name ~= self._spine:getCurFace() then
+		local time = self._mixTime or 0.5
 
-		if string.find(arg_4_1, var_0_1) then
-			var_4_0 = 0.3
+		if string.find(name, biYanName) then
+			time = 0.3
 		end
 
-		arg_4_0._spine:setFaceAnimation(arg_4_1, arg_4_2, var_4_0)
+		self._spine:setFaceAnimation(name, loop, time)
 	end
 end
 
-function var_0_0.init(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._spineVoice = arg_5_1
-	arg_5_0._voiceConfig = arg_5_2
-	arg_5_0._spine = arg_5_3
+function SpineVoiceFace:init(spineVoice, voiceConfig, spine)
+	self._spineVoice = spineVoice
+	self._voiceConfig = voiceConfig
+	self._spine = spine
 
-	local var_5_0 = arg_5_0:getFace(arg_5_2)
+	local face = self:getFace(voiceConfig)
 
-	arg_5_0:playFaceActionList(var_5_0)
+	self:playFaceActionList(face)
 end
 
-function var_0_0.getFace(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._spineVoice:getVoiceLang()
+function SpineVoiceFace:getFace(voiceCo)
+	local shortcut = self._spineVoice:getVoiceLang()
 
-	if var_6_0 == "zh" then
-		return arg_6_1.face
+	if shortcut == "zh" then
+		return voiceCo.face
 	else
-		return arg_6_1[var_6_0 .. "face"] or arg_6_1.face
+		return voiceCo[shortcut .. "face"] or voiceCo.face
 	end
 end
 
-function var_0_0._configValidity(arg_7_0, arg_7_1, arg_7_2)
-	for iter_7_0 = #arg_7_1, 1, -1 do
-		local var_7_0 = arg_7_1[iter_7_0]
-		local var_7_1 = string.split(var_7_0, "#")
-		local var_7_2 = true
+function SpineVoiceFace:_configValidity(list, spine)
+	for i = #list, 1, -1 do
+		local action = list[i]
+		local actionParam = string.split(action, "#")
+		local invalid = true
 
-		if #var_7_1 >= 3 then
-			local var_7_3 = "e_" .. var_7_1[1]
+		if #actionParam >= 3 then
+			local str = "e_" .. actionParam[1]
 
-			if arg_7_2:hasAnimation(var_7_3) then
-				var_7_2 = false
+			if spine:hasAnimation(str) then
+				invalid = false
 			end
 		end
 
-		if var_7_2 then
-			logError(string.format("id：%s 语音 face 无效的配置：%s face:%s", arg_7_0._voiceConfig.audio, var_7_0, arg_7_0:getFace(arg_7_0._voiceConfig)))
-			table.remove(arg_7_1, iter_7_0)
+		if invalid then
+			logError(string.format("id：%s 语音 face 无效的配置：%s face:%s", self._voiceConfig.audio, action, self:getFace(self._voiceConfig)))
+			table.remove(list, i)
 		end
 	end
 end
 
-function var_0_0.playFaceActionList(arg_8_0, arg_8_1)
-	arg_8_0._faceStart = 0
+function SpineVoiceFace:playFaceActionList(face)
+	self._faceStart = 0
 
-	if not string.nilorempty(arg_8_1) then
-		arg_8_0._faceList = string.split(arg_8_1, "|")
+	if not string.nilorempty(face) then
+		self._faceList = string.split(face, "|")
 
-		arg_8_0:_configValidity(arg_8_0._faceList, arg_8_0._spine)
+		self:_configValidity(self._faceList, self._spine)
 	else
-		arg_8_0._faceList = {}
+		self._faceList = {}
 	end
 
-	arg_8_0:_playFaceAction(arg_8_0._diffFaceBiYan)
+	self:_playFaceAction(self._diffFaceBiYan)
 end
 
-function var_0_0._playFaceAction(arg_9_0, arg_9_1)
-	arg_9_0._faceActionName = nil
+function SpineVoiceFace:_playFaceAction(setTransition)
+	self._faceActionName = nil
 
-	local var_9_0 = true
+	local showNormal = true
 
-	arg_9_0:removeTaskActions()
+	self:removeTaskActions()
 
-	local var_9_1 = true
+	local isEnd = true
 
-	if #arg_9_0._faceList > 0 then
-		local var_9_2 = table.remove(arg_9_0._faceList, 1)
-		local var_9_3 = string.split(var_9_2, "#")
+	if #self._faceList > 0 then
+		local action = table.remove(self._faceList, 1)
+		local actionParam = string.split(action, "#")
 
-		if #var_9_3 >= 3 then
-			arg_9_0._faceActionName = "e_" .. var_9_3[1]
+		if #actionParam >= 3 then
+			self._faceActionName = "e_" .. actionParam[1]
 
-			local var_9_4 = tonumber(var_9_3[2])
-			local var_9_5 = tonumber(var_9_3[3])
+			local startTime = tonumber(actionParam[2])
+			local endTime = tonumber(actionParam[3])
 
-			arg_9_0._faceActionDuration = var_9_5 - var_9_4
-			arg_9_0._mixTime = tonumber(var_9_3[4])
-			arg_9_0._setLoop = var_9_3[5] == nil
-			arg_9_0._delayTime = var_9_4 - arg_9_0._faceStart
-			arg_9_0._faceStart = var_9_5
-			arg_9_0._faceActionStartTime = Time.time
+			self._faceActionDuration = endTime - startTime
+			self._mixTime = tonumber(actionParam[4])
+			self._setLoop = actionParam[5] == nil
+			self._delayTime = startTime - self._faceStart
+			self._faceStart = endTime
+			self._faceActionStartTime = Time.time
 
-			if arg_9_0._delayTime > 0 then
-				TaskDispatcher.runDelay(arg_9_0._faceActionDelay, arg_9_0, arg_9_0._delayTime)
+			if self._delayTime > 0 then
+				TaskDispatcher.runDelay(self._faceActionDelay, self, self._delayTime)
 			else
-				var_9_0 = false
+				showNormal = false
 
-				arg_9_0:_faceActionDelay()
+				self:_faceActionDelay()
 			end
 
-			var_9_1 = false
+			isEnd = false
 		end
 	end
 
-	if var_9_0 then
-		local var_9_6 = arg_9_0:_needBiYan(StoryAnimName.E_ZhengChang)
+	if showNormal then
+		local needBiyan = self:_needBiYan(StoryAnimName.E_ZhengChang)
 
-		arg_9_0:setNormal()
+		self:setNormal()
 
-		if arg_9_1 then
-			arg_9_0:setBiYan(var_9_6)
+		if setTransition then
+			self:setBiYan(needBiyan)
 		end
 	end
 
-	if var_9_1 then
-		arg_9_0:_onFaceEnd()
+	if isEnd then
+		self:_onFaceEnd()
 	end
 end
 
-function var_0_0._onFaceEnd(arg_10_0)
-	arg_10_0._spineVoice:_onComponentStop(arg_10_0)
+function SpineVoiceFace:_onFaceEnd()
+	self._spineVoice:_onComponentStop(self)
 end
 
-function var_0_0.setNormal(arg_11_0)
-	arg_11_0:setFaceAnimation(StoryAnimName.E_ZhengChang, true)
+function SpineVoiceFace:setNormal()
+	self:setFaceAnimation(StoryAnimName.E_ZhengChang, true)
 end
 
-function var_0_0._faceActionDelay(arg_12_0)
-	local var_12_0 = arg_12_0:_needBiYan(arg_12_0._faceActionName)
+function SpineVoiceFace:_faceActionDelay()
+	local needBiyan = self:_needBiYan(self._faceActionName)
 
-	arg_12_0:setFaceAnimation(arg_12_0._faceActionName, arg_12_0._setLoop)
+	self:setFaceAnimation(self._faceActionName, self._setLoop)
 
-	if not string.find(arg_12_0._faceActionName, var_0_1) then
-		arg_12_0:setBiYan(var_12_0)
+	if not string.find(self._faceActionName, biYanName) then
+		self:setBiYan(needBiyan)
 	end
 end
 
-function var_0_0.setBiYan(arg_13_0, arg_13_1)
-	if not arg_13_0._spine then
+function SpineVoiceFace:setBiYan(needBiyan)
+	if not self._spine then
 		return
 	end
 
-	if arg_13_1 then
-		arg_13_0._spine:setTransition(StoryAnimName.H_BiYan, false, 0)
-	elseif arg_13_1 == false then
-		arg_13_0._spine:setTransition(StoryAnimName.H_ZhengYan, false, 0)
+	if needBiyan then
+		self._spine:setTransition(StoryAnimName.H_BiYan, false, 0)
+	elseif needBiyan == false then
+		self._spine:setTransition(StoryAnimName.H_ZhengYan, false, 0)
 	end
 
-	TaskDispatcher.cancelTask(arg_13_0._stopTransition, arg_13_0)
-	TaskDispatcher.runDelay(arg_13_0._stopTransition, arg_13_0, 1)
+	TaskDispatcher.cancelTask(self._stopTransition, self)
+	TaskDispatcher.runDelay(self._stopTransition, self, 1)
 end
 
-function var_0_0._stopTransition(arg_14_0)
-	arg_14_0._spine:stopTransition()
+function SpineVoiceFace:_stopTransition()
+	self._spine:stopTransition()
 end
 
-function var_0_0._needBiYan(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._diffFaceBiYan and arg_15_0._lastFaceName or arg_15_0._spine:getCurFace()
-	local var_15_1 = var_15_0 and not string.find(var_15_0, var_0_1)
+function SpineVoiceFace:_needBiYan(targetFaceName)
+	local faceName = self._diffFaceBiYan and self._lastFaceName or self._spine:getCurFace()
+	local biyan = faceName and not string.find(faceName, biYanName)
 
-	if var_15_1 and arg_15_0._diffFaceBiYan then
-		var_15_1 = arg_15_1 ~= arg_15_0._lastFaceName and true or nil
+	if biyan and self._diffFaceBiYan then
+		biyan = targetFaceName ~= self._lastFaceName and true or nil
 	end
 
-	return var_15_1
+	return biyan
 end
 
-function var_0_0.setDiffFaceBiYan(arg_16_0, arg_16_1)
-	arg_16_0._diffFaceBiYan = arg_16_1
+function SpineVoiceFace:setDiffFaceBiYan(value)
+	self._diffFaceBiYan = value
 end
 
-function var_0_0.checkFaceEnd(arg_17_0, arg_17_1)
-	if arg_17_1 == arg_17_0._faceActionName then
-		local var_17_0 = arg_17_0._faceActionStartTime + arg_17_0._faceActionDuration + arg_17_0._delayTime
-		local var_17_1 = Time.time
+function SpineVoiceFace:checkFaceEnd(actName)
+	if actName == self._faceActionName then
+		local endTime = self._faceActionStartTime + self._faceActionDuration + self._delayTime
+		local curTime = Time.time
 
-		if var_17_0 <= var_17_1 then
-			arg_17_0:_playFaceAction(true)
+		if endTime <= curTime then
+			self:_playFaceAction(true)
 
 			return true
 		end
 
-		if not arg_17_0._loop then
-			local var_17_2 = var_17_0 - var_17_1
+		if not self._loop then
+			local delayTime = endTime - curTime
 
-			TaskDispatcher.runDelay(arg_17_0._nonLoopFaceEnd, arg_17_0, var_17_2)
+			TaskDispatcher.runDelay(self._nonLoopFaceEnd, self, delayTime)
 		end
 
 		return true
 	end
 end
 
-function var_0_0._nonLoopFaceEnd(arg_18_0)
-	arg_18_0:_playFaceAction(true)
+function SpineVoiceFace:_nonLoopFaceEnd()
+	self:_playFaceAction(true)
 end
 
-function var_0_0.removeTaskActions(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._faceActionDelay, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._nonLoopFaceEnd, arg_19_0)
+function SpineVoiceFace:removeTaskActions()
+	TaskDispatcher.cancelTask(self._faceActionDelay, self)
+	TaskDispatcher.cancelTask(self._nonLoopFaceEnd, self)
 end
 
-function var_0_0.onVoiceStop(arg_20_0)
-	arg_20_0:removeTaskActions()
-	arg_20_0:_doSetFaceAnimation(StoryAnimName.E_ZhengChang, true)
+function SpineVoiceFace:onVoiceStop()
+	self:removeTaskActions()
+	self:_doSetFaceAnimation(StoryAnimName.E_ZhengChang, true)
 end
 
-return var_0_0
+return SpineVoiceFace

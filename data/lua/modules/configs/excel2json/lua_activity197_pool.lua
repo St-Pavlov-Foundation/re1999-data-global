@@ -1,21 +1,23 @@
-﻿module("modules.configs.excel2json.lua_activity197_pool", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity197_pool.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity197_pool", package.seeall)
+
+local lua_activity197_pool = {}
+local fields = {
 	index = 3,
 	bonus = 4,
 	activityId = 1,
 	poolId = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"poolId",
 	"index"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity197_pool.onLoad(json)
+	lua_activity197_pool.configList, lua_activity197_pool.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity197_pool

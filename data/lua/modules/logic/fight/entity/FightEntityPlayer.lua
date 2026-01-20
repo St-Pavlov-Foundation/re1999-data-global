@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.entity.FightEntityPlayer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityPlayer.lua
 
-local var_0_0 = class("FightEntityPlayer", BaseFightEntity)
+module("modules.logic.fight.entity.FightEntityPlayer", package.seeall)
 
-function var_0_0.getTag(arg_1_0)
+local FightEntityPlayer = class("FightEntityPlayer", BaseFightEntity)
+
+function FightEntityPlayer:getTag()
 	return SceneTag.UnitPlayer
 end
 
-function var_0_0.initComponents(arg_2_0)
-	var_0_0.super.initComponents(arg_2_0)
-	arg_2_0:addComp("readyAttack", FightPlayerReadyAttackComp)
-	arg_2_0:addComp("variantCrayon", FightVariantCrayonComp)
-	arg_2_0:addComp("entityVisible", FightEntityVisibleComp)
-	arg_2_0:addComp("nameUIVisible", FightNameUIVisibleComp)
-	arg_2_0:addComp("variantHeart", FightVariantHeartComp)
-	arg_2_0:addComp("heroCustomComp", FightHeroCustomComp)
+function FightEntityPlayer:initComponents()
+	FightEntityPlayer.super.initComponents(self)
+	self:addComp("readyAttack", FightPlayerReadyAttackComp)
+	self:addComp("variantCrayon", FightVariantCrayonComp)
+	self:addComp("entityVisible", FightEntityVisibleComp)
+	self:addComp("nameUIVisible", FightNameUIVisibleComp)
+	self:addComp("variantHeart", FightVariantHeartComp)
+	self:addComp("heroCustomComp", FightHeroCustomComp)
 end
 
-return var_0_0
+return FightEntityPlayer

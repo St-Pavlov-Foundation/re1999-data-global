@@ -1,53 +1,55 @@
-﻿module("modules.logic.story.model.StoryStepModel", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepModel.lua
 
-local var_0_0 = class("StoryStepModel", BaseModel)
+module("modules.logic.story.model.StoryStepModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._stepList = {}
+local StoryStepModel = class("StoryStepModel", BaseModel)
+
+function StoryStepModel:onInit()
+	self._stepList = {}
 end
 
-function var_0_0.setStepList(arg_2_0, arg_2_1)
-	arg_2_0._stepList = {}
+function StoryStepModel:setStepList(infos)
+	self._stepList = {}
 
-	if arg_2_1 then
-		for iter_2_0, iter_2_1 in pairs(arg_2_1) do
-			local var_2_0 = StoryStepMo.New()
+	if infos then
+		for _, info in pairs(infos) do
+			local stepMo = StoryStepMo.New()
 
-			var_2_0:init(iter_2_1)
-			table.insert(arg_2_0._stepList, var_2_0)
+			stepMo:init(info)
+			table.insert(self._stepList, stepMo)
 		end
 	end
 
-	arg_2_0:setList(arg_2_0._stepList)
+	self:setList(self._stepList)
 end
 
-function var_0_0.getStepList(arg_3_0)
-	return arg_3_0._stepList
+function StoryStepModel:getStepList()
+	return self._stepList
 end
 
-function var_0_0.getStepListById(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._stepList) do
-		if iter_4_1.id == arg_4_1 then
-			return iter_4_1
+function StoryStepModel:getStepListById(stepId)
+	for _, v in pairs(self._stepList) do
+		if v.id == stepId then
+			return v
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getStepFavor(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getStepListById(arg_5_1).optList
-	local var_5_1 = 0
+function StoryStepModel:getStepFavor(stepId)
+	local config = self:getStepListById(stepId).optList
+	local favor = 0
 
-	for iter_5_0, iter_5_1 in pairs(var_5_0) do
-		if iter_5_1.feedbackType == 1 then
-			var_5_1 = var_5_1 + iter_5_1.feedbackValue
+	for _, v in pairs(config) do
+		if v.feedbackType == 1 then
+			favor = favor + v.feedbackValue
 		end
 	end
 
-	return var_5_1
+	return favor
 end
 
-var_0_0.instance = var_0_0.New()
+StoryStepModel.instance = StoryStepModel.New()
 
-return var_0_0
+return StoryStepModel

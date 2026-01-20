@@ -1,61 +1,65 @@
-﻿module("modules.logic.share.controller.ShareController", package.seeall)
+﻿-- chunkname: @modules/logic/share/controller/ShareController.lua
 
-local var_0_0 = class("ShareController", BaseController)
+module("modules.logic.share.controller.ShareController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ShareController = class("ShareController", BaseController)
+
+function ShareController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function ShareController:reInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function ShareController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	SDKMgr.instance:setSocialShareCallBack(arg_4_0._onSocialShare, arg_4_0)
-	SDKMgr.instance:setScreenShotCallBack(arg_4_0._onScreenShot, arg_4_0)
+function ShareController:addConstEvents()
+	SDKMgr.instance:setSocialShareCallBack(self._onSocialShare, self)
+	SDKMgr.instance:setScreenShotCallBack(self._onScreenShot, self)
 end
 
-function var_0_0.openShareEditorView(arg_5_0, arg_5_1, arg_5_2)
-	ViewMgr.instance:openView(ViewName.ShareEditorView, arg_5_1, arg_5_2)
+function ShareController:openShareEditorView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.ShareEditorView, param, isImmediate)
 end
 
-function var_0_0.openShareTipView(arg_6_0, arg_6_1, arg_6_2)
-	ViewMgr.instance:openView(ViewName.ShareTipView, arg_6_1, arg_6_2)
+function ShareController:openShareTipView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.ShareTipView, param, isImmediate)
 end
 
-function var_0_0.CaptureScreenshot(arg_7_0)
-	ZProj.ScreenCaptureUtil.Instance:ReadScreenPixelsAsTexture(nil, arg_7_0._onReadScene, arg_7_0)
+function ShareController:CaptureScreenshot()
+	ZProj.ScreenCaptureUtil.Instance:ReadScreenPixelsAsTexture(nil, self._onReadScene, self)
 end
 
-function var_0_0._onReadScene(arg_8_0, arg_8_1)
-	if not StoryModel.instance:isStoryPvPause() then
-		arg_8_0:openShareTipView(arg_8_1)
+function ShareController:_onReadScene(texture2d)
+	local pvPause = StoryModel.instance:isStoryPvPause()
+
+	if not pvPause then
+		self:openShareTipView(texture2d)
 	end
 end
 
-function var_0_0._onSocialShare(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 200 or arg_9_1 == -2 then
+function ShareController:_onSocialShare(code, msg)
+	if code == 200 or code == -2 then
 		ViewMgr.instance:closeView(ViewName.ShareEditorView)
 	end
 
-	local var_9_0 = luaLang("datatrack_shareaction_success")
+	local show = luaLang("datatrack_shareaction_success")
 
-	if arg_9_1 == -1 then
-		var_9_0 = luaLang("datatrack_shareaction_failure")
-	elseif arg_9_1 == -2 then
-		var_9_0 = luaLang("datatrack_shareaction_cancel")
+	if code == -1 then
+		show = luaLang("datatrack_shareaction_failure")
+	elseif code == -2 then
+		show = luaLang("datatrack_shareaction_cancel")
 	end
 
 	StatController.instance:track(StatEnum.EventName.PlayerShare, {
-		[StatEnum.EventProperties.ShareAction] = var_9_0
+		[StatEnum.EventProperties.ShareAction] = show
 	})
 end
 
-function var_0_0._onScreenShot(arg_10_0, arg_10_1, arg_10_2)
+function ShareController:_onScreenShot(success, msg)
 	if VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS() then
 		return false
 	end
@@ -64,7 +68,7 @@ function var_0_0._onScreenShot(arg_10_0, arg_10_1, arg_10_2)
 		return false
 	end
 
-	if not arg_10_1 then
+	if not success then
 		return
 	end
 
@@ -77,10 +81,10 @@ function var_0_0._onScreenShot(arg_10_0, arg_10_1, arg_10_2)
 	end
 
 	if SettingsModel.instance:getScreenshotSwitch() then
-		arg_10_0:CaptureScreenshot()
+		self:CaptureScreenshot()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ShareController.instance = ShareController.New()
 
-return var_0_0
+return ShareController

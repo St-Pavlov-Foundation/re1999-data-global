@@ -68,5 +68,25 @@
     "decStage": 303,
     "feature": "depresse#100#100",
     "desc": "language_10066655"
+  },
+  {
+    "id": 10008,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "rouge2Attr102",
+    "desc": ""
+  },
+  {
+    "id": 10009,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "rouge2Attr103",
+    "desc": ""
   }
 ]

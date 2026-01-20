@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.controller.VersionActivity1_8StatController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/controller/VersionActivity1_8StatController.lua
 
-local var_0_0 = class("VersionActivity1_8StatController")
+module("modules.logic.versionactivity1_8.dungeon.controller.VersionActivity1_8StatController", package.seeall)
 
-function var_0_0.startStat(arg_1_0)
-	arg_1_0.startTime = ServerTime.now()
+local VersionActivity1_8StatController = class("VersionActivity1_8StatController")
+
+function VersionActivity1_8StatController:startStat()
+	self.startTime = ServerTime.now()
 end
 
-function var_0_0.statSuccess(arg_2_0)
-	arg_2_0:_statEnd(StatEnum.Result.Success)
+function VersionActivity1_8StatController:statSuccess()
+	self:_statEnd(StatEnum.Result.Success)
 end
 
-function var_0_0.statAbort(arg_3_0)
-	arg_3_0:_statEnd(StatEnum.Result.Abort)
+function VersionActivity1_8StatController:statAbort()
+	self:_statEnd(StatEnum.Result.Abort)
 end
 
-function var_0_0.statReset(arg_4_0)
-	arg_4_0:_statEnd(StatEnum.Result.Reset)
-	arg_4_0:startStat()
+function VersionActivity1_8StatController:statReset()
+	self:_statEnd(StatEnum.Result.Reset)
+	self:startStat()
 end
 
-function var_0_0._statEnd(arg_5_0, arg_5_1)
-	if not arg_5_0.startTime then
+function VersionActivity1_8StatController:_statEnd(result)
+	if not self.startTime then
 		return
 	end
 
 	StatController.instance:track(StatEnum.EventName.FactoryConnectionGame, {
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_5_0.startTime,
+		[StatEnum.EventProperties.UseTime] = ServerTime.now() - self.startTime,
 		[StatEnum.EventProperties.PartsId] = tostring(Activity157RepairGameModel.instance:getCurComponentId()),
-		[StatEnum.EventProperties.Result] = arg_5_1
+		[StatEnum.EventProperties.Result] = result
 	})
 
-	arg_5_0.startTime = nil
+	self.startTime = nil
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_8StatController.instance = VersionActivity1_8StatController.New()
 
-return var_0_0
+return VersionActivity1_8StatController

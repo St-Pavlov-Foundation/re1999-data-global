@@ -1,64 +1,66 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.DiceHeroHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/DiceHeroHelper.lua
 
-local var_0_0 = class("DiceHeroHelper")
+module("modules.logic.versionactivity2_6.dicehero.controller.DiceHeroHelper", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._entityDict = {}
-	arg_1_0._cardDict = {}
-	arg_1_0._diceDict = {}
-	arg_1_0._diceTextureDict = {}
-	arg_1_0._effectItem = nil
-	arg_1_0._effectPool = {}
-	arg_1_0.flow = nil
-	arg_1_0.afterFlow = nil
+local DiceHeroHelper = class("DiceHeroHelper")
+
+function DiceHeroHelper:ctor()
+	self._entityDict = {}
+	self._cardDict = {}
+	self._diceDict = {}
+	self._diceTextureDict = {}
+	self._effectItem = nil
+	self._effectPool = {}
+	self.flow = nil
+	self.afterFlow = nil
 end
 
-function var_0_0.buildFlow(arg_2_0, arg_2_1)
-	local var_2_0 = FlowSequence.New()
+function DiceHeroHelper:buildFlow(steps)
+	local flow = FlowSequence.New()
 
-	var_2_0:addWork(DiceHeroFirstStepWork.New())
+	flow:addWork(DiceHeroFirstStepWork.New())
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		local var_2_1 = DiceHeroFightStepMo.New()
+	for i, v in ipairs(steps) do
+		local stepMo = DiceHeroFightStepMo.New()
 
-		var_2_1:init(iter_2_1)
+		stepMo:init(v)
 
-		local var_2_2 = FlowParallel.New()
+		local parallel = FlowParallel.New()
 
-		var_2_2:addWork(DiceHeroActionWork.New(var_2_1))
+		parallel:addWork(DiceHeroActionWork.New(stepMo))
 
-		local var_2_3 = FlowSequence.New()
+		local sequence = FlowSequence.New()
 
-		for iter_2_2, iter_2_3 in ipairs(var_2_1.effect) do
-			local var_2_4 = iter_2_3.effectType
-			local var_2_5 = DiceHeroEnum.FightEffectTypeToName[var_2_4] or ""
-			local var_2_6 = _G[string.format("DiceHero%sWork", var_2_5)]
+		for _, effectMo in ipairs(stepMo.effect) do
+			local effectType = effectMo.effectType
+			local effectName = DiceHeroEnum.FightEffectTypeToName[effectType] or ""
+			local cls = _G[string.format("DiceHero%sWork", effectName)]
 
-			if var_2_6 then
-				var_2_3:addWork(var_2_6.New(iter_2_3))
+			if cls then
+				sequence:addWork(cls.New(effectMo))
 			end
 		end
 
-		var_2_2:addWork(var_2_3)
-		var_2_0:addWork(var_2_2)
+		parallel:addWork(sequence)
+		flow:addWork(parallel)
 	end
 
-	return var_2_0
+	return flow
 end
 
-function var_0_0.startFlow(arg_3_0, arg_3_1)
-	if arg_3_0.flow then
+function DiceHeroHelper:startFlow(flow)
+	if self.flow then
 		logError("已有Flow执行中")
 	end
 
-	arg_3_0.flow = arg_3_1
+	self.flow = flow
 
-	arg_3_0.flow:registerDoneListener(arg_3_0.flowDone, arg_3_0)
-	arg_3_0.flow:start()
+	self.flow:registerDoneListener(self.flowDone, self)
+	self.flow:start()
 end
 
-function var_0_0.flowDone(arg_4_0)
-	arg_4_0.flow = nil
+function DiceHeroHelper:flowDone()
+	self.flow = nil
 
 	DiceHeroFightModel.instance:getGameData():onStepEnd()
 	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.StepEnd)
@@ -73,115 +75,115 @@ function var_0_0.flowDone(arg_4_0)
 	end
 end
 
-function var_0_0.isInFlow(arg_5_0)
-	return arg_5_0.flow ~= nil
+function DiceHeroHelper:isInFlow()
+	return self.flow ~= nil
 end
 
-function var_0_0.isNotInFlow(arg_6_0)
-	return not arg_6_0:isInFlow()
+function DiceHeroHelper:isNotInFlow()
+	return not self:isInFlow()
 end
 
-function var_0_0.isShowCarNum(arg_7_0, arg_7_1)
-	return arg_7_1 == DiceHeroEnum.SkillEffectType.Damage1 or arg_7_1 == DiceHeroEnum.SkillEffectType.Damage2 or arg_7_1 == DiceHeroEnum.SkillEffectType.ChangeShield1 or arg_7_1 == DiceHeroEnum.SkillEffectType.ChangeShield2 or arg_7_1 == DiceHeroEnum.SkillEffectType.ChangePower1 or arg_7_1 == DiceHeroEnum.SkillEffectType.ChangePower2
+function DiceHeroHelper:isShowCarNum(effectType)
+	return effectType == DiceHeroEnum.SkillEffectType.Damage1 or effectType == DiceHeroEnum.SkillEffectType.Damage2 or effectType == DiceHeroEnum.SkillEffectType.ChangeShield1 or effectType == DiceHeroEnum.SkillEffectType.ChangeShield2 or effectType == DiceHeroEnum.SkillEffectType.ChangePower1 or effectType == DiceHeroEnum.SkillEffectType.ChangePower2
 end
 
-function var_0_0.setEffectItem(arg_8_0, arg_8_1)
-	arg_8_0._effectItem = arg_8_1
+function DiceHeroHelper:setEffectItem(effectItem)
+	self._effectItem = effectItem
 end
 
-function var_0_0.doEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = table.remove(arg_9_0._effectPool)
+function DiceHeroHelper:doEffect(type, fromPos, toPos, num)
+	local effectItem = table.remove(self._effectPool)
 
-	if not var_9_0 then
-		local var_9_1 = gohelper.cloneInPlace(arg_9_0._effectItem)
+	if not effectItem then
+		local effectGo = gohelper.cloneInPlace(self._effectItem)
 
-		var_9_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, DiceHeroEffectItem)
+		effectItem = MonoHelper.addNoUpdateLuaComOnceToGo(effectGo, DiceHeroEffectItem)
 	end
 
-	gohelper.setActive(var_9_0.go, true)
-	var_9_0:initData(arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	gohelper.setActive(effectItem.go, true)
+	effectItem:initData(type, fromPos, toPos, num)
 
-	return var_9_0
+	return effectItem
 end
 
-function var_0_0.returnEffectItemToPool(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_1.go, false)
-	table.insert(arg_10_0._effectPool, arg_10_1)
+function DiceHeroHelper:returnEffectItemToPool(effectItem)
+	gohelper.setActive(effectItem.go, false)
+	table.insert(self._effectPool, effectItem)
 end
 
-function var_0_0.registerEntity(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._entityDict[arg_11_1] = arg_11_2
+function DiceHeroHelper:registerEntity(uid, obj)
+	self._entityDict[uid] = obj
 end
 
-function var_0_0.unregisterEntity(arg_12_0, arg_12_1)
-	arg_12_0._entityDict[arg_12_1] = nil
+function DiceHeroHelper:unregisterEntity(uid)
+	self._entityDict[uid] = nil
 end
 
-function var_0_0.getEntity(arg_13_0, arg_13_1)
-	return arg_13_0._entityDict[arg_13_1]
+function DiceHeroHelper:getEntity(uid)
+	return self._entityDict[uid]
 end
 
-function var_0_0.registerCard(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._cardDict[arg_14_1] = arg_14_2
+function DiceHeroHelper:registerCard(skillId, obj)
+	self._cardDict[skillId] = obj
 end
 
-function var_0_0.unregisterCard(arg_15_0, arg_15_1)
-	arg_15_0._cardDict[arg_15_1] = nil
+function DiceHeroHelper:unregisterCard(skillId)
+	self._cardDict[skillId] = nil
 end
 
-function var_0_0.getCard(arg_16_0, arg_16_1)
-	return arg_16_0._cardDict[arg_16_1]
+function DiceHeroHelper:getCard(skillId)
+	return self._cardDict[skillId]
 end
 
-function var_0_0.registerDice(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._diceDict[arg_17_1] = arg_17_2
+function DiceHeroHelper:registerDice(uid, obj)
+	self._diceDict[uid] = obj
 end
 
-function var_0_0.unregisterDice(arg_18_0, arg_18_1)
-	arg_18_0._diceDict[arg_18_1] = nil
+function DiceHeroHelper:unregisterDice(uid)
+	self._diceDict[uid] = nil
 end
 
-function var_0_0.getDice(arg_19_0, arg_19_1)
-	return arg_19_0._diceDict[arg_19_1]
+function DiceHeroHelper:getDice(uid)
+	return self._diceDict[uid]
 end
 
-function var_0_0.checkChapter(arg_20_0, arg_20_1)
-	return tostring(arg_20_1) == tostring(DiceHeroModel.instance.guideChapter)
+function DiceHeroHelper:checkChapter(chapterId)
+	return tostring(chapterId) == tostring(DiceHeroModel.instance.guideChapter)
 end
 
-function var_0_0.checkLevel(arg_21_0, arg_21_1)
-	return tostring(arg_21_1) == tostring(DiceHeroModel.instance.guideLevel)
+function DiceHeroHelper:checkLevel(levelId)
+	return tostring(levelId) == tostring(DiceHeroModel.instance.guideLevel)
 end
 
-function var_0_0.setDiceTexture(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0._diceTextureDict[arg_22_1] = arg_22_2
+function DiceHeroHelper:setDiceTexture(name, texture)
+	self._diceTextureDict[name] = texture
 end
 
-function var_0_0.getDiceTexture(arg_23_0, arg_23_1)
-	return arg_23_0._diceTextureDict[arg_23_1]
+function DiceHeroHelper:getDiceTexture(name)
+	return self._diceTextureDict[name]
 end
 
-function var_0_0.clear(arg_24_0)
-	if arg_24_0.flow then
-		arg_24_0.flow:onDestroyInternal()
+function DiceHeroHelper:clear()
+	if self.flow then
+		self.flow:onDestroyInternal()
 
-		arg_24_0.flow = nil
+		self.flow = nil
 	end
 
-	if arg_24_0.afterFlow then
-		arg_24_0.afterFlow:onDestroyInternal()
+	if self.afterFlow then
+		self.afterFlow:onDestroyInternal()
 
-		arg_24_0.afterFlow = nil
+		self.afterFlow = nil
 	end
 
-	arg_24_0._entityDict = {}
-	arg_24_0._cardDict = {}
-	arg_24_0._diceDict = {}
-	arg_24_0._diceTextureDict = {}
-	arg_24_0._effectItem = nil
-	arg_24_0._effectPool = {}
+	self._entityDict = {}
+	self._cardDict = {}
+	self._diceDict = {}
+	self._diceTextureDict = {}
+	self._effectItem = nil
+	self._effectPool = {}
 end
 
-var_0_0.instance = var_0_0.New()
+DiceHeroHelper.instance = DiceHeroHelper.New()
 
-return var_0_0
+return DiceHeroHelper

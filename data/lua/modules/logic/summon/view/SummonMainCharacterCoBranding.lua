@@ -1,148 +1,150 @@
-﻿module("modules.logic.summon.view.SummonMainCharacterCoBranding", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonMainCharacterCoBranding.lua
 
-local var_0_0 = class("SummonMainCharacterCoBranding", SummonMainCharacterProbUp)
+module("modules.logic.summon.view.SummonMainCharacterCoBranding", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goui = gohelper.findChild(arg_1_0.viewGO, "#go_ui")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bg")
-	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_role1")
-	arg_1_0._simagetitle1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/title/#simage_title1")
-	arg_1_0._simagelogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/title/#simage_logo")
-	arg_1_0._gocharacteritem1 = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/right/#go_characteritem1")
-	arg_1_0._txtgoto = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/right/#go_characteritem1/btn_goto/#txt_goto")
-	arg_1_0._txttimes = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/first/#txt_times")
-	arg_1_0._txtdeadline = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/#txt_deadline")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
-	arg_1_0._btnsummon1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/#btn_summon1")
-	arg_1_0._simagecurrency1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/currency/#simage_currency1")
-	arg_1_0._txtcurrency11 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_1")
-	arg_1_0._txtcurrency12 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_2")
-	arg_1_0._btnsummon10 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/#btn_summon10")
-	arg_1_0._simagecurrency10 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/currency/#simage_currency10")
-	arg_1_0._txtcurrency101 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_1")
-	arg_1_0._txtcurrency102 = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_2")
-	arg_1_0._btngift = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/#btn_gift")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_lefttop")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_ui/#go_righttop")
-	arg_1_0._txtpreferential = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/current/first/#txt_times")
-	arg_1_0._gopreferential = gohelper.findChild(arg_1_0.viewGO, "#go_ui/current/first")
+local SummonMainCharacterCoBranding = class("SummonMainCharacterCoBranding", SummonMainCharacterProbUp)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonMainCharacterCoBranding:onInitView()
+	self._goui = gohelper.findChild(self.viewGO, "#go_ui")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_bg")
+	self._simagerole1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/node1/#simage_role1")
+	self._simagetitle1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/title/#simage_title1")
+	self._simagelogo = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/title/#simage_logo")
+	self._gocharacteritem1 = gohelper.findChild(self.viewGO, "#go_ui/current/right/#go_characteritem1")
+	self._txtgoto = gohelper.findChildText(self.viewGO, "#go_ui/current/right/#go_characteritem1/btn_goto/#txt_goto")
+	self._txttimes = gohelper.findChildText(self.viewGO, "#go_ui/current/first/#txt_times")
+	self._txtdeadline = gohelper.findChildText(self.viewGO, "#go_ui/current/#txt_deadline")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
+	self._btnsummon1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/summonbtns/summon1/#btn_summon1")
+	self._simagecurrency1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/summonbtns/summon1/currency/#simage_currency1")
+	self._txtcurrency11 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_1")
+	self._txtcurrency12 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon1/currency/#txt_currency1_2")
+	self._btnsummon10 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/summonbtns/summon10/#btn_summon10")
+	self._simagecurrency10 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/summonbtns/summon10/currency/#simage_currency10")
+	self._txtcurrency101 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_1")
+	self._txtcurrency102 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon10/currency/#txt_currency10_2")
+	self._btngift = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/#btn_gift")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_ui/#go_lefttop")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_ui/#go_righttop")
+	self._txtpreferential = gohelper.findChildText(self.viewGO, "#go_ui/current/first/#txt_times")
+	self._gopreferential = gohelper.findChild(self.viewGO, "#go_ui/current/first")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsummon1:AddClickListener(arg_2_0._btnsummon1OnClick, arg_2_0)
-	arg_2_0._btnsummon10:AddClickListener(arg_2_0._btnsummon10OnClick, arg_2_0)
-	arg_2_0._btnclaim:AddClickListener(arg_2_0._btnclaimOnClick, arg_2_0)
-	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
+function SummonMainCharacterCoBranding:addEvents()
+	self._btnsummon1:AddClickListener(self._btnsummon1OnClick, self)
+	self._btnsummon10:AddClickListener(self._btnsummon10OnClick, self)
+	self._btnclaim:AddClickListener(self._btnclaimOnClick, self)
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
 
-	if arg_2_0._btngift then
-		arg_2_0._btngift:AddClickListener(arg_2_0._btngiftOnClick, arg_2_0)
+	if self._btngift then
+		self._btngift:AddClickListener(self._btngiftOnClick, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsummon1:RemoveClickListener()
-	arg_3_0._btnsummon10:RemoveClickListener()
-	arg_3_0._btnclaim:RemoveClickListener()
-	arg_3_0._btngoto:RemoveClickListener()
+function SummonMainCharacterCoBranding:removeEvents()
+	self._btnsummon1:RemoveClickListener()
+	self._btnsummon10:RemoveClickListener()
+	self._btnclaim:RemoveClickListener()
+	self._btngoto:RemoveClickListener()
 
-	if arg_3_0._btngift then
-		arg_3_0._btngift:RemoveClickListener()
+	if self._btngift then
+		self._btngift:RemoveClickListener()
 	end
 end
 
-function var_0_0._btnsummon1OnClick(arg_4_0)
-	var_0_0.super._btnsummon1OnClick(arg_4_0)
+function SummonMainCharacterCoBranding:_btnsummon1OnClick()
+	SummonMainCharacterCoBranding.super._btnsummon1OnClick(self)
 end
 
-function var_0_0._btnsummon10OnClick(arg_5_0)
-	var_0_0.super._btnsummon10OnClick(arg_5_0)
+function SummonMainCharacterCoBranding:_btnsummon10OnClick()
+	SummonMainCharacterCoBranding.super._btnsummon10OnClick(self)
 end
 
-function var_0_0._btnclaimOnClick(arg_6_0)
-	local var_6_0 = SummonMainModel.instance:getCurPool()
+function SummonMainCharacterCoBranding:_btnclaimOnClick()
+	local poolCo = SummonMainModel.instance:getCurPool()
 
-	arg_6_0._nextRewardsRequestTime = arg_6_0._nextRewardsRequestTime or 0
+	self._nextRewardsRequestTime = self._nextRewardsRequestTime or 0
 
-	if var_6_0 and arg_6_0._nextRewardsRequestTime <= Time.time then
-		arg_6_0._nextRewardsRequestTime = Time.time + 0.3
+	if poolCo and self._nextRewardsRequestTime <= Time.time then
+		self._nextRewardsRequestTime = Time.time + 0.3
 
-		SummonRpc.instance:sendGetSummonProgressRewardsRequest(var_6_0.id)
+		SummonRpc.instance:sendGetSummonProgressRewardsRequest(poolCo.id)
 	end
 end
 
-function var_0_0._btngotoOnClick(arg_7_0)
-	local var_7_0 = SummonMainModel.instance:getCurPool()
+function SummonMainCharacterCoBranding:_btngotoOnClick()
+	local poolCo = SummonMainModel.instance:getCurPool()
 
-	if var_7_0 then
-		SummonMainController.instance:openpPogressRewardView(var_7_0.id)
+	if poolCo then
+		SummonMainController.instance:openpPogressRewardView(poolCo.id)
 	end
 end
 
-function var_0_0._btngiftOnClick(arg_8_0)
-	local var_8_0 = SummonMainModel.instance:getCurPool()
+function SummonMainCharacterCoBranding:_btngiftOnClick()
+	local poolCo = SummonMainModel.instance:getCurPool()
 
-	if var_8_0 then
-		local var_8_1 = var_8_0.id
-		local var_8_2 = SummonEnum.CharacterCoBrandingGiftView[var_8_0.customClz]
+	if poolCo then
+		local poolId = poolCo.id
+		local viewName = SummonEnum.CharacterCoBrandingGiftView[poolCo.customClz]
 
-		ViewMgr.instance:openView(var_8_2 or ViewName.V2a9_LinkGiftView, {
-			poolId = var_8_1
+		ViewMgr.instance:openView(viewName or ViewName.V2a9_LinkGiftView, {
+			poolId = poolId
 		})
 
-		if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(var_8_1) then
-			StoreGoodsTaskController.instance:clearNewRedDotByPoolId(var_8_1)
-			StoreGoodsTaskController.instance:waitUpdateRedDot(var_8_1)
-			arg_8_0:_refreshGift()
+		if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(poolId) then
+			StoreGoodsTaskController.instance:clearNewRedDotByPoolId(poolId)
+			StoreGoodsTaskController.instance:waitUpdateRedDot(poolId)
+			self:_refreshGift()
 		end
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	var_0_0.super._editableInitView(arg_9_0)
+function SummonMainCharacterCoBranding:_editableInitView()
+	SummonMainCharacterCoBranding.super._editableInitView(self)
 
-	arg_9_0._btnclaim = gohelper.findChildButtonWithAudio(arg_9_0.viewGO, "#go_ui/current/right/#go_characteritem1/btn_claim")
-	arg_9_0._btngoto = gohelper.findChildButtonWithAudio(arg_9_0.viewGO, "#go_ui/current/right/#go_characteritem1/btn_goto")
-	arg_9_0._goallGet = gohelper.findChild(arg_9_0.viewGO, "#go_ui/current/right/#go_characteritem1/go_allGet")
-	arg_9_0._gogifgReddot = gohelper.findChild(arg_9_0.viewGO, "#go_ui/#btn_gift/go_reddot")
-	arg_9_0._animcharacter = gohelper.findChildComponent(arg_9_0.viewGO, "#go_ui/current/right/#go_characteritem1", gohelper.Type_Animator)
+	self._btnclaim = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/current/right/#go_characteritem1/btn_claim")
+	self._btngoto = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/current/right/#go_characteritem1/btn_goto")
+	self._goallGet = gohelper.findChild(self.viewGO, "#go_ui/current/right/#go_characteritem1/go_allGet")
+	self._gogifgReddot = gohelper.findChild(self.viewGO, "#go_ui/#btn_gift/go_reddot")
+	self._animcharacter = gohelper.findChildComponent(self.viewGO, "#go_ui/current/right/#go_characteritem1", gohelper.Type_Animator)
 
-	if arg_9_0._gogifgReddot then
-		arg_9_0._redotComp = RedDotController.instance:addNotEventRedDot(arg_9_0._gogifgReddot, arg_9_0._checkRedPointFunc, arg_9_0, RedDotEnum.Style.NewTag)
+	if self._gogifgReddot then
+		self._redotComp = RedDotController.instance:addNotEventRedDot(self._gogifgReddot, self._checkRedPointFunc, self, RedDotEnum.Style.NewTag)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	var_0_0.super.onUpdateParam(arg_10_0)
+function SummonMainCharacterCoBranding:onUpdateParam()
+	SummonMainCharacterCoBranding.super.onUpdateParam(self)
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_11_0._refreshProgressRewards, arg_11_0)
-	arg_11_0:addEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, arg_11_0._refreshProgressRewards, arg_11_0)
-	arg_11_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_11_0._refreshGift, arg_11_0)
-	arg_11_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_11_0._refreshGift, arg_11_0)
-	arg_11_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0._refreshGift, arg_11_0)
-	arg_11_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_11_0._checkCanFinishGiftTask, arg_11_0)
-	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_11_0._onCloseViewEvent, arg_11_0)
-	var_0_0.super.onOpen(arg_11_0)
-	arg_11_0:_refreshProgressRewards()
-	arg_11_0:_refreshGift()
+function SummonMainCharacterCoBranding:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self._refreshProgressRewards, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, self._refreshProgressRewards, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshGift, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshGift, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshGift, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._checkCanFinishGiftTask, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewEvent, self)
+	SummonMainCharacterCoBranding.super.onOpen(self)
+	self:_refreshProgressRewards()
+	self:_refreshGift()
 
-	if arg_11_0:_checkCanFinishGiftTask() then
+	if self:_checkCanFinishGiftTask() then
 		StoreGoodsTaskController.instance:autoFinishTaskByPoolId(SummonMainModel.instance:getCurId())
 	end
 
-	arg_11_0:_refreshPreferentialInfo()
+	self:_refreshPreferentialInfo()
 end
 
-function var_0_0._checkCanFinishGiftTask(arg_12_0)
-	local var_12_0 = SummonMainModel.instance:getCurId()
+function SummonMainCharacterCoBranding:_checkCanFinishGiftTask()
+	local poolId = SummonMainModel.instance:getCurId()
 
-	if var_12_0 and StoreGoodsTaskController.instance:isHasCanFinishTaskByPoolId(var_12_0) then
-		arg_12_0._isHasCanFinishTask = true
+	if poolId and StoreGoodsTaskController.instance:isHasCanFinishTaskByPoolId(poolId) then
+		self._isHasCanFinishTask = true
 
 		return true
 	end
@@ -150,171 +152,171 @@ function var_0_0._checkCanFinishGiftTask(arg_12_0)
 	return false
 end
 
-function var_0_0.onClose(arg_13_0)
-	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_13_0._refreshProgressRewards, arg_13_0)
-	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, arg_13_0._refreshProgressRewards, arg_13_0)
-	arg_13_0:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_13_0._refreshGift, arg_13_0)
-	arg_13_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_13_0._refreshGift, arg_13_0)
-	arg_13_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_13_0._refreshGift, arg_13_0)
-	arg_13_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_13_0._checkCanFinishGiftTask, arg_13_0)
-	arg_13_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_13_0._onCloseViewEvent, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._onRunTaskOpenGiftView, arg_13_0)
-	var_0_0.super.onClose(arg_13_0)
+function SummonMainCharacterCoBranding:onClose()
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self._refreshProgressRewards, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, self._refreshProgressRewards, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshGift, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshGift, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshGift, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._checkCanFinishGiftTask, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewEvent, self)
+	TaskDispatcher.cancelTask(self._onRunTaskOpenGiftView, self)
+	SummonMainCharacterCoBranding.super.onClose(self)
 	StoreGoodsTaskController.instance:waitUpdateRedDot()
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	var_0_0.super.onDestroyView(arg_14_0)
+function SummonMainCharacterCoBranding:onDestroyView()
+	SummonMainCharacterCoBranding.super.onDestroyView(self)
 end
 
-function var_0_0._adLoaded(arg_15_0)
+function SummonMainCharacterCoBranding:_adLoaded()
 	return
 end
 
-function var_0_0._onCloseViewEvent(arg_16_0, arg_16_1)
-	if arg_16_0._isHasCanFinishTask then
-		TaskDispatcher.cancelTask(arg_16_0._onRunTaskOpenGiftView, arg_16_0)
-		TaskDispatcher.runDelay(arg_16_0._onRunTaskOpenGiftView, arg_16_0, 0.1)
+function SummonMainCharacterCoBranding:_onCloseViewEvent(viewName)
+	if self._isHasCanFinishTask then
+		TaskDispatcher.cancelTask(self._onRunTaskOpenGiftView, self)
+		TaskDispatcher.runDelay(self._onRunTaskOpenGiftView, self, 0.1)
 	end
 end
 
-function var_0_0._onRunTaskOpenGiftView(arg_17_0)
-	if arg_17_0._isHasCanFinishTask and ViewHelper.instance:checkViewOnTheTop(arg_17_0.viewName) then
-		arg_17_0._isHasCanFinishTask = false
+function SummonMainCharacterCoBranding:_onRunTaskOpenGiftView()
+	if self._isHasCanFinishTask and ViewHelper.instance:checkViewOnTheTop(self.viewName) then
+		self._isHasCanFinishTask = false
 
-		arg_17_0:_btngiftOnClick()
+		self:_btngiftOnClick()
 	end
 end
 
-function var_0_0._refreshProgressRewards(arg_18_0)
-	local var_18_0 = SummonMainModel.instance:getCurPool()
+function SummonMainCharacterCoBranding:_refreshProgressRewards()
+	local poolCo = SummonMainModel.instance:getCurPool()
 
-	if not var_18_0 or string.nilorempty(var_18_0.progressRewards) then
+	if not poolCo or string.nilorempty(poolCo.progressRewards) then
 		return
 	end
 
-	local var_18_1 = SummonMainModel.instance:getPoolServerMO(var_18_0.id)
+	local poolMO = SummonMainModel.instance:getPoolServerMO(poolCo.id)
 
-	if not var_18_1 then
+	if not poolMO then
 		return
 	end
 
-	local var_18_2 = false
-	local var_18_3 = false
-	local var_18_4 = var_18_1.customPickMO:getRewardCount() or 0
-	local var_18_5 = var_18_1.summonCount or 0
-	local var_18_6 = 0
-	local var_18_7 = 0
-	local var_18_8
-	local var_18_9 = SummonConfig.instance:getProgressRewardsByPoolId(var_18_0.id)
+	local isRewardFinish = false
+	local hasReward = false
+	local rewardCount = poolMO.customPickMO:getRewardCount() or 0
+	local summonCount = poolMO.summonCount or 0
+	local maxRewardCount = 0
+	local canRewardCount = 0
+	local nextRwardCount
+	local numsList = SummonConfig.instance:getProgressRewardsByPoolId(poolCo.id)
 
-	if var_18_9 and #var_18_9 > 0 then
-		var_18_6 = #var_18_9
+	if numsList and #numsList > 0 then
+		maxRewardCount = #numsList
 
-		for iter_18_0, iter_18_1 in ipairs(var_18_9) do
-			local var_18_10 = iter_18_1[1]
-			local var_18_11 = iter_18_1[2]
+		for i, nums in ipairs(numsList) do
+			local count = nums[1]
+			local heroId = nums[2]
 
-			if var_18_10 <= var_18_5 then
-				var_18_7 = var_18_7 + 1
-			elseif not var_18_8 or var_18_10 < var_18_8 then
-				var_18_8 = var_18_10
+			if count <= summonCount then
+				canRewardCount = canRewardCount + 1
+			elseif not nextRwardCount or count < nextRwardCount then
+				nextRwardCount = count
 			end
 		end
 	end
 
-	gohelper.setActive(arg_18_0._goallGet, var_18_6 <= var_18_4)
-	gohelper.setActive(arg_18_0._txtgoto, var_18_4 < var_18_6)
-	gohelper.setActive(arg_18_0._btnclaim, var_18_4 < var_18_7)
+	gohelper.setActive(self._goallGet, maxRewardCount <= rewardCount)
+	gohelper.setActive(self._txtgoto, rewardCount < maxRewardCount)
+	gohelper.setActive(self._btnclaim, rewardCount < canRewardCount)
 
-	if var_18_4 < var_18_6 then
-		if var_18_8 and var_18_5 < var_18_8 then
-			arg_18_0._txtgoto.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("summonmaincharacter_progress_rewards"), var_18_8 - var_18_5)
+	if rewardCount < maxRewardCount then
+		if nextRwardCount and summonCount < nextRwardCount then
+			self._txtgoto.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("summonmaincharacter_progress_rewards"), nextRwardCount - summonCount)
 
-			local var_18_12 = "summonmaincharacter_progress_rewards" .. var_18_0.id
+			local key = "summonmaincharacter_progress_rewards" .. poolCo.id
 
-			arg_18_0:_playNumAninByKey(var_18_12, var_18_5)
-		elseif var_18_4 < var_18_7 then
-			arg_18_0._txtgoto.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("summonmaincharacter_progress_rewards_full"), var_18_7 - var_18_4)
+			self:_playNumAninByKey(key, summonCount)
+		elseif rewardCount < canRewardCount then
+			self._txtgoto.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("summonmaincharacter_progress_rewards_full"), canRewardCount - rewardCount)
 
-			local var_18_13 = "summonmaincharacter_progress_rewards_full" .. var_18_0.id
+			local key2 = "summonmaincharacter_progress_rewards_full" .. poolCo.id
 
-			arg_18_0:_playNumAninByKey(var_18_13, 1)
+			self:_playNumAninByKey(key2, 1)
 		else
-			arg_18_0._txtgoto.text = ""
+			self._txtgoto.text = ""
 		end
 	end
 
-	arg_18_0:_refreshPreferentialInfo()
-	arg_18_0:_refreshGift()
+	self:_refreshPreferentialInfo()
+	self:_refreshGift()
 end
 
-function var_0_0._playNumAninByKey(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = PlayerModel.instance:getPlayerPrefsKey(arg_19_1)
-	local var_19_1 = PlayerPrefsHelper.getNumber(var_19_0, -1)
+function SummonMainCharacterCoBranding:_playNumAninByKey(key, summonCount)
+	local playerKey = PlayerModel.instance:getPlayerPrefsKey(key)
+	local tempCount = PlayerPrefsHelper.getNumber(playerKey, -1)
 
-	PlayerPrefsHelper.setNumber(var_19_0, arg_19_2)
+	PlayerPrefsHelper.setNumber(playerKey, summonCount)
 
-	if var_19_1 ~= -1 and var_19_1 ~= arg_19_2 and arg_19_0._animcharacter then
-		arg_19_0._animcharacter:Play("num", 0, 0)
+	if tempCount ~= -1 and tempCount ~= summonCount and self._animcharacter then
+		self._animcharacter:Play("num", 0, 0)
 	end
 end
 
-function var_0_0._refreshGift(arg_20_0)
-	local var_20_0 = SummonMainModel.instance:getCurId()
-	local var_20_1 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(var_20_0)
-	local var_20_2 = false
+function SummonMainCharacterCoBranding:_refreshGift()
+	local poolId = SummonMainModel.instance:getCurId()
+	local goodsCfgList = StoreConfig.instance:getCharageGoodsCfgListByPoolId(poolId)
+	local isShow = false
 
-	if var_20_1 then
-		for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-			local var_20_3 = StoreModel.instance:getGoodsMO(iter_20_1.id)
+	if goodsCfgList then
+		for _, goodsCfg in ipairs(goodsCfgList) do
+			local storePackageGoodsMO = StoreModel.instance:getGoodsMO(goodsCfg.id)
 
-			if var_20_3 and (not var_20_3:isSoldOut() or StoreCharageConditionalHelper.isCharageTaskNotFinish(iter_20_1.id)) then
-				var_20_2 = true
+			if storePackageGoodsMO and (not storePackageGoodsMO:isSoldOut() or StoreCharageConditionalHelper.isCharageTaskNotFinish(goodsCfg.id)) then
+				isShow = true
 
 				break
 			end
 		end
 	end
 
-	if var_20_2 and SummonModel.instance:getSummonFullExSkillHero(var_20_0) then
-		var_20_2 = false
+	if isShow and SummonModel.instance:getSummonFullExSkillHero(poolId) then
+		isShow = false
 	end
 
-	if arg_20_0._redotComp then
-		arg_20_0._redotComp:refreshRedDot()
+	if self._redotComp then
+		self._redotComp:refreshRedDot()
 
-		if not var_20_2 and arg_20_0._redotComp.isShowRedDot then
-			var_20_2 = true
+		if not isShow and self._redotComp.isShowRedDot then
+			isShow = true
 		end
 	end
 
-	gohelper.setActive(arg_20_0._btngift, var_20_2)
+	gohelper.setActive(self._btngift, isShow)
 end
 
-function var_0_0._checkRedPointFunc(arg_21_0)
+function SummonMainCharacterCoBranding:_checkRedPointFunc()
 	return StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(SummonMainModel.instance:getCurId())
 end
 
-function var_0_0._refreshPreferentialInfo(arg_22_0)
-	local var_22_0 = SummonMainModel.instance:getCurPool()
+function SummonMainCharacterCoBranding:_refreshPreferentialInfo()
+	local curPool = SummonMainModel.instance:getCurPool()
 
-	if not var_22_0 then
+	if not curPool then
 		return
 	end
 
-	local var_22_1 = SummonMainModel.instance:getPoolServerMO(var_22_0.id)
-	local var_22_2 = var_22_1.canGetGuaranteeSRCount
+	local poolMO = SummonMainModel.instance:getPoolServerMO(curPool.id)
+	local preferentialLimitCount = poolMO.canGetGuaranteeSRCount
 
-	if arg_22_0._gopreferential then
-		gohelper.setActive(arg_22_0._gopreferential, var_22_2 > 0)
+	if self._gopreferential then
+		gohelper.setActive(self._gopreferential, preferentialLimitCount > 0)
 
-		if arg_22_0._txtpreferential and var_22_2 > 0 then
-			local var_22_3 = var_22_1.guaranteeSRCountDown
+		if self._txtpreferential and preferentialLimitCount > 0 then
+			local preferential = poolMO.guaranteeSRCountDown
 
-			arg_22_0._txtpreferential.text = var_22_3
+			self._txtpreferential.text = preferential
 		end
 	end
 end
 
-return var_0_0
+return SummonMainCharacterCoBranding

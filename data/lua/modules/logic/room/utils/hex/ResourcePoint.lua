@@ -1,161 +1,165 @@
-﻿module("modules.logic.room.utils.hex.ResourcePoint", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/hex/ResourcePoint.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.hex.ResourcePoint", package.seeall)
 
-function var_0_0.New(arg_1_0, arg_1_1)
-	local var_1_0
+local ResourcePoint = {}
 
-	if arg_1_0 and arg_1_1 then
-		local var_1_1 = arg_1_0
-		local var_1_2 = arg_1_1
+function ResourcePoint.New(param1, param2)
+	local t
 
-		var_1_0 = {
-			hexPoint = var_1_1,
-			direction = var_1_2
+	if param1 and param2 then
+		local hexPoint = param1
+		local direction = param2
+
+		t = {
+			hexPoint = hexPoint,
+			direction = direction
 		}
-	elseif arg_1_0 then
-		local var_1_3 = arg_1_0
+	elseif param1 then
+		local resourcePoint = param1
 
-		var_1_0 = {
-			hexPoint = HexPoint(var_1_3.x, var_1_3.y),
-			direction = var_1_3.direction
+		t = {
+			hexPoint = HexPoint(resourcePoint.x, resourcePoint.y),
+			direction = resourcePoint.direction
 		}
 	end
 
-	setmetatable(var_1_0, var_0_0)
+	setmetatable(t, ResourcePoint)
 
-	return var_1_0
+	return t
 end
 
-var_0_0.new = var_0_0.New
+ResourcePoint.new = ResourcePoint.New
 
-local var_0_1 = var_0_0.New
-local var_0_2 = {
-	x = function(arg_2_0)
-		return arg_2_0.hexPoint.x
-	end,
-	y = function(arg_3_0)
-		return arg_3_0.hexPoint.y
-	end,
-	z = function(arg_4_0)
-		return arg_4_0.hexPoint.z
-	end
-}
+local _new = ResourcePoint.New
+local _get = {}
 
-function var_0_0.__index(arg_5_0, arg_5_1)
-	local var_5_0
+function _get.x(t)
+	return t.hexPoint.x
+end
 
-	if var_5_0 == nil then
-		var_5_0 = rawget(var_0_0, arg_5_1)
-	end
+function _get.y(t)
+	return t.hexPoint.y
+end
 
-	if var_5_0 == nil then
-		var_5_0 = rawget(arg_5_0, arg_5_1)
+function _get.z(t)
+	return t.hexPoint.z
+end
+
+function ResourcePoint.__index(t, k)
+	local var
+
+	if var == nil then
+		var = rawget(ResourcePoint, k)
 	end
 
-	if var_5_0 == nil then
-		var_5_0 = rawget(var_0_2, arg_5_1)
+	if var == nil then
+		var = rawget(t, k)
+	end
 
-		if var_5_0 ~= nil then
-			return var_5_0(arg_5_0)
+	if var == nil then
+		var = rawget(_get, k)
+
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_5_0
+	return var
 end
 
-function var_0_0.Add(arg_6_0, arg_6_1)
-	local var_6_0 = RoomRotateHelper.rotateDirection(arg_6_0.direction, arg_6_1)
+function ResourcePoint.Add(p, rotate)
+	local direction = RoomRotateHelper.rotateDirection(p.direction, rotate)
 
-	return var_0_1(arg_6_0.hexPoint, var_6_0)
+	return _new(p.hexPoint, direction)
 end
 
-var_0_0.add = var_0_0.Add
+ResourcePoint.add = ResourcePoint.Add
 
-local var_0_3 = var_0_0.Add
+local _add = ResourcePoint.Add
 
-function var_0_0.Sub(arg_7_0, arg_7_1)
-	local var_7_0 = RoomRotateHelper.rotateDirection(arg_7_0.direction, -arg_7_1)
+function ResourcePoint.Sub(p, rotate)
+	local direction = RoomRotateHelper.rotateDirection(p.direction, -rotate)
 
-	return var_0_1(arg_7_0.hexPoint, var_7_0)
+	return _new(p.hexPoint, direction)
 end
 
-var_0_0.sub = var_0_0.Sub
+ResourcePoint.sub = ResourcePoint.Sub
 
-local var_0_4 = var_0_0.Sub
+local _sub = ResourcePoint.Sub
 
-function var_0_0.Connects(arg_8_0)
-	local var_8_0 = {}
+function ResourcePoint.Connects(p)
+	local connects = {}
 
-	if arg_8_0.direction == 0 then
-		for iter_8_0 = 1, 6 do
-			table.insert(var_8_0, var_0_0(arg_8_0.hexPoint, iter_8_0))
+	if p.direction == 0 then
+		for direction = 1, 6 do
+			table.insert(connects, ResourcePoint(p.hexPoint, direction))
 		end
 	else
-		table.insert(var_8_0, var_0_0(arg_8_0.hexPoint, 0))
-		table.insert(var_8_0, arg_8_0 + 1)
-		table.insert(var_8_0, arg_8_0 - 1)
+		table.insert(connects, ResourcePoint(p.hexPoint, 0))
+		table.insert(connects, p + 1)
+		table.insert(connects, p - 1)
 
-		local var_8_1 = arg_8_0.hexPoint:GetNeighbor(arg_8_0.direction)
+		local neighborHexPoint = p.hexPoint:GetNeighbor(p.direction)
 
-		table.insert(var_8_0, var_0_0(var_8_1, RoomRotateHelper.oppositeDirection(arg_8_0.direction)))
+		table.insert(connects, ResourcePoint(neighborHexPoint, RoomRotateHelper.oppositeDirection(p.direction)))
 	end
 
-	return var_8_0
+	return connects
 end
 
-var_0_0.connects = var_0_0.Connects
-var_0_0.getConnects = var_0_0.Connects
-var_0_0.GetConnects = var_0_0.Connects
+ResourcePoint.connects = ResourcePoint.Connects
+ResourcePoint.getConnects = ResourcePoint.Connects
+ResourcePoint.GetConnects = ResourcePoint.Connects
 
-function var_0_0.ConnectsAll(arg_9_0)
-	local var_9_0 = {}
+function ResourcePoint.ConnectsAll(p)
+	local connects = {}
 
-	for iter_9_0 = 0, 6 do
-		if arg_9_0.direction ~= iter_9_0 then
-			table.insert(var_9_0, var_0_0(arg_9_0.hexPoint, iter_9_0))
+	for direction = 0, 6 do
+		if p.direction ~= direction then
+			table.insert(connects, ResourcePoint(p.hexPoint, direction))
 		end
 	end
 
-	if arg_9_0.direction ~= 0 then
-		local var_9_1 = arg_9_0.hexPoint:GetNeighbor(arg_9_0.direction)
+	if p.direction ~= 0 then
+		local neighborHexPoint = p.hexPoint:GetNeighbor(p.direction)
 
-		table.insert(var_9_0, var_0_0(var_9_1, RoomRotateHelper.oppositeDirection(arg_9_0.direction)))
+		table.insert(connects, ResourcePoint(neighborHexPoint, RoomRotateHelper.oppositeDirection(p.direction)))
 	end
 
-	return var_9_0
+	return connects
 end
 
-var_0_0.connectsAll = var_0_0.ConnectsAll
-var_0_0.getConnectsAll = var_0_0.ConnectsAll
-var_0_0.GetConnectsAll = var_0_0.ConnectsAll
+ResourcePoint.connectsAll = ResourcePoint.ConnectsAll
+ResourcePoint.getConnectsAll = ResourcePoint.ConnectsAll
+ResourcePoint.GetConnectsAll = ResourcePoint.ConnectsAll
 
-function var_0_0.__add(arg_10_0, arg_10_1)
-	return var_0_3(arg_10_0, arg_10_1)
+function ResourcePoint.__add(p, rotate)
+	return _add(p, rotate)
 end
 
-function var_0_0.__sub(arg_11_0, arg_11_1)
-	return var_0_4(arg_11_0, arg_11_1)
+function ResourcePoint.__sub(p, rotate)
+	return _sub(p, rotate)
 end
 
-function var_0_0.__unm(arg_12_0)
-	local var_12_0 = RoomRotateHelper.oppositeDirection(arg_12_0.direction)
+function ResourcePoint.__unm(p)
+	local direction = RoomRotateHelper.oppositeDirection(p.direction)
 
-	return var_0_1(arg_12_0.hexPoint, var_12_0)
+	return _new(p.hexPoint, direction)
 end
 
-function var_0_0.__eq(arg_13_0, arg_13_1)
-	return arg_13_0.hexPoint == arg_13_1.hexPoint and arg_13_0.direction == arg_13_1.direction
+function ResourcePoint.__eq(pA, pB)
+	return pA.hexPoint == pB.hexPoint and pA.direction == pB.direction
 end
 
-function var_0_0.__tostring(arg_14_0)
-	return string.format("(x: %s, y: %s, direction: %s)", arg_14_0.x, arg_14_0.y, arg_14_0.direction)
+function ResourcePoint:__tostring()
+	return string.format("(x: %s, y: %s, direction: %s)", self.x, self.y, self.direction)
 end
 
-function var_0_0.__call(arg_15_0, arg_15_1, arg_15_2)
-	return var_0_1(arg_15_1, arg_15_2)
+function ResourcePoint:__call(hexPoint, direction)
+	return _new(hexPoint, direction)
 end
 
-setmetatable(var_0_0, var_0_0)
+setmetatable(ResourcePoint, ResourcePoint)
 
-return var_0_0
+return ResourcePoint

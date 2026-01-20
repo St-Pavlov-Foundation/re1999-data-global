@@ -1,76 +1,78 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBadgeRuleComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonBadgeRuleComp.lua
 
-local var_0_0 = class("Act183DungeonBadgeRuleComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBadgeRuleComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
+local Act183DungeonBadgeRuleComp = class("Act183DungeonBadgeRuleComp", Act183DungeonBaseComp)
 
-	arg_1_0._gobadgeruleitem = gohelper.findChild(arg_1_0.go, "#go_badgeruleitem")
-	arg_1_0._badgeRuleItemTab = arg_1_0:getUserDataTb_()
+function Act183DungeonBadgeRuleComp:init(go, mgr)
+	Act183DungeonBadgeRuleComp.super.init(self, go, mgr)
 
-	arg_1_0:addEventCb(Act183Controller.instance, Act183Event.OnUpdateSelectBadgeNum, arg_1_0._onUpdateSelectBadgeNum, arg_1_0)
+	self._gobadgeruleitem = gohelper.findChild(self.go, "#go_badgeruleitem")
+	self._badgeRuleItemTab = self:getUserDataTb_()
+
+	self:addEventCb(Act183Controller.instance, Act183Event.OnUpdateSelectBadgeNum, self._onUpdateSelectBadgeNum, self)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonBadgeRuleComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonBadgeRuleComp:removeEventListeners()
 	return
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	var_0_0.super.updateInfo(arg_4_0, arg_4_1)
+function Act183DungeonBadgeRuleComp:updateInfo(episodeMo)
+	Act183DungeonBadgeRuleComp.super.updateInfo(self, episodeMo)
 
-	arg_4_0._baseRules = Act183Config.instance:getEpisodeAllRuleDesc(arg_4_0._episodeId)
-	arg_4_0._useBadgeNum = arg_4_0._episodeMo:getUseBadgeNum()
-	arg_4_0._readyUseBadgeNum = arg_4_0._useBadgeNum or 0
-	arg_4_0._isNeedPlayBadgeAnim = false
+	self._baseRules = Act183Config.instance:getEpisodeAllRuleDesc(self._episodeId)
+	self._useBadgeNum = self._episodeMo:getUseBadgeNum()
+	self._readyUseBadgeNum = self._useBadgeNum or 0
+	self._isNeedPlayBadgeAnim = false
 end
 
-function var_0_0.checkIsVisible(arg_5_0)
-	return arg_5_0._readyUseBadgeNum > 0
+function Act183DungeonBadgeRuleComp:checkIsVisible()
+	return self._readyUseBadgeNum > 0
 end
 
-function var_0_0.show(arg_6_0)
-	var_0_0.super.show(arg_6_0)
+function Act183DungeonBadgeRuleComp:show()
+	Act183DungeonBadgeRuleComp.super.show(self)
 
-	local var_6_0 = Act183Config.instance:getBadgeCo(arg_6_0._activityId, arg_6_0._readyUseBadgeNum)
+	local badgeCo = Act183Config.instance:getBadgeCo(self._activityId, self._readyUseBadgeNum)
 
-	arg_6_0:createObjList({
-		var_6_0
-	}, arg_6_0._badgeRuleItemTab, arg_6_0._gobadgeruleitem, arg_6_0._initBadgeRuleItemFunc, arg_6_0._refreshBadgeRuleItemFunc, arg_6_0._defaultItemFreeFunc)
+	self:createObjList({
+		badgeCo
+	}, self._badgeRuleItemTab, self._gobadgeruleitem, self._initBadgeRuleItemFunc, self._refreshBadgeRuleItemFunc, self._defaultItemFreeFunc)
 end
 
-function var_0_0._initBadgeRuleItemFunc(arg_7_0, arg_7_1)
-	arg_7_1.txtdesc = gohelper.findChildText(arg_7_1.go, "txt_desc")
-	arg_7_1.anim = gohelper.onceAddComponent(arg_7_1.go, gohelper.Type_Animator)
+function Act183DungeonBadgeRuleComp:_initBadgeRuleItemFunc(goItem)
+	goItem.txtdesc = gohelper.findChildText(goItem.go, "txt_desc")
+	goItem.anim = gohelper.onceAddComponent(goItem.go, gohelper.Type_Animator)
 
-	SkillHelper.addHyperLinkClick(arg_7_1.txtdesc)
+	SkillHelper.addHyperLinkClick(goItem.txtdesc)
 end
 
-function var_0_0._refreshBadgeRuleItemFunc(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_1.txtdesc.text = SkillHelper.buildDesc(arg_8_2.decs)
+function Act183DungeonBadgeRuleComp:_refreshBadgeRuleItemFunc(goItem, badgeCo, index)
+	goItem.txtdesc.text = SkillHelper.buildDesc(badgeCo.decs)
 
-	if arg_8_0._isNeedPlayBadgeAnim then
-		arg_8_1.anim:Play("in", 0, 0)
+	if self._isNeedPlayBadgeAnim then
+		goItem.anim:Play("in", 0, 0)
 	end
 end
 
-function var_0_0._onUpdateSelectBadgeNum(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._episodeId ~= arg_9_1 then
+function Act183DungeonBadgeRuleComp:_onUpdateSelectBadgeNum(episodeId, badgeNum)
+	if self._episodeId ~= episodeId then
 		return
 	end
 
-	arg_9_0._readyUseBadgeNum = arg_9_2
-	arg_9_0._isNeedPlayBadgeAnim = true
+	self._readyUseBadgeNum = badgeNum
+	self._isNeedPlayBadgeAnim = true
 
-	arg_9_0.container:refresh()
-	arg_9_0.container.mgr:focus(Act183DungeonBaseAndBadgeRuleComp)
+	self.container:refresh()
+	self.container.mgr:focus(Act183DungeonBaseAndBadgeRuleComp)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	var_0_0.super.onDestroy(arg_10_0)
+function Act183DungeonBadgeRuleComp:onDestroy()
+	Act183DungeonBadgeRuleComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonBadgeRuleComp

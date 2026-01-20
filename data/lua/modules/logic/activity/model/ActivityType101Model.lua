@@ -1,106 +1,108 @@
-﻿local var_0_0 = string.format
+﻿-- chunkname: @modules/logic/activity/model/ActivityType101Model.lua
+
+local sf = string.format
 
 module("modules.logic.activity.model.ActivityType101Model", package.seeall)
 
-local var_0_1 = class("ActivityType101Model", BaseModel)
+local ActivityType101Model = class("ActivityType101Model", BaseModel)
 
-function var_0_1.getRoleSignActIdList(arg_1_0)
+function ActivityType101Model:getRoleSignActIdList()
 	return ActivityType101Config.instance:getRoleSignActIdList()
 end
 
-local var_0_2 = 0
-local var_0_3 = 1
-local var_0_4 = 2
+local kState_None = 0
+local kState_Available = 1
+local kState_Received = 2
 
-function var_0_1.onInit(arg_2_0)
-	arg_2_0:reInit()
+function ActivityType101Model:onInit()
+	self:reInit()
 end
 
-function var_0_1.reInit(arg_3_0)
-	arg_3_0._type101Info = {}
+function ActivityType101Model:reInit()
+	self._type101Info = {}
 
-	arg_3_0:setCurIndex(nil)
+	self:setCurIndex(nil)
 end
 
-function var_0_1.getCurIndex(arg_4_0)
-	return arg_4_0._curIndex
+function ActivityType101Model:getCurIndex()
+	return self._curIndex
 end
 
-function var_0_1.setCurIndex(arg_5_0, arg_5_1)
-	arg_5_0._curIndex = arg_5_1
+function ActivityType101Model:setCurIndex(index)
+	self._curIndex = index
 end
 
-function var_0_1.setType101Info(arg_6_0, arg_6_1)
-	local var_6_0 = {}
-	local var_6_1 = {}
-	local var_6_2 = {}
+function ActivityType101Model:setType101Info(info)
+	local data = {}
+	local infos = {}
+	local spInfos = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1.infos) do
-		local var_6_3 = ActivityType101InfoMo.New()
+	for _, v in ipairs(info.infos) do
+		local norSignInfoMo = ActivityType101InfoMo.New()
 
-		var_6_3:init(iter_6_1)
+		norSignInfoMo:init(v)
 
-		var_6_1[iter_6_1.id] = var_6_3
+		infos[v.id] = norSignInfoMo
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(arg_6_1.spInfos) do
-		local var_6_4 = iter_6_3.id
-		local var_6_5 = ActivityType101SpInfoMo.New()
+	for _, act101SpInfo in ipairs(info.spInfos) do
+		local id = act101SpInfo.id
+		local spInfo = ActivityType101SpInfoMo.New()
 
-		var_6_5:init(iter_6_3)
+		spInfo:init(act101SpInfo)
 
-		var_6_2[var_6_4] = var_6_5
+		spInfos[id] = spInfo
 	end
 
-	var_6_0.infos = var_6_1
-	var_6_0.count = arg_6_1.loginCount
-	var_6_0.spInfos = var_6_2
-	arg_6_0._type101Info[arg_6_1.activityId] = var_6_0
+	data.infos = infos
+	data.count = info.loginCount
+	data.spInfos = spInfos
+	self._type101Info[info.activityId] = data
 end
 
-function var_0_1.setBonusGet(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.activityId
+function ActivityType101Model:setBonusGet(info)
+	local actId = info.activityId
 
-	if not arg_7_0:isInit(var_7_0) then
+	if not self:isInit(actId) then
 		return
 	end
 
-	arg_7_0._type101Info[var_7_0].infos[arg_7_1.id].state = var_0_4
+	self._type101Info[actId].infos[info.id].state = kState_Received
 end
 
-function var_0_1.getType101LoginCount(arg_8_0, arg_8_1)
-	if not arg_8_0:isInit(arg_8_1) then
+function ActivityType101Model:getType101LoginCount(actId)
+	if not self:isInit(actId) then
 		return 0
 	end
 
-	return arg_8_0._type101Info[arg_8_1].count
+	return self._type101Info[actId].count
 end
 
-function var_0_1.isType101RewardGet(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0:getType101InfoState(arg_9_1, arg_9_2) == var_0_4
+function ActivityType101Model:isType101RewardGet(actId, id)
+	return self:getType101InfoState(actId, id) == kState_Received
 end
 
-function var_0_1.isType101RewardCouldGet(arg_10_0, arg_10_1, arg_10_2)
-	return arg_10_0:getType101InfoState(arg_10_1, arg_10_2) == var_0_3
+function ActivityType101Model:isType101RewardCouldGet(actId, id)
+	return self:getType101InfoState(actId, id) == kState_Available
 end
 
-function var_0_1.getType101Info(arg_11_0, arg_11_1)
-	if not arg_11_0:isInit(arg_11_1) then
+function ActivityType101Model:getType101Info(actId)
+	if not self:isInit(actId) then
 		return
 	end
 
-	return arg_11_0._type101Info[arg_11_1].infos
+	return self._type101Info[actId].infos
 end
 
-function var_0_1.isType101RewardCouldGetAnyOne(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getType101Info(arg_12_1)
+function ActivityType101Model:isType101RewardCouldGetAnyOne(actId)
+	local infos = self:getType101Info(actId)
 
-	if not var_12_0 then
+	if not infos then
 		return false
 	end
 
-	for iter_12_0, iter_12_1 in pairs(var_12_0) do
-		if iter_12_1.state == var_0_3 then
+	for _, v in pairs(infos) do
+		if v.state == kState_Available then
 			return true
 		end
 	end
@@ -108,15 +110,15 @@ function var_0_1.isType101RewardCouldGetAnyOne(arg_12_0, arg_12_1)
 	return false
 end
 
-function var_0_1.hasReceiveAllReward(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getType101Info(arg_13_1)
+function ActivityType101Model:hasReceiveAllReward(actId)
+	local infos = self:getType101Info(actId)
 
-	if not var_13_0 then
+	if not infos then
 		return true
 	end
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		if iter_13_1.state == var_0_2 or iter_13_1.state == var_0_3 then
+	for _, v in pairs(infos) do
+		if v.state == kState_None or v.state == kState_Available then
 			return false
 		end
 	end
@@ -124,139 +126,141 @@ function var_0_1.hasReceiveAllReward(arg_13_0, arg_13_1)
 	return true
 end
 
-function var_0_1.isInit(arg_14_0, arg_14_1)
-	return arg_14_0._type101Info[arg_14_1] and true or false
+function ActivityType101Model:isInit(actId)
+	return self._type101Info[actId] and true or false
 end
 
-function var_0_1.isOpen(arg_15_0, arg_15_1)
-	return ActivityHelper.getActivityStatus(arg_15_1, true) == ActivityEnum.ActivityStatus.Normal
+function ActivityType101Model:isOpen(actId)
+	return ActivityHelper.getActivityStatus(actId, true) == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_1.getLastGetIndex(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getType101LoginCount(arg_16_1)
+function ActivityType101Model:getLastGetIndex(actId)
+	local n = self:getType101LoginCount(actId)
 
-	if var_16_0 == 0 then
+	if n == 0 then
 		return 0
 	end
 
-	if arg_16_0:isType101RewardGet(var_16_0) then
-		return var_16_0
+	local isGot = self:isType101RewardGet(n)
+
+	if isGot then
+		return n
 	end
 
-	local var_16_1 = arg_16_0:getType101Info(arg_16_1)
+	local infos = self:getType101Info(actId)
 
-	if not var_16_1 then
+	if not infos then
 		return 0
 	end
 
-	local var_16_2 = {}
+	local list = {}
 
-	for iter_16_0, iter_16_1 in pairs(var_16_1) do
-		local var_16_3 = iter_16_1.id
+	for _, v in pairs(infos) do
+		local id = v.id
 
-		if iter_16_1.state == var_0_4 then
-			var_16_2[#var_16_2 + 1] = var_16_3
+		if v.state == kState_Received then
+			list[#list + 1] = id
 		end
 	end
 
-	table.sort(var_16_2)
+	table.sort(list)
 
-	return var_16_2[#var_16_2] or 0
+	return list[#list] or 0
 end
 
-function var_0_1.getType101InfoState(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_0:isInit(arg_17_1) then
-		return var_0_2
+function ActivityType101Model:getType101InfoState(actId, id)
+	if not self:isInit(actId) then
+		return kState_None
 	end
 
-	local var_17_0 = arg_17_0:getType101Info(arg_17_1)
+	local infos = self:getType101Info(actId)
 
-	if not var_17_0 then
-		return var_0_2
+	if not infos then
+		return kState_None
 	end
 
-	local var_17_1 = var_17_0[arg_17_2]
+	local info = infos[id]
 
-	if not var_17_1 then
-		return var_0_2
+	if not info then
+		return kState_None
 	end
 
-	return var_17_1.state or var_0_2
+	return info.state or kState_None
 end
 
-function var_0_1.getType101SpInfo(arg_18_0, arg_18_1)
-	if not arg_18_0:isInit(arg_18_1) then
+function ActivityType101Model:getType101SpInfo(actId)
+	if not self:isInit(actId) then
 		return
 	end
 
-	return arg_18_0._type101Info[arg_18_1].spInfos
+	return self._type101Info[actId].spInfos
 end
 
-function var_0_1.getType101SpInfoMo(arg_19_0, arg_19_1, arg_19_2)
-	if not arg_19_0:isInit(arg_19_1) then
+function ActivityType101Model:getType101SpInfoMo(actId, id)
+	if not self:isInit(actId) then
 		return
 	end
 
-	local var_19_0 = arg_19_0:getType101SpInfo(arg_19_1)
+	local spInfos = self:getType101SpInfo(actId)
 
-	if not var_19_0 then
+	if not spInfos then
 		return
 	end
 
-	return var_19_0[arg_19_2]
+	return spInfos[id]
 end
 
-function var_0_1.isType101SpRewardUncompleted(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0:getType101SpInfoMo(arg_20_1, arg_20_2)
+function ActivityType101Model:isType101SpRewardUncompleted(actId, id)
+	local type101SpInfoMo = self:getType101SpInfoMo(actId, id)
 
-	if not var_20_0 then
+	if not type101SpInfoMo then
 		return false
 	end
 
-	return var_20_0:isNone()
+	return type101SpInfoMo:isNone()
 end
 
-function var_0_1.isType101SpRewardCouldGet(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0:getType101SpInfoMo(arg_21_1, arg_21_2)
+function ActivityType101Model:isType101SpRewardCouldGet(actId, id)
+	local type101SpInfoMo = self:getType101SpInfoMo(actId, id)
 
-	if not var_21_0 then
+	if not type101SpInfoMo then
 		return false
 	end
 
-	return var_21_0:isAvailable()
+	return type101SpInfoMo:isAvailable()
 end
 
-function var_0_1.isType101SpRewardGot(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0:getType101SpInfoMo(arg_22_1, arg_22_2)
+function ActivityType101Model:isType101SpRewardGot(actId, id)
+	local type101SpInfoMo = self:getType101SpInfoMo(actId, id)
 
-	if not var_22_0 then
+	if not type101SpInfoMo then
 		return false
 	end
 
-	return var_22_0:isReceived()
+	return type101SpInfoMo:isReceived()
 end
 
-function var_0_1.setSpBonusGet(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_1.activityId
-	local var_23_1 = arg_23_1.id
-	local var_23_2 = arg_23_0:getType101SpInfoMo(var_23_0, var_23_1)
+function ActivityType101Model:setSpBonusGet(info)
+	local actId = info.activityId
+	local id = info.id
+	local type101SpInfoMo = self:getType101SpInfoMo(actId, id)
 
-	if not var_23_2 then
+	if not type101SpInfoMo then
 		return
 	end
 
-	var_23_2:setState_Received()
+	type101SpInfoMo:setState_Received()
 end
 
-function var_0_1.isType101SpRewardCouldGetAnyOne(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getType101SpInfo(arg_24_1)
+function ActivityType101Model:isType101SpRewardCouldGetAnyOne(actId)
+	local spInfos = self:getType101SpInfo(actId)
 
-	if not var_24_0 then
+	if not spInfos then
 		return false
 	end
 
-	for iter_24_0, iter_24_1 in pairs(var_24_0) do
-		if iter_24_1:isAvailable() then
+	for id, type101SpInfoMo in pairs(spInfos) do
+		if type101SpInfoMo:isAvailable() then
 			return true
 		end
 	end
@@ -264,72 +268,75 @@ function var_0_1.isType101SpRewardCouldGetAnyOne(arg_24_0, arg_24_1)
 	return false
 end
 
-function var_0_1.claimAll(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if arg_25_0:getType101LoginCount(arg_25_1) == 0 then
-		if arg_25_2 then
-			arg_25_2(arg_25_3)
+function ActivityType101Model:claimAll(actId, cb, cbObj)
+	local n = self:getType101LoginCount(actId)
+
+	if n == 0 then
+		if cb then
+			cb(cbObj)
 		end
 
 		return
 	end
 
-	local var_25_0 = arg_25_0:getType101Info(arg_25_1)
+	local infos = self:getType101Info(actId)
 
-	if not var_25_0 then
-		if arg_25_2 then
-			arg_25_2(arg_25_3)
+	if not infos then
+		if cb then
+			cb(cbObj)
 		end
 
 		return
 	end
 
-	local var_25_1 = {}
+	local list = {}
 
-	for iter_25_0, iter_25_1 in pairs(var_25_0) do
-		local var_25_2 = iter_25_1.id
+	for _, v in pairs(infos) do
+		local id = v.id
 
-		if iter_25_1.state == var_0_3 then
-			var_25_1[#var_25_1 + 1] = var_25_2
+		if v.state == kState_Available then
+			list[#list + 1] = id
 		end
 	end
 
-	for iter_25_2, iter_25_3 in ipairs(var_25_1) do
-		local var_25_3
-		local var_25_4
+	for i, id in ipairs(list) do
+		local _cb, _cbObj
 
-		if iter_25_2 == #var_25_1 then
-			var_25_3 = arg_25_2
-			var_25_4 = arg_25_3
+		if i == #list then
+			_cb = cb
+			_cbObj = cbObj
 		end
 
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_25_1, iter_25_3, var_25_3, var_25_4)
+		Activity101Rpc.instance:sendGet101BonusRequest(actId, id, _cb, _cbObj)
 	end
 end
 
-function var_0_1.getFirstAvailableIndex(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0:getType101Info(arg_26_1)
+function ActivityType101Model:getFirstAvailableIndex(actId)
+	local infos = self:getType101Info(actId)
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_0 or {}) do
-		local var_26_1 = iter_26_1.id
+	for i, v in ipairs(infos or {}) do
+		local id = v.id
 
-		if iter_26_1.state == var_0_3 then
-			return iter_26_0
+		if v.state == kState_Available then
+			return i
 		end
 	end
 
 	return 0
 end
 
-function var_0_1.isDayOpen(arg_27_0, arg_27_1, arg_27_2)
-	if not arg_27_2 or not arg_27_0:isInit(arg_27_1) then
+function ActivityType101Model:isDayOpen(actId, id)
+	if not id or not self:isInit(actId) then
 		return false
 	end
 
-	return arg_27_2 <= arg_27_0:getType101LoginCount(arg_27_1)
+	local n = self:getType101LoginCount(actId)
+
+	return id <= n
 end
 
-local var_0_5 = "_Container"
-local var_0_6 = {
+local k_Container = "_Container"
+local Vxax_Role_FullSignView_Part = {
 	bgBlur = 0,
 	destroy = 0,
 	mainRes = "ui/viewres/activity/v%sa%s_role_fullsignview.prefab",
@@ -340,21 +347,21 @@ local var_0_6 = {
 		[1] = "ui/viewres/activity/v%sa%s_role_signitem.prefab"
 	}
 }
-local var_0_7 = var_0_6
-local var_0_8 = tabletool.copy(var_0_6)
+local Vxax_Role_FullSignView_Part1 = Vxax_Role_FullSignView_Part
+local Vxax_Role_FullSignView_Part2 = tabletool.copy(Vxax_Role_FullSignView_Part)
 
-var_0_7.container = "Vxax_Role_FullSignView_Part1_Container"
-var_0_8.container = "Vxax_Role_FullSignView_Part2_Container"
-var_0_7._viewName = "V%sa%s_Role_FullSignView_Part1"
-var_0_8._viewName = "V%sa%s_Role_FullSignView_Part2"
-var_0_7._viewContainerName = var_0_7._viewName .. var_0_5
-var_0_8._viewContainerName = var_0_8._viewName .. var_0_5
-var_0_7._isFullView = true
-var_0_8._isFullView = true
-var_0_7._whichPart = 1
-var_0_8._whichPart = 2
+Vxax_Role_FullSignView_Part1.container = "Vxax_Role_FullSignView_Part1_Container"
+Vxax_Role_FullSignView_Part2.container = "Vxax_Role_FullSignView_Part2_Container"
+Vxax_Role_FullSignView_Part1._viewName = "V%sa%s_Role_FullSignView_Part1"
+Vxax_Role_FullSignView_Part2._viewName = "V%sa%s_Role_FullSignView_Part2"
+Vxax_Role_FullSignView_Part1._viewContainerName = Vxax_Role_FullSignView_Part1._viewName .. k_Container
+Vxax_Role_FullSignView_Part2._viewContainerName = Vxax_Role_FullSignView_Part2._viewName .. k_Container
+Vxax_Role_FullSignView_Part1._isFullView = true
+Vxax_Role_FullSignView_Part2._isFullView = true
+Vxax_Role_FullSignView_Part1._whichPart = 1
+Vxax_Role_FullSignView_Part2._whichPart = 2
 
-local var_0_9 = {
+local Vxax_Role_PanelSignView_Part = {
 	bgBlur = 1,
 	destroy = 0,
 	mainRes = "ui/viewres/activity/v%sa%s_role_panelsignview.prefab",
@@ -365,21 +372,21 @@ local var_0_9 = {
 		[1] = "ui/viewres/activity/v%sa%s_role_signitem.prefab"
 	}
 }
-local var_0_10 = var_0_9
-local var_0_11 = tabletool.copy(var_0_9)
+local Vxax_Role_PanelSignView_Part1 = Vxax_Role_PanelSignView_Part
+local Vxax_Role_PanelSignView_Part2 = tabletool.copy(Vxax_Role_PanelSignView_Part)
 
-var_0_10.container = "Vxax_Role_PanelSignView_Part1_Container"
-var_0_11.container = "Vxax_Role_PanelSignView_Part2_Container"
-var_0_10._viewName = "V%sa%s_Role_PanelSignView_Part1"
-var_0_11._viewName = "V%sa%s_Role_PanelSignView_Part2"
-var_0_10._viewContainerName = var_0_10._viewName .. var_0_5
-var_0_11._viewContainerName = var_0_11._viewName .. var_0_5
-var_0_10._isFullView = false
-var_0_11._isFullView = false
-var_0_10._whichPart = 1
-var_0_11._whichPart = 2
+Vxax_Role_PanelSignView_Part1.container = "Vxax_Role_PanelSignView_Part1_Container"
+Vxax_Role_PanelSignView_Part2.container = "Vxax_Role_PanelSignView_Part2_Container"
+Vxax_Role_PanelSignView_Part1._viewName = "V%sa%s_Role_PanelSignView_Part1"
+Vxax_Role_PanelSignView_Part2._viewName = "V%sa%s_Role_PanelSignView_Part2"
+Vxax_Role_PanelSignView_Part1._viewContainerName = Vxax_Role_PanelSignView_Part1._viewName .. k_Container
+Vxax_Role_PanelSignView_Part2._viewContainerName = Vxax_Role_PanelSignView_Part2._viewName .. k_Container
+Vxax_Role_PanelSignView_Part1._isFullView = false
+Vxax_Role_PanelSignView_Part2._isFullView = false
+Vxax_Role_PanelSignView_Part1._whichPart = 1
+Vxax_Role_PanelSignView_Part2._whichPart = 2
 
-local var_0_12 = {
+local Vxax_Special_FullSignView = {
 	bgBlur = 0,
 	container = "Vxax_Special_FullSignViewContainer",
 	destroy = 0,
@@ -391,7 +398,7 @@ local var_0_12 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
-local var_0_13 = {
+local Vxax_Special_PanelSignView = {
 	bgBlur = 1,
 	container = "Vxax_Special_PanelSignViewContainer",
 	destroy = 0,
@@ -403,7 +410,7 @@ local var_0_13 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
-local var_0_14 = {
+local Vxax_LinkageActivity_FullView = {
 	bgBlur = 0,
 	container = "Vxax_LinkageActivity_FullViewContainer",
 	destroy = 0,
@@ -415,7 +422,7 @@ local var_0_14 = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
-local var_0_15 = {
+local Vxax_LinkageActivity_PanelView = {
 	bgBlur = 1,
 	container = "Vxax_LinkageActivity_PanelViewContainer",
 	destroy = 0,
@@ -428,119 +435,118 @@ local var_0_15 = {
 	anim = ViewAnim.Default
 }
 
-local function var_0_16(arg_28_0, arg_28_1, arg_28_2)
-	local function var_28_0(arg_29_0)
-		local var_29_0 = var_0_0(arg_29_0._viewName, arg_28_0, arg_28_1)
-		local var_29_1 = var_0_0(arg_29_0._viewContainerName, arg_28_0, arg_28_1)
+local function _make_RoleSign__module_views(V, A, module_views)
+	local function _make(setting)
+		local viewname = sf(setting._viewName, V, A)
+		local viewContainerName = sf(setting._viewContainerName, V, A)
 
-		arg_29_0.mainRes = var_0_0(arg_29_0.mainRes, arg_28_0, arg_28_1)
-		arg_29_0.otherRes[1] = var_0_0(arg_29_0.otherRes[1], arg_28_0, arg_28_1)
-		arg_29_0._viewName = var_29_0
+		setting.mainRes = sf(setting.mainRes, V, A)
+		setting.otherRes[1] = sf(setting.otherRes[1], V, A)
+		setting._viewName = viewname
 
-		local var_29_2
-		local var_29_3 = _G.class(var_29_1, Vxax_Role_SignItem_SignViewContainer)
+		local viewCls
+		local viewContainerCls = _G.class(viewContainerName, Vxax_Role_SignItem_SignViewContainer)
 
-		if arg_29_0._isFullView then
-			var_29_2 = _G.class(var_29_0, Vxax_Role_FullSignView)
+		if setting._isFullView then
+			viewCls = _G.class(viewname, Vxax_Role_FullSignView)
 
-			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_FullSignView_PartX(var_29_2, arg_28_0, arg_28_1, arg_29_0._whichPart)
+			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_FullSignView_PartX(viewCls, V, A, setting._whichPart)
 		else
-			var_29_2 = _G.class(var_29_0, Vxax_Role_PanelSignView)
+			viewCls = _G.class(viewname, Vxax_Role_PanelSignView)
 
-			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX(var_29_2, arg_28_0, arg_28_1, arg_29_0._whichPart)
+			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX(viewCls, V, A, setting._whichPart)
 		end
 
-		Vxax_Role_SignItem_SignViewContainer.Vxax_Role_xxxSignView_Container(var_29_3, var_29_2)
+		Vxax_Role_SignItem_SignViewContainer.Vxax_Role_xxxSignView_Container(viewContainerCls, viewCls)
 
-		arg_28_2[var_29_0] = arg_29_0
+		module_views[viewname] = setting
 
-		rawset(_G.ViewName, var_29_0, var_29_0)
-		rawset(_G, var_29_0, var_29_2)
-		rawset(_G, var_29_1, var_29_3)
+		rawset(_G.ViewName, viewname, viewname)
+		rawset(_G, viewname, viewCls)
+		rawset(_G, viewContainerName, viewContainerCls)
 	end
 
-	var_28_0(var_0_7)
-	var_28_0(var_0_8)
-	var_28_0(var_0_10)
-	var_28_0(var_0_11)
+	_make(Vxax_Role_FullSignView_Part1)
+	_make(Vxax_Role_FullSignView_Part2)
+	_make(Vxax_Role_PanelSignView_Part1)
+	_make(Vxax_Role_PanelSignView_Part2)
 end
 
-local function var_0_17(arg_30_0, arg_30_1, arg_30_2)
-	local function var_30_0(arg_31_0)
-		local var_31_0 = var_0_0(arg_31_0._viewName, arg_30_0, arg_30_1)
-		local var_31_1 = var_0_0(arg_31_0._viewContainerName, arg_30_0, arg_30_1)
+local function _make_SpecialSign__module_views(V, A, module_views)
+	local function _make(setting)
+		local viewname = sf(setting._viewName, V, A)
+		local viewContainerName = sf(setting._viewContainerName, V, A)
 
-		arg_31_0.mainRes = var_0_0(arg_31_0.mainRes, arg_30_0, arg_30_1)
-		arg_31_0._viewName = var_31_0
+		setting.mainRes = sf(setting.mainRes, V, A)
+		setting._viewName = viewname
 
-		local var_31_2
-		local var_31_3 = _G.class(var_31_1, Vxax_Special_SignItemViewContainer)
+		local viewCls
+		local viewContainerCls = _G.class(viewContainerName, Vxax_Special_SignItemViewContainer)
 
-		if arg_31_0._isFullView then
-			var_31_2 = _G.class(var_31_0, var_0_12)
+		if setting._isFullView then
+			viewCls = _G.class(viewname, Vxax_Special_FullSignView)
 
-			Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView(var_31_2, arg_30_0, arg_30_1)
+			Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView(viewCls, V, A)
 		else
-			var_31_2 = _G.class(var_31_0, var_0_13)
+			viewCls = _G.class(viewname, Vxax_Special_PanelSignView)
 
-			Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView(var_31_2, arg_30_0, arg_30_1)
+			Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView(viewCls, V, A)
 		end
 
-		Vxax_Special_SignItemViewContainer.Vxax_Special_xxxSignView_Container(var_31_3, var_31_2)
+		Vxax_Special_SignItemViewContainer.Vxax_Special_xxxSignView_Container(viewContainerCls, viewCls)
 
-		arg_30_2[var_31_0] = arg_31_0
+		module_views[viewname] = setting
 
-		rawset(_G.ViewName, var_31_0, var_31_0)
-		rawset(_G, var_31_0, var_31_2)
-		rawset(_G, var_31_1, var_31_3)
+		rawset(_G.ViewName, viewname, viewname)
+		rawset(_G, viewname, viewCls)
+		rawset(_G, viewContainerName, viewContainerCls)
 	end
 
-	var_30_0(var_0_12)
-	var_30_0(var_0_13)
+	_make(Vxax_Special_FullSignView)
+	_make(Vxax_Special_PanelSignView)
 end
 
-local function var_0_18(arg_32_0, arg_32_1, arg_32_2)
-	local function var_32_0(arg_33_0)
-		local var_33_0 = var_0_0(arg_33_0._viewName, arg_32_0, arg_32_1)
-		local var_33_1 = var_0_0(arg_33_0._viewContainerName, arg_32_0, arg_32_1)
+local function _make_LinkageActivity__module_views(V, A, module_views)
+	local function _make(setting)
+		local viewname = sf(setting._viewName, V, A)
+		local viewContainerName = sf(setting._viewContainerName, V, A)
 
-		arg_33_0.mainRes = var_0_0(arg_33_0.mainRes, arg_32_0, arg_32_1)
-		arg_33_0._viewName = var_33_0
+		setting.mainRes = sf(setting.mainRes, V, A)
+		setting._viewName = viewname
 
-		local var_33_2
-		local var_33_3 = _G.class(var_33_1, LinkageActivity_BaseViewContainer)
+		local viewCls
+		local viewContainerCls = _G.class(viewContainerName, LinkageActivity_BaseViewContainer)
 
-		if arg_33_0._isFullView then
-			var_33_2 = _G.class(var_33_0, LinkageActivity_FullView)
+		if setting._isFullView then
+			viewCls = _G.class(viewname, LinkageActivity_FullView)
 
-			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView(var_33_2, arg_32_0, arg_32_1)
+			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView(viewCls, V, A)
 		else
-			var_33_2 = _G.class(var_33_0, LinkageActivity_PanelView)
+			viewCls = _G.class(viewname, LinkageActivity_PanelView)
 
-			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView(var_33_2, arg_32_0, arg_32_1)
+			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView(viewCls, V, A)
 		end
 
-		LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_xxxView_Container(var_33_3, var_33_2)
+		LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_xxxView_Container(viewContainerCls, viewCls)
 
-		arg_32_2[var_33_0] = arg_33_0
+		module_views[viewname] = setting
 
-		rawset(_G.ViewName, var_33_0, var_33_0)
-		rawset(_G, var_33_0, var_33_2)
-		rawset(_G, var_33_1, var_33_3)
+		rawset(_G.ViewName, viewname, viewname)
+		rawset(_G, viewname, viewCls)
+		rawset(_G, viewContainerName, viewContainerCls)
 	end
 
-	var_32_0(var_0_14)
-	var_32_0(var_0_15)
+	_make(Vxax_LinkageActivity_FullView)
+	_make(Vxax_LinkageActivity_PanelView)
 end
 
-function var_0_1.onModuleViews(arg_34_0, arg_34_1, arg_34_2)
-	local var_34_0 = arg_34_1.curV
-	local var_34_1 = arg_34_1.curA
+function ActivityType101Model:onModuleViews(versionFullInfo, module_views)
+	local V, A = versionFullInfo.curV, versionFullInfo.curA
 
-	var_0_17(var_34_0, var_34_1, arg_34_2)
-	var_0_18(var_34_0, var_34_1, arg_34_2)
+	_make_SpecialSign__module_views(V, A, module_views)
+	_make_LinkageActivity__module_views(V, A, module_views)
 end
 
-var_0_1.instance = var_0_1.New()
+ActivityType101Model.instance = ActivityType101Model.New()
 
-return var_0_1
+return ActivityType101Model

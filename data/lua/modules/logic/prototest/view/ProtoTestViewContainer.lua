@@ -1,58 +1,60 @@
-﻿module("modules.logic.prototest.view.ProtoTestViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/view/ProtoTestViewContainer.lua
 
-local var_0_0 = class("ProtoTestViewContainer", BaseViewContainer)
+module("modules.logic.prototest.view.ProtoTestViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = MixScrollParam.New()
+local ProtoTestViewContainer = class("ProtoTestViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Panel_testcase/protolist"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "Panel_testcase/protolist/Viewport/item"
-	var_1_1.cellClass = ProtoTestCaseItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+function ProtoTestViewContainer:buildViews()
+	local views = {}
+	local testCaseListParam = MixScrollParam.New()
 
-	table.insert(var_1_0, LuaMixScrollView.New(ProtoTestCaseModel.instance, var_1_1))
+	testCaseListParam.scrollGOPath = "Panel_testcase/protolist"
+	testCaseListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	testCaseListParam.prefabUrl = "Panel_testcase/protolist/Viewport/item"
+	testCaseListParam.cellClass = ProtoTestCaseItem
+	testCaseListParam.scrollDir = ScrollEnum.ScrollDirV
 
-	local var_1_2 = ListScrollParam.New()
+	table.insert(views, LuaMixScrollView.New(ProtoTestCaseModel.instance, testCaseListParam))
 
-	var_1_2.scrollGOPath = "Panel_storage/testcaserepo"
-	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_2.prefabUrl = "Panel_storage/testcaserepo/Viewport/repo"
-	var_1_2.cellClass = ProtoTestFileItem
-	var_1_2.scrollDir = ScrollEnum.ScrollDirV
-	var_1_2.lineCount = 1
-	var_1_2.cellWidth = 520
-	var_1_2.cellHeight = 85
-	var_1_2.cellSpaceH = 0
-	var_1_2.cellSpaceV = 0
+	local testFileListParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(ProtoTestFileModel.instance, var_1_2))
+	testFileListParam.scrollGOPath = "Panel_storage/testcaserepo"
+	testFileListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	testFileListParam.prefabUrl = "Panel_storage/testcaserepo/Viewport/repo"
+	testFileListParam.cellClass = ProtoTestFileItem
+	testFileListParam.scrollDir = ScrollEnum.ScrollDirV
+	testFileListParam.lineCount = 1
+	testFileListParam.cellWidth = 520
+	testFileListParam.cellHeight = 85
+	testFileListParam.cellSpaceH = 0
+	testFileListParam.cellSpaceV = 0
 
-	local var_1_3 = ListScrollParam.New()
+	table.insert(views, LuaListScrollView.New(ProtoTestFileModel.instance, testFileListParam))
 
-	var_1_3.scrollGOPath = "Panel_testcase/Panel_new/bg/scroll"
-	var_1_3.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_3.prefabUrl = "Panel_testcase/Panel_new/bg/scroll/Viewport/item"
-	var_1_3.cellClass = ProtoReqListItem
-	var_1_3.scrollDir = ScrollEnum.ScrollDirV
-	var_1_3.lineCount = 1
-	var_1_3.cellWidth = 350
-	var_1_3.cellHeight = 60
-	var_1_3.cellSpaceH = 0
-	var_1_3.cellSpaceV = 0
+	local testReqListParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(ProtoReqListModel.instance, var_1_3))
-	table.insert(var_1_0, ProtoTestView.New())
-	table.insert(var_1_0, ProtoTestCaseView.New())
-	table.insert(var_1_0, ProtoTestFileView.New())
-	table.insert(var_1_0, ProtoTestReqView.New())
+	testReqListParam.scrollGOPath = "Panel_testcase/Panel_new/bg/scroll"
+	testReqListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	testReqListParam.prefabUrl = "Panel_testcase/Panel_new/bg/scroll/Viewport/item"
+	testReqListParam.cellClass = ProtoReqListItem
+	testReqListParam.scrollDir = ScrollEnum.ScrollDirV
+	testReqListParam.lineCount = 1
+	testReqListParam.cellWidth = 350
+	testReqListParam.cellHeight = 60
+	testReqListParam.cellSpaceH = 0
+	testReqListParam.cellSpaceV = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(ProtoReqListModel.instance, testReqListParam))
+	table.insert(views, ProtoTestView.New())
+	table.insert(views, ProtoTestCaseView.New())
+	table.insert(views, ProtoTestFileView.New())
+	table.insert(views, ProtoTestReqView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function ProtoTestViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-return var_0_0
+return ProtoTestViewContainer

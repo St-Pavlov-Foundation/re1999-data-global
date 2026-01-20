@@ -1,82 +1,84 @@
-﻿module("modules.logic.dungeon.controller.DungeonPuzzleMazeDrawController", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/controller/DungeonPuzzleMazeDrawController.lua
 
-local var_0_0 = class("DungeonPuzzleMazeDrawController", BaseController)
+module("modules.logic.dungeon.controller.DungeonPuzzleMazeDrawController", package.seeall)
 
-function var_0_0.onInitFinish(arg_1_0)
+local DungeonPuzzleMazeDrawController = class("DungeonPuzzleMazeDrawController", BaseController)
+
+function DungeonPuzzleMazeDrawController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function DungeonPuzzleMazeDrawController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0._curPosX = nil
-	arg_3_0._curPosY = nil
-	arg_3_0._passedPosX = nil
-	arg_3_0._passedPosY = nil
-	arg_3_0._passedCheckPoint = nil
-	arg_3_0._alertMoMap = nil
-	arg_3_0._nextDir = nil
-	arg_3_0._nextForwardX = nil
-	arg_3_0._nextForwardY = nil
-	arg_3_0._nextProgressX = nil
-	arg_3_0._nextProgressY = nil
-	arg_3_0._lineDirty = nil
+function DungeonPuzzleMazeDrawController:reInit()
+	self._curPosX = nil
+	self._curPosY = nil
+	self._passedPosX = nil
+	self._passedPosY = nil
+	self._passedCheckPoint = nil
+	self._alertMoMap = nil
+	self._nextDir = nil
+	self._nextForwardX = nil
+	self._nextForwardY = nil
+	self._nextProgressX = nil
+	self._nextProgressY = nil
+	self._lineDirty = nil
 end
 
-local var_0_1 = DungeonPuzzleEnum.dir.left
-local var_0_2 = DungeonPuzzleEnum.dir.right
-local var_0_3 = DungeonPuzzleEnum.dir.down
-local var_0_4 = DungeonPuzzleEnum.dir.up
+local LEFT = DungeonPuzzleEnum.dir.left
+local RIGHT = DungeonPuzzleEnum.dir.right
+local DOWN = DungeonPuzzleEnum.dir.down
+local UP = DungeonPuzzleEnum.dir.up
 
-function var_0_0.release(arg_4_0)
-	arg_4_0._curPosX = nil
-	arg_4_0._curPosY = nil
-	arg_4_0._passedPosX = nil
-	arg_4_0._passedPosY = nil
-	arg_4_0._passedCheckPoint = nil
-	arg_4_0._alertMoMap = nil
-	arg_4_0._nextDir = nil
-	arg_4_0._nextForwardX = nil
-	arg_4_0._nextForwardY = nil
-	arg_4_0._nextProgressX = nil
-	arg_4_0._nextProgressY = nil
-	arg_4_0._lineDirty = nil
+function DungeonPuzzleMazeDrawController:release()
+	self._curPosX = nil
+	self._curPosY = nil
+	self._passedPosX = nil
+	self._passedPosY = nil
+	self._passedCheckPoint = nil
+	self._alertMoMap = nil
+	self._nextDir = nil
+	self._nextForwardX = nil
+	self._nextForwardY = nil
+	self._nextProgressX = nil
+	self._nextProgressY = nil
+	self._lineDirty = nil
 end
 
-function var_0_0.openGame(arg_5_0, arg_5_1)
-	DungeonPuzzleMazeDrawModel.instance:initByElementCo(arg_5_1)
+function DungeonPuzzleMazeDrawController:openGame(elementCo)
+	DungeonPuzzleMazeDrawModel.instance:initByElementCo(elementCo)
 	ViewMgr.instance:openView(ViewName.DungeonPuzzleMazeDrawView)
 end
 
-function var_0_0.goStartPoint(arg_6_0)
-	local var_6_0, var_6_1 = DungeonPuzzleMazeDrawModel.instance:getStartPoint()
+function DungeonPuzzleMazeDrawController:goStartPoint()
+	local startX, startY = DungeonPuzzleMazeDrawModel.instance:getStartPoint()
 
-	arg_6_0._curPosX = var_6_0
-	arg_6_0._curPosY = var_6_1
+	self._curPosX = startX
+	self._curPosY = startY
 
-	table.insert(arg_6_0._passedPosX, var_6_0)
-	table.insert(arg_6_0._passedPosY, var_6_1)
+	table.insert(self._passedPosX, startX)
+	table.insert(self._passedPosY, startY)
 end
 
-function var_0_0.startGame(arg_7_0)
-	arg_7_0._passedPosX = {}
-	arg_7_0._passedPosY = {}
-	arg_7_0._passedCheckPoint = {}
-	arg_7_0._alertMoMap = {}
+function DungeonPuzzleMazeDrawController:startGame()
+	self._passedPosX = {}
+	self._passedPosY = {}
+	self._passedCheckPoint = {}
+	self._alertMoMap = {}
 
-	arg_7_0:goStartPoint()
+	self:goStartPoint()
 end
 
-function var_0_0.isGameClear(arg_8_0)
-	local var_8_0, var_8_1 = DungeonPuzzleMazeDrawModel.instance:getEndPoint()
+function DungeonPuzzleMazeDrawController:isGameClear()
+	local endX, endY = DungeonPuzzleMazeDrawModel.instance:getEndPoint()
 
-	if not arg_8_0:hasAlertObj() and arg_8_0._curPosX == var_8_0 and arg_8_0._curPosY == var_8_1 then
-		local var_8_2 = DungeonPuzzleMazeDrawModel.instance:getList()
+	if not self:hasAlertObj() and self._curPosX == endX and self._curPosY == endY then
+		local objList = DungeonPuzzleMazeDrawModel.instance:getList()
 
-		for iter_8_0, iter_8_1 in pairs(var_8_2) do
-			if iter_8_1.objType == DungeonPuzzleEnum.MazeObjType.CheckPoint and not arg_8_0._passedCheckPoint[iter_8_1] then
+		for _, mo in pairs(objList) do
+			if mo.objType == DungeonPuzzleEnum.MazeObjType.CheckPoint and not self._passedCheckPoint[mo] then
 				return false
 			end
 		end
@@ -87,242 +89,235 @@ function var_0_0.isGameClear(arg_8_0)
 	return false
 end
 
-function var_0_0.goPassLine(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6)
-	local var_9_0
-	local var_9_1
+function DungeonPuzzleMazeDrawController:goPassLine(x1, y1, x2, y2, progressX, progressY)
+	local fromDir, passPosList
 
-	arg_9_0._nextDir = nil
-	arg_9_0._nextForwardX = arg_9_0._curPosX ~= arg_9_1 and arg_9_1 or arg_9_3
-	arg_9_0._nextForwardY = arg_9_0._curPosY ~= arg_9_2 and arg_9_2 or arg_9_4
+	self._nextDir = nil
+	self._nextForwardX = self._curPosX ~= x1 and x1 or x2
+	self._nextForwardY = self._curPosY ~= y1 and y1 or y2
 
-	if arg_9_0._curPosX ~= arg_9_1 or arg_9_0._curPosX ~= arg_9_3 then
-		var_9_0 = arg_9_3 > arg_9_0._curPosX and var_0_1 or var_0_2
-		var_9_1 = var_9_1 or {}
+	if self._curPosX ~= x1 or self._curPosX ~= x2 then
+		fromDir = x2 > self._curPosX and LEFT or RIGHT
+		passPosList = passPosList or {}
 
-		if var_9_0 == var_0_1 then
-			for iter_9_0 = arg_9_0._curPosX + 1, arg_9_1 do
-				table.insert(var_9_1, {
-					var_0_2,
-					iter_9_0,
-					arg_9_2
+		if fromDir == LEFT then
+			for i = self._curPosX + 1, x1 do
+				table.insert(passPosList, {
+					RIGHT,
+					i,
+					y1
 				})
 			end
 
-			arg_9_0._nextForwardX = arg_9_3
+			self._nextForwardX = x2
 		else
-			for iter_9_1 = arg_9_0._curPosX - 1, arg_9_3, -1 do
-				table.insert(var_9_1, {
-					var_0_1,
-					iter_9_1,
-					arg_9_2
+			for i = self._curPosX - 1, x2, -1 do
+				table.insert(passPosList, {
+					LEFT,
+					i,
+					y1
 				})
 			end
 
-			arg_9_0._nextForwardX = arg_9_1
+			self._nextForwardX = x1
 		end
 
-		arg_9_6 = nil
+		progressY = nil
 	end
 
-	if arg_9_0._curPosY ~= arg_9_2 or arg_9_0._curPosY ~= arg_9_4 then
-		if var_9_0 ~= nil then
-			arg_9_0._nextForwardX = nil
-			arg_9_0._nextForwardY = nil
+	if self._curPosY ~= y1 or self._curPosY ~= y2 then
+		if fromDir ~= nil then
+			self._nextForwardX = nil
+			self._nextForwardY = nil
 
 			return false
 		end
 
-		var_9_0 = arg_9_4 > arg_9_0._curPosY and var_0_3 or var_0_4
-		var_9_1 = var_9_1 or {}
+		fromDir = y2 > self._curPosY and DOWN or UP
+		passPosList = passPosList or {}
 
-		if var_9_0 == var_0_3 then
-			for iter_9_2 = arg_9_0._curPosY + 1, arg_9_2 do
-				table.insert(var_9_1, {
-					var_0_4,
-					arg_9_1,
-					iter_9_2
+		if fromDir == DOWN then
+			for i = self._curPosY + 1, y1 do
+				table.insert(passPosList, {
+					UP,
+					x1,
+					i
 				})
 			end
 
-			arg_9_0._nextForwardY = arg_9_4
+			self._nextForwardY = y2
 		else
-			for iter_9_3 = arg_9_0._curPosY - 1, arg_9_4, -1 do
-				table.insert(var_9_1, {
-					var_0_3,
-					arg_9_1,
-					iter_9_3
+			for i = self._curPosY - 1, y2, -1 do
+				table.insert(passPosList, {
+					DOWN,
+					x1,
+					i
 				})
 			end
 
-			arg_9_0._nextForwardY = arg_9_2
+			self._nextForwardY = y1
 		end
 
-		arg_9_5 = nil
+		progressX = nil
 	end
 
-	arg_9_0._nextDir = var_9_0
-	arg_9_0._nextProgressX = arg_9_5
-	arg_9_0._nextProgressY = arg_9_6
+	self._nextDir = fromDir
+	self._nextProgressX = progressX
+	self._nextProgressY = progressY
 
-	if var_9_1 and #var_9_1 > 0 then
-		return arg_9_0:processPath(var_9_1, arg_9_5, arg_9_6)
+	if passPosList and #passPosList > 0 then
+		return self:processPath(passPosList, progressX, progressY)
 	end
 
 	return false
 end
 
-function var_0_0.goPassPos(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0
-	local var_10_1
+function DungeonPuzzleMazeDrawController:goPassPos(x, y)
+	local fromDir, passPosList
 
-	if arg_10_0._curPosX ~= arg_10_1 then
-		var_10_0 = arg_10_1 > arg_10_0._curPosX and var_0_1 or var_0_2
-		var_10_1 = var_10_1 or {}
+	if self._curPosX ~= x then
+		fromDir = x > self._curPosX and LEFT or RIGHT
+		passPosList = passPosList or {}
 
-		if var_10_0 == var_0_1 then
-			for iter_10_0 = arg_10_0._curPosX + 1, arg_10_1 do
-				table.insert(var_10_1, {
-					var_0_2,
-					iter_10_0,
-					arg_10_2
+		if fromDir == LEFT then
+			for i = self._curPosX + 1, x do
+				table.insert(passPosList, {
+					RIGHT,
+					i,
+					y
 				})
 			end
 		else
-			for iter_10_1 = arg_10_0._curPosX - 1, arg_10_1, -1 do
-				table.insert(var_10_1, {
-					var_0_1,
-					iter_10_1,
-					arg_10_2
+			for i = self._curPosX - 1, x, -1 do
+				table.insert(passPosList, {
+					LEFT,
+					i,
+					y
 				})
 			end
 		end
 	end
 
-	if arg_10_0._curPosY ~= arg_10_2 then
-		if var_10_0 ~= nil then
-			arg_10_0._nextDir = nil
-			arg_10_0._nextForwardX = nil
-			arg_10_0._nextForwardY = nil
+	if self._curPosY ~= y then
+		if fromDir ~= nil then
+			self._nextDir = nil
+			self._nextForwardX = nil
+			self._nextForwardY = nil
 
 			return false
 		end
 
-		local var_10_2 = arg_10_2 > arg_10_0._curPosY and var_0_3 or var_0_4
+		fromDir = y > self._curPosY and DOWN or UP
+		passPosList = passPosList or {}
 
-		var_10_1 = var_10_1 or {}
-
-		if var_10_2 == var_0_3 then
-			for iter_10_2 = arg_10_0._curPosY + 1, arg_10_2 do
-				table.insert(var_10_1, {
-					var_0_4,
-					arg_10_1,
-					iter_10_2
+		if fromDir == DOWN then
+			for i = self._curPosY + 1, y do
+				table.insert(passPosList, {
+					UP,
+					x,
+					i
 				})
 			end
 		else
-			for iter_10_3 = arg_10_0._curPosY - 1, arg_10_2, -1 do
-				table.insert(var_10_1, {
-					var_0_3,
-					arg_10_1,
-					iter_10_3
+			for i = self._curPosY - 1, y, -1 do
+				table.insert(passPosList, {
+					DOWN,
+					x,
+					i
 				})
 			end
 		end
 	end
 
-	arg_10_0._nextProgressX = nil
-	arg_10_0._nextProgressY = nil
+	self._nextProgressX = nil
+	self._nextProgressY = nil
 
-	if var_10_1 and #var_10_1 > 0 then
-		local var_10_3 = arg_10_0:processPath(var_10_1)
+	if passPosList and #passPosList > 0 then
+		local rs = self:processPath(passPosList)
 	end
 
 	return false
 end
 
-function var_0_0.processPath(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		local var_11_0 = iter_11_1[1]
-		local var_11_1 = iter_11_1[2]
-		local var_11_2 = iter_11_1[3]
-		local var_11_3 = arg_11_0:isBackward(var_11_1, var_11_2)
-		local var_11_4
+function DungeonPuzzleMazeDrawController:processPath(passPosList, progressX, progressY)
+	for _, pos in ipairs(passPosList) do
+		local goDir, nextX, nextY = pos[1], pos[2], pos[3]
+		local isBack = self:isBackward(nextX, nextY)
+		local valueMo
 
-		if not var_11_3 then
-			for iter_11_2, iter_11_3 in pairs(arg_11_0._alertMoMap) do
+		if not isBack then
+			for k, v in pairs(self._alertMoMap) do
 				return false
 			end
 
-			var_11_4 = 1
+			valueMo = 1
 		end
 
-		local var_11_5 = DungeonPuzzleMazeDrawModel.instance:getObjAtLine(var_0_0.formatPos(arg_11_0._curPosX, arg_11_0._curPosY, var_11_1, var_11_2))
+		local mo = DungeonPuzzleMazeDrawModel.instance:getObjAtLine(DungeonPuzzleMazeDrawController.formatPos(self._curPosX, self._curPosY, nextX, nextY))
 
-		if var_11_5 ~= nil and var_11_5.objType == DungeonPuzzleEnum.MazeObjType.Block then
-			arg_11_0._alertMoMap[var_11_5] = var_11_4
+		if mo ~= nil and mo.objType == DungeonPuzzleEnum.MazeObjType.Block then
+			self._alertMoMap[mo] = valueMo
 		end
 
-		if var_11_3 then
-			local var_11_6 = DungeonPuzzleMazeDrawModel.getPosKey(arg_11_0._curPosX, arg_11_0._curPosY)
+		if isBack then
+			local curKey = DungeonPuzzleMazeDrawModel.getPosKey(self._curPosX, self._curPosY)
 
-			arg_11_0._alertMoMap[var_11_6] = nil
+			self._alertMoMap[curKey] = nil
+			mo = DungeonPuzzleMazeDrawModel.instance:getObjAtPos(self._curPosX, self._curPosY)
 
-			local var_11_7 = DungeonPuzzleMazeDrawModel.instance:getObjAtPos(arg_11_0._curPosX, arg_11_0._curPosY)
-
-			if var_11_7 ~= nil and var_11_7.objType == DungeonPuzzleEnum.MazeObjType.CheckPoint and not arg_11_0:alreadyPassed(arg_11_0._curPosX, arg_11_0._curPosY, true) then
-				arg_11_0._passedCheckPoint[var_11_7] = var_11_4
+			if mo ~= nil and mo.objType == DungeonPuzzleEnum.MazeObjType.CheckPoint and not self:alreadyPassed(self._curPosX, self._curPosY, true) then
+				self._passedCheckPoint[mo] = valueMo
 			end
 		else
-			local var_11_8 = DungeonPuzzleMazeDrawModel.instance:getObjAtPos(var_11_1, var_11_2)
+			mo = DungeonPuzzleMazeDrawModel.instance:getObjAtPos(nextX, nextY)
 
-			if var_11_8 ~= nil and var_11_8.objType == DungeonPuzzleEnum.MazeObjType.CheckPoint then
-				arg_11_0._passedCheckPoint[var_11_8] = var_11_4
+			if mo ~= nil and mo.objType == DungeonPuzzleEnum.MazeObjType.CheckPoint then
+				self._passedCheckPoint[mo] = valueMo
 			end
 
-			if arg_11_0:alreadyPassed(var_11_1, var_11_2) then
-				local var_11_9 = DungeonPuzzleMazeDrawModel.getPosKey(var_11_1, var_11_2)
+			if self:alreadyPassed(nextX, nextY) then
+				local key = DungeonPuzzleMazeDrawModel.getPosKey(nextX, nextY)
 
-				arg_11_0._alertMoMap[var_11_9] = var_11_4
+				self._alertMoMap[key] = valueMo
 			end
 		end
 
-		if var_11_3 then
-			arg_11_0._passedPosX[#arg_11_0._passedPosX] = nil
-			arg_11_0._passedPosY[#arg_11_0._passedPosY] = nil
+		if isBack then
+			self._passedPosX[#self._passedPosX] = nil
+			self._passedPosY[#self._passedPosY] = nil
 		else
-			table.insert(arg_11_0._passedPosX, var_11_1)
-			table.insert(arg_11_0._passedPosY, var_11_2)
+			table.insert(self._passedPosX, nextX)
+			table.insert(self._passedPosY, nextY)
 		end
 
-		arg_11_0._curPosX = var_11_1
-		arg_11_0._curPosY = var_11_2
-		arg_11_0._nextDir = var_11_0
-		arg_11_0._lineDirty = true
+		self._curPosX = nextX
+		self._curPosY = nextY
+		self._nextDir = goDir
+		self._lineDirty = true
 	end
 
 	return true
 end
 
-function var_0_0.goBackPos(arg_12_0)
-	local var_12_0 = #arg_12_0._passedPosX
+function DungeonPuzzleMazeDrawController:goBackPos()
+	local len = #self._passedPosX
 
-	if var_12_0 >= 2 then
-		arg_12_0:goPassPos(arg_12_0._passedPosX[var_12_0 - 1], arg_12_0._passedPosY[var_12_0 - 1])
+	if len >= 2 then
+		self:goPassPos(self._passedPosX[len - 1], self._passedPosY[len - 1])
 	end
 end
 
-function var_0_0.isBackward(arg_13_0, arg_13_1, arg_13_2)
-	return #arg_13_0._passedPosX > 1 and arg_13_0._passedPosX[#arg_13_0._passedPosX - 1] == arg_13_1 and arg_13_0._passedPosY[#arg_13_0._passedPosY - 1] == arg_13_2
+function DungeonPuzzleMazeDrawController:isBackward(nextX, nextY)
+	return #self._passedPosX > 1 and self._passedPosX[#self._passedPosX - 1] == nextX and self._passedPosY[#self._passedPosY - 1] == nextY
 end
 
-function var_0_0.alreadyPassed(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = arg_14_3 and #arg_14_0._passedPosX - 1 or #arg_14_0._passedPosX
+function DungeonPuzzleMazeDrawController:alreadyPassed(x, y, withoutTop)
+	local len = withoutTop and #self._passedPosX - 1 or #self._passedPosX
 
-	for iter_14_0 = 1, var_14_0 do
-		local var_14_1 = arg_14_0._passedPosX[iter_14_0]
-		local var_14_2 = arg_14_0._passedPosY[iter_14_0]
+	for i = 1, len do
+		local tmpX, tmpY = self._passedPosX[i], self._passedPosY[i]
 
-		if var_14_1 == arg_14_1 and var_14_2 == arg_14_2 then
+		if tmpX == x and tmpY == y then
 			return true
 		end
 	end
@@ -330,66 +325,66 @@ function var_0_0.alreadyPassed(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
 	return false
 end
 
-function var_0_0.alreadyCheckPoint(arg_15_0, arg_15_1)
-	return arg_15_0._passedCheckPoint and arg_15_0._passedCheckPoint[arg_15_1] ~= nil
+function DungeonPuzzleMazeDrawController:alreadyCheckPoint(mo)
+	return self._passedCheckPoint and self._passedCheckPoint[mo] ~= nil
 end
 
-function var_0_0.getLastPos(arg_16_0)
-	return arg_16_0._curPosX, arg_16_0._curPosY
+function DungeonPuzzleMazeDrawController:getLastPos()
+	return self._curPosX, self._curPosY
 end
 
-function var_0_0.getPassedPoints(arg_17_0)
-	return arg_17_0._passedPosX, arg_17_0._passedPosY
+function DungeonPuzzleMazeDrawController:getPassedPoints()
+	return self._passedPosX, self._passedPosY
 end
 
-function var_0_0.getProgressLine(arg_18_0)
-	return arg_18_0._nextForwardX, arg_18_0._nextForwardY, arg_18_0._nextProgressX, arg_18_0._nextProgressY
+function DungeonPuzzleMazeDrawController:getProgressLine()
+	return self._nextForwardX, self._nextForwardY, self._nextProgressX, self._nextProgressY
 end
 
-function var_0_0.getAlertMap(arg_19_0)
-	return arg_19_0._alertMoMap
+function DungeonPuzzleMazeDrawController:getAlertMap()
+	return self._alertMoMap
 end
 
-function var_0_0.hasAlertObj(arg_20_0)
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._alertMoMap) do
+function DungeonPuzzleMazeDrawController:hasAlertObj()
+	for alertObj, _ in pairs(self._alertMoMap) do
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isLineDirty(arg_21_0)
-	return arg_21_0._lineDirty
+function DungeonPuzzleMazeDrawController:isLineDirty()
+	return self._lineDirty
 end
 
-function var_0_0.resetLineDirty(arg_22_0)
-	arg_22_0._lineDirty = false
+function DungeonPuzzleMazeDrawController:resetLineDirty()
+	self._lineDirty = false
 end
 
-function var_0_0.formatPos(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_2 < arg_23_0 then
-		arg_23_0, arg_23_2 = arg_23_2, arg_23_0
+function DungeonPuzzleMazeDrawController.formatPos(x1, y1, x2, y2)
+	if x2 < x1 then
+		x1, x2 = x2, x1
 	end
 
-	if arg_23_3 < arg_23_1 then
-		arg_23_1, arg_23_3 = arg_23_3, arg_23_1
+	if y2 < y1 then
+		y1, y2 = y2, y1
 	end
 
-	return arg_23_0, arg_23_1, arg_23_2, arg_23_3
+	return x1, y1, x2, y2
 end
 
-function var_0_0.getFromToDir(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if arg_24_0 ~= arg_24_2 then
-		if arg_24_1 ~= arg_24_3 then
+function DungeonPuzzleMazeDrawController.getFromToDir(fromX, fromY, toX, toY)
+	if fromX ~= toX then
+		if fromY ~= toY then
 			return nil
 		end
 
-		return arg_24_0 < arg_24_2 and var_0_2 or var_0_1
+		return fromX < toX and RIGHT or LEFT
 	else
-		return arg_24_1 < arg_24_3 and var_0_4 or var_0_3
+		return fromY < toY and UP or DOWN
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonPuzzleMazeDrawController.instance = DungeonPuzzleMazeDrawController.New()
 
-return var_0_0
+return DungeonPuzzleMazeDrawController

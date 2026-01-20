@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.view.FightSeasonChangeHeroSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSeasonChangeHeroSelectViewContainer.lua
 
-local var_0_0 = class("FightSeasonChangeHeroSelectViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightSeasonChangeHeroSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightSeasonChangeHeroSelectViewContainer = class("FightSeasonChangeHeroSelectViewContainer", BaseViewContainer)
+
+function FightSeasonChangeHeroSelectViewContainer:buildViews()
 	return {
 		FightSeasonChangeHeroSelectView.New()
 	}
 end
 
-return var_0_0
+return FightSeasonChangeHeroSelectViewContainer

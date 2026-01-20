@@ -1,183 +1,185 @@
-﻿module("modules.logic.handbook.view.HandBookCharacterSwitchViewEffect", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandBookCharacterSwitchViewEffect.lua
 
-local var_0_0 = class("HandBookCharacterSwitchViewEffect", BaseView)
+module("modules.logic.handbook.view.HandBookCharacterSwitchViewEffect", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagecoverbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_coverbg1")
-	arg_1_0._simagepeper55bg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_peper55bg")
-	arg_1_0._simagepeper55left = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_peper55bg/#simge_peper55left")
-	arg_1_0._simagepeper55right = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_peper55bg/#simge_peper55right")
-	arg_1_0._gocorvercharacter4 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter4")
-	arg_1_0._gocorvercharacter5 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter5")
-	arg_1_0._gocorvercharacter6 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter6")
-	arg_1_0._gocorvercharacter7 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter7")
-	arg_1_0._gofrpos4 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos4")
-	arg_1_0._gofrpos5 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos5")
-	arg_1_0._gofrpos6 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos6")
-	arg_1_0._gofrpos7 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos7")
-	arg_1_0._gocharacter1 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_character1")
-	arg_1_0._gocharacter2 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_character2")
-	arg_1_0._gocharacter3 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_character3")
-	arg_1_0._gocharacter4 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character4")
-	arg_1_0._gocharacter5 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character5")
-	arg_1_0._gocharacter6 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character6")
-	arg_1_0._gocharacter7 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character7")
-	arg_1_0._gosepos1 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_sepos1")
-	arg_1_0._gosepos2 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_sepos2")
-	arg_1_0._gosepos3 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_sepos3")
-	arg_1_0._gosepos4 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos4")
-	arg_1_0._gosepos5 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos5")
-	arg_1_0._gosepos6 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos6")
-	arg_1_0._gosepos7 = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos7")
-	arg_1_0._goupleft = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_upleft")
+local HandBookCharacterSwitchViewEffect = class("HandBookCharacterSwitchViewEffect", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandBookCharacterSwitchViewEffect:onInitView()
+	self._simagecoverbg1 = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_coverbg1")
+	self._simagepeper55bg = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_peper55bg")
+	self._simagepeper55left = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_peper55bg/#simge_peper55left")
+	self._simagepeper55right = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#go_cover/#simage_peper55bg/#simge_peper55right")
+	self._gocorvercharacter4 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter4")
+	self._gocorvercharacter5 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter5")
+	self._gocorvercharacter6 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter6")
+	self._gocorvercharacter7 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_corvercharacter7")
+	self._gofrpos4 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos4")
+	self._gofrpos5 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos5")
+	self._gofrpos6 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos6")
+	self._gofrpos7 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/right/#go_coverrightpage/#go_frpos7")
+	self._gocharacter1 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_character1")
+	self._gocharacter2 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_character2")
+	self._gocharacter3 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_character3")
+	self._gocharacter4 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character4")
+	self._gocharacter5 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character5")
+	self._gocharacter6 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character6")
+	self._gocharacter7 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_character7")
+	self._gosepos1 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_sepos1")
+	self._gosepos2 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_sepos2")
+	self._gosepos3 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_leftpage/#go_sepos3")
+	self._gosepos4 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos4")
+	self._gosepos5 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos5")
+	self._gosepos6 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos6")
+	self._gosepos7 = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/#go_sepos7")
+	self._goupleft = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_upleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HandBookCharacterSwitchViewEffect:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HandBookCharacterSwitchViewEffect:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagepeperleft01 = gohelper.findChildSingleImage(arg_4_0.viewGO, "#go_center/handbookcharacterview/peper_left01")
-	arg_4_0._simagepeperright01 = gohelper.findChildSingleImage(arg_4_0.viewGO, "#go_center/handbookcharacterview/peper_right01")
-	arg_4_0._simagepeperleft = gohelper.findChildSingleImage(arg_4_0.viewGO, "#go_center/handbookcharacterview/#go_leftpage/peper_left")
-	arg_4_0._simagepagebgright = gohelper.findChildSingleImage(arg_4_0.viewGO, "#go_center/handbookcharacterview/#go_rightpage/peper_right")
-	arg_4_0._simagepagebgleft = gohelper.findChildSingleImage(arg_4_0.viewGO, "#go_center/handbookcharacterview/#simage_pagebg/peper_left")
-	arg_4_0._simagepeperright = gohelper.findChildSingleImage(arg_4_0.viewGO, "#go_center/handbookcharacterview/#simage_pagebg/peper_right")
-	arg_4_0._gocoverleft = gohelper.findChild(arg_4_0.viewGO, "#go_center/handbookcharacterview/#go_cover/left")
-	arg_4_0._prefabPosList = {}
-	arg_4_0._allTypePosList = {}
-	arg_4_0._goTrsList = arg_4_0:getUserDataTb_()
+function HandBookCharacterSwitchViewEffect:_editableInitView()
+	self._simagepeperleft01 = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/peper_left01")
+	self._simagepeperright01 = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/peper_right01")
+	self._simagepeperleft = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#go_leftpage/peper_left")
+	self._simagepagebgright = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#go_rightpage/peper_right")
+	self._simagepagebgleft = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#simage_pagebg/peper_left")
+	self._simagepeperright = gohelper.findChildSingleImage(self.viewGO, "#go_center/handbookcharacterview/#simage_pagebg/peper_right")
+	self._gocoverleft = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_cover/left")
+	self._prefabPosList = {}
+	self._allTypePosList = {}
+	self._goTrsList = self:getUserDataTb_()
 
-	local var_4_0 = {
-		arg_4_0._gocharacter1,
-		arg_4_0._gocharacter2,
-		arg_4_0._gocharacter3,
-		arg_4_0._gocharacter4,
-		arg_4_0._gocharacter5,
-		arg_4_0._gocharacter6,
-		arg_4_0._gocharacter7,
-		arg_4_0._gocorvercharacter4,
-		arg_4_0._gocorvercharacter5,
-		arg_4_0._gocorvercharacter6,
-		arg_4_0._gocorvercharacter7
+	local characterGos = {
+		self._gocharacter1,
+		self._gocharacter2,
+		self._gocharacter3,
+		self._gocharacter4,
+		self._gocharacter5,
+		self._gocharacter6,
+		self._gocharacter7,
+		self._gocorvercharacter4,
+		self._gocorvercharacter5,
+		self._gocorvercharacter6,
+		self._gocorvercharacter7
 	}
-	local var_4_1 = {
-		arg_4_0._gosepos1,
-		arg_4_0._gosepos2,
-		arg_4_0._gosepos3,
-		arg_4_0._gosepos4,
-		arg_4_0._gosepos5,
-		arg_4_0._gosepos6,
-		arg_4_0._gosepos7,
-		arg_4_0._gofrpos4,
-		arg_4_0._gofrpos5,
-		arg_4_0._gofrpos6,
-		arg_4_0._gofrpos7
+	local posGos = {
+		self._gosepos1,
+		self._gosepos2,
+		self._gosepos3,
+		self._gosepos4,
+		self._gosepos5,
+		self._gosepos6,
+		self._gosepos7,
+		self._gofrpos4,
+		self._gofrpos5,
+		self._gofrpos6,
+		self._gofrpos7
 	}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_2 = iter_4_1.transform
-		local var_4_3, var_4_4, var_4_5 = transformhelper.getLocalPos(var_4_2)
+	for i, characterGo in ipairs(characterGos) do
+		local trs = characterGo.transform
+		local x, y, z = transformhelper.getLocalPos(trs)
 
-		table.insert(arg_4_0._prefabPosList, {
-			x = var_4_3,
-			y = var_4_4,
-			z = var_4_5
+		table.insert(self._prefabPosList, {
+			x = x,
+			y = y,
+			z = z
 		})
-		table.insert(arg_4_0._goTrsList, var_4_2)
+		table.insert(self._goTrsList, trs)
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(var_4_1) do
-		local var_4_6, var_4_7, var_4_8 = transformhelper.getLocalPos(iter_4_3.transform)
+	for i, posGo in ipairs(posGos) do
+		local x, y, z = transformhelper.getLocalPos(posGo.transform)
 
-		table.insert(arg_4_0._allTypePosList, {
-			x = var_4_6,
-			y = var_4_7,
-			z = var_4_8
+		table.insert(self._allTypePosList, {
+			x = x,
+			y = y,
+			z = z
 		})
-		gohelper.setActive(iter_4_3, false)
+		gohelper.setActive(posGo, false)
 	end
 end
 
-function var_0_0.reallyOpenView(arg_5_0, arg_5_1)
-	arg_5_0.heroType = arg_5_1
+function HandBookCharacterSwitchViewEffect:reallyOpenView(heroType)
+	self.heroType = heroType
 
-	arg_5_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0._refresh(arg_6_0)
-	local var_6_0 = arg_6_0:_isAllHeroType()
+function HandBookCharacterSwitchViewEffect:_refresh()
+	local isCurAll = self:_isAllHeroType()
 
-	if arg_6_0._isLastAllHeroType == var_6_0 then
+	if self._isLastAllHeroType == isCurAll then
 		return
 	end
 
-	arg_6_0._isLastAllHeroType = var_6_0
+	self._isLastAllHeroType = isCurAll
 
-	local var_6_1 = var_6_0 and arg_6_0._allTypePosList or arg_6_0._prefabPosList
+	local posList = isCurAll and self._allTypePosList or self._prefabPosList
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._goTrsList) do
-		local var_6_2 = var_6_1[iter_6_0]
+	for i, trs in ipairs(self._goTrsList) do
+		local p = posList[i]
 
-		transformhelper.setLocalPos(iter_6_1, var_6_2.x, var_6_2.y, var_6_2.z)
+		transformhelper.setLocalPos(trs, p.x, p.y, p.z)
 	end
 
-	local var_6_3 = arg_6_0:_getBGParam()
-	local var_6_4 = ResUrl.getHandbookCharacterIcon(var_6_3.left)
-	local var_6_5 = ResUrl.getHandbookCharacterIcon(var_6_3.right)
+	local resParam = self:_getBGParam()
+	local leftResPath = ResUrl.getHandbookCharacterIcon(resParam.left)
+	local rightResPath = ResUrl.getHandbookCharacterIcon(resParam.right)
 
-	arg_6_0._simagepeper55left:LoadImage(var_6_4)
-	arg_6_0._simagepeperleft01:LoadImage(var_6_4)
-	arg_6_0._simagepeperleft:LoadImage(var_6_4)
-	arg_6_0._simagepagebgleft:LoadImage(var_6_4)
-	arg_6_0._simagepeper55right:LoadImage(var_6_5)
-	arg_6_0._simagepeperright01:LoadImage(var_6_5)
-	arg_6_0._simagepeperright:LoadImage(var_6_5)
-	arg_6_0._simagepagebgright:LoadImage(var_6_5)
-	gohelper.setActive(arg_6_0._simagecoverbg1, not var_6_0)
-	gohelper.setActive(arg_6_0._gocoverleft, not var_6_0)
-	gohelper.setActive(arg_6_0._simagepeper55bg, var_6_0)
-	gohelper.setActive(arg_6_0._goupleft, var_6_0)
+	self._simagepeper55left:LoadImage(leftResPath)
+	self._simagepeperleft01:LoadImage(leftResPath)
+	self._simagepeperleft:LoadImage(leftResPath)
+	self._simagepagebgleft:LoadImage(leftResPath)
+	self._simagepeper55right:LoadImage(rightResPath)
+	self._simagepeperright01:LoadImage(rightResPath)
+	self._simagepeperright:LoadImage(rightResPath)
+	self._simagepagebgright:LoadImage(rightResPath)
+	gohelper.setActive(self._simagecoverbg1, not isCurAll)
+	gohelper.setActive(self._gocoverleft, not isCurAll)
+	gohelper.setActive(self._simagepeper55bg, isCurAll)
+	gohelper.setActive(self._goupleft, isCurAll)
 end
 
-function var_0_0._isAllHeroType(arg_7_0)
-	return arg_7_0.heroType == HandbookEnum.HeroType.AllHero
+function HandBookCharacterSwitchViewEffect:_isAllHeroType()
+	return self.heroType == HandbookEnum.HeroType.AllHero
 end
 
-function var_0_0._getBGParam(arg_8_0)
-	return HandbookEnum.BookBGRes[arg_8_0.heroType] or HandbookEnum.BookBGRes[HandbookEnum.HeroType.Common]
+function HandBookCharacterSwitchViewEffect:_getBGParam()
+	return HandbookEnum.BookBGRes[self.heroType] or HandbookEnum.BookBGRes[HandbookEnum.HeroType.Common]
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function HandBookCharacterSwitchViewEffect:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, arg_10_0.reallyOpenView, arg_10_0)
-	arg_10_0:_refresh()
+function HandBookCharacterSwitchViewEffect:onOpen()
+	self:addEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, self.reallyOpenView, self)
+	self:_refresh()
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0:removeEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, arg_11_0.reallyOpenView, arg_11_0)
+function HandBookCharacterSwitchViewEffect:onClose()
+	self:removeEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, self.reallyOpenView, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagepeper55left:UnLoadImage()
-	arg_12_0._simagepeperleft01:UnLoadImage()
-	arg_12_0._simagepeperleft:UnLoadImage()
-	arg_12_0._simagepagebgleft:UnLoadImage()
-	arg_12_0._simagepeper55right:UnLoadImage()
-	arg_12_0._simagepeperright01:UnLoadImage()
-	arg_12_0._simagepeperright:UnLoadImage()
-	arg_12_0._simagepagebgright:UnLoadImage()
+function HandBookCharacterSwitchViewEffect:onDestroyView()
+	self._simagepeper55left:UnLoadImage()
+	self._simagepeperleft01:UnLoadImage()
+	self._simagepeperleft:UnLoadImage()
+	self._simagepagebgleft:UnLoadImage()
+	self._simagepeper55right:UnLoadImage()
+	self._simagepeperright01:UnLoadImage()
+	self._simagepeperright:UnLoadImage()
+	self._simagepagebgright:UnLoadImage()
 end
 
-return var_0_0
+return HandBookCharacterSwitchViewEffect

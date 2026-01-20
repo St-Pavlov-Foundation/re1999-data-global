@@ -11,7 +11,7 @@
     "target": 0,
     "position": 2,
     "offset": "",
-    "duration": 0.5,
+    "duration": 1.0,
     "soundId": 0
   },
   {
@@ -131,7 +131,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 0.5,
+    "duration": 1.0,
     "soundId": 0
   },
   {
@@ -253,6 +253,66 @@
     "offset": "",
     "duration": 0.7,
     "soundId": 20280302
+  },
+  {
+    "id": 30013,
+    "tag": "skill",
+    "subtag": "",
+    "nameUp": "autochess_coin_take",
+    "nameDown": "",
+    "type": "normal",
+    "playertype": 2,
+    "loop": 0,
+    "target": 2,
+    "position": 2,
+    "offset": "",
+    "duration": 1.0,
+    "soundId": 20320404
+  },
+  {
+    "id": 30014,
+    "tag": "skill",
+    "subtag": "",
+    "nameUp": "autochess_grow_take",
+    "nameDown": "",
+    "type": "normal",
+    "playertype": 2,
+    "loop": 0,
+    "target": 2,
+    "position": 2,
+    "offset": "",
+    "duration": 1.0,
+    "soundId": 0
+  },
+  {
+    "id": 30015,
+    "tag": "skill",
+    "subtag": "",
+    "nameUp": "autochess_shoot1_up",
+    "nameDown": "",
+    "type": "fly",
+    "playertype": 2,
+    "loop": 0,
+    "target": 1,
+    "position": 2,
+    "offset": "",
+    "duration": 0.3,
+    "soundId": 20320403
+  },
+  {
+    "id": 30016,
+    "tag": "skill",
+    "subtag": "",
+    "nameUp": "autochess_shoot2_up",
+    "nameDown": "",
+    "type": "normal",
+    "playertype": 2,
+    "loop": 0,
+    "target": 2,
+    "position": 2,
+    "offset": "",
+    "duration": 0.4,
+    "soundId": 20320405
   },
   {
     "id": 40001,

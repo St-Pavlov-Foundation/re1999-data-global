@@ -1,78 +1,80 @@
-﻿module("modules.logic.character.view.CharacterSwitchSkinItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSwitchSkinItem.lua
 
-local var_0_0 = class("CharacterSwitchSkinItem", LuaCompBase)
+module("modules.logic.character.view.CharacterSwitchSkinItem", package.seeall)
 
-function var_0_0.showSkin(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._heroId = arg_1_1
-	arg_1_0._skinId = arg_1_2
+local CharacterSwitchSkinItem = class("CharacterSwitchSkinItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0.viewGO, true)
+function CharacterSwitchSkinItem:showSkin(heroId, skinId)
+	self._heroId = heroId
+	self._skinId = skinId
 
-	arg_1_0._image = arg_1_0._singleImg:GetComponent(gohelper.Type_Image)
-	arg_1_0._image.enabled = false
+	gohelper.setActive(self.viewGO, true)
 
-	arg_1_0._singleImg:LoadImage(ResUrl.getHeadIconMiddle(arg_1_2), arg_1_0._loadCallback, arg_1_0)
+	self._image = self._singleImg:GetComponent(gohelper.Type_Image)
+	self._image.enabled = false
+
+	self._singleImg:LoadImage(ResUrl.getHeadIconMiddle(skinId), self._loadCallback, self)
 end
 
-function var_0_0._loadCallback(arg_2_0)
-	arg_2_0._image.enabled = true
+function CharacterSwitchSkinItem:_loadCallback()
+	self._image.enabled = true
 end
 
-function var_0_0.setSelected(arg_3_0, arg_3_1)
-	arg_3_0._selected = arg_3_1
+function CharacterSwitchSkinItem:setSelected(value)
+	self._selected = value
 
-	gohelper.setActive(arg_3_0._selectGo, arg_3_1)
-	gohelper.setActive(arg_3_0._unselectGo, not arg_3_1)
+	gohelper.setActive(self._selectGo, value)
+	gohelper.setActive(self._unselectGo, not value)
 
-	arg_3_0._canvas.alpha = arg_3_1 and 1 or 0.75
+	self._canvas.alpha = value and 1 or 0.75
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	arg_4_0.viewGO = arg_4_1
-	arg_4_0._singleImg = gohelper.findChildSingleImage(arg_4_0.viewGO, "heroskin")
-	arg_4_0._selectGo = gohelper.findChild(arg_4_0.viewGO, "heroskin/select")
-	arg_4_0._unselectGo = gohelper.findChild(arg_4_0.viewGO, "heroskin/unselect")
-	arg_4_0._canvas = gohelper.findChildComponent(arg_4_0.viewGO, "heroskin", typeof(UnityEngine.CanvasGroup))
+function CharacterSwitchSkinItem:init(go)
+	self.viewGO = go
+	self._singleImg = gohelper.findChildSingleImage(self.viewGO, "heroskin")
+	self._selectGo = gohelper.findChild(self.viewGO, "heroskin/select")
+	self._unselectGo = gohelper.findChild(self.viewGO, "heroskin/unselect")
+	self._canvas = gohelper.findChildComponent(self.viewGO, "heroskin", typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	arg_5_0._click = gohelper.getClickWithAudio(arg_5_0.viewGO, AudioEnum.UI.play_ui_character_switch)
+function CharacterSwitchSkinItem:addEventListeners()
+	self._click = gohelper.getClickWithAudio(self.viewGO, AudioEnum.UI.play_ui_character_switch)
 
-	if arg_5_0._click then
-		arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
+	if self._click then
+		self._click:AddClickListener(self._onClick, self)
 	end
 
-	CharacterController.instance:registerCallback(CharacterEvent.SwitchHeroSkin, arg_5_0._switchHeroSkin, arg_5_0)
+	CharacterController.instance:registerCallback(CharacterEvent.SwitchHeroSkin, self._switchHeroSkin, self)
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.SwitchHeroSkin, arg_6_0._switchHeroSkin, arg_6_0)
+function CharacterSwitchSkinItem:removeEventListeners()
+	CharacterController.instance:unregisterCallback(CharacterEvent.SwitchHeroSkin, self._switchHeroSkin, self)
 
-	if arg_6_0._click then
-		arg_6_0._click:RemoveClickListener()
+	if self._click then
+		self._click:RemoveClickListener()
 	end
 end
 
-function var_0_0._switchHeroSkin(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_1 == arg_7_0._heroId and arg_7_0._skinId == arg_7_2
+function CharacterSwitchSkinItem:_switchHeroSkin(heroId, skinId)
+	local value = heroId == self._heroId and self._skinId == skinId
 
-	arg_7_0:setSelected(var_7_0)
+	self:setSelected(value)
 end
 
-function var_0_0._onClick(arg_8_0)
-	if arg_8_0._selected then
+function CharacterSwitchSkinItem:_onClick()
+	if self._selected then
 		return
 	end
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.SwitchHeroSkin, arg_8_0._heroId, arg_8_0._skinId)
+	CharacterController.instance:dispatchEvent(CharacterEvent.SwitchHeroSkin, self._heroId, self._skinId)
 end
 
-function var_0_0.onStart(arg_9_0)
+function CharacterSwitchSkinItem:onStart()
 	return
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	arg_10_0._singleImg:UnLoadImage()
+function CharacterSwitchSkinItem:onDestroy()
+	self._singleImg:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSwitchSkinItem

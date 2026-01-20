@@ -1,198 +1,200 @@
-﻿module("modules.logic.dispatch.model.DispatchHeroListModel", package.seeall)
+﻿-- chunkname: @modules/logic/dispatch/model/DispatchHeroListModel.lua
 
-local var_0_0 = class("DispatchHeroListModel", ListScrollModel)
+module("modules.logic.dispatch.model.DispatchHeroListModel", package.seeall)
 
-local function var_0_1(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:isDispatched()
-	local var_1_1 = arg_1_1:isDispatched()
+local DispatchHeroListModel = class("DispatchHeroListModel", ListScrollModel)
 
-	if var_1_0 ~= var_1_1 then
-		return var_1_1
+local function _sortFunc(heroMo1, heroMo2)
+	local heroMo1Dispatched = heroMo1:isDispatched()
+	local heroMo2Dispatched = heroMo2:isDispatched()
+
+	if heroMo1Dispatched ~= heroMo2Dispatched then
+		return heroMo2Dispatched
 	end
 
-	if arg_1_0.level ~= arg_1_1.level then
-		return arg_1_0.level > arg_1_1.level
+	if heroMo1.level ~= heroMo2.level then
+		return heroMo1.level > heroMo2.level
 	end
 
-	if arg_1_0.rare ~= arg_1_1.rare then
-		return arg_1_0.rare > arg_1_1.rare
+	if heroMo1.rare ~= heroMo2.rare then
+		return heroMo1.rare > heroMo2.rare
 	end
 
-	return arg_1_0.heroId > arg_1_1.heroId
+	return heroMo1.heroId > heroMo2.heroId
 end
 
-function var_0_0.onInit(arg_2_0)
+function DispatchHeroListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function DispatchHeroListModel:reInit()
 	return
 end
 
-function var_0_0.onOpenDispatchView(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:initHeroList()
-	arg_4_0:initSelectedHeroList(arg_4_2, arg_4_1 and arg_4_1.id)
+function DispatchHeroListModel:onOpenDispatchView(dispatchCo, elementId)
+	self:initHeroList()
+	self:initSelectedHeroList(elementId, dispatchCo and dispatchCo.id)
 
-	arg_4_0.maxSelectCount = arg_4_1 and arg_4_1.maxCount or 0
+	self.maxSelectCount = dispatchCo and dispatchCo.maxCount or 0
 end
 
-function var_0_0.initHeroList(arg_5_0)
-	if arg_5_0.heroList then
+function DispatchHeroListModel:initHeroList()
+	if self.heroList then
 		return
 	end
 
-	arg_5_0.heroList = {}
+	self.heroList = {}
 
-	local var_5_0 = HeroModel.instance:getList()
+	local allHeroList = HeroModel.instance:getList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_1 = DispatchHeroMo.New()
+	for _, heroMo in ipairs(allHeroList) do
+		local dispatchHeroMo = DispatchHeroMo.New()
 
-		var_5_1:init(iter_5_1)
-		table.insert(arg_5_0.heroList, var_5_1)
+		dispatchHeroMo:init(heroMo)
+		table.insert(self.heroList, dispatchHeroMo)
 	end
 end
 
-function var_0_0.getDispatchHeroMo(arg_6_0, arg_6_1)
-	if not arg_6_0.heroList then
+function DispatchHeroListModel:getDispatchHeroMo(heroId)
+	if not self.heroList then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.heroList) do
-		if iter_6_1.heroId == arg_6_1 then
-			return iter_6_1
+	for _, heroMo in ipairs(self.heroList) do
+		if heroMo.heroId == heroId then
+			return heroMo
 		end
 	end
 end
 
-function var_0_0.refreshHero(arg_7_0)
-	if not arg_7_0.heroList then
+function DispatchHeroListModel:refreshHero()
+	if not self.heroList then
 		return
 	end
 
-	table.sort(arg_7_0.heroList, var_0_1)
-	arg_7_0:setList(arg_7_0.heroList)
+	table.sort(self.heroList, _sortFunc)
+	self:setList(self.heroList)
 end
 
-function var_0_0.resetSelectHeroList(arg_8_0)
-	arg_8_0.selectedHeroList = {}
-	arg_8_0.selectedHeroIndexDict = {}
+function DispatchHeroListModel:resetSelectHeroList()
+	self.selectedHeroList = {}
+	self.selectedHeroIndexDict = {}
 end
 
-function var_0_0.initSelectedHeroList(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0:resetSelectHeroList()
+function DispatchHeroListModel:initSelectedHeroList(elementId, dispatchId)
+	self:resetSelectHeroList()
 
-	if not arg_9_1 or not arg_9_2 then
+	if not elementId or not dispatchId then
 		return
 	end
 
-	local var_9_0 = DispatchModel.instance:getDispatchMo(arg_9_1, arg_9_2)
+	local dispatchMo = DispatchModel.instance:getDispatchMo(elementId, dispatchId)
 
-	if not var_9_0 then
+	if not dispatchMo then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0.heroIdList) do
-		local var_9_1 = arg_9_0:getDispatchHeroMo(iter_9_1)
+	for index, heroId in ipairs(dispatchMo.heroIdList) do
+		local dispatchHeroMo = self:getDispatchHeroMo(heroId)
 
-		if var_9_1 then
-			table.insert(arg_9_0.selectedHeroList, var_9_1)
+		if dispatchHeroMo then
+			table.insert(self.selectedHeroList, dispatchHeroMo)
 
-			arg_9_0.selectedHeroIndexDict[var_9_1] = iter_9_0
+			self.selectedHeroIndexDict[dispatchHeroMo] = index
 		else
-			logError(string.format("DispatchHeroListModel:initSelectedHeroList error, not found dispatched hero id: %s ", iter_9_1))
+			logError(string.format("DispatchHeroListModel:initSelectedHeroList error, not found dispatched hero id: %s ", heroId))
 		end
 	end
 end
 
-function var_0_0.canAddMo(arg_10_0)
-	return #arg_10_0.selectedHeroList < arg_10_0.maxSelectCount
+function DispatchHeroListModel:canAddMo()
+	return #self.selectedHeroList < self.maxSelectCount
 end
 
-function var_0_0.selectMo(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function DispatchHeroListModel:selectMo(mo)
+	if not mo then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.selectedHeroList) do
-		if iter_11_1.heroId == arg_11_1.heroId then
+	for _, heroMo in ipairs(self.selectedHeroList) do
+		if heroMo.heroId == mo.heroId then
 			return
 		end
 	end
 
-	table.insert(arg_11_0.selectedHeroList, arg_11_1)
+	table.insert(self.selectedHeroList, mo)
 
-	arg_11_0.selectedHeroIndexDict[arg_11_1] = #arg_11_0.selectedHeroList
+	self.selectedHeroIndexDict[mo] = #self.selectedHeroList
 
 	DispatchController.instance:dispatchEvent(DispatchEvent.ChangeSelectedHero)
 end
 
-function var_0_0.deselectMo(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function DispatchHeroListModel:deselectMo(mo)
+	if not mo then
 		return
 	end
 
-	local var_12_0 = arg_12_0:getSelectedIndex(arg_12_1)
+	local deleteIndex = self:getSelectedIndex(mo)
 
-	if var_12_0 and var_12_0 > 0 then
-		table.remove(arg_12_0.selectedHeroList, var_12_0)
+	if deleteIndex and deleteIndex > 0 then
+		table.remove(self.selectedHeroList, deleteIndex)
 
-		arg_12_0.selectedHeroIndexDict[arg_12_1] = nil
+		self.selectedHeroIndexDict[mo] = nil
 
-		for iter_12_0, iter_12_1 in ipairs(arg_12_0.selectedHeroList) do
-			arg_12_0.selectedHeroIndexDict[iter_12_1] = iter_12_0
+		for index, heroMo in ipairs(self.selectedHeroList) do
+			self.selectedHeroIndexDict[heroMo] = index
 		end
 
 		DispatchController.instance:dispatchEvent(DispatchEvent.ChangeSelectedHero)
 	end
 end
 
-function var_0_0.getSelectedIndex(arg_13_0, arg_13_1)
-	return arg_13_0.selectedHeroIndexDict[arg_13_1]
+function DispatchHeroListModel:getSelectedIndex(mo)
+	return self.selectedHeroIndexDict[mo]
 end
 
-function var_0_0.getSelectedMoByIndex(arg_14_0, arg_14_1)
-	return arg_14_0.selectedHeroList[arg_14_1]
+function DispatchHeroListModel:getSelectedMoByIndex(index)
+	return self.selectedHeroList[index]
 end
 
-function var_0_0.getSelectedHeroIdList(arg_15_0)
-	local var_15_0 = {}
+function DispatchHeroListModel:getSelectedHeroIdList()
+	local heroIdList = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.selectedHeroList) do
-		table.insert(var_15_0, iter_15_1.heroId)
+	for _, heroMo in ipairs(self.selectedHeroList) do
+		table.insert(heroIdList, heroMo.heroId)
 	end
 
-	return var_15_0
+	return heroIdList
 end
 
-function var_0_0.getSelectedHeroCount(arg_16_0)
-	return #arg_16_0.selectedHeroList
+function DispatchHeroListModel:getSelectedHeroCount()
+	return #self.selectedHeroList
 end
 
-function var_0_0.getSelectedHeroList(arg_17_0)
-	return arg_17_0.selectedHeroList
+function DispatchHeroListModel:getSelectedHeroList()
+	return self.selectedHeroList
 end
 
-function var_0_0.setDispatchViewStatus(arg_18_0, arg_18_1)
-	arg_18_0.dispatchViewStatus = arg_18_1
+function DispatchHeroListModel:setDispatchViewStatus(status)
+	self.dispatchViewStatus = status
 end
 
-function var_0_0.canChangeHeroMo(arg_19_0)
-	return arg_19_0.dispatchViewStatus == DispatchEnum.DispatchStatus.NotDispatch
+function DispatchHeroListModel:canChangeHeroMo()
+	return self.dispatchViewStatus == DispatchEnum.DispatchStatus.NotDispatch
 end
 
-function var_0_0.clear(arg_20_0)
-	var_0_0.super.clear(arg_20_0)
-	arg_20_0:_clearData()
+function DispatchHeroListModel:clear()
+	DispatchHeroListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_21_0)
-	arg_21_0:resetSelectHeroList()
+function DispatchHeroListModel:_clearData()
+	self:resetSelectHeroList()
 
-	arg_21_0.heroList = nil
-	arg_21_0.dispatchViewStatus = nil
+	self.heroList = nil
+	self.dispatchViewStatus = nil
 end
 
-var_0_0.instance = var_0_0.New()
+DispatchHeroListModel.instance = DispatchHeroListModel.New()
 
-return var_0_0
+return DispatchHeroListModel

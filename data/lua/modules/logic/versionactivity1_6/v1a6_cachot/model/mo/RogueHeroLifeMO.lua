@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueHeroLifeMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/mo/RogueHeroLifeMO.lua
 
-local var_0_0 = pureTable("RogueHeroLifeMO")
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueHeroLifeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.life = arg_1_1.life
-	arg_1_0.lifePercent = arg_1_1.life / 10
+local RogueHeroLifeMO = pureTable("RogueHeroLifeMO")
+
+function RogueHeroLifeMO:init(info)
+	self.heroId = info.heroId
+	self.life = info.life
+	self.lifePercent = info.life / 10
 end
 
-return var_0_0
+return RogueHeroLifeMO

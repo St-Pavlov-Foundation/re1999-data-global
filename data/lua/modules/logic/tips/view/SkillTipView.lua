@@ -1,233 +1,239 @@
-﻿module("modules.logic.tips.view.SkillTipView", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/SkillTipView.lua
 
-local var_0_0 = class("SkillTipView", BaseView)
+module("modules.logic.tips.view.SkillTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonewskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip")
-	arg_1_0._goassassinbg = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skillbgassassin")
-	arg_1_0._goBuffContainer = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer")
-	arg_1_0._goBuffItem = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem")
-	arg_1_0._btnupgradeShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_newskilltip/#btn_upgradeShow")
-	arg_1_0._goScrollSkill = gohelper.findChild(arg_1_0.viewGO, "#scroll_skill")
-	arg_1_0._goContentSkill = gohelper.findChild(arg_1_0.viewGO, "#scroll_skill/Viewport/Content")
+local SkillTipView = class("SkillTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SkillTipView:onInitView()
+	self._gonewskilltip = gohelper.findChild(self.viewGO, "#go_newskilltip")
+	self._goassassinbg = gohelper.findChild(self.viewGO, "#go_newskilltip/skillbgassassin")
+	self._goBuffContainer = gohelper.findChild(self.viewGO, "#go_buffContainer")
+	self._goBuffItem = gohelper.findChild(self.viewGO, "#go_buffContainer/#go_buffitem")
+	self._btnupgradeShow = gohelper.findChildButtonWithAudio(self.viewGO, "#go_newskilltip/#btn_upgradeShow")
+	self._goScrollSkill = gohelper.findChild(self.viewGO, "#scroll_skill")
+	self._goContentSkill = gohelper.findChild(self.viewGO, "#scroll_skill/Viewport/Content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SkillTipView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SkillTipView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goBuffContainer, false)
-	gohelper.setActive(arg_4_0._btnupgradeShow.gameObject, false)
+function SkillTipView:_editableInitView()
+	gohelper.setActive(self._goBuffContainer, false)
+	gohelper.setActive(self._btnupgradeShow.gameObject, false)
 
-	arg_4_0._viewInitialized = true
+	self._viewInitialized = true
 end
 
-function var_0_0.showInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_0._viewInitialized then
+function SkillTipView:showInfo(info, isCharacter, entityId)
+	if not self._viewInitialized then
 		return
 	end
 
-	arg_5_0.entityMo = FightDataHelper.entityMgr:getById(arg_5_3)
-	arg_5_0.monsterName = FightConfig.instance:getEntityName(arg_5_3)
-	arg_5_0.entitySkillIndex = arg_5_1.skillIndex
+	self.entityMo = FightDataHelper.entityMgr:getById(entityId)
+	self.monsterName = FightConfig.instance:getEntityName(entityId)
+	self.entitySkillIndex = info.skillIndex
 
-	if string.nilorempty(arg_5_0.monsterName) then
-		logError("SkillTipView monsterName 为 nil, entityId : " .. tostring(arg_5_3))
+	if string.nilorempty(self.monsterName) then
+		logError("SkillTipView monsterName 为 nil, entityId : " .. tostring(entityId))
 
-		arg_5_0.monsterName = ""
+		self.monsterName = ""
 	end
 
-	arg_5_0._upgradeSelectShow = false
+	self._upgradeSelectShow = false
 
-	arg_5_0:initInfo(arg_5_1, arg_5_2, arg_5_3)
+	self:initInfo(info, isCharacter, entityId)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Tipsopen)
 end
 
-function var_0_0.hideInfo(arg_6_0)
-	if not arg_6_0._viewInitialized then
+function SkillTipView:hideInfo()
+	if not self._viewInitialized then
 		return
 	end
 
-	gohelper.setActive(arg_6_0._goScrollSkill, false)
-	gohelper.setActive(arg_6_0._gonewskilltip, false)
+	gohelper.setActive(self._goScrollSkill, false)
+	gohelper.setActive(self._gonewskilltip, false)
 
-	if arg_6_0._normalSkillLevelComp then
-		arg_6_0._normalSkillLevelComp.upgraded = false
-		arg_6_0._normalSkillLevelComp._upgradeSelectShow = false
+	if self._normalSkillLevelComp then
+		self._normalSkillLevelComp.upgraded = false
+		self._normalSkillLevelComp._upgradeSelectShow = false
 	end
 
-	arg_6_0._curSkillLevel = nil
+	self._curSkillLevel = nil
 end
 
-function var_0_0._getLevelComp(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._skillTiplLevelComps[arg_7_1]
+function SkillTipView:_getLevelComp(index)
+	local comp = self._skillTiplLevelComps[index]
 
-	if not var_7_0 then
-		local var_7_1 = gohelper.clone(arg_7_0._gonewskilltip, arg_7_0._goContentSkill)
+	if not comp then
+		local go = gohelper.clone(self._gonewskilltip, self._goContentSkill)
 
-		var_7_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, SkillTipLevelComp, arg_7_0)
-		arg_7_0._skillTiplLevelComps[arg_7_1] = var_7_0
+		comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, SkillTipLevelComp, self)
+		self._skillTiplLevelComps[index] = comp
 	end
 
-	return var_7_0
+	return comp
 end
 
-function var_0_0._refreshLevelComps(arg_8_0)
+function SkillTipView:_refreshLevelComps()
 	return
 end
 
-function var_0_0.initInfo(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if not arg_9_0._skillTiplLevelComps then
-		arg_9_0._skillTiplLevelComps = arg_9_0:getUserDataTb_()
+function SkillTipView:initInfo(info, isCharacter, entityId)
+	if not self._skillTiplLevelComps then
+		self._skillTiplLevelComps = self:getUserDataTb_()
 	end
 
-	local var_9_0 = arg_9_0.viewParam or {}
+	local param = self.viewParam or {}
 
-	var_9_0.viewName = arg_9_0.viewName
-	var_9_0.entityId = arg_9_3
+	param.viewName = self.viewName
+	param.entityId = entityId
 
-	if arg_9_0.viewName == ViewName.FightFocusView then
-		var_9_0.monsterName = arg_9_0.monsterName
+	if self.viewName == ViewName.FightFocusView then
+		param.monsterName = self.monsterName
 	end
 
-	local var_9_1 = var_9_0.skillIdList
+	local skillIdList = param.skillIdList
 
-	if arg_9_1 then
-		var_9_1 = arg_9_1.skillIdList
-		var_9_0.super = arg_9_1.super
-		var_9_0.isCharacter = arg_9_2
-		var_9_0.entitySkillIndex = arg_9_1.skillIndex
+	if info then
+		skillIdList = info.skillIdList
+		param.super = info.super
+		param.isCharacter = isCharacter
+		param.entitySkillIndex = info.skillIndex
 	end
 
-	local var_9_2 = SkillConfig.instance:getFightCardChoice(var_9_1)
+	local skillChoice = SkillConfig.instance:getFightCardChoice(skillIdList)
 
-	if var_9_2 then
-		local var_9_3 = #var_9_2
+	if skillChoice then
+		local compCount = #skillChoice
 
-		for iter_9_0 = 1, var_9_3 do
-			var_9_0.skillIdList = var_9_2[iter_9_0]
+		for i = 1, compCount do
+			param.skillIdList = skillChoice[i]
 
-			arg_9_0:_getLevelComp(iter_9_0):initInfo(var_9_0)
+			local comp = self:_getLevelComp(i)
+
+			comp:initInfo(param)
 		end
 
-		if arg_9_0.viewName == ViewName.FightFocusView then
-			local var_9_4 = arg_9_0.viewGO.transform.parent and arg_9_0.viewGO.transform.parent.transform.offsetMin
+		if self.viewName == ViewName.FightFocusView then
+			local parentOffsetMin = self.viewGO.transform.parent and self.viewGO.transform.parent.transform.offsetMin
 
-			if var_9_4 and var_9_4.x ~= 0 then
-				arg_9_0._goScrollSkill.transform.offsetMin = Vector2(-var_9_4.x, var_9_4.y)
+			if parentOffsetMin and parentOffsetMin.x ~= 0 then
+				self._goScrollSkill.transform.offsetMin = Vector2(-parentOffsetMin.x, parentOffsetMin.y)
 			end
 		end
 
-		for iter_9_1 = var_9_3 + 1, #arg_9_0._skillTiplLevelComps do
-			arg_9_0._skillTiplLevelComps[iter_9_1]:hideInfo()
+		for i = compCount + 1, #self._skillTiplLevelComps do
+			local comp = self._skillTiplLevelComps[i]
+
+			comp:hideInfo()
 		end
 
-		gohelper.setActive(arg_9_0._goScrollSkill, true)
-		gohelper.setActive(arg_9_0._gonewskilltip, false)
+		gohelper.setActive(self._goScrollSkill, true)
+		gohelper.setActive(self._gonewskilltip, false)
 	else
-		if not arg_9_0._normalSkillLevelComp then
-			arg_9_0._normalSkillLevelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_9_0._gonewskilltip, SkillTipLevelComp, arg_9_0)
+		if not self._normalSkillLevelComp then
+			self._normalSkillLevelComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gonewskilltip, SkillTipLevelComp, self)
 		end
 
-		var_9_0.skillIdList = var_9_1
+		param.skillIdList = skillIdList
 
-		arg_9_0._normalSkillLevelComp:initInfo(var_9_0)
-		arg_9_0:_setSkillTipPos()
-		gohelper.setActive(arg_9_0._goScrollSkill, false)
-		gohelper.setActive(arg_9_0._gonewskilltip, true)
+		self._normalSkillLevelComp:initInfo(param)
+		self:_setSkillTipPos()
+		gohelper.setActive(self._goScrollSkill, false)
+		gohelper.setActive(self._gonewskilltip, true)
 	end
 
-	gohelper.setActive(arg_9_0._goassassinbg, arg_9_0.viewParam and arg_9_0.viewParam.showAssassinBg)
-	arg_9_0:_setViewAnchorPos()
+	gohelper.setActive(self._goassassinbg, self.viewParam and self.viewParam.showAssassinBg)
+	self:_setViewAnchorPos()
 end
 
-function var_0_0._setViewAnchorPos(arg_10_0)
-	local var_10_0 = arg_10_0.viewGO.transform
-	local var_10_1 = arg_10_0.viewParam and arg_10_0.viewParam.anchorX
+function SkillTipView:_setViewAnchorPos()
+	local viewTrans = self.viewGO.transform
+	local anchorX = self.viewParam and self.viewParam.anchorX
 
-	if var_10_1 then
-		recthelper.setAnchorX(var_10_0, var_10_1)
+	if anchorX then
+		recthelper.setAnchorX(viewTrans, anchorX)
 	end
 
-	local var_10_2 = arg_10_0.viewParam and arg_10_0.viewParam.anchorY
+	local anchorY = self.viewParam and self.viewParam.anchorY
 
-	if var_10_2 then
-		recthelper.setAnchorY(var_10_0, var_10_2)
+	if anchorY then
+		recthelper.setAnchorY(viewTrans, anchorY)
 	end
 end
 
-function var_0_0._setSkillTipPos(arg_11_0)
-	local var_11_0 = arg_11_0._goBuffItem.transform
+function SkillTipView:_setSkillTipPos()
+	local trans = self._goBuffItem.transform
 
-	if arg_11_0.viewName == ViewName.FightFocusView then
+	if self.viewName == ViewName.FightFocusView then
 		if ViewMgr.instance:isOpen(ViewName.FightFocusView) then
-			transformhelper.setLocalPosXY(arg_11_0._gonewskilltip.transform, 270, -24.3)
-			recthelper.setAnchorX(var_11_0, -38)
+			transformhelper.setLocalPosXY(self._gonewskilltip.transform, 270, -24.3)
+			recthelper.setAnchorX(trans, -38)
 		else
-			transformhelper.setLocalPosXY(arg_11_0._gonewskilltip.transform, 185.12, 49.85)
-			recthelper.setAnchorX(var_11_0, -120)
+			transformhelper.setLocalPosXY(self._gonewskilltip.transform, 185.12, 49.85)
+			recthelper.setAnchorX(trans, -120)
 		end
 	else
-		transformhelper.setLocalPosXY(arg_11_0._gonewskilltip.transform, 0.69, -0.54)
-		recthelper.setAnchorX(var_11_0, -304)
+		transformhelper.setLocalPosXY(self._gonewskilltip.transform, 0.69, -0.54)
+		recthelper.setAnchorX(trans, -304)
 	end
 end
 
-function var_0_0.onClickSkillItem(arg_12_0, arg_12_1)
-	if arg_12_0._curSkillLevel and arg_12_1 == arg_12_0._curSkillLevel then
+function SkillTipView:onClickSkillItem(level)
+	if self._curSkillLevel and level == self._curSkillLevel then
 		return
 	end
 
-	arg_12_0._curSkillLevel = arg_12_1
+	self._curSkillLevel = level
 
-	if arg_12_0._normalSkillLevelComp then
-		arg_12_0._normalSkillLevelComp:_refreshSkill(arg_12_1)
+	if self._normalSkillLevelComp then
+		self._normalSkillLevelComp:_refreshSkill(level)
 	end
 
-	if arg_12_0._skillTiplLevelComps and #arg_12_0._skillTiplLevelComps > 0 then
-		for iter_12_0, iter_12_1 in ipairs(arg_12_0._skillTiplLevelComps) do
-			iter_12_1:_refreshSkill(arg_12_1)
+	if self._skillTiplLevelComps and #self._skillTiplLevelComps > 0 then
+		for _, comp in ipairs(self._skillTiplLevelComps) do
+			comp:_refreshSkill(level)
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
-	if arg_13_0.viewName ~= ViewName.FightFocusView then
-		arg_13_0:initInfo()
+function SkillTipView:onUpdateParam()
+	if self.viewName ~= ViewName.FightFocusView then
+		self:initInfo()
 	end
 end
 
-function var_0_0.onOpen(arg_14_0)
-	if arg_14_0.viewName ~= ViewName.FightFocusView then
-		arg_14_0:initInfo()
+function SkillTipView:onOpen()
+	if self.viewName ~= ViewName.FightFocusView then
+		self:initInfo()
 	else
-		arg_14_0:hideInfo()
+		self:hideInfo()
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
+function SkillTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	if arg_16_0._skillTiplLevelComps then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._skillTiplLevelComps) do
-			iter_16_1:onDestroyView()
+function SkillTipView:onDestroyView()
+	if self._skillTiplLevelComps then
+		for _, comp in ipairs(self._skillTiplLevelComps) do
+			comp:onDestroyView()
 		end
 	end
 
-	if arg_16_0._normalSkillLevelComp then
-		arg_16_0._normalSkillLevelComp:onDestroyView()
+	if self._normalSkillLevelComp then
+		self._normalSkillLevelComp:onDestroyView()
 	end
 end
 
-return var_0_0
+return SkillTipView

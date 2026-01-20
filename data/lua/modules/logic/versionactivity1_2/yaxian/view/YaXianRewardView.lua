@@ -1,239 +1,241 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/YaXianRewardView.lua
 
-local var_0_0 = class("YaXianRewardView", BaseView)
+module("modules.logic.versionactivity1_2.yaxian.view.YaXianRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._btncloseview = gohelper.findChildButton(arg_1_0.viewGO, "#btn_closeview")
-	arg_1_0._simageblackbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blackbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
-	arg_1_0._txttipsinfo = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_tipsinfo")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content")
-	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom")
-	arg_1_0._gograyline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_grayline")
-	arg_1_0._gonormalline = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_normalline")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_arrow")
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_target")
-	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "progresstip/#txt_progress")
-	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
+local YaXianRewardView = class("YaXianRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function YaXianRewardView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._btncloseview = gohelper.findChildButton(self.viewGO, "#btn_closeview")
+	self._simageblackbg = gohelper.findChildSingleImage(self.viewGO, "#simage_blackbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "#simage_leftbg")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._txttipsinfo = gohelper.findChildText(self.viewGO, "#go_tips/#txt_tipsinfo")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "#scroll_reward")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content")
+	self._gobottom = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom")
+	self._gograyline = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_grayline")
+	self._gonormalline = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_normalline")
+	self._goarrow = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/#go_content/#go_bottom/#go_arrow")
+	self._gotarget = gohelper.findChild(self.viewGO, "#go_target")
+	self._txtprogress = gohelper.findChildText(self.viewGO, "progresstip/#txt_progress")
+	self._btnclose = gohelper.findChildButton(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function YaXianRewardView:addEvents()
+	self._btncloseview:AddClickListener(self._btncloseviewOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseview:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function YaXianRewardView:removeEvents()
+	self._btncloseview:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseviewOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function YaXianRewardView:_btncloseviewOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function YaXianRewardView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.initTargetRewardItem(arg_6_0)
-	local var_6_0 = arg_6_0:getResInst(arg_6_0.itemPath, arg_6_0.goTargetRewardItemContainer, "item")
+function YaXianRewardView:initTargetRewardItem()
+	local go = self:getResInst(self.itemPath, self.goTargetRewardItemContainer, "item")
 
-	arg_6_0.targetRewardItem = YaXianRewardItem.New(var_6_0)
+	self.targetRewardItem = YaXianRewardItem.New(go)
 
-	arg_6_0.targetRewardItem:init()
-	arg_6_0.targetRewardItem:show()
+	self.targetRewardItem:init()
+	self.targetRewardItem:show()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simagebg:LoadImage(ResUrl.getYaXianImage("img_deco_zhizhuwang"))
-	arg_7_0._simageblackbg:LoadImage(ResUrl.getYaXianImage("img_tanchuang_bg"))
+function YaXianRewardView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getYaXianImage("img_deco_zhizhuwang"))
+	self._simageblackbg:LoadImage(ResUrl.getYaXianImage("img_tanchuang_bg"))
 
-	arg_7_0.progressIcon = gohelper.findChildImage(arg_7_0.viewGO, "progresstip/icon")
+	self.progressIcon = gohelper.findChildImage(self.viewGO, "progresstip/icon")
 
-	UISpriteSetMgr.instance:setYaXianSprite(arg_7_0.progressIcon, "icon_zhanluedian_get")
+	UISpriteSetMgr.instance:setYaXianSprite(self.progressIcon, "icon_zhanluedian_get")
 
-	arg_7_0.goTargetRewardItemContainer = gohelper.findChild(arg_7_0.viewGO, "#go_target/#go_targetRewardItemContainer")
-	arg_7_0.contentTransform = arg_7_0._gocontent.transform
-	arg_7_0.scrollWidth = recthelper.getWidth(arg_7_0._scrollreward.transform)
-	arg_7_0.grayLineTransform = arg_7_0._gograyline.transform
-	arg_7_0.normalLineTransform = arg_7_0._gonormalline.transform
-	arg_7_0.arrowTransform = arg_7_0._goarrow.transform
-	arg_7_0.itemPath = arg_7_0.viewContainer:getSetting().otherRes[1]
-	arg_7_0.rewardItemList = {}
-	arg_7_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_7_0._scrollreward.gameObject)
+	self.goTargetRewardItemContainer = gohelper.findChild(self.viewGO, "#go_target/#go_targetRewardItemContainer")
+	self.contentTransform = self._gocontent.transform
+	self.scrollWidth = recthelper.getWidth(self._scrollreward.transform)
+	self.grayLineTransform = self._gograyline.transform
+	self.normalLineTransform = self._gonormalline.transform
+	self.arrowTransform = self._goarrow.transform
+	self.itemPath = self.viewContainer:getSetting().otherRes[1]
+	self.rewardItemList = {}
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._scrollreward.gameObject)
 
-	arg_7_0._drag:AddDragBeginListener(arg_7_0._onDragBeginHandler, arg_7_0)
-	arg_7_0._drag:AddDragEndListener(arg_7_0._onDragEndHandler, arg_7_0)
+	self._drag:AddDragBeginListener(self._onDragBeginHandler, self)
+	self._drag:AddDragEndListener(self._onDragEndHandler, self)
 
-	arg_7_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_7_0._scrollreward.gameObject)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._scrollreward.gameObject)
 
-	arg_7_0._touch:AddClickDownListener(arg_7_0._onClickDownHandler, arg_7_0)
+	self._touch:AddClickDownListener(self._onClickDownHandler, self)
 
-	arg_7_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_7_0._scrollreward.gameObject, DungeonMapEpisodeAudio, arg_7_0._scrollreward)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._scrollreward.gameObject, DungeonMapEpisodeAudio, self._scrollreward)
 
-	arg_7_0:initTargetRewardItem()
-	arg_7_0._scrollreward:AddOnValueChanged(arg_7_0.onValueChanged, arg_7_0)
+	self:initTargetRewardItem()
+	self._scrollreward:AddOnValueChanged(self.onValueChanged, self)
 end
 
-function var_0_0._onDragBeginHandler(arg_8_0)
-	arg_8_0._audioScroll:onDragBegin()
+function YaXianRewardView:_onDragBeginHandler()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEndHandler(arg_9_0)
-	arg_9_0._audioScroll:onDragEnd()
+function YaXianRewardView:_onDragEndHandler()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDownHandler(arg_10_0)
-	arg_10_0._audioScroll:onClickDown()
+function YaXianRewardView:_onClickDownHandler()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0.onValueChanged(arg_11_0)
-	arg_11_0:refreshTargetRewardItem()
+function YaXianRewardView:onValueChanged()
+	self:refreshTargetRewardItem()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._txtprogress.text = YaXianModel.instance:getScore()
+function YaXianRewardView:onOpen()
+	self._txtprogress.text = YaXianModel.instance:getScore()
 
-	arg_12_0:refreshItems()
-	arg_12_0:refreshContentWidth()
-	arg_12_0:refreshLineWidthAndArrowAnchor()
-	arg_12_0:refreshTargetRewardItem()
-	TaskDispatcher.runDelay(arg_12_0.senGetBonusRequest, arg_12_0, 1)
+	self:refreshItems()
+	self:refreshContentWidth()
+	self:refreshLineWidthAndArrowAnchor()
+	self:refreshTargetRewardItem()
+	TaskDispatcher.runDelay(self.senGetBonusRequest, self, 1)
 end
 
-function var_0_0.refreshItems(arg_13_0)
-	local var_13_0 = lua_activity115_bonus.configList
-	local var_13_1
-	local var_13_2
+function YaXianRewardView:refreshItems()
+	local configList = lua_activity115_bonus.configList
+	local rewardItem, go
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_3 = arg_13_0.rewardItemList[iter_13_0]
+	for index, config in ipairs(configList) do
+		rewardItem = self.rewardItemList[index]
 
-		if not var_13_3 then
-			local var_13_4 = arg_13_0:getResInst(arg_13_0.itemPath, arg_13_0._gobottom, "item" .. iter_13_1.id)
+		if not rewardItem then
+			go = self:getResInst(self.itemPath, self._gobottom, "item" .. config.id)
+			rewardItem = YaXianRewardItem.New(go)
 
-			var_13_3 = YaXianRewardItem.New(var_13_4)
-
-			var_13_3:init()
-			table.insert(arg_13_0.rewardItemList, var_13_3)
+			rewardItem:init()
+			table.insert(self.rewardItemList, rewardItem)
 		end
 
-		var_13_3:update(iter_13_0, iter_13_1)
+		rewardItem:update(index, config)
 	end
 
-	for iter_13_2 = #var_13_0 + 1, #arg_13_0.rewardItemList do
-		arg_13_0.rewardItemList[iter_13_2]:hide()
+	for i = #configList + 1, #self.rewardItemList do
+		self.rewardItemList[i]:hide()
 	end
 end
 
-function var_0_0.refreshContentWidth(arg_14_0)
-	arg_14_0.contentWidth = #lua_activity115_bonus.configList * (YaXianEnum.RewardEnum.RewardItemWidth + YaXianEnum.RewardEnum.IntervalX) + YaXianEnum.RewardEnum.RewardContentOffsetX
+function YaXianRewardView:refreshContentWidth()
+	self.contentWidth = #lua_activity115_bonus.configList * (YaXianEnum.RewardEnum.RewardItemWidth + YaXianEnum.RewardEnum.IntervalX) + YaXianEnum.RewardEnum.RewardContentOffsetX
 
-	recthelper.setWidth(arg_14_0.contentTransform, arg_14_0.contentWidth)
+	recthelper.setWidth(self.contentTransform, self.contentWidth)
 end
 
-function var_0_0.calculateNormalWidth(arg_15_0)
-	arg_15_0.normalLineWidth = 0
+function YaXianRewardView:calculateNormalWidth()
+	self.normalLineWidth = 0
 
-	local var_15_0 = YaXianModel.instance:getScore()
-	local var_15_1 = false
-	local var_15_2 = 0
+	local score = YaXianModel.instance:getScore()
+	local find = false
+	local anchorIndex = 0
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.rewardItemList) do
-		if var_15_0 < iter_15_1.config.needScore then
-			local var_15_3 = arg_15_0.rewardItemList[iter_15_0 - 1]
-			local var_15_4 = var_15_3 and var_15_3:getAnchorPosX() or 0
-			local var_15_5 = var_15_3 and var_15_3.config.needScore or 0
-			local var_15_6 = iter_15_1:getAnchorPosX()
+	for index, rewardItem in ipairs(self.rewardItemList) do
+		if score < rewardItem.config.needScore then
+			local preRewardItem = self.rewardItemList[index - 1]
+			local preAnchorX = preRewardItem and preRewardItem:getAnchorPosX() or 0
+			local preNeedScore = preRewardItem and preRewardItem.config.needScore or 0
+			local currentAnchorX = rewardItem:getAnchorPosX()
 
-			arg_15_0.normalLineWidth = var_15_4 + (var_15_0 - var_15_5) / (iter_15_1.config.needScore - var_15_5) * (var_15_6 - var_15_4)
-			var_15_2 = iter_15_0
-			var_15_1 = true
+			self.normalLineWidth = preAnchorX + (score - preNeedScore) / (rewardItem.config.needScore - preNeedScore) * (currentAnchorX - preAnchorX)
+			anchorIndex = index
+			find = true
 
 			break
 		end
 	end
 
-	if not var_15_1 then
-		arg_15_0.normalLineWidth = arg_15_0.contentWidth
-		var_15_2 = #arg_15_0.rewardItemList
+	if not find then
+		self.normalLineWidth = self.contentWidth
+		anchorIndex = #self.rewardItemList
 	end
 
-	local var_15_7 = #arg_15_0.rewardItemList - 4
+	local len = #self.rewardItemList - 4
 
-	arg_15_0._scrollreward.horizontalNormalizedPosition = (var_15_2 - 4) / var_15_7
+	self._scrollreward.horizontalNormalizedPosition = (anchorIndex - 4) / len
 end
 
-function var_0_0.refreshLineWidthAndArrowAnchor(arg_16_0)
-	arg_16_0:calculateNormalWidth()
-	recthelper.setWidth(arg_16_0.grayLineTransform, arg_16_0.contentWidth)
-	recthelper.setWidth(arg_16_0.normalLineTransform, arg_16_0.normalLineWidth)
-	recthelper.setAnchorX(arg_16_0.arrowTransform, arg_16_0.normalLineWidth)
+function YaXianRewardView:refreshLineWidthAndArrowAnchor()
+	self:calculateNormalWidth()
+	recthelper.setWidth(self.grayLineTransform, self.contentWidth)
+	recthelper.setWidth(self.normalLineTransform, self.normalLineWidth)
+	recthelper.setAnchorX(self.arrowTransform, self.normalLineWidth)
 end
 
-function var_0_0.refreshTargetRewardItem(arg_17_0)
-	local var_17_0 = arg_17_0:getTargetRewardConfig()
+function YaXianRewardView:refreshTargetRewardItem()
+	local config = self:getTargetRewardConfig()
 
-	if arg_17_0.targetRewardItem.config and arg_17_0.targetRewardItem.config.id == var_17_0.id then
+	if self.targetRewardItem.config and self.targetRewardItem.config.id == config.id then
 		return
 	end
 
-	arg_17_0.targetRewardItem:updateByTarget(var_17_0)
+	self.targetRewardItem:updateByTarget(config)
 end
 
-function var_0_0.getTargetRewardConfig(arg_18_0)
-	local var_18_0 = -(recthelper.getAnchorX(arg_18_0.contentTransform) - arg_18_0.scrollWidth - YaXianEnum.RewardEnum.HalfRewardItemWidth)
+function YaXianRewardView:getTargetRewardConfig()
+	local maxAnchorX = recthelper.getAnchorX(self.contentTransform) - self.scrollWidth - YaXianEnum.RewardEnum.HalfRewardItemWidth
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.rewardItemList) do
-		if iter_18_1:isImportItem() and var_18_0 <= iter_18_1:getAnchorPosX() then
-			return iter_18_1.config
+	maxAnchorX = -maxAnchorX
+
+	for _, rewardItem in ipairs(self.rewardItemList) do
+		if rewardItem:isImportItem() and maxAnchorX <= rewardItem:getAnchorPosX() then
+			return rewardItem.config
 		end
 	end
 
-	for iter_18_2 = #lua_activity115_bonus.configList, 1, -1 do
-		local var_18_1 = lua_activity115_bonus.configList[iter_18_2]
+	for i = #lua_activity115_bonus.configList, 1, -1 do
+		local config = lua_activity115_bonus.configList[i]
 
-		if var_18_1.important ~= 0 then
-			return var_18_1
+		if config.important ~= 0 then
+			return config
 		end
 	end
 end
 
-function var_0_0.senGetBonusRequest(arg_19_0)
+function YaXianRewardView:senGetBonusRequest()
 	Activity115Rpc.instance:sendAct115BonusRequest()
 end
 
-function var_0_0.onClose(arg_20_0)
+function YaXianRewardView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_insight_close)
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	arg_21_0._simagebg:UnLoadImage()
-	arg_21_0._simageblackbg:UnLoadImage()
-	arg_21_0._drag:RemoveDragBeginListener()
-	arg_21_0._drag:RemoveDragEndListener()
+function YaXianRewardView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simageblackbg:UnLoadImage()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
 
-	arg_21_0._drag = nil
+	self._drag = nil
 
-	arg_21_0._touch:RemoveClickDownListener()
+	self._touch:RemoveClickDownListener()
 
-	arg_21_0._touch = nil
+	self._touch = nil
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0.rewardItemList) do
-		iter_21_1:onDestroy()
+	for _, rewardItem in ipairs(self.rewardItemList) do
+		rewardItem:onDestroy()
 	end
 
-	arg_21_0.targetRewardItem:onDestroy()
-	arg_21_0._scrollreward:RemoveOnValueChanged()
+	self.targetRewardItem:onDestroy()
+	self._scrollreward:RemoveOnValueChanged()
 
-	arg_21_0.rewardItemList = nil
+	self.rewardItemList = nil
 end
 
-return var_0_0
+return YaXianRewardView

@@ -1,15 +1,19 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCameraShake", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventCameraShake.lua
 
-local var_0_0 = class("FightTLEventCameraShake", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventCameraShake", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = tonumber(arg_1_3[1]) or 0
-	local var_1_1 = tonumber(arg_1_3[2]) or 0
-	local var_1_2 = tonumber(arg_1_3[3]) or 0
+local FightTLEventCameraShake = class("FightTLEventCameraShake", FightTimelineTrackItem)
+
+function FightTLEventCameraShake:onTrackStart(fightStepData, duration, paramsArr)
+	local magnitude = tonumber(paramsArr[1]) or 0
+	local decreaseRate = tonumber(paramsArr[2]) or 0
+	local shakeType = tonumber(paramsArr[3]) or 0
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		GameSceneMgr.instance:getCurScene().camera:shake(arg_1_2, var_1_0, var_1_2, var_1_1)
+		local fightScene = GameSceneMgr.instance:getCurScene()
+
+		fightScene.camera:shake(duration, magnitude, shakeType, decreaseRate)
 	end
 end
 
-return var_0_0
+return FightTLEventCameraShake

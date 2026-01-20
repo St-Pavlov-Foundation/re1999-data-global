@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_6.common.ActivityLiveMgr2_6", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/common/ActivityLiveMgr2_6.lua
 
-local var_0_0 = class("ActivityLiveMgr2_6")
+module("modules.logic.versionactivity2_6.common.ActivityLiveMgr2_6", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local ActivityLiveMgr2_6 = class("ActivityLiveMgr2_6")
+
+function ActivityLiveMgr2_6:init()
 	return
 end
 
-function var_0_0.getActId2ViewList(arg_2_0)
+function ActivityLiveMgr2_6:getActId2ViewList()
 	return {
 		[VersionActivity2_6Enum.ActivityId.ReactivityFactory] = {
 			ViewName.VersionActivity1_8FactoryMapView,
@@ -39,6 +41,6 @@ function var_0_0.getActId2ViewList(arg_2_0)
 	}
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityLiveMgr2_6.instance = ActivityLiveMgr2_6.New()
 
-return var_0_0
+return ActivityLiveMgr2_6

@@ -1,134 +1,148 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeFactionLockedTips", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeFactionLockedTips.lua
 
-local var_0_0 = class("RougeFactionLockedTips", BaseView)
+module("modules.logic.rouge.dlc.101.view.RougeFactionLockedTips", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._scrolltips = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tips")
-	arg_1_0._imageskillicon = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/top/#image_skillicon")
-	arg_1_0._godesccontainer = gohelper.findChild(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer")
-	arg_1_0._txtdecitem = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer/#txt_decitem")
-	arg_1_0._btncostunlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#btn_costunlock")
-	arg_1_0._txtunlocknum = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#btn_costunlock/#txt_unlocknum")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#btn_costunlock/#txt_unlocknum/#image_icon")
-	arg_1_0._goRightTop = gohelper.findChild(arg_1_0.viewGO, "#go_RightTop")
-	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.viewGO, "#go_RightTop/point/#image_point")
-	arg_1_0._txtpoint = gohelper.findChildText(arg_1_0.viewGO, "#go_RightTop/point/#txt_point")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_RightTop/point/#btn_click")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_RightTop/tips")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "#go_RightTop/tips/#txt_tips")
+local RougeFactionLockedTips = class("RougeFactionLockedTips", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeFactionLockedTips:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._scrolltips = gohelper.findChildScrollRect(self.viewGO, "#scroll_tips")
+	self._imageskillicon = gohelper.findChildImage(self.viewGO, "#scroll_tips/Viewport/Content/top/#image_skillicon")
+	self._godesccontainer = gohelper.findChild(self.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer")
+	self._txtdecitem = gohelper.findChildText(self.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer/#txt_decitem")
+	self._btncostunlock = gohelper.findChildButtonWithAudio(self.viewGO, "#scroll_tips/Viewport/Content/#btn_costunlock")
+	self._txtunlocknum = gohelper.findChildText(self.viewGO, "#scroll_tips/Viewport/Content/#btn_costunlock/#txt_unlocknum")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#scroll_tips/Viewport/Content/#btn_costunlock/#txt_unlocknum/#image_icon")
+	self._goRightTop = gohelper.findChild(self.viewGO, "#go_RightTop")
+	self._imagepoint = gohelper.findChildImage(self.viewGO, "#go_RightTop/point/#image_point")
+	self._txtpoint = gohelper.findChildText(self.viewGO, "#go_RightTop/point/#txt_point")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_RightTop/point/#btn_click")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_RightTop/tips")
+	self._txttips = gohelper.findChildText(self.viewGO, "#go_RightTop/tips/#txt_tips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btncostunlock:AddClickListener(arg_2_0._btncostunlockOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function RougeFactionLockedTips:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btncostunlock:AddClickListener(self._btncostunlockOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btncostunlock:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
+function RougeFactionLockedTips:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btncostunlock:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RougeFactionLockedTips:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncostunlockOnClick(arg_5_0)
-	if RougeDLCModel101.instance:getTotalEmblemCount() >= arg_5_0._unlockEmblem then
+function RougeFactionLockedTips:_btncostunlockOnClick()
+	local curTotalEmblem = RougeDLCModel101.instance:getTotalEmblemCount()
+
+	if curTotalEmblem >= self._unlockEmblem then
 		AudioMgr.instance:trigger(AudioEnum.UI.UnlockRougeSkill)
 
-		local var_5_0 = RougeOutsideModel.instance:season()
+		local season = RougeOutsideModel.instance:season()
 
-		RougeRpc.instance:sendRougeUnlockSkillRequest(var_5_0, arg_5_0._unlockSkillId, function(arg_6_0, arg_6_1)
-			if arg_6_1 ~= 0 then
+		RougeRpc.instance:sendRougeUnlockSkillRequest(season, self._unlockSkillId, function(_, resultCode)
+			if resultCode ~= 0 then
 				return
 			end
 
-			RougeOutsideModel.instance:getRougeGameRecord():updateSkillUnlockInfo(arg_5_0._skillType, arg_5_0._unlockSkillId)
-			RougeDLCModel101.instance:getLimiterMo():updateTotalEmblemCount(-arg_5_0._unlockEmblem)
+			local gameRecordInfo = RougeOutsideModel.instance:getRougeGameRecord()
+
+			gameRecordInfo:updateSkillUnlockInfo(self._skillType, self._unlockSkillId)
+
+			local limiterMo = RougeDLCModel101.instance:getLimiterMo()
+
+			limiterMo:updateTotalEmblemCount(-self._unlockEmblem)
 			RougeDLCController101.instance:dispatchEvent(RougeDLCEvent101.UpdateEmblem)
-			RougeController.instance:dispatchEvent(RougeEvent.UpdateUnlockSkill, arg_5_0._skillType, arg_5_0._unlockSkillId)
-			arg_5_0:closeThis()
+			RougeController.instance:dispatchEvent(RougeEvent.UpdateUnlockSkill, self._skillType, self._unlockSkillId)
+			self:closeThis()
 		end)
 	else
 		GameFacade.showToast(ToastEnum.LackEmblem)
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_7_0)
-	arg_7_0._isTipVisible = not arg_7_0._isTipVisible
+function RougeFactionLockedTips:_btnclickOnClick()
+	self._isTipVisible = not self._isTipVisible
 
-	gohelper.setActive(arg_7_0._gotips, arg_7_0._isTipVisible)
+	gohelper.setActive(self._gotips, self._isTipVisible)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateEmblem, arg_8_0._onUpdateEmblem, arg_8_0)
+function RougeFactionLockedTips:_editableInitView()
+	self:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateEmblem, self._onUpdateEmblem, self)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function RougeFactionLockedTips:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_refreshSkillInfo()
-	arg_10_0:_onUpdateEmblem()
+function RougeFactionLockedTips:onOpen()
+	self:_refreshSkillInfo()
+	self:_onUpdateEmblem()
 end
 
-local var_0_1 = "#D5D1C8"
-local var_0_2 = "#BF2E11"
+local MatchEmblemColor = "#D5D1C8"
+local LackEmblemColor = "#BF2E11"
 
-function var_0_0._refreshSkillInfo(arg_11_0)
-	arg_11_0._unlockSkillId = arg_11_0.viewParam and arg_11_0.viewParam.skillId
+function RougeFactionLockedTips:_refreshSkillInfo()
+	self._unlockSkillId = self.viewParam and self.viewParam.skillId
 
-	local var_11_0 = RougeDLCConfig101.instance:getUnlockSkills(arg_11_0._unlockSkillId)
+	local unlockCo = RougeDLCConfig101.instance:getUnlockSkills(self._unlockSkillId)
 
-	arg_11_0._skillType = var_11_0.type
-	arg_11_0._unlockEmblem = var_11_0 and var_11_0.unlockEmblem or 0
+	self._skillType = unlockCo.type
+	self._unlockEmblem = unlockCo and unlockCo.unlockEmblem or 0
 
-	local var_11_1 = RougeDLCModel101.instance:getTotalEmblemCount() >= arg_11_0._unlockEmblem and var_0_1 or var_0_2
+	local totalEmblemCount = RougeDLCModel101.instance:getTotalEmblemCount()
+	local isEmblemCountMatch = totalEmblemCount >= self._unlockEmblem
+	local emblemCountColor = isEmblemCountMatch and MatchEmblemColor or LackEmblemColor
 
-	arg_11_0._txtunlocknum.text = string.format("<%s>-%s</color>", var_11_1, arg_11_0._unlockEmblem)
+	self._txtunlocknum.text = string.format("<%s>-%s</color>", emblemCountColor, self._unlockEmblem)
 
-	local var_11_2 = RougeOutsideModel.instance:config():getSkillCo(var_11_0.type, var_11_0.skillId)
-	local var_11_3 = {}
+	local rougeConfig = RougeOutsideModel.instance:config()
+	local skillCo = rougeConfig:getSkillCo(unlockCo.type, unlockCo.skillId)
+	local descList = {}
 
-	if not string.nilorempty(var_11_2.desc) then
-		var_11_3 = string.split(var_11_2.desc, "#")
+	if not string.nilorempty(skillCo.desc) then
+		descList = string.split(skillCo.desc, "#")
 	end
 
-	gohelper.CreateObjList(arg_11_0, arg_11_0.refreshDesc, var_11_3, arg_11_0._godesccontainer, arg_11_0._txtdecitem.gameObject)
-	UISpriteSetMgr.instance:setRouge2Sprite(arg_11_0._imageskillicon, var_11_2.icon)
+	gohelper.CreateObjList(self, self.refreshDesc, descList, self._godesccontainer, self._txtdecitem.gameObject)
+	UISpriteSetMgr.instance:setRouge2Sprite(self._imageskillicon, skillCo.icon)
 end
 
-function var_0_0.refreshDesc(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	gohelper.onceAddComponent(arg_12_1, gohelper.Type_TextMesh).text = arg_12_2
+function RougeFactionLockedTips:refreshDesc(obj, descStr, index)
+	local txtDesc = gohelper.onceAddComponent(obj, gohelper.Type_TextMesh)
+
+	txtDesc.text = descStr
 end
 
-function var_0_0._onUpdateEmblem(arg_13_0)
-	local var_13_0 = lua_rouge_dlc_const.configDict[RougeDLCEnum101.Const.MaxEmblemCount]
-	local var_13_1 = var_13_0 and var_13_0.value or 0
-	local var_13_2 = RougeDLCModel101.instance:getTotalEmblemCount()
-	local var_13_3 = {
-		var_13_2,
-		var_13_1
+function RougeFactionLockedTips:_onUpdateEmblem()
+	local maxEmbleCountCo = lua_rouge_dlc_const.configDict[RougeDLCEnum101.Const.MaxEmblemCount]
+	local maxEmblemCount = maxEmbleCountCo and maxEmbleCountCo.value or 0
+	local curTotalEmblem = RougeDLCModel101.instance:getTotalEmblemCount()
+	local params = {
+		curTotalEmblem,
+		maxEmblemCount
 	}
 
-	arg_13_0._txtpoint.text = RougeDLCModel101.instance:getTotalEmblemCount()
-	arg_13_0._txttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_dlc_101_emblemTips"), var_13_3)
+	self._txtpoint.text = RougeDLCModel101.instance:getTotalEmblemCount()
+	self._txttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_dlc_101_emblemTips"), params)
 end
 
-function var_0_0.onClose(arg_14_0)
+function RougeFactionLockedTips:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function RougeFactionLockedTips:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeFactionLockedTips

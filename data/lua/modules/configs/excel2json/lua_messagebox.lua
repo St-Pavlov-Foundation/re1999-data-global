@@ -1,19 +1,23 @@
-﻿module("modules.configs.excel2json.lua_messagebox", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_messagebox.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_messagebox", package.seeall)
+
+local lua_messagebox = {}
+local fields = {
 	id = 1,
+	title = 3,
 	content = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
-	content = 1
+local mlStringKey = {
+	content = 1,
+	title = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_messagebox.onLoad(json)
+	lua_messagebox.configList, lua_messagebox.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_messagebox

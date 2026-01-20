@@ -1,8 +1,10 @@
-﻿module("modules.logic.sp01.assassinChase.config.AssassinChaseConfig", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassinChase/config/AssassinChaseConfig.lua
 
-local var_0_0 = class("AssassinChaseConfig", BaseConfig)
+module("modules.logic.sp01.assassinChase.config.AssassinChaseConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local AssassinChaseConfig = class("AssassinChaseConfig", BaseConfig)
+
+function AssassinChaseConfig:reqConfigNames()
 	return {
 		"activity206_const",
 		"activity206_reward_direction",
@@ -13,83 +15,83 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._dialogueConfigListDic = {}
+function AssassinChaseConfig:onInit()
+	self._dialogueConfigListDic = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity206_const" then
-		arg_3_0._constConfig = arg_3_2
-	elseif arg_3_1 == "activity206_reward_direction" then
-		arg_3_0._rewardDirectionConfig = arg_3_2
-	elseif arg_3_1 == "activity206_reward_group" then
-		arg_3_0._rewardGroupConfig = arg_3_2
-	elseif arg_3_1 == "activity206_reward" then
-		arg_3_0._rewardConfig = arg_3_2
-	elseif arg_3_1 == "activity206_dialogue" then
-		arg_3_0._dialogueConfig = arg_3_2
-	elseif arg_3_1 == "activity206_desc" then
-		arg_3_0._descConfig = arg_3_2
+function AssassinChaseConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity206_const" then
+		self._constConfig = configTable
+	elseif configName == "activity206_reward_direction" then
+		self._rewardDirectionConfig = configTable
+	elseif configName == "activity206_reward_group" then
+		self._rewardGroupConfig = configTable
+	elseif configName == "activity206_reward" then
+		self._rewardConfig = configTable
+	elseif configName == "activity206_dialogue" then
+		self._dialogueConfig = configTable
+	elseif configName == "activity206_desc" then
+		self._descConfig = configTable
 	end
 end
 
-function var_0_0.getDescConfig(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._descConfig == nil or arg_4_0._descConfig.configDict[arg_4_1] == nil then
+function AssassinChaseConfig:getDescConfig(activityId, stageId)
+	if self._descConfig == nil or self._descConfig.configDict[activityId] == nil then
 		return nil
 	end
 
-	return arg_4_0._descConfig.configDict[arg_4_1][arg_4_2]
+	return self._descConfig.configDict[activityId][stageId]
 end
 
-function var_0_0.getConstConfig(arg_5_0, arg_5_1)
-	if not arg_5_0._constConfig then
+function AssassinChaseConfig:getConstConfig(constId)
+	if not self._constConfig then
 		return nil
 	end
 
-	return arg_5_0._constConfig.configDict[arg_5_1]
+	return self._constConfig.configDict[constId]
 end
 
-function var_0_0.getRewardConfig(arg_6_0, arg_6_1)
-	if not arg_6_0._rewardConfig then
+function AssassinChaseConfig:getRewardConfig(rewardId)
+	if not self._rewardConfig then
 		return nil
 	end
 
-	return arg_6_0._rewardConfig.configDict[arg_6_1]
+	return self._rewardConfig.configDict[rewardId]
 end
 
-function var_0_0.getDirectionConfig(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0._rewardDirectionConfig == nil or arg_7_0._rewardDirectionConfig.configDict[arg_7_1] == nil then
+function AssassinChaseConfig:getDirectionConfig(activityId, directionId)
+	if self._rewardDirectionConfig == nil or self._rewardDirectionConfig.configDict[activityId] == nil then
 		return nil
 	end
 
-	return arg_7_0._rewardDirectionConfig.configDict[arg_7_1][arg_7_2]
+	return self._rewardDirectionConfig.configDict[activityId][directionId]
 end
 
-function var_0_0.getDialogueConfigList(arg_8_0, arg_8_1)
-	if not arg_8_0._dialogueConfigListDic or not arg_8_0._dialogueConfig.configDict[arg_8_1] then
+function AssassinChaseConfig:getDialogueConfigList(activityId)
+	if not self._dialogueConfigListDic or not self._dialogueConfig.configDict[activityId] then
 		return nil
 	end
 
-	if not arg_8_0._dialogueConfigListDic[arg_8_1] then
-		local var_8_0 = {}
-		local var_8_1 = arg_8_0._dialogueConfig.configDict[arg_8_1]
+	if not self._dialogueConfigListDic[activityId] then
+		local dialogConfigList = {}
+		local configDic = self._dialogueConfig.configDict[activityId]
 
-		for iter_8_0, iter_8_1 in pairs(var_8_1) do
-			table.insert(var_8_0, iter_8_1)
+		for _, config in pairs(configDic) do
+			table.insert(dialogConfigList, config)
 		end
 
-		table.sort(var_8_0, arg_8_0.sortDialogueConfigList)
+		table.sort(dialogConfigList, self.sortDialogueConfigList)
 
-		arg_8_0._dialogueConfigListDic[arg_8_1] = var_8_0
+		self._dialogueConfigListDic[activityId] = dialogConfigList
 	end
 
-	return arg_8_0._dialogueConfigListDic[arg_8_1]
+	return self._dialogueConfigListDic[activityId]
 end
 
-function var_0_0.sortDialogueConfigList(arg_9_0, arg_9_1)
-	return arg_9_0.chaseId < arg_9_1.chaseId
+function AssassinChaseConfig.sortDialogueConfigList(a, b)
+	return a.chaseId < b.chaseId
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinChaseConfig.instance = AssassinChaseConfig.New()
 
-return var_0_0
+return AssassinChaseConfig

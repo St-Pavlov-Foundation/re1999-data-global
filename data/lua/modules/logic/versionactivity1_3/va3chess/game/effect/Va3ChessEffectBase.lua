@@ -1,95 +1,97 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessEffectBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/effect/Va3ChessEffectBase.lua
 
-local var_0_0 = class("Va3ChessEffectBase")
+module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessEffectBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._target = arg_1_1
-	arg_1_0._effectCfg = arg_1_0._target.effectCfg
+local Va3ChessEffectBase = class("Va3ChessEffectBase")
+
+function Va3ChessEffectBase:ctor(interactObj)
+	self._target = interactObj
+	self._effectCfg = self._target.effectCfg
 end
 
-function var_0_0.dispose(arg_2_0)
-	arg_2_0:onDispose()
+function Va3ChessEffectBase:dispose()
+	self:onDispose()
 
-	if arg_2_0._loader then
-		arg_2_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_2_0._loader = nil
+		self._loader = nil
 	end
 
-	gohelper.destroy(arg_2_0.effectGO)
+	gohelper.destroy(self.effectGO)
 
-	arg_2_0.effectGO = nil
+	self.effectGO = nil
 end
 
-function var_0_0.onDispose(arg_3_0)
+function Va3ChessEffectBase:onDispose()
 	return
 end
 
-function var_0_0.onAvatarFinish(arg_4_0)
-	if arg_4_0._effectCfg and not string.nilorempty(arg_4_0._effectCfg.avatar) then
-		arg_4_0.effectGO = UnityEngine.GameObject.New("effect_" .. arg_4_0._effectCfg.id)
-		arg_4_0._loader = PrefabInstantiate.Create(arg_4_0.effectGO)
+function Va3ChessEffectBase:onAvatarFinish()
+	if self._effectCfg and not string.nilorempty(self._effectCfg.avatar) then
+		self.effectGO = UnityEngine.GameObject.New("effect_" .. self._effectCfg.id)
+		self._loader = PrefabInstantiate.Create(self.effectGO)
 
-		gohelper.addChild(arg_4_0._target.avatar.sceneGo, arg_4_0.effectGO)
+		gohelper.addChild(self._target.avatar.sceneGo, self.effectGO)
 
-		local var_4_0
+		local pointGO
 
-		if arg_4_0._target.avatar.loader and not string.nilorempty(arg_4_0._effectCfg.piontName) then
-			var_4_0 = gohelper.findChild(arg_4_0._target.avatar.loader:getInstGO(), arg_4_0._effectCfg.piontName)
+		if self._target.avatar.loader and not string.nilorempty(self._effectCfg.piontName) then
+			pointGO = gohelper.findChild(self._target.avatar.loader:getInstGO(), self._effectCfg.piontName)
 		end
 
-		if not gohelper.isNil(var_4_0) then
-			local var_4_1, var_4_2, var_4_3 = transformhelper.getPos(var_4_0.transform)
+		if not gohelper.isNil(pointGO) then
+			local posX, posY, posZ = transformhelper.getPos(pointGO.transform)
 
-			transformhelper.setPos(arg_4_0.effectGO.transform, var_4_1, var_4_2, var_4_3)
+			transformhelper.setPos(self.effectGO.transform, posX, posY, posZ)
 		else
-			transformhelper.setLocalPos(arg_4_0.effectGO.transform, 0, 0, 0)
+			transformhelper.setLocalPos(self.effectGO.transform, 0, 0, 0)
 		end
 
-		local var_4_4 = string.format(Va3ChessEnum.SceneResPath.AvatarItemPath, arg_4_0._effectCfg.avatar)
+		local resPath = string.format(Va3ChessEnum.SceneResPath.AvatarItemPath, self._effectCfg.avatar)
 
-		arg_4_0._loader:startLoad(var_4_4, arg_4_0.onSceneObjectLoadFinish, arg_4_0)
+		self._loader:startLoad(resPath, self.onSceneObjectLoadFinish, self)
 	else
-		arg_4_0.isLoadFinish = true
+		self.isLoadFinish = true
 
-		arg_4_0:onAvatarLoaded()
-		arg_4_0:onCheckEffect()
+		self:onAvatarLoaded()
+		self:onCheckEffect()
 	end
 end
 
-function var_0_0.onSceneObjectLoadFinish(arg_5_0)
-	if arg_5_0._loader then
-		arg_5_0.isLoadFinish = true
+function Va3ChessEffectBase:onSceneObjectLoadFinish()
+	if self._loader then
+		self.isLoadFinish = true
 
-		transformhelper.setLocalPos(arg_5_0._loader:getInstGO().transform, 0, 0, 0)
-		arg_5_0:onAvatarLoaded()
-		arg_5_0:onCheckEffect()
+		transformhelper.setLocalPos(self._loader:getInstGO().transform, 0, 0, 0)
+		self:onAvatarLoaded()
+		self:onCheckEffect()
 	end
 end
 
-function var_0_0.onSelected(arg_6_0)
+function Va3ChessEffectBase:onSelected()
 	return
 end
 
-function var_0_0.onCancelSelect(arg_7_0)
+function Va3ChessEffectBase:onCancelSelect()
 	return
 end
 
-function var_0_0.onAvatarLoaded(arg_8_0)
+function Va3ChessEffectBase:onAvatarLoaded()
 	return
 end
 
-function var_0_0.onCheckEffect(arg_9_0)
-	if arg_9_0._target then
-		local var_9_0 = arg_9_0._target.originData
+function Va3ChessEffectBase:onCheckEffect()
+	if self._target then
+		local originData = self._target.originData
 
-		if var_9_0 and var_9_0.data and var_9_0.data.lostTarget ~= nil then
-			arg_9_0._target.effect:refreshSearchFailed()
-			arg_9_0._target.goToObject:refreshTarget()
+		if originData and originData.data and originData.data.lostTarget ~= nil then
+			self._target.effect:refreshSearchFailed()
+			self._target.goToObject:refreshTarget()
 		end
 
-		arg_9_0._target.goToObject:refreshSource()
+		self._target.goToObject:refreshSource()
 	end
 end
 
-return var_0_0
+return Va3ChessEffectBase

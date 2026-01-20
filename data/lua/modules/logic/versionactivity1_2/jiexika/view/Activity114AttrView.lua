@@ -1,224 +1,228 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114AttrView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114AttrView.lua
 
-local var_0_0 = class("Activity114AttrView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114AttrView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._path = arg_1_1
+local Activity114AttrView = class("Activity114AttrView", BaseView)
+
+function Activity114AttrView:ctor(path)
+	self._path = path
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.go = gohelper.findChild(arg_2_0.viewGO, arg_2_0._path)
-	arg_2_0._goattrdetail = gohelper.findChild(arg_2_0.go, "#go_attrdetail")
-	arg_2_0._goempty = gohelper.findChild(arg_2_0.go, "#go_attrdetail/#go_empty")
-	arg_2_0._scroll = gohelper.findChildScrollRect(arg_2_0.go, "#go_attrdetail/#scroll")
-	arg_2_0._gotips = gohelper.findChild(arg_2_0.viewGO, "#go_tips")
-	arg_2_0._btnCloseTips = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_tips/#btn_closeTips")
-	arg_2_0._gofeaturecontent = gohelper.findChild(arg_2_0.viewGO, "#go_tips/bg/#scroll_feature/Viewport/content")
-	arg_2_0._gofeatureitem = gohelper.findChild(arg_2_0.viewGO, "#go_tips/bg/#scroll_feature/Viewport/content/#go_featureitem")
-	arg_2_0._radar = gohelper.findChild(arg_2_0.viewGO, "#go_eduSelect/teachAttr/radarChart"):GetComponent(typeof(RadarChart))
-	arg_2_0._btnspecialattrtips = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_attr/#go_attrdetail/specialattrtitle/#btn_specialattrtips")
+function Activity114AttrView:onInitView()
+	self.go = gohelper.findChild(self.viewGO, self._path)
+	self._goattrdetail = gohelper.findChild(self.go, "#go_attrdetail")
+	self._goempty = gohelper.findChild(self.go, "#go_attrdetail/#go_empty")
+	self._scroll = gohelper.findChildScrollRect(self.go, "#go_attrdetail/#scroll")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._btnCloseTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_tips/#btn_closeTips")
+	self._gofeaturecontent = gohelper.findChild(self.viewGO, "#go_tips/bg/#scroll_feature/Viewport/content")
+	self._gofeatureitem = gohelper.findChild(self.viewGO, "#go_tips/bg/#scroll_feature/Viewport/content/#go_featureitem")
+	self._radar = gohelper.findChild(self.viewGO, "#go_eduSelect/teachAttr/radarChart"):GetComponent(typeof(RadarChart))
+	self._btnspecialattrtips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_attr/#go_attrdetail/specialattrtitle/#btn_specialattrtips")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnCloseTips:AddClickListener(arg_3_0.closeTips, arg_3_0)
-	arg_3_0._btnspecialattrtips:AddClickListener(arg_3_0.showFeaturesTips, arg_3_0)
-	arg_3_0.viewContainer:registerCallback(Activity114Event.EduSelectAttrChange, arg_3_0.onAttrSelectChange, arg_3_0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnAttrUpdate, arg_3_0.updateAttr, arg_3_0)
-	Activity114Controller.instance:registerCallback(Activity114Event.ShowFeaturesTips, arg_3_0.showFeaturesTips, arg_3_0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnNewFeature, arg_3_0.updateFeature, arg_3_0)
+function Activity114AttrView:addEvents()
+	self._btnCloseTips:AddClickListener(self.closeTips, self)
+	self._btnspecialattrtips:AddClickListener(self.showFeaturesTips, self)
+	self.viewContainer:registerCallback(Activity114Event.EduSelectAttrChange, self.onAttrSelectChange, self)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnAttrUpdate, self.updateAttr, self)
+	Activity114Controller.instance:registerCallback(Activity114Event.ShowFeaturesTips, self.showFeaturesTips, self)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnNewFeature, self.updateFeature, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnCloseTips:RemoveClickListener()
-	arg_4_0._btnspecialattrtips:RemoveClickListener()
-	arg_4_0.viewContainer:unregisterCallback(Activity114Event.EduSelectAttrChange, arg_4_0.onAttrSelectChange, arg_4_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnAttrUpdate, arg_4_0.updateAttr, arg_4_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.ShowFeaturesTips, arg_4_0.showFeaturesTips, arg_4_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnNewFeature, arg_4_0.updateFeature, arg_4_0)
+function Activity114AttrView:removeEvents()
+	self._btnCloseTips:RemoveClickListener()
+	self._btnspecialattrtips:RemoveClickListener()
+	self.viewContainer:unregisterCallback(Activity114Event.EduSelectAttrChange, self.onAttrSelectChange, self)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnAttrUpdate, self.updateAttr, self)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.ShowFeaturesTips, self.showFeaturesTips, self)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnNewFeature, self.updateFeature, self)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.attrTb = {}
+function Activity114AttrView:_editableInitView()
+	self.attrTb = {}
 
-	for iter_5_0 = 1, Activity114Enum.Attr.End - 1 do
-		local var_5_0 = arg_5_0:getUserDataTb_()
-		local var_5_1 = Activity114Config.instance:getAttrName(Activity114Model.instance.id, iter_5_0)
-		local var_5_2 = Activity114Config.instance:getAttrCo(Activity114Model.instance.id, iter_5_0).attribute
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		local attrCom = self:getUserDataTb_()
+		local attrName = Activity114Config.instance:getAttrName(Activity114Model.instance.id, i)
+		local attrId = Activity114Config.instance:getAttrCo(Activity114Model.instance.id, i).attribute
 
-		var_5_0.bg = gohelper.findChild(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/bg")
-		var_5_0.imageIcon = gohelper.findChildImage(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/image_icon")
-		var_5_0.txtValue = gohelper.findChildTextMesh(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/#txt_attr/#txt_value")
-		var_5_0.goAddValue = gohelper.findChild(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/#txt_attr/#txt_value/#go_addvalue")
-		var_5_0.txtAddValue = gohelper.findChildTextMesh(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/#txt_attr/#txt_value/#go_addvalue/#txt_addvalue")
-		var_5_0.gouplevel = gohelper.findChild(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/#txt_attr/#txt_value/#go_uplevel")
-		var_5_0.txtLv = gohelper.findChildTextMesh(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/#txt_attr/#txt_lv")
-		var_5_0.glowAnim = gohelper.findChildComponent(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0, typeof(UnityEngine.Animator))
-		gohelper.findChildTextMesh(arg_5_0.go, "#go_attrdetail/attr/#go_attr" .. iter_5_0 .. "/#txt_attr").text = var_5_1
+		attrCom.bg = gohelper.findChild(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/bg")
+		attrCom.imageIcon = gohelper.findChildImage(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/image_icon")
+		attrCom.txtValue = gohelper.findChildTextMesh(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/#txt_attr/#txt_value")
+		attrCom.goAddValue = gohelper.findChild(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/#txt_attr/#txt_value/#go_addvalue")
+		attrCom.txtAddValue = gohelper.findChildTextMesh(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/#txt_attr/#txt_value/#go_addvalue/#txt_addvalue")
+		attrCom.gouplevel = gohelper.findChild(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/#txt_attr/#txt_value/#go_uplevel")
+		attrCom.txtLv = gohelper.findChildTextMesh(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/#txt_attr/#txt_lv")
+		attrCom.glowAnim = gohelper.findChildComponent(self.go, "#go_attrdetail/attr/#go_attr" .. i, typeof(UnityEngine.Animator))
+		gohelper.findChildTextMesh(self.go, "#go_attrdetail/attr/#go_attr" .. i .. "/#txt_attr").text = attrName
 
-		UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(var_5_0.imageIcon, "icons_" .. var_5_2)
-		gohelper.setActive(var_5_0.bg, iter_5_0 % 2 == 0)
+		UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(attrCom.imageIcon, "icons_" .. attrId)
+		gohelper.setActive(attrCom.bg, i % 2 == 0)
 
-		var_5_0.txtAddValue.text = ""
+		attrCom.txtAddValue.text = ""
 
-		gohelper.setActive(var_5_0.goAddValue, false)
-		gohelper.setActive(var_5_0.gouplevel, false)
+		gohelper.setActive(attrCom.goAddValue, false)
+		gohelper.setActive(attrCom.gouplevel, false)
 
-		arg_5_0.attrTb[iter_5_0] = var_5_0
+		self.attrTb[i] = attrCom
 	end
 
-	arg_5_0._status = 0
+	self._status = 0
 
-	gohelper.setActive(gohelper.findChild(arg_5_0.viewGO, "#go_attrdetail/#scroll/item"), false)
+	gohelper.setActive(gohelper.findChild(self.viewGO, "#go_attrdetail/#scroll/item"), false)
 
-	arg_5_0._scroll = gohelper.findChildScrollRect(arg_5_0.go, "#go_attrdetail/#scroll")
-	arg_5_0._txtname = gohelper.findChildText(arg_5_0.go, "#go_attrdetail/#scroll/item/#txt_name")
+	self._scroll = gohelper.findChildScrollRect(self.go, "#go_attrdetail/#scroll")
+	self._txtname = gohelper.findChildText(self.go, "#go_attrdetail/#scroll/item/#txt_name")
 
-	local var_5_3 = Activity114FeaturesModel.instance:getAllMaxLength(arg_5_0._txtname)
-	local var_5_4 = ListScrollParam.New()
+	local cellWith = Activity114FeaturesModel.instance:getAllMaxLength(self._txtname)
+	local scrollParam = ListScrollParam.New()
 
-	var_5_4.scrollGOPath = "#go_attr/#go_attrdetail/#scroll"
-	var_5_4.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_5_4.prefabUrl = "#go_attr/#go_attrdetail/#scroll/item"
-	var_5_4.cellClass = Activity114FeaturesItem
-	var_5_4.scrollDir = ScrollEnum.ScrollDirV
-	var_5_4.lineCount = 1
-	var_5_4.cellWidth = var_5_3
-	var_5_4.cellHeight = 48
-	var_5_4.cellSpaceH = 0
-	var_5_4.cellSpaceV = 20.73
-	var_5_4.startSpace = 0
-	var_5_4.frameUpdateMs = 100
-	arg_5_0._scrollView = LuaListScrollView.New(Activity114FeaturesModel.instance, var_5_4)
+	scrollParam.scrollGOPath = "#go_attr/#go_attrdetail/#scroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_attr/#go_attrdetail/#scroll/item"
+	scrollParam.cellClass = Activity114FeaturesItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = cellWith
+	scrollParam.cellHeight = 48
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 20.73
+	scrollParam.startSpace = 0
+	scrollParam.frameUpdateMs = 100
+	self._scrollView = LuaListScrollView.New(Activity114FeaturesModel.instance, scrollParam)
 
-	arg_5_0:addChildView(arg_5_0._scrollView)
-	arg_5_0:updateFeature()
-	arg_5_0:closeTips()
+	self:addChildView(self._scrollView)
+	self:updateFeature()
+	self:closeTips()
 end
 
-function var_0_0.updateFeature(arg_6_0)
-	gohelper.setActive(arg_6_0._goempty, #Activity114FeaturesModel.instance:getList() == 0)
+function Activity114AttrView:updateFeature()
+	gohelper.setActive(self._goempty, #Activity114FeaturesModel.instance:getList() == 0)
 end
 
-function var_0_0.closeTips(arg_7_0)
+function Activity114AttrView:closeTips()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_close)
-	gohelper.setActive(arg_7_0._gotips, false)
+	gohelper.setActive(self._gotips, false)
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:updateAttr()
+function Activity114AttrView:onOpen()
+	self:updateAttr()
 end
 
-function var_0_0.showFeaturesTips(arg_9_0)
+function Activity114AttrView:showFeaturesTips()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Copies)
-	gohelper.setActive(arg_9_0._gotips, true)
-	gohelper.CreateObjList(arg_9_0, arg_9_0.setFeatureItem, Activity114FeaturesModel.instance:getList(), arg_9_0._gofeaturecontent, arg_9_0._gofeatureitem)
+	gohelper.setActive(self._gotips, true)
+	gohelper.CreateObjList(self, self.setFeatureItem, Activity114FeaturesModel.instance:getList(), self._gofeaturecontent, self._gofeatureitem)
 end
 
-function var_0_0.setFeatureItem(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = gohelper.findChildImage(arg_10_1, "title/#icon_feature")
-	local var_10_1 = gohelper.findChildText(arg_10_1, "title/#icon_feature/#txt_name")
-	local var_10_2 = gohelper.findChildText(arg_10_1, "#txt_des")
-	local var_10_3 = gohelper.findChild(arg_10_1, "title/#go_inherit")
-	local var_10_4 = gohelper.findChild(arg_10_1, "title/#icon_feature/line")
-	local var_10_5 = Activity114FeaturesModel.instance:getFeaturePreferredLength(var_10_1, 250, 350)
+function Activity114AttrView:setFeatureItem(obj, data)
+	local icon = gohelper.findChildImage(obj, "title/#icon_feature")
+	local name = gohelper.findChildText(obj, "title/#icon_feature/#txt_name")
+	local desc = gohelper.findChildText(obj, "#txt_des")
+	local goinherit = gohelper.findChild(obj, "title/#go_inherit")
+	local goline = gohelper.findChild(obj, "title/#icon_feature/line")
+	local cellWith = Activity114FeaturesModel.instance:getFeaturePreferredLength(name, 250, 350)
 
-	recthelper.setWidth(var_10_0.transform, var_10_5)
+	recthelper.setWidth(icon.transform, cellWith)
 
-	local var_10_6 = var_10_3.transform.rect.width
+	local inheritWidth = goinherit.transform.rect.width
 
-	var_10_6 = var_10_6 > 0 and var_10_6 or 100
+	inheritWidth = inheritWidth > 0 and inheritWidth or 100
 
-	local var_10_7 = 250
-	local var_10_8 = (var_10_7 - (var_10_5 - 250) - (var_10_6 - 100)) / var_10_7
-	local var_10_9 = Mathf.Clamp(var_10_8, 0, 1)
+	local orginWidth = 250
+	local lineWidth = orginWidth - (cellWith - 250) - (inheritWidth - 100)
+	local scale = lineWidth / orginWidth
 
-	transformhelper.setLocalScale(var_10_4.transform, var_10_9, 1, 1)
+	scale = Mathf.Clamp(scale, 0, 1)
 
-	var_10_1.text = arg_10_2.features
-	var_10_2.text = arg_10_2.desc
+	transformhelper.setLocalScale(goline.transform, scale, 1, 1)
 
-	gohelper.setActive(var_10_3, arg_10_2.inheritable == 1)
-	UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(var_10_0, arg_10_2.inheritable == 1 and "img_shuxing1" or "img_shuxing2")
+	name.text = data.features
+	desc.text = data.desc
+
+	gohelper.setActive(goinherit, data.inheritable == 1)
+	UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(icon, data.inheritable == 1 and "img_shuxing1" or "img_shuxing2")
 end
 
-function var_0_0.onAttrSelectChange(arg_11_0)
-	local var_11_0 = Activity114Model.instance.eduSelectAttr
+function Activity114AttrView:onAttrSelectChange()
+	local select = Activity114Model.instance.eduSelectAttr
 
-	for iter_11_0 = 1, Activity114Enum.Attr.End - 1 do
-		local var_11_1 = arg_11_0.attrTb[iter_11_0]
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		local comp = self.attrTb[i]
 
-		if var_11_0 == iter_11_0 then
-			local var_11_2 = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, var_11_0)
-			local var_11_3 = var_11_2 and var_11_2.successVerify[var_11_0] or 0
+		if select == i then
+			local eduEventCo = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, select)
+			local addAttr = eduEventCo and eduEventCo.successVerify[select] or 0
 
-			if Activity114Model.instance.attrAddPermillage[var_11_0] then
-				var_11_3 = Mathf.Round(var_11_3 * (1 + Activity114Model.instance.attrAddPermillage[var_11_0]))
+			if Activity114Model.instance.attrAddPermillage[select] then
+				addAttr = Mathf.Round(addAttr * (1 + Activity114Model.instance.attrAddPermillage[select]))
 			end
 
-			local var_11_4 = Activity114Model.instance.attrDict[iter_11_0] or 0
-			local var_11_5 = Activity114Config.instance:getAttrMaxValue(Activity114Model.instance.id, iter_11_0)
-			local var_11_6 = math.min(var_11_3, var_11_5 - var_11_4)
+			local nowAttr = Activity114Model.instance.attrDict[i] or 0
+			local maxAttr = Activity114Config.instance:getAttrMaxValue(Activity114Model.instance.id, i)
 
-			var_11_1.txtAddValue.text = "+" .. var_11_6
+			addAttr = math.min(addAttr, maxAttr - nowAttr)
+			comp.txtAddValue.text = "+" .. addAttr
 
-			local var_11_7 = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, iter_11_0, var_11_4)
-			local var_11_8 = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, iter_11_0, var_11_4 + var_11_6)
+			local nowLv = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, i, nowAttr)
+			local addLv = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, i, nowAttr + addAttr)
 
-			gohelper.setActive(var_11_1.gouplevel, var_11_7 ~= var_11_8)
+			gohelper.setActive(comp.gouplevel, nowLv ~= addLv)
 		else
-			gohelper.setActive(var_11_1.gouplevel, false)
+			gohelper.setActive(comp.gouplevel, false)
 
-			var_11_1.txtAddValue.text = ""
+			comp.txtAddValue.text = ""
 		end
 
-		gohelper.setActive(var_11_1.goAddValue, not string.nilorempty(var_11_1.txtAddValue.text))
+		gohelper.setActive(comp.goAddValue, not string.nilorempty(comp.txtAddValue.text))
 	end
 end
 
-function var_0_0.updateAttr(arg_12_0)
+function Activity114AttrView:updateAttr()
 	if Activity114Model.instance.attrChangeDict then
-		for iter_12_0 = 1, Activity114Enum.Attr.End - 1 do
-			if Activity114Model.instance.attrChangeDict[iter_12_0] then
-				arg_12_0.attrTb[iter_12_0].glowAnim:Play(UIAnimationName.Open, 0, 0)
+		for i = 1, Activity114Enum.Attr.End - 1 do
+			if Activity114Model.instance.attrChangeDict[i] then
+				self.attrTb[i].glowAnim:Play(UIAnimationName.Open, 0, 0)
 			end
 		end
 
 		Activity114Model.instance.attrChangeDict = nil
 	end
 
-	local var_12_0 = {}
+	local rates = {}
 
-	for iter_12_1 = 1, Activity114Enum.Attr.End - 1 do
-		local var_12_1 = Activity114Model.instance.attrDict[iter_12_1] or 0
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		local value = Activity114Model.instance.attrDict[i] or 0
 
-		arg_12_0.attrTb[iter_12_1].txtValue.text = var_12_1
-		arg_12_0.attrTb[iter_12_1].txtLv.text = "Lv." .. Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, iter_12_1, var_12_1)
-		var_12_0[iter_12_1] = Activity114Model.instance.attrDict[iter_12_1] / Activity114Config.instance:getAttrMaxValue(Activity114Model.instance.id, iter_12_1)
+		self.attrTb[i].txtValue.text = value
+		self.attrTb[i].txtLv.text = "Lv." .. Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, i, value)
+		rates[i] = Activity114Model.instance.attrDict[i] / Activity114Config.instance:getAttrMaxValue(Activity114Model.instance.id, i)
 	end
 
-	local var_12_2 = Activity114Model.instance.eduSelectAttr
+	local eduSelectAttr = Activity114Model.instance.eduSelectAttr
 
-	if var_12_2 then
-		local var_12_3 = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, var_12_2)
-		local var_12_4 = var_12_3 and var_12_3.successVerify[var_12_2] or 0
+	if eduSelectAttr then
+		local eduEventCo = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, eduSelectAttr)
+		local addAttr = eduEventCo and eduEventCo.successVerify[eduSelectAttr] or 0
 
-		if Activity114Model.instance.attrAddPermillage[var_12_2] then
-			var_12_4 = Mathf.Round(var_12_4 * (1 + Activity114Model.instance.attrAddPermillage[var_12_2]))
+		if Activity114Model.instance.attrAddPermillage[eduSelectAttr] then
+			addAttr = Mathf.Round(addAttr * (1 + Activity114Model.instance.attrAddPermillage[eduSelectAttr]))
 		end
 
-		local var_12_5 = Activity114Model.instance.attrDict[var_12_2] or 0
-		local var_12_6 = arg_12_0.attrTb[var_12_2]
-		local var_12_7 = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, var_12_2, var_12_5)
-		local var_12_8 = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, var_12_2, var_12_5 + var_12_4)
+		local nowAttr = Activity114Model.instance.attrDict[eduSelectAttr] or 0
+		local comp = self.attrTb[eduSelectAttr]
+		local nowLv = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, eduSelectAttr, nowAttr)
+		local addLv = Activity114Config.instance:getAttrVerify(Activity114Model.instance.id, eduSelectAttr, nowAttr + addAttr)
 
-		gohelper.setActive(var_12_6.gouplevel, var_12_7 ~= var_12_8)
+		gohelper.setActive(comp.gouplevel, nowLv ~= addLv)
 	end
 
-	arg_12_0._radar:setRate(var_12_0[1], var_12_0[5], var_12_0[4], var_12_0[3], var_12_0[2])
+	self._radar:setRate(rates[1], rates[5], rates[4], rates[3], rates[2])
 end
 
-return var_0_0
+return Activity114AttrView

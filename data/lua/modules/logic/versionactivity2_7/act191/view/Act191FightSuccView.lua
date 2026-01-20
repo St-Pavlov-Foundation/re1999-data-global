@@ -1,299 +1,304 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191FightSuccView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191FightSuccView.lua
 
-local var_0_0 = class("Act191FightSuccView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191FightSuccView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goLeft = gohelper.findChild(arg_1_0.viewGO, "#go_Left")
-	arg_1_0._simagecharacterbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Left/#simage_characterbg")
-	arg_1_0._goSpine = gohelper.findChild(arg_1_0.viewGO, "#go_Left/spineContainer/#go_Spine")
-	arg_1_0._simagemaskImage = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Left/#simage_maskImage")
-	arg_1_0._txtSayCn = gohelper.findChildText(arg_1_0.viewGO, "#go_Left/#txt_SayCn")
-	arg_1_0._txtSayEn = gohelper.findChildText(arg_1_0.viewGO, "#go_Left/SayEn/#txt_SayEn")
-	arg_1_0._goRight = gohelper.findChild(arg_1_0.viewGO, "#go_Right")
-	arg_1_0._goWin = gohelper.findChild(arg_1_0.viewGO, "#go_Right/#go_Win")
-	arg_1_0._goFail = gohelper.findChild(arg_1_0.viewGO, "#go_Right/#go_Fail")
-	arg_1_0._goReward = gohelper.findChild(arg_1_0.viewGO, "#go_Right/#go_Reward")
-	arg_1_0._txtStage = gohelper.findChildText(arg_1_0.viewGO, "#go_Right/Stage/#txt_Stage")
-	arg_1_0._goPvp = gohelper.findChild(arg_1_0.viewGO, "#go_Right/Stage/#go_Pvp")
-	arg_1_0._goHeroItem = gohelper.findChild(arg_1_0.viewGO, "#go_Right/Stage/#go_Pvp/role/layout/#go_HeroItem")
-	arg_1_0._goPve = gohelper.findChild(arg_1_0.viewGO, "#go_Right/Stage/#go_Pve")
-	arg_1_0._gobossHpRoot = gohelper.findChild(arg_1_0.viewGO, "#go_Right/Stage/#go_Pve/#go_bossHpRoot")
-	arg_1_0._gounlimited = gohelper.findChild(arg_1_0.viewGO, "#go_Right/Stage/#go_Pve/#go_bossHpRoot/fight_act191bosshpview/Root/bossHp/Alpha/bossHp/mask/container/imgHp/#go_unlimited")
-	arg_1_0._imageLevel = gohelper.findChildImage(arg_1_0.viewGO, "#go_Right/Level/mainTitle/TeamLvl/#image_Level")
-	arg_1_0._btnData = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Right/#btn_Data")
+local Act191FightSuccView = class("Act191FightSuccView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191FightSuccView:onInitView()
+	self._goLeft = gohelper.findChild(self.viewGO, "#go_Left")
+	self._simagecharacterbg = gohelper.findChildSingleImage(self.viewGO, "#go_Left/#simage_characterbg")
+	self._goSpine = gohelper.findChild(self.viewGO, "#go_Left/spineContainer/#go_Spine")
+	self._simagemaskImage = gohelper.findChildSingleImage(self.viewGO, "#go_Left/#simage_maskImage")
+	self._txtSayCn = gohelper.findChildText(self.viewGO, "#go_Left/#txt_SayCn")
+	self._txtSayEn = gohelper.findChildText(self.viewGO, "#go_Left/SayEn/#txt_SayEn")
+	self._goRight = gohelper.findChild(self.viewGO, "#go_Right")
+	self._goWin = gohelper.findChild(self.viewGO, "#go_Right/#go_Win")
+	self._goFail = gohelper.findChild(self.viewGO, "#go_Right/#go_Fail")
+	self._goReward = gohelper.findChild(self.viewGO, "#go_Right/#go_Reward")
+	self._txtStage = gohelper.findChildText(self.viewGO, "#go_Right/Stage/#txt_Stage")
+	self._goPvp = gohelper.findChild(self.viewGO, "#go_Right/Stage/#go_Pvp")
+	self._goHeroItem = gohelper.findChild(self.viewGO, "#go_Right/Stage/#go_Pvp/role/layout/#go_HeroItem")
+	self._goPve = gohelper.findChild(self.viewGO, "#go_Right/Stage/#go_Pve")
+	self._gobossHpRoot = gohelper.findChild(self.viewGO, "#go_Right/Stage/#go_Pve/#go_bossHpRoot")
+	self._gounlimited = gohelper.findChild(self.viewGO, "#go_Right/Stage/#go_Pve/#go_bossHpRoot/fight_act191bosshpview/Root/bossHp/Alpha/bossHp/mask/container/imgHp/#go_unlimited")
+	self._imageLevel = gohelper.findChildImage(self.viewGO, "#go_Right/Level/mainTitle/TeamLvl/#image_Level")
+	self._btnData = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Right/#btn_Data")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnData:AddClickListener(arg_2_0._btnDataOnClick, arg_2_0)
+function Act191FightSuccView:addEvents()
+	self._btnData:AddClickListener(self._btnDataOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnData:RemoveClickListener()
+function Act191FightSuccView:removeEvents()
+	self._btnData:RemoveClickListener()
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	if arg_4_0._uiSpine then
-		arg_4_0._uiSpine:stopVoice()
+function Act191FightSuccView:onClickModalMask()
+	if self._uiSpine then
+		self._uiSpine:stopVoice()
 	end
 
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnDataOnClick(arg_5_0)
+function Act191FightSuccView:_btnDataOnClick()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.actId = Activity191Model.instance:getCurActId()
-	arg_6_0._uiSpine = GuiModelAgent.Create(arg_6_0._goSpine, true)
+function Act191FightSuccView:_editableInitView()
+	self.actId = Activity191Model.instance:getCurActId()
+	self._uiSpine = GuiModelAgent.Create(self._goSpine, true)
 
-	arg_6_0._uiSpine:useRT()
+	self._uiSpine:useRT()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.actInfo = Activity191Model.instance:getActInfo()
-	arg_7_0.gameInfo = arg_7_0.actInfo:getGameInfo()
+function Act191FightSuccView:onOpen()
+	self.actInfo = Activity191Model.instance:getActInfo()
+	self.gameInfo = self.actInfo:getGameInfo()
 
-	if arg_7_0.gameInfo.state == Activity191Enum.GameState.End then
-		arg_7_0.curNode = arg_7_0.gameInfo.curNode
+	if self.gameInfo.state == Activity191Enum.GameState.End then
+		self.curNode = self.gameInfo.curNode
 	else
-		arg_7_0.curNode = arg_7_0.gameInfo.curNode - 1
+		self.curNode = self.gameInfo.curNode - 1
 	end
 
-	arg_7_0.nodeInfo = arg_7_0.gameInfo:getNodeInfoById(arg_7_0.curNode)
-	arg_7_0.isWin = arg_7_0.viewParam
+	self.nodeInfo = self.gameInfo:getNodeInfoById(self.curNode)
+	self.isWin = self.viewParam
 
-	if arg_7_0.isWin then
+	if self.isWin then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_win)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_lose)
 	end
 
-	gohelper.setActive(arg_7_0._goWin, arg_7_0.isWin)
-	gohelper.setActive(arg_7_0._goFail, not arg_7_0.isWin)
-	arg_7_0._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
-	arg_7_0._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
+	gohelper.setActive(self._goWin, self.isWin)
+	gohelper.setActive(self._goFail, not self.isWin)
+	self._simagecharacterbg:LoadImage(ResUrl.getFightQuitResultIcon("bg_renwubeiguang"))
+	self._simagemaskImage:LoadImage(ResUrl.getFightResultcIcon("bg_zhezhao"))
 
-	arg_7_0.mySideMoList = FightDataHelper.entityMgr:getMyNormalList(nil, true)
-	arg_7_0.enemyMoList = FightDataHelper.entityMgr:getEnemyNormalList(nil, true)
-	arg_7_0._randomEntityMO = arg_7_0:_getRandomEntityMO()
+	self.mySideMoList = FightDataHelper.entityMgr:getMyNormalList(nil, true)
+	self.enemyMoList = FightDataHelper.entityMgr:getEnemyNormalList(nil, true)
+	self._randomEntityMO = self:_getRandomEntityMO()
 
-	if arg_7_0.isWin and arg_7_0._randomEntityMO then
-		arg_7_0:_setSpineVoice()
-		gohelper.setActive(arg_7_0._goLeft, true)
-		recthelper.setAnchorX(arg_7_0._goRight.transform, 0)
+	if self.isWin and self._randomEntityMO then
+		self:_setSpineVoice()
+		gohelper.setActive(self._goLeft, true)
+		recthelper.setAnchorX(self._goRight.transform, 0)
 	else
-		gohelper.setActive(arg_7_0._goLeft, false)
-		recthelper.setAnchorX(arg_7_0._goRight.transform, -413)
+		gohelper.setActive(self._goLeft, false)
+		recthelper.setAnchorX(self._goRight.transform, -413)
 	end
 
-	arg_7_0._canPlayVoice = false
+	self._canPlayVoice = false
 
-	TaskDispatcher.runDelay(arg_7_0._setCanPlayVoice, arg_7_0, 0.9)
+	TaskDispatcher.runDelay(self._setCanPlayVoice, self, 0.9)
 
-	local var_7_0 = arg_7_0.gameInfo:getStageNodeInfoList(arg_7_0.nodeInfo.stage)
+	local nodeInfoList = self.gameInfo:getStageNodeInfoList(self.nodeInfo.stage)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.nodeId == arg_7_0.curNode then
-			local var_7_1 = lua_activity191_stage.configDict[arg_7_0.actId][iter_7_1.stage]
+	for k, v in ipairs(nodeInfoList) do
+		if v.nodeId == self.curNode then
+			local stageCo = lua_activity191_stage.configDict[self.actId][v.stage]
 
-			arg_7_0._txtStage.text = string.format("<#FAB459>%s</color>-%d", var_7_1.name, iter_7_0)
+			self._txtStage.text = string.format("<#FAB459>%s</color>-%d", stageCo.name, k)
 		end
 	end
 
-	arg_7_0.nodeDetailMo = arg_7_0.gameInfo:getNodeDetailMo(arg_7_0.curNode)
-	arg_7_0.isPvp = Activity191Helper.isPvpBattle(arg_7_0.nodeDetailMo.type)
-	arg_7_0.isPve = Activity191Helper.isPveBattle(arg_7_0.nodeDetailMo.type)
+	self.nodeDetailMo = self.gameInfo:getNodeDetailMo(self.curNode)
+	self.isPvp = Activity191Helper.isPvpBattle(self.nodeDetailMo.type)
+	self.isPve = Activity191Helper.isPveBattle(self.nodeDetailMo.type)
 
-	if arg_7_0.isPvp then
-		local var_7_2 = lua_activity191_const.configDict[Activity191Enum.ConstKey.PvpEpisodeName].value2
-		local var_7_3 = GameUtil.setFirstStrSize(var_7_2, 70)
-		local var_7_4 = lua_activity191_match_rank.configDict[arg_7_0.nodeDetailMo.matchInfo.rank].fightLevel
+	if self.isPvp then
+		local titleStr = lua_activity191_const.configDict[Activity191Enum.ConstKey.PvpEpisodeName].value2
 
-		UISpriteSetMgr.instance:setAct174Sprite(arg_7_0._imageLevel, "act191_level_" .. string.lower(var_7_4))
+		titleStr = GameUtil.setFirstStrSize(titleStr, 70)
 
-		for iter_7_2, iter_7_3 in ipairs(arg_7_0.enemyMoList) do
-			local var_7_5 = gohelper.cloneInPlace(arg_7_0._goHeroItem)
-			local var_7_6 = gohelper.findChildSingleImage(var_7_5, "hero/simage_rolehead")
+		local rankStr = lua_activity191_match_rank.configDict[self.nodeDetailMo.matchInfo.rank].fightLevel
 
-			if iter_7_3.entityType == FightEnum.EntityType.Monster then
-				var_7_6:LoadImage(ResUrl.monsterHeadIcon(iter_7_3.skin))
+		UISpriteSetMgr.instance:setAct174Sprite(self._imageLevel, "act191_level_" .. string.lower(rankStr))
+
+		for _, mo in ipairs(self.enemyMoList) do
+			local go = gohelper.cloneInPlace(self._goHeroItem)
+			local simageIcon = gohelper.findChildSingleImage(go, "hero/simage_rolehead")
+
+			if mo.entityType == FightEnum.EntityType.Monster then
+				simageIcon:LoadImage(ResUrl.monsterHeadIcon(mo.skin))
 			else
-				var_7_6:LoadImage(ResUrl.getHeadIconSmall(iter_7_3.skin))
+				simageIcon:LoadImage(ResUrl.getHeadIconSmall(mo.skin))
 			end
 
-			local var_7_7 = gohelper.findChild(var_7_5, "go_dead")
+			local goDead = gohelper.findChild(go, "go_dead")
 
-			gohelper.setActive(var_7_7, iter_7_3:isStatusDead())
+			gohelper.setActive(goDead, mo:isStatusDead())
 		end
 
-		gohelper.setActive(arg_7_0._goHeroItem, false)
-	elseif arg_7_0.isPve or arg_7_0.nodeDetailMo.type == Activity191Enum.NodeType.BattleEvent then
-		local var_7_8 = lua_activity191_fight_event.configDict[arg_7_0.nodeDetailMo.fightEventId]
+		gohelper.setActive(self._goHeroItem, false)
+	elseif self.isPve or self.nodeDetailMo.type == Activity191Enum.NodeType.BattleEvent then
+		local fightEventCo = lua_activity191_fight_event.configDict[self.nodeDetailMo.fightEventId]
 
-		UISpriteSetMgr.instance:setAct174Sprite(arg_7_0._imageLevel, "act191_level_" .. string.lower(var_7_8.fightLevel))
+		UISpriteSetMgr.instance:setAct174Sprite(self._imageLevel, "act191_level_" .. string.lower(fightEventCo.fightLevel))
 
-		local var_7_9 = arg_7_0:getResInst(Activity191Enum.PrefabPath.BossHpItem, arg_7_0._gobossHpRoot)
+		local hpGo = self:getResInst(Activity191Enum.PrefabPath.BossHpItem, self._gobossHpRoot)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_7_9, Act191BossHpItem)
+		MonoHelper.addNoUpdateLuaComOnceToGo(hpGo, Act191BossHpItem)
 	end
 
-	arg_7_0:refreshReward()
-	gohelper.setActive(arg_7_0._goPve, not arg_7_0.isPvp)
-	gohelper.setActive(arg_7_0._goPvp, arg_7_0.isPvp)
+	self:refreshReward()
+	gohelper.setActive(self._goPve, not self.isPvp)
+	gohelper.setActive(self._goPvp, self.isPvp)
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0._canPlayVoice = false
+function Act191FightSuccView:onClose()
+	self._canPlayVoice = false
 
-	gohelper.setActive(arg_8_0._goSpine, false)
+	gohelper.setActive(self._goSpine, false)
 	FightController.onResultViewClose()
-	Act191StatController.instance:statGameTime(arg_8_0.viewName)
+	Act191StatController.instance:statGameTime(self.viewName)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._setCanPlayVoice, arg_9_0)
+function Act191FightSuccView:onDestroyView()
+	TaskDispatcher.cancelTask(self._setCanPlayVoice, self)
 end
 
-function var_0_0._getRandomEntityMO(arg_10_0)
-	local var_10_0 = arg_10_0.mySideMoList
+function Act191FightSuccView:_getRandomEntityMO()
+	local mySideMOList = self.mySideMoList
 
-	for iter_10_0 = #var_10_0, 1, -1 do
-		local var_10_1 = var_10_0[iter_10_0]
+	for i = #mySideMOList, 1, -1 do
+		local entityMO = mySideMOList[i]
 
-		if not arg_10_0:_getSkin(var_10_1) then
-			table.remove(var_10_0, iter_10_0)
+		if not self:_getSkin(entityMO) then
+			table.remove(mySideMOList, i)
 		end
 	end
 
-	local var_10_2 = {}
+	local noMonsterMOList = {}
 
-	tabletool.addValues(var_10_2, var_10_0)
+	tabletool.addValues(noMonsterMOList, mySideMOList)
 
-	for iter_10_1 = #var_10_2, 1, -1 do
-		local var_10_3 = var_10_0[iter_10_1]
-		local var_10_4 = FightAudioMgr.instance:_getHeroVoiceCOs(var_10_3.modelId, CharacterEnum.VoiceType.FightResult)
+	for i = #noMonsterMOList, 1, -1 do
+		local entityMO = mySideMOList[i]
+		local voice_list = FightAudioMgr.instance:_getHeroVoiceCOs(entityMO.modelId, CharacterEnum.VoiceType.FightResult)
 
-		if var_10_4 and #var_10_4 > 0 then
-			if var_10_3:isMonster() then
-				table.remove(var_10_2, iter_10_1)
+		if voice_list and #voice_list > 0 then
+			if entityMO:isMonster() then
+				table.remove(noMonsterMOList, i)
 			end
 		else
-			table.remove(var_10_2, iter_10_1)
+			table.remove(noMonsterMOList, i)
 		end
 	end
 
-	if #var_10_2 > 0 then
-		return var_10_2[math.random(#var_10_2)]
-	elseif #var_10_0 > 0 then
-		return var_10_0[math.random(#var_10_0)]
+	if #noMonsterMOList > 0 then
+		return noMonsterMOList[math.random(#noMonsterMOList)]
+	elseif #mySideMOList > 0 then
+		return mySideMOList[math.random(#mySideMOList)]
 	end
 end
 
-function var_0_0._setCanPlayVoice(arg_11_0)
-	arg_11_0._canPlayVoice = true
+function Act191FightSuccView:_setCanPlayVoice()
+	self._canPlayVoice = true
 
-	arg_11_0:_playSpineVoice()
+	self:_playSpineVoice()
 end
 
-function var_0_0._setSpineVoice(arg_12_0)
-	local var_12_0 = arg_12_0:_getSkin(arg_12_0._randomEntityMO)
+function Act191FightSuccView:_setSpineVoice()
+	local skinCO = self:_getSkin(self._randomEntityMO)
 
-	if var_12_0 then
-		arg_12_0._spineLoaded = false
+	if skinCO then
+		self._spineLoaded = false
 
-		arg_12_0._uiSpine:setImgPos(0)
-		arg_12_0._uiSpine:setResPath(var_12_0, function()
-			arg_12_0._spineLoaded = true
+		self._uiSpine:setImgPos(0)
+		self._uiSpine:setResPath(skinCO, function()
+			self._spineLoaded = true
 
-			arg_12_0._uiSpine:setUIMask(true)
-			arg_12_0:_playSpineVoice()
-			arg_12_0._uiSpine:setAllLayer(UnityLayer.UI)
-		end, arg_12_0)
+			self._uiSpine:setUIMask(true)
+			self:_playSpineVoice()
+			self._uiSpine:setAllLayer(UnityLayer.UI)
+		end, self)
 
-		local var_12_1, var_12_2 = SkinConfig.instance:getSkinOffset(var_12_0.fightSuccViewOffset)
+		local offsets, isNil = SkinConfig.instance:getSkinOffset(skinCO.fightSuccViewOffset)
 
-		if var_12_2 then
-			var_12_1, _ = SkinConfig.instance:getSkinOffset(var_12_0.characterViewOffset)
-			var_12_1 = SkinConfig.instance:getAfterRelativeOffset(504, var_12_1)
+		if isNil then
+			offsets, _ = SkinConfig.instance:getSkinOffset(skinCO.characterViewOffset)
+			offsets = SkinConfig.instance:getAfterRelativeOffset(504, offsets)
 		end
 
-		local var_12_3 = tonumber(var_12_1[3])
-		local var_12_4 = tonumber(var_12_1[1])
-		local var_12_5 = tonumber(var_12_1[2])
+		local scale = tonumber(offsets[3])
+		local offsetX = tonumber(offsets[1])
+		local offsetY = tonumber(offsets[2])
 
-		recthelper.setAnchor(arg_12_0._goSpine.transform, var_12_4, var_12_5)
-		transformhelper.setLocalScale(arg_12_0._goSpine.transform, var_12_3, var_12_3, var_12_3)
+		recthelper.setAnchor(self._goSpine.transform, offsetX, offsetY)
+		transformhelper.setLocalScale(self._goSpine.transform, scale, scale, scale)
 	else
-		gohelper.setActive(arg_12_0._goSpine, false)
+		gohelper.setActive(self._goSpine, false)
 	end
 end
 
-function var_0_0._playSpineVoice(arg_14_0)
-	if not arg_14_0._canPlayVoice then
+function Act191FightSuccView:_playSpineVoice()
+	if not self._canPlayVoice then
 		return
 	end
 
-	if not arg_14_0._spineLoaded then
+	if not self._spineLoaded then
 		return
 	end
 
-	local var_14_0 = FightAudioMgr.instance:_getHeroVoiceCOs(arg_14_0._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, arg_14_0._randomEntityMO.skin)
+	local voiceCOList = FightAudioMgr.instance:_getHeroVoiceCOs(self._randomEntityMO.modelId, CharacterEnum.VoiceType.FightResult, self._randomEntityMO.skin)
 
-	if var_14_0 and #var_14_0 > 0 then
-		local var_14_1 = var_14_0[1]
+	if voiceCOList and #voiceCOList > 0 then
+		local firstVoiceCO = voiceCOList[1]
 
-		arg_14_0._uiSpine:playVoice(var_14_1, nil, arg_14_0._txtSayCn, arg_14_0._txtSayEn)
+		self._uiSpine:playVoice(firstVoiceCO, nil, self._txtSayCn, self._txtSayEn)
 	end
 end
 
-function var_0_0._getSkin(arg_15_0, arg_15_1)
-	local var_15_0 = FightConfig.instance:getSkinCO(arg_15_1.skin)
-	local var_15_1 = var_15_0 and not string.nilorempty(var_15_0.verticalDrawing)
-	local var_15_2 = var_15_0 and not string.nilorempty(var_15_0.live2d)
+function Act191FightSuccView:_getSkin(mo)
+	local skinCO = FightConfig.instance:getSkinCO(mo.skin)
+	local hasVerticalDrawing = skinCO and not string.nilorempty(skinCO.verticalDrawing)
+	local hasLive2d = skinCO and not string.nilorempty(skinCO.live2d)
 
-	if var_15_1 or var_15_2 then
-		return var_15_0
+	if hasVerticalDrawing or hasLive2d then
+		return skinCO
 	end
 end
 
-function var_0_0.refreshReward(arg_16_0)
-	local var_16_0 = {}
+function Act191FightSuccView:refreshReward()
+	local rewardDic = {}
 
-	if arg_16_0.isPvp then
-		if arg_16_0.isWin then
-			local var_16_1 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191].auto and "autoRewardView" or "rewardView"
-			local var_16_2 = Activity191Enum.NodeType2Key[arg_16_0.nodeDetailMo.type]
-			local var_16_3 = lua_activity191_pvp_match.configDict[var_16_2]
-			local var_16_4 = GameUtil.splitString2(var_16_3[var_16_1], true)
+	if self.isPvp then
+		if self.isWin then
+			local isAuto = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191].auto
+			local rewardKey = isAuto and "autoRewardView" or "rewardView"
+			local typeKey = Activity191Enum.NodeType2Key[self.nodeDetailMo.type]
+			local matchCo = lua_activity191_pvp_match.configDict[typeKey]
+			local rewardList = GameUtil.splitString2(matchCo[rewardKey], true)
 
-			for iter_16_0, iter_16_1 in ipairs(var_16_4) do
-				if not var_16_0[iter_16_1[1]] then
-					var_16_0[iter_16_1[1]] = iter_16_1[2]
+			for _, v in ipairs(rewardList) do
+				if not rewardDic[v[1]] then
+					rewardDic[v[1]] = v[2]
 				else
-					var_16_0[iter_16_1[1]] = var_16_0[iter_16_1[1]] + iter_16_1[2]
+					rewardDic[v[1]] = rewardDic[v[1]] + v[2]
 				end
 			end
 		end
 	else
-		local var_16_5 = arg_16_0.actInfo.triggerEffectPushList
+		local triggerList = self.actInfo.triggerEffectPushList
 
-		for iter_16_2, iter_16_3 in ipairs(var_16_5) do
-			for iter_16_4, iter_16_5 in ipairs(iter_16_3.effectId) do
-				local var_16_6 = lua_activity191_effect.configDict[iter_16_5]
+		for _, v in ipairs(triggerList) do
+			for _, effectId in ipairs(v.effectId) do
+				local effectCo = lua_activity191_effect.configDict[effectId]
 
-				if not string.nilorempty(var_16_6.itemParam) then
-					local var_16_7 = GameUtil.splitString2(var_16_6.itemParam, true)
+				if not string.nilorempty(effectCo.itemParam) then
+					local rewardList = GameUtil.splitString2(effectCo.itemParam, true)
 
-					for iter_16_6, iter_16_7 in ipairs(var_16_7) do
-						if not var_16_0[iter_16_7[1]] then
-							var_16_0[iter_16_7[1]] = iter_16_7[2]
+					for _, reward in ipairs(rewardList) do
+						if not rewardDic[reward[1]] then
+							rewardDic[reward[1]] = reward[2]
 						else
-							var_16_0[iter_16_7[1]] = var_16_0[iter_16_7[1]] + iter_16_7[2]
+							rewardDic[reward[1]] = rewardDic[reward[1]] + reward[2]
 						end
 					end
 				end
@@ -301,13 +306,14 @@ function var_0_0.refreshReward(arg_16_0)
 		end
 	end
 
-	for iter_16_8, iter_16_9 in pairs(var_16_0) do
-		local var_16_8 = arg_16_0:getResInst(Activity191Enum.PrefabPath.RewardItem, arg_16_0._goReward)
+	for id, count in pairs(rewardDic) do
+		local rewardGo = self:getResInst(Activity191Enum.PrefabPath.RewardItem, self._goReward)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(rewardGo, Act191RewardItem)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_16_8, Act191RewardItem):setData(iter_16_8, iter_16_9)
+		item:setData(id, count)
 	end
 
-	gohelper.setActive(arg_16_0._goReward, tabletool.len(var_16_0) ~= 0)
+	gohelper.setActive(self._goReward, tabletool.len(rewardDic) ~= 0)
 end
 
-return var_0_0
+return Act191FightSuccView

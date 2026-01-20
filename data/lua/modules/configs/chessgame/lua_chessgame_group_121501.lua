@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/chessgame/lua_chessgame_group_121501.lua
+
+return {
 	{
 		"scenes/v2a1_m_s12_lsp_jshd/scenes_prefab/v2a1_m_s12_lsp_jshd_e_p.prefab",
 		{

@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114FullPhotoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114FullPhotoViewContainer.lua
 
-local var_0_0 = class("Activity114FullPhotoViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114FullPhotoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity114FullPhotoViewContainer = class("Activity114FullPhotoViewContainer", BaseViewContainer)
+
+function Activity114FullPhotoViewContainer:buildViews()
 	return {
-		Activity114FullPhotoView.New(arg_1_0.viewParam)
+		Activity114FullPhotoView.New(self.viewParam)
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Activity114FullPhotoViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity114FullPhotoViewContainer

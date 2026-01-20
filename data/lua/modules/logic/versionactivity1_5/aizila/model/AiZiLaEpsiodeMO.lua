@@ -1,123 +1,125 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaEpsiodeMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaEpsiodeMO.lua
 
-local var_0_0 = pureTable("AiZiLaEpsiodeMO")
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaEpsiodeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.episodeId = arg_1_1
-	arg_1_0.activityId = arg_1_2 or VersionActivity1_5Enum.ActivityId.AiZiLa
-	arg_1_0.day = 0
-	arg_1_0.eventId = 0
-	arg_1_0.actionPoint = 0
-	arg_1_0.buffIds = {}
-	arg_1_0.option = 0
-	arg_1_0.optionResultId = 0
-	arg_1_0.altitude = 0
-	arg_1_0.round = 0
-	arg_1_0.costActionPoint = 0
-	arg_1_0.enterTimes = 0
-	arg_1_0._passRound = 8
+local AiZiLaEpsiodeMO = pureTable("AiZiLaEpsiodeMO")
 
-	arg_1_0:getConfig()
+function AiZiLaEpsiodeMO:init(episodeId, actId)
+	self.id = episodeId
+	self.episodeId = episodeId
+	self.activityId = actId or VersionActivity1_5Enum.ActivityId.AiZiLa
+	self.day = 0
+	self.eventId = 0
+	self.actionPoint = 0
+	self.buffIds = {}
+	self.option = 0
+	self.optionResultId = 0
+	self.altitude = 0
+	self.round = 0
+	self.costActionPoint = 0
+	self.enterTimes = 0
+	self._passRound = 8
+
+	self:getConfig()
 end
 
-function var_0_0.getConfig(arg_2_0)
-	if not arg_2_0._config then
-		arg_2_0._config = AiZiLaConfig.instance:getEpisodeCo(arg_2_0.activityId, arg_2_0.episodeId)
-		arg_2_0._targetIds = arg_2_0._config and string.splitToNumber(arg_2_0._config.showTargets, "|") or {}
+function AiZiLaEpsiodeMO:getConfig()
+	if not self._config then
+		self._config = AiZiLaConfig.instance:getEpisodeCo(self.activityId, self.episodeId)
+		self._targetIds = self._config and string.splitToNumber(self._config.showTargets, "|") or {}
 
-		local var_2_0 = AiZiLaConfig.instance:getPassRoundCo(arg_2_0.activityId, arg_2_0.episodeId)
+		local roundCfg = AiZiLaConfig.instance:getPassRoundCo(self.activityId, self.episodeId)
 
-		if var_2_0 then
-			arg_2_0._passRound = var_2_0.round
+		if roundCfg then
+			self._passRound = roundCfg.round
 		end
 	end
 
-	return arg_2_0._config
+	return self._config
 end
 
-function var_0_0.updateInfo(arg_3_0, arg_3_1)
-	if arg_3_1.actionPoint then
-		arg_3_0.actionPoint = arg_3_1.actionPoint
+function AiZiLaEpsiodeMO:updateInfo(info)
+	if info.actionPoint then
+		self.actionPoint = info.actionPoint
 	end
 
-	if arg_3_1.day then
-		arg_3_0.day = arg_3_1.day
+	if info.day then
+		self.day = info.day
 	end
 
-	if arg_3_1.eventId then
-		arg_3_0.eventId = arg_3_1.eventId
+	if info.eventId then
+		self.eventId = info.eventId
 	end
 
-	if arg_3_1.buffIds then
-		local var_3_0 = #arg_3_0.buffIds
+	if info.buffIds then
+		local count = #self.buffIds
 
-		for iter_3_0 = 1, var_3_0 do
-			table.remove(arg_3_0.buffIds)
+		for i = 1, count do
+			table.remove(self.buffIds)
 		end
 
-		tabletool.addValues(arg_3_0.buffIds, arg_3_1.buffIds)
+		tabletool.addValues(self.buffIds, info.buffIds)
 	end
 
-	if arg_3_1.option then
-		arg_3_0.option = arg_3_1.option
+	if info.option then
+		self.option = info.option
 	end
 
-	if arg_3_1.optionResultId then
-		arg_3_0.optionResultId = arg_3_1.optionResultId
+	if info.optionResultId then
+		self.optionResultId = info.optionResultId
 	end
 
-	if arg_3_1.altitude then
-		arg_3_0.altitude = arg_3_1.altitude
+	if info.altitude then
+		self.altitude = info.altitude
 	end
 
-	if arg_3_1.round then
-		arg_3_0.round = arg_3_1.round
+	if info.round then
+		self.round = info.round
 	end
 
-	if arg_3_1.costActionPoint then
-		arg_3_0.costActionPoint = arg_3_1.costActionPoint
+	if info.costActionPoint then
+		self.costActionPoint = info.costActionPoint
 	end
 
-	if arg_3_1.enterTimes then
-		arg_3_0.enterTimes = arg_3_1.enterTimes
+	if info.enterTimes then
+		self.enterTimes = info.enterTimes
 	end
 end
 
-function var_0_0.getTargetIds(arg_4_0)
-	return arg_4_0._targetIds
+function AiZiLaEpsiodeMO:getTargetIds()
+	return self._targetIds
 end
 
-function var_0_0.isPass(arg_5_0)
-	if arg_5_0._passRound < arg_5_0.round then
+function AiZiLaEpsiodeMO:isPass()
+	if self._passRound < self.round then
 		return true
 	end
 
-	if arg_5_0._passRound == arg_5_0.round and arg_5_0.eventId ~= 0 and arg_5_0.option ~= 0 and arg_5_0.optionResultId ~= 0 then
+	if self._passRound == self.round and self.eventId ~= 0 and self.option ~= 0 and self.optionResultId ~= 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isCanSafe(arg_6_0)
-	if arg_6_0.actionPoint < 0 then
+function AiZiLaEpsiodeMO:isCanSafe()
+	if self.actionPoint < 0 then
 		return false
 	end
 
-	if arg_6_0:isPass() then
+	if self:isPass() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getRoundCfg(arg_7_0)
-	return AiZiLaConfig.instance:getRoundCo(arg_7_0.activityId, arg_7_0.episodeId, arg_7_0.round)
+function AiZiLaEpsiodeMO:getRoundCfg()
+	return AiZiLaConfig.instance:getRoundCo(self.activityId, self.episodeId, self.round)
 end
 
-function var_0_0.getCostActionPoint(arg_8_0)
-	return arg_8_0.costActionPoint
+function AiZiLaEpsiodeMO:getCostActionPoint()
+	return self.costActionPoint
 end
 
-return var_0_0
+return AiZiLaEpsiodeMO

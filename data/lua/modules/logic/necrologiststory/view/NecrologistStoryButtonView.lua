@@ -1,83 +1,132 @@
-﻿module("modules.logic.necrologiststory.view.NecrologistStoryButtonView", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/NecrologistStoryButtonView.lua
 
-local var_0_0 = class("NecrologistStoryButtonView", BaseView)
+module("modules.logic.necrologiststory.view.NecrologistStoryButtonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnNext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "")
-	arg_1_0.btnAuto = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_auto")
-	arg_1_0.goautooff = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_auto/#image_autooff")
-	arg_1_0.goautoon = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_auto/#image_autoon")
-	arg_1_0.btnSkip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_skip")
-	arg_1_0.btnExit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_exit")
-	arg_1_0.btnEnd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_end")
+local NecrologistStoryButtonView = class("NecrologistStoryButtonView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NecrologistStoryButtonView:onInitView()
+	self.btnNext = gohelper.findChildClickWithAudio(self.viewGO, "")
+	self.btnAuto = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#btn_auto")
+	self.goautooff = gohelper.findChild(self.viewGO, "#go_topright/#btn_auto/#image_autooff")
+	self.goautoon = gohelper.findChild(self.viewGO, "#go_topright/#btn_auto/#image_autoon")
+	self.btnSkip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#btn_skip")
+	self.btnExit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#btn_exit")
+	self.btnEnd = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_end")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnNext, arg_2_0.onClickNext, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnAuto, arg_2_0.onClickAuto, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnSkip, arg_2_0.onClickSkip, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnEnd, arg_2_0.onClickEnd, arg_2_0)
-	arg_2_0:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnStoryStart, arg_2_0._onStoryStart, arg_2_0)
-	arg_2_0:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnAutoChange, arg_2_0._onAutoChange, arg_2_0)
+function NecrologistStoryButtonView:addEvents()
+	self.btnNext:AddClickDownListener(self.onClickNextDown, self)
+	self:addClickCb(self.btnNext, self.onClickNext, self)
+	self:addClickCb(self.btnAuto, self.onClickAuto, self)
+	self:addClickCb(self.btnSkip, self.onClickSkip, self)
+	self:addClickCb(self.btnEnd, self.onClickEnd, self)
+	self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnStoryStart, self._onStoryStart, self)
+	self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnAutoChange, self._onAutoChange, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnNext)
-	arg_3_0:removeClickCb(arg_3_0.btnAuto)
-	arg_3_0:removeClickCb(arg_3_0.btnSkip)
-	arg_3_0:removeClickCb(arg_3_0.btnEnd)
-	arg_3_0:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnStoryStart, arg_3_0._onStoryStart, arg_3_0)
-	arg_3_0:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnAutoChange, arg_3_0._onAutoChange, arg_3_0)
+function NecrologistStoryButtonView:removeEvents()
+	self.btnNext:RemoveClickDownListener()
+	self:removeClickCb(self.btnNext)
+	self:removeClickCb(self.btnAuto)
+	self:removeClickCb(self.btnSkip)
+	self:removeClickCb(self.btnEnd)
+	self:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnStoryStart, self._onStoryStart, self)
+	self:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnAutoChange, self._onAutoChange, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function NecrologistStoryButtonView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickEnd(arg_5_0)
-	arg_5_0:closeThis()
-end
+function NecrologistStoryButtonView:_onOpenView(viewName)
+	local isTop = ViewHelper.instance:checkViewOnTheTop(self.viewName)
 
-function var_0_0._onAutoChange(arg_6_0)
-	arg_6_0:refreshButton()
-end
+	if isTop then
+		return
+	end
 
-function var_0_0.onClickNext(arg_7_0)
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnClickNext)
-end
+	local mo = NecrologistStoryModel.instance:getCurStoryMO()
 
-function var_0_0.onClickAuto(arg_8_0)
-	local var_8_0 = NecrologistStoryModel.instance:getCurStoryMO()
-	local var_8_1 = var_8_0:getIsAuto()
+	if mo and mo:getIsAuto() then
+		mo:setIsAuto(false)
 
-	var_8_0:setIsAuto(not var_8_1)
-end
-
-function var_0_0.onClickSkip(arg_9_0)
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnClickSkip)
-end
-
-function var_0_0._onStoryStart(arg_10_0)
-	arg_10_0:refreshButton()
-end
-
-function var_0_0.refreshButton(arg_11_0)
-	local var_11_0 = NecrologistStoryModel.instance:getCurStoryMO():getIsAuto()
-
-	gohelper.setActive(arg_11_0.goautooff, not var_11_0)
-	gohelper.setActive(arg_11_0.goautoon, var_11_0)
-end
-
-function var_0_0.onDestroyView(arg_12_0)
-	if arg_12_0._touchEventMgr then
-		TouchEventMgrHepler.remove(arg_12_0._touchEventMgr)
-
-		arg_12_0._touchEventMgr = nil
+		self.isAutoFlag = true
 	end
 end
 
-return var_0_0
+function NecrologistStoryButtonView:_onCloseViewFinish(viewName)
+	local isTop = ViewHelper.instance:checkViewOnTheTop(self.viewName)
+
+	if not isTop then
+		return
+	end
+
+	local mo = NecrologistStoryModel.instance:getCurStoryMO()
+
+	if mo and self.isAutoFlag then
+		mo:setIsAuto(true)
+	end
+
+	self.isAutoFlag = false
+end
+
+function NecrologistStoryButtonView:onClickNextDown()
+	local mo = NecrologistStoryModel.instance:getCurStoryMO()
+
+	if mo then
+		mo:setIsAuto(false)
+	end
+end
+
+function NecrologistStoryButtonView:onClickEnd()
+	self:closeThis()
+end
+
+function NecrologistStoryButtonView:_onAutoChange()
+	self:refreshButton()
+end
+
+function NecrologistStoryButtonView:onClickNext()
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnClickNext)
+end
+
+function NecrologistStoryButtonView:onClickAuto()
+	local mo = NecrologistStoryModel.instance:getCurStoryMO()
+	local isAuto = mo:getIsAuto()
+
+	mo:setIsAuto(not isAuto)
+end
+
+function NecrologistStoryButtonView:onClickSkip()
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnClickSkip)
+end
+
+function NecrologistStoryButtonView:_onStoryStart()
+	self:refreshButton()
+end
+
+function NecrologistStoryButtonView:refreshButton()
+	local mo = NecrologistStoryModel.instance:getCurStoryMO()
+	local isAuto = mo:getIsAuto()
+
+	gohelper.setActive(self.goautooff, not isAuto)
+	gohelper.setActive(self.goautoon, isAuto)
+end
+
+function NecrologistStoryButtonView:onDestroyView()
+	if self._touchEventMgr then
+		TouchEventMgrHepler.remove(self._touchEventMgr)
+
+		self._touchEventMgr = nil
+	end
+end
+
+return NecrologistStoryButtonView

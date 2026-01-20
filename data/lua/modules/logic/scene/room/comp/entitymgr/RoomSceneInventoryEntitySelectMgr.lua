@@ -1,43 +1,45 @@
-﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneInventoryEntitySelectMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/entitymgr/RoomSceneInventoryEntitySelectMgr.lua
 
-local var_0_0 = class("RoomSceneInventoryEntitySelectMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.room.comp.entitymgr.RoomSceneInventoryEntitySelectMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneInventoryEntitySelectMgr = class("RoomSceneInventoryEntitySelectMgr", BaseSceneUnitMgr)
+
+function RoomSceneInventoryEntitySelectMgr:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
-	arg_2_0._inventoryRootGO = arg_2_0._scene.go.inventoryRootGO
-	arg_2_0._inventoryBlockIdList = {}
-	arg_2_0._entityPosInfoList = {}
-	arg_2_0._locationParamDic = {}
+function RoomSceneInventoryEntitySelectMgr:init(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._inventoryRootGO = self._scene.go.inventoryRootGO
+	self._inventoryBlockIdList = {}
+	self._entityPosInfoList = {}
+	self._locationParamDic = {}
 
-	for iter_2_0 = 1, 24 do
-		table.insert(arg_2_0._entityPosInfoList, {
+	for i = 1, 24 do
+		table.insert(self._entityPosInfoList, {
 			blockId = 0,
 			remove = false,
-			index = iter_2_0
+			index = i
 		})
 	end
 
-	arg_2_0:refreshInventoryBlock()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0.refreshInventoryBlock(arg_3_0)
+function RoomSceneInventoryEntitySelectMgr:refreshInventoryBlock()
 	if not RoomController.instance:isEditMode() then
 		return
 	end
 
-	if arg_3_0:_isHasEntity() then
-		arg_3_0._scene.camera:refreshOrthCamera()
+	if self:_isHasEntity() then
+		self._scene.camera:refreshOrthCamera()
 	end
 end
 
-function var_0_0._isHasEntity(arg_4_0)
-	if arg_4_0._entityPosInfoList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._entityPosInfoList) do
-			if iter_4_1.blockId ~= 0 then
+function RoomSceneInventoryEntitySelectMgr:_isHasEntity()
+	if self._entityPosInfoList then
+		for i, posInfo in ipairs(self._entityPosInfoList) do
+			if posInfo.blockId ~= 0 then
 				return true
 			end
 		end
@@ -46,242 +48,243 @@ function var_0_0._isHasEntity(arg_4_0)
 	return false
 end
 
-function var_0_0.addBlockEntity(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 then
-		local var_5_0 = arg_5_0:_getOrcreateUnit(arg_5_1, arg_5_2)
+function RoomSceneInventoryEntitySelectMgr:addBlockEntity(blockId, isWaterReform)
+	if blockId then
+		local blockEntity = self:_getOrcreateUnit(blockId, isWaterReform)
 
-		arg_5_0:_setTransform(var_5_0, arg_5_0:_findIndexById(arg_5_1))
-		arg_5_0:refreshInventoryBlock()
+		self:_setTransform(blockEntity, self:_findIndexById(blockId))
+		self:refreshInventoryBlock()
 	end
 end
 
-function var_0_0.removeBlockEntity(arg_6_0, arg_6_1)
-	if arg_6_1 then
-		arg_6_0:_deleteById(arg_6_1)
-		arg_6_0:refreshInventoryBlock()
+function RoomSceneInventoryEntitySelectMgr:removeBlockEntity(blockId)
+	if blockId then
+		self:_deleteById(blockId)
+		self:refreshInventoryBlock()
 	end
 end
 
-function var_0_0.removeAllBlockEntity(arg_7_0)
-	local var_7_0 = arg_7_0:getTagUnitDict(SceneTag.RoomInventoryBlock)
+function RoomSceneInventoryEntitySelectMgr:removeAllBlockEntity()
+	local tagEntityDict = self:getTagUnitDict(SceneTag.RoomInventoryBlock)
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		arg_7_0:_removeIndexById(iter_7_0)
+	for blockId, _ in pairs(tagEntityDict) do
+		self:_removeIndexById(blockId)
 	end
 
-	if not arg_7_0._isHasDelayCheckRetainTask then
-		arg_7_0._isHasDelayCheckRetainTask = true
+	if not self._isHasDelayCheckRetainTask then
+		self._isHasDelayCheckRetainTask = true
 
-		TaskDispatcher.runDelay(arg_7_0._onDelayCheckRetain, arg_7_0, 0.01)
+		TaskDispatcher.runDelay(self._onDelayCheckRetain, self, 0.01)
 	end
 
-	arg_7_0:refreshInventoryBlock()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0.getIndexById(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._entityPosInfoList) do
-		if iter_8_1.blockId == arg_8_1 then
-			return iter_8_1.index
+function RoomSceneInventoryEntitySelectMgr:getIndexById(blockId)
+	for i, posInfo in ipairs(self._entityPosInfoList) do
+		if posInfo.blockId == blockId then
+			return posInfo.index
 		end
 	end
 end
 
-function var_0_0._removeIndexById(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._entityPosInfoList) do
-		if iter_9_1.blockId == arg_9_1 then
-			iter_9_1.blockId = 0
+function RoomSceneInventoryEntitySelectMgr:_removeIndexById(blockId)
+	for i, posInfo in ipairs(self._entityPosInfoList) do
+		if posInfo.blockId == blockId then
+			posInfo.blockId = 0
 
-			return iter_9_1.index
+			return posInfo.index
 		end
 	end
 end
 
-function var_0_0._findIndexById(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getIndexById(arg_10_1)
+function RoomSceneInventoryEntitySelectMgr:_findIndexById(blockId)
+	local index = self:getIndexById(blockId)
 
-	if var_10_0 then
-		return var_10_0
+	if index then
+		return index
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._entityPosInfoList) do
-		if iter_10_1.blockId == 0 then
-			iter_10_1.blockId = arg_10_1
+	for i, posInfo in ipairs(self._entityPosInfoList) do
+		if posInfo.blockId == 0 then
+			posInfo.blockId = blockId
 
-			return iter_10_1.index
+			return posInfo.index
 		end
 	end
 end
 
-function var_0_0._getOrcreateUnit(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getUnit(SceneTag.RoomInventoryBlock, arg_11_1)
+function RoomSceneInventoryEntitySelectMgr:_getOrcreateUnit(blockId, isWaterReform)
+	local blockEntity = self:getUnit(SceneTag.RoomInventoryBlock, blockId)
 
-	if not var_11_0 then
-		local var_11_1 = gohelper.create3d(arg_11_0._inventoryRootGO, string.format("block_%d", arg_11_1))
+	if not blockEntity then
+		local blockGO = gohelper.create3d(self._inventoryRootGO, string.format("block_%d", blockId))
 
-		var_11_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, RoomInventoryBlockEntity, {
-			entityId = arg_11_1,
-			isWaterReform = arg_11_2
+		blockEntity = MonoHelper.addNoUpdateLuaComOnceToGo(blockGO, RoomInventoryBlockEntity, {
+			entityId = blockId,
+			isWaterReform = isWaterReform
 		})
-		var_11_0.retainCount = 1
+		blockEntity.retainCount = 1
 
-		arg_11_0:addUnit(var_11_0)
-		table.insert(arg_11_0._inventoryBlockIdList, arg_11_1)
-		gohelper.addChild(arg_11_0._inventoryRootGO, var_11_1)
+		self:addUnit(blockEntity)
+		table.insert(self._inventoryBlockIdList, blockId)
+		gohelper.addChild(self._inventoryRootGO, blockGO)
 	else
-		var_11_0.retainCount = var_11_0.retainCount + 1
+		blockEntity.retainCount = blockEntity.retainCount + 1
 	end
 
-	arg_11_0:refreshInventoryBlock()
+	self:refreshInventoryBlock()
 
-	return var_11_0
+	return blockEntity
 end
 
-function var_0_0._deleteById(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getUnit(SceneTag.RoomInventoryBlock, arg_12_1)
+function RoomSceneInventoryEntitySelectMgr:_deleteById(blockId)
+	local blockEntity = self:getUnit(SceneTag.RoomInventoryBlock, blockId)
 
-	if var_12_0 then
-		var_12_0.retainCount = var_12_0.retainCount - 1
+	if blockEntity then
+		blockEntity.retainCount = blockEntity.retainCount - 1
 
-		if var_12_0.retainCount < 1 then
-			var_12_0.retainCount = 0
+		if blockEntity.retainCount < 1 then
+			blockEntity.retainCount = 0
 
-			arg_12_0:_removeIndexById(arg_12_1)
+			self:_removeIndexById(blockId)
 		end
 	else
-		arg_12_0:_removeIndexById(arg_12_1)
+		self:_removeIndexById(blockId)
 	end
 
-	if not arg_12_0._isHasDelayCheckRetainTask then
-		arg_12_0._isHasDelayCheckRetainTask = true
+	if not self._isHasDelayCheckRetainTask then
+		self._isHasDelayCheckRetainTask = true
 
-		TaskDispatcher.runDelay(arg_12_0._onDelayCheckRetain, arg_12_0, 0.01)
+		TaskDispatcher.runDelay(self._onDelayCheckRetain, self, 0.01)
 	end
 
-	arg_12_0:refreshInventoryBlock()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0._onDelayCheckRetain(arg_13_0)
-	arg_13_0._isHasDelayCheckRetainTask = false
+function RoomSceneInventoryEntitySelectMgr:_onDelayCheckRetain()
+	self._isHasDelayCheckRetainTask = false
 
-	local var_13_0 = arg_13_0._inventoryBlockIdList
+	local blockIdList = self._inventoryBlockIdList
 
-	for iter_13_0 = #var_13_0, 1, -1 do
-		local var_13_1 = var_13_0[iter_13_0]
+	for i = #blockIdList, 1, -1 do
+		local blockId = blockIdList[i]
 
-		if not arg_13_0:getIndexById(var_13_1) then
-			table.remove(var_13_0, iter_13_0)
-			arg_13_0:removeUnit(SceneTag.RoomInventoryBlock, var_13_1)
+		if not self:getIndexById(blockId) then
+			table.remove(blockIdList, i)
+			self:removeUnit(SceneTag.RoomInventoryBlock, blockId)
 		end
 	end
 
-	arg_13_0:refreshInventoryBlock()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0._setTransform(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_1.goTrs
-	local var_14_1 = arg_14_0:_getLocationParam(arg_14_2)
+function RoomSceneInventoryEntitySelectMgr:_setTransform(blockEntity, index)
+	local tGoTrs = blockEntity.goTrs
+	local param = self:_getLocationParam(index)
 
-	transformhelper.setLocalScale(var_14_0, var_14_1.scale, var_14_1.scale, var_14_1.scale)
-	transformhelper.setLocalRotation(var_14_0, var_14_1.rotationX, var_14_1.rotationY, var_14_1.rotationZ)
-	arg_14_1:setLocalPos(var_14_1.positionX, var_14_1.positionY, var_14_1.positionZ)
-	arg_14_1:refreshBlock()
-	arg_14_1:refreshRotation()
-	arg_14_0:refreshInventoryBlock()
+	transformhelper.setLocalScale(tGoTrs, param.scale, param.scale, param.scale)
+	transformhelper.setLocalRotation(tGoTrs, param.rotationX, param.rotationY, param.rotationZ)
+	blockEntity:setLocalPos(param.positionX, param.positionY, param.positionZ)
+	blockEntity:refreshBlock()
+	blockEntity:refreshRotation()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0.moveForward(arg_15_0)
-	arg_15_0:refreshInventoryBlock()
+function RoomSceneInventoryEntitySelectMgr:moveForward()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0.playForwardAnim(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0:_removeAnim()
+function RoomSceneInventoryEntitySelectMgr:playForwardAnim(callback, callbackObj)
+	self:_removeAnim()
 
-	if arg_16_1 then
-		arg_16_0._forwardAnimCallback = arg_16_1
-		arg_16_0._forwardAnimCallbackObj = arg_16_2
-		arg_16_0._isDelayForwardAminRun = true
+	if callback then
+		self._forwardAnimCallback = callback
+		self._forwardAnimCallbackObj = callbackObj
+		self._isDelayForwardAminRun = true
 
-		TaskDispatcher.runDelay(arg_16_0._delayForwardAnimCallback, arg_16_0, 0.11)
+		TaskDispatcher.runDelay(self._delayForwardAnimCallback, self, 0.11)
 	end
 
-	arg_16_0:refreshInventoryBlock()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0._removeAnim(arg_17_0)
-	arg_17_0._forwardAnimCallback = nil
-	arg_17_0._forwardAnimCallbackObj = nil
+function RoomSceneInventoryEntitySelectMgr:_removeAnim()
+	self._forwardAnimCallback = nil
+	self._forwardAnimCallbackObj = nil
 
-	if arg_17_0._isDelayForwardAminRun then
-		arg_17_0._isDelayForwardAminRun = false
+	if self._isDelayForwardAminRun then
+		self._isDelayForwardAminRun = false
 
-		TaskDispatcher.cancelTask(arg_17_0._delayForwardAnimCallback, arg_17_0)
+		TaskDispatcher.cancelTask(self._delayForwardAnimCallback, self)
 	end
 end
 
-function var_0_0._delayForwardAnimCallback(arg_18_0)
-	arg_18_0._isDelayForwardAminRun = false
+function RoomSceneInventoryEntitySelectMgr:_delayForwardAnimCallback()
+	self._isDelayForwardAminRun = false
 
-	if arg_18_0._forwardAnimCallback then
-		if arg_18_0._forwardAnimCallbackObj then
-			arg_18_0._forwardAnimCallback(arg_18_0._forwardAnimCallbackObj)
+	if self._forwardAnimCallback then
+		if self._forwardAnimCallbackObj then
+			self._forwardAnimCallback(self._forwardAnimCallbackObj)
 		else
-			arg_18_0._forwardAnimCallback()
+			self._forwardAnimCallback()
 		end
 	end
 
-	arg_18_0:refreshInventoryBlock()
+	self:refreshInventoryBlock()
 end
 
-function var_0_0._getLocationParam(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._locationParamDic[arg_19_1]
+function RoomSceneInventoryEntitySelectMgr:_getLocationParam(index)
+	local posParam = self._locationParamDic[index]
 
-	if not var_19_0 then
-		var_19_0 = {}
-		arg_19_0._locationParamDic[arg_19_1] = var_19_0
+	if not posParam then
+		posParam = {}
+		self._locationParamDic[index] = posParam
 
-		local var_19_1 = arg_19_1 - 1
-		local var_19_2 = 1
-		local var_19_3 = 1.3125
-		local var_19_4 = math.floor(var_19_1 % 6)
-		local var_19_5 = math.floor(var_19_1 / 6)
+		local tIndex = index - 1
+		local dx = 1
+		local dz = 1.3125
+		local idxX = math.floor(tIndex % 6)
+		local idxZ = math.floor(tIndex / 6)
 
-		var_19_0.positionX = -2.51 + var_19_4 * var_19_2
-		var_19_0.positionY = 0.15
-		var_19_0.positionZ = -1.55 + var_19_5 * var_19_3
-		var_19_0.rotationX = 26
-		var_19_0.rotationY = 0
-		var_19_0.rotationZ = 0
-		var_19_0.scale = 0.9
+		posParam.positionX = -2.51 + idxX * dx
+		posParam.positionY = 0.15
+		posParam.positionZ = -1.55 + idxZ * dz
+		posParam.rotationX = 26
+		posParam.rotationY = 0
+		posParam.rotationZ = 0
+		posParam.scale = 0.9
 	end
 
-	return var_19_0
+	return posParam
 end
 
-function var_0_0.refreshRemainBlock(arg_20_0)
+function RoomSceneInventoryEntitySelectMgr:refreshRemainBlock()
 	return
 end
 
-function var_0_0.getBlockEntity(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getTagUnitDict(SceneTag.RoomInventoryBlock)
+function RoomSceneInventoryEntitySelectMgr:getBlockEntity(id)
+	local tagEntitys = self:getTagUnitDict(SceneTag.RoomInventoryBlock)
+	local entity = tagEntitys and tagEntitys[id]
 
-	return var_21_0 and var_21_0[arg_21_1]
+	return entity
 end
 
-function var_0_0.onSceneClose(arg_22_0)
-	var_0_0.super.onSceneClose(arg_22_0)
+function RoomSceneInventoryEntitySelectMgr:onSceneClose()
+	RoomSceneInventoryEntitySelectMgr.super.onSceneClose(self)
 
-	arg_22_0._isHasDelayCheckRetainTask = false
+	self._isHasDelayCheckRetainTask = false
 
-	TaskDispatcher.cancelTask(arg_22_0._onDelayCheckRetain, arg_22_0)
+	TaskDispatcher.cancelTask(self._onDelayCheckRetain, self)
 
-	arg_22_0._inventoryBlockIdList = {}
+	self._inventoryBlockIdList = {}
 
-	arg_22_0:_removeAnim()
-	arg_22_0:removeAllUnits()
+	self:_removeAnim()
+	self:removeAllUnits()
 end
 
-function var_0_0.addUnit(arg_23_0, arg_23_1)
-	var_0_0.super.addUnit(arg_23_0, arg_23_1)
+function RoomSceneInventoryEntitySelectMgr:addUnit(unit)
+	RoomSceneInventoryEntitySelectMgr.super.addUnit(self, unit)
 end
 
-return var_0_0
+return RoomSceneInventoryEntitySelectMgr

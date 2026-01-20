@@ -1,77 +1,79 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.damage.EliminateTreatmentComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/damage/EliminateTreatmentComp.lua
 
-local var_0_0 = class("EliminateTreatmentComp", HpCompBase)
+module("modules.logic.versionactivity2_7.lengzhou6.model.damage.EliminateTreatmentComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._baseTreatment = 0
-	arg_1_0._exTreatment = 0
-	arg_1_0._treatmentRate = 0
-	arg_1_0._eliminateTypeExTreatment = {}
+local EliminateTreatmentComp = class("EliminateTreatmentComp", HpCompBase)
+
+function EliminateTreatmentComp:ctor()
+	self._baseTreatment = 0
+	self._exTreatment = 0
+	self._treatmentRate = 0
+	self._eliminateTypeExTreatment = {}
 end
 
-function var_0_0.reset(arg_2_0)
-	arg_2_0._baseTreatment = 0
-	arg_2_0._exTreatment = 0
-	arg_2_0._treatmentRate = 0
-	arg_2_0._eliminateTypeExTreatment = {}
+function EliminateTreatmentComp:reset()
+	self._baseTreatment = 0
+	self._exTreatment = 0
+	self._treatmentRate = 0
+	self._eliminateTypeExTreatment = {}
 end
 
-function var_0_0.setExTreatment(arg_3_0, arg_3_1)
-	arg_3_0._exTreatment = arg_3_1
+function EliminateTreatmentComp:setExTreatment(treatment)
+	self._exTreatment = treatment
 end
 
-function var_0_0.setEliminateTypeExTreatment(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._eliminateTypeExTreatment[arg_4_1] = arg_4_2
+function EliminateTreatmentComp:setEliminateTypeExTreatment(type, addTreatment)
+	self._eliminateTypeExTreatment[type] = addTreatment
 end
 
-function var_0_0.setTreatmentRate(arg_5_0, arg_5_1)
-	arg_5_0._treatmentRate = arg_5_1 / 1000
+function EliminateTreatmentComp:setTreatmentRate(rate)
+	self._treatmentRate = rate / 1000
 end
 
-local var_0_1 = "\n"
+local debugTempStr = "\n"
 
-function var_0_0.treatment(arg_6_0, arg_6_1)
-	local var_6_0 = 0
-	local var_6_1 = arg_6_1:getEliminateTypeMap()
+function EliminateTreatmentComp:treatment(eliminateRecordData)
+	local totalTreatment = 0
+	local eliminateTypeMap = eliminateRecordData:getEliminateTypeMap()
 
-	for iter_6_0, iter_6_1 in pairs(var_6_1) do
-		for iter_6_2, iter_6_3 in pairs(iter_6_1) do
-			if not string.nilorempty(iter_6_0) and iter_6_0 ~= EliminateEnum_2_7.ChessType.stone then
-				local var_6_2 = iter_6_3.eliminateType
-				local var_6_3 = iter_6_3.eliminateCount
-				local var_6_4 = iter_6_3.spEliminateCount
-				local var_6_5, var_6_6 = LengZhou6Config.instance:getHealValue(iter_6_0, var_6_2)
+	for eliminateId, dataMap in pairs(eliminateTypeMap) do
+		for _, data in pairs(dataMap) do
+			if not string.nilorempty(eliminateId) and eliminateId ~= EliminateEnum_2_7.ChessType.stone then
+				local eliminateType = data.eliminateType
+				local eliminateCount = data.eliminateCount
+				local spEliminateCount = data.spEliminateCount
+				local baseTreatment, baseExTreatment = LengZhou6Config.instance:getHealValue(eliminateId, eliminateType)
 
-				if var_6_6 ~= nil and (var_6_2 == EliminateEnum_2_7.eliminateType.cross or var_6_2 == EliminateEnum_2_7.eliminateType.five) then
-					var_6_6 = (var_6_3 - 5) * var_6_6
+				if baseExTreatment ~= nil and (eliminateType == EliminateEnum_2_7.eliminateType.cross or eliminateType == EliminateEnum_2_7.eliminateType.five) then
+					baseExTreatment = (eliminateCount - 5) * baseExTreatment
 				end
 
-				if var_6_2 == EliminateEnum_2_7.eliminateType.base then
-					var_6_5 = var_6_5 * var_6_3
+				if eliminateType == EliminateEnum_2_7.eliminateType.base then
+					baseTreatment = baseTreatment * eliminateCount
 				end
 
-				if var_6_4 ~= 0 and arg_6_0._eliminateTypeExTreatment[iter_6_0] ~= nil then
-					var_6_6 = var_6_6 + arg_6_0._eliminateTypeExTreatment[iter_6_0] * var_6_4
+				if spEliminateCount ~= 0 and self._eliminateTypeExTreatment[eliminateId] ~= nil then
+					baseExTreatment = baseExTreatment + self._eliminateTypeExTreatment[eliminateId] * spEliminateCount
 				end
 
 				if isDebugBuild then
-					var_0_1 = var_0_1 .. "eliminateId = " .. iter_6_0 .. " eliminateType = " .. var_6_2 .. " eliminateCount = " .. var_6_3 .. " spEliminateCount = " .. var_6_4 .. " baseTreatment = " .. var_6_5 .. " baseExTreatment = " .. var_6_6 .. "\n"
+					debugTempStr = debugTempStr .. "eliminateId = " .. eliminateId .. " eliminateType = " .. eliminateType .. " eliminateCount = " .. eliminateCount .. " spEliminateCount = " .. spEliminateCount .. " baseTreatment = " .. baseTreatment .. " baseExTreatment = " .. baseExTreatment .. "\n"
 				end
 
-				var_6_0 = var_6_0 + (var_6_5 + arg_6_0._exTreatment + var_6_6) * (1 + arg_6_0._treatmentRate)
+				totalTreatment = totalTreatment + (baseTreatment + self._exTreatment + baseExTreatment) * (1 + self._treatmentRate)
 			end
 		end
 	end
 
 	if isDebugBuild then
-		logNormal("消除治疗计算详情 = " .. var_0_1)
+		logNormal("消除治疗计算详情 = " .. debugTempStr)
 
-		var_0_1 = "\n"
+		debugTempStr = "\n"
 
-		logNormal("消除单次治疗 = ：" .. var_6_0)
+		logNormal("消除单次治疗 = ：" .. totalTreatment)
 	end
 
-	return var_6_0
+	return totalTreatment
 end
 
-return var_0_0
+return EliminateTreatmentComp

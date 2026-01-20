@@ -1,29 +1,31 @@
-﻿module("modules.logic.season.model.Activity104TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/season/model/Activity104TaskListModel.lua
 
-local var_0_0 = class("Activity104TaskListModel", ListScrollModel)
+module("modules.logic.season.model.Activity104TaskListModel", package.seeall)
 
-function var_0_0.refreshList(arg_1_0)
-	local var_1_0 = Activity104TaskModel.instance:getTaskSeasonList()
-	local var_1_1 = {}
-	local var_1_2 = 0
+local Activity104TaskListModel = class("Activity104TaskListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		var_1_1[iter_1_0] = iter_1_1
+function Activity104TaskListModel:refreshList()
+	local tasks = Activity104TaskModel.instance:getTaskSeasonList()
+	local list = {}
+	local finishCount = 0
 
-		if iter_1_1.hasFinished then
-			var_1_2 = var_1_2 + 1
+	for i, v in ipairs(tasks) do
+		list[i] = v
+
+		if v.hasFinished then
+			finishCount = finishCount + 1
 		end
 	end
 
-	if var_1_2 > 1 then
-		table.insert(var_1_1, 1, {
+	if finishCount > 1 then
+		table.insert(list, 1, {
 			isTotalGet = true
 		})
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104TaskListModel.instance = Activity104TaskListModel.New()
 
-return var_0_0
+return Activity104TaskListModel

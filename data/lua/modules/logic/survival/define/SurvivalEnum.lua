@@ -1,13 +1,15 @@
-﻿module("modules.logic.survival.define.SurvivalEnum", package.seeall)
+﻿-- chunkname: @modules/logic/survival/define/SurvivalEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.survival.define.SurvivalEnum", package.seeall)
 
-var_0_0.RainType = {
+local SurvivalEnum = _M
+
+SurvivalEnum.RainType = {
 	Rain3 = 2,
 	Rain2 = 3,
 	Rain1 = 1
 }
-var_0_0.UnitType = {
+SurvivalEnum.UnitType = {
 	NPC = 5,
 	Task = 7,
 	Door = 8,
@@ -18,7 +20,7 @@ var_0_0.UnitType = {
 	Battle = 4,
 	Block = 9
 }
-var_0_0.UnitSubType = {
+SurvivalEnum.UnitSubType = {
 	Water = 96,
 	Shop = 77,
 	Ice = 95,
@@ -28,7 +30,7 @@ var_0_0.UnitSubType = {
 	BlockEvent = 791,
 	Block = 91
 }
-var_0_0.Dir = {
+SurvivalEnum.Dir = {
 	BottomRight = 1,
 	TopLeft = 4,
 	Right = 0,
@@ -36,15 +38,15 @@ var_0_0.Dir = {
 	BottomLeft = 2,
 	Left = 3
 }
-var_0_0.DirToPos = {
-	[var_0_0.Dir.Right] = SurvivalHexNode.New(1, 0, -1),
-	[var_0_0.Dir.BottomRight] = SurvivalHexNode.New(0, 1, -1),
-	[var_0_0.Dir.BottomLeft] = SurvivalHexNode.New(-1, 1, 0),
-	[var_0_0.Dir.Left] = SurvivalHexNode.New(-1, 0, 1),
-	[var_0_0.Dir.TopLeft] = SurvivalHexNode.New(0, -1, 1),
-	[var_0_0.Dir.TopRight] = SurvivalHexNode.New(1, -1, 0)
+SurvivalEnum.DirToPos = {
+	[SurvivalEnum.Dir.Right] = SurvivalHexNode.New(1, 0, -1),
+	[SurvivalEnum.Dir.BottomRight] = SurvivalHexNode.New(0, 1, -1),
+	[SurvivalEnum.Dir.BottomLeft] = SurvivalHexNode.New(-1, 1, 0),
+	[SurvivalEnum.Dir.Left] = SurvivalHexNode.New(-1, 0, 1),
+	[SurvivalEnum.Dir.TopLeft] = SurvivalHexNode.New(0, -1, 1),
+	[SurvivalEnum.Dir.TopRight] = SurvivalHexNode.New(1, -1, 0)
 }
-var_0_0.ConstId = {
+SurvivalEnum.ConstId = {
 	TornadoSpEvent = 4202,
 	Vehicle_WaterNormal = 3906,
 	HeroHealth2 = 2302,
@@ -80,23 +82,23 @@ var_0_0.ConstId = {
 	Vehicle_Water = 3905,
 	ShelterCompositeCost = 2601
 }
-var_0_0.HardUnlockCondition = {
+SurvivalEnum.HardUnlockCondition = {
 	overDifMult = "passMods",
 	overDif = "overDif"
 }
-var_0_0.OperType = {
+SurvivalEnum.OperType = {
 	PlayerMove = 1,
 	SelectOption = 5,
 	TriggerEvent = 2,
 	OperSearch = 3,
 	FightBack = 6
 }
-var_0_0.StepRunOrder = {
+SurvivalEnum.StepRunOrder = {
 	Before = 1,
 	After = 3,
 	None = 2
 }
-var_0_0.StepType = {
+SurvivalEnum.StepType = {
 	MapTickAfter = 22,
 	TeleportGateUpdate = 32,
 	FollowTaskUpdate = 16,
@@ -130,12 +132,12 @@ var_0_0.StepType = {
 	BeginFight = 12,
 	ShowToast = 39
 }
-var_0_0.MagmaStatus = {
+SurvivalEnum.MagmaStatus = {
 	Intermittent = 2,
 	Active = 0,
 	Normal = 1
 }
-var_0_0.PanelType = {
+SurvivalEnum.PanelType = {
 	TreeEvent = 2,
 	Store = 4,
 	DropSelect = 3,
@@ -143,12 +145,12 @@ var_0_0.PanelType = {
 	Decrees = 5,
 	None = 0
 }
-var_0_0.FightStatu = {
+SurvivalEnum.FightStatu = {
 	Win = 1,
 	Lose = 2,
 	None = 0
 }
-var_0_0.ItemType = {
+SurvivalEnum.ItemType = {
 	Quick = 5,
 	Equip = 7,
 	Pileup = 8,
@@ -158,14 +160,14 @@ var_0_0.ItemType = {
 	Material = 1,
 	Currency = 2
 }
-var_0_0.CurrencyType = {
+SurvivalEnum.CurrencyType = {
 	Gold = 1,
 	Enthusiastic = 4,
 	Decoding = 5,
 	Food = 3,
 	Build = 2
 }
-var_0_0.ItemSubType = {
+SurvivalEnum.ItemSubType = {
 	Quick_TransferToEvent = 65,
 	Quick_Revival = 64,
 	Quick_SwapPos = 61,
@@ -187,15 +189,15 @@ var_0_0.ItemSubType = {
 	Quick_GetTalent = 54,
 	Quick_ClearFog = 60
 }
-var_0_0.CustomUseItemSubType = {
-	[var_0_0.ItemSubType.Quick_Fly] = true,
-	[var_0_0.ItemSubType.Quick_ClearFog] = true,
-	[var_0_0.ItemSubType.Quick_SwapPos] = true,
-	[var_0_0.ItemSubType.Quick_DelObstructNPCFight] = true,
-	[var_0_0.ItemSubType.Quick_TransferToEvent] = true,
-	[var_0_0.ItemSubType.Quick_TransferUnitOut] = true
+SurvivalEnum.CustomUseItemSubType = {
+	[SurvivalEnum.ItemSubType.Quick_Fly] = true,
+	[SurvivalEnum.ItemSubType.Quick_ClearFog] = true,
+	[SurvivalEnum.ItemSubType.Quick_SwapPos] = true,
+	[SurvivalEnum.ItemSubType.Quick_DelObstructNPCFight] = true,
+	[SurvivalEnum.ItemSubType.Quick_TransferToEvent] = true,
+	[SurvivalEnum.ItemSubType.Quick_TransferUnitOut] = true
 }
-var_0_0.ItemSource = {
+SurvivalEnum.ItemSource = {
 	Commited = -5,
 	Equip = -2,
 	Map = 1,
@@ -210,55 +212,55 @@ var_0_0.ItemSource = {
 	Shelter = 2,
 	None = 0
 }
-var_0_0.HelpState = {
+SurvivalEnum.HelpState = {
 	Full = 3,
 	UnSelected = 2,
 	Selected = 1
 }
-var_0_0.GameTimeUpdateReason = {
+SurvivalEnum.GameTimeUpdateReason = {
 	Cost = 2,
 	Normal = 1
 }
-var_0_0.MapResult = {
+SurvivalEnum.MapResult = {
 	Win = 1,
 	Lose = 2,
 	None = 0
 }
-var_0_0.MapSettleReason = {
+SurvivalEnum.MapSettleReason = {
 	HealthLimit = 1,
 	Abort = 3,
 	TimeLimit = 2,
 	UseItem = 4,
 	Success = 0
 }
-var_0_0.StepTypeToName = {}
+SurvivalEnum.StepTypeToName = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.StepType) do
-	var_0_0.StepTypeToName[iter_0_1] = iter_0_0
+for k, v in pairs(SurvivalEnum.StepType) do
+	SurvivalEnum.StepTypeToName[v] = k
 end
 
-var_0_0.UnitTypeToName = {}
+SurvivalEnum.UnitTypeToName = {}
 
-for iter_0_2, iter_0_3 in pairs(var_0_0.UnitType) do
-	var_0_0.UnitTypeToName[iter_0_3] = iter_0_2
+for k, v in pairs(SurvivalEnum.UnitType) do
+	SurvivalEnum.UnitTypeToName[v] = k
 end
 
-var_0_0.BuildingStatus = {
+SurvivalEnum.BuildingStatus = {
 	Destroy = 1,
 	Normal = 0
 }
-var_0_0.HeroStatu = {
+SurvivalEnum.HeroStatu = {
 	HasBuff = 1,
 	Hurt = 2,
 	Normal = 0
 }
-var_0_0.NpcStatus = {
+SurvivalEnum.NpcStatus = {
 	HomeBreak = 2,
 	OutSide = 1,
 	HomeLess = 3,
 	Normal = 0
 }
-var_0_0.EventChoiceIcon = {
+SurvivalEnum.EventChoiceIcon = {
 	NPC = 2,
 	Task = 1,
 	Talk = 14,
@@ -271,20 +273,20 @@ var_0_0.EventChoiceIcon = {
 	Obstruct = 9,
 	None = 0
 }
-var_0_0.IconToColor = {
-	[var_0_0.EventChoiceIcon.None] = SurvivalConst.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Task] = SurvivalConst.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.NPC] = SurvivalConst.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.Search] = SurvivalConst.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.Treasure] = SurvivalConst.EventChoiceColor.Green,
-	[var_0_0.EventChoiceIcon.Fight] = SurvivalConst.EventChoiceColor.Red,
-	[var_0_0.EventChoiceIcon.FightElite] = SurvivalConst.EventChoiceColor.Red,
-	[var_0_0.EventChoiceIcon.Exit] = SurvivalConst.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Obstruct] = SurvivalConst.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Talk] = SurvivalConst.EventChoiceColor.Yellow,
-	[var_0_0.EventChoiceIcon.Return] = SurvivalConst.EventChoiceColor.Yellow
+SurvivalEnum.IconToColor = {
+	[SurvivalEnum.EventChoiceIcon.None] = SurvivalConst.EventChoiceColor.Yellow,
+	[SurvivalEnum.EventChoiceIcon.Task] = SurvivalConst.EventChoiceColor.Green,
+	[SurvivalEnum.EventChoiceIcon.NPC] = SurvivalConst.EventChoiceColor.Green,
+	[SurvivalEnum.EventChoiceIcon.Search] = SurvivalConst.EventChoiceColor.Green,
+	[SurvivalEnum.EventChoiceIcon.Treasure] = SurvivalConst.EventChoiceColor.Green,
+	[SurvivalEnum.EventChoiceIcon.Fight] = SurvivalConst.EventChoiceColor.Red,
+	[SurvivalEnum.EventChoiceIcon.FightElite] = SurvivalConst.EventChoiceColor.Red,
+	[SurvivalEnum.EventChoiceIcon.Exit] = SurvivalConst.EventChoiceColor.Yellow,
+	[SurvivalEnum.EventChoiceIcon.Obstruct] = SurvivalConst.EventChoiceColor.Yellow,
+	[SurvivalEnum.EventChoiceIcon.Talk] = SurvivalConst.EventChoiceColor.Yellow,
+	[SurvivalEnum.EventChoiceIcon.Return] = SurvivalConst.EventChoiceColor.Yellow
 }
-var_0_0.ItemSortType = {
+SurvivalEnum.ItemSortType = {
 	ItemReward = 8,
 	EquipTag = 5,
 	Time = 4,
@@ -294,25 +296,25 @@ var_0_0.ItemSortType = {
 	NPC = 6,
 	Mass = 1
 }
-var_0_0.ItemFilterType = {
+SurvivalEnum.ItemFilterType = {
 	Equip = 2,
 	Material = 1,
 	Consume = 3
 }
-var_0_0.TaskStatus = {
+SurvivalEnum.TaskStatus = {
 	Done = 2,
 	Doing = 1,
 	Fail = 4,
 	Finish = 3
 }
-var_0_0.TaskModule = {
+SurvivalEnum.TaskModule = {
 	StoryTask = 3,
 	MainTask = 1,
 	MapMainTarget = 5,
 	SubTask = 2,
 	NormalTask = 4
 }
-var_0_0.AttrType = {
+SurvivalEnum.AttrType = {
 	ChoiceCostTime = 811,
 	BuildCost = 102,
 	HealthInc = 601,
@@ -368,24 +370,24 @@ var_0_0.AttrType = {
 	BuildBuyPriceFix = 303,
 	SellPriceFix = 302
 }
-var_0_0.AttrTypePer = {
-	[var_0_0.AttrType.BuyPriceFix] = true,
-	[var_0_0.AttrType.SellPriceFix] = true,
-	[var_0_0.AttrType.BuildBuyPriceFix] = true,
-	[var_0_0.AttrType.BuildSellPriceFix] = true,
-	[var_0_0.AttrType.HealthDec] = true,
-	[var_0_0.AttrType.HealthInc] = true,
-	[var_0_0.AttrType.NpcRecruitment] = true,
-	[var_0_0.AttrType.ChoiceCostTime] = true,
-	[var_0_0.AttrType.BuildCost] = true,
-	[var_0_0.AttrType.RepairCost] = true,
-	[var_0_0.AttrType.NpcFoodCost] = true,
-	[var_0_0.AttrType.ShopBuyPriceFix] = true,
-	[var_0_0.AttrType.MapSellPriceFix] = true,
-	[var_0_0.AttrType.RenownChangeFix] = true,
-	[var_0_0.AttrType.DecodingFix] = true
+SurvivalEnum.AttrTypePer = {
+	[SurvivalEnum.AttrType.BuyPriceFix] = true,
+	[SurvivalEnum.AttrType.SellPriceFix] = true,
+	[SurvivalEnum.AttrType.BuildBuyPriceFix] = true,
+	[SurvivalEnum.AttrType.BuildSellPriceFix] = true,
+	[SurvivalEnum.AttrType.HealthDec] = true,
+	[SurvivalEnum.AttrType.HealthInc] = true,
+	[SurvivalEnum.AttrType.NpcRecruitment] = true,
+	[SurvivalEnum.AttrType.ChoiceCostTime] = true,
+	[SurvivalEnum.AttrType.BuildCost] = true,
+	[SurvivalEnum.AttrType.RepairCost] = true,
+	[SurvivalEnum.AttrType.NpcFoodCost] = true,
+	[SurvivalEnum.AttrType.ShopBuyPriceFix] = true,
+	[SurvivalEnum.AttrType.MapSellPriceFix] = true,
+	[SurvivalEnum.AttrType.RenownChangeFix] = true,
+	[SurvivalEnum.AttrType.DecodingFix] = true
 }
-var_0_0.PlayerMoveReason = {
+SurvivalEnum.PlayerMoveReason = {
 	Fly = 4,
 	Transfer = 3,
 	Tornado = 5,
@@ -394,11 +396,11 @@ var_0_0.PlayerMoveReason = {
 	Summon = 7,
 	Normal = 1
 }
-var_0_0.UnitDeadReason = {
+SurvivalEnum.UnitDeadReason = {
 	DieByQuickItem = 2006,
 	PlayDieAnim = 2003
 }
-var_0_0.NpcRecruitmentType = {
+SurvivalEnum.NpcRecruitmentType = {
 	NpcNumCheck = 3,
 	WorthCheck = 4,
 	FinishTask = 5,
@@ -406,12 +408,12 @@ var_0_0.NpcRecruitmentType = {
 	ItemCost = 1,
 	ItemCheck = 2
 }
-var_0_0.ConditionOper = {
+SurvivalEnum.ConditionOper = {
 	GE = 1,
 	LE = 3,
 	EQ = 2
 }
-var_0_0.BuildingType = {
+SurvivalEnum.BuildingType = {
 	Base = 1,
 	Task = 4,
 	Population = 3,
@@ -425,62 +427,62 @@ var_0_0.BuildingType = {
 	Health = 6,
 	Tent = 7
 }
-var_0_0.InfoShowType = {
+SurvivalEnum.InfoShowType = {
 	Npc = 2,
 	Building = 1,
 	NpcOnlyConfig = 3,
 	None = 0
 }
-var_0_0.ShelterNpcStatus = {
+SurvivalEnum.ShelterNpcStatus = {
 	NotInBuild = 0,
 	InDestoryBuild = 2,
 	InBuild = 1,
 	OutSide = 3
 }
-var_0_0.ShelterUnitType = {
+SurvivalEnum.ShelterUnitType = {
 	Monster = 3,
 	VoteEntity = 5,
 	Player = 4,
 	Npc = 1,
 	Build = 2
 }
-var_0_0.ShelterMonsterFightState = {
+SurvivalEnum.ShelterMonsterFightState = {
 	Fighting = 2,
 	Abandon = 4,
 	Fail = 3,
 	NoStart = 1,
 	Win = 5
 }
-var_0_0.ShelterUnitTypeToName = {}
+SurvivalEnum.ShelterUnitTypeToName = {}
 
-for iter_0_4, iter_0_5 in pairs(var_0_0.ShelterUnitType) do
-	var_0_0.ShelterUnitTypeToName[iter_0_5] = iter_0_4
+for k, v in pairs(SurvivalEnum.ShelterUnitType) do
+	SurvivalEnum.ShelterUnitTypeToName[v] = k
 end
 
-var_0_0.ShelterBuildingBtnStatus = {
+SurvivalEnum.ShelterBuildingBtnStatus = {
 	Destroy = 1,
 	New = 3,
 	Levelup = 2,
 	Normal = 0
 }
-var_0_0.ShelterDecreeStatus = {
+SurvivalEnum.ShelterDecreeStatus = {
 	UnFinish = 1,
 	Finish = 2,
 	Normal = 0
 }
-var_0_0.ShelterBtnUnlockType = {
+SurvivalEnum.ShelterBtnUnlockType = {
 	BuildingTypeLev = 1
 }
-var_0_0.ShelterGridType = {
+SurvivalEnum.ShelterGridType = {
 	Triangle = 2,
 	Single = 1
 }
-var_0_0.NpcSubType = {
+SurvivalEnum.NpcSubType = {
 	Story = 52,
 	Normal = 51
 }
-var_0_0.SurvivalIntrudeAbandonBlock = "SurvivalIntrudeAbandonBlock"
-var_0_0.ShelterBuildingLocalStatus = {
+SurvivalEnum.SurvivalIntrudeAbandonBlock = "SurvivalIntrudeAbandonBlock"
+SurvivalEnum.ShelterBuildingLocalStatus = {
 	Destroy = 1,
 	NormalToDestroy = 102,
 	DestroyToNormal = 101,
@@ -489,28 +491,28 @@ var_0_0.ShelterBuildingLocalStatus = {
 	UnBuild = 2,
 	Normal = 0
 }
-var_0_0.SurvivalMonsterEventViewShowType = {
+SurvivalEnum.SurvivalMonsterEventViewShowType = {
 	Watch = 1,
 	Normal = 0
 }
-var_0_0.HandBookType = {
+SurvivalEnum.HandBookType = {
 	Amplifier = 2,
 	Result = 4,
 	Event = 3,
 	Npc = 1
 }
-var_0_0.HandBookTypeToName = {}
+SurvivalEnum.HandBookTypeToName = {}
 
-for iter_0_6, iter_0_7 in pairs(var_0_0.HandBookType) do
-	var_0_0.HandBookTypeToName[iter_0_7] = iter_0_6
+for name, index in pairs(SurvivalEnum.HandBookType) do
+	SurvivalEnum.HandBookTypeToName[index] = name
 end
 
-var_0_0.HandBookEventSubType = {
+SurvivalEnum.HandBookEventSubType = {
 	Fight = 2,
 	Task = 3,
 	Search = 1
 }
-var_0_0.HandBookAmplifierSubType = {
+SurvivalEnum.HandBookAmplifierSubType = {
 	Common = 1,
 	Bloom = 4,
 	ElectricEnergy = 2,
@@ -519,32 +521,32 @@ var_0_0.HandBookAmplifierSubType = {
 	Revelation = 3,
 	StateAbnormal = 7
 }
-var_0_0.HandBookAmplifierSubTypeUIPos = {
-	var_0_0.HandBookAmplifierSubType.Common,
-	var_0_0.HandBookAmplifierSubType.Bloom,
-	var_0_0.HandBookAmplifierSubType.ElectricEnergy,
-	var_0_0.HandBookAmplifierSubType.Revelation,
-	var_0_0.HandBookAmplifierSubType.Ceremony,
-	var_0_0.HandBookAmplifierSubType.ExtraActions,
-	var_0_0.HandBookAmplifierSubType.StateAbnormal
+SurvivalEnum.HandBookAmplifierSubTypeUIPos = {
+	SurvivalEnum.HandBookAmplifierSubType.Common,
+	SurvivalEnum.HandBookAmplifierSubType.Bloom,
+	SurvivalEnum.HandBookAmplifierSubType.ElectricEnergy,
+	SurvivalEnum.HandBookAmplifierSubType.Revelation,
+	SurvivalEnum.HandBookAmplifierSubType.Ceremony,
+	SurvivalEnum.HandBookAmplifierSubType.ExtraActions,
+	SurvivalEnum.HandBookAmplifierSubType.StateAbnormal
 }
-var_0_0.HandBookNpcSubType = {
+SurvivalEnum.HandBookNpcSubType = {
 	Foundation = 3,
 	People = 1,
 	Laplace = 2,
 	Zeno = 4
 }
-var_0_0.ReputationType = {
+SurvivalEnum.ReputationType = {
 	Zeno = 2,
 	People = 1,
 	Laplace = 4,
 	Foundation = 3
 }
-var_0_0.ShopType = {
+SurvivalEnum.ShopType = {
 	Reputation = 2,
 	PreExplore = 3,
 	GeneralShop = 4,
 	Normal = 1
 }
 
-return var_0_0
+return SurvivalEnum

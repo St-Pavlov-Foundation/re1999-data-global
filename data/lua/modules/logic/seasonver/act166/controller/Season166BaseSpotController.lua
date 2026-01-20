@@ -1,34 +1,36 @@
-﻿module("modules.logic.seasonver.act166.controller.Season166BaseSpotController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/controller/Season166BaseSpotController.lua
 
-local var_0_0 = class("Season166BaseSpotController", BaseController)
+module("modules.logic.seasonver.act166.controller.Season166BaseSpotController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Season166BaseSpotController = class("Season166BaseSpotController", BaseController)
+
+function Season166BaseSpotController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Season166BaseSpotController:reInit()
 	return
 end
 
-function var_0_0.enterBaseSpotFightScene(arg_3_0, arg_3_1)
-	local var_3_0 = Season166BaseSpotModel.instance.curEpisodeId
+function Season166BaseSpotController:enterBaseSpotFightScene(param)
+	local episodeId = Season166BaseSpotModel.instance.curEpisodeId
 
-	if var_3_0 then
-		arg_3_0:startBattle(arg_3_1.actId, var_3_0)
+	if episodeId then
+		self:startBattle(param.actId, episodeId)
 	end
 end
 
-function var_0_0.startBattle(arg_4_0, arg_4_1, arg_4_2)
-	logNormal(string.format("startBattle with actId = %s, episodeId = %s", arg_4_1, arg_4_2))
+function Season166BaseSpotController:startBattle(actId, episodeId)
+	logNormal(string.format("startBattle with actId = %s, episodeId = %s", actId, episodeId))
 
-	local var_4_0 = DungeonConfig.instance:getEpisodeCO(arg_4_2)
-	local var_4_1 = Season166BaseSpotModel.instance.curBaseSpotId
-	local var_4_2 = Season166BaseSpotModel.instance.talentId
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local baseId = Season166BaseSpotModel.instance.curBaseSpotId
+	local talentId = Season166BaseSpotModel.instance.talentId
 
-	Season166Model.instance:setBattleContext(arg_4_1, arg_4_2, var_4_1, var_4_2)
-	DungeonFightController.instance:enterSeasonFight(var_4_0.chapterId, arg_4_2)
+	Season166Model.instance:setBattleContext(actId, episodeId, baseId, talentId)
+	DungeonFightController.instance:enterSeasonFight(episodeCo.chapterId, episodeId)
 end
 
-var_0_0.instance = var_0_0.New()
+Season166BaseSpotController.instance = Season166BaseSpotController.New()
 
-return var_0_0
+return Season166BaseSpotController

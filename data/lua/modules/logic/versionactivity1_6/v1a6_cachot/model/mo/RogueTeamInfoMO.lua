@@ -1,258 +1,261 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueTeamInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/mo/RogueTeamInfoMO.lua
 
-local var_0_0 = pureTable("RogueTeamInfoMO")
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueTeamInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.groupIdx = arg_1_1.groupIdx
-	arg_1_0._allHeros = {}
-	arg_1_0.fightHeros = {}
+local RogueTeamInfoMO = pureTable("RogueTeamInfoMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.fightHeros) do
-		local var_1_0 = HeroMo.New()
+function RogueTeamInfoMO:init(info)
+	self.groupIdx = info.groupIdx
+	self._allHeros = {}
+	self.fightHeros = {}
 
-		var_1_0:update(iter_1_1)
-		table.insert(arg_1_0.fightHeros, var_1_0)
+	for i, v in ipairs(info.fightHeros) do
+		local hero = HeroMo.New()
 
-		arg_1_0._allHeros[iter_1_1.heroId] = true
+		hero:update(v)
+		table.insert(self.fightHeros, hero)
+
+		self._allHeros[v.heroId] = true
 	end
 
-	arg_1_0.supportHeros = {}
+	self.supportHeros = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.supportHeros) do
-		local var_1_1 = HeroMo.New()
+	for i, v in ipairs(info.supportHeros) do
+		local hero = HeroMo.New()
 
-		var_1_1:update(iter_1_3)
-		table.insert(arg_1_0.supportHeros, var_1_1)
+		hero:update(v)
+		table.insert(self.supportHeros, hero)
 
-		arg_1_0._allHeros[iter_1_3.heroId] = true
+		self._allHeros[v.heroId] = true
 	end
 
-	arg_1_0.lifes = {}
-	arg_1_0.lifeMap = {}
+	self.lifes = {}
+	self.lifeMap = {}
 
-	for iter_1_4, iter_1_5 in ipairs(arg_1_1.lifes) do
-		local var_1_2 = RogueHeroLifeMO.New()
+	for i, v in ipairs(info.lifes) do
+		local heroLife = RogueHeroLifeMO.New()
 
-		var_1_2:init(iter_1_5)
-		table.insert(arg_1_0.lifes, var_1_2)
+		heroLife:init(v)
+		table.insert(self.lifes, heroLife)
 
-		arg_1_0.lifeMap[var_1_2.heroId] = var_1_2
+		self.lifeMap[heroLife.heroId] = heroLife
 	end
 
-	arg_1_0.groupInfos = {}
-	arg_1_0.groupInfoMap = {}
+	self.groupInfos = {}
+	self.groupInfoMap = {}
 
-	for iter_1_6, iter_1_7 in ipairs(arg_1_1.groupInfos) do
-		local var_1_3 = RogueGroupInfoMO.New()
+	for i, v in ipairs(info.groupInfos) do
+		local mo = RogueGroupInfoMO.New()
 
-		var_1_3:init(iter_1_7)
-		table.insert(arg_1_0.groupInfos, var_1_3)
+		mo:init(v)
+		table.insert(self.groupInfos, mo)
 
-		arg_1_0.groupInfoMap[var_1_3.id] = var_1_3
+		self.groupInfoMap[mo.id] = mo
 	end
 
-	arg_1_0:updateGroupBoxStar(arg_1_1.groupBoxStar)
+	self:updateGroupBoxStar(info.groupBoxStar)
 
-	arg_1_0.equipUids = {}
-	arg_1_0.equipUidsMap = {}
+	self.equipUids = {}
+	self.equipUidsMap = {}
 
-	for iter_1_8, iter_1_9 in ipairs(arg_1_1.equipUids) do
-		table.insert(arg_1_0.equipUids, iter_1_9)
+	for i, v in ipairs(info.equipUids) do
+		table.insert(self.equipUids, v)
 
-		arg_1_0.equipUidsMap[iter_1_9] = true
-	end
-end
-
-function var_0_0.hasEquip(arg_2_0, arg_2_1)
-	return arg_2_0.equipUidsMap[arg_2_1]
-end
-
-function var_0_0.updateGroupBoxStar(arg_3_0, arg_3_1)
-	arg_3_0.groupBoxStar = {}
-
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		table.insert(arg_3_0.groupBoxStar, iter_3_1)
+		self.equipUidsMap[v] = true
 	end
 end
 
-function var_0_0.getHeroHp(arg_4_0, arg_4_1)
-	return arg_4_0.lifeMap[arg_4_1]
+function RogueTeamInfoMO:hasEquip(equipUid)
+	return self.equipUidsMap[equipUid]
 end
 
-function var_0_0.getCurGroupInfo(arg_5_0)
-	return arg_5_0.groupInfoMap[arg_5_0.groupIdx]
+function RogueTeamInfoMO:updateGroupBoxStar(groupBoxStar)
+	self.groupBoxStar = {}
+
+	for i, v in ipairs(groupBoxStar) do
+		table.insert(self.groupBoxStar, v)
+	end
 end
 
-function var_0_0.getGroupInfos(arg_6_0)
-	local var_6_0 = {}
+function RogueTeamInfoMO:getHeroHp(heroId)
+	return self.lifeMap[heroId]
+end
 
-	for iter_6_0 = 1, 4 do
-		local var_6_1 = arg_6_0.groupInfos[iter_6_0]
+function RogueTeamInfoMO:getCurGroupInfo()
+	return self.groupInfoMap[self.groupIdx]
+end
 
-		if not var_6_1 then
-			var_6_1 = RogueGroupInfoMO.New()
+function RogueTeamInfoMO:getGroupInfos()
+	local list = {}
 
-			var_6_1:init({
-				id = iter_6_0,
+	for i = 1, 4 do
+		local info = self.groupInfos[i]
+
+		if not info then
+			info = RogueGroupInfoMO.New()
+
+			info:init({
+				id = i,
 				heroList = {},
 				equips = {}
 			})
 		end
 
-		table.insert(var_6_0, var_6_1)
+		table.insert(list, info)
 	end
 
-	return var_6_0
+	return list
 end
 
-function var_0_0.getAllHeroIdsMap(arg_7_0)
-	return arg_7_0._allHeros
+function RogueTeamInfoMO:getAllHeroIdsMap()
+	return self._allHeros
 end
 
-function var_0_0.getAllHeroUids(arg_8_0)
-	local var_8_0 = {}
+function RogueTeamInfoMO:getAllHeroUids()
+	local list = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.fightHeros) do
-		local var_8_1 = HeroModel.instance:getByHeroId(iter_8_1.heroId)
+	for i, v in ipairs(self.fightHeros) do
+		local heroMO = HeroModel.instance:getByHeroId(v.heroId)
 
-		if var_8_1 then
-			table.insert(var_8_0, var_8_1.uid)
+		if heroMO then
+			table.insert(list, heroMO.uid)
 		end
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(arg_8_0.supportHeros) do
-		local var_8_2 = HeroModel.instance:getByHeroId(iter_8_3.heroId)
+	for i, v in ipairs(self.supportHeros) do
+		local heroMO = HeroModel.instance:getByHeroId(v.heroId)
 
-		if var_8_2 then
-			table.insert(var_8_0, var_8_2.uid)
+		if heroMO then
+			table.insert(list, heroMO.uid)
 		end
 	end
 
-	return var_8_0
+	return list
 end
 
-function var_0_0.getGroupHeros(arg_9_0)
-	local var_9_0 = arg_9_0:getCurGroupInfo()
-	local var_9_1 = {}
+function RogueTeamInfoMO:getGroupHeros()
+	local curGroupInfo = self:getCurGroupInfo()
+	local list = {}
 
-	if not var_9_0 then
-		return var_9_1
+	if not curGroupInfo then
+		return list
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0.heroList) do
-		local var_9_2 = HeroModel.instance:getById(iter_9_1)
-		local var_9_3 = HeroSingleGroupMO.New()
+	for i, v in ipairs(curGroupInfo.heroList) do
+		local heroMO = HeroModel.instance:getById(v)
+		local mo = HeroSingleGroupMO.New()
 
-		if var_9_2 then
-			var_9_3.id = var_9_2.heroId
-			var_9_3.heroUid = var_9_2.uid
+		if heroMO then
+			mo.id = heroMO.heroId
+			mo.heroUid = heroMO.uid
 		end
 
-		table.insert(var_9_1, var_9_3)
+		table.insert(list, mo)
 	end
 
-	return var_9_1
+	return list
 end
 
-function var_0_0.getGroupLiveHeros(arg_10_0)
-	local var_10_0 = arg_10_0:getCurGroupInfo()
-	local var_10_1 = {}
+function RogueTeamInfoMO:getGroupLiveHeros()
+	local curGroupInfo = self:getCurGroupInfo()
+	local list = {}
 
-	if not var_10_0 then
-		return var_10_1
+	if not curGroupInfo then
+		return list
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0.heroList) do
-		local var_10_2 = HeroModel.instance:getById(iter_10_1)
-		local var_10_3 = HeroSingleGroupMO.New()
-		local var_10_4 = var_10_2 and arg_10_0:getHeroHp(var_10_2.heroId)
+	for i, v in ipairs(curGroupInfo.heroList) do
+		local heroMO = HeroModel.instance:getById(v)
+		local mo = HeroSingleGroupMO.New()
+		local lifeInfo = heroMO and self:getHeroHp(heroMO.heroId)
 
-		if var_10_4 and var_10_4.life > 0 then
-			var_10_3.id = var_10_2.heroId
-			var_10_3.heroUid = var_10_2.uid
+		if lifeInfo and lifeInfo.life > 0 then
+			mo.id = heroMO.heroId
+			mo.heroUid = heroMO.uid
 		end
 
-		table.insert(var_10_1, var_10_3)
+		table.insert(list, mo)
 	end
 
-	return var_10_1
+	return list
 end
 
-function var_0_0.getGroupEquips(arg_11_0)
-	local var_11_0 = arg_11_0:getCurGroupInfo()
-	local var_11_1 = {}
+function RogueTeamInfoMO:getGroupEquips()
+	local curGroupInfo = self:getCurGroupInfo()
+	local list = {}
 
-	if not var_11_0 then
-		return var_11_1
+	if not curGroupInfo then
+		return list
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0.equips) do
-		local var_11_2 = iter_11_1.equipUid[1]
+	for i, v in ipairs(curGroupInfo.equips) do
+		local equipId = v.equipUid[1]
+		local equipMO = EquipModel.instance:getEquip(equipId)
 
-		var_11_1[iter_11_0] = EquipModel.instance:getEquip(var_11_2)
+		list[i] = equipMO
 	end
 
-	return var_11_1
+	return list
 end
 
-function var_0_0.getFightHeros(arg_12_0)
-	local var_12_0 = {}
+function RogueTeamInfoMO:getFightHeros()
+	local list = {}
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.fightHeros) do
-		local var_12_1 = HeroModel.instance:getByHeroId(iter_12_1.heroId)
-		local var_12_2 = HeroSingleGroupMO.New()
+	for i, v in ipairs(self.fightHeros) do
+		local heroMO = HeroModel.instance:getByHeroId(v.heroId)
+		local mo = HeroSingleGroupMO.New()
 
-		if var_12_1 then
-			var_12_2.id = var_12_1.heroId
-			var_12_2.heroUid = var_12_1.uid
+		if heroMO then
+			mo.id = heroMO.heroId
+			mo.heroUid = heroMO.uid
 		end
 
-		table.insert(var_12_0, var_12_2)
+		table.insert(list, mo)
 	end
 
-	return var_12_0
+	return list
 end
 
-function var_0_0.getSupportHeros(arg_13_0)
-	local var_13_0 = {}
+function RogueTeamInfoMO:getSupportHeros()
+	local list = {}
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.supportHeros) do
-		local var_13_1 = HeroModel.instance:getByHeroId(iter_13_1.heroId)
+	for i, v in ipairs(self.supportHeros) do
+		local heroMO = HeroModel.instance:getByHeroId(v.heroId)
 
-		if var_13_1 then
-			local var_13_2 = HeroSingleGroupMO.New()
+		if heroMO then
+			local mo = HeroSingleGroupMO.New()
 
-			var_13_2.id = var_13_1.heroId
-			var_13_2.heroUid = var_13_1.uid
-			var_13_2._heroMO = var_13_1
+			mo.id = heroMO.heroId
+			mo.heroUid = heroMO.uid
+			mo._heroMO = heroMO
 
-			table.insert(var_13_0, var_13_2)
-		end
-	end
-
-	return var_13_0
-end
-
-function var_0_0.getSupportLiveHeros(arg_14_0)
-	local var_14_0 = {}
-
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.supportHeros) do
-		local var_14_1 = HeroModel.instance:getByHeroId(iter_14_1.heroId)
-		local var_14_2 = var_14_1 and arg_14_0:getHeroHp(var_14_1.heroId)
-
-		if var_14_2 and var_14_2.life > 0 then
-			local var_14_3 = HeroSingleGroupMO.New()
-
-			var_14_3.id = var_14_1.heroId
-			var_14_3.heroUid = var_14_1.uid
-			var_14_3._heroMO = var_14_1
-			var_14_3._hp = var_14_2.life
-
-			table.insert(var_14_0, var_14_3)
+			table.insert(list, mo)
 		end
 	end
 
-	return var_14_0
+	return list
 end
 
-return var_0_0
+function RogueTeamInfoMO:getSupportLiveHeros()
+	local list = {}
+
+	for i, v in ipairs(self.supportHeros) do
+		local heroMO = HeroModel.instance:getByHeroId(v.heroId)
+		local lifeInfo = heroMO and self:getHeroHp(heroMO.heroId)
+
+		if lifeInfo and lifeInfo.life > 0 then
+			local mo = HeroSingleGroupMO.New()
+
+			mo.id = heroMO.heroId
+			mo.heroUid = heroMO.uid
+			mo._heroMO = heroMO
+			mo._hp = lifeInfo.life
+
+			table.insert(list, mo)
+		end
+	end
+
+	return list
+end
+
+return RogueTeamInfoMO

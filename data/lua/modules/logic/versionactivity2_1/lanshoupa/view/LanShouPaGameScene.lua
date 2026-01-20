@@ -1,60 +1,62 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaGameScene.lua
 
-local var_0_0 = class("LanShouPaGameScene", ChessGameScene)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameScene", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._posuiGroundTbList = {}
+local LanShouPaGameScene = class("LanShouPaGameScene", ChessGameScene)
 
-	var_0_0.super._editableInitView(arg_1_0)
+function LanShouPaGameScene:_editableInitView()
+	self._posuiGroundTbList = {}
+
+	LanShouPaGameScene.super._editableInitView(self)
 end
 
-function var_0_0.onResetGame(arg_2_0)
-	arg_2_0:_resetMapId()
-	arg_2_0:_checkLoadMapScene()
+function LanShouPaGameScene:onResetGame()
+	self:_resetMapId()
+	self:_checkLoadMapScene()
 	ChessGameModel.instance:clearRollbackNum()
-	var_0_0.super.onResetGame(arg_2_0)
+	LanShouPaGameScene.super.onResetGame(self)
 end
 
-function var_0_0._resetMapId(arg_3_0)
+function LanShouPaGameScene:_resetMapId()
 	ChessGameModel.instance:initData(ChessModel.instance:getActId(), ChessModel.instance:getEpisodeId(), ChessGameModel.instance:getNowMapIndex())
 end
 
-function var_0_0._checkLoadMapScene(arg_4_0)
-	local var_4_0 = ChessGameModel.instance:getNowMapResPath()
+function LanShouPaGameScene:_checkLoadMapScene()
+	local newSceneUrl = ChessGameModel.instance:getNowMapResPath()
 
-	if arg_4_0._currentSceneResPath ~= var_4_0 then
+	if self._currentSceneResPath ~= newSceneUrl then
 		UIBlockMgr.instance:startBlock(ChessGameScene.BLOCK_KEY)
-		arg_4_0.super.changeMap(arg_4_0, var_4_0)
+		self.super.changeMap(self, newSceneUrl)
 	else
 		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Finish)
 	end
 end
 
-function var_0_0._onGamePointReturn(arg_5_0)
-	arg_5_0:_checkLoadMapScene()
-	var_0_0.super.onResetGame(arg_5_0)
+function LanShouPaGameScene:_onGamePointReturn()
+	self:_checkLoadMapScene()
+	LanShouPaGameScene.super.onResetGame(self)
 end
 
-function var_0_0.loadResCompleted(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._sceneGo
+function LanShouPaGameScene:loadResCompleted(loader)
+	local oldSceneGo = self._sceneGo
 
-	arg_6_0._currentSceneResPath = ChessGameModel.instance:getNowMapResPath()
+	self._currentSceneResPath = ChessGameModel.instance:getNowMapResPath()
 
-	var_0_0.super.loadResCompleted(arg_6_0, arg_6_1)
+	LanShouPaGameScene.super.loadResCompleted(self, loader)
 
-	if var_6_0 then
-		gohelper.destroy(var_6_0)
+	if oldSceneGo then
+		gohelper.destroy(oldSceneGo)
 	end
 
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Finish)
 
-	local var_6_1 = ChessModel.instance:getEpisodeId()
+	local episodeId = ChessModel.instance:getEpisodeId()
 
-	arg_6_0:_initEventCb()
+	self:_initEventCb()
 end
 
-function var_0_0._initEventCb(arg_7_0)
+function LanShouPaGameScene:_initEventCb()
 	return
 end
 
-return var_0_0
+return LanShouPaGameScene

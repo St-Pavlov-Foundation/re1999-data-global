@@ -1,270 +1,274 @@
-﻿module("modules.logic.fight.view.rouge.FightViewRougePianzhenGongZhenJinBi", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/rouge/FightViewRougePianzhenGongZhenJinBi.lua
 
-local var_0_0 = class("FightViewRougePianzhenGongZhenJinBi", BaseViewExtended)
+module("modules.logic.fight.view.rouge.FightViewRougePianzhenGongZhenJinBi", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._coinRoot = gohelper.findChild(arg_1_0.viewGO, "coin")
-	arg_1_0._coinText = gohelper.findChildText(arg_1_0.viewGO, "coin/#txt_num")
-	arg_1_0._addCoinEffect = gohelper.findChild(arg_1_0.viewGO, "coin/obtain")
-	arg_1_0._minCoinEffect = gohelper.findChild(arg_1_0.viewGO, "coin/without")
-	arg_1_0._resonancelObj = gohelper.findChild(arg_1_0.viewGO, "layout/buffitem_short")
-	arg_1_0._resonancelNameText = gohelper.findChildText(arg_1_0.viewGO, "layout/buffitem_short/bg/#txt_name")
-	arg_1_0._resonancelLevelText = gohelper.findChildText(arg_1_0.viewGO, "layout/buffitem_short/bg/#txt_level")
-	arg_1_0._clickResonancel = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "layout/buffitem_short/bg")
-	arg_1_0._polarizationRoot = gohelper.findChild(arg_1_0.viewGO, "layout/polarizationRoot")
-	arg_1_0._polarizationItem = gohelper.findChild(arg_1_0.viewGO, "layout/polarizationRoot/buffitem_long")
-	arg_1_0._desTips = gohelper.findChild(arg_1_0.viewGO, "#go_desc_tips")
-	arg_1_0._clickTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_desc_tips/#btn_click")
-	arg_1_0._tipsContentObj = gohelper.findChild(arg_1_0.viewGO, "#go_desc_tips/Content")
-	arg_1_0._tipsContentTransform = arg_1_0._tipsContentObj and arg_1_0._tipsContentObj.transform
-	arg_1_0._tipsNameText = gohelper.findChildText(arg_1_0.viewGO, "#go_desc_tips/Content/#txt_title")
-	arg_1_0._tipsDescText = gohelper.findChildText(arg_1_0.viewGO, "#go_desc_tips/Content/#txt_details")
+local FightViewRougePianzhenGongZhenJinBi = class("FightViewRougePianzhenGongZhenJinBi", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightViewRougePianzhenGongZhenJinBi:onInitView()
+	self._coinRoot = gohelper.findChild(self.viewGO, "coin")
+	self._coinText = gohelper.findChildText(self.viewGO, "coin/#txt_num")
+	self._addCoinEffect = gohelper.findChild(self.viewGO, "coin/obtain")
+	self._minCoinEffect = gohelper.findChild(self.viewGO, "coin/without")
+	self._resonancelObj = gohelper.findChild(self.viewGO, "layout/buffitem_short")
+	self._resonancelNameText = gohelper.findChildText(self.viewGO, "layout/buffitem_short/bg/#txt_name")
+	self._resonancelLevelText = gohelper.findChildText(self.viewGO, "layout/buffitem_short/bg/#txt_level")
+	self._clickResonancel = gohelper.findChildClickWithDefaultAudio(self.viewGO, "layout/buffitem_short/bg")
+	self._polarizationRoot = gohelper.findChild(self.viewGO, "layout/polarizationRoot")
+	self._polarizationItem = gohelper.findChild(self.viewGO, "layout/polarizationRoot/buffitem_long")
+	self._desTips = gohelper.findChild(self.viewGO, "#go_desc_tips")
+	self._clickTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_desc_tips/#btn_click")
+	self._tipsContentObj = gohelper.findChild(self.viewGO, "#go_desc_tips/Content")
+	self._tipsContentTransform = self._tipsContentObj and self._tipsContentObj.transform
+	self._tipsNameText = gohelper.findChildText(self.viewGO, "#go_desc_tips/Content/#txt_title")
+	self._tipsDescText = gohelper.findChildText(self.viewGO, "#go_desc_tips/Content/#txt_details")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._clickResonancel, arg_2_0._onBtnResonancel, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._clickTips, arg_2_0._onBtnTips, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ResonanceLevel, arg_2_0._onResonanceLevel, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PolarizationLevel, arg_2_0._onPolarizationLevel, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RougeCoinChange, arg_2_0._onRougeCoinChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillRoundSequenceFinish, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_2_0._onRespBeginFight, arg_2_0)
+function FightViewRougePianzhenGongZhenJinBi:addEvents()
+	self:addClickCb(self._clickResonancel, self._onBtnResonancel, self)
+	self:addClickCb(self._clickTips, self._onBtnTips, self)
+	self:addEventCb(FightController.instance, FightEvent.ResonanceLevel, self._onResonanceLevel, self)
+	self:addEventCb(FightController.instance, FightEvent.PolarizationLevel, self._onPolarizationLevel, self)
+	self:addEventCb(FightController.instance, FightEvent.RougeCoinChange, self._onRougeCoinChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillRoundSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._onRespBeginFight, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewRougePianzhenGongZhenJinBi:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightViewRougePianzhenGongZhenJinBi:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_5_0)
+function FightViewRougePianzhenGongZhenJinBi:onRefreshViewParam()
 	return
 end
 
-function var_0_0._onBtnTips(arg_6_0)
-	gohelper.setActive(arg_6_0._desTips, false)
+function FightViewRougePianzhenGongZhenJinBi:_onBtnTips()
+	gohelper.setActive(self._desTips, false)
 end
 
-function var_0_0._onClothSkillRoundSequenceFinish(arg_7_0)
-	arg_7_0:_hideObj()
+function FightViewRougePianzhenGongZhenJinBi:_onClothSkillRoundSequenceFinish()
+	self:_hideObj()
 end
 
-function var_0_0._onRoundSequenceFinish(arg_8_0)
-	arg_8_0:_hideObj()
+function FightViewRougePianzhenGongZhenJinBi:_onRoundSequenceFinish()
+	self:_hideObj()
 end
 
-function var_0_0._onRespBeginFight(arg_9_0)
-	arg_9_0:_refreshCoin()
+function FightViewRougePianzhenGongZhenJinBi:_onRespBeginFight()
+	self:_refreshCoin()
 end
 
-function var_0_0._hideObj(arg_10_0)
-	gohelper.setActive(arg_10_0._resonancelObj, false)
-	gohelper.setActive(arg_10_0._polarizationRoot, false)
-	gohelper.setActive(arg_10_0._desTips, false)
-	arg_10_0.viewContainer.rightElementLayoutView:hideElement(FightRightElementEnum.Elements.Rouge)
+function FightViewRougePianzhenGongZhenJinBi:_hideObj()
+	gohelper.setActive(self._resonancelObj, false)
+	gohelper.setActive(self._polarizationRoot, false)
+	gohelper.setActive(self._desTips, false)
+	self.viewContainer.rightElementLayoutView:hideElement(FightRightElementEnum.Elements.Rouge)
 end
 
-function var_0_0._onResonanceLevel(arg_11_0)
-	arg_11_0:_refreshData()
+function FightViewRougePianzhenGongZhenJinBi:_onResonanceLevel()
+	self:_refreshData()
 end
 
-function var_0_0._onPolarizationLevel(arg_12_0)
-	arg_12_0:_refreshData()
+function FightViewRougePianzhenGongZhenJinBi:_onPolarizationLevel()
+	self:_refreshData()
 end
 
-function var_0_0._cancelCoinTimer(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._hideCoinEffect, arg_13_0)
+function FightViewRougePianzhenGongZhenJinBi:_cancelCoinTimer()
+	TaskDispatcher.cancelTask(self._hideCoinEffect, self)
 end
 
-function var_0_0._hideCoinEffect(arg_14_0)
-	gohelper.setActive(arg_14_0._addCoinEffect, false)
-	gohelper.setActive(arg_14_0._minCoinEffect, false)
+function FightViewRougePianzhenGongZhenJinBi:_hideCoinEffect()
+	gohelper.setActive(self._addCoinEffect, false)
+	gohelper.setActive(self._minCoinEffect, false)
 end
 
-function var_0_0._onRougeCoinChange(arg_15_0, arg_15_1)
-	arg_15_0:_refreshData()
-	arg_15_0:_cancelCoinTimer()
-	TaskDispatcher.runDelay(arg_15_0._hideCoinEffect, arg_15_0, 0.6)
+function FightViewRougePianzhenGongZhenJinBi:_onRougeCoinChange(offset)
+	self:_refreshData()
+	self:_cancelCoinTimer()
+	TaskDispatcher.runDelay(self._hideCoinEffect, self, 0.6)
 
-	if arg_15_1 > 0 then
-		gohelper.setActive(arg_15_0._addCoinEffect, true)
-		gohelper.setActive(arg_15_0._minCoinEffect, false)
+	if offset > 0 then
+		gohelper.setActive(self._addCoinEffect, true)
+		gohelper.setActive(self._minCoinEffect, false)
 	else
-		gohelper.setActive(arg_15_0._addCoinEffect, false)
-		gohelper.setActive(arg_15_0._minCoinEffect, true)
+		gohelper.setActive(self._addCoinEffect, false)
+		gohelper.setActive(self._minCoinEffect, true)
 	end
 end
 
-function var_0_0.onOpen(arg_16_0)
-	gohelper.setActive(arg_16_0._desTips, false)
-	arg_16_0:_refreshData()
+function FightViewRougePianzhenGongZhenJinBi:onOpen()
+	gohelper.setActive(self._desTips, false)
+	self:_refreshData()
 end
 
-function var_0_0._refreshData(arg_17_0)
-	gohelper.setActive(arg_17_0.viewGO, true)
-	arg_17_0:_refreshCoin()
-	arg_17_0:_refreshPianZhenGongZhen()
+function FightViewRougePianzhenGongZhenJinBi:_refreshData()
+	gohelper.setActive(self.viewGO, true)
+	self:_refreshCoin()
+	self:_refreshPianZhenGongZhen()
 end
 
-function var_0_0._onBtnResonancel(arg_18_0)
-	local var_18_0 = arg_18_0:getUserDataTb_()
+function FightViewRougePianzhenGongZhenJinBi:_onBtnResonancel()
+	local tab = self:getUserDataTb_()
 
-	var_18_0.config = arg_18_0._resonancelConfig
-	var_18_0.obj = arg_18_0._resonancelObj
+	tab.config = self._resonancelConfig
+	tab.obj = self._resonancelObj
 
-	arg_18_0:_showTips(var_18_0)
+	self:_showTips(tab)
 end
 
-function var_0_0._refreshPianZhenGongZhen(arg_19_0)
-	arg_19_0._resonancelLevel = FightRoundSequence.roundTempData.ResonanceLevel
+function FightViewRougePianzhenGongZhenJinBi:_refreshPianZhenGongZhen()
+	self._resonancelLevel = FightRoundSequence.roundTempData.ResonanceLevel
 
-	local var_19_0 = arg_19_0._resonancelLevel and arg_19_0._resonancelLevel ~= 0
+	local showResonancelLevel = self._resonancelLevel and self._resonancelLevel ~= 0
 
-	gohelper.setActive(arg_19_0._resonancelObj, var_19_0)
+	gohelper.setActive(self._resonancelObj, showResonancelLevel)
 
-	if var_19_0 then
-		arg_19_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.Rouge)
+	if showResonancelLevel then
+		self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.Rouge)
 
-		local var_19_1 = lua_resonance.configDict[arg_19_0._resonancelLevel]
+		local config = lua_resonance.configDict[self._resonancelLevel]
 
-		if var_19_1 then
-			arg_19_0._resonancelConfig = var_19_1
-			arg_19_0._resonancelNameText.text = var_19_1 and var_19_1.name
-			arg_19_0._resonancelLevelText.text = "Lv." .. arg_19_0._resonancelLevel
+		if config then
+			self._resonancelConfig = config
+			self._resonancelNameText.text = config and config.name
+			self._resonancelLevelText.text = "Lv." .. self._resonancelLevel
 
-			for iter_19_0 = 1, 3 do
-				local var_19_2 = gohelper.findChild(arg_19_0.viewGO, "buffitem_short/effect_lv/effect_lv" .. iter_19_0)
+			for i = 1, 3 do
+				local effectObj = gohelper.findChild(self.viewGO, "buffitem_short/effect_lv/effect_lv" .. i)
 
-				gohelper.setActive(var_19_2, iter_19_0 == arg_19_0._resonancelLevel)
+				gohelper.setActive(effectObj, i == self._resonancelLevel)
 			end
 
-			if arg_19_0._resonancelLevel > 3 then
-				gohelper.setActive(gohelper.findChild(arg_19_0.viewGO, "buffitem_short/effect_lv/effect_lv3"), true)
+			if self._resonancelLevel > 3 then
+				gohelper.setActive(gohelper.findChild(self.viewGO, "buffitem_short/effect_lv/effect_lv3"), true)
 			end
 		else
-			gohelper.setActive(arg_19_0._resonancelObj, false)
+			gohelper.setActive(self._resonancelObj, false)
 		end
 	end
 
-	arg_19_0._polarizationDic = FightRoundSequence.roundTempData.PolarizationLevel
+	self._polarizationDic = FightRoundSequence.roundTempData.PolarizationLevel
 
-	if arg_19_0._polarizationDic then
-		for iter_19_1, iter_19_2 in pairs(arg_19_0._polarizationDic) do
-			if iter_19_2.effectNum == 0 then
-				arg_19_0._polarizationDic[iter_19_1] = nil
+	if self._polarizationDic then
+		for k, v in pairs(self._polarizationDic) do
+			if v.effectNum == 0 then
+				self._polarizationDic[k] = nil
 			end
 		end
 	end
 
-	local var_19_3 = arg_19_0._polarizationDic and tabletool.len(arg_19_0._polarizationDic) > 0
+	local showPolarization = self._polarizationDic and tabletool.len(self._polarizationDic) > 0
 
-	gohelper.setActive(arg_19_0._polarizationRoot, var_19_3)
+	gohelper.setActive(self._polarizationRoot, showPolarization)
 
-	if var_19_3 then
-		arg_19_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.Rouge)
+	if showPolarization then
+		self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.Rouge)
 
-		local var_19_4 = {}
+		local list = {}
 
-		for iter_19_3, iter_19_4 in pairs(arg_19_0._polarizationDic) do
-			table.insert(var_19_4, iter_19_4)
+		for k, v in pairs(self._polarizationDic) do
+			table.insert(list, v)
 		end
 
-		table.sort(var_19_4, var_0_0.sortPolarization)
-		arg_19_0:com_createObjList(arg_19_0._onPolarizationItemShow, var_19_4, arg_19_0._polarizationRoot, arg_19_0._polarizationItem)
+		table.sort(list, FightViewRougePianzhenGongZhenJinBi.sortPolarization)
+		self:com_createObjList(self._onPolarizationItemShow, list, self._polarizationRoot, self._polarizationItem)
 	end
 end
 
-function var_0_0.sortPolarization(arg_20_0, arg_20_1)
-	return arg_20_0.configEffect < arg_20_1.configEffect
+function FightViewRougePianzhenGongZhenJinBi.sortPolarization(item1, item2)
+	return item1.configEffect < item2.configEffect
 end
 
-function var_0_0._onPolarizationItemShow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = lua_polarization.configDict[arg_21_2.effectNum] and lua_polarization.configDict[arg_21_2.effectNum][arg_21_2.configEffect]
+function FightViewRougePianzhenGongZhenJinBi:_onPolarizationItemShow(obj, data, index)
+	local config = lua_polarization.configDict[data.effectNum]
 
-	if not var_21_0 then
-		gohelper.setActive(arg_21_1, false)
+	config = config and lua_polarization.configDict[data.effectNum][data.configEffect]
+
+	if not config then
+		gohelper.setActive(obj, false)
 
 		return
 	end
 
-	local var_21_1 = gohelper.findChildText(arg_21_1, "bg/#txt_name")
-	local var_21_2 = gohelper.findChildText(arg_21_1, "bg/#txt_level")
+	local nameText = gohelper.findChildText(obj, "bg/#txt_name")
+	local levelText = gohelper.findChildText(obj, "bg/#txt_level")
 
-	var_21_1.text = var_21_0 and var_21_0.name
+	nameText.text = config and config.name
 
-	local var_21_3 = arg_21_2.effectNum
+	local level = data.effectNum
 
-	var_21_2.text = "Lv." .. var_21_3
+	levelText.text = "Lv." .. level
 
-	local var_21_4 = gohelper.getClickWithDefaultAudio(gohelper.findChild(arg_21_1, "bg"))
+	local click = gohelper.getClickWithDefaultAudio(gohelper.findChild(obj, "bg"))
 
-	arg_21_0:removeClickCb(var_21_4)
+	self:removeClickCb(click)
 
-	local var_21_5 = arg_21_0:getUserDataTb_()
+	local tab = self:getUserDataTb_()
 
-	var_21_5.config = var_21_0
-	var_21_5.obj = arg_21_1
+	tab.config = config
+	tab.obj = obj
 
-	arg_21_0:addClickCb(var_21_4, arg_21_0._onBtnPolarization, arg_21_0, var_21_5)
+	self:addClickCb(click, self._onBtnPolarization, self, tab)
 
-	for iter_21_0 = 1, 3 do
-		local var_21_6 = gohelper.findChild(arg_21_1, "effect_lv/effect_lv" .. iter_21_0)
+	for i = 1, 3 do
+		local effectObj = gohelper.findChild(obj, "effect_lv/effect_lv" .. i)
 
-		gohelper.setActive(var_21_6, iter_21_0 == var_21_3)
+		gohelper.setActive(effectObj, i == level)
 	end
 
-	if var_21_3 > 3 then
-		gohelper.setActive(gohelper.findChild(arg_21_1, "effect_lv/effect_lv3"), true)
+	if level > 3 then
+		gohelper.setActive(gohelper.findChild(obj, "effect_lv/effect_lv3"), true)
 	end
 end
 
-function var_0_0._onBtnPolarization(arg_22_0, arg_22_1)
-	arg_22_0:_showTips(arg_22_1)
+function FightViewRougePianzhenGongZhenJinBi:_onBtnPolarization(config)
+	self:_showTips(config)
 end
 
-function var_0_0._showTips(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_1 and arg_23_1.config
+function FightViewRougePianzhenGongZhenJinBi:_showTips(tab)
+	local config = tab and tab.config
 
-	if var_23_0 then
-		gohelper.setActive(arg_23_0._desTips, true)
+	if config then
+		gohelper.setActive(self._desTips, true)
 
-		arg_23_0._tipsNameText.text = var_23_0.name
-		arg_23_0._tipsDescText.text = HeroSkillModel.instance:skillDesToSpot(var_23_0.desc)
+		self._tipsNameText.text = config.name
+		self._tipsDescText.text = HeroSkillModel.instance:skillDesToSpot(config.desc)
 
-		if arg_23_0._tipsContentTransform then
-			local var_23_1, var_23_2 = recthelper.rectToRelativeAnchorPos2(arg_23_1.obj.transform.position, arg_23_0.viewGO.transform)
+		if self._tipsContentTransform then
+			local posX, posY = recthelper.rectToRelativeAnchorPos2(tab.obj.transform.position, self.viewGO.transform)
 
-			recthelper.setAnchorY(arg_23_0._tipsContentTransform, var_23_2)
+			recthelper.setAnchorY(self._tipsContentTransform, posY)
 		end
 	end
 end
 
-function var_0_0._refreshCoin(arg_24_0)
-	local var_24_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
-	local var_24_1 = var_24_0 and var_24_0.type == DungeonEnum.EpisodeType.Rouge
+function FightViewRougePianzhenGongZhenJinBi:_refreshCoin()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local showCoin = episode_config and episode_config.type == DungeonEnum.EpisodeType.Rouge
 
-	if var_24_1 then
-		arg_24_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.Rouge)
+	if showCoin then
+		self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.Rouge)
 	end
 
-	gohelper.setActive(arg_24_0._coinRoot, var_24_1)
+	gohelper.setActive(self._coinRoot, showCoin)
 
-	arg_24_0._coinText.text = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.Coin)
+	self._coinText.text = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.Coin)
 end
 
-function var_0_0.onClose(arg_25_0)
-	arg_25_0:_cancelCoinTimer()
+function FightViewRougePianzhenGongZhenJinBi:onClose()
+	self:_cancelCoinTimer()
 end
 
-function var_0_0.onDestroyView(arg_26_0)
+function FightViewRougePianzhenGongZhenJinBi:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightViewRougePianzhenGongZhenJinBi

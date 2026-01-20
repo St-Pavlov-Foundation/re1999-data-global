@@ -1,81 +1,81 @@
-﻿module("modules.logic.activity.controller.chessmap.interacts.ActivityChessInteractPlayer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/interacts/ActivityChessInteractPlayer.lua
 
-local var_0_0 = class("ActivityChessInteractPlayer", ActivityChessInteractBase)
+module("modules.logic.activity.controller.chessmap.interacts.ActivityChessInteractPlayer", package.seeall)
 
-function var_0_0.onSelectCall(arg_1_0)
+local ActivityChessInteractPlayer = class("ActivityChessInteractPlayer", ActivityChessInteractBase)
+
+function ActivityChessInteractPlayer:onSelectCall()
 	ActivityChessGameController.instance:setClickStatus(ActivityChessEnum.SelectPosStatus.SelectObjWaitPos)
 
-	local var_1_0 = arg_1_0._target.originData.posX
-	local var_1_1 = arg_1_0._target.originData.posY
-	local var_1_2 = {
+	local x, y = self._target.originData.posX, self._target.originData.posY
+	local evtObj = {
 		visible = true,
 		posXList = {},
 		posYList = {},
-		selfPosX = var_1_0,
-		selfPosY = var_1_1,
+		selfPosX = x,
+		selfPosY = y,
 		selectType = ActivityChessEnum.ChessSelectType.Normal
 	}
 
-	var_0_0.insertPosToList(var_1_0 + 1, var_1_1, var_1_2.posXList, var_1_2.posYList)
-	var_0_0.insertPosToList(var_1_0 - 1, var_1_1, var_1_2.posXList, var_1_2.posYList)
-	var_0_0.insertPosToList(var_1_0, var_1_1 + 1, var_1_2.posXList, var_1_2.posYList)
-	var_0_0.insertPosToList(var_1_0, var_1_1 - 1, var_1_2.posXList, var_1_2.posYList)
-	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.SetNeedChooseDirectionVisible, var_1_2)
+	ActivityChessInteractPlayer.insertPosToList(x + 1, y, evtObj.posXList, evtObj.posYList)
+	ActivityChessInteractPlayer.insertPosToList(x - 1, y, evtObj.posXList, evtObj.posYList)
+	ActivityChessInteractPlayer.insertPosToList(x, y + 1, evtObj.posXList, evtObj.posYList)
+	ActivityChessInteractPlayer.insertPosToList(x, y - 1, evtObj.posXList, evtObj.posYList)
+	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.SetNeedChooseDirectionVisible, evtObj)
 
-	arg_1_0._isPlayerSelected = true
+	self._isPlayerSelected = true
 
-	arg_1_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.insertPosToList(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if ActivityChessGameController.instance:posCanWalk(arg_2_0, arg_2_1) then
-		table.insert(arg_2_2, arg_2_0)
-		table.insert(arg_2_3, arg_2_1)
+function ActivityChessInteractPlayer.insertPosToList(x, y, posXList, posYList)
+	if ActivityChessGameController.instance:posCanWalk(x, y) then
+		table.insert(posXList, x)
+		table.insert(posYList, y)
 	end
 end
 
-function var_0_0.onCancelSelect(arg_3_0)
+function ActivityChessInteractPlayer:onCancelSelect()
 	ActivityChessGameController.instance:setClickStatus(ActivityChessEnum.SelectPosStatus.None)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.SetNeedChooseDirectionVisible, {
 		visible = false
 	})
 
-	arg_3_0._isPlayerSelected = false
+	self._isPlayerSelected = false
 
-	arg_3_0:refreshPlayerSelected()
+	self:refreshPlayerSelected()
 end
 
-function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._target.originData.posX
-	local var_4_1 = arg_4_0._target.originData.posY
-	local var_4_2 = ActivityChessGameModel.instance:getBaseTile(arg_4_1, arg_4_2)
+function ActivityChessInteractPlayer:onSelectPos(x, y)
+	local curX, curY = self._target.originData.posX, self._target.originData.posY
+	local canWalk = ActivityChessGameModel.instance:getBaseTile(x, y)
 
-	if (var_4_0 == arg_4_1 and math.abs(var_4_1 - arg_4_2) == 1 or var_4_1 == arg_4_2 and math.abs(var_4_0 - arg_4_1) == 1) and ActivityChessGameController.instance:posCanWalk(arg_4_1, arg_4_2) then
-		local var_4_3 = {
-			id = arg_4_0._target.originData.id,
-			dir = ActivityChessMapUtils.ToDirection(var_4_0, var_4_1, arg_4_1, arg_4_2)
+	if (curX == x and math.abs(curY - y) == 1 or curY == y and math.abs(curX - x) == 1) and ActivityChessGameController.instance:posCanWalk(x, y) then
+		local optData = {
+			id = self._target.originData.id,
+			dir = ActivityChessMapUtils.ToDirection(curX, curY, x, y)
 		}
 
-		ActivityChessGameModel.instance:appendOpt(var_4_3)
+		ActivityChessGameModel.instance:appendOpt(optData)
 
-		local var_4_4 = ActivityChessGameModel.instance:getActId()
-		local var_4_5 = ActivityChessGameModel.instance:getOptList()
+		local actId = ActivityChessGameModel.instance:getActId()
+		local optList = ActivityChessGameModel.instance:getOptList()
 
-		Activity109Rpc.instance:sendAct109BeginRoundRequest(var_4_4, var_4_5, arg_4_0.onMoveSuccess, arg_4_0)
+		Activity109Rpc.instance:sendAct109BeginRoundRequest(actId, optList, self.onMoveSuccess, self)
 		ActivityChessGameController.instance:saveTempSelectObj()
 		ActivityChessGameController.instance:setSelectObj(nil)
 
-		local var_4_6 = ActivityChessGameController.instance.event
+		local evtMgr = ActivityChessGameController.instance.event
 
-		if var_4_6 then
-			var_4_6:setLockEvent()
+		if evtMgr then
+			evtMgr:setLockEvent()
 		end
 	else
-		local var_4_7, var_4_8 = ActivityChessGameController.instance:searchInteractByPos(arg_4_1, arg_4_2)
-		local var_4_9 = var_4_7 > 1 and var_4_8[1] or var_4_8
+		local len, result = ActivityChessGameController.instance:searchInteractByPos(x, y)
+		local clickObj = len > 1 and result[1] or result
 
-		if var_4_9 then
-			if var_4_9.config and var_4_9.config.interactType ~= ActivityChessEnum.InteractType.Player then
+		if clickObj then
+			if clickObj.config and clickObj.config.interactType ~= ActivityChessEnum.InteractType.Player then
 				-- block empty
 			else
 				ActivityChessGameController.instance:setSelectObj(nil)
@@ -88,43 +88,43 @@ function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function var_0_0.onMoveSuccess(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 ~= 0 then
+function ActivityChessInteractPlayer:onMoveSuccess(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.moveTo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	var_0_0.super.moveTo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+function ActivityChessInteractPlayer:moveTo(x, y, callback, callbackObj)
+	ActivityChessInteractPlayer.super.moveTo(self, x, y, callback, callbackObj)
 
-	if arg_6_0._animSelf then
-		arg_6_0._animSelf:Play("jump", 0, 0)
+	if self._animSelf then
+		self._animSelf:Play("jump", 0, 0)
 	end
 end
 
-function var_0_0.refreshPlayerSelected(arg_7_0)
+function ActivityChessInteractPlayer:refreshPlayerSelected()
 	return
 end
 
-function var_0_0.onAvatarLoaded(arg_8_0)
-	var_0_0.super.onAvatarLoaded(arg_8_0)
+function ActivityChessInteractPlayer:onAvatarLoaded()
+	ActivityChessInteractPlayer.super.onAvatarLoaded(self)
 
-	local var_8_0 = arg_8_0._target.avatar.loader
+	local loader = self._target.avatar.loader
 
-	if not var_8_0 then
+	if not loader then
 		return
 	end
 
-	local var_8_1 = var_8_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_8_1) then
-		arg_8_0._animSelf = var_8_1:GetComponent(typeof(UnityEngine.Animator))
+	if not gohelper.isNil(go) then
+		self._animSelf = go:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_8_0._target.avatar.goSelected = gohelper.findChild(var_8_0:getInstGO(), "piecea/vx_select")
+	self._target.avatar.goSelected = gohelper.findChild(loader:getInstGO(), "piecea/vx_select")
 
-	gohelper.setActive(arg_8_0._target.avatar.goSelected, true)
-	arg_8_0:refreshPlayerSelected()
+	gohelper.setActive(self._target.avatar.goSelected, true)
+	self:refreshPlayerSelected()
 end
 
-return var_0_0
+return ActivityChessInteractPlayer

@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.system.flow.FightStepBuilder", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/flow/FightStepBuilder.lua
 
-local var_0_0 = class("FightStepBuilder")
+module("modules.logic.fight.system.flow.FightStepBuilder", package.seeall)
 
-var_0_0.ActEffectWorkCls = {
+local FightStepBuilder = class("FightStepBuilder")
+
+FightStepBuilder.ActEffectWorkCls = {
 	[FightEnum.EffectType.MISS] = FightWorkEffectMiss,
 	[FightEnum.EffectType.DAMAGE] = FightWorkEffectDamage,
 	[FightEnum.EffectType.CRIT] = FightWorkEffectDamage,
@@ -187,9 +189,15 @@ var_0_0.ActEffectWorkCls = {
 	[FightEnum.EffectType.REALDAMAGEKILL] = FightWorkRealDamageKill351,
 	[FightEnum.EffectType.BUFFDELREASON] = FightWorkBuffDelReason352,
 	[FightEnum.EffectType.RANDOMDICEUSESKILL] = FightWorkRandomDiceUseSkill353,
-	[FightEnum.EffectType.TOWERDEEPCHANGE] = FightWorkTowerDeepChange354
+	[FightEnum.EffectType.TOWERDEEPCHANGE] = FightWorkTowerDeepChange354,
+	[FightEnum.EffectType.CRYSTALSELECT] = FightWorkCrystalSelect358,
+	[FightEnum.EffectType.CRYSTALADDCARD] = FightWorkCrystalAddCard359,
+	[FightEnum.EffectType.ROUGE2MUSICCARDCHANGE] = FightWorkRouge2MusicCardChange360,
+	[FightEnum.EffectType.ROUGE2MUSICBALLCHANGE] = FightWorkRouge2MusicBallChange361,
+	[FightEnum.EffectType.ADDMAXROUND] = FightWorkAddMaxRound356,
+	[FightEnum.EffectType.ROUGE2CHECK] = FightWorkRouge2Check362
 }
-var_0_0.EffectType2FlowOrWork = {
+FightStepBuilder.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ADDSPHANDCARD] = FightWorkAddSpHandCard320Container,
 	[FightEnum.EffectType.SPCARDADD] = FightWorkSpCardAddContainer,
 	[FightEnum.EffectType.BUFFADD] = FightWorkBuffAddContainer,
@@ -220,197 +228,197 @@ var_0_0.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.COLDSATURDAYHURT] = FightWorkColdSaturdayHurt336Container
 }
 
-setmetatable(var_0_0.EffectType2FlowOrWork, {
-	__index = var_0_0.ActEffectWorkCls
+setmetatable(FightStepBuilder.EffectType2FlowOrWork, {
+	__index = FightStepBuilder.ActEffectWorkCls
 })
 
-function var_0_0.buildStepWorkList(arg_1_0)
-	if not arg_1_0 then
+function FightStepBuilder.buildStepWorkList(fightStepList)
+	if not fightStepList then
 		return
 	end
 
 	FightSkillBuffMgr.instance:clearCompleteBuff()
 
-	var_0_0.ASFDIndex = 0
+	FightStepBuilder.ASFDIndex = 0
 
-	local var_1_0
-	local var_1_1 = {}
-	local var_1_2 = {}
+	local preStepData
+	local stepWorkList = {}
+	local skillFlowList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
-		if iter_1_1.actType == FightEnum.ActType.SKILL then
-			if FightHelper.isASFDSkill(iter_1_1.actId) then
-				local var_1_3 = arg_1_0[iter_1_0 + 1]
+	for i, fightStepData in ipairs(fightStepList) do
+		if fightStepData.actType == FightEnum.ActType.SKILL then
+			if FightHelper.isASFDSkill(fightStepData.actId) then
+				local nextStepData = fightStepList[i + 1]
 
-				var_0_0._buildASFDSkillWork(iter_1_1, var_1_1, var_1_2, var_1_3)
+				FightStepBuilder._buildASFDSkillWork(fightStepData, stepWorkList, skillFlowList, nextStepData)
 			else
-				var_1_0 = var_0_0._buildSkillWork(arg_1_0, iter_1_1, var_1_0, arg_1_0[iter_1_0 + 1], var_1_1, var_1_2)
+				preStepData = FightStepBuilder._buildSkillWork(fightStepList, fightStepData, preStepData, fightStepList[i + 1], stepWorkList, skillFlowList)
 			end
-		elseif iter_1_1.actType == FightEnum.ActType.EFFECT then
-			tabletool.addValues(var_1_1, var_0_0._buildEffectWorks(iter_1_1, nil))
+		elseif fightStepData.actType == FightEnum.ActType.EFFECT then
+			tabletool.addValues(stepWorkList, FightStepBuilder._buildEffectWorks(fightStepData, nil))
 
-			for iter_1_2, iter_1_3 in ipairs(iter_1_1.actEffect) do
-				if iter_1_3.effectType == FightEnum.EffectType.DEALCARD1 or iter_1_3.effectType == FightEnum.EffectType.DEALCARD2 or iter_1_3.effectType == FightEnum.EffectType.ROUNDEND or iter_1_3.effectType == FightEnum.EffectType.NEWCHANGEWAVE then
-					if iter_1_3.effectType == FightEnum.EffectType.NEWCHANGEWAVE then
+			for _, actEffectData in ipairs(fightStepData.actEffect) do
+				if actEffectData.effectType == FightEnum.EffectType.DEALCARD1 or actEffectData.effectType == FightEnum.EffectType.DEALCARD2 or actEffectData.effectType == FightEnum.EffectType.ROUNDEND or actEffectData.effectType == FightEnum.EffectType.NEWCHANGEWAVE then
+					if actEffectData.effectType == FightEnum.EffectType.NEWCHANGEWAVE then
 						FightDataHelper.tempMgr.hasNextWave = true
 
 						FightController.instance:dispatchEvent(FightEvent.HaveNextWave)
 					end
 
-					var_1_0 = nil
+					preStepData = nil
 
 					break
 				end
 			end
 
-			table.insert(var_1_1, FunctionWork.New(function()
-				iter_1_1.hasPlay = true
+			table.insert(stepWorkList, FunctionWork.New(function()
+				fightStepData.hasPlay = true
 			end))
-		elseif iter_1_1.actType == FightEnum.ActType.CHANGEHERO then
-			var_1_0 = nil
+		elseif fightStepData.actType == FightEnum.ActType.CHANGEHERO then
+			preStepData = nil
 
-			local var_1_4 = tabletool.copy(var_1_2)
+			local cloneSkillFlowList = tabletool.copy(skillFlowList)
 
-			table.insert(var_1_1, FightWorkWaitForSkillsDone.New(var_1_4))
-			table.insert(var_1_1, FightWorkStepChangeHero.New(iter_1_1))
-			table.insert(var_1_1, FunctionWork.New(function()
-				iter_1_1.hasPlay = true
+			table.insert(stepWorkList, FightWorkWaitForSkillsDone.New(cloneSkillFlowList))
+			table.insert(stepWorkList, FightWorkStepChangeHero.New(fightStepData))
+			table.insert(stepWorkList, FunctionWork.New(function()
+				fightStepData.hasPlay = true
 			end))
-		elseif iter_1_1.actType == FightEnum.ActType.CHANGEWAVE then
-			var_1_0 = nil
+		elseif fightStepData.actType == FightEnum.ActType.CHANGEWAVE then
+			preStepData = nil
 
-			local var_1_5 = tabletool.copy(var_1_2)
+			local cloneSkillFlowList = tabletool.copy(skillFlowList)
 
-			table.insert(var_1_1, FightWorkWaitForSkillsDone.New(var_1_5))
-			table.insert(var_1_1, FightWorkStepChangeWave.New())
-			table.insert(var_1_1, FightWorkAppearTimeline.New())
-			table.insert(var_1_1, FightWorkStartBornEnemy.New())
-			table.insert(var_1_1, FightWorkFocusMonster.New())
-			table.insert(var_1_1, FunctionWork.New(function()
-				iter_1_1.hasPlay = true
+			table.insert(stepWorkList, FightWorkWaitForSkillsDone.New(cloneSkillFlowList))
+			table.insert(stepWorkList, FightWorkStepChangeWave.New())
+			table.insert(stepWorkList, FightWorkAppearTimeline.New())
+			table.insert(stepWorkList, FightWorkStartBornEnemy.New())
+			table.insert(stepWorkList, FightWorkFocusMonster.New())
+			table.insert(stepWorkList, FunctionWork.New(function()
+				fightStepData.hasPlay = true
 
 				FightController.instance:beginWave()
 			end))
 		else
-			logError("step actType not implement: " .. iter_1_1.actType)
+			logError("step actType not implement: " .. fightStepData.actType)
 		end
 	end
 
-	return var_1_1, var_1_2
+	return stepWorkList, skillFlowList
 end
 
-function var_0_0._buildSkillWork(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	table.insert(arg_5_4, FightGuideBeforeSkill.New(arg_5_1))
+function FightStepBuilder._buildSkillWork(fightStepList, fightStepData, preStepData, nextStepData, stepWorkList, skillFlowList)
+	table.insert(stepWorkList, FightGuideBeforeSkill.New(fightStepData))
 
-	local var_5_0 = FightDataHelper.entityMgr:getById(arg_5_1.fromId)
-	local var_5_1 = var_5_0 and var_5_0.skin
-	local var_5_2 = FightConfig.instance:getSkinSkillTimeline(var_5_1, arg_5_1.actId)
+	local entityMO = FightDataHelper.entityMgr:getById(fightStepData.fromId)
+	local skinId = entityMO and entityMO.skin
+	local timeline = FightConfig.instance:getSkinSkillTimeline(skinId, fightStepData.actId)
 
-	if not string.nilorempty(var_5_2) then
-		local var_5_3 = FightWorkFbStory.checkHasFbStory()
+	if not string.nilorempty(timeline) then
+		local hasStory = FightWorkFbStory.checkHasFbStory()
 
-		if var_5_3 then
-			table.insert(arg_5_4, FightWorkFbStory.New(FightWorkFbStory.Type_BeforePlaySkill, arg_5_1.actId))
+		if hasStory then
+			table.insert(stepWorkList, FightWorkFbStory.New(FightWorkFbStory.Type_BeforePlaySkill, fightStepData.actId))
 		end
 
-		table.insert(arg_5_4, FightWorkShowEquipSkillEffect.New(arg_5_1, arg_5_3))
+		table.insert(stepWorkList, FightWorkShowEquipSkillEffect.New(fightStepData, nextStepData))
 
-		local var_5_4 = FightSkillFlow.New(arg_5_1)
+		local skillFlow = FightSkillFlow.New(fightStepData)
 
-		table.insert(arg_5_4, var_5_4)
-		table.insert(arg_5_5, var_5_4)
-		var_5_4:addAfterSkillEffects(var_0_0._buildEffectWorks(arg_5_1))
+		table.insert(stepWorkList, skillFlow)
+		table.insert(skillFlowList, skillFlow)
+		skillFlow:addAfterSkillEffects(FightStepBuilder._buildEffectWorks(fightStepData))
 
-		if var_5_3 then
-			table.insert(arg_5_4, FightWorkFbStory.New(FightWorkFbStory.Type_AfterPlaySkill, arg_5_1.actId))
+		if hasStory then
+			table.insert(stepWorkList, FightWorkFbStory.New(FightWorkFbStory.Type_AfterPlaySkill, fightStepData.actId))
 		end
 
-		table.insert(arg_5_4, FightParallelPlayNextSkillStep.New(arg_5_1, arg_5_2, arg_5_0))
-		table.insert(arg_5_4, FightNextSkillIsSameStep.New(arg_5_1, arg_5_2))
+		table.insert(stepWorkList, FightParallelPlayNextSkillStep.New(fightStepData, preStepData, fightStepList))
+		table.insert(stepWorkList, FightNextSkillIsSameStep.New(fightStepData, preStepData))
 
-		arg_5_2 = arg_5_1
+		preStepData = fightStepData
 	else
-		table.insert(arg_5_4, FightWorkShowEquipSkillEffect.New(arg_5_1, arg_5_3))
-		table.insert(arg_5_4, FightNonTimelineSkillStep.New(arg_5_1))
-		tabletool.addValues(arg_5_4, var_0_0._buildEffectWorks(arg_5_1))
+		table.insert(stepWorkList, FightWorkShowEquipSkillEffect.New(fightStepData, nextStepData))
+		table.insert(stepWorkList, FightNonTimelineSkillStep.New(fightStepData))
+		tabletool.addValues(stepWorkList, FightStepBuilder._buildEffectWorks(fightStepData))
 	end
 
-	table.insert(arg_5_4, FunctionWork.New(function()
-		arg_5_1.hasPlay = true
+	table.insert(stepWorkList, FunctionWork.New(function()
+		fightStepData.hasPlay = true
 
-		FightController.instance:dispatchEvent(FightEvent.OnSkillEffectPlayFinish, arg_5_1)
+		FightController.instance:dispatchEvent(FightEvent.OnSkillEffectPlayFinish, fightStepData)
 	end))
-	table.insert(arg_5_4, FightWorkSkillDelay.New(arg_5_1))
-	table.insert(arg_5_4, FightWorkSpecialDelay.New(arg_5_1))
+	table.insert(stepWorkList, FightWorkSkillDelay.New(fightStepData))
+	table.insert(stepWorkList, FightWorkSpecialDelay.New(fightStepData))
 
-	return arg_5_2
+	return preStepData
 end
 
-var_0_0.ASFDIndex = 0
+FightStepBuilder.ASFDIndex = 0
 
-function var_0_0._buildASFDSkillWork(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	var_0_0.ASFDIndex = var_0_0.ASFDIndex + 1
+function FightStepBuilder._buildASFDSkillWork(fightStepData, stepWorkList, skillFlowList, nextStepData)
+	FightStepBuilder.ASFDIndex = FightStepBuilder.ASFDIndex + 1
 
-	local var_7_0 = FightASFDFlow.New(arg_7_0, arg_7_3, var_0_0.ASFDIndex)
+	local ASFDFlow = FightASFDFlow.New(fightStepData, nextStepData, FightStepBuilder.ASFDIndex)
 
-	table.insert(arg_7_1, var_7_0)
-	table.insert(arg_7_2, var_7_0)
+	table.insert(stepWorkList, ASFDFlow)
+	table.insert(skillFlowList, ASFDFlow)
 
-	return var_7_0
+	return ASFDFlow
 end
 
-var_0_0.lastEffect = nil
+FightStepBuilder.lastEffect = nil
 
-function var_0_0._buildEffectWorks(arg_8_0)
-	var_0_0.lastEffect = nil
+function FightStepBuilder._buildEffectWorks(fightStepData)
+	FightStepBuilder.lastEffect = nil
 
-	local var_8_0 = FightWorkFlowSequence.New()
+	local flow = FightWorkFlowSequence.New()
 
-	var_0_0.addEffectWork(var_8_0, arg_8_0)
+	FightStepBuilder.addEffectWork(flow, fightStepData)
 
-	var_0_0.lastEffect = nil
+	FightStepBuilder.lastEffect = nil
 
-	local var_8_1 = FightStepEffectWork.New()
+	local stepWork = FightStepEffectWork.New()
 
-	var_8_1:setFlow(var_8_0)
+	stepWork:setFlow(flow)
 
 	return {
-		var_8_1
+		stepWork
 	}
 end
 
-function var_0_0.addEffectWork(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1.actEffect) do
-		local var_9_0 = iter_9_1.effectType
-		local var_9_1 = false
+function FightStepBuilder.addEffectWork(flow, fightStepData)
+	for i, actEffectData in ipairs(fightStepData.actEffect) do
+		local effectType = actEffectData.effectType
+		local continue = false
 
-		if var_9_0 == FightEnum.EffectType.FIGHTSTEP and not iter_9_1.fightStep then
-			var_9_1 = true
+		if effectType == FightEnum.EffectType.FIGHTSTEP and not actEffectData.fightStep then
+			continue = true
 		end
 
-		if not var_9_1 then
-			local var_9_2 = var_0_0.EffectType2FlowOrWork[var_9_0]
+		if not continue then
+			local class = FightStepBuilder.EffectType2FlowOrWork[effectType]
 
-			if var_9_2 then
-				local var_9_3 = arg_9_0:registWork(var_9_2, arg_9_1, iter_9_1)
+			if class then
+				local work = flow:registWork(class, fightStepData, actEffectData)
 
-				if var_0_0.lastEffect then
-					var_0_0.lastEffect.nextActEffectData = iter_9_1
+				if FightStepBuilder.lastEffect then
+					FightStepBuilder.lastEffect.nextActEffectData = actEffectData
 				end
 
-				var_0_0.lastEffect = iter_9_1
+				FightStepBuilder.lastEffect = actEffectData
 
-				if var_9_0 == FightEnum.EffectType.FIGHTSTEP then
-					local var_9_4 = FightWorkFlowSequence.New()
+				if effectType == FightEnum.EffectType.FIGHTSTEP then
+					local stepEffectFlow = FightWorkFlowSequence.New()
 
-					var_0_0.addEffectWork(var_9_4, iter_9_1.fightStep)
-					var_9_3:setFlow(var_9_4)
+					FightStepBuilder.addEffectWork(stepEffectFlow, actEffectData.fightStep)
+					work:setFlow(stepEffectFlow)
 
-					iter_9_1.fightStepNextActEffectData = arg_9_1.actEffect[iter_9_0 + 1]
+					actEffectData.fightStepNextActEffectData = fightStepData.actEffect[i + 1]
 				end
 			end
 		end
 	end
 end
 
-return var_0_0
+return FightStepBuilder

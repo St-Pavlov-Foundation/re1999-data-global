@@ -1,79 +1,81 @@
-﻿module("modules.logic.seasonver.act123.utils.Season123UnlockLocalRecord", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/utils/Season123UnlockLocalRecord.lua
 
-local var_0_0 = class("Season123UnlockLocalRecord")
+module("modules.logic.seasonver.act123.utils.Season123UnlockLocalRecord", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.reasonKey = arg_1_2
-	arg_1_0._localKey = arg_1_0:getLocalKey()
-	arg_1_0._dict = nil
-	arg_1_0._moduleSet = {}
+local Season123UnlockLocalRecord = class("Season123UnlockLocalRecord")
 
-	arg_1_0:initLocalSave()
+function Season123UnlockLocalRecord:init(actId, reasonKey)
+	self.activityId = actId
+	self.reasonKey = reasonKey
+	self._localKey = self:getLocalKey()
+	self._dict = nil
+	self._moduleSet = {}
+
+	self:initLocalSave()
 end
 
-function var_0_0.initLocalSave(arg_2_0)
-	if string.nilorempty(arg_2_0._localKey) then
+function Season123UnlockLocalRecord:initLocalSave()
+	if string.nilorempty(self._localKey) then
 		return
 	end
 
-	local var_2_0 = PlayerPrefsHelper.getString(arg_2_0._localKey, "")
+	local rs = PlayerPrefsHelper.getString(self._localKey, "")
 
-	if not string.nilorempty(var_2_0) then
-		local var_2_1 = cjson.decode(var_2_0)
+	if not string.nilorempty(rs) then
+		local mapObj = cjson.decode(rs)
 
-		if var_2_1 then
-			arg_2_0._dict = var_2_1
+		if mapObj then
+			self._dict = mapObj
 
-			for iter_2_0, iter_2_1 in pairs(var_2_1) do
-				arg_2_0._moduleSet[iter_2_0] = {}
+			for subModule, list in pairs(mapObj) do
+				self._moduleSet[subModule] = {}
 
-				for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
-					arg_2_0._moduleSet[iter_2_0][iter_2_3] = true
+				for i, id in ipairs(list) do
+					self._moduleSet[subModule][id] = true
 				end
 			end
 		else
-			arg_2_0._dict = {}
+			self._dict = {}
 		end
 	else
-		arg_2_0._dict = {}
+		self._dict = {}
 	end
 end
 
-function var_0_0.add(arg_3_0, arg_3_1, arg_3_2)
-	if string.nilorempty(arg_3_0._localKey) then
+function Season123UnlockLocalRecord:add(id, subModule)
+	if string.nilorempty(self._localKey) then
 		return
 	end
 
-	arg_3_0._moduleSet[arg_3_2] = arg_3_0._moduleSet[arg_3_2] or {}
+	self._moduleSet[subModule] = self._moduleSet[subModule] or {}
 
-	if not arg_3_0._moduleSet[arg_3_2][arg_3_1] then
-		arg_3_0._moduleSet[arg_3_2][arg_3_1] = true
-		arg_3_0._dict[arg_3_2] = arg_3_0._dict[arg_3_2] or {}
+	if not self._moduleSet[subModule][id] then
+		self._moduleSet[subModule][id] = true
+		self._dict[subModule] = self._dict[subModule] or {}
 
-		table.insert(arg_3_0._dict[arg_3_2], arg_3_1)
-		arg_3_0:save()
+		table.insert(self._dict[subModule], id)
+		self:save()
 	end
 end
 
-function var_0_0.contain(arg_4_0, arg_4_1, arg_4_2)
-	if string.nilorempty(arg_4_0._localKey) then
+function Season123UnlockLocalRecord:contain(id, subModule)
+	if string.nilorempty(self._localKey) then
 		return false
 	end
 
-	return arg_4_0._moduleSet[arg_4_2] and arg_4_0._moduleSet[arg_4_2][arg_4_1]
+	return self._moduleSet[subModule] and self._moduleSet[subModule][id]
 end
 
-function var_0_0.save(arg_5_0)
-	if string.nilorempty(arg_5_0._localKey) then
+function Season123UnlockLocalRecord:save()
+	if string.nilorempty(self._localKey) then
 		return
 	end
 
-	PlayerPrefsHelper.setString(arg_5_0._localKey, cjson.encode(arg_5_0._dict))
+	PlayerPrefsHelper.setString(self._localKey, cjson.encode(self._dict))
 end
 
-function var_0_0.getLocalKey(arg_6_0)
-	return tostring(arg_6_0.reasonKey) .. "#" .. tostring(arg_6_0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function Season123UnlockLocalRecord:getLocalKey()
+	return tostring(self.reasonKey) .. "#" .. tostring(self.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-return var_0_0
+return Season123UnlockLocalRecord

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/EliminateLevelResultViewContainer.lua
 
-local var_0_0 = class("EliminateLevelResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateLevelResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local EliminateLevelResultViewContainer = class("EliminateLevelResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, EliminateLevelResultView.New())
+function EliminateLevelResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, EliminateLevelResultView.New())
+
+	return views
 end
 
-return var_0_0
+return EliminateLevelResultViewContainer

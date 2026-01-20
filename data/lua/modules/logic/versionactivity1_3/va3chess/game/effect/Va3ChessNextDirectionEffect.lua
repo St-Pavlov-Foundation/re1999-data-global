@@ -1,56 +1,56 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessNextDirectionEffect", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/effect/Va3ChessNextDirectionEffect.lua
 
-local var_0_0 = class("Va3ChessNextDirectionEffect", Va3ChessEffectBase)
+module("modules.logic.versionactivity1_3.va3chess.game.effect.Va3ChessNextDirectionEffect", package.seeall)
 
-function var_0_0.refreshEffect(arg_1_0)
+local Va3ChessNextDirectionEffect = class("Va3ChessNextDirectionEffect", Va3ChessEffectBase)
+
+function Va3ChessNextDirectionEffect:refreshEffect()
 	return
 end
 
-function var_0_0.onDispose(arg_2_0)
+function Va3ChessNextDirectionEffect:onDispose()
 	return
 end
 
-function var_0_0.refreshNextDirFlag(arg_3_0)
-	if arg_3_0._target.originData.data and arg_3_0._target.originData.data.alertArea then
-		local var_3_0 = arg_3_0._target.originData.posX
-		local var_3_1 = arg_3_0._target.originData.posY
-		local var_3_2 = arg_3_0._target.originData.data.alertArea
+function Va3ChessNextDirectionEffect:refreshNextDirFlag()
+	if self._target.originData.data and self._target.originData.data.alertArea then
+		local curX, curY = self._target.originData.posX, self._target.originData.posY
+		local alertArea = self._target.originData.data.alertArea
+		local needRefreshFace = #alertArea == 1
 
-		if #var_3_2 == 1 then
-			local var_3_3 = var_3_2[1].x
-			local var_3_4 = var_3_2[1].y
-			local var_3_5 = arg_3_0._target.originData.posX
-			local var_3_6 = arg_3_0._target.originData.posY
-			local var_3_7 = Va3ChessMapUtils.ToDirection(var_3_5, var_3_6, var_3_3, var_3_4)
+		if needRefreshFace then
+			local tarX, tarY = alertArea[1].x, alertArea[1].y
+			local srcX, srcY = self._target.originData.posX, self._target.originData.posY
+			local dir = Va3ChessMapUtils.ToDirection(srcX, srcY, tarX, tarY)
 
-			arg_3_0._target:getHandler():faceTo(var_3_7)
+			self._target:getHandler():faceTo(dir)
 		end
 	end
 end
 
-function var_0_0.onAvatarLoaded(arg_4_0)
-	local var_4_0 = arg_4_0._loader
+function Va3ChessNextDirectionEffect:onAvatarLoaded()
+	local loader = self._loader
 
-	if not arg_4_0._loader then
+	if not self._loader then
 		return
 	end
 
-	local var_4_1 = var_4_0:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_4_1) then
-		local var_4_2 = arg_4_0._target.avatar
+	if not gohelper.isNil(go) then
+		local avatar = self._target.avatar
 
-		for iter_4_0, iter_4_1 in ipairs(Va3ChessInteractObject.DirectionList) do
-			local var_4_3 = gohelper.findChild(var_4_1, "dir_" .. iter_4_1)
+		for _, dir in ipairs(Va3ChessInteractObject.DirectionList) do
+			local godir = gohelper.findChild(go, "dir_" .. dir)
 
-			var_4_2.goNextDirection = var_4_1
-			var_4_2["goMovetoDir" .. iter_4_1] = var_4_3
+			avatar.goNextDirection = go
+			avatar["goMovetoDir" .. dir] = godir
 
-			gohelper.setActive(var_4_3, false)
+			gohelper.setActive(godir, false)
 		end
 	end
 
-	arg_4_0:refreshNextDirFlag()
+	self:refreshNextDirFlag()
 end
 
-return var_0_0
+return Va3ChessNextDirectionEffect

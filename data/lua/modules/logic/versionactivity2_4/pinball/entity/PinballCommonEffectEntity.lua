@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballCommonEffectEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballCommonEffectEntity.lua
 
-local var_0_0 = class("PinballCommonEffectEntity", PinballColliderEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballCommonEffectEntity", package.seeall)
 
-function var_0_0.canHit(arg_1_0)
+local PinballCommonEffectEntity = class("PinballCommonEffectEntity", PinballColliderEntity)
+
+function PinballCommonEffectEntity:canHit()
 	return false
 end
 
-function var_0_0.initByCo(arg_2_0)
+function PinballCommonEffectEntity:initByCo()
 	return
 end
 
-function var_0_0.setScale(arg_3_0, arg_3_1)
-	arg_3_0.scale = arg_3_1
+function PinballCommonEffectEntity:setScale(scale)
+	self.scale = scale
 
-	transformhelper.setLocalScale(arg_3_0.trans, arg_3_0.scale, arg_3_0.scale, arg_3_0.scale)
+	transformhelper.setLocalScale(self.trans, self.scale, self.scale, self.scale)
 end
 
-function var_0_0.setDelayDispose(arg_4_0, arg_4_1)
-	TaskDispatcher.runDelay(arg_4_0.markDead, arg_4_0, arg_4_1 or 1)
+function PinballCommonEffectEntity:setDelayDispose(time)
+	TaskDispatcher.runDelay(self.markDead, self, time or 1)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	var_0_0.super.onDestroy(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.markDead, arg_5_0)
+function PinballCommonEffectEntity:onDestroy()
+	PinballCommonEffectEntity.super.onDestroy(self)
+	TaskDispatcher.cancelTask(self.markDead, self)
 end
 
-return var_0_0
+return PinballCommonEffectEntity

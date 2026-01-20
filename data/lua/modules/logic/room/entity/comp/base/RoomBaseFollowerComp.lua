@@ -1,96 +1,100 @@
-﻿module("modules.logic.room.entity.comp.base.RoomBaseFollowerComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/base/RoomBaseFollowerComp.lua
 
-local var_0_0 = class("RoomBaseFollowerComp", LuaCompBase)
+module("modules.logic.room.entity.comp.base.RoomBaseFollowerComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._isMoveing = false
+local RoomBaseFollowerComp = class("RoomBaseFollowerComp", LuaCompBase)
+
+function RoomBaseFollowerComp:ctor(entity)
+	self.entity = entity
+	self._isMoveing = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
+function RoomBaseFollowerComp:init(go)
 	return
 end
 
-function var_0_0.getFollowPathData(arg_3_0)
-	if not arg_3_0._followPathData then
-		arg_3_0._followPathData = RoomVehicleFollowPathData.New()
+function RoomBaseFollowerComp:getFollowPathData()
+	if not self._followPathData then
+		self._followPathData = RoomVehicleFollowPathData.New()
 	end
 
-	return arg_3_0._followPathData
+	return self._followPathData
 end
 
-function var_0_0.setFollowPath(arg_4_0, arg_4_1)
-	if arg_4_0._followPathComp == arg_4_1 then
+function RoomBaseFollowerComp:setFollowPath(followPathComp)
+	if self._followPathComp == followPathComp then
 		return
 	end
 
-	if arg_4_0._followPathComp then
-		arg_4_0._followPathComp:removeFollower(arg_4_0)
+	if self._followPathComp then
+		self._followPathComp:removeFollower(self)
 
-		arg_4_0._followPathComp = nil
+		self._followPathComp = nil
 	end
 
-	if arg_4_1 then
-		arg_4_1:addFollower(arg_4_0)
+	if followPathComp then
+		followPathComp:addFollower(self)
 
-		arg_4_0._followPathComp = arg_4_1
+		self._followPathComp = followPathComp
 	end
 
-	arg_4_0:stopMove()
+	self:stopMove()
 end
 
-function var_0_0.clearFollowPath(arg_5_0)
-	arg_5_0:setFollowPath(nil)
+function RoomBaseFollowerComp:clearFollowPath()
+	self:setFollowPath(nil)
 end
 
-function var_0_0.stopMove(arg_6_0)
-	if arg_6_0._isMoveing then
-		arg_6_0._isMoveing = false
+function RoomBaseFollowerComp:stopMove()
+	if self._isMoveing then
+		self._isMoveing = false
 
-		arg_6_0:onStopMove()
+		self:onStopMove()
 	end
 end
 
-function var_0_0.moveByPathData(arg_7_0)
-	if arg_7_0.__willDestroy or not arg_7_0._followPathComp or arg_7_0._followPathComp:isWillDestory() then
+function RoomBaseFollowerComp:moveByPathData()
+	if self.__willDestroy or not self._followPathComp or self._followPathComp:isWillDestory() then
 		return
 	end
 
-	if not arg_7_0._isMoveing then
-		arg_7_0._isMoveing = true
+	if not self._isMoveing then
+		self._isMoveing = true
 
-		arg_7_0:onStartMove()
+		self:onStartMove()
 	end
 
-	arg_7_0:onMoveByPathData(arg_7_0:getFollowPathData())
+	self:onMoveByPathData(self:getFollowPathData())
 end
 
-function var_0_0.addPathPos(arg_8_0, arg_8_1)
-	if not arg_8_0.__willDestroy then
-		arg_8_0:getFollowPathData():addPathPos(arg_8_1)
+function RoomBaseFollowerComp:addPathPos(pos)
+	if not self.__willDestroy then
+		local pathData = self:getFollowPathData()
+
+		pathData:addPathPos(pos)
 	end
 end
 
-function var_0_0.onMoveByPathData(arg_9_0, arg_9_1)
+function RoomBaseFollowerComp:onMoveByPathData(pathData)
 	return
 end
 
-function var_0_0.onStopMove(arg_10_0)
+function RoomBaseFollowerComp:onStopMove()
 	return
 end
 
-function var_0_0.onStartMove(arg_11_0)
+function RoomBaseFollowerComp:onStartMove()
 	return
 end
 
-function var_0_0.isWillDestory(arg_12_0)
-	return arg_12_0.__willDestroy
+function RoomBaseFollowerComp:isWillDestory()
+	return self.__willDestroy
 end
 
-function var_0_0.beforeDestroy(arg_13_0)
-	arg_13_0.__willDestroy = true
+function RoomBaseFollowerComp:beforeDestroy()
+	self.__willDestroy = true
 
-	arg_13_0:clearFollowPath()
+	self:clearFollowPath()
 end
 
-return var_0_0
+return RoomBaseFollowerComp

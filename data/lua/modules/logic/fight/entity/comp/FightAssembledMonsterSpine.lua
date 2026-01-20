@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.entity.comp.FightAssembledMonsterSpine", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightAssembledMonsterSpine.lua
 
-local var_0_0 = class("FightAssembledMonsterSpine", FightUnitSpine)
+module("modules.logic.fight.entity.comp.FightAssembledMonsterSpine", package.seeall)
 
-function var_0_0.playBySub(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	if arg_1_2 == "die" or arg_1_2 == "idle" then
+local FightAssembledMonsterSpine = class("FightAssembledMonsterSpine", FightUnitSpine)
+
+function FightAssembledMonsterSpine:playBySub(entity, animState, loop, reStart)
+	if animState == "die" or animState == "idle" then
 		return
 	end
 
-	arg_1_0:play(arg_1_2, arg_1_3, arg_1_4)
+	self:play(animState, loop, reStart)
 end
 
-return var_0_0
+return FightAssembledMonsterSpine

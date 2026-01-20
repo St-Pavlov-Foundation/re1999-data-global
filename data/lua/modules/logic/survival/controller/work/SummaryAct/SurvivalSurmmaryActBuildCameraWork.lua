@@ -1,26 +1,28 @@
-﻿module("modules.logic.survival.controller.work.SummaryAct.SurvivalSurmmaryActBuildCameraWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SummaryAct/SurvivalSurmmaryActBuildCameraWork.lua
 
-local var_0_0 = class("SurvivalSurmmaryActBuildCameraWork", BaseWork)
+module("modules.logic.survival.controller.work.SummaryAct.SurvivalSurmmaryActBuildCameraWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.mapCo = arg_1_1.mapCo
+local SurvivalSurmmaryActBuildCameraWork = class("SurvivalSurmmaryActBuildCameraWork", BaseWork)
+
+function SurvivalSurmmaryActBuildCameraWork:ctor(param)
+	self.mapCo = param.mapCo
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = string.splitToNumber(arg_2_0.mapCo.orderPosition, ",")
-	local var_2_1, var_2_2, var_2_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_2_0[1], var_2_0[2] + SurvivalModel.instance.summaryActPosOffset)
+function SurvivalSurmmaryActBuildCameraWork:onStart()
+	local playerPos = string.splitToNumber(self.mapCo.orderPosition, ",")
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(playerPos[1], playerPos[2] + SurvivalModel.instance.summaryActPosOffset)
 
-	SurvivalMapHelper.instance:setFocusPos(var_2_1, var_2_2, var_2_3)
+	SurvivalMapHelper.instance:setFocusPos(x, y, z)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.ChangeCameraScale, 0.44)
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	local var_3_0 = SurvivalShelterModel.instance:getPlayerMo()
-	local var_3_1, var_3_2, var_3_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_3_0.pos.q, var_3_0.pos.r)
+function SurvivalSurmmaryActBuildCameraWork:onDestroy()
+	local playerMo = SurvivalShelterModel.instance:getPlayerMo()
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(playerMo.pos.q, playerMo.pos.r)
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(var_3_1, var_3_2, var_3_3), 0)
-	var_0_0.super.onDestroy(arg_3_0)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(x, y, z), 0)
+	SurvivalSurmmaryActBuildCameraWork.super.onDestroy(self)
 end
 
-return var_0_0
+return SurvivalSurmmaryActBuildCameraWork

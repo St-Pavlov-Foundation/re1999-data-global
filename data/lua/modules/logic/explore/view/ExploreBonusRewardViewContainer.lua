@@ -1,27 +1,29 @@
-﻿module("modules.logic.explore.view.ExploreBonusRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBonusRewardViewContainer.lua
 
-local var_0_0 = class("ExploreBonusRewardViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreBonusRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local ExploreBonusRewardViewContainer = class("ExploreBonusRewardViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "mask/#scroll_view"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "mask/#scroll_view/Viewport/Content/rewarditem"
-	var_1_0.cellClass = ExploreBonusRewardItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 1470
-	var_1_0.cellHeight = 140
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 0
-	var_1_0.frameUpdateMs = 100
+function ExploreBonusRewardViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "mask/#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "mask/#scroll_view/Viewport/Content/rewarditem"
+	scrollParam.cellClass = ExploreBonusRewardItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1470
+	scrollParam.cellHeight = 140
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.frameUpdateMs = 100
 
 	return {
 		ExploreBonusRewardView.New(),
-		LuaListScrollView.New(ExploreTaskModel.instance:getTaskList(0), var_1_0)
+		LuaListScrollView.New(ExploreTaskModel.instance:getTaskList(0), scrollParam)
 	}
 end
 
-return var_0_0
+return ExploreBonusRewardViewContainer

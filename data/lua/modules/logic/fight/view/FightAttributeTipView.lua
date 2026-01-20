@@ -1,124 +1,128 @@
-﻿module("modules.logic.fight.view.FightAttributeTipView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightAttributeTipView.lua
 
-local var_0_0 = class("FightAttributeTipView", BaseView)
+module("modules.logic.fight.view.FightAttributeTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goattributetipcontent = gohelper.findChild(arg_1_0.viewGO, "main/bg/content")
-	arg_1_0.attrList = {
+local FightAttributeTipView = class("FightAttributeTipView", BaseView)
+
+function FightAttributeTipView:onInitView()
+	self._goattributetipcontent = gohelper.findChild(self.viewGO, "main/bg/content")
+	self.attrList = {
 		"attack",
 		"technic",
 		"defense",
 		"mdefense"
 	}
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightAttributeTipView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightAttributeTipView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightAttributeTipView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
-	arg_5_0:closeThis()
+function FightAttributeTipView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._onReceiveEntityInfoReply(arg_6_0, arg_6_1)
-	arg_6_0._proto = arg_6_1
+function FightAttributeTipView:_onReceiveEntityInfoReply(proto)
+	self._proto = proto
 
-	if not arg_6_0._proto.entityInfo then
-		arg_6_0:closeThis()
+	if not self._proto.entityInfo then
+		self:closeThis()
 
 		return
 	end
 
-	local var_6_0 = arg_6_0.viewParam.data
+	local data = self.viewParam.data
 
-	arg_6_0.isCharacter = arg_6_0.viewParam.isCharacter
-	arg_6_0.attrMO = arg_6_0.viewParam.mo
+	self.isCharacter = self.viewParam.isCharacter
+	self.attrMO = self.viewParam.mo
 
-	if arg_6_0.isCharacter then
-		gohelper.CreateObjList(arg_6_0, arg_6_0._onAttributeTipShow, var_6_0, arg_6_0._goattributetipcontent)
+	if self.isCharacter then
+		gohelper.CreateObjList(self, self._onAttributeTipShow, data, self._goattributetipcontent)
 	else
-		gohelper.CreateObjList(arg_6_0, arg_6_0._onMonsterAttrItemShow, var_6_0, arg_6_0._goattributetipcontent)
+		gohelper.CreateObjList(self, self._onMonsterAttrItemShow, data, self._goattributetipcontent)
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, arg_7_0._onReceiveEntityInfoReply, arg_7_0)
-	FightRpc.instance:sendEntityInfoRequest(arg_7_0.viewParam.entityMO.id)
+function FightAttributeTipView:onOpen()
+	self:addEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, self._onReceiveEntityInfoReply, self)
+	FightRpc.instance:sendEntityInfoRequest(self.viewParam.entityMO.id)
 end
 
-function var_0_0._onAttributeTipShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_1.transform
-	local var_8_1 = var_8_0:Find("icon"):GetComponent(gohelper.Type_Image)
-	local var_8_2 = var_8_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
-	local var_8_3 = HeroConfig.instance:getHeroAttributeCO(arg_8_2.id)
+function FightAttributeTipView:_onAttributeTipShow(obj, data, index)
+	local transform = obj.transform
+	local icon = transform:Find("icon"):GetComponent(gohelper.Type_Image)
+	local name = transform:Find("name"):GetComponent(gohelper.Type_TextMesh)
+	local config = HeroConfig.instance:getHeroAttributeCO(data.id)
 
-	UISpriteSetMgr.instance:setCommonSprite(var_8_1, "icon_att_" .. var_8_3.id)
+	UISpriteSetMgr.instance:setCommonSprite(icon, "icon_att_" .. config.id)
 
-	local var_8_4 = var_8_0:Find("num"):GetComponent(gohelper.Type_TextMesh)
+	local num = transform:Find("num"):GetComponent(gohelper.Type_TextMesh)
 
-	gohelper.setActive(var_8_4.gameObject, true)
+	gohelper.setActive(num.gameObject, true)
 
-	local var_8_5 = arg_8_0._proto.entityInfo.baseAttr[arg_8_0.attrList[arg_8_3]]
+	local baseValue = self._proto.entityInfo.baseAttr[self.attrList[index]]
 
-	var_8_4.text = var_8_5
-	var_8_2.text = var_8_3.name
+	num.text = baseValue
+	name.text = config.name
 
 	do return end
 
-	var_8_0:Find("add"):GetComponent(gohelper.Type_TextMesh).text = arg_8_0:_getAddValueStr(var_8_5, arg_8_0._proto.entityInfo.attr[arg_8_0.attrList[arg_8_3]])
+	local addNum = transform:Find("add"):GetComponent(gohelper.Type_TextMesh)
+
+	addNum.text = self:_getAddValueStr(baseValue, self._proto.entityInfo.attr[self.attrList[index]])
 end
 
-function var_0_0._getAddValueStr(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_2 - arg_9_1
+function FightAttributeTipView:_getAddValueStr(baseValue, value)
+	local offset = value - baseValue
 
-	if var_9_0 >= 0 then
-		return "+" .. var_9_0
+	if offset >= 0 then
+		return "+" .. offset
 	end
 
-	return var_9_0
+	return offset
 end
 
-function var_0_0._onMonsterAttrItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_1.transform
-	local var_10_1 = var_10_0:Find("icon"):GetComponent(gohelper.Type_Image)
-	local var_10_2 = var_10_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_3 = HeroConfig.instance:getHeroAttributeCO(arg_10_2.id)
+function FightAttributeTipView:_onMonsterAttrItemShow(obj, data, index)
+	local transform = obj.transform
+	local icon = transform:Find("icon"):GetComponent(gohelper.Type_Image)
+	local name = transform:Find("name"):GetComponent(gohelper.Type_TextMesh)
+	local config = HeroConfig.instance:getHeroAttributeCO(data.id)
 
-	var_10_2.text = var_10_3.name
+	name.text = config.name
 
-	UISpriteSetMgr.instance:setCommonSprite(var_10_1, "icon_att_" .. var_10_3.id)
+	UISpriteSetMgr.instance:setCommonSprite(icon, "icon_att_" .. config.id)
 
-	local var_10_4 = var_10_0:Find("num"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_5 = var_10_0:Find("add"):GetComponent(gohelper.Type_TextMesh)
-	local var_10_6 = var_10_0:Find("rate"):GetComponent(gohelper.Type_Image)
+	local num = transform:Find("num"):GetComponent(gohelper.Type_TextMesh)
+	local addNum = transform:Find("add"):GetComponent(gohelper.Type_TextMesh)
+	local rate = transform:Find("rate"):GetComponent(gohelper.Type_Image)
 
-	if arg_10_0.isCharacter then
-		gohelper.setActive(var_10_4.gameObject, true)
-		gohelper.setActive(var_10_5.gameObject, true)
-		gohelper.setActive(var_10_6.gameObject, false)
+	if self.isCharacter then
+		gohelper.setActive(num.gameObject, true)
+		gohelper.setActive(addNum.gameObject, true)
+		gohelper.setActive(rate.gameObject, false)
 
-		local var_10_7 = arg_10_0._proto.entityInfo.baseAttr[arg_10_0.attrList[arg_10_3]]
+		local baseValue = self._proto.entityInfo.baseAttr[self.attrList[index]]
 
-		var_10_4.text = arg_10_0.attrMo[arg_10_0.attrList[arg_10_3]]
-		var_10_5.text = arg_10_0:_getAddValueStr(var_10_7, arg_10_0._proto.entityInfo.attr[arg_10_0.attrList[arg_10_3]])
+		num.text = self.attrMo[self.attrList[index]]
+		addNum.text = self:_getAddValueStr(baseValue, self._proto.entityInfo.attr[self.attrList[index]])
 	else
-		gohelper.setActive(var_10_4.gameObject, false)
-		gohelper.setActive(var_10_5.gameObject, false)
-		gohelper.setActive(var_10_6.gameObject, true)
-		UISpriteSetMgr.instance:setCommonSprite(var_10_6, "sx_" .. arg_10_2.value, true)
+		gohelper.setActive(num.gameObject, false)
+		gohelper.setActive(addNum.gameObject, false)
+		gohelper.setActive(rate.gameObject, true)
+		UISpriteSetMgr.instance:setCommonSprite(rate, "sx_" .. data.value, true)
 	end
 end
 
-return var_0_0
+return FightAttributeTipView

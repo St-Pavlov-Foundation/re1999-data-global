@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.library.OdysseyLibraryToastViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/OdysseyLibraryToastViewContainer.lua
 
-local var_0_0 = class("OdysseyLibraryToastViewContainer", BaseViewContainer)
+module("modules.logic.sp01.library.OdysseyLibraryToastViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseyLibraryToastViewContainer = class("OdysseyLibraryToastViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OdysseyLibraryToastView.New())
+function OdysseyLibraryToastViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OdysseyLibraryToastView.New())
+
+	return views
 end
 
-return var_0_0
+return OdysseyLibraryToastViewContainer

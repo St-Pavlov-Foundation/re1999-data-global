@@ -1,51 +1,53 @@
-﻿module("modules.logic.scene.main.comp.MainSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/main/comp/MainSceneDirector.lua
 
-local var_0_0 = class("MainSceneDirector", BaseSceneComp)
+module("modules.logic.scene.main.comp.MainSceneDirector", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0.animSuccess = false
-	arg_1_0.switchSuccess = false
+local MainSceneDirector = class("MainSceneDirector", BaseSceneComp)
+
+function MainSceneDirector:onInit()
+	self._scene = self:getCurScene()
+	self.animSuccess = false
+	self.switchSuccess = false
 end
 
-function var_0_0._onLevelLoaded(arg_2_0)
-	arg_2_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
+function MainSceneDirector:_onLevelLoaded()
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 
-	local var_2_0 = arg_2_0._scene.level:getSceneGo()
+	local sceneGo = self._scene.level:getSceneGo()
 
-	WeatherController.instance:initSceneGo(var_2_0, arg_2_0._onSwitchResLoaded, arg_2_0)
-	arg_2_0._scene.yearAnimation:initAnimationCurve(arg_2_0._onAnimationCurveLoaded, arg_2_0)
+	WeatherController.instance:initSceneGo(sceneGo, self._onSwitchResLoaded, self)
+	self._scene.yearAnimation:initAnimationCurve(self._onAnimationCurveLoaded, self)
 end
 
-function var_0_0._onAnimationCurveLoaded(arg_3_0)
-	arg_3_0.animSuccess = true
+function MainSceneDirector:_onAnimationCurveLoaded()
+	self.animSuccess = true
 
-	arg_3_0:_check()
+	self:_check()
 end
 
-function var_0_0._onSwitchResLoaded(arg_4_0)
-	arg_4_0.switchSuccess = true
+function MainSceneDirector:_onSwitchResLoaded()
+	self.switchSuccess = true
 
-	arg_4_0:_check()
+	self:_check()
 end
 
-function var_0_0._check(arg_5_0)
-	if arg_5_0.animSuccess and arg_5_0.switchSuccess then
-		arg_5_0._scene:onPrepared()
+function MainSceneDirector:_check()
+	if self.animSuccess and self.switchSuccess then
+		self._scene:onPrepared()
 	end
 end
 
-function var_0_0.onSceneStart(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_6_0._onLevelLoaded, arg_6_0)
+function MainSceneDirector:onSceneStart(sceneId, levelId)
+	self._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0.onScenePrepared(arg_7_0, arg_7_1, arg_7_2)
+function MainSceneDirector:onScenePrepared(sceneId, levelId)
 	return
 end
 
-function var_0_0.onSceneClose(arg_8_0)
-	arg_8_0.animSuccess = false
-	arg_8_0.switchSuccess = false
+function MainSceneDirector:onSceneClose()
+	self.animSuccess = false
+	self.switchSuccess = false
 
 	MainController.instance:dispatchEvent(MainEvent.OnSceneClose)
 	MainController.instance:clearOpenMainViewFlag()
@@ -53,7 +55,7 @@ function var_0_0.onSceneClose(arg_8_0)
 		ViewName.SummonADView
 	})
 	WeatherController.instance:onSceneClose()
-	arg_8_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_8_0._onLevelLoaded, arg_8_0)
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-return var_0_0
+return MainSceneDirector

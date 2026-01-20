@@ -1,250 +1,253 @@
-﻿module("modules.logic.season.view3_0.Season3_0StoryView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0StoryView.lua
 
-local var_0_0 = class("Season3_0StoryView", BaseView)
+module("modules.logic.season.view3_0.Season3_0StoryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocoverPage = gohelper.findChild(arg_1_0.viewGO, "Root/#go_coverPage")
-	arg_1_0._txtcoverTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_coverPage/Left/Title/txt_Title")
-	arg_1_0._txttitleDesc = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_coverPage/Left/#txt_titleDesc")
-	arg_1_0._simageCover = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#go_coverPage/Left/#simage_Cover")
-	arg_1_0._gocoverContent = gohelper.findChild(arg_1_0.viewGO, "Root/#go_coverPage/Right/#go_coverContent")
-	arg_1_0._gocoverItem = gohelper.findChild(arg_1_0.viewGO, "Root/#go_coverPage/Right/#go_coverContent/#go_coverItem")
-	arg_1_0._godetailPage = gohelper.findChild(arg_1_0.viewGO, "Root/#go_detailPage")
-	arg_1_0._txtdetailTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Left/Title/#txt_detailTitle")
-	arg_1_0._simagePolaroid = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#go_detailPage/Left/#simage_Polaroid")
-	arg_1_0._txtdetailPageTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Right/#txt_detailPageTitle")
-	arg_1_0._txtAuthor = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Right/#txt_Author")
-	arg_1_0._scrollDesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#go_detailPage/Right/#scroll_desc")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_detailPage/Right/#scroll_desc/Viewport/#txt_desc")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "Root/#go_detailPage/Right/#go_arrow")
-	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Left")
-	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Right")
-	arg_1_0._goLeftTop = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTop")
-	arg_1_0._animView = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local Season3_0StoryView = class("Season3_0StoryView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season3_0StoryView:onInitView()
+	self._gocoverPage = gohelper.findChild(self.viewGO, "Root/#go_coverPage")
+	self._txtcoverTitle = gohelper.findChildText(self.viewGO, "Root/#go_coverPage/Left/Title/txt_Title")
+	self._txttitleDesc = gohelper.findChildText(self.viewGO, "Root/#go_coverPage/Left/#txt_titleDesc")
+	self._simageCover = gohelper.findChildSingleImage(self.viewGO, "Root/#go_coverPage/Left/#simage_Cover")
+	self._gocoverContent = gohelper.findChild(self.viewGO, "Root/#go_coverPage/Right/#go_coverContent")
+	self._gocoverItem = gohelper.findChild(self.viewGO, "Root/#go_coverPage/Right/#go_coverContent/#go_coverItem")
+	self._godetailPage = gohelper.findChild(self.viewGO, "Root/#go_detailPage")
+	self._txtdetailTitle = gohelper.findChildText(self.viewGO, "Root/#go_detailPage/Left/Title/#txt_detailTitle")
+	self._simagePolaroid = gohelper.findChildSingleImage(self.viewGO, "Root/#go_detailPage/Left/#simage_Polaroid")
+	self._txtdetailPageTitle = gohelper.findChildText(self.viewGO, "Root/#go_detailPage/Right/#txt_detailPageTitle")
+	self._txtAuthor = gohelper.findChildText(self.viewGO, "Root/#go_detailPage/Right/#txt_Author")
+	self._scrollDesc = gohelper.findChildScrollRect(self.viewGO, "Root/#go_detailPage/Right/#scroll_desc")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "Root/#go_detailPage/Right/#scroll_desc/Viewport/#txt_desc")
+	self._goarrow = gohelper.findChild(self.viewGO, "Root/#go_detailPage/Right/#go_arrow")
+	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Left")
+	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Right")
+	self._goLeftTop = gohelper.findChild(self.viewGO, "#go_LeftTop")
+	self._animView = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
-	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity104Controller.instance, Activity104Event.OnCoverItemClick, arg_2_0.onCoverItemClick, arg_2_0)
+function Season3_0StoryView:addEvents()
+	self._btnLeft:AddClickListener(self._btnLeftOnClick, self)
+	self._btnRight:AddClickListener(self._btnRightOnClick, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.OnCoverItemClick, self.onCoverItemClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnLeft:RemoveClickListener()
-	arg_3_0._btnRight:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity104Controller.instance, Activity104Event.OnCoverItemClick, arg_3_0.onCoverItemClick, arg_3_0)
+function Season3_0StoryView:removeEvents()
+	self._btnLeft:RemoveClickListener()
+	self._btnRight:RemoveClickListener()
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.OnCoverItemClick, self.onCoverItemClick, self)
 end
 
-function var_0_0._btnLeftOnClick(arg_4_0)
-	arg_4_0.curPageIndex = Mathf.Max(0, arg_4_0.curPageIndex - 1)
+function Season3_0StoryView:_btnLeftOnClick()
+	self.curPageIndex = Mathf.Max(0, self.curPageIndex - 1)
 
-	if arg_4_0.curPageIndex == 0 then
-		arg_4_0:showSwitchPageAnim("tocover")
+	if self.curPageIndex == 0 then
+		self:showSwitchPageAnim("tocover")
 	else
-		arg_4_0:showSwitchPageAnim("toleft")
+		self:showSwitchPageAnim("toleft")
 	end
 end
 
-function var_0_0._btnRightOnClick(arg_5_0)
-	local var_5_0 = math.min(arg_5_0.curPageIndex + 1, arg_5_0.maxPageIndex)
+function Season3_0StoryView:_btnRightOnClick()
+	local nextPageIndex = math.min(self.curPageIndex + 1, self.maxPageIndex)
+	local nextPageItem = self.coverItemList[nextPageIndex].item
 
-	if arg_5_0.coverItemList[var_5_0].item.isUnlock then
-		arg_5_0.curPageIndex = Mathf.Min(arg_5_0.curPageIndex + 1, arg_5_0.maxPageIndex)
+	if nextPageItem.isUnlock then
+		self.curPageIndex = Mathf.Min(self.curPageIndex + 1, self.maxPageIndex)
 
-		if arg_5_0.curPageIndex == 1 then
-			arg_5_0:showSwitchPageAnim("todetail")
+		if self.curPageIndex == 1 then
+			self:showSwitchPageAnim("todetail")
 		else
-			arg_5_0:showSwitchPageAnim("toright")
+			self:showSwitchPageAnim("toright")
 		end
 	else
 		GameFacade.showToast(ToastEnum.SeasonStoryNotOpen)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.coverItemTab = arg_6_0:getUserDataTb_()
-	arg_6_0.coverItemList = arg_6_0:getUserDataTb_()
-	arg_6_0.unlockStateTab = arg_6_0:getUserDataTb_()
-	arg_6_0.saveUnlockStateTab = arg_6_0:getUserDataTb_()
+function Season3_0StoryView:_editableInitView()
+	self.coverItemTab = self:getUserDataTb_()
+	self.coverItemList = self:getUserDataTb_()
+	self.unlockStateTab = self:getUserDataTb_()
+	self.saveUnlockStateTab = self:getUserDataTb_()
 
-	gohelper.setActive(arg_6_0._gocoverItem, false)
+	gohelper.setActive(self._gocoverItem, false)
 end
 
-function var_0_0.onOpen(arg_7_0)
+function Season3_0StoryView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_role_culture_open)
 
-	arg_7_0.actId = Activity104Model.instance:getCurSeasonId()
-	arg_7_0.allStoryConfig = SeasonConfig.instance:getAllStoryCo(arg_7_0.actId)
-	arg_7_0.maxPageIndex = GameUtil.getTabLen(arg_7_0.allStoryConfig)
-	arg_7_0.curPageIndex = 0
+	self.actId = Activity104Model.instance:getCurSeasonId()
+	self.allStoryConfig = SeasonConfig.instance:getAllStoryCo(self.actId)
+	self.maxPageIndex = GameUtil.getTabLen(self.allStoryConfig)
+	self.curPageIndex = 0
 
-	arg_7_0:initCoverPageUI()
-	arg_7_0:createCoverItem()
-	arg_7_0:refreshUI()
+	self:initCoverPageUI()
+	self:createCoverItem()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	gohelper.setActive(arg_8_0._gocoverPage, true)
-	gohelper.setActive(arg_8_0._godetailPage, arg_8_0.curPageIndex > 0)
-	gohelper.setActive(arg_8_0._btnLeft.gameObject, arg_8_0.curPageIndex > 0)
+function Season3_0StoryView:refreshUI()
+	gohelper.setActive(self._gocoverPage, true)
+	gohelper.setActive(self._godetailPage, self.curPageIndex > 0)
+	gohelper.setActive(self._btnLeft.gameObject, self.curPageIndex > 0)
 
-	local var_8_0 = math.min(arg_8_0.curPageIndex + 1, arg_8_0.maxPageIndex)
-	local var_8_1 = arg_8_0.coverItemList[var_8_0].item.isUnlock
+	local nextPageIndex = math.min(self.curPageIndex + 1, self.maxPageIndex)
+	local nextPageIsUnlocked = self.coverItemList[nextPageIndex].item.isUnlock
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_8_0._btnRight.gameObject:GetComponent(typeof(UnityEngine.UI.Image)), var_8_1 and 1 or 0.2)
-	gohelper.setActive(arg_8_0._btnRight.gameObject, arg_8_0.curPageIndex < arg_8_0.maxPageIndex)
+	ZProj.UGUIHelper.SetColorAlpha(self._btnRight.gameObject:GetComponent(typeof(UnityEngine.UI.Image)), nextPageIsUnlocked and 1 or 0.2)
+	gohelper.setActive(self._btnRight.gameObject, self.curPageIndex < self.maxPageIndex)
 
-	if arg_8_0.curPageIndex > 0 then
-		arg_8_0:refreshDetailPageUI()
+	if self.curPageIndex > 0 then
+		self:refreshDetailPageUI()
 	end
 
-	arg_8_0:refreshUnlockState()
+	self:refreshUnlockState()
 end
 
-function var_0_0.initCoverPageUI(arg_9_0)
-	local var_9_0 = SeasonConfig.instance:getSeasonConstStr(arg_9_0.actId, Activity104Enum.ConstEnum.StoryCoverIconUrl)
+function Season3_0StoryView:initCoverPageUI()
+	local coverIconUrl = SeasonConfig.instance:getSeasonConstStr(self.actId, Activity104Enum.ConstEnum.StoryCoverIconUrl)
 
-	arg_9_0._simageCover:LoadImage(var_9_0)
+	self._simageCover:LoadImage(coverIconUrl)
 
-	arg_9_0._txttitleDesc.text = SeasonConfig.instance:getSeasonConstLangStr(arg_9_0.actId, Activity104Enum.ConstEnum.StoryCoverDesc)
-	arg_9_0._txtcoverTitle.text = SeasonConfig.instance:getSeasonConstLangStr(arg_9_0.actId, Activity104Enum.ConstEnum.StoryCoverTitle)
+	self._txttitleDesc.text = SeasonConfig.instance:getSeasonConstLangStr(self.actId, Activity104Enum.ConstEnum.StoryCoverDesc)
+	self._txtcoverTitle.text = SeasonConfig.instance:getSeasonConstLangStr(self.actId, Activity104Enum.ConstEnum.StoryCoverTitle)
 end
 
-function var_0_0.refreshDetailPageUI(arg_10_0)
-	local var_10_0 = SeasonConfig.instance:getStoryConfig(arg_10_0.actId, arg_10_0.curPageIndex)
+function Season3_0StoryView:refreshDetailPageUI()
+	local storyConfig = SeasonConfig.instance:getStoryConfig(self.actId, self.curPageIndex)
 
-	arg_10_0._txtdetailTitle.text = GameUtil.setFirstStrSize(var_10_0.title, 80)
+	self._txtdetailTitle.text = GameUtil.setFirstStrSize(storyConfig.title, 80)
 
-	local var_10_1 = SeasonViewHelper.getIconUrl("singlebg/%s/storycover/%s.png", var_10_0.picture, arg_10_0.actId)
+	local iconUrl = SeasonViewHelper.getIconUrl("singlebg/%s/storycover/%s.png", storyConfig.picture, self.actId)
 
-	arg_10_0._simagePolaroid:LoadImage(var_10_1)
+	self._simagePolaroid:LoadImage(iconUrl)
 
-	arg_10_0._txtdetailPageTitle.text = var_10_0.subTitle
-	arg_10_0._txtAuthor.text = var_10_0.subContent
+	self._txtdetailPageTitle.text = storyConfig.subTitle
+	self._txtAuthor.text = storyConfig.subContent
 
-	gohelper.setActive(arg_10_0._txtAuthor.gameObject, not string.nilorempty(var_10_0.subContent))
-	recthelper.setHeight(arg_10_0._scrollDesc.gameObject.transform, string.nilorempty(var_10_0.subContent) and 705 or 585)
+	gohelper.setActive(self._txtAuthor.gameObject, not string.nilorempty(storyConfig.subContent))
+	recthelper.setHeight(self._scrollDesc.gameObject.transform, string.nilorempty(storyConfig.subContent) and 705 or 585)
 
-	arg_10_0._txtdesc.text = var_10_0.content
+	self._txtdesc.text = storyConfig.content
 end
 
-function var_0_0.createCoverItem(arg_11_0)
-	local var_11_0 = SeasonConfig.instance:getAllStoryCo(arg_11_0.actId)
+function Season3_0StoryView:createCoverItem()
+	local allStoryConfig = SeasonConfig.instance:getAllStoryCo(self.actId)
 
-	for iter_11_0, iter_11_1 in pairs(var_11_0) do
-		local var_11_1 = arg_11_0.coverItemTab[iter_11_0]
+	for storyId, storyConfig in pairs(allStoryConfig) do
+		local coverItem = self.coverItemTab[storyId]
 
-		if not var_11_1 then
-			var_11_1 = {
-				go = gohelper.clone(arg_11_0._gocoverItem, arg_11_0._gocoverContent, "cover" .. iter_11_0)
+		if not coverItem then
+			coverItem = {
+				go = gohelper.clone(self._gocoverItem, self._gocoverContent, "cover" .. storyId)
 			}
-			var_11_1.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1.go, Season3_0StoryCoverItem, {
-				actId = arg_11_0.actId,
-				storyId = iter_11_0,
-				storyConfig = iter_11_1
+			coverItem.item = MonoHelper.addNoUpdateLuaComOnceToGo(coverItem.go, Season3_0StoryCoverItem, {
+				actId = self.actId,
+				storyId = storyId,
+				storyConfig = storyConfig
 			})
-			arg_11_0.coverItemTab[iter_11_0] = var_11_1
+			self.coverItemTab[storyId] = coverItem
 
-			table.insert(arg_11_0.coverItemList, var_11_1)
+			table.insert(self.coverItemList, coverItem)
 		end
 
-		var_11_1.item:refreshItem()
+		coverItem.item:refreshItem()
 
-		arg_11_0.unlockStateTab[iter_11_0] = var_11_1.item.isUnlock
+		self.unlockStateTab[storyId] = coverItem.item.isUnlock
 
-		gohelper.setActive(var_11_1.go, true)
+		gohelper.setActive(coverItem.go, true)
 	end
 end
 
-function var_0_0.refreshUnlockState(arg_12_0)
-	local var_12_0 = PlayerPrefsHelper.getString(arg_12_0:getLocalKey(), "")
-	local var_12_1 = {}
+function Season3_0StoryView:refreshUnlockState()
+	local saveStr = PlayerPrefsHelper.getString(self:getLocalKey(), "")
+	local saveStateList = {}
 
-	if not string.nilorempty(var_12_0) then
-		local var_12_2 = cjson.decode(var_12_0)
+	if not string.nilorempty(saveStr) then
+		saveStateList = cjson.decode(saveStr)
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_2) do
-			local var_12_3 = string.split(iter_12_1, "|")
-			local var_12_4 = tonumber(var_12_3[1])
-			local var_12_5 = arg_12_0:setStrToBool(var_12_3[2])
+		for _, unlockStateStr in ipairs(saveStateList) do
+			local param = string.split(unlockStateStr, "|")
+			local id = tonumber(param[1])
+			local state = self:setStrToBool(param[2])
 
-			arg_12_0.saveUnlockStateTab[var_12_4] = var_12_5
+			self.saveUnlockStateTab[id] = state
 		end
 	end
 
-	for iter_12_2, iter_12_3 in pairs(arg_12_0.coverItemTab) do
-		if GameUtil.getTabLen(arg_12_0.saveUnlockStateTab) == 0 then
-			iter_12_3.item:refreshUnlockState(false)
+	for storyId, coverItem in pairs(self.coverItemTab) do
+		if GameUtil.getTabLen(self.saveUnlockStateTab) == 0 then
+			coverItem.item:refreshUnlockState(false)
 		else
-			local var_12_6 = arg_12_0.saveUnlockStateTab[iter_12_2]
+			local saveUnlockState = self.saveUnlockStateTab[storyId]
 
-			iter_12_3.item:refreshUnlockState(var_12_6)
+			coverItem.item:refreshUnlockState(saveUnlockState)
 		end
 	end
 
-	arg_12_0:saveUnlockState()
+	self:saveUnlockState()
 end
 
-function var_0_0.getLocalKey(arg_13_0)
-	return "Season104StoryUnlock" .. "#" .. tostring(arg_13_0.actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function Season3_0StoryView:getLocalKey()
+	return "Season104StoryUnlock" .. "#" .. tostring(self.actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-function var_0_0.saveUnlockState(arg_14_0)
-	local var_14_0 = {}
+function Season3_0StoryView:saveUnlockState()
+	local stateSaveStrTab = {}
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.unlockStateTab) do
-		local var_14_1 = string.format("%s|%s", iter_14_0, iter_14_1)
+	for storyId, unlockState in ipairs(self.unlockStateTab) do
+		local saveStr = string.format("%s|%s", storyId, unlockState)
 
-		table.insert(var_14_0, var_14_1)
+		table.insert(stateSaveStrTab, saveStr)
 	end
 
-	PlayerPrefsHelper.setString(arg_14_0:getLocalKey(), cjson.encode(var_14_0))
+	PlayerPrefsHelper.setString(self:getLocalKey(), cjson.encode(stateSaveStrTab))
 end
 
-function var_0_0.setStrToBool(arg_15_0, arg_15_1)
-	if string.nilorempty(arg_15_1) then
+function Season3_0StoryView:setStrToBool(unlockStateStr)
+	if string.nilorempty(unlockStateStr) then
 		return false
-	elseif arg_15_1 == "true" then
+	elseif unlockStateStr == "true" then
 		return true
 	else
 		return false
 	end
 end
 
-function var_0_0.onCoverItemClick(arg_16_0, arg_16_1)
-	arg_16_0.curPageIndex = arg_16_1.storyId
+function Season3_0StoryView:onCoverItemClick(param)
+	self.curPageIndex = param.storyId
 
-	arg_16_0:showSwitchPageAnim("todetail")
+	self:showSwitchPageAnim("todetail")
 end
 
-function var_0_0.showSwitchPageAnim(arg_17_0, arg_17_1)
-	arg_17_0._animView.enabled = true
+function Season3_0StoryView:showSwitchPageAnim(animName)
+	self._animView.enabled = true
 
-	arg_17_0._animView:Play(arg_17_1, 0, 0)
+	self._animView:Play(animName, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_screenplay_photo_close)
 	UIBlockMgr.instance:startBlock("playSwitchPageAnim")
-	TaskDispatcher.runDelay(arg_17_0.refreshPage, arg_17_0, 0.3)
+	TaskDispatcher.runDelay(self.refreshPage, self, 0.3)
 end
 
-function var_0_0.refreshPage(arg_18_0)
+function Season3_0StoryView:refreshPage()
 	UIBlockMgr.instance:endBlock("playSwitchPageAnim")
-	arg_18_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_19_0)
-	arg_19_0:saveUnlockState()
-	TaskDispatcher.cancelTask(arg_19_0.refreshPage, arg_19_0)
+function Season3_0StoryView:onClose()
+	self:saveUnlockState()
+	TaskDispatcher.cancelTask(self.refreshPage, self)
 	UIBlockMgr.instance:endBlock("playSwitchPageAnim")
-	Season123Controller.instance:checkHasReadUnlockStory(arg_19_0.actId)
+	Season123Controller.instance:checkHasReadUnlockStory(self.actId)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0._simageCover:UnLoadImage()
-	arg_20_0._simagePolaroid:UnLoadImage()
+function Season3_0StoryView:onDestroyView()
+	self._simageCover:UnLoadImage()
+	self._simagePolaroid:UnLoadImage()
 end
 
-return var_0_0
+return Season3_0StoryView

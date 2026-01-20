@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_resistances_attribute", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_resistances_attribute.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_resistances_attribute", package.seeall)
+
+local lua_resistances_attribute = {}
+local fields = {
 	forbid = 7,
 	sleep = 3,
 	dizzy = 2,
@@ -18,13 +20,13 @@ local var_0_1 = {
 	disarm = 6,
 	cantGetExskill = 9
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_resistances_attribute.onLoad(json)
+	lua_resistances_attribute.configList, lua_resistances_attribute.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_resistances_attribute

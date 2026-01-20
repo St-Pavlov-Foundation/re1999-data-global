@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_task_room", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_task_room.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_task_room", package.seeall)
+
+local lua_task_room = {}
+local fields = {
 	bonusIcon = 20,
 	name = 4,
 	bonusMail = 9,
@@ -23,18 +25,18 @@ local var_0_1 = {
 	needReset = 18,
 	bonus = 17
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	tips = 4,
 	minType = 1,
 	name = 2,
 	desc = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_task_room.onLoad(json)
+	lua_task_room.configList, lua_task_room.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_task_room

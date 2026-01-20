@@ -1,107 +1,109 @@
-﻿module("modules.logic.battlepass.view.BpBonusView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpBonusView.lua
 
-local var_0_0 = class("BpBonusView", BaseView)
+module("modules.logic.battlepass.view.BpBonusView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollRectWrap = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll")
-	arg_1_0._goKeyBonus = gohelper.findChild(arg_1_0.viewGO, "root/#keyBonus")
-	arg_1_0._simagepaymask = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/pay/#gomask")
-	arg_1_0._simagescrollbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#scroll/#simage_scrollbg")
-	arg_1_0._maskClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/left/pay/#btn_pay", AudioEnum.UI.UI_vertical_first_tabs_click)
-	arg_1_0._txtLeftTime = gohelper.findChildText(arg_1_0.viewGO, "root/#txtLeftTime")
-	arg_1_0._payAnim = gohelper.findChildComponent(arg_1_0.viewGO, "root/left/pay", typeof(UnityEngine.Animator))
-	arg_1_0._lineTr = gohelper.findChildComponent(arg_1_0.viewGO, "root/#scroll/viewport/content/line", typeof(UnityEngine.Transform))
-	arg_1_0._gomask = arg_1_0._simagepaymask.gameObject
+local BpBonusView = class("BpBonusView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function BpBonusView:onInitView()
+	self._scrollRectWrap = gohelper.findChildScrollRect(self.viewGO, "root/#scroll")
+	self._goKeyBonus = gohelper.findChild(self.viewGO, "root/#keyBonus")
+	self._simagepaymask = gohelper.findChildSingleImage(self.viewGO, "root/left/pay/#gomask")
+	self._simagescrollbg = gohelper.findChildSingleImage(self.viewGO, "root/#scroll/#simage_scrollbg")
+	self._maskClick = gohelper.findChildButtonWithAudio(self.viewGO, "root/left/pay/#btn_pay", AudioEnum.UI.UI_vertical_first_tabs_click)
+	self._txtLeftTime = gohelper.findChildText(self.viewGO, "root/#txtLeftTime")
+	self._payAnim = gohelper.findChildComponent(self.viewGO, "root/left/pay", typeof(UnityEngine.Animator))
+	self._lineTr = gohelper.findChildComponent(self.viewGO, "root/#scroll/viewport/content/line", typeof(UnityEngine.Transform))
+	self._gomask = self._simagepaymask.gameObject
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._maskClick:AddClickListener(arg_2_0._onClickbtnPay, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.ShowUnlockBonusAnim, arg_2_0._playUnLockItemAnim, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnGetInfo, arg_2_0._refreshView, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnGetBonus, arg_2_0._refreshView, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnUpdateScore, arg_2_0._refreshView, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, arg_2_0._onUpdatePayStatus, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnBuyLevel, arg_2_0._onBuyLevel, arg_2_0)
-	arg_2_0:addEventCb(BpController.instance, BpEvent.OnTaskUpdate, arg_2_0._onTaskUpdate, arg_2_0)
-	arg_2_0:addEventCb(arg_2_0.viewContainer, BpEvent.TapViewOpenAnimBegin, arg_2_0._updatePayAnim, arg_2_0)
-	arg_2_0._scrollRectWrap:AddOnValueChanged(arg_2_0._onScrollRectValueChanged, arg_2_0)
+function BpBonusView:addEvents()
+	self._maskClick:AddClickListener(self._onClickbtnPay, self)
+	self:addEventCb(BpController.instance, BpEvent.ShowUnlockBonusAnim, self._playUnLockItemAnim, self)
+	self:addEventCb(BpController.instance, BpEvent.OnGetInfo, self._refreshView, self)
+	self:addEventCb(BpController.instance, BpEvent.OnGetBonus, self._refreshView, self)
+	self:addEventCb(BpController.instance, BpEvent.OnUpdateScore, self._refreshView, self)
+	self:addEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, self._onUpdatePayStatus, self)
+	self:addEventCb(BpController.instance, BpEvent.OnBuyLevel, self._onBuyLevel, self)
+	self:addEventCb(BpController.instance, BpEvent.OnTaskUpdate, self._onTaskUpdate, self)
+	self:addEventCb(self.viewContainer, BpEvent.TapViewOpenAnimBegin, self._updatePayAnim, self)
+	self._scrollRectWrap:AddOnValueChanged(self._onScrollRectValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._maskClick:RemoveClickListener()
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.ShowUnlockBonusAnim, arg_3_0._playUnLockItemAnim, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnGetInfo, arg_3_0._refreshView, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnGetBonus, arg_3_0._refreshView, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnUpdateScore, arg_3_0._refreshView, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, arg_3_0._onUpdatePayStatus, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnBuyLevel, arg_3_0._onBuyLevel, arg_3_0)
-	arg_3_0:removeEventCb(BpController.instance, BpEvent.OnTaskUpdate, arg_3_0._onTaskUpdate, arg_3_0)
-	arg_3_0:removeEventCb(arg_3_0.viewContainer, BpEvent.TapViewOpenAnimBegin, arg_3_0._updatePayAnim, arg_3_0)
-	arg_3_0._scrollRectWrap:RemoveOnValueChanged()
+function BpBonusView:removeEvents()
+	self._maskClick:RemoveClickListener()
+	self:removeEventCb(BpController.instance, BpEvent.ShowUnlockBonusAnim, self._playUnLockItemAnim, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnGetInfo, self._refreshView, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnGetBonus, self._refreshView, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnUpdateScore, self._refreshView, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnUpdatePayStatus, self._onUpdatePayStatus, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnBuyLevel, self._onBuyLevel, self)
+	self:removeEventCb(BpController.instance, BpEvent.OnTaskUpdate, self._onTaskUpdate, self)
+	self:removeEventCb(self.viewContainer, BpEvent.TapViewOpenAnimBegin, self._updatePayAnim, self)
+	self._scrollRectWrap:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagescrollbg:LoadImage(ResUrl.getBattlePassBg("img_reward_bg_bot"))
+function BpBonusView:_editableInitView()
+	self._simagescrollbg:LoadImage(ResUrl.getBattlePassBg("img_reward_bg_bot"))
 
-	arg_4_0._scrollWidth = recthelper.getWidth(arg_4_0._scrollRectWrap.transform)
-	arg_4_0._keyBonusItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goKeyBonus, BpBonusKeyItem)
-	arg_4_0._cellWidth = 161
-	arg_4_0._cellSpaceH = 0
+	self._scrollWidth = recthelper.getWidth(self._scrollRectWrap.transform)
+	self._keyBonusItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goKeyBonus, BpBonusKeyItem)
+	self._cellWidth = 161
+	self._cellSpaceH = 0
 
-	local var_4_0 = ListScrollParam.New()
+	local scrollParam = ListScrollParam.New()
 
-	var_4_0.scrollGOPath = "root/#scroll"
-	var_4_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_4_0.prefabUrl = "root/#scroll/item"
-	var_4_0.cellClass = BpBonusItem
-	var_4_0.scrollDir = ScrollEnum.ScrollDirH
-	var_4_0.lineCount = 1
-	var_4_0.cellWidth = arg_4_0._cellWidth
-	var_4_0.cellHeight = 596
-	var_4_0.cellSpaceH = arg_4_0._cellSpaceH
-	var_4_0.cellSpaceV = 0
-	var_4_0.startSpace = 0
-	var_4_0.frameUpdateMs = 100
-	arg_4_0._scrollView = LuaListScrollView.New(BpBonusModel.instance, var_4_0)
+	scrollParam.scrollGOPath = "root/#scroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "root/#scroll/item"
+	scrollParam.cellClass = BpBonusItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = self._cellWidth
+	scrollParam.cellHeight = 596
+	scrollParam.cellSpaceH = self._cellSpaceH
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.frameUpdateMs = 100
+	self._scrollView = LuaListScrollView.New(BpBonusModel.instance, scrollParam)
 
-	arg_4_0:addChildView(arg_4_0._scrollView)
+	self:addChildView(self._scrollView)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:_onUpdatePayStatus()
-	arg_5_0:_udpateScroll()
-	arg_5_0:_updateBtn()
-	arg_5_0:_updateLeftTime()
-	BpController.instance:dispatchEvent(BpEvent.SetGetAllCallBack, arg_5_0._onClickbtnGetAll, arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0.scrollToLevel, arg_5_0, 0)
+function BpBonusView:onOpen()
+	self:_onUpdatePayStatus()
+	self:_udpateScroll()
+	self:_updateBtn()
+	self:_updateLeftTime()
+	BpController.instance:dispatchEvent(BpEvent.SetGetAllCallBack, self._onClickbtnGetAll, self)
+	TaskDispatcher.runDelay(self.scrollToLevel, self, 0)
 
 	if BpModel.instance.preStatus then
-		TaskDispatcher.runDelay(arg_5_0._playUnLockItemAnim, arg_5_0, 0.5)
+		TaskDispatcher.runDelay(self._playUnLockItemAnim, self, 0.5)
 	end
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	arg_6_0._simagescrollbg:UnLoadImage()
+function BpBonusView:onDestroyView()
+	self._simagescrollbg:UnLoadImage()
 end
 
-function var_0_0.onClose(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.scrollToLevel, arg_7_0)
+function BpBonusView:onClose()
+	TaskDispatcher.cancelTask(self.scrollToLevel, self)
 
-	if arg_7_0._scrollTime then
+	if self._scrollTime then
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_permit_slide)
-		TaskDispatcher.cancelTask(arg_7_0.checkScrollEnd, arg_7_0)
+		TaskDispatcher.cancelTask(self.checkScrollEnd, self)
 
-		arg_7_0._scrollTime = nil
+		self._scrollTime = nil
 	end
 
-	if arg_7_0._dotweenId then
-		ZProj.TweenHelper.KillById(arg_7_0._dotweenId)
+	if self._dotweenId then
+		ZProj.TweenHelper.KillById(self._dotweenId)
 
-		arg_7_0._dotweenId = nil
+		self._dotweenId = nil
 
 		BpController.instance:dispatchEvent(BpEvent.BonusAnimEnd)
 	end
@@ -109,38 +111,38 @@ function var_0_0.onClose(arg_7_0)
 	BpModel.instance.preStatus = nil
 	BpModel.instance.animData = nil
 
-	TaskDispatcher.cancelTask(arg_7_0.animFinish, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._playUnLockItemAnim, arg_7_0)
+	TaskDispatcher.cancelTask(self.animFinish, self)
+	TaskDispatcher.cancelTask(self._playUnLockItemAnim, self)
 	BpController.instance:dispatchEvent(BpEvent.OnRedDotUpdate)
 end
 
-function var_0_0._updateLeftTime(arg_8_0)
-	local var_8_0 = BpModel.instance.endTime - ServerTime.now()
+function BpBonusView:_updateLeftTime()
+	local leftSecond = BpModel.instance.endTime - ServerTime.now()
 
-	if var_8_0 > 0 then
-		local var_8_1 = math.floor(var_8_0 / 86400)
-		local var_8_2 = math.floor(var_8_0 % 86400 / 3600)
+	if leftSecond > 0 then
+		local day = math.floor(leftSecond / 86400)
+		local hour = math.floor(leftSecond % 86400 / 3600)
 
-		if var_8_1 > 0 or var_8_2 > 0 then
-			local var_8_3 = {
-				var_8_1,
-				var_8_2
+		if day > 0 or hour > 0 then
+			local tag = {
+				day,
+				hour
 			}
 
-			arg_8_0._txtLeftTime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("bp_dateLeft"), var_8_3)
+			self._txtLeftTime.text = GameUtil.getSubPlaceholderLuaLang(luaLang("bp_dateLeft"), tag)
 		else
-			arg_8_0._txtLeftTime.text = luaLang("bp_dateLeft_1h")
+			self._txtLeftTime.text = luaLang("bp_dateLeft_1h")
 		end
 	else
-		arg_8_0._txtLeftTime.text = luaLang("bp_dateLeft_timeout")
+		self._txtLeftTime.text = luaLang("bp_dateLeft_timeout")
 	end
 end
 
-function var_0_0._onClickbtnGetAll(arg_9_0)
+function BpBonusView:_onClickbtnGetAll()
 	BpRpc.instance:sendGetBpBonusRequest(0)
 end
 
-function var_0_0._onClickbtnPay(arg_10_0)
+function BpBonusView:_onClickbtnPay()
 	if BpModel.instance:isBpChargeEnd() then
 		GameFacade.showToast(ToastEnum.BPChargeEnd)
 
@@ -150,256 +152,261 @@ function var_0_0._onClickbtnPay(arg_10_0)
 	ViewMgr.instance:openView(ViewName.BpChargeView)
 end
 
-function var_0_0._refreshView(arg_11_0)
-	if not arg_11_0._has_onOpen then
+function BpBonusView:_refreshView()
+	if not self._has_onOpen then
 		return
 	end
 
-	arg_11_0:_udpateScroll()
-	arg_11_0:_updateBtn()
+	self:_udpateScroll()
+	self:_updateBtn()
 end
 
-function var_0_0._onBuyLevel(arg_12_0)
-	arg_12_0:_refreshView()
-	arg_12_0:scrollToLevel()
+function BpBonusView:_onBuyLevel()
+	self:_refreshView()
+	self:scrollToLevel()
 end
 
-function var_0_0._onTaskUpdate(arg_13_0)
-	arg_13_0:_udpateScroll()
+function BpBonusView:_onTaskUpdate()
+	self:_udpateScroll()
 end
 
-function var_0_0._playUnLockItemAnim(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._playUnLockItemAnim, arg_14_0)
+function BpBonusView:_playUnLockItemAnim()
+	TaskDispatcher.cancelTask(self._playUnLockItemAnim, self)
 
 	if not BpModel.instance.preStatus then
 		return
 	end
 
-	if not arg_14_0._has_onOpen then
+	if not self._has_onOpen then
 		return
 	end
 
-	if arg_14_0._dotweenId then
-		ZProj.TweenHelper.KillById(arg_14_0._dotweenId, false)
+	if self._dotweenId then
+		ZProj.TweenHelper.KillById(self._dotweenId, false)
 
-		arg_14_0._dotweenId = nil
+		self._dotweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_14_0.animFinish, arg_14_0)
+	TaskDispatcher.cancelTask(self.animFinish, self)
 
-	local var_14_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
-	local var_14_1 = math.floor(BpModel.instance.preStatus.score / var_14_0)
-	local var_14_2 = math.floor(BpModel.instance.score / var_14_0)
-	local var_14_3 = var_14_1
-	local var_14_4 = var_14_2 - var_14_1
+	local levelScore = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local preLv = math.floor(BpModel.instance.preStatus.score / levelScore)
+	local nowLv = math.floor(BpModel.instance.score / levelScore)
+	local prePayLv = preLv
+	local tweenNum = nowLv - preLv
 
 	if BpModel.instance.preStatus.payStatus == BpEnum.PayStatus.NotPay and BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay then
-		var_14_3 = 1
-		var_14_4 = var_14_2 - var_14_3
+		prePayLv = 1
+		tweenNum = nowLv - prePayLv
 	end
 
 	BpModel.instance.animData = {
 		toScrollX = 0,
 		preScrollX = 0,
-		fromLv = var_14_1,
-		toLv = var_14_2,
-		fromPayLv = var_14_3
+		fromLv = preLv,
+		toLv = nowLv,
+		fromPayLv = prePayLv
 	}
 
-	if var_14_4 > BpEnum.BonusTweenMin then
-		local var_14_5 = (var_14_3 - 4) * (arg_14_0._cellWidth + arg_14_0._cellSpaceH)
-		local var_14_6 = var_14_5 + var_14_4 * (arg_14_0._cellWidth + arg_14_0._cellSpaceH)
-		local var_14_7 = #BpConfig.instance:getBonusCOList(BpModel.instance.id) * (arg_14_0._cellWidth + arg_14_0._cellSpaceH) - arg_14_0._scrollWidth
+	if tweenNum > BpEnum.BonusTweenMin then
+		local fromScrollX = (prePayLv - 4) * (self._cellWidth + self._cellSpaceH)
+		local toScrollX = fromScrollX + tweenNum * (self._cellWidth + self._cellSpaceH)
+		local maxScrollX = #BpConfig.instance:getBonusCOList(BpModel.instance.id) * (self._cellWidth + self._cellSpaceH) - self._scrollWidth
 
-		BpModel.instance.animData.preScrollX = var_14_5
-		BpModel.instance.animData.toScrollX = math.min(var_14_7, var_14_6)
-		arg_14_0._dotweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, BpEnum.BonusTweenTime, arg_14_0.everyFrame, arg_14_0.animFinish, arg_14_0, nil, EaseType.OutQuart)
+		BpModel.instance.animData.preScrollX = fromScrollX
+		BpModel.instance.animData.toScrollX = math.min(maxScrollX, toScrollX)
+		self._dotweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, BpEnum.BonusTweenTime, self.everyFrame, self.animFinish, self, nil, EaseType.OutQuart)
 	else
 		BpModel.instance.animProcess = 0
 
-		for iter_14_0 in pairs(arg_14_0._scrollView._cellCompDict) do
-			local var_14_8 = iter_14_0._index
+		for bonusItem in pairs(self._scrollView._cellCompDict) do
+			local index = bonusItem._index
 
-			iter_14_0:playUnLockAnim(var_14_1 < var_14_8 and var_14_8 <= var_14_2, BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay and var_14_3 < var_14_8 and var_14_8 <= var_14_2)
+			bonusItem:playUnLockAnim(preLv < index and index <= nowLv, BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay and prePayLv < index and index <= nowLv)
 		end
 
-		TaskDispatcher.runDelay(arg_14_0.animFinish, arg_14_0, BpEnum.BonusTweenTime)
+		TaskDispatcher.runDelay(self.animFinish, self, BpEnum.BonusTweenTime)
 	end
 end
 
-function var_0_0.everyFrame(arg_15_0, arg_15_1)
-	local var_15_0 = BpModel.instance.animData
+function BpBonusView:everyFrame(value)
+	local data = BpModel.instance.animData
 
-	BpModel.instance.animProcess = arg_15_1
+	BpModel.instance.animProcess = value
 
-	local var_15_1 = arg_15_0._scrollView:getCsListScroll()
+	local csListView = self._scrollView:getCsListScroll()
 
-	var_15_1.HorizontalScrollPixel = Mathf.Lerp(var_15_0.preScrollX, var_15_0.toScrollX, arg_15_1)
+	csListView.HorizontalScrollPixel = Mathf.Lerp(data.preScrollX, data.toScrollX, value)
 
-	var_15_1:UpdateCells(false)
+	csListView:UpdateCells(false)
 end
 
-function var_0_0.animFinish(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.animFinish, arg_16_0)
+function BpBonusView:animFinish()
+	TaskDispatcher.cancelTask(self.animFinish, self)
 
 	BpModel.instance.preStatus = nil
 	BpModel.instance.animData = nil
 
-	for iter_16_0 in pairs(arg_16_0._scrollView._cellCompDict) do
-		iter_16_0:endUnLockAnim()
+	for bonusItem in pairs(self._scrollView._cellCompDict) do
+		bonusItem:endUnLockAnim()
 	end
 
 	BpController.instance:dispatchEvent(BpEvent.BonusAnimEnd)
 end
 
-function var_0_0._onUpdatePayStatus(arg_17_0)
-	arg_17_0:_refreshView()
-	arg_17_0:_updatePayAnim(1)
+function BpBonusView:_onUpdatePayStatus()
+	self:_refreshView()
+	self:_updatePayAnim(1)
 end
 
-function var_0_0._updatePayAnim(arg_18_0, arg_18_1)
-	if arg_18_1 == 1 then
+function BpBonusView:_updatePayAnim(index)
+	if index == 1 then
 		if BpModel.instance.payStatus == BpEnum.PayStatus.NotPay then
-			arg_18_0._payAnim:Play(UIAnimationName.Idle)
+			self._payAnim:Play(UIAnimationName.Idle)
 		else
-			arg_18_0._payAnim:Play(UIAnimationName.Loop)
+			self._payAnim:Play(UIAnimationName.Loop)
 		end
 	end
 end
 
-function var_0_0._udpateScroll(arg_19_0)
+function BpBonusView:_udpateScroll()
 	BpBonusModel.instance:refreshListView()
 
-	if arg_19_0._keyBonusItem and arg_19_0._keyBonusItem.mo then
-		arg_19_0._keyBonusItem:onUpdateMO(arg_19_0._keyBonusItem.mo)
+	if self._keyBonusItem and self._keyBonusItem.mo then
+		self._keyBonusItem:onUpdateMO(self._keyBonusItem.mo)
 	end
 end
 
-function var_0_0.scrollToLevel(arg_20_0, arg_20_1)
-	TaskDispatcher.cancelTask(arg_20_0.scrollToLevel, arg_20_0)
+function BpBonusView:scrollToLevel(level)
+	TaskDispatcher.cancelTask(self.scrollToLevel, self)
 
-	local var_20_0
-	local var_20_1 = BpConfig.instance:getLevelScore(BpModel.instance.id)
-	local var_20_2 = math.floor(BpModel.instance.score / var_20_1)
-	local var_20_3 = (arg_20_1 or var_20_2) - 3
-	local var_20_4 = math.max(var_20_3, 1)
-	local var_20_5 = arg_20_0._scrollView:getCsListScroll()
-	local var_20_6 = (arg_20_0._cellWidth + arg_20_0._cellSpaceH) * (var_20_4 - 1)
-	local var_20_7 = #BpConfig.instance:getBonusCOList(BpModel.instance.id) * (arg_20_0._cellWidth + arg_20_0._cellSpaceH)
+	local selectLevel
+	local levelScore = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local curLevel = math.floor(BpModel.instance.score / levelScore)
 
-	recthelper.setWidth(arg_20_0._lineTr, var_20_7)
-	arg_20_0._lineTr:SetAsLastSibling()
+	selectLevel = level or curLevel
+	selectLevel = selectLevel - 3
+	selectLevel = math.max(selectLevel, 1)
 
-	var_20_5.HorizontalScrollPixel = var_20_6
+	local csListView = self._scrollView:getCsListScroll()
+	local scrollPixel = (self._cellWidth + self._cellSpaceH) * (selectLevel - 1)
+	local totalWidth = #BpConfig.instance:getBonusCOList(BpModel.instance.id) * (self._cellWidth + self._cellSpaceH)
 
-	var_20_5:UpdateCells(false)
-	arg_20_0:initKeyBonusKey(var_20_6)
+	recthelper.setWidth(self._lineTr, totalWidth)
+	self._lineTr:SetAsLastSibling()
+
+	csListView.HorizontalScrollPixel = scrollPixel
+
+	csListView:UpdateCells(false)
+	self:initKeyBonusKey(scrollPixel)
 end
 
-function var_0_0._onScrollRectValueChanged(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0._scrollView:getCsListScroll()
-	local var_21_1 = var_21_0.HorizontalScrollPixel
+function BpBonusView:_onScrollRectValueChanged(scrollX, scrollY)
+	local csListView = self._scrollView:getCsListScroll()
+	local scrollPixel = csListView.HorizontalScrollPixel
 
-	arg_21_0:initKeyBonusKey(var_21_1)
+	self:initKeyBonusKey(scrollPixel)
 
-	local var_21_2 = var_21_0.FirstVisualCellIndex
+	local cellIndex = csListView.FirstVisualCellIndex
 
-	if not arg_21_0.nowFirstCellIndex then
-		arg_21_0.nowFirstCellIndex = var_21_2
-	elseif var_21_2 ~= arg_21_0.nowFirstCellIndex then
-		arg_21_0.nowFirstCellIndex = var_21_2
+	if not self.nowFirstCellIndex then
+		self.nowFirstCellIndex = cellIndex
+	elseif cellIndex ~= self.nowFirstCellIndex then
+		self.nowFirstCellIndex = cellIndex
 
-		if not arg_21_0._scrollTime then
-			arg_21_0._scrollTime = 0
-			arg_21_0._scrollX = arg_21_1
+		if not self._scrollTime then
+			self._scrollTime = 0
+			self._scrollX = scrollX
 
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_permit_slide)
-			TaskDispatcher.runRepeat(arg_21_0.checkScrollEnd, arg_21_0, 0)
+			TaskDispatcher.runRepeat(self.checkScrollEnd, self, 0)
 		end
 	end
 
-	if arg_21_0._scrollTime and math.abs(arg_21_0._scrollX - arg_21_1) > 0.05 then
-		arg_21_0._scrollTime = 0
-		arg_21_0._scrollX = arg_21_1
+	if self._scrollTime and math.abs(self._scrollX - scrollX) > 0.05 then
+		self._scrollTime = 0
+		self._scrollX = scrollX
 	end
 end
 
-function var_0_0.checkScrollEnd(arg_22_0)
-	arg_22_0._scrollTime = arg_22_0._scrollTime + UnityEngine.Time.deltaTime
+function BpBonusView:checkScrollEnd()
+	self._scrollTime = self._scrollTime + UnityEngine.Time.deltaTime
 
-	if arg_22_0._scrollTime > 0.05 then
-		arg_22_0._scrollTime = nil
+	if self._scrollTime > 0.05 then
+		self._scrollTime = nil
 
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_permit_slide)
-		TaskDispatcher.cancelTask(arg_22_0.checkScrollEnd, arg_22_0)
+		TaskDispatcher.cancelTask(self.checkScrollEnd, self)
 	end
 end
 
-function var_0_0.initKeyBonusKey(arg_23_0, arg_23_1)
-	if not arg_23_0._keyBonusLvs then
-		arg_23_0._keyBonusLvs = {}
+function BpBonusView:initKeyBonusKey(scrollPixel)
+	if not self._keyBonusLvs then
+		self._keyBonusLvs = {}
 
-		local var_23_0 = BpConfig.instance:getBonusCOList(BpModel.instance.id)
+		local bonusCOList = BpConfig.instance:getBonusCOList(BpModel.instance.id)
 
-		for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-			if iter_23_1.keyBonus == 1 then
-				table.insert(arg_23_0._keyBonusLvs, iter_23_1.level)
+		for _, co in ipairs(bonusCOList) do
+			if co.keyBonus == 1 then
+				table.insert(self._keyBonusLvs, co.level)
 			end
 		end
 	end
 
-	local var_23_1 = arg_23_0._keyBonusLvs[#arg_23_0._keyBonusLvs]
+	local showKeyLv = self._keyBonusLvs[#self._keyBonusLvs]
 
-	for iter_23_2, iter_23_3 in ipairs(arg_23_0._keyBonusLvs) do
-		if arg_23_1 < (arg_23_0._cellWidth + arg_23_0._cellSpaceH) * iter_23_3 - arg_23_0._cellSpaceH - arg_23_0._scrollWidth then
-			var_23_1 = iter_23_3
+	for _, level in ipairs(self._keyBonusLvs) do
+		local keyBonusPixel = (self._cellWidth + self._cellSpaceH) * level - self._cellSpaceH
+
+		if scrollPixel < keyBonusPixel - self._scrollWidth then
+			showKeyLv = level
 
 			break
 		end
 	end
 
-	local var_23_2 = BpBonusModel.instance:getById(var_23_1)
+	local keyMO = BpBonusModel.instance:getById(showKeyLv)
 
-	if not var_23_2 then
+	if not keyMO then
 		return
 	end
 
-	arg_23_0._keyBonusItem:onUpdateMO(var_23_2)
+	self._keyBonusItem:onUpdateMO(keyMO)
 end
 
-function var_0_0._updateBtn(arg_24_0)
-	local var_24_0 = arg_24_0:_canGetAnyBonus()
+function BpBonusView:_updateBtn()
+	local canGetAllBonus = self:_canGetAnyBonus()
 
-	BpController.instance:dispatchEvent(BpEvent.SetGetAllEnable, var_24_0)
-	gohelper.setActive(arg_24_0._gomask, BpModel.instance.payStatus == BpEnum.PayStatus.NotPay)
+	BpController.instance:dispatchEvent(BpEvent.SetGetAllEnable, canGetAllBonus)
+	gohelper.setActive(self._gomask, BpModel.instance.payStatus == BpEnum.PayStatus.NotPay)
 end
 
-function var_0_0._canGetAnyBonus(arg_25_0)
-	local var_25_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
-	local var_25_1 = math.floor(BpModel.instance.score / var_25_0)
-	local var_25_2 = 0
+function BpBonusView:_canGetAnyBonus()
+	local levelScore = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local level = math.floor(BpModel.instance.score / levelScore)
+	local num = 0
 
-	for iter_25_0, iter_25_1 in ipairs(BpBonusModel.instance:getList()) do
-		if var_25_1 >= iter_25_1.level then
-			local var_25_3 = BpConfig.instance:getBonusCO(BpModel.instance.id, iter_25_1.level)
-			local var_25_4 = string.split(var_25_3.freeBonus, "|")
-			local var_25_5 = string.split(var_25_3.payBonus, "|")
+	for _, mo in ipairs(BpBonusModel.instance:getList()) do
+		if level >= mo.level then
+			local levelCO = BpConfig.instance:getBonusCO(BpModel.instance.id, mo.level)
+			local freeBonusSp = string.split(levelCO.freeBonus, "|")
+			local payBonusSp = string.split(levelCO.payBonus, "|")
 
-			if not iter_25_1.hasGetfreeBonus then
-				var_25_2 = var_25_2 + #var_25_4
+			if not mo.hasGetfreeBonus then
+				num = num + #freeBonusSp
 			end
 
-			if BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay and not iter_25_1.hasGetPayBonus then
-				var_25_2 = var_25_2 + #var_25_5
+			if BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay and not mo.hasGetPayBonus then
+				num = num + #payBonusSp
 			end
 
-			if var_25_2 >= 1 then
+			if num >= 1 then
 				return true
 			end
 		end
 	end
 
-	return var_25_2 >= 1
+	return num >= 1
 end
 
-return var_0_0
+return BpBonusView

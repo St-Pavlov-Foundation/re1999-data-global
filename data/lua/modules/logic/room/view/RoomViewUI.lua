@@ -1,183 +1,188 @@
-﻿module("modules.logic.room.view.RoomViewUI", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewUI.lua
 
-local var_0_0 = class("RoomViewUI", BaseView)
+module("modules.logic.room.view.RoomViewUI", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomViewUI = class("RoomViewUI", BaseView)
+
+function RoomViewUI:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewUI:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewUI:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._cameraStateShowUIMap = {
+function RoomViewUI:_editableInitView()
+	self._cameraStateShowUIMap = {
 		[RoomEnum.CameraState.Overlook] = true,
 		[RoomEnum.CameraState.OverlookAll] = true
 	}
-	arg_4_0._showBuildingItemTypeMap = {
+	self._showBuildingItemTypeMap = {
 		[RoomBuildingEnum.BuildingType.Interact] = true
 	}
-	arg_4_0._gopart = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/go_ui/go_part")
-	arg_4_0._canvasGroup = gohelper.onceAddComponent(arg_4_0._gopart, typeof(UnityEngine.CanvasGroup))
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_4_0._manufactureItemDict = {}
+	self._gopart = gohelper.findChild(self.viewGO, "go_normalroot/go_ui/go_part")
+	self._canvasGroup = gohelper.onceAddComponent(self._gopart, typeof(UnityEngine.CanvasGroup))
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._manufactureItemDict = {}
 end
 
-function var_0_0.onClickBellTower(arg_5_0)
-	local var_5_0 = arg_5_0._partItemDict[1]
+function RoomViewUI:onClickBellTower()
+	local item = self._partItemDict[1]
 
-	if not RoomController.instance:isObMode() or not var_5_0 or not var_5_0._isShow then
+	if not RoomController.instance:isObMode() or not item or not item._isShow then
 		return
 	end
 
-	var_5_0:_onClick()
+	item:_onClick()
 end
 
-function var_0_0.onClickMarket(arg_6_0)
-	local var_6_0 = arg_6_0._partItemDict[2]
+function RoomViewUI:onClickMarket()
+	local item = self._partItemDict[2]
 
-	if not RoomController.instance:isObMode() or not var_6_0 or not var_6_0._isShow then
+	if not RoomController.instance:isObMode() or not item or not item._isShow then
 		return
 	end
 
-	var_6_0:_onClick()
+	item:_onClick()
 end
 
-function var_0_0._onUseBuildingReply(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._onDelayInit, arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._onDelayInit, arg_7_0, 0.1)
+function RoomViewUI:_onUseBuildingReply()
+	TaskDispatcher.cancelTask(self._onDelayInit, self)
+	TaskDispatcher.runDelay(self._onDelayInit, self, 0.1)
 end
 
-function var_0_0._cameraStateUpdate(arg_8_0)
-	local var_8_0 = arg_8_0._scene.camera:getCameraState()
-	local var_8_1 = arg_8_0._cameraStateShowUIMap[var_8_0] and 1 or 0
+function RoomViewUI:_cameraStateUpdate()
+	local cameraState = self._scene.camera:getCameraState()
+	local alpha = self._cameraStateShowUIMap[cameraState] and 1 or 0
 
-	arg_8_0._canvasGroup.alpha = var_8_1
+	self._canvasGroup.alpha = alpha
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, arg_9_0.onClickBellTower, arg_9_0)
-	arg_9_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, arg_9_0.onClickMarket, arg_9_0)
-	arg_9_0:addEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, arg_9_0._onUseBuildingReply, arg_9_0)
-	arg_9_0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, arg_9_0._cameraStateUpdate, arg_9_0)
-	arg_9_0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, arg_9_0._refreshCharacterItem, arg_9_0)
-	arg_9_0:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, arg_9_0._refreshCharacterInteractionItem, arg_9_0)
-	arg_9_0:addEventCb(RoomMapController.instance, RoomEvent.SceneTrainChangeSpine, arg_9_0._refreshCritterItem, arg_9_0)
-	arg_9_0:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, arg_9_0._refreshCritterItem, arg_9_0)
-	arg_9_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_9_0._refreshCritterItem, arg_9_0)
-	arg_9_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_9_0._refreshCritterItem, arg_9_0)
-	arg_9_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_9_0._refreshCritterItem, arg_9_0)
-	TaskDispatcher.runDelay(arg_9_0._onDelayInit, arg_9_0, 0.1)
-	TaskDispatcher.runRepeat(arg_9_0._sort, arg_9_0, 1)
+function RoomViewUI:onOpen()
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, self.onClickBellTower, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, self.onClickMarket, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, self._onUseBuildingReply, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, self._cameraStateUpdate, self)
+	self:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, self._refreshCharacterItem, self)
+	self:addEventCb(RoomCharacterController.instance, RoomEvent.CharacterEntityChanged, self._refreshCharacterInteractionItem, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.SceneTrainChangeSpine, self._refreshCritterItem, self)
+	self:addEventCb(CritterController.instance, CritterEvent.TrainSelectEventOptionReply, self._refreshCritterItem, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._refreshCritterItem, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._refreshCritterItem, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, self._refreshCritterItem, self)
+	TaskDispatcher.runDelay(self._onDelayInit, self, 0.1)
+	TaskDispatcher.runRepeat(self._sort, self, 1)
 end
 
-function var_0_0._onDelayInit(arg_10_0)
-	arg_10_0._isRunDalayInit = true
+function RoomViewUI:_onDelayInit()
+	self._isRunDalayInit = true
 
-	arg_10_0:_initPartItem()
-	arg_10_0:_initInitItem()
-	arg_10_0:_initCharacterItem()
-	arg_10_0:_initCharacterInteractionItem()
-	arg_10_0:_initFishingItem()
-	arg_10_0:refresh()
+	self:_initPartItem()
+	self:_initInitItem()
+	self:_initCharacterItem()
+	self:_initCharacterInteractionItem()
+	self:_initFishingItem()
+	self:refresh()
 end
 
-function var_0_0._initPartItem(arg_11_0)
-	local var_11_0 = arg_11_0.viewContainer._viewSetting.otherRes[10]
+function RoomViewUI:_initPartItem()
+	local resPath = self.viewContainer._viewSetting.otherRes[10]
 
-	arg_11_0._partItemDict = {}
+	self._partItemDict = {}
 
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(lua_production_part.configList) do
-		local var_11_1 = iter_11_1.id
+	for i, partConfig in ipairs(lua_production_part.configList) do
+		local partId = partConfig.id
+		local partItem = self._partItemDict[partId]
 
-		if not arg_11_0._partItemDict[var_11_1] then
-			local var_11_2 = arg_11_0:getResInst(var_11_0, arg_11_0._gopart, "partId" .. var_11_1)
-			local var_11_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_2, RoomViewUIPartItem, var_11_1)
+		if not partItem then
+			local go = self:getResInst(resPath, self._gopart, "partId" .. partId)
 
-			arg_11_0._partItemDict[var_11_1] = var_11_3
+			partItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUIPartItem, partId)
+			self._partItemDict[partId] = partItem
 		end
 	end
 end
 
-function var_0_0._initInitItem(arg_12_0)
-	local var_12_0 = arg_12_0.viewContainer._viewSetting.otherRes[10]
+function RoomViewUI:_initInitItem()
+	local resPath = self.viewContainer._viewSetting.otherRes[10]
 
-	arg_12_0._initItem = nil
+	self._initItem = nil
 
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	if not arg_12_0._initItem then
-		local var_12_1 = arg_12_0:getResInst(var_12_0, arg_12_0._gopart, "init")
+	if not self._initItem then
+		local go = self:getResInst(resPath, self._gopart, "init")
 
-		arg_12_0._initItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1, RoomViewUIInitItem)
+		self._initItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUIInitItem)
 	end
 end
 
-function var_0_0._initCharacterItem(arg_13_0)
-	arg_13_0._gocharacterui = gohelper.findChild(arg_13_0.viewGO, "go_normalroot/go_ui/go_part/go_characterui")
+function RoomViewUI:_initCharacterItem()
+	self._gocharacterui = gohelper.findChild(self.viewGO, "go_normalroot/go_ui/go_part/go_characterui")
 
-	gohelper.setActive(arg_13_0._gocharacterui, false)
+	gohelper.setActive(self._gocharacterui, false)
 
-	arg_13_0._characterItemDict = {}
+	self._characterItemDict = {}
 end
 
-function var_0_0._initCharacterInteractionItem(arg_14_0)
-	arg_14_0._gocharacterinteractionui = gohelper.findChild(arg_14_0.viewGO, "go_normalroot/go_ui/go_part/go_characterinteractionui")
+function RoomViewUI:_initCharacterInteractionItem()
+	self._gocharacterinteractionui = gohelper.findChild(self.viewGO, "go_normalroot/go_ui/go_part/go_characterinteractionui")
 
-	gohelper.setActive(arg_14_0._gocharacterinteractionui, false)
+	gohelper.setActive(self._gocharacterinteractionui, false)
 
-	arg_14_0._characterInteractionItemDict = {}
+	self._characterInteractionItemDict = {}
 end
 
-function var_0_0._initFishingItem(arg_15_0)
-	if not FishingModel.instance:isInFishing() then
-		if arg_15_0._fishingItem then
-			arg_15_0._fishingItem:removeEventListeners()
-			gohelper.destroy(arg_15_0._fishingItem.go)
+function RoomViewUI:_initFishingItem()
+	local isInFishing = FishingModel.instance:isInFishing()
+
+	if not isInFishing then
+		if self._fishingItem then
+			self._fishingItem:removeEventListeners()
+			gohelper.destroy(self._fishingItem.go)
 		end
 
 		return
 	end
 
-	if arg_15_0._fishingItem then
-		arg_15_0._fishingItem:refreshUI()
+	if self._fishingItem then
+		self._fishingItem:refreshUI()
 	else
-		local var_15_0 = RoomViewUIFishingItem.prefabPath
-		local var_15_1 = arg_15_0:getResInst(var_15_0, arg_15_0._gopart, "fishing")
+		local resPath = RoomViewUIFishingItem.prefabPath
+		local go = self:getResInst(resPath, self._gopart, "fishing")
 
-		arg_15_0._fishingItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1, RoomViewUIFishingItem)
+		self._fishingItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUIFishingItem)
 	end
 end
 
-function var_0_0.refresh(arg_16_0)
-	arg_16_0:_refreshCharacterItem()
-	arg_16_0:_refreshCharacterInteractionItem()
-	arg_16_0:_refreshManufactureItem()
-	arg_16_0:_refreshTransportSiteItem()
-	arg_16_0:_refreshCritterBuildingItem()
-	arg_16_0:_refreshTradeBuildingItem()
-	arg_16_0:_refreshCritterItem()
-	arg_16_0:_refreshBuildingItem()
-	arg_16_0:_refreshFishingFriendItem()
-	arg_16_0:_refreshFishingStoreItem()
-	arg_16_0:_sort()
+function RoomViewUI:refresh()
+	self:_refreshCharacterItem()
+	self:_refreshCharacterInteractionItem()
+	self:_refreshManufactureItem()
+	self:_refreshTransportSiteItem()
+	self:_refreshCritterBuildingItem()
+	self:_refreshTradeBuildingItem()
+	self:_refreshCritterItem()
+	self:_refreshBuildingItem()
+	self:_refreshFishingFriendItem()
+	self:_refreshFishingStoreItem()
+	self:_sort()
 end
 
-function var_0_0._refreshCharacterItem(arg_17_0)
-	if not arg_17_0._isRunDalayInit then
+function RoomViewUI:_refreshCharacterItem()
+	if not self._isRunDalayInit then
 		return
 	end
 
@@ -185,30 +190,32 @@ function var_0_0._refreshCharacterItem(arg_17_0)
 		return
 	end
 
-	local var_17_0 = arg_17_0.viewContainer._viewSetting.otherRes[9]
-	local var_17_1 = arg_17_0._scene.charactermgr:getRoomCharacterEntityDict()
+	local resPath = self.viewContainer._viewSetting.otherRes[9]
+	local characterEntityDict = self._scene.charactermgr:getRoomCharacterEntityDict()
 
-	for iter_17_0, iter_17_1 in pairs(var_17_1) do
-		if not arg_17_0._characterItemDict[iter_17_0] then
-			local var_17_2 = arg_17_0:getResInst(var_17_0, arg_17_0._gopart, "heroId" .. iter_17_0)
-			local var_17_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_2, RoomViewUICharacterItem, iter_17_0)
+	for heroId, characterEntity in pairs(characterEntityDict) do
+		local characterItem = self._characterItemDict[heroId]
 
-			arg_17_0._characterItemDict[iter_17_0] = var_17_3
+		if not characterItem then
+			local go = self:getResInst(resPath, self._gopart, "heroId" .. heroId)
+
+			characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUICharacterItem, heroId)
+			self._characterItemDict[heroId] = characterItem
 		end
 	end
 
-	for iter_17_2, iter_17_3 in pairs(arg_17_0._characterItemDict) do
-		if not var_17_1[iter_17_2] then
-			iter_17_3:removeEventListeners()
-			gohelper.destroy(iter_17_3.go)
+	for heroId, characterItem in pairs(self._characterItemDict) do
+		if not characterEntityDict[heroId] then
+			characterItem:removeEventListeners()
+			gohelper.destroy(characterItem.go)
 
-			arg_17_0._characterItemDict[iter_17_2] = nil
+			self._characterItemDict[heroId] = nil
 		end
 	end
 end
 
-function var_0_0._refreshCharacterInteractionItem(arg_18_0)
-	if not arg_18_0._isRunDalayInit then
+function RoomViewUI:_refreshCharacterInteractionItem()
+	if not self._isRunDalayInit then
 		return
 	end
 
@@ -216,337 +223,352 @@ function var_0_0._refreshCharacterInteractionItem(arg_18_0)
 		return
 	end
 
-	local var_18_0 = arg_18_0.viewContainer._viewSetting.otherRes[8]
-	local var_18_1 = arg_18_0._scene.charactermgr:getRoomCharacterEntityDict()
+	local resPath = self.viewContainer._viewSetting.otherRes[8]
+	local characterEntityDict = self._scene.charactermgr:getRoomCharacterEntityDict()
 
-	for iter_18_0, iter_18_1 in pairs(var_18_1) do
-		if not arg_18_0._characterInteractionItemDict[iter_18_0] then
-			local var_18_2 = arg_18_0:getResInst(var_18_0, arg_18_0._gopart, "interaction" .. iter_18_0)
-			local var_18_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_2, RoomViewUICharacterInteractionItem, iter_18_0)
+	for heroId, characterEntity in pairs(characterEntityDict) do
+		local characterInteractionItem = self._characterInteractionItemDict[heroId]
 
-			arg_18_0._characterInteractionItemDict[iter_18_0] = var_18_3
+		if not characterInteractionItem then
+			local go = self:getResInst(resPath, self._gopart, "interaction" .. heroId)
+
+			characterInteractionItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUICharacterInteractionItem, heroId)
+			self._characterInteractionItemDict[heroId] = characterInteractionItem
 		end
 	end
 
-	for iter_18_2, iter_18_3 in pairs(arg_18_0._characterInteractionItemDict) do
-		if not var_18_1[iter_18_2] then
-			iter_18_3:removeEventListeners()
-			gohelper.destroy(iter_18_3.go)
+	for heroId, characterInteractionItem in pairs(self._characterInteractionItemDict) do
+		if not characterEntityDict[heroId] then
+			characterInteractionItem:removeEventListeners()
+			gohelper.destroy(characterInteractionItem.go)
 
-			arg_18_0._characterInteractionItemDict[iter_18_2] = nil
-		end
-	end
-end
-
-function var_0_0._refreshManufactureItem(arg_19_0)
-	if not RoomController.instance:isObMode() or not arg_19_0._isRunDalayInit then
-		return
-	end
-
-	local var_19_0 = RoomMapBuildingAreaModel.instance:getBuildingType2AreaMODict()
-	local var_19_1 = arg_19_0.viewContainer._viewSetting.otherRes[11]
-
-	for iter_19_0, iter_19_1 in pairs(var_19_0) do
-		if not arg_19_0._manufactureItemDict[iter_19_0] then
-			local var_19_2 = arg_19_0:getResInst(var_19_1, arg_19_0._gopart, "manufacture" .. iter_19_0)
-			local var_19_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_19_2, RoomViewUIManufactureItem, iter_19_0)
-
-			arg_19_0._manufactureItemDict[iter_19_0] = var_19_3
-		end
-	end
-
-	for iter_19_2, iter_19_3 in pairs(arg_19_0._manufactureItemDict) do
-		if not var_19_0[iter_19_2] then
-			iter_19_3:removeEventListeners()
-			gohelper.destroy(iter_19_3.go)
-
-			arg_19_0._manufactureItemDict[iter_19_2] = nil
+			self._characterInteractionItemDict[heroId] = nil
 		end
 	end
 end
 
-function var_0_0._refreshTransportSiteItem(arg_20_0)
-	if not RoomController.instance:isObMode() or not arg_20_0._isRunDalayInit then
+function RoomViewUI:_refreshManufactureItem()
+	if not RoomController.instance:isObMode() or not self._isRunDalayInit then
 		return
 	end
 
-	arg_20_0._transportSiteItemDict = arg_20_0._transportSiteItemDict or {}
+	local buildingAreaDict = RoomMapBuildingAreaModel.instance:getBuildingType2AreaMODict()
+	local resPath = self.viewContainer._viewSetting.otherRes[11]
 
-	local var_20_0 = RoomViewUITransportSiteItem.prefabPath
-	local var_20_1 = RoomTransportHelper.getSiteBuildingTypeList()
+	for manufactureType, _ in pairs(buildingAreaDict) do
+		local manufactureItem = self._manufactureItemDict[manufactureType]
 
-	for iter_20_0 = 1, #var_20_1 do
-		local var_20_2 = var_20_1[iter_20_0]
-		local var_20_3 = RoomMapTransportPathModel.instance:getSiteHexPointByType(var_20_2)
-		local var_20_4 = arg_20_0._transportSiteItemDict[var_20_2]
+		if not manufactureItem then
+			local go = self:getResInst(resPath, self._gopart, "manufacture" .. manufactureType)
 
-		if var_20_3 then
-			if not var_20_4 then
-				local var_20_5 = arg_20_0:getResInst(var_20_0, arg_20_0._gopart, "site_" .. var_20_2)
+			manufactureItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUIManufactureItem, manufactureType)
+			self._manufactureItemDict[manufactureType] = manufactureItem
+		end
+	end
 
-				var_20_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_5, RoomViewUITransportSiteItem, var_20_2)
-				arg_20_0._transportSiteItemDict[var_20_2] = var_20_4
+	for manufactureType, manufactureItem in pairs(self._manufactureItemDict) do
+		if not buildingAreaDict[manufactureType] then
+			manufactureItem:removeEventListeners()
+			gohelper.destroy(manufactureItem.go)
+
+			self._manufactureItemDict[manufactureType] = nil
+		end
+	end
+end
+
+function RoomViewUI:_refreshTransportSiteItem()
+	if not RoomController.instance:isObMode() or not self._isRunDalayInit then
+		return
+	end
+
+	self._transportSiteItemDict = self._transportSiteItemDict or {}
+
+	local resPath = RoomViewUITransportSiteItem.prefabPath
+	local buildingTypeList = RoomTransportHelper.getSiteBuildingTypeList()
+
+	for i = 1, #buildingTypeList do
+		local siteType = buildingTypeList[i]
+		local hexPoint = RoomMapTransportPathModel.instance:getSiteHexPointByType(siteType)
+		local siteItem = self._transportSiteItemDict[siteType]
+
+		if hexPoint then
+			if not siteItem then
+				local go = self:getResInst(resPath, self._gopart, "site_" .. siteType)
+
+				siteItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUITransportSiteItem, siteType)
+				self._transportSiteItemDict[siteType] = siteItem
 			end
-		elseif var_20_4 then
-			var_20_4:removeEventListeners()
-			gohelper.destroy(var_20_4.go)
+		elseif siteItem then
+			siteItem:removeEventListeners()
+			gohelper.destroy(siteItem.go)
 
-			arg_20_0._transportSiteItemDict[var_20_2] = nil
+			self._transportSiteItemDict[siteType] = nil
 		end
 	end
 end
 
-function var_0_0._refreshCritterBuildingItem(arg_21_0)
-	if not RoomController.instance:isObMode() or not arg_21_0._isRunDalayInit then
+function RoomViewUI:_refreshCritterBuildingItem()
+	if not RoomController.instance:isObMode() or not self._isRunDalayInit then
 		return
 	end
 
-	local var_21_0
-	local var_21_1 = ManufactureModel.instance:getCritterBuildingListInOrder()
+	local buildingUid
+	local buildingList = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if var_21_1 then
-		var_21_0 = var_21_1[1].buildingUid
+	if buildingList then
+		buildingUid = buildingList[1].buildingUid
 	end
 
-	if arg_21_0._scene.buildingmgr:getBuildingEntity(var_21_0, SceneTag.RoomBuilding) then
-		if not arg_21_0._critterBuildingItem then
-			local var_21_2 = arg_21_0.viewContainer._viewSetting.otherRes[12]
-			local var_21_3 = arg_21_0:getResInst(var_21_2, arg_21_0._gopart, "critterBuilding")
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-			arg_21_0._critterBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_3, RoomViewUICritterBuildingItem)
+	if buildingEntity then
+		if not self._critterBuildingItem then
+			local resPath = self.viewContainer._viewSetting.otherRes[12]
+			local go = self:getResInst(resPath, self._gopart, "critterBuilding")
+
+			self._critterBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUICritterBuildingItem)
 		end
-	elseif arg_21_0._critterBuildingItem then
-		arg_21_0._critterBuildingItem:removeEventListeners()
-		gohelper.destroy(arg_21_0._critterBuildingItem.go)
+	elseif self._critterBuildingItem then
+		self._critterBuildingItem:removeEventListeners()
+		gohelper.destroy(self._critterBuildingItem.go)
 
-		arg_21_0._critterBuildingItem = nil
+		self._critterBuildingItem = nil
 	end
 end
 
-function var_0_0._refreshTradeBuildingItem(arg_22_0)
-	if not RoomController.instance:isObMode() or not arg_22_0._isRunDalayInit then
+function RoomViewUI:_refreshTradeBuildingItem()
+	if not RoomController.instance:isObMode() or not self._isRunDalayInit then
 		return
 	end
 
-	local var_22_0
-	local var_22_1 = ManufactureModel.instance:getTradeBuildingListInOrder()
+	local buildingUid
+	local buildingList = ManufactureModel.instance:getTradeBuildingListInOrder()
 
-	if var_22_1 then
-		var_22_0 = var_22_1[1].buildingUid
+	if buildingList then
+		buildingUid = buildingList[1].buildingUid
 	end
 
-	if arg_22_0._scene.buildingmgr:getBuildingEntity(var_22_0, SceneTag.RoomBuilding) then
-		if not arg_22_0._tradeBuildingItem then
-			local var_22_2 = arg_22_0.viewContainer._viewSetting.otherRes[12]
-			local var_22_3 = arg_22_0:getResInst(var_22_2, arg_22_0._gopart, "tradeBuilding")
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-			arg_22_0._tradeBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_22_3, RoomViewUITradeBuildingItem)
+	if buildingEntity then
+		if not self._tradeBuildingItem then
+			local resPath = self.viewContainer._viewSetting.otherRes[12]
+			local go = self:getResInst(resPath, self._gopart, "tradeBuilding")
+
+			self._tradeBuildingItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUITradeBuildingItem)
 		end
-	elseif arg_22_0._tradeBuildingItem then
-		arg_22_0._tradeBuildingItem:removeEventListeners()
-		gohelper.destroy(arg_22_0._tradeBuildingItem.go)
+	elseif self._tradeBuildingItem then
+		self._tradeBuildingItem:removeEventListeners()
+		gohelper.destroy(self._tradeBuildingItem.go)
 
-		arg_22_0._tradeBuildingItem = nil
+		self._tradeBuildingItem = nil
 	end
 end
 
-function var_0_0._refreshCritterItem(arg_23_0, arg_23_1, arg_23_2)
-	if not RoomController.instance:isObMode() or not arg_23_0._isRunDalayInit then
+function RoomViewUI:_refreshCritterItem(updateTrain, updateWork)
+	if not RoomController.instance:isObMode() or not self._isRunDalayInit then
 		return
 	end
 
-	arg_23_0._critterItemDict = arg_23_0._critterItemDict or {}
+	self._critterItemDict = self._critterItemDict or {}
 
-	local var_23_0 = CritterModel.instance:getAllCritters()
+	local critterMOList = CritterModel.instance:getAllCritters()
 
-	for iter_23_0 = 1, #var_23_0 do
-		local var_23_1 = var_23_0[iter_23_0]
-		local var_23_2 = var_23_1.id
+	for i = 1, #critterMOList do
+		local critterMO = critterMOList[i]
+		local critterUid = critterMO.id
+		local isShowCritterItem = self:_isShowCritterItem(critterMO)
 
-		if arg_23_0:_isShowCritterItem(var_23_1) and not arg_23_0._critterItemDict[var_23_2] then
-			local var_23_3 = arg_23_0:getResInst(RoomViewUICritterEventItem.prefabPath, arg_23_0._gopart, "critter_" .. var_23_2)
+		if isShowCritterItem and not self._critterItemDict[critterUid] then
+			local go = self:getResInst(RoomViewUICritterEventItem.prefabPath, self._gopart, "critter_" .. critterUid)
 
-			arg_23_0._critterItemDict[var_23_1.id] = MonoHelper.addNoUpdateLuaComOnceToGo(var_23_3, RoomViewUICritterEventItem, var_23_2)
+			self._critterItemDict[critterMO.id] = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUICritterEventItem, critterUid)
 		end
 	end
 
-	for iter_23_1, iter_23_2 in pairs(arg_23_0._critterItemDict) do
-		local var_23_4 = CritterModel.instance:getCritterMOByUid(iter_23_1)
+	for critterUid, item in pairs(self._critterItemDict) do
+		local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
+		local isShowCritterItem = self:_isShowCritterItem(critterMO)
 
-		if not arg_23_0:_isShowCritterItem(var_23_4) then
-			if iter_23_2 then
-				iter_23_2:removeEventListeners()
-				gohelper.destroy(iter_23_2.go)
-			end
-
-			arg_23_0._critterItemDict[iter_23_1] = nil
-		end
-	end
-end
-
-function var_0_0._isShowCritterItem(arg_24_0, arg_24_1)
-	local var_24_0
-	local var_24_1 = false
-	local var_24_2 = arg_24_1:getId()
-
-	if arg_24_1:isCultivating() then
-		var_24_1 = arg_24_1.trainInfo:isHasEventTrigger()
-		var_24_0 = arg_24_0._scene.crittermgr:getCritterEntity(var_24_2, SceneTag.RoomCharacter)
-	end
-
-	local var_24_3 = false
-
-	if not var_24_1 then
-		var_24_3 = arg_24_1:isNoMoodWorking()
-		var_24_0 = arg_24_0._scene.buildingcrittermgr:getCritterEntity(var_24_2, SceneTag.RoomCharacter)
-	end
-
-	return arg_24_1 and var_24_0 and (var_24_1 or var_24_3)
-end
-
-function var_0_0._refreshBuildingItem(arg_25_0)
-	if not RoomController.instance:isObMode() or not arg_25_0._isRunDalayInit then
-		return
-	end
-
-	arg_25_0._buildingItemDict = arg_25_0._buildingItemDict or {}
-
-	local var_25_0 = RoomMapBuildingModel.instance:getBuildingMOList()
-
-	for iter_25_0 = 1, #var_25_0 do
-		local var_25_1 = var_25_0[iter_25_0]
-		local var_25_2 = var_25_1.id
-		local var_25_3 = var_25_1.config and var_25_1.config.buildingType
-
-		if var_25_3 and arg_25_0._showBuildingItemTypeMap[var_25_3] and not arg_25_0._buildingItemDict[var_25_2] then
-			local var_25_4 = arg_25_0.viewContainer._viewSetting.otherRes[12]
-			local var_25_5 = arg_25_0:getResInst(var_25_4, arg_25_0._gopart, "building_" .. var_25_2)
-
-			arg_25_0._buildingItemDict[var_25_2] = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_5, RoomViewUIBuildingItem, var_25_2)
-		end
-	end
-
-	for iter_25_1, iter_25_2 in pairs(arg_25_0._buildingItemDict) do
-		if not RoomMapBuildingModel.instance:getBuildingMOById(iter_25_1) then
-			if iter_25_2 then
-				iter_25_2:removeEventListeners()
-				gohelper.destroy(iter_25_2.go)
+		if not isShowCritterItem then
+			if item then
+				item:removeEventListeners()
+				gohelper.destroy(item.go)
 			end
 
-			arg_25_0._buildingItemDict[iter_25_1] = nil
+			self._critterItemDict[critterUid] = nil
 		end
 	end
 end
 
-function var_0_0._refreshFishingFriendItem(arg_26_0)
-	if not FishingModel.instance:isInFishing() or not arg_26_0._isRunDalayInit then
+function RoomViewUI:_isShowCritterItem(critterMO)
+	local critterEntity
+	local hasTrainEvent = false
+	local critterUid = critterMO:getId()
+	local isCultivating = critterMO:isCultivating()
+
+	if isCultivating then
+		hasTrainEvent = critterMO.trainInfo:isHasEventTrigger()
+		critterEntity = self._scene.crittermgr:getCritterEntity(critterUid, SceneTag.RoomCharacter)
+	end
+
+	local noMoodWorking = false
+
+	if not hasTrainEvent then
+		noMoodWorking = critterMO:isNoMoodWorking()
+		critterEntity = self._scene.buildingcrittermgr:getCritterEntity(critterUid, SceneTag.RoomCharacter)
+	end
+
+	return critterMO and critterEntity and (hasTrainEvent or noMoodWorking)
+end
+
+function RoomViewUI:_refreshBuildingItem()
+	if not RoomController.instance:isObMode() or not self._isRunDalayInit then
 		return
 	end
 
-	local var_26_0 = {}
+	self._buildingItemDict = self._buildingItemDict or {}
 
-	arg_26_0._fishingFriendItemDict = arg_26_0._fishingFriendItemDict or {}
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	local var_26_1 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
-	local var_26_2 = PlayerModel.instance:getMyUserId()
+	for i = 1, #buildingMOList do
+		local buildingMO = buildingMOList[i]
+		local buildingUid = buildingMO.id
+		local buildingType = buildingMO.config and buildingMO.config.buildingType
 
-	if var_26_1 then
-		for iter_26_0, iter_26_1 in ipairs(var_26_1) do
-			local var_26_3 = arg_26_0._scene.buildingmgr:getBuildingEntity(iter_26_1.buildingUid, SceneTag.RoomBuilding)
-			local var_26_4 = iter_26_1:getBelongUserId()
+		if buildingType and self._showBuildingItemTypeMap[buildingType] and not self._buildingItemDict[buildingUid] then
+			local resPath = self.viewContainer._viewSetting.otherRes[12]
+			local go = self:getResInst(resPath, self._gopart, "building_" .. buildingUid)
 
-			if var_26_3 and var_26_4 and var_26_4 ~= var_26_2 then
-				local var_26_5 = arg_26_0:getResInst(RoomViewUIFishingFriendItem.prefabPath, arg_26_0._gopart, "fishingFriend_" .. var_26_4)
+			self._buildingItemDict[buildingUid] = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUIBuildingItem, buildingUid)
+		end
+	end
 
-				arg_26_0._fishingFriendItemDict[var_26_4] = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_5, RoomViewUIFishingFriendItem, var_26_4)
-				var_26_0[var_26_4] = true
+	for buildingUid, item in pairs(self._buildingItemDict) do
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+
+		if not buildingMO then
+			if item then
+				item:removeEventListeners()
+				gohelper.destroy(item.go)
+			end
+
+			self._buildingItemDict[buildingUid] = nil
+		end
+	end
+end
+
+function RoomViewUI:_refreshFishingFriendItem()
+	if not FishingModel.instance:isInFishing() or not self._isRunDalayInit then
+		return
+	end
+
+	local userShowBuildingDict = {}
+
+	self._fishingFriendItemDict = self._fishingFriendItemDict or {}
+
+	local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
+	local myUserId = PlayerModel.instance:getMyUserId()
+
+	if buildingList then
+		for _, buildingMO in ipairs(buildingList) do
+			local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingMO.buildingUid, SceneTag.RoomBuilding)
+			local belongUserId = buildingMO:getBelongUserId()
+
+			if buildingEntity and belongUserId and belongUserId ~= myUserId then
+				local go = self:getResInst(RoomViewUIFishingFriendItem.prefabPath, self._gopart, "fishingFriend_" .. belongUserId)
+
+				self._fishingFriendItemDict[belongUserId] = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUIFishingFriendItem, belongUserId)
+				userShowBuildingDict[belongUserId] = true
 			end
 		end
 	end
 
-	for iter_26_2, iter_26_3 in pairs(arg_26_0._fishingFriendItemDict) do
-		if not var_26_0[iter_26_2] then
-			if iter_26_3 then
-				iter_26_3:removeEventListeners()
-				gohelper.destroy(iter_26_3.go)
+	for userId, item in pairs(self._fishingFriendItemDict) do
+		if not userShowBuildingDict[userId] then
+			if item then
+				item:removeEventListeners()
+				gohelper.destroy(item.go)
 			end
 
-			arg_26_0._fishingFriendItemDict[iter_26_2] = nil
+			self._fishingFriendItemDict[userId] = nil
 		end
 	end
 end
 
-function var_0_0._refreshFishingStoreItem(arg_27_0)
-	if not RoomController.instance:isFishingMode() or not arg_27_0._isRunDalayInit then
+function RoomViewUI:_refreshFishingStoreItem()
+	if not RoomController.instance:isFishingMode() or not self._isRunDalayInit then
 		return
 	end
 
-	local var_27_0 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.FishingStore)
-	local var_27_1 = var_27_0 and var_27_0[1].buildingUid
+	local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.FishingStore)
+	local buildingUid = buildingList and buildingList[1].buildingUid
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-	if arg_27_0._scene.buildingmgr:getBuildingEntity(var_27_1, SceneTag.RoomBuilding) then
-		if not arg_27_0._fishingStoreItem then
-			local var_27_2 = arg_27_0.viewContainer._viewSetting.otherRes[12]
-			local var_27_3 = arg_27_0:getResInst(var_27_2, arg_27_0._gopart, "fishingStore")
+	if buildingEntity then
+		if not self._fishingStoreItem then
+			local resPath = self.viewContainer._viewSetting.otherRes[12]
+			local go = self:getResInst(resPath, self._gopart, "fishingStore")
 
-			arg_27_0._fishingStoreItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_27_3, RoomViewUIFishingStoreItem)
+			self._fishingStoreItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomViewUIFishingStoreItem)
 		end
-	elseif arg_27_0._fishingStoreItem then
-		arg_27_0._fishingStoreItem:removeEventListeners()
-		gohelper.destroy(arg_27_0._fishingStoreItem.go)
+	elseif self._fishingStoreItem then
+		self._fishingStoreItem:removeEventListeners()
+		gohelper.destroy(self._fishingStoreItem.go)
 
-		arg_27_0._fishingStoreItem = nil
+		self._fishingStoreItem = nil
 	end
 end
 
-function var_0_0._sort(arg_28_0)
-	if not arg_28_0._isRunDalayInit then
+function RoomViewUI:_sort()
+	if not self._isRunDalayInit then
 		return
 	end
 
-	arg_28_0._uiItemList = {}
+	self._uiItemList = {}
 
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._partItemDict)
-	table.insert(arg_28_0._uiItemList, arg_28_0._initItem)
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._characterItemDict)
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._characterInteractionItemDict)
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._manufactureItemDict)
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._transportSiteItemDict)
-	table.insert(arg_28_0._uiItemList, arg_28_0._critterBuildingItem)
-	table.insert(arg_28_0._uiItemList, arg_28_0._tradeBuildingItem)
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._critterItemDict)
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._buildingItemDict)
-	table.insert(arg_28_0._uiItemList, arg_28_0._fishingItem)
-	LuaUtil.insertDict(arg_28_0._uiItemList, arg_28_0._fishingFriendItemDict)
-	table.insert(arg_28_0._uiItemList, arg_28_0._fishingStoreItem)
+	LuaUtil.insertDict(self._uiItemList, self._partItemDict)
+	table.insert(self._uiItemList, self._initItem)
+	LuaUtil.insertDict(self._uiItemList, self._characterItemDict)
+	LuaUtil.insertDict(self._uiItemList, self._characterInteractionItemDict)
+	LuaUtil.insertDict(self._uiItemList, self._manufactureItemDict)
+	LuaUtil.insertDict(self._uiItemList, self._transportSiteItemDict)
+	table.insert(self._uiItemList, self._critterBuildingItem)
+	table.insert(self._uiItemList, self._tradeBuildingItem)
+	LuaUtil.insertDict(self._uiItemList, self._critterItemDict)
+	LuaUtil.insertDict(self._uiItemList, self._buildingItemDict)
+	table.insert(self._uiItemList, self._fishingItem)
+	LuaUtil.insertDict(self._uiItemList, self._fishingFriendItemDict)
+	table.insert(self._uiItemList, self._fishingStoreItem)
 
-	local var_28_0 = arg_28_0._scene.camera:getCameraPosition()
+	local cameraPosition = self._scene.camera:getCameraPosition()
 
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._uiItemList) do
-		local var_28_1 = iter_28_1:getUI3DPos()
+	for i, uiItem in ipairs(self._uiItemList) do
+		local worldPos = uiItem:getUI3DPos()
+		local distance = Vector3.Distance(cameraPosition, worldPos)
 
-		iter_28_1.__distance = Vector3.Distance(var_28_0, var_28_1)
+		uiItem.__distance = distance
 	end
 
-	table.sort(arg_28_0._uiItemList, function(arg_29_0, arg_29_1)
-		return arg_29_0.__distance > arg_29_1.__distance
+	table.sort(self._uiItemList, function(a, b)
+		return a.__distance > b.__distance
 	end)
 
-	for iter_28_2, iter_28_3 in ipairs(arg_28_0._uiItemList) do
-		gohelper.setAsLastSibling(iter_28_3.go)
+	for i, uiItem in ipairs(self._uiItemList) do
+		gohelper.setAsLastSibling(uiItem.go)
 	end
 end
 
-function var_0_0.onClose(arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._sort, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._onDelayInit, arg_30_0)
-	arg_30_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, arg_30_0.onClickBellTower, arg_30_0)
-	arg_30_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, arg_30_0.onClickMarket, arg_30_0)
-	arg_30_0:removeEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, arg_30_0._onUseBuildingReply, arg_30_0)
+function RoomViewUI:onClose()
+	TaskDispatcher.cancelTask(self._sort, self)
+	TaskDispatcher.cancelTask(self._onDelayInit, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomBellTower, self.onClickBellTower, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyRoomMarket, self.onClickMarket, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.UseBuildingReply, self._onUseBuildingReply, self)
 end
 
-function var_0_0.onDestroyView(arg_31_0)
+function RoomViewUI:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomViewUI

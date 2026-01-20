@@ -1,38 +1,40 @@
-﻿module("modules.logic.story.controller.StoryGCController", package.seeall)
+﻿-- chunkname: @modules/logic/story/controller/StoryGCController.lua
 
-local var_0_0 = class("StoryGCController", BaseController)
-local var_0_1 = 2
-local var_0_2 = 5
-local var_0_3 = 1
-local var_0_4 = 2
-local var_0_5 = 3
-local var_0_6 = 4
-local var_0_7 = 5
+module("modules.logic.story.controller.StoryGCController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local StoryGCController = class("StoryGCController", BaseController)
+local GCUnuseCount = 2
+local AudioGcStepInterval = 5
+local Type_bg = 1
+local Type_spine = 2
+local Type_live2d = 3
+local Type_video = 4
+local Type_effect = 5
+
+function StoryGCController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function StoryGCController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	StoryController.instance:registerCallback(StoryEvent.Start, arg_3_0._onStart, arg_3_0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, arg_3_0._onFinish, arg_3_0)
-	StoryController.instance:registerCallback(StoryEvent.RefreshStep, arg_3_0._onStep, arg_3_0)
-	StoryController.instance:registerCallback(StoryEvent.OnBgmStop, arg_3_0._onTriggerBgmStop, arg_3_0)
-	StoryController.instance:registerCallback(StoryEvent.VideoStart, arg_3_0._onVideoStart, arg_3_0)
+function StoryGCController:addConstEvents()
+	StoryController.instance:registerCallback(StoryEvent.Start, self._onStart, self)
+	StoryController.instance:registerCallback(StoryEvent.Finish, self._onFinish, self)
+	StoryController.instance:registerCallback(StoryEvent.RefreshStep, self._onStep, self)
+	StoryController.instance:registerCallback(StoryEvent.OnBgmStop, self._onTriggerBgmStop, self)
+	StoryController.instance:registerCallback(StoryEvent.VideoStart, self._onVideoStart, self)
 end
 
-function var_0_0._onStart(arg_4_0, arg_4_1)
-	arg_4_0._storyId = arg_4_1
-	arg_4_0._markUseDict = {}
-	arg_4_0._markUseList = {}
-	arg_4_0._usingList = {}
-	arg_4_0._currBg = nil
-	arg_4_0._videoStepCountDown = nil
-	arg_4_0._stepCount = 0
+function StoryGCController:_onStart(storyId)
+	self._storyId = storyId
+	self._markUseDict = {}
+	self._markUseList = {}
+	self._usingList = {}
+	self._currBg = nil
+	self._videoStepCountDown = nil
+	self._stepCount = 0
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight and FightModel.instance:isFinish() then
 		logNormal("战斗内播放战后剧情，清理战斗资源")
@@ -41,145 +43,148 @@ function var_0_0._onStart(arg_4_0, arg_4_1)
 		GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:removeAllUnits()
 		FightPreloadController.instance:dispose()
 		FightRoundPreloadController.instance:dispose()
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_4_0)
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, self)
 	end
 end
 
-function var_0_0._onFinish(arg_5_0, arg_5_1)
-	arg_5_0._storyId = nil
-	arg_5_0._markUseDict = {}
-	arg_5_0._markUseList = {}
-	arg_5_0._usingList = {}
-	arg_5_0._currBg = nil
+function StoryGCController:_onFinish(storyId)
+	self._storyId = nil
+	self._markUseDict = {}
+	self._markUseList = {}
+	self._usingList = {}
+	self._currBg = nil
 
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, arg_5_0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.CancelDelayAudioGC, arg_5_0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, self)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.CancelDelayAudioGC, self)
 end
 
-function var_0_0._onStep(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.stepType
-	local var_6_1 = arg_6_1.stepId
+function StoryGCController:_onStep(o)
+	local stepType = o.stepType
+	local stepId = o.stepId
 
-	arg_6_0._stepId = var_6_1
+	self._stepId = stepId
 
-	local var_6_2 = arg_6_1.branches
+	local branches = o.branches
 
-	arg_6_0._usingList = {}
+	self._usingList = {}
 
-	local var_6_3 = var_6_1 and StoryStepModel.instance:getStepListById(var_6_1)
-	local var_6_4 = var_6_3 and var_6_3.bg
+	local stepCO = stepId and StoryStepModel.instance:getStepListById(stepId)
+	local bgCO = stepCO and stepCO.bg
 
-	if var_6_4 and var_6_4.transType ~= StoryEnum.BgTransType.Keep then
-		if not arg_6_0._markUseDict[var_6_4.bgImg] then
-			arg_6_0._markUseDict[var_6_4.bgImg] = true
+	if bgCO and bgCO.transType ~= StoryEnum.BgTransType.Keep then
+		if not self._markUseDict[bgCO.bgImg] then
+			self._markUseDict[bgCO.bgImg] = true
 
-			local var_6_5 = {
-				type = var_0_3,
-				path = var_6_4.bgImg
+			local o = {
+				type = Type_bg,
+				path = bgCO.bgImg
 			}
 
-			table.insert(arg_6_0._markUseList, var_6_5)
-			table.insert(arg_6_0._usingList, var_6_5)
+			table.insert(self._markUseList, o)
+			table.insert(self._usingList, o)
 
-			arg_6_0._currBg = var_6_4.bgImg
-		elseif arg_6_0._currBg then
-			table.insert(arg_6_0._usingList, {
-				type = var_0_3,
-				path = arg_6_0._currBg
+			self._currBg = bgCO.bgImg
+		elseif self._currBg then
+			table.insert(self._usingList, {
+				type = Type_bg,
+				path = self._currBg
 			})
 		end
-	elseif arg_6_0._currBg then
-		table.insert(arg_6_0._usingList, {
-			type = var_0_3,
-			path = arg_6_0._currBg
+	elseif self._currBg then
+		table.insert(self._usingList, {
+			type = Type_bg,
+			path = self._currBg
 		})
 	end
 
-	local var_6_6 = var_6_3 and var_6_3.heroList
+	local heroList = stepCO and stepCO.heroList
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_6) do
-		local var_6_7 = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(iter_6_1.heroIndex)
-		local var_6_8 = var_6_7.type == 0
-		local var_6_9 = var_6_8 and var_6_7.prefab or var_6_7.live2dPrefab
+	for _, hero in ipairs(heroList) do
+		local heroCO = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(hero.heroIndex)
+		local isSpine = heroCO.type == 0
+		local prefab = isSpine and heroCO.prefab or heroCO.live2dPrefab
 
-		if not arg_6_0._markUseDict[var_6_9] then
-			arg_6_0._markUseDict[var_6_9] = true
+		if not self._markUseDict[prefab] then
+			self._markUseDict[prefab] = true
 
-			local var_6_10 = {
-				type = var_6_8 and var_0_4 or var_0_5,
-				path = var_6_9
+			local o = {
+				type = isSpine and Type_spine or Type_live2d,
+				path = prefab
 			}
 
-			table.insert(arg_6_0._markUseList, var_6_10)
-			table.insert(arg_6_0._usingList, var_6_10)
+			table.insert(self._markUseList, o)
+			table.insert(self._usingList, o)
 		end
 	end
 
-	local var_6_11 = var_6_3 and var_6_3.effList
+	local effList = stepCO and stepCO.effList
 
-	for iter_6_2, iter_6_3 in ipairs(var_6_11) do
-		if not arg_6_0._markUseDict[iter_6_3.effect] then
-			arg_6_0._markUseDict[iter_6_3.effect] = true
+	for _, one in ipairs(effList) do
+		if not self._markUseDict[one.effect] then
+			self._markUseDict[one.effect] = true
 
-			local var_6_12 = {
-				type = var_0_7,
-				path = iter_6_3.effect
+			local o = {
+				type = Type_effect,
+				path = one.effect
 			}
 
-			table.insert(arg_6_0._markUseList, var_6_12)
-			table.insert(arg_6_0._usingList, var_6_12)
+			table.insert(self._markUseList, o)
+			table.insert(self._usingList, o)
 		end
 	end
 
-	local var_6_13 = var_6_3 and var_6_3.videoList
-	local var_6_14 = 5
-	local var_6_15 = #var_6_13 > 0
-	local var_6_16 = false
+	local videoList = stepCO and stepCO.videoList
+	local GCStepCount = 5
+	local hasVideo = #videoList > 0
+	local forceGC = false
 
-	if var_6_15 then
-		arg_6_0._videoStepCountDown = var_6_14
-	elseif arg_6_0._videoStepCountDown then
-		arg_6_0._videoStepCountDown = arg_6_0._videoStepCountDown - 1
+	if hasVideo then
+		self._videoStepCountDown = GCStepCount
+	elseif self._videoStepCountDown then
+		self._videoStepCountDown = self._videoStepCountDown - 1
 
-		if arg_6_0._videoStepCountDown <= 0 then
-			arg_6_0._videoStepCountDown = nil
-			var_6_16 = true
+		if self._videoStepCountDown <= 0 then
+			self._videoStepCountDown = nil
+			forceGC = true
 		end
 	end
 
-	arg_6_0:_checkGC(var_6_16)
+	self:_checkGC(forceGC)
 end
 
-function var_0_0._onVideoStart(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0:_checkGC(true)
+function StoryGCController:_onVideoStart(videoName, loop)
+	self:_checkGC(true)
 end
 
-function var_0_0._checkGC(arg_8_0, arg_8_1)
-	if #arg_8_0._markUseList - #arg_8_0._usingList >= var_0_1 or arg_8_1 then
-		arg_8_0._markUseList = {}
+function StoryGCController:_checkGC(forceGC)
+	local total = #self._markUseList
+	local current = #self._usingList
 
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._usingList) do
-			if iter_8_1.path then
-				arg_8_0._markUseDict[iter_8_1.path] = true
+	if total - current >= GCUnuseCount or forceGC then
+		self._markUseList = {}
 
-				table.insert(arg_8_0._markUseList, iter_8_1)
+		for _, one in ipairs(self._usingList) do
+			if one.path then
+				self._markUseDict[one.path] = true
+
+				table.insert(self._markUseList, one)
 			end
 		end
 
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.StoryGC, arg_8_0)
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.StoryGC, self)
 	end
 
-	arg_8_0._stepCount = arg_8_0._stepCount + 1
+	self._stepCount = self._stepCount + 1
 
-	if arg_8_0._stepCount % var_0_2 == 0 then
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, arg_8_0)
+	if self._stepCount % AudioGcStepInterval == 0 then
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, self)
 	end
 end
 
-function var_0_0._onTriggerBgmStop(arg_9_0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayAudioGC, 0.5, arg_9_0)
+function StoryGCController:_onTriggerBgmStop()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayAudioGC, 0.5, self)
 end
 
-var_0_0.instance = var_0_0.New()
+StoryGCController.instance = StoryGCController.New()
 
-return var_0_0
+return StoryGCController

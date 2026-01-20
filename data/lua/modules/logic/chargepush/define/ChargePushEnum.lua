@@ -1,15 +1,18 @@
-﻿module("modules.logic.chargepush.define.ChargePushEnum", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/define/ChargePushEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.chargepush.define.ChargePushEnum", package.seeall)
 
-var_0_0.PushViewType = {
+local ChargePushEnum = _M
+
+ChargePushEnum.PushViewType = {
 	MonthCard = 1,
-	LevelGoods = 2
+	LevelGoods = 2,
+	CommonGift = 3
 }
-var_0_0.ListenerType = {
+ChargePushEnum.ListenerType = {
 	MonthCardAfter = 2,
 	LevelAfter = 3,
 	MonthCardBefore = 1
 }
 
-return var_0_0
+return ChargePushEnum

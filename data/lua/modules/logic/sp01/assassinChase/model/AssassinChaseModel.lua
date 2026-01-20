@@ -1,114 +1,116 @@
-﻿module("modules.logic.sp01.assassinChase.model.AssassinChaseModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassinChase/model/AssassinChaseModel.lua
 
-local var_0_0 = class("AssassinChaseModel", BaseModel)
+module("modules.logic.sp01.assassinChase.model.AssassinChaseModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local AssassinChaseModel = class("AssassinChaseModel", BaseModel)
+
+function AssassinChaseModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curActivityId = nil
-	arg_2_0._curDirectionId = nil
-	arg_2_0._chaseInfoDic = {}
+function AssassinChaseModel:reInit()
+	self._curActivityId = nil
+	self._curDirectionId = nil
+	self._chaseInfoDic = {}
 end
 
-function var_0_0.setCurActivityId(arg_3_0, arg_3_1)
-	arg_3_0._curActivityId = arg_3_1
+function AssassinChaseModel:setCurActivityId(activityId)
+	self._curActivityId = activityId
 end
 
-function var_0_0.getCurActivityId(arg_4_0)
-	return arg_4_0._curActivityId
+function AssassinChaseModel:getCurActivityId()
+	return self._curActivityId
 end
 
-function var_0_0.setCurDirectionId(arg_5_0, arg_5_1)
-	if arg_5_0._curDirectionId ~= arg_5_1 then
-		arg_5_0._curDirectionId = arg_5_1
+function AssassinChaseModel:setCurDirectionId(directionId)
+	if self._curDirectionId ~= directionId then
+		self._curDirectionId = directionId
 	else
-		arg_5_0._curDirectionId = nil
+		self._curDirectionId = nil
 	end
 
-	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnSelectDirection, arg_5_0._curDirectionId)
+	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnSelectDirection, self._curDirectionId)
 end
 
-function var_0_0.getCurDirectionId(arg_6_0)
-	return arg_6_0._curDirectionId
+function AssassinChaseModel:getCurDirectionId()
+	return self._curDirectionId
 end
 
-function var_0_0.setActInfo(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.activityId
-	local var_7_1
+function AssassinChaseModel:setActInfo(reply)
+	local activityId = reply.activityId
+	local mo
 
-	if not arg_7_0._chaseInfoDic[var_7_0] then
-		var_7_1 = AssassinChaseInfoMo.New()
-		arg_7_0._chaseInfoDic[var_7_0] = var_7_1
+	if not self._chaseInfoDic[activityId] then
+		mo = AssassinChaseInfoMo.New()
+		self._chaseInfoDic[activityId] = mo
 	else
-		var_7_1 = arg_7_0._chaseInfoDic[var_7_0]
+		mo = self._chaseInfoDic[activityId]
 	end
 
-	var_7_1:init(var_7_0, arg_7_1.hasChosenDirection, arg_7_1.chosenInfo, arg_7_1.optionDirections)
-	arg_7_0:setCurDirectionId(nil)
-	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnInfoUpdate, var_7_0)
+	mo:init(activityId, reply.hasChosenDirection, reply.chosenInfo, reply.optionDirections)
+	self:setCurDirectionId(nil)
+	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnInfoUpdate, activityId)
 end
 
-function var_0_0.onActInfoPush(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.activityId
-	local var_8_1
+function AssassinChaseModel:onActInfoPush(reply)
+	local activityId = reply.activityId
+	local mo
 
-	if not arg_8_0._chaseInfoDic[var_8_0] then
-		var_8_1 = AssassinChaseInfoMo.New()
-		arg_8_0._chaseInfoDic[var_8_0] = var_8_1
+	if not self._chaseInfoDic[activityId] then
+		mo = AssassinChaseInfoMo.New()
+		self._chaseInfoDic[activityId] = mo
 	else
-		var_8_1 = arg_8_0._chaseInfoDic[var_8_0]
+		mo = self._chaseInfoDic[activityId]
 	end
 
-	var_8_1:init(var_8_0, arg_8_1.hasChosenDirection, arg_8_1.chosenInfo, arg_8_1.optionDirections)
-	arg_8_0:setCurDirectionId(nil)
-	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnInfoUpdate, var_8_0)
+	mo:init(activityId, reply.hasChosenDirection, reply.chosenInfo, reply.optionDirections)
+	self:setCurDirectionId(nil)
+	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnInfoUpdate, activityId)
 end
 
-function var_0_0.onSelectDirection(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_2.currentDirection
-	local var_9_1 = arg_9_0:getActInfo(arg_9_1)
+function AssassinChaseModel:onSelectDirection(activityId, chosenInfo)
+	local directionId = chosenInfo.currentDirection
+	local infoMo = self:getActInfo(activityId)
 
-	if var_9_1 == nil then
+	if infoMo == nil then
 		logError("奥德赛 下半活动 追逐游戏活动 信息不存在")
 
 		return
 	end
 
-	var_9_1.hasChosenDirection = true
-	var_9_1.chosenInfo = arg_9_2
+	infoMo.hasChosenDirection = true
+	infoMo.chosenInfo = chosenInfo
 
-	var_9_1:refreshTime()
-	arg_9_0:setCurDirectionId(nil)
-	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnInfoUpdate, arg_9_1)
+	infoMo:refreshTime()
+	self:setCurDirectionId(nil)
+	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnInfoUpdate, activityId)
 end
 
-function var_0_0.getActInfo(arg_10_0, arg_10_1)
-	return arg_10_0._chaseInfoDic[arg_10_1]
+function AssassinChaseModel:getActInfo(activityId)
+	return self._chaseInfoDic[activityId]
 end
 
-function var_0_0.getCurInfoMo(arg_11_0)
-	return arg_11_0:getActInfo(arg_11_0._curActivityId)
+function AssassinChaseModel:getCurInfoMo()
+	return self:getActInfo(self._curActivityId)
 end
 
-function var_0_0.isCurActOpen(arg_12_0, arg_12_1)
-	return arg_12_0:isActOpen(arg_12_0._curActivityId, arg_12_1)
+function AssassinChaseModel:isCurActOpen(showToast)
+	return self:isActOpen(self._curActivityId, showToast)
 end
 
-function var_0_0.isActOpen(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = ActivityModel.instance:getActMO(arg_13_1)
+function AssassinChaseModel:isActOpen(activityId, showToast, realEnd)
+	local actInfoMo = ActivityModel.instance:getActMO(activityId)
 
-	if var_13_0 == nil then
+	if actInfoMo == nil then
 		return false
 	end
 
-	local var_13_1 = var_13_0:getRealEndTimeStamp()
-	local var_13_2 = arg_13_3 and var_13_1 or AssassinChaseHelper.getActivityEndTimeStamp(var_13_1)
-	local var_13_3 = ServerTime.now()
+	local realEndTime = actInfoMo:getRealEndTimeStamp()
+	local endTime = realEnd and realEndTime or AssassinChaseHelper.getActivityEndTimeStamp(realEndTime)
+	local nowTime = ServerTime.now()
 
-	if not var_13_0:isOpen() or var_13_2 <= var_13_3 then
-		if arg_13_2 then
+	if not actInfoMo:isOpen() or endTime <= nowTime then
+		if showToast then
 			GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 		end
 
@@ -118,26 +120,26 @@ function var_0_0.isActOpen(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 	return true
 end
 
-function var_0_0.isActHaveReward(arg_14_0, arg_14_1)
-	local var_14_0 = ActivityModel.instance:getActMO(arg_14_1)
+function AssassinChaseModel:isActHaveReward(activityId)
+	local actInfoMo = ActivityModel.instance:getActMO(activityId)
 
-	if var_14_0 == nil then
+	if actInfoMo == nil then
 		return false
 	end
 
-	if not var_14_0:isOpen() or var_14_0:getRealEndTimeStamp() - ServerTime.now() <= 0 then
+	if not actInfoMo:isOpen() or actInfoMo:getRealEndTimeStamp() - ServerTime.now() <= 0 then
 		return false
 	end
 
-	local var_14_1 = arg_14_0:getActInfo(arg_14_1)
+	local infoMo = self:getActInfo(activityId)
 
-	if var_14_1 == nil or var_14_1.hasChosenDirection == false or var_14_1.chosenInfo == nil then
+	if infoMo == nil or infoMo.hasChosenDirection == false or infoMo.chosenInfo == nil then
 		return false
 	end
 
-	return var_14_1.chosenInfo.rewardId ~= nil and var_14_1.chosenInfo.rewardId ~= 0
+	return infoMo.chosenInfo.rewardId ~= nil and infoMo.chosenInfo.rewardId ~= 0
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinChaseModel.instance = AssassinChaseModel.New()
 
-return var_0_0
+return AssassinChaseModel

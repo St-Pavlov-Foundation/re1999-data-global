@@ -1,134 +1,144 @@
-﻿module("modules.spine.roleeffect.CommonRoleEffectContinue", package.seeall)
+﻿-- chunkname: @modules/spine/roleeffect/CommonRoleEffectContinue.lua
 
-local var_0_0 = class("CommonRoleEffectContinue", BaseSpineRoleEffect)
+module("modules.spine.roleeffect.CommonRoleEffectContinue", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._roleEffectConfig = arg_1_1
-	arg_1_0._spineGo = arg_1_0._spine._spineGo
-	arg_1_0._motionList = string.split(arg_1_1.motion, "|")
-	arg_1_0._nodeList = GameUtil.splitString2(arg_1_1.node, false, "|", "#")
-	arg_1_0._firstShow = false
-	arg_1_0._showEverEffect = false
-	arg_1_0._effectVisible = false
+local CommonRoleEffectContinue = class("CommonRoleEffectContinue", BaseSpineRoleEffect)
+
+function CommonRoleEffectContinue:init(roleEffectConfig)
+	self._roleEffectConfig = roleEffectConfig
+	self._spineGo = self._spine._spineGo
+	self._motionList = string.split(roleEffectConfig.motion, "|")
+	self._nodeList = GameUtil.splitString2(roleEffectConfig.node, false, "|", "#")
+	self._firstShow = false
+	self._showEverEffect = false
+	self._effectVisible = false
 end
 
-function var_0_0.isShowEverEffect(arg_2_0)
-	return arg_2_0._showEverEffect
+function CommonRoleEffectContinue:isShowEverEffect()
+	return self._showEverEffect
 end
 
-function var_0_0.showBodyEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._effectVisible = false
+function CommonRoleEffectContinue:showBodyEffect(bodyName, callback, callbackTarget)
+	self._effectVisible = false
 
-	local var_3_0 = tabletool.indexOf(arg_3_0._motionList, arg_3_1)
+	local nextIndex = tabletool.indexOf(self._motionList, bodyName)
 
-	arg_3_0:_setNodeVisible(arg_3_0._index, false, var_3_0 and arg_3_0._nodeList[var_3_0])
+	self:_setNodeVisible(self._index, false, nextIndex and self._nodeList[nextIndex])
 
-	arg_3_0._index = var_3_0
+	self._index = nextIndex
 
-	arg_3_0:_setNodeVisible(arg_3_0._index, true)
+	self:_setNodeVisible(self._index, true)
 
-	if not arg_3_0._firstShow then
-		arg_3_0._firstShow = true
+	if not self._firstShow then
+		self._firstShow = true
 
-		arg_3_0:showEverNodes(false)
-		TaskDispatcher.cancelTask(arg_3_0._delayShowEverNodes, arg_3_0)
-		TaskDispatcher.runDelay(arg_3_0._delayShowEverNodes, arg_3_0, 0.3)
+		self:showEverNodes(false)
+		TaskDispatcher.cancelTask(self._delayShowEverNodes, self)
+		TaskDispatcher.runDelay(self._delayShowEverNodes, self, 0.3)
 	end
 
-	if arg_3_2 and arg_3_3 then
-		arg_3_2(arg_3_3, arg_3_0._effectVisible or arg_3_0._showEverEffect)
+	if callback and callbackTarget then
+		callback(callbackTarget, self._effectVisible or self._showEverEffect)
 	end
 end
 
-function var_0_0._delayShowEverNodes(arg_4_0)
-	arg_4_0:showEverNodes(true)
-end
-
-function var_0_0.showEverNodes(arg_5_0, arg_5_1)
-	if string.nilorempty(arg_5_0._roleEffectConfig.everNode) or not arg_5_0._spineGo then
+function CommonRoleEffectContinue:forceHideBodyEffect()
+	if not self._index then
 		return
 	end
 
-	local var_5_0 = arg_5_0._spine._resPath
+	self:_setNodeVisible(self._index, false)
+end
 
-	if var_5_0 and not string.find(var_5_0, arg_5_0._roleEffectConfig.heroResName .. ".prefab") then
+function CommonRoleEffectContinue:_delayShowEverNodes()
+	self:showEverNodes(true)
+end
+
+function CommonRoleEffectContinue:showEverNodes(value)
+	if string.nilorempty(self._roleEffectConfig.everNode) or not self._spineGo then
 		return
 	end
 
-	local var_5_1 = string.split(arg_5_0._roleEffectConfig.everNode, "#")
+	local _resPath = self._spine._resPath
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		local var_5_2 = gohelper.findChild(arg_5_0._spineGo, iter_5_1)
+	if _resPath and not string.find(_resPath, self._roleEffectConfig.heroResName .. ".prefab") then
+		return
+	end
 
-		gohelper.setActive(var_5_2, arg_5_1)
+	local nodeList = string.split(self._roleEffectConfig.everNode, "#")
 
-		arg_5_0._showEverEffect = true
+	for i, v in ipairs(nodeList) do
+		local go = gohelper.findChild(self._spineGo, v)
 
-		if not var_5_2 and SLFramework.FrameworkSettings.IsEditor then
-			logError(string.format("%s找不到特效节点：%s,请检查路径", var_5_0, iter_5_1))
+		gohelper.setActive(go, value)
+
+		self._showEverEffect = true
+
+		if not go and SLFramework.FrameworkSettings.IsEditor then
+			logError(string.format("%s找不到特效节点：%s,请检查路径", _resPath, v))
 		end
 	end
 end
 
-function var_0_0._playShakeEffect(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0._spine:isInMainView() then
+function CommonRoleEffectContinue:_playShakeEffect(go, visible)
+	if not self._spine:isInMainView() then
 		return
 	end
 
-	local var_6_0 = gohelper.findChild(arg_6_1, "root/shakeconfig")
+	local shakeConfigGo = gohelper.findChild(go, "root/shakeconfig")
 
-	if var_6_0 then
-		local var_6_1 = var_6_0:GetComponent(typeof(ZProj.EffectShakeComponent))
+	if shakeConfigGo then
+		local effectShakeComp = shakeConfigGo:GetComponent(typeof(ZProj.EffectShakeComponent))
 
-		if var_6_1 then
-			if arg_6_2 then
-				gohelper.setActive(var_6_0, true)
+		if effectShakeComp then
+			if visible then
+				gohelper.setActive(shakeConfigGo, true)
 
-				var_6_1.enabled = true
+				effectShakeComp.enabled = true
 
-				var_6_1:Play(CameraMgr.instance:getCameraShake(), 1, 1)
+				effectShakeComp:Play(CameraMgr.instance:getCameraShake(), 1, 1)
 			else
 				CameraMgr.instance:getCameraShake():StopShake()
-				gohelper.setActive(var_6_0, false)
+				gohelper.setActive(shakeConfigGo, false)
 			end
 		end
 	end
 end
 
-function var_0_0._setNodeVisible(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if not arg_7_1 then
+function CommonRoleEffectContinue:_setNodeVisible(index, visible, nextNodeList)
+	if not index then
 		return
 	end
 
-	local var_7_0 = arg_7_0._nodeList[arg_7_1]
+	local nodeList = self._nodeList[index]
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_1 = gohelper.findChild(arg_7_0._spineGo, iter_7_1)
+	for i, v in ipairs(nodeList) do
+		local go = gohelper.findChild(self._spineGo, v)
 
-		if not arg_7_3 or not tabletool.indexOf(arg_7_3, iter_7_1) then
-			gohelper.setActive(var_7_1, arg_7_2)
+		if not nextNodeList or not tabletool.indexOf(nextNodeList, v) then
+			gohelper.setActive(go, visible)
 		end
 
-		arg_7_0:_playShakeEffect(var_7_1, arg_7_2)
+		self:_playShakeEffect(go, visible)
 
-		if not var_7_1 and SLFramework.FrameworkSettings.IsEditor then
-			logError(string.format("%s找不到特效节点：%s,请检查路径", arg_7_0._spine._resPath, iter_7_1))
+		if not go and SLFramework.FrameworkSettings.IsEditor then
+			logError(string.format("%s找不到特效节点：%s,请检查路径", self._spine._resPath, v))
 		end
 
-		if arg_7_2 then
-			arg_7_0._effectVisible = true
+		if visible then
+			self._effectVisible = true
 		end
 	end
 end
 
-function var_0_0.playBodyEffect(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function CommonRoleEffectContinue:playBodyEffect(showEffect, child, bodyName)
 	return
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0._spineGo = nil
+function CommonRoleEffectContinue:onDestroy()
+	self._spineGo = nil
 
-	TaskDispatcher.cancelTask(arg_9_0._delayShowEverNodes, arg_9_0)
+	TaskDispatcher.cancelTask(self._delayShowEverNodes, self)
 end
 
-return var_0_0
+return CommonRoleEffectContinue

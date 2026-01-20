@@ -1,18 +1,20 @@
-﻿module("modules.logic.room.view.RoomInitBuildingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomInitBuildingViewContainer.lua
 
-local var_0_0 = class("RoomInitBuildingViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomInitBuildingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomInitBuildingViewContainer = class("RoomInitBuildingViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_navigatebuttonscontainer"))
+function RoomInitBuildingViewContainer:buildViews()
+	local views = {}
 
-	arg_1_0._roomInitBuildingView = RoomInitBuildingView.New()
+	table.insert(views, TabViewGroup.New(1, "#go_navigatebuttonscontainer"))
 
-	table.insert(var_1_0, arg_1_0._roomInitBuildingView)
-	table.insert(var_1_0, RoomInitBuildingViewChange.New())
-	table.insert(var_1_0, RoomInitBuildingSkinView.New())
-	table.insert(var_1_0, RoomViewTopRight.New("#go_topright", arg_1_0._viewSetting.otherRes[1], {
+	self._roomInitBuildingView = RoomInitBuildingView.New()
+
+	table.insert(views, self._roomInitBuildingView)
+	table.insert(views, RoomInitBuildingViewChange.New())
+	table.insert(views, RoomInitBuildingSkinView.New())
+	table.insert(views, RoomViewTopRight.New("#go_topright", self._viewSetting.otherRes[1], {
 		{
 			initAnim = "idle",
 			type = 2,
@@ -48,27 +50,27 @@ function var_0_0.buildViews(arg_1_0)
 			}
 		}
 	}))
-	table.insert(var_1_0, arg_1_0:_createShowDegreeListView())
-	table.insert(var_1_0, arg_1_0:_createRoomSkinListView())
+	table.insert(views, self:_createShowDegreeListView())
+	table.insert(views, self:_createRoomSkinListView())
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function RoomInitBuildingViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
-		}, HelpEnum.HelpId.RoomInitBuilding, arg_2_0._closeCallback, nil, nil, arg_2_0)
+		}, HelpEnum.HelpId.RoomInitBuilding, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0._closeCallback(arg_3_0)
+function RoomInitBuildingViewContainer:_closeCallback()
 	if ViewMgr.instance:isOpen(ViewName.RoomFormulaView) then
 		ViewMgr.instance:closeView(ViewName.RoomFormulaView)
 	end
@@ -76,73 +78,75 @@ function var_0_0._closeCallback(arg_3_0)
 	RoomMapController.instance:onCloseRoomInitBuildingView()
 end
 
-function var_0_0.setSelectLine(arg_4_0, arg_4_1)
-	arg_4_0._selectLineId = arg_4_1
+function RoomInitBuildingViewContainer:setSelectLine(lineId)
+	self._selectLineId = lineId
 end
 
-function var_0_0.getSelectLine(arg_5_0)
-	return arg_5_0._selectLineId
+function RoomInitBuildingViewContainer:getSelectLine()
+	return self._selectLineId
 end
 
-function var_0_0.setSelectPartId(arg_6_0, arg_6_1)
-	arg_6_0._selectPartId = arg_6_1
+function RoomInitBuildingViewContainer:setSelectPartId(partId)
+	self._selectPartId = partId
 end
 
-function var_0_0.getCurrentViewParam(arg_7_0)
+function RoomInitBuildingViewContainer:getCurrentViewParam()
 	return {
-		partId = arg_7_0._selectPartId,
-		lineId = arg_7_0._selectLineId
+		partId = self._selectPartId,
+		lineId = self._selectLineId
 	}
 end
 
-function var_0_0.onContainerOpenFinish(arg_8_0)
-	arg_8_0._navigateButtonView:resetCloseBtnAudioId(0)
+function RoomInitBuildingViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetCloseBtnAudioId(0)
 end
 
-function var_0_0._createShowDegreeListView(arg_9_0)
-	local var_9_0 = ListScrollParam.New()
+function RoomInitBuildingViewContainer:_createShowDegreeListView()
+	local scrollParam = ListScrollParam.New()
 
-	var_9_0.scrollGOPath = "right/#go_init/#go_activeList/#scroll_activeList"
-	var_9_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_9_0.prefabUrl = "right/#go_init/#go_activeList/#scroll_activeList/viewport/content/#go_degreeItem"
-	var_9_0.cellClass = RoomInitBuildingDegreeItem
-	var_9_0.scrollDir = ScrollEnum.ScrollDirV
-	var_9_0.cellWidth = 635
-	var_9_0.cellHeight = 60
-	var_9_0.cellSpaceV = 4
-	var_9_0.startSpace = 0
+	scrollParam.scrollGOPath = "right/#go_init/#go_activeList/#scroll_activeList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "right/#go_init/#go_activeList/#scroll_activeList/viewport/content/#go_degreeItem"
+	scrollParam.cellClass = RoomInitBuildingDegreeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.cellWidth = 635
+	scrollParam.cellHeight = 60
+	scrollParam.cellSpaceV = 4
+	scrollParam.startSpace = 0
 
-	local var_9_1 = {}
+	local animationDelayTimes = {}
 
-	for iter_9_0 = 1, 10 do
-		var_9_1[iter_9_0] = (iter_9_0 - 1) * 0.03
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.03
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	return LuaListScrollViewWithAnimator.New(RoomShowDegreeListModel.instance, var_9_0, var_9_1)
+	return LuaListScrollViewWithAnimator.New(RoomShowDegreeListModel.instance, scrollParam, animationDelayTimes)
 end
 
-function var_0_0._createRoomSkinListView(arg_10_0)
-	local var_10_0 = ListScrollParam.New()
+function RoomInitBuildingViewContainer:_createRoomSkinListView()
+	local scrollParam = ListScrollParam.New()
 
-	var_10_0.scrollGOPath = "right/#go_skin/#scroll_view"
-	var_10_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_10_0.prefabUrl = "right/#go_skin/#scroll_view/viewport/content/#go_skinitem"
-	var_10_0.cellClass = RoomInitBuildingSkinItem
-	var_10_0.scrollDir = ScrollEnum.ScrollDirV
-	var_10_0.cellWidth = 600
-	var_10_0.cellHeight = 184
-	var_10_0.cellSpaceV = 20
-	var_10_0.startSpace = 14
+	scrollParam.scrollGOPath = "right/#go_skin/#scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "right/#go_skin/#scroll_view/viewport/content/#go_skinitem"
+	scrollParam.cellClass = RoomInitBuildingSkinItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.cellWidth = 600
+	scrollParam.cellHeight = 184
+	scrollParam.cellSpaceV = 20
+	scrollParam.startSpace = 14
 
-	return LuaListScrollView.New(RoomSkinListModel.instance, var_10_0)
+	return LuaListScrollView.New(RoomSkinListModel.instance, scrollParam)
 end
 
-function var_0_0.setIsShowTitle(arg_11_0, arg_11_1)
-	if not arg_11_0._roomInitBuildingView then
+function RoomInitBuildingViewContainer:setIsShowTitle(isShow)
+	if not self._roomInitBuildingView then
 		return
 	end
 
-	arg_11_0._roomInitBuildingView:setTitleShow(arg_11_1)
+	self._roomInitBuildingView:setTitleShow(isShow)
 end
 
-return var_0_0
+return RoomInitBuildingViewContainer

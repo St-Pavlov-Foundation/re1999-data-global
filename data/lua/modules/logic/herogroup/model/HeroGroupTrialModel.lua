@@ -1,250 +1,252 @@
-﻿module("modules.logic.herogroup.model.HeroGroupTrialModel", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroGroupTrialModel.lua
 
-local var_0_0 = class("HeroGroupTrialModel", BaseModel)
+module("modules.logic.herogroup.model.HeroGroupTrialModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.curBattleId = nil
-	arg_1_0._limitNum = 0
-	arg_1_0._trialEquipMo = BaseModel.New()
+local HeroGroupTrialModel = class("HeroGroupTrialModel", BaseModel)
 
-	var_0_0.super.ctor(arg_1_0)
+function HeroGroupTrialModel:ctor()
+	self.curBattleId = nil
+	self._limitNum = 0
+	self._trialEquipMo = BaseModel.New()
+
+	HeroGroupTrialModel.super.ctor(self)
 end
 
-function var_0_0.setTrialByBattleId(arg_2_0, arg_2_1)
-	arg_2_1 = arg_2_1 or HeroGroupModel.instance.battleId
+function HeroGroupTrialModel:setTrialByBattleId(battleId)
+	battleId = battleId or HeroGroupModel.instance.battleId
 
-	if arg_2_0.curBattleId == arg_2_1 then
+	if self.curBattleId == battleId then
 		return
 	end
 
-	arg_2_0.curBattleId = arg_2_1
+	self.curBattleId = battleId
 
-	local var_2_0 = lua_battle.configDict[arg_2_1]
+	local battleCO = lua_battle.configDict[battleId]
 
-	if not var_2_0 then
+	if not battleCO then
 		return
 	end
 
-	arg_2_0._trialEquipMo:clear()
-	var_0_0.super.clear(arg_2_0)
+	self._trialEquipMo:clear()
+	HeroGroupTrialModel.super.clear(self)
 
-	local var_2_1 = var_2_0.trialHeros
+	local curBattleTrialHeros = battleCO.trialHeros
 
-	if HeroGroupModel.instance.episodeId and arg_2_1 == HeroGroupModel.instance.battleId then
-		var_2_1 = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
+	if HeroGroupModel.instance.episodeId and battleId == HeroGroupModel.instance.battleId then
+		curBattleTrialHeros = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
 	end
 
-	if not string.nilorempty(var_2_1) then
-		local var_2_2 = GameUtil.splitString2(var_2_1, true)
+	if not string.nilorempty(curBattleTrialHeros) then
+		local trials = GameUtil.splitString2(curBattleTrialHeros, true)
 
-		for iter_2_0, iter_2_1 in pairs(var_2_2) do
-			local var_2_3 = iter_2_1[1]
-			local var_2_4 = iter_2_1[2] or 0
+		for _, trial in pairs(trials) do
+			local trialId = trial[1]
+			local templateId = trial[2] or 0
+			local co = lua_hero_trial.configDict[trialId] and lua_hero_trial.configDict[trialId][templateId]
 
-			if lua_hero_trial.configDict[var_2_3] and lua_hero_trial.configDict[var_2_3][var_2_4] then
-				local var_2_5 = HeroMo.New()
+			if co then
+				local heroMo = HeroMo.New()
 
-				var_2_5:initFromTrial(unpack(iter_2_1))
-				arg_2_0:addAtLast(var_2_5)
+				heroMo:initFromTrial(unpack(trial))
+				self:addAtLast(heroMo)
 			else
-				logError(string.format("试用角色配置不存在:%s#%s", var_2_3, var_2_4))
+				logError(string.format("试用角色配置不存在:%s#%s", trialId, templateId))
 			end
 		end
 	end
 
-	if not string.nilorempty(var_2_0.trialEquips) then
-		local var_2_6 = string.splitToNumber(var_2_0.trialEquips, "|")
+	if not string.nilorempty(battleCO.trialEquips) then
+		local trials = string.splitToNumber(battleCO.trialEquips, "|")
 
-		for iter_2_2, iter_2_3 in pairs(var_2_6) do
-			local var_2_7 = lua_equip_trial.configDict[iter_2_3]
+		for _, trial in pairs(trials) do
+			local co = lua_equip_trial.configDict[trial]
 
-			if var_2_7 then
-				local var_2_8 = EquipMO.New()
+			if co then
+				local equipMO = EquipMO.New()
 
-				var_2_8:initByTrialEquipCO(var_2_7)
-				arg_2_0._trialEquipMo:addAtLast(var_2_8)
+				equipMO:initByTrialEquipCO(co)
+				self._trialEquipMo:addAtLast(equipMO)
 			else
-				logError("试用心相配置不存在" .. tostring(iter_2_3))
+				logError("试用心相配置不存在" .. tostring(trial))
 			end
 		end
 	end
 
-	arg_2_0._limitNum = var_2_0.trialLimit
+	self._limitNum = battleCO.trialLimit
 
-	local var_2_9 = ToughBattleModel.instance:getAddTrialHeros()
+	local addTrialList = ToughBattleModel.instance:getAddTrialHeros()
 
-	if var_2_9 then
-		arg_2_0._limitNum = math.min(4, #var_2_9 + arg_2_0._limitNum)
+	if addTrialList then
+		self._limitNum = math.min(4, #addTrialList + self._limitNum)
 
-		for iter_2_4, iter_2_5 in pairs(var_2_9) do
-			local var_2_10 = HeroMo.New()
+		for index, id in pairs(addTrialList) do
+			local heroMo = HeroMo.New()
 
-			var_2_10:initFromTrial(iter_2_5)
-			arg_2_0:addAtLast(var_2_10)
+			heroMo:initFromTrial(id)
+			self:addAtLast(heroMo)
 		end
 	end
 end
 
-function var_0_0.setTrialByOdysseyGroupMo(arg_3_0, arg_3_1)
-	arg_3_0:clear()
+function HeroGroupTrialModel:setTrialByOdysseyGroupMo(groupMo)
+	self:clear()
 
-	arg_3_0._limitNum = 1
+	self._limitNum = 1
 
-	if arg_3_1.trialDict then
-		for iter_3_0, iter_3_1 in pairs(arg_3_1.trialDict) do
-			local var_3_0 = iter_3_1[1]
+	if groupMo.trialDict then
+		for pos, trialMo in pairs(groupMo.trialDict) do
+			local trialId = trialMo[1]
 
-			if var_3_0 ~= nil and var_3_0 ~= 0 then
-				local var_3_1 = HeroMo.New()
+			if trialId ~= nil and trialId ~= 0 then
+				local heroMo = HeroMo.New()
 
-				var_3_1:initFromTrial(var_3_0, 0, iter_3_0)
-				arg_3_0:addAtLast(var_3_1)
+				heroMo:initFromTrial(trialId, 0, pos)
+				self:addAtLast(heroMo)
 
-				local var_3_2 = lua_hero_trial.configDict[var_3_0][0]
-				local var_3_3 = EquipMO.New()
+				local trialCo = lua_hero_trial.configDict[trialId][0]
+				local equipMO = EquipMO.New()
 
-				var_3_3:initByTrialCO(var_3_2)
-				var_3_3:clearRecommend()
-				arg_3_0._trialEquipMo:addAtLast(var_3_3)
+				equipMO:initByTrialCO(trialCo)
+				self._trialEquipMo:addAtLast(equipMO)
 			end
 		end
 	end
 end
 
-function var_0_0.setTrailByTrialIdList(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:clear()
+function HeroGroupTrialModel:setTrailByTrialIdList(trialIdList, limitNum)
+	self:clear()
 
-	arg_4_0._limitNum = arg_4_2 or arg_4_0._limitNum
+	self._limitNum = limitNum or self._limitNum
 
-	if arg_4_1 then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-			arg_4_0:addTrialHero(iter_4_1)
+	if trialIdList then
+		for _, trialId in ipairs(trialIdList) do
+			self:addTrialHero(trialId)
 		end
 	end
 end
 
-function var_0_0.addTrialHero(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1 or arg_5_1 == 0 then
+function HeroGroupTrialModel:addTrialHero(trialId, templateId)
+	if not trialId or trialId == 0 then
 		return
 	end
 
-	arg_5_2 = arg_5_2 or 0
+	templateId = templateId or 0
 
-	local var_5_0 = HeroMo.New()
+	local heroMo = HeroMo.New()
 
-	var_5_0:initFromTrial(arg_5_1, arg_5_2)
-	arg_5_0:addAtLast(var_5_0)
+	heroMo:initFromTrial(trialId, templateId)
+	self:addAtLast(heroMo)
 
-	local var_5_1 = lua_hero_trial.configDict[arg_5_1][arg_5_2]
-	local var_5_2 = EquipMO.New()
+	local trialCo = lua_hero_trial.configDict[trialId][templateId]
+	local equipMO = EquipMO.New()
 
-	var_5_2:initByTrialCO(var_5_1)
-	arg_5_0._trialEquipMo:addAtLast(var_5_2)
+	equipMO:initByTrialCO(trialCo)
+	self._trialEquipMo:addAtLast(equipMO)
 end
 
-local var_0_1 = false
-local var_0_2 = false
+local isLevelFirst = false
+local isAsc = false
 
-function var_0_0.sortByLevelAndRare(arg_6_0, arg_6_1, arg_6_2)
-	var_0_1 = arg_6_1
-	var_0_2 = arg_6_2
+function HeroGroupTrialModel:sortByLevelAndRare(levelFirst, asc)
+	isLevelFirst = levelFirst
+	isAsc = asc
 
-	arg_6_0:sort(var_0_0.sortMoFunc)
+	self:sort(HeroGroupTrialModel.sortMoFunc)
 end
 
-function var_0_0.sortMoFunc(arg_7_0, arg_7_1)
-	if var_0_1 then
-		if arg_7_0.level ~= arg_7_1.level then
-			if var_0_2 then
-				return arg_7_0.level < arg_7_1.level
+function HeroGroupTrialModel.sortMoFunc(a, b)
+	if isLevelFirst then
+		if a.level ~= b.level then
+			if isAsc then
+				return a.level < b.level
 			else
-				return arg_7_0.level > arg_7_1.level
+				return a.level > b.level
 			end
-		elseif arg_7_0.config.rare ~= arg_7_1.config.rare then
-			return arg_7_0.config.rare > arg_7_1.config.rare
+		elseif a.config.rare ~= b.config.rare then
+			return a.config.rare > b.config.rare
 		end
-	elseif arg_7_0.config.rare ~= arg_7_1.config.rare then
-		if var_0_2 then
-			return arg_7_0.config.rare < arg_7_1.config.rare
+	elseif a.config.rare ~= b.config.rare then
+		if isAsc then
+			return a.config.rare < b.config.rare
 		else
-			return arg_7_0.config.rare > arg_7_1.config.rare
+			return a.config.rare > b.config.rare
 		end
-	elseif arg_7_0.level ~= arg_7_1.level then
-		return arg_7_0.level > arg_7_1.level
+	elseif a.level ~= b.level then
+		return a.level > b.level
 	end
 
-	return arg_7_0.config.id < arg_7_1.config.id
+	return a.config.id < b.config.id
 end
 
-function var_0_0.setFilter(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._filterDmgs = arg_8_1
-	arg_8_0._filterCareers = arg_8_2
+function HeroGroupTrialModel:setFilter(dmgs, careers)
+	self._filterDmgs = dmgs
+	self._filterCareers = careers
 end
 
-function var_0_0.getFilterList(arg_9_0)
-	arg_9_0:checkBattleIdIsVaild()
+function HeroGroupTrialModel:getFilterList()
+	self:checkBattleIdIsVaild()
 
-	local var_9_0 = {}
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0:getList()) do
-		if (not arg_9_0._filterCareers or tabletool.indexOf(arg_9_0._filterCareers, iter_9_1.config.career)) and (not arg_9_0._filterDmgs or tabletool.indexOf(arg_9_0._filterDmgs, iter_9_1.config.dmgType)) then
-			table.insert(var_9_0, iter_9_1)
+	for _, mo in ipairs(self:getList()) do
+		if (not self._filterCareers or tabletool.indexOf(self._filterCareers, mo.config.career)) and (not self._filterDmgs or tabletool.indexOf(self._filterDmgs, mo.config.dmgType)) then
+			table.insert(list, mo)
 		end
 	end
 
-	return var_9_0
+	return list
 end
 
-function var_0_0.clear(arg_10_0)
-	arg_10_0.curBattleId = nil
-	arg_10_0._limitNum = 0
+function HeroGroupTrialModel:clear()
+	self.curBattleId = nil
+	self._limitNum = 0
 
-	arg_10_0._trialEquipMo:clear()
-	var_0_0.super.clear(arg_10_0)
+	self._trialEquipMo:clear()
+	HeroGroupTrialModel.super.clear(self)
 end
 
-function var_0_0.getLimitNum(arg_11_0)
-	arg_11_0:checkBattleIdIsVaild()
+function HeroGroupTrialModel:getLimitNum()
+	self:checkBattleIdIsVaild()
 
-	return arg_11_0._limitNum
+	return self._limitNum
 end
 
-function var_0_0.getHeroMo(arg_12_0, arg_12_1)
-	return arg_12_0:getById(tostring(tonumber(arg_12_1.id .. "." .. arg_12_1.trialTemplate) - 1099511627776))
+function HeroGroupTrialModel:getHeroMo(trialCo)
+	return self:getById(tostring(tonumber(trialCo.id .. "." .. trialCo.trialTemplate) - 1099511627776))
 end
 
-function var_0_0.getEquipMo(arg_13_0, arg_13_1)
-	return arg_13_0._trialEquipMo:getById(tonumber(arg_13_1))
+function HeroGroupTrialModel:getEquipMo(equipUid)
+	return self._trialEquipMo:getById(tonumber(equipUid))
 end
 
-function var_0_0.getTrialEquipList(arg_14_0)
-	return arg_14_0._trialEquipMo:getList()
+function HeroGroupTrialModel:getTrialEquipList()
+	return self._trialEquipMo:getList()
 end
 
-function var_0_0.checkBattleIdIsVaild(arg_15_0)
-	if arg_15_0.curBattleId and HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 and arg_15_0.curBattleId ~= HeroGroupModel.instance.battleId then
-		arg_15_0:clear()
+function HeroGroupTrialModel:checkBattleIdIsVaild()
+	if self.curBattleId and HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 and self.curBattleId ~= HeroGroupModel.instance.battleId then
+		self:clear()
 	end
 end
 
-function var_0_0.isOnlyUseTrial(arg_16_0)
-	arg_16_0:checkBattleIdIsVaild()
+function HeroGroupTrialModel:isOnlyUseTrial()
+	self:checkBattleIdIsVaild()
 
-	if not arg_16_0.curBattleId then
+	if not self.curBattleId then
 		return false
 	end
 
-	local var_16_0 = lua_battle.configDict[arg_16_0.curBattleId]
+	local battleCO = lua_battle.configDict[self.curBattleId]
 
-	return arg_16_0._limitNum > 0 and var_16_0.onlyTrial == 1
+	return self._limitNum > 0 and battleCO.onlyTrial == 1
 end
 
-function var_0_0.haveTrialEquip(arg_17_0)
-	arg_17_0:checkBattleIdIsVaild()
+function HeroGroupTrialModel:haveTrialEquip()
+	self:checkBattleIdIsVaild()
 
-	return arg_17_0._trialEquipMo:getCount() > 0
+	return self._trialEquipMo:getCount() > 0
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupTrialModel.instance = HeroGroupTrialModel.New()
 
-return var_0_0
+return HeroGroupTrialModel

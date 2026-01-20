@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_4.act131.config.Activity131Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/config/Activity131Config.lua
 
-local var_0_0 = class("Activity131Config", BaseConfig)
+module("modules.logic.versionactivity1_4.act131.config.Activity131Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act131EpisodeConfig = nil
-	arg_1_0._act131ElementConfig = nil
-	arg_1_0._act131DialogConfig = nil
-	arg_1_0._act131DialogList = nil
-	arg_1_0._act131TaskConfig = nil
+local Activity131Config = class("Activity131Config", BaseConfig)
+
+function Activity131Config:ctor()
+	self._act131EpisodeConfig = nil
+	self._act131ElementConfig = nil
+	self._act131DialogConfig = nil
+	self._act131DialogList = nil
+	self._act131TaskConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity131Config:reqConfigNames()
 	return {
 		"activity131_episode",
 		"activity131_element",
@@ -19,112 +21,112 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity131_episode" then
-		arg_3_0._act131EpisodeConfig = arg_3_2
-	elseif arg_3_1 == "activity131_element" then
-		arg_3_0._act131ElementConfig = arg_3_2
-	elseif arg_3_1 == "activity131_dialog" then
-		arg_3_0._act131DialogConfig = arg_3_2
+function Activity131Config:onConfigLoaded(configName, configTable)
+	if configName == "activity131_episode" then
+		self._act131EpisodeConfig = configTable
+	elseif configName == "activity131_element" then
+		self._act131ElementConfig = configTable
+	elseif configName == "activity131_dialog" then
+		self._act131DialogConfig = configTable
 
-		arg_3_0:_initDialog()
-	elseif arg_3_1 == "activity131_task" then
-		arg_3_0._act131TaskConfig = arg_3_2
+		self:_initDialog()
+	elseif configName == "activity131_task" then
+		self._act131TaskConfig = configTable
 	end
 end
 
-function var_0_0.getActivity131EpisodeCos(arg_4_0, arg_4_1)
-	return arg_4_0._act131EpisodeConfig.configDict[arg_4_1]
+function Activity131Config:getActivity131EpisodeCos(actId)
+	return self._act131EpisodeConfig.configDict[actId]
 end
 
-function var_0_0.getActivity131EpisodeCo(arg_5_0, arg_5_1, arg_5_2)
-	return arg_5_0._act131EpisodeConfig.configDict[arg_5_1][arg_5_2]
+function Activity131Config:getActivity131EpisodeCo(actId, id)
+	return self._act131EpisodeConfig.configDict[actId][id]
 end
 
-function var_0_0.getActivity131ElementCo(arg_6_0, arg_6_1, arg_6_2)
-	return arg_6_0._act131ElementConfig.configDict[arg_6_1][arg_6_2]
+function Activity131Config:getActivity131ElementCo(actId, id)
+	return self._act131ElementConfig.configDict[actId][id]
 end
 
-function var_0_0.getActivity131DialogCo(arg_7_0, arg_7_1, arg_7_2)
-	return arg_7_0._act131DialogConfig.configDict[arg_7_1][arg_7_2]
+function Activity131Config:getActivity131DialogCo(dialogId, stepId)
+	return self._act131DialogConfig.configDict[dialogId][stepId]
 end
 
-function var_0_0.getActivity131DialogGroup(arg_8_0, arg_8_1)
-	return arg_8_0._act131DialogConfig.configDict[arg_8_1]
+function Activity131Config:getActivity131DialogGroup(dialogId)
+	return self._act131DialogConfig.configDict[dialogId]
 end
 
-function var_0_0._initDialog(arg_9_0)
-	arg_9_0._act131DialogList = {}
+function Activity131Config:_initDialog()
+	self._act131DialogList = {}
 
-	local var_9_0
-	local var_9_1 = "0"
+	local sectionId
+	local defaultId = "0"
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._act131DialogConfig.configList) do
-		local var_9_2 = arg_9_0._act131DialogList[iter_9_1.id]
+	for i, v in ipairs(self._act131DialogConfig.configList) do
+		local group = self._act131DialogList[v.id]
 
-		if not var_9_2 then
-			var_9_2 = {
+		if not group then
+			group = {
 				optionParamList = {}
 			}
-			var_9_0 = var_9_1
-			arg_9_0._act131DialogList[iter_9_1.id] = var_9_2
+			sectionId = defaultId
+			self._act131DialogList[v.id] = group
 		end
 
-		if not string.nilorempty(iter_9_1.option_param) then
-			table.insert(var_9_2.optionParamList, tonumber(iter_9_1.option_param))
+		if not string.nilorempty(v.option_param) then
+			table.insert(group.optionParamList, tonumber(v.option_param))
 		end
 
-		if iter_9_1.type == "selector" then
-			var_9_0 = iter_9_1.param
-			var_9_2[var_9_0] = var_9_2[var_9_0] or {}
-			var_9_2[var_9_0].type = iter_9_1.type
-			var_9_2[var_9_0].option_param = iter_9_1.option_param
-		elseif iter_9_1.type == "selectorend" then
-			var_9_0 = var_9_1
-		elseif iter_9_1.type == "random" then
-			local var_9_3 = iter_9_1.param
+		if v.type == "selector" then
+			sectionId = v.param
+			group[sectionId] = group[sectionId] or {}
+			group[sectionId].type = v.type
+			group[sectionId].option_param = v.option_param
+		elseif v.type == "selectorend" then
+			sectionId = defaultId
+		elseif v.type == "random" then
+			local sectionId = v.param
 
-			var_9_2[var_9_3] = var_9_2[var_9_3] or {}
-			var_9_2[var_9_3].type = iter_9_1.type
-			var_9_2[var_9_3].option_param = iter_9_1.option_param
+			group[sectionId] = group[sectionId] or {}
+			group[sectionId].type = v.type
+			group[sectionId].option_param = v.option_param
 
-			table.insert(var_9_2[var_9_3], iter_9_1)
+			table.insert(group[sectionId], v)
 		else
-			var_9_2[var_9_0] = var_9_2[var_9_0] or {}
+			group[sectionId] = group[sectionId] or {}
 
-			table.insert(var_9_2[var_9_0], iter_9_1)
+			table.insert(group[sectionId], v)
 		end
 	end
 end
 
-function var_0_0.getDialog(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0._act131DialogList[arg_10_1]
+function Activity131Config:getDialog(groupId, sectionId)
+	local group = self._act131DialogList[groupId]
 
-	return var_10_0 and var_10_0[arg_10_2]
+	return group and group[sectionId]
 end
 
-function var_0_0.getOptionParamList(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._act131DialogList[arg_11_1]
+function Activity131Config:getOptionParamList(groupId)
+	local group = self._act131DialogList[groupId]
 
-	return var_11_0 and var_11_0.optionParamList
+	return group and group.optionParamList
 end
 
-function var_0_0.getActivity131TaskCo(arg_12_0, arg_12_1)
-	return arg_12_0._act131TaskConfig.configDict[arg_12_1]
+function Activity131Config:getActivity131TaskCo(id)
+	return self._act131TaskConfig.configDict[id]
 end
 
-function var_0_0.getTaskByActId(arg_13_0, arg_13_1)
-	local var_13_0 = {}
+function Activity131Config:getTaskByActId(actId)
+	local list = {}
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._act131TaskConfig.configList) do
-		if iter_13_1.activityId == arg_13_1 then
-			table.insert(var_13_0, iter_13_1)
+	for _, co in pairs(self._act131TaskConfig.configList) do
+		if co.activityId == actId then
+			table.insert(list, co)
 		end
 	end
 
-	return var_13_0
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+Activity131Config.instance = Activity131Config.New()
 
-return var_0_0
+return Activity131Config

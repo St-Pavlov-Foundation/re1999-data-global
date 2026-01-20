@@ -1,77 +1,79 @@
-﻿module("modules.logic.scene.shelter.entity.SurvivalDecreeVoteEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/entity/SurvivalDecreeVoteEntity.lua
 
-local var_0_0 = class("SurvivalDecreeVoteEntity", LuaCompBase)
+module("modules.logic.scene.shelter.entity.SurvivalDecreeVoteEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if arg_1_3 == nil then
-		arg_1_3 = math.random(0, 5)
+local SurvivalDecreeVoteEntity = class("SurvivalDecreeVoteEntity", LuaCompBase)
+
+function SurvivalDecreeVoteEntity.Create(resPath, root, pos, dir)
+	if dir == nil then
+		dir = math.random(0, 5)
 	end
 
-	local var_1_0 = gohelper.create3d(arg_1_1, tostring(arg_1_2))
-	local var_1_1, var_1_2, var_1_3 = SurvivalHelper.instance:hexPointToWorldPoint(arg_1_2.q, arg_1_2.r)
-	local var_1_4 = var_1_0.transform
+	local go = gohelper.create3d(root, tostring(pos))
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
+	local rootTrans = go.transform
 
-	transformhelper.setLocalPos(var_1_4, var_1_1, var_1_2, var_1_3)
-	transformhelper.setLocalRotation(var_1_4, 0, arg_1_3 * 60, 0)
+	transformhelper.setLocalPos(rootTrans, x, y, z)
+	transformhelper.setLocalRotation(rootTrans, 0, dir * 60, 0)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalDecreeVoteEntity, resPath)
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.resPath = arg_2_1
+function SurvivalDecreeVoteEntity:ctor(resPath)
+	self.resPath = resPath
 end
 
-function var_0_0.onStart(arg_3_0)
-	arg_3_0.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
+function SurvivalDecreeVoteEntity:onStart()
+	self.go:GetComponent(typeof(SLFramework.LuaMonobehavier)).enabled = false
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	arg_4_0.go = arg_4_1
-	arg_4_0.transform = arg_4_1.transform
+function SurvivalDecreeVoteEntity:init(go)
+	self.go = go
+	self.transform = go.transform
 
-	arg_4_0:showModel()
+	self:showModel()
 end
 
-function var_0_0.showModel(arg_5_0)
-	if not gohelper.isNil(arg_5_0.goModel) then
+function SurvivalDecreeVoteEntity:showModel()
+	if not gohelper.isNil(self.goModel) then
 		return
 	end
 
-	if arg_5_0._loader then
+	if self._loader then
 		return
 	end
 
-	arg_5_0._loader = PrefabInstantiate.Create(arg_5_0.go)
+	self._loader = PrefabInstantiate.Create(self.go)
 
-	local var_5_0 = arg_5_0:getResPath()
+	local path = self:getResPath()
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(path) then
 		return
 	end
 
-	arg_5_0._loader:startLoad(var_5_0, arg_5_0._onResLoadEnd, arg_5_0)
+	self._loader:startLoad(path, self._onResLoadEnd, self)
 end
 
-function var_0_0.getResPath(arg_6_0)
-	return arg_6_0.resPath
+function SurvivalDecreeVoteEntity:getResPath()
+	return self.resPath
 end
 
-function var_0_0._onResLoadEnd(arg_7_0)
-	local var_7_0 = arg_7_0._loader:getInstGO()
-	local var_7_1 = var_7_0.transform
+function SurvivalDecreeVoteEntity:_onResLoadEnd()
+	local go = self._loader:getInstGO()
+	local trans = go.transform
 
-	arg_7_0.goModel = var_7_0
+	self.goModel = go
 
-	transformhelper.setLocalPos(var_7_1, 0, 0, 0)
-	transformhelper.setLocalRotation(var_7_1, 0, 0, 0)
-	transformhelper.setLocalScale(var_7_1, 1, 1, 1)
-	gohelper.setActive(arg_7_0.goModel, true)
+	transformhelper.setLocalPos(trans, 0, 0, 0)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	transformhelper.setLocalScale(trans, 1, 1, 1)
+	gohelper.setActive(self.goModel, true)
 end
 
-function var_0_0.dispose(arg_8_0)
-	if not gohelper.isNil(arg_8_0.go) then
-		gohelper.destroy(arg_8_0.go)
+function SurvivalDecreeVoteEntity:dispose()
+	if not gohelper.isNil(self.go) then
+		gohelper.destroy(self.go)
 	end
 end
 
-return var_0_0
+return SurvivalDecreeVoteEntity

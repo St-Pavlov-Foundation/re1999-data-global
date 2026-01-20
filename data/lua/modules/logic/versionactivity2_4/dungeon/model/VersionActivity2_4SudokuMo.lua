@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/model/VersionActivity2_4SudokuMo.lua
 
-local var_0_0 = pureTable("VersionActivity2_4SudokuMo")
-local var_0_1 = {
+module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuMo", package.seeall)
+
+local VersionActivity2_4SudokuMo = pureTable("VersionActivity2_4SudokuMo")
+local resultStatUse = {
 	["break"] = "中断",
 	done = "成功",
 	reset = "重新开始"
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.beginTime = Time.realtimeSinceStartup
-	arg_1_0.undoNum = 0
-	arg_1_0.erroNum = 0
+function VersionActivity2_4SudokuMo:ctor()
+	self.beginTime = Time.realtimeSinceStartup
+	self.undoNum = 0
+	self.erroNum = 0
 end
 
-function var_0_0.setResult(arg_2_0, arg_2_1)
-	arg_2_0.result = arg_2_1
+function VersionActivity2_4SudokuMo:setResult(result)
+	self.result = result
 end
 
-function var_0_0.addUndoCount(arg_3_0)
-	arg_3_0.undoNum = arg_3_0.undoNum + 1
+function VersionActivity2_4SudokuMo:addUndoCount()
+	self.undoNum = self.undoNum + 1
 end
 
-function var_0_0.addErrorCount(arg_4_0)
-	arg_4_0.erroNum = arg_4_0.erroNum + 1
+function VersionActivity2_4SudokuMo:addErrorCount()
+	self.erroNum = self.erroNum + 1
 end
 
-function var_0_0.sendStatData(arg_5_0)
+function VersionActivity2_4SudokuMo:sendStatData()
 	StatController.instance:track(StatEnum.EventName.SudokuResult, {
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_5_0.beginTime,
-		[StatEnum.EventProperties.Result] = var_0_1[arg_5_0.result],
-		[StatEnum.EventProperties.SudokuBackNum] = arg_5_0.undoNum,
-		[StatEnum.EventProperties.SudokuErrorNum] = arg_5_0.erroNum
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - self.beginTime,
+		[StatEnum.EventProperties.Result] = resultStatUse[self.result],
+		[StatEnum.EventProperties.SudokuBackNum] = self.undoNum,
+		[StatEnum.EventProperties.SudokuErrorNum] = self.erroNum
 	})
 end
 
-return var_0_0
+return VersionActivity2_4SudokuMo

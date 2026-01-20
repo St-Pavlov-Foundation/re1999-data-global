@@ -1,81 +1,83 @@
-﻿module("modules.logic.reactivity.view.ReactivityRuleItem", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/view/ReactivityRuleItem.lua
 
-local var_0_0 = class("ReactivityRuleItem", ListScrollCell)
+module("modules.logic.reactivity.view.ReactivityRuleItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.reward1 = arg_1_0:createReward(gohelper.findChild(arg_1_1, "#reward1"))
-	arg_1_0.reward2 = arg_1_0:createReward(gohelper.findChild(arg_1_1, "#reward2"))
+local ReactivityRuleItem = class("ReactivityRuleItem", ListScrollCell)
+
+function ReactivityRuleItem:init(go)
+	self.reward1 = self:createReward(gohelper.findChild(go, "#reward1"))
+	self.reward2 = self:createReward(gohelper.findChild(go, "#reward2"))
 end
 
-function var_0_0.createReward(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getUserDataTb_()
+function ReactivityRuleItem:createReward(go)
+	local item = self:getUserDataTb_()
 
-	var_2_0.go = arg_2_1
-	var_2_0.imageBg = gohelper.findChildImage(arg_2_1, "image_bg")
-	var_2_0.simageReward = gohelper.findChildSingleImage(arg_2_1, "simage_reward")
-	var_2_0.imageCircle = gohelper.findChildImage(arg_2_1, "image_circle")
-	var_2_0.txtCount = gohelper.findChildTextMesh(arg_2_1, "txt_rewardcount")
-	var_2_0.btn = gohelper.findButtonWithAudio(arg_2_1)
+	item.go = go
+	item.imageBg = gohelper.findChildImage(go, "image_bg")
+	item.simageReward = gohelper.findChildSingleImage(go, "simage_reward")
+	item.imageCircle = gohelper.findChildImage(go, "image_circle")
+	item.txtCount = gohelper.findChildTextMesh(go, "txt_rewardcount")
+	item.btn = gohelper.findButtonWithAudio(go)
 
-	var_2_0.btn:AddClickListener(var_0_0.onClickItem, var_2_0)
+	item.btn:AddClickListener(ReactivityRuleItem.onClickItem, item)
 
-	return var_2_0
+	return item
 end
 
-function var_0_0.onClickItem(arg_3_0)
-	if not arg_3_0.data then
+function ReactivityRuleItem.onClickItem(itemTab)
+	if not itemTab.data then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(arg_3_0.data.type, arg_3_0.data.id, false)
+	MaterialTipController.instance:showMaterialInfo(itemTab.data.type, itemTab.data.id, false)
 end
 
-function var_0_0.addEventListeners(arg_4_0)
+function ReactivityRuleItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
+function ReactivityRuleItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function ReactivityRuleItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_6_0 = {
+	local data1 = {
 		quantity = 1,
-		type = arg_6_1.typeId,
-		id = arg_6_1.itemId
+		type = mo.typeId,
+		id = mo.itemId
 	}
-	local var_6_1 = string.splitToNumber(arg_6_1.price, "#")
-	local var_6_2 = {
-		type = var_6_1[1],
-		id = var_6_1[2],
-		quantity = var_6_1[3]
+	local param = string.splitToNumber(mo.price, "#")
+	local data2 = {
+		type = param[1],
+		id = param[2],
+		quantity = param[3]
 	}
 
-	arg_6_0:updateReward(arg_6_0.reward1, var_6_0)
-	arg_6_0:updateReward(arg_6_0.reward2, var_6_2)
+	self:updateReward(self.reward1, data1)
+	self:updateReward(self.reward2, data2)
 end
 
-function var_0_0.updateReward(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_1.data = arg_7_2
-	arg_7_1.txtCount.text = string.format("<size=25>×</size>%s", arg_7_2.quantity)
+function ReactivityRuleItem:updateReward(item, data)
+	item.data = data
+	item.txtCount.text = string.format("<size=25>×</size>%s", data.quantity)
 
-	local var_7_0, var_7_1 = ItemModel.instance:getItemConfigAndIcon(arg_7_2.type, arg_7_2.id)
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(data.type, data.id)
 
-	arg_7_1.simageReward:LoadImage(var_7_1)
-	UISpriteSetMgr.instance:setUiFBSprite(arg_7_1.imageBg, "bg_pinjidi_" .. var_7_0.rare)
-	UISpriteSetMgr.instance:setUiFBSprite(arg_7_1.imageCircle, "bg_pinjidi_lanse_" .. var_7_0.rare)
+	item.simageReward:LoadImage(icon)
+	UISpriteSetMgr.instance:setUiFBSprite(item.imageBg, "bg_pinjidi_" .. config.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(item.imageCircle, "bg_pinjidi_lanse_" .. config.rare)
 end
 
-function var_0_0.destoryReward(arg_8_0, arg_8_1)
-	arg_8_1.simageReward:UnLoadImage()
-	arg_8_1.btn:RemoveClickListener()
+function ReactivityRuleItem:destoryReward(item)
+	item.simageReward:UnLoadImage()
+	item.btn:RemoveClickListener()
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0:destoryReward(arg_9_0.reward1)
-	arg_9_0:destoryReward(arg_9_0.reward2)
+function ReactivityRuleItem:onDestroy()
+	self:destoryReward(self.reward1)
+	self:destoryReward(self.reward2)
 end
 
-return var_0_0
+return ReactivityRuleItem

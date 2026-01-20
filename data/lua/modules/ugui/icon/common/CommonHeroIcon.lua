@@ -1,229 +1,231 @@
-﻿module("modules.ugui.icon.common.CommonHeroIcon", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonHeroIcon.lua
 
-local var_0_0 = class("CommonHeroIcon", LuaCompBase)
+module("modules.ugui.icon.common.CommonHeroIcon", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.tr = arg_1_1.transform
-	arg_1_0._callback = nil
-	arg_1_0._callbackObj = nil
-	arg_1_0._btnClick = nil
-	arg_1_0._lvTxt = gohelper.findChildText(arg_1_1, "lvltxt")
-	arg_1_0._starObj = gohelper.findChild(arg_1_1, "starobj")
-	arg_1_0._maskObj = gohelper.findChild(arg_1_1, "mask")
-	arg_1_0._breakObj = gohelper.findChild(arg_1_1, "breakobj")
-	arg_1_0._rareObj = gohelper.findChild(arg_1_1, "rareobj")
-	arg_1_0._cardIcon = gohelper.findChildSingleImage(arg_1_1, "charactericon")
-	arg_1_0._careerIcon = gohelper.findChildImage(arg_1_1, "career")
-	arg_1_0._careerFrame = gohelper.findChildImage(arg_1_1, "frame")
-	arg_1_0._rareIcon = gohelper.findChildImage(arg_1_1, "cardrare")
-	arg_1_0._isShowStar = true
-	arg_1_0._isShowBreak = true
-	arg_1_0._isShowRate = true
+local CommonHeroIcon = class("CommonHeroIcon", LuaCompBase)
 
-	arg_1_0:_initObj()
+function CommonHeroIcon:init(go)
+	self.go = go
+	self.tr = go.transform
+	self._callback = nil
+	self._callbackObj = nil
+	self._btnClick = nil
+	self._lvTxt = gohelper.findChildText(go, "lvltxt")
+	self._starObj = gohelper.findChild(go, "starobj")
+	self._maskObj = gohelper.findChild(go, "mask")
+	self._breakObj = gohelper.findChild(go, "breakobj")
+	self._rareObj = gohelper.findChild(go, "rareobj")
+	self._cardIcon = gohelper.findChildSingleImage(go, "charactericon")
+	self._careerIcon = gohelper.findChildImage(go, "career")
+	self._careerFrame = gohelper.findChildImage(go, "frame")
+	self._rareIcon = gohelper.findChildImage(go, "cardrare")
+	self._isShowStar = true
+	self._isShowBreak = true
+	self._isShowRate = true
+
+	self:_initObj()
 end
 
-function var_0_0.setLvVisible(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0._lvTxt.gameObject, arg_2_1)
+function CommonHeroIcon:setLvVisible(value)
+	gohelper.setActive(self._lvTxt.gameObject, value)
 end
 
-function var_0_0.setMaskVisible(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0._maskObj, arg_3_1)
+function CommonHeroIcon:setMaskVisible(value)
+	gohelper.setActive(self._maskObj, value)
 end
 
-function var_0_0.isShowStar(arg_4_0, arg_4_1)
-	arg_4_0._isShowStar = arg_4_1
+function CommonHeroIcon:isShowStar(flag)
+	self._isShowStar = flag
 
-	gohelper.setActive(arg_4_0._starObj, arg_4_1)
+	gohelper.setActive(self._starObj, flag)
 end
 
-function var_0_0.isShowBreak(arg_5_0, arg_5_1)
-	arg_5_0._isShowBreak = arg_5_1
+function CommonHeroIcon:isShowBreak(flag)
+	self._isShowBreak = flag
 
-	gohelper.setActive(arg_5_0._breakObj, arg_5_1)
+	gohelper.setActive(self._breakObj, flag)
 end
 
-function var_0_0.isShowRare(arg_6_0, arg_6_1)
-	arg_6_0._isShowRare = arg_6_1
+function CommonHeroIcon:isShowRare(flag)
+	self._isShowRare = flag
 
-	gohelper.setActive(arg_6_0._rareObj, arg_6_1)
+	gohelper.setActive(self._rareObj, flag)
 end
 
-function var_0_0.isShowRareIcon(arg_7_0, arg_7_1)
-	arg_7_0._isShowRareIcon = arg_7_1
+function CommonHeroIcon:isShowRareIcon(flag)
+	self._isShowRareIcon = flag
 
-	gohelper.setActive(arg_7_0._rareIcon.gameObject, arg_7_1)
+	gohelper.setActive(self._rareIcon.gameObject, flag)
 end
 
-function var_0_0.isShowCareerIcon(arg_8_0, arg_8_1)
-	arg_8_0._isShowCareer = arg_8_1
+function CommonHeroIcon:isShowCareerIcon(flag)
+	self._isShowCareer = flag
 
-	gohelper.setActive(arg_8_0._careerIcon.gameObject, arg_8_1)
+	gohelper.setActive(self._careerIcon.gameObject, flag)
 end
 
-function var_0_0.setScale(arg_9_0, arg_9_1)
-	transformhelper.setLocalScale(arg_9_0.tr, arg_9_1, arg_9_1, arg_9_1)
+function CommonHeroIcon:setScale(scale)
+	transformhelper.setLocalScale(self.tr, scale, scale, scale)
 end
 
-function var_0_0.setAnchor(arg_10_0, arg_10_1, arg_10_2)
-	recthelper.setAnchor(arg_10_0.tr, arg_10_1, arg_10_2)
+function CommonHeroIcon:setAnchor(anchorX, anchorY)
+	recthelper.setAnchor(self.tr, anchorX, anchorY)
 end
 
-function var_0_0._initObj(arg_11_0)
-	arg_11_0._rareGos = arg_11_0:getUserDataTb_()
+function CommonHeroIcon:_initObj()
+	self._rareGos = self:getUserDataTb_()
 
-	for iter_11_0 = 1, 6 do
-		arg_11_0._rareGos[iter_11_0] = gohelper.findChild(arg_11_0._rareObj, "rare" .. tostring(iter_11_0))
+	for i = 1, 6 do
+		self._rareGos[i] = gohelper.findChild(self._rareObj, "rare" .. tostring(i))
 	end
 
-	arg_11_0._starImgs = arg_11_0:getUserDataTb_()
+	self._starImgs = self:getUserDataTb_()
 
-	for iter_11_1 = 1, 5 do
-		arg_11_0._starImgs[iter_11_1] = gohelper.findChildImage(arg_11_0._starObj, "star" .. tostring(iter_11_1))
+	for i = 1, 5 do
+		self._starImgs[i] = gohelper.findChildImage(self._starObj, "star" .. tostring(i))
 	end
 
-	arg_11_0._breakImgs = arg_11_0:getUserDataTb_()
+	self._breakImgs = self:getUserDataTb_()
 
-	for iter_11_2 = 1, 6 do
-		arg_11_0._breakImgs[iter_11_2] = gohelper.findChildImage(arg_11_0._breakObj, "break" .. tostring(iter_11_2))
-	end
-end
-
-function var_0_0.addClickListener(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._callback = arg_12_1
-	arg_12_0._callbackObj = arg_12_2
-
-	if not arg_12_0._btnClick then
-		arg_12_0._btnClick = SLFramework.UGUI.UIClickListener.Get(arg_12_0.go)
-	end
-
-	arg_12_0._btnClick:AddClickListener(arg_12_0._onItemClick, arg_12_0)
-end
-
-function var_0_0.removeClickListener(arg_13_0)
-	arg_13_0._callback = nil
-	arg_13_0._callbackObj = nil
-
-	if arg_13_0._btnClick then
-		arg_13_0._btnClick:RemoveClickListener()
+	for i = 1, 6 do
+		self._breakImgs[i] = gohelper.findChildImage(self._breakObj, "break" .. tostring(i))
 	end
 end
 
-function var_0_0.removeEventListeners(arg_14_0)
-	if arg_14_0._btnClick then
-		arg_14_0._btnClick:RemoveClickListener()
+function CommonHeroIcon:addClickListener(callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
+
+	if not self._btnClick then
+		self._btnClick = SLFramework.UGUI.UIClickListener.Get(self.go)
+	end
+
+	self._btnClick:AddClickListener(self._onItemClick, self)
+end
+
+function CommonHeroIcon:removeClickListener()
+	self._callback = nil
+	self._callbackObj = nil
+
+	if self._btnClick then
+		self._btnClick:RemoveClickListener()
 	end
 end
 
-function var_0_0.onUpdateHeroId(arg_15_0, arg_15_1)
-	local var_15_0 = HeroConfig.instance:getHeroCO(arg_15_1)
-	local var_15_1 = SkinConfig.instance:getSkinCo(var_15_0.skinId)
-
-	arg_15_0._cardIcon:LoadImage(ResUrl.getHeadIconSmall(var_15_1.retangleIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_15_0._careerIcon, "lssx_" .. tostring(var_15_0.career))
-	arg_15_0:_fillRareContent(CharacterEnum.Star[var_15_0.rare])
+function CommonHeroIcon:removeEventListeners()
+	if self._btnClick then
+		self._btnClick:RemoveClickListener()
+	end
 end
 
-function var_0_0.onUpdateMO(arg_16_0, arg_16_1)
-	arg_16_0._mo = arg_16_1
+function CommonHeroIcon:onUpdateHeroId(heroId)
+	local heroCo = HeroConfig.instance:getHeroCO(heroId)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 
-	local var_16_0 = HeroConfig.instance:getShowLevel(arg_16_1.level)
-
-	arg_16_0._lvTxt.text = var_16_0
-
-	arg_16_0:_fillRareContent(CharacterEnum.Star[arg_16_1.config.rare])
-	arg_16_0:_fillBreakContent(arg_16_1.exSkillLevel)
-	arg_16_0:_fillStarContent(arg_16_1.rank)
-
-	local var_16_1 = HeroModel.instance:getByHeroId(arg_16_1.heroId)
-	local var_16_2 = SkinConfig.instance:getSkinCo(var_16_1.skin)
-
-	arg_16_0._cardIcon:LoadImage(ResUrl.getHeadIconSmall(var_16_2.retangleIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_16_0._careerIcon, "lssx_" .. tostring(arg_16_1.config.career))
+	self._cardIcon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._careerIcon, "lssx_" .. tostring(heroCo.career))
+	self:_fillRareContent(CharacterEnum.Star[heroCo.rare])
 end
 
-function var_0_0.updateMonster(arg_17_0, arg_17_1)
-	arg_17_0._monsterConfig = arg_17_1
+function CommonHeroIcon:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_17_0 = HeroConfig.instance:getShowLevel(arg_17_1.level)
+	local showLevel = HeroConfig.instance:getShowLevel(mo.level)
 
-	arg_17_0._lvTxt.text = var_17_0
+	self._lvTxt.text = showLevel
 
-	arg_17_0:_fillRareContent(1)
-	gohelper.setActive(arg_17_0._breakObj, false)
-	gohelper.setActive(arg_17_0._starObj, false)
+	self:_fillRareContent(CharacterEnum.Star[mo.config.rare])
+	self:_fillBreakContent(mo.exSkillLevel)
+	self:_fillStarContent(mo.rank)
 
-	local var_17_1 = FightConfig.instance:getSkinCO(arg_17_1.skinId)
+	local heroSkin = HeroModel.instance:getByHeroId(mo.heroId)
+	local skinConfig = SkinConfig.instance:getSkinCo(heroSkin.skin)
 
-	arg_17_0._cardIcon:LoadImage(ResUrl.getHeadIconSmall(var_17_1.retangleIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_17_0._careerIcon, "lssx_" .. tostring(arg_17_1.career))
+	self._cardIcon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._careerIcon, "lssx_" .. tostring(mo.config.career))
 end
 
-function var_0_0._fillRareContent(arg_18_0, arg_18_1)
-	arg_18_1 = arg_18_1 and math.max(arg_18_1, 1) or 1
+function CommonHeroIcon:updateMonster(monsterConfig)
+	self._monsterConfig = monsterConfig
 
-	if arg_18_0._rareObj then
-		UISpriteSetMgr.instance:setCommonSprite(arg_18_0._rareIcon, "bp_quality_0" .. tostring(arg_18_1))
+	local showLevel = HeroConfig.instance:getShowLevel(monsterConfig.level)
 
-		if arg_18_0._isShowRare then
-			for iter_18_0 = 1, 6 do
-				gohelper.setActive(arg_18_0._rareGos[iter_18_0], iter_18_0 <= arg_18_1)
+	self._lvTxt.text = showLevel
+
+	self:_fillRareContent(1)
+	gohelper.setActive(self._breakObj, false)
+	gohelper.setActive(self._starObj, false)
+
+	local skinConfig = FightConfig.instance:getSkinCO(monsterConfig.skinId)
+
+	self._cardIcon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._careerIcon, "lssx_" .. tostring(monsterConfig.career))
+end
+
+function CommonHeroIcon:_fillRareContent(value)
+	value = value and math.max(value, 1) or 1
+
+	if self._rareObj then
+		UISpriteSetMgr.instance:setCommonSprite(self._rareIcon, "bp_quality_0" .. tostring(value))
+
+		if self._isShowRare then
+			for i = 1, 6 do
+				gohelper.setActive(self._rareGos[i], i <= value)
 			end
 		end
 
-		gohelper.setActive(arg_18_0._rareObj, arg_18_0._isShowRare)
+		gohelper.setActive(self._rareObj, self._isShowRare)
 	end
 end
 
-function var_0_0._fillBreakContent(arg_19_0, arg_19_1)
-	arg_19_1 = arg_19_1 and math.max(arg_19_1, 1) or 1
+function CommonHeroIcon:_fillBreakContent(value)
+	value = value and math.max(value, 1) or 1
 
-	if arg_19_0._breakObj then
-		if arg_19_0._isShowBreak then
-			for iter_19_0 = 1, 6 do
-				if iter_19_0 <= arg_19_1 then
-					SLFramework.UGUI.GuiHelper.SetColor(arg_19_0._breakImgs[iter_19_0], "#d7a93d")
+	if self._breakObj then
+		if self._isShowBreak then
+			for i = 1, 6 do
+				if i <= value then
+					SLFramework.UGUI.GuiHelper.SetColor(self._breakImgs[i], "#d7a93d")
 				else
-					SLFramework.UGUI.GuiHelper.SetColor(arg_19_0._breakImgs[iter_19_0], "#626467")
+					SLFramework.UGUI.GuiHelper.SetColor(self._breakImgs[i], "#626467")
 				end
 			end
 		end
 
-		gohelper.setActive(arg_19_0._breakObj, arg_19_0._isShowBreak)
+		gohelper.setActive(self._breakObj, self._isShowBreak)
 	end
 end
 
-function var_0_0._fillStarContent(arg_20_0, arg_20_1)
-	arg_20_1 = arg_20_1 and math.max(arg_20_1, 1) or 1
+function CommonHeroIcon:_fillStarContent(value)
+	value = value and math.max(value, 1) or 1
 
-	if arg_20_0._starObj then
-		if arg_20_0._isShowStar then
-			for iter_20_0 = 1, 5 do
-				if iter_20_0 <= arg_20_1 then
-					SLFramework.UGUI.GuiHelper.SetColor(arg_20_0._starImgs[iter_20_0], "#d7a93d")
+	if self._starObj then
+		if self._isShowStar then
+			for i = 1, 5 do
+				if i <= value then
+					SLFramework.UGUI.GuiHelper.SetColor(self._starImgs[i], "#d7a93d")
 				else
-					SLFramework.UGUI.GuiHelper.SetColor(arg_20_0._starImgs[iter_20_0], "#626467")
+					SLFramework.UGUI.GuiHelper.SetColor(self._starImgs[i], "#626467")
 				end
 			end
 		end
 
-		gohelper.setActive(arg_20_0._starObj, arg_20_0._isShowStar)
+		gohelper.setActive(self._starObj, self._isShowStar)
 	end
 end
 
-function var_0_0._onItemClick(arg_21_0)
-	if arg_21_0._callback then
-		if arg_21_0._callbackObj then
-			arg_21_0._callback(arg_21_0._callbackObj, arg_21_0._mo)
+function CommonHeroIcon:_onItemClick()
+	if self._callback then
+		if self._callbackObj then
+			self._callback(self._callbackObj, self._mo)
 		else
-			arg_21_0._callback(arg_21_0._mo)
+			self._callback(self._mo)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_22_0)
-	arg_22_0._cardIcon:UnLoadImage()
+function CommonHeroIcon:onDestroy()
+	self._cardIcon:UnLoadImage()
 end
 
-return var_0_0
+return CommonHeroIcon

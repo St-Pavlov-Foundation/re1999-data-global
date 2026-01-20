@@ -1,49 +1,51 @@
-﻿module("modules.logic.equip.view.EquipTeamViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipTeamViewContainer.lua
 
-local var_0_0 = class("EquipTeamViewContainer", BaseViewContainer)
+module("modules.logic.equip.view.EquipTeamViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local EquipTeamViewContainer = class("EquipTeamViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#go_equipcontainer/#scroll_equip"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = EquipTeamItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 3
-	var_1_0.cellWidth = 200
-	var_1_0.cellHeight = 210
-	var_1_0.cellSpaceH = 28
-	var_1_0.cellSpaceV = 10
-	var_1_0.startSpace = 13
+function EquipTeamViewContainer:buildViews()
+	local equipScrollParam = ListScrollParam.New()
+
+	equipScrollParam.scrollGOPath = "#go_equipcontainer/#scroll_equip"
+	equipScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	equipScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	equipScrollParam.cellClass = EquipTeamItem
+	equipScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	equipScrollParam.lineCount = 3
+	equipScrollParam.cellWidth = 200
+	equipScrollParam.cellHeight = 210
+	equipScrollParam.cellSpaceH = 28
+	equipScrollParam.cellSpaceV = 10
+	equipScrollParam.startSpace = 13
 
 	return {
 		EquipTeamView.New(),
 		TabViewGroup.New(1, "#go_btns"),
-		LuaListScrollView.New(EquipTeamListModel.instance, var_1_0)
+		LuaListScrollView.New(EquipTeamListModel.instance, equipScrollParam)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function EquipTeamViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, nil, arg_2_0._overrideClose)
+		}, nil, self._overrideClose)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0._overrideClose(arg_3_0)
+function EquipTeamViewContainer:_overrideClose()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnCloseEquipTeamShowView)
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	arg_4_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
+function EquipTeamViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
 end
 
-return var_0_0
+return EquipTeamViewContainer

@@ -1,124 +1,126 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/element/FairyLandElementBase.lua
 
-local var_0_0 = class("FairyLandElementBase", LuaCompBase)
+module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElementBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local FairyLandElementBase = class("FairyLandElementBase", LuaCompBase)
 
-	arg_1_0._config = arg_1_2
-	arg_1_0._elements = arg_1_1
+function FairyLandElementBase:ctor(elements, config)
+	self:__onInit()
+
+	self._config = config
+	self._elements = elements
 end
 
-function var_0_0.getElementId(arg_2_0)
-	return arg_2_0._config.id
+function FairyLandElementBase:getElementId()
+	return self._config.id
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0._go = arg_3_1
-	arg_3_0._transform = arg_3_1.transform
+function FairyLandElementBase:init(go)
+	self._go = go
+	self._transform = go.transform
 
-	arg_3_0:updatePos()
-	arg_3_0:onInitView()
-	arg_3_0:onRefresh()
+	self:updatePos()
+	self:onInitView()
+	self:onRefresh()
 
-	local var_3_0 = arg_3_0:getClickGO()
+	local clickGo = self:getClickGO()
 
-	if var_3_0 then
-		arg_3_0.click = gohelper.getClickWithAudio(var_3_0)
+	if clickGo then
+		self.click = gohelper.getClickWithAudio(clickGo)
 
-		if arg_3_0.click then
-			arg_3_0.click:AddClickListener(arg_3_0.onClick, arg_3_0)
+		if self.click then
+			self.click:AddClickListener(self.onClick, self)
 		end
 	end
 end
 
-function var_0_0.refresh(arg_4_0)
-	arg_4_0:onRefresh()
+function FairyLandElementBase:refresh()
+	self:onRefresh()
 end
 
-function var_0_0.finish(arg_5_0)
-	arg_5_0:onFinish()
-	arg_5_0:onDestroy()
+function FairyLandElementBase:finish()
+	self:onFinish()
+	self:onDestroy()
 end
 
-function var_0_0.getPos(arg_6_0)
-	return tonumber(arg_6_0._config.pos)
+function FairyLandElementBase:getPos()
+	return tonumber(self._config.pos)
 end
 
-function var_0_0.updatePos(arg_7_0)
-	local var_7_0 = 244
-	local var_7_1 = 73
-	local var_7_2 = arg_7_0:getPos()
-	local var_7_3 = var_7_2 * var_7_0
-	local var_7_4 = -(var_7_2 * var_7_1)
+function FairyLandElementBase:updatePos()
+	local spaceX = 244
+	local spaceY = 73
+	local pos = self:getPos()
+	local x = pos * spaceX
+	local y = -(pos * spaceY)
 
-	recthelper.setAnchor(arg_7_0._transform, var_7_3, var_7_4)
+	recthelper.setAnchor(self._transform, x, y)
 end
 
-function var_0_0.hide(arg_8_0)
-	gohelper.setActive(arg_8_0._go, false)
+function FairyLandElementBase:hide()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.show(arg_9_0)
-	gohelper.setActive(arg_9_0._go, true)
+function FairyLandElementBase:show()
+	gohelper.setActive(self._go, true)
 end
 
-function var_0_0.getVisible(arg_10_0)
-	return not gohelper.isNil(arg_10_0._go) and arg_10_0._go.activeSelf
+function FairyLandElementBase:getVisible()
+	return not gohelper.isNil(self._go) and self._go.activeSelf
 end
 
-function var_0_0.isValid(arg_11_0)
-	return not gohelper.isNil(arg_11_0._go)
+function FairyLandElementBase:isValid()
+	return not gohelper.isNil(self._go)
 end
 
-function var_0_0.onClick(arg_12_0)
+function FairyLandElementBase:onClick()
 	return
 end
 
-function var_0_0.getTransform(arg_13_0)
-	return arg_13_0._transform
+function FairyLandElementBase:getTransform()
+	return self._transform
 end
 
-function var_0_0.onDestroy(arg_14_0)
-	arg_14_0:onDestroyElement()
+function FairyLandElementBase:onDestroy()
+	self:onDestroyElement()
 
-	if arg_14_0.click then
-		arg_14_0.click:RemoveClickListener()
+	if self.click then
+		self.click:RemoveClickListener()
 	end
 
-	if not gohelper.isNil(arg_14_0._go) then
-		gohelper.destroy(arg_14_0._go)
+	if not gohelper.isNil(self._go) then
+		gohelper.destroy(self._go)
 
-		arg_14_0._go = nil
+		self._go = nil
 	end
 
-	arg_14_0:__onDispose()
+	self:__onDispose()
 end
 
-function var_0_0.getClickGO(arg_15_0)
-	return arg_15_0._go
+function FairyLandElementBase:getClickGO()
+	return self._go
 end
 
-function var_0_0.setFinish(arg_16_0)
-	local var_16_0 = arg_16_0:getElementId()
+function FairyLandElementBase:setFinish()
+	local elementId = self:getElementId()
 
-	FairyLandRpc.instance:sendRecordElementRequest(var_16_0)
+	FairyLandRpc.instance:sendRecordElementRequest(elementId)
 end
 
-function var_0_0.onInitView(arg_17_0)
+function FairyLandElementBase:onInitView()
 	return
 end
 
-function var_0_0.onRefresh(arg_18_0)
+function FairyLandElementBase:onRefresh()
 	return
 end
 
-function var_0_0.onFinish(arg_19_0)
+function FairyLandElementBase:onFinish()
 	return
 end
 
-function var_0_0.onDestroyElement(arg_20_0)
+function FairyLandElementBase:onDestroyElement()
 	return
 end
 
-return var_0_0
+return FairyLandElementBase

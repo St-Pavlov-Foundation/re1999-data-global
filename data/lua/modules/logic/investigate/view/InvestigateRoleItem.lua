@@ -1,126 +1,128 @@
-﻿module("modules.logic.investigate.view.InvestigateRoleItem", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateRoleItem.lua
 
-local var_0_0 = class("InvestigateRoleItem", ListScrollCellExtend)
+module("modules.logic.investigate.view.InvestigateRoleItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerole = gohelper.findChildSingleImage(arg_1_0.viewGO, "role")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "locked")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "clickarea")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "progress")
-	arg_1_0._goprogresitem = gohelper.findChild(arg_1_0.viewGO, "progress/item")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "reddot")
+local InvestigateRoleItem = class("InvestigateRoleItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function InvestigateRoleItem:onInitView()
+	self._simagerole = gohelper.findChildSingleImage(self.viewGO, "role")
+	self._golocked = gohelper.findChild(self.viewGO, "locked")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "clickarea")
+	self._goprogress = gohelper.findChild(self.viewGO, "progress")
+	self._goprogresitem = gohelper.findChild(self.viewGO, "progress/item")
+	self._goreddot = gohelper.findChild(self.viewGO, "reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function InvestigateRoleItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function InvestigateRoleItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if not arg_4_0._isUnlocked then
+function InvestigateRoleItem:_btnclickOnClick()
+	if not self._isUnlocked then
 		return
 	end
 
 	InvestigateController.instance:openInvestigateOpinionTabView({
-		mo = arg_4_0._mo
+		mo = self._mo
 	})
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._gounlockEffect = gohelper.findChild(arg_5_0.viewGO, "#unlock")
+function InvestigateRoleItem:_editableInitView()
+	self._gounlockEffect = gohelper.findChild(self.viewGO, "#unlock")
 
-	arg_5_0:addEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, arg_5_0._onLinkedOpinionSuccess, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_5_0._onCloseViewCall, arg_5_0)
+	self:addEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, self._onLinkedOpinionSuccess, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewCall, self)
 end
 
-function var_0_0._onCloseViewCall(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.InvestigateOpinionTabView then
+function InvestigateRoleItem:_onCloseViewCall(viewName)
+	if viewName == ViewName.InvestigateOpinionTabView then
 		-- block empty
 	end
 end
 
-function var_0_0._isShowRedDot(arg_7_0)
-	return arg_7_0._isUnlocked and InvestigateController.showInfoRedDot(arg_7_0._mo.id)
+function InvestigateRoleItem:_isShowRedDot()
+	return self._isUnlocked and InvestigateController.showInfoRedDot(self._mo.id)
 end
 
-function var_0_0._onLinkedOpinionSuccess(arg_8_0)
-	arg_8_0:_updateProgress()
+function InvestigateRoleItem:_onLinkedOpinionSuccess()
+	self:_updateProgress()
 end
 
-function var_0_0._editableAddEvents(arg_9_0)
+function InvestigateRoleItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_10_0)
+function InvestigateRoleItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_11_0, arg_11_1)
-	arg_11_0._mo = arg_11_1
-	arg_11_0._isUnlocked = arg_11_1.episode == 0 or DungeonModel.instance:hasPassLevel(arg_11_1.episode)
+function InvestigateRoleItem:onUpdateMO(mo)
+	self._mo = mo
+	self._isUnlocked = mo.episode == 0 or DungeonModel.instance:hasPassLevel(mo.episode)
 
-	gohelper.setActive(arg_11_0._simagerole, arg_11_0._isUnlocked)
-	gohelper.setActive(arg_11_0._golocked, not arg_11_0._isUnlocked)
+	gohelper.setActive(self._simagerole, self._isUnlocked)
+	gohelper.setActive(self._golocked, not self._isUnlocked)
 
-	if arg_11_0._isUnlocked and not InvestigateController.hasOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, arg_11_0._mo.id) then
-		gohelper.setActive(arg_11_0._gounlockEffect, arg_11_0._isUnlocked)
-		InvestigateController.setOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, arg_11_0._mo.id)
+	if self._isUnlocked and not InvestigateController.hasOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, self._mo.id) then
+		gohelper.setActive(self._gounlockEffect, self._isUnlocked)
+		InvestigateController.setOnceActionKey(InvestigateEnum.OnceActionType.InfoUnlock, self._mo.id)
 	end
 
-	if arg_11_0._isUnlocked then
-		arg_11_0._simagerole:LoadImage(arg_11_1.icon)
+	if self._isUnlocked then
+		self._simagerole:LoadImage(mo.icon)
 	end
 
-	arg_11_0:_initOpinionProgress()
+	self:_initOpinionProgress()
 end
 
-function var_0_0._initOpinionProgress(arg_12_0)
-	arg_12_0._progressItemList = arg_12_0:getUserDataTb_()
+function InvestigateRoleItem:_initOpinionProgress()
+	self._progressItemList = self:getUserDataTb_()
 
-	local var_12_0 = InvestigateConfig.instance:getInvestigateRelatedClueInfos(arg_12_0._mo.id)
+	local data_list = InvestigateConfig.instance:getInvestigateRelatedClueInfos(self._mo.id)
 
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onItemShow, var_12_0, arg_12_0._goprogress, arg_12_0._goprogresitem)
-	arg_12_0:_updateProgress()
+	gohelper.CreateObjList(self, self._onItemShow, data_list, self._goprogress, self._goprogresitem)
+	self:_updateProgress()
 end
 
-function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_0:getUserDataTb_()
+function InvestigateRoleItem:_onItemShow(obj, data, index)
+	local t = self:getUserDataTb_()
 
-	arg_13_0._progressItemList[arg_13_3] = var_13_0
-	var_13_0.unfinished = gohelper.findChild(arg_13_1, "unfinished")
-	var_13_0.finished = gohelper.findChild(arg_13_1, "finished")
-	var_13_0.light = gohelper.findChild(arg_13_1, "light")
-	var_13_0.reddot = gohelper.findChild(arg_13_1, "reddot")
-	var_13_0.config = arg_13_2
+	self._progressItemList[index] = t
+	t.unfinished = gohelper.findChild(obj, "unfinished")
+	t.finished = gohelper.findChild(obj, "finished")
+	t.light = gohelper.findChild(obj, "light")
+	t.reddot = gohelper.findChild(obj, "reddot")
+	t.config = data
 end
 
-function var_0_0._updateProgress(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._progressItemList) do
-		local var_14_0 = iter_14_1.config.id
-		local var_14_1 = InvestigateOpinionModel.instance:getLinkedStatus(var_14_0)
+function InvestigateRoleItem:_updateProgress()
+	for i, v in ipairs(self._progressItemList) do
+		local clueId = v.config.id
+		local isFinished = InvestigateOpinionModel.instance:getLinkedStatus(clueId)
 
-		gohelper.setActive(iter_14_1.unfinished, not var_14_1)
-		gohelper.setActive(iter_14_1.finished, var_14_1)
+		gohelper.setActive(v.unfinished, not isFinished)
+		gohelper.setActive(v.finished, isFinished)
 
-		local var_14_2 = InvestigateOpinionModel.instance:isUnlocked(var_14_0) and arg_14_0._isUnlocked
+		local isUnlocked = InvestigateOpinionModel.instance:isUnlocked(clueId) and self._isUnlocked
 
-		gohelper.setActive(iter_14_1.reddot, var_14_2 and not var_14_1)
+		gohelper.setActive(v.reddot, isUnlocked and not isFinished)
 	end
 end
 
-function var_0_0.onSelect(arg_15_0, arg_15_1)
+function InvestigateRoleItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function InvestigateRoleItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return InvestigateRoleItem

@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.model.data.FightBuffActInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightBuffActInfoData.lua
 
-local var_0_0 = FightDataClass("FightBuffActInfoData")
+module("modules.logic.fight.model.data.FightBuffActInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.actId = arg_1_1.actId
-	arg_1_0.param = {}
+local FightBuffActInfoData = FightDataClass("FightBuffActInfoData")
 
-	local var_1_0 = arg_1_1.param
+function FightBuffActInfoData:onConstructor(proto)
+	self.actId = proto.actId
+	self.param = {}
 
-	for iter_1_0 = 1, #var_1_0 do
-		arg_1_0.param[iter_1_0] = var_1_0[iter_1_0]
+	local protoParam = proto.param
+
+	for i = 1, #protoParam do
+		self.param[i] = protoParam[i]
 	end
 
-	arg_1_0.strParam = arg_1_1.strParam
+	self.strParam = proto.strParam
 end
 
-return var_0_0
+return FightBuffActInfoData

@@ -1,100 +1,104 @@
-﻿module("modules.ugui.uieffect.UIEffectManager", package.seeall)
+﻿-- chunkname: @modules/ugui/uieffect/UIEffectManager.lua
 
-local var_0_0 = class("UIEffectManager")
+module("modules.ugui.uieffect.UIEffectManager", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._effectDic = {}
+local UIEffectManager = class("UIEffectManager")
+
+function UIEffectManager:ctor()
+	self._effectDic = {}
 end
 
-function var_0_0.addEffect(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6, arg_2_7, arg_2_8)
-	if gohelper.isNil(arg_2_1) then
+function UIEffectManager:addEffect(targetGo, effectPath, rtWidth, rtHeight, rawImageWidth, rawImageHeight, loadcallback, callbackTarget)
+	if gohelper.isNil(targetGo) then
 		return
 	end
 
-	arg_2_0._loadcallback = arg_2_7
-	arg_2_0._callbackTarget = arg_2_8
+	self._loadcallback = loadcallback
+	self._callbackTarget = callbackTarget
 
-	if not arg_2_3 or not arg_2_4 then
-		logError(string.format("addEffect rt size error rtWidth:%s,rtHeight:%s", arg_2_3, arg_2_4))
+	if not rtWidth or not rtHeight then
+		logError(string.format("addEffect rt size error rtWidth:%s,rtHeight:%s", rtWidth, rtHeight))
 
 		return
 	end
 
-	local var_2_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_1, UIEffectUnit)
+	local effectUnit = MonoHelper.addNoUpdateLuaComOnceToGo(targetGo, UIEffectUnit)
 
-	if var_2_0 then
-		var_2_0:Refresh(arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
+	if effectUnit then
+		effectUnit:Refresh(targetGo, effectPath, rtWidth, rtHeight, rawImageWidth, rawImageHeight)
 	end
 
-	AudioEffectMgr.instance:playAudioByEffectPath(arg_2_2)
+	AudioEffectMgr.instance:playAudioByEffectPath(effectPath)
 end
 
-function var_0_0._getEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if not arg_3_0._effectDic[arg_3_1] then
-		arg_3_0._effectDic[arg_3_1] = {}
+function UIEffectManager:_getEffect(effectPath, width, height, rawImage)
+	if not self._effectDic[effectPath] then
+		self._effectDic[effectPath] = {}
 	end
 
-	local var_3_0 = string.format("%s_%s", arg_3_2, arg_3_3)
-	local var_3_1 = arg_3_0._effectDic[arg_3_1][var_3_0]
+	local key = string.format("%s_%s", width, height)
+	local uiEffectLoader = self._effectDic[effectPath][key]
 
-	if not var_3_1 then
-		var_3_1 = UIEffectLoader.New()
+	if not uiEffectLoader then
+		uiEffectLoader = UIEffectLoader.New()
 
-		var_3_1:Init(arg_3_1, arg_3_2, arg_3_3)
+		uiEffectLoader:Init(effectPath, width, height)
 
-		arg_3_0._effectDic[arg_3_1][var_3_0] = var_3_1
+		self._effectDic[effectPath][key] = uiEffectLoader
 	end
 
-	var_3_1:getEffect(arg_3_4, arg_3_0._loadcallback, arg_3_0._callbackTarget)
+	uiEffectLoader:getEffect(rawImage, self._loadcallback, self._callbackTarget)
 end
 
-function var_0_0.getEffectGo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0._effectDic[arg_4_1] then
+function UIEffectManager:getEffectGo(effectPath, width, height)
+	if not self._effectDic[effectPath] then
 		return
 	end
 
-	local var_4_0 = string.format("%s_%s", arg_4_2, arg_4_3)
+	local key = string.format("%s_%s", width, height)
 
-	return arg_4_0._effectDic[arg_4_1][var_4_0]:getEffectGo()
+	return self._effectDic[effectPath][key]:getEffectGo()
 end
 
-function var_0_0._putEffect(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_0._effectDic[arg_5_1] then
+function UIEffectManager:_putEffect(effectPath, width, height)
+	if not self._effectDic[effectPath] then
 		return
 	end
 
-	local var_5_0 = string.format("%s_%s", arg_5_2, arg_5_3)
-	local var_5_1 = arg_5_0._effectDic[arg_5_1][var_5_0]
+	local key = string.format("%s_%s", width, height)
+	local uiEffectLoader = self._effectDic[effectPath][key]
 
-	if var_5_1 then
-		var_5_1:ReduceRef()
+	if uiEffectLoader then
+		uiEffectLoader:ReduceRef()
 	end
 end
 
-function var_0_0._delEffectLoader(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if not arg_6_0._effectDic[arg_6_1] then
+function UIEffectManager:_delEffectLoader(effectPath, width, height)
+	if not self._effectDic[effectPath] then
 		return
 	end
 
-	local var_6_0 = string.format("%s_%s", arg_6_2, arg_6_3)
+	local key = string.format("%s_%s", width, height)
 
-	arg_6_0._effectDic[arg_6_1][var_6_0] = nil
+	self._effectDic[effectPath][key] = nil
 end
 
-function var_0_0.getUIEffect(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_1 then
+function UIEffectManager:getUIEffect(gameObject, type)
+	if not gameObject then
 		return nil
 	end
 
-	if arg_7_1:GetComponent(typeof(TMPro.TextMeshProUGUI)) then
+	local tmp = gameObject:GetComponent(typeof(TMPro.TextMeshProUGUI))
+
+	if tmp then
 		logError("TextMeshPro 不能和 UIEffect 一起使用")
 
 		return nil
 	end
 
-	return gohelper.onceAddComponent(arg_7_1, arg_7_2)
+	return gohelper.onceAddComponent(gameObject, type)
 end
 
-var_0_0.instance = var_0_0.New()
+UIEffectManager.instance = UIEffectManager.New()
 
-return var_0_0
+return UIEffectManager

@@ -1,9 +1,11 @@
-﻿module("modules.configs.excel2json.lua_fight_buff_layer_effect", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_buff_layer_effect.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_buff_layer_effect", package.seeall)
+
+local lua_fight_buff_layer_effect = {}
+local fields = {
 	addLayerEffect = 8,
-	releaseCreateEffectTime = 14,
+	lE = 21,
 	skin = 2,
 	delayTimeBeforeLoop = 15,
 	releaseDestroyEffectTime = 19,
@@ -15,23 +17,25 @@ local var_0_1 = {
 	releaseAddLayerEffectTime = 10,
 	loopEffectAudio = 6,
 	createEffect = 11,
+	releaseCreateEffectTime = 14,
 	loopEffectRoot = 5,
 	layer = 3,
+	hideEffectWhenBigSkill = 22,
 	hideEffectWhenPlaying = 20,
 	loopEffect = 4,
 	id = 1,
 	createAudio = 13,
 	createEffectRoot = 12
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"skin",
 	"layer"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_buff_layer_effect.onLoad(json)
+	lua_fight_buff_layer_effect.configList, lua_fight_buff_layer_effect.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_buff_layer_effect

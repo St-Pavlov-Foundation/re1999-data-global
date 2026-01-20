@@ -1,42 +1,44 @@
-﻿module("modules.logic.room.model.transport.RoomTransportCritterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/transport/RoomTransportCritterListModel.lua
 
-local var_0_0 = class("RoomTransportCritterListModel", ListScrollModel)
+module("modules.logic.room.model.transport.RoomTransportCritterListModel", package.seeall)
 
-function var_0_0.setCritterList(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = CritterModel.instance:getAllCritters()
+local RoomTransportCritterListModel = class("RoomTransportCritterListModel", ListScrollModel)
 
-	for iter_1_0 = 1, #var_1_1 do
-		local var_1_2 = var_1_1[iter_1_0]
+function RoomTransportCritterListModel:setCritterList()
+	local moList = {}
+	local critterMOList = CritterModel.instance:getAllCritters()
 
-		if var_1_2 and var_1_2:isMaturity() then
-			table.insert(var_1_0, var_1_2)
+	for i = 1, #critterMOList do
+		local critterMO = critterMOList[i]
+
+		if critterMO and critterMO:isMaturity() then
+			table.insert(moList, critterMO)
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-function var_0_0.getSelect(arg_2_0)
-	return arg_2_0._selectId
+function RoomTransportCritterListModel:getSelect()
+	return self._selectId
 end
 
-function var_0_0._refreshSelect(arg_3_0)
-	local var_3_0 = arg_3_0:getById(arg_3_0._selectId)
+function RoomTransportCritterListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectId)
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._scrollViews) do
-		iter_3_1:setSelect(var_3_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_4_0, arg_4_1)
-	if arg_4_0._selectId ~= arg_4_1 then
-		arg_4_0._selectId = arg_4_1
+function RoomTransportCritterListModel:setSelect(id)
+	if self._selectId ~= id then
+		self._selectId = id
 
-		arg_4_0:_refreshSelect()
+		self:_refreshSelect()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTransportCritterListModel.instance = RoomTransportCritterListModel.New()
 
-return var_0_0
+return RoomTransportCritterListModel

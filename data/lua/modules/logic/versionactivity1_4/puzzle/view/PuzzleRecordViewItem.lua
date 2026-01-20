@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.view.PuzzleRecordViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/view/PuzzleRecordViewItem.lua
 
-local var_0_0 = class("PuzzleRecordViewItem", ListScrollCellExtend)
+module("modules.logic.versionactivity1_4.puzzle.view.PuzzleRecordViewItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local PuzzleRecordViewItem = class("PuzzleRecordViewItem", ListScrollCellExtend)
+
+function PuzzleRecordViewItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function PuzzleRecordViewItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function PuzzleRecordViewItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.txtRecord = gohelper.findChildText(arg_4_0.viewGO, "")
+function PuzzleRecordViewItem:_editableInitView()
+	self.txtRecord = gohelper.findChildText(self.viewGO, "")
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function PuzzleRecordViewItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function PuzzleRecordViewItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1:GetIndex()
-	local var_7_1 = arg_7_1:GetRecord()
+function PuzzleRecordViewItem:onUpdateMO(mo)
+	local index = mo:GetIndex()
+	local desc = mo:GetRecord()
 
-	arg_7_0.txtRecord.text = var_7_0 .. "." .. var_7_1
+	self.txtRecord.text = index .. "." .. desc
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
+function PuzzleRecordViewItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function PuzzleRecordViewItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return PuzzleRecordViewItem

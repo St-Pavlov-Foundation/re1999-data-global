@@ -1,343 +1,355 @@
-﻿module("modules.logic.room.utils.RoomBlockHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomBlockHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.RoomBlockHelper", package.seeall)
 
-function var_0_0.getNearBlockEntity(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	local var_1_0 = {}
-	local var_1_1 = GameSceneMgr.instance:getCurScene()
-	local var_1_2 = arg_1_0 and var_0_0._getMapEmptyBlockMO or var_0_0._getMapBlockMO
-	local var_1_3 = arg_1_0 and SceneTag.RoomEmptyBlock or SceneTag.RoomMapBlock
+local RoomBlockHelper = {}
 
-	for iter_1_0 = arg_1_3 and 1 or 0, 6 do
-		local var_1_4 = HexPoint.directions[iter_1_0]
-		local var_1_5 = var_1_2(var_1_4.x + arg_1_1.x, var_1_4.y + arg_1_1.y, arg_1_4)
+function RoomBlockHelper.getNearBlockEntity(isEmpty, hexPoint, range, withoutSelf, isFullRiver)
+	local entityList = {}
+	local scene = GameSceneMgr.instance:getCurScene()
+	local func = isEmpty and RoomBlockHelper._getMapEmptyBlockMO or RoomBlockHelper._getMapBlockMO
+	local sceneTag = isEmpty and SceneTag.RoomEmptyBlock or SceneTag.RoomMapBlock
+	local s = withoutSelf and 1 or 0
 
-		if var_1_5 then
-			local var_1_6 = var_1_1.mapmgr:getBlockEntity(var_1_5.id, var_1_3)
+	for direction = s, 6 do
+		local neighbor = HexPoint.directions[direction]
+		local mo = func(neighbor.x + hexPoint.x, neighbor.y + hexPoint.y, isFullRiver)
 
-			if var_1_6 then
-				table.insert(var_1_0, var_1_6)
+		if mo then
+			local entity = scene.mapmgr:getBlockEntity(mo.id, sceneTag)
+
+			if entity then
+				table.insert(entityList, entity)
 			end
 		end
 	end
 
-	return var_1_0
+	return entityList
 end
 
-function var_0_0.getNearBlockEntityByBuilding(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = {}
-	local var_2_1 = RoomResourceModel.instance
-	local var_2_2 = GameSceneMgr.instance:getCurScene()
-	local var_2_3 = RoomBuildingHelper.getOccupyDict(arg_2_1, arg_2_2, arg_2_3)
-	local var_2_4 = arg_2_0 and var_0_0._getMapEmptyBlockMO or var_0_0._getMapBlockMO
-	local var_2_5 = arg_2_0 and SceneTag.RoomEmptyBlock or SceneTag.RoomMapBlock
-	local var_2_6 = {}
+function RoomBlockHelper.getNearBlockEntityByBuilding(isEmpty, buildingId, hexPoint, rotate)
+	local entityList = {}
+	local tRoomResourceModel = RoomResourceModel.instance
+	local scene = GameSceneMgr.instance:getCurScene()
+	local occupyDict = RoomBuildingHelper.getOccupyDict(buildingId, hexPoint, rotate)
+	local func = isEmpty and RoomBlockHelper._getMapEmptyBlockMO or RoomBlockHelper._getMapBlockMO
+	local sceneTag = isEmpty and SceneTag.RoomEmptyBlock or SceneTag.RoomMapBlock
+	local hexPointDict = {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_3) do
-		for iter_2_2, iter_2_3 in pairs(iter_2_1) do
-			for iter_2_4 = 0, 6 do
-				local var_2_7 = HexPoint.directions[iter_2_4]
-				local var_2_8 = iter_2_0 + var_2_7.x
-				local var_2_9 = iter_2_2 + var_2_7.y
-				local var_2_10 = var_2_1:getIndexByXY(var_2_8, var_2_9)
+	for x, dict in pairs(occupyDict) do
+		for y, _ in pairs(dict) do
+			for direction = 0, 6 do
+				local neighbor = HexPoint.directions[direction]
+				local dx = x + neighbor.x
+				local dy = y + neighbor.y
+				local index = tRoomResourceModel:getIndexByXY(dx, dy)
 
-				if not var_2_6[var_2_10] then
-					local var_2_11 = var_2_4(var_2_8, var_2_9)
-					local var_2_12 = var_2_11 and var_2_2.mapmgr:getBlockEntity(var_2_11.id, var_2_5)
+				if not hexPointDict[index] then
+					local mo = func(dx, dy)
+					local entity = mo and scene.mapmgr:getBlockEntity(mo.id, sceneTag)
 
-					if var_2_12 then
-						var_2_6[var_2_10] = true
+					if entity then
+						hexPointDict[index] = true
 
-						table.insert(var_2_0, var_2_12)
+						table.insert(entityList, entity)
 					end
 				end
 			end
 		end
 	end
 
-	return var_2_0
+	return entityList
 end
 
-function var_0_0.getBlockMOListByPlaceBuilding(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = RoomMapModel.instance:getBuildingConfigParam(arg_3_0)
+function RoomBlockHelper.getBlockMOListByPlaceBuilding(buildingId, hexPoint, rotate, blockMOList, blockIndexDict)
+	local buildingConfigParam = RoomMapModel.instance:getBuildingConfigParam(buildingId)
 
-	if not var_3_0 or var_3_0.replaceBlockCount and var_3_0.replaceBlockCount < 1 then
-		return arg_3_3, arg_3_4
+	if not buildingConfigParam or buildingConfigParam.replaceBlockCount and buildingConfigParam.replaceBlockCount < 1 then
+		return blockMOList, blockIndexDict
 	end
 
-	arg_3_3 = arg_3_3 or {}
-	arg_3_4 = {} or {}
+	blockMOList = blockMOList or {}
+	blockIndexDict = {} or {}
 
-	local var_3_1 = RoomResourceModel.instance
-	local var_3_2 = GameSceneMgr.instance:getCurScene()
-	local var_3_3 = RoomBuildingHelper.getOccupyDict(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_4 = var_0_0._getMapBlockMO
+	local tRoomResourceModel = RoomResourceModel.instance
+	local scene = GameSceneMgr.instance:getCurScene()
+	local occupyDict = RoomBuildingHelper.getOccupyDict(buildingId, hexPoint, rotate)
+	local func = RoomBlockHelper._getMapBlockMO
 
-	for iter_3_0, iter_3_1 in pairs(var_3_3) do
-		for iter_3_2, iter_3_3 in pairs(iter_3_1) do
-			for iter_3_4 = 0, 6 do
-				local var_3_5 = HexPoint.directions[iter_3_4]
-				local var_3_6 = iter_3_0 + var_3_5.x
-				local var_3_7 = var_3_5.y + iter_3_2
-				local var_3_8 = var_3_1:getIndexByXY(var_3_6, var_3_7)
+	for x, dict in pairs(occupyDict) do
+		for y, param in pairs(dict) do
+			for direction = 0, 6 do
+				local neighbor = HexPoint.directions[direction]
+				local dx = x + neighbor.x
+				local dy = neighbor.y + y
+				local index = tRoomResourceModel:getIndexByXY(dx, dy)
 
-				if not arg_3_4[var_3_8] then
-					local var_3_9 = var_3_4(var_3_6, var_3_7, iter_3_4 ~= 0)
+				if not blockIndexDict[index] then
+					local blockMO = func(dx, dy, direction ~= 0)
 
-					if var_3_9 then
-						arg_3_4[var_3_8] = true
+					if blockMO then
+						blockIndexDict[index] = true
 
-						table.insert(arg_3_3, var_3_9)
+						table.insert(blockMOList, blockMO)
 					end
 				end
 			end
 		end
 	end
 
-	return arg_3_3, arg_3_4
+	return blockMOList, blockIndexDict
 end
 
-function var_0_0.getNearSameBlockTypeEntity(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0 then
+function RoomBlockHelper.getNearSameBlockTypeEntity(blockMO, repeatDict, resultList)
+	if not blockMO then
 		return
 	end
 
-	arg_4_1 = arg_4_1 or {}
+	repeatDict = repeatDict or {}
 
-	local var_4_0 = arg_4_0:getDefineBlockType()
+	local checkBlockType = blockMO:getDefineBlockType()
 
-	for iter_4_0 = 1, 6 do
-		local var_4_1 = arg_4_0.hexPoint:getNeighbor(iter_4_0)
-		local var_4_2 = var_4_1.x
-		local var_4_3 = var_4_1.y
+	for i = 1, 6 do
+		local neighbor = blockMO.hexPoint:getNeighbor(i)
+		local x = neighbor.x
+		local y = neighbor.y
 
-		if not arg_4_1[var_4_2] or not arg_4_1[var_4_2][var_4_3] then
-			arg_4_1[var_4_2] = arg_4_1[var_4_2] or {}
-			arg_4_1[var_4_2][var_4_3] = true
+		if not repeatDict[x] or not repeatDict[x][y] then
+			repeatDict[x] = repeatDict[x] or {}
+			repeatDict[x][y] = true
 
-			local var_4_4 = RoomMapBlockModel.instance:getBlockMO(var_4_2, var_4_3)
+			local neighborMO = RoomMapBlockModel.instance:getBlockMO(x, y)
+			local blockType = neighborMO and neighborMO:getDefineBlockType()
 
-			if (var_4_4 and var_4_4:getDefineBlockType()) == var_4_0 and var_4_4:isInMap() and var_4_4.blockState == RoomBlockEnum.BlockState.Map then
-				local var_4_5 = var_4_4.blockId
-				local var_4_6 = var_4_4:hasRiver()
-				local var_4_7 = RoomConfig.instance:getInitBlock(var_4_5)
+			if blockType == checkBlockType and neighborMO:isInMap() and neighborMO.blockState == RoomBlockEnum.BlockState.Map then
+				local tmpBlockId = neighborMO.blockId
+				local hasRiver = neighborMO:hasRiver()
+				local isInitBlock = RoomConfig.instance:getInitBlock(tmpBlockId)
 
-				if not var_4_6 and not var_4_7 then
-					arg_4_2[#arg_4_2 + 1] = var_4_4.blockId
+				if not hasRiver and not isInitBlock then
+					resultList[#resultList + 1] = neighborMO.blockId
 
-					var_0_0.getNearSameBlockTypeEntity(var_4_4, arg_4_1, arg_4_2)
+					RoomBlockHelper.getNearSameBlockTypeEntity(neighborMO, repeatDict, resultList)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._getMapEmptyBlockMO(arg_5_0, arg_5_1)
-	local var_5_0 = RoomMapBlockModel.instance:getBlockMO(arg_5_0, arg_5_1)
+function RoomBlockHelper._getMapEmptyBlockMO(x, y)
+	local mo = RoomMapBlockModel.instance:getBlockMO(x, y)
 
-	if var_5_0 == nil then
+	if mo == nil then
 		return
 	end
 
-	if var_5_0.blockState ~= RoomBlockEnum.BlockState.Water then
+	if mo.blockState ~= RoomBlockEnum.BlockState.Water then
 		return
 	end
 
-	return var_5_0
+	return mo
 end
 
-function var_0_0._getMapBlockMO(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = RoomMapBlockModel.instance:getBlockMO(arg_6_0, arg_6_1)
+function RoomBlockHelper._getMapBlockMO(x, y, isFullRiver)
+	local mo = RoomMapBlockModel.instance:getBlockMO(x, y)
 
-	if var_6_0 == nil then
+	if mo == nil then
 		return
 	end
 
-	if var_6_0.blockState == RoomBlockEnum.BlockState.Water then
+	if mo.blockState == RoomBlockEnum.BlockState.Water then
 		return
 	end
 
-	if arg_6_2 and var_6_0:getRiverCount() < 6 then
+	if isFullRiver and mo:getRiverCount() < 6 then
 		return
 	end
 
-	return var_6_0
+	return mo
 end
 
-function var_0_0.refreshBlockEntity(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0 == nil or #arg_7_0 < 1 then
+function RoomBlockHelper.refreshBlockEntity(entityList, funcName, paramList)
+	if entityList == nil or #entityList < 1 then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0) do
-		local var_7_0 = iter_7_1[arg_7_1]
+	for i, entity in ipairs(entityList) do
+		local func = entity[funcName]
 
-		if var_7_0 then
-			if arg_7_2 then
-				var_7_0(iter_7_1, unpack(arg_7_2))
+		if func then
+			if paramList then
+				func(entity, unpack(paramList))
 			else
-				var_7_0(iter_7_1)
+				func(entity)
 			end
 		end
 	end
 end
 
-function var_0_0.refreshBlockResourceType(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0) do
-		local var_8_0 = RoomMapBlockModel.instance:getFullBlockMOById(iter_8_1.id)
+function RoomBlockHelper.refreshBlockResourceType(entityList)
+	for i, entity in ipairs(entityList) do
+		local blockMO = RoomMapBlockModel.instance:getFullBlockMOById(entity.id)
 
-		if var_8_0 then
-			var_8_0:refreshRiver()
+		if blockMO then
+			blockMO:refreshRiver()
 		end
 	end
 end
 
-function var_0_0.getMapResourceId(arg_9_0)
-	if arg_9_0.blockState == RoomBlockEnum.BlockState.Water then
+function RoomBlockHelper.getMapResourceId(blockMO)
+	if blockMO.blockState == RoomBlockEnum.BlockState.Water then
 		return RoomResourceEnum.ResourceId.Empty
 	end
 
-	if arg_9_0.blockState == RoomBlockEnum.BlockState.Fake then
+	if blockMO.blockState == RoomBlockEnum.BlockState.Fake then
 		return RoomResourceEnum.ResourceId.None
 	end
 
-	local var_9_0 = RoomMapBuildingModel.instance:getAllOccupyDict()
-	local var_9_1 = var_9_0[arg_9_0.hexPoint.x] and var_9_0[arg_9_0.hexPoint.x][arg_9_0.hexPoint.y]
-	local var_9_2 = var_9_1 and var_9_1.buildingUid
-	local var_9_3 = var_9_2 and RoomMapBuildingModel.instance:getBuildingMOById(var_9_2)
-	local var_9_4 = var_9_3 and RoomBuildingHelper.getCostResourceId(var_9_3.buildingId)
+	local allOccpyDict = RoomMapBuildingModel.instance:getAllOccupyDict()
+	local param = allOccpyDict[blockMO.hexPoint.x] and allOccpyDict[blockMO.hexPoint.x][blockMO.hexPoint.y]
+	local buildingUid = param and param.buildingUid
+	local buildingMO = buildingUid and RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local costResourceId = buildingMO and RoomBuildingHelper.getCostResourceId(buildingMO.buildingId)
 
-	if var_9_4 and var_9_4 ~= RoomResourceEnum.ResourceId.None then
-		return var_9_4
+	if costResourceId and costResourceId ~= RoomResourceEnum.ResourceId.None then
+		return costResourceId
 	end
 
-	local var_9_5 = {}
-	local var_9_6 = {}
+	local resourceParamDict = {}
+	local repeatResourceAreaDict = {}
 
-	for iter_9_0 = 0, 6 do
-		local var_9_7 = ResourcePoint(arg_9_0.hexPoint, iter_9_0)
-		local var_9_8 = RoomResourceModel.instance:getResourceArea(var_9_7)
+	for i = 0, 6 do
+		local resourcePoint = ResourcePoint(blockMO.hexPoint, i)
+		local resourceArea = RoomResourceModel.instance:getResourceArea(resourcePoint)
 
-		if var_9_8 and not var_9_6[var_9_8.index] then
-			var_9_6[var_9_8.index] = true
-			var_9_5[var_9_8.resourceId] = var_9_5[var_9_8.resourceId] or {}
-			var_9_5[var_9_8.resourceId].linkOut = var_9_5[var_9_8.resourceId].linkOut or var_9_8.linkOut
-			var_9_5[var_9_8.resourceId].isCenter = var_9_5[var_9_8.resourceId].isCenter or iter_9_0 == 0
+		if resourceArea and not repeatResourceAreaDict[resourceArea.index] then
+			repeatResourceAreaDict[resourceArea.index] = true
+			resourceParamDict[resourceArea.resourceId] = resourceParamDict[resourceArea.resourceId] or {}
+			resourceParamDict[resourceArea.resourceId].linkOut = resourceParamDict[resourceArea.resourceId].linkOut or resourceArea.linkOut
+			resourceParamDict[resourceArea.resourceId].isCenter = resourceParamDict[resourceArea.resourceId].isCenter or i == 0
 		end
 	end
 
-	local var_9_9 = RoomResourceEnum.ResourceId.None
-	local var_9_10
+	local bestResourceId = RoomResourceEnum.ResourceId.None
+	local bestParam
 
-	for iter_9_1, iter_9_2 in pairs(var_9_5) do
-		if not var_9_10 then
-			var_9_10 = iter_9_2
-			var_9_9 = iter_9_1
-		elseif not var_9_10.linkOut and iter_9_2.linkOut then
-			var_9_10 = iter_9_2
-			var_9_9 = iter_9_1
-		elseif var_9_10.linkOut and not iter_9_2.linkOut then
+	for resourceId, param in pairs(resourceParamDict) do
+		if not bestParam then
+			bestParam = param
+			bestResourceId = resourceId
+		elseif not bestParam.linkOut and param.linkOut then
+			bestParam = param
+			bestResourceId = resourceId
+		elseif bestParam.linkOut and not param.linkOut then
 			-- block empty
-		elseif not var_9_10.linkOut and not iter_9_2.linkOut and iter_9_2.isCenter then
-			var_9_10 = iter_9_2
-			var_9_9 = iter_9_1
+		elseif not bestParam.linkOut and not param.linkOut and param.isCenter then
+			bestParam = param
+			bestResourceId = resourceId
 		end
 	end
 
-	return var_9_9
+	return bestResourceId
 end
 
-function var_0_0.getResourcePath(arg_10_0, arg_10_1)
-	if arg_10_0:getResourceId(arg_10_1, true, true) == RoomResourceEnum.ResourceId.River then
-		local var_10_0, var_10_1, var_10_2 = arg_10_0:getResourceTypeRiver(arg_10_1, true)
+function RoomBlockHelper.getResourcePath(blockMO, direction)
+	local resourceId = blockMO:getResourceId(direction, true, true)
 
-		if not var_10_0 then
+	if resourceId == RoomResourceEnum.ResourceId.River then
+		local linkType, defineBlockType, defineBlockBType = blockMO:getResourceTypeRiver(direction, true)
+
+		if not linkType then
 			return nil
 		end
 
-		var_10_1 = var_10_1 or arg_10_0:getDefineBlockType()
+		defineBlockType = defineBlockType or blockMO:getDefineBlockType()
 
-		local var_10_3 = arg_10_0:getDefineWaterType()
-		local var_10_4, var_10_5 = RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, RoomRiverEnum.LakeBlockType[var_10_0], var_10_3)
-		local var_10_6, var_10_7 = RoomResHelper.getMapRiverFloorResPath(RoomRiverEnum.LakeFloorType[var_10_0], var_10_1)
-		local var_10_8
-		local var_10_9
+		local defineWaterType = blockMO:getDefineWaterType()
+		local blockres, blockresAb = RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, RoomRiverEnum.LakeBlockType[linkType], defineWaterType)
+		local floorres, floorresAb = RoomResHelper.getMapRiverFloorResPath(RoomRiverEnum.LakeFloorType[linkType], defineBlockType)
+		local floor2res, floor2resAb
 
-		if var_10_2 and RoomRiverEnum.LakeFloorBType[var_10_0] then
-			var_10_8, var_10_9 = RoomResHelper.getMapRiverFloorResPath(RoomRiverEnum.LakeFloorBType[var_10_0], var_10_2)
+		if defineBlockBType and RoomRiverEnum.LakeFloorBType[linkType] then
+			floor2res, floor2resAb = RoomResHelper.getMapRiverFloorResPath(RoomRiverEnum.LakeFloorBType[linkType], defineBlockBType)
 		end
 
-		return var_10_4, var_10_6, var_10_8, var_10_5, var_10_7, var_10_9
+		return blockres, floorres, floor2res, blockresAb, floorresAb, floor2resAb
 	end
 
 	return nil
 end
 
-function var_0_0.getCenterResourcePoint(arg_11_0)
-	if not arg_11_0 or #arg_11_0 <= 0 then
+function RoomBlockHelper.getCenterResourcePoint(resourcePointList)
+	if not resourcePointList or #resourcePointList <= 0 then
 		return nil
 	end
 
-	if #arg_11_0 <= 2 then
-		return arg_11_0[1]
+	if #resourcePointList <= 2 then
+		return resourcePointList[1]
 	end
 
-	local var_11_0 = HexPoint(0, 0)
+	local centerHexPoint = HexPoint(0, 0)
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0) do
-		var_11_0 = var_11_0 + (HexPoint(iter_11_1.x, iter_11_1.y) + HexPoint.directions[iter_11_1.direction] * 0.4)
+	for i, resourcePoint in ipairs(resourcePointList) do
+		local hexPoint = HexPoint(resourcePoint.x, resourcePoint.y)
+
+		hexPoint = hexPoint + HexPoint.directions[resourcePoint.direction] * 0.4
+		centerHexPoint = centerHexPoint + hexPoint
 	end
 
-	local var_11_1 = var_11_0.x / #arg_11_0
-	local var_11_2 = var_11_0.y / #arg_11_0
-	local var_11_3 = HexPoint(var_11_1, var_11_2)
-	local var_11_4 = 0
-	local var_11_5
+	local centerX = centerHexPoint.x / #resourcePointList
+	local centerY = centerHexPoint.y / #resourcePointList
 
-	for iter_11_2, iter_11_3 in ipairs(arg_11_0) do
-		local var_11_6 = HexMath.resourcePointToHexPoint(iter_11_3, 0.33)
-		local var_11_7 = HexPoint.DirectDistance(var_11_6, var_11_3)
+	centerHexPoint = HexPoint(centerX, centerY)
 
-		if not var_11_5 or var_11_7 < var_11_4 then
-			var_11_5 = iter_11_3
-			var_11_4 = var_11_7
+	local minDistance = 0
+	local centerResourcePoint
+
+	for i, resourcePoint in ipairs(resourcePointList) do
+		local hexPoint = HexMath.resourcePointToHexPoint(resourcePoint, 0.33)
+		local distance = HexPoint.DirectDistance(hexPoint, centerHexPoint)
+
+		if not centerResourcePoint or distance < minDistance then
+			centerResourcePoint = resourcePoint
+			minDistance = distance
 		end
 	end
 
-	return var_11_5
+	return centerResourcePoint
 end
 
-function var_0_0.findSelectInvenBlockSameResId()
-	local var_12_0 = RoomInventoryBlockModel.instance
-	local var_12_1 = var_12_0:getSelectResId()
+function RoomBlockHelper.findSelectInvenBlockSameResId()
+	local tRoomInventoryBlockModel = RoomInventoryBlockModel.instance
+	local resId = tRoomInventoryBlockModel:getSelectResId()
 
-	if not var_12_1 then
+	if not resId then
 		return nil
 	end
 
-	local var_12_2 = var_12_0:getCurPackageMO()
+	local packageMO = tRoomInventoryBlockModel:getCurPackageMO()
 
-	if not var_12_2 then
+	if not packageMO then
 		return nil
 	end
 
-	local var_12_3 = var_12_0:findFristUnUseBlockMO(var_12_2.packageId, var_12_1)
+	local blockMO = tRoomInventoryBlockModel:findFristUnUseBlockMO(packageMO.packageId, resId)
 
-	return var_12_3 and var_12_3.id or nil
+	return blockMO and blockMO.id or nil
 end
 
-function var_0_0.isInBoundary(arg_13_0)
-	return CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius) >= math.max(math.abs(arg_13_0.x), math.abs(arg_13_0.y), math.abs(arg_13_0.z))
+function RoomBlockHelper.isInBoundary(hexPoint)
+	local mapMaxRadius = CommonConfig.instance:getConstNum(ConstEnum.RoomMapMaxRadius)
+
+	return mapMaxRadius >= math.max(math.abs(hexPoint.x), math.abs(hexPoint.y), math.abs(hexPoint.z))
 end
 
-function var_0_0.isCanPlaceBlock()
+function RoomBlockHelper.isCanPlaceBlock()
 	if RoomController.instance:isEditMode() then
-		local var_14_0 = RoomMapBlockModel.instance:isBackMore()
-		local var_14_1 = RoomBuildingController.instance:isBuildingListShow()
-		local var_14_2 = RoomWaterReformModel.instance:isWaterReform()
-		local var_14_3 = RoomTransportController.instance:isTransportPathShow()
+		local isBackBlockShow = RoomMapBlockModel.instance:isBackMore()
+		local isBuildingShow = RoomBuildingController.instance:isBuildingListShow()
+		local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+		local isTransportPath = RoomTransportController.instance:isTransportPathShow()
 
-		if not var_14_0 and not var_14_1 and not var_14_2 and not var_14_3 then
+		if not isBackBlockShow and not isBuildingShow and not isWaterReform and not isTransportPath then
 			return true
 		end
 	elseif RoomController.instance:isDebugMode() and RoomDebugController.instance:isDebugPlaceListShow() then
@@ -347,4 +359,4 @@ function var_0_0.isCanPlaceBlock()
 	return false
 end
 
-return var_0_0
+return RoomBlockHelper

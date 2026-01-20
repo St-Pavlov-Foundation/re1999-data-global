@@ -1,124 +1,126 @@
-﻿module("modules.logic.necrologiststory.controller.NecrologistStoryController", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/controller/NecrologistStoryController.lua
 
-local var_0_0 = class("NecrologistStoryController", BaseController)
+module("modules.logic.necrologiststory.controller.NecrologistStoryController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local NecrologistStoryController = class("NecrologistStoryController", BaseController)
+
+function NecrologistStoryController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function NecrologistStoryController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function NecrologistStoryController:reInit()
 	return
 end
 
-function var_0_0.openTipView(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = {
-		tagId = arg_4_1,
-		clickPosition = arg_4_2
-	}
+function NecrologistStoryController:openTipView(tagId, clickPosition)
+	local viewParam = {}
 
-	ViewMgr.instance:openView(ViewName.NecrologistStoryTipView, var_4_0)
+	viewParam.tagId = tagId
+	viewParam.clickPosition = clickPosition
+
+	ViewMgr.instance:openView(ViewName.NecrologistStoryTipView, viewParam)
 end
 
-function var_0_0.closeGameView(arg_5_0, arg_5_1)
-	if not arg_5_1 or arg_5_1 == 0 then
+function NecrologistStoryController:closeGameView(storyId)
+	if not storyId or storyId == 0 then
 		return
 	end
 
-	local var_5_0 = NecrologistStoryEnum.StoryId2GameView[arg_5_1]
+	local viewName = NecrologistStoryEnum.StoryId2GameView[storyId]
 
-	if not var_5_0 then
+	if not viewName then
 		return
 	end
 
-	ViewMgr.instance:closeView(var_5_0)
+	ViewMgr.instance:closeView(viewName)
 end
 
-function var_0_0.openGameView(arg_6_0, arg_6_1)
-	if not arg_6_1 or arg_6_1 == 0 then
+function NecrologistStoryController:openGameView(storyId)
+	if not storyId or storyId == 0 then
 		return
 	end
 
-	arg_6_0._curStoryId = arg_6_1
+	self._curStoryId = storyId
 
-	local var_6_0 = RoleStoryModel.instance:getMoById(arg_6_1)
+	local mo = RoleStoryModel.instance:getMoById(storyId)
 
-	if not var_6_0 then
+	if not mo then
 		return
 	end
 
-	if var_6_0.hasUnlock then
-		arg_6_0:_onUnlockStory(0, 0)
+	if mo.hasUnlock then
+		self:_onUnlockStory(0, 0)
 	else
-		HeroStoryRpc.instance:sendUnlocHeroStoryRequest(arg_6_1, arg_6_0._onUnlockStory, arg_6_0)
+		HeroStoryRpc.instance:sendUnlocHeroStoryRequest(storyId, self._onUnlockStory, self)
 	end
 end
 
-function var_0_0._onUnlockStory(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_2 ~= 0 then
+function NecrologistStoryController:_onUnlockStory(_, resultCode, _)
+	if resultCode ~= 0 then
 		return
 	end
 
-	if not arg_7_0._curStoryId then
+	if not self._curStoryId then
 		return
 	end
 
-	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest(arg_7_0._curStoryId, arg_7_0._openCurView, arg_7_0)
+	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest(self._curStoryId, self._openCurView, self)
 end
 
-function var_0_0._openCurView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 ~= 0 then
+function NecrologistStoryController:_openCurView(_, resultCode, _)
+	if resultCode ~= 0 then
 		return
 	end
 
-	if not arg_8_0._curStoryId then
+	if not self._curStoryId then
 		return
 	end
 
-	local var_8_0 = NecrologistStoryEnum.StoryId2GameView[arg_8_0._curStoryId]
+	local viewName = NecrologistStoryEnum.StoryId2GameView[self._curStoryId]
 
-	if not var_8_0 then
+	if not viewName then
 		return
 	end
 
-	ViewMgr.instance:openView(var_8_0, {
-		roleStoryId = arg_8_0._curStoryId
+	ViewMgr.instance:openView(viewName, {
+		roleStoryId = self._curStoryId
 	})
 end
 
-function var_0_0.openStoryView(arg_9_0, arg_9_1, arg_9_2)
+function NecrologistStoryController:openStoryView(storyGroupId, roleStoryId)
 	ViewMgr.instance:openView(ViewName.NecrologistStoryView, {
-		storyGroupId = arg_9_1,
-		roleStoryId = arg_9_2
+		storyGroupId = storyGroupId,
+		roleStoryId = roleStoryId
 	})
 end
 
-function var_0_0.openTaskView(arg_10_0, arg_10_1)
+function NecrologistStoryController:openTaskView(roleStoryId)
 	ViewMgr.instance:openView(ViewName.NecrologistStoryTaskView, {
-		roleStoryId = arg_10_1
+		roleStoryId = roleStoryId
 	})
 end
 
-function var_0_0.openReviewView(arg_11_0, arg_11_1)
+function NecrologistStoryController:openReviewView(roleStoryId)
 	ViewMgr.instance:openView(ViewName.NecrologistStoryReviewView, {
-		roleStoryId = arg_11_1
+		roleStoryId = roleStoryId
 	})
 end
 
-function var_0_0.openCgUnlockView(arg_12_0, arg_12_1)
+function NecrologistStoryController:openCgUnlockView(roleStoryId)
 	ViewMgr.instance:openView(ViewName.NecrologistStoryReviewView, {
 		cgUnlock = true,
-		roleStoryId = arg_12_1
+		roleStoryId = roleStoryId
 	})
 end
 
-function var_0_0.getNecrologistStoryActivityRed(arg_13_0, arg_13_1)
-	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.NecrologistStoryTask, arg_13_1)
+function NecrologistStoryController:getNecrologistStoryActivityRed(storyId)
+	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.NecrologistStoryTask, storyId)
 end
 
-var_0_0.instance = var_0_0.New()
+NecrologistStoryController.instance = NecrologistStoryController.New()
 
-return var_0_0
+return NecrologistStoryController

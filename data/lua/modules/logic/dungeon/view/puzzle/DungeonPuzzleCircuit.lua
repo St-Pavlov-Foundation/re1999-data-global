@@ -1,319 +1,330 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleCircuit", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzleCircuit.lua
 
-local var_0_0 = class("DungeonPuzzleCircuit", BaseView)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzleCircuit", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocube = gohelper.findChild(arg_1_0.viewGO, "#go_basepoint/#go_cube")
-	arg_1_0._gobasepoint = gohelper.findChild(arg_1_0.viewGO, "#go_basepoint")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_click")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
+local DungeonPuzzleCircuit = class("DungeonPuzzleCircuit", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonPuzzleCircuit:onInitView()
+	self._gocube = gohelper.findChild(self.viewGO, "#go_basepoint/#go_cube")
+	self._gobasepoint = gohelper.findChild(self.viewGO, "#go_basepoint")
+	self._goclick = gohelper.findChild(self.viewGO, "#go_click")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0:addEventCb(DungeonPuzzleCircuitController.instance, DungeonPuzzleEvent.CircuitClick, arg_2_0._onGuideClick, arg_2_0)
+function DungeonPuzzleCircuit:addEvents()
+	self._click:AddClickListener(self._onClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self:addEventCb(DungeonPuzzleCircuitController.instance, DungeonPuzzleEvent.CircuitClick, self._onGuideClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0:removeEventCb(DungeonPuzzleCircuitController.instance, DungeonPuzzleEvent.CircuitClick, arg_3_0._onGuideClick, arg_3_0)
+function DungeonPuzzleCircuit:removeEvents()
+	self._click:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self:removeEventCb(DungeonPuzzleCircuitController.instance, DungeonPuzzleEvent.CircuitClick, self._onGuideClick, self)
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
-	if arg_4_0._rule:isWin() then
+function DungeonPuzzleCircuit:_btnresetOnClick()
+	if self._rule:isWin() then
 		GameFacade.showToast(ToastEnum.DungeonPuzzle)
 
 		return
 	end
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.DungeonPuzzleResetGame, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_4_0:_resetGame()
+		self:_resetGame()
 	end)
 end
 
-function var_0_0._resetGame(arg_6_0)
-	for iter_6_0 = 1, arg_6_0._gameHeight do
-		for iter_6_1 = 1, arg_6_0._gameWidth do
-			local var_6_0 = DungeonPuzzleCircuitModel.instance:getData(iter_6_0, iter_6_1)
+function DungeonPuzzleCircuit:_resetGame()
+	for x = 1, self._gameHeight do
+		for y = 1, self._gameWidth do
+			local mo = DungeonPuzzleCircuitModel.instance:getData(x, y)
 
-			if var_6_0 then
-				var_6_0.value = var_6_0.rawValue
+			if mo then
+				mo.value = mo.rawValue
 
-				arg_6_0:_syncRotation(iter_6_0, iter_6_1, var_6_0)
+				self:_syncRotation(x, y, mo)
 			end
 		end
 	end
 
-	arg_6_0._rule:refreshAllConnection()
-	arg_6_0:_refreshAllConnectionStatus()
+	self._rule:refreshAllConnection()
+	self:_refreshAllConnectionStatus()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0:initConst()
+function DungeonPuzzleCircuit:_editableInitView()
+	self:initConst()
 
-	arg_7_0._touch = TouchEventMgrHepler.getTouchEventMgr(arg_7_0._gobasepoint)
+	self._touch = TouchEventMgrHepler.getTouchEventMgr(self._gobasepoint)
 
-	arg_7_0._touch:SetOnlyTouch(true)
-	arg_7_0._touch:SetIgnoreUI(true)
-	arg_7_0._touch:SetOnClickCb(arg_7_0._onClickContainer, arg_7_0)
+	self._touch:SetOnlyTouch(true)
+	self._touch:SetIgnoreUI(true)
+	self._touch:SetOnClickCb(self._onClickContainer, self)
 
-	arg_7_0._click = SLFramework.UGUI.UIClickListener.Get(arg_7_0._goclick)
-	arg_7_0._rule = DungeonPuzzleCircuitRule.New()
-	arg_7_0._animator = gohelper.findChild(arg_7_0.viewGO, "biaopan"):GetComponent(typeof(UnityEngine.Animator))
-	arg_7_0._capacitanceEffectList = {}
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._goclick)
+	self._rule = DungeonPuzzleCircuitRule.New()
+
+	local finishGo = gohelper.findChild(self.viewGO, "biaopan")
+
+	self._animator = finishGo:GetComponent(typeof(UnityEngine.Animator))
+	self._capacitanceEffectList = {}
 end
 
-function var_0_0.initConst(arg_8_0)
-	arg_8_0._itemSizeX = 109
-	arg_8_0._itemSizeY = 109
-	arg_8_0._gameWidth, arg_8_0._gameHeight = DungeonPuzzleCircuitModel.instance:getGameSize()
+function DungeonPuzzleCircuit:initConst()
+	self._itemSizeX = 109
+	self._itemSizeY = 109
+	self._gameWidth, self._gameHeight = DungeonPuzzleCircuitModel.instance:getGameSize()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function DungeonPuzzleCircuit:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._gridObjs = {}
+function DungeonPuzzleCircuit:onOpen()
+	self._gridObjs = {}
 
-	for iter_10_0 = 1, arg_10_0._gameHeight do
-		for iter_10_1 = 1, arg_10_0._gameWidth do
-			arg_10_0._gridObjs[iter_10_0] = arg_10_0._gridObjs[iter_10_0] or {}
+	for x = 1, self._gameHeight do
+		for y = 1, self._gameWidth do
+			self._gridObjs[x] = self._gridObjs[x] or {}
 
-			arg_10_0:addNewItem(iter_10_0, iter_10_1)
+			self:addNewItem(x, y)
 		end
 	end
 
-	arg_10_0._rule:refreshAllConnection()
-	arg_10_0:_refreshAllConnectionStatus()
+	self._rule:refreshAllConnection()
+	self:_refreshAllConnectionStatus()
 end
 
-function var_0_0.addNewItem(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0:initItem(arg_11_1, arg_11_2)
+function DungeonPuzzleCircuit:addNewItem(x, y)
+	self:initItem(x, y)
 end
 
-function var_0_0._newPipeItem(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._gridObjs[arg_12_1][arg_12_2] then
+function DungeonPuzzleCircuit:_newPipeItem(x, y)
+	if self._gridObjs[x][y] then
 		return
 	end
 
-	local var_12_0 = gohelper.cloneInPlace(arg_12_0._gocube, arg_12_1 .. "_" .. arg_12_2)
+	local itemGo = gohelper.cloneInPlace(self._gocube, x .. "_" .. y)
 
-	gohelper.setActive(var_12_0, true)
+	gohelper.setActive(itemGo, true)
 
-	local var_12_1 = var_12_0.transform
-	local var_12_2, var_12_3 = DungeonPuzzleCircuitModel.instance:getRelativePosition(arg_12_1, arg_12_2, arg_12_0._itemSizeX, arg_12_0._itemSizeY)
+	local rectTf = itemGo.transform
+	local anchorX, anchorY = DungeonPuzzleCircuitModel.instance:getRelativePosition(x, y, self._itemSizeX, self._itemSizeY)
 
-	recthelper.setAnchor(var_12_1, var_12_2, var_12_3)
+	recthelper.setAnchor(rectTf, anchorX, anchorY)
 
-	local var_12_4 = arg_12_0:getUserDataTb_()
+	local itemObj = self:getUserDataTb_()
 
-	var_12_4.go = var_12_0
-	var_12_4.image = gohelper.findChildImage(var_12_0, "icon")
-	var_12_4.imageTf = var_12_4.image.transform
-	var_12_4.tf = var_12_1
-	var_12_4.capacitanceEffect = gohelper.findChild(var_12_0, "#vx_dianzu")
-	var_12_4.errorEffect = gohelper.findChild(var_12_0, "error")
-	arg_12_0._gridObjs[arg_12_1][arg_12_2] = var_12_4
+	itemObj.go = itemGo
+	itemObj.image = gohelper.findChildImage(itemGo, "icon")
+	itemObj.imageTf = itemObj.image.transform
+	itemObj.tf = rectTf
+	itemObj.capacitanceEffect = gohelper.findChild(itemGo, "#vx_dianzu")
+	itemObj.errorEffect = gohelper.findChild(itemGo, "error")
+	self._gridObjs[x][y] = itemObj
 end
 
-function var_0_0.initItem(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = DungeonPuzzleCircuitModel.instance:getData(arg_13_1, arg_13_2)
+function DungeonPuzzleCircuit:initItem(x, y)
+	local mo = DungeonPuzzleCircuitModel.instance:getData(x, y)
 
-	if not var_13_0 then
+	if not mo then
 		return
 	end
 
-	arg_13_0:_newPipeItem(arg_13_1, arg_13_2)
+	self:_newPipeItem(x, y)
 
-	local var_13_1 = arg_13_0._gridObjs[arg_13_1][arg_13_2]
+	local itemObj = self._gridObjs[x][y]
 
-	if var_13_0.type == 0 then
-		gohelper.setActive(var_13_1.go, false)
-
-		return
-	end
-
-	gohelper.setActive(var_13_1.go, true)
-
-	local var_13_2 = DungeonPuzzleCircuitEnum.res[var_13_0.type][1]
-
-	UISpriteSetMgr.instance:setPuzzleSprite(var_13_1.image, var_13_2, true)
-	arg_13_0:_syncRotation(arg_13_1, arg_13_2, var_13_0)
-end
-
-function var_0_0._getItem(arg_14_0, arg_14_1)
-	return arg_14_0._gridObjs[arg_14_1.x][arg_14_1.y]
-end
-
-function var_0_0._syncRotation(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = arg_15_0._gridObjs[arg_15_1][arg_15_2]
-	local var_15_1 = DungeonPuzzleCircuitEnum.rotate[arg_15_3.type]
-
-	if not var_15_1 then
-		arg_15_3.value = 0
-
-		transformhelper.setLocalRotation(var_15_0.tf, 0, 0, 0)
+	if mo.type == 0 then
+		gohelper.setActive(itemObj.go, false)
 
 		return
 	end
 
-	if not var_15_1[arg_15_3.value] then
-		for iter_15_0, iter_15_1 in pairs(var_15_1) do
-			arg_15_3.value = iter_15_0
+	gohelper.setActive(itemObj.go, true)
+
+	local resConst = DungeonPuzzleCircuitEnum.res[mo.type]
+	local path = resConst[1]
+
+	UISpriteSetMgr.instance:setPuzzleSprite(itemObj.image, path, true)
+	self:_syncRotation(x, y, mo)
+end
+
+function DungeonPuzzleCircuit:_getItem(mo)
+	return self._gridObjs[mo.x][mo.y]
+end
+
+function DungeonPuzzleCircuit:_syncRotation(x, y, mo)
+	local itemObj = self._gridObjs[x][y]
+	local rotateConfig = DungeonPuzzleCircuitEnum.rotate[mo.type]
+
+	if not rotateConfig then
+		mo.value = 0
+
+		transformhelper.setLocalRotation(itemObj.tf, 0, 0, 0)
+
+		return
+	end
+
+	local config = rotateConfig[mo.value]
+
+	if not config then
+		for k, v in pairs(rotateConfig) do
+			mo.value = k
 
 			break
 		end
 	end
 
-	local var_15_2 = var_15_1[arg_15_3.value][1]
+	config = rotateConfig[mo.value]
 
-	transformhelper.setLocalRotation(var_15_0.tf, 0, 0, var_15_2)
+	local rotation = config[1]
+
+	transformhelper.setLocalRotation(itemObj.tf, 0, 0, rotation)
 end
 
-function var_0_0._onClick(arg_16_0)
-	arg_16_0._isClick = true
+function DungeonPuzzleCircuit:_onClick()
+	self._isClick = true
 end
 
-function var_0_0._onClickContainer(arg_17_0, arg_17_1)
-	if not arg_17_0._isClick then
+function DungeonPuzzleCircuit:_onClickContainer(position)
+	if not self._isClick then
 		return
 	end
 
-	arg_17_0._isClick = false
+	self._isClick = false
 
-	if arg_17_0._rule:isWin() then
+	if self._rule:isWin() then
 		return
 	end
 
-	local var_17_0 = recthelper.screenPosToAnchorPos(arg_17_1, arg_17_0._gobasepoint.transform)
-	local var_17_1, var_17_2 = DungeonPuzzleCircuitModel.instance:getIndexByTouchPos(var_17_0.x, var_17_0.y, arg_17_0._itemSizeX, arg_17_0._itemSizeY)
+	local tempPos = recthelper.screenPosToAnchorPos(position, self._gobasepoint.transform)
+	local x, y = DungeonPuzzleCircuitModel.instance:getIndexByTouchPos(tempPos.x, tempPos.y, self._itemSizeX, self._itemSizeY)
 
-	if var_17_1 ~= -1 then
-		arg_17_0:_onClickGridItem(var_17_1, var_17_2)
+	if x ~= -1 then
+		self:_onClickGridItem(x, y)
 	end
 end
 
-function var_0_0._onGuideClick(arg_18_0, arg_18_1)
-	local var_18_0 = string.splitToNumber(arg_18_1, "_")
+function DungeonPuzzleCircuit:_onGuideClick(param)
+	local sp = string.splitToNumber(param, "_")
 
-	arg_18_0:_onClickGridItem(var_18_0[1], var_18_0[2])
+	self:_onClickGridItem(sp[1], sp[2])
 end
 
-function var_0_0._onClickGridItem(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = DungeonPuzzleCircuitModel.instance:getData(arg_19_1, arg_19_2)
+function DungeonPuzzleCircuit:_onClickGridItem(x, y)
+	local mo = DungeonPuzzleCircuitModel.instance:getData(x, y)
 
-	if not var_19_0 then
+	if not mo then
 		return
 	end
 
-	arg_19_0._clickItemMo = var_19_0
+	self._clickItemMo = mo
 
 	AudioMgr.instance:trigger(AudioEnum.PuzzleCircuit.play_ui_circuit_click)
-	arg_19_0._rule:changeDirection(arg_19_1, arg_19_2, true)
-	arg_19_0._rule:refreshAllConnection()
-	arg_19_0:_syncRotation(arg_19_1, arg_19_2, var_19_0)
-	arg_19_0:_checkAudio()
-	arg_19_0:_refreshAllConnectionStatus()
+	self._rule:changeDirection(x, y, true)
+	self._rule:refreshAllConnection()
+	self:_syncRotation(x, y, mo)
+	self:_checkAudio()
+	self:_refreshAllConnectionStatus()
 
-	if arg_19_0._rule:isWin() then
+	if self._rule:isWin() then
 		AudioMgr.instance:trigger(AudioEnum.PuzzleCircuit.play_ui_powersupply_connection)
 		GameFacade.showToast(ToastEnum.DungeonPuzzle2)
 
-		local var_19_1 = DungeonPuzzleCircuitModel.instance:getElementCo()
+		local elementCo = DungeonPuzzleCircuitModel.instance:getElementCo()
 
-		DungeonRpc.instance:sendPuzzleFinishRequest(var_19_1.id)
-		arg_19_0._animator:Play(UIAnimationName.Open)
+		DungeonRpc.instance:sendPuzzleFinishRequest(elementCo.id)
+		self._animator:Play(UIAnimationName.Open)
 	end
 end
 
-function var_0_0._refreshAllConnectionStatus(arg_20_0)
-	arg_20_0:_refreshItemsStatus(arg_20_0._rule:getOldCircuitList(), DungeonPuzzleCircuitEnum.status.normal)
-	arg_20_0:_refreshItemsStatus(arg_20_0._rule:getOldCapacitanceList(), DungeonPuzzleCircuitEnum.status.normal)
-	arg_20_0:_refreshItemsStatus(arg_20_0._rule:getOldWrongList(), DungeonPuzzleCircuitEnum.status.normal)
-	arg_20_0:_refreshItemsStatus(arg_20_0._rule:getCircuitList(), DungeonPuzzleCircuitEnum.status.correct)
-	arg_20_0:_refreshItemsStatus(arg_20_0._rule:getCapacitanceList(), DungeonPuzzleCircuitEnum.status.correct)
-	arg_20_0:_refreshItemsStatus(arg_20_0._rule:getWrongList(), DungeonPuzzleCircuitEnum.status.error)
+function DungeonPuzzleCircuit:_refreshAllConnectionStatus()
+	self:_refreshItemsStatus(self._rule:getOldCircuitList(), DungeonPuzzleCircuitEnum.status.normal)
+	self:_refreshItemsStatus(self._rule:getOldCapacitanceList(), DungeonPuzzleCircuitEnum.status.normal)
+	self:_refreshItemsStatus(self._rule:getOldWrongList(), DungeonPuzzleCircuitEnum.status.normal)
+	self:_refreshItemsStatus(self._rule:getCircuitList(), DungeonPuzzleCircuitEnum.status.correct)
+	self:_refreshItemsStatus(self._rule:getCapacitanceList(), DungeonPuzzleCircuitEnum.status.correct)
+	self:_refreshItemsStatus(self._rule:getWrongList(), DungeonPuzzleCircuitEnum.status.error)
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._capacitanceEffectList) do
-		gohelper.setActive(iter_20_1.capacitanceEffect, false)
-		rawset(arg_20_0._capacitanceEffectList, iter_20_0, nil)
+	for k, itemObj in pairs(self._capacitanceEffectList) do
+		gohelper.setActive(itemObj.capacitanceEffect, false)
+		rawset(self._capacitanceEffectList, k, nil)
 	end
 end
 
-function var_0_0._checkAudio(arg_21_0)
-	if tabletool.len(arg_21_0._rule:getCapacitanceList()) > tabletool.len(arg_21_0._rule:getOldCapacitanceList()) then
+function DungeonPuzzleCircuit:_checkAudio()
+	if tabletool.len(self._rule:getCapacitanceList()) > tabletool.len(self._rule:getOldCapacitanceList()) then
 		AudioMgr.instance:trigger(AudioEnum.PuzzleCircuit.play_ui_capacitors_connection)
-		arg_21_0._animator:Play("onece", 0, 0)
+		self._animator:Play("onece", 0, 0)
 	end
 
-	if tabletool.len(arg_21_0._rule:getWrongList()) > tabletool.len(arg_21_0._rule:getOldWrongList()) then
+	if tabletool.len(self._rule:getWrongList()) > tabletool.len(self._rule:getOldWrongList()) then
 		AudioMgr.instance:trigger(AudioEnum.PuzzleCircuit.play_ui_circuit_shortcircuit)
 
-		arg_21_0._clickItemMo = nil
+		self._clickItemMo = nil
 	end
 end
 
-function var_0_0._refreshItemsStatus(arg_22_0, arg_22_1, arg_22_2)
-	if not arg_22_1 then
+function DungeonPuzzleCircuit:_refreshItemsStatus(list, status)
+	if not list then
 		return
 	end
 
-	for iter_22_0, iter_22_1 in pairs(arg_22_1) do
-		local var_22_0 = arg_22_0:_getItem(iter_22_1)
-		local var_22_1 = DungeonPuzzleCircuitEnum.res[iter_22_1.type][arg_22_2]
+	for i, mo in pairs(list) do
+		local itemObj = self:_getItem(mo)
+		local resConst = DungeonPuzzleCircuitEnum.res[mo.type]
+		local path = resConst[status]
 
-		if var_22_1 then
-			UISpriteSetMgr.instance:setPuzzleSprite(var_22_0.image, var_22_1, true)
+		if path then
+			UISpriteSetMgr.instance:setPuzzleSprite(itemObj.image, path, true)
 		end
 
-		if arg_22_2 == DungeonPuzzleCircuitEnum.status.normal then
-			if iter_22_1.type == DungeonPuzzleCircuitEnum.type.capacitance then
-				arg_22_0._capacitanceEffectList[iter_22_1] = var_22_0
+		if status == DungeonPuzzleCircuitEnum.status.normal then
+			if mo.type == DungeonPuzzleCircuitEnum.type.capacitance then
+				self._capacitanceEffectList[mo] = itemObj
 			end
 
-			gohelper.setActive(var_22_0.errorEffect, false)
-		elseif iter_22_1.type == DungeonPuzzleCircuitEnum.type.capacitance and arg_22_2 == DungeonPuzzleCircuitEnum.status.correct then
-			gohelper.setActive(var_22_0.capacitanceEffect, true)
+			gohelper.setActive(itemObj.errorEffect, false)
+		elseif mo.type == DungeonPuzzleCircuitEnum.type.capacitance and status == DungeonPuzzleCircuitEnum.status.correct then
+			gohelper.setActive(itemObj.capacitanceEffect, true)
 
-			arg_22_0._capacitanceEffectList[iter_22_1] = nil
-		elseif arg_22_2 == DungeonPuzzleCircuitEnum.status.error and iter_22_1.type >= DungeonPuzzleCircuitEnum.type.straight and iter_22_1.type <= DungeonPuzzleCircuitEnum.type.t_shape then
-			gohelper.setActive(var_22_0.errorEffect, true)
+			self._capacitanceEffectList[mo] = nil
+		elseif status == DungeonPuzzleCircuitEnum.status.error and mo.type >= DungeonPuzzleCircuitEnum.type.straight and mo.type <= DungeonPuzzleCircuitEnum.type.t_shape then
+			gohelper.setActive(itemObj.errorEffect, true)
 
-			local var_22_2, var_22_3, var_22_4 = transformhelper.getLocalRotation(var_22_0.tf)
+			local _, _, z = transformhelper.getLocalRotation(itemObj.tf)
 
-			transformhelper.setLocalRotation(var_22_0.errorEffect.transform, 0, 0, -var_22_4)
+			transformhelper.setLocalRotation(itemObj.errorEffect.transform, 0, 0, -z)
 
-			if arg_22_0._clickItemMo == iter_22_1 then
+			if self._clickItemMo == mo then
 				AudioMgr.instance:trigger(AudioEnum.PuzzleCircuit.play_ui_circuit_shortcircuit)
 			end
 		end
 	end
 end
 
-function var_0_0._doEdit(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = DungeonPuzzleCircuitModel.instance:getEditIndex()
+function DungeonPuzzleCircuit:_doEdit(x, y)
+	local editIndex = DungeonPuzzleCircuitModel.instance:getEditIndex()
 
-	if not var_23_0 or var_23_0 <= 0 then
+	if not editIndex or editIndex <= 0 then
 		return false
 	end
 
-	local var_23_1 = DungeonPuzzleCircuitModel.instance:getData(arg_23_1, arg_23_2)
+	local mo = DungeonPuzzleCircuitModel.instance:getData(x, y)
 
 	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftAlt) then
-		if not var_23_1 then
+		if not mo then
 			return true
 		end
 
-		var_23_1.type = 0
+		mo.type = 0
 
-		arg_23_0:initItem(arg_23_1, arg_23_2)
+		self:initItem(x, y)
 
 		return true
 	end
@@ -322,27 +333,27 @@ function var_0_0._doEdit(arg_23_0, arg_23_1, arg_23_2)
 		return false
 	end
 
-	var_23_1 = var_23_1 or DungeonPuzzleCircuitModel.instance:_getMo(arg_23_1, arg_23_2)
+	mo = mo or DungeonPuzzleCircuitModel.instance:_getMo(x, y)
 
-	if var_23_0 >= DungeonPuzzleCircuitEnum.type.power1 and var_23_0 <= DungeonPuzzleCircuitEnum.type.t_shape then
-		var_23_1.type = var_23_0
+	if editIndex >= DungeonPuzzleCircuitEnum.type.power1 and editIndex <= DungeonPuzzleCircuitEnum.type.t_shape then
+		mo.type = editIndex
 
-		arg_23_0:initItem(arg_23_1, arg_23_2)
+		self:initItem(x, y)
 	end
 
 	return true
 end
 
-function var_0_0.onClose(arg_24_0)
-	if arg_24_0._touch then
-		TouchEventMgrHepler.remove(arg_24_0._touch)
+function DungeonPuzzleCircuit:onClose()
+	if self._touch then
+		TouchEventMgrHepler.remove(self._touch)
 
-		arg_24_0._touch = nil
+		self._touch = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function DungeonPuzzleCircuit:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonPuzzleCircuit

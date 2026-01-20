@@ -1,7 +1,9 @@
-﻿module("modules.logic.minors.controller.MinorsEvent", package.seeall)
+﻿-- chunkname: @modules/logic/minors/controller/MinorsEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.minors.controller.MinorsEvent", package.seeall)
 
-var_0_0.PayLimitFlagUpdate = 1
+local MinorsEvent = _M
 
-return var_0_0
+MinorsEvent.PayLimitFlagUpdate = 1
+
+return MinorsEvent

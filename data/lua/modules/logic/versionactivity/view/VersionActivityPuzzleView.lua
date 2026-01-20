@@ -1,343 +1,346 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityPuzzleView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityPuzzleView.lua
 
-local var_0_0 = class("VersionActivityPuzzleView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityPuzzleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goclose = gohelper.findChild(arg_1_0.viewGO, "#go_close")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/#txt_title")
-	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/Scroll View/Viewport/Content/#txt_info")
-	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_options")
-	arg_1_0._gooptionitem = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_options/#go_optionitem")
-	arg_1_0._goemptyoptionitem = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_options/#go_empty")
-	arg_1_0._godragoptionitem = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_dragoptionitem")
-	arg_1_0._goadsorbrect = gohelper.findChild(arg_1_0.viewGO, "#simage_bg/#go_adsorbrect")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
-	arg_1_0._txtgamename = gohelper.findChildText(arg_1_0.viewGO, "#simage_bg/#txt_gamename")
-	arg_1_0._txttemp = gohelper.findChildText(arg_1_0.viewGO, "#txt_temp")
+local VersionActivityPuzzleView = class("VersionActivityPuzzleView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityPuzzleView:onInitView()
+	self._goclose = gohelper.findChild(self.viewGO, "#go_close")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#simage_bg/#txt_title")
+	self._txtinfo = gohelper.findChildText(self.viewGO, "#simage_bg/Scroll View/Viewport/Content/#txt_info")
+	self._gooptions = gohelper.findChild(self.viewGO, "#simage_bg/#go_options")
+	self._gooptionitem = gohelper.findChild(self.viewGO, "#simage_bg/#go_options/#go_optionitem")
+	self._goemptyoptionitem = gohelper.findChild(self.viewGO, "#simage_bg/#go_options/#go_empty")
+	self._godragoptionitem = gohelper.findChild(self.viewGO, "#simage_bg/#go_dragoptionitem")
+	self._goadsorbrect = gohelper.findChild(self.viewGO, "#simage_bg/#go_adsorbrect")
+	self._gofinish = gohelper.findChild(self.viewGO, "#go_finish")
+	self._txtgamename = gohelper.findChildText(self.viewGO, "#simage_bg/#txt_gamename")
+	self._txttemp = gohelper.findChildText(self.viewGO, "#txt_temp")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivityPuzzleView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivityPuzzleView:removeEvents()
 	return
 end
 
-var_0_0.GuideBorder = 10
-var_0_0.FingerAnswerOffsetX = 77
-var_0_0.FingerAnswerOffsetY = -160
-var_0_0.FingerOptionOffsetX = 150
-var_0_0.FingerOptionOffsetY = -250
-var_0_0.AbsorbOffsetX = 20
-var_0_0.AbsorbOffsetY = 10
+VersionActivityPuzzleView.GuideBorder = 10
+VersionActivityPuzzleView.FingerAnswerOffsetX = 77
+VersionActivityPuzzleView.FingerAnswerOffsetY = -160
+VersionActivityPuzzleView.FingerOptionOffsetX = 150
+VersionActivityPuzzleView.FingerOptionOffsetY = -250
+VersionActivityPuzzleView.AbsorbOffsetX = 20
+VersionActivityPuzzleView.AbsorbOffsetY = 10
 
-function var_0_0.closeViewOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivityPuzzleView:closeViewOnClick()
+	self:closeThis()
 end
 
-function var_0_0.initCharacterWidth(arg_5_0)
-	arg_5_0._txttemp.text = luaLang("lei_mi_te_bei_placeholder")
-	arg_5_0.oneCharacterWidth = arg_5_0._txttemp.preferredWidth
-	arg_5_0._txttemp.text = string.rep(luaLang("lei_mi_te_bei_placeholder"), 2)
-	arg_5_0.intervalX = arg_5_0._txttemp.preferredWidth - 2 * arg_5_0.oneCharacterWidth
+function VersionActivityPuzzleView:initCharacterWidth()
+	self._txttemp.text = luaLang("lei_mi_te_bei_placeholder")
+	self.oneCharacterWidth = self._txttemp.preferredWidth
+	self._txttemp.text = string.rep(luaLang("lei_mi_te_bei_placeholder"), 2)
+	self.intervalX = self._txttemp.preferredWidth - 2 * self.oneCharacterWidth
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.defaultAnchorPos = Vector2(0, 0)
+function VersionActivityPuzzleView:_editableInitView()
+	self.defaultAnchorPos = Vector2(0, 0)
 
-	arg_6_0:initCharacterWidth()
+	self:initCharacterWidth()
 
-	arg_6_0._goGuide = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle")
+	self._goGuide = gohelper.findChild(self.viewGO, "guide_activitypuzzle")
 
-	gohelper.setActive(arg_6_0._godragoptionitem, false)
-	gohelper.setActive(arg_6_0._goadsorbrect, false)
+	gohelper.setActive(self._godragoptionitem, false)
+	gohelper.setActive(self._goadsorbrect, false)
 
-	arg_6_0.goAdsorbSuccess = gohelper.findChild(arg_6_0.viewGO, "#simage_bg/#go_adsorbrect/success")
-	arg_6_0.goAdsorbFail = gohelper.findChild(arg_6_0.viewGO, "#simage_bg/#go_adsorbrect/fail")
+	self.goAdsorbSuccess = gohelper.findChild(self.viewGO, "#simage_bg/#go_adsorbrect/success")
+	self.goAdsorbFail = gohelper.findChild(self.viewGO, "#simage_bg/#go_adsorbrect/fail")
 
-	arg_6_0:resetAdsorbEffect()
+	self:resetAdsorbEffect()
 
-	arg_6_0.goGuideAnimationContainer = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1")
-	arg_6_0.goGuideAnimator = arg_6_0.goGuideAnimationContainer:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0.goAnswerRect = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1/kuang1")
-	arg_6_0.goOptionRect = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1/kuang2")
-	arg_6_0.goFinger = gohelper.findChild(arg_6_0.viewGO, "guide_activitypuzzle/guide1/shouzhi")
-	arg_6_0.rectTransformAnswer = arg_6_0.goAnswerRect.transform
-	arg_6_0.rectTransformOption = arg_6_0.goOptionRect.transform
-	arg_6_0.rectTransformFinger = arg_6_0.goFinger.transform
+	self.goGuideAnimationContainer = gohelper.findChild(self.viewGO, "guide_activitypuzzle/guide1")
+	self.goGuideAnimator = self.goGuideAnimationContainer:GetComponent(typeof(UnityEngine.Animator))
+	self.goAnswerRect = gohelper.findChild(self.viewGO, "guide_activitypuzzle/guide1/kuang1")
+	self.goOptionRect = gohelper.findChild(self.viewGO, "guide_activitypuzzle/guide1/kuang2")
+	self.goFinger = gohelper.findChild(self.viewGO, "guide_activitypuzzle/guide1/shouzhi")
+	self.rectTransformAnswer = self.goAnswerRect.transform
+	self.rectTransformOption = self.goOptionRect.transform
+	self.rectTransformFinger = self.goFinger.transform
 
-	arg_6_0:initDragOptionItem()
-	arg_6_0:initTextScrollViewScenePosRect()
-	gohelper.setActive(arg_6_0._gofinish, false)
+	self:initDragOptionItem()
+	self:initTextScrollViewScenePosRect()
+	gohelper.setActive(self._gofinish, false)
 
-	arg_6_0.bgHalfWidth = recthelper.getWidth(arg_6_0._simagebg.transform) / 2
-	arg_6_0.bgHalfHeight = recthelper.getHeight(arg_6_0._simagebg.transform) / 2
-	arg_6_0.closeViewClick = gohelper.getClick(arg_6_0._goclose)
+	self.bgHalfWidth = recthelper.getWidth(self._simagebg.transform) / 2
+	self.bgHalfHeight = recthelper.getHeight(self._simagebg.transform) / 2
+	self.closeViewClick = gohelper.getClick(self._goclose)
 
-	arg_6_0.closeViewClick:AddClickListener(arg_6_0.closeViewOnClick, arg_6_0)
+	self.closeViewClick:AddClickListener(self.closeViewOnClick, self)
 
-	arg_6_0.optionItemList = {}
-	arg_6_0.answerExistOptionItemDict = {}
-	arg_6_0.needAnswerList = {}
-	arg_6_0.answerMatched = false
+	self.optionItemList = {}
+	self.answerExistOptionItemDict = {}
+	self.needAnswerList = {}
+	self.answerMatched = false
 end
 
-function var_0_0.initDragOptionItem(arg_7_0)
-	arg_7_0.dragOptionItem = arg_7_0:getUserDataTb_()
-	arg_7_0.dragOptionItem.go = arg_7_0._godragoptionitem
-	arg_7_0.dragOptionItem.txtInfo = gohelper.findChildText(arg_7_0.dragOptionItem.go, "info")
-	arg_7_0.dragOptionItem.transform = arg_7_0.dragOptionItem.go.transform
+function VersionActivityPuzzleView:initDragOptionItem()
+	self.dragOptionItem = self:getUserDataTb_()
+	self.dragOptionItem.go = self._godragoptionitem
+	self.dragOptionItem.txtInfo = gohelper.findChildText(self.dragOptionItem.go, "info")
+	self.dragOptionItem.transform = self.dragOptionItem.go.transform
 end
 
-function var_0_0.initTextScrollViewScenePosRect(arg_8_0)
-	arg_8_0.goScroll = gohelper.findChild(arg_8_0.viewGO, "#simage_bg/Scroll View")
+function VersionActivityPuzzleView:initTextScrollViewScenePosRect()
+	self.goScroll = gohelper.findChild(self.viewGO, "#simage_bg/Scroll View")
 
-	local var_8_0 = arg_8_0.goScroll.transform:GetWorldCorners()
-	local var_8_1 = var_8_0[0]
-	local var_8_2 = var_8_0[1]
-	local var_8_3 = var_8_0[2]
-	local var_8_4 = var_8_0[3]
+	local worldCorners = self.goScroll.transform:GetWorldCorners()
+	local LT = worldCorners[0]
+	local RT = worldCorners[1]
+	local RB = worldCorners[2]
+	local LB = worldCorners[3]
 
-	arg_8_0.textScrollScenePosRect = {
-		var_8_1,
-		var_8_2,
-		var_8_3,
-		var_8_4
+	self.textScrollScenePosRect = {
+		LT,
+		RT,
+		RB,
+		LB
 	}
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function VersionActivityPuzzleView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0.isFinish = arg_10_0.viewParam.isFinish
-	arg_10_0.elementCo = arg_10_0.viewParam.elementCo
-	arg_10_0.puzzleId = tonumber(arg_10_0.elementCo.param)
-	arg_10_0.puzzleConfig = lua_version_activity_puzzle_question.configDict[arg_10_0.puzzleId]
-	arg_10_0._txtgamename.text = arg_10_0.puzzleConfig.tittle
+function VersionActivityPuzzleView:onOpen()
+	self.isFinish = self.viewParam.isFinish
+	self.elementCo = self.viewParam.elementCo
+	self.puzzleId = tonumber(self.elementCo.param)
+	self.puzzleConfig = lua_version_activity_puzzle_question.configDict[self.puzzleId]
+	self._txtgamename.text = self.puzzleConfig.tittle
 
-	if arg_10_0.puzzleConfig == nil then
-		logError(string.format("not found puzzleId : %s, elementId : %s", arg_10_0.puzzleId, arg_10_0.elementCo.id))
-		arg_10_0:closeThis()
+	if self.puzzleConfig == nil then
+		logError(string.format("not found puzzleId : %s, elementId : %s", self.puzzleId, self.elementCo.id))
+		self:closeThis()
 
 		return
 	end
 
-	arg_10_0.options, arg_10_0.maxAnswerLenList = arg_10_0:buildOptions(arg_10_0.puzzleConfig.answer)
-	arg_10_0.halfAnsWerHeight = recthelper.getHeight(arg_10_0._goadsorbrect.transform) * 0.5
+	self.options, self.maxAnswerLenList = self:buildOptions(self.puzzleConfig.answer)
+	self.halfAnsWerHeight = recthelper.getHeight(self._goadsorbrect.transform) * 0.5
 
-	if arg_10_0.isFinish then
-		arg_10_0:refreshFinishStatus()
+	if self.isFinish then
+		self:refreshFinishStatus()
 	else
-		arg_10_0:refreshNormalStatus()
+		self:refreshNormalStatus()
 	end
 end
 
-function var_0_0.refreshFinishStatus(arg_11_0)
-	local var_11_0 = arg_11_0._gofinish:GetComponent(typeof(UnityEngine.Animator))
+function VersionActivityPuzzleView:refreshFinishStatus()
+	local finishAnimator = self._gofinish:GetComponent(typeof(UnityEngine.Animator))
 
-	if var_11_0 then
-		var_11_0.enabled = false
+	if finishAnimator then
+		finishAnimator.enabled = false
 	end
 
-	gohelper.setActive(arg_11_0._gofinish, true)
+	gohelper.setActive(self._gofinish, true)
 
-	arg_11_0.showText = arg_11_0:buildFinishText(arg_11_0.puzzleConfig.text)
+	self.showText = self:buildFinishText(self.puzzleConfig.text)
 
-	arg_11_0:onTextInfoChange()
-	arg_11_0:refreshOptions()
+	self:onTextInfoChange()
+	self:refreshOptions()
 end
 
-function var_0_0.refreshNormalStatus(arg_12_0)
-	arg_12_0.showText = arg_12_0:buildText(arg_12_0.puzzleConfig.text)
+function VersionActivityPuzzleView:refreshNormalStatus()
+	self.showText = self:buildText(self.puzzleConfig.text)
 
-	arg_12_0:onTextInfoChange()
-	arg_12_0:refreshOptions()
+	self:onTextInfoChange()
+	self:refreshOptions()
 
-	local var_12_0 = PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.LeiMiTeBeiEnteredPuzzleViewKey), 0) == 0
+	local isShowGuide = PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.LeiMiTeBeiEnteredPuzzleViewKey), 0) == 0
 
-	gohelper.setActive(arg_12_0._goGuide, false)
+	gohelper.setActive(self._goGuide, false)
 
-	if var_12_0 then
-		UIBlockMgr.instance:startBlock(arg_12_0.viewName .. "PlayGuideAnimation")
-		TaskDispatcher.runDelay(arg_12_0.showGuide, arg_12_0, 0.7)
+	if isShowGuide then
+		UIBlockMgr.instance:startBlock(self.viewName .. "PlayGuideAnimation")
+		TaskDispatcher.runDelay(self.showGuide, self, 0.7)
 	end
 end
 
-function var_0_0.showGuide(arg_13_0)
-	UIBlockMgr.instance:endBlock(arg_13_0.viewName .. "PlayGuideAnimation")
-	gohelper.setActive(arg_13_0._goGuide, true)
+function VersionActivityPuzzleView:showGuide()
+	UIBlockMgr.instance:endBlock(self.viewName .. "PlayGuideAnimation")
+	gohelper.setActive(self._goGuide, true)
 	PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.LeiMiTeBeiEnteredPuzzleViewKey), 1)
 
-	arg_13_0.guideBlock = gohelper.findChild(arg_13_0.viewGO, "guide_activitypuzzle/guide_block")
-	arg_13_0.guideClick = gohelper.getClick(arg_13_0.guideBlock)
+	self.guideBlock = gohelper.findChild(self.viewGO, "guide_activitypuzzle/guide_block")
+	self.guideClick = gohelper.getClick(self.guideBlock)
 
-	arg_13_0.guideClick:AddClickListener(arg_13_0.onClickGuideGo, arg_13_0)
+	self.guideClick:AddClickListener(self.onClickGuideGo, self)
 
-	arg_13_0.guideAnswerAnchor = arg_13_0:getFirstAnswerAnchorPos()
+	self.guideAnswerAnchor = self:getFirstAnswerAnchorPos()
 
-	recthelper.setWidth(arg_13_0.rectTransformAnswer, arg_13_0:getAnswerWidth(1))
-	recthelper.setAnchor(arg_13_0.rectTransformAnswer, arg_13_0.guideAnswerAnchor.x, arg_13_0.guideAnswerAnchor.y)
+	recthelper.setWidth(self.rectTransformAnswer, self:getAnswerWidth(1))
+	recthelper.setAnchor(self.rectTransformAnswer, self.guideAnswerAnchor.x, self.guideAnswerAnchor.y)
 
-	local var_13_0 = arg_13_0.optionItemList[arg_13_0.firstAnswerIndex]:getScreenPos()
+	local optionScreenPos = self.optionItemList[self.firstAnswerIndex]:getScreenPos()
 
-	arg_13_0.optionAnchor = recthelper.screenPosToAnchorPos(var_13_0, arg_13_0.rectTransformOption.parent)
+	self.optionAnchor = recthelper.screenPosToAnchorPos(optionScreenPos, self.rectTransformOption.parent)
 
-	recthelper.setAnchor(arg_13_0.rectTransformOption, arg_13_0.optionAnchor.x, arg_13_0.optionAnchor.y)
-	arg_13_0.goGuideAnimator:Play(UIAnimationName.Open, 0, 0)
-	TaskDispatcher.runDelay(arg_13_0.playGuideAnimation, arg_13_0, 1)
+	recthelper.setAnchor(self.rectTransformOption, self.optionAnchor.x, self.optionAnchor.y)
+	self.goGuideAnimator:Play(UIAnimationName.Open, 0, 0)
+	TaskDispatcher.runDelay(self.playGuideAnimation, self, 1)
 end
 
-function var_0_0.playGuideAnimation(arg_14_0)
-	if arg_14_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_14_0.tweenId)
+function VersionActivityPuzzleView:playGuideAnimation()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 	end
 
-	recthelper.setAnchor(arg_14_0.rectTransformFinger, arg_14_0.optionAnchor.x + var_0_0.FingerOptionOffsetX, arg_14_0.optionAnchor.y + var_0_0.FingerOptionOffsetY)
+	recthelper.setAnchor(self.rectTransformFinger, self.optionAnchor.x + VersionActivityPuzzleView.FingerOptionOffsetX, self.optionAnchor.y + VersionActivityPuzzleView.FingerOptionOffsetY)
 
-	arg_14_0.tweenId = ZProj.TweenHelper.DOAnchorPos(arg_14_0.rectTransformFinger, arg_14_0.guideAnswerAnchor.x + var_0_0.FingerAnswerOffsetX, arg_14_0.guideAnswerAnchor.y + var_0_0.FingerAnswerOffsetY, 1.667, arg_14_0.playGuideAnimation, arg_14_0)
+	self.tweenId = ZProj.TweenHelper.DOAnchorPos(self.rectTransformFinger, self.guideAnswerAnchor.x + VersionActivityPuzzleView.FingerAnswerOffsetX, self.guideAnswerAnchor.y + VersionActivityPuzzleView.FingerAnswerOffsetY, 1.667, self.playGuideAnimation, self)
 
-	arg_14_0.goGuideAnimator:Play(UIAnimationName.Loop, 0, 0)
+	self.goGuideAnimator:Play(UIAnimationName.Loop, 0, 0)
 end
 
-function var_0_0.stopGuideAnimation(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0.playGuideAnimation, arg_15_0)
+function VersionActivityPuzzleView:stopGuideAnimation()
+	TaskDispatcher.cancelTask(self.playGuideAnimation, self)
 
-	if arg_15_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_15_0.tweenId)
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 	end
 
-	arg_15_0.goGuideAnimator.enabled = false
+	self.goGuideAnimator.enabled = false
 end
 
-function var_0_0.onTextInfoChange(arg_16_0)
-	arg_16_0._txtinfo.text = arg_16_0.showText
+function VersionActivityPuzzleView:onTextInfoChange()
+	self._txtinfo.text = self.showText
 end
 
-function var_0_0.buildOptions(arg_17_0, arg_17_1)
-	arg_17_1 = string.trim(arg_17_1)
+function VersionActivityPuzzleView:buildOptions(optionStr)
+	optionStr = string.trim(optionStr)
 
-	local var_17_0 = 0
-	local var_17_1
-	local var_17_2 = {}
-	local var_17_3 = {}
+	local maxAnswerLen = 0
+	local answer
+	local optionList = {}
+	local maxLenList = {}
 
-	for iter_17_0, iter_17_1 in ipairs(string.split(arg_17_1, "|")) do
-		local var_17_4 = string.split(iter_17_1, "#")[2]
+	for index, option in ipairs(string.split(optionStr, "|")) do
+		answer = string.split(option, "#")[2]
+		maxAnswerLen = Mathf.Max(maxAnswerLen, GameUtil.utf8len(answer))
 
-		var_17_0 = Mathf.Max(var_17_0, GameUtil.utf8len(var_17_4))
-
-		if iter_17_0 % 4 == 0 then
-			if var_17_0 % 2 ~= 0 then
-				var_17_0 = var_17_0 + 1
+		if index % 4 == 0 then
+			if maxAnswerLen % 2 ~= 0 then
+				maxAnswerLen = maxAnswerLen + 1
 			end
 
-			var_17_0 = var_17_0 + 1
+			maxAnswerLen = maxAnswerLen + 1
 
-			table.insert(var_17_3, var_17_0)
+			table.insert(maxLenList, maxAnswerLen)
 
-			var_17_0 = 0
+			maxAnswerLen = 0
 		end
 
-		table.insert(var_17_2, var_17_4)
+		table.insert(optionList, answer)
 	end
 
-	return var_17_2, var_17_3
+	return optionList, maxLenList
 end
 
-function var_0_0.buildText(arg_18_0, arg_18_1)
-	arg_18_0.placeholderDict = {}
+function VersionActivityPuzzleView:buildText(text)
+	self.placeholderDict = {}
 
-	local var_18_0 = 0
+	local index = 0
 
-	for iter_18_0 in string.gmatch(arg_18_1, "{(%d+)}") do
-		local var_18_1 = tonumber(iter_18_0)
+	for answerIndex in string.gmatch(text, "{(%d+)}") do
+		local answer = tonumber(answerIndex)
 
-		table.insert(arg_18_0.needAnswerList, var_18_1)
+		table.insert(self.needAnswerList, answer)
 
-		var_18_0 = var_18_0 + 1
+		index = index + 1
 
-		arg_18_0:buildPlaceholder(var_18_1, var_18_0)
+		self:buildPlaceholder(answer, index)
 
-		arg_18_1 = string.gsub(arg_18_1, "{(%d+)}", arg_18_0:addUnderlineTag(string.format("<link=%s>%s</link>", "%1", arg_18_0.placeholderDict[var_18_1])), 1)
+		text = string.gsub(text, "{(%d+)}", self:addUnderlineTag(string.format("<link=%s>%s</link>", "%1", self.placeholderDict[answer])), 1)
 	end
 
-	arg_18_0.firstAnswerIndex = arg_18_0.needAnswerList[1]
+	self.firstAnswerIndex = self.needAnswerList[1]
 
-	return arg_18_1
+	return text
 end
 
-function var_0_0.buildFinishText(arg_19_0, arg_19_1)
-	for iter_19_0 in string.gmatch(arg_19_1, "{(%d+)}") do
-		iter_19_0 = tonumber(iter_19_0)
-		arg_19_1 = string.gsub(arg_19_1, "{(%d+)}", arg_19_0:addUnderlineTag(string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor, arg_19_0.options[iter_19_0])), 1)
+function VersionActivityPuzzleView:buildFinishText(text)
+	for answerIndex in string.gmatch(text, "{(%d+)}") do
+		answerIndex = tonumber(answerIndex)
+		text = string.gsub(text, "{(%d+)}", self:addUnderlineTag(string.format("<color=%s>%s</color>", VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor, self.options[answerIndex])), 1)
 	end
 
-	return arg_19_1
+	return text
 end
 
-function var_0_0.addUnderlineTag(arg_20_0, arg_20_1)
-	return string.format("<u>%s</u>", arg_20_1)
+function VersionActivityPuzzleView:addUnderlineTag(text)
+	return string.format("<u>%s</u>", text)
 end
 
-function var_0_0.buildPlaceholder(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_0.placeholderDict[arg_21_1] then
+function VersionActivityPuzzleView:buildPlaceholder(answer, index)
+	if self.placeholderDict[answer] then
 		return
 	end
 
-	local var_21_0 = arg_21_0.maxAnswerLenList[arg_21_2]
-	local var_21_1 = math.floor((var_21_0 - 1) / 2)
-	local var_21_2 = string.rep(luaLang("lei_mi_te_bei_placeholder"), var_21_1)
-	local var_21_3 = var_21_2
+	local maxLen = self.maxAnswerLenList[index]
+	local halfLen = math.floor((maxLen - 1) / 2)
+	local leftPlaceholder = string.rep(luaLang("lei_mi_te_bei_placeholder"), halfLen)
+	local rightPlaceholder = leftPlaceholder
 
-	arg_21_0.placeholderDict[arg_21_1] = var_21_2 .. string.format("<sprite name=\"num%s\">", arg_21_2) .. var_21_3
+	self.placeholderDict[answer] = leftPlaceholder .. string.format("<sprite name=\"num%s\">", index) .. rightPlaceholder
 end
 
-function var_0_0.refreshOptions(arg_22_0)
-	local var_22_0
+function VersionActivityPuzzleView:refreshOptions()
+	local optionItem
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.options) do
-		local var_22_1 = arg_22_0.optionItemList[iter_22_0]
+	for index, optionText in ipairs(self.options) do
+		optionItem = self.optionItemList[index]
 
-		if not var_22_1 then
-			var_22_1 = arg_22_0:createOptionItem()
+		if not optionItem then
+			optionItem = self:createOptionItem()
 
-			table.insert(arg_22_0.optionItemList, var_22_1)
+			table.insert(self.optionItemList, optionItem)
 		end
 
-		var_22_1:updateInfo(iter_22_1, iter_22_0)
+		optionItem:updateInfo(optionText, index)
 	end
 
-	for iter_22_2 = #arg_22_0.options + 1, #arg_22_0.optionItemList do
-		arg_22_0.optionItemList[iter_22_2]:hide()
+	for index = #self.options + 1, #self.optionItemList do
+		optionItem = self.optionItemList[index]
+
+		optionItem:hide()
 	end
 
-	arg_22_0:refreshEmptyOptionItem()
+	self:refreshEmptyOptionItem()
 end
 
-function var_0_0.createOptionItem(arg_23_0)
-	local var_23_0 = VersionActivityPuzzleOptionItem.New()
+function VersionActivityPuzzleView:createOptionItem()
+	local optionItem = VersionActivityPuzzleOptionItem.New()
 
-	var_23_0:onInitView(gohelper.cloneInPlace(arg_23_0._gooptionitem), arg_23_0)
+	optionItem:onInitView(gohelper.cloneInPlace(self._gooptionitem), self)
 
-	return var_23_0
+	return optionItem
 end
 
-function var_0_0.refreshEmptyOptionItem(arg_24_0)
-	if not arg_24_0._emptyOption then
-		arg_24_0._emptyOption = arg_24_0:getUserDataTb_()
+function VersionActivityPuzzleView:refreshEmptyOptionItem()
+	if not self._emptyOption then
+		self._emptyOption = self:getUserDataTb_()
 	end
 
-	local var_24_0 = #arg_24_0._emptyOption
-	local var_24_1 = {
+	local count = #self._emptyOption
+	local sibling = {
 		6,
 		7,
 		12,
@@ -346,209 +349,208 @@ function var_0_0.refreshEmptyOptionItem(arg_24_0)
 		19
 	}
 
-	for iter_24_0 = 1, 6 do
-		if var_24_0 < iter_24_0 then
-			local var_24_2 = gohelper.cloneInPlace(arg_24_0._goemptyoptionitem)
+	for i = 1, 6 do
+		if count < i then
+			local optionItem = gohelper.cloneInPlace(self._goemptyoptionitem)
 
-			table.insert(arg_24_0._emptyOption, var_24_2)
+			table.insert(self._emptyOption, optionItem)
 		end
 
-		gohelper.setActive(arg_24_0._emptyOption[iter_24_0], true)
+		gohelper.setActive(self._emptyOption[i], true)
 
-		arg_24_0._emptyOption[iter_24_0].name = "emptyitem_" .. iter_24_0 .. "  " .. var_24_1[iter_24_0]
+		self._emptyOption[i].name = "emptyitem_" .. i .. "  " .. sibling[i]
 
-		gohelper.setSibling(arg_24_0._emptyOption[iter_24_0], var_24_1[iter_24_0])
+		gohelper.setSibling(self._emptyOption[i], sibling[i])
 	end
 end
 
-function var_0_0.onDragItemDragBegin(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if arg_25_0.complete or arg_25_0.isFinish then
+function VersionActivityPuzzleView:onDragItemDragBegin(pointerEventData, txtInfo, answerIndex)
+	if self.complete or self.isFinish then
 		return
 	end
 
-	gohelper.setActive(arg_25_0.dragOptionItem.go, true)
+	gohelper.setActive(self.dragOptionItem.go, true)
 
-	arg_25_0.dragOptionItem.txtInfo.text = arg_25_2
-	arg_25_0.draggingAnswerIndex = arg_25_3
+	self.dragOptionItem.txtInfo.text = txtInfo
+	self.draggingAnswerIndex = answerIndex
 
-	arg_25_0:changeDragItemAnchor(arg_25_1)
-	arg_25_0:calculateLinksRectAnchor()
-	arg_25_0:resetAdsorbEffect()
+	self:changeDragItemAnchor(pointerEventData)
+	self:calculateLinksRectAnchor()
+	self:resetAdsorbEffect()
 end
 
-function var_0_0.onDragItemDragging(arg_26_0, arg_26_1)
-	if arg_26_0.complete or arg_26_0.isFinish then
+function VersionActivityPuzzleView:onDragItemDragging(pointerEventData)
+	if self.complete or self.isFinish then
 		return
 	end
 
-	arg_26_0:changeDragItemAnchor(arg_26_1)
+	self:changeDragItemAnchor(pointerEventData)
 end
 
-function var_0_0.onDragItemDragEnd(arg_27_0, arg_27_1)
-	if arg_27_0.complete or arg_27_0.isFinish then
+function VersionActivityPuzzleView:onDragItemDragEnd(pointerEventData)
+	if self.complete or self.isFinish then
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_27_0.showEndEffect, arg_27_0)
-	arg_27_0:changeDragItemAnchor(arg_27_1)
+	TaskDispatcher.cancelTask(self.showEndEffect, self)
+	self:changeDragItemAnchor(pointerEventData)
 
-	local var_27_0 = arg_27_0:getShowAdsorbRectAnswerIndex()
+	local hoverAnswerIndex = self:getShowAdsorbRectAnswerIndex()
 
-	if var_27_0 > 0 then
-		local var_27_1 = arg_27_0.answerExistOptionItemDict[var_27_0]
+	if hoverAnswerIndex > 0 then
+		local existOptionItem = self.answerExistOptionItemDict[hoverAnswerIndex]
 
-		arg_27_0.hoverAnswerIndex = var_27_0
+		self.hoverAnswerIndex = hoverAnswerIndex
 
-		if not var_27_1 or var_27_1.answerIndex ~= arg_27_0.draggingAnswerIndex then
-			if var_27_1 then
-				var_27_1:unUse()
+		if not existOptionItem or existOptionItem.answerIndex ~= self.draggingAnswerIndex then
+			if existOptionItem then
+				existOptionItem:unUse()
 			end
 
-			arg_27_0:resetGroupAnswerOption(arg_27_0:getAnswerGroupIndex(arg_27_0.draggingAnswerIndex))
+			self:resetGroupAnswerOption(self:getAnswerGroupIndex(self.draggingAnswerIndex))
 
-			local var_27_2 = arg_27_0.optionItemList[arg_27_0.draggingAnswerIndex]
+			local draggingOptionItem = self.optionItemList[self.draggingAnswerIndex]
 
-			arg_27_0.answerExistOptionItemDict[var_27_0] = var_27_2
+			self.answerExistOptionItemDict[hoverAnswerIndex] = draggingOptionItem
 
-			local var_27_3 = arg_27_0.options[arg_27_0.draggingAnswerIndex]
-			local var_27_4
+			local answerText = self.options[self.draggingAnswerIndex]
+			local color
 
-			if var_27_0 == arg_27_0.draggingAnswerIndex then
-				var_27_2:matchCorrect()
+			if hoverAnswerIndex == self.draggingAnswerIndex then
+				draggingOptionItem:matchCorrect()
 
-				var_27_4 = VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor
+				color = VersionActivityEnum.PuzzleColorEnum.MatchCorrectColor
 			else
-				var_27_2:matchError()
+				draggingOptionItem:matchError()
 
-				var_27_4 = VersionActivityEnum.PuzzleColorEnum.MatchErrorColor
+				color = VersionActivityEnum.PuzzleColorEnum.MatchErrorColor
 			end
 
-			local var_27_5 = string.format("<color=%s>%s</color>", var_27_4, arg_27_0:getAnswerText(var_27_3, var_27_0))
+			answerText = string.format("<color=%s>%s</color>", color, self:getAnswerText(answerText, hoverAnswerIndex))
+			self.showText = string.gsub(self.showText, string.format("<link=%s>.-</link>", hoverAnswerIndex), string.format("<link=%s>%s</link>", hoverAnswerIndex, answerText))
 
-			arg_27_0.showText = string.gsub(arg_27_0.showText, string.format("<link=%s>.-</link>", var_27_0), string.format("<link=%s>%s</link>", var_27_0, var_27_5))
-
-			arg_27_0:onTextInfoChange()
-			arg_27_0:checkComplete()
-			TaskDispatcher.runDelay(arg_27_0.showEndEffect, arg_27_0, 0.1)
+			self:onTextInfoChange()
+			self:checkComplete()
+			TaskDispatcher.runDelay(self.showEndEffect, self, 0.1)
 		end
 	end
 
-	gohelper.setActive(arg_27_0.dragOptionItem.go, false)
+	gohelper.setActive(self.dragOptionItem.go, false)
 end
 
-function var_0_0.showEndEffect(arg_28_0)
-	if not arg_28_0.hoverAnswerIndex or arg_28_0.hoverAnswerIndex <= 0 then
+function VersionActivityPuzzleView:showEndEffect()
+	if not self.hoverAnswerIndex or self.hoverAnswerIndex <= 0 then
 		return
 	end
 
-	local var_28_0 = arg_28_0.hoverAnswerIndex == arg_28_0.draggingAnswerIndex
+	local matchCorrect = self.hoverAnswerIndex == self.draggingAnswerIndex
 
-	if var_28_0 then
+	if matchCorrect then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_decrypt_correct)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_decrypt_incorrect)
 	end
 
-	arg_28_0:calculateLinksRectAnchor()
+	self:calculateLinksRectAnchor()
 
-	local var_28_1 = arg_28_0.answerToAnchorPosDict[arg_28_0.hoverAnswerIndex][1]
+	local anchor = self.answerToAnchorPosDict[self.hoverAnswerIndex][1]
 
-	recthelper.setAnchor(arg_28_0._goadsorbrect.transform, var_28_1.x, var_28_1.y)
-	gohelper.setActive(arg_28_0._goadsorbrect, true)
-	gohelper.setActive(arg_28_0.goAdsorbSuccess, var_28_0)
-	gohelper.setActive(arg_28_0.goAdsorbFail, not var_28_0)
-	TaskDispatcher.runDelay(arg_28_0.hideAdsorb, arg_28_0, 1)
+	recthelper.setAnchor(self._goadsorbrect.transform, anchor.x, anchor.y)
+	gohelper.setActive(self._goadsorbrect, true)
+	gohelper.setActive(self.goAdsorbSuccess, matchCorrect)
+	gohelper.setActive(self.goAdsorbFail, not matchCorrect)
+	TaskDispatcher.runDelay(self.hideAdsorb, self, 1)
 end
 
-function var_0_0.hideAdsorb(arg_29_0)
-	gohelper.setActive(arg_29_0._goadsorbrect, false)
-	arg_29_0:resetAdsorbEffect()
+function VersionActivityPuzzleView:hideAdsorb()
+	gohelper.setActive(self._goadsorbrect, false)
+	self:resetAdsorbEffect()
 end
 
-function var_0_0.resetGroupAnswerOption(arg_30_0, arg_30_1)
-	local var_30_0 = (arg_30_1 - 1) * 4 + 1
-	local var_30_1
-	local var_30_2
+function VersionActivityPuzzleView:resetGroupAnswerOption(groupIndex)
+	local startIndex = (groupIndex - 1) * 4 + 1
+	local optionItem, answer
 
-	for iter_30_0 = var_30_0, var_30_0 + 3 do
-		local var_30_3 = arg_30_0.optionItemList[iter_30_0]
-		local var_30_4 = arg_30_0:getBeUsedAnswerByOptionItem(var_30_3)
+	for i = startIndex, startIndex + 3 do
+		optionItem = self.optionItemList[i]
+		answer = self:getBeUsedAnswerByOptionItem(optionItem)
 
-		if var_30_4 > 0 then
-			var_30_3:unUse()
+		if answer > 0 then
+			optionItem:unUse()
 
-			arg_30_0.showText = string.gsub(arg_30_0.showText, string.format("<link=%s>.-</link>", var_30_4), string.format("<link=%s>%s</link>", var_30_4, arg_30_0.placeholderDict[var_30_4]))
-			arg_30_0.answerExistOptionItemDict[var_30_4] = nil
+			self.showText = string.gsub(self.showText, string.format("<link=%s>.-</link>", answer), string.format("<link=%s>%s</link>", answer, self.placeholderDict[answer]))
+			self.answerExistOptionItemDict[answer] = nil
 		end
 	end
 end
 
-function var_0_0.getBeUsedAnswerByOptionItem(arg_31_0, arg_31_1)
-	for iter_31_0, iter_31_1 in pairs(arg_31_0.answerExistOptionItemDict) do
-		if iter_31_1.answerIndex == arg_31_1.answerIndex then
-			return iter_31_0
-		end
-	end
-
-	return -1
-end
-
-function var_0_0.getAnswerText(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = GameUtil.utf8len(arg_32_1)
-	local var_32_1 = arg_32_0.maxAnswerLenList[arg_32_0:getAnswerGroupIndex(arg_32_2)] - var_32_0
-
-	if var_32_1 <= 0 then
-		return arg_32_1
-	end
-
-	return string.format("%s%s%s", string.rep("<nbsp>", var_32_1), arg_32_1, string.rep("<nbsp>", var_32_1))
-end
-
-function var_0_0.changeDragItemAnchor(arg_33_0, arg_33_1)
-	local var_33_0 = recthelper.screenPosToAnchorPos(arg_33_1.position, arg_33_0._simagebg.transform)
-	local var_33_1 = var_33_0.x
-	local var_33_2 = var_33_0.y
-
-	if var_33_1 > 0 then
-		var_33_1 = Mathf.Min(arg_33_0.bgHalfWidth + 800, var_33_1)
-	else
-		var_33_1 = Mathf.Max(-arg_33_0.bgHalfWidth, var_33_1)
-	end
-
-	if var_33_2 > 0 then
-		var_33_2 = Mathf.Min(arg_33_0.bgHalfHeight, var_33_2)
-	else
-		var_33_2 = Mathf.Max(-arg_33_0.bgHalfHeight, var_33_2)
-	end
-
-	arg_33_0.dragOptionAnchor = Vector2.New(var_33_1, var_33_2)
-
-	recthelper.setAnchor(arg_33_0.dragOptionItem.transform, var_33_1, var_33_2)
-end
-
-function var_0_0.getDraggingOptionItemBeUsedAnswer(arg_34_0)
-	for iter_34_0, iter_34_1 in pairs(arg_34_0.answerExistOptionItemDict) do
-		if arg_34_0.draggingAnswerIndex == iter_34_1.answerIndex then
-			return iter_34_0
+function VersionActivityPuzzleView:getBeUsedAnswerByOptionItem(optionItem)
+	for answer, existOptionItem in pairs(self.answerExistOptionItemDict) do
+		if existOptionItem.answerIndex == optionItem.answerIndex then
+			return answer
 		end
 	end
 
 	return -1
 end
 
-function var_0_0.checkComplete(arg_35_0)
-	if arg_35_0:isComplete() then
-		arg_35_0:onComplete()
+function VersionActivityPuzzleView:getAnswerText(answerText, answerIndex)
+	local len = GameUtil.utf8len(answerText)
+	local maxAnswerLen = self.maxAnswerLenList[self:getAnswerGroupIndex(answerIndex)]
+	local blankLen = maxAnswerLen - len
+
+	if blankLen <= 0 then
+		return answerText
+	end
+
+	return string.format("%s%s%s", string.rep("<nbsp>", blankLen), answerText, string.rep("<nbsp>", blankLen))
+end
+
+function VersionActivityPuzzleView:changeDragItemAnchor(pointerEventData)
+	local anchor = recthelper.screenPosToAnchorPos(pointerEventData.position, self._simagebg.transform)
+	local anchorX = anchor.x
+	local anchorY = anchor.y
+
+	if anchorX > 0 then
+		anchorX = Mathf.Min(self.bgHalfWidth + 800, anchorX)
+	else
+		anchorX = Mathf.Max(-self.bgHalfWidth, anchorX)
+	end
+
+	if anchorY > 0 then
+		anchorY = Mathf.Min(self.bgHalfHeight, anchorY)
+	else
+		anchorY = Mathf.Max(-self.bgHalfHeight, anchorY)
+	end
+
+	self.dragOptionAnchor = Vector2.New(anchorX, anchorY)
+
+	recthelper.setAnchor(self.dragOptionItem.transform, anchorX, anchorY)
+end
+
+function VersionActivityPuzzleView:getDraggingOptionItemBeUsedAnswer()
+	for answer, optionItem in pairs(self.answerExistOptionItemDict) do
+		if self.draggingAnswerIndex == optionItem.answerIndex then
+			return answer
+		end
+	end
+
+	return -1
+end
+
+function VersionActivityPuzzleView:checkComplete()
+	if self:isComplete() then
+		self:onComplete()
 	end
 end
 
-function var_0_0.isComplete(arg_36_0)
-	local var_36_0
+function VersionActivityPuzzleView:isComplete()
+	local existOptionItem
 
-	for iter_36_0, iter_36_1 in pairs(arg_36_0.needAnswerList) do
-		local var_36_1 = arg_36_0.answerExistOptionItemDict[iter_36_1]
+	for _, answer in pairs(self.needAnswerList) do
+		existOptionItem = self.answerExistOptionItemDict[answer]
 
-		if not var_36_1 or iter_36_1 ~= var_36_1.answerIndex then
+		if not existOptionItem or answer ~= existOptionItem.answerIndex then
 			return false
 		end
 	end
@@ -556,126 +558,128 @@ function var_0_0.isComplete(arg_36_0)
 	return true
 end
 
-function var_0_0.onComplete(arg_37_0)
-	arg_37_0.complete = true
+function VersionActivityPuzzleView:onComplete()
+	self.complete = true
 
-	DungeonRpc.instance:sendPuzzleFinishRequest(arg_37_0.elementCo.id)
+	DungeonRpc.instance:sendPuzzleFinishRequest(self.elementCo.id)
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_achievement)
 	AudioMgr.instance:trigger(AudioEnum.Puzzle.play_ui_main_puzzles_character)
-	gohelper.setActive(arg_37_0._gofinish, true)
+	gohelper.setActive(self._gofinish, true)
 	GameFacade.showToast(ToastEnum.DungeonPuzzle2)
 end
 
-function var_0_0.onClickGuideGo(arg_38_0)
-	arg_38_0:stopGuideAnimation()
-	gohelper.setActive(arg_38_0._goGuide, false)
-	arg_38_0.guideClick:RemoveClickListener()
+function VersionActivityPuzzleView:onClickGuideGo()
+	self:stopGuideAnimation()
+	gohelper.setActive(self._goGuide, false)
+	self.guideClick:RemoveClickListener()
 
-	arg_38_0.guideClick = nil
+	self.guideClick = nil
 end
 
-function var_0_0.calculateLinksRectAnchor(arg_39_0)
-	arg_39_0.answerToAnchorPosDict = {}
+function VersionActivityPuzzleView:calculateLinksRectAnchor()
+	self.answerToAnchorPosDict = {}
 
-	local var_39_0 = arg_39_0._txtinfo.transform
-	local var_39_1 = arg_39_0._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
-	local var_39_2 = var_39_1.textInfo.linkInfo
-	local var_39_3 = var_39_1.textInfo.characterInfo
-	local var_39_4
-	local var_39_5
-	local var_39_6 = var_39_2:GetEnumerator()
+	local textTransform = self._txtinfo.transform
+	local tmpText = self._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
+	local linkInfoList = tmpText.textInfo.linkInfo
+	local characterInfoList = tmpText.textInfo.characterInfo
+	local bl, tr
+	local iter = linkInfoList:GetEnumerator()
 
-	while var_39_6:MoveNext() do
-		local var_39_7 = var_39_6.Current
-		local var_39_8 = tonumber(var_39_7:GetLinkID())
-		local var_39_9 = var_39_3[var_39_7.linkTextfirstCharacterIndex]
-		local var_39_10 = var_39_0:TransformPoint(Vector3.New(var_39_9.bottomLeft.x, var_39_9.descender, 0))
+	while iter:MoveNext() do
+		local linkInfo = iter.Current
+		local answerIndex = tonumber(linkInfo:GetLinkID())
+		local firstCharInfo = characterInfoList[linkInfo.linkTextfirstCharacterIndex]
 
-		if var_39_7.linkTextLength == 1 then
-			local var_39_11 = var_39_0:TransformPoint(Vector3.New(var_39_9.topRight.x, var_39_9.ascender, 0))
+		bl = textTransform:TransformPoint(Vector3.New(firstCharInfo.bottomLeft.x, firstCharInfo.descender, 0))
 
-			arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_11)
+		if linkInfo.linkTextLength == 1 then
+			tr = textTransform:TransformPoint(Vector3.New(firstCharInfo.topRight.x, firstCharInfo.ascender, 0))
+
+			self:addCenterPos(answerIndex, bl, tr)
 		else
-			local var_39_12 = var_39_3[var_39_7.linkTextfirstCharacterIndex + var_39_7.linkTextLength - 1]
+			local lastCharInfo = characterInfoList[linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength - 1]
 
-			if var_39_9.lineNumber == var_39_12.lineNumber then
-				local var_39_13 = var_39_0:TransformPoint(Vector3.New(var_39_12.topRight.x, var_39_12.ascender, 0))
+			if firstCharInfo.lineNumber == lastCharInfo.lineNumber then
+				tr = textTransform:TransformPoint(Vector3.New(lastCharInfo.topRight.x, lastCharInfo.ascender, 0))
 
-				arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_13)
+				self:addCenterPos(answerIndex, bl, tr)
 			else
-				local var_39_14 = var_39_0:TransformPoint(Vector3.New(var_39_9.topRight.x, var_39_9.ascender, 0))
-				local var_39_15 = var_39_9.lineNumber
+				tr = textTransform:TransformPoint(Vector3.New(firstCharInfo.topRight.x, firstCharInfo.ascender, 0))
 
-				for iter_39_0 = 1, var_39_7.linkTextLength - 1 do
-					local var_39_16 = var_39_3[var_39_7.linkTextfirstCharacterIndex + iter_39_0]
-					local var_39_17 = var_39_16.lineNumber
+				local startLineNumber = firstCharInfo.lineNumber
 
-					if var_39_17 == var_39_15 then
-						var_39_14 = var_39_0:TransformPoint(Vector3.New(var_39_16.topRight.x, var_39_16.ascender, 0))
+				for i = 1, linkInfo.linkTextLength - 1 do
+					local characterIndex = linkInfo.linkTextfirstCharacterIndex + i
+					local tmpCharInfo = characterInfoList[characterIndex]
+					local currentLineNumber = tmpCharInfo.lineNumber
+
+					if currentLineNumber == startLineNumber then
+						tr = textTransform:TransformPoint(Vector3.New(tmpCharInfo.topRight.x, tmpCharInfo.ascender, 0))
 					else
-						arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_14)
+						self:addCenterPos(answerIndex, bl, tr)
 
-						var_39_15 = var_39_17
-						var_39_10 = var_39_0:TransformPoint(Vector3.New(var_39_16.bottomLeft.x, var_39_16.descender, 0))
-						var_39_14 = var_39_0:TransformPoint(Vector3.New(var_39_16.topRight.x, var_39_16.ascender, 0))
+						startLineNumber = currentLineNumber
+						bl = textTransform:TransformPoint(Vector3.New(tmpCharInfo.bottomLeft.x, tmpCharInfo.descender, 0))
+						tr = textTransform:TransformPoint(Vector3.New(tmpCharInfo.topRight.x, tmpCharInfo.ascender, 0))
 					end
 				end
 
-				arg_39_0:addCenterPos(var_39_8, var_39_10, var_39_14)
+				self:addCenterPos(answerIndex, bl, tr)
 			end
 		end
 	end
 end
 
-function var_0_0.addCenterPos(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
-	local var_40_0 = (arg_40_2 + arg_40_3) * 0.5
+function VersionActivityPuzzleView:addCenterPos(answerIndex, bl, tr)
+	local centerPos = (bl + tr) * 0.5
 
-	if arg_40_0:checkScenePosIsValid(var_40_0) then
-		if not arg_40_0.answerToAnchorPosDict[arg_40_1] then
-			arg_40_0.answerToAnchorPosDict[arg_40_1] = {}
+	if self:checkScenePosIsValid(centerPos) then
+		if not self.answerToAnchorPosDict[answerIndex] then
+			self.answerToAnchorPosDict[answerIndex] = {}
 		end
 
-		table.insert(arg_40_0.answerToAnchorPosDict[arg_40_1], recthelper.worldPosToAnchorPos(var_40_0, arg_40_0._goadsorbrect.transform.parent, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera()))
+		table.insert(self.answerToAnchorPosDict[answerIndex], recthelper.worldPosToAnchorPos(centerPos, self._goadsorbrect.transform.parent, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera()))
 	end
 end
 
-function var_0_0.getFirstAnswerAnchorPos(arg_41_0)
-	local var_41_0 = arg_41_0._txtinfo.transform
-	local var_41_1 = arg_41_0._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
-	local var_41_2 = var_41_1.textInfo.linkInfo
-	local var_41_3 = var_41_1.textInfo.characterInfo
-	local var_41_4
-	local var_41_5
-	local var_41_6
-	local var_41_7 = var_41_2:GetEnumerator()
+function VersionActivityPuzzleView:getFirstAnswerAnchorPos()
+	local textTransform = self._txtinfo.transform
+	local tmpText = self._txtinfo:GetComponent(typeof(TMPro.TMP_Text))
+	local linkInfoList = tmpText.textInfo.linkInfo
+	local characterInfoList = tmpText.textInfo.characterInfo
+	local bl, tr, anchorPos
+	local iter = linkInfoList:GetEnumerator()
 
-	while var_41_7:MoveNext() do
-		local var_41_8 = var_41_7.Current
-		local var_41_9 = var_41_3[var_41_8.linkTextfirstCharacterIndex]
-		local var_41_10 = var_41_0:TransformPoint(Vector3.New(var_41_9.bottomLeft.x, var_41_9.descender, 0))
+	while iter:MoveNext() do
+		local linkInfo = iter.Current
+		local firstCharInfo = characterInfoList[linkInfo.linkTextfirstCharacterIndex]
 
-		if var_41_8.linkTextLength == 1 then
-			local var_41_11 = var_41_0:TransformPoint(Vector3.New(var_41_9.topRight.x, var_41_9.ascender, 0))
+		bl = textTransform:TransformPoint(Vector3.New(firstCharInfo.bottomLeft.x, firstCharInfo.descender, 0))
 
-			var_41_6 = arg_41_0:getAnchorPos(var_41_10, var_41_11, arg_41_0.goGuideAnimationContainer.transform)
+		if linkInfo.linkTextLength == 1 then
+			tr = textTransform:TransformPoint(Vector3.New(firstCharInfo.topRight.x, firstCharInfo.ascender, 0))
+			anchorPos = self:getAnchorPos(bl, tr, self.goGuideAnimationContainer.transform)
 		else
-			local var_41_12 = var_41_3[var_41_8.linkTextfirstCharacterIndex + var_41_8.linkTextLength - 1]
+			local lastCharInfo = characterInfoList[linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength - 1]
 
-			if var_41_9.lineNumber == var_41_12.lineNumber then
-				local var_41_13 = var_41_0:TransformPoint(Vector3.New(var_41_12.topRight.x, var_41_12.ascender, 0))
-
-				var_41_6 = arg_41_0:getAnchorPos(var_41_10, var_41_13, arg_41_0.goGuideAnimationContainer.transform)
+			if firstCharInfo.lineNumber == lastCharInfo.lineNumber then
+				tr = textTransform:TransformPoint(Vector3.New(lastCharInfo.topRight.x, lastCharInfo.ascender, 0))
+				anchorPos = self:getAnchorPos(bl, tr, self.goGuideAnimationContainer.transform)
 			else
-				local var_41_14 = var_41_0:TransformPoint(Vector3.New(var_41_9.topRight.x, var_41_9.ascender, 0))
-				local var_41_15 = var_41_9.lineNumber
+				tr = textTransform:TransformPoint(Vector3.New(firstCharInfo.topRight.x, firstCharInfo.ascender, 0))
 
-				for iter_41_0 = 1, var_41_8.linkTextLength - 1 do
-					local var_41_16 = var_41_3[var_41_8.linkTextfirstCharacterIndex + iter_41_0]
+				local startLineNumber = firstCharInfo.lineNumber
 
-					if var_41_16.lineNumber == var_41_15 then
-						var_41_14 = var_41_0:TransformPoint(Vector3.New(var_41_16.topRight.x, var_41_16.ascender, 0))
+				for i = 1, linkInfo.linkTextLength - 1 do
+					local characterIndex = linkInfo.linkTextfirstCharacterIndex + i
+					local tmpCharInfo = characterInfoList[characterIndex]
+					local currentLineNumber = tmpCharInfo.lineNumber
+
+					if currentLineNumber == startLineNumber then
+						tr = textTransform:TransformPoint(Vector3.New(tmpCharInfo.topRight.x, tmpCharInfo.ascender, 0))
 					else
-						var_41_6 = arg_41_0:getAnchorPos(var_41_10, var_41_14, arg_41_0.goGuideAnimationContainer.transform)
+						anchorPos = self:getAnchorPos(bl, tr, self.goGuideAnimationContainer.transform)
 
 						break
 					end
@@ -683,85 +687,85 @@ function var_0_0.getFirstAnswerAnchorPos(arg_41_0)
 			end
 		end
 
-		return var_41_6
+		return anchorPos
 	end
 
-	return arg_41_0.defaultAnchorPos
+	return self.defaultAnchorPos
 end
 
-function var_0_0.getAnchorPos(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	local var_42_0 = (arg_42_1 + arg_42_2) * 0.5
+function VersionActivityPuzzleView:getAnchorPos(bl, tr, parentTr)
+	local centerPos = (bl + tr) * 0.5
 
-	if arg_42_0:checkScenePosIsValid(var_42_0) then
-		return recthelper.worldPosToAnchorPos(var_42_0, arg_42_3, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera())
+	if self:checkScenePosIsValid(centerPos) then
+		return recthelper.worldPosToAnchorPos(centerPos, parentTr, CameraMgr.instance:getUICamera(), CameraMgr.instance:getUICamera())
 	end
 
-	return arg_42_0.defaultAnchorPos
+	return self.defaultAnchorPos
 end
 
-function var_0_0.getShowAdsorbRectAnswerIndex(arg_43_0)
-	local var_43_0 = 0
-	local var_43_1 = 99999
+function VersionActivityPuzzleView:getShowAdsorbRectAnswerIndex()
+	local needShowAdsorbAnswer = 0
+	local minDistance = 99999
 
-	for iter_43_0, iter_43_1 in pairs(arg_43_0.answerToAnchorPosDict) do
-		local var_43_2 = arg_43_0:getAnswerWidth(arg_43_0:getAnswerGroupIndex(iter_43_0)) / 2
+	for answerIndex, anchorList in pairs(self.answerToAnchorPosDict) do
+		local halfWidth = self:getAnswerWidth(self:getAnswerGroupIndex(answerIndex)) / 2
 
-		for iter_43_2, iter_43_3 in ipairs(iter_43_1) do
-			if arg_43_0.dragOptionAnchor.x >= iter_43_3.x - (var_43_2 + var_0_0.AbsorbOffsetX) and arg_43_0.dragOptionAnchor.x <= iter_43_3.x + (var_43_2 + var_0_0.AbsorbOffsetX) and arg_43_0.dragOptionAnchor.y >= iter_43_3.y - (arg_43_0.halfAnsWerHeight + var_0_0.AbsorbOffsetY) and arg_43_0.dragOptionAnchor.y <= iter_43_3.y + (arg_43_0.halfAnsWerHeight + var_0_0.AbsorbOffsetY) then
-				local var_43_3 = Vector2.Distance(iter_43_3, arg_43_0.dragOptionAnchor)
+		for _, anchor in ipairs(anchorList) do
+			if self.dragOptionAnchor.x >= anchor.x - (halfWidth + VersionActivityPuzzleView.AbsorbOffsetX) and self.dragOptionAnchor.x <= anchor.x + (halfWidth + VersionActivityPuzzleView.AbsorbOffsetX) and self.dragOptionAnchor.y >= anchor.y - (self.halfAnsWerHeight + VersionActivityPuzzleView.AbsorbOffsetY) and self.dragOptionAnchor.y <= anchor.y + (self.halfAnsWerHeight + VersionActivityPuzzleView.AbsorbOffsetY) then
+				local distance = Vector2.Distance(anchor, self.dragOptionAnchor)
 
-				if var_43_3 < var_43_1 then
-					var_43_1 = var_43_3
-					var_43_0 = iter_43_0
+				if distance < minDistance then
+					minDistance = distance
+					needShowAdsorbAnswer = answerIndex
 				end
 			end
 		end
 	end
 
-	return var_43_0
+	return needShowAdsorbAnswer
 end
 
-function var_0_0.checkScenePosIsValid(arg_44_0, arg_44_1)
-	return GameUtil.checkPointInRectangle(arg_44_1, arg_44_0.textScrollScenePosRect[1], arg_44_0.textScrollScenePosRect[2], arg_44_0.textScrollScenePosRect[3], arg_44_0.textScrollScenePosRect[4])
+function VersionActivityPuzzleView:checkScenePosIsValid(scenePos)
+	return GameUtil.checkPointInRectangle(scenePos, self.textScrollScenePosRect[1], self.textScrollScenePosRect[2], self.textScrollScenePosRect[3], self.textScrollScenePosRect[4])
 end
 
-function var_0_0.getAnswerGroupIndex(arg_45_0, arg_45_1)
-	return math.ceil(arg_45_1 / 4)
+function VersionActivityPuzzleView:getAnswerGroupIndex(answerIndex)
+	return math.ceil(answerIndex / 4)
 end
 
-function var_0_0.resetAdsorbEffect(arg_46_0)
-	gohelper.setActive(arg_46_0.goAdsorbSuccess, false)
-	gohelper.setActive(arg_46_0.goAdsorbFail, false)
+function VersionActivityPuzzleView:resetAdsorbEffect()
+	gohelper.setActive(self.goAdsorbSuccess, false)
+	gohelper.setActive(self.goAdsorbFail, false)
 end
 
-function var_0_0.getAnswerWidth(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_0.maxAnswerLenList[arg_47_1]
+function VersionActivityPuzzleView:getAnswerWidth(groupIndex)
+	local len = self.maxAnswerLenList[groupIndex]
 
-	return var_47_0 * arg_47_0.oneCharacterWidth + arg_47_0.intervalX * (var_47_0 - 1) + var_0_0.GuideBorder * 2
+	return len * self.oneCharacterWidth + self.intervalX * (len - 1) + VersionActivityPuzzleView.GuideBorder * 2
 end
 
-function var_0_0.onClose(arg_48_0)
+function VersionActivityPuzzleView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	TaskDispatcher.cancelTask(arg_48_0.showGuide, arg_48_0)
-	TaskDispatcher.cancelTask(arg_48_0.hideAdsorb, arg_48_0)
-	TaskDispatcher.cancelTask(arg_48_0.showEndEffect, arg_48_0)
-	arg_48_0:stopGuideAnimation()
+	TaskDispatcher.cancelTask(self.showGuide, self)
+	TaskDispatcher.cancelTask(self.hideAdsorb, self)
+	TaskDispatcher.cancelTask(self.showEndEffect, self)
+	self:stopGuideAnimation()
 
-	if DungeonMapModel.instance:hasMapPuzzleStatus(arg_48_0.elementCo.id) then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, arg_48_0.elementCo.id)
+	if DungeonMapModel.instance:hasMapPuzzleStatus(self.elementCo.id) then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, self.elementCo.id)
 	end
 end
 
-function var_0_0.onDestroyView(arg_49_0)
-	arg_49_0.closeViewClick:RemoveClickListener()
+function VersionActivityPuzzleView:onDestroyView()
+	self.closeViewClick:RemoveClickListener()
 
-	if arg_49_0.guideClick then
-		arg_49_0.guideClick:RemoveClickListener()
+	if self.guideClick then
+		self.guideClick:RemoveClickListener()
 	end
 
-	for iter_49_0, iter_49_1 in ipairs(arg_49_0.optionItemList) do
-		iter_49_1:onDestroy()
+	for _, optionItem in ipairs(self.optionItemList) do
+		optionItem:onDestroy()
 	end
 end
 
-return var_0_0
+return VersionActivityPuzzleView

@@ -1,491 +1,507 @@
-﻿module("modules.ugui.icon.common.CommonEquipIcon", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonEquipIcon.lua
 
-local var_0_0 = class("CommonEquipIcon", ListScrollCellExtend)
+module("modules.ugui.icon.common.CommonEquipIcon", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageBg = gohelper.findChildImage(arg_1_0.viewGO, "bg")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#image_rare")
-	arg_1_0._imagerare2 = gohelper.findChildImage(arg_1_0.viewGO, "#image_rare2")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "mask/#simage_icon")
-	arg_1_0._iconImage = arg_1_0._simageicon:GetComponent(gohelper.Type_Image)
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
-	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_inteam/#image_heroicon")
-	arg_1_0._countbg = gohelper.findChild(arg_1_0.viewGO, "layout/#go_num/countbg")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_num/#txt_num")
-	arg_1_0._gointeam = gohelper.findChild(arg_1_0.viewGO, "#go_inteam")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "layout/#go_level")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_level/#txt_level")
-	arg_1_0._txtlevelEn = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_level/#txt_level/lv")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "layout/#go_num")
-	arg_1_0.goclickarea = gohelper.findChild(arg_1_0.viewGO, "#go_clickarea")
-	arg_1_0.gotrial = gohelper.findChild(arg_1_0.viewGO, "#go_trial")
-	arg_1_0._gorefinecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_refinecontainer")
-	arg_1_0._txtrefinelv = gohelper.findChildText(arg_1_0.viewGO, "#go_refinecontainer/#txt_refinelv")
-	arg_1_0._goAddition = gohelper.findChild(arg_1_0.viewGO, "turnback")
-	arg_1_0._gorecommend = gohelper.findChild(arg_1_0.viewGO, "#go_recommend")
+local CommonEquipIcon = class("CommonEquipIcon", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommonEquipIcon:onInitView()
+	self._imageBg = gohelper.findChildImage(self.viewGO, "bg")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#image_rare")
+	self._imagerare2 = gohelper.findChildImage(self.viewGO, "#image_rare2")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "mask/#simage_icon")
+	self._iconImage = self._simageicon:GetComponent(gohelper.Type_Image)
+	self._golock = gohelper.findChild(self.viewGO, "#go_lock")
+	self._simageheroicon = gohelper.findChildSingleImage(self.viewGO, "#go_inteam/#image_heroicon")
+	self._countbg = gohelper.findChild(self.viewGO, "layout/#go_num/countbg")
+	self._txtnum = gohelper.findChildText(self.viewGO, "layout/#go_num/#txt_num")
+	self._gointeam = gohelper.findChild(self.viewGO, "#go_inteam")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._golevel = gohelper.findChild(self.viewGO, "layout/#go_level")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "layout/#go_level/#txt_level")
+	self._txtlevelEn = gohelper.findChildText(self.viewGO, "layout/#go_level/#txt_level/lv")
+	self._gonum = gohelper.findChild(self.viewGO, "layout/#go_num")
+	self.goclickarea = gohelper.findChild(self.viewGO, "#go_clickarea")
+	self.gotrial = gohelper.findChild(self.viewGO, "#go_trial")
+	self._gorefinecontainer = gohelper.findChild(self.viewGO, "#go_refinecontainer")
+	self._txtrefinelv = gohelper.findChildText(self.viewGO, "#go_refinecontainer/#txt_refinelv")
+	self._goAddition = gohelper.findChild(self.viewGO, "turnback")
+	self._gorecommend = gohelper.findChild(self.viewGO, "#go_recommend")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CommonEquipIcon:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CommonEquipIcon:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._imagerare.gameObject, false)
-	gohelper.setActive(arg_4_0._imagerare2.gameObject, false)
+function CommonEquipIcon:_editableInitView()
+	gohelper.setActive(self._imagerare.gameObject, false)
+	gohelper.setActive(self._imagerare2.gameObject, false)
 
-	arg_4_0._showQuality = true
-	arg_4_0._effectGos = {}
-	arg_4_0._effectLoader = MultiAbLoader.New()
+	self._showQuality = true
+	self._effectGos = {}
+	self._effectLoader = MultiAbLoader.New()
 
-	arg_4_0._effectLoader:setPathList({
+	self._effectLoader:setPathList({
 		ResUrl.getCommonitemEffect("itemeffect")
 	})
-	arg_4_0._effectLoader:startLoad(arg_4_0.LoadEffect, arg_4_0)
+	self._effectLoader:startLoad(self.LoadEffect, self)
 
-	arg_4_0._showLockIcon = true
-	arg_4_0._cantJump = false
-	arg_4_0._hideShowBreakAndLv = false
-	arg_4_0._showCount = true
+	self._showLockIcon = true
+	self._cantJump = false
+	self._hideShowBreakAndLv = false
+	self._showCount = true
 
-	transformhelper.setLocalPosXY(arg_4_0.viewGO.transform, 0, 0)
+	transformhelper.setLocalPosXY(self.viewGO.transform, 0, 0)
 
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._isShowSelectedUI = false
-	arg_4_0._isCarrerIconAndRefineVisible = true
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._isShowSelectedUI = false
+	self._isCarrerIconAndRefineVisible = true
 
-	gohelper.setActive(arg_4_0._gorefinecontainer, false)
-	arg_4_0:hideHeroIcon()
+	gohelper.setActive(self._gorefinecontainer, false)
+	self:hideHeroIcon()
 
-	arg_4_0._itemType = MaterialEnum.MaterialType.Equip
+	self._itemType = MaterialEnum.MaterialType.Equip
 
-	arg_4_0._gorecommend:SetActive(false)
+	self._gorecommend:SetActive(false)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function CommonEquipIcon:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	if arg_6_0._click then
-		arg_6_0._click:RemoveClickListener()
+function CommonEquipIcon:_editableRemoveEvents()
+	if self._click then
+		self._click:RemoveClickListener()
 	end
 
-	arg_6_0.cus_callback = nil
-	arg_6_0.cus_callback_param = nil
+	self.cus_callback = nil
+	self.cus_callback_param = nil
 end
 
-local var_0_1 = 4
-local var_0_2 = 5
+local VFX_MIN_LV = 4
+local VFX_MAX_LV = 5
 
-function var_0_0.LoadEffect(arg_7_0)
-	if gohelper.isNil(arg_7_0._imagerare) then
-		if arg_7_0._effectLoader then
-			arg_7_0._effectLoader:dispose()
+function CommonEquipIcon:LoadEffect()
+	if gohelper.isNil(self._imagerare) then
+		if self._effectLoader then
+			self._effectLoader:dispose()
 
-			arg_7_0._effectLoader = nil
+			self._effectLoader = nil
 		end
 
 		return
 	end
 
-	local var_7_0 = arg_7_0._effectLoader:getFirstAssetItem():GetResource()
+	local prefabGO = self._effectLoader:getFirstAssetItem():GetResource()
 
-	arg_7_0:isShowQuality(arg_7_0._showQuality)
+	self:isShowQuality(self._showQuality)
 
-	arg_7_0._effect = gohelper.clone(var_7_0, arg_7_0._imagerare.gameObject, "itemEffect")
+	self._effect = gohelper.clone(prefabGO, self._imagerare.gameObject, "itemEffect")
 
-	for iter_7_0 = var_0_1, var_0_2 do
-		local var_7_1 = gohelper.findChild(arg_7_0._effect, "effect" .. tostring(iter_7_0))
+	for i = VFX_MIN_LV, VFX_MAX_LV do
+		local go = gohelper.findChild(self._effect, "effect" .. tostring(i))
 
-		arg_7_0._effectGos[iter_7_0] = var_7_1
+		self._effectGos[i] = go
 	end
 
-	if arg_7_0._config then
-		for iter_7_1 = var_0_1, var_0_2 do
-			gohelper.setActive(arg_7_0._effectGos[iter_7_1], iter_7_1 == tonumber(arg_7_0._config.rare) and EquipModel.canShowVfx(arg_7_0._config))
-			gohelper.setActive(gohelper.findChild(arg_7_0._effectGos[iter_7_1], "mask"), false)
+	if self._config then
+		for i = VFX_MIN_LV, VFX_MAX_LV do
+			gohelper.setActive(self._effectGos[i], i == tonumber(self._config.rare) and EquipModel.canShowVfx(self._config))
+			gohelper.setActive(gohelper.findChild(self._effectGos[i], "mask"), false)
 		end
 	end
 end
 
-function var_0_0._onClick(arg_8_0)
-	if arg_8_0.cus_callback then
-		arg_8_0.cus_callback(arg_8_0.cus_callback_param)
+function CommonEquipIcon:setInterceptClick(callback, callbackObj)
+	self.interceptCallback = callback
+	self.interceptCallbackObj = callbackObj
+end
+
+function CommonEquipIcon:_onClick()
+	if self.interceptCallback and self.interceptCallback(self.interceptCallbackObj) then
+		return
+	end
+
+	if self.cus_callback then
+		self.cus_callback(self.cus_callback_param)
 
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(arg_8_0._itemType, arg_8_0._itemId, false, nil, arg_8_0._cantJump)
+	MaterialTipController.instance:showMaterialInfo(self._itemType, self._itemId, false, nil, self._cantJump)
 end
 
-function var_0_0.customClick(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.cus_callback = arg_9_1
-	arg_9_0.cus_callback_param = arg_9_2
+function CommonEquipIcon:customClick(callback, param)
+	self.cus_callback = callback
+	self.cus_callback_param = param
 
-	arg_9_0:addClick()
+	self:addClick()
 end
 
-function var_0_0.setCantJump(arg_10_0, arg_10_1)
-	arg_10_0._cantJump = arg_10_1
+function CommonEquipIcon:setCantJump(cantJump)
+	self._cantJump = cantJump
 end
 
-function var_0_0.addClick(arg_11_0)
-	arg_11_0._click = gohelper.getClickWithAudio(arg_11_0.viewGO)
+function CommonEquipIcon:addClick()
+	self._click = gohelper.getClickWithAudio(self.viewGO)
 
-	arg_11_0._click:AddClickListener(arg_11_0._onClick, arg_11_0)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.setScale(arg_12_0, arg_12_1)
-	transformhelper.setLocalScale(arg_12_0.viewGO.transform, arg_12_1, arg_12_1, arg_12_1)
+function CommonEquipIcon:setScale(scale)
+	transformhelper.setLocalScale(self.viewGO.transform, scale, scale, scale)
 end
 
-function var_0_0.setLevelScaleAndColor(arg_13_0, arg_13_1, arg_13_2)
-	transformhelper.setLocalScale(arg_13_0._golevel.transform, arg_13_1, arg_13_1, arg_13_1)
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_13_0.viewGO, "layout/#go_level/#txt_level"), arg_13_2)
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_13_0.viewGO, "layout/#go_level/#txt_level/lv"), arg_13_2)
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_13_0.viewGO, "layout/#go_num/#txt_num"), arg_13_2)
+function CommonEquipIcon:setLevelScaleAndColor(scale, color)
+	transformhelper.setLocalScale(self._golevel.transform, scale, scale, scale)
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(self.viewGO, "layout/#go_level/#txt_level"), color)
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(self.viewGO, "layout/#go_level/#txt_level/lv"), color)
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(self.viewGO, "layout/#go_num/#txt_num"), color)
 end
 
-function var_0_0.hideLockIcon(arg_14_0)
-	arg_14_0._showLockIcon = false
+function CommonEquipIcon:hideLockIcon()
+	self._showLockIcon = false
 end
 
-function var_0_0.hideLv(arg_15_0, arg_15_1)
-	arg_15_0._hideLv = arg_15_1
+function CommonEquipIcon:hideLv(flag)
+	self._hideLv = flag
 
-	arg_15_0._golevel:SetActive(not arg_15_1)
+	self._golevel:SetActive(not flag)
 end
 
-function var_0_0.hideLvAndBreak(arg_16_0, arg_16_1)
-	arg_16_0:hideLv(arg_16_1)
+function CommonEquipIcon:hideLvAndBreak(flag)
+	self:hideLv(flag)
 end
 
-function var_0_0.setHideLvAndBreakFlag(arg_17_0, arg_17_1)
-	arg_17_0._hideShowBreakAndLv = arg_17_1
+function CommonEquipIcon:setHideLvAndBreakFlag(flag)
+	self._hideShowBreakAndLv = flag
 end
 
-function var_0_0.playEquipAnim(arg_18_0, arg_18_1)
-	arg_18_0._animator:Play(arg_18_1)
+function CommonEquipIcon:playEquipAnim(aniName)
+	self._animator:Play(aniName)
 end
 
-function var_0_0._initEquipByMo(arg_19_0, arg_19_1)
-	arg_19_0._mo = arg_19_1
-	arg_19_0._config = arg_19_0._mo.config
-	arg_19_0._isLock = arg_19_0._mo.isLock
-	arg_19_0._count = arg_19_0._mo.count
-	arg_19_0._level = arg_19_0._mo.level
-	arg_19_0._breakLv = arg_19_0._mo.breakLv
-	arg_19_0._refineLv = arg_19_0._mo.refineLv
-	arg_19_0._itemId = arg_19_0._config.id
-	arg_19_0._equipTeamPosInfo = EquipChooseListModel.instance:equipInTeam(arg_19_0._mo.uid)
+function CommonEquipIcon:_initEquipByMo(equipMo)
+	self._mo = equipMo
+	self._config = self._mo.config
+	self._isLock = self._mo.isLock
+	self._count = self._mo.count
+	self._level = self._mo.level
+	self._breakLv = self._mo.breakLv
+	self._refineLv = self._mo.refineLv
+	self._itemId = self._config.id
+	self._equipTeamPosInfo = EquipChooseListModel.instance:equipInTeam(self._mo.uid)
 end
 
-function var_0_0._initEquipByConfig(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._mo = nil
-	arg_20_0._config = arg_20_1
-	arg_20_0._itemId = arg_20_1.id
-	arg_20_0._isLock = false
-	arg_20_0._count = arg_20_2
-	arg_20_0._level = 1
-	arg_20_0._breakLv = 1
-	arg_20_0._refineLv = 1
+function CommonEquipIcon:_initEquipByConfig(equipCo, quantity)
+	self._mo = nil
+	self._config = equipCo
+	self._itemId = equipCo.id
+	self._isLock = false
+	self._count = quantity
+	self._level = 1
+	self._breakLv = 1
+	self._refineLv = 1
 end
 
-function var_0_0.setMOValue(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
-	local var_21_0 = EquipModel.instance:getEquip(arg_21_4)
+function CommonEquipIcon:setMOValue(type, materilId, quantity, uid)
+	local equipMo = EquipModel.instance:getEquip(uid)
 
-	if var_21_0 then
-		arg_21_0:_initEquipByMo(var_21_0)
+	if equipMo then
+		self:_initEquipByMo(equipMo)
 	else
-		arg_21_0:_initEquipByConfig(EquipConfig.instance:getEquipCo(tonumber(arg_21_2)), arg_21_3)
+		self:_initEquipByConfig(EquipConfig.instance:getEquipCo(tonumber(materilId)), quantity)
 	end
 
-	arg_21_0:initEquipType()
-	arg_21_0:refreshUI()
+	self:initEquipType()
+	self:refreshUI()
 end
 
-function var_0_0.setEquipMO(arg_22_0, arg_22_1)
-	arg_22_0:_initEquipByMo(arg_22_1)
-	arg_22_0:initEquipType()
-	arg_22_0:refreshUI()
+function CommonEquipIcon:setEquipMO(mo)
+	self:_initEquipByMo(mo)
+	self:initEquipType()
+	self:refreshUI()
 end
 
-function var_0_0.initEquipType(arg_23_0)
-	arg_23_0.isExpEquip = EquipHelper.isExpEquip(arg_23_0._config)
-	arg_23_0.isSpRefineEquip = EquipHelper.isSpRefineEquip(arg_23_0._config)
-	arg_23_0.isRefineUniversalEquip = EquipHelper.isRefineUniversalMaterials(arg_23_0._config.id)
-	arg_23_0.isNormalEquip = not arg_23_0.isExpEquip and not arg_23_0.isSpRefineEquip and not arg_23_0.isRefineUniversalEquip
+function CommonEquipIcon:initEquipType()
+	self.isExpEquip = EquipHelper.isExpEquip(self._config)
+	self.isSpRefineEquip = EquipHelper.isSpRefineEquip(self._config)
+	self.isRefineUniversalEquip = EquipHelper.isRefineUniversalMaterials(self._config.id)
+	self.isNormalEquip = not self.isExpEquip and not self.isSpRefineEquip and not self.isRefineUniversalEquip
 end
 
-function var_0_0.onUpdateMO(arg_24_0, arg_24_1)
-	arg_24_0:setEquipMO(arg_24_1)
+function CommonEquipIcon:onUpdateMO(mo)
+	self:setEquipMO(mo)
 end
 
-function var_0_0.isUniversalMeterial(arg_25_0)
-	return arg_25_0._config.id == 1000
+function CommonEquipIcon:isUniversalMeterial()
+	return self._config.id == 1000
 end
 
-function var_0_0.setBalanceLv(arg_26_0, arg_26_1)
-	if not arg_26_1 or not arg_26_0._mo or tonumber(arg_26_0._mo.uid) < 0 or arg_26_1 <= arg_26_0._level then
+function CommonEquipIcon:setBalanceLv(level)
+	if not level or not self._mo or tonumber(self._mo.uid) < 0 or level <= self._level then
 		return
 	end
 
-	arg_26_0._txtlevel.text = "<color=#bfdaff>" .. arg_26_1
+	self._txtlevel.text = "<color=#bfdaff>" .. level
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_26_0._txtlevelEn, "#bfdaff")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtlevelEn, "#bfdaff")
 end
 
-function var_0_0.refreshUI(arg_27_0)
-	if not arg_27_0._config then
+function CommonEquipIcon:refreshUI()
+	if not self._config then
 		return
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_27_0._imagerare, "equipbar" .. EquipConfig.instance:getRareColor(arg_27_0._config.rare), nil, arg_27_0.bgAlpha)
-	UISpriteSetMgr.instance:setCommonSprite(arg_27_0._imagerare2, "bgequip" .. tostring(ItemEnum.Color[arg_27_0._config.rare]), nil, arg_27_0.bgAlpha)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare, "equipbar" .. EquipConfig.instance:getRareColor(self._config.rare), nil, self.bgAlpha)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare2, "bgequip" .. tostring(ItemEnum.Color[self._config.rare]), nil, self.bgAlpha)
 
-	if arg_27_0._effectGos and tabletool.len(arg_27_0._effectGos) > 0 then
-		for iter_27_0 = var_0_1, var_0_2 do
-			gohelper.setActive(arg_27_0._effectGos[iter_27_0], iter_27_0 == tonumber(arg_27_0._config.rare) and EquipModel.canShowVfx(arg_27_0._config))
-			gohelper.setActive(gohelper.findChild(arg_27_0._effectGos[iter_27_0], "mask"), false)
+	if self._effectGos and tabletool.len(self._effectGos) > 0 then
+		for i = VFX_MIN_LV, VFX_MAX_LV do
+			gohelper.setActive(self._effectGos[i], i == tonumber(self._config.rare) and EquipModel.canShowVfx(self._config))
+			gohelper.setActive(gohelper.findChild(self._effectGos[i], "mask"), false)
 		end
 	end
 
-	arg_27_0._txtnum.text = GameUtil.numberDisplay(arg_27_0._count)
-	arg_27_0._txtlevel.text = arg_27_0._level
+	self._txtnum.text = GameUtil.numberDisplay(self._count)
+	self._txtlevel.text = self._level
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_27_0._txtlevelEn, "#E8E7E7")
-	gohelper.setActive(arg_27_0.gotrial, arg_27_0._mo and arg_27_0._mo.equipType == EquipEnum.ClientEquipType.TrialEquip)
-	gohelper.setActive(arg_27_0._gorefinecontainer, arg_27_0._mo and arg_27_0.isNormalEquip)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtlevelEn, "#E8E7E7")
+	gohelper.setActive(self.gotrial, self._mo and self._mo.equipType == EquipEnum.ClientEquipType.TrialEquip)
+	gohelper.setActive(self._gorefinecontainer, self._mo and self.isNormalEquip)
 
-	if arg_27_0.isNormalEquip then
-		if arg_27_0._refineLv >= EquipConfig.instance:getEquipRefineLvMax() then
-			arg_27_0._txtrefinelv.text = string.format("<color=#e87826>%s</color>", arg_27_0._refineLv)
+	if self.isNormalEquip then
+		if self._refineLv >= EquipConfig.instance:getEquipRefineLvMax() then
+			self._txtrefinelv.text = string.format("<color=#e87826>%s</color>", self._refineLv)
 		else
-			arg_27_0._txtrefinelv.text = string.format("<color=#E8E7E7>%s</color>", arg_27_0._refineLv)
+			self._txtrefinelv.text = string.format("<color=#E8E7E7>%s</color>", self._refineLv)
 		end
 	end
 
-	arg_27_0:_loadIconImage()
-	arg_27_0:hideLvAndBreak(EquipHelper.isRefineUniversalMaterials(arg_27_0._config.id) or arg_27_0.isExpEquip or EquipHelper.isSpRefineEquip(arg_27_0._config) or arg_27_0._hideShowBreakAndLv)
-	arg_27_0:isShowCount(not EquipHelper.isRefineUniversalMaterials(arg_27_0._config.id) and arg_27_0.isExpEquip and arg_27_0._showCount)
+	self:_loadIconImage()
+	self:hideLvAndBreak(EquipHelper.isRefineUniversalMaterials(self._config.id) or self.isExpEquip or EquipHelper.isSpRefineEquip(self._config) or self._hideShowBreakAndLv)
+	self:isShowCount(not EquipHelper.isRefineUniversalMaterials(self._config.id) and self.isExpEquip and self._showCount)
 
-	if not arg_27_0._iconImage.sprite then
-		arg_27_0:_setIconAlpha(0)
+	if not self._iconImage.sprite then
+		self:_setIconAlpha(0)
 	end
 
-	arg_27_0._golock:SetActive(arg_27_0._isLock and arg_27_0._showLockIcon)
+	self._golock:SetActive(self._isLock and self._showLockIcon)
 end
 
-function var_0_0.checkRecommend(arg_28_0)
-	local var_28_0 = arg_28_0._mo and arg_28_0._mo.recommondIndex and arg_28_0._mo.recommondIndex > 0
+function CommonEquipIcon:checkRecommend()
+	local isRecommend = self._mo and self._mo.recommondIndex and self._mo.recommondIndex > 0
 
-	arg_28_0._gorecommend:SetActive(var_28_0)
+	self._gorecommend:SetActive(isRecommend)
 end
 
-function var_0_0._loadIconImage(arg_29_0)
-	if arg_29_0._overrideIconLoadFunc then
-		arg_29_0._overrideIconLoadFunc(arg_29_0._overrideIconLoadFuncObj)
+function CommonEquipIcon:setGrayScale(isGray)
+	ZProj.UGUIHelper.SetGrayscale(self._simageicon.gameObject, isGray)
+	ZProj.UGUIHelper.SetGrayscale(self._imagerare.gameObject, isGray)
+end
+
+function CommonEquipIcon:_loadIconImage()
+	if self._overrideIconLoadFunc then
+		self._overrideIconLoadFunc(self._overrideIconLoadFuncObj)
 
 		return
 	end
 
-	arg_29_0:_defaultLoadIconFunc()
+	self:_defaultLoadIconFunc()
 end
 
-function var_0_0._defaultLoadIconFunc(arg_30_0)
-	arg_30_0._simageicon:LoadImage(ResUrl.getEquipIcon(arg_30_0._config.icon), arg_30_0._loadImageFinish, arg_30_0)
+function CommonEquipIcon:_defaultLoadIconFunc()
+	self._simageicon:LoadImage(ResUrl.getEquipIcon(self._config.icon), self._loadImageFinish, self)
 end
 
-function var_0_0.setItemIconScale(arg_31_0, arg_31_1)
-	transformhelper.setLocalScale(arg_31_0._simageicon.transform, arg_31_1, arg_31_1, arg_31_1)
+function CommonEquipIcon:setItemIconScale(scale)
+	transformhelper.setLocalScale(self._simageicon.transform, scale, scale, scale)
 end
 
-function var_0_0.setItemOffset(arg_32_0, arg_32_1, arg_32_2)
-	recthelper.setAnchor(arg_32_0._simageicon.transform, arg_32_1 or -1.5, arg_32_2 or 53)
+function CommonEquipIcon:setItemOffset(offsetX, offsetY)
+	recthelper.setAnchor(self._simageicon.transform, offsetX or -1.5, offsetY or 53)
 end
 
-function var_0_0._overrideLoadIconFunc(arg_33_0, arg_33_1, arg_33_2)
-	arg_33_0._overrideIconLoadFunc = arg_33_1
-	arg_33_0._overrideIconLoadFuncObj = arg_33_2
+function CommonEquipIcon:_overrideLoadIconFunc(loadFunc, funcObj)
+	self._overrideIconLoadFunc = loadFunc
+	self._overrideIconLoadFuncObj = funcObj
 end
 
-function var_0_0._loadImageFinish(arg_34_0)
-	arg_34_0:_setIconAlpha(arg_34_0.iconAlpha or 1)
+function CommonEquipIcon:_loadImageFinish()
+	self:_setIconAlpha(self.iconAlpha or 1)
 end
 
-function var_0_0.setAlpha(arg_35_0, arg_35_1, arg_35_2)
-	arg_35_0.iconAlpha = arg_35_1
-	arg_35_0.bgAlpha = arg_35_2
+function CommonEquipIcon:setAlpha(iconAlpha, bgAlpha)
+	self.iconAlpha = iconAlpha
+	self.bgAlpha = bgAlpha
 
-	arg_35_0:_setIconAlpha(arg_35_0.iconAlpha)
-	arg_35_0:refreshUI()
+	self:_setIconAlpha(self.iconAlpha)
+	self:refreshUI()
 end
 
-function var_0_0._setIconAlpha(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0._iconImage.color
+function CommonEquipIcon:_setIconAlpha(value)
+	local color = self._iconImage.color
 
-	var_36_0.a = arg_36_1
-	arg_36_0._iconImage.color = var_36_0
+	color.a = value
+	self._iconImage.color = color
 end
 
-function var_0_0.showLevel(arg_37_0)
-	gohelper.setActive(arg_37_0._gonum, false)
+function CommonEquipIcon:showLevel()
+	gohelper.setActive(self._gonum, false)
 
-	arg_37_0._txtlevel.text = arg_37_0._level
+	self._txtlevel.text = self._level
 end
 
-function var_0_0.refreshLock(arg_38_0, arg_38_1)
-	arg_38_0._isLock = arg_38_1
+function CommonEquipIcon:refreshLock(isLock)
+	self._isLock = isLock
 
-	arg_38_0._golock:SetActive(arg_38_0._isLock and arg_38_0._showLockIcon)
+	self._golock:SetActive(self._isLock and self._showLockIcon)
 end
 
-function var_0_0.showEquipCount(arg_39_0, arg_39_1, arg_39_2)
-	arg_39_1 = arg_39_1 or arg_39_0._golevel
-	arg_39_2 = arg_39_2 or arg_39_0._txtlevel
+function CommonEquipIcon:showEquipCount(countbg, count)
+	countbg = countbg or self._golevel
+	count = count or self._txtlevel
 
-	gohelper.setActive(arg_39_0._golevel, false)
-	gohelper.setActive(arg_39_0._gonum, false)
+	gohelper.setActive(self._golevel, false)
+	gohelper.setActive(self._gonum, false)
 
-	if arg_39_0.isExpEquip then
-		arg_39_2.text = GameUtil.numberDisplay(arg_39_0._count)
+	if self.isExpEquip then
+		count.text = GameUtil.numberDisplay(self._count)
 
-		gohelper.setActive(arg_39_1, arg_39_2.text ~= nil)
+		gohelper.setActive(countbg, count.text ~= nil)
 	else
-		arg_39_0._txtlevel.text = arg_39_0._level
+		self._txtlevel.text = self._level
 
-		gohelper.setActive(arg_39_1, false)
-		gohelper.setActive(arg_39_0._golevel, true)
+		gohelper.setActive(countbg, false)
+		gohelper.setActive(self._golevel, true)
 	end
 end
 
-function var_0_0.isShowAddition(arg_40_0, arg_40_1)
-	gohelper.setActive(arg_40_0._goAddition, arg_40_1)
+function CommonEquipIcon:isShowAddition(flag)
+	gohelper.setActive(self._goAddition, flag)
 end
 
-function var_0_0.isShowCount(arg_41_0, arg_41_1)
-	gohelper.setActive(arg_41_0._gonum, arg_41_1)
+function CommonEquipIcon:isShowCount(flag)
+	gohelper.setActive(self._gonum, flag)
 end
 
-function var_0_0.setShowCountFlag(arg_42_0, arg_42_1)
-	arg_42_0._showCount = arg_42_1
+function CommonEquipIcon:setShowCountFlag(flag)
+	self._showCount = flag
 end
 
-function var_0_0.hideExpEquipState(arg_43_0)
-	gohelper.setActive(arg_43_0._gorefinecontainer, not arg_43_0.isExpEquip)
-	gohelper.setActive(arg_43_0._gonum, false)
-	gohelper.setActive(arg_43_0._golevel, not arg_43_0.isExpEquip)
+function CommonEquipIcon:hideExpEquipState()
+	gohelper.setActive(self._gorefinecontainer, not self.isExpEquip)
+	gohelper.setActive(self._gonum, false)
+	gohelper.setActive(self._golevel, not self.isExpEquip)
 end
 
-function var_0_0.showEquipRefineContainer(arg_44_0, arg_44_1)
-	gohelper.setActive(arg_44_0._gorefinecontainer, arg_44_1)
+function CommonEquipIcon:showEquipRefineContainer(flag)
+	gohelper.setActive(self._gorefinecontainer, flag)
 end
 
-function var_0_0.setCountFontSize(arg_45_0, arg_45_1)
-	if not arg_45_0._scale then
-		arg_45_0._scale = arg_45_1 / arg_45_0._txtnum.fontSize
+function CommonEquipIcon:setCountFontSize(fontsize)
+	if not self._scale then
+		self._scale = fontsize / self._txtnum.fontSize
 	end
 
-	transformhelper.setLocalScale(arg_45_0._countbg.transform, 1, arg_45_0._scale, 1)
+	transformhelper.setLocalScale(self._countbg.transform, 1, self._scale, 1)
 
-	arg_45_0._txtnum.fontSize = arg_45_1
+	self._txtnum.fontSize = fontsize
 
-	transformhelper.setLocalScale(arg_45_0._txtlevel.transform, arg_45_0._scale, arg_45_0._scale, arg_45_0._scale)
-	transformhelper.setLocalPosXY(arg_45_0._txtlevel.transform, 30, 0)
+	transformhelper.setLocalScale(self._txtlevel.transform, self._scale, self._scale, self._scale)
+	transformhelper.setLocalPosXY(self._txtlevel.transform, 30, 0)
 end
 
-function var_0_0.setLevelPos(arg_46_0, arg_46_1, arg_46_2)
-	transformhelper.setLocalPosXY(arg_46_0._txtlevel.transform, arg_46_1, arg_46_2)
+function CommonEquipIcon:setLevelPos(posx, posy)
+	transformhelper.setLocalPosXY(self._txtlevel.transform, posx, posy)
 end
 
-function var_0_0.setLevelFontColor(arg_47_0, arg_47_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_47_0._txtlevel, arg_47_1)
+function CommonEquipIcon:setLevelFontColor(color)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtlevel, color)
 end
 
-function var_0_0.setCarrerIconAndRefineVisible(arg_48_0, arg_48_1)
-	if arg_48_0._isCarrerIconAndRefineVisible == arg_48_1 then
+function CommonEquipIcon:setCarrerIconAndRefineVisible(isVisible)
+	if self._isCarrerIconAndRefineVisible == isVisible then
 		return
 	end
 
-	arg_48_0._isCarrerIconAndRefineVisible = arg_48_1
+	self._isCarrerIconAndRefineVisible = isVisible
 end
 
-function var_0_0.onSelect(arg_49_0, arg_49_1)
-	gohelper.setActive(arg_49_0._goselected, arg_49_0._isShowSelectedUI and arg_49_1)
+function CommonEquipIcon:onSelect(isSelect)
+	gohelper.setActive(self._goselected, self._isShowSelectedUI and isSelect)
 end
 
-function var_0_0.setSelectUIVisible(arg_50_0, arg_50_1)
-	arg_50_0._isShowSelectedUI = arg_50_1
+function CommonEquipIcon:setSelectUIVisible(isVisible)
+	self._isShowSelectedUI = isVisible
 end
 
-function var_0_0.isShowRefineLv(arg_51_0, arg_51_1)
-	gohelper.setActive(arg_51_0._txtrefinelv.gameObject, arg_51_1)
+function CommonEquipIcon:isShowRefineLv(isShow)
+	gohelper.setActive(self._txtrefinelv.gameObject, isShow)
 end
 
-function var_0_0.setRefineLvFontSize(arg_52_0, arg_52_1)
-	arg_52_0._txtrefinelv.fontSize = arg_52_1
+function CommonEquipIcon:setRefineLvFontSize(fontSize)
+	self._txtrefinelv.fontSize = fontSize
 end
 
-function var_0_0.showHeroIcon(arg_53_0, arg_53_1)
-	arg_53_0._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(arg_53_1.headIcon))
-	gohelper.setActive(arg_53_0._gointeam, true)
-	arg_53_0:refreshLock(false)
+function CommonEquipIcon:showHeroIcon(skinCo)
+	self._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(skinCo.headIcon))
+	gohelper.setActive(self._gointeam, true)
+	self:refreshLock(false)
 end
 
-function var_0_0.hideHeroIcon(arg_54_0)
-	gohelper.setActive(arg_54_0._gointeam, false)
+function CommonEquipIcon:hideHeroIcon()
+	gohelper.setActive(self._gointeam, false)
 end
 
-function var_0_0.setItemColor(arg_55_0, arg_55_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._imageBg, arg_55_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._iconImage, arg_55_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._imagerare, arg_55_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._imagerare2, arg_55_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._countbg:GetComponent(gohelper.Type_Image), arg_55_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._txtnum, arg_55_1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._txtlevel, arg_55_1 or "#E8E7E7")
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_55_0.viewGO, "layout/#go_level/#txt_level/lv"), arg_55_1 or "#E8E7E7")
+function CommonEquipIcon:setItemColor(color)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imageBg, color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._iconImage, color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagerare, color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagerare2, color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._countbg:GetComponent(gohelper.Type_Image), color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtnum, color or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtlevel, color or "#E8E7E7")
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(self.viewGO, "layout/#go_level/#txt_level/lv"), color or "#E8E7E7")
 end
 
-function var_0_0.setGetMask(arg_56_0, arg_56_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._iconImage, arg_56_1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._imagerare, arg_56_1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._imagerare2, arg_56_1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._txtlevel, arg_56_1 and "#525252" or "#E8E7E7")
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_56_0.viewGO, "layout/#go_level/#txt_level/lv"), arg_56_1 and "#525252" or "#E8E7E7")
-	ZProj.UGUIHelper.SetColorAlpha(arg_56_0._txtrefinelv, arg_56_1 and 0.4 or 1)
+function CommonEquipIcon:setGetMask(isMask)
+	SLFramework.UGUI.GuiHelper.SetColor(self._iconImage, isMask and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagerare, isMask and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagerare2, isMask and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtlevel, isMask and "#525252" or "#E8E7E7")
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(self.viewGO, "layout/#go_level/#txt_level/lv"), isMask and "#525252" or "#E8E7E7")
+	ZProj.UGUIHelper.SetColorAlpha(self._txtrefinelv, isMask and 0.4 or 1)
 end
 
-function var_0_0.isShowQuality(arg_57_0, arg_57_1)
-	arg_57_0._showQuality = arg_57_1
+function CommonEquipIcon:isShowQuality(flag)
+	self._showQuality = flag
 
-	gohelper.setActive(arg_57_0._imageBg, arg_57_1)
-	gohelper.setActive(arg_57_0._imagerare, arg_57_1)
-	gohelper.setActive(arg_57_0._imagerare2, arg_57_1)
+	gohelper.setActive(self._imageBg, flag)
+	gohelper.setActive(self._imagerare, flag)
+	gohelper.setActive(self._imagerare2, flag)
 end
 
-function var_0_0.onDestroyView(arg_58_0)
-	if arg_58_0._effectLoader then
-		arg_58_0._effectLoader:dispose()
+function CommonEquipIcon:onDestroyView()
+	if self._effectLoader then
+		self._effectLoader:dispose()
 
-		arg_58_0._effectLoader = nil
+		self._effectLoader = nil
 	end
 
-	arg_58_0._simageheroicon:UnLoadImage()
-	arg_58_0._simageicon:UnLoadImage()
+	self._simageheroicon:UnLoadImage()
+	self._simageicon:UnLoadImage()
 end
 
-function var_0_0.isExpiredItem(arg_59_0)
+function CommonEquipIcon:isExpiredItem()
 	return false
 end
 
-return var_0_0
+return CommonEquipIcon

@@ -1,13 +1,15 @@
-﻿module("modules.logic.skin.SkinOffsetController", package.seeall)
+﻿-- chunkname: @modules/logic/skin/SkinOffsetController.lua
 
-local var_0_0 = class("SkinOffsetController", BaseController)
+module("modules.logic.skin.SkinOffsetController", package.seeall)
 
-var_0_0.Event = {
+local SkinOffsetController = class("SkinOffsetController", BaseController)
+
+SkinOffsetController.Event = {
 	OnSelectSkinChange = 1
 }
-var_0_0.instance = var_0_0.New()
+SkinOffsetController.instance = SkinOffsetController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
-var_0_0.instance:__onInit()
+LuaEventSystem.addEventMechanism(SkinOffsetController.instance)
+SkinOffsetController.instance:__onInit()
 
-return var_0_0
+return SkinOffsetController

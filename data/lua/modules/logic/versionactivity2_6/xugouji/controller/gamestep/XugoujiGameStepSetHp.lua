@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepSetHp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/controller/gamestep/XugoujiGameStepSetHp.lua
 
-local var_0_0 = class("XugoujiGameStepSetHp", XugoujiGameStepBase)
+module("modules.logic.versionactivity2_6.xugouji.controller.gamestep.XugoujiGameStepSetHp", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0:finish()
+local XugoujiGameStepSetHp = class("XugoujiGameStepSetHp", XugoujiGameStepBase)
+
+function XugoujiGameStepSetHp:start()
+	self:finish()
 end
 
-function var_0_0.finish(arg_2_0)
-	local var_2_0 = arg_2_0.originData.hp
+function XugoujiGameStepSetHp:finish()
+	local hp = self.originData.hp
 
-	Activity188Model.instance:setHp(var_2_0)
+	Activity188Model.instance:setHp(hp)
 	XugoujiController.instance:dispatchEvent(Va3ChessEvent.CurrentHpUpdate)
-	var_0_0.super.finish(arg_2_0)
+	XugoujiGameStepSetHp.super.finish(self)
 end
 
-return var_0_0
+return XugoujiGameStepSetHp

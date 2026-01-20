@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.model.mo.FightAssistBossSkillInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightAssistBossSkillInfoMo.lua
 
-local var_0_0 = pureTable("FightAssistBossSkillInfoMo")
+module("modules.logic.fight.model.mo.FightAssistBossSkillInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.skillId = arg_1_1.skillId
-	arg_1_0.needPower = arg_1_1.needPower
-	arg_1_0.powerLow = arg_1_1.powerLow
-	arg_1_0.powerHigh = arg_1_1.powerHigh
+local FightAssistBossSkillInfoMo = pureTable("FightAssistBossSkillInfoMo")
+
+function FightAssistBossSkillInfoMo:init(skillInfo)
+	self.skillId = skillInfo.skillId
+	self.needPower = skillInfo.needPower
+	self.powerLow = skillInfo.powerLow
+	self.powerHigh = skillInfo.powerHigh
 end
 
-return var_0_0
+return FightAssistBossSkillInfoMo

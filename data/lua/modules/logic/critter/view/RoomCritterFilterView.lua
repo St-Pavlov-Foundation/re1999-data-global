@@ -1,184 +1,194 @@
-﻿module("modules.logic.critter.view.RoomCritterFilterView", package.seeall)
+﻿-- chunkname: @modules/logic/critter/view/RoomCritterFilterView.lua
 
-local var_0_0 = class("RoomCritterFilterView", BaseView)
+module("modules.logic.critter.view.RoomCritterFilterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/#btn_closefilterview")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content")
-	arg_1_0._gofilterCategoryItem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/filterTypeItem")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_ok")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_reset")
+local RoomCritterFilterView = class("RoomCritterFilterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterFilterView:onInitView()
+	self._btnclosefilterview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/#btn_closefilterview")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content")
+	self._gofilterCategoryItem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/Scroll View/Viewport/Content/filterTypeItem")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_ok")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_reset")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclosefilterview:AddClickListener(arg_2_0._btnclosefilterviewOnClick, arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+function RoomCritterFilterView:addEvents()
+	self._btnclosefilterview:AddClickListener(self._btnclosefilterviewOnClick, self)
+	self._btnok:AddClickListener(self._btnokOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclosefilterview:RemoveClickListener()
-	arg_3_0._btnok:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
+function RoomCritterFilterView:removeEvents()
+	self._btnclosefilterview:RemoveClickListener()
+	self._btnok:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0.filterCategoryItemDict) do
-		for iter_3_2, iter_3_3 in pairs(iter_3_1.tagItemDict) do
-			iter_3_3.btnClick:RemoveClickListener()
+	for _, categoryItem in pairs(self.filterCategoryItemDict) do
+		for _, tagItem in pairs(categoryItem.tagItemDict) do
+			tagItem.btnClick:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0._btnclosefilterviewOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomCritterFilterView:_btnclosefilterviewOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnokOnClick(arg_5_0)
-	CritterFilterModel.instance:applyMO(arg_5_0.filterMO)
-	arg_5_0:closeThis()
+function RoomCritterFilterView:_btnokOnClick()
+	CritterFilterModel.instance:applyMO(self.filterMO)
+	self:closeThis()
 end
 
-function var_0_0._btnresetOnClick(arg_6_0)
-	arg_6_0.filterMO:reset()
-	arg_6_0:refresh()
+function RoomCritterFilterView:_btnresetOnClick()
+	self.filterMO:reset()
+	self:refresh()
 end
 
-function var_0_0.onClickTagItem(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.filterType
-	local var_7_1 = arg_7_1.tagId
+function RoomCritterFilterView:onClickTagItem(tagItem)
+	local filterType = tagItem.filterType
+	local tagId = tagItem.tagId
+	local isSelected = self:isSelectTag(filterType, tagId)
 
-	if arg_7_0:isSelectTag(var_7_0, var_7_1) then
-		arg_7_0.filterMO:unselectedTag(var_7_0, var_7_1)
+	if isSelected then
+		self.filterMO:unselectedTag(filterType, tagId)
 	else
-		arg_7_0.filterMO:selectedTag(var_7_0, var_7_1)
+		self.filterMO:selectedTag(filterType, tagId)
 	end
 
-	arg_7_0:refreshTag(arg_7_1)
+	self:refreshTag(tagItem)
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function RoomCritterFilterView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0.filterTypeList = arg_9_0.viewParam.filterTypeList
-	arg_9_0.parentViewName = arg_9_0.viewParam.viewName
+function RoomCritterFilterView:onUpdateParam()
+	self.filterTypeList = self.viewParam.filterTypeList
+	self.parentViewName = self.viewParam.viewName
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:onUpdateParam()
+function RoomCritterFilterView:onOpen()
+	self:onUpdateParam()
 
-	arg_10_0.filterCategoryItemDict = {}
-	arg_10_0.filterMO = CritterFilterModel.instance:getFilterMO(arg_10_0.parentViewName, true):clone()
+	self.filterCategoryItemDict = {}
 
-	gohelper.CreateObjList(arg_10_0, arg_10_0._onSetFilterCategoryItem, arg_10_0.filterTypeList, arg_10_0._gocontent, arg_10_0._gofilterCategoryItem)
-	arg_10_0:refresh()
+	local filterMO = CritterFilterModel.instance:getFilterMO(self.parentViewName, true)
+
+	self.filterMO = filterMO:clone()
+
+	gohelper.CreateObjList(self, self._onSetFilterCategoryItem, self.filterTypeList, self._gocontent, self._gofilterCategoryItem)
+	self:refresh()
 end
 
-function var_0_0._onSetFilterCategoryItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function RoomCritterFilterView:_onSetFilterCategoryItem(obj, data, index)
+	local categoryItem = self:getUserDataTb_()
 
-	var_11_0.go = arg_11_1
-	var_11_0.filterType = arg_11_2
+	categoryItem.go = obj
+	categoryItem.filterType = data
 
-	local var_11_1 = CritterConfig.instance:getCritterFilterTypeCfg(arg_11_2, true)
-	local var_11_2 = gohelper.findChildText(var_11_0.go, "title/dmgTypeCn")
-	local var_11_3 = gohelper.findChildText(var_11_0.go, "title/dmgTypeCn/dmgTypeEn")
+	local cfg = CritterConfig.instance:getCritterFilterTypeCfg(data, true)
+	local nameTxt = gohelper.findChildText(categoryItem.go, "title/dmgTypeCn")
+	local nameEnTxt = gohelper.findChildText(categoryItem.go, "title/dmgTypeCn/dmgTypeEn")
 
-	var_11_2.text = var_11_1.name
-	var_11_3.text = var_11_1.nameEn
+	nameTxt.text = cfg.name
+	nameEnTxt.text = cfg.nameEn
 
-	local var_11_4 = gohelper.findChild(var_11_0.go, "layout")
-	local var_11_5 = gohelper.findChild(var_11_0.go, "layout/#go_tabItem1")
-	local var_11_6 = gohelper.findChild(var_11_0.go, "layout/#go_tabItem2")
+	local golayout = gohelper.findChild(categoryItem.go, "layout")
+	local gotabItem1 = gohelper.findChild(categoryItem.go, "layout/#go_tabItem1")
+	local gotabItem2 = gohelper.findChild(categoryItem.go, "layout/#go_tabItem2")
 
-	gohelper.setActive(var_11_5, false)
-	gohelper.setActive(var_11_6, false)
+	gohelper.setActive(gotabItem1, false)
+	gohelper.setActive(gotabItem2, false)
 
-	var_11_0.tagItemDict = {}
+	categoryItem.tagItemDict = {}
 
-	local var_11_7 = CritterConfig.instance:getCritterTabDataList(var_11_0.filterType)
+	local tabDataList = CritterConfig.instance:getCritterTabDataList(categoryItem.filterType)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_7) do
-		local var_11_8 = iter_11_1.filterTab
-		local var_11_9 = var_11_5
+	for _, tabData in ipairs(tabDataList) do
+		local filterTabId = tabData.filterTab
+		local tagItemGO = gotabItem1
 
-		if not string.nilorempty(iter_11_1.icon) then
-			var_11_9 = var_11_6
+		if not string.nilorempty(tabData.icon) then
+			tagItemGO = gotabItem2
 		end
 
-		local var_11_10 = gohelper.clone(var_11_9, var_11_4, var_11_8)
-		local var_11_11 = arg_11_0:getTagItem(iter_11_1, var_11_10, var_11_0.filterType)
+		local tagGO = gohelper.clone(tagItemGO, golayout, filterTabId)
+		local tagItem = self:getTagItem(tabData, tagGO, categoryItem.filterType)
 
-		var_11_0.tagItemDict[var_11_8] = var_11_11
+		categoryItem.tagItemDict[filterTabId] = tagItem
 	end
 
-	arg_11_0.filterCategoryItemDict[arg_11_2] = var_11_0
+	self.filterCategoryItemDict[data] = categoryItem
 end
 
-function var_0_0.getTagItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = arg_12_1.name
-	local var_12_1 = arg_12_1.icon
-	local var_12_2 = arg_12_0:getUserDataTb_()
+function RoomCritterFilterView:getTagItem(tabData, tagGO, filterType)
+	local name = tabData.name
+	local icon = tabData.icon
+	local tagItem = self:getUserDataTb_()
 
-	var_12_2.go = arg_12_2
-	var_12_2.tagId = arg_12_1.filterTab
-	var_12_2.filterType = arg_12_3
-	var_12_2.gounselected = gohelper.findChild(var_12_2.go, "unselected")
-	var_12_2.goselected = gohelper.findChild(var_12_2.go, "selected")
-	var_12_2.btnClick = gohelper.findChildClickWithAudio(var_12_2.go, "click", AudioEnum.UI.UI_Common_Click)
+	tagItem.go = tagGO
+	tagItem.tagId = tabData.filterTab
+	tagItem.filterType = filterType
+	tagItem.gounselected = gohelper.findChild(tagItem.go, "unselected")
+	tagItem.goselected = gohelper.findChild(tagItem.go, "selected")
+	tagItem.btnClick = gohelper.findChildClickWithAudio(tagItem.go, "click", AudioEnum.UI.UI_Common_Click)
 
-	var_12_2.btnClick:AddClickListener(arg_12_0.onClickTagItem, arg_12_0, var_12_2)
+	tagItem.btnClick:AddClickListener(self.onClickTagItem, self, tagItem)
 
-	local var_12_3 = gohelper.findChildText(var_12_2.go, "unselected/info1")
-	local var_12_4 = gohelper.findChildText(var_12_2.go, "selected/info2")
+	local unselectedNameTxt = gohelper.findChildText(tagItem.go, "unselected/info1")
+	local selectedNameTxt = gohelper.findChildText(tagItem.go, "selected/info2")
 
-	var_12_3.text = var_12_0
-	var_12_4.text = var_12_0
+	unselectedNameTxt.text = name
+	selectedNameTxt.text = name
 
-	if not string.nilorempty(var_12_1) then
-		local var_12_5 = gohelper.findChildImage(var_12_2.go, "unselected/#image_icon")
-		local var_12_6 = gohelper.findChildImage(var_12_2.go, "selected/#image_icon")
+	local hasIcon = not string.nilorempty(icon)
 
-		UISpriteSetMgr.instance:setCritterSprite(var_12_5, var_12_1)
-		UISpriteSetMgr.instance:setCritterSprite(var_12_6, var_12_1)
+	if hasIcon then
+		local imgunselectedIcon = gohelper.findChildImage(tagItem.go, "unselected/#image_icon")
+		local imageselectedicon = gohelper.findChildImage(tagItem.go, "selected/#image_icon")
+
+		UISpriteSetMgr.instance:setCritterSprite(imgunselectedIcon, icon)
+		UISpriteSetMgr.instance:setCritterSprite(imageselectedicon, icon)
 	end
 
-	gohelper.setActive(var_12_2.go, true)
+	gohelper.setActive(tagItem.go, true)
 
-	return var_12_2
+	return tagItem
 end
 
-function var_0_0.refresh(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.filterCategoryItemDict) do
-		for iter_13_2, iter_13_3 in pairs(iter_13_1.tagItemDict) do
-			arg_13_0:refreshTag(iter_13_3)
+function RoomCritterFilterView:refresh()
+	for _, categoryItem in pairs(self.filterCategoryItemDict) do
+		for _, tagItem in pairs(categoryItem.tagItemDict) do
+			self:refreshTag(tagItem)
 		end
 	end
 end
 
-function var_0_0.refreshTag(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1.filterType
-	local var_14_1 = arg_14_1.tagId
-	local var_14_2 = arg_14_0:isSelectTag(var_14_0, var_14_1)
+function RoomCritterFilterView:refreshTag(tagItem)
+	local filterType = tagItem.filterType
+	local tagId = tagItem.tagId
+	local isSelected = self:isSelectTag(filterType, tagId)
 
-	gohelper.setActive(arg_14_1.goselected, var_14_2)
-	gohelper.setActive(arg_14_1.gounselected, not var_14_2)
+	gohelper.setActive(tagItem.goselected, isSelected)
+	gohelper.setActive(tagItem.gounselected, not isSelected)
 end
 
-function var_0_0.isSelectTag(arg_15_0, arg_15_1, arg_15_2)
-	return (arg_15_0.filterMO:isSelectedTag(arg_15_1, arg_15_2))
+function RoomCritterFilterView:isSelectTag(filterType, tagId)
+	local result = self.filterMO:isSelectedTag(filterType, tagId)
+
+	return result
 end
 
-function var_0_0.onClose(arg_16_0)
+function RoomCritterFilterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function RoomCritterFilterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomCritterFilterView

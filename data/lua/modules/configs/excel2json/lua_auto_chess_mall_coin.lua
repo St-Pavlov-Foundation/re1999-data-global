@@ -1,19 +1,22 @@
-﻿module("modules.configs.excel2json.lua_auto_chess_mall_coin", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_auto_chess_mall_coin.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_auto_chess_mall_coin", package.seeall)
+
+local lua_auto_chess_mall_coin = {}
+local fields = {
 	activityId = 1,
 	coinNum = 3,
-	round = 2
+	round = 2,
+	refreshCost = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"round"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_auto_chess_mall_coin.onLoad(json)
+	lua_auto_chess_mall_coin.configList, lua_auto_chess_mall_coin.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_auto_chess_mall_coin

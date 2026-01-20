@@ -1,29 +1,57 @@
-﻿module("modules.logic.summon.model.SummonCustomPickMO", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonCustomPickMO.lua
 
-local var_0_0 = pureTable("SummonCustomPickMO")
+module("modules.logic.summon.model.SummonCustomPickMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.pickHeroIds = nil
-	arg_1_0._haveFirstSSR = false
+local SummonCustomPickMO = pureTable("SummonCustomPickMO")
+
+function SummonCustomPickMO:ctor()
+	self.pickHeroIds = nil
+	self._haveFirstSSR = false
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	arg_2_0.pickHeroIds = {}
+function SummonCustomPickMO:update(info)
+	self.pickHeroIds = {}
 
-	if arg_2_1.UpHeroIds then
-		for iter_2_0 = 1, #arg_2_1.UpHeroIds do
-			local var_2_0 = arg_2_1.UpHeroIds[iter_2_0]
+	if info.UpHeroIds then
+		for i = 1, #info.UpHeroIds do
+			local heroId = info.UpHeroIds[i]
 
-			table.insert(arg_2_0.pickHeroIds, var_2_0)
+			table.insert(self.pickHeroIds, heroId)
 		end
 	end
 
+	self:sortPickHeroIdsByRule()
+
+	if info.usedFirstSSRGuarantee ~= nil then
+		self._haveFirstSSR = info.usedFirstSSRGuarantee
+	end
+
+	self.hasGetRewardProgresses = info.hasGetRewardProgresses or {}
+end
+
+function SummonCustomPickMO:isPicked(poolId)
+	return self.pickHeroIds ~= nil and #self.pickHeroIds >= SummonCustomPickModel.instance:getMaxSelectCount(poolId)
+end
+
+function SummonCustomPickMO:isHaveFirstSSR()
+	return self._haveFirstSSR
+end
+
+function SummonCustomPickMO:getRewardCount()
+	if self.hasGetRewardProgresses then
+		return #self.hasGetRewardProgresses
+	end
+
+	return 0
+end
+
+function SummonCustomPickMO:sortPickHeroIdsByRule()
 	if SummonEnum.ChooseNeedFirstHeroIds then
-		for iter_2_1, iter_2_2 in ipairs(SummonEnum.ChooseNeedFirstHeroIds) do
-			for iter_2_3, iter_2_4 in ipairs(arg_2_0.pickHeroIds) do
-				if iter_2_4 == iter_2_2 then
-					table.remove(arg_2_0.pickHeroIds, iter_2_3)
-					table.insert(arg_2_0.pickHeroIds, 1, iter_2_2)
+		for _, heroId in ipairs(SummonEnum.ChooseNeedFirstHeroIds) do
+			for i, pickHeroId in ipairs(self.pickHeroIds) do
+				if pickHeroId == heroId then
+					table.remove(self.pickHeroIds, i)
+					table.insert(self.pickHeroIds, 1, heroId)
 
 					break
 				end
@@ -31,27 +59,20 @@ function var_0_0.update(arg_2_0, arg_2_1)
 		end
 	end
 
-	if arg_2_1.usedFirstSSRGuarantee ~= nil then
-		arg_2_0._haveFirstSSR = arg_2_1.usedFirstSSRGuarantee
+	if SummonEnum.ChooseNeedMiddleHeroIds then
+		local middleIndex = math.ceil(#self.pickHeroIds / 2)
+
+		for _, heroId in ipairs(SummonEnum.ChooseNeedMiddleHeroIds) do
+			for i, pickHeroId in ipairs(self.pickHeroIds) do
+				if pickHeroId == heroId then
+					table.remove(self.pickHeroIds, i)
+					table.insert(self.pickHeroIds, middleIndex, heroId)
+
+					break
+				end
+			end
+		end
 	end
-
-	arg_2_0.hasGetRewardProgresses = arg_2_1.hasGetRewardProgresses or {}
 end
 
-function var_0_0.isPicked(arg_3_0, arg_3_1)
-	return arg_3_0.pickHeroIds ~= nil and #arg_3_0.pickHeroIds >= SummonCustomPickModel.instance:getMaxSelectCount(arg_3_1)
-end
-
-function var_0_0.isHaveFirstSSR(arg_4_0)
-	return arg_4_0._haveFirstSSR
-end
-
-function var_0_0.getRewardCount(arg_5_0)
-	if arg_5_0.hasGetRewardProgresses then
-		return #arg_5_0.hasGetRewardProgresses
-	end
-
-	return 0
-end
-
-return var_0_0
+return SummonCustomPickMO

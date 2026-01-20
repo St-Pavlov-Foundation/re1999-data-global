@@ -1,25 +1,27 @@
-﻿module("modules.logic.scene.rouge.comp.RougeSceneBgmComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/rouge/comp/RougeSceneBgmComp.lua
 
-local var_0_0 = class("RougeSceneBgmComp", BaseSceneComp)
+module("modules.logic.scene.rouge.comp.RougeSceneBgmComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:changeBgm()
-	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, arg_1_0.changeBgm, arg_1_0)
+local RougeSceneBgmComp = class("RougeSceneBgmComp", BaseSceneComp)
+
+function RougeSceneBgmComp:onScenePrepared(sceneId, levelId)
+	self:changeBgm()
+	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, self.changeBgm, self)
 end
 
-function var_0_0.changeBgm(arg_2_0)
-	local var_2_0 = RougeMapModel.instance:getLayerCo()
-	local var_2_1 = AudioEnum.Bgm.RougeMain
+function RougeSceneBgmComp:changeBgm()
+	local layerCo = RougeMapModel.instance:getLayerCo()
+	local bgmId = AudioEnum.Bgm.RougeMain
 
-	if var_2_0 and var_2_0.bgm ~= 0 then
-		var_2_1 = var_2_0.bgm
+	if layerCo and layerCo.bgm ~= 0 then
+		bgmId = layerCo.bgm
 	end
 
-	AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.RougeScene, var_2_1, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.RougeScene, bgmId, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 end
 
-function var_0_0.onSceneClose(arg_3_0, arg_3_1, arg_3_2)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, arg_3_0.changeBgm, arg_3_0)
+function RougeSceneBgmComp:onSceneClose(sceneId, levelId)
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, self.changeBgm, self)
 end
 
-return var_0_0
+return RougeSceneBgmComp

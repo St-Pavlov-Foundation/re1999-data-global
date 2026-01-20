@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.model.data.FightClientData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightClientData.lua
 
-local var_0_0 = FightDataClass("FightClientData")
+module("modules.logic.fight.model.data.FightClientData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightClientData = FightDataClass("FightClientData")
+
+function FightClientData:onConstructor()
 	return
 end
 
-return var_0_0
+return FightClientData

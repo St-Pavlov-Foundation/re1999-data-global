@@ -1,96 +1,101 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.model.SportsNewsModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/model/SportsNewsModel.lua
 
-local var_0_0 = class("SportsNewsModel", BaseModel)
+module("modules.logic.versionactivity1_5.sportsnews.model.SportsNewsModel", package.seeall)
 
-function var_0_0.finishOrder(arg_1_0, arg_1_1, arg_1_2)
-	Activity106Rpc.instance:sendGet106OrderBonusRequest(arg_1_1, arg_1_2, 1, function()
+local SportsNewsModel = class("SportsNewsModel", BaseModel)
+
+function SportsNewsModel:finishOrder(actId, orderId)
+	Activity106Rpc.instance:sendGet106OrderBonusRequest(actId, orderId, 1, function()
 		ActivityWarmUpController.instance:dispatchEvent(ActivityWarmUpEvent.PlayOrderFinish, {
-			actId = arg_1_1,
-			orderId = arg_1_2
+			actId = actId,
+			orderId = orderId
 		})
-	end, arg_1_0)
+	end, self)
 end
 
-function var_0_0.onReadEnd(arg_3_0, arg_3_1, arg_3_2)
-	SportsNewsRpc.instance:sendFinishReadTaskRequest(arg_3_1, arg_3_2)
-	arg_3_0:finishOrder(arg_3_1, arg_3_2)
+function SportsNewsModel:onReadEnd(actId, orderId)
+	SportsNewsRpc.instance:sendFinishReadTaskRequest(actId, orderId)
+	self:finishOrder(actId, orderId)
 end
 
-function var_0_0.getSelectedDayTask(arg_4_0, arg_4_1)
-	return ActivityWarmUpTaskListModel.instance._taskGroup and ActivityWarmUpTaskListModel.instance._taskGroup[arg_4_1]
+function SportsNewsModel:getSelectedDayTask(day)
+	return ActivityWarmUpTaskListModel.instance._taskGroup and ActivityWarmUpTaskListModel.instance._taskGroup[day]
 end
 
-function var_0_0.getJumpToTab(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._JumpOrderId
+function SportsNewsModel:getJumpToTab(actId)
+	local jumpId = self._JumpOrderId
 
-	if not var_5_0 then
+	if not jumpId then
 		return nil
 	end
 
-	return (var_0_0.instance:getDayByOrderId(arg_5_1, var_5_0))
+	local jumpTab = SportsNewsModel.instance:getDayByOrderId(actId, jumpId)
+
+	return jumpTab
 end
 
-function var_0_0.setJumpToOrderId(arg_6_0, arg_6_1)
-	arg_6_0._JumpOrderId = arg_6_1
+function SportsNewsModel:setJumpToOrderId(orderId)
+	self._JumpOrderId = orderId
 end
 
-function var_0_0.getDayByOrderId(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = Activity106Config.instance:getActivityWarmUpOrderCo(arg_7_1, arg_7_2)
+function SportsNewsModel:getDayByOrderId(actId, id)
+	local co = Activity106Config.instance:getActivityWarmUpOrderCo(actId, id)
 
-	return var_7_0 and var_7_0.openDay
+	return co and co.openDay
 end
 
-function var_0_0.getPrefs(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getPrefsKey(arg_8_1)
+function SportsNewsModel:getPrefs(prefs)
+	local prefs = self:getPrefsKey(prefs)
+	local tabPrefs = PlayerPrefsHelper.getNumber(prefs, 0)
 
-	return (PlayerPrefsHelper.getNumber(var_8_0, 0))
+	return tabPrefs
 end
 
-function var_0_0.setPrefs(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getPrefsKey(arg_9_1)
+function SportsNewsModel:setPrefs(prefs)
+	local prefs = self:getPrefsKey(prefs)
 
-	PlayerPrefsHelper.setNumber(var_9_0, 1)
+	PlayerPrefsHelper.setNumber(prefs, 1)
 end
 
-function var_0_0.getPrefsKey(arg_10_0, arg_10_1)
-	local var_10_0 = VersionActivity1_5Enum.ActivityId.SportsNews
-	local var_10_1 = PlayerModel.instance:getPlayinfo().userId
+function SportsNewsModel:getPrefsKey(prefs)
+	local actId = VersionActivity1_5Enum.ActivityId.SportsNews
+	local userId = PlayerModel.instance:getPlayinfo().userId
 
-	return string.format("%s#%s#%s", var_10_0, var_10_1, arg_10_1)
+	return string.format("%s#%s#%s", actId, userId, prefs)
 end
 
-function var_0_0.hasCanFinishOrder(arg_11_0)
-	local var_11_0 = {}
-	local var_11_1 = ActivityWarmUpModel.instance:getAllOrders()
+function SportsNewsModel:hasCanFinishOrder()
+	local _hasCanFinishOrderList = {}
+	local allOrders = ActivityWarmUpModel.instance:getAllOrders()
 
-	for iter_11_0, iter_11_1 in pairs(var_11_1) do
-		local var_11_2 = false
+	for _, order in pairs(allOrders) do
+		local isCanFinish = false
 
-		if iter_11_1.cfg.listenerType == "ReadTask" then
-			if iter_11_1.status ~= ActivityWarmUpEnum.OrderStatus.Finished then
-				var_11_2 = true
+		if order.cfg.listenerType == "ReadTask" then
+			if order.status ~= ActivityWarmUpEnum.OrderStatus.Finished then
+				isCanFinish = true
 			end
-		elseif iter_11_1.status == ActivityWarmUpEnum.OrderStatus.Collected then
-			var_11_2 = true
+		elseif order.status == ActivityWarmUpEnum.OrderStatus.Collected then
+			isCanFinish = true
 		end
 
-		if var_11_2 then
-			local var_11_3 = iter_11_1.cfg.openDay
-			local var_11_4 = {
-				iter_11_1.id
+		if isCanFinish then
+			local day = order.cfg.openDay
+			local id = {
+				order.id
 			}
 
-			if not var_11_0[var_11_3] then
-				var_11_0[var_11_3] = {}
+			if not _hasCanFinishOrderList[day] then
+				_hasCanFinishOrderList[day] = {}
 			end
 
-			table.insert(var_11_0[var_11_3], var_11_4)
+			table.insert(_hasCanFinishOrderList[day], id)
 		end
 	end
 
-	return var_11_0
+	return _hasCanFinishOrderList
 end
 
-var_0_0.instance = var_0_0.New()
+SportsNewsModel.instance = SportsNewsModel.New()
 
-return var_0_0
+return SportsNewsModel

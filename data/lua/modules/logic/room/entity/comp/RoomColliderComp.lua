@@ -1,107 +1,110 @@
-﻿module("modules.logic.room.entity.comp.RoomColliderComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomColliderComp.lua
 
-local var_0_0 = class("RoomColliderComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomColliderComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._colliderEffectKey = RoomEnum.EffectKey.BuildingGOKey
+local RoomColliderComp = class("RoomColliderComp", LuaCompBase)
+
+function RoomColliderComp:ctor(entity)
+	self.entity = entity
+	self._colliderEffectKey = RoomEnum.EffectKey.BuildingGOKey
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._colliderGO = nil
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_2_0._colliderParamList = nil
-	arg_2_0._isEnabled = true
+function RoomColliderComp:init(go)
+	self.go = go
+	self._colliderGO = nil
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._colliderParamList = nil
+	self._isEnabled = true
 
-	arg_2_0:refreshPosition()
+	self:refreshPosition()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraUpdateFinish, arg_3_0._cameraUpdateFinish, arg_3_0)
+function RoomColliderComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.CameraUpdateFinish, self._cameraUpdateFinish, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraUpdateFinish, arg_4_0._cameraUpdateFinish, arg_4_0)
+function RoomColliderComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraUpdateFinish, self._cameraUpdateFinish, self)
 end
 
-function var_0_0._cameraUpdateFinish(arg_5_0)
-	arg_5_0:refreshPosition()
+function RoomColliderComp:_cameraUpdateFinish()
+	self:refreshPosition()
 end
 
-function var_0_0.setEnable(arg_6_0, arg_6_1)
-	arg_6_0._isEnabled = arg_6_1
+function RoomColliderComp:setEnable(isEnabled)
+	self._isEnabled = isEnabled
 
-	arg_6_0:_updateEnable()
-	arg_6_0:refreshPosition()
+	self:_updateEnable()
+	self:refreshPosition()
 end
 
-function var_0_0._updateEnable(arg_7_0)
-	if not arg_7_0._colliderParamList then
+function RoomColliderComp:_updateEnable()
+	if not self._colliderParamList then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._colliderParamList) do
-		iter_7_1.collider.enabled = arg_7_0._isEnabled
+	for i, colliderParam in ipairs(self._colliderParamList) do
+		colliderParam.collider.enabled = self._isEnabled
 	end
 end
 
-function var_0_0.refreshPosition(arg_8_0)
-	if not arg_8_0.entity.effect:isHasEffectGOByKey(arg_8_0._colliderEffectKey) then
+function RoomColliderComp:refreshPosition()
+	if not self.entity.effect:isHasEffectGOByKey(self._colliderEffectKey) then
 		return
 	end
 
-	if not arg_8_0._colliderParamList then
-		arg_8_0._colliderParamList = arg_8_0:getUserDataTb_()
+	if not self._colliderParamList then
+		self._colliderParamList = self:getUserDataTb_()
 
-		local var_8_0 = arg_8_0.entity.effect:getComponentsByKey(arg_8_0._colliderEffectKey, RoomEnum.ComponentName.BoxCollider)
+		local colliders = self.entity.effect:getComponentsByKey(self._colliderEffectKey, RoomEnum.ComponentName.BoxCollider)
 
-		if var_8_0 then
-			for iter_8_0 = 1, #var_8_0 do
-				local var_8_1 = var_8_0[iter_8_0]
+		if colliders then
+			for i = 1, #colliders do
+				local collider = colliders[i]
 
-				if var_8_1.gameObject.layer == UnityLayer.SceneOpaque then
-					table.insert(arg_8_0._colliderParamList, {
-						collider = var_8_1,
-						trans = var_8_1.transform,
-						center = var_8_1.center
+				if collider.gameObject.layer == UnityLayer.SceneOpaque then
+					table.insert(self._colliderParamList, {
+						collider = collider,
+						trans = collider.transform,
+						center = collider.center
 					})
 				end
 			end
 		end
 
-		arg_8_0:_updateEnable()
+		self:_updateEnable()
 	end
 
-	for iter_8_1, iter_8_2 in ipairs(arg_8_0._colliderParamList) do
-		local var_8_2 = iter_8_2.trans
-		local var_8_3 = var_8_2.position
-		local var_8_4 = RoomBendingHelper.worldToBendingSimple(var_8_3):Sub(var_8_3)
-		local var_8_5 = var_8_2.lossyScale
+	for i, colliderParam in ipairs(self._colliderParamList) do
+		local trans = colliderParam.trans
+		local goPos = trans.position
+		local bendingPos = RoomBendingHelper.worldToBendingSimple(goPos)
+		local offsetCenter = bendingPos:Sub(goPos)
+		local lossyScale = trans.lossyScale
 
-		var_8_4.x = var_8_5.x ~= 0 and var_8_4.x / var_8_5.x or 0
-		var_8_4.y = var_8_5.y ~= 0 and var_8_4.y / var_8_5.y or 0
-		var_8_4.z = var_8_5.z ~= 0 and var_8_4.z / var_8_5.z or 0
-		iter_8_2.collider.center = var_8_4:Add(iter_8_2.center)
+		offsetCenter.x = lossyScale.x ~= 0 and offsetCenter.x / lossyScale.x or 0
+		offsetCenter.y = lossyScale.y ~= 0 and offsetCenter.y / lossyScale.y or 0
+		offsetCenter.z = lossyScale.z ~= 0 and offsetCenter.z / lossyScale.z or 0
+		colliderParam.collider.center = offsetCenter:Add(colliderParam.center)
 	end
 end
 
-function var_0_0.clearColliderGOList(arg_9_0)
-	if not arg_9_0._colliderParamList then
+function RoomColliderComp:clearColliderGOList()
+	if not self._colliderParamList then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._colliderParamList) do
-		iter_9_1.collider.center = iter_9_1.center
+	for i, colliderParam in ipairs(self._colliderParamList) do
+		colliderParam.collider.center = colliderParam.center
 	end
 
-	arg_9_0._colliderParamList = nil
+	self._colliderParamList = nil
 end
 
-function var_0_0.beforeDestroy(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._onUpdate, arg_10_0)
-	arg_10_0:clearColliderGOList()
-	arg_10_0:removeEventListeners()
+function RoomColliderComp:beforeDestroy()
+	TaskDispatcher.cancelTask(self._onUpdate, self)
+	self:clearColliderGOList()
+	self:removeEventListeners()
 end
 
-return var_0_0
+return RoomColliderComp

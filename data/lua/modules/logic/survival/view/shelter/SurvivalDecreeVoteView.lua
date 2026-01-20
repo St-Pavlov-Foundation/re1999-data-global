@@ -1,156 +1,159 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalDecreeVoteView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalDecreeVoteView.lua
 
-local var_0_0 = class("SurvivalDecreeVoteView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalDecreeVoteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_survivaldecreeitem")
-	arg_1_0.goBubbleRoot = gohelper.findChild(arg_1_0.viewGO, "Bubble")
-	arg_1_0.goBubble = gohelper.findChild(arg_1_0.goBubbleRoot, "goBubble")
-	arg_1_0.txtBubble = gohelper.findChildTextMesh(arg_1_0.goBubbleRoot, "goBubble/#txt_Bubble")
-	arg_1_0.goAgreeItem = gohelper.findChild(arg_1_0.goBubbleRoot, "goAgree")
-	arg_1_0.goDisAgreeItem = gohelper.findChild(arg_1_0.goBubbleRoot, "goDisagree")
+local SurvivalDecreeVoteView = class("SurvivalDecreeVoteView", BaseView)
 
-	gohelper.setActive(arg_1_0.goBubble, false)
-	gohelper.setActive(arg_1_0.goAgreeItem, false)
-	gohelper.setActive(arg_1_0.goDisAgreeItem, false)
+function SurvivalDecreeVoteView:onInitView()
+	self.goItem = gohelper.findChild(self.viewGO, "Left/#go_survivaldecreeitem")
+	self.goBubbleRoot = gohelper.findChild(self.viewGO, "Bubble")
+	self.goBubble = gohelper.findChild(self.goBubbleRoot, "goBubble")
+	self.txtBubble = gohelper.findChildTextMesh(self.goBubbleRoot, "goBubble/#txt_Bubble")
+	self.goAgreeItem = gohelper.findChild(self.goBubbleRoot, "goAgree")
+	self.goDisAgreeItem = gohelper.findChild(self.goBubbleRoot, "goDisagree")
 
-	arg_1_0.goVoteFinish = gohelper.findChild(arg_1_0.viewGO, "#go_VoteFinished")
-	arg_1_0.txtVotePercent = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_VoteFinished/Rate/#txt_Percent")
-	arg_1_0.txtVotePercentGlow = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_VoteFinished/Rate/#txt_Percent_glow")
-	arg_1_0.goVoteState = gohelper.findChild(arg_1_0.viewGO, "#go_VoteState")
-	arg_1_0.goTipsItem = gohelper.findChild(arg_1_0.viewGO, "#go_VoteState/#scroll_Tips/Viewport/Content/#go_Item")
+	gohelper.setActive(self.goBubble, false)
+	gohelper.setActive(self.goAgreeItem, false)
+	gohelper.setActive(self.goDisAgreeItem, false)
 
-	gohelper.setActive(arg_1_0.goTipsItem, false)
+	self.goVoteFinish = gohelper.findChild(self.viewGO, "#go_VoteFinished")
+	self.txtVotePercent = gohelper.findChildTextMesh(self.viewGO, "#go_VoteFinished/Rate/#txt_Percent")
+	self.txtVotePercentGlow = gohelper.findChildTextMesh(self.viewGO, "#go_VoteFinished/Rate/#txt_Percent_glow")
+	self.goVoteState = gohelper.findChild(self.viewGO, "#go_VoteState")
+	self.goTipsItem = gohelper.findChild(self.viewGO, "#go_VoteState/#scroll_Tips/Viewport/Content/#go_Item")
 
-	arg_1_0.btnClose = gohelper.findChildClick(arg_1_0.viewGO, "btnClose")
-	arg_1_0.goTxtClose = gohelper.findChild(arg_1_0.viewGO, "btnClose/txt_Close")
+	gohelper.setActive(self.goTipsItem, false)
+
+	self.btnClose = gohelper.findChildClick(self.viewGO, "btnClose")
+	self.goTxtClose = gohelper.findChild(self.viewGO, "btnClose/txt_Close")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickClose, arg_2_0)
+function SurvivalDecreeVoteView:addEvents()
+	self:addClickCb(self.btnClose, self.onClickClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnClose)
+function SurvivalDecreeVoteView:removeEvents()
+	self:removeClickCb(self.btnClose)
 end
 
-function var_0_0.onClickClose(arg_4_0)
-	if not arg_4_0.popupFlow or arg_4_0.popupFlow:isFlowDone() then
-		arg_4_0:closeThis()
+function SurvivalDecreeVoteView:onClickClose()
+	if not self.popupFlow or self.popupFlow:isFlowDone() then
+		self:closeThis()
 
 		return
 	end
 
-	arg_4_0.popupFlow:tryJumpNextWork()
+	self.popupFlow:tryJumpNextWork()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.decreeInfo = arg_5_0.viewParam.decreeInfo
-	arg_5_0.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalDecreeVoteView:onOpen()
+	self.decreeInfo = self.viewParam.decreeInfo
+	self.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	arg_5_0:startVote()
+	self:startVote()
 end
 
-function var_0_0.startVote(arg_6_0)
+function SurvivalDecreeVoteView:startVote()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnDecreeVoteStart)
-	arg_6_0:initWork()
-	arg_6_0:buildPlayerWork()
-	arg_6_0:buildNpcWork()
-	arg_6_0:buildCameraWork()
-	arg_6_0:buildDelay(0.5)
-	arg_6_0:buildDecreeItemWork()
-	arg_6_0:buildBubbleWork()
-	arg_6_0:buildToastWork()
-	arg_6_0:buildVotePercentWork()
-	arg_6_0.popupFlow:start()
+	self:initWork()
+	self:buildPlayerWork()
+	self:buildNpcWork()
+	self:buildCameraWork()
+	self:buildDelay(0.5)
+	self:buildDecreeItemWork()
+	self:buildBubbleWork()
+	self:buildToastWork()
+	self:buildVotePercentWork()
+	self.popupFlow:start()
 end
 
-function var_0_0.initWork(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.playNextToast, arg_7_0)
-	gohelper.setActive(arg_7_0.goTxtClose, false)
-	gohelper.setActive(arg_7_0.goBubbleRoot, false)
-	gohelper.setActive(arg_7_0.goBubble, false)
-	gohelper.setActive(arg_7_0.goVoteFinish, false)
-	gohelper.setActive(arg_7_0.goVoteState, false)
-	arg_7_0:clearFlow()
-	arg_7_0:clearBubble()
-	arg_7_0:buildData()
+function SurvivalDecreeVoteView:initWork()
+	TaskDispatcher.cancelTask(self.playNextToast, self)
+	gohelper.setActive(self.goTxtClose, false)
+	gohelper.setActive(self.goBubbleRoot, false)
+	gohelper.setActive(self.goBubble, false)
+	gohelper.setActive(self.goVoteFinish, false)
+	gohelper.setActive(self.goVoteState, false)
+	self:clearFlow()
+	self:clearBubble()
+	self:buildData()
 
-	arg_7_0.popupFlow = SurvivalDecreeVoteFlowSequence.New()
+	self.popupFlow = SurvivalDecreeVoteFlowSequence.New()
 
-	arg_7_0.popupFlow:registerDoneListener(arg_7_0.onVoteDone, arg_7_0)
+	self.popupFlow:registerDoneListener(self.onVoteDone, self)
 end
 
-function var_0_0.clearFlow(arg_8_0)
-	if arg_8_0.popupFlow then
-		arg_8_0.popupFlow:destroy()
+function SurvivalDecreeVoteView:clearFlow()
+	if self.popupFlow then
+		self.popupFlow:destroy()
 
-		arg_8_0.popupFlow = nil
+		self.popupFlow = nil
 	end
 end
 
-function var_0_0.buildData(arg_9_0)
-	arg_9_0.toastDataList = {}
+function SurvivalDecreeVoteView:buildData()
+	self.toastDataList = {}
 
-	local var_9_0 = arg_9_0.weekInfo.shelterMapId
+	local shelterMapId = self.weekInfo.shelterMapId
 
-	arg_9_0.mapCo = lua_survival_shelter.configDict[var_9_0]
-	arg_9_0.unitComp = SurvivalMapHelper.instance:getScene().unit
+	self.mapCo = lua_survival_shelter.configDict[shelterMapId]
+	self.unitComp = SurvivalMapHelper.instance:getScene().unit
 
-	local var_9_1 = {}
-	local var_9_2 = arg_9_0.decreeInfo:getCurPolicyGroup():getPolicyList()
-	local var_9_3 = var_9_2[#var_9_2]
-	local var_9_4 = SurvivalConfig.instance:getDecreeCo(var_9_3.id)
+	local tagDict = {}
+	local decreeList = self.decreeInfo:getCurPolicyGroup():getPolicyList()
+	local lastDecree = decreeList[#decreeList]
+	local config = SurvivalConfig.instance:getDecreeCo(lastDecree.id)
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-		local var_9_5 = SurvivalConfig.instance:getDecreeCo(iter_9_1.id)
-		local var_9_6 = string.splitToNumber(var_9_5 and var_9_5.tags, "#")
+	for i, v in ipairs(decreeList) do
+		local curConfig = SurvivalConfig.instance:getDecreeCo(v.id)
+		local tags = string.splitToNumber(curConfig and curConfig.tags, "#")
 
-		if var_9_6 then
-			for iter_9_2, iter_9_3 in ipairs(var_9_6) do
-				var_9_1[iter_9_3] = 1
+		if tags then
+			for _, tag in ipairs(tags) do
+				tagDict[tag] = 1
 			end
 		end
 	end
 
-	local var_9_7 = var_9_3.needVoteNum
-	local var_9_8 = math.min(var_9_3.currVoteNum, var_9_3.needVoteNum)
+	local needVoteNum = lastDecree.needVoteNum
+	local currVoteNum = math.min(lastDecree.currVoteNum, lastDecree.needVoteNum)
 
-	if var_9_7 == 0 then
-		arg_9_0.votePercent = 1
+	if needVoteNum == 0 then
+		self.votePercent = 1
 	else
-		arg_9_0.votePercent = var_9_8 / var_9_7
+		self.votePercent = currVoteNum / needVoteNum
 	end
 
-	arg_9_0.npcDataList = {
+	self.npcDataList = {
 		{},
 		{}
 	}
 
-	local var_9_9 = SurvivalShelterModel.instance:getWeekInfo().npcDict
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local dict = weekInfo.npcDict
 
-	for iter_9_4, iter_9_5 in pairs(var_9_9) do
-		local var_9_10 = {
-			id = iter_9_5.id,
-			resource = iter_9_5.co.resource,
-			config = iter_9_5.co,
-			isAgree = arg_9_0:checkTagIsAgree(var_9_1, iter_9_5.co.tag)
-		}
+	for k, v in pairs(dict) do
+		local data = {}
 
-		if var_9_10.isAgree then
-			table.insert(arg_9_0.npcDataList[1], var_9_10)
+		data.id = v.id
+		data.resource = v.co.resource
+		data.config = v.co
+		data.isAgree = self:checkTagIsAgree(tagDict, v.co.tag)
+
+		if data.isAgree then
+			table.insert(self.npcDataList[1], data)
 		else
-			table.insert(arg_9_0.npcDataList[2], var_9_10)
+			table.insert(self.npcDataList[2], data)
 		end
 	end
 end
 
-function var_0_0.checkTagIsAgree(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = string.splitToNumber(arg_10_2, "#")
+function SurvivalDecreeVoteView:checkTagIsAgree(tagDict, tag)
+	local npcTags = string.splitToNumber(tag, "#")
 
-	if var_10_0 then
-		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-			if arg_10_1[iter_10_1] then
+	if npcTags then
+		for i, v in ipairs(npcTags) do
+			if tagDict[v] then
 				return true
 			end
 		end
@@ -159,149 +162,150 @@ function var_0_0.checkTagIsAgree(arg_10_0, arg_10_1, arg_10_2)
 	return false
 end
 
-function var_0_0.buildDelay(arg_11_0, arg_11_1)
-	local var_11_0 = {
-		time = arg_11_1
+function SurvivalDecreeVoteView:buildDelay(time)
+	local param = {
+		time = time
 	}
 
-	arg_11_0.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(var_11_0))
+	self.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(param))
 end
 
-function var_0_0.buildDecreeItemWork(arg_12_0)
-	if not arg_12_0.decreeItem then
-		local var_12_0 = arg_12_0.viewContainer:getResInst(arg_12_0.viewContainer:getSetting().otherRes.itemRes, arg_12_0.goItem, "item")
+function SurvivalDecreeVoteView:buildDecreeItemWork()
+	if not self.decreeItem then
+		local go = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes.itemRes, self.goItem, "item")
 
-		arg_12_0.decreeItemGO = var_12_0
-		arg_12_0.decreeItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0, SurvivalDecreeVoteItem)
+		self.decreeItemGO = go
+		self.decreeItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalDecreeVoteItem)
 	end
 
-	arg_12_0.decreeItem:onUpdateMO(arg_12_0.decreeInfo)
-	gohelper.setActive(arg_12_0.decreeItemGO, false)
+	self.decreeItem:onUpdateMO(self.decreeInfo)
+	gohelper.setActive(self.decreeItemGO, false)
 
-	local var_12_1 = {
+	local param = {
 		time = 0.333,
-		go = arg_12_0.decreeItemGO,
+		go = self.decreeItemGO,
 		audioId = AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_decide
 	}
 
-	arg_12_0.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(var_12_1))
+	self.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(param))
 end
 
-function var_0_0.buildCameraWork(arg_13_0)
-	local var_13_0 = SurvivalShelterModel.instance:getPlayerMo().pos
-	local var_13_1 = {
-		playerPos = var_13_0
+function SurvivalDecreeVoteView:buildCameraWork()
+	local playerMo = SurvivalShelterModel.instance:getPlayerMo()
+	local playerPos = playerMo.pos
+	local param = {
+		playerPos = playerPos
 	}
 
-	arg_13_0.popupFlow:addWork(SurvivalDecreeVoteBuildCameraWork.New(var_13_1))
-	arg_13_0:buildDelay(0.5)
+	self.popupFlow:addWork(SurvivalDecreeVoteBuildCameraWork.New(param))
+	self:buildDelay(0.5)
 end
 
-function var_0_0.buildNpcWork(arg_14_0)
-	local var_14_0 = {
-		npcDataList = arg_14_0.npcDataList,
-		votePercent = arg_14_0.votePercent,
-		goAgreeItem = arg_14_0.goAgreeItem,
-		goDisAgreeItem = arg_14_0.goDisAgreeItem,
-		mapCo = arg_14_0.mapCo,
-		unitComp = arg_14_0.unitComp,
-		bubbleList = arg_14_0.bubbleList,
-		toastList = arg_14_0.toastDataList
+function SurvivalDecreeVoteView:buildNpcWork()
+	local param = {
+		npcDataList = self.npcDataList,
+		votePercent = self.votePercent,
+		goAgreeItem = self.goAgreeItem,
+		goDisAgreeItem = self.goDisAgreeItem,
+		mapCo = self.mapCo,
+		unitComp = self.unitComp,
+		bubbleList = self.bubbleList,
+		toastList = self.toastDataList
 	}
 
-	arg_14_0.popupFlow:addWork(SurvivalDecreeVoteBuildNpcWork.New(var_14_0))
+	self.popupFlow:addWork(SurvivalDecreeVoteBuildNpcWork.New(param))
 end
 
-function var_0_0.buildPlayerWork(arg_15_0)
-	local var_15_0 = {
-		mapCo = arg_15_0.mapCo,
-		goBubble = arg_15_0.goBubble
+function SurvivalDecreeVoteView:buildPlayerWork()
+	local param = {
+		mapCo = self.mapCo,
+		goBubble = self.goBubble
 	}
 
-	arg_15_0.popupFlow:addWork(SurvivalDecreeVoteBuildPlayerWork.New(var_15_0))
+	self.popupFlow:addWork(SurvivalDecreeVoteBuildPlayerWork.New(param))
 end
 
-function var_0_0.buildBubbleWork(arg_16_0)
-	local var_16_0 = {
+function SurvivalDecreeVoteView:buildBubbleWork()
+	local param1 = {
 		time = 1.2,
-		callback = arg_16_0.showPlayerBubble,
-		callbackObj = arg_16_0
+		callback = self.showPlayerBubble,
+		callbackObj = self
 	}
 
-	arg_16_0.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(var_16_0))
+	self.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(param1))
 
-	local var_16_1 = {
-		bubbleList = arg_16_0.bubbleList,
-		startCallback = arg_16_0.showNpcBubble,
-		startCallbackObj = arg_16_0
+	local param2 = {
+		bubbleList = self.bubbleList,
+		startCallback = self.showNpcBubble,
+		startCallbackObj = self
 	}
 
-	arg_16_0.popupFlow:addWork(SurvivalDecreeVoteNpcBubbleWork.New(var_16_1))
+	self.popupFlow:addWork(SurvivalDecreeVoteNpcBubbleWork.New(param2))
 end
 
-function var_0_0.showPlayerBubble(arg_17_0)
-	gohelper.setAsLastSibling(arg_17_0.goBubble)
-	gohelper.setActive(arg_17_0.goBubbleRoot, true)
-	gohelper.setActive(arg_17_0.goBubble, true)
+function SurvivalDecreeVoteView:showPlayerBubble()
+	gohelper.setAsLastSibling(self.goBubble)
+	gohelper.setActive(self.goBubbleRoot, true)
+	gohelper.setActive(self.goBubble, true)
 end
 
-function var_0_0.showNpcBubble(arg_18_0)
-	gohelper.setActive(arg_18_0.goBubbleRoot, true)
+function SurvivalDecreeVoteView:showNpcBubble()
+	gohelper.setActive(self.goBubbleRoot, true)
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_discuss)
 end
 
-function var_0_0.buildToastWork(arg_19_0)
-	local var_19_0 = {
-		goVoteState = arg_19_0.goVoteState,
-		toastDataList = arg_19_0.toastDataList,
-		goTipsItem = arg_19_0.goTipsItem
+function SurvivalDecreeVoteView:buildToastWork()
+	local param = {
+		goVoteState = self.goVoteState,
+		toastDataList = self.toastDataList,
+		goTipsItem = self.goTipsItem
 	}
 
-	arg_19_0.popupFlow:addWork(SurvivalDecreeVotePlayToastWork.New(var_19_0))
+	self.popupFlow:addWork(SurvivalDecreeVotePlayToastWork.New(param))
 end
 
-function var_0_0.buildVotePercentWork(arg_20_0)
-	local var_20_0 = {
-		goVoteFinish = arg_20_0.goVoteFinish,
-		txtVotePercent = arg_20_0.txtVotePercent,
-		txtVotePercentGlow = arg_20_0.txtVotePercentGlow,
-		votePercent = arg_20_0.votePercent
+function SurvivalDecreeVoteView:buildVotePercentWork()
+	local param = {
+		goVoteFinish = self.goVoteFinish,
+		txtVotePercent = self.txtVotePercent,
+		txtVotePercentGlow = self.txtVotePercentGlow,
+		votePercent = self.votePercent
 	}
-	local var_20_1 = SurvivalDecreeVotePlayPercentWork.New(var_20_0)
+	local work = SurvivalDecreeVotePlayPercentWork.New(param)
 
-	arg_20_0.popupFlow:addWork(var_20_1)
+	self.popupFlow:addWork(work)
 end
 
-function var_0_0.onPercentDone(arg_21_0)
-	if arg_21_0.decreeItem then
-		arg_21_0.decreeItem:refreshHas(false)
+function SurvivalDecreeVoteView:onPercentDone()
+	if self.decreeItem then
+		self.decreeItem:refreshHas(false)
 	end
 end
 
-function var_0_0.onVoteDone(arg_22_0)
-	arg_22_0:onPercentDone()
-	gohelper.setActive(arg_22_0.goTxtClose, true)
+function SurvivalDecreeVoteView:onVoteDone()
+	self:onPercentDone()
+	gohelper.setActive(self.goTxtClose, true)
 end
 
-function var_0_0.clearBubble(arg_23_0)
-	if arg_23_0.bubbleList then
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0.bubbleList) do
-			iter_23_1:dispose()
+function SurvivalDecreeVoteView:clearBubble()
+	if self.bubbleList then
+		for i, v in ipairs(self.bubbleList) do
+			v:dispose()
 		end
 	end
 
-	arg_23_0.bubbleList = {}
+	self.bubbleList = {}
 end
 
-function var_0_0.onClose(arg_24_0)
-	arg_24_0:clearFlow()
-	arg_24_0:clearBubble()
+function SurvivalDecreeVoteView:onClose()
+	self:clearFlow()
+	self:clearBubble()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnDecreeVoteEnd)
 	ViewMgr.instance:openView(ViewName.SurvivalDecreeView)
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function SurvivalDecreeVoteView:onDestroyView()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.ChangeCameraScale)
 end
 
-return var_0_0
+return SurvivalDecreeVoteView

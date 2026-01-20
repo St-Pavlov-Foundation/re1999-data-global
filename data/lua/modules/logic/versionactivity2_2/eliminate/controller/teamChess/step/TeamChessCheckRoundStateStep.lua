@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessCheckRoundStateStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/TeamChessCheckRoundStateStep.lua
 
-local var_0_0 = class("TeamChessCheckRoundStateStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessCheckRoundStateStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local TeamChessCheckRoundStateStep = class("TeamChessCheckRoundStateStep", EliminateTeamChessStepBase)
+
+function TeamChessCheckRoundStateStep:onStart()
 	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.EnemyForecastChessIdUpdate)
-	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.teamChessToMatchStepTime)
+	TaskDispatcher.runDelay(self._onDone, self, EliminateTeamChessEnum.teamChessToMatchStepTime)
 end
 
-function var_0_0._onDone(arg_2_0)
+function TeamChessCheckRoundStateStep:_onDone()
 	EliminateLevelController.instance:checkState()
-	var_0_0.super._onDone(arg_2_0)
+	TeamChessCheckRoundStateStep.super._onDone(self)
 end
 
-return var_0_0
+return TeamChessCheckRoundStateStep

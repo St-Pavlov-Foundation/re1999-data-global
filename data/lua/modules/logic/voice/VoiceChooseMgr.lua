@@ -1,37 +1,39 @@
-﻿module("modules.logic.voice.VoiceChooseMgr", package.seeall)
+﻿-- chunkname: @modules/logic/voice/VoiceChooseMgr.lua
 
-local var_0_0 = class("VoiceChooseMgr")
+module("modules.logic.voice.VoiceChooseMgr", package.seeall)
 
-function var_0_0.start(arg_1_0, arg_1_1, arg_1_2)
+local VoiceChooseMgr = class("VoiceChooseMgr")
+
+function VoiceChooseMgr:start(callback, callbackObj)
 	if VersionValidator.instance:isInReviewing() then
-		arg_1_1(arg_1_2)
+		callback(callbackObj)
 	elseif GameResMgr.IsFromEditorDir and not HotUpdateVoiceMgr.EnableEditorDebug then
-		arg_1_1(arg_1_2)
+		callback(callbackObj)
 	elseif PlayerPrefsHelper.hasKey(PlayerPrefsKey.SettingsVoiceShortcut) then
-		arg_1_1(arg_1_2)
+		callback(callbackObj)
 	elseif not GameConfig.CanHotUpdate then
-		arg_1_1(arg_1_2)
+		callback(callbackObj)
 	else
-		local var_1_0 = GameConfig:GetDefaultVoiceShortcut()
+		local defaultChoose = GameConfig:GetDefaultVoiceShortcut()
 
-		VoiceChooseModel.instance:initModel(var_1_0)
+		VoiceChooseModel.instance:initModel(defaultChoose)
 
 		if VoiceChooseModel.instance:getCount() > 1 then
 			BootLoadingView.instance:hide()
 			ViewMgr.instance:openView(ViewName.VoiceChooseView, {
-				callback = arg_1_1,
-				callbackObj = arg_1_2
+				callback = callback,
+				callbackObj = callbackObj
 			})
 		else
-			local var_1_1 = GameConfig:GetDefaultVoiceShortcut()
+			local defaultLang = GameConfig:GetDefaultVoiceShortcut()
 
-			logNormal("没有下载可选语音，跳过选择语音界面，默认选择 " .. var_1_1)
-			PlayerPrefsHelper.setString(PlayerPrefsKey.SettingsVoiceShortcut, var_1_1)
-			arg_1_1(arg_1_2)
+			logNormal("没有下载可选语音，跳过选择语音界面，默认选择 " .. defaultLang)
+			PlayerPrefsHelper.setString(PlayerPrefsKey.SettingsVoiceShortcut, defaultLang)
+			callback(callbackObj)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+VoiceChooseMgr.instance = VoiceChooseMgr.New()
 
-return var_0_0
+return VoiceChooseMgr

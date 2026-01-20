@@ -1,67 +1,69 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianMapHeroView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/YaXianMapHeroView.lua
 
-local var_0_0 = class("YaXianMapHeroView", BaseView)
+module("modules.logic.versionactivity1_2.yaxian.view.YaXianMapHeroView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local YaXianMapHeroView = class("YaXianMapHeroView", BaseView)
+
+function YaXianMapHeroView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function YaXianMapHeroView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function YaXianMapHeroView:removeEvents()
 	return
 end
 
-function var_0_0.onClickDetail(arg_4_0)
+function YaXianMapHeroView:onClickDetail()
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-		heroId = arg_4_0.heroId
+		heroId = self.heroId
 	})
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.simageHeroIcon = gohelper.findChildSingleImage(arg_5_0.viewGO, "window/role/icon")
-	arg_5_0.detailClick = gohelper.findChildClick(arg_5_0.viewGO, "window/role/icon/detail")
-	arg_5_0.txtName = gohelper.findChildText(arg_5_0.viewGO, "window/role/name")
+function YaXianMapHeroView:_editableInitView()
+	self.simageHeroIcon = gohelper.findChildSingleImage(self.viewGO, "window/role/icon")
+	self.detailClick = gohelper.findChildClick(self.viewGO, "window/role/icon/detail")
+	self.txtName = gohelper.findChildText(self.viewGO, "window/role/name")
 
-	arg_5_0.detailClick:AddClickListener(arg_5_0.onClickDetail, arg_5_0)
+	self.detailClick:AddClickListener(self.onClickDetail, self)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function YaXianMapHeroView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.maxTrialTemplateId = YaXianModel.instance:getMaxTrialTemplateId()
-	arg_7_0.heroId, arg_7_0.skinId = YaXianModel.instance:getHeroIdAndSkinId()
+function YaXianMapHeroView:onOpen()
+	self.maxTrialTemplateId = YaXianModel.instance:getMaxTrialTemplateId()
+	self.heroId, self.skinId = YaXianModel.instance:getHeroIdAndSkinId()
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	local var_8_0 = HeroConfig.instance:getHeroCO(arg_8_0.heroId)
+function YaXianMapHeroView:refreshUI()
+	local heroConfig = HeroConfig.instance:getHeroCO(self.heroId)
 
-	arg_8_0.txtName.text = var_8_0.name
+	self.txtName.text = heroConfig.name
 
-	arg_8_0:refreshHeroIcon()
+	self:refreshHeroIcon()
 end
 
-function var_0_0.refreshHeroIcon(arg_9_0)
-	local var_9_0 = SkinConfig.instance:getSkinCo(arg_9_0.skinId)
+function YaXianMapHeroView:refreshHeroIcon()
+	local skinCo = SkinConfig.instance:getSkinCo(self.skinId)
 
-	arg_9_0.simageHeroIcon:LoadImage(ResUrl.getHeadIconMiddle(var_9_0.retangleIcon))
+	self.simageHeroIcon:LoadImage(ResUrl.getHeadIconMiddle(skinCo.retangleIcon))
 end
 
-function var_0_0.onClose(arg_10_0)
+function YaXianMapHeroView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0.simageHeroIcon:UnLoadImage()
-	arg_11_0.detailClick:RemoveClickListener()
+function YaXianMapHeroView:onDestroyView()
+	self.simageHeroIcon:UnLoadImage()
+	self.detailClick:RemoveClickListener()
 end
 
-return var_0_0
+return YaXianMapHeroView

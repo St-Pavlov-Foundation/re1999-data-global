@@ -1,15 +1,17 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalTeleportGateUpdateWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalTeleportGateUpdateWork.lua
 
-local var_0_0 = class("SurvivalTeleportGateUpdateWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalTeleportGateUpdateWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
+local SurvivalTeleportGateUpdateWork = class("SurvivalTeleportGateUpdateWork", SurvivalStepBaseWork)
 
-	var_1_0.sceneProp.teleportGate = arg_1_0._stepMo.paramInt[1] or 0
-	var_1_0.sceneProp.teleportGateHex = arg_1_0._stepMo.position
+function SurvivalTeleportGateUpdateWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	sceneMo.sceneProp.teleportGate = self._stepMo.paramInt[1] or 0
+	sceneMo.sceneProp.teleportGateHex = self._stepMo.position
 
 	SurvivalMapHelper.instance:getScene().pointEffect:setTeleportGateEffect()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalTeleportGateUpdateWork

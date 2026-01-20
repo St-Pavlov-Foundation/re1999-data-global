@@ -1,35 +1,37 @@
-﻿module("modules.logic.seasonver.act123.utils.Season123ViewHelper", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/utils/Season123ViewHelper.lua
 
-local var_0_0 = class("Season123ViewHelper")
+module("modules.logic.seasonver.act123.utils.Season123ViewHelper", package.seeall)
 
-function var_0_0.openView(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = var_0_0.getViewName(arg_1_0, arg_1_1)
+local Season123ViewHelper = class("Season123ViewHelper")
 
-	if var_1_0 then
-		ViewMgr.instance:openView(var_1_0, arg_1_2)
+function Season123ViewHelper.openView(seasonId, viewName, param)
+	local realView = Season123ViewHelper.getViewName(seasonId, viewName)
+
+	if realView then
+		ViewMgr.instance:openView(realView, param)
 	end
 end
 
-function var_0_0.getViewName(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0 = arg_2_0 or Season123Model.instance:getCurSeasonId()
+function Season123ViewHelper.getViewName(seasonId, viewName, noError)
+	seasonId = seasonId or Season123Model.instance:getCurSeasonId()
 
-	local var_2_0 = Activity123Enum.SeasonViewPrefix[arg_2_0] or ""
-	local var_2_1 = string.format("Season123%s%s", var_2_0, arg_2_1)
-	local var_2_2 = ViewName[var_2_1]
+	local prefix = Activity123Enum.SeasonViewPrefix[seasonId] or ""
+	local seasonViewName = string.format("Season123%s%s", prefix, viewName)
+	local realViewName = ViewName[seasonViewName]
 
-	if not var_2_2 and not arg_2_2 then
-		logError(string.format("cant find season123 view [%s] [%s]", arg_2_0, arg_2_1))
+	if not realViewName and not noError then
+		logError(string.format("cant find season123 view [%s] [%s]", seasonId, viewName))
 	end
 
-	return var_2_2 or var_2_1
+	return realViewName or seasonViewName
 end
 
-function var_0_0.getIconUrl(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_2 = arg_3_2 or Season123Model.instance:getCurSeasonId()
+function Season123ViewHelper.getIconUrl(url, param, actId)
+	actId = actId or Season123Model.instance:getCurSeasonId()
 
-	local var_3_0 = Activity123Enum.SeasonResourcePrefix[arg_3_2]
+	local version = Activity123Enum.SeasonResourcePrefix[actId]
 
-	return string.format(arg_3_0, var_3_0, arg_3_1)
+	return string.format(url, version, param)
 end
 
-return var_0_0
+return Season123ViewHelper

@@ -1,196 +1,219 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.controller.CooperGarlandController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/controller/CooperGarlandController.lua
 
-local var_0_0 = class("CooperGarlandController", BaseController)
+module("modules.logic.versionactivity2_7.coopergarland.controller.CooperGarlandController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local CooperGarlandController = class("CooperGarlandController", BaseController)
+
+function CooperGarlandController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function CooperGarlandController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function CooperGarlandController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function CooperGarlandController:reInit()
 	return
 end
 
-function var_0_0.getAct192Info(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not CooperGarlandModel.instance:isAct192Open(arg_5_3) then
+function CooperGarlandController:getAct192Info(cb, cbObj, isToast)
+	local isOpen = CooperGarlandModel.instance:isAct192Open(isToast)
+
+	if not isOpen then
 		return
 	end
 
-	local var_5_0 = CooperGarlandModel.instance:getAct192Id()
+	local actId = CooperGarlandModel.instance:getAct192Id()
 
-	Activity192Rpc.instance:sendGetAct192InfoRequest(var_5_0, arg_5_1, arg_5_2)
+	Activity192Rpc.instance:sendGetAct192InfoRequest(actId, cb, cbObj)
 end
 
-function var_0_0.onGetAct192Info(arg_6_0, arg_6_1)
-	CooperGarlandModel.instance:updateAct192Info(arg_6_1)
-	arg_6_0:dispatchEvent(CooperGarlandEvent.OnAct192InfoUpdate)
+function CooperGarlandController:onGetAct192Info(info)
+	CooperGarlandModel.instance:updateAct192Info(info)
+	self:dispatchEvent(CooperGarlandEvent.OnAct192InfoUpdate)
 end
 
-function var_0_0.saveGameProgress(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if not CooperGarlandModel.instance:isAct192Open(arg_7_3) then
+function CooperGarlandController:saveGameProgress(episodeId, curRound, isToast)
+	local isOpen = CooperGarlandModel.instance:isAct192Open(isToast)
+
+	if not isOpen then
 		return
 	end
 
-	local var_7_0 = CooperGarlandModel.instance:getAct192Id()
+	local actId = CooperGarlandModel.instance:getAct192Id()
+	local isUnlock = CooperGarlandModel.instance:isUnlockEpisode(actId, episodeId)
 
-	if not CooperGarlandModel.instance:isUnlockEpisode(var_7_0, arg_7_1) then
+	if not isUnlock then
 		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
 
 		return
 	end
 
-	Activity192Rpc.instance:sendAct192FinishEpisodeRequest(var_7_0, arg_7_1, tostring(arg_7_2), arg_7_0._onSaveGameProgress, arg_7_0)
+	Activity192Rpc.instance:sendAct192FinishEpisodeRequest(actId, episodeId, tostring(curRound), self._onSaveGameProgress, self)
 end
 
-function var_0_0._onSaveGameProgress(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 ~= 0 then
+function CooperGarlandController:_onSaveGameProgress(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_3.activityId
-	local var_8_1 = arg_8_3.episodeId
-	local var_8_2 = arg_8_3.progress
-	local var_8_3 = CooperGarlandModel.instance:isFinishedEpisode(var_8_0, var_8_1)
+	local actId = msg.activityId
+	local episodeId = msg.episodeId
+	local progress = msg.progress
+	local isFinished = CooperGarlandModel.instance:isFinishedEpisode(actId, episodeId)
 
-	CooperGarlandModel.instance:updateAct192Episode(var_8_0, var_8_1, var_8_3, var_8_2)
+	CooperGarlandModel.instance:updateAct192Episode(actId, episodeId, isFinished, progress)
 end
 
-function var_0_0.finishEpisode(arg_9_0, arg_9_1, arg_9_2)
-	if not CooperGarlandModel.instance:isAct192Open(arg_9_2) then
+function CooperGarlandController:finishEpisode(episodeId, isToast)
+	local isOpen = CooperGarlandModel.instance:isAct192Open(isToast)
+
+	if not isOpen then
 		return
 	end
 
-	local var_9_0 = CooperGarlandModel.instance:getAct192Id()
+	local actId = CooperGarlandModel.instance:getAct192Id()
+	local isUnlock = CooperGarlandModel.instance:isUnlockEpisode(actId, episodeId)
 
-	if not CooperGarlandModel.instance:isUnlockEpisode(var_9_0, arg_9_1) then
+	if not isUnlock then
 		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
 
 		return
 	end
 
-	if CooperGarlandModel.instance:isFinishedEpisode(var_9_0, arg_9_1) then
-		arg_9_0:_playStoryClear(arg_9_1)
+	local isFinished = CooperGarlandModel.instance:isFinishedEpisode(actId, episodeId)
 
-		if CooperGarlandConfig.instance:isExtraEpisode(var_9_0, arg_9_1) then
-			arg_9_0:saveGameProgress(arg_9_1, CooperGarlandEnum.Const.DefaultGameProgress, true)
+	if isFinished then
+		self:_playStoryClear(episodeId)
+
+		local isExtra = CooperGarlandConfig.instance:isExtraEpisode(actId, episodeId)
+
+		if isExtra then
+			self:saveGameProgress(episodeId, CooperGarlandEnum.Const.DefaultGameProgress, true)
 		end
 	else
-		Activity192Rpc.instance:sendAct192FinishEpisodeRequest(var_9_0, arg_9_1, nil, arg_9_0.onFinishEpisode, arg_9_0)
+		Activity192Rpc.instance:sendAct192FinishEpisodeRequest(actId, episodeId, nil, self.onFinishEpisode, self)
 	end
 end
 
-function var_0_0.onFinishEpisode(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 ~= 0 then
+function CooperGarlandController:onFinishEpisode(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_10_0 = arg_10_3.activityId
-	local var_10_1 = arg_10_3.episodeId
-	local var_10_2 = arg_10_3.progress
+	local actId = msg.activityId
+	local episodeId = msg.episodeId
+	local progress = msg.progress
 
-	CooperGarlandModel.instance:updateAct192Episode(var_10_0, var_10_1, true, var_10_2)
+	CooperGarlandModel.instance:updateAct192Episode(actId, episodeId, true, progress)
 
-	if var_10_0 == CooperGarlandModel.instance:getAct192Id() then
-		arg_10_0:_playStoryClear(var_10_1)
+	local curActId = CooperGarlandModel.instance:getAct192Id()
+
+	if actId == curActId then
+		self:_playStoryClear(episodeId)
 	end
 
-	arg_10_0:dispatchEvent(CooperGarlandEvent.FirstFinishEpisode, var_10_0, var_10_1)
+	self:dispatchEvent(CooperGarlandEvent.FirstFinishEpisode, actId, episodeId)
 end
 
-function var_0_0._playStoryClear(arg_11_0, arg_11_1)
-	local var_11_0 = CooperGarlandModel.instance:getAct192Id()
+function CooperGarlandController:_playStoryClear(episodeId)
+	local actId = CooperGarlandModel.instance:getAct192Id()
+	local isFinished = CooperGarlandModel.instance:isFinishedEpisode(actId, episodeId)
 
-	if not CooperGarlandModel.instance:isFinishedEpisode(var_11_0, arg_11_1) then
+	if not isFinished then
 		return
 	end
 
-	local var_11_1 = CooperGarlandConfig.instance:getStoryClear(var_11_0, arg_11_1)
+	local storyClear = CooperGarlandConfig.instance:getStoryClear(actId, episodeId)
 
-	if var_11_1 and var_11_1 ~= 0 then
-		StoryController.instance:playStory(var_11_1, nil, arg_11_0.openResultView, arg_11_0, {
+	if storyClear and storyClear ~= 0 then
+		StoryController.instance:playStory(storyClear, nil, self.openResultView, self, {
 			isWin = true,
-			episodeId = arg_11_1
+			episodeId = episodeId
 		})
 	else
-		arg_11_0:openResultView({
+		self:openResultView({
 			isWin = true,
-			episodeId = arg_11_1
+			episodeId = episodeId
 		})
 	end
 end
 
-function var_0_0.clickEpisode(arg_12_0, arg_12_1, arg_12_2)
-	if not CooperGarlandModel.instance:isAct192Open(true) then
+function CooperGarlandController:clickEpisode(actId, episodeId)
+	local isOpen = CooperGarlandModel.instance:isAct192Open(true)
+
+	if not isOpen then
 		return
 	end
 
-	if not CooperGarlandModel.instance:isUnlockEpisode(arg_12_1, arg_12_2) then
+	local isUnlock = CooperGarlandModel.instance:isUnlockEpisode(actId, episodeId)
+
+	if not isUnlock then
 		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
 
 		return
 	end
 
-	arg_12_0:dispatchEvent(CooperGarlandEvent.OnClickEpisode, arg_12_1, arg_12_2)
+	self:dispatchEvent(CooperGarlandEvent.OnClickEpisode, actId, episodeId)
 end
 
-function var_0_0.afterClickEpisode(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = CooperGarlandModel.instance:getAct192Id()
+function CooperGarlandController:afterClickEpisode(actId, episodeId)
+	local curActId = CooperGarlandModel.instance:getAct192Id()
 
-	if not arg_13_1 or not arg_13_2 or arg_13_1 ~= var_13_0 then
+	if not actId or not episodeId or actId ~= curActId then
 		return
 	end
 
-	CooperGarlandStatHelper.instance:enterEpisode(arg_13_2)
+	CooperGarlandStatHelper.instance:enterEpisode(episodeId)
 
-	if CooperGarlandConfig.instance:isExtraEpisode(arg_13_1, arg_13_2) then
-		local var_13_1 = CooperGarlandModel.instance:getEpisodeProgress(arg_13_1, arg_13_2)
+	local isExtra = CooperGarlandConfig.instance:isExtraEpisode(actId, episodeId)
 
-		Activity192Rpc.instance:sendAct192FinishEpisodeRequest(arg_13_1, arg_13_2, tostring(var_13_1))
+	if isExtra then
+		local saveRound = CooperGarlandModel.instance:getEpisodeProgress(actId, episodeId)
+
+		Activity192Rpc.instance:sendAct192FinishEpisodeRequest(actId, episodeId, tostring(saveRound))
 	end
 
-	local var_13_2 = CooperGarlandConfig.instance:getStoryBefore(arg_13_1, arg_13_2)
+	local storyBefore = CooperGarlandConfig.instance:getStoryBefore(actId, episodeId)
 
-	if var_13_2 and var_13_2 ~= 0 then
-		StoryController.instance:playStory(var_13_2, nil, arg_13_0._enterGame, arg_13_0, {
-			episodeId = arg_13_2
+	if storyBefore and storyBefore ~= 0 then
+		StoryController.instance:playStory(storyBefore, nil, self._enterGame, self, {
+			episodeId = episodeId
 		})
 
 		return
 	end
 
-	arg_13_0:_enterGame({
-		episodeId = arg_13_2
+	self:_enterGame({
+		episodeId = episodeId
 	})
 end
 
-function var_0_0.openLevelView(arg_14_0)
-	arg_14_0:getAct192Info(arg_14_0._realOpenLevelView, arg_14_0, true)
+function CooperGarlandController:openLevelView()
+	self:getAct192Info(self._realOpenLevelView, self, true)
 end
 
-function var_0_0._realOpenLevelView(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_2 ~= 0 then
+function CooperGarlandController:_realOpenLevelView(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.CooperGarlandLevelView)
 end
 
-function var_0_0.openTaskView(arg_16_0)
+function CooperGarlandController:openTaskView()
 	CooperGarlandTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity192
-	}, arg_16_0._realOpenTaskView, arg_16_0)
+	}, self._realOpenTaskView, self)
 end
 
-function var_0_0._realOpenTaskView(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if arg_17_2 ~= 0 then
+function CooperGarlandController:_realOpenTaskView(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
@@ -198,229 +221,244 @@ function var_0_0._realOpenTaskView(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
 	ViewMgr.instance:openView(ViewName.CooperGarlandTaskView)
 end
 
-function var_0_0.openResultView(arg_18_0, arg_18_1)
-	if arg_18_1 and arg_18_1.isWin then
+function CooperGarlandController:openResultView(param)
+	if param and param.isWin then
 		CooperGarlandStatHelper.instance:sendEpisodeFinish()
 	end
 
-	local var_18_0 = CooperGarlandModel.instance:getAct192Id()
-	local var_18_1 = arg_18_1 and arg_18_1.episodeId
+	local actId = CooperGarlandModel.instance:getAct192Id()
+	local episodeId = param and param.episodeId
 
-	if not var_18_0 or not var_18_1 then
+	if not actId or not episodeId then
 		return
 	end
 
-	if not CooperGarlandConfig.instance:isGameEpisode(var_18_0, var_18_1) then
+	local hasGame = CooperGarlandConfig.instance:isGameEpisode(actId, episodeId)
+
+	if not hasGame then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.CooperGarlandResultView, {
-		episodeId = var_18_1,
-		isWin = arg_18_1.isWin
+		episodeId = episodeId,
+		isWin = param.isWin
 	})
 end
 
-function var_0_0._enterGame(arg_19_0, arg_19_1)
-	local var_19_0 = CooperGarlandModel.instance:getAct192Id()
-	local var_19_1 = arg_19_1 and arg_19_1.episodeId
+function CooperGarlandController:_enterGame(param)
+	local actId = CooperGarlandModel.instance:getAct192Id()
+	local episodeId = param and param.episodeId
+	local hasGame = CooperGarlandConfig.instance:isGameEpisode(actId, episodeId)
 
-	if CooperGarlandConfig.instance:isGameEpisode(var_19_0, var_19_1) then
+	if hasGame then
 		CooperGarlandStatHelper.instance:enterGame()
-		CooperGarlandGameModel.instance:enterGameInitData(var_19_1)
+		CooperGarlandGameModel.instance:enterGameInitData(episodeId)
 		CooperGarlandGameEntityMgr.instance:enterMap()
 		ViewMgr.instance:openView(ViewName.CooperGarlandGameView)
 	else
-		arg_19_0:finishEpisode(var_19_1, true)
+		self:finishEpisode(episodeId, true)
 	end
 end
 
-function var_0_0.resetJoystick(arg_20_0)
-	arg_20_0:dispatchEvent(CooperGarlandEvent.ResetJoystick)
+function CooperGarlandController:resetJoystick()
+	self:dispatchEvent(CooperGarlandEvent.ResetJoystick)
 end
 
-function var_0_0.resetPanelBalance(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0:changePanelBalance(0, 0, arg_21_1, arg_21_2)
+function CooperGarlandController:resetPanelBalance(lerpTimeScale, isForceSet)
+	self:changePanelBalance(0, 0, lerpTimeScale, isForceSet)
 end
 
-function var_0_0.changePanelBalance(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	arg_22_0:dispatchEvent(CooperGarlandEvent.ChangePanelAngle, arg_22_1, arg_22_2, arg_22_3 or 0, arg_22_4)
+function CooperGarlandController:changePanelBalance(x, y, lerpTimeScale, isForceSet)
+	self:dispatchEvent(CooperGarlandEvent.ChangePanelAngle, x, y, lerpTimeScale or 0, isForceSet)
 end
 
-function var_0_0.changeRemoveMode(arg_23_0)
-	local var_23_0 = not CooperGarlandGameModel.instance:getIsRemoveMode()
+function CooperGarlandController:changeRemoveMode()
+	local curIsRemoveMode = CooperGarlandGameModel.instance:getIsRemoveMode()
+	local newIsRemoveMode = not curIsRemoveMode
 
-	if var_23_0 then
-		local var_23_1 = CooperGarlandGameModel.instance:getRemoveCount()
+	if newIsRemoveMode then
+		local removeCount = CooperGarlandGameModel.instance:getRemoveCount()
 
-		if not var_23_1 or var_23_1 <= 0 then
+		if not removeCount or removeCount <= 0 then
 			GameFacade.showToast(ToastEnum.CooperGarlandRemoveCountNotEnough)
 
 			return
 		end
 	end
 
-	arg_23_0:setStopGame(var_23_0)
-	CooperGarlandGameModel.instance:setRemoveMode(var_23_0)
-	arg_23_0:dispatchEvent(CooperGarlandEvent.OnRemoveModeChange)
+	self:setStopGame(newIsRemoveMode)
+	CooperGarlandGameModel.instance:setRemoveMode(newIsRemoveMode)
+	self:dispatchEvent(CooperGarlandEvent.OnRemoveModeChange)
 end
 
-function var_0_0.changeControlMode(arg_24_0)
-	arg_24_0:resetJoystick()
-	arg_24_0:resetPanelBalance(0, true)
+function CooperGarlandController:changeControlMode()
+	self:resetJoystick()
+	self:resetPanelBalance(0, true)
 
-	local var_24_0 = CooperGarlandGameModel.instance:getControlMode() % CooperGarlandEnum.Const.JoystickModeLeft + 1
+	local controlMode = CooperGarlandGameModel.instance:getControlMode()
+	local newControlMode = controlMode % CooperGarlandEnum.Const.JoystickModeLeft + 1
 
-	CooperGarlandGameModel.instance:setControlMode(var_24_0)
-	arg_24_0:dispatchEvent(CooperGarlandEvent.OnChangeControlMode)
+	CooperGarlandGameModel.instance:setControlMode(newControlMode)
+	self:dispatchEvent(CooperGarlandEvent.OnChangeControlMode)
 end
 
-function var_0_0.removeComponent(arg_25_0, arg_25_1, arg_25_2)
-	if not CooperGarlandGameModel.instance:getIsRemoveMode() then
+function CooperGarlandController:removeComponent(mapId, componentId)
+	local isRemoveMode = CooperGarlandGameModel.instance:getIsRemoveMode()
+
+	if not isRemoveMode then
 		return
 	end
 
-	local var_25_0 = CooperGarlandGameModel.instance:getRemoveCount()
+	local removeCount = CooperGarlandGameModel.instance:getRemoveCount()
 
-	if not var_25_0 or var_25_0 <= 0 then
+	if not removeCount or removeCount <= 0 then
 		return
 	end
 
-	local var_25_1 = CooperGarlandConfig.instance:getMapComponentType(arg_25_1, arg_25_2)
+	local componentType = CooperGarlandConfig.instance:getMapComponentType(mapId, componentId)
 
-	if var_25_1 == CooperGarlandEnum.ComponentType.Hole or var_25_1 == CooperGarlandEnum.ComponentType.Spike then
-		CooperGarlandGameEntityMgr.instance:removeComp(arg_25_2)
-		CooperGarlandGameModel.instance:setRemoveCount(var_25_0 - 1)
-		arg_25_0:dispatchEvent(CooperGarlandEvent.OnRemoveComponent, arg_25_2)
+	if componentType == CooperGarlandEnum.ComponentType.Hole or componentType == CooperGarlandEnum.ComponentType.Spike then
+		CooperGarlandGameEntityMgr.instance:removeComp(componentId)
+		CooperGarlandGameModel.instance:setRemoveCount(removeCount - 1)
+		self:dispatchEvent(CooperGarlandEvent.OnRemoveComponent, componentId)
 	end
 end
 
-function var_0_0.enterNextRound(arg_26_0)
-	local var_26_0 = CooperGarlandGameModel.instance:getGameRound() + 1
-	local var_26_1 = CooperGarlandModel.instance:getAct192Id()
-	local var_26_2 = CooperGarlandGameModel.instance:getEpisodeId()
+function CooperGarlandController:enterNextRound()
+	local curRound = CooperGarlandGameModel.instance:getGameRound()
+	local nextRound = curRound + 1
+	local actId = CooperGarlandModel.instance:getAct192Id()
+	local episodeId = CooperGarlandGameModel.instance:getEpisodeId()
+	local isExtra = CooperGarlandConfig.instance:isExtraEpisode(actId, episodeId)
 
-	if CooperGarlandConfig.instance:isExtraEpisode(var_26_1, var_26_2) then
-		arg_26_0:saveGameProgress(var_26_2, var_26_0, true)
+	if isExtra then
+		self:saveGameProgress(episodeId, nextRound, true)
 	end
 
-	CooperGarlandGameModel.instance:changeRound(var_26_0)
+	CooperGarlandGameModel.instance:changeRound(nextRound)
 	CooperGarlandGameEntityMgr.instance:changeMap()
-	arg_26_0:dispatchEvent(CooperGarlandEvent.OnEnterNextRound)
+	self:dispatchEvent(CooperGarlandEvent.OnEnterNextRound)
 end
 
-function var_0_0.resetGame(arg_27_0)
+function CooperGarlandController:resetGame()
 	CooperGarlandGameModel.instance:resetGameData()
 	CooperGarlandGameEntityMgr.instance:resetMap()
-	arg_27_0:dispatchEvent(CooperGarlandEvent.OnResetGame)
+	self:dispatchEvent(CooperGarlandEvent.OnResetGame)
 end
 
-function var_0_0.exitGame(arg_28_0)
+function CooperGarlandController:exitGame()
 	CooperGarlandGameEntityMgr.instance:clearAllMap()
 	CooperGarlandGameModel.instance:clearAllData()
 	ViewMgr.instance:closeView(ViewName.CooperGarlandGameView)
 end
 
-function var_0_0.setStopGame(arg_29_0, arg_29_1)
-	if CooperGarlandGameModel.instance:getIsStopGame() == arg_29_1 then
+function CooperGarlandController:setStopGame(isStop)
+	local curIsStop = CooperGarlandGameModel.instance:getIsStopGame()
+
+	if curIsStop == isStop then
 		return
 	end
 
-	CooperGarlandGameModel.instance:setIsStopGame(arg_29_1)
-	arg_29_0:resetJoystick()
-	arg_29_0:resetPanelBalance(0, true)
+	CooperGarlandGameModel.instance:setIsStopGame(isStop)
+	self:resetJoystick()
+	self:resetPanelBalance(0, true)
 	CooperGarlandGameEntityMgr.instance:checkBallFreeze(true)
-	arg_29_0:dispatchEvent(CooperGarlandEvent.OnGameStopChange)
+	self:dispatchEvent(CooperGarlandEvent.OnGameStopChange)
 end
 
-function var_0_0.triggerEnterComponent(arg_30_0, arg_30_1, arg_30_2)
-	if not CooperGarlandGameEntityMgr.instance:isBallCanTriggerComp() then
+function CooperGarlandController:triggerEnterComponent(mapId, componentId)
+	local isCanTrigger = CooperGarlandGameEntityMgr.instance:isBallCanTriggerComp()
+
+	if not isCanTrigger then
 		return
 	end
 
-	local var_30_0
-	local var_30_1 = AudioEnum2_7.CooperGarland
-	local var_30_2 = CooperGarlandConfig.instance:getMapComponentType(arg_30_1, arg_30_2)
+	local audioId
+	local cooperAudioEnum = AudioEnum2_7.CooperGarland
+	local componentType = CooperGarlandConfig.instance:getMapComponentType(mapId, componentId)
 
-	if var_30_2 == CooperGarlandEnum.ComponentType.End then
-		var_30_0 = var_30_1.play_ui_yuzhou_ball_fall
+	if componentType == CooperGarlandEnum.ComponentType.End then
+		audioId = cooperAudioEnum.play_ui_yuzhou_ball_fall
 
-		arg_30_0:_ballArrivesEnd()
-	elseif var_30_2 == CooperGarlandEnum.ComponentType.Hole or var_30_2 == CooperGarlandEnum.ComponentType.Spike then
-		var_30_0 = var_30_2 == CooperGarlandEnum.ComponentType.Hole and var_30_1.play_ui_yuzhou_ball_trap or var_30_1.play_ui_yuzhou_ball_spikes
+		self:_ballArrivesEnd()
+	elseif componentType == CooperGarlandEnum.ComponentType.Hole or componentType == CooperGarlandEnum.ComponentType.Spike then
+		audioId = componentType == CooperGarlandEnum.ComponentType.Hole and cooperAudioEnum.play_ui_yuzhou_ball_trap or cooperAudioEnum.play_ui_yuzhou_ball_spikes
 
 		CooperGarlandGameEntityMgr.instance:playBallDieVx()
-		arg_30_0:_gameFail(arg_30_2)
-	elseif var_30_2 == CooperGarlandEnum.ComponentType.Key then
-		arg_30_0:_ballKeyChange(true)
+		self:_gameFail(componentId)
+	elseif componentType == CooperGarlandEnum.ComponentType.Key then
+		self:_ballKeyChange(true)
 
-		var_30_0 = var_30_1.play_ui_yuzhou_ball_star
+		audioId = cooperAudioEnum.play_ui_yuzhou_ball_star
 
-		CooperGarlandGameEntityMgr.instance:removeComp(arg_30_2)
-	elseif var_30_2 == CooperGarlandEnum.ComponentType.Story then
-		local var_30_3 = CooperGarlandConfig.instance:getMapComponentExtraParams(arg_30_1, arg_30_2)
+		CooperGarlandGameEntityMgr.instance:removeComp(componentId)
+	elseif componentType == CooperGarlandEnum.ComponentType.Story then
+		local extraParam = CooperGarlandConfig.instance:getMapComponentExtraParams(mapId, componentId)
 
-		arg_30_0:_triggerStory(var_30_3)
+		self:_triggerStory(extraParam)
 	end
 
-	if var_30_0 then
-		AudioMgr.instance:trigger(var_30_0)
+	if audioId then
+		AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.triggerExitComponent(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = CooperGarlandConfig.instance:getMapComponentType(arg_31_1, arg_31_2)
+function CooperGarlandController:triggerExitComponent(mapId, componentId)
+	local componentType = CooperGarlandConfig.instance:getMapComponentType(mapId, componentId)
 end
 
-function var_0_0._ballArrivesEnd(arg_32_0)
-	arg_32_0:setStopGame(true)
+function CooperGarlandController:_ballArrivesEnd()
+	self:setStopGame(true)
 	CooperGarlandStatHelper.instance:sendMapArrive()
 
-	local var_32_0 = CooperGarlandGameModel.instance:getGameRound()
-	local var_32_1 = CooperGarlandGameModel.instance:getGameId()
+	local curRound = CooperGarlandGameModel.instance:getGameRound()
+	local gameId = CooperGarlandGameModel.instance:getGameId()
+	local maxRound = CooperGarlandConfig.instance:getMaxRound(gameId)
 
-	if var_32_0 >= CooperGarlandConfig.instance:getMaxRound(var_32_1) then
+	if maxRound <= curRound then
 		CooperGarlandStatHelper.instance:sendGameFinish()
-		arg_32_0:dispatchEvent(CooperGarlandEvent.PlayFinishEpisodeStarVX)
+		self:dispatchEvent(CooperGarlandEvent.PlayFinishEpisodeStarVX)
 	else
 		CooperGarlandGameModel.instance:setSceneOpenAnimShowBall(false)
-		arg_32_0:dispatchEvent(CooperGarlandEvent.PlayEnterNextRoundAnim)
+		self:dispatchEvent(CooperGarlandEvent.PlayEnterNextRoundAnim)
 	end
 end
 
-function var_0_0._gameFail(arg_33_0, arg_33_1)
-	arg_33_0:setStopGame(true)
-	CooperGarlandStatHelper.instance:sendMapFail(arg_33_1)
+function CooperGarlandController:_gameFail(componentId)
+	self:setStopGame(true)
+	CooperGarlandStatHelper.instance:sendMapFail(componentId)
 
-	local var_33_0 = CooperGarlandGameModel.instance:getEpisodeId()
+	local episodeId = CooperGarlandGameModel.instance:getEpisodeId()
 
-	arg_33_0:openResultView({
+	self:openResultView({
 		isWin = false,
-		episodeId = var_33_0
+		episodeId = episodeId
 	})
 end
 
-function var_0_0._ballKeyChange(arg_34_0, arg_34_1)
-	CooperGarlandGameModel.instance:setBallHasKey(arg_34_1)
-	arg_34_0:dispatchEvent(CooperGarlandEvent.OnBallKeyChange)
+function CooperGarlandController:_ballKeyChange(isGet)
+	CooperGarlandGameModel.instance:setBallHasKey(isGet)
+	self:dispatchEvent(CooperGarlandEvent.OnBallKeyChange)
 end
 
-function var_0_0._triggerStory(arg_35_0, arg_35_1)
-	local var_35_0 = arg_35_1 and tonumber(arg_35_1)
+function CooperGarlandController:_triggerStory(params)
+	local guideId = params and tonumber(params)
 
-	if not var_35_0 then
+	if not guideId then
 		return
 	end
 
-	local var_35_1 = GuideController.instance:isForbidGuides()
+	local isForbid = GuideController.instance:isForbidGuides()
+	local isRunning = GuideModel.instance:isGuideRunning(guideId)
 
-	if not GuideModel.instance:isGuideRunning(var_35_0) or var_35_1 then
+	if not isRunning or isForbid then
 		return
 	end
 
-	arg_35_0:setStopGame(true)
-	arg_35_0:dispatchEvent(CooperGarlandEvent.triggerGuideDialogue, var_35_0)
+	self:setStopGame(true)
+	self:dispatchEvent(CooperGarlandEvent.triggerGuideDialogue, guideId)
 end
 
-var_0_0.instance = var_0_0.New()
+CooperGarlandController.instance = CooperGarlandController.New()
 
-return var_0_0
+return CooperGarlandController

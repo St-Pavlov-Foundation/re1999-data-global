@@ -1,293 +1,301 @@
-﻿module("modules.logic.gm.view.rouge.GMSubViewRouge", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/rouge/GMSubViewRouge.lua
 
-local var_0_0 = class("GMSubViewRouge", GMSubViewBase)
+module("modules.logic.gm.view.rouge.GMSubViewRouge", package.seeall)
+
+local GMSubViewRouge = class("GMSubViewRouge", GMSubViewBase)
 
 require("tolua.reflection")
 tolua.loadassembly("UnityEngine.UI")
 
-local var_0_1 = tolua.findtype("UnityEngine.UI.InputField+LineType")
-local var_0_2 = System.Enum.Parse(var_0_1, "MultiLineNewline")
+local type_linetype = tolua.findtype("UnityEngine.UI.InputField+LineType")
+local MultiLineNewline = System.Enum.Parse(type_linetype, "MultiLineNewline")
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.tabName = "肉鸽"
+function GMSubViewRouge:ctor()
+	self.tabName = "肉鸽"
 end
 
-function var_0_0.addLineIndex(arg_2_0)
-	arg_2_0.lineIndex = arg_2_0.lineIndex + 1
+function GMSubViewRouge:addLineIndex()
+	self.lineIndex = self.lineIndex + 1
 end
 
-function var_0_0.getLineGroup(arg_3_0)
-	return "L" .. arg_3_0.lineIndex
+function GMSubViewRouge:getLineGroup()
+	return "L" .. self.lineIndex
 end
 
-function var_0_0.initViewContent(arg_4_0)
-	if arg_4_0._inited then
+function GMSubViewRouge:initViewContent()
+	if self._inited then
 		return
 	end
 
-	GMSubViewBase.initViewContent(arg_4_0)
+	GMSubViewBase.initViewContent(self)
 
-	arg_4_0.lineIndex = 1
+	self.lineIndex = 1
 
-	arg_4_0:addTitleSplitLine("地图编辑")
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "肉鸽地图编辑", arg_4_0.onClickRougeMapEditor, arg_4_0)
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "肉鸽地图路线位置编辑", arg_4_0.onClickRougeSelectMapEditor, arg_4_0)
+	self:addTitleSplitLine("地图编辑")
+	self:addButton(self:getLineGroup(), "肉鸽地图编辑", self.onClickRougeMapEditor, self)
+	self:addButton(self:getLineGroup(), "肉鸽地图路线位置编辑", self.onClickRougeSelectMapEditor, self)
 
-	arg_4_0.showClickAreaTrigger = arg_4_0:addToggle(arg_4_0:getLineGroup(), "显示节点点击区域", arg_4_0.onToggleValueChanged, arg_4_0)
+	self.showClickAreaTrigger = self:addToggle(self:getLineGroup(), "显示节点点击区域", self.onToggleValueChanged, self)
 
-	arg_4_0:addLineIndex()
+	self:addLineIndex()
 
-	arg_4_0.allowAbortFightTrigger = arg_4_0:addToggle(arg_4_0:getLineGroup(), "允许主动退出战斗", arg_4_0.onAllowAbortFightToggleValueChanged, arg_4_0)
-	arg_4_0.allowAbortFightTrigger.isOn = RougeEditorController.instance:isAllowAbortFight()
-	arg_4_0.startRecordGc = arg_4_0:addButton(arg_4_0:getLineGroup(), "开始记录内存", arg_4_0.onClickStartRecordGc, arg_4_0)
-	arg_4_0.endRecordGc = arg_4_0:addButton(arg_4_0:getLineGroup(), "结束记录内存", arg_4_0.onClickEndRecordGc, arg_4_0)
+	self.allowAbortFightTrigger = self:addToggle(self:getLineGroup(), "允许主动退出战斗", self.onAllowAbortFightToggleValueChanged, self)
+	self.allowAbortFightTrigger.isOn = RougeEditorController.instance:isAllowAbortFight()
+	self.startRecordGc = self:addButton(self:getLineGroup(), "开始记录内存", self.onClickStartRecordGc, self)
+	self.endRecordGc = self:addButton(self:getLineGroup(), "结束记录内存", self.onClickEndRecordGc, self)
 
-	arg_4_0:addTitleSplitLine("配置检查")
-	arg_4_0:addLineIndex()
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "事件总表配置的id在事件分表是否存在", arg_4_0.checkAllEventExistInSubEvent, arg_4_0)
-	arg_4_0:addTitleSplitLine("检查id在指定表是否存在")
-	arg_4_0:addLineIndex()
+	self:addTitleSplitLine("配置检查")
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "事件总表配置的id在事件分表是否存在", self.checkAllEventExistInSubEvent, self)
+	self:addTitleSplitLine("检查id在指定表是否存在")
+	self:addLineIndex()
 
-	arg_4_0.inputExcelName = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "表名", nil, nil, {
+	self.inputExcelName = self:addInputText(self:getLineGroup(), "", "表名", nil, nil, {
 		w = 300
 	})
-	arg_4_0.inputCheckExcelFields = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "检查表excel.字段名", nil, nil, {
+	self.inputCheckExcelFields = self:addInputText(self:getLineGroup(), "", "检查表excel.字段名", nil, nil, {
 		w = 500,
 		h = 500
 	})
-	arg_4_0.inputCheckExcelFields.inputField.lineType = var_0_2
-	arg_4_0.mathList = {
+	self.inputCheckExcelFields.inputField.lineType = MultiLineNewline
+	self.mathList = {
 		"默认",
 		"1#(%d+).*"
 	}
-	arg_4_0.matchDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "匹配格式", arg_4_0.mathList)
+	self.matchDrop = self:addDropDown(self:getLineGroup(), "匹配格式", self.mathList)
 
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "开始检查", arg_4_0.startCheckExcel, arg_4_0)
-	arg_4_0:addTitleSplitLine("剧情")
-	arg_4_0:addLineIndex()
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "清空肉鸽剧情", arg_4_0._onClickClearRougeStories, arg_4_0)
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "完成肉鸽剧情", arg_4_0._onClickFinishRougeStories, arg_4_0)
-	arg_4_0:addLineIndex()
+	self:addButton(self:getLineGroup(), "开始检查", self.startCheckExcel, self)
+	self:addTitleSplitLine("剧情")
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "清空肉鸽剧情", self._onClickClearRougeStories, self)
+	self:addButton(self:getLineGroup(), "完成肉鸽剧情", self._onClickFinishRougeStories, self)
+	self:addLineIndex()
 
-	arg_4_0._inpClearStoryValue = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "剧情id", nil, nil, {
+	self._inpClearStoryValue = self:addInputText(self:getLineGroup(), "", "剧情id", nil, nil, {
 		w = 1000
 	})
 
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "重置剧情", arg_4_0._onClickClearStory, arg_4_0)
-	arg_4_0:addLineIndex()
+	self:addButton(self:getLineGroup(), "重置剧情", self._onClickClearStory, self)
+	self:addLineIndex()
 
-	arg_4_0._inpFinishStoryValue = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "剧情id", nil, nil, {
+	self._inpFinishStoryValue = self:addInputText(self:getLineGroup(), "", "剧情id", nil, nil, {
 		w = 1000
 	})
 
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "完成剧情", arg_4_0._onClickFinishStory, arg_4_0)
+	self:addButton(self:getLineGroup(), "完成剧情", self._onClickFinishStory, self)
 end
 
-function var_0_0.onClickStartRecordGc(arg_5_0)
+function GMSubViewRouge:onClickStartRecordGc()
 	RougeProfileController.instance:startRecordMemory()
 end
 
-function var_0_0.onClickEndRecordGc(arg_6_0)
+function GMSubViewRouge:onClickEndRecordGc()
 	RougeProfileController.instance:endRecord()
 end
 
-function var_0_0.onClickRougeMapEditor(arg_7_0)
+function GMSubViewRouge:onClickRougeMapEditor()
 	RougeEditorController.instance:enterRougeMapEditor()
-	arg_7_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onToggleValueChanged(arg_8_0)
-	if arg_8_0.showClickAreaTrigger.isOn then
+function GMSubViewRouge:onToggleValueChanged()
+	if self.showClickAreaTrigger.isOn then
 		RougeEditorController.instance:showNodeClickArea()
 	else
 		RougeEditorController.instance:hideNodeClickArea()
 	end
 end
 
-function var_0_0.onAllowAbortFightToggleValueChanged(arg_9_0)
-	RougeEditorController.instance:allowAbortFight(arg_9_0.allowAbortFightTrigger.isOn)
+function GMSubViewRouge:onAllowAbortFightToggleValueChanged()
+	RougeEditorController.instance:allowAbortFight(self.allowAbortFightTrigger.isOn)
 end
 
-function var_0_0.onClickRougeSelectMapEditor(arg_10_0)
+function GMSubViewRouge:onClickRougeSelectMapEditor()
 	RougeEditorController.instance:enterPathSelectMapEditorView()
-	arg_10_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.checkAllEventExistInSubEvent(arg_11_0)
-	local var_11_0 = lua_rouge_event.configList
+function GMSubViewRouge:checkAllEventExistInSubEvent()
+	local allEvent = lua_rouge_event.configList
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_1 = iter_11_1.type
-		local var_11_2 = iter_11_1.id
-		local var_11_3
+	for _, eventCo in ipairs(allEvent) do
+		local eventType = eventCo.type
+		local eventId = eventCo.id
+		local subEventCo
 
-		if RougeMapHelper.isFightEvent(var_11_1) then
-			if not lua_rouge_fight_event.configDict[var_11_2] then
-				logError("肉鸽战斗事件表不存在id : " .. tostring(var_11_2))
+		if RougeMapHelper.isFightEvent(eventType) then
+			subEventCo = lua_rouge_fight_event.configDict[eventId]
+
+			if not subEventCo then
+				logError("肉鸽战斗事件表不存在id : " .. tostring(eventId))
 			end
-		elseif RougeMapHelper.isChoiceEvent(var_11_1) then
-			if not lua_rouge_choice_event.configDict[var_11_2] then
-				logError("肉鸽选项事件表不存在id : " .. tostring(var_11_2))
+		elseif RougeMapHelper.isChoiceEvent(eventType) then
+			subEventCo = lua_rouge_choice_event.configDict[eventId]
+
+			if not subEventCo then
+				logError("肉鸽选项事件表不存在id : " .. tostring(eventId))
 			end
-		elseif RougeMapHelper.isStoreEvent(var_11_1) then
-			if not lua_rouge_shop_event.configDict[var_11_2] then
-				logError("肉鸽商店事件表不存在id : " .. tostring(var_11_2))
+		elseif RougeMapHelper.isStoreEvent(eventType) then
+			subEventCo = lua_rouge_shop_event.configDict[eventId]
+
+			if not subEventCo then
+				logError("肉鸽商店事件表不存在id : " .. tostring(eventId))
 			end
 		else
-			logError(string.format("事件表id : %s, 配置了未知事件类型 : %s", var_11_2, var_11_1))
+			logError(string.format("事件表id : %s, 配置了未知事件类型 : %s", eventId, eventType))
 		end
 	end
 
 	GameFacade.showToastString("检查完毕")
 end
 
-function var_0_0.startCheckExcel(arg_12_0)
-	local var_12_0 = arg_12_0.inputExcelName:GetText()
-	local var_12_1 = arg_12_0:getExcelDataDict(var_12_0)
+function GMSubViewRouge:startCheckExcel()
+	local excelName = self.inputExcelName:GetText()
+	local configDict = self:getExcelDataDict(excelName)
 
-	if not var_12_1 then
+	if not configDict then
 		return
 	end
 
-	local var_12_2 = arg_12_0.inputCheckExcelFields:GetText()
-	local var_12_3 = string.split(var_12_2, "\n")
-	local var_12_4 = {}
+	local checkExcelStr = self.inputCheckExcelFields:GetText()
+	local fields = string.split(checkExcelStr, "\n")
+	local fieldList = {}
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_3) do
-		if not string.nilorempty(iter_12_1) then
-			local var_12_5
-			local var_12_6
-			local var_12_7 = string.split(iter_12_1, ".")
-			local var_12_8 = var_12_7[1]
-			local var_12_9 = string.trim(var_12_7[2])
+	for _, field in ipairs(fields) do
+		if not string.nilorempty(field) then
+			local excel, fieldName
+			local splitArr = string.split(field, ".")
 
-			table.insert(var_12_4, {
-				excel = var_12_8,
-				fieldName = var_12_9
+			excel = splitArr[1]
+			fieldName = string.trim(splitArr[2])
+
+			table.insert(fieldList, {
+				excel = excel,
+				fieldName = fieldName
 			})
 		end
 	end
 
-	local var_12_10 = arg_12_0.matchDrop:GetValue()
-	local var_12_11 = var_12_10 ~= 0 and arg_12_0.mathList[var_12_10 + 1] or nil
+	local mathIndex = self.matchDrop:GetValue()
+	local mathStr = mathIndex ~= 0 and self.mathList[mathIndex + 1] or nil
 
-	for iter_12_2, iter_12_3 in ipairs(var_12_4) do
-		logWarn(string.format("开始检查 excel ： %s, 字段 : %s", iter_12_3.excel, iter_12_3.fieldName))
+	for _, field in ipairs(fieldList) do
+		logWarn(string.format("开始检查 excel ： %s, 字段 : %s", field.excel, field.fieldName))
 
-		local var_12_12 = arg_12_0:getExcelDataList(iter_12_3.excel)
+		local configList = self:getExcelDataList(field.excel)
 
-		if var_12_12 then
-			for iter_12_4, iter_12_5 in ipairs(var_12_12) do
-				local var_12_13 = iter_12_5[iter_12_3.fieldName]
+		if configList then
+			for _, co in ipairs(configList) do
+				local value = co[field.fieldName]
 
-				if var_12_13 then
-					local var_12_14 = tostring(var_12_13)
+				if value then
+					value = tostring(value)
 
-					if var_12_11 then
-						var_12_14 = string.match(var_12_14, var_12_11)
+					if mathStr then
+						value = string.match(value, mathStr)
 					end
 
-					if not string.nilorempty(var_12_14) then
-						local var_12_15 = string.splitToNumber(var_12_14, "|")
+					if not string.nilorempty(value) then
+						local valueList = string.splitToNumber(value, "|")
 
-						for iter_12_6, iter_12_7 in ipairs(var_12_15) do
-							if not var_12_1[iter_12_7] then
-								logError(string.format("excel : %s, id : %s, 字段 : %s, 配置的id : '%s' 在 excel : '%s' 中不存在", iter_12_3.excel, iter_12_5.id, iter_12_3.fieldName, iter_12_7, var_12_0))
+						for _, valueId in ipairs(valueList) do
+							if not configDict[valueId] then
+								logError(string.format("excel : %s, id : %s, 字段 : %s, 配置的id : '%s' 在 excel : '%s' 中不存在", field.excel, co.id, field.fieldName, valueId, excelName))
 							end
 
-							logNormal("check id : " .. tostring(iter_12_7))
+							logNormal("check id : " .. tostring(valueId))
 						end
 					end
 				else
-					logError(string.format("excel : %s, 不存在 字段 : %s, id : %s", iter_12_3.excel, iter_12_3.fieldName, iter_12_5 and iter_12_5.id or "nil"))
+					logError(string.format("excel : %s, 不存在 字段 : %s, id : %s", field.excel, field.fieldName, co and co.id or "nil"))
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getExcelDataDict(arg_13_0, arg_13_1)
-	local var_13_0 = _G["lua_" .. tostring(arg_13_1)]
+function GMSubViewRouge:getExcelDataDict(excelName)
+	local cls = _G["lua_" .. tostring(excelName)]
 
-	if not var_13_0 then
-		logError("配置表不存在 ：" .. tostring(arg_13_1))
-
-		return
-	end
-
-	local var_13_1 = var_13_0.configDict
-
-	if not var_13_1 then
-		logError("配置表 configDict 不存在 ：" .. tostring(arg_13_1))
+	if not cls then
+		logError("配置表不存在 ：" .. tostring(excelName))
 
 		return
 	end
 
-	return var_13_1
+	local configDict = cls.configDict
+
+	if not configDict then
+		logError("配置表 configDict 不存在 ：" .. tostring(excelName))
+
+		return
+	end
+
+	return configDict
 end
 
-function var_0_0.getExcelDataList(arg_14_0, arg_14_1)
-	local var_14_0 = _G["lua_" .. tostring(arg_14_1)]
+function GMSubViewRouge:getExcelDataList(excelName)
+	local cls = _G["lua_" .. tostring(excelName)]
 
-	if not var_14_0 then
-		logError("配置表不存在 ：" .. tostring(arg_14_1))
-
-		return
-	end
-
-	local var_14_1 = var_14_0.configList
-
-	if not var_14_1 then
-		logError("配置表 configDict 不存在 ：" .. tostring(arg_14_1))
+	if not cls then
+		logError("配置表不存在 ：" .. tostring(excelName))
 
 		return
 	end
 
-	return var_14_1
+	local configList = cls.configList
+
+	if not configList then
+		logError("配置表 configDict 不存在 ：" .. tostring(excelName))
+
+		return
+	end
+
+	return configList
 end
 
-function var_0_0._onClickClearRougeStories(arg_15_0)
-	for iter_15_0, iter_15_1 in ipairs(lua_rouge_story_list.configList) do
-		local var_15_0 = string.splitToNumber(iter_15_1.storyIdList, "#")
+function GMSubViewRouge:_onClickClearRougeStories()
+	for i, v in ipairs(lua_rouge_story_list.configList) do
+		local storyList = string.splitToNumber(v.storyIdList, "#")
 
-		for iter_15_2, iter_15_3 in ipairs(var_15_0) do
-			GMRpc.instance:sendGMRequest(string.format("delete story %s", iter_15_3))
+		for _, id in ipairs(storyList) do
+			GMRpc.instance:sendGMRequest(string.format("delete story %s", id))
 		end
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-function var_0_0._onClickFinishRougeStories(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(lua_rouge_story_list.configList) do
-		local var_16_0 = string.splitToNumber(iter_16_1.storyIdList, "#")
+function GMSubViewRouge:_onClickFinishRougeStories()
+	for i, v in ipairs(lua_rouge_story_list.configList) do
+		local storyList = string.splitToNumber(v.storyIdList, "#")
 
-		for iter_16_2, iter_16_3 in ipairs(var_16_0) do
-			StoryRpc.instance:sendUpdateStoryRequest(iter_16_3, -1, 0)
+		for _, id in ipairs(storyList) do
+			StoryRpc.instance:sendUpdateStoryRequest(id, -1, 0)
 		end
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-function var_0_0._onClickClearStory(arg_17_0)
-	local var_17_0 = string.splitToNumber(arg_17_0._inpClearStoryValue:GetText(), "#")
+function GMSubViewRouge:_onClickClearStory()
+	local storyList = string.splitToNumber(self._inpClearStoryValue:GetText(), "#")
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		GMRpc.instance:sendGMRequest(string.format("delete story %s", iter_17_1))
+	for _, id in ipairs(storyList) do
+		GMRpc.instance:sendGMRequest(string.format("delete story %s", id))
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-function var_0_0._onClickFinishStory(arg_18_0)
-	local var_18_0 = string.splitToNumber(arg_18_0._inpFinishStoryValue:GetText(), "#")
+function GMSubViewRouge:_onClickFinishStory()
+	local storyList = string.splitToNumber(self._inpFinishStoryValue:GetText(), "#")
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		StoryRpc.instance:sendUpdateStoryRequest(iter_18_1, -1, 0)
+	for _, id in ipairs(storyList) do
+		StoryRpc.instance:sendUpdateStoryRequest(id, -1, 0)
 	end
 
 	StoryRpc.instance:sendGetStoryRequest()
 end
 
-return var_0_0
+return GMSubViewRouge

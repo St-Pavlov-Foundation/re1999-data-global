@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity1_7.enter.controller.VersionActivity1_7EnterController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/enter/controller/VersionActivity1_7EnterController.lua
 
-local var_0_0 = class("VersionActivity1_7EnterController", BaseController)
+module("modules.logic.versionactivity1_7.enter.controller.VersionActivity1_7EnterController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_7EnterController = class("VersionActivity1_7EnterController", BaseController)
+
+function VersionActivity1_7EnterController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_7EnterController:reInit()
 	return
 end
 
-function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function VersionActivity1_7EnterController:openVersionActivityEnterViewIfNotOpened(openedCallback, openedCallbackObj, jumpActId)
 	if ViewMgr.instance:isOpen(VersionActivity1_7Enum.ActivityId.EnterView) then
-		if arg_3_1 then
-			arg_3_1(arg_3_2)
+		if openedCallback then
+			openedCallback(openedCallbackObj)
 		end
 
 		return
 	end
 
-	arg_3_0:openVersionActivityEnterView(arg_3_1, arg_3_2, arg_3_3)
+	self:openVersionActivityEnterView(openedCallback, openedCallbackObj, jumpActId)
 end
 
-function var_0_0.openVersionActivityEnterView(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0:checkCanOpen(VersionActivity1_7Enum.ActivityId.EnterView) then
+function VersionActivity1_7EnterController:openVersionActivityEnterView(openedCallback, openedCallbackObj, jumpActId)
+	if not self:checkCanOpen(VersionActivity1_7Enum.ActivityId.EnterView) then
 		return
 	end
 
-	arg_4_0:_openVersionActivityEnterView(arg_4_1, arg_4_2, arg_4_3)
+	self:_openVersionActivityEnterView(openedCallback, openedCallbackObj, jumpActId)
 end
 
-function var_0_0._onFinishStory(arg_5_0)
-	if not arg_5_0:checkCanOpen(VersionActivity1_7Enum.ActivityId.EnterView) then
+function VersionActivity1_7EnterController:_onFinishStory()
+	if not self:checkCanOpen(VersionActivity1_7Enum.ActivityId.EnterView) then
 		return
 	end
 
-	arg_5_0:_openVersionActivityEnterView(arg_5_0.openCallback, arg_5_0.openedCallbackObj, arg_5_0.jumpActId)
+	self:_openVersionActivityEnterView(self.openCallback, self.openedCallbackObj, self.jumpActId)
 end
 
-function var_0_0._openVersionActivityEnterView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function VersionActivity1_7EnterController:_openVersionActivityEnterView(openedCallback, openedCallbackObj, jumpActId)
 	if not VersionActivityBaseController.instance:isPlayedActivityVideo(VersionActivity1_7Enum.ActivityId.EnterView) then
-		local var_6_0 = ActivityModel.instance:getActMO(VersionActivity1_7Enum.ActivityId.EnterView)
-		local var_6_1 = var_6_0 and var_6_0.config and var_6_0.config.storyId
+		local activityMo = ActivityModel.instance:getActMO(VersionActivity1_7Enum.ActivityId.EnterView)
+		local storyId = activityMo and activityMo.config and activityMo.config.storyId
 
-		if not var_6_1 then
-			logError(string.format("act id %s dot config story id", var_6_1))
+		if not storyId then
+			logError(string.format("act id %s dot config story id", storyId))
 
-			var_6_1 = 100010
+			storyId = 100010
 		end
 
-		local var_6_2 = {}
+		local param = {}
 
-		var_6_2.isVersionActivityPV = true
-		arg_6_0.openCallback = arg_6_1
-		arg_6_0.openedCallbackObj = arg_6_2
-		arg_6_0.jumpActId = arg_6_3
+		param.isVersionActivityPV = true
+		self.openCallback = openedCallback
+		self.openedCallbackObj = openedCallbackObj
+		self.jumpActId = jumpActId
 
-		StoryController.instance:playStory(var_6_1, var_6_2, arg_6_0._onFinishStory, arg_6_0)
+		StoryController.instance:playStory(storyId, param, self._onFinishStory, self)
 
 		return
 	end
@@ -64,16 +66,16 @@ function var_0_0._openVersionActivityEnterView(arg_6_0, arg_6_1, arg_6_2, arg_6_
 	ViewMgr.instance:openView(ViewName.VersionActivity1_7EnterView, {
 		actId = VersionActivity1_7Enum.ActivityId.EnterView,
 		activityIdList = VersionActivity1_7Enum.EnterViewActIdList,
-		jumpActId = arg_6_3
+		jumpActId = jumpActId
 	})
 
-	if arg_6_1 then
-		arg_6_1(arg_6_2)
+	if openedCallback then
+		openedCallback(openedCallbackObj)
 	end
 end
 
-function var_0_0.directOpenVersionActivityEnterView(arg_7_0, arg_7_1)
-	if not arg_7_0:checkCanOpen(VersionActivity1_7Enum.ActivityId.EnterView) then
+function VersionActivity1_7EnterController:directOpenVersionActivityEnterView(jumpActId)
+	if not self:checkCanOpen(VersionActivity1_7Enum.ActivityId.EnterView) then
 		return
 	end
 
@@ -81,16 +83,16 @@ function var_0_0.directOpenVersionActivityEnterView(arg_7_0, arg_7_1)
 		skipOpenAnim = true,
 		actId = VersionActivity1_7Enum.ActivityId.EnterView,
 		activityIdList = VersionActivity1_7Enum.EnterViewActIdList,
-		jumpActId = arg_7_1
+		jumpActId = jumpActId
 	})
 end
 
-function var_0_0.checkCanOpen(arg_8_0, arg_8_1)
-	local var_8_0, var_8_1, var_8_2 = ActivityHelper.getActivityStatusAndToast(arg_8_1)
+function VersionActivity1_7EnterController:checkCanOpen(actId)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_8_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_8_1 then
-			GameFacade.showToast(var_8_1, var_8_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToast(toastId, toastParam)
 		end
 
 		return false
@@ -99,14 +101,14 @@ function var_0_0.checkCanOpen(arg_8_0, arg_8_1)
 	return true
 end
 
-function var_0_0.GetActivityPrefsKey(arg_9_0)
-	return VersionActivity1_7Enum.ActivityId.EnterView .. arg_9_0
+function VersionActivity1_7EnterController.GetActivityPrefsKey(key)
+	return VersionActivity1_7Enum.ActivityId.EnterView .. key
 end
 
-function var_0_0.GetActivityPrefsKeyWithUser(arg_10_0)
-	return PlayerModel.instance:getPlayerPrefsKey(var_0_0.GetActivityPrefsKey(arg_10_0))
+function VersionActivity1_7EnterController.GetActivityPrefsKeyWithUser(key)
+	return PlayerModel.instance:getPlayerPrefsKey(VersionActivity1_7EnterController.GetActivityPrefsKey(key))
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_7EnterController.instance = VersionActivity1_7EnterController.New()
 
-return var_0_0
+return VersionActivity1_7EnterController

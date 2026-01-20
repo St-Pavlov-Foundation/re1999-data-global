@@ -1,11 +1,13 @@
-﻿module("modules.logic.battlepass.view.BpVideoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpVideoViewContainer.lua
 
-local var_0_0 = class("BpVideoViewContainer", BaseViewContainer)
+module("modules.logic.battlepass.view.BpVideoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpVideoViewContainer = class("BpVideoViewContainer", BaseViewContainer)
+
+function BpVideoViewContainer:buildViews()
 	return {
 		BpVideoView.New()
 	}
 end
 
-return var_0_0
+return BpVideoViewContainer

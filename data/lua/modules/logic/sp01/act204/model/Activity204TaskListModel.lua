@@ -1,89 +1,91 @@
-﻿module("modules.logic.sp01.act204.model.Activity204TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/model/Activity204TaskListModel.lua
 
-local var_0_0 = class("Activity204TaskListModel", MixScrollModel)
+module("modules.logic.sp01.act204.model.Activity204TaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._activityId = arg_1_1
+local Activity204TaskListModel = class("Activity204TaskListModel", MixScrollModel)
+
+function Activity204TaskListModel:init(activityId)
+	self._activityId = activityId
 end
 
-function var_0_0.refresh(arg_2_0)
-	local var_2_0 = Activity204Model.instance:getById(arg_2_0._activityId)
+function Activity204TaskListModel:refresh()
+	local actMo = Activity204Model.instance:getById(self._activityId)
 
-	if not var_2_0 then
+	if not actMo then
 		return
 	end
 
-	arg_2_0._nextRefreshTime = nil
+	self._nextRefreshTime = nil
 
-	local var_2_1 = var_2_0:getTaskList()
-	local var_2_2 = {}
+	local taskMoList = actMo:getTaskList()
+	local list = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		local var_2_3 = iter_2_1.config
+	for i, v in ipairs(taskMoList) do
+		local config = v.config
 
-		if var_2_3 then
-			if not string.nilorempty(var_2_3.prepose) then
-				local var_2_4 = true
-				local var_2_5 = string.splitToNumber(var_2_3.prepose, "#")
+		if config then
+			if not string.nilorempty(config.prepose) then
+				local preposeFinish = true
+				local preposes = string.splitToNumber(config.prepose, "#")
 
-				for iter_2_2, iter_2_3 in ipairs(var_2_5) do
-					local var_2_6 = var_2_0:getTaskInfo(iter_2_3)
+				for _, preposeId in ipairs(preposes) do
+					local taskInfo = actMo:getTaskInfo(preposeId)
 
-					if not var_2_6 or not var_2_6.hasGetBonus then
-						var_2_4 = false
+					if not taskInfo or not taskInfo.hasGetBonus then
+						preposeFinish = false
 
 						break
 					end
 				end
 
-				if var_2_4 then
-					table.insert(var_2_2, iter_2_1)
+				if preposeFinish then
+					table.insert(list, v)
 				end
 			else
-				table.insert(var_2_2, iter_2_1)
+				table.insert(list, v)
 			end
 
-			arg_2_0:_updateNextRefreshTime(iter_2_1)
+			self:_updateNextRefreshTime(v)
 		end
 	end
 
-	if #var_2_2 > 1 then
-		table.sort(var_2_2, SortUtil.tableKeyLower({
+	if #list > 1 then
+		table.sort(list, SortUtil.tableKeyLower({
 			"status",
 			"missionorder",
 			"id"
 		}))
 	end
 
-	for iter_2_4, iter_2_5 in ipairs(var_2_2) do
-		iter_2_5.index = iter_2_4
+	for i, v in ipairs(list) do
+		v.index = i
 	end
 
-	arg_2_0:setList(var_2_2)
+	self:setList(list)
 end
 
-function var_0_0._updateNextRefreshTime(arg_3_0, arg_3_1)
-	if not arg_3_1 or not arg_3_1.config or arg_3_1.hasGetBonus then
+function Activity204TaskListModel:_updateNextRefreshTime(taskMo)
+	if not taskMo or not taskMo.config or taskMo.hasGetBonus then
 		return
 	end
 
-	if arg_3_1.config.durationHour == 0 then
+	if taskMo.config.durationHour == 0 then
 		return
 	end
 
-	if not arg_3_1.expireTime or arg_3_1.expireTime <= ServerTime.now() then
+	if not taskMo.expireTime or taskMo.expireTime <= ServerTime.now() then
 		return
 	end
 
-	if not arg_3_0._nextRefreshTime or arg_3_1.expireTime < arg_3_0._nextRefreshTime then
-		arg_3_0._nextRefreshTime = arg_3_1.expireTime
+	if not self._nextRefreshTime or taskMo.expireTime < self._nextRefreshTime then
+		self._nextRefreshTime = taskMo.expireTime
 	end
 end
 
-function var_0_0.getNextRefreshTime(arg_4_0)
-	return arg_4_0._nextRefreshTime
+function Activity204TaskListModel:getNextRefreshTime()
+	return self._nextRefreshTime
 end
 
-var_0_0.instance = var_0_0.New()
+Activity204TaskListModel.instance = Activity204TaskListModel.New()
 
-return var_0_0
+return Activity204TaskListModel

@@ -1,22 +1,28 @@
-﻿module("modules.logic.rouge.dlc.103.config.RougeDLCConfig103", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/103/config/RougeDLCConfig103.lua
 
-local var_0_0 = class("RougeDLCConfig103", BaseConfig)
+module("modules.logic.rouge.dlc.103.config.RougeDLCConfig103", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local RougeDLCConfig103 = class("RougeDLCConfig103", BaseConfig)
+
+function RougeDLCConfig103:reqConfigNames()
 	return {
 		"rouge_map_rule",
 		"rouge_monster_rule"
 	}
 end
 
-function var_0_0.getMapRuleConfig(arg_2_0, arg_2_1)
-	return lua_rouge_map_rule.configDict[arg_2_1]
+function RougeDLCConfig103:getMapRuleConfig(ruleId)
+	local ruleCo = lua_rouge_map_rule.configDict[ruleId]
+
+	return ruleCo
 end
 
-function var_0_0.getMonsterRuleConfig(arg_3_0, arg_3_1)
-	return lua_rouge_monster_rule.configDict[arg_3_1]
+function RougeDLCConfig103:getMonsterRuleConfig(ruleId)
+	local ruleCo = lua_rouge_monster_rule.configDict[ruleId]
+
+	return ruleCo
 end
 
-var_0_0.instance = var_0_0.New()
+RougeDLCConfig103.instance = RougeDLCConfig103.New()
 
-return var_0_0
+return RougeDLCConfig103

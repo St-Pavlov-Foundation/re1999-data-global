@@ -1,77 +1,81 @@
-﻿module("modules.logic.gm.view.GM_TaskListCommonItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_TaskListCommonItem.lua
 
-local var_0_0 = class("GM_TaskListCommonItem", BaseView)
+module("modules.logic.gm.view.GM_TaskListCommonItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
-	arg_1_0._item1Toggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item1/Toggle")
-	arg_1_0._item2Toggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item2/Toggle")
-	arg_1_0._item3Btn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item3/Button")
+local GM_TaskListCommonItem = class("GM_TaskListCommonItem", BaseView)
+
+function GM_TaskListCommonItem:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
+	self._item2Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item2/Toggle")
+	self._item3Btn = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item3/Button")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._item1Toggle:AddOnValueChanged(arg_2_0._onItem1ToggleValueChanged, arg_2_0)
-	arg_2_0._item2Toggle:AddOnValueChanged(arg_2_0._onItem2ToggleValueChanged, arg_2_0)
-	arg_2_0._item3Btn:AddClickListener(arg_2_0._onItem3Click, arg_2_0)
+function GM_TaskListCommonItem:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
+	self._item2Toggle:AddOnValueChanged(self._onItem2ToggleValueChanged, self)
+	self._item3Btn:AddClickListener(self._onItem3Click, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._item1Toggle:RemoveOnValueChanged()
-	arg_3_0._item2Toggle:RemoveOnValueChanged()
-	arg_3_0._item3Btn:RemoveClickListener()
+function GM_TaskListCommonItem:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
+	self._item2Toggle:RemoveOnValueChanged()
+	self._item3Btn:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_refreshItem1()
-	arg_4_0:_refreshItem2()
+function GM_TaskListCommonItem:onOpen()
+	self:_refreshItem1()
+	self:_refreshItem2()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function GM_TaskListCommonItem:onDestroyView()
 	return
 end
 
-function var_0_0._refreshItem1(arg_6_0)
-	local var_6_0 = arg_6_0.class.s_ShowAllTabId or false
+function GM_TaskListCommonItem:_refreshItem1()
+	local cls = self.class
+	local isOn = cls.s_ShowAllTabId or false
 
-	arg_6_0._item1Toggle.isOn = var_6_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_7_0)
-	local var_7_0 = arg_7_0._item1Toggle.isOn
-	local var_7_1 = arg_7_0.class
+function GM_TaskListCommonItem:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
+	local cls = self.class
 
-	if var_7_1.s_ShowAllTabId == var_7_0 then
+	if cls.s_ShowAllTabId == isOn then
 		return
 	end
 
-	var_7_1.s_ShowAllTabId = var_7_0
+	cls.s_ShowAllTabId = isOn
 
-	arg_7_0.viewContainer:_gm_showAllTabIdUpdate(var_7_0)
+	self.viewContainer:_gm_showAllTabIdUpdate(isOn)
 end
 
-function var_0_0._refreshItem2(arg_8_0)
-	local var_8_0 = arg_8_0.class.s_enableFinishSelectedTask or false
+function GM_TaskListCommonItem:_refreshItem2()
+	local cls = self.class
+	local isOn = cls.s_enableFinishSelectedTask or false
 
-	arg_8_0._item2Toggle.isOn = var_8_0
+	self._item2Toggle.isOn = isOn
 end
 
-function var_0_0._onItem2ToggleValueChanged(arg_9_0)
-	local var_9_0 = arg_9_0._item2Toggle.isOn
-	local var_9_1 = arg_9_0.class
+function GM_TaskListCommonItem:_onItem2ToggleValueChanged()
+	local isOn = self._item2Toggle.isOn
+	local cls = self.class
 
-	if var_9_1.s_enableFinishSelectedTask == var_9_0 then
+	if cls.s_enableFinishSelectedTask == isOn then
 		return
 	end
 
-	var_9_1.s_enableFinishSelectedTask = var_9_0
+	cls.s_enableFinishSelectedTask = isOn
 
-	arg_9_0.viewContainer:_gm_enableFinishOnSelect(var_9_0)
+	self.viewContainer:_gm_enableFinishOnSelect(isOn)
 end
 
-function var_0_0._onItem3Click(arg_10_0)
-	arg_10_0.viewContainer:_gm_onClickFinishAll()
+function GM_TaskListCommonItem:_onItem3Click()
+	self.viewContainer:_gm_onClickFinishAll()
 end
 
-return var_0_0
+return GM_TaskListCommonItem

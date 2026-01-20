@@ -1,305 +1,303 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalReportView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalReportView.lua
 
-local var_0_0 = class("SurvivalReportView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalReportView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Mask")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_PanelBG")
-	arg_1_0._simagePanelBG1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_PanelBG1")
-	arg_1_0._simagePanelBG2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_PanelBG2")
-	arg_1_0._scrollcontentlist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_contentlist")
-	arg_1_0._txtdec1 = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#txt_dec1")
-	arg_1_0._goNpc = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc")
-	arg_1_0._txtNpc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/#txt_Npc")
-	arg_1_0._goNpcNew = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_NpcNew")
-	arg_1_0._txtNpcNew = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_NpcNew/#txt_NpcNew")
-	arg_1_0._goMonster = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Monster")
-	arg_1_0._txtMonster = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Monster/#txt_Monster")
-	arg_1_0._goBuilding = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Building")
-	arg_1_0._txtBuilding = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Building/#txt_Building")
-	arg_1_0._goTask = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Task")
-	arg_1_0._txtTask = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Task/#txt_Task")
-	arg_1_0._goTaskScore = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Task/#go_TaskScore")
-	arg_1_0._txtnpcScore = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_Task/#go_TaskScore/#txt_npcScore")
-	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#txt_dec2")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local SurvivalReportView = class("SurvivalReportView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalReportView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageMask = gohelper.findChildSingleImage(self.viewGO, "#simage_Mask")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_PanelBG")
+	self._simagePanelBG1 = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_PanelBG1")
+	self._simagePanelBG2 = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_PanelBG2")
+	self._scrollcontentlist = gohelper.findChildScrollRect(self.viewGO, "#scroll_contentlist")
+	self._txtdec1 = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#txt_dec1")
+	self._goNpc = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc")
+	self._txtNpc = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Npc/#txt_Npc")
+	self._goNpcNew = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_NpcNew")
+	self._txtNpcNew = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_NpcNew/#txt_NpcNew")
+	self._goMonster = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Monster")
+	self._txtMonster = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Monster/#txt_Monster")
+	self._goBuilding = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Building")
+	self._txtBuilding = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Building/#txt_Building")
+	self._goTask = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Task")
+	self._txtTask = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Task/#txt_Task")
+	self._goTaskScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_Task/#go_TaskScore")
+	self._txtnpcScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Task/#go_TaskScore/#txt_npcScore")
+	self._txtdec2 = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#txt_dec2")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function SurvivalReportView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function SurvivalReportView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SurvivalReportView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function SurvivalReportView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function SurvivalReportView:onUpdateParam()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_7_0)
-	arg_7_0:_btncloseOnClick()
+function SurvivalReportView:onClickModalMask()
+	self:_btncloseOnClick()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = SurvivalModel.instance:getDailyReport()
+function SurvivalReportView:onOpen()
+	local report = SurvivalModel.instance:getDailyReport()
 
-	arg_8_0._report = nil
+	self._report = nil
 
-	if not string.nilorempty(var_8_0) then
-		arg_8_0._report = cjson.decode(var_8_0)
+	if not string.nilorempty(report) then
+		self._report = cjson.decode(report)
 	end
 
 	SurvivalModel.instance:setDailyReport()
-	arg_8_0:_initView()
+	self:_initView()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_general_2)
 end
 
-function var_0_0._initView(arg_9_0)
-	arg_9_0:_initNpc()
-	arg_9_0:_initMonster()
-	gohelper.setActive(arg_9_0._goBuilding, false)
-	arg_9_0:_initTask()
-	arg_9_0:_initNpcNew()
+function SurvivalReportView:_initView()
+	self:_initNpc()
+	self:_initMonster()
+	gohelper.setActive(self._goBuilding, false)
+	self:_initTask()
+	self:_initNpcNew()
 end
 
-function var_0_0._initNpc(arg_10_0)
-	local var_10_0 = luaLang("survivalreportview_npc_empty")
+function SurvivalReportView:_initNpc()
+	local desc = luaLang("survivalreportview_npc_empty")
 
-	if arg_10_0._report ~= nil then
-		local var_10_1 = arg_10_0._report.leaveNpcIds
+	if self._report ~= nil then
+		local leaveNpcIds = self._report.leaveNpcIds
 
-		if var_10_1 ~= nil and #var_10_1 > 0 then
-			local var_10_2 = #var_10_1
-			local var_10_3 = ""
+		if leaveNpcIds ~= nil and #leaveNpcIds > 0 then
+			local count = #leaveNpcIds
+			local npcNameStr = ""
 
-			for iter_10_0 = 1, var_10_2 do
-				local var_10_4 = var_10_1[iter_10_0]
-				local var_10_5 = SurvivalConfig.instance:getNpcConfig(var_10_4)
+			for i = 1, count do
+				local npcId = leaveNpcIds[i]
+				local npcCo = SurvivalConfig.instance:getNpcConfig(npcId)
 
-				if var_10_5 then
-					local var_10_6 = var_10_5.name
+				if npcCo then
+					local name = npcCo.name
 
-					if iter_10_0 ~= var_10_2 then
-						var_10_3 = var_10_3 .. var_10_6 .. luaLang("sep_overseas")
+					if i ~= count then
+						npcNameStr = npcNameStr .. name .. luaLang("sep_overseas")
 					else
-						var_10_3 = var_10_3 .. var_10_6
+						npcNameStr = npcNameStr .. name
 					end
 				end
 			end
 
-			var_10_0 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survivalreportview_npc"), var_10_2, var_10_3)
+			desc = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survivalreportview_npc"), count, npcNameStr)
 		end
 	end
 
-	arg_10_0._txtNpc.text = var_10_0
+	self._txtNpc.text = desc
 end
 
-function var_0_0._initNpcNew(arg_11_0)
-	local var_11_0 = arg_11_0._report.npc2GetCount
-	local var_11_1 = 0
+function SurvivalReportView:_initNpcNew()
+	local npc2Count = self._report.npc2GetCount
+	local count = 0
 
-	if var_11_0 then
-		var_11_1 = tabletool.len(var_11_0)
+	if npc2Count then
+		count = tabletool.len(npc2Count)
 	end
 
-	local var_11_2 = SurvivalShelterTentListModel.instance:getShowList()
-	local var_11_3 = true
+	local allTent = SurvivalShelterTentListModel.instance:getShowList()
+	local isFull = true
 
-	for iter_11_0, iter_11_1 in pairs(var_11_2) do
-		if iter_11_1.buildingInfo and iter_11_1.buildingInfo:isBuild() and iter_11_1.npcNum < iter_11_1.npcCount then
-			var_11_3 = false
+	for _, tent in pairs(allTent) do
+		if tent.buildingInfo and tent.buildingInfo:isBuild() and tent.npcNum < tent.npcCount then
+			isFull = false
 
 			break
 		end
 	end
 
-	local var_11_4 = var_11_1 > 0 and var_11_3
+	local showNewTip = count > 0 and isFull
 
-	gohelper.setActive(arg_11_0._goNpcNew, var_11_4)
+	gohelper.setActive(self._goNpcNew, showNewTip)
 
-	if var_11_4 then
-		local var_11_5 = ""
-		local var_11_6 = 0
+	if showNewTip then
+		local name = ""
+		local index = 0
 
-		for iter_11_2, iter_11_3 in pairs(var_11_0) do
-			var_11_6 = var_11_6 + 1
+		for npcId, _ in pairs(npc2Count) do
+			index = index + 1
 
-			local var_11_7 = SurvivalConfig.instance:getNpcConfig(tonumber(iter_11_2))
+			local npcCo = SurvivalConfig.instance:getNpcConfig(tonumber(npcId))
 
-			if var_11_7 then
-				var_11_5 = var_11_5 .. var_11_7.name .. (var_11_6 == var_11_1 and "" or ",")
+			if npcCo then
+				name = name .. npcCo.name .. (index == count and "" or ",")
 			end
 		end
 
-		if not string.nilorempty(var_11_5) then
-			arg_11_0._txtNpcNew.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalreportview_npc_new"), var_11_5)
+		if not string.nilorempty(name) then
+			self._txtNpcNew.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalreportview_npc_new"), name)
 		end
 	end
 end
 
-function var_0_0._initMonster(arg_12_0)
-	local var_12_0 = luaLang("survivalreportview_monster_empty")
+function SurvivalReportView:_initMonster()
+	local desc = luaLang("survivalreportview_monster_empty")
 
-	if arg_12_0._report ~= nil then
-		local var_12_1 = SurvivalShelterModel.instance:getWeekInfo()
-		local var_12_2 = var_12_1.intrudeBox
+	if self._report ~= nil then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+		local intrudeBox = weekInfo.intrudeBox
 
-		if var_12_2 ~= nil then
-			local var_12_3 = var_12_1.day + 1
-			local var_12_4 = var_12_2:getNextBossCreateDay(var_12_3)
+		if intrudeBox ~= nil then
+			local curDay = weekInfo.day + 1
+			local createDay = intrudeBox:getNextBossCreateDay(curDay)
 
-			if var_12_3 == var_12_4 then
-				var_12_0 = luaLang("survivalreportview_monster_today")
+			if curDay == createDay then
+				desc = luaLang("survivalreportview_monster_today")
 			else
-				var_12_0 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalreportview_monster"), var_12_4 - var_12_3)
+				desc = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalreportview_monster"), createDay - curDay)
 			end
 		end
 	end
 
-	arg_12_0._txtMonster.text = var_12_0
+	self._txtMonster.text = desc
 end
 
-function var_0_0._initBuilding(arg_13_0)
-	local var_13_0 = luaLang("survivalreportview_build_empty")
+function SurvivalReportView:_initBuilding()
+	local desc = luaLang("survivalreportview_build_empty")
 
-	if arg_13_0._report ~= nil then
-		local var_13_1 = arg_13_0._report.desBuildingIds
-		local var_13_2 = SurvivalShelterModel.instance:getWeekInfo()
+	if self._report ~= nil then
+		local desBuildingIds = self._report.desBuildingIds
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-		if var_13_1 ~= nil and #var_13_1 > 0 then
-			local var_13_3 = #var_13_1
-			local var_13_4 = ""
+		if desBuildingIds ~= nil and #desBuildingIds > 0 then
+			local count = #desBuildingIds
+			local desBuildingStr = ""
 
-			for iter_13_0 = 1, var_13_3 do
-				local var_13_5 = var_13_1[iter_13_0]
-				local var_13_6 = var_13_2:getBuildingInfo(var_13_5)
+			for i = 1, count do
+				local buildId = desBuildingIds[i]
+				local buildMo = weekInfo:getBuildingInfo(buildId)
 
-				if var_13_6 then
-					local var_13_7 = var_13_6.baseCo
+				if buildMo then
+					local buildCo = buildMo.baseCo
 
-					if var_13_7 then
-						local var_13_8 = var_13_7.name
+					if buildCo then
+						local name = buildCo.name
 
-						if iter_13_0 ~= var_13_3 then
-							var_13_4 = var_13_4 .. var_13_8 .. luaLang("sep_overseas")
+						if i ~= count then
+							desBuildingStr = desBuildingStr .. name .. luaLang("sep_overseas")
 						else
-							var_13_4 = var_13_4 .. var_13_8
+							desBuildingStr = desBuildingStr .. name
 						end
 					end
 				end
 			end
 
-			if not string.nilorempty(var_13_4) then
-				var_13_0 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalreportview_build"), var_13_4)
+			if not string.nilorempty(desBuildingStr) then
+				desc = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survivalreportview_build"), desBuildingStr)
 			end
 		end
 	end
 
-	arg_13_0._txtBuilding.text = var_13_0
+	self._txtBuilding.text = desc
 end
 
-function var_0_0._initTask(arg_14_0)
-	local var_14_0
+function SurvivalReportView:_initTask()
+	local desc
 
-	if arg_14_0._report ~= nil then
-		local var_14_1 = arg_14_0._report.totalScore
+	if self._report ~= nil then
+		local totalScore = self._report.totalScore
 
-		if var_14_1 ~= nil and var_14_1 > 0 then
-			local var_14_2 = arg_14_0._report.itemId2Count
-			local var_14_3 = arg_14_0._report.npc2GetCount
-			local var_14_4 = 0
+		if totalScore ~= nil and totalScore > 0 then
+			local itemId2Count = self._report.itemId2Count
+			local npc2Count = self._report.npc2GetCount
+			local npcCount = 0
 
-			if var_14_3 ~= nil then
-				var_14_4 = tabletool.len(var_14_3)
+			if npc2Count ~= nil then
+				npcCount = tabletool.len(npc2Count)
 			end
 
-			local var_14_5 = 0
-			local var_14_6 = 0
-			local var_14_7 = 0
-			local var_14_8 = 0
-			local var_14_9 = 0
+			local buildItemCount, foodItemCount, equipCount, goldCount, otherCount = 0, 0, 0, 0, 0
 
-			for iter_14_0, iter_14_1 in pairs(var_14_2) do
-				local var_14_10 = lua_survival_item.configDict[tonumber(iter_14_0)]
+			for itemId, count in pairs(itemId2Count) do
+				local itemConfig = lua_survival_item.configDict[tonumber(itemId)]
 
-				if var_14_10 then
-					if var_14_10.type == SurvivalEnum.ItemType.Equip then
-						var_14_7 = var_14_7 + iter_14_1
-					elseif var_14_10.type == SurvivalEnum.ItemType.Currency then
-						if var_14_10.subType == SurvivalEnum.CurrencyType.Gold then
-							var_14_8 = var_14_8 + iter_14_1
-						elseif var_14_10.subType == SurvivalEnum.CurrencyType.Build then
-							var_14_5 = var_14_5 + iter_14_1
-						elseif var_14_10.subType == SurvivalEnum.CurrencyType.Food then
-							var_14_6 = var_14_6 + iter_14_1
+				if itemConfig then
+					if itemConfig.type == SurvivalEnum.ItemType.Equip then
+						equipCount = equipCount + count
+					elseif itemConfig.type == SurvivalEnum.ItemType.Currency then
+						if itemConfig.subType == SurvivalEnum.CurrencyType.Gold then
+							goldCount = goldCount + count
+						elseif itemConfig.subType == SurvivalEnum.CurrencyType.Build then
+							buildItemCount = buildItemCount + count
+						elseif itemConfig.subType == SurvivalEnum.CurrencyType.Food then
+							foodItemCount = foodItemCount + count
 						else
-							var_14_9 = var_14_9 + iter_14_1
+							otherCount = otherCount + count
 						end
 					else
-						var_14_9 = var_14_9 + iter_14_1
+						otherCount = otherCount + count
 					end
 				end
 			end
 
-			local var_14_11 = ""
+			local scoreDesc = ""
 
-			local function var_14_12(arg_15_0, arg_15_1)
-				if arg_15_0 > 0 then
-					if var_14_11 ~= "" then
-						var_14_11 = var_14_11 .. luaLang("sep_overseas")
+			local function appendScoreDesc(value, langKey)
+				if value > 0 then
+					if scoreDesc ~= "" then
+						scoreDesc = scoreDesc .. luaLang("sep_overseas")
 					end
 
-					var_14_11 = var_14_11 .. GameUtil.getSubPlaceholderLuaLangOneParam(luaLang(arg_15_1), arg_15_0)
+					scoreDesc = scoreDesc .. GameUtil.getSubPlaceholderLuaLangOneParam(luaLang(langKey), value)
 				end
 			end
 
-			var_14_12(var_14_5, "survivalreportview_score_buildItem")
-			var_14_12(var_14_6, "survivalreportview_score_foodItem")
-			var_14_12(var_14_7, "survivalreportview_score_equipItem")
-			var_14_12(var_14_8, "survivalreportview_score_goldItem")
-			var_14_12(var_14_9, "survivalreportview_score_otherItem")
-			var_14_12(var_14_4, "survivalreportview_score_npc")
+			appendScoreDesc(buildItemCount, "survivalreportview_score_buildItem")
+			appendScoreDesc(foodItemCount, "survivalreportview_score_foodItem")
+			appendScoreDesc(equipCount, "survivalreportview_score_equipItem")
+			appendScoreDesc(goldCount, "survivalreportview_score_goldItem")
+			appendScoreDesc(otherCount, "survivalreportview_score_otherItem")
+			appendScoreDesc(npcCount, "survivalreportview_score_npc")
 
-			if not string.nilorempty(var_14_11) then
-				local var_14_13 = "survivalreportview_score_failed"
+			if not string.nilorempty(scoreDesc) then
+				local scoreId = "survivalreportview_score_failed"
 
 				if SurvivalMapModel.instance.result == SurvivalEnum.MapResult.Win then
-					var_14_13 = "survivalreportview_score_success"
+					scoreId = "survivalreportview_score_success"
 				end
 
-				var_14_0 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang(var_14_13), var_14_11, var_14_1)
+				desc = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang(scoreId), scoreDesc, totalScore)
 			end
 		end
 	end
 
-	if var_14_0 ~= nil then
-		arg_14_0._txtTask.text = var_14_0
-		arg_14_0._txtnpcScore.text = arg_14_0._report.totalScore
+	if desc ~= nil then
+		self._txtTask.text = desc
+		self._txtnpcScore.text = self._report.totalScore
 	end
 
-	gohelper.setActive(arg_14_0._goTask, var_14_0 ~= nil)
+	gohelper.setActive(self._goTask, desc ~= nil)
 end
 
-function var_0_0.onClose(arg_16_0)
+function SurvivalReportView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function SurvivalReportView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SurvivalReportView

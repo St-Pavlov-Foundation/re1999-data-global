@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.fightparamwork.FightParamChangeWork4", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/fightparamwork/FightParamChangeWork4.lua
 
-local var_0_0 = class("FightParamChangeWork4", FightParamWorkBase)
+module("modules.logic.fight.system.work.fightparamwork.FightParamChangeWork4", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightController.instance:dispatchEvent(FightEvent.DoomsdayClock_OnAreaChange, arg_1_0.currValue)
-	arg_1_0:com_registTimer(arg_1_0._delayDone, FightDoomsdayClockView.RotateDuration)
+local FightParamChangeWork4 = class("FightParamChangeWork4", FightParamWorkBase)
+
+function FightParamChangeWork4:onStart()
+	FightController.instance:dispatchEvent(FightEvent.DoomsdayClock_OnAreaChange, self.currValue)
+	self:com_registTimer(self._delayDone, FightDoomsdayClockView.RotateDuration)
 end
 
-return var_0_0
+return FightParamChangeWork4

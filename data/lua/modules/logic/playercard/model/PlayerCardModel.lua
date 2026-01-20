@@ -1,212 +1,216 @@
-﻿module("modules.logic.playercard.model.PlayerCardModel", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/model/PlayerCardModel.lua
 
-local var_0_0 = class("PlayerCardModel", BaseModel)
+module("modules.logic.playercard.model.PlayerCardModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local PlayerCardModel = class("PlayerCardModel", BaseModel)
+
+function PlayerCardModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.characterSwitchFlag = nil
+function PlayerCardModel:reInit()
+	self.characterSwitchFlag = nil
 end
 
-function var_0_0.updateCardInfo(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_2 and arg_3_2.userId or PlayerModel.instance:getMyUserId()
+function PlayerCardModel:updateCardInfo(cardInfo, playerInfo)
+	local userId = playerInfo and playerInfo.userId or PlayerModel.instance:getMyUserId()
 
-	if not var_3_0 then
+	if not userId then
 		return
 	end
 
-	local var_3_1 = arg_3_0:getById(var_3_0)
+	local mo = self:getById(userId)
 
-	if not var_3_1 then
-		var_3_1 = PlayerCardMO.New()
+	if not mo then
+		mo = PlayerCardMO.New()
 
-		var_3_1:init(var_3_0)
-		arg_3_0:addAtLast(var_3_1)
+		mo:init(userId)
+		self:addAtLast(mo)
 	end
 
-	var_3_1:updateInfo(arg_3_1, arg_3_2)
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_3_0)
-	arg_3_0:setShowRed()
+	mo:updateInfo(cardInfo, playerInfo)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, userId)
+	self:setShowRed()
 end
 
-function var_0_0.setShowRed(arg_4_0)
-	arg_4_0._showRed = false
+function PlayerCardModel:setShowRed()
+	self._showRed = false
 
-	local var_4_0 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
+	local list = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_1 = iter_4_1.id
-		local var_4_2 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayerCardNewBgSkinRed) .. var_4_1
+	for _, co in ipairs(list) do
+		local id = co.id
+		local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayerCardNewBgSkinRed) .. id
+		local value = PlayerPrefsHelper.getNumber(key, 0)
 
-		if PlayerPrefsHelper.getNumber(var_4_2, 0) == 1 then
-			arg_4_0._showRed = true
+		if value == 1 then
+			self._showRed = true
 
 			break
 		end
 	end
 end
 
-function var_0_0.getShowRed(arg_5_0)
-	return arg_5_0._showRed
+function PlayerCardModel:getShowRed()
+	return self._showRed
 end
 
-function var_0_0.updateSetting(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getCardInfo()
+function PlayerCardModel:updateSetting(showSettings)
+	local mo = self:getCardInfo()
 
-	if var_6_0 then
-		var_6_0:updateShowSetting(arg_6_1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_6_0.userId)
+	if mo then
+		mo:updateShowSetting(showSettings)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, mo.userId)
 	end
 end
 
-function var_0_0.updateProgressSetting(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getCardInfo()
+function PlayerCardModel:updateProgressSetting(showSettings)
+	local mo = self:getCardInfo()
 
-	if var_7_0 then
-		var_7_0:updateProgressSetting(arg_7_1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_7_0.userId)
+	if mo then
+		mo:updateProgressSetting(showSettings)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, mo.userId)
 	end
 end
 
-function var_0_0.updateBaseInfoSetting(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getCardInfo()
+function PlayerCardModel:updateBaseInfoSetting(showSettings)
+	local mo = self:getCardInfo()
 
-	if var_8_0 then
-		var_8_0:updateBaseInfoSetting(arg_8_1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_8_0.userId)
+	if mo then
+		mo:updateBaseInfoSetting(showSettings)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, mo.userId)
 	end
 end
 
-function var_0_0.updateHeroCover(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getCardInfo()
+function PlayerCardModel:updateHeroCover(heroCover)
+	local mo = self:getCardInfo()
 
-	if var_9_0 then
-		var_9_0:updateHeroCover(arg_9_1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_9_0.userId)
+	if mo then
+		mo:updateHeroCover(heroCover)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, mo.userId)
 	end
 end
 
-function var_0_0.updateThemeId(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getCardInfo()
+function PlayerCardModel:updateThemeId(themeId)
+	local mo = self:getCardInfo()
 
-	if var_10_0 then
-		var_10_0:updateThemeId(arg_10_1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_10_0.userId)
+	if mo then
+		mo:updateThemeId(themeId)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, mo.userId)
 	end
 end
 
-function var_0_0.updateCritter(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getCardInfo()
+function PlayerCardModel:updateCritter(critterId, skinId)
+	local mo = self:getCardInfo()
 
-	if var_11_0 then
-		var_11_0:updateCritter(arg_11_1, arg_11_2)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_11_0.userId)
+	if mo then
+		mo:updateCritter(critterId, skinId)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, mo.userId)
 	end
 end
 
-function var_0_0.updateAchievement(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getCardInfo()
+function PlayerCardModel:updateAchievement(showAchievement)
+	local mo = self:getCardInfo()
 
-	if var_12_0 then
-		var_12_0:updateAchievement(arg_12_1)
-		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, var_12_0.userId)
+	if mo then
+		mo:updateAchievement(showAchievement)
+		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.UpdateCardInfo, mo.userId)
 	end
 end
 
-function var_0_0.getCardInfo(arg_13_0, arg_13_1)
-	arg_13_1 = arg_13_1 or PlayerModel.instance:getMyUserId()
+function PlayerCardModel:getCardInfo(userId)
+	userId = userId or PlayerModel.instance:getMyUserId()
 
-	return arg_13_0:getById(arg_13_1)
+	return self:getById(userId)
 end
 
-function var_0_0.getShowAchievement(arg_14_0)
-	local var_14_0 = arg_14_0:getCardInfo()
+function PlayerCardModel:getShowAchievement()
+	local mo = self:getCardInfo()
 
-	if var_14_0 then
-		return var_14_0:getShowAchievement()
+	if mo then
+		return mo:getShowAchievement()
 	end
 end
 
-function var_0_0.themeIsUnlock(arg_15_0, arg_15_1)
+function PlayerCardModel:themeIsUnlock(themeId)
 	return true
 end
 
-function var_0_0.isCharacterSwitchFlag(arg_16_0)
-	return arg_16_0.characterSwitchFlag
+function PlayerCardModel:isCharacterSwitchFlag()
+	return self.characterSwitchFlag
 end
 
-function var_0_0.setCharacterSwitchFlag(arg_17_0, arg_17_1)
-	arg_17_0.characterSwitchFlag = arg_17_1
+function PlayerCardModel:setCharacterSwitchFlag(value)
+	self.characterSwitchFlag = value
 end
 
-function var_0_0.setSelectCritterUid(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getCardInfo()
+function PlayerCardModel:setSelectCritterUid(critterUid)
+	local mo = self:getCardInfo()
 
-	if var_18_0 then
-		return var_18_0:setSelectCritterUid(arg_18_1)
+	if mo then
+		return mo:setSelectCritterUid(critterUid)
 	end
 end
 
-function var_0_0.getSelectCritterUid(arg_19_0)
-	local var_19_0 = arg_19_0:getCardInfo()
+function PlayerCardModel:getSelectCritterUid()
+	local mo = self:getCardInfo()
 
-	if var_19_0 then
-		return var_19_0:getSelectCritterUid()
+	if mo then
+		return mo:getSelectCritterUid()
 	end
 end
 
-function var_0_0.getPlayerCardSkinId(arg_20_0)
-	local var_20_0 = arg_20_0:getCardInfo()
+function PlayerCardModel:getPlayerCardSkinId()
+	local mo = self:getCardInfo()
 
-	if var_20_0 then
-		return var_20_0:getThemeId()
+	if mo then
+		return mo:getThemeId()
 	end
 end
 
-function var_0_0.setSelectSkinMO(arg_21_0, arg_21_1)
-	arg_21_0.selectSkinMO = arg_21_1
+function PlayerCardModel:setSelectSkinMO(skinMO)
+	self.selectSkinMO = skinMO
 end
 
-function var_0_0.getSelectSkinMO(arg_22_0)
-	return arg_22_0.selectSkinMO or nil
+function PlayerCardModel:getSelectSkinMO()
+	return self.selectSkinMO or nil
 end
 
-function var_0_0.setIsOpenSkinView(arg_23_0, arg_23_1)
-	arg_23_0.isopenskin = arg_23_1
+function PlayerCardModel:setIsOpenSkinView(state)
+	self.isopenskin = state
 end
 
-function var_0_0.getIsOpenSkinView(arg_24_0)
-	return arg_24_0.isopenskin
+function PlayerCardModel:getIsOpenSkinView()
+	return self.isopenskin
 end
 
-function var_0_0.setSelectHero(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0.selectHeroId = arg_25_1
-	arg_25_0.selectSkinId = arg_25_2
+function PlayerCardModel:setSelectHero(heroId, skinId)
+	self.selectHeroId = heroId
+	self.selectSkinId = skinId
 end
 
-function var_0_0.getSelectHero(arg_26_0)
-	return arg_26_0.selectHeroId, arg_26_0.selectSkinId
+function PlayerCardModel:getSelectHero()
+	return self.selectHeroId, self.selectSkinId
 end
 
-function var_0_0.checkHeroDiff(arg_27_0)
-	local var_27_0, var_27_1, var_27_2, var_27_3 = arg_27_0:getCardInfo():getMainHero()
+function PlayerCardModel:checkHeroDiff()
+	local heroId, skinId, _, isL2d = self:getCardInfo():getMainHero()
 
-	if var_27_0 ~= arg_27_0.selectHeroId or var_27_1 ~= arg_27_0.selectSkinId then
+	if heroId ~= self.selectHeroId or skinId ~= self.selectSkinId then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getCritterOpen(arg_28_0)
-	local var_28_0 = CritterModel.instance:isCritterUnlock(false)
-	local var_28_1 = CritterModel.instance:getAllCritters()
+function PlayerCardModel:getCritterOpen()
+	local isCritterUnlock = CritterModel.instance:isCritterUnlock(false)
+	local allCritterList = CritterModel.instance:getAllCritters()
+	local isCritterOpen = isCritterUnlock and #allCritterList > 0
 
-	return var_28_0 and #var_28_1 > 0
+	return isCritterOpen
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerCardModel.instance = PlayerCardModel.New()
 
-return var_0_0
+return PlayerCardModel

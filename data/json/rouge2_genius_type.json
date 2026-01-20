@@ -1,0 +1,429 @@
+[
+  {
+    "talent": 0,
+    "geniusId": 10001,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 4
+  },
+  {
+    "talent": 0,
+    "geniusId": 10002,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 9
+  },
+  {
+    "talent": 0,
+    "geniusId": 10003,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 14
+  },
+  {
+    "talent": 0,
+    "geniusId": 10004,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 19
+  },
+  {
+    "talent": 0,
+    "geniusId": 10005,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 6
+  },
+  {
+    "talent": 0,
+    "geniusId": 10006,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 7
+  },
+  {
+    "talent": 0,
+    "geniusId": 10007,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 16
+  },
+  {
+    "talent": 0,
+    "geniusId": 10008,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 17
+  },
+  {
+    "talent": 0,
+    "geniusId": 10009,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 1
+  },
+  {
+    "talent": 0,
+    "geniusId": 10010,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 2
+  },
+  {
+    "talent": 0,
+    "geniusId": 10011,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 11
+  },
+  {
+    "talent": 0,
+    "geniusId": 10012,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 12
+  },
+  {
+    "talent": 0,
+    "geniusId": 10013,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 3
+  },
+  {
+    "talent": 0,
+    "geniusId": 10014,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 5
+  },
+  {
+    "talent": 0,
+    "geniusId": 10015,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 8
+  },
+  {
+    "talent": 0,
+    "geniusId": 10016,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 10
+  },
+  {
+    "talent": 0,
+    "geniusId": 10017,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 13
+  },
+  {
+    "talent": 0,
+    "geniusId": 10018,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 15
+  },
+  {
+    "talent": 0,
+    "geniusId": 10019,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 18
+  },
+  {
+    "talent": 0,
+    "geniusId": 10020,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 20
+  },
+  {
+    "talent": 0,
+    "geniusId": 10021,
+    "careerExp": 0,
+    "pointCost": 1,
+    "order": 21
+  },
+  {
+    "talent": 1,
+    "geniusId": 2000,
+    "careerExp": 1000,
+    "pointCost": 0,
+    "order": 1
+  },
+  {
+    "talent": 1,
+    "geniusId": 2001,
+    "careerExp": 2000,
+    "pointCost": 0,
+    "order": 2
+  },
+  {
+    "talent": 1,
+    "geniusId": 2002,
+    "careerExp": 3000,
+    "pointCost": 0,
+    "order": 3
+  },
+  {
+    "talent": 1,
+    "geniusId": 2003,
+    "careerExp": 4000,
+    "pointCost": 0,
+    "order": 4
+  },
+  {
+    "talent": 1,
+    "geniusId": 2004,
+    "careerExp": 5000,
+    "pointCost": 0,
+    "order": 5
+  },
+  {
+    "talent": 1,
+    "geniusId": 2005,
+    "careerExp": 6000,
+    "pointCost": 0,
+    "order": 6
+  },
+  {
+    "talent": 1,
+    "geniusId": 2006,
+    "careerExp": 7000,
+    "pointCost": 0,
+    "order": 7
+  },
+  {
+    "talent": 1,
+    "geniusId": 2007,
+    "careerExp": 8000,
+    "pointCost": 0,
+    "order": 8
+  },
+  {
+    "talent": 1,
+    "geniusId": 2008,
+    "careerExp": 9000,
+    "pointCost": 0,
+    "order": 9
+  },
+  {
+    "talent": 1,
+    "geniusId": 2009,
+    "careerExp": 10000,
+    "pointCost": 0,
+    "order": 10
+  },
+  {
+    "talent": 2,
+    "geniusId": 3000,
+    "careerExp": 1000,
+    "pointCost": 0,
+    "order": 1
+  },
+  {
+    "talent": 2,
+    "geniusId": 3001,
+    "careerExp": 2000,
+    "pointCost": 0,
+    "order": 2
+  },
+  {
+    "talent": 2,
+    "geniusId": 3002,
+    "careerExp": 3000,
+    "pointCost": 0,
+    "order": 3
+  },
+  {
+    "talent": 2,
+    "geniusId": 3003,
+    "careerExp": 4000,
+    "pointCost": 0,
+    "order": 4
+  },
+  {
+    "talent": 2,
+    "geniusId": 3004,
+    "careerExp": 5000,
+    "pointCost": 0,
+    "order": 5
+  },
+  {
+    "talent": 2,
+    "geniusId": 3005,
+    "careerExp": 6000,
+    "pointCost": 0,
+    "order": 6
+  },
+  {
+    "talent": 2,
+    "geniusId": 3006,
+    "careerExp": 7000,
+    "pointCost": 0,
+    "order": 7
+  },
+  {
+    "talent": 2,
+    "geniusId": 3007,
+    "careerExp": 8000,
+    "pointCost": 0,
+    "order": 8
+  },
+  {
+    "talent": 2,
+    "geniusId": 3008,
+    "careerExp": 9000,
+    "pointCost": 0,
+    "order": 9
+  },
+  {
+    "talent": 2,
+    "geniusId": 3009,
+    "careerExp": 10000,
+    "pointCost": 0,
+    "order": 10
+  },
+  {
+    "talent": 3,
+    "geniusId": 4000,
+    "careerExp": 1000,
+    "pointCost": 0,
+    "order": 1
+  },
+  {
+    "talent": 3,
+    "geniusId": 4001,
+    "careerExp": 2000,
+    "pointCost": 0,
+    "order": 2
+  },
+  {
+    "talent": 3,
+    "geniusId": 4002,
+    "careerExp": 3000,
+    "pointCost": 0,
+    "order": 3
+  },
+  {
+    "talent": 3,
+    "geniusId": 4003,
+    "careerExp": 4000,
+    "pointCost": 0,
+    "order": 4
+  },
+  {
+    "talent": 3,
+    "geniusId": 4004,
+    "careerExp": 5000,
+    "pointCost": 0,
+    "order": 5
+  },
+  {
+    "talent": 3,
+    "geniusId": 4005,
+    "careerExp": 6000,
+    "pointCost": 0,
+    "order": 6
+  },
+  {
+    "talent": 3,
+    "geniusId": 4006,
+    "careerExp": 7000,
+    "pointCost": 0,
+    "order": 7
+  },
+  {
+    "talent": 3,
+    "geniusId": 4007,
+    "careerExp": 8000,
+    "pointCost": 0,
+    "order": 8
+  },
+  {
+    "talent": 3,
+    "geniusId": 4008,
+    "careerExp": 9000,
+    "pointCost": 0,
+    "order": 9
+  },
+  {
+    "talent": 3,
+    "geniusId": 4009,
+    "careerExp": 10000,
+    "pointCost": 0,
+    "order": 10
+  },
+  {
+    "talent": 4,
+    "geniusId": 5000,
+    "careerExp": 1000,
+    "pointCost": 0,
+    "order": 1
+  },
+  {
+    "talent": 4,
+    "geniusId": 5001,
+    "careerExp": 2000,
+    "pointCost": 0,
+    "order": 2
+  },
+  {
+    "talent": 4,
+    "geniusId": 5002,
+    "careerExp": 3000,
+    "pointCost": 0,
+    "order": 3
+  },
+  {
+    "talent": 4,
+    "geniusId": 5003,
+    "careerExp": 4000,
+    "pointCost": 0,
+    "order": 4
+  },
+  {
+    "talent": 4,
+    "geniusId": 5004,
+    "careerExp": 5000,
+    "pointCost": 0,
+    "order": 5
+  },
+  {
+    "talent": 4,
+    "geniusId": 5005,
+    "careerExp": 6000,
+    "pointCost": 0,
+    "order": 6
+  },
+  {
+    "talent": 4,
+    "geniusId": 5006,
+    "careerExp": 7000,
+    "pointCost": 0,
+    "order": 7
+  },
+  {
+    "talent": 4,
+    "geniusId": 5007,
+    "careerExp": 8000,
+    "pointCost": 0,
+    "order": 8
+  },
+  {
+    "talent": 4,
+    "geniusId": 5008,
+    "careerExp": 9000,
+    "pointCost": 0,
+    "order": 9
+  },
+  {
+    "talent": 4,
+    "geniusId": 5009,
+    "careerExp": 10000,
+    "pointCost": 0,
+    "order": 10
+  }
+]

@@ -1,109 +1,111 @@
-﻿module("modules.logic.explore.map.scene.ExploreMapClipObj", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/scene/ExploreMapClipObj.lua
 
-local var_0_0 = class("ExploreMapClipObj", UserDataDispose)
-local var_0_1 = UnityEngine.Shader.PropertyToID("_OcclusionThreshold")
-local var_0_2 = 0.7
-local var_0_3 = 0.6
+module("modules.logic.explore.map.scene.ExploreMapClipObj", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ExploreMapClipObj = class("ExploreMapClipObj", UserDataDispose)
+local OcclusionThresholdId = UnityEngine.Shader.PropertyToID("_OcclusionThreshold")
+local toValue = 0.7
+local time = 0.6
 
-	arg_1_0._trans = arg_1_1
-	arg_1_0._renderers = arg_1_1:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
-	arg_1_0._isClip = false
-	arg_1_0._isNowClip = false
-	arg_1_0._nowClipValue = nil
+function ExploreMapClipObj:init(trans)
+	self:__onInit()
+
+	self._trans = trans
+	self._renderers = trans:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
+	self._isClip = false
+	self._isNowClip = false
+	self._nowClipValue = nil
 end
 
-function var_0_0.markClip(arg_2_0, arg_2_1)
-	arg_2_0._isClip = arg_2_1
+function ExploreMapClipObj:markClip(isClip)
+	self._isClip = isClip
 end
 
-function var_0_0.checkNow(arg_3_0)
-	if arg_3_0._isClip ~= arg_3_0._isNowClip then
-		arg_3_0._isNowClip = arg_3_0._isClip
+function ExploreMapClipObj:checkNow()
+	if self._isClip ~= self._isNowClip then
+		self._isNowClip = self._isClip
 
-		if arg_3_0._isClip then
-			arg_3_0:beginClip()
+		if self._isClip then
+			self:beginClip()
 		else
-			arg_3_0:endClip()
+			self:endClip()
 		end
 	end
 end
 
-function var_0_0.beginClip(arg_4_0)
-	if not arg_4_0._shareMats then
-		arg_4_0._shareMats = arg_4_0:getUserDataTb_()
-		arg_4_0._matInsts = arg_4_0:getUserDataTb_()
+function ExploreMapClipObj:beginClip()
+	if not self._shareMats then
+		self._shareMats = self:getUserDataTb_()
+		self._matInsts = self:getUserDataTb_()
 
-		for iter_4_0 = 0, arg_4_0._renderers.Length - 1 do
-			arg_4_0._shareMats[iter_4_0] = arg_4_0._renderers[iter_4_0].sharedMaterial
-			arg_4_0._matInsts[iter_4_0] = arg_4_0._renderers[iter_4_0].material
+		for i = 0, self._renderers.Length - 1 do
+			self._shareMats[i] = self._renderers[i].sharedMaterial
+			self._matInsts[i] = self._renderers[i].material
 
-			arg_4_0._matInsts[iter_4_0]:EnableKeyword("_OCCLUSION_CLIP")
-			arg_4_0._matInsts[iter_4_0]:SetFloat(var_0_1, 0)
+			self._matInsts[i]:EnableKeyword("_OCCLUSION_CLIP")
+			self._matInsts[i]:SetFloat(OcclusionThresholdId, 0)
 		end
 	end
 
-	for iter_4_1 = 0, arg_4_0._renderers.Length - 1 do
-		local var_4_0 = arg_4_0._renderers[iter_4_1]
+	for i = 0, self._renderers.Length - 1 do
+		local renderer = self._renderers[i]
 
-		if not tolua.isnull(var_4_0) then
-			var_4_0.material = arg_4_0._matInsts[iter_4_1]
+		if not tolua.isnull(renderer) then
+			renderer.material = self._matInsts[i]
 		end
 	end
 
-	if arg_4_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_4_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	arg_4_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_4_0._nowClipValue or 0, var_0_2, var_0_3, arg_4_0.onTween, arg_4_0.onTweenEnd, arg_4_0, nil, EaseType.Linear)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._nowClipValue or 0, toValue, time, self.onTween, self.onTweenEnd, self, nil, EaseType.Linear)
 end
 
-function var_0_0.onTween(arg_5_0, arg_5_1)
-	arg_5_0._nowClipValue = arg_5_1
+function ExploreMapClipObj:onTween(value)
+	self._nowClipValue = value
 
-	for iter_5_0 = 0, #arg_5_0._matInsts do
-		arg_5_0._matInsts[iter_5_0]:SetFloat(var_0_1, arg_5_1)
+	for i = 0, #self._matInsts do
+		self._matInsts[i]:SetFloat(OcclusionThresholdId, value)
 	end
 end
 
-function var_0_0.onTweenEnd(arg_6_0)
-	arg_6_0._tweenId = nil
+function ExploreMapClipObj:onTweenEnd()
+	self._tweenId = nil
 
-	if not arg_6_0._isNowClip then
-		for iter_6_0 = 0, arg_6_0._renderers.Length - 1 do
-			local var_6_0 = arg_6_0._renderers[iter_6_0]
+	if not self._isNowClip then
+		for i = 0, self._renderers.Length - 1 do
+			local renderer = self._renderers[i]
 
-			if not tolua.isnull(var_6_0) then
-				var_6_0.material = arg_6_0._shareMats[iter_6_0]
+			if not tolua.isnull(renderer) then
+				renderer.material = self._shareMats[i]
 			end
 		end
 	end
 end
 
-function var_0_0.endClip(arg_7_0)
-	if arg_7_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_7_0._tweenId)
+function ExploreMapClipObj:endClip()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	arg_7_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_7_0._nowClipValue or var_0_2, 0, var_0_3, arg_7_0.onTween, arg_7_0.onTweenEnd, arg_7_0, nil, EaseType.Linear)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(self._nowClipValue or toValue, 0, time, self.onTween, self.onTweenEnd, self, nil, EaseType.Linear)
 end
 
-function var_0_0.clear(arg_8_0)
-	if arg_8_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_8_0._tweenId)
+function ExploreMapClipObj:clear()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_8_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_8_0._trans = nil
-	arg_8_0._renderers = nil
-	arg_8_0._mats = nil
-	arg_8_0._isClip = false
-	arg_8_0._isNowClip = false
+	self._trans = nil
+	self._renderers = nil
+	self._mats = nil
+	self._isClip = false
+	self._isNowClip = false
 
-	arg_8_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return ExploreMapClipObj

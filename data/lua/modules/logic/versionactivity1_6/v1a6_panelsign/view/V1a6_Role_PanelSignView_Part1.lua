@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_panelsign.view.V1a6_Role_PanelSignView_Part1", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_panelsign/view/V1a6_Role_PanelSignView_Part1.lua
 
-local var_0_0 = class("V1a6_Role_PanelSignView_Part1", V1a6_Role_PanelSignView)
+module("modules.logic.versionactivity1_6.v1a6_panelsign.view.V1a6_Role_PanelSignView_Part1", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simageTitle:LoadImage(ResUrl.getV1a6SignSingleBg("v1a6_sign_logo"))
-	arg_1_0._simagePanelBG:LoadImage(ResUrl.getV1a6SignSingleBg("v1a6_quniang_sign_panelbg"))
+local V1a6_Role_PanelSignView_Part1 = class("V1a6_Role_PanelSignView_Part1", V1a6_Role_PanelSignView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect1")
-	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect2")
+function V1a6_Role_PanelSignView_Part1:_editableInitView()
+	self._simageTitle:LoadImage(ResUrl.getV1a6SignSingleBg("v1a6_sign_logo"))
+	self._simagePanelBG:LoadImage(ResUrl.getV1a6SignSingleBg("v1a6_quniang_sign_panelbg"))
 
-	gohelper.setActive(var_1_0, true)
-	gohelper.setActive(var_1_1, false)
+	local go1 = gohelper.findChild(self.viewGO, "Root/vx_effect1")
+	local go2 = gohelper.findChild(self.viewGO, "Root/vx_effect2")
+
+	gohelper.setActive(go1, true)
+	gohelper.setActive(go2, false)
 end
 
-return var_0_0
+return V1a6_Role_PanelSignView_Part1

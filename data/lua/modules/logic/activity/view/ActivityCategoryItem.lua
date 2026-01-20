@@ -1,279 +1,295 @@
-﻿module("modules.logic.activity.view.ActivityCategoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityCategoryItem.lua
 
-local var_0_0 = class("ActivityCategoryItem", ListScrollCell)
+module("modules.logic.activity.view.ActivityCategoryItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goselect = gohelper.findChild(arg_1_1, "beselected")
-	arg_1_0._goselectbg = gohelper.findChild(arg_1_1, "beselected/selecticon")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_1, "noselected")
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_1, "beselected/activitynamecn")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_1, "beselected/activitynamecn/activitynameen")
-	arg_1_0._txtunselectnamecn = gohelper.findChildText(arg_1_1, "noselected/noactivitynamecn")
-	arg_1_0._txtunselectnameen = gohelper.findChildText(arg_1_1, "noselected/noactivitynamecn/noactivitynameen")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_1, "#go_reddot")
-	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0.go)
+local ActivityCategoryItem = class("ActivityCategoryItem", ListScrollCell)
 
-	gohelper.setActive(arg_1_0._goselectbg, false)
+function ActivityCategoryItem:init(go)
+	self.go = go
+	self._goselect = gohelper.findChild(go, "beselected")
+	self._goselectbg = gohelper.findChild(go, "beselected/selecticon")
+	self._gounselect = gohelper.findChild(go, "noselected")
+	self._txtnamecn = gohelper.findChildText(go, "beselected/activitynamecn")
+	self._txtnameen = gohelper.findChildText(go, "beselected/activitynamecn/activitynameen")
+	self._txtunselectnamecn = gohelper.findChildText(go, "noselected/noactivitynamecn")
+	self._txtunselectnameen = gohelper.findChildText(go, "noselected/noactivitynamecn/noactivitynameen")
+	self._goreddot = gohelper.findChild(go, "#go_reddot")
+	self._itemClick = gohelper.getClickWithAudio(self.go)
 
-	arg_1_0._anim = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._openAnimTime = 0.43
+	gohelper.setActive(self._goselectbg, false)
 
-	arg_1_0:playEnterAnim()
+	self._anim = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._openAnimTime = 0.43
+
+	self:playEnterAnim()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+function ActivityCategoryItem:addEventListeners()
+	self._itemClick:AddClickListener(self._onItemClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._itemClick:RemoveClickListener()
+function ActivityCategoryItem:removeEventListeners()
+	self._itemClick:RemoveClickListener()
 end
 
-function var_0_0._onItemClick(arg_4_0)
-	if arg_4_0._selected then
+function ActivityCategoryItem:_onItemClick()
+	if self._selected then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_switch)
 	ActivityRpc.instance:sendGetActivityInfosRequest()
-	arg_4_0:setRedDotData()
-	ActivityModel.instance:setTargetActivityCategoryId(arg_4_0._mo.id)
+	self:setRedDotData()
+	ActivityModel.instance:setTargetActivityCategoryId(self._mo.id)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function ActivityCategoryItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0:_refreshItem()
+	self:_refreshItem()
 
-	if Time.realtimeSinceStartup - ActivityBeginnerCategoryListModel.instance.openViewTime > arg_5_0._openAnimTime then
-		arg_5_0._anim:Play(UIAnimationName.Idle, 0, 1)
+	if Time.realtimeSinceStartup - ActivityBeginnerCategoryListModel.instance.openViewTime > self._openAnimTime then
+		self._anim:Play(UIAnimationName.Idle, 0, 1)
 	end
 end
 
-function var_0_0._refreshItem(arg_6_0)
-	local var_6_0
-	local var_6_1
-	local var_6_2 = arg_6_0._mo.id
-	local var_6_3 = ActivityConfig.instance:getActivityCo(var_6_2)
-	local var_6_4 = var_6_3.redDotId
-	local var_6_5 = var_6_3.typeId
+function ActivityCategoryItem:_refreshItem()
+	local center, dotId
+	local actId = self._mo.id
+	local ActivityCo = ActivityConfig.instance:getActivityCo(actId)
+	local redDotId = ActivityCo.redDotId
+	local typeId = ActivityCo.typeId
 
-	arg_6_0._txtnamecn.text = var_6_3.name
-	arg_6_0._txtnameen.text = var_6_3.nameEn
-	arg_6_0._txtunselectnamecn.text = var_6_3.name
-	arg_6_0._txtunselectnameen.text = var_6_3.nameEn
+	self._txtnamecn.text = ActivityCo.name
+	self._txtnameen.text = ActivityCo.nameEn
+	self._txtunselectnamecn.text = ActivityCo.name
+	self._txtunselectnameen.text = ActivityCo.nameEn
 
-	gohelper.setActive(arg_6_0._goreddot, true)
+	gohelper.setActive(self._goreddot, true)
 
-	if arg_6_0._mo.type == ActivityEnum.ActivityType.Normal then
-		local var_6_6 = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.NorSign).showCenter
-		local var_6_7 = ActivityConfig.instance:getActivityCenterCo(var_6_6).reddotid
+	if self._mo.type == ActivityEnum.ActivityType.Normal then
+		center = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.NorSign).showCenter
+		dotId = ActivityConfig.instance:getActivityCenterCo(center).reddotid
+		self._selected = actId == ActivityModel.instance:getTargetActivityCategoryId(center)
 
-		arg_6_0._selected = var_6_2 == ActivityModel.instance:getTargetActivityCategoryId(var_6_6)
+		if actId == ActivityEnum.Activity.NoviceInsight then
+			RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.ActivityNoviceInsight)
 
-		if var_6_2 == ActivityEnum.Activity.NoviceInsight then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, RedDotEnum.DotNode.ActivityNoviceInsight)
-
-			if arg_6_0._selected then
+			if self._selected then
 				RedDotRpc.instance:sendShowRedDotRequest(RedDotEnum.DotNode.ActivityNoviceInsight, false)
 			end
 		else
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_7, var_6_2)
+			RedDotController.instance:addRedDot(self._goreddot, dotId, actId)
 		end
-	elseif arg_6_0._mo.type == ActivityEnum.ActivityType.Beginner then
-		arg_6_0._selected = var_6_2 == ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Beginner)
+	elseif self._mo.type == ActivityEnum.ActivityType.Beginner then
+		self._selected = actId == ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Beginner)
+		dotId = ActivityConfig.instance:getActivityCenterCo(ActivityEnum.ActivityType.Beginner).reddotid
 
-		local var_6_8 = ActivityConfig.instance:getActivityCenterCo(ActivityEnum.ActivityType.Beginner).reddotid
+		if actId == ActivityEnum.Activity.DreamShow then
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
+		elseif actId == DoubleDropModel.instance:getActId() then
+			RedDotController.instance:addRedDot(self._goreddot, dotId, actId, self.checkActivityShowFirstEnter, self)
+		elseif actId == ActivityEnum.Activity.Activity1_7WarmUp then
+			if self._selected then
+				Activity125Controller.instance:saveEnterActDateInfo(actId)
 
-		if var_6_2 == ActivityEnum.Activity.DreamShow then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
-		elseif var_6_2 == DoubleDropModel.instance:getActId() then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, var_6_2, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.Activity1_7WarmUp then
-			if arg_6_0._selected then
-				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
-
-				local var_6_9 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
+				local parentReddot = RedDotConfig.instance:getRedDotCO(dotId).parent
 
 				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-					[tonumber(var_6_9)] = true
+					[tonumber(parentReddot)] = true
 				})
 			end
 
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkIsV1A7WarmupRed, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.Activity1_5WarmUp then
-			if arg_6_0._selected then
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsV1A7WarmupRed, self)
+		elseif actId == ActivityEnum.Activity.Activity1_5WarmUp then
+			if self._selected then
 				Activity146Controller.instance:saveEnterActDateInfo()
 
-				local var_6_10 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
+				local parentReddot = RedDotConfig.instance:getRedDotCO(dotId).parent
 
 				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-					[tonumber(var_6_10)] = true
+					[tonumber(parentReddot)] = true
 				})
 			end
 
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkIsAct146NeedReddot, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.Activity1_8WarmUp then
-			if arg_6_0._selected then
-				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsAct146NeedReddot, self)
+		elseif actId == ActivityEnum.Activity.Activity1_8WarmUp then
+			if self._selected then
+				Activity125Controller.instance:saveEnterActDateInfo(actId)
 
-				local var_6_11 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
+				local parentReddot = RedDotConfig.instance:getRedDotCO(dotId).parent
 
 				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-					[tonumber(var_6_11)] = true
+					[tonumber(parentReddot)] = true
 				})
 			end
 
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkIsV1A8WarmupRed, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.V2a2_TurnBack_H5 then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
-		elseif var_6_2 == VersionActivity2_2Enum.ActivityId.LimitDecorate then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, var_6_2, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.Activity1_9WarmUp or var_6_2 == ActivityEnum.Activity.V3a0_WarmUp or var_6_2 == ActivityEnum.Activity.V2a0_WarmUp or var_6_2 == ActivityEnum.Activity.V2a1_WarmUp or var_6_2 == ActivityEnum.Activity.V2a2_WarmUp or var_6_2 == ActivityEnum.Activity.V2a3_WarmUp or var_6_2 == ActivityEnum.Activity.RoomSign or var_6_2 == ActivityEnum.Activity.V2a5_WarmUp or var_6_2 == ActivityEnum.Activity.V2a6_WarmUp or var_6_2 == ActivityEnum.Activity.V2a7_WarmUp then
-			if arg_6_0._selected then
-				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsV1A8WarmupRed, self)
+		elseif actId == ActivityEnum.Activity.V2a2_TurnBack_H5 then
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
+		elseif actId == VersionActivity2_2Enum.ActivityId.LimitDecorate then
+			RedDotController.instance:addRedDot(self._goreddot, dotId, actId, self.checkActivityShowFirstEnter, self)
+		elseif actId == ActivityEnum.Activity.Activity1_9WarmUp or actId == ActivityEnum.Activity.V3a0_WarmUp or actId == ActivityEnum.Activity.V2a0_WarmUp or actId == ActivityEnum.Activity.V2a1_WarmUp or actId == ActivityEnum.Activity.V2a2_WarmUp or actId == ActivityEnum.Activity.V2a3_WarmUp or actId == ActivityEnum.Activity.RoomSign or actId == ActivityEnum.Activity.V2a5_WarmUp or actId == ActivityEnum.Activity.V2a6_WarmUp or actId == ActivityEnum.Activity.V2a7_WarmUp then
+			if self._selected then
+				Activity125Controller.instance:saveEnterActDateInfo(actId)
 
-				local var_6_12 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
+				local parentReddot = RedDotConfig.instance:getRedDotCO(dotId).parent
 
 				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-					[tonumber(var_6_12)] = true
+					[tonumber(parentReddot)] = true
 				})
 			end
 
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkIsV1A9WarmupRed, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.V2a4_WarmUp then
-			if arg_6_0._selected then
-				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsV1A9WarmupRed, self)
+		elseif actId == ActivityEnum.Activity.V2a4_WarmUp then
+			if self._selected then
+				Activity125Controller.instance:saveEnterActDateInfo(actId)
 
-				local var_6_13 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
+				local parentReddot = RedDotConfig.instance:getRedDotCO(dotId).parent
 
 				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-					[tonumber(var_6_13)] = true
+					[tonumber(parentReddot)] = true
 				})
 			end
 
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4 ~= 0 and var_6_4 or RedDotEnum.DotNode.Activity125Task, nil, arg_6_0._checkIsV2a4WarmupRed, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.V2a9_FreeMonthCard then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, arg_6_0._mo.id)
+			RedDotController.instance:addRedDot(self._goreddot, redDotId ~= 0 and redDotId or RedDotEnum.DotNode.Activity125Task, nil, self._checkIsV2a4WarmupRed, self)
+		elseif actId == ActivityEnum.Activity.V2a9_FreeMonthCard then
+			RedDotController.instance:addRedDot(self._goreddot, dotId, self._mo.id)
 
-			local var_6_14 = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
+			local isRewardGet = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
 
-			gohelper.setActive(arg_6_0._goreddot, var_6_14)
-		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act125 then
-			if arg_6_0._selected then
-				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
+			gohelper.setActive(self._goreddot, isRewardGet)
+		elseif typeId == ActivityEnum.ActivityTypeID.Act125 then
+			if self._selected then
+				Activity125Controller.instance:saveEnterActDateInfo(actId)
 
-				local var_6_15 = RedDotConfig.instance:getRedDotCO(var_6_8).parent
+				local parentReddot = RedDotConfig.instance:getRedDotCO(dotId).parent
 
 				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-					[tonumber(var_6_15)] = true
+					[tonumber(parentReddot)] = true
 				})
 			end
 
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkIsV1A9WarmupRed, arg_6_0)
-		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act189 then
-			local var_6_16 = {
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsV1A9WarmupRed, self)
+		elseif typeId == ActivityEnum.ActivityTypeID.Act189 then
+			local infoList_red = {
 				{
-					id = var_6_4,
-					uid = var_6_2
+					id = redDotId,
+					uid = actId
 				},
 				{
 					id = RedDotEnum.DotNode.Activity189Task,
-					uid = var_6_2
+					uid = actId
 				},
 				{
 					id = RedDotEnum.DotNode.Activity189OnceReward,
-					uid = var_6_2
+					uid = actId
 				}
 			}
 
-			RedDotController.instance:addMultiRedDot(arg_6_0._goreddot, var_6_16)
-		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act201 or var_6_5 == ActivityEnum.ActivityTypeID.Act209 or var_6_5 == ActivityEnum.ActivityTypeID.Act212 or var_6_5 == ActivityEnum.ActivityTypeID.Act214 or var_6_5 == ActivityEnum.ActivityTypeID.Act100 then
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
+			RedDotController.instance:addMultiRedDot(self._goreddot, infoList_red)
+		elseif typeId == ActivityEnum.ActivityTypeID.Act201 or typeId == ActivityEnum.ActivityTypeID.Act209 or typeId == ActivityEnum.ActivityTypeID.Act212 or typeId == ActivityEnum.ActivityTypeID.Act214 or typeId == ActivityEnum.ActivityTypeID.Act100 then
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
+		elseif typeId == ActivityEnum.ActivityTypeID.Act217 then
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsAct217NeedReddot, self)
 		else
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, arg_6_0._mo.id)
+			RedDotController.instance:addRedDot(self._goreddot, dotId, self._mo.id)
 		end
 	end
 
-	gohelper.setActive(arg_6_0._goselect, arg_6_0._selected)
-	gohelper.setActive(arg_6_0._gounselect, not arg_6_0._selected)
+	gohelper.setActive(self._goselect, self._selected)
+	gohelper.setActive(self._gounselect, not self._selected)
 end
 
-function var_0_0.checkActivityShowFirstEnter(arg_7_0, arg_7_1)
-	arg_7_1:defaultRefreshDot()
+function ActivityCategoryItem:checkActivityShowFirstEnter(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	if not arg_7_1.show then
-		arg_7_1.show = ActivityBeginnerController.instance:checkFirstEnter(arg_7_0._mo.id)
+	if not redDotIcon.show then
+		redDotIcon.show = ActivityBeginnerController.instance:checkFirstEnter(self._mo.id)
 
-		arg_7_1:showRedDot(RedDotEnum.Style.NewTag)
+		redDotIcon:showRedDot(RedDotEnum.Style.NewTag)
 	end
 end
 
-function var_0_0.checkActivityNewStage(arg_8_0, arg_8_1)
-	arg_8_1:defaultRefreshDot()
+function ActivityCategoryItem:checkActivityNewStage(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	if not arg_8_1.show then
-		arg_8_1.show = ActivityBeginnerController.instance:checkActivityNewStage(arg_8_0._mo.id)
+	if not redDotIcon.show then
+		redDotIcon.show = ActivityBeginnerController.instance:checkActivityNewStage(self._mo.id)
 
-		arg_8_1:showRedDot(RedDotEnum.Style.Normal)
+		redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 	end
 end
 
-function var_0_0.checkIsAct146NeedReddot(arg_9_0, arg_9_1)
-	arg_9_1:defaultRefreshDot()
+function ActivityCategoryItem:checkIsAct217NeedReddot(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	if not arg_9_1.show then
-		local var_9_0 = Activity146Controller.instance:isActFirstEnterToday()
-		local var_9_1 = Activity146Model.instance:isAllEpisodeFinish()
-		local var_9_2 = Activity146Model.instance:isHasEpisodeCanReceiveReward()
+	if not redDotIcon.show then
+		local expCount = Activity217Model.instance:getExpEpisodeCount(self._mo.id)
+		local coinCount = Activity217Model.instance:getCoinEpisodeCount(self._mo.id)
+		local firstShow = ActivityBeginnerController.instance:checkFirstEnter(self._mo.id)
+		local needShow = expCount > 0 and coinCount > 0 and firstShow
 
-		arg_9_1.show = var_9_0 and (not var_9_1 or var_9_2)
+		redDotIcon.show = needShow
 
-		arg_9_1:showRedDot(RedDotEnum.Style.Normal)
+		redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 	end
 end
 
-function var_0_0.checkIsV1A7WarmupRed(arg_10_0, arg_10_1)
-	arg_10_1.show = Activity125Controller.instance:checkActRed(ActivityEnum.Activity.Activity1_7WarmUp)
+function ActivityCategoryItem:checkIsAct146NeedReddot(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	arg_10_1:showRedDot(RedDotEnum.Style.Normal)
+	if not redDotIcon.show then
+		local isFirstEnterToday = Activity146Controller.instance:isActFirstEnterToday()
+		local isAllEpisodeFinish = Activity146Model.instance:isAllEpisodeFinish()
+		local hasEpisodeCanReceiveReward = Activity146Model.instance:isHasEpisodeCanReceiveReward()
+
+		redDotIcon.show = isFirstEnterToday and (not isAllEpisodeFinish or hasEpisodeCanReceiveReward)
+
+		redDotIcon:showRedDot(RedDotEnum.Style.Normal)
+	end
 end
 
-function var_0_0.checkIsV1A8WarmupRed(arg_11_0, arg_11_1)
-	arg_11_1.show = Activity125Controller.instance:checkActRed1(ActivityEnum.Activity.Activity1_8WarmUp)
+function ActivityCategoryItem:checkIsV1A7WarmupRed(redDotIcon)
+	redDotIcon.show = Activity125Controller.instance:checkActRed(ActivityEnum.Activity.Activity1_7WarmUp)
 
-	arg_11_1:showRedDot(RedDotEnum.Style.Normal)
+	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 end
 
-function var_0_0.checkIsV1A9WarmupRed(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._mo.id
+function ActivityCategoryItem:checkIsV1A8WarmupRed(redDotIcon)
+	redDotIcon.show = Activity125Controller.instance:checkActRed1(ActivityEnum.Activity.Activity1_8WarmUp)
 
-	arg_12_1.show = Activity125Controller.instance:checkActRed2(var_12_0)
-
-	arg_12_1:showRedDot(RedDotEnum.Style.Normal)
+	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 end
 
-function var_0_0.setRedDotData(arg_13_0)
-	ActivityBeginnerController.instance:setFirstEnter(arg_13_0._mo.id)
+function ActivityCategoryItem:checkIsV1A9WarmupRed(redDotIcon)
+	local actId = self._mo.id
+
+	redDotIcon.show = Activity125Controller.instance:checkActRed2(actId)
+
+	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 end
 
-function var_0_0.playEnterAnim(arg_14_0)
-	local var_14_0 = Mathf.Clamp01((Time.realtimeSinceStartup - ActivityBeginnerCategoryListModel.instance.openViewTime) / arg_14_0._openAnimTime)
-
-	arg_14_0._anim:Play(UIAnimationName.Open, 0, var_14_0)
+function ActivityCategoryItem:setRedDotData()
+	ActivityBeginnerController.instance:setFirstEnter(self._mo.id)
 end
 
-function var_0_0.onDestroy(arg_15_0)
+function ActivityCategoryItem:playEnterAnim()
+	local openAnimProgress = Mathf.Clamp01((Time.realtimeSinceStartup - ActivityBeginnerCategoryListModel.instance.openViewTime) / self._openAnimTime)
+
+	self._anim:Play(UIAnimationName.Open, 0, openAnimProgress)
+end
+
+function ActivityCategoryItem:onDestroy()
 	return
 end
 
-function var_0_0._checkIsV2a4WarmupRed(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._mo.id
+function ActivityCategoryItem:_checkIsV2a4WarmupRed(redDotIcon)
+	local actId = self._mo.id
 
-	arg_16_1.show = Activity125Controller.instance:checkActRed3(var_16_0)
+	redDotIcon.show = Activity125Controller.instance:checkActRed3(actId)
 
-	arg_16_1:showRedDot(RedDotEnum.Style.Normal)
+	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 end
 
-return var_0_0
+return ActivityCategoryItem

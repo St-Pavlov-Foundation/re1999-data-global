@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.define.VersionActivity2_8BossEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/define/VersionActivity2_8BossEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_8.dungeonboss.define.VersionActivity2_8BossEnum", package.seeall)
 
-var_0_0.BossActChapterId = 28102
-var_0_0.ElementId = 101023
-var_0_0.RainMap = {
+local VersionActivity2_8BossEnum = _M
+
+VersionActivity2_8BossEnum.BossActChapterId = 28102
+VersionActivity2_8BossEnum.ElementId = 101023
+VersionActivity2_8BossEnum.RainMap = {
 	minId = 11024,
 	maxId = 11025
 }
-var_0_0.HeroGroupId = {
+VersionActivity2_8BossEnum.HeroGroupId = {
 	Second = 14,
 	First = 13
 }
-var_0_0.PrefsKey = {
+VersionActivity2_8BossEnum.PrefsKey = {
 	BossActUnlock = 1,
 	BossActSelected = 2
 }
-var_0_0.AutoEnterNextEpisodeFight = 2810104
-var_0_0.StoryBossLastEpisode = 2810105
-var_0_0.StoryBossSecondEpisode = 2810102
-var_0_0.SceneNearScale = 2
-var_0_0.StoryBoss_EpisodeStoryId = 101033
-var_0_0.StoryBossSecondEpisodeGuideId = 28002
-var_0_0.RainEffectEpisodeId = 11024
+VersionActivity2_8BossEnum.AutoEnterNextEpisodeFight = 2810104
+VersionActivity2_8BossEnum.StoryBossLastEpisode = 2810105
+VersionActivity2_8BossEnum.StoryBossSecondEpisode = 2810102
+VersionActivity2_8BossEnum.SceneNearScale = 2
+VersionActivity2_8BossEnum.StoryBoss_EpisodeStoryId = 101033
+VersionActivity2_8BossEnum.StoryBossSecondEpisodeGuideId = 28002
+VersionActivity2_8BossEnum.RainEffectEpisodeId = 11024
 
-return var_0_0
+return VersionActivity2_8BossEnum

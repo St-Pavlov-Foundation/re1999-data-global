@@ -1,102 +1,104 @@
-﻿module("modules.logic.main.view.MainSwitchCategoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainSwitchCategoryItem.lua
 
-local var_0_0 = class("MainSwitchCategoryItem", ListScrollCellExtend)
+module("modules.logic.main.view.MainSwitchCategoryItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtitemcn1 = gohelper.findChildText(arg_1_0.viewGO, "bg1/#txt_itemcn1")
-	arg_1_0._goreddot1 = gohelper.findChild(arg_1_0.viewGO, "bg1/#txt_itemcn1/#go_reddot1")
-	arg_1_0._txtitemen1 = gohelper.findChildText(arg_1_0.viewGO, "bg1/#txt_itemen1")
-	arg_1_0._txtitemcn2 = gohelper.findChildText(arg_1_0.viewGO, "bg2/#txt_itemcn2")
-	arg_1_0._goreddot2 = gohelper.findChild(arg_1_0.viewGO, "bg2/#txt_itemcn2/#go_reddot2")
-	arg_1_0._txtitemen2 = gohelper.findChildText(arg_1_0.viewGO, "bg2/#txt_itemen2")
+local MainSwitchCategoryItem = class("MainSwitchCategoryItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainSwitchCategoryItem:onInitView()
+	self._txtitemcn1 = gohelper.findChildText(self.viewGO, "bg1/#txt_itemcn1")
+	self._goreddot1 = gohelper.findChild(self.viewGO, "bg1/#txt_itemcn1/#go_reddot1")
+	self._txtitemen1 = gohelper.findChildText(self.viewGO, "bg1/#txt_itemen1")
+	self._txtitemcn2 = gohelper.findChildText(self.viewGO, "bg2/#txt_itemcn2")
+	self._goreddot2 = gohelper.findChild(self.viewGO, "bg2/#txt_itemcn2/#go_reddot2")
+	self._txtitemen2 = gohelper.findChildText(self.viewGO, "bg2/#txt_itemen2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MainSwitchCategoryItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MainSwitchCategoryItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._btnCategory = SLFramework.UGUI.UIClickListener.Get(arg_4_0.viewGO)
+function MainSwitchCategoryItem:_editableInitView()
+	self._btnCategory = SLFramework.UGUI.UIClickListener.Get(self.viewGO)
 
-	arg_4_0._btnCategory:AddClickListener(arg_4_0._onItemClick, arg_4_0)
+	self._btnCategory:AddClickListener(self._onItemClick, self)
 
-	arg_4_0._bgs = arg_4_0:getUserDataTb_()
+	self._bgs = self:getUserDataTb_()
 
-	for iter_4_0 = 1, 2 do
-		arg_4_0._bgs[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, "bg" .. tostring(iter_4_0))
+	for i = 1, 2 do
+		self._bgs[i] = gohelper.findChild(self.viewGO, "bg" .. tostring(i))
 	end
 
-	gohelper.setActive(arg_4_0._bgs[2], false)
+	gohelper.setActive(self._bgs[2], false)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_5_0._refreshReddot, arg_5_0)
+function MainSwitchCategoryItem:_editableAddEvents()
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshReddot, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_6_0._refreshReddot, arg_6_0)
+function MainSwitchCategoryItem:_editableRemoveEvents()
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshReddot, self)
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
+function MainSwitchCategoryItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_7_0:refreshStatus()
+	self:refreshStatus()
 end
 
-function var_0_0.refreshStatus(arg_8_0)
-	local var_8_0 = arg_8_0:_isSelected()
+function MainSwitchCategoryItem:refreshStatus()
+	local target = self:_isSelected()
 
-	gohelper.setActive(arg_8_0._bgs[1], not var_8_0)
-	gohelper.setActive(arg_8_0._bgs[2], var_8_0)
-	arg_8_0:_refreshReddot()
+	gohelper.setActive(self._bgs[1], not target)
+	gohelper.setActive(self._bgs[2], target)
+	self:_refreshReddot()
 end
 
-function var_0_0._refreshReddot(arg_9_0)
-	local var_9_0 = false
+function MainSwitchCategoryItem:_refreshReddot()
+	local showReddot = false
 
-	if arg_9_0._mo.id == MainEnum.SwitchType.Scene then
-		var_9_0 = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0)
+	if self._mo.id == MainEnum.SwitchType.Scene then
+		showReddot = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0)
 
-		if var_9_0 and arg_9_0:_isSelected() then
+		if showReddot and self:_isSelected() then
 			MainSceneSwitchController.closeReddot()
 
-			var_9_0 = false
+			showReddot = false
 		end
 	end
 
-	gohelper.setActive(arg_9_0._goreddot1, var_9_0)
+	gohelper.setActive(self._goreddot1, showReddot)
 end
 
-function var_0_0._isSelected(arg_10_0)
-	return arg_10_0._mo.id == MainSwitchCategoryListModel.instance:getCategoryId()
+function MainSwitchCategoryItem:_isSelected()
+	return self._mo.id == MainSwitchCategoryListModel.instance:getCategoryId()
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
+function MainSwitchCategoryItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0._onItemClick(arg_12_0)
-	if arg_12_0:_isSelected() then
+function MainSwitchCategoryItem:_onItemClick()
+	if self:_isSelected() then
 		return
 	end
 
-	MainSwitchCategoryListModel.instance:setCategoryId(arg_12_0._mo.id)
+	MainSwitchCategoryListModel.instance:setCategoryId(self._mo.id)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.SwitchCategoryClick, arg_12_0._mo.id)
+	MainSceneSwitchController.instance:dispatchEvent(MainSceneSwitchEvent.SwitchCategoryClick, self._mo.id)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	if arg_13_0._btnCategory then
-		arg_13_0._btnCategory:RemoveClickListener()
+function MainSwitchCategoryItem:onDestroyView()
+	if self._btnCategory then
+		self._btnCategory:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return MainSwitchCategoryItem

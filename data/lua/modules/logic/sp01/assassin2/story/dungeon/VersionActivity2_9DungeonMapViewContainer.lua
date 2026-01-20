@@ -1,38 +1,42 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonMapViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonMapViewContainer", VersionActivityFixedDungeonMapViewContainer)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.mapScene = VersionActivityFixedHelper.getVersionActivityDungeonMapScene().New()
-	arg_1_0.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements().New()
-	arg_1_0.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView().New()
-	arg_1_0.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView().New()
-	arg_1_0.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView().New()
-	arg_1_0.mapElementReward = VersionActivity2_9DungeonMapElementReward.New()
-	arg_1_0.director = VersionActivity2_9DungeonMapDirector.New()
+local VersionActivity2_9DungeonMapViewContainer = class("VersionActivity2_9DungeonMapViewContainer", VersionActivityFixedDungeonMapViewContainer)
 
-	local var_1_0 = {
+function VersionActivity2_9DungeonMapViewContainer:buildViews()
+	self.mapScene = VersionActivityFixedHelper.getVersionActivityDungeonMapScene().New()
+	self.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements().New()
+	self.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView().New()
+	self.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView().New()
+	self.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView().New()
+	self.mapElementReward = VersionActivity2_9DungeonMapElementReward.New()
+	self.director = VersionActivity2_9DungeonMapDirector.New()
+
+	local views = {
 		VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView().New(),
-		arg_1_0.mapSceneElements,
-		arg_1_0.mapScene,
-		arg_1_0.mapView,
-		arg_1_0.mapEpisodeView,
-		arg_1_0.interactView,
-		arg_1_0.mapElementReward,
-		arg_1_0.director,
+		self.mapSceneElements,
+		self.mapScene,
+		self.mapView,
+		self.mapEpisodeView,
+		self.interactView,
+		self.mapElementReward,
+		self.director,
 		VersionActivity2_9DungeonMapExtraView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 
 	if isDebugBuild then
-		table.insert(var_1_0, VersionActivity2_9DungeonMapEditView.New())
+		table.insert(views, VersionActivity2_9DungeonMapEditView.New())
 	end
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	ZProj.ProjAnimatorPlayer.Get(arg_2_0.viewGO):Play("to_game", arg_2_0.onPlayCloseTransitionFinish, arg_2_0)
+function VersionActivity2_9DungeonMapViewContainer:playCloseTransition()
+	local animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+
+	animatorPlayer:Play("to_game", self.onPlayCloseTransitionFinish, self)
 end
 
-return var_0_0
+return VersionActivity2_9DungeonMapViewContainer

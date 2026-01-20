@@ -1,285 +1,359 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballCityView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballCityView.lua
 
-local var_0_0 = class("PinballCityView", BaseView)
+module("modules.logic.versionactivity2_4.pinball.view.PinballCityView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_start")
-	arg_1_0._btnrest = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_rest")
-	arg_1_0._gorestgery = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_rest/gery")
-	arg_1_0._btnend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_end")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_task")
-	arg_1_0._gotaskred = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_task/#go_reddotreward")
-	arg_1_0._txtDay = gohelper.findChildTextMesh(arg_1_0.viewGO, "Top/#txt_day")
-	arg_1_0._topCurrencyRoot = gohelper.findChild(arg_1_0.viewGO, "Top/#go_currency")
-	arg_1_0._leftCurrencyRoot = gohelper.findChild(arg_1_0.viewGO, "Left/#go_currency")
-	arg_1_0._leftCurrencyItem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_currency/go_item")
-	arg_1_0._btnmood = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_mood/#btn_mood")
-	arg_1_0._imagemoodicon = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_mood/#btn_mood/#simage_icon")
-	arg_1_0._imagemood1 = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_mood/#btn_mood/#simage_progress1")
-	arg_1_0._imagemood2 = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_mood/#btn_mood/#simage_progress2")
-	arg_1_0._imagemood2_eff = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_mood/#btn_mood/#simage_progress2/#simage_progress2_eff")
-	arg_1_0._btntip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_mood/#btn_tips")
-	arg_1_0._gotipright = gohelper.findChild(arg_1_0.viewGO, "Left/#go_mood/#go_tipright")
-	arg_1_0._gotiptop = gohelper.findChild(arg_1_0.viewGO, "Left/#go_mood/#go_tiptop")
-	arg_1_0._txttiptopnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/#go_mood/#go_tiptop/layout/#txt_num")
-	arg_1_0._txtrighttips = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/#go_mood/#go_tipright/#scroll_dec/Viewport/Content/#txt_desc")
-	arg_1_0._btnclosetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_mood/#go_tipright/#btn_close")
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
+local PinballCityView = class("PinballCityView", BaseView)
+
+function PinballCityView:onInitView()
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_start")
+	self._btnrest = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_rest")
+	self._gorestgery = gohelper.findChild(self.viewGO, "Right/#btn_rest/gery")
+	self._btnend = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_end")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_task")
+	self._gotaskred = gohelper.findChild(self.viewGO, "Right/#btn_task/#go_reddotreward")
+	self._txtDay = gohelper.findChildTextMesh(self.viewGO, "Top/#txt_day")
+	self._topCurrencyRoot = gohelper.findChild(self.viewGO, "Top/#go_currency")
+	self._leftCurrencyRoot = gohelper.findChild(self.viewGO, "Left/#go_currency")
+	self._leftCurrencyItem = gohelper.findChild(self.viewGO, "Left/#go_currency/go_item")
+	self._btnmood = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_mood/#btn_mood")
+	self._imagemoodicon = gohelper.findChildImage(self.viewGO, "Left/#go_mood/#btn_mood/#simage_icon")
+	self._imagemood1 = gohelper.findChildImage(self.viewGO, "Left/#go_mood/#btn_mood/#simage_progress1")
+	self._imagemood2 = gohelper.findChildImage(self.viewGO, "Left/#go_mood/#btn_mood/#simage_progress2")
+	self._imagemood2_eff = gohelper.findChildImage(self.viewGO, "Left/#go_mood/#btn_mood/#simage_progress2/#simage_progress2_eff")
+	self._btntip = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_mood/#btn_tips")
+	self._gotipright = gohelper.findChild(self.viewGO, "Left/#go_mood/#go_tipright")
+	self._gotiptop = gohelper.findChild(self.viewGO, "Left/#go_mood/#go_tiptop")
+	self._txttiptopnum = gohelper.findChildTextMesh(self.viewGO, "Left/#go_mood/#go_tiptop/layout/#txt_num")
+	self._txtrighttips = gohelper.findChildTextMesh(self.viewGO, "Left/#go_mood/#go_tipright/#scroll_dec/Viewport/Content/#txt_desc")
+	self._btnclosetip = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_mood/#go_tipright/#btn_close")
+	self._goTry = gohelper.findChild(self.viewGO, "Left/#go_Try")
+	self._goTips = gohelper.findChild(self.viewGO, "Left/#go_Try/#go_Tips")
+	self._simageReward = gohelper.findChildSingleImage(self.viewGO, "Left/#go_Try/#go_Tips/#simage_Reward")
+	self._txtNum = gohelper.findChildText(self.viewGO, "Left/#go_Try/#go_Tips/#txt_Num")
+	self._btnitem = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_Try/#go_Tips/#btn_item")
+	self._goResetBtn = gohelper.findChild(self.viewGO, "Left/image_ResetBtn")
+	self._goTryBtn = gohelper.findChild(self.viewGO, "Left/#go_Try/image_TryBtn")
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._onStartClick, arg_2_0)
-	arg_2_0._btnrest:AddClickListener(arg_2_0._onRestClick, arg_2_0)
-	arg_2_0._btnend:AddClickListener(arg_2_0._onEndClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._onTaskClick, arg_2_0)
-	arg_2_0._btnclosetip:AddClickListener(arg_2_0.closeTips, arg_2_0)
-	arg_2_0._btnmood:AddClickListener(arg_2_0._openCloseTopTips, arg_2_0)
-	arg_2_0._btntip:AddClickListener(arg_2_0._openCloseRightTips, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.EndRound, arg_2_0._refreshUI, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.OperChange, arg_2_0._refreshUI, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, arg_2_0._refreshMood, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.OperBuilding, arg_2_0._refreshMood, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.LearnTalent, arg_2_0._refreshMood, arg_2_0)
-	arg_2_0.viewContainer:registerCallback(PinballEvent.ClickScene, arg_2_0.closeTips, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0.closeTips, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0.onViewClose, arg_2_0)
+function PinballCityView:addEvents()
+	self._btnstart:AddClickListener(self._onStartClick, self)
+	self._btnrest:AddClickListener(self._onRestClick, self)
+	self._btnend:AddClickListener(self._onEndClick, self)
+	self._btntask:AddClickListener(self._onTaskClick, self)
+	self._btnclosetip:AddClickListener(self.closeTips, self)
+	self._btnmood:AddClickListener(self._openCloseTopTips, self)
+	self._btntip:AddClickListener(self._openCloseRightTips, self)
+
+	self._btnReset = SLFramework.UGUI.UIClickListener.Get(self._goResetBtn)
+
+	self._btnReset:AddClickListener(self._clickReset, self)
+
+	self._btnTry = SLFramework.UGUI.UIClickListener.Get(self._goTryBtn)
+
+	self._btnTry:AddClickListener(self._clickTrial, self)
+	PinballController.instance:registerCallback(PinballEvent.EndRound, self._refreshUI, self)
+	PinballController.instance:registerCallback(PinballEvent.OperChange, self._refreshUI, self)
+	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, self._refreshMood, self)
+	PinballController.instance:registerCallback(PinballEvent.OperBuilding, self._refreshMood, self)
+	PinballController.instance:registerCallback(PinballEvent.LearnTalent, self._refreshMood, self)
+	PinballController.instance:registerCallback(PinballEvent.DataInited, self._refreshUI, self)
+	self.viewContainer:registerCallback(PinballEvent.ClickScene, self.closeTips, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.closeTips, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self.onViewClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnrest:RemoveClickListener()
-	arg_3_0._btnend:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnclosetip:RemoveClickListener()
-	arg_3_0._btnmood:RemoveClickListener()
-	arg_3_0._btntip:RemoveClickListener()
-	PinballController.instance:unregisterCallback(PinballEvent.EndRound, arg_3_0._refreshUI, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.OperChange, arg_3_0._refreshUI, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, arg_3_0._refreshMood, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.OperBuilding, arg_3_0._refreshMood, arg_3_0)
-	PinballController.instance:unregisterCallback(PinballEvent.LearnTalent, arg_3_0._refreshMood, arg_3_0)
-	arg_3_0.viewContainer:unregisterCallback(PinballEvent.ClickScene, arg_3_0.closeTips, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_3_0.closeTips, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0.onViewClose, arg_3_0)
+function PinballCityView:removeEvents()
+	self._btnstart:RemoveClickListener()
+	self._btnrest:RemoveClickListener()
+	self._btnend:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self._btnclosetip:RemoveClickListener()
+	self._btnmood:RemoveClickListener()
+	self._btntip:RemoveClickListener()
+	self._btnReset:RemoveClickListener()
+	self._btnTry:RemoveClickListener()
+	PinballController.instance:unregisterCallback(PinballEvent.EndRound, self._refreshUI, self)
+	PinballController.instance:unregisterCallback(PinballEvent.OperChange, self._refreshUI, self)
+	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, self._refreshMood, self)
+	PinballController.instance:unregisterCallback(PinballEvent.OperBuilding, self._refreshMood, self)
+	PinballController.instance:unregisterCallback(PinballEvent.LearnTalent, self._refreshMood, self)
+	PinballController.instance:unregisterCallback(PinballEvent.DataInited, self._refreshUI, self)
+	self.viewContainer:unregisterCallback(PinballEvent.ClickScene, self.closeTips, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.closeTips, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self.onViewClose, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function PinballCityView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio1)
-	gohelper.setActive(arg_4_0._leftCurrencyItem, false)
-	RedDotController.instance:addRedDot(arg_4_0._gotaskred, RedDotEnum.DotNode.V2a4PinballTaskRed)
-	arg_4_0:closeTips()
-	arg_4_0:createCurrencyItem()
-	arg_4_0:_refreshUI()
+	gohelper.setActive(self._leftCurrencyItem, false)
+	RedDotController.instance:addRedDot(self._gotaskred, RedDotEnum.DotNode.V2a4PinballTaskRed)
+	self:closeTips()
+	self:createCurrencyItem()
+	self:_refreshUI()
 	PinballStatHelper.instance:resetCityDt()
 	PinballController.instance:sendGuideMainLv()
 end
 
-function var_0_0.onViewClose(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.PinballDayEndView or arg_5_1 == ViewName.PinballGameView then
-		arg_5_0._anim.enabled = true
+function PinballCityView:onViewClose(viewName)
+	if viewName == ViewName.PinballDayEndView or viewName == ViewName.PinballGameView then
+		self._anim.enabled = true
 
-		arg_5_0._anim:Play("open", 0, 0)
+		self._anim:Play("open", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio1)
-		TaskDispatcher.runDelay(arg_5_0._openAnimFinish, arg_5_0, 1.84)
+		TaskDispatcher.runDelay(self._openAnimFinish, self, 1.84)
 	end
 end
 
-function var_0_0._openAnimFinish(arg_6_0)
-	arg_6_0._anim.enabled = false
+function PinballCityView:_openAnimFinish()
+	self._anim.enabled = false
 end
 
-function var_0_0.closeTips(arg_7_0)
-	gohelper.setActive(arg_7_0._gotipright, false)
-	gohelper.setActive(arg_7_0._btntip, true)
-	gohelper.setActive(arg_7_0._gotiptop, false)
+function PinballCityView:closeTips()
+	gohelper.setActive(self._gotipright, false)
+	gohelper.setActive(self._btntip, true)
+	gohelper.setActive(self._gotiptop, false)
 end
 
-function var_0_0._openCloseTopTips(arg_8_0)
-	gohelper.setActive(arg_8_0._gotipright, false)
-	gohelper.setActive(arg_8_0._btntip, true)
-	gohelper.setActive(arg_8_0._gotiptop, not arg_8_0._gotiptop.activeSelf)
+function PinballCityView:_openCloseTopTips()
+	gohelper.setActive(self._gotipright, false)
+	gohelper.setActive(self._btntip, true)
+	gohelper.setActive(self._gotiptop, not self._gotiptop.activeSelf)
 end
 
-function var_0_0._openCloseRightTips(arg_9_0)
-	gohelper.setActive(arg_9_0._gotipright, not arg_9_0._gotipright.activeSelf)
-	gohelper.setActive(arg_9_0._btntip, not arg_9_0._gotipright.activeSelf)
-	gohelper.setActive(arg_9_0._gotiptop, false)
+function PinballCityView:_openCloseRightTips()
+	gohelper.setActive(self._gotipright, not self._gotipright.activeSelf)
+	gohelper.setActive(self._btntip, not self._gotipright.activeSelf)
+	gohelper.setActive(self._gotiptop, false)
 end
 
-function var_0_0.createCurrencyItem(arg_10_0)
-	local var_10_0 = {
+function PinballCityView:_clickReset()
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PinballReset, MsgBoxEnum.BoxType.Yes_No, self._realReset, nil, nil, self)
+end
+
+function PinballCityView:_realReset()
+	self._anim.enabled = true
+
+	self._anim:Play("open", 0, 0)
+	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio1)
+	TaskDispatcher.runDelay(self._openAnimFinish, self, 1.84)
+	PinballStatHelper.instance:sendResetCity()
+	Activity178Rpc.instance:sendAct178Reset(VersionActivity2_4Enum.ActivityId.Pinball)
+end
+
+function PinballCityView:_clickTrial()
+	if ActivityHelper.getActivityStatus(VersionActivity2_4Enum.ActivityId.Pinball) == ActivityEnum.ActivityStatus.Normal then
+		local actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_4Enum.ActivityId.Pinball)
+		local episodeId = actCo.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function PinballCityView:_clickLock()
+	local actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_4Enum.ActivityId.Pinball)
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(actCo.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
+end
+
+function PinballCityView:createCurrencyItem()
+	local topCurrency = {
 		PinballEnum.ResType.Wood,
 		PinballEnum.ResType.Mine,
 		PinballEnum.ResType.Stone
 	}
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = arg_10_0:getResInst(arg_10_0.viewContainer._viewSetting.otherRes.currency, arg_10_0._topCurrencyRoot)
+	for _, currencyType in ipairs(topCurrency) do
+		local go = self:getResInst(self.viewContainer._viewSetting.otherRes.currency, self._topCurrencyRoot)
+		local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, PinballCurrencyItem)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_10_1, PinballCurrencyItem):setCurrencyType(iter_10_1)
+		comp:setCurrencyType(currencyType)
 	end
 
-	local var_10_2 = {
+	local leftCurrency = {
 		PinballEnum.ResType.Food,
 		PinballEnum.ResType.Play
 	}
 
-	for iter_10_2, iter_10_3 in ipairs(var_10_2) do
-		local var_10_3 = gohelper.cloneInPlace(arg_10_0._leftCurrencyItem)
+	for _, currencyType in ipairs(leftCurrency) do
+		local go = gohelper.cloneInPlace(self._leftCurrencyItem)
 
-		gohelper.setActive(var_10_3, true)
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_10_3, PinballCurrencyItem2):setCurrencyType(iter_10_3)
+		gohelper.setActive(go, true)
+
+		local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, PinballCurrencyItem2)
+
+		comp:setCurrencyType(currencyType)
 	end
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	local var_11_0 = PinballModel.instance.oper ~= PinballEnum.OperType.None
+function PinballCityView:_refreshUI()
+	local isFinishDay = PinballModel.instance.oper ~= PinballEnum.OperType.None
 
-	gohelper.setActive(arg_11_0._btnstart, not var_11_0)
-	gohelper.setActive(arg_11_0._btnrest, not var_11_0)
-	gohelper.setActive(arg_11_0._btnend, var_11_0)
-	gohelper.setActive(arg_11_0._gorestgery, PinballModel.instance.restCdDay > 0)
+	gohelper.setActive(self._btnstart, not isFinishDay)
+	gohelper.setActive(self._btnrest, not isFinishDay)
+	gohelper.setActive(self._btnend, isFinishDay)
+	gohelper.setActive(self._gorestgery, PinballModel.instance.restCdDay > 0)
 
-	arg_11_0._txtDay.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_day"), PinballModel.instance.day)
+	self._txtDay.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("pinball_day"), PinballModel.instance.day)
 
-	arg_11_0:_refreshMood()
+	self:_refreshMood()
+	self:_refreshResetShow()
 end
 
-function var_0_0._refreshMood(arg_12_0)
-	local var_12_0 = 0
-	local var_12_1 = {}
-	local var_12_2 = 0
+function PinballCityView:_refreshMood()
+	local addVal = 0
+	local arr = {}
+	local index = 0
 
 	if PinballModel.instance:getTotalFoodCost() > PinballModel.instance:getResNum(PinballEnum.ResType.Food) then
-		local var_12_3 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.NoFoodAddComplaint)
+		local val = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.NoFoodAddComplaint)
 
-		if var_12_3 ~= 0 then
-			var_12_2 = var_12_2 + 1
+		if val ~= 0 then
+			index = index + 1
 
-			table.insert(var_12_1, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_food_not_enough"), var_12_2, var_12_3))
+			table.insert(arr, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_food_not_enough"), index, val))
 
-			var_12_0 = var_12_0 + var_12_3
+			addVal = addVal + val
 		end
 	else
-		local var_12_4 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.FoodEnoughSubComplaint)
+		local val = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.FoodEnoughSubComplaint)
 
-		if var_12_4 ~= 0 then
-			var_12_2 = var_12_2 + 1
+		if val ~= 0 then
+			index = index + 1
 
-			table.insert(var_12_1, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_food_enough"), var_12_2, var_12_4))
+			table.insert(arr, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_food_enough"), index, val))
 
-			var_12_0 = var_12_0 - var_12_4
+			addVal = addVal - val
 		end
 	end
 
 	if PinballModel.instance:getTotalPlayDemand() > PinballModel.instance:getResNum(PinballEnum.ResType.Play) then
-		local var_12_5 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.NoPlayAddComplaint)
+		local val = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.NoPlayAddComplaint)
 
-		if var_12_5 ~= 0 then
-			var_12_2 = var_12_2 + 1
+		if val ~= 0 then
+			index = index + 1
 
-			table.insert(var_12_1, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_play_not_enough"), var_12_2, var_12_5))
+			table.insert(arr, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_play_not_enough"), index, val))
 
-			var_12_0 = var_12_0 + var_12_5
+			addVal = addVal + val
 		end
 	else
-		local var_12_6 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.PlayEnoughSubComplaint)
+		local val = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.PlayEnoughSubComplaint)
 
-		if var_12_6 ~= 0 then
-			var_12_2 = var_12_2 + 1
+		if val ~= 0 then
+			index = index + 1
 
-			table.insert(var_12_1, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_play_enough"), var_12_2, var_12_6))
+			table.insert(arr, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_play_enough"), index, val))
 
-			var_12_0 = var_12_0 - var_12_6
+			addVal = addVal - val
 		end
 	end
 
 	if PinballModel.instance.oper == PinballEnum.OperType.Rest and PinballModel.instance.restCdDay <= 0 then
-		local var_12_7 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.RestSubComplaint)
+		local val = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.RestSubComplaint)
 
-		if var_12_7 ~= 0 then
-			local var_12_8 = var_12_2 + 1
+		if val ~= 0 then
+			index = index + 1
 
-			table.insert(var_12_1, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_rest"), var_12_8, var_12_7))
+			table.insert(arr, GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_rest"), index, val))
 
-			var_12_0 = var_12_0 - var_12_7
+			addVal = addVal - val
 		end
 	end
 
-	arg_12_0._txtrighttips.text = table.concat(var_12_1, "\n")
+	self._txtrighttips.text = table.concat(arr, "\n")
 
-	local var_12_9 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit)
-	local var_12_10 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThreshold)
-	local var_12_11 = PinballModel.instance:getResNum(PinballEnum.ResType.Complaint)
-	local var_12_12 = var_12_0 + var_12_11
-	local var_12_13 = Mathf.Clamp(var_12_12, 0, var_12_9)
-	local var_12_14 = 1
+	local max = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintLimit)
+	local threshold = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ComplaintThreshold)
+	local cur = PinballModel.instance:getResNum(PinballEnum.ResType.Complaint)
+	local next = addVal + cur
 
-	if var_12_9 <= var_12_11 then
-		var_12_14 = 3
-	elseif var_12_10 <= var_12_11 then
-		var_12_14 = 2
+	next = Mathf.Clamp(next, 0, max)
+
+	local curStage = 1
+
+	if max <= cur then
+		curStage = 3
+	elseif threshold <= cur then
+		curStage = 2
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(arg_12_0._imagemoodicon, "v2a4_tutushizi_heart_" .. var_12_14)
-	UISpriteSetMgr.instance:setAct178Sprite(arg_12_0._imagemood2, "v2a4_tutushizi_heartprogress_" .. var_12_14)
+	UISpriteSetMgr.instance:setAct178Sprite(self._imagemoodicon, "v2a4_tutushizi_heart_" .. curStage)
+	UISpriteSetMgr.instance:setAct178Sprite(self._imagemood2, "v2a4_tutushizi_heartprogress_" .. curStage)
 
-	if var_12_13 < var_12_11 then
-		UISpriteSetMgr.instance:setAct178Sprite(arg_12_0._imagemood1, "v2a4_tutushizi_heartprogress_" .. var_12_14)
+	if next < cur then
+		UISpriteSetMgr.instance:setAct178Sprite(self._imagemood1, "v2a4_tutushizi_heartprogress_" .. curStage)
 	else
-		UISpriteSetMgr.instance:setAct178Sprite(arg_12_0._imagemood1, "v2a4_tutushizi_heartprogress_4")
+		UISpriteSetMgr.instance:setAct178Sprite(self._imagemood1, "v2a4_tutushizi_heartprogress_4")
 	end
 
-	local var_12_15 = var_12_11 / var_12_9
-	local var_12_16 = var_12_13 / var_12_9
+	local value1 = cur / max
+	local value2 = next / max
 
-	if var_12_16 < var_12_15 then
-		var_12_15, var_12_16 = var_12_16, var_12_15
+	if value2 < value1 then
+		value1, value2 = value2, value1
 	end
 
-	arg_12_0._imagemood1.fillAmount = var_12_16
-	arg_12_0._imagemood2.fillAmount = var_12_15
-	arg_12_0._imagemood2_eff.fillAmount = var_12_15
+	self._imagemood1.fillAmount = value2
+	self._imagemood2.fillAmount = value1
+	self._imagemood2_eff.fillAmount = value1
 
-	if var_12_11 == var_12_13 then
-		arg_12_0._txttiptopnum.text = string.format("%s/%s", var_12_11, var_12_9)
-	elseif var_12_13 < var_12_11 then
-		arg_12_0._txttiptopnum.text = string.format("%s<#6EC47F>（-%s）</color>/%s", var_12_11, var_12_11 - var_12_13, var_12_9)
+	if cur == next then
+		self._txttiptopnum.text = string.format("%s/%s", cur, max)
+	elseif next < cur then
+		self._txttiptopnum.text = string.format("%s<#6EC47F>（-%s）</color>/%s", cur, cur - next, max)
 	else
-		arg_12_0._txttiptopnum.text = string.format("%s<#D85B5B>（+%s）</color>/%s", var_12_11, var_12_13 - var_12_11, var_12_9)
+		self._txttiptopnum.text = string.format("%s<#D85B5B>（+%s）</color>/%s", cur, next - cur, max)
 	end
 end
 
-function var_0_0._onStartClick(arg_13_0)
+function PinballCityView:_onStartClick()
 	ViewMgr.instance:openView(ViewName.PinballMapSelectView)
 end
 
-function var_0_0._onRestClick(arg_14_0)
+function PinballCityView:_onRestClick()
 	if PinballModel.instance.restCdDay > 0 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.PinballRestConfirm2, MsgBoxEnum.BoxType.Yes_No, arg_14_0.onYesClick, nil, nil, arg_14_0)
+		GameFacade.showMessageBox(MessageBoxIdDefine.PinballRestConfirm2, MsgBoxEnum.BoxType.Yes_No, self.onYesClick, nil, nil, self)
 
 		return
 	end
 
-	GameFacade.showOptionMessageBox(MessageBoxIdDefine.PinballRestConfirm, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.NotShow, arg_14_0.onYesClick, nil, nil, arg_14_0)
+	GameFacade.showOptionMessageBox(MessageBoxIdDefine.PinballRestConfirm, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.NotShow, self.onYesClick, nil, nil, self)
 end
 
-function var_0_0.onYesClick(arg_15_0)
+function PinballCityView:onYesClick()
 	Activity178Rpc.instance:sendAct178Rest(VersionActivity2_4Enum.ActivityId.Pinball)
 end
 
-function var_0_0._onEndClick(arg_16_0)
+function PinballCityView:_onEndClick()
 	Activity178Rpc.instance:sendAct178EndRound(VersionActivity2_4Enum.ActivityId.Pinball)
 end
 
-function var_0_0._onTaskClick(arg_17_0)
+function PinballCityView:_onTaskClick()
 	ViewMgr.instance:openView(ViewName.PinballTaskView)
 end
 
-function var_0_0.onClose(arg_18_0)
+function PinballCityView:onClose()
 	PinballStatHelper.instance:sendExitCity()
-	gohelper.setActive(arg_18_0.viewGO, false)
-	TaskDispatcher.cancelTask(arg_18_0._openAnimFinish, arg_18_0)
+	gohelper.setActive(self.viewGO, false)
+	TaskDispatcher.cancelTask(self._openAnimFinish, self)
 end
 
-return var_0_0
+function PinballCityView:_refreshResetShow()
+	gohelper.setActive(self._btnReset, not self._isLock and PinballModel.instance.day >= PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.ResetDay))
+end
+
+return PinballCityView

@@ -1,271 +1,271 @@
-﻿module("modules.logic.activity.view.V2a6_WeekwalkHeart_FullView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a6_WeekwalkHeart_FullView.lua
 
-local var_0_0 = class("V2a6_WeekwalkHeart_FullView", Activity189BaseView)
+module("modules.logic.activity.view.V2a6_WeekwalkHeart_FullView", package.seeall)
 
-var_0_0.SignInState = {
+local V2a6_WeekwalkHeart_FullView = class("V2a6_WeekwalkHeart_FullView", Activity189BaseView)
+
+V2a6_WeekwalkHeart_FullView.SignInState = {
 	CanGet = 1,
 	HasGet = 2,
 	NotFinish = 0
 }
-var_0_0.ReadTaskId = 530008
+V2a6_WeekwalkHeart_FullView.ReadTaskId = 530008
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/Top/#txt_LimitTime")
-	arg_1_0._btngoto = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/#btn_goto")
-	arg_1_0._rewardItemList = {}
-	arg_1_0._tipItemList = {}
+function V2a6_WeekwalkHeart_FullView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/Top/#txt_LimitTime")
+	self._btngoto = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/#btn_goto")
+	self._rewardItemList = {}
+	self._tipItemList = {}
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
-	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_2_0._onFinishReadTask, arg_2_0)
-	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, arg_2_0._onGetReward, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._refresh, arg_2_0)
+function V2a6_WeekwalkHeart_FullView:addEvents()
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, self._onFinishReadTask, self)
+	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, self._onGetReward, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._refresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngoto:RemoveClickListener()
-	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_3_0._onFinishReadTask, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, arg_3_0._onGetReward, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
-	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._refresh, arg_3_0)
+function V2a6_WeekwalkHeart_FullView:removeEvents()
+	self._btngoto:RemoveClickListener()
+	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, self._onFinishReadTask, self)
+	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, self._onGetReward, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	self:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._refresh, self)
 end
 
-function var_0_0._btngotoOnClick(arg_4_0)
+function V2a6_WeekwalkHeart_FullView:_btngotoOnClick()
 	GameFacade.jump(JumpEnum.JumpView.WeekWalk)
-	arg_4_0:_trySendReadTask()
+	self:_trySendReadTask()
 end
 
-function var_0_0._onFinishReadTask(arg_5_0)
-	arg_5_0:_updateRewardState()
+function V2a6_WeekwalkHeart_FullView:_onFinishReadTask()
+	self:_updateRewardState()
 end
 
-function var_0_0._onGetReward(arg_6_0, arg_6_1)
-	arg_6_0._taskId = arg_6_1
+function V2a6_WeekwalkHeart_FullView:_onGetReward(taskId)
+	self._taskId = taskId
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.CommonPropView then
-		arg_7_0:_updateRewardState()
+function V2a6_WeekwalkHeart_FullView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		self:_updateRewardState()
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:_initReward()
-	arg_8_0:_initTipList()
+function V2a6_WeekwalkHeart_FullView:_editableInitView()
+	self:_initReward()
+	self:_initTipList()
 end
 
-function var_0_0._initReward(arg_9_0)
-	local var_9_0 = Activity189Config.instance:getAllTaskList(arg_9_0:actId())
+function V2a6_WeekwalkHeart_FullView:_initReward()
+	local configList = Activity189Config.instance:getAllTaskList(self:actId())
 
-	for iter_9_0 = 1, 3 do
-		local var_9_1 = arg_9_0:getUserDataTb_()
+	for i = 1, 3 do
+		local item = self:getUserDataTb_()
 
-		var_9_1.co = var_9_0[iter_9_0]
-		var_9_1.go = gohelper.findChild(arg_9_0.viewGO, "Root/Right/rightbg/taskitem" .. iter_9_0)
-		var_9_1.txttask = gohelper.findChildText(var_9_1.go, "#txt_task")
-		var_9_1.goreward = gohelper.findChild(var_9_1.go, "#go_rewarditem")
-		var_9_1.gorewardicon = gohelper.findChild(var_9_1.goreward, "go_icon")
-		var_9_1.gocanget = gohelper.findChild(var_9_1.goreward, "go_canget")
-		var_9_1.goreceive = gohelper.findChild(var_9_1.goreward, "go_receive")
-		var_9_1.gohasget = gohelper.findChild(var_9_1.goreward, "go_receive/go_hasget")
-		var_9_1.btnclick = gohelper.findChildButton(var_9_1.goreward, "btnclick")
-		var_9_1.animget = var_9_1.gohasget:GetComponent(typeof(UnityEngine.Animator))
+		item.co = configList[i]
+		item.go = gohelper.findChild(self.viewGO, "Root/Right/rightbg/taskitem" .. i)
+		item.txttask = gohelper.findChildText(item.go, "#txt_task")
+		item.goreward = gohelper.findChild(item.go, "#go_rewarditem")
+		item.gorewardicon = gohelper.findChild(item.goreward, "go_icon")
+		item.gocanget = gohelper.findChild(item.goreward, "go_canget")
+		item.goreceive = gohelper.findChild(item.goreward, "go_receive")
+		item.gohasget = gohelper.findChild(item.goreward, "go_receive/go_hasget")
+		item.btnclick = gohelper.findChildButton(item.goreward, "btnclick")
+		item.animget = item.gohasget:GetComponent(typeof(UnityEngine.Animator))
 
-		if var_9_1.co then
-			local var_9_2 = string.splitToNumber(var_9_1.co.bonus, "#")
-			local var_9_3 = var_9_2[1]
-			local var_9_4 = var_9_2[2]
-			local var_9_5 = var_9_2[3]
+		if item.co then
+			local rewardco = string.splitToNumber(item.co.bonus, "#")
+			local type, id, num = rewardco[1], rewardco[2], rewardco[3]
 
-			var_9_1.txttask.text = var_9_1.co.desc
-			var_9_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_9_1.gorewardicon)
+			item.txttask.text = item.co.desc
+			item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.gorewardicon)
 
-			var_9_1.itemIcon:setMOValue(var_9_3, var_9_4, var_9_5, nil, true)
+			item.itemIcon:setMOValue(type, id, num, nil, true)
 
-			if iter_9_0 ~= 2 then
-				var_9_1.itemIcon:setItemIconScale(0.8)
+			if i ~= 2 then
+				item.itemIcon:setItemIconScale(0.8)
 			end
 
-			var_9_1.itemIcon:setCountFontSize(36)
+			item.itemIcon:setCountFontSize(36)
 
-			local function var_9_6()
-				TaskRpc.instance:sendFinishTaskRequest(var_9_1.co.id)
+			local function func()
+				TaskRpc.instance:sendFinishTaskRequest(item.co.id)
 			end
 
-			var_9_1.btnclick:AddClickListener(var_9_6, arg_9_0, var_9_1)
+			item.btnclick:AddClickListener(func, self, item)
 		end
 
-		table.insert(arg_9_0._rewardItemList, var_9_1)
+		table.insert(self._rewardItemList, item)
 	end
 end
 
-function var_0_0._initTipList(arg_11_0)
-	for iter_11_0 = 1, 3 do
-		local var_11_0 = arg_11_0:getUserDataTb_()
+function V2a6_WeekwalkHeart_FullView:_initTipList()
+	for i = 1, 3 do
+		local item = self:getUserDataTb_()
 
-		var_11_0.go = gohelper.findChild(arg_11_0.viewGO, "Root/Left/tips" .. iter_11_0 .. "/root")
+		item.go = gohelper.findChild(self.viewGO, "Root/Left/tips" .. i .. "/root")
 
-		arg_11_0:_initTipItem(var_11_0)
+		self:_initTipItem(item)
 	end
 
-	local var_11_1 = arg_11_0:getUserDataTb_()
+	local item = self:getUserDataTb_()
 
-	var_11_1.go = gohelper.findChild(arg_11_0.viewGO, "Root/Right/rightbg/title")
+	item.go = gohelper.findChild(self.viewGO, "Root/Right/rightbg/title")
 
-	arg_11_0:_initTipItem(var_11_1)
+	self:_initTipItem(item)
 end
 
-function var_0_0._initTipItem(arg_12_0, arg_12_1)
-	arg_12_1.isLike = false
-	arg_12_1.isUnLike = false
-	arg_12_1.golike = gohelper.findChild(arg_12_1.go, "like")
-	arg_12_1.txtlike = gohelper.findChildText(arg_12_1.golike, "num")
-	arg_12_1.likenum = math.random(50, 99)
-	arg_12_1.txtlike.text = arg_12_1.likenum
-	arg_12_1.govxlike = gohelper.findChild(arg_12_1.golike, "vx_like")
-	arg_12_1.golikeSelect = gohelper.findChild(arg_12_1.golike, "go_selected")
-	arg_12_1.btnlikeclick = gohelper.findChildButton(arg_12_1.golike, "#btn_click")
+function V2a6_WeekwalkHeart_FullView:_initTipItem(item)
+	item.isLike = false
+	item.isUnLike = false
+	item.golike = gohelper.findChild(item.go, "like")
+	item.txtlike = gohelper.findChildText(item.golike, "num")
+	item.likenum = math.random(50, 99)
+	item.txtlike.text = item.likenum
+	item.govxlike = gohelper.findChild(item.golike, "vx_like")
+	item.golikeSelect = gohelper.findChild(item.golike, "go_selected")
+	item.btnlikeclick = gohelper.findChildButton(item.golike, "#btn_click")
 
-	local function var_12_0()
-		if not arg_12_1.isUnLike then
-			if arg_12_1.isLike then
-				arg_12_1.likenum = arg_12_1.likenum - 1
+	local function likefunc()
+		if not item.isUnLike then
+			if item.isLike then
+				item.likenum = item.likenum - 1
 			else
-				arg_12_1.likenum = arg_12_1.likenum + 1
+				item.likenum = item.likenum + 1
 			end
 
-			arg_12_1.isLike = not arg_12_1.isLike
+			item.isLike = not item.isLike
 		end
 
-		gohelper.setActive(arg_12_1.govxlike, arg_12_1.isLike)
-		gohelper.setActive(arg_12_1.golikeSelect, arg_12_1.isLike)
+		gohelper.setActive(item.govxlike, item.isLike)
+		gohelper.setActive(item.golikeSelect, item.isLike)
 
-		arg_12_1.txtlike.text = arg_12_1.likenum
+		item.txtlike.text = item.likenum
 
 		AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 	end
 
-	arg_12_1.btnlikeclick:AddClickListener(var_12_0, arg_12_0, arg_12_1)
+	item.btnlikeclick:AddClickListener(likefunc, self, item)
 
-	arg_12_1.gounlike = gohelper.findChild(arg_12_1.go, "unlike")
-	arg_12_1.txtunlike = gohelper.findChildText(arg_12_1.gounlike, "num")
-	arg_12_1.unlikenum = math.random(50, 99)
-	arg_12_1.txtunlike.text = arg_12_1.unlikenum
-	arg_12_1.govxunlike = gohelper.findChild(arg_12_1.gounlike, "vx_unlike")
-	arg_12_1.gounlikeSelect = gohelper.findChild(arg_12_1.gounlike, "go_selected")
-	arg_12_1.btnunlikeclick = gohelper.findChildButton(arg_12_1.gounlike, "#btn_click")
+	item.gounlike = gohelper.findChild(item.go, "unlike")
+	item.txtunlike = gohelper.findChildText(item.gounlike, "num")
+	item.unlikenum = math.random(50, 99)
+	item.txtunlike.text = item.unlikenum
+	item.govxunlike = gohelper.findChild(item.gounlike, "vx_unlike")
+	item.gounlikeSelect = gohelper.findChild(item.gounlike, "go_selected")
+	item.btnunlikeclick = gohelper.findChildButton(item.gounlike, "#btn_click")
 
-	local function var_12_1()
-		if not arg_12_1.isLike then
-			if arg_12_1.isUnLike then
-				arg_12_1.unlikenum = arg_12_1.unlikenum - 1
+	local function unlikefunc()
+		if not item.isLike then
+			if item.isUnLike then
+				item.unlikenum = item.unlikenum - 1
 			else
-				arg_12_1.unlikenum = arg_12_1.unlikenum + 1
+				item.unlikenum = item.unlikenum + 1
 			end
 
-			arg_12_1.isUnLike = not arg_12_1.isUnLike
+			item.isUnLike = not item.isUnLike
 		end
 
-		gohelper.setActive(arg_12_1.govxunlike, arg_12_1.isUnLike)
-		gohelper.setActive(arg_12_1.gounlikeSelect, arg_12_1.isUnLike)
+		gohelper.setActive(item.govxunlike, item.isUnLike)
+		gohelper.setActive(item.gounlikeSelect, item.isUnLike)
 
-		arg_12_1.txtunlike.text = arg_12_1.unlikenum
+		item.txtunlike.text = item.unlikenum
 
 		AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 	end
 
-	arg_12_1.btnunlikeclick:AddClickListener(var_12_1, arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_1.govxlike, arg_12_1.isLike)
-	gohelper.setActive(arg_12_1.golikeSelect, arg_12_1.isLike)
-	gohelper.setActive(arg_12_1.govxunlike, arg_12_1.isUnLike)
-	gohelper.setActive(arg_12_1.gounlikeSelect, arg_12_1.isUnLike)
-	table.insert(arg_12_0._tipItemList, arg_12_1)
+	item.btnunlikeclick:AddClickListener(unlikefunc, self, item)
+	gohelper.setActive(item.govxlike, item.isLike)
+	gohelper.setActive(item.golikeSelect, item.isLike)
+	gohelper.setActive(item.govxunlike, item.isUnLike)
+	gohelper.setActive(item.gounlikeSelect, item.isUnLike)
+	table.insert(self._tipItemList, item)
 end
 
-function var_0_0._refresh(arg_15_0)
-	arg_15_0:_updateRewardState()
+function V2a6_WeekwalkHeart_FullView:_refresh()
+	self:_updateRewardState()
 end
 
-function var_0_0._updateRewardState(arg_16_0)
-	local var_16_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, arg_16_0:actId())
+function V2a6_WeekwalkHeart_FullView:_updateRewardState()
+	local moList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, self:actId())
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		for iter_16_2, iter_16_3 in ipairs(arg_16_0._rewardItemList) do
-			if iter_16_3.co.id == iter_16_1.id then
-				iter_16_3.mo = iter_16_1
+	for _, mo in ipairs(moList) do
+		for _, item in ipairs(self._rewardItemList) do
+			if item.co.id == mo.id then
+				item.mo = mo
 
-				if iter_16_1.finishCount > 0 then
-					gohelper.setActive(iter_16_3.gocanget, false)
-					gohelper.setActive(iter_16_3.goreceive, true)
+				if mo.finishCount > 0 then
+					gohelper.setActive(item.gocanget, false)
+					gohelper.setActive(item.goreceive, true)
 
-					if arg_16_0._taskId == iter_16_1.id then
-						iter_16_3.animget:Play("go_hasget_in")
+					if self._taskId == mo.id then
+						item.animget:Play("go_hasget_in")
 
-						arg_16_0._taskId = nil
+						self._taskId = nil
 					end
 
-					gohelper.setActive(iter_16_3.btnclick.gameObject, false)
-				elseif iter_16_1.hasFinished then
-					gohelper.setActive(iter_16_3.gocanget, true)
-					gohelper.setActive(iter_16_3.goreceive, false)
-					gohelper.setActive(iter_16_3.btnclick.gameObject, true)
+					gohelper.setActive(item.btnclick.gameObject, false)
+				elseif mo.hasFinished then
+					gohelper.setActive(item.gocanget, true)
+					gohelper.setActive(item.goreceive, false)
+					gohelper.setActive(item.btnclick.gameObject, true)
 				else
-					gohelper.setActive(iter_16_3.goreceive, false)
-					gohelper.setActive(iter_16_3.gocanget, false)
-					gohelper.setActive(iter_16_3.btnclick.gameObject, false)
+					gohelper.setActive(item.goreceive, false)
+					gohelper.setActive(item.gocanget, false)
+					gohelper.setActive(item.btnclick.gameObject, false)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_17_0)
+function V2a6_WeekwalkHeart_FullView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_18_0)
-	local var_18_0 = arg_18_0.viewParam.parent
+function V2a6_WeekwalkHeart_FullView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_18_0, arg_18_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 
-	arg_18_0._txtLimitTime.text = arg_18_0:getRemainTimeStr()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 
 	AudioMgr.instance:trigger(AudioEnum.AudioEnum2_6.WeekwalkHeart.play_ui_wenming_popup)
-	Activity189Controller.instance:sendGetTaskInfoRequest(arg_18_0._refresh, arg_18_0)
+	Activity189Controller.instance:sendGetTaskInfoRequest(self._refresh, self)
 end
 
-function var_0_0._trySendReadTask(arg_19_0)
-	local var_19_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, arg_19_0:actId())
+function V2a6_WeekwalkHeart_FullView:_trySendReadTask()
+	local moList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, self:actId())
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		if iter_19_1.id == var_0_0.ReadTaskId and not iter_19_1.hasFinished and not (iter_19_1.finishCount > 0) then
-			TaskRpc.instance:sendFinishReadTaskRequest(var_0_0.ReadTaskId)
+	for index, mo in ipairs(moList) do
+		if mo.id == V2a6_WeekwalkHeart_FullView.ReadTaskId and not mo.hasFinished and not (mo.finishCount > 0) then
+			TaskRpc.instance:sendFinishReadTaskRequest(V2a6_WeekwalkHeart_FullView.ReadTaskId)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_20_0)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._rewardItemList) do
-		iter_20_1.btnclick:RemoveClickListener()
+function V2a6_WeekwalkHeart_FullView:onClose()
+	for index, item in ipairs(self._rewardItemList) do
+		item.btnclick:RemoveClickListener()
 	end
 
-	for iter_20_2, iter_20_3 in ipairs(arg_20_0._tipItemList) do
-		iter_20_3.btnlikeclick:RemoveClickListener()
-		iter_20_3.btnunlikeclick:RemoveClickListener()
+	for index, item in ipairs(self._tipItemList) do
+		item.btnlikeclick:RemoveClickListener()
+		item.btnunlikeclick:RemoveClickListener()
 	end
 
-	TaskDispatcher.cancelTask(arg_20_0._cb, arg_20_0)
+	TaskDispatcher.cancelTask(self._cb, self)
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function V2a6_WeekwalkHeart_FullView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V2a6_WeekwalkHeart_FullView

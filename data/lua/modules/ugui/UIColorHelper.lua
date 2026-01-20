@@ -1,74 +1,79 @@
-﻿module("modules.ugui.UIColorHelper", package.seeall)
+﻿-- chunkname: @modules/ugui/UIColorHelper.lua
 
-local var_0_0 = {
-	PressColor = GameUtil.parseColor("#C8C8C8")
-}
+module("modules.ugui.UIColorHelper", package.seeall)
 
-function var_0_0.setUIPressState(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	if not arg_1_0 then
+local UIColorHelper = {}
+
+UIColorHelper.PressColor = GameUtil.parseColor("#C8C8C8")
+
+function UIColorHelper.setUIPressState(graphicCompArray, oriColorMap, isPress, pressColor, pressAlpha)
+	if not graphicCompArray then
 		return
 	end
 
-	local var_1_0 = arg_1_0:GetEnumerator()
+	local iter = graphicCompArray:GetEnumerator()
 
-	while var_1_0:MoveNext() do
-		local var_1_1
+	while iter:MoveNext() do
+		local color
 
-		if arg_1_2 then
-			local var_1_2 = arg_1_4 or 0.85
+		if isPress then
+			local pressAlpha = pressAlpha or 0.85
 
-			var_1_1 = arg_1_1 and arg_1_1[var_1_0.Current] * var_1_2 or arg_1_3 or var_0_0.PressColor
-			var_1_1.a = var_1_0.Current.color.a
+			color = oriColorMap and oriColorMap[iter.Current] * pressAlpha or pressColor or UIColorHelper.PressColor
+
+			local alpha = iter.Current.color.a
+
+			color.a = alpha
 		else
-			var_1_1 = arg_1_1 and arg_1_1[var_1_0.Current] or Color.white
+			color = oriColorMap and oriColorMap[iter.Current] or Color.white
 		end
 
-		var_1_0.Current.color = var_1_1
+		iter.Current.color = color
 	end
 end
 
-function var_0_0.setGameObjectPressState(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_0.pressGoContainer or not arg_2_0.pressGoContainer[arg_2_1] then
-		if not arg_2_0.pressGoContainer then
-			arg_2_0.pressGoContainer = arg_2_0:getUserDataTb_()
+function UIColorHelper.setGameObjectPressState(viewObj, go, press)
+	if not viewObj.pressGoContainer or not viewObj.pressGoContainer[go] then
+		if not viewObj.pressGoContainer then
+			viewObj.pressGoContainer = viewObj:getUserDataTb_()
 		end
 
-		arg_2_0.pressGoContainer[arg_2_1] = {}
+		viewObj.pressGoContainer[go] = {}
 
-		local var_2_0 = arg_2_1:GetComponentsInChildren(gohelper.Type_Image, true)
+		local images = go:GetComponentsInChildren(gohelper.Type_Image, true)
 
-		arg_2_0.pressGoContainer[arg_2_1].images = var_2_0
+		viewObj.pressGoContainer[go].images = images
 
-		local var_2_1 = arg_2_1:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+		local tmps = go:GetComponentsInChildren(gohelper.Type_TextMesh, true)
 
-		arg_2_0.pressGoContainer[arg_2_1].tmps = var_2_1
-		arg_2_0.pressGoContainer[arg_2_1].compColor = {}
+		viewObj.pressGoContainer[go].tmps = tmps
+		viewObj.pressGoContainer[go].compColor = {}
 
-		local var_2_2 = var_2_0:GetEnumerator()
+		local iter = images:GetEnumerator()
 
-		while var_2_2:MoveNext() do
-			arg_2_0.pressGoContainer[arg_2_1].compColor[var_2_2.Current] = var_2_2.Current.color
+		while iter:MoveNext() do
+			viewObj.pressGoContainer[go].compColor[iter.Current] = iter.Current.color
 		end
 
-		local var_2_3 = var_2_1:GetEnumerator()
+		iter = tmps:GetEnumerator()
 
-		while var_2_3:MoveNext() do
-			arg_2_0.pressGoContainer[arg_2_1].compColor[var_2_3.Current] = var_2_3.Current.color
+		while iter:MoveNext() do
+			viewObj.pressGoContainer[go].compColor[iter.Current] = iter.Current.color
 		end
 	end
 
-	if arg_2_0.pressGoContainer[arg_2_1] then
-		var_0_0.setUIPressState(arg_2_0.pressGoContainer[arg_2_1].images, arg_2_0.pressGoContainer[arg_2_1].compColor, arg_2_2, nil, 0.7)
-		var_0_0.setUIPressState(arg_2_0.pressGoContainer[arg_2_1].tmps, arg_2_0.pressGoContainer[arg_2_1].compColor, arg_2_2, nil, 0.7)
+	if viewObj.pressGoContainer[go] then
+		UIColorHelper.setUIPressState(viewObj.pressGoContainer[go].images, viewObj.pressGoContainer[go].compColor, press, nil, 0.7)
+		UIColorHelper.setUIPressState(viewObj.pressGoContainer[go].tmps, viewObj.pressGoContainer[go].compColor, press, nil, 0.7)
 	end
 end
 
-function var_0_0.set(arg_3_0, arg_3_1)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_3_0, arg_3_1)
+function UIColorHelper.set(imageOrTextCmp, hexColor)
+	SLFramework.UGUI.GuiHelper.SetColor(imageOrTextCmp, hexColor)
 end
 
-function var_0_0.setGray(arg_4_0, arg_4_1)
-	ZProj.UGUIHelper.SetGrayscale(arg_4_0, arg_4_1 and true or false)
+function UIColorHelper.setGray(imageOrTextGo, isGray)
+	ZProj.UGUIHelper.SetGrayscale(imageOrTextGo, isGray and true or false)
 end
 
-return var_0_0
+return UIColorHelper

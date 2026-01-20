@@ -1,70 +1,72 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.rpc.Activity116Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/rpc/Activity116Rpc.lua
 
-local var_0_0 = class("Activity116Rpc", BaseRpc)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.rpc.Activity116Rpc", package.seeall)
 
-function var_0_0.sendGet116InfosRequest(arg_1_0)
-	local var_1_0 = Activity116Module_pb.Get116InfosRequest()
+local Activity116Rpc = class("Activity116Rpc", BaseRpc)
 
-	var_1_0.activityId = VersionActivity1_2Enum.ActivityId.Building
+function Activity116Rpc:sendGet116InfosRequest()
+	local req = Activity116Module_pb.Get116InfosRequest()
 
-	arg_1_0:sendMsg(var_1_0)
+	req.activityId = VersionActivity1_2Enum.ActivityId.Building
+
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGet116InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceiveGet116InfosReply(arg_2_2)
+function Activity116Rpc:onReceiveGet116InfosReply(resultCode, msg)
+	if resultCode == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceiveGet116InfosReply(msg)
 	end
 end
 
-function var_0_0.onReceiveAct116InfoUpdatePush(arg_3_0, arg_3_1, arg_3_2)
-	VersionActivity1_2DungeonModel.instance:onReceiveAct116InfoUpdatePush(arg_3_2)
+function Activity116Rpc:onReceiveAct116InfoUpdatePush(resultCode, msg)
+	VersionActivity1_2DungeonModel.instance:onReceiveAct116InfoUpdatePush(msg)
 end
 
-function var_0_0.sendUpgradeElementRequest(arg_4_0, arg_4_1)
-	local var_4_0 = Activity116Module_pb.UpgradeElementRequest()
+function Activity116Rpc:sendUpgradeElementRequest(elementId)
+	local req = Activity116Module_pb.UpgradeElementRequest()
 
-	var_4_0.activityId = VersionActivity1_2Enum.ActivityId.Building
-	var_4_0.elementId = arg_4_1
+	req.activityId = VersionActivity1_2Enum.ActivityId.Building
+	req.elementId = elementId
 
-	arg_4_0:sendMsg(var_4_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveUpgradeElementReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceiveUpgradeElementReply(arg_5_2)
+function Activity116Rpc:onReceiveUpgradeElementReply(resultCode, msg)
+	if resultCode == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceiveUpgradeElementReply(msg)
 	end
 end
 
-function var_0_0.sendBuildTrapRequest(arg_6_0, arg_6_1)
-	local var_6_0 = Activity116Module_pb.BuildTrapRequest()
+function Activity116Rpc:sendBuildTrapRequest(trapId)
+	local req = Activity116Module_pb.BuildTrapRequest()
 
-	var_6_0.activityId = VersionActivity1_2Enum.ActivityId.Building
-	var_6_0.trapId = arg_6_1
+	req.activityId = VersionActivity1_2Enum.ActivityId.Building
+	req.trapId = trapId
 
-	arg_6_0:sendMsg(var_6_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveBuildTrapReply(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceiveBuildTrapReply(arg_7_2)
+function Activity116Rpc:onReceiveBuildTrapReply(resultCode, msg)
+	if resultCode == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceiveBuildTrapReply(msg)
 	end
 end
 
-function var_0_0.sendPutTrapRequest(arg_8_0, arg_8_1)
-	local var_8_0 = Activity116Module_pb.PutTrapRequest()
+function Activity116Rpc:sendPutTrapRequest(trapId)
+	local req = Activity116Module_pb.PutTrapRequest()
 
-	var_8_0.activityId = VersionActivity1_2Enum.ActivityId.Building
-	var_8_0.trapId = arg_8_1
+	req.activityId = VersionActivity1_2Enum.ActivityId.Building
+	req.trapId = trapId
 
-	arg_8_0:sendMsg(var_8_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceivePutTrapReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		VersionActivity1_2DungeonModel.instance:onReceivePutTrapReply(arg_9_2)
+function Activity116Rpc:onReceivePutTrapReply(resultCode, msg)
+	if resultCode == 0 then
+		VersionActivity1_2DungeonModel.instance:onReceivePutTrapReply(msg)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity116Rpc.instance = Activity116Rpc.New()
 
-return var_0_0
+return Activity116Rpc

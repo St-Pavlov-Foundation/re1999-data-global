@@ -1,19 +1,23 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotResultViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotResultViewContainer = class("V1a6_CachotResultViewContainer", BaseViewContainer)
+
+function V1a6_CachotResultViewContainer:buildViews()
 	return {
 		V1a6_CachotResultView.New()
 	}
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	SLFramework.AnimatorPlayer.Get(arg_2_0.viewGO):Play("close", arg_2_0.onCloseAnimDone, arg_2_0)
+function V1a6_CachotResultViewContainer:playCloseTransition()
+	local animator = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	animator:Play("close", self.onCloseAnimDone, self)
 end
 
-function var_0_0.onCloseAnimDone(arg_3_0)
-	arg_3_0:onPlayCloseTransitionFinish()
+function V1a6_CachotResultViewContainer:onCloseAnimDone()
+	self:onPlayCloseTransitionFinish()
 end
 
-return var_0_0
+return V1a6_CachotResultViewContainer

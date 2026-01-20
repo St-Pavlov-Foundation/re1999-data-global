@@ -1,11 +1,13 @@
-﻿module("modules.logic.dragonboat.view.DragonBoatFestivalViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dragonboat/view/DragonBoatFestivalViewContainer.lua
 
-local var_0_0 = class("DragonBoatFestivalViewContainer", BaseViewContainer)
+module("modules.logic.dragonboat.view.DragonBoatFestivalViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DragonBoatFestivalViewContainer = class("DragonBoatFestivalViewContainer", BaseViewContainer)
+
+function DragonBoatFestivalViewContainer:buildViews()
 	return {
 		DragonBoatFestivalView.New()
 	}
 end
 
-return var_0_0
+return DragonBoatFestivalViewContainer

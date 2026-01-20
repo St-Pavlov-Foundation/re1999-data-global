@@ -1,69 +1,73 @@
-﻿module("modules.logic.room.model.critter.RoomCritterFoodListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomCritterFoodListModel.lua
 
-local var_0_0 = class("RoomCritterFoodListModel", ListScrollModel)
+module("modules.logic.room.model.critter.RoomCritterFoodListModel", package.seeall)
 
-local function var_0_1(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0 and arg_1_0.id
-	local var_1_1 = arg_1_1 and arg_1_1.id
+local RoomCritterFoodListModel = class("RoomCritterFoodListModel", ListScrollModel)
 
-	if not var_1_0 or not var_1_1 then
+local function _sortFoodItem(aFood, bFood)
+	local aItemId = aFood and aFood.id
+	local bItemId = bFood and bFood.id
+
+	if not aItemId or not bItemId then
 		return false
 	end
 
-	local var_1_2 = arg_1_0.isFavorite
+	local aIsFavorite = aFood.isFavorite
+	local bIsFavorite = bFood.isFavorite
 
-	if var_1_2 ~= arg_1_1.isFavorite then
-		return var_1_2
+	if aIsFavorite ~= bIsFavorite then
+		return aIsFavorite
 	end
 
-	local var_1_3 = ItemModel.instance:getItemCount(var_1_0)
-	local var_1_4 = ItemModel.instance:getItemCount(var_1_1)
+	local aQuantity = ItemModel.instance:getItemCount(aItemId)
+	local bQuantity = ItemModel.instance:getItemCount(bItemId)
 
-	if var_1_3 ~= var_1_4 then
-		return var_1_4 < var_1_3
+	if aQuantity ~= bQuantity then
+		return bQuantity < aQuantity
 	end
 
-	local var_1_5 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, var_1_0)
-	local var_1_6 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, var_1_1)
+	local aCfg = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, aItemId)
+	local bCfg = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, bItemId)
 
-	if var_1_5.rare ~= var_1_6.rare then
-		return var_1_5.rare > var_1_6.rare
+	if aCfg.rare ~= bCfg.rare then
+		return aCfg.rare > bCfg.rare
 	end
 
-	return var_1_0 < var_1_1
+	return aItemId < bItemId
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0:clear()
-	arg_2_0:clearData()
+function RoomCritterFoodListModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:clearData()
+function RoomCritterFoodListModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_4_0)
+function RoomCritterFoodListModel:clearData()
 	return
 end
 
-function var_0_0.setCritterFoodList(arg_5_0, arg_5_1)
-	local var_5_0 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.CritterFood)
-	local var_5_1 = {}
+function RoomCritterFoodListModel:setCritterFoodList(critterId)
+	local foodItemList = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.CritterFood)
+	local list = {}
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_2 = iter_5_1.id
-		local var_5_3 = CritterConfig.instance:isFavoriteFood(arg_5_1, var_5_2)
-
-		var_5_1[iter_5_0] = {
-			id = var_5_2,
-			isFavorite = var_5_3
+	for i, cfg in ipairs(foodItemList) do
+		local itemId = cfg.id
+		local isFavorite = CritterConfig.instance:isFavoriteFood(critterId, itemId)
+		local mo = {
+			id = itemId,
+			isFavorite = isFavorite
 		}
+
+		list[i] = mo
 	end
 
-	table.sort(var_5_1, var_0_1)
-	arg_5_0:setList(var_5_1)
+	table.sort(list, _sortFoodItem)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomCritterFoodListModel.instance = RoomCritterFoodListModel.New()
 
-return var_0_0
+return RoomCritterFoodListModel

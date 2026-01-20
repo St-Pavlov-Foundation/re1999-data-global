@@ -1,102 +1,104 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoOptionComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/view/FeiLinShiDuoOptionComp.lua
 
-local var_0_0 = class("FeiLinShiDuoOptionComp", LuaCompBase)
+module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoOptionComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_0.go.transform
+local FeiLinShiDuoOptionComp = class("FeiLinShiDuoOptionComp", LuaCompBase)
+
+function FeiLinShiDuoOptionComp:init(go)
+	self.go = go
+	self.trans = self.go.transform
 end
 
-function var_0_0.initData(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.itemInfo = arg_2_1
-	arg_2_0.sceneViewCls = arg_2_2
-	arg_2_0.playerGO = arg_2_2:getPlayerGO()
-	arg_2_0.playerTrans = arg_2_0.playerGO.transform
-	arg_2_0.refId = arg_2_0.itemInfo.refId
-	arg_2_0.doorItemInfo = nil
-	arg_2_0.curOpenState = false
+function FeiLinShiDuoOptionComp:initData(mapItemInfo, viewCls)
+	self.itemInfo = mapItemInfo
+	self.sceneViewCls = viewCls
+	self.playerGO = viewCls:getPlayerGO()
+	self.playerTrans = self.playerGO.transform
+	self.refId = self.itemInfo.refId
+	self.doorItemInfo = nil
+	self.curOpenState = false
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, arg_3_0.resetData, arg_3_0)
+function FeiLinShiDuoOptionComp:addEventListeners()
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, self.resetData, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, arg_4_0.resetData, arg_4_0)
+function FeiLinShiDuoOptionComp:removeEventListeners()
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, self.resetData, self)
 end
 
-function var_0_0.resetData(arg_5_0)
-	arg_5_0.curOpenState = false
+function FeiLinShiDuoOptionComp:resetData()
+	self.curOpenState = false
 end
 
-function var_0_0.onTick(arg_6_0)
-	arg_6_0:initDoorItem()
-	arg_6_0:handleEvent()
+function FeiLinShiDuoOptionComp:onTick()
+	self:initDoorItem()
+	self:handleEvent()
 end
 
-function var_0_0.initDoorItem(arg_7_0)
-	if not arg_7_0.doorItemInfo then
-		local var_7_0 = FeiLinShiDuoGameModel.instance:getElementMap()
-		local var_7_1 = var_7_0[FeiLinShiDuoEnum.ObjectType.Door] or {}
+function FeiLinShiDuoOptionComp:initDoorItem()
+	if not self.doorItemInfo then
+		local elementMap = FeiLinShiDuoGameModel.instance:getElementMap()
+		local doorElementMap = elementMap[FeiLinShiDuoEnum.ObjectType.Door] or {}
 
-		for iter_7_0, iter_7_1 in pairs(var_7_1) do
-			if iter_7_1.refId == arg_7_0.refId then
-				arg_7_0.doorItemInfo = iter_7_1
+		for _, item in pairs(doorElementMap) do
+			if item.refId == self.refId then
+				self.doorItemInfo = item
 
 				break
 			end
 		end
 
-		if not arg_7_0.doorItemInfo then
+		if not self.doorItemInfo then
 			return
 		end
 
-		local var_7_2 = arg_7_0.sceneViewCls:getElementGOMap()
+		local elementGOMap = self.sceneViewCls:getElementGOMap()
 
-		arg_7_0.doorGO = var_7_2[arg_7_0.doorItemInfo.id].subGOList[1]
-		arg_7_0.boxElementMap = var_7_0[FeiLinShiDuoEnum.ObjectType.Box]
-		arg_7_0.doorAnim = arg_7_0.doorGO:GetComponent(gohelper.Type_Animator)
-		arg_7_0.curOpenState = false
-		arg_7_0.optionGO = var_7_2[arg_7_0.itemInfo.id].subGOList[1]
-		arg_7_0.optionAnim = arg_7_0.optionGO:GetComponent(gohelper.Type_Animator)
+		self.doorGO = elementGOMap[self.doorItemInfo.id].subGOList[1]
+		self.boxElementMap = elementMap[FeiLinShiDuoEnum.ObjectType.Box]
+		self.doorAnim = self.doorGO:GetComponent(gohelper.Type_Animator)
+		self.curOpenState = false
+		self.optionGO = elementGOMap[self.itemInfo.id].subGOList[1]
+		self.optionAnim = self.optionGO:GetComponent(gohelper.Type_Animator)
 	end
 end
 
-function var_0_0.handleEvent(arg_8_0)
-	if not arg_8_0.sceneViewCls or not arg_8_0.doorItemInfo then
+function FeiLinShiDuoOptionComp:handleEvent()
+	if not self.sceneViewCls or not self.doorItemInfo then
 		return
 	end
 
-	arg_8_0:checkTouchBoxOrPlayer()
+	self:checkTouchBoxOrPlayer()
 end
 
-function var_0_0.checkTouchBoxOrPlayer(arg_9_0)
-	local var_9_0 = false
-	local var_9_1 = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(arg_9_0.trans.localPosition.x, arg_9_0.trans.localPosition.y - 1, arg_9_0.itemInfo, FeiLinShiDuoEnum.checkDir.Top, arg_9_0.boxElementMap)
-	local var_9_2 = arg_9_0.playerTrans.localPosition.x > arg_9_0.itemInfo.pos[1] and arg_9_0.playerTrans.localPosition.x < arg_9_0.itemInfo.pos[1] + arg_9_0.itemInfo.width and arg_9_0.playerTrans.localPosition.y > arg_9_0.itemInfo.pos[2] - 1 and arg_9_0.playerTrans.localPosition.y < arg_9_0.itemInfo.pos[2] + arg_9_0.itemInfo.height
+function FeiLinShiDuoOptionComp:checkTouchBoxOrPlayer()
+	local isOpenState = false
+	local isTouchElementList = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(self.trans.localPosition.x, self.trans.localPosition.y - 1, self.itemInfo, FeiLinShiDuoEnum.checkDir.Top, self.boxElementMap)
+	local isPlayerTouch = self.playerTrans.localPosition.x > self.itemInfo.pos[1] and self.playerTrans.localPosition.x < self.itemInfo.pos[1] + self.itemInfo.width and self.playerTrans.localPosition.y > self.itemInfo.pos[2] - 1 and self.playerTrans.localPosition.y < self.itemInfo.pos[2] + self.itemInfo.height
 
-	if var_9_1 and #var_9_1 > 0 or var_9_2 then
-		var_9_0 = true
+	if isTouchElementList and #isTouchElementList > 0 or isPlayerTouch then
+		isOpenState = true
 	end
 
-	arg_9_0:setOpenState(var_9_0)
+	self:setOpenState(isOpenState)
 end
 
-function var_0_0.setOpenState(arg_10_0, arg_10_1)
-	if arg_10_0.curOpenState ~= arg_10_1 then
-		arg_10_0.curOpenState = arg_10_1
+function FeiLinShiDuoOptionComp:setOpenState(isOpen)
+	if self.curOpenState ~= isOpen then
+		self.curOpenState = isOpen
 
-		arg_10_0.optionAnim:Play(arg_10_1 and "in" or "out")
-		arg_10_0.doorAnim:Play(arg_10_1 and "out" or "in")
+		self.optionAnim:Play(isOpen and "in" or "out")
+		self.doorAnim:Play(isOpen and "out" or "in")
 
-		if arg_10_1 then
+		if isOpen then
 			AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_door_open)
 		else
 			AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_tangren_door_close)
 		end
 
-		FeiLinShiDuoGameModel.instance:setDoorOpenState(arg_10_0.doorItemInfo.id, arg_10_0.curOpenState)
+		FeiLinShiDuoGameModel.instance:setDoorOpenState(self.doorItemInfo.id, self.curOpenState)
 	end
 end
 
-return var_0_0
+return FeiLinShiDuoOptionComp

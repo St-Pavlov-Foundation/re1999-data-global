@@ -1,19 +1,21 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalPlayDialogWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalPlayDialogWork.lua
 
-local var_0_0 = class("SurvivalPlayDialogWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalPlayDialogWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if arg_1_0.context.fastExecute then
-		arg_1_0:onDone(true)
+local SurvivalPlayDialogWork = class("SurvivalPlayDialogWork", SurvivalStepBaseWork)
+
+function SurvivalPlayDialogWork:onStart(context)
+	if self.context.fastExecute then
+		self:onDone(true)
 
 		return
 	end
 
-	TipDialogController.instance:openTipDialogView(arg_1_0._stepMo.paramInt[1], arg_1_0._onPlayFinish, arg_1_0)
+	TipDialogController.instance:openTipDialogView(self._stepMo.paramInt[1], self._onPlayFinish, self)
 end
 
-function var_0_0._onPlayFinish(arg_2_0)
-	arg_2_0:onDone(true)
+function SurvivalPlayDialogWork:_onPlayFinish()
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalPlayDialogWork

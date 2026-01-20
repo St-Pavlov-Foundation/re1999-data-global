@@ -1,13 +1,17 @@
-﻿module("modules.logic.gm.controller.define.PerformanceRecordEvent", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/define/PerformanceRecordEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = 1
+module("modules.logic.gm.controller.define.PerformanceRecordEvent", package.seeall)
 
-;(function(arg_1_0)
-	assert(var_0_0[arg_1_0] == nil, "[PerformanceRecordEvent] error redefined PerformanceRecordEvent." .. arg_1_0)
+local PerformanceRecordEvent = _M
+local _uid = 1
 
-	var_0_0[arg_1_0] = var_0_1
-	var_0_1 = var_0_1 + 1
-end)("onRecordDone")
+local function E(name)
+	assert(PerformanceRecordEvent[name] == nil, "[PerformanceRecordEvent] error redefined PerformanceRecordEvent." .. name)
 
-return var_0_0
+	PerformanceRecordEvent[name] = _uid
+	_uid = _uid + 1
+end
+
+E("onRecordDone")
+
+return PerformanceRecordEvent

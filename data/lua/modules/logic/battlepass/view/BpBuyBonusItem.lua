@@ -1,30 +1,32 @@
-﻿module("modules.logic.battlepass.view.BpBuyBonusItem", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpBuyBonusItem.lua
 
-local var_0_0 = class("BpBuyBonusItem", ListScrollCell)
+module("modules.logic.battlepass.view.BpBuyBonusItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_1_0.go)
+local BpBuyBonusItem = class("BpBuyBonusItem", ListScrollCell)
+
+function BpBuyBonusItem:init(go)
+	self.go = go
+	self._itemIcon = IconMgr.instance:getCommonPropItemIcon(self.go)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0.mo = arg_2_1
+function BpBuyBonusItem:onUpdateMO(mo)
+	self.mo = mo
 
-	arg_2_0._itemIcon:setMOValue(arg_2_0.mo[1], arg_2_0.mo[2], arg_2_0.mo[3], nil, true)
-	arg_2_0._itemIcon:isShowCount(arg_2_0.mo[1] ~= MaterialEnum.MaterialType.Hero)
-	arg_2_0._itemIcon:setCountFontSize(40)
-	arg_2_0._itemIcon:setScale(0.8)
-	arg_2_0._itemIcon:showStackableNum2()
-	arg_2_0._itemIcon:setHideLvAndBreakFlag(true)
-	arg_2_0._itemIcon:hideEquipLvAndBreak(true)
+	self._itemIcon:setMOValue(self.mo[1], self.mo[2], self.mo[3], nil, true)
+	self._itemIcon:isShowCount(self.mo[1] ~= MaterialEnum.MaterialType.Hero)
+	self._itemIcon:setCountFontSize(40)
+	self._itemIcon:setScale(0.8)
+	self._itemIcon:showStackableNum2()
+	self._itemIcon:setHideLvAndBreakFlag(true)
+	self._itemIcon:hideEquipLvAndBreak(true)
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	if arg_3_0._itemIcon then
-		arg_3_0._itemIcon:onDestroy()
+function BpBuyBonusItem:onDestroyView()
+	if self._itemIcon then
+		self._itemIcon:onDestroy()
 	end
 
-	arg_3_0._itemIcon = nil
+	self._itemIcon = nil
 end
 
-return var_0_0
+return BpBuyBonusItem

@@ -1,38 +1,40 @@
-﻿module("modules.logic.commandstation.view.CommandStationEnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationEnterViewContainer.lua
 
-local var_0_0 = class("CommandStationEnterViewContainer", BaseViewContainer)
+module("modules.logic.commandstation.view.CommandStationEnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CommandStationEnterViewContainer = class("CommandStationEnterViewContainer", BaseViewContainer)
+
+function CommandStationEnterViewContainer:buildViews()
 	return {
 		CommandStationEnterView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.playOpenTransition(arg_2_0)
-	local var_2_0
+function CommandStationEnterViewContainer:playOpenTransition()
+	local param
 
-	if arg_2_0.viewParam and arg_2_0.viewParam.fromDungeonSectionItem then
-		var_2_0 = {
+	if self.viewParam and self.viewParam.fromDungeonSectionItem then
+		param = {
 			anim = "open2"
 		}
 	end
 
-	var_0_0.super.playOpenTransition(arg_2_0, var_2_0)
+	CommandStationEnterViewContainer.super.playOpenTransition(self, param)
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0.navigateView = NavigateButtonsView.New({
+function CommandStationEnterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.CommandStationEnter)
 
 		return {
-			arg_3_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return CommandStationEnterViewContainer

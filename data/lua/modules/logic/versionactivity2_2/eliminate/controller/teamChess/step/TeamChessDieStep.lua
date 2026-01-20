@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessDieStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/TeamChessDieStep.lua
 
-local var_0_0 = class("TeamChessDieStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessDieStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local TeamChessDieStep = class("TeamChessDieStep", EliminateTeamChessStepBase)
+
+function TeamChessDieStep:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return TeamChessDieStep

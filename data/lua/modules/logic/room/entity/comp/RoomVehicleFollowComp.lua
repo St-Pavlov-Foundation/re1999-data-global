@@ -1,295 +1,297 @@
-﻿module("modules.logic.room.entity.comp.RoomVehicleFollowComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomVehicleFollowComp.lua
 
-local var_0_0 = class("RoomVehicleFollowComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomVehicleFollowComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._followerList = {}
-	arg_1_0._forwardList = {}
-	arg_1_0._backwardList = {}
-	arg_1_0._initPosList = {}
-	arg_1_0._isForward = true
-	arg_1_0._pathData = RoomVehicleFollowPathData.New()
-	arg_1_0._isNight = RoomWeatherModel.instance:getIsNight()
+local RoomVehicleFollowComp = class("RoomVehicleFollowComp", LuaCompBase)
+
+function RoomVehicleFollowComp:ctor(entity)
+	self.entity = entity
+	self._followerList = {}
+	self._forwardList = {}
+	self._backwardList = {}
+	self._initPosList = {}
+	self._isForward = true
+	self._pathData = RoomVehicleFollowPathData.New()
+	self._isNight = RoomWeatherModel.instance:getIsNight()
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.targetTrs = arg_2_0.go.transform
+function RoomVehicleFollowComp:init(go)
+	self.go = go
+	self.targetTrs = self.go.transform
 
-	arg_2_0:_initPathList()
+	self:_initPathList()
 end
 
-function var_0_0._initPathList(arg_3_0)
-	arg_3_0._initPosList = {}
-	arg_3_0._lookAtPos = nil
+function RoomVehicleFollowComp:_initPathList()
+	self._initPosList = {}
+	self._lookAtPos = nil
 
-	local var_3_0 = arg_3_0.entity:getVehicleMO()
+	local mo = self.entity:getVehicleMO()
 
-	if not var_3_0 then
+	if not mo then
 		return
 	end
 
-	local var_3_1 = {}
+	local areaNodes = {}
 
-	tabletool.addValues(var_3_1, var_3_0:getInitAreaNode())
+	tabletool.addValues(areaNodes, mo:getInitAreaNode())
 
-	if #var_3_1 < 2 then
+	if #areaNodes < 2 then
 		return
 	end
 
-	table.insert(arg_3_0._initPosList, arg_3_0:_getPostionByNode(var_3_1[1], 0))
+	table.insert(self._initPosList, self:_getPostionByNode(areaNodes[1], 0))
 
-	for iter_3_0 = 2, #var_3_1 do
-		local var_3_2 = var_3_1[iter_3_0 - 1]
-		local var_3_3 = var_3_1[iter_3_0]
-		local var_3_4, var_3_5 = arg_3_0:_findConnectDirection(var_3_2, var_3_3)
+	for i = 2, #areaNodes do
+		local curNode = areaNodes[i - 1]
+		local nextNode = areaNodes[i]
+		local curExitDire, nextEnterDire = self:_findConnectDirection(curNode, nextNode)
 
-		if var_3_2 then
-			if iter_3_0 == 2 and var_3_5 then
-				arg_3_0._lookAtPos = arg_3_0:_getPostionByNode(var_3_2, var_3_5)
+		if curNode then
+			if i == 2 and nextEnterDire then
+				self._lookAtPos = self:_getPostionByNode(curNode, nextEnterDire)
 			end
 
-			table.insert(arg_3_0._initPosList, arg_3_0:_getPostionByNode(var_3_2, var_3_4 or 0))
+			table.insert(self._initPosList, self:_getPostionByNode(curNode, curExitDire or 0))
 		end
 
-		if var_3_3 then
-			table.insert(arg_3_0._initPosList, arg_3_0:_getPostionByNode(var_3_3, var_3_5 or 0))
+		if nextNode then
+			table.insert(self._initPosList, self:_getPostionByNode(nextNode, nextEnterDire or 0))
 
-			if iter_3_0 == #var_3_1 and var_3_4 then
-				table.insert(arg_3_0._initPosList, arg_3_0:_getPostionByNode(var_3_3, var_3_4 or 0))
+			if i == #areaNodes and curExitDire then
+				table.insert(self._initPosList, self:_getPostionByNode(nextNode, curExitDire or 0))
 			end
 		end
 	end
 end
 
-function var_0_0._findConnectDirection(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_2.hexPoint.x - arg_4_1.hexPoint.x
-	local var_4_1 = arg_4_2.hexPoint.y - arg_4_1.hexPoint.y
+function RoomVehicleFollowComp:_findConnectDirection(curNode, nextNode)
+	local px = nextNode.hexPoint.x - curNode.hexPoint.x
+	local py = nextNode.hexPoint.y - curNode.hexPoint.y
 
-	for iter_4_0 = 1, 6 do
-		local var_4_2 = HexPoint.directions[iter_4_0]
+	for curExitDire = 1, 6 do
+		local hexPoint = HexPoint.directions[curExitDire]
 
-		if var_4_2.x == var_4_0 and var_4_2.y == var_4_1 then
-			local var_4_3 = arg_4_1:getConnectDirection(iter_4_0)
+		if hexPoint.x == px and hexPoint.y == py then
+			local nextEnterDire = curNode:getConnectDirection(curExitDire)
 
-			return iter_4_0, var_4_3
+			return curExitDire, nextEnterDire
 		end
 	end
 end
 
-function var_0_0._getPostionByNode(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0
+function RoomVehicleFollowComp:_getPostionByNode(curNode, direction, offset)
+	local position
 
-	if not arg_5_2 or arg_5_2 == 0 then
-		var_5_0 = HexMath.hexToPosition(arg_5_1.hexPoint, RoomBlockEnum.BlockSize)
+	if not direction or direction == 0 then
+		position = HexMath.hexToPosition(curNode.hexPoint, RoomBlockEnum.BlockSize)
 	else
-		var_5_0 = HexMath.resourcePointToPosition(ResourcePoint.New(arg_5_1.hexPoint, arg_5_2), RoomBlockEnum.BlockSize, arg_5_3 or 0.4)
+		position = HexMath.resourcePointToPosition(ResourcePoint.New(curNode.hexPoint, direction), RoomBlockEnum.BlockSize, offset or 0.4)
 	end
 
-	return Vector3(var_5_0.x, RoomBuildingEnum.VehicleInitOffestY, var_5_0.y)
+	return Vector3(position.x, RoomBuildingEnum.VehicleInitOffestY, position.y)
 end
 
-function var_0_0.addEventListeners(arg_6_0)
-	RoomMapController.instance:registerCallback(RoomEvent.MapEntityNightLight, arg_6_0._onNightLight, arg_6_0)
+function RoomVehicleFollowComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.MapEntityNightLight, self._onNightLight, self)
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.MapEntityNightLight, arg_7_0._onNightLight, arg_7_0)
+function RoomVehicleFollowComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.MapEntityNightLight, self._onNightLight, self)
 end
 
-function var_0_0.stop(arg_8_0)
+function RoomVehicleFollowComp:stop()
 	return
 end
 
-function var_0_0._onNightLight(arg_9_0, arg_9_1)
-	if arg_9_1 ~= nil and arg_9_0._isNight ~= arg_9_1 then
-		arg_9_0._isNight = arg_9_1
+function RoomVehicleFollowComp:_onNightLight(isNight)
+	if isNight ~= nil and self._isNight ~= isNight then
+		self._isNight = isNight
 
-		arg_9_0:updateNight(arg_9_1)
+		self:updateNight(isNight)
 	end
 end
 
-function var_0_0.updateNight(arg_10_0, arg_10_1)
-	for iter_10_0 = 1, #arg_10_0._followerList do
-		arg_10_0._followerList[iter_10_0]:nightLight(arg_10_1)
+function RoomVehicleFollowComp:updateNight(isNight)
+	for i = 1, #self._followerList do
+		self._followerList[i]:nightLight(isNight)
 	end
 end
 
-function var_0_0.restart(arg_11_0)
-	if #arg_11_0._followerList < 2 then
+function RoomVehicleFollowComp:restart()
+	if #self._followerList < 2 then
 		return
 	end
 
-	arg_11_0._pathData:clear()
+	self._pathData:clear()
 
-	if arg_11_0._lookAtPos then
-		arg_11_0.targetTrs:LookAt(arg_11_0._lookAtPos)
+	if self._lookAtPos then
+		self.targetTrs:LookAt(self._lookAtPos)
 	end
 
-	for iter_11_0 = #arg_11_0._initPosList, 1, -1 do
-		arg_11_0._pathData:addPathPos(arg_11_0._initPosList[iter_11_0])
+	for i = #self._initPosList, 1, -1 do
+		self._pathData:addPathPos(self._initPosList[i])
 	end
 
-	for iter_11_1 = 1, #arg_11_0._followerList do
-		arg_11_0._followerList[iter_11_1]:moveByPathData()
+	for i = 1, #self._followerList do
+		self._followerList[i]:moveByPathData()
 	end
 end
 
-function var_0_0.getVehicleMO(arg_12_0)
-	return arg_12_0.entity:getVehicleMO()
+function RoomVehicleFollowComp:getVehicleMO()
+	return self.entity:getVehicleMO()
 end
 
-function var_0_0.getSeeker(arg_13_0)
-	return arg_13_0._seeker
+function RoomVehicleFollowComp:getSeeker()
+	return self._seeker
 end
 
-function var_0_0.beforeDestroy(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._followerRebuild, arg_14_0)
+function RoomVehicleFollowComp:beforeDestroy()
+	TaskDispatcher.cancelTask(self._followerRebuild, self)
 
-	if #arg_14_0._followerList > 0 then
-		for iter_14_0 = 1, #arg_14_0._followerList do
-			gohelper.destroy(arg_14_0._followerList[iter_14_0].go)
-			arg_14_0._followerList[iter_14_0]:dispose()
+	if #self._followerList > 0 then
+		for i = 1, #self._followerList do
+			gohelper.destroy(self._followerList[i].go)
+			self._followerList[i]:dispose()
 		end
 
-		arg_14_0._followerList = {}
+		self._followerList = {}
 	end
 end
 
-function var_0_0._initFollower(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_1 or string.nilorempty(arg_15_1.followNodePathStr) or gohelper.isNil(arg_15_2) then
+function RoomVehicleFollowComp:_initFollower(cfg, vehicleGO)
+	if not cfg or string.nilorempty(cfg.followNodePathStr) or gohelper.isNil(vehicleGO) then
 		return
 	end
 
-	local var_15_0 = string.split(arg_15_1.followNodePathStr, "#")
-	local var_15_1 = string.splitToNumber(arg_15_1.followRadiusStr, "#")
-	local var_15_2 = string.splitToNumber(arg_15_1.followRotateStr, "#")
+	local names = string.split(cfg.followNodePathStr, "#")
+	local radius = string.splitToNumber(cfg.followRadiusStr, "#")
+	local rotates = string.splitToNumber(cfg.followRotateStr, "#")
 
-	if not var_15_0 or #var_15_0 < 2 then
+	if not names or #names < 2 then
 		return
 	end
 
-	local var_15_3 = 0
+	local followDistance = 0
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_4 = gohelper.findChild(arg_15_2, iter_15_1)
+	for i, name in ipairs(names) do
+		local tempGO = gohelper.findChild(vehicleGO, name)
 
-		if not gohelper.isNil(var_15_4) then
-			local var_15_5 = RoomVehicleFollower.New(arg_15_0)
-			local var_15_6 = gohelper.create3d(arg_15_0.go, iter_15_1)
+		if not gohelper.isNil(tempGO) then
+			local follower = RoomVehicleFollower.New(self)
+			local go = gohelper.create3d(self.go, name)
 
-			var_15_5:init(var_15_6, var_15_1[iter_15_0], var_15_3, iter_15_1, var_15_2[iter_15_0])
-			table.insert(arg_15_0._followerList, var_15_5)
+			follower:init(go, radius[i], followDistance, name, rotates[i])
+			table.insert(self._followerList, follower)
 		end
 	end
 
-	arg_15_0:_refreshFollowDistance()
-	tabletool.addValues(arg_15_0._forwardList, arg_15_0._followerList)
+	self:_refreshFollowDistance()
+	tabletool.addValues(self._forwardList, self._followerList)
 
-	for iter_15_2, iter_15_3 in ipairs(arg_15_0._followerList) do
-		table.insert(arg_15_0._backwardList, 1, iter_15_3)
+	for i, follower in ipairs(self._followerList) do
+		table.insert(self._backwardList, 1, follower)
 	end
 
-	arg_15_0:restart()
+	self:restart()
 end
 
-function var_0_0.addFollerPathPos(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if #arg_16_0._followerList > 0 then
-		local var_16_0 = Vector3(arg_16_1, arg_16_2, arg_16_3)
+function RoomVehicleFollowComp:addFollerPathPos(x, y, z)
+	if #self._followerList > 0 then
+		local toPos = Vector3(x, y, z)
 
-		arg_16_0._pathData:addPathPos(var_16_0)
+		self._pathData:addPathPos(toPos)
 	end
 end
 
-function var_0_0._addFollerPathPos(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if #arg_17_0._followerList > 0 then
-		local var_17_0 = Vector3(arg_17_1, arg_17_2, arg_17_3)
+function RoomVehicleFollowComp:_addFollerPathPos(x, y, z)
+	if #self._followerList > 0 then
+		local toPos = Vector3(x, y, z)
 
-		for iter_17_0 = 2, #arg_17_0._followerList do
-			arg_17_0._followerList[iter_17_0]:addPathPos(var_17_0)
+		for i = 2, #self._followerList do
+			self._followerList[i]:addPathPos(toPos)
 		end
 	end
 end
 
-function var_0_0.updateFollower(arg_18_0)
-	if #arg_18_0._followerList > 0 then
-		for iter_18_0 = 2, #arg_18_0._followerList do
-			arg_18_0._followerList[iter_18_0]:moveByPathData()
+function RoomVehicleFollowComp:updateFollower()
+	if #self._followerList > 0 then
+		for i = 2, #self._followerList do
+			self._followerList[i]:moveByPathData()
 		end
 
-		if arg_18_0._isNeedUpdateForward then
-			arg_18_0._isNeedUpdateForward = false
+		if self._isNeedUpdateForward then
+			self._isNeedUpdateForward = false
 
-			for iter_18_1 = 1, #arg_18_0._followerList do
-				arg_18_0._followerList[iter_18_1]:setVehiceForward(arg_18_0._isForward)
+			for i = 1, #self._followerList do
+				self._followerList[i]:setVehiceForward(self._isForward)
 			end
 		end
 	end
 end
 
-function var_0_0.getPathData(arg_19_0)
-	return arg_19_0._pathData
+function RoomVehicleFollowComp:getPathData()
+	return self._pathData
 end
 
-function var_0_0._followerRebuild(arg_20_0)
-	if not arg_20_0._initCloneFollowerFinish and arg_20_0.entity.effect:isHasEffectGOByKey(RoomEnum.EffectKey.VehicleGOKey) then
-		arg_20_0._initCloneFollowerFinish = true
+function RoomVehicleFollowComp:_followerRebuild()
+	if not self._initCloneFollowerFinish and self.entity.effect:isHasEffectGOByKey(RoomEnum.EffectKey.VehicleGOKey) then
+		self._initCloneFollowerFinish = true
 
-		local var_20_0 = arg_20_0:getVehicleMO()
-		local var_20_1 = var_20_0 and var_20_0:getReplaceDefideCfg()
-		local var_20_2 = arg_20_0.entity.effect:getEffectGO(RoomEnum.EffectKey.VehicleGOKey)
+		local mo = self:getVehicleMO()
+		local vehicleCfg = mo and mo:getReplaceDefideCfg()
+		local vehicleGO = self.entity.effect:getEffectGO(RoomEnum.EffectKey.VehicleGOKey)
 
-		arg_20_0:_initFollower(var_20_1, var_20_2)
+		self:_initFollower(vehicleCfg, vehicleGO)
 
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._followerList) do
-			iter_20_1:onEffectRebuild()
+		for i, follower in ipairs(self._followerList) do
+			follower:onEffectRebuild()
 		end
 
-		arg_20_0.entity.effect:setActiveByKey(RoomEnum.EffectKey.VehicleGOKey, #arg_20_0._followerList < 1)
-		arg_20_0:updateNight(arg_20_0._isNight)
+		self.entity.effect:setActiveByKey(RoomEnum.EffectKey.VehicleGOKey, #self._followerList < 1)
+		self:updateNight(self._isNight)
 	end
 end
 
-function var_0_0.setShow(arg_21_0, arg_21_1)
-	if #arg_21_0._followerList > 0 then
-		for iter_21_0 = 1, #arg_21_0._followerList do
-			gohelper.setActive(arg_21_0._followerList[iter_21_0].go, arg_21_1)
+function RoomVehicleFollowComp:setShow(isShow)
+	if #self._followerList > 0 then
+		for i = 1, #self._followerList do
+			gohelper.setActive(self._followerList[i].go, isShow)
 		end
 	end
 end
 
-function var_0_0.turnAround(arg_22_0)
-	if #arg_22_0._followerList < 2 then
+function RoomVehicleFollowComp:turnAround()
+	if #self._followerList < 2 then
 		return
 	end
 
-	arg_22_0._isForward = arg_22_0._isForward ~= true
-	arg_22_0._isNeedUpdateForward = true
+	self._isForward = self._isForward ~= true
+	self._isNeedUpdateForward = true
 
-	local var_22_0 = arg_22_0.entity:getVehicleMO()
+	local mo = self.entity:getVehicleMO()
 
-	if var_22_0 then
-		local var_22_1 = {}
+	if mo then
+		local areaNodes = {}
 
-		tabletool.addValues(var_22_1, var_22_0:getAreaNode())
+		tabletool.addValues(areaNodes, mo:getAreaNode())
 
-		local var_22_2, var_22_3, var_22_4 = transformhelper.getPos(arg_22_0._followerList[#arg_22_0._followerList].goTrs)
-		local var_22_5, var_22_6 = HexMath.positionToRoundHex(Vector2(var_22_2, var_22_4), RoomBlockEnum.BlockSize)
-		local var_22_7 = var_22_0.pathPlanMO:getNode(var_22_5)
+		local px, py, pz = transformhelper.getPos(self._followerList[#self._followerList].goTrs)
+		local hexPoint, direction = HexMath.positionToRoundHex(Vector2(px, pz), RoomBlockEnum.BlockSize)
+		local node = mo.pathPlanMO:getNode(hexPoint)
 
-		if var_22_7 and not tabletool.indexOf(var_22_1, var_22_7) then
-			table.insert(var_22_1, var_22_7)
+		if node and not tabletool.indexOf(areaNodes, node) then
+			table.insert(areaNodes, node)
 		end
 
-		if #var_22_1 > 1 then
-			for iter_22_0 = 2, #var_22_1 do
-				local var_22_8 = var_22_1[iter_22_0 - 1]
-				local var_22_9 = var_22_1[iter_22_0]
+		if #areaNodes > 1 then
+			for i = 2, #areaNodes do
+				local curNode = areaNodes[i - 1]
+				local nextNode = areaNodes[i]
 
-				for iter_22_1 = 1, 6 do
-					if var_22_9:getConnctNode(iter_22_1) == var_22_8 then
-						var_22_0:moveToNode(var_22_9, iter_22_1)
+				for enterDire = 1, 6 do
+					if nextNode:getConnctNode(enterDire) == curNode then
+						mo:moveToNode(nextNode, enterDire)
 
 						break
 					end
@@ -298,53 +300,55 @@ function var_0_0.turnAround(arg_22_0)
 		end
 	end
 
-	arg_22_0._pathData:clear()
+	self._pathData:clear()
 
-	local var_22_10 = #arg_22_0._followerList
-	local var_22_11 = arg_22_0.targetTrs.parent
+	local followerCount = #self._followerList
+	local parentTrs = self.targetTrs.parent
 
-	for iter_22_2 = 1, var_22_10 do
-		local var_22_12 = arg_22_0._followerList[iter_22_2]
-		local var_22_13, var_22_14, var_22_15 = transformhelper.getPos(var_22_12.goTrs)
+	for i = 1, followerCount do
+		local follower = self._followerList[i]
+		local px, py, pz = transformhelper.getPos(follower.goTrs)
 
-		arg_22_0._pathData:addPathPos(Vector3(var_22_13, var_22_14, var_22_15))
-		var_22_12.goTrs:SetParent(var_22_11)
+		self._pathData:addPathPos(Vector3(px, py, pz))
+		follower.goTrs:SetParent(parentTrs)
 
-		if iter_22_2 == var_22_10 then
-			transformhelper.setPos(arg_22_0.targetTrs, var_22_13, var_22_14, var_22_15)
+		if i == followerCount then
+			transformhelper.setPos(self.targetTrs, px, py, pz)
 
-			arg_22_0.targetTrs.rotation = var_22_12.goTrs.rotation
+			self.targetTrs.rotation = follower.goTrs.rotation
 
-			var_22_12.goTrs:SetParent(arg_22_0.targetTrs)
+			follower.goTrs:SetParent(self.targetTrs)
 		end
 	end
 
-	arg_22_0._followerList = arg_22_0._isForward and arg_22_0._forwardList or arg_22_0._backwardList
+	self._followerList = self._isForward and self._forwardList or self._backwardList
 
-	arg_22_0:_refreshFollowDistance()
+	self:_refreshFollowDistance()
 
 	return true
 end
 
-function var_0_0._refreshFollowDistance(arg_23_0)
-	local var_23_0 = 0
+function RoomVehicleFollowComp:_refreshFollowDistance()
+	local distance = 0
 
-	for iter_23_0 = 1, #arg_23_0._followerList do
-		local var_23_1 = arg_23_0._followerList[iter_23_0]
+	for i = 1, #self._followerList do
+		local follower = self._followerList[i]
 
-		if iter_23_0 > 1 then
-			var_23_0 = var_23_0 + arg_23_0._followerList[iter_23_0 - 1].radius + var_23_1.radius
+		if i > 1 then
+			local parentwer = self._followerList[i - 1]
+
+			distance = distance + parentwer.radius + follower.radius
 		end
 
-		var_23_1.followDistance = var_23_0
+		follower.followDistance = distance
 	end
 end
 
-function var_0_0.onEffectRebuild(arg_24_0)
-	if not arg_24_0._initCloneFollowerFinish then
-		TaskDispatcher.cancelTask(arg_24_0._followerRebuild, arg_24_0)
-		TaskDispatcher.runDelay(arg_24_0._followerRebuild, arg_24_0, 0.1)
+function RoomVehicleFollowComp:onEffectRebuild()
+	if not self._initCloneFollowerFinish then
+		TaskDispatcher.cancelTask(self._followerRebuild, self)
+		TaskDispatcher.runDelay(self._followerRebuild, self, 0.1)
 	end
 end
 
-return var_0_0
+return RoomVehicleFollowComp

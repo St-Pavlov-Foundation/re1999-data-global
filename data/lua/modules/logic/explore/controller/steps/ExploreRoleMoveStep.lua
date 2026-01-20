@@ -1,33 +1,35 @@
-﻿module("modules.logic.explore.controller.steps.ExploreRoleMoveStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreRoleMoveStep.lua
 
-local var_0_0 = class("ExploreRoleMoveStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreRoleMoveStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = ExploreController.instance:getMap():getHero()
+local ExploreRoleMoveStep = class("ExploreRoleMoveStep", ExploreStepBase)
+
+function ExploreRoleMoveStep:onStart()
+	local hero = ExploreController.instance:getMap():getHero()
 
 	if ExploreModel.instance.isReseting then
-		var_1_0:setPosByNode(arg_1_0._data, false)
-		arg_1_0:onDone()
+		hero:setPosByNode(self._data, false)
+		self:onDone()
 
 		return
 	end
 
-	if var_1_0:isMoving() and ExploreHelper.getDistance(var_1_0.nodePos, arg_1_0._data) == 1 then
-		ExploreController.instance:registerCallback(ExploreEvent.OnCharacterNodeChange, arg_1_0._onCharacterNodeChange, arg_1_0)
-		ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, arg_1_0._onCharacterNodeChange, arg_1_0)
+	if hero:isMoving() and ExploreHelper.getDistance(hero.nodePos, self._data) == 1 then
+		ExploreController.instance:registerCallback(ExploreEvent.OnCharacterNodeChange, self._onCharacterNodeChange, self)
+		ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, self._onCharacterNodeChange, self)
 	else
-		arg_1_0:onDone()
+		self:onDone()
 	end
 end
 
-function var_0_0._onCharacterNodeChange(arg_2_0)
-	arg_2_0:onDone()
+function ExploreRoleMoveStep:_onCharacterNodeChange()
+	self:onDone()
 end
 
-function var_0_0.onDestory(arg_3_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterNodeChange, arg_3_0._onCharacterNodeChange, arg_3_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, arg_3_0._onCharacterNodeChange, arg_3_0)
-	var_0_0.super.onDestory(arg_3_0)
+function ExploreRoleMoveStep:onDestory()
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterNodeChange, self._onCharacterNodeChange, self)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, self._onCharacterNodeChange, self)
+	ExploreRoleMoveStep.super.onDestory(self)
 end
 
-return var_0_0
+return ExploreRoleMoveStep

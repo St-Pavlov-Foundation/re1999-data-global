@@ -1,180 +1,185 @@
-﻿local var_0_0 = require("modules.logic.common.defines.UIAnimationName")
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/view/XugoujiLevelViewStageItem.lua
+
+local UIAnimationName = require("modules.logic.common.defines.UIAnimationName")
 
 module("modules.logic.versionactivity2_6.xugouji.view.XugoujiLevelViewStageItem", package.seeall)
 
-local var_0_1 = class("XugoujiLevelViewStageItem", LuaCompBase)
-local var_0_2 = VersionActivity2_6Enum.ActivityId.Xugouji
+local XugoujiLevelViewStageItem = class("XugoujiLevelViewStageItem", LuaCompBase)
+local actId = VersionActivity2_6Enum.ActivityId.Xugouji
 
-function var_0_1.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
+function XugoujiLevelViewStageItem:init(go)
+	self.viewGO = go
 
-	gohelper.setActive(arg_1_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	arg_1_0._goStageType1Item = gohelper.findChild(arg_1_0.viewGO, "#go_StageType1")
-	arg_1_0._goStageType2Item = gohelper.findChild(arg_1_0.viewGO, "#go_StageType2")
-	arg_1_0._goStageType1Lock = gohelper.findChild(arg_1_0._goStageType1Item, "#go_Lock")
-	arg_1_0._goStageType2Lock = gohelper.findChild(arg_1_0._goStageType2Item, "#go_Lock")
-	arg_1_0._animator = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._imageStageIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_StageType1")
-	arg_1_0._imageStageIconLock = gohelper.findChildImage(arg_1_0.viewGO, "#go_StageType1/#go_Lock")
-	arg_1_0._txtType1StageName = gohelper.findChildText(arg_1_0.viewGO, "#go_StageType1/#txt_StageName")
-	arg_1_0._txtType1StageNum = gohelper.findChildText(arg_1_0.viewGO, "#go_StageType1/#txt_ChapterNum")
-	arg_1_0._txtType2StageNum = gohelper.findChildText(arg_1_0.viewGO, "#go_StageType2/#txt_ChapterNum")
-	arg_1_0._goCompleteEffect = gohelper.findChild(arg_1_0.viewGO, "vx_complete")
-	arg_1_0._completeEffectAnimator = ZProj.ProjAnimatorPlayer.Get(arg_1_0._goCompleteEffect)
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClick")
+	self._goStageType1Item = gohelper.findChild(self.viewGO, "#go_StageType1")
+	self._goStageType2Item = gohelper.findChild(self.viewGO, "#go_StageType2")
+	self._goStageType1Lock = gohelper.findChild(self._goStageType1Item, "#go_Lock")
+	self._goStageType2Lock = gohelper.findChild(self._goStageType2Item, "#go_Lock")
+	self._animator = go:GetComponent(typeof(UnityEngine.Animator))
+	self._imageStageIcon = gohelper.findChildImage(self.viewGO, "#go_StageType1")
+	self._imageStageIconLock = gohelper.findChildImage(self.viewGO, "#go_StageType1/#go_Lock")
+	self._txtType1StageName = gohelper.findChildText(self.viewGO, "#go_StageType1/#txt_StageName")
+	self._txtType1StageNum = gohelper.findChildText(self.viewGO, "#go_StageType1/#txt_ChapterNum")
+	self._txtType2StageNum = gohelper.findChildText(self.viewGO, "#go_StageType2/#txt_ChapterNum")
+	self._goCompleteEffect = gohelper.findChild(self.viewGO, "vx_complete")
+	self._completeEffectAnimator = ZProj.ProjAnimatorPlayer.Get(self._goCompleteEffect)
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "btnClick")
 
-	arg_1_0:_addEvents()
+	self:_addEvents()
 end
 
-function var_0_1.refreshItem(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._actId = VersionActivity2_6Enum.ActivityId.Xugouji
-	arg_2_0._index = arg_2_2
-	arg_2_0._config = arg_2_1
-	arg_2_0.episodeId = arg_2_0._config.episodeId
+function XugoujiLevelViewStageItem:refreshItem(cfg, index)
+	self._actId = VersionActivity2_6Enum.ActivityId.Xugouji
+	self._index = index
+	self._config = cfg
+	self.episodeId = self._config.episodeId
 
-	if arg_2_0.episodeId == XugoujiEnum.ChallengeEpisodeId then
-		gohelper.setActive(arg_2_0.viewGO, false)
+	if self.episodeId == XugoujiEnum.ChallengeEpisodeId then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	arg_2_0._stageType = arg_2_1.gameId ~= 0 and XugoujiEnum.LevelType.Level or XugoujiEnum.LevelType.Story
+	self._stageType = cfg.gameId ~= 0 and XugoujiEnum.LevelType.Level or XugoujiEnum.LevelType.Story
 
-	local var_2_0 = Activity188Model.instance:getCurEpisodeId()
+	local curEpisodeId = Activity188Model.instance:getCurEpisodeId()
 
-	arg_2_0:refreshTitle()
+	self:refreshTitle()
 
-	local var_2_1
+	local isChessStage = self._config.mapId ~= 0
+	local isFinish = Activity188Model.instance:isEpisodeFinished(self.episodeId)
+	local isUnlock = Activity188Model.instance:isEpisodeUnlock(self.episodeId)
 
-	var_2_1 = arg_2_0._config.mapId ~= 0
-
-	local var_2_2 = Activity188Model.instance:isEpisodeFinished(arg_2_0.episodeId)
-	local var_2_3 = Activity188Model.instance:isEpisodeUnlock(arg_2_0.episodeId)
-
-	if not string.nilorempty(arg_2_1.resource) then
-		UISpriteSetMgr.instance:setXugoujiSprite(arg_2_0._imageStageIcon, arg_2_1.resource)
-		UISpriteSetMgr.instance:setXugoujiSprite(arg_2_0._imageStageIconLock, arg_2_1.resource)
+	if not string.nilorempty(cfg.resource) then
+		UISpriteSetMgr.instance:setXugoujiSprite(self._imageStageIcon, cfg.resource)
+		UISpriteSetMgr.instance:setXugoujiSprite(self._imageStageIconLock, cfg.resource)
 	end
 
-	gohelper.setActive(arg_2_0._goStageType1Item, arg_2_0._stageType == XugoujiEnum.LevelType.Story)
-	gohelper.setActive(arg_2_0._goStageType2Item, arg_2_0._stageType == XugoujiEnum.LevelType.Level)
-	gohelper.setActive(arg_2_0._goStageType1Lock, not var_2_3)
-	gohelper.setActive(arg_2_0._goStageType2Lock, not var_2_3)
-	gohelper.setActive(arg_2_0._goCompleteEffect, var_2_2)
-	arg_2_0._completeEffectAnimator:Play(var_0_0.Idle, nil, nil)
+	gohelper.setActive(self._goStageType1Item, self._stageType == XugoujiEnum.LevelType.Story)
+	gohelper.setActive(self._goStageType2Item, self._stageType == XugoujiEnum.LevelType.Level)
+	gohelper.setActive(self._goStageType1Lock, not isUnlock)
+	gohelper.setActive(self._goStageType2Lock, not isUnlock)
+	gohelper.setActive(self._goCompleteEffect, isFinish)
+	self._completeEffectAnimator:Play(UIAnimationName.Idle, nil, nil)
 end
 
-function var_0_1.refreshTitle(arg_3_0)
-	arg_3_0._txtType1StageName.text = arg_3_0._config.name
-	arg_3_0._txtType1StageNum.text = string.format("%02d", arg_3_0._index)
-	arg_3_0._txtType2StageNum.text = string.format("%02d", arg_3_0._index)
+function XugoujiLevelViewStageItem:refreshTitle()
+	self._txtType1StageName.text = self._config.name
+	self._txtType1StageNum.text = string.format("%02d", self._index)
+	self._txtType2StageNum.text = string.format("%02d", self._index)
 end
 
-function var_0_1.addEventListeners(arg_4_0)
-	arg_4_0._btnclick:AddClickListener(arg_4_0._btnclickOnClick, arg_4_0)
+function XugoujiLevelViewStageItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_1.removeEventListeners(arg_5_0)
-	if arg_5_0._btnclick then
-		arg_5_0._btnclick:RemoveClickListener()
+function XugoujiLevelViewStageItem:removeEventListeners()
+	if self._btnclick then
+		self._btnclick:RemoveClickListener()
 	end
 end
 
-function var_0_1._btnclickOnClick(arg_6_0)
-	if arg_6_0:checkIsOpen() then
-		arg_6_0:_delayEnterEpisode()
+function XugoujiLevelViewStageItem:_btnclickOnClick()
+	if self:checkIsOpen() then
+		self:_delayEnterEpisode()
 	end
 end
 
-function var_0_1.checkIsOpen(arg_7_0)
-	local var_7_0 = ActivityModel.instance:getActMO(var_0_2)
-	local var_7_1 = true
+function XugoujiLevelViewStageItem:checkIsOpen()
+	local mo = ActivityModel.instance:getActMO(actId)
+	local isOpen = true
 
-	if var_7_0 == nil then
-		logError("not such activity id: " .. arg_7_0.actId)
+	if mo == nil then
+		logError("not such activity id: " .. self.actId)
 
-		var_7_1 = false
+		isOpen = false
 	end
 
-	if not var_7_0:isOpen() or var_7_0:isExpired() then
+	if not mo:isOpen() or mo:isExpired() then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
-		var_7_1 = false
+		isOpen = false
 	end
 
-	if not Activity188Model.instance:isEpisodeUnlock(arg_7_0.episodeId) then
+	local isUnlock = Activity188Model.instance:isEpisodeUnlock(self.episodeId)
+
+	if not isUnlock then
 		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
 
-		var_7_1 = false
+		isOpen = false
 	end
 
-	return var_7_1
+	return isOpen
 end
 
-function var_0_1._delayEnterEpisode(arg_8_0)
-	if not arg_8_0._config then
+function XugoujiLevelViewStageItem:_delayEnterEpisode()
+	if not self._config then
 		return
 	end
 
 	XugoujiController.instance:dispatchEvent(XugoujiEvent.BeforeEnterEpisode)
-	TaskDispatcher.runDelay(arg_8_0._enterGameView, arg_8_0, 0.1)
+	TaskDispatcher.runDelay(self._enterGameView, self, 0.1)
 end
 
-function var_0_1._enterGameView(arg_9_0)
-	XugoujiController.instance:enterEpisode(arg_9_0.episodeId)
+function XugoujiLevelViewStageItem:_enterGameView()
+	XugoujiController.instance:enterEpisode(self.episodeId)
 end
 
-function var_0_1._addEvents(arg_10_0)
-	XugoujiController.instance:registerCallback(XugoujiEvent.EnterEpisode, arg_10_0._onEnterEpisode, arg_10_0)
+function XugoujiLevelViewStageItem:_addEvents()
+	XugoujiController.instance:registerCallback(XugoujiEvent.EnterEpisode, self._onEnterEpisode, self)
 end
 
-function var_0_1._removeEvents(arg_11_0)
-	XugoujiController.instance:unregisterCallback(XugoujiEvent.EnterEpisode, arg_11_0._onEnterEpisode, arg_11_0)
+function XugoujiLevelViewStageItem:_removeEvents()
+	XugoujiController.instance:unregisterCallback(XugoujiEvent.EnterEpisode, self._onEnterEpisode, self)
 end
 
-function var_0_1.playFinishAni(arg_12_0)
-	arg_12_0:refreshItem(arg_12_0._config, arg_12_0._index)
+function XugoujiLevelViewStageItem:playFinishAni()
+	self:refreshItem(self._config, self._index)
 	AudioMgr.instance:trigger(AudioEnum2_6.Xugouji.episodeFinish)
-	arg_12_0._animator:Play(var_0_0.Finish, 0, 0)
-	arg_12_0._completeEffectAnimator:Play(var_0_0.Open, nil, nil)
+	self._animator:Play(UIAnimationName.Finish, 0, 0)
+	self._completeEffectAnimator:Play(UIAnimationName.Open, nil, nil)
 	AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_tongguan)
 end
 
-function var_0_1.playUnlockAni(arg_13_0)
-	arg_13_0:refreshItem(arg_13_0._config, arg_13_0._index)
+function XugoujiLevelViewStageItem:playUnlockAni()
+	self:refreshItem(self._config, self._index)
 	AudioMgr.instance:trigger(AudioEnum2_6.Xugouji.episodeUnlock)
-	arg_13_0._animator:Play(var_0_0.Unlock, 0, 0)
+	self._animator:Play(UIAnimationName.Unlock, 0, 0)
 	AudioEffectMgr.instance:playAudio(AudioEnum.UI.play_ui_activity_hero37_checkpoint_tongguan)
 end
 
-function var_0_1._onEnterEpisode(arg_14_0, arg_14_1)
-	if arg_14_0.episodeId ~= arg_14_1 then
+function XugoujiLevelViewStageItem:_onEnterEpisode(episodeId)
+	if self.episodeId ~= episodeId then
 		return
 	end
 
-	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_6XugoujiSelect .. var_0_2, tostring(arg_14_0._index))
+	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Version2_6XugoujiSelect .. actId, tostring(self._index))
 
-	if arg_14_0._config.gameId and arg_14_0._config.gameId ~= 0 then
-		local var_14_0 = arg_14_0._config.storyId == 0
-		local var_14_1 = Activity188Model.instance:getCurEpisodeId() == arg_14_1
+	if self._config.gameId and self._config.gameId ~= 0 then
+		local isSkipStory = self._config.storyId == 0
+		local isPlayedStoryLastTime = Activity188Model.instance:getCurEpisodeId() == episodeId
 
-		if var_14_0 or var_14_1 then
-			arg_14_0:_storyEnd()
+		if isSkipStory or isPlayedStoryLastTime then
+			self:_storyEnd()
 		else
-			StoryController.instance:playStory(arg_14_0._config.storyId, nil, arg_14_0._storyEnd, arg_14_0)
+			StoryController.instance:playStory(self._config.storyId, nil, self._storyEnd, self)
 		end
-	elseif arg_14_0._config.storyId == 0 then
-		arg_14_0:_storyEnd()
 	else
-		StoryController.instance:playStory(arg_14_0._config.storyId, nil, arg_14_0._storyEnd, arg_14_0)
+		local isSkipStory = self._config.storyId == 0
+
+		if isSkipStory then
+			self:_storyEnd()
+		else
+			StoryController.instance:playStory(self._config.storyId, nil, self._storyEnd, self)
+		end
 	end
 
-	Activity188Model.instance:setCurEpisodeId(arg_14_1)
+	Activity188Model.instance:setCurEpisodeId(episodeId)
 end
 
-function var_0_1._storyEnd(arg_15_0)
-	if arg_15_0._config.gameId and arg_15_0._config.gameId ~= 0 then
+function XugoujiLevelViewStageItem:_storyEnd()
+	if self._config.gameId and self._config.gameId ~= 0 then
 		XugoujiGameStepController.instance:insertStepListClient({
 			{
 				stepType = XugoujiEnum.GameStepType.WaitGameStart
@@ -189,9 +194,9 @@ function var_0_1._storyEnd(arg_15_0)
 	end
 end
 
-function var_0_1.onDestroy(arg_16_0)
-	arg_16_0:_removeEvents()
-	arg_16_0:removeEventListeners()
+function XugoujiLevelViewStageItem:onDestroy()
+	self:_removeEvents()
+	self:removeEventListeners()
 end
 
-return var_0_1
+return XugoujiLevelViewStageItem

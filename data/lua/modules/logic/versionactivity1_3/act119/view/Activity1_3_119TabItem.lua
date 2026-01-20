@@ -1,123 +1,126 @@
-﻿module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119TabItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act119/view/Activity1_3_119TabItem.lua
 
-local var_0_0 = class("Activity1_3_119TabItem")
+module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119TabItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._go = arg_1_1
-	arg_1_0.index = arg_1_2
-	arg_1_0.co = Activity119Config.instance:getConfig(VersionActivity1_3Enum.ActivityId.Act307, arg_1_2)
+local Activity1_3_119TabItem = class("Activity1_3_119TabItem")
 
-	arg_1_0:onInitView()
-	arg_1_0:addEvents()
+function Activity1_3_119TabItem:init(_go, index)
+	self._go = _go
+	self.index = index
+	self.co = Activity119Config.instance:getConfig(VersionActivity1_3Enum.ActivityId.Act307, index)
+
+	self:onInitView()
+	self:addEvents()
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._btn = gohelper.findButtonWithAudio(arg_2_0._go)
-	arg_2_0._txtTabName = gohelper.findChildText(arg_2_0._go, "#txt_TabName")
-	arg_2_0._txtTabNum = gohelper.findChildText(arg_2_0._go, "#txt_TabName/#txt_TabNum")
-	arg_2_0._goSelected = gohelper.findChild(arg_2_0._go, "#go_Selected")
-	arg_2_0._imageSelected = gohelper.findChildImage(arg_2_0._go, "#go_Selected/#image_Selected")
-	arg_2_0._txtTabNameSelected = gohelper.findChildText(arg_2_0._go, "#go_Selected/#txt_TabName")
-	arg_2_0._txtTabNumSelected = gohelper.findChildText(arg_2_0._go, "#go_Selected/#txt_TabName/#txt_TabNum")
-	arg_2_0._txtLockedTips = gohelper.findChildText(arg_2_0._go, "#go_Locked/#txt_LockedTips")
-	arg_2_0._goLocked = gohelper.findChild(arg_2_0._go, "#go_Locked")
-	arg_2_0._goFinished = gohelper.findChild(arg_2_0._go, "#go_Finished")
-	arg_2_0._txtTabNum.text = string.format("TRAINING NO.%s", arg_2_0.index)
-	arg_2_0._txtTabName.text = arg_2_0.co.normalCO.name
-	arg_2_0._txtTabNumSelected.text = string.format("TRAINING NO.%s", arg_2_0.index)
-	arg_2_0._txtTabNameSelected.text = arg_2_0.co.normalCO.name
-	arg_2_0._goRedPoint = gohelper.findChild(arg_2_0._go, "redPoint")
+function Activity1_3_119TabItem:onInitView()
+	self._btn = gohelper.findButtonWithAudio(self._go)
+	self._txtTabName = gohelper.findChildText(self._go, "#txt_TabName")
+	self._txtTabNum = gohelper.findChildText(self._go, "#txt_TabName/#txt_TabNum")
+	self._goSelected = gohelper.findChild(self._go, "#go_Selected")
+	self._imageSelected = gohelper.findChildImage(self._go, "#go_Selected/#image_Selected")
+	self._txtTabNameSelected = gohelper.findChildText(self._go, "#go_Selected/#txt_TabName")
+	self._txtTabNumSelected = gohelper.findChildText(self._go, "#go_Selected/#txt_TabName/#txt_TabNum")
+	self._txtLockedTips = gohelper.findChildText(self._go, "#go_Locked/#txt_LockedTips")
+	self._goLocked = gohelper.findChild(self._go, "#go_Locked")
+	self._goFinished = gohelper.findChild(self._go, "#go_Finished")
+	self._txtTabNum.text = string.format("TRAINING NO.%s", self.index)
+	self._txtTabName.text = self.co.normalCO.name
+	self._txtTabNumSelected.text = string.format("TRAINING NO.%s", self.index)
+	self._txtTabNameSelected.text = self.co.normalCO.name
+	self._goRedPoint = gohelper.findChild(self._go, "redPoint")
 
-	RedDotController.instance:addRedDot(arg_2_0._goRedPoint, RedDotEnum.DotNode.ActivityDreamTailTask, arg_2_0.index)
-	arg_2_0:changeSelect(false)
+	RedDotController.instance:addRedDot(self._goRedPoint, RedDotEnum.DotNode.ActivityDreamTailTask, self.index)
+	self:changeSelect(false)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btn:AddClickListener(arg_3_0.changeSelect, arg_3_0, true)
+function Activity1_3_119TabItem:addEvents()
+	self._btn:AddClickListener(self.changeSelect, self, true)
 end
 
-function var_0_0.updateLock(arg_4_0, arg_4_1)
-	arg_4_0.nowDay = arg_4_1
+function Activity1_3_119TabItem:updateLock(nowDay)
+	self.nowDay = nowDay
 
-	local var_4_0 = arg_4_0.co.normalCO.openDay - arg_4_1
+	local day = self.co.normalCO.openDay - nowDay
 
-	arg_4_0._isLock = false
+	self._isLock = false
 
-	if var_4_0 > 0 then
-		arg_4_0._isLock = true
+	if day > 0 then
+		self._isLock = true
 
-		if var_4_0 == 1 then
-			gohelper.setActive(arg_4_0._goLocked, true)
+		if day == 1 then
+			gohelper.setActive(self._goLocked, true)
 
-			arg_4_0._txtLockedTips.text = formatLuaLang("versionactivity_1_2_119_unlock", var_4_0)
+			self._txtLockedTips.text = formatLuaLang("versionactivity_1_2_119_unlock", day)
 		else
-			gohelper.setActive(arg_4_0._goLocked, false)
+			gohelper.setActive(self._goLocked, false)
 
-			arg_4_0._txtTabName.text = luaLang("versionactivity_1_2_119_unlock1")
-			arg_4_0._txtTabNum.text = "UNLOCK"
+			self._txtTabName.text = luaLang("versionactivity_1_2_119_unlock1")
+			self._txtTabNum.text = "UNLOCK"
 		end
 	else
-		gohelper.setActive(arg_4_0._goLocked, false)
+		gohelper.setActive(self._goLocked, false)
 
-		arg_4_0._txtTabNum.text = string.format("TRAINING NO.%s", arg_4_0.co.normalCO.tabId)
-		arg_4_0._txtTabName.text = arg_4_0.co.normalCO.name
+		self._txtTabNum.text = string.format("TRAINING NO.%s", self.co.normalCO.tabId)
+		self._txtTabName.text = self.co.normalCO.name
 	end
 end
 
-function var_0_0.updateFinishView(arg_5_0)
-	local var_5_0 = arg_5_0.co.taskList
-	local var_5_1 = true
+function Activity1_3_119TabItem:updateFinishView()
+	local cfg = self.co
+	local taskList = cfg.taskList
+	local isAllFinish = true
 
-	for iter_5_0 = 1, #var_5_0 do
-		local var_5_2 = TaskModel.instance:getTaskById(var_5_0[iter_5_0].id)
+	for i = 1, #taskList do
+		local taskMO = TaskModel.instance:getTaskById(taskList[i].id)
 
-		if var_5_2 and not (var_5_2.finishCount > 0) then
-			var_5_1 = false
+		if taskMO and not (taskMO.finishCount > 0) then
+			isAllFinish = false
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_5_0._goFinished, var_5_1)
+	gohelper.setActive(self._goFinished, isAllFinish)
 end
 
-function var_0_0.playUnLockAnim(arg_6_0)
+function Activity1_3_119TabItem:playUnLockAnim()
 	return
 end
 
-function var_0_0.changeSelect(arg_7_0, arg_7_1)
-	if arg_7_1 and arg_7_0._isLock and not arg_7_0._isPlayingUnLock then
+function Activity1_3_119TabItem:changeSelect(isSelect)
+	if isSelect and self._isLock and not self._isPlayingUnLock then
 		ToastController.instance:showToast(3401)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0._goSelected, arg_7_1)
+	gohelper.setActive(self._goSelected, isSelect)
 
-	arg_7_0._isSelect = arg_7_1
+	self._isSelect = isSelect
 
-	if arg_7_1 then
+	if isSelect then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_detailed_tabs_click)
-		Activity119Controller.instance:dispatchEvent(Activity119Event.TabChange, arg_7_0.index)
+		Activity119Controller.instance:dispatchEvent(Activity119Event.TabChange, self.index)
 	end
 end
 
-function var_0_0.removeEvents(arg_8_0)
-	arg_8_0._btn:RemoveClickListener()
+function Activity1_3_119TabItem:removeEvents()
+	self._btn:RemoveClickListener()
 end
 
-function var_0_0.dispose(arg_9_0)
-	arg_9_0:removeEvents()
+function Activity1_3_119TabItem:dispose()
+	self:removeEvents()
 
-	arg_9_0._go = nil
-	arg_9_0.index = nil
-	arg_9_0._btn = nil
-	arg_9_0._goSelected = nil
-	arg_9_0._txtTabNum = nil
-	arg_9_0._txtTabNumSelected = nil
-	arg_9_0._txtTabName = nil
-	arg_9_0._txtTabNameSelected = nil
-	arg_9_0._goLocked = nil
+	self._go = nil
+	self.index = nil
+	self._btn = nil
+	self._goSelected = nil
+	self._txtTabNum = nil
+	self._txtTabNumSelected = nil
+	self._txtTabName = nil
+	self._txtTabNameSelected = nil
+	self._goLocked = nil
 end
 
-return var_0_0
+return Activity1_3_119TabItem

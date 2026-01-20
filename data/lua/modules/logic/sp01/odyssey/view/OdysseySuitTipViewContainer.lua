@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseySuitTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseySuitTipViewContainer.lua
 
-local var_0_0 = class("OdysseySuitTipViewContainer", BaseViewContainer)
+module("modules.logic.sp01.odyssey.view.OdysseySuitTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseySuitTipViewContainer = class("OdysseySuitTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OdysseySuitTipView.New())
+function OdysseySuitTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OdysseySuitTipView.New())
+
+	return views
 end
 
-return var_0_0
+return OdysseySuitTipViewContainer

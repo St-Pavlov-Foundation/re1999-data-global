@@ -1,47 +1,49 @@
-﻿module("modules.logic.gm.view.GMResetCardsItem2", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMResetCardsItem2.lua
 
-local var_0_0 = class("GMResetCardsItem2", ListScrollCell)
+module("modules.logic.gm.view.GMResetCardsItem2", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._mo = nil
-	arg_1_0._itemClick = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+local GMResetCardsItem2 = class("GMResetCardsItem2", ListScrollCell)
 
-	arg_1_0._itemClick:AddClickListener(arg_1_0._onClickItem, arg_1_0)
+function GMResetCardsItem2:init(go)
+	self.go = go
+	self._mo = nil
+	self._itemClick = SLFramework.UGUI.UIClickListener.Get(go)
+
+	self._itemClick:AddClickListener(self._onClickItem, self)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	if not arg_2_0._cardItem then
-		local var_2_0 = arg_2_0._view.viewContainer
+function GMResetCardsItem2:onUpdateMO(mo)
+	if not self._cardItem then
+		local container = self._view.viewContainer
 
-		arg_2_0._cardGO = var_2_0:getResInst(var_2_0:getSetting().otherRes[1], gohelper.findChild(arg_2_0.go, "card"), "card")
-		arg_2_0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._cardGO, FightViewCardItem)
+		self._cardGO = container:getResInst(container:getSetting().otherRes[1], gohelper.findChild(self.go, "card"), "card")
+		self._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._cardGO, FightViewCardItem)
 
-		gohelper.setActive(gohelper.findChild(arg_2_0._cardItem.go, "Image"), true)
-		gohelper.setActive(arg_2_0._cardItem._txt, true)
-		transformhelper.transformhelper.setLocalScale(arg_2_0._cardGO.transform, 0.8, 0.8, 0.8)
+		gohelper.setActive(gohelper.findChild(self._cardItem.go, "Image"), true)
+		gohelper.setActive(self._cardItem._txt, true)
+		transformhelper.transformhelper.setLocalScale(self._cardGO.transform, 0.8, 0.8, 0.8)
 	end
 
-	arg_2_0._mo = arg_2_1
+	self._mo = mo
 
-	local var_2_1 = arg_2_1.skillId
+	local skillId = mo.skillId
 
-	arg_2_0._cardItem:updateItem(arg_2_1.entityId, var_2_1)
+	self._cardItem:updateItem(mo.entityId, skillId)
 
-	local var_2_2 = lua_skill.configDict[var_2_1]
+	local skillCO = lua_skill.configDict[skillId]
 
-	arg_2_0._cardItem._txt.text = var_2_2 and var_2_2.name or "nil"
+	self._cardItem._txt.text = skillCO and skillCO.name or "nil"
 end
 
-function var_0_0._onClickItem(arg_3_0)
-	local var_3_0 = GMResetCardsModel.instance:getModel1()
+function GMResetCardsItem2:_onClickItem()
+	local model1 = GMResetCardsModel.instance:getModel1()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0:getList()) do
-		if not iter_3_1.newSkillId then
-			iter_3_1.newEntityId = arg_3_0._mo.entityId
-			iter_3_1.newSkillId = arg_3_0._mo.skillId
+	for _, one in ipairs(model1:getList()) do
+		if not one.newSkillId then
+			one.newEntityId = self._mo.entityId
+			one.newSkillId = self._mo.skillId
 
-			var_3_0:onModelUpdate()
+			model1:onModelUpdate()
 
 			return
 		end
@@ -50,12 +52,12 @@ function var_0_0._onClickItem(arg_3_0)
 	GameFacade.showToast(ToastEnum.IconId, "cards full")
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	if arg_4_0._itemClick then
-		arg_4_0._itemClick:RemoveClickListener()
+function GMResetCardsItem2:onDestroy()
+	if self._itemClick then
+		self._itemClick:RemoveClickListener()
 
-		arg_4_0._itemClick = nil
+		self._itemClick = nil
 	end
 end
 
-return var_0_0
+return GMResetCardsItem2

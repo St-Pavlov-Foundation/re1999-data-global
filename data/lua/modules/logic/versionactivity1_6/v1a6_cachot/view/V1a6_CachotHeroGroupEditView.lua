@@ -1,180 +1,182 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupEditView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotHeroGroupEditView.lua
 
-local var_0_0 = class("V1a6_CachotHeroGroupEditView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupEditView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gononecharacter = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_nonecharacter")
-	arg_1_0._gocharacterinfo = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo")
-	arg_1_0._imagedmgtype = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
-	arg_1_0._imagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
-	arg_1_0._gospecialitem = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem")
-	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#txt_level")
-	arg_1_0._txtlevelmax = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#txt_level/#txt_levelmax")
-	arg_1_0._btncharacter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#btn_character")
-	arg_1_0._btntrial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#btn_trial")
-	arg_1_0._goBalance = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#go_balance")
-	arg_1_0._goheroLvTxt = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/Text")
-	arg_1_0._golevelWithTalent = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent")
-	arg_1_0._txtlevelWithTalent = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#txt_level")
-	arg_1_0._txtlevelmaxWithTalent = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#txt_level/#txt_levelmax")
-	arg_1_0._btncharacterWithTalent = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#btn_character")
-	arg_1_0._btntrialWithTalent = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#btn_trial")
-	arg_1_0._goBalanceWithTalent = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#go_balance")
-	arg_1_0._goheroLvTxtWithTalent = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/Text")
-	arg_1_0._txttalent = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#txt_talent")
-	arg_1_0._btnattribute = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/attribute/#btn_attribute")
-	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
-	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_skill")
-	arg_1_0._btnpassiveskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
-	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
-	arg_1_0._gopassiveskills = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
-	arg_1_0._gorolecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer")
-	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rolecontainer/#scroll_card")
-	arg_1_0._goScrollContent = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#scroll_card/scrollcontent")
-	arg_1_0._scrollquickedit = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rolecontainer/#scroll_quickedit")
-	arg_1_0._gorolesort = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort")
-	arg_1_0._btnlvrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
-	arg_1_0._btnexskillrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
-	arg_1_0._btnclassify = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
-	arg_1_0._btnquickedit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_quickedit")
-	arg_1_0._goexarrow = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
-	arg_1_0._goseatlevel = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_level")
-	arg_1_0._seatIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_rolecontainer/#go_level/bg/#txt_title/icon")
-	arg_1_0._seatEffect = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_level/bg/#txt_title/quality_effect")
-	arg_1_0._btntips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_level/bg/#txt_title/#btn_tips")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_empty")
-	arg_1_0._gosearchfilter = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter")
-	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/#btn_closefilterview")
-	arg_1_0._godmgitem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/dmgContainer/#go_dmgitem")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/attrContainer/#go_attritem")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_reset")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_ok")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ops/#btn_confirm")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ops/#btn_cancel")
-	arg_1_0._txtrecommendAttrDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_recommendAttr/bg/#txt_desc")
-	arg_1_0._goattrlist = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/bg/#go_attrlist")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/bg/#go_attrlist/#go_attritem")
+local V1a6_CachotHeroGroupEditView = class("V1a6_CachotHeroGroupEditView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotHeroGroupEditView:onInitView()
+	self._gononecharacter = gohelper.findChild(self.viewGO, "characterinfo/#go_nonecharacter")
+	self._gocharacterinfo = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo")
+	self._imagedmgtype = gohelper.findChildImage(self.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
+	self._imagecareericon = gohelper.findChildImage(self.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
+	self._txtname = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
+	self._gospecialitem = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem")
+	self._golevel = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/level")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/level/#txt_level")
+	self._txtlevelmax = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/level/#txt_level/#txt_levelmax")
+	self._btncharacter = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/level/#btn_character")
+	self._btntrial = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/level/#btn_trial")
+	self._goBalance = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/level/#go_balance")
+	self._goheroLvTxt = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/level/Text")
+	self._golevelWithTalent = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent")
+	self._txtlevelWithTalent = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#txt_level")
+	self._txtlevelmaxWithTalent = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#txt_level/#txt_levelmax")
+	self._btncharacterWithTalent = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#btn_character")
+	self._btntrialWithTalent = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#btn_trial")
+	self._goBalanceWithTalent = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#go_balance")
+	self._goheroLvTxtWithTalent = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/Text")
+	self._txttalent = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/levelwithtalent/#txt_talent")
+	self._btnattribute = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/attribute/#btn_attribute")
+	self._goattribute = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
+	self._goskill = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_skill")
+	self._btnpassiveskill = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
+	self._txtpassivename = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
+	self._gopassiveskills = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
+	self._gorolecontainer = gohelper.findChild(self.viewGO, "#go_rolecontainer")
+	self._scrollcard = gohelper.findChildScrollRect(self.viewGO, "#go_rolecontainer/#scroll_card")
+	self._goScrollContent = gohelper.findChild(self.viewGO, "#go_rolecontainer/#scroll_card/scrollcontent")
+	self._scrollquickedit = gohelper.findChildScrollRect(self.viewGO, "#go_rolecontainer/#scroll_quickedit")
+	self._gorolesort = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort")
+	self._btnlvrank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
+	self._btnexskillrank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
+	self._btnclassify = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
+	self._btnquickedit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_quickedit")
+	self._goexarrow = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
+	self._goseatlevel = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_level")
+	self._seatIcon = gohelper.findChildImage(self.viewGO, "#go_rolecontainer/#go_level/bg/#txt_title/icon")
+	self._seatEffect = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_level/bg/#txt_title/quality_effect")
+	self._btntips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_level/bg/#txt_title/#btn_tips")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_empty")
+	self._gosearchfilter = gohelper.findChild(self.viewGO, "#go_searchfilter")
+	self._btnclosefilterview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/#btn_closefilterview")
+	self._godmgitem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/dmgContainer/#go_dmgitem")
+	self._goattritem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/attrContainer/#go_attritem")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_reset")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_ok")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_confirm")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_cancel")
+	self._txtrecommendAttrDesc = gohelper.findChildText(self.viewGO, "#go_recommendAttr/bg/#txt_desc")
+	self._goattrlist = gohelper.findChild(self.viewGO, "#go_recommendAttr/bg/#go_attrlist")
+	self._goattritem = gohelper.findChild(self.viewGO, "#go_recommendAttr/bg/#go_attrlist/#go_attritem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlvrank:AddClickListener(arg_2_0._btnlvrankOnClick, arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnexskillrank:AddClickListener(arg_2_0._btnexskillrankOnClick, arg_2_0)
-	arg_2_0._btnclassify:AddClickListener(arg_2_0._btnclassifyOnClick, arg_2_0)
-	arg_2_0._btncharacter:AddClickListener(arg_2_0._btncharacterOnClick, arg_2_0)
-	arg_2_0._btntrial:AddClickListener(arg_2_0._btntrialOnClick, arg_2_0)
-	arg_2_0._btncharacterWithTalent:AddClickListener(arg_2_0._btncharacterOnClick, arg_2_0)
-	arg_2_0._btntrialWithTalent:AddClickListener(arg_2_0._btntrialOnClick, arg_2_0)
-	arg_2_0._btnattribute:AddClickListener(arg_2_0._btnattributeOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnpassiveskill:AddClickListener(arg_2_0._btnpassiveskillOnClick, arg_2_0)
-	arg_2_0._btnquickedit:AddClickListener(arg_2_0._btnquickeditOnClick, arg_2_0)
-	arg_2_0._btnclosefilterview:AddClickListener(arg_2_0._btncloseFilterViewOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+function V1a6_CachotHeroGroupEditView:addEvents()
+	self._btnlvrank:AddClickListener(self._btnlvrankOnClick, self)
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnexskillrank:AddClickListener(self._btnexskillrankOnClick, self)
+	self._btnclassify:AddClickListener(self._btnclassifyOnClick, self)
+	self._btncharacter:AddClickListener(self._btncharacterOnClick, self)
+	self._btntrial:AddClickListener(self._btntrialOnClick, self)
+	self._btncharacterWithTalent:AddClickListener(self._btncharacterOnClick, self)
+	self._btntrialWithTalent:AddClickListener(self._btntrialOnClick, self)
+	self._btnattribute:AddClickListener(self._btnattributeOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnpassiveskill:AddClickListener(self._btnpassiveskillOnClick, self)
+	self._btnquickedit:AddClickListener(self._btnquickeditOnClick, self)
+	self._btnclosefilterview:AddClickListener(self._btncloseFilterViewOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnok:AddClickListener(self._btnokOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlvrank:RemoveClickListener()
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnexskillrank:RemoveClickListener()
-	arg_3_0._btnclassify:RemoveClickListener()
-	arg_3_0._btncharacter:RemoveClickListener()
-	arg_3_0._btntrial:RemoveClickListener()
-	arg_3_0._btncharacterWithTalent:RemoveClickListener()
-	arg_3_0._btntrialWithTalent:RemoveClickListener()
-	arg_3_0._btnattribute:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnpassiveskill:RemoveClickListener()
-	arg_3_0._btnquickedit:RemoveClickListener()
-	arg_3_0._btnclosefilterview:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnok:RemoveClickListener()
-	arg_3_0._btntips:RemoveClickListener()
+function V1a6_CachotHeroGroupEditView:removeEvents()
+	self._btnlvrank:RemoveClickListener()
+	self._btnrarerank:RemoveClickListener()
+	self._btnexskillrank:RemoveClickListener()
+	self._btnclassify:RemoveClickListener()
+	self._btncharacter:RemoveClickListener()
+	self._btntrial:RemoveClickListener()
+	self._btncharacterWithTalent:RemoveClickListener()
+	self._btntrialWithTalent:RemoveClickListener()
+	self._btnattribute:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnpassiveskill:RemoveClickListener()
+	self._btnquickedit:RemoveClickListener()
+	self._btnclosefilterview:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnok:RemoveClickListener()
+	self._btntips:RemoveClickListener()
 end
 
-function var_0_0._btntipsOnClick(arg_4_0)
+function V1a6_CachotHeroGroupEditView:_btntipsOnClick()
 	HelpController.instance:showHelp(HelpEnum.HelpId.Cachot1_6HeroGroupHelp)
 end
 
-function var_0_0._btncloseFilterViewOnClick(arg_5_0)
-	arg_5_0._selectDmgs = LuaUtil.deepCopy(arg_5_0._curDmgs)
-	arg_5_0._selectAttrs = LuaUtil.deepCopy(arg_5_0._curAttrs)
-	arg_5_0._selectLocations = LuaUtil.deepCopy(arg_5_0._curLocations)
+function V1a6_CachotHeroGroupEditView:_btncloseFilterViewOnClick()
+	self._selectDmgs = LuaUtil.deepCopy(self._curDmgs)
+	self._selectAttrs = LuaUtil.deepCopy(self._curAttrs)
+	self._selectLocations = LuaUtil.deepCopy(self._curLocations)
 
-	arg_5_0:_refreshBtnIcon()
-	gohelper.setActive(arg_5_0._gosearchfilter, false)
+	self:_refreshBtnIcon()
+	gohelper.setActive(self._gosearchfilter, false)
 end
 
-function var_0_0._btnclassifyOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0._gosearchfilter, true)
-	arg_6_0:_refreshFilterView()
+function V1a6_CachotHeroGroupEditView:_btnclassifyOnClick()
+	gohelper.setActive(self._gosearchfilter, true)
+	self:_refreshFilterView()
 end
 
-function var_0_0._btnresetOnClick(arg_7_0)
-	for iter_7_0 = 1, 2 do
-		arg_7_0._selectDmgs[iter_7_0] = false
+function V1a6_CachotHeroGroupEditView:_btnresetOnClick()
+	for i = 1, 2 do
+		self._selectDmgs[i] = false
 	end
 
-	for iter_7_1 = 1, 6 do
-		arg_7_0._selectAttrs[iter_7_1] = false
+	for i = 1, 6 do
+		self._selectAttrs[i] = false
 	end
 
-	for iter_7_2 = 1, 6 do
-		arg_7_0._selectLocations[iter_7_2] = false
+	for i = 1, 6 do
+		self._selectLocations[i] = false
 	end
 
-	arg_7_0:_refreshBtnIcon()
-	arg_7_0:_refreshFilterView()
+	self:_refreshBtnIcon()
+	self:_refreshFilterView()
 end
 
-function var_0_0._btnokOnClick(arg_8_0)
-	gohelper.setActive(arg_8_0._gosearchfilter, false)
+function V1a6_CachotHeroGroupEditView:_btnokOnClick()
+	gohelper.setActive(self._gosearchfilter, false)
 
-	local var_8_0 = {}
+	local dmgs = {}
 
-	for iter_8_0 = 1, 2 do
-		if arg_8_0._selectDmgs[iter_8_0] then
-			table.insert(var_8_0, iter_8_0)
+	for i = 1, 2 do
+		if self._selectDmgs[i] then
+			table.insert(dmgs, i)
 		end
 	end
 
-	local var_8_1 = {}
+	local careers = {}
 
-	for iter_8_1 = 1, 6 do
-		if arg_8_0._selectAttrs[iter_8_1] then
-			table.insert(var_8_1, iter_8_1)
+	for i = 1, 6 do
+		if self._selectAttrs[i] then
+			table.insert(careers, i)
 		end
 	end
 
-	local var_8_2 = {}
+	local locations = {}
 
-	for iter_8_2 = 1, 6 do
-		if arg_8_0._selectLocations[iter_8_2] then
-			table.insert(var_8_2, iter_8_2)
+	for i = 1, 6 do
+		if self._selectLocations[i] then
+			table.insert(locations, i)
 		end
 	end
 
-	if #var_8_0 == 0 then
-		var_8_0 = {
+	if #dmgs == 0 then
+		dmgs = {
 			1,
 			2
 		}
 	end
 
-	if #var_8_1 == 0 then
-		var_8_1 = {
+	if #careers == 0 then
+		careers = {
 			1,
 			2,
 			3,
@@ -184,8 +186,8 @@ function var_0_0._btnokOnClick(arg_8_0)
 		}
 	end
 
-	if #var_8_2 == 0 then
-		var_8_2 = {
+	if #locations == 0 then
+		locations = {
 			1,
 			2,
 			3,
@@ -195,684 +197,693 @@ function var_0_0._btnokOnClick(arg_8_0)
 		}
 	end
 
-	local var_8_3, var_8_4 = transformhelper.getLocalPos(arg_8_0._goScrollContent.transform)
+	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(arg_8_0._goScrollContent.transform, var_8_3, arg_8_0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(self._goScrollContent.transform, x, self._initScrollContentPosY)
 
-	local var_8_5 = {
-		dmgs = var_8_0,
-		careers = var_8_1,
-		locations = var_8_2
-	}
+	local filterParam = {}
 
-	CharacterModel.instance:filterCardListByDmgAndCareer(var_8_5, false, CharacterEnum.FilterType.HeroGroup)
-	HeroGroupTrialModel.instance:setFilter(var_8_0, var_8_1)
+	filterParam.dmgs = dmgs
+	filterParam.careers = careers
+	filterParam.locations = locations
 
-	arg_8_0._curDmgs = LuaUtil.deepCopy(arg_8_0._selectDmgs)
-	arg_8_0._curAttrs = LuaUtil.deepCopy(arg_8_0._selectAttrs)
-	arg_8_0._curLocations = LuaUtil.deepCopy(arg_8_0._selectLocations)
+	CharacterModel.instance:filterCardListByDmgAndCareer(filterParam, false, CharacterEnum.FilterType.HeroGroup)
+	HeroGroupTrialModel.instance:setFilter(dmgs, careers)
 
-	arg_8_0:_refreshBtnIcon()
-	arg_8_0:_refreshCurScrollBySort()
+	self._curDmgs = LuaUtil.deepCopy(self._selectDmgs)
+	self._curAttrs = LuaUtil.deepCopy(self._selectAttrs)
+	self._curLocations = LuaUtil.deepCopy(self._selectLocations)
+
+	self:_refreshBtnIcon()
+	self:_refreshCurScrollBySort()
 	ViewMgr.instance:closeView(ViewName.CharacterLevelUpView)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 end
 
-function var_0_0._btnpassiveskillOnClick(arg_9_0)
-	if not arg_9_0._heroMO then
+function V1a6_CachotHeroGroupEditView:_btnpassiveskillOnClick()
+	if not self._heroMO then
 		return
 	end
 
-	local var_9_0 = {}
+	local info = {}
 
-	var_9_0.tag = "passiveskill"
-	var_9_0.heroid = arg_9_0._heroMO.heroId
-	var_9_0.heroMo = arg_9_0._heroMO
-	var_9_0.tipPos = Vector2.New(851, -59)
-	var_9_0.buffTipsX = 1603
-	var_9_0.anchorParams = {
+	info.tag = "passiveskill"
+	info.heroid = self._heroMO.heroId
+	info.heroMo = self._heroMO
+	info.tipPos = Vector2.New(851, -59)
+	info.buffTipsX = 1603
+	info.anchorParams = {
 		Vector2.New(0, 0.5),
 		Vector2.New(0, 0.5)
 	}
-	var_9_0.isBalance = HeroGroupBalanceHelper.getIsBalanceMode() and not arg_9_0._heroMO:isTrial()
+	info.isBalance = HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial()
 
-	arg_9_0:_addCachotProp(var_9_0)
-	CharacterController.instance:openCharacterTipView(var_9_0)
+	self:_addCachotProp(info)
+	CharacterController.instance:openCharacterTipView(info)
 end
 
-function var_0_0._addCachotProp(arg_10_0, arg_10_1)
-	local var_10_0, var_10_1 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_10_0._heroMO, arg_10_0._seatLevel)
-	local var_10_2, var_10_3 = HeroConfig.instance:getShowLevel(var_10_0)
+function V1a6_CachotHeroGroupEditView:_addCachotProp(info)
+	local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
+	local showLevel, rank = HeroConfig.instance:getShowLevel(level)
 
-	arg_10_1.level = var_10_0
-	arg_10_1.rank = var_10_3
-	arg_10_1.passiveSkillLevel = {}
-	arg_10_1.seatLevel = arg_10_0._seatLevel
+	info.level = level
+	info.rank = rank
+	info.passiveSkillLevel = {}
+	info.seatLevel = self._seatLevel
 
-	for iter_10_0 = 1, var_10_3 - 1 do
-		table.insert(arg_10_1.passiveSkillLevel, iter_10_0)
+	for i = 1, rank - 1 do
+		table.insert(info.passiveSkillLevel, i)
 	end
 
-	local var_10_4 = V1a6_CachotHeroGroupController.instance
+	local controller = V1a6_CachotHeroGroupController.instance
 
-	arg_10_1.setEquipInfo = {
-		var_10_4.getCharacterTipEquipInfo,
-		var_10_4,
+	info.setEquipInfo = {
+		controller.getCharacterTipEquipInfo,
+		controller,
 		{
 			isCachot = true,
-			seatLevel = arg_10_0._seatLevel
+			seatLevel = self._seatLevel
 		}
 	}
-	arg_10_1.talentCubeInfos = arg_10_0._talentCubeInfos
+	info.talentCubeInfos = self._talentCubeInfos
 end
 
-function var_0_0._btnconfirmOnClick(arg_11_0)
-	if arg_11_0._adventure then
-		local var_11_0 = arg_11_0._heroGroupQuickEditListModel:getHeroUids()
+function V1a6_CachotHeroGroupEditView:_btnconfirmOnClick()
+	if self._adventure then
+		local newHeroUids = self._heroGroupQuickEditListModel:getHeroUids()
 
-		if var_11_0 and #var_11_0 > 0 then
-			for iter_11_0, iter_11_1 in pairs(var_11_0) do
-				local var_11_1 = HeroModel.instance:getById(iter_11_1)
+		if newHeroUids and #newHeroUids > 0 then
+			for k, heroUid in pairs(newHeroUids) do
+				local mo = HeroModel.instance:getById(heroUid)
 
-				if var_11_1 and WeekWalkModel.instance:getCurMapHeroCd(var_11_1.heroId) > 0 then
-					GameFacade.showToast(ToastEnum.HeroGroupEdit)
+				if mo then
+					local cd = WeekWalkModel.instance:getCurMapHeroCd(mo.heroId)
 
-					return
+					if cd > 0 then
+						GameFacade.showToast(ToastEnum.HeroGroupEdit)
+
+						return
+					end
 				end
 			end
-		elseif arg_11_0._heroMO and WeekWalkModel.instance:getCurMapHeroCd(arg_11_0._heroMO.heroId) > 0 then
-			GameFacade.showToast(ToastEnum.HeroGroupEdit)
+		elseif self._heroMO then
+			local cd = WeekWalkModel.instance:getCurMapHeroCd(self._heroMO.heroId)
 
-			return
+			if cd > 0 then
+				GameFacade.showToast(ToastEnum.HeroGroupEdit)
+
+				return
+			end
 		end
 	end
 
-	if arg_11_0._isShowQuickEdit then
-		arg_11_0:_saveQuickGroupInfo()
-		arg_11_0:closeThis()
+	if self._isShowQuickEdit then
+		self:_saveQuickGroupInfo()
+		self:closeThis()
 
 		return
 	end
 
-	if not arg_11_0:_normalEditHasChange() then
-		arg_11_0:closeThis()
+	if not self:_normalEditHasChange() then
+		self:closeThis()
 
 		return
 	end
 
-	local var_11_2 = arg_11_0._heroSingleGroupModel:getById(arg_11_0._singleGroupMOId)
+	local singleGroupMO = self._heroSingleGroupModel:getById(self._singleGroupMOId)
 
-	if var_11_2.trialPos then
+	if singleGroupMO.trialPos then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if arg_11_0._heroMO then
-		if arg_11_0._heroMO.isPosLock then
+	if self._heroMO then
+		if self._heroMO.isPosLock then
 			GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 			return
 		end
 
-		if arg_11_0._heroMO:isTrial() and not arg_11_0._heroSingleGroupModel:isInGroup(arg_11_0._heroMO.uid) and (var_11_2:isEmpty() or not var_11_2.trial) and arg_11_0._heroGroupEditListModel:isTrialLimit() then
+		if self._heroMO:isTrial() and not self._heroSingleGroupModel:isInGroup(self._heroMO.uid) and (singleGroupMO:isEmpty() or not singleGroupMO.trial) and self._heroGroupEditListModel:isTrialLimit() then
 			GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 			return
 		end
 
-		if arg_11_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight then
-			local var_11_3 = V1a6_CachotModel.instance:getTeamInfo():getHeroHp(arg_11_0._heroMO.heroId)
+		if self.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight then
+			local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
+			local hpInfo = teamInfo:getHeroHp(self._heroMO.heroId)
+			local hpValue = hpInfo and hpInfo.life or 0
 
-			if (var_11_3 and var_11_3.life or 0) <= 0 then
+			if hpValue <= 0 then
 				GameFacade.showToast(ToastEnum.V1a6CachotToast04)
 
 				return
 			end
 		end
 
-		local var_11_4, var_11_5 = arg_11_0._heroSingleGroupModel:hasHeroUids(arg_11_0._heroMO.uid, arg_11_0._singleGroupMOId)
+		local hasHero, hasHeroIndex = self._heroSingleGroupModel:hasHeroUids(self._heroMO.uid, self._singleGroupMOId)
 
-		if var_11_4 then
-			if arg_11_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+		if hasHero then
+			if self.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
 				GameFacade.showToast(ToastEnum.V1a6CachotToast03)
 
 				return
 			end
 
-			arg_11_0._heroSingleGroupModel:removeFrom(var_11_5)
-			arg_11_0._heroSingleGroupModel:addTo(arg_11_0._heroMO.uid, arg_11_0._singleGroupMOId)
+			self._heroSingleGroupModel:removeFrom(hasHeroIndex)
+			self._heroSingleGroupModel:addTo(self._heroMO.uid, self._singleGroupMOId)
 
-			if arg_11_0._heroMO:isTrial() then
-				var_11_2:setTrial(arg_11_0._heroMO.trialCo.id, arg_11_0._heroMO.trialCo.trialTemplate)
+			if self._heroMO:isTrial() then
+				singleGroupMO:setTrial(self._heroMO.trialCo.id, self._heroMO.trialCo.trialTemplate)
 			else
-				var_11_2:setTrial()
+				singleGroupMO:setTrial()
 			end
 
-			FightAudioMgr.instance:playHeroVoiceRandom(arg_11_0._heroMO.heroId, CharacterEnum.VoiceType.HeroGroup)
-			arg_11_0:_saveCurGroupInfo()
-			arg_11_0:closeThis()
+			FightAudioMgr.instance:playHeroVoiceRandom(self._heroMO.heroId, CharacterEnum.VoiceType.HeroGroup)
+			self:_saveCurGroupInfo()
+			self:closeThis()
 
 			return
 		end
 
-		if arg_11_0._heroSingleGroupModel:isAidConflict(arg_11_0._heroMO.heroId) then
+		if self._heroSingleGroupModel:isAidConflict(self._heroMO.heroId) then
 			GameFacade.showToast(ToastEnum.HeroIsAidConflict)
 
 			return
 		end
 
-		arg_11_0._heroSingleGroupModel:addTo(arg_11_0._heroMO.uid, arg_11_0._singleGroupMOId)
+		self._heroSingleGroupModel:addTo(self._heroMO.uid, self._singleGroupMOId)
 
-		if arg_11_0._heroMO:isTrial() then
-			var_11_2:setTrial(arg_11_0._heroMO.trialCo.id, arg_11_0._heroMO.trialCo.trialTemplate)
+		if self._heroMO:isTrial() then
+			singleGroupMO:setTrial(self._heroMO.trialCo.id, self._heroMO.trialCo.trialTemplate)
 		else
-			var_11_2:setTrial()
+			singleGroupMO:setTrial()
 		end
 
-		FightAudioMgr.instance:playHeroVoiceRandom(arg_11_0._heroMO.heroId, CharacterEnum.VoiceType.HeroGroup)
-		arg_11_0:_saveCurGroupInfo()
-		arg_11_0:closeThis()
+		FightAudioMgr.instance:playHeroVoiceRandom(self._heroMO.heroId, CharacterEnum.VoiceType.HeroGroup)
+		self:_saveCurGroupInfo()
+		self:closeThis()
 	else
-		if arg_11_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
-			arg_11_0.viewContainer:_overrideClose()
+		if self.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+			self.viewContainer:_overrideClose()
 
 			return
 		end
 
-		arg_11_0._heroSingleGroupModel:removeFrom(arg_11_0._singleGroupMOId)
-		arg_11_0:_saveCurGroupInfo()
-		arg_11_0:closeThis()
+		self._heroSingleGroupModel:removeFrom(self._singleGroupMOId)
+		self:_saveCurGroupInfo()
+		self:closeThis()
 	end
 end
 
-function var_0_0.checkTrialNum(arg_12_0)
+function V1a6_CachotHeroGroupEditView:checkTrialNum()
 	return false
 end
 
-function var_0_0._btncancelOnClick(arg_13_0)
-	if arg_13_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
-		arg_13_0.viewContainer:_overrideClose()
+function V1a6_CachotHeroGroupEditView:_btncancelOnClick()
+	if self.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+		self.viewContainer:_overrideClose()
 
 		return
 	end
 
-	arg_13_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btncharacterOnClick(arg_14_0)
-	if arg_14_0._heroMO then
-		local var_14_0
+function V1a6_CachotHeroGroupEditView:_btncharacterOnClick()
+	if self._heroMO then
+		local heroMoList
 
-		if arg_14_0._isShowQuickEdit then
-			var_14_0 = arg_14_0._heroGroupQuickEditListModel:getList()
+		if self._isShowQuickEdit then
+			heroMoList = self._heroGroupQuickEditListModel:getList()
 		else
-			var_14_0 = arg_14_0._heroGroupEditListModel:getList()
+			heroMoList = self._heroGroupEditListModel:getList()
 		end
 
-		local var_14_1 = {}
+		local newList = {}
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-			if not iter_14_1:isTrial() then
-				table.insert(var_14_1, iter_14_1)
+		for k, heroMo in ipairs(heroMoList) do
+			if not heroMo:isTrial() then
+				table.insert(newList, heroMo)
 			end
 		end
 
-		CharacterController.instance:openCharacterView(arg_14_0._heroMO, var_14_1)
+		CharacterController.instance:openCharacterView(self._heroMO, newList)
 	end
 end
 
-function var_0_0._btntrialOnClick(arg_15_0)
-	if arg_15_0._heroMO then
-		local var_15_0
+function V1a6_CachotHeroGroupEditView:_btntrialOnClick()
+	if self._heroMO then
+		local heroMoList
 
-		if arg_15_0._isShowQuickEdit then
-			var_15_0 = arg_15_0._heroGroupQuickEditListModel:getList()
+		if self._isShowQuickEdit then
+			heroMoList = self._heroGroupQuickEditListModel:getList()
 		else
-			var_15_0 = arg_15_0._heroGroupEditListModel:getList()
+			heroMoList = self._heroGroupEditListModel:getList()
 		end
 
-		local var_15_1 = {}
+		local newList = {}
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			if iter_15_1:isTrial() then
-				table.insert(var_15_1, iter_15_1)
+		for k, heroMo in ipairs(heroMoList) do
+			if heroMo:isTrial() then
+				table.insert(newList, heroMo)
 			end
 		end
 
-		CharacterController.instance:openCharacterView(arg_15_0._heroMO, var_15_1)
+		CharacterController.instance:openCharacterView(self._heroMO, newList)
 	end
 end
 
-function var_0_0._btnattributeOnClick(arg_16_0)
-	if arg_16_0._heroMO then
-		local var_16_0 = {}
+function V1a6_CachotHeroGroupEditView:_btnattributeOnClick()
+	if self._heroMO then
+		local info = {}
 
-		var_16_0.tag = "attribute"
-		var_16_0.heroid = arg_16_0._heroMO.heroId
-		var_16_0.equips = arg_16_0._equips
-		var_16_0.showExtraAttr = true
-		var_16_0.fromHeroGroupEditView = true
-		var_16_0.heroMo = arg_16_0._heroMO
-		var_16_0.isBalance = HeroGroupBalanceHelper.getIsBalanceMode() and not arg_16_0._heroMO:isTrial()
+		info.tag = "attribute"
+		info.heroid = self._heroMO.heroId
+		info.equips = self._equips
+		info.showExtraAttr = true
+		info.fromHeroGroupEditView = true
+		info.heroMo = self._heroMO
+		info.isBalance = HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial()
 
-		arg_16_0:_addCachotProp(var_16_0)
-		CharacterController.instance:openCharacterTipView(var_16_0)
+		self:_addCachotProp(info)
+		CharacterController.instance:openCharacterTipView(info)
 	end
 end
 
-function var_0_0._btnexskillrankOnClick(arg_17_0)
-	local var_17_0, var_17_1 = transformhelper.getLocalPos(arg_17_0._goScrollContent.transform)
+function V1a6_CachotHeroGroupEditView:_btnexskillrankOnClick()
+	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(arg_17_0._goScrollContent.transform, var_17_0, arg_17_0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(self._goScrollContent.transform, x, self._initScrollContentPosY)
 	CharacterModel.instance:setCardListByExSkill(false, CharacterEnum.FilterType.HeroGroup)
-	arg_17_0:_refreshCurScrollBySort()
-	arg_17_0:_refreshBtnIcon()
+	self:_refreshCurScrollBySort()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnlvrankOnClick(arg_18_0)
-	local var_18_0, var_18_1 = transformhelper.getLocalPos(arg_18_0._goScrollContent.transform)
+function V1a6_CachotHeroGroupEditView:_btnlvrankOnClick()
+	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(arg_18_0._goScrollContent.transform, var_18_0, arg_18_0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(self._goScrollContent.transform, x, self._initScrollContentPosY)
 	CharacterModel.instance:setCardListByLevel(false, CharacterEnum.FilterType.HeroGroup)
-	arg_18_0:_refreshCurScrollBySort()
-	arg_18_0:_refreshBtnIcon()
+	self:_refreshCurScrollBySort()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnrarerankOnClick(arg_19_0)
-	local var_19_0, var_19_1 = transformhelper.getLocalPos(arg_19_0._goScrollContent.transform)
+function V1a6_CachotHeroGroupEditView:_btnrarerankOnClick()
+	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
 
-	transformhelper.setLocalPosXY(arg_19_0._goScrollContent.transform, var_19_0, arg_19_0._initScrollContentPosY)
+	transformhelper.setLocalPosXY(self._goScrollContent.transform, x, self._initScrollContentPosY)
 	CharacterModel.instance:setCardListByRare(false, CharacterEnum.FilterType.HeroGroup)
-	arg_19_0:_refreshCurScrollBySort()
-	arg_19_0:_refreshBtnIcon()
+	self:_refreshCurScrollBySort()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnquickeditOnClick(arg_20_0)
-	arg_20_0._isShowQuickEdit = not arg_20_0._isShowQuickEdit
+function V1a6_CachotHeroGroupEditView:_btnquickeditOnClick()
+	self._isShowQuickEdit = not self._isShowQuickEdit
 
-	arg_20_0:_refreshBtnIcon()
-	arg_20_0:_refreshEditMode()
+	self:_refreshBtnIcon()
+	self:_refreshEditMode()
 
-	if arg_20_0._isShowQuickEdit then
-		arg_20_0:_onHeroItemClick(nil)
-		arg_20_0._heroGroupQuickEditListModel:cancelAllSelected()
-		arg_20_0._heroGroupQuickEditListModel:copyQuickEditCardList()
+	if self._isShowQuickEdit then
+		self:_onHeroItemClick(nil)
+		self._heroGroupQuickEditListModel:cancelAllSelected()
+		self._heroGroupQuickEditListModel:copyQuickEditCardList()
 
-		local var_20_0 = arg_20_0._heroGroupQuickEditListModel:getById(arg_20_0._originalHeroUid)
+		local mo = self._heroGroupQuickEditListModel:getById(self._originalHeroUid)
 
-		if var_20_0 then
-			local var_20_1 = arg_20_0._heroGroupQuickEditListModel:getIndex(var_20_0)
+		if mo then
+			local index = self._heroGroupQuickEditListModel:getIndex(mo)
 
-			arg_20_0._heroGroupQuickEditListModel:selectCell(var_20_1, true)
+			self._heroGroupQuickEditListModel:selectCell(index, true)
 		end
 	else
-		arg_20_0:_saveQuickGroupInfo()
-		arg_20_0:_onHeroItemClick(nil)
-		arg_20_0._heroGroupEditListModel:cancelAllSelected()
+		self:_saveQuickGroupInfo()
+		self:_onHeroItemClick(nil)
+		self._heroGroupEditListModel:cancelAllSelected()
 
-		local var_20_2 = arg_20_0._heroSingleGroupModel:getHeroUid(arg_20_0._singleGroupMOId)
+		local curHeroUid = self._heroSingleGroupModel:getHeroUid(self._singleGroupMOId)
 
-		if var_20_2 ~= "0" then
-			local var_20_3 = arg_20_0._heroGroupEditListModel:getById(var_20_2)
-			local var_20_4 = arg_20_0._heroGroupEditListModel:getIndex(var_20_3)
+		if curHeroUid ~= "0" then
+			local mo = self._heroGroupEditListModel:getById(curHeroUid)
+			local index = self._heroGroupEditListModel:getIndex(mo)
 
-			arg_20_0._heroGroupEditListModel:selectCell(var_20_4, true)
+			self._heroGroupEditListModel:selectCell(index, true)
 		end
 
-		arg_20_0._heroGroupEditListModel:copyCharacterCardList()
+		self._heroGroupEditListModel:copyCharacterCardList()
 	end
 end
 
-function var_0_0._attrBtnOnClick(arg_21_0, arg_21_1)
-	arg_21_0._selectAttrs[arg_21_1] = not arg_21_0._selectAttrs[arg_21_1]
+function V1a6_CachotHeroGroupEditView:_attrBtnOnClick(i)
+	self._selectAttrs[i] = not self._selectAttrs[i]
 
-	arg_21_0:_refreshFilterView()
+	self:_refreshFilterView()
 end
 
-function var_0_0._dmgBtnOnClick(arg_22_0, arg_22_1)
-	if not arg_22_0._selectDmgs[arg_22_1] then
-		arg_22_0._selectDmgs[3 - arg_22_1] = arg_22_0._selectDmgs[arg_22_1]
+function V1a6_CachotHeroGroupEditView:_dmgBtnOnClick(i)
+	if not self._selectDmgs[i] then
+		self._selectDmgs[3 - i] = self._selectDmgs[i]
 	end
 
-	arg_22_0._selectDmgs[arg_22_1] = not arg_22_0._selectDmgs[arg_22_1]
+	self._selectDmgs[i] = not self._selectDmgs[i]
 
-	arg_22_0:_refreshFilterView()
+	self:_refreshFilterView()
 end
 
-function var_0_0._locationBtnOnClick(arg_23_0, arg_23_1)
-	arg_23_0._selectLocations[arg_23_1] = not arg_23_0._selectLocations[arg_23_1]
+function V1a6_CachotHeroGroupEditView:_locationBtnOnClick(i)
+	self._selectLocations[i] = not self._selectLocations[i]
 
-	arg_23_0:_refreshFilterView()
+	self:_refreshFilterView()
 end
 
-function var_0_0._onHeroItemClick(arg_24_0, arg_24_1)
-	arg_24_0._heroMO = arg_24_1
+function V1a6_CachotHeroGroupEditView:_onHeroItemClick(heroMO)
+	self._heroMO = heroMO
 
-	arg_24_0:_refreshCharacterInfo()
+	self:_refreshCharacterInfo()
 end
 
-function var_0_0._refreshCharacterInfo(arg_25_0)
-	if arg_25_0._heroMO then
-		gohelper.setActive(arg_25_0._gononecharacter, false)
-		gohelper.setActive(arg_25_0._gocharacterinfo, true)
-		arg_25_0:_refreshSkill()
-		arg_25_0:_refreshMainInfo()
-		arg_25_0:_refreshAttribute()
-		arg_25_0:_refreshPassiveSkill()
+function V1a6_CachotHeroGroupEditView:_refreshCharacterInfo()
+	if self._heroMO then
+		gohelper.setActive(self._gononecharacter, false)
+		gohelper.setActive(self._gocharacterinfo, true)
+		self:_refreshSkill()
+		self:_refreshMainInfo()
+		self:_refreshAttribute()
+		self:_refreshPassiveSkill()
 	else
-		gohelper.setActive(arg_25_0._gononecharacter, true)
-		gohelper.setActive(arg_25_0._gocharacterinfo, false)
+		gohelper.setActive(self._gononecharacter, true)
+		gohelper.setActive(self._gocharacterinfo, false)
 	end
 end
 
-function var_0_0._refreshMainInfo(arg_26_0)
-	if arg_26_0._heroMO then
-		gohelper.setActive(arg_26_0._btntrial.gameObject, arg_26_0._heroMO:isTrial())
-		gohelper.setActive(arg_26_0._btntrialWithTalent.gameObject, arg_26_0._heroMO:isTrial())
-		UISpriteSetMgr.instance:setCommonSprite(arg_26_0._imagecareericon, "sx_biandui_" .. tostring(arg_26_0._heroMO.config.career))
-		UISpriteSetMgr.instance:setCommonSprite(arg_26_0._imagedmgtype, "dmgtype" .. tostring(arg_26_0._heroMO.config.dmgType))
+function V1a6_CachotHeroGroupEditView:_refreshMainInfo()
+	if self._heroMO then
+		gohelper.setActive(self._btntrial.gameObject, self._heroMO:isTrial())
+		gohelper.setActive(self._btntrialWithTalent.gameObject, self._heroMO:isTrial())
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "sx_biandui_" .. tostring(self._heroMO.config.career))
+		UISpriteSetMgr.instance:setCommonSprite(self._imagedmgtype, "dmgtype" .. tostring(self._heroMO.config.dmgType))
 
-		arg_26_0._txtname.text = arg_26_0._heroMO.config.name
-		arg_26_0._txtnameen.text = arg_26_0._heroMO.config.nameEng
+		self._txtname.text = self._heroMO.config.name
+		self._txtnameen.text = self._heroMO.config.nameEng
 
-		local var_26_0, var_26_1 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_26_0._heroMO, arg_26_0._seatLevel)
-		local var_26_2, var_26_3 = HeroConfig.instance:getShowLevel(var_26_0)
-		local var_26_4 = var_26_3 >= CharacterEnum.TalentRank
+		local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+		local isShowTalent = rank >= CharacterEnum.TalentRank
 
 		if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
-			var_26_4 = false
+			isShowTalent = false
 		end
 
-		local var_26_5 = 0
-		local var_26_6 = 0
-		local var_26_7 = 0
-		local var_26_8 = false
+		local balanceLv = 0
+		local balanceRank = 0
+		local balanceTalent = 0
+		local isShowBalanceTalent = false
 
-		if not arg_26_0._heroMO:isTrial() then
-			local var_26_9
+		if not self._heroMO:isTrial() then
+			balanceLv, balanceRank, balanceTalent = HeroGroupBalanceHelper.getHeroBalanceInfo(self._heroMO.heroId)
 
-			var_26_5, var_26_9, var_26_7 = HeroGroupBalanceHelper.getHeroBalanceInfo(arg_26_0._heroMO.heroId)
-
-			if var_26_9 and var_26_9 >= CharacterEnum.TalentRank and var_26_7 > 0 then
-				var_26_8 = true
+			if balanceRank and balanceRank >= CharacterEnum.TalentRank and balanceTalent > 0 then
+				isShowBalanceTalent = true
 			end
 		end
 
-		local var_26_10 = var_26_5 and var_26_5 > arg_26_0._heroMO.level
-		local var_26_11 = var_26_8 and (not var_26_4 or var_26_7 > arg_26_0._heroMO.talent)
+		local isBalance = balanceLv and balanceLv > self._heroMO.level
+		local isBalanceTalent = isShowBalanceTalent and (not isShowTalent or balanceTalent > self._heroMO.talent)
 
-		if var_26_4 or var_26_8 then
-			gohelper.setActive(arg_26_0._golevel, false)
-			gohelper.setActive(arg_26_0._golevelWithTalent, true)
-			gohelper.setActive(arg_26_0._goBalanceWithTalent, var_26_10 or var_26_11)
-			gohelper.setActive(arg_26_0._goheroLvTxtWithTalent, true)
+		if isShowTalent or isShowBalanceTalent then
+			gohelper.setActive(self._golevel, false)
+			gohelper.setActive(self._golevelWithTalent, true)
+			gohelper.setActive(self._goBalanceWithTalent, isBalance or isBalanceTalent)
+			gohelper.setActive(self._goheroLvTxtWithTalent, true)
 
-			if var_26_10 then
-				local var_26_12, var_26_13 = HeroConfig.instance:getShowLevel(var_26_5)
-				local var_26_14 = CharacterModel.instance:getrankEffects(arg_26_0._heroMO.heroId, var_26_13)[1]
-				local var_26_15 = HeroConfig.instance:getShowLevel(var_26_14)
+			if isBalance then
+				local showLevel, rank = HeroConfig.instance:getShowLevel(balanceLv)
+				local maxLevel = CharacterModel.instance:getrankEffects(self._heroMO.heroId, rank)[1]
+				local showMaxLevel = HeroConfig.instance:getShowLevel(maxLevel)
 
-				arg_26_0._txtlevelWithTalent.text = "<color=#8fb1cc>" .. tostring(var_26_12)
-				arg_26_0._txtlevelmaxWithTalent.text = string.format("/%d", var_26_15)
+				self._txtlevelWithTalent.text = "<color=#8fb1cc>" .. tostring(showLevel)
+				self._txtlevelmaxWithTalent.text = string.format("/%d", showMaxLevel)
 			else
-				local var_26_16, var_26_17 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_26_0._heroMO, arg_26_0._seatLevel)
-				local var_26_18, var_26_19 = HeroConfig.instance:getShowLevel(var_26_16)
-				local var_26_20 = CharacterModel.instance:getrankEffects(arg_26_0._heroMO.heroId, var_26_19)[1]
-				local var_26_21 = HeroConfig.instance:getShowLevel(var_26_20)
+				local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
+				local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+				local maxLevel = CharacterModel.instance:getrankEffects(self._heroMO.heroId, rank)[1]
+				local showMaxLevel = HeroConfig.instance:getShowLevel(maxLevel)
 
-				arg_26_0._txtlevelWithTalent.text = tostring(var_26_18)
-				arg_26_0._txtlevelmaxWithTalent.text = string.format("/%d", var_26_21)
+				self._txtlevelWithTalent.text = tostring(showLevel)
+				self._txtlevelmaxWithTalent.text = string.format("/%d", showMaxLevel)
 			end
 
-			if var_26_11 then
-				arg_26_0._txttalent.text = "<color=#8fb1cc>Lv.<size=40>" .. tostring(var_26_7)
+			if isBalanceTalent then
+				self._txttalent.text = "<color=#8fb1cc>Lv.<size=40>" .. tostring(balanceTalent)
 			else
-				local var_26_22, var_26_23 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_26_0._heroMO, arg_26_0._seatLevel)
+				local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
 
-				arg_26_0._txttalent.text = "Lv.<size=40>" .. tostring(var_26_23)
+				self._txttalent.text = "Lv.<size=40>" .. tostring(talentLevel)
 			end
 		else
-			gohelper.setActive(arg_26_0._golevel, true)
-			gohelper.setActive(arg_26_0._golevelWithTalent, false)
-			gohelper.setActive(arg_26_0._goBalance, var_26_10)
-			gohelper.setActive(arg_26_0._goheroLvTxt, not var_26_10)
+			gohelper.setActive(self._golevel, true)
+			gohelper.setActive(self._golevelWithTalent, false)
+			gohelper.setActive(self._goBalance, isBalance)
+			gohelper.setActive(self._goheroLvTxt, not isBalance)
 
-			if var_26_10 then
-				local var_26_24, var_26_25 = HeroConfig.instance:getShowLevel(var_26_5)
-				local var_26_26 = CharacterModel.instance:getrankEffects(arg_26_0._heroMO.heroId, var_26_25)[1]
-				local var_26_27 = HeroConfig.instance:getShowLevel(var_26_26)
+			if isBalance then
+				local showLevel, rank = HeroConfig.instance:getShowLevel(balanceLv)
+				local maxLevel = CharacterModel.instance:getrankEffects(self._heroMO.heroId, rank)[1]
+				local showMaxLevel = HeroConfig.instance:getShowLevel(maxLevel)
 
-				arg_26_0._txtlevel.text = "<color=#8fb1cc>" .. tostring(var_26_24)
-				arg_26_0._txtlevelmax.text = string.format("/%d", var_26_27)
+				self._txtlevel.text = "<color=#8fb1cc>" .. tostring(showLevel)
+				self._txtlevelmax.text = string.format("/%d", showMaxLevel)
 			else
-				local var_26_28, var_26_29 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_26_0._heroMO, arg_26_0._seatLevel)
-				local var_26_30, var_26_31 = HeroConfig.instance:getShowLevel(var_26_28)
-				local var_26_32 = CharacterModel.instance:getrankEffects(arg_26_0._heroMO.heroId, var_26_31)[1]
-				local var_26_33 = HeroConfig.instance:getShowLevel(var_26_32)
+				local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
+				local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+				local maxLevel = CharacterModel.instance:getrankEffects(self._heroMO.heroId, rank)[1]
+				local showMaxLevel = HeroConfig.instance:getShowLevel(maxLevel)
 
-				arg_26_0._txtlevel.text = tostring(var_26_30)
-				arg_26_0._txtlevelmax.text = string.format("/%d", var_26_33)
+				self._txtlevel.text = tostring(showLevel)
+				self._txtlevelmax.text = string.format("/%d", showMaxLevel)
 			end
 		end
 
-		local var_26_34 = {}
+		local tags = {}
 
-		if not string.nilorempty(arg_26_0._heroMO.config.battleTag) then
-			var_26_34 = string.split(arg_26_0._heroMO.config.battleTag, "#")
+		if not string.nilorempty(self._heroMO.config.battleTag) then
+			tags = string.split(self._heroMO.config.battleTag, "#")
 		end
 
-		for iter_26_0 = 1, #var_26_34 do
-			local var_26_35 = arg_26_0._careerGOs[iter_26_0]
+		for i = 1, #tags do
+			local careerTable = self._careerGOs[i]
 
-			if not var_26_35 then
-				var_26_35 = arg_26_0:getUserDataTb_()
-				var_26_35.go = gohelper.cloneInPlace(arg_26_0._gospecialitem, "item" .. iter_26_0)
-				var_26_35.textfour = gohelper.findChildText(var_26_35.go, "#go_fourword/name")
-				var_26_35.textthree = gohelper.findChildText(var_26_35.go, "#go_threeword/name")
-				var_26_35.texttwo = gohelper.findChildText(var_26_35.go, "#go_twoword/name")
-				var_26_35.containerfour = gohelper.findChild(var_26_35.go, "#go_fourword")
-				var_26_35.containerthree = gohelper.findChild(var_26_35.go, "#go_threeword")
-				var_26_35.containertwo = gohelper.findChild(var_26_35.go, "#go_twoword")
+			if not careerTable then
+				careerTable = self:getUserDataTb_()
+				careerTable.go = gohelper.cloneInPlace(self._gospecialitem, "item" .. i)
+				careerTable.textfour = gohelper.findChildText(careerTable.go, "#go_fourword/name")
+				careerTable.textthree = gohelper.findChildText(careerTable.go, "#go_threeword/name")
+				careerTable.texttwo = gohelper.findChildText(careerTable.go, "#go_twoword/name")
+				careerTable.containerfour = gohelper.findChild(careerTable.go, "#go_fourword")
+				careerTable.containerthree = gohelper.findChild(careerTable.go, "#go_threeword")
+				careerTable.containertwo = gohelper.findChild(careerTable.go, "#go_twoword")
 
-				table.insert(arg_26_0._careerGOs, var_26_35)
+				table.insert(self._careerGOs, careerTable)
 			end
 
-			local var_26_36 = HeroConfig.instance:getBattleTagConfigCO(var_26_34[iter_26_0]).tagName
-			local var_26_37 = GameUtil.utf8len(var_26_36)
+			local desc = HeroConfig.instance:getBattleTagConfigCO(tags[i]).tagName
+			local wordCount = GameUtil.utf8len(desc)
 
-			gohelper.setActive(var_26_35.containertwo, var_26_37 <= 2)
-			gohelper.setActive(var_26_35.containerthree, var_26_37 == 3)
-			gohelper.setActive(var_26_35.containerfour, var_26_37 >= 4)
+			gohelper.setActive(careerTable.containertwo, wordCount <= 2)
+			gohelper.setActive(careerTable.containerthree, wordCount == 3)
+			gohelper.setActive(careerTable.containerfour, wordCount >= 4)
 
-			if var_26_37 <= 2 then
-				var_26_35.texttwo.text = var_26_36
-			elseif var_26_37 == 3 then
-				var_26_35.textthree.text = var_26_36
+			if wordCount <= 2 then
+				careerTable.texttwo.text = desc
+			elseif wordCount == 3 then
+				careerTable.textthree.text = desc
 			else
-				var_26_35.textfour.text = var_26_36
+				careerTable.textfour.text = desc
 			end
 
-			gohelper.setActive(var_26_35.go, true)
+			gohelper.setActive(careerTable.go, true)
 		end
 
-		for iter_26_1 = #var_26_34 + 1, #arg_26_0._careerGOs do
-			gohelper.setActive(arg_26_0._careerGOs[iter_26_1].go, false)
-		end
-	end
-end
-
-function var_0_0._modifyEquipMo(arg_27_0, arg_27_1)
-	local var_27_0 = V1a6_CachotTeamModel.instance:getEquipMaxLevel(arg_27_1, arg_27_0._seatLevel)
-
-	if var_27_0 == arg_27_1.level then
-		return arg_27_1
-	end
-
-	local var_27_1 = EquipMO.New()
-
-	var_27_1:initByConfig(nil, arg_27_1.equipId, var_27_0, arg_27_1.refineLv)
-
-	return var_27_1
-end
-
-function var_0_0._refreshAttribute(arg_28_0)
-	arg_28_0._talentCubeInfos = nil
-
-	if arg_28_0._heroMO then
-		local var_28_0, var_28_1 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_28_0._heroMO, arg_28_0._seatLevel)
-		local var_28_2, var_28_3 = HeroConfig.instance:getShowLevel(var_28_0)
-		local var_28_4
-
-		if var_28_1 ~= arg_28_0._heroMO.talent and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
-			var_28_4 = var_28_3 >= CharacterEnum.TalentRank and HeroMo.getTalentCubeInfos(arg_28_0._heroMO.heroId, var_28_1) or nil
-			arg_28_0._talentCubeInfos = var_28_4
-		end
-
-		local var_28_5 = arg_28_0._heroMO:getCachotTotalBaseAttrDict(arg_28_0._equips, var_28_0, var_28_3, nil, var_28_4, arg_28_0._modifyEquipMo, arg_28_0)
-
-		for iter_28_0, iter_28_1 in ipairs(CharacterEnum.BaseAttrIdList) do
-			local var_28_6 = HeroConfig.instance:getHeroAttributeCO(iter_28_1)
-
-			arg_28_0._attributevalues[iter_28_0].name.text = var_28_6.name
-			arg_28_0._attributevalues[iter_28_0].value.text = var_28_5[iter_28_1]
-
-			CharacterController.instance:SetAttriIcon(arg_28_0._attributevalues[iter_28_0].icon, iter_28_1)
+		for i = #tags + 1, #self._careerGOs do
+			gohelper.setActive(self._careerGOs[i].go, false)
 		end
 	end
 end
 
-function var_0_0._refreshPassiveSkill(arg_29_0)
-	if not arg_29_0._heroMO then
+function V1a6_CachotHeroGroupEditView:_modifyEquipMo(equipMO)
+	local level = V1a6_CachotTeamModel.instance:getEquipMaxLevel(equipMO, self._seatLevel)
+
+	if level == equipMO.level then
+		return equipMO
+	end
+
+	local newEquipMo = EquipMO.New()
+
+	newEquipMo:initByConfig(nil, equipMO.equipId, level, equipMO.refineLv)
+
+	return newEquipMo
+end
+
+function V1a6_CachotHeroGroupEditView:_refreshAttribute()
+	self._talentCubeInfos = nil
+
+	if self._heroMO then
+		local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+		local talentCubeInfos
+
+		if talentLevel ~= self._heroMO.talent and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) then
+			talentCubeInfos = rank >= CharacterEnum.TalentRank and HeroMo.getTalentCubeInfos(self._heroMO.heroId, talentLevel) or nil
+			self._talentCubeInfos = talentCubeInfos
+		end
+
+		local attrDict = self._heroMO:getCachotTotalBaseAttrDict(self._equips, level, rank, nil, talentCubeInfos, self._modifyEquipMo, self)
+
+		for index, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+			local co = HeroConfig.instance:getHeroAttributeCO(attrId)
+
+			self._attributevalues[index].name.text = co.name
+			self._attributevalues[index].value.text = attrDict[attrId]
+
+			CharacterController.instance:SetAttriIcon(self._attributevalues[index].icon, attrId)
+		end
+	end
+end
+
+function V1a6_CachotHeroGroupEditView:_refreshPassiveSkill()
+	if not self._heroMO then
 		return
 	end
 
-	local var_29_0 = SkillConfig.instance:getpassiveskillsCO(arg_29_0._heroMO.heroId)
-	local var_29_1 = var_29_0[1].skillPassive
-	local var_29_2 = lua_skill.configDict[var_29_1]
+	local pskills = SkillConfig.instance:getpassiveskillsCO(self._heroMO.heroId)
+	local firstSkill = pskills[1]
+	local skillId = firstSkill.skillPassive
+	local passiveSkillConfig = lua_skill.configDict[skillId]
 
-	if not var_29_2 then
-		logError("找不到角色被动技能, skillId: " .. tostring(var_29_1))
+	if not passiveSkillConfig then
+		logError("找不到角色被动技能, skillId: " .. tostring(skillId))
 	else
-		arg_29_0._txtpassivename.text = var_29_2.name
+		self._txtpassivename.text = passiveSkillConfig.name
 	end
 
-	local var_29_3 = 0
+	local balanceLv = 0
 
-	if not arg_29_0._heroMO:isTrial() then
-		var_29_3 = HeroGroupBalanceHelper.getHeroBalanceLv(arg_29_0._heroMO.heroId)
+	if not self._heroMO:isTrial() then
+		balanceLv = HeroGroupBalanceHelper.getHeroBalanceLv(self._heroMO.heroId)
 	end
 
-	local var_29_4, var_29_5 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_29_0._heroMO, arg_29_0._seatLevel)
-	local var_29_6 = var_29_4 < var_29_3
-	local var_29_7, var_29_8 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_29_0._heroMO.heroId, math.max(var_29_4, var_29_3))
+	local level, talentLevel = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._heroMO, self._seatLevel)
+	local isBalance = level < balanceLv
+	local passiveLevel, rank = SkillConfig.instance:getHeroExSkillLevelByLevel(self._heroMO.heroId, math.max(level, balanceLv))
 
-	for iter_29_0 = 1, #var_29_0 do
-		local var_29_9 = iter_29_0 <= var_29_7
+	for i = 1, #pskills do
+		local unlock = i <= passiveLevel
 
-		gohelper.setActive(arg_29_0._passiveskillitems[iter_29_0].on, var_29_9 and not var_29_6)
-		gohelper.setActive(arg_29_0._passiveskillitems[iter_29_0].off, not var_29_9)
-		gohelper.setActive(arg_29_0._passiveskillitems[iter_29_0].balance, var_29_9 and var_29_6)
-		gohelper.setActive(arg_29_0._passiveskillitems[iter_29_0].go, true)
+		gohelper.setActive(self._passiveskillitems[i].on, unlock and not isBalance)
+		gohelper.setActive(self._passiveskillitems[i].off, not unlock)
+		gohelper.setActive(self._passiveskillitems[i].balance, unlock and isBalance)
+		gohelper.setActive(self._passiveskillitems[i].go, true)
 	end
 
-	for iter_29_1 = #var_29_0 + 1, #arg_29_0._passiveskillitems do
-		gohelper.setActive(arg_29_0._passiveskillitems[iter_29_1].go, false)
-	end
-end
-
-function var_0_0._refreshSkill(arg_30_0)
-	arg_30_0._skillContainer:onUpdateMO(arg_30_0._heroMO and arg_30_0._heroMO.heroId, nil, arg_30_0._heroMO, HeroGroupBalanceHelper.getIsBalanceMode() and not arg_30_0._heroMO:isTrial())
-end
-
-function var_0_0._refreshBtnIcon(arg_31_0)
-	local var_31_0 = CharacterModel.instance:getRankState()
-	local var_31_1 = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
-
-	gohelper.setActive(arg_31_0._lvBtns[1], var_31_1 ~= 1)
-	gohelper.setActive(arg_31_0._lvBtns[2], var_31_1 == 1)
-	gohelper.setActive(arg_31_0._rareBtns[1], var_31_1 ~= 2)
-	gohelper.setActive(arg_31_0._rareBtns[2], var_31_1 == 2)
-
-	local var_31_2 = false
-
-	for iter_31_0, iter_31_1 in pairs(arg_31_0._selectDmgs) do
-		if iter_31_1 then
-			var_31_2 = true
-		end
-	end
-
-	for iter_31_2, iter_31_3 in pairs(arg_31_0._selectAttrs) do
-		if iter_31_3 then
-			var_31_2 = true
-		end
-	end
-
-	for iter_31_4, iter_31_5 in pairs(arg_31_0._selectLocations) do
-		if iter_31_5 then
-			var_31_2 = true
-		end
-	end
-
-	gohelper.setActive(arg_31_0._classifyBtns[1], not var_31_2)
-	gohelper.setActive(arg_31_0._classifyBtns[2], var_31_2)
-	transformhelper.setLocalScale(arg_31_0._lvArrow[1], 1, var_31_0[1], 1)
-	transformhelper.setLocalScale(arg_31_0._lvArrow[2], 1, var_31_0[1], 1)
-	transformhelper.setLocalScale(arg_31_0._rareArrow[1], 1, var_31_0[2], 1)
-	transformhelper.setLocalScale(arg_31_0._rareArrow[2], 1, var_31_0[2], 1)
-end
-
-function var_0_0._refreshFilterView(arg_32_0)
-	for iter_32_0 = 1, 2 do
-		gohelper.setActive(arg_32_0._dmgUnselects[iter_32_0], not arg_32_0._selectDmgs[iter_32_0])
-		gohelper.setActive(arg_32_0._dmgSelects[iter_32_0], arg_32_0._selectDmgs[iter_32_0])
-	end
-
-	for iter_32_1 = 1, 6 do
-		gohelper.setActive(arg_32_0._attrUnselects[iter_32_1], not arg_32_0._selectAttrs[iter_32_1])
-		gohelper.setActive(arg_32_0._attrSelects[iter_32_1], arg_32_0._selectAttrs[iter_32_1])
-	end
-
-	for iter_32_2 = 1, 6 do
-		gohelper.setActive(arg_32_0._locationUnselects[iter_32_2], not arg_32_0._selectLocations[iter_32_2])
-		gohelper.setActive(arg_32_0._locationSelects[iter_32_2], arg_32_0._selectLocations[iter_32_2])
+	for i = #pskills + 1, #self._passiveskillitems do
+		gohelper.setActive(self._passiveskillitems[i].go, false)
 	end
 end
 
-function var_0_0._updateHeroList(arg_33_0)
-	local var_33_0 = {}
+function V1a6_CachotHeroGroupEditView:_refreshSkill()
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial())
+end
 
-	for iter_33_0 = 1, 2 do
-		if arg_33_0._selectDmgs[iter_33_0] then
-			table.insert(var_33_0, iter_33_0)
+function V1a6_CachotHeroGroupEditView:_refreshBtnIcon()
+	local state = CharacterModel.instance:getRankState()
+	local tag = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
+
+	gohelper.setActive(self._lvBtns[1], tag ~= 1)
+	gohelper.setActive(self._lvBtns[2], tag == 1)
+	gohelper.setActive(self._rareBtns[1], tag ~= 2)
+	gohelper.setActive(self._rareBtns[2], tag == 2)
+
+	local hasFilter = false
+
+	for _, v in pairs(self._selectDmgs) do
+		if v then
+			hasFilter = true
 		end
 	end
 
-	local var_33_1 = {}
-
-	for iter_33_1 = 1, 6 do
-		if arg_33_0._selectAttrs[iter_33_1] then
-			table.insert(var_33_1, iter_33_1)
+	for _, v in pairs(self._selectAttrs) do
+		if v then
+			hasFilter = true
 		end
 	end
 
-	local var_33_2 = {}
-
-	for iter_33_2 = 1, 6 do
-		if arg_33_0._selectLocations[iter_33_2] then
-			table.insert(var_33_2, iter_33_2)
+	for _, v in pairs(self._selectLocations) do
+		if v then
+			hasFilter = true
 		end
 	end
 
-	if #var_33_0 == 0 then
-		var_33_0 = {
+	gohelper.setActive(self._classifyBtns[1], not hasFilter)
+	gohelper.setActive(self._classifyBtns[2], hasFilter)
+	transformhelper.setLocalScale(self._lvArrow[1], 1, state[1], 1)
+	transformhelper.setLocalScale(self._lvArrow[2], 1, state[1], 1)
+	transformhelper.setLocalScale(self._rareArrow[1], 1, state[2], 1)
+	transformhelper.setLocalScale(self._rareArrow[2], 1, state[2], 1)
+end
+
+function V1a6_CachotHeroGroupEditView:_refreshFilterView()
+	for i = 1, 2 do
+		gohelper.setActive(self._dmgUnselects[i], not self._selectDmgs[i])
+		gohelper.setActive(self._dmgSelects[i], self._selectDmgs[i])
+	end
+
+	for i = 1, 6 do
+		gohelper.setActive(self._attrUnselects[i], not self._selectAttrs[i])
+		gohelper.setActive(self._attrSelects[i], self._selectAttrs[i])
+	end
+
+	for i = 1, 6 do
+		gohelper.setActive(self._locationUnselects[i], not self._selectLocations[i])
+		gohelper.setActive(self._locationSelects[i], self._selectLocations[i])
+	end
+end
+
+function V1a6_CachotHeroGroupEditView:_updateHeroList()
+	local dmgs = {}
+
+	for i = 1, 2 do
+		if self._selectDmgs[i] then
+			table.insert(dmgs, i)
+		end
+	end
+
+	local careers = {}
+
+	for i = 1, 6 do
+		if self._selectAttrs[i] then
+			table.insert(careers, i)
+		end
+	end
+
+	local locations = {}
+
+	for i = 1, 6 do
+		if self._selectLocations[i] then
+			table.insert(locations, i)
+		end
+	end
+
+	if #dmgs == 0 then
+		dmgs = {
 			1,
 			2
 		}
 	end
 
-	if #var_33_1 == 0 then
-		var_33_1 = {
+	if #careers == 0 then
+		careers = {
 			1,
 			2,
 			3,
@@ -882,8 +893,8 @@ function var_0_0._updateHeroList(arg_33_0)
 		}
 	end
 
-	if #var_33_2 == 0 then
-		var_33_2 = {
+	if #locations == 0 then
+		locations = {
 			1,
 			2,
 			3,
@@ -893,82 +904,85 @@ function var_0_0._updateHeroList(arg_33_0)
 		}
 	end
 
-	local var_33_3 = {
-		dmgs = var_33_0,
-		careers = var_33_1,
-		locations = var_33_2
-	}
+	local filterParam = {}
 
-	CharacterModel.instance:filterCardListByDmgAndCareer(var_33_3, false, CharacterEnum.FilterType.HeroGroup)
-	arg_33_0:_refreshBtnIcon()
+	filterParam.dmgs = dmgs
+	filterParam.careers = careers
+	filterParam.locations = locations
 
-	if arg_33_0._isShowQuickEdit then
-		arg_33_0._heroGroupQuickEditListModel:copyQuickEditCardList()
+	CharacterModel.instance:filterCardListByDmgAndCareer(filterParam, false, CharacterEnum.FilterType.HeroGroup)
+	self:_refreshBtnIcon()
+
+	if self._isShowQuickEdit then
+		self._heroGroupQuickEditListModel:copyQuickEditCardList()
 	else
-		arg_33_0._heroGroupEditListModel:copyCharacterCardList()
+		self._heroGroupEditListModel:copyCharacterCardList()
 	end
 end
 
-function var_0_0.replaceSelectHeroDefaultEquip(arg_34_0)
-	if arg_34_0._heroMO and arg_34_0._heroMO:hasDefaultEquip() then
-		local var_34_0 = arg_34_0._heroSingleGroupModel:getCurGroupMO().equips
+function V1a6_CachotHeroGroupEditView:replaceSelectHeroDefaultEquip()
+	if self._heroMO and self._heroMO:hasDefaultEquip() then
+		local heroGroupMo = self._heroSingleGroupModel:getCurGroupMO()
+		local heroGroupEquipMoList = heroGroupMo.equips
 
-		for iter_34_0, iter_34_1 in pairs(var_34_0) do
-			if iter_34_1.equipUid[1] == arg_34_0._heroMO.defaultEquipUid then
-				iter_34_1.equipUid[1] = "0"
+		for i, heroGroupEquipMo in pairs(heroGroupEquipMoList) do
+			if heroGroupEquipMo.equipUid[1] == self._heroMO.defaultEquipUid then
+				heroGroupEquipMo.equipUid[1] = "0"
 			end
 		end
 
-		var_34_0[arg_34_0._singleGroupMOId - 1].equipUid[1] = arg_34_0._heroMO.defaultEquipUid
+		heroGroupEquipMoList[self._singleGroupMOId - 1].equipUid[1] = self._heroMO.defaultEquipUid
 	end
 end
 
-function var_0_0.replaceFightSelectHeroDefaultEquip(arg_35_0)
-	local var_35_0 = V1a6_CachotModel.instance:getTeamInfo()
+function V1a6_CachotHeroGroupEditView:replaceFightSelectHeroDefaultEquip()
+	local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
 
-	if arg_35_0._heroMO and arg_35_0._heroMO:hasDefaultEquip() and var_35_0:hasEquip(arg_35_0._heroMO.defaultEquipUid) then
-		local var_35_1 = arg_35_0._heroSingleGroupModel:getCurGroupMO().equips
+	if self._heroMO and self._heroMO:hasDefaultEquip() and teamInfo:hasEquip(self._heroMO.defaultEquipUid) then
+		local heroGroupMo = self._heroSingleGroupModel:getCurGroupMO()
+		local heroGroupEquipMoList = heroGroupMo.equips
 
-		for iter_35_0, iter_35_1 in pairs(var_35_1) do
-			if iter_35_1.equipUid[1] == arg_35_0._heroMO.defaultEquipUid then
-				iter_35_1.equipUid[1] = "0"
+		for i, heroGroupEquipMo in pairs(heroGroupEquipMoList) do
+			if heroGroupEquipMo.equipUid[1] == self._heroMO.defaultEquipUid then
+				heroGroupEquipMo.equipUid[1] = "0"
 			end
 		end
 
-		var_35_1[arg_35_0._singleGroupMOId - 1].equipUid[1] = arg_35_0._heroMO.defaultEquipUid
+		heroGroupEquipMoList[self._singleGroupMOId - 1].equipUid[1] = self._heroMO.defaultEquipUid
 	end
 end
 
-function var_0_0.replaceQuickGroupHeroDefaultEquip(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0._heroSingleGroupModel:getCurGroupMO().equips
-	local var_36_1
+function V1a6_CachotHeroGroupEditView:replaceQuickGroupHeroDefaultEquip(heroUids)
+	local heroGroupMo = self._heroSingleGroupModel:getCurGroupMO()
+	local heroGroupEquipMoList = heroGroupMo.equips
+	local heroMo
 
-	for iter_36_0, iter_36_1 in ipairs(arg_36_1) do
-		local var_36_2 = HeroModel.instance:getById(iter_36_1)
+	for index, heroUid in ipairs(heroUids) do
+		heroMo = HeroModel.instance:getById(heroUid)
 
-		if var_36_2 and var_36_2:hasDefaultEquip() then
-			for iter_36_2, iter_36_3 in pairs(var_36_0) do
-				if iter_36_3.equipUid[1] == var_36_2.defaultEquipUid then
-					iter_36_3.equipUid[1] = "0"
+		if heroMo and heroMo:hasDefaultEquip() then
+			for _, heroGroupEquipMo in pairs(heroGroupEquipMoList) do
+				if heroGroupEquipMo.equipUid[1] == heroMo.defaultEquipUid then
+					heroGroupEquipMo.equipUid[1] = "0"
 
 					break
 				end
 			end
 
-			var_36_0[iter_36_0 - 1].equipUid[1] = var_36_2.defaultEquipUid
+			heroGroupEquipMoList[index - 1].equipUid[1] = heroMo.defaultEquipUid
 		end
 	end
 end
 
-function var_0_0._saveCurGroupInfo(arg_37_0)
-	if arg_37_0.viewParam.heroGroupEditType ~= V1a6_CachotEnum.HeroGroupEditType.Fight then
-		if arg_37_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Init then
-			arg_37_0:replaceSelectHeroDefaultEquip()
+function V1a6_CachotHeroGroupEditView:_saveCurGroupInfo()
+	if self.viewParam.heroGroupEditType ~= V1a6_CachotEnum.HeroGroupEditType.Fight then
+		if self.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Init then
+			self:replaceSelectHeroDefaultEquip()
 
-			local var_37_0 = arg_37_0._heroSingleGroupModel:getCurGroupMO()
-			local var_37_1 = V1a6_CachotHeroSingleGroupModel.instance:getList()
+			local heroGroupMO = self._heroSingleGroupModel:getCurGroupMO()
+			local heroList = V1a6_CachotHeroSingleGroupModel.instance:getList()
 
-			var_37_0:replaceHeroList(var_37_1)
+			heroGroupMO:replaceHeroList(heroList)
 		end
 
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
@@ -976,444 +990,448 @@ function var_0_0._saveCurGroupInfo(arg_37_0)
 		return
 	end
 
-	local var_37_2 = arg_37_0._heroSingleGroupModel:getHeroUids()
-	local var_37_3 = arg_37_0._heroSingleGroupModel:getCurGroupMO()
+	local newHeroUids = self._heroSingleGroupModel:getHeroUids()
+	local heroGroupMO = self._heroSingleGroupModel:getCurGroupMO()
 
-	arg_37_0:replaceFightSelectHeroDefaultEquip()
-	arg_37_0._heroGroupModel:replaceSingleGroup()
+	self:replaceFightSelectHeroDefaultEquip()
+	self._heroGroupModel:replaceSingleGroup()
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-	arg_37_0._heroGroupModel:saveCurGroupData()
-	arg_37_0._heroGroupModel:cachotSaveCurGroup()
+	self._heroGroupModel:saveCurGroupData()
+	self._heroGroupModel:cachotSaveCurGroup()
 end
 
-function var_0_0._saveQuickGroupInfo(arg_38_0)
-	if arg_38_0._heroGroupQuickEditListModel:getIsDirty() then
-		local var_38_0 = arg_38_0._heroGroupQuickEditListModel:getHeroUids()
-		local var_38_1 = arg_38_0._heroSingleGroupModel:getCurGroupMO()
+function V1a6_CachotHeroGroupEditView:_saveQuickGroupInfo()
+	if self._heroGroupQuickEditListModel:getIsDirty() then
+		local newHeroUids = self._heroGroupQuickEditListModel:getHeroUids()
+		local heroGroupMO = self._heroSingleGroupModel:getCurGroupMO()
 
-		arg_38_0:replaceQuickGroupHeroDefaultEquip(var_38_0)
+		self:replaceQuickGroupHeroDefaultEquip(newHeroUids)
 
-		for iter_38_0 = 1, arg_38_0._heroGroupModel:getBattleRoleNum() do
-			local var_38_2 = var_38_0[iter_38_0]
+		for i = 1, self._heroGroupModel:getBattleRoleNum() do
+			local heroUid = newHeroUids[i]
 
-			if var_38_2 ~= nil then
-				arg_38_0._heroSingleGroupModel:addTo(var_38_2, iter_38_0)
+			if heroUid ~= nil then
+				self._heroSingleGroupModel:addTo(heroUid, i)
 
-				local var_38_3 = arg_38_0._heroSingleGroupModel:getByIndex(iter_38_0)
+				local singleGroupMO = self._heroSingleGroupModel:getByIndex(i)
 
-				if tonumber(var_38_2) < 0 then
-					local var_38_4 = HeroGroupTrialModel.instance:getById(var_38_2)
+				if tonumber(heroUid) < 0 then
+					local heroMO = HeroGroupTrialModel.instance:getById(heroUid)
 
-					if var_38_4 then
-						var_38_3:setTrial(var_38_4.trialCo.id, var_38_4.trialCo.trialTemplate)
+					if heroMO then
+						singleGroupMO:setTrial(heroMO.trialCo.id, heroMO.trialCo.trialTemplate)
 					else
-						var_38_3:setTrial()
+						singleGroupMO:setTrial()
 					end
 				else
-					var_38_3:setTrial()
+					singleGroupMO:setTrial()
 				end
 			end
 		end
 
-		arg_38_0._heroGroupModel:replaceSingleGroup()
-		arg_38_0._heroGroupModel:replaceSingleGroupEquips()
+		self._heroGroupModel:replaceSingleGroup()
+		self._heroGroupModel:replaceSingleGroupEquips()
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-		arg_38_0._heroGroupModel:saveCurGroupData()
+		self._heroGroupModel:saveCurGroupData()
 	end
 end
 
-function var_0_0._onAttributeChanged(arg_39_0, arg_39_1, arg_39_2)
-	CharacterModel.instance:setFakeLevel(arg_39_2, arg_39_1)
+function V1a6_CachotHeroGroupEditView:_onAttributeChanged(level, heroId)
+	CharacterModel.instance:setFakeLevel(heroId, level)
 end
 
-function var_0_0._normalEditHasChange(arg_40_0)
+function V1a6_CachotHeroGroupEditView:_normalEditHasChange()
 	if Activity104Model.instance:isSeasonChapter() then
 		return true
 	end
 
-	if arg_40_0._heroSingleGroupModel:getHeroUid(arg_40_0._singleGroupMOId) ~= arg_40_0._originalHeroUid then
+	if self._heroSingleGroupModel:getHeroUid(self._singleGroupMOId) ~= self._originalHeroUid then
 		return true
 	end
 
-	if arg_40_0._originalHeroUid and arg_40_0._heroMO and arg_40_0._originalHeroUid == arg_40_0._heroMO.uid then
+	if self._originalHeroUid and self._heroMO and self._originalHeroUid == self._heroMO.uid then
 		return false
-	elseif (not arg_40_0._originalHeroUid or arg_40_0._originalHeroUid == "0") and not arg_40_0._heroMO then
+	elseif (not self._originalHeroUid or self._originalHeroUid == "0") and not self._heroMO then
 		return false
 	else
 		return true
 	end
 end
 
-function var_0_0._refreshEditMode(arg_41_0)
-	gohelper.setActive(arg_41_0._scrollquickedit.gameObject, arg_41_0._isShowQuickEdit)
-	gohelper.setActive(arg_41_0._scrollcard.gameObject, not arg_41_0._isShowQuickEdit)
-	gohelper.setActive(arg_41_0._goBtnEditQuickMode.gameObject, arg_41_0._isShowQuickEdit)
-	gohelper.setActive(arg_41_0._goBtnEditNormalMode.gameObject, not arg_41_0._isShowQuickEdit)
+function V1a6_CachotHeroGroupEditView:_refreshEditMode()
+	gohelper.setActive(self._scrollquickedit.gameObject, self._isShowQuickEdit)
+	gohelper.setActive(self._scrollcard.gameObject, not self._isShowQuickEdit)
+	gohelper.setActive(self._goBtnEditQuickMode.gameObject, self._isShowQuickEdit)
+	gohelper.setActive(self._goBtnEditNormalMode.gameObject, not self._isShowQuickEdit)
 end
 
-function var_0_0._refreshCurScrollBySort(arg_42_0)
-	if arg_42_0._isShowQuickEdit then
-		if arg_42_0._heroGroupQuickEditListModel:getIsDirty() then
-			arg_42_0:_saveQuickGroupInfo()
+function V1a6_CachotHeroGroupEditView:_refreshCurScrollBySort()
+	if self._isShowQuickEdit then
+		if self._heroGroupQuickEditListModel:getIsDirty() then
+			self:_saveQuickGroupInfo()
 		end
 
-		local var_42_0 = arg_42_0._heroMO
+		local originalMO = self._heroMO
 
-		arg_42_0._heroGroupQuickEditListModel:copyQuickEditCardList()
+		self._heroGroupQuickEditListModel:copyQuickEditCardList()
 
-		if var_42_0 ~= arg_42_0._heroMO then
-			arg_42_0._heroGroupQuickEditListModel:cancelAllSelected()
+		if originalMO ~= self._heroMO then
+			self._heroGroupQuickEditListModel:cancelAllSelected()
 		end
 	else
-		arg_42_0._heroGroupEditListModel:copyCharacterCardList()
+		self._heroGroupEditListModel:copyCharacterCardList()
 	end
 end
 
-function var_0_0._onGroupModify(arg_43_0)
-	if arg_43_0._isShowQuickEdit then
-		arg_43_0._heroGroupQuickEditListModel:copyQuickEditCardList()
+function V1a6_CachotHeroGroupEditView:_onGroupModify()
+	if self._isShowQuickEdit then
+		self._heroGroupQuickEditListModel:copyQuickEditCardList()
 	else
-		local var_43_0 = arg_43_0._heroSingleGroupModel:getHeroUid(arg_43_0._singleGroupMOId)
+		local heroUid = self._heroSingleGroupModel:getHeroUid(self._singleGroupMOId)
 
-		if arg_43_0._originalHeroUid ~= var_43_0 then
-			arg_43_0._originalHeroUid = var_43_0
+		if self._originalHeroUid ~= heroUid then
+			self._originalHeroUid = heroUid
 
-			arg_43_0._heroGroupEditListModel:setParam(var_43_0, arg_43_0._adventure)
-			arg_43_0:_onHeroItemClick(nil)
-			arg_43_0._heroGroupEditListModel:cancelAllSelected()
+			self._heroGroupEditListModel:setParam(heroUid, self._adventure)
+			self:_onHeroItemClick(nil)
+			self._heroGroupEditListModel:cancelAllSelected()
 
-			local var_43_1 = arg_43_0._heroGroupEditListModel:getById(var_43_0)
-			local var_43_2 = arg_43_0._heroGroupEditListModel:getIndex(var_43_1)
+			local mo = self._heroGroupEditListModel:getById(heroUid)
+			local index = self._heroGroupEditListModel:getIndex(mo)
 
-			arg_43_0._heroGroupEditListModel:selectCell(var_43_2, true)
+			self._heroGroupEditListModel:selectCell(index, true)
 		end
 
-		arg_43_0._heroGroupEditListModel:copyCharacterCardList()
+		self._heroGroupEditListModel:copyCharacterCardList()
 	end
 end
 
-function var_0_0._editableInitView(arg_44_0)
-	gohelper.setActive(arg_44_0._gospecialitem, false)
+function V1a6_CachotHeroGroupEditView:_editableInitView()
+	gohelper.setActive(self._gospecialitem, false)
 
-	arg_44_0._careerGOs = {}
-	arg_44_0._imgBg = gohelper.findChildSingleImage(arg_44_0.viewGO, "bg/bgimg")
-	arg_44_0._simageredlight = gohelper.findChildSingleImage(arg_44_0.viewGO, "bg/#simage_redlight")
+	self._careerGOs = {}
+	self._imgBg = gohelper.findChildSingleImage(self.viewGO, "bg/bgimg")
+	self._simageredlight = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_redlight")
 
-	arg_44_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
-	arg_44_0._simageredlight:LoadImage(ResUrl.getHeroGroupBg("guang_027"))
+	self._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
+	self._simageredlight:LoadImage(ResUrl.getHeroGroupBg("guang_027"))
 
-	arg_44_0._lvBtns = arg_44_0:getUserDataTb_()
-	arg_44_0._lvArrow = arg_44_0:getUserDataTb_()
-	arg_44_0._rareBtns = arg_44_0:getUserDataTb_()
-	arg_44_0._rareArrow = arg_44_0:getUserDataTb_()
-	arg_44_0._classifyBtns = arg_44_0:getUserDataTb_()
-	arg_44_0._selectDmgs = {}
-	arg_44_0._dmgSelects = arg_44_0:getUserDataTb_()
-	arg_44_0._dmgUnselects = arg_44_0:getUserDataTb_()
-	arg_44_0._dmgBtnClicks = arg_44_0:getUserDataTb_()
-	arg_44_0._selectAttrs = {}
-	arg_44_0._attrSelects = arg_44_0:getUserDataTb_()
-	arg_44_0._attrUnselects = arg_44_0:getUserDataTb_()
-	arg_44_0._attrBtnClicks = arg_44_0:getUserDataTb_()
-	arg_44_0._selectLocations = {}
-	arg_44_0._locationSelects = arg_44_0:getUserDataTb_()
-	arg_44_0._locationUnselects = arg_44_0:getUserDataTb_()
-	arg_44_0._locationBtnClicks = arg_44_0:getUserDataTb_()
-	arg_44_0._curDmgs = {}
-	arg_44_0._curAttrs = {}
-	arg_44_0._curLocations = {}
+	self._lvBtns = self:getUserDataTb_()
+	self._lvArrow = self:getUserDataTb_()
+	self._rareBtns = self:getUserDataTb_()
+	self._rareArrow = self:getUserDataTb_()
+	self._classifyBtns = self:getUserDataTb_()
+	self._selectDmgs = {}
+	self._dmgSelects = self:getUserDataTb_()
+	self._dmgUnselects = self:getUserDataTb_()
+	self._dmgBtnClicks = self:getUserDataTb_()
+	self._selectAttrs = {}
+	self._attrSelects = self:getUserDataTb_()
+	self._attrUnselects = self:getUserDataTb_()
+	self._attrBtnClicks = self:getUserDataTb_()
+	self._selectLocations = {}
+	self._locationSelects = self:getUserDataTb_()
+	self._locationUnselects = self:getUserDataTb_()
+	self._locationBtnClicks = self:getUserDataTb_()
+	self._curDmgs = {}
+	self._curAttrs = {}
+	self._curLocations = {}
 
-	for iter_44_0 = 1, 2 do
-		arg_44_0._lvBtns[iter_44_0] = gohelper.findChild(arg_44_0._btnlvrank.gameObject, "btn" .. tostring(iter_44_0))
-		arg_44_0._lvArrow[iter_44_0] = gohelper.findChild(arg_44_0._lvBtns[iter_44_0], "txt/arrow").transform
-		arg_44_0._rareBtns[iter_44_0] = gohelper.findChild(arg_44_0._btnrarerank.gameObject, "btn" .. tostring(iter_44_0))
-		arg_44_0._rareArrow[iter_44_0] = gohelper.findChild(arg_44_0._rareBtns[iter_44_0], "txt/arrow").transform
-		arg_44_0._classifyBtns[iter_44_0] = gohelper.findChild(arg_44_0._btnclassify.gameObject, "btn" .. tostring(iter_44_0))
-		arg_44_0._dmgUnselects[iter_44_0] = gohelper.findChild(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_44_0 .. "/unselected")
-		arg_44_0._dmgSelects[iter_44_0] = gohelper.findChild(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_44_0 .. "/selected")
-		arg_44_0._dmgBtnClicks[iter_44_0] = gohelper.findChildButtonWithAudio(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_44_0 .. "/click")
+	for i = 1, 2 do
+		self._lvBtns[i] = gohelper.findChild(self._btnlvrank.gameObject, "btn" .. tostring(i))
+		self._lvArrow[i] = gohelper.findChild(self._lvBtns[i], "txt/arrow").transform
+		self._rareBtns[i] = gohelper.findChild(self._btnrarerank.gameObject, "btn" .. tostring(i))
+		self._rareArrow[i] = gohelper.findChild(self._rareBtns[i], "txt/arrow").transform
+		self._classifyBtns[i] = gohelper.findChild(self._btnclassify.gameObject, "btn" .. tostring(i))
+		self._dmgUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/unselected")
+		self._dmgSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/selected")
+		self._dmgBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/click")
 
-		arg_44_0._dmgBtnClicks[iter_44_0]:AddClickListener(arg_44_0._dmgBtnOnClick, arg_44_0, iter_44_0)
+		self._dmgBtnClicks[i]:AddClickListener(self._dmgBtnOnClick, self, i)
 	end
 
-	for iter_44_1 = 1, 6 do
-		arg_44_0._attrUnselects[iter_44_1] = gohelper.findChild(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_44_1 .. "/unselected")
-		arg_44_0._attrSelects[iter_44_1] = gohelper.findChild(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_44_1 .. "/selected")
-		arg_44_0._attrBtnClicks[iter_44_1] = gohelper.findChildButtonWithAudio(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_44_1 .. "/click")
+	for i = 1, 6 do
+		self._attrUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/unselected")
+		self._attrSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/selected")
+		self._attrBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/click")
 
-		arg_44_0._attrBtnClicks[iter_44_1]:AddClickListener(arg_44_0._attrBtnOnClick, arg_44_0, iter_44_1)
+		self._attrBtnClicks[i]:AddClickListener(self._attrBtnOnClick, self, i)
 	end
 
-	for iter_44_2 = 1, 6 do
-		arg_44_0._locationUnselects[iter_44_2] = gohelper.findChild(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_44_2 .. "/unselected")
-		arg_44_0._locationSelects[iter_44_2] = gohelper.findChild(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_44_2 .. "/selected")
-		arg_44_0._locationBtnClicks[iter_44_2] = gohelper.findChildButtonWithAudio(arg_44_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_44_2 .. "/click")
+	for i = 1, 6 do
+		self._locationUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/unselected")
+		self._locationSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/selected")
+		self._locationBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/click")
 
-		arg_44_0._locationBtnClicks[iter_44_2]:AddClickListener(arg_44_0._locationBtnOnClick, arg_44_0, iter_44_2)
+		self._locationBtnClicks[i]:AddClickListener(self._locationBtnOnClick, self, i)
 	end
 
-	arg_44_0._goBtnEditQuickMode = gohelper.findChild(arg_44_0._btnquickedit.gameObject, "btn2")
-	arg_44_0._goBtnEditNormalMode = gohelper.findChild(arg_44_0._btnquickedit.gameObject, "btn1")
-	arg_44_0._attributevalues = {}
+	self._goBtnEditQuickMode = gohelper.findChild(self._btnquickedit.gameObject, "btn2")
+	self._goBtnEditNormalMode = gohelper.findChild(self._btnquickedit.gameObject, "btn1")
+	self._attributevalues = {}
 
-	for iter_44_3 = 1, 5 do
-		local var_44_0 = arg_44_0:getUserDataTb_()
+	for i = 1, 5 do
+		local o = self:getUserDataTb_()
 
-		var_44_0.value = gohelper.findChildText(arg_44_0._goattribute, "attribute" .. tostring(iter_44_3) .. "/txt_attribute")
-		var_44_0.name = gohelper.findChildText(arg_44_0._goattribute, "attribute" .. tostring(iter_44_3) .. "/name")
-		var_44_0.icon = gohelper.findChildImage(arg_44_0._goattribute, "attribute" .. tostring(iter_44_3) .. "/icon")
-		arg_44_0._attributevalues[iter_44_3] = var_44_0
+		o.value = gohelper.findChildText(self._goattribute, "attribute" .. tostring(i) .. "/txt_attribute")
+		o.name = gohelper.findChildText(self._goattribute, "attribute" .. tostring(i) .. "/name")
+		o.icon = gohelper.findChildImage(self._goattribute, "attribute" .. tostring(i) .. "/icon")
+		self._attributevalues[i] = o
 	end
 
-	arg_44_0._passiveskillitems = {}
+	self._passiveskillitems = {}
 
-	for iter_44_4 = 1, 3 do
-		local var_44_1 = arg_44_0:getUserDataTb_()
+	for i = 1, 3 do
+		local o = self:getUserDataTb_()
 
-		var_44_1.go = gohelper.findChild(arg_44_0._gopassiveskills, "passiveskill" .. tostring(iter_44_4))
-		var_44_1.on = gohelper.findChild(var_44_1.go, "on")
-		var_44_1.off = gohelper.findChild(var_44_1.go, "off")
-		var_44_1.balance = gohelper.findChild(var_44_1.go, "balance")
-		arg_44_0._passiveskillitems[iter_44_4] = var_44_1
+		o.go = gohelper.findChild(self._gopassiveskills, "passiveskill" .. tostring(i))
+		o.on = gohelper.findChild(o.go, "on")
+		o.off = gohelper.findChild(o.go, "off")
+		o.balance = gohelper.findChild(o.go, "balance")
+		self._passiveskillitems[i] = o
 	end
 
-	arg_44_0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(arg_44_0._goskill, CharacterSkillContainer)
+	self._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(self._goskill, CharacterSkillContainer)
 
-	gohelper.setActive(arg_44_0._gononecharacter, false)
-	gohelper.setActive(arg_44_0._gocharacterinfo, false)
+	gohelper.setActive(self._gononecharacter, false)
+	gohelper.setActive(self._gocharacterinfo, false)
 
-	arg_44_0._animator = arg_44_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
 	if GuideModel.instance:isGuideFinish(V1a6_CachotEnum.HelpUnlockGuideId) then
-		arg_44_0._btntips:AddClickListener(arg_44_0._btntipsOnClick, arg_44_0)
+		self._btntips:AddClickListener(self._btntipsOnClick, self)
 	end
 end
 
-function var_0_0._initFakeLevelList(arg_45_0)
-	if not arg_45_0.viewParam.seatLevel then
+function V1a6_CachotHeroGroupEditView:_initFakeLevelList()
+	if not self.viewParam.seatLevel then
 		return
 	end
 
-	local var_45_0 = {}
-	local var_45_1 = HeroModel.instance:getList()
+	local fakeLevelList = {}
+	local heroList = HeroModel.instance:getList()
 
-	for iter_45_0, iter_45_1 in ipairs(var_45_1) do
-		local var_45_2 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(iter_45_1, arg_45_0.viewParam.seatLevel)
+	for i, v in ipairs(heroList) do
+		local level = V1a6_CachotTeamModel.instance:getHeroMaxLevel(v, self.viewParam.seatLevel)
 
-		var_45_0[iter_45_1.heroId] = var_45_2
+		fakeLevelList[v.heroId] = level
 	end
 
-	CharacterModel.instance:setFakeList(var_45_0)
+	CharacterModel.instance:setFakeList(fakeLevelList)
 end
 
-function var_0_0.onOpen(arg_46_0)
-	arg_46_0._isShowQuickEdit = false
-	arg_46_0._scrollcard.verticalNormalizedPosition = 1
-	arg_46_0._scrollquickedit.verticalNormalizedPosition = 1
-	arg_46_0._originalHeroUid = arg_46_0.viewParam.originalHeroUid
-	arg_46_0._singleGroupMOId = arg_46_0.viewParam.singleGroupMOId
-	arg_46_0._adventure = arg_46_0.viewParam.adventure
-	arg_46_0._equips = arg_46_0.viewParam.equips
+function V1a6_CachotHeroGroupEditView:onOpen()
+	self._isShowQuickEdit = false
+	self._scrollcard.verticalNormalizedPosition = 1
+	self._scrollquickedit.verticalNormalizedPosition = 1
+	self._originalHeroUid = self.viewParam.originalHeroUid
+	self._singleGroupMOId = self.viewParam.singleGroupMOId
+	self._adventure = self.viewParam.adventure
+	self._equips = self.viewParam.equips
 
-	for iter_46_0 = 1, 2 do
-		arg_46_0._selectDmgs[iter_46_0] = false
+	for i = 1, 2 do
+		self._selectDmgs[i] = false
 	end
 
-	for iter_46_1 = 1, 6 do
-		arg_46_0._selectAttrs[iter_46_1] = false
+	for i = 1, 6 do
+		self._selectAttrs[i] = false
 	end
 
-	for iter_46_2 = 1, 6 do
-		arg_46_0._selectLocations[iter_46_2] = false
+	for i = 1, 6 do
+		self._selectLocations[i] = false
 	end
 
-	arg_46_0._heroGroupEditListModel = V1a6_CachotHeroGroupEditListModel.instance
-	arg_46_0._heroGroupQuickEditListModel = HeroGroupQuickEditListModel.instance
-	arg_46_0._heroSingleGroupModel = V1a6_CachotHeroSingleGroupModel.instance
-	arg_46_0._heroGroupModel = V1a6_CachotHeroGroupModel.instance
+	self._heroGroupEditListModel = V1a6_CachotHeroGroupEditListModel.instance
+	self._heroGroupQuickEditListModel = HeroGroupQuickEditListModel.instance
+	self._heroSingleGroupModel = V1a6_CachotHeroSingleGroupModel.instance
+	self._heroGroupModel = V1a6_CachotHeroGroupModel.instance
 
-	arg_46_0:_initFakeLevelList()
+	self:_initFakeLevelList()
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
 	CharacterModel.instance:setCardListByRareAndSort(false, CharacterEnum.FilterType.HeroGroup, false)
-	arg_46_0._heroGroupEditListModel:setParam(arg_46_0._originalHeroUid, arg_46_0._adventure, arg_46_0._heroHps)
-	arg_46_0._heroGroupQuickEditListModel:setParam(arg_46_0._adventure, arg_46_0._heroHps)
-	arg_46_0._heroGroupEditListModel:setHeroGroupEditType(arg_46_0.viewParam.heroGroupEditType)
-	arg_46_0.viewContainer:_setHomeBtnVisible(arg_46_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight)
+	self._heroGroupEditListModel:setParam(self._originalHeroUid, self._adventure, self._heroHps)
+	self._heroGroupQuickEditListModel:setParam(self._adventure, self._heroHps)
+	self._heroGroupEditListModel:setHeroGroupEditType(self.viewParam.heroGroupEditType)
+	self.viewContainer:_setHomeBtnVisible(self.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Fight)
 
-	local var_46_0 = arg_46_0.viewParam.seatLevel
+	local seatLevel = self.viewParam.seatLevel
 
-	arg_46_0._seatLevel = var_46_0
+	self._seatLevel = seatLevel
 
-	arg_46_0._heroGroupEditListModel:setSeatLevel(var_46_0)
-	gohelper.setActive(arg_46_0._goseatlevel, var_46_0)
+	self._heroGroupEditListModel:setSeatLevel(seatLevel)
+	gohelper.setActive(self._goseatlevel, seatLevel)
 
-	if var_46_0 then
-		UISpriteSetMgr.instance:setV1a6CachotSprite(arg_46_0._seatIcon, "v1a6_cachot_quality_0" .. var_46_0)
+	if seatLevel then
+		UISpriteSetMgr.instance:setV1a6CachotSprite(self._seatIcon, "v1a6_cachot_quality_0" .. seatLevel)
 
-		if not arg_46_0._qualityEffectList then
-			arg_46_0._qualityEffectList = arg_46_0:getUserDataTb_()
+		if not self._qualityEffectList then
+			self._qualityEffectList = self:getUserDataTb_()
 
-			local var_46_1 = arg_46_0._seatEffect.transform
-			local var_46_2 = var_46_1.childCount
+			local transform = self._seatEffect.transform
+			local childCount = transform.childCount
 
-			for iter_46_3 = 1, var_46_2 do
-				local var_46_3 = var_46_1:GetChild(iter_46_3 - 1)
+			for i = 1, childCount do
+				local child = transform:GetChild(i - 1)
 
-				arg_46_0._qualityEffectList[var_46_3.name] = var_46_3
+				self._qualityEffectList[child.name] = child
 			end
 		end
 
-		local var_46_4 = "effect_0" .. var_46_0
+		local targetName = "effect_0" .. seatLevel
 
-		for iter_46_4, iter_46_5 in pairs(arg_46_0._qualityEffectList) do
-			gohelper.setActive(iter_46_5, iter_46_4 == var_46_4)
+		for k, v in pairs(self._qualityEffectList) do
+			gohelper.setActive(v, k == targetName)
 		end
 	end
 
-	arg_46_0._heroMO = arg_46_0._heroGroupEditListModel:copyCharacterCardList(true)
+	self._heroMO = self._heroGroupEditListModel:copyCharacterCardList(true)
 
-	arg_46_0:_refreshEditMode()
-	arg_46_0:_refreshBtnIcon()
-	arg_46_0:_refreshCharacterInfo()
-	gohelper.setActive(arg_46_0._btnquickedit, false)
-	gohelper.setActive(arg_46_0._btncancel, not arg_46_0.viewParam.hideCancel)
-	gohelper.setActive(arg_46_0._btncharacter, false)
-	gohelper.setActive(arg_46_0._btncharacterWithTalent, false)
+	self:_refreshEditMode()
+	self:_refreshBtnIcon()
+	self:_refreshCharacterInfo()
+	gohelper.setActive(self._btnquickedit, false)
+	gohelper.setActive(self._btncancel, not self.viewParam.hideCancel)
+	gohelper.setActive(self._btncharacter, false)
+	gohelper.setActive(self._btncharacterWithTalent, false)
 
-	if arg_46_0.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
-		local var_46_5 = arg_46_0._heroGroupEditListModel:getList()
+	if self.viewParam.heroGroupEditType == V1a6_CachotEnum.HeroGroupEditType.Event then
+		local allHeroList = self._heroGroupEditListModel:getList()
 
-		gohelper.setActive(arg_46_0._goempty, #var_46_5 <= 0)
+		gohelper.setActive(self._goempty, #allHeroList <= 0)
 
-		if #V1a6_CachotModel.instance:getRogueInfo().teamInfo:getAllHeroUids() >= #var_46_5 then
-			gohelper.setActive(arg_46_0._btncancel, true)
-			gohelper.setActive(arg_46_0._btnconfirm, false)
-			recthelper.setAnchorX(arg_46_0._btncancel.transform, -192)
+		local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+		local teamInfo = rogueInfo.teamInfo
+		local heroList = teamInfo:getAllHeroUids()
+
+		if #heroList >= #allHeroList then
+			gohelper.setActive(self._btncancel, true)
+			gohelper.setActive(self._btnconfirm, false)
+			recthelper.setAnchorX(self._btncancel.transform, -192)
 		end
 	end
 
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_46_0._updateHeroList, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_46_0._updateHeroList, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_46_0._updateHeroList, arg_46_0)
-	arg_46_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_46_0._onHeroItemClick, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_46_0._refreshCharacterInfo, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_46_0._refreshCharacterInfo, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_46_0._refreshCharacterInfo, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_46_0._refreshCharacterInfo, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_46_0._refreshCharacterInfo, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_46_0._onAttributeChanged, arg_46_0)
-	arg_46_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_46_0._showCharacterRankUpView, arg_46_0)
-	arg_46_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_46_0._onGroupModify, arg_46_0)
-	arg_46_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_46_0._onGroupModify, arg_46_0)
-	arg_46_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_46_0._onOpenView, arg_46_0)
-	arg_46_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_46_0._onCloseView, arg_46_0)
-	gohelper.addUIClickAudio(arg_46_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_46_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_46_0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_46_0._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_46_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_46_0._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, self._onHeroItemClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, self._onAttributeChanged, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, self._showCharacterRankUpView, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onGroupModify, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onGroupModify, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	gohelper.addUIClickAudio(self._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	_, arg_46_0._initScrollContentPosY = transformhelper.getLocalPos(arg_46_0._goScrollContent.transform)
+	_, self._initScrollContentPosY = transformhelper.getLocalPos(self._goScrollContent.transform)
 end
 
-function var_0_0.onClose(arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_47_0._updateHeroList, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_47_0._updateHeroList, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_47_0._updateHeroList, arg_47_0)
-	arg_47_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_47_0._onHeroItemClick, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_47_0._refreshCharacterInfo, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_47_0._refreshCharacterInfo, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_47_0._refreshCharacterInfo, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_47_0._refreshCharacterInfo, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_47_0._refreshCharacterInfo, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_47_0._onAttributeChanged, arg_47_0)
-	arg_47_0:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_47_0._showCharacterRankUpView, arg_47_0)
-	arg_47_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_47_0._onGroupModify, arg_47_0)
-	arg_47_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_47_0._onGroupModify, arg_47_0)
+function V1a6_CachotHeroGroupEditView:onClose()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, self._onHeroItemClick, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._refreshCharacterInfo, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._refreshCharacterInfo, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._refreshCharacterInfo, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._refreshCharacterInfo, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._refreshCharacterInfo, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, self._onAttributeChanged, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, self._showCharacterRankUpView, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onGroupModify, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onGroupModify, self)
 	CharacterModel.instance:clearFakeList()
 	CharacterModel.instance:setFakeLevel()
-	arg_47_0._heroGroupEditListModel:cancelAllSelected()
-	arg_47_0._heroGroupEditListModel:clear()
-	arg_47_0._heroGroupQuickEditListModel:cancelAllSelected()
-	arg_47_0._heroGroupQuickEditListModel:clear()
+	self._heroGroupEditListModel:cancelAllSelected()
+	self._heroGroupEditListModel:clear()
+	self._heroGroupQuickEditListModel:cancelAllSelected()
+	self._heroGroupQuickEditListModel:clear()
 	HeroGroupTrialModel.instance:setFilter()
 	CommonHeroHelper.instance:resetGrayState()
 
-	arg_47_0._selectDmgs = {}
-	arg_47_0._selectAttrs = {}
-	arg_47_0._selectLocations = {}
+	self._selectDmgs = {}
+	self._selectAttrs = {}
+	self._selectLocations = {}
 
-	if arg_47_0._isStopBgm then
-		TaskDispatcher.cancelTask(arg_47_0._delyStopBgm, arg_47_0)
-		arg_47_0:_delyStopBgm()
+	if self._isStopBgm then
+		TaskDispatcher.cancelTask(self._delyStopBgm, self)
+		self:_delyStopBgm()
 	end
 end
 
-function var_0_0._onOpenView(arg_48_0, arg_48_1)
-	if arg_48_1 == ViewName.CharacterView and arg_48_0._isStopBgm then
-		TaskDispatcher.cancelTask(arg_48_0._delyStopBgm, arg_48_0)
+function V1a6_CachotHeroGroupEditView:_onOpenView(viewName)
+	if viewName == ViewName.CharacterView and self._isStopBgm then
+		TaskDispatcher.cancelTask(self._delyStopBgm, self)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Unsatisfied_Music)
 
 		return
 	end
 end
 
-function var_0_0._showRecommendCareer(arg_49_0)
-	local var_49_0, var_49_1 = FightHelper.detectAttributeCounter()
+function V1a6_CachotHeroGroupEditView:_showRecommendCareer()
+	local recommended, counter = FightHelper.detectAttributeCounter()
 
-	gohelper.CreateObjList(arg_49_0, arg_49_0._onRecommendCareerItemShow, var_49_0, arg_49_0._goattrlist, arg_49_0._goattritem)
+	gohelper.CreateObjList(self, self._onRecommendCareerItemShow, recommended, self._goattrlist, self._goattritem)
 
-	arg_49_0._txtrecommendAttrDesc.text = #var_49_0 == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
+	self._txtrecommendAttrDesc.text = #recommended == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
 
-	gohelper.setActive(arg_49_0._goattrlist, #var_49_0 ~= 0)
+	gohelper.setActive(self._goattrlist, #recommended ~= 0)
 end
 
-function var_0_0._onRecommendCareerItemShow(arg_50_0, arg_50_1, arg_50_2, arg_50_3)
-	local var_50_0 = gohelper.findChildImage(arg_50_1, "icon")
+function V1a6_CachotHeroGroupEditView:_onRecommendCareerItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(var_50_0, "career_" .. arg_50_2)
+	UISpriteSetMgr.instance:setHeroGroupSprite(icon, "career_" .. data)
 end
 
-function var_0_0._onCloseView(arg_51_0, arg_51_1)
-	if arg_51_1 == ViewName.CharacterView then
+function V1a6_CachotHeroGroupEditView:_onCloseView(viewName)
+	if viewName == ViewName.CharacterView then
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_UIMusic)
 
-		arg_51_0._isStopBgm = true
+		self._isStopBgm = true
 
-		TaskDispatcher.cancelTask(arg_51_0._delyStopBgm, arg_51_0)
-		TaskDispatcher.runDelay(arg_51_0._delyStopBgm, arg_51_0, 1)
+		TaskDispatcher.cancelTask(self._delyStopBgm, self)
+		TaskDispatcher.runDelay(self._delyStopBgm, self, 1)
 	end
 end
 
-function var_0_0._delyStopBgm(arg_52_0)
-	arg_52_0._isStopBgm = false
+function V1a6_CachotHeroGroupEditView:_delyStopBgm()
+	self._isStopBgm = false
 
 	AudioMgr.instance:trigger(AudioEnum.Bgm.Pause_FightingMusic)
 end
 
-function var_0_0._showCharacterRankUpView(arg_53_0, arg_53_1)
-	arg_53_1()
+function V1a6_CachotHeroGroupEditView:_showCharacterRankUpView(func)
+	func()
 end
 
-function var_0_0.onDestroyView(arg_54_0)
-	arg_54_0._imgBg:UnLoadImage()
-	arg_54_0._simageredlight:UnLoadImage()
+function V1a6_CachotHeroGroupEditView:onDestroyView()
+	self._imgBg:UnLoadImage()
+	self._simageredlight:UnLoadImage()
 
-	arg_54_0._imgBg = nil
-	arg_54_0._simageredlight = nil
+	self._imgBg = nil
+	self._simageredlight = nil
 
-	for iter_54_0 = 1, 2 do
-		arg_54_0._dmgBtnClicks[iter_54_0]:RemoveClickListener()
+	for i = 1, 2 do
+		self._dmgBtnClicks[i]:RemoveClickListener()
 	end
 
-	for iter_54_1 = 1, 6 do
-		arg_54_0._attrBtnClicks[iter_54_1]:RemoveClickListener()
+	for i = 1, 6 do
+		self._attrBtnClicks[i]:RemoveClickListener()
 	end
 
-	for iter_54_2 = 1, 6 do
-		arg_54_0._locationBtnClicks[iter_54_2]:RemoveClickListener()
+	for i = 1, 6 do
+		self._locationBtnClicks[i]:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return V1a6_CachotHeroGroupEditView

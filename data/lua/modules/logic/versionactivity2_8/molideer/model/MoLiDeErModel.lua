@@ -1,149 +1,153 @@
-﻿module("modules.logic.versionactivity2_8.molideer.model.MoLiDeErModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/model/MoLiDeErModel.lua
 
-local var_0_0 = class("MoLiDeErModel", BaseModel)
+module("modules.logic.versionactivity2_8.molideer.model.MoLiDeErModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:init()
+local MoLiDeErModel = class("MoLiDeErModel", BaseModel)
+
+function MoLiDeErModel:onInit()
+	self:init()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:init()
+function MoLiDeErModel:reInit()
+	self:init()
 end
 
-function var_0_0.init(arg_3_0)
-	arg_3_0._curActId = VersionActivity2_8Enum.ActivityId.MoLiDeEr
-	arg_3_0._curEpisodeConfig = nil
-	arg_3_0._curEpisodeId = nil
-	arg_3_0._actInfoDic = {}
+function MoLiDeErModel:init()
+	self._curActId = VersionActivity2_8Enum.ActivityId.MoLiDeEr
+	self._curEpisodeConfig = nil
+	self._curEpisodeId = nil
+	self._actInfoDic = {}
 end
 
-function var_0_0.onGetActInfo(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.activityId
-	local var_4_1 = VersionActivity2_8Enum.ActivityId.MoLiDeEr
-	local var_4_2
+function MoLiDeErModel:onGetActInfo(msg)
+	local actId = msg.activityId
 
-	if not arg_4_0._actInfoDic[var_4_1] then
-		var_4_2 = {}
-		arg_4_0._actInfoDic[var_4_1] = var_4_2
+	actId = VersionActivity2_8Enum.ActivityId.MoLiDeEr
+
+	local episodeDic
+
+	if not self._actInfoDic[actId] then
+		episodeDic = {}
+		self._actInfoDic[actId] = episodeDic
 	else
-		var_4_2 = arg_4_0._actInfoDic[var_4_1]
+		episodeDic = self._actInfoDic[actId]
 
-		tabletool.clear(var_4_2)
+		tabletool.clear(episodeDic)
 	end
 
-	local var_4_3 = arg_4_1.episodeRecords
+	local infos = msg.episodeRecords
 
-	if not var_4_3 or #var_4_3 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_3) do
-		local var_4_4
+	for _, info in ipairs(infos) do
+		local mo
 
-		if MoLiDeErConfig.instance:getEpisodeConfig(var_4_1, iter_4_1.episodeId) == nil then
-			logError("episodeConfig not exist id: " .. iter_4_1.episodeId)
-		elseif var_4_2[iter_4_1.episodeId] then
-			logError("episodeId has exist id: " .. iter_4_1.episodeId)
+		if MoLiDeErConfig.instance:getEpisodeConfig(actId, info.episodeId) == nil then
+			logError("episodeConfig not exist id: " .. info.episodeId)
+		elseif episodeDic[info.episodeId] then
+			logError("episodeId has exist id: " .. info.episodeId)
 		else
-			local var_4_5 = MoLiDeErInfoMo.New()
+			mo = MoLiDeErInfoMo.New()
 
-			var_4_5:init(var_4_1, iter_4_1.episodeId, iter_4_1.isUnlock, iter_4_1.passCount, iter_4_1.passStar, iter_4_1.haveProgress)
+			mo:init(actId, info.episodeId, info.isUnlock, info.passCount, info.passStar, info.haveProgress)
 
-			var_4_2[iter_4_1.episodeId] = var_4_5
+			episodeDic[info.episodeId] = mo
 		end
 	end
 end
 
-function var_0_0.onEpisodeRecordsPush(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0
+function MoLiDeErModel:onEpisodeRecordsPush(actId, infos)
+	local episodeDic
 
-	if not arg_5_0._actInfoDic[arg_5_1] then
-		var_5_0 = {}
-		arg_5_0._actInfoDic[arg_5_1] = var_5_0
+	if not self._actInfoDic[actId] then
+		episodeDic = {}
+		self._actInfoDic[actId] = episodeDic
 	else
-		var_5_0 = arg_5_0._actInfoDic[arg_5_1]
+		episodeDic = self._actInfoDic[actId]
 	end
 
-	if not arg_5_2 or #arg_5_2 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
-		local var_5_1
+	for _, info in ipairs(infos) do
+		local mo
 
-		if MoLiDeErConfig.instance:getEpisodeConfig(arg_5_1, iter_5_1.episodeId) == nil then
-			logError("episodeConfig not exist id: " .. iter_5_1.episodeId)
-		elseif var_5_0[iter_5_1.episodeId] then
-			var_5_1 = var_5_0[iter_5_1.episodeId]
+		if MoLiDeErConfig.instance:getEpisodeConfig(actId, info.episodeId) == nil then
+			logError("episodeConfig not exist id: " .. info.episodeId)
+		elseif episodeDic[info.episodeId] then
+			mo = episodeDic[info.episodeId]
 		else
-			var_5_1 = MoLiDeErInfoMo.New()
+			mo = MoLiDeErInfoMo.New()
 		end
 
-		var_5_1:init(arg_5_1, iter_5_1.episodeId, iter_5_1.isUnlock, iter_5_1.passCount, iter_5_1.passStar, iter_5_1.haveProgress)
+		mo:init(actId, info.episodeId, info.isUnlock, info.passCount, info.passStar, info.haveProgress)
 
-		var_5_0[iter_5_1.episodeId] = var_5_1
+		episodeDic[info.episodeId] = mo
 	end
 end
 
-function var_0_0.isEpisodeFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0:getEpisodeInfoMo(arg_6_1, arg_6_2)
+function MoLiDeErModel:isEpisodeFinish(actId, episodeId, isFirst)
+	local episodeMo = self:getEpisodeInfoMo(actId, episodeId)
 
-	if not var_6_0 then
+	if not episodeMo then
 		return false
 	end
 
-	if arg_6_3 then
-		return var_6_0.passCount == 1
+	if isFirst then
+		return episodeMo.passCount == 1
 	end
 
-	return var_6_0.passCount > 0
+	return episodeMo.passCount > 0
 end
 
-function var_0_0.haveEpisodeProgress(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0:getEpisodeInfoMo(arg_7_1, arg_7_2)
+function MoLiDeErModel:haveEpisodeProgress(actId, episodeId)
+	local episodeMo = self:getEpisodeInfoMo(actId, episodeId)
 
-	if not var_7_0 then
+	if not episodeMo then
 		return false
 	end
 
-	return var_7_0:isInProgress()
+	return episodeMo:isInProgress()
 end
 
-function var_0_0.getEpisodeInfoMo(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._actInfoDic[arg_8_1] then
+function MoLiDeErModel:getEpisodeInfoMo(actId, episodeId)
+	if not self._actInfoDic[actId] then
 		return nil
 	end
 
-	return arg_8_0._actInfoDic[arg_8_1][arg_8_2]
+	return self._actInfoDic[actId][episodeId]
 end
 
-function var_0_0.setCurEpisodeData(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_0._curActId = arg_9_1
-	arg_9_0._curEpisodeId = arg_9_2
+function MoLiDeErModel:setCurEpisodeData(actId, episodeId, episodeConfig)
+	self._curActId = actId
+	self._curEpisodeId = episodeId
 
-	if arg_9_3 == nil then
-		arg_9_3 = MoLiDeErConfig.instance:getEpisodeConfig(arg_9_1, arg_9_2)
+	if episodeConfig == nil then
+		episodeConfig = MoLiDeErConfig.instance:getEpisodeConfig(actId, episodeId)
 	end
 
-	arg_9_0._curEpisodeConfig = arg_9_3
+	self._curEpisodeConfig = episodeConfig
 end
 
-function var_0_0.getCurEpisode(arg_10_0)
-	return arg_10_0._curEpisodeConfig
+function MoLiDeErModel:getCurEpisode()
+	return self._curEpisodeConfig
 end
 
-function var_0_0.getCurEpisodeId(arg_11_0)
-	return arg_11_0._curEpisodeId
+function MoLiDeErModel:getCurEpisodeId()
+	return self._curEpisodeId
 end
 
-function var_0_0.getCurActId(arg_12_0)
-	return arg_12_0._curActId
+function MoLiDeErModel:getCurActId()
+	return self._curActId
 end
 
-function var_0_0.getCurEpisodeInfo(arg_13_0)
-	return arg_13_0:getEpisodeInfoMo(arg_13_0._curActId, arg_13_0._curEpisodeId)
+function MoLiDeErModel:getCurEpisodeInfo()
+	return self:getEpisodeInfoMo(self._curActId, self._curEpisodeId)
 end
 
-var_0_0.instance = var_0_0.New()
+MoLiDeErModel.instance = MoLiDeErModel.New()
 
-return var_0_0
+return MoLiDeErModel

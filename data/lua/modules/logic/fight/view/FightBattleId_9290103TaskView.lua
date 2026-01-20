@@ -1,72 +1,75 @@
-﻿module("modules.logic.fight.view.FightBattleId_9290103TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightBattleId_9290103TaskView.lua
 
-local var_0_0 = class("FightBattleId_9290103TaskView", FightBaseView)
+module("modules.logic.fight.view.FightBattleId_9290103TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._descText = gohelper.findChildText(arg_1_0.viewGO, "#txt_dec")
+local FightBattleId_9290103TaskView = class("FightBattleId_9290103TaskView", FightBaseView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "#txt_title")
-	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "#image_star")
+function FightBattleId_9290103TaskView:onInitView()
+	self._descText = gohelper.findChildText(self.viewGO, "#txt_dec")
 
-	gohelper.setActive(var_1_0, false)
-	gohelper.setActive(var_1_1, false)
+	local goTitle = gohelper.findChild(self.viewGO, "#txt_title")
+	local goStar = gohelper.findChild(self.viewGO, "#image_star")
+
+	gohelper.setActive(goTitle, false)
+	gohelper.setActive(goStar, false)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate)
+function FightBattleId_9290103TaskView:addEvents()
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightBattleId_9290103TaskView:removeEvents()
 	return
 end
 
-function var_0_0.onConstructor(arg_4_0)
+function FightBattleId_9290103TaskView:onConstructor()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:_refreshData()
+function FightBattleId_9290103TaskView:onOpen()
+	self:_refreshData()
 end
 
-local var_0_1 = 6295031
+local SpecialBuffId = 6295031
 
-function var_0_0._onBuffUpdate(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_3 ~= var_0_1 then
+function FightBattleId_9290103TaskView:_onBuffUpdate(entityId, effectType, buffId)
+	if buffId ~= SpecialBuffId then
 		return
 	end
 
-	arg_6_0:_refreshData()
+	self:_refreshData()
 end
 
-var_0_0.TempEnemyList = {}
+FightBattleId_9290103TaskView.TempEnemyList = {}
 
-function var_0_0._refreshData(arg_7_0)
-	local var_7_0 = var_0_0.TempEnemyList
+function FightBattleId_9290103TaskView:_refreshData()
+	local enemyList = FightBattleId_9290103TaskView.TempEnemyList
 
-	tabletool.clear(var_7_0)
+	tabletool.clear(enemyList)
 
-	local var_7_1 = FightDataHelper.entityMgr:getEnemyNormalList(var_7_0)
-	local var_7_2 = 0
+	enemyList = FightDataHelper.entityMgr:getEnemyNormalList(enemyList)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_3 = iter_7_1:getBuffDic()
+	local count = 0
 
-		for iter_7_2, iter_7_3 in pairs(var_7_3) do
-			if iter_7_3.buffId == var_0_1 then
-				var_7_2 = var_7_2 + iter_7_3.layer
+	for _, entityMo in ipairs(enemyList) do
+		local buffDict = entityMo:getBuffDic()
+
+		for _, buffMo in pairs(buffDict) do
+			if buffMo.buffId == SpecialBuffId then
+				count = count + buffMo.layer
 			end
 		end
 	end
 
-	arg_7_0._descText.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("battle_id_9290103_task_text"), var_7_2)
+	self._descText.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("battle_id_9290103_task_text"), count)
 end
 
-function var_0_0.onClose(arg_8_0)
+function FightBattleId_9290103TaskView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function FightBattleId_9290103TaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightBattleId_9290103TaskView

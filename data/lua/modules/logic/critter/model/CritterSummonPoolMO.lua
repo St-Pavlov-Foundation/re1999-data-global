@@ -1,85 +1,87 @@
-﻿module("modules.logic.critter.model.CritterSummonPoolMO", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/CritterSummonPoolMO.lua
 
-local var_0_0 = pureTable("CritterSummonPoolMO")
+module("modules.logic.critter.model.CritterSummonPoolMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.rare = arg_1_1
-	arg_1_0.uid = "0"
-	arg_1_0.critterId = arg_1_2
-	arg_1_0.count = arg_1_3
-	arg_1_0.poolCount = arg_1_3 - arg_1_4
-	arg_1_0.co = CritterConfig.instance:getCritterCfg(arg_1_2)
+local CritterSummonPoolMO = pureTable("CritterSummonPoolMO")
 
-	arg_1_0:initCritterMo()
+function CritterSummonPoolMO:init(rare, id, count, hasSummonCount)
+	self.rare = rare
+	self.uid = "0"
+	self.critterId = id
+	self.count = count
+	self.poolCount = count - hasSummonCount
+	self.co = CritterConfig.instance:getCritterCfg(id)
+
+	self:initCritterMo()
 end
 
-function var_0_0.initCritterMo(arg_2_0)
-	arg_2_0.critterMo = CritterMO.New()
+function CritterSummonPoolMO:initCritterMo()
+	self.critterMo = CritterMO.New()
 
-	local var_2_0 = 0
-	local var_2_1 = 0
-	local var_2_2 = 0
-	local var_2_3 = 0
-	local var_2_4 = 0
-	local var_2_5 = 0
-	local var_2_6 = {}
+	local efficiency = 0
+	local patience = 0
+	local lucky = 0
+	local efficiencyIncrRate = 0
+	local patienceIncrRate = 0
+	local luckyIncrRate = 0
+	local skillInfo = {}
 
-	if arg_2_0.co then
-		if not string.nilorempty(arg_2_0.co.baseAttribute) then
-			local var_2_7 = GameUtil.splitString2(arg_2_0.co.baseAttribute, true)
+	if self.co then
+		if not string.nilorempty(self.co.baseAttribute) then
+			local values = GameUtil.splitString2(self.co.baseAttribute, true)
 
-			var_2_0 = var_2_7[1][2] or 0
-			var_2_1 = var_2_7[2][2] or 0
-			var_2_2 = var_2_7[3][2] or 0
+			efficiency = values[1][2] or 0
+			patience = values[2][2] or 0
+			lucky = values[3][2] or 0
 		end
 
-		if not string.nilorempty(arg_2_0.co.baseAttribute) then
-			local var_2_8 = GameUtil.splitString2(arg_2_0.co.attributeIncrRate, true)
+		if not string.nilorempty(self.co.baseAttribute) then
+			local rates = GameUtil.splitString2(self.co.attributeIncrRate, true)
 
-			var_2_3 = var_2_8[1][2] or 0
-			var_2_4 = var_2_8[2][2] or 0
-			var_2_5 = var_2_8[3][2] or 0
+			efficiencyIncrRate = rates[1][2] or 0
+			patienceIncrRate = rates[2][2] or 0
+			luckyIncrRate = rates[3][2] or 0
 		end
 
-		var_2_6 = {
+		skillInfo = {
 			tags = {
-				arg_2_0.co.raceTag
+				self.co.raceTag
 			}
 		}
 	end
 
-	local var_2_9 = {
+	local info = {
 		specialSkin = false,
-		id = arg_2_0.uid,
-		uid = arg_2_0.uid,
-		defineId = arg_2_0.critterId,
-		efficiency = var_2_0,
-		patience = var_2_1,
-		lucky = var_2_2,
-		efficiencyIncrRate = var_2_3,
-		patienceIncrRate = var_2_4,
-		luckyIncrRate = var_2_5,
+		id = self.uid,
+		uid = self.uid,
+		defineId = self.critterId,
+		efficiency = efficiency,
+		patience = patience,
+		lucky = lucky,
+		efficiencyIncrRate = efficiencyIncrRate,
+		patienceIncrRate = patienceIncrRate,
+		luckyIncrRate = luckyIncrRate,
 		tagAttributeRates = {},
-		skillInfo = var_2_6
+		skillInfo = skillInfo
 	}
 
-	arg_2_0.critterMo:init(var_2_9)
+	self.critterMo:init(info)
 end
 
-function var_0_0.getCritterMo(arg_3_0)
-	return arg_3_0.critterMo
+function CritterSummonPoolMO:getCritterMo()
+	return self.critterMo
 end
 
-function var_0_0.onRefreshPoolCount(arg_4_0, arg_4_1)
-	arg_4_0.poolCount = arg_4_0.count - arg_4_1
+function CritterSummonPoolMO:onRefreshPoolCount(hasSummonCount)
+	self.poolCount = self.count - hasSummonCount
 end
 
-function var_0_0.getPoolCount(arg_5_0)
-	return arg_5_0.poolCount
+function CritterSummonPoolMO:getPoolCount()
+	return self.poolCount
 end
 
-function var_0_0.isFullPool(arg_6_0)
-	return arg_6_0.count == arg_6_0.poolCount
+function CritterSummonPoolMO:isFullPool()
+	return self.count == self.poolCount
 end
 
-return var_0_0
+return CritterSummonPoolMO

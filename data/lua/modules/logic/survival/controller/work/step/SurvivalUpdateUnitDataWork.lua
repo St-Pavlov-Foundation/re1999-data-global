@@ -1,72 +1,74 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalUpdateUnitDataWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalUpdateUnitDataWork.lua
 
-local var_0_0 = class("SurvivalUpdateUnitDataWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalUpdateUnitDataWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
+local SurvivalUpdateUnitDataWork = class("SurvivalUpdateUnitDataWork", SurvivalStepBaseWork)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._stepMo.unit) do
-		local var_1_1 = var_1_0.unitsById[iter_1_1.id]
+function SurvivalUpdateUnitDataWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-		if var_1_1 then
-			local var_1_2 = var_1_1.cfgId
-			local var_1_3 = var_1_1.pos
+	for _, unit in ipairs(self._stepMo.unit) do
+		local unitMo = sceneMo.unitsById[unit.id]
 
-			var_1_1:init(iter_1_1)
+		if unitMo then
+			local preCfgId = unitMo.cfgId
+			local oldPos = unitMo.pos
 
-			if var_1_3 ~= var_1_1.pos then
-				local var_1_4 = var_1_1.pos
+			unitMo:init(unit)
 
-				var_1_1.pos = var_1_3
+			if oldPos ~= unitMo.pos then
+				local newPos = unitMo.pos
 
-				var_1_0:onUnitUpdatePos(var_1_1, var_1_4)
+				unitMo.pos = oldPos
+
+				sceneMo:onUnitUpdatePos(unitMo, newPos)
 			end
 
-			SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapUnitChange, var_1_1.id)
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapUnitChange, unitMo.id)
 
-			if var_1_2 ~= var_1_1.cfgId then
-				var_1_0:fixUnitExPos(var_1_1)
+			if preCfgId ~= unitMo.cfgId then
+				sceneMo:fixUnitExPos(unitMo)
 			end
 		else
-			var_1_1 = var_1_0.blocksById[iter_1_1.id]
+			unitMo = sceneMo.blocksById[unit.id]
 
-			if var_1_1 then
-				var_1_1:init(iter_1_1)
+			if unitMo then
+				unitMo:init(unit)
 
-				if var_1_1:isDestory() then
-					SurvivalHelper.instance:addNodeToDict(var_1_0.allDestroyPos, var_1_1.pos)
+				if unitMo:isDestory() then
+					SurvivalHelper.instance:addNodeToDict(sceneMo.allDestroyPos, unitMo.pos)
 
-					for iter_1_2, iter_1_3 in ipairs(var_1_1.exPoints) do
-						SurvivalHelper.instance:addNodeToDict(var_1_0.allDestroyPos, iter_1_3)
+					for _, pos in ipairs(unitMo.exPoints) do
+						SurvivalHelper.instance:addNodeToDict(sceneMo.allDestroyPos, pos)
 					end
 
-					var_1_0:deleteUnit(var_1_1.id)
-					SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapDestoryPosAdd, var_1_1)
+					sceneMo:deleteUnit(unitMo.id)
+					SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapDestoryPosAdd, unitMo)
 				end
 			end
 		end
 
-		if not var_1_1 then
-			logError("元件不存在，更新失败" .. tostring(iter_1_1.id))
+		if not unitMo then
+			logError("元件不存在，更新失败" .. tostring(unit.id))
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = false
+function SurvivalUpdateUnitDataWork:getRunOrder(params, flow)
+	local haveMoveItem = false
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._stepMo.unit) do
-		if arg_2_1.moveIdSet[iter_2_1.id] then
-			var_2_0 = true
+	for k, unit in ipairs(self._stepMo.unit) do
+		if params.moveIdSet[unit.id] then
+			haveMoveItem = true
 
 			break
 		end
 	end
 
-	if var_2_0 then
-		arg_2_2:addWork(arg_2_0)
+	if haveMoveItem then
+		flow:addWork(self)
 
 		return SurvivalEnum.StepRunOrder.None
 	end
@@ -74,4 +76,4 @@ function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalUpdateUnitDataWork

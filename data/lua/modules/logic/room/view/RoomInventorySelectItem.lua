@@ -1,110 +1,112 @@
-﻿module("modules.logic.room.view.RoomInventorySelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomInventorySelectItem.lua
 
-local var_0_0 = class("RoomInventorySelectItem", ListScrollCellExtend)
+module("modules.logic.room.view.RoomInventorySelectItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomInventorySelectItem = class("RoomInventorySelectItem", ListScrollCellExtend)
+
+function RoomInventorySelectItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnItem:AddClickListener(arg_2_0._onBtnItemClick, arg_2_0)
-	arg_2_0:addEventCb(RoomWaterReformController.instance, RoomEvent.OnGetBlockReformPermanentInfo, arg_2_0._onGetReformPermanentInfo, arg_2_0)
+function RoomInventorySelectItem:addEvents()
+	self._btnItem:AddClickListener(self._onBtnItemClick, self)
+	self:addEventCb(RoomWaterReformController.instance, RoomEvent.OnGetBlockReformPermanentInfo, self._onGetReformPermanentInfo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnItem:RemoveClickListener()
-	arg_3_0:removeEventCb(RoomWaterReformController.instance, RoomEvent.OnGetBlockReformPermanentInfo, arg_3_0._onGetReformPermanentInfo, arg_3_0)
+function RoomInventorySelectItem:removeEvents()
+	self._btnItem:RemoveClickListener()
+	self:removeEventCb(RoomWaterReformController.instance, RoomEvent.OnGetBlockReformPermanentInfo, self._onGetReformPermanentInfo, self)
 end
 
-function var_0_0._editableAddEvents(arg_4_0)
-	RoomMapController.instance:registerCallback(RoomEvent.BackBlockListDataChanged, arg_4_0._onBackBlockChanged, arg_4_0)
-	RoomMapController.instance:registerCallback(RoomEvent.BackBlockPlayUIAnim, arg_4_0._onPlayAnim, arg_4_0)
+function RoomInventorySelectItem:_editableAddEvents()
+	RoomMapController.instance:registerCallback(RoomEvent.BackBlockListDataChanged, self._onBackBlockChanged, self)
+	RoomMapController.instance:registerCallback(RoomEvent.BackBlockPlayUIAnim, self._onPlayAnim, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_5_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockListDataChanged, arg_5_0._onBackBlockChanged, arg_5_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockPlayUIAnim, arg_5_0._onPlayAnim, arg_5_0)
+function RoomInventorySelectItem:_editableRemoveEvents()
+	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockListDataChanged, self._onBackBlockChanged, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockPlayUIAnim, self._onPlayAnim, self)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._rtIndex = OrthCameraRTMgr.instance:getNewIndex()
-	arg_6_0._goselect = gohelper.findChild(arg_6_0.viewGO, "go_select")
-	arg_6_0._goempty = gohelper.findChild(arg_6_0.viewGO, "go_empty")
-	arg_6_0._goicon = gohelper.findChild(arg_6_0.viewGO, "go_icon")
-	arg_6_0._gobirthicon = gohelper.findChild(arg_6_0.viewGO, "go_birthicon")
-	arg_6_0._simagebirthhero = gohelper.findChildSingleImage(arg_6_0.viewGO, "go_birthicon/simage_birthhero")
-	arg_6_0._goonbirthdayicon = gohelper.findChild(arg_6_0.viewGO, "go_birthicon/#image_onbirthday")
-	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._btnItem = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "go_icon")
-	arg_6_0._rawImageIcon = gohelper.onceAddComponent(arg_6_0._goicon, gohelper.Type_RawImage)
+function RoomInventorySelectItem:_editableInitView()
+	self._rtIndex = OrthCameraRTMgr.instance:getNewIndex()
+	self._goselect = gohelper.findChild(self.viewGO, "go_select")
+	self._goempty = gohelper.findChild(self.viewGO, "go_empty")
+	self._goicon = gohelper.findChild(self.viewGO, "go_icon")
+	self._gobirthicon = gohelper.findChild(self.viewGO, "go_birthicon")
+	self._simagebirthhero = gohelper.findChildSingleImage(self.viewGO, "go_birthicon/simage_birthhero")
+	self._goonbirthdayicon = gohelper.findChild(self.viewGO, "go_birthicon/#image_onbirthday")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._btnItem = gohelper.findChildButtonWithAudio(self.viewGO, "go_icon")
+	self._rawImageIcon = gohelper.onceAddComponent(self._goicon, gohelper.Type_RawImage)
 
-	OrthCameraRTMgr.instance:setRawImageUvRect(arg_6_0._rawImageIcon, arg_6_0._rtIndex)
+	OrthCameraRTMgr.instance:setRawImageUvRect(self._rawImageIcon, self._rtIndex)
 
-	local var_6_0 = "#BFB5A3"
+	local colorStr = "#BFB5A3"
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._rawImageIcon, var_6_0)
+	SLFramework.UGUI.GuiHelper.SetColor(self._rawImageIcon, colorStr)
 
-	arg_6_0._scene = GameSceneMgr.instance:getCurScene()
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	gohelper.setActive(arg_6_0._goempty, false)
+	gohelper.setActive(self._goempty, false)
 
-	arg_6_0._backBlockIds = {}
+	self._backBlockIds = {}
 end
 
-function var_0_0._onBackBlockChanged(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if arg_7_2 then
-		if arg_7_0:_IsShow() then
-			arg_7_0:_playBackBlockAnim(arg_7_1, false, arg_7_4)
+function RoomInventorySelectItem:_onBackBlockChanged(blockIds, isHasCurPackage, buildingIds, minBlockIndex)
+	if isHasCurPackage then
+		if self:_IsShow() then
+			self:_playBackBlockAnim(blockIds, false, minBlockIndex)
 		else
-			tabletool.addValues(arg_7_0._backBlockIds, arg_7_1)
+			tabletool.addValues(self._backBlockIds, blockIds)
 		end
 	end
 end
 
-function var_0_0._onPlayAnim(arg_8_0)
-	if arg_8_0:_IsShow() and #arg_8_0._backBlockIds > 0 then
-		local var_8_0 = arg_8_0._backBlockIds
+function RoomInventorySelectItem:_onPlayAnim()
+	if self:_IsShow() and #self._backBlockIds > 0 then
+		local blockIds = self._backBlockIds
 
-		arg_8_0._backBlockIds = {}
+		self._backBlockIds = {}
 
-		arg_8_0:_playBackBlockAnim(var_8_0, true)
+		self:_playBackBlockAnim(blockIds, true)
 	end
 end
 
-function var_0_0._playBackBlockAnim(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_1 = arg_9_1 or {}
+function RoomInventorySelectItem:_playBackBlockAnim(blockIds, isBackMore, minIndex)
+	blockIds = blockIds or {}
 
-	local var_9_0 = arg_9_0._blockMO and tabletool.indexOf(arg_9_1, arg_9_0._blockMO.id)
-	local var_9_1
+	local isNew = self._blockMO and tabletool.indexOf(blockIds, self._blockMO.id)
+	local animName
 
-	if arg_9_2 then
-		if var_9_0 then
-			var_9_1 = "dikuai03"
+	if isBackMore then
+		if isNew then
+			animName = "dikuai03"
 		end
-	elseif var_9_0 then
-		var_9_1 = "dikuai01"
+	elseif isNew then
+		animName = "dikuai01"
 	else
-		local var_9_2 = true
+		local isBehindNew = true
 
-		if arg_9_3 and arg_9_0._index then
-			var_9_2 = arg_9_3 < arg_9_0._index
+		if minIndex and self._index then
+			isBehindNew = minIndex < self._index
 		end
 
-		if var_9_2 then
-			var_9_1 = "dikuai02"
+		if isBehindNew then
+			animName = "dikuai02"
 		end
 	end
 
-	if not var_9_1 then
+	if not animName then
 		return
 	end
 
-	arg_9_0._animator:Play(var_9_1, 0, 0)
+	self._animator:Play(animName, 0, 0)
 end
 
-function var_0_0._IsShow(arg_10_0)
+function RoomInventorySelectItem:_IsShow()
 	if RoomMapBlockModel.instance:isBackMore() or RoomBuildingController.instance:isBuildingListShow() then
 		return false
 	end
@@ -112,37 +114,38 @@ function var_0_0._IsShow(arg_10_0)
 	return true
 end
 
-function var_0_0._onBtnItemClick(arg_11_0)
-	if not arg_11_0._blockMO then
+function RoomInventorySelectItem:_onBtnItemClick()
+	if not self._blockMO then
 		return
 	end
 
-	local var_11_0 = arg_11_0._blockMO
-	local var_11_1 = arg_11_0._blockMO.id
+	local blockMO = self._blockMO
+	local blockId = self._blockMO.id
 
-	RoomShowBlockListModel.instance:setSelect(var_11_1)
+	RoomShowBlockListModel.instance:setSelect(blockId)
 
-	local var_11_2 = arg_11_0._scene
-	local var_11_3 = var_11_2.fsm:getCurStateName()
+	local tscene = self._scene
+	local curStateName = tscene.fsm:getCurStateName()
 
 	if RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceConfirm) then
-		local var_11_4 = RoomMapBlockModel.instance:getTempBlockMO()
-		local var_11_5 = HexMath.hexToPosition(var_11_4.hexPoint, RoomBlockEnum.BlockSize)
+		local tempBlockMO = RoomMapBlockModel.instance:getTempBlockMO()
+		local pos = HexMath.hexToPosition(tempBlockMO.hexPoint, RoomBlockEnum.BlockSize)
+		local tempBlockId = tempBlockMO.id
 
-		if var_11_4.id == var_11_1 then
-			if RoomHelper.isOutCameraFocusCenter(var_11_5) then
-				if not var_11_2.camera:isTweening() then
-					var_11_2.camera:tweenCamera({
-						focusX = var_11_5.x,
-						focusY = var_11_5.y
+		if tempBlockId == blockId then
+			if RoomHelper.isOutCameraFocusCenter(pos) then
+				if not tscene.camera:isTweening() then
+					tscene.camera:tweenCamera({
+						focusX = pos.x,
+						focusY = pos.y
 					})
 				end
 			else
 				GameFacade.showToast(ToastEnum.RoomInventorySelect)
 			end
 		else
-			var_11_2.fsm:triggerEvent(RoomSceneEvent.TryPlaceBlock, {
-				hexPoint = var_11_4.hexPoint
+			tscene.fsm:triggerEvent(RoomSceneEvent.TryPlaceBlock, {
+				hexPoint = tempBlockMO.hexPoint
 			})
 		end
 	end
@@ -150,105 +153,105 @@ function var_0_0._onBtnItemClick(arg_11_0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.SelectBlock)
 end
 
-function var_0_0._onGetReformPermanentInfo(arg_12_0)
-	local var_12_0 = arg_12_0:getBlockMO()
+function RoomInventorySelectItem:_onGetReformPermanentInfo()
+	local blockMO = self:getBlockMO()
 
-	if not var_12_0 then
+	if not blockMO then
 		return
 	end
 
-	local var_12_1 = arg_12_0._scene.inventorymgr:getBlockEntity(var_12_0.id, SceneTag.RoomInventoryBlock)
+	local inventoryEntity = self._scene.inventorymgr:getBlockEntity(blockMO.id, SceneTag.RoomInventoryBlock)
 
 	RoomBlockHelper.refreshBlockEntity({
-		var_12_1
+		inventoryEntity
 	}, "refreshBlock")
 end
 
-function var_0_0._refreshBlock(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_2 then
-		arg_13_0._scene.inventorymgr:removeBlockEntity(arg_13_2)
+function RoomInventorySelectItem:_refreshBlock(blockId, oldBlockId)
+	if oldBlockId then
+		self._scene.inventorymgr:removeBlockEntity(oldBlockId)
 	end
 
-	if arg_13_1 then
-		arg_13_0._scene.inventorymgr:addBlockEntity(arg_13_1)
+	if blockId then
+		self._scene.inventorymgr:addBlockEntity(blockId)
 
-		local var_13_0 = arg_13_0._scene.inventorymgr:getIndexById(arg_13_1)
+		local index = self._scene.inventorymgr:getIndexById(blockId)
 
-		OrthCameraRTMgr.instance:setRawImageUvRect(arg_13_0._rawImageIcon, var_13_0)
+		OrthCameraRTMgr.instance:setRawImageUvRect(self._rawImageIcon, index)
 	end
 end
 
-function var_0_0.getBlockMO(arg_14_0)
-	return arg_14_0._blockMO
+function RoomInventorySelectItem:getBlockMO()
+	return self._blockMO
 end
 
-function var_0_0.onUpdateMO(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._blockMO and arg_15_0._blockMO.id
-	local var_15_1 = arg_15_1 and arg_15_1.id
+function RoomInventorySelectItem:onUpdateMO(mo)
+	local oldBlockId = self._blockMO and self._blockMO.id
+	local blockId = mo and mo.id
 
-	arg_15_0._blockMO = arg_15_1
+	self._blockMO = mo
 
-	arg_15_0:_refreshBlock(var_15_1, var_15_0)
+	self:_refreshBlock(blockId, oldBlockId)
 
-	local var_15_2 = arg_15_0._blockMO and arg_15_0._blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday
+	local isBirthdayBlock = self._blockMO and self._blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday
 
-	gohelper.setActive(arg_15_0._gobirthicon, var_15_2)
+	gohelper.setActive(self._gobirthicon, isBirthdayBlock)
 
-	if var_15_2 then
-		arg_15_0:_refreshCharacter(var_15_1)
+	if isBirthdayBlock then
+		self:_refreshCharacter(blockId)
 	end
 
-	RoomMapController.instance:getNextBlockReformPermanentInfo(arg_15_0._index)
+	RoomMapController.instance:getNextBlockReformPermanentInfo(self._index)
 end
 
-function var_0_0.onSelect(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._goselect, arg_16_1)
+function RoomInventorySelectItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	if arg_17_0._blockMO then
-		arg_17_0._scene.inventorymgr:removeBlockEntity(arg_17_0._blockMO.id)
+function RoomInventorySelectItem:onDestroyView()
+	if self._blockMO then
+		self._scene.inventorymgr:removeBlockEntity(self._blockMO.id)
 	end
 
-	if arg_17_0._rawImageIcon then
-		arg_17_0._rawImageIcon.texture = nil
+	if self._rawImageIcon then
+		self._rawImageIcon.texture = nil
 	end
 
-	arg_17_0._simagebirthhero:UnLoadImage()
+	self._simagebirthhero:UnLoadImage()
 end
 
-function var_0_0._refreshCharacter(arg_18_0, arg_18_1)
-	local var_18_0 = RoomConfig.instance:getSpecialBlockConfig(arg_18_1)
+function RoomInventorySelectItem:_refreshCharacter(blockId)
+	local blockCfg = RoomConfig.instance:getSpecialBlockConfig(blockId)
 
-	if not var_18_0 then
+	if not blockCfg then
 		return
 	end
 
-	local var_18_1 = RoomCharacterModel.instance:isOnBirthday(var_18_0.heroId)
+	local isOnBirthday = RoomCharacterModel.instance:isOnBirthday(blockCfg.heroId)
 
-	gohelper.setActive(arg_18_0._goonbirthdayicon, var_18_1)
+	gohelper.setActive(self._goonbirthdayicon, isOnBirthday)
 
-	local var_18_2 = arg_18_0:_findSkinIdByHeroId(var_18_0.heroId)
+	local skinId = self:_findSkinIdByHeroId(blockCfg.heroId)
 
-	if not var_18_2 then
+	if not skinId then
 		return
 	end
 
-	local var_18_3 = SkinConfig.instance:getSkinCo(var_18_2)
+	local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
-	arg_18_0._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(var_18_3.headIcon))
+	self._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
 end
 
-function var_0_0._findSkinIdByHeroId(arg_19_0, arg_19_1)
-	local var_19_0 = RoomCharacterModel.instance:getCharacterMOById(arg_19_1)
+function RoomInventorySelectItem:_findSkinIdByHeroId(heroId)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(heroId)
 
-	if var_19_0 then
-		return var_19_0.skinId
+	if roomCharacterMO then
+		return roomCharacterMO.skinId
 	end
 
-	local var_19_1 = HeroConfig.instance:getHeroCO(arg_19_1)
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
 
-	return var_19_1 and var_19_1.skinId or nil
+	return heroCfg and heroCfg.skinId or nil
 end
 
-return var_0_0
+return RoomInventorySelectItem

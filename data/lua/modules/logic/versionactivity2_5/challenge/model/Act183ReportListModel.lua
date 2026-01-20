@@ -1,29 +1,34 @@
-﻿module("modules.logic.versionactivity2_5.challenge.model.Act183ReportListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/model/Act183ReportListModel.lua
 
-local var_0_0 = class("Act183ReportListModel", MixScrollModel)
+module("modules.logic.versionactivity2_5.challenge.model.Act183ReportListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._activityId = arg_1_1
+local Act183ReportListModel = class("Act183ReportListModel", MixScrollModel)
 
-	table.sort(arg_1_2, arg_1_0._recordSortFunc)
-	arg_1_0:setList(arg_1_2)
+function Act183ReportListModel:init(activityId, groupList)
+	self._activityId = activityId
+
+	table.sort(groupList, self._recordSortFunc)
+	self:setList(groupList)
 end
 
-function var_0_0._recordSortFunc(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getFinishedTime()
-	local var_2_1 = arg_2_1:getFinishedTime()
+function Act183ReportListModel._recordSortFunc(aRecordMo, bRecordMo)
+	local aFinishedTime = aRecordMo:getFinishedTime()
+	local bFinishedTime = bRecordMo:getFinishedTime()
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_1 < var_2_0
+	if aFinishedTime ~= bFinishedTime then
+		return bFinishedTime < aFinishedTime
 	end
 
-	return arg_2_0:getGroupId() < arg_2_1:getGroupId()
+	local aGroupId = aRecordMo:getGroupId()
+	local bGroupId = bRecordMo:getGroupId()
+
+	return aGroupId < bGroupId
 end
 
-function var_0_0.getActivityId(arg_3_0)
-	return arg_3_0._activityId
+function Act183ReportListModel:getActivityId()
+	return self._activityId
 end
 
-var_0_0.instance = var_0_0.New()
+Act183ReportListModel.instance = Act183ReportListModel.New()
 
-return var_0_0
+return Act183ReportListModel

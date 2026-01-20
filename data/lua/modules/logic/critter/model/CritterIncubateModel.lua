@@ -1,232 +1,240 @@
-﻿module("modules.logic.critter.model.CritterIncubateModel", package.seeall)
+﻿-- chunkname: @modules/logic/critter/model/CritterIncubateModel.lua
 
-local var_0_0 = class("CritterIncubateModel", BaseModel)
+module("modules.logic.critter.model.CritterIncubateModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._selectParentCrittersIds = nil
+local CritterIncubateModel = class("CritterIncubateModel", BaseModel)
+
+function CritterIncubateModel:onInit()
+	self._selectParentCrittersIds = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._selectParentCrittersIds = {}
+function CritterIncubateModel:reInit()
+	self._selectParentCrittersIds = {}
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function CritterIncubateModel:clear()
+	CritterIncubateModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
+function CritterIncubateModel:_clearData()
 	return
 end
 
-function var_0_0.getCanSelectCount(arg_5_0)
+function CritterIncubateModel:getCanSelectCount()
 	return 2
 end
 
-function var_0_0._getNullSelect(arg_6_0)
-	for iter_6_0 = 1, arg_6_0:getCanSelectCount() do
-		if not arg_6_0._selectParentCrittersIds[iter_6_0] then
-			return iter_6_0
+function CritterIncubateModel:_getNullSelect()
+	for i = 1, self:getCanSelectCount() do
+		if not self._selectParentCrittersIds[i] then
+			return i
 		end
 	end
 end
 
-function var_0_0.addSelectParentCritter(arg_7_0, arg_7_1)
-	if not arg_7_0._selectParentCrittersIds then
-		arg_7_0._selectParentCrittersIds = {}
+function CritterIncubateModel:addSelectParentCritter(uid)
+	if not self._selectParentCrittersIds then
+		self._selectParentCrittersIds = {}
 	end
 
-	local var_7_0 = arg_7_0:_getNullSelect()
+	local index = self:_getNullSelect()
 
-	if var_7_0 then
-		arg_7_0._selectParentCrittersIds[var_7_0] = arg_7_1
+	if index then
+		self._selectParentCrittersIds[index] = uid
 
-		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onSelectParentCritter, var_7_0, arg_7_1)
-	end
-end
-
-function var_0_0.removeSelectParentCritter(arg_8_0, arg_8_1)
-	if not arg_8_0._selectParentCrittersIds then
-		arg_8_0._selectParentCrittersIds = {}
-	end
-
-	local var_8_0 = tabletool.indexOf(arg_8_0._selectParentCrittersIds, arg_8_1)
-
-	if var_8_0 then
-		arg_8_0._selectParentCrittersIds[var_8_0] = nil
-
-		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onRemoveParentCritter, var_8_0, arg_8_1)
+		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onSelectParentCritter, index, uid)
 	end
 end
 
-function var_0_0.isSelectParentCritter(arg_9_0, arg_9_1)
-	return LuaUtil.tableContains(arg_9_0._selectParentCrittersIds, arg_9_1)
+function CritterIncubateModel:removeSelectParentCritter(uid)
+	if not self._selectParentCrittersIds then
+		self._selectParentCrittersIds = {}
+	end
+
+	local index = tabletool.indexOf(self._selectParentCrittersIds, uid)
+
+	if index then
+		self._selectParentCrittersIds[index] = nil
+
+		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onRemoveParentCritter, index, uid)
+	end
 end
 
-function var_0_0.getSelectParentCritterUIdByIndex(arg_10_0, arg_10_1)
-	if not arg_10_0._selectParentCrittersIds then
+function CritterIncubateModel:isSelectParentCritter(uid)
+	return LuaUtil.tableContains(self._selectParentCrittersIds, uid)
+end
+
+function CritterIncubateModel:getSelectParentCritterUIdByIndex(index)
+	if not self._selectParentCrittersIds then
 		return
 	end
 
-	local var_10_0 = arg_10_0._selectParentCrittersIds[arg_10_1]
+	local uid = self._selectParentCrittersIds[index]
 
-	if var_10_0 and CritterModel.instance:getCritterMOByUid(var_10_0) then
-		return var_10_0
+	if uid then
+		local mo = CritterModel.instance:getCritterMOByUid(uid)
+
+		if mo then
+			return uid
+		end
 	end
 
-	arg_10_0._selectParentCrittersIds[arg_10_1] = nil
+	self._selectParentCrittersIds[index] = nil
 end
 
-function var_0_0.getSelectParentCritterMoByid(arg_11_0, arg_11_1)
-	if not arg_11_0._selectParentCrittersIds then
+function CritterIncubateModel:getSelectParentCritterMoByid(defineId)
+	if not self._selectParentCrittersIds then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._selectParentCrittersIds) do
-		local var_11_0 = CritterModel.instance:getCritterMOByUid(iter_11_1)
+	for i, uid in ipairs(self._selectParentCrittersIds) do
+		local mo = CritterModel.instance:getCritterMOByUid(uid)
 
-		if var_11_0.defineId == arg_11_1 then
-			return var_11_0
+		if mo.defineId == defineId then
+			return mo
 		end
 	end
 end
 
-function var_0_0.getSelectParentCritterCount(arg_12_0)
-	return arg_12_0._selectParentCrittersIds and tabletool.len(arg_12_0._selectParentCrittersIds) or 0, arg_12_0:getCanSelectCount()
+function CritterIncubateModel:getSelectParentCritterCount()
+	return self._selectParentCrittersIds and tabletool.len(self._selectParentCrittersIds) or 0, self:getCanSelectCount()
 end
 
-function var_0_0.getChildMOList(arg_13_0)
-	return arg_13_0._previewChildCritters or {}
+function CritterIncubateModel:getChildMOList()
+	return self._previewChildCritters or {}
 end
 
-function var_0_0.setCritterPreviewInfo(arg_14_0, arg_14_1)
-	arg_14_0._previewChildCritters = {}
+function CritterIncubateModel:setCritterPreviewInfo(childes)
+	self._previewChildCritters = {}
 
-	if arg_14_1 then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-			local var_14_0 = arg_14_0:getById(iter_14_1.uid) or CritterMO.New()
+	if childes then
+		for i, critterInfo in ipairs(childes) do
+			local critterMO = self:getById(critterInfo.uid)
 
-			var_14_0:init(iter_14_1)
-			table.insert(arg_14_0._previewChildCritters, var_14_0)
+			critterMO = critterMO or CritterMO.New()
+
+			critterMO:init(critterInfo)
+			table.insert(self._previewChildCritters, critterMO)
 		end
 	end
 end
 
-function var_0_0.getCritterMOByUid(arg_15_0, arg_15_1)
-	if not arg_15_0._previewChildCritters then
+function CritterIncubateModel:getCritterMOByUid(uid)
+	if not self._previewChildCritters then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._previewChildCritters) do
-		if iter_15_1.uid == arg_15_1 then
-			return iter_15_1
+	for _, mo in ipairs(self._previewChildCritters) do
+		if mo.uid == uid then
+			return mo
 		end
 	end
 end
 
-function var_0_0.notSummonToast(arg_16_0)
-	local var_16_0, var_16_1, var_16_2, var_16_3 = arg_16_0:getPoolCurrency()
+function CritterIncubateModel:notSummonToast()
+	local _, _, enough, name = self:getPoolCurrency()
 
 	if CritterSummonModel.instance:isMaxCritterCount() then
 		return ToastEnum.RoomCritterMaxCount
 	end
 
-	if not var_16_2 then
-		return ToastEnum.RoomCritterNotEnough, var_16_3
+	if not enough then
+		return ToastEnum.RoomCritterNotEnough, name
 	end
 
-	local var_16_4, var_16_5 = arg_16_0:getSelectParentCritterCount()
+	local count, max = self:getSelectParentCritterCount()
 
-	if var_16_4 < var_16_5 then
+	if count < max then
 		return ToastEnum.RoomCritteNeedTwo
 	end
 
 	return ""
 end
 
-function var_0_0.getPoolCurrency(arg_17_0)
-	local var_17_0 = 3
+function CritterIncubateModel:getPoolCurrency()
+	local maxRare = 3
 
-	if arg_17_0._selectParentCrittersIds then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._selectParentCrittersIds) do
-			local var_17_1 = CritterModel.instance:getCritterMOByUid(iter_17_1)
+	if self._selectParentCrittersIds then
+		for i, uid in ipairs(self._selectParentCrittersIds) do
+			local mo = CritterModel.instance:getCritterMOByUid(uid)
 
-			if var_17_1 then
-				local var_17_2 = var_17_1:getDefineCfg().rare
+			if mo then
+				local rare = mo:getDefineCfg().rare
 
-				var_17_0 = math.max(var_17_0, var_17_2)
+				maxRare = math.max(maxRare, rare)
 			end
 		end
 	end
 
-	local var_17_3 = CritterConfig.instance:getCritterRareCfg(var_17_0)
+	local co = CritterConfig.instance:getCritterRareCfg(maxRare)
 
-	if var_17_3 then
-		return CritterSummonModel.instance:getCostInfo(var_17_3.incubateCost)
+	if co then
+		return CritterSummonModel.instance:getCostInfo(co.incubateCost)
 	end
 end
 
-function var_0_0.getCostCurrency(arg_18_0)
-	local var_18_0 = {}
-	local var_18_1 = {}
+function CritterIncubateModel:getCostCurrency()
+	local list = {}
+	local costCurrency = {}
 
-	for iter_18_0, iter_18_1 in ipairs(lua_critter_rare.configList) do
-		if not string.nilorempty(iter_18_1.incubateCost) then
-			local var_18_2 = string.split(iter_18_1.incubateCost, "#")
+	for i, co in ipairs(lua_critter_rare.configList) do
+		if not string.nilorempty(co.incubateCost) then
+			local incubateCost = string.split(co.incubateCost, "#")
 
-			if var_18_2[1] and var_18_2[2] then
-				local var_18_3 = var_18_2[1] .. "#" .. var_18_2[2]
+			if incubateCost[1] and incubateCost[2] then
+				local costType = incubateCost[1] .. "#" .. incubateCost[2]
 
-				if not LuaUtil.tableContains(var_18_0, var_18_3) then
-					table.insert(var_18_0, var_18_3)
+				if not LuaUtil.tableContains(list, costType) then
+					table.insert(list, costType)
 				end
 			end
 		end
 	end
 
-	for iter_18_2, iter_18_3 in ipairs(var_18_0) do
-		local var_18_4 = string.split(iter_18_3, "#")
+	for _, str in ipairs(list) do
+		local incubateCost = string.split(str, "#")
 
-		if var_18_4[1] and var_18_4[2] then
-			local var_18_5 = tonumber(var_18_4[1])
-			local var_18_6 = tonumber(var_18_4[2])
+		if incubateCost[1] and incubateCost[2] then
+			local materialtype = tonumber(incubateCost[1])
+			local type = tonumber(incubateCost[2])
 
-			if var_18_5 == MaterialEnum.MaterialType.Item then
-				local var_18_7 = {
+			if materialtype == MaterialEnum.MaterialType.Item then
+				local currency = {
 					isIcon = true,
-					type = var_18_5,
-					id = var_18_6,
+					type = materialtype,
+					id = type,
 					jumpFunc = SummonMainModel.jumpToSummonCostShop
 				}
 
-				if not LuaUtil.tableContains(var_18_1, var_18_7) then
-					table.insert(var_18_1, var_18_7)
+				if not LuaUtil.tableContains(costCurrency, currency) then
+					table.insert(costCurrency, currency)
 				end
-			elseif var_18_5 == MaterialEnum.MaterialType.Currency and not LuaUtil.tableContains(var_18_1, var_18_6) then
-				table.insert(var_18_1, var_18_6)
+			elseif materialtype == MaterialEnum.MaterialType.Currency and not LuaUtil.tableContains(costCurrency, type) then
+				table.insert(costCurrency, type)
 			end
 		end
 	end
 
-	return var_18_1
+	return costCurrency
 end
 
-function var_0_0.setSortType(arg_19_0, arg_19_1)
-	arg_19_0._selectSortType = arg_19_1
+function CritterIncubateModel:setSortType(index)
+	self._selectSortType = index
 end
 
-function var_0_0.getSortType(arg_20_0)
-	return arg_20_0._selectSortType or CritterEnum.AttributeType.Efficiency
+function CritterIncubateModel:getSortType()
+	return self._selectSortType or CritterEnum.AttributeType.Efficiency
 end
 
-function var_0_0.setSortWay(arg_21_0, arg_21_1)
-	arg_21_0._selectSortWay = arg_21_1
+function CritterIncubateModel:setSortWay(index)
+	self._selectSortWay = index
 end
 
-function var_0_0.getSortWay(arg_22_0)
-	return arg_22_0._selectSortWay
+function CritterIncubateModel:getSortWay()
+	return self._selectSortWay
 end
 
-var_0_0.instance = var_0_0.New()
+CritterIncubateModel.instance = CritterIncubateModel.New()
 
-return var_0_0
+return CritterIncubateModel

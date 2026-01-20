@@ -1,82 +1,88 @@
-﻿module("modules.logic.versionactivity3_1.nationalgift.view.NationalGiftFullBonusItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/nationalgift/view/NationalGiftFullBonusItem.lua
 
-local var_0_0 = class("NationalGiftFullBonusItem", LuaCompBase)
+module("modules.logic.versionactivity3_1.nationalgift.view.NationalGiftFullBonusItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._config = arg_1_2
-	arg_1_0._txtrewardnum1 = gohelper.findChildText(arg_1_0.go, "group/reward1/txt_num")
-	arg_1_0._txtrewardnum2 = gohelper.findChildText(arg_1_0.go, "group/reward2/txt_num")
-	arg_1_0._gounget = gohelper.findChild(arg_1_0.go, "go_unget")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.go, "go_hasget")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.go, "go_canget")
-	arg_1_0._gonextday = gohelper.findChild(arg_1_0.go, "go_nextday")
-	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click")
+local NationalGiftFullBonusItem = class("NationalGiftFullBonusItem", LuaCompBase)
 
-	arg_1_0:_initItem()
+function NationalGiftFullBonusItem:init(go, co)
+	self.go = go
+	self._config = co
+	self._txtrewardnum1 = gohelper.findChildText(self.go, "group/reward1/txt_num")
+	self._txtrewardnum2 = gohelper.findChildText(self.go, "group/reward2/txt_num")
+	self._gounget = gohelper.findChild(self.go, "go_unget")
+	self._gohasget = gohelper.findChild(self.go, "go_hasget")
+	self._gocanget = gohelper.findChild(self.go, "go_canget")
+	self._gonextday = gohelper.findChild(self.go, "go_nextday")
+	self._btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
+
+	self:_initItem()
 end
 
-function var_0_0._initItem(arg_2_0)
-	local var_2_0 = string.split(arg_2_0._config.bonus, "|")
+function NationalGiftFullBonusItem:_initItem()
+	local rewards = string.split(self._config.bonus, "|")
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_1 = string.splitToNumber(iter_2_1, "#")
+	for index, reward in ipairs(rewards) do
+		local rewards = string.splitToNumber(reward, "#")
 
-		arg_2_0["_txtrewardnum" .. tostring(iter_2_0)].text = var_2_1[3]
+		self["_txtrewardnum" .. tostring(index)].text = rewards[3]
 	end
 
-	if arg_2_0._btnClick then
-		arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
+	if self._btnClick then
+		self._btnClick:AddClickListener(self._btnClickOnClick, self)
 	end
 end
 
-function var_0_0._btnClickOnClick(arg_3_0)
-	if not NationalGiftModel.instance:isGiftHasBuy() then
+function NationalGiftFullBonusItem:_btnClickOnClick()
+	local isGiftHasBuy = NationalGiftModel.instance:isGiftHasBuy()
+
+	if not isGiftHasBuy then
 		return
 	end
 
-	if not NationalGiftModel.instance:isBonusCouldGet(arg_3_0._config.id) then
+	local isCouldGet = NationalGiftModel.instance:isBonusCouldGet(self._config.id)
+
+	if not isCouldGet then
 		return
 	end
 
-	Activity212Rpc.instance:sendAct212ReceiveBonusRequest(VersionActivity3_1Enum.ActivityId.NationalGift, arg_3_0._config.id)
+	Activity212Rpc.instance:sendAct212ReceiveBonusRequest(VersionActivity3_1Enum.ActivityId.NationalGift, self._config.id)
 end
 
-function var_0_0.refresh(arg_4_0)
-	local var_4_0 = NationalGiftModel.instance:isBonusGet(arg_4_0._config.id)
-	local var_4_1 = NationalGiftModel.instance:isBonusCouldGet(arg_4_0._config.id)
-	local var_4_2 = NationalGiftModel.instance:isGiftHasBuy()
+function NationalGiftFullBonusItem:refresh()
+	local isGet = NationalGiftModel.instance:isBonusGet(self._config.id)
+	local isCouldGet = NationalGiftModel.instance:isBonusCouldGet(self._config.id)
+	local isGiftHasBuy = NationalGiftModel.instance:isGiftHasBuy()
 
-	if arg_4_0._gounget then
-		local var_4_3 = arg_4_0._config.id == 1 and not var_4_2
+	if self._gounget then
+		local showUnget = self._config.id == 1 and not isGiftHasBuy
 
-		gohelper.setActive(arg_4_0._gounget, var_4_3)
+		gohelper.setActive(self._gounget, showUnget)
 	end
 
-	if arg_4_0._gohasget then
-		local var_4_4 = var_4_2 and var_4_0
+	if self._gohasget then
+		local showHasGet = isGiftHasBuy and isGet
 
-		gohelper.setActive(arg_4_0._gohasget, var_4_4)
+		gohelper.setActive(self._gohasget, showHasGet)
 	end
 
-	if arg_4_0._gocanget then
-		local var_4_5 = var_4_2 and var_4_1
+	if self._gocanget then
+		local showCanGet = isGiftHasBuy and isCouldGet
 
-		gohelper.setActive(arg_4_0._gocanget, var_4_5)
+		gohelper.setActive(self._gocanget, showCanGet)
 	end
 
-	if arg_4_0._gonextday then
-		local var_4_6 = NationalGiftModel.instance:getCurRewardDay()
-		local var_4_7 = var_4_2 and var_4_6 + 1 == arg_4_0._config.id
+	if self._gonextday then
+		local curDay = NationalGiftModel.instance:getCurRewardDay()
+		local showNext = isGiftHasBuy and curDay + 1 == self._config.id
 
-		gohelper.setActive(arg_4_0._gonextday, var_4_7)
-	end
-end
-
-function var_0_0.destroy(arg_5_0)
-	if arg_5_0._btnClick then
-		arg_5_0._btnClick:RemoveClickListener()
+		gohelper.setActive(self._gonextday, showNext)
 	end
 end
 
-return var_0_0
+function NationalGiftFullBonusItem:destroy()
+	if self._btnClick then
+		self._btnClick:RemoveClickListener()
+	end
+end
+
+return NationalGiftFullBonusItem

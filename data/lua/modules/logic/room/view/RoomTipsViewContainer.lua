@@ -1,11 +1,13 @@
-﻿module("modules.logic.room.view.RoomTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomTipsViewContainer.lua
 
-local var_0_0 = class("RoomTipsViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local RoomTipsViewContainer = class("RoomTipsViewContainer", BaseViewContainer)
+
+function RoomTipsViewContainer:buildViews()
 	return {
 		RoomTipsView.New()
 	}
 end
 
-return var_0_0
+return RoomTipsViewContainer

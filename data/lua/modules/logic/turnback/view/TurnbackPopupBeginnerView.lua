@@ -1,90 +1,92 @@
-﻿module("modules.logic.turnback.view.TurnbackPopupBeginnerView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackPopupBeginnerView.lua
 
-local var_0_0 = class("TurnbackPopupBeginnerView", BaseViewExtended)
+module("modules.logic.turnback.view.TurnbackPopupBeginnerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local TurnbackPopupBeginnerView = class("TurnbackPopupBeginnerView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackPopupBeginnerView:onInitView()
+	self._gosubview = gohelper.findChild(self.viewGO, "#go_subview")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	NavigateMgr.instance:addEscape(ViewName.TurnbackPopupBeginnerView, arg_2_0._btncloseOnClick, arg_2_0)
+function TurnbackPopupBeginnerView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	NavigateMgr.instance:addEscape(ViewName.TurnbackPopupBeginnerView, self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	NavigateMgr.instance:removeEscape(ViewName.TurnbackPopupBeginnerView, arg_3_0._btncloseOnClick, arg_3_0)
+function TurnbackPopupBeginnerView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	NavigateMgr.instance:removeEscape(ViewName.TurnbackPopupBeginnerView, self._btncloseOnClick, self)
 end
 
-local var_0_1 = {
+local subViewDict = {
 	TurnbackPopupRewardView
 }
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0.viewIndex = arg_4_0.viewIndex + 1
+function TurnbackPopupBeginnerView:_btncloseOnClick()
+	self.viewIndex = self.viewIndex + 1
 
-	if var_0_1[arg_4_0.viewIndex] then
-		arg_4_0:openSubPopupView(arg_4_0.viewIndex)
+	if subViewDict[self.viewIndex] then
+		self:openSubPopupView(self.viewIndex)
 	else
-		arg_4_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function TurnbackPopupBeginnerView:_editableInitView()
 	return
 end
 
-function var_0_0.openSubPopupView(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[arg_6_0.viewIndex]
+function TurnbackPopupBeginnerView:openSubPopupView(viewIndex)
+	local path = self.viewContainer:getSetting().otherRes[self.viewIndex]
 
-	if arg_6_0.viewObjDict[var_6_0] then
-		gohelper.setActive(arg_6_0.viewObjDict[var_6_0], true)
+	if self.viewObjDict[path] then
+		gohelper.setActive(self.viewObjDict[path], true)
 	end
 
-	local var_6_1 = {
-		callbackObject = arg_6_0,
-		closeCallback = arg_6_0._btncloseOnClick
-	}
+	local param = {}
 
-	arg_6_0:openExclusiveView(nil, arg_6_1, var_0_1[arg_6_1], arg_6_0.viewObjDict[var_6_0] or var_6_0, arg_6_0._gosubview, var_6_1)
+	param.callbackObject = self
+	param.closeCallback = self._btncloseOnClick
+
+	self:openExclusiveView(nil, viewIndex, subViewDict[viewIndex], self.viewObjDict[path] or path, self._gosubview, param)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function TurnbackPopupBeginnerView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.viewObjDict = arg_8_0:getUserDataTb_()
+function TurnbackPopupBeginnerView:onOpen()
+	self.viewObjDict = self:getUserDataTb_()
 
-	arg_8_0:com_loadListAsset(arg_8_0.viewContainer:getSetting().otherRes, arg_8_0._assetLoaded, arg_8_0.onLoadFinish)
+	self:com_loadListAsset(self.viewContainer:getSetting().otherRes, self._assetLoaded, self.onLoadFinish)
 end
 
-function var_0_0._assetLoaded(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1:GetResource()
-	local var_9_1 = gohelper.clone(var_9_0, arg_9_0.viewGO)
+function TurnbackPopupBeginnerView:_assetLoaded(assetItem)
+	local tarPrefab = assetItem:GetResource()
+	local cloneObj = gohelper.clone(tarPrefab, self.viewGO)
 
-	gohelper.setActive(var_9_1, false)
+	gohelper.setActive(cloneObj, false)
 
-	arg_9_0.viewObjDict[arg_9_1.ResPath] = var_9_1
+	self.viewObjDict[assetItem.ResPath] = cloneObj
 end
 
-function var_0_0.onLoadFinish(arg_10_0)
-	arg_10_0.viewIndex = 1
+function TurnbackPopupBeginnerView:onLoadFinish()
+	self.viewIndex = 1
 
-	arg_10_0:openSubPopupView(arg_10_0.viewIndex)
+	self:openSubPopupView(self.viewIndex)
 end
 
-function var_0_0.onClose(arg_11_0)
+function TurnbackPopupBeginnerView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function TurnbackPopupBeginnerView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackPopupBeginnerView

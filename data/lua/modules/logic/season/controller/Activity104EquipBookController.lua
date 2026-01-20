@@ -1,51 +1,53 @@
-﻿module("modules.logic.season.controller.Activity104EquipBookController", package.seeall)
+﻿-- chunkname: @modules/logic/season/controller/Activity104EquipBookController.lua
 
-local var_0_0 = class("Activity104EquipBookController", BaseController)
+module("modules.logic.season.controller.Activity104EquipBookController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1)
-	Activity104Controller.instance:registerCallback(Activity104Event.GetAct104ItemChange, arg_1_0.handleItemChanged, arg_1_0)
-	Activity104EquipItemBookModel.instance:initDatas(arg_1_1)
+local Activity104EquipBookController = class("Activity104EquipBookController", BaseController)
+
+function Activity104EquipBookController:onOpenView(actId)
+	Activity104Controller.instance:registerCallback(Activity104Event.GetAct104ItemChange, self.handleItemChanged, self)
+	Activity104EquipItemBookModel.instance:initDatas(actId)
 end
 
-function var_0_0.onCloseView(arg_2_0)
-	Activity104Controller.instance:unregisterCallback(Activity104Event.GetAct104ItemChange, arg_2_0.handleItemChanged, arg_2_0)
+function Activity104EquipBookController:onCloseView()
+	Activity104Controller.instance:unregisterCallback(Activity104Event.GetAct104ItemChange, self.handleItemChanged, self)
 	Activity104EquipItemBookModel.instance:flushRecord()
 	Activity104Controller.instance:dispatchEvent(Activity104Event.OnPlayerPrefNewUpdate)
 	Activity104EquipItemBookModel.instance:clear()
 end
 
-function var_0_0.changeSelect(arg_3_0, arg_3_1)
-	Activity104EquipItemBookModel.instance:setSelectItemId(arg_3_1)
+function Activity104EquipBookController:changeSelect(itemId)
+	Activity104EquipItemBookModel.instance:setSelectItemId(itemId)
 	Activity104EquipItemBookModel.instance:onModelUpdate()
-	arg_3_0:dispatchEvent(Activity104Event.OnBookChangeSelectNotify)
+	self:dispatchEvent(Activity104Event.OnBookChangeSelectNotify)
 end
 
-function var_0_0.handleItemChanged(arg_4_0)
-	local var_4_0 = Activity104EquipItemBookModel.instance.curSelectItemId
+function Activity104EquipBookController:handleItemChanged()
+	local oldSelected = Activity104EquipItemBookModel.instance.curSelectItemId
 
 	Activity104EquipItemBookModel.instance:initList()
-	Activity104EquipItemBookModel.instance:setSelectItemId(var_4_0)
-	arg_4_0:notifyUpdateView()
+	Activity104EquipItemBookModel.instance:setSelectItemId(oldSelected)
+	self:notifyUpdateView()
 end
 
-function var_0_0.notifyUpdateView(arg_5_0)
+function Activity104EquipBookController:notifyUpdateView()
 	Activity104EquipItemBookModel.instance:onModelUpdate()
-	arg_5_0:dispatchEvent(Activity104Event.OnBookUpdateNotify)
+	self:dispatchEvent(Activity104Event.OnBookUpdateNotify)
 end
 
-function var_0_0.setSelectTag(arg_6_0, arg_6_1)
+function Activity104EquipBookController:setSelectTag(tagIndex)
 	if Activity104EquipItemBookModel.instance.tagModel then
-		Activity104EquipItemBookModel.instance.tagModel:selectTagIndex(arg_6_1)
-		arg_6_0:handleItemChanged()
+		Activity104EquipItemBookModel.instance.tagModel:selectTagIndex(tagIndex)
+		self:handleItemChanged()
 	end
 end
 
-function var_0_0.getFilterModel(arg_7_0)
+function Activity104EquipBookController:getFilterModel()
 	return Activity104EquipItemBookModel.instance.tagModel
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104EquipBookController.instance = Activity104EquipBookController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Activity104EquipBookController.instance)
 
-return var_0_0
+return Activity104EquipBookController

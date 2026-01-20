@@ -1,105 +1,110 @@
-﻿module("modules.logic.gm.view.fight.FightGmNameUIComp", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/fight/FightGmNameUIComp.lua
 
-local var_0_0 = class("FightGmNameUIComp", LuaCompBase)
+module("modules.logic.gm.view.fight.FightGmNameUIComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+local FightGmNameUIComp = class("FightGmNameUIComp", LuaCompBase)
+
+function FightGmNameUIComp:ctor(entity)
+	self.entity = entity
 end
 
-var_0_0.GmNameUIPath = "ui/viewres/gm/gmnameui.prefab"
-var_0_0.SideAnchorY = {
+FightGmNameUIComp.GmNameUIPath = "ui/viewres/gm/gmnameui.prefab"
+FightGmNameUIComp.SideAnchorY = {
 	[FightEnum.EntitySide.MySide] = 93,
 	[FightEnum.EntitySide.EnemySide] = 147
 }
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.goContainer = arg_2_1
-	arg_2_0.loaded = false
+function FightGmNameUIComp:init(go)
+	self.goContainer = go
+	self.loaded = false
 
-	loadAbAsset(var_0_0.GmNameUIPath, true, arg_2_0.onLoadDone, arg_2_0)
+	loadAbAsset(FightGmNameUIComp.GmNameUIPath, true, self.onLoadDone, self)
 end
 
-function var_0_0.onLoadDone(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.assetItem
+function FightGmNameUIComp:onLoadDone(assetItem)
+	local oldAsstet = self.assetItem
 
-	arg_3_0.assetItem = arg_3_1
+	self.assetItem = assetItem
 
-	arg_3_0.assetItem:Retain()
+	self.assetItem:Retain()
 
-	if var_3_0 then
-		var_3_0:Release()
+	if oldAsstet then
+		oldAsstet:Release()
 	end
 
-	arg_3_0.go = gohelper.clone(arg_3_1:GetResource(), arg_3_0.goContainer)
-	arg_3_0.labelText = gohelper.findChildText(arg_3_0.go, "label")
-	arg_3_0.labelText.text = ""
+	self.go = gohelper.clone(assetItem:GetResource(), self.goContainer)
+	self.labelText = gohelper.findChildText(self.go, "label")
+	self.labelText.text = ""
 
-	local var_3_1 = arg_3_0.entity:getMO().side
+	local side = self.entity:getMO().side
 
-	recthelper.setAnchorY(arg_3_0.go.transform, var_0_0.SideAnchorY[var_3_1] or 0)
-	arg_3_0:hide()
+	recthelper.setAnchorY(self.go.transform, FightGmNameUIComp.SideAnchorY[side] or 0)
+	self:hide()
 
-	arg_3_0.loaded = true
+	self.loaded = true
 
-	arg_3_0:_startStatBuffType()
+	self:_startStatBuffType()
 end
 
-function var_0_0.show(arg_4_0)
-	gohelper.setActive(arg_4_0.go, true)
+function FightGmNameUIComp:show()
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.hide(arg_5_0)
-	gohelper.setActive(arg_5_0.go, false)
+function FightGmNameUIComp:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.startStatBuffType(arg_6_0, arg_6_1)
-	arg_6_0.buffTypeId = arg_6_1
+function FightGmNameUIComp:startStatBuffType(buffTypeId)
+	self.buffTypeId = buffTypeId
 
-	arg_6_0:_startStatBuffType()
+	self:_startStatBuffType()
 end
 
-function var_0_0._startStatBuffType(arg_7_0)
-	if not arg_7_0.loaded then
+function FightGmNameUIComp:_startStatBuffType()
+	if not self.loaded then
 		return
 	end
 
-	if not arg_7_0.buffTypeId then
+	if not self.buffTypeId then
 		return
 	end
 
-	arg_7_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_7_0.refreshLabel, arg_7_0)
-	arg_7_0:show()
-	arg_7_0:refreshLabel()
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.refreshLabel, self)
+	self:show()
+	self:refreshLabel()
 end
 
-function var_0_0.stopStatBuffType(arg_8_0)
-	arg_8_0.buffTypeId = nil
+function FightGmNameUIComp:stopStatBuffType()
+	self.buffTypeId = nil
 
-	arg_8_0:hide()
-	arg_8_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_8_0.refreshLabel, arg_8_0)
+	self:hide()
+	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.refreshLabel, self)
 end
 
-function var_0_0.refreshLabel(arg_9_0)
-	local var_9_0 = arg_9_0.entity:getMO():getBuffList()
-	local var_9_1 = 0
+function FightGmNameUIComp:refreshLabel()
+	local entityMo = self.entity:getMO()
+	local buffList = entityMo:getBuffList()
+	local count = 0
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if iter_9_1:getCO().typeId == arg_9_0.buffTypeId then
-			var_9_1 = var_9_1 + 1
+	for _, buffMo in ipairs(buffList) do
+		local buffCo = buffMo:getCO()
+
+		if buffCo.typeId == self.buffTypeId then
+			count = count + 1
 		end
 	end
 
-	arg_9_0.labelText.text = string.format("%s : %s", arg_9_0.buffTypeId, var_9_1)
+	self.labelText.text = string.format("%s : %s", self.buffTypeId, count)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	removeAssetLoadCb(var_0_0.GmNameUIPath, arg_10_0.onLoadDone, arg_10_0)
+function FightGmNameUIComp:onDestroy()
+	removeAssetLoadCb(FightGmNameUIComp.GmNameUIPath, self.onLoadDone, self)
 
-	arg_10_0.entity = nil
+	self.entity = nil
 
-	if arg_10_0.assetItem then
-		arg_10_0.assetItem:Release()
+	if self.assetItem then
+		self.assetItem:Release()
 	end
 end
 
-return var_0_0
+return FightGmNameUIComp

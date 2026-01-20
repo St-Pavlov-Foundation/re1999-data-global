@@ -1,71 +1,78 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerOpenViewCondition", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerOpenViewCondition.lua
 
-local var_0_0 = class("GuideTriggerOpenViewCondition", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerOpenViewCondition", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
+local GuideTriggerOpenViewCondition = class("GuideTriggerOpenViewCondition", BaseGuideTrigger)
+
+function GuideTriggerOpenViewCondition:ctor(triggerKey)
+	GuideTriggerOpenViewCondition.super.ctor(self, triggerKey)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = string.split(arg_2_2, "_")
-	local var_2_1 = var_2_0[1]
-	local var_2_2 = var_2_0[2]
-	local var_2_3 = var_2_0[3]
+function GuideTriggerOpenViewCondition:assertGuideSatisfy(param, configParam)
+	local paramList = string.split(configParam, "_")
+	local viewName = paramList[1]
+	local conditionFunc = paramList[2]
+	local conditionParam = paramList[3]
 
-	if arg_2_1 ~= var_2_1 then
+	if param ~= viewName then
 		return false
 	end
 
-	return var_0_0[var_2_2](var_2_3)
+	return GuideTriggerOpenViewCondition[conditionFunc](conditionParam)
 end
 
-function var_0_0._onOpenView(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerOpenViewCondition:_onOpenView(viewName, viewParam)
+	self:checkStartGuide(viewName)
 end
 
-function var_0_0.checkInEliminateEpisode(arg_4_0)
-	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(arg_4_0)
+function GuideTriggerOpenViewCondition.checkInEliminateEpisode(id)
+	return EliminateTeamSelectionModel.instance:getSelectedEpisodeId() == tonumber(id)
 end
 
-function var_0_0.checkInWindows(arg_5_0)
+function GuideTriggerOpenViewCondition.checkInWindows(id)
 	return BootNativeUtil.isWindows()
 end
 
-function var_0_0.checkTowerMopUpOpen()
-	local var_6_0 = TowerPermanentModel.instance:getCurPermanentPassLayer()
-	local var_6_1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
+function GuideTriggerOpenViewCondition.checkTowerMopUpOpen()
+	local permanentPassLayerNum = TowerPermanentModel.instance:getCurPermanentPassLayer()
+	local openLayerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpOpenLayerNum)
 
-	return var_6_0 >= tonumber(var_6_1)
+	return permanentPassLayerNum >= tonumber(openLayerNum)
 end
 
-function var_0_0.checkTowerBossOpen()
-	local var_7_0 = TowerPermanentModel.instance:getCurPermanentPassLayer()
-	local var_7_1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
+function GuideTriggerOpenViewCondition.checkTowerBossOpen()
+	local permanentPassLayerNum = TowerPermanentModel.instance:getCurPermanentPassLayer()
+	local openLayerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
 
-	return var_7_0 >= tonumber(var_7_1)
+	return permanentPassLayerNum >= tonumber(openLayerNum)
 end
 
-function var_0_0.checkTowerLimitOpen()
-	local var_8_0 = TowerPermanentModel.instance:getCurPermanentPassLayer()
-	local var_8_1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)
-	local var_8_2 = var_8_0 >= tonumber(var_8_1)
+function GuideTriggerOpenViewCondition.checkTowerLimitOpen()
+	local permanentPassLayerNum = TowerPermanentModel.instance:getCurPermanentPassLayer()
+	local openLayerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)
+	local result = permanentPassLayerNum >= tonumber(openLayerNum)
 
-	var_8_2 = var_8_2 and TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() ~= nil
+	if result then
+		local mo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 
-	local var_8_3 = GuideModel.instance:isGuideFinish(TowerEnum.BossGuideId)
+		result = mo ~= nil
+	end
 
-	return var_8_2 and var_8_3
+	local isBossGuideFinish = GuideModel.instance:isGuideFinish(TowerEnum.BossGuideId)
+
+	return result and isBossGuideFinish
 end
 
-function var_0_0.checkTowerPermanentElite()
+function GuideTriggerOpenViewCondition.checkTowerPermanentElite()
 	return TowerPermanentModel.instance:checkNewLayerIsElite()
 end
 
-function var_0_0.checkMercenaryUnlock()
-	local var_10_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
+function GuideTriggerOpenViewCondition.checkMercenaryUnlock()
+	local mercenaryUnlockCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
+	local isMercenaryUnlock = OdysseyDungeonModel.instance:checkConditionCanUnlock(mercenaryUnlockCo.value)
 
-	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_10_0.value))
+	return isMercenaryUnlock
 end
 
-return var_0_0
+return GuideTriggerOpenViewCondition

@@ -1,138 +1,145 @@
-﻿module("modules.logic.fight.view.FightBloodPoolView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightBloodPoolView.lua
 
-local var_0_0 = class("FightBloodPoolView", FightBaseView)
+module("modules.logic.fight.view.FightBloodPoolView", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.teamType = arg_1_1
+local FightBloodPoolView = class("FightBloodPoolView", FightBaseView)
+
+function FightBloodPoolView:onConstructor(teamType)
+	self.teamType = teamType
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.root = gohelper.findChild(arg_2_0.viewGO, "root")
-	arg_2_0.goPreTxt = gohelper.findChild(arg_2_0.viewGO, "root/num/bottom/txt_preparation")
-	arg_2_0.bottomNumTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/bottom/#txt_num")
-	arg_2_0.bottomPreNumTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/bottom/txt_preparation/#txt_preparation")
-	arg_2_0.bottomNumAnimator = gohelper.findChildComponent(arg_2_0.viewGO, "root/num/bottom", gohelper.Type_Animator)
-	arg_2_0.goLeft = gohelper.findChild(arg_2_0.viewGO, "root/num/left")
-	arg_2_0.leftMaxTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/left/#txt_num1")
-	arg_2_0.leftCurTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/left/#txt_num1/#txt_num2")
-	arg_2_0.leftEffMaxTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/left/#txt_num1eff")
-	arg_2_0.leftEffCurTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/left/#txt_num1eff/#txt_num2")
-	arg_2_0.heartAnimator = gohelper.findChildComponent(arg_2_0.viewGO, "root/heart", gohelper.Type_Animator)
-	arg_2_0.imageHeart = gohelper.findChildImage(arg_2_0.viewGO, "root/heart/unbroken/#image_heart")
-	arg_2_0.imageHeartPre = gohelper.findChildImage(arg_2_0.viewGO, "root/heart/unbroken/#image_heart_broken")
-	arg_2_0.imageHeartMat = arg_2_0.imageHeart.material
-	arg_2_0.imageHeartPreMat = arg_2_0.imageHeartPre.material
-	arg_2_0.heightPropertyId = UnityEngine.Shader.PropertyToID("_LerpOffset")
+function FightBloodPoolView:onInitView()
+	self.root = gohelper.findChild(self.viewGO, "root")
+	self.goPreTxt = gohelper.findChild(self.viewGO, "root/num/bottom/txt_preparation")
+	self.bottomNumTxt = gohelper.findChildText(self.viewGO, "root/num/bottom/#txt_num")
+	self.bottomPreNumTxt = gohelper.findChildText(self.viewGO, "root/num/bottom/txt_preparation/#txt_preparation")
+	self.bottomNumAnimator = gohelper.findChildComponent(self.viewGO, "root/num/bottom", gohelper.Type_Animator)
+	self.goLeft = gohelper.findChild(self.viewGO, "root/num/left")
+	self.leftMaxTxt = gohelper.findChildText(self.viewGO, "root/num/left/#txt_num1")
+	self.leftCurTxt = gohelper.findChildText(self.viewGO, "root/num/left/#txt_num1/#txt_num2")
+	self.leftEffMaxTxt = gohelper.findChildText(self.viewGO, "root/num/left/#txt_num1eff")
+	self.leftEffCurTxt = gohelper.findChildText(self.viewGO, "root/num/left/#txt_num1eff/#txt_num2")
+	self.heartAnimator = gohelper.findChildComponent(self.viewGO, "root/heart", gohelper.Type_Animator)
+	self.imageHeart = gohelper.findChildImage(self.viewGO, "root/heart/unbroken/#image_heart")
+	self.imageHeartPre = gohelper.findChildImage(self.viewGO, "root/heart/unbroken/#image_heart_broken")
+	self.imageHeartMat = self.imageHeart.material
+	self.imageHeartPreMat = self.imageHeartPre.material
+	self.heightPropertyId = UnityEngine.Shader.PropertyToID("_LerpOffset")
 
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "root/#btn_click")
+	local goClick = gohelper.findChild(self.viewGO, "root/#btn_click")
 
-	arg_2_0.longPress = SLFramework.UGUI.UILongPressListener.Get(var_2_0)
+	self.longPress = SLFramework.UGUI.UILongPressListener.Get(goClick)
 
-	arg_2_0.longPress:SetLongPressTime({
+	self.longPress:SetLongPressTime({
 		0.5,
 		99999
 	})
 
-	arg_2_0.preCostBloodValue = 0
-	arg_2_0.bloodPoolSkillId = FightHelper.getBloodPoolSkillId()
+	self.preCostBloodValue = 0
+	self.bloodPoolSkillId = FightHelper.getBloodPoolSkillId()
 
-	gohelper.setActive(arg_2_0.goPreTxt, false)
+	gohelper.setActive(self.goPreTxt, false)
 end
 
-var_0_0.HeartTweenDuration = 0.5
+FightBloodPoolView.HeartTweenDuration = 0.5
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:com_registFightEvent(FightEvent.BloodPool_MaxValueChange, arg_3_0.onMaxValueChange)
-	arg_3_0:com_registFightEvent(FightEvent.BloodPool_ValueChange, arg_3_0.onValueChange)
-	arg_3_0:com_registFightEvent(FightEvent.BloodPool_OnPlayCard, arg_3_0.onPlayBloodCard)
-	arg_3_0:com_registFightEvent(FightEvent.BloodPool_OnCancelPlayCard, arg_3_0.onCancelPlayBloodCard)
-	arg_3_0:com_registFightEvent(FightEvent.RespBeginRound, arg_3_0.onRespBeginRound)
-	arg_3_0:com_registFightEvent(FightEvent.BeforePlayHandCard, arg_3_0.onPlayHandCard)
-	arg_3_0.longPress:AddClickListener(arg_3_0.onClickBlood, arg_3_0)
-	arg_3_0.longPress:AddLongPressListener(arg_3_0.onLongPressBlood, arg_3_0)
+function FightBloodPoolView:addEvents()
+	self:com_registFightEvent(FightEvent.BloodPool_MaxValueChange, self.onMaxValueChange)
+	self:com_registFightEvent(FightEvent.BloodPool_ValueChange, self.onValueChange)
+	self:com_registFightEvent(FightEvent.BloodPool_OnPlayCard, self.onPlayBloodCard)
+	self:com_registFightEvent(FightEvent.BloodPool_OnCancelPlayCard, self.onCancelPlayBloodCard)
+	self:com_registFightEvent(FightEvent.RespBeginRound, self.onRespBeginRound)
+	self:com_registFightEvent(FightEvent.BeforePlayHandCard, self.onPlayHandCard)
+	self.longPress:AddClickListener(self.onClickBlood, self)
+	self.longPress:AddLongPressListener(self.onLongPressBlood, self)
 end
 
-function var_0_0.onPlayHandCard(arg_4_0, arg_4_1)
-	local var_4_0 = FightDataHelper.handCardMgr.handCard
-	local var_4_1 = var_4_0 and var_4_0[arg_4_1]
+function FightBloodPoolView:onPlayHandCard(index)
+	local cards = FightDataHelper.handCardMgr.handCard
+	local cardInfoMO = cards and cards[index]
 
-	if not var_4_1 then
+	if not cardInfoMO then
 		return
 	end
 
-	arg_4_0:calculateSkillPreCostBloodValue(var_4_1.skillId)
-	arg_4_0:refreshPreCostBloodValue()
+	self:calculateSkillPreCostBloodValue(cardInfoMO.skillId)
+	self:refreshPreCostBloodValue()
 end
 
-var_0_0.BloodValueChangeBehaviorId = 60191
+FightBloodPoolView.BloodValueChangeBehaviorId = 60191
 
-function var_0_0.calculateSkillPreCostBloodValue(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1 and lua_skill.configDict[arg_5_1]
+function FightBloodPoolView:calculateSkillPreCostBloodValue(skillId)
+	local skillCo = skillId and lua_skill.configDict[skillId]
 
-	if not var_5_0 then
+	if not skillCo then
 		return
 	end
 
-	local var_5_1 = lua_skill_effect.configDict[var_5_0.skillEffect]
+	local skillEffectCo = lua_skill_effect.configDict[skillCo.skillEffect]
 
-	if not var_5_1 then
+	if not skillEffectCo then
 		return
 	end
 
-	for iter_5_0 = 1, FightEnum.MaxBehavior do
-		local var_5_2 = var_5_1["behavior" .. iter_5_0]
+	for i = 1, FightEnum.MaxBehavior do
+		local behavior = skillEffectCo["behavior" .. i]
 
-		if not string.nilorempty(var_5_2) then
-			local var_5_3 = FightStrUtil.instance:getSplitString2Cache(var_5_2, true)
+		if not string.nilorempty(behavior) then
+			local behaviorList = FightStrUtil.instance:getSplitString2Cache(behavior, true)
 
-			for iter_5_1, iter_5_2 in ipairs(var_5_3) do
-				if iter_5_2[1] == var_0_0.BloodValueChangeBehaviorId then
-					arg_5_0.preCostBloodValue = arg_5_0.preCostBloodValue + iter_5_2[2]
+			for _, oneBehavior in ipairs(behaviorList) do
+				local behaviorId = oneBehavior[1]
+
+				if behaviorId == FightBloodPoolView.BloodValueChangeBehaviorId then
+					self.preCostBloodValue = self.preCostBloodValue + oneBehavior[2]
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.refreshPreCostBloodValue(arg_6_0)
-	local var_6_0 = FightDataHelper.getBloodPool(arg_6_0.teamType)
-	local var_6_1 = var_6_0.max
-	local var_6_2 = var_6_0.value + arg_6_0.preCostBloodValue
-	local var_6_3 = math.max(math.min(var_6_1, var_6_2), 0)
-	local var_6_4 = string.format("%s/%s", var_6_3, var_6_1)
+function FightBloodPoolView:refreshPreCostBloodValue()
+	local bloodPool = FightDataHelper.getBloodPool(self.teamType)
+	local max = bloodPool.max
+	local curValue = bloodPool.value
 
-	arg_6_0.bottomNumTxt.text = var_6_4
-	arg_6_0.bottomPreNumTxt.text = var_6_4
-	arg_6_0.leftCurTxt.text = var_6_3
-	arg_6_0.leftEffCurTxt.text = var_6_3
+	curValue = curValue + self.preCostBloodValue
+	curValue = math.max(math.min(max, curValue), 0)
 
-	arg_6_0.imageHeartPreMat:SetFloat(arg_6_0.heightPropertyId, var_6_3 / var_6_1)
-	arg_6_0:refreshPreTxtActive()
+	local txt = string.format("%s/%s", curValue, max)
+
+	self.bottomNumTxt.text = txt
+	self.bottomPreNumTxt.text = txt
+	self.leftCurTxt.text = curValue
+	self.leftEffCurTxt.text = curValue
+
+	self.imageHeartPreMat:SetFloat(self.heightPropertyId, curValue / max)
+	self:refreshPreTxtActive()
 end
 
-function var_0_0.refreshPreTxtActive(arg_7_0)
-	gohelper.setActive(arg_7_0.goPreTxt, arg_7_0.preCostBloodValue ~= 0)
+function FightBloodPoolView:refreshPreTxtActive()
+	gohelper.setActive(self.goPreTxt, self.preCostBloodValue ~= 0)
 end
 
-function var_0_0.onPlayBloodCard(arg_8_0)
-	arg_8_0.heartAnimator:Play("click", 0, 0)
-	arg_8_0:calculateSkillPreCostBloodValue(arg_8_0.bloodPoolSkillId)
-	arg_8_0:refreshPreCostBloodValue()
+function FightBloodPoolView:onPlayBloodCard()
+	self.heartAnimator:Play("click", 0, 0)
+	self:calculateSkillPreCostBloodValue(self.bloodPoolSkillId)
+	self:refreshPreCostBloodValue()
 end
 
-function var_0_0.onCancelPlayBloodCard(arg_9_0)
-	arg_9_0.heartAnimator:Play("idle", 0, 0)
+function FightBloodPoolView:onCancelPlayBloodCard()
+	self.heartAnimator:Play("idle", 0, 0)
 
-	arg_9_0.preCostBloodValue = 0
+	self.preCostBloodValue = 0
 
-	arg_9_0:directSetBloodValue()
+	self:directSetBloodValue()
 end
 
-function var_0_0.onRespBeginRound(arg_10_0)
+function FightBloodPoolView:onRespBeginRound()
 	FightDataHelper.bloodPoolDataMgr:onCancelOperation()
 end
 
-function var_0_0.onClickBlood(arg_11_0)
+function FightBloodPoolView:onClickBlood()
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -153,13 +160,17 @@ function var_0_0.onClickBlood(arg_11_0)
 		return
 	end
 
-	local var_11_0 = FightDataHelper.getBloodPool(arg_11_0.teamType)
-
-	if not var_11_0 then
+	if FightGameMgr.operateMgr:isOperating() then
 		return
 	end
 
-	if var_11_0.value < 1 then
+	local bloodPool = FightDataHelper.getBloodPool(self.teamType)
+
+	if not bloodPool then
+		return
+	end
+
+	if bloodPool.value < 1 then
 		GameFacade.showToast(ToastEnum.NotEnoughBlood)
 
 		return
@@ -169,18 +180,18 @@ function var_0_0.onClickBlood(arg_11_0)
 		return
 	end
 
-	local var_11_1 = FightDataHelper.operationDataMgr:newOperation()
+	local op = FightDataHelper.operationDataMgr:newOperation()
 
-	var_11_1:playBloodPoolCard(arg_11_0.bloodPoolSkillId)
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_11_1)
+	op:playBloodPoolCard(self.bloodPoolSkillId)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, op)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_11_1)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, var_11_1)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, op)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, op)
 	FightDataHelper.bloodPoolDataMgr:playBloodPoolCard()
 	AudioMgr.instance:trigger(20270004)
 end
 
-function var_0_0.onLongPressBlood(arg_12_0)
+function FightBloodPoolView:onLongPressBlood()
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -201,138 +212,144 @@ function var_0_0.onLongPressBlood(arg_12_0)
 		return
 	end
 
-	if not FightDataHelper.getBloodPool(arg_12_0.teamType) then
+	local bloodPool = FightDataHelper.getBloodPool(self.teamType)
+
+	if not bloodPool then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.FightBloodPoolTipView)
 end
 
-function var_0_0.onMaxValueChange(arg_13_0, arg_13_1)
-	if arg_13_1 ~= arg_13_0.teamType then
+function FightBloodPoolView:onMaxValueChange(teamType)
+	if teamType ~= self.teamType then
 		return
 	end
 
-	arg_13_0:refreshTxt()
+	self:refreshTxt()
 end
 
-function var_0_0.onValueChange(arg_14_0, arg_14_1)
-	if arg_14_1 ~= arg_14_0.teamType then
+function FightBloodPoolView:onValueChange(teamType)
+	if teamType ~= self.teamType then
 		return
 	end
 
-	arg_14_0:refreshTxt()
+	self:refreshTxt()
 end
 
-function var_0_0.onOpen(arg_15_0)
+function FightBloodPoolView:onOpen()
 	AudioMgr.instance:trigger(20270005)
-	arg_15_0:refreshTxt()
-	arg_15_0:showBengFaView()
+	self:refreshTxt()
+	self:showBengFaView()
 end
 
-function var_0_0.recordPreValue(arg_16_0)
-	local var_16_0 = FightDataHelper.getBloodPool(arg_16_0.teamType)
-	local var_16_1 = var_16_0.value
+function FightBloodPoolView:recordPreValue()
+	local bloodPool = FightDataHelper.getBloodPool(self.teamType)
+	local curValue = bloodPool.value
+	local max = bloodPool.max
 
-	arg_16_0.preMaxValue, arg_16_0.preValue = var_16_0.max, var_16_1
+	self.preValue = curValue
+	self.preMaxValue = max
 end
 
-function var_0_0.refreshTxt(arg_17_0)
-	if not arg_17_0.inited then
-		arg_17_0:directSetBloodValue()
-		arg_17_0:recordPreValue()
-		arg_17_0.heartAnimator:Play("add", 0, 0)
+function FightBloodPoolView:refreshTxt()
+	if not self.inited then
+		self:directSetBloodValue()
+		self:recordPreValue()
+		self.heartAnimator:Play("add", 0, 0)
 
-		arg_17_0.inited = true
+		self.inited = true
 
 		return
 	end
 
-	arg_17_0:cleanHeartImageTween()
+	self:cleanHeartImageTween()
 
-	local var_17_0 = FightDataHelper.getBloodPool(arg_17_0.teamType)
-	local var_17_1 = var_17_0.value
-	local var_17_2 = var_17_0.max
+	local bloodPool = FightDataHelper.getBloodPool(self.teamType)
+	local curValue = bloodPool.value
+	local max = bloodPool.max
 
-	arg_17_0.valueChangeLen = var_17_1 - arg_17_0.preValue
-	arg_17_0.maxValueChangeLen = var_17_2 - arg_17_0.preMaxValue
-	arg_17_0.startValue = arg_17_0.preValue
-	arg_17_0.startMaxValue = arg_17_0.preMaxValue
+	self.valueChangeLen = curValue - self.preValue
+	self.maxValueChangeLen = max - self.preMaxValue
+	self.startValue = self.preValue
+	self.startMaxValue = self.preMaxValue
 
-	arg_17_0:recordPreValue()
+	self:recordPreValue()
 
-	arg_17_0.heartTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, var_0_0.HeartTweenDuration, arg_17_0.onHeartTweenFrame, arg_17_0.onHeartTweenDone, arg_17_0)
+	self.heartTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, FightBloodPoolView.HeartTweenDuration, self.onHeartTweenFrame, self.onHeartTweenDone, self)
 
-	arg_17_0.bottomNumAnimator:Play("add", 0, 0)
+	self.bottomNumAnimator:Play("add", 0, 0)
 	AudioMgr.instance:trigger(20270006)
-	gohelper.setActive(arg_17_0.goLeft, false)
-	gohelper.setActive(arg_17_0.goLeft, true)
+	gohelper.setActive(self.goLeft, false)
+	gohelper.setActive(self.goLeft, true)
 end
 
-function var_0_0.cleanHeartImageTween(arg_18_0)
-	if arg_18_0.heartTweenId then
-		ZProj.TweenHelper.KillById(arg_18_0.heartTweenId)
+function FightBloodPoolView:cleanHeartImageTween()
+	if self.heartTweenId then
+		ZProj.TweenHelper.KillById(self.heartTweenId)
 
-		arg_18_0.heartTweenId = nil
+		self.heartTweenId = nil
 	end
 end
 
-function var_0_0.onHeartTweenFrame(arg_19_0, arg_19_1)
-	local var_19_0 = math.floor(LuaTween.linear(arg_19_1, arg_19_0.startValue, arg_19_0.valueChangeLen, 1))
-	local var_19_1 = math.floor(LuaTween.linear(arg_19_1, arg_19_0.startMaxValue, arg_19_0.maxValueChangeLen, 1))
+function FightBloodPoolView:onHeartTweenFrame(value)
+	local curValue = math.floor(LuaTween.linear(value, self.startValue, self.valueChangeLen, 1))
+	local max = math.floor(LuaTween.linear(value, self.startMaxValue, self.maxValueChangeLen, 1))
 
-	arg_19_0:setNumAndImage(var_19_0, var_19_1)
+	self:setNumAndImage(curValue, max)
 end
 
-function var_0_0.onHeartTweenDone(arg_20_0)
-	arg_20_0:directSetBloodValue()
-	arg_20_0:recordPreValue()
+function FightBloodPoolView:onHeartTweenDone()
+	self:directSetBloodValue()
+	self:recordPreValue()
 
-	arg_20_0.heartTweenId = nil
+	self.heartTweenId = nil
 end
 
-function var_0_0.directSetBloodValue(arg_21_0)
-	local var_21_0 = FightDataHelper.getBloodPool(arg_21_0.teamType)
-	local var_21_1 = var_21_0.value
-	local var_21_2 = var_21_0.max
+function FightBloodPoolView:directSetBloodValue()
+	local bloodPool = FightDataHelper.getBloodPool(self.teamType)
+	local curValue = bloodPool.value
+	local max = bloodPool.max
 
-	arg_21_0:setNumAndImage(var_21_1, var_21_2)
+	self:setNumAndImage(curValue, max)
 end
 
-local var_0_1 = 0
-local var_0_2 = 1 - var_0_1
+local InitOffset = 0
+local RealLen = 1 - InitOffset
 
-function var_0_0.setNumAndImage(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = string.format("%s/%s", arg_22_1, arg_22_2)
+function FightBloodPoolView:setNumAndImage(curValue, maxValue)
+	local txt = string.format("%s/%s", curValue, maxValue)
 
-	arg_22_0.bottomNumTxt.text = var_22_0
-	arg_22_0.bottomPreNumTxt.text = var_22_0
-	arg_22_0.leftMaxTxt.text = arg_22_2
-	arg_22_0.leftCurTxt.text = arg_22_1
-	arg_22_0.leftEffMaxTxt.text = arg_22_2
-	arg_22_0.leftEffCurTxt.text = arg_22_1
+	self.bottomNumTxt.text = txt
+	self.bottomPreNumTxt.text = txt
+	self.leftMaxTxt.text = maxValue
+	self.leftCurTxt.text = curValue
+	self.leftEffMaxTxt.text = maxValue
+	self.leftEffCurTxt.text = curValue
 
-	local var_22_1 = arg_22_1 / arg_22_2 * var_0_2
+	local rate = curValue / maxValue
 
-	if var_22_1 > 0 then
-		var_22_1 = var_22_1 + var_0_1
+	rate = rate * RealLen
+
+	if rate > 0 then
+		rate = rate + InitOffset
 	end
 
-	arg_22_0.imageHeartMat:SetFloat(arg_22_0.heightPropertyId, var_22_1)
-	arg_22_0.imageHeartPreMat:SetFloat(arg_22_0.heightPropertyId, var_22_1)
-	arg_22_0:refreshPreTxtActive()
+	self.imageHeartMat:SetFloat(self.heightPropertyId, rate)
+	self.imageHeartPreMat:SetFloat(self.heightPropertyId, rate)
+	self:refreshPreTxtActive()
 end
 
-function var_0_0.showBengFaView(arg_23_0)
-	arg_23_0:newClass(FightBengFaView, arg_23_0)
+function FightBloodPoolView:showBengFaView()
+	self:newClass(FightBengFaView, self)
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	arg_24_0:cleanHeartImageTween()
-	arg_24_0.longPress:RemoveClickListener()
-	arg_24_0.longPress:RemoveLongPressListener()
+function FightBloodPoolView:onDestroyView()
+	self:cleanHeartImageTween()
+	self.longPress:RemoveClickListener()
+	self.longPress:RemoveLongPressListener()
 
-	arg_24_0.longPress = nil
+	self.longPress = nil
 end
 
-return var_0_0
+return FightBloodPoolView

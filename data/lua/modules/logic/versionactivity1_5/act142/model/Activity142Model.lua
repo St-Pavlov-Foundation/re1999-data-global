@@ -1,254 +1,267 @@
-﻿module("modules.logic.versionactivity1_5.act142.model.Activity142Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/model/Activity142Model.lua
 
-local var_0_0 = class("Activity142Model", BaseModel)
-local var_0_1 = 1
+module("modules.logic.versionactivity1_5.act142.model.Activity142Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local Activity142Model = class("Activity142Model", BaseModel)
+local DEFAULT_EPISODE_ID = 1
+
+function Activity142Model:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function Activity142Model:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
+function Activity142Model:clear()
+	Activity142Model.super.clear(self)
 
-	arg_3_0._activityId = nil
-	arg_3_0._curEpisodeId = nil
-	arg_3_0._episodeInfoData = {}
-	arg_3_0._hasCollectionDict = {}
+	self._activityId = nil
+	self._curEpisodeId = nil
+	self._episodeInfoData = {}
+	self._hasCollectionDict = {}
 
-	arg_3_0:clearCacheData()
+	self:clearCacheData()
 end
 
-function var_0_0.onReceiveGetAct142InfoReply(arg_4_0, arg_4_1)
-	arg_4_0._activityId = arg_4_1.activityId
-	arg_4_0._episodeInfoData = {}
+function Activity142Model:onReceiveGetAct142InfoReply(msg)
+	self._activityId = msg.activityId
+	self._episodeInfoData = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1.episodes) do
-		local var_4_0 = iter_4_1.id
+	for _, v in ipairs(msg.episodes) do
+		local id = v.id
 
-		arg_4_0._episodeInfoData[var_4_0] = {}
-		arg_4_0._episodeInfoData[var_4_0].id = iter_4_1.id
-		arg_4_0._episodeInfoData[var_4_0].star = iter_4_1.star
-		arg_4_0._episodeInfoData[var_4_0].totalCount = iter_4_1.totalCount
+		self._episodeInfoData[id] = {}
+		self._episodeInfoData[id].id = v.id
+		self._episodeInfoData[id].star = v.star
+		self._episodeInfoData[id].totalCount = v.totalCount
 	end
 end
 
-function var_0_0.getRemainTimeStr(arg_5_0, arg_5_1)
-	local var_5_0 = ""
-	local var_5_1 = ActivityModel.instance:getActMO(arg_5_1)
+function Activity142Model:getRemainTimeStr(actId)
+	local resultStr = ""
+	local actMO = ActivityModel.instance:getActMO(actId)
 
-	if var_5_1 then
-		local var_5_2 = var_5_1:getRemainTimeStr3()
+	if actMO then
+		local timeStr = actMO:getRemainTimeStr3()
 
-		var_5_0 = string.format(luaLang("remain"), var_5_2)
+		resultStr = string.format(luaLang("remain"), timeStr)
 	else
-		var_5_0 = string.format(luaLang("activity_warmup_remain_time"), "0")
+		resultStr = string.format(luaLang("activity_warmup_remain_time"), "0")
 	end
 
-	return var_5_0
+	return resultStr
 end
 
-function var_0_0.getActivityId(arg_6_0)
-	return arg_6_0._activityId or VersionActivity1_5Enum.ActivityId.Activity142
+function Activity142Model:getActivityId()
+	return self._activityId or VersionActivity1_5Enum.ActivityId.Activity142
 end
 
-function var_0_0.setCurEpisodeId(arg_7_0, arg_7_1)
-	arg_7_0._curEpisodeId = arg_7_1
+function Activity142Model:setCurEpisodeId(episodeId)
+	self._curEpisodeId = episodeId
 end
 
-function var_0_0.getCurEpisodeId(arg_8_0)
-	return arg_8_0._curEpisodeId or var_0_1
+function Activity142Model:getCurEpisodeId()
+	return self._curEpisodeId or DEFAULT_EPISODE_ID
 end
 
-function var_0_0.getEpisodeData(arg_9_0, arg_9_1)
-	local var_9_0
+function Activity142Model:getEpisodeData(episodeId)
+	local result
 
-	if arg_9_0._episodeInfoData then
-		var_9_0 = arg_9_0._episodeInfoData[arg_9_1]
+	if self._episodeInfoData then
+		result = self._episodeInfoData[episodeId]
 	end
 
-	return var_9_0
+	return result
 end
 
-function var_0_0.isEpisodeClear(arg_10_0, arg_10_1)
-	local var_10_0 = false
-	local var_10_1 = arg_10_0:getEpisodeData(arg_10_1)
+function Activity142Model:isEpisodeClear(episodeId)
+	local result = false
+	local episodeData = self:getEpisodeData(episodeId)
 
-	if var_10_1 then
-		var_10_0 = var_10_1.star > 0
+	if episodeData then
+		result = episodeData.star > 0
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.isOpenDay(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = false
-	local var_11_1 = ActivityModel.instance:getActMO(arg_11_1)
-	local var_11_2 = Activity142Config.instance:getEpisodeOpenDay(arg_11_1, arg_11_2)
+function Activity142Model:isOpenDay(actId, episodeId)
+	local result = false
+	local actMO = ActivityModel.instance:getActMO(actId)
+	local openDay = Activity142Config.instance:getEpisodeOpenDay(actId, episodeId)
 
-	if var_11_1 and var_11_2 and var_11_1:getRealStartTimeStamp() + (var_11_2 - 1) * TimeUtil.OneDaySecond < ServerTime.now() then
-		var_11_0 = true
-	end
+	if actMO and openDay then
+		local openTime = actMO:getRealStartTimeStamp() + (openDay - 1) * TimeUtil.OneDaySecond
 
-	return var_11_0
-end
-
-function var_0_0.isPreEpisodeClear(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = false
-	local var_12_1 = Activity142Config.instance:getEpisodePreEpisode(arg_12_1, arg_12_2)
-
-	return var_12_1 == 0 and true or arg_12_0:isEpisodeClear(var_12_1)
-end
-
-function var_0_0.isEpisodeOpen(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0:isOpenDay(arg_13_1, arg_13_2)
-
-	return arg_13_0:isPreEpisodeClear(arg_13_1, arg_13_2) and var_13_0
-end
-
-function var_0_0.onReceiveAct142StartEpisodeReply(arg_14_0, arg_14_1)
-	arg_14_0:increaseCount(arg_14_1.map.id)
-end
-
-function var_0_0.increaseCount(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._episodeInfoData and arg_15_0._episodeInfoData[arg_15_1]
-
-	if var_15_0 then
-		var_15_0.totalCount = var_15_0.totalCount + 1
-	end
-end
-
-function var_0_0.setHasCollection(arg_16_0, arg_16_1)
-	if not arg_16_0._hasCollectionDict then
-		arg_16_0._hasCollectionDict = {}
-	end
-
-	arg_16_0._hasCollectionDict[arg_16_1] = true
-end
-
-function var_0_0.getHadCollectionCount(arg_17_0)
-	local var_17_0 = 0
-	local var_17_1 = arg_17_0:getActivityId()
-	local var_17_2 = Activity142Config.instance:getCollectionList(var_17_1)
-
-	for iter_17_0, iter_17_1 in ipairs(var_17_2) do
-		if arg_17_0:isHasCollection(iter_17_1) then
-			var_17_0 = var_17_0 + 1
+		if openTime < ServerTime.now() then
+			result = true
 		end
 	end
 
-	return var_17_0
+	return result
 end
 
-function var_0_0.getHadCollectionIdList(arg_18_0)
-	local var_18_0 = {}
-	local var_18_1 = arg_18_0:getActivityId()
-	local var_18_2 = Activity142Config.instance:getCollectionList(var_18_1)
+function Activity142Model:isPreEpisodeClear(actId, episodeId)
+	local isPreEpisodeClear = false
+	local preEpisodeId = Activity142Config.instance:getEpisodePreEpisode(actId, episodeId)
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_2) do
-		if arg_18_0:isHasCollection(iter_18_1) then
-			var_18_0[#var_18_0 + 1] = iter_18_1
+	isPreEpisodeClear = preEpisodeId == 0 and true or self:isEpisodeClear(preEpisodeId)
+
+	return isPreEpisodeClear
+end
+
+function Activity142Model:isEpisodeOpen(actId, episodeId)
+	local isOpenDay = self:isOpenDay(actId, episodeId)
+	local isPreEpisodeClear = self:isPreEpisodeClear(actId, episodeId)
+
+	return isPreEpisodeClear and isOpenDay
+end
+
+function Activity142Model:onReceiveAct142StartEpisodeReply(msg)
+	self:increaseCount(msg.map.id)
+end
+
+function Activity142Model:increaseCount(id)
+	local data = self._episodeInfoData and self._episodeInfoData[id]
+
+	if data then
+		data.totalCount = data.totalCount + 1
+	end
+end
+
+function Activity142Model:setHasCollection(collectionId)
+	if not self._hasCollectionDict then
+		self._hasCollectionDict = {}
+	end
+
+	self._hasCollectionDict[collectionId] = true
+end
+
+function Activity142Model:getHadCollectionCount()
+	local count = 0
+	local actId = self:getActivityId()
+	local collectionList = Activity142Config.instance:getCollectionList(actId)
+
+	for _, collectionId in ipairs(collectionList) do
+		if self:isHasCollection(collectionId) then
+			count = count + 1
 		end
 	end
 
-	return var_18_0
+	return count
 end
 
-function var_0_0.isHasCollection(arg_19_0, arg_19_1)
-	local var_19_0 = false
+function Activity142Model:getHadCollectionIdList()
+	local result = {}
+	local actId = self:getActivityId()
+	local collectionList = Activity142Config.instance:getCollectionList(actId)
 
-	if arg_19_0._hasCollectionDict and arg_19_0._hasCollectionDict[arg_19_1] then
-		var_19_0 = true
+	for _, collectionId in ipairs(collectionList) do
+		if self:isHasCollection(collectionId) then
+			result[#result + 1] = collectionId
+		end
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.getPlayerCacheData(arg_20_0)
-	local var_20_0 = PlayerModel.instance:getMyUserId()
+function Activity142Model:isHasCollection(collectId)
+	local result = false
 
-	if not var_20_0 or var_20_0 == 0 then
+	if self._hasCollectionDict and self._hasCollectionDict[collectId] then
+		result = true
+	end
+
+	return result
+end
+
+function Activity142Model:getPlayerCacheData()
+	local userId = PlayerModel.instance:getMyUserId()
+
+	if not userId or userId == 0 then
 		return
 	end
 
-	local var_20_1 = tostring(var_20_0)
+	local strUserId = tostring(userId)
 
-	if not arg_20_0.cacheData then
-		local var_20_2 = PlayerPrefsHelper.getString(PlayerPrefsKey.Version1_5_Act142ChessKey, "")
+	if not self.cacheData then
+		local strCacheData = PlayerPrefsHelper.getString(PlayerPrefsKey.Version1_5_Act142ChessKey, "")
 
-		if not string.nilorempty(var_20_2) then
-			arg_20_0.cacheData = cjson.decode(var_20_2)
-			arg_20_0.playerCacheData = arg_20_0.cacheData[var_20_1]
+		if not string.nilorempty(strCacheData) then
+			self.cacheData = cjson.decode(strCacheData)
+			self.playerCacheData = self.cacheData[strUserId]
 		end
 
-		arg_20_0.cacheData = arg_20_0.cacheData or {}
+		self.cacheData = self.cacheData or {}
 	end
 
-	if not arg_20_0.playerCacheData then
-		arg_20_0.playerCacheData = {}
-		arg_20_0.cacheData[var_20_1] = arg_20_0.playerCacheData
+	if not self.playerCacheData then
+		self.playerCacheData = {}
+		self.cacheData[strUserId] = self.playerCacheData
 
-		arg_20_0:saveCacheData()
+		self:saveCacheData()
 	end
 
-	return arg_20_0.playerCacheData
+	return self.playerCacheData
 end
 
-function var_0_0.saveCacheData(arg_21_0)
-	if not arg_21_0.cacheData then
+function Activity142Model:saveCacheData()
+	if not self.cacheData then
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.Version1_5_Act142ChessKey, cjson.encode(arg_21_0.cacheData))
+	PlayerPrefsHelper.setString(PlayerPrefsKey.Version1_5_Act142ChessKey, cjson.encode(self.cacheData))
 end
 
-function var_0_0.clearCacheData(arg_22_0)
-	arg_22_0.cacheData = nil
-	arg_22_0.playerCacheData = nil
+function Activity142Model:clearCacheData()
+	self.cacheData = nil
+	self.playerCacheData = nil
 end
 
-function var_0_0.getStarCount(arg_23_0)
-	local var_23_0 = 0
-	local var_23_1 = Va3ChessGameModel.instance:getActId()
-	local var_23_2 = Va3ChessModel.instance:getEpisodeId()
+function Activity142Model:getStarCount()
+	local count = 0
+	local actId = Va3ChessGameModel.instance:getActId()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
 
-	if not var_23_1 or not var_23_2 then
-		return var_23_0
+	if not actId or not episodeId then
+		return count
 	end
 
-	local var_23_3 = Va3ChessConfig.instance:getEpisodeCo(var_23_1, var_23_2)
+	local episodeCfg = Va3ChessConfig.instance:getEpisodeCo(actId, episodeId)
 
-	if not var_23_3 then
-		return var_23_0
+	if not episodeCfg then
+		return count
 	end
 
-	if Activity142Helper.checkConditionIsFinish(var_23_3.mainConfition, var_23_1) then
-		var_23_0 = var_23_0 + 1
+	local isFinishAllMainCon = Activity142Helper.checkConditionIsFinish(episodeCfg.mainConfition, actId)
+
+	if isFinishAllMainCon then
+		count = count + 1
 	end
 
-	if Activity142Helper.checkConditionIsFinish(var_23_3.extStarCondition, var_23_1) then
-		var_23_0 = var_23_0 + 1
+	local isFinishAllSubCon = Activity142Helper.checkConditionIsFinish(episodeCfg.extStarCondition, actId)
+
+	if isFinishAllSubCon then
+		count = count + 1
 	end
 
-	return var_23_0
+	return count
 end
 
-function var_0_0.isChapterOpen(arg_24_0, arg_24_1)
-	local var_24_0 = false
-	local var_24_1 = arg_24_0:getActivityId()
-	local var_24_2 = Activity142Config.instance:getChapterEpisodeIdList(var_24_1, arg_24_1)
-	local var_24_3 = var_24_2 and var_24_2[1]
+function Activity142Model:isChapterOpen(chapterId)
+	local result = false
+	local actId = self:getActivityId()
+	local episodeIdList = Activity142Config.instance:getChapterEpisodeIdList(actId, chapterId)
+	local episodeId = episodeIdList and episodeIdList[1]
 
-	if var_24_3 then
-		var_24_0 = arg_24_0:isEpisodeOpen(var_24_1, var_24_3)
+	if episodeId then
+		result = self:isEpisodeOpen(actId, episodeId)
 	end
 
-	return var_24_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+Activity142Model.instance = Activity142Model.New()
 
-return var_0_0
+return Activity142Model

@@ -1,11 +1,13 @@
-﻿module("modules.logic.dialogue.defines.DialogueEvent", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/defines/DialogueEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.dialogue.defines.DialogueEvent", package.seeall)
 
-var_0_0.OnClickOption = 1
-var_0_0.BeforePlayStep = 2
-var_0_0.OnDone = 3
-var_0_0.OnDialogueInfoChange = 100
-var_0_0.OnCloseViewWithDialogueDone = 4
+local DialogueEvent = _M
 
-return var_0_0
+DialogueEvent.OnClickOption = 1
+DialogueEvent.BeforePlayStep = 2
+DialogueEvent.OnDone = 3
+DialogueEvent.OnDialogueInfoChange = 100
+DialogueEvent.OnCloseViewWithDialogueDone = 4
+
+return DialogueEvent

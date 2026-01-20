@@ -1,47 +1,49 @@
-﻿module("modules.logic.fight.system.work.FightWorkAppearPerformance", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAppearPerformance.lua
 
-local var_0_0 = class("FightWorkAppearPerformance", BaseWork)
+module("modules.logic.fight.system.work.FightWorkAppearPerformance", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0._flow = FlowSequence.New()
+local FightWorkAppearPerformance = class("FightWorkAppearPerformance", BaseWork)
 
-	arg_1_0._flow:addWork(FightWorkAppearTimeline.New())
+function FightWorkAppearPerformance:onStart()
+	self._flow = FlowSequence.New()
 
-	local var_1_0, var_1_1 = FightWorkAppearTimeline.getAppearTimeline()
-	local var_1_2 = var_1_1 and var_1_1:getMO()
+	self._flow:addWork(FightWorkAppearTimeline.New())
 
-	if var_1_0 and var_1_2 then
-		arg_1_0._flow:addWork(FunctionWork.New(function()
-			local var_2_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+	local hasTimeline, entity = FightWorkAppearTimeline.getAppearTimeline()
+	local entityMO = entity and entity:getMO()
 
-			for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-				if iter_2_1.nameUI then
-					iter_2_1.nameUI:setActive(false)
+	if hasTimeline and entityMO then
+		self._flow:addWork(FunctionWork.New(function()
+			local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+
+			for i, v in ipairs(entityList) do
+				if v.nameUI then
+					v.nameUI:setActive(false)
 				end
 
-				if iter_2_1.setAlpha then
-					iter_2_1:setAlpha(0, 0)
+				if v.setAlpha then
+					v:setAlpha(0, 0)
 				end
 			end
 		end))
-		arg_1_0._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterAppearTimeline, var_1_2.modelId))
+		self._flow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.AfterAppearTimeline, entityMO.modelId))
 	end
 
-	arg_1_0._flow:registerDoneListener(arg_1_0._onFlowDone, arg_1_0)
-	arg_1_0._flow:start()
+	self._flow:registerDoneListener(self._onFlowDone, self)
+	self._flow:start()
 end
 
-function var_0_0._onFlowDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkAppearPerformance:_onFlowDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._flow then
-		arg_4_0._flow:unregisterDoneListener(arg_4_0._onFlowDone, arg_4_0)
-		arg_4_0._flow:stop()
+function FightWorkAppearPerformance:clearWork()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onFlowDone, self)
+		self._flow:stop()
 
-		arg_4_0._flow = nil
+		self._flow = nil
 	end
 end
 
-return var_0_0
+return FightWorkAppearPerformance

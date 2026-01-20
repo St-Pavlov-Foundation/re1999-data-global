@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_5.act142.define.Activity142Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/define/Activity142Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_5.act142.define.Activity142Event", package.seeall)
 
-var_0_0.ClickEpisode = 142001
-var_0_0.OneClickClaimReward = 142002
-var_0_0.Back2CheckPoint = 142201
-var_0_0.PlaySwitchPlayerEff = 142202
+local Activity142Event = _M
 
-return var_0_0
+Activity142Event.ClickEpisode = 142001
+Activity142Event.OneClickClaimReward = 142002
+Activity142Event.Back2CheckPoint = 142201
+Activity142Event.PlaySwitchPlayerEff = 142202
+
+return Activity142Event

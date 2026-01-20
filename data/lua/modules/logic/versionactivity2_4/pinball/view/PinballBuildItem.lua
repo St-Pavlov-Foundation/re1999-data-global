@@ -1,65 +1,69 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballBuildItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballBuildItem.lua
 
-local var_0_0 = class("PinballBuildItem", LuaCompBase)
+module("modules.logic.versionactivity2_4.pinball.view.PinballBuildItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goselect = gohelper.findChild(arg_1_1, "#go_select")
-	arg_1_0._imageicon = gohelper.findChildSingleImage(arg_1_1, "#image_icon")
-	arg_1_0._godone = gohelper.findChild(arg_1_1, "#go_done")
-	arg_1_0._golock = gohelper.findChild(arg_1_1, "#go_lock")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_1, "#txt_name")
+local PinballBuildItem = class("PinballBuildItem", LuaCompBase)
+
+function PinballBuildItem:init(go)
+	self.go = go
+	self._goselect = gohelper.findChild(go, "#go_select")
+	self._imageicon = gohelper.findChildSingleImage(go, "#image_icon")
+	self._godone = gohelper.findChild(go, "#go_done")
+	self._golock = gohelper.findChild(go, "#go_lock")
+	self._txtname = gohelper.findChildTextMesh(go, "#txt_name")
 end
 
-function var_0_0.initData(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._data = arg_2_1
-	arg_2_0._index = arg_2_2
-	arg_2_0._txtname.text = arg_2_0._data.name
+function PinballBuildItem:initData(data, index)
+	self._data = data
+	self._index = index
+	self._txtname.text = self._data.name
 
-	gohelper.setActive(arg_2_0._golock, arg_2_0:isLock())
-	gohelper.setActive(arg_2_0._godone, arg_2_0:isDone())
+	gohelper.setActive(self._golock, self:isLock())
+	gohelper.setActive(self._godone, self:isDone())
 end
 
-function var_0_0.isDone(arg_3_0)
-	if PinballModel.instance:getBuildingNum(arg_3_0._data.id) >= arg_3_0._data.limit then
+function PinballBuildItem:isDone()
+	local nowNum = PinballModel.instance:getBuildingNum(self._data.id)
+
+	if nowNum >= self._data.limit then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isLock(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._data.condition
+function PinballBuildItem:isLock(isToast)
+	local condition = self._data.condition
 
-	if string.nilorempty(var_4_0) then
+	if string.nilorempty(condition) then
 		return false
 	end
 
-	local var_4_1 = GameUtil.splitString2(var_4_0, true)
+	local dict = GameUtil.splitString2(condition, true)
 
-	for iter_4_0, iter_4_1 in pairs(var_4_1) do
-		local var_4_2 = iter_4_1[1]
+	for _, arr in pairs(dict) do
+		local type = arr[1]
 
-		if var_4_2 == PinballEnum.ConditionType.Talent then
-			local var_4_3 = iter_4_1[2]
+		if type == PinballEnum.ConditionType.Talent then
+			local talentId = arr[2]
 
-			if not PinballModel.instance:getTalentMo(var_4_3) then
-				if arg_4_1 then
-					local var_4_4 = lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_4_3]
+			if not PinballModel.instance:getTalentMo(talentId) then
+				if isToast then
+					local talentCo = lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][talentId]
 
-					GameFacade.showToast(ToastEnum.Act178TalentCondition, var_4_4.name)
+					GameFacade.showToast(ToastEnum.Act178TalentCondition, talentCo.name)
 				end
 
 				return true
 			end
-		elseif var_4_2 == PinballEnum.ConditionType.Score then
-			local var_4_5 = iter_4_1[2]
+		elseif type == PinballEnum.ConditionType.Score then
+			local value = arr[2]
 
-			if var_4_5 > PinballModel.instance.maxProsperity then
-				if arg_4_1 then
-					local var_4_6 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, var_4_5)
+			if value > PinballModel.instance.maxProsperity then
+				if isToast then
+					local lv = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, value)
 
-					GameFacade.showToast(ToastEnum.Act178ScoreCondition, var_4_6)
+					GameFacade.showToast(ToastEnum.Act178ScoreCondition, lv)
 				end
 
 				return true
@@ -70,25 +74,25 @@ function var_0_0.isLock(arg_4_0, arg_4_1)
 	return false
 end
 
-function var_0_0.setSelect(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._goselect, arg_5_1)
+function PinballBuildItem:setSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 
-	local var_5_0 = arg_5_0:isDone()
-	local var_5_1 = 1
+	local isDone = self:isDone()
+	local stage = 1
 
-	if not var_5_0 and not arg_5_1 then
-		var_5_1 = 1
-	elseif var_5_0 and not arg_5_1 then
-		var_5_1 = 2
-	elseif var_5_0 and arg_5_1 then
-		var_5_1 = 3
-	elseif not var_5_0 and arg_5_1 then
-		var_5_1 = 4
+	if not isDone and not isSelect then
+		stage = 1
+	elseif isDone and not isSelect then
+		stage = 2
+	elseif isDone and isSelect then
+		stage = 3
+	elseif not isDone and isSelect then
+		stage = 4
 	end
 
-	local var_5_2 = arg_5_0._data.icon
+	local icon = self._data.icon
 
-	arg_5_0._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s_%s.png", var_5_2, var_5_1))
+	self._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s_%s.png", icon, stage))
 end
 
-return var_0_0
+return PinballBuildItem

@@ -1,142 +1,146 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapRadarView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapRadarView.lua
 
-local var_0_0 = class("SurvivalMapRadarView", BaseView)
+module("modules.logic.survival.view.map.SurvivalMapRadarView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnRadar = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Radar/#btn_radar")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "Radar/#go_tips")
-	arg_1_0._animtips = gohelper.findChildAnim(arg_1_0.viewGO, "Radar/#go_tips")
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "Radar/#go_tips/#txt_dec")
+local SurvivalMapRadarView = class("SurvivalMapRadarView", BaseView)
+
+function SurvivalMapRadarView:onInitView()
+	self._btnRadar = gohelper.findChildButtonWithAudio(self.viewGO, "Radar/#btn_radar")
+	self._gotips = gohelper.findChild(self.viewGO, "Radar/#go_tips")
+	self._animtips = gohelper.findChildAnim(self.viewGO, "Radar/#go_tips")
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "Radar/#go_tips/#txt_dec")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnRadar:AddClickListener(arg_2_0._showHideTips, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapPlayerPosChange, arg_2_0._refreshRadarLevel, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapRadarPosChange, arg_2_0._refreshRadarLevel, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, arg_2_0._onFollowTaskUpdate, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitPosChange, arg_2_0._onUnitPosChange, arg_2_0)
-	arg_2_0.viewContainer:registerCallback(SurvivalEvent.OnClickSurvivalScene, arg_2_0._onSceneClick, arg_2_0)
+function SurvivalMapRadarView:addEvents()
+	self._btnRadar:AddClickListener(self._showHideTips, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapPlayerPosChange, self._refreshRadarLevel, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapRadarPosChange, self._refreshRadarLevel, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitPosChange, self._onUnitPosChange, self)
+	self.viewContainer:registerCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnRadar:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapPlayerPosChange, arg_3_0._refreshRadarLevel, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapRadarPosChange, arg_3_0._refreshRadarLevel, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, arg_3_0._onFollowTaskUpdate, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitPosChange, arg_3_0._onUnitPosChange, arg_3_0)
-	arg_3_0.viewContainer:unregisterCallback(SurvivalEvent.OnClickSurvivalScene, arg_3_0._onSceneClick, arg_3_0)
+function SurvivalMapRadarView:removeEvents()
+	self._btnRadar:RemoveClickListener()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapPlayerPosChange, self._refreshRadarLevel, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapRadarPosChange, self._refreshRadarLevel, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitPosChange, self._onUnitPosChange, self)
+	self.viewContainer:unregisterCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._levelGos = arg_4_0:getUserDataTb_()
+function SurvivalMapRadarView:onOpen()
+	self._levelGos = self:getUserDataTb_()
 
-	local var_4_0 = 1
+	local index = 1
 
 	while true do
-		local var_4_1 = gohelper.findChild(arg_4_0._btnRadar.gameObject, "#go_level" .. var_4_0)
+		local levelGo = gohelper.findChild(self._btnRadar.gameObject, "#go_level" .. index)
 
-		if var_4_1 then
-			arg_4_0._levelGos[var_4_0] = var_4_1
+		if levelGo then
+			self._levelGos[index] = levelGo
 		else
 			break
 		end
 
-		var_4_0 = var_4_0 + 1
+		index = index + 1
 	end
 
-	arg_4_0._isTipsClose = true
+	self._isTipsClose = true
 
-	gohelper.setActive(arg_4_0._gotips, true)
+	gohelper.setActive(self._gotips, true)
 
-	arg_4_0._animtips.keepAnimatorControllerStateOnDisable = true
+	self._animtips.keepAnimatorStateOnDisable = true
 
-	arg_4_0._animtips:Play("close", 0, 1)
-	arg_4_0:_refreshRadarLevel()
+	self._animtips:Play("close", 0, 1)
+	self:_refreshRadarLevel()
 end
 
-function var_0_0._onSceneClick(arg_5_0)
-	if not arg_5_0._isTipsClose then
-		arg_5_0:_showHideTips()
+function SurvivalMapRadarView:_onSceneClick()
+	if not self._isTipsClose then
+		self:_showHideTips()
 	end
 end
 
-function var_0_0._showHideTips(arg_6_0)
-	if not arg_6_0._levelGo then
+function SurvivalMapRadarView:_showHideTips()
+	if not self._levelGo then
 		return
 	end
 
-	arg_6_0._isTipsClose = not arg_6_0._isTipsClose
+	self._isTipsClose = not self._isTipsClose
 
-	SurvivalStatHelper.instance:statBtnClick("onClickRadar_" .. tostring(arg_6_0._isTipsClose), " SurvivalMapRadarView")
-	arg_6_0._animtips:Play(arg_6_0._isTipsClose and "close" or "open")
+	SurvivalStatHelper.instance:statBtnClick("onClickRadar_" .. tostring(self._isTipsClose), " SurvivalMapRadarView")
+	self._animtips:Play(self._isTipsClose and "close" or "open")
 end
 
-function var_0_0._onFollowTaskUpdate(arg_7_0, arg_7_1)
-	if arg_7_1.type == 1 then
-		arg_7_0:_refreshRadarLevel()
+function SurvivalMapRadarView:_onFollowTaskUpdate(followTaskMo)
+	if followTaskMo.type == 1 then
+		self:_refreshRadarLevel()
 	end
 end
 
-function var_0_0._onUnitPosChange(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalMapRadarView:_onUnitPosChange(_, unitMo)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if arg_8_2.id == var_8_0.mainTask.followUnitUid then
-		arg_8_0:_refreshRadarLevel()
+	if unitMo.id == sceneMo.mainTask.followUnitUid then
+		self:_refreshRadarLevel()
 	end
 end
 
-function var_0_0._refreshRadarLevel(arg_9_0)
-	local var_9_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_9_1 = var_9_0.player.pos
-	local var_9_2 = var_9_1
-	local var_9_3 = SurvivalMapModel.instance:isInMiasma()
+function SurvivalMapRadarView:_refreshRadarLevel()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local playerPos = sceneMo.player.pos
+	local mainTargetPos = playerPos
+	local isInMiasma = SurvivalMapModel.instance:isInMiasma()
 
-	if var_9_0.mainTask.followUnitUid ~= 0 and not var_9_3 then
-		var_9_2 = var_9_0.sceneProp.radarPosition
+	if sceneMo.mainTask.followUnitUid ~= 0 and not isInMiasma then
+		mainTargetPos = sceneMo.sceneProp.radarPosition
 	end
 
-	local var_9_4 = SurvivalHelper.instance:getDistance(var_9_1, var_9_2)
-	local var_9_5, var_9_6, var_9_7 = SurvivalHelper.instance:hexPointToWorldPoint(var_9_1.q, var_9_1.r)
-	local var_9_8, var_9_9, var_9_10 = SurvivalHelper.instance:hexPointToWorldPoint(var_9_2.q, var_9_2.r)
-	local var_9_11 = math.deg(math.atan2(var_9_10 - var_9_7, var_9_8 - var_9_5)) - 90
-	local var_9_12 = 3
-	local var_9_13
+	local dis = SurvivalHelper.instance:getDistance(playerPos, mainTargetPos)
+	local x1, _, z1 = SurvivalHelper.instance:hexPointToWorldPoint(playerPos.q, playerPos.r)
+	local x2, _, z2 = SurvivalHelper.instance:hexPointToWorldPoint(mainTargetPos.q, mainTargetPos.r)
+	local angle = math.deg(math.atan2(z2 - z1, x2 - x1))
 
-	while var_9_12 > 0 do
-		local var_9_14 = SurvivalEnum.ConstId["RadarLv" .. var_9_12]
-		local var_9_15, var_9_16 = SurvivalConfig.instance:getConstValue(var_9_14)
-		local var_9_17
+	angle = angle - 90
 
-		var_9_17 = tonumber(var_9_15) or 0
+	local level = 3
+	local desc
 
-		if var_9_17 <= var_9_4 then
-			var_9_13 = var_9_16
+	while level > 0 do
+		local key = SurvivalEnum.ConstId["RadarLv" .. level]
+		local lvDis, lvDesc = SurvivalConfig.instance:getConstValue(key)
+
+		lvDis = tonumber(lvDis) or 0
+
+		if lvDis <= dis then
+			desc = lvDesc
 
 			break
 		end
 
-		var_9_12 = var_9_12 - 1
+		level = level - 1
 	end
 
-	if var_9_12 ~= arg_9_0._level then
-		arg_9_0._level = var_9_12
+	if level ~= self._level then
+		self._level = level
 
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._levelGos) do
-			gohelper.setActive(iter_9_1, iter_9_0 == var_9_12)
+		for index, go in pairs(self._levelGos) do
+			gohelper.setActive(go, index == level)
 		end
 
-		arg_9_0._levelGo = arg_9_0._levelGos[var_9_12]
+		self._levelGo = self._levelGos[level]
 	end
 
-	if arg_9_0._levelGo then
-		transformhelper.setLocalRotation(arg_9_0._levelGo.transform, 0, 0, var_9_11)
+	if self._levelGo then
+		transformhelper.setLocalRotation(self._levelGo.transform, 0, 0, angle)
 
-		arg_9_0._txtdesc.text = var_9_13
+		self._txtdesc.text = desc
 	else
-		arg_9_0._isTipsClose = true
+		self._isTipsClose = true
 
-		arg_9_0._animtips:Play("close")
+		self._animtips:Play("close")
 	end
 end
 
-return var_0_0
+return SurvivalMapRadarView

@@ -1,21 +1,26 @@
-﻿module("modules.configs.excel2json.lua_month_card", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_month_card.lua
 
-local var_0_0 = {}
-local var_0_1 = {
-	onceBonus = 3,
+module("modules.configs.excel2json.lua_month_card", package.seeall)
+
+local lua_month_card = {}
+local fields = {
 	dailyBonus = 4,
+	signingItem = 9,
+	signatureDays = 8,
 	days = 2,
+	onceBonus = 3,
+	itemSource = 7,
 	id = 1,
 	maxDaysLimit = 5,
 	overMaxDayBonus = 6
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_month_card.onLoad(json)
+	lua_month_card.configList, lua_month_card.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_month_card

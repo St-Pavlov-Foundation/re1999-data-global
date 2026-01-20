@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity2_8.act196.rpc.Activity196Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act196/rpc/Activity196Rpc.lua
 
-local var_0_0 = class("Activity196Rpc", BaseRpc)
+module("modules.logic.versionactivity2_8.act196.rpc.Activity196Rpc", package.seeall)
 
-function var_0_0.sendGet196InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity196Module_pb.Get196InfoRequest()
+local Activity196Rpc = class("Activity196Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity196Rpc:sendGet196InfoRequest(activityId, callback, callbackObj)
+	local req = Activity196Module_pb.Get196InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet196InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity196Rpc:onReceiveGet196InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.hasGain
+	local rewardIdList = msg.hasGain
 
-	Activity196Model.instance:setActInfo(var_2_0)
+	Activity196Model.instance:setActInfo(rewardIdList)
 end
 
-function var_0_0.sendAct196GainRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = Activity196Module_pb.Act196GainRequest()
+function Activity196Rpc:sendAct196GainRequest(activityId, id, callback, callbackObj)
+	local req = Activity196Module_pb.Act196GainRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.id = arg_3_2
+	req.activityId = activityId
+	req.id = id
 
-	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct196GainReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Activity196Rpc:onReceiveAct196GainReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.id
+	local id = msg.id
 
-	Activity196Model.instance:updateRewardIdList(var_4_0)
+	Activity196Model.instance:updateRewardIdList(id)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity196Rpc.instance = Activity196Rpc.New()
 
-return var_0_0
+return Activity196Rpc

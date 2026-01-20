@@ -1,53 +1,55 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.store.Act183StoreEntry", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/store/Act183StoreEntry.lua
 
-local var_0_0 = class("Act183StoreEntry", BaseViewExtended)
+module("modules.logic.versionactivity2_5.challenge.view.store.Act183StoreEntry", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_click")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_Num")
-	arg_1_0._gostoretips = gohelper.findChild(arg_1_0.viewGO, "root/#go_storetips")
+local Act183StoreEntry = class("Act183StoreEntry", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183StoreEntry:onInitView()
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_click")
+	self._txtNum = gohelper.findChildText(self.viewGO, "root/#txt_Num")
+	self._gostoretips = gohelper.findChild(self.viewGO, "root/#go_storetips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._btnstoreOnClick, arg_2_0)
+function Act183StoreEntry:addEvents()
+	self._btnstore:AddClickListener(self._btnstoreOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstore:RemoveClickListener()
+function Act183StoreEntry:removeEvents()
+	self._btnstore:RemoveClickListener()
 end
 
-function var_0_0._btnstoreOnClick(arg_4_0)
+function Act183StoreEntry:_btnstoreOnClick()
 	Act183Controller.instance:openAct183StoreView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_5_0.refreshStoreTag, arg_5_0)
-	arg_5_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_5_0.refreshStoreTag, arg_5_0)
-	arg_5_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_5_0.refreshCurrency, arg_5_0)
-	arg_5_0:addEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, arg_5_0.refreshStoreTag, arg_5_0)
+function Act183StoreEntry:_editableInitView()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.refreshStoreTag, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, self.refreshStoreTag, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
+	self:addEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, self.refreshStoreTag, self)
 
-	arg_5_0._actId = Act183Model.instance:getActivityId()
+	self._actId = Act183Model.instance:getActivityId()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshCurrency()
-	arg_6_0:refreshStoreTag()
+function Act183StoreEntry:onOpen()
+	self:refreshCurrency()
+	self:refreshStoreTag()
 end
 
-function var_0_0.refreshCurrency(arg_7_0)
-	local var_7_0 = V1a6_BossRush_StoreModel.instance:getCurrencyCount(arg_7_0._actId)
+function Act183StoreEntry:refreshCurrency()
+	local count = V1a6_BossRush_StoreModel.instance:getCurrencyCount(self._actId)
 
-	arg_7_0._txtNum.text = var_7_0 or 0
+	self._txtNum.text = count or 0
 end
 
-function var_0_0.refreshStoreTag(arg_8_0)
-	local var_8_0 = V1a6_BossRush_StoreModel.instance:isHasNewGoodsInStore()
+function Act183StoreEntry:refreshStoreTag()
+	local isNew = V1a6_BossRush_StoreModel.instance:isHasNewGoodsInStore()
 
-	gohelper.setActive(arg_8_0._gostoretips, var_8_0)
+	gohelper.setActive(self._gostoretips, isNew)
 end
 
-return var_0_0
+return Act183StoreEntry

@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity2_2.act173.config.Activity173Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act173/config/Activity173Config.lua
 
-local var_0_0 = class("Activity173Config", BaseConfig)
+module("modules.logic.versionactivity2_2.act173.config.Activity173Config", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._taskCfg = nil
+local Activity173Config = class("Activity173Config", BaseConfig)
+
+function Activity173Config:onInit()
+	self._taskCfg = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity173Config:reqConfigNames()
 	return {
 		"activity173_task",
 		"act173_global_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity173_task" then
-		arg_3_0._taskCfg = arg_3_2
-	elseif arg_3_1 == "act173_global_task" then
-		arg_3_0._globalTaskCo = arg_3_2
+function Activity173Config:onConfigLoaded(configName, configTable)
+	if configName == "activity173_task" then
+		self._taskCfg = configTable
+	elseif configName == "act173_global_task" then
+		self._globalTaskCo = configTable
 	end
 end
 
-function var_0_0.getTaskConfig(arg_4_0, arg_4_1)
-	return arg_4_0._taskCfg.configDict[arg_4_1]
+function Activity173Config:getTaskConfig(taskId)
+	return self._taskCfg.configDict[taskId]
 end
 
-function var_0_0.getAllOnlineTasks(arg_5_0)
-	local var_5_0 = {}
+function Activity173Config:getAllOnlineTasks()
+	local taskCos = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._taskCfg.configList) do
-		if iter_5_1.isOnline == 1 then
-			table.insert(var_5_0, iter_5_1)
+	for _, taskCo in ipairs(self._taskCfg.configList) do
+		if taskCo.isOnline == 1 then
+			table.insert(taskCos, taskCo)
 		end
 	end
 
-	table.sort(var_5_0, arg_5_0.onlineTaskSortFunc)
+	table.sort(taskCos, self.onlineTaskSortFunc)
 
-	return var_5_0
+	return taskCos
 end
 
-function var_0_0.onlineTaskSortFunc(arg_6_0, arg_6_1)
-	if arg_6_0.sortId ~= arg_6_1.sortId then
-		return arg_6_0.sortId < arg_6_1.sortId
+function Activity173Config.onlineTaskSortFunc(aTaskCo, bTaskCo)
+	if aTaskCo.sortId ~= bTaskCo.sortId then
+		return aTaskCo.sortId < bTaskCo.sortId
 	end
 
-	return arg_6_0.id < arg_6_1.id
+	return aTaskCo.id < bTaskCo.id
 end
 
-function var_0_0.getGlobalTaskStages(arg_7_0)
-	return arg_7_0._globalTaskCo and arg_7_0._globalTaskCo.configList
+function Activity173Config:getGlobalTaskStages()
+	return self._globalTaskCo and self._globalTaskCo.configList
 end
 
-function var_0_0.getGlobalVisibleTaskStages(arg_8_0)
-	local var_8_0 = {}
+function Activity173Config:getGlobalVisibleTaskStages()
+	local stages = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._globalTaskCo.configList) do
-		if iter_8_1.isVisible == 1 then
-			table.insert(var_8_0, iter_8_1)
+	for _, stageCo in ipairs(self._globalTaskCo.configList) do
+		if stageCo.isVisible == 1 then
+			table.insert(stages, stageCo)
 		end
 	end
 
-	return var_8_0
+	return stages
 end
 
-function var_0_0.getGlobalVisibleTaskStagesByActId(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function Activity173Config:getGlobalVisibleTaskStagesByActId(actId)
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._globalTaskCo.configList) do
-		if iter_9_1.activityId == arg_9_1 then
-			table.insert(var_9_0, iter_9_1)
+	for _, stageCo in ipairs(self._globalTaskCo.configList) do
+		if stageCo.activityId == actId then
+			table.insert(list, stageCo)
 		end
 	end
 
-	return var_9_0
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+Activity173Config.instance = Activity173Config.New()
 
-return var_0_0
+return Activity173Config

@@ -1,329 +1,332 @@
-﻿module("modules.logic.seasonver.act123.view2_1.component.Season123_2_1EntryLoadScene", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/component/Season123_2_1EntryLoadScene.lua
 
-local var_0_0 = class("Season123_2_1EntryLoadScene", UserDataDispose)
+module("modules.logic.seasonver.act123.view2_1.component.Season123_2_1EntryLoadScene", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:__onInit()
+local Season123_2_1EntryLoadScene = class("Season123_2_1EntryLoadScene", UserDataDispose)
 
-	arg_1_0._prefabDict = {}
-	arg_1_0._containerDict = arg_1_0:getUserDataTb_()
-	arg_1_0._retailPrefabDict = {}
-	arg_1_0._retailContainerDict = arg_1_0:getUserDataTb_()
-	arg_1_0._retailPosXDict = {}
-	arg_1_0._retailPosYDict = {}
-	arg_1_0._animDict = arg_1_0:getUserDataTb_()
+function Season123_2_1EntryLoadScene:init()
+	self:__onInit()
+
+	self._prefabDict = {}
+	self._containerDict = self:getUserDataTb_()
+	self._retailPrefabDict = {}
+	self._retailContainerDict = self:getUserDataTb_()
+	self._retailPosXDict = {}
+	self._retailPosYDict = {}
+	self._animDict = self:getUserDataTb_()
 end
 
-function var_0_0.dispose(arg_2_0)
-	arg_2_0:__onDispose()
-	arg_2_0:releaseRes()
+function Season123_2_1EntryLoadScene:dispose()
+	self:__onDispose()
+	self:releaseRes()
 end
 
-function var_0_0.createSceneRoot(arg_3_0)
-	local var_3_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_3_1 = CameraMgr.instance:getSceneRoot()
+function Season123_2_1EntryLoadScene:createSceneRoot()
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_3_0._sceneRoot = UnityEngine.GameObject.New("Season123_2_1EntryScene")
+	self._sceneRoot = UnityEngine.GameObject.New("Season123_2_1EntryScene")
 
-	local var_3_2, var_3_3, var_3_4 = transformhelper.getLocalPos(var_3_0)
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_3_0._sceneRoot.transform, 0, var_3_3, 0)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
 
-	arg_3_0._sceneOffsetY = var_3_3
+	self._sceneOffsetY = y
 
-	gohelper.addChild(var_3_1, arg_3_0._sceneRoot)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 
-	return arg_3_0._sceneRoot
+	return self._sceneRoot
 end
 
-function var_0_0.disposeSceneRoot(arg_4_0)
-	if arg_4_0._sceneRoot then
-		gohelper.destroy(arg_4_0._sceneRoot)
+function Season123_2_1EntryLoadScene:disposeSceneRoot()
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_4_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 end
 
-var_0_0.BLOCK_LOAD_RES_KEY = "Season123_2_1EntrySceneLoadRes"
+Season123_2_1EntryLoadScene.BLOCK_LOAD_RES_KEY = "Season123_2_1EntrySceneLoadRes"
 
-function var_0_0.loadRes(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._callback = arg_5_1
-	arg_5_0._callbackObj = arg_5_2
+function Season123_2_1EntryLoadScene:loadRes(callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_LOAD_RES_KEY)
+	UIBlockMgr.instance:startBlock(Season123_2_1EntryLoadScene.BLOCK_LOAD_RES_KEY)
 
-	arg_5_0._loader = MultiAbLoader.New()
+	self._loader = MultiAbLoader.New()
 
-	arg_5_0._loader:addPath(arg_5_0:getSceneBackgroundUrl())
-	arg_5_0._loader:startLoad(arg_5_0.onLoadResCompleted, arg_5_0)
+	self._loader:addPath(self:getSceneBackgroundUrl())
+	self._loader:startLoad(self.onLoadResCompleted, self)
 end
 
-function var_0_0.releaseRes(arg_6_0)
-	if arg_6_0._loader then
-		arg_6_0._loader:dispose()
+function Season123_2_1EntryLoadScene:releaseRes()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_6_0._loader = nil
+		self._loader = nil
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_LOAD_RES_KEY)
+	UIBlockMgr.instance:endBlock(Season123_2_1EntryLoadScene.BLOCK_LOAD_RES_KEY)
 
-	if arg_6_0._prefabDict then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._prefabDict) do
-			iter_6_1:dispose()
+	if self._prefabDict then
+		for _, inst in pairs(self._prefabDict) do
+			inst:dispose()
 		end
 
-		arg_6_0._prefabDict = nil
+		self._prefabDict = nil
 	end
 
-	if arg_6_0._retailPrefabDict then
-		for iter_6_2, iter_6_3 in pairs(arg_6_0._retailPrefabDict) do
-			iter_6_3:dispose()
+	if self._retailPrefabDict then
+		for _, inst in pairs(self._retailPrefabDict) do
+			inst:dispose()
 		end
 
-		arg_6_0._retailPrefabDict = nil
+		self._retailPrefabDict = nil
 	end
 end
 
-function var_0_0.getSceneBackgroundUrl(arg_7_0)
-	local var_7_0 = arg_7_0:getSceneFolderPath()
-	local var_7_1 = arg_7_0:getDefaultBackgroundPrefab()
+function Season123_2_1EntryLoadScene:getSceneBackgroundUrl()
+	local sceneFolderPath = self:getSceneFolderPath()
+	local defaultBackgroundPrefab = self:getDefaultBackgroundPrefab()
 
-	return ResUrl.getSeason123Scene(var_7_0, var_7_1)
+	return ResUrl.getSeason123Scene(sceneFolderPath, defaultBackgroundPrefab)
 end
 
-function var_0_0.onLoadResCompleted(arg_8_0, arg_8_1)
-	if not arg_8_0._loader then
+function Season123_2_1EntryLoadScene:onLoadResCompleted(loader)
+	if not self._loader then
 		return
 	end
 
-	local var_8_0 = arg_8_1:getAssetItem(arg_8_0:getSceneBackgroundUrl())
+	local assetItem = loader:getAssetItem(self:getSceneBackgroundUrl())
 
-	if var_8_0 then
-		arg_8_0._sceneGo = gohelper.clone(var_8_0:GetResource(), arg_8_0._sceneRoot, "scene")
-		arg_8_0._sceneRetailRoot = gohelper.findChild(arg_8_0._sceneGo, "root")
+	if assetItem then
+		self._sceneGo = gohelper.clone(assetItem:GetResource(), self._sceneRoot, "scene")
+		self._sceneRetailRoot = gohelper.findChild(self._sceneGo, "root")
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_LOAD_RES_KEY)
+	UIBlockMgr.instance:endBlock(Season123_2_1EntryLoadScene.BLOCK_LOAD_RES_KEY)
 
-	if arg_8_0._callback then
-		if arg_8_0._callbackObj then
-			arg_8_0._callback(arg_8_0._callbackObj, arg_8_0._sceneGo)
+	if self._callback then
+		if self._callbackObj then
+			self._callback(self._callbackObj, self._sceneGo)
 		else
-			arg_8_0._callback(arg_8_0._sceneGo)
+			self._callback(self._sceneGo)
 		end
 	end
 end
 
-function var_0_0.showStageRes(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = Season123EntryModel.instance.activityId
-	local var_9_1 = Season123Config.instance:getStageCo(var_9_0, arg_9_1)
+function Season123_2_1EntryLoadScene:showStageRes(targetStage, isOpen)
+	local actId = Season123EntryModel.instance.activityId
+	local stageCO = Season123Config.instance:getStageCo(actId, targetStage)
 
-	if not var_9_1 then
+	if not stageCO then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._containerDict) do
-		gohelper.setActive(iter_9_1, iter_9_0 == arg_9_1)
+	for stageId, containerGO in pairs(self._containerDict) do
+		gohelper.setActive(containerGO, stageId == targetStage)
 	end
 
-	if not arg_9_0._containerDict[arg_9_1] then
-		arg_9_0:createPrefabInst(arg_9_1, var_9_1, arg_9_2)
-	elseif arg_9_2 then
-		arg_9_0:playAnim(arg_9_1, Activity123Enum.StageSceneAnim.Open)
-	end
-end
-
-function var_0_0.hideAllStage(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._containerDict) do
-		gohelper.setActive(iter_10_1, false)
+	if not self._containerDict[targetStage] then
+		self:createPrefabInst(targetStage, stageCO, isOpen)
+	elseif isOpen then
+		self:playAnim(targetStage, Activity123Enum.StageSceneAnim.Open)
 	end
 end
 
-function var_0_0.showRetailRes(arg_11_0, arg_11_1)
-	local var_11_0, var_11_1 = Season123EntryModel.getRandomRetailRes(arg_11_1)
-
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._retailContainerDict) do
-		gohelper.setActive(iter_11_1, iter_11_0 == var_11_0)
-	end
-
-	if not arg_11_0._retailContainerDict[var_11_0] then
-		arg_11_0:createRetailPrefabInst(arg_11_1)
+function Season123_2_1EntryLoadScene:hideAllStage()
+	for stageId, containerGO in pairs(self._containerDict) do
+		gohelper.setActive(containerGO, false)
 	end
 end
 
-function var_0_0.hideAllRetail(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._retailContainerDict) do
-		gohelper.setActive(iter_12_1, false)
+function Season123_2_1EntryLoadScene:showRetailRes(retailSceneId)
+	local rndIndex, _ = Season123EntryModel.getRandomRetailRes(retailSceneId)
+
+	for index, containerGO in pairs(self._retailContainerDict) do
+		gohelper.setActive(containerGO, index == rndIndex)
+	end
+
+	if not self._retailContainerDict[rndIndex] then
+		self:createRetailPrefabInst(retailSceneId)
 	end
 end
 
-function var_0_0.createPrefabInst(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if string.nilorempty(arg_13_2.res) then
+function Season123_2_1EntryLoadScene:hideAllRetail()
+	for index, containerGO in pairs(self._retailContainerDict) do
+		gohelper.setActive(containerGO, false)
+	end
+end
+
+function Season123_2_1EntryLoadScene:createPrefabInst(stage, stageCO, isOpen)
+	if string.nilorempty(stageCO.res) then
 		return
 	end
 
-	local var_13_0 = UnityEngine.GameObject.New("stage_" .. tostring(arg_13_1))
+	local containerGO = UnityEngine.GameObject.New("stage_" .. tostring(stage))
 
-	gohelper.addChild(arg_13_0._sceneRoot, var_13_0)
+	gohelper.addChild(self._sceneRoot, containerGO)
 
-	arg_13_0._containerDict[arg_13_1] = var_13_0
+	self._containerDict[stage] = containerGO
 
-	local var_13_1 = arg_13_2.initPos
+	local posStr = stageCO.initPos
 
-	if not string.nilorempty(var_13_1) then
-		local var_13_2 = string.splitToNumber(var_13_1, "#")
+	if not string.nilorempty(posStr) then
+		local posXY = string.splitToNumber(posStr, "#")
 
-		transformhelper.setLocalPos(var_13_0.transform, var_13_2[1], var_13_2[2], 0)
+		transformhelper.setLocalPos(containerGO.transform, posXY[1], posXY[2], 0)
 	else
-		transformhelper.setLocalPos(var_13_0.transform, 0, 0, 0)
+		transformhelper.setLocalPos(containerGO.transform, 0, 0, 0)
 	end
 
-	local var_13_3 = arg_13_2.initScale
+	local scaleStr = stageCO.initScale
 
-	if not string.nilorempty(var_13_3) then
-		local var_13_4 = string.splitToNumber(var_13_3, "#")
+	if not string.nilorempty(scaleStr) then
+		local scaleXY = string.splitToNumber(scaleStr, "#")
 
-		transformhelper.setLocalScale(var_13_0.transform, var_13_4[1], var_13_4[2], 1)
+		transformhelper.setLocalScale(containerGO.transform, scaleXY[1], scaleXY[2], 1)
 	else
-		transformhelper.setLocalScale(var_13_0.transform, 1, 1, 1)
+		transformhelper.setLocalScale(containerGO.transform, 1, 1, 1)
 	end
 
-	local var_13_5 = PrefabInstantiate.Create(var_13_0)
+	local inst = PrefabInstantiate.Create(containerGO)
 
-	arg_13_0._prefabDict[arg_13_1] = var_13_5
-	arg_13_0.tempStage = arg_13_1
-	arg_13_0.isOpen = arg_13_3
+	self._prefabDict[stage] = inst
+	self.tempStage = stage
+	self.isOpen = isOpen
 
-	var_13_5:startLoad(ResUrl.getSeason123Scene(arg_13_0:getSceneFolderPath(), arg_13_2.res), arg_13_0.loadCallback, arg_13_0)
+	inst:startLoad(ResUrl.getSeason123Scene(self:getSceneFolderPath(), stageCO.res), self.loadCallback, self)
 end
 
-function var_0_0.loadCallback(arg_14_0, arg_14_1)
-	if arg_14_0.tempStage then
-		local var_14_0 = arg_14_1:getInstGO()
+function Season123_2_1EntryLoadScene:loadCallback(inst)
+	if self.tempStage then
+		local go = inst:getInstGO()
 
-		arg_14_0._animDict[arg_14_0.tempStage] = var_14_0:GetComponent(gohelper.Type_Animator)
+		self._animDict[self.tempStage] = go:GetComponent(gohelper.Type_Animator)
 
-		if arg_14_0.isOpen then
-			arg_14_0:playAnim(arg_14_0.tempStage, Activity123Enum.StageSceneAnim.Open)
+		if self.isOpen then
+			self:playAnim(self.tempStage, Activity123Enum.StageSceneAnim.Open)
 
-			arg_14_0.isOpen = nil
+			self.isOpen = nil
 		end
 
-		arg_14_0.tempStage = nil
+		self.tempStage = nil
 	end
 end
 
-local var_0_1 = {
+local rndList = {
 	"v1a7_s15_yisuoerde_a",
 	"v1a7_s15_makusi_a",
 	"v1a7_s15_kakaniya_a"
 }
 
-function var_0_0.createRetailPrefabInst(arg_15_0, arg_15_1)
-	local var_15_0, var_15_1 = Season123EntryModel.getRandomRetailRes(arg_15_1)
-	local var_15_2 = string.format("%s%s", Activity123Enum.SeasonResourcePrefix[Season123EntryModel.instance.activityId], var_15_1)
-	local var_15_3 = UnityEngine.GameObject.New("retail_" .. tostring(var_15_0))
+function Season123_2_1EntryLoadScene:createRetailPrefabInst(retailSceneId)
+	local rndIndex, prefabPath = Season123EntryModel.getRandomRetailRes(retailSceneId)
+	local versionPrefabPath = string.format("%s%s", Activity123Enum.SeasonResourcePrefix[Season123EntryModel.instance.activityId], prefabPath)
+	local containerGO = UnityEngine.GameObject.New("retail_" .. tostring(rndIndex))
 
-	gohelper.addChild(arg_15_0._sceneRetailRoot, var_15_3)
-	transformhelper.setLocalPos(var_15_3.transform, 0, 0, 0)
-	transformhelper.setLocalScale(var_15_3.transform, 1, 1, 1)
+	gohelper.addChild(self._sceneRetailRoot, containerGO)
+	transformhelper.setLocalPos(containerGO.transform, 0, 0, 0)
+	transformhelper.setLocalScale(containerGO.transform, 1, 1, 1)
 
-	local var_15_4 = PrefabInstantiate.Create(var_15_3)
+	local inst = PrefabInstantiate.Create(containerGO)
 
-	arg_15_0._retailContainerDict[var_15_0] = var_15_3
-	arg_15_0._retailPrefabDict[var_15_0] = var_15_4
+	self._retailContainerDict[rndIndex] = containerGO
+	self._retailPrefabDict[rndIndex] = inst
 
-	var_15_4:startLoad(ResUrl.getSeason123RetailPrefab(arg_15_0:getSceneFolderPath(), var_15_2), arg_15_0.onLoadRetailCompleted, arg_15_0)
+	inst:startLoad(ResUrl.getSeason123RetailPrefab(self:getSceneFolderPath(), versionPrefabPath), self.onLoadRetailCompleted, self)
 end
 
-function var_0_0.onLoadRetailCompleted(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getIndexByRetailInst(arg_16_1)
+function Season123_2_1EntryLoadScene:onLoadRetailCompleted(loader)
+	local index = self:getIndexByRetailInst(loader)
 
-	if var_16_0 then
-		local var_16_1 = arg_16_1:getInstGO()
+	if index then
+		local loaderGO = loader:getInstGO()
 
-		if var_16_1 then
-			local var_16_2 = var_16_1.transform:GetChild(0)
+		if loaderGO then
+			local contentTf = loaderGO.transform:GetChild(0)
 
-			if var_16_2 then
-				local var_16_3, var_16_4 = transformhelper.getLocalPos(var_16_2)
+			if contentTf then
+				local x, y = transformhelper.getLocalPos(contentTf)
 
-				arg_16_0._retailPosXDict[var_16_0] = -var_16_3
-				arg_16_0._retailPosYDict[var_16_0] = -var_16_4
+				self._retailPosXDict[index] = -x
+				self._retailPosYDict[index] = -y
 
-				Season123EntryController.instance:dispatchEvent(Season123Event.RetailObjLoaded, var_16_0)
+				Season123EntryController.instance:dispatchEvent(Season123Event.RetailObjLoaded, index)
 			end
 		end
 	end
 end
 
-function var_0_0.getIndexByRetailInst(arg_17_0, arg_17_1)
-	if not arg_17_0._retailPrefabDict then
+function Season123_2_1EntryLoadScene:getIndexByRetailInst(loader)
+	if not self._retailPrefabDict then
 		return
 	end
 
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._retailPrefabDict) do
-		if iter_17_1 == arg_17_1 then
-			return iter_17_0
+	for index, inst in pairs(self._retailPrefabDict) do
+		if inst == loader then
+			return index
 		end
 	end
 end
 
-function var_0_0.getRetailPosByIndex(arg_18_0, arg_18_1)
-	return arg_18_0._retailPosXDict[arg_18_1], arg_18_0._retailPosYDict[arg_18_1]
+function Season123_2_1EntryLoadScene:getRetailPosByIndex(index)
+	return self._retailPosXDict[index], self._retailPosYDict[index]
 end
 
-function var_0_0.playAnim(arg_19_0, arg_19_1, arg_19_2)
-	if not arg_19_0._animDict[arg_19_1] then
+function Season123_2_1EntryLoadScene:playAnim(stage, animName)
+	if not self._animDict[stage] then
 		return
 	end
 
-	arg_19_0._animDict[arg_19_1]:Play(arg_19_2, 0, 0)
+	self._animDict[stage]:Play(animName, 0, 0)
 end
 
-function var_0_0.tweenStage(arg_20_0, arg_20_1, arg_20_2)
-	if not arg_20_0._containerDict[arg_20_1] then
-		logError("gameObject is empty:stage" .. arg_20_1)
+function Season123_2_1EntryLoadScene:tweenStage(stage, isEnter)
+	if not self._containerDict[stage] then
+		logError("gameObject is empty:stage" .. stage)
 
 		return
 	end
 
-	local var_20_0 = arg_20_0._containerDict[arg_20_1].transform
-	local var_20_1 = Season123Config.instance:getStageCo(Season123EntryModel.instance.activityId, arg_20_1)
-	local var_20_2
-	local var_20_3
+	local stageTrs = self._containerDict[stage].transform
+	local stageCO = Season123Config.instance:getStageCo(Season123EntryModel.instance.activityId, stage)
+	local posStr, scaleStr
 
-	if arg_20_2 then
-		var_20_2 = var_20_1.finalPos
-		var_20_3 = var_20_1.finalScale
+	if isEnter then
+		posStr = stageCO.finalPos
+		scaleStr = stageCO.finalScale
 	else
-		var_20_2 = var_20_1.initPos
-		var_20_3 = var_20_1.initScale
+		posStr = stageCO.initPos
+		scaleStr = stageCO.initScale
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.season123_map_scale)
 
-	local var_20_4 = string.splitToNumber(var_20_2, "#")
+	local posXY = string.splitToNumber(posStr, "#")
 
-	ZProj.TweenHelper.DOLocalMove(var_20_0, var_20_4[1], var_20_4[2], 0, 0.7)
+	ZProj.TweenHelper.DOLocalMove(stageTrs, posXY[1], posXY[2], 0, 0.7)
 
-	local var_20_5 = string.splitToNumber(var_20_3, "#")
+	local scaleXY = string.splitToNumber(scaleStr, "#")
 
-	ZProj.TweenHelper.DOScale(var_20_0, var_20_5[1], var_20_5[2], 1, 0.7)
+	ZProj.TweenHelper.DOScale(stageTrs, scaleXY[1], scaleXY[2], 1, 0.7)
 end
 
-function var_0_0.getSceneFolderPath(arg_21_0)
-	local var_21_0 = Season123EntryModel.instance.activityId or Season123Model.instance:getCurSeasonId()
-	local var_21_1 = Activity123Enum.SeasonResourcePrefix[var_21_0]
+function Season123_2_1EntryLoadScene:getSceneFolderPath()
+	local actId = Season123EntryModel.instance.activityId or Season123Model.instance:getCurSeasonId()
+	local version = Activity123Enum.SeasonResourcePrefix[actId]
+	local sceneFolderPath = string.format("%s%s", version, Activity123Enum.SceneFolderPath)
 
-	return (string.format("%s%s", var_21_1, Activity123Enum.SceneFolderPath))
+	return sceneFolderPath
 end
 
-function var_0_0.getDefaultBackgroundPrefab(arg_22_0)
-	local var_22_0 = Season123EntryModel.instance.activityId or Season123Model.instance:getCurSeasonId()
-	local var_22_1 = Activity123Enum.SeasonResourcePrefix[var_22_0]
+function Season123_2_1EntryLoadScene:getDefaultBackgroundPrefab()
+	local actId = Season123EntryModel.instance.activityId or Season123Model.instance:getCurSeasonId()
+	local version = Activity123Enum.SeasonResourcePrefix[actId]
+	local defaultBackgroundPrefab = string.format("%s%s", version, Activity123Enum.DefaultBackgroundPrefab)
 
-	return (string.format("%s%s", var_22_1, Activity123Enum.DefaultBackgroundPrefab))
+	return defaultBackgroundPrefab
 end
 
-return var_0_0
+return Season123_2_1EntryLoadScene

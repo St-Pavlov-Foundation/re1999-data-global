@@ -1,7 +1,9 @@
-﻿module("modules.logic.activity.model.ActivityNorSignItemListModel_1_2", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityNorSignItemListModel_1_2.lua
 
-local var_0_0 = class("ActivityNorSignItemListModel_1_2", ListScrollModel)
+module("modules.logic.activity.model.ActivityNorSignItemListModel_1_2", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local ActivityNorSignItemListModel_1_2 = class("ActivityNorSignItemListModel_1_2", ListScrollModel)
 
-return var_0_0
+ActivityNorSignItemListModel_1_2.instance = ActivityNorSignItemListModel_1_2.New()
+
+return ActivityNorSignItemListModel_1_2

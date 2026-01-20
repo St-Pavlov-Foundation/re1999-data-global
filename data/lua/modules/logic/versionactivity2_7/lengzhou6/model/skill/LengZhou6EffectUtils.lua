@@ -1,326 +1,334 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.skill.LengZhou6EffectUtils", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/skill/LengZhou6EffectUtils.lua
 
-local var_0_0 = class("LengZhou6EffectUtils")
+module("modules.logic.versionactivity2_7.lengzhou6.model.skill.LengZhou6EffectUtils", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._defineList = {
-		[LengZhou6Enum.SkillEffect.DamageUpByIntensified] = var_0_0._damageUpByIntensified,
-		[LengZhou6Enum.SkillEffect.HealUpByIntensified] = var_0_0._healUpByIntensified,
-		[LengZhou6Enum.SkillEffect.EliminationDecreaseCd] = var_0_0._eliminationDecreaseCd,
-		[LengZhou6Enum.SkillEffect.AddBuffByIntensified] = var_0_0._addBuffByIntensified,
-		[LengZhou6Enum.SkillEffect.DamageUpByType] = var_0_0._damageUpByType,
-		[LengZhou6Enum.SkillEffect.SuccessiveElimination] = var_0_0._successiveElimination,
-		[LengZhou6Enum.SkillEffect.EliminationLevelUp] = var_0_0._eliminationLevelUp,
-		[LengZhou6Enum.SkillEffect.EliminationCross] = var_0_0._eliminationCross,
-		[LengZhou6Enum.SkillEffect.EliminationDoubleAttack] = var_0_0._eliminationDoubleAttack,
-		[LengZhou6Enum.SkillEffect.EliminationRange] = var_0_0._eliminationRange,
-		[LengZhou6Enum.SkillEffect.AddBuff] = var_0_0._addBuff,
-		[LengZhou6Enum.SkillEffect.DealsDamage] = var_0_0._dealsDamage,
-		[LengZhou6Enum.SkillEffect.Contaminate] = var_0_0._contaminate,
-		[LengZhou6Enum.SkillEffect.Shuffle] = var_0_0._shuffle,
-		[LengZhou6Enum.SkillEffect.FreezeEliminationBlock] = var_0_0._freezeEliminationBlock,
-		[LengZhou6Enum.SkillEffect.PetrifyEliminationBlock] = var_0_0._petrifyEliminationBlock,
-		[LengZhou6Enum.SkillEffect.Heal] = var_0_0._heal
+local LengZhou6EffectUtils = class("LengZhou6EffectUtils")
+
+function LengZhou6EffectUtils:ctor()
+	self._defineList = {
+		[LengZhou6Enum.SkillEffect.DamageUpByIntensified] = LengZhou6EffectUtils._damageUpByIntensified,
+		[LengZhou6Enum.SkillEffect.HealUpByIntensified] = LengZhou6EffectUtils._healUpByIntensified,
+		[LengZhou6Enum.SkillEffect.EliminationDecreaseCd] = LengZhou6EffectUtils._eliminationDecreaseCd,
+		[LengZhou6Enum.SkillEffect.AddBuffByIntensified] = LengZhou6EffectUtils._addBuffByIntensified,
+		[LengZhou6Enum.SkillEffect.DamageUpByType] = LengZhou6EffectUtils._damageUpByType,
+		[LengZhou6Enum.SkillEffect.SuccessiveElimination] = LengZhou6EffectUtils._successiveElimination,
+		[LengZhou6Enum.SkillEffect.EliminationLevelUp] = LengZhou6EffectUtils._eliminationLevelUp,
+		[LengZhou6Enum.SkillEffect.EliminationCross] = LengZhou6EffectUtils._eliminationCross,
+		[LengZhou6Enum.SkillEffect.EliminationDoubleAttack] = LengZhou6EffectUtils._eliminationDoubleAttack,
+		[LengZhou6Enum.SkillEffect.EliminationRange] = LengZhou6EffectUtils._eliminationRange,
+		[LengZhou6Enum.SkillEffect.AddBuff] = LengZhou6EffectUtils._addBuff,
+		[LengZhou6Enum.SkillEffect.DealsDamage] = LengZhou6EffectUtils._dealsDamage,
+		[LengZhou6Enum.SkillEffect.Contaminate] = LengZhou6EffectUtils._contaminate,
+		[LengZhou6Enum.SkillEffect.Shuffle] = LengZhou6EffectUtils._shuffle,
+		[LengZhou6Enum.SkillEffect.FreezeEliminationBlock] = LengZhou6EffectUtils._freezeEliminationBlock,
+		[LengZhou6Enum.SkillEffect.PetrifyEliminationBlock] = LengZhou6EffectUtils._petrifyEliminationBlock,
+		[LengZhou6Enum.SkillEffect.Heal] = LengZhou6EffectUtils._heal
 	}
 end
 
-function var_0_0._damageUpByIntensified(arg_2_0)
-	local var_2_0 = LengZhou6GameModel.instance:getPlayer()
+function LengZhou6EffectUtils._damageUpByIntensified(param)
+	local player = LengZhou6GameModel.instance:getPlayer()
 
-	if var_2_0 ~= nil then
-		var_2_0:getDamageComp():setEliminateTypeExDamage(arg_2_0[2], tonumber(arg_2_0[3]))
+	if player ~= nil then
+		local damageComp = player:getDamageComp()
+
+		damageComp:setEliminateTypeExDamage(param[2], tonumber(param[3]))
 	end
 end
 
-function var_0_0._healUpByIntensified(arg_3_0)
-	local var_3_0 = LengZhou6GameModel.instance:getPlayer()
+function LengZhou6EffectUtils._healUpByIntensified(param)
+	local player = LengZhou6GameModel.instance:getPlayer()
 
-	if var_3_0 ~= nil then
-		var_3_0:getTreatmentComp():setEliminateTypeExTreatment(arg_3_0[2], tonumber(arg_3_0[3]))
+	if player ~= nil then
+		local treatmentComp = player:getTreatmentComp()
+
+		treatmentComp:setEliminateTypeExTreatment(param[2], tonumber(param[3]))
 	end
 end
 
-function var_0_0._eliminationDecreaseCd(arg_4_0)
-	local var_4_0 = LengZhou6GameModel.instance:getPlayer()
+function LengZhou6EffectUtils._eliminationDecreaseCd(param)
+	local player = LengZhou6GameModel.instance:getPlayer()
 
-	if var_4_0 ~= nil then
-		local var_4_1 = LengZhou6GameModel.instance:getCurEliminateSpEliminateCount(arg_4_0[2]) or 0
-		local var_4_2 = var_4_0:getActiveSkills()
-		local var_4_3
-		local var_4_4 = 0
+	if player ~= nil then
+		local count = LengZhou6GameModel.instance:getCurEliminateSpEliminateCount(param[2]) or 0
+		local allActiveSkills = player:getActiveSkills()
+		local cdMaxSkill
+		local maxCd = 0
 
-		for iter_4_0 = 1, #var_4_2 do
-			local var_4_5 = var_4_2[iter_4_0]
-			local var_4_6 = var_4_5:getCd()
+		for i = 1, #allActiveSkills do
+			local skill = allActiveSkills[i]
+			local cd = skill:getCd()
 
-			if var_4_4 < var_4_6 then
-				var_4_3 = var_4_5
-				var_4_4 = var_4_6
+			if maxCd < cd then
+				cdMaxSkill = skill
+				maxCd = cd
 			end
 		end
 
-		if var_4_3 ~= nil then
-			for iter_4_1 = 1, var_4_1 do
-				var_4_3:setCd(var_4_3:getCd() - tonumber(arg_4_0[3]))
-			end
-		end
-	end
-end
-
-function var_0_0._addBuffByIntensified(arg_5_0)
-	local var_5_0 = arg_5_0[2]
-	local var_5_1 = LengZhou6GameModel.instance:getCurEliminateSpEliminateCount(var_5_0) or 0
-	local var_5_2 = tonumber(arg_5_0[3])
-	local var_5_3 = tonumber(arg_5_0[4])
-	local var_5_4 = tonumber(arg_5_0[5])
-
-	for iter_5_0 = 1, var_5_1 do
-		for iter_5_1 = 1, var_5_3 do
-			if var_5_4 == LengZhou6Enum.entityCamp.player then
-				LengZhou6BuffSystem.instance:addBuffToPlayer(var_5_2)
-			end
-
-			if var_5_4 == LengZhou6Enum.entityCamp.enemy then
-				LengZhou6BuffSystem.instance:addBuffToEnemy(var_5_2)
+		if cdMaxSkill ~= nil then
+			for i = 1, count do
+				cdMaxSkill:setCd(cdMaxSkill:getCd() - tonumber(param[3]))
 			end
 		end
 	end
 end
 
-function var_0_0._damageUpByType(arg_6_0)
-	local var_6_0 = LengZhou6GameModel.instance:getPlayer()
+function LengZhou6EffectUtils._addBuffByIntensified(param)
+	local eliminateType = param[2]
+	local count = LengZhou6GameModel.instance:getCurEliminateSpEliminateCount(eliminateType) or 0
+	local buffConfigId = tonumber(param[3])
+	local buffAddLayerCount = tonumber(param[4])
+	local camp = tonumber(param[5])
 
-	if var_6_0 ~= nil then
-		local var_6_1 = var_6_0:getDamageComp()
-		local var_6_2 = string.splitToNumber(arg_6_0[3], ",")
+	for i = 1, count do
+		for j = 1, buffAddLayerCount do
+			if camp == LengZhou6Enum.entityCamp.player then
+				LengZhou6BuffSystem.instance:addBuffToPlayer(buffConfigId)
+			end
 
-		var_6_1:setSpEliminateRate(var_6_2[1], var_6_2[2], var_6_2[3])
+			if camp == LengZhou6Enum.entityCamp.enemy then
+				LengZhou6BuffSystem.instance:addBuffToEnemy(buffConfigId)
+			end
+		end
 	end
 end
 
-function var_0_0._successiveElimination(arg_7_0)
-	local var_7_0 = tonumber(arg_7_0[2]) / 1000
+function LengZhou6EffectUtils._damageUpByType(param)
+	local player = LengZhou6GameModel.instance:getPlayer()
 
-	LengZhou6GameModel.instance:setLineEliminateRate(var_7_0)
+	if player ~= nil then
+		local damageComp = player:getDamageComp()
+		local damages = string.splitToNumber(param[3], ",")
+
+		damageComp:setSpEliminateRate(damages[1], damages[2], damages[3])
+	end
 end
 
-function var_0_0._eliminationLevelUp(arg_8_0)
-	local var_8_0 = arg_8_0[2]
-	local var_8_1 = tonumber(arg_8_0[3])
-	local var_8_2 = EliminateEnum_2_7.ChessTypeToIndex[var_8_0]
-	local var_8_3 = LocalEliminateChessModel.instance:getAllEliminateIdPos(var_8_2)
-	local var_8_4 = {}
-	local var_8_5 = {}
+function LengZhou6EffectUtils._successiveElimination(param)
+	local rate = tonumber(param[2]) / 1000
 
-	if var_8_1 < #var_8_3 then
-		for iter_8_0 = 1, var_8_1 do
-			local var_8_6 = math.random(1, #var_8_3)
+	LengZhou6GameModel.instance:setLineEliminateRate(rate)
+end
 
-			table.insert(var_8_4, var_8_3[var_8_6].x)
-			table.insert(var_8_5, var_8_3[var_8_6].y)
+function LengZhou6EffectUtils._eliminationLevelUp(param)
+	local eliminateType = param[2]
+	local changeCount = tonumber(param[3])
+	local eliminateId = EliminateEnum_2_7.ChessTypeToIndex[eliminateType]
+	local allPos = LocalEliminateChessModel.instance:getAllEliminateIdPos(eliminateId)
+	local needChangeX = {}
+	local needChangeY = {}
+
+	if changeCount < #allPos then
+		for i = 1, changeCount do
+			local randomIndex = math.random(1, #allPos)
+
+			table.insert(needChangeX, allPos[randomIndex].x)
+			table.insert(needChangeY, allPos[randomIndex].y)
 		end
 	else
-		for iter_8_1 = 1, #var_8_3 do
-			table.insert(var_8_4, var_8_3[iter_8_1].x)
-			table.insert(var_8_5, var_8_3[iter_8_1].y)
+		for i = 1, #allPos do
+			table.insert(needChangeX, allPos[i].x)
+			table.insert(needChangeY, allPos[i].y)
 		end
 	end
 
-	local var_8_7 = FlowParallel.New()
+	local changeStepFlow = FlowParallel.New()
 
-	for iter_8_2 = 1, #var_8_4 do
-		local var_8_8 = var_8_4[iter_8_2]
-		local var_8_9 = var_8_5[iter_8_2]
+	for i = 1, #needChangeX do
+		local x = needChangeX[i]
+		local y = needChangeY[i]
 
-		LocalEliminateChessModel.instance:changeCellState(var_8_8, var_8_9, EliminateEnum.ChessState.SpecialSkill)
+		LocalEliminateChessModel.instance:changeCellState(x, y, EliminateEnum.ChessState.SpecialSkill)
 
-		local var_8_10 = {
-			x = var_8_8,
-			y = var_8_9
+		local data = {
+			x = x,
+			y = y
 		}
-		local var_8_11 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChangeState, var_8_10)
+		local updateStateWork = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChangeState, data)
 
-		var_8_7:addWork(var_8_11)
+		changeStepFlow:addWork(updateStateWork)
 	end
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_8_7)
+	LengZhou6EliminateController.instance:buildSeqFlow(changeStepFlow)
 end
 
-function var_0_0._eliminationCross(arg_9_0, arg_9_1)
-	LocalEliminateChessModel.instance:eliminateCross(arg_9_0, arg_9_1)
+function LengZhou6EffectUtils._eliminationCross(x, y)
+	LocalEliminateChessModel.instance:eliminateCross(x, y)
 
-	local var_9_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_9_0)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0._eliminationDoubleAttack()
+function LengZhou6EffectUtils._eliminationDoubleAttack()
 	LengZhou6GameModel.instance:setEnemySettleCount(2)
 end
 
-function var_0_0._eliminationRange(arg_11_0, arg_11_1)
-	LocalEliminateChessModel.instance:eliminateRange(arg_11_0, arg_11_1, 3)
+function LengZhou6EffectUtils._eliminationRange(x, y)
+	LocalEliminateChessModel.instance:eliminateRange(x, y, 3)
 
-	local var_11_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_11_0)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0._addBuff(arg_12_0)
-	local var_12_0 = tonumber(arg_12_0[2])
-	local var_12_1 = tonumber(arg_12_0[3])
+function LengZhou6EffectUtils._addBuff(param)
+	local buffConfigId = tonumber(param[2])
+	local layout = tonumber(param[3])
 
-	for iter_12_0 = 1, var_12_1 do
-		LengZhou6BuffSystem.instance:addBuffToEnemy(var_12_0)
+	for i = 1, layout do
+		LengZhou6BuffSystem.instance:addBuffToEnemy(buffConfigId)
 	end
 end
 
-function var_0_0._dealsDamage(arg_13_0, arg_13_1)
-	local var_13_0 = tonumber(arg_13_0[2]) + (arg_13_1 ~= nil and arg_13_1 or 0)
+function LengZhou6EffectUtils._dealsDamage(param, exValue)
+	local damage = tonumber(param[2]) + (exValue ~= nil and exValue or 0)
+	local player = LengZhou6GameModel.instance:getPlayer()
 
-	LengZhou6GameModel.instance:getPlayer():changeHp(-var_13_0)
+	player:changeHp(-damage)
 end
 
-function var_0_0._contaminate(arg_14_0, arg_14_1)
-	local var_14_0 = tonumber(arg_14_0[2]) + (arg_14_1 ~= nil and arg_14_1 or 0)
-	local var_14_1, var_14_2 = LocalEliminateChessModel.instance:getCellRowAndCol()
-	local var_14_3 = var_0_0.getRandomXYSet(var_14_1, var_14_2, var_14_0, true, LengZhou6Enum.SkillEffect.Contaminate)
+function LengZhou6EffectUtils._contaminate(param, exValue)
+	local contaminateCount = tonumber(param[2]) + (exValue ~= nil and exValue or 0)
+	local row, col = LocalEliminateChessModel.instance:getCellRowAndCol()
+	local randomXYSet = LengZhou6EffectUtils.getRandomXYSet(row, col, contaminateCount, true, LengZhou6Enum.SkillEffect.Contaminate)
 
-	for iter_14_0 = 1, #var_14_3 do
-		local var_14_4 = var_14_3[iter_14_0].x
-		local var_14_5 = var_14_3[iter_14_0].y
+	for i = 1, #randomXYSet do
+		local randomX = randomXYSet[i].x
+		local randomY = randomXYSet[i].y
 
-		LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.ShowEffect, var_14_4, var_14_5, EliminateEnum_2_7.ChessEffect.pollution)
+		LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.ShowEffect, randomX, randomY, EliminateEnum_2_7.ChessEffect.pollution)
 	end
 end
 
-function var_0_0._shuffle()
-	local var_15_0 = LocalEliminateChessModel.instance:randomCell()
+function LengZhou6EffectUtils._shuffle()
+	local randomList = LocalEliminateChessModel.instance:randomCell()
 
-	LengZhou6EliminateController.instance:updateAllItemPos(var_15_0)
+	LengZhou6EliminateController.instance:updateAllItemPos(randomList)
 end
 
-function var_0_0._freezeEliminationBlock(arg_16_0, arg_16_1)
-	local var_16_0 = tonumber(arg_16_0[2]) + (arg_16_1 ~= nil and arg_16_1 or 0)
-	local var_16_1, var_16_2 = LocalEliminateChessModel.instance:getCellRowAndCol()
-	local var_16_3 = FlowParallel.New()
-	local var_16_4 = var_0_0.getRandomXYSet(var_16_1, var_16_2, var_16_0, true, LengZhou6Enum.SkillEffect.FreezeEliminationBlock)
+function LengZhou6EffectUtils._freezeEliminationBlock(param, exValue)
+	local freezeCount = tonumber(param[2]) + (exValue ~= nil and exValue or 0)
+	local row, col = LocalEliminateChessModel.instance:getCellRowAndCol()
+	local changeStepFlow = FlowParallel.New()
+	local randomXYSet = LengZhou6EffectUtils.getRandomXYSet(row, col, freezeCount, true, LengZhou6Enum.SkillEffect.FreezeEliminationBlock)
 
-	for iter_16_0 = 1, #var_16_4 do
-		local var_16_5 = var_16_4[iter_16_0].x
-		local var_16_6 = var_16_4[iter_16_0].y
+	for i = 1, #randomXYSet do
+		local randomX = randomXYSet[i].x
+		local randomY = randomXYSet[i].y
 
-		LocalEliminateChessModel.instance:changeCellState(var_16_5, var_16_6, EliminateEnum.ChessState.Frost)
+		LocalEliminateChessModel.instance:changeCellState(randomX, randomY, EliminateEnum.ChessState.Frost)
 
-		local var_16_7 = {
-			x = var_16_5,
-			y = var_16_6
+		local data = {
+			x = randomX,
+			y = randomY
 		}
-		local var_16_8 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChangeState, var_16_7)
+		local updateStateWork = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChangeState, data)
 
-		var_16_3:addWork(var_16_8)
+		changeStepFlow:addWork(updateStateWork)
 	end
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_16_3)
+	LengZhou6EliminateController.instance:buildSeqFlow(changeStepFlow)
 	LengZhou6EliminateController.instance:setFlowEndState(true)
 end
 
-function var_0_0._petrifyEliminationBlock(arg_17_0, arg_17_1)
-	local var_17_0 = tonumber(arg_17_0[2]) + (arg_17_1 ~= nil and arg_17_1 or 0)
-	local var_17_1, var_17_2 = LocalEliminateChessModel.instance:getCellRowAndCol()
-	local var_17_3, var_17_4 = LengZhou6Controller.instance:getFixChessPos()
+function LengZhou6EffectUtils._petrifyEliminationBlock(param, exValue)
+	local petrifyCount = tonumber(param[2]) + (exValue ~= nil and exValue or 0)
+	local row, col = LocalEliminateChessModel.instance:getCellRowAndCol()
+	local isInGuide, pos = LengZhou6Controller.instance:getFixChessPos()
 
-	if var_17_3 then
-		var_17_0 = var_17_0 - 1
+	if isInGuide then
+		petrifyCount = petrifyCount - 1
 	end
 
-	local var_17_5 = var_0_0.getRandomXYSet(var_17_1, var_17_2, var_17_0, true, LengZhou6Enum.SkillEffect.PetrifyEliminationBlock)
+	local randomXYSet = LengZhou6EffectUtils.getRandomXYSet(row, col, petrifyCount, true, LengZhou6Enum.SkillEffect.PetrifyEliminationBlock)
 
-	if var_17_3 and var_17_4 ~= nil then
-		table.insert(var_17_5, {
-			x = var_17_4.x,
-			y = var_17_4.y
+	if isInGuide and pos ~= nil then
+		table.insert(randomXYSet, {
+			x = pos.x,
+			y = pos.y
 		})
 	end
 
-	local var_17_6 = FlowParallel.New()
+	local updateInfoStepFlow = FlowParallel.New()
 
-	for iter_17_0 = 1, #var_17_5 do
-		local var_17_7 = var_17_5[iter_17_0].x
-		local var_17_8 = var_17_5[iter_17_0].y
-		local var_17_9 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChessItemUpdateInfo, {
-			x = var_17_7,
-			y = var_17_8
+	for i = 1, #randomXYSet do
+		local randomX = randomXYSet[i].x
+		local randomY = randomXYSet[i].y
+		local work = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChessItemUpdateInfo, {
+			x = randomX,
+			y = randomY
 		})
 
-		var_17_6:addWork(var_17_9)
+		updateInfoStepFlow:addWork(work)
 	end
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_17_6)
+	LengZhou6EliminateController.instance:buildSeqFlow(updateInfoStepFlow)
 	LengZhou6EliminateController.instance:setFlowEndState(true)
 end
 
-function var_0_0._heal(arg_18_0, arg_18_1)
-	local var_18_0 = tonumber(arg_18_0[2]) + (arg_18_1 ~= nil and arg_18_1 or 0)
+function LengZhou6EffectUtils._heal(param, exValue)
+	local hp = tonumber(param[2]) + (exValue ~= nil and exValue or 0)
+	local enemy = LengZhou6GameModel.instance:getEnemy()
 
-	LengZhou6GameModel.instance:getEnemy():changeHp(var_18_0)
+	enemy:changeHp(hp)
 end
 
-function var_0_0.getRandomXYSet(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	local var_19_0 = {}
+function LengZhou6EffectUtils.getRandomXYSet(row, col, count, needExcludeEffect, effect)
+	local randomXYSet = {}
 
-	for iter_19_0 = 1, 100 do
-		if #var_19_0 == arg_19_2 then
+	for j = 1, 100 do
+		if #randomXYSet == count then
 			break
 		end
 
-		local var_19_1 = math.random(1, arg_19_0)
-		local var_19_2 = math.random(1, arg_19_1)
-		local var_19_3 = true
+		local randomX = math.random(1, row)
+		local randomY = math.random(1, col)
+		local canAdd = true
 
-		if arg_19_3 then
-			local var_19_4 = LocalEliminateChessModel.instance:getCell(var_19_1, var_19_2)
-			local var_19_5 = LocalEliminateChessModel.instance:getSpEffect(var_19_1, var_19_2)
+		if needExcludeEffect then
+			local cell = LocalEliminateChessModel.instance:getCell(randomX, randomY)
+			local spEffect = LocalEliminateChessModel.instance:getSpEffect(randomX, randomY)
 
-			if arg_19_4 == LengZhou6Enum.SkillEffect.Contaminate and var_19_5 ~= nil then
-				var_19_3 = false
+			if effect == LengZhou6Enum.SkillEffect.Contaminate and spEffect ~= nil then
+				canAdd = false
 			end
 
-			if arg_19_4 == LengZhou6Enum.SkillEffect.FreezeEliminationBlock and (var_19_5 ~= nil or var_19_4.id == EliminateEnum.InvalidId or var_19_4:getEliminateID() == EliminateEnum_2_7.ChessType.stone) then
-				var_19_3 = false
+			if effect == LengZhou6Enum.SkillEffect.FreezeEliminationBlock and (spEffect ~= nil or cell.id == EliminateEnum.InvalidId or cell:getEliminateID() == EliminateEnum_2_7.ChessType.stone) then
+				canAdd = false
 			end
 
-			if arg_19_4 == LengZhou6Enum.SkillEffect.PetrifyEliminationBlock and (var_19_5 ~= nil and var_19_5 == EliminateEnum_2_7.ChessEffect.frost or var_19_4.id == EliminateEnum.InvalidId) then
-				var_19_3 = false
+			if effect == LengZhou6Enum.SkillEffect.PetrifyEliminationBlock and (spEffect ~= nil and spEffect == EliminateEnum_2_7.ChessEffect.frost or cell.id == EliminateEnum.InvalidId) then
+				canAdd = false
 			end
 		end
 
-		if var_19_3 then
-			for iter_19_1 = 1, #var_19_0 do
-				local var_19_6 = var_19_0[iter_19_1].x
-				local var_19_7 = var_19_0[iter_19_1].y
+		if canAdd then
+			for i = 1, #randomXYSet do
+				local x = randomXYSet[i].x
+				local y = randomXYSet[i].y
 
-				if var_19_1 == var_19_6 and var_19_7 == var_19_2 then
-					var_19_3 = false
+				if randomX == x and y == randomY then
+					canAdd = false
 				end
 			end
 		end
 
-		if var_19_3 then
-			table.insert(var_19_0, {
-				x = var_19_1,
-				y = var_19_2
+		if canAdd then
+			table.insert(randomXYSet, {
+				x = randomX,
+				y = randomY
 			})
 		end
 	end
 
-	return var_19_0
+	return randomXYSet
 end
 
-function var_0_0.getHandleFunc(arg_20_0, arg_20_1)
-	return arg_20_0._defineList[arg_20_1]
+function LengZhou6EffectUtils:getHandleFunc(type)
+	return self._defineList[type]
 end
 
-var_0_0.instance = var_0_0.New()
+LengZhou6EffectUtils.instance = LengZhou6EffectUtils.New()
 
-return var_0_0
+return LengZhou6EffectUtils

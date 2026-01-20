@@ -1,32 +1,34 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionEnterScene", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionEnterScene.lua
 
-local var_0_0 = class("GuideActionEnterScene", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionEnterScene", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionEnterScene = class("GuideActionEnterScene", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
+function GuideActionEnterScene:onStart(context)
+	GuideActionEnterScene.super.onStart(self, context)
 
-	arg_1_0._sceneType = SceneType[var_1_0[1]]
+	local temp = string.split(self.actionParam, "#")
 
-	if VirtualSummonScene.instance:isOpen() and arg_1_0._sceneType ~= SceneType.Summon then
+	self._sceneType = SceneType[temp[1]]
+
+	if VirtualSummonScene.instance:isOpen() and self._sceneType ~= SceneType.Summon then
 		VirtualSummonScene.instance:close(true)
 	end
 
-	if arg_1_0._sceneType == SceneType.Summon then
+	if self._sceneType == SceneType.Summon then
 		SummonController.instance:enterSummonScene()
 	else
-		arg_1_0._sceneId = tonumber(var_1_0[2])
-		arg_1_0._sceneLevel = tonumber(var_1_0[3])
+		self._sceneId = tonumber(temp[2])
+		self._sceneLevel = tonumber(temp[3])
 
-		if arg_1_0._sceneLevel then
-			GameSceneMgr.instance:startScene(arg_1_0._sceneType, arg_1_0._sceneId, arg_1_0._sceneLevel)
+		if self._sceneLevel then
+			GameSceneMgr.instance:startScene(self._sceneType, self._sceneId, self._sceneLevel)
 		else
-			GameSceneMgr.instance:startSceneDefaultLevel(arg_1_0._sceneType, arg_1_0._sceneId)
+			GameSceneMgr.instance:startSceneDefaultLevel(self._sceneType, self._sceneId)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionEnterScene

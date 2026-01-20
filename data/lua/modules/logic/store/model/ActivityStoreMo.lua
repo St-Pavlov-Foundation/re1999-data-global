@@ -1,17 +1,19 @@
-﻿module("modules.logic.store.model.ActivityStoreMo", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/ActivityStoreMo.lua
 
-local var_0_0 = pureTable("ActivityStoreMo")
+module("modules.logic.store.model.ActivityStoreMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.actId = arg_1_1
-	arg_1_0.id = arg_1_2.id
-	arg_1_0.config = ActivityStoreConfig.instance:getStoreConfig(arg_1_1, arg_1_0.id)
+local ActivityStoreMo = pureTable("ActivityStoreMo")
 
-	arg_1_0:updateData(arg_1_2)
+function ActivityStoreMo:init(actId, info)
+	self.actId = actId
+	self.id = info.id
+	self.config = ActivityStoreConfig.instance:getStoreConfig(actId, self.id)
+
+	self:updateData(info)
 end
 
-function var_0_0.updateData(arg_2_0, arg_2_1)
-	arg_2_0.buyCount = arg_2_1.buyCount
+function ActivityStoreMo:updateData(info)
+	self.buyCount = info.buyCount
 end
 
-return var_0_0
+return ActivityStoreMo

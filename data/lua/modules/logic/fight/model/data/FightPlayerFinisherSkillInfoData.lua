@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.data.FightPlayerFinisherSkillInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightPlayerFinisherSkillInfoData.lua
 
-local var_0_0 = FightDataClass("FightPlayerFinisherSkillInfoData")
+module("modules.logic.fight.model.data.FightPlayerFinisherSkillInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.skillId = arg_1_1.skillId
-	arg_1_0.needPower = arg_1_1.needPower
+local FightPlayerFinisherSkillInfoData = FightDataClass("FightPlayerFinisherSkillInfoData")
+
+function FightPlayerFinisherSkillInfoData:onConstructor(proto)
+	self.skillId = proto.skillId
+	self.needPower = proto.needPower
 end
 
-return var_0_0
+return FightPlayerFinisherSkillInfoData

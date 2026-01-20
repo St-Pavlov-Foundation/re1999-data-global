@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalPrepareItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoleRevivalPrepareItem.lua
 
-local var_0_0 = class("V1a6_CachotRoleRevivalPrepareItem", V1a6_CachotTeamPrepareItem)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalPrepareItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local V1a6_CachotRoleRevivalPrepareItem = class("V1a6_CachotRoleRevivalPrepareItem", V1a6_CachotTeamPrepareItem)
+
+function V1a6_CachotRoleRevivalPrepareItem:onInitView()
+	V1a6_CachotRoleRevivalPrepareItem.super.onInitView(self)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, arg_2_0._onClickTeamItem, arg_2_0)
+function V1a6_CachotRoleRevivalPrepareItem:addEvents()
+	V1a6_CachotRoleRevivalPrepareItem.super.addEvents(self)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, self._onClickTeamItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, arg_3_0._onClickTeamItem, arg_3_0)
+function V1a6_CachotRoleRevivalPrepareItem:removeEvents()
+	V1a6_CachotRoleRevivalPrepareItem.super.removeEvents(self)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, self._onClickTeamItem, self)
 end
 
-function var_0_0._onClickTeamItem(arg_4_0, arg_4_1)
-	arg_4_0:setSelected(arg_4_0._mo == arg_4_1)
+function V1a6_CachotRoleRevivalPrepareItem:_onClickTeamItem(mo)
+	self:setSelected(self._mo == mo)
 end
 
-function var_0_0._getEquipMO(arg_5_0)
+function V1a6_CachotRoleRevivalPrepareItem:_getEquipMO()
 	return
 end
 
-function var_0_0.showNone(arg_6_0)
-	gohelper.setActive(arg_6_0._gorole, false)
-	gohelper.setActive(arg_6_0._goheart, false)
+function V1a6_CachotRoleRevivalPrepareItem:showNone()
+	gohelper.setActive(self._gorole, false)
+	gohelper.setActive(self._goheart, false)
 
-	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, "bg_normal")
-	local var_6_1 = gohelper.findChild(arg_6_0.viewGO, "bg_none")
+	local bgNormal = gohelper.findChild(self.viewGO, "bg_normal")
+	local bgNone = gohelper.findChild(self.viewGO, "bg_none")
 
-	gohelper.setActive(var_6_0, false)
-	gohelper.setActive(var_6_1, true)
+	gohelper.setActive(bgNormal, false)
+	gohelper.setActive(bgNone, true)
 end
 
-function var_0_0.hideDeadStatus(arg_7_0, arg_7_1)
-	arg_7_0._hideDeadStatus = arg_7_1
+function V1a6_CachotRoleRevivalPrepareItem:hideDeadStatus(value)
+	self._hideDeadStatus = value
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	var_0_0.super.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0:_updateHp()
-	arg_8_0:setSelectEnable(true)
+function V1a6_CachotRoleRevivalPrepareItem:onUpdateMO(mo)
+	V1a6_CachotRoleRevivalPrepareItem.super.onUpdateMO(self, mo)
+	self:_updateHp()
+	self:setSelectEnable(true)
 end
 
-function var_0_0._showDeadStatus(arg_9_0, arg_9_1)
-	if arg_9_0._hideDeadStatus then
+function V1a6_CachotRoleRevivalPrepareItem:_showDeadStatus(isDead)
+	if self._hideDeadStatus then
 		return
 	end
 
-	var_0_0.super._showDeadStatus(arg_9_0, arg_9_1)
+	V1a6_CachotRoleRevivalPrepareItem.super._showDeadStatus(self, isDead)
 end
 
-return var_0_0
+return V1a6_CachotRoleRevivalPrepareItem

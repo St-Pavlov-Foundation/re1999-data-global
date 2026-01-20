@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.entry.GaoSiNiaoEntryFlow_WorkBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/entry/GaoSiNiaoEntryFlow_WorkBase.lua
 
-local var_0_0 = class("GaoSiNiaoEntryFlow_WorkBase", GaoSiNiaoWorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.entry.GaoSiNiaoEntryFlow_WorkBase", package.seeall)
 
-function var_0_0.episodeId(arg_1_0)
-	return arg_1_0.root:episodeId()
+local GaoSiNiaoEntryFlow_WorkBase = class("GaoSiNiaoEntryFlow_WorkBase", GaoSiNiaoWorkBase)
+
+function GaoSiNiaoEntryFlow_WorkBase:episodeId()
+	return self.root:episodeId()
 end
 
-function var_0_0.restartBattle(arg_2_0)
-	GaoSiNiaoBattleModel.instance:restart(arg_2_0:episodeId())
+function GaoSiNiaoEntryFlow_WorkBase:restartBattle()
+	GaoSiNiaoBattleModel.instance:restart(self:episodeId())
 end
 
-function var_0_0.insertWork(arg_3_0, arg_3_1)
-	return arg_3_0.root:insertWork(arg_3_1)
+function GaoSiNiaoEntryFlow_WorkBase:insertWork(work)
+	return self.root:insertWork(work)
 end
 
-return var_0_0
+return GaoSiNiaoEntryFlow_WorkBase

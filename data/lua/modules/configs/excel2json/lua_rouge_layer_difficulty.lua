@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_rouge_layer_difficulty", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_layer_difficulty.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_layer_difficulty", package.seeall)
+
+local lua_rouge_layer_difficulty = {}
+local fields = {
 	stepAttr = 3,
 	difficulty = 1,
 	layer = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"difficulty",
 	"layer"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_layer_difficulty.onLoad(json)
+	lua_rouge_layer_difficulty.configList, lua_rouge_layer_difficulty.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_layer_difficulty

@@ -1,74 +1,76 @@
-﻿module("modules.logic.store.view.recommend.StoreNewbieView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/StoreNewbieView.lua
 
-local var_0_0 = class("StoreNewbieView", StoreRecommendBaseSubView)
+module("modules.logic.store.view.recommend.StoreNewbieView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "recommend/#simage_bg")
+local StoreNewbieView = class("StoreNewbieView", StoreRecommendBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreNewbieView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "recommend/#simage_bg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btn:AddClickListener(arg_2_0._onClick, arg_2_0)
+function StoreNewbieView:addEvents()
+	self._btn:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btn:RemoveClickListener()
+function StoreNewbieView:removeEvents()
+	self._btn:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("firstchargeview/bg"))
+function StoreNewbieView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getStoreBottomBgIcon("firstchargeview/bg"))
 
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "recommend")
+	local gotmp = gohelper.findChild(self.viewGO, "recommend")
 
-	arg_4_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(var_4_0)
-	arg_4_0._btn = gohelper.getClickWithAudio(arg_4_0.viewGO)
-	arg_4_0._txticon = gohelper.findChildText(arg_4_0.viewGO, "recommend/#simage_bg/#txt_num/#txt_icon")
-	arg_4_0._txtnum = gohelper.findChildText(arg_4_0.viewGO, "recommend/#simage_bg/#txt_num")
-	arg_4_0._txticon.text = PayModel.instance:getProductOriginPriceSymbol(610002)
-	arg_4_0._txtnum.text = PayModel.instance:getProductOriginPriceNum(610002)
-	arg_4_0._txtnum = gohelper.getDynamicSizeText(arg_4_0._txtnum.gameObject)
-	arg_4_0._txtnum.maxIteration = 3
-	arg_4_0._txticon.text = ""
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(gotmp)
+	self._btn = gohelper.getClickWithAudio(self.viewGO)
+	self._txticon = gohelper.findChildText(self.viewGO, "recommend/#simage_bg/#txt_num/#txt_icon")
+	self._txtnum = gohelper.findChildText(self.viewGO, "recommend/#simage_bg/#txt_num")
+	self._txticon.text = PayModel.instance:getProductOriginPriceSymbol(610002)
+	self._txtnum.text = PayModel.instance:getProductOriginPriceNum(610002)
+	self._txtnum = gohelper.getDynamicSizeText(self._txtnum.gameObject)
+	self._txtnum.maxIteration = 3
+	self._txticon.text = ""
 
-	local var_4_1 = PayModel.instance:getProductOriginPriceSymbol(610002)
-	local var_4_2, var_4_3 = PayModel.instance:getProductOriginPriceNum(610002)
-	local var_4_4 = ""
+	local symbol = PayModel.instance:getProductOriginPriceSymbol(610002)
+	local _, numStr = PayModel.instance:getProductOriginPriceNum(610002)
+	local symbol2 = ""
 
-	if string.nilorempty(var_4_1) then
-		local var_4_5 = string.reverse(var_4_3)
-		local var_4_6 = string.find(var_4_5, "%d")
-		local var_4_7 = string.len(var_4_5) - var_4_6 + 1
-		local var_4_8 = string.sub(var_4_3, var_4_7 + 1, string.len(var_4_3))
+	if string.nilorempty(symbol) then
+		local reverseStr = string.reverse(numStr)
+		local lastIndex = string.find(reverseStr, "%d")
 
-		var_4_3 = string.sub(var_4_3, 1, var_4_7)
-		arg_4_0._txtnum.text = string.format("%s<size=100>%s</size>", var_4_3, var_4_8)
+		lastIndex = string.len(reverseStr) - lastIndex + 1
+		symbol2 = string.sub(numStr, lastIndex + 1, string.len(numStr))
+		numStr = string.sub(numStr, 1, lastIndex)
+		self._txtnum.text = string.format("%s<size=100>%s</size>", numStr, symbol2)
 	else
-		arg_4_0._txtnum.text = string.format("<size=100>%s</size>%s", var_4_1, var_4_3)
+		self._txtnum.text = string.format("<size=100>%s</size>%s", symbol, numStr)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function StoreNewbieView:onUpdateParam()
 	return
 end
 
-function var_0_0._onClick(arg_6_0)
+function StoreNewbieView:_onClick()
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "712",
 		[StatEnum.EventProperties.RecommendPageName] = "新人邀约",
-		[StatEnum.EventProperties.RecommendPageRank] = arg_6_0:getTabIndex()
+		[StatEnum.EventProperties.RecommendPageRank] = self:getTabIndex()
 	})
 	GameFacade.jumpByAdditionParam("10170#610002")
 	AudioMgr.instance:trigger(2000001)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	arg_7_0._simagebg:UnLoadImage()
+function StoreNewbieView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return StoreNewbieView

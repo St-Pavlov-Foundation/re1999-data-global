@@ -1,238 +1,242 @@
-﻿module("modules.logic.rouge.map.controller.RougeMapChoiceEventHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/controller/RougeMapChoiceEventHelper.lua
 
-local var_0_0 = class("RougeMapChoiceEventHelper")
+module("modules.logic.rouge.map.controller.RougeMapChoiceEventHelper", package.seeall)
 
-function var_0_0.triggerEventHandle(arg_1_0)
-	if not arg_1_0 then
+local RougeMapChoiceEventHelper = class("RougeMapChoiceEventHelper")
+
+function RougeMapChoiceEventHelper.triggerEventHandle(nodeMo)
+	if not nodeMo then
 		return
 	end
 
-	if arg_1_0:checkIsStart() then
+	if nodeMo:checkIsStart() then
 		return
 	end
 
-	local var_1_0 = arg_1_0.eventMo
+	local eventMo = nodeMo.eventMo
 
-	if var_1_0.state == RougeMapEnum.EventState.Finish then
+	if eventMo.state == RougeMapEnum.EventState.Finish then
 		return
 	end
 
-	local var_1_1 = var_1_0.eventCo and var_1_0.eventCo.type
+	local eventType = eventMo.eventCo and eventMo.eventCo.type
 
-	var_0_0._initEventHandleDict()
+	RougeMapChoiceEventHelper._initEventHandleDict()
 
-	local var_1_2 = var_0_0.eventHandleDict[var_1_1]
+	local handle = RougeMapChoiceEventHelper.eventHandleDict[eventType]
 
-	if not var_1_2 then
-		logError("not event handle event type : " .. tostring(var_1_1))
+	if not handle then
+		logError("not event handle event type : " .. tostring(eventType))
 
 		return
 	end
 
-	var_1_2(arg_1_0)
+	handle(nodeMo)
 end
 
-function var_0_0._initEventHandleDict()
-	if var_0_0.eventHandleDict then
+function RougeMapChoiceEventHelper._initEventHandleDict()
+	if RougeMapChoiceEventHelper.eventHandleDict then
 		return
 	end
 
-	var_0_0.eventHandleDict = {
-		[RougeMapEnum.EventType.Empty] = var_0_0.emptyHandle,
-		[RougeMapEnum.EventType.NormalFight] = var_0_0.fightHandle,
-		[RougeMapEnum.EventType.HardFight] = var_0_0.fightHandle,
-		[RougeMapEnum.EventType.EliteFight] = var_0_0.fightHandle,
-		[RougeMapEnum.EventType.BossFight] = var_0_0.fightHandle,
-		[RougeMapEnum.EventType.Reward] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.Choice] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.Store] = var_0_0.storeHandle,
-		[RougeMapEnum.EventType.Rest] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.WatchTower] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.TreasurePlace] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.ChoiceLair] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.FightLair] = var_0_0.fightHandle,
-		[RougeMapEnum.EventType.Unknow] = var_0_0.emptyHandle,
-		[RougeMapEnum.EventType.LevelUpSp] = var_0_0.choiceHandle
+	RougeMapChoiceEventHelper.eventHandleDict = {
+		[RougeMapEnum.EventType.Empty] = RougeMapChoiceEventHelper.emptyHandle,
+		[RougeMapEnum.EventType.NormalFight] = RougeMapChoiceEventHelper.fightHandle,
+		[RougeMapEnum.EventType.HardFight] = RougeMapChoiceEventHelper.fightHandle,
+		[RougeMapEnum.EventType.EliteFight] = RougeMapChoiceEventHelper.fightHandle,
+		[RougeMapEnum.EventType.BossFight] = RougeMapChoiceEventHelper.fightHandle,
+		[RougeMapEnum.EventType.Reward] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.Choice] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.Store] = RougeMapChoiceEventHelper.storeHandle,
+		[RougeMapEnum.EventType.Rest] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.WatchTower] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.TreasurePlace] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.ChoiceLair] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.FightLair] = RougeMapChoiceEventHelper.fightHandle,
+		[RougeMapEnum.EventType.Unknow] = RougeMapChoiceEventHelper.emptyHandle,
+		[RougeMapEnum.EventType.LevelUpSp] = RougeMapChoiceEventHelper.choiceHandle
 	}
 end
 
-function var_0_0.triggerContinueEventHandle(arg_3_0)
-	if not arg_3_0 then
+function RougeMapChoiceEventHelper.triggerContinueEventHandle(nodeMo)
+	if not nodeMo then
 		return
 	end
 
-	if arg_3_0:checkIsStart() then
+	if nodeMo:checkIsStart() then
 		return
 	end
 
-	local var_3_0 = arg_3_0.eventMo
+	local eventMo = nodeMo.eventMo
 
-	if var_3_0.state == RougeMapEnum.EventState.Finish then
+	if eventMo.state == RougeMapEnum.EventState.Finish then
 		return
 	end
 
-	local var_3_1 = var_3_0.eventCo and var_3_0.eventCo.type
+	local eventType = eventMo.eventCo and eventMo.eventCo.type
 
-	var_0_0._initContinueEventHandleDict()
+	RougeMapChoiceEventHelper._initContinueEventHandleDict()
 
-	local var_3_2 = var_0_0.continueEventHandleDict[var_3_1]
+	local handle = RougeMapChoiceEventHelper.continueEventHandleDict[eventType]
 
-	if not var_3_2 then
-		logError("not continue event handle event type : " .. tostring(var_3_1))
+	if not handle then
+		logError("not continue event handle event type : " .. tostring(eventType))
 
 		return
 	end
 
-	var_3_2(arg_3_0)
+	handle(nodeMo)
 end
 
-function var_0_0._initContinueEventHandleDict()
-	if var_0_0.continueEventHandleDict then
+function RougeMapChoiceEventHelper._initContinueEventHandleDict()
+	if RougeMapChoiceEventHelper.continueEventHandleDict then
 		return
 	end
 
-	var_0_0.continueEventHandleDict = {
-		[RougeMapEnum.EventType.Empty] = var_0_0.emptyHandle,
-		[RougeMapEnum.EventType.NormalFight] = var_0_0.continueFightEventHandle,
-		[RougeMapEnum.EventType.HardFight] = var_0_0.continueFightEventHandle,
-		[RougeMapEnum.EventType.EliteFight] = var_0_0.continueFightEventHandle,
-		[RougeMapEnum.EventType.BossFight] = var_0_0.continueFightEventHandle,
-		[RougeMapEnum.EventType.Reward] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.Choice] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.Store] = var_0_0.storeHandle,
-		[RougeMapEnum.EventType.Rest] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.WatchTower] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.TreasurePlace] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.ChoiceLair] = var_0_0.choiceHandle,
-		[RougeMapEnum.EventType.FightLair] = var_0_0.continueFightEventHandle,
-		[RougeMapEnum.EventType.Unknow] = var_0_0.emptyHandle,
-		[RougeMapEnum.EventType.LevelUpSp] = var_0_0.choiceHandle
+	RougeMapChoiceEventHelper.continueEventHandleDict = {
+		[RougeMapEnum.EventType.Empty] = RougeMapChoiceEventHelper.emptyHandle,
+		[RougeMapEnum.EventType.NormalFight] = RougeMapChoiceEventHelper.continueFightEventHandle,
+		[RougeMapEnum.EventType.HardFight] = RougeMapChoiceEventHelper.continueFightEventHandle,
+		[RougeMapEnum.EventType.EliteFight] = RougeMapChoiceEventHelper.continueFightEventHandle,
+		[RougeMapEnum.EventType.BossFight] = RougeMapChoiceEventHelper.continueFightEventHandle,
+		[RougeMapEnum.EventType.Reward] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.Choice] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.Store] = RougeMapChoiceEventHelper.storeHandle,
+		[RougeMapEnum.EventType.Rest] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.WatchTower] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.TreasurePlace] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.ChoiceLair] = RougeMapChoiceEventHelper.choiceHandle,
+		[RougeMapEnum.EventType.FightLair] = RougeMapChoiceEventHelper.continueFightEventHandle,
+		[RougeMapEnum.EventType.Unknow] = RougeMapChoiceEventHelper.emptyHandle,
+		[RougeMapEnum.EventType.LevelUpSp] = RougeMapChoiceEventHelper.choiceHandle
 	}
 end
 
-function var_0_0.emptyHandle(arg_5_0)
+function RougeMapChoiceEventHelper.emptyHandle(nodeMo)
 	logNormal("empty handle")
 end
 
-function var_0_0.fightHandle(arg_6_0)
+function RougeMapChoiceEventHelper.fightHandle(nodeMo)
 	logNormal("fight handle")
 
-	if arg_6_0:isStartedEvent() then
+	if nodeMo:isStartedEvent() then
 		return
 	end
 
-	local var_6_0 = arg_6_0:getEventCo()
-	local var_6_1 = RougeMapEnum.ChapterId
-	local var_6_2 = RougeMapConfig.instance:getFightEvent(var_6_0.id)
-	local var_6_3 = RougeDLCHelper.isCurrentUsingVersions(var_6_2.versionEpisode) and var_6_2.episodeIdInstead or var_6_2.episodeId
+	local eventCo = nodeMo:getEventCo()
+	local chapterId = RougeMapEnum.ChapterId
+	local fightEventCo = RougeMapConfig.instance:getFightEvent(eventCo.id)
+	local isUsing = RougeDLCHelper.isCurrentUsingVersions(fightEventCo.versionEpisode)
+	local episodeId = isUsing and fightEventCo.episodeIdInstead or fightEventCo.episodeId
 
-	if var_6_3 and var_6_3 ~= 0 then
-		DungeonFightController.instance:enterFight(var_6_1, var_6_3)
+	if episodeId and episodeId ~= 0 then
+		DungeonFightController.instance:enterFight(chapterId, episodeId)
 	else
-		logError(string.format("尝试进入肉鸽战斗失败, 战斗事件 %s 中 episodeId and episodeIdInstead 不可为空", var_6_0.id))
+		logError(string.format("尝试进入肉鸽战斗失败, 战斗事件 %s 中 episodeId and episodeIdInstead 不可为空", eventCo.id))
 	end
 end
 
-function var_0_0.continueFightEventHandle()
+function RougeMapChoiceEventHelper.continueFightEventHandle()
 	logNormal("continue fight handle")
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onShowContinueFight)
 end
 
-function var_0_0.storeHandle(arg_8_0)
+function RougeMapChoiceEventHelper.storeHandle(nodeMo)
 	logNormal("store handle")
-	ViewMgr.instance:openView(ViewName.RougeStoreView, arg_8_0.eventMo)
+	ViewMgr.instance:openView(ViewName.RougeStoreView, nodeMo.eventMo)
 end
 
-function var_0_0.choiceHandle(arg_9_0)
+function RougeMapChoiceEventHelper.choiceHandle(nodeMo)
 	logNormal("choice handle")
-	ViewMgr.instance:openView(ViewName.RougeMapChoiceView, arg_9_0)
+	ViewMgr.instance:openView(ViewName.RougeMapChoiceView, nodeMo)
 end
 
-function var_0_0.triggerEventHandleOnChoiceView(arg_10_0)
-	if not arg_10_0 then
-		var_0_0.defaultHandleOnChoiceView()
+function RougeMapChoiceEventHelper.triggerEventHandleOnChoiceView(nodeMo)
+	if not nodeMo then
+		RougeMapChoiceEventHelper.defaultHandleOnChoiceView()
 
 		return
 	end
 
-	if arg_10_0:checkIsStart() then
-		var_0_0.defaultHandleOnChoiceView()
+	if nodeMo:checkIsStart() then
+		RougeMapChoiceEventHelper.defaultHandleOnChoiceView()
 
 		return
 	end
 
-	local var_10_0 = arg_10_0.eventMo
+	local eventMo = nodeMo.eventMo
 
-	if var_10_0.state == RougeMapEnum.EventState.Finish then
-		var_0_0.defaultHandleOnChoiceView()
-
-		return
-	end
-
-	local var_10_1 = var_10_0.eventCo and var_10_0.eventCo.type
-
-	var_0_0._initEventHandleOnChoiceViewDict()
-
-	local var_10_2 = var_0_0._onChoiceViewHandleDict[var_10_1]
-
-	if not var_10_2 then
-		logError("not on choice view event handle event type : " .. tostring(var_10_1))
-		var_0_0.defaultHandleOnChoiceView()
+	if eventMo.state == RougeMapEnum.EventState.Finish then
+		RougeMapChoiceEventHelper.defaultHandleOnChoiceView()
 
 		return
 	end
 
-	return var_10_2(arg_10_0)
+	local eventType = eventMo.eventCo and eventMo.eventCo.type
+
+	RougeMapChoiceEventHelper._initEventHandleOnChoiceViewDict()
+
+	local handle = RougeMapChoiceEventHelper._onChoiceViewHandleDict[eventType]
+
+	if not handle then
+		logError("not on choice view event handle event type : " .. tostring(eventType))
+		RougeMapChoiceEventHelper.defaultHandleOnChoiceView()
+
+		return
+	end
+
+	return handle(nodeMo)
 end
 
-function var_0_0.defaultHandleOnChoiceView()
+function RougeMapChoiceEventHelper.defaultHandleOnChoiceView()
 	ViewMgr.instance:closeView(ViewName.RougeMapChoiceView)
 end
 
-function var_0_0._initEventHandleOnChoiceViewDict()
-	if var_0_0._onChoiceViewHandleDict then
+function RougeMapChoiceEventHelper._initEventHandleOnChoiceViewDict()
+	if RougeMapChoiceEventHelper._onChoiceViewHandleDict then
 		return
 	end
 
-	var_0_0._onChoiceViewHandleDict = {
-		[RougeMapEnum.EventType.Empty] = var_0_0.defaultHandleOnChoiceView,
-		[RougeMapEnum.EventType.NormalFight] = var_0_0.onChoiceViewFightHandle,
-		[RougeMapEnum.EventType.HardFight] = var_0_0.onChoiceViewFightHandle,
-		[RougeMapEnum.EventType.EliteFight] = var_0_0.onChoiceViewFightHandle,
-		[RougeMapEnum.EventType.BossFight] = var_0_0.onChoiceViewFightHandle,
-		[RougeMapEnum.EventType.Reward] = var_0_0.onChoiceViewChoiceHandle,
-		[RougeMapEnum.EventType.Choice] = var_0_0.onChoiceViewChoiceHandle,
-		[RougeMapEnum.EventType.Store] = var_0_0.onChoiceViewStoreHandle,
-		[RougeMapEnum.EventType.Rest] = var_0_0.onChoiceViewChoiceHandle,
-		[RougeMapEnum.EventType.WatchTower] = var_0_0.onChoiceViewChoiceHandle,
-		[RougeMapEnum.EventType.TreasurePlace] = var_0_0.onChoiceViewChoiceHandle,
-		[RougeMapEnum.EventType.ChoiceLair] = var_0_0.onChoiceViewChoiceHandle,
-		[RougeMapEnum.EventType.FightLair] = var_0_0.onChoiceViewFightHandle,
-		[RougeMapEnum.EventType.LevelUpSp] = var_0_0.onChoiceViewChoiceHandle
+	RougeMapChoiceEventHelper._onChoiceViewHandleDict = {
+		[RougeMapEnum.EventType.Empty] = RougeMapChoiceEventHelper.defaultHandleOnChoiceView,
+		[RougeMapEnum.EventType.NormalFight] = RougeMapChoiceEventHelper.onChoiceViewFightHandle,
+		[RougeMapEnum.EventType.HardFight] = RougeMapChoiceEventHelper.onChoiceViewFightHandle,
+		[RougeMapEnum.EventType.EliteFight] = RougeMapChoiceEventHelper.onChoiceViewFightHandle,
+		[RougeMapEnum.EventType.BossFight] = RougeMapChoiceEventHelper.onChoiceViewFightHandle,
+		[RougeMapEnum.EventType.Reward] = RougeMapChoiceEventHelper.onChoiceViewChoiceHandle,
+		[RougeMapEnum.EventType.Choice] = RougeMapChoiceEventHelper.onChoiceViewChoiceHandle,
+		[RougeMapEnum.EventType.Store] = RougeMapChoiceEventHelper.onChoiceViewStoreHandle,
+		[RougeMapEnum.EventType.Rest] = RougeMapChoiceEventHelper.onChoiceViewChoiceHandle,
+		[RougeMapEnum.EventType.WatchTower] = RougeMapChoiceEventHelper.onChoiceViewChoiceHandle,
+		[RougeMapEnum.EventType.TreasurePlace] = RougeMapChoiceEventHelper.onChoiceViewChoiceHandle,
+		[RougeMapEnum.EventType.ChoiceLair] = RougeMapChoiceEventHelper.onChoiceViewChoiceHandle,
+		[RougeMapEnum.EventType.FightLair] = RougeMapChoiceEventHelper.onChoiceViewFightHandle,
+		[RougeMapEnum.EventType.LevelUpSp] = RougeMapChoiceEventHelper.onChoiceViewChoiceHandle
 	}
 end
 
-function var_0_0.onChoiceViewFightHandle(arg_13_0)
-	var_0_0.defaultHandleOnChoiceView()
-	var_0_0.fightHandle(arg_13_0)
+function RougeMapChoiceEventHelper.onChoiceViewFightHandle(nodeMo)
+	RougeMapChoiceEventHelper.defaultHandleOnChoiceView()
+	RougeMapChoiceEventHelper.fightHandle(nodeMo)
 end
 
-function var_0_0.onChoiceViewChoiceHandle(arg_14_0)
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceEventChange, arg_14_0)
+function RougeMapChoiceEventHelper.onChoiceViewChoiceHandle(nodeMo)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceEventChange, nodeMo)
 end
 
-function var_0_0.onChoiceViewStoreHandle(arg_15_0)
-	var_0_0.defaultHandleOnChoiceView()
-	ViewMgr.instance:openView(ViewName.RougeStoreView, arg_15_0.eventMo)
+function RougeMapChoiceEventHelper.onChoiceViewStoreHandle(nodeMo)
+	RougeMapChoiceEventHelper.defaultHandleOnChoiceView()
+	ViewMgr.instance:openView(ViewName.RougeStoreView, nodeMo.eventMo)
 end
 
-function var_0_0._getLevelUpMaxNum(arg_16_0)
-	if arg_16_0 then
-		local var_16_0 = arg_16_0 and arg_16_0.eventMo
-		local var_16_1 = var_16_0 and var_16_0.jsonData
+function RougeMapChoiceEventHelper._getLevelUpMaxNum(nodeMo)
+	if nodeMo then
+		local eventMo = nodeMo and nodeMo.eventMo
+		local jsonData = eventMo and eventMo.jsonData
+		local maxLevelUpNum = jsonData and jsonData.collectionLevelUpNum
 
-		return var_16_1 and var_16_1.collectionLevelUpNum
+		return maxLevelUpNum
 	end
 end
 
-return var_0_0
+return RougeMapChoiceEventHelper

@@ -1,56 +1,61 @@
-﻿module("modules.logic.room.view.RoomViewBlur", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewBlur.lua
 
-local var_0_0 = class("RoomViewBlur", BaseView)
+module("modules.logic.room.view.RoomViewBlur", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomViewBlur = class("RoomViewBlur", BaseView)
+
+function RoomViewBlur:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewBlur:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewBlur:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_4_0._blurGO = nil
-	arg_4_0._material = nil
+function RoomViewBlur:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._blurGO = nil
+	self._material = nil
 end
 
-function var_0_0._refreshUI(arg_5_0)
-	if not arg_5_0._blurGO then
-		arg_5_0._blurGO = arg_5_0.viewContainer:getResInst("ppassets/uixiaowumask.prefab", arg_5_0.viewGO, "blur")
-		arg_5_0._material = arg_5_0._blurGO:GetComponent(typeof(UnityEngine.UI.Image)).material
+function RoomViewBlur:_refreshUI()
+	if not self._blurGO then
+		self._blurGO = self.viewContainer:getResInst("ppassets/uixiaowumask.prefab", self.viewGO, "blur")
 
-		arg_5_0:_updateBlur(0)
+		local image = self._blurGO:GetComponent(typeof(UnityEngine.UI.Image))
+
+		self._material = image.material
+
+		self:_updateBlur(0)
 	end
 end
 
-function var_0_0._updateBlur(arg_6_0, arg_6_1)
-	if not arg_6_0._material then
+function RoomViewBlur:_updateBlur(blur)
+	if not self._material then
 		return
 	end
 
-	arg_6_1 = arg_6_1 or 0
+	blur = blur or 0
 
-	arg_6_0._material:SetFloat("_ChangeTax", arg_6_1)
+	self._material:SetFloat("_ChangeTax", blur)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateBlur, arg_7_0._updateBlur, arg_7_0)
+function RoomViewBlur:onOpen()
+	self:addEventCb(RoomMapController.instance, RoomEvent.UpdateBlur, self._updateBlur, self)
 end
 
-function var_0_0.onClose(arg_8_0)
+function RoomViewBlur:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._material = nil
+function RoomViewBlur:onDestroyView()
+	self._material = nil
 end
 
-return var_0_0
+return RoomViewBlur

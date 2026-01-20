@@ -1,43 +1,45 @@
-﻿module("modules.logic.activity.model.warmup.ActivityWarmUpTaskMO", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/warmup/ActivityWarmUpTaskMO.lua
 
-local var_0_0 = pureTable("ActivityWarmUpTaskMO")
+module("modules.logic.activity.model.warmup.ActivityWarmUpTaskMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_2.id
-	arg_1_0.config = arg_1_2
-	arg_1_0.taskMO = arg_1_1
+local ActivityWarmUpTaskMO = pureTable("ActivityWarmUpTaskMO")
+
+function ActivityWarmUpTaskMO:init(taskMO, taskCO)
+	self.id = taskCO.id
+	self.config = taskCO
+	self.taskMO = taskMO
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.taskMO = arg_2_1
+function ActivityWarmUpTaskMO:updateMO(taskMO)
+	self.taskMO = taskMO
 end
 
-function var_0_0.isLock(arg_3_0)
-	return arg_3_0.taskMO == nil
+function ActivityWarmUpTaskMO:isLock()
+	return self.taskMO == nil
 end
 
-function var_0_0.isFinished(arg_4_0)
-	if arg_4_0.taskMO then
-		return arg_4_0.taskMO.hasFinished
+function ActivityWarmUpTaskMO:isFinished()
+	if self.taskMO then
+		return self.taskMO.hasFinished
 	end
 
 	return false
 end
 
-function var_0_0.getProgress(arg_5_0)
-	if arg_5_0.taskMO then
-		return arg_5_0.taskMO.progress
+function ActivityWarmUpTaskMO:getProgress()
+	if self.taskMO then
+		return self.taskMO.progress
 	end
 
 	return 0
 end
 
-function var_0_0.alreadyGotReward(arg_6_0)
-	if arg_6_0.taskMO then
-		return arg_6_0.taskMO.finishCount > 0
+function ActivityWarmUpTaskMO:alreadyGotReward()
+	if self.taskMO then
+		return self.taskMO.finishCount > 0
 	end
 
 	return false
 end
 
-return var_0_0
+return ActivityWarmUpTaskMO

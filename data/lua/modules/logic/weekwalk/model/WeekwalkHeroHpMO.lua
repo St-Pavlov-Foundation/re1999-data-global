@@ -1,17 +1,19 @@
-﻿module("modules.logic.weekwalk.model.WeekwalkHeroHpMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/WeekwalkHeroHpMO.lua
 
-local var_0_0 = pureTable("WeekwalkHeroHpMO")
+module("modules.logic.weekwalk.model.WeekwalkHeroHpMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.hp = arg_1_1.hp
-	arg_1_0.buff = arg_1_1.buff
+local WeekwalkHeroHpMO = pureTable("WeekwalkHeroHpMO")
+
+function WeekwalkHeroHpMO:init(info)
+	self.heroId = info.heroId
+	self.hp = info.hp
+	self.buff = info.buff
 end
 
-function var_0_0.setValue(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.heroId = arg_2_1
-	arg_2_0.buff = arg_2_2
-	arg_2_0.hp = arg_2_3
+function WeekwalkHeroHpMO:setValue(heroId, buff, hp)
+	self.heroId = heroId
+	self.buff = buff
+	self.hp = hp
 end
 
-return var_0_0
+return WeekwalkHeroHpMO

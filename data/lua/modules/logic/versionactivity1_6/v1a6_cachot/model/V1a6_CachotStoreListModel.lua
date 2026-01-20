@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotStoreListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotStoreListModel.lua
 
-local var_0_0 = class("V1a6_CachotStoreListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotStoreListModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local V1a6_CachotStoreListModel = class("V1a6_CachotStoreListModel", ListScrollModel)
 
-return var_0_0
+V1a6_CachotStoreListModel.instance = V1a6_CachotStoreListModel.New()
+
+return V1a6_CachotStoreListModel

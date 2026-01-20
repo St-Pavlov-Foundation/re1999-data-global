@@ -1,13 +1,15 @@
-﻿module("modules.logic.pcInput.activityAdapter.ThirdDoorActivtiyAdapter", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/activityAdapter/ThirdDoorActivtiyAdapter.lua
 
-local var_0_0 = class("ThirdDoorActivtiyAdapter", BaseActivityAdapter)
+module("modules.logic.pcInput.activityAdapter.ThirdDoorActivtiyAdapter", package.seeall)
 
-var_0_0.keytoFunction = {
+local ThirdDoorActivtiyAdapter = class("ThirdDoorActivtiyAdapter", BaseActivityAdapter)
+
+ThirdDoorActivtiyAdapter.keytoFunction = {
 	[5] = function()
 		if ViewMgr.instance:isOpen(ViewName.ExploreMapView) then
 			ViewMgr.instance:closeView(ViewName.ExploreMapView)
 		else
-			if ViewMgr.instance:IsPopUpViewOpen() or not var_0_0.instance:getHeroCanMove() then
+			if ViewMgr.instance:IsPopUpViewOpen() or not ThirdDoorActivtiyAdapter.instance:getHeroCanMove() then
 				return
 			end
 
@@ -22,7 +24,7 @@ var_0_0.keytoFunction = {
 		if ViewMgr.instance:isOpen(ViewName.ExploreBackpackView) then
 			ViewMgr.instance:closeView(ViewName.ExploreBackpackView)
 		else
-			if ViewMgr.instance:IsPopUpViewOpen() or not var_0_0.instance:getHeroCanMove() then
+			if ViewMgr.instance:IsPopUpViewOpen() or not ThirdDoorActivtiyAdapter.instance:getHeroCanMove() then
 				return
 			end
 
@@ -63,7 +65,7 @@ var_0_0.keytoFunction = {
 			return
 		end
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_0_0.instance:getHeroCanMove() then
+		if ViewMgr.instance:IsPopUpViewOpen() or not ThirdDoorActivtiyAdapter.instance:getHeroCanMove() then
 			return
 		end
 
@@ -76,7 +78,7 @@ var_0_0.keytoFunction = {
 			return
 		end
 
-		if ViewMgr.instance:IsPopUpViewOpen() or not var_0_0.instance:getHeroCanMove() then
+		if ViewMgr.instance:IsPopUpViewOpen() or not ThirdDoorActivtiyAdapter.instance:getHeroCanMove() then
 			return
 		end
 
@@ -84,25 +86,25 @@ var_0_0.keytoFunction = {
 	end
 }
 
-function var_0_0.getHeroCanMove(arg_14_0)
-	local var_14_0 = ExploreController.instance:getMap()
+function ThirdDoorActivtiyAdapter:getHeroCanMove()
+	local map = ExploreController.instance:getMap()
 
-	if var_14_0 and var_14_0:getNowStatus() == ExploreEnum.MapStatus.Normal then
+	if map and map:getNowStatus() == ExploreEnum.MapStatus.Normal then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.ctor(arg_15_0)
-	BaseActivityAdapter.ctor(arg_15_0)
+function ThirdDoorActivtiyAdapter:ctor()
+	BaseActivityAdapter.ctor(self)
 
-	arg_15_0.keytoFunction = var_0_0.keytoFunction
-	arg_15_0.activitid = PCInputModel.Activity.thrityDoor
+	self.keytoFunction = ThirdDoorActivtiyAdapter.keytoFunction
+	self.activitid = PCInputModel.Activity.thrityDoor
 
-	arg_15_0:registerFunction()
+	self:registerFunction()
 end
 
-var_0_0.instance = var_0_0.New()
+ThirdDoorActivtiyAdapter.instance = ThirdDoorActivtiyAdapter.New()
 
-return var_0_0
+return ThirdDoorActivtiyAdapter

@@ -1,59 +1,61 @@
-﻿module("modules.logic.bossrush.view.BossRushFightViewBossHpExt", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/BossRushFightViewBossHpExt.lua
 
-local var_0_0 = class("BossRushFightViewBossHpExt", BaseViewExtended)
+module("modules.logic.bossrush.view.BossRushFightViewBossHpExt", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtmyblood = gohelper.findChildText(arg_1_0.viewGO, "#txt_myblood")
-	arg_1_0._txtbloodnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_bloodnum")
-	arg_1_0._txtbloodnum.text = ""
+local BossRushFightViewBossHpExt = class("BossRushFightViewBossHpExt", BaseViewExtended)
+
+function BossRushFightViewBossHpExt:onInitView()
+	self._txtmyblood = gohelper.findChildText(self.viewGO, "#txt_myblood")
+	self._txtbloodnum = gohelper.findChildText(self.viewGO, "#txt_bloodnum")
+	self._txtbloodnum.text = ""
 end
 
-function var_0_0.onRefreshViewParam(arg_2_0, arg_2_1)
-	arg_2_0._parentGo = arg_2_1
+function BossRushFightViewBossHpExt:onRefreshViewParam(parentGo)
+	self._parentGo = parentGo
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0._isInitedInfinitBlood = false
+function BossRushFightViewBossHpExt:onOpen()
+	self._isInitedInfinitBlood = false
 
-	gohelper.setSiblingAfter(arg_3_0.viewGO, arg_3_0._parentGo)
-	arg_3_0:_setMyBossBlood(BossRushModel.instance:getBossCurHP(), BossRushModel.instance:getBossCurMaxHP())
-	BossRushController.instance:registerCallback(BossRushEvent.OnBossDeadSumChange, arg_3_0._onBossDeadSumChange, arg_3_0)
-	BossRushController.instance:registerCallback(BossRushEvent.OnHpChange, arg_3_0._onHpChange, arg_3_0)
+	gohelper.setSiblingAfter(self.viewGO, self._parentGo)
+	self:_setMyBossBlood(BossRushModel.instance:getBossCurHP(), BossRushModel.instance:getBossCurMaxHP())
+	BossRushController.instance:registerCallback(BossRushEvent.OnBossDeadSumChange, self._onBossDeadSumChange, self)
+	BossRushController.instance:registerCallback(BossRushEvent.OnHpChange, self._onHpChange, self)
 end
 
-function var_0_0.onClose(arg_4_0)
-	BossRushController.instance:unregisterCallback(BossRushEvent.OnHpChange, arg_4_0._onHpChange, arg_4_0)
-	BossRushController.instance:unregisterCallback(BossRushEvent.OnBossDeadSumChange, arg_4_0._onBossDeadSumChange, arg_4_0)
+function BossRushFightViewBossHpExt:onClose()
+	BossRushController.instance:unregisterCallback(BossRushEvent.OnHpChange, self._onHpChange, self)
+	BossRushController.instance:unregisterCallback(BossRushEvent.OnBossDeadSumChange, self._onBossDeadSumChange, self)
 
-	arg_4_0._isInitedInfinitBlood = false
+	self._isInitedInfinitBlood = false
 end
 
-function var_0_0._onBossDeadSumChange(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:_setBossDeadNum(arg_5_2)
+function BossRushFightViewBossHpExt:_onBossDeadSumChange(last, cur)
+	self:_setBossDeadNum(cur)
 end
 
-function var_0_0._onHpChange(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = BossRushModel.instance:getBossCurMaxHP()
+function BossRushFightViewBossHpExt:_onHpChange(last, cur)
+	local max = BossRushModel.instance:getBossCurMaxHP()
 
-	arg_6_0:_setMyBossBlood(arg_6_2, var_6_0)
+	self:_setMyBossBlood(cur, max)
 end
 
-function var_0_0._setMyBossBlood(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = BossRushModel.instance:getBossBloodCount()
-	local var_7_1 = BossRushModel.instance:getBossBloodMaxCount()
-	local var_7_2 = string.format("%.2f%%", arg_7_1 / arg_7_2 * 100)
+function BossRushFightViewBossHpExt:_setMyBossBlood(value, max)
+	local hpCurCount = BossRushModel.instance:getBossBloodCount()
+	local hpMaxCount = BossRushModel.instance:getBossBloodMaxCount()
+	local percent = string.format("%.2f%%", value / max * 100)
 
-	if var_7_0 == 1 and arg_7_1 == 0 and not arg_7_0._isInitedInfinitBlood then
-		arg_7_0:_setBossDeadNum(0)
+	if hpCurCount == 1 and value == 0 and not self._isInitedInfinitBlood then
+		self:_setBossDeadNum(0)
 
-		arg_7_0._isInitedInfinitBlood = true
+		self._isInitedInfinitBlood = true
 	end
 
-	arg_7_0._txtmyblood.text = string.format("%s/%s (%s) %s/%s", arg_7_1, arg_7_2, var_7_2, math.max(0, var_7_0 - 1), math.max(0, var_7_1 - 1))
+	self._txtmyblood.text = string.format("%s/%s (%s) %s/%s", value, max, percent, math.max(0, hpCurCount - 1), math.max(0, hpMaxCount - 1))
 end
 
-function var_0_0._setBossDeadNum(arg_8_0, arg_8_1)
-	arg_8_0._txtbloodnum.text = string.format("<color=#FFFF00>(x%s)</color>", arg_8_1)
+function BossRushFightViewBossHpExt:_setBossDeadNum(num)
+	self._txtbloodnum.text = string.format("<color=#FFFF00>(x%s)</color>", num)
 end
 
-return var_0_0
+return BossRushFightViewBossHpExt

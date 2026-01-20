@@ -1,42 +1,46 @@
-﻿module("modules.logic.seasonver.act166.view.Season166TeachViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166TeachViewContainer.lua
 
-local var_0_0 = class("Season166TeachViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act166.view.Season166TeachViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season166TeachViewContainer = class("Season166TeachViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season166TeachView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Season166TeachViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season166TeachView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Season166TeachViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideClose, arg_2_0)
+		self.navigateView:setOverrideClose(self.overrideClose, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.overrideClose(arg_3_0)
-	if Season166TeachModel.instance:checkIsAllTeachFinish(arg_3_0.viewParam.actId) then
-		arg_3_0:closeThis()
+function Season166TeachViewContainer:overrideClose()
+	local isAllTeachFinish = Season166TeachModel.instance:checkIsAllTeachFinish(self.viewParam.actId)
+
+	if isAllTeachFinish then
+		self:closeThis()
 	else
-		GameFacade.showOptionMessageBox(MessageBoxIdDefine.Season166CloseTeachTip, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.NotShow, arg_3_0.onYesClick, nil, nil, arg_3_0)
+		GameFacade.showOptionMessageBox(MessageBoxIdDefine.Season166CloseTeachTip, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.NotShow, self.onYesClick, nil, nil, self)
 	end
 end
 
-function var_0_0.onYesClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season166TeachViewContainer:onYesClick()
+	self:closeThis()
 end
 
-return var_0_0
+return Season166TeachViewContainer

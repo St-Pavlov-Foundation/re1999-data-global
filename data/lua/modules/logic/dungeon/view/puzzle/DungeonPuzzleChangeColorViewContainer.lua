@@ -1,17 +1,19 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzleChangeColorViewContainer.lua
 
-local var_0_0 = class("DungeonPuzzleChangeColorViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzleChangeColorViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonPuzzleChangeColorViewContainer = class("DungeonPuzzleChangeColorViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
-	table.insert(var_1_0, DungeonPuzzleChangeColorView.New())
+function DungeonPuzzleChangeColorViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, DungeonPuzzleChangeColorView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function DungeonPuzzleChangeColorViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -21,4 +23,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return DungeonPuzzleChangeColorViewContainer

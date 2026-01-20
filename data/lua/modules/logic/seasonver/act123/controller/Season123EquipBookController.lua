@@ -1,53 +1,55 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123EquipBookController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123EquipBookController.lua
 
-local var_0_0 = class("Season123EquipBookController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123EquipBookController", package.seeall)
 
-function var_0_0.changeSelect(arg_1_0, arg_1_1)
-	Season123EquipBookModel.instance:setCurSelectItemId(arg_1_1)
+local Season123EquipBookController = class("Season123EquipBookController", BaseController)
+
+function Season123EquipBookController:changeSelect(itemId)
+	Season123EquipBookModel.instance:setCurSelectItemId(itemId)
 	Season123EquipBookModel.instance:onModelUpdate()
-	arg_1_0:dispatchEvent(Season123Event.OnEquipBookItemChangeSelect)
+	self:dispatchEvent(Season123Event.OnEquipBookItemChangeSelect)
 end
 
-function var_0_0.setSelectTag(arg_2_0, arg_2_1)
+function Season123EquipBookController:setSelectTag(selectTagIndex)
 	if Season123EquipBookModel.instance.tagModel then
-		Season123EquipBookModel.instance.tagModel:selectTagIndex(arg_2_1)
-		arg_2_0:handleItemChange()
+		Season123EquipBookModel.instance.tagModel:selectTagIndex(selectTagIndex)
+		self:handleItemChange()
 	end
 end
 
-function var_0_0.handleItemChange(arg_3_0)
-	local var_3_0 = Season123EquipBookModel.instance.curSelectItemId
+function Season123EquipBookController:handleItemChange()
+	local oldSelected = Season123EquipBookModel.instance.curSelectItemId
 
 	Season123EquipBookModel.instance:initList()
-	Season123EquipBookModel.instance:setCurSelectItemId(var_3_0)
+	Season123EquipBookModel.instance:setCurSelectItemId(oldSelected)
 
 	if not Season123EquipBookModel.instance.curSelectItemId then
 		Season123EquipBookModel.instance:selectFirstCard()
 	end
 
 	Season123EquipBookModel.instance:onModelUpdate()
-	arg_3_0:dispatchEvent(Season123Event.OnRefleshEquipBookView)
+	self:dispatchEvent(Season123Event.OnRefleshEquipBookView)
 end
 
-function var_0_0.onCloseView(arg_4_0)
+function Season123EquipBookController:onCloseView()
 	Season123EquipBookModel.instance:flushRecord()
 	Season123EquipBookModel.instance:clear()
 	Season123DecomposeModel.instance:release()
 	Season123DecomposeModel.instance:clear()
 end
 
-function var_0_0.openBatchDecomposeView(arg_5_0, arg_5_1)
-	Season123DecomposeModel.instance:initDatas(arg_5_1)
-	Season123ViewHelper.openView(arg_5_1, "BatchDecomposeView", {
-		actId = arg_5_1
+function Season123EquipBookController:openBatchDecomposeView(activityId)
+	Season123DecomposeModel.instance:initDatas(activityId)
+	Season123ViewHelper.openView(activityId, "BatchDecomposeView", {
+		actId = activityId
 	})
 end
 
-function var_0_0.clearItemSelectState(arg_6_0)
+function Season123EquipBookController:clearItemSelectState()
 	Season123DecomposeModel.instance:clearCurSelectItem()
-	arg_6_0:dispatchEvent(Season123Event.OnRefleshDecomposeItemUI)
+	self:dispatchEvent(Season123Event.OnRefleshDecomposeItemUI)
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EquipBookController.instance = Season123EquipBookController.New()
 
-return var_0_0
+return Season123EquipBookController

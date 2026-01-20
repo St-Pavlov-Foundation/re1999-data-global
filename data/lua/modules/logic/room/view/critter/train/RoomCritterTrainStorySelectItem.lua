@@ -1,126 +1,134 @@
-﻿module("modules.logic.room.view.critter.train.RoomCritterTrainStorySelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/train/RoomCritterTrainStorySelectItem.lua
 
-local var_0_0 = class("RoomCritterTrainStorySelectItem")
+module("modules.logic.room.view.critter.train.RoomCritterTrainStorySelectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = gohelper.cloneInPlace(arg_1_1, string.format("selectItem%s", arg_1_2))
+local RoomCritterTrainStorySelectItem = class("RoomCritterTrainStorySelectItem")
 
-	gohelper.setActive(arg_1_0.go, false)
+function RoomCritterTrainStorySelectItem:init(go, index)
+	self.go = gohelper.cloneInPlace(go, string.format("selectItem%s", index))
 
-	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.go, "btnselect")
-	arg_1_0._goselectlight = gohelper.findChild(arg_1_0.go, "btnselect/light")
-	arg_1_0._gobgdark = gohelper.findChild(arg_1_0.go, "bgdark")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.go, "bgdark/icon")
-	arg_1_0._txtcontentdark = gohelper.findChildText(arg_1_0.go, "bgdark/txtcontentdark")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.go, "bgdark/#txt_num")
-	arg_1_0._golvup = gohelper.findChild(arg_1_0.go, "go_lvup")
-	arg_1_0._txtlvup = gohelper.findChildText(arg_1_0.go, "go_lvup/txt_lvup")
-	arg_1_0._goup = gohelper.findChild(arg_1_0.go, "go_up")
-	arg_1_0._gonum = gohelper.findChild(arg_1_0.go, "go_num")
-	arg_1_0._txtcountnum = gohelper.findChildText(arg_1_0.go, "go_num/#txt_num")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.go, "btncancel")
-	arg_1_0._goselecteff = gohelper.findChild(arg_1_0.go, "#selecteff")
+	gohelper.setActive(self.go, false)
 
-	gohelper.setActive(arg_1_0._golvup, false)
-	gohelper.setActive(arg_1_0._goselecteff, false)
-	arg_1_0:_addEvents()
+	self._btnselect = gohelper.findChildButtonWithAudio(self.go, "btnselect")
+	self._goselectlight = gohelper.findChild(self.go, "btnselect/light")
+	self._gobgdark = gohelper.findChild(self.go, "bgdark")
+	self._imageicon = gohelper.findChildImage(self.go, "bgdark/icon")
+	self._txtcontentdark = gohelper.findChildText(self.go, "bgdark/txtcontentdark")
+	self._txtnum = gohelper.findChildText(self.go, "bgdark/#txt_num")
+	self._golvup = gohelper.findChild(self.go, "go_lvup")
+	self._txtlvup = gohelper.findChildText(self.go, "go_lvup/txt_lvup")
+	self._goup = gohelper.findChild(self.go, "go_up")
+	self._gonum = gohelper.findChild(self.go, "go_num")
+	self._txtcountnum = gohelper.findChildText(self.go, "go_num/#txt_num")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.go, "btncancel")
+	self._goselecteff = gohelper.findChild(self.go, "#selecteff")
+
+	gohelper.setActive(self._golvup, false)
+	gohelper.setActive(self._goselecteff, false)
+	self:_addEvents()
 end
 
-function var_0_0._addEvents(arg_2_0)
-	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+function RoomCritterTrainStorySelectItem:_addEvents()
+	self._btnselect:AddClickListener(self._btnselectOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
 end
 
-function var_0_0._removeEvents(arg_3_0)
-	arg_3_0._btnselect:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
+function RoomCritterTrainStorySelectItem:_removeEvents()
+	self._btnselect:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
 end
 
-function var_0_0.show(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0._optionId = arg_4_1
-	arg_4_0._count = arg_4_4
-	arg_4_0._attributeMO = arg_4_2.trainInfo:getEventOptionMOByOptionId(arg_4_3, arg_4_1).addAttriButes[1]
-	arg_4_0._attributeInfo = arg_4_2:getAttributeInfoByType(arg_4_0._attributeMO.attributeId)
-	arg_4_0._addAttributeValue = arg_4_2.trainInfo:getAddAttributeValue(arg_4_0._attributeMO.attributeId)
-	arg_4_0._attributeCo = CritterConfig.instance:getCritterAttributeCfg(arg_4_0._attributeMO.attributeId)
-	arg_4_0._critterMo = arg_4_2
-	arg_4_0._eventId = arg_4_3
+function RoomCritterTrainStorySelectItem:show(optionId, critterMo, eventId, count)
+	self._optionId = optionId
+	self._count = count
+	self._attributeMO = critterMo.trainInfo:getEventOptionMOByOptionId(eventId, optionId).addAttriButes[1]
+	self._attributeInfo = critterMo:getAttributeInfoByType(self._attributeMO.attributeId)
+	self._addAttributeValue = critterMo.trainInfo:getAddAttributeValue(self._attributeMO.attributeId)
+	self._attributeCo = CritterConfig.instance:getCritterAttributeCfg(self._attributeMO.attributeId)
+	self._critterMo = critterMo
+	self._eventId = eventId
 
-	arg_4_0:_refreshItem()
+	self:_refreshItem()
 end
 
-function var_0_0._btncancelOnClick(arg_5_0)
-	if RoomTrainCritterModel.instance:getSelectOptionCount(arg_5_0._optionId) <= 0 then
+function RoomCritterTrainStorySelectItem:_btncancelOnClick()
+	local count = RoomTrainCritterModel.instance:getSelectOptionCount(self._optionId)
+
+	if count <= 0 then
 		return
 	end
 
-	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeCancel, arg_5_0._attributeCo.id, arg_5_0._optionId)
+	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeCancel, self._attributeCo.id, self._optionId)
 end
 
-function var_0_0._btnselectOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0._goselecteff, false)
-	TaskDispatcher.cancelTask(arg_6_0._playSelectFinished, arg_6_0)
+function RoomCritterTrainStorySelectItem:_btnselectOnClick()
+	gohelper.setActive(self._goselecteff, false)
+	TaskDispatcher.cancelTask(self._playSelectFinished, self)
 
-	if RoomTrainCritterModel.instance:getSelectOptionLimitCount() <= 0 then
+	local limitCount = RoomTrainCritterModel.instance:getSelectOptionLimitCount()
+
+	if limitCount <= 0 then
 		return
 	end
 
-	if arg_6_0._count and arg_6_0._count < 1 then
-		gohelper.setActive(arg_6_0._goselecteff, true)
-		TaskDispatcher.runDelay(arg_6_0._playSelectFinished, arg_6_0, 0.34)
+	if self._count and self._count < 1 then
+		gohelper.setActive(self._goselecteff, true)
+		TaskDispatcher.runDelay(self._playSelectFinished, self, 0.34)
 	end
 
-	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeSelected, arg_6_0._attributeCo.id, arg_6_0._optionId)
+	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeSelected, self._attributeCo.id, self._optionId)
 end
 
-function var_0_0._playSelectFinished(arg_7_0)
-	gohelper.setActive(arg_7_0._goselecteff, false)
+function RoomCritterTrainStorySelectItem:_playSelectFinished()
+	gohelper.setActive(self._goselecteff, false)
 end
 
-function var_0_0._refreshItem(arg_8_0)
-	gohelper.setActive(arg_8_0._goselectlight, arg_8_0._count and arg_8_0._count > 0)
-	gohelper.setActive(arg_8_0._btncancel.gameObject, arg_8_0._count and arg_8_0._count > 0)
-	ZProj.TweenHelper.KillByObj(arg_8_0.go)
+function RoomCritterTrainStorySelectItem:_refreshItem()
+	gohelper.setActive(self._goselectlight, self._count and self._count > 0)
+	gohelper.setActive(self._btncancel.gameObject, self._count and self._count > 0)
+	ZProj.TweenHelper.KillByObj(self.go)
 
-	if not arg_8_0.go.activeSelf then
-		gohelper.setActive(arg_8_0.go, true)
-		ZProj.TweenHelper.DOFadeCanvasGroup(arg_8_0.go, 0, 1, 0.6)
+	if not self.go.activeSelf then
+		gohelper.setActive(self.go, true)
+		ZProj.TweenHelper.DOFadeCanvasGroup(self.go, 0, 1, 0.6)
 	end
 
-	arg_8_0._txtcontentdark.text = arg_8_0._attributeCo.name
+	self._txtcontentdark.text = self._attributeCo.name
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_8_0._imageicon, arg_8_0._attributeCo.icon)
+	UISpriteSetMgr.instance:setCritterSprite(self._imageicon, self._attributeCo.icon)
 
-	arg_8_0._txtnum.text = string.format("+%.02f", arg_8_0._attributeMO.value)
+	self._txtnum.text = string.format("+%.02f", self._attributeMO.value)
 
-	gohelper.setActive(arg_8_0._gonum, arg_8_0._count and arg_8_0._count > 0)
+	gohelper.setActive(self._gonum, self._count and self._count > 0)
 
-	arg_8_0._txtcountnum.text = arg_8_0._count or 0
+	self._txtcountnum.text = self._count or 0
 
-	local var_8_0 = false
+	local showPref = false
+	local heroPreferenceCo = CritterConfig.instance:getCritterHeroPreferenceCfg(self._critterMo.trainInfo.heroId)
 
-	if CritterConfig.instance:getCritterHeroPreferenceCfg(arg_8_0._critterMo.trainInfo.heroId).effectAttribute == arg_8_0._attributeMO.attributeId then
-		var_8_0 = true
+	if heroPreferenceCo.effectAttribute == self._attributeMO.attributeId then
+		showPref = true
 	end
 
-	gohelper.setActive(arg_8_0._goup, var_8_0)
+	gohelper.setActive(self._goup, showPref)
 
-	local var_8_1 = arg_8_0._attributeInfo.value + arg_8_0._addAttributeValue
-	local var_8_2 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(var_8_1).level
-	local var_8_3 = RoomTrainCritterModel.instance:getSelectOptionCount(arg_8_0._optionId)
-	local var_8_4 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(var_8_3 * arg_8_0._attributeMO.value + var_8_1).level
+	local baseValue = self._attributeInfo.value + self._addAttributeValue
+	local initLevel = CritterConfig.instance:getCritterAttributeLevelCfgByValue(baseValue).level
+	local count = RoomTrainCritterModel.instance:getSelectOptionCount(self._optionId)
+	local addLevel = CritterConfig.instance:getCritterAttributeLevelCfgByValue(count * self._attributeMO.value + baseValue).level
+	local maxLvConfig = CritterConfig.instance:getMaxCritterAttributeLevelCfg()
 
-	if var_8_2 == CritterConfig.instance:getMaxCritterAttributeLevelCfg().level then
-		arg_8_0._txtnum.text = string.format("+%.02f(MAX)", arg_8_0._attributeMO.value)
+	if initLevel == maxLvConfig.level then
+		self._txtnum.text = string.format("+%.02f(MAX)", self._attributeMO.value)
 	end
 
-	gohelper.setActive(arg_8_0._golvup, var_8_2 < var_8_4)
+	gohelper.setActive(self._golvup, initLevel < addLevel)
 end
 
-function var_0_0.destroy(arg_9_0)
-	arg_9_0:_removeEvents()
-	TaskDispatcher.cancelTask(arg_9_0._playSelectFinished, arg_9_0)
-	ZProj.TweenHelper.KillByObj(arg_9_0.go)
+function RoomCritterTrainStorySelectItem:destroy()
+	self:_removeEvents()
+	TaskDispatcher.cancelTask(self._playSelectFinished, self)
+	ZProj.TweenHelper.KillByObj(self.go)
 end
 
-return var_0_0
+return RoomCritterTrainStorySelectItem

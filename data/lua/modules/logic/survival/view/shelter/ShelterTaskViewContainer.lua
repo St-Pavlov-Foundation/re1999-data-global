@@ -1,32 +1,34 @@
-﻿module("modules.logic.survival.view.shelter.ShelterTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterTaskViewContainer.lua
 
-local var_0_0 = class("ShelterTaskViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.ShelterTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ShelterTaskViewContainer = class("ShelterTaskViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ShelterTaskView.New())
-	table.insert(var_1_0, ShelterTaskMainTaskView.New())
-	table.insert(var_1_0, ShelterTaskStoryTaskView.New())
-	table.insert(var_1_0, ShelterTaskDecreeTaskView.New())
-	table.insert(var_1_0, ShelterTaskNormalTaskView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+function ShelterTaskViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ShelterTaskView.New())
+	table.insert(views, ShelterTaskMainTaskView.New())
+	table.insert(views, ShelterTaskStoryTaskView.New())
+	table.insert(views, ShelterTaskDecreeTaskView.New())
+	table.insert(views, ShelterTaskNormalTaskView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function ShelterTaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-return var_0_0
+return ShelterTaskViewContainer

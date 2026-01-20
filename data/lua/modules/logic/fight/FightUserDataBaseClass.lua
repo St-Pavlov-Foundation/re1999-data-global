@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.FightUserDataBaseClass", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightUserDataBaseClass.lua
 
-local var_0_0 = class("FightUserDataBaseClass", UserDataDispose)
+module("modules.logic.fight.FightUserDataBaseClass", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:__onInit()
+local FightUserDataBaseClass = class("FightUserDataBaseClass", UserDataDispose)
+
+function FightUserDataBaseClass:init()
+	self:__onInit()
 end
 
-function var_0_0.dispose(arg_2_0)
-	arg_2_0:__onDispose()
+function FightUserDataBaseClass:dispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightUserDataBaseClass

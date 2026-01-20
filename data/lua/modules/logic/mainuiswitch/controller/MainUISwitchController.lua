@@ -1,87 +1,91 @@
-﻿module("modules.logic.mainuiswitch.controller.MainUISwitchController", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/controller/MainUISwitchController.lua
 
-local var_0_0 = class("MainUISwitchController", BaseController)
+module("modules.logic.mainuiswitch.controller.MainUISwitchController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local MainUISwitchController = class("MainUISwitchController", BaseController)
+
+function MainUISwitchController:onInit()
+	self:reInit()
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function MainUISwitchController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_3_0._onGetInfoFinish, arg_3_0)
+function MainUISwitchController:addConstEvents()
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onGetInfoFinish, self)
 end
 
-function var_0_0.reInit(arg_4_0)
+function MainUISwitchController:reInit()
 	return
 end
 
-function var_0_0._onGetInfoFinish(arg_5_0)
+function MainUISwitchController:_onGetInfoFinish()
 	MainUISwitchModel.instance:initMainUI()
 end
 
-function var_0_0.openMainUISwitchInfoView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function MainUISwitchController:openMainUISwitchInfoView(skinId, noInfoEffect, isPreview)
 	ViewMgr.instance:openView(ViewName.MainUISwitchInfoBlurMaskView, {
-		SkinId = arg_6_1,
-		noInfoEffect = arg_6_2,
-		isPreview = arg_6_3
+		SkinId = skinId,
+		noInfoEffect = noInfoEffect,
+		isPreview = isPreview
 	})
 end
 
-function var_0_0.openMainUISwitchInfoViewGiftSet(arg_7_0, arg_7_1, arg_7_2)
+function MainUISwitchController:openMainUISwitchInfoViewGiftSet(skinId, sceneId)
 	ViewMgr.instance:openView(ViewName.MainUISwitchInfoBlurMaskView, {
 		isPreview = true,
 		isNotShowLeft = true,
 		isNotShowHero = true,
 		noInfoEffect = true,
-		SkinId = arg_7_1,
-		sceneId = arg_7_2
+		SkinId = skinId,
+		sceneId = sceneId
 	})
 end
 
-function var_0_0.setCurMainUIStyle(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = lua_scene_ui.configDict[arg_8_1]
+function MainUISwitchController:setCurMainUIStyle(id, callback, callbackObj)
+	local co = lua_scene_ui.configDict[id]
 
-	if not var_8_0 then
+	if not co then
 		return
 	end
 
-	local var_8_1 = var_8_0.defaultUnlock == 1 and 0 or var_8_0.itemId
+	local itemId = co.defaultUnlock == 1 and 0 or co.itemId
 
-	MainUISwitchModel.instance:setCurUseUI(arg_8_1)
-	PlayerRpc.instance:sendSetUiStyleSkinRequest(var_8_1, arg_8_2, arg_8_3)
-	var_0_0.instance:dispatchEvent(MainUISwitchEvent.UseMainUI, arg_8_1)
+	MainUISwitchModel.instance:setCurUseUI(id)
+	PlayerRpc.instance:sendSetUiStyleSkinRequest(itemId, callback, callbackObj)
+	MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.UseMainUI, id)
 end
 
-function var_0_0.hasReddot(arg_9_0)
+function MainUISwitchController.hasReddot(id)
 	return false
 end
 
-function var_0_0.closeReddot(arg_10_0)
+function MainUISwitchController.closeReddot(id)
 	return
 end
 
-function var_0_0.isClickEagle(arg_11_0)
-	if not arg_11_0._pointerEventData then
-		arg_11_0._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine.EventSystems.EventSystem.current)
-		arg_11_0._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
+function MainUISwitchController:isClickEagle()
+	if not self._pointerEventData then
+		self._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine.EventSystems.EventSystem.current)
+		self._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
 	end
 
-	arg_11_0._pointerEventData.position = UnityEngine.Input.mousePosition
+	self._pointerEventData.position = UnityEngine.Input.mousePosition
 
-	UnityEngine.EventSystems.EventSystem.current:RaycastAll(arg_11_0._pointerEventData, arg_11_0._raycastResults)
+	UnityEngine.EventSystems.EventSystem.current:RaycastAll(self._pointerEventData, self._raycastResults)
 
-	local var_11_0 = arg_11_0._raycastResults:GetEnumerator()
+	local iter = self._raycastResults:GetEnumerator()
 
-	while var_11_0:MoveNext() do
-		if var_11_0.Current.gameObject.name == "#go_eagleclick" then
+	while iter:MoveNext() do
+		local raycastResult = iter.Current
+
+		if raycastResult.gameObject.name == "#go_eagleclick" then
 			return true
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+MainUISwitchController.instance = MainUISwitchController.New()
 
-return var_0_0
+return MainUISwitchController

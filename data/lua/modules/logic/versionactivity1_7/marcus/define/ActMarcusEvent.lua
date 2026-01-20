@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_7.marcus.define.ActMarcusEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/marcus/define/ActMarcusEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_7.marcus.define.ActMarcusEvent", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.StoryItemClick = 2
-var_0_0.FightItemClick = 3
-var_0_0.TabSwitch = 4
+local ActMarcusEvent = _M
 
-return var_0_0
+ActMarcusEvent.OneClickClaimReward = 1
+ActMarcusEvent.StoryItemClick = 2
+ActMarcusEvent.FightItemClick = 3
+ActMarcusEvent.TabSwitch = 4
+
+return ActMarcusEvent

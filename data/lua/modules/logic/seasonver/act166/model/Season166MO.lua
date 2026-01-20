@@ -1,223 +1,227 @@
-﻿module("modules.logic.seasonver.act166.model.Season166MO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166MO.lua
 
-local var_0_0 = pureTable("Season166MO")
+module("modules.logic.seasonver.act166.model.Season166MO", package.seeall)
 
-function var_0_0.updateInfo(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1.activityId
-	arg_1_0.isFinishTeach = arg_1_1.isFinishTeach
+local Season166MO = pureTable("Season166MO")
 
-	arg_1_0:updateSpotsInfo(arg_1_1.bases)
-	arg_1_0:updateTrainsInfo(arg_1_1.trains)
-	arg_1_0:updateTeachsInfo(arg_1_1.teachs)
-	arg_1_0:updateInfomation(arg_1_1.information)
-	arg_1_0:initTalentInfo(arg_1_1.talents)
+function Season166MO:updateInfo(info)
+	self.activityId = info.activityId
+	self.isFinishTeach = info.isFinishTeach
 
-	arg_1_0.spotHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(arg_1_1.baseHeroGroupSnapshot)
-	arg_1_0.trainHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(arg_1_1.trainHeroGroupSnapshot)
+	self:updateSpotsInfo(info.bases)
+	self:updateTrainsInfo(info.trains)
+	self:updateTeachsInfo(info.teachs)
+	self:updateInfomation(info.information)
+	self:initTalentInfo(info.talents)
+
+	self.spotHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(info.baseHeroGroupSnapshot)
+	self.trainHeroGroupSnapshot = Season166HeroGroupUtils.buildSnapshotHeroGroups(info.trainHeroGroupSnapshot)
 end
 
-function var_0_0.updateInfomation(arg_2_0, arg_2_1)
-	arg_2_0.infoBonusDict = {}
-	arg_2_0.informationDict = {}
+function Season166MO:updateInfomation(information)
+	self.infoBonusDict = {}
+	self.informationDict = {}
 
-	for iter_2_0 = 1, #arg_2_1.bonusIds do
-		arg_2_0.infoBonusDict[arg_2_1.bonusIds[iter_2_0]] = 1
+	for i = 1, #information.bonusIds do
+		self.infoBonusDict[information.bonusIds[i]] = 1
 	end
 
-	arg_2_0:updateInfos(arg_2_1.infos)
+	self:updateInfos(information.infos)
 end
 
-function var_0_0.updateInfos(arg_3_0, arg_3_1)
-	local var_3_0 = false
+function Season166MO:updateInfos(infos)
+	local hasNewInfo = false
 
-	for iter_3_0 = 1, #arg_3_1 do
-		local var_3_1 = arg_3_1[iter_3_0]
-		local var_3_2 = arg_3_0.informationDict[var_3_1.id]
+	for i = 1, #infos do
+		local info = infos[i]
+		local mo = self.informationDict[info.id]
 
-		if not var_3_2 then
-			var_3_2 = Season166InfoMO.New()
+		if not mo then
+			mo = Season166InfoMO.New()
 
-			var_3_2:init(arg_3_0.activityId)
+			mo:init(self.activityId)
 
-			arg_3_0.informationDict[var_3_1.id] = var_3_2
-			var_3_0 = true
+			self.informationDict[info.id] = mo
+			hasNewInfo = true
 		end
 
-		var_3_2:setData(var_3_1)
+		mo:setData(info)
 	end
 
-	return var_3_0
+	return hasNewInfo
 end
 
-function var_0_0.updateAnalyInfoStage(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0.informationDict[arg_4_1]
+function Season166MO:updateAnalyInfoStage(infoId, stage)
+	local mo = self.informationDict[infoId]
 
-	if var_4_0 then
-		var_4_0.stage = arg_4_2
-	end
-end
-
-function var_0_0.updateInfoBonus(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0.informationDict[arg_5_1]
-
-	if var_5_0 then
-		var_5_0.bonusStage = arg_5_2
+	if mo then
+		mo.stage = stage
 	end
 end
 
-function var_0_0.onReceiveInformationBonus(arg_6_0, arg_6_1)
-	for iter_6_0 = 1, #arg_6_1 do
-		arg_6_0.infoBonusDict[arg_6_1[iter_6_0]] = 1
+function Season166MO:updateInfoBonus(infoId, bonusStage)
+	local mo = self.informationDict[infoId]
+
+	if mo then
+		mo.bonusStage = bonusStage
 	end
 end
 
-function var_0_0.updateSpotsInfo(arg_7_0, arg_7_1)
-	arg_7_0.baseSpotInfoMap = {}
-
-	for iter_7_0 = 1, #arg_7_1 do
-		local var_7_0 = arg_7_1[iter_7_0]
-		local var_7_1 = Season166BaseSpotMO.New()
-
-		var_7_1:setData(var_7_0)
-
-		arg_7_0.baseSpotInfoMap[var_7_0.id] = var_7_1
+function Season166MO:onReceiveInformationBonus(bonusIds)
+	for i = 1, #bonusIds do
+		self.infoBonusDict[bonusIds[i]] = 1
 	end
 end
 
-function var_0_0.updateMaxScore(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0.baseSpotInfoMap[arg_8_1]
+function Season166MO:updateSpotsInfo(baseSpotInfos)
+	self.baseSpotInfoMap = {}
 
-	if var_8_0 then
-		var_8_0.maxScore = arg_8_2
+	for i = 1, #baseSpotInfos do
+		local baseSpotData = baseSpotInfos[i]
+		local baseSpotMO = Season166BaseSpotMO.New()
+
+		baseSpotMO:setData(baseSpotData)
+
+		self.baseSpotInfoMap[baseSpotData.id] = baseSpotMO
 	end
 end
 
-function var_0_0.updateTrainsInfo(arg_9_0, arg_9_1)
-	arg_9_0.trainInfoMap = {}
+function Season166MO:updateMaxScore(spotId, score)
+	local baseSpotMO = self.baseSpotInfoMap[spotId]
 
-	for iter_9_0 = 1, #arg_9_1 do
-		local var_9_0 = arg_9_1[iter_9_0]
-		local var_9_1 = Season166TrainMO.New()
-
-		var_9_1:setData(var_9_0)
-
-		arg_9_0.trainInfoMap[var_9_0.id] = var_9_1
+	if baseSpotMO then
+		baseSpotMO.maxScore = score
 	end
 end
 
-function var_0_0.updateTeachsInfo(arg_10_0, arg_10_1)
-	arg_10_0.teachInfoMap = {}
+function Season166MO:updateTrainsInfo(trainsInfo)
+	self.trainInfoMap = {}
 
-	for iter_10_0 = 1, #arg_10_1 do
-		local var_10_0 = arg_10_1[iter_10_0]
-		local var_10_1 = Season166TeachMO.New()
+	for i = 1, #trainsInfo do
+		local trainData = trainsInfo[i]
+		local trainMO = Season166TrainMO.New()
 
-		var_10_1:setData(var_10_0)
+		trainMO:setData(trainData)
 
-		arg_10_0.teachInfoMap[var_10_0.id] = var_10_1
+		self.trainInfoMap[trainData.id] = trainMO
 	end
 end
 
-function var_0_0.getHeroGroupSnapShot(arg_11_0, arg_11_1)
-	if arg_11_1 == DungeonEnum.EpisodeType.Season166Base then
-		return arg_11_0.spotHeroGroupSnapshot
-	elseif arg_11_1 == DungeonEnum.EpisodeType.Season166Train then
-		return arg_11_0.trainHeroGroupSnapshot
+function Season166MO:updateTeachsInfo(teachsInfo)
+	self.teachInfoMap = {}
+
+	for i = 1, #teachsInfo do
+		local teachData = teachsInfo[i]
+		local teachMO = Season166TeachMO.New()
+
+		teachMO:setData(teachData)
+
+		self.teachInfoMap[teachData.id] = teachMO
 	end
 end
 
-function var_0_0.getInformationMO(arg_12_0, arg_12_1)
-	return arg_12_0.informationDict[arg_12_1]
-end
-
-function var_0_0.isBonusGet(arg_13_0, arg_13_1)
-	return arg_13_0.infoBonusDict[arg_13_1] == 1
-end
-
-function var_0_0.getBonusNum(arg_14_0)
-	local var_14_0 = Season166Config.instance:getSeasonInfoBonuss(arg_14_0.activityId) or {}
-	local var_14_1 = #var_14_0
-	local var_14_2 = 0
-	local var_14_3 = arg_14_0:getInfoAnalyCount()
-
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		if var_14_3 >= iter_14_1.analyCount then
-			var_14_2 = var_14_2 + 1
-		end
+function Season166MO:getHeroGroupSnapShot(episodeType)
+	if episodeType == DungeonEnum.EpisodeType.Season166Base then
+		return self.spotHeroGroupSnapshot
+	elseif episodeType == DungeonEnum.EpisodeType.Season166Train then
+		return self.trainHeroGroupSnapshot
 	end
-
-	return var_14_2, var_14_1
 end
 
-function var_0_0.getInfoAnalyCount(arg_15_0)
-	local var_15_0 = 0
+function Season166MO:getInformationMO(infoId)
+	return self.informationDict[infoId]
+end
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.informationDict) do
-		if iter_15_1:hasAnaly() then
-			var_15_0 = var_15_0 + 1
+function Season166MO:isBonusGet(bonusId)
+	return self.infoBonusDict[bonusId] == 1
+end
+
+function Season166MO:getBonusNum()
+	local list = Season166Config.instance:getSeasonInfoBonuss(self.activityId) or {}
+	local bonusCount = #list
+	local canGetBonusCount = 0
+	local analyCount = self:getInfoAnalyCount()
+
+	for i, v in ipairs(list) do
+		if analyCount >= v.analyCount then
+			canGetBonusCount = canGetBonusCount + 1
 		end
 	end
 
-	return var_15_0
+	return canGetBonusCount, bonusCount
 end
 
-function var_0_0.initTalentInfo(arg_16_0, arg_16_1)
-	arg_16_0.talentMap = {}
+function Season166MO:getInfoAnalyCount()
+	local count = 0
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
-		local var_16_0 = arg_16_0.talentMap[iter_16_1.id] or Season166TalentMO.New()
+	for k, v in pairs(self.informationDict) do
+		if v:hasAnaly() then
+			count = count + 1
+		end
+	end
 
-		var_16_0:setData(iter_16_1)
+	return count
+end
 
-		arg_16_0.talentMap[iter_16_1.id] = var_16_0
+function Season166MO:initTalentInfo(talentInfos)
+	self.talentMap = {}
+
+	for _, info in ipairs(talentInfos) do
+		local talentMO = self.talentMap[info.id]
+
+		talentMO = talentMO or Season166TalentMO.New()
+
+		talentMO:setData(info)
+
+		self.talentMap[info.id] = talentMO
 	end
 end
 
-function var_0_0.updateTalentInfo(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0.talentMap[arg_17_1.id]
+function Season166MO:updateTalentInfo(talentInfo)
+	local talentMO = self.talentMap[talentInfo.id]
 
-	if not var_17_0 then
-		logError("talent not init" .. arg_17_1.id)
+	if not talentMO then
+		logError("talent not init" .. talentInfo.id)
 	end
 
-	var_17_0:setData(arg_17_1)
+	talentMO:setData(talentInfo)
 end
 
-function var_0_0.setTalentSkillIds(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0:getTalentMO(arg_18_1)
-	local var_18_1 = #var_18_0.skillIds
+function Season166MO:setTalentSkillIds(talentId, skillIds)
+	local talentMO = self:getTalentMO(talentId)
+	local oldSkillCnt = #talentMO.skillIds
 
-	var_18_0:updateSkillIds(arg_18_2)
+	talentMO:updateSkillIds(skillIds)
 
-	return var_18_1 < #arg_18_2
+	return oldSkillCnt < #skillIds
 end
 
-function var_0_0.getTalentMO(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.talentMap[arg_19_1]
+function Season166MO:getTalentMO(talentId)
+	local talentMO = self.talentMap[talentId]
 
-	if not var_19_0 then
-		logError("dont exist TalentMO" .. arg_19_1)
+	if not talentMO then
+		logError("dont exist TalentMO" .. talentId)
 	end
 
-	return var_19_0
+	return talentMO
 end
 
-function var_0_0.isTrainPass(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0.trainInfoMap[arg_20_1]
+function Season166MO:isTrainPass(trainId)
+	local trainMO = self.trainInfoMap[trainId]
 
-	if var_20_0 then
-		return var_20_0.passCount > 0
+	if trainMO then
+		return trainMO.passCount > 0
 	end
 
 	return false
 end
 
-function var_0_0.setSpotBaseEnter(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0.baseSpotInfoMap[arg_21_1]
+function Season166MO:setSpotBaseEnter(spotId, isEnter)
+	local baseSpotMO = self.baseSpotInfoMap[spotId]
 
-	if var_21_0 then
-		var_21_0.isEnter = arg_21_2
+	if baseSpotMO then
+		baseSpotMO.isEnter = isEnter
 	end
 end
 
-return var_0_0
+return Season166MO

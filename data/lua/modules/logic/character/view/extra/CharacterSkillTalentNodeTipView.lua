@@ -1,233 +1,239 @@
-﻿module("modules.logic.character.view.extra.CharacterSkillTalentNodeTipView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterSkillTalentNodeTipView.lua
 
-local var_0_0 = class("CharacterSkillTalentNodeTipView", BaseView)
+module("modules.logic.character.view.extra.CharacterSkillTalentNodeTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_tipclose")
-	arg_1_0._imageTag = gohelper.findChildImage(arg_1_0.viewGO, "#go_tip/#image_Tag")
-	arg_1_0._golichang = gohelper.findChild(arg_1_0.viewGO, "#go_tip/Scroll View/Viewport/Content/#go_lichang")
-	arg_1_0._goWarning = gohelper.findChild(arg_1_0.viewGO, "#go_tip/Scroll View/Viewport/Content/#go_lichang/#go_Warning")
-	arg_1_0._txtWarning = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/Scroll View/Viewport/Content/#go_lichang/#go_Warning/txt_Warning")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_tip/#btn_yes")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_tip/#btn_no")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_tip/#btn_Locked")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "#go_tip/#btn_Locked/txt_Tips")
+local CharacterSkillTalentNodeTipView = class("CharacterSkillTalentNodeTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkillTalentNodeTipView:onInitView()
+	self._gotip = gohelper.findChild(self.viewGO, "#go_tip")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_tipclose")
+	self._imageTag = gohelper.findChildImage(self.viewGO, "#go_tip/#image_Tag")
+	self._golichang = gohelper.findChild(self.viewGO, "#go_tip/Scroll View/Viewport/Content/#go_lichang")
+	self._goWarning = gohelper.findChild(self.viewGO, "#go_tip/Scroll View/Viewport/Content/#go_lichang/#go_Warning")
+	self._txtWarning = gohelper.findChildText(self.viewGO, "#go_tip/Scroll View/Viewport/Content/#go_lichang/#go_Warning/txt_Warning")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "#go_tip/#btn_yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#go_tip/#btn_no")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "#go_tip/#btn_Locked")
+	self._txtTips = gohelper.findChildText(self.viewGO, "#go_tip/#btn_Locked/txt_Tips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, arg_2_0._onClickTalentTreeNode, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, arg_2_0._closeTip, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, arg_2_0._closeTip, arg_2_0)
+function CharacterSkillTalentNodeTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, self._onClickTalentTreeNode, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, self._closeTip, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, self._closeTip, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, arg_3_0._onClickTalentTreeNode, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, arg_3_0._closeTip, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, arg_3_0._closeTip, arg_3_0)
+function CharacterSkillTalentNodeTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, self._onClickTalentTreeNode, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, self._closeTip, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, self._closeTip, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:_closeTip()
+function CharacterSkillTalentNodeTipView:_btncloseOnClick()
+	self:_closeTip()
 end
 
-function var_0_0._btnyesOnClick(arg_5_0)
-	if not arg_5_0.heroMo:isOwnHero() then
+function CharacterSkillTalentNodeTipView:_btnyesOnClick()
+	if not self.heroMo:isOwnHero() then
 		return
 	end
 
-	if not arg_5_0.skillTalentMo then
+	if not self.skillTalentMo then
 		return
 	end
 
-	if arg_5_0.skillTalentMo:isNullTalentPonit(arg_5_0.heroMo) then
+	if self.skillTalentMo:isNullTalentPonit(self.heroMo) then
 		return
 	end
 
-	if arg_5_0._nodeMo:isLight() then
+	if self._nodeMo:isLight() then
 		return
 	end
 
-	HeroRpc.instance:setChoiceHero3124TalentTreeRequest(arg_5_0.heroMo.heroId, arg_5_0._sub, arg_5_0._level)
+	HeroRpc.instance:setChoiceHero3124TalentTreeRequest(self.heroMo.heroId, self._sub, self._level)
 end
 
-function var_0_0._btnnoOnClick(arg_6_0)
-	if not arg_6_0.heroMo:isOwnHero() then
+function CharacterSkillTalentNodeTipView:_btnnoOnClick()
+	if not self.heroMo:isOwnHero() then
 		return
 	end
 
-	if not arg_6_0.skillTalentMo then
+	if not self.skillTalentMo then
 		return
 	end
 
-	if not arg_6_0._nodeMo:isLight() then
+	if not self._nodeMo:isLight() then
 		return
 	end
 
-	HeroRpc.instance:setCancelHero3124TalentTreeRequest(arg_6_0.heroMo.heroId, arg_6_0._sub, arg_6_0._level)
+	HeroRpc.instance:setCancelHero3124TalentTreeRequest(self.heroMo.heroId, self._sub, self._level)
 end
 
-function var_0_0._onClickTalentTreeNode(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0:_openNodeTip(arg_7_1, arg_7_2)
+function CharacterSkillTalentNodeTipView:_onClickTalentTreeNode(sub, level)
+	self:_openNodeTip(sub, level)
 end
 
-function var_0_0._closeTip(arg_8_0)
-	arg_8_0:_activeTip(false)
-	CharacterController.instance:dispatchEvent(CharacterEvent.onCloseSkillTalentTipView, arg_8_0._sub, arg_8_0._level)
+function CharacterSkillTalentNodeTipView:_closeTip()
+	self:_activeTip(false)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onCloseSkillTalentTipView, self._sub, self._level)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._txtname = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/txt_name")
-	arg_9_0._txtdesc = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/Scroll View/Viewport/Content/txt_desc")
-	arg_9_0._txtyesnum = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_yes/txt_num")
-	arg_9_0._txtnonum = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_no/txt_num")
-	arg_9_0._txtlocknum = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_Locked/txt_num")
-	arg_9_0._txtlock = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_Locked/no")
-	arg_9_0._txtfield = gohelper.findChildText(arg_9_0._golichang, "txt_desc")
-	arg_9_0._gofieldbg = gohelper.findChild(arg_9_0._golichang, "image_LightBG")
-	arg_9_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_9_0._gotip.gameObject)
+function CharacterSkillTalentNodeTipView:_editableInitView()
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_tip/txt_name")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_tip/Scroll View/Viewport/Content/txt_desc")
+	self._txtyesnum = gohelper.findChildText(self.viewGO, "#go_tip/#btn_yes/txt_num")
+	self._txtnonum = gohelper.findChildText(self.viewGO, "#go_tip/#btn_no/txt_num")
+	self._txtlocknum = gohelper.findChildText(self.viewGO, "#go_tip/#btn_Locked/txt_num")
+	self._txtlock = gohelper.findChildText(self.viewGO, "#go_tip/#btn_Locked/no")
+	self._txtfield = gohelper.findChildText(self._golichang, "txt_desc")
+	self._gofieldbg = gohelper.findChild(self._golichang, "image_LightBG")
+	self._animPlayer = SLFramework.AnimatorPlayer.Get(self._gotip.gameObject)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0.heroMo = arg_10_0.viewParam
-	arg_10_0.skillTalentMo = arg_10_0.heroMo.extraMo:getSkillTalentMo()
-	arg_10_0._isShowTip = false
+function CharacterSkillTalentNodeTipView:onOpen()
+	self.heroMo = self.viewParam
 
-	gohelper.setActive(arg_10_0._gotip, false)
-	gohelper.setActive(arg_10_0._btnclose.gameObject, false)
+	local extraMo = self.heroMo.extraMo
+
+	self.skillTalentMo = extraMo:getSkillTalentMo()
+	self._isShowTip = false
+
+	gohelper.setActive(self._gotip, false)
+	gohelper.setActive(self._btnclose.gameObject, false)
 end
 
-local var_0_1 = "+"
-local var_0_2 = "-"
+local addCode = "+"
+local reduceCode = "-"
 
-function var_0_0._openNodeTip(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0.heroMo.exSkillLevel
+function CharacterSkillTalentNodeTipView:_openNodeTip(sub, level)
+	local exSkillLevel = self.heroMo.exSkillLevel
 
-	recthelper.setAnchorX(arg_11_0._gotip.transform, arg_11_1 == 2 and 500 or 0)
+	recthelper.setAnchorX(self._gotip.transform, sub == 2 and 500 or 0)
 
-	local var_11_1 = arg_11_0.skillTalentMo:getTreeNodeMoBySubLevel(arg_11_1, arg_11_2)
+	local mo = self.skillTalentMo:getTreeNodeMoBySubLevel(sub, level)
 
-	arg_11_0._sub = arg_11_1
-	arg_11_0._level = arg_11_2
-	arg_11_0._txtname.text = var_11_1.co.name
+	self._sub = sub
+	self._level = level
+	self._txtname.text = mo.co.name
 
-	local var_11_2 = var_11_1:getDesc(var_11_0)
-	local var_11_3 = var_11_1:getFieldActivateDesc(var_11_0)
+	local desc = mo:getDesc(exSkillLevel)
+	local fieldActivateDesc = mo:getFieldActivateDesc(exSkillLevel)
 
-	arg_11_0._skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._txtdesc.gameObject, SkillDescComp)
+	self._skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(self._txtdesc.gameObject, SkillDescComp)
 
-	arg_11_0._skillDesc:updateInfo(arg_11_0._txtdesc, var_11_2, arg_11_0.heroMo.heroId)
-	UISpriteSetMgr.instance:setUiCharacterSprite(arg_11_0._imageTag, arg_11_0.skillTalentMo:getSmallSubIconPath(arg_11_1))
+	self._skillDesc:updateInfo(self._txtdesc, desc, self.heroMo.heroId)
+	UISpriteSetMgr.instance:setUiCharacterSprite(self._imageTag, self.skillTalentMo:getSmallSubIconPath(sub))
 
-	arg_11_0._treeMo = arg_11_0.skillTalentMo:getTreeMosBySub(arg_11_1)
-	arg_11_0._nodeMo = arg_11_0.skillTalentMo:getTreeNodeMoBySubLevel(arg_11_1, arg_11_2)
+	self._treeMo = self.skillTalentMo:getTreeMosBySub(sub)
+	self._nodeMo = self.skillTalentMo:getTreeNodeMoBySubLevel(sub, level)
 
-	local var_11_4 = #arg_11_0.skillTalentMo:getLightOrCancelNodes(arg_11_1, arg_11_2)
-	local var_11_5 = var_11_4 > arg_11_0.skillTalentMo:getTalentpoint()
+	local nodeList = self.skillTalentMo:getLightOrCancelNodes(sub, level)
+	local nodeCount = #nodeList
+	local isNoEnoughPoint = nodeCount > self.skillTalentMo:getTalentpoint()
 
-	arg_11_0._fieldDesc = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._txtfield.gameObject, SkillDescComp)
+	self._fieldDesc = MonoHelper.addNoUpdateLuaComOnceToGo(self._txtfield.gameObject, SkillDescComp)
 
-	arg_11_0._fieldDesc:updateInfo(arg_11_0._txtfield, var_11_3, arg_11_0.heroMo.heroId)
+	self._fieldDesc:updateInfo(self._txtfield, fieldActivateDesc, self.heroMo.heroId)
 
-	local var_11_6 = arg_11_0._treeMo:isAllLight()
-	local var_11_7 = arg_11_0._nodeMo:isLock()
-	local var_11_8 = arg_11_0._nodeMo:isLight()
-	local var_11_9 = arg_11_0._nodeMo:isNormal()
-	local var_11_10 = arg_11_0.skillTalentMo:getExtraCount()
-	local var_11_11 = ""
-	local var_11_12 = ""
+	local isAllLightTreeNode = self._treeMo:isAllLight()
+	local lock = self._nodeMo:isLock()
+	local light = self._nodeMo:isLight()
+	local normal = self._nodeMo:isNormal()
+	local treeCount = self.skillTalentMo:getExtraCount()
+	local tipStr = ""
+	local warningStr = ""
 
-	if var_11_5 then
-		var_11_11 = luaLang("characterskilltalent_warning_3")
+	if isNoEnoughPoint then
+		tipStr = luaLang("characterskilltalent_warning_3")
 	end
 
-	local var_11_13 = arg_11_0.skillTalentMo:getMainFieldMo()
+	local mo = self.skillTalentMo:getMainFieldMo()
 
-	if var_11_13 then
-		local var_11_14 = var_11_13.co and var_11_13.co.sub
+	if mo then
+		local _sub = mo.co and mo.co.sub
 
-		if var_11_14 and var_11_14 ~= arg_11_1 then
-			if not var_11_5 then
-				var_11_11 = luaLang("characterskilltalent_warning_2")
+		if _sub and _sub ~= sub then
+			if not isNoEnoughPoint then
+				tipStr = luaLang("characterskilltalent_warning_2")
 			end
 
-			local var_11_15 = luaLang("characterskilltalent_warning_1")
-			local var_11_16 = luaLang("characterskilltalent_sub_" .. var_11_14)
-			local var_11_17 = luaLang("characterskilltalent_sub_" .. arg_11_1)
+			local warnFormat = luaLang("characterskilltalent_warning_1")
+			local curLangSubName = luaLang("characterskilltalent_sub_" .. _sub)
+			local subName = luaLang("characterskilltalent_sub_" .. sub)
 
-			var_11_12 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_11_15, var_11_16, var_11_17)
+			warningStr = GameUtil.getSubPlaceholderLuaLangTwoParam(warnFormat, curLangSubName, subName)
 		end
 	end
 
-	local var_11_18 = var_11_6 and var_11_10 > 1
-	local var_11_19 = var_11_7 and not string.nilorempty(var_11_11)
-	local var_11_20 = not string.nilorempty(var_11_12)
-	local var_11_21 = not string.nilorempty(var_11_3)
-	local var_11_22 = arg_11_0.heroMo:isOwnHero()
+	local isLock = isAllLightTreeNode and treeCount > 1
+	local isShowTip = lock and not string.nilorempty(tipStr)
+	local isShowWarning = not string.nilorempty(warningStr)
+	local isField = not string.nilorempty(fieldActivateDesc)
+	local isOwnHero = self.heroMo:isOwnHero()
 
-	gohelper.setActive(arg_11_0._gofieldbg.gameObject, var_11_22 and (var_11_20 or var_11_21))
-	gohelper.setActive(arg_11_0._golichang.gameObject, var_11_22 and var_11_21)
-	gohelper.setActive(arg_11_0._txtTips.gameObject, var_11_22 and var_11_19)
-	gohelper.setActive(arg_11_0._txtWarning.gameObject, var_11_22 and var_11_20)
-	gohelper.setActive(arg_11_0._btnyes.gameObject, var_11_22 and not var_11_18 and var_11_9)
-	gohelper.setActive(arg_11_0._btnno.gameObject, var_11_22 and not var_11_18 and var_11_8)
-	gohelper.setActive(arg_11_0._btnLocked.gameObject, var_11_22 and (var_11_18 or var_11_19))
-	gohelper.setActive(arg_11_0._goWarning.gameObject, var_11_22 and not var_11_6 and var_11_20)
-	arg_11_0:_activeTip(true)
+	gohelper.setActive(self._gofieldbg.gameObject, isOwnHero and (isShowWarning or isField))
+	gohelper.setActive(self._golichang.gameObject, isOwnHero and isField)
+	gohelper.setActive(self._txtTips.gameObject, isOwnHero and isShowTip)
+	gohelper.setActive(self._txtWarning.gameObject, isOwnHero and isShowWarning)
+	gohelper.setActive(self._btnyes.gameObject, isOwnHero and not isLock and normal)
+	gohelper.setActive(self._btnno.gameObject, isOwnHero and not isLock and light)
+	gohelper.setActive(self._btnLocked.gameObject, isOwnHero and (isLock or isShowTip))
+	gohelper.setActive(self._goWarning.gameObject, isOwnHero and not isAllLightTreeNode and isShowWarning)
+	self:_activeTip(true)
 
-	if arg_11_0._nodeMo:isLight() then
-		arg_11_0._txtnonum.text = var_0_1 .. var_11_4
-		arg_11_0._txtlocknum.text = var_0_1 .. var_11_4
-		arg_11_0._txtlock.text = luaLang("characterskilltalent_cancel_light")
-	elseif arg_11_0._nodeMo:isLock() then
-		arg_11_0._txtlocknum.text = var_0_2 .. var_11_4
-		arg_11_0._txtlock.text = luaLang("characterskilltalent_sure_light")
+	if self._nodeMo:isLight() then
+		self._txtnonum.text = addCode .. nodeCount
+		self._txtlocknum.text = addCode .. nodeCount
+		self._txtlock.text = luaLang("characterskilltalent_cancel_light")
+	elseif self._nodeMo:isLock() then
+		self._txtlocknum.text = reduceCode .. nodeCount
+		self._txtlock.text = luaLang("characterskilltalent_sure_light")
 	else
-		arg_11_0._txtyesnum.text = var_0_2 .. var_11_4
+		self._txtyesnum.text = reduceCode .. nodeCount
 	end
 
-	arg_11_0._txtWarning.text = var_11_12
-	arg_11_0._txtTips.text = var_11_11
+	self._txtWarning.text = warningStr
+	self._txtTips.text = tipStr
 end
 
-function var_0_0._activeTip(arg_12_0, arg_12_1)
-	if arg_12_1 then
-		arg_12_0._isShowTip = true
+function CharacterSkillTalentNodeTipView:_activeTip(active)
+	if active then
+		self._isShowTip = true
 
-		gohelper.setActive(arg_12_0._gotip, true)
-		gohelper.setActive(arg_12_0._btnclose.gameObject, true)
-		arg_12_0._animPlayer:Play(CharacterExtraEnum.SkillTreeAnimName.OpenTip, arg_12_0._playAnimCallback, arg_12_0)
+		gohelper.setActive(self._gotip, true)
+		gohelper.setActive(self._btnclose.gameObject, true)
+		self._animPlayer:Play(CharacterExtraEnum.SkillTreeAnimName.OpenTip, self._playAnimCallback, self)
 		AudioMgr.instance:trigger(AudioEnum2_9.Character.ui_role_kashan_zhuangbei)
-	elseif arg_12_0._isShowTip then
-		arg_12_0._isShowTip = false
+	elseif self._isShowTip then
+		self._isShowTip = false
 
-		arg_12_0._animPlayer:Play(CharacterExtraEnum.SkillTreeAnimName.CloseTip, arg_12_0._playAnimCallback, arg_12_0)
+		self._animPlayer:Play(CharacterExtraEnum.SkillTreeAnimName.CloseTip, self._playAnimCallback, self)
 	end
 end
 
-function var_0_0._playAnimCallback(arg_13_0)
-	if not arg_13_0._isShowTip then
-		gohelper.setActive(arg_13_0._gotip, false)
-		gohelper.setActive(arg_13_0._btnclose.gameObject, false)
+function CharacterSkillTalentNodeTipView:_playAnimCallback()
+	if not self._isShowTip then
+		gohelper.setActive(self._gotip, false)
+		gohelper.setActive(self._btnclose.gameObject, false)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function CharacterSkillTalentNodeTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function CharacterSkillTalentNodeTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CharacterSkillTalentNodeTipView

@@ -1,40 +1,42 @@
-﻿module("modules.logic.sp01.library.OdysseyLibraryToastView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/OdysseyLibraryToastView.lua
 
-local var_0_0 = class("OdysseyLibraryToastView", AssassinLibraryToastView)
+module("modules.logic.sp01.library.OdysseyLibraryToastView", package.seeall)
 
-function var_0_0._showToast(arg_1_0)
-	local var_1_0 = table.remove(arg_1_0._cacheMsgList, 1)
+local OdysseyLibraryToastView = class("OdysseyLibraryToastView", AssassinLibraryToastView)
 
-	if not var_1_0 then
-		TaskDispatcher.cancelTask(arg_1_0._showToast, arg_1_0)
+function OdysseyLibraryToastView:_showToast()
+	local msg = table.remove(self._cacheMsgList, 1)
 
-		arg_1_0.hadTask = false
+	if not msg then
+		TaskDispatcher.cancelTask(self._showToast, self)
+
+		self.hadTask = false
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_unlock)
 
-	local var_1_1 = table.remove(arg_1_0._freeList, 1)
+	local newItem = table.remove(self._freeList, 1)
 
-	if not var_1_1 then
-		local var_1_2 = gohelper.clone(arg_1_0._gotemplate, arg_1_0._gopoint)
+	if not newItem then
+		local go = gohelper.clone(self._gotemplate, self._gopoint)
 
-		var_1_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_2, OdysseyLibraryToastItem)
+		newItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, OdysseyLibraryToastItem)
 	end
 
-	local var_1_3
+	local item
 
-	if #arg_1_0._usingList >= arg_1_0._maxCount then
-		local var_1_4 = arg_1_0._usingList[1]
+	if #self._usingList >= self._maxCount then
+		item = self._usingList[1]
 
-		arg_1_0:_doRecycleAnimation(var_1_4, true)
+		self:_doRecycleAnimation(item, true)
 	end
 
-	table.insert(arg_1_0._usingList, var_1_1)
-	var_1_1:setMsg(var_1_0)
-	var_1_1:appearAnimation(var_1_0)
-	arg_1_0:_refreshAllItemsAnimation()
+	table.insert(self._usingList, newItem)
+	newItem:setMsg(msg)
+	newItem:appearAnimation(msg)
+	self:_refreshAllItemsAnimation()
 end
 
-return var_0_0
+return OdysseyLibraryToastView

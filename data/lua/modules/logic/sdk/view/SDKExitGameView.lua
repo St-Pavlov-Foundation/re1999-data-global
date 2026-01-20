@@ -1,73 +1,75 @@
-﻿module("modules.logic.sdk.view.SDKExitGameView", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/view/SDKExitGameView.lua
 
-local var_0_0 = class("SDKExitGameView", BaseView)
+module("modules.logic.sdk.view.SDKExitGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "txt_desc")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._btnlogout = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_logout")
+local SDKExitGameView = class("SDKExitGameView", BaseView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "#btn_cancel/#go_pcbtn")
-	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "#btn_logout/#go_pcbtn")
+function SDKExitGameView:onInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "txt_desc")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._btnlogout = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_logout")
 
-	PCInputController.instance:showkeyTips(var_1_0, nil, nil, "Esc")
-	PCInputController.instance:showkeyTips(var_1_1, nil, nil, "Return")
+	local btnCancelTips = gohelper.findChild(self.viewGO, "#btn_cancel/#go_pcbtn")
+	local btnLogoutTips = gohelper.findChild(self.viewGO, "#btn_logout/#go_pcbtn")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	PCInputController.instance:showkeyTips(btnCancelTips, nil, nil, "Esc")
+	PCInputController.instance:showkeyTips(btnLogoutTips, nil, nil, "Return")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnlogout:AddClickListener(arg_2_0._btnlogoutOnClick, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, arg_2_0._btnlogoutOnClick, arg_2_0)
+function SDKExitGameView:addEvents()
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnlogout:AddClickListener(self._btnlogoutOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btncancelOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._btnlogoutOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnlogout:RemoveClickListener()
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, arg_3_0._btncancelOnClick, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, arg_3_0._btnlogoutOnClick, arg_3_0)
+function SDKExitGameView:removeEvents()
+	self._btncancel:RemoveClickListener()
+	self._btnlogout:RemoveClickListener()
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btncancelOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._btnlogoutOnClick, self)
 end
 
-function var_0_0._btncancelOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SDKExitGameView:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnlogoutOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function SDKExitGameView:_btnlogoutOnClick()
+	self:closeThis()
 
-	if arg_5_0.viewParam.exitCallback then
-		arg_5_0.viewParam.exitCallback()
+	if self.viewParam.exitCallback then
+		self.viewParam.exitCallback()
 	else
 		LoginController.instance:logout()
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function SDKExitGameView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function SDKExitGameView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	NavigateMgr.instance:addEscape(ViewName.SDKExitGameView, arg_8_0.closeThis, arg_8_0)
+function SDKExitGameView:onOpen()
+	NavigateMgr.instance:addEscape(ViewName.SDKExitGameView, self.closeThis, self)
 end
 
-function var_0_0.onClose(arg_9_0)
+function SDKExitGameView:onClose()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_10_0)
-	arg_10_0:closeThis()
+function SDKExitGameView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function SDKExitGameView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SDKExitGameView

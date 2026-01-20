@@ -1,16 +1,18 @@
-﻿module("modules.logic.rouge.model.RougeResultReportListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeResultReportListModel.lua
 
-local var_0_0 = class("RougeResultReportListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeResultReportListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	local var_1_0 = RougeFavoriteModel.instance:getReviewInfoList()
+local RougeResultReportListModel = class("RougeResultReportListModel", ListScrollModel)
 
-	table.sort(var_1_0, function(arg_2_0, arg_2_1)
-		return arg_2_0.finishTime > arg_2_1.finishTime
+function RougeResultReportListModel:init()
+	local list = RougeFavoriteModel.instance:getReviewInfoList()
+
+	table.sort(list, function(a, b)
+		return a.finishTime > b.finishTime
 	end)
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+RougeResultReportListModel.instance = RougeResultReportListModel.New()
 
-return var_0_0
+return RougeResultReportListModel

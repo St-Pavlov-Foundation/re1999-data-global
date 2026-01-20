@@ -1,357 +1,359 @@
-﻿module("modules.logic.handbook.view.HandbookEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookEquipView.lua
 
-local var_0_0 = class("HandbookEquipView", BaseView)
+module("modules.logic.handbook.view.HandbookEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goequip1 = gohelper.findChild(arg_1_0.viewGO, "equipContain/#go_equip1")
-	arg_1_0._goequip2 = gohelper.findChild(arg_1_0.viewGO, "equipContain/#go_equip2")
-	arg_1_0._goequip3 = gohelper.findChild(arg_1_0.viewGO, "equipContain/#go_equip3")
-	arg_1_0._goequip4 = gohelper.findChild(arg_1_0.viewGO, "equipContain/#go_equip4")
-	arg_1_0._goleftpage = gohelper.findChild(arg_1_0.viewGO, "#btn_leftpage")
-	arg_1_0._goleftarrow = gohelper.findChild(arg_1_0.viewGO, "#btn_leftpage/#go_leftarrow")
-	arg_1_0._gorightpage = gohelper.findChild(arg_1_0.viewGO, "#btn_rightpage")
-	arg_1_0._gorightarrow = gohelper.findChild(arg_1_0.viewGO, "#btn_rightpage/#go_rightarrow")
-	arg_1_0._gorarerank = gohelper.findChild(arg_1_0.viewGO, "sortbtn/#btn_rarerank")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "sortbtn/#btn_filter")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local HandbookEquipView = class("HandbookEquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandbookEquipView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goequip1 = gohelper.findChild(self.viewGO, "equipContain/#go_equip1")
+	self._goequip2 = gohelper.findChild(self.viewGO, "equipContain/#go_equip2")
+	self._goequip3 = gohelper.findChild(self.viewGO, "equipContain/#go_equip3")
+	self._goequip4 = gohelper.findChild(self.viewGO, "equipContain/#go_equip4")
+	self._goleftpage = gohelper.findChild(self.viewGO, "#btn_leftpage")
+	self._goleftarrow = gohelper.findChild(self.viewGO, "#btn_leftpage/#go_leftarrow")
+	self._gorightpage = gohelper.findChild(self.viewGO, "#btn_rightpage")
+	self._gorightarrow = gohelper.findChild(self.viewGO, "#btn_rightpage/#go_rightarrow")
+	self._gorarerank = gohelper.findChild(self.viewGO, "sortbtn/#btn_rarerank")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "sortbtn/#btn_filter")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0.onClickBtnFilter, arg_2_0)
+function HandbookEquipView:addEvents()
+	self._btnfilter:AddClickListener(self.onClickBtnFilter, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfilter:RemoveClickListener()
+function HandbookEquipView:removeEvents()
+	self._btnfilter:RemoveClickListener()
 end
 
-var_0_0.everyPageShowCount = 4
-var_0_0.DragAbsPositionX = 50
-var_0_0.AnimatorBlockName = "HandbookEquipViewAnimator"
+HandbookEquipView.everyPageShowCount = 4
+HandbookEquipView.DragAbsPositionX = 50
+HandbookEquipView.AnimatorBlockName = "HandbookEquipViewAnimator"
 
-function var_0_0.onClickBtnFilter(arg_4_0)
+function HandbookEquipView:onClickBtnFilter()
 	ViewMgr.instance:openView(ViewName.EquipFilterView, {
-		viewName = arg_4_0.viewName
+		viewName = self.viewName
 	})
 end
 
-function var_0_0.leftPageOnClick(arg_5_0)
-	if arg_5_0.currentPage <= 1 then
+function HandbookEquipView:leftPageOnClick()
+	if self.currentPage <= 1 then
 		return
 	end
 
-	UIBlockMgr.instance:startBlock(var_0_0.AnimatorBlockName)
-	arg_5_0.animatorPlayer:Play("rightout", function(arg_6_0)
-		arg_6_0:refreshPage(arg_6_0.currentPage - 1)
-		arg_6_0.animatorPlayer:Play("rightin")
-		UIBlockMgr.instance:endBlock(var_0_0.AnimatorBlockName)
-	end, arg_5_0)
+	UIBlockMgr.instance:startBlock(HandbookEquipView.AnimatorBlockName)
+	self.animatorPlayer:Play("rightout", function(self)
+		self:refreshPage(self.currentPage - 1)
+		self.animatorPlayer:Play("rightin")
+		UIBlockMgr.instance:endBlock(HandbookEquipView.AnimatorBlockName)
+	end, self)
 end
 
-function var_0_0.rightPageOnClick(arg_7_0)
-	if arg_7_0.currentPage >= arg_7_0.maxPage then
+function HandbookEquipView:rightPageOnClick()
+	if self.currentPage >= self.maxPage then
 		return
 	end
 
-	UIBlockMgr.instance:startBlock(var_0_0.AnimatorBlockName)
-	arg_7_0.animatorPlayer:Play("leftout", function(arg_8_0)
-		arg_8_0:refreshPage(arg_8_0.currentPage + 1)
-		arg_8_0.animatorPlayer:Play("leftin")
-		UIBlockMgr.instance:endBlock(var_0_0.AnimatorBlockName)
-	end, arg_7_0)
+	UIBlockMgr.instance:startBlock(HandbookEquipView.AnimatorBlockName)
+	self.animatorPlayer:Play("leftout", function(self)
+		self:refreshPage(self.currentPage + 1)
+		self.animatorPlayer:Play("leftin")
+		UIBlockMgr.instance:endBlock(HandbookEquipView.AnimatorBlockName)
+	end, self)
 end
 
-function var_0_0.rareRankOnClick(arg_9_0)
-	arg_9_0.rareRankAscending = not arg_9_0.rareRankAscending
+function HandbookEquipView:rareRankOnClick()
+	self.rareRankAscending = not self.rareRankAscending
 
-	arg_9_0:refreshSort()
-	arg_9_0:refreshUI()
+	self:refreshSort()
+	self:refreshUI()
 end
 
-function var_0_0.onEquipItemClick(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.equipList[(arg_10_0.currentPage - 1) * var_0_0.everyPageShowCount + arg_10_1]
+function HandbookEquipView:onEquipItemClick(index)
+	local equipCo = self.equipList[(self.currentPage - 1) * HandbookEquipView.everyPageShowCount + index]
 
 	EquipController.instance:openEquipView({
 		fromHandBook = true,
-		equipId = var_10_0.id
+		equipId = equipCo.id
 	})
 end
 
-function var_0_0.customAddEvent(arg_11_0)
-	arg_11_0._leftPageClick = gohelper.findChildClickWithAudio(arg_11_0._goleftarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
-	arg_11_0._rightPageClick = gohelper.findChildClickWithAudio(arg_11_0._gorightarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
+function HandbookEquipView:customAddEvent()
+	self._leftPageClick = gohelper.findChildClickWithAudio(self._goleftarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
+	self._rightPageClick = gohelper.findChildClickWithAudio(self._gorightarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
 
-	arg_11_0._leftPageClick:AddClickListener(arg_11_0.leftPageOnClick, arg_11_0)
-	arg_11_0._rightPageClick:AddClickListener(arg_11_0.rightPageOnClick, arg_11_0)
+	self._leftPageClick:AddClickListener(self.leftPageOnClick, self)
+	self._rightPageClick:AddClickListener(self.rightPageOnClick, self)
 
-	arg_11_0._rareRankClick = gohelper.getClickWithAudio(arg_11_0._gorarerank, AudioEnum.UI.play_ui_hero_card_click)
+	self._rareRankClick = gohelper.getClickWithAudio(self._gorarerank, AudioEnum.UI.play_ui_hero_card_click)
 
-	arg_11_0._rareRankClick:AddClickListener(arg_11_0.rareRankOnClick, arg_11_0)
+	self._rareRankClick:AddClickListener(self.rareRankOnClick, self)
 
-	arg_11_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_11_0.viewGO)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self.viewGO)
 
-	arg_11_0._drag:AddDragBeginListener(arg_11_0.onDragBeginHandle, arg_11_0)
-	arg_11_0._drag:AddDragEndListener(arg_11_0.onDragEndHandle, arg_11_0)
-	arg_11_0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, arg_11_0.onFilterValueChange, arg_11_0)
+	self._drag:AddDragBeginListener(self.onDragBeginHandle, self)
+	self._drag:AddDragEndListener(self.onDragEndHandle, self)
+	self:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, self.onFilterValueChange, self)
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0.simageList = arg_12_0:getUserDataTb_()
-	arg_12_0.txtNameList = arg_12_0:getUserDataTb_()
-	arg_12_0.txtNameEnList = arg_12_0:getUserDataTb_()
-	arg_12_0.goRareList = arg_12_0:getUserDataTb_()
-	arg_12_0.goEquipList = arg_12_0:getUserDataTb_()
-	arg_12_0.equipClickList = arg_12_0:getUserDataTb_()
+function HandbookEquipView:_editableInitView()
+	self.simageList = self:getUserDataTb_()
+	self.txtNameList = self:getUserDataTb_()
+	self.txtNameEnList = self:getUserDataTb_()
+	self.goRareList = self:getUserDataTb_()
+	self.goEquipList = self:getUserDataTb_()
+	self.equipClickList = self:getUserDataTb_()
 
-	arg_12_0:addItem(arg_12_0._goequip1, 1)
-	arg_12_0:addItem(arg_12_0._goequip2, 2)
-	arg_12_0:addItem(arg_12_0._goequip3, 3)
-	arg_12_0:addItem(arg_12_0._goequip4, 4)
+	self:addItem(self._goequip1, 1)
+	self:addItem(self._goequip2, 2)
+	self:addItem(self._goequip3, 3)
+	self:addItem(self._goequip4, 4)
 
-	arg_12_0.goRareRankIcon1 = gohelper.findChild(arg_12_0.viewGO, "sortbtn/#btn_rarerank/txt/go_icon1")
-	arg_12_0.goRareRankIcon2 = gohelper.findChild(arg_12_0.viewGO, "sortbtn/#btn_rarerank/txt/go_icon2")
-	arg_12_0.goNotFilter = gohelper.findChild(arg_12_0.viewGO, "sortbtn/#btn_filter/#go_notfilter")
-	arg_12_0.goFilter = gohelper.findChild(arg_12_0.viewGO, "sortbtn/#btn_filter/#go_filter")
-	arg_12_0.currentPage = 0
-	arg_12_0.maxPage = 0
-	arg_12_0.equipList = nil
-	arg_12_0.startDragPosX = 0
-	arg_12_0.rareRankAscending = false
+	self.goRareRankIcon1 = gohelper.findChild(self.viewGO, "sortbtn/#btn_rarerank/txt/go_icon1")
+	self.goRareRankIcon2 = gohelper.findChild(self.viewGO, "sortbtn/#btn_rarerank/txt/go_icon2")
+	self.goNotFilter = gohelper.findChild(self.viewGO, "sortbtn/#btn_filter/#go_notfilter")
+	self.goFilter = gohelper.findChild(self.viewGO, "sortbtn/#btn_filter/#go_filter")
+	self.currentPage = 0
+	self.maxPage = 0
+	self.equipList = nil
+	self.startDragPosX = 0
+	self.rareRankAscending = false
 
-	arg_12_0:customAddEvent()
-	arg_12_0._simagebg:LoadImage(ResUrl.getHandbookCharacterIcon("full/bg111"))
+	self:customAddEvent()
+	self._simagebg:LoadImage(ResUrl.getHandbookCharacterIcon("full/bg111"))
 
-	arg_12_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_12_0.viewGO)
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onCareerClick(arg_13_0, arg_13_1)
-	if arg_13_0.career == arg_13_1.career then
+function HandbookEquipView:onCareerClick(careerMo)
+	if self.career == careerMo.career then
 		return
 	end
 
-	arg_13_0.career = arg_13_1.career
+	self.career = careerMo.career
 
-	arg_13_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.addItem(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = gohelper.findChildSingleImage(arg_14_1, "simage_equipicon")
-	local var_14_1 = gohelper.findChildText(arg_14_1, "txt_name")
-	local var_14_2 = gohelper.findChildText(arg_14_1, "txt_name/txt_nameEn")
-	local var_14_3 = arg_14_0:getUserDataTb_()
+function HandbookEquipView:addItem(goItem, index)
+	local simage = gohelper.findChildSingleImage(goItem, "simage_equipicon")
+	local txtname = gohelper.findChildText(goItem, "txt_name")
+	local txtnameEn = gohelper.findChildText(goItem, "txt_name/txt_nameEn")
+	local rareList = self:getUserDataTb_()
 
-	for iter_14_0 = 3, 6 do
-		local var_14_4 = gohelper.findChild(arg_14_1, "txt_name/rare/rare" .. iter_14_0)
+	for i = 3, 6 do
+		local rareGo = gohelper.findChild(goItem, "txt_name/rare/rare" .. i)
 
-		table.insert(var_14_3, var_14_4)
+		table.insert(rareList, rareGo)
 	end
 
-	table.insert(arg_14_0.simageList, var_14_0)
-	table.insert(arg_14_0.txtNameList, var_14_1)
-	table.insert(arg_14_0.txtNameEnList, var_14_2)
-	table.insert(arg_14_0.goRareList, var_14_3)
-	table.insert(arg_14_0.goEquipList, arg_14_1)
+	table.insert(self.simageList, simage)
+	table.insert(self.txtNameList, txtname)
+	table.insert(self.txtNameEnList, txtnameEn)
+	table.insert(self.goRareList, rareList)
+	table.insert(self.goEquipList, goItem)
 
-	local var_14_5 = gohelper.getClick(arg_14_1)
+	local click = gohelper.getClick(goItem)
 
-	var_14_5:AddClickListener(arg_14_0.onEquipItemClick, arg_14_0, arg_14_2)
-	table.insert(arg_14_0.equipClickList, var_14_5)
+	click:AddClickListener(self.onEquipItemClick, self, index)
+	table.insert(self.equipClickList, click)
 end
 
-function var_0_0.onFilterValueChange(arg_15_0, arg_15_1)
-	if arg_15_1 ~= arg_15_0.viewName then
+function HandbookEquipView:onFilterValueChange(viewName)
+	if viewName ~= self.viewName then
 		return
 	end
 
-	arg_15_0:refreshEquipData()
-	arg_15_0:refreshSort()
-	arg_15_0:refreshUI()
+	self:refreshEquipData()
+	self:refreshSort()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0.filterMo = EquipFilterModel.instance:generateFilterMo(arg_16_0.viewName)
+function HandbookEquipView:onOpen()
+	self.filterMo = EquipFilterModel.instance:generateFilterMo(self.viewName)
 
-	arg_16_0:refreshEquipData()
-	arg_16_0:refreshSort()
-	arg_16_0:refreshUI()
+	self:refreshEquipData()
+	self:refreshSort()
+	self:refreshUI()
 end
 
-function var_0_0.refreshEquipData(arg_17_0)
-	arg_17_0.equipList = arg_17_0:getEquips()
-	arg_17_0.maxPage = arg_17_0:getMaxPageNum()
+function HandbookEquipView:refreshEquipData()
+	self.equipList = self:getEquips()
+	self.maxPage = self:getMaxPageNum()
 end
 
-function var_0_0.refreshSort(arg_18_0)
-	if arg_18_0.rareRankAscending then
-		table.sort(arg_18_0.equipList, arg_18_0.rareAscendingSortFunc)
+function HandbookEquipView:refreshSort()
+	if self.rareRankAscending then
+		table.sort(self.equipList, self.rareAscendingSortFunc)
 	else
-		table.sort(arg_18_0.equipList, arg_18_0.rareDescendingSortFunc)
+		table.sort(self.equipList, self.rareDescendingSortFunc)
 	end
 end
 
-function var_0_0.refreshUI(arg_19_0)
-	arg_19_0:refreshBtnStatus()
-	arg_19_0:refreshPage(1)
+function HandbookEquipView:refreshUI()
+	self:refreshBtnStatus()
+	self:refreshPage(1)
 end
 
-function var_0_0.refreshBtnStatus(arg_20_0)
-	gohelper.setActive(arg_20_0.goRareRankIcon1, arg_20_0.rareRankAscending)
-	gohelper.setActive(arg_20_0.goRareRankIcon2, not arg_20_0.rareRankAscending)
-	arg_20_0:refreshFilterBtnStatus()
+function HandbookEquipView:refreshBtnStatus()
+	gohelper.setActive(self.goRareRankIcon1, self.rareRankAscending)
+	gohelper.setActive(self.goRareRankIcon2, not self.rareRankAscending)
+	self:refreshFilterBtnStatus()
 end
 
-function var_0_0.refreshFilterBtnStatus(arg_21_0)
-	local var_21_0 = arg_21_0.filterMo:isFiltering()
+function HandbookEquipView:refreshFilterBtnStatus()
+	local isFiltering = self.filterMo:isFiltering()
 
-	gohelper.setActive(arg_21_0.goFilter, var_21_0)
-	gohelper.setActive(arg_21_0.goNotFilter, not var_21_0)
+	gohelper.setActive(self.goFilter, isFiltering)
+	gohelper.setActive(self.goNotFilter, not isFiltering)
 end
 
-function var_0_0.refreshPage(arg_22_0, arg_22_1)
-	arg_22_0.currentPage = arg_22_1
+function HandbookEquipView:refreshPage(pageNum)
+	self.currentPage = pageNum
 
-	local var_22_0 = (arg_22_1 - 1) * var_0_0.everyPageShowCount
+	local startIndex = (pageNum - 1) * HandbookEquipView.everyPageShowCount
 
-	for iter_22_0 = 1, var_0_0.everyPageShowCount do
-		arg_22_0:handleItem(iter_22_0, arg_22_0.equipList[var_22_0 + iter_22_0])
+	for i = 1, HandbookEquipView.everyPageShowCount do
+		self:handleItem(i, self.equipList[startIndex + i])
 	end
 
-	gohelper.setActive(arg_22_0._goleftarrow, arg_22_0.currentPage > 1)
-	gohelper.setActive(arg_22_0._gorightarrow, arg_22_0.currentPage < arg_22_0.maxPage)
+	gohelper.setActive(self._goleftarrow, self.currentPage > 1)
+	gohelper.setActive(self._gorightarrow, self.currentPage < self.maxPage)
 end
 
-function var_0_0.rareAscendingSortFunc(arg_23_0, arg_23_1)
-	if arg_23_0.rare ~= arg_23_1.rare then
-		return arg_23_0.rare < arg_23_1.rare
+function HandbookEquipView.rareAscendingSortFunc(a, b)
+	if a.rare ~= b.rare then
+		return a.rare < b.rare
 	end
 
-	return arg_23_0.id < arg_23_1.id
+	return a.id < b.id
 end
 
-function var_0_0.rareDescendingSortFunc(arg_24_0, arg_24_1)
-	if arg_24_0.rare ~= arg_24_1.rare then
-		return arg_24_0.rare > arg_24_1.rare
+function HandbookEquipView.rareDescendingSortFunc(a, b)
+	if a.rare ~= b.rare then
+		return a.rare > b.rare
 	end
 
-	return arg_24_0.id < arg_24_1.id
+	return a.id < b.id
 end
 
-function var_0_0.getEquips(arg_25_0)
-	local var_25_0 = {}
+function HandbookEquipView:getEquips()
+	local equips = {}
 
-	for iter_25_0, iter_25_1 in ipairs(lua_handbook_equip.configList) do
-		local var_25_1 = EquipConfig.instance:getEquipCo(iter_25_1.equipId)
+	for _, handbookEquipCo in ipairs(lua_handbook_equip.configList) do
+		local equipCo = EquipConfig.instance:getEquipCo(handbookEquipCo.equipId)
 
-		if arg_25_0:checkNeedEquipCo(var_25_1) then
-			table.insert(var_25_0, var_25_1)
+		if self:checkNeedEquipCo(equipCo) then
+			table.insert(equips, equipCo)
 		end
 	end
 
-	return var_25_0
+	return equips
 end
 
-function var_0_0.getMaxPageNum(arg_26_0)
-	return math.ceil(#arg_26_0.equipList / var_0_0.everyPageShowCount)
+function HandbookEquipView:getMaxPageNum()
+	return math.ceil(#self.equipList / HandbookEquipView.everyPageShowCount)
 end
 
-function var_0_0.checkNeedEquipCo(arg_27_0, arg_27_1)
-	if not arg_27_1 then
+function HandbookEquipView:checkNeedEquipCo(equipCo)
+	if not equipCo then
 		return false
 	end
 
-	if not arg_27_0.filterMo:isFiltering() then
+	if not self.filterMo:isFiltering() then
 		return true
 	end
 
-	if not arg_27_0.filterMo:checkIsIncludeTag(arg_27_1) then
+	if not self.filterMo:checkIsIncludeTag(equipCo) then
 		return false
 	end
 
-	local var_27_0 = arg_27_0.filterMo:getObtainType()
+	local obtainType = self.filterMo:getObtainType()
 
-	if var_27_0 == EquipFilterModel.ObtainEnum.All then
+	if obtainType == EquipFilterModel.ObtainEnum.All then
 		return true
 	end
 
-	if var_27_0 == EquipFilterModel.ObtainEnum.Get then
-		return HandbookModel.instance:haveEquip(arg_27_1.id)
+	if obtainType == EquipFilterModel.ObtainEnum.Get then
+		return HandbookModel.instance:haveEquip(equipCo.id)
 	else
-		return not HandbookModel.instance:haveEquip(arg_27_1.id)
+		return not HandbookModel.instance:haveEquip(equipCo.id)
 	end
 end
 
-function var_0_0.handleItem(arg_28_0, arg_28_1, arg_28_2)
-	if not arg_28_2 then
-		gohelper.setActive(arg_28_0.goEquipList[arg_28_1], false)
+function HandbookEquipView:handleItem(index, equipCo)
+	if not equipCo then
+		gohelper.setActive(self.goEquipList[index], false)
 
 		return
 	end
 
-	gohelper.setActive(arg_28_0.goEquipList[arg_28_1], true)
-	ZProj.UGUIHelper.SetGrayscale(arg_28_0.simageList[arg_28_1].gameObject, not HandbookModel.instance:haveEquip(arg_28_2.id))
-	arg_28_0.simageList[arg_28_1]:LoadImage(ResUrl.getHandbookEquipImage(arg_28_2.icon .. arg_28_1))
+	gohelper.setActive(self.goEquipList[index], true)
+	ZProj.UGUIHelper.SetGrayscale(self.simageList[index].gameObject, not HandbookModel.instance:haveEquip(equipCo.id))
+	self.simageList[index]:LoadImage(ResUrl.getHandbookEquipImage(equipCo.icon .. index))
 
-	arg_28_0.txtNameList[arg_28_1].text = arg_28_2.name
-	arg_28_0.txtNameEnList[arg_28_1].text = arg_28_2.name_en
+	self.txtNameList[index].text = equipCo.name
+	self.txtNameEnList[index].text = equipCo.name_en
 
-	for iter_28_0 = 1, #arg_28_0.goRareList[arg_28_1] do
-		if arg_28_2.rare == iter_28_0 + 1 then
-			gohelper.setActive(arg_28_0.goRareList[arg_28_1][iter_28_0], true)
+	for i = 1, #self.goRareList[index] do
+		if equipCo.rare == i + 1 then
+			gohelper.setActive(self.goRareList[index][i], true)
 		else
-			gohelper.setActive(arg_28_0.goRareList[arg_28_1][iter_28_0], false)
+			gohelper.setActive(self.goRareList[index][i], false)
 		end
 	end
 end
 
-function var_0_0.onDragBeginHandle(arg_29_0, arg_29_1, arg_29_2)
-	arg_29_0.startDragPosX = arg_29_2.position.x
+function HandbookEquipView:onDragBeginHandle(param, pointerEventData)
+	self.startDragPosX = pointerEventData.position.x
 end
 
-function var_0_0.onDragEndHandle(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = arg_30_2.position.x
+function HandbookEquipView:onDragEndHandle(param, pointerEventData)
+	local endDragPosX = pointerEventData.position.x
 
-	if math.abs(var_30_0 - arg_30_0.startDragPosX) > var_0_0.DragAbsPositionX then
+	if math.abs(endDragPosX - self.startDragPosX) > HandbookEquipView.DragAbsPositionX then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_screenplay_photo_click)
 
-		if var_30_0 < arg_30_0.startDragPosX then
-			arg_30_0:rightPageOnClick()
+		if endDragPosX < self.startDragPosX then
+			self:rightPageOnClick()
 		else
-			arg_30_0:leftPageOnClick()
+			self:leftPageOnClick()
 		end
 	end
 end
 
-function var_0_0.onClose(arg_31_0)
+function HandbookEquipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_32_0)
-	EquipFilterModel.instance:clear(arg_32_0.viewName)
+function HandbookEquipView:onDestroyView()
+	EquipFilterModel.instance:clear(self.viewName)
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_0.equipClickList) do
-		iter_32_1:RemoveClickListener()
+	for _, click in ipairs(self.equipClickList) do
+		click:RemoveClickListener()
 	end
 
-	arg_32_0._leftPageClick:RemoveClickListener()
-	arg_32_0._rightPageClick:RemoveClickListener()
-	arg_32_0._rareRankClick:RemoveClickListener()
+	self._leftPageClick:RemoveClickListener()
+	self._rightPageClick:RemoveClickListener()
+	self._rareRankClick:RemoveClickListener()
 
-	if arg_32_0._drag then
-		arg_32_0._drag:RemoveDragBeginListener()
-		arg_32_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 	end
 
-	arg_32_0.equipList = nil
+	self.equipList = nil
 
-	arg_32_0._simagebg:UnLoadImage()
+	self._simagebg:UnLoadImage()
 
-	for iter_32_2 = 1, #arg_32_0.simageList do
-		arg_32_0.simageList[iter_32_2]:UnLoadImage()
+	for i = 1, #self.simageList do
+		self.simageList[i]:UnLoadImage()
 	end
 end
 
-return var_0_0
+return HandbookEquipView

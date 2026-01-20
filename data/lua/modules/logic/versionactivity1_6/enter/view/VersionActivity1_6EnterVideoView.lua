@@ -1,51 +1,55 @@
-﻿module("modules.logic.versionactivity1_6.enter.view.VersionActivity1_6EnterVideoView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/enter/view/VersionActivity1_6EnterVideoView.lua
 
-local var_0_0 = class("VersionActivity1_6EnterVideoView", BaseView)
-local var_0_1 = 3
-local var_0_2 = "videos/1_6_enter.mp4"
+module("modules.logic.versionactivity1_6.enter.view.VersionActivity1_6EnterVideoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._videoRoot = gohelper.findChild(arg_1_0.viewGO, "#go_video")
+local VersionActivity1_6EnterVideoView = class("VersionActivity1_6EnterVideoView", BaseView)
+local videoOverTime = 3
+local videoPath = "videos/1_6_enter.mp4"
+
+function VersionActivity1_6EnterVideoView:onInitView()
+	self._videoRoot = gohelper.findChild(self.viewGO, "#go_video")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._videoPlayer, arg_2_0._displauUGUI, arg_2_0._videoGo = AvProMgr.instance:getVideoPlayer(arg_2_0._videoRoot)
+function VersionActivity1_6EnterVideoView:onOpen()
+	self._videoPlayer, self._videoGo = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._videoRoot)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6EnterViewVideo)
-	arg_2_0._videoPlayer:Play(arg_2_0._displauUGUI, langVideoUrl("1_6_enter"), false, arg_2_0._videoStatusUpdate, arg_2_0)
+	self._videoPlayer:play("1_6_enter", false, self._videoStatusUpdate, self)
 
-	arg_2_0._videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter)).enabled = false
+	local bgAdapter = self._videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter))
 
-	TaskDispatcher.runDelay(arg_2_0.handleVideoOverTime, arg_2_0, var_0_1)
+	bgAdapter.enabled = false
+
+	TaskDispatcher.runDelay(self.handleVideoOverTime, self, videoOverTime)
 end
 
-function var_0_0._videoStatusUpdate(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_2 == AvProEnum.PlayerStatus.FinishedPlaying or arg_3_2 == AvProEnum.PlayerStatus.Error then
-		arg_3_0:_stopVideoOverTimeAction()
-		arg_3_0:closeThis()
+function VersionActivity1_6EnterVideoView:_videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.FinishedPlaying or status == VideoEnum.PlayerStatus.Error then
+		self:_stopVideoOverTimeAction()
+		self:closeThis()
 		VersionActivity1_6EnterController.instance:dispatchEvent(VersionActivity1_6EnterEvent.OnEnterVideoFinished)
 	end
 end
 
-function var_0_0.handleVideoOverTime(arg_4_0)
-	arg_4_0:_stopVideoOverTimeAction()
-	arg_4_0:closeThis()
+function VersionActivity1_6EnterVideoView:handleVideoOverTime()
+	self:_stopVideoOverTimeAction()
+	self:closeThis()
 	VersionActivity1_6EnterController.instance:dispatchEvent(VersionActivity1_6EnterEvent.OnEnterVideoFinished)
 end
 
-function var_0_0._stopVideoOverTimeAction(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.handleVideoOverTime, arg_5_0)
+function VersionActivity1_6EnterVideoView:_stopVideoOverTimeAction()
+	TaskDispatcher.cancelTask(self.handleVideoOverTime, self)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	arg_6_0:_stopVideoOverTimeAction()
+function VersionActivity1_6EnterVideoView:onDestroyView()
+	self:_stopVideoOverTimeAction()
 
-	if arg_6_0._videoPlayer then
-		arg_6_0._videoPlayer:Stop()
-		arg_6_0._videoPlayer:Clear()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
+		self._videoPlayer:clear()
 
-		arg_6_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 end
 
-return var_0_0
+return VersionActivity1_6EnterVideoView

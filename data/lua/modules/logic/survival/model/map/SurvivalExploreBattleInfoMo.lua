@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.model.map.SurvivalExploreBattleInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalExploreBattleInfoMo.lua
 
-local var_0_0 = pureTable("SurvivalExploreBattleInfoMo")
+module("modules.logic.survival.model.map.SurvivalExploreBattleInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.unitId = arg_1_1.unitId
-	arg_1_0.battleId = arg_1_1.battleId
-	arg_1_0.status = arg_1_1.status
+local SurvivalExploreBattleInfoMo = pureTable("SurvivalExploreBattleInfoMo")
+
+function SurvivalExploreBattleInfoMo:init(data)
+	self.unitId = data.unitId
+	self.battleId = data.battleId
+	self.status = data.status
 end
 
-return var_0_0
+return SurvivalExploreBattleInfoMo

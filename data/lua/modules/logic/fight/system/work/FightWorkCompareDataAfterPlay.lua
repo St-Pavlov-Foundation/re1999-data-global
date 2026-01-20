@@ -1,42 +1,45 @@
-﻿module("modules.logic.fight.system.work.FightWorkCompareDataAfterPlay", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCompareDataAfterPlay.lua
 
-local var_0_0 = class("FightWorkCompareDataAfterPlay", BaseWork)
+module("modules.logic.fight.system.work.FightWorkCompareDataAfterPlay", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0._flow = FightWorkFlowSequence.New()
+local FightWorkCompareDataAfterPlay = class("FightWorkCompareDataAfterPlay", BaseWork)
 
-	arg_1_0:_registCompareServer()
-	arg_1_0:_registRefreshPerformance()
-	arg_1_0._flow:registFinishCallback(arg_1_0._onFlowFinish, arg_1_0)
-	arg_1_0._flow:start()
+function FightWorkCompareDataAfterPlay:onStart(context)
+	self._flow = FightWorkFlowSequence.New()
+
+	self:_registCompareServer()
+	self:_registRefreshPerformance()
+	self._flow:registFinishCallback(self._onFlowFinish, self)
+	self._flow:start()
 end
 
-function var_0_0._registCompareServer(arg_2_0)
-	arg_2_0._flow:registWork(FightWorkCompareServerEntityData)
+function FightWorkCompareDataAfterPlay:_registCompareServer()
+	self._flow:registWork(FightWorkCompareServerEntityData)
 end
 
-function var_0_0._registRefreshPerformance(arg_3_0)
-	arg_3_0._flow:registWork(FightWorkRefreshPerformanceEntityData)
-	arg_3_0._flow:registWork(FightWorkFunction, arg_3_0.refreshPerformanceData, arg_3_0)
+function FightWorkCompareDataAfterPlay:_registRefreshPerformance()
+	self._flow:registWork(FightWorkRefreshPerformanceEntityData)
+	self._flow:registWork(FightWorkFunction, self.refreshPerformanceData, self)
 end
 
-function var_0_0.refreshPerformanceData(arg_4_0)
+function FightWorkCompareDataAfterPlay:refreshPerformanceData()
 	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.param, FightDataMgr.instance.fieldMgr.param)
 	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.fightTaskBox, FightDataMgr.instance.fieldMgr.fightTaskBox)
 	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.progressDic, FightDataMgr.instance.fieldMgr.progressDic)
+	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.indicatorDict, FightDataMgr.instance.fieldMgr.indicatorDict)
 end
 
-function var_0_0._onFlowFinish(arg_5_0)
+function FightWorkCompareDataAfterPlay:_onFlowFinish()
 	FightController.instance:dispatchEvent(FightEvent.AfterCorrectData)
-	arg_5_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_6_0)
-	if arg_6_0._flow then
-		arg_6_0._flow:disposeSelf()
+function FightWorkCompareDataAfterPlay:clearWork()
+	if self._flow then
+		self._flow:disposeSelf()
 
-		arg_6_0._flow = nil
+		self._flow = nil
 	end
 end
 
-return var_0_0
+return FightWorkCompareDataAfterPlay

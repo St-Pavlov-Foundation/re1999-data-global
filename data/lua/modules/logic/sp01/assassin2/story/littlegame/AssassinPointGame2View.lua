@@ -1,202 +1,206 @@
-﻿module("modules.logic.sp01.assassin2.story.littlegame.AssassinPointGame2View", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/littlegame/AssassinPointGame2View.lua
 
-local var_0_0 = class("AssassinPointGame2View", BaseView)
-local var_0_1 = {
+module("modules.logic.sp01.assassin2.story.littlegame.AssassinPointGame2View", package.seeall)
+
+local AssassinPointGame2View = class("AssassinPointGame2View", BaseView)
+local LineStatus = {
 	Disconnected = 1,
 	Connected = 2
 }
-local var_0_2 = "AssassinPointGame2View"
-local var_0_3 = 0.5
+local BlockScreenKey = "AssassinPointGame2View"
+local DelayCheckConnectPoint = 0.5
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gogame1 = gohelper.findChild(arg_1_0.viewGO, "root/#go_game1")
-	arg_1_0._golines = gohelper.findChild(arg_1_0.viewGO, "root/#go_game1/#go_lines2")
-	arg_1_0._gopoints1 = gohelper.findChild(arg_1_0.viewGO, "root/#go_game1/#go_points")
-	arg_1_0._gopoints2 = gohelper.findChild(arg_1_0.viewGO, "root/#go_game1/#go_points2")
-	arg_1_0._goeyelight = gohelper.findChild(arg_1_0.viewGO, "root/top/#go_points/#go_point1/#eyelight")
+function AssassinPointGame2View:onInitView()
+	self._gogame1 = gohelper.findChild(self.viewGO, "root/#go_game1")
+	self._golines = gohelper.findChild(self.viewGO, "root/#go_game1/#go_lines2")
+	self._gopoints1 = gohelper.findChild(self.viewGO, "root/#go_game1/#go_points")
+	self._gopoints2 = gohelper.findChild(self.viewGO, "root/#go_game1/#go_points2")
+	self._goeyelight = gohelper.findChild(self.viewGO, "root/top/#go_points/#go_point1/#eyelight")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.OnGameAfterStoryDone, arg_2_0.closeThis, arg_2_0)
+function AssassinPointGame2View:addEvents()
+	self:addEventCb(AssassinController.instance, AssassinEvent.OnGameAfterStoryDone, self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AssassinPointGame2View:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._pointView = arg_4_0.viewContainer._views[1]
+function AssassinPointGame2View:_editableInitView()
+	self._pointView = self.viewContainer._views[1]
 
-	arg_4_0:initLines()
-	arg_4_0:initPoints()
+	self:initLines()
+	self:initPoints()
 end
 
-function var_0_0.initLines(arg_5_0)
-	arg_5_0._linesTran = arg_5_0._golines.transform
-	arg_5_0._lineCount = arg_5_0._linesTran.childCount
-	arg_5_0._lineName2GoDict = {}
-	arg_5_0._lineStatusDict = {}
+function AssassinPointGame2View:initLines()
+	self._linesTran = self._golines.transform
+	self._lineCount = self._linesTran.childCount
+	self._lineName2GoDict = {}
+	self._lineStatusDict = {}
 
-	for iter_5_0 = 1, arg_5_0._lineCount do
-		local var_5_0 = arg_5_0._linesTran:GetChild(iter_5_0 - 1).gameObject
+	for i = 1, self._lineCount do
+		local goline = self._linesTran:GetChild(i - 1).gameObject
 
-		if gohelper.isNil(var_5_0) then
+		if gohelper.isNil(goline) then
 			break
 		end
 
-		local var_5_1 = var_5_0.name
+		local lineName = goline.name
 
-		arg_5_0._lineName2GoDict[var_5_1] = var_5_0
-		arg_5_0._lineStatusDict[var_5_1] = var_0_1.Disconnected
+		self._lineName2GoDict[lineName] = goline
+		self._lineStatusDict[lineName] = LineStatus.Disconnected
 	end
 end
 
-function var_0_0.initPoints(arg_6_0)
-	arg_6_0._pointGoTab = arg_6_0:getUserDataTb_()
-	arg_6_0._pointName2GoTab = arg_6_0:getUserDataTb_()
-	arg_6_0._lineName2ConnectPointDict = {}
-	arg_6_0._point2ConnectLineNameDict = {}
-	arg_6_0._pointsTran = arg_6_0._gopoints2.transform
-	arg_6_0._pointCount = 1
-	arg_6_0._collectPointCount = 0
+function AssassinPointGame2View:initPoints()
+	self._pointGoTab = self:getUserDataTb_()
+	self._pointName2GoTab = self:getUserDataTb_()
+	self._lineName2ConnectPointDict = {}
+	self._point2ConnectLineNameDict = {}
+	self._pointsTran = self._gopoints2.transform
+	self._pointCount = 1
+	self._collectPointCount = 0
 
-	for iter_6_0 = 1, arg_6_0._pointCount do
-		local var_6_0 = arg_6_0._pointsTran:GetChild(iter_6_0 - 1).gameObject
+	for i = 1, self._pointCount do
+		local gopoint = self._pointsTran:GetChild(i - 1).gameObject
 
-		if gohelper.isNil(var_6_0) then
+		if gohelper.isNil(gopoint) then
 			break
 		end
 
-		arg_6_0._pointName2GoTab[var_6_0.name] = var_6_0
-		arg_6_0._pointGoTab[iter_6_0] = var_6_0
+		self._pointName2GoTab[gopoint.name] = gopoint
+		self._pointGoTab[i] = gopoint
 
-		local var_6_1 = string.split(var_6_0.name, "#")
+		local connectLineNameList = string.split(gopoint.name, "#")
 
-		for iter_6_1, iter_6_2 in ipairs(var_6_1) do
-			arg_6_0._lineName2ConnectPointDict[iter_6_2] = iter_6_0
+		for _, connectLineName in ipairs(connectLineNameList) do
+			self._lineName2ConnectPointDict[connectLineName] = i
 		end
 
-		arg_6_0._point2ConnectLineNameDict[iter_6_0] = var_6_1
+		self._point2ConnectLineNameDict[i] = connectLineNameList
 	end
 end
 
-function var_0_0.onClickLineConnectPoint(arg_7_0, arg_7_1)
-	if arg_7_0._lastClickPointIndex then
-		local var_7_0 = arg_7_0:getTwoPointConnectLine(arg_7_0._lastClickPointIndex, arg_7_1)
+function AssassinPointGame2View:onClickLineConnectPoint(pointIndex)
+	if self._lastClickPointIndex then
+		local connectLineGo = self:getTwoPointConnectLine(self._lastClickPointIndex, pointIndex)
 
-		if var_7_0 then
-			gohelper.setActive(var_7_0, true)
+		if connectLineGo then
+			gohelper.setActive(connectLineGo, true)
 
-			arg_7_0._lineStatusDict[var_7_0.name] = var_0_1.Connected
+			self._lineStatusDict[connectLineGo.name] = LineStatus.Connected
 
-			arg_7_0:checkNewLineConnectOtherLine(var_7_0)
+			self:checkNewLineConnectOtherLine(connectLineGo)
 			AudioMgr.instance:trigger(AudioEnum2_9.DungeonMiniGame.play_ui_connectPoint)
 		end
 
-		arg_7_0._pointView:onClickPointError(arg_7_1)
-		arg_7_0._pointView:onClickPointError(arg_7_0._lastClickPointIndex)
+		self._pointView:onClickPointError(pointIndex)
+		self._pointView:onClickPointError(self._lastClickPointIndex)
 
-		arg_7_0._lastClickPointIndex = nil
+		self._lastClickPointIndex = nil
 
 		return
 	end
 
-	arg_7_0._lastClickPointIndex = arg_7_1
+	self._lastClickPointIndex = pointIndex
 end
 
-function var_0_0.getTwoPointConnectLine(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = string.format("%s_%s", arg_8_1, arg_8_2)
-	local var_8_1 = string.format("%s_%s", arg_8_2, arg_8_1)
+function AssassinPointGame2View:getTwoPointConnectLine(pointName1, pointName2)
+	local key1 = string.format("%s_%s", pointName1, pointName2)
+	local key2 = string.format("%s_%s", pointName2, pointName1)
 
-	return arg_8_0._lineName2GoDict[var_8_0] or arg_8_0._lineName2GoDict[var_8_1]
+	return self._lineName2GoDict[key1] or self._lineName2GoDict[key2]
 end
 
-function var_0_0.checkNewLineConnectOtherLine(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1.name
-	local var_9_1 = arg_9_0._lineName2ConnectPointDict[var_9_0]
-	local var_9_2 = var_9_1 and arg_9_0._point2ConnectLineNameDict[var_9_1]
+function AssassinPointGame2View:checkNewLineConnectOtherLine(lineGo)
+	local lineName = lineGo.name
+	local connectPointIndex = self._lineName2ConnectPointDict[lineName]
+	local connectLineNameList = connectPointIndex and self._point2ConnectLineNameDict[connectPointIndex]
 
-	if not var_9_2 or #var_9_2 <= 0 then
+	if not connectLineNameList or #connectLineNameList <= 0 then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-		if arg_9_0._lineStatusDict[iter_9_1] == var_0_1.Disconnected then
+	for _, connectLineName in ipairs(connectLineNameList) do
+		if self._lineStatusDict[connectLineName] == LineStatus.Disconnected then
 			return
 		end
 	end
 
-	arg_9_0:destroyFlow()
+	self:destroyFlow()
 
-	arg_9_0._flow = FlowSequence.New()
+	self._flow = FlowSequence.New()
 
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0.lockScreen, arg_9_0, true))
-	arg_9_0._flow:addWork(DelayDoFuncWork.New(arg_9_0.onNewLineConnectOtherLine, arg_9_0, var_0_3, var_9_1))
-	arg_9_0._flow:addWork(FunctionWork.New(arg_9_0.lockScreen, arg_9_0, false))
-	arg_9_0._flow:start()
+	self._flow:addWork(FunctionWork.New(self.lockScreen, self, true))
+	self._flow:addWork(DelayDoFuncWork.New(self.onNewLineConnectOtherLine, self, DelayCheckConnectPoint, connectPointIndex))
+	self._flow:addWork(FunctionWork.New(self.lockScreen, self, false))
+	self._flow:start()
 end
 
-function var_0_0.destroyFlow(arg_10_0)
-	if arg_10_0._flow then
-		arg_10_0._flow:destroy()
+function AssassinPointGame2View:destroyFlow()
+	if self._flow then
+		self._flow:destroy()
 
-		arg_10_0._flow = nil
+		self._flow = nil
 	end
 end
 
-function var_0_0.lockScreen(arg_11_0, arg_11_1)
-	AssassinHelper.lockScreen(var_0_2, arg_11_1)
+function AssassinPointGame2View:lockScreen(lock)
+	AssassinHelper.lockScreen(BlockScreenKey, lock)
 end
 
-function var_0_0.onNewLineConnectOtherLine(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._pointGoTab[arg_12_1]
+function AssassinPointGame2View:onNewLineConnectOtherLine(pointIndex)
+	local gopoint = self._pointGoTab[pointIndex]
 
-	if not var_12_0 then
+	if not gopoint then
 		return
 	end
 
-	gohelper.setActive(var_12_0, true)
-	gohelper.setActive(arg_12_0._gopoints2, true)
-	gohelper.setActive(arg_12_0._goeyelight, true)
+	gohelper.setActive(gopoint, true)
+	gohelper.setActive(self._gopoints2, true)
+	gohelper.setActive(self._goeyelight, true)
 	AudioMgr.instance:trigger(AudioEnum2_9.DungeonMiniGame.play_ui_findEyeSucc)
 
-	arg_12_0._collectPointCount = arg_12_0._collectPointCount + 1
+	self._collectPointCount = self._collectPointCount + 1
 
-	arg_12_0:checkIsGameDone()
+	self:checkIsGameDone()
 end
 
-function var_0_0.checkIsGameDone(arg_13_0)
-	if arg_13_0._collectPointCount >= arg_13_0._pointCount then
-		gohelper.setActive(arg_13_0._gopoints1, false)
-		gohelper.setActive(arg_13_0._golines, false)
+function AssassinPointGame2View:checkIsGameDone()
+	local isAllCollect = self._collectPointCount >= self._pointCount
 
-		local var_13_0 = VersionActivity2_9DungeonHelper.getLittleGameDialogIds(AssassinEnum.ConstId.DialogId_PointGame)
-		local var_13_1 = var_13_0 and #var_13_0 or 0
+	if isAllCollect then
+		gohelper.setActive(self._gopoints1, false)
+		gohelper.setActive(self._golines, false)
 
-		arg_13_0._pointView:playDialog(var_13_1, arg_13_0.onGameDone, arg_13_0)
+		local dialogIdList = VersionActivity2_9DungeonHelper.getLittleGameDialogIds(AssassinEnum.ConstId.DialogId_PointGame)
+		local dialogCount = dialogIdList and #dialogIdList or 0
+
+		self._pointView:playDialog(dialogCount, self.onGameDone, self)
 	end
 end
 
-function var_0_0.onGameDone(arg_14_0)
-	arg_14_0.viewContainer:stat(StatEnum.Result.Success)
-	AssassinController.instance:dispatchEvent(AssassinEvent.OnGameEpisodeFinished, arg_14_0._episodeId)
+function AssassinPointGame2View:onGameDone()
+	self.viewContainer:stat(StatEnum.Result.Success)
+	AssassinController.instance:dispatchEvent(AssassinEvent.OnGameEpisodeFinished, self._episodeId)
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0._episodeId = arg_15_0.viewParam and arg_15_0.viewParam.episodeId
+function AssassinPointGame2View:onOpen()
+	self._episodeId = self.viewParam and self.viewParam.episodeId
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0:destroyFlow()
-	arg_16_0:lockScreen(false)
+function AssassinPointGame2View:onClose()
+	self:destroyFlow()
+	self:lockScreen(false)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function AssassinPointGame2View:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinPointGame2View

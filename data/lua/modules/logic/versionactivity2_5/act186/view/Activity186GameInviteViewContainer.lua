@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186GameInviteViewContainer.lua
 
-local var_0_0 = class("Activity186GameInviteViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity186GameInviteViewContainer = class("Activity186GameInviteViewContainer", BaseViewContainer)
 
-	arg_1_0.heroView = Activity186GameHeroView.New()
+function Activity186GameInviteViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.heroView)
-	table.insert(var_1_0, Activity186GameInviteView.New())
-	table.insert(var_1_0, Activity186GameDialogueView.New())
+	self.heroView = Activity186GameHeroView.New()
 
-	return var_1_0
+	table.insert(views, self.heroView)
+	table.insert(views, Activity186GameInviteView.New())
+	table.insert(views, Activity186GameDialogueView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity186GameInviteViewContainer

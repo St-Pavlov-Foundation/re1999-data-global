@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/Activity201MaLiAnNaTaskView.lua
 
-local var_0_0 = class("Activity201MaLiAnNaTaskView", BaseView)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
+local Activity201MaLiAnNaTaskView = class("Activity201MaLiAnNaTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity201MaLiAnNaTaskView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+function Activity201MaLiAnNaTaskView:onOpen()
+	self._actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0._oneClaimReward, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._onFinishTask, arg_2_0)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	Activity201MaLiAnNaTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity203
-	}, arg_2_0._oneClaimReward, arg_2_0)
-	TaskDispatcher.runRepeat(arg_2_0.showLeftTime, arg_2_0, TimeUtil.OneMinuteSecond)
-	arg_2_0:showLeftTime()
+	}, self._oneClaimReward, self)
+	TaskDispatcher.runRepeat(self.showLeftTime, self, TimeUtil.OneMinuteSecond)
+	self:showLeftTime()
 end
 
-function var_0_0._oneClaimReward(arg_3_0)
-	Activity201MaLiAnNaTaskListModel.instance:init(arg_3_0._actId)
+function Activity201MaLiAnNaTaskView:_oneClaimReward()
+	Activity201MaLiAnNaTaskListModel.instance:init(self._actId)
 end
 
-function var_0_0._onFinishTask(arg_4_0, arg_4_1)
-	if Activity201MaLiAnNaTaskListModel.instance:getById(arg_4_1) then
-		Activity201MaLiAnNaTaskListModel.instance:init(arg_4_0._actId)
+function Activity201MaLiAnNaTaskView:_onFinishTask(taskId)
+	if Activity201MaLiAnNaTaskListModel.instance:getById(taskId) then
+		Activity201MaLiAnNaTaskListModel.instance:init(self._actId)
 	end
 end
 
-function var_0_0.showLeftTime(arg_5_0)
-	arg_5_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_5_0._actId)
+function Activity201MaLiAnNaTaskView:showLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 end
 
-function var_0_0.onClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.showLeftTime, arg_6_0)
+function Activity201MaLiAnNaTaskView:onClose()
+	TaskDispatcher.cancelTask(self.showLeftTime, self)
 end
 
-return var_0_0
+return Activity201MaLiAnNaTaskView

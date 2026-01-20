@@ -1,57 +1,59 @@
-﻿module("modules.logic.activity.view.Activity101SignViewBase", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Activity101SignViewBase.lua
 
-local var_0_0 = class("Activity101SignViewBase", BaseView)
+module("modules.logic.activity.view.Activity101SignViewBase", package.seeall)
 
-var_0_0.eOpenMode = {
+local Activity101SignViewBase = class("Activity101SignViewBase", BaseView)
+
+Activity101SignViewBase.eOpenMode = {
 	PaiLian = 2,
 	ActivityBeginnerView = 1
 }
 
-function var_0_0.addEvents(arg_1_0)
-	arg_1_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_1_0._refresh, arg_1_0)
+function Activity101SignViewBase:addEvents()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refresh, self)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	arg_2_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, arg_2_0._refresh, arg_2_0)
+function Activity101SignViewBase:removeEvents()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refresh, self)
 end
 
-function var_0_0.internal_set_actId(arg_3_0, arg_3_1)
-	arg_3_0._actId = arg_3_1
+function Activity101SignViewBase:internal_set_actId(actId)
+	self._actId = actId
 end
 
-function var_0_0.internal_set_openMode(arg_4_0, arg_4_1)
-	arg_4_0._eOpenMode = arg_4_1
+function Activity101SignViewBase:internal_set_openMode(eOpenMode)
+	self._eOpenMode = eOpenMode
 end
 
-function var_0_0.actId(arg_5_0)
-	return assert(arg_5_0._actId, "please call self:internal_set_actId(actId) first")
+function Activity101SignViewBase:actId()
+	return assert(self._actId, "please call self:internal_set_actId(actId) first")
 end
 
-function var_0_0.openMode(arg_6_0)
-	return assert(arg_6_0._eOpenMode, "please call self:internal_set_openMode(eOpenMode) first")
+function Activity101SignViewBase:openMode()
+	return assert(self._eOpenMode, "please call self:internal_set_openMode(eOpenMode) first")
 end
 
-function var_0_0.actCO(arg_7_0)
-	local var_7_0 = arg_7_0:actId()
+function Activity101SignViewBase:actCO()
+	local actId = self:actId()
 
-	return lua_activity.configDict[var_7_0]
+	return lua_activity.configDict[actId]
 end
 
-function var_0_0.internal_onOpen(arg_8_0)
-	local var_8_0 = arg_8_0:openMode()
-	local var_8_1 = var_0_0.eOpenMode
+function Activity101SignViewBase:internal_onOpen()
+	local M = self:openMode()
+	local E = Activity101SignViewBase.eOpenMode
 
-	if var_8_0 == var_8_1.ActivityBeginnerView then
-		local var_8_2 = arg_8_0.viewParam.actId
-		local var_8_3 = arg_8_0.viewParam.parent
+	if M == E.ActivityBeginnerView then
+		local actId = self.viewParam.actId
+		local parentGO = self.viewParam.parent
 
-		arg_8_0:internal_set_actId(var_8_2)
-		gohelper.addChild(var_8_3, arg_8_0.viewGO)
-		arg_8_0:_internal_onOpen()
-		arg_8_0:_refresh()
-	elseif var_8_0 == var_8_1.PaiLian then
-		arg_8_0:_internal_onOpen()
-		arg_8_0:_refresh()
+		self:internal_set_actId(actId)
+		gohelper.addChild(parentGO, self.viewGO)
+		self:_internal_onOpen()
+		self:_refresh()
+	elseif M == E.PaiLian then
+		self:_internal_onOpen()
+		self:_refresh()
 	else
 		assert(false)
 	end
@@ -59,141 +61,145 @@ function var_0_0.internal_onOpen(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Task_page)
 end
 
-function var_0_0._internal_onOpen(arg_9_0)
-	arg_9_0:onStart()
+function Activity101SignViewBase:_internal_onOpen()
+	self:onStart()
 end
 
-function var_0_0._internal_onDestroy(arg_10_0)
-	FrameTimerController.onDestroyViewMember(arg_10_0, "__createTimer")
-	GameUtil.onDestroyViewMemberList(arg_10_0, "__itemList")
+function Activity101SignViewBase:_internal_onDestroy()
+	FrameTimerController.onDestroyViewMember(self, "__createTimer")
+	GameUtil.onDestroyViewMemberList(self, "__itemList")
 end
 
-function var_0_0._refresh(arg_11_0)
-	arg_11_0:onRefresh()
+function Activity101SignViewBase:_refresh()
+	self:onRefresh()
 end
 
-function var_0_0.getHelpViewParam(arg_12_0, arg_12_1)
-	local var_12_0 = ActivityConfig.instance:getActivityCo(arg_12_0._actId)
-
-	return {
+function Activity101SignViewBase:getHelpViewParam(goHelp)
+	local co = ActivityConfig.instance:getActivityCo(self._actId)
+	local res = {
 		title = luaLang("rule"),
-		desc = var_12_0.actTip,
-		rootGo = arg_12_1
+		desc = co.actTip,
+		rootGo = goHelp
 	}
+
+	return res
 end
 
-function var_0_0.getDataList(arg_13_0)
-	local var_13_0 = {}
-	local var_13_1 = arg_13_0:actId()
+function Activity101SignViewBase:getDataList()
+	local res = {}
+	local actId = self:actId()
 
-	for iter_13_0, iter_13_1 in pairs(lua_activity101.configDict[var_13_1] or {}) do
-		local var_13_2 = {
-			day = iter_13_0,
-			data = iter_13_1
+	for id, v in pairs(lua_activity101.configDict[actId] or {}) do
+		local item = {
+			day = id,
+			data = v
 		}
 
-		var_13_0[#var_13_0 + 1] = var_13_2
+		res[#res + 1] = item
 	end
 
-	table.sort(var_13_0, function(arg_14_0, arg_14_1)
-		return arg_14_0.day < arg_14_1.day
+	table.sort(res, function(a, b)
+		return a.day < b.day
 	end)
 
-	arg_13_0._tempDataList = var_13_0
+	self._tempDataList = res
 
-	return var_13_0
+	return res
 end
 
-function var_0_0.getTempDataList(arg_15_0)
-	return arg_15_0._tempDataList
+function Activity101SignViewBase:getTempDataList()
+	return self._tempDataList
 end
 
-function var_0_0.getRewardCouldGetIndex(arg_16_0)
-	local var_16_0 = arg_16_0:actId()
-	local var_16_1 = arg_16_0:getDataList()
-	local var_16_2 = #var_16_1
+function Activity101SignViewBase:getRewardCouldGetIndex()
+	local actId = self:actId()
+	local dataList = self:getDataList()
+	local index = #dataList
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		local var_16_3 = iter_16_1.day
+	for i, v in ipairs(dataList) do
+		local id = v.day
+		local alreadyGet = ActivityType101Model.instance:isType101RewardGet(actId, id)
 
-		if not ActivityType101Model.instance:isType101RewardGet(var_16_0, var_16_3) then
-			return true, iter_16_0
+		if not alreadyGet then
+			return true, i
 		end
 	end
 
-	return false, var_16_2
+	return false, index
 end
 
-function var_0_0.updateRewardCouldGetHorizontalScrollPixel(arg_17_0, arg_17_1)
-	local var_17_0, var_17_1 = arg_17_0:getRewardCouldGetIndex()
+function Activity101SignViewBase:updateRewardCouldGetHorizontalScrollPixel(indexFomularFunc)
+	local _, index = self:getRewardCouldGetIndex()
 
-	if arg_17_1 then
-		var_17_1 = arg_17_1(var_17_1)
+	if indexFomularFunc then
+		index = indexFomularFunc(index)
 	end
 
-	arg_17_0:focusByIndex(var_17_1)
+	self:focusByIndex(index)
 end
 
-function var_0_0._tweenByLimitedScrollView(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getCsListScroll()
-	local var_18_1 = arg_18_0:getListScrollParam()
-	local var_18_2 = var_18_1.cellWidth
-	local var_18_3 = var_18_1.cellSpaceH
-	local var_18_4 = var_18_1.rectMaskSoftness[1] or 0
-	local var_18_5 = (var_18_2 + var_18_3) * math.max(0, arg_18_1) + math.min(0, -var_18_4)
+function Activity101SignViewBase:_tweenByLimitedScrollView(index)
+	local csListView = self:getCsListScroll()
+	local listScrollParam = self:getListScrollParam()
+	local cellWidth = listScrollParam.cellWidth
+	local cellSpaceH = listScrollParam.cellSpaceH
+	local rectMaskSoftness = listScrollParam.rectMaskSoftness
+	local rectMaskSoftnessX = rectMaskSoftness[1] or 0
+	local scrollPixel = (cellWidth + cellSpaceH) * math.max(0, index) + math.min(0, -rectMaskSoftnessX)
 
-	var_18_0.HorizontalScrollPixel = math.max(0, var_18_5)
+	csListView.HorizontalScrollPixel = math.max(0, scrollPixel)
 
-	var_18_0:UpdateCells(true)
+	csListView:UpdateCells(true)
 end
 
-function var_0_0._tweenByScrollContent(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0:getScrollContentTranform()
-	local var_19_1 = arg_19_0:getListScrollParam()
-	local var_19_2 = var_19_1.startSpace
+function Activity101SignViewBase:_tweenByScrollContent(index)
+	local scrollContentTran = self:getScrollContentTranform()
+	local listScrollParam = self:getListScrollParam()
+	local startSpace = listScrollParam.startSpace
 
-	if arg_19_1 <= 1 then
-		recthelper.setAnchorX(var_19_0, var_19_2 or 0)
+	if index <= 1 then
+		recthelper.setAnchorX(scrollContentTran, startSpace or 0)
 
 		return
 	end
 
-	local var_19_3 = var_19_1.rectMaskSoftness[1] or 0
-	local var_19_4 = arg_19_0:getMaxScrollX()
-	local var_19_5 = var_19_1.cellWidth
-	local var_19_6 = var_19_1.cellSpaceH
-	local var_19_7 = math.max(0, var_19_2 + (arg_19_1 - 1) * (var_19_5 + var_19_6)) + math.min(0, -var_19_3)
-	local var_19_8 = math.min(var_19_4, var_19_7)
+	local rectMaskSoftness = listScrollParam.rectMaskSoftness
+	local rectMaskSoftnessX = rectMaskSoftness[1] or 0
+	local maxScrollX = self:getMaxScrollX()
+	local cellWidth = listScrollParam.cellWidth
+	local cellSpaceH = listScrollParam.cellSpaceH
+	local scrollPixel = math.max(0, startSpace + (index - 1) * (cellWidth + cellSpaceH)) + math.min(0, -rectMaskSoftnessX)
+	local posX = math.min(maxScrollX, scrollPixel)
 
-	recthelper.setAnchorX(var_19_0, -var_19_8)
+	recthelper.setAnchorX(scrollContentTran, -posX)
 end
 
-function var_0_0.getRemainTimeStr(arg_20_0)
-	local var_20_0 = arg_20_0:actId()
-	local var_20_1 = arg_20_0:getRemainTimeSec()
+function Activity101SignViewBase:getRemainTimeStr()
+	local actId = self:actId()
+	local remainTimeSec = self:getRemainTimeSec()
 
-	if var_20_1 <= 0 then
+	if remainTimeSec <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	local var_20_2, var_20_3, var_20_4, var_20_5 = TimeUtil.secondsToDDHHMMSS(var_20_1)
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
 
-	if var_20_2 > 0 then
+	if day > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
-			var_20_2,
-			var_20_3
+			day,
+			hour
 		})
-	elseif var_20_3 > 0 then
+	elseif hour > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
-			var_20_3,
-			var_20_4
+			hour,
+			min
 		})
-	elseif var_20_4 > 0 then
+	elseif min > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
-			var_20_4
+			min
 		})
-	elseif var_20_5 > 0 then
+	elseif sec > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
 			1
@@ -203,230 +209,239 @@ function var_0_0.getRemainTimeStr(arg_20_0)
 	return luaLang("turnback_end")
 end
 
-function var_0_0._createList(arg_21_0)
-	if arg_21_0.__itemList then
+function Activity101SignViewBase:_createList()
+	if self.__itemList then
 		return
 	end
 
-	local var_21_0 = arg_21_0:getDataList()
+	local dataList = self:getDataList()
 
-	recthelper.setWidth(arg_21_0:getScrollContentTranform(), arg_21_0:calcContentWidth())
+	recthelper.setWidth(self:getScrollContentTranform(), self:calcContentWidth())
 
-	local var_21_1 = arg_21_0:_rectMask2d()
+	local rectMask2d = self:_rectMask2d()
 
-	if var_21_1 then
-		var_21_1.enabled = #var_21_0 > 7
+	if rectMask2d then
+		rectMask2d.enabled = #dataList > 7
 	end
 
-	arg_21_0.__itemList = {}
+	self.__itemList = {}
 
-	if #var_21_0 <= 7 then
-		arg_21_0:_createListDirectly()
+	if #dataList <= 7 then
+		self:_createListDirectly()
 	else
-		arg_21_0:_createListSplitFrame()
+		self:_createListSplitFrame()
 	end
 end
 
-function var_0_0._createListDirectly(arg_22_0)
-	local var_22_0 = arg_22_0:getDataList()
+function Activity101SignViewBase:_createListDirectly()
+	local dataList = self:getDataList()
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-		local var_22_1 = arg_22_0.viewContainer:createItemInst()
+	for i, mo in ipairs(dataList) do
+		local item = self.viewContainer:createItemInst()
 
-		var_22_1._index = iter_22_0
-		var_22_1._view = arg_22_0
+		item._index = i
+		item._view = self
 
-		var_22_1:onUpdateMO(iter_22_1)
-		var_22_1:playOpenAnim()
-		table.insert(arg_22_0.__itemList, var_22_1)
+		item:onUpdateMO(mo)
+		item:playOpenAnim()
+		table.insert(self.__itemList, item)
 	end
 end
 
-function var_0_0._createListSplitFrame(arg_23_0)
-	local var_23_0 = arg_23_0:getDataList()
+function Activity101SignViewBase:_createListSplitFrame()
+	local dataList = self:getDataList()
 
-	arg_23_0.__createTimer = FrameTimerController.instance:register(arg_23_0.__createInner, arg_23_0, 1, #var_23_0 + 1)
+	self.__createTimer = FrameTimerController.instance:register(self.__createInner, self, 1, #dataList + 1)
 
-	arg_23_0.__createTimer:Start()
+	self.__createTimer:Start()
 end
 
-local var_0_1 = 3
+local kProcessCountPerTime = 3
 
-function var_0_0.__createInner(arg_24_0)
-	local var_24_0 = arg_24_0:getDataList()
-	local var_24_1 = #var_24_0
+function Activity101SignViewBase:__createInner()
+	local dataList = self:getDataList()
+	local count = #dataList
+	local isDone = count == #self.__itemList
 
-	if var_24_1 == #arg_24_0.__itemList then
-		FrameTimerController.onDestroyViewMember(arg_24_0, "__createTimer")
+	if isDone then
+		FrameTimerController.onDestroyViewMember(self, "__createTimer")
 
 		return
 	end
 
-	local var_24_2 = var_0_1
+	local handleCount = kProcessCountPerTime
+	local from = #self.__itemList + 1
 
-	for iter_24_0 = #arg_24_0.__itemList + 1, var_24_1 do
-		if var_24_2 <= 0 and var_24_1 - iter_24_0 >= var_0_1 then
+	for i = from, count do
+		if handleCount <= 0 and count - i >= kProcessCountPerTime then
 			break
 		end
 
-		local var_24_3 = var_24_0[iter_24_0]
-		local var_24_4 = arg_24_0.viewContainer:createItemInst()
+		local mo = dataList[i]
+		local item = self.viewContainer:createItemInst()
 
-		var_24_4._index = iter_24_0
-		var_24_4._view = arg_24_0
+		item._index = i
+		item._view = self
 
-		var_24_4:onUpdateMO(var_24_3)
-		var_24_4:playOpenAnim()
-		table.insert(arg_24_0.__itemList, var_24_4)
+		item:onUpdateMO(mo)
+		item:playOpenAnim()
+		table.insert(self.__itemList, item)
 
-		var_24_2 = var_24_2 - 1
+		handleCount = handleCount - 1
 	end
 end
 
-function var_0_0._refreshList(arg_25_0, arg_25_1)
-	local var_25_0
+function Activity101SignViewBase:_refreshList(isUseCache)
+	local dataList
 
-	if arg_25_1 then
-		var_25_0 = arg_25_0:getTempDataList()
+	if isUseCache then
+		dataList = self:getTempDataList()
 	else
-		var_25_0 = arg_25_0:getDataList()
+		dataList = self:getDataList()
 	end
 
-	arg_25_0:_setPinStartIndex(var_25_0)
-	arg_25_0:onRefreshList(var_25_0)
+	self:_setPinStartIndex(dataList)
+	self:onRefreshList(dataList)
 end
 
-function var_0_0.refreshListByLimitedScollRect(arg_26_0, arg_26_1)
-	arg_26_0:getScrollModel():setList(arg_26_1)
+function Activity101SignViewBase:refreshListByLimitedScollRect(dataList)
+	local scrollModel = self:getScrollModel()
+
+	scrollModel:setList(dataList)
 end
 
-function var_0_0._updateScrollViewPos(arg_27_0)
-	arg_27_0:updateRewardCouldGetHorizontalScrollPixel(function(arg_28_0)
-		if arg_28_0 <= 4 then
-			return arg_28_0 - 4
+function Activity101SignViewBase:_updateScrollViewPos()
+	self:updateRewardCouldGetHorizontalScrollPixel(function(index)
+		if index <= 4 then
+			return index - 4
 		else
-			local var_28_0 = arg_27_0:getTempDataList()
+			local list = self:getTempDataList()
 
-			return var_28_0 and #var_28_0 or arg_28_0
+			return list and #list or index
 		end
 	end)
 end
 
-function var_0_0.calcContentWidth(arg_29_0)
-	local var_29_0 = arg_29_0:getTempDataList() or arg_29_0:getDataList()
-	local var_29_1 = arg_29_0:getListScrollParam()
-	local var_29_2 = var_29_1.cellWidth
-	local var_29_3 = var_29_1.cellSpaceH
-	local var_29_4 = var_29_1.startSpace
-	local var_29_5 = var_29_1.endSpace
+function Activity101SignViewBase:calcContentWidth()
+	local dataList = self:getTempDataList() or self:getDataList()
+	local listScrollParam = self:getListScrollParam()
+	local cellWidth = listScrollParam.cellWidth
+	local cellSpaceH = listScrollParam.cellSpaceH
+	local startSpace = listScrollParam.startSpace
+	local endSpace = listScrollParam.endSpace
+	local count = dataList and #dataList or 0
 
-	return ((var_29_0 and #var_29_0 or 0) - 1) * (var_29_2 + var_29_3) + var_29_2 + var_29_4 + var_29_5
+	return (count - 1) * (cellWidth + cellSpaceH) + cellWidth + startSpace + endSpace
 end
 
-function var_0_0.getMaxScrollX(arg_30_0)
-	local var_30_0 = arg_30_0.viewContainer:getViewportWH()
-	local var_30_1 = arg_30_0:calcContentWidth()
+function Activity101SignViewBase:getMaxScrollX()
+	local viewportW = self.viewContainer:getViewportWH()
+	local maxContentW = self:calcContentWidth()
 
-	return math.max(0, var_30_1 - var_30_0)
+	return math.max(0, maxContentW - viewportW)
 end
 
-function var_0_0.getScrollModel(arg_31_0)
-	return arg_31_0.viewContainer:getScrollModel()
+function Activity101SignViewBase:getScrollModel()
+	return self.viewContainer:getScrollModel()
 end
 
-function var_0_0.getCsListScroll(arg_32_0)
-	return arg_32_0.viewContainer:getCsListScroll()
+function Activity101SignViewBase:getCsListScroll()
+	return self.viewContainer:getCsListScroll()
 end
 
-function var_0_0.getListScrollParam(arg_33_0)
-	return arg_33_0.viewContainer:getListScrollParam()
+function Activity101SignViewBase:getListScrollParam()
+	return self.viewContainer:getListScrollParam()
 end
 
-function var_0_0.getScrollContentTranform(arg_34_0)
-	return arg_34_0.viewContainer:getScrollContentTranform()
+function Activity101SignViewBase:getScrollContentTranform()
+	return self.viewContainer:getScrollContentTranform()
 end
 
-function var_0_0.isLimitedScrollView(arg_35_0)
-	return arg_35_0.viewContainer:isLimitedScrollView()
+function Activity101SignViewBase:isLimitedScrollView()
+	return self.viewContainer:isLimitedScrollView()
 end
 
-function var_0_0._rectMask2d(arg_36_0)
-	if arg_36_0.__rectMask2d then
-		return arg_36_0.__rectMask2d
+function Activity101SignViewBase:_rectMask2d()
+	if self.__rectMask2d then
+		return self.__rectMask2d
 	end
 
-	if arg_36_0._scrollItemList then
-		arg_36_0.__rectMask2d = arg_36_0._scrollItemList:GetComponent(gohelper.Type_RectMask2D)
+	if self._scrollItemList then
+		self.__rectMask2d = self._scrollItemList:GetComponent(gohelper.Type_RectMask2D)
 	end
 
-	return arg_36_0.__rectMask2d
+	return self.__rectMask2d
 end
 
-function var_0_0.rectMask2dSoftnessV2(arg_37_0)
-	return arg_37_0:getListScrollParam().rectMaskSoftness
+function Activity101SignViewBase:rectMask2dSoftnessV2()
+	local listScrollParam = self:getListScrollParam()
+
+	return listScrollParam.rectMaskSoftness
 end
 
-function var_0_0.getRemainTimeSec(arg_38_0)
-	local var_38_0 = arg_38_0:actId()
+function Activity101SignViewBase:getRemainTimeSec()
+	local actId = self:actId()
+	local remainTimeSec = ActivityModel.instance:getRemainTimeSec(actId)
 
-	return ActivityModel.instance:getRemainTimeSec(var_38_0) or 0
+	return remainTimeSec or 0
 end
 
-function var_0_0._editableInitView(arg_39_0)
+function Activity101SignViewBase:_editableInitView()
 	assert(false, "please override this function")
 end
 
-function var_0_0._setPinStartIndex(arg_40_0, arg_40_1)
-	local var_40_0, var_40_1 = arg_40_0:getRewardCouldGetIndex()
+function Activity101SignViewBase:_setPinStartIndex(dataList)
+	local ok, index = self:getRewardCouldGetIndex()
+	local scrollModel = self:getScrollModel()
 
-	arg_40_0:getScrollModel():setDefaultPinStartIndex(arg_40_1, var_40_0 and var_40_1 or 1)
+	scrollModel:setDefaultPinStartIndex(dataList, ok and index or 1)
 end
 
-function var_0_0.onStart(arg_41_0)
-	if arg_41_0:isLimitedScrollView() then
+function Activity101SignViewBase:onStart()
+	if self:isLimitedScrollView() then
 		return
 	end
 
-	arg_41_0:_createList()
-	arg_41_0:_updateScrollViewPos()
+	self:_createList()
+	self:_updateScrollViewPos()
 end
 
-function var_0_0.onRefresh(arg_42_0)
-	arg_42_0:_refreshList()
+function Activity101SignViewBase:onRefresh()
+	self:_refreshList()
 end
 
-function var_0_0.onRefreshList(arg_43_0, arg_43_1)
-	if not arg_43_1 then
+function Activity101SignViewBase:onRefreshList(dataList)
+	if not dataList then
 		return
 	end
 
-	local var_43_0 = arg_43_0.__itemList
+	local itemList = self.__itemList
 
-	for iter_43_0, iter_43_1 in ipairs(arg_43_1) do
-		local var_43_1 = var_43_0[iter_43_0]
+	for i, mo in ipairs(dataList) do
+		local item = itemList[i]
 
-		if var_43_1 then
-			local var_43_2 = var_43_1._mo
+		if item then
+			local oldMo = item._mo
 
-			if var_43_2 then
-				iter_43_1.__isPlayedOpenAnim = var_43_2.__isPlayedOpenAnim
+			if oldMo then
+				mo.__isPlayedOpenAnim = oldMo.__isPlayedOpenAnim
 			end
 
-			var_43_1:onUpdateMO(iter_43_1)
+			item:onUpdateMO(mo)
 		end
 	end
 end
 
-function var_0_0.getItemByIndex(arg_44_0, arg_44_1)
-	return arg_44_0.__itemList[arg_44_1]
+function Activity101SignViewBase:getItemByIndex(index)
+	return self.__itemList[index]
 end
 
-function var_0_0.focusByIndex(arg_45_0, arg_45_1)
-	if arg_45_0:isLimitedScrollView() then
-		arg_45_0:_tweenByLimitedScrollView(arg_45_1)
+function Activity101SignViewBase:focusByIndex(index)
+	if self:isLimitedScrollView() then
+		self:_tweenByLimitedScrollView(index)
 	else
-		arg_45_0:_tweenByScrollContent(arg_45_1)
+		self:_tweenByScrollContent(index)
 	end
 end
 
-return var_0_0
+return Activity101SignViewBase

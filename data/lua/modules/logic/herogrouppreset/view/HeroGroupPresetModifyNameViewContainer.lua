@@ -1,19 +1,21 @@
-﻿module("modules.logic.herogrouppreset.view.HeroGroupPresetModifyNameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/view/HeroGroupPresetModifyNameViewContainer.lua
 
-local var_0_0 = class("HeroGroupPresetModifyNameViewContainer", BaseViewContainer)
+module("modules.logic.herogrouppreset.view.HeroGroupPresetModifyNameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local HeroGroupPresetModifyNameViewContainer = class("HeroGroupPresetModifyNameViewContainer", BaseViewContainer)
+
+function HeroGroupPresetModifyNameViewContainer:buildViews()
 	return {
 		HeroGroupPresetModifyNameView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function HeroGroupPresetModifyNameViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	arg_3_0:onPlayOpenTransitionFinish()
+function HeroGroupPresetModifyNameViewContainer:playOpenTransition()
+	self:onPlayOpenTransitionFinish()
 end
 
-return var_0_0
+return HeroGroupPresetModifyNameViewContainer

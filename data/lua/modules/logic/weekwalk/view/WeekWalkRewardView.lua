@@ -1,316 +1,318 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkRewardView.lua
 
-local var_0_0 = class("WeekWalkRewardView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goweek = gohelper.findChild(arg_1_0.viewGO, "left/#go_week")
-	arg_1_0._goweekunchoose = gohelper.findChild(arg_1_0.viewGO, "left/#go_week/#go_weekunchoose")
-	arg_1_0._goweekchoose = gohelper.findChild(arg_1_0.viewGO, "left/#go_week/#go_weekchoose")
-	arg_1_0._goweekreddot = gohelper.findChild(arg_1_0.viewGO, "left/#go_week/#go_weekreddot")
-	arg_1_0._btnweek = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_week/#btn_week")
-	arg_1_0._godream = gohelper.findChild(arg_1_0.viewGO, "left/#go_dream")
-	arg_1_0._godreamunchoose = gohelper.findChild(arg_1_0.viewGO, "left/#go_dream/#go_dreamunchoose")
-	arg_1_0._godreamchoose = gohelper.findChild(arg_1_0.viewGO, "left/#go_dream/#go_dreamchoose")
-	arg_1_0._godreamreddot = gohelper.findChild(arg_1_0.viewGO, "left/#go_dream/#go_dreamreddot")
-	arg_1_0._btndream = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_dream/#btn_dream")
-	arg_1_0._gochallenge = gohelper.findChild(arg_1_0.viewGO, "left/#go_challenge")
-	arg_1_0._gochallengeunchoose = gohelper.findChild(arg_1_0.viewGO, "left/#go_challenge/#go_challengeunchoose")
-	arg_1_0._gochallengechoose = gohelper.findChild(arg_1_0.viewGO, "left/#go_challenge/#go_challengechoose")
-	arg_1_0._gochallengereddot = gohelper.findChild(arg_1_0.viewGO, "left/#go_challenge/#go_challengereddot")
-	arg_1_0._btnchallenge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#go_challenge/#btn_challenge")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#scroll_reward")
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_reward/viewport/#go_rewardcontent")
-	arg_1_0._gofinishall = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_finishall")
-	arg_1_0._btnfinishall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#go_finishall/#btn_finishall")
-	arg_1_0._gocountdown = gohelper.findChild(arg_1_0.viewGO, "title/#go_countdown")
-	arg_1_0._txtcountdowntitle = gohelper.findChildText(arg_1_0.viewGO, "title/#go_countdown/#txt_countdowntitle")
-	arg_1_0._txtcountday = gohelper.findChildText(arg_1_0.viewGO, "title/#go_countdown/#txt_countdowntitle/#txt_countday")
-	arg_1_0._txtlayer = gohelper.findChildText(arg_1_0.viewGO, "#txt_layer")
-	arg_1_0._gotiptxt = gohelper.findChild(arg_1_0.viewGO, "#go_tiptxt")
-	arg_1_0._txttotalprogress = gohelper.findChildText(arg_1_0.viewGO, "#txt_totalprogress")
+local WeekWalkRewardView = class("WeekWalkRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkRewardView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goweek = gohelper.findChild(self.viewGO, "left/#go_week")
+	self._goweekunchoose = gohelper.findChild(self.viewGO, "left/#go_week/#go_weekunchoose")
+	self._goweekchoose = gohelper.findChild(self.viewGO, "left/#go_week/#go_weekchoose")
+	self._goweekreddot = gohelper.findChild(self.viewGO, "left/#go_week/#go_weekreddot")
+	self._btnweek = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_week/#btn_week")
+	self._godream = gohelper.findChild(self.viewGO, "left/#go_dream")
+	self._godreamunchoose = gohelper.findChild(self.viewGO, "left/#go_dream/#go_dreamunchoose")
+	self._godreamchoose = gohelper.findChild(self.viewGO, "left/#go_dream/#go_dreamchoose")
+	self._godreamreddot = gohelper.findChild(self.viewGO, "left/#go_dream/#go_dreamreddot")
+	self._btndream = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_dream/#btn_dream")
+	self._gochallenge = gohelper.findChild(self.viewGO, "left/#go_challenge")
+	self._gochallengeunchoose = gohelper.findChild(self.viewGO, "left/#go_challenge/#go_challengeunchoose")
+	self._gochallengechoose = gohelper.findChild(self.viewGO, "left/#go_challenge/#go_challengechoose")
+	self._gochallengereddot = gohelper.findChild(self.viewGO, "left/#go_challenge/#go_challengereddot")
+	self._btnchallenge = gohelper.findChildButtonWithAudio(self.viewGO, "left/#go_challenge/#btn_challenge")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "right/#scroll_reward")
+	self._gorewardcontent = gohelper.findChild(self.viewGO, "right/#scroll_reward/viewport/#go_rewardcontent")
+	self._gofinishall = gohelper.findChild(self.viewGO, "bottom/#go_finishall")
+	self._btnfinishall = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#go_finishall/#btn_finishall")
+	self._gocountdown = gohelper.findChild(self.viewGO, "title/#go_countdown")
+	self._txtcountdowntitle = gohelper.findChildText(self.viewGO, "title/#go_countdown/#txt_countdowntitle")
+	self._txtcountday = gohelper.findChildText(self.viewGO, "title/#go_countdown/#txt_countdowntitle/#txt_countday")
+	self._txtlayer = gohelper.findChildText(self.viewGO, "#txt_layer")
+	self._gotiptxt = gohelper.findChild(self.viewGO, "#go_tiptxt")
+	self._txttotalprogress = gohelper.findChildText(self.viewGO, "#txt_totalprogress")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnweek:AddClickListener(arg_2_0._btnweekOnClick, arg_2_0)
-	arg_2_0._btndream:AddClickListener(arg_2_0._btndreamOnClick, arg_2_0)
-	arg_2_0._btnchallenge:AddClickListener(arg_2_0._btnchallengeOnClick, arg_2_0)
-	arg_2_0._btnfinishall:AddClickListener(arg_2_0._btnfinishallOnClick, arg_2_0)
+function WeekWalkRewardView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnweek:AddClickListener(self._btnweekOnClick, self)
+	self._btndream:AddClickListener(self._btndreamOnClick, self)
+	self._btnchallenge:AddClickListener(self._btnchallengeOnClick, self)
+	self._btnfinishall:AddClickListener(self._btnfinishallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnweek:RemoveClickListener()
-	arg_3_0._btndream:RemoveClickListener()
-	arg_3_0._btnchallenge:RemoveClickListener()
-	arg_3_0._btnfinishall:RemoveClickListener()
+function WeekWalkRewardView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnweek:RemoveClickListener()
+	self._btndream:RemoveClickListener()
+	self._btnchallenge:RemoveClickListener()
+	self._btnfinishall:RemoveClickListener()
 end
 
-function var_0_0._btnchallengeOnClick(arg_4_0)
-	arg_4_0._btnIndex = WeekWalkEnum.TaskType.Challenge
+function WeekWalkRewardView:_btnchallengeOnClick()
+	self._btnIndex = WeekWalkEnum.TaskType.Challenge
 
-	arg_4_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function WeekWalkRewardView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnweekOnClick(arg_6_0)
-	arg_6_0._btnIndex = WeekWalkEnum.TaskType.Week
+function WeekWalkRewardView:_btnweekOnClick()
+	self._btnIndex = WeekWalkEnum.TaskType.Week
 
-	arg_6_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._btndreamOnClick(arg_7_0)
-	arg_7_0._btnIndex = WeekWalkEnum.TaskType.Dream
+function WeekWalkRewardView:_btndreamOnClick()
+	self._btnIndex = WeekWalkEnum.TaskType.Dream
 
-	arg_7_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._updateBtns(arg_8_0)
-	local var_8_0 = arg_8_0._btnIndex == WeekWalkEnum.TaskType.Week
+function WeekWalkRewardView:_updateBtns()
+	local showWeek = self._btnIndex == WeekWalkEnum.TaskType.Week
 
-	gohelper.setActive(arg_8_0._goweekchoose, var_8_0)
-	gohelper.setActive(arg_8_0._goweekunchoose, not var_8_0)
-	gohelper.setActive(arg_8_0._goweekreddot, WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week))
+	gohelper.setActive(self._goweekchoose, showWeek)
+	gohelper.setActive(self._goweekunchoose, not showWeek)
+	gohelper.setActive(self._goweekreddot, WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week))
 
-	local var_8_1 = arg_8_0._btnIndex == WeekWalkEnum.TaskType.Dream
+	local showDream = self._btnIndex == WeekWalkEnum.TaskType.Dream
 
-	gohelper.setActive(arg_8_0._godreamchoose, var_8_1)
-	gohelper.setActive(arg_8_0._godreamunchoose, not var_8_1)
-	gohelper.setActive(arg_8_0._godreamreddot, WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Dream))
+	gohelper.setActive(self._godreamchoose, showDream)
+	gohelper.setActive(self._godreamunchoose, not showDream)
+	gohelper.setActive(self._godreamreddot, WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Dream))
 
-	local var_8_2 = arg_8_0._btnIndex == WeekWalkEnum.TaskType.Challenge
+	local showChallenge = self._btnIndex == WeekWalkEnum.TaskType.Challenge
 
-	gohelper.setActive(arg_8_0._gochallengechoose, var_8_2)
-	gohelper.setActive(arg_8_0._gochallengeunchoose, not var_8_2)
-	gohelper.setActive(arg_8_0._gochallengereddot, WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Challenge))
-	gohelper.setActive(arg_8_0._gocountdown, not var_8_1)
-	gohelper.setActive(arg_8_0._gotiptxt, var_8_0)
+	gohelper.setActive(self._gochallengechoose, showChallenge)
+	gohelper.setActive(self._gochallengeunchoose, not showChallenge)
+	gohelper.setActive(self._gochallengereddot, WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Challenge))
+	gohelper.setActive(self._gocountdown, not showDream)
+	gohelper.setActive(self._gotiptxt, showWeek)
 
-	if not var_8_1 then
-		arg_8_0:_showDeadline()
+	if not showDream then
+		self:_showDeadline()
 	else
-		TaskDispatcher.cancelTask(arg_8_0._onRefreshDeadline, arg_8_0)
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 	end
 
-	arg_8_0._scrollreward.verticalNormalizedPosition = 1
+	self._scrollreward.verticalNormalizedPosition = 1
 
-	WeekWalkTaskListModel.instance:showTaskList(arg_8_0._btnIndex, arg_8_0._mapId)
+	WeekWalkTaskListModel.instance:showTaskList(self._btnIndex, self._mapId)
 
-	arg_8_0._mapId = nil
+	self._mapId = nil
 
-	gohelper.setActive(arg_8_0._gofinishall.gameObject, WeekWalkTaskListModel.instance:hasFinished())
+	gohelper.setActive(self._gofinishall.gameObject, WeekWalkTaskListModel.instance:hasFinished())
 
-	local var_8_3 = WeekWalkTaskListModel.instance:getList()
-	local var_8_4 = 0
-	local var_8_5 = 0
+	local list = WeekWalkTaskListModel.instance:getList()
+	local progress = 0
+	local maxProgress = 0
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_3) do
-		local var_8_6 = WeekWalkTaskListModel.instance:getTaskMo(iter_8_1.id)
+	for i, v in ipairs(list) do
+		local taskMo = WeekWalkTaskListModel.instance:getTaskMo(v.id)
 
-		if var_8_6 then
-			var_8_4 = math.max(var_8_6.progress or 0, var_8_4)
+		if taskMo then
+			progress = math.max(taskMo.progress or 0, progress)
 		end
 
-		local var_8_7 = lua_task_weekwalk.configDict[iter_8_1.id]
+		local config = lua_task_weekwalk.configDict[v.id]
 
-		if var_8_7 then
-			var_8_5 = math.max(var_8_7.maxProgress or 0, var_8_5)
+		if config then
+			maxProgress = math.max(config.maxProgress or 0, maxProgress)
 		end
 	end
 
-	arg_8_0._txttotalprogress.text = string.format("%s/%s", var_8_4, var_8_5)
+	self._txttotalprogress.text = string.format("%s/%s", progress, maxProgress)
 end
 
-function var_0_0._btnfinishallOnClick(arg_9_0)
+function WeekWalkRewardView:_btnfinishallOnClick()
 	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.WeekWalk)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("img_bg_black.png"))
+function WeekWalkRewardView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getWeekWalkBg("img_bg_black.png"))
 end
 
-function var_0_0._showDeadline(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._onRefreshDeadline, arg_11_0)
+function WeekWalkRewardView:_showDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 
-	arg_11_0._endTime = WeekWalkController.getTaskEndTime(arg_11_0._btnIndex)
+	self._endTime = WeekWalkController.getTaskEndTime(self._btnIndex)
 
-	if not arg_11_0._endTime then
+	if not self._endTime then
 		return
 	end
 
-	TaskDispatcher.runRepeat(arg_11_0._onRefreshDeadline, arg_11_0, 1)
-	arg_11_0:_onRefreshDeadline()
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
+	self:_onRefreshDeadline()
 
-	arg_11_0._txtcountdowntitle.text = luaLang(arg_11_0._btnIndex == WeekWalkEnum.TaskType.Challenge and "p_dungeonweekwalkview_device" or "p_dungeonweekwalkview_task")
+	self._txtcountdowntitle.text = luaLang(self._btnIndex == WeekWalkEnum.TaskType.Challenge and "p_dungeonweekwalkview_device" or "p_dungeonweekwalkview_task")
 end
 
-function var_0_0._onRefreshDeadline(arg_12_0)
-	local var_12_0 = arg_12_0._endTime - ServerTime.now()
+function WeekWalkRewardView:_onRefreshDeadline()
+	local limitSec = self._endTime - ServerTime.now()
 
-	if var_12_0 <= 0 then
-		TaskDispatcher.cancelTask(arg_12_0._onRefreshDeadline, arg_12_0)
+	if limitSec <= 0 then
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 	end
 
-	local var_12_1, var_12_2 = TimeUtil.secondToRoughTime2(math.floor(var_12_0))
+	local time, format = TimeUtil.secondToRoughTime2(math.floor(limitSec))
 
-	arg_12_0._txtcountday.text = var_12_1 .. var_12_2
+	self._txtcountday.text = time .. format
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
+function WeekWalkRewardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0._btnIndex = WeekWalkEnum.TaskType.Week
-	arg_14_0._mapId = arg_14_0.viewParam and arg_14_0.viewParam.mapId
+function WeekWalkRewardView:onOpen()
+	self._btnIndex = WeekWalkEnum.TaskType.Week
+	self._mapId = self.viewParam and self.viewParam.mapId
 
-	if arg_14_0._mapId then
-		arg_14_0._btnIndex = var_0_0.getTaskType(arg_14_0._mapId)
+	if self._mapId then
+		self._btnIndex = WeekWalkRewardView.getTaskType(self._mapId)
 	end
 
-	arg_14_0:_updateBtns()
-	arg_14_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_14_0._onWeekwalkTaskUpdate, arg_14_0)
-	arg_14_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_14_0._onGetInfo, arg_14_0)
-	arg_14_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetTaskReward, arg_14_0._getTaskBouns, arg_14_0)
+	self:_updateBtns()
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, self._onWeekwalkTaskUpdate, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, self._onGetInfo, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetTaskReward, self._getTaskBouns, self)
 end
 
-function var_0_0._onGetInfo(arg_15_0)
-	arg_15_0:_updateBtns()
+function WeekWalkRewardView:_onGetInfo()
+	self:_updateBtns()
 end
 
-function var_0_0.getTaskType(arg_16_0)
-	return WeekWalkModel.isShallowMap(arg_16_0) and WeekWalkEnum.TaskType.Dream or WeekWalkEnum.TaskType.Challenge
+function WeekWalkRewardView.getTaskType(mapId)
+	return WeekWalkModel.isShallowMap(mapId) and WeekWalkEnum.TaskType.Dream or WeekWalkEnum.TaskType.Challenge
 end
 
-function var_0_0._onWeekwalkTaskUpdate(arg_17_0)
-	if not arg_17_0._bounsItemList or #arg_17_0._bounsItemList == 0 then
+function WeekWalkRewardView:_onWeekwalkTaskUpdate()
+	if not self._bounsItemList or #self._bounsItemList == 0 then
 		return
 	end
 
-	arg_17_0:_bonusReply()
+	self:_bonusReply()
 end
 
-function var_0_0._getTaskBouns(arg_18_0, arg_18_1)
-	arg_18_0._bounsItemList = arg_18_0:getUserDataTb_()
+function WeekWalkRewardView:_getTaskBouns(taskItem)
+	self._bounsItemList = self:getUserDataTb_()
 
-	local var_18_0 = arg_18_0._gorewardcontent.transform
-	local var_18_1 = var_18_0.childCount
-	local var_18_2
+	local transform = self._gorewardcontent.transform
+	local itemCount = transform.childCount
+	local getAllItem
 
-	for iter_18_0 = 1, var_18_1 do
-		local var_18_3 = iter_18_0 - 1
-		local var_18_4 = var_18_0:GetChild(var_18_3)
-		local var_18_5 = gohelper.findChild(var_18_4.gameObject, "prefabInst")
-		local var_18_6 = MonoHelper.getLuaComFromGo(var_18_5, WeekWalkRewardItem)
+	for i = 1, itemCount do
+		local index = i - 1
+		local child = transform:GetChild(index)
+		local prefabInstGO = gohelper.findChild(child.gameObject, "prefabInst")
+		local item = MonoHelper.getLuaComFromGo(prefabInstGO, WeekWalkRewardItem)
 
-		if var_18_6._canGet then
-			table.insert(arg_18_0._bounsItemList, var_18_6)
+		if item._canGet then
+			table.insert(self._bounsItemList, item)
 		end
 
-		if var_18_6._mo.id == 0 then
-			var_18_2 = var_18_6
+		if item._mo.id == 0 then
+			getAllItem = item
 		end
 	end
 
-	if arg_18_1 ~= var_18_2 then
-		local var_18_7 = #arg_18_0._bounsItemList
+	if taskItem ~= getAllItem then
+		local len = #self._bounsItemList
 
-		arg_18_0._bounsItemList = arg_18_0:getUserDataTb_()
+		self._bounsItemList = self:getUserDataTb_()
 
-		if var_18_2 and var_18_7 <= 3 then
-			table.insert(arg_18_0._bounsItemList, var_18_2)
+		if getAllItem and len <= 3 then
+			table.insert(self._bounsItemList, getAllItem)
 		end
 
-		table.insert(arg_18_0._bounsItemList, arg_18_1)
+		table.insert(self._bounsItemList, taskItem)
 	end
 end
 
-function var_0_0._bonusReply(arg_19_0)
+function WeekWalkRewardView:_bonusReply()
 	UIBlockMgr.instance:startBlock("WeekWalkRewardView bonus")
-	arg_19_0:_playTaskFinish()
+	self:_playTaskFinish()
 end
 
-function var_0_0._playTaskFinish(arg_20_0)
-	local var_20_0 = arg_20_0._bounsItemList
+function WeekWalkRewardView:_playTaskFinish()
+	local list = self._bounsItemList
 
-	arg_20_0._indexList = {}
+	self._indexList = {}
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		iter_20_1:playOutAnim()
+	for i, v in ipairs(list) do
+		v:playOutAnim()
 
-		local var_20_1 = iter_20_1.viewGO.transform.parent:GetSiblingIndex()
+		local siblingIndex = v.viewGO.transform.parent:GetSiblingIndex()
 
-		table.insert(arg_20_0._indexList, var_20_1)
+		table.insert(self._indexList, siblingIndex)
 	end
 
-	arg_20_0._bounsItemList = nil
+	self._bounsItemList = nil
 
-	TaskDispatcher.runDelay(arg_20_0._onTaskFinishDone, arg_20_0, 0.267)
+	TaskDispatcher.runDelay(self._onTaskFinishDone, self, 0.267)
 end
 
-function var_0_0._onTaskFinishDone(arg_21_0)
-	arg_21_0:_updateBtns()
+function WeekWalkRewardView:_onTaskFinishDone()
+	self:_updateBtns()
 
-	local var_21_0 = arg_21_0._gorewardcontent.transform
-	local var_21_1 = var_21_0.childCount
+	local transform = self._gorewardcontent.transform
+	local itemCount = transform.childCount
 
-	for iter_21_0 = 1, var_21_1 do
-		local var_21_2 = iter_21_0 - 1
-		local var_21_3 = arg_21_0:_skipNum(var_21_2)
+	for i = 1, itemCount do
+		local index = i - 1
+		local num = self:_skipNum(index)
 
-		if var_21_3 > 0 then
-			local var_21_4 = var_21_0:GetChild(var_21_2)
-			local var_21_5, var_21_6 = transformhelper.getLocalPos(var_21_4.transform)
+		if num > 0 then
+			local child = transform:GetChild(index)
+			local x, y = transformhelper.getLocalPos(child.transform)
 
-			transformhelper.setLocalPosXY(var_21_4, var_21_5, var_21_6 - 166 * var_21_3)
+			transformhelper.setLocalPosXY(child, x, y - 166 * num)
 
-			local var_21_7 = ZProj.TweenHelper.DOLocalMoveY(var_21_4, var_21_6, 0.3, nil, nil, nil, EaseType.Linear)
+			local tweenId = ZProj.TweenHelper.DOLocalMoveY(child, y, 0.3, nil, nil, nil, EaseType.Linear)
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_21_0._showRewards, arg_21_0, 0.3)
+	TaskDispatcher.runDelay(self._showRewards, self, 0.3)
 end
 
-function var_0_0._skipNum(arg_22_0, arg_22_1)
-	local var_22_0 = 0
+function WeekWalkRewardView:_skipNum(index)
+	local num = 0
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._indexList) do
-		if iter_22_1 <= arg_22_1 then
-			var_22_0 = var_22_0 + 1
+	for i, v in ipairs(self._indexList) do
+		if v <= index then
+			num = num + 1
 		else
 			break
 		end
 	end
 
-	return var_22_0
+	return num
 end
 
-function var_0_0._showRewards(arg_23_0)
+function WeekWalkRewardView:_showRewards()
 	UIBlockMgr.instance:endBlock("WeekWalkRewardView bonus")
 
-	local var_23_0 = WeekWalkTaskListModel.instance:getTaskRewardList()
+	local list = WeekWalkTaskListModel.instance:getTaskRewardList()
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_23_0)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, list)
 end
 
-function var_0_0.onClose(arg_24_0)
+function WeekWalkRewardView:onClose()
 	UIBlockMgr.instance:endBlock("WeekWalkRewardView bonus")
-	TaskDispatcher.cancelTask(arg_24_0._onRefreshDeadline, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._showRewards, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._onTaskFinishDone, arg_24_0)
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	TaskDispatcher.cancelTask(self._showRewards, self)
+	TaskDispatcher.cancelTask(self._onTaskFinishDone, self)
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	arg_25_0._simagebg:UnLoadImage()
+function WeekWalkRewardView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return WeekWalkRewardView

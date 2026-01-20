@@ -1,93 +1,100 @@
-﻿module("modules.logic.bossrush.model.v1a6.V1a6_BossRush_StoreModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/v1a6/V1a6_BossRush_StoreModel.lua
 
-local var_0_0 = class("V1a6_BossRush_StoreModel", BaseModel)
+module("modules.logic.bossrush.model.v1a6.V1a6_BossRush_StoreModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.goodsInfosDict = nil
+local V1a6_BossRush_StoreModel = class("V1a6_BossRush_StoreModel", BaseModel)
+
+function V1a6_BossRush_StoreModel:onInit()
+	self.goodsInfosDict = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function V1a6_BossRush_StoreModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.getCurrencyIcon(arg_3_0, arg_3_1)
-	local var_3_0 = CurrencyEnum.CurrencyType.BossRushStore
+function V1a6_BossRush_StoreModel:getCurrencyIcon(activityId)
+	local currenyId = CurrencyEnum.CurrencyType.BossRushStore
 
-	if var_3_0 then
-		local var_3_1 = CurrencyConfig.instance:getCurrencyCo(var_3_0)
+	if currenyId then
+		local currencyCO = CurrencyConfig.instance:getCurrencyCo(currenyId)
 
-		if var_3_1 then
-			return var_3_1.icon .. "_1"
+		if currencyCO then
+			return currencyCO.icon .. "_1"
 		end
 	end
 end
 
-function var_0_0.getCurrencyCount(arg_4_0, arg_4_1)
-	local var_4_0 = CurrencyEnum.CurrencyType.BossRushStore
+function V1a6_BossRush_StoreModel:getCurrencyCount(activityId)
+	local currenyId = CurrencyEnum.CurrencyType.BossRushStore
 
-	if var_4_0 then
-		local var_4_1 = CurrencyModel.instance:getCurrency(var_4_0)
+	if currenyId then
+		local curreny = CurrencyModel.instance:getCurrency(currenyId)
 
-		if var_4_1 then
-			return var_4_1.quantity
+		if curreny then
+			return curreny.quantity
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.getStoreGroupMO(arg_5_0)
-	local var_5_0 = {}
+function V1a6_BossRush_StoreModel:getStoreGroupMO()
+	local storeMoList = {}
 
-	for iter_5_0, iter_5_1 in pairs(StoreEnum.BossRushStore) do
-		var_5_0[iter_5_1] = StoreModel.instance:getStoreMO(iter_5_1)
+	for _, storeId in pairs(StoreEnum.BossRushStore) do
+		local storeMO = StoreModel.instance:getStoreMO(storeId)
+
+		storeMoList[storeId] = storeMO
 	end
 
-	return var_5_0
+	return storeMoList
 end
 
-function var_0_0.getStoreGroupName(arg_6_0, arg_6_1)
-	local var_6_0 = StoreConfig.instance:getTabConfig(arg_6_1)
+function V1a6_BossRush_StoreModel:getStoreGroupName(storeId)
+	local storeGroupCo = StoreConfig.instance:getTabConfig(storeId)
 
-	if var_6_0 then
-		return var_6_0.name, var_6_0.nameEn
+	if storeGroupCo then
+		return storeGroupCo.name, storeGroupCo.nameEn
 	end
 end
 
-function var_0_0.getUpdateStoreRemainTime(arg_7_0)
-	local var_7_0 = arg_7_0:getUpdateStoreActivityMo()
+function V1a6_BossRush_StoreModel:getUpdateStoreRemainTime()
+	local actInfoMo = self:getUpdateStoreActivityMo()
 
-	if var_7_0 then
-		return (var_7_0:getRemainTimeStr2ByEndTime())
+	if actInfoMo then
+		local remainTime = actInfoMo:getRemainTimeStr2ByEndTime()
+
+		return remainTime
 	end
 
 	return ""
 end
 
-function var_0_0.getUpdateStoreActivityMo(arg_8_0)
-	local var_8_0 = arg_8_0:checkUpdateStoreActivity()
-	local var_8_1 = ActivityModel.instance:getActivityInfo()[var_8_0]
+function V1a6_BossRush_StoreModel:getUpdateStoreActivityMo()
+	local actId = self:checkUpdateStoreActivity()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+	local isNormal = actInfoMo and ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal
 
-	if var_8_1 and ActivityHelper.getActivityStatus(var_8_0) == ActivityEnum.ActivityStatus.Normal then
-		return var_8_1
+	if isNormal then
+		return actInfoMo
 	end
 end
 
-function var_0_0.checkUpdateStoreActivity(arg_9_0)
-	local var_9_0 = arg_9_0:getStoreGroupMO()
-	local var_9_1
+function V1a6_BossRush_StoreModel:checkUpdateStoreActivity()
+	local storeMoList = self:getStoreGroupMO()
+	local actId
 
-	if var_9_0 then
-		local var_9_2 = var_9_0[StoreEnum.BossRushStore.UpdateStore]
+	if storeMoList then
+		local updateStoreMo = storeMoList[StoreEnum.BossRushStore.UpdateStore]
 
-		if var_9_2 then
-			for iter_9_0, iter_9_1 in pairs(var_9_2:getGoodsList()) do
-				if not var_9_1 then
-					if iter_9_1.config.activityId ~= 0 then
-						var_9_1 = iter_9_1.config.activityId
+		if updateStoreMo then
+			for _, mo in pairs(updateStoreMo:getGoodsList()) do
+				if not actId then
+					if mo.config.activityId ~= 0 then
+						actId = mo.config.activityId
 					end
-				elseif var_9_1 ~= iter_9_1.config.activityId then
-					logError("鬃毛信托特约期汇绑定活动id不一致：" .. "  " .. iter_9_1.config.id)
+				elseif actId ~= mo.config.activityId then
+					logError("鬃毛信托特约期汇绑定活动id不一致：" .. "  " .. mo.config.id)
 
 					return
 				end
@@ -95,192 +102,195 @@ function var_0_0.checkUpdateStoreActivity(arg_9_0)
 		end
 	end
 
-	return var_9_1
+	return actId
 end
 
-function var_0_0.checkStoreNewGoods(arg_10_0)
-	local var_10_0 = arg_10_0:checkUpdateStoreActivity()
+function V1a6_BossRush_StoreModel:checkStoreNewGoods()
+	local actId = self:checkUpdateStoreActivity()
 
-	if arg_10_0:isHasNewGoods() then
-		arg_10_0._isHasNewGoods = true
-	elseif var_10_0 then
-		local var_10_1 = arg_10_0:getStoreNewGoodsPrefKey()
+	if self:isHasNewGoods() then
+		self._isHasNewGoods = true
+	elseif actId then
+		local key = self:getStoreNewGoodsPrefKey()
 
-		arg_10_0._isHasNewGoods = not ActivityEnterMgr.instance:isEnteredActivity(var_10_0)
+		self._isHasNewGoods = not ActivityEnterMgr.instance:isEnteredActivity(actId)
 
-		if not arg_10_0._isHasNewGoods then
-			arg_10_0._isHasNewGoods = PlayerPrefsHelper.getNumber(var_10_1, 0) == 0
+		if not self._isHasNewGoods then
+			self._isHasNewGoods = PlayerPrefsHelper.getNumber(key, 0) == 0
 		end
 	else
-		arg_10_0._isHasNewGoods = false
+		self._isHasNewGoods = false
 	end
 
-	return arg_10_0._isHasNewGoods
+	return self._isHasNewGoods
 end
 
-function var_0_0.setNotNewStoreGoods(arg_11_0)
-	local var_11_0 = arg_11_0:getStoreNewGoodsPrefKey()
+function V1a6_BossRush_StoreModel:setNotNewStoreGoods()
+	local key = self:getStoreNewGoodsPrefKey()
 
-	PlayerPrefsHelper.setNumber(var_11_0, 1)
+	PlayerPrefsHelper.setNumber(key, 1)
 
-	arg_11_0._isHasNewGoods = false
+	self._isHasNewGoods = false
 end
 
-function var_0_0.isHasNewGoodsInStore(arg_12_0)
-	return arg_12_0._isHasNewGoods
+function V1a6_BossRush_StoreModel:isHasNewGoodsInStore()
+	return self._isHasNewGoods
 end
 
-function var_0_0.getStoreNewGoodsPrefKey(arg_13_0)
-	local var_13_0 = arg_13_0:checkUpdateStoreActivity() or BossRushConfig.instance:getActivityId()
-	local var_13_1 = PlayerModel.instance:getPlayinfo()
-	local var_13_2 = var_13_1 and var_13_1.userId or 1999
+function V1a6_BossRush_StoreModel:getStoreNewGoodsPrefKey()
+	local actId = self:checkUpdateStoreActivity() or BossRushConfig.instance:getActivityId()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
+	local playerId = playerInfo and playerInfo.userId or 1999
+	local key = "V1a6_BossRush_StoreModel_StoreNewGoods_" .. playerId .. "|" .. actId
 
-	return "V1a6_BossRush_StoreModel_StoreNewGoods_" .. var_13_2 .. "|" .. var_13_0
+	return key
 end
 
-function var_0_0.getStore(arg_14_0)
+function V1a6_BossRush_StoreModel:getStore()
 	return {
 		StoreEnum.BossRushStore.NormalStore,
 		StoreEnum.BossRushStore.UpdateStore
 	}
 end
 
-function var_0_0.saveAllStoreGroupNewData(arg_15_0)
-	local var_15_0 = StoreEnum.BossRushStore.NormalStore
+function V1a6_BossRush_StoreModel:saveAllStoreGroupNewData()
+	local normalStoreId = StoreEnum.BossRushStore.NormalStore
 
-	arg_15_0:clearStoreGroupMo(var_15_0)
-	arg_15_0:saveStoreGroupNewMo(var_15_0)
+	self:clearStoreGroupMo(normalStoreId)
+	self:saveStoreGroupNewMo(normalStoreId)
 end
 
-function var_0_0.readAllStoreGroupNewData(arg_16_0)
-	local var_16_0 = StoreEnum.BossRushStore.NormalStore
+function V1a6_BossRush_StoreModel:readAllStoreGroupNewData()
+	local normalStoreId = StoreEnum.BossRushStore.NormalStore
 
-	arg_16_0:readStoreGroupNewMo(var_16_0)
+	self:readStoreGroupNewMo(normalStoreId)
 end
 
-function var_0_0.saveStoreGroupNewMo(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getStoreGoodsNewDataPrefKey(arg_17_1)
-	local var_17_1 = ""
+function V1a6_BossRush_StoreModel:saveStoreGroupNewMo(storeId)
+	local key = self:getStoreGoodsNewDataPrefKey(storeId)
+	local dataStr = ""
 
-	if not arg_17_0._storeGroupGoodsMo then
-		PlayerPrefsHelper.setString(var_17_0, var_17_1)
+	if not self._storeGroupGoodsMo then
+		PlayerPrefsHelper.setString(key, dataStr)
 
 		return
 	end
 
-	local var_17_2 = arg_17_0._storeGroupGoodsMo[arg_17_1]
+	local groupMo = self._storeGroupGoodsMo[storeId]
 
-	if var_17_2 then
-		for iter_17_0, iter_17_1 in pairs(var_17_2) do
-			var_17_1 = var_17_1 .. string.format("%s#%s#%s|", iter_17_1.goodsId, iter_17_1.limitCount, iter_17_1.isNew and 0 or 1)
+	if groupMo then
+		for _, mo in pairs(groupMo) do
+			dataStr = dataStr .. string.format("%s#%s#%s|", mo.goodsId, mo.limitCount, mo.isNew and 0 or 1)
 		end
 	end
 
-	PlayerPrefsHelper.setString(var_17_0, var_17_1)
+	PlayerPrefsHelper.setString(key, dataStr)
 end
 
-function var_0_0.readStoreGroupNewMo(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getStoreGoodsNewDataPrefKey(arg_18_1)
-	local var_18_1 = PlayerPrefsHelper.getString(var_18_0, "")
+function V1a6_BossRush_StoreModel:readStoreGroupNewMo(storeId)
+	local key = self:getStoreGoodsNewDataPrefKey(storeId)
+	local saveStoreGroupMo = PlayerPrefsHelper.getString(key, "")
 
-	if not arg_18_0._storeGroupGoodsMo then
-		arg_18_0._storeGroupGoodsMo = {}
+	if not self._storeGroupGoodsMo then
+		self._storeGroupGoodsMo = {}
 	end
 
-	arg_18_0._storeGroupGoodsMo[arg_18_1] = {}
+	self._storeGroupGoodsMo[storeId] = {}
 
-	local var_18_2 = arg_18_0:getStoreGroupMO()
+	local stroreGroupMo = self:getStoreGroupMO()
 
-	if not var_18_2 then
+	if not stroreGroupMo then
 		return
 	end
 
-	local var_18_3 = var_18_2[arg_18_1]
+	local nowStoreGroupMo = stroreGroupMo[storeId]
 
-	if not var_18_3 then
+	if not nowStoreGroupMo then
 		return
 	end
 
-	local var_18_4 = var_18_3:getGoodsList()
+	local nowStoreGoodsList = nowStoreGroupMo:getGoodsList()
 
-	for iter_18_0, iter_18_1 in pairs(var_18_4) do
-		local var_18_5 = iter_18_1.goodsId
-		local var_18_6 = iter_18_1.config.maxBuyCount - iter_18_1.buyCount
-		local var_18_7 = {
-			goodsId = var_18_5,
-			limitCount = var_18_6
+	for _, mo in pairs(nowStoreGoodsList) do
+		local goodsId = mo.goodsId
+		local limitCount = mo.config.maxBuyCount - mo.buyCount
+		local _mo = {
+			goodsId = goodsId,
+			limitCount = limitCount
 		}
 
-		if not string.nilorempty(var_18_1) then
-			local var_18_8 = GameUtil.splitString2(var_18_1, true, "|", "#")
-			local var_18_9
+		if not string.nilorempty(saveStoreGroupMo) then
+			local groupMoList = GameUtil.splitString2(saveStoreGroupMo, true, "|", "#")
+			local hasMo
 
-			for iter_18_2, iter_18_3 in pairs(var_18_8) do
-				if iter_18_3 and iter_18_3[1] == var_18_5 then
-					if var_18_6 > iter_18_3[2] then
-						var_18_7.isNew = true
+			for _, goodsMo in pairs(groupMoList) do
+				if goodsMo and goodsMo[1] == goodsId then
+					if limitCount > goodsMo[2] then
+						_mo.isNew = true
 					else
-						var_18_7.isNew = iter_18_3[3] == 0
-						var_18_9 = true
+						_mo.isNew = goodsMo[3] == 0
+						hasMo = true
 					end
 				end
 			end
 
-			if not var_18_9 then
-				var_18_7.isNew = true
+			if not hasMo then
+				_mo.isNew = true
 			end
 		else
-			var_18_7.isNew = true
+			_mo.isNew = true
 		end
 
-		arg_18_0._storeGroupGoodsMo[arg_18_1][var_18_5] = var_18_7
+		self._storeGroupGoodsMo[storeId][goodsId] = _mo
 	end
 end
 
-function var_0_0.clearStoreGroupMo(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._storeGroupGoodsMo and arg_19_0._storeGroupGoodsMo[arg_19_1]
+function V1a6_BossRush_StoreModel:clearStoreGroupMo(storeId)
+	local groupGoodsMo = self._storeGroupGoodsMo and self._storeGroupGoodsMo[storeId]
 
-	if var_19_0 then
-		for iter_19_0, iter_19_1 in pairs(var_19_0) do
-			iter_19_1.isNew = false
+	if groupGoodsMo then
+		for _, mo in pairs(groupGoodsMo) do
+			mo.isNew = false
 		end
 	end
 end
 
-function var_0_0.getStoreGoodsNewData(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0._storeGroupGoodsMo and arg_20_0._storeGroupGoodsMo[arg_20_1]
+function V1a6_BossRush_StoreModel:getStoreGoodsNewData(storeId, goodsId)
+	local groupGoodsMo = self._storeGroupGoodsMo and self._storeGroupGoodsMo[storeId]
+	local goodsMo = groupGoodsMo and groupGoodsMo[goodsId]
 
-	return var_20_0 and var_20_0[arg_20_2]
+	return goodsMo
 end
 
-function var_0_0.isHasNewGoods(arg_21_0)
-	local var_21_0 = StoreEnum.BossRushStore.NormalStore
-	local var_21_1 = arg_21_0._storeGroupGoodsMo and arg_21_0._storeGroupGoodsMo[var_21_0]
+function V1a6_BossRush_StoreModel:isHasNewGoods()
+	local normalStoreId = StoreEnum.BossRushStore.NormalStore
+	local groupGoodsMo = self._storeGroupGoodsMo and self._storeGroupGoodsMo[normalStoreId]
 
-	if var_21_1 then
-		for iter_21_0, iter_21_1 in pairs(var_21_1) do
-			if iter_21_1.isNew then
+	if groupGoodsMo then
+		for _, mo in pairs(groupGoodsMo) do
+			if mo.isNew then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.onClickGoodsItem(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0:getStoreGoodsNewData(arg_22_1, arg_22_2)
+function V1a6_BossRush_StoreModel:onClickGoodsItem(storeId, goodsId)
+	local goodsMo = self:getStoreGoodsNewData(storeId, goodsId)
 
-	if var_22_0 then
-		var_22_0.isNew = false
+	if goodsMo then
+		goodsMo.isNew = false
 	end
 end
 
-function var_0_0.getStoreGoodsNewDataPrefKey(arg_23_0, arg_23_1)
-	local var_23_0 = PlayerModel.instance:getPlayinfo()
-	local var_23_1 = var_23_0 and var_23_0.userId or 1999
+function V1a6_BossRush_StoreModel:getStoreGoodsNewDataPrefKey(storeId)
+	local playerInfo = PlayerModel.instance:getPlayinfo()
+	local playerId = playerInfo and playerInfo.userId or 1999
+	local key = "V1a6_BossRush_StoreModel_StoreGoodsNewData_" .. storeId .. "_" .. playerId
 
-	return "V1a6_BossRush_StoreModel_StoreGoodsNewData_" .. arg_23_1 .. "_" .. var_23_1
+	return key
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_BossRush_StoreModel.instance = V1a6_BossRush_StoreModel.New()
 
-return var_0_0
+return V1a6_BossRush_StoreModel

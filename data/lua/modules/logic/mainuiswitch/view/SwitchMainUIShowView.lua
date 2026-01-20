@@ -1,457 +1,467 @@
-﻿module("modules.logic.mainuiswitch.view.SwitchMainUIShowView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/SwitchMainUIShowView.lua
 
-local var_0_0 = class("SwitchMainUIShowView", BaseView)
+module("modules.logic.mainuiswitch.view.SwitchMainUIShowView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golightspinecontrol = gohelper.findChild(arg_1_0.viewGO, "#go_lightspinecontrol")
-	arg_1_0._btnquest = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_quest")
-	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "left/#btn_quest/#go_taskreddot")
-	arg_1_0._btnstorage = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_storage")
-	arg_1_0._godeadline = gohelper.findChild(arg_1_0.viewGO, "left/#btn_storage/#go_deadline")
-	arg_1_0._godeadlineEffect = gohelper.findChild(arg_1_0.viewGO, "left/#btn_storage/#go_deadline/#effect")
-	arg_1_0._imagetimebg = gohelper.findChildImage(arg_1_0.viewGO, "left/#btn_storage/#go_deadline/timebg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "left/#btn_storage/#go_deadline/#txt_time")
-	arg_1_0._imagetimeicon = gohelper.findChildImage(arg_1_0.viewGO, "left/#btn_storage/#go_deadline/#txt_time/timeicon")
-	arg_1_0._txtformat = gohelper.findChildText(arg_1_0.viewGO, "left/#btn_storage/#go_deadline/#txt_time/#txt_format")
-	arg_1_0._gostoragereddot = gohelper.findChild(arg_1_0.viewGO, "left/#btn_storage/#go_storagereddot")
-	arg_1_0._btnbank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_bank")
-	arg_1_0._gobankreddot = gohelper.findChild(arg_1_0.viewGO, "left/#btn_bank/#go_bankreddot")
-	arg_1_0._godeadlinebank = gohelper.findChild(arg_1_0.viewGO, "left/#btn_bank/#go_deadlinebank")
-	arg_1_0._gobankeffect = gohelper.findChild(arg_1_0.viewGO, "left/#btn_bank/#go_bankeffect")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "right")
-	arg_1_0._btnroom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_room")
-	arg_1_0._goroomlock = gohelper.findChild(arg_1_0.viewGO, "right/#btn_room/#go_roomlock")
-	arg_1_0._goroomreddot = gohelper.findChild(arg_1_0.viewGO, "right/#btn_room/#go_roomreddot")
-	arg_1_0._gogreendot = gohelper.findChild(arg_1_0.viewGO, "right/#btn_room/#go_roomreddot/#go_greendot")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "right/#btn_room/#go_roomreddot/#go_reddot")
-	arg_1_0._goroomgiftreddot = gohelper.findChild(arg_1_0.viewGO, "right/#btn_room/#go_v1a9actroom")
-	arg_1_0._gobanners = gohelper.findChild(arg_1_0.viewGO, "left/#go_banners")
-	arg_1_0._goactivity = gohelper.findChild(arg_1_0.viewGO, "left/#go_activity")
-	arg_1_0._btnswitchrole = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_switchrole")
-	arg_1_0._gothumbnialreddot = gohelper.findChild(arg_1_0.viewGO, "left/#btn_switchrole/#go_thumbnailreddot")
-	arg_1_0._btnplayerinfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_top/playerinfos/info/#btn_playerinfo")
-	arg_1_0._imageslider = gohelper.findChildImage(arg_1_0.viewGO, "left_top/playerinfos/info/#image_slider")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "left_top/playerinfos/txtContainer/#txt_name")
-	arg_1_0._txtid = gohelper.findChildText(arg_1_0.viewGO, "left_top/playerinfos/txtContainer/#txt_id")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "left_top/playerinfos/txtContainer/layout/#txt_level")
-	arg_1_0._goplayerreddot = gohelper.findChild(arg_1_0.viewGO, "left_top/#go_reddot")
-	arg_1_0._btnmail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_mail")
-	arg_1_0._gomailreddot = gohelper.findChild(arg_1_0.viewGO, "left/#btn_mail/#go_mailreddot")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
-	arg_1_0._btnpower = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_power")
-	arg_1_0._btnrole = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_role")
-	arg_1_0._btnsummon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_summon")
-	arg_1_0._imagesummonnew1 = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/1/#image_summonnew")
-	arg_1_0._imagesummonnew2 = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/2/#image_summonnew")
-	arg_1_0._imagesummonfree = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/#image_free")
-	arg_1_0._imagesummonreddot = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/#image_summonreddot")
-	arg_1_0._txtpower = gohelper.findChildText(arg_1_0.viewGO, "right/txtContainer/#txt_power")
-	arg_1_0._gospinescale = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale")
-	arg_1_0._golightspine = gohelper.findChild(arg_1_0.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
-	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_contentbg")
-	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_cn")
-	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_ana_en")
-	arg_1_0._btnhide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_hide")
-	arg_1_0._btnbgm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_bgm")
-	arg_1_0._gobgmnone = gohelper.findChild(arg_1_0.viewGO, "#btn_bgm/none")
-	arg_1_0._gobgmplay = gohelper.findChild(arg_1_0.viewGO, "#btn_bgm/playing")
-	arg_1_0._btnlimitedshow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "limitedshow/#btn_limitedshow")
-	arg_1_0._golimitedshow = gohelper.findChild(arg_1_0.viewGO, "limitedshow")
-	arg_1_0._pcBtnHide = gohelper.findChild(arg_1_0._btnhide.gameObject, "#go_pcbtn")
-	arg_1_0._pcBtnRoom = gohelper.findChild(arg_1_0._btnroom.gameObject, "#go_pcbtn")
-	arg_1_0._pcBtnCharactor = gohelper.findChild(arg_1_0._btnrole.gameObject, "#go_pcbtn")
-	arg_1_0._pcBtnSummon = gohelper.findChild(arg_1_0._btnsummon.gameObject, "#go_pcbtn")
+local SwitchMainUIShowView = class("SwitchMainUIShowView", BaseView)
 
-	gohelper.setActive(arg_1_0._btnlimitedshow.gameObject, true)
-	gohelper.setActive(arg_1_0._golimitedshow, false)
+function SwitchMainUIShowView:onInitView()
+	self._golightspinecontrol = gohelper.findChild(self.viewGO, "#go_lightspinecontrol")
+	self._btnquest = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_quest")
+	self._gotaskreddot = gohelper.findChild(self.viewGO, "left/#btn_quest/#go_taskreddot")
+	self._btnstorage = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_storage")
+	self._godeadline = gohelper.findChild(self.viewGO, "left/#btn_storage/#go_deadline")
+	self._godeadlineEffect = gohelper.findChild(self.viewGO, "left/#btn_storage/#go_deadline/#effect")
+	self._imagetimebg = gohelper.findChildImage(self.viewGO, "left/#btn_storage/#go_deadline/timebg")
+	self._txttime = gohelper.findChildText(self.viewGO, "left/#btn_storage/#go_deadline/#txt_time")
+	self._imagetimeicon = gohelper.findChildImage(self.viewGO, "left/#btn_storage/#go_deadline/#txt_time/timeicon")
+	self._txtformat = gohelper.findChildText(self.viewGO, "left/#btn_storage/#go_deadline/#txt_time/#txt_format")
+	self._gostoragereddot = gohelper.findChild(self.viewGO, "left/#btn_storage/#go_storagereddot")
+	self._btnbank = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_bank")
+	self._gobankreddot = gohelper.findChild(self.viewGO, "left/#btn_bank/#go_bankreddot")
+	self._godeadlinebank = gohelper.findChild(self.viewGO, "left/#btn_bank/#go_deadlinebank")
+	self._gobankeffect = gohelper.findChild(self.viewGO, "left/#btn_bank/#go_bankeffect")
+	self._goright = gohelper.findChild(self.viewGO, "right")
+	self._btnroom = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_room")
+	self._goroomlock = gohelper.findChild(self.viewGO, "right/#btn_room/#go_roomlock")
+	self._goroomreddot = gohelper.findChild(self.viewGO, "right/#btn_room/#go_roomreddot")
+	self._gogreendot = gohelper.findChild(self.viewGO, "right/#btn_room/#go_roomreddot/#go_greendot")
+	self._goreddot = gohelper.findChild(self.viewGO, "right/#btn_room/#go_roomreddot/#go_reddot")
+	self._goroomgiftreddot = gohelper.findChild(self.viewGO, "right/#btn_room/#go_v1a9actroom")
+	self._gobanners = gohelper.findChild(self.viewGO, "left/#go_banners")
+	self._goactivity = gohelper.findChild(self.viewGO, "left/#go_activity")
+	self._btnswitchrole = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_switchrole")
+	self._gothumbnialreddot = gohelper.findChild(self.viewGO, "left/#btn_switchrole/#go_thumbnailreddot")
+	self._btnplayerinfo = gohelper.findChildButtonWithAudio(self.viewGO, "left_top/playerinfos/info/#btn_playerinfo")
+	self._imageslider = gohelper.findChildImage(self.viewGO, "left_top/playerinfos/info/#image_slider")
+	self._txtname = gohelper.findChildText(self.viewGO, "left_top/playerinfos/txtContainer/#txt_name")
+	self._txtid = gohelper.findChildText(self.viewGO, "left_top/playerinfos/txtContainer/#txt_id")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "left_top/playerinfos/txtContainer/layout/#txt_level")
+	self._goplayerreddot = gohelper.findChild(self.viewGO, "left_top/#go_reddot")
+	self._btnmail = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_mail")
+	self._gomailreddot = gohelper.findChild(self.viewGO, "left/#btn_mail/#go_mailreddot")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+	self._btnpower = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_power")
+	self._btnrole = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_role")
+	self._btnsummon = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_summon")
+	self._imagesummonfree = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_free")
+	self._imagesummonreddot = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_summonreddot")
+	self._txtpower = gohelper.findChildText(self.viewGO, "right/txtContainer/#txt_power")
+	self._gospinescale = gohelper.findChild(self.viewGO, "#go_spine_scale")
+	self._golightspine = gohelper.findChild(self.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
+	self._gocontentbg = gohelper.findChild(self.viewGO, "bottom/#go_contentbg")
+	self._txtanacn = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_cn")
+	self._txtanaen = gohelper.findChildText(self.viewGO, "bottom/#txt_ana_en")
+	self._btnhide = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_hide")
+	self._btnbgm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_bgm")
+	self._gobgmnone = gohelper.findChild(self.viewGO, "#btn_bgm/none")
+	self._gobgmplay = gohelper.findChild(self.viewGO, "#btn_bgm/playing")
+	self._btnlimitedshow = gohelper.findChildButtonWithAudio(self.viewGO, "limitedshow/#btn_limitedshow")
+	self._golimitedshow = gohelper.findChild(self.viewGO, "limitedshow")
+	self._pcBtnHide = gohelper.findChild(self._btnhide.gameObject, "#go_pcbtn")
+	self._pcBtnRoom = gohelper.findChild(self._btnroom.gameObject, "#go_pcbtn")
+	self._pcBtnCharactor = gohelper.findChild(self._btnrole.gameObject, "#go_pcbtn")
+	self._pcBtnSummon = gohelper.findChild(self._btnsummon.gameObject, "#go_pcbtn")
 
-	arg_1_0._showMainView = true
+	gohelper.setActive(self._btnlimitedshow.gameObject, true)
+	gohelper.setActive(self._golimitedshow, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._showMainView = true
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, arg_2_0._onSwitchUIVisible, arg_2_0)
-	arg_2_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, arg_2_0._onSwitchUIVisible, arg_2_0)
+function SwitchMainUIShowView:addEvents()
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, self._onSwitchUIVisible, self)
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, self._onSwitchUIVisible, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, arg_3_0._onSwitchUIVisible, arg_3_0)
-	arg_3_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, arg_3_0._onSwitchUIVisible, arg_3_0)
+function SwitchMainUIShowView:removeEvents()
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, self._onSwitchUIVisible, self)
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.PreviewSwitchUIVisible, self._onSwitchUIVisible, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goleft = gohelper.findChild(arg_4_0.viewGO, "left")
-	arg_4_0._golefttop = gohelper.findChild(arg_4_0.viewGO, "left_top")
-	arg_4_0._goright = gohelper.findChild(arg_4_0.viewGO, "right")
-	arg_4_0._gorighttop = gohelper.findChild(arg_4_0.viewGO, "#go_righttop")
-	arg_4_0._goactbgGo = gohelper.findChild(arg_4_0.viewGO, "#simage_actbg")
-	arg_4_0._currencyObjs = {}
-	arg_4_0._currencyView = arg_4_0:getResInst(CurrencyView.prefabPath, arg_4_0._gorighttop)
-	arg_4_0._gocurrency = gohelper.findChild(arg_4_0._currencyView, "#go_container/#go_currency")
+function SwitchMainUIShowView:_editableInitView()
+	self._goleft = gohelper.findChild(self.viewGO, "left")
+	self._golefttop = gohelper.findChild(self.viewGO, "left_top")
+	self._goright = gohelper.findChild(self.viewGO, "right")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+	self._goactbgGo = gohelper.findChild(self.viewGO, "#simage_actbg")
+	self._currencyObjs = {}
+	self._currencyView = self:getResInst(CurrencyView.prefabPath, self._gorighttop)
+	self._gocurrency = gohelper.findChild(self._currencyView, "#go_container/#go_currency")
 
-	arg_4_0:_initOffsetGos()
+	self:_initOffsetGos()
 
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
-	arg_4_0._cameraAnimator.speed = 1
-	arg_4_0._animatorRight = gohelper.findChildComponent(arg_4_0.viewGO, "right", typeof(UnityEngine.Animator))
-	arg_4_0._openOtherView = false
-	arg_4_0._goroomImage = gohelper.findChild(arg_4_0.viewGO, "right/#btn_room")
-	arg_4_0._roomCanvasGroup = gohelper.onceAddComponent(arg_4_0._goroomImage, typeof(UnityEngine.CanvasGroup))
-	arg_4_0._openMainThumbnailTime = Time.realtimeSinceStartup
-	arg_4_0._animator.enabled = false
-	arg_4_0._mailreddot = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gomailreddot, SwitchMainUIReddotIcon)
-	arg_4_0._taskreddot = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gotaskreddot, SwitchMainUIReddotIcon)
-	arg_4_0._bankreddot = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gobankreddot, SwitchMainUIReddotIcon)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	self._cameraAnimator.speed = 1
+	self._animatorRight = gohelper.findChildComponent(self.viewGO, "right", typeof(UnityEngine.Animator))
+	self._openOtherView = false
+	self._goroomImage = gohelper.findChild(self.viewGO, "right/#btn_room")
+	self._roomCanvasGroup = gohelper.onceAddComponent(self._goroomImage, typeof(UnityEngine.CanvasGroup))
+	self._openMainThumbnailTime = Time.realtimeSinceStartup
+	self._animator.enabled = false
+	self._mailreddot = MonoHelper.addNoUpdateLuaComOnceToGo(self._gomailreddot, SwitchMainUIReddotIcon)
+	self._taskreddot = MonoHelper.addNoUpdateLuaComOnceToGo(self._gotaskreddot, SwitchMainUIReddotIcon)
+	self._bankreddot = MonoHelper.addNoUpdateLuaComOnceToGo(self._gobankreddot, SwitchMainUIReddotIcon)
 
-	gohelper.setActive(arg_4_0._btnhide.gameObject, false)
-	gohelper.setActive(arg_4_0._goactivity.gameObject, false)
+	gohelper.setActive(self._btnhide.gameObject, false)
+	gohelper.setActive(self._goactivity.gameObject, false)
+
+	self._imagesummonnews = self:getUserDataTb_()
+
+	for _, skinId in pairs(MainUISwitchEnum.Skin) do
+		local newName = string.format("right/#btn_summon/%s/#image_summonnew", skinId)
+		local new = gohelper.findChild(self.viewGO, newName)
+
+		table.insert(self._imagesummonnews, new)
+	end
 end
 
-function var_0_0._checkActivityImgVisible(arg_5_0)
-	local var_5_0 = ActivityModel.showActivityEffect()
-	local var_5_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
+function SwitchMainUIShowView:_checkActivityImgVisible()
+	local isShow = ActivityModel.showActivityEffect()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if var_5_1 then
-		for iter_5_0, iter_5_1 in ipairs(var_5_1.mainView) do
-			local var_5_2 = gohelper.findChild(arg_5_0.viewGO, iter_5_1)
+	if config then
+		for _, path in ipairs(config.mainView) do
+			local go = gohelper.findChild(self.viewGO, path)
 
-			if var_5_2 then
-				gohelper.setActive(var_5_2, var_5_0)
+			if go then
+				gohelper.setActive(go, isShow)
 			end
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_refreshBtns()
-	arg_6_0:_refreshView()
-	arg_6_0:_checkActivityImgVisible()
+function SwitchMainUIShowView:onOpen()
+	self:_refreshBtns()
+	self:_refreshView()
+	self:_checkActivityImgVisible()
 end
 
-function var_0_0._refreshBtns(arg_7_0)
-	local var_7_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Task)
+function SwitchMainUIShowView:_refreshBtns()
+	local taskShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Task)
 
-	gohelper.setActive(arg_7_0._btnquest.gameObject, var_7_0)
+	gohelper.setActive(self._btnquest.gameObject, taskShow)
 
-	local var_7_1 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Storage)
+	local storageShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Storage)
 
-	gohelper.setActive(arg_7_0._btnstorage.gameObject, var_7_1)
+	gohelper.setActive(self._btnstorage.gameObject, storageShow)
 
-	local var_7_2 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Bank)
+	local bankShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Bank)
 
-	gohelper.setActive(arg_7_0._btnbank.gameObject, var_7_2)
+	gohelper.setActive(self._btnbank.gameObject, bankShow)
 
-	local var_7_3 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Room)
+	local roomShow = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Room)
 
-	gohelper.setActive(arg_7_0._btnroom.gameObject, var_7_3)
+	gohelper.setActive(self._btnroom.gameObject, roomShow)
 
-	local var_7_4 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room)
+	local isUnLockRoom = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room)
 
-	arg_7_0._roomCanvasGroup.alpha = var_7_4 and 1 or 0.65
+	self._roomCanvasGroup.alpha = isUnLockRoom and 1 or 0.65
 
-	gohelper.setActive(arg_7_0._goroomlock, not var_7_4)
-	gohelper.setActive(arg_7_0._btnmail.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Mail))
-	gohelper.setActive(arg_7_0._btnsummon.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon))
-	gohelper.setActive(arg_7_0._btnrole.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Role))
-	gohelper.setActive(arg_7_0._btnswitchrole.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.MainThumbnail))
+	gohelper.setActive(self._goroomlock, not isUnLockRoom)
+	gohelper.setActive(self._btnmail.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Mail))
+	gohelper.setActive(self._btnsummon.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon))
+	gohelper.setActive(self._btnrole.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Role))
+	gohelper.setActive(self._btnswitchrole.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.MainThumbnail))
 end
 
-function var_0_0._initOffsetGos(arg_8_0)
-	arg_8_0._offsetGos = arg_8_0:getUserDataTb_()
+function SwitchMainUIShowView:_initOffsetGos()
+	self._offsetGos = self:getUserDataTb_()
 
-	table.insert(arg_8_0._offsetGos, {
+	table.insert(self._offsetGos, {
 		offsetType = 1,
-		go = arg_8_0._goleft
+		go = self._goleft
 	})
-	table.insert(arg_8_0._offsetGos, {
+	table.insert(self._offsetGos, {
 		offsetType = 1,
-		go = arg_8_0._golefttop
+		go = self._golefttop
 	})
-	table.insert(arg_8_0._offsetGos, {
+	table.insert(self._offsetGos, {
 		offsetType = 2,
-		go = arg_8_0._goright
+		go = self._goright
 	})
-	table.insert(arg_8_0._offsetGos, {
+	table.insert(self._offsetGos, {
 		offsetType = 2,
-		go = arg_8_0._gorighttop
+		go = self._gorighttop
 	})
-	table.insert(arg_8_0._offsetGos, {
+	table.insert(self._offsetGos, {
 		offsetType = 2,
-		go = arg_8_0._goactbgGo
+		go = self._goactbgGo
 	})
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._offsetGos) do
-		iter_8_1.anchorX = recthelper.getAnchorX(iter_8_1.go.transform)
+	for _, v in ipairs(self._offsetGos) do
+		local anchorX = recthelper.getAnchorX(v.go.transform)
+
+		v.anchorX = anchorX
 	end
 
-	local var_8_0 = arg_8_0.viewContainer:isInitMainFullView()
+	local isFull = self.viewContainer:isInitMainFullView()
 
-	arg_8_0:_refreshOffest(var_8_0)
+	self:_refreshOffest(isFull)
 end
 
-function var_0_0._refreshOffest(arg_9_0, arg_9_1)
-	local var_9_0 = MainUISwitchEnum.SwitchMainUIOffsetType
-	local var_9_1 = arg_9_1 and 1 or MainUISwitchEnum.MainUIScale
+function SwitchMainUIShowView:_refreshOffest(isFull)
+	local offsetType = MainUISwitchEnum.SwitchMainUIOffsetType
+	local scale = isFull and 1 or MainUISwitchEnum.MainUIScale
 
-	transformhelper.setLocalScale(arg_9_0.viewGO.transform, var_9_1, var_9_1, 1)
+	transformhelper.setLocalScale(self.viewGO.transform, scale, scale, 1)
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._offsetGos) do
-		local var_9_2 = var_9_0[iter_9_1.offsetType] and not arg_9_1 and var_9_0[iter_9_1.offsetType].offsetX or 0
-		local var_9_3 = iter_9_1.anchorX + var_9_2
+	for _, v in ipairs(self._offsetGos) do
+		local offset = offsetType[v.offsetType] and not isFull and offsetType[v.offsetType].offsetX or 0
+		local anchorX = v.anchorX + offset
 
-		recthelper.setAnchorX(iter_9_1.go.transform, var_9_3)
+		recthelper.setAnchorX(v.go.transform, anchorX)
 	end
 end
 
-function var_0_0._refreshView(arg_10_0)
-	arg_10_0:_refreshRedDot()
-	arg_10_0:_refreshPower()
-	arg_10_0:_refreshBgm()
-	arg_10_0:_refreshBackpack()
-	arg_10_0:_refreshSummonNewFlag()
-	arg_10_0:_setPlayerInfo(PlayerModel.instance:getPlayinfo())
-	arg_10_0:_showCurrency()
-	arg_10_0:showStoreDeadline(false)
+function SwitchMainUIShowView:_refreshView()
+	self:_refreshRedDot()
+	self:_refreshPower()
+	self:_refreshBgm()
+	self:_refreshBackpack()
+	self:_refreshSummonNewFlag()
+	self:_setPlayerInfo(PlayerModel.instance:getPlayinfo())
+	self:_showCurrency()
+	self:showStoreDeadline(false)
 end
 
-function var_0_0._setPlayerInfo(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1.level
+function SwitchMainUIShowView:_setPlayerInfo(playerinfo)
+	local level = playerinfo.level
 
-	arg_11_0._txtlevel.text = arg_11_1.level
-	arg_11_0._txtname.text = arg_11_1.name
-	arg_11_0._txtid.text = "ID:" .. arg_11_1.userId
+	self._txtlevel.text = playerinfo.level
+	self._txtname.text = playerinfo.name
+	self._txtid.text = "ID:" .. playerinfo.userId
 
-	local var_11_1 = arg_11_1.exp
-	local var_11_2 = 0
+	local exp_now = playerinfo.exp
+	local exp_max = 0
 
-	if var_11_0 < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
-		var_11_2 = PlayerConfig.instance:getPlayerLevelCO(var_11_0 + 1).exp
+	if level < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
+		exp_max = PlayerConfig.instance:getPlayerLevelCO(level + 1).exp
 	else
-		var_11_2 = PlayerConfig.instance:getPlayerLevelCO(var_11_0).exp
-		var_11_1 = var_11_2
+		exp_max = PlayerConfig.instance:getPlayerLevelCO(level).exp
+		exp_now = exp_max
 	end
 
-	arg_11_0._imageslider.fillAmount = var_11_1 / var_11_2
+	self._imageslider.fillAmount = exp_now / exp_max
 
-	if arg_11_0._lastUpdateLevel ~= arg_11_1.level then
-		arg_11_0._lastUpdateLevel = arg_11_1.level
+	if self._lastUpdateLevel ~= playerinfo.level then
+		self._lastUpdateLevel = playerinfo.level
 	end
 
-	arg_11_0:_refreshPower()
+	self:_refreshPower()
 end
 
-function var_0_0._refreshSummonNewFlag(arg_12_0)
-	local var_12_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon)
-	local var_12_1 = SummonMainModel.instance:entryHasNew()
+function SwitchMainUIShowView:_refreshSummonNewFlag()
+	local isSummonUnlock = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon)
+	local hasNew = SummonMainModel.instance:entryHasNew()
 
-	gohelper.setActive(arg_12_0._imagesummonnew1, var_12_0 and var_12_1)
-	gohelper.setActive(arg_12_0._imagesummonnew2, var_12_0 and var_12_1)
+	for _, new in ipairs(self._imagesummonnews) do
+		gohelper.setActive(new, isSummonUnlock and hasNew)
+	end
 
-	local var_12_2 = SummonMainModel.instance:entryHasFree()
+	local hasFree = SummonMainModel.instance:entryHasFree()
 
-	gohelper.setActive(arg_12_0._imagesummonfree, var_12_0 and var_12_2)
+	gohelper.setActive(self._imagesummonfree, isSummonUnlock and hasFree)
 end
 
-function var_0_0._refreshRedDot(arg_13_0)
-	local var_13_0 = arg_13_0.viewParam and arg_13_0.viewParam.SkinId or MainUISwitchModel.instance:getCurUseUI()
+function SwitchMainUIShowView:_refreshRedDot()
+	local skinId = self.viewParam and self.viewParam.SkinId or MainUISwitchModel.instance:getCurUseUI()
 
-	arg_13_0._mailreddot:setId(RedDotEnum.DotNode.MailBtn, nil, var_13_0)
-	arg_13_0._taskreddot:setId(RedDotEnum.DotNode.TaskBtn, nil, var_13_0)
-	arg_13_0._bankreddot:setId(RedDotEnum.DotNode.StoreBtn, nil, var_13_0)
-	arg_13_0._mailreddot:defaultRefreshDot()
-	arg_13_0._taskreddot:defaultRefreshDot()
-	arg_13_0._bankreddot:defaultRefreshDot()
-	RedDotController.instance:addRedDotTag(arg_13_0._goreddot, RedDotEnum.DotNode.MainRoomProductionFull)
-	RedDotController.instance:addRedDotTag(arg_13_0._gogreendot, RedDotEnum.DotNode.MainRoomCharacterFaithGetFull)
-	RedDotController.instance:addRedDotTag(arg_13_0._goroomgiftreddot, RedDotEnum.DotNode.RoomGift)
+	self._mailreddot:setId(RedDotEnum.DotNode.MailBtn, nil, skinId)
+	self._taskreddot:setId(RedDotEnum.DotNode.TaskBtn, nil, skinId)
+	self._bankreddot:setId(RedDotEnum.DotNode.StoreBtn, nil, skinId)
+	self._mailreddot:defaultRefreshDot()
+	self._taskreddot:defaultRefreshDot()
+	self._bankreddot:defaultRefreshDot()
+	RedDotController.instance:addRedDotTag(self._goreddot, RedDotEnum.DotNode.MainRoomProductionFull)
+	RedDotController.instance:addRedDotTag(self._gogreendot, RedDotEnum.DotNode.MainRoomCharacterFaithGetFull)
+	RedDotController.instance:addRedDotTag(self._goroomgiftreddot, RedDotEnum.DotNode.RoomGift)
 end
 
-function var_0_0._refreshPower(arg_14_0)
-	local var_14_0 = PlayerModel.instance:getPlayinfo().level
-	local var_14_1 = PlayerConfig.instance:getPlayerLevelCO(var_14_0).maxAutoRecoverPower
-	local var_14_2 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Power)
-	local var_14_3 = var_14_2 and var_14_2.quantity or 0
+function SwitchMainUIShowView:_refreshPower()
+	local level = PlayerModel.instance:getPlayinfo().level
+	local recoverLimit = PlayerConfig.instance:getPlayerLevelCO(level).maxAutoRecoverPower
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Power)
+	local power = currencyMO and currencyMO.quantity or 0
 
-	arg_14_0._txtpower.text = string.format("%s/%s", var_14_3, var_14_1)
+	self._txtpower.text = string.format("%s/%s", power, recoverLimit)
 end
 
-function var_0_0._refreshBgm(arg_15_0)
-	local var_15_0 = WeatherController.instance:getSceneNode("s01_obj_a/Anim/Effect/bgm")
-	local var_15_1 = WeatherController.instance:getSceneNode("s01_obj_a/Anim/Obj/s01_obj_b")
-	local var_15_2 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
-	local var_15_3 = BGMSwitchModel.instance:getMechineGear()
+function SwitchMainUIShowView:_refreshBgm()
+	local lightGo = WeatherController.instance:getSceneNode("s01_obj_a/Anim/Effect/bgm")
+	local bgmGo = WeatherController.instance:getSceneNode("s01_obj_a/Anim/Obj/s01_obj_b")
+	local isUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BGMSwitch)
+	local gear = BGMSwitchModel.instance:getMechineGear()
 
-	gohelper.setActive(var_15_0, var_15_3 == BGMSwitchEnum.Gear.On1 and var_15_2)
-	gohelper.setActive(var_15_1, var_15_2)
+	gohelper.setActive(lightGo, gear == BGMSwitchEnum.Gear.On1 and isUnlock)
+	gohelper.setActive(bgmGo, isUnlock)
 
-	if not var_15_1 then
+	if not bgmGo then
 		logError("_refreshBgm no bgmGo")
 	end
 
-	if not var_15_0 then
+	if not lightGo then
 		logError("_refreshBgm no lightGo")
 	end
 end
 
-function var_0_0._refreshBackpack(arg_16_0)
-	arg_16_0._itemDeadline = BackpackModel.instance:getItemDeadline()
-	arg_16_0._laststorageDeadLineHasDay = nil
+function SwitchMainUIShowView:_refreshBackpack()
+	self._itemDeadline = BackpackModel.instance:getItemDeadline()
+	self._laststorageDeadLineHasDay = nil
 
-	arg_16_0:_onRefreshDeadline()
+	self:_onRefreshDeadline()
 end
 
-function var_0_0._onRefreshDeadline(arg_17_0)
-	if arg_17_0._itemDeadline and arg_17_0._itemDeadline > 0 then
-		gohelper.setActive(arg_17_0._txttime.gameObject, true)
+function SwitchMainUIShowView:_onRefreshDeadline()
+	if self._itemDeadline and self._itemDeadline > 0 then
+		gohelper.setActive(self._txttime.gameObject, true)
 
-		local var_17_0 = arg_17_0._itemDeadline - ServerTime.now()
+		local limitSec = self._itemDeadline - ServerTime.now()
 
-		if var_17_0 <= 0 then
-			gohelper.setActive(arg_17_0._godeadline, false)
+		if limitSec <= 0 then
+			gohelper.setActive(self._godeadline, false)
 
 			return
 		end
 
-		arg_17_0._txttime.text, arg_17_0._txtformat.text, arg_17_0._storageDeadLineHasDay = TimeUtil.secondToRoughTime(math.floor(var_17_0), true)
+		self._txttime.text, self._txtformat.text, self._storageDeadLineHasDay = TimeUtil.secondToRoughTime(math.floor(limitSec), true)
 
-		gohelper.setActive(arg_17_0._godeadline, true)
+		gohelper.setActive(self._godeadline, true)
 
-		if arg_17_0._laststorageDeadLineHasDay == nil or arg_17_0._laststorageDeadLineHasDay ~= arg_17_0._storageDeadLineHasDay then
-			UISpriteSetMgr.instance:setCommonSprite(arg_17_0._imagetimebg, arg_17_0._storageDeadLineHasDay and "daojishi_01" or "daojishi_02")
-			UISpriteSetMgr.instance:setCommonSprite(arg_17_0._imagetimeicon, arg_17_0._storageDeadLineHasDay and "daojishiicon_01" or "daojishiicon_02")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_17_0._txttime, arg_17_0._storageDeadLineHasDay and "#98D687" or "#E99B56")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_17_0._txtformat, arg_17_0._storageDeadLineHasDay and "#98D687" or "#E99B56")
-			gohelper.setActive(arg_17_0._godeadlineEffect, not arg_17_0._storageDeadLineHasDay)
+		if self._laststorageDeadLineHasDay == nil or self._laststorageDeadLineHasDay ~= self._storageDeadLineHasDay then
+			UISpriteSetMgr.instance:setCommonSprite(self._imagetimebg, self._storageDeadLineHasDay and "daojishi_01" or "daojishi_02")
+			UISpriteSetMgr.instance:setCommonSprite(self._imagetimeicon, self._storageDeadLineHasDay and "daojishiicon_01" or "daojishiicon_02")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txttime, self._storageDeadLineHasDay and "#98D687" or "#E99B56")
+			SLFramework.UGUI.GuiHelper.SetColor(self._txtformat, self._storageDeadLineHasDay and "#98D687" or "#E99B56")
+			gohelper.setActive(self._godeadlineEffect, not self._storageDeadLineHasDay)
 
-			arg_17_0._laststorageDeadLineHasDay = arg_17_0._storageDeadLineHasDay
+			self._laststorageDeadLineHasDay = self._storageDeadLineHasDay
 		end
 	else
-		gohelper.setActive(arg_17_0._godeadline, false)
-		gohelper.setActive(arg_17_0._txttime.gameObject, false)
+		gohelper.setActive(self._godeadline, false)
+		gohelper.setActive(self._txttime.gameObject, false)
 	end
 end
 
-function var_0_0.showStoreDeadline(arg_18_0, arg_18_1)
-	if not arg_18_0.viewGO then
+function SwitchMainUIShowView:showStoreDeadline(needShow)
+	if not self.viewGO then
 		return
 	end
 
-	local var_18_0 = arg_18_0:getOrCreateStoreDeadline()
+	local deadlineItem = self:getOrCreateStoreDeadline()
 
-	var_18_0.needShow = arg_18_1 or var_18_0.needShow
+	deadlineItem.needShow = needShow or deadlineItem.needShow
 
-	if var_18_0.needShow then
-		local var_18_1 = false
-		local var_18_2 = StoreConfig.instance:getTabConfig(StoreEnum.StoreId.LimitStore)
-		local var_18_3 = 0
+	if deadlineItem.needShow then
+		local deadlineHasDay = false
+		local storeEntranceCfg = StoreConfig.instance:getTabConfig(StoreEnum.StoreId.LimitStore)
+		local deadlineTimeSec = 0
 
-		if var_18_2 then
-			local var_18_4 = StoreHelper.getRemainExpireTime(var_18_2)
+		if storeEntranceCfg then
+			local sec = StoreHelper.getRemainExpireTime(storeEntranceCfg)
 
-			if var_18_4 and var_18_4 > 0 and var_18_4 <= TimeUtil.OneDaySecond * 7 then
-				var_18_3 = var_18_4
+			if sec and sec > 0 and sec <= TimeUtil.OneDaySecond * 7 then
+				deadlineTimeSec = sec
 			end
 		end
 
-		local var_18_5 = StoreHelper.getRemainExpireTimeDeepByStoreId(StoreEnum.StoreId.DecorateStore)
+		local decorateSec = StoreHelper.getRemainExpireTimeDeepByStoreId(StoreEnum.StoreId.DecorateStore)
 
-		if var_18_5 > 0 then
-			var_18_3 = var_18_3 == 0 and var_18_5 or Mathf.Min(var_18_5, var_18_3)
+		if decorateSec > 0 then
+			deadlineTimeSec = deadlineTimeSec == 0 and decorateSec or Mathf.Min(decorateSec, deadlineTimeSec)
 		end
 
-		if var_18_3 > 0 then
-			gohelper.setActive(var_18_0.godeadline, true)
-			gohelper.setActive(var_18_0.txttime.gameObject, true)
+		if deadlineTimeSec > 0 then
+			gohelper.setActive(deadlineItem.godeadline, true)
+			gohelper.setActive(deadlineItem.txttime.gameObject, true)
 
-			local var_18_6
+			deadlineItem.txttime.text, deadlineItem.txtformat.text, deadlineHasDay = TimeUtil.secondToRoughTime(math.floor(deadlineTimeSec), true)
 
-			var_18_0.txttime.text, var_18_0.txtformat.text, var_18_6 = TimeUtil.secondToRoughTime(math.floor(var_18_3), true)
-
-			UISpriteSetMgr.instance:setCommonSprite(var_18_0.imagetimebg, var_18_6 and "daojishi_01" or "daojishi_02")
-			UISpriteSetMgr.instance:setCommonSprite(var_18_0.imagetimeicon, var_18_6 and "daojishiicon_01" or "daojishiicon_02")
-			SLFramework.UGUI.GuiHelper.SetColor(var_18_0.txttime, var_18_6 and "#98D687" or "#E99B56")
-			SLFramework.UGUI.GuiHelper.SetColor(var_18_0.txtformat, var_18_6 and "#98D687" or "#E99B56")
-			gohelper.setActive(var_18_0.godeadlineEffect, not var_18_6)
+			UISpriteSetMgr.instance:setCommonSprite(deadlineItem.imagetimebg, deadlineHasDay and "daojishi_01" or "daojishi_02")
+			UISpriteSetMgr.instance:setCommonSprite(deadlineItem.imagetimeicon, deadlineHasDay and "daojishiicon_01" or "daojishiicon_02")
+			SLFramework.UGUI.GuiHelper.SetColor(deadlineItem.txttime, deadlineHasDay and "#98D687" or "#E99B56")
+			SLFramework.UGUI.GuiHelper.SetColor(deadlineItem.txtformat, deadlineHasDay and "#98D687" or "#E99B56")
+			gohelper.setActive(deadlineItem.godeadlineEffect, not deadlineHasDay)
 
 			return
 		end
 	end
 
-	gohelper.setActive(var_18_0.godeadline, false)
-	gohelper.setActive(var_18_0.txttime.gameObject, false)
+	gohelper.setActive(deadlineItem.godeadline, false)
+	gohelper.setActive(deadlineItem.txttime.gameObject, false)
 end
 
-function var_0_0.getOrCreateStoreDeadline(arg_19_0)
-	if not arg_19_0._deadlineStore then
-		arg_19_0._deadlineStore = arg_19_0:getUserDataTb_()
-		arg_19_0._deadlineStore.godeadline = arg_19_0._godeadlinebank
-		arg_19_0._deadlineStore.godeadlineEffect = gohelper.findChild(arg_19_0._deadlineStore.godeadline, "#effect")
-		arg_19_0._deadlineStore.txttime = gohelper.findChildText(arg_19_0._deadlineStore.godeadline, "#txt_time")
-		arg_19_0._deadlineStore.txtformat = gohelper.findChildText(arg_19_0._deadlineStore.godeadline, "#txt_time/#txt_format")
-		arg_19_0._deadlineStore.imagetimebg = gohelper.findChildImage(arg_19_0._deadlineStore.godeadline, "timebg")
-		arg_19_0._deadlineStore.imagetimeicon = gohelper.findChildImage(arg_19_0._deadlineStore.godeadline, "#txt_time/timeicon")
+function SwitchMainUIShowView:getOrCreateStoreDeadline()
+	if not self._deadlineStore then
+		self._deadlineStore = self:getUserDataTb_()
+		self._deadlineStore.godeadline = self._godeadlinebank
+		self._deadlineStore.godeadlineEffect = gohelper.findChild(self._deadlineStore.godeadline, "#effect")
+		self._deadlineStore.txttime = gohelper.findChildText(self._deadlineStore.godeadline, "#txt_time")
+		self._deadlineStore.txtformat = gohelper.findChildText(self._deadlineStore.godeadline, "#txt_time/#txt_format")
+		self._deadlineStore.imagetimebg = gohelper.findChildImage(self._deadlineStore.godeadline, "timebg")
+		self._deadlineStore.imagetimeicon = gohelper.findChildImage(self._deadlineStore.godeadline, "#txt_time/timeicon")
 	end
 
-	return arg_19_0._deadlineStore
+	return self._deadlineStore
 end
 
-function var_0_0.showBankNewEffect(arg_20_0, arg_20_1)
-	gohelper.setActive(arg_20_0._gobankeffect, arg_20_1)
+function SwitchMainUIShowView:showBankNewEffect(state)
+	gohelper.setActive(self._gobankeffect, state)
 end
 
-function var_0_0._showCurrency(arg_21_0)
-	local var_21_0 = {
+function SwitchMainUIShowView:_showCurrency()
+	local currencyParam = {
 		CurrencyEnum.CurrencyType.Gold,
 		CurrencyEnum.CurrencyType.FreeDiamondCoupon,
 		CurrencyEnum.CurrencyType.Diamond
 	}
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
-		local var_21_1 = arg_21_0:getCurrencyItem(iter_21_0)
-		local var_21_2 = CurrencyModel.instance:getCurrency(iter_21_1)
-		local var_21_3 = CurrencyConfig.instance:getCurrencyCo(iter_21_1)
-		local var_21_4 = var_21_2 and var_21_2.quantity or 0
-		local var_21_5 = var_21_3.icon
+	for i, param in ipairs(currencyParam) do
+		local item = self:getCurrencyItem(i)
+		local currencyMO = CurrencyModel.instance:getCurrency(param)
+		local currencyCO = CurrencyConfig.instance:getCurrencyCo(param)
+		local quantity = currencyMO and currencyMO.quantity or 0
+		local currencyname = currencyCO.icon
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(var_21_1.image, var_21_5 .. "_1")
+		UISpriteSetMgr.instance:setCurrencyItemSprite(item.image, currencyname .. "_1")
 
-		var_21_1.txt.text = GameUtil.numberDisplay(var_21_4)
+		item.txt.text = GameUtil.numberDisplay(quantity)
 
-		gohelper.setActive(var_21_1.go, true)
+		gohelper.setActive(item.go, true)
 	end
 end
 
-function var_0_0.getCurrencyItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._currencyObjs[arg_22_1]
+function SwitchMainUIShowView:getCurrencyItem(index)
+	local currencyObj = self._currencyObjs[index]
 
-	if not var_22_0 then
-		var_22_0 = arg_22_0:getUserDataTb_()
+	if not currencyObj then
+		currencyObj = self:getUserDataTb_()
 
-		local var_22_1 = gohelper.cloneInPlace(arg_22_0._gocurrency, "currency")
+		local go = gohelper.cloneInPlace(self._gocurrency, "currency")
 
-		var_22_0.go = var_22_1
-		var_22_0.image = gohelper.findChildImage(var_22_1, "#btn_currency/#image")
-		var_22_0.simage = gohelper.findChildSingleImage(var_22_1, "#btn_currency/#simage")
-		var_22_0.txt = gohelper.findChildText(var_22_1, "#btn_currency/content/#txt")
+		currencyObj.go = go
+		currencyObj.image = gohelper.findChildImage(go, "#btn_currency/#image")
+		currencyObj.simage = gohelper.findChildSingleImage(go, "#btn_currency/#simage")
+		currencyObj.txt = gohelper.findChildText(go, "#btn_currency/content/#txt")
 
-		gohelper.setActive(var_22_0.simage, false)
+		gohelper.setActive(currencyObj.simage, false)
 
-		arg_22_0._currencyObjs[arg_22_1] = var_22_0
+		self._currencyObjs[index] = currencyObj
 	end
 
-	return var_22_0
+	return currencyObj
 end
 
-function var_0_0._onSwitchUIVisible(arg_23_0, arg_23_1)
-	arg_23_0:_refreshOffest(not arg_23_1)
+function SwitchMainUIShowView:_onSwitchUIVisible(visible)
+	self:_refreshOffest(not visible)
 end
 
-function var_0_0.onClose(arg_24_0)
+function SwitchMainUIShowView:onClose()
 	return
 end
 
-return var_0_0
+return SwitchMainUIShowView

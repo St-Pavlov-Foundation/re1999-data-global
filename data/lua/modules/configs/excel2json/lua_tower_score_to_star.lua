@@ -1,17 +1,19 @@
-﻿module("modules.configs.excel2json.lua_tower_score_to_star", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_tower_score_to_star.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_tower_score_to_star", package.seeall)
+
+local lua_tower_score_to_star = {}
+local fields = {
 	needScore = 2,
 	level = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"level"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_tower_score_to_star.onLoad(json)
+	lua_tower_score_to_star.configList, lua_tower_score_to_star.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_tower_score_to_star

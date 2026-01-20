@@ -1,113 +1,169 @@
-﻿module("modules.logic.character.view.destiny.CharacterDestinyStoneEffectItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/destiny/CharacterDestinyStoneEffectItem.lua
 
-local var_0_0 = class("CharacterDestinyStoneEffectItem", LuaCompBase)
+module("modules.logic.character.view.destiny.CharacterDestinyStoneEffectItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gounlock = gohelper.findChild(arg_1_0.viewGO, "#go_unlock")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_unlock/#txt_desc")
-	arg_1_0._gounlocktip = gohelper.findChild(arg_1_0.viewGO, "#go_unlocktip")
-	arg_1_0._txtunlocktips = gohelper.findChildText(arg_1_0.viewGO, "#go_unlocktip/#txt_unlocktips")
+local CharacterDestinyStoneEffectItem = class("CharacterDestinyStoneEffectItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterDestinyStoneEffectItem:onInitView()
+	self._gounlock = gohelper.findChild(self.viewGO, "#go_unlock")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_unlock/#txt_desc")
+	self._gounlocktip = gohelper.findChild(self.viewGO, "#go_unlocktip")
+	self._txtunlocktips = gohelper.findChildText(self.viewGO, "#go_unlocktip/#txt_unlocktips")
+	self._goreshapeItem = gohelper.findChild(self.viewGO, "#go_reshapeItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CharacterDestinyStoneEffectItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CharacterDestinyStoneEffectItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function CharacterDestinyStoneEffectItem:_editableInitView()
 	return
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0.viewGO = arg_5_1
+function CharacterDestinyStoneEffectItem:init(go)
+	self.viewGO = go
 
-	arg_5_0:onInitView()
+	self:onInitView()
 
-	arg_5_0._unlockInfoItems = arg_5_0:getUserDataTb_()
-	arg_5_0._lockInfoItems = arg_5_0:getUserDataTb_()
+	self._unlockInfoItems = self:getUserDataTb_()
+	self._lockInfoItems = self:getUserDataTb_()
+	self._reshapeItems = self:getUserDataTb_()
 
-	gohelper.setActive(arg_5_0.viewGO, true)
-	gohelper.setActive(arg_5_0._gounlock, false)
-	gohelper.setActive(arg_5_0._gounlocktip, false)
+	gohelper.setActive(self.viewGO, true)
+	gohelper.setActive(self._gounlock, false)
+	gohelper.setActive(self._gounlocktip, false)
+	gohelper.setActive(self._goreshapeItem, false)
 end
 
-function var_0_0.addEventListeners(arg_6_0)
-	arg_6_0:addEvents()
+function CharacterDestinyStoneEffectItem:addEventListeners()
+	self:addEvents()
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
-	arg_7_0:removeEvents()
+function CharacterDestinyStoneEffectItem:removeEventListeners()
+	self:removeEvents()
 end
 
-function var_0_0.onUpdateMo(arg_8_0, arg_8_1)
-	if arg_8_1.curUseStoneId == 0 then
+function CharacterDestinyStoneEffectItem:onUpdateMo(mo)
+	local descList = mo:getReshapeDesc()
+
+	if descList then
+		for i, desc in ipairs(descList) do
+			local item = self:_getReshapeItem(i)
+			local lang = luaLang("character_destinystone_reshape_lv")
+
+			item.titleTxt.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, i)
+			item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.descTxt.gameObject, SkillDescComp)
+
+			item.skillDesc:updateInfo(item.descTxt, desc, mo.heroId)
+			item.skillDesc:setTipParam(0, Vector2(380, 100))
+			gohelper.setSibling(item.go, i)
+		end
+	end
+
+	if mo.curUseStoneId == 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_1.rank
+	self._rank = mo.rank
+	self._mo = mo
+	self._cos = CharacterDestinyConfig.instance:getDestinyFacetCo(mo.curUseStoneId)
 
-	arg_8_0._mo = arg_8_1
+	if self._cos then
+		for i, co in ipairs(self._cos) do
+			local item = co.level <= self._rank and self:_getUnlockItem(i) or self:_getLockItem(i)
 
-	local var_8_1 = CharacterDestinyConfig.instance:getDestinyFacetCo(arg_8_1.curUseStoneId)
+			item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.txt.gameObject, SkillDescComp)
 
-	if var_8_1 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-			local var_8_2 = var_8_0 >= iter_8_1.level and arg_8_0:_getUnlockItem(iter_8_0) or arg_8_0:_getLockItem(iter_8_0)
-
-			var_8_2.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_2.txt.gameObject, SkillDescComp)
-
-			var_8_2.skillDesc:updateInfo(var_8_2.txt, iter_8_1.desc, arg_8_1.heroId)
-			var_8_2.skillDesc:setTipParam(0, Vector2(380, 100))
-			gohelper.setSibling(var_8_2.go, iter_8_0)
+			item.skillDesc:updateInfo(item.txt, co.desc, mo.heroId)
+			item.skillDesc:setTipParam(0, Vector2(380, 100))
+			gohelper.setSibling(item.go, i)
 		end
 
-		for iter_8_2, iter_8_3 in pairs(arg_8_0._unlockInfoItems) do
-			gohelper.setActive(iter_8_3.go, iter_8_2 <= var_8_0)
-		end
-
-		for iter_8_4, iter_8_5 in pairs(arg_8_0._lockInfoItems) do
-			gohelper.setActive(iter_8_5.go, var_8_0 < iter_8_4 and iter_8_4 <= #var_8_1)
-		end
+		self:_showNormalItem(false)
 	end
 end
 
-function var_0_0._getUnlockItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._unlockInfoItems[arg_9_1]
+function CharacterDestinyStoneEffectItem:_getUnlockItem(index)
+	local item = self._unlockInfoItems[index]
 
-	if not var_9_0 then
-		var_9_0 = arg_9_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_9_1 = gohelper.cloneInPlace(arg_9_0._gounlock, "unlock" .. arg_9_1)
+		local go = gohelper.cloneInPlace(self._gounlock, "unlock" .. index)
 
-		var_9_0.go = var_9_1
-		var_9_0.txt = gohelper.findChildText(var_9_1, "#txt_desc")
-		arg_9_0._unlockInfoItems[arg_9_1] = var_9_0
+		item.go = go
+		item.txt = gohelper.findChildText(go, "#txt_desc")
+		self._unlockInfoItems[index] = item
 	end
 
-	return var_9_0
+	return item
 end
 
-function var_0_0._getLockItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._lockInfoItems[arg_10_1]
+function CharacterDestinyStoneEffectItem:_getLockItem(index)
+	local item = self._lockInfoItems[index]
 
-	if not var_10_0 then
-		var_10_0 = arg_10_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_10_1 = gohelper.cloneInPlace(arg_10_0._gounlocktip, "lock" .. arg_10_1)
+		local go = gohelper.cloneInPlace(self._gounlocktip, "lock" .. index)
 
-		var_10_0.go = var_10_1
-		var_10_0.txt = gohelper.findChildText(var_10_1, "#txt_unlocktips")
-		arg_10_0._lockInfoItems[arg_10_1] = var_10_0
+		item.go = go
+		item.txt = gohelper.findChildText(go, "#txt_unlocktips")
+		self._lockInfoItems[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-return var_0_0
+function CharacterDestinyStoneEffectItem:_getReshapeItem(index)
+	local item = self._reshapeItems[index]
+
+	if not item then
+		item = self:getUserDataTb_()
+
+		local go = gohelper.cloneInPlace(self._goreshapeItem, "reshape" .. index)
+
+		item.go = go
+		item.descTxt = gohelper.findChildText(go, "desc")
+		item.titleTxt = gohelper.findChildText(go, "title")
+		self._reshapeItems[index] = item
+	end
+
+	return item
+end
+
+function CharacterDestinyStoneEffectItem:showReshape(show)
+	if show then
+		self:_showNormalItem(true)
+		self:_showReshapeItem(true)
+	else
+		self:_showNormalItem(false)
+		self:_showReshapeItem(false)
+	end
+end
+
+function CharacterDestinyStoneEffectItem:_showNormalItem(forceHide)
+	for i, item in pairs(self._unlockInfoItems) do
+		gohelper.setActive(item.go, not forceHide and i <= self._rank)
+	end
+
+	for i, item in pairs(self._lockInfoItems) do
+		gohelper.setActive(item.go, not forceHide and i > self._rank and i <= #self._cos)
+	end
+end
+
+function CharacterDestinyStoneEffectItem:_showReshapeItem(show)
+	for i = 1, #self._reshapeItems do
+		gohelper.setActive(self._reshapeItems[i].go, show)
+	end
+end
+
+return CharacterDestinyStoneEffectItem

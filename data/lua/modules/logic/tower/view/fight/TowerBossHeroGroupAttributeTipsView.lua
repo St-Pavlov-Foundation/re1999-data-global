@@ -1,123 +1,125 @@
-﻿module("modules.logic.tower.view.fight.TowerBossHeroGroupAttributeTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerBossHeroGroupAttributeTipsView.lua
 
-local var_0_0 = class("TowerBossHeroGroupAttributeTipsView", BaseView)
+module("modules.logic.tower.view.fight.TowerBossHeroGroupAttributeTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.gotipitem = gohelper.findChild(arg_1_0.viewGO, "mask/root/scrollview/viewport/content/tipitem")
+local TowerBossHeroGroupAttributeTipsView = class("TowerBossHeroGroupAttributeTipsView", BaseView)
 
-	gohelper.setActive(arg_1_0.gotipitem, false)
+function TowerBossHeroGroupAttributeTipsView:onInitView()
+	self.gotipitem = gohelper.findChild(self.viewGO, "mask/root/scrollview/viewport/content/tipitem")
 
-	arg_1_0.items = {}
-	arg_1_0.txtTeamLev = gohelper.findChildTextMesh(arg_1_0.viewGO, "title/txt_Lv/num")
-	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "title/Click")
-	arg_1_0.goSmallTips = gohelper.findChild(arg_1_0.viewGO, "#go_SmallTips")
+	gohelper.setActive(self.gotipitem, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.items = {}
+	self.txtTeamLev = gohelper.findChildTextMesh(self.viewGO, "title/txt_Lv/num")
+	self._btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "title/Click")
+	self.goSmallTips = gohelper.findChild(self.viewGO, "#go_SmallTips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnClick, arg_2_0.onBtnClick, arg_2_0)
+function TowerBossHeroGroupAttributeTipsView:addEvents()
+	self:addClickCb(self._btnClick, self.onBtnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0._btnClick)
+function TowerBossHeroGroupAttributeTipsView:removeEvents()
+	self:removeClickCb(self._btnClick)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function TowerBossHeroGroupAttributeTipsView:_editableInitView()
 	return
 end
 
-function var_0_0.onBtnClick(arg_5_0)
-	arg_5_0._isSmallTipsShow = not arg_5_0._isSmallTipsShow
+function TowerBossHeroGroupAttributeTipsView:onBtnClick()
+	self._isSmallTipsShow = not self._isSmallTipsShow
 
-	gohelper.setActive(arg_5_0.goSmallTips, arg_5_0._isSmallTipsShow)
+	gohelper.setActive(self.goSmallTips, self._isSmallTipsShow)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:refreshParam()
-	arg_6_0:refreshView()
+function TowerBossHeroGroupAttributeTipsView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function TowerBossHeroGroupAttributeTipsView:onOpen()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_8_0)
-	arg_8_0.bossId = arg_8_0.viewParam.bossId
-	arg_8_0.bossMo = TowerAssistBossModel.instance:getById(arg_8_0.bossId)
-	arg_8_0.config = TowerConfig.instance:getAssistBossConfig(arg_8_0.bossId)
+function TowerBossHeroGroupAttributeTipsView:refreshParam()
+	self.bossId = self.viewParam.bossId
+	self.bossMo = TowerAssistBossModel.instance:getById(self.bossId)
+	self.config = TowerConfig.instance:getAssistBossConfig(self.bossId)
 end
 
-function var_0_0.refreshView(arg_9_0)
-	arg_9_0:refreshAttr()
+function TowerBossHeroGroupAttributeTipsView:refreshView()
+	self:refreshAttr()
 end
 
-function var_0_0.refreshAttr(arg_10_0)
-	local var_10_0 = HeroSingleGroupModel.instance:getTeamLevel()
+function TowerBossHeroGroupAttributeTipsView:refreshAttr()
+	local teamLev = HeroSingleGroupModel.instance:getTeamLevel()
 
-	arg_10_0.txtTeamLev.text = HeroConfig.instance:getCommonLevelDisplay(var_10_0)
+	self.txtTeamLev.text = HeroConfig.instance:getCommonLevelDisplay(teamLev)
 
-	local var_10_1 = arg_10_0.bossMo and arg_10_0.bossMo.trialLevel > 0 and arg_10_0.bossMo.trialLevel or arg_10_0.bossMo and arg_10_0.bossMo.level or 1
-	local var_10_2 = TowerConfig.instance:getHeroGroupAddAttr(arg_10_0.bossId, var_10_0, var_10_1)
-	local var_10_3 = math.max(#var_10_2, #arg_10_0.items)
+	local bossLev = self.bossMo and self.bossMo.trialLevel > 0 and self.bossMo.trialLevel or self.bossMo and self.bossMo.level or 1
+	local list = TowerConfig.instance:getHeroGroupAddAttr(self.bossId, teamLev, bossLev)
+	local max = math.max(#list, #self.items)
 
-	for iter_10_0 = 1, var_10_3 do
-		local var_10_4 = arg_10_0:getAttrItem(iter_10_0)
+	for i = 1, max do
+		local item = self:getAttrItem(i)
 
-		arg_10_0:updateAttrItem(var_10_4, var_10_2[iter_10_0])
+		self:updateAttrItem(item, list[i])
 	end
 end
 
-function var_0_0.getAttrItem(arg_11_0, arg_11_1)
-	if not arg_11_0.items[arg_11_1] then
-		local var_11_0 = arg_11_0:getUserDataTb_()
+function TowerBossHeroGroupAttributeTipsView:getAttrItem(index)
+	if not self.items[index] then
+		local item = self:getUserDataTb_()
 
-		var_11_0.go = gohelper.cloneInPlace(arg_11_0.gotipitem)
-		var_11_0.imgIcon = gohelper.findChildImage(var_11_0.go, "icon")
-		var_11_0.txtName = gohelper.findChildTextMesh(var_11_0.go, "name")
-		var_11_0.txtNum = gohelper.findChildTextMesh(var_11_0.go, "num")
-		var_11_0.txtAdd = gohelper.findChildTextMesh(var_11_0.go, "add")
-		arg_11_0.items[arg_11_1] = var_11_0
+		item.go = gohelper.cloneInPlace(self.gotipitem)
+		item.imgIcon = gohelper.findChildImage(item.go, "icon")
+		item.txtName = gohelper.findChildTextMesh(item.go, "name")
+		item.txtNum = gohelper.findChildTextMesh(item.go, "num")
+		item.txtAdd = gohelper.findChildTextMesh(item.go, "add")
+		self.items[index] = item
 	end
 
-	return arg_11_0.items[arg_11_1]
+	return self.items[index]
 end
 
-function var_0_0.updateAttrItem(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_2 then
-		gohelper.setActive(arg_12_1.go, false)
+function TowerBossHeroGroupAttributeTipsView:updateAttrItem(item, data)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_12_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_12_0 = HeroConfig.instance:getHeroAttributeCO(arg_12_2.key)
+	local co = HeroConfig.instance:getHeroAttributeCO(data.key)
 
-	arg_12_1.txtName.text = var_12_0.name
+	item.txtName.text = co.name
 
-	local var_12_1 = arg_12_2.val or 0
+	local val = data.val or 0
 
-	if arg_12_2.upAttr then
-		arg_12_1.txtNum.text = string.format("%s%%", var_12_1 * 0.1)
+	if data.upAttr then
+		item.txtNum.text = string.format("%s%%", val * 0.1)
 	else
-		arg_12_1.txtNum.text = string.format("%s", var_12_1)
+		item.txtNum.text = string.format("%s", val)
 	end
 
-	arg_12_1.txtAdd.text = string.format("+%s%%", arg_12_2.add * 0.1)
+	item.txtAdd.text = string.format("+%s%%", data.add * 0.1)
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_12_1.imgIcon, string.format("icon_att_%s", arg_12_2.key))
+	UISpriteSetMgr.instance:setCommonSprite(item.imgIcon, string.format("icon_att_%s", data.key))
 end
 
-function var_0_0.onClose(arg_13_0)
+function TowerBossHeroGroupAttributeTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function TowerBossHeroGroupAttributeTipsView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerBossHeroGroupAttributeTipsView

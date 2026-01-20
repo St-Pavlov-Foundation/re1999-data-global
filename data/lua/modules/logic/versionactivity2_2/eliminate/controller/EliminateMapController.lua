@@ -1,93 +1,100 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.EliminateMapController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/EliminateMapController.lua
 
-local var_0_0 = class("EliminateMapController", BaseController)
+module("modules.logic.versionactivity2_2.eliminate.controller.EliminateMapController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local EliminateMapController = class("EliminateMapController", BaseController)
+
+function EliminateMapController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function EliminateMapController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function EliminateMapController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function EliminateMapController:reInit()
 	return
 end
 
-function var_0_0.enterEpisode(arg_5_0, arg_5_1)
-	EliminateTeamSelectionModel.instance:setSelectedEpisodeId(arg_5_1)
+function EliminateMapController:enterEpisode(episodeId)
+	EliminateTeamSelectionModel.instance:setSelectedEpisodeId(episodeId)
 
 	if not EliminateLevelModel.instance:selectSoliderIsUnLock() then
-		var_0_0.instance:enterLevel(arg_5_1)
+		EliminateMapController.instance:enterLevel(episodeId)
 
 		return
 	end
 
-	var_0_0.instance:openEliminateSelectRoleView(arg_5_1)
+	EliminateMapController.instance:openEliminateSelectRoleView(episodeId)
 end
 
-function var_0_0.openEliminateMapView(arg_6_0, arg_6_1, arg_6_2)
+function EliminateMapController:openEliminateMapView(param, isImmediate)
 	EliminateRpc.instance:sendGetMatch3WarChessFacadeInfoRequest(function()
-		ViewMgr.instance:openView(ViewName.EliminateMapView, arg_6_1, arg_6_2)
+		ViewMgr.instance:openView(ViewName.EliminateMapView, param, isImmediate)
 	end)
 end
 
-function var_0_0.openEliminateSelectRoleView(arg_8_0, arg_8_1, arg_8_2)
-	ViewMgr.instance:openView(ViewName.EliminateSelectRoleView, arg_8_1, arg_8_2)
+function EliminateMapController:openEliminateSelectRoleView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.EliminateSelectRoleView, param, isImmediate)
 end
 
-function var_0_0.openEliminateSelectChessMenView(arg_9_0, arg_9_1, arg_9_2)
-	ViewMgr.instance:openView(ViewName.EliminateSelectChessMenView, arg_9_1, arg_9_2)
+function EliminateMapController:openEliminateSelectChessMenView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.EliminateSelectChessMenView, param, isImmediate)
 end
 
-function var_0_0.enterLevel(arg_10_0, arg_10_1)
-	local var_10_0
+function EliminateMapController:enterLevel(episodeId)
+	local characterId
 
 	if EliminateTeamSelectionModel.instance:isPreset() then
-		var_10_0 = EliminateTeamSelectionModel.instance:getPresetCharacter()
+		characterId = EliminateTeamSelectionModel.instance:getPresetCharacter()
 	else
-		var_10_0 = EliminateTeamSelectionModel.instance:getCharacterList()[1].id
+		local characterList = EliminateTeamSelectionModel.instance:getCharacterList()
+
+		characterId = characterList[1].id
 	end
 
 	EliminateSelectChessMenListModel.instance:initList()
 
-	local var_10_1 = EliminateSelectChessMenListModel.instance:getAutoList()
+	local list = EliminateSelectChessMenListModel.instance:getAutoList()
 
-	EliminateLevelController.instance:enterLevel(arg_10_1, var_10_0, var_10_1)
+	EliminateLevelController.instance:enterLevel(episodeId, characterId, list)
 end
 
-function var_0_0.hasOnceActionKey(arg_11_0, arg_11_1)
-	local var_11_0 = var_0_0._getKey(arg_11_0, arg_11_1)
+function EliminateMapController.hasOnceActionKey(type, id)
+	local key = EliminateMapController._getKey(type, id)
 
-	return PlayerPrefsHelper.hasKey(var_11_0)
+	return PlayerPrefsHelper.hasKey(key)
 end
 
-function var_0_0.setOnceActionKey(arg_12_0, arg_12_1)
-	local var_12_0 = var_0_0._getKey(arg_12_0, arg_12_1)
+function EliminateMapController.setOnceActionKey(type, id)
+	local key = EliminateMapController._getKey(type, id)
 
-	PlayerPrefsHelper.setNumber(var_12_0, 1)
+	PlayerPrefsHelper.setNumber(key, 1)
 end
 
-function var_0_0.getPrefsString(arg_13_0, arg_13_1)
-	local var_13_0 = var_0_0._getKey(arg_13_0, arg_13_0)
+function EliminateMapController.getPrefsString(type, defaultValue)
+	local key = EliminateMapController._getKey(type, type)
+	local value = PlayerPrefsHelper.getString(key, defaultValue or "")
 
-	return (PlayerPrefsHelper.getString(var_13_0, arg_13_1 or ""))
+	return value
 end
 
-function var_0_0.setPrefsString(arg_14_0, arg_14_1)
-	local var_14_0 = var_0_0._getKey(arg_14_0, arg_14_0)
+function EliminateMapController.setPrefsString(type, value)
+	local key = EliminateMapController._getKey(type, type)
 
-	return PlayerPrefsHelper.setString(var_14_0, arg_14_1)
+	return PlayerPrefsHelper.setString(key, value)
 end
 
-function var_0_0._getKey(arg_15_0, arg_15_1)
-	return (string.format("%s%s_%s_%s", PlayerPrefsKey.EliminateOnceAnim, PlayerModel.instance:getPlayinfo().userId, arg_15_0, arg_15_1))
+function EliminateMapController._getKey(type, id)
+	local key = string.format("%s%s_%s_%s", PlayerPrefsKey.EliminateOnceAnim, PlayerModel.instance:getPlayinfo().userId, type, id)
+
+	return key
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateMapController.instance = EliminateMapController.New()
 
-return var_0_0
+return EliminateMapController

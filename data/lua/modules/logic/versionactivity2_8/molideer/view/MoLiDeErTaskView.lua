@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.MoLiDeErTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/MoLiDeErTaskView.lua
 
-local var_0_0 = class("MoLiDeErTaskView", BaseView)
+module("modules.logic.versionactivity2_8.molideer.view.MoLiDeErTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
+local MoLiDeErTaskView = class("MoLiDeErTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErTaskView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._actId = VersionActivity2_8Enum.ActivityId.MoLiDeEr
+function MoLiDeErTaskView:onOpen()
+	self._actId = VersionActivity2_8Enum.ActivityId.MoLiDeEr
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0._oneClaimReward, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._onFinishTask, arg_2_0)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	MoLiDeErTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity194
-	}, arg_2_0._oneClaimReward, arg_2_0)
-	TaskDispatcher.runRepeat(arg_2_0.showLeftTime, arg_2_0, TimeUtil.OneMinuteSecond)
-	arg_2_0:showLeftTime()
+	}, self._oneClaimReward, self)
+	TaskDispatcher.runRepeat(self.showLeftTime, self, TimeUtil.OneMinuteSecond)
+	self:showLeftTime()
 end
 
-function var_0_0._oneClaimReward(arg_3_0)
-	MoLiDeErTaskListModel.instance:init(arg_3_0._actId)
+function MoLiDeErTaskView:_oneClaimReward()
+	MoLiDeErTaskListModel.instance:init(self._actId)
 end
 
-function var_0_0._onFinishTask(arg_4_0, arg_4_1)
-	if MoLiDeErTaskListModel.instance:getById(arg_4_1) then
-		MoLiDeErTaskListModel.instance:init(arg_4_0._actId)
+function MoLiDeErTaskView:_onFinishTask(taskId)
+	if MoLiDeErTaskListModel.instance:getById(taskId) then
+		MoLiDeErTaskListModel.instance:init(self._actId)
 	end
 end
 
-function var_0_0.showLeftTime(arg_5_0)
-	arg_5_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_5_0._actId)
+function MoLiDeErTaskView:showLeftTime()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 end
 
-function var_0_0.onClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.showLeftTime, arg_6_0)
+function MoLiDeErTaskView:onClose()
+	TaskDispatcher.cancelTask(self.showLeftTime, self)
 end
 
-return var_0_0
+return MoLiDeErTaskView

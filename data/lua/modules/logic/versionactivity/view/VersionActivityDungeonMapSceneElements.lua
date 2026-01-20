@@ -1,96 +1,98 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapSceneElements", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityDungeonMapSceneElements.lua
 
-local var_0_0 = class("VersionActivityDungeonMapSceneElements", DungeonMapSceneElements)
+module("modules.logic.versionactivity.view.VersionActivityDungeonMapSceneElements", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivityDungeonMapSceneElements = class("VersionActivityDungeonMapSceneElements", DungeonMapSceneElements)
 
-	arg_1_0.finishElementList = {}
+function VersionActivityDungeonMapSceneElements:_editableInitView()
+	VersionActivityDungeonMapSceneElements.super._editableInitView(self)
+
+	self.finishElementList = {}
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0.activityDungeonMo = arg_2_0.viewContainer.versionActivityDungeonBaseMo
+function VersionActivityDungeonMapSceneElements:onOpen()
+	self.activityDungeonMo = self.viewContainer.versionActivityDungeonBaseMo
 
-	var_0_0.super.onOpen(arg_2_0)
-	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, arg_2_0.onModeChange, arg_2_0, LuaEventSystem.Low)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnInitElements, arg_2_0._initElements, arg_2_0)
+	VersionActivityDungeonMapSceneElements.super.onOpen(self)
+	self:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnModeChange, self.onModeChange, self, LuaEventSystem.Low)
+	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnInitElements, self._initElements, self)
 end
 
-function var_0_0.onModeChange(arg_3_0)
-	local var_3_0 = arg_3_0.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story
+function VersionActivityDungeonMapSceneElements:onModeChange()
+	local showElement = self.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Story
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._elementList) do
-		if var_3_0 then
-			iter_3_1:show()
+	for _, elementComp in pairs(self._elementList) do
+		if showElement then
+			elementComp:show()
 		else
-			iter_3_1:hide()
+			elementComp:hide()
 		end
 	end
 
-	for iter_3_2, iter_3_3 in pairs(arg_3_0.finishElementList) do
-		if var_3_0 then
-			iter_3_3:show()
+	for _, elementComp in pairs(self.finishElementList) do
+		if showElement then
+			elementComp:show()
 		else
-			iter_3_3:hide()
+			elementComp:hide()
 		end
 	end
 end
 
-function var_0_0._removeElement(arg_4_0, arg_4_1)
-	local var_4_0 = DungeonConfig.instance:getChapterMapElement(arg_4_1)
+function VersionActivityDungeonMapSceneElements:_removeElement(id)
+	local elementCo = DungeonConfig.instance:getChapterMapElement(id)
 
-	if not arg_4_0:canShow(var_4_0) then
-		var_0_0.super._removeElement(arg_4_0, arg_4_1)
+	if not self:canShow(elementCo) then
+		VersionActivityDungeonMapSceneElements.super._removeElement(self, id)
 
 		return
 	end
 
-	local var_4_1 = arg_4_0._elementList[arg_4_1]
-	local var_4_2 = var_4_1._go
+	local elementComp = self._elementList[id]
+	local existGo = elementComp._go
 
-	var_4_1:setFinishAndDotDestroy()
+	elementComp:setFinishAndDotDestroy()
 
-	arg_4_0._elementList[arg_4_1] = nil
+	self._elementList[id] = nil
 
-	local var_4_3 = arg_4_0._arrowList[arg_4_1]
+	local arrowItem = self._arrowList[id]
 
-	if var_4_3 then
-		var_4_3.arrowClick:RemoveClickListener()
+	if arrowItem then
+		arrowItem.arrowClick:RemoveClickListener()
 
-		arg_4_0._arrowList[arg_4_1] = nil
+		self._arrowList[id] = nil
 
-		gohelper.destroy(var_4_3.go)
+		gohelper.destroy(arrowItem.go)
 	end
 
-	arg_4_0:addFinishElement(DungeonConfig.instance:getChapterMapElement(arg_4_1), var_4_2)
+	self:addFinishElement(DungeonConfig.instance:getChapterMapElement(id), existGo)
 end
 
-function var_0_0._showElements(arg_5_0, arg_5_1)
-	if arg_5_0.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
+function VersionActivityDungeonMapSceneElements:_showElements(mapId)
+	if self.activityDungeonMo.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
 		return
 	end
 
-	if not DungeonModel.instance:hasPassLevelAndStory(arg_5_0.activityDungeonMo.episodeId) then
+	if not DungeonModel.instance:hasPassLevelAndStory(self.activityDungeonMo.episodeId) then
 		return
 	end
 
-	var_0_0.super._showElements(arg_5_0, arg_5_1)
+	VersionActivityDungeonMapSceneElements.super._showElements(self, mapId)
 
-	local var_5_0 = DungeonMapModel.instance:getElements(arg_5_1)
-	local var_5_1 = DungeonConfig.instance:getMapElements(arg_5_1)
+	local elementsList = DungeonMapModel.instance:getElements(mapId)
+	local mapAllElementList = DungeonConfig.instance:getMapElements(mapId)
 
-	if var_5_1 then
-		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-			if arg_5_0:canShow(iter_5_1) and not arg_5_0:inNotFinishElementList(iter_5_1.id, var_5_0) then
-				arg_5_0:addFinishElement(iter_5_1)
+	if mapAllElementList then
+		for _, elementCo in ipairs(mapAllElementList) do
+			if self:canShow(elementCo) and not self:inNotFinishElementList(elementCo.id, elementsList) then
+				self:addFinishElement(elementCo)
 			end
 		end
 	end
 end
 
-function var_0_0.inNotFinishElementList(arg_6_0, arg_6_1, arg_6_2)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_2) do
-		if iter_6_1.id == arg_6_1 then
+function VersionActivityDungeonMapSceneElements:inNotFinishElementList(elementId, notFinishElementsList)
+	for _, elementCo in ipairs(notFinishElementsList) do
+		if elementCo.id == elementId then
 			return true
 		end
 	end
@@ -98,49 +100,49 @@ function var_0_0.inNotFinishElementList(arg_6_0, arg_6_1, arg_6_2)
 	return false
 end
 
-function var_0_0.addFinishElement(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0.finishElementList[arg_7_1.id] then
+function VersionActivityDungeonMapSceneElements:addFinishElement(elementCo, existGo)
+	if self.finishElementList[elementCo.id] then
 		return
 	end
 
-	local var_7_0 = arg_7_2
+	local go = existGo
 
-	if not var_7_0 then
-		var_7_0 = UnityEngine.GameObject.New(tostring(arg_7_1.id))
+	if not go then
+		go = UnityEngine.GameObject.New(tostring(elementCo.id))
 
-		gohelper.addChild(arg_7_0._elementRoot, var_7_0)
+		gohelper.addChild(self._elementRoot, go)
 	end
 
-	local var_7_1 = MonoHelper.addLuaComOnceToGo(var_7_0, DungeonMapFinishElement, {
-		arg_7_1,
-		arg_7_0._mapScene,
-		arg_7_0,
-		arg_7_2
+	local elementComp = MonoHelper.addLuaComOnceToGo(go, DungeonMapFinishElement, {
+		elementCo,
+		self._mapScene,
+		self,
+		existGo
 	})
 
-	arg_7_0.finishElementList[arg_7_1.id] = var_7_1
+	self.finishElementList[elementCo.id] = elementComp
 end
 
-function var_0_0.canShow(arg_8_0, arg_8_1)
-	return arg_8_1.type == DungeonEnum.ElementType.PuzzleGame or arg_8_1.type == DungeonEnum.ElementType.None
+function VersionActivityDungeonMapSceneElements:canShow(elementCo)
+	return elementCo.type == DungeonEnum.ElementType.PuzzleGame or elementCo.type == DungeonEnum.ElementType.None
 end
 
-function var_0_0._disposeScene(arg_9_0)
-	var_0_0.super._disposeScene(arg_9_0)
-	arg_9_0:disposeFinishElements()
+function VersionActivityDungeonMapSceneElements:_disposeScene()
+	VersionActivityDungeonMapSceneElements.super._disposeScene(self)
+	self:disposeFinishElements()
 end
 
-function var_0_0._disposeOldMap(arg_10_0)
-	var_0_0.super._disposeOldMap(arg_10_0)
-	arg_10_0:disposeFinishElements()
+function VersionActivityDungeonMapSceneElements:_disposeOldMap()
+	VersionActivityDungeonMapSceneElements.super._disposeOldMap(self)
+	self:disposeFinishElements()
 end
 
-function var_0_0.disposeFinishElements(arg_11_0)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.finishElementList) do
-		iter_11_1:onDestroy()
+function VersionActivityDungeonMapSceneElements:disposeFinishElements()
+	for k, v in pairs(self.finishElementList) do
+		v:onDestroy()
 	end
 
-	arg_11_0.finishElementList = {}
+	self.finishElementList = {}
 end
 
-return var_0_0
+return VersionActivityDungeonMapSceneElements

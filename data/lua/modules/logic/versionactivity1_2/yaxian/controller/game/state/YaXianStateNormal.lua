@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.state.YaXianStateNormal", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/state/YaXianStateNormal.lua
 
-local var_0_0 = class("YaXianStateNormal", YaXianStateBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.state.YaXianStateNormal", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local YaXianStateNormal = class("YaXianStateNormal", YaXianStateBase)
+
+function YaXianStateNormal:start()
 	logNormal("YaXianStateNormal start")
 
-	arg_1_0.stateType = YaXianGameEnum.GameStateType.Normal
+	self.stateType = YaXianGameEnum.GameStateType.Normal
 end
 
-function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = YaXianGameController.instance:getSelectedInteractItem()
+function YaXianStateNormal:onClickPos(x, y)
+	local interactItem = YaXianGameController.instance:getSelectedInteractItem()
 
-	if var_2_0 and not var_2_0.delete and var_2_0:getHandler() then
-		var_2_0:getHandler():onSelectPos(arg_2_1, arg_2_2)
+	if interactItem and not interactItem.delete and interactItem:getHandler() then
+		interactItem:getHandler():onSelectPos(x, y)
 	else
 		logError("select obj missing!")
 	end
 end
 
-return var_0_0
+return YaXianStateNormal

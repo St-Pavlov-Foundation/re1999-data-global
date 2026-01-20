@@ -1,214 +1,216 @@
-﻿module("modules.logic.room.view.RoomBlockPackageView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomBlockPackageView.lua
 
-local var_0_0 = class("RoomBlockPackageView", BaseView)
+module("modules.logic.room.view.RoomBlockPackageView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._godetailedItem = gohelper.findChild(arg_1_0.viewGO, "middle/cloneItem/#go_detailedItem")
-	arg_1_0._gosimpleItem = gohelper.findChild(arg_1_0.viewGO, "middle/cloneItem/#go_simpleItem")
-	arg_1_0._scrolldetailed = gohelper.findChildScrollRect(arg_1_0.viewGO, "middle/#scroll_detailed")
-	arg_1_0._scrollsimple = gohelper.findChildScrollRect(arg_1_0.viewGO, "middle/#scroll_simple")
-	arg_1_0._btnnumber = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/left/#btn_number")
-	arg_1_0._btnrare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/left/#btn_rare")
-	arg_1_0._btntheme = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/left/#btn_theme")
-	arg_1_0._btndetailed = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#btn_detailed")
-	arg_1_0._btnsimple = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#btn_simple")
-	arg_1_0._gonavigatebuttonscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_navigatebuttonscontainer")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+local RoomBlockPackageView = class("RoomBlockPackageView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBlockPackageView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._godetailedItem = gohelper.findChild(self.viewGO, "middle/cloneItem/#go_detailedItem")
+	self._gosimpleItem = gohelper.findChild(self.viewGO, "middle/cloneItem/#go_simpleItem")
+	self._scrolldetailed = gohelper.findChildScrollRect(self.viewGO, "middle/#scroll_detailed")
+	self._scrollsimple = gohelper.findChildScrollRect(self.viewGO, "middle/#scroll_simple")
+	self._btnnumber = gohelper.findChildButtonWithAudio(self.viewGO, "top/left/#btn_number")
+	self._btnrare = gohelper.findChildButtonWithAudio(self.viewGO, "top/left/#btn_rare")
+	self._btntheme = gohelper.findChildButtonWithAudio(self.viewGO, "top/left/#btn_theme")
+	self._btndetailed = gohelper.findChildButtonWithAudio(self.viewGO, "top/#btn_detailed")
+	self._btnsimple = gohelper.findChildButtonWithAudio(self.viewGO, "top/#btn_simple")
+	self._gonavigatebuttonscontainer = gohelper.findChild(self.viewGO, "#go_navigatebuttonscontainer")
+	self._gotopright = gohelper.findChild(self.viewGO, "#go_topright")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnnumber:AddClickListener(arg_2_0._btnnumberOnClick, arg_2_0)
-	arg_2_0._btnrare:AddClickListener(arg_2_0._btnrareOnClick, arg_2_0)
-	arg_2_0._btndetailed:AddClickListener(arg_2_0._btndetailedOnClick, arg_2_0)
-	arg_2_0._btnsimple:AddClickListener(arg_2_0._btnsimpleOnClick, arg_2_0)
-	arg_2_0._btntheme:AddClickListener(arg_2_0._btnthemeOnClick, arg_2_0)
+function RoomBlockPackageView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnnumber:AddClickListener(self._btnnumberOnClick, self)
+	self._btnrare:AddClickListener(self._btnrareOnClick, self)
+	self._btndetailed:AddClickListener(self._btndetailedOnClick, self)
+	self._btnsimple:AddClickListener(self._btnsimpleOnClick, self)
+	self._btntheme:AddClickListener(self._btnthemeOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnnumber:RemoveClickListener()
-	arg_3_0._btnrare:RemoveClickListener()
-	arg_3_0._btndetailed:RemoveClickListener()
-	arg_3_0._btnsimple:RemoveClickListener()
-	arg_3_0._btntheme:RemoveClickListener()
+function RoomBlockPackageView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnnumber:RemoveClickListener()
+	self._btnrare:RemoveClickListener()
+	self._btndetailed:RemoveClickListener()
+	self._btnsimple:RemoveClickListener()
+	self._btntheme:RemoveClickListener()
 end
 
-function var_0_0._btnthemeOnClick(arg_4_0)
+function RoomBlockPackageView:_btnthemeOnClick()
 	RoomController.instance:openThemeFilterView(false)
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function RoomBlockPackageView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnrareOnClick(arg_6_0)
-	arg_6_0:_setSortRate(true)
+function RoomBlockPackageView:_btnrareOnClick()
+	self:_setSortRate(true)
 end
 
-function var_0_0._btnnumberOnClick(arg_7_0)
-	arg_7_0:_setSortRate(false)
+function RoomBlockPackageView:_btnnumberOnClick()
+	self:_setSortRate(false)
 end
 
-function var_0_0._btndetailedOnClick(arg_8_0)
-	if arg_8_0._isDetailed ~= true then
-		arg_8_0:_toFirsePage(true)
+function RoomBlockPackageView:_btndetailedOnClick()
+	if self._isDetailed ~= true then
+		self:_toFirsePage(true)
 	end
 end
 
-function var_0_0._btnsimpleOnClick(arg_9_0)
-	if arg_9_0._isDetailed ~= false then
-		arg_9_0:_toFirsePage(false)
+function RoomBlockPackageView:_btnsimpleOnClick()
+	if self._isDetailed ~= false then
+		self:_toFirsePage(false)
 	end
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._selectPackageId = nil
-	arg_10_0._isDetailed = true
+function RoomBlockPackageView:_editableInitView()
+	self._selectPackageId = nil
+	self._isDetailed = true
 
-	local var_10_0 = {
-		arg_10_0._btnrare.gameObject,
-		arg_10_0._btnnumber.gameObject
+	local stateGos = {
+		self._btnrare.gameObject,
+		self._btnnumber.gameObject
 	}
 
-	arg_10_0._stateInfoGos = {}
+	self._stateInfoGos = {}
 
-	for iter_10_0 = 1, #var_10_0 do
-		local var_10_1 = var_10_0[iter_10_0]
-		local var_10_2 = {
-			normalGO = gohelper.findChild(var_10_1, "go_normal"),
-			selectGO = gohelper.findChild(var_10_1, "go_select"),
-			arrowGO = gohelper.findChild(var_10_1, "go_select/txt/go_arrow")
-		}
+	for i = 1, #stateGos do
+		local tempGo = stateGos[i]
+		local t = {}
 
-		table.insert(arg_10_0._stateInfoGos, var_10_2)
+		t.normalGO = gohelper.findChild(tempGo, "go_normal")
+		t.selectGO = gohelper.findChild(tempGo, "go_select")
+		t.arrowGO = gohelper.findChild(tempGo, "go_select/txt/go_arrow")
+
+		table.insert(self._stateInfoGos, t)
 	end
 
-	arg_10_0._gothemeSelect = gohelper.findChild(arg_10_0.viewGO, "top/left/#btn_theme/go_select")
-	arg_10_0._gothemeUnSelect = gohelper.findChild(arg_10_0.viewGO, "top/left/#btn_theme/go_unselect")
+	self._gothemeSelect = gohelper.findChild(self.viewGO, "top/left/#btn_theme/go_select")
+	self._gothemeUnSelect = gohelper.findChild(self.viewGO, "top/left/#btn_theme/go_unselect")
 
-	gohelper.setActive(arg_10_0._gosimpleItem, false)
-	gohelper.setActive(arg_10_0._godetailedItem, false)
-	gohelper.setActive(arg_10_0._gopageItem, false)
-	arg_10_0:_setDetailed(true)
-	gohelper.addUIClickAudio(arg_10_0._btnclose.gameObject, AudioEnum.UI.UI_Team_close)
+	gohelper.setActive(self._gosimpleItem, false)
+	gohelper.setActive(self._godetailedItem, false)
+	gohelper.setActive(self._gopageItem, false)
+	self:_setDetailed(true)
+	gohelper.addUIClickAudio(self._btnclose.gameObject, AudioEnum.UI.UI_Team_close)
 end
 
-function var_0_0._setSortRate(arg_11_0, arg_11_1)
-	if arg_11_0._isSortOrder ~= nil and arg_11_0._isSortRate == arg_11_1 then
-		arg_11_0._isSortOrder = arg_11_0._isSortOrder == false
+function RoomBlockPackageView:_setSortRate(isSortRate)
+	if self._isSortOrder ~= nil and self._isSortRate == isSortRate then
+		self._isSortOrder = self._isSortOrder == false
 	else
-		arg_11_0._isSortOrder = false
+		self._isSortOrder = false
 	end
 
-	arg_11_0._isSortRate = arg_11_1
+	self._isSortRate = isSortRate
 
-	local var_11_0 = arg_11_0._isSortRate and 1 or 2
+	local selectIndex = self._isSortRate and 1 or 2
 
-	for iter_11_0 = 1, #arg_11_0._stateInfoGos do
-		local var_11_1 = iter_11_0 == var_11_0
-		local var_11_2 = arg_11_0._stateInfoGos[iter_11_0]
+	for i = 1, #self._stateInfoGos do
+		local isSelect = i == selectIndex
+		local item = self._stateInfoGos[i]
 
-		gohelper.setActive(var_11_2.selectGO, var_11_1 == true)
-		gohelper.setActive(var_11_2.normalGO, var_11_1 == false)
+		gohelper.setActive(item.selectGO, isSelect == true)
+		gohelper.setActive(item.normalGO, isSelect == false)
 
-		if var_11_1 then
-			transformhelper.setLocalScale(var_11_2.arrowGO.transform, 1, arg_11_0._isSortOrder and -1 or 1, 1)
+		if isSelect then
+			transformhelper.setLocalScale(item.arrowGO.transform, 1, self._isSortOrder and -1 or 1, 1)
 		end
 	end
 
-	arg_11_0:_sortPackageIds()
-	arg_11_0:_toFirsePage()
+	self:_sortPackageIds()
+	self:_toFirsePage()
 end
 
-function var_0_0._setDetailed(arg_12_0, arg_12_1)
-	arg_12_0._isDetailed = arg_12_1 and true or false
+function RoomBlockPackageView:_setDetailed(isDetailed)
+	self._isDetailed = isDetailed and true or false
 
-	gohelper.setActive(arg_12_0._scrollsimple.gameObject, arg_12_0._isDetailed == false)
-	gohelper.setActive(arg_12_0._btndetailed.gameObject, arg_12_0._isDetailed == false)
-	gohelper.setActive(arg_12_0._scrolldetailed.gameObject, arg_12_0._isDetailed == true)
-	gohelper.setActive(arg_12_0._btnsimple.gameObject, arg_12_0._isDetailed == true)
+	gohelper.setActive(self._scrollsimple.gameObject, self._isDetailed == false)
+	gohelper.setActive(self._btndetailed.gameObject, self._isDetailed == false)
+	gohelper.setActive(self._scrolldetailed.gameObject, self._isDetailed == true)
+	gohelper.setActive(self._btnsimple.gameObject, self._isDetailed == true)
 end
 
-function var_0_0._toFirsePage(arg_13_0, arg_13_1)
-	if arg_13_1 ~= nil then
-		arg_13_0:_setDetailed(arg_13_1)
+function RoomBlockPackageView:_toFirsePage(isDetailed)
+	if isDetailed ~= nil then
+		self:_setDetailed(isDetailed)
 	end
 
-	if arg_13_0._isDetailed then
-		arg_13_0._scrolldetailed.horizontalNormalizedPosition = 0
+	if self._isDetailed then
+		self._scrolldetailed.horizontalNormalizedPosition = 0
 	else
-		arg_13_0._scrollsimple.verticalNormalizedPosition = 1
+		self._scrollsimple.verticalNormalizedPosition = 1
 	end
 end
 
-function var_0_0._sortPackageIds(arg_14_0)
-	RoomShowBlockPackageListModel.instance:setSortParam(arg_14_0._isSortRate, arg_14_0._isSortOrder)
+function RoomBlockPackageView:_sortPackageIds()
+	RoomShowBlockPackageListModel.instance:setSortParam(self._isSortRate, self._isSortOrder)
 end
 
-function var_0_0._refreshItemListUI(arg_15_0)
+function RoomBlockPackageView:_refreshItemListUI()
 	return
 end
 
-function var_0_0._onSelectBlockPackage(arg_16_0, arg_16_1)
-	arg_16_0._selectPackageId = arg_16_1
+function RoomBlockPackageView:_onSelectBlockPackage(packageId)
+	self._selectPackageId = packageId
 
-	RoomShowBlockPackageListModel.instance:setSelect(arg_16_0._selectPackageId)
+	RoomShowBlockPackageListModel.instance:setSelect(self._selectPackageId)
 
-	if arg_16_0._selectPackageId and arg_16_0._selectPackageId ~= arg_16_0:_getCurUsePacageId() then
+	if self._selectPackageId and self._selectPackageId ~= self:_getCurUsePacageId() then
 		RoomInventoryBlockModel.instance:setSelectBlockPackageIds({
-			arg_16_0._selectPackageId
+			self._selectPackageId
 		})
 		RoomMapController.instance:dispatchEvent(RoomEvent.ConfirmSelectBlockPackage)
 	end
 end
 
-function var_0_0._onThemeFilterChanged(arg_17_0)
+function RoomBlockPackageView:_onThemeFilterChanged()
 	RoomShowBlockPackageListModel.instance:setShowBlockList()
-	RoomShowBlockPackageListModel.instance:setSelect(arg_17_0._selectPackageId)
-	arg_17_0:_refreshFilterState()
+	RoomShowBlockPackageListModel.instance:setSelect(self._selectPackageId)
+	self:_refreshFilterState()
 end
 
-function var_0_0._refreshFilterState(arg_18_0)
-	local var_18_0 = RoomThemeFilterListModel.instance:getSelectCount() > 0
+function RoomBlockPackageView:_refreshFilterState()
+	local isOpen = RoomThemeFilterListModel.instance:getSelectCount() > 0
 
-	if arg_18_0._isLastThemeOpen ~= var_18_0 then
-		arg_18_0._isLastThemeOpen = var_18_0
+	if self._isLastThemeOpen ~= isOpen then
+		self._isLastThemeOpen = isOpen
 
-		gohelper.setActive(arg_18_0._gothemeUnSelect, not var_18_0)
-		gohelper.setActive(arg_18_0._gothemeSelect, var_18_0)
+		gohelper.setActive(self._gothemeUnSelect, not isOpen)
+		gohelper.setActive(self._gothemeSelect, isOpen)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function RoomBlockPackageView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:addEventCb(RoomMapController.instance, RoomEvent.SelectBlockPackage, arg_20_0._onSelectBlockPackage, arg_20_0)
-	arg_20_0:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, arg_20_0._onThemeFilterChanged, arg_20_0)
+function RoomBlockPackageView:onOpen()
+	self:addEventCb(RoomMapController.instance, RoomEvent.SelectBlockPackage, self._onSelectBlockPackage, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UIRoomThemeFilterChanged, self._onThemeFilterChanged, self)
 
-	arg_20_0._selectPackageId = arg_20_0:_getCurUsePacageId()
+	self._selectPackageId = self:_getCurUsePacageId()
 
-	RoomShowBlockPackageListModel.instance:initShow(arg_20_0._selectPackageId)
-	RoomShowBlockPackageListModel.instance:setSelect(arg_20_0._selectPackageId)
-	arg_20_0:_setSortRate(true)
-	arg_20_0:_refreshFilterState()
+	RoomShowBlockPackageListModel.instance:initShow(self._selectPackageId)
+	RoomShowBlockPackageListModel.instance:setSelect(self._selectPackageId)
+	self:_setSortRate(true)
+	self:_refreshFilterState()
 end
 
-function var_0_0.onClickModalMask(arg_21_0)
-	arg_21_0:closeThis()
+function RoomBlockPackageView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._getCurUsePacageId(arg_22_0)
-	local var_22_0 = RoomInventoryBlockModel.instance:getCurPackageMO()
+function RoomBlockPackageView:_getCurUsePacageId()
+	local packageMO = RoomInventoryBlockModel.instance:getCurPackageMO()
 
-	return var_22_0 and var_22_0.id or nil
+	return packageMO and packageMO.id or nil
 end
 
-return var_0_0
+return RoomBlockPackageView

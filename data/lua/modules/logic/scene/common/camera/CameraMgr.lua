@@ -1,421 +1,423 @@
-﻿module("modules.logic.scene.common.camera.CameraMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/camera/CameraMgr.lua
 
-local var_0_0 = class("CameraMgr")
-local var_0_1 = "ppassets/cameraroot.prefab"
-local var_0_2 = "ppassets/urpassets/urpasset.asset"
-local var_0_3 = "cameraroot"
-local var_0_4 = "main/MainCamera"
-local var_0_5 = "main/MainCamera/unitcamera"
-local var_0_6 = "main/orthCamera"
-local var_0_7 = "main/subcamera"
-local var_0_8 = "UICamera"
-local var_0_9 = "main/VirtualCameras"
+module("modules.logic.scene.common.camera.CameraMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._cameraRootGO = nil
-	arg_1_0._cameraTraceGO = nil
-	arg_1_0._cameraTrace = nil
-	arg_1_0._cameraShake = nil
-	arg_1_0._focusTrs = nil
-	arg_1_0._mainCamera = nil
-	arg_1_0._mainCameraGO = nil
-	arg_1_0._mainCameraTrs = nil
-	arg_1_0._uiCamera = nil
-	arg_1_0._uiCameraGO = nil
-	arg_1_0._uiCameraTrs = nil
-	arg_1_0._unitCamera = nil
-	arg_1_0._unitCameraGO = nil
-	arg_1_0._unitCameraTrs = nil
-	arg_1_0._orthCamera = nil
-	arg_1_0._orthCameraGO = nil
-	arg_1_0._orthCameraTrs = nil
-	arg_1_0._subCamera = nil
-	arg_1_0._subCameraGO = nil
-	arg_1_0._subCameraTrs = nil
-	arg_1_0._urpProfileAsset = nil
-	arg_1_0._sceneRootGO = nil
-	arg_1_0._virtualCameraList = nil
-	arg_1_0._virtualCameraGO = nil
-	arg_1_0._virtualCameraTrs = nil
-	arg_1_0._virtualCameraSets = nil
-	arg_1_0._cameraRootAnimator = nil
-	arg_1_0._cameraRootAnimatorPlayer = nil
+local CameraMgr = class("CameraMgr")
+local CameraResPath = "ppassets/cameraroot.prefab"
+local UrpProfilePath = "ppassets/urpassets/urpasset.asset"
+local CameraRootName = "cameraroot"
+local MainCameraPath = "main/MainCamera"
+local UnitCameraPath = "main/MainCamera/unitcamera"
+local OrthCameraPath = "main/orthCamera"
+local SubCameraPath = "main/subcamera"
+local UICameraPath = "UICamera"
+local VirtualCameraPath = "main/VirtualCameras"
+
+function CameraMgr:ctor()
+	self._cameraRootGO = nil
+	self._cameraTraceGO = nil
+	self._cameraTrace = nil
+	self._cameraShake = nil
+	self._focusTrs = nil
+	self._mainCamera = nil
+	self._mainCameraGO = nil
+	self._mainCameraTrs = nil
+	self._uiCamera = nil
+	self._uiCameraGO = nil
+	self._uiCameraTrs = nil
+	self._unitCamera = nil
+	self._unitCameraGO = nil
+	self._unitCameraTrs = nil
+	self._orthCamera = nil
+	self._orthCameraGO = nil
+	self._orthCameraTrs = nil
+	self._subCamera = nil
+	self._subCameraGO = nil
+	self._subCameraTrs = nil
+	self._urpProfileAsset = nil
+	self._sceneRootGO = nil
+	self._virtualCameraList = nil
+	self._virtualCameraGO = nil
+	self._virtualCameraTrs = nil
+	self._virtualCameraSets = nil
+	self._cameraRootAnimator = nil
+	self._cameraRootAnimatorPlayer = nil
 end
 
-function var_0_0.initCamera(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._onInitDone = arg_2_1
-	arg_2_0._doneCbObj = arg_2_2
+function CameraMgr:initCamera(onInitDone, cbObj)
+	self._onInitDone = onInitDone
+	self._doneCbObj = cbObj
 
-	loadAbAsset(var_0_2, true, arg_2_0._onLoadedUrpProfile, arg_2_0)
+	loadAbAsset(UrpProfilePath, true, self._onLoadedUrpProfile, self)
 end
 
-function var_0_0._onLoadedCamera(arg_3_0, arg_3_1)
-	if not arg_3_1.IsLoadSuccess then
-		logError("CameraMgr:_onLoadedCamera load fail: " .. arg_3_1.ResPath)
+function CameraMgr:_onLoadedCamera(assetItem)
+	if not assetItem.IsLoadSuccess then
+		logError("CameraMgr:_onLoadedCamera load fail: " .. assetItem.ResPath)
 	else
-		arg_3_1:Retain()
+		assetItem:Retain()
 
-		arg_3_0._cameraRootGO = gohelper.clone(arg_3_1.EngineAsset, nil, var_0_3)
+		self._cameraRootGO = gohelper.clone(assetItem:GetResource(), nil, CameraRootName)
 
-		arg_3_0:_initCameraRootGO()
+		self:_initCameraRootGO()
 	end
 
-	if arg_3_0._onInitDone then
-		arg_3_0._onInitDone(arg_3_0._doneCbObj)
-	end
-end
-
-function var_0_0._initCameraRootGO(arg_4_0)
-	arg_4_0._cameraTraceGO = gohelper.findChild(arg_4_0._cameraRootGO, "main")
-	arg_4_0._sceneRootGO = gohelper.findChild(arg_4_0._cameraRootGO, "SceneRoot")
-	arg_4_0._sceneTransform = arg_4_0._sceneRootGO.transform
-	arg_4_0._cameraTrace = ZProj.GameCameraTrace.Get(arg_4_0._cameraTraceGO)
-	arg_4_0._cameraTrace.EnableTrace = false
-	arg_4_0._cameraShake = ZProj.CameraShake.Get(arg_4_0._sceneRootGO)
-
-	ZProj.CameraChangeActor4Lua.Instance:SetCameraTrace(arg_4_0._cameraTrace)
-
-	arg_4_0._focusTrs = gohelper.findChild(arg_4_0._cameraRootGO, "focus").transform
-
-	arg_4_0._cameraTrace:SetFocusTransform(arg_4_0._focusTrs)
-
-	local var_4_0 = gohelper.findChild(arg_4_0._cameraRootGO, var_0_4)
-	local var_4_1 = gohelper.findChild(arg_4_0._cameraRootGO, var_0_5)
-	local var_4_2 = gohelper.findChild(arg_4_0._cameraRootGO, var_0_6)
-	local var_4_3 = gohelper.findChild(arg_4_0._cameraRootGO, var_0_8)
-	local var_4_4 = gohelper.findChild(arg_4_0._cameraRootGO, var_0_7)
-	local var_4_5 = gohelper.findChild(arg_4_0._cameraRootGO, var_0_9)
-
-	arg_4_0:setMainCamera(var_4_0)
-	arg_4_0:setUICamera(var_4_3)
-	arg_4_0:setUnitCamera(var_4_1)
-	arg_4_0:setOrthCamera(var_4_2)
-	arg_4_0:setOrthCameraActive(false)
-	arg_4_0:setSubCamera(var_4_4)
-	arg_4_0:setVirtualCamera(var_4_5)
-
-	arg_4_0._showUnitCameraKeyDict = {}
-
-	PostProcessingMgr.instance:init(var_4_0, var_4_1, var_4_3, arg_4_0._urpProfileAsset)
-	TaskDispatcher.runDelay(arg_4_0._destoryActiveGos, arg_4_0, 1)
-end
-
-function var_0_0.setUnitCameraSeparate(arg_5_0)
-	arg_5_0._unitCameraTrs.parent = arg_5_0._mainCameraTrs.parent
-end
-
-function var_0_0.setUnitCameraCombine(arg_6_0)
-	arg_6_0._mainCameraTrs.localRotation = Vector3.zero
-	arg_6_0._unitCameraTrs.parent = arg_6_0._mainCameraTrs
-	arg_6_0._unitCameraTrs.localRotation = Vector3.zero
-	arg_6_0._unitCameraTrs.localPosition = Vector3.zero
-end
-
-function var_0_0._destoryActiveGos(arg_7_0)
-	local var_7_0 = gohelper.findChild(arg_7_0._mainCameraGO, "scene")
-
-	if var_7_0 then
-		gohelper.destroy(var_7_0)
-	end
-
-	local var_7_1 = gohelper.findChild(arg_7_0._unitCameraGO, "unit")
-
-	if var_7_1 then
-		gohelper.destroy(var_7_1)
-	end
-
-	local var_7_2 = UnityEngine.GameObject.Find("ClearCamera")
-
-	if var_7_2 then
-		gohelper.destroy(var_7_2)
+	if self._onInitDone then
+		self._onInitDone(self._doneCbObj)
 	end
 end
 
-function var_0_0._onLoadedUrpProfile(arg_8_0, arg_8_1)
-	if not arg_8_1.IsLoadSuccess then
-		logError("CameraMgr:_onLoadedUrpProfile load fail: " .. arg_8_1.ResPath)
+function CameraMgr:_initCameraRootGO()
+	self._cameraTraceGO = gohelper.findChild(self._cameraRootGO, "main")
+	self._sceneRootGO = gohelper.findChild(self._cameraRootGO, "SceneRoot")
+	self._sceneTransform = self._sceneRootGO.transform
+	self._cameraTrace = ZProj.GameCameraTrace.Get(self._cameraTraceGO)
+	self._cameraTrace.EnableTrace = false
+	self._cameraShake = ZProj.CameraShake.Get(self._sceneRootGO)
+
+	ZProj.CameraChangeActor4Lua.Instance:SetCameraTrace(self._cameraTrace)
+
+	self._focusTrs = gohelper.findChild(self._cameraRootGO, "focus").transform
+
+	self._cameraTrace:SetFocusTransform(self._focusTrs)
+
+	local mainCameraGO = gohelper.findChild(self._cameraRootGO, MainCameraPath)
+	local unitCameraGO = gohelper.findChild(self._cameraRootGO, UnitCameraPath)
+	local orthCameraGO = gohelper.findChild(self._cameraRootGO, OrthCameraPath)
+	local uiCameraGO = gohelper.findChild(self._cameraRootGO, UICameraPath)
+	local subCameraGO = gohelper.findChild(self._cameraRootGO, SubCameraPath)
+	local virtualCameraGO = gohelper.findChild(self._cameraRootGO, VirtualCameraPath)
+
+	self:setMainCamera(mainCameraGO)
+	self:setUICamera(uiCameraGO)
+	self:setUnitCamera(unitCameraGO)
+	self:setOrthCamera(orthCameraGO)
+	self:setOrthCameraActive(false)
+	self:setSubCamera(subCameraGO)
+	self:setVirtualCamera(virtualCameraGO)
+
+	self._showUnitCameraKeyDict = {}
+
+	PostProcessingMgr.instance:init(mainCameraGO, unitCameraGO, uiCameraGO, self._urpProfileAsset)
+	TaskDispatcher.runDelay(self._destoryActiveGos, self, 1)
+end
+
+function CameraMgr:setUnitCameraSeparate()
+	self._unitCameraTrs.parent = self._mainCameraTrs.parent
+end
+
+function CameraMgr:setUnitCameraCombine()
+	self._mainCameraTrs.localRotation = Vector3.zero
+	self._unitCameraTrs.parent = self._mainCameraTrs
+	self._unitCameraTrs.localRotation = Vector3.zero
+	self._unitCameraTrs.localPosition = Vector3.zero
+end
+
+function CameraMgr:_destoryActiveGos()
+	local sceneGO = gohelper.findChild(self._mainCameraGO, "scene")
+
+	if sceneGO then
+		gohelper.destroy(sceneGO)
+	end
+
+	local unitGO = gohelper.findChild(self._unitCameraGO, "unit")
+
+	if unitGO then
+		gohelper.destroy(unitGO)
+	end
+
+	local clearCameraGO = UnityEngine.GameObject.Find("ClearCamera")
+
+	if clearCameraGO then
+		gohelper.destroy(clearCameraGO)
+	end
+end
+
+function CameraMgr:_onLoadedUrpProfile(assetItem)
+	if not assetItem.IsLoadSuccess then
+		logError("CameraMgr:_onLoadedUrpProfile load fail: " .. assetItem.ResPath)
 	else
-		arg_8_1:Retain()
+		assetItem:Retain()
 
-		arg_8_0._urpProfileAsset = arg_8_1.EngineAsset
-		UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset = arg_8_0._urpProfileAsset
+		self._urpProfileAsset = assetItem:GetResource()
+		UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset = self._urpProfileAsset
 	end
 
-	loadAbAsset(var_0_1, true, arg_8_0._onLoadedCamera, arg_8_0)
+	loadAbAsset(CameraResPath, true, self._onLoadedCamera, self)
 end
 
-function var_0_0.initCameraWithCameraRoot(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_0._onInitDone = arg_9_1
-	arg_9_0._doneCbObj = arg_9_2
-	arg_9_0._cameraRootGO = arg_9_3
+function CameraMgr:initCameraWithCameraRoot(onInitDone, cbObj, cameraRoot)
+	self._onInitDone = onInitDone
+	self._doneCbObj = cbObj
+	self._cameraRootGO = cameraRoot
 
-	loadAbAsset(var_0_2, true, arg_9_0._onLoadedUrpProfileWithCameraRoot, arg_9_0)
+	loadAbAsset(UrpProfilePath, true, self._onLoadedUrpProfileWithCameraRoot, self)
 end
 
-function var_0_0._onLoadedUrpProfileWithCameraRoot(arg_10_0, arg_10_1)
-	if not arg_10_1.IsLoadSuccess then
-		logError("CameraMgr:_onLoadedUrpProfile load fail: " .. arg_10_1.ResPath)
+function CameraMgr:_onLoadedUrpProfileWithCameraRoot(assetItem)
+	if not assetItem.IsLoadSuccess then
+		logError("CameraMgr:_onLoadedUrpProfile load fail: " .. assetItem.ResPath)
 	else
-		arg_10_1:Retain()
+		assetItem:Retain()
 
-		arg_10_0._urpProfileAsset = arg_10_1.EngineAsset
-		UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset = arg_10_0._urpProfileAsset
+		self._urpProfileAsset = assetItem:GetResource()
+		UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset = self._urpProfileAsset
 	end
 
-	arg_10_0:_initCameraRootGO()
+	self:_initCameraRootGO()
 
-	if arg_10_0._onInitDone then
-		arg_10_0._onInitDone(arg_10_0._doneCbObj)
+	if self._onInitDone then
+		self._onInitDone(self._doneCbObj)
 	end
 end
 
-function var_0_0.setMainCamera(arg_11_0, arg_11_1)
-	arg_11_0._mainCamera = arg_11_1:GetComponent("Camera")
-	arg_11_0._mainCameraGO = arg_11_1
-	arg_11_0._mainCameraTrs = arg_11_1.transform
+function CameraMgr:setMainCamera(cameraGO)
+	self._mainCamera = cameraGO:GetComponent("Camera")
+	self._mainCameraGO = cameraGO
+	self._mainCameraTrs = cameraGO.transform
 end
 
-function var_0_0.setUICamera(arg_12_0, arg_12_1)
-	arg_12_0._uiCamera = arg_12_1:GetComponent("Camera")
-	arg_12_0._uiCameraGO = arg_12_1
-	arg_12_0._uiCameraTrs = arg_12_1.transform
-	ViewMgr.instance:getUICanvas().worldCamera = arg_12_0._uiCamera
+function CameraMgr:setUICamera(cameraGO)
+	self._uiCamera = cameraGO:GetComponent("Camera")
+	self._uiCameraGO = cameraGO
+	self._uiCameraTrs = cameraGO.transform
+	ViewMgr.instance:getUICanvas().worldCamera = self._uiCamera
 end
 
-function var_0_0.setUnitCamera(arg_13_0, arg_13_1)
-	arg_13_0._unitCamera = arg_13_1:GetComponent("Camera")
-	arg_13_0._unitCameraGO = arg_13_1
-	arg_13_0._unitCameraTrs = arg_13_1.transform
+function CameraMgr:setUnitCamera(cameraGO)
+	self._unitCamera = cameraGO:GetComponent("Camera")
+	self._unitCameraGO = cameraGO
+	self._unitCameraTrs = cameraGO.transform
 end
 
-function var_0_0.setOrthCamera(arg_14_0, arg_14_1)
-	arg_14_0._orthCamera = arg_14_1:GetComponent("Camera")
-	arg_14_0._orthCameraGO = arg_14_1
-	arg_14_0._orthCameraTrs = arg_14_1.transform
+function CameraMgr:setOrthCamera(cameraGO)
+	self._orthCamera = cameraGO:GetComponent("Camera")
+	self._orthCameraGO = cameraGO
+	self._orthCameraTrs = cameraGO.transform
 end
 
-function var_0_0.setSubCamera(arg_15_0, arg_15_1)
-	arg_15_0._subCamera = arg_15_1:GetComponent("Camera")
-	arg_15_0._subCameraGO = arg_15_1
-	arg_15_0._subCameraTrs = arg_15_1.transform
+function CameraMgr:setSubCamera(cameraGO)
+	self._subCamera = cameraGO:GetComponent("Camera")
+	self._subCameraGO = cameraGO
+	self._subCameraTrs = cameraGO.transform
 end
 
-function var_0_0.setVirtualCamera(arg_16_0, arg_16_1)
-	arg_16_0._virtualCameraGO = arg_16_1
-	arg_16_0._virtualCameraTrs = arg_16_1.transform
-	arg_16_0._virtualCameraList = {}
+function CameraMgr:setVirtualCamera(virtualCameraGO)
+	self._virtualCameraGO = virtualCameraGO
+	self._virtualCameraTrs = virtualCameraGO.transform
+	self._virtualCameraList = {}
 
-	local var_16_0 = {
+	local pathList = {
 		"set1/vcam1/CM_vcam1",
 		"set1/vcam2/CM_vcam2",
 		"set2/vcam3/CM_vcam3",
 		"set2/vcam4/CM_vcam4"
 	}
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_1 = gohelper.findChildComponent(arg_16_0._virtualCameraGO, iter_16_1, typeof(Cinemachine.CinemachineVirtualCamera))
+	for _, path in ipairs(pathList) do
+		local virtualCamera = gohelper.findChildComponent(self._virtualCameraGO, path, typeof(Cinemachine.CinemachineVirtualCamera))
 
-		if var_16_1 then
-			table.insert(arg_16_0._virtualCameraList, var_16_1)
+		if virtualCamera then
+			table.insert(self._virtualCameraList, virtualCamera)
 		end
 	end
 
-	arg_16_0._virtualCameraSets = {}
-	arg_16_0._virtualCameraSets[1] = gohelper.findChild(arg_16_1, "set1")
-	arg_16_0._virtualCameraSets[2] = gohelper.findChild(arg_16_1, "set2")
+	self._virtualCameraSets = {}
+	self._virtualCameraSets[1] = gohelper.findChild(virtualCameraGO, "set1")
+	self._virtualCameraSets[2] = gohelper.findChild(virtualCameraGO, "set2")
 end
 
-function var_0_0.switchVirtualCamera(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._virtualCameraSets) do
-		iter_17_1.name = iter_17_0 == arg_17_1 and "set" .. arg_17_1 or "disableSet"
+function CameraMgr:switchVirtualCamera(setIndex)
+	for i, setGO in ipairs(self._virtualCameraSets) do
+		setGO.name = i == setIndex and "set" .. setIndex or "disableSet"
 
-		gohelper.setActive(iter_17_1, iter_17_0 == arg_17_1)
+		gohelper.setActive(setGO, i == setIndex)
 	end
 end
 
-function var_0_0.setSceneCameraActive(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_0._unitCameraGO then
+function CameraMgr:setSceneCameraActive(active, key)
+	if not self._unitCameraGO then
 		return
 	end
 
-	arg_18_0._showUnitCameraKeyDict[arg_18_2] = arg_18_1 and true or false
+	self._showUnitCameraKeyDict[key] = active and true or false
 
-	local var_18_0 = true
+	local show = true
 
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._showUnitCameraKeyDict) do
-		if not iter_18_1 then
-			var_18_0 = false
+	for _, value in pairs(self._showUnitCameraKeyDict) do
+		if not value then
+			show = false
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_18_0._unitCameraGO, var_18_0)
-	PostProcessingMgr.instance:dispatchEvent(PostProcessingEvent.onUnitCameraVisibleChange, var_18_0)
+	gohelper.setActive(self._unitCameraGO, show)
+	PostProcessingMgr.instance:dispatchEvent(PostProcessingEvent.onUnitCameraVisibleChange, show)
 end
 
-function var_0_0.setOrthCameraActive(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._orthCameraGO, arg_19_1)
+function CameraMgr:setOrthCameraActive(active)
+	gohelper.setActive(self._orthCameraGO, active)
 end
 
-function var_0_0.getCameraRootGO(arg_20_0)
-	return arg_20_0._cameraRootGO
+function CameraMgr:getCameraRootGO()
+	return self._cameraRootGO
 end
 
-function var_0_0.getCameraRootAnimator(arg_21_0)
-	if arg_21_0._cameraRootAnimatorPlayer then
-		arg_21_0._cameraRootAnimatorPlayer:Stop()
-	elseif SLFramework.FrameworkSettings.IsEditor and arg_21_0._cameraRootGO:GetComponent(typeof(SLFramework.AnimatorPlayer)) then
+function CameraMgr:getCameraRootAnimator()
+	if self._cameraRootAnimatorPlayer then
+		self._cameraRootAnimatorPlayer:Stop()
+	elseif SLFramework.FrameworkSettings.IsEditor and self._cameraRootGO:GetComponent(typeof(SLFramework.AnimatorPlayer)) then
 		logError("CameraMgr要通过getCameraRootAnimatorPlayer获得AnimatorPlayer")
 	end
 
-	if not arg_21_0._cameraRootAnimator then
-		arg_21_0._cameraRootAnimator = gohelper.onceAddComponent(arg_21_0._cameraRootGO, typeof(UnityEngine.Animator))
+	if not self._cameraRootAnimator then
+		self._cameraRootAnimator = gohelper.onceAddComponent(self._cameraRootGO, typeof(UnityEngine.Animator))
 	end
 
-	return arg_21_0._cameraRootAnimator
+	return self._cameraRootAnimator
 end
 
-function var_0_0.getCameraRootAnimatorPlayer(arg_22_0)
-	arg_22_0._cameraRootAnimatorPlayer = arg_22_0._cameraRootAnimatorPlayer or SLFramework.AnimatorPlayer.Get(arg_22_0._cameraRootGO)
+function CameraMgr:getCameraRootAnimatorPlayer()
+	self._cameraRootAnimatorPlayer = self._cameraRootAnimatorPlayer or SLFramework.AnimatorPlayer.Get(self._cameraRootGO)
 
-	return arg_22_0._cameraRootAnimatorPlayer
+	return self._cameraRootAnimatorPlayer
 end
 
-function var_0_0.hasCameraRootAnimatorPlayer(arg_23_0)
-	return arg_23_0._cameraRootAnimatorPlayer ~= nil
+function CameraMgr:hasCameraRootAnimatorPlayer()
+	return self._cameraRootAnimatorPlayer ~= nil
 end
 
-function var_0_0.getCameraTraceGO(arg_24_0)
-	return arg_24_0._cameraTraceGO
+function CameraMgr:getCameraTraceGO()
+	return self._cameraTraceGO
 end
 
-function var_0_0.getCameraTrace(arg_25_0)
-	return arg_25_0._cameraTrace
+function CameraMgr:getCameraTrace()
+	return self._cameraTrace
 end
 
-function var_0_0.getCameraShake(arg_26_0)
-	return arg_26_0._cameraShake
+function CameraMgr:getCameraShake()
+	return self._cameraShake
 end
 
-function var_0_0.getFocusTrs(arg_27_0)
-	return arg_27_0._focusTrs
+function CameraMgr:getFocusTrs()
+	return self._focusTrs
 end
 
-function var_0_0.getMainCamera(arg_28_0)
-	return arg_28_0._mainCamera
+function CameraMgr:getMainCamera()
+	return self._mainCamera
 end
 
-function var_0_0.getMainCameraGO(arg_29_0)
-	return arg_29_0._mainCameraGO
+function CameraMgr:getMainCameraGO()
+	return self._mainCameraGO
 end
 
-function var_0_0.getMainCameraTrs(arg_30_0)
-	return arg_30_0._mainCameraTrs
+function CameraMgr:getMainCameraTrs()
+	return self._mainCameraTrs
 end
 
-function var_0_0.getUICamera(arg_31_0)
-	return arg_31_0._uiCamera
+function CameraMgr:getUICamera()
+	return self._uiCamera
 end
 
-function var_0_0.getUICameraGO(arg_32_0)
-	return arg_32_0._uiCameraGO
+function CameraMgr:getUICameraGO()
+	return self._uiCameraGO
 end
 
-function var_0_0.getUICameraTrs(arg_33_0)
-	return arg_33_0._uiCameraTrs
+function CameraMgr:getUICameraTrs()
+	return self._uiCameraTrs
 end
 
-function var_0_0.getUnitCamera(arg_34_0)
-	return arg_34_0._unitCamera
+function CameraMgr:getUnitCamera()
+	return self._unitCamera
 end
 
-function var_0_0.getUnitCameraGO(arg_35_0)
-	return arg_35_0._unitCameraGO
+function CameraMgr:getUnitCameraGO()
+	return self._unitCameraGO
 end
 
-function var_0_0.getUnitCameraTrs(arg_36_0)
-	return arg_36_0._unitCameraTrs
+function CameraMgr:getUnitCameraTrs()
+	return self._unitCameraTrs
 end
 
-function var_0_0.getOrthCamera(arg_37_0)
-	return arg_37_0._orthCamera
+function CameraMgr:getOrthCamera()
+	return self._orthCamera
 end
 
-function var_0_0.getOrthCameraGO(arg_38_0)
-	return arg_38_0._orthCameraGO
+function CameraMgr:getOrthCameraGO()
+	return self._orthCameraGO
 end
 
-function var_0_0.getSubCamera(arg_39_0)
-	return arg_39_0._subCamera
+function CameraMgr:getSubCamera()
+	return self._subCamera
 end
 
-function var_0_0.getSubCameraGO(arg_40_0)
-	return arg_40_0._subCameraGO
+function CameraMgr:getSubCameraGO()
+	return self._subCameraGO
 end
 
-function var_0_0.getSubCameraTrs(arg_41_0)
-	return arg_41_0._subCameraTrs
+function CameraMgr:getSubCameraTrs()
+	return self._subCameraTrs
 end
 
-function var_0_0.getSceneRoot(arg_42_0)
-	return arg_42_0._sceneRootGO
+function CameraMgr:getSceneRoot()
+	return self._sceneRootGO
 end
 
-function var_0_0.getSceneTransform(arg_43_0)
-	return arg_43_0._sceneTransform
+function CameraMgr:getSceneTransform()
+	return self._sceneTransform
 end
 
-function var_0_0.getVirtualCamera(arg_44_0, arg_44_1, arg_44_2)
-	local var_44_0 = (arg_44_1 - 1) * 2 + arg_44_2
+function CameraMgr:getVirtualCamera(setIndex, indexInSet)
+	local id = (setIndex - 1) * 2 + indexInSet
 
-	return arg_44_0._virtualCameraList[var_44_0]
+	return self._virtualCameraList[id]
 end
 
-function var_0_0.getVirtualCameras(arg_45_0)
-	return arg_45_0._virtualCameraList
+function CameraMgr:getVirtualCameras()
+	return self._virtualCameraList
 end
 
-function var_0_0.getVirtualCameraGO(arg_46_0)
-	return arg_46_0._virtualCameraGO
+function CameraMgr:getVirtualCameraGO()
+	return self._virtualCameraGO
 end
 
-function var_0_0.setVirtualCameraChildActive(arg_47_0, arg_47_1, arg_47_2)
-	if not arg_47_0._virtualCameraGO then
+function CameraMgr:setVirtualCameraChildActive(active, child)
+	if not self._virtualCameraGO then
 		return
 	end
 
-	local var_47_0 = gohelper.findChild(arg_47_0._virtualCameraGO, arg_47_2)
+	local childGo = gohelper.findChild(self._virtualCameraGO, child)
 
-	gohelper.setActive(var_47_0, arg_47_1)
+	gohelper.setActive(childGo, active)
 end
 
-function var_0_0.getVirtualCameraTrs(arg_48_0)
-	return arg_48_0._virtualCameraTrs
+function CameraMgr:getVirtualCameraTrs()
+	return self._virtualCameraTrs
 end
 
-function var_0_0.setRenderScale(arg_49_0, arg_49_1)
-	if arg_49_0._urpProfileAsset then
-		logNormal("CameraMgr:setRenderScale scale = " .. arg_49_1)
+function CameraMgr:setRenderScale(scale)
+	if self._urpProfileAsset then
+		logNormal("CameraMgr:setRenderScale scale = " .. scale)
 
-		arg_49_0._urpProfileAsset.renderScale = arg_49_1
+		self._urpProfileAsset.renderScale = scale
 	end
 end
 
-function var_0_0.setRenderMSAACount(arg_50_0, arg_50_1)
-	if arg_50_0._urpProfileAsset then
-		logNormal("CameraMgr:setRenderMSAACount count = " .. arg_50_1)
+function CameraMgr:setRenderMSAACount(count)
+	if self._urpProfileAsset then
+		logNormal("CameraMgr:setRenderMSAACount count = " .. count)
 
-		arg_50_0._urpProfileAsset.msaaSampleCount = arg_50_1
+		self._urpProfileAsset.msaaSampleCount = count
 	end
 end
 
-function var_0_0.getRenderScale(arg_51_0)
-	if arg_51_0._urpProfileAsset then
-		return arg_51_0._urpProfileAsset.renderScale
+function CameraMgr:getRenderScale()
+	if self._urpProfileAsset then
+		return self._urpProfileAsset.renderScale
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+CameraMgr.instance = CameraMgr.New()
 
-return var_0_0
+return CameraMgr

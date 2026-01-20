@@ -1,313 +1,320 @@
-﻿module("modules.logic.achievement.view.AchievementMainListItem", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementMainListItem.lua
 
-local var_0_0 = class("AchievementMainListItem", ListScrollCellExtend)
+module("modules.logic.achievement.view.AchievementMainListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotop1 = gohelper.findChild(arg_1_0.viewGO, "go_top")
-	arg_1_0._gotop2 = gohelper.findChild(arg_1_0.viewGO, "go_top2")
-	arg_1_0._txtachievementname = gohelper.findChildText(arg_1_0.viewGO, "go_top/image_AchievementNameBG/#txt_achievementname")
-	arg_1_0._simageAchievementGroupBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_top2/#simage_AchievementGroupBG")
-	arg_1_0._txtachievementgroupname = gohelper.findChildText(arg_1_0.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname")
-	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "go_layout")
-	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "go_layout/go_taskitem")
-	arg_1_0._btnpopup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_top2/#btn_popup")
-	arg_1_0._goallcollect = gohelper.findChild(arg_1_0.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname/#go_allcollect")
+local AchievementMainListItem = class("AchievementMainListItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AchievementMainListItem:onInitView()
+	self._gotop1 = gohelper.findChild(self.viewGO, "go_top")
+	self._gotop2 = gohelper.findChild(self.viewGO, "go_top2")
+	self._txtachievementname = gohelper.findChildText(self.viewGO, "go_top/image_AchievementNameBG/#txt_achievementname")
+	self._simageAchievementGroupBG = gohelper.findChildSingleImage(self.viewGO, "go_top2/#simage_AchievementGroupBG")
+	self._txtachievementgroupname = gohelper.findChildText(self.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname")
+	self._golayout = gohelper.findChild(self.viewGO, "go_layout")
+	self._gotaskitem = gohelper.findChild(self.viewGO, "go_layout/go_taskitem")
+	self._btnpopup = gohelper.findChildButtonWithAudio(self.viewGO, "go_top2/#btn_popup")
+	self._goallcollect = gohelper.findChild(self.viewGO, "go_top2/#simage_AchievementGroupBG/#txt_achievementgroupname/#go_allcollect")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnFocusAchievementFinished, arg_2_0._onFocusFinished, arg_2_0)
+function AchievementMainListItem:addEvents()
+	self:addEventCb(AchievementMainController.instance, AchievementEvent.OnFocusAchievementFinished, self._onFocusFinished, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AchievementMainListItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._taskItemTab = arg_4_0:getUserDataTb_()
-	arg_4_0._topAnimator = gohelper.onceAddComponent(arg_4_0._gotop1, gohelper.Type_Animator)
-	arg_4_0._foldAnimComp = AchievementItemFoldAnimComp.Get(arg_4_0._btnpopup.gameObject, arg_4_0._gotop1)
+function AchievementMainListItem:_editableInitView()
+	self._taskItemTab = self:getUserDataTb_()
+	self._topAnimator = gohelper.onceAddComponent(self._gotop1, gohelper.Type_Animator)
+	self._foldAnimComp = AchievementItemFoldAnimComp.Get(self._btnpopup.gameObject, self._gotop1)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0._simageAchievementGroupBG:UnLoadImage()
-	arg_5_0:recycleAchievementMainIcon()
+function AchievementMainListItem:onDestroy()
+	self._simageAchievementGroupBG:UnLoadImage()
+	self:recycleAchievementMainIcon()
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function AchievementMainListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	local var_7_0 = AchievementConfig.instance:getAchievement(arg_7_0._mo.id)
+function AchievementMainListItem:refreshUI()
+	local achievementCfg = AchievementConfig.instance:getAchievement(self._mo.id)
 
-	if var_7_0 then
-		arg_7_0._groupId = var_7_0.groupId
+	if achievementCfg then
+		self._groupId = achievementCfg.groupId
 
-		local var_7_1 = AchievementMainCommonModel.instance:getCurrentSortType()
-		local var_7_2 = AchievementMainCommonModel.instance:getCurrentFilterType()
-		local var_7_3 = arg_7_0._mo:getFilterTaskList(var_7_1, var_7_2)
+		local curSortType = AchievementMainCommonModel.instance:getCurrentSortType()
+		local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
+		local taskConfigList = self._mo:getFilterTaskList(curSortType, curFilterType)
 
-		arg_7_0:refreshTaskList(var_7_3)
-		arg_7_0:refreshTopUI(var_7_0)
-		arg_7_0._foldAnimComp:onUpdateMO(arg_7_0._mo)
+		self:refreshTaskList(taskConfigList)
+		self:refreshTopUI(achievementCfg)
+		self._foldAnimComp:onUpdateMO(self._mo)
 	end
 end
 
-local var_0_1 = 1
-local var_0_2 = 0.5
-local var_0_3 = 1
-local var_0_4 = 0.5
-local var_0_5 = "#FFFFFF"
-local var_0_6 = "#4D4D4D"
+local finishTaskDescAlpha = 1
+local unfinishTaskDescAlpha = 0.5
+local finishTaskExtraDescAlpha = 1
+local unfinishTaskExtraDescAlpha = 0.5
+local finshTaskIconColor = "#FFFFFF"
+local unfinishTaskIconColor = "#4D4D4D"
 
-function var_0_0.refreshTaskList(arg_8_0, arg_8_1)
-	local var_8_0
-	local var_8_1 = arg_8_0._mo:getIsFold()
+function AchievementMainListItem:refreshTaskList(taskConfigList)
+	local useMap
+	local isFold = self._mo:getIsFold()
 
-	gohelper.setActive(arg_8_0._golayout, not var_8_1)
+	gohelper.setActive(self._golayout, not isFold)
 
-	arg_8_0._hasTaskFinished = false
+	self._hasTaskFinished = false
 
-	if not var_8_1 and arg_8_1 then
-		var_8_0 = {}
+	if not isFold and taskConfigList then
+		useMap = {}
 
-		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-			local var_8_2 = arg_8_0:getOrCreateTaskItem(iter_8_0)
+		for index, taskCfg in ipairs(taskConfigList) do
+			local taskItem = self:getOrCreateTaskItem(index)
 
-			var_8_0[var_8_2] = true
+			useMap[taskItem] = true
 
-			local var_8_3 = AchievementModel.instance:getById(iter_8_1.id)
-			local var_8_4 = var_8_3 and var_8_3.hasFinished
+			local taskMO = AchievementModel.instance:getById(taskCfg.id)
+			local taskHasFinished = taskMO and taskMO.hasFinished
 
-			var_8_2.txtTaskDesc2.text = iter_8_1.extraDesc
+			taskItem.txtTaskDesc2.text = taskCfg.extraDesc
 
-			var_8_2.taskIcon:setData(iter_8_1)
-			var_8_2.taskIcon:setIconColor(var_8_4 and var_0_5 or var_0_6)
-			ZProj.UGUIHelper.SetColorAlpha(var_8_2.txtTaskDesc2, var_8_4 and var_0_3 or var_0_4)
-			ZProj.UGUIHelper.SetColorAlpha(var_8_2.txtTaskDesc, var_8_4 and var_0_1 or var_0_2)
-			gohelper.setActive(var_8_2.goUnLockTime, var_8_4)
-			gohelper.setActive(var_8_2.goNormalBG, var_8_4)
-			gohelper.setActive(var_8_2.golockedBG, not var_8_4)
+			taskItem.taskIcon:setData(taskCfg)
+			taskItem.taskIcon:setIconColor(taskHasFinished and finshTaskIconColor or unfinishTaskIconColor)
+			ZProj.UGUIHelper.SetColorAlpha(taskItem.txtTaskDesc2, taskHasFinished and finishTaskExtraDescAlpha or unfinishTaskExtraDescAlpha)
+			ZProj.UGUIHelper.SetColorAlpha(taskItem.txtTaskDesc, taskHasFinished and finishTaskDescAlpha or unfinishTaskDescAlpha)
+			gohelper.setActive(taskItem.goUnLockTime, taskHasFinished)
+			gohelper.setActive(taskItem.goNormalBG, taskHasFinished)
+			gohelper.setActive(taskItem.golockedBG, not taskHasFinished)
 
-			if var_8_4 then
-				var_8_2.txtUnLockedTime.text = TimeUtil.localTime2ServerTimeString(var_8_3.finishTime)
-				var_8_2.txtTaskDesc.text = iter_8_1.desc
-				arg_8_0._hasTaskFinished = true
+			if taskHasFinished then
+				taskItem.txtUnLockedTime.text = TimeUtil.localTime2ServerTimeString(taskMO.finishTime)
+				taskItem.txtTaskDesc.text = taskCfg.desc
+				self._hasTaskFinished = true
 			else
-				local var_8_5 = iter_8_1.maxProgress
-				local var_8_6 = var_8_3 and var_8_3.progress or 0
-				local var_8_7 = {
-					iter_8_1.desc,
-					var_8_6,
-					var_8_5
+				local taskMaxProgress = taskCfg.maxProgress
+				local taskCurProgress = taskMO and taskMO.progress or 0
+				local tag = {
+					taskCfg.desc,
+					taskCurProgress,
+					taskMaxProgress
 				}
 
-				var_8_2.txtTaskDesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementmainview_unlockPath"), var_8_7)
+				taskItem.txtTaskDesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementmainview_unlockPath"), tag)
 			end
 
-			arg_8_0:playTaskAnim(var_8_2)
-			arg_8_0:tryPlayUpgradeEffect(var_8_3, var_8_2)
+			self:playTaskAnim(taskItem)
+			self:tryPlayUpgradeEffect(taskMO, taskItem)
 		end
 	end
 
-	arg_8_0:recycleUnuseTaskItem(var_8_0)
-	arg_8_0:onTasksPlayUpgradeEffectFinished()
+	self:recycleUnuseTaskItem(useMap)
+	self:onTasksPlayUpgradeEffectFinished()
 end
 
-function var_0_0.tryPlayUpgradeEffect(arg_9_0, arg_9_1, arg_9_2)
-	if AchievementMainCommonModel.instance:isCurrentScrollFocusing() or not arg_9_0.viewGO.activeInHierarchy or not arg_9_1 or not arg_9_2 then
+function AchievementMainListItem:tryPlayUpgradeEffect(taskMO, taskItem)
+	if AchievementMainCommonModel.instance:isCurrentScrollFocusing() or not self.viewGO.activeInHierarchy or not taskMO or not taskItem then
 		return
 	end
 
-	local var_9_0 = AchievementConfig.instance:getTask(arg_9_1.id)
+	local taskCfg = AchievementConfig.instance:getTask(taskMO.id)
 
-	arg_9_0._achievementId = var_9_0 and var_9_0.achievementId
+	self._achievementId = taskCfg and taskCfg.achievementId
 
-	local var_9_1 = AchievementMainCommonModel.instance:isAchievementPlayEffect(arg_9_0._achievementId)
+	local isAchievementPlayEffect = AchievementMainCommonModel.instance:isAchievementPlayEffect(self._achievementId)
 
-	arg_9_0._isNeedPlayEffect = false
+	self._isNeedPlayEffect = false
 
-	if arg_9_1 and arg_9_1.hasFinished and arg_9_1.isNew and not var_9_1 then
-		arg_9_0._isNeedPlayEffect = true
+	if taskMO and taskMO.hasFinished and taskMO.isNew and not isAchievementPlayEffect then
+		self._isNeedPlayEffect = true
 	end
 
-	gohelper.setActive(arg_9_2.goupgrade, arg_9_0._isNeedPlayEffect)
+	gohelper.setActive(taskItem.goupgrade, self._isNeedPlayEffect)
 
-	if arg_9_0._isNeedPlayEffect then
-		local var_9_2 = AchievementMainCommonModel.instance:isTaskPlayFinishedEffect(arg_9_1.id)
+	if self._isNeedPlayEffect then
+		local hasPlayEffect = AchievementMainCommonModel.instance:isTaskPlayFinishedEffect(taskMO.id)
 
-		arg_9_2.goupgradeAnimator:Play("upgrade2", 0, var_9_2 and 1 or 0)
+		taskItem.goupgradeAnimator:Play("upgrade2", 0, hasPlayEffect and 1 or 0)
 
-		if not var_9_2 then
-			AchievementMainCommonModel.instance:markTaskPlayFinishedEffect(arg_9_1.id)
+		if not hasPlayEffect then
+			AchievementMainCommonModel.instance:markTaskPlayFinishedEffect(taskMO.id)
 		end
 	end
 end
 
-function var_0_0.onTasksPlayUpgradeEffectFinished(arg_10_0)
-	if arg_10_0._isNeedPlayEffect and arg_10_0._achievementId then
-		AchievementMainCommonModel.instance:markAchievementPlayEffect(arg_10_0._achievementId)
+function AchievementMainListItem:onTasksPlayUpgradeEffectFinished()
+	if self._isNeedPlayEffect and self._achievementId then
+		AchievementMainCommonModel.instance:markAchievementPlayEffect(self._achievementId)
 	end
 end
 
-function var_0_0._onFocusFinished(arg_11_0, arg_11_1)
-	if arg_11_1 ~= AchievementEnum.ViewType.List then
+function AchievementMainListItem:_onFocusFinished(viewType)
+	if viewType ~= AchievementEnum.ViewType.List then
 		return
 	end
 
-	if arg_11_0._taskItemTab then
-		local var_11_0 = AchievementMainCommonModel.instance:getCurrentSortType()
-		local var_11_1 = AchievementMainCommonModel.instance:getCurrentFilterType()
-		local var_11_2 = arg_11_0._mo:getFilterTaskList(var_11_0, var_11_1)
+	if self._taskItemTab then
+		local curSortType = AchievementMainCommonModel.instance:getCurrentSortType()
+		local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
+		local taskConfigList = self._mo:getFilterTaskList(curSortType, curFilterType)
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-			local var_11_3 = arg_11_0:getOrCreateTaskItem(iter_11_0)
-			local var_11_4 = AchievementModel.instance:getById(iter_11_1.id)
+		for index, taskCfg in ipairs(taskConfigList) do
+			local taskItem = self:getOrCreateTaskItem(index)
+			local taskMO = AchievementModel.instance:getById(taskCfg.id)
 
-			arg_11_0:tryPlayUpgradeEffect(var_11_4, var_11_3)
+			self:tryPlayUpgradeEffect(taskMO, taskItem)
 		end
 
-		arg_11_0:onTasksPlayUpgradeEffectFinished()
+		self:onTasksPlayUpgradeEffectFinished()
 	end
 end
 
-function var_0_0.playTaskAnim(arg_12_0, arg_12_1)
-	if not arg_12_1 or not arg_12_1.viewGO.activeInHierarchy then
+function AchievementMainListItem:playTaskAnim(taskItem)
+	if not taskItem or not taskItem.viewGO.activeInHierarchy then
 		return
 	end
 
-	if AchievementMainListModel.instance:isCurTaskNeedPlayIdleAnim() then
-		arg_12_1.animator:Play("idle", 0, 0)
+	local isCurTaskNeedPlayIdleAnim = AchievementMainListModel.instance:isCurTaskNeedPlayIdleAnim()
+
+	if isCurTaskNeedPlayIdleAnim then
+		taskItem.animator:Play("idle", 0, 0)
 	else
-		arg_12_1.animator:Play("open", 0, 0)
+		taskItem.animator:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.getOrCreateTaskItem(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._taskItemTab[arg_13_1]
+function AchievementMainListItem:getOrCreateTaskItem(index)
+	local taskItem = self._taskItemTab[index]
 
-	if not var_13_0 then
-		var_13_0 = arg_13_0:getUserDataTb_()
-		var_13_0.viewGO = gohelper.cloneInPlace(arg_13_0._gotaskitem, "task_" .. arg_13_1)
-		var_13_0.goNormalBG = gohelper.findChild(var_13_0.viewGO, "#go_NormalBG")
-		var_13_0.golockedBG = gohelper.findChild(var_13_0.viewGO, "#go_lockedBG")
-		var_13_0.txtTaskDesc = gohelper.findChildText(var_13_0.viewGO, "Descr/txt_taskdesc")
-		var_13_0.txtTaskDesc2 = gohelper.findChildText(var_13_0.viewGO, "Descr/txt_taskdesc2")
-		var_13_0.goUnLockTime = gohelper.findChild(var_13_0.viewGO, "UnLockedTime")
-		var_13_0.txtUnLockedTime = gohelper.findChildText(var_13_0.viewGO, "UnLockedTime/#txt_UnLockedTime")
-		var_13_0.goupgrade = gohelper.findChild(var_13_0.viewGO, "#go_upgrade")
-		var_13_0.goupgradeAnimator = gohelper.onceAddComponent(var_13_0.goupgrade, gohelper.Type_Animator)
-		var_13_0.goIcon = gohelper.findChild(var_13_0.viewGO, "go_icon")
-		var_13_0.animator = gohelper.onceAddComponent(var_13_0.viewGO, gohelper.Type_Animator)
+	if not taskItem then
+		taskItem = self:getUserDataTb_()
+		taskItem.viewGO = gohelper.cloneInPlace(self._gotaskitem, "task_" .. index)
+		taskItem.goNormalBG = gohelper.findChild(taskItem.viewGO, "#go_NormalBG")
+		taskItem.golockedBG = gohelper.findChild(taskItem.viewGO, "#go_lockedBG")
+		taskItem.txtTaskDesc = gohelper.findChildText(taskItem.viewGO, "Descr/txt_taskdesc")
+		taskItem.txtTaskDesc2 = gohelper.findChildText(taskItem.viewGO, "Descr/txt_taskdesc2")
+		taskItem.goUnLockTime = gohelper.findChild(taskItem.viewGO, "UnLockedTime")
+		taskItem.txtUnLockedTime = gohelper.findChildText(taskItem.viewGO, "UnLockedTime/#txt_UnLockedTime")
+		taskItem.goupgrade = gohelper.findChild(taskItem.viewGO, "#go_upgrade")
+		taskItem.goupgradeAnimator = gohelper.onceAddComponent(taskItem.goupgrade, gohelper.Type_Animator)
+		taskItem.goIcon = gohelper.findChild(taskItem.viewGO, "go_icon")
+		taskItem.animator = gohelper.onceAddComponent(taskItem.viewGO, gohelper.Type_Animator)
 
-		if arg_13_0._view and arg_13_0._view.viewContainer then
-			local var_13_1 = arg_13_0._view.viewContainer:getPoolView()
+		if self._view and self._view.viewContainer then
+			local poolView = self._view.viewContainer:getPoolView()
 
-			if var_13_1 then
-				var_13_0.taskIcon = var_13_1:getIcon(var_13_0.goIcon)
+			if poolView then
+				taskItem.taskIcon = poolView:getIcon(taskItem.goIcon)
 
-				var_13_0.taskIcon:setNameTxtVisible(false)
-				var_13_0.taskIcon:setClickCall(arg_13_0._iconClickCallBack, arg_13_0)
+				taskItem.taskIcon:setNameTxtVisible(false)
+				taskItem.taskIcon:setClickCall(self._iconClickCallBack, self)
 			end
 		end
 
-		arg_13_0._taskItemTab[arg_13_1] = var_13_0
+		self._taskItemTab[index] = taskItem
 	end
 
-	gohelper.setActive(var_13_0.viewGO, true)
+	gohelper.setActive(taskItem.viewGO, true)
 
-	return var_13_0
+	return taskItem
 end
 
-function var_0_0._iconClickCallBack(arg_14_0)
+function AchievementMainListItem:_iconClickCallBack()
 	return
 end
 
-function var_0_0.recycleUnuseTaskItem(arg_15_0, arg_15_1)
-	if arg_15_1 and arg_15_0._taskItemTab then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._taskItemTab) do
-			if not arg_15_1[iter_15_1] then
-				gohelper.setActive(iter_15_1.viewGO, false)
+function AchievementMainListItem:recycleUnuseTaskItem(useMap)
+	if useMap and self._taskItemTab then
+		for _, taskItem in pairs(self._taskItemTab) do
+			if not useMap[taskItem] then
+				gohelper.setActive(taskItem.viewGO, false)
 			end
 		end
 	end
 end
 
-function var_0_0.refreshTopUI(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1 and arg_16_1.groupId ~= 0 and arg_16_0._mo.isGroupTop
+function AchievementMainListItem:refreshTopUI(achievementCfg)
+	local isGroup = achievementCfg and achievementCfg.groupId ~= 0
+	local isNeedShowGroupTop = isGroup and self._mo.isGroupTop
 
-	if var_16_0 then
-		arg_16_0:refreshGroupTopUI(arg_16_1.groupId)
+	if isNeedShowGroupTop then
+		self:refreshGroupTopUI(achievementCfg.groupId)
 	end
 
-	local var_16_1 = arg_16_0._mo:getIsFold()
+	local isFold = self._mo:getIsFold()
 
-	if not var_16_1 then
-		arg_16_0:refreshSingleTopUI(arg_16_1)
+	if not isFold then
+		self:refreshSingleTopUI(achievementCfg)
 	end
 
-	gohelper.setActive(arg_16_0._gotop1, not var_16_1)
-	gohelper.setActive(arg_16_0._gotop2, var_16_0)
+	gohelper.setActive(self._gotop1, not isFold)
+	gohelper.setActive(self._gotop2, isNeedShowGroupTop)
 
-	if not var_16_1 then
-		arg_16_0:playTopAnim()
+	if not isFold then
+		self:playTopAnim()
 	end
 end
 
-function var_0_0.playTopAnim(arg_17_0)
-	if not arg_17_0._gotop1.activeInHierarchy then
+function AchievementMainListItem:playTopAnim()
+	if not self._gotop1.activeInHierarchy then
 		return
 	end
 
-	if AchievementMainListModel.instance:isCurTaskNeedPlayIdleAnim() then
-		arg_17_0._topAnimator:Play("idle", 0, 0)
+	local isCurTaskNeedPlayIdleAnim = AchievementMainListModel.instance:isCurTaskNeedPlayIdleAnim()
+
+	if isCurTaskNeedPlayIdleAnim then
+		self._topAnimator:Play("idle", 0, 0)
 	else
-		arg_17_0._topAnimator:Play("open", 0, 0)
+		self._topAnimator:Play("open", 0, 0)
 	end
 end
 
-local var_0_7 = 1
-local var_0_8 = 0.5
+local hasGetAchievementTitleAlpha = 1
+local unGetAchievementTitleAlpha = 0.5
 
-function var_0_0.refreshSingleTopUI(arg_18_0, arg_18_1)
-	if arg_18_1 then
-		arg_18_0._txtachievementname.text = arg_18_1.name
+function AchievementMainListItem:refreshSingleTopUI(achievementCfg)
+	if achievementCfg then
+		self._txtachievementname.text = achievementCfg.name
 
-		local var_18_0 = arg_18_0._hasTaskFinished and var_0_7 or var_0_8
+		local targetTitleAlpha = self._hasTaskFinished and hasGetAchievementTitleAlpha or unGetAchievementTitleAlpha
 
-		ZProj.UGUIHelper.SetColorAlpha(arg_18_0._txtachievementname, var_18_0)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtachievementname, targetTitleAlpha)
 	end
 end
 
-function var_0_0.refreshGroupTopUI(arg_19_0, arg_19_1)
-	arg_19_0._txtachievementgroupname.text = AchievementConfig.instance:getGroupName(arg_19_1)
+function AchievementMainListItem:refreshGroupTopUI(groupId)
+	self._txtachievementgroupname.text = AchievementConfig.instance:getGroupName(groupId)
 
-	local var_19_0 = AchievementModel.instance:isGroupFinished(arg_19_1)
+	local isGroupFinish = AchievementModel.instance:isGroupFinished(groupId)
 
-	gohelper.setActive(arg_19_0._goallcollect, arg_19_1 > 100 and var_19_0)
+	gohelper.setActive(self._goallcollect, groupId > 100 and isGroupFinish)
 
-	local var_19_1 = "#F4FFBD"
+	local groupTitleColor = "#F4FFBD"
 
-	if arg_19_1 > 100 then
-		var_19_1 = AchievementConfig.instance:getGroupTitleColorConfig(arg_19_1, AchievementEnum.GroupParamType.Player)
+	if groupId > 100 then
+		groupTitleColor = AchievementConfig.instance:getGroupTitleColorConfig(groupId, AchievementEnum.GroupParamType.Player)
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_19_0._txtachievementgroupname, var_19_1)
-	arg_19_0._simageAchievementGroupBG:LoadImage(ResUrl.getAchievementIcon(string.format("grouptitle/%s", arg_19_1)))
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtachievementgroupname, groupTitleColor)
+	self._simageAchievementGroupBG:LoadImage(ResUrl.getAchievementIcon(string.format("grouptitle/%s", groupId)))
 end
 
-function var_0_0.recycleAchievementMainIcon(arg_20_0)
-	if arg_20_0._taskItemTab then
-		for iter_20_0, iter_20_1 in pairs(arg_20_0._taskItemTab) do
-			iter_20_1.taskIcon:dispose()
+function AchievementMainListItem:recycleAchievementMainIcon()
+	if self._taskItemTab then
+		for _, taskItem in pairs(self._taskItemTab) do
+			taskItem.taskIcon:dispose()
 		end
 	end
 end
 
-return var_0_0
+return AchievementMainListItem

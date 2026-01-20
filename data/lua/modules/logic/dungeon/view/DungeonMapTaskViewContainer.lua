@@ -1,13 +1,15 @@
-﻿module("modules.logic.dungeon.view.DungeonMapTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMapTaskViewContainer.lua
 
-local var_0_0 = class("DungeonMapTaskViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonMapTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonMapTaskViewContainer = class("DungeonMapTaskViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonMapTaskView.New())
+function DungeonMapTaskViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonMapTaskView.New())
+
+	return views
 end
 
-return var_0_0
+return DungeonMapTaskViewContainer

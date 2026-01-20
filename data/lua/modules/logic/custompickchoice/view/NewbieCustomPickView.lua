@@ -1,172 +1,176 @@
-﻿module("modules.logic.custompickchoice.view.NewbieCustomPickView", package.seeall)
+﻿-- chunkname: @modules/logic/custompickchoice/view/NewbieCustomPickView.lua
 
-local var_0_0 = class("NewbieCustomPickView", BaseView)
+module("modules.logic.custompickchoice.view.NewbieCustomPickView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "mask")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "bg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "TitleBG/Title")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "Tips2")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._goChar1Root = gohelper.findChild(arg_1_0.viewGO, "Hero/#go_Hero1")
-	arg_1_0._goChar2Root = gohelper.findChild(arg_1_0.viewGO, "Hero/#go_Hero2")
-	arg_1_0._goChar3Root = gohelper.findChild(arg_1_0.viewGO, "Hero/#go_Hero3")
+local NewbieCustomPickView = class("NewbieCustomPickView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NewbieCustomPickView:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "mask")
+	self._gomask = gohelper.findChild(self.viewGO, "bg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "TitleBG/Title")
+	self._goTips = gohelper.findChild(self.viewGO, "Tips2")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._goChar1Root = gohelper.findChild(self.viewGO, "Hero/#go_Hero1")
+	self._goChar2Root = gohelper.findChild(self.viewGO, "Hero/#go_Hero2")
+	self._goChar3Root = gohelper.findChild(self.viewGO, "Hero/#go_Hero3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, arg_2_0.closeThis, arg_2_0)
+function NewbieCustomPickView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncancel:AddClickListener(self.closeThis, self)
+	self:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
+	self:addEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, arg_3_0.closeThis, arg_3_0)
+function NewbieCustomPickView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickListChanged, self.refreshUI, self)
+	self:removeEventCb(CustomPickChoiceController.instance, CustomPickChoiceEvent.onCustomPickComplete, self.closeThis, self)
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	CustomPickChoiceController.instance:tryChoice(arg_4_0.viewParam)
+function NewbieCustomPickView:_btnconfirmOnClick()
+	CustomPickChoiceController.instance:tryChoice(self.viewParam)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._HeroItems = {}
+function NewbieCustomPickView:_editableInitView()
+	self._HeroItems = {}
 end
 
-function var_0_0.onOpen(arg_6_0)
+function NewbieCustomPickView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mln_unlock)
 	CustomPickChoiceController.instance:onOpenView()
 
-	local var_6_0 = arg_6_0.viewParam and arg_6_0.viewParam.styleId
-	local var_6_1 = var_6_0 and CustomPickChoiceEnum.FixedText[var_6_0]
+	local styleId = self.viewParam and self.viewParam.styleId
+	local fixedTexts = styleId and CustomPickChoiceEnum.FixedText[styleId]
 
-	if var_6_1 then
-		for iter_6_0, iter_6_1 in pairs(var_6_1) do
-			if arg_6_0[iter_6_0] then
-				arg_6_0[iter_6_0].text = luaLang(iter_6_1)
+	if fixedTexts then
+		for com, fixedText in pairs(fixedTexts) do
+			if self[com] then
+				self[com].text = luaLang(fixedText)
 			end
 		end
 	end
 
-	local var_6_2 = var_6_0 and CustomPickChoiceEnum.ComponentVisible[var_6_0]
+	local compVisible = styleId and CustomPickChoiceEnum.ComponentVisible[styleId]
 
-	if var_6_2 then
-		for iter_6_2, iter_6_3 in pairs(var_6_2) do
-			if arg_6_0[iter_6_2] then
-				gohelper.setActive(arg_6_0[iter_6_2], iter_6_3)
+	if compVisible then
+		for com, visible in pairs(compVisible) do
+			if self[com] then
+				gohelper.setActive(self[com], visible)
 			end
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	arg_7_0:refreshSelectCount()
-	arg_7_0:refreshList()
+function NewbieCustomPickView:refreshUI()
+	self:refreshSelectCount()
+	self:refreshList()
 end
 
-function var_0_0.refreshSelectCount(arg_8_0)
-	local var_8_0 = CustomPickChoiceListModel.instance:getSelectCount()
-	local var_8_1 = CustomPickChoiceListModel.instance:getMaxSelectCount()
+function NewbieCustomPickView:refreshSelectCount()
+	local selectCount = CustomPickChoiceListModel.instance:getSelectCount()
+	local maxCount = CustomPickChoiceListModel.instance:getMaxSelectCount()
 
-	ZProj.UGUIHelper.SetGrayscale(arg_8_0._btnconfirm.gameObject, var_8_0 ~= var_8_1)
+	ZProj.UGUIHelper.SetGrayscale(self._btnconfirm.gameObject, selectCount ~= maxCount)
 end
 
-function var_0_0.refreshList(arg_9_0)
-	arg_9_0:updateCharItem(CustomPickChoiceListModel.instance.allHeroList[1], 1, arg_9_0._HeroItems, arg_9_0._goChar1Root)
-	arg_9_0:updateCharItem(CustomPickChoiceListModel.instance.allHeroList[2], 2, arg_9_0._HeroItems, arg_9_0._goChar2Root)
-	arg_9_0:updateCharItem(CustomPickChoiceListModel.instance.allHeroList[3], 3, arg_9_0._HeroItems, arg_9_0._goChar3Root)
+function NewbieCustomPickView:refreshList()
+	self:updateCharItem(CustomPickChoiceListModel.instance.allHeroList[1], 1, self._HeroItems, self._goChar1Root)
+	self:updateCharItem(CustomPickChoiceListModel.instance.allHeroList[2], 2, self._HeroItems, self._goChar2Root)
+	self:updateCharItem(CustomPickChoiceListModel.instance.allHeroList[3], 3, self._HeroItems, self._goChar3Root)
 end
 
-function var_0_0.updateCharItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = arg_10_0:getOrCreateItem(arg_10_2, arg_10_3, arg_10_4)
-	local var_10_1 = arg_10_1.id
-	local var_10_2
+function NewbieCustomPickView:updateCharItem(itemData, index, itemList, goRoot)
+	local item = self:getOrCreateItem(index, itemList, goRoot)
+	local heroId = itemData.id
+	local heroCfg
 
-	if var_10_1 and var_10_1 ~= 0 then
-		var_10_2 = HeroConfig.instance:getHeroCO(var_10_1)
+	if heroId and heroId ~= 0 then
+		heroCfg = HeroConfig.instance:getHeroCO(heroId)
 	end
 
-	local var_10_3 = HeroModel.instance:getByHeroId(var_10_1)
-	local var_10_4 = 0
-	local var_10_5 = 0
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
+	local ownNum = 0
+	local exSkillLevel = 0
 
-	if var_10_3 then
-		var_10_5 = var_10_3.exSkillLevel
-		var_10_4 = var_10_5 + 1
+	if heroMo then
+		exSkillLevel = heroMo.exSkillLevel
+		ownNum = exSkillLevel + 1
 	end
 
-	local var_10_6 = HeroMo.New()
+	local customHeroMo = HeroMo.New()
 
-	var_10_6:initFromConfig(var_10_2)
+	customHeroMo:initFromConfig(heroCfg)
 
-	var_10_6.rank = arg_10_1.rank
-	var_10_6.exSkillLevel = var_10_5
+	customHeroMo.rank = itemData.rank
+	customHeroMo.exSkillLevel = exSkillLevel
 
-	local var_10_7 = CustomPickChoiceListModel.instance:isHeroIdSelected(var_10_1)
+	local isSelect = CustomPickChoiceListModel.instance:isHeroIdSelected(heroId)
 
-	var_10_0:setSelect(var_10_7)
-	var_10_0:onUpdateMO(var_10_6)
+	item:setSelect(isSelect)
+	item:onUpdateMO(customHeroMo)
 
-	local var_10_8 = gohelper.findChild(arg_10_4, "#go_Have")
-	local var_10_9 = gohelper.findChild(arg_10_4, "#go_NoHave")
-	local var_10_10 = var_10_4 > 0
+	local haveText = gohelper.findChild(goRoot, "#go_Have")
+	local noHaveText = gohelper.findChild(goRoot, "#go_NoHave")
+	local haveHero = ownNum > 0
 
-	gohelper.setActive(var_10_8, var_10_10)
-	gohelper.setActive(var_10_9, not var_10_10)
+	gohelper.setActive(haveText, haveHero)
+	gohelper.setActive(noHaveText, not haveHero)
 end
 
-function var_0_0.getOrCreateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if not arg_11_2[arg_11_1] then
-		local var_11_0 = IconMgr.instance:getCommonHeroItem(arg_11_3)
+function NewbieCustomPickView:getOrCreateItem(index, items, goRoot)
+	if not items[index] then
+		local heroItem = IconMgr.instance:getCommonHeroItem(goRoot)
 
-		var_11_0:addClickListener(arg_11_0._onItemClick, arg_11_0)
-		var_11_0:setStyle_CharacterBackpack()
-		var_11_0:setLevelContentShow(false)
-		var_11_0:setExSkillActive(true)
+		heroItem:addClickListener(self._onItemClick, self)
+		heroItem:setStyle_CharacterBackpack()
+		heroItem:setLevelContentShow(false)
+		heroItem:setExSkillActive(true)
 
-		var_11_0.btnLongPress = SLFramework.UGUI.UILongPressListener.Get(var_11_0.go)
+		heroItem.btnLongPress = SLFramework.UGUI.UILongPressListener.Get(heroItem.go)
 
-		var_11_0.btnLongPress:SetLongPressTime({
+		heroItem.btnLongPress:SetLongPressTime({
 			0.5,
 			99999
 		})
-		var_11_0.btnLongPress:AddLongPressListener(arg_11_0._onLongClickItem, arg_11_0, arg_11_1)
+		heroItem.btnLongPress:AddLongPressListener(self._onLongClickItem, self, index)
 
-		arg_11_2[arg_11_1] = var_11_0
+		items[index] = heroItem
 	end
 
-	return arg_11_2[arg_11_1]
+	local item = items[index]
+
+	return item
 end
 
-function var_0_0._onItemClick(arg_12_0, arg_12_1)
+function NewbieCustomPickView:_onItemClick(itemData)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	CustomPickChoiceController.instance:setSelect(arg_12_1.heroId)
+	CustomPickChoiceController.instance:setSelect(itemData.heroId)
 end
 
-function var_0_0._onLongClickItem(arg_13_0, arg_13_1)
-	local var_13_0 = CustomPickChoiceListModel.instance.allHeroList[arg_13_1]
+function NewbieCustomPickView:_onLongClickItem(index)
+	local itemData = CustomPickChoiceListModel.instance.allHeroList[index]
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_rolesopen)
 	ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-		heroId = var_13_0.id
+		heroId = itemData.id
 	})
 end
 
-function var_0_0.onClose(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._HeroItems) do
-		iter_14_1.btnLongPress:RemoveLongPressListener()
+function NewbieCustomPickView:onClose()
+	for _, heroItem in ipairs(self._HeroItems) do
+		heroItem.btnLongPress:RemoveLongPressListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function NewbieCustomPickView:onDestroyView()
 	CustomPickChoiceController.instance:onCloseView()
 end
 
-return var_0_0
+return NewbieCustomPickView

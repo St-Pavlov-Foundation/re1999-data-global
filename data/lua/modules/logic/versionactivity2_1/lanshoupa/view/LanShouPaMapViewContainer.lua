@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaMapViewContainer.lua
 
-local var_0_0 = class("LanShouPaMapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local LanShouPaMapViewContainer = class("LanShouPaMapViewContainer", BaseViewContainer)
 
-	arg_1_0._mapViewScene = LanShouPaMapScene.New()
+function LanShouPaMapViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._mapViewScene)
-	table.insert(var_1_0, LanShouPaMapView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	self._mapViewScene = LanShouPaMapScene.New()
 
-	return var_1_0
+	table.insert(views, self._mapViewScene)
+	table.insert(views, LanShouPaMapView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function LanShouPaMapViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function LanShouPaMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_3_0._navigateButtonsView:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
+		self._navigateButtonsView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_4_0)
+function LanShouPaMapViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity2_1Enum.ActivityId.LanShouPa)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity2_1Enum.ActivityId.LanShouPa
 	})
 end
 
-function var_0_0.setVisibleInternal(arg_5_0, arg_5_1)
-	arg_5_0._mapViewScene:setSceneVisible(arg_5_1)
-	var_0_0.super.setVisibleInternal(arg_5_0, arg_5_1)
+function LanShouPaMapViewContainer:setVisibleInternal(isVisible)
+	self._mapViewScene:setSceneVisible(isVisible)
+	LanShouPaMapViewContainer.super.setVisibleInternal(self, isVisible)
 end
 
-return var_0_0
+return LanShouPaMapViewContainer

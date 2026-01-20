@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.act197.config.Activity197Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act197/config/Activity197Config.lua
 
-local var_0_0 = class("Activity197Config", BaseConfig)
+module("modules.logic.versionactivity2_8.act197.config.Activity197Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity197Config = class("Activity197Config", BaseConfig)
+
+function Activity197Config:reqConfigNames()
 	return {
 		"activity197",
 		"activity197_pool",
@@ -10,73 +12,73 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._poolList = {}
-	arg_2_0._poolDict = {}
-	arg_2_0._stageConfig = {}
-	arg_2_0._rummageConsume = 1
-	arg_2_0._exploreConsume = 1
+function Activity197Config:onInit()
+	self._poolList = {}
+	self._poolDict = {}
+	self._stageConfig = {}
+	self._rummageConsume = 1
+	self._exploreConsume = 1
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity197_pool" then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
-			arg_3_0._poolDict[iter_3_1.poolId] = arg_3_0._poolDict[iter_3_1.poolId] or {}
+function Activity197Config:onConfigLoaded(configName, configTable)
+	if configName == "activity197_pool" then
+		for _, poolCo in ipairs(configTable.configList) do
+			self._poolDict[poolCo.poolId] = self._poolDict[poolCo.poolId] or {}
 
-			table.insert(arg_3_0._poolDict[iter_3_1.poolId], iter_3_1)
+			table.insert(self._poolDict[poolCo.poolId], poolCo)
 		end
 
-		for iter_3_2, iter_3_3 in pairs(arg_3_0._poolDict) do
-			table.insert(arg_3_0._poolList, iter_3_2)
+		for key, value in pairs(self._poolDict) do
+			table.insert(self._poolList, key)
 		end
-	elseif arg_3_1 == "activity197" then
-		local var_3_0 = arg_3_2.configList[1]
-		local var_3_1 = string.split(var_3_0.rummageConsume, "#")
-		local var_3_2 = string.split(var_3_0.exploreConsume, "#")
-		local var_3_3 = string.split(var_3_0.exploreItem, "#")
+	elseif configName == "activity197" then
+		local co = configTable.configList[1]
+		local rummageConsume = string.split(co.rummageConsume, "#")
+		local exploreConsume = string.split(co.exploreConsume, "#")
+		local exploreGetCount = string.split(co.exploreItem, "#")
 
-		arg_3_0._rummageConsume = var_3_1[3]
-		arg_3_0._exploreConsume = var_3_2[3]
-		arg_3_0._exploreGetCount = var_3_3[3]
-	elseif arg_3_1 == "actvity197_stage" then
-		arg_3_0._stageConfig = arg_3_2
+		self._rummageConsume = rummageConsume[3]
+		self._exploreConsume = exploreConsume[3]
+		self._exploreGetCount = exploreGetCount[3]
+	elseif configName == "actvity197_stage" then
+		self._stageConfig = configTable
 	end
 end
 
-function var_0_0.getPoolList(arg_4_0)
-	return arg_4_0._poolList
+function Activity197Config:getPoolList()
+	return self._poolList
 end
 
-function var_0_0.getPoolCount(arg_5_0)
-	return #arg_5_0._poolList
+function Activity197Config:getPoolCount()
+	return #self._poolList
 end
 
-function var_0_0.getPoolConfigById(arg_6_0, arg_6_1)
-	return arg_6_0._poolDict[arg_6_1]
+function Activity197Config:getPoolConfigById(poolId)
+	return self._poolDict[poolId]
 end
 
-function var_0_0.getPoolRewardCount(arg_7_0, arg_7_1)
-	return #arg_7_0._poolDict[arg_7_1]
+function Activity197Config:getPoolRewardCount(poolId)
+	return #self._poolDict[poolId]
 end
 
-function var_0_0.getRummageConsume(arg_8_0)
-	return arg_8_0._rummageConsume
+function Activity197Config:getRummageConsume()
+	return self._rummageConsume
 end
 
-function var_0_0.getExploreConsume(arg_9_0)
-	return arg_9_0._exploreConsume
+function Activity197Config:getExploreConsume()
+	return self._exploreConsume
 end
 
-function var_0_0.getExploreGetCount(arg_10_0)
-	return arg_10_0._exploreGetCount
+function Activity197Config:getExploreGetCount()
+	return self._exploreGetCount
 end
 
-function var_0_0.getStageConfig(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._stageConfig.configDict[arg_11_1]
+function Activity197Config:getStageConfig(actId, stage)
+	local dict = self._stageConfig.configDict[actId]
 
-	return var_11_0 and var_11_0[arg_11_2]
+	return dict and dict[stage]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity197Config.instance = Activity197Config.New()
 
-return var_0_0
+return Activity197Config

@@ -1,144 +1,146 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillDescItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/skill/VersionActivity1_6SkillDescItem.lua
 
-local var_0_0 = class("VersionActivity1_6SkillDescItem", UserDataDispose)
+module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillDescItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._skillCfg = arg_1_2
-	arg_1_0.go = arg_1_1
-	arg_1_0.parentView = arg_1_3
-	arg_1_0.txtlv = gohelper.findChildText(arg_1_1, "descripteitem/#txt_skillevel")
-	arg_1_0.txtskillDesc = gohelper.findChildText(arg_1_1, "descripteitem/#txt_descripte")
-	arg_1_0.canvasGroup = gohelper.onceAddComponent(arg_1_0.txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
-	arg_1_0.txtlvcanvasGroup = gohelper.onceAddComponent(arg_1_0.txtlv.gameObject, gohelper.Type_CanvasGroup)
-	arg_1_0.goCurLvFlag = gohelper.findChild(arg_1_1, "descripteitem/#go_curlevel")
-	arg_1_0.vx = gohelper.findChild(arg_1_1, "descripteitem/vx")
-	arg_1_0.txtCostNum = gohelper.findChildText(arg_1_1, "descripteitem/#txt_descripte/Prop/#txt_Num")
-	arg_1_0.imageCostIcon = gohelper.findChildImage(arg_1_1, "descripteitem/#txt_descripte/Prop/#simage_Prop")
+local VersionActivity1_6SkillDescItem = class("VersionActivity1_6SkillDescItem", UserDataDispose)
 
-	gohelper.setActive(arg_1_0.vx, false)
+function VersionActivity1_6SkillDescItem:init(go, skillCfg, view)
+	self._skillCfg = skillCfg
+	self.go = go
+	self.parentView = view
+	self.txtlv = gohelper.findChildText(go, "descripteitem/#txt_skillevel")
+	self.txtskillDesc = gohelper.findChildText(go, "descripteitem/#txt_descripte")
+	self.canvasGroup = gohelper.onceAddComponent(self.txtskillDesc.gameObject, gohelper.Type_CanvasGroup)
+	self.txtlvcanvasGroup = gohelper.onceAddComponent(self.txtlv.gameObject, gohelper.Type_CanvasGroup)
+	self.goCurLvFlag = gohelper.findChild(go, "descripteitem/#go_curlevel")
+	self.vx = gohelper.findChild(go, "descripteitem/vx")
+	self.txtCostNum = gohelper.findChildText(go, "descripteitem/#txt_descripte/Prop/#txt_Num")
+	self.imageCostIcon = gohelper.findChildImage(go, "descripteitem/#txt_descripte/Prop/#simage_Prop")
 
-	arg_1_0._needUseSkillEffDescList = {}
-	arg_1_0._needUseSkillEffDescList2 = {}
+	gohelper.setActive(self.vx, false)
+
+	self._needUseSkillEffDescList = {}
+	self._needUseSkillEffDescList2 = {}
 end
 
-function var_0_0.refreshInfo(arg_2_0)
-	local var_2_0 = arg_2_0._skillCfg.level
-	local var_2_1 = arg_2_0._skillCfg.skillId
-	local var_2_2 = arg_2_0._skillCfg.attrs
-	local var_2_3 = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[var_2_0]
+function VersionActivity1_6SkillDescItem:refreshInfo()
+	local skillLv = self._skillCfg.level
+	local skillId = self._skillCfg.skillId
+	local attrStr = self._skillCfg.attrs
+	local isKeyPoint = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[skillLv]
 
-	arg_2_0.lv = var_2_0
-	arg_2_0.txtlv.text = arg_2_0._skillCfg.level
-	arg_2_0._hyperLinkClick = arg_2_0.txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
+	self.lv = skillLv
+	self.txtlv.text = self._skillCfg.level
+	self._hyperLinkClick = self.txtskillDesc:GetComponent(typeof(ZProj.TMPHyperLinkClick))
 
-	arg_2_0._hyperLinkClick:SetClickListener(arg_2_0._onHyperLinkClick, arg_2_0)
+	self._hyperLinkClick:SetClickListener(self._onHyperLinkClick, self)
 
-	local var_2_4 = ""
+	local attrDesc = ""
 
-	if var_2_1 and var_2_1 ~= 0 then
-		local var_2_5 = FightConfig.instance:getSkillEffectCO(var_2_1)
+	if skillId and skillId ~= 0 then
+		local skillEffectCfg = FightConfig.instance:getSkillEffectCO(skillId)
 
-		var_2_4 = FightConfig.instance:getSkillEffectDesc(nil, var_2_5)
-	elseif var_2_2 then
-		local var_2_6 = string.splitToNumber(var_2_2, "#")
-		local var_2_7 = var_2_6[1]
-		local var_2_8 = var_2_6[2]
-		local var_2_9 = lua_skill_effect.configDict[var_2_7]
+		attrDesc = FightConfig.instance:getSkillEffectDesc(nil, skillEffectCfg)
+	elseif attrStr then
+		local attributeArr = string.splitToNumber(attrStr, "#")
+		local attrId = attributeArr[1]
+		local attrValue = attributeArr[2]
+		local attrCfg = lua_skill_effect.configDict[attrId]
 
-		var_2_4 = arg_2_0._skillCfg.skillAttrDesc
+		attrDesc = self._skillCfg.skillAttrDesc
 	end
 
-	local var_2_10 = HeroSkillModel.instance:formatDescWithColor(var_2_4, "#deaa79", "#7e99d0")
-	local var_2_11 = arg_2_0:_buildLinkTag(var_2_10)
+	attrDesc = HeroSkillModel.instance:formatDescWithColor(attrDesc, "#deaa79", "#7e99d0")
+	attrDesc = self:_buildLinkTag(attrDesc)
 
-	arg_2_0.height = GameUtil.getTextHeightByLine(arg_2_0.txtskillDesc, var_2_11, 28, -3) + 42
+	local height = GameUtil.getTextHeightByLine(self.txtskillDesc, attrDesc, 28, -3)
 
-	recthelper.setHeight(arg_2_0.go.transform, arg_2_0.height)
+	self.height = height + 42
 
-	arg_2_0.txtskillDesc.text = var_2_11
-	arg_2_0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0.txtskillDesc.gameObject, FixTmpBreakLine)
+	recthelper.setHeight(self.go.transform, self.height)
 
-	arg_2_0._fixTmpBreakLine:refreshTmpContent(arg_2_0.txtskillDesc)
+	self.txtskillDesc.text = attrDesc
+	self._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self.txtskillDesc.gameObject, FixTmpBreakLine)
 
-	local var_2_12 = Activity148Config.instance:getAct148CfgByTypeLv(arg_2_0._skillCfg.type, arg_2_0._skillCfg.level)
+	self._fixTmpBreakLine:refreshTmpContent(self.txtskillDesc)
 
-	if var_2_12 then
-		local var_2_13 = var_2_12.cost
-		local var_2_14 = string.splitToNumber(var_2_13, "#")[3]
+	local curLvSkillCfg = Activity148Config.instance:getAct148CfgByTypeLv(self._skillCfg.type, self._skillCfg.level)
 
-		arg_2_0.txtCostNum.text = var_2_14
+	if curLvSkillCfg then
+		local costStr = curLvSkillCfg.cost
+		local attribute = string.splitToNumber(costStr, "#")
+		local costNum = attribute[3]
+
+		self.txtCostNum.text = costNum
 	end
 
-	local var_2_15 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
-	local var_2_16 = string.format("%s_1", var_2_15 and var_2_15.icon)
+	local currencyCfg = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
+	local currencyname = string.format("%s_1", currencyCfg and currencyCfg.icon)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_2_0.imageCostIcon, var_2_16)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self.imageCostIcon, currencyname)
 end
 
-function var_0_0._onHyperLinkClick(arg_3_0, arg_3_1, arg_3_2)
+function VersionActivity1_6SkillDescItem:_onHyperLinkClick(skillName, clickPosition)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	arg_3_1 = arg_3_0._needUseSkillEffDescList2[tonumber(arg_3_1)]
+	skillName = self._needUseSkillEffDescList2[tonumber(skillName)]
 
-	if not arg_3_0._needUseSkillEffDescList[arg_3_1] then
+	if not self._needUseSkillEffDescList[skillName] then
 		return
 	end
 
-	arg_3_0.parentView:showBuffContainer(SkillConfig.instance:processSkillDesKeyWords(arg_3_1), arg_3_0._needUseSkillEffDescList[arg_3_1], arg_3_2)
+	self.parentView:showBuffContainer(SkillConfig.instance:processSkillDesKeyWords(skillName), self._needUseSkillEffDescList[skillName], clickPosition)
 end
 
-function var_0_0._buildLinkTag(arg_4_0, arg_4_1)
-	arg_4_1 = string.gsub(arg_4_1, "】", "]")
-	arg_4_1 = string.gsub(arg_4_1, "【", "[")
+function VersionActivity1_6SkillDescItem:_buildLinkTag(desc)
+	desc = string.gsub(desc, "】", "]")
+	desc = string.gsub(desc, "【", "[")
 
-	local var_4_0 = 0
-	local var_4_1 = 0
-	local var_4_2 = {}
-	local var_4_3
+	local pos, index, arr = 0, 0, {}
+	local skillName
 
-	for iter_4_0, iter_4_1 in function()
-		return string.find(arg_4_1, "[%[%]]", var_4_0)
+	for st, sp in function()
+		return string.find(desc, "[%[%]]", pos)
 	end do
-		var_4_1 = var_4_1 + 1
+		index = index + 1
+		skillName = string.sub(desc, pos, st - 1)
 
-		local var_4_4 = string.sub(arg_4_1, var_4_0, iter_4_0 - 1)
+		if index % 2 == 0 then
+			local skillIndex = self:_buildSkillEffDescCo(skillName)
 
-		if var_4_1 % 2 == 0 then
-			local var_4_5 = arg_4_0:_buildSkillEffDescCo(var_4_4)
+			if skillIndex then
+				local showName = SkillConfig.instance:processSkillDesKeyWords(skillName)
 
-			if var_4_5 then
-				local var_4_6 = SkillConfig.instance:processSkillDesKeyWords(var_4_4)
-
-				var_4_4 = string.format("<u><link=%s>[%s]</link></u>", var_4_5, var_4_6)
+				skillName = string.format("<u><link=%s>[%s]</link></u>", skillIndex, showName)
 			else
-				var_4_4 = string.format("[%s]", var_4_4)
+				skillName = string.format("[%s]", skillName)
 			end
 		end
 
-		table.insert(var_4_2, var_4_4)
+		table.insert(arr, skillName)
 
-		var_4_0 = iter_4_1 + 1
+		pos = sp + 1
 	end
 
-	table.insert(var_4_2, string.sub(arg_4_1, var_4_0))
+	table.insert(arr, string.sub(desc, pos))
 
-	return table.concat(var_4_2)
+	return table.concat(arr)
 end
 
-function var_0_0._buildSkillEffDescCo(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(lua_skill_eff_desc.configList) do
-		if iter_6_1.name == arg_6_1 then
-			if SkillHelper.canShowTag(iter_6_1) then
-				local var_6_0 = tabletool.indexOf(arg_6_0._needUseSkillEffDescList2, arg_6_1)
+function VersionActivity1_6SkillDescItem:_buildSkillEffDescCo(skillName)
+	for _, skillCo in ipairs(lua_skill_eff_desc.configList) do
+		if skillCo.name == skillName then
+			if SkillHelper.canShowTag(skillCo) then
+				local index = tabletool.indexOf(self._needUseSkillEffDescList2, skillName)
 
-				if not var_6_0 then
-					var_6_0 = #arg_6_0._needUseSkillEffDescList2 + 1
-					arg_6_0._needUseSkillEffDescList2[var_6_0] = arg_6_1
+				if not index then
+					index = #self._needUseSkillEffDescList2 + 1
+					self._needUseSkillEffDescList2[index] = skillName
 				end
 
-				arg_6_0._needUseSkillEffDescList[arg_6_1] = iter_6_1.desc
+				self._needUseSkillEffDescList[skillName] = skillCo.desc
 
-				return var_6_0
+				return index
 			else
 				return nil
 			end
@@ -146,4 +148,4 @@ function var_0_0._buildSkillEffDescCo(arg_6_0, arg_6_1)
 	end
 end
 
-return var_0_0
+return VersionActivity1_6SkillDescItem

@@ -1,3 +1,7 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreSequenceCountUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreSequenceCountUnitMO.lua
 
-return (class("ExploreSequenceCountUnitMO", ExploreWaitActiveAnimUnitMO))
+module("modules.logic.explore.model.mo.unit.ExploreSequenceCountUnitMO", package.seeall)
+
+local ExploreSequenceCountUnitMO = class("ExploreSequenceCountUnitMO", ExploreWaitActiveAnimUnitMO)
+
+return ExploreSequenceCountUnitMO

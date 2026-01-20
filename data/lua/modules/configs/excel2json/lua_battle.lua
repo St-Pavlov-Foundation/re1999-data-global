@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_battle", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_battle.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_battle", package.seeall)
+
+local lua_battle = {}
+local fields = {
 	restrictReason = 28,
 	trialMainAct104EuqipId = 32,
 	battleEffectiveness = 23,
@@ -16,12 +18,13 @@ local var_0_1 = {
 	noAutoFight = 35,
 	sceneIds = 3,
 	additionRule = 15,
-	balance = 33,
+	actShow = 39,
 	actionRule = 34,
 	heroEffectiveness = 24,
 	winCondition = 12,
 	myStance = 16,
 	playerMax = 9,
+	balance = 33,
 	fightTitle = 21,
 	aiLink = 37,
 	bgmevent = 20,
@@ -41,15 +44,15 @@ local var_0_1 = {
 	onlyTrial = 36,
 	trialEquips = 31
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	restrictReason = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_battle.onLoad(json)
+	lua_battle.configList, lua_battle.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_battle

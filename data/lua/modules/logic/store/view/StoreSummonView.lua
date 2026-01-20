@@ -1,122 +1,126 @@
-﻿module("modules.logic.store.view.StoreSummonView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSummonView.lua
 
-local var_0_0 = class("StoreSummonView", BaseView)
+module("modules.logic.store.view.StoreSummonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem")
-	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#scroll_prop/#go_lock")
-	arg_1_0._lineGo = gohelper.findChild(arg_1_0.viewGO, "line")
-	arg_1_0._txtLockText = gohelper.findChildText(arg_1_0.viewGO, "#scroll_prop/#go_lock/locktext")
-	arg_1_0._simagelockbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_prop/#go_lock/#simage_lockbg")
+local StoreSummonView = class("StoreSummonView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreSummonView:onInitView()
+	self._gostorecategoryitem = gohelper.findChild(self.viewGO, "top/scroll_category/viewport/categorycontent/#go_storecategoryitem")
+	self._scrollprop = gohelper.findChildScrollRect(self.viewGO, "#scroll_prop")
+	self._golock = gohelper.findChild(self.viewGO, "#scroll_prop/#go_lock")
+	self._lineGo = gohelper.findChild(self.viewGO, "line")
+	self._txtLockText = gohelper.findChildText(self.viewGO, "#scroll_prop/#go_lock/locktext")
+	self._simagelockbg = gohelper.findChildSingleImage(self.viewGO, "#scroll_prop/#go_lock/#simage_lockbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function StoreSummonView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function StoreSummonView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._txtrefreshTime = gohelper.findChildText(arg_4_0.viewGO, "#txt_refreshTime")
+function StoreSummonView:_editableInitView()
+	self._txtrefreshTime = gohelper.findChildText(self.viewGO, "#txt_refreshTime")
 
-	gohelper.setActive(arg_4_0._txtrefreshTime.gameObject, false)
-	gohelper.setActive(arg_4_0._gostorecategoryitem, false)
+	gohelper.setActive(self._txtrefreshTime.gameObject, false)
+	gohelper.setActive(self._gostorecategoryitem, false)
 
-	arg_4_0._lockClick = gohelper.getClickWithAudio(arg_4_0._golock)
-	arg_4_0._isLock = false
-	arg_4_0._categoryItemContainer = {}
+	self._lockClick = gohelper.getClickWithAudio(self._golock)
+	self._isLock = false
+	self._categoryItemContainer = {}
 
-	arg_4_0._simagelockbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_weijiesuodiban"))
+	self._simagelockbg:LoadImage(ResUrl.getStoreBottomBgIcon("bg_weijiesuodiban"))
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._categoryItemContainer and #arg_5_0._categoryItemContainer > 0 then
-		for iter_5_0 = 1, #arg_5_0._categoryItemContainer do
-			arg_5_0._categoryItemContainer[iter_5_0].btn:RemoveClickListener()
+function StoreSummonView:onDestroyView()
+	if self._categoryItemContainer and #self._categoryItemContainer > 0 then
+		for i = 1, #self._categoryItemContainer do
+			local categotyItem = self._categoryItemContainer[i]
+
+			categotyItem.btn:RemoveClickListener()
 		end
 	end
 
-	arg_5_0._simagelockbg:UnLoadImage()
+	self._simagelockbg:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.storeId = StoreEnum.StoreId.LimitStore
+function StoreSummonView:onOpen()
+	self.storeId = StoreEnum.StoreId.LimitStore
 
-	arg_6_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_6_0._updateInfo, arg_6_0)
-	arg_6_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_6_0._updateInfo, arg_6_0)
-	arg_6_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_6_0._onRefreshRedDot, arg_6_0)
-	arg_6_0._lockClick:AddClickListener(arg_6_0._onLockClick, arg_6_0)
+	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._updateInfo, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, self._onRefreshRedDot, self)
+	self._lockClick:AddClickListener(self._onLockClick, self)
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_7_0._updateInfo, arg_7_0)
-	arg_7_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_7_0._updateInfo, arg_7_0)
-	arg_7_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_7_0._onRefreshRedDot, arg_7_0)
-	arg_7_0._lockClick:RemoveClickListener()
+function StoreSummonView:onClose()
+	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._updateInfo, self)
+	self:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, self._onRefreshRedDot, self)
+	self._lockClick:RemoveClickListener()
 end
 
-function var_0_0.refreshRemainTime(arg_8_0)
-	local var_8_0 = StoreConfig.instance:getTabConfig(arg_8_0.storeId)
-	local var_8_1 = StoreHelper.getRemainExpireTime(var_8_0)
+function StoreSummonView:refreshRemainTime()
+	local storeEntranceCfg = StoreConfig.instance:getTabConfig(self.storeId)
+	local remainTime = StoreHelper.getRemainExpireTime(storeEntranceCfg)
 
-	if var_8_1 and var_8_1 > 0 then
-		arg_8_0._txtrefreshTime.text = string.format(luaLang("summon_limit_shop_remaintime"), SummonModel.formatRemainTime(var_8_1))
+	if remainTime and remainTime > 0 then
+		self._txtrefreshTime.text = string.format(luaLang("summon_limit_shop_remaintime"), SummonModel.formatRemainTime(remainTime))
 	else
-		arg_8_0._txtrefreshTime.text = ""
+		self._txtrefreshTime.text = ""
 	end
 end
 
-function var_0_0.refreshLockStatus(arg_9_0)
-	if arg_9_0._selectThirdTabId > 0 then
-		arg_9_0._isLock = StoreModel.instance:isStoreTabLock(arg_9_0.storeId)
+function StoreSummonView:refreshLockStatus()
+	if self._selectThirdTabId > 0 then
+		self._isLock = StoreModel.instance:isStoreTabLock(self.storeId)
 
-		if arg_9_0._isLock then
-			local var_9_0 = StoreConfig.instance:getStoreConfig(arg_9_0.storeId)
+		if self._isLock then
+			local co = StoreConfig.instance:getStoreConfig(self.storeId)
 
-			arg_9_0._txtLockText.text = string.format(luaLang("lock_store_text"), StoreConfig.instance:getTabConfig(var_9_0.needClearStore).name)
+			self._txtLockText.text = string.format(luaLang("lock_store_text"), StoreConfig.instance:getTabConfig(co.needClearStore).name)
 		end
 
-		gohelper.setActive(arg_9_0._golock, arg_9_0._isLock)
+		gohelper.setActive(self._golock, self._isLock)
 	else
-		gohelper.setActive(arg_9_0._golock, false)
+		gohelper.setActive(self._golock, false)
 	end
 end
 
-function var_0_0._refreshSecondTabs(arg_10_0, arg_10_1, arg_10_2)
+function StoreSummonView:_refreshSecondTabs(index, secondTabConfig)
 	return
 end
 
-function var_0_0._refreshGoods(arg_11_0)
+function StoreSummonView:_refreshGoods()
 	return
 end
 
-function var_0_0._onLockClick(arg_12_0)
-	if arg_12_0._isLock then
-		local var_12_0 = StoreConfig.instance:getTabConfig(arg_12_0.storeId).name
+function StoreSummonView:_onLockClick()
+	if self._isLock then
+		local currentStoreName = StoreConfig.instance:getTabConfig(self.storeId).name
 
-		GameFacade.showToast(ToastEnum.NormalStoreIsLock, var_12_0)
+		GameFacade.showToast(ToastEnum.NormalStoreIsLock, currentStoreName)
 	end
 end
 
-function var_0_0._updateInfo(arg_13_0)
+function StoreSummonView:_updateInfo()
 	return
 end
 
-function var_0_0._onRefreshRedDot(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._categoryItemContainer) do
-		gohelper.setActive(iter_14_1.go_reddot, StoreModel.instance:isTabFirstRedDotShow(iter_14_1.tabId))
+function StoreSummonView:_onRefreshRedDot()
+	for _, v in pairs(self._categoryItemContainer) do
+		gohelper.setActive(v.go_reddot, StoreModel.instance:isTabFirstRedDotShow(v.tabId))
 	end
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function StoreSummonView:onUpdateParam()
 	return
 end
 
-return var_0_0
+return StoreSummonView

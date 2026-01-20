@@ -1,182 +1,190 @@
-﻿module("modules.logic.room.entity.comp.RoomInitBuildingSkinComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomInitBuildingSkinComp.lua
 
-local var_0_0 = class("RoomInitBuildingSkinComp", LuaCompBase)
-local var_0_1 = 0.3
-local var_0_2 = "RoomInitBuildingSkinComp_refreshBuilding_block"
+module("modules.logic.room.entity.comp.RoomInitBuildingSkinComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+local RoomInitBuildingSkinComp = class("RoomInitBuildingSkinComp", LuaCompBase)
+local DEFAULT_SWITCH_TIME = 0.3
+local BLOCK_KEY = "RoomInitBuildingSkinComp_refreshBuilding_block"
+
+function RoomInitBuildingSkinComp:ctor(entity)
+	self.entity = entity
+	self._effectKey = RoomEnum.EffectKey.BuildingGOKey
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._skinId = arg_2_0:_getRoomSkin()
-	arg_2_0._switchTime = CommonConfig.instance:getConstNum(ConstEnum.RoomSkinSwitchTime)
+function RoomInitBuildingSkinComp:init(go)
+	self.go = go
+	self._skinId = self:_getRoomSkin()
+	self._switchTime = CommonConfig.instance:getConstNum(ConstEnum.RoomSkinSwitchTime)
 
-	if not arg_2_0._switchTime or arg_2_0._switchTime == 0 then
-		arg_2_0._switchTime = var_0_1
-	end
-end
-
-function var_0_0.addEventListeners(arg_3_0)
-	RoomSkinController.instance:registerCallback(RoomSkinEvent.SkinListViewShowChange, arg_3_0._onSkinChange, arg_3_0)
-	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangePreviewRoomSkin, arg_3_0._onSkinChange, arg_3_0)
-	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangeEquipRoomSkin, arg_3_0._onEquipSkin, arg_3_0)
-end
-
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.SkinListViewShowChange, arg_4_0._onSkinChange, arg_4_0)
-	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangePreviewRoomSkin, arg_4_0._onSkinChange, arg_4_0)
-	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangeEquipRoomSkin, arg_4_0._onEquipSkin, arg_4_0)
-end
-
-function var_0_0._onSkinChange(arg_5_0)
-	if arg_5_0.__willDestroy then
-		return
-	end
-
-	local var_5_0 = RoomSkinListModel.instance:getSelectPartId()
-
-	if not arg_5_0.entity or var_5_0 ~= arg_5_0.entity.id then
-		return
-	end
-
-	local var_5_1 = arg_5_0:_getRoomSkin()
-
-	if arg_5_0._skinId ~= var_5_1 then
-		TaskDispatcher.cancelTask(arg_5_0.delayPlayChangeEff, arg_5_0)
-
-		arg_5_0._skinId = var_5_1
-
-		arg_5_0.entity:tweenAlphaThreshold(0, 1, arg_5_0._switchTime, arg_5_0.onHideLastSkinFinish, arg_5_0)
+	if not self._switchTime or self._switchTime == 0 then
+		self._switchTime = DEFAULT_SWITCH_TIME
 	end
 end
 
-function var_0_0.onHideLastSkinFinish(arg_6_0)
-	if not arg_6_0.entity or arg_6_0.__willDestroy then
-		return
-	end
-
-	UIBlockMgr.instance:startBlock(var_0_2)
-
-	arg_6_0._needPlayChangeEff = true
-
-	arg_6_0.entity:refreshBuilding(true, 1)
+function RoomInitBuildingSkinComp:addEventListeners()
+	RoomSkinController.instance:registerCallback(RoomSkinEvent.SkinListViewShowChange, self._onSkinChange, self)
+	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangePreviewRoomSkin, self._onSkinChange, self)
+	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangeEquipRoomSkin, self._onEquipSkin, self)
 end
 
-function var_0_0.onEffectRebuild(arg_7_0)
-	UIBlockMgr.instance:endBlock(var_0_2)
+function RoomInitBuildingSkinComp:removeEventListeners()
+	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.SkinListViewShowChange, self._onSkinChange, self)
+	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangePreviewRoomSkin, self._onSkinChange, self)
+	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangeEquipRoomSkin, self._onEquipSkin, self)
+end
 
-	if arg_7_0.__willDestroy then
+function RoomInitBuildingSkinComp:_onSkinChange()
+	if self.__willDestroy then
 		return
 	end
 
-	local var_7_0 = arg_7_0.entity.effect
+	local selectPartId = RoomSkinListModel.instance:getSelectPartId()
 
-	if not var_7_0:isHasEffectGOByKey(arg_7_0._effectKey) then
+	if not self.entity or selectPartId ~= self.entity.id then
 		return
 	end
 
-	if not var_7_0:isSameResByKey(arg_7_0._effectKey, arg_7_0._effectRes) then
-		arg_7_0._effectRes = var_7_0:getEffectRes(arg_7_0._effectKey)
-		arg_7_0._skinId = arg_7_0:_getRoomSkin()
-	end
+	local skinId = self:_getRoomSkin()
 
-	if arg_7_0._needPlayChangeEff then
-		TaskDispatcher.cancelTask(arg_7_0.delayPlayChangeEff, arg_7_0)
-		TaskDispatcher.runDelay(arg_7_0.delayPlayChangeEff, arg_7_0, 0.01)
+	if self._skinId ~= skinId then
+		TaskDispatcher.cancelTask(self.delayPlayChangeEff, self)
+
+		self._skinId = skinId
+
+		self.entity:tweenAlphaThreshold(0, 1, self._switchTime, self.onHideLastSkinFinish, self)
 	end
 end
 
-function var_0_0.delayPlayChangeEff(arg_8_0)
-	if arg_8_0.__willDestroy then
+function RoomInitBuildingSkinComp:onHideLastSkinFinish()
+	if not self.entity or self.__willDestroy then
 		return
 	end
 
-	arg_8_0.entity:tweenAlphaThreshold(1, 0, arg_8_0._switchTime)
+	UIBlockMgr.instance:startBlock(BLOCK_KEY)
 
-	arg_8_0._needPlayChangeEff = false
+	self._needPlayChangeEff = true
+
+	self.entity:refreshBuilding(true, 1)
 end
 
-function var_0_0._onEquipSkin(arg_9_0)
-	if arg_9_0.__willDestroy then
+function RoomInitBuildingSkinComp:onEffectRebuild()
+	UIBlockMgr.instance:endBlock(BLOCK_KEY)
+
+	if self.__willDestroy then
 		return
 	end
 
-	local var_9_0 = RoomSkinListModel.instance:getSelectPartId()
+	local effect = self.entity.effect
+	local isHasEffectGOByKey = effect:isHasEffectGOByKey(self._effectKey)
 
-	if not arg_9_0.entity or var_9_0 ~= arg_9_0.entity.id then
+	if not isHasEffectGOByKey then
 		return
 	end
 
-	if RoomSkinModel.instance:isDefaultRoomSkin(var_9_0, arg_9_0._skinId) then
+	local isSameRes = effect:isSameResByKey(self._effectKey, self._effectRes)
+
+	if not isSameRes then
+		self._effectRes = effect:getEffectRes(self._effectKey)
+		self._skinId = self:_getRoomSkin()
+	end
+
+	if self._needPlayChangeEff then
+		TaskDispatcher.cancelTask(self.delayPlayChangeEff, self)
+		TaskDispatcher.runDelay(self.delayPlayChangeEff, self, 0.01)
+	end
+end
+
+function RoomInitBuildingSkinComp:delayPlayChangeEff()
+	if self.__willDestroy then
 		return
 	end
 
-	local var_9_1 = RoomEnum.EffectKey.BuildingEquipSkinEffectKey
-	local var_9_2 = arg_9_0.entity.effect
+	self.entity:tweenAlphaThreshold(1, 0, self._switchTime)
 
-	if var_9_2:isHasEffectGOByKey(var_9_1) then
-		local var_9_3 = var_9_2:getEffectGO(var_9_1)
+	self._needPlayChangeEff = false
+end
 
-		gohelper.setActive(var_9_3, false)
-		gohelper.setActive(var_9_3, true)
+function RoomInitBuildingSkinComp:_onEquipSkin()
+	if self.__willDestroy then
+		return
+	end
+
+	local selectPartId = RoomSkinListModel.instance:getSelectPartId()
+
+	if not self.entity or selectPartId ~= self.entity.id then
+		return
+	end
+
+	local isDefaultRoomSkin = RoomSkinModel.instance:isDefaultRoomSkin(selectPartId, self._skinId)
+
+	if isDefaultRoomSkin then
+		return
+	end
+
+	local changeSkinEffKey = RoomEnum.EffectKey.BuildingEquipSkinEffectKey
+	local effect = self.entity.effect
+	local isHasChangeSkinEff = effect:isHasEffectGOByKey(changeSkinEffKey)
+
+	if isHasChangeSkinEff then
+		local effGo = effect:getEffectGO(changeSkinEffKey)
+
+		gohelper.setActive(effGo, false)
+		gohelper.setActive(effGo, true)
 	else
-		local var_9_4 = 0
-		local var_9_5 = 0
-		local var_9_6 = 0
-		local var_9_7 = RoomConfig.instance:getRoomSkinEquipEffPos(arg_9_0._skinId)
+		local x, y, z = 0, 0, 0
+		local cfgPos = RoomConfig.instance:getRoomSkinEquipEffPos(self._skinId)
 
-		if var_9_7 and #var_9_7 > 0 then
-			var_9_4 = var_9_7[1] or 0
-			var_9_5 = var_9_7[2] or 0
-			var_9_6 = var_9_7[3] or 0
+		if cfgPos and #cfgPos > 0 then
+			x = cfgPos[1] or 0
+			y = cfgPos[2] or 0
+			z = cfgPos[3] or 0
 		end
 
-		local var_9_8
-		local var_9_9 = RoomConfig.instance:getRoomSkinEquipEffSize(arg_9_0._skinId)
+		local vector3LocalScale
+		local cfgScale = RoomConfig.instance:getRoomSkinEquipEffSize(self._skinId)
 
-		if var_9_9 and var_9_9 ~= 0 then
-			var_9_8 = Vector3(var_9_9, var_9_9, var_9_9)
+		if cfgScale and cfgScale ~= 0 then
+			vector3LocalScale = Vector3(cfgScale, cfgScale, cfgScale)
 		end
 
-		var_9_2:addParams({
-			[var_9_1] = {
+		effect:addParams({
+			[changeSkinEffKey] = {
 				res = RoomScenePreloader.ResEquipRoomSkinEffect,
-				localPos = Vector3(var_9_4, var_9_5, var_9_6),
-				localScale = var_9_8
+				localPos = Vector3(x, y, z),
+				localScale = vector3LocalScale
 			}
 		})
 	end
 
-	var_9_2:refreshEffect()
+	effect:refreshEffect()
 end
 
-function var_0_0._getRoomSkin(arg_10_0)
-	if arg_10_0.__willDestroy then
+function RoomInitBuildingSkinComp:_getRoomSkin()
+	if self.__willDestroy then
 		return
 	end
 
-	return (RoomSkinModel.instance:getShowSkin(arg_10_0.entity.id))
+	local showSkinId = RoomSkinModel.instance:getShowSkin(self.entity.id)
+
+	return showSkinId
 end
 
-function var_0_0.beforeDestroy(arg_11_0)
-	UIBlockMgr.instance:endBlock(var_0_2)
+function RoomInitBuildingSkinComp:beforeDestroy()
+	UIBlockMgr.instance:endBlock(BLOCK_KEY)
 
-	arg_11_0.__willDestroy = true
+	self.__willDestroy = true
 
-	arg_11_0:removeEventListeners()
+	self:removeEventListeners()
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.delayPlayChangeEff, arg_12_0)
+function RoomInitBuildingSkinComp:onDestroy()
+	TaskDispatcher.cancelTask(self.delayPlayChangeEff, self)
 
-	arg_12_0.go = nil
-	arg_12_0._effectRes = nil
-	arg_12_0._skinId = nil
-	arg_12_0.entity = nil
-	arg_12_0._needPlayChangeEff = false
+	self.go = nil
+	self._effectRes = nil
+	self._skinId = nil
+	self.entity = nil
+	self._needPlayChangeEff = false
 end
 
-return var_0_0
+return RoomInitBuildingSkinComp

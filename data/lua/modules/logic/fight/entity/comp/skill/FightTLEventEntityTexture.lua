@@ -1,72 +1,78 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityTexture", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventEntityTexture.lua
 
-local var_0_0 = class("FightTLEventEntityTexture", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventEntityTexture", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_3[1]
+local FightTLEventEntityTexture = class("FightTLEventEntityTexture", FightTimelineTrackItem)
 
-	arg_1_0._targetEntitys = nil
+function FightTLEventEntityTexture:onTrackStart(fightStepData, duration, paramsArr)
+	local targetType = paramsArr[1]
 
-	if var_1_0 == "1" then
-		arg_1_0._targetEntitys = {}
+	self._targetEntitys = nil
 
-		table.insert(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.fromId))
-	elseif var_1_0 == "2" then
-		arg_1_0._targetEntitys = FightHelper.getSkillTargetEntitys(arg_1_1)
-	elseif not string.nilorempty(var_1_0) then
-		local var_1_1 = GameSceneMgr.instance:getCurScene().entityMgr
-		local var_1_2 = arg_1_1.stepUid .. "_" .. var_1_0
-		local var_1_3 = var_1_1:getUnit(SceneTag.UnitNpc, var_1_2)
+	if targetType == "1" then
+		self._targetEntitys = {}
 
-		if var_1_3 then
-			arg_1_0._targetEntitys = {}
+		table.insert(self._targetEntitys, FightHelper.getEntity(fightStepData.fromId))
+	elseif targetType == "2" then
+		self._targetEntitys = FightHelper.getSkillTargetEntitys(fightStepData)
+	elseif not string.nilorempty(targetType) then
+		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityId = fightStepData.stepUid .. "_" .. targetType
+		local tempEntity = entityMgr:getUnit(SceneTag.UnitNpc, entityId)
 
-			table.insert(arg_1_0._targetEntitys, var_1_3)
+		if tempEntity then
+			self._targetEntitys = {}
+
+			table.insert(self._targetEntitys, tempEntity)
 		else
-			logError("找不到实体, id: " .. tostring(var_1_0))
+			logError("找不到实体, id: " .. tostring(targetType))
 
 			return
 		end
 	end
 
-	arg_1_0._texVariable = arg_1_3[3]
+	self._texVariable = paramsArr[3]
 
-	local var_1_4 = arg_1_3[2]
+	local texturePath = paramsArr[2]
 
-	if not string.nilorempty(var_1_4) then
-		arg_1_0._texturePath = ResUrl.getRoleSpineMatTex(var_1_4)
-		arg_1_0._loader = MultiAbLoader.New()
+	if not string.nilorempty(texturePath) then
+		self._texturePath = ResUrl.getRoleSpineMatTex(texturePath)
+		self._loader = MultiAbLoader.New()
 
-		arg_1_0._loader:addPath(arg_1_0._texturePath)
-		arg_1_0._loader:startLoad(arg_1_0._onLoaded, arg_1_0)
+		self._loader:addPath(self._texturePath)
+		self._loader:startLoad(self._onLoaded, self)
 	end
 end
 
-function var_0_0._onLoaded(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1:getFirstAssetItem()
-	local var_2_1 = var_2_0 and var_2_0:GetResource(arg_2_0._texturePath)
+function FightTLEventEntityTexture:_onLoaded(multiAbLoader)
+	local texAssetItem = multiAbLoader:getFirstAssetItem()
+	local texture = texAssetItem and texAssetItem:GetResource(self._texturePath)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._targetEntitys) do
-		iter_2_1.spineRenderer:getReplaceMat():SetTexture(arg_2_0._texVariable, var_2_1)
+	for _, entity in ipairs(self._targetEntitys) do
+		local mat = entity.spineRenderer:getReplaceMat()
+
+		mat:SetTexture(self._texVariable, texture)
 	end
 end
 
-function var_0_0._clear(arg_3_0)
-	if not arg_3_0._loader then
+function FightTLEventEntityTexture:_clear()
+	if not self._loader then
 		return
 	end
 
-	arg_3_0._loader:dispose()
+	self._loader:dispose()
 
-	arg_3_0._loader = nil
+	self._loader = nil
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._targetEntitys) do
-		iter_3_1.spineRenderer:getReplaceMat():SetTexture(arg_3_0._texVariable, nil)
+	for _, entity in ipairs(self._targetEntitys) do
+		local mat = entity.spineRenderer:getReplaceMat()
+
+		mat:SetTexture(self._texVariable, nil)
 	end
 end
 
-function var_0_0.onDestructor(arg_4_0)
-	arg_4_0:_clear()
+function FightTLEventEntityTexture:onDestructor()
+	self:_clear()
 end
 
-return var_0_0
+return FightTLEventEntityTexture

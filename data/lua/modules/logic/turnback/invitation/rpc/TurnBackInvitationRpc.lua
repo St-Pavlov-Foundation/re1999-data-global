@@ -1,22 +1,24 @@
-﻿module("modules.logic.turnback.invitation.rpc.TurnBackInvitationRpc", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/invitation/rpc/TurnBackInvitationRpc.lua
 
-local var_0_0 = class("TurnBackInvitationRpc", BaseRpc)
+module("modules.logic.turnback.invitation.rpc.TurnBackInvitationRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local TurnBackInvitationRpc = class("TurnBackInvitationRpc", BaseRpc)
 
-function var_0_0.sendGet171InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity171Module_pb.Get171InfoRequest()
+TurnBackInvitationRpc.instance = TurnBackInvitationRpc.New()
 
-	var_1_0.activityId = arg_1_1
+function TurnBackInvitationRpc:sendGet171InfoRequest(activityId, callBack, callBackObj)
+	local req = Activity171Module_pb.Get171InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	self:sendMsg(req, callBack, callBackObj)
 end
 
-function var_0_0.onReceiveGet171InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		TurnBackInvitationModel.instance:setActivityInfo(arg_2_2)
+function TurnBackInvitationRpc:onReceiveGet171InfoReply(resultCode, msg)
+	if resultCode == 0 then
+		TurnBackInvitationModel.instance:setActivityInfo(msg)
 		TurnBackInvitationController.instance:dispatchEvent(TurnBackInvitationEvent.OnGetInfoSuccess)
 	end
 end
 
-return var_0_0
+return TurnBackInvitationRpc

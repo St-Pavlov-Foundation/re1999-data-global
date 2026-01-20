@@ -1,17 +1,19 @@
-﻿module("modules.common.gameobject.GameObjectLiveEventComp", package.seeall)
+﻿-- chunkname: @modules/common/gameobject/GameObjectLiveEventComp.lua
 
-local var_0_0 = class("GameObjectLiveEventComp", LuaCompBase)
+module("modules.common.gameobject.GameObjectLiveEventComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
+local GameObjectLiveEventComp = class("GameObjectLiveEventComp", LuaCompBase)
+
+function GameObjectLiveEventComp:init(go)
+	self.go = go
 end
 
-function var_0_0.onStart(arg_2_0)
-	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnStart, arg_2_0.go)
+function GameObjectLiveEventComp:onStart()
+	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnStart, self.go)
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnDestroy, arg_3_0.go)
+function GameObjectLiveEventComp:onDestroy()
+	GameObjectLiveMgr.instance:dispatchEvent(GameObjectLiveEvent.OnDestroy, self.go)
 end
 
-return var_0_0
+return GameObjectLiveEventComp

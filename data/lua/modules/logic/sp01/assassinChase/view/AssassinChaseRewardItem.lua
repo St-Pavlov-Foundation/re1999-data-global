@@ -1,40 +1,42 @@
-﻿module("modules.logic.sp01.assassinChase.view.AssassinChaseRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassinChase/view/AssassinChaseRewardItem.lua
 
-local var_0_0 = class("AssassinChaseRewardItem", LuaCompBase)
+module("modules.logic.sp01.assassinChase.view.AssassinChaseRewardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._gorewardPos = gohelper.findChild(arg_1_0.viewGO, "go_rewardPos")
-	arg_1_0._gorewardGet = gohelper.findChild(arg_1_0.viewGO, "go_rewardGet")
+local AssassinChaseRewardItem = class("AssassinChaseRewardItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinChaseRewardItem:init(go)
+	self.viewGO = go
+	self._gorewardPos = gohelper.findChild(self.viewGO, "go_rewardPos")
+	self._gorewardGet = gohelper.findChild(self.viewGO, "go_rewardGet")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._rewardItem = IconMgr.instance:getCommonItemIcon(arg_2_0._gorewardPos)
+function AssassinChaseRewardItem:_editableInitView()
+	self._rewardItem = IconMgr.instance:getCommonItemIcon(self._gorewardPos)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1)
-	local var_3_0 = string.splitToNumber(arg_3_1, "#")
-	local var_3_1 = arg_3_0._rewardItem
+function AssassinChaseRewardItem:setData(rewardParam)
+	local itemData = string.splitToNumber(rewardParam, "#")
+	local item = self._rewardItem
 
-	var_3_1:setMOValue(var_3_0[1], var_3_0[2], var_3_0[3])
-	var_3_1:isShowCount(true)
-	var_3_1:setInPack(false)
+	item:setMOValue(itemData[1], itemData[2], itemData[3])
+	item:isShowCount(true)
+	item:setInPack(false)
 end
 
-function var_0_0.setGetState(arg_4_0, arg_4_1)
-	gohelper.setActive(arg_4_0._gorewardGet, arg_4_1)
+function AssassinChaseRewardItem:setGetState(isGet)
+	gohelper.setActive(self._gorewardGet, isGet)
 end
 
-function var_0_0.setActive(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0.viewGO, arg_5_1)
+function AssassinChaseRewardItem:setActive(active)
+	gohelper.setActive(self.viewGO, active)
 end
 
-function var_0_0.onDestroy(arg_6_0)
+function AssassinChaseRewardItem:onDestroy()
 	return
 end
 
-return var_0_0
+return AssassinChaseRewardItem

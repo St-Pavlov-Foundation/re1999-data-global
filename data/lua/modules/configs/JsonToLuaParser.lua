@@ -1,47 +1,52 @@
-﻿module("modules.configs.JsonToLuaParser", package.seeall)
+﻿-- chunkname: @modules/configs/JsonToLuaParser.lua
 
-return {
-	parse = function(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-		local var_1_0 = {}
-		local var_1_1 = arg_1_0
-		local var_1_2 = {
-			__index = function(arg_2_0, arg_2_1)
-				local var_2_0 = arg_1_1[arg_2_1]
-				local var_2_1 = rawget(arg_2_0, var_2_0)
+module("modules.configs.JsonToLuaParser", package.seeall)
 
-				if arg_1_3 and arg_1_3[arg_2_1] then
-					return lang(var_2_1)
-				end
+local JsonToLuaParser = {}
 
-				return var_2_1
-			end,
-			__newindex = function(arg_3_0, arg_3_1, arg_3_2)
-				logError("Can't modify config field: " .. arg_3_1)
-			end
-		}
+function JsonToLuaParser.parse(json, fields, primaryKey, mlStringKeyDict)
+	local configDict = {}
+	local configList = json
+	local metatable = {}
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			local var_1_3 = iter_1_1.name
+	function metatable.__index(t, key)
+		local fieldIndex = fields[key]
+		local value = rawget(t, fieldIndex)
 
-			setmetatable(iter_1_1, var_1_2)
-
-			local var_1_4 = var_1_0
-
-			for iter_1_2, iter_1_3 in ipairs(arg_1_2) do
-				local var_1_5 = iter_1_1[iter_1_3]
-
-				if iter_1_2 == #arg_1_2 then
-					var_1_4[var_1_5] = iter_1_1
-				else
-					if not var_1_4[var_1_5] then
-						var_1_4[var_1_5] = {}
-					end
-
-					var_1_4 = var_1_4[var_1_5]
-				end
-			end
+		if mlStringKeyDict and mlStringKeyDict[key] then
+			return lang(value)
 		end
 
-		return var_1_1, var_1_0
+		return value
 	end
-}
+
+	function metatable.__newindex(_, key, value)
+		logError("Can't modify config field: " .. key)
+	end
+
+	for _, configRow in ipairs(configList) do
+		local preName = configRow.name
+
+		setmetatable(configRow, metatable)
+
+		local dict = configDict
+
+		for i, pkKey in ipairs(primaryKey) do
+			local pkValue = configRow[pkKey]
+
+			if i == #primaryKey then
+				dict[pkValue] = configRow
+			else
+				if not dict[pkValue] then
+					dict[pkValue] = {}
+				end
+
+				dict = dict[pkValue]
+			end
+		end
+	end
+
+	return configList, configDict
+end
+
+return JsonToLuaParser

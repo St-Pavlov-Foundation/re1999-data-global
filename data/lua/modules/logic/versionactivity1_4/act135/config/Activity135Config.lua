@@ -1,33 +1,36 @@
-﻿module("modules.logic.versionactivity1_4.act135.config.Activity135Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act135/config/Activity135Config.lua
 
-local var_0_0 = class("Activity135Config", BaseConfig)
+module("modules.logic.versionactivity1_4.act135.config.Activity135Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.rewardDict = {}
+local Activity135Config = class("Activity135Config", BaseConfig)
+
+function Activity135Config:ctor()
+	self.rewardDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity135Config:reqConfigNames()
 	return {
 		"activity135_reward"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0[string.format("on%sConfigLoaded", arg_3_1)]
+function Activity135Config:onConfigLoaded(configName, configTable)
+	local funcName = string.format("on%sConfigLoaded", configName)
+	local func = self[funcName]
 
-	if var_3_0 then
-		var_3_0(arg_3_0, arg_3_1, arg_3_2)
+	if func then
+		func(self, configName, configTable)
 	end
 end
 
-function var_0_0.onactivity135_rewardConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.rewardDict = arg_4_2.configDict
+function Activity135Config:onactivity135_rewardConfigLoaded(configName, configTable)
+	self.rewardDict = configTable.configDict
 end
 
-function var_0_0.getEpisodeCos(arg_5_0, arg_5_1)
-	return arg_5_0.rewardDict[arg_5_1]
+function Activity135Config:getEpisodeCos(episodeId)
+	return self.rewardDict[episodeId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity135Config.instance = Activity135Config.New()
 
-return var_0_0
+return Activity135Config

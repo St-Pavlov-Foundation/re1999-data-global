@@ -1,13 +1,15 @@
-﻿module("modules.logic.necrologiststory.view.NecrologistStoryTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/NecrologistStoryTipViewContainer.lua
 
-local var_0_0 = class("NecrologistStoryTipViewContainer", BaseViewContainer)
+module("modules.logic.necrologiststory.view.NecrologistStoryTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local NecrologistStoryTipViewContainer = class("NecrologistStoryTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, NecrologistStoryTipView.New())
+function NecrologistStoryTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, NecrologistStoryTipView.New())
+
+	return views
 end
 
-return var_0_0
+return NecrologistStoryTipViewContainer

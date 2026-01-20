@@ -1,116 +1,118 @@
-﻿module("modules.logic.reddot.rpc.RedDotRpc", package.seeall)
+﻿-- chunkname: @modules/logic/reddot/rpc/RedDotRpc.lua
 
-local var_0_0 = class("RedDotRpc", BaseRpc)
+module("modules.logic.reddot.rpc.RedDotRpc", package.seeall)
 
-function var_0_0.sendGetRedDotInfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = RedDotModule_pb.GetRedDotInfosRequest()
+local RedDotRpc = class("RedDotRpc", BaseRpc)
 
-	if arg_1_1 then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-			table.insert(var_1_0.ids, iter_1_1)
+function RedDotRpc:sendGetRedDotInfosRequest(ids, callback, callbackObj)
+	local req = RedDotModule_pb.GetRedDotInfosRequest()
+
+	if ids then
+		for i, id in ipairs(ids) do
+			table.insert(req.ids, id)
 		end
 	end
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetRedDotInfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		RedDotModel.instance:setRedDotInfo(arg_2_2.redDotInfos)
+function RedDotRpc:onReceiveGetRedDotInfosReply(resultCode, msg)
+	if resultCode == 0 then
+		RedDotModel.instance:setRedDotInfo(msg.redDotInfos)
 
-		local var_2_0 = {}
+		local refreshlist = {}
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_2.redDotInfos) do
-			local var_2_1 = RedDotModel.instance:_getAssociateRedDots(iter_2_1.defineId)
+		for _, v in ipairs(msg.redDotInfos) do
+			local ids = RedDotModel.instance:_getAssociateRedDots(v.defineId)
 
-			for iter_2_2, iter_2_3 in pairs(var_2_1) do
-				var_2_0[iter_2_3] = true
+			for _, id in pairs(ids) do
+				refreshlist[id] = true
 			end
 		end
 
 		RedDotController.instance:CheckExpireDot()
-		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, var_2_0)
+		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, refreshlist)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function var_0_0.onReceiveUpdateRedDotPush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == 0 then
-		RedDotModel.instance:updateRedDotInfo(arg_3_2.redDotInfos)
+function RedDotRpc:onReceiveUpdateRedDotPush(resultCode, msg)
+	if resultCode == 0 then
+		RedDotModel.instance:updateRedDotInfo(msg.redDotInfos)
 
-		local var_3_0 = {}
+		local refreshlist = {}
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2.redDotInfos) do
-			local var_3_1 = RedDotModel.instance:_getAssociateRedDots(iter_3_1.defineId)
+		for _, v in ipairs(msg.redDotInfos) do
+			local ids = RedDotModel.instance:_getAssociateRedDots(v.defineId)
 
-			for iter_3_2, iter_3_3 in pairs(var_3_1) do
-				var_3_0[iter_3_3] = true
+			for _, id in pairs(ids) do
+				refreshlist[id] = true
 			end
 		end
 
 		RedDotController.instance:CheckExpireDot()
-		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, var_3_0)
+		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, refreshlist)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function var_0_0.sendShowRedDotRequest(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = RedDotModule_pb.ShowRedDotRequest()
+function RedDotRpc:sendShowRedDotRequest(defineId, isVisible)
+	local req = RedDotModule_pb.ShowRedDotRequest()
 
-	var_4_0.defineId = arg_4_1
-	var_4_0.isVisible = arg_4_2
+	req.defineId = defineId
+	req.isVisible = isVisible
 
-	arg_4_0:sendMsg(var_4_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveShowRedDotReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
+function RedDotRpc:onReceiveShowRedDotReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.clientAddRedDotGroupList(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = {}
+function RedDotRpc:clientAddRedDotGroupList(list, replaceAll)
+	local groups = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		var_6_0[iter_6_1.id] = var_6_0[iter_6_1.id] or {}
+	for _, v in ipairs(list) do
+		groups[v.id] = groups[v.id] or {}
 
-		local var_6_1 = arg_6_0:clientMakeRedDotGroupItem(iter_6_1.uid, iter_6_1.value)
+		local info = self:clientMakeRedDotGroupItem(v.uid, v.value)
 
-		table.insert(var_6_0[iter_6_1.id], var_6_1)
+		table.insert(groups[v.id], info)
 	end
 
-	local var_6_2 = {
+	local msg = {
 		redDotInfos = {},
-		replaceAll = arg_6_2 or false
+		replaceAll = replaceAll or false
 	}
 
-	for iter_6_2, iter_6_3 in pairs(var_6_0) do
-		local var_6_3 = arg_6_0:clientMakeRedDotGroup(iter_6_2, iter_6_3, arg_6_2)
+	for id, infos in pairs(groups) do
+		local redDotInfo = self:clientMakeRedDotGroup(id, infos, replaceAll)
 
-		table.insert(var_6_2.redDotInfos, var_6_3)
+		table.insert(msg.redDotInfos, redDotInfo)
 	end
 
-	arg_6_0:onReceiveUpdateRedDotPush(0, var_6_2)
+	self:onReceiveUpdateRedDotPush(0, msg)
 end
 
-function var_0_0.clientMakeRedDotGroupItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+function RedDotRpc:clientMakeRedDotGroupItem(uid, value, time, ext)
 	return {
-		id = arg_7_1 or 0,
-		value = arg_7_2 or 0,
-		time = arg_7_3 or 0,
-		ext = arg_7_4 or ""
+		id = uid or 0,
+		value = value or 0,
+		time = time or 0,
+		ext = ext or ""
 	}
 end
 
-function var_0_0.clientMakeRedDotGroup(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function RedDotRpc:clientMakeRedDotGroup(id, infos, replaceAll)
 	return {
-		defineId = arg_8_1,
-		infos = arg_8_2,
-		replaceAll = arg_8_3 or false
+		defineId = id,
+		infos = infos,
+		replaceAll = replaceAll or false
 	}
 end
 
-var_0_0.instance = var_0_0.New()
+RedDotRpc.instance = RedDotRpc.New()
 
-return var_0_0
+return RedDotRpc

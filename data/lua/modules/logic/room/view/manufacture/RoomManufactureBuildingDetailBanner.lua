@@ -1,218 +1,221 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureBuildingDetailBanner", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureBuildingDetailBanner.lua
 
-local var_0_0 = class("RoomManufactureBuildingDetailBanner", BaseView)
+module("modules.logic.room.view.manufacture.RoomManufactureBuildingDetailBanner", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_detail")
-	arg_1_0._scrollbase = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/#scroll_base")
-	arg_1_0._gobaseLayer = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer")
-	arg_1_0._gobaseitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name/#image_icon")
-	arg_1_0._txtratio = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_ratio")
-	arg_1_0._goitemLayer = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer")
-	arg_1_0._txtadd = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#txt_add")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#go_item")
+local RoomManufactureBuildingDetailBanner = class("RoomManufactureBuildingDetailBanner", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomManufactureBuildingDetailBanner:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#btn_detail")
+	self._scrollbase = gohelper.findChildScrollRect(self.viewGO, "#go_content/#scroll_base")
+	self._gobaseLayer = gohelper.findChild(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer")
+	self._gobaseitem = gohelper.findChild(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_name/#image_icon")
+	self._txtratio = gohelper.findChildText(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_baseLayer/#go_baseitem/#txt_ratio")
+	self._goitemLayer = gohelper.findChild(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer")
+	self._txtadd = gohelper.findChildText(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#txt_add")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_content/#scroll_base/viewport/content/#go_itemLayer/#go_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
+function RoomManufactureBuildingDetailBanner:addEvents()
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btndetail:RemoveClickListener()
+function RoomManufactureBuildingDetailBanner:removeEvents()
+	self._btndetail:RemoveClickListener()
 end
 
-function var_0_0._btndetailOnClick(arg_4_0)
-	local var_4_0 = ManufactureController.instance:openRoomManufactureBuildingDetailView(arg_4_0._buildingUid)
+function RoomManufactureBuildingDetailBanner:_btndetailOnClick()
+	local isOpen = ManufactureController.instance:openRoomManufactureBuildingDetailView(self._buildingUid)
 
-	arg_4_0:_setDetailSelect(var_4_0)
+	self:_setDetailSelect(isOpen)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._gounselectdetail = gohelper.findChild(arg_5_0.viewGO, "#go_content/#btn_detail/unselect")
-	arg_5_0._goselectdetail = gohelper.findChild(arg_5_0.viewGO, "#go_content/#btn_detail/select")
-	arg_5_0._baseAttrTypeList = {
+function RoomManufactureBuildingDetailBanner:_editableInitView()
+	self._gounselectdetail = gohelper.findChild(self.viewGO, "#go_content/#btn_detail/unselect")
+	self._goselectdetail = gohelper.findChild(self.viewGO, "#go_content/#btn_detail/select")
+	self._baseAttrTypeList = {
 		CritterEnum.AttributeType.Efficiency,
 		CritterEnum.AttributeType.Lucky
 	}
-	arg_5_0._attrItemCompList = {}
-	arg_5_0._itemTbList = {}
+	self._attrItemCompList = {}
+	self._itemTbList = {}
 
-	gohelper.setActive(arg_5_0._gobaseitem, false)
-	gohelper.setActive(arg_5_0._goitem, false)
-	arg_5_0:_setDetailSelect(false)
+	gohelper.setActive(self._gobaseitem, false)
+	gohelper.setActive(self._goitem, false)
+	self:_setDetailSelect(false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:_startRefreshTask()
-	arg_6_0:_refreshUI()
+function RoomManufactureBuildingDetailBanner:onUpdateParam()
+	self:_startRefreshTask()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(RoomController.instance, RoomEvent.ManufactureGuideTweenFinish, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureReadNewFormula, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_7_0._startRefreshTask, arg_7_0)
-	arg_7_0:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, arg_7_0._onCloseDetatilView, arg_7_0)
-	arg_7_0:_startRefreshTask()
+function RoomManufactureBuildingDetailBanner:onOpen()
+	self:addEventCb(RoomController.instance, RoomEvent.ManufactureGuideTweenFinish, self._startRefreshTask, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._startRefreshTask, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, self._startRefreshTask, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._startRefreshTask, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedCritterSlotItem, self._startRefreshTask, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureReadNewFormula, self._startRefreshTask, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, self._startRefreshTask, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, self._startRefreshTask, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, self._onCloseDetatilView, self)
+	self:_startRefreshTask()
 end
 
-function var_0_0.onClose(arg_8_0)
+function RoomManufactureBuildingDetailBanner:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0:_stopRefreshTask()
+function RoomManufactureBuildingDetailBanner:onDestroyView()
+	self:_stopRefreshTask()
 end
 
-function var_0_0._startRefreshTask(arg_10_0)
-	if not arg_10_0._hasWaitRefreshTask then
-		arg_10_0._hasWaitRefreshTask = true
+function RoomManufactureBuildingDetailBanner:_startRefreshTask()
+	if not self._hasWaitRefreshTask then
+		self._hasWaitRefreshTask = true
 
-		TaskDispatcher.runDelay(arg_10_0._onRunRefreshTask, arg_10_0, 0.1)
+		TaskDispatcher.runDelay(self._onRunRefreshTask, self, 0.1)
 	end
 end
 
-function var_0_0._stopRefreshTask(arg_11_0)
-	arg_11_0._hasWaitRefreshTask = false
+function RoomManufactureBuildingDetailBanner:_stopRefreshTask()
+	self._hasWaitRefreshTask = false
 
-	TaskDispatcher.cancelTask(arg_11_0._onRunRefreshTask, arg_11_0)
+	TaskDispatcher.cancelTask(self._onRunRefreshTask, self)
 end
 
-function var_0_0._onRunRefreshTask(arg_12_0)
-	arg_12_0:_updateParam()
-	arg_12_0:_refreshAttr()
-	arg_12_0:_refreshItem()
+function RoomManufactureBuildingDetailBanner:_onRunRefreshTask()
+	self:_updateParam()
+	self:_refreshAttr()
+	self:_refreshItem()
 
-	if not arg_12_0._isSendCritterRequest and arg_12_0._buildingType then
-		arg_12_0._isSendCritterRequest = true
+	if not self._isSendCritterRequest and self._buildingType then
+		self._isSendCritterRequest = true
 
-		CritterController.instance:sendBuildManufacturAttrByBtype(arg_12_0._buildingType)
+		CritterController.instance:sendBuildManufacturAttrByBtype(self._buildingType)
 	end
 
-	arg_12_0._hasWaitRefreshTask = false
+	self._hasWaitRefreshTask = false
 end
 
-function var_0_0._onCloseDetatilView(arg_13_0)
-	arg_13_0:_setDetailSelect(false)
+function RoomManufactureBuildingDetailBanner:_onCloseDetatilView()
+	self:_setDetailSelect(false)
 end
 
-function var_0_0.getViewBuilding(arg_14_0)
-	local var_14_0, var_14_1 = arg_14_0.viewContainer:getContainerViewBuilding()
+function RoomManufactureBuildingDetailBanner:getViewBuilding()
+	local viewBuildingUid, viewBuildingMO = self.viewContainer:getContainerViewBuilding()
 
-	return var_14_0, var_14_1
+	return viewBuildingUid, viewBuildingMO
 end
 
-function var_0_0._updateParam(arg_15_0)
-	arg_15_0._buildingUid, arg_15_0._buildingMO = arg_15_0:getViewBuilding()
-	arg_15_0._buildingType = arg_15_0.viewParam.buildingType
-	arg_15_0._builidngCfg = arg_15_0._buildingMO and arg_15_0._buildingMO.config
-	arg_15_0._buildingType = arg_15_0._builidngCfg and arg_15_0._builidngCfg.buildingType
-	arg_15_0._buildingId = arg_15_0._builidngCfg and arg_15_0._builidngCfg.buildingId
-	arg_15_0._attrInfoMOList = {}
-	arg_15_0._critterMOList = CritterHelper.getWorkCritterMOListByBuid(arg_15_0._buildingUid)
-	arg_15_0._critterUidList = {}
+function RoomManufactureBuildingDetailBanner:_updateParam()
+	self._buildingUid, self._buildingMO = self:getViewBuilding()
+	self._buildingType = self.viewParam.buildingType
+	self._builidngCfg = self._buildingMO and self._buildingMO.config
+	self._buildingType = self._builidngCfg and self._builidngCfg.buildingType
+	self._buildingId = self._builidngCfg and self._builidngCfg.buildingId
+	self._attrInfoMOList = {}
+	self._critterMOList = CritterHelper.getWorkCritterMOListByBuid(self._buildingUid)
+	self._critterUidList = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._critterMOList) do
-		table.insert(arg_15_0._critterUidList, iter_15_1.id)
+	for _, critterMO in ipairs(self._critterMOList) do
+		table.insert(self._critterUidList, critterMO.id)
 	end
 
-	for iter_15_2, iter_15_3 in ipairs(arg_15_0._baseAttrTypeList) do
-		table.insert(arg_15_0._attrInfoMOList, CritterHelper.sumArrtInfoMOByAttrId(iter_15_3, arg_15_0._critterMOList))
+	for _, attrType in ipairs(self._baseAttrTypeList) do
+		table.insert(self._attrInfoMOList, CritterHelper.sumArrtInfoMOByAttrId(attrType, self._critterMOList))
 	end
 
-	arg_15_0._manufactureItemIdList = ManufactureHelper.findLuckyItemIdListByBUid(arg_15_0._buildingUid)
+	self._manufactureItemIdList = ManufactureHelper.findLuckyItemIdListByBUid(self._buildingUid)
 
-	gohelper.setActive(arg_15_0._btndetail, #arg_15_0._critterUidList > 0)
+	gohelper.setActive(self._btndetail, #self._critterUidList > 0)
 end
 
-function var_0_0._refreshUI(arg_16_0)
-	arg_16_0:_refreshAttr()
-	arg_16_0:_refreshItem()
+function RoomManufactureBuildingDetailBanner:_refreshUI()
+	self:_refreshAttr()
+	self:_refreshItem()
 end
 
-function var_0_0._setDetailSelect(arg_17_0, arg_17_1)
-	gohelper.setActive(arg_17_0._goselectdetail, arg_17_1)
-	gohelper.setActive(arg_17_0._gounselectdetail, not arg_17_1)
+function RoomManufactureBuildingDetailBanner:_setDetailSelect(iselect)
+	gohelper.setActive(self._goselectdetail, iselect)
+	gohelper.setActive(self._gounselectdetail, not iselect)
 end
 
-function var_0_0._refreshAttr(arg_18_0)
-	local var_18_0 = arg_18_0._attrInfoMOList
+function RoomManufactureBuildingDetailBanner:_refreshAttr()
+	local attrInfos = self._attrInfoMOList
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		local var_18_1 = arg_18_0._attrItemCompList[iter_18_0]
+	for index, attrMO in ipairs(attrInfos) do
+		local item = self._attrItemCompList[index]
 
-		if not var_18_1 then
-			local var_18_2 = gohelper.clone(arg_18_0._gobaseitem, arg_18_0._gobaseLayer)
+		if not item then
+			local go = gohelper.clone(self._gobaseitem, self._gobaseLayer)
 
-			var_18_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_2, RoomCritterDetailAttrItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoomCritterDetailAttrItem)
 
-			table.insert(arg_18_0._attrItemCompList, var_18_1)
+			table.insert(self._attrItemCompList, item)
 		end
 
-		local var_18_3 = CritterHelper.sumPreViewAttrValue(iter_18_1.attributeId, arg_18_0._critterUidList, arg_18_0._buildingId, false)
-		local var_18_4 = CritterHelper.formatAttrValue(iter_18_1.attributeId, var_18_3)
+		local value = CritterHelper.sumPreViewAttrValue(attrMO.attributeId, self._critterUidList, self._buildingId, false)
+		local valueStr = CritterHelper.formatAttrValue(attrMO.attributeId, value)
 
-		var_18_1:onRefreshMo(iter_18_1, iter_18_0, var_18_4, var_18_4, iter_18_1:getName())
+		item:onRefreshMo(attrMO, index, valueStr, valueStr, attrMO:getName())
 	end
 
-	local var_18_5 = #var_18_0
+	local count = #attrInfos
 
-	for iter_18_2 = 1, #arg_18_0._attrItemCompList do
-		gohelper.setActive(arg_18_0._attrItemCompList[iter_18_2].viewGO, iter_18_2 <= var_18_5)
+	for i = 1, #self._attrItemCompList do
+		gohelper.setActive(self._attrItemCompList[i].viewGO, i <= count)
 	end
 end
 
-function var_0_0._refreshItem(arg_19_0)
-	local var_19_0 = CritterHelper.sumPreViewAttrValue(CritterEnum.AttributeType.Efficiency, arg_19_0._critterUidList, arg_19_0._buildingId, false) > 100
+function RoomManufactureBuildingDetailBanner:_refreshItem()
+	local value = CritterHelper.sumPreViewAttrValue(CritterEnum.AttributeType.Efficiency, self._critterUidList, self._buildingId, false)
+	local isUp = value > 100
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._manufactureItemIdList) do
-		local var_19_1 = arg_19_0._itemTbList[iter_19_0]
+	for index, itemId in ipairs(self._manufactureItemIdList) do
+		local itemTb = self._itemTbList[index]
 
-		if not var_19_1 then
-			var_19_1 = arg_19_0:getUserDataTb_()
+		if not itemTb then
+			itemTb = self:getUserDataTb_()
 
-			table.insert(arg_19_0._itemTbList, var_19_1)
+			table.insert(self._itemTbList, itemTb)
 
-			local var_19_2 = gohelper.cloneInPlace(arg_19_0._goitem)
+			local go = gohelper.cloneInPlace(self._goitem)
 
-			var_19_1.go = var_19_2
-			var_19_1.image_quality = gohelper.findChildImage(var_19_2, "image_quality")
-			var_19_1.go_icon = gohelper.findChild(var_19_2, "go_icon")
-			var_19_1.go_up = gohelper.findChild(var_19_2, "go_up")
-			var_19_1.itemIcon = IconMgr.instance:getCommonItemIcon(var_19_1.go_icon)
+			itemTb.go = go
+			itemTb.image_quality = gohelper.findChildImage(go, "image_quality")
+			itemTb.go_icon = gohelper.findChild(go, "go_icon")
+			itemTb.go_up = gohelper.findChild(go, "go_up")
+			itemTb.itemIcon = IconMgr.instance:getCommonItemIcon(itemTb.go_icon)
 
-			var_19_1.itemIcon:isShowQuality(false)
+			itemTb.itemIcon:isShowQuality(false)
 		end
 
-		var_19_1.itemIcon:setMOValue(MaterialEnum.MaterialType.Item, iter_19_1, nil, nil, nil)
+		itemTb.itemIcon:setMOValue(MaterialEnum.MaterialType.Item, itemId, nil, nil, nil)
 
-		local var_19_3 = var_19_1.itemIcon:getRare()
-		local var_19_4 = RoomManufactureEnum.RareImageMap[var_19_3]
+		local rare = itemTb.itemIcon:getRare()
+		local qualityImg = RoomManufactureEnum.RareImageMap[rare]
 
-		UISpriteSetMgr.instance:setCritterSprite(var_19_1.image_quality, var_19_4)
-		gohelper.setActive(var_19_1.go_up, var_19_0)
+		UISpriteSetMgr.instance:setCritterSprite(itemTb.image_quality, qualityImg)
+		gohelper.setActive(itemTb.go_up, isUp)
 	end
 
-	local var_19_5 = #arg_19_0._manufactureItemIdList
+	local count = #self._manufactureItemIdList
 
-	for iter_19_2 = 1, #arg_19_0._itemTbList do
-		gohelper.setActive(arg_19_0._itemTbList[iter_19_2].go, iter_19_2 <= var_19_5)
+	for i = 1, #self._itemTbList do
+		gohelper.setActive(self._itemTbList[i].go, i <= count)
 	end
 
-	arg_19_0._txtadd.text = luaLang(var_19_5 < 1 and "room_manufacture_detail_no_item" or "room_manufacture_detail_item_title")
+	self._txtadd.text = luaLang(count < 1 and "room_manufacture_detail_no_item" or "room_manufacture_detail_item_title")
 end
 
-var_0_0.prefabPath = "ui/viewres/room/manufacture/roommanufacturebuildingdetailbanner.prefab"
+RoomManufactureBuildingDetailBanner.prefabPath = "ui/viewres/room/manufacture/roommanufacturebuildingdetailbanner.prefab"
 
-return var_0_0
+return RoomManufactureBuildingDetailBanner

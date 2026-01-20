@@ -1,48 +1,50 @@
-﻿module("modules.logic.jump.controller.JumpController", package.seeall)
+﻿-- chunkname: @modules/logic/jump/controller/JumpController.lua
 
-local var_0_0 = class("JumpController", BaseController)
+module("modules.logic.jump.controller.JumpController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local JumpController = class("JumpController", BaseController)
+
+function JumpController:onInit()
 	JumpControllerCanJumpFunc.activateCanJumpFuncController()
 	JumpControllerHandleFunc.activateHandleFuncController()
 
-	arg_1_0.isInitLogicDefine = false
+	self.isInitLogicDefine = false
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function JumpController:onInitFinish()
 	return
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0.waitOpenViewNames = nil
-	arg_3_0.remainViewNames = nil
-	arg_3_0.closeViewNames = nil
-	arg_3_0._callback = nil
-	arg_3_0._callbackObj = nil
-	arg_3_0.jumpStage = JumpEnum.JumpStage.None
+function JumpController:clear()
+	self.waitOpenViewNames = nil
+	self.remainViewNames = nil
+	self.closeViewNames = nil
+	self._callback = nil
+	self._callbackObj = nil
+	self.jumpStage = JumpEnum.JumpStage.None
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, arg_4_0._onOpenView, arg_4_0)
+function JumpController:addConstEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, self._onOpenView, self)
 end
 
-function var_0_0.reInit(arg_5_0)
-	arg_5_0:clear()
+function JumpController:reInit()
+	self:clear()
 end
 
-function var_0_0.initLogicDefine(arg_6_0)
-	if arg_6_0.isInitLogicDefine then
+function JumpController:initLogicDefine()
+	if self.isInitLogicDefine then
 		return
 	end
 
-	arg_6_0:initJumpViewBelongScene()
+	self:initJumpViewBelongScene()
 
-	arg_6_0.isInitLogicDefine = true
+	self.isInitLogicDefine = true
 end
 
-function var_0_0.initJumpViewBelongScene(arg_7_0)
-	arg_7_0.jumpViewBelongScene = {
+function JumpController:initJumpViewBelongScene()
+	self.jumpViewBelongScene = {
 		[JumpEnum.JumpView.StoreView] = {
 			SceneType.Main,
 			SceneType.Room
@@ -82,130 +84,136 @@ function var_0_0.initJumpViewBelongScene(arg_7_0)
 	}
 end
 
-function var_0_0._onOpenView(arg_8_0, arg_8_1)
-	if arg_8_0.jumpStage ~= JumpEnum.JumpStage.Jumping then
+function JumpController:_onOpenView(viewName)
+	if self.jumpStage ~= JumpEnum.JumpStage.Jumping then
 		return
 	end
 
-	if not arg_8_0.canDispatchCallback then
+	if not self.canDispatchCallback then
 		return
 	end
 
-	if arg_8_0.waitOpenViewNames and tabletool.indexOf(arg_8_0.waitOpenViewNames, arg_8_1) then
-		tabletool.removeValue(arg_8_0.waitOpenViewNames, arg_8_1)
+	if self.waitOpenViewNames and tabletool.indexOf(self.waitOpenViewNames, viewName) then
+		tabletool.removeValue(self.waitOpenViewNames, viewName)
 	end
 
-	arg_8_0:dispatchCallback()
+	self:dispatchCallback()
 end
 
-function var_0_0.checkJumpDone(arg_9_0)
-	return not arg_9_0.waitOpenViewNames or not next(arg_9_0.waitOpenViewNames)
+function JumpController:checkJumpDone()
+	return not self.waitOpenViewNames or not next(self.waitOpenViewNames)
 end
 
-function var_0_0.dispatchCallback(arg_10_0)
-	if not arg_10_0:checkJumpDone() then
+function JumpController:dispatchCallback()
+	if not self:checkJumpDone() then
 		return
 	end
 
-	if arg_10_0._callback then
-		arg_10_0._callback(arg_10_0._callbackObj)
+	if self._callback then
+		self._callback(self._callbackObj)
 	end
 
-	arg_10_0:reInit()
+	self:reInit()
 end
 
-function var_0_0.jump(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+function JumpController:jump(jumpId, callback, callbackObj, recordFarmItem)
 	if not LoginController.instance:isEnteredGame() then
 		return false
 	end
 
-	arg_11_1 = tonumber(arg_11_1)
+	jumpId = tonumber(jumpId)
 
-	local var_11_0 = JumpConfig.instance:getJumpConfig(arg_11_1)
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
 
-	if var_11_0 then
-		if not arg_11_0:isJumpOpen(arg_11_1) then
-			local var_11_1, var_11_2 = OpenHelper.getToastIdAndParam(var_11_0.openId)
+	if jumpConfig then
+		if not self:isJumpOpen(jumpId) then
+			local toast, paramList = OpenHelper.getToastIdAndParam(jumpConfig.openId)
 
-			if var_11_1 then
-				GameFacade.showToastWithTableParam(var_11_1, var_11_2)
+			if toast then
+				GameFacade.showToastWithTableParam(toast, paramList)
 			end
 
 			return false
 		else
-			local var_11_3, var_11_4, var_11_5 = arg_11_0:canJumpNew(var_11_0.param)
+			local canJump, toastId, toastParamList = self:canJumpNew(jumpConfig.param)
 
-			if not var_11_3 then
-				GameFacade.showToastWithTableParam(var_11_4, var_11_5)
+			if not canJump then
+				GameFacade.showToastWithTableParam(toastId, toastParamList)
 
 				return false
 			end
 		end
 
-		local var_11_6 = var_11_0.param
+		local jumpParam = jumpConfig.param
+		local jumpResult = self:jumpTo(jumpParam, callback, callbackObj, recordFarmItem)
 
-		return arg_11_0:jumpTo(var_11_6, arg_11_2, arg_11_3, arg_11_4) == JumpEnum.JumpResult.Success
+		return jumpResult == JumpEnum.JumpResult.Success
 	end
 
 	return false
 end
 
-function var_0_0.jumpByAdditionParam(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	local var_12_0 = string.split(arg_12_1, "#")
-	local var_12_1 = tonumber(var_12_0[1])
-	local var_12_2 = ""
+function JumpController:jumpByAdditionParam(additionParam, callback, callbackObj, recordFarmItem)
+	local paramsList = string.split(additionParam, "#")
+	local jumpId = tonumber(paramsList[1])
+	local _additionParam = ""
 
-	for iter_12_0 = 2, #var_12_0 do
-		var_12_2 = string.format("%s#%s", var_12_2, var_12_0[iter_12_0])
+	for i = 2, #paramsList do
+		_additionParam = string.format("%s#%s", _additionParam, paramsList[i])
 	end
 
-	local var_12_3 = JumpConfig.instance:getJumpConfig(var_12_1)
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
 
-	if var_12_3 then
-		if not arg_12_0:isJumpOpen(var_12_1) then
-			local var_12_4, var_12_5 = OpenHelper.getToastIdAndParam(var_12_3.openId)
+	if jumpConfig then
+		if not self:isJumpOpen(jumpId) then
+			local toast, toastParamList = OpenHelper.getToastIdAndParam(jumpConfig.openId)
 
-			if var_12_4 then
-				GameFacade.showToastWithTableParam(var_12_4, var_12_5)
+			if toast then
+				GameFacade.showToastWithTableParam(toast, toastParamList)
 			end
 
 			return false
 		else
-			local var_12_6, var_12_7, var_12_8 = arg_12_0:canJumpNew(var_12_3.param)
+			local canJump, toastId, toastParamList = self:canJumpNew(jumpConfig.param)
 
-			if not var_12_6 then
-				GameFacade.showToastWithTableParam(var_12_7, var_12_8)
+			if not canJump then
+				GameFacade.showToastWithTableParam(toastId, toastParamList)
 
 				return false
 			end
 		end
 
-		local var_12_9 = var_12_3.param
-		local var_12_10 = string.format("%s%s", var_12_9, var_12_2)
+		local jumpParam = jumpConfig.param
 
-		return arg_12_0:jumpTo(var_12_10, arg_12_2, arg_12_3, arg_12_4) == JumpEnum.JumpResult.Success
+		jumpParam = string.format("%s%s", jumpParam, _additionParam)
+
+		local jumpResult = self:jumpTo(jumpParam, callback, callbackObj, recordFarmItem)
+
+		return jumpResult == JumpEnum.JumpResult.Success
 	end
 
 	return false
 end
 
-function var_0_0.jumpByParamWithCondition(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	local var_13_0, var_13_1, var_13_2 = arg_13_0:canJumpNew(arg_13_1)
+function JumpController:jumpByParamWithCondition(jumpParam, callback, callbackObj, recordFarmItem)
+	local canJump, toastId, toastParamList = self:canJumpNew(jumpParam)
 
-	if not var_13_0 then
-		GameFacade.showToastWithTableParam(var_13_1, var_13_2)
+	if not canJump then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 
 		return false
 	end
 
-	return arg_13_0:jumpTo(arg_13_1, arg_13_2, arg_13_3, arg_13_4) == JumpEnum.JumpResult.Success
+	local jumpResult = self:jumpTo(jumpParam, callback, callbackObj, recordFarmItem)
+
+	return jumpResult == JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpByParam(arg_14_0, arg_14_1)
-	arg_14_0:jumpTo(arg_14_1)
+function JumpController:jumpByParam(jumpParam)
+	self:jumpTo(jumpParam)
 end
 
-local var_0_1 = {
+local _notAllowJumpViewNames = {
 	"V1a5_HarvestSeason_PanelSignView",
 	"V2a0_SummerSign_PanelView",
 	"V2a1_MoonFestival_PanelView",
@@ -256,231 +264,240 @@ local var_0_1 = {
 	"V3a1_AutumnSign_PanelView"
 }
 
-function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	arg_15_0:dispatchEvent(JumpEvent.BeforeJump, arg_15_1)
-	arg_15_0:initLogicDefine()
+function JumpController:jumpTo(jumpParam, callback, callbackObj, recordFarmItem)
+	self:dispatchEvent(JumpEvent.BeforeJump, jumpParam)
+	self:initLogicDefine()
 
-	if string.nilorempty(arg_15_1) then
+	if string.nilorempty(jumpParam) then
 		logError("跳转参数为空")
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	arg_15_0.jumpStage = JumpEnum.JumpStage.Jumping
+	self.jumpStage = JumpEnum.JumpStage.Jumping
 
-	local var_15_0 = string.splitToNumber(arg_15_1, "#")[1]
+	local jumps = string.splitToNumber(jumpParam, "#")
+	local jumpView = jumps[1]
 
-	if ViewMgr.instance:isOpen(ViewName.CommonPropView) or ViewMgr.instance:isOpen(ViewName.BpPropView) or ViewMgr.instance:isOpen(ViewName.BpPropView2) or ViewMgr.instance:isOpen(ViewName.FightSuccView) then
+	if ViewMgr.instance:isOpen(ViewName.CommonPropView) and (ViewMgr.instance:isOpen(ViewName.MaterialTipView) or ViewMgr.instance:isOpen(ViewName.RoomMaterialTipView)) or ViewMgr.instance:isOpen(ViewName.BpPropView) or ViewMgr.instance:isOpen(ViewName.BpPropView2) or ViewMgr.instance:isOpen(ViewName.FightSuccView) then
 		GameFacade.showToast(ToastEnum.MaterialTipJump)
 
 		return false
 	end
 
-	if VirtualSummonScene.instance:isOpen() and var_15_0 ~= JumpEnum.JumpView.StoreView then
+	if VirtualSummonScene.instance:isOpen() and jumpView ~= JumpEnum.JumpView.StoreView then
 		GameFacade.showToast(ToastEnum.MaterialTipJump)
 
 		return false
 	end
 
-	arg_15_0:_notAllowJumpViewNames_RoleSignPanelView()
-	arg_15_0:_notAllowJumpViewNames_SpecialSignPanelView()
+	self:_notAllowJumpViewNames_RoleSignPanelView()
+	self:_notAllowJumpViewNames_SpecialSignPanelView()
 
-	for iter_15_0, iter_15_1 in ipairs(var_0_1) do
-		local var_15_1 = ViewName[iter_15_1]
+	for _, name in ipairs(_notAllowJumpViewNames) do
+		local viewName = ViewName[name]
 
-		if ViewMgr.instance:isOpen(var_15_1) then
+		if ViewMgr.instance:isOpen(viewName) then
 			GameFacade.showToast(ToastEnum.MaterialTipJump)
 
 			return false
 		end
 	end
 
-	if arg_15_0:_checkNeedSwitchScene(var_15_0) then
+	if self:_checkNeedSwitchScene(jumpView) then
 		DungeonModel.instance.curSendEpisodeId = nil
 
 		ViewMgr.instance:closeAllPopupViews()
 
-		local var_15_2 = arg_15_0:_getJumpViewDefaultScene(var_15_0)
+		local jumpViewDefaultScene = self:_getJumpViewDefaultScene(jumpView)
 
-		if var_15_2 == SceneType.Main then
+		if jumpViewDefaultScene == SceneType.Main then
 			MainController.instance:enterMainScene(true)
-		elseif var_15_2 == SceneType.Room then
-			local var_15_3 = RoomEnum.GameMode.Ob
+		elseif jumpViewDefaultScene == SceneType.Room then
+			local mode = RoomEnum.GameMode.Ob
 
-			if var_15_0 == JumpEnum.JumpView.RoomFishing then
-				var_15_3 = RoomEnum.GameMode.Fishing
+			if jumpView == JumpEnum.JumpView.RoomFishing then
+				mode = RoomEnum.GameMode.Fishing
 			end
 
-			RoomController.instance:enterRoom(var_15_3, nil, nil, nil, nil, true)
-		elseif var_15_2 == SceneType.PushBox then
+			RoomController.instance:enterRoom(mode, nil, nil, nil, nil, true)
+		elseif jumpViewDefaultScene == SceneType.PushBox then
 			PushBoxController.instance:enterPushBoxGame()
 		else
-			var_15_2 = SceneType.Main
+			jumpViewDefaultScene = SceneType.Main
 
 			MainController.instance:enterMainScene()
 		end
 
 		ViewMgr.instance:closeAllPopupViews()
-		SceneHelper.instance:waitSceneDone(var_15_2, function()
-			arg_15_0:jumpTo(arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+		SceneHelper.instance:waitSceneDone(jumpViewDefaultScene, function()
+			self:jumpTo(jumpParam, callback, callbackObj, recordFarmItem)
 		end)
 
 		return JumpEnum.JumpResult.Success
 	end
 
-	JumpModel.instance:setRecordFarmItem(arg_15_4)
+	JumpModel.instance:setRecordFarmItem(recordFarmItem)
 
-	arg_15_0._callback = arg_15_2
-	arg_15_0._callbackObj = arg_15_3
-	arg_15_0.waitOpenViewNames = {}
-	arg_15_0.remainViewNames = {}
-	arg_15_0.closeViewNames = {}
+	self._callback = callback
+	self._callbackObj = callbackObj
+	self.waitOpenViewNames = {}
+	self.remainViewNames = {}
+	self.closeViewNames = {}
 
-	local var_15_4 = var_0_0.JumpViewToHandleFunc[var_15_0]
+	local jumpToHandleFunc = JumpController.JumpViewToHandleFunc[jumpView]
 
-	if not var_15_4 then
-		logError("跳转参数错误: " .. arg_15_1)
-		arg_15_0:reInit()
+	if not jumpToHandleFunc then
+		logError("跳转参数错误: " .. jumpParam)
+		self:reInit()
 
 		return JumpEnum.JumpResult.Fail
 	end
 
-	arg_15_0.canDispatchCallback = false
+	self.canDispatchCallback = false
 
-	local var_15_5 = var_15_4(arg_15_0, arg_15_1)
+	local jumpResult = jumpToHandleFunc(self, jumpParam)
 
-	arg_15_0.canDispatchCallback = true
+	self.canDispatchCallback = true
 
-	if var_15_5 ~= JumpEnum.JumpResult.Success then
-		arg_15_0:reInit()
+	if jumpResult ~= JumpEnum.JumpResult.Success then
+		self:reInit()
 
-		return var_15_5
+		return jumpResult
 	end
 
-	table.insert(arg_15_0.closeViewNames, ViewName.NormalStoreGoodsView)
-	table.insert(arg_15_0.closeViewNames, ViewName.ChargeStoreGoodsView)
-	table.insert(arg_15_0.closeViewNames, ViewName.HeroGroupEditView)
-	table.insert(arg_15_0.closeViewNames, ViewName.VersionActivity_1_2_HeroGroupEditView)
-	table.insert(arg_15_0.closeViewNames, ViewName.PlayerClothView)
-	table.insert(arg_15_0.closeViewNames, ViewName.DungeonMapLevelView)
-	table.insert(arg_15_0.closeViewNames, ViewName.VersionActivityDungeonMapLevelView)
-	table.insert(arg_15_0.closeViewNames, ViewName.GiftMultipleChoiceView)
-	table.insert(arg_15_0.closeViewNames, ViewName.DungeonCumulativeRewardsView)
-	table.insert(arg_15_0.closeViewNames, ViewName.DungeonCumulativeRewardPackView)
-	table.insert(arg_15_0.closeViewNames, ViewName.WeekWalkLayerRewardView)
-	table.insert(arg_15_0.closeViewNames, ViewName.WeekWalkRewardView)
-	table.insert(arg_15_0.closeViewNames, ViewName.MaterialTipView)
-	table.insert(arg_15_0.closeViewNames, ViewName.VersionActivity1_5RevivalTaskView)
-	arg_15_0:_closeModelViews(arg_15_0.remainViewNames)
-	arg_15_0:_closeViews(arg_15_0.closeViewNames, arg_15_0.remainViewNames)
-	arg_15_0:removeOpenedView()
-	arg_15_0:dispatchCallback()
+	table.insert(self.closeViewNames, ViewName.NormalStoreGoodsView)
+	table.insert(self.closeViewNames, ViewName.ChargeStoreGoodsView)
+	table.insert(self.closeViewNames, ViewName.HeroGroupEditView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity_1_2_HeroGroupEditView)
+	table.insert(self.closeViewNames, ViewName.PlayerClothView)
+	table.insert(self.closeViewNames, ViewName.DungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.VersionActivityDungeonMapLevelView)
+	table.insert(self.closeViewNames, ViewName.GiftMultipleChoiceView)
+	table.insert(self.closeViewNames, ViewName.DungeonCumulativeRewardsView)
+	table.insert(self.closeViewNames, ViewName.DungeonCumulativeRewardPackView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkLayerRewardView)
+	table.insert(self.closeViewNames, ViewName.WeekWalkRewardView)
+	table.insert(self.closeViewNames, ViewName.MaterialTipView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity1_5RevivalTaskView)
+	self:_closeModelViews(self.remainViewNames)
+	self:_closeViews(self.closeViewNames, self.remainViewNames)
+	self:removeOpenedView()
+	self:dispatchCallback()
 
-	return var_15_5
+	return jumpResult
 end
 
-function var_0_0._checkNeedSwitchScene(arg_17_0, arg_17_1)
-	local var_17_0 = GameSceneMgr.instance:getCurSceneType()
-	local var_17_1 = arg_17_0.jumpViewBelongScene[arg_17_1] or SceneType.Main
+function JumpController:_checkNeedSwitchScene(jumpView)
+	local currentScene = GameSceneMgr.instance:getCurSceneType()
+	local jumpViewBelongScene = self.jumpViewBelongScene[jumpView] or SceneType.Main
 
-	if type(var_17_1) == "table" then
-		return not tabletool.indexOf(var_17_1, var_17_0)
+	if type(jumpViewBelongScene) == "table" then
+		return not tabletool.indexOf(jumpViewBelongScene, currentScene)
 	end
 
-	return var_17_0 ~= var_17_1
+	return currentScene ~= jumpViewBelongScene
 end
 
-function var_0_0._getJumpViewDefaultScene(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0.jumpViewBelongScene[arg_18_1] or SceneType.Main
+function JumpController:_getJumpViewDefaultScene(jumpView)
+	local jumpViewBelongScene = self.jumpViewBelongScene[jumpView] or SceneType.Main
 
-	if type(var_18_0) == "table" then
-		return var_18_0 and var_18_0[1] or SceneType.Main
+	if type(jumpViewBelongScene) == "table" then
+		return jumpViewBelongScene and jumpViewBelongScene[1] or SceneType.Main
 	end
 
-	return var_18_0
+	return jumpViewBelongScene
 end
 
-function var_0_0.removeOpenedView(arg_19_0)
-	for iter_19_0 = #arg_19_0.waitOpenViewNames, 1, -1 do
-		if ViewMgr.instance:isOpen(arg_19_0.waitOpenViewNames[iter_19_0]) then
-			table.remove(arg_19_0.waitOpenViewNames, iter_19_0)
+function JumpController:removeOpenedView()
+	for i = #self.waitOpenViewNames, 1, -1 do
+		if ViewMgr.instance:isOpen(self.waitOpenViewNames[i]) then
+			table.remove(self.waitOpenViewNames, i)
 		end
 	end
 end
 
-function var_0_0.cantJump(arg_20_0, arg_20_1)
-	local var_20_0 = string.split(arg_20_1, "#")
-	local var_20_1 = tonumber(var_20_0[1])
-	local var_20_2, var_20_3, var_20_4 = (var_0_0.JumpViewToCanJumpFunc[var_20_1] or var_0_0.defaultCanJump)(arg_20_0, arg_20_1)
+function JumpController:cantJump(jumpParam)
+	local jumps = string.split(jumpParam, "#")
+	local jumpView = tonumber(jumps[1])
+	local canJumpFunc = JumpController.JumpViewToCanJumpFunc[jumpView]
 
-	if var_20_2 then
+	canJumpFunc = canJumpFunc or JumpController.defaultCanJump
+
+	local canJump, toastId, toastParamList = canJumpFunc(self, jumpParam)
+
+	if canJump then
 		return nil
 	else
-		return var_20_3, var_20_4
+		return toastId, toastParamList
 	end
 end
 
-function var_0_0.canJumpNew(arg_21_0, arg_21_1)
-	local var_21_0 = string.split(arg_21_1, "#")
-	local var_21_1 = tonumber(var_21_0[1])
-	local var_21_2, var_21_3, var_21_4 = (var_0_0.JumpViewToCanJumpFunc[var_21_1] or var_0_0.defaultCanJump)(arg_21_0, arg_21_1)
+function JumpController:canJumpNew(jumpParam)
+	local jumps = string.split(jumpParam, "#")
+	local jumpView = tonumber(jumps[1])
+	local canJumpFunc = JumpController.JumpViewToCanJumpFunc[jumpView]
 
-	return var_21_2, var_21_3, var_21_4
+	canJumpFunc = canJumpFunc or JumpController.defaultCanJump
+
+	local canJump, toastId, toastParamList = canJumpFunc(self, jumpParam)
+
+	return canJump, toastId, toastParamList
 end
 
-function var_0_0._closeModelViews(arg_22_0, arg_22_1)
-	local var_22_0 = {}
+function JumpController:_closeModelViews(remainViewNames)
+	local willCloseViewNames = {}
 
-	arg_22_1 = arg_22_1 or {}
+	remainViewNames = remainViewNames or {}
 
-	table.insert(arg_22_1, ViewName.ActivityNormalView)
-	table.insert(arg_22_1, ViewName.SignInView)
-	table.insert(arg_22_1, ViewName.MaterialTipView)
-	table.insert(arg_22_1, ViewName.ActivityBeginnerView)
+	table.insert(remainViewNames, ViewName.ActivityNormalView)
+	table.insert(remainViewNames, ViewName.SignInView)
+	table.insert(remainViewNames, ViewName.MaterialTipView)
+	table.insert(remainViewNames, ViewName.ActivityBeginnerView)
 
-	local var_22_1 = ViewMgr.instance:getOpenViewNameList()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_1) do
-		local var_22_2 = ViewMgr.instance:getSetting(iter_22_1)
+	for _, viewName in ipairs(openViewNameList) do
+		local setting = ViewMgr.instance:getSetting(viewName)
 
-		if (not arg_22_1 or not tabletool.indexOf(arg_22_1, iter_22_1)) and var_22_2.layer == UILayerName.PopUpTop and var_22_2.viewType == ViewType.Modal then
-			local var_22_3 = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
-			local var_22_4 = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
-			local var_22_5 = ViewMgr.instance:getContainer(iter_22_1).viewGO
+		if (not remainViewNames or not tabletool.indexOf(remainViewNames, viewName)) and setting.layer == UILayerName.PopUpTop and setting.viewType == ViewType.Modal then
+			local popUpTopGO = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+			local popUpBlurGO = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
+			local oneViewGO = ViewMgr.instance:getContainer(viewName).viewGO
 
-			if var_22_5 and (var_22_5.transform.parent == var_22_3.transform or var_22_5.transform.parent == var_22_4.transform) then
-				table.insert(var_22_0, iter_22_1)
+			if oneViewGO and (oneViewGO.transform.parent == popUpTopGO.transform or oneViewGO.transform.parent == popUpBlurGO.transform) then
+				table.insert(willCloseViewNames, viewName)
 			end
 		end
 	end
 
-	for iter_22_2 = 1, #var_22_0 do
-		ViewMgr.instance:closeView(var_22_0[iter_22_2], true)
+	for i = 1, #willCloseViewNames do
+		ViewMgr.instance:closeView(willCloseViewNames[i], true)
 	end
 end
 
-function var_0_0._closeViews(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = {}
+function JumpController:_closeViews(closeViewNames, remainViewNames)
+	local willCloseViewNames = {}
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
-		if not tabletool.indexOf(arg_23_2, iter_23_1) then
-			table.insert(var_23_0, iter_23_1)
+	for _, closeViewName in ipairs(closeViewNames) do
+		if not tabletool.indexOf(remainViewNames, closeViewName) then
+			table.insert(willCloseViewNames, closeViewName)
 		end
 	end
 
-	for iter_23_2, iter_23_3 in ipairs(var_23_0) do
-		ViewMgr.instance:closeView(iter_23_3, true)
+	for i, willCloseViewName in ipairs(willCloseViewNames) do
+		ViewMgr.instance:closeView(willCloseViewName, true)
 	end
 end
 
-function var_0_0.isJumpOpen(arg_24_0, arg_24_1)
-	local var_24_0 = JumpConfig.instance:getJumpConfig(arg_24_1)
+function JumpController:isJumpOpen(jumpId)
+	local config = JumpConfig.instance:getJumpConfig(jumpId)
 
-	if var_24_0 then
-		local var_24_1 = var_24_0.openId
+	if config then
+		local openId = config.openId
 
-		if var_24_1 and var_24_1 ~= 0 then
-			return OpenModel.instance:isFunctionUnlock(var_24_1)
+		if openId and openId ~= 0 then
+			return OpenModel.instance:isFunctionUnlock(openId)
 		end
 
 		return true
@@ -489,19 +506,20 @@ function var_0_0.isJumpOpen(arg_24_0, arg_24_1)
 	return false
 end
 
-function var_0_0.isOnlyShowJump(arg_25_0, arg_25_1)
-	local var_25_0 = JumpConfig.instance:getJumpConfig(arg_25_1)
+function JumpController:isOnlyShowJump(jumpId)
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
 
-	if var_25_0 then
-		local var_25_1 = var_25_0.param
+	if jumpConfig then
+		local jumpParam = jumpConfig.param
 
-		if string.nilorempty(var_25_1) then
+		if string.nilorempty(jumpParam) then
 			return true
 		end
 
-		local var_25_2 = string.split(var_25_1, "#")
+		local jumps = string.split(jumpParam, "#")
+		local jumpView = tonumber(jumps[1])
 
-		if tonumber(var_25_2[1]) == JumpEnum.JumpView.Show then
+		if jumpView == JumpEnum.JumpView.Show then
 			return true
 		end
 	end
@@ -509,9 +527,9 @@ function var_0_0.isOnlyShowJump(arg_25_0, arg_25_1)
 	return false
 end
 
-function var_0_0.getCurrentOpenedView(arg_26_0, arg_26_1)
-	if not arg_26_0.ignoreViewName then
-		arg_26_0.ignoreViewName = {
+function JumpController:getCurrentOpenedView(excludeView)
+	if not self.ignoreViewName then
+		self.ignoreViewName = {
 			[ViewName.RoomView] = true,
 			[ViewName.ToastView] = true,
 			[ViewName.MainView] = true,
@@ -533,66 +551,64 @@ function var_0_0.getCurrentOpenedView(arg_26_0, arg_26_1)
 		}
 	end
 
-	local var_26_0 = {}
-	local var_26_1
-	local var_26_2
+	local openedViewList = {}
+	local openedViewTable, viewContainer
 
-	for iter_26_0, iter_26_1 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if iter_26_1 ~= arg_26_1 and not arg_26_0.ignoreViewName[iter_26_1] then
-			local var_26_3 = {
-				viewName = iter_26_1
+	for _, viewName in ipairs(ViewMgr.instance:getOpenViewNameList()) do
+		if viewName ~= excludeView and not self.ignoreViewName[viewName] then
+			openedViewTable = {
+				viewName = viewName
 			}
-			local var_26_4 = ViewMgr.instance:getContainer(iter_26_1)
+			viewContainer = ViewMgr.instance:getContainer(viewName)
+			openedViewTable.viewParam = viewContainer.getCurrentViewParam and viewContainer:getCurrentViewParam() or viewContainer.viewParam
 
-			var_26_3.viewParam = var_26_4.getCurrentViewParam and var_26_4:getCurrentViewParam() or var_26_4.viewParam
-
-			table.insert(var_26_0, var_26_3)
+			table.insert(openedViewList, openedViewTable)
 		end
 	end
 
-	return var_26_0
+	return openedViewList
 end
 
-function var_0_0.commonIconBeforeClickSetRecordItem(arg_27_0, arg_27_1, arg_27_2)
-	arg_27_2:setRecordFarmItem({
-		type = arg_27_2._itemType,
-		id = arg_27_2._itemId,
-		quantity = arg_27_2._itemQuantity,
+function JumpController.commonIconBeforeClickSetRecordItem(view, param, commonItemIcon)
+	commonItemIcon:setRecordFarmItem({
+		type = commonItemIcon._itemType,
+		id = commonItemIcon._itemId,
+		quantity = commonItemIcon._itemQuantity,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
-		openedViewNameList = var_0_0.instance:getCurrentOpenedView()
+		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	})
 end
 
-local var_0_2 = false
+local s_RoleSignPanelView = false
 
-function var_0_0._notAllowJumpViewNames_RoleSignPanelView(arg_28_0)
-	if var_0_2 then
+function JumpController:_notAllowJumpViewNames_RoleSignPanelView()
+	if s_RoleSignPanelView then
 		return
 	end
 
-	var_0_2 = true
+	s_RoleSignPanelView = true
 
-	local var_28_0 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part1", ViewName.Role_PanelSignView_Part1)
-	local var_28_1 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part2", ViewName.Role_PanelSignView_Part2)
+	local view1 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part1", ViewName.Role_PanelSignView_Part1)
+	local view2 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part2", ViewName.Role_PanelSignView_Part2)
 
-	table.insert(var_0_1, var_28_0)
-	table.insert(var_0_1, var_28_1)
+	table.insert(_notAllowJumpViewNames, view1)
+	table.insert(_notAllowJumpViewNames, view2)
 end
 
-local var_0_3 = false
+local s_SpecialSignPanelView = false
 
-function var_0_0._notAllowJumpViewNames_SpecialSignPanelView(arg_29_0)
-	if var_0_3 then
+function JumpController:_notAllowJumpViewNames_SpecialSignPanelView()
+	if s_SpecialSignPanelView then
 		return
 	end
 
-	var_0_3 = true
+	s_SpecialSignPanelView = true
 
-	local var_29_0 = GameBranchMgr.instance:Vxax_ViewName("Special_PanelsView", ViewName.V2a3_Special_PanelsView)
+	local view = GameBranchMgr.instance:Vxax_ViewName("Special_PanelsView", ViewName.V2a3_Special_PanelsView)
 
-	table.insert(var_0_1, var_29_0)
+	table.insert(_notAllowJumpViewNames, view)
 end
 
-var_0_0.instance = var_0_0.New()
+JumpController.instance = JumpController.New()
 
-return var_0_0
+return JumpController

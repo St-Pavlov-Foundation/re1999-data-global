@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.config.EliminateConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/config/EliminateConfig.lua
 
-local var_0_0 = class("EliminateConfig", BaseConfig)
+module("modules.logic.versionactivity2_2.eliminate.config.EliminateConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local EliminateConfig = class("EliminateConfig", BaseConfig)
+
+function EliminateConfig:reqConfigNames()
 	return {
 		"eliminate_episode",
 		"eliminate_chapter",
@@ -21,252 +23,253 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0:_initEliminateChessConfig()
+function EliminateConfig:onInit()
+	self:_initEliminateChessConfig()
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "eliminate_chapter" then
-		arg_3_0:_initChapter()
-	elseif arg_3_1 == "soldier_chess" then
-		arg_3_0:_initSoldierChess()
-	elseif arg_3_1 == "eliminate_cost" then
-		arg_3_0:_initEvaluateGear()
-		arg_3_0:_initCharacterDamageGear()
+function EliminateConfig:onConfigLoaded(configName, configTable)
+	if configName == "eliminate_chapter" then
+		self:_initChapter()
+	elseif configName == "soldier_chess" then
+		self:_initSoldierChess()
+	elseif configName == "eliminate_cost" then
+		self:_initEvaluateGear()
+		self:_initCharacterDamageGear()
 	end
 end
 
-function var_0_0._initSoldierChess(arg_4_0)
-	arg_4_0._soldierChessList = {}
-	arg_4_0._soldierChessShowList = {}
-	arg_4_0._soldierChessShowMap = {}
+function EliminateConfig:_initSoldierChess()
+	self._soldierChessList = {}
+	self._soldierChessShowList = {}
+	self._soldierChessShowMap = {}
 
-	for iter_4_0, iter_4_1 in ipairs(lua_soldier_chess.configList) do
-		local var_4_0 = 0
-		local var_4_1 = GameUtil.splitString2(iter_4_1.cost, false, "#", "_")
+	for i, v in ipairs(lua_soldier_chess.configList) do
+		local costValue = 0
+		local list = GameUtil.splitString2(v.cost, false, "#", "_")
 
-		if var_4_1 then
-			for iter_4_2, iter_4_3 in ipairs(var_4_1) do
-				local var_4_2 = tonumber(iter_4_3[2])
+		if list then
+			for _, costParam in ipairs(list) do
+				local addValue = tonumber(costParam[2])
 
-				if var_4_2 then
-					var_4_0 = var_4_0 + var_4_2
+				if addValue then
+					costValue = costValue + addValue
 				else
-					logError("eliminate_cost error:" .. tostring(iter_4_1.id) .. " cost:" .. tostring(iter_4_1.cost))
+					logError("eliminate_cost error:" .. tostring(v.id) .. " cost:" .. tostring(v.cost))
 				end
 			end
 		end
 
-		local var_4_3 = {
-			id = iter_4_1.id,
-			config = iter_4_1,
-			costList = var_4_1,
-			costValue = var_4_0
+		local data = {
+			id = v.id,
+			config = v,
+			costList = list,
+			costValue = costValue
 		}
 
-		table.insert(arg_4_0._soldierChessList, var_4_3)
+		table.insert(self._soldierChessList, data)
 
-		if iter_4_1.formationDisplays == 1 then
-			table.insert(arg_4_0._soldierChessShowList, var_4_3)
+		if v.formationDisplays == 1 then
+			table.insert(self._soldierChessShowList, data)
 
-			arg_4_0._soldierChessShowMap[iter_4_1.id] = var_4_3
+			self._soldierChessShowMap[v.id] = data
 		end
 	end
 end
 
-function var_0_0.getSoldierChessList(arg_5_0)
-	return arg_5_0._soldierChessShowList
+function EliminateConfig:getSoldierChessList()
+	return self._soldierChessShowList
 end
 
-function var_0_0.getSoldierChessById(arg_6_0, arg_6_1)
-	return arg_6_0._soldierChessShowMap[arg_6_1]
+function EliminateConfig:getSoldierChessById(id)
+	return self._soldierChessShowMap[id]
 end
 
-function var_0_0.getSoldierChessConfig(arg_7_0, arg_7_1)
-	return lua_soldier_chess.configDict[arg_7_1]
+function EliminateConfig:getSoldierChessConfig(id)
+	return lua_soldier_chess.configDict[id]
 end
 
-function var_0_0.getSoldierSkillConfig(arg_8_0, arg_8_1)
-	return lua_soldier_skill.configDict[arg_8_1]
+function EliminateConfig:getSoldierSkillConfig(id)
+	return lua_soldier_skill.configDict[id]
 end
 
-function var_0_0.getSoldierChessQualityImageName(arg_9_0, arg_9_1)
-	return EliminateTeamChessEnum.SoliderChessQualityImage[arg_9_1] or EliminateTeamChessEnum.SoliderChessQualityImage[1]
+function EliminateConfig:getSoldierChessQualityImageName(levelId)
+	return EliminateTeamChessEnum.SoliderChessQualityImage[levelId] or EliminateTeamChessEnum.SoliderChessQualityImage[1]
 end
 
-function var_0_0.getSoldierChessDesc(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getSoldierChessConfig(arg_10_1).skillId
-	local var_10_1 = string.splitToNumber(var_10_0, "#")
-	local var_10_2 = ""
+function EliminateConfig:getSoldierChessDesc(id)
+	local skillId = self:getSoldierChessConfig(id).skillId
+	local skillIds = string.splitToNumber(skillId, "#")
+	local desc = ""
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-		local var_10_3 = lua_soldier_skill.configDict[iter_10_1]
+	for _, v in ipairs(skillIds) do
+		local skillConfig = lua_soldier_skill.configDict[v]
 
-		if var_10_3 then
-			var_10_2 = var_10_2 .. var_10_3.skillDes .. "\n"
+		if skillConfig then
+			desc = desc .. skillConfig.skillDes .. "\n"
 		end
 	end
 
-	return var_10_2
+	return desc
 end
 
-function var_0_0.getUnLockMainCharacterSkillConst(arg_11_0)
-	return arg_11_0:getConstValue(4)
+function EliminateConfig:getUnLockMainCharacterSkillConst()
+	return self:getConstValue(4)
 end
 
-function var_0_0.getUnLockChessSellConst(arg_12_0)
-	return arg_12_0:getConstValue(5)
+function EliminateConfig:getUnLockChessSellConst()
+	return self:getConstValue(5)
 end
 
-function var_0_0.getUnLockSelectSoliderConst(arg_13_0)
-	return arg_13_0:getConstValue(6)
+function EliminateConfig:getUnLockSelectSoliderConst()
+	return self:getConstValue(6)
 end
 
-function var_0_0.getSellSoliderPermillage(arg_14_0)
-	local var_14_0 = lua_eliminate_cost.configDict[12]
+function EliminateConfig:getSellSoliderPermillage()
+	local config = lua_eliminate_cost.configDict[12]
 
-	return var_14_0 and tonumber(var_14_0.value) or 1
+	return config and tonumber(config.value) or 1
 end
 
-function var_0_0.getConstValue(arg_15_0, arg_15_1)
-	local var_15_0 = lua_eliminate_cost.configDict[arg_15_1]
+function EliminateConfig:getConstValue(id)
+	local config = lua_eliminate_cost.configDict[id]
 
-	return var_15_0 and tonumber(var_15_0.value) or 0
+	return config and tonumber(config.value) or 0
 end
 
-function var_0_0.getSoldierChessConfigConst(arg_16_0, arg_16_1)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._soldierChessList) do
-		local var_16_0 = iter_16_1.config
+function EliminateConfig:getSoldierChessConfigConst(id)
+	for _, data in ipairs(self._soldierChessList) do
+		local config = data.config
 
-		if var_16_0 and var_16_0.id == arg_16_1 then
-			return iter_16_1.costList, iter_16_1.costValue
+		if config and config.id == id then
+			return data.costList, data.costValue
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getTeamChessCharacterConfig(arg_17_0, arg_17_1)
-	return lua_teamchess_character.configDict[arg_17_1]
+function EliminateConfig:getTeamChessCharacterConfig(id)
+	return lua_teamchess_character.configDict[id]
 end
 
-function var_0_0.getTeamChessEnemyConfig(arg_18_0, arg_18_1)
-	return lua_teamchess_enemy.configDict[arg_18_1]
+function EliminateConfig:getTeamChessEnemyConfig(id)
+	return lua_teamchess_enemy.configDict[id]
 end
 
-function var_0_0.getStrongHoldConfig(arg_19_0, arg_19_1)
-	return lua_strong_hold.configDict[arg_19_1]
+function EliminateConfig:getStrongHoldConfig(id)
+	return lua_strong_hold.configDict[id]
 end
 
-function var_0_0.getSoldierChessModelPath(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getSoldierChessConfig(arg_20_1)
+function EliminateConfig:getSoldierChessModelPath(id)
+	local config = self:getSoldierChessConfig(id)
 
-	return var_20_0 and var_20_0.resModel or ""
+	return config and config.resModel or ""
 end
 
-function var_0_0._initChapter(arg_21_0)
-	arg_21_0._normalChapterList = {}
+function EliminateConfig:_initChapter()
+	self._normalChapterList = {}
 
-	for iter_21_0, iter_21_1 in ipairs(lua_eliminate_chapter.configList) do
-		table.insert(arg_21_0._normalChapterList, iter_21_1)
+	for i, v in ipairs(lua_eliminate_chapter.configList) do
+		table.insert(self._normalChapterList, v)
 	end
 end
 
-function var_0_0._initEliminateChessConfig(arg_22_0)
-	arg_22_0._chessBoardConfig = {}
-	arg_22_0._chessConfig = {}
+function EliminateConfig:_initEliminateChessConfig()
+	self._chessBoardConfig = {}
+	self._chessConfig = {}
 
-	for iter_22_0 = 1, #T_lua_eliminate_chessBoard do
-		local var_22_0 = T_lua_eliminate_chessBoard[iter_22_0]
+	for i = 1, #T_lua_eliminate_chessBoard do
+		local data = T_lua_eliminate_chessBoard[i]
 
-		arg_22_0._chessBoardConfig[var_22_0.type] = var_22_0
+		self._chessBoardConfig[data.type] = data
 	end
 
-	for iter_22_1 = 1, #T_lua_eliminate_chess do
-		local var_22_1 = T_lua_eliminate_chess[iter_22_1]
+	for i = 1, #T_lua_eliminate_chess do
+		local data = T_lua_eliminate_chess[i]
 
-		arg_22_0._chessConfig[var_22_1.id] = var_22_1
+		self._chessConfig[data.id] = data
 	end
 end
 
-function var_0_0.getChessIconPath(arg_23_0, arg_23_1)
-	return arg_23_0._chessConfig[arg_23_1] and arg_23_0._chessConfig[arg_23_1].iconPath or ""
+function EliminateConfig:getChessIconPath(id)
+	return self._chessConfig[id] and self._chessConfig[id].iconPath or ""
 end
 
-function var_0_0.getChessSourceID(arg_24_0, arg_24_1)
-	return arg_24_0._chessConfig[arg_24_1] and arg_24_0._chessConfig[arg_24_1].colorId or ""
+function EliminateConfig:getChessSourceID(id)
+	return self._chessConfig[id] and self._chessConfig[id].colorId or ""
 end
 
-function var_0_0.getChessBoardIconPath(arg_25_0, arg_25_1)
-	return arg_25_0._chessBoardConfig[arg_25_1] and arg_25_0._chessBoardConfig[arg_25_1].iconPath or ""
+function EliminateConfig:getChessBoardIconPath(typeId)
+	return self._chessBoardConfig[typeId] and self._chessBoardConfig[typeId].iconPath or ""
 end
 
-function var_0_0.getNormalChapterList(arg_26_0)
-	return arg_26_0._normalChapterList
+function EliminateConfig:getNormalChapterList()
+	return self._normalChapterList
 end
 
-function var_0_0.getEliminateEpisodeConfig(arg_27_0, arg_27_1)
-	return lua_eliminate_episode.configDict[arg_27_1]
+function EliminateConfig:getEliminateEpisodeConfig(id)
+	return lua_eliminate_episode.configDict[id]
 end
 
-function var_0_0.getWarChessEpisodeConfig(arg_28_0, arg_28_1)
-	return lua_war_chess_episode.configDict[arg_28_1]
+function EliminateConfig:getWarChessEpisodeConfig(id)
+	return lua_war_chess_episode.configDict[id]
 end
 
-function var_0_0.getMainCharacterSkillConfig(arg_29_0, arg_29_1)
-	if arg_29_1 then
-		local var_29_0 = string.splitToNumber(arg_29_1, "#")
+function EliminateConfig:getMainCharacterSkillConfig(skillId)
+	if skillId then
+		local skillIds = string.splitToNumber(skillId, "#")
+		local skillConfig = lua_character_skill.configDict[skillIds[1]]
 
-		return lua_character_skill.configDict[var_29_0[1]]
+		return skillConfig
 	end
 
 	return nil
 end
 
-function var_0_0.getStrongHoldRuleRuleConfig(arg_30_0, arg_30_1)
-	return lua_strong_hold_rule.configDict[arg_30_1]
+function EliminateConfig:getStrongHoldRuleRuleConfig(ruleId)
+	return lua_strong_hold_rule.configDict[ruleId]
 end
 
-function var_0_0.getEliminateDialogConfig(arg_31_0, arg_31_1)
-	local var_31_0 = lua_eliminate_dialog.configDict[arg_31_1]
+function EliminateConfig:getEliminateDialogConfig(levelId)
+	local levelDialog = lua_eliminate_dialog.configDict[levelId]
 
-	if var_31_0 == nil then
-		var_31_0 = {}
+	if levelDialog == nil then
+		levelDialog = {}
 	end
 
-	local var_31_1 = lua_eliminate_dialog.configDict[999999]
+	local globalDialogData = lua_eliminate_dialog.configDict[999999]
 
-	if var_31_1 ~= nil then
-		tabletool.addValues(var_31_0, var_31_1)
+	if globalDialogData ~= nil then
+		tabletool.addValues(levelDialog, globalDialogData)
 	end
 
-	return var_31_0
+	return levelDialog
 end
 
-function var_0_0._initEvaluateGear(arg_32_0)
-	local var_32_0 = lua_eliminate_cost.configDict[36]
+function EliminateConfig:_initEvaluateGear()
+	local config = lua_eliminate_cost.configDict[36]
 
-	arg_32_0._evaluateGear = string.splitToNumber(var_32_0.value, "#")
+	self._evaluateGear = string.splitToNumber(config.value, "#")
 end
 
-function var_0_0.getEvaluateGear(arg_33_0)
-	return arg_33_0._evaluateGear
+function EliminateConfig:getEvaluateGear()
+	return self._evaluateGear
 end
 
-function var_0_0._initCharacterDamageGear(arg_34_0)
-	local var_34_0 = lua_eliminate_cost.configDict[38]
+function EliminateConfig:_initCharacterDamageGear()
+	local config = lua_eliminate_cost.configDict[38]
 
-	arg_34_0._characterDamageGear = string.splitToNumber(var_34_0.value, "#")
+	self._characterDamageGear = string.splitToNumber(config.value, "#")
 end
 
-function var_0_0.getCharacterDamageGear(arg_35_0)
-	return arg_35_0._characterDamageGear
+function EliminateConfig:getCharacterDamageGear()
+	return self._characterDamageGear
 end
 
-function var_0_0.getSoliderSkillConfig(arg_36_0, arg_36_1)
-	return lua_soldier_skill.configDict[arg_36_1] or {}
+function EliminateConfig:getSoliderSkillConfig(id)
+	return lua_soldier_skill.configDict[id] or {}
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateConfig.instance = EliminateConfig.New()
 
-return var_0_0
+return EliminateConfig

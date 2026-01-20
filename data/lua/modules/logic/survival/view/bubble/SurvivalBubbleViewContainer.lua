@@ -1,11 +1,15 @@
-﻿module("modules.logic.survival.view.bubble.SurvivalBubbleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/bubble/SurvivalBubbleViewContainer.lua
 
-local var_0_0 = class("SurvivalBubbleViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.bubble.SurvivalBubbleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local SurvivalBubbleViewContainer = class("SurvivalBubbleViewContainer", BaseViewContainer)
+
+function SurvivalBubbleViewContainer:buildViews()
+	local views = {
 		SurvivalBubbleView.New()
 	}
+
+	return views
 end
 
-return var_0_0
+return SurvivalBubbleViewContainer

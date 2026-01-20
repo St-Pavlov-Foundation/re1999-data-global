@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerBlackHoleEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballTriggerBlackHoleEntity.lua
 
-local var_0_0 = class("PinballTriggerBlackHoleEntity", PinballTriggerEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballTriggerBlackHoleEntity", package.seeall)
 
-function var_0_0.onInitByCo(arg_1_0)
-	arg_1_0.groupId = tonumber(arg_1_0.spData) or 0
+local PinballTriggerBlackHoleEntity = class("PinballTriggerBlackHoleEntity", PinballTriggerEntity)
+
+function PinballTriggerBlackHoleEntity:onInitByCo()
+	self.groupId = tonumber(self.spData) or 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function PinballTriggerBlackHoleEntity:init(go)
+	PinballTriggerBlackHoleEntity.super.init(self, go)
 
-	local var_2_0 = gohelper.findChild(arg_2_1, "vx_blackhole")
+	local effect = gohelper.findChild(go, "vx_blackhole")
 
-	gohelper.setActive(var_2_0, true)
+	gohelper.setActive(effect, true)
 end
 
-function var_0_0.isBounce(arg_3_0)
+function PinballTriggerBlackHoleEntity:isBounce()
 	return false
 end
 
-function var_0_0.onHitEnter(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local var_4_0 = PinballEntityMgr.instance:getEntity(arg_4_1)
+function PinballTriggerBlackHoleEntity:onHitEnter(hitEntityId, hitX, hitY, hitDir)
+	local hitEntity = PinballEntityMgr.instance:getEntity(hitEntityId)
 
-	if not var_4_0 or var_4_0.inBlackHoleId then
+	if not hitEntity or hitEntity.inBlackHoleId then
 		return
 	end
 
-	local var_4_1
+	local otherBalckHoleEntity
 
-	for iter_4_0, iter_4_1 in pairs(PinballEntityMgr.instance:getAllEntity()) do
-		if iter_4_1 ~= arg_4_0 and iter_4_1.unitType == arg_4_0.unitType and iter_4_1.groupId == arg_4_0.groupId then
-			var_4_1 = iter_4_1
+	for k, entity in pairs(PinballEntityMgr.instance:getAllEntity()) do
+		if entity ~= self and entity.unitType == self.unitType and entity.groupId == self.groupId then
+			otherBalckHoleEntity = entity
 
 			break
 		end
 	end
 
-	if var_4_1 then
-		var_4_0.x = var_4_1.x
-		var_4_0.y = var_4_1.y
+	if otherBalckHoleEntity then
+		hitEntity.x = otherBalckHoleEntity.x
+		hitEntity.y = otherBalckHoleEntity.y
 
-		var_4_0:tick(0)
+		hitEntity:tick(0)
 
-		var_4_0.inBlackHoleId = arg_4_0.id
+		hitEntity.inBlackHoleId = self.id
 
-		var_4_0:onEnterHole()
+		hitEntity:onEnterHole()
 	end
 end
 
-function var_0_0.onHitExit(arg_5_0, arg_5_1)
-	local var_5_0 = PinballEntityMgr.instance:getEntity(arg_5_1)
+function PinballTriggerBlackHoleEntity:onHitExit(hitEntityId)
+	local hitEntity = PinballEntityMgr.instance:getEntity(hitEntityId)
 
-	if not var_5_0 or not var_5_0.inBlackHoleId or var_5_0.inBlackHoleId == arg_5_0.id then
+	if not hitEntity or not hitEntity.inBlackHoleId or hitEntity.inBlackHoleId == self.id then
 		return
 	end
 
-	var_5_0.inBlackHoleId = nil
+	hitEntity.inBlackHoleId = nil
 
-	var_5_0:onExitHole()
+	hitEntity:onExitHole()
 end
 
-return var_0_0
+return PinballTriggerBlackHoleEntity

@@ -1,79 +1,81 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureWrongTipView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureWrongTipView.lua
 
-local var_0_0 = class("RoomManufactureWrongTipView", BaseView)
+module("modules.logic.room.view.manufacture.RoomManufactureWrongTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._gorightroot = gohelper.findChild(arg_1_0.viewGO, "rightRoot")
-	arg_1_0._goworngPop = gohelper.findChild(arg_1_0.viewGO, "root/#go_wrongPop")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_wrongPop/#simage_bg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/#go_wrongPop/#txt_title")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_wrongPop/#btn_close")
-	arg_1_0._scrolllist = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#go_wrongPop/#scroll_list")
-	arg_1_0._gotipcontent = gohelper.findChild(arg_1_0.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content")
-	arg_1_0._gotipItem = gohelper.findChild(arg_1_0.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content/#go_tipItem")
+local RoomManufactureWrongTipView = class("RoomManufactureWrongTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomManufactureWrongTipView:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, "root")
+	self._gorightroot = gohelper.findChild(self.viewGO, "rightRoot")
+	self._goworngPop = gohelper.findChild(self.viewGO, "root/#go_wrongPop")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "root/#go_wrongPop/#simage_bg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "root/#go_wrongPop/#txt_title")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_wrongPop/#btn_close")
+	self._scrolllist = gohelper.findChildScrollRect(self.viewGO, "root/#go_wrongPop/#scroll_list")
+	self._gotipcontent = gohelper.findChild(self.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content")
+	self._gotipItem = gohelper.findChild(self.viewGO, "root/#go_wrongPop/#scroll_list/viewport/content/#go_tipItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomManufactureWrongTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomManufactureWrongTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomManufactureWrongTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RoomManufactureWrongTipView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	if not arg_6_0.viewParam then
+function RoomManufactureWrongTipView:onUpdateParam()
+	if not self.viewParam then
 		return
 	end
 
-	arg_6_0.isRight = arg_6_0.viewParam.isRight
-	arg_6_0.buildingUid = arg_6_0.viewParam.buildingUid
+	self.isRight = self.viewParam.isRight
+	self.buildingUid = self.viewParam.buildingUid
 
-	arg_6_0:setTipItems()
-	ManufactureController.instance:dispatchEvent(ManufactureEvent.OnWrongTipViewChange, arg_6_0.buildingUid)
+	self:setTipItems()
+	ManufactureController.instance:dispatchEvent(ManufactureEvent.OnWrongTipViewChange, self.buildingUid)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:onUpdateParam()
+function RoomManufactureWrongTipView:onOpen()
+	self:onUpdateParam()
 
-	if arg_7_0.isRight then
-		gohelper.addChild(arg_7_0._gorightroot, arg_7_0._goworngPop)
+	if self.isRight then
+		gohelper.addChild(self._gorightroot, self._goworngPop)
 	end
 end
 
-function var_0_0.setTipItems(arg_8_0)
-	arg_8_0.tipItemList = {}
+function RoomManufactureWrongTipView:setTipItems()
+	self.tipItemList = {}
 
-	local var_8_0 = ManufactureModel.instance:getManufactureWrongTipItemList(arg_8_0.buildingUid)
+	local tipItemList = ManufactureModel.instance:getManufactureWrongTipItemList(self.buildingUid)
 
-	gohelper.CreateObjList(arg_8_0, arg_8_0._onSetTipItem, var_8_0, arg_8_0._gotipcontent, arg_8_0._gotipItem, RoomManufactureWrongTipItem)
+	gohelper.CreateObjList(self, self._onSetTipItem, tipItemList, self._gotipcontent, self._gotipItem, RoomManufactureWrongTipItem)
 end
 
-function var_0_0._onSetTipItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_0.tipItemList[arg_9_3] = arg_9_1
+function RoomManufactureWrongTipView:_onSetTipItem(obj, data, index)
+	self.tipItemList[index] = obj
 
-	arg_9_1:setData(arg_9_0.buildingUid, arg_9_2.manufactureItemId, arg_9_2.wrongSlotIdList, arg_9_0.isRight)
+	obj:setData(self.buildingUid, data.manufactureItemId, data.wrongSlotIdList, self.isRight)
 end
 
-function var_0_0.onClose(arg_10_0)
+function RoomManufactureWrongTipView:onClose()
 	ManufactureController.instance:dispatchEvent(ManufactureEvent.OnWrongTipViewChange)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RoomManufactureWrongTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomManufactureWrongTipView

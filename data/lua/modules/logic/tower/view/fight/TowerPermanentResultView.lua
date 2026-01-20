@@ -1,334 +1,339 @@
-﻿module("modules.logic.tower.view.fight.TowerPermanentResultView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerPermanentResultView.lua
 
-local var_0_0 = class("TowerPermanentResultView", BaseView)
+module("modules.logic.tower.view.fight.TowerPermanentResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._click = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "goFinish")
-	arg_1_0.goResult = gohelper.findChild(arg_1_0.viewGO, "go_Result")
-	arg_1_0.goRewards = gohelper.findChild(arg_1_0.viewGO, "go_Result/goReward")
-	arg_1_0.goReward = gohelper.findChild(arg_1_0.viewGO, "go_Result/goReward/scroll_reward/Viewport/#go_rewards")
-	arg_1_0.btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_Result/#btn_Detail")
-	arg_1_0.goBossEmpty = gohelper.findChild(arg_1_0.viewGO, "go_Result/goGroup/assistBoss/boss/#go_Empty")
-	arg_1_0.goBossRoot = gohelper.findChild(arg_1_0.viewGO, "go_Result/goGroup/assistBoss/boss/root")
-	arg_1_0.simageBoss = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_Result/goGroup/assistBoss/boss/root/icon")
-	arg_1_0.txtBossName = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_Result/goGroup/assistBoss/boss/root/name")
-	arg_1_0.txtBossLev = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_Result/goGroup/assistBoss/boss/root/lev")
-	arg_1_0.imgBossCareer = gohelper.findChildImage(arg_1_0.viewGO, "go_Result/goGroup/assistBoss/boss/root/career")
-	arg_1_0.goLimitDetail = gohelper.findChild(arg_1_0.viewGO, "go_Result/LimitDetail")
-	arg_1_0.simageStageDetail = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_Result/LimitDetail/imgStage")
-	arg_1_0.simageWaveDetail = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_Result/LimitDetail/wavebg")
-	arg_1_0.txtTower = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_Result/LimitDetail/image_NameBG/txtTower")
-	arg_1_0.difficultyItems = arg_1_0:getUserDataTb_()
+local TowerPermanentResultView = class("TowerPermanentResultView", BaseView)
 
-	for iter_1_0 = 1, 3 do
-		arg_1_0.difficultyItems[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, string.format("go_Result/LimitDetail/Difficulty/image_Difficulty%s", iter_1_0))
+function TowerPermanentResultView:onInitView()
+	self._click = gohelper.getClick(self.viewGO)
+	self.goFinish = gohelper.findChild(self.viewGO, "goFinish")
+	self.goResult = gohelper.findChild(self.viewGO, "go_Result")
+	self.goRewards = gohelper.findChild(self.viewGO, "go_Result/goReward")
+	self.goReward = gohelper.findChild(self.viewGO, "go_Result/goReward/scroll_reward/Viewport/#go_rewards")
+	self.btnDetail = gohelper.findChildButtonWithAudio(self.viewGO, "go_Result/#btn_Detail")
+	self.goBossEmpty = gohelper.findChild(self.viewGO, "go_Result/goGroup/assistBoss/boss/#go_Empty")
+	self.goBossRoot = gohelper.findChild(self.viewGO, "go_Result/goGroup/assistBoss/boss/root")
+	self.simageBoss = gohelper.findChildSingleImage(self.viewGO, "go_Result/goGroup/assistBoss/boss/root/icon")
+	self.txtBossName = gohelper.findChildTextMesh(self.viewGO, "go_Result/goGroup/assistBoss/boss/root/name")
+	self.txtBossLev = gohelper.findChildTextMesh(self.viewGO, "go_Result/goGroup/assistBoss/boss/root/lev")
+	self.imgBossCareer = gohelper.findChildImage(self.viewGO, "go_Result/goGroup/assistBoss/boss/root/career")
+	self.goLimitDetail = gohelper.findChild(self.viewGO, "go_Result/LimitDetail")
+	self.simageStageDetail = gohelper.findChildSingleImage(self.viewGO, "go_Result/LimitDetail/imgStage")
+	self.simageWaveDetail = gohelper.findChildSingleImage(self.viewGO, "go_Result/LimitDetail/wavebg")
+	self.txtTower = gohelper.findChildTextMesh(self.viewGO, "go_Result/LimitDetail/image_NameBG/txtTower")
+	self.difficultyItems = self:getUserDataTb_()
+
+	for i = 1, 3 do
+		self.difficultyItems[i] = gohelper.findChild(self.viewGO, string.format("go_Result/LimitDetail/Difficulty/image_Difficulty%s", i))
 	end
 
-	arg_1_0.txtScoreDetail = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_Result/LimitDetail/image_ScoreBG/#txt_Score")
-	arg_1_0.goPermanentDetail = gohelper.findChild(arg_1_0.viewGO, "go_Result/PermanentDetail")
-	arg_1_0.imgStageDetail = gohelper.findChildImage(arg_1_0.viewGO, "go_Result/PermanentDetail/imgStage")
-	arg_1_0.txtTowerPermanent = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_Result/PermanentDetail/image_NameBG/txtTower")
-	arg_1_0.goSchedule = gohelper.findChild(arg_1_0.viewGO, "go_Result/PermanentDetail/LayoutGroup/Schedule")
-	arg_1_0.txtSchedule = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_Result/PermanentDetail/LayoutGroup/Schedule/image_ScheduleBG/txt_Schedule")
-	arg_1_0.goComplete = gohelper.findChild(arg_1_0.viewGO, "go_Result/PermanentDetail/LayoutGroup/Complete")
-	arg_1_0.goEntry = gohelper.findChild(arg_1_0.viewGO, "go_Entry")
-	arg_1_0.goEntryLimit = gohelper.findChild(arg_1_0.viewGO, "go_Entry/#go_Limit")
-	arg_1_0.txtScore = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_Entry/#go_Limit/image_ScoreBG/#txt_Score")
-	arg_1_0.simageStageEntry = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_Entry/#go_Limit/imgStage")
-	arg_1_0.simageWaveEntry = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_Entry/#go_Limit/wavebg")
-	arg_1_0.goEntryPermanent = gohelper.findChild(arg_1_0.viewGO, "go_Entry/#go_Permanent")
-	arg_1_0.imgStage = gohelper.findChildImage(arg_1_0.viewGO, "go_Entry/#go_Permanent/imgStage")
-	arg_1_0.goScoreStar = gohelper.findChild(arg_1_0.viewGO, "go_Result/LimitDetail/#go_scoreStar")
-	arg_1_0.goPointContent = gohelper.findChild(arg_1_0.viewGO, "go_Result/LimitDetail/#go_scoreStar/#go_PointContent")
-	arg_1_0.goPointItem = gohelper.findChild(arg_1_0.viewGO, "go_Result/LimitDetail/#go_scoreStar/#go_PointContent/#go_PointItem")
+	self.txtScoreDetail = gohelper.findChildTextMesh(self.viewGO, "go_Result/LimitDetail/image_ScoreBG/#txt_Score")
+	self.goPermanentDetail = gohelper.findChild(self.viewGO, "go_Result/PermanentDetail")
+	self.imgStageDetail = gohelper.findChildImage(self.viewGO, "go_Result/PermanentDetail/imgStage")
+	self.txtTowerPermanent = gohelper.findChildTextMesh(self.viewGO, "go_Result/PermanentDetail/image_NameBG/txtTower")
+	self.goSchedule = gohelper.findChild(self.viewGO, "go_Result/PermanentDetail/LayoutGroup/Schedule")
+	self.txtSchedule = gohelper.findChildTextMesh(self.viewGO, "go_Result/PermanentDetail/LayoutGroup/Schedule/image_ScheduleBG/txt_Schedule")
+	self.goComplete = gohelper.findChild(self.viewGO, "go_Result/PermanentDetail/LayoutGroup/Complete")
+	self.goEntry = gohelper.findChild(self.viewGO, "go_Entry")
+	self.goEntryLimit = gohelper.findChild(self.viewGO, "go_Entry/#go_Limit")
+	self.txtScore = gohelper.findChildTextMesh(self.viewGO, "go_Entry/#go_Limit/image_ScoreBG/#txt_Score")
+	self.simageStageEntry = gohelper.findChildSingleImage(self.viewGO, "go_Entry/#go_Limit/imgStage")
+	self.simageWaveEntry = gohelper.findChildSingleImage(self.viewGO, "go_Entry/#go_Limit/wavebg")
+	self.goEntryPermanent = gohelper.findChild(self.viewGO, "go_Entry/#go_Permanent")
+	self.imgStage = gohelper.findChildImage(self.viewGO, "go_Entry/#go_Permanent/imgStage")
+	self.goScoreStar = gohelper.findChild(self.viewGO, "go_Result/LimitDetail/#go_scoreStar")
+	self.goPointContent = gohelper.findChild(self.viewGO, "go_Result/LimitDetail/#go_scoreStar/#go_PointContent")
+	self.goPointItem = gohelper.findChild(self.viewGO, "go_Result/LimitDetail/#go_scoreStar/#go_PointContent/#go_PointItem")
 
-	gohelper.setActive(arg_1_0.goFinish, false)
-	gohelper.setActive(arg_1_0.goEntry, false)
-	gohelper.setActive(arg_1_0.goResult, false)
+	gohelper.setActive(self.goFinish, false)
+	gohelper.setActive(self.goEntry, false)
+	gohelper.setActive(self.goResult, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnDetail, arg_2_0._onBtnRankClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._click, arg_2_0._onClickClose, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+function TowerPermanentResultView:addEvents()
+	self:addClickCb(self.btnDetail, self._onBtnRankClick, self)
+	self:addClickCb(self._click, self._onClickClose, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnDetail)
-	arg_3_0:removeClickCb(arg_3_0._click)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
+function TowerPermanentResultView:removeEvents()
+	self:removeClickCb(self.btnDetail)
+	self:removeClickCb(self._click)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function TowerPermanentResultView:_editableInitView()
 	return
 end
 
-function var_0_0._onClickClose(arg_5_0)
-	if not arg_5_0.canClick then
-		if arg_5_0.popupFlow then
-			local var_5_0 = arg_5_0.popupFlow:getWorkList()[arg_5_0.popupFlow._curIndex]
+function TowerPermanentResultView:_onClickClose()
+	if not self.canClick then
+		if self.popupFlow then
+			local workList = self.popupFlow:getWorkList()
+			local curWork = workList[self.popupFlow._curIndex]
 
-			if var_5_0 then
-				var_5_0:onDone(true)
+			if curWork then
+				curWork:onDone(true)
 			end
 		end
 
 		return
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._onBtnRankClick(arg_6_0)
+function TowerPermanentResultView:_onBtnRankClick()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function TowerPermanentResultView:onOpen()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_8_0)
-	arg_8_0.episodeId = DungeonModel.instance.curSendEpisodeId
-	arg_8_0.episodeConfig = DungeonConfig.instance:getEpisodeCO(arg_8_0.episodeId)
-	arg_8_0.fightFinishParam = TowerModel.instance:getFightFinishParam()
-	arg_8_0.towerType = arg_8_0.fightFinishParam.towerType
-	arg_8_0.towerId = arg_8_0.fightFinishParam.towerId
-	arg_8_0.layerId = arg_8_0.fightFinishParam.layerId
-	arg_8_0.score = arg_8_0.fightFinishParam.score
-	arg_8_0.difficulty = arg_8_0.fightFinishParam.difficulty
-	arg_8_0.bossLevel = arg_8_0.fightFinishParam.bossLevel
-	arg_8_0.layer = arg_8_0.fightFinishParam.layer
-	arg_8_0.isLimit = arg_8_0.towerType == TowerEnum.TowerType.Limited
+function TowerPermanentResultView:refreshParam()
+	self.episodeId = DungeonModel.instance.curSendEpisodeId
+	self.episodeConfig = DungeonConfig.instance:getEpisodeCO(self.episodeId)
+	self.fightFinishParam = TowerModel.instance:getFightFinishParam()
+	self.towerType = self.fightFinishParam.towerType
+	self.towerId = self.fightFinishParam.towerId
+	self.layerId = self.fightFinishParam.layerId
+	self.score = self.fightFinishParam.score
+	self.difficulty = self.fightFinishParam.difficulty
+	self.bossLevel = self.fightFinishParam.bossLevel
+	self.layer = self.fightFinishParam.layer
+	self.isLimit = self.towerType == TowerEnum.TowerType.Limited
 
-	if arg_8_0.isLimit then
-		arg_8_0.layerConfig = TowerConfig.instance:getLimitEpisodeConfig(arg_8_0.layerId, arg_8_0.difficulty)
+	if self.isLimit then
+		self.layerConfig = TowerConfig.instance:getLimitEpisodeConfig(self.layerId, self.difficulty)
 	else
-		arg_8_0.layerConfig = TowerConfig.instance:getPermanentEpisodeCo(arg_8_0.layerId)
+		self.layerConfig = TowerConfig.instance:getPermanentEpisodeCo(self.layerId)
 	end
 end
 
-function var_0_0.refreshView(arg_9_0)
-	arg_9_0:refreshEntry()
-	arg_9_0:refreshResult()
+function TowerPermanentResultView:refreshView()
+	self:refreshEntry()
+	self:refreshResult()
 
-	local var_9_0 = AchievementToastModel.instance:getWaitNamePlateToastList()
+	local waitNamePlateToastList = AchievementToastModel.instance:getWaitNamePlateToastList()
 
-	if not var_9_0 or #var_9_0 == 0 then
-		arg_9_0:startFlow()
+	if not waitNamePlateToastList or #waitNamePlateToastList == 0 then
+		self:startFlow()
 	end
 end
 
-function var_0_0.startFlow(arg_10_0)
-	if arg_10_0._popupFlow then
-		arg_10_0._popupFlow:destroy()
+function TowerPermanentResultView:startFlow()
+	if self._popupFlow then
+		self._popupFlow:destroy()
 
-		arg_10_0._popupFlow = nil
+		self._popupFlow = nil
 	end
 
-	arg_10_0.popupFlow = FlowSequence.New()
+	self.popupFlow = FlowSequence.New()
 
-	arg_10_0.popupFlow:addWork(TowerBossResultShowFinishWork.New(arg_10_0.goFinish, AudioEnum.Tower.play_ui_fight_explore))
-	arg_10_0.popupFlow:addWork(TowerBossResultShowFinishWork.New(arg_10_0.goEntry, AudioEnum.Tower.play_ui_fight_ui_appear))
-	arg_10_0.popupFlow:addWork(TowerBossResultShowResultWork.New(arg_10_0.goResult, AudioEnum.Tower.play_ui_fight_card_flip, arg_10_0.onResultShowCallBack, arg_10_0))
-	arg_10_0.popupFlow:registerDoneListener(arg_10_0._onAllFinish, arg_10_0)
-	arg_10_0.popupFlow:start()
+	self.popupFlow:addWork(TowerBossResultShowFinishWork.New(self.goFinish, AudioEnum.Tower.play_ui_fight_explore))
+	self.popupFlow:addWork(TowerBossResultShowFinishWork.New(self.goEntry, AudioEnum.Tower.play_ui_fight_ui_appear))
+	self.popupFlow:addWork(TowerBossResultShowResultWork.New(self.goResult, AudioEnum.Tower.play_ui_fight_card_flip, self.onResultShowCallBack, self))
+	self.popupFlow:registerDoneListener(self._onAllFinish, self)
+	self.popupFlow:start()
 end
 
-function var_0_0.onResultShowCallBack(arg_11_0)
-	if arg_11_0._isComplete then
+function TowerPermanentResultView:onResultShowCallBack()
+	if self._isComplete then
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_complete)
 	end
 end
 
-function var_0_0.refreshEntry(arg_12_0)
-	gohelper.setActive(arg_12_0.goEntryPermanent, not arg_12_0.isLimit)
-	gohelper.setActive(arg_12_0.goEntryLimit, arg_12_0.isLimit)
+function TowerPermanentResultView:refreshEntry()
+	gohelper.setActive(self.goEntryPermanent, not self.isLimit)
+	gohelper.setActive(self.goEntryLimit, self.isLimit)
 
-	if arg_12_0.isLimit then
-		arg_12_0.txtScore.text = tostring(arg_12_0.score)
+	if self.isLimit then
+		self.txtScore.text = tostring(self.score)
 
-		arg_12_0.simageStageEntry:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s.png", arg_12_0.layerConfig.entrance))
-		arg_12_0.simageWaveEntry:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s_2.png", arg_12_0.layerConfig.entrance))
+		self.simageStageEntry:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s.png", self.layerConfig.entrance))
+		self.simageWaveEntry:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s_2.png", self.layerConfig.entrance))
 	else
-		local var_12_0 = string.splitToNumber(arg_12_0.layerConfig.episodeIds, "|")
-		local var_12_1 = tabletool.indexOf(var_12_0, arg_12_0.episodeId)
+		local list = string.splitToNumber(self.layerConfig.episodeIds, "|")
+		local index = tabletool.indexOf(list, self.episodeId)
 
-		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_12_0.imgStage, string.format("towerpermanent_stage_%s_1", var_12_1))
+		UISpriteSetMgr.instance:setTowerPermanentSprite(self.imgStage, string.format("towerpermanent_stage_%s_1", index))
 	end
 end
 
-function var_0_0.refreshResult(arg_13_0)
-	gohelper.setActive(arg_13_0.goLimitDetail, arg_13_0.isLimit)
-	gohelper.setActive(arg_13_0.goPermanentDetail, not arg_13_0.isLimit)
-	gohelper.setActive(arg_13_0.goScoreStar, arg_13_0.isLimit)
+function TowerPermanentResultView:refreshResult()
+	gohelper.setActive(self.goLimitDetail, self.isLimit)
+	gohelper.setActive(self.goPermanentDetail, not self.isLimit)
+	gohelper.setActive(self.goScoreStar, self.isLimit)
 
-	if arg_13_0.isLimit then
-		arg_13_0.txtScoreDetail.text = tostring(arg_13_0.score)
+	if self.isLimit then
+		self.txtScoreDetail.text = tostring(self.score)
 
-		arg_13_0.simageStageDetail:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s.png", arg_13_0.layerConfig.entrance))
-		arg_13_0.simageWaveDetail:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s_2.png", arg_13_0.layerConfig.entrance))
+		self.simageStageDetail:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s.png", self.layerConfig.entrance))
+		self.simageWaveDetail:LoadImage(string.format("singlebg/tower_singlebg/level/tower_level_stage_%s_2.png", self.layerConfig.entrance))
 
-		arg_13_0.txtTower.text = arg_13_0.episodeConfig.name
+		self.txtTower.text = self.episodeConfig.name
 
-		for iter_13_0, iter_13_1 in ipairs(arg_13_0.difficultyItems) do
-			gohelper.setActive(iter_13_1, iter_13_0 == arg_13_0.difficulty)
+		for i, v in ipairs(self.difficultyItems) do
+			gohelper.setActive(v, i == self.difficulty)
 		end
 
-		local var_13_0 = TowerConfig.instance:getScoreToStarConfig(arg_13_0.score)
+		local starLevel = TowerConfig.instance:getScoreToStarConfig(self.score)
 
-		gohelper.setActive(arg_13_0.goScoreStar, var_13_0 > 0)
+		gohelper.setActive(self.goScoreStar, starLevel > 0)
 
-		if var_13_0 > 0 then
-			local var_13_1 = {}
+		if starLevel > 0 then
+			local starLevelList = {}
 
-			for iter_13_2 = 1, var_13_0 do
-				table.insert(var_13_1, iter_13_2)
+			for i = 1, starLevel do
+				table.insert(starLevelList, i)
 			end
 
-			gohelper.CreateObjList(arg_13_0, arg_13_0.scoreStarShow, var_13_1, arg_13_0.goPointContent, arg_13_0.goPointItem)
+			gohelper.CreateObjList(self, self.scoreStarShow, starLevelList, self.goPointContent, self.goPointItem)
 		end
 	else
-		local var_13_2 = string.splitToNumber(arg_13_0.layerConfig.episodeIds, "|") or {}
-		local var_13_3 = tabletool.indexOf(var_13_2, arg_13_0.episodeId)
+		local list = string.splitToNumber(self.layerConfig.episodeIds, "|") or {}
+		local index = tabletool.indexOf(list, self.episodeId)
 
-		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_13_0.imgStageDetail, string.format("towerpermanent_stage_%s_1", var_13_3))
+		UISpriteSetMgr.instance:setTowerPermanentSprite(self.imgStageDetail, string.format("towerpermanent_stage_%s_1", index))
 
-		arg_13_0.txtTowerPermanent.text = arg_13_0.episodeConfig.name
+		self.txtTowerPermanent.text = self.episodeConfig.name
 
-		local var_13_4 = 0
+		local passCount = 0
 
-		if arg_13_0.layer and arg_13_0.layer.episodeNOs then
-			for iter_13_3 = 1, #arg_13_0.layer.episodeNOs do
-				if arg_13_0.layer.episodeNOs[iter_13_3].status == 1 then
-					var_13_4 = var_13_4 + 1
+		if self.layer and self.layer.episodeNOs then
+			for i = 1, #self.layer.episodeNOs do
+				local mo = self.layer.episodeNOs[i]
+
+				if mo.status == 1 then
+					passCount = passCount + 1
 				end
 			end
 		end
 
-		local var_13_5 = #var_13_2
-		local var_13_6 = var_13_5 <= var_13_4
+		local episodeCount = #list
+		local isComplete = episodeCount <= passCount
 
-		arg_13_0.txtSchedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerpermanentresultview_schedule"), var_13_4, var_13_5)
+		self.txtSchedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerpermanentresultview_schedule"), passCount, episodeCount)
 
-		gohelper.setActive(arg_13_0.goSchedule, var_13_5 > 1)
+		gohelper.setActive(self.goSchedule, episodeCount > 1)
 
-		arg_13_0._isComplete = var_13_6
+		self._isComplete = isComplete
 
-		gohelper.setActive(arg_13_0.goComplete, var_13_6)
+		gohelper.setActive(self.goComplete, isComplete)
 	end
 
-	arg_13_0:refreshHeroGroup()
-	arg_13_0:refreshRewards(arg_13_0.goReward, arg_13_0.goRewards)
+	self:refreshHeroGroup()
+	self:refreshRewards(self.goReward, self.goRewards)
 end
 
-function var_0_0.scoreStarShow(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	gohelper.setActive(arg_14_1, arg_14_3 <= arg_14_2)
+function TowerPermanentResultView:scoreStarShow(obj, data, index)
+	gohelper.setActive(obj, index <= data)
 end
 
-function var_0_0.refreshRewards(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0.rewardItems == nil then
-		arg_15_0.rewardItems = {}
+function TowerPermanentResultView:refreshRewards(goReward, goRewards)
+	if self.rewardItems == nil then
+		self.rewardItems = {}
 	end
 
-	local var_15_0 = FightResultModel.instance:getMaterialDataList() or {}
+	local dataList = FightResultModel.instance:getMaterialDataList() or {}
 
-	for iter_15_0 = 1, math.max(#arg_15_0.rewardItems, #var_15_0) do
-		local var_15_1 = arg_15_0.rewardItems[iter_15_0]
-		local var_15_2 = var_15_0[iter_15_0]
+	for i = 1, math.max(#self.rewardItems, #dataList) do
+		local item = self.rewardItems[i]
+		local data = dataList[i]
 
-		if not var_15_1 then
-			var_15_1 = IconMgr.instance:getCommonPropItemIcon(arg_15_1)
-			arg_15_0.rewardItems[iter_15_0] = var_15_1
+		if not item then
+			item = IconMgr.instance:getCommonPropItemIcon(goReward)
+			self.rewardItems[i] = item
 		end
 
-		gohelper.setActive(var_15_1.go, var_15_2 ~= nil)
+		gohelper.setActive(item.go, data ~= nil)
 
-		if var_15_2 then
-			var_15_1:setMOValue(var_15_2.materilType, var_15_2.materilId, var_15_2.quantity)
-			var_15_1:setScale(0.7)
-			var_15_1:setCountTxtSize(51)
+		if data then
+			item:setMOValue(data.materilType, data.materilId, data.quantity)
+			item:setScale(0.7)
+			item:setCountTxtSize(51)
 		end
 	end
 
-	gohelper.setActive(arg_15_2, #var_15_0 ~= 0)
+	gohelper.setActive(goRewards, #dataList ~= 0)
 end
 
-function var_0_0.refreshHeroGroup(arg_16_0)
-	if arg_16_0.heroItemList == nil then
-		arg_16_0.heroItemList = arg_16_0:getUserDataTb_()
+function TowerPermanentResultView:refreshHeroGroup()
+	if self.heroItemList == nil then
+		self.heroItemList = self:getUserDataTb_()
 	end
 
-	local var_16_0 = FightModel.instance:getFightParam()
-	local var_16_1 = var_16_0:getHeroEquipAndTrialMoList(true)
+	local fightParam = FightModel.instance:getFightParam()
+	local heroEquipList = fightParam:getHeroEquipAndTrialMoList(true)
 
-	for iter_16_0 = 1, 4 do
-		local var_16_2 = arg_16_0.heroItemList[iter_16_0]
+	for i = 1, 4 do
+		local heroItem = self.heroItemList[i]
 
-		if var_16_2 == nil then
-			local var_16_3 = gohelper.findChild(arg_16_0.viewGO, string.format("go_Result/goGroup/Group/heroitem%s", iter_16_0))
+		if heroItem == nil then
+			local go = gohelper.findChild(self.viewGO, string.format("go_Result/goGroup/Group/heroitem%s", i))
 
-			var_16_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_3, TowerBossResultHeroItem)
-			arg_16_0.heroItemList[iter_16_0] = var_16_2
+			heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, TowerBossResultHeroItem)
+			self.heroItemList[i] = heroItem
 		end
 
-		local var_16_4 = var_16_1[iter_16_0]
+		local mo = heroEquipList[i]
 
-		if var_16_4 then
-			var_16_2:setData(var_16_4.heroMo, var_16_4.equipMo)
+		if mo then
+			heroItem:setData(mo.heroMo, mo.equipMo)
 		else
-			var_16_2:setData()
+			heroItem:setData()
 		end
 	end
 
-	local var_16_5 = var_16_0.assistBossId
-	local var_16_6 = TowerConfig.instance:getAssistBossConfig(var_16_5)
-	local var_16_7 = var_16_6 == nil
+	local bossId = fightParam.assistBossId
+	local bossConfig = TowerConfig.instance:getAssistBossConfig(bossId)
+	local isEmpty = bossConfig == nil
 
-	gohelper.setActive(arg_16_0.goBossEmpty, var_16_7)
-	gohelper.setActive(arg_16_0.goBossRoot, not var_16_7)
+	gohelper.setActive(self.goBossEmpty, isEmpty)
+	gohelper.setActive(self.goBossRoot, not isEmpty)
 
-	if not var_16_7 then
-		arg_16_0.simageBoss:LoadImage(var_16_6.bossPic)
+	if not isEmpty then
+		self.simageBoss:LoadImage(bossConfig.bossPic)
 
-		arg_16_0.txtBossName.text = var_16_6.name
-		arg_16_0.txtBossLev.text = tostring(arg_16_0.bossLevel)
+		self.txtBossName.text = bossConfig.name
+		self.txtBossLev.text = tostring(self.bossLevel)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_16_0.imgBossCareer, string.format("lssx_%s", var_16_6.career))
+		UISpriteSetMgr.instance:setCommonSprite(self.imgBossCareer, string.format("lssx_%s", bossConfig.career))
 	end
 end
 
-function var_0_0._onAllFinish(arg_17_0)
-	arg_17_0.canClick = true
+function TowerPermanentResultView:_onAllFinish()
+	self.canClick = true
 end
 
-function var_0_0._onCloseViewFinish(arg_18_0, arg_18_1)
-	if arg_18_1 == ViewName.AchievementNamePlateUnlockView then
-		arg_18_0:startFlow()
+function TowerPermanentResultView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.AchievementNamePlateUnlockView then
+		self:startFlow()
 	end
 end
 
-function var_0_0.onClose(arg_19_0)
+function TowerPermanentResultView:onClose()
 	FightController.onResultViewClose()
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0.simageBoss:UnLoadImage()
-	arg_20_0.simageWaveEntry:UnLoadImage()
-	arg_20_0.simageStageEntry:UnLoadImage()
-	arg_20_0.simageStageDetail:UnLoadImage()
-	arg_20_0.simageWaveDetail:UnLoadImage()
+function TowerPermanentResultView:onDestroyView()
+	self.simageBoss:UnLoadImage()
+	self.simageWaveEntry:UnLoadImage()
+	self.simageStageEntry:UnLoadImage()
+	self.simageStageDetail:UnLoadImage()
+	self.simageWaveDetail:UnLoadImage()
 
-	if arg_20_0._popupFlow then
-		arg_20_0._popupFlow:destroy()
+	if self._popupFlow then
+		self._popupFlow:destroy()
 
-		arg_20_0._popupFlow = nil
+		self._popupFlow = nil
 	end
 end
 
-return var_0_0
+return TowerPermanentResultView

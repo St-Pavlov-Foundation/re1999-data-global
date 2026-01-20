@@ -1,94 +1,96 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/UnlockVoucherModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.UnlockVoucherModule_pb", package.seeall)
 
-local var_0_1 = {
-	GETUNLOCKVOUCHERINFOREPLY_MSG = var_0_0.Descriptor(),
-	GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD = var_0_0.FieldDescriptor(),
-	UNLOCKVOUCHERINFOUPDATEPUSH_MSG = var_0_0.Descriptor(),
-	UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD = var_0_0.FieldDescriptor(),
-	UNLOCKVOUCHERINFO_MSG = var_0_0.Descriptor(),
-	UNLOCKVOUCHERINFOVOUCHERIDFIELD = var_0_0.FieldDescriptor(),
-	UNLOCKVOUCHERINFOGETTIMEFIELD = var_0_0.FieldDescriptor(),
-	GETUNLOCKVOUCHERINFOREQUEST_MSG = var_0_0.Descriptor()
-}
+local UnlockVoucherModule_pb = {}
 
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.name = "vouchers"
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.full_name = ".GetUnlockVoucherInfoReply.vouchers"
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.number = 1
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.index = 0
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.label = 3
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.has_default_value = false
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.default_value = {}
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.message_type = var_0_1.UNLOCKVOUCHERINFO_MSG
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.type = 11
-var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.cpp_type = 10
-var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG.name = "GetUnlockVoucherInfoReply"
-var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG.full_name = ".GetUnlockVoucherInfoReply"
-var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG.nested_types = {}
-var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG.enum_types = {}
-var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG.fields = {
-	var_0_1.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG = protobuf.Descriptor()
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD = protobuf.FieldDescriptor()
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG = protobuf.Descriptor()
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD = protobuf.FieldDescriptor()
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG = protobuf.Descriptor()
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD = protobuf.FieldDescriptor()
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD = protobuf.FieldDescriptor()
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG = protobuf.Descriptor()
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.name = "vouchers"
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.full_name = ".GetUnlockVoucherInfoReply.vouchers"
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.number = 1
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.index = 0
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.label = 3
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.has_default_value = false
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.default_value = {}
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.message_type = UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.type = 11
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD.cpp_type = 10
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG.name = "GetUnlockVoucherInfoReply"
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG.full_name = ".GetUnlockVoucherInfoReply"
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG.nested_types = {}
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG.enum_types = {}
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG.fields = {
+	UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLYVOUCHERSFIELD
 }
-var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG.is_extendable = false
-var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG.extensions = {}
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.name = "vouchers"
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.full_name = ".UnlockVoucherInfoUpdatePush.vouchers"
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.number = 1
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.index = 0
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.label = 3
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.has_default_value = false
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.default_value = {}
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.message_type = var_0_1.UNLOCKVOUCHERINFO_MSG
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.type = 11
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.cpp_type = 10
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.name = "UnlockVoucherInfoUpdatePush"
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.full_name = ".UnlockVoucherInfoUpdatePush"
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.nested_types = {}
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.enum_types = {}
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.fields = {
-	var_0_1.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG.is_extendable = false
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG.extensions = {}
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.name = "vouchers"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.full_name = ".UnlockVoucherInfoUpdatePush.vouchers"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.number = 1
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.index = 0
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.label = 3
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.has_default_value = false
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.default_value = {}
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.message_type = UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.type = 11
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD.cpp_type = 10
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.name = "UnlockVoucherInfoUpdatePush"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.full_name = ".UnlockVoucherInfoUpdatePush"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.nested_types = {}
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.enum_types = {}
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.fields = {
+	UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSHVOUCHERSFIELD
 }
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.is_extendable = false
-var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.extensions = {}
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.name = "voucherId"
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.full_name = ".UnlockVoucherInfo.voucherId"
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.number = 1
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.index = 0
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.label = 1
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.has_default_value = false
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.default_value = 0
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.type = 5
-var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD.cpp_type = 1
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.name = "getTime"
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.full_name = ".UnlockVoucherInfo.getTime"
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.number = 2
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.index = 1
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.label = 1
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.has_default_value = false
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.default_value = 0
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.type = 4
-var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD.cpp_type = 4
-var_0_1.UNLOCKVOUCHERINFO_MSG.name = "UnlockVoucherInfo"
-var_0_1.UNLOCKVOUCHERINFO_MSG.full_name = ".UnlockVoucherInfo"
-var_0_1.UNLOCKVOUCHERINFO_MSG.nested_types = {}
-var_0_1.UNLOCKVOUCHERINFO_MSG.enum_types = {}
-var_0_1.UNLOCKVOUCHERINFO_MSG.fields = {
-	var_0_1.UNLOCKVOUCHERINFOVOUCHERIDFIELD,
-	var_0_1.UNLOCKVOUCHERINFOGETTIMEFIELD
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.is_extendable = false
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG.extensions = {}
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.name = "voucherId"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.full_name = ".UnlockVoucherInfo.voucherId"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.number = 1
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.index = 0
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.label = 1
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.has_default_value = false
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.default_value = 0
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.type = 5
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD.cpp_type = 1
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.name = "getTime"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.full_name = ".UnlockVoucherInfo.getTime"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.number = 2
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.index = 1
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.label = 1
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.has_default_value = false
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.default_value = 0
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.type = 4
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD.cpp_type = 4
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG.name = "UnlockVoucherInfo"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG.full_name = ".UnlockVoucherInfo"
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG.nested_types = {}
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG.enum_types = {}
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG.fields = {
+	UnlockVoucherModule_pb.UNLOCKVOUCHERINFOVOUCHERIDFIELD,
+	UnlockVoucherModule_pb.UNLOCKVOUCHERINFOGETTIMEFIELD
 }
-var_0_1.UNLOCKVOUCHERINFO_MSG.is_extendable = false
-var_0_1.UNLOCKVOUCHERINFO_MSG.extensions = {}
-var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG.name = "GetUnlockVoucherInfoRequest"
-var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG.full_name = ".GetUnlockVoucherInfoRequest"
-var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG.nested_types = {}
-var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG.enum_types = {}
-var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG.fields = {}
-var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG.is_extendable = false
-var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG.extensions = {}
-var_0_1.GetUnlockVoucherInfoReply = var_0_0.Message(var_0_1.GETUNLOCKVOUCHERINFOREPLY_MSG)
-var_0_1.GetUnlockVoucherInfoRequest = var_0_0.Message(var_0_1.GETUNLOCKVOUCHERINFOREQUEST_MSG)
-var_0_1.UnlockVoucherInfo = var_0_0.Message(var_0_1.UNLOCKVOUCHERINFO_MSG)
-var_0_1.UnlockVoucherInfoUpdatePush = var_0_0.Message(var_0_1.UNLOCKVOUCHERINFOUPDATEPUSH_MSG)
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG.is_extendable = false
+UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG.extensions = {}
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG.name = "GetUnlockVoucherInfoRequest"
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG.full_name = ".GetUnlockVoucherInfoRequest"
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG.nested_types = {}
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG.enum_types = {}
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG.fields = {}
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG.is_extendable = false
+UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG.extensions = {}
+UnlockVoucherModule_pb.GetUnlockVoucherInfoReply = protobuf.Message(UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREPLY_MSG)
+UnlockVoucherModule_pb.GetUnlockVoucherInfoRequest = protobuf.Message(UnlockVoucherModule_pb.GETUNLOCKVOUCHERINFOREQUEST_MSG)
+UnlockVoucherModule_pb.UnlockVoucherInfo = protobuf.Message(UnlockVoucherModule_pb.UNLOCKVOUCHERINFO_MSG)
+UnlockVoucherModule_pb.UnlockVoucherInfoUpdatePush = protobuf.Message(UnlockVoucherModule_pb.UNLOCKVOUCHERINFOUPDATEPUSH_MSG)
 
-return var_0_1
+return UnlockVoucherModule_pb

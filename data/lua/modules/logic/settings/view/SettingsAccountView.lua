@@ -1,120 +1,122 @@
-﻿module("modules.logic.settings.view.SettingsAccountView", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsAccountView.lua
 
-local var_0_0 = class("SettingsAccountView", BaseView)
+module("modules.logic.settings.view.SettingsAccountView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnaccount = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/accountInfo/content/#btn_account")
-	arg_1_0._btnaccountlogout = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/accountlogout/content/#btn_accountlogout")
-	arg_1_0._btncdkey = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/cdkey/content/#btn_cdkey")
-	arg_1_0._btnexit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/other/content/#btn_exit")
-	arg_1_0._btnPrivacy = gohelper.findChildClick(arg_1_0.viewGO, "agreement/txtPrivacy")
-	arg_1_0._btnPersonal = gohelper.findChildClick(arg_1_0.viewGO, "agreement/txtPersonal")
-	arg_1_0._btnThirdParty = gohelper.findChildClick(arg_1_0.viewGO, "agreement/txtThirdParty")
+local SettingsAccountView = class("SettingsAccountView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SettingsAccountView:onInitView()
+	self._btnaccount = gohelper.findChildButtonWithAudio(self.viewGO, "Scroll View/Viewport/layout/accountInfo/content/#btn_account")
+	self._btnaccountlogout = gohelper.findChildButtonWithAudio(self.viewGO, "Scroll View/Viewport/layout/accountlogout/content/#btn_accountlogout")
+	self._btncdkey = gohelper.findChildButtonWithAudio(self.viewGO, "Scroll View/Viewport/layout/cdkey/content/#btn_cdkey")
+	self._btnexit = gohelper.findChildButtonWithAudio(self.viewGO, "Scroll View/Viewport/layout/other/content/#btn_exit")
+	self._btnPrivacy = gohelper.findChildClick(self.viewGO, "agreement/txtPrivacy")
+	self._btnPersonal = gohelper.findChildClick(self.viewGO, "agreement/txtPersonal")
+	self._btnThirdParty = gohelper.findChildClick(self.viewGO, "agreement/txtThirdParty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnaccount:AddClickListener(arg_2_0._btnaccountOnClick, arg_2_0)
-	arg_2_0._btnaccountlogout:AddClickListener(arg_2_0._btnaccountlogoutOnClick, arg_2_0)
-	arg_2_0._btncdkey:AddClickListener(arg_2_0._btncdkeyOnClick, arg_2_0)
-	arg_2_0._btnexit:AddClickListener(arg_2_0._btnexitOnClick, arg_2_0)
-	arg_2_0._btnPrivacy:AddClickListener(arg_2_0._btnPrivacyOnClick, arg_2_0)
-	arg_2_0._btnPersonal:AddClickListener(arg_2_0._btnPersonalOnClick, arg_2_0)
-	arg_2_0._btnThirdParty:AddClickListener(arg_2_0._btnThirdPartyOnClick, arg_2_0)
+function SettingsAccountView:addEvents()
+	self._btnaccount:AddClickListener(self._btnaccountOnClick, self)
+	self._btnaccountlogout:AddClickListener(self._btnaccountlogoutOnClick, self)
+	self._btncdkey:AddClickListener(self._btncdkeyOnClick, self)
+	self._btnexit:AddClickListener(self._btnexitOnClick, self)
+	self._btnPrivacy:AddClickListener(self._btnPrivacyOnClick, self)
+	self._btnPersonal:AddClickListener(self._btnPersonalOnClick, self)
+	self._btnThirdParty:AddClickListener(self._btnThirdPartyOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnaccount:RemoveClickListener()
-	arg_3_0._btnaccountlogout:RemoveClickListener()
-	arg_3_0._btncdkey:RemoveClickListener()
-	arg_3_0._btnexit:RemoveClickListener()
-	arg_3_0._btnPrivacy:RemoveClickListener()
-	arg_3_0._btnPersonal:RemoveClickListener()
-	arg_3_0._btnThirdParty:RemoveClickListener()
+function SettingsAccountView:removeEvents()
+	self._btnaccount:RemoveClickListener()
+	self._btnaccountlogout:RemoveClickListener()
+	self._btncdkey:RemoveClickListener()
+	self._btnexit:RemoveClickListener()
+	self._btnPrivacy:RemoveClickListener()
+	self._btnPersonal:RemoveClickListener()
+	self._btnThirdParty:RemoveClickListener()
 end
 
-function var_0_0._btnaccountOnClick(arg_4_0)
-	if arg_4_0.isShowUserCenter then
+function SettingsAccountView:_btnaccountOnClick()
+	if self.isShowUserCenter then
 		SDKMgr.instance:showUserCenter()
 	end
 end
 
-function var_0_0._btnaccountlogoutOnClick(arg_5_0)
+function SettingsAccountView:_btnaccountlogoutOnClick()
 	SDKMgr.instance:unregisterSdk()
 end
 
-function var_0_0._btncdkeyOnClick(arg_6_0)
+function SettingsAccountView:_btncdkeyOnClick()
 	ViewMgr.instance:openView(ViewName.SettingsCdkeyView)
 end
 
-function var_0_0._btnexitOnClick(arg_7_0)
+function SettingsAccountView:_btnexitOnClick()
 	SDKController.instance:openSDKExitView()
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.goAccountContainer = gohelper.findChild(arg_8_0.viewGO, "Scroll View/Viewport/layout/accountInfo")
-	arg_8_0.goCdkContainer = gohelper.findChild(arg_8_0.viewGO, "Scroll View/Viewport/layout/cdkey")
-	arg_8_0.goAccountLogoutContainer = gohelper.findChild(arg_8_0.viewGO, "Scroll View/Viewport/layout/accountlogout")
+function SettingsAccountView:_editableInitView()
+	self.goAccountContainer = gohelper.findChild(self.viewGO, "Scroll View/Viewport/layout/accountInfo")
+	self.goCdkContainer = gohelper.findChild(self.viewGO, "Scroll View/Viewport/layout/cdkey")
+	self.goAccountLogoutContainer = gohelper.findChild(self.viewGO, "Scroll View/Viewport/layout/accountlogout")
 
-	gohelper.setActive(arg_8_0.goAccountLogoutContainer, false)
+	gohelper.setActive(self.goAccountLogoutContainer, false)
 
 	if VersionValidator.instance:isInReviewing() and SLFramework.FrameworkSettings.IsIOSPlayer() then
-		gohelper.setActive(arg_8_0.goCdkContainer, false)
+		gohelper.setActive(self.goCdkContainer, false)
 	end
 
 	if not HotUpdateVoiceMgr.IsGuoFu then
-		gohelper.setActive(arg_8_0._btnPrivacy.gameObject, false)
-		gohelper.setActive(arg_8_0._btnPersonal.gameObject, false)
-		gohelper.setActive(arg_8_0._btnThirdParty.gameObject, false)
+		gohelper.setActive(self._btnPrivacy.gameObject, false)
+		gohelper.setActive(self._btnPersonal.gameObject, false)
+		gohelper.setActive(self._btnThirdParty.gameObject, false)
 	end
 
-	arg_8_0:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, arg_8_0._OnChangeLangTxt, arg_8_0)
+	self:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, self._OnChangeLangTxt, self)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function SettingsAccountView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0.isShowUserCenter = SDKMgr.instance:isShowUserCenter()
+function SettingsAccountView:onOpen()
+	self.isShowUserCenter = SDKMgr.instance:isShowUserCenter()
 
-	gohelper.setActive(arg_10_0.goAccountContainer, arg_10_0.isShowUserCenter)
-	logNormal("get sdk showCenter : " .. tostring(arg_10_0.isShowUserCenter))
+	gohelper.setActive(self.goAccountContainer, self.isShowUserCenter)
+	logNormal("get sdk showCenter : " .. tostring(self.isShowUserCenter))
 end
 
-function var_0_0._btnPrivacyOnClick(arg_11_0)
+function SettingsAccountView:_btnPrivacyOnClick()
 	GameUtil.openURL("https://m.sl916.com/protocol.html")
 end
 
-function var_0_0._btnPersonalOnClick(arg_12_0)
+function SettingsAccountView:_btnPersonalOnClick()
 	GameUtil.openURL("https://m.sl916.com/collected.html")
 end
 
-function var_0_0._btnThirdPartyOnClick(arg_13_0)
+function SettingsAccountView:_btnThirdPartyOnClick()
 	GameUtil.openURL("https://m.sl916.com/personal.html")
 end
 
-function var_0_0._OnChangeLangTxt(arg_14_0)
+function SettingsAccountView:_OnChangeLangTxt()
 	if LangSettings.instance:isEn() then
-		recthelper.setAnchor(arg_14_0._btnPrivacy.transform, -395, -375)
-		recthelper.setAnchor(arg_14_0._btnPersonal.transform, 112, -375)
-		recthelper.setAnchor(arg_14_0._btnThirdParty.transform, -225, -445)
+		recthelper.setAnchor(self._btnPrivacy.transform, -395, -375)
+		recthelper.setAnchor(self._btnPersonal.transform, 112, -375)
+		recthelper.setAnchor(self._btnThirdParty.transform, -225, -445)
 	else
-		recthelper.setAnchor(arg_14_0._btnPrivacy.transform, -457, -445)
-		recthelper.setAnchor(arg_14_0._btnPersonal.transform, -122, -445)
-		recthelper.setAnchor(arg_14_0._btnThirdParty.transform, -312.67, -445)
+		recthelper.setAnchor(self._btnPrivacy.transform, -457, -445)
+		recthelper.setAnchor(self._btnPersonal.transform, -122, -445)
+		recthelper.setAnchor(self._btnThirdParty.transform, -312.67, -445)
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
+function SettingsAccountView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function SettingsAccountView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SettingsAccountView

@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.MainCharacterHpChangeStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/MainCharacterHpChangeStep.lua
 
-local var_0_0 = class("MainCharacterHpChangeStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.MainCharacterHpChangeStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
+local MainCharacterHpChangeStep = class("MainCharacterHpChangeStep", EliminateTeamChessStepBase)
 
-	if var_1_0.diffValue == nil or var_1_0.teamType == nil then
-		arg_1_0:onDone(true)
+function MainCharacterHpChangeStep:onStart()
+	local data = self._data
+
+	if data.diffValue == nil or data.teamType == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	EliminateTeamChessModel.instance:updateMainCharacterHp(var_1_0.teamType, var_1_0.diffValue)
+	EliminateTeamChessModel.instance:updateMainCharacterHp(data.teamType, data.diffValue)
 
-	if math.abs(var_1_0.diffValue) > 0 then
-		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.MainCharacterHpChange, var_1_0.teamType, var_1_0.diffValue)
-		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateTeamChessEnum.teamChessHpChangeStepTime)
+	if math.abs(data.diffValue) > 0 then
+		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.MainCharacterHpChange, data.teamType, data.diffValue)
+		TaskDispatcher.runDelay(self._onDone, self, EliminateTeamChessEnum.teamChessHpChangeStepTime)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return MainCharacterHpChangeStep

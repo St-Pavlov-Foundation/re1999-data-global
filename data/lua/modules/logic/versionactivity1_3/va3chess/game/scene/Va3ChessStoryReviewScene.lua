@@ -1,126 +1,128 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.scene.Va3ChessStoryReviewScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/scene/Va3ChessStoryReviewScene.lua
 
-local var_0_0 = class("Va3ChessStoryReviewScene", BaseViewExtended)
+module("modules.logic.versionactivity1_3.va3chess.game.scene.Va3ChessStoryReviewScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+local Va3ChessStoryReviewScene = class("Va3ChessStoryReviewScene", BaseViewExtended)
+
+function Va3ChessStoryReviewScene:onInitView()
+	self._viewAnimator = self.viewGO:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
 end
 
-var_0_0.BLOCK_KEY = "Va3ChessGameSceneLoading"
+Va3ChessStoryReviewScene.BLOCK_KEY = "Va3ChessGameSceneLoading"
 
-function var_0_0.onDestroyView(arg_2_0)
-	arg_2_0:_clearRes()
+function Va3ChessStoryReviewScene:onDestroyView()
+	self:_clearRes()
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:addEventCb(Va3ChessController.instance, Va3ChessEvent.StoryReviewSceneActvie, arg_3_0.showScene, arg_3_0)
+function Va3ChessStoryReviewScene:onOpen()
+	self:addEventCb(Va3ChessController.instance, Va3ChessEvent.StoryReviewSceneActvie, self.showScene, self)
 end
 
-function var_0_0.onClose(arg_4_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
-	TaskDispatcher.cancelTask(arg_4_0._onDelayClearRes, arg_4_0)
+function Va3ChessStoryReviewScene:onClose()
+	UIBlockMgr.instance:endBlock(Va3ChessStoryReviewScene.BLOCK_KEY)
+	TaskDispatcher.cancelTask(self._onDelayClearRes, self)
 end
 
-function var_0_0.showScene(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 then
-		if arg_5_0._sceneActive then
-			arg_5_0:_clearRes()
+function Va3ChessStoryReviewScene:showScene(show, mapPath)
+	if show then
+		if self._sceneActive then
+			self:_clearRes()
 		end
 
-		arg_5_0._sceneActive = true
-		arg_5_0._mapPath = arg_5_2
+		self._sceneActive = true
+		self._mapPath = mapPath
 
-		arg_5_0:createSceneRoot()
-		arg_5_0:loadRes()
+		self:createSceneRoot()
+		self:loadRes()
 	end
 end
 
-function var_0_0.resetOpenAnim(arg_6_0)
-	if arg_6_0._viewAnimator then
-		arg_6_0._viewAnimator:Play(arg_6_0._sceneActive and "switch" or "open", 0, 0)
+function Va3ChessStoryReviewScene:resetOpenAnim()
+	if self._viewAnimator then
+		self._viewAnimator:Play(self._sceneActive and "switch" or "open", 0, 0)
 	end
 
-	arg_6_0._sceneActive = false
+	self._sceneActive = false
 
-	arg_6_0:_clearRes()
+	self:_clearRes()
 end
 
-function var_0_0._clearRes(arg_7_0)
-	arg_7_0:releaseRes()
-	arg_7_0:disposeSceneRoot()
+function Va3ChessStoryReviewScene:_clearRes()
+	self:releaseRes()
+	self:disposeSceneRoot()
 end
 
-function var_0_0.loadRes(arg_8_0)
-	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_KEY)
+function Va3ChessStoryReviewScene:loadRes()
+	UIBlockMgr.instance:startBlock(Va3ChessStoryReviewScene.BLOCK_KEY)
 
-	arg_8_0._loader = MultiAbLoader.New()
+	self._loader = MultiAbLoader.New()
 
-	arg_8_0._loader:addPath(arg_8_0:getCurrentSceneUrl())
-	arg_8_0._loader:startLoad(arg_8_0.loadResCompleted, arg_8_0)
+	self._loader:addPath(self:getCurrentSceneUrl())
+	self._loader:startLoad(self.loadResCompleted, self)
 end
 
-function var_0_0.getCurrentSceneUrl(arg_9_0)
-	if arg_9_0._mapPath then
-		return string.format(Va3ChessEnum.SceneResPath.SceneFormatPath, arg_9_0._mapPath)
+function Va3ChessStoryReviewScene:getCurrentSceneUrl()
+	if self._mapPath then
+		return string.format(Va3ChessEnum.SceneResPath.SceneFormatPath, self._mapPath)
 	else
 		return Va3ChessEnum.SceneResPath.DefaultScene
 	end
 end
 
-function var_0_0.loadResCompleted(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1:getAssetItem(arg_10_0:getCurrentSceneUrl())
+function Va3ChessStoryReviewScene:loadResCompleted(loader)
+	local assetItem = loader:getAssetItem(self:getCurrentSceneUrl())
 
-	if var_10_0 then
-		arg_10_0._sceneGo = gohelper.clone(var_10_0:GetResource(), arg_10_0._sceneRoot, "scene")
-		arg_10_0._sceneEffect1 = gohelper.findChild(arg_10_0._sceneGo, "Obj-Plant/all/diffuse/vx_click_quan")
-		arg_10_0._sceneEffect2 = gohelper.findChild(arg_10_0._sceneGo, "Obj-Plant/all/diffuse/vx_click_eye")
+	if assetItem then
+		self._sceneGo = gohelper.clone(assetItem:GetResource(), self._sceneRoot, "scene")
+		self._sceneEffect1 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/vx_click_quan")
+		self._sceneEffect2 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/vx_click_eye")
 
-		if arg_10_0._sceneEffect1 and not gohelper.isNil(arg_10_0._sceneEffect1) then
-			gohelper.setActive(arg_10_0._sceneEffect1, false)
-			gohelper.setActive(arg_10_0._sceneEffect2, false)
+		if self._sceneEffect1 and not gohelper.isNil(self._sceneEffect1) then
+			gohelper.setActive(self._sceneEffect1, false)
+			gohelper.setActive(self._sceneEffect2, false)
 		end
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(Va3ChessStoryReviewScene.BLOCK_KEY)
 end
 
-function var_0_0.releaseRes(arg_11_0)
-	if arg_11_0._loader then
-		arg_11_0._loader:dispose()
+function Va3ChessStoryReviewScene:releaseRes()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_11_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0.createSceneRoot(arg_12_0)
-	local var_12_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_12_1 = CameraMgr.instance:getSceneRoot()
+function Va3ChessStoryReviewScene:createSceneRoot()
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_12_0._sceneRoot = UnityEngine.GameObject.New("StoryReviewScene")
+	self._sceneRoot = UnityEngine.GameObject.New("StoryReviewScene")
 
-	local var_12_2, var_12_3, var_12_4 = transformhelper.getLocalPos(var_12_0)
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_12_0._sceneRoot.transform, 0, var_12_3, -10)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, -10)
 
-	arg_12_0._sceneOffsetY = var_12_3
+	self._sceneOffsetY = y
 
-	gohelper.addChild(var_12_1, arg_12_0._sceneRoot)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0.disposeSceneRoot(arg_13_0)
-	if arg_13_0._sceneRoot then
-		gohelper.destroy(arg_13_0._sceneRoot)
+function Va3ChessStoryReviewScene:disposeSceneRoot()
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_13_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 
-	arg_13_0._sceneGo = nil
+	self._sceneGo = nil
 end
 
-function var_0_0.playEnterAnim(arg_14_0)
-	if arg_14_0._sceneAnim then
-		arg_14_0._sceneAnim:Play(UIAnimationName.Open, 0, 0)
+function Va3ChessStoryReviewScene:playEnterAnim()
+	if self._sceneAnim then
+		self._sceneAnim:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-return var_0_0
+return Va3ChessStoryReviewScene

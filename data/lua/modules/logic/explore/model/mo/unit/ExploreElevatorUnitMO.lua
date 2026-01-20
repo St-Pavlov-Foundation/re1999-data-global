@@ -1,31 +1,33 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreElevatorUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreElevatorUnitMO.lua
 
-local var_0_0 = pureTable("ExploreElevatorUnitMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreElevatorUnitMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	local var_1_0 = string.splitToNumber(arg_1_0.specialDatas[1], "#")
+local ExploreElevatorUnitMO = pureTable("ExploreElevatorUnitMO", ExploreBaseUnitMO)
 
-	arg_1_0.height1 = var_1_0[1]
-	arg_1_0.height2 = var_1_0[2]
+function ExploreElevatorUnitMO:initTypeData()
+	local heightInfos = string.splitToNumber(self.specialDatas[1], "#")
 
-	local var_1_1 = string.splitToNumber(arg_1_0.specialDatas[2], "#")
+	self.height1 = heightInfos[1]
+	self.height2 = heightInfos[2]
 
-	arg_1_0.intervalTime = var_1_1[1]
-	arg_1_0.keepTime = var_1_1[2]
+	local intervalInfos = string.splitToNumber(self.specialDatas[2], "#")
+
+	self.intervalTime = intervalInfos[1]
+	self.keepTime = intervalInfos[2]
 end
 
-function var_0_0.getUnitClass(arg_2_0)
+function ExploreElevatorUnitMO:getUnitClass()
 	return ExploreElevatorUnit
 end
 
-function var_0_0.updateNodeHeight(arg_3_0, arg_3_1)
-	for iter_3_0 = arg_3_0.offsetSize[1], arg_3_0.offsetSize[3] do
-		for iter_3_1 = arg_3_0.offsetSize[2], arg_3_0.offsetSize[4] do
-			local var_3_0 = ExploreHelper.getKeyXY(arg_3_0.nodePos.x + iter_3_0, arg_3_0.nodePos.y + iter_3_1)
+function ExploreElevatorUnitMO:updateNodeHeight(height)
+	for x = self.offsetSize[1], self.offsetSize[3] do
+		for y = self.offsetSize[2], self.offsetSize[4] do
+			local nodeKey = ExploreHelper.getKeyXY(self.nodePos.x + x, self.nodePos.y + y)
 
-			ExploreMapModel.instance:updateNodeHeight(var_3_0, arg_3_1)
+			ExploreMapModel.instance:updateNodeHeight(nodeKey, height)
 		end
 	end
 end
 
-return var_0_0
+return ExploreElevatorUnitMO

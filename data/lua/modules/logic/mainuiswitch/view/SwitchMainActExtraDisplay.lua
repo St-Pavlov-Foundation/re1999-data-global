@@ -1,519 +1,564 @@
-﻿module("modules.logic.mainuiswitch.view.SwitchMainActExtraDisplay", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/SwitchMainActExtraDisplay.lua
 
-local var_0_0 = class("SwitchMainActExtraDisplay", BaseView)
+module("modules.logic.mainuiswitch.view.SwitchMainActExtraDisplay", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "right")
-	arg_1_0._btnrolestory = gohelper.findChildButton(arg_1_0.viewGO, "right/#btn_rolestory")
-	arg_1_0._simagerolestory = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#btn_rolestory/#simage_rolestory")
-	arg_1_0._imagerolestory = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_rolestory/#simage_rolestory")
-	arg_1_0._gorolestoryred = gohelper.findChild(arg_1_0.viewGO, "right/#btn_rolestory/#go_activityreddot")
-	arg_1_0._txtrolestory = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#btn_rolestory/txt")
-	arg_1_0._gorolestorynew = gohelper.findChild(arg_1_0.viewGO, "right/#btn_rolestory/new")
-	arg_1_0._btnreactivity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_activityreprint")
-	arg_1_0._imagereactivity = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_activityreprint/image_activityreprint")
-	arg_1_0._goreactivityred = gohelper.findChild(arg_1_0.viewGO, "right/#btn_activityreprint/#go_activityreprintreddot")
-	arg_1_0._txtreactivity = gohelper.findChildTextMesh(arg_1_0.viewGO, "right/#btn_activityreprint/txt")
-	arg_1_0._goreactivitynew = gohelper.findChild(arg_1_0.viewGO, "right/#btn_activityreprint/new")
-	arg_1_0._goreactivitylocked = gohelper.findChild(arg_1_0.viewGO, "right/#btn_activityreprint/#go_Locked")
+local SwitchMainActExtraDisplay = class("SwitchMainActExtraDisplay", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SwitchMainActExtraDisplay:onInitView()
+	self._goright = gohelper.findChild(self.viewGO, "right")
+	self._btnrolestory = gohelper.findChildButton(self.viewGO, "right/#btn_rolestory")
+	self._simagerolestory = gohelper.findChildSingleImage(self.viewGO, "right/#btn_rolestory/#simage_rolestory")
+	self._imagerolestory = gohelper.findChildImage(self.viewGO, "right/#btn_rolestory/#simage_rolestory")
+	self._gorolestoryred = gohelper.findChild(self.viewGO, "right/#btn_rolestory/#go_activityreddot")
+	self._txtrolestory = gohelper.findChildTextMesh(self.viewGO, "right/#btn_rolestory/txt")
+	self._gorolestorynew = gohelper.findChild(self.viewGO, "right/#btn_rolestory/new")
+	self._btnreactivity = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_activityreprint")
+	self._imagereactivity = gohelper.findChildImage(self.viewGO, "right/#btn_activityreprint/image_activityreprint")
+	self._goreactivityred = gohelper.findChild(self.viewGO, "right/#btn_activityreprint/#go_activityreprintreddot")
+	self._txtreactivity = gohelper.findChildTextMesh(self.viewGO, "right/#btn_activityreprint/txt")
+	self._goreactivitynew = gohelper.findChild(self.viewGO, "right/#btn_activityreprint/new")
+	self._goreactivitylocked = gohelper.findChild(self.viewGO, "right/#btn_activityreprint/#go_Locked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SwitchMainActExtraDisplay:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SwitchMainActExtraDisplay:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	local var_4_0 = ActivityConfig.instance:getSesonActivityConfig()
+function SwitchMainActExtraDisplay:_editableInitView()
+	local seasonActivityConfig = ActivityConfig.instance:getSesonActivityConfig()
 
-	arg_4_0._seasonActId = var_4_0 and var_4_0.id or Season123Model.instance:getCurSeasonId() or Season166Model.instance:getCurSeasonId()
+	self._seasonActId = seasonActivityConfig and seasonActivityConfig.id or Season123Model.instance:getCurSeasonId() or Season166Model.instance:getCurSeasonId()
 
-	local var_4_1 = ActivityConfig.instance:getRougeActivityConfig()
+	local rougeActivityConfig = ActivityConfig.instance:getRougeActivityConfig()
 
-	arg_4_0._rougeActId = var_4_1 and var_4_1.id
-	arg_4_0._douququActId = VersionActivity2_3Enum.ActivityId.Act174
-	arg_4_0._act178ActId = VersionActivity2_4Enum.ActivityId.Pinball
-	arg_4_0._act182ActId = VersionActivity2_5Enum.ActivityId.AutoChess
+	self._rougeActId = rougeActivityConfig and rougeActivityConfig.id
+	self._douququActId = VersionActivity2_3Enum.ActivityId.Act174
+	self._act178ActId = VersionActivity2_4Enum.ActivityId.Pinball
+	self._act182ActId = VersionActivity2_5Enum.ActivityId.AutoChess
 
-	arg_4_0:_initActs()
+	self:_initActs()
 end
 
-function var_0_0._initActs(arg_5_0)
-	arg_5_0._actHandler = {}
-	arg_5_0._actGetStartTimeHandler = {}
-	arg_5_0._actClickHandler = {}
-	arg_5_0._actRefreshBtnHandler = {}
+function SwitchMainActExtraDisplay:_initActs()
+	self._actHandler = {}
+	self._actGetStartTimeHandler = {}
+	self._actClickHandler = {}
+	self._actRefreshBtnHandler = {}
 
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, arg_5_0._getRoleStoryActivityStatus, arg_5_0._getRoleStoryActivityStartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.Survival, arg_5_0._getSurvivalStatus, arg_5_0._getSurvivalStartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.Reactivity, arg_5_0._getReactivityStatus, arg_5_0._getReactivityStartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.SeasonActivity, arg_5_0._getSeasonActivityStatus, arg_5_0._getSeasonActivityStartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.Rouge, arg_5_0._getRougeStatus, arg_5_0._getRougeStartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.DouQuQu, arg_5_0._getDouQuQuStatus, arg_5_0._getDouQuQuStartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.Act178, arg_5_0._getAct178Status, arg_5_0._getAct178StartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.Act182, arg_5_0._getAct182Status, arg_5_0._getAct182StartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, arg_5_0._getWeekWalkHeartStatus, arg_5_0._getWeekWalkHeartStartTime)
-	arg_5_0:_addActHandler(ActivityEnum.MainViewActivityState.Act191, arg_5_0._getAct191Status, arg_5_0._getAct191StartTime)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, arg_5_0.refreshRoleStoryBtn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Survival, arg_5_0.refreshSurvivalBtn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.SeasonActivity, arg_5_0.refreshSeasonBtn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge, arg_5_0.refreshRougeBtn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.DouQuQu, arg_5_0.refreshDouQuQuBtn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act178, arg_5_0.refreshAct178Btn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act182, arg_5_0.refreshAct182Btn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, arg_5_0.refreshWeekWalkHeartBtn)
-	arg_5_0:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act191, arg_5_0.refreshAct191Btn)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, self._getRoleStoryActivityStatus, self._getRoleStoryActivityStartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Survival, self._getSurvivalStatus, self._getSurvivalStartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Reactivity, self._getReactivityStatus, self._getReactivityStartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.SeasonActivity, self._getSeasonActivityStatus, self._getSeasonActivityStartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Rouge, self._getRougeStatus, self._getRougeStartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.DouQuQu, self._getDouQuQuStatus, self._getDouQuQuStartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Act178, self._getAct178Status, self._getAct178StartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Act182, self._getAct182Status, self._getAct182StartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, self._getWeekWalkHeartStatus, self._getWeekWalkHeartStartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Act191, self._getAct191Status, self._getAct191StartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Rouge2, self._getRouge2Status, self._getRouge2StartTime)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, self.refreshRoleStoryBtn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Survival, self.refreshSurvivalBtn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.SeasonActivity, self.refreshSeasonBtn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge, self.refreshRougeBtn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.DouQuQu, self.refreshDouQuQuBtn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act178, self.refreshAct178Btn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act182, self.refreshAct182Btn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, self.refreshWeekWalkHeartBtn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act191, self.refreshAct191Btn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge2, self.refreshRouge2Btn)
 end
 
-function var_0_0._addRefreshBtnHandler(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._actRefreshBtnHandler[arg_6_1] = arg_6_2
+function SwitchMainActExtraDisplay:_addRefreshBtnHandler(id, handler)
+	self._actRefreshBtnHandler[id] = handler
 end
 
-function var_0_0._addClickHandler(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._actClickHandler[arg_7_1] = arg_7_2
+function SwitchMainActExtraDisplay:_addClickHandler(id, handler)
+	self._actClickHandler[id] = handler
 end
 
-function var_0_0._addActHandler(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0._actHandler[arg_8_1] = arg_8_2
-	arg_8_0._actGetStartTimeHandler[arg_8_1] = arg_8_3
+function SwitchMainActExtraDisplay:_addActHandler(id, getActStatusHandler, getStartTimeHandler)
+	self._actHandler[id] = getActStatusHandler
+	self._actGetStartTimeHandler[id] = getStartTimeHandler
 end
 
-function var_0_0._getSeasonActivityStatus(arg_9_0)
-	local var_9_0 = arg_9_0._seasonActId
+function SwitchMainActExtraDisplay:_getSeasonActivityStatus()
+	local seasonActId = self._seasonActId
+	local status = seasonActId and ActivityHelper.getActivityStatus(seasonActId)
 
-	return (var_9_0 and ActivityHelper.getActivityStatus(var_9_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getSeasonActivityStartTime(arg_10_0)
-	local var_10_0 = arg_10_0._seasonActId
+function SwitchMainActExtraDisplay:_getSeasonActivityStartTime()
+	local seasonActId = self._seasonActId
 
-	return var_10_0 and ActivityModel.instance:getActStartTime(var_10_0)
+	return seasonActId and ActivityModel.instance:getActStartTime(seasonActId)
 end
 
-function var_0_0._getReactivityStatus(arg_11_0)
-	local var_11_0 = ReactivityController.instance:getCurReactivityId()
-	local var_11_1 = var_11_0 and ReactivityEnum.ActivityDefine[var_11_0]
-	local var_11_2 = var_11_1 and var_11_1.storeActId
+function SwitchMainActExtraDisplay:_getReactivityStatus()
+	local reactivityActId = ReactivityController.instance:getCurReactivityId()
+	local define = reactivityActId and ReactivityEnum.ActivityDefine[reactivityActId]
+	local storeActId = define and define.storeActId
+	local reactivityStatus = storeActId and ActivityHelper.getActivityStatus(storeActId)
 
-	return (var_11_2 and ActivityHelper.getActivityStatus(var_11_2)) == ActivityEnum.ActivityStatus.Normal
+	return reactivityStatus == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getReactivityStartTime(arg_12_0)
-	local var_12_0 = ReactivityController.instance:getCurReactivityId()
-	local var_12_1 = ReactivityEnum.ActivityDefine[var_12_0]
-	local var_12_2 = var_12_1 and var_12_1.storeActId
-	local var_12_3 = var_12_2 and ActivityModel.instance:getActMO(var_12_2)
+function SwitchMainActExtraDisplay:_getReactivityStartTime()
+	local reactivityActId = ReactivityController.instance:getCurReactivityId()
+	local define = ReactivityEnum.ActivityDefine[reactivityActId]
+	local storeActId = define and define.storeActId
+	local reactivityMo = storeActId and ActivityModel.instance:getActMO(storeActId)
 
-	return var_12_3 and var_12_3:getRealStartTimeStamp() * 1000
+	return reactivityMo and reactivityMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._getRoleStoryActivityStatus(arg_13_0)
-	local var_13_0 = RoleStoryModel.instance:getCurActStoryId()
+function SwitchMainActExtraDisplay:_getRoleStoryActivityStatus()
+	local storyId = RoleStoryModel.instance:getCurActStoryId()
+	local hasStory = storyId and storyId > 0 or false
 
-	return var_13_0 and var_13_0 > 0 or false
+	return hasStory
 end
 
-function var_0_0._getRoleStoryActivityStartTime(arg_14_0)
-	local var_14_0 = RoleStoryModel.instance:getCurActStoryId()
-	local var_14_1 = (var_14_0 and var_14_0 > 0 or false) and RoleStoryModel.instance:getMoById(var_14_0)
+function SwitchMainActExtraDisplay:_getRoleStoryActivityStartTime()
+	local storyId = RoleStoryModel.instance:getCurActStoryId()
+	local hasStory = storyId and storyId > 0 or false
+	local storyMo = hasStory and RoleStoryModel.instance:getMoById(storyId)
 
-	return var_14_1 and var_14_1:getActTime() * 1000
+	return storyMo and storyMo:getActTime() * 1000
 end
 
-function var_0_0._getRougeStatus(arg_15_0)
-	local var_15_0 = arg_15_0._rougeActId
+function SwitchMainActExtraDisplay:_getRougeStatus()
+	local actId = self._rougeActId
+	local status = actId and ActivityHelper.getActivityStatus(actId)
 
-	return (var_15_0 and ActivityHelper.getActivityStatus(var_15_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getRougeStartTime(arg_16_0)
-	local var_16_0 = arg_16_0._rougeActId
-	local var_16_1 = ActivityModel.instance:getActMO(var_16_0)
+function SwitchMainActExtraDisplay:_getRougeStartTime()
+	local actId = self._rougeActId
+	local actMo = ActivityModel.instance:getActMO(actId)
 
-	return var_16_1 and var_16_1:getRealStartTimeStamp() * 1000
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._getSurvivalStatus(arg_17_0)
-	local var_17_0 = VersionActivity3_1Enum.ActivityId.Survival
+function SwitchMainActExtraDisplay:_getSurvivalStatus()
+	local actId = VersionActivity3_1Enum.ActivityId.Survival
+	local status = actId and ActivityHelper.getActivityStatus(actId)
 
-	return (var_17_0 and ActivityHelper.getActivityStatus(var_17_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getSurvivalStartTime(arg_18_0)
-	local var_18_0 = VersionActivity3_1Enum.ActivityId.Survival
-	local var_18_1 = ActivityModel.instance:getActMO(var_18_0)
+function SwitchMainActExtraDisplay:_getSurvivalStartTime()
+	local actId = VersionActivity3_1Enum.ActivityId.Survival
+	local actMo = ActivityModel.instance:getActMO(actId)
 
-	return var_18_1 and var_18_1:getRealStartTimeStamp() * 1000
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._getDouQuQuStatus(arg_19_0)
-	local var_19_0 = arg_19_0._douququActId
+function SwitchMainActExtraDisplay:_getDouQuQuStatus()
+	local actId = self._douququActId
+	local status = actId and ActivityHelper.getActivityStatus(actId)
 
-	return (var_19_0 and ActivityHelper.getActivityStatus(var_19_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getDouQuQuStartTime(arg_20_0)
-	local var_20_0 = arg_20_0._douququActId
-	local var_20_1 = ActivityModel.instance:getActMO(var_20_0)
+function SwitchMainActExtraDisplay:_getDouQuQuStartTime()
+	local actId = self._douququActId
+	local actMo = ActivityModel.instance:getActMO(actId)
 
-	return var_20_1 and var_20_1:getRealStartTimeStamp() * 1000
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._getAct178Status(arg_21_0)
-	local var_21_0 = arg_21_0._act178ActId
+function SwitchMainActExtraDisplay:_getAct178Status()
+	local actId = self._act178ActId
+	local status = actId and ActivityHelper.getActivityStatus(actId)
 
-	return (var_21_0 and ActivityHelper.getActivityStatus(var_21_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getAct178StartTime(arg_22_0)
-	local var_22_0 = arg_22_0._act178ActId
-	local var_22_1 = ActivityModel.instance:getActMO(var_22_0)
+function SwitchMainActExtraDisplay:_getAct178StartTime()
+	local actId = self._act178ActId
+	local actMo = ActivityModel.instance:getActMO(actId)
 
-	return var_22_1 and var_22_1:getRealStartTimeStamp() * 1000
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._getAct182Status(arg_23_0)
-	local var_23_0 = arg_23_0._act182ActId
+function SwitchMainActExtraDisplay:_getAct182Status()
+	local actId = self._act182ActId
+	local status = actId and ActivityHelper.getActivityStatus(actId)
 
-	return (var_23_0 and ActivityHelper.getActivityStatus(var_23_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getAct182StartTime(arg_24_0)
-	local var_24_0 = arg_24_0._act182ActId
-	local var_24_1 = ActivityModel.instance:getActMO(var_24_0)
+function SwitchMainActExtraDisplay:_getAct182StartTime()
+	local actId = self._act182ActId
+	local actMo = ActivityModel.instance:getActMO(actId)
 
-	return var_24_1 and var_24_1:getRealStartTimeStamp() * 1000
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._getWeekWalkHeartStatus(arg_25_0)
-	local var_25_0 = arg_25_0:_getBindActivityId(ActivityEnum.MainViewActivityState.WeekWalkHeart)
+function SwitchMainActExtraDisplay:_getWeekWalkHeartStatus()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.WeekWalkHeart)
+	local status = actId and ActivityHelper.getActivityStatus(actId)
 
-	return (var_25_0 and ActivityHelper.getActivityStatus(var_25_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getWeekWalkHeartStartTime(arg_26_0)
-	local var_26_0 = arg_26_0:_getBindActivityId(ActivityEnum.MainViewActivityState.WeekWalkHeart)
-	local var_26_1 = ActivityModel.instance:getActMO(var_26_0)
+function SwitchMainActExtraDisplay:_getWeekWalkHeartStartTime()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.WeekWalkHeart)
+	local actMo = ActivityModel.instance:getActMO(actId)
 
-	return var_26_1 and var_26_1:getRealStartTimeStamp() * 1000
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._getAct191Status(arg_27_0)
-	local var_27_0 = arg_27_0:_getBindActivityId(ActivityEnum.MainViewActivityState.Act191)
+function SwitchMainActExtraDisplay:_getAct191Status()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Act191)
+	local status = actId and ActivityHelper.getActivityStatus(actId)
 
-	return (var_27_0 and ActivityHelper.getActivityStatus(var_27_0)) == ActivityEnum.ActivityStatus.Normal
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getAct191StartTime(arg_28_0)
-	local var_28_0 = arg_28_0:_getBindActivityId(ActivityEnum.MainViewActivityState.Act191)
-	local var_28_1 = ActivityModel.instance:getActMO(var_28_0)
+function SwitchMainActExtraDisplay:_getAct191StartTime()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Act191)
+	local actMo = ActivityModel.instance:getActMO(actId)
 
-	return var_28_1 and var_28_1:getRealStartTimeStamp() * 1000
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._onStoryChange(arg_29_0)
-	arg_29_0:onRefreshActivityState()
+function SwitchMainActExtraDisplay:_getRouge2Status()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Rouge2)
+	local status = actId and ActivityHelper.getActivityStatus(actId)
+
+	return status == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._onStoryNewChange(arg_30_0)
-	arg_30_0:refreshRoleStoryRed()
+function SwitchMainActExtraDisplay:_getRouge2StartTime()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Rouge2)
+	local actMo = ActivityModel.instance:getActMO(actId)
+
+	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
-function var_0_0._roleStoryLoadImage(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if string.nilorempty(arg_31_1) then
+function SwitchMainActExtraDisplay:_onStoryChange()
+	self:onRefreshActivityState()
+end
+
+function SwitchMainActExtraDisplay:_onStoryNewChange()
+	self:refreshRoleStoryRed()
+end
+
+function SwitchMainActExtraDisplay:_roleStoryLoadImage(path, callback, callbackTarget)
+	if string.nilorempty(path) then
 		logError("SwitchMainActExtraDisplay:_roleStoryLoadImage path nil")
 
 		return
 	end
 
-	arg_31_0._simagerolestory:LoadImage(arg_31_1, arg_31_2, arg_31_3)
+	self._simagerolestory:LoadImage(path, callback, callbackTarget)
 end
 
-function var_0_0.refreshRougeBtn(arg_32_0)
-	gohelper.setActive(arg_32_0._btnrolestory, true)
+function SwitchMainActExtraDisplay:refreshRougeBtn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	local var_32_0 = ActivityConfig.instance:getRougeActivityConfig()
+	local activityConfig = ActivityConfig.instance:getRougeActivityConfig()
 
-	arg_32_0:_roleStoryLoadImage(var_32_0.extraDisplayIcon, arg_32_0.onLoadImage, arg_32_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-	arg_32_0._txtrolestory.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("mainview_rougeactextradisplay"), var_32_0.tabName)
+	self._txtrolestory.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("mainview_rougeactextradisplay"), activityConfig.tabName)
 end
 
-function var_0_0.refreshDouQuQuBtn(arg_33_0)
-	gohelper.setActive(arg_33_0._btnrolestory, true)
+function SwitchMainActExtraDisplay:refreshDouQuQuBtn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	local var_33_0 = ActivityConfig.instance:getActivityCo(arg_33_0._douququActId)
+	local activityConfig = ActivityConfig.instance:getActivityCo(self._douququActId)
 
-	arg_33_0:_roleStoryLoadImage(var_33_0.extraDisplayIcon, arg_33_0.onLoadImage, arg_33_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-	arg_33_0._txtrolestory.text = ""
+	self._txtrolestory.text = ""
 end
 
-function var_0_0.refreshSurvivalBtn(arg_34_0)
-	gohelper.setActive(arg_34_0._btnrolestory, true)
+function SwitchMainActExtraDisplay:refreshSurvivalBtn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	local var_34_0 = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
+	local activityConfig = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
 
-	arg_34_0:_roleStoryLoadImage(var_34_0.extraDisplayIcon, arg_34_0.onLoadImage, arg_34_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-	arg_34_0._txtrolestory.text = ""
+	self._txtrolestory.text = ""
 end
 
-function var_0_0.refreshAct178Btn(arg_35_0)
-	gohelper.setActive(arg_35_0._btnrolestory, true)
+function SwitchMainActExtraDisplay:refreshAct178Btn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	local var_35_0 = ActivityConfig.instance:getActivityCo(arg_35_0._act178ActId)
+	local activityConfig = ActivityConfig.instance:getActivityCo(self._act178ActId)
 
-	arg_35_0:_roleStoryLoadImage(var_35_0.extraDisplayIcon, arg_35_0.onLoadImage, arg_35_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-	arg_35_0._txtrolestory.text = ""
+	self._txtrolestory.text = ""
 end
 
-function var_0_0.refreshAct182Btn(arg_36_0)
-	gohelper.setActive(arg_36_0._btnrolestory, true)
+function SwitchMainActExtraDisplay:refreshAct182Btn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	local var_36_0 = ActivityConfig.instance:getActivityCo(arg_36_0._act182ActId)
+	local activityConfig = ActivityConfig.instance:getActivityCo(self._act182ActId)
 
-	arg_36_0:_roleStoryLoadImage(var_36_0.extraDisplayIcon, arg_36_0.onLoadImage, arg_36_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-	arg_36_0._txtrolestory.text = ""
+	self._txtrolestory.text = ""
 end
 
-function var_0_0.refreshWeekWalkHeartBtn(arg_37_0)
-	gohelper.setActive(arg_37_0._btnrolestory, true)
+function SwitchMainActExtraDisplay:refreshWeekWalkHeartBtn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	local var_37_0 = arg_37_0:_getBindActivityId(ActivityEnum.MainViewActivityState.WeekWalkHeart)
-	local var_37_1 = ActivityConfig.instance:getActivityCo(var_37_0)
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.WeekWalkHeart)
+	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
 
-	arg_37_0:_roleStoryLoadImage(var_37_1.extraDisplayIcon, arg_37_0.onLoadImage, arg_37_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-	local var_37_2 = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.WeekWalkHeartShow)
+	local config = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.WeekWalkHeartShow)
 
-	arg_37_0._txtrolestory.text = var_37_2.name
+	self._txtrolestory.text = config.name
 end
 
-function var_0_0.refreshAct191Btn(arg_38_0)
-	gohelper.setActive(arg_38_0._btnrolestory, true)
+function SwitchMainActExtraDisplay:refreshAct191Btn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	local var_38_0 = arg_38_0:_getBindActivityId(ActivityEnum.MainViewActivityState.Act191)
-	local var_38_1 = ActivityConfig.instance:getActivityCo(var_38_0)
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Act191)
+	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
 
-	arg_38_0:_roleStoryLoadImage(var_38_1.extraDisplayIcon, arg_38_0.onLoadImage, arg_38_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-	arg_38_0._txtrolestory.text = ""
+	self._txtrolestory.text = ""
 end
 
-function var_0_0.onLoadImage(arg_39_0)
-	arg_39_0._imagerolestory:SetNativeSize()
+function SwitchMainActExtraDisplay:refreshRouge2Btn()
+	gohelper.setActive(self._btnrolestory, true)
+
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Rouge2)
+	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
+
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
+
+	self._txtrolestory.text = ""
 end
 
-function var_0_0.refreshSeasonBtn(arg_40_0)
-	gohelper.setActive(arg_40_0._btnrolestory, true)
-
-	local var_40_0 = ActivityConfig.instance:getSesonActivityConfig()
-
-	arg_40_0:_roleStoryLoadImage(var_40_0.extraDisplayIcon, arg_40_0.onLoadImage, arg_40_0)
-
-	arg_40_0._txtrolestory.text = var_40_0.name
-
-	local var_40_1 = arg_40_0._seasonActId
-	local var_40_2 = ActivityConfig.instance:getActivityCo(var_40_1)
-
-	RedDotController.instance:addRedDot(arg_40_0._gorolestoryred, var_40_2.redDotId)
-
-	local var_40_3 = ActivityStageHelper.checkOneActivityStageHasChange(var_40_1)
-
-	gohelper.setActive(arg_40_0._gorolestorynew, var_40_3)
-	gohelper.setActive(arg_40_0._gorolestoryred, not var_40_3)
+function SwitchMainActExtraDisplay:onLoadImage()
+	self._imagerolestory:SetNativeSize()
 end
 
-function var_0_0.refreshRoleStoryBtn(arg_41_0)
-	local var_41_0 = RoleStoryModel.instance:getCurActStoryId()
-	local var_41_1 = var_41_0 > 0
+function SwitchMainActExtraDisplay:refreshSeasonBtn()
+	gohelper.setActive(self._btnrolestory, true)
 
-	gohelper.setActive(arg_41_0._btnrolestory, var_41_1)
+	local activityConfig = ActivityConfig.instance:getSesonActivityConfig()
 
-	if var_41_1 then
-		local var_41_2 = RoleStoryConfig.instance:getStoryById(var_41_0)
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
-		arg_41_0:_roleStoryLoadImage(string.format("singlebg/dungeon/rolestory_singlebg/%s.png", var_41_2.main_pic), arg_41_0.onLoadImage, arg_41_0)
+	self._txtrolestory.text = activityConfig.name
 
-		local var_41_3 = var_41_2.mainviewName
+	local actId = self._seasonActId
+	local activityCo = ActivityConfig.instance:getActivityCo(actId)
 
-		if string.nilorempty(var_41_3) then
-			var_41_3 = var_41_2.name
+	RedDotController.instance:addRedDot(self._gorolestoryred, activityCo.redDotId)
+
+	local hasNew = ActivityStageHelper.checkOneActivityStageHasChange(actId)
+
+	gohelper.setActive(self._gorolestorynew, hasNew)
+	gohelper.setActive(self._gorolestoryred, not hasNew)
+end
+
+function SwitchMainActExtraDisplay:refreshRoleStoryBtn()
+	local storyId = RoleStoryModel.instance:getCurActStoryId()
+	local hasStory = storyId > 0
+
+	gohelper.setActive(self._btnrolestory, hasStory)
+
+	if hasStory then
+		local co = RoleStoryConfig.instance:getStoryById(storyId)
+
+		self:_roleStoryLoadImage(string.format("singlebg/dungeon/rolestory_singlebg/%s.png", co.main_pic), self.onLoadImage, self)
+
+		local storyName = co.mainviewName
+
+		if string.nilorempty(storyName) then
+			storyName = co.name
 		end
 
-		arg_41_0._txtrolestory.text = var_41_3
+		self._txtrolestory.text = storyName
 
-		RedDotController.instance:addRedDot(arg_41_0._gorolestoryred, RedDotEnum.DotNode.RoleStoryActivity)
+		RedDotController.instance:addRedDot(self._gorolestoryred, RedDotEnum.DotNode.RoleStoryActivity)
 	end
 
-	arg_41_0:refreshRoleStoryRed()
+	self:refreshRoleStoryRed()
 end
 
-function var_0_0.refreshRoleStoryRed(arg_42_0)
-	if arg_42_0.activityShowState ~= ActivityEnum.MainViewActivityState.RoleStoryActivity then
+function SwitchMainActExtraDisplay:refreshRoleStoryRed()
+	if self.activityShowState ~= ActivityEnum.MainViewActivityState.RoleStoryActivity then
 		return
 	end
 
-	local var_42_0 = false
-	local var_42_1 = RoleStoryModel.instance:getCurActStoryId()
+	local showNew = false
+	local storyId = RoleStoryModel.instance:getCurActStoryId()
+	local hasStory = storyId > 0
 
-	if not (var_42_1 > 0) then
+	if not hasStory then
 		return
 	end
 
-	local var_42_2 = RoleStoryModel.instance:getMoById(var_42_1).cfg.activityId
-	local var_42_3 = ActivityStageHelper.checkOneActivityStageHasChange(var_42_2)
+	local storyMo = RoleStoryModel.instance:getMoById(storyId)
+	local actId = storyMo.cfg.activityId
+	local hasNew = ActivityStageHelper.checkOneActivityStageHasChange(actId)
 
-	gohelper.setActive(arg_42_0._gorolestorynew, var_42_3)
-	gohelper.setActive(arg_42_0._gorolestoryred, not var_42_3)
+	gohelper.setActive(self._gorolestorynew, hasNew)
+	gohelper.setActive(self._gorolestoryred, not hasNew)
 end
 
-function var_0_0.refreshReactivityBtn(arg_43_0)
-	local var_43_0 = ReactivityController.instance:getCurReactivityId()
-	local var_43_1 = var_43_0 and ActivityHelper.getActivityStatusAndToast(var_43_0)
-	local var_43_2 = arg_43_0.activityShowState == ActivityEnum.MainViewActivityState.Reactivity
+function SwitchMainActExtraDisplay:refreshReactivityBtn()
+	local actId = ReactivityController.instance:getCurReactivityId()
+	local status = actId and ActivityHelper.getActivityStatusAndToast(actId)
+	local reactivityShow = self.activityShowState == ActivityEnum.MainViewActivityState.Reactivity
 
-	gohelper.setActive(arg_43_0._btnreactivity, var_43_2)
+	gohelper.setActive(self._btnreactivity, reactivityShow)
 
-	if var_43_2 then
-		local var_43_3 = ActivityConfig.instance:getActivityCo(var_43_0)
+	if reactivityShow then
+		local actCo = ActivityConfig.instance:getActivityCo(actId)
 
-		arg_43_0._txtreactivity.text = var_43_3 and var_43_3.name or ""
+		self._txtreactivity.text = actCo and actCo.name or ""
 
-		local var_43_4 = var_43_1 == ActivityEnum.ActivityStatus.Normal and ActivityStageHelper.checkOneActivityStageHasChange(var_43_0)
+		local hasNew = status == ActivityEnum.ActivityStatus.Normal and ActivityStageHelper.checkOneActivityStageHasChange(actId)
 
-		gohelper.setActive(arg_43_0._goreactivityred, not var_43_4)
-		gohelper.setActive(arg_43_0._goreactivitynew, var_43_4)
-		gohelper.setActive(arg_43_0._goreactivitylocked, var_43_1 == ActivityEnum.ActivityStatus.NotUnlock)
-		arg_43_0:addReactivityRed()
+		gohelper.setActive(self._goreactivityred, not hasNew)
+		gohelper.setActive(self._goreactivitynew, hasNew)
+		gohelper.setActive(self._goreactivitylocked, status == ActivityEnum.ActivityStatus.NotUnlock)
+		self:addReactivityRed()
 	end
 end
 
-function var_0_0.addReactivityRed(arg_44_0)
-	local var_44_0 = ReactivityController.instance:getCurReactivityId()
+function SwitchMainActExtraDisplay:addReactivityRed()
+	local actId = ReactivityController.instance:getCurReactivityId()
 
-	if var_44_0 then
-		local var_44_1 = ActivityConfig.instance:getActivityCo(var_44_0)
+	if actId then
+		local actCo = ActivityConfig.instance:getActivityCo(actId)
 
-		if var_44_1 and var_44_1.redDotId > 0 then
-			RedDotController.instance:addRedDot(arg_44_0._goreactivityred, var_44_1.redDotId)
+		if actCo and actCo.redDotId > 0 then
+			RedDotController.instance:addRedDot(self._goreactivityred, actCo.redDotId)
 		end
 	end
 end
 
-function var_0_0.checkShowActivityEnter(arg_45_0)
-	local var_45_0 = ActivityEnum.MainViewActivityState.None
+function SwitchMainActExtraDisplay:checkShowActivityEnter()
+	local showState = ActivityEnum.MainViewActivityState.None
 
-	arg_45_0._curActDisplayConfig = nil
+	self._curActDisplayConfig = nil
 
-	local var_45_1 = 0
-	local var_45_2 = ActivityConfig.instance:getMainActExtraDisplayList()
+	local lastStartTime = 0
+	local actList = ActivityConfig.instance:getMainActExtraDisplayList()
 
-	for iter_45_0, iter_45_1 in ipairs(var_45_2) do
-		local var_45_3 = arg_45_0._actHandler[iter_45_1.id]
+	for i, v in ipairs(actList) do
+		local handler = self._actHandler[v.id]
 
-		if not var_45_3 then
-			logError("SwitchMainActExtraDisplay 活动没有对应的handler id:" .. tostring(iter_45_1.id))
+		if not handler then
+			logError("SwitchMainActExtraDisplay 活动没有对应的handler id:" .. tostring(v.id))
 		end
 
-		if var_45_3 and var_45_3(arg_45_0) then
-			local var_45_4 = arg_45_0._actGetStartTimeHandler[iter_45_1.id](arg_45_0)
+		if handler and handler(self) then
+			local getStartTimeHandler = self._actGetStartTimeHandler[v.id]
+			local time = getStartTimeHandler(self)
 
-			if var_45_1 <= var_45_4 then
-				var_45_1 = var_45_4
-				var_45_0 = iter_45_1.id
-				arg_45_0._curActDisplayConfig = iter_45_1
+			if lastStartTime <= time then
+				lastStartTime = time
+				showState = v.id
+				self._curActDisplayConfig = v
 			end
 		end
 	end
 
-	arg_45_0.activityShowState = var_45_0
+	self.activityShowState = showState
 
-	recthelper.setAnchorY(arg_45_0._goright.transform, arg_45_0.activityShowState == ActivityEnum.MainViewActivityState.None and 0 or -40)
+	recthelper.setAnchorY(self._goright.transform, self.activityShowState == ActivityEnum.MainViewActivityState.None and 0 or -40)
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		logNormal("SwitchMainActExtraDisplay:checkShowActivityEnter showState:" .. tostring(var_45_0))
+		logNormal("SwitchMainActExtraDisplay:checkShowActivityEnter showState:" .. tostring(showState))
 	end
 end
 
-function var_0_0.check2_0DungeonReddot(arg_46_0)
-	if ActivityHelper.getActivityStatus(VersionActivity2_0Enum.ActivityId.Dungeon) == ActivityEnum.ActivityStatus.Normal then
+function SwitchMainActExtraDisplay:check2_0DungeonReddot()
+	local status = ActivityHelper.getActivityStatus(VersionActivity2_0Enum.ActivityId.Dungeon)
+
+	if status == ActivityEnum.ActivityStatus.Normal then
 		Activity161Controller.instance:checkHasUnDoElement()
 	end
 end
 
-function var_0_0._getCurBindActivityId(arg_47_0)
-	return arg_47_0:_getBindActivityId(arg_47_0.activityShowState)
+function SwitchMainActExtraDisplay:_getCurBindActivityId()
+	return self:_getBindActivityId(self.activityShowState)
 end
 
-function var_0_0._getBindActivityId(arg_48_0, arg_48_1)
-	local var_48_0 = ActivityConfig.instance:getActivityByExtraDisplayId(arg_48_1)
+function SwitchMainActExtraDisplay:_getBindActivityId(showState)
+	local config = ActivityConfig.instance:getActivityByExtraDisplayId(showState)
 
-	return var_48_0 and var_48_0.id
+	return config and config.id
 end
 
-function var_0_0.onRefreshActivityState(arg_49_0)
-	arg_49_0:checkShowActivityEnter()
-	arg_49_0:refreshReactivityBtn()
-	arg_49_0:_refreshBtns()
-	arg_49_0:check2_0DungeonReddot()
+function SwitchMainActExtraDisplay:onRefreshActivityState()
+	self:checkShowActivityEnter()
+	self:refreshReactivityBtn()
+	self:_refreshBtns()
+	self:check2_0DungeonReddot()
 end
 
-function var_0_0._refreshBtns(arg_50_0)
-	gohelper.setActive(arg_50_0._btnrolestory, false)
+function SwitchMainActExtraDisplay:_refreshBtns()
+	gohelper.setActive(self._btnrolestory, false)
 
-	if not arg_50_0._curActDisplayConfig then
+	if not self._curActDisplayConfig then
 		return
 	end
 
-	local var_50_0 = arg_50_0._actRefreshBtnHandler[arg_50_0.activityShowState]
+	local handler = self._actRefreshBtnHandler[self.activityShowState]
 
-	if var_50_0 then
-		var_50_0(arg_50_0)
+	if handler then
+		handler(self)
 	end
 end
 
-function var_0_0.onOpen(arg_51_0)
-	arg_51_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, arg_51_0._onStoryChange, arg_51_0)
-	arg_51_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.StoryNewChange, arg_51_0._onStoryNewChange, arg_51_0)
-	arg_51_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_51_0.onRefreshActivityState, arg_51_0)
-	arg_51_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_51_0.onRefreshActivityState, arg_51_0)
-	arg_51_0:addEventCb(ActivityController.instance, ActivityEvent.ChangeActivityStage, arg_51_0.onRefreshActivityState, arg_51_0)
+function SwitchMainActExtraDisplay:onOpen()
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, self._onStoryChange, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.StoryNewChange, self._onStoryNewChange, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivityState, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, self.onRefreshActivityState, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.ChangeActivityStage, self.onRefreshActivityState, self)
 
 	if VersionValidator.instance:isInReviewing() then
-		gohelper.setActive(arg_51_0._goright, false)
+		gohelper.setActive(self._goright, false)
 	end
 
-	arg_51_0:onRefreshActivityState()
-	arg_51_0:showKeyTips()
+	self:onRefreshActivityState()
+	self:showKeyTips()
 end
 
-function var_0_0.showKeyTips(arg_52_0)
-	arg_52_0._keytipsReactivity = gohelper.findChild(arg_52_0._btnreactivity.gameObject, "#go_pcbtn")
-	arg_52_0._keytipsRoleStory = gohelper.findChild(arg_52_0._btnrolestory.gameObject, "#go_pcbtn")
+function SwitchMainActExtraDisplay:showKeyTips()
+	self._keytipsReactivity = gohelper.findChild(self._btnreactivity.gameObject, "#go_pcbtn")
+	self._keytipsRoleStory = gohelper.findChild(self._btnrolestory.gameObject, "#go_pcbtn")
 
-	PCInputController.instance:showkeyTips(arg_52_0._keytipsReactivity, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.curActivity)
-	PCInputController.instance:showkeyTips(arg_52_0._keytipsRoleStory, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.curActivity)
+	PCInputController.instance:showkeyTips(self._keytipsReactivity, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.curActivity)
+	PCInputController.instance:showkeyTips(self._keytipsRoleStory, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.curActivity)
 end
 
-function var_0_0.onClose(arg_53_0)
+function SwitchMainActExtraDisplay:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_54_0)
-	if arg_54_0._simagerolestory then
-		arg_54_0._simagerolestory:UnLoadImage()
+function SwitchMainActExtraDisplay:onDestroyView()
+	if self._simagerolestory then
+		self._simagerolestory:UnLoadImage()
 	end
 end
 
-return var_0_0
+return SwitchMainActExtraDisplay

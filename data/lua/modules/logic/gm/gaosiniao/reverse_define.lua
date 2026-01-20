@@ -1,74 +1,81 @@
-﻿local var_0_0 = _G.rawset
-local var_0_1 = _G.assert
-local var_0_2 = string.format
+﻿-- chunkname: @modules/logic/gm/gaosiniao/reverse_define.lua
 
-local function var_0_3(arg_1_0, arg_1_1)
-	return string.split(arg_1_0, arg_1_1) or {}
+local rawset = _G.rawset
+local assert = _G.assert
+local sf = string.format
+
+local function _split(s, delimiter)
+	return string.split(s, delimiter) or {}
 end
 
-local function var_0_4(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = var_0_3(arg_2_0, ".")
-	local var_2_1 = arg_2_2 or _G
+local function _make_tables(name, value, root)
+	local list = _split(name, ".")
+	local res = root or _G
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		if iter_2_0 == #var_2_0 and arg_2_1 ~= nil then
-			var_0_0(var_2_1, iter_2_1, arg_2_1)
+	for i, key in ipairs(list) do
+		if i == #list and value ~= nil then
+			rawset(res, key, value)
 		else
-			var_0_0(var_2_1, iter_2_1, var_2_1[iter_2_1] or {})
+			rawset(res, key, res[key] or {})
 		end
 
-		var_2_1 = var_2_1[iter_2_1]
+		res = res[key]
 	end
 
-	return var_2_1
+	return res
 end
 
-local function var_0_5(arg_3_0)
-	var_0_1(type(arg_3_0) == "string")
+local function _rname(user_define_name)
+	assert(type(user_define_name) == "string")
 
-	return var_0_2("_r.%s", arg_3_0)
+	return sf("_r.%s", user_define_name)
 end
 
-local function var_0_6(arg_4_0, arg_4_1)
-	local var_4_0 = var_0_3(arg_4_1, ".")
-	local var_4_1 = #var_4_0
-	local var_4_2 = arg_4_0
+local function _transfer(src_define_tbl, declare_name)
+	local list = _split(declare_name, ".")
+	local n = #list
+	local res = src_define_tbl
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		var_4_2 = var_4_2[iter_4_1]
+	for _, key in ipairs(list) do
+		res = res[key]
 
-		if not var_4_2 then
+		if not res then
 			break
 		end
 
-		var_4_1 = var_4_1 - 1
+		n = n - 1
 	end
 
-	return var_4_1 == 0 and var_4_2, var_4_2
+	local ok = n == 0 and res
+
+	return ok, res
 end
 
-return function(arg_5_0, arg_5_1)
-	local var_5_0 = var_0_5(arg_5_1)
-	local var_5_1, var_5_2 = var_0_6(arg_5_0, var_5_0)
+local function RD(src_define_tbl, member_name)
+	local rname = _rname(member_name)
+	local ok, dst_tbl = _transfer(src_define_tbl, rname)
 
-	if var_5_1 then
-		return var_5_2
+	if ok then
+		return dst_tbl
 	end
 
-	local var_5_3, var_5_4 = var_0_6(arg_5_0, arg_5_1)
+	local ok2, src_tbl = _transfer(src_define_tbl, member_name)
 
-	var_0_1(var_5_3, var_0_2("can not found define.%s", arg_5_1))
+	assert(ok2, sf("can not found define.%s", member_name))
 
-	local var_5_5 = var_0_4(var_5_0, nil, arg_5_0)
-	local var_5_6 = {}
+	dst_tbl = _make_tables(rname, nil, src_define_tbl)
 
-	for iter_5_0, iter_5_1 in pairs(var_5_4) do
-		var_5_5[iter_5_1] = iter_5_0
+	local check_same_value = {}
 
-		var_0_1(not var_5_6[iter_5_1], var_0_2("%s: can not set same value when use RD, conflict between %s and %s", var_5_0, iter_5_1, iter_5_0))
+	for k, v in pairs(src_tbl) do
+		dst_tbl[v] = k
 
-		var_5_6[iter_5_1] = iter_5_0
+		assert(not check_same_value[v], sf("%s: can not set same value when use RD, conflict between %s and %s", rname, v, k))
+
+		check_same_value[v] = k
 	end
 
-	return var_5_5
+	return dst_tbl
 end
+
+return RD

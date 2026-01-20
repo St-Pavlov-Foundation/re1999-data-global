@@ -1,55 +1,57 @@
-﻿module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologySuccessView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/astrology/view/VersionActivity1_3AstrologySuccessView.lua
 
-local var_0_0 = class("VersionActivity1_3AstrologySuccessView", BaseView)
+module("modules.logic.versionactivity1_3.astrology.view.VersionActivity1_3AstrologySuccessView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goSuccess = gohelper.findChild(arg_1_0.viewGO, "#go_Success")
-	arg_1_0._simageSuccessBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Success/#simage_SuccessBG")
-	arg_1_0._simageSuccessCircleDec = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Success/#simage_SuccessCircleDec")
-	arg_1_0._simageSuccessTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Success/#simage_SuccessTitle")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local VersionActivity1_3AstrologySuccessView = class("VersionActivity1_3AstrologySuccessView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_3AstrologySuccessView:onInitView()
+	self._goSuccess = gohelper.findChild(self.viewGO, "#go_Success")
+	self._simageSuccessBG = gohelper.findChildSingleImage(self.viewGO, "#go_Success/#simage_SuccessBG")
+	self._simageSuccessCircleDec = gohelper.findChildSingleImage(self.viewGO, "#go_Success/#simage_SuccessCircleDec")
+	self._simageSuccessTitle = gohelper.findChildSingleImage(self.viewGO, "#go_Success/#simage_SuccessTitle")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function VersionActivity1_3AstrologySuccessView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function VersionActivity1_3AstrologySuccessView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity1_3AstrologySuccessView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simageSuccessBG:LoadImage(ResUrl.getV1a3AstrologySinglebg("v1a3_astrology_successtitlebg"))
-	TaskDispatcher.cancelTask(arg_5_0._onAminDone, arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0._onAminDone, arg_5_0, 3.5)
+function VersionActivity1_3AstrologySuccessView:_editableInitView()
+	self._simageSuccessBG:LoadImage(ResUrl.getV1a3AstrologySinglebg("v1a3_astrology_successtitlebg"))
+	TaskDispatcher.cancelTask(self._onAminDone, self)
+	TaskDispatcher.runDelay(self._onAminDone, self, 3.5)
 end
 
-function var_0_0._onAminDone(arg_6_0)
-	arg_6_0:closeThis()
+function VersionActivity1_3AstrologySuccessView:_onAminDone()
+	self:closeThis()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function VersionActivity1_3AstrologySuccessView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
+function VersionActivity1_3AstrologySuccessView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_3.play_ui_molu_astrology_success)
 end
 
-function var_0_0.onClose(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._onAminDone, arg_9_0)
+function VersionActivity1_3AstrologySuccessView:onClose()
+	TaskDispatcher.cancelTask(self._onAminDone, self)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageSuccessBG:UnLoadImage()
+function VersionActivity1_3AstrologySuccessView:onDestroyView()
+	self._simageSuccessBG:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_3AstrologySuccessView

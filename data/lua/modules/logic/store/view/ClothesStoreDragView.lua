@@ -1,114 +1,118 @@
-﻿module("modules.logic.store.view.ClothesStoreDragView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/ClothesStoreDragView.lua
 
-local var_0_0 = class("ClothesStoreDragView", BaseView)
+module("modules.logic.store.view.ClothesStoreDragView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goskincontainer = gohelper.findChild(arg_1_0.viewGO, "#go_has/character/bg/characterSpine/#go_skincontainer")
-	arg_1_0._skincontainerCanvasGroup = gohelper.findChildComponent(arg_1_0.viewGO, "#go_has/character/bg/characterSpine/#go_skincontainer", typeof(UnityEngine.CanvasGroup))
+local ClothesStoreDragView = class("ClothesStoreDragView", BaseView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "#go_has/drag")
+function ClothesStoreDragView:onInitView()
+	self._goskincontainer = gohelper.findChild(self.viewGO, "#go_has/character/bg/characterSpine/#go_skincontainer")
+	self._skincontainerCanvasGroup = gohelper.findChildComponent(self.viewGO, "#go_has/character/bg/characterSpine/#go_skincontainer", typeof(UnityEngine.CanvasGroup))
 
-	gohelper.setActive(var_1_0, true)
+	local goDrag = gohelper.findChild(self.viewGO, "#go_has/drag")
 
-	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(var_1_0)
+	gohelper.setActive(goDrag, true)
 
-	arg_1_0._drag:AddDragBeginListener(arg_1_0._onViewDragBegin, arg_1_0)
-	arg_1_0._drag:AddDragListener(arg_1_0._onViewDrag, arg_1_0)
-	arg_1_0._drag:AddDragEndListener(arg_1_0._onViewDragEnd, arg_1_0)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(goDrag)
 
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._drag:AddDragBeginListener(self._onViewDragBegin, self)
+	self._drag:AddDragListener(self._onViewDrag, self)
+	self._drag:AddDragEndListener(self._onViewDragEnd, self)
+
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ClothesStoreDragView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ClothesStoreDragView:removeEvents()
 	return
 end
 
-function var_0_0._onViewDragBegin(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._startPos = arg_4_2.position.x
+function ClothesStoreDragView:_onViewDragBegin(param, pointerEventData)
+	self._startPos = pointerEventData.position.x
 
-	arg_4_0._animator:Play("switchout", 0, 0)
-	arg_4_0:setShaderKeyWord(true)
+	self._animator:Play("switchout", 0, 0)
+	self:setShaderKeyWord(true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_pause)
 end
 
-function var_0_0._onViewDrag(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_2.position.x
-	local var_5_1 = 1
-	local var_5_2 = recthelper.getAnchorX(arg_5_0._goskincontainer.transform) + arg_5_2.delta.x * var_5_1
+function ClothesStoreDragView:_onViewDrag(param, pointerEventData)
+	local curPos = pointerEventData.position.x
+	local moveSmooth = 1
+	local curSpineRootPosX = recthelper.getAnchorX(self._goskincontainer.transform)
 
-	recthelper.setAnchorX(arg_5_0._goskincontainer.transform, var_5_2)
+	curSpineRootPosX = curSpineRootPosX + pointerEventData.delta.x * moveSmooth
 
-	local var_5_3 = 0.007
+	recthelper.setAnchorX(self._goskincontainer.transform, curSpineRootPosX)
 
-	arg_5_0._skincontainerCanvasGroup.alpha = 1 - Mathf.Abs(arg_5_0._startPos - var_5_0) * var_5_3
+	local alphaSmooth = 0.007
+
+	self._skincontainerCanvasGroup.alpha = 1 - Mathf.Abs(self._startPos - curPos) * alphaSmooth
 end
 
-function var_0_0._onViewDragEnd(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = StoreClothesGoodsItemListModel.instance:getSelectIndex()
-	local var_6_1 = StoreClothesGoodsItemListModel.instance:getCount()
-	local var_6_2 = arg_6_2.position.x
-	local var_6_3
+function ClothesStoreDragView:_onViewDragEnd(param, pointerEventData)
+	local curSkinIndex = StoreClothesGoodsItemListModel.instance:getSelectIndex()
+	local skinCount = StoreClothesGoodsItemListModel.instance:getCount()
+	local endPos = pointerEventData.position.x
+	local newSelectSkinIndex
 
-	if var_6_2 > arg_6_0._startPos and var_6_2 - arg_6_0._startPos >= 100 then
-		var_6_3 = var_6_0 - 1
+	if endPos > self._startPos and endPos - self._startPos >= 100 then
+		newSelectSkinIndex = curSkinIndex - 1
 
-		if var_6_3 == 0 then
-			var_6_3 = var_6_1
+		if newSelectSkinIndex == 0 then
+			newSelectSkinIndex = skinCount
 		end
-	elseif var_6_2 < arg_6_0._startPos and arg_6_0._startPos - var_6_2 >= 100 then
-		var_6_3 = var_6_0 + 1
+	elseif endPos < self._startPos and self._startPos - endPos >= 100 then
+		newSelectSkinIndex = curSkinIndex + 1
 
-		if var_6_1 < var_6_3 then
-			var_6_3 = 1
+		if skinCount < newSelectSkinIndex then
+			newSelectSkinIndex = 1
 		end
 	end
 
-	arg_6_0._skincontainerCanvasGroup.alpha = 1
+	self._skincontainerCanvasGroup.alpha = 1
 
-	arg_6_0:setShaderKeyWord(true)
-	TaskDispatcher.cancelTask(arg_6_0.disAbleShader, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0.disAbleShader, arg_6_0, 0.33)
+	self:setShaderKeyWord(true)
+	TaskDispatcher.cancelTask(self.disAbleShader, self)
+	TaskDispatcher.runDelay(self.disAbleShader, self, 0.33)
 
-	if var_6_3 then
-		StoreClothesGoodsItemListModel.instance:setSelectIndex(var_6_3, true)
+	if newSelectSkinIndex then
+		StoreClothesGoodsItemListModel.instance:setSelectIndex(newSelectSkinIndex, true)
 	else
-		recthelper.setAnchor(arg_6_0._goskincontainer.transform, 0, 0)
-		arg_6_0._animator:Play("switchin", 0, 0)
+		recthelper.setAnchor(self._goskincontainer.transform, 0, 0)
+		self._animator:Play("switchin", 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
+function ClothesStoreDragView:onOpen()
 	return
 end
 
-function var_0_0.setShaderKeyWord(arg_8_0, arg_8_1)
-	if arg_8_1 then
+function ClothesStoreDragView:setShaderKeyWord(enable)
+	if enable then
 		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 	else
 		UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 	end
 end
 
-function var_0_0.disAbleShader(arg_9_0)
-	arg_9_0:setShaderKeyWord(false)
+function ClothesStoreDragView:disAbleShader()
+	self:setShaderKeyWord(false)
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.disAbleShader, arg_10_0)
+function ClothesStoreDragView:onClose()
+	TaskDispatcher.cancelTask(self.disAbleShader, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.disAbleShader, arg_11_0)
+function ClothesStoreDragView:onDestroyView()
+	TaskDispatcher.cancelTask(self.disAbleShader, self)
 
-	if arg_11_0._drag then
-		arg_11_0._drag:RemoveDragBeginListener()
-		arg_11_0._drag:RemoveDragEndListener()
-		arg_11_0._drag:RemoveDragListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
+		self._drag:RemoveDragListener()
 	end
 end
 
-return var_0_0
+return ClothesStoreDragView

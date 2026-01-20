@@ -1,9 +1,11 @@
-﻿module("modules.common.preload.ConstAbCache", package.seeall)
+﻿-- chunkname: @modules/common/preload/ConstAbCache.lua
 
-local var_0_0 = class("ConstAbCache")
+module("modules.common.preload.ConstAbCache", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._pathTab = {
+local ConstAbCache = class("ConstAbCache")
+
+function ConstAbCache:ctor()
+	self._pathTab = {
 		"ui/viewres/rpcblock/rpcblock.prefab",
 		PostProcessingMgr.MainHighProfilePath,
 		PostProcessingMgr.MainMiddleProfilePath,
@@ -16,36 +18,36 @@ function var_0_0.ctor(arg_1_0)
 		RoomResourceEnum.PPVolume.Low,
 		PostProcessingMgr.CaptureResPath
 	}
-	arg_1_0._pathResTab = {}
+	self._pathResTab = {}
 end
 
-function var_0_0.getRes(arg_2_0, arg_2_1)
-	return arg_2_0._pathResTab[arg_2_1]
+function ConstAbCache:getRes(path)
+	return self._pathResTab[path]
 end
 
-function var_0_0.startLoad(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._finishCb = arg_3_1
-	arg_3_0._finishCbObj = arg_3_2
-	arg_3_0._needCount = #arg_3_0._pathTab
+function ConstAbCache:startLoad(cb, cbObj)
+	self._finishCb = cb
+	self._finishCbObj = cbObj
+	self._needCount = #self._pathTab
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._pathTab) do
-		loadAbAsset(iter_3_1, false, arg_3_0._onLoadOne, arg_3_0)
+	for _, path in ipairs(self._pathTab) do
+		loadAbAsset(path, false, self._onLoadOne, self)
 	end
 end
 
-function var_0_0._onLoadOne(arg_4_0, arg_4_1)
-	if arg_4_1.IsLoadSuccess then
-		arg_4_1:Retain()
+function ConstAbCache:_onLoadOne(assetItem)
+	if assetItem.IsLoadSuccess then
+		assetItem:Retain()
 
-		arg_4_0._pathResTab[arg_4_1.ResPath] = arg_4_1:GetResource()
-		arg_4_0._needCount = arg_4_0._needCount - 1
+		self._pathResTab[assetItem.ResPath] = assetItem:GetResource()
+		self._needCount = self._needCount - 1
 
-		if arg_4_0._needCount == 0 then
-			if arg_4_0._finishCb then
-				arg_4_0._finishCb(arg_4_0._finishCbObj)
+		if self._needCount == 0 then
+			if self._finishCb then
+				self._finishCb(self._finishCbObj)
 
-				arg_4_0._finishCb = nil
-				arg_4_0._finishCbObj = nil
+				self._finishCb = nil
+				self._finishCbObj = nil
 			end
 
 			logNormal("ConstAbCache 预加载ab资源完成了!")
@@ -54,9 +56,9 @@ function var_0_0._onLoadOne(arg_4_0, arg_4_1)
 		return
 	end
 
-	logError("ConstAbCache 预加载ab资源失败，path = " .. arg_4_1.ResPath)
+	logError("ConstAbCache 预加载ab资源失败，path = " .. assetItem.ResPath)
 end
 
-var_0_0.instance = var_0_0.New()
+ConstAbCache.instance = ConstAbCache.New()
 
-return var_0_0
+return ConstAbCache

@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.controller.GaoSiNiaoEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/controller/GaoSiNiaoEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity3_1.gaosiniao.controller.GaoSiNiaoEvent", package.seeall)
 
-var_0_0.onReceiveGetAct210InfoReply = var_0_1()
-var_0_0.onReceiveAct210SaveEpisodeProgressReply = var_0_1()
-var_0_0.onReceiveAct210FinishEpisodeReply = var_0_1()
-var_0_0.onReceiveAct210ChooseEpisodeBranchReply = var_0_1()
-var_0_0.onReceiveAct210EpisodePush = var_0_1()
+local GaoSiNiaoEvent = _M
+local make = GameUtil.getUniqueTb()
 
-return var_0_0
+GaoSiNiaoEvent.onReceiveGetAct210InfoReply = make()
+GaoSiNiaoEvent.onReceiveAct210SaveEpisodeProgressReply = make()
+GaoSiNiaoEvent.onReceiveAct210FinishEpisodeReply = make()
+GaoSiNiaoEvent.onReceiveAct210ChooseEpisodeBranchReply = make()
+GaoSiNiaoEvent.onReceiveAct210EpisodePush = make()
+
+return GaoSiNiaoEvent

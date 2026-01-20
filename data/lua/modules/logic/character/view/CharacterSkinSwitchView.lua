@@ -1,711 +1,720 @@
-﻿module("modules.logic.character.view.CharacterSkinSwitchView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinSwitchView.lua
 
-local var_0_0 = class("CharacterSkinSwitchView", BaseView)
+module("modules.logic.character.view.CharacterSkinSwitchView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._gozs = gohelper.findChild(arg_1_0.viewGO, "#go_zs")
-	arg_1_0._gosmallspine = gohelper.findChild(arg_1_0.viewGO, "smalldynamiccontainer/#go_smallspine")
-	arg_1_0._goskincontainer = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer")
-	arg_1_0._simageskin = gohelper.findChildSingleImage(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
-	arg_1_0._simagel2d = gohelper.findChildSingleImage(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#simage_l2d")
-	arg_1_0._gobigspine = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
-	arg_1_0._gospinecontainer = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer")
-	arg_1_0._simagebgmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgmask")
-	arg_1_0._gogetIcno = gohelper.findChild(arg_1_0.viewGO, "desc/#go_getIcno")
-	arg_1_0._gonotgetIcno = gohelper.findChild(arg_1_0.viewGO, "desc/#go_notgetIcno")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "desc/#simage_signature")
-	arg_1_0._simagesignatureicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "desc/#simage_signatureicon")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_index")
-	arg_1_0._txtcharacterName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_characterName")
-	arg_1_0._txtskinName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName")
-	arg_1_0._txtskinNameEn = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc")
-	arg_1_0._btnshowDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#txt_characterName/#btn_showDetail")
-	arg_1_0._simageskinSwitchBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/#simage_skinSwitchBg")
-	arg_1_0._scrollskinSwitch = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content")
-	arg_1_0._gopreEmpty = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_preEmpty")
-	arg_1_0._goskinItem = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_skinItem")
-	arg_1_0._btndress = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_dress")
-	arg_1_0._btnnotget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_notget")
-	arg_1_0._btnrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_rank")
-	arg_1_0._btnskinstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/skinSwitch/dressState/#btn_skinstore")
-	arg_1_0._godressing = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/dressState/#go_dressing")
-	arg_1_0._goactivityget = gohelper.findChild(arg_1_0.viewGO, "container/skinSwitch/dressState/#go_activityget")
-	arg_1_0._gobtntopleft = gohelper.findChild(arg_1_0.viewGO, "#go_btntopleft")
-	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btntag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_tag")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_switch")
-	arg_1_0._txtswitch = gohelper.findChildText(arg_1_0.viewGO, "desc/#btn_switch/#txt_switch")
-	arg_1_0._go2d = gohelper.findChild(arg_1_0.viewGO, "desc/#btn_switch/#go_2d")
-	arg_1_0._gol2d = gohelper.findChild(arg_1_0.viewGO, "desc/#btn_switch/#go_l2d")
+local CharacterSkinSwitchView = class("CharacterSkinSwitchView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkinSwitchView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._gozs = gohelper.findChild(self.viewGO, "#go_zs")
+	self._gosmallspine = gohelper.findChild(self.viewGO, "smalldynamiccontainer/#go_smallspine")
+	self._goskincontainer = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer")
+	self._simageskin = gohelper.findChildSingleImage(self.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
+	self._simagel2d = gohelper.findChildSingleImage(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#simage_l2d")
+	self._gobigspine = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
+	self._gospinecontainer = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer")
+	self._simagebgmask = gohelper.findChildSingleImage(self.viewGO, "#simage_bgmask")
+	self._gogetIcno = gohelper.findChild(self.viewGO, "desc/#go_getIcno")
+	self._gonotgetIcno = gohelper.findChild(self.viewGO, "desc/#go_notgetIcno")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "desc/#simage_signature")
+	self._simagesignatureicon = gohelper.findChildSingleImage(self.viewGO, "desc/#simage_signatureicon")
+	self._txtindex = gohelper.findChildText(self.viewGO, "desc/#txt_index")
+	self._txtcharacterName = gohelper.findChildText(self.viewGO, "desc/#txt_characterName")
+	self._txtskinName = gohelper.findChildText(self.viewGO, "desc/#txt_skinName")
+	self._txtskinNameEn = gohelper.findChildText(self.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "desc/#txt_desc")
+	self._btnshowDetail = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#txt_characterName/#btn_showDetail")
+	self._simageskinSwitchBg = gohelper.findChildSingleImage(self.viewGO, "container/#simage_skinSwitchBg")
+	self._scrollskinSwitch = gohelper.findChildScrollRect(self.viewGO, "container/skinSwitch/#scroll_skinSwitch")
+	self._goContent = gohelper.findChild(self.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content")
+	self._gopreEmpty = gohelper.findChild(self.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_preEmpty")
+	self._goskinItem = gohelper.findChild(self.viewGO, "container/skinSwitch/#scroll_skinSwitch/Viewport/#go_Content/#go_skinItem")
+	self._btndress = gohelper.findChildButtonWithAudio(self.viewGO, "container/skinSwitch/dressState/#btn_dress")
+	self._btnnotget = gohelper.findChildButtonWithAudio(self.viewGO, "container/skinSwitch/dressState/#btn_notget")
+	self._btnrank = gohelper.findChildButtonWithAudio(self.viewGO, "container/skinSwitch/dressState/#btn_rank")
+	self._btnskinstore = gohelper.findChildButtonWithAudio(self.viewGO, "container/skinSwitch/dressState/#btn_skinstore")
+	self._godressing = gohelper.findChild(self.viewGO, "container/skinSwitch/dressState/#go_dressing")
+	self._goactivityget = gohelper.findChild(self.viewGO, "container/skinSwitch/dressState/#go_activityget")
+	self._gobtntopleft = gohelper.findChild(self.viewGO, "#go_btntopleft")
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._btntag = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_tag")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_switch")
+	self._txtswitch = gohelper.findChildText(self.viewGO, "desc/#btn_switch/#txt_switch")
+	self._go2d = gohelper.findChild(self.viewGO, "desc/#btn_switch/#go_2d")
+	self._gol2d = gohelper.findChild(self.viewGO, "desc/#btn_switch/#go_l2d")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnshowDetail:AddClickListener(arg_2_0._btnshowDetailOnClick, arg_2_0)
-	arg_2_0._btndress:AddClickListener(arg_2_0._btndressOnClick, arg_2_0)
-	arg_2_0._btnnotget:AddClickListener(arg_2_0._btnnotgetOnClick, arg_2_0)
-	arg_2_0._btnrank:AddClickListener(arg_2_0._btnrankOnClick, arg_2_0)
-	arg_2_0._btnskinstore:AddClickListener(arg_2_0._btnskinstoreOnClick, arg_2_0)
-	arg_2_0._btntag:AddClickListener(arg_2_0._btntagOnClick, arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
+function CharacterSkinSwitchView:addEvents()
+	self._btnshowDetail:AddClickListener(self._btnshowDetailOnClick, self)
+	self._btndress:AddClickListener(self._btndressOnClick, self)
+	self._btnnotget:AddClickListener(self._btnnotgetOnClick, self)
+	self._btnrank:AddClickListener(self._btnrankOnClick, self)
+	self._btnskinstore:AddClickListener(self._btnskinstoreOnClick, self)
+	self._btntag:AddClickListener(self._btntagOnClick, self)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnshowDetail:RemoveClickListener()
-	arg_3_0._btndress:RemoveClickListener()
-	arg_3_0._btnnotget:RemoveClickListener()
-	arg_3_0._btnrank:RemoveClickListener()
-	arg_3_0._btnskinstore:RemoveClickListener()
-	arg_3_0._btntag:RemoveClickListener()
-	arg_3_0._btnswitch:RemoveClickListener()
+function CharacterSkinSwitchView:removeEvents()
+	self._btnshowDetail:RemoveClickListener()
+	self._btndress:RemoveClickListener()
+	self._btnnotget:RemoveClickListener()
+	self._btnrank:RemoveClickListener()
+	self._btnskinstore:RemoveClickListener()
+	self._btntag:RemoveClickListener()
+	self._btnswitch:RemoveClickListener()
 end
 
-local var_0_1 = ZProj.TweenHelper
+local csTweenHelper = ZProj.TweenHelper
 
-var_0_0.SkinStoreId = 500
-var_0_0.TweenTime = 0.2
-var_0_0.NormalAnimationTimeDuration = 0.33
+CharacterSkinSwitchView.SkinStoreId = 500
+CharacterSkinSwitchView.TweenTime = 0.2
+CharacterSkinSwitchView.NormalAnimationTimeDuration = 0.33
 
-function var_0_0._btnswitchOnClick(arg_4_0)
+function CharacterSkinSwitchView:_btnswitchOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_switch_skin_l2d)
 
-	arg_4_0._showLive2d = arg_4_0._showLive2d == false
+	self._showLive2d = self._showLive2d == false
 
-	gohelper.setActive(arg_4_0._go2d, arg_4_0._showLive2d)
-	gohelper.setActive(arg_4_0._gol2d, arg_4_0._showLive2d == false)
+	gohelper.setActive(self._go2d, self._showLive2d)
+	gohelper.setActive(self._gol2d, self._showLive2d == false)
 
-	arg_4_0._txtswitch.text = arg_4_0._showLive2d and luaLang("storeskinpreviewview_btnswitch") or "L2D"
+	self._txtswitch.text = self._showLive2d and luaLang("storeskinpreviewview_btnswitch") or "L2D"
 
-	arg_4_0._viewAnim:Play("switch", 0, 0)
-	TaskDispatcher.runDelay(arg_4_0._refreshStaticVertical, arg_4_0, 0.16)
+	self._viewAnim:Play("switch", 0, 0)
+	TaskDispatcher.runDelay(self._refreshStaticVertical, self, 0.16)
 end
 
-function var_0_0._btnshowDetailOnClick(arg_5_0)
-	CharacterController.instance:openCharacterSkinFullScreenView(arg_5_0.skinCo, false, arg_5_0._showLive2d and CharacterEnum.ShowSkinEnum.Dynamic or CharacterEnum.ShowSkinEnum.Static)
+function CharacterSkinSwitchView:_btnshowDetailOnClick()
+	CharacterController.instance:openCharacterSkinFullScreenView(self.skinCo, false, self._showLive2d and CharacterEnum.ShowSkinEnum.Dynamic or CharacterEnum.ShowSkinEnum.Static)
 end
 
-function var_0_0._btndressOnClick(arg_6_0)
-	HeroRpc.instance:sendUseSkinRequest(arg_6_0.viewParam.heroId, arg_6_0._itemObjects[arg_6_0._currentSelectSkinIndex].skinCo.id)
+function CharacterSkinSwitchView:_btndressOnClick()
+	HeroRpc.instance:sendUseSkinRequest(self.viewParam.heroId, self._itemObjects[self._currentSelectSkinIndex].skinCo.id)
 end
 
-function var_0_0._btnnotgetOnClick(arg_7_0)
-	local var_7_0 = arg_7_0._itemObjects[arg_7_0._currentSelectSkinIndex].skinCo
+function CharacterSkinSwitchView:_btnnotgetOnClick()
+	local skinCO = self._itemObjects[self._currentSelectSkinIndex].skinCo
 
-	if var_7_0 and var_7_0.jump and var_7_0.jump > 0 then
-		GameFacade.jump(var_7_0.jump)
+	if skinCO and skinCO.jump and skinCO.jump > 0 then
+		GameFacade.jump(skinCO.jump)
 	end
 end
 
-function var_0_0._btnrankOnClick(arg_8_0)
-	local var_8_0 = HeroModel.instance:getByHeroId(arg_8_0.skinCo.characterId)
+function CharacterSkinSwitchView:_btnrankOnClick()
+	local heroMo = HeroModel.instance:getByHeroId(self.skinCo.characterId)
 
-	CharacterController.instance:openCharacterRankUpView(var_8_0)
+	CharacterController.instance:openCharacterRankUpView(heroMo)
 end
 
-function var_0_0._btntagOnClick(arg_9_0)
+function CharacterSkinSwitchView:_btntagOnClick()
 	ViewMgr.instance:openView(ViewName.CharacterSkinTagView, {
-		skinCo = arg_9_0.skinCo
+		skinCo = self.skinCo
 	})
 end
 
-function var_0_0._btnskinstoreOnClick(arg_10_0)
-	if not StoreModel.instance:isTabOpen(var_0_0.SkinStoreId) then
+function CharacterSkinSwitchView:_btnskinstoreOnClick()
+	if not StoreModel.instance:isTabOpen(CharacterSkinSwitchView.SkinStoreId) then
 		return
 	end
 
-	StoreController.instance:openStoreView(var_0_0.SkinStoreId)
+	StoreController.instance:openStoreView(CharacterSkinSwitchView.SkinStoreId)
 end
 
-function var_0_0._onOpenView(arg_11_0, arg_11_1)
-	if arg_11_0._showLive2d and arg_11_1 == ViewName.CharacterSkinFullScreenView then
-		gohelper.setActive(arg_11_0._gospinecontainer, false)
+function CharacterSkinSwitchView:_onOpenView(viewName)
+	if self._showLive2d and viewName == ViewName.CharacterSkinFullScreenView then
+		gohelper.setActive(self._gospinecontainer, false)
 	end
 end
 
-function var_0_0._onCloseView(arg_12_0, arg_12_1)
-	if arg_12_0._showLive2d and arg_12_1 == ViewName.CharacterSkinFullScreenView then
-		gohelper.setActive(arg_12_0._gospinecontainer, true)
+function CharacterSkinSwitchView:_onCloseView(viewName)
+	if self._showLive2d and viewName == ViewName.CharacterSkinFullScreenView then
+		gohelper.setActive(self._gospinecontainer, true)
 	end
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	arg_13_0._showLive2d = true
+function CharacterSkinSwitchView:_editableInitView()
+	self._showLive2d = true
 
-	gohelper.setActive(arg_13_0._go2d, arg_13_0._showLive2d)
-	gohelper.setActive(arg_13_0._gol2d, arg_13_0._showLive2d == false)
+	gohelper.setActive(self._go2d, self._showLive2d)
+	gohelper.setActive(self._gol2d, self._showLive2d == false)
 
-	arg_13_0._txtswitch.text = arg_13_0._showLive2d and "L2D" or luaLang("storeskinpreviewview_btnswitch")
-	arg_13_0.goDesc = gohelper.findChild(arg_13_0.viewGO, "desc")
-	arg_13_0.goDynamicContainer = gohelper.findChild(arg_13_0.viewGO, "smalldynamiccontainer")
-	arg_13_0._goSpine = GuiSpine.Create(arg_13_0._gosmallspine, false)
-	arg_13_0._itemObjects = {}
-	arg_13_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_13_0._scrollskinSwitch.gameObject)
+	self._txtswitch.text = self._showLive2d and "L2D" or luaLang("storeskinpreviewview_btnswitch")
+	self.goDesc = gohelper.findChild(self.viewGO, "desc")
+	self.goDynamicContainer = gohelper.findChild(self.viewGO, "smalldynamiccontainer")
+	self._goSpine = GuiSpine.Create(self._gosmallspine, false)
+	self._itemObjects = {}
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._scrollskinSwitch.gameObject)
 
-	arg_13_0._drag:AddDragBeginListener(arg_13_0._onDragBegin, arg_13_0)
-	arg_13_0._drag:AddDragEndListener(arg_13_0._onDragEnd, arg_13_0)
-	arg_13_0._drag:AddDragListener(arg_13_0._onDrag, arg_13_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
+	self._drag:AddDragListener(self._onDrag, self)
 
-	arg_13_0._preDragAnchorPositionX = 0
-	arg_13_0._itemWidth = recthelper.getWidth(arg_13_0._goskinItem.transform)
-	arg_13_0._scrollOneItemTime = 0.5
-	arg_13_0._scrollRate = arg_13_0._itemWidth / arg_13_0._scrollOneItemTime
-	arg_13_0._tweeningId = 0
-	arg_13_0._currentSelectSkinIndex = 0
-	arg_13_0._preSelectSkinIndex = 0
-	arg_13_0._hadSkinDict = {}
-	arg_13_0._minAnchorPositionX = 0
-	arg_13_0._minChangeAnchorPositionX = 100
+	self._preDragAnchorPositionX = 0
+	self._itemWidth = recthelper.getWidth(self._goskinItem.transform)
+	self._scrollOneItemTime = 0.5
+	self._scrollRate = self._itemWidth / self._scrollOneItemTime
+	self._tweeningId = 0
+	self._currentSelectSkinIndex = 0
+	self._preSelectSkinIndex = 0
+	self._hadSkinDict = {}
+	self._minAnchorPositionX = 0
+	self._minChangeAnchorPositionX = 100
 
-	arg_13_0._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
-	arg_13_0._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
-	arg_13_0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
+	self._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
+	self._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
+	self._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
 
-	arg_13_0._skincontainerCanvasGroup = arg_13_0._goskincontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_13_0.halfAnimationTime = var_0_0.TweenTime / 2
+	self._skincontainerCanvasGroup = self._goskincontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self.halfAnimationTime = CharacterSkinSwitchView.TweenTime / 2
 
-	arg_13_0:_clearBtnStatus()
-	arg_13_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_13_0._onCloseView, arg_13_0)
-	arg_13_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_13_0._onOpenView, arg_13_0)
+	self:_clearBtnStatus()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
-	arg_14_0._hadSkinDict = {}
+function CharacterSkinSwitchView:onUpdateParam()
+	self._hadSkinDict = {}
 
-	arg_14_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0._simagesignature:LoadImage(ResUrl.getSignature(arg_15_0.viewParam.config.signature, "characterget"))
-	arg_15_0:refreshView()
-	arg_15_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_15_0._successDressUpSkin, arg_15_0)
-	arg_15_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_15_0.refreshView, arg_15_0)
+function CharacterSkinSwitchView:onOpen()
+	self._simagesignature:LoadImage(ResUrl.getSignature(self.viewParam.config.signature, "characterget"))
+	self:refreshView()
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._successDressUpSkin, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self.refreshView, self)
 end
 
-function var_0_0.onOpenFinish(arg_16_0)
-	arg_16_0._viewAnim.enabled = true
+function CharacterSkinSwitchView:onOpenFinish()
+	self._viewAnim.enabled = true
 end
 
-function var_0_0.refreshView(arg_17_0)
-	arg_17_0.skinCo = SkinConfig.instance:getSkinCo(arg_17_0.viewParam.skin)
-	arg_17_0._hadSkinDict[arg_17_0.viewParam.config.skinId] = true
+function CharacterSkinSwitchView:refreshView()
+	self.skinCo = SkinConfig.instance:getSkinCo(self.viewParam.skin)
+	self._hadSkinDict[self.viewParam.config.skinId] = true
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.viewParam.skinInfoList) do
-		arg_17_0._hadSkinDict[iter_17_1.skin] = true
+	for i, skin in ipairs(self.viewParam.skinInfoList) do
+		self._hadSkinDict[skin.skin] = true
 	end
 
-	arg_17_0._simagesignature:LoadImage(ResUrl.getSignature(arg_17_0.viewParam.config.signature, "characterget"))
-	arg_17_0._simagesignatureicon:LoadImage(ResUrl.getSignature("3011_2", "characterget"))
-	gohelper.setActive(arg_17_0._simagesignatureicon.gameObject, arg_17_0.viewParam.config.signature == "3011")
-	arg_17_0:_refreshSkinList()
-	arg_17_0:_reallyRefreshView()
+	self._simagesignature:LoadImage(ResUrl.getSignature(self.viewParam.config.signature, "characterget"))
+	self._simagesignatureicon:LoadImage(ResUrl.getSignature("3011_2", "characterget"))
+	gohelper.setActive(self._simagesignatureicon.gameObject, self.viewParam.config.signature == "3011")
+	self:_refreshSkinList()
+	self:_reallyRefreshView()
 end
 
-function var_0_0._reallyRefreshView(arg_18_0)
-	arg_18_0:_resetRes()
-	arg_18_0:_refreshStaticVertical()
-	arg_18_0:_refreshSkinInfo()
-	arg_18_0:_refreshSpine()
-	arg_18_0:_refreshDressBtnStatus()
-	CharacterController.instance:dispatchEvent(CharacterEvent.OnSkinSwitchSpine, arg_18_0.skinCo.id)
+function CharacterSkinSwitchView:_reallyRefreshView()
+	self:_resetRes()
+	self:_refreshStaticVertical()
+	self:_refreshSkinInfo()
+	self:_refreshSpine()
+	self:_refreshDressBtnStatus()
+	CharacterController.instance:dispatchEvent(CharacterEvent.OnSkinSwitchSpine, self.skinCo.id)
 end
 
-function var_0_0._resetRes(arg_19_0)
-	gohelper.setActive(arg_19_0._btnswitch, arg_19_0.skinCo.showSwitchBtn == 1)
+function CharacterSkinSwitchView:_resetRes()
+	gohelper.setActive(self._btnswitch, self.skinCo.showSwitchBtn == 1)
 
-	arg_19_0._showLive2d = false
+	self._showLive2d = false
 
-	gohelper.setActive(arg_19_0._go2d, arg_19_0._showLive2d)
-	gohelper.setActive(arg_19_0._gol2d, arg_19_0._showLive2d == false)
+	gohelper.setActive(self._go2d, self._showLive2d)
+	gohelper.setActive(self._gol2d, self._showLive2d == false)
 
-	if arg_19_0._uiSpine then
-		arg_19_0._uiSpine:onDestroy()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_19_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 
-	arg_19_0._simageskin:UnLoadImage()
-	arg_19_0._simagel2d:UnLoadImage()
+	self._simageskin:UnLoadImage()
+	self._simagel2d:UnLoadImage()
 end
 
-function var_0_0._refreshStaticVertical(arg_20_0)
-	gohelper.setActive(arg_20_0._gospinecontainer, arg_20_0._showLive2d)
-	gohelper.setActive(arg_20_0._simageskin.gameObject, arg_20_0._showLive2d == false)
+function CharacterSkinSwitchView:_refreshStaticVertical()
+	gohelper.setActive(self._gospinecontainer, self._showLive2d)
+	gohelper.setActive(self._simageskin.gameObject, self._showLive2d == false)
 
-	if arg_20_0._showLive2d then
-		if arg_20_0._uiSpine == nil then
-			arg_20_0._uiSpine = GuiModelAgent.Create(arg_20_0._gobigspine, true)
+	if self._showLive2d then
+		if self._uiSpine == nil then
+			self._uiSpine = GuiModelAgent.Create(self._gobigspine, true)
 
-			arg_20_0._uiSpine:setResPath(arg_20_0.skinCo, arg_20_0._onUISpineLoaded, arg_20_0)
+			self._uiSpine:setResPath(self.skinCo, self._onUISpineLoaded, self)
 		else
-			arg_20_0:_onUISpineLoaded()
+			self:_onUISpineLoaded()
 		end
 
-		arg_20_0._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
+		self._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
 	else
-		arg_20_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_20_0.skinCo.id), arg_20_0._loadedImage, arg_20_0)
+		self._simageskin:LoadImage(ResUrl.getHeadIconImg(self.skinCo.id), self._loadedImage, self)
 
-		arg_20_0._txtswitch.text = "L2D"
+		self._txtswitch.text = "L2D"
 	end
 
-	local var_20_0 = arg_20_0.skinCo.live2dbg
+	local live2dbg = self.skinCo.live2dbg
 
-	if not string.nilorempty(var_20_0) then
-		gohelper.setActive(arg_20_0._simagel2d.gameObject, arg_20_0._showLive2d)
-		arg_20_0._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(var_20_0))
-		gohelper.setActive(arg_20_0._gozs, arg_20_0._showLive2d)
+	if not string.nilorempty(live2dbg) then
+		gohelper.setActive(self._simagel2d.gameObject, self._showLive2d)
+		self._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(live2dbg))
+		gohelper.setActive(self._gozs, self._showLive2d)
 	else
-		gohelper.setActive(arg_20_0._simagel2d.gameObject, false)
-		gohelper.setActive(arg_20_0._gozs, false)
+		gohelper.setActive(self._simagel2d.gameObject, false)
+		gohelper.setActive(self._gozs, false)
 	end
 end
 
-function var_0_0._refreshSelectSkin(arg_21_0)
-	local var_21_0 = arg_21_0._itemObjects[arg_21_0._preSelectSkinIndex]
-	local var_21_1 = arg_21_0._itemObjects[arg_21_0._currentSelectSkinIndex]
+function CharacterSkinSwitchView:_refreshSelectSkin()
+	local preSelectSkinItem = self._itemObjects[self._preSelectSkinIndex]
+	local curSelectSkinItem = self._itemObjects[self._currentSelectSkinIndex]
 
-	gohelper.setActive(var_21_0.goNewSelect, false)
-	gohelper.setActive(var_21_1.goNewSelect, true)
+	gohelper.setActive(preSelectSkinItem.goNewSelect, false)
+	gohelper.setActive(curSelectSkinItem.goNewSelect, true)
 end
 
-function var_0_0._successDressUpSkin(arg_22_0)
-	arg_22_0:_refreshDressBtnStatus()
-	arg_22_0:_refreshSelectSkin()
+function CharacterSkinSwitchView:_successDressUpSkin()
+	self:_refreshDressBtnStatus()
+	self:_refreshSelectSkin()
 end
 
-function var_0_0._onDragBegin(arg_23_0)
-	var_0_1.KillById(arg_23_0._tweeningId)
+function CharacterSkinSwitchView:_onDragBegin()
+	csTweenHelper.KillById(self._tweeningId)
 
-	arg_23_0._preDragAnchorPositionX = recthelper.getAnchorX(arg_23_0._goContent.transform)
-	arg_23_0.playAnimation = false
+	self._preDragAnchorPositionX = recthelper.getAnchorX(self._goContent.transform)
+	self.playAnimation = false
 end
 
-function var_0_0._onDrag(arg_24_0)
-	local var_24_0 = arg_24_0._preDragAnchorPositionX - recthelper.getAnchorX(arg_24_0._goContent.transform)
-	local var_24_1 = Mathf.Abs(var_24_0)
-	local var_24_2 = 0.005
+function CharacterSkinSwitchView:_onDrag()
+	local offset = self._preDragAnchorPositionX - recthelper.getAnchorX(self._goContent.transform)
+	local absOffset = Mathf.Abs(offset)
+	local alphaSmooth = 0.005
 
-	arg_24_0._skincontainerCanvasGroup.alpha = 1 - var_24_1 * var_24_2
+	self._skincontainerCanvasGroup.alpha = 1 - absOffset * alphaSmooth
 
-	if arg_24_0.playAnimation then
+	if self.playAnimation then
 		return
 	end
 
-	if arg_24_0._currentSelectSkinIndex == 1 then
-		if var_24_0 <= 0 then
-			arg_24_0.playAnimation = false
+	if self._currentSelectSkinIndex == 1 then
+		if offset <= 0 then
+			self.playAnimation = false
 		else
-			arg_24_0.playAnimation = true
+			self.playAnimation = true
 		end
-	elseif arg_24_0._currentSelectSkinIndex == arg_24_0.skinCount then
-		if var_24_0 >= 0 then
-			arg_24_0.playAnimation = false
+	elseif self._currentSelectSkinIndex == self.skinCount then
+		if offset >= 0 then
+			self.playAnimation = false
 		else
-			arg_24_0.playAnimation = true
+			self.playAnimation = true
 		end
 	else
-		arg_24_0.playAnimation = true
+		self.playAnimation = true
 	end
 
-	if arg_24_0.playAnimation then
-		arg_24_0._viewAnim:Play(UIAnimationName.SwitchClose, 0, 0)
+	if self.playAnimation then
+		self._viewAnim:Play(UIAnimationName.SwitchClose, 0, 0)
 	end
 end
 
-function var_0_0._onDragEnd(arg_25_0)
-	if arg_25_0.playAnimation then
-		arg_25_0._viewAnim:Play(UIAnimationName.SwitchOpen, 0, 0)
+function CharacterSkinSwitchView:_onDragEnd()
+	if self.playAnimation then
+		self._viewAnim:Play(UIAnimationName.SwitchOpen, 0, 0)
 	end
 
-	arg_25_0._skincontainerCanvasGroup.alpha = 1
+	self._skincontainerCanvasGroup.alpha = 1
 
-	local var_25_0 = recthelper.getAnchorX(arg_25_0._goContent.transform)
-	local var_25_1 = math.abs(var_25_0 - arg_25_0._preDragAnchorPositionX)
+	local endAnchorPositionX = recthelper.getAnchorX(self._goContent.transform)
+	local distance = math.abs(endAnchorPositionX - self._preDragAnchorPositionX)
 
-	if var_25_1 <= arg_25_0._minChangeAnchorPositionX then
-		arg_25_0:killTween()
+	if distance <= self._minChangeAnchorPositionX then
+		self:killTween()
 
-		arg_25_0._tweeningId = var_0_1.DOAnchorPosX(arg_25_0._goContent.transform, arg_25_0._preDragAnchorPositionX, var_25_1 / arg_25_0._scrollRate, arg_25_0.onCompleteTween, arg_25_0)
+		self._tweeningId = csTweenHelper.DOAnchorPosX(self._goContent.transform, self._preDragAnchorPositionX, distance / self._scrollRate, self.onCompleteTween, self)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_skin_switch)
 
-		if var_25_0 < arg_25_0._minAnchorPositionX then
-			var_25_0 = arg_25_0._minAnchorPositionX
+		if endAnchorPositionX < self._minAnchorPositionX then
+			endAnchorPositionX = self._minAnchorPositionX
 		end
 
-		if var_25_0 > 0 then
-			var_25_0 = 0
+		if endAnchorPositionX > 0 then
+			endAnchorPositionX = 0
 		end
 
-		local var_25_2 = 0
+		distance = 0
+		self._preSelectSkinIndex = self._currentSelectSkinIndex
 
-		arg_25_0._preSelectSkinIndex = arg_25_0._currentSelectSkinIndex
+		if endAnchorPositionX < self._preDragAnchorPositionX then
+			self._currentSelectSkinIndex = math.ceil(math.abs(endAnchorPositionX) / self._itemWidth) + 1
 
-		if var_25_0 < arg_25_0._preDragAnchorPositionX then
-			arg_25_0._currentSelectSkinIndex = math.ceil(math.abs(var_25_0) / arg_25_0._itemWidth) + 1
-
-			if arg_25_0._currentSelectSkinIndex > #arg_25_0._itemObjects then
-				arg_25_0._currentSelectSkinIndex = #arg_25_0._itemObjects
+			if self._currentSelectSkinIndex > #self._itemObjects then
+				self._currentSelectSkinIndex = #self._itemObjects
 			end
 
-			var_25_2 = math.abs(var_25_0) % arg_25_0._itemWidth
+			distance = math.abs(endAnchorPositionX) % self._itemWidth
 
-			if var_25_2 == 0 then
-				arg_25_0:onCompleteTween()
+			if distance == 0 then
+				self:onCompleteTween()
 
-				arg_25_0.skinCo = arg_25_0._itemObjects[arg_25_0._currentSelectSkinIndex].skinCo
+				local item = self._itemObjects[self._currentSelectSkinIndex]
 
-				arg_25_0:_reallyRefreshView()
+				self.skinCo = item.skinCo
+
+				self:_reallyRefreshView()
 
 				return
 			end
 
-			var_25_2 = arg_25_0._itemWidth - var_25_2
-		elseif var_25_0 > arg_25_0._preDragAnchorPositionX then
-			arg_25_0._currentSelectSkinIndex = math.ceil(math.abs(var_25_0) / arg_25_0._itemWidth)
+			distance = self._itemWidth - distance
+		elseif endAnchorPositionX > self._preDragAnchorPositionX then
+			self._currentSelectSkinIndex = math.ceil(math.abs(endAnchorPositionX) / self._itemWidth)
 
-			if arg_25_0._currentSelectSkinIndex < 1 then
-				arg_25_0._currentSelectSkinIndex = 1
+			if self._currentSelectSkinIndex < 1 then
+				self._currentSelectSkinIndex = 1
 			end
 
-			var_25_2 = math.abs(var_25_0) % arg_25_0._itemWidth
+			distance = math.abs(endAnchorPositionX) % self._itemWidth
 		end
 
-		arg_25_0.skinCo = arg_25_0._itemObjects[arg_25_0._currentSelectSkinIndex].skinCo
+		local item = self._itemObjects[self._currentSelectSkinIndex]
 
-		arg_25_0:_reallyRefreshView()
-		arg_25_0:killTween()
+		self.skinCo = item.skinCo
 
-		arg_25_0._tweeningId = var_0_1.DOAnchorPosX(arg_25_0._goContent.transform, -(arg_25_0._currentSelectSkinIndex - 1) * arg_25_0._itemWidth, var_25_2 / arg_25_0._scrollRate, arg_25_0.onCompleteTween, arg_25_0)
+		self:_reallyRefreshView()
+		self:killTween()
+
+		self._tweeningId = csTweenHelper.DOAnchorPosX(self._goContent.transform, -(self._currentSelectSkinIndex - 1) * self._itemWidth, distance / self._scrollRate, self.onCompleteTween, self)
 	end
 
-	if arg_25_0._currentSelectSkinIndex then
-		local var_25_3 = arg_25_0._itemObjects[arg_25_0._currentSelectSkinIndex]
+	if self._currentSelectSkinIndex then
+		local item = self._itemObjects[self._currentSelectSkinIndex]
 
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0._itemObjects) do
-			local var_25_4 = arg_25_0._currentSelectSkinIndex == iter_25_0 and 1 or 0.9
+		for i, v in ipairs(self._itemObjects) do
+			local scale = self._currentSelectSkinIndex == i and 1 or 0.9
 
-			transformhelper.setLocalScale(iter_25_1.transSkinmask, var_25_4, var_25_4, var_25_4)
+			transformhelper.setLocalScale(v.transSkinmask, scale, scale, scale)
 		end
 	end
 end
 
-function var_0_0.getSkinIndex(arg_26_0)
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._itemObjects) do
-		if iter_26_1.skinCo.id == arg_26_0.skinCo.id then
-			return iter_26_0
+function CharacterSkinSwitchView:getSkinIndex()
+	for i, itemObj in ipairs(self._itemObjects) do
+		if itemObj.skinCo.id == self.skinCo.id then
+			return i
 		end
 	end
 
 	return 0
 end
 
-function var_0_0._refreshSkinInfo(arg_27_0)
-	if arg_27_0.skinCo.gainApproach == CharacterEnum.SkinGainApproach.Rank and not arg_27_0._hadSkinDict[arg_27_0.skinCo.id] then
-		gohelper.setActive(arg_27_0.goDesc, false)
+function CharacterSkinSwitchView:_refreshSkinInfo()
+	if self.skinCo.gainApproach == CharacterEnum.SkinGainApproach.Rank and not self._hadSkinDict[self.skinCo.id] then
+		gohelper.setActive(self.goDesc, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_27_0.goDesc, true)
+	gohelper.setActive(self.goDesc, true)
 
-	local var_27_0 = arg_27_0:getSkinIndex()
+	local index = self:getSkinIndex()
 
-	arg_27_0._txtindex.text = string.format("%02d", var_27_0)
-	arg_27_0._txtcharacterName.text = arg_27_0.viewParam.config.name
+	self._txtindex.text = string.format("%02d", index)
+	self._txtcharacterName.text = self.viewParam.config.name
 
-	if var_27_0 == 1 then
-		gohelper.setActive(arg_27_0._txtskinName.gameObject, false)
-		gohelper.setActive(arg_27_0._txtskinNameEn.gameObject, false)
+	if index == 1 then
+		gohelper.setActive(self._txtskinName.gameObject, false)
+		gohelper.setActive(self._txtskinNameEn.gameObject, false)
 	else
-		arg_27_0._txtskinName.text = arg_27_0.skinCo.characterSkin
-		arg_27_0._txtskinNameEn.text = arg_27_0.skinCo.characterSkinNameEng
+		self._txtskinName.text = self.skinCo.characterSkin
+		self._txtskinNameEn.text = self.skinCo.characterSkinNameEng
 
-		gohelper.setActive(arg_27_0._txtskinName.gameObject, true)
-		gohelper.setActive(arg_27_0._txtskinNameEn.gameObject, GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN)
+		gohelper.setActive(self._txtskinName.gameObject, true)
+		gohelper.setActive(self._txtskinNameEn.gameObject, GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.CN)
 	end
 
-	arg_27_0._txtdesc.text = arg_27_0.skinCo.skinDescription
+	self._txtdesc.text = self.skinCo.skinDescription
 
-	gohelper.setActive(arg_27_0._btntag.gameObject, string.nilorempty(arg_27_0.skinCo.storeTag) == false)
+	gohelper.setActive(self._btntag.gameObject, string.nilorempty(self.skinCo.storeTag) == false)
 end
 
-function var_0_0._onUISpineLoaded(arg_28_0)
-	arg_28_0._skincontainerCanvasGroup.alpha = 1
+function CharacterSkinSwitchView:_onUISpineLoaded()
+	self._skincontainerCanvasGroup.alpha = 1
 
-	local var_28_0 = arg_28_0.skinCo.skinViewLive2dOffset
+	local offsetStr = self.skinCo.skinViewLive2dOffset
 
-	if string.nilorempty(var_28_0) then
-		var_28_0 = arg_28_0.skinCo.characterViewOffset
+	if string.nilorempty(offsetStr) then
+		offsetStr = self.skinCo.characterViewOffset
 	end
 
-	local var_28_1 = SkinConfig.instance:getSkinOffset(var_28_0)
+	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(arg_28_0._gobigspine.transform, tonumber(var_28_1[1]), tonumber(var_28_1[2]))
-	transformhelper.setLocalScale(arg_28_0._gobigspine.transform, tonumber(var_28_1[3]), tonumber(var_28_1[3]), tonumber(var_28_1[3]))
+	recthelper.setAnchor(self._gobigspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gobigspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._loadedImage(arg_29_0)
-	ZProj.UGUIHelper.SetImageSize(arg_29_0._simageskin.gameObject)
+function CharacterSkinSwitchView:_loadedImage()
+	ZProj.UGUIHelper.SetImageSize(self._simageskin.gameObject)
 
-	arg_29_0._skincontainerCanvasGroup.alpha = 1
+	self._skincontainerCanvasGroup.alpha = 1
 
-	local var_29_0 = arg_29_0.skinCo.skinViewImgOffset
+	local offsetStr = self.skinCo.skinViewImgOffset
 
-	if not string.nilorempty(var_29_0) then
-		local var_29_1 = string.splitToNumber(var_29_0, "#")
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
 
-		recthelper.setAnchor(arg_29_0._simageskin.transform, tonumber(var_29_1[1]), tonumber(var_29_1[2]))
-		transformhelper.setLocalScale(arg_29_0._simageskin.transform, tonumber(var_29_1[3]), tonumber(var_29_1[3]), tonumber(var_29_1[3]))
+		recthelper.setAnchor(self._simageskin.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		transformhelper.setLocalScale(self._simageskin.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	else
-		recthelper.setAnchor(arg_29_0._simageskin.transform, -150, -150)
-		transformhelper.setLocalScale(arg_29_0._simageskin.transform, 0.6, 0.6, 0.6)
+		recthelper.setAnchor(self._simageskin.transform, -150, -150)
+		transformhelper.setLocalScale(self._simageskin.transform, 0.6, 0.6, 0.6)
 	end
 end
 
-function var_0_0._refreshSpine(arg_30_0)
-	if arg_30_0.skinCo.gainApproach == CharacterEnum.SkinGainApproach.Rank and not arg_30_0._hadSkinDict[arg_30_0.skinCo.id] then
-		gohelper.setActive(arg_30_0.goDynamicContainer, false)
+function CharacterSkinSwitchView:_refreshSpine()
+	if self.skinCo.gainApproach == CharacterEnum.SkinGainApproach.Rank and not self._hadSkinDict[self.skinCo.id] then
+		gohelper.setActive(self.goDynamicContainer, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_30_0.goDynamicContainer, true)
-	arg_30_0._goSpine:stopVoice()
-	arg_30_0._goSpine:setResPath(ResUrl.getSpineUIPrefab(arg_30_0.skinCo.spine), arg_30_0._onSpineLoaded, arg_30_0, true)
+	gohelper.setActive(self.goDynamicContainer, true)
+	self._goSpine:stopVoice()
+	self._goSpine:setResPath(ResUrl.getSpineUIPrefab(self.skinCo.spine), self._onSpineLoaded, self, true)
 
-	local var_30_0 = SkinConfig.instance:getSkinOffset(arg_30_0.skinCo.skinSpineOffset)
+	local offsets = SkinConfig.instance:getSkinOffset(self.skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(arg_30_0._gosmallspine.transform, tonumber(var_30_0[1]), tonumber(var_30_0[2]))
-	transformhelper.setLocalScale(arg_30_0._gosmallspine.transform, tonumber(var_30_0[3]), tonumber(var_30_0[3]), tonumber(var_30_0[3]))
+	recthelper.setAnchor(self._gosmallspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gosmallspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._refreshSkinList(arg_31_0)
-	local var_31_0 = SkinConfig.instance:getCharacterSkinCoList(arg_31_0.viewParam.heroId)
+function CharacterSkinSwitchView:_refreshSkinList()
+	local skinCoList = SkinConfig.instance:getCharacterSkinCoList(self.viewParam.heroId)
 
-	if var_31_0 == nil or #var_31_0 == 0 then
-		logError("get skin config list failed,, heroid is : " .. tostring(arg_31_0.viewParam.heroId))
+	if skinCoList == nil or #skinCoList == 0 then
+		logError("get skin config list failed,, heroid is : " .. tostring(self.viewParam.heroId))
 	end
 
-	arg_31_0.skinCount = #var_31_0
+	self.skinCount = #skinCoList
 
-	gohelper.setActive(arg_31_0._goskinItem, false)
+	gohelper.setActive(self._goskinItem, false)
 
-	local var_31_1
-	local var_31_2
+	local skinItem, scale
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
-		local var_31_3 = arg_31_0._itemObjects[iter_31_0] or arg_31_0:createSkinItem()
+	for index, skinCo in ipairs(skinCoList) do
+		skinItem = self._itemObjects[index]
+		skinItem = skinItem or self:createSkinItem()
 
-		var_31_3.image:LoadImage(ResUrl.getHeadSkinSmall(iter_31_1.id))
+		skinItem.image:LoadImage(ResUrl.getHeadSkinSmall(skinCo.id))
 
-		var_31_3.index = iter_31_0
-		var_31_3.skinCo = iter_31_1
+		skinItem.index = index
+		skinItem.skinCo = skinCo
 
-		if arg_31_0.viewParam.skin == iter_31_1.id then
-			var_31_2 = 1
-			arg_31_0._currentSelectSkinIndex = iter_31_0
-			arg_31_0._preSelectSkinIndex = iter_31_0
+		if self.viewParam.skin == skinCo.id then
+			scale = 1
+			self._currentSelectSkinIndex = index
+			self._preSelectSkinIndex = index
 		else
-			var_31_2 = 0.9
+			scale = 0.9
 		end
 
-		transformhelper.setLocalScale(var_31_3.transSkinmask, var_31_2, var_31_2, var_31_2)
+		transformhelper.setLocalScale(skinItem.transSkinmask, scale, scale, scale)
 	end
 
-	arg_31_0._minAnchorPositionX = -((#var_31_0 - 1) * arg_31_0._itemWidth)
+	self._minAnchorPositionX = -((#skinCoList - 1) * self._itemWidth)
 
-	gohelper.cloneInPlace(arg_31_0._gopreEmpty, "suffixEmpty")
+	gohelper.cloneInPlace(self._gopreEmpty, "suffixEmpty")
 
-	if arg_31_0._currentSelectSkinIndex == 0 then
+	if self._currentSelectSkinIndex == 0 then
 		logError("init view error, not selected skin")
 
-		arg_31_0._currentSelectSkinIndex = 1
+		self._currentSelectSkinIndex = 1
 	end
 
-	arg_31_0:_refreshSelectSkin()
-	recthelper.setAnchorX(arg_31_0._goContent.transform, -(arg_31_0._currentSelectSkinIndex - 1) * arg_31_0._itemWidth)
+	self:_refreshSelectSkin()
+	recthelper.setAnchorX(self._goContent.transform, -(self._currentSelectSkinIndex - 1) * self._itemWidth)
 end
 
-function var_0_0.createSkinItem(arg_32_0)
-	local var_32_0 = arg_32_0:getUserDataTb_()
-	local var_32_1 = gohelper.cloneInPlace(arg_32_0._goskinItem, "skinItem")
+function CharacterSkinSwitchView:createSkinItem()
+	local item = self:getUserDataTb_()
+	local itemGo = gohelper.cloneInPlace(self._goskinItem, "skinItem")
 
-	var_32_0.image = gohelper.findChildSingleImage(var_32_1, "skinmask/skinicon")
-	var_32_0.transSkinmask = gohelper.findChild(var_32_1, "skinmask").transform
-	var_32_0.goNewSelect = gohelper.findChild(var_32_1, "skinmask/#go_select")
+	item.image = gohelper.findChildSingleImage(itemGo, "skinmask/skinicon")
+	item.transSkinmask = gohelper.findChild(itemGo, "skinmask").transform
+	item.goNewSelect = gohelper.findChild(itemGo, "skinmask/#go_select")
 
-	gohelper.setActive(var_32_0.goNewSelect, false)
+	gohelper.setActive(item.goNewSelect, false)
 
-	local var_32_2 = gohelper.getClick(var_32_0.image.gameObject)
+	local click = gohelper.getClick(item.image.gameObject)
 
-	var_32_2:AddClickListener(arg_32_0._onItemClick, arg_32_0, var_32_0)
+	click:AddClickListener(self._onItemClick, self, item)
 
-	var_32_0.click = var_32_2
+	item.click = click
 
-	gohelper.setActive(var_32_1, true)
-	table.insert(arg_32_0._itemObjects, var_32_0)
+	gohelper.setActive(itemGo, true)
+	table.insert(self._itemObjects, item)
 
-	return var_32_0
+	return item
 end
 
-function var_0_0._onItemClick(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_1.index
+function CharacterSkinSwitchView:_onItemClick(skinItem)
+	local index = skinItem.index
 
-	if arg_33_0._currentSelectSkinIndex == var_33_0 then
+	if self._currentSelectSkinIndex == index then
 		return
 	end
 
-	arg_33_0._preSelectSkinIndex = arg_33_0._currentSelectSkinIndex
-	arg_33_0._currentSelectSkinIndex = var_33_0
-	arg_33_0.skinCo = arg_33_0._itemObjects[arg_33_0._currentSelectSkinIndex].skinCo
+	self._preSelectSkinIndex = self._currentSelectSkinIndex
+	self._currentSelectSkinIndex = index
+
+	local item = self._itemObjects[self._currentSelectSkinIndex]
+
+	self.skinCo = item.skinCo
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_skin_switch)
 
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0._itemObjects) do
-		local var_33_1 = arg_33_0._currentSelectSkinIndex == iter_33_0 and 1 or 0.9
+	for i, v in ipairs(self._itemObjects) do
+		local scale = self._currentSelectSkinIndex == i and 1 or 0.9
 
-		transformhelper.setLocalScale(iter_33_1.transSkinmask, var_33_1, var_33_1, var_33_1)
+		transformhelper.setLocalScale(v.transSkinmask, scale, scale, scale)
 	end
 
-	arg_33_0.startAnchorPositionX = arg_33_0._goContent.transform.anchoredPosition.x
-	arg_33_0.endAnchorPositionX = -(arg_33_0._currentSelectSkinIndex - 1) * arg_33_0._itemWidth
+	self.startAnchorPositionX = self._goContent.transform.anchoredPosition.x
+	self.endAnchorPositionX = -(self._currentSelectSkinIndex - 1) * self._itemWidth
 
-	arg_33_0:killTween()
+	self:killTween()
 
-	arg_33_0._tweeningId = var_0_1.DOTweenFloat(0, 1, var_0_0.TweenTime, arg_33_0.tweenFrameCallback, arg_33_0.onCompleteTween, arg_33_0)
+	self._tweeningId = csTweenHelper.DOTweenFloat(0, 1, CharacterSkinSwitchView.TweenTime, self.tweenFrameCallback, self.onCompleteTween, self)
 
-	arg_33_0:destroyFlow()
+	self:destroyFlow()
 
-	arg_33_0.workFlow = FlowSequence.New()
+	self.workFlow = FlowSequence.New()
 
-	arg_33_0.workFlow:addWork(DelayFuncWork.New(arg_33_0.beforeFlow, arg_33_0, 0))
-	arg_33_0.workFlow:addWork(DelayFuncWork.New(arg_33_0.playCloseAnimation, arg_33_0, 0.16))
-	arg_33_0.workFlow:addWork(DelayFuncWork.New(arg_33_0._reallyRefreshView, arg_33_0, 0))
-	arg_33_0.workFlow:addWork(DelayFuncWork.New(arg_33_0.playOpenAnimation, arg_33_0, 0.33))
-	arg_33_0.workFlow:registerDoneListener(arg_33_0.onFlowDone, arg_33_0)
-	arg_33_0.workFlow:start()
+	self.workFlow:addWork(DelayFuncWork.New(self.beforeFlow, self, 0))
+	self.workFlow:addWork(DelayFuncWork.New(self.playCloseAnimation, self, 0.16))
+	self.workFlow:addWork(DelayFuncWork.New(self._reallyRefreshView, self, 0))
+	self.workFlow:addWork(DelayFuncWork.New(self.playOpenAnimation, self, 0.33))
+	self.workFlow:registerDoneListener(self.onFlowDone, self)
+	self.workFlow:start()
 end
 
-function var_0_0.beforeFlow(arg_34_0)
-	arg_34_0._viewAnim.speed = var_0_0.NormalAnimationTimeDuration / arg_34_0.halfAnimationTime
+function CharacterSkinSwitchView:beforeFlow()
+	self._viewAnim.speed = CharacterSkinSwitchView.NormalAnimationTimeDuration / self.halfAnimationTime
 end
 
-function var_0_0.playCloseAnimation(arg_35_0)
-	arg_35_0._viewAnim:Play("clickclose", 0, 0)
+function CharacterSkinSwitchView:playCloseAnimation()
+	self._viewAnim:Play("clickclose", 0, 0)
 end
 
-function var_0_0.playOpenAnimation(arg_36_0)
-	arg_36_0._viewAnim:Play(UIAnimationName.SwitchOpen, 0, 0)
+function CharacterSkinSwitchView:playOpenAnimation()
+	self._viewAnim:Play(UIAnimationName.SwitchOpen, 0, 0)
 end
 
-function var_0_0.onFlowDone(arg_37_0)
-	arg_37_0._viewAnim.speed = 1
+function CharacterSkinSwitchView:onFlowDone()
+	self._viewAnim.speed = 1
 end
 
-function var_0_0.tweenFrameCallback(arg_38_0, arg_38_1)
-	recthelper.setAnchorX(arg_38_0._goContent.transform, Mathf.Lerp(arg_38_0.startAnchorPositionX, arg_38_0.endAnchorPositionX, arg_38_1))
+function CharacterSkinSwitchView:tweenFrameCallback(value)
+	recthelper.setAnchorX(self._goContent.transform, Mathf.Lerp(self.startAnchorPositionX, self.endAnchorPositionX, value))
 end
 
-function var_0_0.onCompleteTween(arg_39_0)
-	arg_39_0._tweeningId = 0
+function CharacterSkinSwitchView:onCompleteTween()
+	self._tweeningId = 0
 end
 
-function var_0_0._refreshDressBtnStatus(arg_40_0)
-	arg_40_0:_clearBtnStatus()
+function CharacterSkinSwitchView:_refreshDressBtnStatus()
+	self:_clearBtnStatus()
 
-	local var_40_0 = arg_40_0._itemObjects[arg_40_0._currentSelectSkinIndex].skinCo
+	local selectItem = self._itemObjects[self._currentSelectSkinIndex]
+	local skinCo = selectItem.skinCo
 
-	if var_40_0.id == arg_40_0.viewParam.skin then
-		gohelper.setActive(arg_40_0._godressing, true)
-	elseif arg_40_0._hadSkinDict[var_40_0.id] then
-		gohelper.setActive(arg_40_0._btndress.gameObject, true)
-	elseif var_40_0.gainApproach == CharacterEnum.SkinGainApproach.Rank then
-		gohelper.setActive(arg_40_0._btnrank.gameObject, true)
-	elseif var_40_0.gainApproach == CharacterEnum.SkinGainApproach.Activity then
-		gohelper.setActive(arg_40_0._goactivityget, true)
-	elseif var_40_0.gainApproach == CharacterEnum.SkinGainApproach.Store then
-		if not StoreModel.instance:isTabOpen(var_0_0.SkinStoreId) then
-			gohelper.setActive(arg_40_0._goactivityget, true)
+	if skinCo.id == self.viewParam.skin then
+		gohelper.setActive(self._godressing, true)
+	elseif self._hadSkinDict[skinCo.id] then
+		gohelper.setActive(self._btndress.gameObject, true)
+	elseif skinCo.gainApproach == CharacterEnum.SkinGainApproach.Rank then
+		gohelper.setActive(self._btnrank.gameObject, true)
+	elseif skinCo.gainApproach == CharacterEnum.SkinGainApproach.Activity then
+		gohelper.setActive(self._goactivityget, true)
+	elseif skinCo.gainApproach == CharacterEnum.SkinGainApproach.Store then
+		if not StoreModel.instance:isTabOpen(CharacterSkinSwitchView.SkinStoreId) then
+			gohelper.setActive(self._goactivityget, true)
 		else
-			gohelper.setActive(arg_40_0._btnskinstore.gameObject, true)
+			gohelper.setActive(self._btnskinstore.gameObject, true)
 		end
 	else
-		gohelper.setActive(arg_40_0._btnnotget.gameObject, true)
+		gohelper.setActive(self._btnnotget.gameObject, true)
 	end
 end
 
-function var_0_0._clearBtnStatus(arg_41_0)
-	gohelper.setActive(arg_41_0._btndress.gameObject, false)
-	gohelper.setActive(arg_41_0._btnnotget.gameObject, false)
-	gohelper.setActive(arg_41_0._btnrank.gameObject, false)
-	gohelper.setActive(arg_41_0._btnskinstore.gameObject, false)
-	gohelper.setActive(arg_41_0._godressing, false)
-	gohelper.setActive(arg_41_0._goactivityget, false)
+function CharacterSkinSwitchView:_clearBtnStatus()
+	gohelper.setActive(self._btndress.gameObject, false)
+	gohelper.setActive(self._btnnotget.gameObject, false)
+	gohelper.setActive(self._btnrank.gameObject, false)
+	gohelper.setActive(self._btnskinstore.gameObject, false)
+	gohelper.setActive(self._godressing, false)
+	gohelper.setActive(self._goactivityget, false)
 end
 
-function var_0_0._onSpineLoaded(arg_42_0)
+function CharacterSkinSwitchView:_onSpineLoaded()
 	return
 end
 
-function var_0_0.killTween(arg_43_0)
-	if arg_43_0._tweeningId and arg_43_0._tweeningId ~= 0 then
-		var_0_1.KillById(arg_43_0._tweeningId)
+function CharacterSkinSwitchView:killTween()
+	if self._tweeningId and self._tweeningId ~= 0 then
+		csTweenHelper.KillById(self._tweeningId)
 	end
 end
 
-function var_0_0.destroyFlow(arg_44_0)
-	if arg_44_0.workFlow then
-		arg_44_0.workFlow:destroy()
+function CharacterSkinSwitchView:destroyFlow()
+	if self.workFlow then
+		self.workFlow:destroy()
 
-		arg_44_0.workFlow = nil
+		self.workFlow = nil
 	end
 end
 
-function var_0_0.onClose(arg_45_0)
-	arg_45_0:killTween()
-	arg_45_0._simageskin:UnLoadImage()
-	arg_45_0._simagesignature:UnLoadImage()
-	arg_45_0._simagesignatureicon:UnLoadImage()
-	arg_45_0._simagel2d:UnLoadImage()
+function CharacterSkinSwitchView:onClose()
+	self:killTween()
+	self._simageskin:UnLoadImage()
+	self._simagesignature:UnLoadImage()
+	self._simagesignatureicon:UnLoadImage()
+	self._simagel2d:UnLoadImage()
 
-	for iter_45_0, iter_45_1 in ipairs(arg_45_0._itemObjects) do
-		iter_45_1.image:UnLoadImage()
-		iter_45_1.click:RemoveClickListener()
+	for i, item in ipairs(self._itemObjects) do
+		item.image:UnLoadImage()
+		item.click:RemoveClickListener()
 	end
 
-	if arg_45_0._uiSpine then
-		arg_45_0._uiSpine:setModelVisible(false)
+	if self._uiSpine then
+		self._uiSpine:setModelVisible(false)
 	end
 
-	arg_45_0._drag:RemoveDragBeginListener()
-	arg_45_0._drag:RemoveDragEndListener()
-	arg_45_0._drag:RemoveDragListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self._drag:RemoveDragListener()
 end
 
-function var_0_0.onDestroyView(arg_46_0)
-	arg_46_0:destroyFlow()
+function CharacterSkinSwitchView:onDestroyView()
+	self:destroyFlow()
 
-	if arg_46_0._goSpine then
-		arg_46_0._goSpine:stopVoice()
+	if self._goSpine then
+		self._goSpine:stopVoice()
 
-		arg_46_0._goSpine = nil
+		self._goSpine = nil
 	end
 
-	if arg_46_0._uiSpine then
-		arg_46_0._uiSpine:onDestroy()
+	if self._uiSpine then
+		self._uiSpine:onDestroy()
 
-		arg_46_0._uiSpine = nil
+		self._uiSpine = nil
 	end
 
-	arg_46_0._simagebg:UnLoadImage()
-	arg_46_0._simagebgmask:UnLoadImage()
-	arg_46_0._simageskinSwitchBg:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagebgmask:UnLoadImage()
+	self._simageskinSwitchBg:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSkinSwitchView

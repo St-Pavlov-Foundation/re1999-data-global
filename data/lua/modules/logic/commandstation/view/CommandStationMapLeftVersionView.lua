@@ -1,138 +1,145 @@
-﻿module("modules.logic.commandstation.view.CommandStationMapLeftVersionView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationMapLeftVersionView.lua
 
-local var_0_0 = class("CommandStationMapLeftVersionView", BaseView)
+module("modules.logic.commandstation.view.CommandStationMapLeftVersionView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonameViewport = gohelper.findChild(arg_1_0.viewGO, "#go_TimeAxis/go/timeline/Sort/ScrollView/#go_leftViewport")
-	arg_1_0._gonameContent = gohelper.findChild(arg_1_0.viewGO, "#go_TimeAxis/go/timeline/Sort/ScrollView/#go_leftViewport/#go_leftContent")
-	arg_1_0._gonameItem = gohelper.findChild(arg_1_0.viewGO, "#go_TimeAxis/go/timeline/Sort/ScrollView/#go_leftViewport/#go_leftContent/#go_versionItem")
+local CommandStationMapLeftVersionView = class("CommandStationMapLeftVersionView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationMapLeftVersionView:onInitView()
+	self._gonameViewport = gohelper.findChild(self.viewGO, "#go_TimeAxis/go/timeline/Sort/ScrollView/#go_leftViewport")
+	self._gonameContent = gohelper.findChild(self.viewGO, "#go_TimeAxis/go/timeline/Sort/ScrollView/#go_leftViewport/#go_leftContent")
+	self._gonameItem = gohelper.findChild(self.viewGO, "#go_TimeAxis/go/timeline/Sort/ScrollView/#go_leftViewport/#go_leftContent/#go_versionItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	gohelper.setActive(arg_2_0._gonameItem, false)
+function CommandStationMapLeftVersionView:_editableInitView()
+	gohelper.setActive(self._gonameItem, false)
 
-	arg_2_0._itemList = arg_2_0:getUserDataTb_()
-	arg_2_0._recycleList = arg_2_0:getUserDataTb_()
-	arg_2_0._versionConfigList = lua_copost_version.configList
-	arg_2_0._versionConfigLen = #arg_2_0._versionConfigList
-	arg_2_0._itemHeight = 60
-	arg_2_0._itemSpace = 0
-	arg_2_0._itemHeightWithSpace = arg_2_0._itemHeight + arg_2_0._itemSpace
-	arg_2_0._halfItemHeight = arg_2_0._itemHeight / 2
-	arg_2_0._startIndex = -1
-	arg_2_0._endIndex = 3
-	arg_2_0._noScaleOffsetIndex = 2
+	self._itemList = self:getUserDataTb_()
+	self._recycleList = self:getUserDataTb_()
+	self._versionConfigList = lua_copost_version.configList
+	self._versionConfigLen = #self._versionConfigList
+	self._itemHeight = 60
+	self._itemSpace = 0
+	self._itemHeightWithSpace = self._itemHeight + self._itemSpace
+	self._halfItemHeight = self._itemHeight / 2
+	self._startIndex = -1
+	self._endIndex = 3
+	self._noScaleOffsetIndex = 2
 end
 
-function var_0_0._checkBoundry(arg_3_0)
-	local var_3_0 = recthelper.getAnchorY(arg_3_0._gonameContent.transform)
-	local var_3_1 = Mathf.Round(var_3_0 / arg_3_0._itemHeightWithSpace)
-	local var_3_2 = arg_3_0._startIndex + var_3_1
-	local var_3_3 = arg_3_0._endIndex + var_3_1
-	local var_3_4 = var_3_2 + arg_3_0._noScaleOffsetIndex
-	local var_3_5 = -180
+function CommandStationMapLeftVersionView:_checkBoundry()
+	local contentY = recthelper.getAnchorY(self._gonameContent.transform)
+	local offsetIndex = Mathf.Round(contentY / self._itemHeightWithSpace)
+	local minIndex = self._startIndex + offsetIndex
+	local maxIndex = self._endIndex + offsetIndex
+	local noScaleIndex = minIndex + self._noScaleOffsetIndex
+	local noScalePosY = -180
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._itemList) do
-		if var_3_2 > iter_3_1.index or var_3_3 < iter_3_1.index then
-			gohelper.setActive(iter_3_1.go, false)
+	for k, v in pairs(self._itemList) do
+		if minIndex > v.index or maxIndex < v.index then
+			gohelper.setActive(v.go, false)
 
-			arg_3_0._itemList[iter_3_0] = nil
+			self._itemList[k] = nil
 
-			table.insert(arg_3_0._recycleList, iter_3_1)
+			table.insert(self._recycleList, v)
 		end
 	end
 
-	for iter_3_2 = var_3_2, var_3_3 do
-		if not arg_3_0._itemList[iter_3_2] then
-			local var_3_6 = arg_3_0:_getItem(iter_3_2)
+	for i = minIndex, maxIndex do
+		local item = self._itemList[i]
 
-			arg_3_0._itemList[iter_3_2] = var_3_6
+		if not item then
+			item = self:_getItem(i)
+			self._itemList[i] = item
 		end
 
-		local var_3_7 = arg_3_0._itemList[iter_3_2]
-		local var_3_8 = recthelper.getAnchorY(var_3_7.transform) + var_3_0 + arg_3_0._halfItemHeight
-		local var_3_9 = math.abs(var_3_8 - var_3_5) * 0.1 / arg_3_0._itemHeight
+		local item = self._itemList[i]
+		local posY = recthelper.getAnchorY(item.transform) + contentY + self._halfItemHeight
+		local deltaY = math.abs(posY - noScalePosY)
+		local offsetScale = deltaY * 0.1 / self._itemHeight
 
-		transformhelper.setLocalScale(var_3_7.transform, 1 - var_3_9, 1 - var_3_9, 1)
+		transformhelper.setLocalScale(item.transform, 1 - offsetScale, 1 - offsetScale, 1)
 	end
 
-	return var_3_4
+	return noScaleIndex
 end
 
-function var_0_0._getItem(arg_4_0, arg_4_1)
-	local var_4_0 = table.remove(arg_4_0._recycleList)
+function CommandStationMapLeftVersionView:_getItem(index)
+	local item = table.remove(self._recycleList)
 
-	if not var_4_0 then
-		local var_4_1 = gohelper.cloneInPlace(arg_4_0._gonameItem)
-		local var_4_2 = gohelper.findChildText(var_4_1, "Text")
+	if not item then
+		local go = gohelper.cloneInPlace(self._gonameItem)
+		local txt = gohelper.findChildText(go, "Text")
 
-		var_4_0 = {
-			transform = var_4_1.transform,
-			go = var_4_1,
-			txt = var_4_2
+		item = {
+			transform = go.transform,
+			go = go,
+			txt = txt
 		}
 	end
 
-	var_4_0.index = arg_4_1
+	item.index = index
 
-	local var_4_3 = math.abs(arg_4_1 % #arg_4_0._versionConfigList)
-	local var_4_4 = arg_4_0._versionConfigList[var_4_3 + 1]
+	local dataIndex = math.abs(index % #self._versionConfigList)
+	local data = self._versionConfigList[dataIndex + 1]
 
-	var_4_0.txt.text = var_4_4.id
+	item.txt.text = data.id
 
-	recthelper.setAnchorY(var_4_0.transform, -arg_4_1 * arg_4_0._itemHeightWithSpace - arg_4_0._halfItemHeight)
-	gohelper.setActive(var_4_0.go, true)
+	recthelper.setAnchorY(item.transform, -index * self._itemHeightWithSpace - self._halfItemHeight)
+	gohelper.setActive(item.go, true)
 
-	var_4_0.go.name = arg_4_1
+	item.go.name = index
 
-	return var_4_0
+	return item
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0._startIndex + arg_5_0._noScaleOffsetIndex
-	local var_5_1 = math.abs(var_5_0 % arg_5_0._versionConfigLen)
-	local var_5_2 = arg_5_0._versionConfigList[var_5_1 + 1].versionId
-	local var_5_3 = CommandStationMapModel.instance:getVersionId()
+function CommandStationMapLeftVersionView:onOpen()
+	local index = self._startIndex + self._noScaleOffsetIndex
+	local dataIndex = math.abs(index % self._versionConfigLen)
+	local data = self._versionConfigList[dataIndex + 1]
+	local versionId = data.versionId
+	local targetVersionId = CommandStationMapModel.instance:getVersionId()
 
-	if var_5_3 ~= var_5_2 then
-		arg_5_0._focusVersionPosY = (CommandStationConfig.instance:getVersionIndex(var_5_3) - 1 - var_5_1) * arg_5_0._itemHeightWithSpace
+	if targetVersionId ~= versionId then
+		local targetIndex = CommandStationConfig.instance:getVersionIndex(targetVersionId) - 1
 
-		recthelper.setAnchorY(arg_5_0._gonameContent.transform, arg_5_0._focusVersionPosY)
+		self._focusVersionPosY = (targetIndex - dataIndex) * self._itemHeightWithSpace
+
+		recthelper.setAnchorY(self._gonameContent.transform, self._focusVersionPosY)
 	else
-		arg_5_0._focusVersionPosY = 0
+		self._focusVersionPosY = 0
 
-		recthelper.setAnchorY(arg_5_0._gonameContent.transform, arg_5_0._focusVersionPosY)
+		recthelper.setAnchorY(self._gonameContent.transform, self._focusVersionPosY)
 	end
 
-	arg_5_0:_checkBoundry()
+	self:_checkBoundry()
 end
 
-function var_0_0.setContentPosY(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0._focusVersionPosY + (arg_6_1 + arg_6_2) * arg_6_0._itemHeightWithSpace
+function CommandStationMapLeftVersionView:setContentPosY(deltaIndex, deltaRatio)
+	local posY = self._focusVersionPosY + (deltaIndex + deltaRatio) * self._itemHeightWithSpace
 
-	recthelper.setAnchorY(arg_6_0._gonameContent.transform, var_6_0)
+	recthelper.setAnchorY(self._gonameContent.transform, posY)
 
-	local var_6_1 = math.abs(arg_6_2)
+	local absValue = math.abs(deltaRatio)
 
-	if arg_6_0._lastRation and arg_6_0._lastRation < 0.3 and var_6_1 >= 0.3 then
+	if self._lastRation and self._lastRation < 0.3 and absValue >= 0.3 then
 		AudioMgr.instance:trigger(AudioEnum3_0.CommandStationMap.play_ui_common_click)
 	end
 
-	arg_6_0._lastRation = var_6_1
+	self._lastRation = absValue
 
-	arg_6_0:_checkBoundry()
+	self:_checkBoundry()
 end
 
-function var_0_0.onClose(arg_7_0)
-	if arg_7_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_7_0._tweenId)
+function CommandStationMapLeftVersionView:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_7_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return CommandStationMapLeftVersionView

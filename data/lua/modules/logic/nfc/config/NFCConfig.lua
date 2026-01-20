@@ -1,27 +1,29 @@
-﻿module("modules.logic.nfc.config.NFCConfig", package.seeall)
+﻿-- chunkname: @modules/logic/nfc/config/NFCConfig.lua
 
-local var_0_0 = class("NFCConfig", BaseConfig)
+module("modules.logic.nfc.config.NFCConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local NFCConfig = class("NFCConfig", BaseConfig)
+
+function NFCConfig:reqConfigNames()
 	return {
 		"nfc_recognize"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function NFCConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "nfc_recognize" then
-		arg_3_0._nfcRecognizeConfig = arg_3_2
+function NFCConfig:onConfigLoaded(configName, configTable)
+	if configName == "nfc_recognize" then
+		self._nfcRecognizeConfig = configTable
 	end
 end
 
-function var_0_0.getNFCRecognizeCo(arg_4_0, arg_4_1)
-	return arg_4_0._nfcRecognizeConfig.configDict[arg_4_1]
+function NFCConfig:getNFCRecognizeCo(id)
+	return self._nfcRecognizeConfig.configDict[id]
 end
 
-var_0_0.instance = var_0_0.New()
+NFCConfig.instance = NFCConfig.New()
 
-return var_0_0
+return NFCConfig

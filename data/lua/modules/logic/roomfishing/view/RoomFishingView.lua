@@ -1,94 +1,96 @@
-﻿module("modules.logic.roomfishing.view.RoomFishingView", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/view/RoomFishingView.lua
 
-local var_0_0 = class("RoomFishingView", BaseView)
+module("modules.logic.roomfishing.view.RoomFishingView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goSelf = gohelper.findChild(arg_1_0.viewGO, "Root/Left/playerInfo/#go_Self")
-	arg_1_0._goFriend = gohelper.findChild(arg_1_0.viewGO, "Root/Left/playerInfo/#go_Friend")
-	arg_1_0._goheadicon = gohelper.findChild(arg_1_0.viewGO, "Root/Left/playerInfo/#go_headicon")
-	arg_1_0._txtPlayerName = gohelper.findChildText(arg_1_0.viewGO, "Root/Left/playerInfo/#txt_PlayerName")
-	arg_1_0._btnInfoCopy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/playerInfo/#btn_Copy")
-	arg_1_0._txtrefreshTime = gohelper.findChildText(arg_1_0.viewGO, "Root/Left/playerInfo/#txt_refreshTime")
-	arg_1_0._btnExpandFriendList = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/FriendList/#btn_Expand")
-	arg_1_0._input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "Root/Left/FriendList/#go_Expand/#input_inform")
-	arg_1_0._btnFoldFriendList = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/FriendList/#go_Expand/#btn_Fold")
-	arg_1_0._gounfishingTab = gohelper.findChild(arg_1_0.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab1/#go_Selected")
-	arg_1_0._btnunfishingTab = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab1/image_TabBG")
-	arg_1_0._gofishingTab = gohelper.findChild(arg_1_0.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab2/#go_Selected")
-	arg_1_0._btnfishingTab = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab2/image_TabBG")
-	arg_1_0._btnhide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Left/btn_hide")
-	arg_1_0._btnback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/btn_back")
+local RoomFishingView = class("RoomFishingView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomFishingView:onInitView()
+	self._goSelf = gohelper.findChild(self.viewGO, "Root/Left/playerInfo/#go_Self")
+	self._goFriend = gohelper.findChild(self.viewGO, "Root/Left/playerInfo/#go_Friend")
+	self._goheadicon = gohelper.findChild(self.viewGO, "Root/Left/playerInfo/#go_headicon")
+	self._txtPlayerName = gohelper.findChildText(self.viewGO, "Root/Left/playerInfo/#txt_PlayerName")
+	self._btnInfoCopy = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/playerInfo/#btn_Copy")
+	self._txtrefreshTime = gohelper.findChildText(self.viewGO, "Root/Left/playerInfo/#txt_refreshTime")
+	self._btnExpandFriendList = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/FriendList/#btn_Expand")
+	self._input = gohelper.findChildTextMeshInputField(self.viewGO, "Root/Left/FriendList/#go_Expand/#input_inform")
+	self._btnFoldFriendList = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/FriendList/#go_Expand/#btn_Fold")
+	self._gounfishingTab = gohelper.findChild(self.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab1/#go_Selected")
+	self._btnunfishingTab = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab1/image_TabBG")
+	self._gofishingTab = gohelper.findChild(self.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab2/#go_Selected")
+	self._btnfishingTab = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/FriendList/#go_Expand/Tab/Tab2/image_TabBG")
+	self._btnhide = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Left/btn_hide")
+	self._btnback = gohelper.findChildButtonWithAudio(self.viewGO, "Root/btn_back")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnInfoCopy:AddClickListener(arg_2_0._btnInfoCopyOnClick, arg_2_0)
-	arg_2_0._btnExpandFriendList:AddClickListener(arg_2_0._btnExpandFriendListOnClick, arg_2_0)
-	arg_2_0._btnFoldFriendList:AddClickListener(arg_2_0._btnFoldFriendListOnClick, arg_2_0)
-	arg_2_0._btnunfishingTab:AddClickListener(arg_2_0._btnFriendTabOnClick, arg_2_0, FishingEnum.FriendListTag.UnFishing)
-	arg_2_0._btnfishingTab:AddClickListener(arg_2_0._btnFriendTabOnClick, arg_2_0, FishingEnum.FriendListTag.Fishing)
-	arg_2_0._btnhide:AddClickListener(arg_2_0._btnHideOnClick, arg_2_0)
-	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
-	arg_2_0._input:AddOnValueChanged(arg_2_0._inputValueChanged, arg_2_0)
-	arg_2_0._input:AddOnEndEdit(arg_2_0._onEndEdit, arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, arg_2_0._onFishingInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, arg_2_0._onFishingProgressUpdate, arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.OnSelectFriendTab, arg_2_0.refreshFriendTab, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
-	arg_2_0:addEventCb(GameSceneMgr.instance, SceneEventName.EnterSceneFinish, arg_2_0._onSceneDone, arg_2_0, LuaEventSystem.Low)
-	arg_2_0:addEventCb(RoomController.instance, RoomEvent.OnSwitchModeDone, arg_2_0._onSceneDone, arg_2_0, LuaEventSystem.Low)
+function RoomFishingView:addEvents()
+	self._btnInfoCopy:AddClickListener(self._btnInfoCopyOnClick, self)
+	self._btnExpandFriendList:AddClickListener(self._btnExpandFriendListOnClick, self)
+	self._btnFoldFriendList:AddClickListener(self._btnFoldFriendListOnClick, self)
+	self._btnunfishingTab:AddClickListener(self._btnFriendTabOnClick, self, FishingEnum.FriendListTag.UnFishing)
+	self._btnfishingTab:AddClickListener(self._btnFriendTabOnClick, self, FishingEnum.FriendListTag.Fishing)
+	self._btnhide:AddClickListener(self._btnHideOnClick, self)
+	self._btnback:AddClickListener(self._btnbackOnClick, self)
+	self._input:AddOnValueChanged(self._inputValueChanged, self)
+	self._input:AddOnEndEdit(self._onEndEdit, self)
+	self:addEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, self._onFishingInfoUpdate, self)
+	self:addEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, self._onFishingProgressUpdate, self)
+	self:addEventCb(FishingController.instance, FishingEvent.OnSelectFriendTab, self.refreshFriendTab, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.EnterSceneFinish, self._onSceneDone, self, LuaEventSystem.Low)
+	self:addEventCb(RoomController.instance, RoomEvent.OnSwitchModeDone, self._onSceneDone, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnInfoCopy:RemoveClickListener()
-	arg_3_0._btnExpandFriendList:RemoveClickListener()
-	arg_3_0._btnFoldFriendList:RemoveClickListener()
-	arg_3_0._btnunfishingTab:RemoveClickListener()
-	arg_3_0._btnfishingTab:RemoveClickListener()
-	arg_3_0._btnhide:RemoveClickListener()
-	arg_3_0._btnback:RemoveClickListener()
-	arg_3_0._input:RemoveOnValueChanged()
-	arg_3_0._input:RemoveOnEndEdit()
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, arg_3_0._onFishingInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, arg_3_0._onFishingProgressUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.OnSelectFriendTab, arg_3_0.refreshFriendTab, arg_3_0)
-	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
-	arg_3_0:removeEventCb(GameSceneMgr.instance, SceneEventName.EnterSceneFinish, arg_3_0._onSceneDone, arg_3_0)
-	arg_3_0:removeEventCb(RoomController.instance, RoomEvent.OnSwitchModeDone, arg_3_0._onSceneDone, arg_3_0)
+function RoomFishingView:removeEvents()
+	self._btnInfoCopy:RemoveClickListener()
+	self._btnExpandFriendList:RemoveClickListener()
+	self._btnFoldFriendList:RemoveClickListener()
+	self._btnunfishingTab:RemoveClickListener()
+	self._btnfishingTab:RemoveClickListener()
+	self._btnhide:RemoveClickListener()
+	self._btnback:RemoveClickListener()
+	self._input:RemoveOnValueChanged()
+	self._input:RemoveOnEndEdit()
+	self:removeEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, self._onFishingInfoUpdate, self)
+	self:removeEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, self._onFishingProgressUpdate, self)
+	self:removeEventCb(FishingController.instance, FishingEvent.OnSelectFriendTab, self.refreshFriendTab, self)
+	self:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.EnterSceneFinish, self._onSceneDone, self)
+	self:removeEventCb(RoomController.instance, RoomEvent.OnSwitchModeDone, self._onSceneDone, self)
 end
 
-function var_0_0._btnInfoCopyOnClick(arg_4_0)
-	local var_4_0 = FishingModel.instance:getCurShowingUserId()
+function RoomFishingView:_btnInfoCopyOnClick()
+	local curPoolUserId = FishingModel.instance:getCurShowingUserId()
 
-	ZProj.UGUIHelper.CopyText(var_4_0)
+	ZProj.UGUIHelper.CopyText(curPoolUserId)
 	GameFacade.showToast(ToastEnum.ClickPlayerId)
 end
 
-function var_0_0._btnExpandFriendListOnClick(arg_5_0)
-	FishingController.instance:getFriendListInfo(arg_5_0._realExpandFriendList, arg_5_0)
+function RoomFishingView:_btnExpandFriendListOnClick()
+	FishingController.instance:getFriendListInfo(self._realExpandFriendList, self)
 end
 
-function var_0_0._realExpandFriendList(arg_6_0)
-	arg_6_0._isFriendListExpand = true
+function RoomFishingView:_realExpandFriendList()
+	self._isFriendListExpand = true
 
-	arg_6_0:_btnFriendTabOnClick(FishingEnum.FriendListTag.UnFishing)
-	arg_6_0:refreshFriendListExpand(true)
+	self:_btnFriendTabOnClick(FishingEnum.FriendListTag.UnFishing)
+	self:refreshFriendListExpand(true)
 end
 
-function var_0_0._btnFoldFriendListOnClick(arg_7_0)
-	arg_7_0._isFriendListExpand = false
+function RoomFishingView:_btnFoldFriendListOnClick()
+	self._isFriendListExpand = false
 
-	arg_7_0:refreshFriendListExpand(true, arg_7_0._btnFriendTabOnClick, arg_7_0)
+	self:refreshFriendListExpand(true, self._btnFriendTabOnClick, self)
 end
 
-function var_0_0._btnFriendTabOnClick(arg_8_0, arg_8_1)
-	FishingController.instance:selectFriendTab(arg_8_1)
+function RoomFishingView:_btnFriendTabOnClick(tab)
+	FishingController.instance:selectFriendTab(tab)
 end
 
-function var_0_0._btnHideOnClick(arg_9_0)
+function RoomFishingView:_btnHideOnClick()
 	if RoomMapController.instance:isUIHide() then
 		RoomMapController.instance:setUIHide(false)
 	else
@@ -96,214 +98,219 @@ function var_0_0._btnHideOnClick(arg_9_0)
 	end
 end
 
-function var_0_0._btnbackOnClick(arg_10_0)
+function RoomFishingView:_btnbackOnClick()
 	FishingController.instance:enterFishingMode(true)
 end
 
-function var_0_0._inputValueChanged(arg_11_0)
-	local var_11_0 = arg_11_0._input:GetText()
-	local var_11_1 = string.gsub(var_11_0, "[^0-9]", "")
-	local var_11_2 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.UidInputCountLimit, true)
-	local var_11_3 = GameUtil.utf8sub(var_11_1, 1, math.min(GameUtil.utf8len(var_11_1), var_11_2))
+function RoomFishingView:_inputValueChanged()
+	local inputValue = self._input:GetText()
+	local inputStr = string.gsub(inputValue, "[^0-9]", "")
+	local limit = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.UidInputCountLimit, true)
+	local newInput = GameUtil.utf8sub(inputStr, 1, math.min(GameUtil.utf8len(inputStr), limit))
 
-	if var_11_3 ~= var_11_0 then
-		arg_11_0._input:SetTextWithoutNotify(var_11_3)
+	if newInput ~= inputValue then
+		self._input:SetTextWithoutNotify(newInput)
 	end
 end
 
-function var_0_0._onEndEdit(arg_12_0, arg_12_1)
-	if not tonumber(arg_12_1) then
+function RoomFishingView:_onEndEdit(inputStr)
+	if not tonumber(inputStr) then
 		return
 	end
 
-	FishingController.instance:visitOtherFishingPool(arg_12_1)
+	FishingController.instance:visitOtherFishingPool(inputStr)
 end
 
-function var_0_0._onFishingInfoUpdate(arg_13_0, arg_13_1)
-	if arg_13_1 then
+function RoomFishingView:_onFishingInfoUpdate(userId)
+	if userId then
 		FishingController.instance:updateFriendListInfo()
 	end
 end
 
-function var_0_0._onFishingProgressUpdate(arg_14_0)
+function RoomFishingView:_onFishingProgressUpdate()
 	FishingController.instance:getFriendListInfo()
 end
 
-function var_0_0._onDailyRefresh(arg_15_0)
-	if FishingModel.instance:getIsShowingMySelf() then
-		arg_15_0:_updateFishingInfo(true)
+function RoomFishingView:_onDailyRefresh()
+	local isShowMyself = FishingModel.instance:getIsShowingMySelf()
+
+	if isShowMyself then
+		self:_updateFishingInfo(true)
 	else
-		arg_15_0:_btnbackOnClick()
+		self:_btnbackOnClick()
 	end
 end
 
-function var_0_0._onSceneDone(arg_16_0)
-	TaskDispatcher.runDelay(arg_16_0._delayDispatchOpen, arg_16_0, 0.1)
+function RoomFishingView:_onSceneDone()
+	TaskDispatcher.runDelay(self._delayDispatchOpen, self, 0.1)
 end
 
-function var_0_0._delayDispatchOpen(arg_17_0)
+function RoomFishingView:_delayDispatchOpen()
 	FishingController.instance:dispatchEvent(FishingEvent.GuideOnOpenFishingView)
 end
 
-function var_0_0._editableInitView(arg_18_0)
-	local var_18_0 = gohelper.findChild(arg_18_0.viewGO, "Root/Left/FriendList")
+function RoomFishingView:_editableInitView()
+	local friendList = gohelper.findChild(self.viewGO, "Root/Left/FriendList")
 
-	arg_18_0._friendListAnimator = var_18_0:GetComponent(typeof(UnityEngine.Animator))
-	arg_18_0._friendListAnimatorPlayer = SLFramework.AnimatorPlayer.Get(var_18_0)
-	arg_18_0._selectedFriendTag = FishingEnum.FriendListTag.UnFishing
+	self._friendListAnimator = friendList:GetComponent(typeof(UnityEngine.Animator))
+	self._friendListAnimatorPlayer = SLFramework.AnimatorPlayer.Get(friendList)
+	self._selectedFriendTag = FishingEnum.FriendListTag.UnFishing
 
-	arg_18_0:setPlayerInfo()
+	self:setPlayerInfo()
 
-	arg_18_0._PcBtnHide = gohelper.findChild(arg_18_0.viewGO, "Root/Left/btn_hide/#go_pcbtn")
+	self._PcBtnHide = gohelper.findChild(self.viewGO, "Root/Left/btn_hide/#go_pcbtn")
 
-	PCInputController.instance:showkeyTips(arg_18_0._PcBtnHide, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.hide)
+	PCInputController.instance:showkeyTips(self._PcBtnHide, PCInputModel.Activity.room, PCInputModel.RoomActivityFun.hide)
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function RoomFishingView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_20_0)
-	arg_20_0:refresh()
-	arg_20_0:everySecondCall()
-	TaskDispatcher.cancelTask(arg_20_0.everySecondCall, arg_20_0)
-	TaskDispatcher.runRepeat(arg_20_0.everySecondCall, arg_20_0, TimeUtil.OneSecond)
+function RoomFishingView:onOpen()
+	self:refresh()
+	self:everySecondCall()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
+	TaskDispatcher.runRepeat(self.everySecondCall, self, TimeUtil.OneSecond)
 	FishingController.instance:dispatchEvent(FishingEvent.GuideOnOpenFishingView)
 end
 
-function var_0_0.setPlayerInfo(arg_21_0)
-	local var_21_0, var_21_1, var_21_2 = FishingModel.instance:getCurFishingPoolUserInfo()
+function RoomFishingView:setPlayerInfo()
+	local userId, name, portrait = FishingModel.instance:getCurFishingPoolUserInfo()
 
-	arg_21_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_21_0._goheadicon)
+	self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goheadicon)
 
-	arg_21_0._playericon:setMOValue(var_21_0, "", 0, var_21_2)
-	arg_21_0._playericon:setEnableClick(false)
-	arg_21_0._playericon:setShowLevel(false)
+	self._playericon:setMOValue(userId, "", 0, portrait)
+	self._playericon:setEnableClick(false)
+	self._playericon:setShowLevel(false)
 
-	arg_21_0._txtPlayerName.text = var_21_1
+	self._txtPlayerName.text = name
 
-	local var_21_3 = FishingModel.instance:getIsShowingMySelf()
+	local isShowMyself = FishingModel.instance:getIsShowingMySelf()
 
-	gohelper.setActive(arg_21_0._goSelf, var_21_3)
-	gohelper.setActive(arg_21_0._goFriend, not var_21_3)
-	gohelper.setActive(arg_21_0._btnback, not var_21_3)
+	gohelper.setActive(self._goSelf, isShowMyself)
+	gohelper.setActive(self._goFriend, not isShowMyself)
+	gohelper.setActive(self._btnback, not isShowMyself)
 
-	arg_21_0._isFriendListExpand = not var_21_3
+	self._isFriendListExpand = not isShowMyself
 end
 
-function var_0_0.refresh(arg_22_0)
-	arg_22_0:refreshTime()
-	arg_22_0:refreshFriendListExpand()
+function RoomFishingView:refresh()
+	self:refreshTime()
+	self:refreshFriendListExpand()
 end
 
-function var_0_0.refreshFriendListExpand(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	arg_23_0:refreshFriendTab()
+function RoomFishingView:refreshFriendListExpand(playAnim, cb, cbObj)
+	self:refreshFriendTab()
 
-	local var_23_0 = arg_23_0._isFriendListExpand and UIAnimationName.Open or UIAnimationName.Close
+	local animaName = self._isFriendListExpand and UIAnimationName.Open or UIAnimationName.Close
 
-	if arg_23_1 then
-		arg_23_0._friendListAnimatorPlayer:Play(var_23_0, arg_23_2, arg_23_3)
+	if playAnim then
+		self._friendListAnimatorPlayer:Play(animaName, cb, cbObj)
 	else
-		arg_23_0._friendListAnimator.enabled = true
+		self._friendListAnimator.enabled = true
 
-		arg_23_0._friendListAnimator:Play(var_23_0, 0, 1)
+		self._friendListAnimator:Play(animaName, 0, 1)
 	end
 end
 
-function var_0_0.refreshFriendTab(arg_24_0)
-	local var_24_0 = FishingFriendListModel.instance:getSelectedTab()
+function RoomFishingView:refreshFriendTab()
+	local selectedTab = FishingFriendListModel.instance:getSelectedTab()
 
-	gohelper.setActive(arg_24_0._gounfishingTab, var_24_0 == FishingEnum.FriendListTag.UnFishing)
-	gohelper.setActive(arg_24_0._gofishingTab, var_24_0 == FishingEnum.FriendListTag.Fishing)
+	gohelper.setActive(self._gounfishingTab, selectedTab == FishingEnum.FriendListTag.UnFishing)
+	gohelper.setActive(self._gofishingTab, selectedTab == FishingEnum.FriendListTag.Fishing)
 end
 
-function var_0_0.everySecondCall(arg_25_0)
-	arg_25_0:refreshTime()
-	arg_25_0:checkBonus()
+function RoomFishingView:everySecondCall()
+	self:refreshTime()
+	self:checkBonus()
 end
 
-local var_0_1 = 2
+local GET_INFO_INTERVAL = 2
 
-function var_0_0.refreshTime(arg_26_0)
-	local var_26_0, var_26_1 = FishingModel.instance:getCurFishingPoolRefreshTime()
-	local var_26_2 = string.format("%s%s", TimeUtil.secondToRoughTime2(var_26_0))
+function RoomFishingView:refreshTime()
+	local remainSecond, needRefresh = FishingModel.instance:getCurFishingPoolRefreshTime()
+	local timeStr = string.format("%s%s", TimeUtil.secondToRoughTime2(remainSecond))
 
-	arg_26_0._txtrefreshTime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("RoomFishing_refresh_time"), var_26_2)
+	self._txtrefreshTime.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("RoomFishing_refresh_time"), timeStr)
 
-	if var_26_1 then
-		arg_26_0:_updateFishingInfo()
+	if needRefresh then
+		self:_updateFishingInfo()
 	end
 end
 
-function var_0_0._updateFishingInfo(arg_27_0, arg_27_1)
-	if not arg_27_1 then
-		local var_27_0 = arg_27_0._lastGetInfoTime or 0
-		local var_27_1 = Time.realtimeSinceStartup - var_27_0
+function RoomFishingView:_updateFishingInfo(forceUpdate)
+	if not forceUpdate then
+		local lastTime = self._lastGetInfoTime or 0
+		local offsetTime = Time.realtimeSinceStartup - lastTime
 
-		if arg_27_0.gettingInfo or var_27_1 < var_0_1 then
+		if self.gettingInfo or offsetTime < GET_INFO_INTERVAL then
 			return
 		end
 	end
 
-	if FishingModel.instance:getIsShowingMySelf() then
-		FishingController.instance:getFishingInfo(nil, arg_27_0._afterGetFishingInfo, arg_27_0)
-	else
-		local var_27_2 = FishingModel.instance:getCurShowingUserId()
+	local isShowMyself = FishingModel.instance:getIsShowingMySelf()
 
-		if var_27_2 then
-			FishingController.instance:getFishingInfo(var_27_2, arg_27_0._afterGetFishingInfo, arg_27_0)
+	if isShowMyself then
+		FishingController.instance:getFishingInfo(nil, self._afterGetFishingInfo, self)
+	else
+		local userId = FishingModel.instance:getCurShowingUserId()
+
+		if userId then
+			FishingController.instance:getFishingInfo(userId, self._afterGetFishingInfo, self)
 		end
 	end
 
-	arg_27_0._lastGetInfoTime = Time.realtimeSinceStartup
-	arg_27_0.gettingInfo = true
+	self._lastGetInfoTime = Time.realtimeSinceStartup
+	self.gettingInfo = true
 end
 
-function var_0_0._afterGetFishingInfo(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	if arg_28_2 ~= 0 then
+function RoomFishingView:_afterGetFishingInfo(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_28_0.gettingInfo = false
+	self.gettingInfo = false
 
-	arg_28_0:refreshTime()
+	self:refreshTime()
 	FishingController.instance:getFriendListInfo()
 end
 
-local var_0_2 = 2
+local GET_BONUS_INTERVAL = 2
 
-function var_0_0.checkBonus(arg_29_0)
-	local var_29_0 = ViewMgr.instance:isOpen(ViewName.LoadingRoomView)
-	local var_29_1 = UIBlockMgr.instance:isKeyBlock(RoomController.ENTER_ROOM_BLOCK_KEY)
+function RoomFishingView:checkBonus()
+	local isShowingLoading = ViewMgr.instance:isOpen(ViewName.LoadingRoomView)
+	local isKeyBlock = UIBlockMgr.instance:isKeyBlock(RoomController.ENTER_ROOM_BLOCK_KEY)
 
-	if arg_29_0.gettingBonus or var_29_0 or var_29_1 then
+	if self.gettingBonus or isShowingLoading or isKeyBlock then
 		return
 	end
 
-	local var_29_2 = arg_29_0._lastGetBonusTime or 0
+	local lastTime = self._lastGetBonusTime or 0
+	local offsetTime = Time.realtimeSinceStartup - lastTime
 
-	if Time.realtimeSinceStartup - var_29_2 < var_0_2 then
+	if offsetTime < GET_BONUS_INTERVAL then
 		return
 	end
 
-	arg_29_0.gettingBonus = FishingController.instance:checkGetBonus(arg_29_0._afterGetBonus, arg_29_0)
+	self.gettingBonus = FishingController.instance:checkGetBonus(self._afterGetBonus, self)
 
-	if arg_29_0.gettingBonus then
-		arg_29_0._lastGetBonusTime = Time.realtimeSinceStartup
+	if self.gettingBonus then
+		self._lastGetBonusTime = Time.realtimeSinceStartup
 	end
 end
 
-function var_0_0._afterGetBonus(arg_30_0)
-	arg_30_0.gettingBonus = false
+function RoomFishingView:_afterGetBonus()
+	self.gettingBonus = false
 end
 
-function var_0_0.onClose(arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0.everySecondCall, arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0._delayDispatchOpen, arg_31_0)
+function RoomFishingView:onClose()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
+	TaskDispatcher.cancelTask(self._delayDispatchOpen, self)
 end
 
-function var_0_0.onDestroyView(arg_32_0)
+function RoomFishingView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomFishingView

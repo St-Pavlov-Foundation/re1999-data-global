@@ -1,429 +1,438 @@
-﻿module("modules.logic.room.view.backpack.RoomCritterDecomposeView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/backpack/RoomCritterDecomposeView.lua
 
-local var_0_0 = class("RoomCritterDecomposeView", BaseView)
-local var_0_1 = "DecomposeAnimKey"
-local var_0_2 = 0.2
-local var_0_3 = 0.5
-local var_0_4 = 0.9
+module("modules.logic.room.view.backpack.RoomCritterDecomposeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncirtterRare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_critterSort/#btn_cirtterRare")
-	arg_1_0._dropmaturefilter = gohelper.findChildDropdown(arg_1_0.viewGO, "left_container/#go_critterSort/#drop_mature")
-	arg_1_0._transmatureDroparrow = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_critterSort/#drop_mature/#go_arrow").transform
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_critterSort/#btn_filter")
-	arg_1_0._gonotfilter = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_critterSort/#btn_filter/#go_notfilter")
-	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_critterSort/#btn_filter/#go_filter")
-	arg_1_0._dropRareFilter = gohelper.findChildDropdown(arg_1_0.viewGO, "left_container/#go_cost/#drop_filter")
-	arg_1_0._btnfastadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_cost/fast/#btn_fastadd")
-	arg_1_0._txtselectNum = gohelper.findChildText(arg_1_0.viewGO, "left_container/#go_cost/txt_selected/#txt_num")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_empty")
-	arg_1_0._btnclear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/go_clear/#btn_clear")
-	arg_1_0._simageresultItemIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "right_container/frame/#simage_resultIcon")
-	arg_1_0._txtresultItemName = gohelper.findChildText(arg_1_0.viewGO, "right_container/#txt_resultName")
-	arg_1_0._txtResultCount = gohelper.findChildText(arg_1_0.viewGO, "right_container/#txt_count")
-	arg_1_0._btndecompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right_container/#btn_decompose")
+local RoomCritterDecomposeView = class("RoomCritterDecomposeView", BaseView)
+local DecomposeAnimKey = "DecomposeAnimKey"
+local CritterEnterAnimWaitTime = 0.2
+local DecomposeTxtAnimDuration = 0.5
+local DecomposeAnimDuration = 0.9
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterDecomposeView:onInitView()
+	self._btncirtterRare = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/#go_critterSort/#btn_cirtterRare")
+	self._dropmaturefilter = gohelper.findChildDropdown(self.viewGO, "left_container/#go_critterSort/#drop_mature")
+	self._transmatureDroparrow = gohelper.findChild(self.viewGO, "left_container/#go_critterSort/#drop_mature/#go_arrow").transform
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/#go_critterSort/#btn_filter")
+	self._gonotfilter = gohelper.findChild(self.viewGO, "left_container/#go_critterSort/#btn_filter/#go_notfilter")
+	self._gofilter = gohelper.findChild(self.viewGO, "left_container/#go_critterSort/#btn_filter/#go_filter")
+	self._dropRareFilter = gohelper.findChildDropdown(self.viewGO, "left_container/#go_cost/#drop_filter")
+	self._btnfastadd = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/#go_cost/fast/#btn_fastadd")
+	self._txtselectNum = gohelper.findChildText(self.viewGO, "left_container/#go_cost/txt_selected/#txt_num")
+	self._goempty = gohelper.findChild(self.viewGO, "left_container/#go_empty")
+	self._btnclear = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/go_clear/#btn_clear")
+	self._simageresultItemIcon = gohelper.findChildSingleImage(self.viewGO, "right_container/frame/#simage_resultIcon")
+	self._txtresultItemName = gohelper.findChildText(self.viewGO, "right_container/#txt_resultName")
+	self._txtResultCount = gohelper.findChildText(self.viewGO, "right_container/#txt_count")
+	self._btndecompose = gohelper.findChildButtonWithAudio(self.viewGO, "right_container/#btn_decompose")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncirtterRare:AddClickListener(arg_2_0._btncirtterRareOnClick, arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
-	arg_2_0._btnfastadd:AddClickListener(arg_2_0._btnfastaddOnClick, arg_2_0)
-	arg_2_0._btnclear:AddClickListener(arg_2_0._btnclearOnClick, arg_2_0)
-	arg_2_0._btndecompose:AddClickListener(arg_2_0._btndecomposeOnClick, arg_2_0)
-	arg_2_0._dropmaturefilter:AddOnValueChanged(arg_2_0.onMatureDropValueChange, arg_2_0)
-	arg_2_0._dropRareFilter:AddOnValueChanged(arg_2_0.onRareDropValueChange, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, arg_2_0.onCritterFilterTypeChange, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, arg_2_0.onCritterDecomposeSelectChange, arg_2_0)
-	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterChangeSort, arg_2_0.onCritterSortChange, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0.onOpenView, arg_2_0)
+function RoomCritterDecomposeView:addEvents()
+	self._btncirtterRare:AddClickListener(self._btncirtterRareOnClick, self)
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
+	self._btnfastadd:AddClickListener(self._btnfastaddOnClick, self)
+	self._btnclear:AddClickListener(self._btnclearOnClick, self)
+	self._btndecompose:AddClickListener(self._btndecomposeOnClick, self)
+	self._dropmaturefilter:AddOnValueChanged(self.onMatureDropValueChange, self)
+	self._dropRareFilter:AddOnValueChanged(self.onRareDropValueChange, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, self.onCritterFilterTypeChange, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, self.onCritterDecomposeSelectChange, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterChangeSort, self.onCritterSortChange, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onOpenView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncirtterRare:RemoveClickListener()
-	arg_3_0._btnfilter:RemoveClickListener()
-	arg_3_0._btnfastadd:RemoveClickListener()
-	arg_3_0._btnclear:RemoveClickListener()
-	arg_3_0._btndecompose:RemoveClickListener()
-	arg_3_0._dropmaturefilter:RemoveOnValueChanged()
-	arg_3_0._dropRareFilter:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, arg_3_0.onCritterFilterTypeChange, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, arg_3_0.onCritterDecomposeSelectChange, arg_3_0)
-	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterChangeSort, arg_3_0.onCritterSortChange, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_3_0.onOpenView, arg_3_0)
+function RoomCritterDecomposeView:removeEvents()
+	self._btncirtterRare:RemoveClickListener()
+	self._btnfilter:RemoveClickListener()
+	self._btnfastadd:RemoveClickListener()
+	self._btnclear:RemoveClickListener()
+	self._btndecompose:RemoveClickListener()
+	self._dropmaturefilter:RemoveOnValueChanged()
+	self._dropRareFilter:RemoveOnValueChanged()
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterChangeFilterType, self.onCritterFilterTypeChange, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterDecomposeChangeSelect, self.onCritterDecomposeSelectChange, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterChangeSort, self.onCritterSortChange, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self.onOpenView, self)
 end
 
-function var_0_0._btncirtterRareOnClick(arg_4_0)
-	local var_4_0 = RoomCritterDecomposeListModel.instance:getIsSortByRareAscend()
+function RoomCritterDecomposeView:_btncirtterRareOnClick()
+	local isRareAscend = RoomCritterDecomposeListModel.instance:getIsSortByRareAscend()
 
-	RoomCritterDecomposeListModel.instance:setIsSortByRareAscend(not var_4_0)
+	RoomCritterDecomposeListModel.instance:setIsSortByRareAscend(not isRareAscend)
 end
 
-function var_0_0._btnfilterOnClick(arg_5_0)
-	local var_5_0 = {
+function RoomCritterDecomposeView:_btnfilterOnClick()
+	local filterTypeList = {
 		CritterEnum.FilterType.Race,
 		CritterEnum.FilterType.SkillTag
 	}
 
-	CritterController.instance:openCritterFilterView(var_5_0, arg_5_0.viewName)
+	CritterController.instance:openCritterFilterView(filterTypeList, self.viewName)
 end
 
-function var_0_0._btnfastaddOnClick(arg_6_0)
+function RoomCritterDecomposeView:_btnfastaddOnClick()
 	RoomCritterDecomposeListModel.instance:fastAddCritter()
 end
 
-function var_0_0._btnclearOnClick(arg_7_0)
+function RoomCritterDecomposeView:_btnclearOnClick()
 	RoomCritterDecomposeListModel.instance:clearSelectedCritter()
 end
 
-function var_0_0._btndecomposeOnClick(arg_8_0)
-	if RoomCritterDecomposeListModel.instance:getSelectCount() <= 0 then
+function RoomCritterDecomposeView:_btndecomposeOnClick()
+	local count = RoomCritterDecomposeListModel.instance:getSelectCount()
+
+	if count <= 0 then
 		return
 	end
 
-	if not RoomCritterDecomposeListModel.instance:checkDecomposeCountLimit() then
+	local isLimitPass = RoomCritterDecomposeListModel.instance:checkDecomposeCountLimit()
+
+	if not isLimitPass then
 		GameFacade.showToast(ToastEnum.CritterDecomposeLimitCount)
 
 		return
 	end
 
-	arg_8_0.scrollRect.velocity = Vector2.zero
+	self.scrollRect.velocity = Vector2.zero
 
-	UIBlockMgr.instance:startBlock(var_0_1)
+	UIBlockMgr.instance:startBlock(DecomposeAnimKey)
 	CritterController.instance:dispatchEvent(CritterEvent.BeforeDecomposeCritter)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_gplay_uihuan)
-	TaskDispatcher.runDelay(arg_8_0._sendCritterDecomposeRequest, arg_8_0, var_0_4)
+	TaskDispatcher.runDelay(self._sendCritterDecomposeRequest, self, DecomposeAnimDuration)
 end
 
-function var_0_0._sendCritterDecomposeRequest(arg_9_0)
-	UIBlockMgr.instance:endBlock(var_0_1)
+function RoomCritterDecomposeView:_sendCritterDecomposeRequest()
+	UIBlockMgr.instance:endBlock(DecomposeAnimKey)
 
-	if RoomCritterDecomposeListModel.instance:getSelectCount() <= 0 then
+	local count = RoomCritterDecomposeListModel.instance:getSelectCount()
+
+	if count <= 0 then
 		return
 	end
 
-	local var_9_0 = RoomCritterDecomposeListModel.instance:getSelectUIds()
+	local uidList = RoomCritterDecomposeListModel.instance:getSelectUIds()
 
-	CritterRpc.instance:sendBanishCritterRequest(var_9_0)
+	CritterRpc.instance:sendBanishCritterRequest(uidList)
 end
 
-function var_0_0.onMatureDropShow(arg_10_0)
+function RoomCritterDecomposeView:onMatureDropShow()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
-	transformhelper.setLocalScale(arg_10_0._transmatureDroparrow, 1, 1, 1)
+	transformhelper.setLocalScale(self._transmatureDroparrow, 1, 1, 1)
 end
 
-function var_0_0.onMatureDropValueChange(arg_11_0, arg_11_1)
-	if not arg_11_0.initMatureDropDone then
+function RoomCritterDecomposeView:onMatureDropValueChange(index)
+	if not self.initMatureDropDone then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_volume_button)
 
-	local var_11_0 = arg_11_0.filterMatureTypeList and arg_11_0.filterMatureTypeList[arg_11_1 + 1]
-	local var_11_1 = RoomCritterDecomposeListModel.instance:getFilterMature()
+	local newFilterType = self.filterMatureTypeList and self.filterMatureTypeList[index + 1]
+	local matureFilterType = RoomCritterDecomposeListModel.instance:getFilterMature()
 
-	if var_11_1 and var_11_1 == var_11_0 then
+	if matureFilterType and matureFilterType == newFilterType then
 		return
 	end
 
-	RoomCritterDecomposeListModel.instance:setFilterMature(var_11_0)
-	RoomCritterDecomposeListModel.instance:updateCritterList(arg_11_0.filterMO)
-	arg_11_0:refreshCritterList()
+	RoomCritterDecomposeListModel.instance:setFilterMature(newFilterType)
+	RoomCritterDecomposeListModel.instance:updateCritterList(self.filterMO)
+	self:refreshCritterList()
 end
 
-function var_0_0.onMatureDropHide(arg_12_0)
-	transformhelper.setLocalScale(arg_12_0._transmatureDroparrow, 1, -1, 1)
+function RoomCritterDecomposeView:onMatureDropHide()
+	transformhelper.setLocalScale(self._transmatureDroparrow, 1, -1, 1)
 end
 
-function var_0_0.onRareDropShow(arg_13_0)
+function RoomCritterDecomposeView:onRareDropShow()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
-	transformhelper.setLocalScale(arg_13_0._transRareDropArrow, 1, -1, 1)
+	transformhelper.setLocalScale(self._transRareDropArrow, 1, -1, 1)
 end
 
-function var_0_0.onRareDropValueChange(arg_14_0, arg_14_1)
-	if not arg_14_0.initRareDropDone then
+function RoomCritterDecomposeView:onRareDropValueChange(index)
+	if not self.initRareDropDone then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_volume_button)
-	RoomCritterDecomposeListModel.instance:setFilterRare(arg_14_0.filterRareList[arg_14_1 + 1])
+	RoomCritterDecomposeListModel.instance:setFilterRare(self.filterRareList[index + 1])
 end
 
-function var_0_0.onRareDropHide(arg_15_0)
-	transformhelper.setLocalScale(arg_15_0._transRareDropArrow, 1, 1, 1)
+function RoomCritterDecomposeView:onRareDropHide()
+	transformhelper.setLocalScale(self._transRareDropArrow, 1, 1, 1)
 end
 
-function var_0_0.onCritterFilterTypeChange(arg_16_0, arg_16_1)
-	if arg_16_1 ~= arg_16_0.viewName then
+function RoomCritterDecomposeView:onCritterFilterTypeChange(viewName)
+	if viewName ~= self.viewName then
 		return
 	end
 
-	RoomCritterDecomposeListModel.instance:updateCritterList(arg_16_0.filterMO)
-	arg_16_0:refreshCritterList()
-	arg_16_0:refreshFilterBtn()
+	RoomCritterDecomposeListModel.instance:updateCritterList(self.filterMO)
+	self:refreshCritterList()
+	self:refreshFilterBtn()
 end
 
-function var_0_0.onCritterDecomposeSelectChange(arg_17_0)
-	arg_17_0:refreshSelectNum()
-	arg_17_0:refreshResultCount()
-	arg_17_0:refreshDecomposeBtn()
+function RoomCritterDecomposeView:onCritterDecomposeSelectChange()
+	self:refreshSelectNum()
+	self:refreshResultCount()
+	self:refreshDecomposeBtn()
 end
 
-function var_0_0.onCritterSortChange(arg_18_0)
+function RoomCritterDecomposeView:onCritterSortChange()
 	RoomCritterDecomposeListModel.instance:sortCritterList()
-	arg_18_0:refreshCritterList()
-	arg_18_0:refreshBtnItem(arg_18_0.rareBtnItem)
+	self:refreshCritterList()
+	self:refreshBtnItem(self.rareBtnItem)
 end
 
-function var_0_0.onOpenView(arg_19_0, arg_19_1)
-	if arg_19_1 ~= ViewName.CommonPropView then
+function RoomCritterDecomposeView:onOpenView(viewName)
+	if viewName ~= ViewName.CommonPropView then
 		return
 	end
 
-	arg_19_0:clearPerCount()
-	RoomCritterDecomposeListModel.instance:updateCritterList(arg_19_0.filterMO)
-	arg_19_0:refreshCritterList()
-	arg_19_0:refreshDecomposeBtn()
+	self:clearPerCount()
+	RoomCritterDecomposeListModel.instance:updateCritterList(self.filterMO)
+	self:refreshCritterList()
+	self:refreshDecomposeBtn()
 end
 
-function var_0_0._editableInitView(arg_20_0)
-	arg_20_0._goRareDrop = arg_20_0._dropRareFilter.gameObject
-	arg_20_0._transRareDropArrow = gohelper.findChildComponent(arg_20_0._goRareDrop, "Arrow", gohelper.Type_Transform)
-	arg_20_0.scrollRect = gohelper.findChild(arg_20_0.viewGO, "left_container/#go_scrollcontainer/#scroll_critter"):GetComponent(typeof(UnityEngine.UI.ScrollRect))
-	arg_20_0.goclear = gohelper.findChild(arg_20_0.viewGO, "left_container/go_clear")
-	arg_20_0.txtCountAnimator = gohelper.findChildComponent(arg_20_0.viewGO, "right_container/vx_count/ani", gohelper.Type_Animator)
-	arg_20_0.goDecomposeBtn = arg_20_0._btndecompose.gameObject
-	arg_20_0.rareBtnItem = arg_20_0:createSortBtnItem(arg_20_0._btncirtterRare.gameObject)
+function RoomCritterDecomposeView:_editableInitView()
+	self._goRareDrop = self._dropRareFilter.gameObject
+	self._transRareDropArrow = gohelper.findChildComponent(self._goRareDrop, "Arrow", gohelper.Type_Transform)
+	self.scrollRect = gohelper.findChild(self.viewGO, "left_container/#go_scrollcontainer/#scroll_critter"):GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	self.goclear = gohelper.findChild(self.viewGO, "left_container/go_clear")
+	self.txtCountAnimator = gohelper.findChildComponent(self.viewGO, "right_container/vx_count/ani", gohelper.Type_Animator)
+	self.goDecomposeBtn = self._btndecompose.gameObject
+	self.rareBtnItem = self:createSortBtnItem(self._btncirtterRare.gameObject)
 
-	arg_20_0:initMatureDropFilter()
-	arg_20_0:initRareFilterDrop()
+	self:initMatureDropFilter()
+	self:initRareFilterDrop()
 
-	arg_20_0.multipleChar = luaLang("multiple")
+	self.multipleChar = luaLang("multiple")
 
-	arg_20_0:clearVar()
+	self:clearVar()
 
-	arg_20_0.filterMO = CritterFilterModel.instance:generateFilterMO(arg_20_0.viewName)
+	self.filterMO = CritterFilterModel.instance:generateFilterMO(self.viewName)
 
-	RoomCritterDecomposeListModel.instance:updateCritterList(arg_20_0.filterMO)
+	RoomCritterDecomposeListModel.instance:updateCritterList(self.filterMO)
 end
 
-function var_0_0.createSortBtnItem(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getUserDataTb_()
+function RoomCritterDecomposeView:createSortBtnItem(btnGO)
+	local btnItem = self:getUserDataTb_()
 
-	var_21_0.go = arg_21_1
-	var_21_0.goNormal = gohelper.findChild(var_21_0.go, "normal")
-	var_21_0.goSelected = gohelper.findChild(var_21_0.go, "selected")
-	var_21_0.arrowTr = gohelper.findChildComponent(var_21_0.go, "selected/txt/arrow", gohelper.Type_Transform)
+	btnItem.go = btnGO
+	btnItem.goNormal = gohelper.findChild(btnItem.go, "normal")
+	btnItem.goSelected = gohelper.findChild(btnItem.go, "selected")
+	btnItem.arrowTr = gohelper.findChildComponent(btnItem.go, "selected/txt/arrow", gohelper.Type_Transform)
 
-	gohelper.setActive(var_21_0.goNormal, false)
-	gohelper.setActive(var_21_0.goSelected, true)
+	gohelper.setActive(btnItem.goNormal, false)
+	gohelper.setActive(btnItem.goSelected, true)
 
-	return var_21_0
+	return btnItem
 end
 
-function var_0_0.initMatureDropFilter(arg_22_0)
-	arg_22_0.dropMatureExtend = DropDownExtend.Get(arg_22_0._dropmaturefilter.gameObject)
+function RoomCritterDecomposeView:initMatureDropFilter()
+	self.dropMatureExtend = DropDownExtend.Get(self._dropmaturefilter.gameObject)
 
-	arg_22_0.dropMatureExtend:init(arg_22_0.onMatureDropShow, arg_22_0.onMatureDropHide, arg_22_0)
+	self.dropMatureExtend:init(self.onMatureDropShow, self.onMatureDropHide, self)
 
-	arg_22_0.filterMatureTypeList = {
+	self.filterMatureTypeList = {
 		CritterEnum.MatureFilterType.All,
 		CritterEnum.MatureFilterType.Mature,
 		CritterEnum.MatureFilterType.NotMature
 	}
 
-	local var_22_0 = {}
+	local filterName = {}
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.filterMatureTypeList) do
-		local var_22_1 = CritterEnum.MatureFilterTypeName[iter_22_1]
-		local var_22_2 = luaLang(var_22_1)
+	for _, filterType in ipairs(self.filterMatureTypeList) do
+		local filterTypeNameLangId = CritterEnum.MatureFilterTypeName[filterType]
+		local filterTypeName = luaLang(filterTypeNameLangId)
 
-		table.insert(var_22_0, var_22_2)
+		table.insert(filterName, filterTypeName)
 	end
 
-	arg_22_0._dropmaturefilter:ClearOptions()
-	arg_22_0._dropmaturefilter:AddOptions(var_22_0)
+	self._dropmaturefilter:ClearOptions()
+	self._dropmaturefilter:AddOptions(filterName)
 
-	arg_22_0.initMatureDropDone = true
+	self.initMatureDropDone = true
 end
 
-function var_0_0.initRareFilterDrop(arg_23_0)
-	arg_23_0.dropRareExtend = DropDownExtend.Get(arg_23_0._goRareDrop)
+function RoomCritterDecomposeView:initRareFilterDrop()
+	self.dropRareExtend = DropDownExtend.Get(self._goRareDrop)
 
-	arg_23_0.dropRareExtend:init(arg_23_0.onRareDropShow, arg_23_0.onRareDropHide, arg_23_0)
+	self.dropRareExtend:init(self.onRareDropShow, self.onRareDropHide, self)
 
-	local var_23_0 = {}
+	local dropStrList = {}
 
-	arg_23_0.filterRareList = {}
+	self.filterRareList = {}
 
-	for iter_23_0 = CritterEnum.CritterDecomposeMinRare, CritterEnum.CritterDecomposeMaxRare do
-		table.insert(arg_23_0.filterRareList, iter_23_0)
+	for value = CritterEnum.CritterDecomposeMinRare, CritterEnum.CritterDecomposeMaxRare do
+		table.insert(self.filterRareList, value)
 
-		local var_23_1 = GameUtil.getSubPlaceholderLuaLang(luaLang("critter_rare_filter"), {
-			iter_23_0 + 1
+		local str = GameUtil.getSubPlaceholderLuaLang(luaLang("critter_rare_filter"), {
+			value + 1
 		})
 
-		table.insert(var_23_0, var_23_1)
+		table.insert(dropStrList, str)
 	end
 
-	arg_23_0._dropRareFilter:ClearOptions()
-	arg_23_0._dropRareFilter:AddOptions(var_23_0)
+	self._dropRareFilter:ClearOptions()
+	self._dropRareFilter:AddOptions(dropStrList)
 
-	arg_23_0.initRareDropDone = true
+	self.initRareDropDone = true
 end
 
-function var_0_0.onUpdateParam(arg_24_0)
+function RoomCritterDecomposeView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_25_0)
-	arg_25_0:setResultIcon()
-	arg_25_0:refresh()
-	gohelper.setActive(arg_25_0._goempty, false)
-	TaskDispatcher.runDelay(arg_25_0.initCritterList, arg_25_0, var_0_2)
+function RoomCritterDecomposeView:onOpen()
+	self:setResultIcon()
+	self:refresh()
+	gohelper.setActive(self._goempty, false)
+	TaskDispatcher.runDelay(self.initCritterList, self, CritterEnterAnimWaitTime)
 end
 
-function var_0_0.setResultIcon(arg_26_0)
-	local var_26_0
-	local var_26_1 = ""
-	local var_26_2 = CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.DecomposeResult)
-	local var_26_3 = string.splitToNumber(var_26_2, "#")
+function RoomCritterDecomposeView:setResultIcon()
+	local resultItemIconPath
+	local resultItemName = ""
+	local strResult = CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.DecomposeResult)
+	local resultList = string.splitToNumber(strResult, "#")
 
-	if var_26_3 then
-		local var_26_4, var_26_5 = ItemModel.instance:getItemConfigAndIcon(var_26_3[1], var_26_3[2])
+	if resultList then
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(resultList[1], resultList[2])
 
-		var_26_1 = var_26_4.name
-		var_26_0 = var_26_5
+		resultItemName = config.name
+		resultItemIconPath = icon
 	end
 
-	if not string.nilorempty(var_26_0) then
-		arg_26_0._simageresultItemIcon:LoadImage(var_26_0)
+	if not string.nilorempty(resultItemIconPath) then
+		self._simageresultItemIcon:LoadImage(resultItemIconPath)
 	end
 
-	arg_26_0._txtresultItemName.text = var_26_1
+	self._txtresultItemName.text = resultItemName
 end
 
-function var_0_0.initCritterList(arg_27_0)
-	arg_27_0.viewContainer._views[2]._animationStartTime = Time.time
+function RoomCritterDecomposeView:initCritterList()
+	self.viewContainer._views[2]._animationStartTime = Time.time
 
-	arg_27_0:refreshCritterList()
+	self:refreshCritterList()
 end
 
-function var_0_0.refreshCritterList(arg_28_0)
+function RoomCritterDecomposeView:refreshCritterList()
 	RoomCritterDecomposeListModel.instance:refreshCritterShowList()
 
-	local var_28_0 = RoomCritterDecomposeListModel.instance:isEmpty()
+	local isEmpty = RoomCritterDecomposeListModel.instance:isEmpty()
 
-	gohelper.setActive(arg_28_0._goempty, var_28_0)
+	gohelper.setActive(self._goempty, isEmpty)
 end
 
-function var_0_0.refresh(arg_29_0)
-	arg_29_0:refreshTop()
-	arg_29_0:refreshSelectNum()
-	arg_29_0:refreshResultCount()
-	arg_29_0:refreshDecomposeBtn()
+function RoomCritterDecomposeView:refresh()
+	self:refreshTop()
+	self:refreshSelectNum()
+	self:refreshResultCount()
+	self:refreshDecomposeBtn()
 end
 
-function var_0_0.refreshTop(arg_30_0)
-	arg_30_0:refreshBtnItem(arg_30_0.rareBtnItem)
-	arg_30_0:refreshFilterBtn()
+function RoomCritterDecomposeView:refreshTop()
+	self:refreshBtnItem(self.rareBtnItem)
+	self:refreshFilterBtn()
 end
 
-function var_0_0.refreshBtnItem(arg_31_0, arg_31_1)
-	local var_31_0 = RoomCritterDecomposeListModel.instance:getIsSortByRareAscend() and 1 or -1
+function RoomCritterDecomposeView:refreshBtnItem(btnItem)
+	local isRareAscend = RoomCritterDecomposeListModel.instance:getIsSortByRareAscend()
+	local scaleY = isRareAscend and 1 or -1
 
-	transformhelper.setLocalScale(arg_31_1.arrowTr, 1, var_31_0, 1)
+	transformhelper.setLocalScale(btnItem.arrowTr, 1, scaleY, 1)
 end
 
-function var_0_0.refreshFilterBtn(arg_32_0)
-	local var_32_0 = arg_32_0.filterMO:isFiltering()
+function RoomCritterDecomposeView:refreshFilterBtn()
+	local isFiltering = self.filterMO:isFiltering()
 
-	gohelper.setActive(arg_32_0._gonotfilter, not var_32_0)
-	gohelper.setActive(arg_32_0._gofilter, var_32_0)
+	gohelper.setActive(self._gonotfilter, not isFiltering)
+	gohelper.setActive(self._gofilter, isFiltering)
 end
 
-function var_0_0.refreshSelectNum(arg_33_0)
-	local var_33_0 = RoomCritterDecomposeListModel.instance:getSelectCount()
+function RoomCritterDecomposeView:refreshSelectNum()
+	local selectedCount = RoomCritterDecomposeListModel.instance:getSelectCount()
 
-	arg_33_0._txtselectNum.text = string.format("<color=#ff7933>%s</color>/%s", var_33_0, CritterEnum.DecomposeMaxCount)
+	self._txtselectNum.text = string.format("<color=#ff7933>%s</color>/%s", selectedCount, CritterEnum.DecomposeMaxCount)
 
-	gohelper.setActive(arg_33_0.goclear, var_33_0 > 0)
+	gohelper.setActive(self.goclear, selectedCount > 0)
 end
 
-function var_0_0.refreshResultCount(arg_34_0)
-	local var_34_0 = RoomCritterDecomposeListModel.instance:getDecomposeCritterCount()
+function RoomCritterDecomposeView:refreshResultCount()
+	local currentCount = RoomCritterDecomposeListModel.instance:getDecomposeCritterCount()
 
-	if arg_34_0.preCount == var_34_0 then
+	if self.preCount == currentCount then
 		return
 	end
 
-	arg_34_0.preCount = var_34_0
+	self.preCount = currentCount
 
-	arg_34_0:killTween()
+	self:killTween()
 
-	arg_34_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_34_0.preCount, var_34_0, var_0_3, arg_34_0.frameCallback, arg_34_0.finishCallback, arg_34_0)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(self.preCount, currentCount, DecomposeTxtAnimDuration, self.frameCallback, self.finishCallback, self)
 
-	arg_34_0.txtCountAnimator:Play("vx_count", 0, 0)
+	self.txtCountAnimator:Play("vx_count", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_gplay_uihuan2)
 end
 
-function var_0_0.frameCallback(arg_35_0, arg_35_1)
-	arg_35_0:setTxtResultCount(math.ceil(arg_35_1))
+function RoomCritterDecomposeView:frameCallback(value)
+	self:setTxtResultCount(math.ceil(value))
 end
 
-function var_0_0.setTxtResultCount(arg_36_0, arg_36_1)
-	arg_36_0._txtResultCount.text = string.format("%s%s", arg_36_0.multipleChar, arg_36_1)
+function RoomCritterDecomposeView:setTxtResultCount(count)
+	self._txtResultCount.text = string.format("%s%s", self.multipleChar, count)
 end
 
-function var_0_0.finishCallback(arg_37_0)
-	arg_37_0.tweenId = nil
+function RoomCritterDecomposeView:finishCallback()
+	self.tweenId = nil
 end
 
-function var_0_0.refreshDecomposeBtn(arg_38_0)
-	local var_38_0 = RoomCritterDecomposeListModel.instance:getSelectCount()
+function RoomCritterDecomposeView:refreshDecomposeBtn()
+	local selectCount = RoomCritterDecomposeListModel.instance:getSelectCount()
 
-	ZProj.UGUIHelper.SetGrayscale(arg_38_0.goDecomposeBtn, var_38_0 < 1)
+	ZProj.UGUIHelper.SetGrayscale(self.goDecomposeBtn, selectCount < 1)
 end
 
-function var_0_0.killTween(arg_39_0)
-	if arg_39_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_39_0.tweenId)
+function RoomCritterDecomposeView:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_39_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.clearVar(arg_40_0)
-	arg_40_0:clearPerCount()
-	arg_40_0:killTween()
+function RoomCritterDecomposeView:clearVar()
+	self:clearPerCount()
+	self:killTween()
 end
 
-function var_0_0.clearPerCount(arg_41_0)
-	arg_41_0.preCount = 0
+function RoomCritterDecomposeView:clearPerCount()
+	self.preCount = 0
 
-	arg_41_0:setTxtResultCount(arg_41_0.preCount)
+	self:setTxtResultCount(self.preCount)
 end
 
-function var_0_0.onClose(arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0.initCritterList, arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0._sendCritterDecomposeRequest, arg_42_0)
-	UIBlockMgr.instance:endBlock(var_0_1)
-	arg_42_0:clearVar()
+function RoomCritterDecomposeView:onClose()
+	TaskDispatcher.cancelTask(self.initCritterList, self)
+	TaskDispatcher.cancelTask(self._sendCritterDecomposeRequest, self)
+	UIBlockMgr.instance:endBlock(DecomposeAnimKey)
+	self:clearVar()
 end
 
-function var_0_0.onDestroyView(arg_43_0)
-	arg_43_0._simageresultItemIcon:UnLoadImage()
+function RoomCritterDecomposeView:onDestroyView()
+	self._simageresultItemIcon:UnLoadImage()
 
-	if arg_43_0.dropMatureExtend then
-		arg_43_0.dropMatureExtend:dispose()
+	if self.dropMatureExtend then
+		self.dropMatureExtend:dispose()
 	end
 
-	if arg_43_0.dropRareExtend then
-		arg_43_0.dropRareExtend:dispose()
+	if self.dropRareExtend then
+		self.dropRareExtend:dispose()
 	end
 end
 
-return var_0_0
+return RoomCritterDecomposeView

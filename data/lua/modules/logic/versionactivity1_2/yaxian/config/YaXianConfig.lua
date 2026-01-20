@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.config.YaXianConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/config/YaXianConfig.lua
 
-local var_0_0 = class("YaXianConfig", BaseConfig)
+module("modules.logic.versionactivity1_2.yaxian.config.YaXianConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.chapterConfig = nil
-	arg_1_0.chapterId2EpisodeList = nil
-	arg_1_0.mapConfig = nil
-	arg_1_0.interactObjectConfig = nil
-	arg_1_0.episodeConfig = nil
-	arg_1_0.skillConfig = nil
-	arg_1_0.toothConfig = nil
-	arg_1_0.toothUnlockEpisodeIdDict = {}
-	arg_1_0.toothUnlockSkillIdDict = {}
-	arg_1_0.toothUnlockHeroTemplateDict = {}
+local YaXianConfig = class("YaXianConfig", BaseConfig)
+
+function YaXianConfig:ctor()
+	self.chapterConfig = nil
+	self.chapterId2EpisodeList = nil
+	self.mapConfig = nil
+	self.interactObjectConfig = nil
+	self.episodeConfig = nil
+	self.skillConfig = nil
+	self.toothConfig = nil
+	self.toothUnlockEpisodeIdDict = {}
+	self.toothUnlockSkillIdDict = {}
+	self.toothUnlockHeroTemplateDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function YaXianConfig:reqConfigNames()
 	return {
 		"activity115_chapter",
 		"activity115_episode",
@@ -27,189 +29,191 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity115_chapter" then
-		arg_3_0.chapterConfig = arg_3_2
-	elseif arg_3_1 == "activity115_episode" then
-		arg_3_0.episodeConfig = arg_3_2
+function YaXianConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity115_chapter" then
+		self.chapterConfig = configTable
+	elseif configName == "activity115_episode" then
+		self.episodeConfig = configTable
 
-		arg_3_0:initEpisode()
-	elseif arg_3_1 == "activity115_map" then
-		arg_3_0.mapConfig = arg_3_2
-	elseif arg_3_1 == "activity115_interact_object" then
-		arg_3_0.interactObjectConfig = arg_3_2
-	elseif arg_3_1 == "activity115_skill" then
-		arg_3_0.skillConfig = arg_3_2
-	elseif arg_3_1 == "activity115_tooth" then
-		arg_3_0.toothConfig = arg_3_2
+		self:initEpisode()
+	elseif configName == "activity115_map" then
+		self.mapConfig = configTable
+	elseif configName == "activity115_interact_object" then
+		self.interactObjectConfig = configTable
+	elseif configName == "activity115_skill" then
+		self.skillConfig = configTable
+	elseif configName == "activity115_tooth" then
+		self.toothConfig = configTable
 	end
 end
 
-function var_0_0.initEpisode(arg_4_0)
-	arg_4_0.chapterId2EpisodeList = {}
+function YaXianConfig:initEpisode()
+	self.chapterId2EpisodeList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.episodeConfig.configList) do
-		if not arg_4_0.chapterId2EpisodeList[iter_4_1.chapterId] then
-			arg_4_0.chapterId2EpisodeList[iter_4_1.chapterId] = {}
+	for _, episodeCo in ipairs(self.episodeConfig.configList) do
+		if not self.chapterId2EpisodeList[episodeCo.chapterId] then
+			self.chapterId2EpisodeList[episodeCo.chapterId] = {}
 		end
 
-		table.insert(arg_4_0.chapterId2EpisodeList[iter_4_1.chapterId], iter_4_1)
+		table.insert(self.chapterId2EpisodeList[episodeCo.chapterId], episodeCo)
 
-		if iter_4_1.tooth ~= 0 then
-			arg_4_0.toothUnlockEpisodeIdDict[iter_4_1.tooth] = iter_4_1.id
+		if episodeCo.tooth ~= 0 then
+			self.toothUnlockEpisodeIdDict[episodeCo.tooth] = episodeCo.id
 
-			if iter_4_1.unlockSkill ~= 0 then
-				arg_4_0.toothUnlockSkillIdDict[iter_4_1.tooth] = iter_4_1.unlockSkill
+			if episodeCo.unlockSkill ~= 0 then
+				self.toothUnlockSkillIdDict[episodeCo.tooth] = episodeCo.unlockSkill
 			end
 
-			if iter_4_1.trialTemplate ~= 0 then
-				arg_4_0.toothUnlockHeroTemplateDict[iter_4_1.tooth] = iter_4_1.trialTemplate
+			if episodeCo.trialTemplate ~= 0 then
+				self.toothUnlockHeroTemplateDict[episodeCo.tooth] = episodeCo.trialTemplate
 			end
 		end
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(arg_4_0.chapterId2EpisodeList) do
-		table.sort(iter_4_3, function(arg_5_0, arg_5_1)
-			return arg_5_0.id < arg_5_1.id
+	for _, episodeList in ipairs(self.chapterId2EpisodeList) do
+		table.sort(episodeList, function(a, b)
+			return a.id < b.id
 		end)
 	end
 end
 
-function var_0_0.getChapterConfigList(arg_6_0)
-	return arg_6_0.chapterConfig.configList
+function YaXianConfig:getChapterConfigList()
+	return self.chapterConfig.configList
 end
 
-function var_0_0.getChapterConfig(arg_7_0, arg_7_1)
-	return arg_7_0.chapterConfig.configDict[YaXianEnum.ActivityId][arg_7_1]
+function YaXianConfig:getChapterConfig(chapterId)
+	return self.chapterConfig.configDict[YaXianEnum.ActivityId][chapterId]
 end
 
-function var_0_0.getMapConfig(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0.mapConfig.configDict[arg_8_1] then
-		return arg_8_0.mapConfig.configDict[arg_8_1][arg_8_2]
+function YaXianConfig:getMapConfig(actId, mapId)
+	if self.mapConfig.configDict[actId] then
+		return self.mapConfig.configDict[actId][mapId]
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeConfig(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0.episodeConfig.configDict[arg_9_1] then
-		return arg_9_0.episodeConfig.configDict[arg_9_1][arg_9_2]
+function YaXianConfig:getEpisodeConfig(actId, episodeId)
+	if self.episodeConfig.configDict[actId] then
+		return self.episodeConfig.configDict[actId][episodeId]
 	end
 
 	return nil
 end
 
-function var_0_0.getPreEpisodeConfig(arg_10_0, arg_10_1, arg_10_2)
-	return arg_10_0:getEpisodeConfig(arg_10_1, arg_10_2 - 1)
+function YaXianConfig:getPreEpisodeConfig(actId, episodeId)
+	return self:getEpisodeConfig(actId, episodeId - 1)
 end
 
-function var_0_0.getEpisodeCanFinishInteractCount(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function YaXianConfig:getEpisodeCanFinishInteractCount(episodeCo)
+	if not episodeCo then
 		return 0
 	end
 
-	arg_11_0.episodeCanFinishInteractCountDict = arg_11_0.episodeCanFinishInteractCountDict or {}
+	self.episodeCanFinishInteractCountDict = self.episodeCanFinishInteractCountDict or {}
 
-	if arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId] then
-		return arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId]
+	if self.episodeCanFinishInteractCountDict[episodeCo.mapId] then
+		return self.episodeCanFinishInteractCountDict[episodeCo.mapId]
 	end
 
-	local var_11_0 = arg_11_0:getMapConfig(arg_11_1.activityId, arg_11_1.mapId)
+	local mapCo = self:getMapConfig(episodeCo.activityId, episodeCo.mapId)
 
-	if not var_11_0 then
-		arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId] = 0
+	if not mapCo then
+		self.episodeCanFinishInteractCountDict[episodeCo.mapId] = 0
 
 		return 0
 	end
 
-	local var_11_1 = cjson.decode(var_11_0.objects)
-	local var_11_2 = 0
+	local objList = cjson.decode(mapCo.objects)
+	local canFinishCount = 0
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		if arg_11_0:checkInteractCanFinish(arg_11_0:getInteractObjectCo(iter_11_1.actId, iter_11_1.id)) then
-			var_11_2 = var_11_2 + 1
+	for _, co in ipairs(objList) do
+		if self:checkInteractCanFinish(self:getInteractObjectCo(co.actId, co.id)) then
+			canFinishCount = canFinishCount + 1
 		end
 	end
 
-	arg_11_0.episodeCanFinishInteractCountDict[arg_11_1.mapId] = var_11_2
+	self.episodeCanFinishInteractCountDict[episodeCo.mapId] = canFinishCount
 
-	return var_11_2
+	return canFinishCount
 end
 
-function var_0_0.checkInteractCanFinish(arg_12_0, arg_12_1)
-	return arg_12_1 and arg_12_1.interactType == YaXianGameEnum.InteractType.Enemy
+function YaXianConfig:checkInteractCanFinish(interactCo)
+	return interactCo and interactCo.interactType == YaXianGameEnum.InteractType.Enemy
 end
 
-function var_0_0.getConditionList(arg_13_0, arg_13_1)
-	if not arg_13_1 then
+function YaXianConfig:getConditionList(episodeCo)
+	if not episodeCo then
 		return {}
 	end
 
-	local var_13_0 = GameUtil.splitString2(arg_13_1.extStarCondition, true, "|", "#") or {}
+	local conditionList = GameUtil.splitString2(episodeCo.extStarCondition, true, "|", "#")
 
-	table.insert(var_13_0, {
+	conditionList = conditionList or {}
+
+	table.insert(conditionList, {
 		YaXianGameEnum.ConditionType.PassEpisode
 	})
 
-	return var_13_0
+	return conditionList
 end
 
-function var_0_0.getInteractObjectCo(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0.interactObjectConfig.configDict[arg_14_1] then
-		return arg_14_0.interactObjectConfig.configDict[arg_14_1][arg_14_2]
+function YaXianConfig:getInteractObjectCo(actId, interactId)
+	if self.interactObjectConfig.configDict[actId] then
+		return self.interactObjectConfig.configDict[actId][interactId]
 	end
 
 	return nil
 end
 
-function var_0_0.getSkillConfig(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0.skillConfig.configDict[arg_15_1] then
-		return arg_15_0.skillConfig.configDict[arg_15_1][arg_15_2]
+function YaXianConfig:getSkillConfig(actId, skillId)
+	if self.skillConfig.configDict[actId] then
+		return self.skillConfig.configDict[actId][skillId]
 	end
 
 	return nil
 end
 
-function var_0_0.getThroughSkillDistance(arg_16_0)
-	if not arg_16_0.throughSkillDistance then
-		local var_16_0 = arg_16_0:getSkillConfig(YaXianEnum.ActivityId, YaXianGameEnum.SkillId.ThroughWall)
+function YaXianConfig:getThroughSkillDistance()
+	if not self.throughSkillDistance then
+		local config = self:getSkillConfig(YaXianEnum.ActivityId, YaXianGameEnum.SkillId.ThroughWall)
 
-		arg_16_0.throughSkillDistance = var_16_0 and tonumber(var_16_0.param)
+		self.throughSkillDistance = config and tonumber(config.param)
 	end
 
-	return arg_16_0.throughSkillDistance
+	return self.throughSkillDistance
 end
 
-function var_0_0.getToothConfig(arg_17_0, arg_17_1)
-	return arg_17_0.toothConfig.configDict[YaXianEnum.ActivityId][arg_17_1]
+function YaXianConfig:getToothConfig(id)
+	return self.toothConfig.configDict[YaXianEnum.ActivityId][id]
 end
 
-function var_0_0.getToothUnlockEpisode(arg_18_0, arg_18_1)
-	return arg_18_0.toothUnlockEpisodeIdDict and arg_18_0.toothUnlockEpisodeIdDict[arg_18_1]
+function YaXianConfig:getToothUnlockEpisode(toothId)
+	return self.toothUnlockEpisodeIdDict and self.toothUnlockEpisodeIdDict[toothId]
 end
 
-function var_0_0.getToothUnlockSkill(arg_19_0, arg_19_1)
-	return arg_19_0.toothUnlockSkillIdDict and arg_19_0.toothUnlockSkillIdDict[arg_19_1]
+function YaXianConfig:getToothUnlockSkill(toothId)
+	return self.toothUnlockSkillIdDict and self.toothUnlockSkillIdDict[toothId]
 end
 
-function var_0_0.getToothUnlockHeroTemplate(arg_20_0, arg_20_1)
-	return arg_20_0.toothUnlockHeroTemplateDict and arg_20_0.toothUnlockHeroTemplateDict[arg_20_1]
+function YaXianConfig:getToothUnlockHeroTemplate(toothId)
+	return self.toothUnlockHeroTemplateDict and self.toothUnlockHeroTemplateDict[toothId]
 end
 
-function var_0_0.getMaxBonusScore(arg_21_0)
-	if not arg_21_0.maxBonusScore then
-		arg_21_0.maxBonusScore = 0
+function YaXianConfig:getMaxBonusScore()
+	if not self.maxBonusScore then
+		self.maxBonusScore = 0
 
-		for iter_21_0, iter_21_1 in ipairs(lua_activity115_bonus.configList) do
-			if iter_21_1.needScore > arg_21_0.maxBonusScore then
-				arg_21_0.maxBonusScore = iter_21_1.needScore
+		for _, bonusCo in ipairs(lua_activity115_bonus.configList) do
+			if bonusCo.needScore > self.maxBonusScore then
+				self.maxBonusScore = bonusCo.needScore
 			end
 		end
 	end
 
-	return arg_21_0.maxBonusScore
+	return self.maxBonusScore
 end
 
-var_0_0.instance = var_0_0.New()
+YaXianConfig.instance = YaXianConfig.New()
 
-return var_0_0
+return YaXianConfig

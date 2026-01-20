@@ -1,66 +1,68 @@
-﻿module("modules.logic.explore.map.unit.comp.ExploreUnitClickComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/comp/ExploreUnitClickComp.lua
 
-local var_0_0 = class("ExploreUnitClickComp", LuaCompBase)
+module("modules.logic.explore.map.unit.comp.ExploreUnitClickComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.unit = arg_1_1
-	arg_1_0.enable = true
+local ExploreUnitClickComp = class("ExploreUnitClickComp", LuaCompBase)
+
+function ExploreUnitClickComp:ctor(unit)
+	self.unit = unit
+	self.enable = true
 end
 
-function var_0_0.setup(arg_2_0, arg_2_1)
-	arg_2_0.colliderList = arg_2_1:GetComponentsInChildren(typeof(UnityEngine.Collider))
+function ExploreUnitClickComp:setup(go)
+	self.colliderList = go:GetComponentsInChildren(typeof(UnityEngine.Collider))
 
-	if arg_2_0.colliderList == nil or arg_2_0.colliderList.Length == 0 then
+	if self.colliderList == nil or self.colliderList.Length == 0 then
 		return
 	end
 
-	for iter_2_0 = 0, arg_2_0.colliderList.Length - 1 do
-		local var_2_0 = arg_2_0.colliderList[iter_2_0]
+	for i = 0, self.colliderList.Length - 1 do
+		local collider = self.colliderList[i]
 
-		tolua.setpeer(var_2_0, arg_2_0)
+		tolua.setpeer(collider, self)
 
-		var_2_0.enabled = arg_2_0.enable
+		collider.enabled = self.enable
 	end
 end
 
-function var_0_0.click(arg_3_0)
-	if not arg_3_0.enable then
+function ExploreUnitClickComp:click()
+	if not self.enable then
 		return false
 	end
 
-	if arg_3_0.unit.mo.triggerByClick then
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnClickUnit, arg_3_0.unit.mo)
+	if self.unit.mo.triggerByClick then
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnClickUnit, self.unit.mo)
 	end
 
-	return arg_3_0.unit.mo.triggerByClick
+	return self.unit.mo.triggerByClick
 end
 
-function var_0_0.setEnable(arg_4_0, arg_4_1)
-	arg_4_0.enable = arg_4_1
+function ExploreUnitClickComp:setEnable(v)
+	self.enable = v
 
-	if arg_4_0.colliderList then
-		for iter_4_0 = 0, arg_4_0.colliderList.Length - 1 do
-			arg_4_0.colliderList[iter_4_0].enabled = arg_4_1
+	if self.colliderList then
+		for i = 0, self.colliderList.Length - 1 do
+			self.colliderList[i].enabled = v
 		end
 	end
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
+function ExploreUnitClickComp:beforeDestroy()
 	return
 end
 
-function var_0_0.clear(arg_6_0)
-	if arg_6_0.colliderList then
-		for iter_6_0 = 0, arg_6_0.colliderList.Length - 1 do
-			tolua.setpeer(arg_6_0.colliderList[iter_6_0], nil)
+function ExploreUnitClickComp:clear()
+	if self.colliderList then
+		for i = 0, self.colliderList.Length - 1 do
+			tolua.setpeer(self.colliderList[i], nil)
 		end
 	end
 
-	arg_6_0.colliderList = nil
+	self.colliderList = nil
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	arg_7_0:clear()
+function ExploreUnitClickComp:onDestroy()
+	self:clear()
 end
 
-return var_0_0
+return ExploreUnitClickComp

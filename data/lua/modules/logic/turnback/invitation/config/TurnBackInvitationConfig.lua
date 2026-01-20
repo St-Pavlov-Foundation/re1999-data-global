@@ -1,56 +1,58 @@
-﻿module("modules.logic.turnback.invitation.config.TurnBackInvitationConfig", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/invitation/config/TurnBackInvitationConfig.lua
 
-local var_0_0 = class("TurnBackInvitationConfig", BaseConfig)
+module("modules.logic.turnback.invitation.config.TurnBackInvitationConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._turnBackH5ChannelConfig = nil
+local TurnBackInvitationConfig = class("TurnBackInvitationConfig", BaseConfig)
+
+function TurnBackInvitationConfig:ctor()
+	self._turnBackH5ChannelConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function TurnBackInvitationConfig:reqConfigNames()
 	return {
 		"turnback_h5_channel"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "turnback_h5_channel" then
-		arg_3_0._turnBackH5ChannelConfig = arg_3_2
+function TurnBackInvitationConfig:onConfigLoaded(configName, configTable)
+	if configName == "turnback_h5_channel" then
+		self._turnBackH5ChannelConfig = configTable
 
-		arg_3_0:_initTurnBackH5Config()
+		self:_initTurnBackH5Config()
 	end
 end
 
-function var_0_0._initTurnBackH5Config(arg_4_0)
-	local var_4_0 = {}
-	local var_4_1 = {}
+function TurnBackInvitationConfig:_initTurnBackH5Config()
+	local channelDic = {}
+	local channelTestDic = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._turnBackH5ChannelConfig.configList) do
-		if var_4_0[iter_4_1.channelId] == nil then
-			var_4_0[iter_4_1.channelId] = iter_4_1.url
-			var_4_1[iter_4_1.channelId] = iter_4_1.testUrl
+	for _, config in ipairs(self._turnBackH5ChannelConfig.configList) do
+		if channelDic[config.channelId] == nil then
+			channelDic[config.channelId] = config.url
+			channelTestDic[config.channelId] = config.testUrl
 		end
 	end
 
-	arg_4_0._channelUrlDic = var_4_0
-	arg_4_0._channelTestDic = var_4_1
+	self._channelUrlDic = channelDic
+	self._channelTestDic = channelTestDic
 end
 
-function var_0_0.getChannelConfig(arg_5_0, arg_5_1)
-	return arg_5_0._turnBackH5ChannelConfig.configDict[arg_5_1]
+function TurnBackInvitationConfig:getChannelConfig(id)
+	return self._turnBackH5ChannelConfig.configDict[id]
 end
 
-function var_0_0.getUrlByChannelId(arg_6_0, arg_6_1)
-	return arg_6_0._channelUrlDic[arg_6_1]
+function TurnBackInvitationConfig:getUrlByChannelId(channelId)
+	return self._channelUrlDic[channelId]
 end
 
-function var_0_0.getTestUrlByChannelId(arg_7_0, arg_7_1)
-	if arg_7_0._channelTestDic[arg_7_1] ~= nil then
-		return arg_7_0._channelTestDic[arg_7_1]
+function TurnBackInvitationConfig:getTestUrlByChannelId(channelId)
+	if self._channelTestDic[channelId] ~= nil then
+		return self._channelTestDic[channelId]
 	end
 
-	return arg_7_0._channelUrlDic[arg_7_1]
+	return self._channelUrlDic[channelId]
 end
 
-var_0_0.instance = var_0_0.New()
+TurnBackInvitationConfig.instance = TurnBackInvitationConfig.New()
 
-return var_0_0
+return TurnBackInvitationConfig

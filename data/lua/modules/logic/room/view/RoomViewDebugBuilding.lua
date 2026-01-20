@@ -1,76 +1,77 @@
-﻿module("modules.logic.room.view.RoomViewDebugBuilding", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewDebugBuilding.lua
 
-local var_0_0 = class("RoomViewDebugBuilding", BaseView)
+module("modules.logic.room.view.RoomViewDebugBuilding", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomViewDebugBuilding = class("RoomViewDebugBuilding", BaseView)
+
+function RoomViewDebugBuilding:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewDebugBuilding:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewDebugBuilding:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._godebugbuilding = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/go_debugbuilding")
-	arg_4_0._btnclose = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/go_debugbuilding/btn_close")
-	arg_4_0._scrolldebugbuilding = gohelper.findChildScrollRect(arg_4_0.viewGO, "go_normalroot/go_debugbuilding/scroll_debugbuilding")
+function RoomViewDebugBuilding:_editableInitView()
+	self._godebugbuilding = gohelper.findChild(self.viewGO, "go_normalroot/go_debugbuilding")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_debugbuilding/btn_close")
+	self._scrolldebugbuilding = gohelper.findChildScrollRect(self.viewGO, "go_normalroot/go_debugbuilding/scroll_debugbuilding")
 
-	arg_4_0._btnclose:AddClickListener(arg_4_0._btncloseOnClick, arg_4_0)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 
-	arg_4_0._isShowDebugBuilding = false
+	self._isShowDebugBuilding = false
 
-	gohelper.setActive(arg_4_0._godebugbuilding, false)
+	gohelper.setActive(self._godebugbuilding, false)
 
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
+function RoomViewDebugBuilding:_btncloseOnClick()
 	RoomDebugController.instance:setDebugBuildingListShow(false)
 end
 
-function var_0_0._refreshUI(arg_6_0)
+function RoomViewDebugBuilding:_refreshUI()
 	return
 end
 
-function var_0_0._debugBuildingListViewShowChanged(arg_7_0, arg_7_1)
-	local var_7_0
+function RoomViewDebugBuilding:_debugBuildingListViewShowChanged(isShowDebugBuilding)
+	local changed = self._isShowDebugBuilding ~= isShowDebugBuilding
 
-	var_7_0 = arg_7_0._isShowDebugBuilding ~= arg_7_1
-	arg_7_0._isShowDebugBuilding = arg_7_1
+	self._isShowDebugBuilding = isShowDebugBuilding
 
 	RoomDebugBuildingListModel.instance:clearSelect()
-	gohelper.setActive(arg_7_0._godebugbuilding, arg_7_1)
+	gohelper.setActive(self._godebugbuilding, isShowDebugBuilding)
 
-	if arg_7_1 then
+	if isShowDebugBuilding then
 		RoomDebugBuildingListModel.instance:setDebugBuildingList()
 
-		arg_7_0._scrolldebugbuilding.horizontalNormalizedPosition = 0
+		self._scrolldebugbuilding.horizontalNormalizedPosition = 0
 	end
 end
 
-function var_0_0._addBtnAudio(arg_8_0)
-	gohelper.addUIClickAudio(arg_8_0._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
+function RoomViewDebugBuilding:_addBtnAudio()
+	gohelper.addUIClickAudio(self._btnclose.gameObject, AudioEnum.UI.UI_vertical_first_tabs_click)
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:_refreshUI()
-	arg_9_0:_addBtnAudio()
-	arg_9_0:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, arg_9_0._debugBuildingListViewShowChanged, arg_9_0)
+function RoomViewDebugBuilding:onOpen()
+	self:_refreshUI()
+	self:_addBtnAudio()
+	self:addEventCb(RoomDebugController.instance, RoomEvent.DebugBuildingListShowChanged, self._debugBuildingListViewShowChanged, self)
 end
 
-function var_0_0.onClose(arg_10_0)
+function RoomViewDebugBuilding:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._btnclose:RemoveClickListener()
-	arg_11_0._scrolldebugbuilding:RemoveOnValueChanged()
+function RoomViewDebugBuilding:onDestroyView()
+	self._btnclose:RemoveClickListener()
+	self._scrolldebugbuilding:RemoveOnValueChanged()
 end
 
-return var_0_0
+return RoomViewDebugBuilding

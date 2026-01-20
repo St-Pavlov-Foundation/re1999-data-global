@@ -1,196 +1,198 @@
-﻿module("modules.logic.versionactivity2_0.warmup.view.Act2_0WarmUpLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/warmup/view/Act2_0WarmUpLeftView.lua
 
-local var_0_0 = class("Act2_0WarmUpLeftView", BaseView)
+module("modules.logic.versionactivity2_0.warmup.view.Act2_0WarmUpLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbglight = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/eye/#simage_fullbg_light")
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "Middle/eye/eye0/#go_drag")
-	arg_1_0._goClickArea = gohelper.findChild(arg_1_0.viewGO, "Middle/eye/eye1/#go_ClickArea")
-	arg_1_0._simageday = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/eye_detail/#simage_day")
-	arg_1_0._simagedaybg = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle/eye_detail/#simage_daybg")
+local Act2_0WarmUpLeftView = class("Act2_0WarmUpLeftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act2_0WarmUpLeftView:onInitView()
+	self._simagefullbglight = gohelper.findChildSingleImage(self.viewGO, "Middle/eye/#simage_fullbg_light")
+	self._godrag = gohelper.findChild(self.viewGO, "Middle/eye/eye0/#go_drag")
+	self._goClickArea = gohelper.findChild(self.viewGO, "Middle/eye/eye1/#go_ClickArea")
+	self._simageday = gohelper.findChildSingleImage(self.viewGO, "Middle/eye_detail/#simage_day")
+	self._simagedaybg = gohelper.findChildSingleImage(self.viewGO, "Middle/eye_detail/#simage_daybg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act2_0WarmUpLeftView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act2_0WarmUpLeftView:removeEvents()
 	return
 end
 
-local var_0_1 = SLFramework.AnimatorPlayer
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._middleGo = gohelper.findChild(arg_4_0.viewGO, "Middle")
-	arg_4_0._animatorPlayer = var_0_1.Get(arg_4_0._middleGo)
-	arg_4_0._animSelf = arg_4_0._animatorPlayer.animator
-	arg_4_0._guideGo = gohelper.findChild(arg_4_0.viewGO, "Middle/guide")
-	arg_4_0._animatorPlayer_guide = var_0_1.Get(arg_4_0._guideGo)
-	arg_4_0._eye0Go = gohelper.findChild(arg_4_0.viewGO, "Middle/eye/eye0")
-	arg_4_0._itemClick1 = gohelper.getClickWithAudio(arg_4_0._godrag, AudioEnum.UI.play_ui_common_click_20200111)
-	arg_4_0._itemClick2 = gohelper.getClickWithAudio(arg_4_0._goClickArea, AudioEnum.UI.play_ui_common_click_20200111)
+function Act2_0WarmUpLeftView:_editableInitView()
+	self._middleGo = gohelper.findChild(self.viewGO, "Middle")
+	self._animatorPlayer = csAnimatorPlayer.Get(self._middleGo)
+	self._animSelf = self._animatorPlayer.animator
+	self._guideGo = gohelper.findChild(self.viewGO, "Middle/guide")
+	self._animatorPlayer_guide = csAnimatorPlayer.Get(self._guideGo)
+	self._eye0Go = gohelper.findChild(self.viewGO, "Middle/eye/eye0")
+	self._itemClick1 = gohelper.getClickWithAudio(self._godrag, AudioEnum.UI.play_ui_common_click_20200111)
+	self._itemClick2 = gohelper.getClickWithAudio(self._goClickArea, AudioEnum.UI.play_ui_common_click_20200111)
 
-	arg_4_0._itemClick1:AddClickListener(arg_4_0._onItemClick, arg_4_0)
-	arg_4_0._itemClick2:AddClickListener(arg_4_0._onItemClick, arg_4_0)
+	self._itemClick1:AddClickListener(self._onItemClick, self)
+	self._itemClick2:AddClickListener(self._onItemClick, self)
 
-	arg_4_0._drag = UIDragListenerHelper.New()
+	self._drag = UIDragListenerHelper.New()
 end
 
-function var_0_0._onItemClick(arg_5_0)
-	if not arg_5_0.viewContainer:checkLidIsOpened() then
+function Act2_0WarmUpLeftView:_onItemClick()
+	if not self.viewContainer:checkLidIsOpened() then
 		return
 	end
 
-	arg_5_0:playAnim_Eye(true)
+	self:playAnim_Eye(true)
 end
 
-function var_0_0.onDataUpdateFirst(arg_6_0)
-	if not arg_6_0.viewContainer:checkLidIsOpened() then
-		arg_6_0._drag:create(arg_6_0._godrag)
-		arg_6_0._drag:registerCallback(arg_6_0._drag.EventBegin, arg_6_0._onDragBegin, arg_6_0)
-		arg_6_0._drag:registerCallback(arg_6_0._drag.EventEnd, arg_6_0._onDragEnd, arg_6_0)
+function Act2_0WarmUpLeftView:onDataUpdateFirst()
+	if not self.viewContainer:checkLidIsOpened() then
+		self._drag:create(self._godrag)
+		self._drag:registerCallback(self._drag.EventBegin, self._onDragBegin, self)
+		self._drag:registerCallback(self._drag.EventEnd, self._onDragEnd, self)
 	end
 end
 
-function var_0_0.onDataUpdate(arg_7_0)
-	arg_7_0:_refresh()
+function Act2_0WarmUpLeftView:onDataUpdate()
+	self:_refresh()
 end
 
-function var_0_0.onSwitchEpisode(arg_8_0)
-	arg_8_0:_refresh()
+function Act2_0WarmUpLeftView:onSwitchEpisode()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_9_0)
+function Act2_0WarmUpLeftView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_10_0)
+function Act2_0WarmUpLeftView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	GameUtil.onDestroyViewMember(arg_11_0, "_drag")
-	GameUtil.onDestroyViewMember_ClickListener(arg_11_0, "_itemClick1")
-	GameUtil.onDestroyViewMember_ClickListener(arg_11_0, "_itemClick2")
-	arg_11_0._simagefullbglight:UnLoadImage()
-	arg_11_0._simageday:UnLoadImage()
-	arg_11_0._simagedaybg:UnLoadImage()
+function Act2_0WarmUpLeftView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_drag")
+	GameUtil.onDestroyViewMember_ClickListener(self, "_itemClick1")
+	GameUtil.onDestroyViewMember_ClickListener(self, "_itemClick2")
+	self._simagefullbglight:UnLoadImage()
+	self._simageday:UnLoadImage()
+	self._simagedaybg:UnLoadImage()
 end
 
-function var_0_0._setActive_drag(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._godrag, arg_12_1)
-	gohelper.setActive(arg_12_0._guideGo, arg_12_1)
+function Act2_0WarmUpLeftView:_setActive_drag(isActive)
+	gohelper.setActive(self._godrag, isActive)
+	gohelper.setActive(self._guideGo, isActive)
 end
 
-function var_0_0._episodeId(arg_13_0)
-	return arg_13_0.viewContainer:getCurSelectedEpisode()
+function Act2_0WarmUpLeftView:_episodeId()
+	return self.viewContainer:getCurSelectedEpisode()
 end
 
-function var_0_0._refresh(arg_14_0)
-	local var_14_0 = arg_14_0:_episodeId()
-	local var_14_1 = arg_14_0.viewContainer:checkLidIsOpened()
-	local var_14_2 = arg_14_0.viewContainer:checkEyeIsClicked(var_14_0)
-	local var_14_3 = arg_14_0.viewContainer:getImgResUrl(arg_14_0.viewContainer:episode2Index(var_14_0))
+function Act2_0WarmUpLeftView:_refresh()
+	local episodeId = self:_episodeId()
+	local lidIsOpened = self.viewContainer:checkLidIsOpened()
+	local eyeIsClicked = self.viewContainer:checkEyeIsClicked(episodeId)
+	local resUrl = self.viewContainer:getImgResUrl(self.viewContainer:episode2Index(episodeId))
 
-	arg_14_0._simageday:LoadImage(var_14_3)
-	arg_14_0:_setActive_drag(not var_14_1)
+	self._simageday:LoadImage(resUrl)
+	self:_setActive_drag(not lidIsOpened)
 
-	if var_14_2 then
-		arg_14_0:_zoomed_Eye()
-	elseif var_14_1 then
-		arg_14_0:_opened_Eye()
+	if eyeIsClicked then
+		self:_zoomed_Eye()
+	elseif lidIsOpened then
+		self:_opened_Eye()
 	else
-		arg_14_0:_closed_Lid()
+		self:_closed_Lid()
 	end
 end
 
-function var_0_0.openGuide(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._animatorPlayer_guide:Play("guide_warmup1_loop", arg_15_1, arg_15_2)
+function Act2_0WarmUpLeftView:openGuide(cb, cbObj)
+	self._animatorPlayer_guide:Play("guide_warmup1_loop", cb, cbObj)
 end
 
-function var_0_0._onDragBegin(arg_16_0)
-	gohelper.setActive(arg_16_0._guideGo, false)
+function Act2_0WarmUpLeftView:_onDragBegin()
+	gohelper.setActive(self._guideGo, false)
 end
 
-function var_0_0._onDragEnd(arg_17_0)
-	if arg_17_0.viewContainer:checkLidIsOpened() then
+function Act2_0WarmUpLeftView:_onDragEnd()
+	if self.viewContainer:checkLidIsOpened() then
 		return
 	end
 
-	if arg_17_0._drag:isMoveVerticalMajor() and arg_17_0._drag:isSwipeUp() then
-		arg_17_0:playAnim_Lid(true)
+	if self._drag:isMoveVerticalMajor() and self._drag:isSwipeUp() then
+		self:playAnim_Lid(true)
 	end
 end
 
-function var_0_0._playAnim(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	arg_18_0._animatorPlayer:Play(arg_18_1, arg_18_2, arg_18_3)
+function Act2_0WarmUpLeftView:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb, cbObj)
 end
 
-function var_0_0._playAnimRaw(arg_19_0, arg_19_1, ...)
-	arg_19_0._animSelf.enabled = true
+function Act2_0WarmUpLeftView:_playAnimRaw(name, ...)
+	self._animSelf.enabled = true
 
-	arg_19_0._animSelf:Play(arg_19_1, ...)
+	self._animSelf:Play(name, ...)
 end
 
-local var_0_2 = "Act2_0WarmUpLeftView:playAnim_Lid"
-local var_0_3 = 9.99
+local kBlock_Lid = "Act2_0WarmUpLeftView:playAnim_Lid"
+local kTimeout = 9.99
 
-function var_0_0.playAnim_Lid(arg_20_0, arg_20_1)
+function Act2_0WarmUpLeftView:playAnim_Lid(isOpen)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feichi_dooreye_20200112)
 
-	if arg_20_1 == arg_20_0.viewContainer:checkLidIsOpened() then
+	if isOpen == self.viewContainer:checkLidIsOpened() then
 		return
 	end
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockHelper.instance:startBlock(var_0_2, var_0_3, arg_20_0.viewName)
+	UIBlockHelper.instance:startBlock(kBlock_Lid, kTimeout, self.viewName)
 
-	arg_20_0._animSelf.speed = arg_20_1 and 1 or -1
+	self._animSelf.speed = isOpen and 1 or -1
 
-	arg_20_0:_playAnim("eye1", function()
-		arg_20_0.viewContainer:saveLidState(arg_20_1)
-		UIBlockHelper.instance:endBlock(var_0_2)
+	self:_playAnim("eye1", function()
+		self.viewContainer:saveLidState(isOpen)
+		UIBlockHelper.instance:endBlock(kBlock_Lid)
 		UIBlockMgrExtend.setNeedCircleMv(true)
 	end)
 end
 
-local var_0_4 = "Act2_0WarmUpLeftView:playAnim_Eye"
+local kBlock_Eye = "Act2_0WarmUpLeftView:playAnim_Eye"
 
-function var_0_0.playAnim_Eye(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:_episodeId()
+function Act2_0WarmUpLeftView:playAnim_Eye(isBig)
+	local episodeId = self:_episodeId()
 
-	if arg_22_1 == arg_22_0.viewContainer:checkEyeIsClicked(var_22_0) then
+	if isBig == self.viewContainer:checkEyeIsClicked(episodeId) then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feichi_zoom_20200113)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockHelper.instance:startBlock(var_0_4, var_0_3, arg_22_0.viewName)
+	UIBlockHelper.instance:startBlock(kBlock_Eye, kTimeout, self.viewName)
 
-	arg_22_0._animSelf.speed = arg_22_1 and 1 or -1
+	self._animSelf.speed = isBig and 1 or -1
 
-	arg_22_0:_playAnim("eyedetail", function()
-		arg_22_0.viewContainer:saveEyeState(var_22_0, arg_22_1)
-		arg_22_0.viewContainer:openDesc()
-		UIBlockHelper.instance:endBlock(var_0_4)
+	self:_playAnim("eyedetail", function()
+		self.viewContainer:saveEyeState(episodeId, isBig)
+		self.viewContainer:openDesc()
+		UIBlockHelper.instance:endBlock(kBlock_Eye)
 		UIBlockMgrExtend.setNeedCircleMv(true)
 	end)
 end
 
-function var_0_0._opened_Eye(arg_24_0)
-	arg_24_0:_playAnimRaw("eye1", 0, 1)
+function Act2_0WarmUpLeftView:_opened_Eye()
+	self:_playAnimRaw("eye1", 0, 1)
 end
 
-function var_0_0._closed_Lid(arg_25_0)
-	arg_25_0:_playAnimRaw("eye0", 0, 1)
+function Act2_0WarmUpLeftView:_closed_Lid()
+	self:_playAnimRaw("eye0", 0, 1)
 end
 
-function var_0_0._zoomed_Eye(arg_26_0)
-	arg_26_0:_playAnimRaw("eyedetail", 0, 1)
+function Act2_0WarmUpLeftView:_zoomed_Eye()
+	self:_playAnimRaw("eyedetail", 0, 1)
 end
 
-return var_0_0
+return Act2_0WarmUpLeftView

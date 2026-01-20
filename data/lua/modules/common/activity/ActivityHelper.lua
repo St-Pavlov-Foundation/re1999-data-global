@@ -1,83 +1,85 @@
-﻿module("modules.common.activity.ActivityHelper", package.seeall)
+﻿-- chunkname: @modules/common/activity/ActivityHelper.lua
 
-local var_0_0 = class("ActivityHelper")
+module("modules.common.activity.ActivityHelper", package.seeall)
 
-function var_0_0.getActivityStatus(arg_1_0, arg_1_1)
-	local var_1_0 = ActivityModel.instance:getActivityInfo()[arg_1_0]
+local ActivityHelper = class("ActivityHelper")
 
-	if not var_1_0 then
-		if not arg_1_1 then
-			logError(string.format("not found ActivityId : %s activity", arg_1_0))
+function ActivityHelper.getActivityStatus(actId, noError)
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+
+	if not actInfoMo then
+		if not noError then
+			logError(string.format("not found ActivityId : %s activity", actId))
 		end
 
 		return ActivityEnum.ActivityStatus.None
 	end
 
-	if not var_1_0:isOpen() then
+	if not actInfoMo:isOpen() then
 		return ActivityEnum.ActivityStatus.NotOpen
 	end
 
-	if var_1_0:isExpired() then
+	if actInfoMo:isExpired() then
 		return ActivityEnum.ActivityStatus.Expired
 	end
 
-	local var_1_1 = var_1_0.config and var_1_0.config.openId
+	local openId = actInfoMo.config and actInfoMo.config.openId
 
-	if var_1_1 and var_1_1 ~= 0 and not OpenModel.instance:isFunctionUnlock(var_1_1) then
+	if openId and openId ~= 0 and not OpenModel.instance:isFunctionUnlock(openId) then
 		return ActivityEnum.ActivityStatus.NotUnlock
 	end
 
-	if not var_1_0:isOnline() then
+	if not actInfoMo:isOnline() then
 		return ActivityEnum.ActivityStatus.NotOnLine
 	end
 
 	return ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0.isOpen(arg_2_0)
-	return var_0_0.getActivityStatus(arg_2_0, true) == ActivityEnum.ActivityStatus.Normal
+function ActivityHelper.isOpen(actId)
+	return ActivityHelper.getActivityStatus(actId, true) == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0.getActivityStatusAndToast(arg_3_0, arg_3_1)
-	local var_3_0 = ActivityModel.instance:getActivityInfo()[arg_3_0]
+function ActivityHelper.getActivityStatusAndToast(actId, noError)
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-	if not var_3_0 then
-		if not arg_3_1 then
-			logError(string.format("not found ActivityId : %s activity", arg_3_0))
+	if not actInfoMo then
+		if not noError then
+			logError(string.format("not found ActivityId : %s activity", actId))
 		end
 
 		return ActivityEnum.ActivityStatus.None
 	end
 
-	if not var_3_0:isOpen() then
+	if not actInfoMo:isOpen() then
 		return ActivityEnum.ActivityStatus.NotOpen, ToastEnum.ActivityNotOpen
 	end
 
-	if var_3_0:isExpired() then
+	if actInfoMo:isExpired() then
 		return ActivityEnum.ActivityStatus.Expired, ToastEnum.ActivityEnd
 	end
 
-	local var_3_1 = var_3_0.config and var_3_0.config.openId
+	local openId = actInfoMo.config and actInfoMo.config.openId
 
-	if var_3_1 and var_3_1 ~= 0 and not OpenModel.instance:isFunctionUnlock(var_3_1) then
-		local var_3_2, var_3_3 = OpenHelper.getToastIdAndParam(var_3_1)
+	if openId and openId ~= 0 and not OpenModel.instance:isFunctionUnlock(openId) then
+		local toastId, toastParamList = OpenHelper.getToastIdAndParam(openId)
 
-		return ActivityEnum.ActivityStatus.NotUnlock, var_3_2, var_3_3
+		return ActivityEnum.ActivityStatus.NotUnlock, toastId, toastParamList
 	end
 
-	if not var_3_0:isOnline() then
+	if not actInfoMo:isOnline() then
 		return ActivityEnum.ActivityStatus.NotOnLine, ToastEnum.ActivityEnd
 	end
 
 	return ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0.getActivityRemainTimeStr(arg_4_0, arg_4_1)
-	local var_4_0 = ActivityModel.instance:getRemainTimeSec(arg_4_0)
+function ActivityHelper.getActivityRemainTimeStr(activityId, useEn)
+	local leftSecond = ActivityModel.instance:getRemainTimeSec(activityId)
 
-	if var_4_0 then
-		if var_4_0 >= 0 then
-			return TimeUtil.SecondToActivityTimeFormat(var_4_0, arg_4_1)
+	if leftSecond then
+		if leftSecond >= 0 then
+			return TimeUtil.SecondToActivityTimeFormat(leftSecond, useEn)
 		else
 			return luaLang("turnback_end")
 		end
@@ -86,127 +88,126 @@ function var_0_0.getActivityRemainTimeStr(arg_4_0, arg_4_1)
 	return ""
 end
 
-local var_0_1
-local var_0_2
+local _activityIdToVersionDict, _jumpNeedCloseViewDict
 
-function var_0_0.initActivityVersion()
-	if not var_0_1 then
-		var_0_1 = {}
-		var_0_2 = {}
+function ActivityHelper.initActivityVersion()
+	if not _activityIdToVersionDict then
+		_activityIdToVersionDict = {}
+		_jumpNeedCloseViewDict = {}
 
-		var_0_0._loadAllDefineVersionActivityEnum()
-		var_0_0._loadVersionActivityEnum(2, 9)
+		ActivityHelper._loadAllDefineVersionActivityEnum()
+		ActivityHelper._loadVersionActivityEnum(2, 9)
 	end
 end
 
-function var_0_0._loadAllDefineVersionActivityEnum()
-	local var_6_0 = 1
+function ActivityHelper._loadAllDefineVersionActivityEnum()
+	local smallVersionBegin = 1
 
-	for iter_6_0 = 1, math.huge do
-		for iter_6_1 = var_6_0, math.huge do
-			local var_6_1 = var_0_0._loadVersionActivityEnum(iter_6_0, iter_6_1)
+	for bigVersion = 1, math.huge do
+		for smallVersion = smallVersionBegin, math.huge do
+			local enum = ActivityHelper._loadVersionActivityEnum(bigVersion, smallVersion)
 
-			if iter_6_1 == 0 and not var_6_1 then
+			if smallVersion == 0 and not enum then
 				return
-			elseif not var_6_1 then
+			elseif not enum then
 				break
 			end
 		end
 
-		var_6_0 = 0
+		smallVersionBegin = 0
 	end
 end
 
-function var_0_0._loadVersionActivityEnum(arg_7_0, arg_7_1)
-	local var_7_0 = string.format("VersionActivity%d_%dEnum", arg_7_0, arg_7_1)
+function ActivityHelper._loadVersionActivityEnum(bigVersion, smallVersion)
+	local clsName = string.format("VersionActivity%d_%dEnum", bigVersion, smallVersion)
 
-	if arg_7_0 == 1 and arg_7_1 == 1 then
-		var_7_0 = "VersionActivityEnum"
+	if bigVersion == 1 and smallVersion == 1 then
+		clsName = "VersionActivityEnum"
 	end
 
-	local var_7_1 = _G[var_7_0]
+	local enum = _G[clsName]
 
-	if not var_7_1 then
+	if not enum then
 		return
 	end
 
 	if isDebugBuild then
-		logNormal("自动加载" .. var_7_0)
+		logNormal("自动加载" .. clsName)
 	end
 
-	if var_7_1.ActivityId then
-		local var_7_2 = string.format("%d_%d", arg_7_0, arg_7_1)
+	if enum.ActivityId then
+		local version = string.format("%d_%d", bigVersion, smallVersion)
 
-		for iter_7_0, iter_7_1 in pairs(var_7_1.ActivityId) do
-			var_0_1[iter_7_1] = var_7_2
+		for name, id in pairs(enum.ActivityId) do
+			_activityIdToVersionDict[id] = version
 		end
 	end
 
-	if var_7_1.JumpNeedCloseView then
-		for iter_7_2, iter_7_3 in pairs(var_7_1.JumpNeedCloseView()) do
-			var_0_2[iter_7_3] = true
+	if enum.JumpNeedCloseView then
+		for _, viewName in pairs(enum.JumpNeedCloseView()) do
+			_jumpNeedCloseViewDict[viewName] = true
 		end
 	end
 
-	return var_7_1
+	return enum
 end
 
-function var_0_0.getActivityVersion(arg_8_0)
-	var_0_0.initActivityVersion()
+function ActivityHelper.getActivityVersion(activityId)
+	ActivityHelper.initActivityVersion()
 
-	return var_0_1[arg_8_0] or ""
+	return _activityIdToVersionDict[activityId] or ""
 end
 
-function var_0_0.getJumpNeedCloseViewDict()
-	var_0_0.initActivityVersion()
+function ActivityHelper.getJumpNeedCloseViewDict()
+	ActivityHelper.initActivityVersion()
 
-	return var_0_2
+	return _jumpNeedCloseViewDict
 end
 
-function var_0_0.activateClass(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_1 = arg_10_1 or 1
-	arg_10_2 = arg_10_2 or 0
+function ActivityHelper.activateClass(format, fromBigVersion, fromSmallVersion)
+	fromBigVersion = fromBigVersion or 1
+	fromSmallVersion = fromSmallVersion or 0
 
-	for iter_10_0 = arg_10_1, math.huge do
-		for iter_10_1 = arg_10_2, math.huge do
-			local var_10_0 = string.format(arg_10_0, iter_10_0, iter_10_1)
-			local var_10_1 = _G[var_10_0]
+	for bigVersion = fromBigVersion, math.huge do
+		for smallVersion = fromSmallVersion, math.huge do
+			local clsName = string.format(format, bigVersion, smallVersion)
+			local cls = _G[clsName]
 
-			if not var_10_1 then
-				local var_10_2 = iter_10_1
+			if not cls then
+				local oldSmallVersion = smallVersion
 
-				while iter_10_1 < 10 do
-					iter_10_1 = iter_10_1 + 1
-					var_10_0 = string.format(arg_10_0, iter_10_0, iter_10_1)
-					var_10_1 = _G[var_10_0]
+				while smallVersion < 10 do
+					smallVersion = smallVersion + 1
+					clsName = string.format(format, bigVersion, smallVersion)
+					cls = _G[clsName]
 
-					if var_10_1 then
+					if cls then
 						break
 					end
 				end
 
-				if var_10_2 == 0 and not var_10_1 then
+				if oldSmallVersion == 0 and not cls then
 					return
 				end
 
-				if iter_10_1 >= 10 then
+				if smallVersion >= 10 then
 					break
 				end
 			end
 
-			if iter_10_1 == 0 and not var_10_1 then
+			if smallVersion == 0 and not cls then
 				return
-			elseif not var_10_1 then
+			elseif not cls then
 				break
 			end
 
 			if isDebugBuild then
-				logNormal("自动加载" .. var_10_0)
+				logNormal("自动加载" .. clsName)
 			end
 		end
 
-		arg_10_2 = 0
+		fromSmallVersion = 0
 	end
 end
 
-return var_0_0
+return ActivityHelper

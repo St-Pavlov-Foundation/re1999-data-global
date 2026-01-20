@@ -1,47 +1,49 @@
-﻿module("modules.logic.guide.view.GuideView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/view/GuideView.lua
 
-local var_0_0 = class("GuideView", BaseView)
+module("modules.logic.guide.view.GuideView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = GMController.instance:getGMNode("guideview", arg_1_0.viewGO)
+local GuideView = class("GuideView", BaseView)
 
-	if var_1_0 then
-		arg_1_0._btnJump = gohelper.findChildButtonWithAudio(var_1_0, "btnJump")
+function GuideView:onInitView()
+	local guideGMNode = GMController.instance:getGMNode("guideview", self.viewGO)
+
+	if guideGMNode then
+		self._btnJump = gohelper.findChildButtonWithAudio(guideGMNode, "btnJump")
 	end
 end
 
-function var_0_0.isOpenGM(arg_2_0)
+function GuideView:isOpenGM()
 	return isDebugBuild and PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewShowGMBtn, 1) == 1
 end
 
-function var_0_0.onOpen(arg_3_0)
-	if arg_3_0._btnJump then
-		gohelper.setActive(arg_3_0._btnJump.gameObject, arg_3_0:isOpenGM())
+function GuideView:onOpen()
+	if self._btnJump then
+		gohelper.setActive(self._btnJump.gameObject, self:isOpenGM())
 	end
 end
 
-function var_0_0.addEvents(arg_4_0)
-	if arg_4_0._btnJump then
-		arg_4_0._btnJump:AddClickListener(arg_4_0._onClickBtnJump, arg_4_0)
+function GuideView:addEvents()
+	if self._btnJump then
+		self._btnJump:AddClickListener(self._onClickBtnJump, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	if arg_5_0._btnJump then
-		arg_5_0._btnJump:RemoveClickListener()
+function GuideView:removeEvents()
+	if self._btnJump then
+		self._btnJump:RemoveClickListener()
 	end
 end
 
-function var_0_0._onClickBtnJump(arg_6_0)
+function GuideView:_onClickBtnJump()
 	GuideModel.instance:onClickJumpGuides()
 
-	local var_6_0 = GuideModel.instance:getDoingGuideId()
-	local var_6_1 = var_6_0 and GuideModel.instance:getById(var_6_0)
-	local var_6_2 = var_6_1 and var_6_1.currStepId
+	local doingGuideId = GuideModel.instance:getDoingGuideId()
+	local guideMO = doingGuideId and GuideModel.instance:getById(doingGuideId)
+	local doingStepId = guideMO and guideMO.currStepId
 
-	logWarn(string.format("点击了指引跳过按钮！！！！！当前指引：%d_%d", var_6_0 or -1, var_6_2 or -1))
+	logWarn(string.format("点击了指引跳过按钮！！！！！当前指引：%d_%d", doingGuideId or -1, doingStepId or -1))
 
-	if var_6_0 == GuideController.FirstGuideId then
+	if doingGuideId == GuideController.FirstGuideId then
 		DungeonFightController.instance:sendEndFightRequest(true)
 	end
 
@@ -49,4 +51,4 @@ function var_0_0._onClickBtnJump(arg_6_0)
 	GuideStepController.instance:clearStep()
 end
 
-return var_0_0
+return GuideView

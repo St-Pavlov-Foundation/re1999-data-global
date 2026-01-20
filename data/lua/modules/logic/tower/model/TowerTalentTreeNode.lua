@@ -1,122 +1,127 @@
-﻿module("modules.logic.tower.model.TowerTalentTreeNode", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerTalentTreeNode.lua
 
-local var_0_0 = class("TowerTalentTreeNode")
+module("modules.logic.tower.model.TowerTalentTreeNode", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.parents = {}
-	arg_1_0.childs = {}
+local TowerTalentTreeNode = class("TowerTalentTreeNode")
+
+function TowerTalentTreeNode:ctor()
+	self.parents = {}
+	self.childs = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.tree = arg_2_2
-	arg_2_0.nodeId = arg_2_1.nodeId
-	arg_2_0.id = arg_2_0.nodeId
-	arg_2_0.config = arg_2_1
-	arg_2_0.isOr = not string.find(arg_2_1.preNodeIds, "&")
+function TowerTalentTreeNode:init(config, tree)
+	self.tree = tree
+	self.nodeId = config.nodeId
+	self.id = self.nodeId
+	self.config = config
+	self.isOr = not string.find(config.preNodeIds, "&")
 end
 
-function var_0_0.isRootNode(arg_3_0)
-	return arg_3_0.config.startNode == 1
+function TowerTalentTreeNode:isRootNode()
+	return self.config.startNode == 1
 end
 
-function var_0_0.setParent(arg_4_0, arg_4_1)
-	arg_4_0.parents[arg_4_1.nodeId] = arg_4_1
+function TowerTalentTreeNode:setParent(parent)
+	self.parents[parent.nodeId] = parent
 end
 
-function var_0_0.getParents(arg_5_0)
-	return arg_5_0.parents
+function TowerTalentTreeNode:getParents()
+	return self.parents
 end
 
-function var_0_0.setChild(arg_6_0, arg_6_1)
-	arg_6_0.childs[arg_6_1.nodeId] = arg_6_1
+function TowerTalentTreeNode:setChild(child)
+	self.childs[child.nodeId] = child
 end
 
-function var_0_0.isActiveTalent(arg_7_0)
-	return arg_7_0.tree:isActiveTalent(arg_7_0.nodeId)
+function TowerTalentTreeNode:isActiveTalent()
+	return self.tree:isActiveTalent(self.nodeId)
 end
 
-function var_0_0.isSelectedSystemTalentPlan(arg_8_0)
-	return arg_8_0.tree:isSelectedSystemTalentPlan()
+function TowerTalentTreeNode:isSelectedSystemTalentPlan()
+	return self.tree:isSelectedSystemTalentPlan()
 end
 
-function var_0_0.isParentActive(arg_9_0)
-	local var_9_0
+function TowerTalentTreeNode:isParentActive()
+	local active
 
-	if arg_9_0.isOr then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0.parents) do
-			if iter_9_1:isActiveTalent() then
-				var_9_0 = true
+	if self.isOr then
+		for k, v in pairs(self.parents) do
+			if v:isActiveTalent() then
+				active = true
 
 				break
 			else
-				var_9_0 = false
+				active = false
 			end
 		end
 	else
-		for iter_9_2, iter_9_3 in pairs(arg_9_0.parents) do
-			if not iter_9_3:isActiveTalent() then
-				var_9_0 = false
+		for k, v in pairs(self.parents) do
+			if not v:isActiveTalent() then
+				active = false
 
 				break
 			end
 		end
 	end
 
-	if var_9_0 == nil then
-		var_9_0 = true
+	if active == nil then
+		active = true
 	end
 
-	return var_9_0
+	return active
 end
 
-function var_0_0.getParentActiveResult(arg_10_0)
-	local var_10_0 = 2
+function TowerTalentTreeNode:getParentActiveResult()
+	local result = 2
 
-	if arg_10_0.isOr then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0.parents) do
-			if iter_10_1:isActiveTalent() then
-				var_10_0 = 2
+	if self.isOr then
+		for k, v in pairs(self.parents) do
+			if v:isActiveTalent() then
+				result = 2
 
 				break
 			else
-				var_10_0 = 0
+				result = 0
 			end
 		end
 	else
-		local var_10_1 = 0
-		local var_10_2 = 0
+		local parentCount = 0
+		local activeCount = 0
 
-		for iter_10_2, iter_10_3 in pairs(arg_10_0.parents) do
-			if iter_10_3:isActiveTalent() then
-				var_10_2 = var_10_2 + 1
+		for k, v in pairs(self.parents) do
+			if v:isActiveTalent() then
+				activeCount = activeCount + 1
 			end
 
-			var_10_1 = var_10_1 + 1
+			parentCount = parentCount + 1
 		end
 
-		if var_10_1 > 0 then
-			var_10_0 = var_10_1 <= var_10_2 and 2 or var_10_2 == 0 and 0 or 1
+		if parentCount > 0 then
+			result = parentCount <= activeCount and 2 or activeCount == 0 and 0 or 1
 		end
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.isTalentCanActive(arg_11_0)
-	return arg_11_0:isParentActive() and arg_11_0:isTalentConsumeEnough()
+function TowerTalentTreeNode:isTalentCanActive()
+	return self:isParentActive() and self:isTalentConsumeEnough()
 end
 
-function var_0_0.isTalentConsumeEnough(arg_12_0)
-	return arg_12_0.tree:getTalentPoint() >= arg_12_0.config.consume
+function TowerTalentTreeNode:isTalentConsumeEnough()
+	local talentPoint = self.tree:getTalentPoint()
+	local consume = self.config.consume
+
+	return consume <= talentPoint
 end
 
-function var_0_0.isActiveGroup(arg_13_0)
-	return arg_13_0.tree:isActiveGroup(arg_13_0.config.nodeGroup)
+function TowerTalentTreeNode:isActiveGroup()
+	return self.tree:isActiveGroup(self.config.nodeGroup)
 end
 
-function var_0_0.isLeafNode(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.childs) do
-		if iter_14_1:isActiveTalent() then
+function TowerTalentTreeNode:isLeafNode()
+	for k, v in pairs(self.childs) do
+		if v:isActiveTalent() then
 			return false
 		end
 	end
@@ -124,4 +129,4 @@ function var_0_0.isLeafNode(arg_14_0)
 	return true
 end
 
-return var_0_0
+return TowerTalentTreeNode

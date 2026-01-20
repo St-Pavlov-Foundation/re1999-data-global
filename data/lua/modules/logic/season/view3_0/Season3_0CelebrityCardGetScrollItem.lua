@@ -1,13 +1,15 @@
-﻿module("modules.logic.season.view3_0.Season3_0CelebrityCardGetScrollItem", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0CelebrityCardGetScrollItem.lua
 
-local var_0_0 = class("Season3_0CelebrityCardGetScrollItem", Season3_0CelebrityCardGetItem)
+module("modules.logic.season.view3_0.Season3_0CelebrityCardGetScrollItem", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
+local Season3_0CelebrityCardGetScrollItem = class("Season3_0CelebrityCardGetScrollItem", Season3_0CelebrityCardGetItem)
+
+function Season3_0CelebrityCardGetScrollItem:onOpen()
 	return
 end
 
-function var_0_0.onScrollItemRefreshData(arg_2_0, arg_2_1)
-	arg_2_0:refreshData(arg_2_1)
+function Season3_0CelebrityCardGetScrollItem:onScrollItemRefreshData(data)
+	self:refreshData(data)
 end
 
-return var_0_0
+return Season3_0CelebrityCardGetScrollItem

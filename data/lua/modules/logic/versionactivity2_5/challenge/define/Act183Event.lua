@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_5.challenge.define.Act183Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/define/Act183Event.lua
 
-local var_0_0 = _M
-local var_0_1 = 1
+module("modules.logic.versionactivity2_5.challenge.define.Act183Event", package.seeall)
 
-local function var_0_2(arg_1_0)
-	assert(var_0_0[arg_1_0] == nil, "[Act183Event] error redefined Act183Event." .. arg_1_0)
+local Act183Event = _M
+local _uid = 1
 
-	var_0_0[arg_1_0] = var_0_1
-	var_0_1 = var_0_1 + 1
+local function E(name)
+	assert(Act183Event[name] == nil, "[Act183Event] error redefined Act183Event." .. name)
+
+	Act183Event[name] = _uid
+	_uid = _uid + 1
 end
 
-var_0_2("OnClickEpisode")
-var_0_2("OnUpdateGroupInfo")
-var_0_2("OnUpdateRepressInfo")
-var_0_2("OnUpdateBadgeNum")
-var_0_2("OnClickSwitchGroup")
-var_0_2("OnCreateHeroItemDone")
-var_0_2("RefreshMedalReddot")
-var_0_2("OnInitDungeonDone")
-var_0_2("ClickToGetReward")
-var_0_2("OnGroupAllTaskFinished")
-var_0_2("OnUpdateSelectBadgeNum")
-var_0_2("OnUpdateBadgeDetailVisible")
-var_0_2("EpisodeStartPlayFinishAnim")
-var_0_2("FightBossIfSubUnfinish")
-var_0_2("OnPlayEffectDoneIfSubUnfinish")
+E("OnClickEpisode")
+E("OnUpdateGroupInfo")
+E("OnUpdateRepressInfo")
+E("OnUpdateBadgeNum")
+E("OnClickSwitchGroup")
+E("OnCreateHeroItemDone")
+E("RefreshMedalReddot")
+E("OnInitDungeonDone")
+E("ClickToGetReward")
+E("OnGroupAllTaskFinished")
+E("OnUpdateSelectBadgeNum")
+E("OnUpdateBadgeDetailVisible")
+E("EpisodeStartPlayFinishAnim")
+E("FightBossIfSubUnfinish")
+E("OnPlayEffectDoneIfSubUnfinish")
 
-return var_0_0
+return Act183Event

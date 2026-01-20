@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_soldier_chess", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_soldier_chess.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_soldier_chess", package.seeall)
+
+local lua_soldier_chess = {}
+local fields = {
 	cost = 8,
 	name = 2,
 	defaultPower = 6,
@@ -15,15 +17,15 @@ local var_0_1 = {
 	resModel = 10,
 	level = 5
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_soldier_chess.onLoad(json)
+	lua_soldier_chess.configList, lua_soldier_chess.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_soldier_chess

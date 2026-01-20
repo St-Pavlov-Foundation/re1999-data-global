@@ -1,97 +1,99 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRushLevelDetailItem", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRushLevelDetailItem.lua
 
-local var_0_0 = class("V1a4_BossRushLevelDetailItem", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.bossrush.view.V1a4_BossRushLevelDetailItem", package.seeall)
+
+local V1a4_BossRushLevelDetailItem = class("V1a4_BossRushLevelDetailItem", LuaCompBase)
+local BtnStateEnum = {
 	UnSelectd = 1,
 	Locked = 0,
 	Selected = 2
 }
-local var_0_2 = BossRushEnum.AnimEvtLevelDetailItem
+local EAnimEvt = BossRushEnum.AnimEvtLevelDetailItem
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1.transform
+function V1a4_BossRushLevelDetailItem:init(go)
+	local transform = go.transform
 
-	arg_1_0._lockedGo = var_1_0:GetChild(var_0_1.Locked).gameObject
-	arg_1_0._unSelectedGo = var_1_0:GetChild(var_0_1.UnSelectd).gameObject
-	arg_1_0._selectedGo = var_1_0:GetChild(var_0_1.Selected).gameObject
-	arg_1_0._animSelf = arg_1_1:GetComponent(gohelper.Type_Animator)
-	arg_1_0._animEvent = arg_1_1:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_1_0.go = arg_1_1
+	self._lockedGo = transform:GetChild(BtnStateEnum.Locked).gameObject
+	self._unSelectedGo = transform:GetChild(BtnStateEnum.UnSelectd).gameObject
+	self._selectedGo = transform:GetChild(BtnStateEnum.Selected).gameObject
+	self._animSelf = go:GetComponent(gohelper.Type_Animator)
+	self._animEvent = go:GetComponent(gohelper.Type_AnimationEventWrap)
+	self.go = go
 
-	arg_1_0._animEvent:AddEventListener(var_0_2.onPlayUnlockSound, arg_1_0._onPlayUnlockSound, arg_1_0)
+	self._animEvent:AddEventListener(EAnimEvt.onPlayUnlockSound, self._onPlayUnlockSound, self)
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._delayUnlockCallBack, arg_2_0)
-	arg_2_0._animEvent:RemoveEventListener(var_0_2.onPlayUnlockSound)
+function V1a4_BossRushLevelDetailItem:onDestroy()
+	TaskDispatcher.cancelTask(self._delayUnlockCallBack, self)
+	self._animEvent:RemoveEventListener(EAnimEvt.onPlayUnlockSound)
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	arg_3_0:onDestroy()
+function V1a4_BossRushLevelDetailItem:onDestroyView()
+	self:onDestroy()
 end
 
-function var_0_0.setSelect(arg_4_0, arg_4_1)
-	gohelper.setActive(arg_4_0._unSelectedGo, not arg_4_1)
-	gohelper.setActive(arg_4_0._selectedGo, arg_4_1)
+function V1a4_BossRushLevelDetailItem:setSelect(isSelect)
+	gohelper.setActive(self._unSelectedGo, not isSelect)
+	gohelper.setActive(self._selectedGo, isSelect)
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._index = arg_5_1
-	arg_5_0._stageLayerInfo = arg_5_2
+function V1a4_BossRushLevelDetailItem:setData(index, stageLayerInfo)
+	self._index = index
+	self._stageLayerInfo = stageLayerInfo
 
-	local var_5_0 = arg_5_2.isOpen
+	local isOpen = stageLayerInfo.isOpen
 
-	arg_5_0._isOpen = var_5_0
+	self._isOpen = isOpen
 
-	arg_5_0:setIsLocked(not var_5_0)
+	self:setIsLocked(not isOpen)
 
-	if not var_5_0 then
-		gohelper.setActive(arg_5_0._unSelectedGo, false)
-		gohelper.setActive(arg_5_0._selectedGo, false)
+	if not isOpen then
+		gohelper.setActive(self._unSelectedGo, false)
+		gohelper.setActive(self._selectedGo, false)
 	end
 end
 
-function var_0_0.setIsLocked(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0._lockedGo, arg_6_1)
-	arg_6_0:playIdle(arg_6_1)
+function V1a4_BossRushLevelDetailItem:setIsLocked(isLock)
+	gohelper.setActive(self._lockedGo, isLock)
+	self:playIdle(isLock)
 end
 
-function var_0_0.plaAnim(arg_7_0, arg_7_1, ...)
-	arg_7_0._animSelf:Play(arg_7_1, ...)
+function V1a4_BossRushLevelDetailItem:plaAnim(eAnimLevelDetailBtn, ...)
+	self._animSelf:Play(eAnimLevelDetailBtn, ...)
 end
 
-function var_0_0.playIdle(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._isOpen
+function V1a4_BossRushLevelDetailItem:playIdle(isLock)
+	local isOpen = self._isOpen
 
-	if arg_8_1 ~= nil then
-		var_8_0 = not arg_8_1
+	if isLock ~= nil then
+		isOpen = not isLock
 	end
 
-	if var_8_0 then
-		arg_8_0._animSelf:Play(BossRushEnum.AnimLevelDetailBtn.UnlockedIdle, 0, 1)
+	if isOpen then
+		self._animSelf:Play(BossRushEnum.AnimLevelDetailBtn.UnlockedIdle, 0, 1)
 	else
-		arg_8_0._animSelf:Play(BossRushEnum.AnimLevelDetailBtn.LockedIdle, 0, 1)
+		self._animSelf:Play(BossRushEnum.AnimLevelDetailBtn.LockedIdle, 0, 1)
 	end
 end
 
-function var_0_0.setTrigger(arg_9_0, arg_9_1)
-	arg_9_0._animSelf:SetTrigger(arg_9_1)
+function V1a4_BossRushLevelDetailItem:setTrigger(name)
+	self._animSelf:SetTrigger(name)
 end
 
-function var_0_0._delayUnlockCallBack(arg_10_0)
-	arg_10_0:setTrigger(BossRushEnum.AnimTriggerLevelDetailBtn.PlayUnlock)
+function V1a4_BossRushLevelDetailItem:_delayUnlockCallBack()
+	self:setTrigger(BossRushEnum.AnimTriggerLevelDetailBtn.PlayUnlock)
 end
 
-function var_0_0.playUnlock(arg_11_0)
-	if arg_11_0._isOpen then
-		TaskDispatcher.cancelTask(arg_11_0._delayUnlockCallBack, arg_11_0)
-		TaskDispatcher.runDelay(arg_11_0._delayUnlockCallBack, arg_11_0, 0.5)
-		arg_11_0:playIdle(true)
+function V1a4_BossRushLevelDetailItem:playUnlock()
+	if self._isOpen then
+		TaskDispatcher.cancelTask(self._delayUnlockCallBack, self)
+		TaskDispatcher.runDelay(self._delayUnlockCallBack, self, 0.5)
+		self:playIdle(true)
 	end
 end
 
-function var_0_0._onPlayUnlockSound(arg_12_0)
+function V1a4_BossRushLevelDetailItem:_onPlayUnlockSound()
 	AudioMgr.instance:trigger(AudioEnum.ui_checkpoint.play_ui_checkpoint_light_up)
 end
 
-return var_0_0
+return V1a4_BossRushLevelDetailItem

@@ -1,184 +1,188 @@
-﻿module("modules.logic.survival.view.handbook.SurvivalHandbookNpcComp", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/handbook/SurvivalHandbookNpcComp.lua
 
-local var_0_0 = class("SurvivalHandbookNpcComp", SurvivalHandbookViewComp)
+module("modules.logic.survival.view.handbook.SurvivalHandbookNpcComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._parentView = arg_1_1
-	arg_1_0.handBookType = SurvivalEnum.HandBookType.Npc
-	arg_1_0.handBookDatas = {}
+local SurvivalHandbookNpcComp = class("SurvivalHandbookNpcComp", SurvivalHandbookViewComp)
+
+function SurvivalHandbookNpcComp:ctor(parentView)
+	self._parentView = parentView
+	self.handBookType = SurvivalEnum.HandBookType.Npc
+	self.handBookDatas = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function SurvivalHandbookNpcComp:init(go)
+	SurvivalHandbookNpcComp.super.init(self, go)
 
-	arg_2_0.scroll = gohelper.findChild(arg_2_1, "#scroll")
-	arg_2_0.npc = gohelper.findChild(arg_2_1, "#npc")
-	arg_2_0.goNpcInfoRoot = gohelper.findChild(arg_2_1, "#npc")
-	arg_2_0.btnPeople = gohelper.findChildButtonWithAudio(arg_2_1, "tab/#btnPeople")
-	arg_2_0.btnLaplace = gohelper.findChildButtonWithAudio(arg_2_1, "tab/#btnLaplace")
-	arg_2_0.btnFoundation = gohelper.findChildButtonWithAudio(arg_2_1, "tab/#btnFoundation")
-	arg_2_0.btnZeno = gohelper.findChildButtonWithAudio(arg_2_1, "tab/#btnZeno")
-	arg_2_0.tabs = {}
+	self.scroll = gohelper.findChild(go, "#scroll")
+	self.npc = gohelper.findChild(go, "#npc")
+	self.goNpcInfoRoot = gohelper.findChild(go, "#npc")
+	self.btnPeople = gohelper.findChildButtonWithAudio(go, "tab/#btnPeople")
+	self.btnLaplace = gohelper.findChildButtonWithAudio(go, "tab/#btnLaplace")
+	self.btnFoundation = gohelper.findChildButtonWithAudio(go, "tab/#btnFoundation")
+	self.btnZeno = gohelper.findChildButtonWithAudio(go, "tab/#btnZeno")
+	self.tabs = {}
 
-	local var_2_0 = {
+	local transNames = {
 		"#btnFoundation",
 		"#btnLaplace",
 		"#btnZeno",
 		"#btnPeople"
 	}
-	local var_2_1 = SurvivalEnum.HandBookNpcSubType
-	local var_2_2 = {
-		var_2_1.Foundation,
-		var_2_1.Laplace,
-		var_2_1.Zeno,
-		var_2_1.People
+	local HandBookNpcSubType = SurvivalEnum.HandBookNpcSubType
+	local subTypes = {
+		HandBookNpcSubType.Foundation,
+		HandBookNpcSubType.Laplace,
+		HandBookNpcSubType.Zeno,
+		HandBookNpcSubType.People
 	}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_3 = gohelper.findChildButtonWithAudio(arg_2_1, "tab/" .. iter_2_1)
-		local var_2_4 = gohelper.findChild(var_2_3.gameObject, "#go_Selected")
-		local var_2_5 = gohelper.findChild(var_2_3.gameObject, "#go_redDot")
-		local var_2_6 = var_2_2[iter_2_0]
-		local var_2_7 = arg_2_0:getUserDataTb_()
+	for i, name in ipairs(transNames) do
+		local btnClick = gohelper.findChildButtonWithAudio(go, "tab/" .. name)
+		local go_selected = gohelper.findChild(btnClick.gameObject, "#go_Selected")
+		local go_redDot = gohelper.findChild(btnClick.gameObject, "#go_redDot")
+		local subType = subTypes[i]
+		local item = self:getUserDataTb_()
 
-		var_2_7.btnClick = var_2_3
-		var_2_7.go_selected = var_2_4
-		var_2_7.subType = var_2_6
+		item.btnClick = btnClick
+		item.go_selected = go_selected
+		item.subType = subType
 
-		table.insert(arg_2_0.tabs, var_2_7)
-		gohelper.setActive(var_2_4, false)
-		RedDotController.instance:addRedDot(var_2_5, RedDotEnum.DotNode.SurvivalHandbookNpc, var_2_6)
+		table.insert(self.tabs, item)
+		gohelper.setActive(go_selected, false)
+		RedDotController.instance:addRedDot(go_redDot, RedDotEnum.DotNode.SurvivalHandbookNpc, subType)
 	end
 
-	local var_2_8 = arg_2_0._parentView.viewContainer:getSetting().otherRes.survivalrewardinheritnpcitem
+	local resPath = self._parentView.viewContainer:getSetting().otherRes.survivalrewardinheritnpcitem
 
-	arg_2_0._item = arg_2_0._parentView:getResInst(var_2_8, arg_2_0.go)
+	self._item = self._parentView:getResInst(resPath, self.go)
 
-	recthelper.setWidth(arg_2_0._item.transform, 1250)
-	gohelper.setActive(arg_2_0._item, false)
+	recthelper.setWidth(self._item.transform, 1250)
+	gohelper.setActive(self._item, false)
 
-	arg_2_0._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0.scroll, SurvivalSimpleListPart, {
+	self._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self.scroll, SurvivalSimpleListPart, {
 		minUpdate = 6
 	})
 
-	arg_2_0._simpleList:setCellUpdateCallBack(arg_2_0._createItem, arg_2_0, SurvivalRewardInheritNpcItem, arg_2_0._item)
+	self._simpleList:setCellUpdateCallBack(self._createItem, self, SurvivalRewardInheritNpcItem, self._item)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:selectTab(1, true)
+function SurvivalHandbookNpcComp:onOpen()
+	self:selectTab(1, true)
 end
 
-function var_0_0.onClose(arg_4_0)
-	arg_4_0:selectTab(nil)
+function SurvivalHandbookNpcComp:onClose()
+	self:selectTab(nil)
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.tabs) do
-		arg_5_0:addClickCb(iter_5_1.btnClick, arg_5_0.onClickTab, arg_5_0, iter_5_0)
+function SurvivalHandbookNpcComp:addEventListeners()
+	for i, v in ipairs(self.tabs) do
+		self:addClickCb(v.btnClick, self.onClickTab, self, i)
 	end
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
+function SurvivalHandbookNpcComp:removeEventListeners()
 	return
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function SurvivalHandbookNpcComp:onDestroy()
 	return
 end
 
-function var_0_0.onClickTab(arg_8_0, arg_8_1)
-	arg_8_0:selectTab(arg_8_1)
+function SurvivalHandbookNpcComp:onClickTab(index)
+	self:selectTab(index)
 end
 
-function var_0_0._createItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_1:updateMo(arg_9_2, nil, arg_9_0.onClickItem, arg_9_0)
+function SurvivalHandbookNpcComp:_createItem(obj, data, index)
+	obj:updateMo(data, nil, self.onClickItem, self)
 end
 
-function var_0_0.onClickItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1.mo
+function SurvivalHandbookNpcComp:onClickItem(item)
+	local survivalHandbookMo = item.mo
 
-	if var_10_0.isUnlock then
+	if survivalHandbookMo.isUnlock then
 		ViewMgr.instance:openView(ViewName.SurvivalHandbookInfoView, {
-			handBookType = arg_10_0.handBookType,
-			handBookDatas = arg_10_0.handBookDatas,
-			select = arg_10_0:getIndex(var_10_0)
+			handBookType = self.handBookType,
+			handBookDatas = self.handBookDatas,
+			select = self:getIndex(survivalHandbookMo)
 		})
 	end
 end
 
-function var_0_0.refreshList(arg_11_0, arg_11_1)
-	if arg_11_0.curSelect == nil then
-		arg_11_0._simpleList:setList({})
+function SurvivalHandbookNpcComp:refreshList(isAnim)
+	if self.curSelect == nil then
+		self._simpleList:setList({})
 
 		return
 	end
 
-	tabletool.clear(arg_11_0.handBookDatas)
+	tabletool.clear(self.handBookDatas)
 
-	local var_11_0 = SurvivalHandbookModel.instance:getHandBookDatas(arg_11_0.handBookType, arg_11_0.tabs[arg_11_0.curSelect].subType)
+	local datas = SurvivalHandbookModel.instance:getHandBookDatas(self.handBookType, self.tabs[self.curSelect].subType)
 
-	table.sort(var_11_0, SurvivalHandbookModel.instance.handBookSortFunc)
+	table.sort(datas, SurvivalHandbookModel.instance.handBookSortFunc)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if iter_11_1.isUnlock then
-			table.insert(arg_11_0.handBookDatas, iter_11_1)
+	for i, mo in ipairs(datas) do
+		if mo.isUnlock then
+			table.insert(self.handBookDatas, mo)
 		end
 	end
 
-	local var_11_1 = {}
-	local var_11_2 = {}
-	local var_11_3 = 5
+	local list = {}
+	local temp = {}
+	local lineAmount = 5
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		local var_11_4 = {
-			survivalHandbookMo = iter_11_3
+	for i, survivalHandbookMo in ipairs(datas) do
+		local t = {
+			survivalHandbookMo = survivalHandbookMo
 		}
 
-		table.insert(var_11_2, var_11_4)
+		table.insert(temp, t)
 
-		if iter_11_2 % var_11_3 == 0 or iter_11_2 == #var_11_0 then
-			local var_11_5 = iter_11_2 ~= #var_11_0
-			local var_11_6 = {
-				viewContainer = arg_11_0._parentView.viewContainer,
-				listData = tabletool.copy(var_11_2),
-				isShowLine = var_11_5
+		if i % lineAmount == 0 or i == #datas then
+			local isShowLine = i ~= #datas
+			local lineData = {
+				viewContainer = self._parentView.viewContainer,
+				listData = tabletool.copy(temp),
+				isShowLine = isShowLine
 			}
 
-			table.insert(var_11_1, var_11_6)
-			tabletool.clear(var_11_2)
+			table.insert(list, lineData)
+			tabletool.clear(temp)
 		end
 	end
 
-	if arg_11_1 then
-		arg_11_0._simpleList:setOpenAnimation(0.03)
+	if isAnim then
+		self._simpleList:setOpenAnimation(0.03)
 	end
 
-	arg_11_0._simpleList:setList(var_11_1)
+	self._simpleList:setList(list)
 end
 
-function var_0_0.getIndex(arg_12_0, arg_12_1)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.handBookDatas) do
-		if arg_12_1 == iter_12_1 then
-			return iter_12_0
+function SurvivalHandbookNpcComp:getIndex(survivalHandbookMo)
+	for i, mo in ipairs(self.handBookDatas) do
+		if survivalHandbookMo == mo then
+			return i
 		end
-	end
-end
-
-function var_0_0.selectTab(arg_13_0, arg_13_1, arg_13_2)
-	if (not arg_13_1 or not arg_13_0.curSelect or arg_13_0.curSelect ~= arg_13_1) and (not not arg_13_1 or not not arg_13_0.curSelect) then
-		if arg_13_0.curSelect then
-			gohelper.setActive(arg_13_0.tabs[arg_13_0.curSelect].go_selected, false)
-		end
-
-		arg_13_0.curSelect = arg_13_1
-
-		if arg_13_0.curSelect then
-			SurvivalHandbookController.instance:markNewHandbook(arg_13_0.handBookType, arg_13_0.tabs[arg_13_0.curSelect].subType)
-			gohelper.setActive(arg_13_0.tabs[arg_13_0.curSelect].go_selected, true)
-		end
-
-		arg_13_0:refreshList(arg_13_2)
 	end
 end
 
-return var_0_0
+function SurvivalHandbookNpcComp:selectTab(tarSelect, isAnim)
+	local haveChange = (not tarSelect or not self.curSelect or self.curSelect ~= tarSelect) and (not not tarSelect or not not self.curSelect)
+
+	if haveChange then
+		if self.curSelect then
+			gohelper.setActive(self.tabs[self.curSelect].go_selected, false)
+		end
+
+		self.curSelect = tarSelect
+
+		if self.curSelect then
+			SurvivalHandbookController.instance:markNewHandbook(self.handBookType, self.tabs[self.curSelect].subType)
+			gohelper.setActive(self.tabs[self.curSelect].go_selected, true)
+		end
+
+		self:refreshList(isAnim)
+	end
+end
+
+return SurvivalHandbookNpcComp

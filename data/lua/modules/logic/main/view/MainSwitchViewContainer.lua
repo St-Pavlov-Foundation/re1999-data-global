@@ -1,312 +1,314 @@
-﻿module("modules.logic.main.view.MainSwitchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainSwitchViewContainer.lua
 
-local var_0_0 = class("MainSwitchViewContainer", BaseViewContainer)
+module("modules.logic.main.view.MainSwitchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MainSwitchViewContainer = class("MainSwitchViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MainSwitchView.New())
-	table.insert(var_1_0, TabViewGroupFit.New(1, "#go_container"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_btns"))
+function MainSwitchViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MainSwitchView.New())
+	table.insert(views, TabViewGroupFit.New(1, "#go_container"))
+	table.insert(views, TabViewGroup.New(2, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 2 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function MainSwitchViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 2 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self.overrideCloseFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 
-	if arg_2_1 == 1 then
-		local var_2_0 = {}
+	if tabContainerId == 1 then
+		local t = {}
 
-		arg_2_0:_addCharacterSwitch(var_2_0)
-		arg_2_0:_addSceneClassify(var_2_0)
-		arg_2_0:_addFightUISwitch(var_2_0)
+		self:_addCharacterSwitch(t)
+		self:_addSceneClassify(t)
+		self:_addFightUISwitch(t)
 
-		return var_2_0
+		return t
 	end
 
-	if arg_2_1 == 3 then
-		local var_2_1 = {}
+	if tabContainerId == 3 then
+		local t = {}
 
-		arg_2_0:_addSceneSwitch(var_2_1)
-		arg_2_0:_addUISwitch(var_2_1)
-		arg_2_0:_addClickUISwitch(var_2_1)
+		self:_addSceneSwitch(t)
+		self:_addUISwitch(t)
+		self:_addClickUISwitch(t)
 
-		return var_2_1
+		return t
 	end
 
-	if arg_2_1 == 4 then
-		local var_2_2 = {}
+	if tabContainerId == 4 then
+		local t = {}
 
-		arg_2_0:_addMainUI(var_2_2)
+		self:_addMainUI(t)
 
-		return var_2_2
+		return t
 	end
 end
 
-function var_0_0.getMainHeroView(arg_3_0)
-	return arg_3_0._mainUIHeroView
+function MainSwitchViewContainer:getMainHeroView()
+	return self._mainUIHeroView
 end
 
-function var_0_0.switchMainUI(arg_4_0, arg_4_1)
-	arg_4_0._mainUISwitchView:refreshMainUI(arg_4_1)
+function MainSwitchViewContainer:switchMainUI(id)
+	self._mainUISwitchView:refreshMainUI(id)
 end
 
-function var_0_0._addCharacterSwitch(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function MainSwitchViewContainer:_addCharacterSwitch(t)
+	local views = {}
 
-	arg_5_0._characterSwitchView = CharacterSwitchView.New()
+	self._characterSwitchView = CharacterSwitchView.New()
 
-	table.insert(var_5_0, arg_5_0._characterSwitchView)
+	table.insert(views, self._characterSwitchView)
 
-	local var_5_1 = ListScrollParam.New()
+	local scrollParam = ListScrollParam.New()
 
-	var_5_1.scrollGOPath = "right/mask/#scroll_card"
-	var_5_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_5_1.prefabUrl = arg_5_0._viewSetting.tabRes[1][1][2]
-	var_5_1.cellClass = CharacterSwitchItem
-	var_5_1.scrollDir = ScrollEnum.ScrollDirV
-	var_5_1.lineCount = 3
-	var_5_1.cellWidth = 170
-	var_5_1.cellHeight = 208
-	var_5_1.cellSpaceH = 5
-	var_5_1.cellSpaceV = 0
-	var_5_1.startSpace = 5
-	var_5_1.endSpace = 0
-	arg_5_0._characterScrollView = LuaListScrollView.New(CharacterSwitchListModel.instance, var_5_1)
+	scrollParam.scrollGOPath = "right/mask/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.tabRes[1][1][2]
+	scrollParam.cellClass = CharacterSwitchItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 170
+	scrollParam.cellHeight = 208
+	scrollParam.cellSpaceH = 5
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 5
+	scrollParam.endSpace = 0
+	self._characterScrollView = LuaListScrollView.New(CharacterSwitchListModel.instance, scrollParam)
 
-	table.insert(var_5_0, arg_5_0._characterScrollView)
+	table.insert(views, self._characterScrollView)
 
-	arg_5_1[MainEnum.SwitchType.Character] = MultiView.New(var_5_0)
+	t[MainEnum.SwitchType.Character] = MultiView.New(views)
 end
 
-function var_0_0.getCharacterScrollView(arg_6_0)
-	return arg_6_0._characterScrollView
+function MainSwitchViewContainer:getCharacterScrollView()
+	return self._characterScrollView
 end
 
-function var_0_0._addSceneClassify(arg_7_0, arg_7_1)
-	local var_7_0 = {}
+function MainSwitchViewContainer:_addSceneClassify(t)
+	local views = {}
 
-	arg_7_0._classifyView = MainSwitchClassifyView.New()
+	self._classifyView = MainSwitchClassifyView.New()
 
-	table.insert(var_7_0, arg_7_0._classifyView)
-	table.insert(var_7_0, TabViewGroupFit.New(3, "root"))
+	table.insert(views, self._classifyView)
+	table.insert(views, TabViewGroupFit.New(3, "root"))
 
-	local var_7_1 = ListScrollParam.New()
+	local scrollClassifyParam = ListScrollParam.New()
 
-	var_7_1.scrollGOPath = "left/#go_left"
-	var_7_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_7_1.prefabUrl = arg_7_0._viewSetting.otherRes[3]
-	var_7_1.cellClass = MainSwitchClassifyInfoItem
-	var_7_1.scrollDir = ScrollEnum.ScrollDirV
-	var_7_1.cellWidth = 400
-	var_7_1.cellHeight = 160
+	scrollClassifyParam.scrollGOPath = "left/#go_left"
+	scrollClassifyParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollClassifyParam.prefabUrl = self._viewSetting.otherRes[3]
+	scrollClassifyParam.cellClass = MainSwitchClassifyInfoItem
+	scrollClassifyParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollClassifyParam.cellWidth = 400
+	scrollClassifyParam.cellHeight = 160
 
-	table.insert(var_7_0, LuaListScrollView.New(MainSwitchClassifyListModel.instance, var_7_1))
+	table.insert(views, LuaListScrollView.New(MainSwitchClassifyListModel.instance, scrollClassifyParam))
 
-	arg_7_1[MainEnum.SwitchType.Scene] = MultiView.New(var_7_0)
+	t[MainEnum.SwitchType.Scene] = MultiView.New(views)
 end
 
-function var_0_0._addMainSceneSwitchList(arg_8_0, arg_8_1)
-	local var_8_0 = MixScrollParam.New()
+function MainSwitchViewContainer:_addMainSceneSwitchList(views)
+	local scrollSceneParam = MixScrollParam.New()
 
-	var_8_0.scrollGOPath = "right/mask/#scroll_card"
-	var_8_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_8_0.prefabUrl = arg_8_0._viewSetting.tabRes[1][2][2]
-	var_8_0.cellClass = MainSceneSwitchItem
-	var_8_0.scrollDir = ScrollEnum.ScrollDirV
-	var_8_0.lineCount = 1
+	scrollSceneParam.scrollGOPath = "right/mask/#scroll_card"
+	scrollSceneParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollSceneParam.prefabUrl = self._viewSetting.tabRes[1][2][2]
+	scrollSceneParam.cellClass = MainSceneSwitchItem
+	scrollSceneParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollSceneParam.lineCount = 1
 
-	table.insert(arg_8_1, LuaMixScrollView.New(MainSceneSwitchListModel.instance, var_8_0))
+	table.insert(views, LuaMixScrollView.New(MainSceneSwitchListModel.instance, scrollSceneParam))
 end
 
-function var_0_0._addSceneSwitch(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function MainSwitchViewContainer:_addSceneSwitch(t)
+	local views = {}
 
-	arg_9_0._displayView = MainSceneSwitchDisplayView.New()
+	self._displayView = MainSceneSwitchDisplayView.New()
 
-	table.insert(var_9_0, arg_9_0._displayView)
-	table.insert(var_9_0, MainSceneSwitchNewView.New())
-	arg_9_0:_addMainSceneSwitchList(var_9_0)
+	table.insert(views, self._displayView)
+	table.insert(views, MainSceneSwitchNewView.New())
+	self:_addMainSceneSwitchList(views)
 
-	arg_9_1[MainSwitchClassifyEnum.Classify.Scene] = MultiView.New(var_9_0)
+	t[MainSwitchClassifyEnum.Classify.Scene] = MultiView.New(views)
 end
 
-function var_0_0._addMainUISwitchList(arg_10_0, arg_10_1)
-	local var_10_0 = MixScrollParam.New()
+function MainSwitchViewContainer:_addMainUISwitchList(views)
+	local scrollUIParam = MixScrollParam.New()
 
-	var_10_0.scrollGOPath = "right/mask/#scroll_card"
-	var_10_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_10_0.prefabUrl = arg_10_0._viewSetting.tabRes[1][2][2]
-	var_10_0.cellClass = MainUISwitchItem
-	var_10_0.scrollDir = ScrollEnum.ScrollDirV
-	var_10_0.lineCount = 1
+	scrollUIParam.scrollGOPath = "right/mask/#scroll_card"
+	scrollUIParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollUIParam.prefabUrl = self._viewSetting.tabRes[1][2][2]
+	scrollUIParam.cellClass = MainUISwitchItem
+	scrollUIParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollUIParam.lineCount = 1
 
-	table.insert(arg_10_1, LuaMixScrollView.New(MainUISwitchListModel.instance, var_10_0))
+	table.insert(views, LuaMixScrollView.New(MainUISwitchListModel.instance, scrollUIParam))
 end
 
-function var_0_0._addUISwitch(arg_11_0, arg_11_1)
-	local var_11_0 = {}
+function MainSwitchViewContainer:_addUISwitch(t)
+	local views = {}
 
-	table.insert(var_11_0, MainUISwitchView.New())
-	table.insert(var_11_0, TabViewGroupFit.New(4, "middle/#go_mainUI"))
-	arg_11_0:_addMainUISwitchList(var_11_0)
+	table.insert(views, MainUISwitchView.New())
+	table.insert(views, TabViewGroupFit.New(4, "middle/#go_mainUI"))
+	self:_addMainUISwitchList(views)
 
-	arg_11_1[MainSwitchClassifyEnum.Classify.UI] = MultiView.New(var_11_0)
+	t[MainSwitchClassifyEnum.Classify.UI] = MultiView.New(views)
 end
 
-function var_0_0._addMainUI(arg_12_0, arg_12_1)
-	local var_12_0 = {}
+function MainSwitchViewContainer:_addMainUI(t)
+	local views = {}
 
-	arg_12_0._mainUIHeroView = SwitchMainHeroView.New()
+	self._mainUIHeroView = SwitchMainHeroView.New()
 
-	table.insert(var_12_0, SwitchMainUIShowView.New())
-	table.insert(var_12_0, SwitchMainActivityEnterView.New())
-	table.insert(var_12_0, SwitchMainActExtraDisplay.New())
-	table.insert(var_12_0, arg_12_0._mainUIHeroView)
-	table.insert(var_12_0, SwitchMainUIEagleAnimView.New())
-	table.insert(var_12_0, SwitchMainUIView.New())
+	table.insert(views, SwitchMainUIShowView.New())
+	table.insert(views, SwitchMainActivityEnterView.New())
+	table.insert(views, SwitchMainActExtraDisplay.New())
+	table.insert(views, self._mainUIHeroView)
+	table.insert(views, SwitchMainUIEagleAnimView.New())
+	table.insert(views, SwitchMainUIView.New())
 
-	arg_12_1[1] = MultiView.New(var_12_0)
-	arg_12_0._mainUIViews = var_12_0
+	t[1] = MultiView.New(views)
+	self._mainUIViews = views
 
-	return arg_12_1[1]
+	return t[1]
 end
 
-function var_0_0._addClickUISwitch(arg_13_0, arg_13_1)
-	local var_13_0 = {}
-	local var_13_1 = MixScrollParam.New()
+function MainSwitchViewContainer:_addClickUISwitch(t)
+	local views = {}
+	local scrollUIParam = MixScrollParam.New()
 
-	var_13_1.scrollGOPath = "right/mask/#scroll_card"
-	var_13_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_13_1.prefabUrl = arg_13_0._viewSetting.tabRes[1][2][2]
-	var_13_1.cellClass = ClickUISwitchItem
-	var_13_1.scrollDir = ScrollEnum.ScrollDirV
-	var_13_1.lineCount = 1
+	scrollUIParam.scrollGOPath = "right/mask/#scroll_card"
+	scrollUIParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollUIParam.prefabUrl = self._viewSetting.tabRes[1][2][2]
+	scrollUIParam.cellClass = ClickUISwitchItem
+	scrollUIParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollUIParam.lineCount = 1
 
-	table.insert(var_13_0, LuaMixScrollView.New(ClickUISwitchListModel.instance, var_13_1))
-	table.insert(var_13_0, ClickUISwitchView.New())
+	table.insert(views, LuaMixScrollView.New(ClickUISwitchListModel.instance, scrollUIParam))
+	table.insert(views, ClickUISwitchView.New())
 
-	arg_13_1[MainSwitchClassifyEnum.Classify.Click] = MultiView.New(var_13_0)
+	t[MainSwitchClassifyEnum.Classify.Click] = MultiView.New(views)
 end
 
-function var_0_0._addFightUISwitch(arg_14_0, arg_14_1)
-	local var_14_0 = {}
+function MainSwitchViewContainer:_addFightUISwitch(t)
+	local views = {}
 
-	table.insert(var_14_0, FightUISwitchView.New())
+	table.insert(views, FightUISwitchView.New())
 
-	local var_14_1 = MixScrollParam.New()
+	local scrollParam = MixScrollParam.New()
 
-	var_14_1.scrollGOPath = "root/#go_right/#scroll_style"
-	var_14_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_14_1.prefabUrl = arg_14_0._viewSetting.tabRes[1][3][2]
-	var_14_1.cellClass = FightUISwitchItem
-	var_14_1.scrollDir = ScrollEnum.ScrollDirV
-	var_14_1.lineCount = 1
+	scrollParam.scrollGOPath = "root/#go_right/#scroll_style"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.tabRes[1][3][2]
+	scrollParam.cellClass = FightUISwitchItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
 
-	table.insert(var_14_0, LuaMixScrollView.New(FightUISwitchListModel.instance, var_14_1))
+	table.insert(views, LuaMixScrollView.New(FightUISwitchListModel.instance, scrollParam))
 
-	arg_14_1[MainEnum.SwitchType.FightUI] = MultiView.New(var_14_0)
+	t[MainEnum.SwitchType.FightUI] = MultiView.New(views)
 end
 
-function var_0_0.switchTab(arg_15_0, arg_15_1)
-	arg_15_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_15_1)
+function MainSwitchViewContainer:switchTab(tabId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 1, tabId)
 
-	if arg_15_0._displayView and arg_15_0._displayView:isShowView() then
-		if arg_15_1 == MainEnum.SwitchType.Scene then
-			arg_15_0._displayView:showTab()
+	if self._displayView and self._displayView:isShowView() then
+		if tabId == MainEnum.SwitchType.Scene then
+			self._displayView:showTab()
 		else
-			arg_15_0._displayView:hideTab()
+			self._displayView:hideTab()
 		end
 	end
 end
 
-function var_0_0.switchClassifyTab(arg_16_0, arg_16_1)
-	arg_16_0._classifyTabId = arg_16_1
+function MainSwitchViewContainer:switchClassifyTab(tabId)
+	self._classifyTabId = tabId
 
-	arg_16_0:dispatchEvent(ViewEvent.ToSwitchTab, 3, arg_16_1)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 3, tabId)
 end
 
-function var_0_0.getClassify(arg_17_0)
-	return arg_17_0._classifyTabId or MainSwitchClassifyEnum.Classify.Scene
+function MainSwitchViewContainer:getClassify()
+	return self._classifyTabId or MainSwitchClassifyEnum.Classify.Scene
 end
 
-function var_0_0.isInitMainFullView(arg_18_0)
+function MainSwitchViewContainer:isInitMainFullView()
 	return false
 end
 
-function var_0_0.playCloseAnim(arg_19_0, arg_19_1)
-	local var_19_0 = false
+function MainSwitchViewContainer:playCloseAnim(tabId)
+	local isPlayAnim = false
 
-	if arg_19_0._lastTabId then
-		local var_19_1 = arg_19_0._views[2] and arg_19_0._views[2]._tabViews[arg_19_0._lastTabId]
+	if self._lastTabId then
+		local lastTabView = self._views[2] and self._views[2]._tabViews[self._lastTabId]
 
-		if var_19_1 and var_19_1.viewGO then
-			local var_19_2 = SLFramework.AnimatorPlayer.Get(var_19_1.viewGO)
+		if lastTabView and lastTabView.viewGO then
+			local animPlayer = SLFramework.AnimatorPlayer.Get(lastTabView.viewGO)
 
-			if var_19_2 then
-				local function var_19_3()
-					arg_19_0:switchTab(arg_19_1)
+			if animPlayer then
+				local function cb()
+					self:switchTab(tabId)
 				end
 
-				var_19_2:Play("close", var_19_3, arg_19_0)
+				animPlayer:Play("close", cb, self)
 
-				var_19_0 = true
+				isPlayAnim = true
 			end
 		end
 	end
 
-	local var_19_4 = arg_19_0._views[2] and arg_19_0._views[2]._tabViews[arg_19_1]
+	local tabView = self._views[2] and self._views[2]._tabViews[tabId]
 
-	if var_19_4 and var_19_4.viewGO then
-		local var_19_5 = var_19_4.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	if tabView and tabView.viewGO then
+		local anim = tabView.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-		if var_19_5 then
-			var_19_5.enabled = true
+		if anim then
+			anim.enabled = true
 
-			var_19_5:Play("open", 0, 0)
+			anim:Play("open", 0, 0)
 		end
 	end
 
-	arg_19_0._lastTabId = arg_19_1
+	self._lastTabId = tabId
 
-	if not var_19_0 then
-		arg_19_0:switchTab(arg_19_1)
+	if not isPlayAnim then
+		self:switchTab(tabId)
 	end
 end
 
-function var_0_0.overrideCloseFunc(arg_21_0)
-	local var_21_0 = false
+function MainSwitchViewContainer:overrideCloseFunc()
+	local isPlayAnim = false
 
-	if arg_21_0._lastTabId then
-		local var_21_1 = arg_21_0._views[2] and arg_21_0._views[2]._tabViews[arg_21_0._lastTabId]
+	if self._lastTabId then
+		local lastTabView = self._views[2] and self._views[2]._tabViews[self._lastTabId]
 
-		if var_21_1 and var_21_1.viewGO then
-			local var_21_2 = SLFramework.AnimatorPlayer.Get(var_21_1.viewGO)
+		if lastTabView and lastTabView.viewGO then
+			local animPlayer = SLFramework.AnimatorPlayer.Get(lastTabView.viewGO)
 
-			if var_21_2 then
-				var_21_2:Play("close", arg_21_0.closeThis, arg_21_0)
+			if animPlayer then
+				animPlayer:Play("close", self.closeThis, self)
 
-				var_21_0 = true
+				isPlayAnim = true
 			end
 		end
 	end
 
-	if not var_21_0 then
-		arg_21_0:closeThis()
+	if not isPlayAnim then
+		self:closeThis()
 	end
 end
 
-return var_0_0
+return MainSwitchViewContainer

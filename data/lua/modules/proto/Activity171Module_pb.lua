@@ -1,128 +1,130 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/Activity171Module_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.Activity171Module_pb", package.seeall)
 
-local var_0_1 = {
-	INVITEPLAYER_MSG = var_0_0.Descriptor(),
-	INVITEPLAYERUSERIDFIELD = var_0_0.FieldDescriptor(),
-	INVITEPLAYERNAMEFIELD = var_0_0.FieldDescriptor(),
-	INVITEPLAYERPORTRAITFIELD = var_0_0.FieldDescriptor(),
-	GET171INFOREPLY_MSG = var_0_0.Descriptor(),
-	GET171INFOREPLYACTIVITYIDFIELD = var_0_0.FieldDescriptor(),
-	GET171INFOREPLYISTURNBACKFIELD = var_0_0.FieldDescriptor(),
-	GET171INFOREPLYINVITEPLAYERSFIELD = var_0_0.FieldDescriptor(),
-	GET171INFOREPLYINVITECODEFIELD = var_0_0.FieldDescriptor(),
-	GET171INFOREQUEST_MSG = var_0_0.Descriptor(),
-	GET171INFOREQUESTACTIVITYIDFIELD = var_0_0.FieldDescriptor()
-}
+local Activity171Module_pb = {}
 
-var_0_1.INVITEPLAYERUSERIDFIELD.name = "userId"
-var_0_1.INVITEPLAYERUSERIDFIELD.full_name = ".InvitePlayer.userId"
-var_0_1.INVITEPLAYERUSERIDFIELD.number = 1
-var_0_1.INVITEPLAYERUSERIDFIELD.index = 0
-var_0_1.INVITEPLAYERUSERIDFIELD.label = 1
-var_0_1.INVITEPLAYERUSERIDFIELD.has_default_value = false
-var_0_1.INVITEPLAYERUSERIDFIELD.default_value = 0
-var_0_1.INVITEPLAYERUSERIDFIELD.type = 3
-var_0_1.INVITEPLAYERUSERIDFIELD.cpp_type = 2
-var_0_1.INVITEPLAYERNAMEFIELD.name = "name"
-var_0_1.INVITEPLAYERNAMEFIELD.full_name = ".InvitePlayer.name"
-var_0_1.INVITEPLAYERNAMEFIELD.number = 2
-var_0_1.INVITEPLAYERNAMEFIELD.index = 1
-var_0_1.INVITEPLAYERNAMEFIELD.label = 1
-var_0_1.INVITEPLAYERNAMEFIELD.has_default_value = false
-var_0_1.INVITEPLAYERNAMEFIELD.default_value = ""
-var_0_1.INVITEPLAYERNAMEFIELD.type = 9
-var_0_1.INVITEPLAYERNAMEFIELD.cpp_type = 9
-var_0_1.INVITEPLAYERPORTRAITFIELD.name = "portrait"
-var_0_1.INVITEPLAYERPORTRAITFIELD.full_name = ".InvitePlayer.portrait"
-var_0_1.INVITEPLAYERPORTRAITFIELD.number = 3
-var_0_1.INVITEPLAYERPORTRAITFIELD.index = 2
-var_0_1.INVITEPLAYERPORTRAITFIELD.label = 1
-var_0_1.INVITEPLAYERPORTRAITFIELD.has_default_value = false
-var_0_1.INVITEPLAYERPORTRAITFIELD.default_value = 0
-var_0_1.INVITEPLAYERPORTRAITFIELD.type = 5
-var_0_1.INVITEPLAYERPORTRAITFIELD.cpp_type = 1
-var_0_1.INVITEPLAYER_MSG.name = "InvitePlayer"
-var_0_1.INVITEPLAYER_MSG.full_name = ".InvitePlayer"
-var_0_1.INVITEPLAYER_MSG.nested_types = {}
-var_0_1.INVITEPLAYER_MSG.enum_types = {}
-var_0_1.INVITEPLAYER_MSG.fields = {
-	var_0_1.INVITEPLAYERUSERIDFIELD,
-	var_0_1.INVITEPLAYERNAMEFIELD,
-	var_0_1.INVITEPLAYERPORTRAITFIELD
+Activity171Module_pb.INVITEPLAYER_MSG = protobuf.Descriptor()
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.INVITEPLAYERNAMEFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.GET171INFOREPLY_MSG = protobuf.Descriptor()
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.GET171INFOREQUEST_MSG = protobuf.Descriptor()
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD = protobuf.FieldDescriptor()
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.name = "userId"
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.full_name = ".InvitePlayer.userId"
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.number = 1
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.index = 0
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.label = 1
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.has_default_value = false
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.default_value = 0
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.type = 3
+Activity171Module_pb.INVITEPLAYERUSERIDFIELD.cpp_type = 2
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.name = "name"
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.full_name = ".InvitePlayer.name"
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.number = 2
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.index = 1
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.label = 1
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.has_default_value = false
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.default_value = ""
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.type = 9
+Activity171Module_pb.INVITEPLAYERNAMEFIELD.cpp_type = 9
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.name = "portrait"
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.full_name = ".InvitePlayer.portrait"
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.number = 3
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.index = 2
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.label = 1
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.has_default_value = false
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.default_value = 0
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.type = 5
+Activity171Module_pb.INVITEPLAYERPORTRAITFIELD.cpp_type = 1
+Activity171Module_pb.INVITEPLAYER_MSG.name = "InvitePlayer"
+Activity171Module_pb.INVITEPLAYER_MSG.full_name = ".InvitePlayer"
+Activity171Module_pb.INVITEPLAYER_MSG.nested_types = {}
+Activity171Module_pb.INVITEPLAYER_MSG.enum_types = {}
+Activity171Module_pb.INVITEPLAYER_MSG.fields = {
+	Activity171Module_pb.INVITEPLAYERUSERIDFIELD,
+	Activity171Module_pb.INVITEPLAYERNAMEFIELD,
+	Activity171Module_pb.INVITEPLAYERPORTRAITFIELD
 }
-var_0_1.INVITEPLAYER_MSG.is_extendable = false
-var_0_1.INVITEPLAYER_MSG.extensions = {}
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.name = "activityId"
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.full_name = ".Get171InfoReply.activityId"
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.number = 1
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.index = 0
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.label = 1
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.has_default_value = false
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.default_value = 0
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.type = 5
-var_0_1.GET171INFOREPLYACTIVITYIDFIELD.cpp_type = 1
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.name = "isTurnback"
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.full_name = ".Get171InfoReply.isTurnback"
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.number = 2
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.index = 1
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.label = 1
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.has_default_value = false
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.default_value = false
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.type = 8
-var_0_1.GET171INFOREPLYISTURNBACKFIELD.cpp_type = 7
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.name = "invitePlayers"
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.full_name = ".Get171InfoReply.invitePlayers"
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.number = 3
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.index = 2
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.label = 3
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.has_default_value = false
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.default_value = {}
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.message_type = var_0_1.INVITEPLAYER_MSG
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.type = 11
-var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD.cpp_type = 10
-var_0_1.GET171INFOREPLYINVITECODEFIELD.name = "inviteCode"
-var_0_1.GET171INFOREPLYINVITECODEFIELD.full_name = ".Get171InfoReply.inviteCode"
-var_0_1.GET171INFOREPLYINVITECODEFIELD.number = 4
-var_0_1.GET171INFOREPLYINVITECODEFIELD.index = 3
-var_0_1.GET171INFOREPLYINVITECODEFIELD.label = 1
-var_0_1.GET171INFOREPLYINVITECODEFIELD.has_default_value = false
-var_0_1.GET171INFOREPLYINVITECODEFIELD.default_value = ""
-var_0_1.GET171INFOREPLYINVITECODEFIELD.type = 9
-var_0_1.GET171INFOREPLYINVITECODEFIELD.cpp_type = 9
-var_0_1.GET171INFOREPLY_MSG.name = "Get171InfoReply"
-var_0_1.GET171INFOREPLY_MSG.full_name = ".Get171InfoReply"
-var_0_1.GET171INFOREPLY_MSG.nested_types = {}
-var_0_1.GET171INFOREPLY_MSG.enum_types = {}
-var_0_1.GET171INFOREPLY_MSG.fields = {
-	var_0_1.GET171INFOREPLYACTIVITYIDFIELD,
-	var_0_1.GET171INFOREPLYISTURNBACKFIELD,
-	var_0_1.GET171INFOREPLYINVITEPLAYERSFIELD,
-	var_0_1.GET171INFOREPLYINVITECODEFIELD
+Activity171Module_pb.INVITEPLAYER_MSG.is_extendable = false
+Activity171Module_pb.INVITEPLAYER_MSG.extensions = {}
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.name = "activityId"
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.full_name = ".Get171InfoReply.activityId"
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.number = 1
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.index = 0
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.label = 1
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.has_default_value = false
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.default_value = 0
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.type = 5
+Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD.cpp_type = 1
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.name = "isTurnback"
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.full_name = ".Get171InfoReply.isTurnback"
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.number = 2
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.index = 1
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.label = 1
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.has_default_value = false
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.default_value = false
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.type = 8
+Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD.cpp_type = 7
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.name = "invitePlayers"
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.full_name = ".Get171InfoReply.invitePlayers"
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.number = 3
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.index = 2
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.label = 3
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.has_default_value = false
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.default_value = {}
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.message_type = Activity171Module_pb.INVITEPLAYER_MSG
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.type = 11
+Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD.cpp_type = 10
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.name = "inviteCode"
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.full_name = ".Get171InfoReply.inviteCode"
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.number = 4
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.index = 3
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.label = 1
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.has_default_value = false
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.default_value = ""
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.type = 9
+Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD.cpp_type = 9
+Activity171Module_pb.GET171INFOREPLY_MSG.name = "Get171InfoReply"
+Activity171Module_pb.GET171INFOREPLY_MSG.full_name = ".Get171InfoReply"
+Activity171Module_pb.GET171INFOREPLY_MSG.nested_types = {}
+Activity171Module_pb.GET171INFOREPLY_MSG.enum_types = {}
+Activity171Module_pb.GET171INFOREPLY_MSG.fields = {
+	Activity171Module_pb.GET171INFOREPLYACTIVITYIDFIELD,
+	Activity171Module_pb.GET171INFOREPLYISTURNBACKFIELD,
+	Activity171Module_pb.GET171INFOREPLYINVITEPLAYERSFIELD,
+	Activity171Module_pb.GET171INFOREPLYINVITECODEFIELD
 }
-var_0_1.GET171INFOREPLY_MSG.is_extendable = false
-var_0_1.GET171INFOREPLY_MSG.extensions = {}
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.name = "activityId"
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.full_name = ".Get171InfoRequest.activityId"
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.number = 1
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.index = 0
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.label = 1
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.has_default_value = false
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.default_value = 0
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.type = 5
-var_0_1.GET171INFOREQUESTACTIVITYIDFIELD.cpp_type = 1
-var_0_1.GET171INFOREQUEST_MSG.name = "Get171InfoRequest"
-var_0_1.GET171INFOREQUEST_MSG.full_name = ".Get171InfoRequest"
-var_0_1.GET171INFOREQUEST_MSG.nested_types = {}
-var_0_1.GET171INFOREQUEST_MSG.enum_types = {}
-var_0_1.GET171INFOREQUEST_MSG.fields = {
-	var_0_1.GET171INFOREQUESTACTIVITYIDFIELD
+Activity171Module_pb.GET171INFOREPLY_MSG.is_extendable = false
+Activity171Module_pb.GET171INFOREPLY_MSG.extensions = {}
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.name = "activityId"
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.full_name = ".Get171InfoRequest.activityId"
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.number = 1
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.index = 0
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.label = 1
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.has_default_value = false
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.default_value = 0
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.type = 5
+Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD.cpp_type = 1
+Activity171Module_pb.GET171INFOREQUEST_MSG.name = "Get171InfoRequest"
+Activity171Module_pb.GET171INFOREQUEST_MSG.full_name = ".Get171InfoRequest"
+Activity171Module_pb.GET171INFOREQUEST_MSG.nested_types = {}
+Activity171Module_pb.GET171INFOREQUEST_MSG.enum_types = {}
+Activity171Module_pb.GET171INFOREQUEST_MSG.fields = {
+	Activity171Module_pb.GET171INFOREQUESTACTIVITYIDFIELD
 }
-var_0_1.GET171INFOREQUEST_MSG.is_extendable = false
-var_0_1.GET171INFOREQUEST_MSG.extensions = {}
-var_0_1.Get171InfoReply = var_0_0.Message(var_0_1.GET171INFOREPLY_MSG)
-var_0_1.Get171InfoRequest = var_0_0.Message(var_0_1.GET171INFOREQUEST_MSG)
-var_0_1.InvitePlayer = var_0_0.Message(var_0_1.INVITEPLAYER_MSG)
+Activity171Module_pb.GET171INFOREQUEST_MSG.is_extendable = false
+Activity171Module_pb.GET171INFOREQUEST_MSG.extensions = {}
+Activity171Module_pb.Get171InfoReply = protobuf.Message(Activity171Module_pb.GET171INFOREPLY_MSG)
+Activity171Module_pb.Get171InfoRequest = protobuf.Message(Activity171Module_pb.GET171INFOREQUEST_MSG)
+Activity171Module_pb.InvitePlayer = protobuf.Message(Activity171Module_pb.INVITEPLAYER_MSG)
 
-return var_0_1
+return Activity171Module_pb

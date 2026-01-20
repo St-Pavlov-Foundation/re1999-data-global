@@ -1,25 +1,27 @@
-﻿module("modules.logic.dungeon.model.RoleStoryRewardListModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/RoleStoryRewardListModel.lua
 
-local var_0_0 = class("RoleStoryRewardListModel", ListScrollModel)
+module("modules.logic.dungeon.model.RoleStoryRewardListModel", package.seeall)
 
-function var_0_0.refreshList(arg_1_0)
-	local var_1_0 = RoleStoryModel.instance:getCurActStoryId()
-	local var_1_1 = {}
+local RoleStoryRewardListModel = class("RoleStoryRewardListModel", ListScrollModel)
 
-	if var_1_0 then
-		local var_1_2 = RoleStoryConfig.instance:getRewardList(var_1_0) or {}
+function RoleStoryRewardListModel:refreshList()
+	local storyId = RoleStoryModel.instance:getCurActStoryId()
+	local dataList = {}
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-			table.insert(var_1_1, {
-				index = iter_1_0,
-				config = iter_1_1
+	if storyId then
+		local list = RoleStoryConfig.instance:getRewardList(storyId) or {}
+
+		for i, v in ipairs(list) do
+			table.insert(dataList, {
+				index = i,
+				config = v
 			})
 		end
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(dataList)
 end
 
-var_0_0.instance = var_0_0.New()
+RoleStoryRewardListModel.instance = RoleStoryRewardListModel.New()
 
-return var_0_0
+return RoleStoryRewardListModel

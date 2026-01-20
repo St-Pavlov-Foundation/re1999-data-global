@@ -1,39 +1,41 @@
-﻿module("modules.logic.fight.view.assistboss.FightAssistBoss2", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/assistboss/FightAssistBoss2.lua
 
-local var_0_0 = class("FightAssistBoss2", FightAssistBossBase)
+module("modules.logic.fight.view.assistboss.FightAssistBoss2", package.seeall)
 
-function var_0_0.setPrefabPath(arg_1_0)
-	arg_1_0.prefabPath = "ui/viewres/assistboss/boss2.prefab"
+local FightAssistBoss2 = class("FightAssistBoss2", FightAssistBossBase)
+
+function FightAssistBoss2:setPrefabPath()
+	self.prefabPath = "ui/viewres/assistboss/boss2.prefab"
 end
 
-var_0_0.MaxPower = 6
+FightAssistBoss2.MaxPower = 6
 
-function var_0_0.initView(arg_2_0)
-	var_0_0.super.initView(arg_2_0)
+function FightAssistBoss2:initView()
+	FightAssistBoss2.super.initView(self)
 
-	arg_2_0.goPowerList = arg_2_0:getUserDataTb_()
+	self.goPowerList = self:getUserDataTb_()
 
-	for iter_2_0 = 1, var_0_0.MaxPower do
-		table.insert(arg_2_0.goPowerList, gohelper.findChild(arg_2_0.viewGo, string.format("go_energy/%s/light", iter_2_0)))
+	for i = 1, FightAssistBoss2.MaxPower do
+		table.insert(self.goPowerList, gohelper.findChild(self.viewGo, string.format("go_energy/%s/light", i)))
 	end
 end
 
-function var_0_0.refreshPower(arg_3_0)
-	var_0_0.super.refreshPower(arg_3_0)
+function FightAssistBoss2:refreshPower()
+	FightAssistBoss2.super.refreshPower(self)
 
-	local var_3_0 = FightDataHelper.paTaMgr:getAssistBossPower()
+	local curPower = FightDataHelper.paTaMgr:getAssistBossPower()
 
-	for iter_3_0 = 1, var_0_0.MaxPower do
-		gohelper.setActive(arg_3_0.goPowerList[iter_3_0], iter_3_0 <= var_3_0)
+	for i = 1, FightAssistBoss2.MaxPower do
+		gohelper.setActive(self.goPowerList[i], i <= curPower)
 	end
 end
 
-function var_0_0.onPowerChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	var_0_0.super.onPowerChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+function FightAssistBoss2:onPowerChange(entityId, powerId, oldNum, newNum)
+	FightAssistBoss2.super.onPowerChange(self, entityId, powerId, oldNum, newNum)
 
-	if arg_4_3 < arg_4_4 then
+	if oldNum < newNum then
 		FightAudioMgr.instance:playAudio(20232001)
 	end
 end
 
-return var_0_0
+return FightAssistBoss2

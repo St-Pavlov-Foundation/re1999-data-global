@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreFinishViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreFinishViewContainer.lua
 
-local var_0_0 = class("ExploreFinishViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreFinishViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreFinishViewContainer = class("ExploreFinishViewContainer", BaseViewContainer)
+
+function ExploreFinishViewContainer:buildViews()
 	return {
 		ExploreFinishView.New()
 	}
 end
 
-return var_0_0
+return ExploreFinishViewContainer

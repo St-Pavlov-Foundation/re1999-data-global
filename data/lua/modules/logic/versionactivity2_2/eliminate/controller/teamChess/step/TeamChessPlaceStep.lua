@@ -1,28 +1,32 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPlaceStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/TeamChessPlaceStep.lua
 
-local var_0_0 = class("TeamChessPlaceStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPlaceStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if EliminateTeamChessModel.instance:getCurTeamRoundStepState() == EliminateTeamChessEnum.TeamChessRoundType.enemy then
-		EliminateLevelController.instance:registerCallback(EliminateChessEvent.LevelDialogClosed, arg_1_0._checkRoundStep, arg_1_0)
+local TeamChessPlaceStep = class("TeamChessPlaceStep", EliminateTeamChessStepBase)
+
+function TeamChessPlaceStep:onStart()
+	local roundStepState = EliminateTeamChessModel.instance:getCurTeamRoundStepState()
+
+	if roundStepState == EliminateTeamChessEnum.TeamChessRoundType.enemy then
+		EliminateLevelController.instance:registerCallback(EliminateChessEvent.LevelDialogClosed, self._checkRoundStep, self)
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessEnemyPlaceBefore)
 	else
-		arg_1_0:_checkRoundStep()
+		self:_checkRoundStep()
 	end
 end
 
-function var_0_0._checkRoundStep(arg_2_0)
-	EliminateLevelController.instance:unregisterCallback(EliminateChessEvent.LevelDialogClosed, arg_2_0._checkRoundStep, arg_2_0)
+function TeamChessPlaceStep:_checkRoundStep()
+	EliminateLevelController.instance:unregisterCallback(EliminateChessEvent.LevelDialogClosed, self._checkRoundStep, self)
 
-	local var_2_0 = arg_2_0._data
-	local var_2_1 = EliminateTeamChessModel.instance:getStronghold(var_2_0.strongholdId)
-	local var_2_2 = var_2_0.chessPiece
-	local var_2_3 = var_2_2.teamType
-	local var_2_4 = var_2_1:updatePiece(var_2_3, var_2_2)
-	local var_2_5 = var_2_1:getChess(var_2_2.uid)
+	local data = self._data
+	local stronghold = EliminateTeamChessModel.instance:getStronghold(data.strongholdId)
+	local chessPiece = data.chessPiece
+	local teamType = chessPiece.teamType
+	local index = stronghold:updatePiece(teamType, chessPiece)
+	local piece = stronghold:getChess(chessPiece.uid)
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.AddStrongholdChess, var_2_5, var_2_0.strongholdId, var_2_4)
-	TaskDispatcher.runDelay(arg_2_0._onDone, arg_2_0, EliminateTeamChessEnum.teamChessPlaceStep)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.AddStrongholdChess, piece, data.strongholdId, index)
+	TaskDispatcher.runDelay(self._onDone, self, EliminateTeamChessEnum.teamChessPlaceStep)
 end
 
-return var_0_0
+return TeamChessPlaceStep

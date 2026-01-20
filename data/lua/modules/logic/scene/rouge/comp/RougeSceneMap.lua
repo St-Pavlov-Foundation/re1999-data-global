@@ -1,114 +1,116 @@
-﻿module("modules.logic.scene.rouge.comp.RougeSceneMap", package.seeall)
+﻿-- chunkname: @modules/logic/scene/rouge/comp/RougeSceneMap.lua
 
-local var_0_0 = class("RougeSceneMap", BaseSceneComp)
+module("modules.logic.scene.rouge.comp.RougeSceneMap", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+local RougeSceneMap = class("RougeSceneMap", BaseSceneComp)
+
+function RougeSceneMap:onSceneStart(chapterId, layerId)
 	RougeMapModel.instance:setMapState(RougeMapEnum.MapState.LoadingMap)
-	arg_1_0:loadMap()
-	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, arg_1_0.onChangeMapInfo, arg_1_0)
-	RougeMapController.instance:registerCallback(RougeMapEvent.onBeforeChangeMapInfo, arg_1_0.onBeforeChangeMapInfo, arg_1_0)
+	self:loadMap()
+	RougeMapController.instance:registerCallback(RougeMapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
+	RougeMapController.instance:registerCallback(RougeMapEvent.onBeforeChangeMapInfo, self.onBeforeChangeMapInfo, self)
 end
 
-function var_0_0.loadMap(arg_2_0)
-	if arg_2_0.loader then
-		if arg_2_0.loader.isLoading then
-			logError(string.format("exist loading rouge scene, res : %s", arg_2_0.resPath))
+function RougeSceneMap:loadMap()
+	if self.loader then
+		if self.loader.isLoading then
+			logError(string.format("exist loading rouge scene, res : %s", self.resPath))
 
 			return
 		end
 
-		arg_2_0:clearLoader()
+		self:clearLoader()
 	end
 
-	local var_2_0 = RougeMapModel.instance:getMapType()
+	local type = RougeMapModel.instance:getMapType()
 
-	arg_2_0.resPath = RougeMapHelper.getMapResPath(var_2_0)
+	self.resPath = RougeMapHelper.getMapResPath(type)
 
 	RougeMapModel.instance:setLoadingMap(true)
 
-	arg_2_0.loader = MultiAbLoader.New()
+	self.loader = MultiAbLoader.New()
 
-	arg_2_0.loader:addPath(arg_2_0.resPath)
-	RougeMapHelper.addMapOtherRes(var_2_0, arg_2_0.loader)
+	self.loader:addPath(self.resPath)
+	RougeMapHelper.addMapOtherRes(type, self.loader)
 
-	arg_2_0.versions = RougeModel.instance:getVersion()
+	self.versions = RougeModel.instance:getVersion()
 
-	RougeMapDLCResHelper.addMapDLCRes(var_2_0, arg_2_0.versions, arg_2_0.loader)
-	arg_2_0.loader:startLoad(arg_2_0.onLoadCallback, arg_2_0)
+	RougeMapDLCResHelper.addMapDLCRes(type, self.versions, self.loader)
+	self.loader:startLoad(self.onLoadCallback, self)
 end
 
-function var_0_0.onLoadCallback(arg_3_0)
-	arg_3_0:destroyOldMapGo()
+function RougeSceneMap:onLoadCallback()
+	self:destroyOldMapGo()
 
-	local var_3_0 = arg_3_0:getCurScene():getSceneContainerGO()
-	local var_3_1 = arg_3_0.loader:getAssetItem(arg_3_0.resPath)
+	local sceneGO = self:getCurScene():getSceneContainerGO()
+	local assetItem = self.loader:getAssetItem(self.resPath)
 
-	arg_3_0.mapGo = gohelper.clone(var_3_1:GetResource(), var_3_0)
+	self.mapGo = gohelper.clone(assetItem:GetResource(), sceneGO)
 
-	gohelper.setLayer(arg_3_0.mapGo, UnityLayer.Scene, true)
+	gohelper.setLayer(self.mapGo, UnityLayer.Scene, true)
 
-	local var_3_2 = RougeMapModel.instance:getMapType()
+	local type = RougeMapModel.instance:getMapType()
 
-	arg_3_0.mapComp = RougeMapHelper.createMapComp(var_3_2)
+	self.mapComp = RougeMapHelper.createMapComp(type)
 
-	arg_3_0.mapComp:init(arg_3_0.mapGo)
-	arg_3_0.mapComp:handleOtherRes(arg_3_0.loader)
-	arg_3_0.mapComp:handleDLCRes(arg_3_0.loader, arg_3_0.versions)
+	self.mapComp:init(self.mapGo)
+	self.mapComp:handleOtherRes(self.loader)
+	self.mapComp:handleDLCRes(self.loader, self.versions)
 	RougeMapModel.instance:setLoadingMap(false)
-	logNormal(string.format("load scene success, res : %s", arg_3_0.resPath))
+	logNormal(string.format("load scene success, res : %s", self.resPath))
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onLoadMapDone)
 end
 
-function var_0_0.onScenePrepared(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.mapComp:createMap()
+function RougeSceneMap:onScenePrepared(chapterId, layerId)
+	self.mapComp:createMap()
 end
 
-function var_0_0.getMapSceneGo(arg_5_0)
-	return arg_5_0.mapGo
+function RougeSceneMap:getMapSceneGo()
+	return self.mapGo
 end
 
-function var_0_0.switchMap(arg_6_0)
-	arg_6_0:loadMap()
+function RougeSceneMap:switchMap()
+	self:loadMap()
 end
 
-function var_0_0.onChangeMapInfo(arg_7_0, arg_7_1)
-	arg_7_0:loadMap()
+function RougeSceneMap:onChangeMapInfo(changeMapEnum)
+	self:loadMap()
 end
 
-function var_0_0.onBeforeChangeMapInfo(arg_8_0)
-	arg_8_0:destroyOldMap()
+function RougeSceneMap:onBeforeChangeMapInfo()
+	self:destroyOldMap()
 end
 
-function var_0_0.clearLoader(arg_9_0)
-	if arg_9_0.loader then
-		arg_9_0.loader:dispose()
+function RougeSceneMap:clearLoader()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_9_0.loader = nil
+		self.loader = nil
 	end
 end
 
-function var_0_0.destroyOldMap(arg_10_0)
-	if arg_10_0.mapComp then
-		arg_10_0.mapComp:destroy()
+function RougeSceneMap:destroyOldMap()
+	if self.mapComp then
+		self.mapComp:destroy()
 
-		arg_10_0.mapComp = nil
+		self.mapComp = nil
 	end
 end
 
-function var_0_0.destroyOldMapGo(arg_11_0)
-	if arg_11_0.mapGo then
-		gohelper.destroy(arg_11_0.mapGo)
+function RougeSceneMap:destroyOldMapGo()
+	if self.mapGo then
+		gohelper.destroy(self.mapGo)
 
-		arg_11_0.mapGo = nil
+		self.mapGo = nil
 	end
 end
 
-function var_0_0.onSceneClose(arg_12_0)
+function RougeSceneMap:onSceneClose()
 	RougeMapModel.instance:setMapState(RougeMapEnum.MapState.Empty)
-	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, arg_12_0.onChangeMapInfo, arg_12_0)
-	arg_12_0:clearLoader()
-	arg_12_0:destroyOldMap()
-	arg_12_0:destroyOldMapGo()
+	RougeMapController.instance:unregisterCallback(RougeMapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
+	self:clearLoader()
+	self:destroyOldMap()
+	self:destroyOldMapGo()
 end
 
-return var_0_0
+return RougeSceneMap

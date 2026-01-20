@@ -1,56 +1,58 @@
-﻿module("modules.logic.rouge.map.map.event.RougeMapEventComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/map/event/RougeMapEventComp.lua
 
-local var_0_0 = class("RougeMapEventComp", UserDataDispose)
+module("modules.logic.rouge.map.map.event.RougeMapEventComp", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local RougeMapEventComp = class("RougeMapEventComp", UserDataDispose)
+
+function RougeMapEventComp:init()
 	return
 end
 
-function var_0_0.handleEvent(arg_2_0, arg_2_1)
-	arg_2_0.eventCo = arg_2_1
+function RougeMapEventComp:handleEvent(eventCo)
+	self.eventCo = eventCo
 
-	local var_2_0 = arg_2_0.eventCo.type
-	local var_2_1 = var_0_0.EventHandleDict[var_2_0]
+	local eventType = self.eventCo.type
+	local handle = RougeMapEventComp.EventHandleDict[eventType]
 
-	if not var_2_1 then
-		logError("not handle event type : " .. tostring(var_2_0))
+	if not handle then
+		logError("not handle event type : " .. tostring(eventType))
 
 		return
 	end
 
-	var_2_1(arg_2_0)
+	handle(self)
 end
 
-function var_0_0.emptyHandle(arg_3_0)
+function RougeMapEventComp:emptyHandle()
 	logWarn("empty handle")
 end
 
-function var_0_0.fightHandle(arg_4_0)
+function RougeMapEventComp:fightHandle()
 	logError("进入战斗")
 end
 
-function var_0_0.storeHandle(arg_5_0)
+function RougeMapEventComp:storeHandle()
 	logError("打开商店")
 end
 
-function var_0_0.choiceHandle(arg_6_0)
+function RougeMapEventComp:choiceHandle()
 	logError("打开选项")
 end
 
-var_0_0.EventHandleDict = {
-	[RougeMapEnum.EventType.Empty] = var_0_0.emptyHandle,
-	[RougeMapEnum.EventType.NormalFight] = var_0_0.fightHandle,
-	[RougeMapEnum.EventType.HardFight] = var_0_0.fightHandle,
-	[RougeMapEnum.EventType.EliteFight] = var_0_0.fightHandle,
-	[RougeMapEnum.EventType.BossFight] = var_0_0.fightHandle,
-	[RougeMapEnum.EventType.Reward] = var_0_0.choiceHandle,
-	[RougeMapEnum.EventType.Choice] = var_0_0.choiceHandle,
-	[RougeMapEnum.EventType.Store] = var_0_0.storeHandle,
-	[RougeMapEnum.EventType.Rest] = var_0_0.choiceHandle
+RougeMapEventComp.EventHandleDict = {
+	[RougeMapEnum.EventType.Empty] = RougeMapEventComp.emptyHandle,
+	[RougeMapEnum.EventType.NormalFight] = RougeMapEventComp.fightHandle,
+	[RougeMapEnum.EventType.HardFight] = RougeMapEventComp.fightHandle,
+	[RougeMapEnum.EventType.EliteFight] = RougeMapEventComp.fightHandle,
+	[RougeMapEnum.EventType.BossFight] = RougeMapEventComp.fightHandle,
+	[RougeMapEnum.EventType.Reward] = RougeMapEventComp.choiceHandle,
+	[RougeMapEnum.EventType.Choice] = RougeMapEventComp.choiceHandle,
+	[RougeMapEnum.EventType.Store] = RougeMapEventComp.storeHandle,
+	[RougeMapEnum.EventType.Rest] = RougeMapEventComp.choiceHandle
 }
 
-function var_0_0.destroy(arg_7_0)
+function RougeMapEventComp:destroy()
 	return
 end
 
-return var_0_0
+return RougeMapEventComp

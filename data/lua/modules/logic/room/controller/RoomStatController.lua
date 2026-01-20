@@ -1,169 +1,173 @@
-﻿module("modules.logic.room.controller.RoomStatController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomStatController.lua
 
-local var_0_0 = class("RoomStatController", BaseController)
+module("modules.logic.room.controller.RoomStatController", package.seeall)
 
-function var_0_0.blockOp(arg_1_0, arg_1_1, arg_1_2)
-	if not arg_1_1 or #arg_1_1 < 1 then
+local RoomStatController = class("RoomStatController", BaseController)
+
+function RoomStatController:blockOp(blockIds, isPlace)
+	if not blockIds or #blockIds < 1 then
 		return
 	end
 
-	local var_1_0 = {}
-	local var_1_1 = RoomConfig.instance
+	local plotbas = {}
+	local tRoomConfig = RoomConfig.instance
 
-	for iter_1_0 = 1, #arg_1_1 do
-		local var_1_2 = var_1_1:getPackageConfigByBlockId(arg_1_1[iter_1_0])
+	for i = 1, #blockIds do
+		local packageCfg = tRoomConfig:getPackageConfigByBlockId(blockIds[i])
 
-		if var_1_2 then
-			table.insert(var_1_0, var_1_2.name)
+		if packageCfg then
+			table.insert(plotbas, packageCfg.name)
 		end
 	end
 
 	StatController.instance:track(StatEnum.EventName.RoomOperatingPlot, {
 		[StatEnum.EventProperties.RoomPivotLevel] = RoomModel.instance:getRoomLevel() or 0,
-		[StatEnum.EventProperties.RoomOperationType] = arg_1_2 and luaLang("datatrack_room_place_block") or luaLang("datatrack_room_back_block"),
-		[StatEnum.EventProperties.RoomPlotbag] = var_1_0
+		[StatEnum.EventProperties.RoomOperationType] = isPlace and luaLang("datatrack_room_place_block") or luaLang("datatrack_room_back_block"),
+		[StatEnum.EventProperties.RoomPlotbag] = plotbas
 	})
 end
 
-function var_0_0.oneKeyDispatch(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_1 and "critter" or "manu"
+function RoomStatController:oneKeyDispatch(isCritter, oneKeyType)
+	local type = isCritter and "critter" or "manu"
 
 	StatController.instance:track(StatEnum.EventName.RoomManuAutoDispatch, {
-		[StatEnum.EventProperties.RoomDispatchType] = var_2_0,
-		[StatEnum.EventProperties.RoomDispatchSubType] = arg_2_2
+		[StatEnum.EventProperties.RoomDispatchType] = type,
+		[StatEnum.EventProperties.RoomDispatchSubType] = oneKeyType
 	})
 end
 
-function var_0_0.switchUpdateRecordTime(arg_3_0)
-	arg_3_0._switchRecordTime = Time.realtimeSinceStartup
+function RoomStatController:switchUpdateRecordTime()
+	self._switchRecordTime = Time.realtimeSinceStartup
 end
 
-function var_0_0.roomTransportCameraSwitch(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = Time.realtimeSinceStartup - arg_4_0._switchRecordTime
-	local var_4_1 = arg_4_0:getRoadInfo(arg_4_3)
-	local var_4_2 = arg_4_0:getRoadInfo(arg_4_2)
-	local var_4_3 = {
-		var_4_2
+function RoomStatController:roomTransportCameraSwitch(isOnePerson, lastPathMO, newPathMO)
+	local spendTime = Time.realtimeSinceStartup - self._switchRecordTime
+	local roadInfo = self:getRoadInfo(newPathMO)
+	local beforeRoadInfo = self:getRoadInfo(lastPathMO)
+	local beforeRoadList = {
+		beforeRoadInfo
 	}
-	local var_4_4 = {
-		var_4_1
+	local roadList = {
+		roadInfo
 	}
 
 	StatController.instance:track(StatEnum.EventName.RoomTransportCameraSwitch, {
-		[StatEnum.EventProperties.IsOnePerson] = arg_4_1,
-		[StatEnum.EventProperties.SpendTime] = var_4_0,
-		[StatEnum.EventProperties.RoadInfoBefore] = var_4_3,
-		[StatEnum.EventProperties.RoadInfo] = var_4_4
+		[StatEnum.EventProperties.IsOnePerson] = isOnePerson,
+		[StatEnum.EventProperties.SpendTime] = spendTime,
+		[StatEnum.EventProperties.RoadInfoBefore] = beforeRoadList,
+		[StatEnum.EventProperties.RoadInfo] = roadList
 	})
-	arg_4_0:switchUpdateRecordTime()
+	self:switchUpdateRecordTime()
 end
 
-function var_0_0.startOpenTransportSiteView(arg_5_0)
-	arg_5_0:switchUpdateRecordTime()
+function RoomStatController:startOpenTransportSiteView()
+	self:switchUpdateRecordTime()
 
-	arg_5_0._openTransportSiteViewTime = Time.realtimeSinceStartup
+	self._openTransportSiteViewTime = Time.realtimeSinceStartup
 end
 
-function var_0_0.closeTransportSiteView(arg_6_0, arg_6_1)
-	if not arg_6_0._openTransportSiteViewTime or not arg_6_1 then
+function RoomStatController:closeTransportSiteView(pathMO)
+	if not self._openTransportSiteViewTime or not pathMO then
 		return
 	end
 
-	local var_6_0 = Time.realtimeSinceStartup - arg_6_0._openTransportSiteViewTime
-	local var_6_1 = arg_6_0:getRoadInfo(arg_6_1)
-	local var_6_2 = {
-		var_6_1
+	local spendTime = Time.realtimeSinceStartup - self._openTransportSiteViewTime
+	local roadInfo = self:getRoadInfo(pathMO)
+	local roadInfoList = {
+		roadInfo
 	}
 
 	StatController.instance:track(StatEnum.EventName.RoomTransportCameraLeave, {
-		[StatEnum.EventProperties.SpendTime] = var_6_0,
-		[StatEnum.EventProperties.RoadInfo] = var_6_2
+		[StatEnum.EventProperties.SpendTime] = spendTime,
+		[StatEnum.EventProperties.RoadInfo] = roadInfoList
 	})
 
-	arg_6_0._openTransportSiteViewTime = nil
+	self._openTransportSiteViewTime = nil
 end
 
-function var_0_0.roomRoadEditView(arg_7_0)
-	arg_7_0._openTransportPathViewTime = Time.realtimeSinceStartup
+function RoomStatController:roomRoadEditView()
+	self._openTransportPathViewTime = Time.realtimeSinceStartup
 
 	StatController.instance:track(StatEnum.EventName.RoomRoadEditView)
 end
 
-function var_0_0.roomRoadEditClose(arg_8_0)
-	if not arg_8_0._openTransportPathViewTime then
+function RoomStatController:roomRoadEditClose()
+	if not self._openTransportPathViewTime then
 		return
 	end
 
-	local var_8_0 = Time.realtimeSinceStartup - arg_8_0._openTransportPathViewTime
-	local var_8_1 = {}
-	local var_8_2 = RoomTransportHelper.getPathBuildingTypesList()
+	local spendTime = Time.realtimeSinceStartup - self._openTransportPathViewTime
+	local tipList = {}
+	local typesList = RoomTransportHelper.getPathBuildingTypesList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-		local var_8_3 = iter_8_1[1]
-		local var_8_4 = iter_8_1[2]
-		local var_8_5 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_8_3, var_8_4)
+	for _, types in ipairs(typesList) do
+		local fromType = types[1]
+		local toType = types[2]
+		local transportPathMO = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(fromType, toType)
+		local isLinkFinish = transportPathMO and transportPathMO:isLinkFinish()
 
-		if not (var_8_5 and var_8_5:isLinkFinish()) then
-			local var_8_6 = RoomTransportHelper.fromTo2SiteType(var_8_3, var_8_4)
-			local var_8_7 = RoomTransportPathEnum.TipLang[var_8_6]
+		if not isLinkFinish then
+			local siteType = RoomTransportHelper.fromTo2SiteType(fromType, toType)
+			local langKey = RoomTransportPathEnum.TipLang[siteType]
 
-			table.insert(var_8_1, var_8_7)
+			table.insert(tipList, langKey)
 		end
 	end
 
-	local var_8_8 = {}
-	local var_8_9 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+	local roadInfoList = {}
+	local transportPathMOList = RoomMapTransportPathModel.instance:getTransportPathMOList()
 
-	for iter_8_2, iter_8_3 in ipairs(var_8_9) do
-		local var_8_10 = arg_8_0:getRoadInfo(iter_8_3)
+	for _, pathMO in ipairs(transportPathMOList) do
+		local roadInfo = self:getRoadInfo(pathMO)
 
-		table.insert(var_8_8, var_8_10)
+		table.insert(roadInfoList, roadInfo)
 	end
 
 	StatController.instance:track(StatEnum.EventName.RoomRoadEditClose, {
-		[StatEnum.EventProperties.SpendTime] = var_8_0,
-		[StatEnum.EventProperties.TipList] = var_8_1,
-		[StatEnum.EventProperties.RoadInfo] = var_8_8
+		[StatEnum.EventProperties.SpendTime] = spendTime,
+		[StatEnum.EventProperties.TipList] = tipList,
+		[StatEnum.EventProperties.RoadInfo] = roadInfoList
 	})
 
-	arg_8_0._openTransportPathViewTime = nil
+	self._openTransportPathViewTime = nil
 end
 
-function var_0_0.getRoadInfo(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function RoomStatController:getRoadInfo(pathMO)
+	if not pathMO then
 		return
 	end
 
-	local var_9_0 = RoomTransportHelper.fromTo2SiteType(arg_9_1.fromType, arg_9_1.toType)
-
-	return {
-		id = arg_9_1.id,
-		length = arg_9_1:getHexPointCount(),
-		vehicle = arg_9_1.buildingId,
-		vehicleSkinId = arg_9_1.buildingSkinId,
-		from = arg_9_1.fromType,
-		to = arg_9_1.toType,
-		is_auto = RoomTransportHelper.getIsQuickLink(var_9_0)
+	local siteType = RoomTransportHelper.fromTo2SiteType(pathMO.fromType, pathMO.toType)
+	local result = {
+		id = pathMO.id,
+		length = pathMO:getHexPointCount(),
+		vehicle = pathMO.buildingId,
+		vehicleSkinId = pathMO.buildingSkinId,
+		from = pathMO.fromType,
+		to = pathMO.toType,
+		is_auto = RoomTransportHelper.getIsQuickLink(siteType)
 	}
+
+	return result
 end
 
-function var_0_0.roomInteractBuildingInvite(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = {}
+function RoomStatController:roomInteractBuildingInvite(buildingId, heroIds)
+	local heroList = {}
 
-	tabletool.addValues(var_10_0, arg_10_2)
+	tabletool.addValues(heroList, heroIds)
 	StatController.instance:track(StatEnum.EventName.RoomInteractBuildingInvite, {
-		[StatEnum.EventProperties.BuildingId] = arg_10_1,
-		[StatEnum.EventProperties.HeroList] = var_10_0
+		[StatEnum.EventProperties.BuildingId] = buildingId,
+		[StatEnum.EventProperties.HeroList] = heroList
 	})
 end
 
-function var_0_0.critterBookBgSwitch(arg_11_0, arg_11_1, arg_11_2)
+function RoomStatController:critterBookBgSwitch(bookId, boolBg)
 	StatController.instance:track(StatEnum.EventName.CritterBookBgSwitch, {
-		[StatEnum.EventProperties.CritterBookId] = arg_11_1,
-		[StatEnum.EventProperties.CritterBookBg] = arg_11_2
+		[StatEnum.EventProperties.CritterBookId] = bookId,
+		[StatEnum.EventProperties.CritterBookBg] = boolBg
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+RoomStatController.instance = RoomStatController.New()
 
-return var_0_0
+return RoomStatController

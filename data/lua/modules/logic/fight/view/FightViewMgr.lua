@@ -1,58 +1,69 @@
-﻿module("modules.logic.fight.view.FightViewMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewMgr.lua
 
-local var_0_0 = class("FightViewMgr", FightBaseView)
+module("modules.logic.fight.view.FightViewMgr", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._topLeft = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent")
-	arg_1_0._topRightBtnRoot = gohelper.findChild(arg_1_0.viewGO, "root/btns")
-	arg_1_0._fightSeasonChangeHero = gohelper.findChild(arg_1_0.viewGO, "root/fightSeasonChangeHero")
-	arg_1_0._progressRoot = gohelper.findChild(arg_1_0._topLeft, "#go_commonalityslider")
-	arg_1_0._goRoot = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._taskRoot = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/#go_task")
+local FightViewMgr = class("FightViewMgr", FightBaseView)
 
-	gohelper.setActive(arg_1_0._fightSeasonChangeHero, false)
-	gohelper.setActive(arg_1_0._progressRoot, false)
-	gohelper.setActive(arg_1_0._taskRoot, false)
+function FightViewMgr:onInitView()
+	self._topLeft = gohelper.findChild(self.viewGO, "root/topLeftContent")
+	self._topRightBtnRoot = gohelper.findChild(self.viewGO, "root/btns")
+	self._fightSeasonChangeHero = gohelper.findChild(self.viewGO, "root/fightSeasonChangeHero")
+	self._progressRoot = gohelper.findChild(self._topLeft, "#go_commonalityslider")
+	self._goRoot = gohelper.findChild(self.viewGO, "root")
+	self._taskRoot = gohelper.findChild(self.viewGO, "root/topLeftContent/#go_task")
+
+	gohelper.setActive(self._fightSeasonChangeHero, false)
+	gohelper.setActive(self._progressRoot, false)
+	gohelper.setActive(self._taskRoot, false)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, arg_2_0._onBeforeEnterStepBehaviour)
-	arg_2_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate)
-	arg_2_0:com_registFightEvent(FightEvent.BloodPool_OnCreate, arg_2_0.onBloodPoolCreate)
-	arg_2_0:com_registFightEvent(FightEvent.DoomsdayClock_OnValueChange, arg_2_0.onCreateDoomsdayClock)
-	arg_2_0:com_registFightEvent(FightEvent.DoomsdayClock_OnAreaChange, arg_2_0.onCreateDoomsdayClock)
-	arg_2_0:com_registMsg(FightMsgId.FightProgressValueChange, arg_2_0._showFightProgress)
-	arg_2_0:com_registMsg(FightMsgId.FightMaxProgressValueChange, arg_2_0._showFightProgress)
-	arg_2_0:com_registMsg(FightMsgId.ShowDouQuQuXianHouShou, arg_2_0._onShowDouQuQuXianHouShou)
-	arg_2_0:com_registMsg(FightMsgId.RefreshPlayerFinisherSkill, arg_2_0._showPlayerFinisherSkill)
-	arg_2_0:com_registMsg(FightMsgId.RefreshSimplePolarizationLevel, arg_2_0._onRefreshSimplePolarizationLevel)
+function FightViewMgr:addEvents()
+	self:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.BloodPool_OnCreate, self.onBloodPoolCreate)
+	self:com_registFightEvent(FightEvent.HeatScale_OnCreate, self.onHeatScaleCreate)
+	self:com_registFightEvent(FightEvent.DoomsdayClock_OnValueChange, self.onCreateDoomsdayClock)
+	self:com_registFightEvent(FightEvent.DoomsdayClock_OnAreaChange, self.onCreateDoomsdayClock)
+	self:com_registMsg(FightMsgId.FightProgressValueChange, self._showFightProgress)
+	self:com_registMsg(FightMsgId.FightMaxProgressValueChange, self._showFightProgress)
+	self:com_registMsg(FightMsgId.ShowDouQuQuXianHouShou, self._onShowDouQuQuXianHouShou)
+	self:com_registMsg(FightMsgId.RefreshPlayerFinisherSkill, self._showPlayerFinisherSkill)
+	self:com_registMsg(FightMsgId.RefreshSimplePolarizationLevel, self._onRefreshSimplePolarizationLevel)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightViewMgr:removeEvents()
 	return
 end
 
-function var_0_0.onCreateDoomsdayClock(arg_4_0)
-	arg_4_0:createDoomsdayClock()
+function FightViewMgr:onCreateDoomsdayClock()
+	self:createDoomsdayClock()
 end
 
-function var_0_0.onBloodPoolCreate(arg_5_0, arg_5_1)
-	if arg_5_1 ~= FightEnum.TeamType.MySide then
+function FightViewMgr:onBloodPoolCreate(teamType)
+	if teamType ~= FightEnum.TeamType.MySide then
 		return
 	end
 
-	arg_5_0:_createBloodPool(arg_5_1)
+	self:_createBloodPool(teamType)
 end
 
-function var_0_0._showSimplePolarizationLevel(arg_6_0)
-	local var_6_0 = FightDataHelper.entityMgr:getMyVertin()
+function FightViewMgr:onHeatScaleCreate(teamType)
+	if teamType ~= FightEnum.TeamType.MySide then
+		return
+	end
 
-	if var_6_0 then
-		local var_6_1 = var_6_0:getBuffList()
+	self:_createHeatScale(teamType)
+end
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-			if iter_6_1.buffId == 6240501 then
-				arg_6_0:_onRefreshSimplePolarizationLevel()
+function FightViewMgr:_showSimplePolarizationLevel()
+	local vertin = FightDataHelper.entityMgr:getMyVertin()
+
+	if vertin then
+		local buffList = vertin:getBuffList()
+
+		for i, v in ipairs(buffList) do
+			if v.buffId == 6240501 then
+				self:_onRefreshSimplePolarizationLevel()
 
 				return
 			end
@@ -60,438 +71,563 @@ function var_0_0._showSimplePolarizationLevel(arg_6_0)
 	end
 end
 
-function var_0_0._onBuffUpdate(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if arg_7_3 == 6240501 and arg_7_1 == FightEntityScene.MySideId then
-		arg_7_0:_onRefreshSimplePolarizationLevel()
+function FightViewMgr:_onBuffUpdate(entityId, effectType, buffId, buffUid)
+	if buffId == 6240501 and entityId == FightEntityScene.MySideId then
+		self:_onRefreshSimplePolarizationLevel()
 	end
 end
 
-function var_0_0._onRefreshSimplePolarizationLevel(arg_8_0)
-	if arg_8_0._simplePolarizationLevel then
+function FightViewMgr:_onRefreshSimplePolarizationLevel()
+	if self._simplePolarizationLevel then
 		return
 	end
 
-	local var_8_0 = arg_8_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.MelodyLevel)
+	local goMelodyLevel = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.MelodyLevel)
 
-	arg_8_0._simplePolarizationLevel = arg_8_0:com_openSubView(FightSimplePolarizationLevelView, "ui/viewres/fight/fightsimplepolarizationlevelview.prefab", var_8_0)
+	self._simplePolarizationLevel = self:com_openSubView(FightSimplePolarizationLevelView, "ui/viewres/fight/fightsimplepolarizationlevelview.prefab", goMelodyLevel)
 
-	arg_8_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.MelodyLevel)
+	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.MelodyLevel)
 end
 
-function var_0_0._onRefreshPlayerFinisherSkill(arg_9_0)
-	if arg_9_0._playerFinisherSkill then
+function FightViewMgr:_onRefreshPlayerFinisherSkill()
+	if self._playerFinisherSkill then
 		return
 	end
 
-	local var_9_0 = arg_9_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.MelodySkill)
+	local goMelodySkill = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.MelodySkill)
 
-	arg_9_0._playerFinisherSkill = arg_9_0:com_openSubView(FightPlayerFinisherSkillView, "ui/viewres/fight/fightplayerfinisherskillview.prefab", var_9_0)
+	self._playerFinisherSkill = self:com_openSubView(FightPlayerFinisherSkillView, "ui/viewres/fight/fightplayerfinisherskillview.prefab", goMelodySkill)
 
-	arg_9_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.MelodySkill)
+	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.MelodySkill)
 end
 
-function var_0_0._onShowDouQuQuXianHouShou(arg_10_0, arg_10_1)
-	arg_10_0:com_openSubView(FightAct174StartFirstView, "ui/viewres/fight/fight_act174startfirstview.prefab", arg_10_0.viewGO, arg_10_1)
+function FightViewMgr:_onShowDouQuQuXianHouShou(actEffectData)
+	self:com_openSubView(FightAct174StartFirstView, "ui/viewres/fight/fight_act174startfirstview.prefab", self.viewGO, actEffectData)
 end
 
-function var_0_0._onBeforeEnterStepBehaviour(arg_11_0)
+function FightViewMgr:_onBeforeEnterStepBehaviour()
 	if FightModel.instance:isSeason2() then
-		gohelper.setActive(arg_11_0._fightSeasonChangeHero, true)
-		arg_11_0:com_openSubView(FightSeasonChangeHeroView, arg_11_0._fightSeasonChangeHero)
+		gohelper.setActive(self._fightSeasonChangeHero, true)
+		self:com_openSubView(FightSeasonChangeHeroView, self._fightSeasonChangeHero)
 	end
 
-	arg_11_0:_showTopLeft()
+	self:_showTopLeft()
 end
 
-function var_0_0._showTopLeft(arg_12_0)
-	arg_12_0:_showFightProgress()
+function FightViewMgr:_showTopLeft()
+	self:_showFightProgress()
 end
 
-function var_0_0._showFightProgress(arg_13_0)
-	if FightDataHelper.fieldMgr.progressMax > 0 then
-		if arg_13_0._progressView then
+function FightViewMgr:_showFightProgress()
+	local progressMax = FightDataHelper.fieldMgr.progressMax
+
+	if progressMax > 0 then
+		if self._progressView then
 			return
 		end
 
-		gohelper.setActive(arg_13_0._progressRoot, true)
+		gohelper.setActive(self._progressRoot, true)
 
-		local var_13_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId]
-		local var_13_1 = "ui/viewres/fight/commonalityslider.prefab"
-		local var_13_2 = FightCommonalitySlider
+		local progressId = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId]
+		local path = "ui/viewres/fight/commonalityslider.prefab"
+		local class = FightCommonalitySlider
 
-		if var_13_0 == 1 then
-			var_13_1 = "ui/viewres/fight/commonalityslider1.prefab"
-		elseif var_13_0 == 2 then
-			var_13_1 = "ui/viewres/fight/commonalityslider2.prefab"
-			var_13_2 = FightCommonalitySlider2
-		elseif var_13_0 == 3 then
-			var_13_1 = "ui/viewres/fight/fightcoldview.prefab"
-			var_13_2 = FightCommonalitySlider3
-		elseif var_13_0 == 4 then
-			var_13_1 = "ui/viewres/fight/fightcoldview.prefab"
-			var_13_2 = FightCommonalitySlider4
+		if progressId == 1 then
+			path = "ui/viewres/fight/commonalityslider1.prefab"
+		elseif progressId == 2 then
+			path = "ui/viewres/fight/commonalityslider2.prefab"
+			class = FightCommonalitySlider2
+		elseif progressId == 3 then
+			path = "ui/viewres/fight/fightcoldview.prefab"
+			class = FightCommonalitySlider3
+		elseif progressId == 4 then
+			path = "ui/viewres/fight/fightcoldview.prefab"
+			class = FightCommonalitySlider4
 		end
 
-		arg_13_0._progressView = arg_13_0:com_openSubView(var_13_2, var_13_1, arg_13_0._progressRoot, arg_13_0._goRoot)
+		self._progressView = self:com_openSubView(class, path, self._progressRoot, self._goRoot)
 	end
 end
 
-function var_0_0.showFightNewProgress(arg_14_0)
-	arg_14_0:com_openSubView(FightNewProgressView, arg_14_0.viewGO)
+function FightViewMgr:showFightNewProgress()
+	self:com_openSubView(FightNewProgressView, self.viewGO)
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0.top = arg_15_0:com_openSubView(FightTopView, arg_15_0.viewGO)
-	arg_15_0.topLeft = arg_15_0:com_openSubView(FightTopLeftView, arg_15_0.viewGO)
-	arg_15_0.topRight = arg_15_0:com_openSubView(FightTopRightView, arg_15_0.viewGO)
-	arg_15_0.center = arg_15_0:com_openSubView(FightCenterView, arg_15_0.viewGO)
-	arg_15_0.left = arg_15_0:com_openSubView(FightLeftView, arg_15_0.viewGO)
-	arg_15_0.right = arg_15_0:com_openSubView(FightRightView, arg_15_0.viewGO)
-	arg_15_0.bottom = arg_15_0:com_openSubView(FightBottomView, arg_15_0.viewGO)
-	arg_15_0.bottomLeft = arg_15_0:com_openSubView(FightBottomLeftView, arg_15_0.viewGO)
-	arg_15_0.bottomRight = arg_15_0:com_openSubView(FightBottomRightView, arg_15_0.viewGO)
+function FightViewMgr:onOpen()
+	self.top = self:com_openSubView(FightTopView, self.viewGO)
+	self.topLeft = self:com_openSubView(FightTopLeftView, self.viewGO)
+	self.topRight = self:com_openSubView(FightTopRightView, self.viewGO)
+	self.center = self:com_openSubView(FightCenterView, self.viewGO)
+	self.left = self:com_openSubView(FightLeftView, self.viewGO)
+	self.right = self:com_openSubView(FightRightView, self.viewGO)
+	self.bottom = self:com_openSubView(FightBottomView, self.viewGO)
+	self.bottomLeft = self:com_openSubView(FightBottomLeftView, self.viewGO)
+	self.bottomRight = self:com_openSubView(FightBottomRightView, self.viewGO)
 
-	arg_15_0:_showCardDeckBtn()
-	arg_15_0:_showSeasonTalentBtn()
-	arg_15_0:_showPlayerFinisherSkill()
-	arg_15_0:_showSimplePolarizationLevel()
-	arg_15_0:_showTaskPart()
-	arg_15_0:_showBloodPool()
-	arg_15_0:_showDoomsdayClock()
-	arg_15_0:showDouQuQuHunting()
-	arg_15_0:showFightNewProgress()
-	arg_15_0:showItemSkillInfos()
-	arg_15_0:showBattleId_9290103_Task()
-	arg_15_0:showDouQuQuBoss()
-	arg_15_0:showSurvivalTalent2()
+	self:_showCardDeckBtn()
+	self:_showSeasonTalentBtn()
+	self:_showPlayerFinisherSkill()
+	self:_showSimplePolarizationLevel()
+	self:_showTaskPart()
+	self:_showBloodPool()
+	self:_showHeatScale()
+	self:_showDoomsdayClock()
+	self:showDouQuQuHunting()
+	self:showFightNewProgress()
+	self:showItemSkillInfos()
+	self:showBattleId_9290103_Task()
+	self:showDouQuQuBoss()
+	self:showSurvivalTalent2()
+	self:showZongMaoScore()
+	self:showRouge2MusicInfo()
+	self:showRouge2CoinAndRevivalCoin()
+	self:showRouge2TreasureView()
+	self:showRouge2Task()
 end
 
-function var_0_0.showSurvivalTalent2(arg_16_0)
-	if arg_16_0.survivalTalent2View then
+function FightViewMgr:showRouge2Task()
+	local customData = FightDataHelper.fieldMgr.customData
+	local rouge2Data = customData and customData[FightCustomData.CustomDataType.Rouge2]
+	local eventType = rouge2Data and rouge2Data.eventType
+
+	if eventType ~= Rouge2_MapEnum.EventType.NormalFight then
 		return
 	end
 
-	local var_16_0 = FightDataHelper.entityMgr:getVorpalith()
+	if self.rouge2TaskView then
+		return
+	end
 
-	if var_16_0 and var_16_0:getPowerInfo(FightEnum.PowerType.SurvivalDot) then
-		local var_16_1 = "ui/viewres/fight/fightsurvivaltalentview2.prefab"
-		local var_16_2 = arg_16_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.SurvivalTalent2)
+	local url = "ui/viewres/fight/fight_rouge2/fight_rouge2_level.prefab"
+	local enum = FightRightElementEnum.Elements.Rouge2Task
+	local root = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
 
-		arg_16_0.survivalTalent2View = arg_16_0:com_openSubView(FightSurvivalTalent2View, var_16_1, var_16_2)
+	self.rouge2TaskView = self:com_openSubView(FightRouge2TaskView, url, root)
 
-		arg_16_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.SurvivalTalent2)
+	self.viewContainer.rightElementLayoutView:showElement(enum)
+end
+
+function FightViewMgr:showRouge2CoinAndRevivalCoin()
+	if not FightDataHelper.fieldMgr:isRouge2() then
+		return
+	end
+
+	if self.rougeCoinMgr then
+		return
+	end
+
+	self.rougeCoinMgr = FightRouge2CoinMgr.New(self.viewContainer)
+
+	self.rougeCoinMgr:start()
+end
+
+function FightViewMgr:showRouge2TreasureView()
+	if not FightDataHelper.fieldMgr:isRouge2() then
+		return
+	end
+
+	local career = FightHelper.getRouge2Career()
+
+	if career ~= FightEnum.Rouge2Career.Strings then
+		return
+	end
+
+	if self.rouge2TreasureView then
+		return
+	end
+
+	local url = "ui/viewres/fight/fight_rouge2/fight_rouge2_treasureitem.prefab"
+	local enum = FightRightElementEnum.Elements.Rouge2Treasure
+	local root = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
+
+	self.rouge2TreasureView = self:com_openSubView(FightRouge2TreasureView, url, root)
+end
+
+function FightViewMgr:showRouge2MusicInfo()
+	if self.rouge2MusicInfoView then
+		return
+	end
+
+	local teamDataMgr = FightDataHelper.teamDataMgr[FightEnum.TeamType.MySide]
+	local rouge2MusicInfo = teamDataMgr and teamDataMgr.rouge2MusicInfo
+
+	if not rouge2MusicInfo then
+		return
+	end
+
+	local url = "ui/viewres/fight/fight_rouge2/fight_rouge2_yinfuview.prefab"
+	local root = gohelper.findChild(self._goRoot, "rouge2music")
+
+	self.rouge2MusicInfoView = self:com_openSubView(FightRouge2MusicView, url, root)
+end
+
+function FightViewMgr:showSurvivalTalent2()
+	if self.survivalTalent2View then
+		return
+	end
+
+	local vorpalithMo = FightDataHelper.entityMgr:getVorpalith()
+	local power = vorpalithMo and vorpalithMo:getPowerInfo(FightEnum.PowerType.SurvivalDot)
+
+	if power then
+		local url = "ui/viewres/fight/fightsurvivaltalentview2.prefab"
+		local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.SurvivalTalent2)
+
+		self.survivalTalent2View = self:com_openSubView(FightSurvivalTalent2View, url, parentRoot)
+
+		self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.SurvivalTalent2)
 	end
 end
 
-function var_0_0.showItemSkillInfos(arg_17_0)
-	local var_17_0 = FightDataHelper.teamDataMgr.myData.itemSkillInfos
+function FightViewMgr:showItemSkillInfos()
+	local itemSkillInfos = FightDataHelper.teamDataMgr.myData.itemSkillInfos
 
-	if var_17_0 and #var_17_0 > 0 then
-		local var_17_1 = "ui/viewres/fight/fightassassinwheelbtnview.prefab"
-		local var_17_2 = gohelper.findChild(arg_17_0.viewGO, "root")
+	if itemSkillInfos and #itemSkillInfos > 0 then
+		local url = "ui/viewres/fight/fightassassinwheelbtnview.prefab"
+		local parentRoot = gohelper.findChild(self.viewGO, "root")
 
-		arg_17_0:com_openSubView(FightItemSkillInfosBtnView, var_17_1, var_17_2)
+		self:com_openSubView(FightItemSkillInfosBtnView, url, parentRoot)
 	end
 end
 
-function var_0_0.showDouQuQuHunting(arg_18_0)
+function FightViewMgr:showDouQuQuHunting()
 	if not FightDataHelper.fieldMgr.customData then
 		return
 	end
 
-	local var_18_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
+	local customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
 
-	if not var_18_0 then
+	if not customData then
 		return
 	end
 
-	if var_18_0.minNeedHuntValue == -1 then
+	if customData.minNeedHuntValue == -1 then
 		return
 	end
 
-	local var_18_1 = FightRightElementEnum.Elements.DouQuQuHunting
-	local var_18_2 = arg_18_0.viewContainer.rightElementLayoutView:getElementContainer(var_18_1)
+	local enum = FightRightElementEnum.Elements.DouQuQuHunting
+	local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
 
-	arg_18_0:com_openSubView(FightDouQuQuHuntingView, "ui/viewres/fight/fight_act191huntview.prefab", var_18_2)
-	arg_18_0.viewContainer.rightElementLayoutView:showElement(var_18_1)
+	self:com_openSubView(FightDouQuQuHuntingView, "ui/viewres/fight/fight_act191huntview.prefab", parentRoot)
+	self.viewContainer.rightElementLayoutView:showElement(enum)
 end
 
-function var_0_0.showDouQuQuCoin(arg_19_0)
+function FightViewMgr:showDouQuQuCoin()
 	if not FightDataHelper.fieldMgr.customData then
 		return
 	end
 
-	if not FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191] then
+	local customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
+
+	if not customData then
 		return
 	end
 
-	local var_19_0 = FightRightElementEnum.Elements.DouQuQuCoin
-	local var_19_1 = arg_19_0.viewContainer.rightElementLayoutView:getElementContainer(var_19_0)
+	local enum = FightRightElementEnum.Elements.DouQuQuCoin
+	local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
 
-	arg_19_0:com_openSubView(FightDouQuQuCoinView, "ui/viewres/fight/fight_act191coinview.prefab", var_19_1)
-	arg_19_0.viewContainer.rightElementLayoutView:showElement(var_19_0)
+	self:com_openSubView(FightDouQuQuCoinView, "ui/viewres/fight/fight_act191coinview.prefab", parentRoot)
+	self.viewContainer.rightElementLayoutView:showElement(enum)
 end
 
-function var_0_0.showDouQuQuBoss(arg_20_0)
-	local var_20_0 = FightDataHelper.entityMgr:getSpFightEntities(FightEnum.TeamType.MySide)
+function FightViewMgr:showDouQuQuBoss()
+	local spFightEntities = FightDataHelper.entityMgr:getSpFightEntities(FightEnum.TeamType.MySide)
 
-	for iter_20_0, iter_20_1 in pairs(var_20_0) do
-		if iter_20_1.entityType == FightEnum.EntityType.Act191Boss and iter_20_1:getPowerInfo(FightEnum.PowerType.Act191Boss) then
-			local var_20_1 = arg_20_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.DouQuQuBoss)
+	for k, entityData in pairs(spFightEntities) do
+		if entityData.entityType == FightEnum.EntityType.Act191Boss and entityData:getPowerInfo(FightEnum.PowerType.Act191Boss) then
+			local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.DouQuQuBoss)
 
-			arg_20_0:com_openSubView(FightDouQuQuBossView, "ui/viewres/fight/fight_act191assistbossview.prefab", var_20_1, iter_20_1)
-			arg_20_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.DouQuQuBoss)
+			self:com_openSubView(FightDouQuQuBossView, "ui/viewres/fight/fight_act191assistbossview.prefab", parentRoot, entityData)
+			self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.DouQuQuBoss)
 
 			break
 		end
 	end
 end
 
-function var_0_0._showDoomsdayClock(arg_21_0)
-	local var_21_0 = FightDataHelper.fieldMgr.param
+function FightViewMgr:showZongMaoScore()
+	local episodeId = FightDataHelper.fieldMgr.episodeId
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_21_0 and var_21_0:getKey(FightParamData.ParamKey.DoomsdayClock_Range4) then
-		arg_21_0:createDoomsdayClock()
-	end
-end
-
-function var_0_0.createDoomsdayClock(arg_22_0)
-	if arg_22_0.doomsdayClockView then
+	if not episodeConfig then
 		return
 	end
 
-	local var_22_0 = arg_22_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.DoomsdayClock)
-
-	arg_22_0.doomsdayClockView = arg_22_0:com_openSubView(FightDoomsdayClockView, "ui/viewres/fight/fightclockview.prefab", var_22_0)
-
-	arg_22_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.DoomsdayClock)
-end
-
-function var_0_0._showBloodPool(arg_23_0)
-	if FightDataHelper.getBloodPool(FightEnum.TeamType.MySide) then
-		arg_23_0:_createBloodPool(FightEnum.TeamType.MySide)
-	end
-end
-
-function var_0_0._createBloodPool(arg_24_0, arg_24_1)
-	if arg_24_0.bloodPoolView then
+	if episodeConfig.type ~= DungeonEnum.EpisodeType.V3_2ZongMao then
 		return
 	end
 
-	local var_24_0 = arg_24_0.viewContainer.rightBottomElementLayoutView:getElementContainer(FightRightBottomElementEnum.Elements.BloodPool)
+	local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.BossRush)
 
-	arg_24_0.bloodPoolView = arg_24_0:com_openSubView(FightBloodPoolView, "ui/viewres/fight/fightbloodview.prefab", var_24_0, arg_24_1)
+	self.zongMaoScoreView = self:com_openSubView(FightZongMaoScoreView, "ui/viewres/versionactivity_1_4/v1a4_bossrush/v3a2_bossrush/v3a2_bossrush_ig_scoretips.prefab", parentRoot)
 
-	arg_24_0.viewContainer.rightBottomElementLayoutView:showElement(FightRightBottomElementEnum.Elements.BloodPool)
+	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.BossRush)
 end
 
-function var_0_0._createSurvivalTalent(arg_25_0)
-	if arg_25_0.survivalTalentView then
-		return
-	end
+function FightViewMgr:_showDoomsdayClock()
+	local param = FightDataHelper.fieldMgr.param
+	local value = param and param:getKey(FightParamData.ParamKey.DoomsdayClock_Range4)
 
-	local var_25_0 = arg_25_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.SurvivalTalent)
-
-	arg_25_0.survivalTalentView = arg_25_0:com_openSubView(FightSurvivalTalentView, "ui/viewres/fight/fightsurvivaltalentview.prefab", var_25_0)
-
-	arg_25_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.SurvivalTalent)
-end
-
-function var_0_0._showPlayerFinisherSkill(arg_26_0)
-	local var_26_0 = FightDataHelper.fieldMgr.playerFinisherInfo
-
-	if not var_26_0 then
-		return
-	end
-
-	if var_26_0.type == FightPlayerFinisherInfoData.Type.SurvivalTalent then
-		arg_26_0:_createSurvivalTalent()
-
-		return
-	end
-
-	if var_26_0 and #var_26_0.skills > 0 then
-		arg_26_0:_onRefreshPlayerFinisherSkill()
+	if value then
+		self:createDoomsdayClock()
 	end
 end
 
-function var_0_0._showCardDeckBtn(arg_27_0)
+function FightViewMgr:createDoomsdayClock()
+	if self.doomsdayClockView then
+		return
+	end
+
+	local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.DoomsdayClock)
+
+	self.doomsdayClockView = self:com_openSubView(FightDoomsdayClockView, "ui/viewres/fight/fightclockview.prefab", parentRoot)
+
+	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.DoomsdayClock)
+end
+
+function FightViewMgr:_showBloodPool()
+	local bloodPool = FightDataHelper.getBloodPool(FightEnum.TeamType.MySide)
+
+	if bloodPool then
+		self:_createBloodPool(FightEnum.TeamType.MySide)
+	end
+end
+
+function FightViewMgr:_showHeatScale()
+	local heatScale = FightDataHelper.getHeatScale(FightEnum.TeamType.MySide)
+
+	if heatScale then
+		self:_createHeatScale(FightEnum.TeamType.MySide)
+	end
+end
+
+function FightViewMgr:_createBloodPool(teamType)
+	if self.bloodPoolView then
+		return
+	end
+
+	local parentRoot = self.viewContainer.rightBottomElementLayoutView:getElementContainer(FightRightBottomElementEnum.Elements.BloodPool)
+
+	self.bloodPoolView = self:com_openSubView(FightBloodPoolView, "ui/viewres/fight/fightbloodview.prefab", parentRoot, teamType)
+
+	self.viewContainer.rightBottomElementLayoutView:showElement(FightRightBottomElementEnum.Elements.BloodPool)
+end
+
+function FightViewMgr:_createHeatScale(teamType)
+	if self.heatScaleMgrView then
+		return
+	end
+
+	self.heatScaleMgrView = self:com_openSubView(FightHeatScaleMgrView, nil, nil, teamType)
+end
+
+function FightViewMgr:_createSurvivalTalent()
+	if self.survivalTalentView then
+		return
+	end
+
+	local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.SurvivalTalent)
+
+	self.survivalTalentView = self:com_openSubView(FightSurvivalTalentView, "ui/viewres/fight/fightsurvivaltalentview.prefab", parentRoot)
+
+	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.SurvivalTalent)
+end
+
+function FightViewMgr:_showPlayerFinisherSkill()
+	local playerFinisherInfo = FightDataHelper.fieldMgr.playerFinisherInfo
+
+	if not playerFinisherInfo then
+		return
+	end
+
+	if playerFinisherInfo.type == FightPlayerFinisherInfoData.Type.SurvivalTalent then
+		self:_createSurvivalTalent()
+
+		return
+	end
+
+	if playerFinisherInfo and #playerFinisherInfo.skills > 0 then
+		self:_onRefreshPlayerFinisherSkill()
+	end
+end
+
+function FightViewMgr:_showCardDeckBtn()
 	if FightDataHelper.fieldMgr:isDouQuQu() then
 		return
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.CardDeck) then
-		arg_27_0:com_loadAsset("ui/viewres/fight/fightcarddeckbtnview.prefab", arg_27_0._onBtnLoaded)
+		self:com_loadAsset("ui/viewres/fight/fightcarddeckbtnview.prefab", self._onBtnLoaded)
 	end
 end
 
-function var_0_0.onDeckGenerate_Anim(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_1 and #arg_28_1 or 0
+function FightViewMgr:onDeckGenerate_Anim(cardInfoList)
+	local len = cardInfoList and #cardInfoList or 0
 
-	if var_28_0 <= 0 then
+	if len <= 0 then
 		return
 	end
 
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0.goPaiList) do
-		gohelper.setActive(iter_28_1, iter_28_0 <= var_28_0)
+	for index, go in ipairs(self.goPaiList) do
+		gohelper.setActive(go, index <= len)
 	end
 
-	arg_28_0:showDeckActiveGo()
-	arg_28_0.deckAnimatorPlayer:Play("generate", arg_28_0.hideDeckActiveGo, arg_28_0)
+	self:showDeckActiveGo()
+	self.deckAnimatorPlayer:Play("generate", self.hideDeckActiveGo, self)
 	AudioMgr.instance:trigger(20250502)
 end
 
-function var_0_0.onPlayGenerateAnimDone(arg_29_0)
-	arg_29_0:hideDeckActiveGo()
-	arg_29_0:com_sendFightEvent(FightEvent.CardDeckGenerateDone)
+function FightViewMgr:onPlayGenerateAnimDone()
+	self:hideDeckActiveGo()
+	self:com_sendFightEvent(FightEvent.CardDeckGenerateDone)
 end
 
-function var_0_0.onDeckDelete_Anim(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_1 and #arg_30_1 or 0
+function FightViewMgr:onDeckDelete_Anim(cardInfoList)
+	local len = cardInfoList and #cardInfoList or 0
 
-	if var_30_0 <= 0 then
-		return arg_30_0:onPlayDeleteAnimDone()
+	if len <= 0 then
+		return self:onPlayDeleteAnimDone()
 	end
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0.goPaiList) do
-		gohelper.setActive(iter_30_1, iter_30_0 <= var_30_0)
+	for index, go in ipairs(self.goPaiList) do
+		gohelper.setActive(go, index <= len)
 	end
 
-	arg_30_0:showDeckActiveGo()
-	arg_30_0.deckAnimatorPlayer:Play("delete", arg_30_0.onPlayDeleteAnimAnchorDone, arg_30_0)
+	self:showDeckActiveGo()
+	self.deckAnimatorPlayer:Play("delete", self.onPlayDeleteAnimAnchorDone, self)
 	AudioMgr.instance:trigger(20250503)
 end
 
-function var_0_0.onPlayDeleteAnimAnchorDone(arg_31_0)
-	local var_31_0 = {
+function FightViewMgr:onPlayDeleteAnimAnchorDone()
+	local context = {
 		dissolveScale = 1,
 		dissolveSkillItemGOs = {
-			arg_31_0.goDeckActive
+			self.goDeckActive
 		}
 	}
 
-	arg_31_0:clearFlow()
+	self:clearFlow()
 
-	arg_31_0.dissolveFlow = FlowSequence.New()
+	self.dissolveFlow = FlowSequence.New()
 
-	arg_31_0.dissolveFlow:addWork(FightCardDissolveEffect.New())
-	arg_31_0.dissolveFlow:registerDoneListener(arg_31_0.onPlayDeleteAnimDone, arg_31_0)
-	arg_31_0.dissolveFlow:start(var_31_0)
+	self.dissolveFlow:addWork(FightCardDissolveEffect.New())
+	self.dissolveFlow:registerDoneListener(self.onPlayDeleteAnimDone, self)
+	self.dissolveFlow:start(context)
 end
 
-function var_0_0.clearFlow(arg_32_0)
-	if arg_32_0.dissolveFlow then
-		arg_32_0.dissolveFlow:stop()
+function FightViewMgr:clearFlow()
+	if self.dissolveFlow then
+		self.dissolveFlow:stop()
 
-		arg_32_0.dissolveFlow = nil
+		self.dissolveFlow = nil
 	end
 end
 
-function var_0_0.onPlayDeleteAnimDone(arg_33_0)
-	arg_33_0:hideDeckActiveGo()
-	arg_33_0:com_sendFightEvent(FightEvent.CardDeckDeleteDone)
+function FightViewMgr:onPlayDeleteAnimDone()
+	self:hideDeckActiveGo()
+	self:com_sendFightEvent(FightEvent.CardDeckDeleteDone)
 end
 
-function var_0_0.hideDeckActiveGo(arg_34_0)
-	gohelper.setActive(arg_34_0.goDeckActive, false)
+function FightViewMgr:hideDeckActiveGo()
+	gohelper.setActive(self.goDeckActive, false)
 end
 
-function var_0_0.showDeckActiveGo(arg_35_0)
-	gohelper.setActive(arg_35_0.goDeckActive, true)
+function FightViewMgr:showDeckActiveGo()
+	gohelper.setActive(self.goDeckActive, true)
 end
 
-var_0_0.MaxDeckAnimLen = 15
+FightViewMgr.MaxDeckAnimLen = 15
 
-function var_0_0._onBtnLoaded(arg_36_0, arg_36_1, arg_36_2)
-	if not arg_36_1 then
+function FightViewMgr:_onBtnLoaded(success, loader)
+	if not success then
 		return
 	end
 
-	local var_36_0 = arg_36_2:GetResource()
-	local var_36_1 = gohelper.clone(var_36_0, arg_36_0._topRightBtnRoot, "cardBox")
+	local tarPrefab = loader:GetResource()
+	local btn = gohelper.clone(tarPrefab, self._topRightBtnRoot, "cardBox")
 
-	arg_36_0.goDeckBtn = var_36_1
+	self.goDeckBtn = btn
 
-	arg_36_0:com_registClick(gohelper.getClickWithDefaultAudio(var_36_1), arg_36_0._onCardBoxClick, arg_36_0)
-	gohelper.setAsFirstSibling(var_36_1)
+	self:com_registClick(gohelper.getClickWithDefaultAudio(btn), self._onCardBoxClick, self)
+	gohelper.setAsFirstSibling(btn)
 
-	arg_36_0._deckCardAnimator = gohelper.onceAddComponent(var_36_1, typeof(UnityEngine.Animator))
-	arg_36_0._deckBtnAniPlayer = SLFramework.AnimatorPlayer.Get(var_36_1)
-	arg_36_0.txtNum = gohelper.findChildText(var_36_1, "txt_Num")
+	self._deckCardAnimator = gohelper.onceAddComponent(btn, typeof(UnityEngine.Animator))
+	self._deckBtnAniPlayer = SLFramework.AnimatorPlayer.Get(btn)
+	self.txtNum = gohelper.findChildText(btn, "txt_Num")
 
-	gohelper.setActive(arg_36_0.txtNum.gameObject, false)
+	gohelper.setActive(self.txtNum.gameObject, false)
 
-	local var_36_2 = gohelper.findChild(arg_36_0.goDeckBtn, "#go_Active")
+	local activeGo = gohelper.findChild(self.goDeckBtn, "#go_Active")
 
-	gohelper.setActive(var_36_2, false)
+	gohelper.setActive(activeGo, false)
 
-	arg_36_0.deckContainer = gohelper.findChild(arg_36_0.goDeckBtn, "#deckbtn")
+	self.deckContainer = gohelper.findChild(self.goDeckBtn, "#deckbtn")
 
-	gohelper.setActive(arg_36_0.deckContainer, true)
+	gohelper.setActive(self.deckContainer, true)
 
-	arg_36_0.deckAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_36_0.deckContainer)
-	arg_36_0.goDeckActive = gohelper.findChild(arg_36_0.deckContainer, "active")
+	self.deckAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.deckContainer)
+	self.goDeckActive = gohelper.findChild(self.deckContainer, "active")
 
-	arg_36_0:hideDeckActiveGo()
+	self:hideDeckActiveGo()
 
-	arg_36_0.goPaiList = arg_36_0:newUserDataTable()
+	self.goPaiList = self:newUserDataTable()
 
-	for iter_36_0 = 1, var_0_0.MaxDeckAnimLen do
-		local var_36_3 = gohelper.findChild(arg_36_0.goDeckActive, string.format("#pai%02d", iter_36_0))
+	for i = 1, FightViewMgr.MaxDeckAnimLen do
+		local go = gohelper.findChild(self.goDeckActive, string.format("#pai%02d", i))
 
-		if not var_36_3 then
-			logError("deck view not find pai , index : " .. iter_36_0)
+		if not go then
+			logError("deck view not find pai , index : " .. i)
 		end
 
-		table.insert(arg_36_0.goPaiList, var_36_3)
+		table.insert(self.goPaiList, go)
 	end
 
-	arg_36_0:com_registFightEvent(FightEvent.CardDeckGenerate, arg_36_0._onCardDeckGenerate)
-	arg_36_0:com_registFightEvent(FightEvent.CardClear, arg_36_0._onCardClear)
-	arg_36_0:com_registFightEvent(FightEvent.CardBoxNumChange, arg_36_0.onCardBoxNumChange)
-	arg_36_0:com_registFightEvent(FightEvent.CardDeckGenerate, arg_36_0.onDeckGenerate_Anim)
-	arg_36_0:com_registFightEvent(FightEvent.CardDeckDelete, arg_36_0.onDeckDelete_Anim)
+	self:com_registFightEvent(FightEvent.CardDeckGenerate, self._onCardDeckGenerate)
+	self:com_registFightEvent(FightEvent.CardClear, self._onCardClear)
+	self:com_registFightEvent(FightEvent.CardBoxNumChange, self.onCardBoxNumChange)
+	self:com_registFightEvent(FightEvent.CardDeckGenerate, self.onDeckGenerate_Anim)
+	self:com_registFightEvent(FightEvent.CardDeckDelete, self.onDeckDelete_Anim)
 end
 
-function var_0_0.activeDeck(arg_37_0)
-	local var_37_0 = FightDataHelper.fieldMgr
+function FightViewMgr:activeDeck()
+	local fieldMgr = FightDataHelper.fieldMgr
 
-	if var_37_0 and var_37_0:isAct183() then
-		local var_37_1 = gohelper.findChild(arg_37_0.goDeckBtn, "#go_Active")
+	if fieldMgr and fieldMgr:isAct183() then
+		local activeGo = gohelper.findChild(self.goDeckBtn, "#go_Active")
 
-		gohelper.setActive(var_37_1, true)
-		gohelper.setActive(arg_37_0.txtNum.gameObject, true)
-	end
-end
-
-function var_0_0.clearTweenId(arg_38_0)
-	if arg_38_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_38_0.tweenId)
-
-		arg_38_0.tweenId = nil
+		gohelper.setActive(activeGo, true)
+		gohelper.setActive(self.txtNum.gameObject, true)
 	end
 end
 
-var_0_0.DeckNumChangeDuration = 0.5
+function FightViewMgr:clearTweenId()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-function var_0_0.onCardBoxNumChange(arg_39_0, arg_39_1, arg_39_2)
-	arg_39_0:activeDeck()
-	arg_39_0:clearTweenId()
-
-	local var_39_0 = tonumber(arg_39_0.txtNum.text) or 0
-
-	arg_39_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_39_0, arg_39_2, var_0_0.DeckNumChangeDuration, arg_39_0.directSetDeckNum, nil, arg_39_0)
+		self.tweenId = nil
+	end
 end
 
-function var_0_0.directSetDeckNum(arg_40_0, arg_40_1)
-	arg_40_0.txtNum.text = math.ceil(arg_40_1)
+FightViewMgr.DeckNumChangeDuration = 0.5
+
+function FightViewMgr:onCardBoxNumChange(beforeNum, afterNum)
+	self:activeDeck()
+	self:clearTweenId()
+
+	local curNum = tonumber(self.txtNum.text) or 0
+
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(curNum, afterNum, FightViewMgr.DeckNumChangeDuration, self.directSetDeckNum, nil, self)
 end
 
-function var_0_0.onNumChangeDone(arg_41_0)
-	arg_41_0:directSetDeckNum(FightDataHelper.fieldMgr.deckNum)
+function FightViewMgr:directSetDeckNum(value)
+	self.txtNum.text = math.ceil(value)
 end
 
-function var_0_0._onCardBoxClick(arg_42_0)
+function FightViewMgr:onNumChangeDone()
+	self:directSetDeckNum(FightDataHelper.fieldMgr.deckNum)
+end
+
+function FightViewMgr:_onCardBoxClick()
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
@@ -501,79 +637,90 @@ function var_0_0._onCardBoxClick(arg_42_0)
 	})
 end
 
-function var_0_0._showSeasonTalentBtn(arg_43_0)
-	if not Season166Model.instance:getBattleContext(true) then
+function FightViewMgr:_showSeasonTalentBtn()
+	local battleContext = Season166Model.instance:getBattleContext(true)
+
+	if not battleContext then
 		return
 	end
 
 	if Season166Model.instance:checkCanShowSeasonTalent() then
-		arg_43_0:com_loadAsset("ui/viewres/fight/fightseasontalentbtn.prefab", arg_43_0._onBtnSeasonTalentLoaded)
+		self:com_loadAsset("ui/viewres/fight/fightseasontalentbtn.prefab", self._onBtnSeasonTalentLoaded)
 	end
 end
 
-function var_0_0._onBtnSeasonTalentLoaded(arg_44_0, arg_44_1, arg_44_2)
-	if not arg_44_1 then
+function FightViewMgr:_onBtnSeasonTalentLoaded(success, loader)
+	if not success then
 		return
 	end
 
-	local var_44_0 = arg_44_2:GetResource()
-	local var_44_1 = gohelper.clone(var_44_0, arg_44_0._topRightBtnRoot, "fightseasontalentbtn")
+	local tarPrefab = loader:GetResource()
+	local btn = gohelper.clone(tarPrefab, self._topRightBtnRoot, "fightseasontalentbtn")
 
-	arg_44_0:com_registClick(gohelper.getClickWithDefaultAudio(var_44_1), arg_44_0._onSeasonTalentClick, arg_44_0)
-	gohelper.setAsFirstSibling(var_44_1)
+	self:com_registClick(gohelper.getClickWithDefaultAudio(btn), self._onSeasonTalentClick, self)
+	gohelper.setAsFirstSibling(btn)
 end
 
-function var_0_0._onSeasonTalentClick(arg_45_0)
+function FightViewMgr:_onSeasonTalentClick()
 	Season166Controller.instance:openTalentInfoView()
 end
 
-function var_0_0._deckAniFinish(arg_46_0)
-	arg_46_0._deckCardAnimator.enabled = true
+function FightViewMgr:_deckAniFinish()
+	self._deckCardAnimator.enabled = true
 
-	arg_46_0._deckCardAnimator:Play("idle")
+	self._deckCardAnimator:Play("idle")
 end
 
-function var_0_0._onCardDeckGenerate(arg_47_0)
-	arg_47_0._deckBtnAniPlayer:Play("add", arg_47_0._deckAniFinish, arg_47_0)
+function FightViewMgr:_onCardDeckGenerate()
+	self._deckBtnAniPlayer:Play("add", self._deckAniFinish, self)
 end
 
-function var_0_0._onCardClear(arg_48_0)
-	arg_48_0._deckBtnAniPlayer:Play("delete", arg_48_0._deckAniFinish, arg_48_0)
+function FightViewMgr:_onCardClear()
+	self._deckBtnAniPlayer:Play("delete", self._deckAniFinish, self)
 end
 
-function var_0_0._showTaskPart(arg_49_0)
-	local var_49_0 = FightDataHelper.fieldMgr.episodeId
+function FightViewMgr:_showTaskPart()
+	local episodeId = FightDataHelper.fieldMgr.episodeId
+	local is183 = FightDataHelper.fieldMgr:isDungeonType(DungeonEnum.EpisodeType.Act183)
 
-	if FightDataHelper.fieldMgr:isDungeonType(DungeonEnum.EpisodeType.Act183) then
-		local var_49_1 = lua_challenge_episode.configDict[var_49_0]
+	if is183 then
+		local config = lua_challenge_episode.configDict[episodeId]
 
-		if not var_49_1 then
+		if not config then
 			return
 		end
 
-		if string.nilorempty(var_49_1.condition) then
+		if string.nilorempty(config.condition) then
 			return
 		end
 
-		gohelper.setActive(arg_49_0._taskRoot, true)
-		arg_49_0:com_openSubView(Fight183TaskView, "ui/viewres/fight/fighttaskview.prefab", arg_49_0._taskRoot, var_49_1.condition)
+		gohelper.setActive(self._taskRoot, true)
+		self:com_openSubView(Fight183TaskView, "ui/viewres/fight/fighttaskview.prefab", self._taskRoot, config.condition)
 	end
 end
 
-function var_0_0.showBattleId_9290103_Task(arg_50_0)
-	if FightDataHelper.fieldMgr.battleId == 9290103 then
-		gohelper.setActive(arg_50_0._taskRoot, true)
-		arg_50_0:com_openSubView(FightBattleId_9290103TaskView, "ui/viewres/fight/fighttaskview.prefab", arg_50_0._taskRoot)
+function FightViewMgr:showBattleId_9290103_Task()
+	local battleId = FightDataHelper.fieldMgr.battleId
+
+	if battleId == 9290103 then
+		gohelper.setActive(self._taskRoot, true)
+		self:com_openSubView(FightBattleId_9290103TaskView, "ui/viewres/fight/fighttaskview.prefab", self._taskRoot)
 	end
 end
 
-function var_0_0.onClose(arg_51_0)
+function FightViewMgr:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_52_0)
-	arg_52_0:clearFlow()
-	arg_52_0:clearTweenId()
+function FightViewMgr:onDestroyView()
+	if self.rougeCoinMgr then
+		self.rougeCoinMgr:destroy()
+
+		self.rougeCoinMgr = nil
+	end
+
+	self:clearFlow()
+	self:clearTweenId()
 end
 
-return var_0_0
+return FightViewMgr

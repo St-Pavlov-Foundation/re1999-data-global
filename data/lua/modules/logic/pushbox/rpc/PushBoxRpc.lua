@@ -1,70 +1,72 @@
-﻿module("modules.logic.pushbox.rpc.PushBoxRpc", package.seeall)
+﻿-- chunkname: @modules/logic/pushbox/rpc/PushBoxRpc.lua
 
-local var_0_0 = class("PushBoxRpc", BaseRpc)
+module("modules.logic.pushbox.rpc.PushBoxRpc", package.seeall)
 
-function var_0_0.sendGet111InfosRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = Activity111Module_pb.Get111InfosRequest()
+local PushBoxRpc = class("PushBoxRpc", BaseRpc)
 
-	var_1_0.activityId = 11113
+function PushBoxRpc:sendGet111InfosRequest(callback, callbackObj)
+	local req = Activity111Module_pb.Get111InfosRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+	req.activityId = 11113
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet111InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		PushBoxModel.instance:onReceiveGet111InfosReply(arg_2_2)
+function PushBoxRpc:onReceiveGet111InfosReply(resultCode, msg)
+	if resultCode == 0 then
+		PushBoxModel.instance:onReceiveGet111InfosReply(msg)
 	end
 end
 
-function var_0_0.sendFinishEpisodeRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = Activity111Module_pb.FinishEpisodeRequest()
+function PushBoxRpc:sendFinishEpisodeRequest(activityId, episodeId, step, alarm)
+	local req = Activity111Module_pb.FinishEpisodeRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.episodeId = arg_3_2
-	var_3_0.step = arg_3_3
-	var_3_0.alarm = arg_3_4
+	req.activityId = activityId
+	req.episodeId = episodeId
+	req.step = step
+	req.alarm = alarm
 
-	local var_3_1 = ServerTime.now()
+	local serverTime = ServerTime.now()
 
-	for iter_3_0 = 1, 6 do
-		var_3_1 = var_3_1 .. math.random(0, 9)
+	for i = 1, 6 do
+		serverTime = serverTime .. math.random(0, 9)
 	end
 
-	var_3_0.timestamp = var_3_1
-	var_3_0.sign = GameLuaMD5.sumhexa(string.format("%s#%s#%s#%s#%s#%s", arg_3_1, arg_3_2, arg_3_3, arg_3_4, var_3_1, LoginModel.instance.sessionId))
+	req.timestamp = serverTime
+	req.sign = GameLuaMD5.sumhexa(string.format("%s#%s#%s#%s#%s#%s", activityId, episodeId, step, alarm, serverTime, LoginModel.instance.sessionId))
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveFinishEpisodeReply(arg_4_0, arg_4_1, arg_4_2)
-	PushBoxModel.instance:onReceiveFinishEpisodeReply(arg_4_1, arg_4_2)
+function PushBoxRpc:onReceiveFinishEpisodeReply(resultCode, msg)
+	PushBoxModel.instance:onReceiveFinishEpisodeReply(resultCode, msg)
 end
 
-function var_0_0.onReceiveAct111InfoPush(arg_5_0, arg_5_1, arg_5_2)
-	PushBoxModel.instance:onReceiveAct111InfoPush(arg_5_2)
+function PushBoxRpc:onReceiveAct111InfoPush(resultCode, msg)
+	PushBoxModel.instance:onReceiveAct111InfoPush(msg)
 end
 
-function var_0_0.onReceivePushBoxTaskPush(arg_6_0, arg_6_1, arg_6_2)
-	PushBoxModel.instance:onReceivePushBoxTaskPush(arg_6_2)
+function PushBoxRpc:onReceivePushBoxTaskPush(resultCode, msg)
+	PushBoxModel.instance:onReceivePushBoxTaskPush(msg)
 end
 
-function var_0_0.sendReceiveTaskRewardRequest(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = Activity111Module_pb.ReceiveTaskRewardRequest()
+function PushBoxRpc:sendReceiveTaskRewardRequest(activityId, taskId)
+	local req = Activity111Module_pb.ReceiveTaskRewardRequest()
 
-	var_7_0.activityId = arg_7_1 or PushBoxModel.instance:getCurActivityID()
-	var_7_0.taskId = arg_7_2
+	req.activityId = activityId or PushBoxModel.instance:getCurActivityID()
+	req.taskId = taskId
 
-	arg_7_0:sendMsg(var_7_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveReceiveTaskRewardReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == 0 then
-		PushBoxModel.instance:onReceiveReceiveTaskRewardReply(arg_8_2)
+function PushBoxRpc:onReceiveReceiveTaskRewardReply(resultCode, msg)
+	if resultCode == 0 then
+		PushBoxModel.instance:onReceiveReceiveTaskRewardReply(msg)
 	end
 end
 
-setGlobal("Activity111Rpc", var_0_0)
+setGlobal("Activity111Rpc", PushBoxRpc)
 
-var_0_0.instance = var_0_0.New()
+PushBoxRpc.instance = PushBoxRpc.New()
 
-return var_0_0
+return PushBoxRpc

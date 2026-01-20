@@ -1,17 +1,19 @@
-﻿module("modules.logic.activity.view.V1a8_Role_PanelSignView_Part1", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a8_Role_PanelSignView_Part1.lua
 
-local var_0_0 = class("V1a8_Role_PanelSignView_Part1", V1a8_Role_PanelSignView)
+module("modules.logic.activity.view.V1a8_Role_PanelSignView_Part1", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simageTitle:LoadImage(ResUrl.getV1a8SignSingleBgLang("v1a8_sign_panel_title1"))
-	arg_1_0._simageTitle_eff:LoadImage(ResUrl.getV1a8SignSingleBgLang("v1a8_sign_panel_title1"))
-	arg_1_0._simagePanelBG:LoadImage(ResUrl.getV1a8SignSingleBg("v1a8_sign_panel_bg1"))
+local V1a8_Role_PanelSignView_Part1 = class("V1a8_Role_PanelSignView_Part1", V1a8_Role_PanelSignView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect1")
-	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "Root/vx_effect2")
+function V1a8_Role_PanelSignView_Part1:_editableInitView()
+	self._simageTitle:LoadImage(ResUrl.getV1a8SignSingleBgLang("v1a8_sign_panel_title1"))
+	self._simageTitle_eff:LoadImage(ResUrl.getV1a8SignSingleBgLang("v1a8_sign_panel_title1"))
+	self._simagePanelBG:LoadImage(ResUrl.getV1a8SignSingleBg("v1a8_sign_panel_bg1"))
 
-	gohelper.setActive(var_1_0, true)
-	gohelper.setActive(var_1_1, false)
+	local go1 = gohelper.findChild(self.viewGO, "Root/vx_effect1")
+	local go2 = gohelper.findChild(self.viewGO, "Root/vx_effect2")
+
+	gohelper.setActive(go1, true)
+	gohelper.setActive(go2, false)
 end
 
-return var_0_0
+return V1a8_Role_PanelSignView_Part1

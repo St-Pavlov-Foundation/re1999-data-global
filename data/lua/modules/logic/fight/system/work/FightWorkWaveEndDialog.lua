@@ -1,37 +1,39 @@
-﻿module("modules.logic.fight.system.work.FightWorkWaveEndDialog", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkWaveEndDialog.lua
 
-local var_0_0 = class("FightWorkWaveEndDialog", BaseWork)
+module("modules.logic.fight.system.work.FightWorkWaveEndDialog", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getCurWaveId()
+local FightWorkWaveEndDialog = class("FightWorkWaveEndDialog", BaseWork)
+
+function FightWorkWaveEndDialog:onStart()
+	local currWaveId = FightModel.instance:getCurWaveId()
 
 	FightWorkStepChangeWave.needStopMonsterWave = nil
 
-	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEnd, var_1_0)
-	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEndAndCheckBuffId, var_1_0)
+	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEnd, currWaveId)
+	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWaveEndAndCheckBuffId, currWaveId)
 
 	if FightWorkStepChangeWave.needStopMonsterWave then
-		arg_1_0._dialogWork = FightWorkWaitDialog.New()
+		self._dialogWork = FightWorkWaitDialog.New()
 
-		arg_1_0._dialogWork:registerDoneListener(arg_1_0._onFightDialogEnd, arg_1_0)
-		arg_1_0._dialogWork:onStart()
+		self._dialogWork:registerDoneListener(self._onFightDialogEnd, self)
+		self._dialogWork:onStart()
 	else
-		arg_1_0:_onFightDialogEnd()
+		self:_onFightDialogEnd()
 	end
 end
 
-function var_0_0._onFightDialogEnd(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkWaveEndDialog:_onFightDialogEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_3_0._onFightDialogEnd, arg_3_0)
+function FightWorkWaveEndDialog:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, self._onFightDialogEnd, self)
 
-	if arg_3_0._dialogWork then
-		arg_3_0._dialogWork:unregisterDoneListener(arg_3_0._onFightDialogEnd, arg_3_0)
+	if self._dialogWork then
+		self._dialogWork:unregisterDoneListener(self._onFightDialogEnd, self)
 
-		arg_3_0._dialogWork = nil
+		self._dialogWork = nil
 	end
 end
 
-return var_0_0
+return FightWorkWaveEndDialog

@@ -1,124 +1,126 @@
-﻿module("modules.logic.room.model.map.RoomMapInteractionModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomMapInteractionModel.lua
 
-local var_0_0 = class("RoomMapInteractionModel", BaseModel)
+module("modules.logic.room.model.map.RoomMapInteractionModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomMapInteractionModel = class("RoomMapInteractionModel", BaseModel)
+
+function RoomMapInteractionModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomMapInteractionModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomMapInteractionModel:clear()
+	RoomMapInteractionModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0.init(arg_4_0)
-	arg_4_0:clear()
+function RoomMapInteractionModel:init()
+	self:clear()
 end
 
-function var_0_0._clearData(arg_5_0)
-	arg_5_0._buildingInteraction = {}
-	arg_5_0._buildingHexpointIndexDic = {}
+function RoomMapInteractionModel:_clearData()
+	self._buildingInteraction = {}
+	self._buildingHexpointIndexDic = {}
 
-	if arg_5_0._builidngInteractionModel then
-		arg_5_0._builidngInteractionModel:clear()
+	if self._builidngInteractionModel then
+		self._builidngInteractionModel:clear()
 	else
-		arg_5_0._builidngInteractionModel = BaseModel.New()
+		self._builidngInteractionModel = BaseModel.New()
 	end
 end
 
-function var_0_0.initInteraction(arg_6_0)
-	arg_6_0:_clearData()
+function RoomMapInteractionModel:initInteraction()
+	self:_clearData()
 
-	local var_6_0 = RoomConfig.instance:getCharacterInteractionConfigList()
+	local configList = RoomConfig.instance:getCharacterInteractionConfigList()
 
-	arg_6_0.hexPointRanges = HexPoint.Zero:getInRanges(2)
+	self.hexPointRanges = HexPoint.Zero:getInRanges(2)
 
-	for iter_6_0 = 1, #var_6_0 do
-		local var_6_1 = var_6_0[iter_6_0]
+	for i = 1, #configList do
+		local cfg = configList[i]
 
-		if var_6_1.behaviour == RoomCharacterEnum.InteractionType.Building then
-			arg_6_0:_addInteractionBuilding(var_6_1)
+		if cfg.behaviour == RoomCharacterEnum.InteractionType.Building then
+			self:_addInteractionBuilding(cfg)
 		end
 	end
 end
 
-function var_0_0.getBuildingRangeIndexList(arg_7_0, arg_7_1)
-	return arg_7_0._buildingHexpointIndexDic[arg_7_1]
+function RoomMapInteractionModel:getBuildingRangeIndexList(buildingUid)
+	return self._buildingHexpointIndexDic[buildingUid]
 end
 
-function var_0_0._addInteractionBuilding(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:_getBuildingMOListByBuildingId(arg_8_1.buildingId)
+function RoomMapInteractionModel:_addInteractionBuilding(cfg)
+	local buildingMOList = self:_getBuildingMOListByBuildingId(cfg.buildingId)
 
-	if var_8_0 and #var_8_0 > 0 then
-		local var_8_1 = {}
+	if buildingMOList and #buildingMOList > 0 then
+		local buildingUids = {}
 
-		arg_8_0._buildingInteraction[arg_8_1.id] = var_8_1
+		self._buildingInteraction[cfg.id] = buildingUids
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-			table.insert(var_8_1, iter_8_1.id)
+		for _, mo in ipairs(buildingMOList) do
+			table.insert(buildingUids, mo.id)
 
-			if not arg_8_0._buildingHexpointIndexDic[iter_8_1.id] then
-				arg_8_0._buildingHexpointIndexDic[iter_8_1.id] = arg_8_0:_getBuildingRangeIndex(iter_8_1.buildingId, iter_8_1.hexPoint, iter_8_1.rotate, arg_8_0.hexPointRanges)
+			if not self._buildingHexpointIndexDic[mo.id] then
+				self._buildingHexpointIndexDic[mo.id] = self:_getBuildingRangeIndex(mo.buildingId, mo.hexPoint, mo.rotate, self.hexPointRanges)
 			end
 		end
 
-		local var_8_2 = RoomInteractionMO.New()
+		local mo = RoomInteractionMO.New()
 
-		var_8_2:init(arg_8_1.id, arg_8_1.id, var_8_1)
-		arg_8_0._builidngInteractionModel:addAtLast(var_8_2)
+		mo:init(cfg.id, cfg.id, buildingUids)
+		self._builidngInteractionModel:addAtLast(mo)
 	end
 end
 
-function var_0_0._getBuildingMOListByBuildingId(arg_9_0, arg_9_1)
-	local var_9_0 = {}
-	local var_9_1 = RoomMapBuildingModel.instance:getList()
+function RoomMapInteractionModel:_getBuildingMOListByBuildingId(buildingId)
+	local tempMOlist = {}
+	local list = RoomMapBuildingModel.instance:getList()
 
-	for iter_9_0 = 1, #var_9_1 do
-		local var_9_2 = var_9_1[iter_9_0]
+	for i = 1, #list do
+		local buildingMO = list[i]
 
-		if var_9_2.buildingId == arg_9_1 then
-			table.insert(var_9_0, var_9_2)
+		if buildingMO.buildingId == buildingId then
+			table.insert(tempMOlist, buildingMO)
 		end
 	end
 
-	return var_9_0
+	return tempMOlist
 end
 
-function var_0_0._getBuildingRangeIndex(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = {}
-	local var_10_1 = RoomResourceModel.instance
-	local var_10_2 = RoomBuildingHelper.getOccupyDict(arg_10_1, arg_10_2, arg_10_3)
+function RoomMapInteractionModel:_getBuildingRangeIndex(buildingId, hexPoint, rotate, hexPointRanges)
+	local list = {}
+	local tRoomResourceModel = RoomResourceModel.instance
+	local occupyDict = RoomBuildingHelper.getOccupyDict(buildingId, hexPoint, rotate)
 
-	for iter_10_0, iter_10_1 in pairs(var_10_2) do
-		for iter_10_2, iter_10_3 in pairs(iter_10_1) do
-			for iter_10_4 = 1, #arg_10_4 do
-				local var_10_3 = arg_10_4[iter_10_4]
-				local var_10_4 = iter_10_0 + var_10_3.x
-				local var_10_5 = var_10_3.y + iter_10_2
-				local var_10_6 = var_10_1:getIndexByXY(var_10_4, var_10_5)
+	for x, dict in pairs(occupyDict) do
+		for y, _ in pairs(dict) do
+			for i = 1, #hexPointRanges do
+				local neighbor = hexPointRanges[i]
+				local dx = x + neighbor.x
+				local dy = neighbor.y + y
+				local index = tRoomResourceModel:getIndexByXY(dx, dy)
 
-				if not tabletool.indexOf(var_10_0, var_10_6) then
-					table.insert(var_10_0, var_10_6)
+				if not tabletool.indexOf(list, index) then
+					table.insert(list, index)
 				end
 			end
 		end
 	end
 
-	return var_10_0
+	return list
 end
 
-function var_0_0.getBuildingInteractionMOList(arg_11_0)
-	return arg_11_0._builidngInteractionModel:getList()
+function RoomMapInteractionModel:getBuildingInteractionMOList()
+	return self._builidngInteractionModel:getList()
 end
 
-function var_0_0.getBuildingInteractionMO(arg_12_0, arg_12_1)
-	return arg_12_0._builidngInteractionModel:getById(arg_12_1)
+function RoomMapInteractionModel:getBuildingInteractionMO(id)
+	return self._builidngInteractionModel:getById(id)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomMapInteractionModel.instance = RoomMapInteractionModel.New()
 
-return var_0_0
+return RoomMapInteractionModel

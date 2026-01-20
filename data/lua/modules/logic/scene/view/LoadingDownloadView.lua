@@ -1,83 +1,94 @@
-﻿module("modules.logic.scene.view.LoadingDownloadView", package.seeall)
+﻿-- chunkname: @modules/logic/scene/view/LoadingDownloadView.lua
 
-local var_0_0 = class("LoadingDownloadView", BaseView)
+module("modules.logic.scene.view.LoadingDownloadView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._progressBar = SLFramework.UGUI.SliderWrap.GetWithPath(arg_1_0.viewGO, "progressBar")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txtPercent = gohelper.findChildText(arg_1_0.viewGO, "bottom_text/#txt_percent")
-	arg_1_0._txtWarn = gohelper.findChildText(arg_1_0.viewGO, "bottom_text/#txt_actualnum")
-	arg_1_0._txtDescribe = gohelper.findChildText(arg_1_0.viewGO, "describe_text/#txt_describe")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "describe_text/#txt_describe/title/#txt_title")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "describe_text/#txt_describe/title/#txt_title_en")
+local LoadingDownloadView = class("LoadingDownloadView", BaseView)
 
-	arg_1_0:_setLoadingItem()
+function LoadingDownloadView:onInitView()
+	self._progressBar = SLFramework.UGUI.SliderWrap.GetWithPath(self.viewGO, "progressBar")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txtPercent = gohelper.findChildText(self.viewGO, "bottom_text/#txt_percent")
+	self._txtWarn = gohelper.findChildText(self.viewGO, "bottom_text/#txt_actualnum")
+	self._txtDescribe = gohelper.findChildText(self.viewGO, "describe_text/#txt_describe")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "describe_text/#txt_describe/title/#txt_title")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "describe_text/#txt_describe/title/#txt_title_en")
+
+	self:_setLoadingItem()
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:addEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, arg_2_0._showDownloadInfo, arg_2_0)
+function LoadingDownloadView:onOpen()
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, self._showDownloadInfo, self)
 end
 
-function var_0_0.onClose(arg_3_0)
-	gohelper.setActive(arg_3_0.viewGO, false)
-	arg_3_0:removeEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, arg_3_0._showDownloadInfo, arg_3_0)
-	arg_3_0._simagebg:UnLoadImage()
+function LoadingDownloadView:onClose()
+	gohelper.setActive(self.viewGO, false)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.ShowDownloadInfo, self._showDownloadInfo, self)
+	self._simagebg:UnLoadImage()
 end
 
-function var_0_0._showDownloadInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0:setPercent(arg_4_1)
-	arg_4_0:setProgressMsg(arg_4_2)
-	arg_4_0:setWarnningMsg(arg_4_3)
+function LoadingDownloadView:_showDownloadInfo(percent, progressMsg, warnningMsg)
+	self:setPercent(percent)
+	self:setProgressMsg(progressMsg)
+	self:setWarnningMsg(warnningMsg)
 end
 
-function var_0_0._getRandomCO(arg_5_0, arg_5_1)
-	local var_5_0 = 0
+function LoadingDownloadView:_getRandomCO(plist)
+	local totalWeight = 0
+	local list = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		var_5_0 = var_5_0 + iter_5_1.weight
-	end
+	for _, co in ipairs(plist) do
+		local episodeId = co.episodeId
 
-	local var_5_1 = math.floor(math.random() * var_5_0)
+		if not episodeId or episodeId == 0 or LoginController.instance:isPassDungeonById(episodeId) then
+			totalWeight = totalWeight + co.weight
 
-	for iter_5_2, iter_5_3 in ipairs(arg_5_1) do
-		if var_5_1 < iter_5_3.weight then
-			return iter_5_3
-		else
-			var_5_1 = var_5_1 - iter_5_3.weight
+			table.insert(list, co)
 		end
 	end
 
-	return arg_5_1[math.random(1, #arg_5_1)]
+	local rand = math.floor(math.random() * totalWeight)
+
+	for _, co in ipairs(list) do
+		if rand < co.weight then
+			return co
+		else
+			rand = rand - co.weight
+		end
+	end
+
+	local randIndex = math.random(1, #list)
+
+	return list[randIndex]
 end
 
-function var_0_0._setLoadingItem(arg_6_0)
-	local var_6_0 = booterLoadingConfig()
-	local var_6_1 = arg_6_0:_getRandomCO(var_6_0)
+function LoadingDownloadView:_setLoadingItem()
+	local txtCo = booterLoadingConfig()
+	local loadTxt = self:_getRandomCO(txtCo)
 
-	arg_6_0._txtDescribe.text = var_6_1.desc
-	arg_6_0._txtTitle.text = var_6_1.title
-	arg_6_0._txtTitleEn.text = var_6_1.titleen
+	self._txtDescribe.text = loadTxt.desc
+	self._txtTitle.text = loadTxt.title
+	self._txtTitleEn.text = loadTxt.titleen
 
-	arg_6_0:_showDownloadInfo(0, luaLang("voice_package_update"))
-	arg_6_0._simagebg:LoadImage(ResUrl.getLoadingBg("full/originbg"))
+	self:_showDownloadInfo(0, luaLang("voice_package_update"))
+	self._simagebg:LoadImage(ResUrl.getLoadingBg("full/originbg"))
 end
 
-function var_0_0.show(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0:setPercent(arg_7_1)
-	arg_7_0:setProgressMsg(arg_7_2)
-	arg_7_0:setWarnningMsg(arg_7_3)
+function LoadingDownloadView:show(percent, progressMsg, warnningMsg)
+	self:setPercent(percent)
+	self:setProgressMsg(progressMsg)
+	self:setWarnningMsg(warnningMsg)
 end
 
-function var_0_0.setPercent(arg_8_0, arg_8_1)
-	arg_8_0._progressBar:SetValue(arg_8_1)
+function LoadingDownloadView:setPercent(percent)
+	self._progressBar:SetValue(percent)
 end
 
-function var_0_0.setProgressMsg(arg_9_0, arg_9_1)
-	arg_9_0._txtPercent.text = arg_9_1 and arg_9_1 or ""
+function LoadingDownloadView:setProgressMsg(progressMsg)
+	self._txtPercent.text = progressMsg and progressMsg or ""
 end
 
-function var_0_0.setWarnningMsg(arg_10_0, arg_10_1)
-	arg_10_0._txtWarn.text = arg_10_1 and arg_10_1 or ""
+function LoadingDownloadView:setWarnningMsg(warnningMsg)
+	self._txtWarn.text = warnningMsg and warnningMsg or ""
 end
 
-return var_0_0
+return LoadingDownloadView

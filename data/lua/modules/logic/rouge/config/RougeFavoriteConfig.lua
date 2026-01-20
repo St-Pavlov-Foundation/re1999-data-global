@@ -1,151 +1,154 @@
-﻿module("modules.logic.rouge.config.RougeFavoriteConfig", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/config/RougeFavoriteConfig.lua
 
-local var_0_0 = class("RougeFavoriteConfig", BaseConfig)
+module("modules.logic.rouge.config.RougeFavoriteConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local RougeFavoriteConfig = class("RougeFavoriteConfig", BaseConfig)
+
+function RougeFavoriteConfig:reqConfigNames()
 	return {
 		"rouge_story_list",
 		"rouge_illustration_list"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function RougeFavoriteConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "rouge_story_list" then
-		arg_3_0:_initStoryList()
-	elseif arg_3_1 == "rouge_illustration_list" then
-		arg_3_0:_initIllustrationList()
+function RougeFavoriteConfig:onConfigLoaded(configName, configTable)
+	if configName == "rouge_story_list" then
+		self:_initStoryList()
+	elseif configName == "rouge_illustration_list" then
+		self:_initIllustrationList()
 	end
 end
 
-function var_0_0._initIllustrationList(arg_4_0)
-	arg_4_0._illustrationList = {}
-	arg_4_0._illustrationPages = {}
-	arg_4_0._normalIllustrationPageCount = 0
-	arg_4_0._dlcIllustrationPageCount = 0
+function RougeFavoriteConfig:_initIllustrationList()
+	self._illustrationList = {}
+	self._illustrationPages = {}
+	self._normalIllustrationPageCount = 0
+	self._dlcIllustrationPageCount = 0
 
-	local var_4_0 = {}
+	local list = {}
 
-	for iter_4_0, iter_4_1 in ipairs(lua_rouge_illustration_list.configList) do
-		table.insert(var_4_0, iter_4_1)
+	for _, v in ipairs(lua_rouge_illustration_list.configList) do
+		table.insert(list, v)
 	end
 
-	table.sort(var_4_0, var_0_0._sortIllustration)
+	table.sort(list, RougeFavoriteConfig._sortIllustration)
 
-	local var_4_1 = 0
+	local usePageIndex = 0
 
-	for iter_4_2, iter_4_3 in ipairs(var_4_0) do
-		local var_4_2 = arg_4_0._illustrationPages[var_4_1]
-		local var_4_3 = var_4_2 and #var_4_2 or 0
-		local var_4_4 = var_4_3 >= RougeEnum.IllustrationNumOfPage
-		local var_4_5 = var_4_2 and var_4_2[var_4_3]
-		local var_4_6 = var_4_5 and var_4_5.config
-		local var_4_7 = arg_4_0:isDLCIllustration(var_4_6)
-		local var_4_8 = arg_4_0:isDLCIllustration(iter_4_3)
-		local var_4_9 = var_4_7 == var_4_8
+	for i, v in ipairs(list) do
+		local page = self._illustrationPages[usePageIndex]
+		local illustrationCount = page and #page or 0
+		local isFull = illustrationCount >= RougeEnum.IllustrationNumOfPage
+		local lastIllustration = page and page[illustrationCount]
+		local lastIllustrationCo = lastIllustration and lastIllustration.config
+		local isPageDLC = self:isDLCIllustration(lastIllustrationCo)
+		local isDLC = self:isDLCIllustration(v)
+		local isSameType = isPageDLC == isDLC
 
-		if not var_4_2 or not var_4_9 or var_4_4 then
-			var_4_1 = var_4_1 + 1
-			arg_4_0._illustrationPages[var_4_1] = {}
+		if not page or not isSameType or isFull then
+			usePageIndex = usePageIndex + 1
+			self._illustrationPages[usePageIndex] = {}
 
-			if var_4_8 then
-				arg_4_0._dlcIllustrationPageCount = arg_4_0._dlcIllustrationPageCount + 1
+			if isDLC then
+				self._dlcIllustrationPageCount = self._dlcIllustrationPageCount + 1
 			else
-				arg_4_0._normalIllustrationPageCount = arg_4_0._normalIllustrationPageCount + 1
+				self._normalIllustrationPageCount = self._normalIllustrationPageCount + 1
 			end
 		end
 
-		local var_4_10 = string.splitToNumber(iter_4_3.eventId, "|")
-		local var_4_11 = {
-			config = iter_4_3,
-			eventIdList = var_4_10
+		local eventIdList = string.splitToNumber(v.eventId, "|")
+		local mo = {
+			config = v,
+			eventIdList = eventIdList
 		}
 
-		table.insert(arg_4_0._illustrationPages[var_4_1], var_4_11)
-		table.insert(arg_4_0._illustrationList, var_4_11)
+		table.insert(self._illustrationPages[usePageIndex], mo)
+		table.insert(self._illustrationList, mo)
 	end
 end
 
-function var_0_0._sortIllustration(arg_5_0, arg_5_1)
-	local var_5_0 = var_0_0.instance:isDLCIllustration(arg_5_0)
+function RougeFavoriteConfig._sortIllustration(a, b)
+	local isADLC = RougeFavoriteConfig.instance:isDLCIllustration(a)
+	local isBDLC = RougeFavoriteConfig.instance:isDLCIllustration(b)
 
-	if var_5_0 ~= var_0_0.instance:isDLCIllustration(arg_5_1) then
-		return not var_5_0
+	if isADLC ~= isBDLC then
+		return not isADLC
 	end
 
-	if arg_5_0.order ~= arg_5_1.order then
-		return arg_5_0.order > arg_5_1.order
+	if a.order ~= b.order then
+		return a.order > b.order
 	end
 
-	return arg_5_0.id < arg_5_1.id
+	return a.id < b.id
 end
 
-function var_0_0.isDLCIllustration(arg_6_0, arg_6_1)
-	return arg_6_1 and arg_6_1.dlc == 1
+function RougeFavoriteConfig:isDLCIllustration(illustrationCo)
+	return illustrationCo and illustrationCo.dlc == 1
 end
 
-function var_0_0.getIllustrationList(arg_7_0)
-	return arg_7_0._illustrationList
+function RougeFavoriteConfig:getIllustrationList()
+	return self._illustrationList
 end
 
-function var_0_0.getIllustrationPages(arg_8_0)
-	return arg_8_0._illustrationPages
+function RougeFavoriteConfig:getIllustrationPages()
+	return self._illustrationPages
 end
 
-function var_0_0.getNormalIllustrationPageCount(arg_9_0)
-	return arg_9_0._normalIllustrationPageCount
+function RougeFavoriteConfig:getNormalIllustrationPageCount()
+	return self._normalIllustrationPageCount
 end
 
-function var_0_0.getDLCIllustationPageCount(arg_10_0)
-	return arg_10_0._dlcIllustrationPageCount
+function RougeFavoriteConfig:getDLCIllustationPageCount()
+	return self._dlcIllustrationPageCount
 end
 
-function var_0_0._initStoryList(arg_11_0)
-	local var_11_0 = {}
+function RougeFavoriteConfig:_initStoryList()
+	local list = {}
 
-	for iter_11_0, iter_11_1 in ipairs(lua_rouge_story_list.configList) do
-		table.insert(var_11_0, iter_11_1)
+	for _, v in ipairs(lua_rouge_story_list.configList) do
+		table.insert(list, v)
 	end
 
-	table.sort(var_11_0, var_0_0._sortStory)
+	table.sort(list, RougeFavoriteConfig._sortStory)
 
-	arg_11_0._storyList = {}
-	arg_11_0._storyMap = {}
+	self._storyList = {}
+	self._storyMap = {}
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		local var_11_1 = {
-			index = iter_11_2,
-			config = iter_11_3,
-			storyIdList = string.splitToNumber(iter_11_3.storyIdList, "#")
-		}
+	for i, v in ipairs(list) do
+		local t = {}
 
-		table.insert(arg_11_0._storyList, var_11_1)
+		t.index = i
+		t.config = v
+		t.storyIdList = string.splitToNumber(v.storyIdList, "#")
 
-		local var_11_2 = var_11_1.storyIdList[#var_11_1.storyIdList]
+		table.insert(self._storyList, t)
 
-		arg_11_0._storyMap[var_11_2] = true
+		local storyId = t.storyIdList[#t.storyIdList]
+
+		self._storyMap[storyId] = true
 	end
 end
 
-function var_0_0._sortStory(arg_12_0, arg_12_1)
-	if arg_12_0.stageId ~= arg_12_1.stageId then
-		return arg_12_0.stageId < arg_12_1.stageId
+function RougeFavoriteConfig._sortStory(a, b)
+	if a.stageId ~= b.stageId then
+		return a.stageId < b.stageId
 	end
 
-	return arg_12_0.id < arg_12_1.id
+	return a.id < b.id
 end
 
-function var_0_0.getStoryList(arg_13_0)
-	return arg_13_0._storyList
+function RougeFavoriteConfig:getStoryList()
+	return self._storyList
 end
 
-function var_0_0.inRougeStoryList(arg_14_0, arg_14_1)
-	return arg_14_0._storyMap and arg_14_0._storyMap[arg_14_1]
+function RougeFavoriteConfig:inRougeStoryList(storyId)
+	return self._storyMap and self._storyMap[storyId]
 end
 
-var_0_0.instance = var_0_0.New()
+RougeFavoriteConfig.instance = RougeFavoriteConfig.New()
 
-return var_0_0
+return RougeFavoriteConfig

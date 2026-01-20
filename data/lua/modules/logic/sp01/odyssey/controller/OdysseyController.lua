@@ -1,130 +1,136 @@
-﻿module("modules.logic.sp01.odyssey.controller.OdysseyController", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/controller/OdysseyController.lua
 
-local var_0_0 = class("OdysseyController", BaseController)
+module("modules.logic.sp01.odyssey.controller.OdysseyController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local OdysseyController = class("OdysseyController", BaseController)
+
+function OdysseyController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function OdysseyController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0.onDailyRefresh, arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0.onUpdateTaskList, arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_3_0.onSetTaskList, arg_3_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, arg_3_0.setAddOuterItemData, arg_3_0)
+function OdysseyController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self.onDailyRefresh, self)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self.onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self.onSetTaskList, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, self.setAddOuterItemData, self)
 end
 
-function var_0_0.onDailyRefresh(arg_4_0)
-	if not ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.Dungeon2) then
+function OdysseyController:onDailyRefresh()
+	local isActOpen = ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.Dungeon2)
+
+	if not isActOpen then
 		return
 	end
 
 	OdysseyRpc.instance:sendOdysseyGetInfoRequest(function()
-		var_0_0.instance:dispatchEvent(OdysseyEvent.DailyRefresh)
-	end, arg_4_0)
+		OdysseyController.instance:dispatchEvent(OdysseyEvent.DailyRefresh)
+	end, self)
 end
 
-function var_0_0.onUpdateTaskList(arg_6_0, arg_6_1)
-	if OdysseyTaskModel.instance:updateTaskInfo(arg_6_1.taskInfo) then
+function OdysseyController:onUpdateTaskList(msg)
+	local isChange = OdysseyTaskModel.instance:updateTaskInfo(msg.taskInfo)
+
+	if isChange then
 		OdysseyTaskModel.instance:refreshList()
 	end
 
-	arg_6_0:checkTaskReddotShow()
-	arg_6_0:dispatchEvent(OdysseyEvent.OdysseyTaskUpdated)
+	self:checkTaskReddotShow()
+	self:dispatchEvent(OdysseyEvent.OdysseyTaskUpdated)
 end
 
-function var_0_0.onSetTaskList(arg_7_0)
+function OdysseyController:onSetTaskList()
 	RedDotRpc.instance:sendGetRedDotInfosRequest({
 		RedDotEnum.DotNode.OdysseyLevelReward,
 		RedDotEnum.DotNode.OdysseyTask
 	})
 	OdysseyTaskModel.instance:setTaskInfoList()
 	OdysseyTaskModel.instance:refreshList()
-	arg_7_0:checkTaskReddotShow()
-	arg_7_0:dispatchEvent(OdysseyEvent.OdysseyTaskUpdated)
+	self:checkTaskReddotShow()
+	self:dispatchEvent(OdysseyEvent.OdysseyTaskUpdated)
 end
 
-function var_0_0.checkTaskReddotShow(arg_8_0)
-	local var_8_0 = OdysseyTaskModel.instance:checkHasLevelReawrdTaskCanGet() and 1 or 0
-	local var_8_1 = OdysseyTaskModel.instance:checkHasNormalTaskCanGet() and 1 or 0
-	local var_8_2 = {
+function OdysseyController:checkTaskReddotShow()
+	local hasLevelReawrdTaskCanGet = OdysseyTaskModel.instance:checkHasLevelReawrdTaskCanGet() and 1 or 0
+	local hasNormalTaskCanGet = OdysseyTaskModel.instance:checkHasNormalTaskCanGet() and 1 or 0
+	local redDotInfoList = {
 		{
 			uid = 0,
 			id = RedDotEnum.DotNode.OdysseyLevelReward,
-			value = var_8_0
+			value = hasLevelReawrdTaskCanGet
 		},
 		{
 			uid = 0,
 			id = RedDotEnum.DotNode.OdysseyTask,
-			value = var_8_1
+			value = hasNormalTaskCanGet
 		}
 	}
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_8_2, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
 end
 
-function var_0_0.showItemTipView(arg_9_0, arg_9_1)
-	ViewMgr.instance:openView(ViewName.OdysseyItemTipView, arg_9_1)
+function OdysseyController:showItemTipView(viewParam)
+	ViewMgr.instance:openView(ViewName.OdysseyItemTipView, viewParam)
 end
 
-function var_0_0.openTalentTreeView(arg_10_0, arg_10_1)
-	ViewMgr.instance:openView(ViewName.OdysseyTalentTreeView, arg_10_1)
+function OdysseyController:openTalentTreeView(viewParam)
+	ViewMgr.instance:openView(ViewName.OdysseyTalentTreeView, viewParam)
 end
 
-function var_0_0.openLibraryView(arg_11_0, arg_11_1)
-	AssassinController.instance:openAssassinLibraryView(VersionActivity2_9Enum.ActivityId.Dungeon2, arg_11_1 or AssassinEnum.LibraryType.Hero)
+function OdysseyController:openLibraryView(libraryType)
+	AssassinController.instance:openAssassinLibraryView(VersionActivity2_9Enum.ActivityId.Dungeon2, libraryType or AssassinEnum.LibraryType.Hero)
 end
 
-function var_0_0.openTaskView(arg_12_0)
+function OdysseyController:openTaskView()
 	OdysseyTaskModel.instance:setCurSelectTaskTypeAndGroupId(OdysseyEnum.TaskType.NormalTask, OdysseyEnum.TaskGroupType.Story)
 	OdysseyTaskModel.instance:refreshList()
 	ViewMgr.instance:openView(ViewName.OdysseyTaskView)
 end
 
-function var_0_0.openHeroGroupView(arg_13_0, arg_13_1)
+function OdysseyController:openHeroGroupView(viewParam)
 	HeroGroupModel.instance:setReplayParam(nil)
 	HeroSingleGroupModel.instance:setMaxHeroCount(OdysseyEnum.MaxHeroGroupCount)
 	HeroGroupModel.instance:setParam(nil, nil, nil, nil, DungeonEnum.EpisodeType.Odyssey)
 
-	if arg_13_1 == nil then
-		arg_13_1 = {}
+	if viewParam == nil then
+		viewParam = {}
 	end
 
-	arg_13_1.heroGroupType = OdysseyEnum.HeroGroupType.Prepare
+	viewParam.heroGroupType = OdysseyEnum.HeroGroupType.Prepare
 
-	ViewMgr.instance:openView(ViewName.OdysseyHeroGroupView, arg_13_1)
+	ViewMgr.instance:openView(ViewName.OdysseyHeroGroupView, viewParam)
 end
 
-function var_0_0.openEquipView(arg_14_0, arg_14_1)
-	ViewMgr.instance:openView(ViewName.OdysseyEquipView, arg_14_1)
+function OdysseyController:openEquipView(viewParam)
+	ViewMgr.instance:openView(ViewName.OdysseyEquipView, viewParam)
 end
 
-function var_0_0.openFightSuccView(arg_15_0)
-	local var_15_0 = OdysseyModel.instance:getFightResultInfo()
+function OdysseyController:openFightSuccView()
+	local mo = OdysseyModel.instance:getFightResultInfo()
 
-	if var_15_0 and var_15_0:checkFightTypeIsMyth() then
+	if mo and mo:checkFightTypeIsMyth() then
 		ViewMgr.instance:openView(ViewName.OdysseyMythSuccessView)
 	else
 		ViewMgr.instance:openView(ViewName.OdysseySuccessView)
 	end
 end
 
-function var_0_0.openBagView(arg_16_0, arg_16_1)
-	ViewMgr.instance:openView(ViewName.OdysseyBagView, arg_16_1)
+function OdysseyController:openBagView(viewParam)
+	ViewMgr.instance:openView(ViewName.OdysseyBagView, viewParam)
 end
 
-function var_0_0.openSuitTipsView(arg_17_0, arg_17_1)
-	ViewMgr.instance:openView(ViewName.OdysseySuitTipView, arg_17_1)
+function OdysseyController:openSuitTipsView(viewParam)
+	ViewMgr.instance:openView(ViewName.OdysseySuitTipView, viewParam)
 end
 
-function var_0_0.setAddOuterItemData(arg_18_0, arg_18_1)
+function OdysseyController:setAddOuterItemData(msg)
 	OdysseyDungeonModel.instance:setCurFightEpisodeId(nil)
-	OdysseyItemModel.instance:setAddOuterItem(arg_18_1.firstBonus or {})
+	OdysseyItemModel.instance:setAddOuterItem(msg.firstBonus or {})
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyController.instance = OdysseyController.New()
 
-return var_0_0
+return OdysseyController

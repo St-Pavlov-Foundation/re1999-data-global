@@ -1,11 +1,13 @@
-﻿module("modules.configs.excel2json.lua_skin", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_skin.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_skin", package.seeall)
+
+local lua_skin = {}
+local fields = {
 	characterTitleViewStaticOffset = 54,
 	weatherParam = 37,
 	mainThumbnailViewOffset = 47,
-	guideLeftPortraitOffset = 56,
+	skinSwitchLive2dOffset = 92,
 	fightSuccViewOffset = 49,
 	drawing = 15,
 	nameEng = 4,
@@ -53,6 +55,7 @@ local var_0_1 = {
 	skinGetColorbg = 68,
 	lucidescapeViewImgOffset = 83,
 	matId = 31,
+	guideLeftPortraitOffset = 56,
 	storeTag = 77,
 	headIcon = 26,
 	skinGetDetailViewSpineOffset = 69,
@@ -94,10 +97,10 @@ local var_0_1 = {
 	characterId = 6,
 	skinGainViewImgOffset = 75
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1,
 	skinDescription = 4,
 	skinStory = 5,
@@ -105,8 +108,8 @@ local var_0_3 = {
 	des = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_skin.onLoad(json)
+	lua_skin.configList, lua_skin.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_skin

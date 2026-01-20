@@ -1,18 +1,20 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EpisodeListMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EpisodeListMO.lua
 
-local var_0_0 = pureTable("Season123EpisodeListMO")
+module("modules.logic.seasonver.act123.model.Season123EpisodeListMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_2.layer
-	arg_1_0.cfg = arg_1_2
+local Season123EpisodeListMO = pureTable("Season123EpisodeListMO")
 
-	if arg_1_1 then
-		arg_1_0.isFinished = arg_1_1:isFinished()
-		arg_1_0.round = arg_1_1.round
+function Season123EpisodeListMO:init(episodeMO, episodeCfg)
+	self.id = episodeCfg.layer
+	self.cfg = episodeCfg
+
+	if episodeMO then
+		self.isFinished = episodeMO:isFinished()
+		self.round = episodeMO.round
 	else
-		arg_1_0.isFinished = false
-		arg_1_0.round = 0
+		self.isFinished = false
+		self.round = 0
 	end
 end
 
-return var_0_0
+return Season123EpisodeListMO

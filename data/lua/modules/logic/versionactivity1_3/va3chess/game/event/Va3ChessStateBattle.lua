@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateBattle", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/event/Va3ChessStateBattle.lua
 
-local var_0_0 = class("Va3ChessStateBattle", Va3ChessStateBase)
+module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateBattle", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local Va3ChessStateBattle = class("Va3ChessStateBattle", Va3ChessStateBase)
+
+function Va3ChessStateBattle:start()
 	logNormal("Va3ChessStateBattle start")
 
-	local var_1_0 = arg_1_0.originData.battleId
-	local var_1_1 = arg_1_0.originData.activityId
-	local var_1_2 = arg_1_0.originData.interactId
+	local battleId = self.originData.battleId
+	local actId = self.originData.activityId
+	local interactId = self.originData.interactId
 
-	Va3ChessGameController.instance:registerCallback(Va3ChessEvent.GameViewOpened, arg_1_0.onReturnChessFinish, arg_1_0)
-	arg_1_0:startBattle()
+	Va3ChessGameController.instance:registerCallback(Va3ChessEvent.GameViewOpened, self.onReturnChessFinish, self)
+	self:startBattle()
 end
 
-function var_0_0.startBattle(arg_2_0)
-	Va3ChessController.instance:enterActivityFight(arg_2_0.originData.battleId)
+function Va3ChessStateBattle:startBattle()
+	Va3ChessController.instance:enterActivityFight(self.originData.battleId)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.EventFinishPlay)
 end
 
-function var_0_0.onReturnChessFinish(arg_3_0, arg_3_1)
-	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.GameViewOpened, arg_3_0.onReturnChessFinish, arg_3_0)
+function Va3ChessStateBattle:onReturnChessFinish(viewParam)
+	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.GameViewOpened, self.onReturnChessFinish, self)
 
-	if arg_3_1 and arg_3_1.fromRefuseBattle then
-		local var_3_0 = arg_3_0.originData.activityId
+	if viewParam and viewParam.fromRefuseBattle then
+		local actId = self.originData.activityId
 
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.EventBattleReturn)
 	end
 
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.EventFinishPlay, arg_3_0)
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.EventFinishPlay, self)
 end
 
-function var_0_0.onReceiveAboveGame(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 ~= 0 then
+function Va3ChessStateBattle:onReceiveAboveGame(cmd, resultCode)
+	if resultCode ~= 0 then
 		return
 	end
 
@@ -39,8 +41,8 @@ function var_0_0.onReceiveAboveGame(arg_4_0, arg_4_1, arg_4_2)
 	Va3ChessGameController.instance:gameOver()
 end
 
-function var_0_0.dispose(arg_5_0)
-	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.GameViewOpened, arg_5_0.onReturnChessFinish, arg_5_0)
+function Va3ChessStateBattle:dispose()
+	Va3ChessGameController.instance:unregisterCallback(Va3ChessEvent.GameViewOpened, self.onReturnChessFinish, self)
 end
 
-return var_0_0
+return Va3ChessStateBattle

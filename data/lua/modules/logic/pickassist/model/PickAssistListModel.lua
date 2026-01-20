@@ -1,179 +1,183 @@
-﻿module("modules.logic.pickassist.model.PickAssistListModel", package.seeall)
+﻿-- chunkname: @modules/logic/pickassist/model/PickAssistListModel.lua
 
-local var_0_0 = class("PickAssistListModel", ListScrollModel)
-local var_0_1 = CharacterEnum.CareerType.Yan
-local var_0_2 = {}
-local var_0_3 = {
+module("modules.logic.pickassist.model.PickAssistListModel", package.seeall)
+
+local PickAssistListModel = class("PickAssistListModel", ListScrollModel)
+local DEFAULT_CAREER = CharacterEnum.CareerType.Yan
+local ActId2PickAssistViewName = {}
+local assistType2PickAssistViewName = {
 	[PickAssistEnum.Type.Rouge] = "RougePickAssistView",
 	[PickAssistEnum.Type.Survival] = "SurvivalPickAssistView"
 }
 
-local function var_0_4(arg_1_0)
-	if not arg_1_0 then
+local function createPickAssistHeroMO(dungeonAssistHeroMo)
+	if not dungeonAssistHeroMo then
 		return
 	end
 
-	local var_1_0 = arg_1_0:getHeroInfo()
-	local var_1_1 = PickAssistHeroMO.New()
+	local heroInfo = dungeonAssistHeroMo:getHeroInfo()
+	local mo = PickAssistHeroMO.New()
 
-	var_1_1:init(var_1_0)
+	mo:init(heroInfo)
 
-	return var_1_1
+	return mo
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0:clearData()
+function PickAssistListModel:onInit()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:onInit()
+function PickAssistListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.clearData(arg_4_0)
-	arg_4_0.activityId = nil
-	arg_4_0.career = nil
-	arg_4_0.selectMO = nil
+function PickAssistListModel:clearData()
+	self.activityId = nil
+	self.career = nil
+	self.selectMO = nil
 end
 
-function var_0_0.onCloseView(arg_5_0)
-	arg_5_0:clear()
-	arg_5_0:clearData()
+function PickAssistListModel:onCloseView()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.init(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.activityId = arg_6_1
-	arg_6_0._assistType = arg_6_2
+function PickAssistListModel:init(actId, assistType, selectedHeroUid)
+	self.activityId = actId
+	self._assistType = assistType
 
-	if not arg_6_0.career then
-		arg_6_0:setCareer(var_0_1)
+	if not self.career then
+		self:setCareer(DEFAULT_CAREER)
 	end
 
-	arg_6_0:initSelectedMO(arg_6_3)
-	arg_6_0:updateDatas()
+	self:initSelectedMO(selectedHeroUid)
+	self:updateDatas()
 end
 
-function var_0_0.initSelectedMO(arg_7_0, arg_7_1)
-	arg_7_0:setHeroSelect()
+function PickAssistListModel:initSelectedMO(selectedHeroUid)
+	self:setHeroSelect()
 
-	local var_7_0 = arg_7_0:getAssistType()
-	local var_7_1 = DungeonAssistModel.instance:getAssistList(var_7_0)
+	local assistType = self:getAssistType()
+	local dungeonAssistList = DungeonAssistModel.instance:getAssistList(assistType)
 
-	if not var_7_1 then
+	if not dungeonAssistList then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if iter_7_1:getHeroUid() == arg_7_1 then
-			local var_7_2 = var_0_4(iter_7_1)
+	for _, dungeonAssistHeroMo in ipairs(dungeonAssistList) do
+		local assistUid = dungeonAssistHeroMo:getHeroUid()
 
-			arg_7_0:setHeroSelect(var_7_2, true)
+		if assistUid == selectedHeroUid then
+			local mo = createPickAssistHeroMO(dungeonAssistHeroMo)
+
+			self:setHeroSelect(mo, true)
 
 			break
 		end
 	end
 end
 
-function var_0_0.updateDatas(arg_8_0)
-	if not arg_8_0.activityId or not arg_8_0.career then
+function PickAssistListModel:updateDatas()
+	if not self.activityId or not self.career then
 		return
 	end
 
-	arg_8_0:setListByCareer()
+	self:setListByCareer()
 end
 
-function var_0_0.setListByCareer(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = arg_9_0:getSelectedMO()
+function PickAssistListModel:setListByCareer()
+	local list = {}
+	local lastSelectMO = self:getSelectedMO()
 
-	arg_9_0:setHeroSelect()
+	self:setHeroSelect()
 
-	local var_9_2 = arg_9_0:getAssistType()
-	local var_9_3 = DungeonAssistModel.instance:getAssistList(var_9_2, arg_9_0.career)
+	local assistType = self:getAssistType()
+	local dungeonAssistList = DungeonAssistModel.instance:getAssistList(assistType, self.career)
 
-	if var_9_3 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_3) do
-			local var_9_4 = var_0_4(iter_9_1)
-			local var_9_5 = var_9_4 and var_9_4:getCareer()
+	if dungeonAssistList then
+		for _, dungeonAssistHeroMo in ipairs(dungeonAssistList) do
+			local mo = createPickAssistHeroMO(dungeonAssistHeroMo)
+			local career = mo and mo:getCareer()
 
-			if var_9_4 and var_9_5 == arg_9_0.career then
-				table.insert(var_9_0, var_9_4)
+			if mo and career == self.career then
+				table.insert(list, mo)
 
-				if var_9_1 and var_9_1:isSameHero(var_9_4) then
-					arg_9_0:setHeroSelect(var_9_4, true)
+				if lastSelectMO and lastSelectMO:isSameHero(mo) then
+					self:setHeroSelect(mo, true)
 				end
 			end
 		end
 	end
 
-	arg_9_0:setList(var_9_0)
+	self:setList(list)
 	PickAssistController.instance:dispatchEvent(PickAssistEvent.SetCareer)
 end
 
-function var_0_0.getPickAssistViewName(arg_10_0)
-	local var_10_0 = ViewName.PickAssistView
+function PickAssistListModel:getPickAssistViewName()
+	local result = ViewName.PickAssistView
 
-	var_10_0 = arg_10_0.activityId and var_0_2[arg_10_0.activityId] or var_10_0
-	var_10_0 = arg_10_0._assistType and var_0_3[arg_10_0._assistType] or var_10_0
+	result = self.activityId and ActId2PickAssistViewName[self.activityId] or result
+	result = self._assistType and assistType2PickAssistViewName[self._assistType] or result
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.getCareer(arg_11_0)
-	return arg_11_0.career
+function PickAssistListModel:getCareer()
+	return self.career
 end
 
-function var_0_0.getSelectedMO(arg_12_0)
-	return arg_12_0.selectMO
+function PickAssistListModel:getSelectedMO()
+	return self.selectMO
 end
 
-function var_0_0.isHeroSelected(arg_13_0, arg_13_1)
-	local var_13_0 = false
-	local var_13_1 = arg_13_0:getSelectedMO()
+function PickAssistListModel:isHeroSelected(assistMO)
+	local result = false
+	local selectMO = self:getSelectedMO()
 
-	if var_13_1 then
-		var_13_0 = var_13_1:isSameHero(arg_13_1)
+	if selectMO then
+		result = selectMO:isSameHero(assistMO)
 	end
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.isHasAssistList(arg_14_0)
-	local var_14_0 = false
-	local var_14_1 = arg_14_0:getList()
+function PickAssistListModel:isHasAssistList()
+	local isHasAssists = false
+	local assistList = self:getList()
 
-	if var_14_1 then
-		var_14_0 = #var_14_1 > 0
+	if assistList then
+		isHasAssists = #assistList > 0
 	end
 
-	return var_14_0
+	return isHasAssists
 end
 
-function var_0_0.getAssistType(arg_15_0)
-	if not arg_15_0._assistType then
+function PickAssistListModel:getAssistType()
+	if not self._assistType then
 		logError("PickAssistListModel:getAssistType error, not set assistType")
 	end
 
-	return arg_15_0._assistType
+	return self._assistType
 end
 
-function var_0_0.setCareer(arg_16_0, arg_16_1)
-	if arg_16_0.career ~= arg_16_1 then
-		arg_16_0.career = arg_16_1
+function PickAssistListModel:setCareer(career)
+	if self.career ~= career then
+		self.career = career
 
-		arg_16_0:updateDatas()
+		self:updateDatas()
 	end
 end
 
-function var_0_0.setHeroSelect(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_2 then
-		arg_17_0.selectMO = arg_17_1
+function PickAssistListModel:setHeroSelect(assistMO, value)
+	if value then
+		self.selectMO = assistMO
 	else
-		arg_17_0.selectMO = nil
+		self.selectMO = nil
 	end
 
 	PickAssistController.instance:dispatchEvent(PickAssistEvent.RefreshSelectAssistHero)
 end
 
-var_0_0.instance = var_0_0.New()
+PickAssistListModel.instance = PickAssistListModel.New()
 
-return var_0_0
+return PickAssistListModel

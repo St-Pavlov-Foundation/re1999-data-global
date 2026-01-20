@@ -1,77 +1,79 @@
-﻿module("modules.logic.character.view.CharacterLevelUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterLevelUpViewContainer.lua
 
-local var_0_0 = class("CharacterLevelUpViewContainer", BaseViewContainer)
-local var_0_1 = 130
+module("modules.logic.character.view.CharacterLevelUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local CharacterLevelUpViewContainer = class("CharacterLevelUpViewContainer", BaseViewContainer)
+local ITEM_WIDTH = 130
 
-	var_1_0.scrollGOPath = "anim/lv/#go_Lv/#scroll_Num"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "anim/lv/#go_Lv/#scroll_Num/Viewport/Content/#go_Item"
-	var_1_0.cellClass = CharacterLevelItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirH
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = var_0_1
-	var_1_0.cellHeight = 120
-	var_1_0.startSpace = 280
-	var_1_0.endSpace = 280
-	arg_1_0.characterLevelUpView = CharacterLevelUpView.New()
+function CharacterLevelUpViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "anim/lv/#go_Lv/#scroll_Num"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "anim/lv/#go_Lv/#scroll_Num/Viewport/Content/#go_Item"
+	scrollParam.cellClass = CharacterLevelItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = ITEM_WIDTH
+	scrollParam.cellHeight = 120
+	scrollParam.startSpace = 280
+	scrollParam.endSpace = 280
+	self.characterLevelUpView = CharacterLevelUpView.New()
 
 	return {
-		arg_1_0.characterLevelUpView,
+		self.characterLevelUpView,
 		TabViewGroup.New(1, "anim/#go_righttop"),
-		LuaListScrollView.New(CharacterLevelListModel.instance, var_1_0)
+		LuaListScrollView.New(CharacterLevelListModel.instance, scrollParam)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = CurrencyEnum.CurrencyType
-	local var_2_1 = {
-		var_2_0.Gold,
-		var_2_0.HeroExperience
+function CharacterLevelUpViewContainer:buildTabViews(tabContainerId)
+	local currencyType = CurrencyEnum.CurrencyType
+	local currencyParam = {
+		currencyType.Gold,
+		currencyType.HeroExperience
 	}
 
 	return {
-		CurrencyView.New(var_2_1, arg_2_0._onCurrencyClick, arg_2_0, true)
+		CurrencyView.New(currencyParam, self._onCurrencyClick, self, true)
 	}
 end
 
-function var_0_0._onCurrencyClick(arg_3_0)
+function CharacterLevelUpViewContainer:_onCurrencyClick()
 	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpViewClick)
 end
 
-function var_0_0.setWaitHeroLevelUpRefresh(arg_4_0, arg_4_1)
-	arg_4_0._waitHeroLevelUpRefresh = arg_4_1
+function CharacterLevelUpViewContainer:setWaitHeroLevelUpRefresh(isWait)
+	self._waitHeroLevelUpRefresh = isWait
 end
 
-function var_0_0.getWaitHeroLevelUpRefresh(arg_5_0)
-	return arg_5_0._waitHeroLevelUpRefresh
+function CharacterLevelUpViewContainer:getWaitHeroLevelUpRefresh()
+	return self._waitHeroLevelUpRefresh
 end
 
-function var_0_0.setLocalUpLevel(arg_6_0, arg_6_1)
-	arg_6_0.localUpLevel = arg_6_1
+function CharacterLevelUpViewContainer:setLocalUpLevel(localUpLevel)
+	self.localUpLevel = localUpLevel
 end
 
-function var_0_0.getLocalUpLevel(arg_7_0)
-	return arg_7_0.localUpLevel
+function CharacterLevelUpViewContainer:getLocalUpLevel()
+	return self.localUpLevel
 end
 
-function var_0_0.onContainerClose(arg_8_0)
-	arg_8_0:setWaitHeroLevelUpRefresh(false)
-	arg_8_0:setLocalUpLevel()
+function CharacterLevelUpViewContainer:onContainerClose()
+	self:setWaitHeroLevelUpRefresh(false)
+	self:setLocalUpLevel()
 end
 
-function var_0_0.getLevelItemWidth(arg_9_0)
-	return var_0_1
+function CharacterLevelUpViewContainer:getLevelItemWidth()
+	return ITEM_WIDTH
 end
 
-function var_0_0.playCloseTransition(arg_10_0, arg_10_1)
+function CharacterLevelUpViewContainer:playCloseTransition(paramTable)
 	if GuideModel.instance:getDoingGuideId() == 108 then
-		arg_10_0:onPlayCloseTransitionFinish()
+		self:onPlayCloseTransitionFinish()
 	else
-		var_0_0.super.playCloseTransition(arg_10_0, arg_10_1)
+		CharacterLevelUpViewContainer.super.playCloseTransition(self, paramTable)
 	end
 end
 
-return var_0_0
+return CharacterLevelUpViewContainer

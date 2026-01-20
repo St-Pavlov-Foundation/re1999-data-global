@@ -1,211 +1,378 @@
-﻿module("modules.logic.store.view.recommend.StoreMonthCardView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/StoreMonthCardView.lua
 
-local var_0_0 = class("StoreMonthCardView", StoreRecommendBaseSubView)
+module("modules.logic.store.view.recommend.StoreMonthCardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagegoods = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_goods")
-	arg_1_0._txtlefttimetips = gohelper.findChildText(arg_1_0.viewGO, "view/#txt_lefttimetips")
-	arg_1_0._txttitle1 = gohelper.findChildText(arg_1_0.viewGO, "view/layout/#txt_title1")
-	arg_1_0._txttitle2 = gohelper.findChildText(arg_1_0.viewGO, "view/layout/#txt_title2")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "view/#txt_dec")
-	arg_1_0._txttitleen = gohelper.findChildText(arg_1_0.viewGO, "view/#txt_titleen")
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips1/#simage_icon1")
-	arg_1_0._txttipnum1 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips1/#txt_tipnum1")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips2/#simage_icon2")
-	arg_1_0._txttipnum2 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips2/#txt_tipnum2")
-	arg_1_0._simageicon3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips3/#simage_icon3")
-	arg_1_0._txttipnum3 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips3/#txt_tipnum3")
-	arg_1_0._simageicon4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/tips/tips4/#simage_icon1")
-	arg_1_0._txttipnum4 = gohelper.findChildText(arg_1_0.viewGO, "view/tips/tips4/#txt_tipnum1")
-	arg_1_0._golimittime = gohelper.findChild(arg_1_0.viewGO, "view/tips/tips3/#go_limittime")
-	arg_1_0._imglimittime = gohelper.findChildImage(arg_1_0.viewGO, "view/tips/tips3/#go_limittime")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/buy/#btn_buy")
-	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_cost")
-	arg_1_0._txtcosticon = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_cost/costicon")
-	arg_1_0._txtgoodstips = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_goodstips")
-	arg_1_0._gomooncardup = gohelper.findChild(arg_1_0.viewGO, "view/#go_mooncardup")
-	arg_1_0._txtcosthw = gohelper.findChildText(arg_1_0.viewGO, "view/buy/#txt_cost_hw")
+local StoreMonthCardView = class("StoreMonthCardView", StoreRecommendBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreMonthCardView:onInitView()
+	self._simagegoods = gohelper.findChildSingleImage(self.viewGO, "view/#simage_goods")
+	self._txtlefttimetips = gohelper.findChildText(self.viewGO, "view/#txt_lefttimetips")
+	self._txttitle1 = gohelper.findChildText(self.viewGO, "view/layout/#txt_title1")
+	self._txttitle2 = gohelper.findChildText(self.viewGO, "view/layout/#txt_title2")
+	self._txtdec = gohelper.findChildText(self.viewGO, "view/#txt_dec")
+	self._txttitleen = gohelper.findChildText(self.viewGO, "view/#txt_titleen")
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "view/tips/tips1/#simage_icon1")
+	self._txttipnum1 = gohelper.findChildText(self.viewGO, "view/tips/tips1/#txt_tipnum1")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "view/tips/tips2/#simage_icon2")
+	self._txttipnum2 = gohelper.findChildText(self.viewGO, "view/tips/tips2/#txt_tipnum2")
+	self._simageicon3 = gohelper.findChildSingleImage(self.viewGO, "view/tips/tips3/#simage_icon3")
+	self._txttipnum3 = gohelper.findChildText(self.viewGO, "view/tips/tips3/#txt_tipnum3")
+	self._simageicon4 = gohelper.findChildSingleImage(self.viewGO, "view/tips/tips4/#simage_icon1")
+	self._txttipnum4 = gohelper.findChildText(self.viewGO, "view/tips/tips4/#txt_tipnum1")
+	self._golimittime = gohelper.findChild(self.viewGO, "view/tips/tips3/#go_limittime")
+	self._imglimittime = gohelper.findChildImage(self.viewGO, "view/tips/tips3/#go_limittime")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "view/buy/#btn_buy")
+	self._txtcost = gohelper.findChildText(self.viewGO, "view/buy/#txt_cost")
+	self._txtcosticon = gohelper.findChildText(self.viewGO, "view/buy/#txt_cost/costicon")
+	self._txtgoodstips = gohelper.findChildText(self.viewGO, "view/buy/#txt_goodstips")
+	self._gomooncardup = gohelper.findChild(self.viewGO, "view/#go_mooncardup")
+	self._gocanpatch = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/#go_canpatch")
+	self._txtcanpatch = gohelper.findChildText(self.viewGO, "view/#go_yuekapatch/#go_canpatch/txt")
+	self._goyuekapatch = gohelper.findChild(self.viewGO, "view/#go_yuekapatch")
+	self._gonopatch = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/#go_nopatch")
+	self._txtnopatch = gohelper.findChildText(self.viewGO, "view/#go_yuekapatch/#go_nopatch/txt")
+	self._gosupplementicon = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/itemicon")
+	self._btnbuqian = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_yuekapatch/#btn_buqian")
+	self._simagesupplement = gohelper.findChildSingleImage(self.viewGO, "view/tips/patchtips/#txt_propnum/#simage_icon1")
+	self._gopatchtips = gohelper.findChild(self.viewGO, "view/#go_patchtips")
+	self._gopatchlimittime = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/#go_limittime")
+	self._gopatchcurrtime = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/#go_currenttime")
+	self._txtpatchcurrtime = gohelper.findChildText(self.viewGO, "view/#go_yuekapatch/#go_currenttime/timetxt")
+	self._txtpatchday = gohelper.findChildText(self.viewGO, "view/#go_yuekapatch/infobg/#txt_patchday")
+	self._gopatchinfo = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/infobg")
+	self._txtcosthw = gohelper.findChildText(self.viewGO, "view/buy/#txt_cost_hw")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+function StoreMonthCardView:addEvents()
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._btnbuqian:AddClickListener(self._btnbuqianOnClick, self)
+	SignInController.instance:registerCallback(SignInEvent.OnReceiveSupplementMonthCardReply, self._onReceiveSupplementMonthCardReply, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshSupplement, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	return
+function StoreMonthCardView:removeEvents()
+	self._btnbuqian:RemoveClickListener()
+	SignInController.instance:unregisterCallback(SignInEvent.OnReceiveSupplementMonthCardReply, self._onReceiveSupplementMonthCardReply, self)
 end
 
-function var_0_0._btnbuyOnClick(arg_4_0)
+function StoreMonthCardView:_btnbuyOnClick()
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
 		[StatEnum.EventProperties.RecommendPageId] = "711",
 		[StatEnum.EventProperties.RecommendPageName] = "月历",
-		[StatEnum.EventProperties.RecommendPageRank] = arg_4_0:getTabIndex()
+		[StatEnum.EventProperties.RecommendPageRank] = self:getTabIndex()
 	})
 
-	local var_4_0 = string.splitToNumber(arg_4_0.config.systemJumpCode, "#")
+	local jumpParams = string.splitToNumber(self.config.systemJumpCode, "#")
 
-	if var_4_0[2] then
-		local var_4_1 = var_4_0[2]
-		local var_4_2 = StoreModel.instance:getGoodsMO(var_4_1)
+	if jumpParams[2] then
+		local goodId = jumpParams[2]
+		local packageMo = StoreModel.instance:getGoodsMO(goodId)
 
-		StoreController.instance:openPackageStoreGoodsView(var_4_2)
+		StoreController.instance:openPackageStoreGoodsView(packageMo)
 	else
-		arg_4_0.viewContainer.storeView:_refreshTabs(StoreEnum.StoreId.Package, StoreEnum.MonthCardGoodsId)
+		self.viewContainer.storeView:_refreshTabs(StoreEnum.StoreId.Package, StoreEnum.MonthCardGoodsId)
 		StoreController.instance:statSwitchStore(StoreEnum.StoreId.Package)
 	end
 end
 
-function var_0_0.onWenHaoClick(arg_5_0)
+function StoreMonthCardView:onWenHaoClick()
 	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.MouthTipsDesc))
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.godecorate = gohelper.findChild(arg_6_0.viewGO, "view/decorateicon")
-	arg_6_0.wenhaoClick = gohelper.getClick(arg_6_0.godecorate)
+function StoreMonthCardView:_editableInitView()
+	self.godecorate = gohelper.findChild(self.viewGO, "view/decorateicon")
+	self.wenhaoClick = gohelper.getClick(self.godecorate)
 
-	arg_6_0.wenhaoClick:AddClickListener(arg_6_0.onWenHaoClick, arg_6_0)
+	self.wenhaoClick:AddClickListener(self.onWenHaoClick, self)
 
-	arg_6_0._simageBg = gohelper.findChildSingleImage(arg_6_0.viewGO, "view/#simage_bg")
-	arg_6_0._bgClick = gohelper.getClick(arg_6_0._simageBg.gameObject)
+	self._simageBg = gohelper.findChildSingleImage(self.viewGO, "view/#simage_bg")
+	self._bgClick = gohelper.getClick(self._simageBg.gameObject)
 
-	gohelper.addUIClickAudio(arg_6_0._bgClick.gameObject, AudioEnum.UI.play_ui_common_pause)
-	arg_6_0._simagegoods:LoadImage(ResUrl.getStoreBottomBgIcon("img_calendar"))
-	arg_6_0._simageBg:LoadImage(ResUrl.getStoreBottomBgIcon("deco"))
-	arg_6_0._bgClick:AddClickListener(arg_6_0._btnbuyOnClick, arg_6_0)
-	arg_6_0:addEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, arg_6_0.onMonthCardInfoChange, arg_6_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_6_0.onDailyRefresh, arg_6_0)
+	gohelper.addUIClickAudio(self._bgClick.gameObject, AudioEnum.UI.play_ui_common_pause)
+	self._simagegoods:LoadImage(ResUrl.getStoreBottomBgIcon("img_calendar"))
+	self._simageBg:LoadImage(ResUrl.getStoreBottomBgIcon("deco"))
+	self._bgClick:AddClickListener(self._btnbuyOnClick, self)
+	self:addEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, self.onMonthCardInfoChange, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.onDailyRefresh, self)
 
-	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
-	arg_6_0._txtgoodstips.text = luaLang("storemonthcard_tips")
-	arg_6_0._txtcost.text = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
-	arg_6_0._txtcosticon.text = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._txtgoodstips.text = luaLang("storemonthcard_tips")
 
-	local var_6_0 = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
-	local var_6_1, var_6_2 = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
-	local var_6_3 = ""
+	self._simagesupplement:LoadImage(ResUrl.getSpecialPropItemIcon(StoreEnum.SupplementMonthCardItemId))
 
-	if string.nilorempty(var_6_0) then
-		local var_6_4 = string.reverse(var_6_2)
-		local var_6_5 = string.find(var_6_4, "%d")
-		local var_6_6 = string.len(var_6_4) - var_6_5 + 1
-		local var_6_7 = string.sub(var_6_2, var_6_6 + 1, string.len(var_6_2))
+	self._txtcost.text = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
+	self._txtcosticon.text = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
 
-		var_6_2 = string.sub(var_6_2, 1, var_6_6)
-		arg_6_0._txtcosthw.text = string.format("%s<size=30>%s</size>", var_6_2, var_6_7)
+	local symbol = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
+	local num, numStr = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
+	local symbol2 = ""
+
+	if string.nilorempty(symbol) then
+		local reverseStr = string.reverse(numStr)
+		local lastIndex = string.find(reverseStr, "%d")
+
+		lastIndex = string.len(reverseStr) - lastIndex + 1
+		symbol2 = string.sub(numStr, lastIndex + 1, string.len(numStr))
+		numStr = string.sub(numStr, 1, lastIndex)
+		self._txtcosthw.text = string.format("%s<size=30>%s</size>", numStr, symbol2)
 	else
-		arg_6_0._txtcosthw.text = string.format("<size=30>%s</size>%s", var_6_0, var_6_2)
+		self._txtcosthw.text = string.format("<size=30>%s</size>%s", symbol, numStr)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function StoreMonthCardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.monthCardInfo = StoreModel.instance:getMonthCardInfo()
-	arg_8_0.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.MonthCardId)
+function StoreMonthCardView:_initCurrency()
+	local currencyConfig = StoreConfig.instance:getTabConfig(StoreEnum.RecommendSubStoreId.MonthCardId)
 
-	arg_8_0:refreshUI()
-	var_0_0.super.onOpen(arg_8_0)
+	if currencyConfig and not string.nilorempty(currencyConfig.showCost) then
+		local param = {}
+		local temp = string.splitToNumber(currencyConfig.showCost, "#")
+
+		for i = #temp, 1, -1 do
+			table.insert(param, temp[i])
+		end
+
+		local item = {
+			id = StoreEnum.SupplementMonthCardItemId,
+			type = MaterialEnum.MaterialType.SpecialExpiredItem
+		}
+
+		table.insert(param, item)
+		self.viewContainer:setCurrencyByParams(param)
+	end
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0:refreshRemainDay()
-	arg_9_0:refreshRewardIcon()
+function StoreMonthCardView:onOpen()
+	self.monthCardInfo = StoreModel.instance:getMonthCardInfo()
+	self.config = StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.MonthCardId)
 
-	local var_9_0 = StoreHelper.checkMonthCardLevelUpTagOpen()
-
-	gohelper.setActive(arg_9_0._gomooncardup, var_9_0)
+	self:_tryPatFaceMonthCardView()
+	self:refreshUI()
+	self:_initCurrency()
+	StoreMonthCardView.super.onOpen(self)
 end
 
-function var_0_0.refreshRemainDay(arg_10_0)
-	if arg_10_0.monthCardInfo ~= nil then
-		local var_10_0 = arg_10_0.monthCardInfo:getRemainDay()
+function StoreMonthCardView:refreshUI()
+	self:refreshRemainDay()
+	self:refreshRewardIcon()
+	self:_refreshSupplement()
 
-		if var_10_0 == StoreEnum.MonthCardStatus.NotPurchase then
-			arg_10_0._txtlefttimetips.text = luaLang("not_purchase")
-		elseif var_10_0 == StoreEnum.MonthCardStatus.NotEnoughOneDay then
-			arg_10_0._txtlefttimetips.text = luaLang("not_enough_one_day") .. (arg_10_0.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
+	local showtag = StoreHelper.checkMonthCardLevelUpTagOpen()
+
+	gohelper.setActive(self._gomooncardup, showtag)
+
+	if SignInModel.instance:getCanSupplementMonthCardDays() > 0 then
+		StoreController.instance:dispatchEvent(StoreEvent.StopRecommendViewAuto)
+	end
+end
+
+function StoreMonthCardView:refreshRemainDay()
+	if self.monthCardInfo ~= nil then
+		local remainDay = self.monthCardInfo:getRemainDay()
+
+		if remainDay == StoreEnum.MonthCardStatus.NotPurchase then
+			self._txtlefttimetips.text = luaLang("not_purchase")
+		elseif remainDay == StoreEnum.MonthCardStatus.NotEnoughOneDay then
+			local str = luaLang("not_enough_one_day")
+
+			if LangSettings.instance:isEn() then
+				str = str .. " "
+			end
+
+			str = str .. (self.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
+			self._txtlefttimetips.text = str
 		else
-			arg_10_0._txtlefttimetips.text = formatLuaLang("remain_day", var_10_0) .. (arg_10_0.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
+			local str = formatLuaLang("remain_day", remainDay)
+
+			if LangSettings.instance:isEn() then
+				str = str .. " "
+			end
+
+			str = str .. (self.monthCardInfo.hasGetBonus and luaLang("today_reward") or "")
+			self._txtlefttimetips.text = str
 		end
 	else
-		arg_10_0._txtlefttimetips.text = luaLang("not_purchase")
+		self._txtlefttimetips.text = luaLang("not_purchase")
 	end
 end
 
-function var_0_0.refreshRewardIcon(arg_11_0)
-	local var_11_0 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
-	local var_11_1, var_11_2 = arg_11_0:getIconUrlAndQuantity(string.split(var_11_0.onceBonus, "|")[1])
-	local var_11_3, var_11_4 = arg_11_0:getIconUrlAndQuantity(string.split(var_11_0.onceBonus, "|")[2])
-	local var_11_5, var_11_6 = arg_11_0:getIconUrlAndQuantity(string.split(var_11_0.dailyBonus, "|")[1])
-	local var_11_7 = string.split(var_11_0.dailyBonus, "|")[2]
-	local var_11_8 = string.split(var_11_7, "#")
-	local var_11_9, var_11_10 = ItemModel.instance:getItemConfigAndIcon(var_11_8[1], var_11_8[2])
+function StoreMonthCardView:refreshRewardIcon()
+	local monthCardCo = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
+	local onceIconUrl, onceQuantity = self:getIconUrlAndQuantity(string.split(monthCardCo.onceBonus, "|")[1])
+	local onceIcon2Url, onceQuan2tity = self:getIconUrlAndQuantity(string.split(monthCardCo.onceBonus, "|")[2])
+	local dayIconUrl, dayQuantity = self:getIconUrlAndQuantity(string.split(monthCardCo.dailyBonus, "|")[1])
+	local powertable = string.split(monthCardCo.dailyBonus, "|")[2]
+	local power = string.split(powertable, "#")
+	local powerconfig, powericon = ItemModel.instance:getItemConfigAndIcon(power[1], power[2])
 
-	arg_11_0._txttipnum1.text = luaLang("multiple") .. var_11_2
+	self._txttipnum1.text = luaLang("multiple") .. onceQuantity
 
-	arg_11_0._simageicon1:LoadImage(var_11_1)
+	self._simageicon1:LoadImage(onceIconUrl)
 
-	arg_11_0._txttipnum2.text = luaLang("multiple") .. var_11_6 * 30
+	self._txttipnum2.text = luaLang("multiple") .. dayQuantity * 30
 
-	arg_11_0._simageicon2:LoadImage(var_11_5)
+	self._simageicon2:LoadImage(dayIconUrl)
 
-	arg_11_0._txttipnum3.text = luaLang("multiple") .. var_11_8[3] * 30
+	self._txttipnum3.text = luaLang("multiple") .. power[3] * 30
 
-	arg_11_0._simageicon3:LoadImage(var_11_10)
+	self._simageicon3:LoadImage(powericon)
 
-	arg_11_0._txttipnum4.text = luaLang("multiple") .. var_11_4
+	self._txttipnum4.text = luaLang("multiple") .. onceQuan2tity
 
-	arg_11_0._simageicon4:LoadImage(var_11_3)
-	UISpriteSetMgr.instance:setStoreGoodsSprite(arg_11_0._imglimittime, "img_xianshi2")
-	gohelper.setActive(arg_11_0._golimittime, false)
+	self._simageicon4:LoadImage(onceIcon2Url)
+	UISpriteSetMgr.instance:setStoreGoodsSprite(self._imglimittime, "img_xianshi2")
+	gohelper.setActive(self._golimittime, false)
 
-	if var_11_9.expireTime then
-		gohelper.setActive(arg_11_0._golimittime, true)
+	if powerconfig.expireTime then
+		gohelper.setActive(self._golimittime, true)
 	end
 end
 
-function var_0_0.getIconUrlAndQuantity(arg_12_0, arg_12_1)
-	local var_12_0
-	local var_12_1
-	local var_12_2
-	local var_12_3 = string.splitToNumber(arg_12_1, "#")
-	local var_12_4 = var_12_3[1]
-	local var_12_5 = var_12_3[2]
-	local var_12_6 = var_12_3[3]
-	local var_12_7, var_12_8 = ItemModel.instance:getItemConfigAndIcon(var_12_4, var_12_5)
+function StoreMonthCardView:getIconUrlAndQuantity(iconStr)
+	local type, id, quantity
+	local temp = string.splitToNumber(iconStr, "#")
 
-	return var_12_8, var_12_6
+	type = temp[1]
+	id = temp[2]
+	quantity = temp[3]
+
+	local _, icon = ItemModel.instance:getItemConfigAndIcon(type, id)
+
+	return icon, quantity
 end
 
-function var_0_0.onMonthCardInfoChange(arg_13_0)
-	arg_13_0.monthCardInfo = StoreModel.instance:getMonthCardInfo()
+function StoreMonthCardView:onMonthCardInfoChange()
+	self.monthCardInfo = StoreModel.instance:getMonthCardInfo()
 
-	arg_13_0:refreshRemainDay()
+	self:refreshRemainDay()
 end
 
-function var_0_0.onDailyRefresh(arg_14_0)
+function StoreMonthCardView:onDailyRefresh()
 	ChargeRpc.instance:sendGetMonthCardInfoRequest()
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._simagegoods:UnLoadImage()
-	arg_15_0._simageicon1:UnLoadImage()
-	arg_15_0._simageicon2:UnLoadImage()
-	arg_15_0._simageicon3:UnLoadImage()
-	arg_15_0._simageBg:UnLoadImage()
-	arg_15_0._btnbuy:RemoveClickListener()
-	arg_15_0._bgClick:RemoveClickListener()
-	arg_15_0.wenhaoClick:RemoveClickListener()
-	arg_15_0:removeEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, arg_15_0.onMonthCardInfoChange, arg_15_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_15_0.onDailyRefresh, arg_15_0)
+function StoreMonthCardView:_onReceiveSupplementMonthCardReply()
+	StoreController.instance:dispatchEvent(StoreEvent.SetAutoToNextPage, true)
+	self:_refreshSupplement()
 end
 
-return var_0_0
+function StoreMonthCardView:_refreshSupplement()
+	if StoreModel.instance:hasPurchaseMonthCard() then
+		gohelper.setActive(self._goyuekapatch, true)
+		gohelper.setActive(self._gopatchtips, false)
+
+		local showBtn = SignInModel.instance:getCanSupplementMonthCardDays() > 0
+
+		gohelper.setActive(self._gocanpatch, showBtn)
+		gohelper.setActive(self._gonopatch, not showBtn)
+	else
+		gohelper.setActive(self._goyuekapatch, false)
+		gohelper.setActive(self._gopatchtips, true)
+	end
+
+	if not self._supplementItem then
+		self._supplementItem = IconMgr.instance:getCommonItemIcon(self._gosupplementicon)
+
+		self._supplementItem:setMOValue(MaterialEnum.MaterialType.SpecialExpiredItem, StoreEnum.SupplementMonthCardItemId, 1)
+		self._supplementItem:isShowCount(false)
+		self._supplementItem:setCanShowDeadLine(false)
+	end
+
+	local nosigninday = SignInModel.instance:getSupplementMonthCardDays()
+	local itemcount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.SpecialExpiredItem, StoreEnum.SupplementMonthCardItemId)
+	local showtips = false
+	local showlimiticon = false
+
+	if nosigninday and nosigninday > 0 then
+		showtips = true
+
+		if itemcount > 0 then
+			self._txtpatchday.text = formatLuaLang("p_monthcard_reappear_txt_04", SignInModel.instance:getCanSupplementMonthCardDays())
+		else
+			self._txtpatchday.text = luaLang("p_monthcard_reappear_txt_01")
+		end
+	end
+
+	if itemcount < 1 then
+		showlimiticon = true
+	else
+		local itemDeadline = CurrencyController.instance:getExpireItemDeadLineTime()
+
+		if itemDeadline and itemDeadline > 0 then
+			local limitSec = itemDeadline - ServerTime.now()
+			local date, dateFormat, hasDay = TimeUtil.secondToRoughTime(limitSec, true)
+
+			self._txtpatchcurrtime.text = string.format("%s%s", date, dateFormat)
+		end
+	end
+
+	gohelper.setActive(self._gopatchlimittime, showlimiticon)
+	gohelper.setActive(self._gopatchcurrtime, not showlimiticon)
+	gohelper.setActive(self._gopatchinfo, showtips)
+end
+
+function StoreMonthCardView:_btnbuqianOnClick()
+	if StoreModel.instance:hasPurchaseMonthCard() then
+		local nosigninday = SignInModel.instance:getSupplementMonthCardDays()
+		local itemcount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.SpecialExpiredItem, StoreEnum.SupplementMonthCardItemId)
+
+		if itemcount < 1 then
+			MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.SpecialExpiredItem, StoreEnum.SupplementMonthCardItemId)
+		elseif nosigninday < 1 then
+			GameFacade.showToastString(luaLang("p_monthcard_reappear_tips_02"))
+		else
+			local currencyParam = {}
+			local item = {
+				isHideAddBtn = true,
+				id = StoreEnum.SupplementMonthCardItemId,
+				type = MaterialEnum.MaterialType.SpecialExpiredItem
+			}
+
+			table.insert(currencyParam, item)
+			SignInController.instance:showPatchpropUseView(MessageBoxIdDefine.SupplementMonthCardUseTip, MsgBoxEnum.BoxType.Yes_No, currencyParam, self._useSupplementMonthCard, nil, nil, self, nil, nil, SignInModel.instance:getCanSupplementMonthCardDays())
+		end
+	end
+end
+
+function StoreMonthCardView:_useSupplementMonthCard()
+	SignInRpc.instance:sendSupplementMonthCardRequest()
+end
+
+function StoreMonthCardView:_tryPatFaceMonthCardView()
+	local config = StoreConfig.instance:getTabConfig(self.config.id)
+
+	if not config.toprecommend then
+		return
+	end
+
+	local num = PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.StoreSupplementMonthCardTipView), 0)
+
+	if num == 0 then
+		ViewMgr.instance:openView(ViewName.StoreSupplementMonthCardTipView)
+		PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.StoreSupplementMonthCardTipView), 1)
+	end
+end
+
+function StoreMonthCardView:onDestroyView()
+	self._simagegoods:UnLoadImage()
+	self._simageicon1:UnLoadImage()
+	self._simageicon2:UnLoadImage()
+	self._simageicon3:UnLoadImage()
+	self._simageBg:UnLoadImage()
+	self._btnbuy:RemoveClickListener()
+	self._bgClick:RemoveClickListener()
+	self.wenhaoClick:RemoveClickListener()
+	self:removeEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, self.onMonthCardInfoChange, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.onDailyRefresh, self)
+end
+
+return StoreMonthCardView

@@ -1,366 +1,370 @@
-﻿module("modules.logic.playercard.view.PlayerCardCharacterSwitchView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardCharacterSwitchView.lua
 
-local var_0_0 = class("PlayerCardCharacterSwitchView", BaseView)
+module("modules.logic.playercard.view.PlayerCardCharacterSwitchView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.switchViewGO = gohelper.findChild(arg_1_0.viewGO, "#go_characterswitchview/characterswitchview")
-	arg_1_0._btnClose = gohelper.findChildButton(arg_1_0.viewGO, "#go_characterswitchview/characterswitchview/#btn_close")
-	arg_1_0._btnchange = gohelper.findChildButtonWithAudio(arg_1_0.switchViewGO, "right/start/#btn_change", AudioEnum.UI.Store_Good_Click)
-	arg_1_0._goshowing = gohelper.findChild(arg_1_0.switchViewGO, "right/start/#go_showing")
-	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.switchViewGO, "right/mask/#scroll_card")
-	arg_1_0._btntimerank = gohelper.findChildButtonWithAudio(arg_1_0.switchViewGO, "right/#btn_timerank")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.switchViewGO, "right/#btn_rarerank")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.switchViewGO, "#go_btns")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_info")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.switchViewGO, "left/#go_info/#simage_signature")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.switchViewGO, "left/#go_info/#txt_time")
-	arg_1_0._goheroskin = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_heroskin")
-	arg_1_0._gobgbottom = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_heroskin/#go_bgbottom")
-	arg_1_0._scrollskin = gohelper.findChildScrollRect(arg_1_0.switchViewGO, "left/#go_heroskin/#scroll_skin")
-	arg_1_0._goheroskinItem = gohelper.findChild(arg_1_0.switchViewGO, "left/#go_heroskin/#scroll_skin/Viewport/Content/#go_heroskinItem")
-	arg_1_0.animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local PlayerCardCharacterSwitchView = class("PlayerCardCharacterSwitchView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PlayerCardCharacterSwitchView:onInitView()
+	self.switchViewGO = gohelper.findChild(self.viewGO, "#go_characterswitchview/characterswitchview")
+	self._btnClose = gohelper.findChildButton(self.viewGO, "#go_characterswitchview/characterswitchview/#btn_close")
+	self._btnchange = gohelper.findChildButtonWithAudio(self.switchViewGO, "right/start/#btn_change", AudioEnum.UI.Store_Good_Click)
+	self._goshowing = gohelper.findChild(self.switchViewGO, "right/start/#go_showing")
+	self._scrollcard = gohelper.findChildScrollRect(self.switchViewGO, "right/mask/#scroll_card")
+	self._btntimerank = gohelper.findChildButtonWithAudio(self.switchViewGO, "right/#btn_timerank")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.switchViewGO, "right/#btn_rarerank")
+	self._gobtns = gohelper.findChild(self.switchViewGO, "#go_btns")
+	self._goinfo = gohelper.findChild(self.switchViewGO, "left/#go_info")
+	self._simagesignature = gohelper.findChildSingleImage(self.switchViewGO, "left/#go_info/#simage_signature")
+	self._txttime = gohelper.findChildText(self.switchViewGO, "left/#go_info/#txt_time")
+	self._goheroskin = gohelper.findChild(self.switchViewGO, "left/#go_heroskin")
+	self._gobgbottom = gohelper.findChild(self.switchViewGO, "left/#go_heroskin/#go_bgbottom")
+	self._scrollskin = gohelper.findChildScrollRect(self.switchViewGO, "left/#go_heroskin/#scroll_skin")
+	self._goheroskinItem = gohelper.findChild(self.switchViewGO, "left/#go_heroskin/#scroll_skin/Viewport/Content/#go_heroskinItem")
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnchange:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
-	arg_2_0._btntimerank:AddClickListener(arg_2_0._btntimerankOnClick, arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHero, arg_2_0._onSwitchHero, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroSkin, arg_2_0._switchHeroSkin, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroL2d, arg_2_0._switchL2d, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, arg_2_0._onRefreshSwitchView, arg_2_0)
-	arg_2_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, arg_2_0.refreshView, arg_2_0)
+function PlayerCardCharacterSwitchView:addEvents()
+	self._btnchange:AddClickListener(self._btnchangeOnClick, self)
+	self._btntimerank:AddClickListener(self._btntimerankOnClick, self)
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnClose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHero, self._onSwitchHero, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroSkin, self._switchHeroSkin, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchHeroL2d, self._switchL2d, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshSwitchView, self._onRefreshSwitchView, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.UpdateCardInfo, self.refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnchange:RemoveClickListener()
-	arg_3_0._btntimerank:RemoveClickListener()
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
+function PlayerCardCharacterSwitchView:removeEvents()
+	self._btnchange:RemoveClickListener()
+	self._btntimerank:RemoveClickListener()
+	self._btnrarerank:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._showItemList = arg_4_0:getUserDataTb_()
-	arg_4_0._cacheItemList = arg_4_0:getUserDataTb_()
+function PlayerCardCharacterSwitchView:_editableInitView()
+	self._showItemList = self:getUserDataTb_()
+	self._cacheItemList = self:getUserDataTb_()
 
-	arg_4_0._goinfo:SetActive(true)
+	self._goinfo:SetActive(true)
 
-	arg_4_0._timeBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._timeArrow = arg_4_0:getUserDataTb_()
-	arg_4_0._rareBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._rareArrow = arg_4_0:getUserDataTb_()
+	self._timeBtns = self:getUserDataTb_()
+	self._timeArrow = self:getUserDataTb_()
+	self._rareBtns = self:getUserDataTb_()
+	self._rareArrow = self:getUserDataTb_()
 
-	for iter_4_0 = 1, 2 do
-		arg_4_0._timeBtns[iter_4_0] = gohelper.findChild(arg_4_0._btntimerank.gameObject, "btn" .. tostring(iter_4_0))
-		arg_4_0._timeArrow[iter_4_0] = gohelper.findChild(arg_4_0._timeBtns[iter_4_0], "txt/arrow").transform
-		arg_4_0._rareBtns[iter_4_0] = gohelper.findChild(arg_4_0._btnrarerank.gameObject, "btn" .. tostring(iter_4_0))
-		arg_4_0._rareArrow[iter_4_0] = gohelper.findChild(arg_4_0._rareBtns[iter_4_0], "txt/arrow").transform
+	for i = 1, 2 do
+		self._timeBtns[i] = gohelper.findChild(self._btntimerank.gameObject, "btn" .. tostring(i))
+		self._timeArrow[i] = gohelper.findChild(self._timeBtns[i], "txt/arrow").transform
+		self._rareBtns[i] = gohelper.findChild(self._btnrarerank.gameObject, "btn" .. tostring(i))
+		self._rareArrow[i] = gohelper.findChild(self._rareBtns[i], "txt/arrow").transform
 	end
 
-	arg_4_0._sortIndex = 2
-	arg_4_0._asceTime = false
-	arg_4_0._asceRare = false
+	self._sortIndex = 2
+	self._asceTime = false
+	self._asceRare = false
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
+function PlayerCardCharacterSwitchView:_btncloseOnClick()
 	if not PlayerCardModel.instance:checkHeroDiff() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardSelectTips, MsgBoxEnum.BoxType.Yes_No, PlayerCardCharacterSwitchViewContainer.yesCallback)
 	else
-		arg_5_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._btnchangeOnClick(arg_6_0)
-	PlayerCardCharacterSwitchListModel.instance:changeMainHero(arg_6_0._heroId, arg_6_0._skinId, arg_6_0._isRandom, arg_6_0._isL2d)
+function PlayerCardCharacterSwitchView:_btnchangeOnClick()
+	PlayerCardCharacterSwitchListModel.instance:changeMainHero(self._heroId, self._skinId, self._isRandom, self._isL2d)
 end
 
-function var_0_0._btntimerankOnClick(arg_7_0)
-	if arg_7_0._sortIndex ~= 1 then
-		arg_7_0._sortIndex = 1
+function PlayerCardCharacterSwitchView:_btntimerankOnClick()
+	if self._sortIndex ~= 1 then
+		self._sortIndex = 1
 	else
-		arg_7_0._asceTime = not arg_7_0._asceTime
+		self._asceTime = not self._asceTime
 	end
 
-	arg_7_0._asceRare = false
+	self._asceRare = false
 
-	arg_7_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnrarerankOnClick(arg_8_0)
-	if arg_8_0._sortIndex ~= 2 then
-		arg_8_0._sortIndex = 2
+function PlayerCardCharacterSwitchView:_btnrarerankOnClick()
+	if self._sortIndex ~= 2 then
+		self._sortIndex = 2
 	else
-		arg_8_0._asceRare = not arg_8_0._asceRare
+		self._asceRare = not self._asceRare
 	end
 
-	arg_8_0._asceTime = false
+	self._asceTime = false
 
-	arg_8_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._onSwitchHero(arg_9_0, arg_9_1)
-	arg_9_0:_switchHero(arg_9_1[1], arg_9_1[2], arg_9_1[3], arg_9_0._isL2d)
+function PlayerCardCharacterSwitchView:_onSwitchHero(param)
+	self:_switchHero(param[1], param[2], param[3], self._isL2d)
 end
 
-function var_0_0._switchHeroSkin(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0:_switchHero(arg_10_1, arg_10_2, false, arg_10_0._isL2d)
+function PlayerCardCharacterSwitchView:_switchHeroSkin(heroId, skinId)
+	self:_switchHero(heroId, skinId, false, self._isL2d)
 end
 
-function var_0_0._switchL2d(arg_11_0)
-	arg_11_0._isL2d = not arg_11_0._isL2d
+function PlayerCardCharacterSwitchView:_switchL2d()
+	self._isL2d = not self._isL2d
 
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshSwitchView, {
-		heroId = arg_11_0._heroId,
-		skinId = arg_11_0._skinId,
-		isL2d = arg_11_0._isL2d
+		heroId = self._heroId,
+		skinId = self._skinId,
+		isL2d = self._isL2d
 	})
 end
 
-function var_0_0._switchHero(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	if arg_12_3 then
-		arg_12_0:_updateHero(arg_12_0._curHeroId, arg_12_0._curSkinId, arg_12_3, arg_12_4)
+function PlayerCardCharacterSwitchView:_switchHero(heroId, skinId, isRandom, isL2d)
+	if isRandom then
+		self:_updateHero(self._curHeroId, self._curSkinId, isRandom, isL2d)
 	else
-		arg_12_0:_updateHero(arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+		self:_updateHero(heroId, skinId, isRandom, isL2d)
 	end
 end
 
-function var_0_0._showMainHero(arg_13_0)
-	arg_13_0._curHeroId, arg_13_0._curSkinId, arg_13_0._curRandom, arg_13_0._curIsL2d = arg_13_0.cardInfo:getMainHero()
+function PlayerCardCharacterSwitchView:_showMainHero()
+	self._curHeroId, self._curSkinId, self._curRandom, self._curIsL2d = self.cardInfo:getMainHero()
 
-	if arg_13_0._curHeroId and arg_13_0._curSkinId then
-		arg_13_0:_switchHero(arg_13_0._curHeroId, arg_13_0._curSkinId, arg_13_0._curRandom, arg_13_0._curIsL2d)
-		arg_13_0:_refreshSelect()
+	if self._curHeroId and self._curSkinId then
+		self:_switchHero(self._curHeroId, self._curSkinId, self._curRandom, self._curIsL2d)
+		self:_refreshSelect()
 	end
 end
 
-function var_0_0._refreshSelect(arg_14_0)
-	local var_14_0 = not arg_14_0._isRandom and arg_14_0._heroId
-	local var_14_1 = PlayerCardCharacterSwitchListModel.instance:getMoByHeroId(var_14_0)
-	local var_14_2 = arg_14_0.viewContainer.scrollView
+function PlayerCardCharacterSwitchView:_refreshSelect()
+	local heroId = not self._isRandom and self._heroId
+	local mo = PlayerCardCharacterSwitchListModel.instance:getMoByHeroId(heroId)
+	local scrollView = self.viewContainer.scrollView
 
-	if var_14_1 then
-		var_14_2:setSelect(var_14_1)
+	if mo then
+		scrollView:setSelect(mo)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
-	arg_15_0:_updateParam()
-	arg_15_0:refreshView()
+function PlayerCardCharacterSwitchView:onUpdateParam()
+	self:_updateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:_updateParam()
+function PlayerCardCharacterSwitchView:onOpen()
+	self:_updateParam()
 	PlayerCardCharacterSwitchListModel.instance:initHeroList()
-	arg_16_0:refreshView()
-	arg_16_0:_refreshBtnIcon()
+	self:refreshView()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._updateParam(arg_17_0)
-	arg_17_0.userId = PlayerModel.instance:getMyUserId()
-	arg_17_0.cardInfo = PlayerCardModel.instance:getCardInfo(arg_17_0.userId)
+function PlayerCardCharacterSwitchView:_updateParam()
+	self.userId = PlayerModel.instance:getMyUserId()
+	self.cardInfo = PlayerCardModel.instance:getCardInfo(self.userId)
 end
 
-function var_0_0.refreshView(arg_18_0)
-	if not arg_18_0.cardInfo then
+function PlayerCardCharacterSwitchView:refreshView()
+	if not self.cardInfo then
 		return
 	end
 
-	arg_18_0:_showMainHero()
+	self:_showMainHero()
 end
 
-function var_0_0._refreshBtnIcon(arg_19_0)
-	local var_19_0 = arg_19_0._sortIndex
+function PlayerCardCharacterSwitchView:_refreshBtnIcon()
+	local tag = self._sortIndex
 
-	if var_19_0 == 1 then
-		PlayerCardCharacterSwitchListModel.instance:sortByTime(arg_19_0._asceTime)
+	if tag == 1 then
+		PlayerCardCharacterSwitchListModel.instance:sortByTime(self._asceTime)
 	else
-		PlayerCardCharacterSwitchListModel.instance:sortByRare(arg_19_0._asceRare)
+		PlayerCardCharacterSwitchListModel.instance:sortByRare(self._asceRare)
 	end
 
-	gohelper.setActive(arg_19_0._timeBtns[1], var_19_0 ~= 1)
-	gohelper.setActive(arg_19_0._timeBtns[2], var_19_0 == 1)
-	gohelper.setActive(arg_19_0._rareBtns[1], var_19_0 ~= 2)
-	gohelper.setActive(arg_19_0._rareBtns[2], var_19_0 == 2)
+	gohelper.setActive(self._timeBtns[1], tag ~= 1)
+	gohelper.setActive(self._timeBtns[2], tag == 1)
+	gohelper.setActive(self._rareBtns[1], tag ~= 2)
+	gohelper.setActive(self._rareBtns[2], tag == 2)
 
-	local var_19_1 = arg_19_0._asceTime and -1 or 1
-	local var_19_2 = arg_19_0._asceRare and -1 or 1
+	local scaleTime = self._asceTime and -1 or 1
+	local scaleRare = self._asceRare and -1 or 1
 
-	transformhelper.setLocalScale(arg_19_0._timeArrow[1], 1, var_19_1, 1)
-	transformhelper.setLocalScale(arg_19_0._timeArrow[2], 1, var_19_1, 1)
-	transformhelper.setLocalScale(arg_19_0._rareArrow[1], 1, var_19_2, 1)
-	transformhelper.setLocalScale(arg_19_0._rareArrow[2], 1, var_19_2, 1)
+	transformhelper.setLocalScale(self._timeArrow[1], 1, scaleTime, 1)
+	transformhelper.setLocalScale(self._timeArrow[2], 1, scaleTime, 1)
+	transformhelper.setLocalScale(self._rareArrow[1], 1, scaleRare, 1)
+	transformhelper.setLocalScale(self._rareArrow[2], 1, scaleRare, 1)
 end
 
-function var_0_0.changeHero(arg_20_0, arg_20_1)
-	PlayerCardCharacterSwitchListModel.instance.curHeroId = arg_20_1
+function PlayerCardCharacterSwitchView:changeHero(id)
+	PlayerCardCharacterSwitchListModel.instance.curHeroId = id
 end
 
-function var_0_0._updateHero(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
-	if arg_21_3 then
-		arg_21_0:changeHero()
+function PlayerCardCharacterSwitchView:_updateHero(heroId, skinId, isRandom, isL2d)
+	if isRandom then
+		self:changeHero()
 	else
-		arg_21_0:changeHero(arg_21_1)
+		self:changeHero(heroId)
 	end
 
-	arg_21_0._heroId = arg_21_1
-	arg_21_0._skinId = arg_21_2
-	arg_21_0._isRandom = arg_21_3
-	arg_21_0._isL2d = arg_21_4
+	self._heroId = heroId
+	self._skinId = skinId
+	self._isRandom = isRandom
+	self._isL2d = isL2d
 
-	local var_21_0 = HeroModel.instance:getByHeroId(arg_21_0._heroId)
+	local hero = HeroModel.instance:getByHeroId(self._heroId)
+	local skinCo = SkinConfig.instance:getSkinCo(self._skinId or hero and hero.skin)
 
-	arg_21_0._heroSkinConfig, arg_21_0._hero = SkinConfig.instance:getSkinCo(arg_21_0._skinId or var_21_0 and var_21_0.skin), var_21_0
+	self._hero = hero
+	self._heroSkinConfig = skinCo
 
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshSwitchView, {
-		heroId = arg_21_0._heroId,
-		skinId = arg_21_0._skinId,
-		isL2d = arg_21_0._isL2d
+		heroId = self._heroId,
+		skinId = self._skinId,
+		isL2d = self._isL2d
 	})
-	PlayerCardModel.instance:setSelectHero(arg_21_0._heroId, arg_21_0._skinId)
+	PlayerCardModel.instance:setSelectHero(self._heroId, self._skinId)
 end
 
-function var_0_0._onRefreshSwitchView(arg_22_0)
-	arg_22_0:showTip()
-	arg_22_0:refreshSignature()
-	arg_22_0:refreshCreateTime()
-	arg_22_0:_showSkinList()
+function PlayerCardCharacterSwitchView:_onRefreshSwitchView()
+	self:showTip()
+	self:refreshSignature()
+	self:refreshCreateTime()
+	self:_showSkinList()
 end
 
-function var_0_0.refreshSignature(arg_23_0)
-	if not arg_23_0._hero then
+function PlayerCardCharacterSwitchView:refreshSignature()
+	if not self._hero then
 		return
 	end
 
-	arg_23_0._simagesignature:UnLoadImage()
-	arg_23_0._simagesignature:LoadImage(ResUrl.getSignature(arg_23_0._hero.config.signature))
+	self._simagesignature:UnLoadImage()
+	self._simagesignature:LoadImage(ResUrl.getSignature(self._hero.config.signature))
 end
 
-function var_0_0.showTip(arg_24_0)
-	local var_24_0 = arg_24_0._curHeroId == arg_24_0._heroId and arg_24_0._curSkinId == arg_24_0._skinId and arg_24_0._curRandom == arg_24_0._isRandom and arg_24_0._curIsL2d == arg_24_0._isL2d
+function PlayerCardCharacterSwitchView:showTip()
+	local showCurHero = self._curHeroId == self._heroId and self._curSkinId == self._skinId and self._curRandom == self._isRandom and self._curIsL2d == self._isL2d
 
-	gohelper.setActive(arg_24_0._btnchange.gameObject, not var_24_0)
-	gohelper.setActive(arg_24_0._goshowing.gameObject, var_24_0)
+	gohelper.setActive(self._btnchange.gameObject, not showCurHero)
+	gohelper.setActive(self._goshowing.gameObject, showCurHero)
 end
 
-function var_0_0.refreshCreateTime(arg_25_0)
-	if not arg_25_0._hero then
+function PlayerCardCharacterSwitchView:refreshCreateTime()
+	if not self._hero then
 		return
 	end
 
-	local var_25_0 = ServerTime.formatTimeInLocal(arg_25_0._hero.createTime / 1000, "%Y / %m / %d")
+	local timeStr = ServerTime.formatTimeInLocal(self._hero.createTime / 1000, "%Y / %m / %d")
 
-	if not var_25_0 then
+	if not timeStr then
 		return
 	end
 
-	arg_25_0._txttime.text = var_25_0
+	self._txttime.text = timeStr
 end
 
-local var_0_1 = {
+local yOffset = {
 	149.2,
 	-64.3,
 	-151.4
 }
 
-function var_0_0._showSkinList(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0._heroId
-	local var_26_1 = arg_26_0._skinId
-	local var_26_2 = arg_26_0._isRandom
+function PlayerCardCharacterSwitchView:_showSkinList(heroId, showSkinId)
+	local heroId = self._heroId
+	local showSkinId = self._skinId
+	local isRandom = self._isRandom
 
-	gohelper.setActive(arg_26_0._goheroskin, not var_26_2)
+	gohelper.setActive(self._goheroskin, not isRandom)
 
-	if not var_26_0 then
+	if not heroId then
 		return
 	end
 
-	local var_26_3 = HeroModel.instance:getByHeroId(var_26_0)
-	local var_26_4 = tabletool.copy(var_26_3.skinInfoList)
+	local heroMO = HeroModel.instance:getByHeroId(heroId)
+	local skinInfoList = tabletool.copy(heroMO.skinInfoList)
 
-	table.sort(var_26_4, var_0_0._sort)
+	table.sort(skinInfoList, PlayerCardCharacterSwitchView._sort)
 
-	local var_26_5 = SkinInfoMO.New()
+	local skinInfoMO = SkinInfoMO.New()
 
-	var_26_5:init({
+	skinInfoMO:init({
 		expireSec = 0,
-		skin = var_26_3.config.skinId
+		skin = heroMO.config.skinId
 	})
-	table.insert(var_26_4, 1, var_26_5)
+	table.insert(skinInfoList, 1, skinInfoMO)
 
-	local var_26_6 = arg_26_0:removeDuplicates(var_26_4)
+	skinInfoList = self:removeDuplicates(skinInfoList)
 
-	arg_26_0:_hideAllItems()
+	self:_hideAllItems()
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_6) do
-		local var_26_7 = iter_26_1.skin
+	for _, skinInfo in ipairs(skinInfoList) do
+		local skinId = skinInfo.skin
 
-		arg_26_0:_showSkinItem(var_26_0, var_26_7, var_26_7 == var_26_1)
+		self:_showSkinItem(heroId, skinId, skinId == showSkinId)
 	end
 
-	local var_26_8 = math.min(#var_26_6, #var_0_1)
+	local offsetIndex = math.min(#skinInfoList, #yOffset)
 
-	recthelper.setAnchorY(arg_26_0._gobgbottom.transform, var_0_1[var_26_8])
+	recthelper.setAnchorY(self._gobgbottom.transform, yOffset[offsetIndex])
 end
 
-function var_0_0._sort(arg_27_0, arg_27_1)
-	return arg_27_0.skin < arg_27_1.skin
+function PlayerCardCharacterSwitchView._sort(a, b)
+	return a.skin < b.skin
 end
 
-function var_0_0.removeDuplicates(arg_28_0, arg_28_1)
-	local var_28_0 = {}
-	local var_28_1 = {}
+function PlayerCardCharacterSwitchView:removeDuplicates(skinInfoList)
+	local checkDict = {}
+	local newArray = {}
 
-	for iter_28_0, iter_28_1 in ipairs(arg_28_1) do
-		if not var_28_0[iter_28_1.skin] then
-			var_28_0[iter_28_1.skin] = true
+	for _, skinInfo in ipairs(skinInfoList) do
+		if not checkDict[skinInfo.skin] then
+			checkDict[skinInfo.skin] = true
 
-			table.insert(var_28_1, iter_28_1)
+			table.insert(newArray, skinInfo)
 		end
 	end
 
-	return var_28_1
+	return newArray
 end
 
-function var_0_0._hideAllItems(arg_29_0)
-	local var_29_0 = #arg_29_0._showItemList
+function PlayerCardCharacterSwitchView:_hideAllItems()
+	local count = #self._showItemList
 
-	for iter_29_0 = 1, var_29_0 do
-		local var_29_1 = arg_29_0._showItemList[iter_29_0]
+	for i = 1, count do
+		local item = self._showItemList[i]
 
-		gohelper.setActive(var_29_1.viewGO, false)
-		table.insert(arg_29_0._cacheItemList, var_29_1)
+		gohelper.setActive(item.viewGO, false)
+		table.insert(self._cacheItemList, item)
 
-		arg_29_0._showItemList[iter_29_0] = nil
+		self._showItemList[i] = nil
 	end
 end
 
-function var_0_0._showSkinItem(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	local var_30_0 = table.remove(arg_30_0._cacheItemList)
+function PlayerCardCharacterSwitchView:_showSkinItem(heroId, skinId, selected)
+	local item = table.remove(self._cacheItemList)
 
-	if not var_30_0 then
-		local var_30_1 = gohelper.cloneInPlace(arg_30_0._goheroskinItem)
+	if not item then
+		local go = gohelper.cloneInPlace(self._goheroskinItem)
 
-		var_30_0 = MonoHelper.addLuaComOnceToGo(var_30_1, PlayerCardCharacterSwitchSkinItem)
+		item = MonoHelper.addLuaComOnceToGo(go, PlayerCardCharacterSwitchSkinItem)
 	end
 
-	gohelper.setAsLastSibling(var_30_0.viewGO)
-	table.insert(arg_30_0._showItemList, var_30_0)
-	var_30_0:showSkin(arg_30_1, arg_30_2)
-	var_30_0:setSelected(arg_30_3)
+	gohelper.setAsLastSibling(item.viewGO)
+	table.insert(self._showItemList, item)
+	item:showSkin(heroId, skinId)
+	item:setSelected(selected)
 end
 
-function var_0_0.onClose(arg_31_0)
-	arg_31_0.animator:Play("close")
+function PlayerCardCharacterSwitchView:onClose()
+	self.animator:Play("close")
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.OnCloseHeroView)
 end
 
-function var_0_0.onDestroyView(arg_32_0)
-	arg_32_0._simagesignature:UnLoadImage()
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_32_0)
+function PlayerCardCharacterSwitchView:onDestroyView()
+	self._simagesignature:UnLoadImage()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, self)
 end
 
-return var_0_0
+return PlayerCardCharacterSwitchView

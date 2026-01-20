@@ -1,155 +1,162 @@
-﻿module("modules.logic.fight.view.FightViewScrollBossHp_500M", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewScrollBossHp_500M.lua
 
-local var_0_0 = class("FightViewScrollBossHp_500M", FightViewSurvivalBossHp)
-local var_0_1 = "ui/viewres/fight/fighttower/fighttowerbosshplock.prefab"
+module("modules.logic.fight.view.FightViewScrollBossHp_500M", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local FightViewScrollBossHp_500M = class("FightViewScrollBossHp_500M", FightViewSurvivalBossHp)
+local lockLifePath = "ui/viewres/fight/fighttower/fighttowerbosshplock.prefab"
 
-	arg_1_0.hpPointList = {}
-	arg_1_0.root = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp")
-	arg_1_0.loader = PrefabInstantiate.Create(arg_1_0.root)
+function FightViewScrollBossHp_500M:onInitView()
+	FightViewScrollBossHp_500M.super.onInitView(self)
 
-	arg_1_0.loader:startLoad(var_0_1, arg_1_0.onLoadFinish, arg_1_0)
-	arg_1_0:initPlayedPoSuiAnimPoint()
+	self.hpPointList = {}
+	self.root = gohelper.findChild(self.viewGO, "Alpha/bossHp")
+	self.loader = PrefabInstantiate.Create(self.root)
+
+	self.loader:startLoad(lockLifePath, self.onLoadFinish, self)
+	self:initPlayedPoSuiAnimPoint()
 end
 
-function var_0_0.initPlayedPoSuiAnimPoint(arg_2_0)
-	arg_2_0.playedPoSuiAnimPointDict = {}
+function FightViewScrollBossHp_500M:initPlayedPoSuiAnimPoint()
+	self.playedPoSuiAnimPointDict = {}
 
-	local var_2_0 = arg_2_0:_getBossEntityMO()
+	local bossEntityMo = self:_getBossEntityMO()
 
-	if var_2_0 then
-		local var_2_1 = var_2_0.attrMO:getCurMultiHpIndex()
+	if bossEntityMo then
+		local multiHpIdx = bossEntityMo.attrMO:getCurMultiHpIndex()
 
-		for iter_2_0 = 1, var_2_1 do
-			arg_2_0.playedPoSuiAnimPointDict[iter_2_0] = true
+		for i = 1, multiHpIdx do
+			self.playedPoSuiAnimPointDict[i] = true
 		end
 	end
 end
 
-function var_0_0.onLoadFinish(arg_3_0)
-	arg_3_0.lockLifeGo = arg_3_0.loader:getInstGO()
-	arg_3_0.goHpLock = gohelper.findChild(arg_3_0.lockLifeGo, "go_hpLock")
-	arg_3_0.lockHpAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_3_0.goHpLock)
-	arg_3_0.goPointItem = gohelper.findChild(arg_3_0.lockLifeGo, "go_hpPoint/#image_point")
-	arg_3_0.goHpPoint = gohelper.findChild(arg_3_0.lockLifeGo, "go_hpPoint")
+function FightViewScrollBossHp_500M:onLoadFinish()
+	self.lockLifeGo = self.loader:getInstGO()
+	self.goHpLock = gohelper.findChild(self.lockLifeGo, "go_hpLock")
+	self.lockHpAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.goHpLock)
+	self.goPointItem = gohelper.findChild(self.lockLifeGo, "go_hpPoint/#image_point")
+	self.goHpPoint = gohelper.findChild(self.lockLifeGo, "go_hpPoint")
 
-	gohelper.setActive(arg_3_0.goHpLock, false)
-	gohelper.setActive(arg_3_0.goPointItem, false)
-	arg_3_0:_detectBossMultiHp()
+	gohelper.setActive(self.goHpLock, false)
+	gohelper.setActive(self.goPointItem, false)
+	self:_detectBossMultiHp()
 end
 
-local var_0_2 = 102310003
+local LockHpBuffId = 102310003
 
-function var_0_0._onBuffUpdate(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	var_0_0.super._onBuffUpdate(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
+function FightViewScrollBossHp_500M:_onBuffUpdate(entityId, effectType, buffId, buff_uid, configEffect)
+	FightViewScrollBossHp_500M.super._onBuffUpdate(self, entityId, effectType, buffId, buff_uid, configEffect)
 
-	if arg_4_3 ~= var_0_2 then
+	if buffId ~= LockHpBuffId then
 		return
 	end
 
-	arg_4_0:_detectBossMultiHp()
+	self:_detectBossMultiHp()
 end
 
-function var_0_0._detectBossMultiHp(arg_5_0)
-	gohelper.setActive(arg_5_0._multiHpRoot, false)
+function FightViewScrollBossHp_500M:_detectBossMultiHp()
+	gohelper.setActive(self._multiHpRoot, false)
 
-	arg_5_0.hasLockHpBuff = false
+	self.hasLockHpBuff = false
 
-	local var_5_0 = FightDataHelper.entityMgr:getAllEntityMO()
+	local entityDict = FightDataHelper.entityMgr:getAllEntityMO()
 
-	for iter_5_0, iter_5_1 in pairs(var_5_0) do
-		local var_5_1 = iter_5_1:getBuffDic()
+	for _, entityMo in pairs(entityDict) do
+		local buffDict = entityMo:getBuffDic()
 
-		for iter_5_2, iter_5_3 in pairs(var_5_1) do
-			if iter_5_3.buffId == var_0_2 then
-				arg_5_0.hasLockHpBuff = true
+		for _, buffMo in pairs(buffDict) do
+			if buffMo.buffId == LockHpBuffId then
+				self.hasLockHpBuff = true
 
 				break
 			end
 		end
 
-		if arg_5_0.hasLockHpBuff then
+		if self.hasLockHpBuff then
 			break
 		end
 	end
 
-	arg_5_0:refreshPoint_500M()
-	arg_5_0:refreshLockHp_500M()
+	self:refreshPoint_500M()
+	self:refreshLockHp_500M()
 end
 
-function var_0_0.refreshPoint_500M(arg_6_0)
-	local var_6_0 = arg_6_0._bossEntityMO
+function FightViewScrollBossHp_500M:refreshPoint_500M()
+	local bossEntityMo = self._bossEntityMO
 
-	if not var_6_0 then
-		gohelper.setActive(arg_6_0.goHpPoint, false)
-
-		return
-	end
-
-	local var_6_1 = var_6_0.attrMO.multiHpNum
-
-	if var_6_1 <= 1 then
-		gohelper.setActive(arg_6_0.goHpPoint, false)
+	if not bossEntityMo then
+		gohelper.setActive(self.goHpPoint, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_6_0.goHpPoint, true)
+	local multiHpNum = bossEntityMo.attrMO.multiHpNum
 
-	local var_6_2 = var_6_0.attrMO:getCurMultiHpIndex()
+	if multiHpNum <= 1 then
+		gohelper.setActive(self.goHpPoint, false)
 
-	for iter_6_0 = 1, var_6_1 do
-		local var_6_3 = arg_6_0.hpPointList[iter_6_0]
+		return
+	end
 
-		if not var_6_3 then
-			var_6_3 = arg_6_0:getUserDataTb_()
-			var_6_3.go = gohelper.cloneInPlace(arg_6_0.goPointItem)
-			var_6_3.image = var_6_3.go:GetComponent(gohelper.Type_Image)
-			arg_6_0.hpPointList[iter_6_0] = var_6_3
+	gohelper.setActive(self.goHpPoint, true)
 
-			gohelper.setAsFirstSibling(var_6_3.go)
+	local multiHpIdx = bossEntityMo.attrMO:getCurMultiHpIndex()
+
+	for i = 1, multiHpNum do
+		local hpPointItem = self.hpPointList[i]
+
+		if not hpPointItem then
+			hpPointItem = self:getUserDataTb_()
+			hpPointItem.go = gohelper.cloneInPlace(self.goPointItem)
+			hpPointItem.image = hpPointItem.go:GetComponent(gohelper.Type_Image)
+			self.hpPointList[i] = hpPointItem
+
+			gohelper.setAsFirstSibling(hpPointItem.go)
 		end
 
-		gohelper.setActive(var_6_3.go, true)
+		gohelper.setActive(hpPointItem.go, true)
 
-		if var_6_2 < iter_6_0 then
-			local var_6_4 = lua_fight_tower_500m_boss_behaviour.configDict[iter_6_0]
-			local var_6_5 = var_6_4 and var_6_4.param1
+		local showHp = multiHpIdx < i
 
-			if var_6_5 then
-				UISpriteSetMgr.instance:setFightTowerSprite(var_6_3.image, var_6_5)
+		if showHp then
+			local co = lua_fight_tower_500m_boss_behaviour.configDict[i]
+			local icon = co and co.param1
+
+			if icon then
+				UISpriteSetMgr.instance:setFightTowerSprite(hpPointItem.image, icon)
 			end
 		else
-			UISpriteSetMgr.instance:setFightTowerSprite(var_6_3.image, "fight_tower_hp_0")
+			UISpriteSetMgr.instance:setFightTowerSprite(hpPointItem.image, "fight_tower_hp_0")
 
-			if not arg_6_0.playedPoSuiAnimPointDict[iter_6_0] then
-				arg_6_0.playedPoSuiAnimPointDict[iter_6_0] = true
+			if not self.playedPoSuiAnimPointDict[i] then
+				self.playedPoSuiAnimPointDict[i] = true
 
-				local var_6_6 = gohelper.findChild(var_6_3.go, "ani_posui")
+				local animGo = gohelper.findChild(hpPointItem.go, "ani_posui")
 
-				gohelper.setActive(var_6_6, true)
-				var_6_6:GetComponent(gohelper.Type_Animation):Play()
+				gohelper.setActive(animGo, true)
+
+				local anim = animGo:GetComponent(gohelper.Type_Animation)
+
+				anim:Play()
 			end
 		end
 	end
 
-	for iter_6_1 = var_6_1 + 1, #arg_6_0.hpPointList do
-		local var_6_7 = arg_6_0.hpPointList[iter_6_1]
+	for i = multiHpNum + 1, #self.hpPointList do
+		local hpPointItem = self.hpPointList[i]
 
-		if var_6_7 then
-			gohelper.setActive(var_6_7.go, false)
+		if hpPointItem then
+			gohelper.setActive(hpPointItem.go, false)
 		end
 	end
 end
 
-function var_0_0.refreshLockHp_500M(arg_7_0)
-	if arg_7_0.hasLockHpBuff then
-		gohelper.setActive(arg_7_0.goHpLock, true)
+function FightViewScrollBossHp_500M:refreshLockHp_500M()
+	if self.hasLockHpBuff then
+		gohelper.setActive(self.goHpLock, true)
 
-		if not arg_7_0.playedLockHpAudio then
-			arg_7_0.playedLockHpAudio = true
+		if not self.playedLockHpAudio then
+			self.playedLockHpAudio = true
 
 			AudioMgr.instance:trigger(310002)
 		end
@@ -157,28 +164,30 @@ function var_0_0.refreshLockHp_500M(arg_7_0)
 		return
 	end
 
-	if arg_7_0.goHpLock.activeInHierarchy then
-		arg_7_0.lockHpAnimatorPlayer:Play("close", arg_7_0.onCloseCallback, arg_7_0)
+	local active = self.goHpLock.activeInHierarchy
 
-		arg_7_0.playedLockHpAudio = false
+	if active then
+		self.lockHpAnimatorPlayer:Play("close", self.onCloseCallback, self)
+
+		self.playedLockHpAudio = false
 
 		AudioMgr.instance:trigger(310003)
 	end
 end
 
-function var_0_0.onCloseCallback(arg_8_0)
-	gohelper.setActive(arg_8_0.goHpLock, false)
-	arg_8_0:_detectBossMultiHp()
+function FightViewScrollBossHp_500M:onCloseCallback()
+	gohelper.setActive(self.goHpLock, false)
+	self:_detectBossMultiHp()
 end
 
-local var_0_3 = {
+local Threshold = {
 	0.2,
 	0.4,
 	0.6,
 	0.8,
 	1
 }
-local var_0_4 = {
+local Color = {
 	{
 		"#B33E2D",
 		"#6F2216"
@@ -201,72 +210,72 @@ local var_0_4 = {
 	}
 }
 
-function var_0_0.refreshHpColor(arg_9_0)
-	if not arg_9_0._bossEntityMO then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.hp, "#B33E2D")
-		gohelper.setActive(arg_9_0.bgHpGo, false)
+function FightViewScrollBossHp_500M:refreshHpColor()
+	if not self._bossEntityMO then
+		SLFramework.UGUI.GuiHelper.SetColor(self.hp, "#B33E2D")
+		gohelper.setActive(self.bgHpGo, false)
 
 		return
 	end
 
-	local var_9_0 = FightHelper.getBossCurStageCo_500M(arg_9_0._bossEntityMO)
+	local curStage = FightHelper.getBossCurStageCo_500M(self._bossEntityMO)
 
-	if not var_9_0 then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.hp, "#B33E2D")
-		gohelper.setActive(arg_9_0.bgHpGo, false)
+	if not curStage then
+		SLFramework.UGUI.GuiHelper.SetColor(self.hp, "#B33E2D")
+		gohelper.setActive(self.bgHpGo, false)
 
 		return
 	end
 
-	local var_9_1 = arg_9_0.tweenHp
+	local curHp = self.tweenHp
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.hp, string.format("#%s", var_9_0.hpColor))
+	SLFramework.UGUI.GuiHelper.SetColor(self.hp, string.format("#%s", curStage.hpColor))
 
-	if var_9_1 <= arg_9_0.oneMaxHp then
-		local var_9_2 = var_9_0.level + 1
-		local var_9_3 = lua_fight_tower_500m_boss_behaviour.configDict[var_9_2]
+	if curHp <= self.oneMaxHp then
+		local nextStage = curStage.level + 1
+		local nextStageCo = lua_fight_tower_500m_boss_behaviour.configDict[nextStage]
 
-		if not var_9_3 then
-			gohelper.setActive(arg_9_0.bgHpGo, false)
+		if not nextStageCo then
+			gohelper.setActive(self.bgHpGo, false)
 		else
-			gohelper.setActive(arg_9_0.bgHpGo, true)
-			SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.bgHp, string.format("#%s", var_9_3.hpBgColor))
+			gohelper.setActive(self.bgHpGo, true)
+			SLFramework.UGUI.GuiHelper.SetColor(self.bgHp, string.format("#%s", nextStageCo.hpBgColor))
 		end
 	else
-		gohelper.setActive(arg_9_0.bgHpGo, true)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0.bgHp, string.format("#%s", var_9_0.hpBgColor))
+		gohelper.setActive(self.bgHpGo, true)
+		SLFramework.UGUI.GuiHelper.SetColor(self.bgHp, string.format("#%s", curStage.hpBgColor))
 	end
 end
 
-function var_0_0.getThreshold(arg_10_0)
-	return var_0_3
+function FightViewScrollBossHp_500M:getThreshold()
+	return Threshold
 end
 
-function var_0_0.getColor(arg_11_0)
-	return var_0_4
+function FightViewScrollBossHp_500M:getColor()
+	return Color
 end
 
-function var_0_0.refreshImageIcon(arg_12_0)
-	if not arg_12_0._bossEntityMO then
+function FightViewScrollBossHp_500M:refreshImageIcon()
+	if not self._bossEntityMO then
 		return
 	end
 
-	local var_12_0 = arg_12_0._bossEntityMO.modelId
-	local var_12_1 = lua_fight_sp_500m_model.configDict[var_12_0]
-	local var_12_2 = var_12_1 and var_12_1.headIconName
+	local modelId = self._bossEntityMO.modelId
+	local co = lua_fight_sp_500m_model.configDict[modelId]
+	local headIcon = co and co.headIconName
 
-	if not string.nilorempty(var_12_2) then
-		gohelper.setActive(arg_12_0._imgHead.gameObject, true)
-		gohelper.getSingleImage(arg_12_0._imgHead.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_12_2))
+	if not string.nilorempty(headIcon) then
+		gohelper.setActive(self._imgHead.gameObject, true)
+		gohelper.getSingleImage(self._imgHead.gameObject):LoadImage(ResUrl.monsterHeadIcon(headIcon))
 
-		local var_12_3 = lua_monster.configDict[arg_12_0._bossEntityMO.modelId]
+		local monsterCO = lua_monster.configDict[self._bossEntityMO.modelId]
 
-		if var_12_3.heartVariantId ~= 0 then
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(var_12_3.heartVariantId), arg_12_0._imgHeadIcon)
+		if monsterCO.heartVariantId ~= 0 then
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(monsterCO.heartVariantId), self._imgHeadIcon)
 		end
 	else
-		gohelper.setActive(arg_12_0._imgHead.gameObject, false)
+		gohelper.setActive(self._imgHead.gameObject, false)
 	end
 end
 
-return var_0_0
+return FightViewScrollBossHp_500M

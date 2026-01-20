@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectEnchantBurnDamage", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectEnchantBurnDamage.lua
 
-local var_0_0 = class("FightWorkEffectEnchantBurnDamage", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectEnchantBurnDamage", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+local FightWorkEffectEnchantBurnDamage = class("FightWorkEffectEnchantBurnDamage", FightEffectBase)
 
-	if var_1_0 then
-		local var_1_1 = arg_1_0.actEffectData.effectNum
+function FightWorkEffectEnchantBurnDamage:onStart()
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
 
-		if var_1_1 > 0 then
-			local var_1_2 = var_1_0:isMySide() and -var_1_1 or var_1_1
+	if entity then
+		local effectNum = self.actEffectData.effectNum
 
-			FightFloatMgr.instance:float(var_1_0.id, FightEnum.FloatType.damage, var_1_2, nil, arg_1_0.actEffectData.effectNum1 == 1)
+		if effectNum > 0 then
+			local floatNum = entity:isMySide() and -effectNum or effectNum
 
-			if var_1_0.nameUI then
-				var_1_0.nameUI:addHp(-var_1_1)
+			FightFloatMgr.instance:float(entity.id, FightEnum.FloatType.damage, floatNum, nil, self.actEffectData.effectNum1 == 1)
+
+			if entity.nameUI then
+				entity.nameUI:addHp(-effectNum)
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, -var_1_1)
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, -effectNum)
 
-			local var_1_3 = var_1_0.effect:addHangEffect("buff/buff_shenghuo", "mountbody", nil, 1.5 / FightModel.instance:getSpeed())
+			local effectWrap = entity.effect:addHangEffect("buff/buff_shenghuo", "mountbody", nil, 1.5 / FightModel.instance:getSpeed())
 
 			FightAudioMgr.instance:playAudio(4307301)
-			FightRenderOrderMgr.instance:onAddEffectWrap(var_1_0.id, var_1_3)
-			var_1_3:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
+			effectWrap:setLocalPos(0, 0, 0)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectEnchantBurnDamage

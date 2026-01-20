@@ -1,11 +1,13 @@
-﻿module("modules.logic.investigate.view.InvestigateClueViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateClueViewContainer.lua
 
-local var_0_0 = class("InvestigateClueViewContainer", BaseViewContainer)
+module("modules.logic.investigate.view.InvestigateClueViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local InvestigateClueViewContainer = class("InvestigateClueViewContainer", BaseViewContainer)
+
+function InvestigateClueViewContainer:buildViews()
 	return {
 		InvestigateClueView.New()
 	}
 end
 
-return var_0_0
+return InvestigateClueViewContainer

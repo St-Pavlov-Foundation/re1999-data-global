@@ -1,25 +1,27 @@
-﻿module("modules.logic.story.model.StoryBgEffectTransMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryBgEffectTransMo.lua
 
-local var_0_0 = pureTable("StoryBgEffectTransMo")
+module("modules.logic.story.model.StoryBgEffectTransMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.type = 0
-	arg_1_0.name = ""
-	arg_1_0.mat = ""
-	arg_1_0.prefab = ""
-	arg_1_0.aniName = ""
-	arg_1_0.transTime = 0
-	arg_1_0.extraParam = ""
+local StoryBgEffectTransMo = pureTable("StoryBgEffectTransMo")
+
+function StoryBgEffectTransMo:ctor()
+	self.type = 0
+	self.name = ""
+	self.mat = ""
+	self.prefab = ""
+	self.aniName = ""
+	self.transTime = 0
+	self.extraParam = ""
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.type = arg_2_1[1]
-	arg_2_0.name = arg_2_1[2]
-	arg_2_0.mat = arg_2_1[3]
-	arg_2_0.prefab = string.split(arg_2_1[4], ".")[1]
-	arg_2_0.aniName = arg_2_1[5]
-	arg_2_0.transTime = arg_2_1[6]
-	arg_2_0.extraParam = arg_2_1[7]
+function StoryBgEffectTransMo:init(info)
+	self.type = info[1]
+	self.name = info[2]
+	self.mat = info[3]
+	self.prefab = string.split(info[4], ".")[1]
+	self.aniName = info[5]
+	self.transTime = info[6]
+	self.extraParam = info[7]
 end
 
-return var_0_0
+return StoryBgEffectTransMo

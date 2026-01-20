@@ -1,266 +1,270 @@
-﻿module("modules.logic.fight.controller.FightPreloadController", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightPreloadController.lua
 
-local var_0_0 = class("FightPreloadController", BaseController)
+module("modules.logic.fight.controller.FightPreloadController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._preloadSequence = nil
-	arg_1_0._firstSequence = arg_1_0:_buildFirstFlow()
-	arg_1_0._secondSequence = arg_1_0:_buildSecondFlow()
-	arg_1_0._allResLoadFlow = FlowSequence.New()
+local FightPreloadController = class("FightPreloadController", BaseController)
 
-	arg_1_0._allResLoadFlow:addWork(arg_1_0:_buildFirstFlow(true))
-	arg_1_0._allResLoadFlow:addWork(arg_1_0:_buildSecondFlow())
+function FightPreloadController:onInit()
+	self._preloadSequence = nil
+	self._firstSequence = self:_buildFirstFlow()
+	self._secondSequence = self:_buildSecondFlow()
+	self._allResLoadFlow = FlowSequence.New()
 
-	arg_1_0._reconnectSequence = arg_1_0:_buildReconnectFlow()
-	arg_1_0._context = {
-		callback = arg_1_0._onPreloadOneFinish,
-		callbackObj = arg_1_0
+	self._allResLoadFlow:addWork(self:_buildFirstFlow(true))
+	self._allResLoadFlow:addWork(self:_buildSecondFlow())
+
+	self._reconnectSequence = self:_buildReconnectFlow()
+	self._context = {
+		callback = self._onPreloadOneFinish,
+		callbackObj = self
 	}
 end
 
-function var_0_0._buildFirstFlow(arg_2_0, arg_2_1)
-	local var_2_0 = FlowSequence.New()
+function FightPreloadController:_buildFirstFlow(buildAllRes)
+	local sequence = FlowSequence.New()
 
-	var_2_0:addWork(FightPreloadTimelineFirstWork.New())
-	var_2_0:addWork(FightPreloadTimelineRefWork.New())
-	var_2_0:addWork(FightRoundPreloadEffectWork.New())
-	var_2_0:addWork(FightPreloadFirstMonsterSpineWork.New())
-	var_2_0:addWork(FightPreloadHeroGroupSpineWork.New())
-	var_2_0:addWork(FightPreloadViewWork.New())
+	sequence:addWork(FightPreloadTimelineFirstWork.New())
+	sequence:addWork(FightPreloadTimelineRefWork.New())
+	sequence:addWork(FightRoundPreloadEffectWork.New())
+	sequence:addWork(FightPreloadFirstMonsterSpineWork.New())
+	sequence:addWork(FightPreloadHeroGroupSpineWork.New())
+	sequence:addWork(FightPreloadViewWork.New())
 
-	if not arg_2_1 then
-		var_2_0:addWork(FightPreloadDoneWork.New())
+	if not buildAllRes then
+		sequence:addWork(FightPreloadDoneWork.New())
 	end
 
-	var_2_0:addWork(FightPreloadRoleCardWork.New())
-	var_2_0:addWork(FightPreloadCameraAni.New({}))
-	var_2_0:addWork(FightPreloadEntityAni.New())
-	var_2_0:addWork(FightPreloadRolesTimeline.New())
-	var_2_0:addWork(FightPreloadOthersWork.New())
-	var_2_0:addWork(FightPreloadEffectWork.New())
+	sequence:addWork(FightPreloadRoleCardWork.New())
+	sequence:addWork(FightPreloadCameraAni.New({}))
+	sequence:addWork(FightPreloadEntityAni.New())
+	sequence:addWork(FightPreloadRolesTimeline.New())
+	sequence:addWork(FightPreloadOthersWork.New())
+	sequence:addWork(FightPreloadEffectWork.New())
 
-	return var_2_0
+	return sequence
 end
 
-function var_0_0._buildSecondFlow(arg_3_0)
-	local var_3_0 = FlowSequence.New()
+function FightPreloadController:_buildSecondFlow()
+	local sequence = FlowSequence.New()
 
-	var_3_0:addWork(FightPreloadCompareSpineWork.New())
-	var_3_0:addWork(FightPreloadTimelineFirstWork.New())
-	var_3_0:addWork(FightPreloadSpineWork.New())
-	var_3_0:addWork(FightPreloadRoleCardByRealDataWork.New())
-	var_3_0:addWork(FightPreloadOthersWork.New())
-	var_3_0:addWork(FightPreloadViewWork.New())
-	var_3_0:addWork(FightPreloadCameraAni.New())
-	var_3_0:addWork(FightPreloadEntityAni.New())
-	var_3_0:addWork(FightPreloadRolesTimeline.New())
-	var_3_0:addWork(FightPreloadEffectWork.New())
-	var_3_0:addWork(FightPreloadDoneWork.New())
-	var_3_0:addWork(FightPreloadCardInitWork.New())
-	var_3_0:addWork(FightPreloadWaitReplayWork.New())
-	var_3_0:addWork(FightPreloadRoleEffectWork.New())
+	sequence:addWork(FightPreloadCompareSpineWork.New())
+	sequence:addWork(FightPreloadTimelineFirstWork.New())
+	sequence:addWork(FightPreloadSpineWork.New())
+	sequence:addWork(FightPreloadRoleCardByRealDataWork.New())
+	sequence:addWork(FightPreloadOthersWork.New())
+	sequence:addWork(FightPreloadViewWork.New())
+	sequence:addWork(FightPreloadCameraAni.New())
+	sequence:addWork(FightPreloadEntityAni.New())
+	sequence:addWork(FightPreloadRolesTimeline.New())
+	sequence:addWork(FightPreloadEffectWork.New())
+	sequence:addWork(FightPreloadDoneWork.New())
+	sequence:addWork(FightPreloadCardInitWork.New())
+	sequence:addWork(FightPreloadWaitReplayWork.New())
+	sequence:addWork(FightPreloadRoleEffectWork.New())
 
-	return var_3_0
+	return sequence
 end
 
-function var_0_0._buildReconnectFlow(arg_4_0)
-	local var_4_0 = FlowSequence.New()
+function FightPreloadController:_buildReconnectFlow()
+	local sequence = FlowSequence.New()
 
-	var_4_0:addWork(FightPreloadTimelineFirstWork.New())
-	var_4_0:addWork(FightPreloadSpineWork.New())
-	var_4_0:addWork(FightPreloadRoleCardWork.New())
-	var_4_0:addWork(FightPreloadOthersWork.New())
-	var_4_0:addWork(FightPreloadViewWork.New())
-	var_4_0:addWork(FightPreloadCameraAni.New())
-	var_4_0:addWork(FightPreloadEntityAni.New())
-	var_4_0:addWork(FightPreloadRolesTimeline.New())
-	var_4_0:addWork(FightPreloadEffectWork.New())
-	var_4_0:addWork(FightPreloadDoneWork.New())
-	var_4_0:addWork(FightPreloadCardInitWork.New())
-	var_4_0:addWork(FightPreloadWaitReplayWork.New())
-	var_4_0:addWork(FightPreloadRoleEffectWork.New())
+	sequence:addWork(FightPreloadTimelineFirstWork.New())
+	sequence:addWork(FightPreloadSpineWork.New())
+	sequence:addWork(FightPreloadRoleCardWork.New())
+	sequence:addWork(FightPreloadOthersWork.New())
+	sequence:addWork(FightPreloadViewWork.New())
+	sequence:addWork(FightPreloadCameraAni.New())
+	sequence:addWork(FightPreloadEntityAni.New())
+	sequence:addWork(FightPreloadRolesTimeline.New())
+	sequence:addWork(FightPreloadEffectWork.New())
+	sequence:addWork(FightPreloadDoneWork.New())
+	sequence:addWork(FightPreloadCardInitWork.New())
+	sequence:addWork(FightPreloadWaitReplayWork.New())
+	sequence:addWork(FightPreloadRoleEffectWork.New())
 
-	return var_4_0
+	return sequence
 end
 
-function var_0_0.reInit(arg_5_0)
-	arg_5_0:dispose()
+function FightPreloadController:reInit()
+	self:dispose()
 end
 
-function var_0_0.isPreloading(arg_6_0)
-	return arg_6_0._preloadSequence and arg_6_0._preloadSequence.status == WorkStatus.Running
+function FightPreloadController:isPreloading()
+	return self._preloadSequence and self._preloadSequence.status == WorkStatus.Running
 end
 
-function var_0_0.hasPreload(arg_7_0, arg_7_1)
-	return arg_7_0._battleId == arg_7_1 and arg_7_0._preloadSequence and arg_7_0._preloadSequence.status == WorkStatus.Done
+function FightPreloadController:hasPreload(battleId)
+	return self._battleId == battleId and self._preloadSequence and self._preloadSequence.status == WorkStatus.Done
 end
 
-function var_0_0.preloadFirst(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6)
-	arg_8_0:_startPreload(arg_8_0._firstSequence, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6)
+function FightPreloadController:preloadFirst(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
+	self:_startPreload(self._firstSequence, battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
 end
 
-function var_0_0.preloadSecond(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6)
-	if FightModel.instance:getBattleId() ~= arg_9_0._battleId then
-		arg_9_0:dispose()
-		arg_9_0:_startPreload(arg_9_0._allResLoadFlow, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6)
+function FightPreloadController:preloadSecond(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
+	local curBattleId = FightModel.instance:getBattleId()
+
+	if curBattleId ~= self._battleId then
+		self:dispose()
+		self:_startPreload(self._allResLoadFlow, battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
 	else
-		arg_9_0:_startPreload(arg_9_0._secondSequence, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6)
+		self:_startPreload(self._secondSequence, battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
 	end
 end
 
-function var_0_0.preloadReconnect(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
-	arg_10_0:_startPreload(arg_10_0._reconnectSequence, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
+function FightPreloadController:preloadReconnect(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
+	self:_startPreload(self._reconnectSequence, battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
 end
 
-function var_0_0._startPreload(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7)
-	arg_11_0:__onInit()
+function FightPreloadController:_startPreload(sequence, battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
+	self:__onInit()
 
-	if arg_11_0._preloadSequence and arg_11_0._preloadSequence.status == WorkStatus.Running then
-		arg_11_0._preloadSequence:stop()
+	if self._preloadSequence and self._preloadSequence.status == WorkStatus.Running then
+		self._preloadSequence:stop()
 	end
 
-	arg_11_0._assetItemDict = arg_11_0._assetItemDict or arg_11_0:getUserDataTb_()
-	arg_11_0._battleId = arg_11_2
-	arg_11_0._preloadSequence = arg_11_1
+	self._assetItemDict = self._assetItemDict or self:getUserDataTb_()
+	self._battleId = battleId
+	self._preloadSequence = sequence
 
-	arg_11_0._preloadSequence:registerDoneListener(arg_11_0._onPreloadDone, arg_11_0)
-	arg_11_0._preloadSequence:start(arg_11_0:_getContext(arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7))
+	self._preloadSequence:registerDoneListener(self._onPreloadDone, self)
+	self._preloadSequence:start(self:_getContext(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds))
 end
 
-function var_0_0._getContext(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6)
-	arg_12_0._context.battleId = arg_12_1
-	arg_12_0._context.myModelIds = arg_12_2
-	arg_12_0._context.mySkinIds = arg_12_3
-	arg_12_0._context.enemyModelIds = arg_12_4
-	arg_12_0._context.enemySkinIds = arg_12_5
-	arg_12_0._context.subSkinIds = arg_12_6
+function FightPreloadController:_getContext(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
+	self._context.battleId = battleId
+	self._context.myModelIds = myModelIds
+	self._context.mySkinIds = mySkinIds
+	self._context.enemyModelIds = enemyModelIds
+	self._context.enemySkinIds = enemySkinIds
+	self._context.subSkinIds = subSkinIds
 
-	return arg_12_0._context
+	return self._context
 end
 
-function var_0_0.dispose(arg_13_0)
-	arg_13_0._battleId = nil
+function FightPreloadController:dispose()
+	self._battleId = nil
 
-	if arg_13_0._preloadSequence then
-		arg_13_0._preloadSequence:stop()
-		arg_13_0._preloadSequence:unregisterDoneListener(arg_13_0._onPreloadDone, arg_13_0)
+	if self._preloadSequence then
+		self._preloadSequence:stop()
+		self._preloadSequence:unregisterDoneListener(self._onPreloadDone, self)
 
-		arg_13_0._preloadSequence = nil
+		self._preloadSequence = nil
 	end
 
 	FightEffectPool.dispose()
 	FightSpineMatPool.dispose()
 	FightSpinePool.dispose()
 
-	if arg_13_0._assetItemDict then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._assetItemDict) do
-			iter_13_1:Release()
+	if self._assetItemDict then
+		for url, assetItem in pairs(self._assetItemDict) do
+			assetItem:Release()
 		end
 
-		arg_13_0._assetItemDict = nil
+		self._assetItemDict = nil
 	end
 
-	arg_13_0.roleCardAssetItemDict = nil
-	arg_13_0.timelineRefAssetItemDict = nil
+	self.roleCardAssetItemDict = nil
+	self.timelineRefAssetItemDict = nil
 
-	arg_13_0:cacheFirstPreloadSpine()
+	self:cacheFirstPreloadSpine()
 
-	arg_13_0._context.timelineDict = nil
+	self._context.timelineDict = nil
 
 	ZProj.SkillTimelineAssetHelper.ClearAssetJson()
-	arg_13_0:__onDispose()
+	self:__onDispose()
 end
 
-function var_0_0._onPreloadDone(arg_14_0)
+function FightPreloadController:_onPreloadDone()
 	FightController.instance:dispatchEvent(FightEvent.OnPreloadFinish)
 end
 
-function var_0_0._onPreloadOneFinish(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.ResPath
+function FightPreloadController:_onPreloadOneFinish(assetItem)
+	local url = assetItem.ResPath
 
-	if not arg_15_0._assetItemDict[var_15_0] then
-		arg_15_0._assetItemDict[var_15_0] = arg_15_1
+	if not self._assetItemDict[url] then
+		self._assetItemDict[url] = assetItem
 
-		arg_15_1:Retain()
+		assetItem:Retain()
 	end
 end
 
-function var_0_0.addRoleCardAsset(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.ResPath
+function FightPreloadController:addRoleCardAsset(assetItem)
+	local url = assetItem.ResPath
 
-	arg_16_0.roleCardAssetItemDict = arg_16_0.roleCardAssetItemDict or {}
-	arg_16_0.roleCardAssetItemDict[var_16_0] = arg_16_1
+	self.roleCardAssetItemDict = self.roleCardAssetItemDict or {}
+	self.roleCardAssetItemDict[url] = assetItem
 end
 
-function var_0_0.releaseRoleCardAsset(arg_17_0)
-	if not arg_17_0.roleCardAssetItemDict then
+function FightPreloadController:releaseRoleCardAsset()
+	if not self.roleCardAssetItemDict then
 		return
 	end
 
-	for iter_17_0, iter_17_1 in pairs(arg_17_0.roleCardAssetItemDict) do
-		arg_17_0.roleCardAssetItemDict[iter_17_0] = nil
-		arg_17_0._assetItemDict[iter_17_0] = nil
+	for url, assetItem in pairs(self.roleCardAssetItemDict) do
+		self.roleCardAssetItemDict[url] = nil
+		self._assetItemDict[url] = nil
 
-		iter_17_1:Release()
+		assetItem:Release()
 	end
 
-	arg_17_0.roleCardAssetItemDict = nil
+	self.roleCardAssetItemDict = nil
 end
 
-function var_0_0.addTimelineRefAsset(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1.ResPath
+function FightPreloadController:addTimelineRefAsset(assetItem)
+	local url = assetItem.ResPath
 
-	arg_18_0.timelineRefAssetItemDict = arg_18_0.timelineRefAssetItemDict or {}
-	arg_18_0.timelineRefAssetItemDict[var_18_0] = arg_18_1
+	self.timelineRefAssetItemDict = self.timelineRefAssetItemDict or {}
+	self.timelineRefAssetItemDict[url] = assetItem
 end
 
-function var_0_0.releaseTimelineRefAsset(arg_19_0)
-	if not arg_19_0.timelineRefAssetItemDict then
+function FightPreloadController:releaseTimelineRefAsset()
+	if not self.timelineRefAssetItemDict then
 		return
 	end
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0.timelineRefAssetItemDict) do
-		arg_19_0.timelineRefAssetItemDict[iter_19_0] = nil
-		arg_19_0._assetItemDict[iter_19_0] = nil
+	for url, assetItem in pairs(self.timelineRefAssetItemDict) do
+		self.timelineRefAssetItemDict[url] = nil
+		self._assetItemDict[url] = nil
 
-		iter_19_1:Release()
+		assetItem:Release()
 	end
 
-	arg_19_0.timelineRefAssetItemDict = nil
+	self.timelineRefAssetItemDict = nil
 end
 
-function var_0_0.getFightAssetItem(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0._assetItemDict[arg_20_1]
+function FightPreloadController:getFightAssetItem(path)
+	local assetItem = self._assetItemDict[path]
 
-	if var_20_0 then
-		return var_20_0
+	if assetItem then
+		return assetItem
 	end
 
-	logWarn(arg_20_1 .. " need preload")
+	logWarn(path .. " need preload")
 end
 
-function var_0_0.releaseAsset(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0._assetItemDict and arg_21_0._assetItemDict[arg_21_1]
+function FightPreloadController:releaseAsset(url)
+	local assetItem = self._assetItemDict and self._assetItemDict[url]
 
-	if var_21_0 then
-		var_21_0:Release()
+	if assetItem then
+		assetItem:Release()
 
-		arg_21_0._assetItemDict[arg_21_1] = nil
+		self._assetItemDict[url] = nil
 	end
 end
 
-function var_0_0.cacheFirstPreloadSpine(arg_22_0, arg_22_1)
-	if arg_22_1 then
-		arg_22_0.cachePreloadSpine = {}
+function FightPreloadController:cacheFirstPreloadSpine(data)
+	if data then
+		self.cachePreloadSpine = {}
 
-		for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
-			arg_22_0.cachePreloadSpine[iter_22_1[1]] = iter_22_1[2]
+		for i, v in ipairs(data) do
+			self.cachePreloadSpine[v[1]] = v[2]
 		end
 	else
-		arg_22_0.cachePreloadSpine = nil
+		self.cachePreloadSpine = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FightPreloadController.instance = FightPreloadController.New()
 
-return var_0_0
+return FightPreloadController

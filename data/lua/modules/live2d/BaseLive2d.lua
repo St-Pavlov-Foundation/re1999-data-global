@@ -1,538 +1,557 @@
-﻿module("modules.live2d.BaseLive2d", package.seeall)
+﻿-- chunkname: @modules/live2d/BaseLive2d.lua
 
-local var_0_0 = class("BaseLive2d", LuaCompBase)
+module("modules.live2d.BaseLive2d", package.seeall)
 
-var_0_0.BodyTrackIndex = 0
-var_0_0.FaceTrackIndex = 1
-var_0_0.MouthTrackIndex = 2
-var_0_0.TransitionTrackIndex = 3
-var_0_0.enableMainInterfaceLight = false
+local BaseLive2d = class("BaseLive2d", LuaCompBase)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._gameObj = arg_1_1
-	arg_1_0._gameTr = arg_1_1.transform
-	arg_1_0._resLoader = SpinePrefabInstantiate.Create(arg_1_0._gameObj)
-	arg_1_0._resPath = nil
-	arg_1_0._cubismController = nil
-	arg_1_0._spineGo = nil
-	arg_1_0._spineTr = nil
-	arg_1_0._isLoop = false
-	arg_1_0._lookDir = SpineLookDir.Left
-	arg_1_0._bFreeze = false
-	arg_1_0._actionCb = nil
-	arg_1_0._actionCbObj = nil
-	arg_1_0._resLoadedCb = nil
-	arg_1_0._resLoadedCbObj = nil
+BaseLive2d.BodyTrackIndex = 0
+BaseLive2d.FaceTrackIndex = 1
+BaseLive2d.MouthTrackIndex = 2
+BaseLive2d.TransitionTrackIndex = 3
+BaseLive2d.enableMainInterfaceLight = false
+
+function BaseLive2d:init(gameObj)
+	self._gameObj = gameObj
+	self._gameTr = gameObj.transform
+	self._resLoader = SpinePrefabInstantiate.Create(self._gameObj)
+	self._resPath = nil
+	self._cubismController = nil
+	self._spineGo = nil
+	self._spineTr = nil
+	self._isLoop = false
+	self._lookDir = SpineLookDir.Left
+	self._bFreeze = false
+	self._actionCb = nil
+	self._actionCbObj = nil
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
 end
 
-function var_0_0.setResPath(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if not arg_2_1 then
+function BaseLive2d:setResPath(resPath, loadedCb, loadedCbObj)
+	if not resPath then
 		return
 	end
 
-	if arg_2_0._resPath == arg_2_1 and not gohelper.isNil(arg_2_0._spineGo) then
-		if arg_2_2 then
-			arg_2_2(arg_2_3)
+	if self._resPath == resPath and not gohelper.isNil(self._spineGo) then
+		if loadedCb then
+			loadedCb(loadedCbObj)
 		end
 
 		return
 	end
 
-	arg_2_0:_clear()
+	self:_clear()
 
-	arg_2_0._resPath = arg_2_1
-	arg_2_0._resLoadedCb = arg_2_2
-	arg_2_0._resLoadedCbObj = arg_2_3
+	self._resPath = resPath
+	self._resLoadedCb = loadedCb
+	self._resLoadedCbObj = loadedCbObj
 
-	arg_2_0._resLoader:startLoad(arg_2_0._resPath, arg_2_0._resPath, arg_2_0._onResLoaded, arg_2_0)
+	self._resLoader:startLoad(self._resPath, self._resPath, self._onResLoaded, self)
 end
 
-function var_0_0.setHeroId(arg_3_0, arg_3_1)
-	arg_3_0._heroId = arg_3_1
+function BaseLive2d:setHeroId(id)
+	self._heroId = id
 end
 
-function var_0_0.setSkinId(arg_4_0, arg_4_1)
-	arg_4_0._skinId = arg_4_1
+function BaseLive2d:setSkinId(id)
+	self._skinId = id
 end
 
-function var_0_0.getResPath(arg_5_0)
-	return arg_5_0._resPath
+function BaseLive2d:getResPath()
+	return self._resPath
 end
 
-function var_0_0.doClear(arg_6_0)
-	arg_6_0:_clear()
+function BaseLive2d:doClear()
+	self:_clear()
 end
 
-function var_0_0._clear(arg_7_0)
-	if arg_7_0._resLoader then
-		arg_7_0._resLoader:dispose()
+function BaseLive2d:_clear()
+	if self._resLoader then
+		self._resLoader:dispose()
 	end
 
-	if arg_7_0._roleEffectComp then
-		arg_7_0._roleEffectComp:onDestroy()
+	if self._roleEffectComp then
+		self._roleEffectComp:onDestroy()
 
-		arg_7_0._roleEffectComp = nil
+		self._roleEffectComp = nil
 	end
 
-	if arg_7_0._roleFaceComp then
-		arg_7_0._roleFaceComp:onDestroy()
+	if self._roleFaceComp then
+		self._roleFaceComp:onDestroy()
 
-		arg_7_0._roleFaceComp = nil
+		self._roleFaceComp = nil
 	end
 
-	arg_7_0._cubismController = nil
-	arg_7_0._resPath = nil
+	self._cubismController = nil
+	self._resPath = nil
 
-	if arg_7_0._spineGo then
-		Live2dMaskController.instance:removeLive2dGo(arg_7_0._spineGo)
+	if self._spineGo then
+		Live2dMaskController.instance:removeLive2dGo(self._spineGo)
 
-		arg_7_0._spineGo = nil
+		self._spineGo = nil
 	end
 
-	arg_7_0._spineTr = nil
-	arg_7_0._bFreeze = false
-	arg_7_0._renderer = nil
-	arg_7_0._curBodyName = nil
+	self._spineTr = nil
+	self._bFreeze = false
+	self._renderer = nil
+	self._curBodyName = nil
 end
 
-function var_0_0.setInMainView(arg_8_0)
-	arg_8_0._isInMainView = true
+function BaseLive2d:setInMainView()
+	self._isInMainView = true
 end
 
-function var_0_0.isInMainView(arg_9_0)
-	return arg_9_0._isInMainView
+function BaseLive2d:isInMainView()
+	return self._isInMainView
 end
 
-function var_0_0.isPlayingVoice(arg_10_0)
-	return arg_10_0._live2dVoice and arg_10_0._live2dVoice:playing()
+function BaseLive2d:setBodyChangeCallback(callback, callbackObj)
+	self._bodyChangeCallback = callback
+	self._bodyChangeCallbackObj = callbackObj
 end
 
-function var_0_0.getPlayVoiceStartTime(arg_11_0)
-	return arg_11_0._live2dVoice and arg_11_0._live2dVoice:getPlayVoiceStartTime()
+function BaseLive2d:isPlayingVoice()
+	return self._live2dVoice and self._live2dVoice:playing()
 end
 
-function var_0_0._initVoice(arg_12_0)
-	arg_12_0._live2dVoice = arg_12_0._live2dVoice or Live2dVoice.New()
+function BaseLive2d:getPlayVoiceStartTime()
+	return self._live2dVoice and self._live2dVoice:getPlayVoiceStartTime()
 end
 
-function var_0_0.playVoice(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
-	arg_13_0:_initVoice()
-	arg_13_0._live2dVoice:playVoice(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
+function BaseLive2d:_initVoice()
+	self._live2dVoice = self._live2dVoice or Live2dVoice.New()
 end
 
-function var_0_0.stopVoice(arg_14_0)
-	if arg_14_0._live2dVoice then
-		arg_14_0._live2dVoice:stopVoice()
-	end
+function BaseLive2d:playVoice(config, callback, txtContent, txtEnContent, bgGo)
+	self:_initVoice()
+	self._live2dVoice:playVoice(self, config, callback, txtContent, txtEnContent, bgGo)
 end
 
-function var_0_0.setSwitch(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0:_initVoice()
-	arg_15_0._live2dVoice:setSwitch(arg_15_0, arg_15_1, arg_15_2)
-end
-
-function var_0_0.getSpineVoice(arg_16_0)
-	arg_16_0:_initVoice()
-
-	return arg_16_0._live2dVoice
-end
-
-function var_0_0.initSkeletonComponent(arg_17_0)
-	arg_17_0._cubismController = arg_17_0._spineGo:GetComponent(typeof(ZProj.CubismController))
-	arg_17_0._cubismMouthController = arg_17_0._spineGo:AddComponent(typeof(CubismMouthProxy))
-
-	if arg_17_0._cubismController and var_0_0.enableMainInterfaceLight then
-		arg_17_0._cubismController:SetMainColor(Color.white)
+function BaseLive2d:stopVoice()
+	if self._live2dVoice then
+		self._live2dVoice:stopVoice()
 	end
 end
 
-function var_0_0.setAlwaysFade(arg_18_0, arg_18_1)
-	if arg_18_0._cubismController then
-		Live2dSpecialLogic.setAlwaysFade(arg_18_0._cubismController, arg_18_0._resPath, arg_18_1)
+function BaseLive2d:setSwitch(switchGroup, switchState)
+	self:_initVoice()
+	self._live2dVoice:setSwitch(self, switchGroup, switchState)
+end
+
+function BaseLive2d:getSpineVoice()
+	self:_initVoice()
+
+	return self._live2dVoice
+end
+
+function BaseLive2d:initSkeletonComponent()
+	self._cubismController = self._spineGo:GetComponent(typeof(ZProj.CubismController))
+	self._cubismMouthController = self._spineGo:AddComponent(typeof(CubismMouthProxy))
+
+	if self._cubismController and BaseLive2d.enableMainInterfaceLight then
+		self._cubismController:SetMainColor(Color.white)
 	end
 end
 
-function var_0_0.onAnimEventCallback(arg_19_0, arg_19_1)
-	if arg_19_0._actionCb then
-		arg_19_0._actionCb(arg_19_0._actionCbObj, arg_19_1, SpineAnimEvent.ActionComplete)
-	end
-
-	if arg_19_0._live2dVoice then
-		arg_19_0._live2dVoice:onAnimationEvent(arg_19_1, SpineAnimEvent.ActionComplete)
+function BaseLive2d:setAlwaysFade(value)
+	if self._cubismController then
+		Live2dSpecialLogic.setAlwaysFade(self._cubismController, self._resPath, value)
 	end
 end
 
-function var_0_0.getSpineGo(arg_20_0)
-	return arg_20_0._spineGo
+function BaseLive2d:onAnimEventCallback(actName)
+	if self._actionCb then
+		self._actionCb(self._actionCbObj, actName, SpineAnimEvent.ActionComplete)
+	end
+
+	if self._live2dVoice then
+		self._live2dVoice:onAnimationEvent(actName, SpineAnimEvent.ActionComplete)
+	end
 end
 
-function var_0_0.getRenderer(arg_21_0)
-	if gohelper.isNil(arg_21_0._spineGo) then
+function BaseLive2d:getSpineGo()
+	return self._spineGo
+end
+
+function BaseLive2d:getRenderer()
+	if gohelper.isNil(self._spineGo) then
 		return nil
 	end
 
-	arg_21_0._renderer = arg_21_0._renderer or arg_21_0._spineGo:GetComponentInChildren(typeof(UnityEngine.Renderer))
+	self._renderer = self._renderer or self._spineGo:GetComponentInChildren(typeof(UnityEngine.Renderer))
 
-	return arg_21_0._renderer
+	return self._renderer
 end
 
-function var_0_0.getSpineTr(arg_22_0)
-	return arg_22_0._spineTr
+function BaseLive2d:getSpineTr()
+	return self._spineTr
 end
 
-function var_0_0._onResLoaded(arg_23_0)
-	arg_23_0._spineGo = arg_23_0._resLoader:getInstGO()
+function BaseLive2d:_onResLoaded()
+	self._spineGo = self._resLoader:getInstGO()
 
-	Live2dMaskController.instance:addLive2dGo(arg_23_0._spineGo)
+	Live2dMaskController.instance:addLive2dGo(self._spineGo)
 
-	arg_23_0._spineTr = arg_23_0._spineGo.transform
-	arg_23_0._renderer = nil
+	self._spineTr = self._spineGo.transform
+	self._renderer = nil
 
-	arg_23_0:_initRoleEffect()
-	arg_23_0:_initFaceEffect()
-	arg_23_0:initSkeletonComponent()
-	arg_23_0:_changeLookDir()
+	self:_initRoleEffect()
+	self:_initFaceEffect()
+	self:initSkeletonComponent()
+	self:_changeLookDir()
 
-	if arg_23_0._isStory then
-		arg_23_0._cubismController:SetAnimEventCallback(arg_23_0.onAnimEventCallback, arg_23_0)
+	if self._isStory then
+		self._cubismController:SetAnimEventCallback(self.onAnimEventCallback, self)
 
-		arg_23_0._curBodyName = arg_23_0._curBodyName or CharacterVoiceController.instance:getIdle(arg_23_0._heroId)
-		arg_23_0._curFaceName = arg_23_0._curFaceName or StoryAnimName.E_ZhengChang
+		self._curBodyName = self._curBodyName or CharacterVoiceController.instance:getIdle(self._heroId)
+		self._curFaceName = self._curFaceName or StoryAnimName.E_ZhengChang
 
-		arg_23_0:playStory(arg_23_0._curBodyName, arg_23_0._curFaceName)
+		self:playStory(self._curBodyName, self._curFaceName)
 	else
-		arg_23_0._curBodyName = arg_23_0._curBodyName or SpineAnimState.idle1
+		self._curBodyName = self._curBodyName or SpineAnimState.idle1
 
-		arg_23_0:setBodyAnimation(arg_23_0._curBodyName, true, 0.5)
+		self:setBodyAnimation(self._curBodyName, true, 0.5)
 	end
 
-	if arg_23_0._resLoadedCb then
-		arg_23_0._resLoadedCb(arg_23_0._resLoadedCbObj)
+	if self._resLoadedCb then
+		self._resLoadedCb(self._resLoadedCbObj)
 	end
 
-	arg_23_0._resLoadedCb = nil
-	arg_23_0._resLoadedCbObj = nil
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
 end
 
-function var_0_0._initRoleEffect(arg_24_0)
-	local var_24_0
-	local var_24_1
+function BaseLive2d:_initRoleEffect()
+	local roleEffectConfig
 
-	arg_24_0._roleEffectComp, var_24_1 = arg_24_0:_getRoleEffectComp(arg_24_0._resPath)
+	self._roleEffectComp, roleEffectConfig = self:_getRoleEffectComp(self._resPath)
 
-	if arg_24_0._roleEffectComp then
-		arg_24_0._roleEffectComp:setSpine(arg_24_0)
-		arg_24_0._roleEffectComp:init(var_24_1)
+	if self._roleEffectComp then
+		self._roleEffectComp:setSpine(self)
+		self._roleEffectComp:init(roleEffectConfig)
 	end
 end
 
-function var_0_0._getRoleEffectComp(arg_25_0, arg_25_1)
-	for iter_25_0, iter_25_1 in ipairs(lua_character_motion_effect.configList) do
-		if string.find(arg_25_1, iter_25_1.heroResName) then
-			local var_25_0 = iter_25_1.effectCompName
+function BaseLive2d:_getRoleEffectComp(resPath)
+	for i, v in ipairs(lua_character_motion_effect.configList) do
+		if string.find(resPath, v.heroResName) then
+			local effectCompName = v.effectCompName
+			local cls = _G[effectCompName]
 
-			return _G[var_25_0].New(), iter_25_1
+			return cls.New(), v
 		end
 	end
 end
 
-function var_0_0._initFaceEffect(arg_26_0)
-	local var_26_0
-	local var_26_1
+function BaseLive2d:_initFaceEffect()
+	local faceEffectConfig
 
-	arg_26_0._faceEffectComp, var_26_1 = arg_26_0:_getRoleFaceEffectComp(arg_26_0._resPath)
+	self._faceEffectComp, faceEffectConfig = self:_getRoleFaceEffectComp(self._resPath)
 
-	if arg_26_0._faceEffectComp then
-		arg_26_0._faceEffectComp:setSpine(arg_26_0)
-		arg_26_0._faceEffectComp:init(var_26_1)
+	if self._faceEffectComp then
+		self._faceEffectComp:setSpine(self)
+		self._faceEffectComp:init(faceEffectConfig)
 	end
 end
 
-function var_0_0._getRoleFaceEffectComp(arg_27_0, arg_27_1)
-	for iter_27_0, iter_27_1 in ipairs(lua_character_face_effect.configList) do
-		if string.find(arg_27_1, iter_27_1.heroResName) then
-			local var_27_0 = iter_27_1.effectCompName
+function BaseLive2d:_getRoleFaceEffectComp(resPath)
+	for i, v in ipairs(lua_character_face_effect.configList) do
+		if string.find(resPath, v.heroResName) then
+			local effectCompName = v.effectCompName
+			local cls = _G[effectCompName]
 
-			return _G[var_27_0].New(), iter_27_1
+			return cls.New(), v
 		end
 	end
 end
 
-function var_0_0._showBodyEffect(arg_28_0, arg_28_1)
-	if arg_28_0._roleEffectComp then
-		arg_28_0._roleEffectComp:showBodyEffect(arg_28_1, arg_28_0._onBodyEffectShow, arg_28_0)
+function BaseLive2d:_showBodyEffect(bodyName)
+	if self._roleEffectComp then
+		self._roleEffectComp:showBodyEffect(bodyName, self._onBodyEffectShow, self)
 	end
 end
 
-function var_0_0._onBodyEffectShow(arg_29_0, arg_29_1)
+function BaseLive2d:forceHideBodyEffect()
+	if self._roleEffectComp and self._roleEffectComp.forceHideBodyEffect then
+		self._roleEffectComp:forceHideBodyEffect()
+	end
+end
+
+function BaseLive2d:_onBodyEffectShow(visible)
 	return
 end
 
-function var_0_0.showEverNodes(arg_30_0, arg_30_1)
-	if arg_30_0._roleEffectComp and arg_30_0._roleEffectComp.showEverNodes then
-		arg_30_0._roleEffectComp:showEverNodes(arg_30_1)
+function BaseLive2d:showEverNodes(value)
+	if self._roleEffectComp and self._roleEffectComp.showEverNodes then
+		self._roleEffectComp:showEverNodes(value)
 	end
 end
 
-function var_0_0.hasEverNodes(arg_31_0)
-	return arg_31_0._roleEffectComp and arg_31_0._roleEffectComp.isShowEverEffect and arg_31_0._roleEffectComp:isShowEverEffect()
+function BaseLive2d:hasEverNodes()
+	return self._roleEffectComp and self._roleEffectComp.isShowEverEffect and self._roleEffectComp:isShowEverEffect()
 end
 
-function var_0_0._showFaceEffect(arg_32_0, arg_32_1)
-	if arg_32_0._faceEffectComp then
-		arg_32_0._faceEffectComp:showFaceEffect(arg_32_1)
+function BaseLive2d:_showFaceEffect(faceName)
+	if self._faceEffectComp then
+		self._faceEffectComp:showFaceEffect(faceName)
 	end
 end
 
-function var_0_0.play(arg_33_0, arg_33_1, arg_33_2)
-	arg_33_0._curBodyName = arg_33_1
+function BaseLive2d:play(bodyName, loop)
+	self._curBodyName = bodyName
 
-	arg_33_0:setBodyAnimation(arg_33_1, arg_33_2, 0.5)
+	self:setBodyAnimation(bodyName, loop, 0.5)
 end
 
-function var_0_0.playStory(arg_34_0, arg_34_1, arg_34_2)
-	arg_34_0._curBodyName = arg_34_1
-	arg_34_0._curFaceName = arg_34_2
+function BaseLive2d:playStory(bodyName, faceName)
+	self._curBodyName = bodyName
+	self._curFaceName = faceName
 
-	if arg_34_1 ~= StoryAnimName.B_IDLE or arg_34_0:hasAnimation(arg_34_1) then
-		arg_34_0:setBodyAnimation(arg_34_1, true, 0.5)
+	if bodyName ~= StoryAnimName.B_IDLE or self:hasAnimation(bodyName) then
+		self:setBodyAnimation(bodyName, true, 0.5)
 	end
 
-	if arg_34_2 ~= StoryAnimName.E_ZhengChang or arg_34_0:hasAnimation(arg_34_2) then
-		arg_34_0:setFaceAnimation(arg_34_2, true, 0.5)
+	if faceName ~= StoryAnimName.E_ZhengChang or self:hasAnimation(faceName) then
+		self:setFaceAnimation(faceName, true, 0.5)
 	end
 end
 
-function var_0_0.setBodyAnimation(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	arg_35_0._curBodyName = arg_35_1
+function BaseLive2d:setBodyAnimation(bodyName, loop, mixTime)
+	local oldBodyName = self._curBodyName
 
-	arg_35_0:_setBodyAnimation(var_0_0.BodyTrackIndex, arg_35_1, arg_35_2, arg_35_3)
-	arg_35_0:_showBodyEffect(arg_35_1)
+	self._curBodyName = bodyName
+
+	self:_setBodyAnimation(BaseLive2d.BodyTrackIndex, bodyName, loop, mixTime)
+	self:_showBodyEffect(bodyName)
+
+	if self._bodyChangeCallback then
+		self._bodyChangeCallback(self._bodyChangeCallbackObj, oldBodyName, bodyName)
+	end
 end
 
-function var_0_0.getCurBody(arg_36_0)
-	return arg_36_0._curBodyName
+function BaseLive2d:getCurBody()
+	return self._curBodyName
 end
 
-function var_0_0.setFaceAnimation(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	arg_37_0._curFaceName = arg_37_1
+function BaseLive2d:setFaceAnimation(faceName, loop, mixTime)
+	self._curFaceName = faceName
 
-	if gohelper.isNil(arg_37_0._cubismController) then
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_37_0._cubismController:PlayExpression(arg_37_1)
-	arg_37_0:_showFaceEffect(arg_37_1)
+	self._cubismController:PlayExpression(faceName)
+	self:_showFaceEffect(faceName)
 end
 
-function var_0_0.getCurFace(arg_38_0)
-	return arg_38_0._curFaceName
+function BaseLive2d:getCurFace()
+	return self._curFaceName
 end
 
-function var_0_0.getCurMouth(arg_39_0)
-	return arg_39_0._curMouthName
+function BaseLive2d:getCurMouth()
+	return self._curMouthName
 end
 
-function var_0_0.setSortingOrder(arg_40_0, arg_40_1)
-	if gohelper.isNil(arg_40_0._cubismController) then
+function BaseLive2d:setSortingOrder(value)
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_40_0._cubismController.SortingOrder = arg_40_1
+	self._cubismController.SortingOrder = value
 end
 
-function var_0_0.setAlpha(arg_41_0, arg_41_1)
-	if gohelper.isNil(arg_41_0._cubismController) then
+function BaseLive2d:setAlpha(alpha)
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_41_0._cubismController:SetAlpha(arg_41_1)
+	self._cubismController:SetAlpha(alpha)
 end
 
-function var_0_0.setSceneTexture(arg_42_0, arg_42_1)
-	if gohelper.isNil(arg_42_0._cubismController) then
+function BaseLive2d:setSceneTexture(texture)
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_42_0._cubismController:SetSceneTexture(arg_42_1)
+	self._cubismController:SetSceneTexture(texture)
 end
 
-function var_0_0.setUIMaskKeyword(arg_43_0, arg_43_1)
-	if gohelper.isNil(arg_43_0._cubismController) then
+function BaseLive2d:setUIMaskKeyword(enable)
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_43_0._cubismController:SetUIMaskKeyword(arg_43_1)
+	self._cubismController:SetUIMaskKeyword(enable)
 end
 
-function var_0_0.enableSceneAlpha(arg_44_0)
-	if gohelper.isNil(arg_44_0._cubismController) then
+function BaseLive2d:enableSceneAlpha()
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_44_0._cubismController:SetSceneAlphaKeyword(true)
+	self._cubismController:SetSceneAlphaKeyword(true)
 end
 
-function var_0_0.disableSceneAlpha(arg_45_0)
-	if gohelper.isNil(arg_45_0._cubismController) then
+function BaseLive2d:disableSceneAlpha()
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_45_0._cubismController:SetSceneAlphaKeyword(false)
+	self._cubismController:SetSceneAlphaKeyword(false)
 end
 
-function var_0_0.SetDark(arg_46_0)
-	if gohelper.isNil(arg_46_0._cubismController) then
+function BaseLive2d:SetDark()
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_46_0._cubismController:SetColorFactor(0.6)
+	self._cubismController:SetColorFactor(0.6)
 end
 
-function var_0_0.SetBright(arg_47_0)
-	if gohelper.isNil(arg_47_0._cubismController) then
+function BaseLive2d:SetBright()
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_47_0._cubismController:SetColorFactor(1)
+	self._cubismController:SetColorFactor(1)
 end
 
-function var_0_0.setMouthAnimation(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
-	arg_48_0._curMouthName = arg_48_1
+function BaseLive2d:setMouthAnimation(mouthName, loop, mixTime)
+	self._curMouthName = mouthName
 
-	arg_48_0:SetAnimation(var_0_0.MouthTrackIndex, arg_48_1, arg_48_2, arg_48_3)
+	self:SetAnimation(BaseLive2d.MouthTrackIndex, mouthName, loop, mixTime)
 end
 
-function var_0_0.setTransition(arg_49_0, arg_49_1, arg_49_2, arg_49_3)
-	arg_49_0:SetAnimation(var_0_0.TransitionTrackIndex, arg_49_1, arg_49_2, arg_49_3)
+function BaseLive2d:setTransition(transitionName, loop, mixTime)
+	self:SetAnimation(BaseLive2d.TransitionTrackIndex, transitionName, loop, mixTime)
 end
 
-function var_0_0.SetAnimation(arg_50_0, arg_50_1, arg_50_2, arg_50_3, arg_50_4)
-	if gohelper.isNil(arg_50_0._cubismController) then
+function BaseLive2d:SetAnimation(trackIndex, animationName, loop, mixTime)
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	if arg_50_0:hasAnimation(arg_50_2) == false then
+	if self:hasAnimation(animationName) == false then
 		return
 	end
 
-	if arg_50_1 <= var_0_0.MouthTrackIndex then
-		arg_50_0._cubismController:PlayAnimation(arg_50_2, arg_50_3, 1, arg_50_1)
+	if trackIndex <= BaseLive2d.MouthTrackIndex then
+		self._cubismController:PlayAnimation(animationName, loop, 1, trackIndex)
 	end
 end
 
-function var_0_0._setBodyAnimation(arg_51_0, arg_51_1, arg_51_2, arg_51_3, arg_51_4)
-	if gohelper.isNil(arg_51_0._cubismController) then
+function BaseLive2d:_setBodyAnimation(trackIndex, animationName, loop, mixTime)
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	if arg_51_0:hasAnimation(arg_51_2) == false then
+	if self:hasAnimation(animationName) == false then
 		return
 	end
 
-	if arg_51_1 <= var_0_0.MouthTrackIndex then
-		arg_51_0._cubismController:PlayAnimation(arg_51_2, arg_51_3, arg_51_4 == 0 and 0 or 1, arg_51_1)
+	if trackIndex <= BaseLive2d.MouthTrackIndex then
+		self._cubismController:PlayAnimation(animationName, loop, mixTime == 0 and 0 or 1, trackIndex)
 	end
 end
 
-function var_0_0.hasAnimation(arg_52_0, arg_52_1)
-	return not gohelper.isNil(arg_52_0._cubismController) and arg_52_0._cubismController:HasAnimation(arg_52_1)
+function BaseLive2d:hasAnimation(animationName)
+	return not gohelper.isNil(self._cubismController) and self._cubismController:HasAnimation(animationName)
 end
 
-function var_0_0.hasExpression(arg_53_0, arg_53_1)
-	return not gohelper.isNil(arg_53_0._cubismController) and arg_53_0._cubismController:HasExpression(arg_53_1)
+function BaseLive2d:hasExpression(name)
+	return not gohelper.isNil(self._cubismController) and self._cubismController:HasExpression(name)
 end
 
-function var_0_0.setParameterStoreEnabled(arg_54_0, arg_54_1)
-	return not gohelper.isNil(arg_54_0._cubismController) and arg_54_0._cubismController:SetParameterStoreEnabled(arg_54_1)
+function BaseLive2d:setParameterStoreEnabled(value)
+	return not gohelper.isNil(self._cubismController) and self._cubismController:SetParameterStoreEnabled(value)
 end
 
-function var_0_0.stopMouthAnimation(arg_55_0)
-	if gohelper.isNil(arg_55_0._cubismController) then
+function BaseLive2d:stopMouthAnimation()
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_55_0._cubismController:StopAnimation(var_0_0.MouthTrackIndex)
+	self._cubismController:StopAnimation(BaseLive2d.MouthTrackIndex)
 end
 
-function var_0_0.stopTransition(arg_56_0)
-	if gohelper.isNil(arg_56_0._cubismController) then
+function BaseLive2d:stopTransition()
+	if gohelper.isNil(self._cubismController) then
 		return
 	end
 
-	arg_56_0._cubismController:StopAnimation(var_0_0.TransitionTrackIndex)
+	self._cubismController:StopAnimation(BaseLive2d.TransitionTrackIndex)
 end
 
-function var_0_0.setActionEventCb(arg_57_0, arg_57_1, arg_57_2)
-	if arg_57_0._isStory then
-		arg_57_0._actionCb = arg_57_1
-		arg_57_0._actionCbObj = arg_57_2
+function BaseLive2d:setActionEventCb(animEvtCb, animEvtCbObj)
+	if self._isStory then
+		self._actionCb = animEvtCb
+		self._actionCbObj = animEvtCbObj
 	end
 end
 
-function var_0_0.changeLookDir(arg_58_0, arg_58_1)
-	if arg_58_1 == arg_58_0._lookDir then
+function BaseLive2d:changeLookDir(dir)
+	if dir == self._lookDir then
 		return
 	end
 
-	arg_58_0._lookDir = arg_58_1
+	self._lookDir = dir
 
-	arg_58_0:_changeLookDir()
+	self:_changeLookDir()
 end
 
-function var_0_0._changeLookDir(arg_59_0)
+function BaseLive2d:_changeLookDir()
 	return
 end
 
-function var_0_0.getLookDir(arg_60_0)
-	return arg_60_0._lookDir
+function BaseLive2d:getLookDir()
+	return self._lookDir
 end
 
-function var_0_0.getMouthController(arg_61_0)
-	return arg_61_0._cubismMouthController
+function BaseLive2d:getMouthController()
+	return self._cubismMouthController
 end
 
-function var_0_0.onDestroy(arg_62_0)
-	if arg_62_0._resLoader then
-		arg_62_0._resLoader:onDestroy()
+function BaseLive2d:onDestroy()
+	if self._resLoader then
+		self._resLoader:onDestroy()
 
-		arg_62_0._resLoader = nil
+		self._resLoader = nil
 	end
 
-	if arg_62_0._live2dVoice then
-		arg_62_0._live2dVoice:onDestroy()
+	if self._live2dVoice then
+		self._live2dVoice:onDestroy()
 
-		arg_62_0._live2dVoice = nil
+		self._live2dVoice = nil
 	end
 
-	if arg_62_0._roleEffectComp then
-		arg_62_0._roleEffectComp:onDestroy()
+	if self._roleEffectComp then
+		self._roleEffectComp:onDestroy()
 
-		arg_62_0._roleEffectComp = nil
+		self._roleEffectComp = nil
 	end
 
-	if arg_62_0._roleFaceComp then
-		arg_62_0._roleFaceComp:onDestroy()
+	if self._roleFaceComp then
+		self._roleFaceComp:onDestroy()
 
-		arg_62_0._roleFaceComp = nil
+		self._roleFaceComp = nil
 	end
 
-	arg_62_0._gameObj = nil
-	arg_62_0._resPath = nil
-	arg_62_0._cubismController = nil
-	arg_62_0._cubismMouthController = nil
+	self._gameObj = nil
+	self._resPath = nil
+	self._cubismController = nil
+	self._cubismMouthController = nil
 
-	if arg_62_0._spineGo then
-		Live2dMaskController.instance:removeLive2dGo(arg_62_0._spineGo)
+	if self._spineGo then
+		Live2dMaskController.instance:removeLive2dGo(self._spineGo)
 
-		arg_62_0._spineGo = nil
+		self._spineGo = nil
 	end
 
-	arg_62_0._renderer = nil
-	arg_62_0._actionCb = nil
-	arg_62_0._actionCbObj = nil
-	arg_62_0._resLoadedCb = nil
-	arg_62_0._resLoadedCbObj = nil
+	self._renderer = nil
+	self._actionCb = nil
+	self._actionCbObj = nil
+	self._resLoadedCb = nil
+	self._resLoadedCbObj = nil
 end
 
-return var_0_0
+return BaseLive2d

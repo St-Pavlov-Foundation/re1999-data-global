@@ -1,298 +1,304 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalMonsterEventView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalMonsterEventView.lua
 
-local var_0_0 = class("SurvivalMonsterEventView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalMonsterEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simageMap = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/Left/#simage_Map")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Panel/Title/#txt_Title")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "Panel/Title/#txt_TitleEn")
-	arg_1_0._goscore = gohelper.findChild(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/#go_score")
-	arg_1_0._txtrecommendscore = gohelper.findChildText(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/#go_score/recommend/#txt_recommend_score")
-	arg_1_0._txtcurscore = gohelper.findChildText(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/#go_score/current/#txt_cur_score")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/#go_tips")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/#go_tips/#txt_tips")
-	arg_1_0._txttitledec = gohelper.findChildText(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/#txt_titledec")
-	arg_1_0._gobuffitem = gohelper.findChild(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem")
-	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/#go_unfinish")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/scroll_buffDec/Viewport/Content/#txt_dec")
-	arg_1_0._txtdecfinished = gohelper.findChildText(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/scroll_buffDec/Viewport/Content/#txt_dec_finished")
-	arg_1_0._gofinished = gohelper.findChild(arg_1_0.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/#go_finished")
-	arg_1_0._goNpcitem = gohelper.findChild(arg_1_0.viewGO, "Panel/Npc/layout/#go_Npcitem")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "Panel/Npc/layout/#go_Npcitem/#go_empty")
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "Panel/Npc/layout/#go_Npcitem/#go_has")
-	arg_1_0._simagehero = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/Npc/layout/#go_Npcitem/#go_has/#simage_hero")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Npc/layout/#go_Npcitem/#btn_click")
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Btns/#btn_Reset")
-	arg_1_0._btnFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Btns/#btn_Fight")
-	arg_1_0._btnWatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Btns/#btn_Watch")
+local SurvivalMonsterEventView = class("SurvivalMonsterEventView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalMonsterEventView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simageMap = gohelper.findChildSingleImage(self.viewGO, "Panel/Left/#simage_Map")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Panel/Title/#txt_Title")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "Panel/Title/#txt_TitleEn")
+	self._goscore = gohelper.findChild(self.viewGO, "Panel/Buff/Viewport/Content/#go_score")
+	self._txtrecommendscore = gohelper.findChildText(self.viewGO, "Panel/Buff/Viewport/Content/#go_score/recommend/#txt_recommend_score")
+	self._txtcurscore = gohelper.findChildText(self.viewGO, "Panel/Buff/Viewport/Content/#go_score/current/#txt_cur_score")
+	self._gotips = gohelper.findChild(self.viewGO, "Panel/Buff/Viewport/Content/#go_tips")
+	self._txttips = gohelper.findChildText(self.viewGO, "Panel/Buff/Viewport/Content/#go_tips/#txt_tips")
+	self._txttitledec = gohelper.findChildText(self.viewGO, "Panel/Buff/Viewport/Content/#txt_titledec")
+	self._gobuffitem = gohelper.findChild(self.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem")
+	self._gounfinish = gohelper.findChild(self.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/#go_unfinish")
+	self._txtdec = gohelper.findChildText(self.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/scroll_buffDec/Viewport/Content/#txt_dec")
+	self._txtdecfinished = gohelper.findChildText(self.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/scroll_buffDec/Viewport/Content/#txt_dec_finished")
+	self._gofinished = gohelper.findChild(self.viewGO, "Panel/Buff/Viewport/Content/layout/#go_buffitem/#go_finished")
+	self._goNpcitem = gohelper.findChild(self.viewGO, "Panel/Npc/layout/#go_Npcitem")
+	self._goempty = gohelper.findChild(self.viewGO, "Panel/Npc/layout/#go_Npcitem/#go_empty")
+	self._gohas = gohelper.findChild(self.viewGO, "Panel/Npc/layout/#go_Npcitem/#go_has")
+	self._simagehero = gohelper.findChildSingleImage(self.viewGO, "Panel/Npc/layout/#go_Npcitem/#go_has/#simage_hero")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Npc/layout/#go_Npcitem/#btn_click")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Btns/#btn_Reset")
+	self._btnFight = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Btns/#btn_Fight")
+	self._btnWatch = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Btns/#btn_Watch")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 
-	arg_1_0._goNpc = gohelper.findChild(arg_1_0.viewGO, "Panel/Npc")
+	self._goNpc = gohelper.findChild(self.viewGO, "Panel/Npc")
 
-	gohelper.setActive(arg_1_0._goNpc, false)
+	gohelper.setActive(self._goNpc, false)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0._btnResetOnClick, arg_2_0)
-	arg_2_0._btnFight:AddClickListener(arg_2_0._btnFightOnClick, arg_2_0)
-	arg_2_0._btnWatch:AddClickListener(arg_2_0._btnWatchOnClick, arg_2_0)
+function SurvivalMonsterEventView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnReset:AddClickListener(self._btnResetOnClick, self)
+	self._btnFight:AddClickListener(self._btnFightOnClick, self)
+	self._btnWatch:AddClickListener(self._btnWatchOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnReset:RemoveClickListener()
-	arg_3_0._btnFight:RemoveClickListener()
-	arg_3_0._btnWatch:RemoveClickListener()
+function SurvivalMonsterEventView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
+	self._btnReset:RemoveClickListener()
+	self._btnFight:RemoveClickListener()
+	self._btnWatch:RemoveClickListener()
 end
 
-function var_0_0._btnWatchOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SurvivalMonsterEventView:_btnWatchOnClick()
+	self:closeThis()
 
-	if arg_4_0._fight and arg_4_0._fight:canShowEntity() then
-		SurvivalMapHelper.instance:gotoMonster(arg_4_0._fight.fightId, nil, true)
+	if self._fight and self._fight:canShowEntity() then
+		SurvivalMapHelper.instance:gotoMonster(self._fight.fightId, nil, true)
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function SurvivalMonsterEventView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
-	arg_6_0:closeThis()
+function SurvivalMonsterEventView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._btnclickOnClick(arg_7_0)
+function SurvivalMonsterEventView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._btnResetOnClick(arg_8_0)
-	if arg_8_0._fight then
+function SurvivalMonsterEventView:_btnResetOnClick()
+	if self._fight then
 		UIBlockHelper.instance:startBlock("SurvivalMonsterEventView_Reset", 1)
 		SurvivalWeekRpc.instance:sendSurvivalIntrudeReExterminateRequest()
 	end
 end
 
-function var_0_0._btnFightOnClick(arg_9_0)
-	if arg_9_0._fight == nil then
+function SurvivalMonsterEventView:_btnFightOnClick()
+	if self._fight == nil then
 		return
 	end
 
-	if not arg_9_0._fight:isFighting() then
-		GameFacade.showToast(ToastEnum.SurvivalBossDotOpen, arg_9_0._fight.beginTime)
+	if not self._fight:isFighting() then
+		GameFacade.showToast(ToastEnum.SurvivalBossDotOpen, self._fight.beginTime)
 
 		return
 	end
 
-	arg_9_0:enterFight()
+	self:enterFight()
 end
 
-function var_0_0.enterFight(arg_10_0)
-	arg_10_0:_enterFight()
+function SurvivalMonsterEventView:enterFight()
+	self:_enterFight()
 end
 
-local var_0_1 = ZProj.UIEffectsCollection
+local ZProj_UIEffectsCollection = ZProj.UIEffectsCollection
 
-function var_0_0._enterFight(arg_11_0)
-	if arg_11_0._fight:getBattleId() then
+function SurvivalMonsterEventView:_enterFight()
+	if self._fight:getBattleId() then
 		UIBlockHelper.instance:startBlock("SurvivalMonsterEventView_EnterFight")
-		SurvivalController.instance:tryEnterShelterFight(arg_11_0._enterFightFinish, arg_11_0)
+		SurvivalController.instance:tryEnterShelterFight(self._enterFightFinish, self)
 	end
 end
 
-function var_0_0._enterFightFinish(arg_12_0)
+function SurvivalMonsterEventView:_enterFightFinish()
 	UIBlockHelper.instance:endBlock("SurvivalMonsterEventView_EnterFight")
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	gohelper.setActive(arg_13_0._goNpcitem, false)
-	gohelper.setActive(arg_13_0._gobuffitem, false)
-	arg_13_0:addEventCb(SurvivalController.instance, SurvivalEvent.UpdateView, arg_13_0.updateView, arg_13_0)
+function SurvivalMonsterEventView:_editableInitView()
+	gohelper.setActive(self._goNpcitem, false)
+	gohelper.setActive(self._gobuffitem, false)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.UpdateView, self.updateView, self)
 
-	arg_13_0._fightUIEffect = var_0_1.Get(arg_13_0._btnFight.gameObject)
-	arg_13_0._fightBtnAnchorX, arg_13_0._fightBtnAnchorY = recthelper.getAnchor(arg_13_0._btnFight.transform)
-	arg_13_0._resetBtnAnchorX, arg_13_0._resetBtnAnchorY = recthelper.getAnchor(arg_13_0._btnReset.transform)
+	self._fightUIEffect = ZProj_UIEffectsCollection.Get(self._btnFight.gameObject)
+	self._fightBtnAnchorX, self._fightBtnAnchorY = recthelper.getAnchor(self._btnFight.transform)
+	self._resetBtnAnchorX, self._resetBtnAnchorY = recthelper.getAnchor(self._btnReset.transform)
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function SurvivalMonsterEventView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
+function SurvivalMonsterEventView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 
-	arg_15_0.showType = arg_15_0.viewParam.showType
-	arg_15_0._fight = SurvivalShelterModel.instance:getWeekInfo():getMonsterFight()
-	arg_15_0._fightConfig = arg_15_0._fight.fightCo
+	self.showType = self.viewParam.showType
 
-	arg_15_0:_initConfigInfo()
-	arg_15_0:updateView()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local fight = weekInfo:getMonsterFight()
+
+	self._fight = fight
+	self._fightConfig = self._fight.fightCo
+
+	self:_initConfigInfo()
+	self:updateView()
 end
 
-function var_0_0.refreshShowType(arg_16_0)
-	gohelper.setActive(arg_16_0._gotips, arg_16_0.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Watch)
-	gohelper.setActive(arg_16_0._btnWatch.gameObject, arg_16_0.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Watch)
-	gohelper.setActive(arg_16_0._goscore, arg_16_0.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Normal)
-	gohelper.setActive(arg_16_0._btnFight.gameObject, arg_16_0.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Normal)
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitBossEventView, arg_16_0.showType)
+function SurvivalMonsterEventView:refreshShowType()
+	gohelper.setActive(self._gotips, self.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Watch)
+	gohelper.setActive(self._btnWatch.gameObject, self.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Watch)
+	gohelper.setActive(self._goscore, self.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Normal)
+	gohelper.setActive(self._btnFight.gameObject, self.showType == SurvivalEnum.SurvivalMonsterEventViewShowType.Normal)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitBossEventView, self.showType)
 end
 
-function var_0_0.updateView(arg_17_0)
-	local var_17_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalMonsterEventView:updateView()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local fight = weekInfo:getMonsterFight()
 
-	arg_17_0._fight = var_17_0:getMonsterFight()
+	self._fight = fight
 
-	arg_17_0:_refreshState()
+	self:_refreshState()
 
-	local var_17_1 = arg_17_0._fightConfig.score
-	local var_17_2 = var_17_0.equipBox:getAllScore()
-	local var_17_3 = "#843034"
+	local recommendScore = self._fightConfig.score
+	local curScore = weekInfo.equipBox:getAllScore()
+	local curScoreTxtColor = "#843034"
 
-	if var_17_1 < var_17_2 then
-		var_17_3 = "#19623f"
+	if recommendScore < curScore then
+		curScoreTxtColor = "#19623f"
 	end
 
-	arg_17_0._txtrecommendscore.text = arg_17_0._fightConfig.score
-	arg_17_0._txtcurscore.text = var_17_0.equipBox:getAllScore()
-	arg_17_0._txtcurscore.color = GameUtil.parseColor(var_17_3)
+	self._txtrecommendscore.text = self._fightConfig.score
+	self._txtcurscore.text = weekInfo.equipBox:getAllScore()
+	self._txtcurscore.color = GameUtil.parseColor(curScoreTxtColor)
 
-	local var_17_4 = arg_17_0._fight.endTime - var_17_0.day
+	local time = self._fight.endTime - weekInfo.day
 
-	if var_17_4 == 0 then
-		arg_17_0._txttips.text = luaLang("survivalmonstereventview_monster_toady")
+	if time == 0 then
+		self._txttips.text = luaLang("survivalmonstereventview_monster_toady")
 	else
-		arg_17_0._txttips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_SurvivalMonsterEventView_tips"), var_17_4)
+		self._txttips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_SurvivalMonsterEventView_tips"), time)
 	end
 
-	TaskDispatcher.runDelay(arg_17_0._updateNpcInfo, arg_17_0, 0.5)
+	TaskDispatcher.runDelay(self._updateNpcInfo, self, 0.5)
 end
 
-function var_0_0._refreshState(arg_18_0)
-	arg_18_0:refreshShowType()
-	gohelper.setActive(arg_18_0._btnReset, arg_18_0._fight:canShowReset())
+function SurvivalMonsterEventView:_refreshState()
+	self:refreshShowType()
+	gohelper.setActive(self._btnReset, self._fight:canShowReset())
 
-	local var_18_0 = arg_18_0._fight:isFighting()
+	local canFight = self._fight:isFighting()
 
-	if arg_18_0._fightUIEffect then
-		arg_18_0._fightUIEffect:SetGray(not var_18_0)
+	if self._fightUIEffect then
+		self._fightUIEffect:SetGray(not canFight)
 	end
 
-	local var_18_1 = arg_18_0._fight:canShowFightBtn()
+	local showFight = self._fight:canShowFightBtn()
 
-	gohelper.setActive(arg_18_0._btnFight, var_18_1)
+	gohelper.setActive(self._btnFight, showFight)
 
-	local var_18_2 = arg_18_0._resetBtnAnchorX
-	local var_18_3 = arg_18_0._resetBtnAnchorY
+	local anchorX, anchorY = self._resetBtnAnchorX, self._resetBtnAnchorY
 
-	if not var_18_1 then
-		var_18_2, var_18_3 = arg_18_0._fightBtnAnchorX, arg_18_0._fightBtnAnchorY
+	if not showFight then
+		anchorX, anchorY = self._fightBtnAnchorX, self._fightBtnAnchorY
 	end
 
-	recthelper.setAnchor(arg_18_0._btnReset.transform, var_18_2, var_18_3)
+	recthelper.setAnchor(self._btnReset.transform, anchorX, anchorY)
 end
 
-function var_0_0._initConfigInfo(arg_19_0)
-	if arg_19_0._fightConfig == nil then
+function SurvivalMonsterEventView:_initConfigInfo()
+	if self._fightConfig == nil then
 		return
 	end
 
-	arg_19_0._txtTitle.text = arg_19_0._fightConfig.name
-	arg_19_0._txttitledec.text = arg_19_0._fightConfig.desc
+	self._txtTitle.text = self._fightConfig.name
+	self._txttitledec.text = self._fightConfig.desc
 
-	local var_19_0 = arg_19_0._fightConfig.image
+	local path = self._fightConfig.image
 
-	arg_19_0._simageMap:LoadImage(var_19_0)
+	self._simageMap:LoadImage(path)
 end
 
-function var_0_0._updateNpcInfo(arg_20_0)
-	if arg_20_0._fight == nil then
+function SurvivalMonsterEventView:_updateNpcInfo()
+	if self._fight == nil then
 		logError("SurvivalMonsterEventView:_updateNpcInfo() self._fight is nil")
 
 		return
 	end
 
-	arg_20_0:_refreshSchemes()
+	self:_refreshSchemes()
 
-	local var_20_0 = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
+	local repressNpcIds = SurvivalShelterNpcMonsterListModel.instance:getSelectList()
 
-	if var_20_0 == nil then
+	if repressNpcIds == nil then
 		return
 	end
 
-	if arg_20_0._repressNpcItems == nil then
-		arg_20_0._repressNpcItems = arg_20_0:getUserDataTb_()
+	if self._repressNpcItems == nil then
+		self._repressNpcItems = self:getUserDataTb_()
 	end
 
-	local var_20_1 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterMonsterSelectNpcMax)
-	local var_20_2 = var_20_1 and tonumber(var_20_1) or 0
+	local configValue = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.ShelterMonsterSelectNpcMax)
+	local count = configValue and tonumber(configValue) or 0
 
-	for iter_20_0 = 1, var_20_2 do
-		local var_20_3 = arg_20_0._repressNpcItems[iter_20_0]
-		local var_20_4 = var_20_0[iter_20_0]
+	for i = 1, count do
+		local item = self._repressNpcItems[i]
+		local npcId = repressNpcIds[i]
 
-		if var_20_3 == nil then
-			local var_20_5 = gohelper.cloneInPlace(arg_20_0._goNpcitem)
+		if item == nil then
+			local go = gohelper.cloneInPlace(self._goNpcitem)
 
-			var_20_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_5, SurvivalMonsterEventSmallNpcItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalMonsterEventSmallNpcItem)
 
-			gohelper.setActive(var_20_5, true)
-			table.insert(arg_20_0._repressNpcItems, var_20_3)
+			gohelper.setActive(go, true)
+			table.insert(self._repressNpcItems, item)
 		end
 
-		var_20_3:setIsCanEnterSelect(arg_20_0._fight:canEnterSelectNpc())
-		var_20_3:setNeedShowEmpty(arg_20_0._fight:canEnterSelectNpc())
-		var_20_3:updateItem(var_20_4)
+		item:setIsCanEnterSelect(self._fight:canEnterSelectNpc())
+		item:setNeedShowEmpty(self._fight:canEnterSelectNpc())
+		item:updateItem(npcId)
 	end
 end
 
-function var_0_0._refreshSchemes(arg_21_0)
-	local var_21_0 = arg_21_0._fight.schemes
+function SurvivalMonsterEventView:_refreshSchemes()
+	local schemes = self._fight.schemes
 
-	if arg_21_0._schemesItems == nil then
-		arg_21_0._schemesItems = arg_21_0:getUserDataTb_()
+	if self._schemesItems == nil then
+		self._schemesItems = self:getUserDataTb_()
 	end
 
-	local var_21_1 = arg_21_0._fight:isFighting()
+	local isFight = self._fight:isFighting()
 
-	for iter_21_0, iter_21_1 in pairs(var_21_0) do
-		local var_21_2 = arg_21_0._schemesItems[iter_21_0]
+	for id, repress in pairs(schemes) do
+		local item = self._schemesItems[id]
 
-		if var_21_2 == nil then
-			local var_21_3 = gohelper.cloneInPlace(arg_21_0._gobuffitem)
+		if item == nil then
+			local go = gohelper.cloneInPlace(self._gobuffitem)
 
-			var_21_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_21_3, SurvivalMonsterEventBuffItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalMonsterEventBuffItem)
 
-			var_21_2:initItem(iter_21_0, arg_21_0._fight:getIntrudeSchemeMo(iter_21_0))
+			item:initItem(id, self._fight:getIntrudeSchemeMo(id))
 
-			arg_21_0._schemesItems[iter_21_0] = var_21_2
+			self._schemesItems[id] = item
 
-			gohelper.setActive(var_21_3, true)
+			gohelper.setActive(go, true)
 		end
 
-		if not var_21_1 then
-			iter_21_1 = SurvivalShelterMonsterModel.instance:calBuffIsRepress(iter_21_0)
+		if not isFight then
+			repress = SurvivalShelterMonsterModel.instance:calBuffIsRepress(id)
 		end
 
-		var_21_2:updateItem(iter_21_1)
+		item:updateItem(repress)
 	end
 end
 
-function var_0_0.onClose(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._updateNpcInfo, arg_22_0)
+function SurvivalMonsterEventView:onClose()
+	TaskDispatcher.cancelTask(self._updateNpcInfo, self)
 
-	if arg_22_0._fight:canEnterSelectNpc() then
+	if self._fight:canEnterSelectNpc() then
 		SurvivalShelterNpcMonsterListModel.instance:setSelectNpcByList(nil)
 	end
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	arg_23_0._simageMap:UnLoadImage()
+function SurvivalMonsterEventView:onDestroyView()
+	self._simageMap:UnLoadImage()
 end
 
-return var_0_0
+return SurvivalMonsterEventView

@@ -1,20 +1,22 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerMoveCamera", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerMoveCamera.lua
 
-local var_0_0 = class("ExploreTriggerMoveCamera", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerMoveCamera", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = string.splitToNumber(arg_1_1, "#")
-	local var_1_1 = {
+local ExploreTriggerMoveCamera = class("ExploreTriggerMoveCamera", ExploreTriggerBase)
+
+function ExploreTriggerMoveCamera:handle(param, unit)
+	local arr = string.splitToNumber(param, "#")
+	local stepData = {
 		stepType = ExploreEnum.StepType.CameraMove,
-		id = var_1_0[1],
-		moveTime = var_1_0[2],
-		keepTime = var_1_0[3]
+		id = arr[1],
+		moveTime = arr[2],
+		keepTime = arr[3]
 	}
 
-	ExploreStepController.instance:insertClientStep(var_1_1, 1)
+	ExploreStepController.instance:insertClientStep(stepData, 1)
 	ExploreStepController.instance:startStep()
 	ExploreController.instance:getMap():getHero():stopMoving()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ExploreTriggerMoveCamera

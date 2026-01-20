@@ -1,170 +1,181 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191InitBuildView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191InitBuildView.lua
 
-local var_0_0 = class("Act191InitBuildView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191InitBuildView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollbuild = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_build")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Act191InitBuildView = class("Act191InitBuildView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191InitBuildView:onInitView()
+	self._scrollbuild = gohelper.findChildScrollRect(self.viewGO, "#scroll_build")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0.actId = Activity191Model.instance:getCurActId()
+function Act191InitBuildView:_editableInitView()
+	self.actId = Activity191Model.instance:getCurActId()
 end
 
-function var_0_0.onOpen(arg_3_0)
-	Act191StatController.instance:onViewOpen(arg_3_0.viewName)
+function Act191InitBuildView:onOpen()
+	Act191StatController.instance:onViewOpen(self.viewName)
 
-	arg_3_0.initBuildInfo = Activity191Model.instance:getActInfo():getGameInfo().initBuildInfo
+	local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 
-	arg_3_0:refreshUI()
+	self.initBuildInfo = gameInfo.initBuildInfo
+
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_4_0)
-	local var_4_0 = arg_4_0.viewContainer:isManualClose()
+function Act191InitBuildView:onClose()
+	local isManual = self.viewContainer:isManualClose()
 
-	Act191StatController.instance:statViewClose(arg_4_0.viewName, var_4_0)
+	Act191StatController.instance:statViewClose(self.viewName, isManual)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.nextStep, arg_5_0)
+function Act191InitBuildView:onDestroyView()
+	TaskDispatcher.cancelTask(self.nextStep, self)
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	arg_6_0.buildCoList = lua_activity191_init_build.configDict[arg_6_0.actId]
-	arg_6_0.bagAnimList = arg_6_0:getUserDataTb_()
+function Act191InitBuildView:refreshUI()
+	self.buildCoList = lua_activity191_init_build.configDict[self.actId]
+	self.bagAnimList = self:getUserDataTb_()
 
-	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, "#scroll_build/Viewport/Content")
-	local var_6_1 = gohelper.findChild(arg_6_0.viewGO, "#scroll_build/Viewport/Content/SelectItem")
+	local selectGoParent = gohelper.findChild(self.viewGO, "#scroll_build/Viewport/Content")
+	local selectGo = gohelper.findChild(self.viewGO, "#scroll_build/Viewport/Content/SelectItem")
 
-	gohelper.CreateObjList(arg_6_0, arg_6_0._onInitBuildItem, arg_6_0.initBuildInfo, var_6_0, var_6_1)
-	gohelper.setActive(var_6_1, false)
+	gohelper.CreateObjList(self, self._onInitBuildItem, self.initBuildInfo, selectGoParent, selectGo)
+	gohelper.setActive(selectGo, false)
 
-	arg_6_0._scrollbuild.horizontalNormalizedPosition = 0
+	self._scrollbuild.horizontalNormalizedPosition = 0
 
-	if arg_6_0.extraBuildIndex and not GuideModel.instance:isGuideFinish(31504) then
-		local var_6_2 = "UIRoot/POPUP_TOP/Act191InitBuildView/#scroll_build/Viewport/Content/" .. arg_6_0.extraBuildIndex
+	if self.extraBuildIndex and not GuideModel.instance:isGuideFinish(31504) then
+		local path = "UIRoot/POPUP_TOP/Act191InitBuildView/#scroll_build/Viewport/Content/" .. self.extraBuildIndex
 
-		GuideModel.instance:setNextStepGOPath(31504, 1, var_6_2)
+		GuideModel.instance:setNextStepGOPath(31504, 1, path)
 		Activity191Controller.instance:dispatchEvent(Activity191Event.ZTrigger31504)
 	end
 end
 
-function var_0_0._onInitBuildItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = lua_activity191_init_build.configDict[arg_7_0.actId][arg_7_2.id]
+function Act191InitBuildView:_onInitBuildItem(go, info, i)
+	local buildCo = lua_activity191_init_build.configDict[self.actId][info.id]
+	local txtName = gohelper.findChildText(go, "name/txt_name")
 
-	gohelper.findChildText(arg_7_1, "name/txt_name").text = var_7_0.name or ""
-	gohelper.findChildText(arg_7_1, "Coin/txt_Coin").text = arg_7_2.coin
+	txtName.text = buildCo.name or ""
 
-	if not arg_7_0.extraBuildIndex and arg_7_2.coin ~= var_7_0.coin then
-		arg_7_0.extraBuildIndex = arg_7_3
+	local txtCoin = gohelper.findChildText(go, "Coin/txt_Coin")
+
+	txtCoin.text = info.coin
+
+	if not self.extraBuildIndex and info.coin ~= buildCo.coin then
+		self.extraBuildIndex = i
 	end
 
-	local var_7_1 = gohelper.findChild(arg_7_1, "Coin/effect")
+	local coinEffect = gohelper.findChild(go, "Coin/effect")
 
-	gohelper.setActive(var_7_1, arg_7_2.coin ~= var_7_0.coin)
+	gohelper.setActive(coinEffect, info.coin ~= buildCo.coin)
 
-	local var_7_2 = gohelper.findChildButtonWithAudio(arg_7_1, "btn_select")
+	local btnBuy = gohelper.findChildButtonWithAudio(go, "btn_select")
 
-	arg_7_0:addClickCb(var_7_2, arg_7_0.selectInitBuild, arg_7_0, arg_7_3)
+	self:addClickCb(btnBuy, self.selectInitBuild, self, i)
 
-	local var_7_3 = gohelper.findChild(arg_7_1, "hero/heroitem")
-	local var_7_4 = gohelper.findChild(arg_7_1, "collection/collectionitem")
+	local heroGo = gohelper.findChild(go, "hero/heroitem")
+	local collectionGo = gohelper.findChild(go, "collection/collectionitem")
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_2.detail) do
-		if not arg_7_0.extraBuildIndex and iter_7_1.type == Activity191Enum.InitBuildType.Extra then
-			arg_7_0.extraBuildIndex = arg_7_3
+	for _, v in ipairs(info.detail) do
+		if not self.extraBuildIndex and v.type == Activity191Enum.InitBuildType.Extra then
+			self.extraBuildIndex = i
 		end
 
-		local var_7_5 = iter_7_1.type == Activity191Enum.InitBuildType.Extra
+		local extra = v.type == Activity191Enum.InitBuildType.Extra
 
-		for iter_7_2, iter_7_3 in ipairs(iter_7_1.addHero) do
-			arg_7_0:addHero(var_7_3, iter_7_3, var_7_5)
+		for _, id in ipairs(v.addHero) do
+			self:addHero(heroGo, id, extra)
 		end
 
-		for iter_7_4, iter_7_5 in ipairs(iter_7_1.addItem) do
-			arg_7_0:addCollection(var_7_4, iter_7_5, var_7_5)
+		for _, id in ipairs(v.addItem) do
+			self:addCollection(collectionGo, id, extra)
 		end
 	end
 
-	gohelper.setActive(var_7_3, false)
-	gohelper.setActive(var_7_4, false)
+	gohelper.setActive(heroGo, false)
+	gohelper.setActive(collectionGo, false)
 
-	arg_7_0.bagAnimList[arg_7_3] = arg_7_1:GetComponent(gohelper.Type_Animator)
+	self.bagAnimList[i] = go:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.addHero(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.cloneInPlace(arg_8_1)
-	local var_8_1 = arg_8_0:getResInst(Activity191Enum.PrefabPath.HeroHeadItem, var_8_0)
-	local var_8_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, Act191HeroHeadItem)
+function Act191InitBuildView:addHero(go, id, extra)
+	local cloneGo = gohelper.cloneInPlace(go)
+	local headGo = self:getResInst(Activity191Enum.PrefabPath.HeroHeadItem, cloneGo)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(headGo, Act191HeroHeadItem)
 
-	var_8_2:setData(nil, arg_8_2)
-	var_8_2:setPreview()
-	var_8_2:setExtraEffect(arg_8_3)
+	item:setData(nil, id)
+	item:setPreview()
+	item:setExtraEffect(extra)
 end
 
-function var_0_0.addCollection(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = gohelper.cloneInPlace(arg_9_1)
-	local var_9_1 = Activity191Config.instance:getCollectionCo(arg_9_2)
-	local var_9_2 = gohelper.findChildImage(var_9_0, "rare")
+function Act191InitBuildView:addCollection(go, itemId, extra)
+	local cloneGo = gohelper.cloneInPlace(go)
+	local co = Activity191Config.instance:getCollectionCo(itemId)
+	local imageRare = gohelper.findChildImage(cloneGo, "rare")
 
-	UISpriteSetMgr.instance:setAct174Sprite(var_9_2, "act174_propitembg_" .. var_9_1.rare)
-	gohelper.findChildSingleImage(var_9_0, "collectionicon"):LoadImage(ResUrl.getRougeSingleBgCollection(var_9_1.icon))
+	UISpriteSetMgr.instance:setAct174Sprite(imageRare, "act174_propitembg_" .. co.rare)
 
-	local var_9_3 = gohelper.findChildButtonWithAudio(var_9_0, "collectionicon")
+	local collectionIcon = gohelper.findChildSingleImage(cloneGo, "collectionicon")
 
-	arg_9_0:addClickCb(var_9_3, arg_9_0.clickCollection, arg_9_0, arg_9_2)
+	collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(co.icon))
 
-	local var_9_4 = gohelper.findChild(var_9_0, "effect")
+	local btnClick = gohelper.findChildButtonWithAudio(cloneGo, "collectionicon")
 
-	gohelper.setActive(var_9_4, arg_9_3)
+	self:addClickCb(btnClick, self.clickCollection, self, itemId)
+
+	local extraEffect = gohelper.findChild(cloneGo, "effect")
+
+	gohelper.setActive(extraEffect, extra)
 end
 
-function var_0_0.selectInitBuild(arg_10_0, arg_10_1)
-	if arg_10_0.selectIndex then
+function Act191InitBuildView:selectInitBuild(index)
+	if self.selectIndex then
 		return
 	end
 
-	local var_10_0 = arg_10_0.initBuildInfo[arg_10_1]
+	local buildInfo = self.initBuildInfo[index]
 
-	Activity191Rpc.instance:sendSelect191InitBuildRequest(arg_10_0.actId, var_10_0.id, arg_10_0.buildReply, arg_10_0)
+	Activity191Rpc.instance:sendSelect191InitBuildRequest(self.actId, buildInfo.id, self.buildReply, self)
 
-	arg_10_0.selectIndex = arg_10_1
+	self.selectIndex = index
 end
 
-function var_0_0.buildReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_2 == 0 then
-		local var_11_0 = arg_11_0.selectIndex
+function Act191InitBuildView:buildReply(cmd, resultCode)
+	if resultCode == 0 then
+		local index = self.selectIndex
 
-		if var_11_0 and arg_11_0.bagAnimList[var_11_0] then
-			arg_11_0.bagAnimList[var_11_0]:Play(UIAnimationName.Close)
+		if index and self.bagAnimList[index] then
+			self.bagAnimList[index]:Play(UIAnimationName.Close)
 			AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_shuori_qiyuan_reset)
 		end
 
-		TaskDispatcher.runDelay(arg_11_0.nextStep, arg_11_0, 0.67)
+		TaskDispatcher.runDelay(self.nextStep, self, 0.67)
 
-		local var_11_1 = Activity191Helper.getPlayerPrefs(arg_11_0.actId, "Act191GameCostTime", 0)
+		local gameUid = Activity191Helper.getPlayerPrefs(self.actId, "Act191GameCostTime", 0)
 
-		Activity191Helper.setPlayerPrefs(arg_11_0.actId, "Act191GameCostTime", var_11_1 + 1)
+		Activity191Helper.setPlayerPrefs(self.actId, "Act191GameCostTime", gameUid + 1)
 	end
 end
 
-function var_0_0.clickCollection(arg_12_0, arg_12_1)
-	local var_12_0 = {
-		itemId = arg_12_1
+function Act191InitBuildView:clickCollection(itemId)
+	local param = {
+		itemId = itemId
 	}
 
-	Activity191Controller.instance:openCollectionTipView(var_12_0)
+	Activity191Controller.instance:openCollectionTipView(param)
 end
 
-function var_0_0.nextStep(arg_13_0)
-	arg_13_0.selectIndex = nil
+function Act191InitBuildView:nextStep()
+	self.selectIndex = nil
 
 	Activity191Controller.instance:nextStep()
-	ViewMgr.instance:closeView(arg_13_0.viewName)
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-return var_0_0
+return Act191InitBuildView

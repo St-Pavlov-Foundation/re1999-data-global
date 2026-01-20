@@ -1,108 +1,112 @@
-﻿module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceOptionItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/piecechoice/RougeMapPieceOptionItem.lua
 
-local var_0_0 = class("RougeMapPieceOptionItem", UserDataDispose)
+module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceOptionItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local RougeMapPieceOptionItem = class("RougeMapPieceOptionItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.tr = arg_1_1:GetComponent(gohelper.Type_RectTransform)
+function RougeMapPieceOptionItem:init(go)
+	self:__onInit()
 
-	arg_1_0:_editableInitView()
+	self.go = go
+	self.tr = go:GetComponent(gohelper.Type_RectTransform)
+
+	self:_editableInitView()
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._refreshClick = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#go_refresh")
-	arg_2_0._exitClick = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#go_exit")
+function RougeMapPieceOptionItem:_editableInitView()
+	self._refreshClick = gohelper.findChildClickWithDefaultAudio(self.go, "#go_refresh")
+	self._exitClick = gohelper.findChildClickWithDefaultAudio(self.go, "#go_exit")
 
-	arg_2_0._refreshClick:AddClickListener(arg_2_0.onClickRefreshBtn, arg_2_0)
-	arg_2_0._exitClick:AddClickListener(arg_2_0.onClickExitBtn, arg_2_0)
+	self._refreshClick:AddClickListener(self.onClickRefreshBtn, self)
+	self._exitClick:AddClickListener(self.onClickExitBtn, self)
 
-	arg_2_0.goNormal = gohelper.findChild(arg_2_0.go, "#go_refresh/normal")
-	arg_2_0.goLock = gohelper.findChild(arg_2_0.go, "#go_refresh/locked")
-	arg_2_0.txtNormalTime = gohelper.findChildText(arg_2_0.go, "#go_refresh/normal/txt_refresh/#txt_times")
-	arg_2_0.txtLockTime = gohelper.findChildText(arg_2_0.go, "#go_refresh/locked/txt_refresh/#txt_times")
-	arg_2_0.goRefresh = arg_2_0._refreshClick.gameObject
+	self.goNormal = gohelper.findChild(self.go, "#go_refresh/normal")
+	self.goLock = gohelper.findChild(self.go, "#go_refresh/locked")
+	self.txtNormalTime = gohelper.findChildText(self.go, "#go_refresh/normal/txt_refresh/#txt_times")
+	self.txtLockTime = gohelper.findChildText(self.go, "#go_refresh/locked/txt_refresh/#txt_times")
+	self.goRefresh = self._refreshClick.gameObject
 
-	arg_2_0:setRefreshActive()
+	self:setRefreshActive()
 end
 
-function var_0_0.setRefreshActive(arg_3_0)
-	local var_3_0 = RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockRestRefresh)
+function RougeMapPieceOptionItem:setRefreshActive()
+	local active = RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockRestRefresh)
 
-	gohelper.setActive(arg_3_0.goRefresh, var_3_0)
+	gohelper.setActive(self.goRefresh, active)
 end
 
-function var_0_0.onClickRefreshBtn(arg_4_0)
-	if not RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockRestRefresh) then
+function RougeMapPieceOptionItem:onClickRefreshBtn()
+	local active = RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockRestRefresh)
+
+	if not active then
 		return
 	end
 
-	if arg_4_0.isLock then
+	if self.isLock then
 		return
 	end
 
-	arg_4_0:clearCallback()
+	self:clearCallback()
 
-	arg_4_0.callbackId = RougeRpc.instance:sendRougeRepairShopRandomRequest(arg_4_0.onReceiveMsg, arg_4_0)
+	self.callbackId = RougeRpc.instance:sendRougeRepairShopRandomRequest(self.onReceiveMsg, self)
 end
 
-function var_0_0.onReceiveMsg(arg_5_0)
-	arg_5_0.callbackId = nil
+function RougeMapPieceOptionItem:onReceiveMsg()
+	self.callbackId = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onRefreshPieceChoiceEvent)
 end
 
-function var_0_0.onClickExitBtn(arg_6_0)
+function RougeMapPieceOptionItem:onClickExitBtn()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceViewStatusChange, RougeMapEnum.PieceChoiceViewStatus.Choice)
 end
 
-function var_0_0.update(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.pieceMo = arg_7_2
+function RougeMapPieceOptionItem:update(pos, pieceMo)
+	self.pieceMo = pieceMo
 
-	recthelper.setAnchor(arg_7_0.tr, arg_7_1.x, arg_7_1.y)
-	arg_7_0:refreshExchangeUI()
+	recthelper.setAnchor(self.tr, pos.x, pos.y)
+	self:refreshExchangeUI()
 end
 
-function var_0_0.refreshExchangeUI(arg_8_0)
-	local var_8_0 = arg_8_0.pieceMo.triggerStr and arg_8_0.pieceMo.triggerStr.repairRandomNum or 0
-	local var_8_1 = RougeMapConfig.instance:getRestStoreRefreshCount()
+function RougeMapPieceOptionItem:refreshExchangeUI()
+	local curRandomTime = self.pieceMo.triggerStr and self.pieceMo.triggerStr.repairRandomNum or 0
+	local maxRandomTime = RougeMapConfig.instance:getRestStoreRefreshCount()
 
-	arg_8_0.isLock = var_8_1 <= var_8_0
+	self.isLock = maxRandomTime <= curRandomTime
 
-	gohelper.setActive(arg_8_0.goNormal, not arg_8_0.isLock)
-	gohelper.setActive(arg_8_0.goLock, arg_8_0.isLock)
+	gohelper.setActive(self.goNormal, not self.isLock)
+	gohelper.setActive(self.goLock, self.isLock)
 
-	if arg_8_0.isLock then
-		arg_8_0.txtLockTime.text = string.format("(<color=#d97373>0</color>/%s)", var_8_1)
+	if self.isLock then
+		self.txtLockTime.text = string.format("(<color=#d97373>0</color>/%s)", maxRandomTime)
 	else
-		local var_8_2 = var_8_1 - var_8_0
+		local remainTime = maxRandomTime - curRandomTime
 
-		arg_8_0.txtNormalTime.text = string.format("(%s/%s)", var_8_2, var_8_1)
+		self.txtNormalTime.text = string.format("(%s/%s)", remainTime, maxRandomTime)
 	end
 end
 
-function var_0_0.show(arg_9_0)
-	gohelper.setActive(arg_9_0.go, true)
+function RougeMapPieceOptionItem:show()
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.hide(arg_10_0)
-	gohelper.setActive(arg_10_0.go, false)
+function RougeMapPieceOptionItem:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.clearCallback(arg_11_0)
-	if arg_11_0.callbackId then
-		RougeRpc.instance:removeCallbackById(arg_11_0.callbackId)
+function RougeMapPieceOptionItem:clearCallback()
+	if self.callbackId then
+		RougeRpc.instance:removeCallbackById(self.callbackId)
 
-		arg_11_0.callbackId = nil
+		self.callbackId = nil
 	end
 end
 
-function var_0_0.destroy(arg_12_0)
-	arg_12_0:clearCallback()
-	arg_12_0._refreshClick:RemoveClickListener()
-	arg_12_0._exitClick:RemoveClickListener()
-	arg_12_0:__onDispose()
+function RougeMapPieceOptionItem:destroy()
+	self:clearCallback()
+	self._refreshClick:RemoveClickListener()
+	self._exitClick:RemoveClickListener()
+	self:__onDispose()
 end
 
-return var_0_0
+return RougeMapPieceOptionItem

@@ -1,29 +1,31 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadRolesTimeline", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadRolesTimeline.lua
 
-local var_0_0 = class("FightPreloadRolesTimeline", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadRolesTimeline", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local FightPreloadRolesTimeline = class("FightPreloadRolesTimeline", BaseWork)
+
+function FightPreloadRolesTimeline:onStart(context)
 	if not GameResMgr.IsFromEditorDir then
-		arg_1_0._loader = MultiAbLoader.New()
+		self._loader = MultiAbLoader.New()
 
-		arg_1_0._loader:addPath(ResUrl.getRolesTimeline())
-		arg_1_0._loader:startLoad(arg_1_0._onLoadFinish, arg_1_0)
+		self._loader:addPath(ResUrl.getRolesTimeline())
+		self._loader:startLoad(self._onLoadFinish, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onLoadFinish(arg_2_0, arg_2_1)
-	arg_2_0.context.callback(arg_2_0.context.callbackObj, arg_2_1:getFirstAssetItem())
-	arg_2_0:onDone(true)
+function FightPreloadRolesTimeline:_onLoadFinish(roles_time_loader)
+	self.context.callback(self.context.callbackObj, roles_time_loader:getFirstAssetItem())
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	if arg_3_0._loader then
-		arg_3_0._loader:dispose()
+function FightPreloadRolesTimeline:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_3_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return FightPreloadRolesTimeline

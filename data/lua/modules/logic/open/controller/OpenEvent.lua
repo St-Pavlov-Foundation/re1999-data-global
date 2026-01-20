@@ -1,8 +1,10 @@
-﻿module("modules.logic.open.controller.OpenEvent", package.seeall)
+﻿-- chunkname: @modules/logic/open/controller/OpenEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.open.controller.OpenEvent", package.seeall)
 
-var_0_0.GetOpenInfoSuccess = 1
-var_0_0.NewFuncUnlock = 2
+local OpenEvent = _M
 
-return var_0_0
+OpenEvent.GetOpenInfoSuccess = 1
+OpenEvent.NewFuncUnlock = 2
+
+return OpenEvent

@@ -1,26 +1,30 @@
-﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType166", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartAbandonType/FightRestartAbandonType166.lua
 
-local var_0_0 = class("FightRestartAbandonType166", FightRestartAbandonType1)
+module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType166", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightRestartAbandonType166 = class("FightRestartAbandonType166", FightRestartAbandonType1)
 
-	arg_1_0._fight_work = arg_1_1
-	arg_1_0._fightParam = arg_1_2
-	arg_1_0._episode_config = arg_1_3
-	arg_1_0._chapter_config = arg_1_4
+function FightRestartAbandonType166:ctor(fight_work, fightParam, episode_config, chapter_config)
+	self:__onInit()
+
+	self._fight_work = fight_work
+	self._fightParam = fightParam
+	self._episode_config = episode_config
+	self._chapter_config = chapter_config
 end
 
-function var_0_0.canRestart(arg_2_0)
-	local var_2_0 = Season166Model.instance:getBattleContext().actId
-	local var_2_1 = ActivityHelper.getActivityStatusAndToast(var_2_0) ~= ActivityEnum.ActivityStatus.Normal
-	local var_2_2 = Season166Model.instance:getActInfo(var_2_0)
+function FightRestartAbandonType166:canRestart()
+	local context = Season166Model.instance:getBattleContext()
+	local actId = context.actId
+	local status = ActivityHelper.getActivityStatusAndToast(actId)
+	local isLock = status ~= ActivityEnum.ActivityStatus.Normal
+	local season166MO = Season166Model.instance:getActInfo(actId)
 
-	if var_2_1 or not var_2_2 then
+	if isLock or not season166MO then
 		return false
 	end
 
-	return var_0_0.super.canRestart(arg_2_0)
+	return FightRestartAbandonType166.super.canRestart(self)
 end
 
-return var_0_0
+return FightRestartAbandonType166

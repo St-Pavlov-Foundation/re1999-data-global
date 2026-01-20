@@ -1,18 +1,22 @@
-﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType9", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartAbandonType/FightRestartAbandonType9.lua
 
-local var_0_0 = class("FightRestartAbandonType9", FightRestartAbandonType1)
+module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType9", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightRestartAbandonType9 = class("FightRestartAbandonType9", FightRestartAbandonType1)
 
-	arg_1_0._fight_work = arg_1_1
-	arg_1_0._fightParam = arg_1_2
-	arg_1_0._episode_config = arg_1_3
-	arg_1_0._chapter_config = arg_1_4
+function FightRestartAbandonType9:ctor(fight_work, fightParam, episode_config, chapter_config)
+	self:__onInit()
+
+	self._fight_work = fight_work
+	self._fightParam = fightParam
+	self._episode_config = episode_config
+	self._chapter_config = chapter_config
 end
 
-function var_0_0.canRestart(arg_2_0)
-	return (arg_2_0:episodeCostIsEnough())
+function FightRestartAbandonType9:canRestart()
+	local can_restart = self:episodeCostIsEnough()
+
+	return can_restart
 end
 
-return var_0_0
+return FightRestartAbandonType9

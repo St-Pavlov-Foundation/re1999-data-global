@@ -1,14 +1,16 @@
-﻿module("modules.logic.summonsimulationpick.defines.SummonSimulationEnum", package.seeall)
+﻿-- chunkname: @modules/logic/summonsimulationpick/defines/SummonSimulationEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.summonsimulationpick.defines.SummonSimulationEnum", package.seeall)
 
-var_0_0.SaveType = {
+local SummonSimulationEnum = _M
+
+SummonSimulationEnum.SaveType = {
 	Saved = 1,
 	Current = 2
 }
-var_0_0.PickType = {
+SummonSimulationEnum.PickType = {
 	SaveResult = 1,
 	SelectResult = 2
 }
 
-return var_0_0
+return SummonSimulationEnum

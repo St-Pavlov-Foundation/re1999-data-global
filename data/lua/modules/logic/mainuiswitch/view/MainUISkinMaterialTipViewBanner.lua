@@ -1,102 +1,104 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISkinMaterialTipViewBanner", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISkinMaterialTipViewBanner.lua
 
-local var_0_0 = class("MainUISkinMaterialTipViewBanner", MainSceneSkinMaterialTipViewBanner)
+module("modules.logic.mainuiswitch.view.MainUISkinMaterialTipViewBanner", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local MainUISkinMaterialTipViewBanner = class("MainUISkinMaterialTipViewBanner", MainSceneSkinMaterialTipViewBanner)
 
-	arg_1_0._goSceneLogo = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo")
-	arg_1_0._goSceneLogo2 = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo2")
-	arg_1_0._goSceneLogo3 = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo3")
-	arg_1_0._simageSceneLogo4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo4")
+function MainUISkinMaterialTipViewBanner:onInitView()
+	MainUISkinMaterialTipViewBanner.super.onInitView(self)
+
+	self._goSceneLogo = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo")
+	self._goSceneLogo2 = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo2")
+	self._goSceneLogo3 = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo3")
+	self._simageSceneLogo4 = gohelper.findChildSingleImage(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/image_frame/#go_SceneLogo4")
 end
 
-function var_0_0._createInfoItemUserDataTb_(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getUserDataTb_()
+function MainUISkinMaterialTipViewBanner:_createInfoItemUserDataTb_(goItem)
+	local tb = self:getUserDataTb_()
 
-	var_2_0._go = arg_2_1
-	var_2_0._gotag = gohelper.findChild(arg_2_1, "#go_tag")
-	var_2_0._txtdesc = gohelper.findChildText(arg_2_1, "txt_desc")
-	var_2_0._txtname = gohelper.findChildText(arg_2_1, "txt_desc/txt_name")
-	var_2_0._simageinfobg = gohelper.findChildSingleImage(arg_2_1, "#simage_pic")
-	var_2_0._btn = gohelper.findChildButtonWithAudio(arg_2_1, "txt_desc/txt_name/#btn_Info")
+	tb._go = goItem
+	tb._gotag = gohelper.findChild(goItem, "#go_tag")
+	tb._txtdesc = gohelper.findChildText(goItem, "txt_desc")
+	tb._txtname = gohelper.findChildText(goItem, "txt_desc/txt_name")
+	tb._simageinfobg = gohelper.findChildSingleImage(goItem, "#simage_pic")
+	tb._btn = gohelper.findChildButtonWithAudio(goItem, "txt_desc/txt_name/#btn_Info")
 
-	var_2_0._btn:AddClickListener(arg_2_0._clickCheckBtn, arg_2_0, var_2_0)
+	tb._btn:AddClickListener(self._clickCheckBtn, self, tb)
 
-	arg_2_0._infoItemTbList = arg_2_0._infoItemTbList or {}
+	self._infoItemTbList = self._infoItemTbList or {}
 
-	table.insert(arg_2_0._infoItemTbList, var_2_0)
+	table.insert(self._infoItemTbList, tb)
 
-	return var_2_0
+	return tb
 end
 
-function var_0_0._clickCheckBtn(arg_3_0, arg_3_1)
-	if not arg_3_1._uiSkinId then
+function MainUISkinMaterialTipViewBanner:_clickCheckBtn(tb)
+	if not tb._uiSkinId then
 		return
 	end
 
-	if arg_3_0._classify == MainSwitchClassifyEnum.Classify.UI then
-		MainUISwitchController.instance:openMainUISwitchInfoView(arg_3_1._uiSkinId, true, true)
-	elseif arg_3_0._classify == MainSwitchClassifyEnum.Classify.Click then
-		ClickUISwitchController.instance:openClickUISwitchInfoView(arg_3_1._uiSkinId, true, true)
+	if self._classify == MainSwitchClassifyEnum.Classify.UI then
+		MainUISwitchController.instance:openMainUISwitchInfoView(tb._uiSkinId, true, true)
+	elseif self._classify == MainSwitchClassifyEnum.Classify.Click then
+		ClickUISwitchController.instance:openClickUISwitchInfoView(tb._uiSkinId, true, true)
 	end
 end
 
-function var_0_0._updateInfoItemUI(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_1
-	local var_4_1 = ItemModel.instance:getItemConfig(arg_4_3, arg_4_2)
+function MainUISkinMaterialTipViewBanner:_updateInfoItemUI(itemUserDataTb, itemId, itemType)
+	local tb = itemUserDataTb
+	local config = ItemModel.instance:getItemConfig(itemType, itemId)
 
-	var_4_0._txtdesc.text = var_4_1.desc
-	var_4_0._txtname.text = var_4_1.name
+	tb._txtdesc.text = config.desc
+	tb._txtname.text = config.name
 
-	gohelper.setActive(var_4_0._gotag, true)
+	gohelper.setActive(tb._gotag, true)
 
-	local var_4_2 = arg_4_0:_getUIConfig(arg_4_2)
+	local uiConfig = self:_getUIConfig(itemId)
 
-	var_4_0._uiSkinId = var_4_2.id
+	tb._uiSkinId = uiConfig.id
 
-	local var_4_3 = arg_4_0._classify == MainSwitchClassifyEnum.Classify.Click and ResUrl.getMainSceneSwitchIcon(var_4_2.previewIcon) or ResUrl.getMainSceneSwitchLangIcon(var_4_2.previewIcon)
+	local icon = self._classify == MainSwitchClassifyEnum.Classify.Click and ResUrl.getMainSceneSwitchIcon(uiConfig.previewIcon) or ResUrl.getMainSceneSwitchLangIcon(uiConfig.previewIcon)
 
-	var_4_0._simageinfobg:LoadImage(var_4_3)
+	tb._simageinfobg:LoadImage(icon)
 end
 
-function var_0_0._refreshTitle(arg_5_0)
-	local var_5_0 = MainSwitchClassifyEnum.ClassifyShowInfo[arg_5_0._classify].TitleLogo
+function MainUISkinMaterialTipViewBanner:_refreshTitle()
+	local logo = MainSwitchClassifyEnum.ClassifyShowInfo[self._classify].TitleLogo
 
-	arg_5_0._simageSceneLogo4:LoadImage(ResUrl.getMainSceneSwitchLangIcon(var_5_0))
+	self._simageSceneLogo4:LoadImage(ResUrl.getMainSceneSwitchLangIcon(logo))
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._infoItemDataList = {}
-	arg_6_0._classify = MainSwitchClassifyEnum.Classify.UI
-	arg_6_0._itemSubType = ItemModel.instance:getItemConfig(arg_6_0.viewParam.type, arg_6_0.viewParam.id).subType
+function MainUISkinMaterialTipViewBanner:onOpen()
+	self._infoItemDataList = {}
+	self._classify = MainSwitchClassifyEnum.Classify.UI
+	self._itemSubType = ItemModel.instance:getItemConfig(self.viewParam.type, self.viewParam.id).subType
 
-	tabletool.addValues(arg_6_0._infoItemDataList, arg_6_0:_getItemDataList())
-	arg_6_0:_refreshUI()
-	arg_6_0:_startAutoSwitch()
-	gohelper.setActive(arg_6_0._goSceneLogo, false)
-	gohelper.setActive(arg_6_0._goSceneLogo2, false)
-	gohelper.setActive(arg_6_0._goSceneLogo3, false)
-	gohelper.setActive(arg_6_0._simageSceneLogo4.gameObject, true)
-	arg_6_0:_refreshTitle()
+	tabletool.addValues(self._infoItemDataList, self:_getItemDataList())
+	self:_refreshUI()
+	self:_startAutoSwitch()
+	gohelper.setActive(self._goSceneLogo, false)
+	gohelper.setActive(self._goSceneLogo2, false)
+	gohelper.setActive(self._goSceneLogo3, false)
+	gohelper.setActive(self._simageSceneLogo4.gameObject, true)
+	self:_refreshTitle()
 end
 
-function var_0_0._getUIConfig(arg_7_0, arg_7_1)
-	local var_7_0 = MainUISwitchConfig.instance:getUISwitchCoByItemId(arg_7_1)
+function MainUISkinMaterialTipViewBanner:_getUIConfig(itemId)
+	local uiConfig = MainUISwitchConfig.instance:getUISwitchCoByItemId(itemId)
 
-	if var_7_0 then
-		arg_7_0._classify = MainSwitchClassifyEnum.Classify.UI
+	if uiConfig then
+		self._classify = MainSwitchClassifyEnum.Classify.UI
 	else
-		arg_7_0._classify = MainSwitchClassifyEnum.Classify.Click
-		var_7_0 = ClickUISwitchConfig.instance:getClickUICoByItemId(arg_7_1)
+		self._classify = MainSwitchClassifyEnum.Classify.Click
+		uiConfig = ClickUISwitchConfig.instance:getClickUICoByItemId(itemId)
 	end
 
-	return var_7_0
+	return uiConfig
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	var_0_0.super.onDestroyView(arg_8_0)
-	arg_8_0._simageSceneLogo4:UnLoadImage()
+function MainUISkinMaterialTipViewBanner:onDestroyView()
+	MainUISkinMaterialTipViewBanner.super.onDestroyView(self)
+	self._simageSceneLogo4:UnLoadImage()
 end
 
-return var_0_0
+return MainUISkinMaterialTipViewBanner

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_character_skill", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_character_skill.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_character_skill", package.seeall)
+
+local lua_character_skill = {}
+local fields = {
 	triggerPoint = 8,
 	name = 2,
 	cost = 7,
@@ -15,17 +17,17 @@ local var_0_1 = {
 	icon = 5,
 	active = 6
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1,
 	skillPrompt = 3,
 	desc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_character_skill.onLoad(json)
+	lua_character_skill.configList, lua_character_skill.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_character_skill

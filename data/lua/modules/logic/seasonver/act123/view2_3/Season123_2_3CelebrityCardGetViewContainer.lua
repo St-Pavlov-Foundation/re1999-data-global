@@ -1,17 +1,19 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3CelebrityCardGetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3CelebrityCardGetViewContainer.lua
 
-local var_0_0 = class("Season123_2_3CelebrityCardGetViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3CelebrityCardGetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_2_3CelebrityCardGetViewContainer = class("Season123_2_3CelebrityCardGetViewContainer", BaseViewContainer)
+
+function Season123_2_3CelebrityCardGetViewContainer:buildViews()
 	return {
 		Season123_2_3CelebrityCardGetView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function Season123_2_3CelebrityCardGetViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		-- block empty
 	end
 end
 
-return var_0_0
+return Season123_2_3CelebrityCardGetViewContainer

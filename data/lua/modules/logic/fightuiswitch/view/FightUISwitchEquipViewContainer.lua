@@ -1,13 +1,15 @@
-﻿module("modules.logic.fightuiswitch.view.FightUISwitchEquipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/FightUISwitchEquipViewContainer.lua
 
-local var_0_0 = class("FightUISwitchEquipViewContainer", BaseViewContainer)
+module("modules.logic.fightuiswitch.view.FightUISwitchEquipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FightUISwitchEquipViewContainer = class("FightUISwitchEquipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FightUISwitchEquipView.New())
+function FightUISwitchEquipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FightUISwitchEquipView.New())
+
+	return views
 end
 
-return var_0_0
+return FightUISwitchEquipViewContainer

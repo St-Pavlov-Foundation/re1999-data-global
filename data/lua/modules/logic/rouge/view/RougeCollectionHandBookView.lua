@@ -1,246 +1,254 @@
-﻿module("modules.logic.rouge.view.RougeCollectionHandBookView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionHandBookView.lua
 
-local var_0_0 = class("RougeCollectionHandBookView", BaseView)
+module("modules.logic.rouge.view.RougeCollectionHandBookView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fullbg")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_filter")
-	arg_1_0._scrollcollection = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_collection")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/smalltitle/txt_Title/#txt_TitleEn")
-	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/#go_collectionitem")
-	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#image_bg")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#txt_num")
-	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#simage_collection")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/top/#simage_icon")
-	arg_1_0._txtcollectionname = gohelper.findChildText(arg_1_0.viewGO, "Right/top/#txt_collectionname")
-	arg_1_0._gobasetags = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_basetags")
-	arg_1_0._gobasetagitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_basetags/#go_basetagitem")
-	arg_1_0._goextratags = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_extratags")
-	arg_1_0._goextratagitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/tags/#go_extratags/#go_extratagitem")
-	arg_1_0._goshapecell = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/shape/#go_shapecell")
-	arg_1_0._scrollcollectiondesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/top/#scroll_collectiondesc")
-	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
-	arg_1_0._btnhandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Bottom/#btn_handbook")
-	arg_1_0._goholecontainer = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/#go_holecontainer")
-	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/#go_holecontainer/#go_holeitem")
-	arg_1_0._gocompositelayout = gohelper.findChild(arg_1_0.viewGO, "Right/top/need/#go_compositelayout")
-	arg_1_0._gocompositeitem = gohelper.findChild(arg_1_0.viewGO, "Right/top/need/#go_compositelayout/#go_compositeitem")
-	arg_1_0._gocancomposite = gohelper.findChild(arg_1_0.viewGO, "Right/top/layout/#go_cancomposite")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+local RougeCollectionHandBookView = class("RougeCollectionHandBookView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionHandBookView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_fullbg")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_filter")
+	self._scrollcollection = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_collection")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "Left/#scroll_collection/Viewport/Content/item/smalltitle/txt_Title/#txt_TitleEn")
+	self._gocollectionitem = gohelper.findChild(self.viewGO, "Left/#scroll_collection/Viewport/Content/#go_collectionitem")
+	self._imagebg = gohelper.findChildImage(self.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#image_bg")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#txt_num")
+	self._simagecollection = gohelper.findChildSingleImage(self.viewGO, "Left/#scroll_collection/Viewport/Content/item/#go_collectionitem/normal/#simage_collection")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "Right/top/#simage_icon")
+	self._txtcollectionname = gohelper.findChildText(self.viewGO, "Right/top/#txt_collectionname")
+	self._gobasetags = gohelper.findChild(self.viewGO, "Right/top/tags/#go_basetags")
+	self._gobasetagitem = gohelper.findChild(self.viewGO, "Right/top/tags/#go_basetags/#go_basetagitem")
+	self._goextratags = gohelper.findChild(self.viewGO, "Right/top/tags/#go_extratags")
+	self._goextratagitem = gohelper.findChild(self.viewGO, "Right/top/tags/#go_extratags/#go_extratagitem")
+	self._goshapecell = gohelper.findChild(self.viewGO, "Right/top/layout/shape/#go_shapecell")
+	self._scrollcollectiondesc = gohelper.findChildScrollRect(self.viewGO, "Right/top/#scroll_collectiondesc")
+	self._godescContent = gohelper.findChild(self.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent")
+	self._godescitem = gohelper.findChild(self.viewGO, "Right/top/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
+	self._btnhandbook = gohelper.findChildButtonWithAudio(self.viewGO, "Bottom/#btn_handbook")
+	self._goholecontainer = gohelper.findChild(self.viewGO, "Right/top/layout/#go_holecontainer")
+	self._goholeitem = gohelper.findChild(self.viewGO, "Right/top/layout/#go_holecontainer/#go_holeitem")
+	self._gocompositelayout = gohelper.findChild(self.viewGO, "Right/top/need/#go_compositelayout")
+	self._gocompositeitem = gohelper.findChild(self.viewGO, "Right/top/need/#go_compositelayout/#go_compositeitem")
+	self._gocancomposite = gohelper.findChild(self.viewGO, "Right/top/layout/#go_cancomposite")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+function RougeCollectionHandBookView:addEvents()
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfilter:RemoveClickListener()
+function RougeCollectionHandBookView:removeEvents()
+	self._btnfilter:RemoveClickListener()
 end
 
-function var_0_0._btnfilterOnClick(arg_4_0)
-	local var_4_0 = {
-		confirmCallback = arg_4_0.onConfirmTagFilterCallback,
-		confirmCallbackObj = arg_4_0,
-		baseSelectMap = arg_4_0._baseTagSelectMap,
-		extraSelectMap = arg_4_0._extraTagSelectMap
+function RougeCollectionHandBookView:_btnfilterOnClick()
+	local params = {
+		confirmCallback = self.onConfirmTagFilterCallback,
+		confirmCallbackObj = self,
+		baseSelectMap = self._baseTagSelectMap,
+		extraSelectMap = self._extraTagSelectMap
 	}
 
-	RougeController.instance:openRougeCollectionFilterView(var_4_0)
+	RougeController.instance:openRougeCollectionFilterView(params)
 end
 
-function var_0_0.onConfirmTagFilterCallback(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:filterCompositeList(arg_5_1, arg_5_2)
-	arg_5_0:refreshFilterButtonUI()
+function RougeCollectionHandBookView:onConfirmTagFilterCallback(baseTagMap, extraTagMap)
+	self:filterCompositeList(baseTagMap, extraTagMap)
+	self:refreshFilterButtonUI()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0:addEventCb(RougeController.instance, RougeEvent.OnSelectCollectionHandBookItem, arg_6_0._onSelectHandBookItem, arg_6_0)
-	arg_6_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_6_0._onSwitchCollectionInfoType, arg_6_0)
+function RougeCollectionHandBookView:_editableInitView()
+	self:addEventCb(RougeController.instance, RougeEvent.OnSelectCollectionHandBookItem, self._onSelectHandBookItem, self)
+	self:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, self._onSwitchCollectionInfoType, self)
 
-	arg_6_0._compositeItemTab = arg_6_0:getUserDataTb_()
-	arg_6_0._collectionCellTab = arg_6_0:getUserDataTb_()
-	arg_6_0._itemInstTab = arg_6_0:getUserDataTb_()
-	arg_6_0._baseTagSelectMap = {}
-	arg_6_0._extraTagSelectMap = {}
-	arg_6_0._goshapecontainer = gohelper.findChild(arg_6_0.viewGO, "Right/top/layout/shape")
-	arg_6_0._aniamtor = gohelper.onceAddComponent(arg_6_0.viewGO, gohelper.Type_Animator)
-	arg_6_0._goright = gohelper.findChild(arg_6_0.viewGO, "Right")
-	arg_6_0._rightAnimator = gohelper.onceAddComponent(arg_6_0._goright, gohelper.Type_Animator)
+	self._compositeItemTab = self:getUserDataTb_()
+	self._collectionCellTab = self:getUserDataTb_()
+	self._itemInstTab = self:getUserDataTb_()
+	self._baseTagSelectMap = {}
+	self._extraTagSelectMap = {}
+	self._goshapecontainer = gohelper.findChild(self.viewGO, "Right/top/layout/shape")
+	self._aniamtor = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+	self._goright = gohelper.findChild(self.viewGO, "Right")
+	self._rightAnimator = gohelper.onceAddComponent(self._goright, gohelper.Type_Animator)
 end
 
-function var_0_0.onOpen(arg_7_0)
+function RougeCollectionHandBookView:onOpen()
 	RougeCollectionHandBookListModel.instance:onInit()
-	arg_7_0:refreshSelectCollectionInfo()
-	arg_7_0._aniamtor:Play("open", 0, 0)
+	self:refreshSelectCollectionInfo()
+	self._aniamtor:Play("open", 0, 0)
 end
 
-function var_0_0.refreshSelectCollectionInfo(arg_8_0)
-	local var_8_0 = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
-	local var_8_1 = RougeCollectionHandBookListModel.instance:getById(var_8_0)
+function RougeCollectionHandBookView:refreshSelectCollectionInfo()
+	local synethesisId = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
+	local synthesisCfg = RougeCollectionHandBookListModel.instance:getById(synethesisId)
 
-	gohelper.setActive(arg_8_0._goright, var_8_1 ~= nil)
-	gohelper.setActive(arg_8_0._goempty, var_8_1 == nil)
+	gohelper.setActive(self._goright, synthesisCfg ~= nil)
+	gohelper.setActive(self._goempty, synthesisCfg == nil)
 
-	if not var_8_1 then
+	if not synthesisCfg then
 		return
 	end
 
-	local var_8_2 = var_8_1.product
-	local var_8_3 = RougeCollectionConfig.instance:getCollectionCfg(var_8_2)
+	local productId = synthesisCfg.product
+	local productCfg = RougeCollectionConfig.instance:getCollectionCfg(productId)
 
-	if not var_8_3 then
+	if not productCfg then
 		return
 	end
 
-	arg_8_0._productId = var_8_2
+	self._productId = productId
 
-	arg_8_0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_8_2))
+	self._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(productId))
 
-	arg_8_0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(var_8_2)
+	self._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(productId)
 
-	arg_8_0:refrehsCollectionDesc()
-	gohelper.CreateObjList(arg_8_0, arg_8_0.refreshCollectionTagIcon, var_8_3.tags, arg_8_0._gobasetags, arg_8_0._gobasetagitem)
-	gohelper.CreateNumObjList(arg_8_0._goholecontainer, arg_8_0._goholeitem, var_8_3.holeNum)
-	gohelper.setActive(arg_8_0._goholecontainer, var_8_3.holeNum > 0)
+	self:refrehsCollectionDesc()
+	gohelper.CreateObjList(self, self.refreshCollectionTagIcon, productCfg.tags, self._gobasetags, self._gobasetagitem)
+	gohelper.CreateNumObjList(self._goholecontainer, self._goholeitem, productCfg.holeNum)
+	gohelper.setActive(self._goholecontainer, productCfg.holeNum > 0)
 
-	local var_8_4 = RougeCollectionConfig.instance:getCollectionCompositeIds(var_8_0) or {}
+	local compositeIds = RougeCollectionConfig.instance:getCollectionCompositeIds(synethesisId) or {}
 
-	gohelper.CreateObjList(arg_8_0, arg_8_0.refreshCompositeItem, var_8_4, arg_8_0._gocompositelayout, arg_8_0._gocompositeitem)
-	RougeCollectionHelper.loadShapeGrid(var_8_2, arg_8_0._goshapecontainer, arg_8_0._goshapecell, arg_8_0._collectionCellTab, false)
+	gohelper.CreateObjList(self, self.refreshCompositeItem, compositeIds, self._gocompositelayout, self._gocompositeitem)
+	RougeCollectionHelper.loadShapeGrid(productId, self._goshapecontainer, self._goshapecell, self._collectionCellTab, false)
 
-	local var_8_5 = RougeCollectionModel.instance:checkIsCanCompositeCollection(var_8_0)
+	local canComposite = RougeCollectionModel.instance:checkIsCanCompositeCollection(synethesisId)
 
-	gohelper.setActive(arg_8_0._gocancomposite, var_8_5)
+	gohelper.setActive(self._gocancomposite, canComposite)
 end
 
-function var_0_0.refrehsCollectionDesc(arg_9_0)
-	RougeCollectionDescHelper.setCollectionDescInfos2(arg_9_0._productId, nil, arg_9_0._godescContent, arg_9_0._itemInstTab)
+function RougeCollectionHandBookView:refrehsCollectionDesc()
+	RougeCollectionDescHelper.setCollectionDescInfos2(self._productId, nil, self._godescContent, self._itemInstTab)
 end
 
-function var_0_0.refreshCollectionTagIcon(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = gohelper.findChildImage(arg_10_1, "image_tagicon")
-	local var_10_1 = gohelper.findChildImage(arg_10_1, "image_tagframe")
-	local var_10_2 = lua_rouge_tag.configDict[arg_10_2]
+function RougeCollectionHandBookView:refreshCollectionTagIcon(tagObj, tagId, index)
+	local tagicon = gohelper.findChildImage(tagObj, "image_tagicon")
+	local frameImg = gohelper.findChildImage(tagObj, "image_tagframe")
+	local tagCo = lua_rouge_tag.configDict[tagId]
 
-	UISpriteSetMgr.instance:setRougeSprite(var_10_0, var_10_2.iconUrl)
-	UISpriteSetMgr.instance:setRougeSprite(var_10_1, "rouge_collection_tagframe_1")
+	UISpriteSetMgr.instance:setRougeSprite(tagicon, tagCo.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(frameImg, "rouge_collection_tagframe_1")
 end
 
-function var_0_0.refreshCompositeItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_11_2)
+function RougeCollectionHandBookView:refreshCompositeItem(obj, compositeId, index)
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(compositeId)
 
-	if not var_11_0 then
+	if not collectionCfg then
 		return
 	end
 
-	local var_11_1 = gohelper.findChildSingleImage(arg_11_1, "normal/#simage_collection")
+	local simageCollectionIcon = gohelper.findChildSingleImage(obj, "normal/#simage_collection")
 
-	var_11_1:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_11_2))
+	simageCollectionIcon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(compositeId))
 
-	gohelper.findChildText(arg_11_1, "normal/#txt_num").text = tostring(RougeEnum.CompositeCollectionCostCount)
+	local txtNum = gohelper.findChildText(obj, "normal/#txt_num")
 
-	local var_11_2 = gohelper.findChildImage(arg_11_1, "normal/#image_bg")
+	txtNum.text = tostring(RougeEnum.CompositeCollectionCostCount)
 
-	UISpriteSetMgr.instance:setRougeSprite(var_11_2, "rouge_episode_collectionbg_" .. tostring(var_11_0.showRare))
+	local imageBg = gohelper.findChildImage(obj, "normal/#image_bg")
 
-	arg_11_0._compositeItemTab[arg_11_3] = arg_11_0._compositeItemTab[arg_11_3] or arg_11_0:getUserDataTb_()
-	arg_11_0._compositeItemTab[arg_11_3].icon = var_11_1
+	UISpriteSetMgr.instance:setRougeSprite(imageBg, "rouge_episode_collectionbg_" .. tostring(collectionCfg.showRare))
 
-	local var_11_3 = gohelper.findChildButtonWithAudio(arg_11_1, "normal/#btn_click")
+	self._compositeItemTab[index] = self._compositeItemTab[index] or self:getUserDataTb_()
+	self._compositeItemTab[index].icon = simageCollectionIcon
 
-	var_11_3:RemoveClickListener()
-	var_11_3:AddClickListener(arg_11_0.clickCompositeItemCallBack, arg_11_0, arg_11_2)
+	local click = gohelper.findChildButtonWithAudio(obj, "normal/#btn_click")
 
-	arg_11_0._compositeItemTab[arg_11_3].btnClick = var_11_3
+	click:RemoveClickListener()
+	click:AddClickListener(self.clickCompositeItemCallBack, self, compositeId)
+
+	self._compositeItemTab[index].btnClick = click
 end
 
-function var_0_0.clickCompositeItemCallBack(arg_12_0, arg_12_1)
-	local var_12_0 = {
+function RougeCollectionHandBookView:clickCompositeItemCallBack(compositeId)
+	local params = {
 		interactable = false,
-		collectionCfgId = arg_12_1,
+		collectionCfgId = compositeId,
 		viewPosition = RougeEnum.CollectionTipPos.HandBook
 	}
 
-	RougeController.instance:openRougeCollectionTipView(var_12_0)
+	RougeController.instance:openRougeCollectionTipView(params)
 end
 
-function var_0_0.releaseCompositeIconSingleImages(arg_13_0)
-	if arg_13_0._compositeItemTab then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._compositeItemTab) do
-			if iter_13_1 and iter_13_1.icon then
-				iter_13_1.icon:UnLoadImage()
+function RougeCollectionHandBookView:releaseCompositeIconSingleImages()
+	if self._compositeItemTab then
+		for _, compositeItem in pairs(self._compositeItemTab) do
+			if compositeItem and compositeItem.icon then
+				compositeItem.icon:UnLoadImage()
 			end
 
-			if iter_13_1 and iter_13_1.btnClick then
-				iter_13_1.btnClick:RemoveClickListener()
+			if compositeItem and compositeItem.btnClick then
+				compositeItem.btnClick:RemoveClickListener()
 			end
 		end
 	end
 end
 
-function var_0_0._onSelectHandBookItem(arg_14_0, arg_14_1)
-	if arg_14_1 == RougeCollectionHandBookListModel.instance:getCurSelectCellId() then
+function RougeCollectionHandBookView:_onSelectHandBookItem(readySelectId)
+	local curSelectCellId = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
+
+	if readySelectId == curSelectCellId then
 		return
 	end
 
-	local var_14_0 = RougeCollectionHandBookListModel.instance:getById(arg_14_1)
-	local var_14_1 = RougeCollectionHandBookListModel.instance:getIndex(var_14_0)
+	local readySelectMO = RougeCollectionHandBookListModel.instance:getById(readySelectId)
+	local readySelectIndex = RougeCollectionHandBookListModel.instance:getIndex(readySelectMO)
 
-	RougeCollectionHandBookListModel.instance:selectCell(var_14_1, true)
-	arg_14_0:delay2SwitchHandBookItem(var_0_0.DelayTime2SwitchCollection)
-	arg_14_0._rightAnimator:Play("switch", 0, 0)
+	RougeCollectionHandBookListModel.instance:selectCell(readySelectIndex, true)
+	self:delay2SwitchHandBookItem(RougeCollectionHandBookView.DelayTime2SwitchCollection)
+	self._rightAnimator:Play("switch", 0, 0)
 end
 
-var_0_0.DelayTime2SwitchCollection = 0.3
+RougeCollectionHandBookView.DelayTime2SwitchCollection = 0.3
 
-function var_0_0.delay2SwitchHandBookItem(arg_15_0, arg_15_1)
-	arg_15_1 = arg_15_1 or 0
+function RougeCollectionHandBookView:delay2SwitchHandBookItem(delayTime)
+	delayTime = delayTime or 0
 
-	TaskDispatcher.cancelTask(arg_15_0.refreshSelectCollectionInfo, arg_15_0)
-	TaskDispatcher.runDelay(arg_15_0.refreshSelectCollectionInfo, arg_15_0, arg_15_1)
+	TaskDispatcher.cancelTask(self.refreshSelectCollectionInfo, self)
+	TaskDispatcher.runDelay(self.refreshSelectCollectionInfo, self, delayTime)
 end
 
-function var_0_0.filterCompositeList(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
+function RougeCollectionHandBookView:filterCompositeList(baseTagMap, extraTagMap)
+	local lastSelectCellId = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
 
-	RougeCollectionHandBookListModel.instance:updateFilterMap(arg_16_1, arg_16_2)
+	RougeCollectionHandBookListModel.instance:updateFilterMap(baseTagMap, extraTagMap)
 
-	if var_16_0 ~= RougeCollectionHandBookListModel.instance:getCurSelectCellId() then
-		arg_16_0:refreshSelectCollectionInfo()
+	local curSelectCellId = RougeCollectionHandBookListModel.instance:getCurSelectCellId()
+
+	if lastSelectCellId ~= curSelectCellId then
+		self:refreshSelectCollectionInfo()
 	end
 end
 
-function var_0_0.refreshFilterButtonUI(arg_17_0)
-	local var_17_0 = RougeCollectionHandBookListModel.instance:isFiltering()
+function RougeCollectionHandBookView:refreshFilterButtonUI()
+	local isFiltering = RougeCollectionHandBookListModel.instance:isFiltering()
 
-	arg_17_0:_setFilterSelected(var_17_0)
+	self:_setFilterSelected(isFiltering)
 end
 
-function var_0_0._setFilterSelected(arg_18_0, arg_18_1)
-	local var_18_0 = gohelper.findChild(arg_18_0._btnfilter.gameObject, "unselect")
-	local var_18_1 = gohelper.findChild(arg_18_0._btnfilter.gameObject, "select")
+function RougeCollectionHandBookView:_setFilterSelected(isFiltering)
+	local goUnselect = gohelper.findChild(self._btnfilter.gameObject, "unselect")
+	local goSelect = gohelper.findChild(self._btnfilter.gameObject, "select")
 
-	gohelper.setActive(var_18_1, arg_18_1)
-	gohelper.setActive(var_18_0, not arg_18_1)
+	gohelper.setActive(goSelect, isFiltering)
+	gohelper.setActive(goUnselect, not isFiltering)
 end
 
-function var_0_0._onSwitchCollectionInfoType(arg_19_0)
-	arg_19_0:refrehsCollectionDesc()
+function RougeCollectionHandBookView:_onSwitchCollectionInfoType()
+	self:refrehsCollectionDesc()
 end
 
-function var_0_0.onClose(arg_20_0)
+function RougeCollectionHandBookView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	arg_21_0._simageicon:UnLoadImage()
-	arg_21_0:releaseCompositeIconSingleImages()
-	TaskDispatcher.cancelTask(arg_21_0.refreshSelectCollectionInfo, arg_21_0)
+function RougeCollectionHandBookView:onDestroyView()
+	self._simageicon:UnLoadImage()
+	self:releaseCompositeIconSingleImages()
+	TaskDispatcher.cancelTask(self.refreshSelectCollectionInfo, self)
 end
 
-return var_0_0
+return RougeCollectionHandBookView

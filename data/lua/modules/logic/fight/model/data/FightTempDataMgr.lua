@@ -1,25 +1,35 @@
-﻿module("modules.logic.fight.model.data.FightTempDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightTempDataMgr.lua
 
-local var_0_0 = FightDataClass("FightTempDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightTempDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.hasNextWave = false
-	arg_1_0.combineCount = 0
-	arg_1_0.aiJiAoQteCount = 0
-	arg_1_0.aiJiAoQteEndlessLoop = 0
-	arg_1_0.aiJiAoFakeHpOffset = {}
-	arg_1_0.aiJiAoSelectTargetView = nil
-	arg_1_0.playAiJiAoPreTimeline = nil
-	arg_1_0.buffDurationDic = {}
-	arg_1_0.douQuQuDice = nil
+local FightTempDataMgr = FightDataClass("FightTempDataMgr", FightDataMgrBase)
+
+function FightTempDataMgr:onConstructor()
+	self.hasNextWave = false
+	self.combineCount = 0
+	self.aiJiAoQteCount = 0
+	self.aiJiAoQteEndlessLoop = 0
+	self.aiJiAoFakeHpOffset = {}
+	self.aiJiAoSelectTargetView = nil
+	self.playAiJiAoPreTimeline = nil
+	self.buffDurationDic = {}
+	self.douQuQuDice = nil
 end
 
-function var_0_0.onCancelOperation(arg_2_0)
-	arg_2_0.combineCount = 0
+function FightTempDataMgr:onCancelOperation()
+	self.combineCount = 0
 end
 
-function var_0_0.onStageChanged(arg_3_0)
-	arg_3_0.combineCount = 0
+function FightTempDataMgr:onStageChanged()
+	self.combineCount = 0
 end
 
-return var_0_0
+function FightTempDataMgr:setAutoSelectedCrystal(selected)
+	self.autoSelectedCrystal = true
+end
+
+function FightTempDataMgr:isAutoSelectedCrystal()
+	return self.autoSelectedCrystal
+end
+
+return FightTempDataMgr

@@ -1,38 +1,40 @@
-﻿module("modules.logic.character.view.CharacterTalentStyleNavigateButtonsView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentStyleNavigateButtonsView.lua
 
-local var_0_0 = class("CharacterTalentStyleNavigateButtonsView", NavigateButtonsView)
+module("modules.logic.character.view.CharacterTalentStyleNavigateButtonsView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local CharacterTalentStyleNavigateButtonsView = class("CharacterTalentStyleNavigateButtonsView", NavigateButtonsView)
 
-	arg_1_0._btnstat = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_stat")
+function CharacterTalentStyleNavigateButtonsView:_editableInitView()
+	CharacterTalentStyleNavigateButtonsView.super._editableInitView(self)
+
+	self._btnstat = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_stat")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnstat:AddClickListener(arg_2_0._btnstatOnClick, arg_2_0)
+function CharacterTalentStyleNavigateButtonsView:addEvents()
+	CharacterTalentStyleNavigateButtonsView.super.addEvents(self)
+	self._btnstat:AddClickListener(self._btnstatOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._btnstat:RemoveClickListener()
+function CharacterTalentStyleNavigateButtonsView:removeEvents()
+	CharacterTalentStyleNavigateButtonsView.super.removeEvents(self)
+	self._btnstat:RemoveClickListener()
 end
 
-function var_0_0._btnstatOnClick(arg_4_0)
-	if arg_4_0._overrideStatFunc then
-		arg_4_0._overrideStatFunc(arg_4_0._overrideStatObj)
+function CharacterTalentStyleNavigateButtonsView:_btnstatOnClick()
+	if self._overrideStatFunc then
+		self._overrideStatFunc(self._overrideStatObj)
 	end
 end
 
-function var_0_0.setOverrideStat(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._overrideStatFunc = arg_5_1
-	arg_5_0._overrideStatObj = arg_5_2
+function CharacterTalentStyleNavigateButtonsView:setOverrideStat(overrideStatFunc, overrideStatObj)
+	self._overrideStatFunc = overrideStatFunc
+	self._overrideStatObj = overrideStatObj
 end
 
-function var_0_0.showStatBtn(arg_6_0, arg_6_1)
-	if arg_6_0._btnstat then
-		gohelper.setActive(arg_6_0._btnstat.gameObject, arg_6_1)
+function CharacterTalentStyleNavigateButtonsView:showStatBtn(isShow)
+	if self._btnstat then
+		gohelper.setActive(self._btnstat.gameObject, isShow)
 	end
 end
 
-return var_0_0
+return CharacterTalentStyleNavigateButtonsView

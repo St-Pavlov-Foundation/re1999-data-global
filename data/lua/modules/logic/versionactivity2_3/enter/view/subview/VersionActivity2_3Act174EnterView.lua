@@ -1,79 +1,81 @@
-﻿module("modules.logic.versionactivity2_3.enter.view.subview.VersionActivity2_3Act174EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/enter/view/subview/VersionActivity2_3Act174EnterView.lua
 
-local var_0_0 = class("VersionActivity2_3Act174EnterView", BaseView)
+module("modules.logic.versionactivity2_3.enter.view.subview.VersionActivity2_3Act174EnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
-	arg_1_0._btnShop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Shop")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#btn_Shop/#txt_num")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Enter")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#txt_time")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+local VersionActivity2_3Act174EnterView = class("VersionActivity2_3Act174EnterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_3Act174EnterView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#simage_title")
+	self._btnShop = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Shop")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#btn_Shop/#txt_num")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Enter")
+	self._txttime = gohelper.findChildText(self.viewGO, "#txt_time")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnShop:AddClickListener(arg_2_0._btnShopOnClick, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
+function VersionActivity2_3Act174EnterView:addEvents()
+	self._btnShop:AddClickListener(self._btnShopOnClick, self)
+	self._btnEnter:AddClickListener(self._btnEnterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnShop:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
+function VersionActivity2_3Act174EnterView:removeEvents()
+	self._btnShop:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
 end
 
-function var_0_0._btnShopOnClick(arg_4_0)
+function VersionActivity2_3Act174EnterView:_btnShopOnClick()
 	Activity174Controller.instance:openStoreView(VersionActivity2_3Enum.ActivityId.Act174Store)
 end
 
-function var_0_0._btnEnterOnClick(arg_5_0)
+function VersionActivity2_3Act174EnterView:_btnEnterOnClick()
 	Activity174Controller.instance:openMainView({
-		actId = arg_5_0.actId
+		actId = self.actId
 	})
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.animComp = VersionActivitySubAnimatorComp.get(arg_6_0.viewGO, arg_6_0)
-	arg_6_0.actId = VersionActivity2_3Enum.ActivityId.Act174
+function VersionActivity2_3Act174EnterView:_editableInitView()
+	self.animComp = VersionActivitySubAnimatorComp.get(self.viewGO, self)
+	self.actId = VersionActivity2_3Enum.ActivityId.Act174
 
-	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_0.actId)
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	arg_6_0._txtdesc.text = var_6_0.actDesc
+	self._txtdesc.text = actCo.actDesc
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.animComp:playOpenAnim()
-	arg_7_0:refreshUI()
-	arg_7_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_7_0.refreshCurrency, arg_7_0)
+function VersionActivity2_3Act174EnterView:onOpen()
+	self.animComp:playOpenAnim()
+	self:refreshUI()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_8_0.refreshCurrency, arg_8_0)
+function VersionActivity2_3Act174EnterView:onClose()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.refreshLeftTime, arg_9_0)
-	arg_9_0.animComp:destroy()
+function VersionActivity2_3Act174EnterView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshLeftTime, self)
+	self.animComp:destroy()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	arg_10_0:refreshLeftTime()
-	arg_10_0:refreshCurrency()
-	TaskDispatcher.runRepeat(arg_10_0.refreshLeftTime, arg_10_0, TimeUtil.OneSecond)
+function VersionActivity2_3Act174EnterView:refreshUI()
+	self:refreshLeftTime()
+	self:refreshCurrency()
+	TaskDispatcher.runRepeat(self.refreshLeftTime, self, TimeUtil.OneSecond)
 end
 
-function var_0_0.refreshLeftTime(arg_11_0)
-	arg_11_0._txttime.text = ActivityHelper.getActivityRemainTimeStr(arg_11_0.actId)
+function VersionActivity2_3Act174EnterView:refreshLeftTime()
+	self._txttime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0.refreshCurrency(arg_12_0)
-	local var_12_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a3DouQuQu)
+function VersionActivity2_3Act174EnterView:refreshCurrency()
+	local currencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a3DouQuQu)
 
-	arg_12_0._txtnum.text = var_12_0.quantity
+	self._txtnum.text = currencyMo.quantity
 end
 
-return var_0_0
+return VersionActivity2_3Act174EnterView

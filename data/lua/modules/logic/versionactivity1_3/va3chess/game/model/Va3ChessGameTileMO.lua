@@ -1,132 +1,142 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameTileMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/model/Va3ChessGameTileMO.lua
 
-local var_0_0 = pureTable("Va3ChessGameTileMO")
+module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameTileMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1 or arg_1_0.id or 1
-	arg_1_0.tileType = 0
-	arg_1_0.triggerTypeList = {}
-	arg_1_0.finishList = {}
-	arg_1_0.triggerStatusDict = {}
+local Va3ChessGameTileMO = pureTable("Va3ChessGameTileMO")
+
+function Va3ChessGameTileMO:init(index)
+	self.id = index or self.id or 1
+	self.tileType = 0
+	self.triggerTypeList = {}
+	self.finishList = {}
+	self.triggerStatusDict = {}
 end
 
-function var_0_0.addTrigger(arg_2_0, arg_2_1)
-	if arg_2_1 and arg_2_1 > 0 and tabletool.indexOf(arg_2_0.triggerTypeList, arg_2_1) == nil then
-		table.insert(arg_2_0.triggerTypeList, arg_2_1)
+function Va3ChessGameTileMO:addTrigger(triggerType)
+	if triggerType and triggerType > 0 and tabletool.indexOf(self.triggerTypeList, triggerType) == nil then
+		table.insert(self.triggerTypeList, triggerType)
 	end
 end
 
-function var_0_0.updateTrigger(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0.triggerStatusDict[arg_3_1] ~= arg_3_2 then
-		arg_3_0.triggerStatusDict[arg_3_1] = arg_3_2
+function Va3ChessGameTileMO:updateTrigger(triggerType, status)
+	local oldStatus = self.triggerStatusDict[triggerType]
+
+	if oldStatus ~= status then
+		self.triggerStatusDict[triggerType] = status
 	end
 end
 
-function var_0_0.getTriggerBrokenStatus(arg_4_0)
-	local var_4_0 = arg_4_0:getTriggerStatus(Va3ChessEnum.TileTrigger.Broken)
-	local var_4_1 = Va3ChessEnum.TileTrigger.Broken
+function Va3ChessGameTileMO:getTriggerBrokenStatus()
+	local result = self:getTriggerStatus(Va3ChessEnum.TileTrigger.Broken)
+	local brokenTrigger = Va3ChessEnum.TileTrigger.Broken
 
-	var_4_0 = var_4_0 or Va3ChessEnum.TriggerStatus[var_4_1].Normal
+	result = result or Va3ChessEnum.TriggerStatus[brokenTrigger].Normal
 
-	return var_4_0
+	return result
 end
 
-function var_0_0.getTriggerStatus(arg_5_0, arg_5_1)
-	if arg_5_0.triggerStatusDict then
-		return arg_5_0.triggerStatusDict[arg_5_1]
+function Va3ChessGameTileMO:getTriggerStatus(triggerType)
+	if self.triggerStatusDict then
+		return self.triggerStatusDict[triggerType]
 	end
 end
 
-function var_0_0.removeTrigger(arg_6_0, arg_6_1)
-	tabletool.removeValue(arg_6_0.triggerTypeList, arg_6_1)
+function Va3ChessGameTileMO:removeTrigger(triggerType)
+	tabletool.removeValue(self.triggerTypeList, triggerType)
 end
 
-function var_0_0.isHasTrigger(arg_7_0, arg_7_1)
-	if tabletool.indexOf(arg_7_0.triggerTypeList, arg_7_1) then
+function Va3ChessGameTileMO:isHasTrigger(triggerType)
+	if tabletool.indexOf(self.triggerTypeList, triggerType) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.addFinishTrigger(arg_8_0, arg_8_1)
-	if tabletool.indexOf(arg_8_0.finishList, arg_8_1) == nil then
-		table.insert(arg_8_0.finishList, arg_8_1)
+function Va3ChessGameTileMO:addFinishTrigger(triggerType)
+	if tabletool.indexOf(self.finishList, triggerType) == nil then
+		table.insert(self.finishList, triggerType)
 	end
 end
 
-function var_0_0.isFinishTrigger(arg_9_0, arg_9_1)
-	local var_9_0 = false
+function Va3ChessGameTileMO:isFinishTrigger(triggerType)
+	local result = false
 
-	if tabletool.indexOf(arg_9_0.finishList, arg_9_1) then
-		var_9_0 = true
+	if tabletool.indexOf(self.finishList, triggerType) then
+		result = true
 	end
 
-	local var_9_1 = Va3ChessEnum.TileTrigger.Broken
+	local brokenTrigger = Va3ChessEnum.TileTrigger.Broken
 
-	if arg_9_0:isHasTrigger(arg_9_1) and arg_9_1 == var_9_1 then
-		local var_9_2 = arg_9_0:getTriggerBrokenStatus()
+	if self:isHasTrigger(triggerType) and triggerType == brokenTrigger then
+		local status = self:getTriggerBrokenStatus()
 
-		var_9_0 = var_9_0 or var_9_2 == Va3ChessEnum.TriggerStatus[var_9_1].Broken
+		result = result or status == Va3ChessEnum.TriggerStatus[brokenTrigger].Broken
 	end
 
-	return var_9_0
+	return result
 end
 
-function var_0_0.resetFinish(arg_10_0)
-	if #arg_10_0.finishList > 0 then
-		arg_10_0.finishList = {}
+function Va3ChessGameTileMO:resetFinish()
+	if #self.finishList > 0 then
+		self.finishList = {}
 	end
 end
 
-function var_0_0.setParamStr(arg_11_0, arg_11_1)
-	if string.find(arg_11_1, "|") then
-		local var_11_0 = string.split(arg_11_1, "|") or {}
+function Va3ChessGameTileMO:setParamStr(str)
+	local hasBaffleTypeData = string.find(str, "|")
 
-		arg_11_1 = var_11_0[1]
-		arg_11_0.baffleTypeData = var_11_0[2]
+	if hasBaffleTypeData then
+		local strArr = string.split(str, "|") or {}
+
+		str = strArr[1]
+		self.baffleTypeData = strArr[2]
 	end
 
-	local var_11_1 = string.splitToNumber(arg_11_1, "#") or {}
-	local var_11_2 = var_11_1[1] or 0
+	local nums = string.splitToNumber(str, "#") or {}
+	local cfgTileType = nums[1] or 0
 
-	arg_11_0.originalTileType = var_11_2
-	arg_11_0.tileType = var_11_2 > 0 and Va3ChessEnum.TileBaseType.Normal or Va3ChessEnum.TileBaseType.None
-	arg_11_0.triggerTypeList = {}
+	self.originalTileType = cfgTileType
+	self.tileType = cfgTileType > 0 and Va3ChessEnum.TileBaseType.Normal or Va3ChessEnum.TileBaseType.None
+	self.triggerTypeList = {}
 
-	if var_11_1 and #var_11_1 > 1 then
-		for iter_11_0 = 2, #var_11_1 do
-			table.insert(arg_11_0.triggerTypeList, var_11_1[iter_11_0])
+	if nums and #nums > 1 then
+		for i = 2, #nums do
+			table.insert(self.triggerTypeList, nums[i])
 		end
 	end
 
-	arg_11_0:resetFinish()
+	self:resetFinish()
 end
 
-function var_0_0.getBaffleDataList(arg_12_0)
-	return (Activity142Helper.getBaffleDataList(arg_12_0.originalTileType, arg_12_0.baffleTypeData))
+function Va3ChessGameTileMO:getBaffleDataList()
+	local result = Activity142Helper.getBaffleDataList(self.originalTileType, self.baffleTypeData)
+
+	return result
 end
 
-function var_0_0.getOriginalTileType(arg_13_0)
-	return arg_13_0.originalTileType
+function Va3ChessGameTileMO:getOriginalTileType()
+	return self.originalTileType
 end
 
-function var_0_0.isHasBaffleInDir(arg_14_0, arg_14_1)
-	local var_14_0 = false
+function Va3ChessGameTileMO:isHasBaffleInDir(dir)
+	local result = false
 
-	return (Activity142Helper.isHasBaffleInDir(arg_14_0.originalTileType, arg_14_1))
+	result = Activity142Helper.isHasBaffleInDir(self.originalTileType, dir)
+
+	return result
 end
 
-function var_0_0.getParamStr(arg_15_0)
-	local var_15_0 = tostring(arg_15_0.tileType)
+function Va3ChessGameTileMO:getParamStr()
+	local str = tostring(self.tileType)
 
-	if arg_15_0.triggerTypeList then
-		for iter_15_0 = 1, #arg_15_0.triggerTypeList do
-			var_15_0 = string.format("%s#%s", var_15_0, arg_15_0.triggerTypeList[iter_15_0])
+	if self.triggerTypeList then
+		for i = 1, #self.triggerTypeList do
+			str = string.format("%s#%s", str, self.triggerTypeList[i])
 		end
 	end
 
-	return var_15_0
+	return str
 end
 
-return var_0_0
+return Va3ChessGameTileMO

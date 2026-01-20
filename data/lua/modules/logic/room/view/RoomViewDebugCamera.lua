@@ -1,75 +1,77 @@
-﻿module("modules.logic.room.view.RoomViewDebugCamera", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewDebugCamera.lua
 
-local var_0_0 = class("RoomViewDebugCamera", BaseView)
+module("modules.logic.room.view.RoomViewDebugCamera", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomViewDebugCamera = class("RoomViewDebugCamera", BaseView)
+
+function RoomViewDebugCamera:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomViewDebugCamera:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomViewDebugCamera:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._btndebugcameraoverlookfarest = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugcameraoverlookfarest")
-	arg_4_0._btndebugcameraoverlooknearest = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugcameraoverlooknearest")
-	arg_4_0._btndebugcameranormal = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugcameranormal")
-	arg_4_0._btndebugcameracharacter = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_debugcameracharacter")
+function RoomViewDebugCamera:_editableInitView()
+	self._btndebugcameraoverlookfarest = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_debugcameraoverlookfarest")
+	self._btndebugcameraoverlooknearest = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_debugcameraoverlooknearest")
+	self._btndebugcameranormal = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_debugcameranormal")
+	self._btndebugcameracharacter = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/btn_debugcameracharacter")
 
-	arg_4_0._btndebugcameraoverlookfarest:AddClickListener(arg_4_0._btndebugcameraoverlookfarestOnClick, arg_4_0)
-	arg_4_0._btndebugcameraoverlooknearest:AddClickListener(arg_4_0._btndebugcameraoverlooknearestOnClick, arg_4_0)
-	arg_4_0._btndebugcameranormal:AddClickListener(arg_4_0._btndebugcameranormalOnClick, arg_4_0)
-	arg_4_0._btndebugcameracharacter:AddClickListener(arg_4_0._btndebugcameracharacterOnClick, arg_4_0)
+	self._btndebugcameraoverlookfarest:AddClickListener(self._btndebugcameraoverlookfarestOnClick, self)
+	self._btndebugcameraoverlooknearest:AddClickListener(self._btndebugcameraoverlooknearestOnClick, self)
+	self._btndebugcameranormal:AddClickListener(self._btndebugcameranormalOnClick, self)
+	self._btndebugcameracharacter:AddClickListener(self._btndebugcameracharacterOnClick, self)
 
-	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0._btndebugcameraoverlookfarestOnClick(arg_5_0)
-	arg_5_0._scene.camera:switchCameraState(RoomEnum.CameraState.Overlook, {
+function RoomViewDebugCamera:_btndebugcameraoverlookfarestOnClick()
+	self._scene.camera:switchCameraState(RoomEnum.CameraState.Overlook, {
 		zoom = 1
 	})
 end
 
-function var_0_0._btndebugcameraoverlooknearestOnClick(arg_6_0)
-	arg_6_0._scene.camera:switchCameraState(RoomEnum.CameraState.Overlook, {
+function RoomViewDebugCamera:_btndebugcameraoverlooknearestOnClick()
+	self._scene.camera:switchCameraState(RoomEnum.CameraState.Overlook, {
 		zoom = 0
 	})
 end
 
-function var_0_0._btndebugcameranormalOnClick(arg_7_0)
-	arg_7_0._scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {})
+function RoomViewDebugCamera:_btndebugcameranormalOnClick()
+	self._scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {})
 end
 
-function var_0_0._btndebugcameracharacterOnClick(arg_8_0)
-	arg_8_0._scene.camera:switchCameraState(RoomEnum.CameraState.Character, {})
+function RoomViewDebugCamera:_btndebugcameracharacterOnClick()
+	self._scene.camera:switchCameraState(RoomEnum.CameraState.Character, {})
 end
 
-function var_0_0._refreshUI(arg_9_0)
-	gohelper.setActive(arg_9_0._btndebugcameraoverlookfarest.gameObject, RoomController.instance:isDebugMode())
-	gohelper.setActive(arg_9_0._btndebugcameraoverlooknearest.gameObject, RoomController.instance:isDebugMode())
-	gohelper.setActive(arg_9_0._btndebugcameranormal.gameObject, RoomController.instance:isDebugMode())
-	gohelper.setActive(arg_9_0._btndebugcameracharacter.gameObject, RoomController.instance:isDebugMode())
+function RoomViewDebugCamera:_refreshUI()
+	gohelper.setActive(self._btndebugcameraoverlookfarest.gameObject, RoomController.instance:isDebugMode())
+	gohelper.setActive(self._btndebugcameraoverlooknearest.gameObject, RoomController.instance:isDebugMode())
+	gohelper.setActive(self._btndebugcameranormal.gameObject, RoomController.instance:isDebugMode())
+	gohelper.setActive(self._btndebugcameracharacter.gameObject, RoomController.instance:isDebugMode())
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:_refreshUI()
+function RoomViewDebugCamera:onOpen()
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_11_0)
+function RoomViewDebugCamera:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._btndebugcameraoverlookfarest:RemoveClickListener()
-	arg_12_0._btndebugcameraoverlooknearest:RemoveClickListener()
-	arg_12_0._btndebugcameranormal:RemoveClickListener()
-	arg_12_0._btndebugcameracharacter:RemoveClickListener()
+function RoomViewDebugCamera:onDestroyView()
+	self._btndebugcameraoverlookfarest:RemoveClickListener()
+	self._btndebugcameraoverlooknearest:RemoveClickListener()
+	self._btndebugcameranormal:RemoveClickListener()
+	self._btndebugcameracharacter:RemoveClickListener()
 end
 
-return var_0_0
+return RoomViewDebugCamera

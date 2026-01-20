@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEpisodeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotEpisodeViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotEpisodeViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEpisodeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotEpisodeViewContainer = class("V1a6_CachotEpisodeViewContainer", BaseViewContainer)
+
+function V1a6_CachotEpisodeViewContainer:buildViews()
 	return {
 		V1a6_CachotEpisodeView.New(),
 		V1a6_CachotInteractView.New(),
@@ -11,4 +13,4 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-return var_0_0
+return V1a6_CachotEpisodeViewContainer

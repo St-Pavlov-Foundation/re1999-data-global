@@ -1,134 +1,147 @@
-﻿module("modules.logic.sp01.assassin2.outside.model.AssassinBuildingMapMO", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/model/AssassinBuildingMapMO.lua
 
-local var_0_0 = pureTable("AssassinBuildingMapMO")
+module("modules.logic.sp01.assassin2.outside.model.AssassinBuildingMapMO", package.seeall)
 
-function var_0_0.clearData(arg_1_0)
-	arg_1_0.unlockBuildIdMap = nil
-	arg_1_0.buildingDict = nil
+local AssassinBuildingMapMO = pureTable("AssassinBuildingMapMO")
+
+function AssassinBuildingMapMO:clearData()
+	self.unlockBuildIdMap = nil
+	self.buildingDict = nil
 end
 
-function var_0_0.setInfo(arg_2_0, arg_2_1)
-	arg_2_0:_onGetBuildingInfos(arg_2_1.buildings)
-	arg_2_0:_onGetUnlockBuildIds(arg_2_1.unlockBuildIds)
+function AssassinBuildingMapMO:setInfo(buildInfo)
+	self:_onGetBuildingInfos(buildInfo.buildings)
+	self:_onGetUnlockBuildIds(buildInfo.unlockBuildIds)
 end
 
-function var_0_0._onGetUnlockBuildIds(arg_3_0, arg_3_1)
-	arg_3_0.unlockBuildIdMap = {}
+function AssassinBuildingMapMO:_onGetUnlockBuildIds(unlockBuildIds)
+	self.unlockBuildIdMap = {}
 
-	arg_3_0:updateUnlockBuildIds(arg_3_1)
+	self:updateUnlockBuildIds(unlockBuildIds)
 end
 
-function var_0_0.updateUnlockBuildIds(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		arg_4_0:_updateUnlockBuildId(iter_4_1)
+function AssassinBuildingMapMO:updateUnlockBuildIds(unlockBuildIds)
+	for _, buildingId in ipairs(unlockBuildIds) do
+		self:_updateUnlockBuildId(buildingId)
 	end
 end
 
-function var_0_0._updateUnlockBuildId(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function AssassinBuildingMapMO:_updateUnlockBuildId(buildingId)
+	if not buildingId then
 		return
 	end
 
-	local var_5_0 = AssassinConfig.instance:getBuildingCo(arg_5_1)
+	local buildingCo = AssassinConfig.instance:getBuildingCo(buildingId)
 
-	if not var_5_0 then
+	if not buildingCo then
 		return
 	end
 
-	arg_5_0.unlockBuildIdMap[arg_5_1] = true
+	self.unlockBuildIdMap[buildingId] = true
 
-	local var_5_1 = var_5_0.type
-	local var_5_2, var_5_3 = arg_5_0:getOrCreateBuildingMo(var_5_1)
+	local buildingType = buildingCo.type
+	local buildingMo, isCreate = self:getOrCreateBuildingMo(buildingType)
 
-	if var_5_3 then
-		var_5_2:initParams(var_5_1, 0)
+	if isCreate then
+		buildingMo:initParams(buildingType, 0)
 	end
 end
 
-function var_0_0._onGetBuildingInfos(arg_6_0, arg_6_1)
-	arg_6_0.buildingDict = {}
+function AssassinBuildingMapMO:_onGetBuildingInfos(buildingInfos)
+	self.buildingDict = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		arg_6_0:updateBuildingInfo(iter_6_1)
+	for _, buildingInfo in ipairs(buildingInfos) do
+		self:updateBuildingInfo(buildingInfo)
 	end
 end
 
-function var_0_0.updateBuildingInfo(arg_7_0, arg_7_1)
-	arg_7_0:getOrCreateBuildingMo(arg_7_1.type):init(arg_7_1)
+function AssassinBuildingMapMO:updateBuildingInfo(buildingInfo)
+	local buildingMo = self:getOrCreateBuildingMo(buildingInfo.type)
+
+	buildingMo:init(buildingInfo)
 end
 
-function var_0_0.getBuildingMo(arg_8_0, arg_8_1)
-	return arg_8_0.buildingDict and arg_8_0.buildingDict[arg_8_1]
+function AssassinBuildingMapMO:getBuildingMo(buildingType)
+	local buildingMo = self.buildingDict and self.buildingDict[buildingType]
+
+	return buildingMo
 end
 
-function var_0_0.getOrCreateBuildingMo(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getBuildingMo(arg_9_1)
-	local var_9_1 = false
+function AssassinBuildingMapMO:getOrCreateBuildingMo(buildingType)
+	local buildingMo = self:getBuildingMo(buildingType)
+	local isCreate = false
 
-	if not var_9_0 then
-		var_9_0 = AssassinBuildingMO.New()
-		arg_9_0.buildingDict[arg_9_1] = var_9_0
-		var_9_1 = true
+	if not buildingMo then
+		buildingMo = AssassinBuildingMO.New()
+		self.buildingDict[buildingType] = buildingMo
+		isCreate = true
 	end
 
-	return var_9_0, var_9_1
+	return buildingMo, isCreate
 end
 
-function var_0_0.getBuildingStatus(arg_10_0, arg_10_1)
-	local var_10_0 = AssassinEnum.BuildingStatus.Locked
+function AssassinBuildingMapMO:getBuildingStatus(buildingId)
+	local status = AssassinEnum.BuildingStatus.Locked
 
-	if arg_10_0.unlockBuildIdMap[arg_10_1] then
-		local var_10_1 = AssassinConfig.instance:getBuildingCo(arg_10_1)
-		local var_10_2 = arg_10_0:getBuildingMo(var_10_1.type):getLv()
+	if self.unlockBuildIdMap[buildingId] then
+		local buildingCo = AssassinConfig.instance:getBuildingCo(buildingId)
+		local buildingMo = self:getBuildingMo(buildingCo.type)
+		local buildingLv = buildingMo:getLv()
 
-		if var_10_2 >= var_10_1.level then
-			var_10_0 = AssassinEnum.BuildingStatus.LevelUp
-		elseif var_10_2 == var_10_1.level - 1 then
-			var_10_0 = AssassinEnum.BuildingStatus.Unlocked
+		if buildingLv >= buildingCo.level then
+			status = AssassinEnum.BuildingStatus.LevelUp
+		elseif buildingLv == buildingCo.level - 1 then
+			status = AssassinEnum.BuildingStatus.Unlocked
 		end
 	end
 
-	return var_10_0
+	return status
 end
 
-function var_0_0.isBuildingUnlocked(arg_11_0, arg_11_1)
-	return arg_11_1 and arg_11_0.unlockBuildIdMap[arg_11_1] == true
+function AssassinBuildingMapMO:isBuildingUnlocked(buildingId)
+	return buildingId and self.unlockBuildIdMap[buildingId] == true
 end
 
-function var_0_0.isBuildingTypeUnlocked(arg_12_0, arg_12_1)
-	return arg_12_0:getBuildingMo(arg_12_1) ~= nil
+function AssassinBuildingMapMO:isBuildingTypeUnlocked(buildingType)
+	local buildingMo = self:getBuildingMo(buildingType)
+
+	return buildingMo ~= nil
 end
 
-function var_0_0.isBuildingLevelUp2NextLv(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getBuildingMo(arg_13_1)
-	local var_13_1 = var_13_0 and var_13_0:getLv() or 0
-	local var_13_2 = var_13_1 + 1
-	local var_13_3 = var_13_0 and var_13_0:isMaxLv()
+function AssassinBuildingMapMO:isBuildingLevelUp2NextLv(buildingType)
+	local buildingMo = self:getBuildingMo(buildingType)
+	local buildingLv = buildingMo and buildingMo:getLv() or 0
+	local targetLv = buildingLv + 1
+	local isMaxLv = buildingMo and buildingMo:isMaxLv()
 
-	if var_13_2 <= var_13_1 or var_13_3 then
+	if targetLv <= buildingLv or isMaxLv then
 		return
 	end
 
-	local var_13_4 = AssassinConfig.instance:getBuildingLvCo(arg_13_1, var_13_2)
-	local var_13_5 = var_13_4 and var_13_4.id
+	local nextLvBuildingCo = AssassinConfig.instance:getBuildingLvCo(buildingType, targetLv)
+	local nextLvBuildingId = nextLvBuildingCo and nextLvBuildingCo.id
+	local isUnlocked = self:isBuildingUnlocked(nextLvBuildingId)
 
-	if not arg_13_0:isBuildingUnlocked(var_13_5) then
+	if not isUnlocked then
 		return
 	end
 
-	if var_13_4.cost > AssassinController.instance:getCoinNum() then
+	local targetCost = nextLvBuildingCo.cost
+	local curCoin = AssassinController.instance:getCoinNum()
+
+	if curCoin < targetCost then
 		return
 	end
 
-	return true, var_13_5
+	return true, nextLvBuildingId
 end
 
-function var_0_0.isAnyBuildingLevelUp2NextLv(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.buildingDict) do
-		if arg_14_0:isBuildingLevelUp2NextLv(iter_14_1:getType()) then
+function AssassinBuildingMapMO:isAnyBuildingLevelUp2NextLv()
+	for _, buildingMo in pairs(self.buildingDict) do
+		if self:isBuildingLevelUp2NextLv(buildingMo:getType()) then
 			return true
 		end
 	end
 end
 
-return var_0_0
+return AssassinBuildingMapMO

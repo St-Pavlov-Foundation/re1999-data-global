@@ -1,72 +1,75 @@
-﻿module("modules.logic.activity.view.show.ActivityStoryShowItem", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/show/ActivityStoryShowItem.lua
 
-local var_0_0 = class("ActivityStoryShowItem", LuaCompBase)
+module("modules.logic.activity.view.show.ActivityStoryShowItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.go = arg_1_1
-	arg_1_0._index = arg_1_2
-	arg_1_0._config = arg_1_3
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.go, "txt_taskdesc")
-	arg_1_0._goRewardContent = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/go_rewardContent")
-	arg_1_0._goRewardItem = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/go_rewardContent/go_rewarditem")
-	arg_1_0._goItemPos = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/go_rewardContent/go_rewarditem/itempos")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.go, "go_line")
+local ActivityStoryShowItem = class("ActivityStoryShowItem", LuaCompBase)
 
-	arg_1_0:addEvents()
-	arg_1_0:_refreshItem()
+function ActivityStoryShowItem:init(go, index, co)
+	self.go = go
+	self._index = index
+	self._config = co
+	self._txtdesc = gohelper.findChildText(self.go, "txt_taskdesc")
+	self._goRewardContent = gohelper.findChild(self.go, "scroll_reward/Viewport/go_rewardContent")
+	self._goRewardItem = gohelper.findChild(self.go, "scroll_reward/Viewport/go_rewardContent/go_rewarditem")
+	self._goItemPos = gohelper.findChild(self.go, "scroll_reward/Viewport/go_rewardContent/go_rewarditem/itempos")
+	self._goline = gohelper.findChild(self.go, "go_line")
+
+	self:addEvents()
+	self:_refreshItem()
 end
 
-var_0_0.ShowCount = 1
+ActivityStoryShowItem.ShowCount = 1
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityStoryShowItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityStoryShowItem:removeEvents()
 	return
 end
 
-function var_0_0._refreshItem(arg_4_0)
-	arg_4_0._txtdesc.text = arg_4_0._config.taskDesc
-	arg_4_0._rewardItems = arg_4_0:getUserDataTb_()
+function ActivityStoryShowItem:_refreshItem()
+	self._txtdesc.text = self._config.taskDesc
+	self._rewardItems = self:getUserDataTb_()
 
-	local var_4_0 = string.split(arg_4_0._config.showBonus, "|")
+	local rewards = string.split(self._config.showBonus, "|")
 
-	arg_4_0._goRewardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #var_4_0 > 2
+	self._goRewardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter)).enabled = #rewards > 2
 
-	for iter_4_0 = 1, #var_4_0 do
-		if not arg_4_0._rewardItems[iter_4_0] then
-			local var_4_1 = arg_4_0:getUserDataTb_()
+	for i = 1, #rewards do
+		local item = self._rewardItems[i]
 
-			var_4_1.parentGo = gohelper.cloneInPlace(arg_4_0._goRewardItem)
-			var_4_1.itemPos = gohelper.findChild(var_4_1.parentGo, "itempos")
-			var_4_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_4_1.itemPos)
+		if not item then
+			item = self:getUserDataTb_()
+			item.parentGo = gohelper.cloneInPlace(self._goRewardItem)
+			item.itemPos = gohelper.findChild(item.parentGo, "itempos")
+			item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.itemPos)
 
-			table.insert(arg_4_0._rewardItems, var_4_1)
+			table.insert(self._rewardItems, item)
 		end
 
-		gohelper.setActive(arg_4_0._rewardItems[iter_4_0].parentGo, true)
+		gohelper.setActive(self._rewardItems[i].parentGo, true)
 
-		local var_4_2 = string.splitToNumber(var_4_0[iter_4_0], "#")
+		local itemCo = string.splitToNumber(rewards[i], "#")
 
-		arg_4_0._rewardItems[iter_4_0].itemIcon:setMOValue(var_4_2[1], var_4_2[2], var_4_2[3], nil, true)
-		arg_4_0._rewardItems[iter_4_0].itemIcon:isShowCount(var_4_2[4] == var_0_0.ShowCount)
-		arg_4_0._rewardItems[iter_4_0].itemIcon:setCountFontSize(56)
-		arg_4_0._rewardItems[iter_4_0].itemIcon:setHideLvAndBreakFlag(true)
-		arg_4_0._rewardItems[iter_4_0].itemIcon:hideEquipLvAndBreak(true)
+		self._rewardItems[i].itemIcon:setMOValue(itemCo[1], itemCo[2], itemCo[3], nil, true)
+		self._rewardItems[i].itemIcon:isShowCount(itemCo[4] == ActivityStoryShowItem.ShowCount)
+		self._rewardItems[i].itemIcon:setCountFontSize(56)
+		self._rewardItems[i].itemIcon:setHideLvAndBreakFlag(true)
+		self._rewardItems[i].itemIcon:hideEquipLvAndBreak(true)
 	end
 
-	for iter_4_1 = #var_4_0 + 1, #arg_4_0._rewardItems do
-		gohelper.setActive(arg_4_0._rewardItems[iter_4_1].parentGo, false)
+	for i = #rewards + 1, #self._rewardItems do
+		gohelper.setActive(self._rewardItems[i].parentGo, false)
 	end
 
-	gohelper.setActive(arg_4_0._goline, arg_4_0._index ~= GameUtil.getTabLen(ActivityConfig.instance:getActivityShowTaskCount(ActivityEnum.Activity.StoryShow)))
+	gohelper.setActive(self._goline, self._index ~= GameUtil.getTabLen(ActivityConfig.instance:getActivityShowTaskCount(ActivityEnum.Activity.StoryShow)))
 end
 
-function var_0_0.destroy(arg_5_0)
-	arg_5_0:removeEvents()
+function ActivityStoryShowItem:destroy()
+	self:removeEvents()
 
-	arg_5_0._rewardItems = nil
+	self._rewardItems = nil
 end
 
-return var_0_0
+return ActivityStoryShowItem

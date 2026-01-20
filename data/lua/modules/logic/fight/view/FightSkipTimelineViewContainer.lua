@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.view.FightSkipTimelineViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSkipTimelineViewContainer.lua
 
-local var_0_0 = class("FightSkipTimelineViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightSkipTimelineViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightSkipTimelineViewContainer = class("FightSkipTimelineViewContainer", BaseViewContainer)
+
+function FightSkipTimelineViewContainer:buildViews()
 	return {
 		FightSkipTimelineView.New()
 	}
 end
 
-return var_0_0
+return FightSkipTimelineViewContainer

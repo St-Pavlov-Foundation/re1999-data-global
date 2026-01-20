@@ -1,96 +1,103 @@
-﻿module("modules.logic.dungeon.controller.DungeonJumpGameController", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/controller/DungeonJumpGameController.lua
 
-local var_0_0 = class("DungeonJumpGameController", BaseController)
+module("modules.logic.dungeon.controller.DungeonJumpGameController", package.seeall)
 
-function var_0_0.onInitFinish(arg_1_0)
+local DungeonJumpGameController = class("DungeonJumpGameController", BaseController)
+
+function DungeonJumpGameController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function DungeonJumpGameController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function DungeonJumpGameController:reInit()
 	return
 end
 
-function var_0_0.release(arg_4_0)
+function DungeonJumpGameController:release()
 	return
 end
 
-function var_0_0.openResultView(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = {
-		isWin = arg_5_1,
-		elementId = arg_5_2
+function DungeonJumpGameController:openResultView(win, elementId)
+	local viewParams = {
+		isWin = win,
+		elementId = elementId
 	}
 
-	ViewMgr.instance:openView(ViewName.DungeonJumpGameResultView, var_5_0)
+	ViewMgr.instance:openView(ViewName.DungeonJumpGameResultView, viewParams)
 end
 
-function var_0_0.resetGame(arg_6_0)
+function DungeonJumpGameController:resetGame()
 	return
 end
 
-function var_0_0.checkIsJumpGameBattle(arg_7_0)
-	return DungeonModel.instance.curSendEpisodeId == DungeonJumpGameEnum.episodeId
+function DungeonJumpGameController:checkIsJumpGameBattle()
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+
+	return episodeId == DungeonJumpGameEnum.episodeId
 end
 
-function var_0_0.returnToJumpGameView(arg_8_0)
-	local var_8_0 = DungeonModel.instance.curSendEpisodeId
-	local var_8_1 = DungeonModel.instance.curSendChapterId
-	local var_8_2 = DungeonConfig.instance:getChapterCO(var_8_1)
+function DungeonJumpGameController:returnToJumpGameView()
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(true, false)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.DungeonMapView)
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_8_0.onOpenDungeonMapView, arg_8_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 		JumpController.instance:jumpByParam("3#110")
 	end)
 end
 
-function var_0_0.onOpenDungeonMapView(arg_10_0, arg_10_1)
-	if arg_10_1 == ViewName.DungeonMapView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_10_0.onOpenDungeonMapView, arg_10_0)
+function DungeonJumpGameController:onOpenDungeonMapView(viewName)
+	if viewName == ViewName.DungeonMapView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 		ViewMgr.instance:openView(ViewName.DungeonJumpGameView)
 	end
 end
 
-function var_0_0.SaveCurProgress(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1
-	local var_11_1 = string.format("%d", var_11_0)
+function DungeonJumpGameController:SaveCurProgress(curNodeIdx)
+	local nodeIdx = curNodeIdx
+	local progressStr = string.format("%d", nodeIdx)
 
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DungeonJumpGameKey), var_11_1)
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DungeonJumpGameKey), progressStr)
 end
 
-function var_0_0.HasLocalProgress(arg_12_0)
-	local var_12_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DungeonJumpGameKey), "")
+function DungeonJumpGameController:HasLocalProgress()
+	local progressStr = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DungeonJumpGameKey), "")
 
-	return var_12_0 and not string.nilorempty(var_12_0)
+	return progressStr and not string.nilorempty(progressStr)
 end
 
-function var_0_0.ClearProgress(arg_13_0)
+function DungeonJumpGameController:ClearProgress()
 	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DungeonJumpGameKey), "")
 end
 
-function var_0_0.LoadProgress(arg_14_0)
-	local var_14_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DungeonJumpGameKey), "")
+function DungeonJumpGameController:LoadProgress()
+	local progressStr = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DungeonJumpGameKey), "")
 
-	if string.nilorempty(var_14_0) then
+	if string.nilorempty(progressStr) then
 		return
 	end
 
-	return string.splitToNumber(var_14_0, ",")[1]
+	local arr = string.splitToNumber(progressStr, ",")
+	local curNodeIdx = arr[1]
+
+	return curNodeIdx
 end
 
-function var_0_0.initStatData(arg_15_0)
-	arg_15_0.statMo = DungeonGameMo.New()
+function DungeonJumpGameController:initStatData()
+	self.statMo = DungeonGameMo.New()
 end
 
-function var_0_0.sandStatData(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0.statMo:sendJumpGameStatData(arg_16_1, arg_16_2)
+function DungeonJumpGameController:sandStatData(result, cellId)
+	self.statMo:sendJumpGameStatData(result, cellId)
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonJumpGameController.instance = DungeonJumpGameController.New()
 
-return var_0_0
+return DungeonJumpGameController

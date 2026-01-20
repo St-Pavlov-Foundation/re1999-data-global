@@ -1,26 +1,28 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalUpdateSafeZoneInfoWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalUpdateSafeZoneInfoWork.lua
 
-local var_0_0 = class("SurvivalUpdateSafeZoneInfoWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalUpdateSafeZoneInfoWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._stepMo.safeZone.shrinkInfo
-	local var_1_1 = SurvivalMapModel.instance:getSceneMo()
+local SurvivalUpdateSafeZoneInfoWork = class("SurvivalUpdateSafeZoneInfoWork", SurvivalStepBaseWork)
 
-	var_1_1.safeZone = {}
+function SurvivalUpdateSafeZoneInfoWork:onStart(context)
+	local safeZone = self._stepMo.safeZone.shrinkInfo
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_2 = SurvivalShrinkInfoMo.New()
+	sceneMo.safeZone = {}
 
-		var_1_2:init(iter_1_1)
-		table.insert(var_1_1.safeZone, var_1_2)
+	for i, v in ipairs(safeZone) do
+		local mo = SurvivalShrinkInfoMo.New()
+
+		mo:init(v)
+		table.insert(sceneMo.safeZone, mo)
 	end
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShrinkInfoUpdate)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
+function SurvivalUpdateSafeZoneInfoWork:getRunOrder(params, flow)
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalUpdateSafeZoneInfoWork

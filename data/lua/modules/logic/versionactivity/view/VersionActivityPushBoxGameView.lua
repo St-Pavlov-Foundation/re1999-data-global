@@ -1,298 +1,304 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityPushBoxGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityPushBoxGameView.lua
 
-local var_0_0 = class("VersionActivityPushBoxGameView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityPushBoxGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnforward = gohelper.findChildButton(arg_1_0.viewGO, "controllarea/#btn_forward")
-	arg_1_0._btnleft = gohelper.findChildButton(arg_1_0.viewGO, "controllarea/#btn_left")
-	arg_1_0._btnright = gohelper.findChildButton(arg_1_0.viewGO, "controllarea/#btn_right")
-	arg_1_0._btnback = gohelper.findChildButton(arg_1_0.viewGO, "controllarea/#btn_back")
-	arg_1_0._btnundo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_undo")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._txtsecurityvalue = gohelper.findChildText(arg_1_0.viewGO, "securitybg/#txt_securityvalue")
-	arg_1_0._txtsecurityvalueeffect = gohelper.findChildText(arg_1_0.viewGO, "securitybg/#txt_securityvalue_effect")
-	arg_1_0._goresult = gohelper.findChild(arg_1_0.viewGO, "#go_result")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_result/#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_result/#go_fail")
-	arg_1_0._simageresulticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_result/#go_success/succeed")
-	arg_1_0._simagedecorate = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_result/#simage_decorate")
-	arg_1_0._simageleft = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_result/#simage_left")
-	arg_1_0._simageright = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_result/#simage_right")
-	arg_1_0._btnquit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#go_fail/#btn_quit")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#go_fail/#btn_restart")
+local VersionActivityPushBoxGameView = class("VersionActivityPushBoxGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityPushBoxGameView:onInitView()
+	self._btnforward = gohelper.findChildButton(self.viewGO, "controllarea/#btn_forward")
+	self._btnleft = gohelper.findChildButton(self.viewGO, "controllarea/#btn_left")
+	self._btnright = gohelper.findChildButton(self.viewGO, "controllarea/#btn_right")
+	self._btnback = gohelper.findChildButton(self.viewGO, "controllarea/#btn_back")
+	self._btnundo = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_undo")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._txtsecurityvalue = gohelper.findChildText(self.viewGO, "securitybg/#txt_securityvalue")
+	self._txtsecurityvalueeffect = gohelper.findChildText(self.viewGO, "securitybg/#txt_securityvalue_effect")
+	self._goresult = gohelper.findChild(self.viewGO, "#go_result")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_result/#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_result/#go_fail")
+	self._simageresulticon = gohelper.findChildSingleImage(self.viewGO, "#go_result/#go_success/succeed")
+	self._simagedecorate = gohelper.findChildSingleImage(self.viewGO, "#go_result/#simage_decorate")
+	self._simageleft = gohelper.findChildSingleImage(self.viewGO, "#go_result/#simage_left")
+	self._simageright = gohelper.findChildSingleImage(self.viewGO, "#go_result/#simage_right")
+	self._btnquit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#go_fail/#btn_quit")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#go_fail/#btn_restart")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnforward:AddClickListener(arg_2_0._btnforwardOnClick, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
-	arg_2_0._btnundo:AddClickListener(arg_2_0._btnundoOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
-	arg_2_0._btnquit:AddClickListener(arg_2_0._btnquitOnClick, arg_2_0)
-	arg_2_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshWarningNum, arg_2_0._onRefreshWarningNum, arg_2_0)
-	arg_2_0:addEventCb(PushBoxController.instance, PushBoxEvent.GameWin, arg_2_0._onGameWin, arg_2_0)
-	arg_2_0:addEventCb(PushBoxController.instance, PushBoxEvent.GameOver, arg_2_0._onGameOver, arg_2_0)
+function VersionActivityPushBoxGameView:addEvents()
+	self._btnforward:AddClickListener(self._btnforwardOnClick, self)
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self._btnback:AddClickListener(self._btnbackOnClick, self)
+	self._btnundo:AddClickListener(self._btnundoOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
+	self._btnquit:AddClickListener(self._btnquitOnClick, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshWarningNum, self._onRefreshWarningNum, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.GameWin, self._onGameWin, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.GameOver, self._onGameOver, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnforward:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnback:RemoveClickListener()
-	arg_3_0._btnundo:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnquit:RemoveClickListener()
+function VersionActivityPushBoxGameView:removeEvents()
+	self._btnforward:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._btnback:RemoveClickListener()
+	self._btnundo:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnquit:RemoveClickListener()
 end
 
-function var_0_0._btnforwardOnClick(arg_4_0)
-	arg_4_0:_walk(PushBoxGameMgr.Direction.Up)
+function VersionActivityPushBoxGameView:_btnforwardOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Up)
 end
 
-function var_0_0._btnbackOnClick(arg_5_0)
-	arg_5_0:_walk(PushBoxGameMgr.Direction.Down)
+function VersionActivityPushBoxGameView:_btnbackOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Down)
 end
 
-function var_0_0._btnleftOnClick(arg_6_0)
-	arg_6_0:_walk(PushBoxGameMgr.Direction.Left)
+function VersionActivityPushBoxGameView:_btnleftOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Left)
 end
 
-function var_0_0._btnrightOnClick(arg_7_0)
-	arg_7_0:_walk(PushBoxGameMgr.Direction.Right)
+function VersionActivityPushBoxGameView:_btnrightOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Right)
 end
 
-function var_0_0._btnundoOnClick(arg_8_0)
-	arg_8_0._game_mgr:revertStep()
+function VersionActivityPushBoxGameView:_btnundoOnClick()
+	self._game_mgr:revertStep()
 end
 
-function var_0_0._btnresetOnClick(arg_9_0)
+function VersionActivityPushBoxGameView:_btnresetOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.ResetPushBox, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_9_0:_statEnd(StatEnum.Result.Reset)
-		arg_9_0:_statStart()
-		arg_9_0._game_mgr:revertGame()
+		self:_statEnd(StatEnum.Result.Reset)
+		self:_statStart()
+		self._game_mgr:revertGame()
 	end)
 end
 
-function var_0_0._btnrestartOnClick(arg_11_0)
-	arg_11_0._game_mgr:revertGame()
+function VersionActivityPushBoxGameView:_btnrestartOnClick()
+	self._game_mgr:revertGame()
 
-	arg_11_0._gameDone = nil
+	self._gameDone = nil
 
-	gohelper.setActive(arg_11_0._goresult, false)
-	arg_11_0:_statStart()
+	gohelper.setActive(self._goresult, false)
+	self:_statStart()
 end
 
-function var_0_0._btnquitOnClick(arg_12_0)
-	if arg_12_0._gameDone and Time.realtimeSinceStartup - arg_12_0._gameDone < 1.5 then
+function VersionActivityPushBoxGameView:_btnquitOnClick()
+	if self._gameDone and Time.realtimeSinceStartup - self._gameDone < 1.5 then
 		return
 	end
 
-	arg_12_0:_onBtnClose()
+	self:_onBtnClose()
 end
 
-function var_0_0._btntaskrewardOnClick(arg_13_0)
+function VersionActivityPushBoxGameView:_btntaskrewardOnClick()
 	PushBoxRpc.instance:sendReceiveTaskRewardRequest(nil, 1)
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._simagedecorate:LoadImage(ResUrl.getActivityWarmUpBg("bg_bodian"))
+function VersionActivityPushBoxGameView:_editableInitView()
+	self._simagedecorate:LoadImage(ResUrl.getActivityWarmUpBg("bg_bodian"))
 
-	arg_14_0._bgMaterial = MonoHelper.addNoUpdateLuaComOnceToGo(arg_14_0._simagedecorate.gameObject, SingleBgToMaterial)
+	self._bgMaterial = MonoHelper.addNoUpdateLuaComOnceToGo(self._simagedecorate.gameObject, SingleBgToMaterial)
 
-	arg_14_0._bgMaterial:loadMaterial(arg_14_0._simagedecorate, "ui_black2transparent")
-	arg_14_0._simageleft:LoadImage(ResUrl.getVersionActivityIcon("pushbox/btn_zt1"))
-	arg_14_0._simageright:LoadImage(ResUrl.getVersionActivityIcon("pushbox/btn_zt2"))
+	self._bgMaterial:loadMaterial(self._simagedecorate, "ui_black2transparent")
+	self._simageleft:LoadImage(ResUrl.getVersionActivityIcon("pushbox/btn_zt1"))
+	self._simageright:LoadImage(ResUrl.getVersionActivityIcon("pushbox/btn_zt2"))
 
-	arg_14_0._statViewTime = nil
+	self._statViewTime = nil
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function VersionActivityPushBoxGameView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0.viewContainer._navigateButtonView:setOverrideClose(arg_16_0._onNavigateCloseCallback, arg_16_0)
+function VersionActivityPushBoxGameView:onOpen()
+	self.viewContainer._navigateButtonView:setOverrideClose(self._onNavigateCloseCallback, self)
 
-	arg_16_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	arg_16_0._txtsecurityvalue.text = 0
-	arg_16_0._success_click = gohelper.findChildClickWithAudio(arg_16_0.viewGO, "#go_result/#go_success")
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._txtsecurityvalue.text = 0
+	self._success_click = gohelper.findChildClickWithAudio(self.viewGO, "#go_result/#go_success")
 
-	arg_16_0._success_click:AddClickListener(arg_16_0._successClick, arg_16_0)
-	TaskDispatcher.runRepeat(arg_16_0._onFrame, arg_16_0, 0.001)
-	arg_16_0:_statStart()
+	self._success_click:AddClickListener(self._successClick, self)
+	TaskDispatcher.runRepeat(self._onFrame, self, 0.001)
+	self:_statStart()
 end
 
-function var_0_0._onFrame(arg_17_0)
+function VersionActivityPushBoxGameView:_onFrame()
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.W) then
-		arg_17_0:_walk(PushBoxGameMgr.Direction.Up)
+		self:_walk(PushBoxGameMgr.Direction.Up)
 	end
 
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.S) then
-		arg_17_0:_walk(PushBoxGameMgr.Direction.Down)
+		self:_walk(PushBoxGameMgr.Direction.Down)
 	end
 
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.A) then
-		arg_17_0:_walk(PushBoxGameMgr.Direction.Left)
+		self:_walk(PushBoxGameMgr.Direction.Left)
 	end
 
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.D) then
-		arg_17_0:_walk(PushBoxGameMgr.Direction.Right)
+		self:_walk(PushBoxGameMgr.Direction.Right)
 	end
 end
 
-function var_0_0._onRefreshWarningNum(arg_18_0, arg_18_1)
-	if arg_18_0._game_mgr:gameIsFinish() then
+function VersionActivityPushBoxGameView:_onRefreshWarningNum(num)
+	if self._game_mgr:gameIsFinish() then
 		return
 	end
 
-	if not arg_18_0._last_num then
-		arg_18_0._last_num = 0
+	if not self._last_num then
+		self._last_num = 0
 	end
 
-	arg_18_0._txtsecurityvalue.text = arg_18_1
-	arg_18_0._txtsecurityvalueeffect.text = arg_18_1
+	self._txtsecurityvalue.text = num
+	self._txtsecurityvalueeffect.text = num
 
-	if arg_18_0._last_num ~= arg_18_1 then
-		gohelper.setActive(arg_18_0._txtsecurityvalueeffect.gameObject, false)
-		gohelper.setActive(arg_18_0._txtsecurityvalueeffect.gameObject, true)
+	if self._last_num ~= num then
+		gohelper.setActive(self._txtsecurityvalueeffect.gameObject, false)
+		gohelper.setActive(self._txtsecurityvalueeffect.gameObject, true)
 	end
 
-	arg_18_0._last_num = arg_18_1
+	self._last_num = num
 end
 
-function var_0_0._onGameWin(arg_19_0, arg_19_1)
-	arg_19_0._cur_warning = arg_19_1
+function VersionActivityPushBoxGameView:_onGameWin(cur_warning)
+	self._cur_warning = cur_warning
 
-	local var_19_0 = arg_19_0._game_mgr:getConfig().id
-	local var_19_1 = "OnPushBoxWinPause" .. var_19_0
-	local var_19_2 = GuideEvent[var_19_1]
-	local var_19_3 = GuideEvent.OnPushBoxWinContinue
-	local var_19_4 = arg_19_0._onWinPauseGuideOver
-	local var_19_5 = arg_19_0
+	local episodeConfig = self._game_mgr:getConfig()
+	local mapId = episodeConfig.id
+	local v1 = "OnPushBoxWinPause" .. mapId
+	local v2 = GuideEvent[v1]
+	local v3 = GuideEvent.OnPushBoxWinContinue
+	local v4 = self._onWinPauseGuideOver
+	local v5 = self
 
-	GuideController.instance:GuideFlowPauseAndContinue(var_19_1, var_19_2, var_19_3, var_19_4, var_19_5)
+	GuideController.instance:GuideFlowPauseAndContinue(v1, v2, v3, v4, v5)
 end
 
-function var_0_0._onWinPauseGuideOver(arg_20_0)
-	arg_20_0._gameDone = Time.realtimeSinceStartup
+function VersionActivityPushBoxGameView:_onWinPauseGuideOver()
+	self._gameDone = Time.realtimeSinceStartup
 
-	local var_20_0
-	local var_20_1 = arg_20_0._cur_warning >= 60 and "img_tcst" or arg_20_0._cur_warning >= 30 and "img_scgm" or "img_jctq"
+	local url
 
-	arg_20_0._simageresulticon:LoadImage(ResUrl.getPushBoxResultIcon(var_20_1))
-	gohelper.setActive(arg_20_0._goresult, true)
-	gohelper.setActive(arg_20_0._gosuccess, true)
-	gohelper.setActive(arg_20_0._gofail, false)
+	url = self._cur_warning >= 60 and "img_tcst" or self._cur_warning >= 30 and "img_scgm" or "img_jctq"
 
-	arg_20_0._win = PushBoxGameMgr.finishNewEpisode
+	self._simageresulticon:LoadImage(ResUrl.getPushBoxResultIcon(url))
+	gohelper.setActive(self._goresult, true)
+	gohelper.setActive(self._gosuccess, true)
+	gohelper.setActive(self._gofail, false)
+
+	self._win = PushBoxGameMgr.finishNewEpisode
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_develop_success)
-	arg_20_0:_statEnd(StatEnum.Result.Success)
+	self:_statEnd(StatEnum.Result.Success)
 end
 
-function var_0_0._onGameOver(arg_21_0)
-	arg_21_0._gameDone = Time.realtimeSinceStartup
+function VersionActivityPushBoxGameView:_onGameOver()
+	self._gameDone = Time.realtimeSinceStartup
 
-	arg_21_0._simageresulticon:LoadImage(ResUrl.getPushBoxResultIcon("img_shibai_jhsb"))
-	gohelper.setActive(arg_21_0._goresult, true)
-	gohelper.setActive(arg_21_0._gofail, true)
-	gohelper.setActive(arg_21_0._gosuccess, false)
+	self._simageresulticon:LoadImage(ResUrl.getPushBoxResultIcon("img_shibai_jhsb"))
+	gohelper.setActive(self._goresult, true)
+	gohelper.setActive(self._gofail, true)
+	gohelper.setActive(self._gosuccess, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_develop_fail)
-	arg_21_0:_statEnd(StatEnum.Result.Fail)
+	self:_statEnd(StatEnum.Result.Fail)
 end
 
-function var_0_0._successClick(arg_22_0)
-	if arg_22_0._gameDone and Time.realtimeSinceStartup - arg_22_0._gameDone < 1.5 then
+function VersionActivityPushBoxGameView:_successClick()
+	if self._gameDone and Time.realtimeSinceStartup - self._gameDone < 1.5 then
 		return
 	end
 
-	arg_22_0:_onBtnClose()
+	self:_onBtnClose()
 end
 
-function var_0_0._walk(arg_23_0, arg_23_1)
-	if arg_23_0._gameDone then
+function VersionActivityPushBoxGameView:_walk(direction)
+	if self._gameDone then
 		return
 	end
 
-	if not arg_23_0._last_time then
-		arg_23_0._last_time = Time.realtimeSinceStartup
-	elseif Time.realtimeSinceStartup - arg_23_0._last_time < 0.3 then
+	if not self._last_time then
+		self._last_time = Time.realtimeSinceStartup
+	elseif Time.realtimeSinceStartup - self._last_time < 0.3 then
 		return
 	end
 
-	arg_23_0._last_time = Time.realtimeSinceStartup
+	self._last_time = Time.realtimeSinceStartup
 
-	arg_23_0._game_mgr:_onMove(arg_23_1)
+	self._game_mgr:_onMove(direction)
 end
 
-function var_0_0._onBtnClose(arg_24_0)
-	local var_24_0 = {
-		id = GameSceneMgr.instance:getCurScene().gameMgr:getCurStageID(),
-		win = arg_24_0._win
-	}
+function VersionActivityPushBoxGameView:_onBtnClose()
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.VersionActivityPushBoxLevelView, var_24_0)
-	arg_24_0:closeThis()
+	param.id = GameSceneMgr.instance:getCurScene().gameMgr:getCurStageID()
+	param.win = self._win
+
+	ViewMgr.instance:openView(ViewName.VersionActivityPushBoxLevelView, param)
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_25_0)
-	arg_25_0.viewContainer._navigateButtonView:setOverrideClose(nil, nil)
-	TaskDispatcher.cancelTask(arg_25_0._onFrame, arg_25_0)
-	arg_25_0._success_click:RemoveClickListener()
-	arg_25_0._simageresulticon:UnLoadImage()
-	arg_25_0:_statEnd(StatEnum.Result.Abort)
+function VersionActivityPushBoxGameView:onClose()
+	self.viewContainer._navigateButtonView:setOverrideClose(nil, nil)
+	TaskDispatcher.cancelTask(self._onFrame, self)
+	self._success_click:RemoveClickListener()
+	self._simageresulticon:UnLoadImage()
+	self:_statEnd(StatEnum.Result.Abort)
 end
 
-function var_0_0._onNavigateCloseCallback(arg_26_0)
-	if TimeUtil.getDayFirstLoginRed("PushBoxFirstQuitGameNotice") then
+function VersionActivityPushBoxGameView:_onNavigateCloseCallback()
+	local red = TimeUtil.getDayFirstLoginRed("PushBoxFirstQuitGameNotice")
+
+	if red then
 		GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, function()
 			TimeUtil.setDayFirstLoginRed("PushBoxFirstQuitGameNotice")
-			arg_26_0:_onBtnClose()
+			self:_onBtnClose()
 		end)
 	else
-		arg_26_0:_onBtnClose()
+		self:_onBtnClose()
 	end
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	arg_28_0._simagedecorate:UnLoadImage()
-	arg_28_0._bgMaterial:dispose()
-	arg_28_0._simageleft:UnLoadImage()
-	arg_28_0._simageright:UnLoadImage()
+function VersionActivityPushBoxGameView:onDestroyView()
+	self._simagedecorate:UnLoadImage()
+	self._bgMaterial:dispose()
+	self._simageleft:UnLoadImage()
+	self._simageright:UnLoadImage()
 end
 
-function var_0_0._statStart(arg_29_0)
-	if arg_29_0._statViewTime then
+function VersionActivityPushBoxGameView:_statStart()
+	if self._statViewTime then
 		return
 	end
 
-	arg_29_0._statViewTime = ServerTime.now()
+	self._statViewTime = ServerTime.now()
 end
 
-function var_0_0._statEnd(arg_30_0, arg_30_1)
-	if not arg_30_0._statViewTime then
+function VersionActivityPushBoxGameView:_statEnd(result)
+	if not self._statViewTime then
 		return
 	end
 
-	local var_30_0 = ServerTime.now() - arg_30_0._statViewTime
-	local var_30_1 = arg_30_0._game_mgr:getConfig()
-	local var_30_2 = var_30_1.id
-	local var_30_3 = var_30_1.name
+	local useTime = ServerTime.now() - self._statViewTime
+	local episodeConfig = self._game_mgr:getConfig()
+	local mapId = episodeConfig.id
+	local mapName = episodeConfig.name
 
-	arg_30_0._statViewTime = nil
+	self._statViewTime = nil
 
 	StatController.instance:track(StatEnum.EventName.ExitSokoban, {
-		[StatEnum.EventProperties.UseTime] = var_30_0,
-		[StatEnum.EventProperties.MapId] = tostring(var_30_2),
-		[StatEnum.EventProperties.MapName] = var_30_3,
-		[StatEnum.EventProperties.Result] = arg_30_1
+		[StatEnum.EventProperties.UseTime] = useTime,
+		[StatEnum.EventProperties.MapId] = tostring(mapId),
+		[StatEnum.EventProperties.MapName] = mapName,
+		[StatEnum.EventProperties.Result] = result
 	})
 end
 
-return var_0_0
+return VersionActivityPushBoxGameView

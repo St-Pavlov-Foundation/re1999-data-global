@@ -1,15 +1,17 @@
-﻿module("modules.logic.player.view.PlayerIdViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerIdViewContainer.lua
 
-local var_0_0 = class("PlayerIdViewContainer", BaseViewContainer)
+module("modules.logic.player.view.PlayerIdViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerIdViewContainer = class("PlayerIdViewContainer", BaseViewContainer)
 
-	arg_1_0.PlayerIdView = PlayerIdView.New()
+function PlayerIdViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.PlayerIdView)
+	self.PlayerIdView = PlayerIdView.New()
 
-	return var_1_0
+	table.insert(views, self.PlayerIdView)
+
+	return views
 end
 
-return var_0_0
+return PlayerIdViewContainer

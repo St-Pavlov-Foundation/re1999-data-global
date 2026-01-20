@@ -1,71 +1,74 @@
-﻿module("modules.logic.fight.system.work.FightWorkRequestAutoFight", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRequestAutoFight.lua
 
-local var_0_0 = class("FightWorkRequestAutoFight", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkRequestAutoFight", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightWorkRequestAutoFight = class("FightWorkRequestAutoFight", FightWorkItem)
+
+function FightWorkRequestAutoFight:onConstructor()
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.AutoCardPlaying)
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:com_registMsg(FightMsgId.AutoRoundReply, arg_2_0.onAutoRoundReply)
-	arg_2_0:com_registMsg(FightMsgId.AutoRoundReplyFail, arg_2_0.onAutoRoundReplyFail)
+function FightWorkRequestAutoFight:onStart()
+	self:com_registMsg(FightMsgId.AutoRoundReply, self.onAutoRoundReply)
+	self:com_registMsg(FightMsgId.AutoRoundReplyFail, self.onAutoRoundReplyFail)
 	FightRpc.instance:sendAutoRoundRequest(FightDataHelper.operationDataMgr:getOpList())
-	arg_2_0:cancelFightWorkSafeTimer()
+	self:cancelFightWorkSafeTimer()
 end
 
-function var_0_0.onAutoRoundReply(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function FightWorkRequestAutoFight:onAutoRoundReply(msg)
+	local autoPlayCardList = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.opers) do
-		local var_3_1 = FightOperationItemData.New()
+	for _, oper in ipairs(msg.opers) do
+		local beginRoundOp = FightOperationItemData.New()
 
-		var_3_1:setByProto(iter_3_1)
-		table.insert(var_3_0, var_3_1)
+		beginRoundOp:setByProto(oper)
+		table.insert(autoPlayCardList, beginRoundOp)
 	end
 
-	if #var_3_0 > 0 then
-		local var_3_2 = arg_3_0:com_registFlowSequence()
+	if #autoPlayCardList > 0 then
+		local flow = self:com_registFlowSequence()
 
-		var_3_2:registWork(FightWorkCheckUseAiJiAoQte)
-		var_3_2:registWork(FightWorkClearAiJiAoQteTempData)
-		var_3_2:registWork(FightAutoBindContractWork)
-		var_3_2:registWork(FightAutoDetectUpgradeWork)
-		var_3_2:registWork(FightWorkWaitAllOperateDone)
+		flow:registWork(FightWorkCheckUseAiJiAoQte)
+		flow:registWork(FightWorkClearAiJiAoQteTempData)
+		flow:registWork(FightAutoBindContractWork)
+		flow:registWork(FightAutoDetectUpgradeWork)
+		flow:registWork(FightAutoSelectCrystalWork)
+		flow:registWork(FightWorkWaitAllOperateDone)
 
-		local var_3_3 = 0
+		local season2Index = 0
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_0) do
-			if iter_3_3:isAssistBossPlayCard() then
-				var_3_2:addWork(WorkWaitSeconds.New(0.3))
-				var_3_2:addWork(FightAutoPlayAssistBossCardWork.New(iter_3_3))
-			elseif iter_3_3:isSeason2ChangeHero() then
+		for i, beginRoundOp in ipairs(autoPlayCardList) do
+			if beginRoundOp:isAssistBossPlayCard() then
+				flow:addWork(WorkWaitSeconds.New(0.3))
+				flow:addWork(FightAutoPlayAssistBossCardWork.New(beginRoundOp))
+			elseif beginRoundOp:isSeason2ChangeHero() then
 				-- block empty
-			elseif iter_3_3:isPlayerFinisherSkill() then
-				var_3_2:addWork(WorkWaitSeconds.New(0.1))
-				var_3_2:addWork(FightWorkAutoPlayerFinisherSkill.New(iter_3_3))
-			elseif iter_3_3:isBloodPoolSkill() then
+			elseif beginRoundOp:isPlayerFinisherSkill() then
+				flow:addWork(WorkWaitSeconds.New(0.1))
+				flow:addWork(FightWorkAutoPlayerFinisherSkill.New(beginRoundOp))
+			elseif beginRoundOp:isBloodPoolSkill() then
 				logError("自动打牌  血池牌 todo")
-			elseif iter_3_3:isPlayCard() then
-				var_3_2:addWork(WorkWaitSeconds.New(0.01))
-				var_3_2:addWork(FightAutoPlayCardWork.New(iter_3_3))
+			elseif beginRoundOp:isPlayCard() then
+				flow:addWork(WorkWaitSeconds.New(0.01))
+				flow:addWork(FightAutoPlayCardWork.New(beginRoundOp))
 			end
 		end
 
-		var_3_2:registWork(FightWorkSendOperate2Server)
-		arg_3_0:playWorkAndDone(var_3_2)
+		flow:registWork(FightWorkSendOperate2Server)
+		self:playWorkAndDone(flow)
 	else
-		local var_3_4 = arg_3_0:com_registWork(FightWorkSendOperate2Server)
+		local work = self:com_registWork(FightWorkSendOperate2Server)
 
-		arg_3_0:playWorkAndDone(var_3_4)
+		self:playWorkAndDone(work)
 	end
 end
 
-function var_0_0.onAutoRoundReplyFail(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkRequestAutoFight:onAutoRoundReplyFail()
+	self:onDone(true)
 end
 
-function var_0_0.onDestructor(arg_5_0)
+function FightWorkRequestAutoFight:onDestructor()
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.AutoCardPlaying)
 end
 
-return var_0_0
+return FightWorkRequestAutoFight

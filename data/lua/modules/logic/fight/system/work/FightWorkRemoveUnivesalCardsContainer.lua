@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkRemoveUnivesalCardsContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRemoveUnivesalCardsContainer.lua
 
-local var_0_0 = class("FightWorkRemoveUnivesalCardsContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkRemoveUnivesalCardsContainer", package.seeall)
+
+local FightWorkRemoveUnivesalCardsContainer = class("FightWorkRemoveUnivesalCardsContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.POWERCHANGE] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
+function FightWorkRemoveUnivesalCardsContainer:onStart()
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkRemoveUnivesalCardsContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkRemoveUnivesalCardsContainer

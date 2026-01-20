@@ -1,11 +1,13 @@
-﻿module("modules.logic.reddot.controller.RedDotEvent", package.seeall)
+﻿-- chunkname: @modules/logic/reddot/controller/RedDotEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.reddot.controller.RedDotEvent", package.seeall)
 
-var_0_0.RefreshClientCharacterDot = 1
-var_0_0.UpdateFriendInfoDot = 2
-var_0_0.UpdateRelateDotInfo = 3
-var_0_0.UpdateActTag = 4
-var_0_0.PreSetRedDot = 5
+local RedDotEvent = _M
 
-return var_0_0
+RedDotEvent.RefreshClientCharacterDot = 1
+RedDotEvent.UpdateFriendInfoDot = 2
+RedDotEvent.UpdateRelateDotInfo = 3
+RedDotEvent.UpdateActTag = 4
+RedDotEvent.PreSetRedDot = 5
+
+return RedDotEvent

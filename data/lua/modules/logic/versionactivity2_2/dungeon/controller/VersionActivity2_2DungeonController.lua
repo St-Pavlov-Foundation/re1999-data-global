@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_2.dungeon.controller.VersionActivity2_2DungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/dungeon/controller/VersionActivity2_2DungeonController.lua
 
-local var_0_0 = class("VersionActivity2_2DungeonController", BaseController)
+module("modules.logic.versionactivity2_2.dungeon.controller.VersionActivity2_2DungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_2DungeonController = class("VersionActivity2_2DungeonController", BaseController)
+
+function VersionActivity2_2DungeonController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity2_2DungeonController:reInit()
 	return
 end
 
-function var_0_0.openVersionActivityDungeonMapView(arg_3_0)
-	local var_3_0, var_3_1, var_3_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_2Enum.ActivityId.EnterView)
+function VersionActivity2_2DungeonController:openVersionActivityDungeonMapView()
+	local enterViewStatus, enterViewToastId, enterViewToastParam = ActivityHelper.getActivityStatusAndToast(VersionActivity2_2Enum.ActivityId.EnterView)
 
-	if var_3_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_3_1 then
-			GameFacade.showToast(var_3_1, var_3_2)
+	if enterViewStatus ~= ActivityEnum.ActivityStatus.Normal then
+		if enterViewToastId then
+			GameFacade.showToast(enterViewToastId, enterViewToastParam)
 		end
 
 		return
 	end
 
-	local var_3_3, var_3_4, var_3_5 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_2Enum.ActivityId.Dungeon)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(VersionActivity2_2Enum.ActivityId.Dungeon)
 
-	if var_3_3 == ActivityEnum.ActivityStatus.Normal then
+	if status == ActivityEnum.ActivityStatus.Normal then
 		ActivityEnterMgr.instance:enterActivity(VersionActivity2_2Enum.ActivityId.Dungeon)
 		ActivityRpc.instance:sendActivityNewStageReadRequest({
 			VersionActivity2_2Enum.ActivityId.Dungeon
@@ -31,40 +33,40 @@ function var_0_0.openVersionActivityDungeonMapView(arg_3_0)
 	end
 
 	if DungeonModel.instance:chapterIsLock(DungeonEnum.ChapterId.Main1_8) then
-		local var_3_6 = true
+		local formMainView = true
 
-		DungeonController.instance:enterDungeonView(true, var_3_6)
+		DungeonController.instance:enterDungeonView(true, formMainView)
 	else
 		JumpController.instance:jumpTo("3#" .. tostring(DungeonEnum.ChapterId.Main1_8))
 	end
 end
 
-function var_0_0.openTaskView(arg_4_0)
-	local var_4_0 = {
+function VersionActivity2_2DungeonController:openTaskView()
+	local typeIds = {
 		TaskEnum.TaskType.ActivityDungeon
 	}
 
-	TaskRpc.instance:sendGetTaskInfoRequest(var_4_0, arg_4_0._openTaskViewAfterRpc, arg_4_0)
+	TaskRpc.instance:sendGetTaskInfoRequest(typeIds, self._openTaskViewAfterRpc, self)
 end
 
-function var_0_0._openTaskViewAfterRpc(arg_5_0)
+function VersionActivity2_2DungeonController:_openTaskViewAfterRpc()
 	ViewMgr.instance:openView(ViewName.VersionActivity2_2TaskView)
 end
 
-function var_0_0.openStoreView(arg_6_0)
-	local var_6_0 = VersionActivity2_2Enum.ActivityId.DungeonStore
+function VersionActivity2_2DungeonController:openStoreView()
+	local actId = VersionActivity2_2Enum.ActivityId.DungeonStore
 
-	if not VersionActivityEnterHelper.checkCanOpen(var_6_0) then
+	if not VersionActivityEnterHelper.checkCanOpen(actId) then
 		return
 	end
 
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(var_6_0, arg_6_0._openStoreViewAfterRpc, arg_6_0)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, self._openStoreViewAfterRpc, self)
 end
 
-function var_0_0._openStoreViewAfterRpc(arg_7_0)
+function VersionActivity2_2DungeonController:_openStoreViewAfterRpc()
 	ViewMgr.instance:openView(ViewName.VersionActivity2_2StoreView)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_2DungeonController.instance = VersionActivity2_2DungeonController.New()
 
-return var_0_0
+return VersionActivity2_2DungeonController

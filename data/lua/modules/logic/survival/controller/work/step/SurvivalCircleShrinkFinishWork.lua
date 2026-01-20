@@ -1,25 +1,27 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalCircleShrinkFinishWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalCircleShrinkFinishWork.lua
 
-local var_0_0 = class("SurvivalCircleShrinkFinishWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalCircleShrinkFinishWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._stepMo.paramInt[1] or 0
-	local var_1_1 = SurvivalMapModel.instance:getSceneMo()
+local SurvivalCircleShrinkFinishWork = class("SurvivalCircleShrinkFinishWork", SurvivalStepBaseWork)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1.safeZone) do
-		if iter_1_1.round == var_1_0 then
-			table.remove(var_1_1.safeZone, iter_1_0)
+function SurvivalCircleShrinkFinishWork:onStart(context)
+	local round = self._stepMo.paramInt[1] or 0
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	for i, v in ipairs(sceneMo.safeZone) do
+		if v.round == round then
+			table.remove(sceneMo.safeZone, i)
 
 			break
 		end
 	end
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShrinkInfoUpdate)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
+function SurvivalCircleShrinkFinishWork:getRunOrder(params, flow)
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalCircleShrinkFinishWork

@@ -1,28 +1,30 @@
-﻿module("modules.logic.gm.view.act165.GMAct165EditViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/act165/GMAct165EditViewContainer.lua
 
-local var_0_0 = class("GMAct165EditViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.act165.GMAct165EditViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local GMAct165EditViewContainer = class("GMAct165EditViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, GMAct165EditView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_pre/#go_topleft"))
+function GMAct165EditViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, GMAct165EditView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_pre/#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function GMAct165EditViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return GMAct165EditViewContainer

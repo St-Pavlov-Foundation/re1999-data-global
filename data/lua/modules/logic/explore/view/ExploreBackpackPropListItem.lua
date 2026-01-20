@@ -1,80 +1,86 @@
-﻿module("modules.logic.explore.view.ExploreBackpackPropListItem", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBackpackPropListItem.lua
 
-local var_0_0 = class("ExploreBackpackPropListItem", LuaCompBase)
+module("modules.logic.explore.view.ExploreBackpackPropListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goinuse = gohelper.findChild(arg_1_0.go, "#go_inuse")
-	arg_1_0._click = gohelper.findChildButton(arg_1_0.go, "#btn_click")
+local ExploreBackpackPropListItem = class("ExploreBackpackPropListItem", LuaCompBase)
 
-	arg_1_0._click:AddClickListener(arg_1_0._onItemClick, arg_1_0)
+function ExploreBackpackPropListItem:init(go)
+	self.go = go
+	self._goinuse = gohelper.findChild(self.go, "#go_inuse")
+	self._click = gohelper.findChildButton(self.go, "#btn_click")
 
-	arg_1_0._simagepropicon = gohelper.findChildSingleImage(arg_1_0.go, "#simage_propicon")
-	arg_1_0._simageusepropicon = gohelper.findChildSingleImage(arg_1_0.go, "#go_inuse/#simage_propicon")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.go, "#go_selected")
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.go, "#go_selected/#txt_propname")
-	arg_1_0._btnIconDetail = gohelper.findChildButton(arg_1_0.go, "#go_selected/#txt_propname/icon")
+	self._click:AddClickListener(self._onItemClick, self)
+
+	self._simagepropicon = gohelper.findChildSingleImage(self.go, "#simage_propicon")
+	self._simageusepropicon = gohelper.findChildSingleImage(self.go, "#go_inuse/#simage_propicon")
+	self._goselect = gohelper.findChild(self.go, "#go_selected")
+	self._txtname = gohelper.findChildTextMesh(self.go, "#go_selected/#txt_propname")
+	self._btnIconDetail = gohelper.findChildButton(self.go, "#go_selected/#txt_propname/icon")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, arg_2_0._updateUsing, arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, arg_2_0.onMapStatusChange, arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.OnHeroMoveEnd, arg_2_0.onHeroMoveEnd, arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.ExploreLightBallEnterExit, arg_2_0.onLightBallChange, arg_2_0)
-	arg_2_0._btnIconDetail:AddClickListener(arg_2_0.onDetailClick, arg_2_0)
+function ExploreBackpackPropListItem:addEventListeners()
+	self:addEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, self._updateUsing, self)
+	self:addEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, self.onMapStatusChange, self)
+	self:addEventCb(ExploreController.instance, ExploreEvent.OnHeroMoveEnd, self.onHeroMoveEnd, self)
+	self:addEventCb(ExploreController.instance, ExploreEvent.ExploreLightBallEnterExit, self.onLightBallChange, self)
+	self._btnIconDetail:AddClickListener(self.onDetailClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, arg_3_0._updateUsing, arg_3_0)
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, arg_3_0.onMapStatusChange, arg_3_0)
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.OnHeroMoveEnd, arg_3_0.onHeroMoveEnd, arg_3_0)
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.ExploreLightBallEnterExit, arg_3_0.onLightBallChange, arg_3_0)
-	arg_3_0._btnIconDetail:RemoveClickListener()
+function ExploreBackpackPropListItem:removeEventListeners()
+	self:removeEventCb(ExploreController.instance, ExploreEvent.UseItemChanged, self._updateUsing, self)
+	self:removeEventCb(ExploreController.instance, ExploreEvent.MapStatusChange, self.onMapStatusChange, self)
+	self:removeEventCb(ExploreController.instance, ExploreEvent.OnHeroMoveEnd, self.onHeroMoveEnd, self)
+	self:removeEventCb(ExploreController.instance, ExploreEvent.ExploreLightBallEnterExit, self.onLightBallChange, self)
+	self._btnIconDetail:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function ExploreBackpackPropListItem:onUpdateMO(data)
+	self._mo = data
 
-	local var_4_0 = ResUrl.getPropItemIcon(arg_4_1.config.icon)
+	local icon = ResUrl.getPropItemIcon(data.config.icon)
 
-	arg_4_0._simagepropicon:LoadImage(var_4_0)
-	arg_4_0._simageusepropicon:LoadImage(var_4_0)
-	arg_4_0:_updateUsing(ExploreModel.instance:getUseItemUid())
+	self._simagepropicon:LoadImage(icon)
+	self._simageusepropicon:LoadImage(icon)
+	self:_updateUsing(ExploreModel.instance:getUseItemUid())
 
-	arg_4_0._txtname.text = arg_4_0._mo.config.name
+	self._txtname.text = self._mo.config.name
 
-	arg_4_0:onMapStatusChange(ExploreController.instance:getMap():getNowStatus())
+	self:onMapStatusChange(ExploreController.instance:getMap():getNowStatus())
 end
 
-function var_0_0.onLightBallChange(arg_5_0)
-	if not arg_5_0._mo then
+function ExploreBackpackPropListItem:onLightBallChange()
+	if not self._mo then
 		return
 	end
 
-	if arg_5_0._mo.itemEffect == ExploreEnum.ItemEffect.CreateUnit2 then
-		arg_5_0:_updateUsing()
+	local effect = self._mo.itemEffect
+
+	if effect == ExploreEnum.ItemEffect.CreateUnit2 then
+		self:_updateUsing()
 	end
 end
 
-function var_0_0._updateUsing(arg_6_0, arg_6_1)
-	if not arg_6_0._mo then
+function ExploreBackpackPropListItem:_updateUsing(useItemUid)
+	if not self._mo then
 		return
 	end
 
-	local var_6_0 = arg_6_0._mo.itemEffect
-	local var_6_1 = arg_6_1 == arg_6_0._mo.id
+	local effect = self._mo.itemEffect
+	local isUsing = useItemUid == self._mo.id
 
-	if var_6_0 == ExploreEnum.ItemEffect.CreateUnit2 then
-		var_6_1 = ExploreController.instance:getMap():getUnit(tonumber(arg_6_0._mo.id), true) and true or false
+	if effect == ExploreEnum.ItemEffect.CreateUnit2 then
+		local unit = ExploreController.instance:getMap():getUnit(tonumber(self._mo.id), true)
+
+		isUsing = unit and true or false
 	end
 
-	gohelper.setActive(arg_6_0._goinuse, var_6_1)
+	gohelper.setActive(self._goinuse, isUsing)
 end
 
-function var_0_0._onItemClick(arg_7_0)
-	local var_7_0 = arg_7_0._mo.itemEffect
+function ExploreBackpackPropListItem:_onItemClick()
+	local effect = self._mo.itemEffect
 
-	if var_7_0 == ExploreEnum.ItemEffect.Fix then
+	if effect == ExploreEnum.ItemEffect.Fix then
 		ToastController.instance:showToast(ExploreConstValue.Toast.UseWithFixPrism)
 
 		return
@@ -86,113 +92,120 @@ function var_0_0._onItemClick(arg_7_0)
 		return
 	end
 
-	local var_7_1 = ExploreController.instance:getMap()
+	local map = ExploreController.instance:getMap()
 
-	if var_7_1:getNowStatus() == ExploreEnum.MapStatus.UseItem then
-		local var_7_2 = var_7_1:getCompByType(ExploreEnum.MapStatus.UseItem):getCurItemMo()
+	if map:getNowStatus() == ExploreEnum.MapStatus.UseItem then
+		local mo = map:getCompByType(ExploreEnum.MapStatus.UseItem):getCurItemMo()
 
-		var_7_1:setMapStatus(ExploreEnum.MapStatus.Normal)
+		map:setMapStatus(ExploreEnum.MapStatus.Normal)
 
-		if var_7_2 == arg_7_0._mo then
+		if mo == self._mo then
 			return
 		end
-	elseif var_7_1:getNowStatus() == ExploreEnum.MapStatus.MoveUnit then
+	elseif map:getNowStatus() == ExploreEnum.MapStatus.MoveUnit then
 		ToastController.instance:showToast(ExploreConstValue.Toast.ExploreCantUseItem)
 
 		return
 	end
 
-	local var_7_3 = ExploreModel.instance:getUseItemUid()
-	local var_7_4 = var_7_1:getUnit(tonumber(var_7_3), true)
+	local usingId = ExploreModel.instance:getUseItemUid()
+	local usingUnit = map:getUnit(tonumber(usingId), true)
 
-	if var_7_4 and var_7_4:getUnitType() == ExploreEnum.ItemType.PipePot then
+	if usingUnit and usingUnit:getUnitType() == ExploreEnum.ItemType.PipePot then
 		ToastController.instance:showToast(ExploreConstValue.Toast.CantUseItem)
 
 		return
 	end
 
-	local var_7_5 = ExploreController.instance:getMap():getHero()
+	local hero = ExploreController.instance:getMap():getHero()
 
-	if var_7_5:isMoving() then
-		local var_7_6 = var_7_5.nodePos
-		local var_7_7 = ExploreHelper.getKey(var_7_6)
+	if hero:isMoving() then
+		local heroPos = hero.nodePos
+		local key = ExploreHelper.getKey(heroPos)
+		local node = ExploreMapModel.instance:getNode(key)
 
-		if ExploreMapModel.instance:getNode(var_7_7).nodeType == ExploreEnum.NodeType.Ice then
+		if node.nodeType == ExploreEnum.NodeType.Ice then
 			return
 		end
 	end
 
-	if var_7_5:isMoving() then
-		if not var_7_5:stopMoving() then
+	if hero:isMoving() then
+		if not hero:stopMoving() then
 			return
 		end
 
 		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.UseItem)
 
-		arg_7_0._waitHeroMoveEnd = true
+		self._waitHeroMoveEnd = true
 
 		return
 	end
 
-	if var_7_0 == ExploreEnum.ItemEffect.CreateUnit2 and ExploreController.instance:getMap():getUnit(tonumber(arg_7_0._mo.id), true) then
-		var_7_5:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.UseItem, true, true)
-		ExploreRpc.instance:sendExploreUseItemRequest(arg_7_0._mo.id, 0, 0)
+	if effect == ExploreEnum.ItemEffect.CreateUnit2 then
+		local unit = ExploreController.instance:getMap():getUnit(tonumber(self._mo.id), true)
 
-		return
+		if unit then
+			hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.UseItem, true, true)
+			ExploreRpc.instance:sendExploreUseItemRequest(self._mo.id, 0, 0)
+
+			return
+		end
 	end
 
-	if var_7_0 == ExploreEnum.ItemEffect.Active then
-		var_7_5:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.UseItem, true, true)
+	if effect == ExploreEnum.ItemEffect.Active then
+		hero:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.UseItem, true, true)
 	end
 
-	if arg_7_0._mo.isActiveTypeItem then
-		ExploreRpc.instance:sendExploreUseItemRequest(arg_7_0._mo.id, 0, 0)
+	if self._mo.isActiveTypeItem then
+		ExploreRpc.instance:sendExploreUseItemRequest(self._mo.id, 0, 0)
 	else
-		ExploreController.instance:dispatchEvent(ExploreEvent.DragItemBegin, arg_7_0._mo)
+		ExploreController.instance:dispatchEvent(ExploreEvent.DragItemBegin, self._mo)
 	end
 end
 
-function var_0_0.onHeroMoveEnd(arg_8_0)
-	if arg_8_0._waitHeroMoveEnd then
-		arg_8_0._waitHeroMoveEnd = nil
+function ExploreBackpackPropListItem:onHeroMoveEnd()
+	if self._waitHeroMoveEnd then
+		self._waitHeroMoveEnd = nil
 
 		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.UseItem)
-		arg_8_0:_onItemClick()
+		self:_onItemClick()
 	end
 end
 
-function var_0_0.onDetailClick(arg_9_0)
+function ExploreBackpackPropListItem:onDetailClick()
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.ExploreGetItemView, {
-		id = arg_9_0._mo.itemId
+		id = self._mo.itemId
 	})
 end
 
-function var_0_0.onMapStatusChange(arg_10_0, arg_10_1)
-	if arg_10_1 == ExploreEnum.MapStatus.UseItem then
-		if ExploreController.instance:getMap():getCompByType(ExploreEnum.MapStatus.UseItem):getCurItemMo() == arg_10_0._mo then
-			gohelper.setActive(arg_10_0._goselect, true)
+function ExploreBackpackPropListItem:onMapStatusChange(status)
+	if status == ExploreEnum.MapStatus.UseItem then
+		local mo = ExploreController.instance:getMap():getCompByType(ExploreEnum.MapStatus.UseItem):getCurItemMo()
+
+		if mo == self._mo then
+			gohelper.setActive(self._goselect, true)
 		else
-			gohelper.setActive(arg_10_0._goselect, false)
+			gohelper.setActive(self._goselect, false)
 		end
 	else
-		gohelper.setActive(arg_10_0._goselect, false)
+		gohelper.setActive(self._goselect, false)
 	end
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._click:RemoveClickListener()
+function ExploreBackpackPropListItem:onDestroyView()
+	self._click:RemoveClickListener()
 
-	if arg_11_0._simagepropicon then
-		arg_11_0._simagepropicon:UnLoadImage()
+	if self._simagepropicon then
+		self._simagepropicon:UnLoadImage()
 
-		arg_11_0._simagepropicon = nil
+		self._simagepropicon = nil
 	end
 
-	if arg_11_0._simageusepropicon then
-		arg_11_0._simageusepropicon:UnLoadImage()
+	if self._simageusepropicon then
+		self._simageusepropicon:UnLoadImage()
 
-		arg_11_0._simageusepropicon = nil
+		self._simageusepropicon = nil
 	end
 end
 
-return var_0_0
+return ExploreBackpackPropListItem

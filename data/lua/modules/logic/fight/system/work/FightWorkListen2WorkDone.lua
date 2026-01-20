@@ -1,43 +1,45 @@
-﻿module("modules.logic.fight.system.work.FightWorkListen2WorkDone", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkListen2WorkDone.lua
 
-local var_0_0 = class("FightWorkListen2WorkDone", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkListen2WorkDone", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0._work = arg_1_1
+local FightWorkListen2WorkDone = class("FightWorkListen2WorkDone", FightWorkItem)
+
+function FightWorkListen2WorkDone:onConstructor(work)
+	self._work = work
 end
 
-function var_0_0.onStart(arg_2_0)
-	if arg_2_0._work.IS_DISPOSED then
-		arg_2_0:onDone(true)
+function FightWorkListen2WorkDone:onStart()
+	if self._work.IS_DISPOSED then
+		self:onDone(true)
 
 		return
 	end
 
-	if arg_2_0._work.WORK_IS_FINISHED then
-		arg_2_0:onDone(true)
+	if self._work.WORK_IS_FINISHED then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_2_0:cancelFightWorkSafeTimer()
+	self:cancelFightWorkSafeTimer()
 
-	if arg_2_0._work.STARTED then
-		arg_2_0._work:registFinishCallback(arg_2_0.onWorkItemDone, arg_2_0)
+	if self._work.STARTED then
+		self._work:registFinishCallback(self.onWorkItemDone, self)
 
 		return
 	end
 
-	arg_2_0._work:registFinishCallback(arg_2_0.onWorkItemDone, arg_2_0)
+	self._work:registFinishCallback(self.onWorkItemDone, self)
 
-	return arg_2_0._work:start(arg_2_0.context)
+	return self._work:start(self.context)
 end
 
-function var_0_0.onWorkItemDone(arg_3_0)
-	return arg_3_0:onDone(true)
+function FightWorkListen2WorkDone:onWorkItemDone()
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	arg_4_0._work:disposeSelf()
+function FightWorkListen2WorkDone:clearWork()
+	self._work:disposeSelf()
 end
 
-return var_0_0
+return FightWorkListen2WorkDone

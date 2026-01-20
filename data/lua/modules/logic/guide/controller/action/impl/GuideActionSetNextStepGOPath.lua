@@ -1,183 +1,196 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionSetNextStepGOPath", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionSetNextStepGOPath.lua
 
-local var_0_0 = class("GuideActionSetNextStepGOPath", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionSetNextStepGOPath", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local GuideActionSetNextStepGOPath = class("GuideActionSetNextStepGOPath", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_3, "#")
+function GuideActionSetNextStepGOPath:ctor(guideId, stepId, actionParam)
+	GuideActionSetNextStepGOPath.super.ctor(self, guideId, stepId, actionParam)
 
-	arg_1_0._funcName = var_1_0[1]
+	local temp = string.split(actionParam, "#")
 
-	table.remove(var_1_0, 1)
+	self._funcName = temp[1]
 
-	arg_1_0._params = var_1_0
+	table.remove(temp, 1)
+
+	self._params = temp
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function GuideActionSetNextStepGOPath:onStart(context)
+	GuideActionSetNextStepGOPath.super.onStart(self, context)
 
-	local var_2_0 = arg_2_0[arg_2_0._funcName](arg_2_0, arg_2_0._params)
+	local func = self[self._funcName]
+	local goPath = func(self, self._params)
 
-	if not string.nilorempty(var_2_0) then
-		GuideModel.instance:setNextStepGOPath(arg_2_0.guideId, arg_2_0.stepId, var_2_0)
+	if not string.nilorempty(goPath) then
+		GuideModel.instance:setNextStepGOPath(self.guideId, self.stepId, goPath)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getCritterMood(arg_3_0, arg_3_1)
-	local var_3_0 = tonumber(arg_3_1[1])
-	local var_3_1 = ManufactureModel.instance:getAllPlacedManufactureBuilding()
-	local var_3_2
+function GuideActionSetNextStepGOPath:getCritterMood(params)
+	local mood = tonumber(params[1])
+	local list = ManufactureModel.instance:getAllPlacedManufactureBuilding()
+	local goPath
 
-	if var_3_1 then
-		local var_3_3
+	if list then
+		local focusIndex
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-			local var_3_4 = iter_3_1:getCanPlaceCritterCount()
+		for i, v in ipairs(list) do
+			local count = v:getCanPlaceCritterCount()
 
-			if var_3_4 > 0 then
-				for iter_3_2 = 1, var_3_4 do
-					local var_3_5 = iter_3_1:getWorkingCritter(iter_3_2 - 1)
+			if count > 0 then
+				for slot = 1, count do
+					local uid = v:getWorkingCritter(slot - 1)
 
-					if var_3_5 and var_3_0 >= CritterModel.instance:getById(var_3_5):getMoodValue() then
-						var_3_3 = iter_3_0
-						var_3_2 = string.format("UIRoot/POPUP_TOP/RoomOverView/#go_subView/roommanufactureoverview(Clone)/centerArea/#go_building/#scroll_building/viewport/content/%s/critterInfo/id-%s_i-%s", iter_3_0, iter_3_2 - 1, iter_3_2)
+					if uid then
+						local critterMO = CritterModel.instance:getById(uid)
+
+						if mood >= critterMO:getMoodValue() then
+							focusIndex = i
+							goPath = string.format("UIRoot/POPUP_TOP/RoomOverView/#go_subView/roommanufactureoverview(Clone)/centerArea/#go_building/#scroll_building/viewport/content/%s/critterInfo/id-%s_i-%s", i, slot - 1, slot)
+						end
 					end
 				end
 			end
 
-			if var_3_3 then
+			if focusIndex then
 				break
 			end
 		end
 
-		ManufactureController.instance:dispatchEvent(ManufactureEvent.GuideFocusCritter, var_3_3)
+		ManufactureController.instance:dispatchEvent(ManufactureEvent.GuideFocusCritter, focusIndex)
 	end
 
-	return var_3_2
+	return goPath
 end
 
-function var_0_0.roomBuilding(arg_4_0, arg_4_1)
-	local var_4_0 = tonumber(arg_4_1[1])
+function GuideActionSetNextStepGOPath:roomBuilding(params)
+	local buildingId = tonumber(params[1])
 
-	if var_4_0 then
-		local var_4_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+	if buildingId then
+		local buildingList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-		for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-			if iter_4_1.buildingId == var_4_0 then
-				local var_4_2 = GameSceneMgr.instance:getCurScene()
-				local var_4_3 = var_4_2.buildingmgr and var_4_2.buildingmgr:getBuildingEntity(iter_4_1.id, SceneTag.RoomBuilding)
+		for _, buildingMO in ipairs(buildingList) do
+			if buildingMO.buildingId == buildingId then
+				local scene = GameSceneMgr.instance:getCurScene()
+				local entity = scene.buildingmgr and scene.buildingmgr:getBuildingEntity(buildingMO.id, SceneTag.RoomBuilding)
+				local go = entity and SLFramework.GameObjectHelper.GetPath(entity.go)
 
-				return var_4_3 and SLFramework.GameObjectHelper.GetPath(var_4_3.go)
+				return go
 			end
 		end
 	else
-		logError("设置下一步骤GameObject路径，但建筑id未配置 " .. arg_4_0.guideId .. "_" .. arg_4_0.stepId)
+		logError("设置下一步骤GameObject路径，但建筑id未配置 " .. self.guideId .. "_" .. self.stepId)
 	end
 end
 
-function var_0_0.findTalentFirstChess(arg_5_0)
-	local var_5_0 = ViewMgr.instance:getContainer(ViewName.CharacterTalentChessView)
+function GuideActionSetNextStepGOPath:findTalentFirstChess()
+	local container = ViewMgr.instance:getContainer(ViewName.CharacterTalentChessView)
 
-	if not var_5_0 then
+	if not container then
 		return
 	end
 
-	local var_5_1 = var_5_0.viewGO
-	local var_5_2 = gohelper.findChild(var_5_1, "chessboard/#go_chessContainer")
+	local viewGo = container.viewGO
+	local chessContainer = gohelper.findChild(viewGo, "chessboard/#go_chessContainer")
 
-	if not var_5_2 then
+	if not chessContainer then
 		return
 	end
 
-	local var_5_3 = var_5_2.transform:GetChild(0)
+	local child = chessContainer.transform:GetChild(0)
 
-	if not var_5_3 then
+	if not child then
 		return
 	end
 
-	return SLFramework.GameObjectHelper.GetPath(var_5_3.gameObject)
+	return SLFramework.GameObjectHelper.GetPath(child.gameObject)
 end
 
-function var_0_0.getEquipChapterItem(arg_6_0)
-	local var_6_0 = "UIRoot/POPUP_TOP/DungeonView/#go_resource/chapterlist/#scroll_chapter_resource/#go_rescontent/chapteritem"
-	local var_6_1 = "/anim/#btn_click"
+function GuideActionSetNextStepGOPath:getEquipChapterItem()
+	local s1 = "UIRoot/POPUP_TOP/DungeonView/#go_resource/chapterlist/#scroll_chapter_resource/#go_rescontent/chapteritem"
+	local s2 = "/anim/#btn_click"
 
 	if DungeonModel.instance:getEquipRemainingNum() > 0 then
-		return var_6_0 .. "1" .. var_6_1
+		return s1 .. "1" .. s2
 	else
-		local var_6_2 = DungeonChapterListModel.getChapterListByType(false, true, false, nil)
+		local resList = DungeonChapterListModel.getChapterListByType(false, true, false, nil)
 
-		return var_6_0 .. tostring(#var_6_2) .. var_6_1
+		return s1 .. tostring(#resList) .. s2
 	end
 end
 
-function var_0_0.getRemainStarsElement(arg_7_0)
-	local var_7_0 = WeekWalkModel.instance:getCurMapInfo()
-	local var_7_1 = var_7_0.battleInfos
-	local var_7_2
+function GuideActionSetNextStepGOPath:getRemainStarsElement()
+	local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+	local battleInfos = mapInfo.battleInfos
+	local battleId
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if iter_7_1.star ~= 2 then
-			var_7_2 = iter_7_1.battleId
+	for i, v in ipairs(battleInfos) do
+		if v.star ~= 2 then
+			battleId = v.battleId
 
 			break
 		end
 	end
 
-	if not var_7_2 then
+	if not battleId then
 		return
 	end
 
-	local var_7_3 = var_7_0.elementInfos
-	local var_7_4
+	local elementInfos = mapInfo.elementInfos
+	local elementInfo
 
-	for iter_7_2, iter_7_3 in ipairs(var_7_3) do
-		if iter_7_3:getType() == WeekWalkEnum.ElementType.Battle and iter_7_3:getBattleId() == var_7_2 then
-			var_7_4 = iter_7_3
+	for i, v in ipairs(elementInfos) do
+		if v:getType() == WeekWalkEnum.ElementType.Battle and v:getBattleId() == battleId then
+			elementInfo = v
 
 			break
 		end
 	end
 
-	if var_7_0:getBattleInfo(var_7_2).index == 5 then
-		return string.format("cameraroot/SceneRoot/WeekWalkMap/%s/elementRoot/%s/s09_rgmy_star1_red(Clone)", var_7_0.id, var_7_4.elementId)
+	local battleInfo = mapInfo:getBattleInfo(battleId)
+
+	if battleInfo.index == 5 then
+		return string.format("cameraroot/SceneRoot/WeekWalkMap/%s/elementRoot/%s/s09_rgmy_star1_red(Clone)", mapInfo.id, elementInfo.elementId)
 	else
-		return string.format("cameraroot/SceneRoot/WeekWalkMap/%s/elementRoot/%s/s09_rgmy_star1(Clone)", var_7_0.id, var_7_4.elementId)
+		return string.format("cameraroot/SceneRoot/WeekWalkMap/%s/elementRoot/%s/s09_rgmy_star1(Clone)", mapInfo.id, elementInfo.elementId)
 	end
 end
 
-function var_0_0.getEquipPool(arg_8_0)
-	local var_8_0 = SummonMainModel.getValidPools()
+function GuideActionSetNextStepGOPath:getEquipPool()
+	local list = SummonMainModel.getValidPools()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if iter_8_1.id == 10001 then
-			return (string.format("UIRoot/POPUP_TOP/SummonADView/#go_ui/#go_category/#scroll_category/Viewport/Content/tabitem_%s/#btn_self", iter_8_0))
+	for i, v in ipairs(list) do
+		if v.id == 10001 then
+			local path = string.format("UIRoot/POPUP_TOP/SummonADView/#go_ui/#go_category/#scroll_category/Viewport/Content/tabitem_%s/#btn_self", i)
+
+			return path
 		end
 	end
 end
 
-function var_0_0.getRoomCharacterPlace1(arg_9_0)
-	var_0_0.RoomCharacterPlace1 = nil
+function GuideActionSetNextStepGOPath:getRoomCharacterPlace1()
+	GuideActionSetNextStepGOPath.RoomCharacterPlace1 = nil
 
-	local var_9_0 = RoomCharacterPlaceListModel.instance:getList()[1]
-	local var_9_1 = var_9_0.heroId
-	local var_9_2 = var_9_0.skinId
-	local var_9_3 = RoomCharacterHelper.getRecommendHexPoint(var_9_1, var_9_2)
+	local list = RoomCharacterPlaceListModel.instance:getList()
+	local first = list[1]
+	local heroId = first.heroId
+	local skinId = first.skinId
+	local bestParam = RoomCharacterHelper.getRecommendHexPoint(heroId, skinId)
 
-	if var_9_3 then
-		local var_9_4 = RoomCharacterHelper.getGuideRecommendHexPoint(var_9_1, var_9_2, var_9_3.hexPoint)
+	if bestParam then
+		local nearParam = RoomCharacterHelper.getGuideRecommendHexPoint(heroId, skinId, bestParam.hexPoint)
 
-		if var_9_4 then
-			local var_9_5 = RoomMapBlockModel.instance:getBlockMO(var_9_4.hexPoint.x, var_9_4.hexPoint.y)
-			local var_9_6 = GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(var_9_5.id, SceneTag.RoomMapBlock)
+		if nearParam then
+			local blockMO = RoomMapBlockModel.instance:getBlockMO(nearParam.hexPoint.x, nearParam.hexPoint.y)
+			local blockEntity = GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-			if var_9_6 then
-				var_0_0.RoomCharacterPlace1 = SLFramework.GameObjectHelper.GetPath(var_9_6.go)
+			if blockEntity then
+				GuideActionSetNextStepGOPath.RoomCharacterPlace1 = SLFramework.GameObjectHelper.GetPath(blockEntity.go)
 
-				return var_0_0.RoomCharacterPlace1
+				return GuideActionSetNextStepGOPath.RoomCharacterPlace1
 			end
 		end
 	end
@@ -185,71 +198,72 @@ function var_0_0.getRoomCharacterPlace1(arg_9_0)
 	return "no block"
 end
 
-function var_0_0.getRoomCharacterPlace2(arg_10_0)
-	if var_0_0.RoomCharacterPlace1 then
-		return var_0_0.RoomCharacterPlace1
+function GuideActionSetNextStepGOPath:getRoomCharacterPlace2()
+	if GuideActionSetNextStepGOPath.RoomCharacterPlace1 then
+		return GuideActionSetNextStepGOPath.RoomCharacterPlace1
 	end
 
-	local var_10_0 = RoomCharacterPlaceListModel.instance:getList()[1]
-	local var_10_1 = var_10_0.heroId
-	local var_10_2 = var_10_0.skinId
-	local var_10_3 = RoomCharacterHelper.getRecommendHexPoint(var_10_1, var_10_2)
+	local list = RoomCharacterPlaceListModel.instance:getList()
+	local first = list[1]
+	local heroId = first.heroId
+	local skinId = first.skinId
+	local bestParam = RoomCharacterHelper.getRecommendHexPoint(heroId, skinId)
 
-	if var_10_3 then
-		local var_10_4 = RoomMapBlockModel.instance:getBlockMO(var_10_3.hexPoint.x, var_10_3.hexPoint.y)
-		local var_10_5 = GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(var_10_4.id, SceneTag.RoomMapBlock)
+	if bestParam then
+		local blockMO = RoomMapBlockModel.instance:getBlockMO(bestParam.hexPoint.x, bestParam.hexPoint.y)
+		local blockEntity = GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-		if var_10_5 then
-			return SLFramework.GameObjectHelper.GetPath(var_10_5.go)
+		if blockEntity then
+			return SLFramework.GameObjectHelper.GetPath(blockEntity.go)
 		end
 	end
 
-	return var_0_0:getRoomCharacterPlace1()
+	return GuideActionSetNextStepGOPath:getRoomCharacterPlace1()
 end
 
-function var_0_0.getMoveHeroPath(arg_11_0)
-	local var_11_0 = HeroGroupEditListModel.instance:getMoveHeroIndex() or 1
+function GuideActionSetNextStepGOPath:getMoveHeroPath()
+	local index = HeroGroupEditListModel.instance:getMoveHeroIndex() or 1
 
-	return string.format("UIRoot/POPUP_TOP/HeroGroupEditView/#go_rolecontainer/#scroll_card/scrollcontent/cell%s", var_11_0 - 1)
+	return string.format("UIRoot/POPUP_TOP/HeroGroupEditView/#go_rolecontainer/#scroll_card/scrollcontent/cell%s", index - 1)
 end
 
-function var_0_0.getConnectPuzzlePipeEntry(arg_12_0)
-	local var_12_0 = DungeonPuzzlePipeModel.instance._connectEntryX
-	local var_12_1 = DungeonPuzzlePipeModel.instance._connectEntryY
+function GuideActionSetNextStepGOPath:getConnectPuzzlePipeEntry()
+	local x = DungeonPuzzlePipeModel.instance._connectEntryX
+	local y = DungeonPuzzlePipeModel.instance._connectEntryY
 
-	return string.format("UIRoot/POPUP_TOP/DungeonPuzzlePipeView/#go_connect/%s_%s", var_12_0, var_12_1)
+	return string.format("UIRoot/POPUP_TOP/DungeonPuzzlePipeView/#go_connect/%s_%s", x, y)
 end
 
-function var_0_0.getMainSceneSkinItem(arg_13_0)
-	local var_13_0 = MainSceneSwitchListModel.instance:getFirstUnlockSceneIndex()
+function GuideActionSetNextStepGOPath:getMainSceneSkinItem()
+	local index = MainSceneSwitchListModel.instance:getFirstUnlockSceneIndex()
 
-	return string.format("UIRoot/POPUP_TOP/MainSwitchView/#go_container/mainswitchclassifyview(Clone)/root/mainsceneswitchnewview(Clone)/right/mask/#scroll_card/scrollcontent/cell%s/prefabInst", var_13_0 - 1)
+	return string.format("UIRoot/POPUP_TOP/MainSwitchView/#go_container/mainswitchclassifyview(Clone)/root/mainsceneswitchnewview(Clone)/right/mask/#scroll_card/scrollcontent/cell%s/prefabInst", index - 1)
 end
 
-function var_0_0.getMainSceneBgmObj(arg_14_0)
-	local var_14_0 = MainSceneSwitchModel.instance:getCurSceneResName()
+function GuideActionSetNextStepGOPath:getMainSceneBgmObj()
+	local resName = MainSceneSwitchModel.instance:getCurSceneResName()
 
-	return string.format("cameraroot/SceneRoot/MainScene/%s_p(Clone)/s01_obj_a/Anim/Obj/s01_obj_b", var_14_0)
+	return string.format("cameraroot/SceneRoot/MainScene/%s_p(Clone)/s01_obj_a/Anim/Obj/s01_obj_b", resName)
 end
 
-function var_0_0.getFirstNoneExpEquip(arg_15_0)
-	local var_15_0 = CharacterBackpackEquipListModel.instance:getList()
-	local var_15_1 = 1
+function GuideActionSetNextStepGOPath:getFirstNoneExpEquip()
+	local list = CharacterBackpackEquipListModel.instance:getList()
+	local index = 1
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_2 = iter_15_1.config
+	for i, v in ipairs(list) do
+		local config = v.config
 
-		if var_15_2 and var_15_2.isExpEquip ~= 1 and var_15_2.isSpRefine ~= 1 then
-			var_15_1 = iter_15_0
+		if config and config.isExpEquip ~= 1 and config.isSpRefine ~= 1 then
+			index = i
 
 			break
 		end
 	end
 
-	return string.format("UIRoot/POPUP_TOP/BackpackView/#go_container/characterbackpackequipview(Clone)/#scroll_equip/viewport/scrollcontent/cell%s/prefabInst", var_15_1 - 1)
+	return string.format("UIRoot/POPUP_TOP/BackpackView/#go_container/characterbackpackequipview(Clone)/#scroll_equip/viewport/scrollcontent/cell%s/prefabInst", index - 1)
 end
 
-function var_0_0.getRoomResFbChapter(arg_16_0)
+function GuideActionSetNextStepGOPath:getRoomResFbChapter()
 	if DungeonModel.instance:getEquipRemainingNum() > 0 then
 		return "UIRoot/POPUP_TOP/DungeonView/#go_resource/chapterlist/#scroll_chapter_resource/#go_rescontent/chapteritem4/anim/#btn_click"
 	else
@@ -257,77 +271,134 @@ function var_0_0.getRoomResFbChapter(arg_16_0)
 	end
 end
 
-function var_0_0.getSpecificCardPath(arg_17_0)
-	local var_17_0 = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightSetSpecificCardIndex)
+function GuideActionSetNextStepGOPath:getSpecificCardPath()
+	local specificCardIdx = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightSetSpecificCardIndex)
 
-	return string.format("UIRoot/HUD/FightView/root/handcards/handcards/cardItem%s", var_17_0 or 1)
+	return string.format("UIRoot/HUD/FightView/root/handcards/handcards/cardItem%s", specificCardIdx or 1)
 end
 
-function var_0_0.getPlayerSoliderChessPath(arg_18_0)
-	local var_18_0 = TeamChessUnitEntityMgr.instance:getAllEntity()
+function GuideActionSetNextStepGOPath:getPlayerSoliderChessPath()
+	local allEntity = TeamChessUnitEntityMgr.instance:getAllEntity()
 
-	if var_18_0 then
-		for iter_18_0 = 1, #var_18_0 do
-			local var_18_1 = var_18_0[iter_18_0]._unitMo:getUid()
+	if allEntity then
+		for i = 1, #allEntity do
+			local entity = allEntity[i]
+			local uid = entity._unitMo:getUid()
 
-			if var_18_1 > 0 then
-				return string.format("cameraroot/SceneRoot/EliminateSceneView/Unit/%s", var_18_1)
+			if uid > 0 then
+				return string.format("cameraroot/SceneRoot/EliminateSceneView/Unit/%s", uid)
 			end
 		end
 	end
 end
 
-function var_0_0.getAct178OperHolePath(arg_19_0, arg_19_1)
-	local var_19_0 = ""
+function GuideActionSetNextStepGOPath:getAct178OperHolePath(params)
+	local str = ""
 
-	if type(arg_19_1) == "table" then
-		var_19_0 = table.concat(arg_19_1, "#")
+	if type(params) == "table" then
+		str = table.concat(params, "#")
 	end
 
-	local var_19_1 = PinballModel.instance.guideHole
+	local index = PinballModel.instance.guideHole
 
-	return string.format("UIRoot/POPUP_TOP/PinballCityView/#go_buildingui/UI_%s%s", var_19_1, var_19_0)
+	return string.format("UIRoot/POPUP_TOP/PinballCityView/#go_buildingui/UI_%s%s", index, str)
 end
 
-function var_0_0.findSurvivalSpBlockPath(arg_20_0)
+function GuideActionSetNextStepGOPath:findSurvivalSpBlockPath()
 	if not SurvivalMapModel.instance.guideSpBlockPos then
 		return ""
 	end
 
-	local var_20_0 = SurvivalMapModel.instance.guideSpBlockPos
-	local var_20_1 = Vector3.New(SurvivalHelper.instance:hexPointToWorldPoint(var_20_0.q, var_20_0.r))
+	local pos = SurvivalMapModel.instance.guideSpBlockPos
+	local posV3 = Vector3.New(SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r))
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, var_20_1, 0.3)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, posV3, 0.3)
 
-	return string.format("cameraroot/SceneRoot/SurvivalScene/SPBlockRoot/%s", tostring(var_20_0))
+	return string.format("cameraroot/SceneRoot/SurvivalScene/SPBlockRoot/%s", tostring(pos))
 end
 
-function var_0_0.getBossTowerFirstBossPath(arg_21_0)
-	local var_21_0 = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
+function GuideActionSetNextStepGOPath:getBossTowerFirstBossPath()
+	local bossOpenMOList = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
 
-	if #var_21_0 > 1 then
-		table.sort(var_21_0, TowerAssistBossModel.sortBossList)
+	if #bossOpenMOList > 1 then
+		table.sort(bossOpenMOList, TowerAssistBossModel.sortBossList)
 	end
 
-	local var_21_1 = var_21_0[1] and var_21_0[1].id or 1
+	local firstBossId = bossOpenMOList[1] and bossOpenMOList[1].id or 1
 
-	return string.format("UIRoot/POPUP_TOP/TowerBossSelectView/root/#scroll_boss/Viewport/#go_bossContent/boss%s/towerbossselectitem(Clone)/click", var_21_1)
+	return string.format("UIRoot/POPUP_TOP/TowerBossSelectView/root/#scroll_boss/Viewport/#go_bossContent/boss%s/towerbossselectitem(Clone)/click", firstBossId)
 end
 
-function var_0_0.getNecrologistStoryLastItemPath(arg_22_0)
-	local var_22_0 = ViewMgr.instance:getContainer(ViewName.NecrologistStoryView)
+function GuideActionSetNextStepGOPath:getNecrologistStoryLastItemPath()
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.NecrologistStoryView)
 
-	if not var_22_0 then
+	if not viewContainer then
 		return
 	end
 
-	local var_22_1 = var_22_0:getLastItem()
+	local lastItem = viewContainer:getLastItem()
 
-	if not var_22_1 then
+	if not lastItem then
 		return
 	end
 
-	return SLFramework.GameObjectHelper.GetPath(var_22_1.viewGO)
+	return SLFramework.GameObjectHelper.GetPath(lastItem.viewGO)
 end
 
-return var_0_0
+function GuideActionSetNextStepGOPath:getNecrologistStoryLastLinkTextPath()
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.NecrologistStoryView)
+
+	if not viewContainer then
+		return
+	end
+
+	local lastItem = viewContainer:getLastItem()
+
+	if not lastItem then
+		return
+	end
+
+	local tmpTextGO = gohelper.findChild(lastItem.viewGO, "content/txtContent")
+
+	if not tmpTextGO then
+		return
+	end
+
+	local transform = tmpTextGO.transform
+
+	if transform.childCount == 0 then
+		return
+	end
+
+	local linkTrs = transform:GetChild(0)
+
+	if not linkTrs then
+		return
+	end
+
+	return SLFramework.GameObjectHelper.GetPath(linkTrs.gameObject)
+end
+
+function GuideActionSetNextStepGOPath:getNecrologistStoryLastMagicPath()
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.NecrologistStoryView)
+
+	if not viewContainer then
+		return
+	end
+
+	local lastItem = viewContainer:getLastItem()
+
+	if not lastItem then
+		return
+	end
+
+	local go = gohelper.findChild(lastItem.viewGO, "root/#btn_zhouyu")
+
+	if not go then
+		return
+	end
+
+	return SLFramework.GameObjectHelper.GetPath(go)
+end
+
+return GuideActionSetNextStepGOPath

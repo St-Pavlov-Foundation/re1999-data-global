@@ -1,164 +1,167 @@
-﻿module("modules.logic.versionactivity2_2.act101.view.VersionActivity2_2RoomSignItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act101/view/VersionActivity2_2RoomSignItem.lua
 
-local var_0_0 = class("VersionActivity2_2RoomSignItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_2.act101.view.VersionActivity2_2RoomSignItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "Root/#txt_title")
-	arg_1_0._goLock = gohelper.findChild(arg_1_0.viewGO, "Root/lock")
-	arg_1_0._txtTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Root/lock/#txt_LimitTime")
-	arg_1_0._goUnlock = gohelper.findChild(arg_1_0.viewGO, "Root/unlock")
-	arg_1_0._simagePic = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/unlock/#image_pic")
-	arg_1_0._txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "Root/unlock/#scroll_ItemList/Viewport/Content/#txt_dec")
-	arg_1_0._goIcon = gohelper.findChild(arg_1_0.viewGO, "Root/unlock/#go_reward/go_icon")
-	arg_1_0._goHasGet = gohelper.findChild(arg_1_0.viewGO, "Root/unlock/#go_reward/hasget")
-	arg_1_0._goCanGet = gohelper.findChild(arg_1_0.viewGO, "Root/unlock/#go_reward/canget")
-	arg_1_0._btnLock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/lock/btn_click")
-	arg_1_0._btnGetReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/unlock/#go_reward/canget")
+local VersionActivity2_2RoomSignItem = class("VersionActivity2_2RoomSignItem", ListScrollCellExtend)
+
+function VersionActivity2_2RoomSignItem:init(go)
+	self.viewGO = go
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._txtTitle = gohelper.findChildTextMesh(self.viewGO, "Root/#txt_title")
+	self._goLock = gohelper.findChild(self.viewGO, "Root/lock")
+	self._txtTime = gohelper.findChildTextMesh(self.viewGO, "Root/lock/#txt_LimitTime")
+	self._goUnlock = gohelper.findChild(self.viewGO, "Root/unlock")
+	self._simagePic = gohelper.findChildSingleImage(self.viewGO, "Root/unlock/#image_pic")
+	self._txtDesc = gohelper.findChildTextMesh(self.viewGO, "Root/unlock/#scroll_ItemList/Viewport/Content/#txt_dec")
+	self._goIcon = gohelper.findChild(self.viewGO, "Root/unlock/#go_reward/go_icon")
+	self._goHasGet = gohelper.findChild(self.viewGO, "Root/unlock/#go_reward/hasget")
+	self._goCanGet = gohelper.findChild(self.viewGO, "Root/unlock/#go_reward/canget")
+	self._btnLock = gohelper.findChildButtonWithAudio(self.viewGO, "Root/lock/btn_click")
+	self._btnGetReward = gohelper.findChildButtonWithAudio(self.viewGO, "Root/unlock/#go_reward/canget")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnLock, arg_2_0.onClickBtnLock, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnGetReward, arg_2_0.onClickBtnReward, arg_2_0)
+function VersionActivity2_2RoomSignItem:addEventListeners()
+	self:addClickCb(self._btnLock, self.onClickBtnLock, self)
+	self:addClickCb(self._btnGetReward, self.onClickBtnReward, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0._btnLock)
-	arg_3_0:removeClickCb(arg_3_0._btnGetReward)
+function VersionActivity2_2RoomSignItem:removeEventListeners()
+	self:removeClickCb(self._btnLock)
+	self:removeClickCb(self._btnGetReward)
 end
 
-function var_0_0.onClickBtnLock(arg_4_0)
-	arg_4_0:onClickBtn()
+function VersionActivity2_2RoomSignItem:onClickBtnLock()
+	self:onClickBtn()
 end
 
-function var_0_0.onClickBtnReward(arg_5_0)
-	arg_5_0:onClickBtn()
+function VersionActivity2_2RoomSignItem:onClickBtnReward()
+	self:onClickBtn()
 end
 
-function var_0_0.onClickBtn(arg_6_0)
-	if not arg_6_0.id then
+function VersionActivity2_2RoomSignItem:onClickBtn()
+	if not self.id then
 		return
 	end
 
-	local var_6_0, var_6_1 = arg_6_0.actInfo:isEpisodeDayOpen(arg_6_0.id)
-	local var_6_2 = arg_6_0.actInfo:isEpisodeFinished(arg_6_0.id)
+	local unlock, remainDay = self.actInfo:isEpisodeDayOpen(self.id)
+	local hasGet = self.actInfo:isEpisodeFinished(self.id)
+	local canGet = unlock and not hasGet
 
-	if var_6_0 and not var_6_2 then
-		Activity125Rpc.instance:sendFinishAct125EpisodeRequest(arg_6_0.activityId, arg_6_0.id, arg_6_0.config.targetFrequency)
+	if canGet then
+		Activity125Rpc.instance:sendFinishAct125EpisodeRequest(self.activityId, self.id, self.config.targetFrequency)
 	end
 
-	if not var_6_0 then
-		GameFacade.showToastString(formatLuaLang("versionactivity_1_2_119_unlock", var_6_1))
+	if not unlock then
+		GameFacade.showToastString(formatLuaLang("versionactivity_1_2_119_unlock", remainDay))
 	end
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.config = arg_7_1
-	arg_7_0.actInfo = arg_7_2
-	arg_7_0.activityId = nil
-	arg_7_0.id = nil
+function VersionActivity2_2RoomSignItem:onUpdateMO(config, actInfo)
+	self.config = config
+	self.actInfo = actInfo
+	self.activityId = nil
+	self.id = nil
 
-	gohelper.setActive(arg_7_0.viewGO, arg_7_1 ~= nil)
+	gohelper.setActive(self.viewGO, config ~= nil)
 
-	if not arg_7_1 then
-		TaskDispatcher.cancelTask(arg_7_0._onRefreshDeadline, arg_7_0)
+	if not config then
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 
 		return
 	end
 
-	arg_7_0.activityId = arg_7_0.config.activityId
-	arg_7_0.id = arg_7_0.config.id
+	self.activityId = self.config.activityId
+	self.id = self.config.id
 
-	if arg_7_0.actInfo:isEpisodeDayOpen(arg_7_0.id) and not arg_7_0.actInfo:checkLocalIsPlay(arg_7_0.id) then
-		arg_7_0:refreshItem(false)
-		TaskDispatcher.runDelay(arg_7_0.refreshItem, arg_7_0, 0.4)
+	if self.actInfo:isEpisodeDayOpen(self.id) and not self.actInfo:checkLocalIsPlay(self.id) then
+		self:refreshItem(false)
+		TaskDispatcher.runDelay(self.refreshItem, self, 0.4)
 	else
-		arg_7_0:refreshItem()
+		self:refreshItem()
 	end
 end
 
-function var_0_0.refreshItem(arg_8_0, arg_8_1)
-	local var_8_0 = 506 * arg_8_0._index - 488
-	local var_8_1 = -28
+function VersionActivity2_2RoomSignItem:refreshItem(unlock)
+	local x = 506 * self._index - 488
+	local y = -28
 
-	recthelper.setAnchor(arg_8_0.viewGO.transform, var_8_0, var_8_1)
-	transformhelper.setEulerAngles(arg_8_0.viewGO.transform, 0, 0, arg_8_0._index % 2 == 1 and -1.64 or 0)
+	recthelper.setAnchor(self.viewGO.transform, x, y)
+	transformhelper.setEulerAngles(self.viewGO.transform, 0, 0, self._index % 2 == 1 and -1.64 or 0)
 
-	arg_8_0._txtTitle.text = arg_8_0.config.name
-	arg_8_0._txtDesc.text = arg_8_0.config.text
+	self._txtTitle.text = self.config.name
+	self._txtDesc.text = self.config.text
 
-	if arg_8_1 == nil then
-		arg_8_1 = arg_8_0.actInfo:isEpisodeDayOpen(arg_8_0.id)
+	if unlock == nil then
+		unlock = self.actInfo:isEpisodeDayOpen(self.id)
 	end
 
-	if arg_8_1 and not arg_8_0.actInfo:checkLocalIsPlay(arg_8_0.id) then
-		arg_8_0.actInfo:setLocalIsPlay(arg_8_0.id)
-		arg_8_0._anim:Play("unlock")
+	if unlock and not self.actInfo:checkLocalIsPlay(self.id) then
+		self.actInfo:setLocalIsPlay(self.id)
+		self._anim:Play("unlock")
 	end
 
-	gohelper.setActive(arg_8_0._goLock, not arg_8_1)
-	gohelper.setActive(arg_8_0._txtTime, not arg_8_1)
-	gohelper.setActive(arg_8_0._goUnlock, arg_8_1)
+	gohelper.setActive(self._goLock, not unlock)
+	gohelper.setActive(self._txtTime, not unlock)
+	gohelper.setActive(self._goUnlock, unlock)
 
-	local var_8_2 = arg_8_0.actInfo:isEpisodeFinished(arg_8_0.id)
-	local var_8_3 = arg_8_1 and not var_8_2
+	local hasGet = self.actInfo:isEpisodeFinished(self.id)
+	local canGet = unlock and not hasGet
 
-	gohelper.setActive(arg_8_0._goHasGet, var_8_2)
-	gohelper.setActive(arg_8_0._goCanGet, var_8_3)
+	gohelper.setActive(self._goHasGet, hasGet)
+	gohelper.setActive(self._goCanGet, canGet)
 
-	if arg_8_1 then
-		arg_8_0._simagePic:LoadImage(string.format("singlebg/v2a2_mainactivity_singlebg/v2a2_room_pic%s.png", arg_8_0.id))
-		arg_8_0:refreshIcon()
+	if unlock then
+		self._simagePic:LoadImage(string.format("singlebg/v2a2_mainactivity_singlebg/v2a2_room_pic%s.png", self.id))
+		self:refreshIcon()
 	end
 
-	arg_8_0:_showDeadline()
+	self:_showDeadline()
 end
 
-function var_0_0.refreshIcon(arg_9_0)
-	local var_9_0 = GameUtil.splitString2(arg_9_0.config.bonus, true)
+function VersionActivity2_2RoomSignItem:refreshIcon()
+	local bounds = GameUtil.splitString2(self.config.bonus, true)
 
-	if not arg_9_0.itemIcon then
-		arg_9_0.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_9_0._goIcon)
+	if not self.itemIcon then
+		self.itemIcon = IconMgr.instance:getCommonPropItemIcon(self._goIcon)
 	end
 
-	local var_9_1 = var_9_0[1]
+	local reward1 = bounds[1]
 
-	if var_9_1 then
-		arg_9_0.itemIcon:setMOValue(var_9_1[1], var_9_1[2], var_9_1[3], nil, true)
-		arg_9_0.itemIcon:setScale(0.5)
+	if reward1 then
+		self.itemIcon:setMOValue(reward1[1], reward1[2], reward1[3], nil, true)
+		self.itemIcon:setScale(0.5)
 	end
 end
 
-function var_0_0._showDeadline(arg_10_0)
-	arg_10_0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(arg_10_0._onRefreshDeadline, arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._onRefreshDeadline, arg_10_0, 1)
+function VersionActivity2_2RoomSignItem:_showDeadline()
+	self:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
 end
 
-function var_0_0._onRefreshDeadline(arg_11_0)
-	local var_11_0, var_11_1, var_11_2 = arg_11_0.actInfo:isEpisodeDayOpen(arg_11_0.id)
+function VersionActivity2_2RoomSignItem:_onRefreshDeadline()
+	local unlock, remainDay, remainTime = self.actInfo:isEpisodeDayOpen(self.id)
 
-	if var_11_0 then
-		TaskDispatcher.cancelTask(arg_11_0._onRefreshDeadline, arg_11_0)
-		gohelper.setActive(arg_11_0._txtTime, false)
+	if unlock then
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+		gohelper.setActive(self._txtTime, false)
 
 		return
 	end
 
-	if var_11_2 < TimeUtil.OneDaySecond then
-		local var_11_3 = TimeUtil.getFormatTime(var_11_2)
+	if remainTime < TimeUtil.OneDaySecond then
+		local timeStr = TimeUtil.getFormatTime(remainTime)
 
-		arg_11_0._txtTime.text = formatLuaLang("season123_overview_unlocktime_custom", var_11_3)
+		self._txtTime.text = formatLuaLang("season123_overview_unlocktime_custom", timeStr)
 	else
-		arg_11_0._txtTime.text = formatLuaLang("season123_overview_unlocktime", var_11_1)
+		self._txtTime.text = formatLuaLang("season123_overview_unlocktime", remainDay)
 	end
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.refreshItem, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onRefreshDeadline, arg_12_0)
-	arg_12_0._simagePic:UnLoadImage()
+function VersionActivity2_2RoomSignItem:onDestroy()
+	TaskDispatcher.cancelTask(self.refreshItem, self)
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	self._simagePic:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity2_2RoomSignItem

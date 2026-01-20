@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.DiceHeroController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/DiceHeroController.lua
 
-local var_0_0 = class("DiceHeroController", BaseController)
+module("modules.logic.versionactivity2_6.dicehero.controller.DiceHeroController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_1_0._onGetOpenInfoSuccess, arg_1_0)
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_1_0._onGetOpenInfoSuccess, arg_1_0)
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_1_0._newFuncUnlock, arg_1_0)
+local DiceHeroController = class("DiceHeroController", BaseController)
+
+function DiceHeroController:addConstEvents()
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, self._onGetOpenInfoSuccess, self)
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, self._onGetOpenInfoSuccess, self)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self._newFuncUnlock, self)
 end
 
-function var_0_0._onGetOpenInfoSuccess(arg_2_0)
+function DiceHeroController:_onGetOpenInfoSuccess()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DiceHero) then
-		arg_2_0:_getInfo()
+		self:_getInfo()
 	end
 end
 
-function var_0_0._newFuncUnlock(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		if iter_3_1 == OpenEnum.UnlockFunc.DiceHero then
-			arg_3_0:_getInfo()
+function DiceHeroController:_newFuncUnlock(newIds)
+	for i, id in ipairs(newIds) do
+		if id == OpenEnum.UnlockFunc.DiceHero then
+			self:_getInfo()
 
 			break
 		end
 	end
 end
 
-function var_0_0._getInfo(arg_4_0)
+function DiceHeroController:_getInfo()
 	DiceHeroRpc.instance:sendDiceHeroGetInfo()
 end
 
-var_0_0.instance = var_0_0.New()
+DiceHeroController.instance = DiceHeroController.New()
 
-return var_0_0
+return DiceHeroController

@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.config.FightConfig", package.seeall)
+﻿-- chunkname: @modules/logic/fight/config/FightConfig.lua
 
-local var_0_0 = class("FightConfig", BaseConfig)
+module("modules.logic.fight.config.FightConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._skillCurrCardLvDict = nil
-	arg_1_0._skillNextCardLvDict = nil
-	arg_1_0._skillPrevCardLvDict = nil
-	arg_1_0._skillHeroIdDict = nil
-	arg_1_0._skillMonsterIdDict = nil
-	arg_1_0._skinSkillTLDict = nil
-	arg_1_0._buffFeatureDict = {}
-	arg_1_0._buffFeatureDictDict = {}
-	arg_1_0._buffId2FeatureIdList = {}
-	arg_1_0._restrainDict = nil
-	arg_1_0._monsterId2UniqueId = {}
+local FightConfig = class("FightConfig", BaseConfig)
+
+function FightConfig:ctor()
+	self._skillCurrCardLvDict = nil
+	self._skillNextCardLvDict = nil
+	self._skillPrevCardLvDict = nil
+	self._skillHeroIdDict = nil
+	self._skillMonsterIdDict = nil
+	self._skinSkillTLDict = nil
+	self._buffFeatureDict = {}
+	self._buffFeatureDictDict = {}
+	self._buffId2FeatureIdList = {}
+	self._restrainDict = nil
+	self._monsterId2UniqueId = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
-	local var_2_0 = {
+function FightConfig:reqConfigNames()
+	local list = {
 		"fight_6_buff_effect",
 		"fight_buff_layer_effect_enemy_skin",
 		"card_description",
@@ -125,125 +127,151 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"fight_sp_500m_model",
 		"fight_ignore_hide_front_effect",
 		"monster_skin_custom_click_box",
-		"fight_appear_timeline_extend"
+		"fight_appear_timeline_extend",
+		"fight_yi_suo_er_de_ball",
+		"fight_jgz_const",
+		"fight_jia_la_bo_na_ball",
+		"fight_jia_la_bo_na_line",
+		"fight_jia_la_bo_na_ball_audio",
+		"fight_rouge2_music",
+		"fight_rouge2_music_ball_skill",
+		"fight_rouge2_check_relic",
+		"fight_rouge2_level",
+		"fight_rouge2_relic_type",
+		"zongmao_boss_stage_buffid_effect"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		table.insert(var_2_0, "activity174_test_bot")
-		table.insert(var_2_0, "activity174_test_role")
+		table.insert(list, "activity174_test_bot")
+		table.insert(list, "activity174_test_role")
+		table.insert(list, "editor_skill_tag")
+		table.insert(list, "editor_role_sources")
 	end
 
-	return var_2_0
+	return list
 end
 
-function var_0_0.getSkinCO(arg_3_0, arg_3_1)
-	return lua_skin.configDict[arg_3_1] or lua_monster_skin.configDict[arg_3_1]
+function FightConfig:getSkinCO(skinId)
+	local skinCO = lua_skin.configDict[skinId]
+
+	skinCO = skinCO or lua_monster_skin.configDict[skinId]
+
+	return skinCO
 end
 
-function var_0_0.getAudioId(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0:getSkinCO(arg_4_1)
-	local var_4_1 = var_4_0 and var_4_0.showTemplate
-	local var_4_2 = var_4_1 and lua_fight_voice.configDict[var_4_1]
+function FightConfig:getAudioId(skinId, fightAudioType)
+	local skinCO = self:getSkinCO(skinId)
+	local showTemplate = skinCO and skinCO.showTemplate
+	local skinVoiceConf = showTemplate and lua_fight_voice.configDict[showTemplate]
 
-	if var_4_2 then
-		return var_4_2["audio_type" .. arg_4_2]
+	if skinVoiceConf then
+		return skinVoiceConf["audio_type" .. fightAudioType]
 	end
 end
 
-function var_0_0.onConfigLoaded(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == "fight_effect" then
-		arg_5_0._restrainDict = {}
+function FightConfig:onConfigLoaded(configName, configTable)
+	if configName == "fight_effect" then
+		self._restrainDict = {}
 
-		for iter_5_0, iter_5_1 in ipairs(arg_5_2.configList) do
-			local var_5_0 = {}
+		for _, oneCO in ipairs(configTable.configList) do
+			local careerTb = {}
 
-			arg_5_0._restrainDict[iter_5_1.id] = var_5_0
+			self._restrainDict[oneCO.id] = careerTb
 
-			for iter_5_2 = 1, 6 do
-				var_5_0[iter_5_2] = iter_5_1["career" .. iter_5_2]
+			for i = 1, 6 do
+				careerTb[i] = oneCO["career" .. i]
 			end
 		end
-	elseif arg_5_1 == "skill" then
-		arg_5_0._hasLoadSkill = true
+	elseif configName == "skill" then
+		self._hasLoadSkill = true
 
-		arg_5_0:_rebuildSkillEffect()
-	elseif arg_5_1 == "skill_effect" then
-		arg_5_0._hasLoadSkillEffect = true
+		self:_rebuildSkillEffect()
+	elseif configName == "skill_effect" then
+		self._hasLoadSkillEffect = true
 
-		arg_5_0:_rebuildSkillEffect()
-	elseif arg_5_1 == "monster" then
-		arg_5_0._hasLoadMonster = true
+		self:_rebuildSkillEffect()
+	elseif configName == "monster" then
+		self._hasLoadMonster = true
 
-		arg_5_0:_rebuildMonsterSkin()
-	elseif arg_5_1 == "skin" then
-		arg_5_0._hasLoadSkin = true
+		self:_rebuildMonsterSkin()
+	elseif configName == "skin" then
+		self._hasLoadSkin = true
 
-		arg_5_0:_rebuildMonsterSkin()
-	elseif arg_5_1 == "skill_buff" then
+		self:_rebuildMonsterSkin()
+	elseif configName == "skill_buff" then
 		-- block empty
-	elseif arg_5_1 == "fight_buff_reject_act" then
-		arg_5_0:_dealFightBuffRejectAct()
-	elseif arg_5_1 == "monster_group" then
-		arg_5_0:_checkMonsterGroupBoss0()
-	elseif arg_5_1 == "skin_spine_action" then
+	elseif configName == "fight_buff_reject_act" then
+		self:_dealFightBuffRejectAct()
+	elseif configName == "monster_group" then
+		self:_checkMonsterGroupBoss0()
+	elseif configName == "skin_spine_action" then
 		-- block empty
-	elseif arg_5_1 == "character" then
-		local function var_5_1(arg_6_0, arg_6_1, arg_6_2)
-			logError("Can't modify config field: " .. arg_6_1)
+	elseif configName == "character" then
+		local function errorFunc(_, key, value)
+			logError("Can't modify config field: " .. key)
 		end
 
-		for iter_5_3, iter_5_4 in ipairs(arg_5_2.configList) do
-			local var_5_2 = getmetatable(iter_5_4)
+		for _, config in ipairs(configTable.configList) do
+			local metatable = getmetatable(config)
 
-			var_5_2.__newindex = nil
-			iter_5_4.skill = string.split(iter_5_4.skill, ",")[1]
-			var_5_2.__newindex = var_5_1
+			metatable.__newindex = nil
+
+			local str = string.split(config.skill, ",")[1]
+
+			config.skill = str
+
+			if config.id == 3135 then
+				config.skill = "1#31350111#31350112#31350113|2#31350121#31350122#31350123"
+			end
+
+			metatable.__newindex = errorFunc
 		end
 	end
 end
 
-function var_0_0._rebuildSkillEffect(arg_7_0)
-	if not arg_7_0._hasLoadSkill or not arg_7_0._hasLoadSkillEffect then
+function FightConfig:_rebuildSkillEffect()
+	if not self._hasLoadSkill or not self._hasLoadSkillEffect then
 		return
 	end
 
-	local var_7_0 = getmetatable(lua_skill.configList[1])
-	local var_7_1 = {
-		__index = function(arg_8_0, arg_8_1)
-			local var_8_0 = var_7_0.__index(arg_8_0, arg_8_1)
+	local skillMetatable = getmetatable(lua_skill.configList[1])
+	local metatable = {}
 
-			if not var_8_0 then
-				local var_8_1 = arg_8_0.skillEffect
-				local var_8_2 = lua_skill_effect.configDict[var_8_1]
+	function metatable.__index(t, key)
+		local value = skillMetatable.__index(t, key)
 
-				if var_8_2 then
-					if isDebugBuild or SLFramework.FrameworkSettings.IsEditor then
-						if arg_8_1 == "desc" and not var_0_0.instance:isSetDescFlag() then
-							logError("获取调用效果 desc 字段， 必须使用 FightConfig.getSkillEffectDesc 函数")
-						end
+		if not value then
+			local skillEffect = t.skillEffect
+			local skillEffectCO = lua_skill_effect.configDict[skillEffect]
 
-						var_8_0 = var_8_2[arg_8_1]
-					else
-						var_8_0 = var_8_2[arg_8_1]
+			if skillEffectCO then
+				if isDebugBuild or SLFramework.FrameworkSettings.IsEditor then
+					if key == "desc" and not FightConfig.instance:isSetDescFlag() then
+						logError("获取调用效果 desc 字段， 必须使用 FightConfig.getSkillEffectDesc 函数")
 					end
+
+					value = skillEffectCO[key]
 				else
-					logError(arg_8_0.id .. " 技能效果模版不存在：" .. var_8_1)
+					value = skillEffectCO[key]
 				end
+			else
+				logError(t.id .. " 技能效果模版不存在：" .. skillEffect)
 			end
+		end
 
-			return var_8_0
-		end,
-		__newindex = var_7_0.__newindex
-	}
-
-	for iter_7_0, iter_7_1 in ipairs(lua_skill.configList) do
-		setmetatable(iter_7_1, var_7_1)
+		return value
 	end
 
-	arg_7_0:_rebuildSkillEffectTab()
+	metatable.__newindex = skillMetatable.__newindex
+
+	for _, skillCO in ipairs(lua_skill.configList) do
+		setmetatable(skillCO, metatable)
+	end
+
+	self:_rebuildSkillEffectTab()
 end
 
-local var_0_1 = {
+local MonsterUniqueLevel1 = {
 	[10151011] = true,
 	[10161131] = true,
 	[10161141] = true,
@@ -266,92 +294,94 @@ local var_0_1 = {
 	[10151012] = true
 }
 
-function var_0_0._rebuildMonsterSkin(arg_9_0)
-	if not arg_9_0._hasLoadMonster or not arg_9_0._hasLoadSkin then
+function FightConfig:_rebuildMonsterSkin()
+	if not self._hasLoadMonster or not self._hasLoadSkin then
 		return
 	end
 
-	local var_9_0 = getmetatable(lua_monster.configList[1])
-	local var_9_1 = {
-		__index = function(arg_10_0, arg_10_1)
-			local var_10_0 = var_9_0.__index(arg_10_0, arg_10_1)
+	local monsterMetatable = getmetatable(lua_monster.configList[1])
+	local metatable = {}
 
-			if arg_10_1 == "career" then
-				if var_10_0 and var_10_0 > 0 then
-					return var_10_0
-				end
-			elseif var_10_0 then
-				return var_10_0
+	function metatable.__index(t, key)
+		local value = monsterMetatable.__index(t, key)
+
+		if key == "career" then
+			if value and value > 0 then
+				return value
 			end
+		elseif value then
+			return value
+		end
 
-			local var_10_1 = arg_10_0.skillTemplate
-			local var_10_2 = lua_monster_skill_template.configDict[var_10_1]
+		local skillTemplate = t.skillTemplate
+		local templateCO = lua_monster_skill_template.configDict[skillTemplate]
 
-			if not var_10_2 then
-				logError(arg_10_0.id .. " 技能效果模版不存在：" .. var_10_1)
+		if not templateCO then
+			logError(t.id .. " 技能效果模版不存在：" .. skillTemplate)
 
-				return nil
-			end
+			return nil
+		end
 
-			local var_10_3 = var_10_2[arg_10_1]
+		value = templateCO[key]
 
-			if var_10_3 then
-				if arg_10_1 == "uniqueSkill" then
-					local var_10_4 = arg_10_0.id
-					local var_10_5 = arg_10_0.uniqueSkillLevel
+		if value then
+			if key == "uniqueSkill" then
+				local monsterId = t.id
+				local uniqueSkillIndex = t.uniqueSkillLevel
 
-					if not arg_9_0._monsterId2UniqueId[var_10_4] then
-						local var_10_6 = {}
-						local var_10_7
-						local var_10_8 = FightStrUtil.instance:getSplitCache(var_10_2.uniqueSkill, "|")
-						local var_10_9 = lua_fight_monster_unique_index.configDict[var_10_4]
+				if not self._monsterId2UniqueId[monsterId] then
+					local uniqueSkillList = {}
+					local uniqueSkill
+					local skills = FightStrUtil.instance:getSplitCache(templateCO.uniqueSkill, "|")
+					local indexConfig = lua_fight_monster_unique_index.configDict[monsterId]
 
-						if var_10_9 then
-							var_10_5 = var_10_9.index
-						end
-
-						for iter_10_0, iter_10_1 in ipairs(var_10_8) do
-							local var_10_10 = FightStrUtil.instance:getSplitToNumberCache(iter_10_1, "#")
-
-							table.insert(var_10_6, var_10_10[var_10_5 <= #var_10_10 and var_10_5 or #var_10_10])
-						end
-
-						arg_9_0._monsterId2UniqueId[var_10_4] = var_10_6
+					if indexConfig then
+						uniqueSkillIndex = indexConfig.index
 					end
 
-					var_10_3 = arg_9_0._monsterId2UniqueId[var_10_4]
+					for _, skill in ipairs(skills) do
+						uniqueSkill = FightStrUtil.instance:getSplitToNumberCache(skill, "#")
+
+						table.insert(uniqueSkillList, uniqueSkill[uniqueSkillIndex <= #uniqueSkill and uniqueSkillIndex or #uniqueSkill])
+					end
+
+					self._monsterId2UniqueId[monsterId] = uniqueSkillList
 				end
 
-				return var_10_3
+				value = self._monsterId2UniqueId[monsterId]
 			end
 
-			local var_10_11 = arg_10_0.skinId
+			return value
+		end
 
-			return var_0_0.instance:getSkinCO(var_10_11)[arg_10_1]
-		end,
-		__newindex = var_9_0.__newindex
-	}
+		local skinId = t.skinId
+		local skinCO = FightConfig.instance:getSkinCO(skinId)
 
-	for iter_9_0, iter_9_1 in ipairs(lua_monster.configList) do
-		setmetatable(iter_9_1, var_9_1)
+		return skinCO[key]
+	end
+
+	metatable.__newindex = monsterMetatable.__newindex
+
+	for _, monsterCO in ipairs(lua_monster.configList) do
+		setmetatable(monsterCO, metatable)
 	end
 
 	if isDebugBuild then
-		arg_9_0:checkMonsterEffectPath()
-		arg_9_0:checkSkinEffectPath()
+		self:checkMonsterEffectPath()
+		self:checkSkinEffectPath()
 	end
 end
 
-function var_0_0.checkMonsterEffectPath(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(lua_monster.configList) do
-		local var_11_0 = iter_11_1.effect
+function FightConfig:checkMonsterEffectPath()
+	for _, monsterCO in ipairs(lua_monster.configList) do
+		local effect = monsterCO.effect
 
-		if not string.nilorempty(var_11_0) then
-			local var_11_1 = string.split(var_11_0, "#")
+		if not string.nilorempty(effect) then
+			local effectArr = string.split(effect, "#")
 
-			for iter_11_2, iter_11_3 in ipairs(var_11_1) do
-				if not string.match(iter_11_3, "^buff/") then
-					logError(string.format("怪物表 id ： %s, 特效配置不在buff目录下. effect : %s", iter_11_1.id, iter_11_1.effect))
+			for i, effect in ipairs(effectArr) do
+				if not string.match(effect, "^buff/") then
+					logError(string.format("怪物表 id ： %s, 特效配置不在buff目录下. effect : %s", monsterCO.id, monsterCO.effect))
 
 					break
 				end
@@ -360,16 +390,16 @@ function var_0_0.checkMonsterEffectPath(arg_11_0)
 	end
 end
 
-function var_0_0.checkSkinEffectPath(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(lua_skin.configList) do
-		local var_12_0 = iter_12_1.effect
+function FightConfig:checkSkinEffectPath()
+	for _, skinCo in ipairs(lua_skin.configList) do
+		local effect = skinCo.effect
 
-		if not string.nilorempty(var_12_0) then
-			local var_12_1 = string.split(var_12_0, "#")
+		if not string.nilorempty(effect) then
+			local effectArr = string.split(effect, "#")
 
-			for iter_12_2, iter_12_3 in ipairs(var_12_1) do
-				if not string.match(iter_12_3, "^buff/") then
-					logError(string.format("皮肤表 id ： %s, 特效配置不在buff目录下. effect : %s", iter_12_1.id, iter_12_1.effect))
+			for i, effect in ipairs(effectArr) do
+				if not string.match(effect, "^buff/") then
+					logError(string.format("皮肤表 id ： %s, 特效配置不在buff目录下. effect : %s", skinCo.id, skinCo.effect))
 
 					break
 				end
@@ -378,17 +408,17 @@ function var_0_0.checkSkinEffectPath(arg_12_0)
 	end
 end
 
-function var_0_0.checkSpineBornPath(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(lua_skin_spine_action.configList) do
-		if iter_13_1.actionName == SpineAnimState.born then
-			local var_13_0 = iter_13_1.effect
+function FightConfig:checkSpineBornPath()
+	for _, spineCo in ipairs(lua_skin_spine_action.configList) do
+		if spineCo.actionName == SpineAnimState.born then
+			local effect = spineCo.effect
 
-			if not string.nilorempty(var_13_0) then
-				local var_13_1 = FightStrUtil.instance:getSplitCache(var_13_0, "#")
+			if not string.nilorempty(effect) then
+				local effectArr = FightStrUtil.instance:getSplitCache(effect, "#")
 
-				for iter_13_2, iter_13_3 in ipairs(var_13_1) do
-					if not string.match(iter_13_3, "^buff/") then
-						logError(string.format("皮肤表, 战斗动作表现表 id ： %s, born 特效 配置不在buff目录下. effect : %s", iter_13_1.id, iter_13_1.effect))
+				for i, effect in ipairs(effectArr) do
+					if not string.match(effect, "^buff/") then
+						logError(string.format("皮肤表, 战斗动作表现表 id ： %s, born 特效 配置不在buff目录下. effect : %s", spineCo.id, spineCo.effect))
 
 						break
 					end
@@ -398,619 +428,645 @@ function var_0_0.checkSpineBornPath(arg_13_0)
 	end
 end
 
-function var_0_0.getSkinSkillTimeline(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0:_checkskinSkill()
+function FightConfig:getSkinSkillTimeline(skinId, skillId)
+	self:_checkskinSkill()
 
-	local var_14_0 = arg_14_1 and arg_14_0._skinSkillTLDict[arg_14_1]
+	local skinSkillDict = skinId and self._skinSkillTLDict[skinId]
 
-	if var_14_0 then
-		local var_14_1 = var_14_0[arg_14_2]
+	if skinSkillDict then
+		local timeline = skinSkillDict[skillId]
 
-		if var_14_1 then
-			return var_14_1
+		if timeline then
+			return timeline
 		end
 	end
 
-	local var_14_2 = lua_skill.configDict[arg_14_2]
+	local skillCO = lua_skill.configDict[skillId]
 
-	if not var_14_2 then
-		logError("skill config not exist: " .. arg_14_2)
+	if not skillCO then
+		logError("skill config not exist: " .. skillId)
 
 		return
 	end
 
-	return var_14_2.timeline
+	return skillCO.timeline
 end
 
-function var_0_0._filterSpeicalSkillIds(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = {}
-	local var_15_1 = {}
+function FightConfig:_filterSpeicalSkillIds(passiveSkillIds, isSpecial)
+	local specialIds = {}
+	local normalIds = {}
 
-	for iter_15_0 = 1, #arg_15_1 do
-		local var_15_2 = arg_15_1[iter_15_0]
+	for i = 1, #passiveSkillIds do
+		local id = passiveSkillIds[i]
 
-		if lua_skill_specialbuff.configDict[var_15_2] then
-			if lua_skill_specialbuff.configDict[var_15_2].isSpecial == 1 then
-				table.insert(var_15_0, arg_15_1[iter_15_0])
+		if lua_skill_specialbuff.configDict[id] then
+			local co = lua_skill_specialbuff.configDict[id]
+
+			if co.isSpecial == 1 then
+				table.insert(specialIds, passiveSkillIds[i])
 			else
-				table.insert(var_15_1, arg_15_1[iter_15_0])
+				table.insert(normalIds, passiveSkillIds[i])
 			end
 		else
-			table.insert(var_15_1, arg_15_1[iter_15_0])
+			table.insert(normalIds, passiveSkillIds[i])
 		end
 	end
 
-	return arg_15_2 and var_15_0 or var_15_1
+	return isSpecial and specialIds or normalIds
 end
 
-function var_0_0.getSkillLv(arg_16_0, arg_16_1)
-	arg_16_0:_checkSkill()
+function FightConfig:getSkillLv(skillId)
+	self:_checkSkill()
 
-	local var_16_0 = lua_skill.configDict[arg_16_1]
+	local skillConfig = lua_skill.configDict[skillId]
 
-	if not var_16_0 then
-		logError("技能表找不到id:" .. tostring(arg_16_1))
+	if not skillConfig then
+		logError("技能表找不到id:" .. tostring(skillId))
 
 		return 1
 	end
 
-	if lua_skill_next.configDict[arg_16_1] then
-		return var_16_0.skillRank
+	if lua_skill_next.configDict[skillId] then
+		return skillConfig.skillRank
 	end
 
-	if FightCardDataHelper.isBigSkill(arg_16_1) then
+	if FightCardDataHelper.isBigSkill(skillId) then
 		return FightEnum.UniqueSkillCardLv
 	end
 
-	if arg_16_1 == FightEnum.UniversalCard1 then
+	if skillId == FightEnum.UniversalCard1 then
 		return 1
-	elseif arg_16_1 == FightEnum.UniversalCard2 then
+	elseif skillId == FightEnum.UniversalCard2 then
 		return 2
 	end
 
-	return var_16_0.skillRank
+	return skillConfig.skillRank
 end
 
-function var_0_0.getSkillNextLvId(arg_17_0, arg_17_1)
-	arg_17_0:_checkSkill()
+function FightConfig:getSkillNextLvId(skillId)
+	self:_checkSkill()
 
-	return arg_17_0._skillNextCardLvDict[arg_17_1]
+	return self._skillNextCardLvDict[skillId]
 end
 
-function var_0_0.getSkillPrevLvId(arg_18_0, arg_18_1)
-	arg_18_0:_checkSkill()
+function FightConfig:getSkillPrevLvId(skillId)
+	self:_checkSkill()
 
-	return arg_18_0._skillPrevCardLvDict[arg_18_1]
+	return self._skillPrevCardLvDict[skillId]
 end
 
-function var_0_0.isActiveSkill(arg_19_0, arg_19_1)
-	if arg_19_1 <= 0 then
+function FightConfig:isActiveSkill(skillId)
+	if skillId <= 0 then
 		return false
 	end
 
-	arg_19_0:_checkSkill()
+	self:_checkSkill()
 
-	if arg_19_0._skillHeroIdDict[arg_19_1] or arg_19_0._skillMonsterIdDict[arg_19_1] then
+	if self._skillHeroIdDict[skillId] or self._skillMonsterIdDict[skillId] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getRestrain(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0._restrainDict[arg_20_1]
+function FightConfig:getRestrain(career1, career2)
+	local careerList = self._restrainDict[career1]
 
-	if var_20_0 then
-		return var_20_0[arg_20_2]
+	if careerList then
+		return careerList[career2]
 	end
 end
 
-function var_0_0.getBuffTag(arg_21_0, arg_21_1)
-	local var_21_0
+function FightConfig:getBuffTag(buffName)
+	local typeId
 
-	for iter_21_0, iter_21_1 in ipairs(lua_skill_buff.configList) do
-		if iter_21_1.name == arg_21_1 then
-			var_21_0 = iter_21_1.typeId
+	for _, buffco in ipairs(lua_skill_buff.configList) do
+		if buffco.name == buffName then
+			typeId = buffco.typeId
 
 			break
 		end
 	end
 
-	if not var_21_0 then
+	if not typeId then
 		return ""
 	end
 
-	local var_21_1 = lua_skill_bufftype.configDict[var_21_0]
-	local var_21_2 = var_21_1 and lua_skill_buff_desc.configDict[var_21_1.type]
+	local buffTypeCo = lua_skill_bufftype.configDict[typeId]
+	local buffTagCO = buffTypeCo and lua_skill_buff_desc.configDict[buffTypeCo.type]
 
-	if var_21_2 then
-		return var_21_2.name
+	if buffTagCO then
+		return buffTagCO.name
 	end
 
 	return ""
 end
 
-function var_0_0.restrainedBy(arg_22_0, arg_22_1)
-	if not arg_22_0._restrainDict then
+function FightConfig:restrainedBy(career)
+	if not self._restrainDict then
 		return nil
 	end
 
-	for iter_22_0, iter_22_1 in pairs(arg_22_0._restrainDict) do
-		if iter_22_1[arg_22_1] and iter_22_1[arg_22_1] > 1000 then
-			return iter_22_0
+	for k_career, careerTab in pairs(self._restrainDict) do
+		if careerTab[career] and careerTab[career] > 1000 then
+			return k_career
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.restrained(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0._restrainDict[arg_23_1]
+function FightConfig:restrained(career)
+	local tb = self._restrainDict[career]
 
-	if not var_23_0 then
+	if not tb then
 		return nil
 	end
 
-	for iter_23_0, iter_23_1 in pairs(var_23_0) do
-		if iter_23_1 > 1000 then
-			return iter_23_0
+	for k, v in pairs(tb) do
+		if v > 1000 then
+			return k
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getSkillHeroId(arg_24_0, arg_24_1)
-	arg_24_0:_checkSkill()
+function FightConfig:getSkillHeroId(skillId)
+	self:_checkSkill()
 
-	return arg_24_0._skillHeroIdDict[arg_24_1]
+	return self._skillHeroIdDict[skillId]
 end
 
-function var_0_0.setSkillDict(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4, arg_25_5)
-	arg_25_0._skillCurrCardLvDict = arg_25_1
-	arg_25_0._skillNextCardLvDict = arg_25_2
-	arg_25_0._skillPrevCardLvDict = arg_25_3
-	arg_25_0._skillHeroIdDict = arg_25_4
-	arg_25_0._skillMonsterIdDict = arg_25_5
-	arg_25_0.parseSkill = true
+function FightConfig:setSkillDict(skillCurrCardLvDict, skillNextCardLvDict, skillPrevCardLvDict, skillHeroIdDict, skillMonsterIdDict)
+	self._skillCurrCardLvDict = skillCurrCardLvDict
+	self._skillNextCardLvDict = skillNextCardLvDict
+	self._skillPrevCardLvDict = skillPrevCardLvDict
+	self._skillHeroIdDict = skillHeroIdDict
+	self._skillMonsterIdDict = skillMonsterIdDict
+	self.parseSkill = true
 end
 
-function var_0_0.isParsedSkill(arg_26_0)
-	return arg_26_0.parseSkill
+function FightConfig:isParsedSkill()
+	return self.parseSkill
 end
 
-function var_0_0._checkSkill(arg_27_0)
-	if arg_27_0.parseSkill then
+function FightConfig:_checkSkill()
+	if self.parseSkill then
 		return
 	end
 
-	arg_27_0.parseSkill = true
-	arg_27_0._skillCurrCardLvDict = {}
-	arg_27_0._skillNextCardLvDict = {}
-	arg_27_0._skillPrevCardLvDict = {}
-	arg_27_0._skillHeroIdDict = {}
-	arg_27_0._skillMonsterIdDict = {}
+	self.parseSkill = true
+	self._skillCurrCardLvDict = {}
+	self._skillNextCardLvDict = {}
+	self._skillPrevCardLvDict = {}
+	self._skillHeroIdDict = {}
+	self._skillMonsterIdDict = {}
 
-	for iter_27_0, iter_27_1 in ipairs(lua_character.configList) do
-		if not string.nilorempty(iter_27_1.skill) then
-			local var_27_0 = FightStrUtil.instance:getSplitString2Cache(iter_27_1.skill, true)
+	for _, heroCO in ipairs(lua_character.configList) do
+		if not string.nilorempty(heroCO.skill) then
+			local activeSkills = FightStrUtil.instance:getSplitString2Cache(heroCO.skill, true)
 
-			for iter_27_2, iter_27_3 in ipairs(var_27_0) do
-				local var_27_1 = iter_27_3[2]
-				local var_27_2 = iter_27_3[3]
-				local var_27_3 = iter_27_3[4]
+			for _, oneSkills in ipairs(activeSkills) do
+				local s1, s2, s3 = oneSkills[2], oneSkills[3], oneSkills[4]
 
-				arg_27_0._skillCurrCardLvDict[var_27_1] = 1
-				arg_27_0._skillCurrCardLvDict[var_27_2] = 2
-				arg_27_0._skillCurrCardLvDict[var_27_3] = 3
-				arg_27_0._skillNextCardLvDict[var_27_1] = var_27_2
-				arg_27_0._skillNextCardLvDict[var_27_2] = var_27_3
-				arg_27_0._skillPrevCardLvDict[var_27_2] = var_27_1
-				arg_27_0._skillPrevCardLvDict[var_27_3] = var_27_2
+				self._skillCurrCardLvDict[s1] = 1
+				self._skillCurrCardLvDict[s2] = 2
+				self._skillCurrCardLvDict[s3] = 3
+				self._skillNextCardLvDict[s1] = s2
+				self._skillNextCardLvDict[s2] = s3
+				self._skillPrevCardLvDict[s2] = s1
+				self._skillPrevCardLvDict[s3] = s2
 
-				local var_27_4 = iter_27_1.id
+				local heroId = heroCO.id
 
-				arg_27_0._skillHeroIdDict[var_27_1] = var_27_4
-				arg_27_0._skillHeroIdDict[var_27_2] = var_27_4
-				arg_27_0._skillHeroIdDict[var_27_3] = var_27_4
+				self._skillHeroIdDict[s1] = heroId
+				self._skillHeroIdDict[s2] = heroId
+				self._skillHeroIdDict[s3] = heroId
 			end
 		end
 	end
 
-	for iter_27_4, iter_27_5 in ipairs(lua_skill_ex_level.configList) do
-		local var_27_5 = iter_27_5.heroId
-		local var_27_6 = iter_27_5.skillGroup1
+	for _, exSkillCO in ipairs(lua_skill_ex_level.configList) do
+		local heroId = exSkillCO.heroId
+		local skillGroup1 = exSkillCO.skillGroup1
 
-		if not string.nilorempty(var_27_6) then
-			local var_27_7 = FightStrUtil.instance:getSplitToNumberCache(var_27_6, "|")
+		if not string.nilorempty(skillGroup1) then
+			local temp = FightStrUtil.instance:getSplitToNumberCache(skillGroup1, "|")
 
-			for iter_27_6, iter_27_7 in ipairs(var_27_7) do
-				arg_27_0._skillHeroIdDict[iter_27_7] = var_27_5
-				arg_27_0._skillCurrCardLvDict[iter_27_7] = iter_27_6
+			for level, skillId in ipairs(temp) do
+				self._skillHeroIdDict[skillId] = heroId
+				self._skillCurrCardLvDict[skillId] = level
 			end
 		end
 
-		local var_27_8 = iter_27_5.skillGroup2
+		local skillGroup2 = exSkillCO.skillGroup2
 
-		if not string.nilorempty(var_27_8) then
-			local var_27_9 = FightStrUtil.instance:getSplitToNumberCache(var_27_8, "|")
+		if not string.nilorempty(skillGroup2) then
+			local temp = FightStrUtil.instance:getSplitToNumberCache(skillGroup2, "|")
 
-			for iter_27_8, iter_27_9 in ipairs(var_27_9) do
-				arg_27_0._skillHeroIdDict[iter_27_9] = var_27_5
-				arg_27_0._skillCurrCardLvDict[iter_27_9] = iter_27_8
+			for level, skillId in ipairs(temp) do
+				self._skillHeroIdDict[skillId] = heroId
+				self._skillCurrCardLvDict[skillId] = level
 			end
 		end
 
-		local var_27_10 = iter_27_5.skillEx
+		local skillId = exSkillCO.skillEx
 
-		arg_27_0._skillHeroIdDict[var_27_10] = var_27_5
+		self._skillHeroIdDict[skillId] = heroId
 	end
 
-	for iter_27_10, iter_27_11 in ipairs(lua_monster.configList) do
-		local var_27_11 = iter_27_11.id
-		local var_27_12 = FightStrUtil.instance:getSplitString2Cache(iter_27_11.activeSkill, true, "|", "#")
+	for _, monsterCO in ipairs(lua_monster.configList) do
+		local monsterId = monsterCO.id
+		local activeSkill = FightStrUtil.instance:getSplitString2Cache(monsterCO.activeSkill, true, "|", "#")
 
-		if var_27_12 then
-			for iter_27_12, iter_27_13 in ipairs(var_27_12) do
-				local var_27_13 = 1
+		if activeSkill then
+			for _, ids in ipairs(activeSkill) do
+				local lv = 1
 
-				for iter_27_14, iter_27_15 in ipairs(iter_27_13) do
-					if lua_skill.configDict[iter_27_15] then
-						arg_27_0._skillMonsterIdDict[iter_27_15] = var_27_11
-						arg_27_0._skillCurrCardLvDict[iter_27_15] = var_27_13
-						var_27_13 = var_27_13 + 1
+				for _, skillId in ipairs(ids) do
+					local skillCO = lua_skill.configDict[skillId]
+
+					if skillCO then
+						self._skillMonsterIdDict[skillId] = monsterId
+						self._skillCurrCardLvDict[skillId] = lv
+						lv = lv + 1
 					end
 				end
 			end
 		end
 
-		local var_27_14 = iter_27_11.uniqueSkill
+		local uniqueSkill = monsterCO.uniqueSkill
 
-		if var_27_14 and #var_27_14 > 0 then
-			for iter_27_16, iter_27_17 in ipairs(var_27_14) do
-				arg_27_0._skillMonsterIdDict[iter_27_17] = var_27_11
+		if uniqueSkill and #uniqueSkill > 0 then
+			for _, skillId in ipairs(uniqueSkill) do
+				self._skillMonsterIdDict[skillId] = monsterId
 			end
 		end
 	end
 end
 
-function var_0_0._checkskinSkill(arg_28_0)
-	if arg_28_0._skinSkillTLDict then
+function FightConfig:_checkskinSkill()
+	if self._skinSkillTLDict then
 		return
 	end
 
-	arg_28_0._skinSkillTLDict = {}
+	self._skinSkillTLDict = {}
 
-	arg_28_0:_doCheckskinSkill(lua_skin.configList)
-	arg_28_0:_doCheckskinSkill(lua_monster_skin.configList)
+	self:_doCheckskinSkill(lua_skin.configList)
+	self:_doCheckskinSkill(lua_monster_skin.configList)
 end
 
-function var_0_0._doCheckskinSkill(arg_29_0, arg_29_1)
-	for iter_29_0, iter_29_1 in ipairs(arg_29_1) do
-		if not string.nilorempty(iter_29_1.skills) then
-			local var_29_0 = {}
-			local var_29_1 = FightStrUtil.instance:getSplitString2Cache(iter_29_1.skills, false, "|", "#")
+function FightConfig:_doCheckskinSkill(configList)
+	for _, skinCO in ipairs(configList) do
+		if not string.nilorempty(skinCO.skills) then
+			local skillTLDict = {}
+			local skillTLs = FightStrUtil.instance:getSplitString2Cache(skinCO.skills, false, "|", "#")
 
-			for iter_29_2, iter_29_3 in ipairs(var_29_1) do
-				local var_29_2 = tonumber(iter_29_3[1])
-				local var_29_3 = iter_29_3[2]
+			for _, skillTL in ipairs(skillTLs) do
+				local skillId = tonumber(skillTL[1])
+				local tlId = skillTL[2]
 
-				if var_29_2 and var_29_3 then
-					var_29_0[var_29_2] = var_29_3
+				if skillId and tlId then
+					skillTLDict[skillId] = tlId
 				end
 			end
 
-			arg_29_0._skinSkillTLDict[iter_29_1.id] = var_29_0
+			self._skinSkillTLDict[skinCO.id] = skillTLDict
 		end
 	end
 end
 
-function var_0_0.getSkillEffectCO(arg_30_0, arg_30_1)
-	local var_30_0 = lua_skill.configDict[arg_30_1]
+function FightConfig:getSkillEffectCO(skillId)
+	local skillCO = lua_skill.configDict[skillId]
+	local skillEffectCO = skillCO and lua_skill_effect.configDict[skillCO.skillEffect]
 
-	return var_30_0 and lua_skill_effect.configDict[var_30_0.skillEffect]
+	return skillEffectCO
 end
 
-function var_0_0.getPassiveSkills(arg_31_0, arg_31_1)
-	local var_31_0
-	local var_31_1 = lua_monster.configDict[arg_31_1]
+function FightConfig:getPassiveSkills(monsterId)
+	local passiveSkills
+	local monsterCO = lua_monster.configDict[monsterId]
 
-	if var_31_1 and var_31_1.passiveSkill then
-		local var_31_2 = "|"
+	if monsterCO and monsterCO.passiveSkill then
+		local splitChat1 = "|"
 
-		if string.find(var_31_1.passiveSkill, "#") then
-			var_31_2 = "#"
+		if string.find(monsterCO.passiveSkill, "#") then
+			splitChat1 = "#"
 		end
 
-		var_31_0 = tabletool.copy(FightStrUtil.instance:getSplitToNumberCache(var_31_1.passiveSkill, var_31_2))
+		passiveSkills = tabletool.copy(FightStrUtil.instance:getSplitToNumberCache(monsterCO.passiveSkill, splitChat1))
 
-		for iter_31_0 = #var_31_0, var_31_1.passiveSkillCount + 1, -1 do
-			var_31_0[iter_31_0] = nil
-		end
-	end
-
-	if not string.nilorempty(var_31_1.passiveSkillsEx) then
-		local var_31_3 = "|"
-
-		if string.find(var_31_1.passiveSkillsEx, "#") then
-			var_31_3 = "#"
-		end
-
-		local var_31_4 = FightStrUtil.instance:getSplitToNumberCache(var_31_1.passiveSkillsEx, var_31_3)
-
-		for iter_31_1, iter_31_2 in ipairs(var_31_4) do
-			var_31_0 = var_31_0 or {}
-
-			table.insert(var_31_0, iter_31_2)
+		for i = #passiveSkills, monsterCO.passiveSkillCount + 1, -1 do
+			passiveSkills[i] = nil
 		end
 	end
 
-	return var_31_0
-end
+	if not string.nilorempty(monsterCO.passiveSkillsEx) then
+		local splitChat2 = "|"
 
-function var_0_0.getPassiveSkillsAfterUIFilter(arg_32_0, arg_32_1)
-	local var_32_0 = lua_monster.configDict[arg_32_1]
-	local var_32_1 = var_0_0.instance:getPassiveSkills(arg_32_1)
-	local var_32_2 = FightStrUtil.instance:getSplitToNumberCache(var_32_0.uiFilterSkill, "|")
+		if string.find(monsterCO.passiveSkillsEx, "#") then
+			splitChat2 = "#"
+		end
 
-	for iter_32_0, iter_32_1 in ipairs(var_32_2) do
-		local var_32_3 = tabletool.indexOf(var_32_1, iter_32_1)
+		local exList = FightStrUtil.instance:getSplitToNumberCache(monsterCO.passiveSkillsEx, splitChat2)
 
-		if var_32_3 then
-			table.remove(var_32_1, var_32_3)
+		for _, exSkillId in ipairs(exList) do
+			passiveSkills = passiveSkills or {}
+
+			table.insert(passiveSkills, exSkillId)
 		end
 	end
 
-	return var_32_1
+	return passiveSkills
 end
 
-function var_0_0.getMonsterGuideFocusConfig(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
-	if lua_monster_guide_focus.configDict[arg_33_1] and lua_monster_guide_focus.configDict[arg_33_1][arg_33_2] and lua_monster_guide_focus.configDict[arg_33_1][arg_33_2][arg_33_3] then
-		return lua_monster_guide_focus.configDict[arg_33_1][arg_33_2][arg_33_3][arg_33_4]
+function FightConfig:getPassiveSkillsAfterUIFilter(monsterId)
+	local monsterCO = lua_monster.configDict[monsterId]
+	local passiveSkillIds = FightConfig.instance:getPassiveSkills(monsterId)
+	local filterSkills = FightStrUtil.instance:getSplitToNumberCache(monsterCO.uiFilterSkill, "|")
+
+	for i, v in ipairs(filterSkills) do
+		local index = tabletool.indexOf(passiveSkillIds, v)
+
+		if index then
+			table.remove(passiveSkillIds, index)
+		end
+	end
+
+	return passiveSkillIds
+end
+
+function FightConfig:getMonsterGuideFocusConfig(id, invokeType, param, monster)
+	if lua_monster_guide_focus.configDict[id] and lua_monster_guide_focus.configDict[id][invokeType] and lua_monster_guide_focus.configDict[id][invokeType][param] then
+		return lua_monster_guide_focus.configDict[id][invokeType][param][monster]
 	end
 end
 
-function var_0_0.getNewMonsterConfig(arg_34_0, arg_34_1)
-	return not string.nilorempty(arg_34_1.highPriorityName) or not string.nilorempty(arg_34_1.highPriorityNameEng) or not string.nilorempty(arg_34_1.highPriorityDes)
+function FightConfig:getNewMonsterConfig(monsterConfig)
+	return not string.nilorempty(monsterConfig.highPriorityName) or not string.nilorempty(monsterConfig.highPriorityNameEng) or not string.nilorempty(monsterConfig.highPriorityDes)
 end
 
-function var_0_0.getMonsterName(arg_35_0, arg_35_1)
-	return arg_35_0:getNewMonsterConfig(arg_35_1) and arg_35_1.highPriorityName or arg_35_1.name
+function FightConfig:getMonsterName(monsterCo)
+	return self:getNewMonsterConfig(monsterCo) and monsterCo.highPriorityName or monsterCo.name
 end
 
-function var_0_0.getBuffFeatures(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0._buffFeatureDictDict[arg_36_1]
+function FightConfig:getBuffFeatures(buffId)
+	local featureDict = self._buffFeatureDictDict[buffId]
 
-	if not var_36_0 then
-		var_36_0 = {}
+	if not featureDict then
+		featureDict = {}
 
-		local var_36_1 = lua_skill_buff.configDict[arg_36_1]
+		local buffCO = lua_skill_buff.configDict[buffId]
 
-		if var_36_1 then
-			local var_36_2 = string.split(var_36_1.features, "|")
+		if buffCO then
+			local featureSp = string.split(buffCO.features, "|")
 
-			if var_36_2 then
-				for iter_36_0, iter_36_1 in ipairs(var_36_2) do
-					local var_36_3 = string.split(iter_36_1, "#")
-					local var_36_4 = tonumber(var_36_3[1])
-					local var_36_5 = var_36_4 and lua_buff_act.configDict[var_36_4]
+			if featureSp then
+				for _, featureStr in ipairs(featureSp) do
+					local arr = string.split(featureStr, "#")
+					local featureId = tonumber(arr[1])
+					local buffActCO = featureId and lua_buff_act.configDict[featureId]
 
-					if var_36_5 and var_36_5.type then
-						var_36_0[var_36_5.type] = {
-							featureType = var_36_5.type,
-							featureStr = iter_36_1
+					if buffActCO and buffActCO.type then
+						featureDict[buffActCO.type] = {
+							featureType = buffActCO.type,
+							featureStr = featureStr
 						}
 					end
 				end
 			end
 		end
 
-		arg_36_0._buffFeatureDictDict[arg_36_1] = var_36_0
+		self._buffFeatureDictDict[buffId] = featureDict
 	end
 
-	return var_36_0
+	return featureDict
 end
 
-function var_0_0.hasBuffFeature(arg_37_0, arg_37_1, arg_37_2)
-	return arg_37_0:getBuffFeatures(arg_37_1)[arg_37_2]
+function FightConfig:hasBuffFeature(buffId, featureName)
+	return self:getBuffFeatures(buffId)[featureName]
 end
 
-function var_0_0.getSkinSpineActionDict(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = arg_38_0:getSkinCO(arg_38_1)
+function FightConfig:getSkinSpineActionDict(skinId, actName)
+	local skinCO = self:getSkinCO(skinId)
 
-	if not var_38_0 then
+	if not skinCO then
 		return
 	end
 
-	local var_38_1 = var_38_0.showTemplate
-	local var_38_2 = lua_skin_spine_action.configDict[var_38_1]
+	local showTemplate = skinCO.showTemplate
+	local spineActionDict = lua_skin_spine_action.configDict[showTemplate]
 
-	if arg_38_2 and var_38_2 and not var_38_2[arg_38_2] then
-		var_38_2 = nil
+	if actName and spineActionDict and not spineActionDict[actName] then
+		spineActionDict = nil
 	end
 
-	if not var_38_2 and lua_skin.configDict[var_38_1] then
-		local var_38_3 = var_38_0.id - var_38_0.id % 10 + 1
-		local var_38_4 = var_0_0.instance:getSkinCO(var_38_3)
+	if not spineActionDict and lua_skin.configDict[showTemplate] then
+		local normal_skin = skinCO.id - skinCO.id % 10 + 1
+		local normal_skin_config = FightConfig.instance:getSkinCO(normal_skin)
 
-		if var_38_4 then
-			var_38_2 = lua_skin_spine_action.configDict[var_38_4.showTemplate]
+		if normal_skin_config then
+			spineActionDict = lua_skin_spine_action.configDict[normal_skin_config.showTemplate]
 		end
 	end
 
-	return var_38_2
+	return spineActionDict
 end
 
-function var_0_0.getSummonedConfig(arg_39_0, arg_39_1, arg_39_2)
-	return lua_summoned.configDict[arg_39_1] and lua_summoned.configDict[arg_39_1][arg_39_2]
+function FightConfig:getSummonedConfig(id, level)
+	return lua_summoned.configDict[id] and lua_summoned.configDict[id][level]
 end
 
-function var_0_0.getRejectActBuffTypeList(arg_40_0, arg_40_1)
-	return arg_40_0._rejectSpineAct and arg_40_0._rejectSpineAct[arg_40_1]
+function FightConfig:getRejectActBuffTypeList(act)
+	return self._rejectSpineAct and self._rejectSpineAct[act]
 end
 
-function var_0_0._dealFightBuffRejectAct(arg_41_0)
-	arg_41_0._rejectSpineAct = {}
+function FightConfig:_dealFightBuffRejectAct()
+	self._rejectSpineAct = {}
 
-	for iter_41_0, iter_41_1 in ipairs(lua_fight_buff_reject_act.configList) do
-		local var_41_0 = string.split(iter_41_1.rejectAct, "#")
+	for i, config in ipairs(lua_fight_buff_reject_act.configList) do
+		local actList = string.split(config.rejectAct, "#")
 
-		for iter_41_2, iter_41_3 in ipairs(var_41_0) do
-			arg_41_0._rejectSpineAct[iter_41_3] = arg_41_0._rejectSpineAct[iter_41_3] or {}
+		for index, name in ipairs(actList) do
+			self._rejectSpineAct[name] = self._rejectSpineAct[name] or {}
 
-			table.insert(arg_41_0._rejectSpineAct[iter_41_3], iter_41_1.id)
+			table.insert(self._rejectSpineAct[name], config.id)
 		end
 	end
 end
 
-function var_0_0._checkMonsterGroupBoss0(arg_42_0)
+function FightConfig:_checkMonsterGroupBoss0()
 	if isDebugBuild then
-		local var_42_0
+		local errorList
 
-		for iter_42_0, iter_42_1 in ipairs(lua_monster_group.configList) do
-			if iter_42_1.bossId == "0" then
-				var_42_0 = var_42_0 or {}
+		for _, monsterGroupCO in ipairs(lua_monster_group.configList) do
+			if monsterGroupCO.bossId == "0" then
+				errorList = errorList or {}
 
-				table.insert(var_42_0, iter_42_1.id)
+				table.insert(errorList, monsterGroupCO.id)
 			end
 		end
 
-		if var_42_0 then
-			logError("以下怪物组配错了 bossId = 0，请检查是否有误\n" .. table.concat(var_42_0, ","))
+		if errorList then
+			logError("以下怪物组配错了 bossId = 0，请检查是否有误\n" .. table.concat(errorList, ","))
 		end
 	end
 end
 
-var_0_0.DescNameTag = "{name}"
+FightConfig.DescNameTag = "{name}"
 
-function var_0_0.getSkillEffectDesc(arg_43_0, arg_43_1, arg_43_2)
-	if not arg_43_2 then
+function FightConfig:getSkillEffectDesc(monsterName, effectCo)
+	if not effectCo then
 		return ""
 	end
 
 	if isDebugBuild or SLFramework.FrameworkSettings.IsEditor then
-		arg_43_0:setGetDescFlag(true)
+		self:setGetDescFlag(true)
 
-		local var_43_0 = arg_43_2.desc
+		local desc = effectCo.desc
 
-		arg_43_0:setGetDescFlag(false)
+		self:setGetDescFlag(false)
 
-		if string.match(var_43_0, var_0_0.DescNameTag) and string.nilorempty(arg_43_1) then
-			local var_43_1 = "monster name is nil or empty str, please check !!!" .. string.format("effectId : %s, effect desc : %s", arg_43_2.id, var_43_0)
+		if string.match(desc, FightConfig.DescNameTag) and string.nilorempty(monsterName) then
+			local msg = "monster name is nil or empty str, please check !!!"
 
-			logError(var_43_1)
+			msg = msg .. string.format("effectId : %s, effect desc : %s", effectCo.id, desc)
 
-			return var_43_0
+			logError(msg)
+
+			return desc
 		end
 
-		if string.nilorempty(arg_43_1) then
-			return var_43_0
+		if string.nilorempty(monsterName) then
+			return desc
 		end
 
-		return string.gsub(var_43_0, var_0_0.DescNameTag, arg_43_1)
+		return string.gsub(desc, FightConfig.DescNameTag, monsterName)
 	end
 
-	local var_43_2 = arg_43_2.desc
+	local desc = effectCo.desc
 
-	if string.nilorempty(arg_43_1) then
-		return var_43_2
+	if string.nilorempty(monsterName) then
+		return desc
 	end
 
-	return string.gsub(var_43_2, var_0_0.DescNameTag, arg_43_1)
+	return string.gsub(desc, FightConfig.DescNameTag, monsterName)
 end
 
-function var_0_0.getEntitySkillDesc(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	arg_44_2 = arg_44_2 or lua_skill.configDict[arg_44_3]
+function FightConfig:getEntitySkillDesc(entityId, skillConfig, skillId)
+	skillConfig = skillConfig or lua_skill.configDict[skillId]
 
-	if not arg_44_2 then
-		if arg_44_3 then
-			logError("技能表找不到id : " .. tostring(arg_44_3))
+	if not skillConfig then
+		if skillId then
+			logError("技能表找不到id : " .. tostring(skillId))
 		end
 
 		return ""
 	end
 
-	local var_44_0 = arg_44_0:getEntityName(arg_44_1)
+	local entityName = self:getEntityName(entityId)
 
-	return arg_44_0:getSkillEffectDesc(var_44_0, arg_44_2)
+	return self:getSkillEffectDesc(entityName, skillConfig)
 end
 
-function var_0_0.getEntityName(arg_45_0, arg_45_1)
-	local var_45_0 = FightDataHelper.entityMgr:getById(arg_45_1)
-	local var_45_1 = var_45_0 and var_45_0:getCO()
+function FightConfig:getEntityName(entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
+	local entityConfig = entityMO and entityMO:getCO()
 
-	return var_45_1 and var_45_1.name or ""
+	return entityConfig and entityConfig.name or ""
 end
 
-function var_0_0._rebuildSkillEffectTab(arg_46_0)
+function FightConfig:_rebuildSkillEffectTab()
 	if isDebugBuild or SLFramework.FrameworkSettings.IsEditor then
-		local var_46_0 = getmetatable(lua_skill_effect.configList[1])
-		local var_46_1 = {
-			__index = function(arg_47_0, arg_47_1)
-				if arg_47_1 == "desc" and not var_0_0.instance:isSetDescFlag() then
-					logError("获取调用效果 desc 字段， 必须使用 FightConfig.getSkillEffectDesc 函数")
-				end
+		local metatable = getmetatable(lua_skill_effect.configList[1])
+		local newMetaTable = {}
 
-				return var_46_0.__index(arg_47_0, arg_47_1)
-			end,
-			__newindex = var_46_0.__newindex
-		}
-
-		for iter_46_0, iter_46_1 in ipairs(lua_skill_effect.configList) do
-			setmetatable(iter_46_1, var_46_1)
-		end
-	end
-end
-
-function var_0_0.setGetDescFlag(arg_48_0, arg_48_1)
-	arg_48_0.descFlag = arg_48_1
-end
-
-function var_0_0.isSetDescFlag(arg_49_0)
-	return arg_49_0.descFlag
-end
-
-function var_0_0.getMultiHpListByMonsterId(arg_50_0, arg_50_1, arg_50_2)
-	local var_50_0 = lua_monster.configDict[arg_50_1]
-
-	if not var_50_0 then
-		return nil
-	end
-
-	local var_50_1 = CharacterDataConfig.instance:getMonsterHp(arg_50_1, arg_50_2)
-	local var_50_2 = lua_monster_skill_template.configDict[var_50_0.skillTemplate]
-
-	if var_50_2 and var_50_2.instance > 0 then
-		local var_50_3 = lua_monster_instance.configDict[var_50_2.instance]
-
-		if var_50_3 and var_50_3.multiHp > 1 then
-			local var_50_4 = {}
-
-			for iter_50_0 = 1, var_50_3.multiHp do
-				table.insert(var_50_4, var_50_1)
+		function newMetaTable.__index(t, k)
+			if k == "desc" and not FightConfig.instance:isSetDescFlag() then
+				logError("获取调用效果 desc 字段， 必须使用 FightConfig.getSkillEffectDesc 函数")
 			end
 
-			return var_50_4
+			return metatable.__index(t, k)
+		end
+
+		newMetaTable.__newindex = metatable.__newindex
+
+		for _, skillCO in ipairs(lua_skill_effect.configList) do
+			setmetatable(skillCO, newMetaTable)
 		end
 	end
+end
 
-	local var_50_5 = lua_monster_template.configDict[var_50_0.template]
-	local var_50_6 = var_50_5 and var_50_5.multiHp
+function FightConfig:setGetDescFlag(enable)
+	self.descFlag = enable
+end
 
-	if string.nilorempty(var_50_6) then
+function FightConfig:isSetDescFlag()
+	return self.descFlag
+end
+
+function FightConfig:getMultiHpListByMonsterId(monsterId, isSimple)
+	local monsterConfig = lua_monster.configDict[monsterId]
+
+	if not monsterConfig then
 		return nil
 	end
 
-	local var_50_7 = #string.split(var_50_6, "#")
-	local var_50_8 = {}
+	local hp = CharacterDataConfig.instance:getMonsterHp(monsterId, isSimple)
+	local skillTemplateConfig = lua_monster_skill_template.configDict[monsterConfig.skillTemplate]
 
-	for iter_50_1 = 1, var_50_7 do
-		table.insert(var_50_8, var_50_1)
+	if skillTemplateConfig and skillTemplateConfig.instance > 0 then
+		local instanceConfig = lua_monster_instance.configDict[skillTemplateConfig.instance]
+
+		if instanceConfig and instanceConfig.multiHp > 1 then
+			local list = {}
+
+			for i = 1, instanceConfig.multiHp do
+				table.insert(list, hp)
+			end
+
+			return list
+		end
 	end
 
-	return var_50_8
+	local templateConfig = lua_monster_template.configDict[monsterConfig.template]
+	local multiHp = templateConfig and templateConfig.multiHp
+
+	if string.nilorempty(multiHp) then
+		return nil
+	end
+
+	local multiHpNum = #string.split(multiHp, "#")
+	local list = {}
+
+	for i = 1, multiHpNum do
+		table.insert(list, hp)
+	end
+
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+function FightConfig:getJGZTitle()
+	return lua_fight_jgz_const.configDict[5].value2
+end
 
-return var_0_0
+function FightConfig:getJGZDesc()
+	return lua_fight_jgz_const.configDict[6].value2
+end
+
+function FightConfig:getRouge2MusicCo(musicType)
+	local co = lua_fight_rouge2_music.configDict[musicType]
+
+	if not co then
+		logError("not found music config : " .. tostring(musicType))
+
+		co = lua_fight_rouge2_music.configList[1]
+	end
+
+	return co
+end
+
+FightConfig.instance = FightConfig.New()
+
+return FightConfig

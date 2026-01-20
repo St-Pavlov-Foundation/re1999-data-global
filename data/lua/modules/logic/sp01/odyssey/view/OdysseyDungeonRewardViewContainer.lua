@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyDungeonRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyDungeonRewardViewContainer.lua
 
-local var_0_0 = class("OdysseyDungeonRewardViewContainer", BaseViewContainer)
+module("modules.logic.sp01.odyssey.view.OdysseyDungeonRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local OdysseyDungeonRewardViewContainer = class("OdysseyDungeonRewardViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, OdysseyDungeonRewardView.New())
+function OdysseyDungeonRewardViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, OdysseyDungeonRewardView.New())
+
+	return views
 end
 
-return var_0_0
+return OdysseyDungeonRewardViewContainer

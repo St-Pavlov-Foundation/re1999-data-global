@@ -1,114 +1,116 @@
-﻿module("modules.logic.versionactivity1_3.act125.view.Activity125WarmUpViewBaseContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act125/view/Activity125WarmUpViewBaseContainer.lua
 
-local var_0_0 = class("Activity125WarmUpViewBaseContainer", Activity125ViewBaseContainer)
+module("modules.logic.versionactivity1_3.act125.view.Activity125WarmUpViewBaseContainer", package.seeall)
 
-function var_0_0.onContainerInit(arg_1_0)
-	var_0_0.super.onContainerInit(arg_1_0)
+local Activity125WarmUpViewBaseContainer = class("Activity125WarmUpViewBaseContainer", Activity125ViewBaseContainer)
+
+function Activity125WarmUpViewBaseContainer:onContainerInit()
+	Activity125WarmUpViewBaseContainer.super.onContainerInit(self)
 end
 
-function var_0_0.onContainerOpen(arg_2_0)
-	var_0_0.super.onContainerOpen(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, arg_2_0._onUpdateActivity, arg_2_0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, arg_2_0._onDataUpdate, arg_2_0)
-	Activity125Controller.instance:registerCallback(Activity125Event.SwitchEpisode, arg_2_0._onSwitchEpisode, arg_2_0)
+function Activity125WarmUpViewBaseContainer:onContainerOpen()
+	Activity125WarmUpViewBaseContainer.super.onContainerOpen(self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	ActivityController.instance:registerCallback(ActivityEvent.UpdateActivity, self._onUpdateActivity, self)
+	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, self._onDataUpdate, self)
+	Activity125Controller.instance:registerCallback(Activity125Event.SwitchEpisode, self._onSwitchEpisode, self)
 
-	if not arg_2_0._isInited then
-		Activity125Controller.instance:getAct125InfoFromServer(arg_2_0:actId())
+	if not self._isInited then
+		Activity125Controller.instance:getAct125InfoFromServer(self:actId())
 	end
 end
 
-function var_0_0.onContainerClose(arg_3_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.UpdateActivity, arg_3_0._onUpdateActivity, arg_3_0)
-	Activity125Controller.instance:unregisterCallback(Activity125Event.SwitchEpisode, arg_3_0._onSwitchEpisode, arg_3_0)
-	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, arg_3_0._onDataUpdate, arg_3_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
-	var_0_0.super.onContainerClose(arg_3_0)
+function Activity125WarmUpViewBaseContainer:onContainerClose()
+	ActivityController.instance:unregisterCallback(ActivityEvent.UpdateActivity, self._onUpdateActivity, self)
+	Activity125Controller.instance:unregisterCallback(Activity125Event.SwitchEpisode, self._onSwitchEpisode, self)
+	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, self._onDataUpdate, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	Activity125WarmUpViewBaseContainer.super.onContainerClose(self)
 end
 
-function var_0_0.onContainerDestroy(arg_4_0)
-	arg_4_0._isInited = false
+function Activity125WarmUpViewBaseContainer:onContainerDestroy()
+	self._isInited = false
 
-	var_0_0.super.onContainerDestroy(arg_4_0)
+	Activity125WarmUpViewBaseContainer.super.onContainerDestroy(self)
 end
 
-function var_0_0._onDataUpdate(arg_5_0)
-	local var_5_0 = arg_5_0._isInited
+function Activity125WarmUpViewBaseContainer:_onDataUpdate()
+	local first = self._isInited
 
-	if not arg_5_0._isInited then
-		arg_5_0:onDataUpdateFirst()
+	if not self._isInited then
+		self:onDataUpdateFirst()
 
-		arg_5_0._isInited = true
+		self._isInited = true
 	end
 
-	arg_5_0:onDataUpdate()
+	self:onDataUpdate()
 
-	if var_5_0 ~= arg_5_0._isInited then
-		arg_5_0:onDataUpdateDoneFirst()
+	if first ~= self._isInited then
+		self:onDataUpdateDoneFirst()
 	end
 end
 
-function var_0_0._onSwitchEpisode(arg_6_0)
-	if not arg_6_0._isInited then
+function Activity125WarmUpViewBaseContainer:_onSwitchEpisode()
+	if not self._isInited then
 		return
 	end
 
-	arg_6_0:onSwitchEpisode()
+	self:onSwitchEpisode()
 end
 
-function var_0_0._onUpdateActivity(arg_7_0)
-	if not arg_7_0._isInited then
+function Activity125WarmUpViewBaseContainer:_onUpdateActivity()
+	if not self._isInited then
 		return
 	end
 
-	arg_7_0:onUpdateActivity()
+	self:onUpdateActivity()
 end
 
-function var_0_0._onDailyRefresh(arg_8_0)
-	Activity125Controller.instance:getAct125InfoFromServer(arg_8_0:actId())
+function Activity125WarmUpViewBaseContainer:_onDailyRefresh()
+	Activity125Controller.instance:getAct125InfoFromServer(self:actId())
 end
 
-function var_0_0._onCloseViewFinish(arg_9_0, ...)
-	if not arg_9_0._isInited then
+function Activity125WarmUpViewBaseContainer:_onCloseViewFinish(...)
+	if not self._isInited then
 		return
 	end
 
-	arg_9_0:onCloseViewFinish(...)
+	self:onCloseViewFinish(...)
 end
 
-function var_0_0.actId(arg_10_0)
-	return arg_10_0.viewParam.actId
+function Activity125WarmUpViewBaseContainer:actId()
+	return self.viewParam.actId
 end
 
-function var_0_0.dispatchRedEvent(arg_11_0)
-	Activity125Model.instance:setHasCheckEpisode(arg_11_0:actId(), arg_11_0:getCurSelectedEpisode())
+function Activity125WarmUpViewBaseContainer:dispatchRedEvent()
+	Activity125Model.instance:setHasCheckEpisode(self:actId(), self:getCurSelectedEpisode())
 	RedDotController.instance:dispatchEvent(RedDotEvent.RedDotEvent.UpdateActTag)
 end
 
-function var_0_0.onDataUpdateFirst(arg_12_0)
+function Activity125WarmUpViewBaseContainer:onDataUpdateFirst()
 	return
 end
 
-function var_0_0.onDataUpdate(arg_13_0)
+function Activity125WarmUpViewBaseContainer:onDataUpdate()
 	assert(false, "please override this function")
 end
 
-function var_0_0.onDataUpdateDoneFirst(arg_14_0)
+function Activity125WarmUpViewBaseContainer:onDataUpdateDoneFirst()
 	return
 end
 
-function var_0_0.onSwitchEpisode(arg_15_0)
+function Activity125WarmUpViewBaseContainer:onSwitchEpisode()
 	return
 end
 
-function var_0_0.onCloseViewFinish(arg_16_0, ...)
+function Activity125WarmUpViewBaseContainer:onCloseViewFinish(...)
 	return
 end
 
-function var_0_0.onUpdateActivity(arg_17_0)
+function Activity125WarmUpViewBaseContainer:onUpdateActivity()
 	return
 end
 
-return var_0_0
+return Activity125WarmUpViewBaseContainer

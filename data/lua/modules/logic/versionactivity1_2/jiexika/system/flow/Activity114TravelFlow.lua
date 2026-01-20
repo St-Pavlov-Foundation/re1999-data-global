@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114TravelFlow", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/flow/Activity114TravelFlow.lua
 
-local var_0_0 = class("Activity114TravelFlow", Activity114BaseFlow)
+module("modules.logic.versionactivity1_2.jiexika.system.flow.Activity114TravelFlow", package.seeall)
 
-function var_0_0.addSkipWork(arg_1_0)
+local Activity114TravelFlow = class("Activity114TravelFlow", Activity114BaseFlow)
+
+function Activity114TravelFlow:addSkipWork()
 	if Activity114Model.instance.serverData.battleEventId > 0 then
-		arg_1_0.context.result = Activity114Enum.Result.Fail
+		self.context.result = Activity114Enum.Result.Fail
 
-		arg_1_0:addWork(Activity114FightResultWork.New())
-		arg_1_0:addWork(Activity114OpenAttrViewWork.New())
+		self:addWork(Activity114FightResultWork.New())
+		self:addWork(Activity114OpenAttrViewWork.New())
 
 		return
 	end
 
-	var_0_0.super.addSkipWork(arg_1_0)
+	Activity114TravelFlow.super.addSkipWork(self)
 end
 
-function var_0_0.addEventWork(arg_2_0)
-	arg_2_0:addWork(Activity114CheckWork.New())
-	arg_2_0:addWork(Activity114CheckOrAnswerWork.New())
+function Activity114TravelFlow:addEventWork()
+	self:addWork(Activity114CheckWork.New())
+	self:addWork(Activity114CheckOrAnswerWork.New())
 end
 
-return var_0_0
+return Activity114TravelFlow

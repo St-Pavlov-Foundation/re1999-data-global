@@ -1,8 +1,10 @@
-﻿module("modules.logic.pcInput.config.pcInputConfig", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/config/pcInputConfig.lua
 
-local var_0_0 = class("pcInputConfig", BaseConfig)
+module("modules.logic.pcInput.config.pcInputConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local pcInputConfig = class("pcInputConfig", BaseConfig)
+
+function pcInputConfig:reqConfigNames()
 	return {
 		"key_binding",
 		"key_block",
@@ -10,32 +12,32 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == "key_binding" then
-		arg_2_0.key_binding = arg_2_2
+function pcInputConfig:onConfigLoaded(configName, configTable)
+	if configName == "key_binding" then
+		self.key_binding = configTable
 	end
 
-	if arg_2_1 == "key_block" then
-		arg_2_0.key_block = arg_2_2
+	if configName == "key_block" then
+		self.key_block = configTable
 	end
 
-	if arg_2_1 == "key_name_replace" then
-		arg_2_0.key_name_replace = arg_2_2
+	if configName == "key_name_replace" then
+		self.key_name_replace = configTable
 	end
 end
 
-function var_0_0.getKeyBinding(arg_3_0)
-	return arg_3_0.key_binding.configDict
+function pcInputConfig:getKeyBinding()
+	return self.key_binding.configDict
 end
 
-function var_0_0.getKeyBlock(arg_4_0)
-	return arg_4_0.key_block.configDict
+function pcInputConfig:getKeyBlock()
+	return self.key_block.configDict
 end
 
-function var_0_0.getKeyNameReplace(arg_5_0)
-	return arg_5_0.key_name_replace.configDict
+function pcInputConfig:getKeyNameReplace()
+	return self.key_name_replace.configDict
 end
 
-var_0_0.instance = var_0_0.New()
+pcInputConfig.instance = pcInputConfig.New()
 
-return var_0_0
+return pcInputConfig

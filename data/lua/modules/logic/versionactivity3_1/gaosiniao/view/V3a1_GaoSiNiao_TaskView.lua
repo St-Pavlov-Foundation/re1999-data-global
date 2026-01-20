@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.view.V3a1_GaoSiNiao_TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/view/V3a1_GaoSiNiao_TaskView.lua
 
-local var_0_0 = class("V3a1_GaoSiNiao_TaskView", CorvusTaskView)
+module("modules.logic.versionactivity3_1.gaosiniao.view.V3a1_GaoSiNiao_TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/LimitTime/#simage_langtxt")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_limittime")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local V3a1_GaoSiNiao_TaskView = class("V3a1_GaoSiNiao_TaskView", CorvusTaskView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V3a1_GaoSiNiao_TaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "#scroll_TaskList")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "Left/LimitTime/#simage_langtxt")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_limittime")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V3a1_GaoSiNiao_TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V3a1_GaoSiNiao_TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V3a1_GaoSiNiao_TaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	var_0_0.super.onUpdateParam(arg_5_0)
-	arg_5_0:_showLeftTime()
-	TaskDispatcher.cancelTask(arg_5_0._showLeftTime, arg_5_0)
-	TaskDispatcher.runRepeat(arg_5_0._showLeftTime, arg_5_0, TimeUtil.OneMinuteSecond)
+function V3a1_GaoSiNiao_TaskView:onUpdateParam()
+	V3a1_GaoSiNiao_TaskView.super.onUpdateParam(self)
+	self:_showLeftTime()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	TaskDispatcher.runRepeat(self._showLeftTime, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	var_0_0.super.onOpen(arg_6_0)
+function V3a1_GaoSiNiao_TaskView:onOpen()
+	V3a1_GaoSiNiao_TaskView.super.onOpen(self)
 end
 
-function var_0_0.onOpenFinish(arg_7_0)
+function V3a1_GaoSiNiao_TaskView:onOpenFinish()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
 end
 
-function var_0_0.onClose(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._showLeftTime, arg_8_0)
-	var_0_0.super.onClose(arg_8_0)
+function V3a1_GaoSiNiao_TaskView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	V3a1_GaoSiNiao_TaskView.super.onClose(self)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._showLeftTime, arg_9_0)
-	var_0_0.super.onDestroyView(arg_9_0)
+function V3a1_GaoSiNiao_TaskView:onDestroyView()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	V3a1_GaoSiNiao_TaskView.super.onDestroyView(self)
 end
 
-function var_0_0._showLeftTime(arg_10_0)
-	arg_10_0._txtlimittime.text = arg_10_0:getActivityRemainTimeStr()
+function V3a1_GaoSiNiao_TaskView:_showLeftTime()
+	self._txtlimittime.text = self:getActivityRemainTimeStr()
 end
 
-function var_0_0._refresh(arg_11_0)
-	arg_11_0:_setTaskList()
+function V3a1_GaoSiNiao_TaskView:_refresh()
+	self:_setTaskList()
 end
 
-return var_0_0
+return V3a1_GaoSiNiao_TaskView

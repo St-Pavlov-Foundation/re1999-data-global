@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryLoadingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8BossStoryLoadingViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_8BossStoryLoadingViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryLoadingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_8BossStoryLoadingViewContainer = class("VersionActivity2_8BossStoryLoadingViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_8BossStoryLoadingView.New())
+function VersionActivity2_8BossStoryLoadingViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_8BossStoryLoadingView.New())
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_8BossStoryLoadingViewContainer

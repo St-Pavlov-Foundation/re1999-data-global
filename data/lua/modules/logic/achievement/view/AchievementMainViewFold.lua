@@ -1,258 +1,273 @@
-﻿module("modules.logic.achievement.view.AchievementMainViewFold", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementMainViewFold.lua
 
-local var_0_0 = class("AchievementMainViewFold", BaseView)
+module("modules.logic.achievement.view.AchievementMainViewFold", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local AchievementMainViewFold = class("AchievementMainViewFold", BaseView)
+
+function AchievementMainViewFold:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AchievementMainViewFold:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AchievementMainViewFold:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._modlInst = AchievementMainTileModel.instance
+function AchievementMainViewFold:_editableInitView()
+	self._modlInst = AchievementMainTileModel.instance
 
-	arg_4_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, arg_4_0.onClickGroupFoldBtn, arg_4_0)
+	self:addEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, self.onClickGroupFoldBtn, self)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function AchievementMainViewFold:onDestroyView()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function AchievementMainViewFold:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:removeEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, arg_7_0.onClickGroupFoldBtn, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.onEndPlayGroupFadeAnim, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.onPreEndPlayGroupFadeAnim, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.onDispatchAchievementFadeAnimationEvent, arg_7_0)
+function AchievementMainViewFold:onClose()
+	self:removeEventCb(AchievementMainController.instance, AchievementEvent.OnClickGroupFoldBtn, self.onClickGroupFoldBtn, self)
+	TaskDispatcher.cancelTask(self.onEndPlayGroupFadeAnim, self)
+	TaskDispatcher.cancelTask(self.onPreEndPlayGroupFadeAnim, self)
+	TaskDispatcher.cancelTask(self.onDispatchAchievementFadeAnimationEvent, self)
 
-	arg_7_0._modifyMap = nil
+	self._modifyMap = nil
 
-	arg_7_0:onEndPlayGroupFadeAnim()
+	self:onEndPlayGroupFadeAnim()
 end
 
-function var_0_0.onClickGroupFoldBtn(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:onStartPlayGroupFadeAnim()
-	arg_8_0:doAchievementFadeAnimation(arg_8_1, arg_8_2)
+function AchievementMainViewFold:onClickGroupFoldBtn(groupId, isFold)
+	self:onStartPlayGroupFadeAnim()
+	self:doAchievementFadeAnimation(groupId, isFold)
 end
 
-function var_0_0.onStartPlayGroupFadeAnim(arg_9_0)
+function AchievementMainViewFold:onStartPlayGroupFadeAnim()
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("AchievementMainViewFold_BeginPlayGroupFadeAnim")
 end
 
-function var_0_0.onEndPlayGroupFadeAnim(arg_10_0)
+function AchievementMainViewFold:onEndPlayGroupFadeAnim()
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("AchievementMainViewFold_BeginPlayGroupFadeAnim")
 end
 
-local var_0_1 = 0.001
-local var_0_2 = 0.0003
-local var_0_3 = 0
-local var_0_4 = 0.35
+local foldoutDurationPerHeight = 0.001
+local foldInDurationPerHeight = 0.0003
+local minAchievementFadeAnimDuration = 0
+local maxAchievementFadeAnimDuration = 0.35
 
-function var_0_0.doAchievementFadeAnimation(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
-	local var_11_1 = AchievementMainCommonModel.instance:getCurrentFilterType()
-	local var_11_2 = var_11_0:getCurGroupMoList(arg_11_1)
-	local var_11_3 = var_11_2 and var_11_2[1]
-	local var_11_4 = var_11_0:getIndex(var_11_3)
+function AchievementMainViewFold:doAchievementFadeAnimation(groupId, isFold)
+	local modelInst = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
+	local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local moList = modelInst:getCurGroupMoList(groupId)
+	local firstMO = moList and moList[1]
+	local groupTopIndex = modelInst:getIndex(firstMO)
 
-	arg_11_0._isFold = arg_11_2
-	arg_11_0._modifyGroupId = arg_11_1
+	self._isFold = isFold
+	self._modifyGroupId = groupId
 
-	local var_11_5
-	local var_11_6 = 0
+	local lastModifyMO
+	local lastFadeAnimDuration = 0
 
-	arg_11_0._modifyMap = arg_11_0:getUserDataTb_()
+	self._modifyMap = self:getUserDataTb_()
 
-	local var_11_7 = arg_11_0:getCurRenderCellCount(arg_11_1, var_11_2, arg_11_2)
-	local var_11_8 = arg_11_2 and var_11_7 or 1
-	local var_11_9 = arg_11_2 and 1 or var_11_7
-	local var_11_10 = arg_11_2 and -1 or 1
+	local cellRenderCount = self:getCurRenderCellCount(groupId, moList, isFold)
+	local startIndex = isFold and cellRenderCount or 1
+	local endIndex = isFold and 1 or cellRenderCount
+	local step = isFold and -1 or 1
 
-	for iter_11_0 = var_11_8, var_11_9, var_11_10 do
-		local var_11_11 = var_11_2[iter_11_0]
+	for i = startIndex, endIndex, step do
+		local mo = moList[i]
 
-		arg_11_0._modifyMap[var_11_11] = true
+		self._modifyMap[mo] = true
 
-		var_11_11:clearOverrideLineHeight()
+		mo:clearOverrideLineHeight()
 
-		if not arg_11_2 and not var_11_11.isGroupTop then
-			local var_11_12 = var_11_4 + iter_11_0 - 1
+		if not isFold and not mo.isGroupTop then
+			local insertIndex = groupTopIndex + i - 1
 
-			var_11_0:addAt(var_11_11, var_11_12)
+			modelInst:addAt(mo, insertIndex)
 		end
 
-		local var_11_13 = arg_11_0:getEffectParams(var_11_1, arg_11_2, var_11_11, var_11_5)
+		local effectParams = self:getEffectParams(curFilterType, isFold, mo, lastModifyMO)
 
-		if not arg_11_2 and not var_11_11.isGroupTop then
-			var_11_11:overrideLineHeight(0)
+		if not isFold and not mo.isGroupTop then
+			mo:overrideLineHeight(0)
 		end
 
-		TaskDispatcher.runDelay(arg_11_0.onDispatchAchievementFadeAnimationEvent, var_11_13, var_11_6)
+		TaskDispatcher.runDelay(self.onDispatchAchievementFadeAnimationEvent, effectParams, lastFadeAnimDuration)
 
-		var_11_6 = var_11_6 + var_11_13.duration
-		var_11_5 = var_11_11
+		lastFadeAnimDuration = lastFadeAnimDuration + effectParams.duration
+		lastModifyMO = mo
 	end
 
-	if arg_11_2 then
-		arg_11_0:onBeginFoldIn(arg_11_0._modifyGroupId, arg_11_0._isFold)
+	if isFold then
+		self:onBeginFoldIn(self._modifyGroupId, self._isFold)
 	end
 
-	TaskDispatcher.cancelTask(arg_11_0.onPreEndPlayGroupFadeAnim, arg_11_0)
-	TaskDispatcher.runDelay(arg_11_0.onPreEndPlayGroupFadeAnim, arg_11_0, var_11_6)
-	TaskDispatcher.cancelTask(arg_11_0.onEndPlayGroupFadeAnim, arg_11_0)
-	TaskDispatcher.runDelay(arg_11_0.onEndPlayGroupFadeAnim, arg_11_0, var_11_6)
+	TaskDispatcher.cancelTask(self.onPreEndPlayGroupFadeAnim, self)
+	TaskDispatcher.runDelay(self.onPreEndPlayGroupFadeAnim, self, lastFadeAnimDuration)
+	TaskDispatcher.cancelTask(self.onEndPlayGroupFadeAnim, self)
+	TaskDispatcher.runDelay(self.onEndPlayGroupFadeAnim, self, lastFadeAnimDuration)
 end
 
-function var_0_0.onBeginFoldIn(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
-	local var_12_1 = var_12_0:getCurGroupMoList(arg_12_1)
+function AchievementMainViewFold:onBeginFoldIn(groupId, isFold)
+	local modelInst = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
+	local moList = modelInst:getCurGroupMoList(groupId)
 
-	if var_12_1 then
-		for iter_12_0 = 1, #var_12_1 do
-			local var_12_2 = var_12_1[iter_12_0]
+	if moList then
+		for i = 1, #moList do
+			local mo = moList[i]
 
-			if not arg_12_0._modifyMap[var_12_2] then
-				var_12_2:setIsFold(arg_12_2)
-				var_12_2:clearOverrideLineHeight()
-				var_12_0:remove(var_12_2)
+			if not self._modifyMap[mo] then
+				mo:setIsFold(isFold)
+				mo:clearOverrideLineHeight()
+				modelInst:remove(mo)
 			end
 		end
 
-		var_12_0:onModelUpdate()
+		modelInst:onModelUpdate()
 	end
 end
 
-function var_0_0.onPreEndPlayGroupFadeAnim(arg_13_0)
-	local var_13_0 = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
-	local var_13_1 = var_13_0:getCurGroupMoList(arg_13_0._modifyGroupId)
+function AchievementMainViewFold:onPreEndPlayGroupFadeAnim()
+	local modelInst = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
+	local moList = modelInst:getCurGroupMoList(self._modifyGroupId)
 
-	if var_13_1 then
-		local var_13_2 = var_13_1 and var_13_1[1]
-		local var_13_3 = var_13_0:getIndex(var_13_2)
+	if moList then
+		local firstMO = moList and moList[1]
+		local groupTopIndex = modelInst:getIndex(firstMO)
 
-		for iter_13_0 = 1, #var_13_1 do
-			local var_13_4 = var_13_1[iter_13_0]
+		for i = 1, #moList do
+			local mo = moList[i]
 
-			var_13_4:setIsFold(arg_13_0._isFold)
-			var_13_4:clearOverrideLineHeight()
+			mo:setIsFold(self._isFold)
+			mo:clearOverrideLineHeight()
 
-			if not arg_13_0._isFold and not arg_13_0._modifyMap[var_13_4] then
-				local var_13_5 = var_13_3 + iter_13_0 - 1
+			if not self._isFold and not self._modifyMap[mo] then
+				local insertIndex = groupTopIndex + i - 1
 
-				var_13_0:addAt(var_13_4, var_13_5)
+				modelInst:addAt(mo, insertIndex)
 			end
 		end
 
-		var_13_0:onModelUpdate()
+		modelInst:onModelUpdate()
 	end
 end
 
-function var_0_0.getEffectParams(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	local var_14_0 = arg_14_3:getLineHeight(arg_14_1, not arg_14_2)
-	local var_14_1 = arg_14_3:getLineHeight(arg_14_1, arg_14_2)
-	local var_14_2 = arg_14_2 and var_0_2 or var_0_1
-	local var_14_3 = math.abs(var_14_1 - var_14_0) * var_14_2
-	local var_14_4 = Mathf.Clamp(var_14_3, var_0_3, var_0_4)
+function AchievementMainViewFold:getEffectParams(curFilterType, isFold, mo, lastModifyMO)
+	local orginLineHeight = mo:getLineHeight(curFilterType, not isFold)
+	local targetLineHeight = mo:getLineHeight(curFilterType, isFold)
+	local durationPerHeight = isFold and foldInDurationPerHeight or foldoutDurationPerHeight
+	local duration = math.abs(targetLineHeight - orginLineHeight) * durationPerHeight
 
-	return {
-		mo = arg_14_3,
-		isFold = arg_14_2,
-		orginLineHeight = var_14_0,
-		targetLineHeight = var_14_1,
-		duration = var_14_4,
-		lastModifyMO = arg_14_4
+	duration = Mathf.Clamp(duration, minAchievementFadeAnimDuration, maxAchievementFadeAnimDuration)
+
+	local effectParams = {
+		mo = mo,
+		isFold = isFold,
+		orginLineHeight = orginLineHeight,
+		targetLineHeight = targetLineHeight,
+		duration = duration,
+		lastModifyMO = lastModifyMO
 	}
+
+	return effectParams
 end
 
-function var_0_0.onDispatchAchievementFadeAnimationEvent(arg_15_0)
-	local var_15_0 = arg_15_0.isFold
-	local var_15_1 = arg_15_0.lastModifyMO
+function AchievementMainViewFold.onDispatchAchievementFadeAnimationEvent(effectParams)
+	local isFold = effectParams.isFold
+	local lastModifyMO = effectParams.lastModifyMO
 
-	if var_15_0 and var_15_1 and not var_15_1.isGroupTop then
-		AchievementMainCommonModel.instance:getCurViewExcuteModelInstance():remove(var_15_1)
+	if isFold and lastModifyMO and not lastModifyMO.isGroupTop then
+		local modelInst = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
+
+		modelInst:remove(lastModifyMO)
 	end
 
-	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnPlayGroupFadeAnim, arg_15_0)
+	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnPlayGroupFadeAnim, effectParams)
 end
 
-local var_0_5 = 3
+local maxAchievementShowCount = 3
 
-function var_0_0.getCurRenderCellCount(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = AchievementMainCommonModel.instance:getCurrentScrollType()
-	local var_16_1 = arg_16_0.viewContainer:getScrollView(var_16_0)
-	local var_16_2 = var_16_1:getCsScroll()
-	local var_16_3 = 0
+function AchievementMainViewFold:getCurRenderCellCount(groupId, moList, isFold)
+	local viewType = AchievementMainCommonModel.instance:getCurrentScrollType()
+	local luaScrollView = self.viewContainer:getScrollView(viewType)
+	local csListScrollView = luaScrollView:getCsScroll()
+	local renderCellCount = 0
 
-	if not arg_16_3 then
-		var_16_3 = arg_16_0:getCurRenderCellCountWhileFoldIn(arg_16_1, arg_16_2, var_16_2)
+	if not isFold then
+		renderCellCount = self:getCurRenderCellCountWhileFoldIn(groupId, moList, csListScrollView)
 	else
-		var_16_3 = arg_16_0:getCurRenderCellCountWhileFoldOut(arg_16_1, arg_16_2, var_16_1, var_16_2)
+		renderCellCount = self:getCurRenderCellCountWhileFoldOut(groupId, moList, luaScrollView, csListScrollView)
 	end
 
-	return (Mathf.Clamp(var_16_3, 1, var_0_5))
+	renderCellCount = Mathf.Clamp(renderCellCount, 1, maxAchievementShowCount)
+
+	return renderCellCount
 end
 
-function var_0_0.getCurRenderCellCountWhileFoldIn(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = AchievementMainCommonModel.instance:getCurrentFilterType()
-	local var_17_1 = 0
-	local var_17_2 = 0
-	local var_17_3 = arg_17_3.VerticalScrollPixel
-	local var_17_4 = recthelper.getHeight(arg_17_3.transform)
-	local var_17_5 = Mathf.Clamp(var_17_4 - var_17_3, 0, var_17_4)
+function AchievementMainViewFold:getCurRenderCellCountWhileFoldIn(groupId, moList, csListScrollView)
+	local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local totalHeight = 0
+	local renderCellCount = 0
+	local scrollPixel = csListScrollView.VerticalScrollPixel
+	local viewHeight = recthelper.getHeight(csListScrollView.transform)
+	local remainShowPixel = Mathf.Clamp(viewHeight - scrollPixel, 0, viewHeight)
 
-	for iter_17_0 = 1, #arg_17_2 do
-		var_17_5 = var_17_5 - arg_17_2[iter_17_0]:getLineHeight(var_17_0, false)
+	for i = 1, #moList do
+		local mo = moList[i]
+		local itemHeight = mo:getLineHeight(curFilterType, false)
 
-		if var_17_5 > 0 then
-			var_17_2 = var_17_2 + 1
+		remainShowPixel = remainShowPixel - itemHeight
+
+		if remainShowPixel > 0 then
+			renderCellCount = renderCellCount + 1
 		else
 			break
 		end
 	end
 
-	return var_17_2
+	return renderCellCount
 end
 
-function var_0_0.getCurRenderCellCountWhileFoldOut(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = arg_18_3._cellCompDict
-	local var_18_1 = {}
-	local var_18_2 = 0
+function AchievementMainViewFold:getCurRenderCellCountWhileFoldOut(groupId, moList, listScrollView, csListScrollView)
+	local cellDict = listScrollView._cellCompDict
+	local renderCellMap = {}
+	local renderCellCount = 0
 
-	for iter_18_0, iter_18_1 in pairs(var_18_0) do
-		if iter_18_0._mo.groupId == arg_18_1 then
-			var_18_1[iter_18_0._mo.id] = iter_18_0
+	for cell, _ in pairs(cellDict) do
+		local cellGroupId = cell._mo.groupId
+
+		if cellGroupId == groupId then
+			renderCellMap[cell._mo.id] = cell
 		end
 	end
 
-	for iter_18_2 = 1, #arg_18_2 do
-		local var_18_3 = var_18_1[arg_18_2[iter_18_2].id]
-		local var_18_4 = var_18_3 and var_18_3._index - 1 or -1
+	for i = 1, #moList do
+		local mo = moList[i]
+		local cellItem = renderCellMap[mo.id]
+		local cellIndex = cellItem and cellItem._index - 1 or -1
 
-		if not var_18_3 then
+		if not cellItem then
 			break
 		end
 
-		if not arg_18_4:IsVisual(var_18_4) then
+		if not csListScrollView:IsVisual(cellIndex) then
 			break
 		end
 
-		var_18_2 = var_18_2 + 1
+		renderCellCount = renderCellCount + 1
 	end
 
-	return var_18_2
+	return renderCellCount
 end
 
-return var_0_0
+return AchievementMainViewFold

@@ -1,201 +1,212 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureAccelerateItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureAccelerateItem.lua
 
-local var_0_0 = class("RoomManufactureAccelerateItem", LuaCompBase)
-local var_0_1 = 1
+module("modules.logic.room.view.manufacture.RoomManufactureAccelerateItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
+local RoomManufactureAccelerateItem = class("RoomManufactureAccelerateItem", LuaCompBase)
+local MIN_CAN_NOT_USE_COUNT = 1
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomManufactureAccelerateItem:init(go)
+	self.go = go
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._imgquality = gohelper.findChildImage(arg_2_0.go, "#image_quality")
-	arg_2_0._goitem = gohelper.findChild(arg_2_0.go, "#go_item")
-	arg_2_0._txtname = gohelper.findChildText(arg_2_0.go, "#txt_name")
-	arg_2_0._gouse = gohelper.findChild(arg_2_0.go, "#go_use")
-	arg_2_0._inputvalue = gohelper.findChildTextMeshInputField(arg_2_0.go, "#go_use/valuebg/#input_value")
-	arg_2_0._btnmin = gohelper.findChildButtonWithAudio(arg_2_0.go, "#go_use/#btn_min")
-	arg_2_0._btnsub = gohelper.findChildButtonWithAudio(arg_2_0.go, "#go_use/#btn_sub")
-	arg_2_0._btnadd = gohelper.findChildButtonWithAudio(arg_2_0.go, "#go_use/#btn_add")
-	arg_2_0._btnmax = gohelper.findChildButtonWithAudio(arg_2_0.go, "#go_use/#btn_max")
-	arg_2_0._simageicon = gohelper.findChildSingleImage(arg_2_0.go, "#go_use/hasCount/#simage_icon")
-	arg_2_0._txthas = gohelper.findChildText(arg_2_0.go, "#go_use/hasCount/#txt_has")
-	arg_2_0._btnuse = gohelper.findChildButtonWithAudio(arg_2_0.go, "#go_use/#btn_use")
+function RoomManufactureAccelerateItem:_editableInitView()
+	self._imgquality = gohelper.findChildImage(self.go, "#image_quality")
+	self._goitem = gohelper.findChild(self.go, "#go_item")
+	self._txtname = gohelper.findChildText(self.go, "#txt_name")
+	self._gouse = gohelper.findChild(self.go, "#go_use")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.go, "#go_use/valuebg/#input_value")
+	self._btnmin = gohelper.findChildButtonWithAudio(self.go, "#go_use/#btn_min")
+	self._btnsub = gohelper.findChildButtonWithAudio(self.go, "#go_use/#btn_sub")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.go, "#go_use/#btn_add")
+	self._btnmax = gohelper.findChildButtonWithAudio(self.go, "#go_use/#btn_max")
+	self._simageicon = gohelper.findChildSingleImage(self.go, "#go_use/hasCount/#simage_icon")
+	self._txthas = gohelper.findChildText(self.go, "#go_use/hasCount/#txt_has")
+	self._btnuse = gohelper.findChildButtonWithAudio(self.go, "#go_use/#btn_use")
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnmin:AddClickListener(arg_3_0._btnminOnClick, arg_3_0)
-	arg_3_0._btnsub:AddClickListener(arg_3_0._btnsubOnClick, arg_3_0)
-	arg_3_0._inputvalue:AddOnValueChanged(arg_3_0._onInputValueChange, arg_3_0)
-	arg_3_0._btnadd:AddClickListener(arg_3_0._btnaddOnClick, arg_3_0)
-	arg_3_0._btnmax:AddClickListener(arg_3_0._btnmaxOnClick, arg_3_0)
-	arg_3_0._btnuse:AddClickListener(arg_3_0._btnuseOnClick, arg_3_0)
-	arg_3_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChange, arg_3_0)
+function RoomManufactureAccelerateItem:addEventListeners()
+	self._btnmin:AddClickListener(self._btnminOnClick, self)
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._inputvalue:AddOnValueChanged(self._onInputValueChange, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnmax:AddClickListener(self._btnmaxOnClick, self)
+	self._btnuse:AddClickListener(self._btnuseOnClick, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnmin:RemoveClickListener()
-	arg_4_0._btnsub:RemoveClickListener()
-	arg_4_0._inputvalue:RemoveOnValueChanged()
-	arg_4_0._btnadd:RemoveClickListener()
-	arg_4_0._btnmax:RemoveClickListener()
-	arg_4_0._btnuse:RemoveClickListener()
-	arg_4_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_4_0._onItemChange, arg_4_0)
+function RoomManufactureAccelerateItem:removeEventListeners()
+	self._btnmin:RemoveClickListener()
+	self._btnsub:RemoveClickListener()
+	self._inputvalue:RemoveOnValueChanged()
+	self._btnadd:RemoveClickListener()
+	self._btnmax:RemoveClickListener()
+	self._btnuse:RemoveClickListener()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChange, self)
 end
 
-function var_0_0._btnminOnClick(arg_5_0)
-	arg_5_0:changeCount(var_0_1)
+function RoomManufactureAccelerateItem:_btnminOnClick()
+	self:changeCount(MIN_CAN_NOT_USE_COUNT)
 end
 
-function var_0_0._btnsubOnClick(arg_6_0)
-	arg_6_0:changeCount(arg_6_0._count - 1)
+function RoomManufactureAccelerateItem:_btnsubOnClick()
+	self:changeCount(self._count - 1)
 end
 
-function var_0_0._onInputValueChange(arg_7_0, arg_7_1)
-	local var_7_0 = tonumber(arg_7_1) or var_0_1
+function RoomManufactureAccelerateItem:_onInputValueChange(value)
+	local count = tonumber(value)
 
-	arg_7_0:changeCount(var_7_0)
+	count = count or MIN_CAN_NOT_USE_COUNT
+
+	self:changeCount(count)
 end
 
-function var_0_0._btnaddOnClick(arg_8_0)
-	arg_8_0:changeCount(arg_8_0._count + 1)
+function RoomManufactureAccelerateItem:_btnaddOnClick()
+	self:changeCount(self._count + 1)
 end
 
-function var_0_0._btnmaxOnClick(arg_9_0)
-	local var_9_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_9_0._buildingUid)
+function RoomManufactureAccelerateItem:_btnmaxOnClick()
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self._buildingUid)
 
-	if not var_9_0 then
+	if not buildingMO then
 		return
 	end
 
-	local var_9_1 = arg_9_0:getMaxCount()
-	local var_9_2 = var_9_0:getSlotIdInProgress()
-	local var_9_3 = var_9_0:getSlotRemainSecTime(var_9_2)
+	local maxCount = self:getMaxCount()
+	local slotId = buildingMO:getSlotIdInProgress()
+	local remainSecond = buildingMO:getSlotRemainSecTime(slotId)
 
-	if var_9_3 > 0 then
-		local var_9_4 = var_9_0:getAccelerateEff(var_9_2, arg_9_0._itemId)
+	if remainSecond > 0 then
+		local accEff = buildingMO:getAccelerateEff(slotId, self._itemId)
 
-		if var_9_4 ~= 0 then
-			var_9_1 = math.ceil(var_9_3 / var_9_4)
+		if accEff ~= 0 then
+			maxCount = math.ceil(remainSecond / accEff)
 		end
 	end
 
-	arg_9_0:changeCount(var_9_1)
+	self:changeCount(maxCount)
 end
 
-function var_0_0._btnuseOnClick(arg_10_0)
-	if arg_10_0:checkCount() then
-		local var_10_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_10_0._buildingUid)
+function RoomManufactureAccelerateItem:_btnuseOnClick()
+	local checkResult = self:checkCount()
 
-		if not var_10_0 then
+	if checkResult then
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self._buildingUid)
+
+		if not buildingMO then
 			return
 		end
 
-		local var_10_1 = var_10_0:getSlotIdInProgress()
+		local slotId = buildingMO:getSlotIdInProgress()
+		local remainSecond = buildingMO:getSlotRemainSecTime(slotId)
+		local accEff = buildingMO:getAccelerateEff(slotId, self._itemId)
+		local isOver = remainSecond < accEff * self._count
 
-		if var_10_0:getSlotRemainSecTime(var_10_1) < var_10_0:getAccelerateEff(var_10_1, arg_10_0._itemId) * arg_10_0._count then
-			GameFacade.showMessageBox(MessageBoxIdDefine.RoomManufactureAccelerateOver, MsgBoxEnum.BoxType.Yes_No, arg_10_0._sendUseItem, nil, nil, arg_10_0)
+		if isOver then
+			GameFacade.showMessageBox(MessageBoxIdDefine.RoomManufactureAccelerateOver, MsgBoxEnum.BoxType.Yes_No, self._sendUseItem, nil, nil, self)
 		else
-			arg_10_0:_sendUseItem()
+			self:_sendUseItem()
 		end
 	else
 		GameFacade.showToast(ToastEnum.RoomManufactureAccelerateCount)
 	end
 end
 
-function var_0_0._sendUseItem(arg_11_0)
-	local var_11_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_11_0._buildingUid)
-	local var_11_1 = var_11_0 and var_11_0:getSlotIdInProgress()
+function RoomManufactureAccelerateItem:_sendUseItem()
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self._buildingUid)
+	local slotId = buildingMO and buildingMO:getSlotIdInProgress()
 
-	ManufactureController.instance:useAccelerateItem(arg_11_0._buildingUid, arg_11_0._itemId, arg_11_0._count, var_11_1)
+	ManufactureController.instance:useAccelerateItem(self._buildingUid, self._itemId, self._count, slotId)
 end
 
-function var_0_0._onItemChange(arg_12_0)
-	arg_12_0:changeCount(var_0_1)
+function RoomManufactureAccelerateItem:_onItemChange()
+	self:changeCount(MIN_CAN_NOT_USE_COUNT)
 end
 
-function var_0_0.setData(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._buildingUid = arg_13_1
-	arg_13_0._itemId = arg_13_2.id
+function RoomManufactureAccelerateItem:setData(buildingUid, itemConfig)
+	self._buildingUid = buildingUid
+	self._itemId = itemConfig.id
 
-	arg_13_0:setItem()
-	arg_13_0:changeCount(var_0_1)
+	self:setItem()
+	self:changeCount(MIN_CAN_NOT_USE_COUNT)
 end
 
-function var_0_0.setItem(arg_14_0)
-	if not arg_14_0._itemId then
+function RoomManufactureAccelerateItem:setItem()
+	if not self._itemId then
 		return
 	end
 
-	if not arg_14_0._itemIcon then
-		arg_14_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_14_0._goitem)
+	if not self._itemIcon then
+		self._itemIcon = IconMgr.instance:getCommonItemIcon(self._goitem)
 
-		arg_14_0._itemIcon:isShowQuality(false)
+		self._itemIcon:isShowQuality(false)
 	end
 
-	arg_14_0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, arg_14_0._itemId)
+	self._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, self._itemId)
 
-	local var_14_0 = arg_14_0._itemIcon:getRare()
-	local var_14_1 = RoomManufactureEnum.RareImageMap[var_14_0]
+	local rare = self._itemIcon:getRare()
+	local qualityImg = RoomManufactureEnum.RareImageMap[rare]
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_14_0._imgquality, var_14_1)
+	UISpriteSetMgr.instance:setCritterSprite(self._imgquality, qualityImg)
 
-	local var_14_2, var_14_3 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, arg_14_0._itemId, true)
+	local _, icon = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, self._itemId, true)
 
-	arg_14_0._simageicon:LoadImage(var_14_3)
+	self._simageicon:LoadImage(icon)
 
-	arg_14_0._txtname.text = ItemConfig.instance:getItemNameById(arg_14_0._itemId)
+	self._txtname.text = ItemConfig.instance:getItemNameById(self._itemId)
 end
 
-function var_0_0.changeCount(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getMaxCount()
+function RoomManufactureAccelerateItem:changeCount(count, notify)
+	local maxCount = self:getMaxCount()
 
-	if var_15_0 < var_0_1 then
-		var_15_0 = var_0_1
+	if maxCount < MIN_CAN_NOT_USE_COUNT then
+		maxCount = MIN_CAN_NOT_USE_COUNT
 	end
 
-	arg_15_1 = Mathf.Clamp(arg_15_1, var_0_1, var_15_0)
-	arg_15_0._count = arg_15_1
+	count = Mathf.Clamp(count, MIN_CAN_NOT_USE_COUNT, maxCount)
+	self._count = count
 
-	if arg_15_2 then
-		arg_15_0._inputvalue:SetText(arg_15_1)
+	if notify then
+		self._inputvalue:SetText(count)
 	else
-		arg_15_0._inputvalue:SetTextWithoutNotify(tostring(arg_15_1))
+		self._inputvalue:SetTextWithoutNotify(tostring(count))
 	end
 
-	arg_15_0:refreshCount()
+	self:refreshCount()
 end
 
-function var_0_0.refreshCount(arg_16_0)
-	local var_16_0 = arg_16_0:getMaxCount()
+function RoomManufactureAccelerateItem:refreshCount()
+	local maxCount = self:getMaxCount()
 
-	arg_16_0._txthas.text = string.format("%s/%s", arg_16_0._count, var_16_0)
+	self._txthas.text = string.format("%s/%s", self._count, maxCount)
 
-	local var_16_1 = arg_16_0:checkCount()
+	local isCanUse = self:checkCount()
 
-	ZProj.UGUIHelper.SetGrayscale(arg_16_0._btnuse.gameObject, not var_16_1)
+	ZProj.UGUIHelper.SetGrayscale(self._btnuse.gameObject, not isCanUse)
 end
 
-function var_0_0.getMaxCount(arg_17_0)
-	return (ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, arg_17_0._itemId))
+function RoomManufactureAccelerateItem:getMaxCount()
+	local result = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, self._itemId)
+
+	return result
 end
 
-function var_0_0.checkCount(arg_18_0)
-	local var_18_0 = false
-	local var_18_1 = arg_18_0:getMaxCount()
+function RoomManufactureAccelerateItem:checkCount()
+	local result = false
+	local maxCount = self:getMaxCount()
 
-	if arg_18_0._count and var_0_1 <= arg_18_0._count and var_18_1 >= arg_18_0._count then
-		var_18_0 = true
+	if self._count and MIN_CAN_NOT_USE_COUNT <= self._count and maxCount >= self._count then
+		result = true
 	end
 
-	return var_18_0
+	return result
 end
 
-function var_0_0.onDestroy(arg_19_0)
-	arg_19_0._simageicon:UnLoadImage()
+function RoomManufactureAccelerateItem:onDestroy()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return RoomManufactureAccelerateItem

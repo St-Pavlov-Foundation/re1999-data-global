@@ -1,17 +1,19 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalStepBaseWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalStepBaseWork.lua
 
-local var_0_0 = class("SurvivalStepBaseWork", BaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalStepBaseWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._stepMo = arg_1_1
+local SurvivalStepBaseWork = class("SurvivalStepBaseWork", BaseWork)
+
+function SurvivalStepBaseWork:ctor(stepMo)
+	self._stepMo = stepMo
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	arg_2_0:onDone(true)
+function SurvivalStepBaseWork:onStart(context)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+function SurvivalStepBaseWork:getRunOrder(params, flow, index, allStep)
 	return SurvivalEnum.StepRunOrder.After
 end
 
-return var_0_0
+return SurvivalStepBaseWork

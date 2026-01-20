@@ -1,277 +1,277 @@
-﻿module("modules.logic.resonance.view.ResonanceCellItem", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/view/ResonanceCellItem.lua
 
-local var_0_0 = class("ResonanceCellItem", UserDataDispose)
+module("modules.logic.resonance.view.ResonanceCellItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local ResonanceCellItem = class("ResonanceCellItem", UserDataDispose)
 
-	arg_1_0.gameObject = arg_1_1
-	arg_1_0.transform = arg_1_0.gameObject.transform
-	arg_1_0.is_filled = false
-	arg_1_0.filled_count = 0
-	arg_1_0.pos_x = arg_1_2
-	arg_1_0.pos_y = arg_1_3
-	arg_1_0.parent_view = arg_1_4
-	arg_1_0.top_line = arg_1_0.transform:Find("top")
-	arg_1_0.bottom_line = arg_1_0.transform:Find("bottom")
-	arg_1_0.left_line = arg_1_0.transform:Find("left")
-	arg_1_0.right_line = arg_1_0.transform:Find("right")
+function ResonanceCellItem:ctor(gameObject, pos_x, pos_y, parent_view)
+	self:__onInit()
 
-	arg_1_0:addClickCb(SLFramework.UGUI.UIClickListener.Get(arg_1_0.gameObject), arg_1_0._onCubeClick, arg_1_0)
+	self.gameObject = gameObject
+	self.transform = self.gameObject.transform
+	self.is_filled = false
+	self.filled_count = 0
+	self.pos_x = pos_x
+	self.pos_y = pos_y
+	self.parent_view = parent_view
+	self.top_line = self.transform:Find("top")
+	self.bottom_line = self.transform:Find("bottom")
+	self.left_line = self.transform:Find("left")
+	self.right_line = self.transform:Find("right")
 
-	arg_1_0._dragListener = SLFramework.UGUI.UIDragListener.Get(arg_1_0.gameObject)
+	self:addClickCb(SLFramework.UGUI.UIClickListener.Get(self.gameObject), self._onCubeClick, self)
 
-	arg_1_0._dragListener:AddDragBeginListener(arg_1_0._onDragBegin, arg_1_0)
-	arg_1_0._dragListener:AddDragListener(arg_1_0._onDrag, arg_1_0)
-	arg_1_0._dragListener:AddDragEndListener(arg_1_0._onDragEnd, arg_1_0)
+	self._dragListener = SLFramework.UGUI.UIDragListener.Get(self.gameObject)
 
-	arg_1_0.position_x = recthelper.getAnchorX(arg_1_0.transform)
-	arg_1_0.position_y = recthelper.getAnchorY(arg_1_0.transform)
-	arg_1_0.left_x = arg_1_0.position_x - arg_1_0.parent_view.cell_length / 2
-	arg_1_0.right_x = arg_1_0.left_x + arg_1_0.parent_view.cell_length
-	arg_1_0.top_y = arg_1_0.position_y + arg_1_0.parent_view.cell_length / 2
-	arg_1_0.bottom_y = arg_1_0.top_y - arg_1_0.parent_view.cell_length
+	self._dragListener:AddDragBeginListener(self._onDragBegin, self)
+	self._dragListener:AddDragListener(self._onDrag, self)
+	self._dragListener:AddDragEndListener(self._onDragEnd, self)
 
-	local var_1_0 = arg_1_0.transform:Find("lattice")
+	self.position_x = recthelper.getAnchorX(self.transform)
+	self.position_y = recthelper.getAnchorY(self.transform)
+	self.left_x = self.position_x - self.parent_view.cell_length / 2
+	self.right_x = self.left_x + self.parent_view.cell_length
+	self.top_y = self.position_y + self.parent_view.cell_length / 2
+	self.bottom_y = self.top_y - self.parent_view.cell_length
 
-	arg_1_0.empty_bg = var_1_0 and var_1_0.gameObject
+	local lattice = self.transform:Find("lattice")
+
+	self.empty_bg = lattice and lattice.gameObject
 end
 
-function var_0_0.detectPosCover(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 > arg_2_0.left_x and arg_2_1 < arg_2_0.right_x and arg_2_2 > arg_2_0.bottom_y and arg_2_2 < arg_2_0.top_y then
+function ResonanceCellItem:detectPosCover(x, y)
+	if x > self.left_x and x < self.right_x and y > self.bottom_y and y < self.top_y then
 		return true
 	end
 end
 
-var_0_0.color = {
+ResonanceCellItem.color = {
 	green = "green",
 	red = "red",
 	white = "white",
 	grey = "grey"
 }
 
-function var_0_0._setLineColor(arg_3_0, arg_3_1, arg_3_2)
-	for iter_3_0, iter_3_1 in pairs(var_0_0.color) do
-		local var_3_0 = arg_3_1:Find(iter_3_1)
+function ResonanceCellItem:_setLineColor(line, color)
+	for k, v in pairs(ResonanceCellItem.color) do
+		local transform = line:Find(v)
 
-		if var_3_0 then
-			gohelper.setActive(var_3_0.gameObject, arg_3_2 == iter_3_1)
+		if transform then
+			gohelper.setActive(transform.gameObject, color == v)
 		end
 	end
 end
 
-function var_0_0.SetRed(arg_4_0)
-	arg_4_0:_setLineColor(arg_4_0.top_line, var_0_0.color.red)
-	arg_4_0:_setLineColor(arg_4_0.right_line, var_0_0.color.red)
-	arg_4_0:_setLineColor(arg_4_0.bottom_line, var_0_0.color.red)
-	arg_4_0:_setLineColor(arg_4_0.left_line, var_0_0.color.red)
-	gohelper.setAsLastSibling(arg_4_0.gameObject)
+function ResonanceCellItem:SetRed()
+	self:_setLineColor(self.top_line, ResonanceCellItem.color.red)
+	self:_setLineColor(self.right_line, ResonanceCellItem.color.red)
+	self:_setLineColor(self.bottom_line, ResonanceCellItem.color.red)
+	self:_setLineColor(self.left_line, ResonanceCellItem.color.red)
+	gohelper.setAsLastSibling(self.gameObject)
 end
 
-function var_0_0.SetGreen(arg_5_0)
-	gohelper.setAsLastSibling(arg_5_0.gameObject)
+function ResonanceCellItem:SetGreen()
+	gohelper.setAsLastSibling(self.gameObject)
 end
 
-function var_0_0.hideEmptyBg(arg_6_0)
-	gohelper.setActive(arg_6_0.empty_bg, false)
+function ResonanceCellItem:hideEmptyBg()
+	gohelper.setActive(self.empty_bg, false)
 end
 
-function var_0_0.SetNormal(arg_7_0, arg_7_1)
-	if arg_7_0.empty_bg then
-		gohelper.setActive(arg_7_0.empty_bg, arg_7_0.parent_view.drag_data and not arg_7_0.is_filled or false)
+function ResonanceCellItem:SetNormal(put_cube)
+	if self.empty_bg then
+		gohelper.setActive(self.empty_bg, self.parent_view.drag_data and not self.is_filled or false)
 	end
 
-	local var_7_0 = arg_7_0.parent_view:getRabbetCell()
-	local var_7_1 = var_7_0[arg_7_0.pos_y][arg_7_0.pos_x - 1]
-	local var_7_2 = var_7_0[arg_7_0.pos_y - 1] and var_7_0[arg_7_0.pos_y - 1][arg_7_0.pos_x]
-	local var_7_3 = var_7_0[arg_7_0.pos_y][arg_7_0.pos_x + 1]
-	local var_7_4 = var_7_0[arg_7_0.pos_y + 1] and var_7_0[arg_7_0.pos_y + 1][arg_7_0.pos_x]
-	local var_7_5 = arg_7_0.parent_view.put_cube_ani
-	local var_7_6 = false
+	local rabbet_cell = self.parent_view:getRabbetCell()
+	local left_cell = rabbet_cell[self.pos_y][self.pos_x - 1]
+	local top_cell = rabbet_cell[self.pos_y - 1] and rabbet_cell[self.pos_y - 1][self.pos_x]
+	local right_cell = rabbet_cell[self.pos_y][self.pos_x + 1]
+	local bottom_cell = rabbet_cell[self.pos_y + 1] and rabbet_cell[self.pos_y + 1][self.pos_x]
+	local put_cube_ani = self.parent_view.put_cube_ani
+	local show_line_effect = false
 
-	if arg_7_1 and arg_7_0.cell_data and var_7_5 and var_7_5.drag_id == arg_7_0.cell_data.cubeId and var_7_5.direction == arg_7_0.cell_data.direction and var_7_5.posX == arg_7_0.cell_data.posX and var_7_5.posY == arg_7_0.cell_data.posY then
-		var_7_6 = true
-		arg_7_0.parent_view.effect_showed = true
+	if put_cube and self.cell_data and put_cube_ani and put_cube_ani.drag_id == self.cell_data.cubeId and put_cube_ani.direction == self.cell_data.direction and put_cube_ani.posX == self.cell_data.posX and put_cube_ani.posY == self.cell_data.posY then
+		show_line_effect = true
+		self.parent_view.effect_showed = true
 	end
 
-	if arg_7_0.cell_data and var_7_1 and var_7_1.cell_data == arg_7_0.cell_data and arg_7_0.is_filled then
-		arg_7_0:hideLeft()
+	if self.cell_data and left_cell and left_cell.cell_data == self.cell_data and self.is_filled then
+		self:hideLeft()
 	else
-		arg_7_0:_setLineColor(arg_7_0.left_line, var_0_0.color.grey)
+		self:_setLineColor(self.left_line, ResonanceCellItem.color.grey)
 
-		if var_7_6 then
-			if not arg_7_0.left_yanwu then
-				arg_7_0.left_yanwu = gohelper.clone(arg_7_0.parent_view.go_yanwu, arg_7_0.gameObject)
+		if show_line_effect then
+			if not self.left_yanwu then
+				self.left_yanwu = gohelper.clone(self.parent_view.go_yanwu, self.gameObject)
 
-				recthelper.setAnchor(arg_7_0.left_yanwu.transform, -38.4, 0)
-				transformhelper.setLocalRotation(arg_7_0.left_yanwu.transform, 0, 0, 90)
+				recthelper.setAnchor(self.left_yanwu.transform, -38.4, 0)
+				transformhelper.setLocalRotation(self.left_yanwu.transform, 0, 0, 90)
 			end
 
-			gohelper.setActive(arg_7_0.left_yanwu, false)
-			gohelper.setActive(arg_7_0.left_yanwu, true)
+			gohelper.setActive(self.left_yanwu, false)
+			gohelper.setActive(self.left_yanwu, true)
 		end
 	end
 
-	if arg_7_0.cell_data and var_7_2 and var_7_2.cell_data == arg_7_0.cell_data and arg_7_0.is_filled then
-		arg_7_0:hideTop()
+	if self.cell_data and top_cell and top_cell.cell_data == self.cell_data and self.is_filled then
+		self:hideTop()
 	else
-		arg_7_0:_setLineColor(arg_7_0.top_line, var_0_0.color.grey)
+		self:_setLineColor(self.top_line, ResonanceCellItem.color.grey)
 
-		if var_7_6 then
-			if not arg_7_0.top_yanwu then
-				arg_7_0.top_yanwu = gohelper.clone(arg_7_0.parent_view.go_yanwu, arg_7_0.gameObject)
+		if show_line_effect then
+			if not self.top_yanwu then
+				self.top_yanwu = gohelper.clone(self.parent_view.go_yanwu, self.gameObject)
 
-				recthelper.setAnchor(arg_7_0.top_yanwu.transform, 0, 38.4)
+				recthelper.setAnchor(self.top_yanwu.transform, 0, 38.4)
 			end
 
-			gohelper.setActive(arg_7_0.top_yanwu, false)
-			gohelper.setActive(arg_7_0.top_yanwu, true)
+			gohelper.setActive(self.top_yanwu, false)
+			gohelper.setActive(self.top_yanwu, true)
 		end
 	end
 
-	if arg_7_0.cell_data and var_7_3 and var_7_3.cell_data == arg_7_0.cell_data and arg_7_0.is_filled then
-		arg_7_0:hideRight()
+	if self.cell_data and right_cell and right_cell.cell_data == self.cell_data and self.is_filled then
+		self:hideRight()
 	else
-		arg_7_0:_setLineColor(arg_7_0.right_line, var_0_0.color.grey)
+		self:_setLineColor(self.right_line, ResonanceCellItem.color.grey)
 
-		if var_7_6 then
-			if not arg_7_0.right_yanwu then
-				arg_7_0.right_yanwu = gohelper.clone(arg_7_0.parent_view.go_yanwu, arg_7_0.gameObject)
+		if show_line_effect then
+			if not self.right_yanwu then
+				self.right_yanwu = gohelper.clone(self.parent_view.go_yanwu, self.gameObject)
 
-				recthelper.setAnchor(arg_7_0.right_yanwu.transform, 38.2, 0)
-				transformhelper.setLocalRotation(arg_7_0.right_yanwu.transform, 0, 0, -90)
+				recthelper.setAnchor(self.right_yanwu.transform, 38.2, 0)
+				transformhelper.setLocalRotation(self.right_yanwu.transform, 0, 0, -90)
 			end
 
-			gohelper.setActive(arg_7_0.right_yanwu, false)
-			gohelper.setActive(arg_7_0.right_yanwu, true)
+			gohelper.setActive(self.right_yanwu, false)
+			gohelper.setActive(self.right_yanwu, true)
 		end
 	end
 
-	if arg_7_0.cell_data and var_7_4 and var_7_4.cell_data == arg_7_0.cell_data and arg_7_0.is_filled then
-		arg_7_0:hideBottom()
+	if self.cell_data and bottom_cell and bottom_cell.cell_data == self.cell_data and self.is_filled then
+		self:hideBottom()
 	else
-		arg_7_0:_setLineColor(arg_7_0.bottom_line, var_0_0.color.grey)
+		self:_setLineColor(self.bottom_line, ResonanceCellItem.color.grey)
 
-		if var_7_6 then
-			if not arg_7_0.bottom_yanwu then
-				arg_7_0.bottom_yanwu = gohelper.clone(arg_7_0.parent_view.go_yanwu, arg_7_0.gameObject)
+		if show_line_effect then
+			if not self.bottom_yanwu then
+				self.bottom_yanwu = gohelper.clone(self.parent_view.go_yanwu, self.gameObject)
 
-				recthelper.setAnchor(arg_7_0.bottom_yanwu.transform, 0, -37.9)
-				transformhelper.setLocalRotation(arg_7_0.bottom_yanwu.transform, 0, 0, -180)
+				recthelper.setAnchor(self.bottom_yanwu.transform, 0, -37.9)
+				transformhelper.setLocalRotation(self.bottom_yanwu.transform, 0, 0, -180)
 			end
 
-			gohelper.setActive(arg_7_0.bottom_yanwu.gameObject, false)
-			gohelper.setActive(arg_7_0.bottom_yanwu.gameObject, true)
+			gohelper.setActive(self.bottom_yanwu.gameObject, false)
+			gohelper.setActive(self.bottom_yanwu.gameObject, true)
 		end
 	end
 
-	arg_7_0:_activeStyleBg()
+	self:_activeStyleBg()
 end
 
-function var_0_0.hideTop(arg_8_0)
-	arg_8_0:_setLineColor(arg_8_0.top_line, var_0_0.color.white)
+function ResonanceCellItem:hideTop()
+	self:_setLineColor(self.top_line, ResonanceCellItem.color.white)
 end
 
-function var_0_0.hideRight(arg_9_0)
-	arg_9_0:_setLineColor(arg_9_0.right_line, var_0_0.color.white)
+function ResonanceCellItem:hideRight()
+	self:_setLineColor(self.right_line, ResonanceCellItem.color.white)
 end
 
-function var_0_0.hideBottom(arg_10_0)
-	arg_10_0:_setLineColor(arg_10_0.bottom_line, var_0_0.color.white)
+function ResonanceCellItem:hideBottom()
+	self:_setLineColor(self.bottom_line, ResonanceCellItem.color.white)
 end
 
-function var_0_0.hideLeft(arg_11_0)
-	arg_11_0:_setLineColor(arg_11_0.left_line, var_0_0.color.white)
+function ResonanceCellItem:hideLeft()
+	self:_setLineColor(self.left_line, ResonanceCellItem.color.white)
 end
 
-function var_0_0.lightTop(arg_12_0)
-	arg_12_0:_setLineColor(arg_12_0.top_line, var_0_0.color.green)
-	arg_12_0:SetGreen()
+function ResonanceCellItem:lightTop()
+	self:_setLineColor(self.top_line, ResonanceCellItem.color.green)
+	self:SetGreen()
 end
 
-function var_0_0.lightRight(arg_13_0)
-	arg_13_0:_setLineColor(arg_13_0.right_line, var_0_0.color.green)
-	arg_13_0:SetGreen()
+function ResonanceCellItem:lightRight()
+	self:_setLineColor(self.right_line, ResonanceCellItem.color.green)
+	self:SetGreen()
 end
 
-function var_0_0.lightBottom(arg_14_0)
-	arg_14_0:_setLineColor(arg_14_0.bottom_line, var_0_0.color.green)
-	arg_14_0:SetGreen()
+function ResonanceCellItem:lightBottom()
+	self:_setLineColor(self.bottom_line, ResonanceCellItem.color.green)
+	self:SetGreen()
 end
 
-function var_0_0.lightLeft(arg_15_0)
-	arg_15_0:_setLineColor(arg_15_0.left_line, var_0_0.color.green)
-	arg_15_0:SetGreen()
+function ResonanceCellItem:lightLeft()
+	self:_setLineColor(self.left_line, ResonanceCellItem.color.green)
+	self:SetGreen()
 end
 
-function var_0_0._activeStyleBg(arg_16_0)
-	local var_16_0 = arg_16_0.is_filled
+function ResonanceCellItem:_activeStyleBg()
+	local showStyleBg = self.is_filled
 
-	if arg_16_0.parent_view and arg_16_0.parent_view.hero_mo_data then
-		arg_16_0.mainCubeId = arg_16_0.parent_view.hero_mo_data.talentCubeInfos.own_main_cube_id
+	if self.parent_view and self.parent_view.hero_mo_data then
+		self.mainCubeId = self.parent_view.hero_mo_data.talentCubeInfos.own_main_cube_id
 	end
 
-	if arg_16_0.is_filled and arg_16_0.cell_data then
-		local var_16_1
-
-		var_16_1 = arg_16_0.cell_data.cubeId == arg_16_0.mainCubeId
+	if self.is_filled and self.cell_data then
+		showStyleBg = self.cell_data.cubeId == self.mainCubeId
 	end
 end
 
-function var_0_0.setCellData(arg_17_0, arg_17_1)
-	arg_17_0.cell_data = arg_17_1
+function ResonanceCellItem:setCellData(data)
+	self.cell_data = data
 end
 
-function var_0_0._refreshCell(arg_18_0)
-	arg_18_0:_activeStyleBg()
+function ResonanceCellItem:_refreshCell()
+	self:_activeStyleBg()
 end
 
-function var_0_0.clickCube(arg_19_0)
-	arg_19_0:_onCubeClick()
+function ResonanceCellItem:clickCube()
+	self:_onCubeClick()
 end
 
-function var_0_0._onCubeClick(arg_20_0)
-	if arg_20_0.is_filled then
-		local var_20_0 = arg_20_0.parent_view.cur_select_cell_data
+function ResonanceCellItem:_onCubeClick()
+	if self.is_filled then
+		local cur_select_cell_data = self.parent_view.cur_select_cell_data
 
-		if var_20_0 and arg_20_0.cell_data and var_20_0.cubeId == arg_20_0.cell_data.cubeId and var_20_0.direction == arg_20_0.cell_data.direction and var_20_0.posX == arg_20_0.cell_data.posX and var_20_0.posY == arg_20_0.cell_data.posY then
-			arg_20_0.parent_view:onCubeClick(arg_20_0.cell_data)
+		if cur_select_cell_data and self.cell_data and cur_select_cell_data.cubeId == self.cell_data.cubeId and cur_select_cell_data.direction == self.cell_data.direction and cur_select_cell_data.posX == self.cell_data.posX and cur_select_cell_data.posY == self.cell_data.posY then
+			self.parent_view:onCubeClick(self.cell_data)
 		else
-			arg_20_0.parent_view:_btnCloseTipOnClick()
+			self.parent_view:_btnCloseTipOnClick()
 
-			arg_20_0.parent_view.cur_select_cell_data = tabletool.copy(arg_20_0.cell_data)
+			self.parent_view.cur_select_cell_data = tabletool.copy(self.cell_data)
 
-			arg_20_0.parent_view:showCurSelectCubeAttr(arg_20_0.cell_data)
+			self.parent_view:showCurSelectCubeAttr(self.cell_data)
 		end
 	end
 end
 
-function var_0_0._onDragBegin(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_0.is_filled then
-		arg_21_0.parent_view:_onGetCube(arg_21_0.cell_data)
-		arg_21_0.parent_view:_onContainerDragBegin(arg_21_1, arg_21_2)
+function ResonanceCellItem:_onDragBegin(param, pointerEventData)
+	if self.is_filled then
+		self.parent_view:_onGetCube(self.cell_data)
+		self.parent_view:_onContainerDragBegin(param, pointerEventData)
 	end
 end
 
-function var_0_0._onDrag(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0.parent_view:_onContainerDrag(arg_22_1, arg_22_2)
+function ResonanceCellItem:_onDrag(param, pointerEventData)
+	self.parent_view:_onContainerDrag(param, pointerEventData)
 end
 
-function var_0_0._onDragEnd(arg_23_0)
-	arg_23_0.parent_view:_onDragEnd()
+function ResonanceCellItem:_onDragEnd()
+	self.parent_view:_onDragEnd()
 end
 
-function var_0_0.releaseSelf(arg_24_0)
-	if arg_24_0._dragListener then
-		arg_24_0._dragListener:RemoveDragBeginListener()
-		arg_24_0._dragListener:RemoveDragListener()
-		arg_24_0._dragListener:RemoveDragEndListener()
+function ResonanceCellItem:releaseSelf()
+	if self._dragListener then
+		self._dragListener:RemoveDragBeginListener()
+		self._dragListener:RemoveDragListener()
+		self._dragListener:RemoveDragEndListener()
 	end
 
-	arg_24_0:__onDispose()
+	self:__onDispose()
 
-	arg_24_0.cell_data = nil
-	arg_24_0.parent_view = nil
+	self.cell_data = nil
+	self.parent_view = nil
 end
 
-return var_0_0
+return ResonanceCellItem

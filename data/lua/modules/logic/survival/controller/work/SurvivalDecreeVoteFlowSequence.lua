@@ -1,21 +1,23 @@
-﻿module("modules.logic.survival.controller.work.SurvivalDecreeVoteFlowSequence", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalDecreeVoteFlowSequence.lua
 
-local var_0_0 = class("SurvivalDecreeVoteFlowSequence", FlowSequence)
+module("modules.logic.survival.controller.work.SurvivalDecreeVoteFlowSequence", package.seeall)
 
-function var_0_0.isFlowDone(arg_1_0)
-	return arg_1_0.status == WorkStatus.Done
+local SurvivalDecreeVoteFlowSequence = class("SurvivalDecreeVoteFlowSequence", FlowSequence)
+
+function SurvivalDecreeVoteFlowSequence:isFlowDone()
+	return self.status == WorkStatus.Done
 end
 
-function var_0_0.tryJumpNextWork(arg_2_0)
-	local var_2_0 = arg_2_0._workList[arg_2_0._curIndex]
+function SurvivalDecreeVoteFlowSequence:tryJumpNextWork()
+	local currWork = self._workList[self._curIndex]
 
-	if not var_2_0 then
+	if not currWork then
 		return
 	end
 
-	if var_2_0 and var_2_0.canJump then
-		var_2_0:onDone(true)
+	if currWork and currWork.canJump then
+		currWork:onDone(true)
 	end
 end
 
-return var_0_0
+return SurvivalDecreeVoteFlowSequence

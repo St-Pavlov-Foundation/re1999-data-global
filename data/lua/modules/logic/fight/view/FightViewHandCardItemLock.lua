@@ -1,112 +1,117 @@
-﻿module("modules.logic.fight.view.FightViewHandCardItemLock", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewHandCardItemLock.lua
 
-local var_0_0 = class("FightViewHandCardItemLock", LuaCompBase)
+module("modules.logic.fight.view.FightViewHandCardItemLock", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._subViewInst = arg_1_1
+local FightViewHandCardItemLock = class("FightViewHandCardItemLock", LuaCompBase)
+
+function FightViewHandCardItemLock:ctor(subViewInst)
+	self._subViewInst = subViewInst
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.tr = arg_2_1.transform
-	arg_2_0._lockGO = gohelper.findChild(arg_2_0.go, "foranim/lock")
+function FightViewHandCardItemLock:init(go)
+	self.go = go
+	self.tr = go.transform
+	self._lockGO = gohelper.findChild(self.go, "foranim/lock")
 
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnFightReconnect, arg_2_0._onFightReconnect, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforePlayHandCard, arg_2_0._beforePlayHandCard, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, arg_2_0._afterPlayHandCard, arg_2_0)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnFightReconnect, self._onFightReconnect, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforePlayHandCard, self._beforePlayHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, self._afterPlayHandCard, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnFightReconnect, arg_3_0._onFightReconnect, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.BeforePlayHandCard, arg_3_0._beforePlayHandCard, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, arg_3_0._afterPlayHandCard, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._reconnectSetCardLock, arg_3_0)
+function FightViewHandCardItemLock:removeEventListeners()
+	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnFightReconnect, self._onFightReconnect, self)
+	self:removeEventCb(FightController.instance, FightEvent.BeforePlayHandCard, self._beforePlayHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, self._afterPlayHandCard, self)
+	TaskDispatcher.cancelTask(self._reconnectSetCardLock, self)
 end
 
-function var_0_0.updateItem(arg_4_0, arg_4_1)
-	arg_4_0.cardInfoMO = arg_4_1 or arg_4_0.cardInfoMO
+function FightViewHandCardItemLock:updateItem(cardInfoMO)
+	self.cardInfoMO = cardInfoMO or self.cardInfoMO
 
-	if not lua_skill.configDict[arg_4_1.skillId] then
-		logError("skill not exist: " .. arg_4_1.skillId)
+	local skillCO = lua_skill.configDict[cardInfoMO.skillId]
+
+	if not skillCO then
+		logError("skill not exist: " .. cardInfoMO.skillId)
 
 		return
 	end
 
-	arg_4_0._skillId = arg_4_1.skillId
+	self._skillId = cardInfoMO.skillId
 
-	local var_4_0 = FightDataHelper.entityMgr:getById(arg_4_0.cardInfoMO.uid)
-	local var_4_1 = FightBuffHelper.simulateBuffList(var_4_0)
+	local entityMO = FightDataHelper.entityMgr:getById(self.cardInfoMO.uid)
+	local buffList = FightBuffHelper.simulateBuffList(entityMO)
 
-	arg_4_0._canUse = var_0_0.canUseCardSkill(arg_4_0.cardInfoMO.uid, arg_4_0.cardInfoMO.skillId)
+	self._canUse = FightViewHandCardItemLock.canUseCardSkill(self.cardInfoMO.uid, self.cardInfoMO.skillId)
 
-	var_0_0.setCardLock(arg_4_0.cardInfoMO.uid, arg_4_0.cardInfoMO.skillId, arg_4_0._lockGO, false, var_4_1)
-	arg_4_0:_setCardPreRemove(false, var_4_1)
+	FightViewHandCardItemLock.setCardLock(self.cardInfoMO.uid, self.cardInfoMO.skillId, self._lockGO, false, buffList)
+	self:_setCardPreRemove(false, buffList)
 end
 
-function var_0_0._onBuffUpdate(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_0.cardInfoMO then
+function FightViewHandCardItemLock:_onBuffUpdate(entityId, effectType, buffId)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if arg_5_1 ~= arg_5_0.cardInfoMO.uid then
+	if entityId ~= self.cardInfoMO.uid then
 		return
 	end
 
-	local var_5_0 = var_0_0.canUseCardSkill(arg_5_1, arg_5_0.cardInfoMO.skillId)
+	local canUse = FightViewHandCardItemLock.canUseCardSkill(entityId, self.cardInfoMO.skillId)
 
-	if arg_5_2 == FightEnum.EffectType.BUFFADD then
-		local var_5_1 = arg_5_0._canUse and not var_5_0
+	if effectType == FightEnum.EffectType.BUFFADD then
+		local hasAnim = self._canUse and not canUse
 
-		var_0_0.setCardLock(arg_5_0.cardInfoMO.uid, arg_5_0.cardInfoMO.skillId, arg_5_0._lockGO, var_5_1)
-	elseif arg_5_2 == FightEnum.EffectType.BUFFDEL then
-		var_0_0.setCardLock(arg_5_0.cardInfoMO.uid, arg_5_0.cardInfoMO.skillId, arg_5_0._lockGO, false)
+		FightViewHandCardItemLock.setCardLock(self.cardInfoMO.uid, self.cardInfoMO.skillId, self._lockGO, hasAnim)
+	elseif effectType == FightEnum.EffectType.BUFFDEL then
+		FightViewHandCardItemLock.setCardLock(self.cardInfoMO.uid, self.cardInfoMO.skillId, self._lockGO, false)
 	end
 
-	arg_5_0._canUse = var_5_0
+	self._canUse = canUse
 end
 
-function var_0_0._onFightReconnect(arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._reconnectSetCardLock, arg_6_0, 1)
+function FightViewHandCardItemLock:_onFightReconnect()
+	TaskDispatcher.runDelay(self._reconnectSetCardLock, self, 1)
 end
 
-local var_0_1 = {}
-local var_0_2 = {}
+local SkillLockStatus = {}
+local SkillPreRemoveStatus = {}
 
-function var_0_0._beforePlayHandCard(arg_7_0)
-	local var_7_0 = FightDataHelper.entityMgr:getById(arg_7_0.cardInfoMO.uid)
-	local var_7_1 = FightBuffHelper.simulateBuffList(var_7_0)
+function FightViewHandCardItemLock:_beforePlayHandCard()
+	local entityMO = FightDataHelper.entityMgr:getById(self.cardInfoMO.uid)
+	local buffList = FightBuffHelper.simulateBuffList(entityMO)
 
-	var_0_1[arg_7_0.cardInfoMO.skillId] = var_0_0.canUseCardSkill(arg_7_0.cardInfoMO.uid, arg_7_0.cardInfoMO.skillId, var_7_1)
-	var_0_2[arg_7_0.cardInfoMO.skillId] = var_0_0.canPreRemove(arg_7_0.cardInfoMO.uid, arg_7_0.cardInfoMO.skillId, nil, var_7_1)
+	SkillLockStatus[self.cardInfoMO.skillId] = FightViewHandCardItemLock.canUseCardSkill(self.cardInfoMO.uid, self.cardInfoMO.skillId, buffList)
+	SkillPreRemoveStatus[self.cardInfoMO.skillId] = FightViewHandCardItemLock.canPreRemove(self.cardInfoMO.uid, self.cardInfoMO.skillId, nil, buffList)
 end
 
-function var_0_0._afterPlayHandCard(arg_8_0)
-	local var_8_0 = FightDataHelper.entityMgr:getById(arg_8_0.cardInfoMO.uid)
-	local var_8_1 = FightBuffHelper.simulateBuffList(var_8_0)
+function FightViewHandCardItemLock:_afterPlayHandCard()
+	local entityMO = FightDataHelper.entityMgr:getById(self.cardInfoMO.uid)
+	local buffList = FightBuffHelper.simulateBuffList(entityMO)
 
-	var_0_0.setCardLock(arg_8_0.cardInfoMO.uid, arg_8_0.cardInfoMO.skillId, arg_8_0._lockGO, false, var_8_1)
+	FightViewHandCardItemLock.setCardLock(self.cardInfoMO.uid, self.cardInfoMO.skillId, self._lockGO, false, buffList)
 
-	local var_8_2 = var_0_1[arg_8_0.cardInfoMO.skillId]
-	local var_8_3 = var_0_2[arg_8_0.cardInfoMO.skillId]
-	local var_8_4 = var_0_0.canUseCardSkill(arg_8_0.cardInfoMO.uid, arg_8_0.cardInfoMO.skillId, var_8_1)
-	local var_8_5 = var_0_0.canPreRemove(arg_8_0.cardInfoMO.uid, arg_8_0.cardInfoMO.skillId, nil, var_8_1)
+	local oldLock = SkillLockStatus[self.cardInfoMO.skillId]
+	local oldPreRemove = SkillPreRemoveStatus[self.cardInfoMO.skillId]
+	local newLock = FightViewHandCardItemLock.canUseCardSkill(self.cardInfoMO.uid, self.cardInfoMO.skillId, buffList)
+	local newPreRemove = FightViewHandCardItemLock.canPreRemove(self.cardInfoMO.uid, self.cardInfoMO.skillId, nil, buffList)
+	local canPlayPreRemove = oldLock == false and newLock == false and (oldPreRemove == nil or oldPreRemove == false) and newPreRemove == true
 
-	if var_8_2 == false and var_8_4 == false and (var_8_3 == nil or var_8_3 == false) and var_8_5 == true then
-		arg_8_0:_setCardPreRemove(true, var_8_1)
+	if canPlayPreRemove then
+		self:_setCardPreRemove(true, buffList)
 	end
 
-	if var_8_2 == var_8_4 and var_8_3 == var_8_5 and var_8_5 and not var_8_4 then
-		arg_8_0:_setCardPreRemove(false, var_8_1)
+	if oldLock == newLock and oldPreRemove == newPreRemove and newPreRemove and not newLock then
+		self:_setCardPreRemove(false, buffList)
 	end
 end
 
-function var_0_0._reconnectSetCardLock(arg_9_0)
-	var_0_0.setCardLock(arg_9_0.cardInfoMO.uid, arg_9_0.cardInfoMO.skillId, arg_9_0._lockGO, false)
+function FightViewHandCardItemLock:_reconnectSetCardLock()
+	FightViewHandCardItemLock.setCardLock(self.cardInfoMO.uid, self.cardInfoMO.skillId, self._lockGO, false)
 end
 
-local var_0_3 = {
+local TxtPaths = {
 	"txtLockName",
 	"normal/0/seal/ani/txtLockName",
 	"normal/0/unseal/ani/txtLockName",
@@ -140,61 +145,62 @@ local var_0_3 = {
 	"bigskill/4/sealing/notani/txtLockName"
 }
 
-function var_0_0.setCardLock(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	gohelper.setActive(arg_10_2, false)
+function FightViewHandCardItemLock.setCardLock(entityId, skillId, lockGO, hasAnim, buffList, roundOp)
+	gohelper.setActive(lockGO, false)
 
-	if gohelper.isNil(arg_10_2) or not arg_10_1 then
+	if gohelper.isNil(lockGO) or not skillId then
 		return
 	end
 
-	if FightEnum.UniversalCard[arg_10_1] then
+	if FightEnum.UniversalCard[skillId] then
 		return
 	end
 
-	local var_10_0 = var_0_0.canUseCardSkill(arg_10_0, arg_10_1, arg_10_4)
+	local canUse = FightViewHandCardItemLock.canUseCardSkill(entityId, skillId, buffList, roundOp)
 
-	gohelper.setActive(arg_10_2, not var_10_0)
+	gohelper.setActive(lockGO, not canUse)
 
-	if not var_10_0 then
-		local var_10_1 = lua_skill.configDict[arg_10_1].isBigSkill == 1 and true or false
+	if not canUse then
+		local skillCO = lua_skill.configDict[skillId]
+		local isBigSkill = skillCO.isBigSkill == 1 and true or false
 
-		if lua_skill_next.configDict[arg_10_1] then
-			var_10_1 = false
+		if lua_skill_next.configDict[skillId] then
+			isBigSkill = false
 		end
 
-		local var_10_2 = FightCardDataHelper.getSkillLv(arg_10_0, arg_10_1)
-		local var_10_3 = var_0_0._getCardLockReason(arg_10_0, arg_10_1, arg_10_4)
-		local var_10_4 = gohelper.findChild(arg_10_2, "normal")
-		local var_10_5 = gohelper.findChild(arg_10_2, "bigskill")
+		local skillLv = FightCardDataHelper.getSkillLv(entityId, skillId)
+		local buffCO = FightViewHandCardItemLock._getCardLockReason(entityId, skillId, buffList, roundOp)
+		local normalGO = gohelper.findChild(lockGO, "normal")
+		local bigskillGO = gohelper.findChild(lockGO, "bigskill")
 
-		gohelper.setActive(var_10_4, not var_10_1)
-		gohelper.setActive(var_10_5, var_10_1)
+		gohelper.setActive(normalGO, not isBigSkill)
+		gohelper.setActive(bigskillGO, isBigSkill)
 
-		for iter_10_0 = 0, 4 do
-			local var_10_6 = gohelper.findChild(iter_10_0 == FightEnum.UniqueSkillCardLv and var_10_5 or var_10_4, tostring(iter_10_0))
+		for i = 0, 4 do
+			local levelGO = gohelper.findChild(i == FightEnum.UniqueSkillCardLv and bigskillGO or normalGO, tostring(i))
 
-			gohelper.setActive(var_10_6, iter_10_0 == var_10_2)
+			gohelper.setActive(levelGO, i == skillLv)
 
-			if iter_10_0 == var_10_2 then
-				local var_10_7 = arg_10_3 and "fight_lock_seal_all" or "fight_lock_seal_allnot"
-				local var_10_8 = var_10_6:GetComponent(typeof(UnityEngine.Animator))
+			if i == skillLv then
+				local animName = hasAnim and "fight_lock_seal_all" or "fight_lock_seal_allnot"
+				local animator = levelGO:GetComponent(typeof(UnityEngine.Animator))
 
-				var_10_8:Play(var_10_7, 0, 0)
-				var_10_8:Update(0)
+				animator:Play(animName, 0, 0)
+				animator:Update(0)
 			end
 		end
 
-		local var_10_9 = var_10_3 and var_10_3.name or ""
+		local name = buffCO and buffCO.name or ""
 
 		if LangSettings.instance:isZh() or LangSettings.instance:isTw() then
-			var_10_9 = LuaUtil.getCharNum(var_10_9) <= 2 and var_10_9 or LuaUtil.subString(var_10_9, 1, 2) .. "\n" .. LuaUtil.subString(var_10_9, 3)
+			name = LuaUtil.getCharNum(name) <= 2 and name or LuaUtil.subString(name, 1, 2) .. "\n" .. LuaUtil.subString(name, 3)
 		end
 
-		for iter_10_1, iter_10_2 in ipairs(var_0_3) do
-			local var_10_10 = gohelper.findChildText(arg_10_2, iter_10_2)
+		for _, goPath in ipairs(TxtPaths) do
+			local txtLockName = gohelper.findChildText(lockGO, goPath)
 
-			if var_10_10 then
-				var_10_10.text = var_10_9
+			if txtLockName then
+				txtLockName.text = name
 			end
 		end
 
@@ -202,87 +208,91 @@ function var_0_0.setCardLock(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 	end
 end
 
-function var_0_0._setCardPreRemove(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0.cardInfoMO.skillId
+function FightViewHandCardItemLock:_setCardPreRemove(hasAnim, buffList)
+	local skillId = self.cardInfoMO.skillId
 
-	if FightEnum.UniversalCard[var_11_0] then
+	if FightEnum.UniversalCard[skillId] then
 		return
 	end
 
-	if gohelper.isNil(arg_11_0.go) then
+	if gohelper.isNil(self.go) then
 		return
 	end
 
-	local var_11_1 = arg_11_0.cardInfoMO.uid
+	local entityId = self.cardInfoMO.uid
+	local canUse = FightViewHandCardItemLock.canUseCardSkill(entityId, skillId, buffList)
 
-	if var_0_0.canUseCardSkill(var_11_1, var_11_0, arg_11_2) then
+	if canUse then
 		return
 	end
 
-	if not var_0_0.canPreRemove(var_11_1, var_11_0, nil, arg_11_2) then
+	local isPreRemove = FightViewHandCardItemLock.canPreRemove(entityId, skillId, nil, buffList)
+
+	if not isPreRemove then
 		return
 	end
 
-	var_0_0.setCardPreRemove(var_11_1, var_11_0, arg_11_0._lockGO, arg_11_1)
+	FightViewHandCardItemLock.setCardPreRemove(entityId, skillId, self._lockGO, hasAnim)
 end
 
-function var_0_0.setCardPreRemove(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = FightCardDataHelper.isBigSkill(arg_12_1)
-	local var_12_1 = FightCardDataHelper.getSkillLv(arg_12_0, arg_12_1)
-	local var_12_2 = gohelper.findChild(arg_12_2, "normal")
-	local var_12_3 = gohelper.findChild(arg_12_2, "bigskill")
+function FightViewHandCardItemLock.setCardPreRemove(entityId, skillId, lockGO, hasAnim)
+	local isBigSkill = FightCardDataHelper.isBigSkill(skillId)
+	local skillLv = FightCardDataHelper.getSkillLv(entityId, skillId)
+	local normalGO = gohelper.findChild(lockGO, "normal")
+	local bigskillGO = gohelper.findChild(lockGO, "bigskill")
 
-	gohelper.setActive(var_12_2, not var_12_0)
-	gohelper.setActive(var_12_3, var_12_0)
+	gohelper.setActive(normalGO, not isBigSkill)
+	gohelper.setActive(bigskillGO, isBigSkill)
 
-	for iter_12_0 = 0, 4 do
-		local var_12_4 = gohelper.findChild(iter_12_0 == FightEnum.UniqueSkillCardLv and var_12_3 or var_12_2, tostring(iter_12_0))
+	for i = 0, 4 do
+		local levelGO = gohelper.findChild(i == FightEnum.UniqueSkillCardLv and bigskillGO or normalGO, tostring(i))
 
-		gohelper.setActive(var_12_4, iter_12_0 == var_12_1)
+		gohelper.setActive(levelGO, i == skillLv)
 
-		if iter_12_0 == var_12_1 then
-			local var_12_5 = arg_12_3 and "fight_lock_sealing_all" or "fight_lock_sealing_allnot"
-			local var_12_6 = var_12_4:GetComponent(typeof(UnityEngine.Animator))
+		if i == skillLv then
+			local animName = hasAnim and "fight_lock_sealing_all" or "fight_lock_sealing_allnot"
+			local animator = levelGO:GetComponent(typeof(UnityEngine.Animator))
 
-			if var_12_6 then
-				var_12_6:Play(var_12_5, 0, 0)
-				var_12_6:Update(0)
+			if animator then
+				animator:Play(animName, 0, 0)
+				animator:Update(0)
 			end
 		end
 	end
 end
 
-function var_0_0.setCardUnLock(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = lua_skill.configDict[arg_13_1].isBigSkill == 1 and true or false
-	local var_13_1 = FightCardDataHelper.getSkillLv(arg_13_0, arg_13_1)
-	local var_13_2 = gohelper.findChild(arg_13_2, "normal")
-	local var_13_3 = gohelper.findChild(arg_13_2, "bigskill")
+function FightViewHandCardItemLock.setCardUnLock(entityId, skillId, lockGO)
+	local skillCO = lua_skill.configDict[skillId]
+	local isBigSkill = skillCO.isBigSkill == 1 and true or false
+	local skillLv = FightCardDataHelper.getSkillLv(entityId, skillId)
+	local normalGO = gohelper.findChild(lockGO, "normal")
+	local bigskillGO = gohelper.findChild(lockGO, "bigskill")
 
-	gohelper.setActive(var_13_2, not var_13_0)
-	gohelper.setActive(var_13_3, var_13_0)
+	gohelper.setActive(normalGO, not isBigSkill)
+	gohelper.setActive(bigskillGO, isBigSkill)
 
-	for iter_13_0 = 0, 4 do
-		local var_13_4 = gohelper.findChild(iter_13_0 == FightEnum.UniqueSkillCardLv and var_13_3 or var_13_2, tostring(iter_13_0))
+	for i = 0, 4 do
+		local levelGO = gohelper.findChild(i == FightEnum.UniqueSkillCardLv and bigskillGO or normalGO, tostring(i))
 
-		gohelper.setActive(var_13_4, iter_13_0 == var_13_1)
+		gohelper.setActive(levelGO, i == skillLv)
 
-		if iter_13_0 == var_13_1 then
-			local var_13_5 = "fight_lock_unseal_all"
-			local var_13_6 = var_13_4:GetComponent(typeof(UnityEngine.Animator))
+		if i == skillLv then
+			local animName = "fight_lock_unseal_all"
+			local animator = levelGO:GetComponent(typeof(UnityEngine.Animator))
 
-			if var_13_6 then
-				var_13_6:Play(var_13_5, 0, 0)
-				var_13_6:Update(0)
+			if animator then
+				animator:Play(animName, 0, 0)
+				animator:Update(0)
 			end
 		end
 	end
 end
 
-local var_0_4 = {
+local AllType = {
 	[102] = true,
 	[101] = true
 }
-local var_0_5 = {
+local SingleType = {
 	true,
 	[107] = true,
 	[106] = true,
@@ -292,35 +302,36 @@ local var_0_5 = {
 	[109] = true
 }
 
-function var_0_0.canPreRemove(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = FightDataHelper.entityMgr:getById(arg_14_0)
+function FightViewHandCardItemLock.canPreRemove(entityId, skillId, curPlayOp, buffList)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if FightBuffHelper.hasCastChannel(var_14_0, arg_14_3) then
+	if FightBuffHelper.hasCastChannel(entityMO, buffList) then
 		return false
 	end
 
-	if FightBuffHelper.hasFeature(var_14_0, arg_14_3, FightEnum.BuffFeature.Dream) and not FightCardDataHelper.isBigSkill(arg_14_1) then
+	if FightBuffHelper.hasFeature(entityMO, buffList, FightEnum.BuffFeature.Dream) and not FightCardDataHelper.isBigSkill(skillId) then
 		return false
 	end
 
-	local var_14_1 = FightDataHelper.operationDataMgr:getOpList()
+	local cardOps = FightDataHelper.operationDataMgr:getOpList()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		if iter_14_1 == arg_14_2 then
+	for _, op in ipairs(cardOps) do
+		if op == curPlayOp then
 			return false
 		end
 
-		if iter_14_1:isPlayCard() and iter_14_1.clientSimulateCanPlayCard then
-			local var_14_2 = lua_skill.configDict[iter_14_1.skillId].logicTarget
+		if op:isPlayCard() and op.clientSimulateCanPlayCard then
+			local skillCo = lua_skill.configDict[op.skillId]
+			local target = skillCo.logicTarget
 
-			if (var_0_4[var_14_2] or var_0_5[var_14_2] and arg_14_0 == iter_14_1.toId and arg_14_0 ~= iter_14_1.belongToEntityId) and FightBuffHelper.checkSkillCanPurifyBySkill(arg_14_0, arg_14_1, iter_14_1.skillId, arg_14_3, iter_14_1.belongToEntityId) then
+			if (AllType[target] or SingleType[target] and entityId == op.toId and entityId ~= op.belongToEntityId) and FightBuffHelper.checkSkillCanPurifyBySkill(entityId, skillId, op.skillId, buffList, op.belongToEntityId) then
 				return true
 			end
 		end
 	end
 end
 
-local var_0_6 = {
+local LockAllBuffType = {
 	[FightEnum.BuffType_Dizzy] = true,
 	[FightEnum.BuffType_Charm] = true,
 	[FightEnum.BuffType_Petrified] = true,
@@ -365,43 +376,44 @@ local var_0_6 = {
 	[FightEnum.BuffFeature.NuoDiKaCastChannel] = true,
 	[FightEnum.BuffFeature.UseSkillHasBuffCond] = {
 		UseSkillHasBuffCond = true
-	}
+	},
+	[FightEnum.BuffFeature.ConsumeBuffLayerCastChannel] = true
 }
 
-function var_0_0.canUseCardSkill(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0 or not arg_15_1 then
+function FightViewHandCardItemLock.canUseCardSkill(entityId, skillId, buffList, roundOp)
+	if not entityId or not skillId then
 		return false
 	end
 
-	local var_15_0 = FightDataHelper.entityMgr:getById(arg_15_0)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_15_0 then
+	if not entityMO then
 		return true
 	end
 
-	local var_15_1 = lua_skill.configDict[arg_15_1]
+	local skillCO = lua_skill.configDict[skillId]
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_2 or var_15_0:getBuffList()) do
-		local var_15_2 = FightConfig.instance:getBuffFeatures(iter_15_1.buffId)
+	for _, buffMO in ipairs(buffList or entityMO:getBuffList()) do
+		local buffFeatures = FightConfig.instance:getBuffFeatures(buffMO.buffId)
 
-		for iter_15_2, iter_15_3 in pairs(var_15_2) do
-			if var_0_0.isLockByLockBuffType(iter_15_3, var_15_1, arg_15_0) then
+		for featureType, value in pairs(buffFeatures) do
+			if FightViewHandCardItemLock.isLockByLockBuffType(value, skillCO, entityId) then
 				return false
 			end
 		end
 	end
 
-	if FightModel.instance:isBeContractEntity(arg_15_0) then
-		if arg_15_2 then
-			local var_15_3 = FightModel.instance.contractEntityUid
-			local var_15_4 = var_15_3 and FightDataHelper.entityMgr:getById(var_15_3)
+	if FightModel.instance:isBeContractEntity(entityId) then
+		if buffList then
+			local nanaEntityId = FightModel.instance.contractEntityUid
+			local nanaEntityMo = nanaEntityId and FightDataHelper.entityMgr:getById(nanaEntityId)
 
-			arg_15_2 = FightBuffHelper.simulateBuffList(var_15_4)
+			buffList = FightBuffHelper.simulateBuffList(nanaEntityMo, roundOp)
 
-			if FightBuffHelper.hasFeature(nil, arg_15_2, FightEnum.BuffType_ContractCastChannel) then
+			if FightBuffHelper.hasFeature(nil, buffList, FightEnum.BuffType_ContractCastChannel) then
 				return false
 			end
-		elseif FightBuffHelper.checkCurEntityIsBeContractAndHasChannel(arg_15_0) then
+		elseif FightBuffHelper.checkCurEntityIsBeContractAndHasChannel(entityId) then
 			return false
 		end
 	end
@@ -409,109 +421,106 @@ function var_0_0.canUseCardSkill(arg_15_0, arg_15_1, arg_15_2)
 	return true
 end
 
-function var_0_0.isLockByLockBuffType(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_1.isBigSkill == 1 and true or false
-	local var_16_1 = arg_16_0.featureType
-	local var_16_2 = var_0_6[var_16_1]
+function FightViewHandCardItemLock.isLockByLockBuffType(feature, skillConfig, entityId)
+	local isBigSkill = skillConfig.isBigSkill == 1 and true or false
+	local featureType = feature.featureType
+	local lockObj = LockAllBuffType[featureType]
 
-	if var_16_2 == true then
+	if lockObj == true then
 		return true
 	end
 
-	if var_16_2 then
-		if var_16_2.reverse then
-			if var_16_0 then
-				if not var_16_2.bigSkill then
+	if lockObj then
+		if lockObj.reverse then
+			if isBigSkill then
+				if not lockObj.bigSkill then
 					return true
 				end
-			elseif not var_16_2[arg_16_1.effectTag] then
+			elseif not lockObj[skillConfig.effectTag] then
 				return true
 			end
-		elseif var_16_2.UseSkillHasBuffCond then
-			local var_16_3 = FightStrUtil.instance:getSplitToNumberCache(arg_16_0.featureStr, "#")
+		elseif lockObj.UseSkillHasBuffCond then
+			local ids = FightStrUtil.instance:getSplitToNumberCache(feature.featureStr, "#")
 
-			for iter_16_0 = 3, #var_16_3 do
-				if var_16_3[iter_16_0] == arg_16_1.id then
-					local var_16_4 = FightHelper.getEntity(arg_16_2)
+			for i = 3, #ids do
+				if ids[i] == skillConfig.id then
+					local entity = FightHelper.getEntity(entityId)
 
-					if var_16_4 and var_16_4.buff and not var_16_4.buff:haveBuffTypeId(var_16_3[2]) then
+					if entity and entity.buff and not entity.buff:haveBuffTypeId(ids[2]) then
 						return true
 					end
 				end
 			end
 		else
-			if var_16_0 and var_16_2.bigSkill then
+			if isBigSkill and lockObj.bigSkill then
 				return true
 			end
 
-			if var_16_2[arg_16_1.effectTag] == true and var_16_2.bigSkill == var_16_0 then
+			if lockObj[skillConfig.effectTag] == true and lockObj.bigSkill == isBigSkill then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0._getCardLockReason(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_0 or not arg_17_1 then
+function FightViewHandCardItemLock._getCardLockReason(entityId, skillId, buffList, roundOp)
+	if not entityId or not skillId then
 		return
 	end
 
-	local var_17_0 = FightDataHelper.entityMgr:getById(arg_17_0)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_17_0 then
+	if not entityMO then
 		return
 	end
 
-	local var_17_1 = lua_skill.configDict[arg_17_1]
-	local var_17_2, var_17_3 = var_0_0.getLockBuffMo(var_17_0, arg_17_2, var_17_1)
+	local skillCO = lua_skill.configDict[skillId]
+	local lockBuffMO, curPriority = FightViewHandCardItemLock.getLockBuffMo(entityMO, buffList, skillCO)
 
-	if FightModel.instance:isBeContractEntity(arg_17_0) then
-		local var_17_4 = FightModel.instance.contractEntityUid
-		local var_17_5 = var_17_4 and FightDataHelper.entityMgr:getById(var_17_4)
+	if FightModel.instance:isBeContractEntity(entityId) then
+		local nanaEntityId = FightModel.instance.contractEntityUid
+		local nanaEntityMo = nanaEntityId and FightDataHelper.entityMgr:getById(nanaEntityId)
 
-		arg_17_2 = FightBuffHelper.simulateBuffList(var_17_5)
-
-		local var_17_6
-
-		var_17_2, var_17_6 = var_0_0.getLockBuffMo(var_17_5, arg_17_2, var_17_1, var_17_2, var_17_3)
+		buffList = FightBuffHelper.simulateBuffList(nanaEntityMo, roundOp)
+		lockBuffMO, curPriority = FightViewHandCardItemLock.getLockBuffMo(nanaEntityMo, buffList, skillCO, lockBuffMO, curPriority)
 	end
 
-	return var_17_2 and lua_skill_buff.configDict[var_17_2.buffId]
+	return lockBuffMO and lua_skill_buff.configDict[lockBuffMO.buffId]
 end
 
-function var_0_0.getLockBuffMo(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	if not arg_18_0 then
+function FightViewHandCardItemLock.getLockBuffMo(entityMo, buffList, skillCO, curBuffMo, curPriority)
+	if not entityMo then
 		return
 	end
 
-	arg_18_4 = arg_18_4 or -1
-	arg_18_1 = arg_18_1 or arg_18_0:getBuffList()
+	curPriority = curPriority or -1
+	buffList = buffList or entityMo:getBuffList()
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		local var_18_0 = FightConfig.instance:getBuffFeatures(iter_18_1.buffId)
+	for _, buffMO in ipairs(buffList) do
+		local buffFeatures = FightConfig.instance:getBuffFeatures(buffMO.buffId)
 
-		for iter_18_2, iter_18_3 in pairs(var_18_0) do
-			if var_0_0.isLockByLockBuffType(iter_18_3, arg_18_2, arg_18_0.id) then
-				local var_18_1 = FightEnum.CardLockPriorityDict[iter_18_2] or -1
+		for featureType, value in pairs(buffFeatures) do
+			if FightViewHandCardItemLock.isLockByLockBuffType(value, skillCO, entityMo.id) then
+				local thisPriority = FightEnum.CardLockPriorityDict[featureType] or -1
 
-				if not arg_18_3 then
-					arg_18_3 = iter_18_1
-					arg_18_4 = var_18_1
-				elseif arg_18_4 < var_18_1 or var_18_1 == arg_18_4 and tonumber(iter_18_1.uid) > tonumber(arg_18_3.uid) then
-					arg_18_3 = iter_18_1
-					arg_18_4 = var_18_1
+				if not curBuffMo then
+					curBuffMo = buffMO
+					curPriority = thisPriority
+				elseif curPriority < thisPriority or thisPriority == curPriority and tonumber(buffMO.uid) > tonumber(curBuffMo.uid) then
+					curBuffMo = buffMO
+					curPriority = thisPriority
 				end
 			end
 		end
 	end
 
-	return arg_18_3, arg_18_4
+	return curBuffMo, curPriority
 end
 
-function var_0_0.logSkill(arg_19_0, arg_19_1)
-	local var_19_0 = lua_skill.configDict[arg_19_0]
+function FightViewHandCardItemLock.logSkill(skillId, message)
+	local skillCo = lua_skill.configDict[skillId]
 
-	logError(string.format("%s : %s", var_19_0.name, arg_19_1))
+	logError(string.format("%s : %s", skillCo.name, message))
 end
 
-return var_0_0
+return FightViewHandCardItemLock

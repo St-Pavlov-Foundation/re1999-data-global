@@ -1,8 +1,10 @@
-﻿module("modules.logic.mainsceneswitch.config.MainSceneSwitchConfig", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/config/MainSceneSwitchConfig.lua
 
-local var_0_0 = class("MainSceneSwitchConfig", BaseConfig)
+module("modules.logic.mainsceneswitch.config.MainSceneSwitchConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local MainSceneSwitchConfig = class("MainSceneSwitchConfig", BaseConfig)
+
+function MainSceneSwitchConfig:reqConfigNames()
 	return {
 		"scene_switch",
 		"scene_settings",
@@ -10,101 +12,101 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function MainSceneSwitchConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "scene_switch" then
-		arg_3_0:_initSceneSwitchConfig()
+function MainSceneSwitchConfig:onConfigLoaded(configName, configTable)
+	if configName == "scene_switch" then
+		self:_initSceneSwitchConfig()
 	end
 end
 
-function var_0_0._initSceneSwitchConfig(arg_4_0)
-	arg_4_0._itemMap = {}
-	arg_4_0._itemLockList = {}
-	arg_4_0._itemSource = {}
-	arg_4_0._defaultSceneId = nil
+function MainSceneSwitchConfig:_initSceneSwitchConfig()
+	self._itemMap = {}
+	self._itemLockList = {}
+	self._itemSource = {}
+	self._defaultSceneId = nil
 
-	for iter_4_0, iter_4_1 in ipairs(lua_scene_switch.configList) do
-		arg_4_0._itemMap[iter_4_1.itemId] = iter_4_1
+	for i, v in ipairs(lua_scene_switch.configList) do
+		self._itemMap[v.itemId] = v
 
-		if iter_4_1.defaultUnlock == 1 then
-			if arg_4_0._defaultSceneId ~= nil then
+		if v.defaultUnlock == 1 then
+			if self._defaultSceneId ~= nil then
 				logError("MainSceneSwitchConfig:_initSceneSwitchConfig has more than one default scene")
 			end
 
-			arg_4_0._defaultSceneId = iter_4_1.id
+			self._defaultSceneId = v.id
 		else
-			table.insert(arg_4_0._itemLockList, iter_4_1.itemId)
+			table.insert(self._itemLockList, v.itemId)
 		end
 	end
 
-	if not arg_4_0._defaultSceneId then
+	if not self._defaultSceneId then
 		logError("MainSceneSwitchConfig:_initSceneSwitchConfig has no default scene")
 	end
 end
 
-function var_0_0.getItemSource(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._itemSource[arg_5_1]
+function MainSceneSwitchConfig:getItemSource(itemId)
+	local t = self._itemSource[itemId]
 
-	if not var_5_0 then
-		var_5_0 = arg_5_0:_collectSource(arg_5_1)
-		arg_5_0._itemSource[arg_5_1] = var_5_0
+	if not t then
+		t = self:_collectSource(itemId)
+		self._itemSource[itemId] = t
 	end
 
-	return var_5_0
+	return t
 end
 
-function var_0_0._collectSource(arg_6_0, arg_6_1)
-	local var_6_0 = lua_item.configDict[arg_6_1].sources
-	local var_6_1 = {}
+function MainSceneSwitchConfig:_collectSource(itemId)
+	local itemConfig = lua_item.configDict[itemId]
+	local sourcesStr = itemConfig.sources
+	local sourceTables = {}
 
-	if not string.nilorempty(var_6_0) then
-		local var_6_2 = string.split(var_6_0, "|")
+	if not string.nilorempty(sourcesStr) then
+		local sources = string.split(sourcesStr, "|")
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_2) do
-			local var_6_3 = string.splitToNumber(iter_6_1, "#")
-			local var_6_4 = {
-				sourceId = var_6_3[1],
-				probability = var_6_3[2]
-			}
+		for i, source in ipairs(sources) do
+			local sourceParam = string.splitToNumber(source, "#")
+			local sourceTable = {}
 
-			var_6_4.episodeId = JumpConfig.instance:getJumpEpisodeId(var_6_4.sourceId)
+			sourceTable.sourceId = sourceParam[1]
+			sourceTable.probability = sourceParam[2]
+			sourceTable.episodeId = JumpConfig.instance:getJumpEpisodeId(sourceTable.sourceId)
 
-			if var_6_4.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(var_6_4.episodeId) then
-				table.insert(var_6_1, var_6_4)
+			if sourceTable.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(sourceTable.episodeId) then
+				table.insert(sourceTables, sourceTable)
 			end
 		end
 	end
 
-	return var_6_1
+	return sourceTables
 end
 
-function var_0_0.getItemLockList(arg_7_0)
-	return arg_7_0._itemLockList
+function MainSceneSwitchConfig:getItemLockList()
+	return self._itemLockList
 end
 
-function var_0_0.getConfigByItemId(arg_8_0, arg_8_1)
-	return arg_8_0._itemMap[arg_8_1]
+function MainSceneSwitchConfig:getConfigByItemId(itemId)
+	return self._itemMap[itemId]
 end
 
-function var_0_0.getDefaultSceneId(arg_9_0)
-	return arg_9_0._defaultSceneId
+function MainSceneSwitchConfig:getDefaultSceneId()
+	return self._defaultSceneId
 end
 
-function var_0_0.getSceneEffect(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = lua_scene_effect_settings.configDict[arg_10_1]
+function MainSceneSwitchConfig:getSceneEffect(sceneId, tag)
+	local configs = lua_scene_effect_settings.configDict[sceneId]
 
-	if var_10_0 then
-		for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-			if iter_10_1.tag == arg_10_2 then
-				return iter_10_1
+	if configs then
+		for i, v in ipairs(configs) do
+			if v.tag == tag then
+				return v
 			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+MainSceneSwitchConfig.instance = MainSceneSwitchConfig.New()
 
-return var_0_0
+return MainSceneSwitchConfig

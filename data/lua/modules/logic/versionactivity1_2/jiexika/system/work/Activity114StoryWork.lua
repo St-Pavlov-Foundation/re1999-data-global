@@ -1,67 +1,69 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114StoryWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114StoryWork.lua
 
-local var_0_0 = class("Activity114StoryWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114StoryWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._storyId = arg_1_1
-	arg_1_0._storyType = arg_1_2
+local Activity114StoryWork = class("Activity114StoryWork", Activity114BaseWork)
 
-	var_0_0.super.ctor(arg_1_0)
+function Activity114StoryWork:ctor(storyId, storyType)
+	self._storyId = storyId
+	self._storyType = storyType
+
+	Activity114StoryWork.super.ctor(self)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if not arg_2_0._storyId then
-		arg_2_0._storyId = arg_2_1.storyId
-		arg_2_1.storyId = nil
+function Activity114StoryWork:onStart(context)
+	if not self._storyId then
+		self._storyId = context.storyId
+		context.storyId = nil
 	end
 
-	if type(arg_2_0._storyId) == "string" then
-		arg_2_0._storyId = tonumber(arg_2_0._storyId)
+	if type(self._storyId) == "string" then
+		self._storyId = tonumber(self._storyId)
 	end
 
-	if not arg_2_0._storyId or arg_2_0._storyId <= 0 then
-		arg_2_0:onDone(true)
+	if not self._storyId or self._storyId <= 0 then
+		self:onDone(true)
 
 		return
 	end
 
 	if Activity114Model.instance.waitStoryFinish then
-		Activity114Controller.instance:registerCallback(Activity114Event.StoryFinish, arg_2_0.playStory, arg_2_0)
+		Activity114Controller.instance:registerCallback(Activity114Event.StoryFinish, self.playStory, self)
 	else
-		arg_2_0:playStory()
+		self:playStory()
 	end
 end
 
-function var_0_0.playStory(arg_3_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, arg_3_0.playStory, arg_3_0)
-	StoryController.instance:registerCallback(StoryEvent.AllStepFinished, arg_3_0._onStoryFinish, arg_3_0)
-	StoryController.instance:playStory(arg_3_0._storyId)
+function Activity114StoryWork:playStory()
+	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, self.playStory, self)
+	StoryController.instance:registerCallback(StoryEvent.AllStepFinished, self._onStoryFinish, self)
+	StoryController.instance:playStory(self._storyId)
 
-	arg_3_0.context.storyType = arg_3_0._storyType
+	self.context.storyType = self._storyType
 end
 
-function var_0_0.forceEndStory(arg_4_0)
-	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, arg_4_0._onStoryFinish, arg_4_0)
-	arg_4_0:onDone(true)
+function Activity114StoryWork:forceEndStory()
+	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, self._onStoryFinish, self)
+	self:onDone(true)
 end
 
-function var_0_0._onStoryFinish(arg_5_0)
-	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, arg_5_0._onStoryFinish, arg_5_0)
+function Activity114StoryWork:_onStoryFinish()
+	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, self._onStoryFinish, self)
 
 	if Activity114Model.instance:isEnd() then
-		arg_5_0:onDone(false)
+		self:onDone(false)
 		Activity114Controller.instance:alertActivityEndMsgBox()
 
 		return
 	end
 
-	arg_5_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_6_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, arg_6_0.playStory, arg_6_0)
-	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, arg_6_0._onStoryFinish, arg_6_0)
-	var_0_0.super.clearWork(arg_6_0)
+function Activity114StoryWork:clearWork()
+	Activity114Controller.instance:unregisterCallback(Activity114Event.StoryFinish, self.playStory, self)
+	StoryController.instance:unregisterCallback(StoryEvent.AllStepFinished, self._onStoryFinish, self)
+	Activity114StoryWork.super.clearWork(self)
 end
 
-return var_0_0
+return Activity114StoryWork

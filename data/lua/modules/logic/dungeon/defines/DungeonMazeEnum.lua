@@ -1,29 +1,31 @@
-﻿module("modules.logic.dungeon.defines.DungeonMazeEnum", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/defines/DungeonMazeEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.dungeon.defines.DungeonMazeEnum", package.seeall)
 
-var_0_0.WordTxtInterval = 5
-var_0_0.WordTxtOpen = 0.7
-var_0_0.WordTxtIdle = 1.1
-var_0_0.WordTxtClose = 0.5
-var_0_0.dir = {
+local DungeonMazeEnum = _M
+
+DungeonMazeEnum.WordTxtInterval = 5
+DungeonMazeEnum.WordTxtOpen = 0.7
+DungeonMazeEnum.WordTxtIdle = 1.1
+DungeonMazeEnum.WordTxtClose = 0.5
+DungeonMazeEnum.dir = {
 	up = 4,
 	down = 3,
 	left = 1,
 	right = 2
 }
-var_0_0.skillState = {
+DungeonMazeEnum.skillState = {
 	cooling = 3,
 	usable = 1,
 	using = 2
 }
-var_0_0.resultStat = {
+DungeonMazeEnum.resultStat = {
 	"成功",
 	"失败",
 	"主动中断",
 	"重置"
 }
-var_0_0.hideDialogTimeConstId = 2
-var_0_0.MaxChaosValue = 100
+DungeonMazeEnum.hideDialogTimeConstId = 2
+DungeonMazeEnum.MaxChaosValue = 100
 
-return var_0_0
+return DungeonMazeEnum

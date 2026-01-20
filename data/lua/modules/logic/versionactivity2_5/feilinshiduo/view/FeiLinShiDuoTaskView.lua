@@ -1,67 +1,69 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/view/FeiLinShiDuoTaskView.lua
 
-local var_0_0 = class("FeiLinShiDuoTaskView", BaseView)
+module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
+local FeiLinShiDuoTaskView = class("FeiLinShiDuoTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FeiLinShiDuoTaskView:onInitView()
+	self._txttime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "#scroll_TaskList")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FeiLinShiDuoTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FeiLinShiDuoTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FeiLinShiDuoTaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function FeiLinShiDuoTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function FeiLinShiDuoTaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
 
-	arg_6_0.actId = arg_6_0.viewParam.activityId
+	self.actId = self.viewParam.activityId
 
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0._oneClaimReward, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0._onFinishTask, arg_6_0)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	FeiLinShiDuoTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity185
-	}, arg_6_0._oneClaimReward, arg_6_0)
-	TaskDispatcher.runRepeat(arg_6_0.showLeftTime, arg_6_0, TimeUtil.OneMinuteSecond)
-	arg_6_0:showLeftTime()
+	}, self._oneClaimReward, self)
+	TaskDispatcher.runRepeat(self.showLeftTime, self, TimeUtil.OneMinuteSecond)
+	self:showLeftTime()
 end
 
-function var_0_0._oneClaimReward(arg_7_0)
-	FeiLinShiDuoTaskListModel.instance:init(arg_7_0.actId)
+function FeiLinShiDuoTaskView:_oneClaimReward()
+	FeiLinShiDuoTaskListModel.instance:init(self.actId)
 end
 
-function var_0_0._onFinishTask(arg_8_0, arg_8_1)
-	if FeiLinShiDuoTaskListModel.instance:getById(arg_8_1) then
-		FeiLinShiDuoTaskListModel.instance:init(arg_8_0.actId)
+function FeiLinShiDuoTaskView:_onFinishTask(taskId)
+	if FeiLinShiDuoTaskListModel.instance:getById(taskId) then
+		FeiLinShiDuoTaskListModel.instance:init(self.actId)
 	end
 end
 
-function var_0_0.showLeftTime(arg_9_0)
-	arg_9_0._txttime.text = ActivityHelper.getActivityRemainTimeStr(arg_9_0.actId)
+function FeiLinShiDuoTaskView:showLeftTime()
+	self._txttime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.showLeftTime, arg_10_0)
+function FeiLinShiDuoTaskView:onClose()
+	TaskDispatcher.cancelTask(self.showLeftTime, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function FeiLinShiDuoTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FeiLinShiDuoTaskView

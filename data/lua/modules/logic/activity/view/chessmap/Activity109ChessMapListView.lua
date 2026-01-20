@@ -1,47 +1,49 @@
-﻿module("modules.logic.activity.view.chessmap.Activity109ChessMapListView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/chessmap/Activity109ChessMapListView.lua
 
-local var_0_0 = class("Activity109ChessMapListView", BaseView)
+module("modules.logic.activity.view.chessmap.Activity109ChessMapListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
+local Activity109ChessMapListView = class("Activity109ChessMapListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity109ChessMapListView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
+function Activity109ChessMapListView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
+function Activity109ChessMapListView:removeEvents()
+	self._btntask:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getActivityBg("full/barqiandao_bj_009"))
+function Activity109ChessMapListView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getActivityBg("full/barqiandao_bj_009"))
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0._simagebg:UnLoadImage()
+function Activity109ChessMapListView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function Activity109ChessMapListView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_7_0)
+function Activity109ChessMapListView:onClose()
 	return
 end
 
-function var_0_0._btntaskOnClick(arg_8_0)
-	local var_8_0 = Activity109ChessModel.instance:getActId()
-	local var_8_1 = Activity109ChessModel.instance:getMapId()
-	local var_8_2 = Activity109ChessModel.instance:getEpisodeId()
-	local var_8_3 = 1
+function Activity109ChessMapListView:_btntaskOnClick()
+	local actId = Activity109ChessModel.instance:getActId()
+	local mapId = Activity109ChessModel.instance:getMapId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
+	local targetEpisodeId = 1
 
-	Activity109ChessController.instance:startNewEpisode(var_8_3)
+	Activity109ChessController.instance:startNewEpisode(targetEpisodeId)
 end
 
-return var_0_0
+return Activity109ChessMapListView

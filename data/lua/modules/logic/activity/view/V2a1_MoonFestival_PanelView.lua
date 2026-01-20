@@ -1,177 +1,182 @@
-﻿module("modules.logic.activity.view.V2a1_MoonFestival_PanelView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a1_MoonFestival_PanelView.lua
 
-local var_0_0 = class("V2a1_MoonFestival_PanelView", Activity101SignViewBase)
+module("modules.logic.activity.view.V2a1_MoonFestival_PanelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDec = gohelper.findChildText(arg_1_0.viewGO, "Root/image_DecBG/scroll_desc/Viewport/Content/#txt_Dec")
-	arg_1_0._goNormalBG = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_NormalBG")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Root/Task/#go_NormalBG/scroll_desc/Viewport/Content/#txt_dec")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Root/Task/#go_NormalBG/#txt_num")
-	arg_1_0._simagereward = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Task/#go_NormalBG/#simage_reward")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_canget")
-	arg_1_0._goFinishedBG = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_FinishedBG")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
-	arg_1_0._btnemptyTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyTop")
-	arg_1_0._btnemptyBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBottom")
-	arg_1_0._btnemptyLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyLeft")
-	arg_1_0._btnemptyRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyRight")
+local V2a1_MoonFestival_PanelView = class("V2a1_MoonFestival_PanelView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a1_MoonFestival_PanelView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDec = gohelper.findChildText(self.viewGO, "Root/image_DecBG/scroll_desc/Viewport/Content/#txt_Dec")
+	self._goNormalBG = gohelper.findChild(self.viewGO, "Root/Task/#go_NormalBG")
+	self._txtdec = gohelper.findChildText(self.viewGO, "Root/Task/#go_NormalBG/scroll_desc/Viewport/Content/#txt_dec")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Root/Task/#go_NormalBG/#txt_num")
+	self._simagereward = gohelper.findChildSingleImage(self.viewGO, "Root/Task/#go_NormalBG/#simage_reward")
+	self._gocanget = gohelper.findChild(self.viewGO, "Root/Task/#go_canget")
+	self._goFinishedBG = gohelper.findChild(self.viewGO, "Root/Task/#go_FinishedBG")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+	self._btnemptyTop = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyTop")
+	self._btnemptyBottom = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyBottom")
+	self._btnemptyLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyLeft")
+	self._btnemptyRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyRight")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
-	arg_2_0._btnemptyTop:AddClickListener(arg_2_0._btnemptyTopOnClick, arg_2_0)
-	arg_2_0._btnemptyBottom:AddClickListener(arg_2_0._btnemptyBottomOnClick, arg_2_0)
-	arg_2_0._btnemptyLeft:AddClickListener(arg_2_0._btnemptyLeftOnClick, arg_2_0)
-	arg_2_0._btnemptyRight:AddClickListener(arg_2_0._btnemptyRightOnClick, arg_2_0)
+function V2a1_MoonFestival_PanelView:addEvents()
+	Activity101SignViewBase.addEvents(self)
+	self._btnemptyTop:AddClickListener(self._btnemptyTopOnClick, self)
+	self._btnemptyBottom:AddClickListener(self._btnemptyBottomOnClick, self)
+	self._btnemptyLeft:AddClickListener(self._btnemptyLeftOnClick, self)
+	self._btnemptyRight:AddClickListener(self._btnemptyRightOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
-	arg_3_0._btnemptyTop:RemoveClickListener()
-	arg_3_0._btnemptyBottom:RemoveClickListener()
-	arg_3_0._btnemptyLeft:RemoveClickListener()
-	arg_3_0._btnemptyRight:RemoveClickListener()
+function V2a1_MoonFestival_PanelView:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
+	self._btnemptyTop:RemoveClickListener()
+	self._btnemptyBottom:RemoveClickListener()
+	self._btnemptyLeft:RemoveClickListener()
+	self._btnemptyRight:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function V2a1_MoonFestival_PanelView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyTopOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function V2a1_MoonFestival_PanelView:_btnemptyTopOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyBottomOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function V2a1_MoonFestival_PanelView:_btnemptyBottomOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyLeftOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function V2a1_MoonFestival_PanelView:_btnemptyLeftOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyRightOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function V2a1_MoonFestival_PanelView:_btnemptyRightOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._txtLimitTime.text = ""
+function V2a1_MoonFestival_PanelView:_editableInitView()
+	self._txtLimitTime.text = ""
 
-	arg_9_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
-	arg_9_0:_setActive_canget(false)
-	arg_9_0:_setActive_goFinishedBG(false)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
+	self:_setActive_canget(false)
+	self:_setActive_goFinishedBG(false)
 
-	arg_9_0._itemClick = gohelper.getClickWithAudio(arg_9_0._goNormalBG)
+	self._itemClick = gohelper.getClickWithAudio(self._goNormalBG)
 
-	arg_9_0._itemClick:AddClickListener(arg_9_0._onItemClick, arg_9_0)
+	self._itemClick:AddClickListener(self._onItemClick, self)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:internal_set_actId(arg_10_0.viewParam.actId)
-	arg_10_0:internal_onOpen()
-	arg_10_0:_clearTimeTick()
-	TaskDispatcher.runRepeat(arg_10_0._refreshTimeTick, arg_10_0, 1)
+function V2a1_MoonFestival_PanelView:onOpen()
+	self:internal_set_actId(self.viewParam.actId)
+	self:internal_onOpen()
+	self:_clearTimeTick()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_11_0)
-	GameUtil.onDestroyViewMember_ClickListener(arg_11_0, "_itemClick")
-	arg_11_0:_clearTimeTick()
+function V2a1_MoonFestival_PanelView:onClose()
+	GameUtil.onDestroyViewMember_ClickListener(self, "_itemClick")
+	self:_clearTimeTick()
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	Activity101SignViewBase._internal_onDestroy(arg_12_0)
-	arg_12_0:_clearTimeTick()
-	arg_12_0._simagereward:UnLoadImage()
-	arg_12_0._simageTitle:UnLoadImage()
+function V2a1_MoonFestival_PanelView:onDestroyView()
+	Activity101SignViewBase._internal_onDestroy(self)
+	self:_clearTimeTick()
+	self._simagereward:UnLoadImage()
+	self._simageTitle:UnLoadImage()
 end
 
-function var_0_0._clearTimeTick(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._refreshTimeTick, arg_13_0)
+function V2a1_MoonFestival_PanelView:_clearTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_14_0)
-	arg_14_0:_refreshList()
-	arg_14_0:_refreshTimeTick()
-	arg_14_0:_refreshLeftTop()
-	arg_14_0:_refreshRightTop()
+function V2a1_MoonFestival_PanelView:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
+	self:_refreshLeftTop()
+	self:_refreshRightTop()
 end
 
-function var_0_0._refreshTimeTick(arg_15_0)
-	arg_15_0._txtLimitTime.text = arg_15_0:getRemainTimeStr()
+function V2a1_MoonFestival_PanelView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0._refreshLeftTop(arg_16_0)
-	local var_16_0 = arg_16_0.viewContainer:getCurrentDayCO()
+function V2a1_MoonFestival_PanelView:_refreshLeftTop()
+	local CO = self.viewContainer:getCurrentDayCO()
 
-	if not var_16_0 then
-		arg_16_0._txtDec.text = ""
+	if not CO then
+		self._txtDec.text = ""
 
 		return
 	end
 
-	arg_16_0._txtDec.text = var_16_0.desc
+	self._txtDec.text = CO.desc
 end
 
-function var_0_0._refreshRightTop(arg_17_0)
-	local var_17_0 = arg_17_0.viewContainer:getCurrentTaskCO()
+function V2a1_MoonFestival_PanelView:_refreshRightTop()
+	local CO = self.viewContainer:getCurrentTaskCO()
 
-	if not var_17_0 then
-		arg_17_0._txtdec.text = ""
+	if not CO then
+		self._txtdec.text = ""
 
-		arg_17_0._simagereward:UnLoadImage()
+		self._simagereward:UnLoadImage()
 
-		arg_17_0._txtnum.text = ""
+		self._txtnum.text = ""
 
 		return
 	end
 
-	local var_17_1 = GameUtil.splitString2(var_17_0.bonus, true)[1]
-	local var_17_2 = var_17_1[1]
-	local var_17_3 = var_17_1[2]
-	local var_17_4, var_17_5 = ItemModel.instance:getItemConfigAndIcon(var_17_2, var_17_3)
-	local var_17_6 = arg_17_0.viewContainer:isNone(var_17_0.id)
-	local var_17_7 = arg_17_0.viewContainer:isFinishedTask(var_17_0.id)
-	local var_17_8 = arg_17_0.viewContainer:isRewardable(var_17_0.id)
+	local bonusItems = GameUtil.splitString2(CO.bonus, true)
+	local bonusItem = bonusItems[1]
+	local itemType = bonusItem[1]
+	local itemId = bonusItem[2]
+	local _, iconResUrl = ItemModel.instance:getItemConfigAndIcon(itemType, itemId)
+	local isNone = self.viewContainer:isNone(CO.id)
+	local isFinishedTask = self.viewContainer:isFinishedTask(CO.id)
+	local isRewardable = self.viewContainer:isRewardable(CO.id)
 
-	arg_17_0:_setActive_canget(var_17_8)
-	arg_17_0:_setActive_goFinishedBG(var_17_7)
+	self:_setActive_canget(isRewardable)
+	self:_setActive_goFinishedBG(isFinishedTask)
 
-	arg_17_0._txtdec.text = var_17_0.taskDesc
+	self._txtdec.text = CO.taskDesc
 
-	GameUtil.loadSImage(arg_17_0._simagereward, var_17_5)
+	GameUtil.loadSImage(self._simagereward, iconResUrl)
 
-	arg_17_0._txtnum.text = var_17_6 and gohelper.getRichColorText("0/1", "#ff9673") or "1/1"
-	arg_17_0._bonusItem = var_17_1
+	self._txtnum.text = isNone and gohelper.getRichColorText("0/1", "#ff9673") or "1/1"
+	self._bonusItem = bonusItem
 end
 
-function var_0_0._onItemClick(arg_18_0)
-	if not arg_18_0.viewContainer:sendGet101SpBonusRequest(arg_18_0._onReceiveGet101SpBonusReplySucc, arg_18_0) and arg_18_0._bonusItem then
-		MaterialTipController.instance:showMaterialInfo(arg_18_0._bonusItem[1], arg_18_0._bonusItem[2])
+function V2a1_MoonFestival_PanelView:_onItemClick()
+	local ok = self.viewContainer:sendGet101SpBonusRequest(self._onReceiveGet101SpBonusReplySucc, self)
+
+	if not ok and self._bonusItem then
+		MaterialTipController.instance:showMaterialInfo(self._bonusItem[1], self._bonusItem[2])
 	end
 end
 
-function var_0_0._setActive_canget(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._gocanget, arg_19_1)
+function V2a1_MoonFestival_PanelView:_setActive_canget(isActive)
+	gohelper.setActive(self._gocanget, isActive)
 end
 
-function var_0_0._setActive_goFinishedBG(arg_20_0, arg_20_1)
-	gohelper.setActive(arg_20_0._goFinishedBG, arg_20_1)
+function V2a1_MoonFestival_PanelView:_setActive_goFinishedBG(isActive)
+	gohelper.setActive(self._goFinishedBG, isActive)
 end
 
-function var_0_0._onReceiveGet101SpBonusReplySucc(arg_21_0)
-	arg_21_0:_refreshRightTop()
+function V2a1_MoonFestival_PanelView:_onReceiveGet101SpBonusReplySucc()
+	self:_refreshRightTop()
 
-	if not ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(arg_21_0:actId()) then
+	if not ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(self:actId()) then
 		RedDotRpc.instance:sendGetRedDotInfosRequest({
 			RedDotEnum.DotNode.ActivityNoviceTab
 		})
 	end
 end
 
-return var_0_0
+return V2a1_MoonFestival_PanelView

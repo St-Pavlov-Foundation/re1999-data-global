@@ -1,8 +1,10 @@
-﻿module("projbooter.config.GameUrlConfig", package.seeall)
+﻿-- chunkname: @projbooter/config/GameUrlConfig.lua
 
-local var_0_0 = _M
+module("projbooter.config.GameUrlConfig", package.seeall)
 
-var_0_0.ServerType = {
+local GameUrlConfig = _M
+
+GameUrlConfig.ServerType = {
 	Develop = 1,
 	OutDevelop = 2,
 	OutRelease = 4,
@@ -10,68 +12,71 @@ var_0_0.ServerType = {
 	OutPreview = 3
 }
 
-function var_0_0.getLoginUrls(arg_1_0)
-	local var_1_0 = UrlConfig.getConfig()
-	local var_1_1 = VersionValidator.instance:isInReviewing(true)
-	local var_1_2
-	local var_1_3
+function GameUrlConfig.getLoginUrls(bak)
+	local curConfig = UrlConfig.getConfig()
+	local review = VersionValidator.instance:isInReviewing(true)
+	local httpLoginUrl, httpLoginUrlInfo
 
-	if var_1_1 then
-		var_1_3 = arg_1_0 and var_1_0.loginReviewBackup or var_1_0.loginReview
+	if review then
+		httpLoginUrlInfo = bak and curConfig.loginReviewBackup or curConfig.loginReview
 	else
-		var_1_3 = arg_1_0 and var_1_0.loginBackup or var_1_0.login
+		httpLoginUrlInfo = bak and curConfig.loginBackup or curConfig.login
 	end
 
-	if type(var_1_3) == "table" then
-		local var_1_4 = tostring(SDKMgr.instance:getChannelId())
+	if type(httpLoginUrlInfo) == "table" then
+		local channelId = tostring(SDKMgr.instance:getChannelId())
 
-		var_1_2 = var_1_3[var_1_4]
+		httpLoginUrl = httpLoginUrlInfo[channelId]
 
-		if not var_1_2 then
-			for iter_1_0, iter_1_1 in pairs(var_1_3) do
-				var_1_2 = iter_1_1
+		if not httpLoginUrl then
+			for cid, url in pairs(httpLoginUrlInfo) do
+				httpLoginUrl = url
 
-				logError(string.format("httpLoginUrl not exist, bak=%s, channelId=%s\nuse %s:%s", arg_1_0 and "true" or "false", var_1_4, iter_1_0, var_1_2 or "nil"))
+				logError(string.format("httpLoginUrl not exist, bak=%s, channelId=%s\nuse %s:%s", bak and "true" or "false", channelId, cid, httpLoginUrl or "nil"))
 
 				break
 			end
 		end
 	else
-		var_1_2 = var_1_3
+		httpLoginUrl = httpLoginUrlInfo
 	end
 
-	local var_1_5 = var_1_2 .. "/login0.jsp"
-	local var_1_6 = var_1_2 .. "/login.jsp"
-	local var_1_7 = var_1_2 .. "/loadzone.jsp"
-	local var_1_8 = var_1_2 .. "/startgame.jsp"
+	local getSessionIdUrl = httpLoginUrl .. "/login0.jsp"
+	local httpWebLoginUrl = httpLoginUrl .. "/login.jsp"
+	local getServerListUrl = httpLoginUrl .. "/loadzone.jsp"
+	local startGameUrl = httpLoginUrl .. "/startgame.jsp"
 
-	return var_1_2, var_1_5, var_1_6, var_1_7, var_1_8
+	return httpLoginUrl, getSessionIdUrl, httpWebLoginUrl, getServerListUrl, startGameUrl
 end
 
-function var_0_0.getHotUpdateUrl()
-	local var_2_0 = UrlConfig.getConfig()
+function GameUrlConfig.getHotUpdateUrl()
+	local curConfig = UrlConfig.getConfig()
 
-	return var_2_0.hotUpdate, var_2_0.hotUpdateBackup
+	return curConfig.hotUpdate, curConfig.hotUpdateBackup
 end
 
-function var_0_0.getOptionalUpdateUrl()
-	local var_3_0 = UrlConfig.getConfig()
+function GameUrlConfig.getOptionalUpdateUrl()
+	local curConfig = UrlConfig.getConfig()
 
-	return var_3_0.optionalUpdate, var_3_0.optionalUpdateBackup
+	return curConfig.optionalUpdate, curConfig.optionalUpdateBackup
 end
 
-function var_0_0.getMassHotUpdateUrl()
-	local var_4_0 = UrlConfig.getConfig()
+function GameUrlConfig.getMassHotUpdateUrl()
+	local curConfig = UrlConfig.getConfig()
 
-	return var_4_0.massHotUpdate, var_4_0.massHotUpdateBackup
+	return curConfig.massHotUpdate, curConfig.massHotUpdateBackup
 end
 
-function var_0_0.getNoticeUrl()
-	return UrlConfig.getConfig().notice
+function GameUrlConfig.getNoticeUrl()
+	local curConfig = UrlConfig.getConfig()
+
+	return curConfig.notice
 end
 
-function var_0_0.getLogReportUrl()
-	return UrlConfig.getConfig().logReport
+function GameUrlConfig.getLogReportUrl()
+	local curConfig = UrlConfig.getConfig()
+
+	return curConfig.logReport
 end
 
-return var_0_0
+return GameUrlConfig

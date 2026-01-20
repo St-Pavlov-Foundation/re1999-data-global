@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_4.act136.define.Activity136Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/define/Activity136Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act136.define.Activity136Event", package.seeall)
 
-var_0_0.SelectCharacter = 1
-var_0_0.ActivityDataUpdate = 2
+local Activity136Event = _M
 
-return var_0_0
+Activity136Event.SelectCharacter = 1
+Activity136Event.ActivityDataUpdate = 2
+
+return Activity136Event

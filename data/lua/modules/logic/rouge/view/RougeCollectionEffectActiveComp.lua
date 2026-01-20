@@ -1,394 +1,402 @@
-﻿module("modules.logic.rouge.view.RougeCollectionEffectActiveComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionEffectActiveComp.lua
 
-local var_0_0 = class("RougeCollectionEffectActiveComp", BaseView)
+module("modules.logic.rouge.view.RougeCollectionEffectActiveComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RougeCollectionEffectActiveComp = class("RougeCollectionEffectActiveComp", BaseView)
+
+function RougeCollectionEffectActiveComp:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeCollectionEffectActiveComp:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeCollectionEffectActiveComp:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnBeginDragCollection, arg_4_0.onBeginDragCollection, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, arg_4_0.deleteSlotCollection, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateSlotCollectionEffect, arg_4_0.updateSomeSlotCollectionEffect, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.RotateSlotCollection, arg_4_0.onRotateSlotCollection, arg_4_0)
-	arg_4_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, arg_4_0.failed2PlaceSlotCollection, arg_4_0)
+function RougeCollectionEffectActiveComp:_editableInitView()
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnBeginDragCollection, self.onBeginDragCollection, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, self.deleteSlotCollection, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateSlotCollectionEffect, self.updateSomeSlotCollectionEffect, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.RotateSlotCollection, self.onRotateSlotCollection, self)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, self.failed2PlaceSlotCollection, self)
 
-	arg_4_0._poolComp = arg_4_0.viewContainer:getRougePoolComp()
-	arg_4_0._effectTab = arg_4_0:getUserDataTb_()
-	arg_4_0._activeEffectMap = {}
+	self._poolComp = self.viewContainer:getRougePoolComp()
+	self._effectTab = self:getUserDataTb_()
+	self._activeEffectMap = {}
 end
 
-function var_0_0.onOpenFinish(arg_5_0)
-	arg_5_0:init()
+function RougeCollectionEffectActiveComp:onOpenFinish()
+	self:init()
 end
 
-function var_0_0.init(arg_6_0)
-	local var_6_0 = RougeCollectionModel.instance:getSlotAreaCollection()
+function RougeCollectionEffectActiveComp:init()
+	local slotCollections = RougeCollectionModel.instance:getSlotAreaCollection()
 
-	arg_6_0:updateSomeSlotCollectionEffect(var_6_0)
+	self:updateSomeSlotCollectionEffect(slotCollections)
 end
 
-function var_0_0.updateSomeSlotCollectionEffect(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-			arg_7_0:recycleCollectionEffects(iter_7_1.id)
+function RougeCollectionEffectActiveComp:updateSomeSlotCollectionEffect(slotCollections)
+	if slotCollections then
+		for _, collectionMO in ipairs(slotCollections) do
+			self:recycleCollectionEffects(collectionMO.id)
 		end
 
-		for iter_7_2, iter_7_3 in ipairs(arg_7_1) do
-			arg_7_0:updateSlotCollectionEffect(iter_7_3.id)
+		for _, collectionMO in ipairs(slotCollections) do
+			self:updateSlotCollectionEffect(collectionMO.id)
 		end
 
-		arg_7_0:playNeedTriggerAudio()
+		self:playNeedTriggerAudio()
 	end
 end
 
-function var_0_0.updateSlotCollectionEffect(arg_8_0, arg_8_1)
-	arg_8_0:excuteActiveEffect(arg_8_1)
+function RougeCollectionEffectActiveComp:updateSlotCollectionEffect(collectionId)
+	self:excuteActiveEffect(collectionId)
 end
 
-function var_0_0.excuteActiveEffect(arg_9_0, arg_9_1)
-	local var_9_0 = RougeCollectionModel.instance:getCollectionByUid(arg_9_1)
+function RougeCollectionEffectActiveComp:excuteActiveEffect(collectionId)
+	local collectionMO = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-	if not var_9_0 then
+	if not collectionMO then
 		return
 	end
 
-	if not RougeCollectionModel.instance:isCollectionPlaceInSlotArea(arg_9_1) then
+	local isInSlotArea = RougeCollectionModel.instance:isCollectionPlaceInSlotArea(collectionId)
+
+	if not isInSlotArea then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in pairs(RougeEnum.EffectActiveType) do
-		local var_9_1 = var_9_0:getEffectShowTypeRelations(iter_9_1)
-		local var_9_2 = var_9_0:isEffectActive(iter_9_1)
+	for _, effectType in pairs(RougeEnum.EffectActiveType) do
+		local effectMOs = collectionMO:getEffectShowTypeRelations(effectType)
+		local isActive = collectionMO:isEffectActive(effectType)
 
-		arg_9_0:executeEffectCmd(var_9_1, var_9_0, iter_9_1, var_9_2)
-	end
-end
-
-function var_0_0.executeEffectCmd(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if not arg_10_1 or not arg_10_2 then
-		return
-	end
-
-	local var_10_0 = arg_10_0:tryGetExecuteEffectFunc(arg_10_3)
-
-	if not var_10_0 then
-		logError(string.format("无法找到肉鸽造物效果表现执行方法,效果id = %s, 造物uid = %s", arg_10_3, arg_10_2.id))
-
-		return
-	end
-
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
-		var_10_0(arg_10_0, arg_10_2, iter_10_1, arg_10_4)
+		self:executeEffectCmd(effectMOs, collectionMO, effectType, isActive)
 	end
 end
 
-function var_0_0.tryGetExecuteEffectFunc(arg_11_0, arg_11_1)
-	if not arg_11_0._effectExcuteFuncTab then
-		arg_11_0._effectExcuteFuncTab = {
-			[RougeEnum.EffectActiveType.Electric] = arg_11_0.electricEffectFunc,
-			[RougeEnum.EffectActiveType.Engulf] = arg_11_0.engulfEffectFunc,
-			[RougeEnum.EffectActiveType.LevelUp] = arg_11_0.levelUpEffectFunc
+function RougeCollectionEffectActiveComp:executeEffectCmd(effectMOs, collectionMO, effectType, isActive)
+	if not effectMOs or not collectionMO then
+		return
+	end
+
+	local excuteFunc = self:tryGetExecuteEffectFunc(effectType)
+
+	if not excuteFunc then
+		logError(string.format("无法找到肉鸽造物效果表现执行方法,效果id = %s, 造物uid = %s", effectType, collectionMO.id))
+
+		return
+	end
+
+	for _, effectMO in ipairs(effectMOs) do
+		excuteFunc(self, collectionMO, effectMO, isActive)
+	end
+end
+
+function RougeCollectionEffectActiveComp:tryGetExecuteEffectFunc(effectType)
+	if not self._effectExcuteFuncTab then
+		self._effectExcuteFuncTab = {
+			[RougeEnum.EffectActiveType.Electric] = self.electricEffectFunc,
+			[RougeEnum.EffectActiveType.Engulf] = self.engulfEffectFunc,
+			[RougeEnum.EffectActiveType.LevelUp] = self.levelUpEffectFunc
 		}
 	end
 
-	return arg_11_0._effectExcuteFuncTab[arg_11_1]
+	return self._effectExcuteFuncTab[effectType]
 end
 
-function var_0_0.electricEffectFunc(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, arg_12_1.id, RougeEnum.EffectActiveType.Electric, arg_12_3)
+function RougeCollectionEffectActiveComp:electricEffectFunc(collectionMO, effectMO, isActive)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, collectionMO.id, RougeEnum.EffectActiveType.Electric, isActive)
 
-	if arg_12_3 then
-		arg_12_0:try2PlayEffectActiveAudio(arg_12_1.id, nil, RougeEnum.EffectActiveType.Electric, AudioEnum.UI.ElectricEffect)
-		RougeCollectionHelper.foreachCollectionCells(arg_12_1, arg_12_0.electircTypeCellFunc, arg_12_0)
+	if isActive then
+		self:try2PlayEffectActiveAudio(collectionMO.id, nil, RougeEnum.EffectActiveType.Electric, AudioEnum.UI.ElectricEffect)
+		RougeCollectionHelper.foreachCollectionCells(collectionMO, self.electircTypeCellFunc, self)
 	end
 
-	arg_12_0:updateActiveEffectInfo(arg_12_1.id, RougeEnum.EffectActiveType.Electric, arg_12_3)
+	self:updateActiveEffectInfo(collectionMO.id, RougeEnum.EffectActiveType.Electric, isActive)
 end
 
-function var_0_0.electircTypeCellFunc(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_1:getLeftTopPos()
-	local var_13_1 = Vector2(var_13_0.x + arg_13_3 - 1, var_13_0.y + arg_13_2 - 1)
-	local var_13_2, var_13_3 = RougeCollectionHelper.slotPos2AnchorPos(var_13_1)
-	local var_13_4 = arg_13_0._poolComp:getEffectItem(RougeEnum.CollectionArtType.Lighting)
+function RougeCollectionEffectActiveComp:electircTypeCellFunc(collectionMO, row, col)
+	local leftTopPos = collectionMO:getLeftTopPos()
+	local slotPos = Vector2(leftTopPos.x + col - 1, leftTopPos.y + row - 1)
+	local anchorPosX, anchorPosY = RougeCollectionHelper.slotPos2AnchorPos(slotPos)
+	local electricItem = self._poolComp:getEffectItem(RougeEnum.CollectionArtType.Lighting)
 
-	gohelper.setActive(var_13_4, true)
-	recthelper.setAnchor(var_13_4.transform, var_13_2, var_13_3)
-	arg_13_0:saveEffectGO(arg_13_1.id, RougeEnum.CollectionArtType.Lighting, var_13_4)
+	gohelper.setActive(electricItem, true)
+	recthelper.setAnchor(electricItem.transform, anchorPosX, anchorPosY)
+	self:saveEffectGO(collectionMO.id, RougeEnum.CollectionArtType.Lighting, electricItem)
 end
 
-function var_0_0.levelUpEffectFunc(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, arg_14_1.id, RougeEnum.EffectActiveType.LevelUp, arg_14_3)
+function RougeCollectionEffectActiveComp:levelUpEffectFunc(collectionMO, effectMO, isActive)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, collectionMO.id, RougeEnum.EffectActiveType.LevelUp, isActive)
 
-	if arg_14_3 then
-		local var_14_0 = arg_14_2:getTrueCollectionIds()
+	if isActive then
+		local trueIds = effectMO:getTrueCollectionIds()
 
-		arg_14_0:try2PlayEffectActiveAudio(arg_14_1.id, var_14_0, RougeEnum.EffectActiveType.LevelUp, AudioEnum.UI.LevelUpEffect)
+		self:try2PlayEffectActiveAudio(collectionMO.id, trueIds, RougeEnum.EffectActiveType.LevelUp, AudioEnum.UI.LevelUpEffect)
 
-		if var_14_0 then
-			for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-				local var_14_1 = RougeCollectionModel.instance:getCollectionByUid(iter_14_1)
+		if trueIds then
+			for _, trueId in ipairs(trueIds) do
+				local effectCollection = RougeCollectionModel.instance:getCollectionByUid(trueId)
 
-				arg_14_0:levelupTypeTrueIdFunc(var_14_1, arg_14_1)
-				arg_14_0:updateActiveEffectInfo(iter_14_1, RougeEnum.EffectActiveType.LevelUp, arg_14_3)
+				self:levelupTypeTrueIdFunc(effectCollection, collectionMO)
+				self:updateActiveEffectInfo(trueId, RougeEnum.EffectActiveType.LevelUp, isActive)
 			end
 		end
 	end
 
-	arg_14_0:updateActiveEffectInfo(arg_14_1.id, RougeEnum.EffectActiveType.LevelUp, arg_14_3)
+	self:updateActiveEffectInfo(collectionMO.id, RougeEnum.EffectActiveType.LevelUp, isActive)
 end
 
-function var_0_0.levelupTypeTrueIdFunc(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0, var_15_1 = RougeCollectionHelper.getTwoCollectionConnectCell(arg_15_1, arg_15_2)
+function RougeCollectionEffectActiveComp:levelupTypeTrueIdFunc(startCollection, endCollection)
+	local startSlotPos, endSlotPos = RougeCollectionHelper.getTwoCollectionConnectCell(startCollection, endCollection)
 
-	if not var_15_0 or not var_15_1 then
+	if not startSlotPos or not endSlotPos then
 		return
 	end
 
-	local var_15_2 = arg_15_1.id
-	local var_15_3 = arg_15_2.id
+	local startId = startCollection.id
+	local endId = endCollection.id
 
-	arg_15_0:drawLineConnectTwoCollection(var_15_2, var_15_0, var_15_3, var_15_1, RougeEnum.CollectionArtType.LevelUpLine)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, var_15_2, RougeEnum.EffectActiveType.LevelUp, true)
+	self:drawLineConnectTwoCollection(startId, startSlotPos, endId, endSlotPos, RougeEnum.CollectionArtType.LevelUpLine)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, startId, RougeEnum.EffectActiveType.LevelUp, true)
 end
 
-function var_0_0.drawLineConnectTwoCollection(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	local var_16_0 = arg_16_0._poolComp:getEffectItem(arg_16_5)
-	local var_16_1, var_16_2 = RougeCollectionHelper.slotPos2AnchorPos(arg_16_2)
+function RougeCollectionEffectActiveComp:drawLineConnectTwoCollection(startId, startSlotPos, endId, endSlotPos, lineType)
+	local effectItem = self._poolComp:getEffectItem(lineType)
+	local startAnchorPosX, startAnchorPosY = RougeCollectionHelper.slotPos2AnchorPos(startSlotPos)
 
-	gohelper.setActive(var_16_0, true)
-	recthelper.setAnchor(var_16_0.transform, var_16_1, var_16_2)
+	gohelper.setActive(effectItem, true)
+	recthelper.setAnchor(effectItem.transform, startAnchorPosX, startAnchorPosY)
 
-	local var_16_3 = var_16_0.transform.position
-	local var_16_4, var_16_5 = recthelper.rectToRelativeAnchorPos2(var_16_3, arg_16_0.viewGO.transform)
-	local var_16_6, var_16_7 = RougeCollectionHelper.slotPos2AnchorPos(arg_16_4)
+	local startPosition = effectItem.transform.position
+	local realStartPosX, realStartPosY = recthelper.rectToRelativeAnchorPos2(startPosition, self.viewGO.transform)
+	local endAnchorPosX, endAnchorPosY = RougeCollectionHelper.slotPos2AnchorPos(endSlotPos)
 
-	recthelper.setAnchor(var_16_0.transform, var_16_6, var_16_7)
+	recthelper.setAnchor(effectItem.transform, endAnchorPosX, endAnchorPosY)
 
-	local var_16_8 = var_16_0.transform.position
-	local var_16_9, var_16_10 = recthelper.rectToRelativeAnchorPos2(var_16_8, arg_16_0.viewGO.transform)
-	local var_16_11 = gohelper.findChildImage(var_16_0, "line")
+	local endPosition = effectItem.transform.position
+	local realEndPosX, realEndPosY = recthelper.rectToRelativeAnchorPos2(endPosition, self.viewGO.transform)
+	local lineIcon = gohelper.findChildImage(effectItem, "line")
 
-	arg_16_0:setLinePosition(var_16_11, var_16_4, var_16_5, var_16_9, var_16_10)
+	self:setLinePosition(lineIcon, realStartPosX, realStartPosY, realEndPosX, realEndPosY)
 
-	local var_16_12 = gohelper.findChildImage(var_16_0, "lineup")
+	local lineupIcon = gohelper.findChildImage(effectItem, "lineup")
 
-	arg_16_0:setLinePosition(var_16_12, var_16_4, var_16_5, var_16_9, var_16_10)
+	self:setLinePosition(lineupIcon, realStartPosX, realStartPosY, realEndPosX, realEndPosY)
 
-	local var_16_13 = gohelper.findChild(var_16_0, "#dot")
-	local var_16_14, var_16_15 = recthelper.rectToRelativeAnchorPos2(var_16_3, var_16_0.transform)
+	local godot = gohelper.findChild(effectItem, "#dot")
+	local godotPosX, godotPosY = recthelper.rectToRelativeAnchorPos2(startPosition, effectItem.transform)
 
-	recthelper.setAnchor(var_16_13.transform, var_16_14, var_16_15)
-	arg_16_0:saveEffectGO(arg_16_1, arg_16_5, var_16_0)
-	arg_16_0:saveEffectGO(arg_16_3, arg_16_5, var_16_0)
+	recthelper.setAnchor(godot.transform, godotPosX, godotPosY)
+	self:saveEffectGO(startId, lineType, effectItem)
+	self:saveEffectGO(endId, lineType, effectItem)
 end
 
-function var_0_0.setLinePosition(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
-	local var_17_0 = Vector4(arg_17_2, arg_17_3, 0, 0)
-	local var_17_1 = Vector4(arg_17_4, arg_17_5, 0, 0)
+function RougeCollectionEffectActiveComp:setLinePosition(lineIcon, startPosX, startPosY, endStartPosX, endStartPosY)
+	local startVec = Vector4(startPosX, startPosY, 0, 0)
+	local endVec = Vector4(endStartPosX, endStartPosY, 0, 0)
 
-	arg_17_1.material:SetVector("_StartVec", var_17_0)
-	arg_17_1.material:SetVector("_EndVec", var_17_1)
+	lineIcon.material:SetVector("_StartVec", startVec)
+	lineIcon.material:SetVector("_EndVec", endVec)
 end
 
-function var_0_0.engulfEffectFunc(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, arg_18_1.id, RougeEnum.EffectActiveType.Engulf, arg_18_3)
+function RougeCollectionEffectActiveComp:engulfEffectFunc(activeCollection, effectMO, isActive)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, activeCollection.id, RougeEnum.EffectActiveType.Engulf, isActive)
 
-	if arg_18_3 then
-		local var_18_0 = arg_18_2:getTrueCollectionIds()
+	if isActive then
+		local trueIds = effectMO:getTrueCollectionIds()
 
-		arg_18_0:try2PlayEffectActiveAudio(arg_18_1.id, var_18_0, RougeEnum.EffectActiveType.Engulf, AudioEnum.UI.EngulfEffect)
+		self:try2PlayEffectActiveAudio(activeCollection.id, trueIds, RougeEnum.EffectActiveType.Engulf, AudioEnum.UI.EngulfEffect)
 
-		if var_18_0 then
-			for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-				local var_18_1 = RougeCollectionModel.instance:getCollectionByUid(iter_18_1)
+		if trueIds then
+			for _, trueId in ipairs(trueIds) do
+				local effectCollection = RougeCollectionModel.instance:getCollectionByUid(trueId)
 
-				arg_18_0:engulfTypeTrueIdFunc(arg_18_1, var_18_1)
-				arg_18_0:updateActiveEffectInfo(iter_18_1, RougeEnum.EffectActiveType.Engulf, arg_18_3)
+				self:engulfTypeTrueIdFunc(activeCollection, effectCollection)
+				self:updateActiveEffectInfo(trueId, RougeEnum.EffectActiveType.Engulf, isActive)
 			end
 		end
 	end
 
-	arg_18_0:updateActiveEffectInfo(arg_18_1.id, RougeEnum.EffectActiveType.Engulf, arg_18_3)
+	self:updateActiveEffectInfo(activeCollection.id, RougeEnum.EffectActiveType.Engulf, isActive)
 end
 
-function var_0_0.engulfTypeTrueIdFunc(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0, var_19_1 = RougeCollectionHelper.getTwoCollectionConnectCell(arg_19_1, arg_19_2)
+function RougeCollectionEffectActiveComp:engulfTypeTrueIdFunc(activeCollection, effectCollection)
+	local startSlotPos, endSlotPos = RougeCollectionHelper.getTwoCollectionConnectCell(activeCollection, effectCollection)
 
-	if not var_19_0 or not var_19_1 then
+	if not startSlotPos or not endSlotPos then
 		return
 	end
 
-	local var_19_2 = arg_19_1.id
-	local var_19_3 = arg_19_2.id
+	local startId = activeCollection.id
+	local endId = effectCollection.id
 
-	arg_19_0:drawLineConnectTwoCollection(var_19_2, var_19_0, var_19_3, var_19_1, RougeEnum.CollectionArtType.EngulfLine)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, arg_19_2.id, RougeEnum.EffectActiveType.Engulf, true)
+	self:drawLineConnectTwoCollection(startId, startSlotPos, endId, endSlotPos, RougeEnum.CollectionArtType.EngulfLine)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateActiveEffect, effectCollection.id, RougeEnum.EffectActiveType.Engulf, true)
 end
 
-function var_0_0.saveEffectGO(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0._effectTab and arg_20_0._effectTab[arg_20_1]
+function RougeCollectionEffectActiveComp:saveEffectGO(collectionId, effectType, effectGO)
+	local collectionEffects = self._effectTab and self._effectTab[collectionId]
+	local effects = collectionEffects and collectionEffects[effectType]
 
-	if not (var_20_0 and var_20_0[arg_20_2]) then
-		arg_20_0._effectTab = arg_20_0._effectTab or arg_20_0:getUserDataTb_()
-		arg_20_0._effectTab[arg_20_1] = arg_20_0._effectTab[arg_20_1] or arg_20_0:getUserDataTb_()
-		arg_20_0._effectTab[arg_20_1][arg_20_2] = arg_20_0:getUserDataTb_()
+	if not effects then
+		self._effectTab = self._effectTab or self:getUserDataTb_()
+		self._effectTab[collectionId] = self._effectTab[collectionId] or self:getUserDataTb_()
+		self._effectTab[collectionId][effectType] = self:getUserDataTb_()
 	end
 
-	table.insert(arg_20_0._effectTab[arg_20_1][arg_20_2], arg_20_3)
+	table.insert(self._effectTab[collectionId][effectType], effectGO)
 end
 
-function var_0_0.recycleEffectGOs(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0._effectTab and arg_21_0._effectTab[arg_21_1]
+function RougeCollectionEffectActiveComp:recycleEffectGOs(collectionId, effectType)
+	local effects = self._effectTab and self._effectTab[collectionId]
 
-	if var_21_0 and var_21_0[arg_21_2] then
-		local var_21_1 = var_21_0[arg_21_2]
+	if effects and effects[effectType] then
+		local effectGOs = effects[effectType]
 
-		for iter_21_0 = #var_21_1, 1, -1 do
-			local var_21_2 = var_21_1[iter_21_0]
+		for i = #effectGOs, 1, -1 do
+			local effectGO = effectGOs[i]
 
-			table.remove(var_21_1, iter_21_0)
-			arg_21_0._poolComp:recycleEffectItem(arg_21_2, var_21_2)
+			table.remove(effectGOs, i)
+			self._poolComp:recycleEffectItem(effectType, effectGO)
 		end
 	end
 end
 
-function var_0_0.onBeginDragCollection(arg_22_0, arg_22_1)
-	if not arg_22_1 then
+function RougeCollectionEffectActiveComp:onBeginDragCollection(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	arg_22_0:recycleCollectionEffects(arg_22_1.id)
-	arg_22_0:updateCollectionActiveEffectInfo(arg_22_1.id)
+	self:recycleCollectionEffects(collectionMO.id)
+	self:updateCollectionActiveEffectInfo(collectionMO.id)
 end
 
-function var_0_0.onRotateSlotCollection(arg_23_0, arg_23_1)
-	if not arg_23_1 then
+function RougeCollectionEffectActiveComp:onRotateSlotCollection(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	arg_23_0:recycleCollectionEffects(arg_23_1.id)
-	arg_23_0:updateCollectionActiveEffectInfo(arg_23_1.id)
+	self:recycleCollectionEffects(collectionMO.id)
+	self:updateCollectionActiveEffectInfo(collectionMO.id)
 end
 
-function var_0_0.setCollectionEffectsVisible(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_0._effectTab and arg_24_0._effectTab[arg_24_1]
+function RougeCollectionEffectActiveComp:setCollectionEffectsVisible(collectionId, isVisible)
+	local effects = self._effectTab and self._effectTab[collectionId]
 
-	if not var_24_0 then
+	if not effects then
 		return
 	end
 
-	for iter_24_0, iter_24_1 in pairs(var_24_0) do
-		local var_24_1 = arg_24_0._effectTab and arg_24_0._effectTab[arg_24_1]
+	for effectType, _ in pairs(effects) do
+		local effects = self._effectTab and self._effectTab[collectionId]
 
-		if var_24_1 and var_24_1[iter_24_0] then
-			for iter_24_2, iter_24_3 in pairs(var_24_1[iter_24_0]) do
-				if iter_24_3 then
-					gohelper.setActive(iter_24_3, arg_24_2)
+		if effects and effects[effectType] then
+			for _, effectGO in pairs(effects[effectType]) do
+				if effectGO then
+					gohelper.setActive(effectGO, isVisible)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.try2PlayEffectActiveAudio(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4)
-	local var_25_0 = arg_25_0:isCollectionHasActiveEffect(arg_25_1, arg_25_3)
+function RougeCollectionEffectActiveComp:try2PlayEffectActiveAudio(collectionId, relationIds, effectType, audioId)
+	local hasActive = self:isCollectionHasActiveEffect(collectionId, effectType)
 
-	if var_25_0 and arg_25_2 then
-		for iter_25_0, iter_25_1 in ipairs(arg_25_2) do
-			var_25_0 = arg_25_0:isCollectionHasActiveEffect(iter_25_1, arg_25_3)
+	if hasActive and relationIds then
+		for _, relationId in ipairs(relationIds) do
+			hasActive = self:isCollectionHasActiveEffect(relationId, effectType)
 
-			if not var_25_0 then
+			if not hasActive then
 				break
 			end
 		end
 	end
 
-	if not var_25_0 then
-		arg_25_0._needTriggerAudioMap = arg_25_0._needTriggerAudioMap or {}
-		arg_25_0._needTriggerAudioMap[arg_25_4] = true
+	if not hasActive then
+		self._needTriggerAudioMap = self._needTriggerAudioMap or {}
+		self._needTriggerAudioMap[audioId] = true
 	end
 end
 
-function var_0_0.playNeedTriggerAudio(arg_26_0)
-	if arg_26_0._needTriggerAudioMap then
-		for iter_26_0, iter_26_1 in pairs(arg_26_0._needTriggerAudioMap) do
-			if iter_26_1 then
-				AudioMgr.instance:trigger(iter_26_0)
+function RougeCollectionEffectActiveComp:playNeedTriggerAudio()
+	if self._needTriggerAudioMap then
+		for audioId, isNeed in pairs(self._needTriggerAudioMap) do
+			if isNeed then
+				AudioMgr.instance:trigger(audioId)
 			end
 
-			arg_26_0._needTriggerAudioMap[iter_26_0] = nil
+			self._needTriggerAudioMap[audioId] = nil
 		end
 	end
 end
 
-function var_0_0.updateActiveEffectInfo(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	if arg_27_3 then
-		arg_27_0._activeEffectMap = arg_27_0._activeEffectMap or {}
-		arg_27_0._activeEffectMap[arg_27_1] = arg_27_0._activeEffectMap[arg_27_1] or {}
-		arg_27_0._activeEffectMap[arg_27_1][arg_27_2] = arg_27_3
+function RougeCollectionEffectActiveComp:updateActiveEffectInfo(collectionId, effectType, isActive)
+	if isActive then
+		self._activeEffectMap = self._activeEffectMap or {}
+		self._activeEffectMap[collectionId] = self._activeEffectMap[collectionId] or {}
+		self._activeEffectMap[collectionId][effectType] = isActive
 	else
-		local var_27_0 = arg_27_0._activeEffectMap and arg_27_0._activeEffectMap[arg_27_1]
+		local activeEffects = self._activeEffectMap and self._activeEffectMap[collectionId]
 
-		if var_27_0 then
-			var_27_0[arg_27_2] = arg_27_3
+		if activeEffects then
+			activeEffects[effectType] = isActive
 		end
 	end
 end
 
-function var_0_0.isCollectionHasActiveEffect(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_0._activeEffectMap and arg_28_0._activeEffectMap[arg_28_1]
+function RougeCollectionEffectActiveComp:isCollectionHasActiveEffect(collectionId, effectType)
+	local collectionEffects = self._activeEffectMap and self._activeEffectMap[collectionId]
+	local isActive = collectionEffects and collectionEffects[effectType]
 
-	return var_28_0 and var_28_0[arg_28_2]
+	return isActive
 end
 
-function var_0_0.failed2PlaceSlotCollection(arg_29_0, arg_29_1)
-	if not RougeCollectionModel.instance:isCollectionPlaceInSlotArea(arg_29_1) then
+function RougeCollectionEffectActiveComp:failed2PlaceSlotCollection(collectionId)
+	local isInSlotArea = RougeCollectionModel.instance:isCollectionPlaceInSlotArea(collectionId)
+
+	if not isInSlotArea then
 		return
 	end
 
-	arg_29_0:updateSlotCollectionEffect(arg_29_1)
+	self:updateSlotCollectionEffect(collectionId)
 end
 
-function var_0_0.recycleCollectionEffects(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0._effectTab and arg_30_0._effectTab[arg_30_1]
+function RougeCollectionEffectActiveComp:recycleCollectionEffects(collectionId)
+	local effects = self._effectTab and self._effectTab[collectionId]
 
-	if not var_30_0 then
+	if not effects then
 		return
 	end
 
-	for iter_30_0, iter_30_1 in pairs(var_30_0) do
-		arg_30_0:recycleEffectGOs(arg_30_1, iter_30_0)
+	for effectType, _ in pairs(effects) do
+		self:recycleEffectGOs(collectionId, effectType)
 	end
 end
 
-function var_0_0.updateCollectionActiveEffectInfo(arg_31_0, arg_31_1)
-	if not arg_31_1 then
+function RougeCollectionEffectActiveComp:updateCollectionActiveEffectInfo(collectionId)
+	if not collectionId then
 		return
 	end
 
-	for iter_31_0, iter_31_1 in pairs(RougeEnum.EffectActiveType) do
-		arg_31_0:updateActiveEffectInfo(arg_31_1, iter_31_1, false)
+	for _, activeType in pairs(RougeEnum.EffectActiveType) do
+		self:updateActiveEffectInfo(collectionId, activeType, false)
 	end
 end
 
-function var_0_0.deleteSlotCollection(arg_32_0, arg_32_1)
-	arg_32_0:recycleCollectionEffects(arg_32_1)
-	arg_32_0:updateCollectionActiveEffectInfo(arg_32_1)
+function RougeCollectionEffectActiveComp:deleteSlotCollection(collectionId)
+	self:recycleCollectionEffects(collectionId)
+	self:updateCollectionActiveEffectInfo(collectionId)
 end
 
-function var_0_0.onDestroyView(arg_33_0)
-	arg_33_0._poolComp = nil
+function RougeCollectionEffectActiveComp:onDestroyView()
+	self._poolComp = nil
 end
 
-return var_0_0
+return RougeCollectionEffectActiveComp

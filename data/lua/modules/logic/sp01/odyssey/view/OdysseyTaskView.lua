@@ -1,213 +1,217 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyTaskView.lua
 
-local var_0_0 = class("OdysseyTaskView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/Task/#scroll_TaskList")
-	arg_1_0._txtreward = gohelper.findChildText(arg_1_0.viewGO, "root/Reward/image_nameBG/#txt_reward")
-	arg_1_0._simagereward = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/Reward/#simage_reward")
-	arg_1_0._imagereward = gohelper.findChildImage(arg_1_0.viewGO, "root/Reward/#simage_reward")
-	arg_1_0._btnbigRewardClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Reward/#simage_reward/#btn_bigRewardClick")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/Reward/#scroll_desc")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/Reward/#scroll_desc/Viewport/Content/#txt_desc")
-	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Reward/btn/#btn_canget")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "root/Reward/btn/#go_hasget")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "root/Reward/btn/#go_normal")
-	arg_1_0._scrollLeftTab = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_LeftTab")
-	arg_1_0._goTabContent = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_LeftTab/Viewport/#go_tabContent")
-	arg_1_0._goTabItem = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_LeftTab/Viewport/#go_tabContent/#go_tabItem")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+local OdysseyTaskView = class("OdysseyTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyTaskView:onInitView()
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "root/Task/#scroll_TaskList")
+	self._txtreward = gohelper.findChildText(self.viewGO, "root/Reward/image_nameBG/#txt_reward")
+	self._simagereward = gohelper.findChildSingleImage(self.viewGO, "root/Reward/#simage_reward")
+	self._imagereward = gohelper.findChildImage(self.viewGO, "root/Reward/#simage_reward")
+	self._btnbigRewardClick = gohelper.findChildButtonWithAudio(self.viewGO, "root/Reward/#simage_reward/#btn_bigRewardClick")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "root/Reward/#scroll_desc")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/Reward/#scroll_desc/Viewport/Content/#txt_desc")
+	self._btncanget = gohelper.findChildButtonWithAudio(self.viewGO, "root/Reward/btn/#btn_canget")
+	self._gohasget = gohelper.findChild(self.viewGO, "root/Reward/btn/#go_hasget")
+	self._gonormal = gohelper.findChild(self.viewGO, "root/Reward/btn/#go_normal")
+	self._scrollLeftTab = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_LeftTab")
+	self._goTabContent = gohelper.findChild(self.viewGO, "root/#scroll_LeftTab/Viewport/#go_tabContent")
+	self._goTabItem = gohelper.findChild(self.viewGO, "root/#scroll_LeftTab/Viewport/#go_tabContent/#go_tabItem")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
-	arg_2_0._btnbigRewardClick:AddClickListener(arg_2_0._btnbigRewardOnClick, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OnTaskRewardGetFinish, arg_2_0._playGetRewardFinishAnim, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, arg_2_0.refreshUI, arg_2_0)
+function OdysseyTaskView:addEvents()
+	self._btncanget:AddClickListener(self._btncangetOnClick, self)
+	self._btnbigRewardClick:AddClickListener(self._btnbigRewardOnClick, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncanget:RemoveClickListener()
-	arg_3_0._btnbigRewardClick:RemoveClickListener()
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OnTaskRewardGetFinish, arg_3_0._playGetRewardFinishAnim, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, arg_3_0.refreshUI, arg_3_0)
+function OdysseyTaskView:removeEvents()
+	self._btncanget:RemoveClickListener()
+	self._btnbigRewardClick:RemoveClickListener()
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, self.refreshUI, self)
 end
 
-var_0_0.TaskMaskTime = 0.65
-var_0_0.TaskGetAnimTime = 0.567
+OdysseyTaskView.TaskMaskTime = 0.65
+OdysseyTaskView.TaskGetAnimTime = 0.567
 
-function var_0_0._btncangetOnClick(arg_4_0)
-	arg_4_0.bigRewardTaskMo = OdysseyTaskModel.instance:getBigRewardTaskMo()
+function OdysseyTaskView:_btncangetOnClick()
+	self.bigRewardTaskMo = OdysseyTaskModel.instance:getBigRewardTaskMo()
 
-	if OdysseyTaskModel.instance:isTaskCanGet(arg_4_0.bigRewardTaskMo) then
-		TaskRpc.instance:sendFinishTaskRequest(arg_4_0.bigRewardTaskMo.id)
+	local isCanGet = OdysseyTaskModel.instance:isTaskCanGet(self.bigRewardTaskMo)
+
+	if isCanGet then
+		TaskRpc.instance:sendFinishTaskRequest(self.bigRewardTaskMo.id)
 	end
 end
 
-function var_0_0._onTabClick(arg_5_0, arg_5_1)
-	OdysseyTaskModel.instance:setCurSelectTaskTypeAndGroupId(OdysseyEnum.TaskType.NormalTask, arg_5_1.tabType)
+function OdysseyTaskView:_onTabClick(tabItem)
+	OdysseyTaskModel.instance:setCurSelectTaskTypeAndGroupId(OdysseyEnum.TaskType.NormalTask, tabItem.tabType)
 	OdysseyTaskModel.instance:refreshList()
-	arg_5_0:refreshTabSelectState()
+	self:refreshTabSelectState()
 end
 
-function var_0_0._btnbigRewardOnClick(arg_6_0)
-	local var_6_0 = string.splitToNumber(arg_6_0.bigRewardTaskConfig.bonus, "#")
+function OdysseyTaskView:_btnbigRewardOnClick()
+	local rewardData = string.splitToNumber(self.bigRewardTaskConfig.bonus, "#")
 
-	MaterialTipController.instance:showMaterialInfo(var_6_0[1], var_6_0[2])
+	MaterialTipController.instance:showMaterialInfo(rewardData[1], rewardData[2])
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_7_0.viewContainer.scrollView)
+function OdysseyTaskView:_editableInitView()
+	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self.viewContainer.scrollView)
 
-	arg_7_0._taskAnimRemoveItem:setMoveInterval(0)
-	arg_7_0._taskAnimRemoveItem:setMoveAnimationTime(var_0_0.TaskMaskTime - var_0_0.TaskGetAnimTime)
+	self._taskAnimRemoveItem:setMoveInterval(0)
+	self._taskAnimRemoveItem:setMoveAnimationTime(OdysseyTaskView.TaskMaskTime - OdysseyTaskView.TaskGetAnimTime)
 
-	arg_7_0.removeIndexTab = {}
+	self.removeIndexTab = {}
 
-	gohelper.setActive(arg_7_0._goTabItem, false)
+	gohelper.setActive(self._goTabItem, false)
 
-	arg_7_0.tabTypeList = {
+	self.tabTypeList = {
 		OdysseyEnum.TaskGroupType.Story,
 		OdysseyEnum.TaskGroupType.Fight,
 		OdysseyEnum.TaskGroupType.Collect,
 		OdysseyEnum.TaskGroupType.Myth
 	}
-	arg_7_0.tabItemMap = arg_7_0:getUserDataTb_()
+	self.tabItemMap = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function OdysseyTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function OdysseyTaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_task)
 
-	arg_9_0.bigRewardTaskConfig = OdysseyConfig.instance:getBigRewardTaskConfig()
+	self.bigRewardTaskConfig = OdysseyConfig.instance:getBigRewardTaskConfig()
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	arg_10_0:createAndRefreshTab()
-	arg_10_0:refreshBigReward()
-	arg_10_0:refreshReddot()
+function OdysseyTaskView:refreshUI()
+	self:createAndRefreshTab()
+	self:refreshBigReward()
+	self:refreshReddot()
 
-	arg_10_0._scrollTaskList.verticalNormalizedPosition = 1
+	self._scrollTaskList.verticalNormalizedPosition = 1
 end
 
-function var_0_0.createAndRefreshTab(arg_11_0)
-	arg_11_0.curTaskType, arg_11_0.curSelectGroupTypeId = OdysseyTaskModel.instance:getCurSelectTaskTypeAndGroupId()
+function OdysseyTaskView:createAndRefreshTab()
+	self.curTaskType, self.curSelectGroupTypeId = OdysseyTaskModel.instance:getCurSelectTaskTypeAndGroupId()
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.tabTypeList) do
-		local var_11_0 = arg_11_0.tabItemMap[iter_11_1]
+	for index, tabType in ipairs(self.tabTypeList) do
+		local tabItem = self.tabItemMap[tabType]
 
-		if not var_11_0 then
-			var_11_0 = {
-				tabType = iter_11_1,
-				go = gohelper.clone(arg_11_0._goTabItem, arg_11_0._goTabContent, "Tab" .. iter_11_1)
+		if not tabItem then
+			tabItem = {
+				tabType = tabType,
+				go = gohelper.clone(self._goTabItem, self._goTabContent, "Tab" .. tabType)
 			}
-			var_11_0.goNormal = gohelper.findChild(var_11_0.go, "go_normal")
-			var_11_0.txtNormalName = gohelper.findChildText(var_11_0.go, "go_normal/txt_normalName")
-			var_11_0.txtNormalNum = gohelper.findChildText(var_11_0.go, "go_normal/txt_normalNum")
-			var_11_0.goSelect = gohelper.findChild(var_11_0.go, "go_select")
-			var_11_0.txtSelectName = gohelper.findChildText(var_11_0.go, "go_select/txt_selectName")
-			var_11_0.txtSelectNum = gohelper.findChildText(var_11_0.go, "go_select/txt_selectNum")
-			var_11_0.goreddot = gohelper.findChild(var_11_0.go, "go_reddot")
-			var_11_0.btnClick = gohelper.findChildButtonWithAudio(var_11_0.go, "btn_click")
+			tabItem.goNormal = gohelper.findChild(tabItem.go, "go_normal")
+			tabItem.txtNormalName = gohelper.findChildText(tabItem.go, "go_normal/txt_normalName")
+			tabItem.txtNormalNum = gohelper.findChildText(tabItem.go, "go_normal/txt_normalNum")
+			tabItem.goSelect = gohelper.findChild(tabItem.go, "go_select")
+			tabItem.txtSelectName = gohelper.findChildText(tabItem.go, "go_select/txt_selectName")
+			tabItem.txtSelectNum = gohelper.findChildText(tabItem.go, "go_select/txt_selectNum")
+			tabItem.goreddot = gohelper.findChild(tabItem.go, "go_reddot")
+			tabItem.btnClick = gohelper.findChildButtonWithAudio(tabItem.go, "btn_click")
 
-			var_11_0.btnClick:AddClickListener(arg_11_0._onTabClick, arg_11_0, var_11_0)
+			tabItem.btnClick:AddClickListener(self._onTabClick, self, tabItem)
 
-			arg_11_0.tabItemMap[iter_11_1] = var_11_0
+			self.tabItemMap[tabType] = tabItem
 		end
 
-		gohelper.setActive(var_11_0.go, true)
-		gohelper.setActive(var_11_0.goNormal, var_11_0.tabType ~= arg_11_0.curSelectGroupTypeId)
-		gohelper.setActive(var_11_0.goSelect, var_11_0.tabType == arg_11_0.curSelectGroupTypeId)
+		gohelper.setActive(tabItem.go, true)
+		gohelper.setActive(tabItem.goNormal, tabItem.tabType ~= self.curSelectGroupTypeId)
+		gohelper.setActive(tabItem.goSelect, tabItem.tabType == self.curSelectGroupTypeId)
 
-		var_11_0.txtNormalName.text = luaLang(OdysseyEnum.NormalTaskGroupTypeLang[iter_11_1])
-		var_11_0.txtSelectName.text = luaLang(OdysseyEnum.NormalTaskGroupTypeLang[iter_11_1])
+		tabItem.txtNormalName.text = luaLang(OdysseyEnum.NormalTaskGroupTypeLang[tabType])
+		tabItem.txtSelectName.text = luaLang(OdysseyEnum.NormalTaskGroupTypeLang[tabType])
 
-		local var_11_1 = OdysseyTaskModel.instance:getNormalTaskListByGroupType(var_11_0.tabType)
-		local var_11_2 = OdysseyTaskModel.instance:getTaskItemRewardCount(var_11_1)
+		local taskList = OdysseyTaskModel.instance:getNormalTaskListByGroupType(tabItem.tabType)
+		local finishCount = OdysseyTaskModel.instance:getTaskItemRewardCount(taskList)
 
-		var_11_0.txtNormalNum.text = string.format("%s/%s", var_11_2, #var_11_1)
-		var_11_0.txtSelectNum.text = string.format("%s/%s", var_11_2, #var_11_1)
+		tabItem.txtNormalNum.text = string.format("%s/%s", finishCount, #taskList)
+		tabItem.txtSelectNum.text = string.format("%s/%s", finishCount, #taskList)
 	end
 end
 
-function var_0_0.refreshTabSelectState(arg_12_0)
-	arg_12_0.curTaskType, arg_12_0.curSelectGroupTypeId = OdysseyTaskModel.instance:getCurSelectTaskTypeAndGroupId()
+function OdysseyTaskView:refreshTabSelectState()
+	self.curTaskType, self.curSelectGroupTypeId = OdysseyTaskModel.instance:getCurSelectTaskTypeAndGroupId()
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.tabItemMap) do
-		gohelper.setActive(iter_12_1.goNormal, iter_12_1.tabType ~= arg_12_0.curSelectGroupTypeId)
-		gohelper.setActive(iter_12_1.goSelect, iter_12_1.tabType == arg_12_0.curSelectGroupTypeId)
+	for index, tabItem in pairs(self.tabItemMap) do
+		gohelper.setActive(tabItem.goNormal, tabItem.tabType ~= self.curSelectGroupTypeId)
+		gohelper.setActive(tabItem.goSelect, tabItem.tabType == self.curSelectGroupTypeId)
 	end
 
-	arg_12_0._scrollTaskList.verticalNormalizedPosition = 1
+	self._scrollTaskList.verticalNormalizedPosition = 1
 end
 
-function var_0_0.refreshReddot(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.tabItemMap) do
-		local var_13_0 = OdysseyTaskModel.instance:canShowReddot(OdysseyEnum.TaskType.NormalTask, iter_13_1.tabType)
+function OdysseyTaskView:refreshReddot()
+	for index, tabItem in pairs(self.tabItemMap) do
+		local canShowReddot = OdysseyTaskModel.instance:canShowReddot(OdysseyEnum.TaskType.NormalTask, tabItem.tabType)
 
-		gohelper.setActive(iter_13_1.goreddot, var_13_0)
+		gohelper.setActive(tabItem.goreddot, canShowReddot)
 	end
 end
 
-function var_0_0.refreshBigReward(arg_14_0)
-	local var_14_0 = string.splitToNumber(arg_14_0.bigRewardTaskConfig.bonus, "#")
-	local var_14_1, var_14_2 = ItemModel.instance:getItemConfigAndIcon(var_14_0[1], var_14_0[2])
+function OdysseyTaskView:refreshBigReward()
+	local rewardData = string.splitToNumber(self.bigRewardTaskConfig.bonus, "#")
+	local bigRewardConfig, bigRewardIcon = ItemModel.instance:getItemConfigAndIcon(rewardData[1], rewardData[2])
 
-	arg_14_0._txtreward.text = var_14_1.name
+	self._txtreward.text = bigRewardConfig.name
 
-	if var_14_0[1] == MaterialEnum.MaterialType.Equip then
-		arg_14_0._simagereward:LoadImage(ResUrl.getHeroDefaultEquipIcon(var_14_1.id), function()
-			arg_14_0._imagereward:SetNativeSize()
+	if rewardData[1] == MaterialEnum.MaterialType.Equip then
+		self._simagereward:LoadImage(ResUrl.getHeroDefaultEquipIcon(bigRewardConfig.id), function()
+			self._imagereward:SetNativeSize()
 		end)
 	else
-		arg_14_0._simagereward:LoadImage(var_14_2)
+		self._simagereward:LoadImage(bigRewardIcon)
 	end
 
-	arg_14_0._scrolldesc.verticalNormalizedPosition = 1
-	arg_14_0._txtdesc.text = arg_14_0.bigRewardTaskConfig.desc
-	arg_14_0.bigRewardTaskMo = OdysseyTaskModel.instance:getBigRewardTaskMo()
+	self._scrolldesc.verticalNormalizedPosition = 1
+	self._txtdesc.text = self.bigRewardTaskConfig.desc
+	self.bigRewardTaskMo = OdysseyTaskModel.instance:getBigRewardTaskMo()
 
-	local var_14_3 = OdysseyTaskModel.instance:isTaskHasGet(arg_14_0.bigRewardTaskMo)
-	local var_14_4 = OdysseyTaskModel.instance:isTaskCanGet(arg_14_0.bigRewardTaskMo)
+	local isHasGet = OdysseyTaskModel.instance:isTaskHasGet(self.bigRewardTaskMo)
+	local isCanGet = OdysseyTaskModel.instance:isTaskCanGet(self.bigRewardTaskMo)
 
-	gohelper.setActive(arg_14_0._gohasget, var_14_3)
-	gohelper.setActive(arg_14_0._gonormal, not var_14_3 and not var_14_4)
-	gohelper.setActive(arg_14_0._btncanget.gameObject, var_14_4)
+	gohelper.setActive(self._gohasget, isHasGet)
+	gohelper.setActive(self._gonormal, not isHasGet and not isCanGet)
+	gohelper.setActive(self._btncanget.gameObject, isCanGet)
 end
 
-function var_0_0._playGetRewardFinishAnim(arg_16_0, arg_16_1)
-	if arg_16_1 then
-		arg_16_0.removeIndexTab = {
-			arg_16_1
+function OdysseyTaskView:_playGetRewardFinishAnim(index)
+	if index then
+		self.removeIndexTab = {
+			index
 		}
 	end
 
-	TaskDispatcher.runDelay(arg_16_0.delayPlayFinishAnim, arg_16_0, var_0_0.TaskGetAnimTime)
+	TaskDispatcher.runDelay(self.delayPlayFinishAnim, self, OdysseyTaskView.TaskGetAnimTime)
 end
 
-function var_0_0.delayPlayFinishAnim(arg_17_0)
-	arg_17_0._taskAnimRemoveItem:removeByIndexs(arg_17_0.removeIndexTab)
+function OdysseyTaskView:delayPlayFinishAnim()
+	self._taskAnimRemoveItem:removeByIndexs(self.removeIndexTab)
 end
 
-function var_0_0.onClose(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.delayPlayFinishAnim, arg_18_0)
+function OdysseyTaskView:onClose()
+	TaskDispatcher.cancelTask(self.delayPlayFinishAnim, self)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	for iter_19_0, iter_19_1 in pairs(arg_19_0.tabItemMap) do
-		iter_19_1.btnClick:RemoveClickListener()
+function OdysseyTaskView:onDestroyView()
+	for index, tabItem in pairs(self.tabItemMap) do
+		tabItem.btnClick:RemoveClickListener()
 	end
 
-	arg_19_0._simagereward:UnLoadImage()
+	self._simagereward:UnLoadImage()
 end
 
-return var_0_0
+return OdysseyTaskView

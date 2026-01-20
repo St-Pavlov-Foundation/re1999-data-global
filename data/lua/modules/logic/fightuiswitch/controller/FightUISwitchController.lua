@@ -1,115 +1,119 @@
-﻿module("modules.logic.fightuiswitch.controller.FightUISwitchController", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/controller/FightUISwitchController.lua
 
-local var_0_0 = class("FightUISwitchController", BaseController)
+module("modules.logic.fightuiswitch.controller.FightUISwitchController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FightUISwitchController = class("FightUISwitchController", BaseController)
+
+function FightUISwitchController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function FightUISwitchController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function FightUISwitchController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function FightUISwitchController:reInit()
 	return
 end
 
-function var_0_0.openSceneView(arg_5_0, arg_5_1)
-	local var_5_0 = FightUISwitchModel.instance:getStyleMoByItemId(arg_5_1)
+function FightUISwitchController:openSceneView(itemId)
+	local mo = FightUISwitchModel.instance:getStyleMoByItemId(itemId)
 
 	ViewMgr.instance:openView(ViewName.FightUISwitchSceneView, {
-		mo = var_5_0
+		mo = mo
 	})
 end
 
-function var_0_0.openEquipView(arg_6_0, arg_6_1)
+function FightUISwitchController:openEquipView(mo)
 	ViewMgr.instance:openView(ViewName.FightUISwitchEquipView, {
-		mo = arg_6_1
+		mo = mo
 	})
 end
 
-function var_0_0._onLoadStyleRes(arg_7_0, arg_7_1)
-	if string.nilorempty(arg_7_1) then
+function FightUISwitchController:_onLoadStyleRes(showres)
+	if string.nilorempty(showres) then
 		return
 	end
 
-	if not arg_7_0._showResPath then
-		arg_7_0._showResPath = {}
+	if not self._showResPath then
+		self._showResPath = {}
 	end
 
-	table.insert(arg_7_0._showResPath, arg_7_1)
+	table.insert(self._showResPath, showres)
 
-	local var_7_0 = arg_7_0:_getResPath(arg_7_1)
+	local showRes = self:_getResPath(showres)
 
-	arg_7_0._loader = arg_7_0._loader or MultiAbLoader.New()
+	self._loader = self._loader or MultiAbLoader.New()
 
-	arg_7_0._loader:addPath(var_7_0)
-	arg_7_0._loader:startLoad(arg_7_0._onLoadedCallBack, arg_7_0)
+	self._loader:addPath(showRes)
+	self._loader:startLoad(self._onLoadedCallBack, self)
 end
 
-function var_0_0._getResPath(arg_8_0, arg_8_1)
-	return (string.format(FightUISwitchEnum.SceneRes, arg_8_1))
+function FightUISwitchController:_getResPath(res)
+	local showRes = string.format(FightUISwitchEnum.SceneRes, res)
+
+	return showRes
 end
 
-function var_0_0._onLoadedCallBack(arg_9_0, arg_9_1)
-	if arg_9_0._showResPath then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._showResPath) do
-			local var_9_0 = arg_9_0:_getResPath(iter_9_1)
-			local var_9_1 = arg_9_1:getAssetItem(var_9_0)
+function FightUISwitchController:_onLoadedCallBack(loader)
+	if self._showResPath then
+		for _, res in pairs(self._showResPath) do
+			local showRes = self:_getResPath(res)
+			local assetItem = loader:getAssetItem(showRes)
 
-			if var_9_1 then
-				local var_9_2 = var_9_1:GetResource()
+			if assetItem then
+				local prefab = assetItem:GetResource()
 
-				arg_9_0._showResPrefab[iter_9_1] = var_9_2
+				self._showResPrefab[res] = prefab
 			end
 		end
 	end
 
-	arg_9_0:_finishLoadRes()
+	self:_finishLoadRes()
 end
 
-function var_0_0._finishLoadRes(arg_10_0)
-	var_0_0.instance:dispatchEvent(FightUISwitchEvent.LoadFinish, arg_10_0._viewName)
+function FightUISwitchController:_finishLoadRes()
+	FightUISwitchController.instance:dispatchEvent(FightUISwitchEvent.LoadFinish, self._viewName)
 end
 
-function var_0_0.loadRes(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = FightUISwitchConfig.instance:getFightUIStyleCoById(arg_11_1)
+function FightUISwitchController:loadRes(styleId, viewName)
+	local co = FightUISwitchConfig.instance:getFightUIStyleCoById(styleId)
 
-	arg_11_0._viewName = arg_11_2
+	self._viewName = viewName
 
-	if not arg_11_0._showResPrefab then
-		arg_11_0._showResPrefab = {}
+	if not self._showResPrefab then
+		self._showResPrefab = {}
 	end
 
-	local var_11_1 = FightUISwitchModel.instance:getSceneRes(var_11_0, arg_11_2)
+	local showres = FightUISwitchModel.instance:getSceneRes(co, viewName)
 
-	if arg_11_0._showResPrefab[var_11_1] then
-		arg_11_0:_finishLoadRes()
+	if self._showResPrefab[showres] then
+		self:_finishLoadRes()
 
 		return
 	end
 
-	arg_11_0:_onLoadStyleRes(var_11_1)
+	self:_onLoadStyleRes(showres)
 end
 
-function var_0_0.getRes(arg_12_0, arg_12_1)
-	return arg_12_0._showResPrefab[arg_12_1]
+function FightUISwitchController:getRes(showres)
+	return self._showResPrefab[showres]
 end
 
-function var_0_0.dispose(arg_13_0)
-	if arg_13_0._loader then
-		arg_13_0._loader:dispose()
+function FightUISwitchController:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_13_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_13_0._showResPrefab = nil
+	self._showResPrefab = nil
 end
 
-var_0_0.instance = var_0_0.New()
+FightUISwitchController.instance = FightUISwitchController.New()
 
-return var_0_0
+return FightUISwitchController

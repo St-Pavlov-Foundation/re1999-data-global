@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity2_4.music.controller.VersionActivity2_4MultiTouchController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/controller/VersionActivity2_4MultiTouchController.lua
 
-local var_0_0 = class("VersionActivity2_4MultiTouchController", BaseController)
+module("modules.logic.versionactivity2_4.music.controller.VersionActivity2_4MultiTouchController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_4MultiTouchController = class("VersionActivity2_4MultiTouchController", BaseController)
+
+function VersionActivity2_4MultiTouchController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function VersionActivity2_4MultiTouchController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function VersionActivity2_4MultiTouchController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function VersionActivity2_4MultiTouchController:reInit()
 	return
 end
 
-function var_0_0.isMobilePlayer()
+function VersionActivity2_4MultiTouchController.isMobilePlayer()
 	return BootNativeUtil.isMobilePlayer()
 end
 
-function var_0_0.addTouch(arg_6_0, arg_6_1)
-	if not var_0_0.isMobilePlayer() then
+function VersionActivity2_4MultiTouchController:addTouch(touchComp)
+	if not VersionActivity2_4MultiTouchController.isMobilePlayer() then
 		return
 	end
 
-	if arg_6_0._touchList then
-		table.insert(arg_6_0._touchList, arg_6_1)
+	if self._touchList then
+		table.insert(self._touchList, touchComp)
 	else
 		logError("addTouch touchList is nil")
 	end
 end
 
-function var_0_0.removeTouch(arg_7_0, arg_7_1)
-	if not var_0_0.isMobilePlayer() then
+function VersionActivity2_4MultiTouchController:removeTouch(touchComp)
+	if not VersionActivity2_4MultiTouchController.isMobilePlayer() then
 		return
 	end
 
-	if arg_7_0._touchList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._touchList) do
-			if iter_7_1 == arg_7_1 then
-				table.remove(arg_7_0._touchList, iter_7_0)
+	if self._touchList then
+		for i, v in ipairs(self._touchList) do
+			if v == touchComp then
+				table.remove(self._touchList, i)
 
 				break
 			end
@@ -50,84 +52,85 @@ function var_0_0.removeTouch(arg_7_0, arg_7_1)
 	end
 end
 
-function var_0_0.startMultiTouch(arg_8_0, arg_8_1)
-	if not var_0_0.isMobilePlayer() then
+function VersionActivity2_4MultiTouchController:startMultiTouch(viewName)
+	if not VersionActivity2_4MultiTouchController.isMobilePlayer() then
 		return
 	end
 
-	arg_8_0._touchList = {}
-	arg_8_0._touchCount = 5
-	arg_8_0._viewName = arg_8_1
+	self._touchList = {}
+	self._touchCount = 5
+	self._viewName = viewName
 
-	TaskDispatcher.cancelTask(arg_8_0._frameHandler, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0._frameHandler, arg_8_0, 0)
+	TaskDispatcher.cancelTask(self._frameHandler, self)
+	TaskDispatcher.runRepeat(self._frameHandler, self, 0)
 end
 
-function var_0_0._frameHandler(arg_9_0)
-	if not arg_9_0._touchList then
+function VersionActivity2_4MultiTouchController:_frameHandler()
+	if not self._touchList then
 		return
 	end
 
-	local var_9_0 = true
-	local var_9_1 = UnityEngine.Input.touchCount
-	local var_9_2 = math.min(var_9_1, arg_9_0._touchCount)
+	local checkOnTop = true
+	local count = UnityEngine.Input.touchCount
 
-	for iter_9_0 = 1, var_9_2 do
-		local var_9_3 = iter_9_0 - 1
-		local var_9_4 = UnityEngine.Input.GetTouch(var_9_3)
+	count = math.min(count, self._touchCount)
 
-		if var_9_4.phase == TouchPhase.Began then
-			if var_9_0 and not ViewHelper.instance:checkViewOnTheTop(arg_9_0._viewName) then
+	for i = 1, count do
+		local index = i - 1
+		local touch = UnityEngine.Input.GetTouch(index)
+
+		if touch.phase == TouchPhase.Began then
+			if checkOnTop and not ViewHelper.instance:checkViewOnTheTop(self._viewName) then
 				return
 			end
 
-			var_9_0 = false
+			checkOnTop = false
 
-			local var_9_5 = var_9_4.position
+			local touchPosition = touch.position
 
-			arg_9_0:_checkTouch(var_9_5)
+			self:_checkTouch(touchPosition)
 		end
 	end
 end
 
-function var_0_0._checkTouch(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._touchList) do
-		if iter_10_1:canTouch() and var_0_0.isTouchOverGo(iter_10_1.go, arg_10_1) then
-			iter_10_1:touchDown()
+function VersionActivity2_4MultiTouchController:_checkTouch(position)
+	for i, v in ipairs(self._touchList) do
+		if v:canTouch() and VersionActivity2_4MultiTouchController.isTouchOverGo(v.go, position) then
+			v:touchDown()
 
 			break
 		end
 	end
 end
 
-function var_0_0.isTouchOverGo(arg_11_0, arg_11_1)
-	if not arg_11_0 or not arg_11_1 then
+function VersionActivity2_4MultiTouchController.isTouchOverGo(goOrComp, screenPos)
+	if not goOrComp or not screenPos then
 		return false
 	end
 
-	local var_11_0 = arg_11_0.transform
-	local var_11_1 = recthelper.getWidth(var_11_0)
-	local var_11_2 = recthelper.getHeight(var_11_0)
-	local var_11_3 = recthelper.screenPosToAnchorPos(arg_11_1, var_11_0)
-	local var_11_4 = var_11_0.pivot
+	local trans = goOrComp.transform
+	local width = recthelper.getWidth(trans)
+	local height = recthelper.getHeight(trans)
+	local touchPos = recthelper.screenPosToAnchorPos(screenPos, trans)
+	local pivot = trans.pivot
 
-	if var_11_3.x >= -var_11_1 * var_11_4.x and var_11_3.x <= var_11_1 * (1 - var_11_4.x) and var_11_3.y <= var_11_2 * var_11_4.x and var_11_3.y >= -var_11_2 * (1 - var_11_4.x) then
+	if touchPos.x >= -width * pivot.x and touchPos.x <= width * (1 - pivot.x) and touchPos.y <= height * pivot.x and touchPos.y >= -height * (1 - pivot.x) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.endMultiTouch(arg_12_0)
-	if not var_0_0.isMobilePlayer() then
+function VersionActivity2_4MultiTouchController:endMultiTouch()
+	if not VersionActivity2_4MultiTouchController.isMobilePlayer() then
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_12_0._frameHandler, arg_12_0)
+	TaskDispatcher.cancelTask(self._frameHandler, self)
 
-	arg_12_0._touchList = nil
+	self._touchList = nil
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_4MultiTouchController.instance = VersionActivity2_4MultiTouchController.New()
 
-return var_0_0
+return VersionActivity2_4MultiTouchController

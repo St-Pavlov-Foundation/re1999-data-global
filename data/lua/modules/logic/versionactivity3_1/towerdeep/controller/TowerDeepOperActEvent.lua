@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity3_1.towerdeep.controller.TowerDeepOperActEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/towerdeep/controller/TowerDeepOperActEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_1.towerdeep.controller.TowerDeepOperActEvent", package.seeall)
 
-var_0_0.onAct209InfoGet = GameUtil.getUniqueTb()
-var_0_0.OnAct209InfoUpdate = GameUtil.getUniqueTb()
+local TowerDeepOperActEvent = _M
 
-return var_0_0
+TowerDeepOperActEvent.onAct209InfoGet = GameUtil.getUniqueTb()
+TowerDeepOperActEvent.OnAct209InfoUpdate = GameUtil.getUniqueTb()
+
+return TowerDeepOperActEvent

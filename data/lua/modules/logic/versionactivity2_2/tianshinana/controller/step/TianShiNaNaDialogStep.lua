@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDialogStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/step/TianShiNaNaDialogStep.lua
 
-local var_0_0 = class("TianShiNaNaDialogStep", TianShiNaNaStepBase)
+module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDialogStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = TianShiNaNaEntityMgr.instance:getEntity(arg_1_0._data.interactId)
+local TianShiNaNaDialogStep = class("TianShiNaNaDialogStep", TianShiNaNaStepBase)
 
-	if var_1_0 and var_1_0.checkActive then
-		var_1_0._unitMo:setActive(true)
-		var_1_0:checkActive()
+function TianShiNaNaDialogStep:onStart(context)
+	local targetEntity = TianShiNaNaEntityMgr.instance:getEntity(self._data.interactId)
+
+	if targetEntity and targetEntity.checkActive then
+		targetEntity._unitMo:setActive(true)
+		targetEntity:checkActive()
 	end
 
-	if arg_1_0._data.dialogueId == 0 then
-		return arg_1_0:onDone(true)
+	if self._data.dialogueId == 0 then
+		return self:onDone(true)
 	end
 
-	arg_1_0:beginPlayDialog()
+	self:beginPlayDialog()
 end
 
-function var_0_0.beginPlayDialog(arg_2_0)
-	local var_2_0 = TianShiNaNaConfig.instance:getBubbleCo(VersionActivity2_2Enum.ActivityId.TianShiNaNa, arg_2_0._data.dialogueId)
+function TianShiNaNaDialogStep:beginPlayDialog()
+	local co = TianShiNaNaConfig.instance:getBubbleCo(VersionActivity2_2Enum.ActivityId.TianShiNaNa, self._data.dialogueId)
 
-	if not var_2_0 then
-		logError("天使娜娜对话配置不存在" .. arg_2_0._data.dialogueId)
-		arg_2_0:onDone(true)
+	if not co then
+		logError("天使娜娜对话配置不存在" .. self._data.dialogueId)
+		self:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onViewClose, arg_2_0)
-	ViewMgr.instance:openView(ViewName.TianShiNaNaTalkView, var_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onViewClose, self)
+	ViewMgr.instance:openView(ViewName.TianShiNaNaTalkView, co)
 end
 
-function var_0_0._onViewClose(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.TianShiNaNaTalkView then
-		arg_3_0:onDone(true)
+function TianShiNaNaDialogStep:_onViewClose(viewName)
+	if viewName == ViewName.TianShiNaNaTalkView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0._onViewClose, arg_4_0)
+function TianShiNaNaDialogStep:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onViewClose, self)
 end
 
-return var_0_0
+return TianShiNaNaDialogStep

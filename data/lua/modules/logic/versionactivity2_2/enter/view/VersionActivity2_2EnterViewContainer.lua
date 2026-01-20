@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_2.enter.view.VersionActivity2_2EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/enter/view/VersionActivity2_2EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_2EnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.enter.view.VersionActivity2_2EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity2_2EnterViewContainer = class("VersionActivity2_2EnterViewContainer", BaseViewContainer)
+
+function VersionActivity2_2EnterViewContainer:buildViews()
 	return {
 		VersionActivity2_2EnterView.New(),
 		VersionActivity2_2EnterBgmView.New(),
@@ -11,81 +13,81 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function VersionActivity2_2EnterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_0 = {}
+	elseif tabContainerId == 2 then
+		local multiView = {}
 
-		var_2_0[#var_2_0 + 1] = V2a2_DungeonEnterView.New()
-		var_2_0[#var_2_0 + 1] = V2a2_TianShiNaNaEnterView.New()
-		var_2_0[#var_2_0 + 1] = V2a2_EliminateEnterView.New()
-		var_2_0[#var_2_0 + 1] = V2a2_Season166EnterView.New()
-		var_2_0[#var_2_0 + 1] = V1a6_BossRush_EnterView.New()
-		var_2_0[#var_2_0 + 1] = RoleStoryEnterView.New()
-		var_2_0[#var_2_0 + 1] = V2a2_LoperaEnterView.New()
-		var_2_0[#var_2_0 + 1] = V2a2_RoomCritterEnterView.New()
+		multiView[#multiView + 1] = V2a2_DungeonEnterView.New()
+		multiView[#multiView + 1] = V2a2_TianShiNaNaEnterView.New()
+		multiView[#multiView + 1] = V2a2_EliminateEnterView.New()
+		multiView[#multiView + 1] = V2a2_Season166EnterView.New()
+		multiView[#multiView + 1] = V1a6_BossRush_EnterView.New()
+		multiView[#multiView + 1] = RoleStoryEnterView.New()
+		multiView[#multiView + 1] = V2a2_LoperaEnterView.New()
+		multiView[#multiView + 1] = V2a2_RoomCritterEnterView.New()
 
-		return var_2_0
+		return multiView
 	end
 end
 
-function var_0_0.selectActTab(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.activityId = arg_3_2
+function VersionActivity2_2EnterViewContainer:selectActTab(jumpTabId, actId)
+	self.activityId = actId
 
-	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, jumpTabId)
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	if not arg_4_0.viewParam then
+function VersionActivity2_2EnterViewContainer:onContainerInit()
+	if not self.viewParam then
 		return
 	end
 
-	arg_4_0.isFirstPlaySubViewAnim = true
+	self.isFirstPlaySubViewAnim = true
 
-	local var_4_0 = arg_4_0.viewParam.activityIdList or {}
+	local activityIdList = self.viewParam.activityIdList or {}
 
-	ActivityStageHelper.recordActivityStage(var_4_0)
+	ActivityStageHelper.recordActivityStage(activityIdList)
 
-	arg_4_0.activityId = arg_4_0.viewParam.jumpActId
+	self.activityId = self.viewParam.jumpActId
 
-	local var_4_1 = arg_4_0.viewParam.activitySettingList or {}
-	local var_4_2 = VersionActivityEnterHelper.getTabIndex(var_4_1, arg_4_0.activityId)
+	local activitySettingList = self.viewParam.activitySettingList or {}
+	local defaultIndex = VersionActivityEnterHelper.getTabIndex(activitySettingList, self.activityId)
 
-	if var_4_2 ~= 1 then
-		arg_4_0.viewParam.defaultTabIds = {}
-		arg_4_0.viewParam.defaultTabIds[2] = var_4_2
+	if defaultIndex ~= 1 then
+		self.viewParam.defaultTabIds = {}
+		self.viewParam.defaultTabIds[2] = defaultIndex
 	end
 
-	local var_4_3 = var_4_1[var_4_2]
-	local var_4_4 = VersionActivityEnterHelper.getActId(var_4_3)
+	local actSetting = activitySettingList[defaultIndex]
+	local actId = VersionActivityEnterHelper.getActId(actSetting)
 
-	ActivityEnterMgr.instance:enterActivity(var_4_4)
+	ActivityEnterMgr.instance:enterActivity(actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		var_4_4
+		actId
 	})
 end
 
-function var_0_0.onContainerClose(arg_5_0)
-	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function VersionActivity2_2EnterViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-function var_0_0.getIsFirstPlaySubViewAnim(arg_6_0)
-	return arg_6_0.isFirstPlaySubViewAnim
+function VersionActivity2_2EnterViewContainer:getIsFirstPlaySubViewAnim()
+	return self.isFirstPlaySubViewAnim
 end
 
-function var_0_0.markPlayedSubViewAnim(arg_7_0)
-	arg_7_0.isFirstPlaySubViewAnim = false
+function VersionActivity2_2EnterViewContainer:markPlayedSubViewAnim()
+	self.isFirstPlaySubViewAnim = false
 end
 
-return var_0_0
+return VersionActivity2_2EnterViewContainer

@@ -1,47 +1,49 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_ForceAuto", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviour_ForceAuto.lua
 
-local var_0_0 = class("FightBuffBehaviour_ForceAuto", FightBuffBehaviourBase)
-local var_0_1 = "ui/viewres/fight/fighttower/fightautobtnlockview.prefab"
-local var_0_2 = 3
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_ForceAuto", package.seeall)
 
-function var_0_0.onAddBuff(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.btnRoot = gohelper.findChild(arg_1_0.viewGo, "root/btns")
-	arg_1_0.srcAutoBtn = gohelper.findChild(arg_1_0.viewGo, "root/btns/btnAuto")
-	arg_1_0.loader = PrefabInstantiate.Create(arg_1_0.btnRoot)
+local FightBuffBehaviour_ForceAuto = class("FightBuffBehaviour_ForceAuto", FightBuffBehaviourBase)
+local autoBtnPath = "ui/viewres/fight/fighttower/fightautobtnlockview.prefab"
+local SiblingIndex = 3
 
-	arg_1_0.loader:startLoad(var_0_1, arg_1_0.onLoadFinish, arg_1_0)
+function FightBuffBehaviour_ForceAuto:onAddBuff(entityId, buffId, buffMo)
+	self.btnRoot = gohelper.findChild(self.viewGo, "root/btns")
+	self.srcAutoBtn = gohelper.findChild(self.viewGo, "root/btns/btnAuto")
+	self.loader = PrefabInstantiate.Create(self.btnRoot)
+
+	self.loader:startLoad(autoBtnPath, self.onLoadFinish, self)
 	FightDataHelper.stateMgr:setBuffForceAuto(true)
 	FightGameMgr.operateMgr:requestAutoFight()
 	AudioMgr.instance:trigger(310004)
 end
 
-function var_0_0.onLoadFinish(arg_2_0)
-	arg_2_0.autoBtn = arg_2_0.loader:getInstGO()
+function FightBuffBehaviour_ForceAuto:onLoadFinish()
+	self.autoBtn = self.loader:getInstGO()
 
-	gohelper.setSibling(arg_2_0.autoBtn, var_0_2)
-	gohelper.setActive(arg_2_0.srcAutoBtn, false)
-	gohelper.setActive(arg_2_0.autoBtn, true)
+	gohelper.setSibling(self.autoBtn, SiblingIndex)
+	gohelper.setActive(self.srcAutoBtn, false)
+	gohelper.setActive(self.autoBtn, true)
 end
 
-function var_0_0.onUpdateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function FightBuffBehaviour_ForceAuto:onUpdateBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onRemoveBuff(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	gohelper.destroy(arg_4_0.autoBtn)
-	gohelper.setActive(arg_4_0.srcAutoBtn, true)
+function FightBuffBehaviour_ForceAuto:onRemoveBuff(entityId, buffId, buffMo)
+	gohelper.destroy(self.autoBtn)
+	gohelper.setActive(self.srcAutoBtn, true)
 	FightDataHelper.stateMgr:setBuffForceAuto(false)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0.loader then
-		arg_5_0.loader:dispose()
+function FightBuffBehaviour_ForceAuto:onDestroy()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_5_0.loader = nil
+		self.loader = nil
 	end
 
 	FightDataHelper.stateMgr:setBuffForceAuto(false)
-	var_0_0.super.onDestroy(arg_5_0)
+	FightBuffBehaviour_ForceAuto.super.onDestroy(self)
 end
 
-return var_0_0
+return FightBuffBehaviour_ForceAuto

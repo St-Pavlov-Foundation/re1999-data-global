@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverPresetItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoleRecoverPresetItem.lua
 
-local var_0_0 = class("V1a6_CachotRoleRecoverPresetItem", V1a6_CachotTeamItem)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverPresetItem", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	var_0_0.super.addEvents(arg_1_0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, arg_1_0._onClickTeamItem, arg_1_0)
+local V1a6_CachotRoleRecoverPresetItem = class("V1a6_CachotRoleRecoverPresetItem", V1a6_CachotTeamItem)
+
+function V1a6_CachotRoleRecoverPresetItem:addEvents()
+	V1a6_CachotRoleRecoverPresetItem.super.addEvents(self)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, self._onClickTeamItem, self)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	var_0_0.super.removeEvents(arg_2_0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, arg_2_0._onClickTeamItem, arg_2_0)
+function V1a6_CachotRoleRecoverPresetItem:removeEvents()
+	V1a6_CachotRoleRecoverPresetItem.super.removeEvents(self)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, self._onClickTeamItem, self)
 end
 
-function var_0_0._onClickTeamItem(arg_3_0, arg_3_1)
-	arg_3_0:setSelected(arg_3_0._mo == arg_3_1)
+function V1a6_CachotRoleRecoverPresetItem:_onClickTeamItem(mo)
+	self:setSelected(self._mo == mo)
 end
 
-function var_0_0._getEquipMO(arg_4_0)
-	if arg_4_0._mo then
-		arg_4_0._equipMO = V1a6_CachotRoleRecoverPresetListModel.instance:getEquip(arg_4_0._mo)
+function V1a6_CachotRoleRecoverPresetItem:_getEquipMO()
+	if self._mo then
+		self._equipMO = V1a6_CachotRoleRecoverPresetListModel.instance:getEquip(self._mo)
 	end
 end
 
-function var_0_0.setSelected(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._goselect2, arg_5_1)
+function V1a6_CachotRoleRecoverPresetItem:setSelected(value)
+	gohelper.setActive(self._goselect2, value)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	var_0_0.super.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0:_updateHp()
-	arg_6_0:setSelectEnable(true)
+function V1a6_CachotRoleRecoverPresetItem:onUpdateMO(mo)
+	V1a6_CachotRoleRecoverPresetItem.super.onUpdateMO(self, mo)
+	self:_updateHp()
+	self:setSelectEnable(true)
 end
 
-return var_0_0
+return V1a6_CachotRoleRecoverPresetItem

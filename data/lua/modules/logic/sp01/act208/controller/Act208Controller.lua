@@ -1,31 +1,33 @@
-﻿module("modules.logic.sp01.act208.controller.Act208Controller", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act208/controller/Act208Controller.lua
 
-local var_0_0 = class("Act208Controller", BaseController)
+module("modules.logic.sp01.act208.controller.Act208Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Act208Controller = class("Act208Controller", BaseController)
+
+function Act208Controller:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Act208Controller:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function Act208Controller:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function Act208Controller:reInit()
 	return
 end
 
-function var_0_0.getActInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	Act208Rpc.instance:sendGetAct208InfoRequest(arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+function Act208Controller:getActInfo(activityId, channelId, callback, callbackObj)
+	Act208Rpc.instance:sendGetAct208InfoRequest(activityId, channelId, callback, callbackObj)
 end
 
-function var_0_0.getBonus(arg_6_0, arg_6_1, arg_6_2)
-	Act208Rpc.instance:sendAct208ReceiveBonusRequest(arg_6_1, arg_6_2)
+function Act208Controller:getBonus(activityId, rewardId)
+	Act208Rpc.instance:sendAct208ReceiveBonusRequest(activityId, rewardId)
 end
 
-var_0_0.instance = var_0_0.New()
+Act208Controller.instance = Act208Controller.New()
 
-return var_0_0
+return Act208Controller

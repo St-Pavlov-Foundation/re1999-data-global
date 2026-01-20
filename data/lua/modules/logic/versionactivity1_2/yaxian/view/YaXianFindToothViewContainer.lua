@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianFindToothViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/YaXianFindToothViewContainer.lua
 
-local var_0_0 = class("YaXianFindToothViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.yaxian.view.YaXianFindToothViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local YaXianFindToothViewContainer = class("YaXianFindToothViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, YaXianFindToothView.New())
+function YaXianFindToothViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, YaXianFindToothView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function YaXianFindToothViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function YaXianFindToothViewContainer:onContainerInit()
 	AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_multiple)
 end
 
-return var_0_0
+return YaXianFindToothViewContainer

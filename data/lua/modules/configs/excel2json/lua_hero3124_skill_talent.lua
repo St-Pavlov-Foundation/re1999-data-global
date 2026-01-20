@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_hero3124_skill_talent", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_hero3124_skill_talent.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_hero3124_skill_talent", package.seeall)
+
+local lua_hero3124_skill_talent = {}
+local fields = {
 	fieldActivateDesc = 9,
 	name = 4,
 	additionalFieldDesc4 = 34,
@@ -45,10 +47,10 @@ local var_0_1 = {
 	exchangeSkills0 = 12,
 	fieldDesc4 = 32
 }
-local var_0_2 = {
+local primaryKey = {
 	"talentId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	fieldActivateDesc = 5,
 	name = 1,
 	additionalFieldDesc4 = 22,
@@ -77,8 +79,8 @@ local var_0_3 = {
 	desc3 = 15
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_hero3124_skill_talent.onLoad(json)
+	lua_hero3124_skill_talent.configList, lua_hero3124_skill_talent.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_hero3124_skill_talent

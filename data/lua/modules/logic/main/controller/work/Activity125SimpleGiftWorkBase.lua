@@ -1,58 +1,63 @@
-﻿module("modules.logic.main.controller.work.Activity125SimpleGiftWorkBase", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/Activity125SimpleGiftWorkBase.lua
 
-local var_0_0 = class("Activity125SimpleGiftWorkBase", SimpleGiftWorkBase)
+module("modules.logic.main.controller.work.Activity125SimpleGiftWorkBase", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, arg_1_0._onDataUpdate, arg_1_0)
-	var_0_0.super.onStart(arg_1_0)
+local Activity125SimpleGiftWorkBase = class("Activity125SimpleGiftWorkBase", SimpleGiftWorkBase)
+
+function Activity125SimpleGiftWorkBase:onStart()
+	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, self._onDataUpdate, self)
+	Activity125SimpleGiftWorkBase.super.onStart(self)
 end
 
-function var_0_0.clearWork(arg_2_0)
-	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, arg_2_0._onDataUpdate, arg_2_0)
-	var_0_0.super.clearWork(arg_2_0)
+function Activity125SimpleGiftWorkBase:clearWork()
+	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, self._onDataUpdate, self)
+	Activity125SimpleGiftWorkBase.super.clearWork(self)
 end
 
-function var_0_0._onDataUpdate(arg_3_0)
-	local var_3_0 = arg_3_0._actId
-	local var_3_1 = arg_3_0._viewName
+function Activity125SimpleGiftWorkBase:_onDataUpdate()
+	local actId = self._actId
+	local viewName = self._viewName
 
-	if not var_3_0 then
+	if not actId then
 		return
 	end
 
-	local var_3_2 = Activity125Model.instance:getById(var_3_0)
+	local activity125MO = Activity125Model.instance:getById(actId)
 
-	if not var_3_2 then
+	if not activity125MO then
 		return
 	end
 
-	if var_3_2:isEpisodeFinished(1) then
-		if ViewMgr.instance:isOpen(var_3_1) then
+	local isClaimed = activity125MO:isEpisodeFinished(1)
+
+	if isClaimed then
+		if ViewMgr.instance:isOpen(viewName) then
 			return
 		end
 
-		arg_3_0:_work()
+		self:_work()
 
 		return
 	end
 
-	local var_3_3 = {
-		actId = var_3_0
+	local viewParam = {
+		actId = actId
 	}
 
-	ViewMgr.instance:openView(var_3_1, var_3_3)
+	ViewMgr.instance:openView(viewName, viewParam)
 end
 
-function var_0_0.onWork(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._actId
+function Activity125SimpleGiftWorkBase:onWork(refWorkContext)
+	local actId = self._actId
+	local isOpen = ActivityHelper.getActivityStatus(actId, true) == ActivityEnum.ActivityStatus.Normal
 
-	if ActivityHelper.getActivityStatus(var_4_0, true) == ActivityEnum.ActivityStatus.Normal then
-		arg_4_1.bAutoWorkNext = false
+	if isOpen then
+		refWorkContext.bAutoWorkNext = false
 
-		Activity125Rpc.instance:sendGetAct125InfosRequest(var_4_0)
+		Activity125Rpc.instance:sendGetAct125InfosRequest(actId)
 	else
-		arg_4_1.bAutoWorkNext = true
+		refWorkContext.bAutoWorkNext = true
 	end
 end
 
-return var_0_0
+return Activity125SimpleGiftWorkBase

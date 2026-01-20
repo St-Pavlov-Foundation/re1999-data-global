@@ -1,106 +1,109 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.MaLiAnNaLaSoliderMoUtil", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/mo/MaLiAnNaLaSoliderMoUtil.lua
 
-local var_0_0 = class("MaLiAnNaLaSoliderMoUtil")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.MaLiAnNaLaSoliderMoUtil", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.soliderOnlyId = 0
-	arg_1_0._allSoliderMoList = {}
+local MaLiAnNaLaSoliderMoUtil = class("MaLiAnNaLaSoliderMoUtil")
+
+function MaLiAnNaLaSoliderMoUtil:init()
+	self.soliderOnlyId = 0
+	self._allSoliderMoList = {}
 end
 
-function var_0_0.getOnlyId(arg_2_0)
-	arg_2_0.soliderOnlyId = arg_2_0.soliderOnlyId + 1
+function MaLiAnNaLaSoliderMoUtil:getOnlyId()
+	self.soliderOnlyId = self.soliderOnlyId + 1
 
-	return arg_2_0.soliderOnlyId
+	return self.soliderOnlyId
 end
 
-function var_0_0.createSoliderMo(arg_3_0, arg_3_1)
-	if arg_3_1 == nil then
+function MaLiAnNaLaSoliderMoUtil:createSoliderMo(configId)
+	if configId == nil then
 		return nil
 	end
 
-	local var_3_0 = arg_3_0:getOnlyId()
-	local var_3_1 = MaLiAnNaSoldierEntityMo.create()
+	local id = self:getOnlyId()
+	local soliderMo = MaLiAnNaSoldierEntityMo.create()
 
-	var_3_1:init(var_3_0, arg_3_1)
+	soliderMo:init(id, configId)
 
-	if var_3_1 ~= nil then
-		arg_3_0._allSoliderMoList[var_3_0] = var_3_1
+	if soliderMo ~= nil then
+		self._allSoliderMoList[id] = soliderMo
 	end
 
-	return var_3_1
+	return soliderMo
 end
 
-function var_0_0.recycleSoliderMo(arg_4_0, arg_4_1)
-	if arg_4_1 == nil then
+function MaLiAnNaLaSoliderMoUtil:recycleSoliderMo(soliderMo)
+	if soliderMo == nil then
 		return
 	end
 
-	local var_4_0 = arg_4_1:getId()
+	local id = soliderMo:getId()
+	local isHero = soliderMo:isHero()
 
-	if not arg_4_1:isHero() then
-		arg_4_0._allSoliderMoList[var_4_0] = nil
+	if not isHero then
+		self._allSoliderMoList[id] = nil
 
-		Activity201MaLiAnNaGameModel.instance:removeDisPatchSolider(var_4_0)
-		arg_4_1:clear()
+		Activity201MaLiAnNaGameModel.instance:removeDisPatchSolider(id)
+		soliderMo:clear()
 
-		arg_4_1 = nil
+		soliderMo = nil
 	end
 end
 
-function var_0_0.getSoliderMoByConfigId(arg_5_0, arg_5_1)
-	if arg_5_1 == nil then
+function MaLiAnNaLaSoliderMoUtil:getSoliderMoByConfigId(configId)
+	if configId == nil then
 		return nil
 	end
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._allSoliderMoList) do
-		if iter_5_1 and iter_5_1:getConfigId() == arg_5_1 then
-			return iter_5_1
+	for _, solider in pairs(self._allSoliderMoList) do
+		if solider and solider:getConfigId() == configId then
+			return solider
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getSoliderMoById(arg_6_0, arg_6_1)
-	if arg_6_1 == nil or arg_6_0._allSoliderMoList == nil then
+function MaLiAnNaLaSoliderMoUtil:getSoliderMoById(id)
+	if id == nil or self._allSoliderMoList == nil then
 		return nil
 	end
 
-	return arg_6_0._allSoliderMoList[arg_6_1]
+	return self._allSoliderMoList[id]
 end
 
-function var_0_0.getAllHeroSolider(arg_7_0, arg_7_1)
-	if arg_7_0._allSoliderMoList == nil then
+function MaLiAnNaLaSoliderMoUtil:getAllHeroSolider(camp)
+	if self._allSoliderMoList == nil then
 		return nil
 	end
 
-	local var_7_0 = {}
+	local heroSoliderList = {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._allSoliderMoList) do
-		if iter_7_1 and iter_7_1:isHero() and arg_7_1 == iter_7_1:getCamp() then
-			var_7_0[#var_7_0 + 1] = iter_7_1
+	for _, solider in pairs(self._allSoliderMoList) do
+		if solider and solider:isHero() and camp == solider:getCamp() then
+			heroSoliderList[#heroSoliderList + 1] = solider
 		end
 	end
 
-	return var_7_0
+	return heroSoliderList
 end
 
-function var_0_0.getAllSoliderMoList(arg_8_0)
-	return arg_8_0._allSoliderMoList
+function MaLiAnNaLaSoliderMoUtil:getAllSoliderMoList()
+	return self._allSoliderMoList
 end
 
-function var_0_0.clear(arg_9_0)
-	if arg_9_0._allSoliderMoList ~= nil then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._allSoliderMoList) do
-			if iter_9_1 then
-				iter_9_1:clear()
+function MaLiAnNaLaSoliderMoUtil:clear()
+	if self._allSoliderMoList ~= nil then
+		for _, solider in pairs(self._allSoliderMoList) do
+			if solider then
+				solider:clear()
 			end
 		end
 
-		arg_9_0._allSoliderMoList = nil
+		self._allSoliderMoList = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+MaLiAnNaLaSoliderMoUtil.instance = MaLiAnNaLaSoliderMoUtil.New()
 
-return var_0_0
+return MaLiAnNaLaSoliderMoUtil

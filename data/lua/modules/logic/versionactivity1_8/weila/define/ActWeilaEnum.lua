@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_8.weila.define.ActWeilaEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/weila/define/ActWeilaEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_8.weila.define.ActWeilaEnum", package.seeall)
 
-var_0_0.AnimatorTime = {
+local ActWeilaEnum = _M
+
+ActWeilaEnum.AnimatorTime = {
 	TaskReward = 0.5,
 	TaskRewardMoveUp = 0.15
 }
-var_0_0.AnimEvt = {
+ActWeilaEnum.AnimEvt = {
 	OnGoStoryEnd = "goStoryEnd",
 	OnStoryOpenEnd = "storyOpenEnd",
 	OnFightOpenEnd = "fightOpenEnd"
 }
 
-return var_0_0
+return ActWeilaEnum

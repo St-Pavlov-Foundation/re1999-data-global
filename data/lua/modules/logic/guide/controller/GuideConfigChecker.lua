@@ -1,91 +1,93 @@
-﻿module("modules.logic.guide.controller.GuideConfigChecker", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideConfigChecker.lua
 
-local var_0_0 = class("GuideConfigChecker")
+module("modules.logic.guide.controller.GuideConfigChecker", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
+local GuideConfigChecker = class("GuideConfigChecker")
+
+function GuideConfigChecker:addConstEvents()
 	if isDebugBuild then
-		GuideController.instance:registerCallback(GuideEvent.StartGuideStep, arg_1_0._onCheckForceGuideStep, arg_1_0)
-		GuideController.instance:registerCallback(GuideEvent.FinishStep, arg_1_0._onFinishStep, arg_1_0)
+		GuideController.instance:registerCallback(GuideEvent.StartGuideStep, self._onCheckForceGuideStep, self)
+		GuideController.instance:registerCallback(GuideEvent.FinishStep, self._onFinishStep, self)
 	end
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._checkForceGuideId = nil
+function GuideConfigChecker:onInit()
+	self._checkForceGuideId = nil
 end
 
-function var_0_0.reInit(arg_3_0)
+function GuideConfigChecker:reInit()
 	if isDebugBuild then
-		GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_3_0._onFinishGuide, arg_3_0)
-		GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, arg_3_0._onTouch, arg_3_0)
-		GuideController.instance:registerCallback(GuideEvent.StartGuideStep, arg_3_0._onCheckForceGuideStep, arg_3_0)
+		GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
+		GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, self._onTouch, self)
+		GuideController.instance:registerCallback(GuideEvent.StartGuideStep, self._onCheckForceGuideStep, self)
 	end
 
-	arg_3_0._checkForceGuideId = nil
+	self._checkForceGuideId = nil
 end
 
-function var_0_0._onCheckForceGuideStep(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = GuideConfig.instance:getGuideCO(arg_4_1)
+function GuideConfigChecker:_onCheckForceGuideStep(guideId, stepId)
+	local guideCO = GuideConfig.instance:getGuideCO(guideId)
 
-	if arg_4_1 >= 600 and var_4_0.parallel == 0 then
-		arg_4_0._checkForceGuideId = arg_4_1
+	if guideId >= 600 and guideCO.parallel == 0 then
+		self._checkForceGuideId = guideId
 
-		GuideController.instance:unregisterCallback(GuideEvent.StartGuideStep, arg_4_0._onCheckForceGuideStep, arg_4_0)
-		GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_4_0._onFinishGuide, arg_4_0)
-		GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, arg_4_0._onTouch, arg_4_0)
+		GuideController.instance:unregisterCallback(GuideEvent.StartGuideStep, self._onCheckForceGuideStep, self)
+		GuideController.instance:registerCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
+		GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreenUp, self._onTouch, self)
 	end
 end
 
-function var_0_0._onTouch(arg_5_0)
-	if not arg_5_0._filterViews then
-		arg_5_0._filterViews = {
+function GuideConfigChecker:_onTouch()
+	if not self._filterViews then
+		self._filterViews = {
 			ViewName.GuideView,
 			ViewName.FightGuideView,
 			ViewName.StoryView
 		}
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._filterViews) do
-		if ViewMgr.instance:isOpen(iter_5_1) then
-			arg_5_0._touchCount = 0
+	for _, viewName in ipairs(self._filterViews) do
+		if ViewMgr.instance:isOpen(viewName) then
+			self._touchCount = 0
 
 			break
 		end
 	end
 
-	arg_5_0._touchCount = arg_5_0._touchCount and arg_5_0._touchCount + 1 or 1
+	self._touchCount = self._touchCount and self._touchCount + 1 or 1
 
-	if arg_5_0._touchCount > 10 then
-		if arg_5_0._checkForceGuideId then
-			local var_5_0 = GuideConfig.instance:getGuideCO(arg_5_0._checkForceGuideId)
+	if self._touchCount > 10 then
+		if self._checkForceGuideId then
+			local guideCO = GuideConfig.instance:getGuideCO(self._checkForceGuideId)
 
-			logError("是否可以改成弱指引：" .. arg_5_0._checkForceGuideId .. " " .. var_5_0.desc)
+			logError("是否可以改成弱指引：" .. self._checkForceGuideId .. " " .. guideCO.desc)
 		end
 
-		arg_5_0._checkForceGuideId = nil
+		self._checkForceGuideId = nil
 
-		GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_5_0._onFinishGuide, arg_5_0)
-		GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, arg_5_0._onTouch, arg_5_0)
+		GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
+		GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreenUp, self._onTouch, self)
 	end
 end
 
-function var_0_0._onFinishGuide(arg_6_0, arg_6_1)
-	if arg_6_0._checkForceGuideId == arg_6_1 then
-		GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_6_0._onFinishGuide, arg_6_0)
+function GuideConfigChecker:_onFinishGuide(guideId)
+	if self._checkForceGuideId == guideId then
+		GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
 	end
 end
 
-function var_0_0._onFinishStep(arg_7_0, arg_7_1, arg_7_2)
+function GuideConfigChecker:_onFinishStep(guideId, clientStepId)
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.DungeonView) then
 		return
 	end
 
-	local var_7_0 = DungeonMainStoryModel.instance:getConflictGuides()
+	local list = DungeonMainStoryModel.instance:getConflictGuides()
 
-	if arg_7_1 ~= DungeonMainStoryEnum.Guide.PreviouslyOn and arg_7_1 ~= DungeonMainStoryEnum.Guide.EarlyAccess and not tabletool.indexOf(var_7_0, arg_7_1) then
-		logError(string.format("严重log,必须处理!!!请往DungeonMainStoryModel.instance:getConflictGuides()添加该指引:%s,否则会跟28005指引冲突", arg_7_1))
+	if guideId ~= DungeonMainStoryEnum.Guide.PreviouslyOn and guideId ~= DungeonMainStoryEnum.Guide.EarlyAccess and not tabletool.indexOf(list, guideId) then
+		logError(string.format("严重log,必须处理!!!请往DungeonMainStoryModel.instance:getConflictGuides()添加该指引:%s,否则会跟28005指引冲突", guideId))
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GuideConfigChecker.instance = GuideConfigChecker.New()
 
-return var_0_0
+return GuideConfigChecker

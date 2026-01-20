@@ -1,22 +1,24 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/model/Activity124RewardMO.lua
 
-local var_0_0 = pureTable("Activity124RewardMO")
+module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.episodeId
-	arg_1_0.config = arg_1_1
+local Activity124RewardMO = pureTable("Activity124RewardMO")
+
+function Activity124RewardMO:init(episodeCo)
+	self.id = episodeCo.episodeId
+	self.config = episodeCo
 end
 
-function var_0_0.isLock(arg_2_0)
+function Activity124RewardMO:isLock()
 	return false
 end
 
-function var_0_0.isReceived(arg_3_0)
-	return Activity124Model.instance:isReceived(arg_3_0.config.activityId, arg_3_0.config.episodeId)
+function Activity124RewardMO:isReceived()
+	return Activity124Model.instance:isReceived(self.config.activityId, self.config.episodeId)
 end
 
-function var_0_0.isHasReard(arg_4_0)
-	return Activity124Model.instance:isHasReard(arg_4_0.config.activityId, arg_4_0.config.episodeId)
+function Activity124RewardMO:isHasReard()
+	return Activity124Model.instance:isHasReard(self.config.activityId, self.config.episodeId)
 end
 
-return var_0_0
+return Activity124RewardMO

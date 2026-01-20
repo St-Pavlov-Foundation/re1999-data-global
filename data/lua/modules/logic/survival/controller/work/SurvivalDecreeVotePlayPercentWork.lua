@@ -1,56 +1,58 @@
-﻿module("modules.logic.survival.controller.work.SurvivalDecreeVotePlayPercentWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalDecreeVotePlayPercentWork.lua
 
-local var_0_0 = class("SurvivalDecreeVotePlayPercentWork", BaseWork)
+module("modules.logic.survival.controller.work.SurvivalDecreeVotePlayPercentWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:initParam(arg_1_1)
+local SurvivalDecreeVotePlayPercentWork = class("SurvivalDecreeVotePlayPercentWork", BaseWork)
+
+function SurvivalDecreeVotePlayPercentWork:ctor(param)
+	self:initParam(param)
 end
 
-function var_0_0.initParam(arg_2_0, arg_2_1)
-	arg_2_0.toastList = {}
-	arg_2_0.goVoteFinish = arg_2_1.goVoteFinish
-	arg_2_0.txtVotePercent = arg_2_1.txtVotePercent
-	arg_2_0.txtVotePercentGlow = arg_2_1.txtVotePercentGlow
-	arg_2_0.votePercent = arg_2_1.votePercent
-	arg_2_0.anim = arg_2_0.goVoteFinish:GetComponent(gohelper.Type_Animator)
-	arg_2_0.startValue = 0
-	arg_2_0.endValue = math.floor(arg_2_0.votePercent * 100)
+function SurvivalDecreeVotePlayPercentWork:initParam(param)
+	self.toastList = {}
+	self.goVoteFinish = param.goVoteFinish
+	self.txtVotePercent = param.txtVotePercent
+	self.txtVotePercentGlow = param.txtVotePercentGlow
+	self.votePercent = param.votePercent
+	self.anim = self.goVoteFinish:GetComponent(gohelper.Type_Animator)
+	self.startValue = 0
+	self.endValue = math.floor(self.votePercent * 100)
 end
 
-function var_0_0.onStart(arg_3_0)
+function SurvivalDecreeVotePlayPercentWork:onStart()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_agree)
-	gohelper.setActive(arg_3_0.goVoteFinish, true)
+	gohelper.setActive(self.goVoteFinish, true)
 
-	arg_3_0.txtVotePercent.text = string.format("%s%%", arg_3_0.startValue)
-	arg_3_0.txtVotePercentGlow.text = ""
-	arg_3_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_3_0.startValue, arg_3_0.endValue, 1.5, arg_3_0.setPercentValue, arg_3_0.onTweenFinish, arg_3_0, nil, EaseType.Linear)
+	self.txtVotePercent.text = string.format("%s%%", self.startValue)
+	self.txtVotePercentGlow.text = ""
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(self.startValue, self.endValue, 1.5, self.setPercentValue, self.onTweenFinish, self, nil, EaseType.Linear)
 end
 
-function var_0_0.setPercentValue(arg_4_0, arg_4_1)
-	local var_4_0 = string.format("%s%%", math.floor(arg_4_1))
+function SurvivalDecreeVotePlayPercentWork:setPercentValue(value)
+	local str = string.format("%s%%", math.floor(value))
 
-	arg_4_0.txtVotePercent.text = var_4_0
-	arg_4_0.txtVotePercentGlow.text = var_4_0
+	self.txtVotePercent.text = str
+	self.txtVotePercentGlow.text = str
 end
 
-function var_0_0.onTweenFinish(arg_5_0)
-	arg_5_0:setPercentValue(arg_5_0.endValue)
-	arg_5_0.anim:Play("finish")
-	arg_5_0:onPlayFinish()
+function SurvivalDecreeVotePlayPercentWork:onTweenFinish()
+	self:setPercentValue(self.endValue)
+	self.anim:Play("finish")
+	self:onPlayFinish()
 end
 
-function var_0_0.onPlayFinish(arg_6_0)
-	arg_6_0:onDone(true)
+function SurvivalDecreeVotePlayPercentWork:onPlayFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_7_0)
-	if arg_7_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_7_0.tweenId)
+function SurvivalDecreeVotePlayPercentWork:clearWork()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_7_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	arg_7_0:setPercentValue(arg_7_0.endValue)
+	self:setPercentValue(self.endValue)
 end
 
-return var_0_0
+return SurvivalDecreeVotePlayPercentWork

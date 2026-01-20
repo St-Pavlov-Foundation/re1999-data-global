@@ -1,28 +1,30 @@
-﻿module("modules.logic.tower.view.TowerMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/TowerMainViewContainer.lua
 
-local var_0_0 = class("TowerMainViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.TowerMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerMainViewContainer = class("TowerMainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerMainView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function TowerMainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerMainView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function TowerMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return TowerMainViewContainer

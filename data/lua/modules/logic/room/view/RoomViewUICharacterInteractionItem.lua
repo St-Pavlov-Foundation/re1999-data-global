@@ -1,209 +1,219 @@
-﻿module("modules.logic.room.view.RoomViewUICharacterInteractionItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewUICharacterInteractionItem.lua
 
-local var_0_0 = class("RoomViewUICharacterInteractionItem", RoomViewUIBaseItem)
+module("modules.logic.room.view.RoomViewUICharacterInteractionItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomViewUICharacterInteractionItem = class("RoomViewUICharacterInteractionItem", RoomViewUIBaseItem)
 
-	arg_1_0._heroId = arg_1_1
+function RoomViewUICharacterInteractionItem:ctor(heroId)
+	RoomViewUICharacterInteractionItem.super.ctor(self)
+
+	self._heroId = heroId
 end
 
-function var_0_0._customOnInit(arg_2_0)
-	arg_2_0._gochaticon = gohelper.findChild(arg_2_0._gocontainer, "go_chaticon")
-	arg_2_0._btnchat = gohelper.findChildButton(arg_2_0._gocontainer, "go_chaticon/btn_chat")
-	arg_2_0._godialog = gohelper.findChild(arg_2_0._gocontainer, "go_dialog")
-	arg_2_0._txtdialog = gohelper.findChildText(arg_2_0._gocontainer, "go_dialog/bg/txt_dialog")
-	arg_2_0._animator = arg_2_0._godialog:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._gogetfaith = gohelper.findChild(arg_2_0._gocontainer, "go_getfaith")
-	arg_2_0._btngetfaith = gohelper.findChildButton(arg_2_0._gocontainer, "go_getfaith/btn_getfaith")
-	arg_2_0._imageprocess = gohelper.findChildImage(arg_2_0._gocontainer, "go_getfaith/process")
-	arg_2_0._gofullfaith = gohelper.findChild(arg_2_0._gocontainer, "go_fullfaith")
-	arg_2_0._btnfull = gohelper.findChildButton(arg_2_0._gocontainer, "go_fullfaith/btn_full")
-	arg_2_0._gomaxfaith = gohelper.findChild(arg_2_0._gocontainer, "go_maxfaith")
-	arg_2_0._btnmax = gohelper.findChildButton(arg_2_0._gocontainer, "go_maxfaith/btn_max")
+function RoomViewUICharacterInteractionItem:_customOnInit()
+	self._gochaticon = gohelper.findChild(self._gocontainer, "go_chaticon")
+	self._btnchat = gohelper.findChildButton(self._gocontainer, "go_chaticon/btn_chat")
+	self._godialog = gohelper.findChild(self._gocontainer, "go_dialog")
+	self._txtdialog = gohelper.findChildText(self._gocontainer, "go_dialog/bg/txt_dialog")
+	self._animator = self._godialog:GetComponent(typeof(UnityEngine.Animator))
+	self._gogetfaith = gohelper.findChild(self._gocontainer, "go_getfaith")
+	self._btngetfaith = gohelper.findChildButton(self._gocontainer, "go_getfaith/btn_getfaith")
+	self._imageprocess = gohelper.findChildImage(self._gocontainer, "go_getfaith/process")
+	self._gofullfaith = gohelper.findChild(self._gocontainer, "go_fullfaith")
+	self._btnfull = gohelper.findChildButton(self._gocontainer, "go_fullfaith/btn_full")
+	self._gomaxfaith = gohelper.findChild(self._gocontainer, "go_maxfaith")
+	self._btnmax = gohelper.findChildButton(self._gocontainer, "go_maxfaith/btn_max")
 end
 
-function var_0_0._customAddEventListeners(arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, arg_3_0._characterPositionChanged, arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, arg_3_0._refreshBtnShow, arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, arg_3_0._refreshBtnShow, arg_3_0)
-	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, arg_3_0._refreshBtnShow, arg_3_0)
-	arg_3_0:refreshUI(true)
+function RoomViewUICharacterInteractionItem:_customAddEventListeners()
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, self._characterPositionChanged, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, self._refreshBtnShow, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, self._refreshBtnShow, self)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, self._refreshBtnShow, self)
+	self:refreshUI(true)
 end
 
-function var_0_0._customRemoveEventListeners(arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, arg_4_0._characterPositionChanged, arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, arg_4_0._refreshBtnShow, arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, arg_4_0._refreshBtnShow, arg_4_0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, arg_4_0._refreshBtnShow, arg_4_0)
+function RoomViewUICharacterInteractionItem:_customRemoveEventListeners()
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, self._characterPositionChanged, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, self._refreshBtnShow, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, self._refreshBtnShow, self)
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, self._refreshBtnShow, self)
 end
 
-function var_0_0.refreshUI(arg_5_0, arg_5_1)
-	arg_5_0:_refreshBtnShow()
-	arg_5_0:_refreshShow(arg_5_1)
-	arg_5_0:_refreshPosition()
+function RoomViewUICharacterInteractionItem:refreshUI(isInit)
+	self:_refreshBtnShow()
+	self:_refreshShow(isInit)
+	self:_refreshPosition()
 end
 
-function var_0_0._characterPositionChanged(arg_6_0, arg_6_1)
-	if arg_6_0._heroId ~= arg_6_1 then
+function RoomViewUICharacterInteractionItem:_characterPositionChanged(heroId)
+	if self._heroId ~= heroId then
 		return
 	end
 
-	arg_6_0:_refreshPosition()
+	self:_refreshPosition()
 end
 
-function var_0_0._refreshBtnShow(arg_7_0)
-	gohelper.setActive(arg_7_0._godialog, false)
+function RoomViewUICharacterInteractionItem:_refreshBtnShow()
+	gohelper.setActive(self._godialog, false)
 
-	local var_7_0 = RoomCharacterModel.instance:getCharacterMOById(arg_7_0._heroId)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_7_0 then
+	if not roomCharacterMO then
 		return
 	end
 
-	if not var_7_0:getCurrentInteractionId() then
-		gohelper.setActive(arg_7_0._gochaticon, false)
+	local currentInteractionId = roomCharacterMO:getCurrentInteractionId()
 
-		local var_7_1 = RoomCharacterController.instance:isCharacterFaithFull(var_7_0.heroId)
+	if not currentInteractionId then
+		gohelper.setActive(self._gochaticon, false)
 
-		gohelper.setActive(arg_7_0._gofullfaith, var_7_1 and RoomController.instance:isObMode() and RoomCharacterModel.instance:isShowFaithFull(var_7_0.heroId))
+		local isFaithFull = RoomCharacterController.instance:isCharacterFaithFull(roomCharacterMO.heroId)
 
-		if var_7_1 then
-			gohelper.setActive(arg_7_0._gogetfaith, false)
-			gohelper.setActive(arg_7_0._gomaxfaith, false)
+		gohelper.setActive(self._gofullfaith, isFaithFull and RoomController.instance:isObMode() and RoomCharacterModel.instance:isShowFaithFull(roomCharacterMO.heroId))
+
+		if isFaithFull then
+			gohelper.setActive(self._gogetfaith, false)
+			gohelper.setActive(self._gomaxfaith, false)
 
 			return
 		end
 
-		local var_7_2 = RoomCharacterHelper.getCharacterFaithFill(var_7_0)
+		local faithFill = RoomCharacterHelper.getCharacterFaithFill(roomCharacterMO)
 
-		gohelper.setActive(arg_7_0._gogetfaith, var_7_2 > 0 and var_7_2 < 1)
-		gohelper.setActive(arg_7_0._gomaxfaith, var_7_2 >= 1)
+		gohelper.setActive(self._gogetfaith, faithFill > 0 and faithFill < 1)
+		gohelper.setActive(self._gomaxfaith, faithFill >= 1)
 
-		if var_7_2 > 0 and var_7_2 < 1 then
-			arg_7_0._imageprocess.fillAmount = var_7_2 * 0.55 + 0.2
+		if faithFill > 0 and faithFill < 1 then
+			self._imageprocess.fillAmount = faithFill * 0.55 + 0.2
 		end
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0._gofullfaith, false)
-	gohelper.setActive(arg_7_0._gogetfaith, false)
-	gohelper.setActive(arg_7_0._gomaxfaith, false)
+	gohelper.setActive(self._gofullfaith, false)
+	gohelper.setActive(self._gogetfaith, false)
+	gohelper.setActive(self._gomaxfaith, false)
 
-	local var_7_3 = RoomCharacterController.instance:getPlayingInteractionParam()
+	local playingInteractionParam = RoomCharacterController.instance:getPlayingInteractionParam()
 
-	gohelper.setActive(arg_7_0._gochaticon, not var_7_3)
+	gohelper.setActive(self._gochaticon, not playingInteractionParam)
 end
 
-function var_0_0._refreshShow(arg_8_0, arg_8_1)
-	if not RoomCharacterModel.instance:getCharacterMOById(arg_8_0._heroId) then
-		arg_8_0:_setShow(false, true)
+function RoomViewUICharacterInteractionItem:_refreshShow(isInit)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
+
+	if not roomCharacterMO then
+		self:_setShow(false, true)
 
 		return
 	end
 
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		arg_8_0:_setShow(false, arg_8_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	if arg_8_0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Normal then
-		arg_8_0:_setShow(false, arg_8_1)
+	local cameraState = self._scene.camera:getCameraState()
+
+	if cameraState ~= RoomEnum.CameraState.Normal then
+		self:_setShow(false, isInit)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		arg_8_0:_setShow(false, arg_8_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	arg_8_0:_setShow(true, arg_8_1)
+	self:_setShow(true, isInit)
 end
 
-function var_0_0.getUI3DPos(arg_9_0)
-	local var_9_0 = RoomCharacterModel.instance:getCharacterMOById(arg_9_0._heroId)
+function RoomViewUICharacterInteractionItem:getUI3DPos()
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_9_0 then
+	if not roomCharacterMO then
 		return Vector3.zero
 	end
 
-	local var_9_1 = var_9_0.currentPosition
-	local var_9_2 = var_9_1.y + 0.18
-	local var_9_3 = arg_9_0._scene.charactermgr:getCharacterEntity(var_9_0.id, SceneTag.RoomCharacter)
+	local movingPosition = roomCharacterMO.currentPosition
+	local height = movingPosition.y + 0.18
+	local entity = self._scene.charactermgr:getCharacterEntity(roomCharacterMO.id, SceneTag.RoomCharacter)
 
-	if var_9_3 then
-		local var_9_4 = var_9_3.characterspine:getMountheadGOTrs()
+	if entity then
+		local headGOTrs = entity.characterspine:getMountheadGOTrs()
 
-		if var_9_4 then
-			local var_9_5, var_9_6, var_9_7 = transformhelper.getPos(var_9_4)
+		if headGOTrs then
+			local px, py, pz = transformhelper.getPos(headGOTrs)
 
-			var_9_2 = var_9_6 - 0.02
+			height = py - 0.02
 		end
 	end
 
-	return (Vector3(var_9_1.x, var_9_2, var_9_1.z))
+	local worldPos = Vector3(movingPosition.x, height, movingPosition.z)
+
+	return worldPos
 end
 
-function var_0_0._refreshPosition(arg_10_0)
-	local var_10_0 = arg_10_0:getUI3DPos()
-	local var_10_1 = RoomBendingHelper.worldToBendingSimple(var_10_0)
-	local var_10_2 = RoomBendingHelper.worldPosToAnchorPos(var_10_1, arg_10_0.go.transform.parent)
+function RoomViewUICharacterInteractionItem:_refreshPosition()
+	local worldPos = self:getUI3DPos()
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
+	local anchorPos = RoomBendingHelper.worldPosToAnchorPos(bendingPos, self.go.transform.parent)
 
-	if var_10_2 then
-		var_10_2.x = var_10_2.x * 0.98
+	if anchorPos then
+		anchorPos.x = anchorPos.x * 0.98
 
-		recthelper.setAnchor(arg_10_0.go.transform, var_10_2.x, var_10_2.y)
+		recthelper.setAnchor(self.go.transform, anchorPos.x, anchorPos.y)
 	end
 
-	local var_10_3 = 0
+	local scale = 0
 
-	if var_10_2 then
-		local var_10_4 = CameraMgr.instance:getMainCameraGO()
-		local var_10_5 = var_10_4.transform.position
-		local var_10_6 = var_10_4.transform.forward
-		local var_10_7 = var_10_1 - var_10_5
-		local var_10_8 = Vector3.Dot(var_10_6, var_10_7)
+	if anchorPos then
+		local cameraGO = CameraMgr.instance:getMainCameraGO()
+		local cameraPosition = cameraGO.transform.position
+		local forward = cameraGO.transform.forward
+		local target = bendingPos - cameraPosition
+		local distance = Vector3.Dot(forward, target)
 
-		var_10_3 = var_10_8 == 0 and 0 or 1 / var_10_8
+		scale = distance == 0 and 0 or 1 / distance
 	end
 
-	transformhelper.setLocalScale(arg_10_0._gocontainer.transform, var_10_3, var_10_3, var_10_3)
-	arg_10_0:_refreshCanvasGroup()
+	transformhelper.setLocalScale(self._gocontainer.transform, scale, scale, scale)
+	self:_refreshCanvasGroup()
 end
 
-function var_0_0._onClick(arg_11_0, arg_11_1, arg_11_2)
+function RoomViewUICharacterInteractionItem:_onClick(go, param)
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	local var_11_0 = RoomCharacterModel.instance:getCharacterMOById(arg_11_0._heroId)
+	local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(self._heroId)
 
-	if not var_11_0 then
+	if not roomCharacterMO then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
 
-	if arg_11_1.transform:IsChildOf(arg_11_0._btngetfaith.transform) or arg_11_1.transform:IsChildOf(arg_11_0._btnmax.transform) then
+	if go.transform:IsChildOf(self._btngetfaith.transform) or go.transform:IsChildOf(self._btnmax.transform) then
 		RoomCharacterController.instance:gainCharacterFaith({
-			var_11_0.heroId
+			roomCharacterMO.heroId
 		})
 		AudioMgr.instance:trigger(AudioEnum.Room.ui_home_board_upgrade)
-	elseif arg_11_1.transform:IsChildOf(arg_11_0._btnfull.transform) then
-		RoomCharacterController.instance:setCharacterFullFaithChecked(var_11_0.heroId)
+	elseif go.transform:IsChildOf(self._btnfull.transform) then
+		RoomCharacterController.instance:setCharacterFullFaithChecked(roomCharacterMO.heroId)
 		GameFacade.showToast(RoomEnum.Toast.GainFaithFull)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rolesback)
-	elseif arg_11_1.transform:IsChildOf(arg_11_0._btnchat.transform) then
-		RoomCharacterController.instance:startInteraction(var_11_0:getCurrentInteractionId(), true)
+	elseif go.transform:IsChildOf(self._btnchat.transform) then
+		RoomCharacterController.instance:startInteraction(roomCharacterMO:getCurrentInteractionId(), true)
 	end
 end
 
-function var_0_0._customOnDestory(arg_12_0)
+function RoomViewUICharacterInteractionItem:_customOnDestory()
 	return
 end
 
-return var_0_0
+return RoomViewUICharacterInteractionItem

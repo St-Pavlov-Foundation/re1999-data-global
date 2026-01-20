@@ -1,10 +1,12 @@
-﻿module("modules.logic.seasonver.act166.model.Season166HeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166HeroMO.lua
 
-local var_0_0 = pureTable("Season166HeroMO")
+module("modules.logic.seasonver.act166.model.Season166HeroMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.heroUid = arg_1_1.heroUid
-	arg_1_0.isAssist = arg_1_1.isAssist
+local Season166HeroMO = pureTable("Season166HeroMO")
+
+function Season166HeroMO:init(info, isAssist)
+	self.heroUid = info.heroUid
+	self.isAssist = info.isAssist
 end
 
-return var_0_0
+return Season166HeroMO

@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.model.data.FightAssistBossInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightAssistBossInfoData.lua
 
-local var_0_0 = FightDataClass("FightAssistBossInfoData")
+module("modules.logic.fight.model.data.FightAssistBossInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.skills = {}
+local FightAssistBossInfoData = FightDataClass("FightAssistBossInfoData")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.skills) do
-		table.insert(arg_1_0.skills, FightAssistBossSkillInfoData.New(iter_1_1))
+function FightAssistBossInfoData:onConstructor(proto)
+	self.skills = {}
+
+	for i, v in ipairs(proto.skills) do
+		table.insert(self.skills, FightAssistBossSkillInfoData.New(v))
 	end
 
-	arg_1_0.currCd = arg_1_1.currCd
-	arg_1_0.cdCfg = arg_1_1.cdCfg
-	arg_1_0.formId = arg_1_1.formId
-	arg_1_0.roundUseLimit = arg_1_1.roundUseLimit
-	arg_1_0.exceedUseFree = arg_1_1.exceedUseFree
-	arg_1_0.params = arg_1_1.params
+	self.currCd = proto.currCd
+	self.cdCfg = proto.cdCfg
+	self.formId = proto.formId
+	self.roundUseLimit = proto.roundUseLimit
+	self.exceedUseFree = proto.exceedUseFree
+	self.params = proto.params
 end
 
-return var_0_0
+return FightAssistBossInfoData

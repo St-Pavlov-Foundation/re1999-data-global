@@ -1,66 +1,70 @@
-﻿module("modules.logic.survival.rpc.SurvivalOutSideRpc", package.seeall)
+﻿-- chunkname: @modules/logic/survival/rpc/SurvivalOutSideRpc.lua
 
-local var_0_0 = class("SurvivalOutSideRpc", BaseRpc)
+module("modules.logic.survival.rpc.SurvivalOutSideRpc", package.seeall)
 
-function var_0_0.sendSurvivalOutSideGetInfo(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = SurvivalOutSideModule_pb.SurvivalOutSideGetInfoRequest()
+local SurvivalOutSideRpc = class("SurvivalOutSideRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function SurvivalOutSideRpc:sendSurvivalOutSideGetInfo(callback, callobj)
+	local req = SurvivalOutSideModule_pb.SurvivalOutSideGetInfoRequest()
+
+	return self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveSurvivalOutSideGetInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		SurvivalModel.instance:onGetInfo(arg_2_2.info)
+function SurvivalOutSideRpc:onReceiveSurvivalOutSideGetInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		SurvivalModel.instance:onGetInfo(msg.info)
 	end
 end
 
-function var_0_0.sendSurvivalOutSideGainReward(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = SurvivalOutSideModule_pb.SurvivalOutSideGainRewardRequest()
+function SurvivalOutSideRpc:sendSurvivalOutSideGainReward(rewardId, callback, callobj)
+	local req = SurvivalOutSideModule_pb.SurvivalOutSideGainRewardRequest()
 
-	var_3_0.rewardId = arg_3_1
+	req.rewardId = rewardId
 
-	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
+	return self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveSurvivalOutSideGainRewardReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		SurvivalModel.instance:getOutSideInfo():onGainReward(arg_4_2.rewardId)
+function SurvivalOutSideRpc:onReceiveSurvivalOutSideGainRewardReply(resultCode, msg)
+	if resultCode == 0 then
+		local outSideMo = SurvivalModel.instance:getOutSideInfo()
+
+		outSideMo:onGainReward(msg.rewardId)
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnGainReward)
 	end
 end
 
-function var_0_0.sendSurvivalSurvivalOutSideClientData(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = SurvivalOutSideModule_pb.SurvivalSurvivalOutSideClientDataRequest()
+function SurvivalOutSideRpc:sendSurvivalSurvivalOutSideClientData(data, callback, callobj)
+	local req = SurvivalOutSideModule_pb.SurvivalSurvivalOutSideClientDataRequest()
 
-	var_5_0.data = arg_5_1
+	req.data = data
 
-	return arg_5_0:sendMsg(var_5_0, arg_5_2, arg_5_3)
+	return self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveSurvivalSurvivalOutSideClientDataReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
+function SurvivalOutSideRpc:onReceiveSurvivalSurvivalOutSideClientDataReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.onReceiveSurvivalHandbookPush(arg_7_0, arg_7_1, arg_7_2)
+function SurvivalOutSideRpc:onReceiveSurvivalHandbookPush(resultCode, msg)
 	return
 end
 
-function var_0_0.onReceiveSurvivalMarkNewHandbookReply(arg_8_0, arg_8_1, arg_8_2)
-	SurvivalHandbookModel.instance:onReceiveSurvivalMarkNewHandbookReply(arg_8_1, arg_8_2)
+function SurvivalOutSideRpc:onReceiveSurvivalMarkNewHandbookReply(resultCode, msg)
+	SurvivalHandbookModel.instance:onReceiveSurvivalMarkNewHandbookReply(resultCode, msg)
 end
 
-function var_0_0.sendSurvivalMarkNewHandbook(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = SurvivalOutSideModule_pb.SurvivalMarkNewHandbookRequest()
+function SurvivalOutSideRpc:sendSurvivalMarkNewHandbook(ids, callback, callobj)
+	local req = SurvivalOutSideModule_pb.SurvivalMarkNewHandbookRequest()
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		table.insert(var_9_0.ids, iter_9_1)
+	for i, v in ipairs(ids) do
+		table.insert(req.ids, v)
 	end
 
-	return arg_9_0:sendMsg(var_9_0, arg_9_2, arg_9_3)
+	return self:sendMsg(req, callback, callobj)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalOutSideRpc.instance = SurvivalOutSideRpc.New()
 
-return var_0_0
+return SurvivalOutSideRpc

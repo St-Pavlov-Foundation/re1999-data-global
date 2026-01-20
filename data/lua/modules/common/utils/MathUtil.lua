@@ -1,135 +1,142 @@
-﻿module("modules.common.utils.MathUtil", package.seeall)
+﻿-- chunkname: @modules/common/utils/MathUtil.lua
 
-local var_0_0 = class("MathUtil")
-local var_0_1 = math.atan2
-local var_0_2 = math.deg
+module("modules.common.utils.MathUtil", package.seeall)
 
-function var_0_0.vec2_lengthSqr(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if not arg_1_0 or not arg_1_1 or not arg_1_2 or not arg_1_3 then
-		logError("Error | vec2_length  Error |: Args: ", tostring(arg_1_0), tostring(arg_1_1), tostring(arg_1_2), tostring(arg_1_3))
+local MathUtil = class("MathUtil")
+local atan2 = math.atan2
+local deg = math.deg
+
+function MathUtil.vec2_lengthSqr(ax, ay, bx, by)
+	if not ax or not ay or not bx or not by then
+		logError("Error | vec2_length  Error |: Args: ", tostring(ax), tostring(ay), tostring(bx), tostring(by))
 
 		return 99999
 	end
 
-	local var_1_0 = arg_1_0 - arg_1_2
-	local var_1_1 = arg_1_1 - arg_1_3
+	local dx = ax - bx
+	local dy = ay - by
+	local lenSq = dx * dx + dy * dy
 
-	return var_1_0 * var_1_0 + var_1_1 * var_1_1
+	return lenSq
 end
 
-function var_0_0.vec2_length(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = var_0_0.vec2_lengthSqr(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function MathUtil.vec2_length(ax, ay, bx, by)
+	local lenSq = MathUtil.vec2_lengthSqr(ax, ay, bx, by)
 
-	return math.sqrt(var_2_0)
+	return math.sqrt(lenSq)
 end
 
-function var_0_0.vec2_normalize(arg_3_0, arg_3_1)
-	local var_3_0 = math.sqrt(arg_3_0 * arg_3_0 + arg_3_1 * arg_3_1)
+function MathUtil.vec2_normalize(ax, ay)
+	local len = math.sqrt(ax * ax + ay * ay)
 
-	if var_3_0 < 1e-06 then
-		var_3_0 = 1
+	if len < 1e-06 then
+		len = 1
 	end
 
-	return arg_3_0 / var_3_0, arg_3_1 / var_3_0
+	return ax / len, ay / len
 end
 
-function var_0_0.calculateV2Angle(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if not arg_4_0 or not arg_4_1 or not arg_4_2 or not arg_4_3 then
-		logError("Error | calculateV2Angle  Error |: Args: ", tostring(arg_4_0), tostring(arg_4_1), tostring(arg_4_2), tostring(arg_4_3))
+function MathUtil.calculateV2Angle(ax, ay, bx, by)
+	if not ax or not ay or not bx or not by then
+		logError("Error | calculateV2Angle  Error |: Args: ", tostring(ax), tostring(ay), tostring(bx), tostring(by))
 
 		return 0
 	end
 
-	local var_4_0 = arg_4_0 - arg_4_2
-	local var_4_1 = arg_4_1 - arg_4_3
-	local var_4_2 = var_0_1(var_4_1, var_4_0)
+	local dx = ax - bx
+	local dy = ay - by
+	local radian = atan2(dy, dx)
+	local angle = deg(radian)
 
-	return (var_0_2(var_4_2))
+	return angle
 end
 
-function var_0_0.isPointInCircleRange(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	if arg_5_0 == nil or arg_5_1 == nil or arg_5_2 == nil or arg_5_3 == nil or arg_5_4 == nil then
-		logError("Error | isPointInCircleRange  Error |: Args: ", tostring(arg_5_0), tostring(arg_5_1), tostring(arg_5_2), tostring(arg_5_3), tostring(arg_5_4))
+function MathUtil.isPointInCircleRange(centerX, centerY, radius, pointX, pointY)
+	if centerX == nil or centerY == nil or radius == nil or pointX == nil or pointY == nil then
+		logError("Error | isPointInCircleRange  Error |: Args: ", tostring(centerX), tostring(centerY), tostring(radius), tostring(pointX), tostring(pointY))
 
 		return false
 	end
 
-	local var_5_0 = arg_5_3 - arg_5_0
-	local var_5_1 = arg_5_4 - arg_5_1
+	local dx = pointX - centerX
+	local dy = pointY - centerY
+	local distanceSquared = dx * dx + dy * dy
 
-	return var_5_0 * var_5_0 + var_5_1 * var_5_1 <= arg_5_2 * arg_5_2
+	return distanceSquared <= radius * radius
 end
 
-function var_0_0.is_point_in_sector(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-	local var_6_0 = arg_6_0 - arg_6_2
-	local var_6_1 = arg_6_1 - arg_6_3
+function MathUtil.is_point_in_sector(px, py, ox, oy, radius, start_degree, sweep_degree)
+	local dx = px - ox
+	local dy = py - oy
+	local distance_squared = dx * dx + dy * dy
 
-	if var_6_0 * var_6_0 + var_6_1 * var_6_1 > arg_6_4 * arg_6_4 then
+	if distance_squared > radius * radius then
 		return false
 	end
 
-	local var_6_2 = math.rad(arg_6_5)
-	local var_6_3 = math.rad(arg_6_6)
+	local start_rad = math.rad(start_degree)
+	local sweep_rad = math.rad(sweep_degree)
 
-	if math.abs(var_6_3) >= 2 * math.pi then
+	if math.abs(sweep_rad) >= 2 * math.pi then
 		return true
 	end
 
-	local var_6_4 = var_6_2 % (2 * math.pi)
+	start_rad = start_rad % (2 * math.pi)
 
-	if var_6_4 < 0 then
-		var_6_4 = var_6_4 + 2 * math.pi
+	if start_rad < 0 then
+		start_rad = start_rad + 2 * math.pi
 	end
 
-	local var_6_5 = math.atan2(var_6_1, var_6_0)
+	local point_rad = math.atan2(dy, dx)
 
-	if var_6_5 < 0 then
-		var_6_5 = var_6_5 + 2 * math.pi
+	if point_rad < 0 then
+		point_rad = point_rad + 2 * math.pi
 	end
 
-	if var_6_3 >= 0 then
-		local var_6_6 = (var_6_5 - var_6_4) % (2 * math.pi)
+	if sweep_rad >= 0 then
+		local diff = (point_rad - start_rad) % (2 * math.pi)
 
-		if var_6_6 < 0 then
-			var_6_6 = var_6_6 + 2 * math.pi
+		if diff < 0 then
+			diff = diff + 2 * math.pi
 		end
 
-		return var_6_6 <= var_6_3
+		return diff <= sweep_rad
 	else
-		local var_6_7 = (var_6_4 - var_6_5) % (2 * math.pi)
+		local diff = (start_rad - point_rad) % (2 * math.pi)
 
-		if var_6_7 < 0 then
-			var_6_7 = var_6_7 + 2 * math.pi
+		if diff < 0 then
+			diff = diff + 2 * math.pi
 		end
 
-		return var_6_7 <= -var_6_3
+		return diff <= -sweep_rad
 	end
 end
 
-function var_0_0.hasPassedPoint(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	local var_7_0 = arg_7_2 - arg_7_0
-	local var_7_1 = arg_7_3 - arg_7_1
+function MathUtil.hasPassedPoint(movingX, movingY, targetX, targetY, moveDirX, moveDirY)
+	local toTargetX = targetX - movingX
+	local toTargetY = targetY - movingY
+	local dotProduct = moveDirX * toTargetX + moveDirY * toTargetY
 
-	return arg_7_4 * var_7_0 + arg_7_5 * var_7_1 <= 0
+	return dotProduct <= 0
 end
 
-function var_0_0.calculateVisiblePoints(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
-	local var_8_0 = arg_8_3 - arg_8_0
-	local var_8_1 = arg_8_4 - arg_8_1
-	local var_8_2 = math.sqrt(var_8_0 * var_8_0 + var_8_1 * var_8_1)
+function MathUtil.calculateVisiblePoints(x1, y1, r1, x2, y2, r2)
+	local dx = x2 - x1
+	local dy = y2 - y1
+	local length = math.sqrt(dx * dx + dy * dy)
 
-	if var_8_2 < 1e-10 then
-		return arg_8_0, arg_8_1, arg_8_3, arg_8_4
+	if length < 1e-10 then
+		return x1, y1, x2, y2
 	end
 
-	local var_8_3 = var_8_0 / var_8_2
-	local var_8_4 = var_8_1 / var_8_2
-	local var_8_5 = arg_8_0 + var_8_3 * arg_8_2
-	local var_8_6 = arg_8_1 + var_8_4 * arg_8_2
-	local var_8_7 = arg_8_3 - var_8_3 * arg_8_5
-	local var_8_8 = arg_8_4 - var_8_4 * arg_8_5
+	local nx = dx / length
+	local ny = dy / length
+	local visible_start_x = x1 + nx * r1
+	local visible_start_y = y1 + ny * r1
+	local visible_end_x = x2 - nx * r2
+	local visible_end_y = y2 - ny * r2
 
-	return var_8_5, var_8_6, var_8_7, var_8_8
+	return visible_start_x, visible_start_y, visible_end_x, visible_end_y
 end
 
-return var_0_0
+return MathUtil

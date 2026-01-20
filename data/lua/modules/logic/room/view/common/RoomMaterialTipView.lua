@@ -1,275 +1,273 @@
-﻿module("modules.logic.room.view.common.RoomMaterialTipView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomMaterialTipView.lua
 
-local var_0_0 = class("RoomMaterialTipView", BaseView)
+module("modules.logic.room.view.common.RoomMaterialTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
-	arg_1_0._gobannerContent = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent")
-	arg_1_0._goroominfoItem = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
-	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_slider")
-	arg_1_0._gobannerscroll = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerscroll")
-	arg_1_0._goact = gohelper.findChild(arg_1_0.viewGO, "left/#go_actname")
-	arg_1_0._txtactname = gohelper.findChildText(arg_1_0.viewGO, "left/#go_actname/#txt_actname")
-	arg_1_0._btntheme = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_theme")
-	arg_1_0._txttheme = gohelper.findChildText(arg_1_0.viewGO, "left/#btn_theme/txt")
-	arg_1_0._gocobrand = gohelper.findChild(arg_1_0.viewGO, "left/#go_cobrand")
-	arg_1_0._gobuyContent = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent")
-	arg_1_0._goblockInfoItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/scroll_blockpackage/viewport/content/#go_blockInfoItem")
-	arg_1_0._gopay = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_pay")
-	arg_1_0._gopayitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_buyContent/#go_pay/#go_payitem")
-	arg_1_0._btninsight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_buyContent/buy/#btn_insight")
-	arg_1_0._txtcostnum = gohelper.findChildText(arg_1_0.viewGO, "right/#go_buyContent/buy/#txt_costnum")
-	arg_1_0._simagecosticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_buyContent/buy/#txt_costnum/#simage_costicon")
-	arg_1_0._gosource = gohelper.findChild(arg_1_0.viewGO, "right/#go_source")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "right/#go_source/title/#txt_time")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "right/#go_source/title/#txt_time")
-	arg_1_0._scrolljump = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#go_source/#scroll_jump")
-	arg_1_0._gojumpItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content/#go_jumpItem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local RoomMaterialTipView = class("RoomMaterialTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomMaterialTipView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
+	self._gobannerContent = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent")
+	self._goroominfoItem = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
+	self._goslider = gohelper.findChild(self.viewGO, "left/banner/#go_slider")
+	self._gobannerscroll = gohelper.findChild(self.viewGO, "left/banner/#go_bannerscroll")
+	self._goact = gohelper.findChild(self.viewGO, "left/#go_actname")
+	self._txtactname = gohelper.findChildText(self.viewGO, "left/#go_actname/#txt_actname")
+	self._btntheme = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_theme")
+	self._txttheme = gohelper.findChildText(self.viewGO, "left/#btn_theme/txt")
+	self._gocobrand = gohelper.findChild(self.viewGO, "left/#go_cobrand")
+	self._gobuyContent = gohelper.findChild(self.viewGO, "right/#go_buyContent")
+	self._goblockInfoItem = gohelper.findChild(self.viewGO, "right/#go_buyContent/scroll_blockpackage/viewport/content/#go_blockInfoItem")
+	self._gopay = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_pay")
+	self._gopayitem = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_pay/#go_payitem")
+	self._btninsight = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_buyContent/buy/#btn_insight")
+	self._txtcostnum = gohelper.findChildText(self.viewGO, "right/#go_buyContent/buy/#txt_costnum")
+	self._simagecosticon = gohelper.findChildSingleImage(self.viewGO, "right/#go_buyContent/buy/#txt_costnum/#simage_costicon")
+	self._gosource = gohelper.findChild(self.viewGO, "right/#go_source")
+	self._gotime = gohelper.findChild(self.viewGO, "right/#go_source/title/#txt_time")
+	self._txttime = gohelper.findChildText(self.viewGO, "right/#go_source/title/#txt_time")
+	self._scrolljump = gohelper.findChildScrollRect(self.viewGO, "right/#go_source/#scroll_jump")
+	self._gojumpItem = gohelper.findChild(self.viewGO, "right/#go_source/#scroll_jump/Viewport/Content/#go_jumpItem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntheme:AddClickListener(arg_2_0._btnthemeOnClick, arg_2_0)
-	arg_2_0._btninsight:AddClickListener(arg_2_0._btninsightOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomMaterialTipView:addEvents()
+	self._btntheme:AddClickListener(self._btnthemeOnClick, self)
+	self._btninsight:AddClickListener(self._btninsightOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntheme:RemoveClickListener()
-	arg_3_0._btninsight:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomMaterialTipView:removeEvents()
+	self._btntheme:RemoveClickListener()
+	self._btninsight:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnthemeOnClick(arg_4_0)
+function RoomMaterialTipView:_btnthemeOnClick()
 	ViewMgr.instance:openView(ViewName.RoomThemeTipView, {
-		type = arg_4_0.viewParam.type,
-		id = arg_4_0.viewParam.id
+		type = self.viewParam.type,
+		id = self.viewParam.id
 	})
 end
 
-function var_0_0._btninsightOnClick(arg_5_0)
+function RoomMaterialTipView:_btninsightOnClick()
 	return
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function RoomMaterialTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	gohelper.setActive(arg_7_0._gojumpItem, false)
-	gohelper.setActive(arg_7_0._gobuyContent, false)
-	gohelper.setActive(arg_7_0._gosource, true)
+function RoomMaterialTipView:_editableInitView()
+	gohelper.setActive(self._gojumpItem, false)
+	gohelper.setActive(self._gobuyContent, false)
+	gohelper.setActive(self._gosource, true)
 
-	arg_7_0._jumpParentGo = gohelper.findChild(arg_7_0.viewGO, "right/#go_source/#scroll_jump/Viewport/Content")
-	arg_7_0.jumpItemGos = {}
+	self._jumpParentGo = gohelper.findChild(self.viewGO, "right/#go_source/#scroll_jump/Viewport/Content")
+	self.jumpItemGos = {}
 
-	arg_7_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_7_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	arg_7_0.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._gocobrand, RoomSourcesCobrandLogoItem, arg_7_0)
+	self.cobrandLogoItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gocobrand, RoomSourcesCobrandLogoItem, self)
 end
 
-function var_0_0._refreshUI(arg_8_0)
-	arg_8_0._roomSkinId = arg_8_0.viewParam.roomSkinId
-	arg_8_0._canJump = arg_8_0.viewParam.canJump
+function RoomMaterialTipView:_refreshUI()
+	self._roomSkinId = self.viewParam.roomSkinId
+	self._canJump = self.viewParam.canJump
 
-	local var_8_0 = false
-	local var_8_1 = false
-	local var_8_2
+	local hasActId = false
+	local showTheme = false
+	local sourcesTypeStr
 
-	if arg_8_0._roomSkinId then
-		local var_8_3 = RoomConfig.instance:getRoomSkinActId(arg_8_0._roomSkinId)
+	if self._roomSkinId then
+		local actId = RoomConfig.instance:getRoomSkinActId(self._roomSkinId)
 
-		var_8_0 = var_8_3 and var_8_3 ~= 0
+		hasActId = actId and actId ~= 0
 
-		local var_8_4 = ""
+		local actName = ""
 
-		if var_8_0 then
-			local var_8_5 = ActivityConfig.instance:getActivityCo(var_8_3)
+		if hasActId then
+			local actCfg = ActivityConfig.instance:getActivityCo(actId)
 
-			var_8_4 = var_8_5 and var_8_5.name or ""
+			actName = actCfg and actCfg.name or ""
 		end
 
-		arg_8_0._txtactname.text = var_8_4
+		self._txtactname.text = actName
 
-		local var_8_6 = ActivityModel.instance:getActMO(var_8_3)
-		local var_8_7 = var_8_6 and var_8_6:getRemainTimeStr3(false, true) or ""
+		local actInfoMo = ActivityModel.instance:getActMO(actId)
+		local timeStr = actInfoMo and actInfoMo:getRemainTimeStr3(false, true) or ""
 
-		arg_8_0._txttime.text = var_8_7
+		self._txttime.text = timeStr
 	else
-		arg_8_0._config = ItemModel.instance:getItemConfig(arg_8_0.viewParam.type, arg_8_0.viewParam.id)
+		self._config = ItemModel.instance:getItemConfig(self.viewParam.type, self.viewParam.id)
 
-		local var_8_8 = RoomConfig.instance:getThemeIdByItem(arg_8_0.viewParam.id, arg_8_0.viewParam.type)
-		local var_8_9 = var_8_8 and lua_room_theme.configDict[var_8_8]
+		local themeId = RoomConfig.instance:getThemeIdByItem(self.viewParam.id, self.viewParam.type)
+		local themeCO = themeId and lua_room_theme.configDict[themeId]
 
-		arg_8_0._txttheme.text = var_8_9 and var_8_9.name or ""
-		var_8_1 = var_8_8 ~= nil
-		var_8_2 = arg_8_0._config.sourcesType
+		self._txttheme.text = themeCO and themeCO.name or ""
+		showTheme = themeId ~= nil
+		sourcesTypeStr = self._config.sourcesType
 	end
 
-	arg_8_0.cobrandLogoItem:setSourcesTypeStr(var_8_2)
-	gohelper.setActive(arg_8_0._goact, var_8_0)
-	gohelper.setActive(arg_8_0._gotime, var_8_0)
-	gohelper.setActive(arg_8_0._btntheme.gameObject, var_8_1 and not arg_8_0.cobrandLogoItem:getIsShow())
-	arg_8_0:_cloneJumpItem()
+	self.cobrandLogoItem:setSourcesTypeStr(sourcesTypeStr)
+	gohelper.setActive(self._goact, hasActId)
+	gohelper.setActive(self._gotime, hasActId)
+	gohelper.setActive(self._btntheme.gameObject, showTheme and not self.cobrandLogoItem:getIsShow())
+	self:_cloneJumpItem()
 end
 
-function var_0_0._cloneJumpItem(arg_9_0)
-	arg_9_0._scrolljump.verticalNormalizedPosition = 1
+function RoomMaterialTipView:_cloneJumpItem()
+	self._scrolljump.verticalNormalizedPosition = 1
 
-	local var_9_0 = {}
+	local sourceTables = {}
 
-	if arg_9_0._config then
-		var_9_0 = arg_9_0:_sourcesStrToTables(arg_9_0._config.sources)
-	elseif arg_9_0._roomSkinId then
-		local var_9_1 = RoomConfig.instance:getRoomSkinSources(arg_9_0._roomSkinId)
+	if self._config then
+		sourceTables = self:_sourcesStrToTables(self._config.sources)
+	elseif self._roomSkinId then
+		local strSources = RoomConfig.instance:getRoomSkinSources(self._roomSkinId)
 
-		var_9_0 = arg_9_0:_sourcesStrToTables(var_9_1)
+		sourceTables = self:_sourcesStrToTables(strSources)
 	end
 
-	for iter_9_0 = 1, #var_9_0 do
-		local var_9_2 = arg_9_0.jumpItemGos[iter_9_0]
+	for i = 1, #sourceTables do
+		local jumpItemTempTab = self.jumpItemGos[i]
 
-		if not var_9_2 then
-			local var_9_3 = iter_9_0 == 1 and arg_9_0._gojumpItem or gohelper.clone(arg_9_0._gojumpItem, arg_9_0._jumpParentGo, "item" .. iter_9_0)
+		if not jumpItemTempTab then
+			local jumpItemGo = i == 1 and self._gojumpItem or gohelper.clone(self._gojumpItem, self._jumpParentGo, "item" .. i)
 
-			var_9_2 = arg_9_0:getUserDataTb_()
-			var_9_2.go = var_9_3
-			var_9_2.originText = gohelper.findChildText(var_9_3, "frame/txt_chapter")
-			var_9_2.indexText = gohelper.findChildText(var_9_3, "frame/txt_name")
-			var_9_2.jumpBtn = gohelper.findChildButtonWithAudio(var_9_3, "frame/btn_jump")
-			var_9_2.jumpBgGO = gohelper.findChild(var_9_3, "frame/btn_jump/jumpbg")
+			jumpItemTempTab = self:getUserDataTb_()
+			jumpItemTempTab.go = jumpItemGo
+			jumpItemTempTab.originText = gohelper.findChildText(jumpItemGo, "frame/txt_chapter")
+			jumpItemTempTab.indexText = gohelper.findChildText(jumpItemGo, "frame/txt_name")
+			jumpItemTempTab.jumpBtn = gohelper.findChildButtonWithAudio(jumpItemGo, "frame/btn_jump")
+			jumpItemTempTab.jumpBgGO = gohelper.findChild(jumpItemGo, "frame/btn_jump/jumpbg")
 
-			table.insert(arg_9_0.jumpItemGos, var_9_2)
-			var_9_2.jumpBtn:AddClickListener(function(arg_10_0)
-				if arg_10_0.cantJumpTips then
-					GameFacade.showToastWithTableParam(arg_10_0.cantJumpTips, arg_10_0.cantJumpParam)
-				elseif arg_10_0.canJump then
+			table.insert(self.jumpItemGos, jumpItemTempTab)
+			jumpItemTempTab.jumpBtn:AddClickListener(function(jumpItemTempTab)
+				if jumpItemTempTab.cantJumpTips then
+					GameFacade.showToastWithTableParam(jumpItemTempTab.cantJumpTips, jumpItemTempTab.cantJumpParam)
+				elseif jumpItemTempTab.canJump then
 					if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.ForceJumpToMainView) then
 						NavigateButtonsView.homeClick()
 
 						return
 					end
 
-					GameFacade.jump(arg_10_0.jumpId, arg_9_0._onJumpFinish, arg_9_0, arg_9_0.viewParam.recordFarmItem)
+					GameFacade.jump(jumpItemTempTab.jumpId, self._onJumpFinish, self, self.viewParam.recordFarmItem)
 				else
 					GameFacade.showToast(ToastEnum.MaterialTipJump)
 				end
-			end, var_9_2)
+			end, jumpItemTempTab)
 		end
 
-		local var_9_4 = var_9_0[iter_9_0]
+		local sourceTable = sourceTables[i]
 
-		var_9_2.canJump = arg_9_0._canJump
-		var_9_2.jumpId = var_9_4.sourceId
+		jumpItemTempTab.canJump = self._canJump
+		jumpItemTempTab.jumpId = sourceTable.sourceId
 
-		local var_9_5, var_9_6 = JumpConfig.instance:getJumpName(var_9_4.sourceId)
+		local name, index = JumpConfig.instance:getJumpName(sourceTable.sourceId)
 
-		var_9_2.originText.text = var_9_5 or ""
-		var_9_2.indexText.text = var_9_6 or ""
+		jumpItemTempTab.originText.text = name or ""
+		jumpItemTempTab.indexText.text = index or ""
 
-		local var_9_7, var_9_8 = arg_9_0:_getCantJump(var_9_4)
+		local cantJumpTips, toastParamList = self:_getCantJump(sourceTable)
 
-		ZProj.UGUIHelper.SetGrayscale(var_9_2.jumpBgGO, var_9_7 ~= nil)
+		ZProj.UGUIHelper.SetGrayscale(jumpItemTempTab.jumpBgGO, cantJumpTips ~= nil)
 
-		var_9_2.cantJumpTips = var_9_7
-		var_9_2.cantJumpParam = var_9_8
+		jumpItemTempTab.cantJumpTips = cantJumpTips
+		jumpItemTempTab.cantJumpParam = toastParamList
 
-		gohelper.setActive(var_9_2.go, true)
+		gohelper.setActive(jumpItemTempTab.go, true)
 
-		local var_9_9 = JumpController.instance:isOnlyShowJump(var_9_4.sourceId)
+		local isOnlyShowJump = JumpController.instance:isOnlyShowJump(sourceTable.sourceId)
 
-		gohelper.setActive(var_9_2.jumpBtn, not var_9_9)
+		gohelper.setActive(jumpItemTempTab.jumpBtn, not isOnlyShowJump)
 	end
 
-	gohelper.setActive(arg_9_0._gosource, #var_9_0 > 0)
+	gohelper.setActive(self._gosource, #sourceTables > 0)
 
-	for iter_9_1 = #var_9_0 + 1, #arg_9_0.jumpItemGos do
-		gohelper.setActive(arg_9_0.jumpItemGos[iter_9_1].go, false)
+	for i = #sourceTables + 1, #self.jumpItemGos do
+		gohelper.setActive(self.jumpItemGos[i].go, false)
 	end
 end
 
-function var_0_0._sourcesStrToTables(arg_11_0, arg_11_1)
-	local var_11_0 = {}
+function RoomMaterialTipView:_sourcesStrToTables(sourcesStr)
+	local sourceTables = {}
 
-	if not string.nilorempty(arg_11_1) then
-		local var_11_1 = string.split(arg_11_1, "|")
+	if not string.nilorempty(sourcesStr) then
+		local sources = string.split(sourcesStr, "|")
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-			local var_11_2 = string.splitToNumber(iter_11_1, "#")
-			local var_11_3 = {
-				sourceId = var_11_2[1],
-				probability = var_11_2[2]
-			}
+		for i, source in ipairs(sources) do
+			local sourceParam = string.splitToNumber(source, "#")
+			local sourceTable = {}
 
-			var_11_3.episodeId = JumpConfig.instance:getJumpEpisodeId(var_11_3.sourceId)
+			sourceTable.sourceId = sourceParam[1]
+			sourceTable.probability = sourceParam[2]
+			sourceTable.episodeId = JumpConfig.instance:getJumpEpisodeId(sourceTable.sourceId)
 
-			if var_11_3.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(var_11_3.episodeId) then
-				table.insert(var_11_0, var_11_3)
+			if sourceTable.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(sourceTable.episodeId) then
+				table.insert(sourceTables, sourceTable)
 			end
 		end
 	end
 
-	return var_11_0
+	return sourceTables
 end
 
-function var_0_0._getCantJump(arg_12_0, arg_12_1)
-	local var_12_0 = JumpController.instance:isJumpOpen(arg_12_1.sourceId)
-	local var_12_1
-	local var_12_2
-	local var_12_3 = JumpConfig.instance:getJumpConfig(arg_12_1.sourceId)
+function RoomMaterialTipView:_getCantJump(sourceTable)
+	local open = JumpController.instance:isJumpOpen(sourceTable.sourceId)
+	local cantJumpTips, toastParamList
+	local jumpConfig = JumpConfig.instance:getJumpConfig(sourceTable.sourceId)
 
-	if not var_12_0 then
-		var_12_1, var_12_2 = OpenHelper.getToastIdAndParam(var_12_3.openId)
+	if not open then
+		cantJumpTips, toastParamList = OpenHelper.getToastIdAndParam(jumpConfig.openId)
 	else
-		var_12_1, var_12_2 = JumpController.instance:cantJump(var_12_3.param)
+		cantJumpTips, toastParamList = JumpController.instance:cantJump(jumpConfig.param)
 	end
 
-	local var_12_4 = string.split(var_12_3.param, "#")
+	local jumps = string.split(jumpConfig.param, "#")
+	local jumpView = tonumber(jumps[1])
 
-	if tonumber(var_12_4[1]) == JumpEnum.JumpView.RoomProductLineView and not var_12_1 then
-		local var_12_5
-		local var_12_6
-		local var_12_7
-		local var_12_8, var_12_9, var_12_10 = RoomProductionHelper.isChangeFormulaUnlock(arg_12_0.viewParam.type, arg_12_0.viewParam.id)
-		local var_12_11 = var_12_10
-		local var_12_12 = var_12_9
+	if jumpView == JumpEnum.JumpView.RoomProductLineView and not cantJumpTips then
+		local isUnLock, unLockParam, unlockTips
 
-		if not var_12_8 then
-			var_12_1 = var_12_12
-			var_12_2 = var_12_11 and {
-				var_12_11
+		isUnLock, unlockTips, unLockParam = RoomProductionHelper.isChangeFormulaUnlock(self.viewParam.type, self.viewParam.id)
+
+		if not isUnLock then
+			cantJumpTips = unlockTips
+			toastParamList = unLockParam and {
+				unLockParam
 			} or nil
 		end
 	end
 
-	return var_12_1, var_12_2
+	return cantJumpTips, toastParamList
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
-	arg_13_0:_refreshUI()
+function RoomMaterialTipView:onUpdateParam()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:_refreshUI()
+function RoomMaterialTipView:onOpen()
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_15_0)
-	for iter_15_0 = 1, #arg_15_0.jumpItemGos do
-		arg_15_0.jumpItemGos[iter_15_0].jumpBtn:RemoveClickListener()
+function RoomMaterialTipView:onClose()
+	for i = 1, #self.jumpItemGos do
+		self.jumpItemGos[i].jumpBtn:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	arg_16_0._simagebg1:UnLoadImage()
-	arg_16_0._simagebg2:UnLoadImage()
-	arg_16_0.cobrandLogoItem:onDestroy()
+function RoomMaterialTipView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
+	self.cobrandLogoItem:onDestroy()
 end
 
-return var_0_0
+return RoomMaterialTipView

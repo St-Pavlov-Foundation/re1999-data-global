@@ -1,71 +1,73 @@
-﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3079_Buff", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialeffect/FightEntitySpecialEffect3079_Buff.lua
 
-local var_0_0 = class("FightEntitySpecialEffect3079_Buff", FightEntitySpecialEffectBase)
+module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3079_Buff", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
+local FightEntitySpecialEffect3079_Buff = class("FightEntitySpecialEffect3079_Buff", FightEntitySpecialEffectBase)
 
-	arg_1_0._showBuffIdList = {}
+function FightEntitySpecialEffect3079_Buff:initClass()
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+
+	self._showBuffIdList = {}
 end
 
-local var_0_1 = 1.5
-local var_0_2 = 0.9
+local _effectTime = 1.5
+local _effectInterval = 0.9
 
-function var_0_0._onBuffUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
-	if arg_2_1 ~= arg_2_0._entity.id then
+function FightEntitySpecialEffect3079_Buff:_onBuffUpdate(targetId, effectType, buffId, buffUid, configEffect, buffData)
+	if targetId ~= self._entity.id then
 		return
 	end
 
-	if not arg_2_6 then
+	if not buffData then
 		return
 	end
 
-	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_6.fromUid)
+	local fromEntityData = FightDataHelper.entityMgr:getById(buffData.fromUid)
 
-	if not var_2_0 then
+	if not fromEntityData then
 		return
 	end
 
-	local var_2_1 = lua_fight_6_buff_effect.configDict[var_2_0.skin] or lua_fight_6_buff_effect.configDict[0]
+	local config = lua_fight_6_buff_effect.configDict[fromEntityData.skin] or lua_fight_6_buff_effect.configDict[0]
 
-	var_2_1 = var_2_1 and var_2_1[arg_2_3]
+	config = config and config[buffId]
 
-	if var_2_1 and arg_2_2 == FightEnum.EffectType.BUFFADD then
-		table.insert(arg_2_0._showBuffIdList, {
-			buffId = arg_2_3,
-			config = var_2_1
+	if config and effectType == FightEnum.EffectType.BUFFADD then
+		table.insert(self._showBuffIdList, {
+			buffId = buffId,
+			config = config
 		})
 
-		if not arg_2_0._playing then
-			arg_2_0:_showBuffEffect()
+		if not self._playing then
+			self:_showBuffEffect()
 		end
 	end
 end
 
-function var_0_0._showBuffEffect(arg_3_0)
-	local var_3_0 = table.remove(arg_3_0._showBuffIdList, 1)
+function FightEntitySpecialEffect3079_Buff:_showBuffEffect()
+	local tab = table.remove(self._showBuffIdList, 1)
 
-	if var_3_0 then
-		arg_3_0._playing = true
+	if tab then
+		self._playing = true
 
-		local var_3_1 = var_3_0.config
-		local var_3_2 = string.nilorempty(var_3_1.effectHang) and ModuleEnum.SpineHangPointRoot or var_3_1.effectHang
-		local var_3_3 = arg_3_0._entity.effect:addHangEffect(var_3_1.effect, var_3_2, nil, var_0_1)
+		local config = tab.config
+		local hangPoint = string.nilorempty(config.effectHang) and ModuleEnum.SpineHangPointRoot or config.effectHang
+		local effectWrap = self._entity.effect:addHangEffect(config.effect, hangPoint, nil, _effectTime)
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(arg_3_0._entity.id, var_3_3)
-		var_3_3:setLocalPos(0, 0, 0)
-		TaskDispatcher.runDelay(arg_3_0._showBuffEffect, arg_3_0, var_0_2)
+		FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
+		effectWrap:setLocalPos(0, 0, 0)
+		TaskDispatcher.runDelay(self._showBuffEffect, self, _effectInterval)
 
-		if var_3_1.audioId ~= 0 then
-			AudioMgr.instance:trigger(var_3_1.audioId)
+		if config.audioId ~= 0 then
+			AudioMgr.instance:trigger(config.audioId)
 		end
 	else
-		arg_3_0._playing = false
+		self._playing = false
 	end
 end
 
-function var_0_0.releaseSelf(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._showBuffEffect, arg_4_0)
+function FightEntitySpecialEffect3079_Buff:releaseSelf()
+	TaskDispatcher.cancelTask(self._showBuffEffect, self)
 end
 
-return var_0_0
+return FightEntitySpecialEffect3079_Buff

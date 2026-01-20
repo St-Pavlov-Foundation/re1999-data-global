@@ -1,19 +1,21 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyEquipInfoTeamItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyEquipInfoTeamItem.lua
 
-local var_0_0 = class("OdysseyEquipInfoTeamItem", EquipInfoTeamItem)
+module("modules.logic.sp01.odyssey.view.OdysseyEquipInfoTeamItem", package.seeall)
 
-function var_0_0.refreshSelect(arg_1_0)
-	arg_1_0.isSelect = OdysseyEquipInfoTeamListModel.instance:isSelectedEquip(arg_1_0.equipMo.uid)
+local OdysseyEquipInfoTeamItem = class("OdysseyEquipInfoTeamItem", EquipInfoTeamItem)
 
-	arg_1_0._commonEquipIcon:onSelect(arg_1_0.isSelect)
+function OdysseyEquipInfoTeamItem:refreshSelect()
+	self.isSelect = OdysseyEquipInfoTeamListModel.instance:isSelectedEquip(self.equipMo.uid)
+
+	self._commonEquipIcon:onSelect(self.isSelect)
 end
 
-function var_0_0.onClickEquip(arg_2_0)
-	arg_2_0.isSelect = not arg_2_0.isSelect
+function OdysseyEquipInfoTeamItem:onClickEquip()
+	self.isSelect = not self.isSelect
 
-	if arg_2_0.isSelect then
+	if self.isSelect then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-		OdysseyEquipInfoTeamListModel.instance:setCurrentSelectEquipMo(arg_2_0.equipMo)
+		OdysseyEquipInfoTeamListModel.instance:setCurrentSelectEquipMo(self.equipMo)
 	else
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Forget)
 		OdysseyEquipInfoTeamListModel.instance:setCurrentSelectEquipMo(nil)
@@ -22,16 +24,16 @@ function var_0_0.onClickEquip(arg_2_0)
 	EquipController.instance:dispatchEvent(EquipEvent.ChangeSelectedEquip)
 end
 
-function var_0_0.refreshHeroIcon(arg_3_0)
-	local var_3_0 = OdysseyEquipInfoTeamListModel.instance:getHeroMoByEquipUid(arg_3_0.equipMo.uid)
+function OdysseyEquipInfoTeamItem:refreshHeroIcon()
+	local heroMo = OdysseyEquipInfoTeamListModel.instance:getHeroMoByEquipUid(self.equipMo.uid)
 
-	if var_3_0 and arg_3_0.equipMo.equipType ~= EquipEnum.ClientEquipType.TrialHero then
-		local var_3_1 = lua_skin.configDict[var_3_0.skin]
+	if heroMo and self.equipMo.equipType ~= EquipEnum.ClientEquipType.TrialHero then
+		local skinCo = lua_skin.configDict[heroMo.skin]
 
-		arg_3_0._commonEquipIcon:showHeroIcon(var_3_1)
+		self._commonEquipIcon:showHeroIcon(skinCo)
 	else
-		arg_3_0._commonEquipIcon:hideHeroIcon()
+		self._commonEquipIcon:hideHeroIcon()
 	end
 end
 
-return var_0_0
+return OdysseyEquipInfoTeamItem

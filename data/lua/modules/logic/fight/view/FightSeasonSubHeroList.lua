@@ -1,206 +1,208 @@
-﻿module("modules.logic.fight.view.FightSeasonSubHeroList", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSeasonSubHeroList.lua
 
-local var_0_0 = class("FightSeasonSubHeroList", FightBaseView)
+module("modules.logic.fight.view.FightSeasonSubHeroList", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scoreText = gohelper.findChildText(arg_1_0.viewGO, "Score/#txt_num")
-	arg_1_0._scoreText1 = gohelper.findChildText(arg_1_0.viewGO, "Score/#txt_num1")
-	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(gohelper.findChild(arg_1_0.viewGO, "Score"))
-	arg_1_0._goScore = gohelper.findChild(arg_1_0.viewGO, "Score")
-	arg_1_0._scoreImg = gohelper.findChildImage(arg_1_0.viewGO, "Score/#image_ScoreBG")
-	arg_1_0._itemRoot = gohelper.findChild(arg_1_0.viewGO, "List")
-	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "List/#go_Item")
-	arg_1_0._itemClassList = {}
+local FightSeasonSubHeroList = class("FightSeasonSubHeroList", FightBaseView)
+
+function FightSeasonSubHeroList:onInitView()
+	self._scoreText = gohelper.findChildText(self.viewGO, "Score/#txt_num")
+	self._scoreText1 = gohelper.findChildText(self.viewGO, "Score/#txt_num1")
+	self._ani = SLFramework.AnimatorPlayer.Get(gohelper.findChild(self.viewGO, "Score"))
+	self._goScore = gohelper.findChild(self.viewGO, "Score")
+	self._scoreImg = gohelper.findChildImage(self.viewGO, "Score/#image_ScoreBG")
+	self._itemRoot = gohelper.findChild(self.viewGO, "List")
+	self._goItem = gohelper.findChild(self.viewGO, "List/#go_Item")
+	self._itemClassList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.ChangeWaveEnd, arg_2_0._onChangeWaveEnd)
-	arg_2_0:com_registFightEvent(FightEvent.OnIndicatorChange, arg_2_0._onIndicatorChange)
-	arg_2_0:com_registFightEvent(FightEvent.StageChanged, arg_2_0._onStageChanged)
-	arg_2_0:com_registEvent(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView)
-	arg_2_0:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0.onCloseView)
+function FightSeasonSubHeroList:addEvents()
+	self:com_registFightEvent(FightEvent.ChangeWaveEnd, self._onChangeWaveEnd)
+	self:com_registFightEvent(FightEvent.OnIndicatorChange, self._onIndicatorChange)
+	self:com_registFightEvent(FightEvent.StageChanged, self._onStageChanged)
+	self:com_registEvent(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView)
+	self:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightSeasonSubHeroList:removeEvents()
 	return
 end
 
-function var_0_0._onStageChanged(arg_4_0, arg_4_1, arg_4_2)
-	gohelper.setActive(arg_4_0._itemRoot, arg_4_1 ~= FightStageMgr.StageType.Play)
+function FightSeasonSubHeroList:_onStageChanged(curStage, lastStage)
+	gohelper.setActive(self._itemRoot, curStage ~= FightStageMgr.StageType.Play)
 end
 
-function var_0_0._enterOperate(arg_5_0)
-	arg_5_0.PARENT_VIEW:_enterOperate()
+function FightSeasonSubHeroList:_enterOperate()
+	self.PARENT_VIEW:_enterOperate()
 end
 
-function var_0_0._exitOperate(arg_6_0, arg_6_1)
-	if arg_6_0._selectItem then
-		arg_6_0._selectItem:playAni("select_out", true)
+function FightSeasonSubHeroList:_exitOperate(changed)
+	if self._selectItem then
+		self._selectItem:playAni("select_out", true)
 
-		arg_6_0._selectItem = nil
+		self._selectItem = nil
 	end
 
-	if not arg_6_1 then
-		arg_6_0:_refreshSubSpine()
+	if not changed then
+		self:_refreshSubSpine()
 	end
 end
 
-function var_0_0.sortScoreConfig(arg_7_0, arg_7_1)
-	return arg_7_0.level < arg_7_1.level
+function FightSeasonSubHeroList.sortScoreConfig(item1, item2)
+	return item1.level < item2.level
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = Season166Model.instance:getCurSeasonId()
-	local var_8_1 = lua_activity166_score.configDict[var_8_0]
+function FightSeasonSubHeroList:onOpen()
+	local activeId = Season166Model.instance:getCurSeasonId()
+	local configs = lua_activity166_score.configDict[activeId]
 
-	arg_8_0._scoreConfigList = {}
+	self._scoreConfigList = {}
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		table.insert(arg_8_0._scoreConfigList, iter_8_1)
+	for i, v in ipairs(configs) do
+		table.insert(self._scoreConfigList, v)
 	end
 
-	table.sort(arg_8_0._scoreConfigList, var_0_0.sortScoreConfig)
+	table.sort(self._scoreConfigList, FightSeasonSubHeroList.sortScoreConfig)
 
-	arg_8_0._index2ImageName = {
+	self._index2ImageName = {
 		"season_scorebg_01",
 		"season_scorebg_02",
 		"season_scorebg_03",
 		"season_scorebg_04"
 	}
-	arg_8_0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	self.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 
-	arg_8_0:_refreshHeroList()
+	self:_refreshHeroList()
 
-	arg_8_0._score = FightDataHelper.fieldMgr:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScore)
+	self._score = FightDataHelper.fieldMgr:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScore)
 
-	arg_8_0:_refreshScore()
+	self:_refreshScore()
 end
 
-function var_0_0._refreshHeroList(arg_9_0)
-	local var_9_0 = FightDataHelper.entityMgr:getMySubList()
+function FightSeasonSubHeroList:_refreshHeroList()
+	local subList = FightDataHelper.entityMgr:getMySubList()
 
-	table.sort(var_9_0, FightEntityDataHelper.sortSubEntityList)
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onItemShow, var_9_0, arg_9_0._itemRoot, arg_9_0._goItem)
+	table.sort(subList, FightEntityDataHelper.sortSubEntityList)
+	gohelper.CreateObjList(self, self._onItemShow, subList, self._itemRoot, self._goItem)
 end
 
-function var_0_0._onItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_0._itemClassList[arg_10_3]
+function FightSeasonSubHeroList:_onItemShow(obj, data, index)
+	local itemclass = self._itemClassList[index]
 
-	if not var_10_0 then
-		var_10_0 = arg_10_0:com_openSubView(FightSeasonSubHeroItem, arg_10_1)
-		arg_10_0._itemClassList[arg_10_3] = var_10_0
+	if not itemclass then
+		itemclass = self:com_openSubView(FightSeasonSubHeroItem, obj)
+		self._itemClassList[index] = itemclass
 	end
 
-	var_10_0:refreshData(arg_10_2.id)
-	var_10_0:playAni("normal_in", true)
+	itemclass:refreshData(data.id)
+	itemclass:playAni("normal_in", true)
 end
 
-function var_0_0.selectItem(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._itemClassList) do
-		if iter_11_1.viewGO.activeInHierarchy and arg_11_0:selecting(iter_11_1) then
-			iter_11_1:playAni("select_out", true)
+function FightSeasonSubHeroList:selectItem(item)
+	for i, v in ipairs(self._itemClassList) do
+		if v.viewGO.activeInHierarchy and self:selecting(v) then
+			v:playAni("select_out", true)
 		end
 	end
 
-	arg_11_1:playAni("select_in", true)
+	item:playAni("select_in", true)
 
-	arg_11_0._selectItem = arg_11_1
+	self._selectItem = item
 
-	arg_11_0.PARENT_VIEW:selectItem(arg_11_1)
-	arg_11_0:_refreshSubSpine(arg_11_1._entityId)
+	self.PARENT_VIEW:selectItem(item)
+	self:_refreshSubSpine(item._entityId)
 end
 
-function var_0_0._refreshSubSpine(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1
+function FightSeasonSubHeroList:_refreshSubSpine(selectId)
+	local showId = selectId
 
-	if not var_12_0 then
-		local var_12_1 = FightDataHelper.entityMgr:getMySubList()
+	if not showId then
+		local subList = FightDataHelper.entityMgr:getMySubList()
 
-		table.sort(var_12_1, FightEntityDataHelper.sortSubEntityList)
+		table.sort(subList, FightEntityDataHelper.sortSubEntityList)
 
-		local var_12_2 = var_12_1[1]
+		local nextSubEntityMO = subList[1]
 
-		var_12_0 = var_12_2 and var_12_2.id
+		showId = nextSubEntityMO and nextSubEntityMO.id
 	end
 
-	if var_12_0 then
-		local var_12_3 = FightDataHelper.entityMgr:getById(var_12_0)
+	if showId then
+		local entityMO = FightDataHelper.entityMgr:getById(showId)
 
-		if var_12_3 then
-			local var_12_4 = FightHelper.getSubEntity(FightEnum.EntitySide.MySide)
+		if entityMO then
+			local subEntity = FightHelper.getSubEntity(FightEnum.EntitySide.MySide)
 
-			if var_12_4 then
-				if var_12_4.id ~= var_12_0 then
-					arg_12_0.entityMgr:removeUnit(var_12_4:getTag(), var_12_4.id)
-					arg_12_0.entityMgr:buildSubSpine(var_12_3)
+			if subEntity then
+				if subEntity.id ~= showId then
+					self.entityMgr:removeUnit(subEntity:getTag(), subEntity.id)
+					self.entityMgr:buildSubSpine(entityMO)
 				end
 			else
-				arg_12_0.entityMgr:buildSubSpine(var_12_3)
+				self.entityMgr:buildSubSpine(entityMO)
 			end
 		end
 	end
 end
 
-function var_0_0.selecting(arg_13_0, arg_13_1)
-	return arg_13_0._selectItem == arg_13_1
+function FightSeasonSubHeroList:selecting(item)
+	return self._selectItem == item
 end
 
-function var_0_0._onIndicatorChange(arg_14_0, arg_14_1)
-	if arg_14_1 == FightEnum.IndicatorId.NewSeasonScoreOffset then
-		arg_14_0._score = arg_14_0._score + FightDataHelper.fieldMgr:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScoreOffset)
+function FightSeasonSubHeroList:_onIndicatorChange(id)
+	if id == FightEnum.IndicatorId.NewSeasonScoreOffset then
+		self._score = self._score + FightDataHelper.fieldMgr:getIndicatorNum(FightEnum.IndicatorId.NewSeasonScoreOffset)
 
-		arg_14_0:_refreshScore()
-		arg_14_0._ani:Play("up", nil, nil)
+		self:_refreshScore()
+		self._ani:Play("up", nil, nil)
 	end
 end
 
-function var_0_0._refreshScore(arg_15_0)
-	gohelper.setActive(arg_15_0._goScore, Season166Model.instance:checkIsBaseSpotEpisode())
+function FightSeasonSubHeroList:_refreshScore()
+	gohelper.setActive(self._goScore, Season166Model.instance:checkIsBaseSpotEpisode())
 
-	arg_15_0._scoreText.text = arg_15_0._score
-	arg_15_0._scoreText1.text = arg_15_0._score
+	self._scoreText.text = self._score
+	self._scoreText1.text = self._score
 
-	local var_15_0 = 1
+	local index = 1
 
-	for iter_15_0 = #arg_15_0._scoreConfigList, 1, -1 do
-		if arg_15_0._score >= arg_15_0._scoreConfigList[iter_15_0].needScore then
-			var_15_0 = iter_15_0
+	for i = #self._scoreConfigList, 1, -1 do
+		if self._score >= self._scoreConfigList[i].needScore then
+			index = i
 
 			break
 		end
 	end
 
-	if var_15_0 == arg_15_0._lastIndex then
+	if index == self._lastIndex then
 		return
 	end
 
-	arg_15_0._lastIndex = var_15_0
+	self._lastIndex = index
 
-	UISpriteSetMgr.instance:setFightSprite(arg_15_0._scoreImg, arg_15_0._index2ImageName[var_15_0])
+	UISpriteSetMgr.instance:setFightSprite(self._scoreImg, self._index2ImageName[index])
 end
 
-function var_0_0.onOpenView(arg_16_0, arg_16_1)
-	if arg_16_1 == ViewName.FightEnemyActionView then
-		gohelper.setActive(arg_16_0._goScore, false)
+function FightSeasonSubHeroList:onOpenView(viewName)
+	if viewName == ViewName.FightEnemyActionView then
+		gohelper.setActive(self._goScore, false)
 	end
 end
 
-function var_0_0.onCloseView(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.FightEnemyActionView then
-		gohelper.setActive(arg_17_0._goScore, Season166Model.instance:checkIsBaseSpotEpisode())
+function FightSeasonSubHeroList:onCloseView(viewName)
+	if viewName == ViewName.FightEnemyActionView then
+		gohelper.setActive(self._goScore, Season166Model.instance:checkIsBaseSpotEpisode())
 	end
 end
 
-function var_0_0._onChangeWaveEnd(arg_18_0)
-	arg_18_0:onOpen()
+function FightSeasonSubHeroList:_onChangeWaveEnd()
+	self:onOpen()
 end
 
-function var_0_0.onClose(arg_19_0)
+function FightSeasonSubHeroList:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function FightSeasonSubHeroList:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightSeasonSubHeroList

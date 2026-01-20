@@ -1,263 +1,271 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.controller.VersionActivity1_6DungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/controller/VersionActivity1_6DungeonController.lua
 
-local var_0_0 = class("VersionActivity1_6DungeonController", BaseController)
+module("modules.logic.versionactivity1_6.dungeon.controller.VersionActivity1_6DungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._bossModel = VersionActivity1_6DungeonBossModel.instance
+local VersionActivity1_6DungeonController = class("VersionActivity1_6DungeonController", BaseController)
+
+function VersionActivity1_6DungeonController:onInit()
+	self._bossModel = VersionActivity1_6DungeonBossModel.instance
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._bossModel = VersionActivity1_6DungeonBossModel.instance
+function VersionActivity1_6DungeonController:reInit()
+	self._bossModel = VersionActivity1_6DungeonBossModel.instance
 
-	arg_2_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenMapViewDone, arg_2_0)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenMapViewDone, self)
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_3_0._respBeginFight, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.RespBeginRound, arg_3_0._respBeginRound, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, arg_3_0._onIndicatorChange, arg_3_0)
-	arg_3_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
+function VersionActivity1_6DungeonController:addConstEvents()
+	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginRound, self._respBeginRound, self)
+	self:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, self._onIndicatorChange, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 end
 
-function var_0_0._respBeginFight(arg_4_0)
-	arg_4_0._tempScore = 0
+function VersionActivity1_6DungeonController:_respBeginFight()
+	self._tempScore = 0
 
-	arg_4_0._bossModel:setFightScore(0)
+	self._bossModel:setFightScore(0)
 end
 
-function var_0_0._respBeginRound(arg_5_0)
-	local var_5_0 = FightDataHelper.roundMgr:getRoundData()
+function VersionActivity1_6DungeonController:_respBeginRound()
+	local roundData = FightDataHelper.roundMgr:getRoundData()
 
-	if not var_5_0 then
+	if not roundData then
 		return
 	end
 
-	local var_5_1 = var_5_0.fightStep
+	local fightStepList = roundData.fightStep
 
-	if not var_5_1 or not next(var_5_1) then
+	if not fightStepList or not next(fightStepList) then
 		return
 	end
 
-	local var_5_2 = FightWorkIndicatorChange.ConfigEffect.AddIndicator
-	local var_5_3 = FightEnum.EffectType.INDICATORCHANGE
-	local var_5_4 = FightEnum.IndicatorId.Act1_6DungeonBoss
-	local var_5_5 = 0
+	local eAddIndicator = FightWorkIndicatorChange.ConfigEffect.AddIndicator
+	local eINDICATORCHANGE = FightEnum.EffectType.INDICATORCHANGE
+	local BossIndicatorId = FightEnum.IndicatorId.Act1_6DungeonBoss
+	local score = 0
 
-	for iter_5_0 = #var_5_1, 1, -1 do
-		local var_5_6 = var_5_1[iter_5_0].actEffect or {}
+	for stepIndex = #fightStepList, 1, -1 do
+		local stepData = fightStepList[stepIndex]
+		local actEffect = stepData.actEffect or {}
 
-		for iter_5_1 = #var_5_6, 1, -1 do
-			local var_5_7 = var_5_6[iter_5_1]
-			local var_5_8 = var_5_7.effectType
-			local var_5_9 = tonumber(var_5_7.targetId)
-			local var_5_10 = var_5_7.configEffect
+		for i = #actEffect, 1, -1 do
+			local actEffectMO = actEffect[i]
+			local effectType = actEffectMO.effectType
+			local indicatorId = tonumber(actEffectMO.targetId)
+			local configEffect = actEffectMO.configEffect
 
-			if var_5_8 == var_5_3 and var_5_9 == var_5_4 and var_5_10 == var_5_2 then
-				var_5_5 = math.max(var_5_5, var_5_7.effectNum)
+			if effectType == eINDICATORCHANGE and indicatorId == BossIndicatorId and configEffect == eAddIndicator then
+				score = math.max(score, actEffectMO.effectNum)
 			end
 		end
 	end
 
-	if var_5_5 > 0 then
-		arg_5_0._bossModel:setFightScore(var_5_5)
+	if score > 0 then
+		self._bossModel:setFightScore(score)
 	end
 end
 
-function var_0_0._onIndicatorChange(arg_6_0, arg_6_1)
-	if arg_6_1 == FightEnum.IndicatorId.Act1_6DungeonBoss then
-		local var_6_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_6_1)
+function VersionActivity1_6DungeonController:_onIndicatorChange(id)
+	if id == FightEnum.IndicatorId.Act1_6DungeonBoss then
+		local num = FightDataHelper.fieldMgr:getIndicatorNum(id)
 
-		arg_6_0._tempScore = math.max(arg_6_0._tempScore, var_6_0)
+		self._tempScore = math.max(self._tempScore, num)
 
-		arg_6_0._bossModel:noticeFightScore(arg_6_0._tempScore)
+		self._bossModel:noticeFightScore(self._tempScore)
 	end
 end
 
-function var_0_0._onEndDungeonPush(arg_7_0, arg_7_1)
+function VersionActivity1_6DungeonController:_onEndDungeonPush(id)
 	if not FightResultModel.instance.firstPass then
 		return
 	end
 
-	local var_7_0 = FightResultModel.instance.episodeId
+	local episodeId = FightResultModel.instance.episodeId
+	local maxOrderBossMo = self._bossModel:getMaxOrderMo()
 
-	if arg_7_0._bossModel:getMaxOrderMo().cfg.episodeId == var_7_0 then
+	if maxOrderBossMo.cfg.episodeId == episodeId then
 		-- block empty
 	end
 end
 
-function var_0_0.openActivityDungeonMapViewDirectly(arg_8_0)
-	ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonMapView, arg_8_0.openViewParam)
+function VersionActivity1_6DungeonController:openActivityDungeonMapViewDirectly()
+	ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonMapView, self.openViewParam)
 end
 
-function var_0_0.getEpisodeMapConfig(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getStoryEpisodeCo(arg_9_1)
+function VersionActivity1_6DungeonController:getEpisodeMapConfig(episodeId)
+	local episodeCo = self:getStoryEpisodeCo(episodeId)
 
-	return DungeonConfig.instance:getChapterMapCfg(VersionActivity1_6DungeonEnum.DungeonChapterId.Story, var_9_0.preEpisode)
+	return DungeonConfig.instance:getChapterMapCfg(VersionActivity1_6DungeonEnum.DungeonChapterId.Story, episodeCo.preEpisode)
 end
 
-function var_0_0.getEpisodeIndex(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getStoryEpisodeCo(arg_10_1)
+function VersionActivity1_6DungeonController:getEpisodeIndex(episodeId)
+	local episodeConfig = self:getStoryEpisodeCo(episodeId)
 
-	return DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_10_0.chapterId, var_10_0.id)
+	return DungeonConfig.instance:getChapterEpisodeIndexWithSP(episodeConfig.chapterId, episodeConfig.id)
 end
 
-function var_0_0.getStoryEpisodeCo(arg_11_0, arg_11_1)
-	local var_11_0 = DungeonConfig.instance:getEpisodeCO(arg_11_1)
+function VersionActivity1_6DungeonController:getStoryEpisodeCo(episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_11_0.chapterId == VersionActivity1_6DungeonEnum.DungeonChapterId.Hard then
-		arg_11_1 = arg_11_1 - 10000
-		var_11_0 = DungeonConfig.instance:getEpisodeCO(arg_11_1)
+	if episodeConfig.chapterId == VersionActivity1_6DungeonEnum.DungeonChapterId.Hard then
+		episodeId = episodeId - 10000
+		episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 	else
-		while var_11_0.chapterId ~= VersionActivity1_6DungeonEnum.DungeonChapterId.Story do
-			var_11_0 = DungeonConfig.instance:getEpisodeCO(var_11_0.preEpisode)
+		while episodeConfig.chapterId ~= VersionActivity1_6DungeonEnum.DungeonChapterId.Story do
+			episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeConfig.preEpisode)
 		end
 	end
 
-	return var_11_0
+	return episodeConfig
 end
 
-function var_0_0.enterBossFightScene(arg_12_0, arg_12_1)
-	local var_12_0 = Activity149Config.instance:getDungeonEpisodeCfg(arg_12_1)
-	local var_12_1 = var_12_0.id
-	local var_12_2 = var_12_0.chapterId
-	local var_12_3 = var_12_0.battleId
-	local var_12_4 = FightController.instance:setFightParamByBattleId(var_12_3)
+function VersionActivity1_6DungeonController:enterBossFightScene(id)
+	local dungeonEpisodeCO = Activity149Config.instance:getDungeonEpisodeCfg(id)
+	local episodeId = dungeonEpisodeCO.id
+	local chapterId = dungeonEpisodeCO.chapterId
+	local battleId = dungeonEpisodeCO.battleId
+	local fightParam = FightController.instance:setFightParamByBattleId(battleId)
 
-	var_12_4.episodeId = var_12_1
-	var_12_4.chapterId = var_12_2
-	FightResultModel.instance.episodeId = var_12_1
+	fightParam.episodeId = episodeId
+	fightParam.chapterId = chapterId
+	FightResultModel.instance.episodeId = episodeId
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_12_2, var_12_1)
-	var_12_4:setPreload()
+	DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
+	fightParam:setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function var_0_0.openVersionActivityDungeonMapView(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	arg_13_0.openViewParam = {
-		chapterId = arg_13_1,
-		episodeId = arg_13_2
+function VersionActivity1_6DungeonController:openVersionActivityDungeonMapView(chapterId, episodeId, callback, callbackObj)
+	self.openViewParam = {
+		chapterId = chapterId,
+		episodeId = episodeId
 	}
-	arg_13_0.openMapViewCallback = arg_13_3
-	arg_13_0.openMapViewCallbackObj = arg_13_4
-	arg_13_0.receiveTaskReply = nil
-	arg_13_0.waitAct148InfoReply = true
+	self.openMapViewCallback = callback
+	self.openMapViewCallbackObj = callbackObj
+	self.receiveTaskReply = nil
+	self.waitAct148InfoReply = true
 
 	VersionActivity1_6DungeonModel.instance:init()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, arg_13_0._onReceiveTaskReply, arg_13_0)
+	}, self._onReceiveTaskReply, self)
 	Activity113Rpc.instance:sendGetAct113InfoRequest(VersionActivity1_6Enum.ActivityId.Dungeon)
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60101) then
-		VersionActivity1_6DungeonRpc.instance:sendGet148InfoRequest(arg_13_0._onReceiveAct148InfoReply, arg_13_0)
+	local isAct148Unlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60101)
+
+	if isAct148Unlock then
+		VersionActivity1_6DungeonRpc.instance:sendGet148InfoRequest(self._onReceiveAct148InfoReply, self)
 	else
-		arg_13_0.waitAct148InfoReply = false
+		self.waitAct148InfoReply = false
 	end
 end
 
-function var_0_0._onReceiveTaskReply(arg_14_0)
-	arg_14_0.receiveTaskReply = true
+function VersionActivity1_6DungeonController:_onReceiveTaskReply()
+	self.receiveTaskReply = true
 
-	arg_14_0:_openVersionActivityDungeonMapView()
+	self:_openVersionActivityDungeonMapView()
 end
 
-function var_0_0._onReceiveAct148InfoReply(arg_15_0)
-	arg_15_0.waitAct148InfoReply = false
+function VersionActivity1_6DungeonController:_onReceiveAct148InfoReply()
+	self.waitAct148InfoReply = false
 
-	arg_15_0:_openVersionActivityDungeonMapView()
+	self:_openVersionActivityDungeonMapView()
 end
 
-function var_0_0._openVersionActivityDungeonMapView(arg_16_0)
-	if not arg_16_0.receiveTaskReply or arg_16_0.waitAct148InfoReply then
+function VersionActivity1_6DungeonController:_openVersionActivityDungeonMapView()
+	if not self.receiveTaskReply or self.waitAct148InfoReply then
 		return
 	end
 
-	arg_16_0.receiveTaskReply = nil
+	self.receiveTaskReply = nil
 
-	if arg_16_0.openMapViewCallback then
-		arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_16_0._onOpenMapViewDone, arg_16_0)
+	if self.openMapViewCallback then
+		self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenMapViewDone, self)
 	end
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonMapView, arg_16_0.openViewParam)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonMapView, self.openViewParam)
 end
 
-function var_0_0._onOpenMapViewDone(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.VersionActivity1_6DungeonMapView then
-		arg_17_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_17_0._onOpenMapViewDone, arg_17_0)
+function VersionActivity1_6DungeonController:_onOpenMapViewDone(viewName)
+	if viewName == ViewName.VersionActivity1_6DungeonMapView then
+		self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenMapViewDone, self)
 
-		if arg_17_0.openMapViewCallback then
-			local var_17_0 = arg_17_0.openMapViewCallback
-			local var_17_1 = arg_17_0.openMapViewCallbackObj
+		if self.openMapViewCallback then
+			local callback = self.openMapViewCallback
+			local callbackObj = self.openMapViewCallbackObj
 
-			arg_17_0.openMapViewCallback = nil
-			arg_17_0.openMapViewCallbackObj = nil
+			self.openMapViewCallback = nil
+			self.openMapViewCallbackObj = nil
 
-			var_17_0(var_17_1)
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0.openTaskView(arg_18_0)
+function VersionActivity1_6DungeonController:openTaskView()
 	ViewMgr.instance:openView(ViewName.VersionActivity1_6TaskView)
 end
 
-function var_0_0.openSkillView(arg_19_0)
-	VersionActivity1_6DungeonRpc.instance:sendGet148InfoRequest(arg_19_0._openSkillViewImpl, arg_19_0)
+function VersionActivity1_6DungeonController:openSkillView()
+	VersionActivity1_6DungeonRpc.instance:sendGet148InfoRequest(self._openSkillViewImpl, self)
 end
 
-function var_0_0._openSkillViewImpl(arg_20_0)
+function VersionActivity1_6DungeonController:_openSkillViewImpl()
 	ViewMgr.instance:openView(ViewName.VersionActivity1_6SkillView)
 end
 
-function var_0_0.openSkillLvUpView(arg_21_0, arg_21_1)
-	local var_21_0 = {
-		skillType = arg_21_1
+function VersionActivity1_6DungeonController:openSkillLvUpView(skillTypeId)
+	local viewParam = {
+		skillType = skillTypeId
 	}
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_6SkillLvUpView, var_21_0)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_6SkillLvUpView, viewParam)
 end
 
-function var_0_0.openResultPanel(arg_22_0, arg_22_1)
+function VersionActivity1_6DungeonController:openResultPanel(skillTypeId)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_6BossFightSuccView)
 end
 
-function var_0_0.openDungeonBossView(arg_23_0, arg_23_1)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60102) then
-		local var_23_0, var_23_1 = OpenHelper.getToastIdAndParam(OpenEnum.UnlockFunc.Act_60102)
+function VersionActivity1_6DungeonController:openDungeonBossView(focusToPreEpisode)
+	local isAct149Unlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60102)
 
-		GameFacade.showToastWithTableParam(var_23_0, var_23_1)
+	if not isAct149Unlock then
+		local toastId, toastParamList = OpenHelper.getToastIdAndParam(OpenEnum.UnlockFunc.Act_60102)
+
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 
 		return
 	end
 
-	arg_23_0._openBossViewParam = {
-		toPreEpisode = arg_23_1
+	self._openBossViewParam = {
+		toPreEpisode = focusToPreEpisode
 	}
 
-	VersionActivity1_6DungeonRpc.instance:sendGet149InfoRequest(arg_23_0._onReceiveAct149InfoReply, arg_23_0)
+	VersionActivity1_6DungeonRpc.instance:sendGet149InfoRequest(self._onReceiveAct149InfoReply, self)
 end
 
-function var_0_0._onReceiveAct149InfoReply(arg_24_0)
-	arg_24_0:_afterDailyBonusOpenDungeonBossView()
+function VersionActivity1_6DungeonController:_onReceiveAct149InfoReply()
+	self:_afterDailyBonusOpenDungeonBossView()
 end
 
-function var_0_0._afterDailyBonusOpenDungeonBossView(arg_25_0)
-	local var_25_0 = VersionActivity1_6DungeonBossModel.instance:GetOpenBossViewWithDailyBonus()
+function VersionActivity1_6DungeonController:_afterDailyBonusOpenDungeonBossView()
+	local showDailyBonus = VersionActivity1_6DungeonBossModel.instance:GetOpenBossViewWithDailyBonus()
 
-	arg_25_0._openBossViewParam.showDailyBonus = var_25_0
+	self._openBossViewParam.showDailyBonus = showDailyBonus
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonBossView, arg_25_0._openBossViewParam)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonBossView, self._openBossViewParam)
 	VersionActivity1_6DungeonBossModel.instance:SetOpenBossViewWithDailyBonus(false)
 end
 
-function var_0_0._onCurrencyChange(arg_26_0, arg_26_1)
-	for iter_26_0, iter_26_1 in pairs(arg_26_1) do
-		if iter_26_1 == CurrencyEnum.CurrencyType.V1a6DungeonSkill then
+function VersionActivity1_6DungeonController:_onCurrencyChange(changeIds)
+	for _, currencyId in pairs(changeIds) do
+		if currencyId == CurrencyEnum.CurrencyType.V1a6DungeonSkill then
 			-- block empty
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_6DungeonController.instance = VersionActivity1_6DungeonController.New()
 
-return var_0_0
+return VersionActivity1_6DungeonController

@@ -1,124 +1,130 @@
-﻿module("modules.logic.room.model.manufacture.RoomBuildingCritterMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/manufacture/RoomBuildingCritterMO.lua
 
-local var_0_0 = pureTable("RoomBuildingCritterMO")
+module("modules.logic.room.model.manufacture.RoomBuildingCritterMO", package.seeall)
 
-local function var_0_1(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0 and arg_1_0:getSeatSlotId()
-	local var_1_1 = arg_1_1 and arg_1_1:getSeatSlotId()
+local RoomBuildingCritterMO = pureTable("RoomBuildingCritterMO")
 
-	if not var_1_0 or not var_1_1 then
+local function SortById(aSeatSlotMO, bSeatSlotMO)
+	local aId = aSeatSlotMO and aSeatSlotMO:getSeatSlotId()
+	local bId = bSeatSlotMO and bSeatSlotMO:getSeatSlotId()
+
+	if not aId or not bId then
 		return false
 	end
 
-	return var_1_0 < var_1_1
+	return aId < bId
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.buildingUid
-	arg_2_0.uid = arg_2_0.id
+function RoomBuildingCritterMO:init(critterBuildingInfo)
+	self.id = critterBuildingInfo.buildingUid
+	self.uid = self.id
 
-	arg_2_0:setSeatSlotInfos(arg_2_1.unlockSlotInfos)
+	self:setSeatSlotInfos(critterBuildingInfo.unlockSlotInfos)
 end
 
-function var_0_0.setSeatSlotInfos(arg_3_0, arg_3_1)
-	arg_3_0.seatSlotMODict = {}
-	arg_3_0.seatSlotMOList = {}
+function RoomBuildingCritterMO:setSeatSlotInfos(seatSlotInfoList)
+	self.seatSlotMODict = {}
+	self.seatSlotMOList = {}
 
-	if arg_3_1 then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-			local var_3_0 = CritterSeatSlotMO.New()
+	if seatSlotInfoList then
+		for _, slotInfo in ipairs(seatSlotInfoList) do
+			local slotMO = CritterSeatSlotMO.New()
 
-			var_3_0:init(iter_3_1)
+			slotMO:init(slotInfo)
 
-			arg_3_0.seatSlotMODict[iter_3_1.critterSlotId] = var_3_0
-			arg_3_0.seatSlotMOList[#arg_3_0.seatSlotMOList + 1] = var_3_0
+			self.seatSlotMODict[slotInfo.critterSlotId] = slotMO
+			self.seatSlotMOList[#self.seatSlotMOList + 1] = slotMO
 		end
 
-		table.sort(arg_3_0.seatSlotMOList, var_0_1)
+		table.sort(self.seatSlotMOList, SortById)
 	end
 end
 
-function var_0_0.unlockSeatSlot(arg_4_0, arg_4_1)
-	if arg_4_0.seatSlotMODict[arg_4_1] then
+function RoomBuildingCritterMO:unlockSeatSlot(seatSlotId)
+	if self.seatSlotMODict[seatSlotId] then
 		return
 	end
 
-	local var_4_0 = CritterSeatSlotMO.New()
-	local var_4_1 = {
-		critterSlotId = arg_4_1
+	local slotMO = CritterSeatSlotMO.New()
+	local slotInfo = {
+		critterSlotId = seatSlotId
 	}
 
-	var_4_0:init(var_4_1)
+	slotMO:init(slotInfo)
 
-	arg_4_0.seatSlotMODict[var_4_1.critterSlotId] = var_4_0
-	arg_4_0.seatSlotMOList[#arg_4_0.seatSlotMOList + 1] = var_4_0
+	self.seatSlotMODict[slotInfo.critterSlotId] = slotMO
+	self.seatSlotMOList[#self.seatSlotMOList + 1] = slotMO
 
-	table.sort(arg_4_0.seatSlotMOList, var_0_1)
+	table.sort(self.seatSlotMOList, SortById)
 end
 
-function var_0_0.getBuildingUid(arg_5_0)
-	return arg_5_0.uid
+function RoomBuildingCritterMO:getBuildingUid()
+	return self.uid
 end
 
-function var_0_0.getSeatSlotMO(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0.seatSlotMODict[arg_6_1]
+function RoomBuildingCritterMO:getSeatSlotMO(slotId, nilError)
+	local result = self.seatSlotMODict[slotId]
 
-	if not var_6_0 and arg_6_2 then
-		logError(string.format("RoomBuildingCritterMO:getSeatSlotMO error, slotId:%s", arg_6_1))
+	if not result and nilError then
+		logError(string.format("RoomBuildingCritterMO:getSeatSlotMO error, slotId:%s", slotId))
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.getSeatSlot2CritterDict(arg_7_0)
-	local var_7_0 = {}
+function RoomBuildingCritterMO:getSeatSlot2CritterDict()
+	local result = {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.seatSlotMODict) do
-		if not iter_7_1:isEmpty() then
-			var_7_0[iter_7_0] = iter_7_1:getRestingCritter()
+	for seatSlotId, seatSlotMO in pairs(self.seatSlotMODict) do
+		local isEmpty = seatSlotMO:isEmpty()
+
+		if not isEmpty then
+			result[seatSlotId] = seatSlotMO:getRestingCritter()
 		end
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.isCritterInSeatSlot(arg_8_0, arg_8_1)
-	local var_8_0
+function RoomBuildingCritterMO:isCritterInSeatSlot(critterUid)
+	local result
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.seatSlotMODict) do
-		local var_8_1 = iter_8_1:getRestingCritter()
+	for seatSlotId, seatSlotMO in pairs(self.seatSlotMODict) do
+		local restingCritterUid = seatSlotMO:getRestingCritter()
 
-		if var_8_1 and var_8_1 == arg_8_1 then
-			var_8_0 = iter_8_0
+		if restingCritterUid and restingCritterUid == critterUid then
+			result = seatSlotId
 
 			break
 		end
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getNextEmptyCritterSeatSlot(arg_9_0)
-	local var_9_0
+function RoomBuildingCritterMO:getNextEmptyCritterSeatSlot()
+	local result
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.seatSlotMOList) do
-		if iter_9_1:isEmpty() then
-			var_9_0 = iter_9_1:getSeatSlotId()
+	for _, seatSlotMO in ipairs(self.seatSlotMOList) do
+		local isEmpty = seatSlotMO:isEmpty()
+
+		if isEmpty then
+			result = seatSlotMO:getSeatSlotId()
 
 			break
 		end
 	end
 
-	return var_9_0
+	return result
 end
 
-function var_0_0.removeRestingCritter(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:isCritterInSeatSlot(arg_10_1)
-	local var_10_1 = arg_10_0:getSeatSlotMO(var_10_0)
+function RoomBuildingCritterMO:removeRestingCritter(critterUid)
+	local seatSlotId = self:isCritterInSeatSlot(critterUid)
+	local seatSlotMO = self:getSeatSlotMO(seatSlotId)
 
-	if var_10_1 then
-		var_10_1:removeCritter()
+	if seatSlotMO then
+		seatSlotMO:removeCritter()
 	end
 end
 
-return var_0_0
+return RoomBuildingCritterMO

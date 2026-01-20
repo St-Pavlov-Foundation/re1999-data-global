@@ -1,103 +1,105 @@
-﻿module("modules.logic.fight.entity.comp.FightHpKillLineComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightHpKillLineComp.lua
 
-local var_0_0 = class("FightHpKillLineComp", UserDataDispose)
+module("modules.logic.fight.entity.comp.FightHpKillLineComp", package.seeall)
 
-var_0_0.resPath = "ui/viewres/fight/fightkilllineview.prefab"
-var_0_0.LoadStatus = {
+local FightHpKillLineComp = class("FightHpKillLineComp", UserDataDispose)
+
+FightHpKillLineComp.resPath = "ui/viewres/fight/fightkilllineview.prefab"
+FightHpKillLineComp.LoadStatus = {
 	Loaded = 2,
 	NotLoaded = 0,
 	Loading = 1
 }
 
-local var_0_1 = var_0_0.LoadStatus
+local LoadStatus = FightHpKillLineComp.LoadStatus
 
-var_0_0.KillLineType = {
+FightHpKillLineComp.KillLineType = {
 	NameUiHp = 3,
 	BossHp = 1,
 	FocusHp = 2
 }
-var_0_0.LineType2NodeName = {
-	[var_0_0.KillLineType.BossHp] = "boss_hp",
-	[var_0_0.KillLineType.FocusHp] = "focus_hp",
-	[var_0_0.KillLineType.NameUiHp] = "name_ui_hp"
+FightHpKillLineComp.LineType2NodeName = {
+	[FightHpKillLineComp.KillLineType.BossHp] = "boss_hp",
+	[FightHpKillLineComp.KillLineType.FocusHp] = "focus_hp",
+	[FightHpKillLineComp.KillLineType.NameUiHp] = "name_ui_hp"
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.lineType = arg_1_1
+function FightHpKillLineComp:ctor(lineType)
+	self.lineType = lineType
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:__onInit()
+function FightHpKillLineComp:init(entityId, containerGo)
+	self:__onInit()
 
-	arg_2_0.loadStatus = var_0_1.NotLoaded
-	arg_2_0.containerGo = arg_2_2
-	arg_2_0.containerWidth = recthelper.getWidth(arg_2_0.containerGo:GetComponent(gohelper.Type_RectTransform))
-	arg_2_0.entityId = arg_2_1
-	arg_2_0.entityMo = FightDataHelper.entityMgr:getById(arg_2_0.entityId)
+	self.loadStatus = LoadStatus.NotLoaded
+	self.containerGo = containerGo
+	self.containerWidth = recthelper.getWidth(self.containerGo:GetComponent(gohelper.Type_RectTransform))
+	self.entityId = entityId
+	self.entityMo = FightDataHelper.entityMgr:getById(self.entityId)
 
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_2_0.onBuffUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.UpdateBuffActInfo, arg_2_0.onUpdateBuffActInfo, arg_2_0)
-	arg_2_0:checkNeedLoadRes()
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.UpdateBuffActInfo, self.onUpdateBuffActInfo, self)
+	self:checkNeedLoadRes()
 end
 
-function var_0_0.checkNeedLoadRes(arg_3_0)
-	if arg_3_0.entityMo and arg_3_0.entityMo:hasBuffFeature(FightEnum.BuffType_RealDamageKill) then
-		arg_3_0:loadRes()
-	end
-end
-
-function var_0_0.onUpdateBuffActInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 ~= arg_4_0.entityId then
-		return
-	end
-
-	if not arg_4_0.entityMo then
-		return
-	end
-
-	local var_4_0 = arg_4_0.entityMo:getBuffDic()
-	local var_4_1 = var_4_0 and var_4_0[arg_4_2]
-
-	if not var_4_1 then
-		return
-	end
-
-	if not arg_4_0:checkIsKillBuff(var_4_1.buffId) then
-		return
-	end
-
-	arg_4_0:updateKillLine()
-end
-
-function var_0_0.onBuffUpdate(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
-	if arg_5_1 ~= arg_5_0.entityId then
-		return
-	end
-
-	if not arg_5_0:checkIsKillBuff(arg_5_3) then
-		return
-	end
-
-	if arg_5_2 == FightEnum.EffectType.BUFFADD then
-		arg_5_0:addKillLine()
-	elseif arg_5_2 == FightEnum.EffectType.BUFFDEL or arg_5_2 == FightEnum.EffectType.BUFFDELNOEFFECT then
-		arg_5_0:updateKillLine()
-	elseif arg_5_2 == FightEnum.EffectType.BUFFUPDATE then
-		arg_5_0:updateKillLine()
+function FightHpKillLineComp:checkNeedLoadRes()
+	if self.entityMo and self.entityMo:hasBuffFeature(FightEnum.BuffType_RealDamageKill) then
+		self:loadRes()
 	end
 end
 
-function var_0_0.checkIsKillBuff(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.entityMo:getFeaturesSplitInfoByBuffId(arg_6_1)
+function FightHpKillLineComp:onUpdateBuffActInfo(entityId, buffUid, buffActInfo)
+	if entityId ~= self.entityId then
+		return
+	end
 
-	if not var_6_0 then
+	if not self.entityMo then
+		return
+	end
+
+	local buffDict = self.entityMo:getBuffDic()
+	local buffMo = buffDict and buffDict[buffUid]
+
+	if not buffMo then
+		return
+	end
+
+	if not self:checkIsKillBuff(buffMo.buffId) then
+		return
+	end
+
+	self:updateKillLine()
+end
+
+function FightHpKillLineComp:onBuffUpdate(entityId, effectType, buffId, buff_uid, configEffect, buffInfoData)
+	if entityId ~= self.entityId then
+		return
+	end
+
+	if not self:checkIsKillBuff(buffId) then
+		return
+	end
+
+	if effectType == FightEnum.EffectType.BUFFADD then
+		self:addKillLine()
+	elseif effectType == FightEnum.EffectType.BUFFDEL or effectType == FightEnum.EffectType.BUFFDELNOEFFECT then
+		self:updateKillLine()
+	elseif effectType == FightEnum.EffectType.BUFFUPDATE then
+		self:updateKillLine()
+	end
+end
+
+function FightHpKillLineComp:checkIsKillBuff(buffId)
+	local featureList = self.entityMo:getFeaturesSplitInfoByBuffId(buffId)
+
+	if not featureList then
 		return false
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = lua_buff_act.configDict[iter_6_1[1]]
+	for _, oneFeature in ipairs(featureList) do
+		local buffActCO = lua_buff_act.configDict[oneFeature[1]]
 
-		if var_6_1 and var_6_1.type == FightEnum.BuffType_RealDamageKill then
+		if buffActCO and buffActCO.type == FightEnum.BuffType_RealDamageKill then
 			return true
 		end
 	end
@@ -105,35 +107,35 @@ function var_0_0.checkIsKillBuff(arg_6_0, arg_6_1)
 	return false
 end
 
-function var_0_0.addKillLine(arg_7_0)
-	if arg_7_0.loadStatus == var_0_1.Loaded then
-		return arg_7_0:updateKillLine()
+function FightHpKillLineComp:addKillLine()
+	if self.loadStatus == LoadStatus.Loaded then
+		return self:updateKillLine()
 	end
 
-	if arg_7_0.loadStatus == var_0_1.Loading then
+	if self.loadStatus == LoadStatus.Loading then
 		return
 	end
 
-	arg_7_0:loadRes()
+	self:loadRes()
 end
 
-function var_0_0.updateKillLine(arg_8_0)
-	if arg_8_0.loadStatus ~= var_0_1.Loaded then
+function FightHpKillLineComp:updateKillLine()
+	if self.loadStatus ~= LoadStatus.Loaded then
 		return
 	end
 
-	gohelper.setActive(arg_8_0.killLineGo, false)
+	gohelper.setActive(self.killLineGo, false)
 
-	if arg_8_0.entityMo then
-		local var_8_0 = arg_8_0.entityMo:getBuffDic()
+	if self.entityMo then
+		local buffDict = self.entityMo:getBuffDic()
 
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			if arg_8_0:checkIsKillBuff(iter_8_1.buffId) then
-				local var_8_1 = iter_8_1.actInfo
+		for _, buffMo in pairs(buffDict) do
+			if self:checkIsKillBuff(buffMo.buffId) then
+				local actInfoList = buffMo.actInfo
 
-				for iter_8_2, iter_8_3 in ipairs(var_8_1) do
-					if iter_8_3.actId == FightEnum.BuffActId.RealDamageKill then
-						return arg_8_0:_updateKillLine(iter_8_3.strParam)
+				for _, actInfo in ipairs(actInfoList) do
+					if actInfo.actId == FightEnum.BuffActId.RealDamageKill then
+						return self:_updateKillLine(actInfo.strParam)
 					end
 				end
 			end
@@ -141,73 +143,76 @@ function var_0_0.updateKillLine(arg_8_0)
 	end
 end
 
-function var_0_0._updateKillLine(arg_9_0, arg_9_1)
-	if not arg_9_0.entityMo then
+function FightHpKillLineComp:_updateKillLine(value)
+	if not self.entityMo then
 		return
 	end
 
-	gohelper.setActive(arg_9_0.killLineGo, true)
+	gohelper.setActive(self.killLineGo, true)
 
-	arg_9_1 = tonumber(arg_9_1)
+	value = tonumber(value)
 
-	local var_9_0 = arg_9_1 / arg_9_0.entityMo.attrMO.hp * arg_9_0.containerWidth
+	local attrMo = self.entityMo.attrMO
+	local maxHp = attrMo.hp
+	local rate = value / maxHp
+	local anchorX = rate * self.containerWidth
 
-	recthelper.setAnchorX(arg_9_0.rectKillLine, var_9_0)
+	recthelper.setAnchorX(self.rectKillLine, anchorX)
 end
 
-function var_0_0.loadRes(arg_10_0)
-	arg_10_0.loadStatus = var_0_1.Loading
-	arg_10_0.loader = PrefabInstantiate.Create(arg_10_0.containerGo)
+function FightHpKillLineComp:loadRes()
+	self.loadStatus = LoadStatus.Loading
+	self.loader = PrefabInstantiate.Create(self.containerGo)
 
-	arg_10_0.loader:startLoad(var_0_0.resPath, arg_10_0.onResLoaded, arg_10_0)
+	self.loader:startLoad(FightHpKillLineComp.resPath, self.onResLoaded, self)
 end
 
-function var_0_0.onResLoaded(arg_11_0)
-	arg_11_0.loadStatus = var_0_1.Loaded
-	arg_11_0.killLineGo = arg_11_0.loader:getInstGO()
-	arg_11_0.rectKillLine = arg_11_0.killLineGo:GetComponent(gohelper.Type_RectTransform)
+function FightHpKillLineComp:onResLoaded()
+	self.loadStatus = LoadStatus.Loaded
+	self.killLineGo = self.loader:getInstGO()
+	self.rectKillLine = self.killLineGo:GetComponent(gohelper.Type_RectTransform)
 
-	for iter_11_0, iter_11_1 in pairs(var_0_0.KillLineType) do
-		local var_11_0 = gohelper.findChild(arg_11_0.killLineGo, var_0_0.LineType2NodeName[iter_11_1])
-		local var_11_1 = arg_11_0.lineType == iter_11_1
+	for _, lineType in pairs(FightHpKillLineComp.KillLineType) do
+		local go = gohelper.findChild(self.killLineGo, FightHpKillLineComp.LineType2NodeName[lineType])
+		local isCurLine = self.lineType == lineType
 
-		gohelper.setActive(var_11_0, var_11_1)
+		gohelper.setActive(go, isCurLine)
 
-		if var_11_1 then
-			local var_11_2 = var_11_0:GetComponent(gohelper.Type_RectTransform)
-			local var_11_3 = recthelper.getWidth(var_11_2)
-			local var_11_4 = recthelper.getHeight(var_11_2)
+		if isCurLine then
+			local rectGo = go:GetComponent(gohelper.Type_RectTransform)
+			local width = recthelper.getWidth(rectGo)
+			local height = recthelper.getHeight(rectGo)
 
-			recthelper.setSize(arg_11_0.rectKillLine, var_11_3, var_11_4)
+			recthelper.setSize(self.rectKillLine, width, height)
 		end
 	end
 
-	arg_11_0:updateKillLine()
+	self:updateKillLine()
 end
 
-function var_0_0.removeKillLine(arg_12_0)
-	if arg_12_0.loader then
-		arg_12_0.loader:onDestroy()
+function FightHpKillLineComp:removeKillLine()
+	if self.loader then
+		self.loader:onDestroy()
 
-		arg_12_0.loader = nil
+		self.loader = nil
 	end
 
-	if arg_12_0.killLineGo then
-		gohelper.destroy(arg_12_0.killLineGo)
+	if self.killLineGo then
+		gohelper.destroy(self.killLineGo)
 
-		arg_12_0.killLineGo = nil
+		self.killLineGo = nil
 	end
 
-	arg_12_0.loadStatus = var_0_1.NotLoaded
+	self.loadStatus = LoadStatus.NotLoaded
 end
 
-function var_0_0.beforeDestroy(arg_13_0)
-	arg_13_0:destroy()
+function FightHpKillLineComp:beforeDestroy()
+	self:destroy()
 end
 
-function var_0_0.destroy(arg_14_0)
-	arg_14_0:removeKillLine()
-	arg_14_0:__onDispose()
+function FightHpKillLineComp:destroy()
+	self:removeKillLine()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightHpKillLineComp

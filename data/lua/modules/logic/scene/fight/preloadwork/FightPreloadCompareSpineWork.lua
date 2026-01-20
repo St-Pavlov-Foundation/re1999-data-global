@@ -1,42 +1,46 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadCompareSpineWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadCompareSpineWork.lua
 
-local var_0_0 = class("FightPreloadCompareSpineWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadCompareSpineWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightPreloadController.instance.cachePreloadSpine
+local FightPreloadCompareSpineWork = class("FightPreloadCompareSpineWork", BaseWork)
 
-	if var_1_0 then
-		local var_1_1 = {}
+function FightPreloadCompareSpineWork:onStart()
+	local cacheDict = FightPreloadController.instance.cachePreloadSpine
 
-		for iter_1_0, iter_1_1 in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)) do
-			local var_1_2 = FightConfig.instance:getSkinCO(iter_1_1.skin)
+	if cacheDict then
+		local mySpineUrlDict = {}
 
-			var_1_1[ResUrl.getSpineFightPrefabBySkin(var_1_2)] = true
+		for i, v in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)) do
+			local skinCO = FightConfig.instance:getSkinCO(v.skin)
+			local url = ResUrl.getSpineFightPrefabBySkin(skinCO)
+
+			mySpineUrlDict[url] = true
 		end
 
-		for iter_1_2, iter_1_3 in ipairs(FightDataHelper.entityMgr:getMySubList()) do
-			local var_1_3 = FightConfig.instance:getSkinCO(iter_1_3.skin)
+		for i, v in ipairs(FightDataHelper.entityMgr:getMySubList()) do
+			local skinCO = FightConfig.instance:getSkinCO(v.skin)
+			local url = ResUrl.getSpineFightPrefabBySkin(skinCO)
 
-			var_1_1[ResUrl.getSpineFightPrefabBySkin(var_1_3)] = true
+			mySpineUrlDict[url] = true
 		end
 
-		for iter_1_4, iter_1_5 in pairs(var_1_0) do
-			if not var_1_1[iter_1_4] then
-				FightSpinePool.releaseUrl(iter_1_4)
-				FightPreloadController.instance:releaseAsset(iter_1_4)
+		for url, spine in pairs(cacheDict) do
+			if not mySpineUrlDict[url] then
+				FightSpinePool.releaseUrl(url)
+				FightPreloadController.instance:releaseAsset(url)
 
-				var_1_0[iter_1_4] = nil
+				cacheDict[url] = nil
 			end
 		end
 
 		FightPreloadController.instance:cacheFirstPreloadSpine()
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightPreloadCompareSpineWork:clearWork()
 	return
 end
 
-return var_0_0
+return FightPreloadCompareSpineWork

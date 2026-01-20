@@ -1,10 +1,12 @@
-﻿module("modules.logic.tipdialog.model.TipDialogEnum", package.seeall)
+﻿-- chunkname: @modules/logic/tipdialog/model/TipDialogEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.tipdialog.model.TipDialogEnum", package.seeall)
 
-var_0_0.dialogType = {
+local TipDialogEnum = _M
+
+TipDialogEnum.dialogType = {
 	talk = "talk",
 	dialog = "dialog"
 }
 
-return var_0_0
+return TipDialogEnum

@@ -1,69 +1,73 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinCurrencyToolView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinCurrencyToolView.lua
 
-local var_0_0 = class("AssassinCurrencyToolView", BaseViewExtended)
+module("modules.logic.sp01.assassin2.outside.view.AssassinCurrencyToolView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "txt_num")
+local AssassinCurrencyToolView = class("AssassinCurrencyToolView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinCurrencyToolView:onInitView()
+	self._txtnum = gohelper.findChildText(self.viewGO, "txt_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.UpdateCoinNum, arg_2_0.onCurrencyChanged, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.OnAllAssassinOutSideInfoUpdate, arg_2_0.onCurrencyChanged, arg_2_0)
+function AssassinCurrencyToolView:addEvents()
+	self:addEventCb(AssassinController.instance, AssassinEvent.UpdateCoinNum, self.onCurrencyChanged, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.OnAllAssassinOutSideInfoUpdate, self.onCurrencyChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(AssassinController.instance, AssassinEvent.UpdateCoinNum, arg_3_0.onCurrencyChanged, arg_3_0)
-	arg_3_0:removeEventCb(AssassinController.instance, AssassinEvent.OnAllAssassinOutSideInfoUpdate, arg_3_0.onCurrencyChanged, arg_3_0)
+function AssassinCurrencyToolView:removeEvents()
+	self:removeEventCb(AssassinController.instance, AssassinEvent.UpdateCoinNum, self.onCurrencyChanged, self)
+	self:removeEventCb(AssassinController.instance, AssassinEvent.OnAllAssassinOutSideInfoUpdate, self.onCurrencyChanged, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function AssassinCurrencyToolView:_editableInitView()
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_4_0:checkPlayGet()
+	self:checkPlayGet()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshAssassinCurrency()
+function AssassinCurrencyToolView:onOpen()
+	self:refreshAssassinCurrency()
 end
 
-function var_0_0.refreshAssassinCurrency(arg_6_0)
-	arg_6_0._txtnum.text = AssassinController.instance:getCoinNum()
+function AssassinCurrencyToolView:refreshAssassinCurrency()
+	self._txtnum.text = AssassinController.instance:getCoinNum()
 end
 
-function var_0_0.onCurrencyChanged(arg_7_0)
-	arg_7_0:refreshAssassinCurrency()
+function AssassinCurrencyToolView:onCurrencyChanged()
+	self:refreshAssassinCurrency()
 end
 
-function var_0_0.checkPlayGet(arg_8_0)
-	if AssassinOutsideModel.instance:getIsNeedPlayGetCoin() then
-		arg_8_0:playGetAnim()
+function AssassinCurrencyToolView:checkPlayGet()
+	local isNeedPlay = AssassinOutsideModel.instance:getIsNeedPlayGetCoin()
+
+	if isNeedPlay then
+		self:playGetAnim()
 	end
 end
 
-function var_0_0.playGetAnim(arg_9_0)
-	if not arg_9_0.animator then
+function AssassinCurrencyToolView:playGetAnim()
+	if not self.animator then
 		return
 	end
 
-	arg_9_0.animator:Play("get", 0, 0)
+	self.animator:Play("get", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_taskring)
 	AssassinOutsideModel.instance:updateIsNeedPlayGetCoin()
 end
 
-function var_0_0.definePrefabUrl(arg_10_0)
-	arg_10_0:setPrefabUrl(AssassinEnum.CurrencyToolPrefabPath)
+function AssassinCurrencyToolView:definePrefabUrl()
+	self:setPrefabUrl(AssassinEnum.CurrencyToolPrefabPath)
 end
 
-function var_0_0.onClose(arg_11_0)
+function AssassinCurrencyToolView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function AssassinCurrencyToolView:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinCurrencyToolView

@@ -1,381 +1,394 @@
-﻿module("modules.logic.bossrush.controller.BossRushController", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/controller/BossRushController.lua
 
-local var_0_0 = class("BossRushController", BaseController)
+module("modules.logic.bossrush.controller.BossRushController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._model = BossRushModel.instance
-	arg_1_0._redModel = BossRushRedModel.instance
+local BossRushController = class("BossRushController", BaseController)
+
+function BossRushController:onInit()
+	self._model = BossRushModel.instance
+	self._redModel = BossRushRedModel.instance
+	self._V3a2model = V3a2_BossRushModel.instance
 end
 
-function var_0_0.reInit(arg_2_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, arg_2_0._refreshClientCharacterDot, arg_2_0)
-	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, arg_2_0._refreshClientCharacterDot, arg_2_0)
+function BossRushController:reInit()
+	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, self._refreshClientCharacterDot, self)
+	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, self._refreshClientCharacterDot, self)
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	FightController.instance:registerCallback(FightEvent.RespBeginFight, arg_3_0._respBeginFight, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.RespBeginRound, arg_3_0._respBeginRound, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.OnIndicatorChange, arg_3_0._onIndicatorChange, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.OnBeginWave, arg_3_0._refreshCurBossHP, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.OnHpChange, arg_3_0._onHpChange, arg_3_0)
-	FightController.instance:registerCallback(FightEvent.OnMonsterChange, arg_3_0._onMonsterChange, arg_3_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_3_0._onGetInfoFinish, arg_3_0)
-	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, arg_3_0._refreshClientCharacterDot, arg_3_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, arg_3_0._onEndDungeonPush, arg_3_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0._refreshActivityState, arg_3_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_3_0._updateRelateDotInfo, arg_3_0)
+function BossRushController:addConstEvents()
+	FightController.instance:registerCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
+	FightController.instance:registerCallback(FightEvent.RespBeginRound, self._respBeginRound, self)
+	FightController.instance:registerCallback(FightEvent.OnIndicatorChange, self._onIndicatorChange, self)
+	FightController.instance:registerCallback(FightEvent.OnBeginWave, self._refreshCurBossHP, self)
+	FightController.instance:registerCallback(FightEvent.OnHpChange, self._onHpChange, self)
+	FightController.instance:registerCallback(FightEvent.OnMonsterChange, self._onMonsterChange, self)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onGetInfoFinish, self)
+	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, self._refreshClientCharacterDot, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, self._onEndDungeonPush, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._refreshActivityState, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._updateRelateDotInfo, self)
+	BossRushController.instance:registerCallback(BossRushEvent.onReceiveAct128GetExpReply, self.refreshPlayerRankExp, self)
 end
 
-function var_0_0.enterFightScene(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._model:setBattleStageAndLayer(arg_4_1, arg_4_2)
+function BossRushController:enterFightScene(stage, layer)
+	self._model:setBattleStageAndLayer(stage, layer)
 
-	local var_4_0 = BossRushConfig.instance:getDungeonEpisodeCO(arg_4_1, arg_4_2)
-	local var_4_1 = var_4_0.id
-	local var_4_2 = var_4_0.chapterId
-	local var_4_3 = var_4_0.battleId
-	local var_4_4 = FightController.instance:setFightParamByBattleId(var_4_3)
+	local dungeonEpisodeCO = BossRushConfig.instance:getDungeonEpisodeCO(stage, layer)
+	local episodeId = dungeonEpisodeCO.id
+	local chapterId = dungeonEpisodeCO.chapterId
+	local battleId = dungeonEpisodeCO.battleId
+	local fightParam = FightController.instance:setFightParamByBattleId(battleId)
 
-	if BossRushConfig.instance:isInfinite(arg_4_1, arg_4_2) then
-		var_4_4.chapterId = DungeonEnum.ChapterType.BossRushInfinite
+	if BossRushConfig.instance:isInfinite(stage, layer) then
+		fightParam.chapterId = DungeonEnum.ChapterType.BossRushInfinite
 	else
-		var_4_4.chapterId = DungeonEnum.ChapterType.BossRushNormal
+		fightParam.chapterId = DungeonEnum.ChapterType.BossRushNormal
 	end
 
-	var_4_4.episodeId = var_4_1
-	var_4_4.chapterId = var_4_2
-	FightResultModel.instance.episodeId = var_4_1
+	fightParam.episodeId = episodeId
+	fightParam.chapterId = chapterId
+	FightResultModel.instance.episodeId = episodeId
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_4_2, var_4_1)
-	var_4_4:setPreload()
+	DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
+	fightParam:setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function var_0_0.openMainView(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_2 then
-		ViewMgr.instance:openView(ViewName.V1a4_BossRushMainView, arg_5_1)
+function BossRushController:openMainView(viewParam, isJustOpen)
+	if isJustOpen then
+		ViewMgr.instance:openView(ViewName.V1a4_BossRushMainView, viewParam)
 
 		return
 	end
 
-	if not arg_5_0._model:isActOnLine() then
+	if not self._model:isActOnLine() then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
 		return
 	end
 
-	if arg_5_1 then
-		local var_5_0 = arg_5_1.stage
-		local var_5_1 = arg_5_1.layer
+	if viewParam then
+		local stage = viewParam.stage
+		local layer = viewParam.layer
 
-		if var_5_0 and not arg_5_0._model:isBossOnline(var_5_0) then
+		if stage and not self._model:isBossOnline(stage) then
 			GameFacade.showToast(ToastEnum.V1a4_BossRushBossLockTip)
 
 			return
 		end
 
-		if var_5_1 and not arg_5_0._model:isBossLayerOpen(var_5_0, var_5_1) then
+		if layer and not self._model:isBossLayerOpen(stage, layer) then
 			GameFacade.showToast(ToastEnum.V1a4_BossRushLayerLockTip)
 		end
 	end
 
 	BossRushRpc.instance:sendGet128InfosRequest(function()
-		ViewMgr.instance:openView(ViewName.V1a4_BossRushMainView, arg_5_1)
+		ViewMgr.instance:openView(ViewName.V1a4_BossRushMainView, viewParam)
 	end)
 end
 
-function var_0_0.openLevelDetailView(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_1.stage
-	local var_7_1 = arg_7_1.layer
+function BossRushController:openLevelDetailView(viewParam, isOpenMain)
+	local stage = viewParam.stage
+	local layer = viewParam.layer
 
-	if not arg_7_0._model:isBossOnline(var_7_0) then
+	if not self._model:isBossOnline(stage) then
 		GameFacade.showToast(ToastEnum.V1a4_BossRushBossLockTip)
 
 		return
 	end
 
-	if not arg_7_0._model:isBossOpen(var_7_0) then
-		local var_7_2, var_7_3 = arg_7_0._model:getBossUnlockEpisode(var_7_0)
+	if not self._model:isBossOpen(stage) then
+		local actName, episode = self._model:getBossUnlockEpisode(stage)
 
-		GameFacade.showToast(ToastEnum.ActivityDungeon, var_7_2, var_7_3)
+		GameFacade.showToast(ToastEnum.ActivityDungeon, actName, episode)
 
 		return
 	end
 
-	if not arg_7_1.stageCO then
-		arg_7_1.stageCO = BossRushConfig.instance:getStageCO(var_7_0)
+	if not viewParam.stageCO then
+		viewParam.stageCO = BossRushConfig.instance:getStageCO(stage)
 	end
 
-	if arg_7_2 then
-		arg_7_0:openMainView(nil, true)
+	if isOpenMain then
+		self:openMainView(nil, true)
 	end
 
-	if var_7_1 then
-		arg_7_1.selectedIndex = arg_7_0._model:layer2Index(var_7_0, var_7_1)
+	if layer then
+		viewParam.selectedIndex = self._model:layer2Index(stage, layer)
 	end
 
-	ViewMgr.instance:openView(ViewName.V1a4_BossRushLevelDetail, arg_7_1)
+	ViewMgr.instance:openView(ViewName.V1a4_BossRushLevelDetail, viewParam)
 end
 
-function var_0_0.sendGetTaskInfoRequest(arg_8_0, arg_8_1, arg_8_2)
+function BossRushController:sendGetTaskInfoRequest(callback, callbackObj)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity128
-	}, arg_8_1, arg_8_2)
+	}, callback, callbackObj)
 end
 
-function var_0_0._refreshClientCharacterDot(arg_9_0)
-	if not arg_9_0._redModel:isInitReady() then
+function BossRushController:_refreshClientCharacterDot()
+	if not self._redModel:isInitReady() then
 		return
 	end
 
-	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, arg_9_0._refreshClientCharacterDot, arg_9_0)
-	arg_9_0._redModel:refreshClientCharacterDot()
+	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, self._refreshClientCharacterDot, self)
+	self._redModel:refreshClientCharacterDot()
 end
 
-function var_0_0._updateRelateDotInfo(arg_10_0, arg_10_1)
-	arg_10_0._redModel:updateRelateDotInfo(arg_10_1)
+function BossRushController:_updateRelateDotInfo(dict)
+	self._redModel:updateRelateDotInfo(dict)
 end
 
-function var_0_0._refreshActivityState(arg_11_0, arg_11_1)
-	if arg_11_1 ~= arg_11_0._model:getActivityId() then
+function BossRushController:_refreshActivityState(actId)
+	local activityId = self._model:getActivityId()
+
+	if actId ~= activityId then
 		return
 	end
 
-	local var_11_0 = ActivityModel.instance:isActOnLine(arg_11_1)
+	local isOnline = ActivityModel.instance:isActOnLine(actId)
 
-	arg_11_0._redModel:setIsOpenActivity(var_11_0)
+	self._redModel:setIsOpenActivity(isOnline)
 end
 
-function var_0_0._onEndDungeonPush(arg_12_0)
+function BossRushController:_onEndDungeonPush()
 	if not FightResultModel.instance.firstPass then
 		return
 	end
 
-	local var_12_0 = FightResultModel.instance.episodeId
-	local var_12_1, var_12_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_12_0)
+	local episodeId = FightResultModel.instance.episodeId
+	local stage, layer = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(episodeId)
 
-	if not var_12_1 then
+	if not stage then
 		return
 	end
 
-	local var_12_3 = BossRushConfig.instance:tryGetStageNextLayer(var_12_1, var_12_2)
+	local nextLayer = BossRushConfig.instance:tryGetStageNextLayer(stage, layer)
 
-	if not var_12_3 then
+	if not nextLayer then
 		return
 	end
 
-	if not arg_12_0._model:isBossLayerOpen(var_12_1, var_12_3) then
+	local isOpen = self._model:isBossLayerOpen(stage, nextLayer)
+
+	if not isOpen then
 		return
 	end
 
-	arg_12_0._redModel:setIsNewUnlockStageLayer(var_12_1, var_12_3, true)
+	self._redModel:setIsNewUnlockStageLayer(stage, nextLayer, true)
 end
 
-function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_13_0)
+function BossRushController:openVersionActivityEnterViewIfNotOpened()
 	if not ViewMgr.instance:isOpen(ViewName.VersionActivity1_5EnterView) then
 		VersionActivity1_5EnterController.instance:directOpenVersionActivityEnterView()
 	end
 end
 
-function var_0_0.openBonusView(arg_14_0, arg_14_1)
+function BossRushController:openBonusView(viewParam)
 	V1a6_BossRush_BonusModel.instance:setTab(BossRushEnum.BonusViewTab.AchievementTab)
 
-	local function var_14_0()
-		ViewMgr.instance:openView(ViewName.V1a6_BossRush_BonusView, arg_14_1)
+	local function func()
+		ViewMgr.instance:openView(ViewName.V1a6_BossRush_BonusView, viewParam)
 	end
 
-	var_0_0.instance:sendGetTaskInfoRequest(var_14_0, arg_14_0)
+	BossRushController.instance:sendGetTaskInfoRequest(func, self)
 end
 
-function var_0_0._respBeginFight(arg_16_0)
-	if not arg_16_0:isInBossRushFight() then
+function BossRushController:_respBeginFight()
+	if not self:isInBossRushFight() then
 		return
 	end
 
-	local var_16_0 = FightModel.instance:getCurMonsterGroupId()
+	local monsterGroupId = FightModel.instance:getCurMonsterGroupId()
 
-	if not var_16_0 then
+	if not monsterGroupId then
 		return
 	end
 
-	local var_16_1 = BossRushConfig.instance:getMonsterGroupBossId(var_16_0)
+	local bossId = BossRushConfig.instance:getMonsterGroupBossId(monsterGroupId)
 
-	arg_16_0._temp11235 = 0
+	self._temp11235 = 0
 
-	arg_16_0._model:setFightScore(0)
-	arg_16_0._model:clearStageScore()
+	self._model:setFightScore(0)
+	self._model:clearStageScore()
 
-	if string.nilorempty(var_16_1) then
-		arg_16_0._model:setBossIdList(nil)
+	if string.nilorempty(bossId) then
+		self._model:setBossIdList(nil)
 	else
-		local var_16_2 = string.splitToNumber(var_16_1, "#")
+		local bossIds = string.splitToNumber(bossId, "#")
 
-		arg_16_0._model:setBossIdList(var_16_2)
-		arg_16_0._model:setBossBloodCount(arg_16_0._model:getBossBloodMaxCount())
+		self._model:setBossIdList(bossIds)
+		self._model:setBossBloodCount(self._model:getBossBloodMaxCount())
 	end
 
-	arg_16_0:_refreshCurBossHP()
+	self:_refreshCurBossHP()
 end
 
-function var_0_0._respBeginRound(arg_17_0)
+function BossRushController:_respBeginRound()
 	return
 end
 
-function var_0_0._onIndicatorChange(arg_18_0, arg_18_1)
-	local var_18_0 = FightEnum.IndicatorId
+function BossRushController:_onIndicatorChange(id)
+	local E = FightEnum.IndicatorId
 
-	if var_18_0.V1a4_BossRush_ig_ScoreTips == arg_18_1 then
-		local var_18_1 = FightDataHelper.fieldMgr:getIndicatorNum(arg_18_1)
+	if E.V1a4_BossRush_ig_ScoreTips == id then
+		local num = FightDataHelper.fieldMgr:getIndicatorNum(id)
 
-		arg_18_0._temp11235 = (arg_18_0._temp11235 or 0) + var_18_1
+		self._temp11235 = (self._temp11235 or 0) + num
 
-		arg_18_0._model:noticeFightScore(arg_18_0._temp11235)
-		arg_18_0._model:setFightScore(arg_18_0._temp11235)
-	elseif var_18_0.BossInfiniteHPCount == arg_18_1 then
-		local var_18_2 = FightDataHelper.fieldMgr:getIndicatorNum(arg_18_1)
+		self._model:noticeFightScore(self._temp11235)
+		self._model:setFightScore(self._temp11235)
+	elseif E.BossInfiniteHPCount == id then
+		local num = FightDataHelper.fieldMgr:getIndicatorNum(id)
 
-		arg_18_0._model:setInfiniteBossDeadSum(var_18_2)
+		self._model:setInfiniteBossDeadSum(num)
 	end
 end
 
-function var_0_0._refreshCurBossHP(arg_19_0)
-	local var_19_0 = arg_19_0._model:getBossEntityMO()
+function BossRushController:_refreshCurBossHP()
+	local bossEntityMo = self._model:getBossEntityMO()
 
-	if not var_19_0 then
+	if not bossEntityMo then
 		return
 	end
 
-	arg_19_0._model:setBossCurHP(var_19_0.currentHp)
+	self._model:setBossCurHP(bossEntityMo.currentHp)
 end
 
-function var_0_0._onHpChange(arg_20_0, arg_20_1)
-	if not arg_20_1 then
+function BossRushController:_onHpChange(entity)
+	if not entity then
 		return
 	end
 
-	local var_20_0 = arg_20_0._model:getBossEntityMO()
+	local bossEntityMo = self._model:getBossEntityMO()
 
-	if not var_20_0 then
+	if not bossEntityMo then
 		return
 	end
 
-	local var_20_1 = arg_20_1:getMO()
+	local entityMo = entity:getMO()
 
-	if var_20_0.id ~= var_20_1.id then
+	if bossEntityMo.id ~= entityMo.id then
 		return
 	end
 
-	arg_20_0._model:setBossCurHP(var_20_0.currentHp)
+	self._model:setBossCurHP(bossEntityMo.currentHp)
 end
 
-function var_0_0._onMonsterChange(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0._model:subBossBlood()
+function BossRushController:_onMonsterChange(oldEntityMO, newEntityMO)
+	self._model:subBossBlood()
 end
 
-function var_0_0._onGetInfoFinish(arg_22_0)
-	arg_22_0:_recordBossRushCurrencyNum()
+function BossRushController:_onGetInfoFinish()
+	self:_recordBossRushCurrencyNum()
 end
 
-function var_0_0._recordBossRushCurrencyNum(arg_23_0)
-	local var_23_0 = PlayerEnum.SimpleProperty.V2a7_BossRushCurrencyNum
+function BossRushController:_recordBossRushCurrencyNum()
+	local propertyId = PlayerEnum.SimpleProperty.V2a7_BossRushCurrencyNum
+	local oldCurrencyNum = PlayerModel.instance:getSimpleProperty(propertyId)
 
-	if not PlayerModel.instance:getSimpleProperty(var_23_0) then
-		local var_23_1 = V1a6_BossRush_StoreModel.instance:getCurrencyCount()
+	if not oldCurrencyNum then
+		oldCurrencyNum = V1a6_BossRush_StoreModel.instance:getCurrencyCount()
 
-		PlayerModel.instance:forceSetSimpleProperty(var_23_0, tostring(var_23_1))
-		PlayerRpc.instance:sendSetSimplePropertyRequest(var_23_0, tostring(var_23_1))
+		PlayerModel.instance:forceSetSimpleProperty(propertyId, tostring(oldCurrencyNum))
+		PlayerRpc.instance:sendSetSimplePropertyRequest(propertyId, tostring(oldCurrencyNum))
 	end
 end
 
-function var_0_0.checkBattleChapterType(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_1 and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
+function BossRushController:checkBattleChapterType(isNeedCheckScene, eChapterType)
+	if isNeedCheckScene and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return false
 	end
 
-	local var_24_0 = DungeonModel.instance.curSendChapterId
+	local chapterId = DungeonModel.instance.curSendChapterId
 
-	if not var_24_0 then
+	if not chapterId then
 		return false
 	end
 
-	local var_24_1 = DungeonConfig.instance:getChapterCO(var_24_0)
+	local chapterCO = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if not var_24_1 then
+	if not chapterCO then
 		return false
 	end
 
-	return var_24_1.type == arg_24_2
+	return chapterCO.type == eChapterType
 end
 
-function var_0_0.isInBossRushInfiniteFight(arg_25_0, arg_25_1)
-	return arg_25_0:checkBattleChapterType(arg_25_1, DungeonEnum.ChapterType.BossRushInfinite)
+function BossRushController:isInBossRushInfiniteFight(isNeedCheckScene)
+	return self:checkBattleChapterType(isNeedCheckScene, DungeonEnum.ChapterType.BossRushInfinite)
 end
 
-function var_0_0.isInBossRushNormalFight(arg_26_0, arg_26_1)
-	return arg_26_0:checkBattleChapterType(arg_26_1, DungeonEnum.ChapterType.BossRushNormal)
+function BossRushController:isInBossRushNormalFight(isNeedCheckScene)
+	return self:checkBattleChapterType(isNeedCheckScene, DungeonEnum.ChapterType.BossRushNormal)
 end
 
-function var_0_0.isInBossRushFight(arg_27_0, arg_27_1)
-	return arg_27_0:isInBossRushNormalFight(arg_27_1) or arg_27_0:isInBossRushInfiniteFight(arg_27_1)
+function BossRushController:isInV3a2BossRushFight(isNeedCheckScene)
+	return self:checkBattleChapterType(isNeedCheckScene, DungeonEnum.ChapterType.V3a2BossRush)
 end
 
-function var_0_0.isInBossRushDungeon(arg_28_0)
-	local var_28_0 = DungeonModel.instance.curSendEpisodeId
+function BossRushController:isInBossRushFight(isNeedCheckScene)
+	return self:isInBossRushNormalFight(isNeedCheckScene) or self:isInBossRushInfiniteFight(isNeedCheckScene) or self:isInV3a2BossRushFight(isNeedCheckScene)
+end
 
-	if not var_28_0 then
+function BossRushController:isInBossRushDungeon()
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+
+	if not episodeId then
 		return false
 	end
 
-	local var_28_1 = DungeonConfig.instance:getEpisodeCO(var_28_0)
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if not var_28_1 then
+	if not episodeCO then
 		return false
 	end
 
-	local var_28_2 = var_28_1.chapterId
-	local var_28_3 = DungeonConfig.instance:getChapterCO(var_28_2)
+	local chapterId = episodeCO.chapterId
+	local chapterCO = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if not var_28_3 then
+	if not chapterCO then
 		return false
 	end
 
-	local var_28_4 = var_28_3.type
-	local var_28_5 = DungeonEnum.ChapterType
+	local e = chapterCO.type
+	local E = DungeonEnum.ChapterType
 
-	if var_28_4 == var_28_5.BossRushInfinite or var_28_4 == var_28_5.BossRushNormal then
+	if e == E.BossRushInfinite or e == E.BossRushNormal or e == E.V3a2BossRush then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.openBossRushStoreView(arg_29_0, arg_29_1)
+function BossRushController:openBossRushStoreView(actId)
 	StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.BossRushStore, function()
-		local var_30_0 = {
-			actId = arg_29_1
+		local viewParam = {
+			actId = actId
 		}
 
-		ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, var_30_0)
-	end, arg_29_0)
+		ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, viewParam)
+	end, self)
 end
 
-function var_0_0.openResultPanel(arg_31_0, arg_31_1)
-	ViewMgr.instance:openView(ViewName.V1a6_BossRush_ResultPanel, arg_31_1)
+function BossRushController:openResultPanel(param)
+	ViewMgr.instance:openView(ViewName.V3a2_BossRush_ResultPanel, param)
 end
 
-function var_0_0.openBossRushOfferRoleView(arg_32_0)
-	local var_32_0 = {
+function BossRushController:openBossRushOfferRoleView()
+	local viewParam = {
 		actId = BossRushConfig.instance:getActivityId()
 	}
 
-	ViewMgr.instance:openView(ViewName.V2a1_BossRush_OfferRoleView, var_32_0)
+	ViewMgr.instance:openView(ViewName.V2a1_BossRush_OfferRoleView, viewParam)
 end
 
-function var_0_0.getGroupFightViewName(arg_33_0, arg_33_1)
+function BossRushController:getGroupFightViewName(episodeId)
 	if V2a9BossRushModel.instance:isV2a9BossRush() then
-		local var_33_0 = BossRushConfig.instance:getEpisodeCoByEpisodeId(arg_33_1)
+		local bossrushCo = BossRushConfig.instance:getEpisodeCoByEpisodeId(episodeId)
 
-		if var_33_0 and var_33_0.layer == BossRushEnum.LayerEnum.V2a9 then
-			if var_33_0.stage == BossRushEnum.V2a9StageEnum.First then
+		if bossrushCo and bossrushCo.layer == BossRushEnum.LayerEnum.V2a9 then
+			if bossrushCo.stage == BossRushEnum.V2a9StageEnum.First then
 				return ViewName.V2a9_BossRushHeroGroupFightView
 			else
 				return ViewName.OdysseyHeroGroupView
@@ -384,26 +397,26 @@ function var_0_0.getGroupFightViewName(arg_33_0, arg_33_1)
 	end
 end
 
-function var_0_0.openV2a9BossRushSkillBackpackView(arg_34_0, arg_34_1)
-	if arg_34_1 then
-		local var_34_0 = V2a9BossRushSkillBackpackListModel.instance:getList()
+function BossRushController:openV2a9BossRushSkillBackpackView(itemType)
+	if itemType then
+		local moList = V2a9BossRushSkillBackpackListModel.instance:getList()
 
-		if var_34_0 then
-			for iter_34_0, iter_34_1 in ipairs(var_34_0) do
-				if iter_34_1.itemType == arg_34_1 then
-					V2a9BossRushModel.instance:selectSpItemId(iter_34_1.id)
+		if moList then
+			for _, mo in ipairs(moList) do
+				if mo.itemType == itemType then
+					V2a9BossRushModel.instance:selectSpItemId(mo.id)
 				end
 			end
 		end
 	end
 
-	arg_34_0:_reallyOpenV2a9BossRushSkillBackpackView()
+	self:_reallyOpenV2a9BossRushSkillBackpackView()
 end
 
-function var_0_0._reallyOpenV2a9BossRushSkillBackpackView(arg_35_0)
-	local var_35_0 = AssassinBackpackListModel.instance:getList()
+function BossRushController:_reallyOpenV2a9BossRushSkillBackpackView()
+	local list = AssassinBackpackListModel.instance:getList()
 
-	if not var_35_0 or #var_35_0 <= 0 then
+	if not list or #list <= 0 then
 		GameFacade.showToast(ToastEnum.AssassinStealthNoItem)
 
 		return
@@ -412,6 +425,79 @@ function var_0_0._reallyOpenV2a9BossRushSkillBackpackView(arg_35_0)
 	ViewMgr.instance:openView(ViewName.V2a9_BossRushSkillBackpackView)
 end
 
-var_0_0.instance = var_0_0.New()
+function BossRushController:openV3a2MainView(viewParam, isJustOpen)
+	if isJustOpen then
+		ViewMgr.instance:openView(ViewName.V3a2_BossRush_MainView, viewParam)
 
-return var_0_0
+		return
+	end
+
+	if not self._model:isActOnLine() then
+		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
+
+		return
+	end
+
+	if viewParam then
+		local stage = viewParam.stage
+
+		if stage and not self._model:isBossOnline(stage) then
+			GameFacade.showToast(ToastEnum.V1a4_BossRushBossLockTip)
+
+			return
+		end
+	end
+
+	BossRushRpc.instance:sendGet128InfosRequest(function()
+		ViewMgr.instance:openView(ViewName.V3a2_BossRush_MainView, viewParam)
+	end)
+end
+
+function BossRushController:openV3a2LevelDetailView(viewParam, isOpenMain)
+	local stage = viewParam.stage
+	local layer = viewParam.layer
+
+	if not self._model:isBossOnline(stage) then
+		GameFacade.showToast(ToastEnum.V1a4_BossRushBossLockTip)
+
+		return
+	end
+
+	if not self._model:isBossOpen(stage) then
+		local actName, episode = self._V3a2model:getBossUnlockEpisode(stage)
+
+		GameFacade.showToast(ToastEnum.ActivityDungeon, actName, episode)
+
+		return
+	end
+
+	if not viewParam.stageCO then
+		viewParam.stageCO = BossRushConfig.instance:getStageCO(stage)
+	end
+
+	if isOpenMain then
+		self:openV3a2MainView(nil, true)
+	end
+
+	ViewMgr.instance:openView(ViewName.V3a2_BossRush_LevelDetailView, viewParam)
+end
+
+function BossRushController:openV3a2HankBookView()
+	local actId = BossRushConfig.instance:getActivityId()
+
+	BossRushRpc.instance:sendGetGalleryInfosRequest(actId, function()
+		ViewMgr.instance:openView(ViewName.V3a2_BossRush_HandBookView)
+	end)
+end
+
+function BossRushController:openV3a2RankView()
+	ViewMgr.instance:openView(ViewName.V3a2_BossRush_RankView)
+end
+
+function BossRushController:refreshPlayerRankExp()
+	V3a2_BossRushModel.instance:refreshRankMos()
+end
+
+BossRushController.instance = BossRushController.New()
+
+return BossRushController

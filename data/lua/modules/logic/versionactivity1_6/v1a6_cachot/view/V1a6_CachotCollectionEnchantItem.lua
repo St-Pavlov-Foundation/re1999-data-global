@@ -1,92 +1,96 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionEnchantItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionEnchantItem.lua
 
-local var_0_0 = class("V1a6_CachotCollectionEnchantItem", ListScrollCellExtend)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionEnchantItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageframe = gohelper.findChildImage(arg_1_0.viewGO, "#image_frame")
-	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_collection")
-	arg_1_0._goenchant = gohelper.findChild(arg_1_0.viewGO, "#go_enchant")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_enchant/#simage_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "scroll_effect/Viewport/Content/#go_descitem")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "select")
-	arg_1_0._btnclick = gohelper.getClickWithDefaultAudio(arg_1_0.viewGO)
-	arg_1_0._scrolleffect = gohelper.findChildScrollRect(arg_1_0.viewGO, "scroll_effect")
+local V1a6_CachotCollectionEnchantItem = class("V1a6_CachotCollectionEnchantItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotCollectionEnchantItem:onInitView()
+	self._imageframe = gohelper.findChildImage(self.viewGO, "#image_frame")
+	self._simagecollection = gohelper.findChildSingleImage(self.viewGO, "#simage_collection")
+	self._goenchant = gohelper.findChild(self.viewGO, "#go_enchant")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_enchant/#simage_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._godescitem = gohelper.findChild(self.viewGO, "scroll_effect/Viewport/Content/#go_descitem")
+	self._goselect = gohelper.findChild(self.viewGO, "select")
+	self._btnclick = gohelper.getClickWithDefaultAudio(self.viewGO)
+	self._scrolleffect = gohelper.findChildScrollRect(self.viewGO, "scroll_effect")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function V1a6_CachotCollectionEnchantItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function V1a6_CachotCollectionEnchantItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	V1a6_CachotCollectionEnchantController.instance:onSelectEnchantItem(arg_4_0._mo.id, true)
+function V1a6_CachotCollectionEnchantItem:_btnclickOnClick()
+	V1a6_CachotCollectionEnchantController.instance:onSelectEnchantItem(self._mo.id, true)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._goScrollContent = gohelper.findChild(arg_5_0.viewGO, "scroll_effect/Viewport/Content")
+function V1a6_CachotCollectionEnchantItem:_editableInitView()
+	self._goScrollContent = gohelper.findChild(self.viewGO, "scroll_effect/Viewport/Content")
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function V1a6_CachotCollectionEnchantItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	local var_7_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_7_0._mo.cfgId)
+function V1a6_CachotCollectionEnchantItem:refreshUI()
+	local collectionCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(self._mo.cfgId)
 
-	if var_7_0 then
-		arg_7_0._txtname.text = tostring(var_7_0.name)
+	if collectionCfg then
+		self._txtname.text = tostring(collectionCfg.name)
 
-		arg_7_0._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_7_0.icon))
-		UISpriteSetMgr.instance:setV1a6CachotSprite(arg_7_0._imageframe, string.format("v1a6_cachot_img_collectionframe%s", var_7_0.showRare))
-		arg_7_0:refreshCollectionUI()
-		V1a6_CachotCollectionHelper.refreshSkillDesc(var_7_0, arg_7_0._goScrollContent, arg_7_0._godescitem, arg_7_0._refreshSingleSkillDesc)
+		self._simagecollection:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. collectionCfg.icon))
+		UISpriteSetMgr.instance:setV1a6CachotSprite(self._imageframe, string.format("v1a6_cachot_img_collectionframe%s", collectionCfg.showRare))
+		self:refreshCollectionUI()
+		V1a6_CachotCollectionHelper.refreshSkillDesc(collectionCfg, self._goScrollContent, self._godescitem, self._refreshSingleSkillDesc)
 
-		arg_7_0._scrolleffect.verticalNormalizedPosition = 1
+		self._scrolleffect.verticalNormalizedPosition = 1
 	end
 end
 
-function var_0_0.refreshCollectionUI(arg_8_0)
-	local var_8_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_8_1 = var_8_0 and var_8_0:getCollectionByUid(arg_8_0._mo.enchantUid)
+function V1a6_CachotCollectionEnchantItem:refreshCollectionUI()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local enchantTargetMO = rogueInfo and rogueInfo:getCollectionByUid(self._mo.enchantUid)
 
-	gohelper.setActive(arg_8_0._goenchant, var_8_1 ~= nil)
+	gohelper.setActive(self._goenchant, enchantTargetMO ~= nil)
 
-	if var_8_1 then
-		local var_8_2 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_8_1.cfgId)
+	if enchantTargetMO then
+		local collectionCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(enchantTargetMO.cfgId)
 
-		if var_8_2 then
-			arg_8_0._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_8_2.icon))
+		if collectionCfg then
+			self._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. collectionCfg.icon))
 		end
 	end
 end
 
-local var_0_1 = "#C66030"
-local var_0_2 = "#C66030"
+local skillPercentColor = "#C66030"
+local skillBracketColor = "#C66030"
 
-function var_0_0._refreshSingleSkillDesc(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = lua_rule.configDict[arg_9_2]
+function V1a6_CachotCollectionEnchantItem:_refreshSingleSkillDesc(obj, skillId, index)
+	local skillCfg = lua_rule.configDict[skillId]
 
-	if var_9_0 then
-		gohelper.findChildText(arg_9_1, "txt_desc").text = HeroSkillModel.instance:skillDesToSpot(var_9_0.desc, var_0_1, var_0_2)
+	if skillCfg then
+		local txtEffectDesc = gohelper.findChildText(obj, "txt_desc")
+
+		txtEffectDesc.text = HeroSkillModel.instance:skillDesToSpot(skillCfg.desc, skillPercentColor, skillBracketColor)
 	end
 end
 
-function var_0_0.onSelect(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goselect, arg_10_1)
+function V1a6_CachotCollectionEnchantItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagecollection:UnLoadImage()
+function V1a6_CachotCollectionEnchantItem:onDestroyView()
+	self._simagecollection:UnLoadImage()
 end
 
-return var_0_0
+return V1a6_CachotCollectionEnchantItem

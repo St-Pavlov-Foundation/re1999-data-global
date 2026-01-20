@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonRuleTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonRuleTipsViewContainer.lua
 
-local var_0_0 = class("RoomCritterSummonRuleTipsViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonRuleTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterSummonRuleTipsViewContainer = class("RoomCritterSummonRuleTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterSummonRuleTipsView.New())
+function RoomCritterSummonRuleTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCritterSummonRuleTipsView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomCritterSummonRuleTipsViewContainer

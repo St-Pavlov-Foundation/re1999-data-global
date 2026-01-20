@@ -1,19 +1,21 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreBonusSceneUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreBonusSceneUnitMO.lua
 
-local var_0_0 = class("ExploreBonusSceneUnitMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreBonusSceneUnitMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0.triggerEffects = tabletool.copy(arg_1_0.triggerEffects)
+local ExploreBonusSceneUnitMO = class("ExploreBonusSceneUnitMO", ExploreBaseUnitMO)
 
-	local var_1_0 = {
+function ExploreBonusSceneUnitMO:initTypeData()
+	self.triggerEffects = tabletool.copy(self.triggerEffects)
+
+	local data = {
 		ExploreEnum.TriggerEvent.OpenBonusView
 	}
 
-	if arg_1_0.triggerEffects[1] and arg_1_0.triggerEffects[1][1] == ExploreEnum.TriggerEvent.Dialogue then
-		table.insert(arg_1_0.triggerEffects, 2, var_1_0)
+	if self.triggerEffects[1] and self.triggerEffects[1][1] == ExploreEnum.TriggerEvent.Dialogue then
+		table.insert(self.triggerEffects, 2, data)
 	else
-		table.insert(arg_1_0.triggerEffects, 1, var_1_0)
+		table.insert(self.triggerEffects, 1, data)
 	end
 end
 
-return var_0_0
+return ExploreBonusSceneUnitMO

@@ -1,131 +1,133 @@
-﻿module("modules.logic.commandstation.view.CommandStationTimelineEventView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationTimelineEventView.lua
 
-local var_0_0 = class("CommandStationTimelineEventView", BaseView)
+module("modules.logic.commandstation.view.CommandStationTimelineEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goTimeAxis = gohelper.findChild(arg_1_0.viewGO, "#go_TimeAxis")
-	arg_1_0._goTimeAxisEvent = gohelper.findChild(arg_1_0.viewGO, "#go_TimeAxis/#go_TimeAxisEvent")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#txt_Title")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/Scroll View/Viewport/#txt_Descr")
-	arg_1_0._btnLeftDisable = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_LeftDisable")
-	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_Left")
-	arg_1_0._btnRightDisable = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_RightDisable")
-	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_Right")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local CommandStationTimelineEventView = class("CommandStationTimelineEventView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationTimelineEventView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goTimeAxis = gohelper.findChild(self.viewGO, "#go_TimeAxis")
+	self._goTimeAxisEvent = gohelper.findChild(self.viewGO, "#go_TimeAxis/#go_TimeAxisEvent")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#txt_Title")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/Scroll View/Viewport/#txt_Descr")
+	self._btnLeftDisable = gohelper.findChildButtonWithAudio(self.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_LeftDisable")
+	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_Left")
+	self._btnRightDisable = gohelper.findChildButtonWithAudio(self.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_RightDisable")
+	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "#go_TimeAxis/#go_TimeAxisEvent/#btn_Right")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnLeftDisable:AddClickListener(arg_2_0._btnLeftDisableOnClick, arg_2_0)
-	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
-	arg_2_0._btnRightDisable:AddClickListener(arg_2_0._btnRightDisableOnClick, arg_2_0)
-	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
+function CommandStationTimelineEventView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnLeftDisable:AddClickListener(self._btnLeftDisableOnClick, self)
+	self._btnLeft:AddClickListener(self._btnLeftOnClick, self)
+	self._btnRightDisable:AddClickListener(self._btnRightDisableOnClick, self)
+	self._btnRight:AddClickListener(self._btnRightOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnLeftDisable:RemoveClickListener()
-	arg_3_0._btnLeft:RemoveClickListener()
-	arg_3_0._btnRightDisable:RemoveClickListener()
-	arg_3_0._btnRight:RemoveClickListener()
+function CommandStationTimelineEventView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnLeftDisable:RemoveClickListener()
+	self._btnLeft:RemoveClickListener()
+	self._btnRightDisable:RemoveClickListener()
+	self._btnRight:RemoveClickListener()
 end
 
-function var_0_0._btnLeftDisableOnClick(arg_4_0)
+function CommandStationTimelineEventView:_btnLeftDisableOnClick()
 	return
 end
 
-function var_0_0._btnRightDisableOnClick(arg_5_0)
+function CommandStationTimelineEventView:_btnRightDisableOnClick()
 	return
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function CommandStationTimelineEventView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnLeftOnClick(arg_7_0)
-	arg_7_0._curIndex = arg_7_0._curIndex - 1
+function CommandStationTimelineEventView:_btnLeftOnClick()
+	self._curIndex = self._curIndex - 1
 
-	if arg_7_0._curIndex < 1 then
-		arg_7_0._curIndex = #arg_7_0._eventList
+	if self._curIndex < 1 then
+		self._curIndex = #self._eventList
 	end
 
-	arg_7_0:_FocusEvent()
-	arg_7_0:_updateEventInfo()
-	arg_7_0:_updateBtnState()
+	self:_FocusEvent()
+	self:_updateEventInfo()
+	self:_updateBtnState()
 end
 
-function var_0_0._btnRightOnClick(arg_8_0)
-	arg_8_0._curIndex = arg_8_0._curIndex + 1
+function CommandStationTimelineEventView:_btnRightOnClick()
+	self._curIndex = self._curIndex + 1
 
-	if arg_8_0._curIndex > #arg_8_0._eventList then
-		arg_8_0._curIndex = 1
+	if self._curIndex > #self._eventList then
+		self._curIndex = 1
 	end
 
-	arg_8_0:_FocusEvent()
-	arg_8_0:_updateEventInfo()
-	arg_8_0:_updateBtnState()
+	self:_FocusEvent()
+	self:_updateEventInfo()
+	self:_updateBtnState()
 end
 
-function var_0_0._FocusEvent(arg_9_0)
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.FocusEvent, arg_9_0._eventList[arg_9_0._curIndex])
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, arg_9_0._eventList[arg_9_0._curIndex])
+function CommandStationTimelineEventView:_FocusEvent()
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.FocusEvent, self._eventList[self._curIndex])
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, self._eventList[self._curIndex])
 end
 
-function var_0_0._editableInitView(arg_10_0)
+function CommandStationTimelineEventView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function CommandStationTimelineEventView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._timeId = arg_12_0.viewParam.timeId
-	arg_12_0._eventId = arg_12_0.viewParam.eventId
-	arg_12_0._eventList = CommandStationConfig.instance:getEventList(arg_12_0._timeId, arg_12_0._eventId)
-	arg_12_0._minIndex = 1
-	arg_12_0._maxIndex = #arg_12_0._eventList
-	arg_12_0._curIndex = tabletool.indexOf(arg_12_0._eventList, arg_12_0._eventId)
+function CommandStationTimelineEventView:onOpen()
+	self._timeId = self.viewParam.timeId
+	self._eventId = self.viewParam.eventId
+	self._eventList = CommandStationConfig.instance:getEventList(self._timeId, self._eventId)
+	self._minIndex = 1
+	self._maxIndex = #self._eventList
+	self._curIndex = tabletool.indexOf(self._eventList, self._eventId)
 
-	arg_12_0:_updateEventInfo()
-	arg_12_0:_updateBtnState()
+	self:_updateEventInfo()
+	self:_updateBtnState()
 end
 
-function var_0_0._updateBtnState(arg_13_0)
-	local var_13_0 = arg_13_0._maxIndex ~= 1
+function CommandStationTimelineEventView:_updateBtnState()
+	local showButton = self._maxIndex ~= 1
 
-	gohelper.setActive(arg_13_0._btnLeft.gameObject, var_13_0)
-	gohelper.setActive(arg_13_0._btnRight.gameObject, var_13_0)
-	gohelper.setActive(arg_13_0._btnLeftDisable.gameObject, false)
-	gohelper.setActive(arg_13_0._btnRightDisable.gameObject, false)
+	gohelper.setActive(self._btnLeft.gameObject, showButton)
+	gohelper.setActive(self._btnRight.gameObject, showButton)
+	gohelper.setActive(self._btnLeftDisable.gameObject, false)
+	gohelper.setActive(self._btnRightDisable.gameObject, false)
 end
 
-function var_0_0._updateEventInfo(arg_14_0)
-	local var_14_0 = arg_14_0._eventList[arg_14_0._curIndex]
-	local var_14_1 = lua_copost_event.configDict[var_14_0]
+function CommandStationTimelineEventView:_updateEventInfo()
+	local eventId = self._eventList[self._curIndex]
+	local eventConfig = lua_copost_event.configDict[eventId]
 
-	if not var_14_1 then
+	if not eventConfig then
 		return
 	end
 
-	local var_14_2 = tonumber(var_14_1.eventTextId)
-	local var_14_3 = var_14_2 and lua_copost_event_text.configDict[var_14_2]
+	local eventTextId = tonumber(eventConfig.eventTextId)
+	local eventTxtConfig = eventTextId and lua_copost_event_text.configDict[eventTextId]
 
-	arg_14_0._txtDescr.text = var_14_3 and var_14_3.text
-	arg_14_0._txtTitle.text = var_14_1.eventTitleId
+	self._txtDescr.text = eventTxtConfig and eventTxtConfig.text
+	self._txtTitle.text = eventConfig.eventTitleId
 end
 
-function var_0_0.onClose(arg_15_0)
+function CommandStationTimelineEventView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function CommandStationTimelineEventView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CommandStationTimelineEventView

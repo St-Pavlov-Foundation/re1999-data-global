@@ -1,115 +1,154 @@
-﻿module("modules.logic.versionactivity1_4.act136.controller.Activity136Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/controller/Activity136Controller.lua
 
-local var_0_0 = class("Activity136Controller", BaseController)
+module("modules.logic.versionactivity1_4.act136.controller.Activity136Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity136Controller = class("Activity136Controller", BaseController)
+
+function Activity136Controller:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0._onRefreshActivityState, arg_2_0)
+function Activity136Controller:addConstEvents()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onRefreshActivityState, self)
 end
 
-function var_0_0.reInit(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayGetInfo, arg_3_0)
+function Activity136Controller:reInit()
+	TaskDispatcher.cancelTask(self._delayGetInfo, self)
 end
 
-function var_0_0._onRefreshActivityState(arg_4_0)
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.SelfSelectCharacter) then
-		TaskDispatcher.cancelTask(arg_4_0._delayGetInfo, arg_4_0)
-		TaskDispatcher.runDelay(arg_4_0._delayGetInfo, arg_4_0, 0.2)
+function Activity136Controller:_onRefreshActivityState()
+	if ActivityModel.instance:isActOnLine(self:actId()) then
+		TaskDispatcher.cancelTask(self._delayGetInfo, self)
+		TaskDispatcher.runDelay(self._delayGetInfo, self, 0.2)
 	end
 end
 
-function var_0_0._delayGetInfo(arg_5_0)
-	Activity136Rpc.instance:sendGet136InfoRequest(ActivityEnum.Activity.SelfSelectCharacter)
+function Activity136Controller:_delayGetInfo()
+	Activity136Rpc.instance:sendGet136InfoRequest(self:actId())
 end
 
-function var_0_0.confirmReceiveCharacterCallback(arg_6_0)
+function Activity136Controller:confirmReceiveCharacterCallback()
 	ViewMgr.instance:closeView(ViewName.Activity136ChoiceView)
+	ViewMgr.instance:closeView(ViewName.LifeCirclePickChoice)
 end
 
-function var_0_0.openActivity136View(arg_7_0, arg_7_1)
-	if Activity136Model.instance:isActivity136InOpen(true) then
-		ViewMgr.instance:openView(ViewName.Activity136View, arg_7_1)
+function Activity136Controller:openActivity136View(viewParam)
+	local isInOpen = Activity136Model.instance:isActivity136InOpen(true)
+
+	if isInOpen then
+		ViewMgr.instance:openView(ViewName.Activity136View, viewParam)
 	end
 end
 
-function var_0_0.openActivity136ChoiceView(arg_8_0)
-	if not Activity136Model.instance:isActivity136InOpen(true) then
+function Activity136Controller:openActivity136ChoiceView()
+	local isInOpen = Activity136Model.instance:isActivity136InOpen(true)
+
+	if not isInOpen then
 		return
 	end
 
-	if Activity136Model.instance:hasReceivedCharacter() then
+	local hasReceive = Activity136Model.instance:hasReceivedCharacter()
+
+	if hasReceive then
 		GameFacade.showToast(ToastEnum.Activity136AlreadyReceive)
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.Activity136ChoiceView)
+	local actId = self:actId()
+	local heroIdList = Activity136Config.instance:getSelfSelectCharacterIdList(actId)
+	local isCustomSelect = true
+	local viewParam = {
+		heroIdList = heroIdList,
+		title = luaLang("p_activity136choiceview_txt_title"),
+		confirmDesc = luaLang("confirm"),
+		isCustomSelect = isCustomSelect,
+		callback = function(viewObj)
+			local targetHeroId = isCustomSelect and viewObj:selectedHeroId() or 0
+
+			if isCustomSelect then
+				if targetHeroId == 0 then
+					GameFacade.showToast(ToastEnum.Activity136NotSelect)
+
+					return
+				end
+
+				Activity136Controller.instance:receiveCharacter(targetHeroId)
+			else
+				assert(false, "not support random select")
+			end
+		end
+	}
+
+	ViewMgr.instance:openView(ViewName.LifeCirclePickChoice, viewParam)
 end
 
-function var_0_0.receiveCharacter(arg_9_0, arg_9_1)
-	if not Activity136Model.instance:isActivity136InOpen(true) then
+function Activity136Controller:receiveCharacter(selectCharacterId)
+	local isInOpen = Activity136Model.instance:isActivity136InOpen(true)
+
+	if not isInOpen then
 		return
 	end
 
-	if not arg_9_1 then
+	if not selectCharacterId then
 		GameFacade.showToast(ToastEnum.Activity136NotSelect)
 
 		return
 	end
 
-	if Activity136Model.instance:hasReceivedCharacter() then
+	local hasReceive = Activity136Model.instance:hasReceivedCharacter()
+
+	if hasReceive then
 		GameFacade.showToast(ToastEnum.Activity136AlreadyReceive)
 
 		return
 	end
 
-	local var_9_0 = HeroModel.instance:getByHeroId(arg_9_1)
-	local var_9_1 = HeroConfig.instance:getHeroCO(arg_9_1)
-	local var_9_2 = MessageBoxIdDefine.Activity136SelectCharacter
-	local var_9_3 = var_9_1 and var_9_1.name or ""
-	local var_9_4 = ""
-	local var_9_5 = ""
+	local heroMo = HeroModel.instance:getByHeroId(selectCharacterId)
+	local heroConfig = HeroConfig.instance:getHeroCO(selectCharacterId)
+	local msgId = MessageBoxIdDefine.Activity136SelectCharacter
+	local heroName = heroConfig and heroConfig.name or ""
+	local duplicateItemName = ""
+	local duplicateItemCount = ""
 
-	if var_9_0 and var_9_1 then
-		local var_9_6 = {}
+	if heroMo and heroConfig then
+		local itemParams = {}
+		local isMaxExSkill = HeroModel.instance:isMaxExSkill(selectCharacterId, true)
 
-		if not HeroModel.instance:isMaxExSkill(arg_9_1, true) then
-			local var_9_7 = GameUtil.splitString2(var_9_1.duplicateItem, true)
+		if not isMaxExSkill then
+			local duplicateItem1List = GameUtil.splitString2(heroConfig.duplicateItem, true)
 
-			var_9_6 = var_9_7 and var_9_7[1] or var_9_6
-			var_9_2 = MessageBoxIdDefine.Activity136SelectCharacterRepeat
+			itemParams = duplicateItem1List and duplicateItem1List[1] or itemParams
+			msgId = MessageBoxIdDefine.Activity136SelectCharacterRepeat
 		else
-			var_9_6 = string.splitToNumber(var_9_1.duplicateItem2, "#") or var_9_6
-			var_9_5 = var_9_6[3] or ""
-			var_9_2 = MessageBoxIdDefine.Activity136SelectCharacterRepeat2
+			itemParams = string.splitToNumber(heroConfig.duplicateItem2, "#") or itemParams
+			duplicateItemCount = itemParams[3] or ""
+			msgId = MessageBoxIdDefine.Activity136SelectCharacterRepeat2
 		end
 
-		local var_9_8 = var_9_6[1]
-		local var_9_9 = var_9_6[2]
+		local itemType = itemParams[1]
+		local itemId = itemParams[2]
 
-		if var_9_8 and var_9_9 then
-			local var_9_10, var_9_11 = ItemModel.instance:getItemConfigAndIcon(var_9_6[1], var_9_6[2])
+		if itemType and itemId then
+			local itemConfig, _ = ItemModel.instance:getItemConfigAndIcon(itemParams[1], itemParams[2])
 
-			var_9_4 = var_9_10 and var_9_10.name or ""
+			duplicateItemName = itemConfig and itemConfig.name or ""
 		end
 	end
 
-	GameFacade.showMessageBox(var_9_2, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_9_0:_confirmSelect(arg_9_1)
-	end, nil, nil, arg_9_0, nil, nil, var_9_3, var_9_4, var_9_5)
+	GameFacade.showMessageBox(msgId, MsgBoxEnum.BoxType.Yes_No, function()
+		self:_confirmSelect(selectCharacterId)
+	end, nil, nil, self, nil, nil, heroName, duplicateItemName, duplicateItemCount)
 end
 
-function var_0_0._confirmSelect(arg_11_0, arg_11_1)
-	local var_11_0 = Activity136Model.instance:getCurActivity136Id()
-
-	if var_11_0 then
-		Activity136Rpc.instance:sendAct136SelectRequest(var_11_0, arg_11_1)
-	end
+function Activity136Controller:_confirmSelect(selectCharacterId)
+	Activity136Rpc.instance:sendAct136SelectRequest(self:actId(), selectCharacterId)
 end
 
-var_0_0.instance = var_0_0.New()
+function Activity136Controller:actId()
+	return Activity136Model.instance:getCurActivity136Id()
+end
 
-return var_0_0
+Activity136Controller.instance = Activity136Controller.New()
+
+return Activity136Controller

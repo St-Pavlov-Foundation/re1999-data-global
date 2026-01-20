@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventResultContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameEventResultContainer.lua
 
-local var_0_0 = class("AiZiLaGameEventResultContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventResultContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaGameEventResultContainer = class("AiZiLaGameEventResultContainer", BaseViewContainer)
 
-	table.insert(var_1_0, AiZiLaGameEventResult.New())
+function AiZiLaGameEventResultContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, AiZiLaGameEventResult.New())
+
+	return views
 end
 
-return var_0_0
+return AiZiLaGameEventResultContainer

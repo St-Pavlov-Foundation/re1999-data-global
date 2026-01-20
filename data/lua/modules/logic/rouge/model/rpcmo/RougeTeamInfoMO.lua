@@ -1,304 +1,306 @@
-﻿module("modules.logic.rouge.model.rpcmo.RougeTeamInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/rpcmo/RougeTeamInfoMO.lua
 
-local var_0_0 = pureTable("RougeTeamInfoMO")
+module("modules.logic.rouge.model.rpcmo.RougeTeamInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.battleHeroList, arg_1_0.battleHeroMap = GameUtil.rpcInfosToListAndMap(arg_1_1.battleHeroList, RougeBattleHeroMO, "index")
-	arg_1_0.heroLifeList, arg_1_0.heroLifeMap = GameUtil.rpcInfosToListAndMap(arg_1_1.heroLifeList, RougeHeroLifeMO, "heroId")
-	arg_1_0.heroInfoList, arg_1_0.heroInfoMap = GameUtil.rpcInfosToListAndMap(arg_1_1.heroInfoList, RougeHeroInfoMO, "heroId")
-	arg_1_0._assistHeroMO = nil
+local RougeTeamInfoMO = pureTable("RougeTeamInfoMO")
 
-	if arg_1_1:HasField("assistHeroInfo") then
-		local var_1_0 = Season123AssistHeroMO.New()
+function RougeTeamInfoMO:init(info)
+	self.battleHeroList, self.battleHeroMap = GameUtil.rpcInfosToListAndMap(info.battleHeroList, RougeBattleHeroMO, "index")
+	self.heroLifeList, self.heroLifeMap = GameUtil.rpcInfosToListAndMap(info.heroLifeList, RougeHeroLifeMO, "heroId")
+	self.heroInfoList, self.heroInfoMap = GameUtil.rpcInfosToListAndMap(info.heroInfoList, RougeHeroInfoMO, "heroId")
+	self._assistHeroMO = nil
 
-		var_1_0:init(arg_1_1.assistHeroInfo)
+	if info:HasField("assistHeroInfo") then
+		local assistMO = Season123AssistHeroMO.New()
 
-		arg_1_0._assistHeroMO = Season123HeroUtils.createHeroMOByAssistMO(var_1_0)
+		assistMO:init(info.assistHeroInfo)
+
+		self._assistHeroMO = Season123HeroUtils.createHeroMOByAssistMO(assistMO)
 
 		if RougeHeroGroupBalanceHelper.getIsBalanceMode() then
-			arg_1_0._assistHeroMO:setOtherPlayerIsOpenTalent(true)
+			self._assistHeroMO:setOtherPlayerIsOpenTalent(true)
 		end
 	end
 
-	arg_1_0:_initSupportHeroAndSkill()
-	arg_1_0:_initTeamList()
-	arg_1_0:updateDeadHeroNum()
+	self:_initSupportHeroAndSkill()
+	self:_initTeamList()
+	self:updateDeadHeroNum()
 end
 
-function var_0_0._initSupportHeroAndSkill(arg_2_0)
-	arg_2_0._supportSkillMap = {}
-	arg_2_0._supportBattleHeroMap = {}
+function RougeTeamInfoMO:_initSupportHeroAndSkill()
+	self._supportSkillMap = {}
+	self._supportBattleHeroMap = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.battleHeroList) do
-		if iter_2_1.supportHeroId > 0 and iter_2_1.supportHeroSkill > 0 then
-			local var_2_0 = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(iter_2_1.supportHeroId, nil, arg_2_0:getAnyHeroMo(iter_2_1.supportHeroId))
+	for i, v in ipairs(self.battleHeroList) do
+		if v.supportHeroId > 0 and v.supportHeroSkill > 0 then
+			local skillIdDict = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(v.supportHeroId, nil, self:getAnyHeroMo(v.supportHeroId))
 
-			arg_2_0._supportSkillMap[iter_2_1.supportHeroId] = var_2_0 and var_2_0[iter_2_1.supportHeroSkill]
-			arg_2_0._supportBattleHeroMap[iter_2_1.index + RougeEnum.FightTeamNormalHeroNum] = {
-				heroId = iter_2_1.supportHeroId
+			self._supportSkillMap[v.supportHeroId] = skillIdDict and skillIdDict[v.supportHeroSkill]
+			self._supportBattleHeroMap[v.index + RougeEnum.FightTeamNormalHeroNum] = {
+				heroId = v.supportHeroId
 			}
 		end
 	end
 end
 
-function var_0_0._initTeamList(arg_3_0)
-	arg_3_0._teamMap = {}
-	arg_3_0._teamAssistMap = {}
+function RougeTeamInfoMO:_initTeamList()
+	self._teamMap = {}
+	self._teamAssistMap = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.battleHeroList) do
-		if iter_3_1.heroId ~= 0 then
-			arg_3_0._teamMap[iter_3_1.heroId] = iter_3_1
+	for i, v in ipairs(self.battleHeroList) do
+		if v.heroId ~= 0 then
+			self._teamMap[v.heroId] = v
 		end
 
-		if iter_3_1.supportHeroId ~= 0 then
-			arg_3_0._teamAssistMap[iter_3_1.supportHeroId] = iter_3_1
+		if v.supportHeroId ~= 0 then
+			self._teamAssistMap[v.supportHeroId] = v
 		end
 	end
 end
 
-function var_0_0.getAssistHeroMo(arg_4_0, arg_4_1)
-	if arg_4_1 then
-		if arg_4_0._assistHeroMO and arg_4_0._assistHeroMO.heroId == arg_4_1 then
-			return arg_4_0._assistHeroMO
+function RougeTeamInfoMO:getAssistHeroMo(heroId)
+	if heroId then
+		if self._assistHeroMO and self._assistHeroMO.heroId == heroId then
+			return self._assistHeroMO
 		end
 	else
-		return arg_4_0._assistHeroMO
+		return self._assistHeroMO
 	end
 end
 
-function var_0_0.getAssistHeroMoByUid(arg_5_0, arg_5_1)
-	if arg_5_0._assistHeroMO and arg_5_0._assistHeroMO.uid == arg_5_1 then
-		return arg_5_0._assistHeroMO
+function RougeTeamInfoMO:getAssistHeroMoByUid(uid)
+	if self._assistHeroMO and self._assistHeroMO.uid == uid then
+		return self._assistHeroMO
 	end
 end
 
-function var_0_0.getAnyHeroMo(arg_6_0, arg_6_1)
-	return arg_6_0:getAssistHeroMo(arg_6_1) or HeroModel.instance:getByHeroId(arg_6_1)
+function RougeTeamInfoMO:getAnyHeroMo(heroId)
+	return self:getAssistHeroMo(heroId) or HeroModel.instance:getByHeroId(heroId)
 end
 
-function var_0_0.isAssistHero(arg_7_0, arg_7_1)
-	return arg_7_0._assistHeroMO and arg_7_0._assistHeroMO.heroId == arg_7_1
+function RougeTeamInfoMO:isAssistHero(heroId)
+	return self._assistHeroMO and self._assistHeroMO.heroId == heroId
 end
 
-function var_0_0.inTeam(arg_8_0, arg_8_1)
-	return arg_8_0._teamMap[arg_8_1] ~= nil
+function RougeTeamInfoMO:inTeam(heroId)
+	return self._teamMap[heroId] ~= nil
 end
 
-function var_0_0.inTeamAssist(arg_9_0, arg_9_1)
-	return arg_9_0._teamAssistMap[arg_9_1] ~= nil
+function RougeTeamInfoMO:inTeamAssist(heroId)
+	return self._teamAssistMap[heroId] ~= nil
 end
 
-function var_0_0.getAssistTargetHero(arg_10_0, arg_10_1)
-	return arg_10_0._teamAssistMap and arg_10_0._teamAssistMap[arg_10_1]
+function RougeTeamInfoMO:getAssistTargetHero(heroId)
+	return self._teamAssistMap and self._teamAssistMap[heroId]
 end
 
-function var_0_0.getHeroHp(arg_11_0, arg_11_1)
-	return arg_11_0.heroLifeMap[arg_11_1]
+function RougeTeamInfoMO:getHeroHp(heroId)
+	return self.heroLifeMap[heroId]
 end
 
-function var_0_0.getSupportSkillStrList(arg_12_0)
-	local var_12_0 = {}
+function RougeTeamInfoMO:getSupportSkillStrList()
+	local list = {}
 
-	for iter_12_0 = 1, RougeEnum.FightTeamNormalHeroNum do
-		local var_12_1 = arg_12_0.battleHeroMap[iter_12_0]
+	for i = 1, RougeEnum.FightTeamNormalHeroNum do
+		local mo = self.battleHeroMap[i]
 
-		if var_12_1 and var_12_1.supportHeroSkill ~= 0 then
-			var_12_0[iter_12_0] = string.format("%s#%s", var_12_1.supportHeroId, var_12_1.supportHeroSkill)
+		if mo and mo.supportHeroSkill ~= 0 then
+			list[i] = string.format("%s#%s", mo.supportHeroId, mo.supportHeroSkill)
 		else
-			var_12_0[iter_12_0] = ""
+			list[i] = ""
 		end
 	end
 
-	return var_12_0
+	return list
 end
 
-function var_0_0.getSupportSkillIndex(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getSupportSkill(arg_13_1)
+function RougeTeamInfoMO:getSupportSkillIndex(heroId)
+	local skillId = self:getSupportSkill(heroId)
 
-	if not var_13_0 then
+	if not skillId then
 		return
 	end
 
-	local var_13_1 = arg_13_0:getAnyHeroMo(arg_13_1)
+	local heroMo = self:getAnyHeroMo(heroId)
 
-	if not var_13_1 then
-		logError(string.format("RougeTeamInfoMO getSupportSkillIndex heroId:%s heroMo nil", arg_13_1))
+	if not heroMo then
+		logError(string.format("RougeTeamInfoMO getSupportSkillIndex heroId:%s heroMo nil", heroId))
 
 		return
 	end
 
-	local var_13_2 = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(arg_13_1, nil, var_13_1)
+	local skillIdDict = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(heroId, nil, heroMo)
 
-	if not var_13_2 then
+	if not skillIdDict then
 		return
 	end
 
-	for iter_13_0, iter_13_1 in pairs(var_13_2) do
-		if iter_13_1 == var_13_0 then
-			return iter_13_0
+	for k, v in pairs(skillIdDict) do
+		if v == skillId then
+			return k
 		end
 	end
 end
 
-function var_0_0.getSupportSkill(arg_14_0, arg_14_1)
-	return arg_14_0._supportSkillMap[arg_14_1]
+function RougeTeamInfoMO:getSupportSkill(heroId)
+	return self._supportSkillMap[heroId]
 end
 
-function var_0_0.setSupportSkill(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._supportSkillMap[arg_15_1] = arg_15_2
+function RougeTeamInfoMO:setSupportSkill(heroId, skillId)
+	self._supportSkillMap[heroId] = skillId
 end
 
-function var_0_0.getGroupInfos(arg_16_0)
-	local var_16_0 = RougeHeroGroupMO.New()
-	local var_16_1 = {}
-	local var_16_2 = {}
+function RougeTeamInfoMO:getGroupInfos()
+	local groupMo = RougeHeroGroupMO.New()
+	local heroList = {}
+	local equipList = {}
 
-	var_16_0:setMaxHeroCount(RougeEnum.FightTeamHeroNum)
+	groupMo:setMaxHeroCount(RougeEnum.FightTeamHeroNum)
 
-	for iter_16_0 = 1, RougeEnum.FightTeamHeroNum do
-		local var_16_3 = arg_16_0.battleHeroMap[iter_16_0] or arg_16_0._supportBattleHeroMap[iter_16_0]
-		local var_16_4 = var_16_3 and var_16_3.heroId or 0
-		local var_16_5 = HeroModel.instance:getByHeroId(var_16_4)
-		local var_16_6 = var_16_3 and var_16_3.equipUid or "0"
+	for i = 1, RougeEnum.FightTeamHeroNum do
+		local battleHeroMo = self.battleHeroMap[i] or self._supportBattleHeroMap[i]
+		local heroId = battleHeroMo and battleHeroMo.heroId or 0
+		local heroMo = HeroModel.instance:getByHeroId(heroId)
+		local equipUid = battleHeroMo and battleHeroMo.equipUid or "0"
 
-		table.insert(var_16_1, var_16_5 and var_16_5.uid or "0")
+		table.insert(heroList, heroMo and heroMo.uid or "0")
 
-		if iter_16_0 <= RougeEnum.FightTeamNormalHeroNum then
-			local var_16_7 = HeroGroupEquipMO.New()
-			local var_16_8 = iter_16_0 - 1
+		if i <= RougeEnum.FightTeamNormalHeroNum then
+			local equipMo = HeroGroupEquipMO.New()
+			local pos = i - 1
 
-			var_16_7:init({
-				index = var_16_8,
+			equipMo:init({
+				index = pos,
 				equipUid = {
-					var_16_6
+					equipUid
 				}
 			})
 
-			var_16_2[var_16_8] = var_16_7
+			equipList[pos] = equipMo
 		end
 	end
 
-	var_16_0:init({
+	groupMo:init({
 		id = 1,
-		heroList = var_16_1,
-		equips = var_16_2
+		heroList = heroList,
+		equips = equipList
 	})
 
 	return {
-		var_16_0
+		groupMo
 	}
 end
 
-function var_0_0.getBattleHeroList(arg_17_0)
-	return arg_17_0.battleHeroList
+function RougeTeamInfoMO:getBattleHeroList()
+	return self.battleHeroList
 end
 
-function var_0_0.updateTeamLife(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		local var_18_0 = arg_18_0.heroLifeMap[iter_18_1.heroId]
+function RougeTeamInfoMO:updateTeamLife(heroLifeList)
+	for _, info in ipairs(heroLifeList) do
+		local mo = self.heroLifeMap[info.heroId]
 
-		if var_18_0 then
-			var_18_0:update(iter_18_1)
+		if mo then
+			mo:update(info)
 		else
-			local var_18_1 = RougeHeroLifeMO.New()
+			mo = RougeHeroLifeMO.New()
 
-			var_18_1:init(iter_18_1)
+			mo:init(info)
 
-			arg_18_0.heroLifeMap[var_18_1.heroId] = var_18_1
+			self.heroLifeMap[mo.heroId] = mo
 
-			table.insert(arg_18_0.heroLifeList, var_18_1)
+			table.insert(self.heroLifeList, mo)
 		end
 	end
 
-	arg_18_0:updateDeadHeroNum()
+	self:updateDeadHeroNum()
 end
 
-function var_0_0.updateExtraHeroInfo(arg_19_0, arg_19_1)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
-		local var_19_0 = arg_19_0.heroInfoMap[iter_19_1.heroId]
+function RougeTeamInfoMO:updateExtraHeroInfo(heroInfoList)
+	for _, info in ipairs(heroInfoList) do
+		local mo = self.heroInfoMap[info.heroId]
 
-		if var_19_0 then
-			var_19_0:update(iter_19_1)
+		if mo then
+			mo:update(info)
 		else
-			local var_19_1 = RougeHeroInfoMO.New()
+			mo = RougeHeroInfoMO.New()
 
-			var_19_1:init(iter_19_1)
+			mo:init(info)
 
-			arg_19_0.heroInfoMap[var_19_1.heroId] = var_19_1
+			self.heroInfoMap[mo.heroId] = mo
 
-			table.insert(arg_19_0.heroInfoList, var_19_1)
+			table.insert(self.heroInfoList, mo)
 		end
 	end
 end
 
-function var_0_0.updateTeamLifeAndDispatchEvent(arg_20_0, arg_20_1)
-	local var_20_0 = RougeMapEnum.LifeChangeStatus.Idle
+function RougeTeamInfoMO:updateTeamLifeAndDispatchEvent(heroLifeList)
+	local status = RougeMapEnum.LifeChangeStatus.Idle
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_1) do
-		local var_20_1 = arg_20_0.heroLifeMap[iter_20_1.heroId]
+	for _, info in ipairs(heroLifeList) do
+		local mo = self.heroLifeMap[info.heroId]
 
-		if var_20_1 then
-			local var_20_2 = RougeMapHelper.getLifeChangeStatus(var_20_1.life, iter_20_1.life)
+		if mo then
+			local _status = RougeMapHelper.getLifeChangeStatus(mo.life, info.life)
 
-			if var_20_2 ~= RougeMapEnum.LifeChangeStatus.Idle then
-				var_20_0 = var_20_2
+			if _status ~= RougeMapEnum.LifeChangeStatus.Idle then
+				status = _status
 			end
 
-			var_20_1:update(iter_20_1)
+			mo:update(info)
 		else
-			local var_20_3 = RougeHeroLifeMO.New()
+			mo = RougeHeroLifeMO.New()
 
-			var_20_3:init(iter_20_1)
+			mo:init(info)
 
-			arg_20_0.heroLifeMap[var_20_3.heroId] = var_20_3
+			self.heroLifeMap[mo.heroId] = mo
 
-			table.insert(arg_20_0.heroLifeList, var_20_3)
+			table.insert(self.heroLifeList, mo)
 		end
 	end
 
-	if var_20_0 ~= RougeMapEnum.LifeChangeStatus.Idle then
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onTeamLifeChange, var_20_0)
+	if status ~= RougeMapEnum.LifeChangeStatus.Idle then
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onTeamLifeChange, status)
 	end
 
-	arg_20_0:updateDeadHeroNum()
+	self:updateDeadHeroNum()
 end
 
-function var_0_0.getAllHeroCount(arg_21_0)
-	return #arg_21_0.heroLifeList
+function RougeTeamInfoMO:getAllHeroCount()
+	return #self.heroLifeList
 end
 
-function var_0_0.getAllHeroId(arg_22_0)
-	local var_22_0 = {}
+function RougeTeamInfoMO:getAllHeroId()
+	local heroIds = {}
 
-	if arg_22_0.heroLifeList then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0.heroLifeList) do
-			local var_22_1 = iter_22_1.heroId
+	if self.heroLifeList then
+		for _, heroLifeMO in ipairs(self.heroLifeList) do
+			local heroId = heroLifeMO.heroId
 
-			table.insert(var_22_0, var_22_1)
+			table.insert(heroIds, heroId)
 		end
 	end
 
-	return var_22_0
+	return heroIds
 end
 
-function var_0_0.updateDeadHeroNum(arg_23_0)
-	arg_23_0.deadHeroNum = 0
+function RougeTeamInfoMO:updateDeadHeroNum()
+	self.deadHeroNum = 0
 
-	if arg_23_0.heroLifeList then
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0.heroLifeList) do
-			if iter_23_1.life <= 0 then
-				arg_23_0.deadHeroNum = arg_23_0.deadHeroNum + 1
+	if self.heroLifeList then
+		for _, heroLifeMO in ipairs(self.heroLifeList) do
+			if heroLifeMO.life <= 0 then
+				self.deadHeroNum = self.deadHeroNum + 1
 			end
 		end
 	end
 end
 
-function var_0_0.getDeadHeroNum(arg_24_0)
-	return arg_24_0.deadHeroNum
+function RougeTeamInfoMO:getDeadHeroNum()
+	return self.deadHeroNum
 end
 
-function var_0_0.getHeroInfo(arg_25_0, arg_25_1)
-	return arg_25_0.heroInfoMap and arg_25_0.heroInfoMap[arg_25_1]
+function RougeTeamInfoMO:getHeroInfo(heroId)
+	return self.heroInfoMap and self.heroInfoMap[heroId]
 end
 
-return var_0_0
+return RougeTeamInfoMO

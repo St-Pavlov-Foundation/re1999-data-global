@@ -1,69 +1,71 @@
-﻿module("modules.logic.tower.model.TowerDeepGroupMo", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerDeepGroupMo.lua
 
-local var_0_0 = pureTable("TowerDeepGroupMo")
+module("modules.logic.tower.model.TowerDeepGroupMo", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.teamsDataMap = {}
-	arg_1_0.teamsDataList = {}
+local TowerDeepGroupMo = pureTable("TowerDeepGroupMo")
+
+function TowerDeepGroupMo:init()
+	self.teamsDataMap = {}
+	self.teamsDataList = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.teamsDataMap = {}
-	arg_2_0.teamsDataList = {}
+function TowerDeepGroupMo:reInit()
+	self.teamsDataMap = {}
+	self.teamsDataList = {}
 end
 
-function var_0_0.updateGroupData(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function TowerDeepGroupMo:updateGroupData(info)
+	if not info then
 		return
 	end
 
-	arg_3_0.archiveId = 0
-	arg_3_0.curDeep = arg_3_1.currDeep and arg_3_1.currDeep > 0 and arg_3_1.currDeep or TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.StartDeepHigh)
+	self.archiveId = 0
+	self.curDeep = info.currDeep and info.currDeep > 0 and info.currDeep or TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.StartDeepHigh)
 
-	arg_3_0:updateTeamsInfo(arg_3_1)
+	self:updateTeamsInfo(info)
 end
 
-function var_0_0.updateArchiveData(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function TowerDeepGroupMo:updateArchiveData(info)
+	if not info then
 		return
 	end
 
-	arg_4_0.archiveId = arg_4_1.archiveNo or 0
-	arg_4_0.curDeep = arg_4_1.group and arg_4_1.group.currDeep > 0 and arg_4_1.group.currDeep or TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.StartDeepHigh)
-	arg_4_0.createTime = arg_4_1.createTime and tonumber(arg_4_1.createTime) > 0 and tonumber(arg_4_1.createTime) / 1000 or ServerTime.now()
+	self.archiveId = info.archiveNo or 0
+	self.curDeep = info.group and info.group.currDeep > 0 and info.group.currDeep or TowerDeepConfig.instance:getConstConfigValue(TowerDeepEnum.ConstId.StartDeepHigh)
+	self.createTime = info.createTime and tonumber(info.createTime) > 0 and tonumber(info.createTime) / 1000 or ServerTime.now()
 
-	arg_4_0:updateTeamsInfo(arg_4_1.group)
+	self:updateTeamsInfo(info.group)
 end
 
-function var_0_0.updateTeamsInfo(arg_5_0, arg_5_1)
-	arg_5_0.teamsDataMap = {}
-	arg_5_0.teamsDataList = {}
+function TowerDeepGroupMo:updateTeamsInfo(info)
+	self.teamsDataMap = {}
+	self.teamsDataList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1.teams) do
-		local var_5_0 = {
-			id = iter_5_1.teamNo,
-			heroList = {}
-		}
+	for index, teamInfo in ipairs(info.teams) do
+		local teamMo = {}
 
-		for iter_5_2, iter_5_3 in ipairs(iter_5_1.heroes) do
-			local var_5_1 = {
-				heroId = iter_5_3.heroId,
-				trialId = iter_5_3.trialId
-			}
+		teamMo.id = teamInfo.teamNo
+		teamMo.heroList = {}
 
-			table.insert(var_5_0.heroList, var_5_1)
+		for _index, heroInfo in ipairs(teamInfo.heroes) do
+			local heroMo = {}
+
+			heroMo.heroId = heroInfo.heroId
+			heroMo.trialId = heroInfo.trialId
+
+			table.insert(teamMo.heroList, heroMo)
 		end
 
-		var_5_0.deep = iter_5_1.deep
-		arg_5_0.teamsDataMap[var_5_0.id] = var_5_0
+		teamMo.deep = teamInfo.deep
+		self.teamsDataMap[teamMo.id] = teamMo
 
-		table.insert(arg_5_0.teamsDataList, var_5_0)
+		table.insert(self.teamsDataList, teamMo)
 	end
 end
 
-function var_0_0.checkHasTeamData(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.teamsDataMap) do
-		if iter_6_1.heroList and #iter_6_1.heroList > 0 then
+function TowerDeepGroupMo:checkHasTeamData()
+	for index, teamMo in pairs(self.teamsDataMap) do
+		if teamMo.heroList and #teamMo.heroList > 0 then
 			return true
 		end
 	end
@@ -71,42 +73,42 @@ function var_0_0.checkHasTeamData(arg_6_0)
 	return false
 end
 
-function var_0_0.getTeamDataMap(arg_7_0)
-	return arg_7_0.teamsDataMap
+function TowerDeepGroupMo:getTeamDataMap()
+	return self.teamsDataMap
 end
 
-function var_0_0.getTeamDataList(arg_8_0)
-	return arg_8_0.teamsDataList
+function TowerDeepGroupMo:getTeamDataList()
+	return self.teamsDataList
 end
 
-function var_0_0.getAllHeroData(arg_9_0)
-	local var_9_0 = {}
+function TowerDeepGroupMo:getAllHeroData()
+	local allHeroDataList = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.teamsDataList) do
-		for iter_9_2, iter_9_3 in ipairs(iter_9_1.heroList) do
-			table.insert(var_9_0, iter_9_3)
+	for teamIndex, teamMo in ipairs(self.teamsDataList) do
+		for index, heroData in ipairs(teamMo.heroList) do
+			table.insert(allHeroDataList, heroData)
 		end
 	end
 
-	return var_9_0
+	return allHeroDataList
 end
 
-function var_0_0.getAllUsedHeroId(arg_10_0)
-	local var_10_0 = {}
+function TowerDeepGroupMo:getAllUsedHeroId()
+	local allUsedHeroList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.teamsDataList) do
-		for iter_10_2, iter_10_3 in ipairs(iter_10_1.heroList) do
-			if iter_10_3.heroId > 0 then
-				table.insert(var_10_0, iter_10_3.heroId)
-			elseif iter_10_3.trialId > 0 then
-				local var_10_1 = lua_hero_trial.configDict[iter_10_3.trialId][0]
+	for teamIndex, teamMo in ipairs(self.teamsDataList) do
+		for index, heroData in ipairs(teamMo.heroList) do
+			if heroData.heroId > 0 then
+				table.insert(allUsedHeroList, heroData.heroId)
+			elseif heroData.trialId > 0 then
+				local trialConfig = lua_hero_trial.configDict[heroData.trialId][0]
 
-				table.insert(var_10_0, var_10_1.heroId)
+				table.insert(allUsedHeroList, trialConfig.heroId)
 			end
 		end
 	end
 
-	return var_10_0
+	return allUsedHeroList
 end
 
-return var_0_0
+return TowerDeepGroupMo

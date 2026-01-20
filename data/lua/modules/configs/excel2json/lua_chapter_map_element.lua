@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_chapter_map_element", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_chapter_map_element.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_chapter_map_element", package.seeall)
+
+local lua_chapter_map_element = {}
+local fields = {
 	mapId = 2,
 	flagText = 18,
 	desc = 17,
@@ -30,10 +32,10 @@ local var_0_1 = {
 	id = 1,
 	paramLang = 15
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 4,
 	paramCn = 1,
 	flagText = 5,
@@ -44,8 +46,8 @@ local var_0_3 = {
 	paramLang = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_chapter_map_element.onLoad(json)
+	lua_chapter_map_element.configList, lua_chapter_map_element.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_chapter_map_element

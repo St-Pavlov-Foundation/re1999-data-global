@@ -1,0 +1,80 @@
+[
+  {
+    "difficulty": 1,
+    "title": "language_10100856",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg1",
+    "preDifficulty": 0,
+    "monsterDesc": "language_10027323",
+    "scoreReward": 100,
+    "startView": "",
+    "initCollections": "",
+    "desc": "language_10100857",
+    "balanceLevel": "121#10#60"
+  },
+  {
+    "difficulty": 2,
+    "title": "language_10100858",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg1",
+    "preDifficulty": 1,
+    "monsterDesc": "language_10006180",
+    "scoreReward": 120,
+    "startView": "",
+    "initCollections": "100022",
+    "desc": "language_10100859",
+    "balanceLevel": "121#10#60"
+  },
+  {
+    "difficulty": 3,
+    "title": "language_10100860",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg2",
+    "preDifficulty": 2,
+    "monsterDesc": "language_10027326",
+    "scoreReward": 140,
+    "startView": "",
+    "initCollections": "100022#100023",
+    "desc": "language_10100861",
+    "balanceLevel": "121#10#60"
+  },
+  {
+    "difficulty": 4,
+    "title": "language_10100862",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg2",
+    "preDifficulty": 3,
+    "monsterDesc": "language_10027328",
+    "scoreReward": 160,
+    "startView": "",
+    "initCollections": "100022#100023#100024",
+    "desc": "language_10100863",
+    "balanceLevel": "121#10#60"
+  },
+  {
+    "difficulty": 5,
+    "title": "language_10100864",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg3",
+    "preDifficulty": 4,
+    "monsterDesc": "language_10027330",
+    "scoreReward": 180,
+    "startView": "",
+    "initCollections": "",
+    "desc": "",
+    "balanceLevel": "121#10#60"
+  },
+  {
+    "difficulty": 6,
+    "title": "language_10100865",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg3",
+    "preDifficulty": 5,
+    "monsterDesc": "language_10027330",
+    "scoreReward": 200,
+    "startView": "",
+    "initCollections": "",
+    "desc": "",
+    "balanceLevel": "121#10#60"
+  }
+]

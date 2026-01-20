@@ -1,233 +1,239 @@
-﻿module("modules.logic.necrologiststory.view.NecrologistStoryReviewView", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/NecrologistStoryReviewView.lua
 
-local var_0_0 = class("NecrologistStoryReviewView", BaseView)
+module("modules.logic.necrologiststory.view.NecrologistStoryReviewView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goBgCg = gohelper.findChild(arg_1_0.viewGO, "#go_bgcg")
-	arg_1_0.bgCgCtrl = arg_1_0._goBgCg:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	arg_1_0.animBgCg = arg_1_0._goBgCg:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goUnlockedBg = gohelper.findChild(arg_1_0._goBgCg, "unlocked")
-	arg_1_0._unlocksimagecgbg = gohelper.findChildSingleImage(arg_1_0._goUnlockedBg, "#simage_cgbg")
-	arg_1_0._unlockimagecgbg = gohelper.findChildImage(arg_1_0._goUnlockedBg, "#simage_cgbg")
-	arg_1_0._goLockedBg = gohelper.findChild(arg_1_0._goBgCg, "locked")
-	arg_1_0._locksimagecgbg = gohelper.findChildSingleImage(arg_1_0._goLockedBg, "bgmask/#simage_cgbg")
-	arg_1_0._lockimagecgbg = gohelper.findChildImage(arg_1_0._goLockedBg, "bgmask/#simage_cgbg")
-	arg_1_0.goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_content")
-	arg_1_0.goItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_content/Viewport/Content/goItem")
-	arg_1_0.goItem1 = gohelper.findChild(arg_1_0.viewGO, "#scroll_content/Viewport/Content/go_item1")
-	arg_1_0.goItem2 = gohelper.findChild(arg_1_0.viewGO, "#scroll_content/Viewport/Content/go_item2")
+local NecrologistStoryReviewView = class("NecrologistStoryReviewView", BaseView)
 
-	gohelper.setActive(arg_1_0.goItem, false)
-	gohelper.setActive(arg_1_0.goItem1, false)
-	gohelper.setActive(arg_1_0.goItem2, false)
+function NecrologistStoryReviewView:onInitView()
+	self._goBgCg = gohelper.findChild(self.viewGO, "#go_bgcg")
+	self.bgCgCtrl = self._goBgCg:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self.animBgCg = self._goBgCg:GetComponent(typeof(UnityEngine.Animator))
+	self._goUnlockedBg = gohelper.findChild(self._goBgCg, "unlocked")
+	self._unlocksimagecgbg = gohelper.findChildSingleImage(self._goUnlockedBg, "#simage_cgbg")
+	self._unlockimagecgbg = gohelper.findChildImage(self._goUnlockedBg, "#simage_cgbg")
+	self._goLockedBg = gohelper.findChild(self._goBgCg, "locked")
+	self._locksimagecgbg = gohelper.findChildSingleImage(self._goLockedBg, "bgmask/#simage_cgbg")
+	self._lockimagecgbg = gohelper.findChildImage(self._goLockedBg, "bgmask/#simage_cgbg")
+	self.goContent = gohelper.findChild(self.viewGO, "#scroll_content")
+	self.goItem = gohelper.findChild(self.viewGO, "#scroll_content/Viewport/Content/goItem")
+	self.goItem1 = gohelper.findChild(self.viewGO, "#scroll_content/Viewport/Content/go_item1")
+	self.goItem2 = gohelper.findChild(self.viewGO, "#scroll_content/Viewport/Content/go_item2")
 
-	arg_1_0.itemList = {}
+	gohelper.setActive(self.goItem, false)
+	gohelper.setActive(self.goItem1, false)
+	gohelper.setActive(self.goItem2, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.itemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function NecrologistStoryReviewView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function NecrologistStoryReviewView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function NecrologistStoryReviewView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickStoryItem(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.plotCo
+function NecrologistStoryReviewView:onClickStoryItem(item)
+	local plotCo = item.plotCo
 
-	if not var_5_0 then
+	if not plotCo then
 		return
 	end
 
-	if not arg_5_0.gameMo:isStoryFinish(var_5_0.id) then
+	local isFinish = self.gameMo:isStoryFinish(plotCo.id)
+
+	if not isFinish then
 		return
 	end
 
-	arg_5_0.selectId = var_5_0.id
+	self.selectId = plotCo.id
 
-	NecrologistStoryController.instance:openStoryView(var_5_0.id)
-	arg_5_0:refreshStoryList()
+	NecrologistStoryController.instance:openStoryView(plotCo.id)
+	self:refreshStoryList()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshParam()
-	arg_6_0:refreshRoleStoryBg()
-	arg_6_0:refreshStoryList()
+function NecrologistStoryReviewView:onOpen()
+	self:refreshParam()
+	self:refreshRoleStoryBg()
+	self:refreshStoryList()
 end
 
-function var_0_0.refreshParam(arg_7_0)
-	arg_7_0.storyId = arg_7_0.viewParam.roleStoryId
-	arg_7_0.cgUnlock = arg_7_0.viewParam.cgUnlock
-	arg_7_0.gameMo = NecrologistStoryModel.instance:getGameMO(arg_7_0.storyId)
+function NecrologistStoryReviewView:refreshParam()
+	self.storyId = self.viewParam.roleStoryId
+	self.cgUnlock = self.viewParam.cgUnlock
+	self.gameMo = NecrologistStoryModel.instance:getGameMO(self.storyId)
 end
 
-function var_0_0.refreshStoryList(arg_8_0)
-	if arg_8_0.cgUnlock then
-		gohelper.setActive(arg_8_0.goContent, false)
+function NecrologistStoryReviewView:refreshStoryList()
+	if self.cgUnlock then
+		gohelper.setActive(self.goContent, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_8_0.goContent, true)
+	gohelper.setActive(self.goContent, true)
 
-	local var_8_0 = NecrologistStoryConfig.instance:getPlotListByStoryId(arg_8_0.storyId)
+	local plotList = NecrologistStoryConfig.instance:getPlotListByStoryId(self.storyId)
 
-	for iter_8_0 = 1, math.max(#var_8_0, #arg_8_0.itemList) do
-		local var_8_1 = arg_8_0:createItem(iter_8_0)
+	for i = 1, math.max(#plotList, #self.itemList) do
+		local item = self:createItem(i)
 
-		arg_8_0:refreshItem(var_8_1, var_8_0[iter_8_0])
+		self:refreshItem(item, plotList[i])
 	end
 end
 
-function var_0_0.createItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.itemList[arg_9_1]
+function NecrologistStoryReviewView:createItem(index)
+	local item = self.itemList[index]
 
-	if not var_9_0 then
-		var_9_0 = arg_9_0:getUserDataTb_()
-		var_9_0.index = arg_9_1
+	if not item then
+		item = self:getUserDataTb_()
+		item.index = index
 
-		local var_9_1 = arg_9_0.goItem1
+		local parentItem = self.goItem1
 
-		if arg_9_1 % 2 == 0 then
-			var_9_1 = arg_9_0.goItem2
+		if index % 2 == 0 then
+			parentItem = self.goItem2
 		end
 
-		var_9_0.goParent = gohelper.cloneInPlace(var_9_1, tostring(arg_9_1))
-		var_9_0.go = gohelper.clone(arg_9_0.goItem, var_9_0.goParent, "item")
+		item.goParent = gohelper.cloneInPlace(parentItem, tostring(index))
+		item.go = gohelper.clone(self.goItem, item.goParent, "item")
 
-		gohelper.setActive(var_9_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_9_0.normalItem = arg_9_0:getUserDataTb_()
-		var_9_0.normalItem.go = gohelper.findChild(var_9_0.go, "go_normalbg")
-		var_9_0.normalItem.txtIndex = gohelper.findChildTextMesh(var_9_0.normalItem.go, "txtIndex")
-		var_9_0.normalItem.txtTitle = gohelper.findChildTextMesh(var_9_0.normalItem.go, "txtTitle")
-		var_9_0.normalItem.txtTitleEn = gohelper.findChildTextMesh(var_9_0.normalItem.go, "txtTitleEn")
-		var_9_0.selectItem = arg_9_0:getUserDataTb_()
-		var_9_0.selectItem.go = gohelper.findChild(var_9_0.go, "go_selectbg")
-		var_9_0.selectItem.txtIndex = gohelper.findChildTextMesh(var_9_0.selectItem.go, "txtIndex")
-		var_9_0.selectItem.txtTitle = gohelper.findChildTextMesh(var_9_0.selectItem.go, "txtTitle")
-		var_9_0.selectItem.txtTitleEn = gohelper.findChildTextMesh(var_9_0.selectItem.go, "txtTitleEn")
-		var_9_0.btn = gohelper.findButtonWithAudio(var_9_0.go)
+		item.normalItem = self:getUserDataTb_()
+		item.normalItem.go = gohelper.findChild(item.go, "go_normalbg")
+		item.normalItem.txtIndex = gohelper.findChildTextMesh(item.normalItem.go, "txtIndex")
+		item.normalItem.txtTitle = gohelper.findChildTextMesh(item.normalItem.go, "txtTitle")
+		item.normalItem.txtTitleEn = gohelper.findChildTextMesh(item.normalItem.go, "txtTitleEn")
+		item.selectItem = self:getUserDataTb_()
+		item.selectItem.go = gohelper.findChild(item.go, "go_selectbg")
+		item.selectItem.txtIndex = gohelper.findChildTextMesh(item.selectItem.go, "txtIndex")
+		item.selectItem.txtTitle = gohelper.findChildTextMesh(item.selectItem.go, "txtTitle")
+		item.selectItem.txtTitleEn = gohelper.findChildTextMesh(item.selectItem.go, "txtTitleEn")
+		item.btn = gohelper.findButtonWithAudio(item.go)
 
-		var_9_0.btn:AddClickListener(arg_9_0.onClickStoryItem, arg_9_0, var_9_0)
+		item.btn:AddClickListener(self.onClickStoryItem, self, item)
 
-		arg_9_0.itemList[arg_9_1] = var_9_0
+		self.itemList[index] = item
 	end
 
-	return var_9_0
+	return item
 end
 
-function var_0_0.refreshItem(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_1.plotCo = arg_10_2
+function NecrologistStoryReviewView:refreshItem(item, plotCo)
+	item.plotCo = plotCo
 
-	if not arg_10_2 then
-		gohelper.setActive(arg_10_1.goParent, false)
+	if not plotCo then
+		gohelper.setActive(item.goParent, false)
 
 		return
 	end
 
-	if not arg_10_0.gameMo:isStoryFinish(arg_10_2.id) then
-		gohelper.setActive(arg_10_1.goParent, false)
+	local isFinish = self.gameMo:isStoryFinish(plotCo.id)
+
+	if not isFinish then
+		gohelper.setActive(item.goParent, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_1.goParent, true)
+	gohelper.setActive(item.goParent, true)
 
-	local var_10_0 = arg_10_0.selectId == arg_10_2.id
+	local isSelect = self.selectId == plotCo.id
 
-	gohelper.setActive(arg_10_1.selectItem.go, var_10_0)
-	gohelper.setActive(arg_10_1.normalItem.go, not var_10_0)
+	gohelper.setActive(item.selectItem.go, isSelect)
+	gohelper.setActive(item.normalItem.go, not isSelect)
 
-	local var_10_1 = var_10_0 and arg_10_1.selectItem or arg_10_1.normalItem
+	local txtItem = isSelect and item.selectItem or item.normalItem
 
-	var_10_1.txtIndex.text = string.format("%02d", arg_10_1.index)
-	var_10_1.txtTitle.text = arg_10_2.storyName
-	var_10_1.txtTitleEn.text = arg_10_2.storyNameEn
+	txtItem.txtIndex.text = string.format("%02d", item.index)
+	txtItem.txtTitle.text = plotCo.storyName
+	txtItem.txtTitleEn.text = plotCo.storyNameEn
 end
 
-function var_0_0.refreshRoleStoryBg(arg_11_0)
-	gohelper.setActive(arg_11_0._goBgCg, true)
+function NecrologistStoryReviewView:refreshRoleStoryBg()
+	gohelper.setActive(self._goBgCg, true)
 
-	local var_11_0 = RoleStoryConfig.instance:getStoryById(arg_11_0.storyId)
-	local var_11_1 = var_11_0.cgUnlockStoryId
-	local var_11_2 = var_11_1 == 0 or arg_11_0.gameMo:isStoryFinish(var_11_1)
+	local storyCo = RoleStoryConfig.instance:getStoryById(self.storyId)
+	local cgUnlockStoryId = storyCo.cgUnlockStoryId
+	local unlock = cgUnlockStoryId == 0 or self.gameMo:isStoryFinish(cgUnlockStoryId)
 
-	if var_11_2 and (arg_11_0.cgUnlock or RoleStoryModel.instance:canPlayDungeonUnlockAnim(arg_11_0.storyId)) then
+	if unlock and (self.cgUnlock or RoleStoryModel.instance:canPlayDungeonUnlockAnim(self.storyId)) then
 		if ViewMgr.instance:isOpen(ViewName.NecrologistStoryView) then
-			gohelper.setActive(arg_11_0._goUnlockedBg, false)
-			gohelper.setActive(arg_11_0._goLockedBg, true)
-			arg_11_0.animBgCg:Play("idle")
-			arg_11_0:refreshRoleStoryLockBg(var_11_0)
+			gohelper.setActive(self._goUnlockedBg, false)
+			gohelper.setActive(self._goLockedBg, true)
+			self.animBgCg:Play("idle")
+			self:refreshRoleStoryLockBg(storyCo)
 		else
-			RoleStoryModel.instance:setPlayDungeonUnlockAnimFlag(arg_11_0.storyId)
-			gohelper.setActive(arg_11_0._goUnlockedBg, true)
-			gohelper.setActive(arg_11_0._goLockedBg, true)
-			arg_11_0:refreshRoleStoryUnlockBg(var_11_0)
-			arg_11_0:refreshRoleStoryLockBg(var_11_0)
-			arg_11_0.animBgCg:Play("unlock", 0, 0)
+			RoleStoryModel.instance:setPlayDungeonUnlockAnimFlag(self.storyId)
+			gohelper.setActive(self._goUnlockedBg, true)
+			gohelper.setActive(self._goLockedBg, true)
+			self:refreshRoleStoryUnlockBg(storyCo)
+			self:refreshRoleStoryLockBg(storyCo)
+			self.animBgCg:Play("unlock", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoin_chapter_unlock)
 		end
 	else
-		gohelper.setActive(arg_11_0._goUnlockedBg, var_11_2)
-		gohelper.setActive(arg_11_0._goLockedBg, not var_11_2)
-		arg_11_0.animBgCg:Play("idle")
+		gohelper.setActive(self._goUnlockedBg, unlock)
+		gohelper.setActive(self._goLockedBg, not unlock)
+		self.animBgCg:Play("idle")
 
-		if var_11_2 then
-			arg_11_0:refreshRoleStoryUnlockBg(var_11_0)
+		if unlock then
+			self:refreshRoleStoryUnlockBg(storyCo)
 		else
-			arg_11_0:refreshRoleStoryLockBg(var_11_0)
+			self:refreshRoleStoryLockBg(storyCo)
 		end
 	end
 end
 
-function var_0_0.refreshRoleStoryUnlockBg(arg_12_0, arg_12_1)
-	arg_12_0._unlocksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", arg_12_1.cgBg), arg_12_0._onLoadUnlockCgCallback, arg_12_0)
-	recthelper.setAnchor(arg_12_0._unlockimagecgbg.transform, 0, 0)
-	transformhelper.setLocalScale(arg_12_0._unlockimagecgbg.transform, 1, 1, 1)
+function NecrologistStoryReviewView:refreshRoleStoryUnlockBg(storyCo)
+	self._unlocksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", storyCo.cgBg), self._onLoadUnlockCgCallback, self)
+	recthelper.setAnchor(self._unlockimagecgbg.transform, 0, 0)
+	transformhelper.setLocalScale(self._unlockimagecgbg.transform, 1, 1, 1)
 end
 
-function var_0_0.refreshRoleStoryLockBg(arg_13_0, arg_13_1)
-	arg_13_0._locksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", arg_13_1.cgBg), arg_13_0._onLoadLockCgCallback, arg_13_0)
+function NecrologistStoryReviewView:refreshRoleStoryLockBg(storyCo)
+	self._locksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", storyCo.cgBg), self._onLoadLockCgCallback, self)
 
-	local var_13_0 = string.splitToNumber(arg_13_1.cgPos, "#")
+	local poss = string.splitToNumber(storyCo.cgPos, "#")
 
-	recthelper.setAnchor(arg_13_0._lockimagecgbg.transform, var_13_0[1] or 0, var_13_0[2] or 0)
-	transformhelper.setLocalScale(arg_13_0._lockimagecgbg.transform, tonumber(arg_13_1.cgScale) or 1, tonumber(arg_13_1.cgScale) or 1, 1)
+	recthelper.setAnchor(self._lockimagecgbg.transform, poss[1] or 0, poss[2] or 0)
+	transformhelper.setLocalScale(self._lockimagecgbg.transform, tonumber(storyCo.cgScale) or 1, tonumber(storyCo.cgScale) or 1, 1)
 end
 
-function var_0_0._onLoadUnlockCgCallback(arg_14_0)
-	arg_14_0._unlockimagecgbg:SetNativeSize()
+function NecrologistStoryReviewView:_onLoadUnlockCgCallback()
+	self._unlockimagecgbg:SetNativeSize()
 end
 
-function var_0_0._onLoadLockCgCallback(arg_15_0)
-	arg_15_0._lockimagecgbg:SetNativeSize()
+function NecrologistStoryReviewView:_onLoadLockCgCallback()
+	self._lockimagecgbg:SetNativeSize()
 end
 
-function var_0_0.onClose(arg_16_0)
+function NecrologistStoryReviewView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	if arg_17_0._unlocksimagecgbg then
-		arg_17_0._unlocksimagecgbg:UnLoadImage()
+function NecrologistStoryReviewView:onDestroyView()
+	if self._unlocksimagecgbg then
+		self._unlocksimagecgbg:UnLoadImage()
 	end
 
-	if arg_17_0._locksimagecgbg then
-		arg_17_0._locksimagecgbg:UnLoadImage()
+	if self._locksimagecgbg then
+		self._locksimagecgbg:UnLoadImage()
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.itemList) do
-		iter_17_1.btn:RemoveClickListener()
+	for _, item in ipairs(self.itemList) do
+		item.btn:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return NecrologistStoryReviewView

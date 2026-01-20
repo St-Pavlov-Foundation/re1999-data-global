@@ -1,87 +1,89 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.Activity114Helper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/Activity114Helper.lua
 
-local var_0_0 = pureTable("Activity114Helper")
+module("modules.logic.versionactivity1_2.jiexika.system.Activity114Helper", package.seeall)
 
-function var_0_0.getEventCoByBattleId(arg_1_0)
-	local var_1_0 = Activity114Model.instance.serverData.battleEventId
+local Activity114Helper = pureTable("Activity114Helper")
 
-	if var_1_0 > 0 then
-		local var_1_1 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, var_1_0)
+function Activity114Helper.getEventCoByBattleId(battleId)
+	local battleEventId = Activity114Model.instance.serverData.battleEventId
 
-		if var_1_1 and var_1_1.config.battleId == arg_1_0 then
-			return var_1_1
+	if battleEventId > 0 then
+		local eventCo = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, battleEventId)
+
+		if eventCo and eventCo.config.battleId == battleId then
+			return eventCo
 		end
 	end
 
 	return false
 end
 
-function var_0_0.haveAttrOrFeatureChange(arg_2_0)
+function Activity114Helper.haveAttrOrFeatureChange(context)
 	if Activity114Model.instance.serverData.battleEventId > 0 then
 		return false
 	end
 
-	if arg_2_0.resultBonus then
+	if context.resultBonus then
 		return true
 	end
 
-	local var_2_0 = arg_2_0.result
+	local result = context.result
 
-	if var_2_0 == nil then
-		var_2_0 = Activity114Enum.Result.Success
+	if result == nil then
+		result = Activity114Enum.Result.Success
 	end
 
-	if var_2_0 == Activity114Enum.Result.None then
+	if result == Activity114Enum.Result.None then
 		return false
 	end
 
-	local var_2_1 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, arg_2_0.eventId)
+	local eventCo = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, context.eventId)
 
-	if not var_2_1 then
+	if not eventCo then
 		return false
 	end
 
-	local var_2_2
+	local featuresList
 
-	if var_2_0 == Activity114Enum.Result.Success or arg_2_0.type == Activity114Enum.EventType.Rest then
-		var_2_2 = var_2_1.successFeatures
-	elseif var_2_0 == Activity114Enum.Result.FightSucess then
-		var_2_2 = var_2_1.successBattleFeatures
+	if result == Activity114Enum.Result.Success or context.type == Activity114Enum.EventType.Rest then
+		featuresList = eventCo.successFeatures
+	elseif result == Activity114Enum.Result.FightSucess then
+		featuresList = eventCo.successBattleFeatures
 	else
-		var_2_2 = var_2_1.failureFeatures
+		featuresList = eventCo.failureFeatures
 	end
 
-	local var_2_3
+	local addAttr
 
-	if var_2_0 == Activity114Enum.Result.Success or arg_2_0.type == Activity114Enum.EventType.Rest then
-		var_2_3 = var_2_1.successVerify
-	elseif var_2_0 == Activity114Enum.Result.FightSucess then
-		var_2_3 = var_2_1.successBattleVerify
+	if result == Activity114Enum.Result.Success or context.type == Activity114Enum.EventType.Rest then
+		addAttr = eventCo.successVerify
+	elseif result == Activity114Enum.Result.FightSucess then
+		addAttr = eventCo.successBattleVerify
 	else
-		var_2_3 = var_2_1.failureVerify
+		addAttr = eventCo.failureVerify
 	end
 
-	var_2_3[Activity114Enum.AddAttrType.UnLockMeet] = nil
-	var_2_3[Activity114Enum.AddAttrType.UnLockTravel] = nil
+	addAttr[Activity114Enum.AddAttrType.UnLockMeet] = nil
+	addAttr[Activity114Enum.AddAttrType.UnLockTravel] = nil
 
 	if next(Activity114Model.instance.newUnLockFeature) then
-		var_2_2 = Activity114Model.instance.newUnLockFeature
+		featuresList = Activity114Model.instance.newUnLockFeature
 	else
-		var_2_2 = {}
+		featuresList = {}
 	end
 
 	if next(Activity114Model.instance.newUnLockMeeting) then
-		var_2_3[Activity114Enum.AddAttrType.UnLockMeet] = Activity114Model.instance.newUnLockMeeting
+		addAttr[Activity114Enum.AddAttrType.UnLockMeet] = Activity114Model.instance.newUnLockMeeting
 	end
 
 	if next(Activity114Model.instance.newUnLockTravel) then
-		var_2_3[Activity114Enum.AddAttrType.UnLockTravel] = Activity114Model.instance.newUnLockTravel
+		addAttr[Activity114Enum.AddAttrType.UnLockTravel] = Activity114Model.instance.newUnLockTravel
 	end
 
-	if next(var_2_3) or next(var_2_2) then
-		arg_2_0.resultBonus = {
-			addAttr = var_2_3,
-			featuresList = var_2_2
+	if next(addAttr) or next(featuresList) then
+		context.resultBonus = {
+			addAttr = addAttr,
+			featuresList = featuresList
 		}
 
 		return true
@@ -90,42 +92,42 @@ function var_0_0.haveAttrOrFeatureChange(arg_2_0)
 	return false
 end
 
-function var_0_0.getNextKeyDayDesc(arg_3_0)
-	arg_3_0 = arg_3_0 or Activity114Model.instance.serverData.day
+function Activity114Helper.getNextKeyDayDesc(day)
+	day = day or Activity114Model.instance.serverData.day
 
-	local var_3_0 = Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, arg_3_0)
+	local keyDayCo = Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, day)
 
-	if var_3_0 then
-		return var_3_0.desc
+	if keyDayCo then
+		return keyDayCo.desc
 	end
 
 	return ""
 end
 
-function var_0_0.getNextKeyDayLeft(arg_4_0)
-	arg_4_0 = arg_4_0 or Activity114Model.instance.serverData.day
+function Activity114Helper.getNextKeyDayLeft(day)
+	day = day or Activity114Model.instance.serverData.day
 
-	local var_4_0 = Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, arg_4_0)
+	local keyDayCo = Activity114Config.instance:getKeyDayCo(Activity114Model.instance.id, day)
 
-	if var_4_0 then
-		return var_4_0.day - arg_4_0
+	if keyDayCo then
+		return keyDayCo.day - day
 	end
 
 	return 0
 end
 
-function var_0_0.getWeekEndScore()
-	local var_5_0 = 0
+function Activity114Helper.getWeekEndScore()
+	local allAttr = 0
 
-	for iter_5_0 = 1, Activity114Enum.Attr.End - 1 do
-		var_5_0 = var_5_0 + Activity114Model.instance.attrDict[iter_5_0] or 0
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		allAttr = allAttr + Activity114Model.instance.attrDict[i] or 0
 	end
 
-	local var_5_1 = Activity114Model.instance.serverData.middleScore
-	local var_5_2 = Activity114Model.instance.serverData.endScore
-	local var_5_3 = var_5_0 + var_5_1 + var_5_2
+	local score1 = Activity114Model.instance.serverData.middleScore
+	local score2 = Activity114Model.instance.serverData.endScore
+	local totalScore = allAttr + score1 + score2
 
-	return var_5_0, var_5_1, var_5_2, var_5_3
+	return allAttr, score1, score2, totalScore
 end
 
-return var_0_0
+return Activity114Helper

@@ -1,31 +1,33 @@
-﻿module("modules.logic.herogrouppreset.view.HeroGroupPresetTeamHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/view/HeroGroupPresetTeamHeroItem.lua
 
-local var_0_0 = class("HeroGroupPresetTeamHeroItem", ListScrollCellExtend)
+module("modules.logic.herogrouppreset.view.HeroGroupPresetTeamHeroItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclickequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_equipicon/#btn_clickequip")
-	arg_1_0._btnclickhero = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_clickhero")
+local HeroGroupPresetTeamHeroItem = class("HeroGroupPresetTeamHeroItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupPresetTeamHeroItem:onInitView()
+	self._btnclickequip = gohelper.findChildButtonWithAudio(self.viewGO, "go_equipicon/#btn_clickequip")
+	self._btnclickhero = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_clickhero")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclickequip:AddClickListener(arg_2_0._btnclickequipOnClick, arg_2_0)
-	arg_2_0._btnclickhero:AddClickListener(arg_2_0._btnclickheroOnClick, arg_2_0)
+function HeroGroupPresetTeamHeroItem:addEvents()
+	self._btnclickequip:AddClickListener(self._btnclickequipOnClick, self)
+	self._btnclickhero:AddClickListener(self._btnclickheroOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclickequip:RemoveClickListener()
-	arg_3_0._btnclickhero:RemoveClickListener()
+function HeroGroupPresetTeamHeroItem:removeEvents()
+	self._btnclickequip:RemoveClickListener()
+	self._btnclickhero:RemoveClickListener()
 end
 
-function var_0_0._btnclickheroOnClick(arg_4_0)
-	if not arg_4_0._unLock then
-		local var_4_0, var_4_1 = HeroGroupModel.instance:getPositionLockDesc(arg_4_0._index)
+function HeroGroupPresetTeamHeroItem:_btnclickheroOnClick()
+	if not self._unLock then
+		local lockDesc, param = HeroGroupModel.instance:getPositionLockDesc(self._index)
 
-		GameFacade.showToast(var_4_0, var_4_1)
+		GameFacade.showToast(lockDesc, param)
 
 		return
 	end
@@ -36,14 +38,14 @@ function var_0_0._btnclickheroOnClick(arg_4_0)
 		return
 	end
 
-	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.ClickHero, arg_4_0._heroGroupMo, arg_4_0._index)
+	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.ClickHero, self._heroGroupMo, self._index)
 end
 
-function var_0_0._btnclickequipOnClick(arg_5_0)
-	if not arg_5_0._unLock then
-		local var_5_0, var_5_1 = HeroGroupModel.instance:getPositionLockDesc(arg_5_0._index)
+function HeroGroupPresetTeamHeroItem:_btnclickequipOnClick()
+	if not self._unLock then
+		local lockDesc, param = HeroGroupModel.instance:getPositionLockDesc(self._index)
 
-		GameFacade.showToast(var_5_0, var_5_1)
+		GameFacade.showToast(lockDesc, param)
 
 		return
 	end
@@ -54,182 +56,177 @@ function var_0_0._btnclickequipOnClick(arg_5_0)
 		return
 	end
 
-	local var_5_2 = {
-		heroMo = arg_5_0._heroMO,
-		equipMo = arg_5_0._equipMO,
-		posIndex = arg_5_0._index - 1,
+	local param = {
+		heroMo = self._heroMO,
+		equipMo = self._equipMO,
+		posIndex = self._index - 1,
 		fromView = EquipEnum.FromViewEnum.FromPresetPreviewView
 	}
 
-	if arg_5_0.trialCO then
-		var_5_2.heroMo = HeroGroupTrialModel.instance:getHeroMo(arg_5_0.trialCO)
+	if self.trialCO then
+		param.heroMo = HeroGroupTrialModel.instance:getHeroMo(self.trialCO)
 
-		if arg_5_0.trialCO.equipId > 0 then
-			var_5_2.equipMo = var_5_2.heroMo.trialEquipMo
+		if self.trialCO.equipId > 0 then
+			param.equipMo = param.heroMo.trialEquipMo
 		end
 	end
 
-	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.ClickEquip, arg_5_0._heroGroupMo, var_5_2)
+	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.ClickEquip, self._heroGroupMo, param)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.gocontainer = gohelper.findChild(arg_6_0.viewGO, "go_container")
-	arg_6_0.simageheroicon = gohelper.findChildSingleImage(arg_6_0.viewGO, "go_container/simage_heroicon")
-	arg_6_0.imagecareer = gohelper.findChildImage(arg_6_0.viewGO, "go_container/image_career")
-	arg_6_0.goaidtag = gohelper.findChild(arg_6_0.viewGO, "go_container/go_aidtag")
-	arg_6_0.gostorytag = gohelper.findChild(arg_6_0.viewGO, "go_container/go_storytag")
-	arg_6_0.imageinsight = gohelper.findChildImage(arg_6_0.viewGO, "go_container/level/layout/image_insight")
-	arg_6_0.txtlevel = gohelper.findChildText(arg_6_0.viewGO, "go_container/level/layout/txt_level")
-	arg_6_0.goempty = gohelper.findChild(arg_6_0.viewGO, "go_empty")
-	arg_6_0.golock = gohelper.findChild(arg_6_0.viewGO, "go_lock")
-	arg_6_0.goleader = gohelper.findChild(arg_6_0.viewGO, "go_container/go_leader")
-	arg_6_0.goequip = gohelper.findChild(arg_6_0.viewGO, "go_equipicon")
-	arg_6_0.goequipempty = gohelper.findChild(arg_6_0.viewGO, "go_equipicon/empty")
-	arg_6_0.equipicon = gohelper.findChildSingleImage(arg_6_0.viewGO, "go_equipicon/equipicon")
+function HeroGroupPresetTeamHeroItem:_editableInitView()
+	self.gocontainer = gohelper.findChild(self.viewGO, "go_container")
+	self.simageheroicon = gohelper.findChildSingleImage(self.viewGO, "go_container/simage_heroicon")
+	self.imagecareer = gohelper.findChildImage(self.viewGO, "go_container/image_career")
+	self.goaidtag = gohelper.findChild(self.viewGO, "go_container/go_aidtag")
+	self.gostorytag = gohelper.findChild(self.viewGO, "go_container/go_storytag")
+	self.imageinsight = gohelper.findChildImage(self.viewGO, "go_container/level/layout/image_insight")
+	self.txtlevel = gohelper.findChildText(self.viewGO, "go_container/level/layout/txt_level")
+	self.goempty = gohelper.findChild(self.viewGO, "go_empty")
+	self.golock = gohelper.findChild(self.viewGO, "go_lock")
+	self.goleader = gohelper.findChild(self.viewGO, "go_container/go_leader")
+	self.goequip = gohelper.findChild(self.viewGO, "go_equipicon")
+	self.goequipempty = gohelper.findChild(self.viewGO, "go_equipicon/empty")
+	self.equipicon = gohelper.findChildSingleImage(self.viewGO, "go_equipicon/equipicon")
 
-	gohelper.setActive(arg_6_0.goleader, false)
+	gohelper.setActive(self.goleader, false)
 end
 
-function var_0_0._editableAddEvents(arg_7_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_7_0._onCloseViewFinish, arg_7_0)
-	arg_7_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_7_0._showEquip, arg_7_0)
-	arg_7_0:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, arg_7_0._showEquip, arg_7_0)
-	arg_7_0:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, arg_7_0._showEquip, arg_7_0)
-	arg_7_0:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, arg_7_0._showEquip, arg_7_0)
-	arg_7_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_7_0._showEquip, arg_7_0)
+function HeroGroupPresetTeamHeroItem:_editableAddEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, self._showEquip, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, self._showEquip, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, self._showEquip, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onEquipRefineReply, self._showEquip, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self._showEquip, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_8_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_8_0._onCloseViewFinish, arg_8_0)
+function HeroGroupPresetTeamHeroItem:_editableRemoveEvents()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._onCloseViewFinish(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.CharacterSkinView then
-		arg_9_0:_updateHeroIcon()
+function HeroGroupPresetTeamHeroItem:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CharacterSkinView then
+		self:_updateHeroIcon()
 	end
 end
 
-function var_0_0._updateHeroIcon(arg_10_0)
-	local var_10_0
-	local var_10_1
-	local var_10_2
-	local var_10_3 = arg_10_0._heroData
+function HeroGroupPresetTeamHeroItem:_updateHeroIcon()
+	local skinConfig, heroConfig, heroId
+	local heroData = self._heroData
 
-	if var_10_3 then
-		local var_10_4 = var_10_3.heroId
-		local var_10_5 = HeroConfig.instance:getHeroCO(var_10_4)
-		local var_10_6 = HeroModel.instance:getByHeroId(var_10_4)
-		local var_10_7 = var_10_6 and var_10_6.skin or var_10_5.skinId
-		local var_10_8 = SkinConfig.instance:getSkinCo(var_10_7)
+	if heroData then
+		heroId = heroData.heroId
+		heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
-		arg_10_0.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(var_10_8.headIcon))
+		local heroMo = HeroModel.instance:getByHeroId(heroId)
+		local skinId = heroMo and heroMo.skin or heroConfig.skinId
+
+		skinConfig = SkinConfig.instance:getSkinCo(skinId)
+
+		self.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
 	end
 end
 
-function var_0_0.onUpdateMO(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	arg_11_0._heroData = arg_11_2
-	arg_11_0._heroGroupMo = arg_11_3
-	arg_11_0._index = arg_11_4
-	arg_11_0._singleGroupMo = arg_11_1
-	arg_11_0._heroMO = arg_11_1:getHeroMO()
-	arg_11_0.trialCO = arg_11_1:getTrialCO()
-	arg_11_0._unLock = HeroGroupModel.instance:isPositionOpen(arg_11_0._index)
+function HeroGroupPresetTeamHeroItem:onUpdateMO(singleGroupMo, heroData, heroGroupMo, index)
+	self._heroData = heroData
+	self._heroGroupMo = heroGroupMo
+	self._index = index
+	self._singleGroupMo = singleGroupMo
+	self._heroMO = singleGroupMo:getHeroMO()
+	self.trialCO = singleGroupMo:getTrialCO()
+	self._unLock = HeroGroupModel.instance:isPositionOpen(self._index)
 
-	gohelper.setActive(arg_11_0.golock, not arg_11_0._unLock)
-	gohelper.setActive(arg_11_0.goequip, OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip))
+	gohelper.setActive(self.golock, not self._unLock)
+	gohelper.setActive(self.goequip, OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip))
 
-	local var_11_0
-	local var_11_1
-	local var_11_2
-	local var_11_3
-	local var_11_4
+	local skinConfig, heroConfig, showLevel, rankLevel, heroId
 
-	if arg_11_2 then
-		local var_11_5 = arg_11_2.heroId
+	if heroData then
+		heroId = heroData.heroId
+		heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
-		var_11_1 = HeroConfig.instance:getHeroCO(var_11_5)
+		local heroMo = HeroModel.instance:getByHeroId(heroId)
+		local skinId = heroMo and heroMo.skin or heroConfig.skinId
 
-		local var_11_6 = HeroModel.instance:getByHeroId(var_11_5)
-		local var_11_7 = var_11_6 and var_11_6.skin or var_11_1.skinId
+		skinConfig = SkinConfig.instance:getSkinCo(skinId)
+		showLevel, rankLevel = HeroConfig.instance:getShowLevel(heroData.level)
+	elseif self.trialCO then
+		heroId = self.trialCO.heroId
+		heroConfig = HeroConfig.instance:getHeroCO(self.trialCO.heroId)
 
-		var_11_0 = SkinConfig.instance:getSkinCo(var_11_7)
-		var_11_2, var_11_3 = HeroConfig.instance:getShowLevel(arg_11_2.level)
-	elseif arg_11_0.trialCO then
-		local var_11_8 = arg_11_0.trialCO.heroId
-
-		var_11_1 = HeroConfig.instance:getHeroCO(arg_11_0.trialCO.heroId)
-
-		if arg_11_0.trialCO.skin > 0 then
-			var_11_0 = SkinConfig.instance:getSkinCo(arg_11_0.trialCO.skin)
+		if self.trialCO.skin > 0 then
+			skinConfig = SkinConfig.instance:getSkinCo(self.trialCO.skin)
 		else
-			var_11_0 = SkinConfig.instance:getSkinCo(var_11_1.skinId)
+			skinConfig = SkinConfig.instance:getSkinCo(heroConfig.skinId)
 		end
 
-		var_11_2, var_11_3 = HeroConfig.instance:getShowLevel(arg_11_0.trialCO.level)
+		showLevel, rankLevel = HeroConfig.instance:getShowLevel(self.trialCO.level)
 	end
 
-	gohelper.setActive(arg_11_0.gocontainer, var_11_1)
-	gohelper.setActive(arg_11_0.goempty, not var_11_1)
+	gohelper.setActive(self.gocontainer, heroConfig)
+	gohelper.setActive(self.goempty, not heroConfig)
 
-	if var_11_1 then
-		gohelper.setActive(arg_11_0.gostorytag, false)
-		gohelper.setActive(arg_11_0.goaidtag, arg_11_0.trialCO)
+	if heroConfig then
+		gohelper.setActive(self.gostorytag, false)
+		gohelper.setActive(self.goaidtag, self.trialCO)
 
-		arg_11_0.txtlevel.text = arg_11_0:getShowLevelText(var_11_2)
+		self.txtlevel.text = self:getShowLevelText(showLevel)
 
-		if var_11_3 > 1 then
-			UISpriteSetMgr.instance:setHeroGroupSprite(arg_11_0.imageinsight, "biandui_dongxi_" .. tostring(var_11_3 - 1))
-			gohelper.setActive(arg_11_0.imageinsight.gameObject, true)
+		if rankLevel > 1 then
+			UISpriteSetMgr.instance:setHeroGroupSprite(self.imageinsight, "biandui_dongxi_" .. tostring(rankLevel - 1))
+			gohelper.setActive(self.imageinsight.gameObject, true)
 		else
-			gohelper.setActive(arg_11_0.imageinsight.gameObject, false)
+			gohelper.setActive(self.imageinsight.gameObject, false)
 		end
 
-		arg_11_0.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(var_11_0.headIcon))
-		UISpriteSetMgr.instance:setCommonSprite(arg_11_0.imagecareer, "lssx_" .. tostring(var_11_1.career))
+		self.simageheroicon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
+		UISpriteSetMgr.instance:setCommonSprite(self.imagecareer, "lssx_" .. tostring(heroConfig.career))
 	end
 
-	arg_11_0:_showEquip()
+	self:_showEquip()
 
-	local var_11_9
+	local trialEquipCO
 
-	if arg_11_0.trialCO and arg_11_0.trialCO.equipId > 0 then
-		local var_11_10 = EquipConfig.instance:getEquipCo(arg_11_0.trialCO.equipId)
-		local var_11_11 = EquipConfig.instance:getEquipCo(arg_11_0.trialCO.equipId)
-		local var_11_12 = var_11_11 ~= nil
+	if self.trialCO and self.trialCO.equipId > 0 then
+		trialEquipCO = EquipConfig.instance:getEquipCo(self.trialCO.equipId)
 
-		gohelper.setActive(arg_11_0.goequipempty, not var_11_12)
-		gohelper.setActive(arg_11_0.equipicon, var_11_12)
+		local equipCO = EquipConfig.instance:getEquipCo(self.trialCO.equipId)
+		local showEquip = equipCO ~= nil
 
-		if var_11_12 then
-			arg_11_0.equipicon:LoadImage(ResUrl.getEquipIcon(var_11_11.icon))
+		gohelper.setActive(self.goequipempty, not showEquip)
+		gohelper.setActive(self.equipicon, showEquip)
+
+		if showEquip then
+			self.equipicon:LoadImage(ResUrl.getEquipIcon(equipCO.icon))
 		end
 	end
 end
 
-function var_0_0._showEquip(arg_12_0)
-	local var_12_0 = arg_12_0._heroGroupMo
-	local var_12_1 = arg_12_0._index
-	local var_12_2 = var_12_0 and var_12_0:getPosEquips(var_12_1 - 1).equipUid
-	local var_12_3 = var_12_2 and var_12_2[1]
-	local var_12_4 = var_12_3 and EquipModel.instance:getEquip(var_12_3) or var_12_3 and HeroGroupTrialModel.instance:getEquipMo(var_12_3)
-	local var_12_5 = var_12_4 ~= nil
+function HeroGroupPresetTeamHeroItem:_showEquip()
+	local heroGroupMo = self._heroGroupMo
+	local index = self._index
+	local equips = heroGroupMo and heroGroupMo:getPosEquips(index - 1).equipUid
+	local equipId = equips and equips[1]
+	local equipMO = equipId and EquipModel.instance:getEquip(equipId) or equipId and HeroGroupTrialModel.instance:getEquipMo(equipId)
+	local showEquip = equipMO ~= nil
 
-	gohelper.setActive(arg_12_0.goequipempty, not var_12_5)
-	gohelper.setActive(arg_12_0.equipicon, var_12_5)
+	gohelper.setActive(self.goequipempty, not showEquip)
+	gohelper.setActive(self.equipicon, showEquip)
 
-	if var_12_5 then
-		arg_12_0.equipicon:LoadImage(ResUrl.getEquipIcon(var_12_4.config.icon))
+	if showEquip then
+		self.equipicon:LoadImage(ResUrl.getEquipIcon(equipMO.config.icon))
 	end
 
-	arg_12_0._equipMo = var_12_4
+	self._equipMo = equipMO
 end
 
-function var_0_0.getShowLevelText(arg_13_0, arg_13_1)
-	return "<size=12>LV.</size>" .. tostring(arg_13_1)
+function HeroGroupPresetTeamHeroItem:getShowLevelText(showLevel)
+	return "<size=12>LV.</size>" .. tostring(showLevel)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function HeroGroupPresetTeamHeroItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return HeroGroupPresetTeamHeroItem

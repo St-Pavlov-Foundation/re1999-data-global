@@ -1,171 +1,177 @@
-﻿module("modules.logic.commandstation.view.CommandStationDispatchEventMainView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationDispatchEventMainView.lua
 
-local var_0_0 = class("CommandStationDispatchEventMainView", BaseView)
+module("modules.logic.commandstation.view.CommandStationDispatchEventMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gochild = gohelper.findChild(arg_1_0.viewGO, "#go_child")
-	arg_1_0._btnLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Left")
-	arg_1_0._btnRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Right")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local CommandStationDispatchEventMainView = class("CommandStationDispatchEventMainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationDispatchEventMainView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gochild = gohelper.findChild(self.viewGO, "#go_child")
+	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Left")
+	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Right")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnLeft:AddClickListener(arg_2_0._btnLeftOnClick, arg_2_0)
-	arg_2_0._btnRight:AddClickListener(arg_2_0._btnRightOnClick, arg_2_0)
+function CommandStationDispatchEventMainView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnLeft:AddClickListener(self._btnLeftOnClick, self)
+	self._btnRight:AddClickListener(self._btnRightOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnLeft:RemoveClickListener()
-	arg_3_0._btnRight:RemoveClickListener()
+function CommandStationDispatchEventMainView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnLeft:RemoveClickListener()
+	self._btnRight:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:checkClose()
+function CommandStationDispatchEventMainView:_btncloseOnClick()
+	self:checkClose()
 end
 
-function var_0_0.checkClose(arg_5_0)
-	if arg_5_0._curTabViewId == CommandStationEnum.DispatchTabView.Process and not CommandStationModel.instance:getDispatchEventInfo(arg_5_0._curEventConfig.id) then
-		arg_5_0:_openTabView(CommandStationEnum.DispatchTabView.Normal)
+function CommandStationDispatchEventMainView:checkClose()
+	if self._curTabViewId == CommandStationEnum.DispatchTabView.Process then
+		local eventInfo = CommandStationModel.instance:getDispatchEventInfo(self._curEventConfig.id)
+
+		if not eventInfo then
+			self:_openTabView(CommandStationEnum.DispatchTabView.Normal)
+
+			return
+		end
+	end
+
+	self:closeThis()
+end
+
+function CommandStationDispatchEventMainView:_btnLeftOnClick()
+	self._toLeft = true
+	self._curIndex = self._curIndex - 1
+
+	if self._curIndex < 1 then
+		self._curIndex = #self._eventList
+	end
+
+	self:_updateEventInfo()
+
+	self._toLeft = nil
+
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.FocusEvent, self._eventList[self._curIndex])
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, self._eventList[self._curIndex])
+end
+
+function CommandStationDispatchEventMainView:_btnRightOnClick()
+	self._toLeft = false
+	self._curIndex = self._curIndex + 1
+
+	if self._curIndex > #self._eventList then
+		self._curIndex = 1
+	end
+
+	self:_updateEventInfo()
+
+	self._toLeft = nil
+
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.FocusEvent, self._eventList[self._curIndex])
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, self._eventList[self._curIndex])
+end
+
+function CommandStationDispatchEventMainView:_updateBtnState()
+	if self._curTabViewId == CommandStationEnum.DispatchTabView.Process and CommandStationModel.instance:getDispatchEventState(self._curEventConfig.id) == CommandStationEnum.DispatchState.NotStart then
+		gohelper.setActive(self._btnLeft, false)
+		gohelper.setActive(self._btnRight, false)
 
 		return
 	end
 
-	arg_5_0:closeThis()
+	gohelper.setActive(self._btnLeft.gameObject, self._maxIndex ~= 1)
+	gohelper.setActive(self._btnRight.gameObject, self._maxIndex ~= 1)
 end
 
-function var_0_0._btnLeftOnClick(arg_6_0)
-	arg_6_0._toLeft = true
-	arg_6_0._curIndex = arg_6_0._curIndex - 1
+function CommandStationDispatchEventMainView:_updateEventInfo()
+	local eventId = self._eventList[self._curIndex]
+	local eventConfig = lua_copost_event.configDict[eventId]
 
-	if arg_6_0._curIndex < 1 then
-		arg_6_0._curIndex = #arg_6_0._eventList
-	end
-
-	arg_6_0:_updateEventInfo()
-
-	arg_6_0._toLeft = nil
-
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.FocusEvent, arg_6_0._eventList[arg_6_0._curIndex])
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, arg_6_0._eventList[arg_6_0._curIndex])
-end
-
-function var_0_0._btnRightOnClick(arg_7_0)
-	arg_7_0._toLeft = false
-	arg_7_0._curIndex = arg_7_0._curIndex + 1
-
-	if arg_7_0._curIndex > #arg_7_0._eventList then
-		arg_7_0._curIndex = 1
-	end
-
-	arg_7_0:_updateEventInfo()
-
-	arg_7_0._toLeft = nil
-
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.FocusEvent, arg_7_0._eventList[arg_7_0._curIndex])
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, arg_7_0._eventList[arg_7_0._curIndex])
-end
-
-function var_0_0._updateBtnState(arg_8_0)
-	if arg_8_0._curTabViewId == CommandStationEnum.DispatchTabView.Process and CommandStationModel.instance:getDispatchEventState(arg_8_0._curEventConfig.id) == CommandStationEnum.DispatchState.NotStart then
-		gohelper.setActive(arg_8_0._btnLeft, false)
-		gohelper.setActive(arg_8_0._btnRight, false)
-
-		return
-	end
-
-	gohelper.setActive(arg_8_0._btnLeft.gameObject, arg_8_0._maxIndex ~= 1)
-	gohelper.setActive(arg_8_0._btnRight.gameObject, arg_8_0._maxIndex ~= 1)
-end
-
-function var_0_0._updateEventInfo(arg_9_0)
-	local var_9_0 = arg_9_0._eventList[arg_9_0._curIndex]
-	local var_9_1 = lua_copost_event.configDict[var_9_0]
-
-	if not var_9_1 then
+	if not eventConfig then
 		logError("CommandStationDispatchEventMainView _updateEventInfo eventConfig is nil")
 
 		return
 	end
 
-	arg_9_0._curEventConfig = var_9_1
+	self._curEventConfig = eventConfig
 
-	local var_9_2 = arg_9_0:_getTabId(var_9_0)
+	local tabViewId = self:_getTabId(eventId)
 
-	arg_9_0:_openTabView(var_9_2)
+	self:_openTabView(tabViewId)
 
-	arg_9_0.viewParam.defaultTabIds[2] = var_9_2
+	self.viewParam.defaultTabIds[2] = tabViewId
 end
 
-function var_0_0._getTabId(arg_10_0, arg_10_1)
-	local var_10_0 = CommandStationModel.instance:getDispatchEventInfo(arg_10_1)
+function CommandStationDispatchEventMainView:_getTabId(eventId)
+	local eventInfo = CommandStationModel.instance:getDispatchEventInfo(eventId)
 
-	if not var_10_0 then
+	if not eventInfo then
 		return CommandStationEnum.DispatchTabView.Normal
 	end
 
-	if not var_10_0:hasGetReward() then
+	if not eventInfo:hasGetReward() then
 		return CommandStationEnum.DispatchTabView.Process
 	end
 
 	return CommandStationEnum.DispatchTabView.Normal
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0:addEventCb(CommandStationController.instance, CommandStationEvent.ClickDispatch, arg_11_0._onClickDispatch, arg_11_0)
-	arg_11_0:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchFinish, arg_11_0._onDispatchFinish, arg_11_0)
-	arg_11_0:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchStart, arg_11_0._onDispatchStart, arg_11_0)
+function CommandStationDispatchEventMainView:_editableInitView()
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.ClickDispatch, self._onClickDispatch, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchFinish, self._onDispatchFinish, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchStart, self._onDispatchStart, self)
 end
 
-function var_0_0._onClickDispatch(arg_12_0)
-	arg_12_0:_openTabView(CommandStationEnum.DispatchTabView.Process)
+function CommandStationDispatchEventMainView:_onClickDispatch()
+	self:_openTabView(CommandStationEnum.DispatchTabView.Process)
 end
 
-function var_0_0._onDispatchFinish(arg_13_0)
-	arg_13_0:_openTabView(CommandStationEnum.DispatchTabView.Normal)
+function CommandStationDispatchEventMainView:_onDispatchFinish()
+	self:_openTabView(CommandStationEnum.DispatchTabView.Normal)
 end
 
-function var_0_0._onDispatchStart(arg_14_0)
-	arg_14_0:_updateBtnState()
+function CommandStationDispatchEventMainView:_onDispatchStart()
+	self:_updateBtnState()
 end
 
-function var_0_0._openTabView(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._curTabViewId and arg_15_0._curTabViewId ~= arg_15_1
+function CommandStationDispatchEventMainView:_openTabView(tabViewId)
+	local isChangeTab = self._curTabViewId and self._curTabViewId ~= tabViewId
 
-	arg_15_0.viewContainer:switchTab(arg_15_1, arg_15_0._curEventConfig)
+	self.viewContainer:switchTab(tabViewId, self._curEventConfig)
 
-	arg_15_0._curTabViewId = arg_15_1
+	self._curTabViewId = tabViewId
 
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.DispatchChangeTab, var_15_0, arg_15_0._toLeft)
-	arg_15_0:_updateBtnState()
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.DispatchChangeTab, isChangeTab, self._toLeft)
+	self:_updateBtnState()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0._timeId = arg_16_0.viewParam.timeId
+function CommandStationDispatchEventMainView:onOpen()
+	self._timeId = self.viewParam.timeId
 
-	local var_16_0 = arg_16_0.viewParam.eventId
+	local eventId = self.viewParam.eventId
 
-	arg_16_0.viewParam.defaultTabIds = {}
-	arg_16_0._eventList = CommandStationConfig.instance:getEventList(arg_16_0._timeId, var_16_0)
-	arg_16_0._minIndex = 1
-	arg_16_0._maxIndex = #arg_16_0._eventList
-	arg_16_0._curIndex = tabletool.indexOf(arg_16_0._eventList, var_16_0)
+	self.viewParam.defaultTabIds = {}
+	self._eventList = CommandStationConfig.instance:getEventList(self._timeId, eventId)
+	self._minIndex = 1
+	self._maxIndex = #self._eventList
+	self._curIndex = tabletool.indexOf(self._eventList, eventId)
 
-	arg_16_0:_updateEventInfo()
+	self:_updateEventInfo()
 end
 
-function var_0_0.onClose(arg_17_0)
+function CommandStationDispatchEventMainView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function CommandStationDispatchEventMainView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CommandStationDispatchEventMainView

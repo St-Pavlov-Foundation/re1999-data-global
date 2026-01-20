@@ -1,57 +1,59 @@
-﻿module("modules.common.others.BaseRpcExtend", package.seeall)
+﻿-- chunkname: @modules/common/others/BaseRpcExtend.lua
 
-local var_0_0 = class("BaseRpcExtend", BaseRpc)
+module("modules.common.others.BaseRpcExtend", package.seeall)
 
-function var_0_0.onInitInternal(arg_1_0)
-	arg_1_0._getter = GameUtil.getUniqueTb(10000)
-	arg_1_0._waitCallBackDict = {}
+local BaseRpcExtend = class("BaseRpcExtend", BaseRpc)
 
-	var_0_0.super.onInitInternal(arg_1_0)
+function BaseRpcExtend:onInitInternal()
+	self._getter = GameUtil.getUniqueTb(10000)
+	self._waitCallBackDict = {}
+
+	BaseRpcExtend.super.onInitInternal(self)
 end
 
-function var_0_0.reInitInternal(arg_2_0)
-	arg_2_0._waitCallBackDict = {}
+function BaseRpcExtend:reInitInternal()
+	self._waitCallBackDict = {}
 
-	var_0_0.super.reInitInternal(arg_2_0)
+	BaseRpcExtend.super.reInitInternal(self)
 end
 
-function var_0_0.sendMsg(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = LuaSocketMgr.instance:getCmdByPbStructName(arg_3_1.__cname)
+function BaseRpcExtend:sendMsg(protobuf, callback, callbackObj, socketId)
+	local cmd = LuaSocketMgr.instance:getCmdByPbStructName(protobuf.__cname)
 
-	if not arg_3_0._waitCallBackDict[var_3_0] then
-		arg_3_0._waitCallBackDict[var_3_0] = {}
+	if not self._waitCallBackDict[cmd] then
+		self._waitCallBackDict[cmd] = {}
 	end
 
-	if arg_3_0._waitCallBackDict[var_3_0][1] ~= nil then
-		var_0_0.super.sendMsg(arg_3_0, arg_3_1, nil, nil, arg_3_4)
+	if self._waitCallBackDict[cmd][1] ~= nil then
+		BaseRpcExtend.super.sendMsg(self, protobuf, nil, nil, socketId)
 	else
-		var_0_0.super.sendMsg(arg_3_0, arg_3_1, arg_3_0.onReceiveMsgExtend, arg_3_0, arg_3_4)
+		BaseRpcExtend.super.sendMsg(self, protobuf, self.onReceiveMsgExtend, self, socketId)
 	end
 
-	if arg_3_2 then
-		local var_3_1 = LuaGeneralCallback.getPool():getObject()
+	if callback then
+		local luaCb = LuaGeneralCallback.getPool():getObject()
 
-		var_3_1.callback = arg_3_2
+		luaCb.callback = callback
 
-		var_3_1:setCbObj(arg_3_3)
+		luaCb:setCbObj(callbackObj)
 
-		var_3_1.id = arg_3_0._getter()
+		luaCb.id = self._getter()
 
-		table.insert(arg_3_0._waitCallBackDict[var_3_0], var_3_1)
+		table.insert(self._waitCallBackDict[cmd], luaCb)
 
-		return var_3_1.id
+		return luaCb.id
 	else
-		table.insert(arg_3_0._waitCallBackDict[var_3_0], false)
+		table.insert(self._waitCallBackDict[cmd], false)
 	end
 end
 
-function var_0_0.removeCallbackByIdExtend(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._waitCallBackDict) do
-		for iter_4_2, iter_4_3 in ipairs(iter_4_1) do
-			if iter_4_3 and iter_4_3.id == arg_4_1 then
-				iter_4_1[iter_4_2] = false
+function BaseRpcExtend:removeCallbackByIdExtend(id)
+	for _, list in pairs(self._waitCallBackDict) do
+		for index, luaCb in ipairs(list) do
+			if luaCb and luaCb.id == id then
+				list[index] = false
 
-				LuaGeneralCallback.getPool():putObject(iter_4_3)
+				LuaGeneralCallback.getPool():putObject(luaCb)
 
 				return
 			end
@@ -59,21 +61,21 @@ function var_0_0.removeCallbackByIdExtend(arg_4_0, arg_4_1)
 	end
 end
 
-function var_0_0.onReceiveMsgExtend(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_0._waitCallBackDict[arg_5_1] then
+function BaseRpcExtend:onReceiveMsgExtend(cmd, resultCode, msg)
+	if not self._waitCallBackDict[cmd] then
 		return
 	end
 
-	local var_5_0 = table.remove(arg_5_0._waitCallBackDict[arg_5_1], 1)
+	local luaCb = table.remove(self._waitCallBackDict[cmd], 1)
 
-	if arg_5_0._waitCallBackDict[arg_5_1][1] ~= nil then
-		arg_5_0:addCallback(arg_5_1, arg_5_0.onReceiveMsgExtend, arg_5_0)
+	if self._waitCallBackDict[cmd][1] ~= nil then
+		self:addCallback(cmd, self.onReceiveMsgExtend, self)
 	end
 
-	if var_5_0 then
-		var_5_0:invoke(arg_5_1, arg_5_2, arg_5_3)
-		LuaGeneralCallback.getPool():putObject(var_5_0)
+	if luaCb then
+		luaCb:invoke(cmd, resultCode, msg)
+		LuaGeneralCallback.getPool():putObject(luaCb)
 	end
 end
 
-return var_0_0
+return BaseRpcExtend

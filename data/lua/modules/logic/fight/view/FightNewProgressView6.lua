@@ -1,90 +1,92 @@
-﻿module("modules.logic.fight.view.FightNewProgressView6", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightNewProgressView6.lua
 
-local var_0_0 = class("FightNewProgressView6", FightBaseView)
+module("modules.logic.fight.view.FightNewProgressView6", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.imgBgProgress = gohelper.findChildImage(arg_1_0.viewGO, "container/imgPre")
-	arg_1_0.imgProgress = gohelper.findChildImage(arg_1_0.viewGO, "container/imgHp")
-	arg_1_0.signRoot = gohelper.findChild(arg_1_0.viewGO, "container/imgHp/imgSignHpContainer")
-	arg_1_0.signItem = gohelper.findChild(arg_1_0.viewGO, "container/imgHp/imgSignHpContainer/1")
-	arg_1_0.animator = gohelper.findChildComponent(arg_1_0.viewGO, "container", typeof(UnityEngine.Animator))
+local FightNewProgressView6 = class("FightNewProgressView6", FightBaseView)
+
+function FightNewProgressView6:onInitView()
+	self.imgBgProgress = gohelper.findChildImage(self.viewGO, "container/imgPre")
+	self.imgProgress = gohelper.findChildImage(self.viewGO, "container/imgHp")
+	self.signRoot = gohelper.findChild(self.viewGO, "container/imgHp/imgSignHpContainer")
+	self.signItem = gohelper.findChild(self.viewGO, "container/imgHp/imgSignHpContainer/1")
+	self.animator = gohelper.findChildComponent(self.viewGO, "container", typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registMsg(FightMsgId.NewProgressValueChange, arg_2_0.onNewProgressValueChange)
+function FightNewProgressView6:addEvents()
+	self:com_registMsg(FightMsgId.NewProgressValueChange, self.onNewProgressValueChange)
 end
 
-function var_0_0.onConstructor(arg_3_0, arg_3_1)
-	arg_3_0.data = arg_3_1
-	arg_3_0.id = arg_3_0.data.id
+function FightNewProgressView6:onConstructor(data)
+	self.data = data
+	self.id = self.data.id
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = OdysseyConfig.instance:getConstConfig(20)
+function FightNewProgressView6:onOpen()
+	local config = OdysseyConfig.instance:getConstConfig(20)
 
-	if var_4_0 then
-		local var_4_1 = string.splitToNumber(var_4_0.value, "#")
+	if config then
+		local arr = string.splitToNumber(config.value, "#")
 
-		table.sort(var_4_1, var_0_0.sortSignList)
+		table.sort(arr, FightNewProgressView6.sortSignList)
 
-		arg_4_0.signDataList = var_4_1
+		self.signDataList = arr
 
-		arg_4_0:com_createObjList(arg_4_0.onSignItemShow, var_4_1, arg_4_0.signRoot, arg_4_0.signItem)
+		self:com_createObjList(self.onSignItemShow, arr, self.signRoot, self.signItem)
 	end
 
-	local var_4_2 = arg_4_0.data.value / arg_4_0.data.max
+	local rate = self.data.value / self.data.max
 
-	arg_4_0.imgProgress.fillAmount = var_4_2
-	arg_4_0.imgBgProgress.fillAmount = var_4_2
+	self.imgProgress.fillAmount = rate
+	self.imgBgProgress.fillAmount = rate
 end
 
-function var_0_0.sortSignList(arg_5_0, arg_5_1)
-	return arg_5_0 < arg_5_1
+function FightNewProgressView6.sortSignList(item1, item2)
+	return item1 < item2
 end
 
-function var_0_0.onNewProgressValueChange(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0.id then
+function FightNewProgressView6:onNewProgressValueChange(id)
+	if id ~= self.id then
 		return
 	end
 
-	local var_6_0 = arg_6_0.data.value / arg_6_0.data.max
-	local var_6_1 = arg_6_0:com_registFlowParallel()
-	local var_6_2 = 0.2
+	local rate = self.data.value / self.data.max
+	local flow = self:com_registFlowParallel()
+	local duration = 0.2
 
-	var_6_1:registWork(FightTweenWork, {
+	flow:registWork(FightTweenWork, {
 		type = "DOFillAmount",
-		img = arg_6_0.imgProgress,
-		to = var_6_0,
-		t = var_6_2
+		img = self.imgProgress,
+		to = rate,
+		t = duration
 	})
 
-	local var_6_3 = var_6_1:registWork(FightWorkFlowSequence)
+	local bgFlow = flow:registWork(FightWorkFlowSequence)
 
-	var_6_3:registWork(FightWorkDelayTimer, 0.2)
-	var_6_3:registWork(FightTweenWork, {
+	bgFlow:registWork(FightWorkDelayTimer, 0.2)
+	bgFlow:registWork(FightTweenWork, {
 		type = "DOFillAmount",
-		img = arg_6_0.imgBgProgress,
-		to = var_6_0,
-		t = var_6_2
+		img = self.imgBgProgress,
+		to = rate,
+		t = duration
 	})
-	var_6_3:registWork(FightWorkFunction, arg_6_0.refreshSignList, arg_6_0)
-	FightMsgMgr.replyMsg(FightMsgId.NewProgressValueChange, var_6_1)
-	arg_6_0.animator:Play("open", 0, 0)
+	bgFlow:registWork(FightWorkFunction, self.refreshSignList, self)
+	FightMsgMgr.replyMsg(FightMsgId.NewProgressValueChange, flow)
+	self.animator:Play("open", 0, 0)
 end
 
-function var_0_0.refreshSignList(arg_7_0)
-	if arg_7_0.signDataList then
-		arg_7_0:com_createObjList(arg_7_0.onSignItemShow, arg_7_0.signDataList, arg_7_0.signRoot, arg_7_0.signItem)
+function FightNewProgressView6:refreshSignList()
+	if self.signDataList then
+		self:com_createObjList(self.onSignItemShow, self.signDataList, self.signRoot, self.signItem)
 	end
 end
 
-function var_0_0.onSignItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.findChild(arg_8_1, "finished")
-	local var_8_1 = gohelper.findChild(arg_8_1, "unfinish")
-	local var_8_2 = arg_8_2 >= arg_8_0.data.value
+function FightNewProgressView6:onSignItemShow(obj, data, index)
+	local finishedRoot = gohelper.findChild(obj, "finished")
+	local unfinishRoot = gohelper.findChild(obj, "unfinish")
+	local isFinish = data >= self.data.value
 
-	gohelper.setActive(var_8_0, not var_8_2)
-	gohelper.setActive(var_8_1, var_8_2)
+	gohelper.setActive(finishedRoot, not isFinish)
+	gohelper.setActive(unfinishRoot, isFinish)
 end
 
-return var_0_0
+return FightNewProgressView6

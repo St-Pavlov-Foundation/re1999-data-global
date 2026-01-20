@@ -1,87 +1,90 @@
-﻿module("modules.logic.common.view.CommonInputView", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/CommonInputView.lua
 
-local var_0_0 = class("CommonInputView", BaseView)
+module("modules.logic.common.view.CommonInputView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
-	arg_1_0._txtyes = gohelper.findChildText(arg_1_0.viewGO, "#btn_yes/#txt_yes")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
-	arg_1_0._txtno = gohelper.findChildText(arg_1_0.viewGO, "#btn_no/#txt_no")
-	arg_1_0._input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#input")
+local CommonInputView = class("CommonInputView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommonInputView:onInitView()
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_yes")
+	self._txtyes = gohelper.findChildText(self.viewGO, "#btn_yes/#txt_yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_no")
+	self._txtno = gohelper.findChildText(self.viewGO, "#btn_no/#txt_no")
+	self._input = gohelper.findChildTextMeshInputField(self.viewGO, "#input")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0._input:AddOnEndEdit(arg_2_0._onEndEdit, arg_2_0)
-	arg_2_0._input:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
+function CommonInputView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self._input:AddOnEndEdit(self._onEndEdit, self)
+	self._input:AddOnValueChanged(self._onValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0._input:RemoveOnEndEdit()
-	arg_3_0._input:RemoveOnValueChanged()
+function CommonInputView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self._input:RemoveOnEndEdit()
+	self._input:RemoveOnValueChanged()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.addUIClickAudio(arg_4_0._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_4_0._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
+function CommonInputView:_editableInitView()
+	gohelper.addUIClickAudio(self._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam
+function CommonInputView:onOpen()
+	local param = self.viewParam
 
-	arg_5_0._txttitle.text = var_5_0.title
-	arg_5_0._txtno.text = var_5_0.cancelBtnName
-	arg_5_0._txtyes.text = var_5_0.sureBtnName
+	self._txttitle.text = param.title
+	self._txtno.text = param.cancelBtnName
+	self._txtyes.text = param.sureBtnName
 
-	arg_5_0._input:SetText(var_5_0.defaultInput)
+	self._input:SetText(param.defaultInput)
 end
 
-function var_0_0._btnyesOnClick(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam
+function CommonInputView:_btnyesOnClick()
+	local param = self.viewParam
 
-	if var_6_0.sureCallback then
-		local var_6_1 = arg_6_0._input:GetText()
+	if param.sureCallback then
+		local inputStr = self._input:GetText()
 
-		if var_6_0.callbackObj then
-			var_6_0.sureCallback(var_6_0.callbackObj, var_6_1)
+		if param.callbackObj then
+			param.sureCallback(param.callbackObj, inputStr)
 		else
-			var_6_0.sureCallback(var_6_1)
+			param.sureCallback(inputStr)
 		end
 	else
-		arg_6_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._btnnoOnClick(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam
+function CommonInputView:_btnnoOnClick()
+	local param = self.viewParam
 
-	arg_7_0:closeThis()
+	self:closeThis()
 
-	if var_7_0.cancelCallback then
-		var_7_0.cancelCallack(var_7_0.callbackObj)
+	if param.cancelCallback then
+		param.cancelCallack(param.callbackObj)
 	end
 end
 
-function var_0_0._onEndEdit(arg_8_0, arg_8_1)
-	arg_8_1 = GameUtil.filterRichText(arg_8_1 or "")
+function CommonInputView:_onEndEdit(inputStr)
+	inputStr = GameUtil.filterRichText(inputStr or "")
 
-	arg_8_0._input:SetText(arg_8_1)
+	self._input:SetText(inputStr)
 end
 
-function var_0_0._onValueChanged(arg_9_0)
-	local var_9_0 = arg_9_0._input:GetText()
-	local var_9_1 = string.gsub(var_9_0, "\n", "")
-	local var_9_2 = GameUtil.getBriefName(var_9_1, arg_9_0.viewParam.characterLimit, "")
+function CommonInputView:_onValueChanged()
+	local inputStr = self._input:GetText()
 
-	arg_9_0._input:SetText(var_9_2)
+	inputStr = string.gsub(inputStr, "\n", "")
+	inputStr = GameUtil.getBriefName(inputStr, self.viewParam.characterLimit, "")
+
+	self._input:SetText(inputStr)
 end
 
-return var_0_0
+return CommonInputView

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_skin_weather_param", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_skin_weather_param.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_skin_weather_param", package.seeall)
+
+local lua_skin_weather_param = {}
+local fields = {
 	emissionColor3 = 12,
 	bloomColor3 = 4,
 	mainColor1 = 6,
@@ -16,13 +18,13 @@ local var_0_1 = {
 	id = 1,
 	mainColor4 = 9
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_skin_weather_param.onLoad(json)
+	lua_skin_weather_param.configList, lua_skin_weather_param.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_skin_weather_param

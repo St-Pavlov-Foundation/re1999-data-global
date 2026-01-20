@@ -1,66 +1,68 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEndingView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotEndingView.lua
 
-local var_0_0 = class("V1a6_CachotEndingView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEndingView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
-	arg_1_0._simagecg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_cg")
-	arg_1_0._txten = gohelper.findChildText(arg_1_0.viewGO, "#txt_en")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "#txt_tips")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local V1a6_CachotEndingView = class("V1a6_CachotEndingView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotEndingView:onInitView()
+	self._simagelevelbg = gohelper.findChildSingleImage(self.viewGO, "#simage_levelbg")
+	self._simagecg = gohelper.findChildSingleImage(self.viewGO, "#simage_cg")
+	self._txten = gohelper.findChildText(self.viewGO, "#txt_en")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._txttips = gohelper.findChildText(self.viewGO, "#txt_tips")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function V1a6_CachotEndingView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function V1a6_CachotEndingView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function V1a6_CachotEndingView:_btncloseOnClick()
 	V1a6_CachotController.instance:openV1a6_CachotResultView()
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function V1a6_CachotEndingView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function V1a6_CachotEndingView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotEndingView, arg_7_0._btncloseOnClick, arg_7_0)
+function V1a6_CachotEndingView:onOpen()
+	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotEndingView, self._btncloseOnClick, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_finale_get)
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	local var_8_0 = V1a6_CachotModel.instance:getRogueEndingInfo()
-	local var_8_1 = var_8_0 and var_8_0._ending
-	local var_8_2 = lua_rogue_ending.configDict[var_8_1]
+function V1a6_CachotEndingView:refreshUI()
+	local rogueEndingInfo = V1a6_CachotModel.instance:getRogueEndingInfo()
+	local endingId = rogueEndingInfo and rogueEndingInfo._ending
+	local endingCfg = lua_rogue_ending.configDict[endingId]
 
-	if var_8_2 then
-		arg_8_0._txttitle.text = tostring(var_8_2.title)
-		arg_8_0._txttips.text = tostring(var_8_2.endingDesc)
+	if endingCfg then
+		self._txttitle.text = tostring(endingCfg.title)
+		self._txttips.text = tostring(endingCfg.endingDesc)
 
-		arg_8_0._simagecg:LoadImage(ResUrl.getV1a6CachotIcon(var_8_2.endingIcon))
+		self._simagecg:LoadImage(ResUrl.getV1a6CachotIcon(endingCfg.endingIcon))
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function V1a6_CachotEndingView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function V1a6_CachotEndingView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V1a6_CachotEndingView

@@ -1,98 +1,100 @@
-﻿module("modules.logic.versionactivity2_7.act191.model.Act191MO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/model/Act191MO.lua
 
-local var_0_0 = pureTable("Act191MO")
+module("modules.logic.versionactivity2_7.act191.model.Act191MO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.triggerEffectPushList = {}
+local Act191MO = pureTable("Act191MO")
+
+function Act191MO:ctor()
+	self.triggerEffectPushList = {}
 end
 
-function var_0_0.initBadgeInfo(arg_2_0, arg_2_1)
-	arg_2_0.badgeMoDic = {}
-	arg_2_0.badgeScoreChangeDic = {}
+function Act191MO:initBadgeInfo(actId)
+	self.badgeMoDic = {}
+	self.badgeScoreChangeDic = {}
 
-	local var_2_0 = lua_activity191_badge.configDict[arg_2_1]
+	local badgeCoDic = lua_activity191_badge.configDict[actId]
 
-	if var_2_0 then
-		for iter_2_0, iter_2_1 in pairs(var_2_0) do
-			local var_2_1 = Act191BadgeMO.New()
+	if badgeCoDic then
+		for id, badgeCo in pairs(badgeCoDic) do
+			local badgeMo = Act191BadgeMO.New()
 
-			var_2_1:init(iter_2_1)
+			badgeMo:init(badgeCo)
 
-			arg_2_0.badgeMoDic[iter_2_0] = var_2_1
+			self.badgeMoDic[id] = badgeMo
 		end
 	end
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.badgeInfoList) do
-		arg_3_0.badgeMoDic[iter_3_1.id]:update(iter_3_1)
+function Act191MO:init(info)
+	for _, badgeInfo in ipairs(info.badgeInfoList) do
+		self.badgeMoDic[badgeInfo.id]:update(badgeInfo)
 	end
 
-	arg_3_0.gameInfo = Act191GameMO.New()
+	self.gameInfo = Act191GameMO.New()
 
-	arg_3_0.gameInfo:init(arg_3_1.gameInfo)
+	self.gameInfo:init(info.gameInfo)
 	Activity191Controller.instance:dispatchEvent(Activity191Event.UpdateBadgeMo)
 end
 
-function var_0_0.updateGameInfo(arg_4_0, arg_4_1)
-	arg_4_0.gameInfo:update(arg_4_1)
+function Act191MO:updateGameInfo(gameInfo)
+	self.gameInfo:update(gameInfo)
 	Activity191Controller.instance:dispatchEvent(Activity191Event.UpdateGameInfo)
 end
 
-function var_0_0.getGameInfo(arg_5_0)
-	return arg_5_0.gameInfo
+function Act191MO:getGameInfo()
+	return self.gameInfo
 end
 
-function var_0_0.triggerEffectPush(arg_6_0, arg_6_1)
-	arg_6_0.triggerEffectPushList[#arg_6_0.triggerEffectPushList + 1] = arg_6_1
+function Act191MO:triggerEffectPush(msg)
+	self.triggerEffectPushList[#self.triggerEffectPushList + 1] = msg
 end
 
-function var_0_0.clearTriggerEffectPush(arg_7_0)
-	tabletool.clear(arg_7_0.triggerEffectPushList)
+function Act191MO:clearTriggerEffectPush()
+	tabletool.clear(self.triggerEffectPushList)
 end
 
-function var_0_0.getGameEndInfo(arg_8_0)
-	return arg_8_0.gameEndInfo
+function Act191MO:getGameEndInfo()
+	return self.gameEndInfo
 end
 
-function var_0_0.setEnfInfo(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1.badgeInfoList) do
-		local var_9_0 = iter_9_1.id
-		local var_9_1 = arg_9_0.badgeMoDic[var_9_0]
+function Act191MO:setEnfInfo(endInfo)
+	for _, badgeInfo in ipairs(endInfo.badgeInfoList) do
+		local id = badgeInfo.id
+		local badgeMO = self.badgeMoDic[id]
 
-		arg_9_0.badgeScoreChangeDic[var_9_0] = iter_9_1.count - var_9_1.count
+		self.badgeScoreChangeDic[id] = badgeInfo.count - badgeMO.count
 
-		arg_9_0.badgeMoDic[var_9_0]:update(iter_9_1)
+		self.badgeMoDic[id]:update(badgeInfo)
 	end
 
-	arg_9_0.gameEndInfo = arg_9_1
+	self.gameEndInfo = endInfo
 
 	Activity191Controller.instance:dispatchEvent(Activity191Event.UpdateBadgeMo)
 end
 
-function var_0_0.getBadgeScoreChangeDic(arg_10_0)
-	return arg_10_0.badgeScoreChangeDic
+function Act191MO:getBadgeScoreChangeDic()
+	return self.badgeScoreChangeDic
 end
 
-function var_0_0.clearEndInfo(arg_11_0)
-	arg_11_0.gameEndInfo = nil
+function Act191MO:clearEndInfo()
+	self.gameEndInfo = nil
 
-	tabletool.clear(arg_11_0.badgeScoreChangeDic)
-	arg_11_0:clearTriggerEffectPush()
+	tabletool.clear(self.badgeScoreChangeDic)
+	self:clearTriggerEffectPush()
 end
 
-function var_0_0.getBadgeMoList(arg_12_0)
-	local var_12_0 = {}
+function Act191MO:getBadgeMoList()
+	local list = {}
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.badgeMoDic) do
-		var_12_0[#var_12_0 + 1] = iter_12_1
+	for _, badgeMo in pairs(self.badgeMoDic) do
+		list[#list + 1] = badgeMo
 	end
 
-	table.sort(var_12_0, function(arg_13_0, arg_13_1)
-		return arg_13_0.id < arg_13_1.id
+	table.sort(list, function(a, b)
+		return a.id < b.id
 	end)
 
-	return var_12_0
+	return list
 end
 
-return var_0_0
+return Act191MO

@@ -1,179 +1,184 @@
-﻿module("modules.logic.rouge.view.RougeReviewItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeReviewItem.lua
 
-local var_0_0 = class("RougeReviewItem", ListScrollCellExtend)
+module("modules.logic.rouge.view.RougeReviewItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goUnlocked = gohelper.findChild(arg_1_0.viewGO, "#go_Unlocked")
-	arg_1_0._simageItemPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Unlocked/#simage_ItemPic")
-	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "#go_Unlocked/#go_new")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "#go_Unlocked/#txt_Name")
-	arg_1_0._txtNameEn = gohelper.findChildText(arg_1_0.viewGO, "#go_Unlocked/#txt_Name/#txt_NameEn")
-	arg_1_0._btnPlay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Unlocked/#btn_Play")
-	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_Locked/#txt_desc")
-	arg_1_0._txtUnknown = gohelper.findChildText(arg_1_0.viewGO, "#go_Locked/#txt_Unknown")
-	arg_1_0._goLine = gohelper.findChild(arg_1_0.viewGO, "#go_Line")
-	arg_1_0._goLine1 = gohelper.findChild(arg_1_0.viewGO, "#go_Line/#go_Line1")
-	arg_1_0._goLine2 = gohelper.findChild(arg_1_0.viewGO, "#go_Line/#go_Line2")
-	arg_1_0._goLine3 = gohelper.findChild(arg_1_0.viewGO, "#go_Line/#go_Line3")
-	arg_1_0._goLine4 = gohelper.findChild(arg_1_0.viewGO, "#go_Line/#go_Line4")
+local RougeReviewItem = class("RougeReviewItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeReviewItem:onInitView()
+	self._goUnlocked = gohelper.findChild(self.viewGO, "#go_Unlocked")
+	self._simageItemPic = gohelper.findChildSingleImage(self.viewGO, "#go_Unlocked/#simage_ItemPic")
+	self._gonew = gohelper.findChild(self.viewGO, "#go_Unlocked/#go_new")
+	self._txtName = gohelper.findChildText(self.viewGO, "#go_Unlocked/#txt_Name")
+	self._txtNameEn = gohelper.findChildText(self.viewGO, "#go_Unlocked/#txt_Name/#txt_NameEn")
+	self._btnPlay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Unlocked/#btn_Play")
+	self._goLocked = gohelper.findChild(self.viewGO, "#go_Locked")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_Locked/#txt_desc")
+	self._txtUnknown = gohelper.findChildText(self.viewGO, "#go_Locked/#txt_Unknown")
+	self._goLine = gohelper.findChild(self.viewGO, "#go_Line")
+	self._goLine1 = gohelper.findChild(self.viewGO, "#go_Line/#go_Line1")
+	self._goLine2 = gohelper.findChild(self.viewGO, "#go_Line/#go_Line2")
+	self._goLine3 = gohelper.findChild(self.viewGO, "#go_Line/#go_Line3")
+	self._goLine4 = gohelper.findChild(self.viewGO, "#go_Line/#go_Line4")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnPlay:AddClickListener(arg_2_0._btnPlayOnClick, arg_2_0)
+function RougeReviewItem:addEvents()
+	self._btnPlay:AddClickListener(self._btnPlayOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnPlay:RemoveClickListener()
+function RougeReviewItem:removeEvents()
+	self._btnPlay:RemoveClickListener()
 end
 
-function var_0_0._btnPlayOnClick(arg_4_0)
-	local var_4_0 = {}
+function RougeReviewItem:_btnPlayOnClick()
+	local levelIdDict = {}
 
-	if not string.nilorempty(arg_4_0._config.levelIdDict) then
-		local var_4_1 = string.split(arg_4_0._config.levelIdDict, "|")
+	if not string.nilorempty(self._config.levelIdDict) then
+		local levelIdPairs = string.split(self._config.levelIdDict, "|")
 
-		for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-			local var_4_2 = string.splitToNumber(iter_4_1, "#")
+		for _, levelIdPair in ipairs(levelIdPairs) do
+			local levelIdParam = string.splitToNumber(levelIdPair, "#")
 
-			var_4_0[var_4_2[1]] = var_4_2[2]
+			levelIdDict[levelIdParam[1]] = levelIdParam[2]
 		end
 	end
 
-	local var_4_3 = {
-		levelIdDict = var_4_0
-	}
+	local data = {}
 
-	var_4_3.isReplay = true
+	data.levelIdDict = levelIdDict
+	data.isReplay = true
 
-	StoryController.instance:playStories(arg_4_0._mo.storyIdList, var_4_3)
+	StoryController.instance:playStories(self._mo.storyIdList, data)
 
-	if arg_4_0._showNewFlag then
-		local var_4_4 = RougeOutsideModel.instance:season()
+	if self._showNewFlag then
+		local season = RougeOutsideModel.instance:season()
 
-		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(var_4_4, RougeEnum.FavoriteType.Story, arg_4_0._mo.config.id, arg_4_0._updateNewFlag, arg_4_0)
+		RougeOutsideRpc.instance:sendRougeMarkNewReddotRequest(season, RougeEnum.FavoriteType.Story, self._mo.config.id, self._updateNewFlag, self)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RougeReviewItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function RougeReviewItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function RougeReviewItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.setIndex(arg_8_0, arg_8_1)
-	arg_8_0._index = arg_8_1
+function RougeReviewItem:setIndex(index)
+	self._index = index
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
-	arg_9_0._mo = arg_9_1
-	arg_9_0._config = arg_9_1.config
-	arg_9_0._isEnd = arg_9_2
-	arg_9_0._reviewView = arg_9_3
-	arg_9_0._path = arg_9_5
+function RougeReviewItem:onUpdateMO(mo, isEnd, reviewView, nodeStoryList, path)
+	self._mo = mo
+	self._config = mo.config
+	self._isEnd = isEnd
+	self._reviewView = reviewView
+	self._path = path
 
-	arg_9_0:_updateInfo()
-	arg_9_0:_initNodes(arg_9_4)
-	arg_9_0:_updateNewFlag()
+	self:_updateInfo()
+	self:_initNodes(nodeStoryList)
+	self:_updateNewFlag()
 end
 
-function var_0_0._updateNewFlag(arg_10_0)
-	arg_10_0._showNewFlag = RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Story, arg_10_0._mo.config.id) ~= nil
+function RougeReviewItem:_updateNewFlag()
+	self._showNewFlag = RougeFavoriteModel.instance:getReddot(RougeEnum.FavoriteType.Story, self._mo.config.id) ~= nil
 
-	gohelper.setActive(arg_10_0._gonew, arg_10_0._showNewFlag)
+	gohelper.setActive(self._gonew, self._showNewFlag)
 end
 
-function var_0_0._initNodes(arg_11_0, arg_11_1)
-	if not arg_11_0._isUnlock then
+function RougeReviewItem:_initNodes(nodeStoryList)
+	if not self._isUnlock then
 		return
 	end
 
-	if not arg_11_1 or #arg_11_1 <= 1 then
-		local var_11_0 = not arg_11_0._isEnd
+	if not nodeStoryList or #nodeStoryList <= 1 then
+		local showLine = not self._isEnd
 
-		gohelper.setActive(arg_11_0._goLine1, var_11_0)
+		gohelper.setActive(self._goLine1, showLine)
 
-		if arg_11_1 and var_11_0 then
-			for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-				arg_11_0:_showNodeText(iter_11_1, arg_11_0._goLine1, iter_11_0)
+		if nodeStoryList and showLine then
+			for i, v in ipairs(nodeStoryList) do
+				self:_showNodeText(v, self._goLine1, i)
 			end
 		end
 
 		return
 	end
 
-	local var_11_1 = arg_11_0["_goLine" .. #arg_11_1]
+	local goLine = self["_goLine" .. #nodeStoryList]
 
-	gohelper.setActive(var_11_1, true)
+	gohelper.setActive(goLine, true)
 
-	for iter_11_2, iter_11_3 in ipairs(arg_11_1) do
-		local var_11_2 = gohelper.findChild(var_11_1, "#go_End" .. iter_11_2)
-		local var_11_3 = arg_11_0._reviewView:getResInst(arg_11_0._path, var_11_2, "item" .. iter_11_3.config.id)
-		local var_11_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_3, var_0_0)
+	for i, v in ipairs(nodeStoryList) do
+		local node = gohelper.findChild(goLine, "#go_End" .. i)
+		local nodeGo = self._reviewView:getResInst(self._path, node, "item" .. v.config.id)
+		local nodeItem = MonoHelper.addNoUpdateLuaComOnceToGo(nodeGo, RougeReviewItem)
 
-		var_11_4._showLock = true
+		nodeItem._showLock = true
 
-		var_11_4:onUpdateMO(iter_11_3, true)
-		arg_11_0:_showNodeText(iter_11_3, var_11_1, iter_11_2)
+		nodeItem:onUpdateMO(v, true)
+		self:_showNodeText(v, goLine, i)
 	end
 end
 
-function var_0_0._showNodeText(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_1 and arg_12_0:_isUnlockStory(arg_12_1) then
-		gohelper.findChildText(arg_12_2, string.format("image_Line/image_Line%s/#txt_Descr%s", arg_12_3, arg_12_3)).text = arg_12_1.config.desc
+function RougeReviewItem:_showNodeText(storyMo, go, index)
+	local isUnlock = storyMo and self:_isUnlockStory(storyMo)
+
+	if isUnlock then
+		local txt = gohelper.findChildText(go, string.format("image_Line/image_Line%s/#txt_Descr%s", index, index))
+
+		txt.text = storyMo.config.desc
 	end
 end
 
-function var_0_0._updateInfo(arg_13_0)
-	arg_13_0._isUnlock = arg_13_0:_isUnlockStory(arg_13_0._mo)
+function RougeReviewItem:_updateInfo()
+	self._isUnlock = self:_isUnlockStory(self._mo)
 
-	gohelper.setActive(arg_13_0._goUnlocked, arg_13_0._isUnlock)
+	gohelper.setActive(self._goUnlocked, self._isUnlock)
 
-	local var_13_0 = arg_13_0._showLock or arg_13_0._index == 1
+	local canShowLock = self._showLock or self._index == 1
 
-	gohelper.setActive(arg_13_0._goLocked, not arg_13_0._isUnlock and var_13_0)
+	gohelper.setActive(self._goLocked, not self._isUnlock and canShowLock)
 
-	if not arg_13_0._isUnlock then
+	if not self._isUnlock then
 		return
 	end
 
-	arg_13_0._txtName.text = arg_13_0._config.name
-	arg_13_0._txtNameEn.text = arg_13_0._config.nameEn
+	self._txtName.text = self._config.name
+	self._txtNameEn.text = self._config.nameEn
 
-	arg_13_0._simageItemPic:LoadImage(arg_13_0._config.image)
+	self._simageItemPic:LoadImage(self._config.image)
 end
 
-function var_0_0.isUnlock(arg_14_0)
-	return arg_14_0._isUnlock
+function RougeReviewItem:isUnlock()
+	return self._isUnlock
 end
 
-function var_0_0.setMaxUnlockStateId(arg_15_0, arg_15_1)
-	arg_15_0._maxUnlockStateId = arg_15_1
+function RougeReviewItem:setMaxUnlockStateId(id)
+	self._maxUnlockStateId = id
 end
 
-function var_0_0._isUnlockStory(arg_16_0, arg_16_1)
-	if arg_16_0._maxUnlockStateId and arg_16_0._maxUnlockStateId >= arg_16_1.config.stageId then
+function RougeReviewItem:_isUnlockStory(mo)
+	if self._maxUnlockStateId and self._maxUnlockStateId >= mo.config.stageId then
 		return true
 	end
 
-	local var_16_0 = arg_16_1.storyIdList
-	local var_16_1 = var_16_0[#var_16_0]
+	local storyList = mo.storyIdList
+	local storyId = storyList[#storyList]
 
-	return RougeOutsideModel.instance:storyIsPass(var_16_1)
+	return RougeOutsideModel.instance:storyIsPass(storyId)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function RougeReviewItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeReviewItem

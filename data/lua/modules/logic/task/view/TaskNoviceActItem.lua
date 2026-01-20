@@ -1,93 +1,95 @@
-﻿module("modules.logic.task.view.TaskNoviceActItem", package.seeall)
+﻿-- chunkname: @modules/logic/task/view/TaskNoviceActItem.lua
 
-local var_0_0 = class("TaskNoviceActItem", LuaCompBase)
+module("modules.logic.task.view.TaskNoviceActItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tag = arg_1_2
-	arg_1_0._gounselect = gohelper.findChild(arg_1_1, "unselected")
-	arg_1_0._gounselecticon = gohelper.findChild(arg_1_1, "unselected/icon")
-	arg_1_0._gounselectlock = gohelper.findChild(arg_1_1, "unselected/lock")
-	arg_1_0._txtunselectTitle = gohelper.findChildText(arg_1_0._gounselect, "act")
-	arg_1_0._goselect = gohelper.findChild(arg_1_1, "selected")
-	arg_1_0._goselecticon = gohelper.findChild(arg_1_1, "selected/icon")
-	arg_1_0._goselectlock = gohelper.findChild(arg_1_1, "selected/lock")
-	arg_1_0._txtselectTitle = gohelper.findChildText(arg_1_0._goselect, "act")
+local TaskNoviceActItem = class("TaskNoviceActItem", LuaCompBase)
 
-	local var_1_0 = gohelper.findChild(arg_1_1, "click")
+function TaskNoviceActItem:init(go, index)
+	self.go = go
+	self._tag = index
+	self._gounselect = gohelper.findChild(go, "unselected")
+	self._gounselecticon = gohelper.findChild(go, "unselected/icon")
+	self._gounselectlock = gohelper.findChild(go, "unselected/lock")
+	self._txtunselectTitle = gohelper.findChildText(self._gounselect, "act")
+	self._goselect = gohelper.findChild(go, "selected")
+	self._goselecticon = gohelper.findChild(go, "selected/icon")
+	self._goselectlock = gohelper.findChild(go, "selected/lock")
+	self._txtselectTitle = gohelper.findChildText(self._goselect, "act")
 
-	arg_1_0._btnClick = gohelper.getClickWithAudio(var_1_0)
+	local goclick = gohelper.findChild(go, "click")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._btnClick = gohelper.getClickWithAudio(goclick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	gohelper.setActive(arg_2_0.go, true)
-	gohelper.setActive(arg_2_0._goselected, false)
-	gohelper.setActive(arg_2_0._gounselected, false)
-	arg_2_0._btnClick:AddClickListener(arg_2_0._btnActItemOnClick, arg_2_0)
-	TaskController.instance:registerCallback(TaskEvent.RefreshActState, arg_2_0._refreshItem, arg_2_0)
-	arg_2_0:_refreshItem()
+function TaskNoviceActItem:_editableInitView()
+	gohelper.setActive(self.go, true)
+	gohelper.setActive(self._goselected, false)
+	gohelper.setActive(self._gounselected, false)
+	self._btnClick:AddClickListener(self._btnActItemOnClick, self)
+	TaskController.instance:registerCallback(TaskEvent.RefreshActState, self._refreshItem, self)
+	self:_refreshItem()
 end
 
-function var_0_0._btnActItemOnClick(arg_3_0)
-	if arg_3_0._tag == TaskModel.instance:getNoviceTaskCurSelectStage() then
+function TaskNoviceActItem:_btnActItemOnClick()
+	if self._tag == TaskModel.instance:getNoviceTaskCurSelectStage() then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_act)
 
-	local var_3_0 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
+	local maxStage = TaskModel.instance:getNoviceTaskMaxUnlockStage()
 
-	if var_3_0 >= arg_3_0._tag then
-		TaskModel.instance:setNoviceTaskCurStage(arg_3_0._tag)
+	if maxStage >= self._tag then
+		TaskModel.instance:setNoviceTaskCurStage(self._tag)
 	end
 
-	TaskModel.instance:setNoviceTaskCurSelectStage(arg_3_0._tag)
+	TaskModel.instance:setNoviceTaskCurSelectStage(self._tag)
 
-	local var_3_1 = TaskModel.instance:getRefreshCount()
+	local count = TaskModel.instance:getRefreshCount()
 
-	TaskModel.instance:setRefreshCount(var_3_1 + 1)
+	TaskModel.instance:setRefreshCount(count + 1)
 
-	local var_3_2 = {}
+	local data = {}
 
-	var_3_2.isActClick = true
+	data.isActClick = true
 
-	TaskController.instance:dispatchEvent(TaskEvent.OnRefreshActItem, var_3_2)
+	TaskController.instance:dispatchEvent(TaskEvent.OnRefreshActItem, data)
 
-	local var_3_3 = {}
+	local param = {}
 
-	var_3_3.num = 0
-	var_3_3.taskType = TaskEnum.TaskType.Novice
-	var_3_3.force = var_3_0 >= arg_3_0._tag
+	param.num = 0
+	param.taskType = TaskEnum.TaskType.Novice
+	param.force = maxStage >= self._tag
 
-	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, var_3_3)
+	TaskController.instance:dispatchEvent(TaskEvent.RefreshActState, param)
 end
 
-function var_0_0._refreshItem(arg_4_0, arg_4_1)
-	local var_4_0 = TaskModel.instance:getNoviceTaskMaxUnlockStage()
-	local var_4_1 = TaskModel.instance:getNoviceTaskCurStage()
-	local var_4_2 = TaskModel.instance:getNoviceTaskCurSelectStage()
+function TaskNoviceActItem:_refreshItem(param)
+	local maxStage = TaskModel.instance:getNoviceTaskMaxUnlockStage()
+	local curStage = TaskModel.instance:getNoviceTaskCurStage()
+	local curSelectStage = TaskModel.instance:getNoviceTaskCurSelectStage()
 
-	gohelper.setActive(arg_4_0._goselect, var_4_2 == arg_4_0._tag)
-	gohelper.setActive(arg_4_0._gounselect, var_4_2 ~= arg_4_0._tag)
-	gohelper.setActive(arg_4_0._goselectlock, var_4_0 < arg_4_0._tag)
-	gohelper.setActive(arg_4_0._gounselectlock, var_4_0 < arg_4_0._tag)
-	gohelper.setActive(arg_4_0._goselecticon, arg_4_0._tag == var_4_0)
-	gohelper.setActive(arg_4_0._gounselecticon, arg_4_0._tag == var_4_0)
+	gohelper.setActive(self._goselect, curSelectStage == self._tag)
+	gohelper.setActive(self._gounselect, curSelectStage ~= self._tag)
+	gohelper.setActive(self._goselectlock, maxStage < self._tag)
+	gohelper.setActive(self._gounselectlock, maxStage < self._tag)
+	gohelper.setActive(self._goselecticon, self._tag == maxStage)
+	gohelper.setActive(self._gounselecticon, self._tag == maxStage)
 
-	arg_4_0._txtunselectTitle.text = "Act." .. tostring(arg_4_0._tag)
-	arg_4_0._txtselectTitle.text = "Act." .. tostring(arg_4_0._tag)
+	self._txtunselectTitle.text = "Act." .. tostring(self._tag)
+	self._txtselectTitle.text = "Act." .. tostring(self._tag)
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_4_0._txtunselectTitle, var_4_0 < arg_4_0._tag and 0.6 or 0.7)
+	ZProj.UGUIHelper.SetColorAlpha(self._txtunselectTitle, maxStage < self._tag and 0.6 or 0.7)
 end
 
-function var_0_0.destroy(arg_5_0)
-	gohelper.destroy(arg_5_0.go)
-	arg_5_0._btnClick:RemoveClickListener()
-	TaskController.instance:unregisterCallback(TaskEvent.RefreshActState, arg_5_0._refreshItem, arg_5_0)
+function TaskNoviceActItem:destroy()
+	gohelper.destroy(self.go)
+	self._btnClick:RemoveClickListener()
+	TaskController.instance:unregisterCallback(TaskEvent.RefreshActState, self._refreshItem, self)
 end
 
-return var_0_0
+return TaskNoviceActItem

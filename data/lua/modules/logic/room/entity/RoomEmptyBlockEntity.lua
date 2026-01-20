@@ -1,112 +1,115 @@
-﻿module("modules.logic.room.entity.RoomEmptyBlockEntity", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/RoomEmptyBlockEntity.lua
 
-local var_0_0 = class("RoomEmptyBlockEntity", RoomBaseBlockEntity)
+module("modules.logic.room.entity.RoomEmptyBlockEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RoomEmptyBlockEntity = class("RoomEmptyBlockEntity", RoomBaseBlockEntity)
 
-	arg_1_0._nearWaveList = {}
-	arg_1_0._nearRiverList = {}
+function RoomEmptyBlockEntity:ctor(entityId)
+	RoomEmptyBlockEntity.super.ctor(self, entityId)
 
-	for iter_1_0 = 1, 6 do
-		table.insert(arg_1_0._nearWaveList, false)
-		table.insert(arg_1_0._nearRiverList, false)
+	self._nearWaveList = {}
+	self._nearRiverList = {}
+
+	for direction = 1, 6 do
+		table.insert(self._nearWaveList, false)
+		table.insert(self._nearRiverList, false)
 	end
 end
 
-function var_0_0.getTag(arg_2_0)
+function RoomEmptyBlockEntity:getTag()
 	return SceneTag.RoomEmptyBlock
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	var_0_0.super.init(arg_3_0, arg_3_1)
+function RoomEmptyBlockEntity:init(go)
+	RoomEmptyBlockEntity.super.init(self, go)
 end
 
-function var_0_0.initComponents(arg_4_0)
-	var_0_0.super.initComponents(arg_4_0)
+function RoomEmptyBlockEntity:initComponents()
+	RoomEmptyBlockEntity.super.initComponents(self)
 end
 
-function var_0_0.onStart(arg_5_0)
-	var_0_0.super.onStart(arg_5_0)
+function RoomEmptyBlockEntity:onStart()
+	RoomEmptyBlockEntity.super.onStart(self)
 end
 
-function var_0_0.refreshLand(arg_6_0)
-	arg_6_0:refreshWater()
-	arg_6_0:refreshWaveEffect()
+function RoomEmptyBlockEntity:refreshLand()
+	self:refreshWater()
+	self:refreshWaveEffect()
 end
 
-function var_0_0.refreshWater(arg_7_0)
+function RoomEmptyBlockEntity:refreshWater()
 	return
 end
 
-function var_0_0.refreshBlock(arg_8_0)
-	var_0_0.super.refreshBlock(arg_8_0)
+function RoomEmptyBlockEntity:refreshBlock()
+	RoomEmptyBlockEntity.super.refreshBlock(self)
 end
 
-function var_0_0.refreshWaveEffect(arg_9_0)
-	local var_9_0 = arg_9_0:getMO().hexPoint
-	local var_9_1 = arg_9_0._nearWaveList
-	local var_9_2 = arg_9_0._nearRiverList
-	local var_9_3 = RoomMapBlockModel.instance
+function RoomEmptyBlockEntity:refreshWaveEffect()
+	local blockMO = self:getMO()
+	local hexPoint = blockMO.hexPoint
+	local nearWaveList = self._nearWaveList
+	local nearRiverList = self._nearRiverList
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
 
-	for iter_9_0 = 1, 6 do
-		local var_9_4 = HexPoint.directions[iter_9_0]
-		local var_9_5 = false
-		local var_9_6 = false
-		local var_9_7 = var_9_3:getBlockMO(var_9_0.x + var_9_4.x, var_9_0.y + var_9_4.y)
+	for direction = 1, 6 do
+		local neighbor = HexPoint.directions[direction]
+		local nearWave = false
+		local nearRiver = false
+		local neighborMO = tRoomMapBlockModel:getBlockMO(hexPoint.x + neighbor.x, hexPoint.y + neighbor.y)
 
-		if var_9_7 and var_9_7:isInMapBlock() then
-			var_9_5 = true
-			var_9_6 = var_9_7:hasRiver(true)
+		if neighborMO and neighborMO:isInMapBlock() then
+			nearWave = true
+			nearRiver = neighborMO:hasRiver(true)
 		end
 
-		var_9_1[iter_9_0] = var_9_5
-		var_9_2[iter_9_0] = var_9_6
+		nearWaveList[direction] = nearWave
+		nearRiverList[direction] = nearRiver
 	end
 
-	local var_9_8, var_9_9, var_9_10 = RoomWaveHelper.getWaveList(var_9_1, var_9_2)
-	local var_9_11 = false
-	local var_9_12 = RoomEnum.EffectKey.BlockWaveEffectKeys
+	local resList, directionList, abPathList = RoomWaveHelper.getWaveList(nearWaveList, nearRiverList)
+	local isRefresh = false
+	local waveEffectKeys = RoomEnum.EffectKey.BlockWaveEffectKeys
 
-	for iter_9_1 = 1, #var_9_8 do
-		local var_9_13 = var_9_8[iter_9_1]
-		local var_9_14 = var_9_10[iter_9_1]
-		local var_9_15 = var_9_9[iter_9_1]
+	for i = 1, #resList do
+		local res = resList[i]
+		local abPath = abPathList[i]
+		local direction = directionList[i]
 
-		if not arg_9_0.effect:isSameResByKey(var_9_12[iter_9_1], var_9_13) then
-			arg_9_0.effect:addParams({
-				[var_9_12[iter_9_1]] = {
-					res = var_9_13,
-					ab = var_9_14,
-					localRotation = Vector3(0, (var_9_15 - 1) * 60, 0)
+		if not self.effect:isSameResByKey(waveEffectKeys[i], res) then
+			self.effect:addParams({
+				[waveEffectKeys[i]] = {
+					res = res,
+					ab = abPath,
+					localRotation = Vector3(0, (direction - 1) * 60, 0)
 				}
 			})
 
-			var_9_11 = true
+			isRefresh = true
 		end
 	end
 
-	for iter_9_2 = #var_9_8 + 1, 6 do
-		if arg_9_0.effect:getEffectRes(var_9_12[iter_9_2]) then
-			arg_9_0.effect:removeParams({
-				var_9_12[iter_9_2]
+	for i = #resList + 1, 6 do
+		if self.effect:getEffectRes(waveEffectKeys[i]) then
+			self.effect:removeParams({
+				waveEffectKeys[i]
 			})
 
-			var_9_11 = true
+			isRefresh = true
 		end
 	end
 
-	if var_9_11 then
-		arg_9_0.effect:refreshEffect()
+	if isRefresh then
+		self.effect:refreshEffect()
 	end
 end
 
-function var_0_0.beforeDestroy(arg_10_0)
-	var_0_0.super.beforeDestroy(arg_10_0)
+function RoomEmptyBlockEntity:beforeDestroy()
+	RoomEmptyBlockEntity.super.beforeDestroy(self)
 end
 
-function var_0_0.getMO(arg_11_0)
-	return RoomMapBlockModel.instance:getEmptyBlockMOById(arg_11_0.id)
+function RoomEmptyBlockEntity:getMO()
+	return RoomMapBlockModel.instance:getEmptyBlockMOById(self.id)
 end
 
-return var_0_0
+return RoomEmptyBlockEntity

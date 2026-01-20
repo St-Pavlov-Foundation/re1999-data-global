@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_instruction_level", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_instruction_level.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_instruction_level", package.seeall)
+
+local lua_instruction_level = {}
+local fields = {
 	picRes = 7,
 	desc = 6,
 	topicId = 2,
@@ -11,16 +13,16 @@ local var_0_1 = {
 	preEpisode = 8,
 	episodeId = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 2,
 	instructionDesc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_instruction_level.onLoad(json)
+	lua_instruction_level.configList, lua_instruction_level.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_instruction_level

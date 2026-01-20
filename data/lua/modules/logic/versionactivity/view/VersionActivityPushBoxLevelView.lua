@@ -1,222 +1,234 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityPushBoxLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityPushBoxLevelView.lua
 
-local var_0_0 = class("VersionActivityPushBoxLevelView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityPushBoxLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._scrolllevels = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_levels")
-	arg_1_0._golevel10 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level10")
-	arg_1_0._golevel9 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level9")
-	arg_1_0._golevel8 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level8")
-	arg_1_0._golevel7 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level7")
-	arg_1_0._golevel6 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level6")
-	arg_1_0._golevel5 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level5")
-	arg_1_0._golevel4 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level4")
-	arg_1_0._golevel3 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level3")
-	arg_1_0._golevel2 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level2")
-	arg_1_0._golevel1 = gohelper.findChild(arg_1_0.viewGO, "#scroll_levels/Viewport/Content/#go_level1")
-	arg_1_0._gotaskred = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_task_red")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "top/#txt_remaintime")
+local VersionActivityPushBoxLevelView = class("VersionActivityPushBoxLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityPushBoxLevelView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._scrolllevels = gohelper.findChildScrollRect(self.viewGO, "#scroll_levels")
+	self._golevel10 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level10")
+	self._golevel9 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level9")
+	self._golevel8 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level8")
+	self._golevel7 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level7")
+	self._golevel6 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level6")
+	self._golevel5 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level5")
+	self._golevel4 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level4")
+	self._golevel3 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level3")
+	self._golevel2 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level2")
+	self._golevel1 = gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content/#go_level1")
+	self._gotaskred = gohelper.findChild(self.viewGO, "#btn_task/#go_task_red")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "top/#txt_remaintime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0:addEventCb(PushBoxController.instance, PushBoxEvent.DataEvent.ReceiveTaskRewardReply, arg_2_0._onReceiveTaskRewardReply, arg_2_0)
+function VersionActivityPushBoxLevelView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.DataEvent.ReceiveTaskRewardReply, self._onReceiveTaskRewardReply, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
+function VersionActivityPushBoxLevelView:removeEvents()
+	self._btntask:RemoveClickListener()
 end
 
-function var_0_0._btntaskOnClick(arg_4_0)
+function VersionActivityPushBoxLevelView:_btntaskOnClick()
 	ViewMgr.instance:openView(ViewName.VersionActivityPushBoxTaskView)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getVersionActivityIcon("pushbox/full/bg"))
+function VersionActivityPushBoxLevelView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getVersionActivityIcon("pushbox/full/bg"))
 
-	arg_5_0._ani = gohelper.onceAddComponent(arg_5_0.viewGO, typeof(UnityEngine.Animator))
+	self._ani = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function VersionActivityPushBoxLevelView:onUpdateParam()
 	return
 end
 
-function var_0_0._playOpenAudio(arg_7_0)
+function VersionActivityPushBoxLevelView:_playOpenAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_culture_open)
 end
 
-function var_0_0.onOpen(arg_8_0)
+function VersionActivityPushBoxLevelView:onOpen()
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.VersionActivityPushBoxNewLevelOpen, 0) then
 		GameFacade.showToast(ToastEnum.VersionActivityPushBoxNewLevelOpen)
 	end
 
-	TaskDispatcher.runDelay(arg_8_0._playOpenAudio, arg_8_0, 0.5)
+	TaskDispatcher.runDelay(self._playOpenAudio, self, 0.5)
 
-	arg_8_0._activity_data = ActivityModel.instance:getActivityInfo()[PushBoxModel.instance:getCurActivityID()]
+	self._activity_data = ActivityModel.instance:getActivityInfo()[PushBoxModel.instance:getCurActivityID()]
 
-	arg_8_0.viewContainer._navigateButtonView:setOverrideClose(arg_8_0._onNavigateCloseCallback, arg_8_0)
-	arg_8_0.viewContainer._navigateButtonView:setOverrideHome(arg_8_0._onNavigateHomeCallback, arg_8_0)
+	self.viewContainer._navigateButtonView:setOverrideClose(self._onNavigateCloseCallback, self)
+	self.viewContainer._navigateButtonView:setOverrideHome(self._onNavigateHomeCallback, self)
 
-	arg_8_0._episode_list = PushBoxEpisodeConfig.instance:getEpisodeList()
+	self._episode_list = PushBoxEpisodeConfig.instance:getEpisodeList()
 
-	local var_8_0 = arg_8_0.viewParam and arg_8_0.viewParam.id
-	local var_8_1
+	local jump_id = self.viewParam and self.viewParam.id
+	local next_lock_episode
 
-	for iter_8_0 = 1, 10 do
-		gohelper.findChildComponent(arg_8_0["_golevel" .. iter_8_0], "go_info/go_finish", typeof(UnityEngine.Animation)).enabled = false
+	for i = 1, 10 do
+		local go_finish = gohelper.findChildComponent(self["_golevel" .. i], "go_info/go_finish", typeof(UnityEngine.Animation))
 
-		if not arg_8_0._episode_list[iter_8_0] then
-			gohelper.setActive(arg_8_0["_golevel" .. iter_8_0], false)
+		go_finish.enabled = false
+
+		if not self._episode_list[i] then
+			gohelper.setActive(self["_golevel" .. i], false)
 		else
-			if PushBoxModel.instance:getPassData(arg_8_0._episode_list[iter_8_0].id) then
+			if PushBoxModel.instance:getPassData(self._episode_list[i].id) then
 				-- block empty
 			else
-				local var_8_2 = gohelper.findChild(arg_8_0["_golevel" .. iter_8_0], "go_info")
+				local go_info = gohelper.findChild(self["_golevel" .. i], "go_info")
 
-				if not var_8_1 then
-					var_8_1 = true
+				if not next_lock_episode then
+					next_lock_episode = true
 
-					gohelper.setActive(var_8_2, true)
+					gohelper.setActive(go_info, true)
 				else
-					gohelper.setActive(var_8_2, false)
-					arg_8_0["_golevel" .. iter_8_0]:GetComponent(typeof(UnityEngine.Animator)):Play("in")
+					gohelper.setActive(go_info, false)
+					self["_golevel" .. i]:GetComponent(typeof(UnityEngine.Animator)):Play("in")
 				end
 			end
 
-			if var_8_0 == arg_8_0._episode_list[iter_8_0].id then
-				if iter_8_0 <= 5 then
+			if jump_id == self._episode_list[i].id then
+				if i <= 5 then
 					-- block empty
 				else
-					recthelper.setAnchorX(gohelper.findChild(arg_8_0.viewGO, "#scroll_levels/Viewport/Content").transform, -950)
+					recthelper.setAnchorX(gohelper.findChild(self.viewGO, "#scroll_levels/Viewport/Content").transform, -950)
 				end
 
-				if arg_8_0.viewParam.win then
-					arg_8_0._new_finish_episode = arg_8_0._episode_list[iter_8_0].id
+				if self.viewParam.win then
+					self._new_finish_episode = self._episode_list[i].id
 				end
 			end
 		end
 	end
 
-	arg_8_0:_refreshLevelData()
-	arg_8_0:_updateDeadline()
-	TaskDispatcher.runRepeat(arg_8_0._updateDeadline, arg_8_0, 60)
+	self:_refreshLevelData()
+	self:_updateDeadline()
+	TaskDispatcher.runRepeat(self._updateDeadline, self, 60)
 end
 
-function var_0_0._updateDeadline(arg_9_0)
-	local var_9_0 = ActivityModel.instance:getActivityInfo()[PushBoxModel.instance:getCurActivityID()]
+function VersionActivityPushBoxLevelView:_updateDeadline()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[PushBoxModel.instance:getCurActivityID()]
 
-	arg_9_0._txtremaintime.text = string.format(luaLang("remain"), var_9_0:getRemainTimeStr2ByEndTime())
+	self._txtremaintime.text = string.format(luaLang("remain"), actInfoMo:getRemainTimeStr2ByEndTime())
 end
 
-function var_0_0._refreshLevelData(arg_10_0)
-	local var_10_0 = false
+function VersionActivityPushBoxLevelView:_refreshLevelData()
+	local lastLevelIsPass = false
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._episode_list) do
-		local var_10_1 = iter_10_1.id
-		local var_10_2 = PushBoxModel.instance:getPassData(var_10_1)
-		local var_10_3 = arg_10_0["_golevel" .. iter_10_0]
+	for i, config in ipairs(self._episode_list) do
+		local id = config.id
+		local pass_data = PushBoxModel.instance:getPassData(id)
+		local obj = self["_golevel" .. i]
+		local txt_title = gohelper.findChildTextMesh(obj, "go_info/txt_title")
 
-		gohelper.findChildTextMesh(var_10_3, "go_info/txt_title").text = iter_10_1.name
+		txt_title.text = config.name
 
-		local var_10_4 = gohelper.findChild(var_10_3, "go_info/go_lock")
-		local var_10_5 = gohelper.findChild(var_10_3, "go_info/go_finish")
-		local var_10_6 = gohelper.findChildImage(var_10_3, "simage_map")
-		local var_10_7 = gohelper.findChildTextMesh(var_10_3, "go_info/go_lock/go_speciallock/txt_unlocktime")
-		local var_10_8 = gohelper.findChild(var_10_3, "go_info/go_lock/go_speciallock")
-		local var_10_9 = gohelper.findChild(var_10_3, "go_info/go_lock/go_normallock")
-		local var_10_10 = gohelper.findChild(var_10_3, "go_info/txt_index")
-		local var_10_11 = gohelper.findChild(var_10_3, "maplock")
-		local var_10_12 = gohelper.findChild(var_10_3, "map")
+		local go_lock = gohelper.findChild(obj, "go_info/go_lock")
+		local go_finish = gohelper.findChild(obj, "go_info/go_finish")
+		local simage_map = gohelper.findChildImage(obj, "simage_map")
+		local txt_unlocktime = gohelper.findChildTextMesh(obj, "go_info/go_lock/go_speciallock/txt_unlocktime")
+		local go_speciallock = gohelper.findChild(obj, "go_info/go_lock/go_speciallock")
+		local go_normallock = gohelper.findChild(obj, "go_info/go_lock/go_normallock")
+		local go_index = gohelper.findChild(obj, "go_info/txt_index")
+		local maplock = gohelper.findChild(obj, "maplock")
+		local map = gohelper.findChild(obj, "map")
 
-		gohelper.setActive(var_10_11, not var_10_2)
-		gohelper.setActive(var_10_12, var_10_2)
+		gohelper.setActive(maplock, not pass_data)
+		gohelper.setActive(map, pass_data)
 
-		var_10_11:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = var_10_0 and 1 or 0.5
+		local canvasgroup = maplock:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-		if var_10_2 then
-			UISpriteSetMgr.instance:setPushBoxSprite(var_10_6, string.format("gk_%02d", iter_10_0), true)
+		canvasgroup.alpha = lastLevelIsPass and 1 or 0.5
+
+		if pass_data then
+			UISpriteSetMgr.instance:setPushBoxSprite(simage_map, string.format("gk_%02d", i), true)
 		else
-			UISpriteSetMgr.instance:setPushBoxSprite(var_10_6, string.format("gkj_%02d", iter_10_0), true)
+			UISpriteSetMgr.instance:setPushBoxSprite(simage_map, string.format("gkj_%02d", i), true)
 
-			local var_10_13 = PushBoxModel.instance:getStageOpened(var_10_1)
+			local stage_is_opened = PushBoxModel.instance:getStageOpened(id)
 
-			gohelper.setActive(var_10_8, not var_10_13)
-			gohelper.setActive(var_10_9, var_10_13)
+			gohelper.setActive(go_speciallock, not stage_is_opened)
+			gohelper.setActive(go_normallock, stage_is_opened)
 
-			if not var_10_13 then
-				local var_10_14 = PushBoxModel.instance:getEpisodeOpenTime(var_10_1)
+			if not stage_is_opened then
+				local start_time = PushBoxModel.instance:getEpisodeOpenTime(id)
 
-				var_10_7.text = os.date("%m.%d", var_10_14) .. luaLang("unlock")
+				txt_unlocktime.text = os.date("%m.%d", start_time) .. luaLang("unlock")
 			end
 		end
 
-		var_10_0 = var_10_2
+		lastLevelIsPass = pass_data
 
-		gohelper.setActive(var_10_5, var_10_2 and var_10_2.state == 1)
-		gohelper.setActive(var_10_4, not var_10_2)
-		gohelper.setActive(var_10_10, var_10_2)
-		gohelper.findChildClickWithAudio(var_10_3, "btn_click"):AddClickListener(arg_10_0._episodeClick, arg_10_0, var_10_1)
+		gohelper.setActive(go_finish, pass_data and pass_data.state == 1)
+		gohelper.setActive(go_lock, not pass_data)
+		gohelper.setActive(go_index, pass_data)
 
-		local var_10_15 = gohelper.findChild(var_10_3, "go_selectedbg")
-		local var_10_16 = gohelper.findChild(var_10_3, "go_selected")
+		local click = gohelper.findChildClickWithAudio(obj, "btn_click")
 
-		gohelper.setActive(var_10_15, false)
-		gohelper.setActive(var_10_16, false)
+		click:AddClickListener(self._episodeClick, self, id)
 
-		if arg_10_0._new_finish_episode == var_10_1 then
-			arg_10_0._new_finish_obj = var_10_5
+		local go_selectedbg = gohelper.findChild(obj, "go_selectedbg")
+		local go_selected = gohelper.findChild(obj, "go_selected")
 
-			gohelper.setActive(var_10_5, false)
-			TaskDispatcher.runDelay(arg_10_0._playNewFinish, arg_10_0, 1.5)
+		gohelper.setActive(go_selectedbg, false)
+		gohelper.setActive(go_selected, false)
+
+		if self._new_finish_episode == id then
+			self._new_finish_obj = go_finish
+
+			gohelper.setActive(go_finish, false)
+			TaskDispatcher.runDelay(self._playNewFinish, self, 1.5)
 		end
 	end
 
-	RedDotController.instance:addRedDot(arg_10_0._gotaskred, RedDotEnum.DotNode.VersionActivityPushBoxTask)
+	RedDotController.instance:addRedDot(self._gotaskred, RedDotEnum.DotNode.VersionActivityPushBoxTask)
 end
 
-function var_0_0._refreshTaskRed(arg_11_0)
-	local var_11_0 = PushBoxEpisodeConfig.instance:getTaskList()
-	local var_11_1 = false
+function VersionActivityPushBoxLevelView:_refreshTaskRed()
+	local task_list = PushBoxEpisodeConfig.instance:getTaskList()
+	local show_red = false
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_2 = PushBoxModel.instance:getTaskData(iter_11_1.taskId)
+	for i, v in ipairs(task_list) do
+		local task_data = PushBoxModel.instance:getTaskData(v.taskId)
 
-		if var_11_2 and not var_11_2.hasGetBonus and var_11_2.progress >= iter_11_1.maxProgress then
-			var_11_1 = true
+		if task_data and not task_data.hasGetBonus and task_data.progress >= v.maxProgress then
+			show_red = true
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_11_0._gotaskred, var_11_1)
+	gohelper.setActive(self._gotaskred, show_red)
 end
 
-function var_0_0._onReceiveTaskRewardReply(arg_12_0)
+function VersionActivityPushBoxLevelView:_onReceiveTaskRewardReply()
 	return
 end
 
-function var_0_0._playNewFinish(arg_13_0)
+function VersionActivityPushBoxLevelView:_playNewFinish()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_mark_finish)
-	gohelper.setActive(arg_13_0._new_finish_obj, true)
+	gohelper.setActive(self._new_finish_obj, true)
 
-	local var_13_0 = gohelper.onceAddComponent(arg_13_0._new_finish_obj, typeof(UnityEngine.Animation))
+	local go_finish = gohelper.onceAddComponent(self._new_finish_obj, typeof(UnityEngine.Animation))
 
-	var_13_0.enabled = true
+	go_finish.enabled = true
 
-	var_13_0:Rewind()
-	var_13_0:Play()
+	go_finish:Rewind()
+	go_finish:Play()
 end
 
-function var_0_0._episodeClick(arg_14_0, arg_14_1)
-	if not PushBoxModel.instance:getPassData(arg_14_1) then
-		if PushBoxModel.instance:getEpisodeOpenTime(arg_14_1) < ServerTime.now() then
+function VersionActivityPushBoxLevelView:_episodeClick(episode_id)
+	if not PushBoxModel.instance:getPassData(episode_id) then
+		local start_time = PushBoxModel.instance:getEpisodeOpenTime(episode_id)
+
+		if start_time < ServerTime.now() then
 			GameFacade.showToast(ToastEnum.ActivityPushBoxLevel)
 
 			return
@@ -227,50 +239,50 @@ function var_0_0._episodeClick(arg_14_0, arg_14_1)
 		return
 	end
 
-	if arg_14_0._activity_data:isExpired() then
+	if self._activity_data:isExpired() then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	local var_14_0 = PushBoxEpisodeConfig.instance:getConfig(arg_14_1)
+	local config = PushBoxEpisodeConfig.instance:getConfig(episode_id)
 
-	arg_14_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
 
-	arg_14_0._game_mgr:startGame(var_14_0.id)
+	self._game_mgr:startGame(config.id)
 
-	arg_14_0._cur_select_config = var_14_0
+	self._cur_select_config = config
 
-	local var_14_1 = tabletool.indexOf(arg_14_0._episode_list, var_14_0)
-	local var_14_2 = arg_14_0["_golevel" .. var_14_1]
-	local var_14_3 = gohelper.findChild(var_14_2, "go_info/go_selectedbg")
-	local var_14_4 = gohelper.findChild(var_14_2, "go_info/go_selected")
+	local index = tabletool.indexOf(self._episode_list, config)
+	local obj = self["_golevel" .. index]
+	local go_selectedbg = gohelper.findChild(obj, "go_info/go_selectedbg")
+	local go_selected = gohelper.findChild(obj, "go_info/go_selected")
 
-	gohelper.setActive(var_14_3, true)
-	gohelper.setActive(var_14_4, true)
-	TaskDispatcher.runDelay(arg_14_0._delaySelectEpisode, arg_14_0, 0.3)
+	gohelper.setActive(go_selectedbg, true)
+	gohelper.setActive(go_selected, true)
+	TaskDispatcher.runDelay(self._delaySelectEpisode, self, 0.3)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_level_chosen)
 end
 
-function var_0_0._delaySelectEpisode(arg_15_0)
-	arg_15_0._ani:Play("gameopen")
-	TaskDispatcher.runDelay(arg_15_0._delayEnterGame, arg_15_0, 0.2)
+function VersionActivityPushBoxLevelView:_delaySelectEpisode()
+	self._ani:Play("gameopen")
+	TaskDispatcher.runDelay(self._delayEnterGame, self, 0.2)
 end
 
-function var_0_0._delayEnterGame(arg_16_0)
-	recthelper.setAnchorX(arg_16_0.viewGO.transform, 10000)
-	arg_16_0:onClose()
-	GuideController.instance:dispatchEvent(GuideEvent["OnPushBoxEnter" .. arg_16_0._cur_select_config.id])
+function VersionActivityPushBoxLevelView:_delayEnterGame()
+	recthelper.setAnchorX(self.viewGO.transform, 10000)
+	self:onClose()
+	GuideController.instance:dispatchEvent(GuideEvent["OnPushBoxEnter" .. self._cur_select_config.id])
 	ViewMgr.instance:openView(ViewName.VersionActivityPushBoxGameView)
-	arg_16_0._game_mgr:playOpenAni()
+	self._game_mgr:playOpenAni()
 end
 
-function var_0_0._onNavigateCloseCallback(arg_17_0)
+function VersionActivityPushBoxLevelView:_onNavigateCloseCallback()
 	if GameSceneMgr.instance:isPushBoxScene() then
 		GameSceneMgr.instance:getCurScene().gameMgr:hideRoot()
 	end
 
-	arg_17_0:onClose()
+	self:onClose()
 	MainController.instance:enterMainScene()
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivityEnterView)
@@ -278,7 +290,7 @@ function var_0_0._onNavigateCloseCallback(arg_17_0)
 	end)
 end
 
-function var_0_0._onNavigateHomeCallback(arg_19_0)
+function VersionActivityPushBoxLevelView:_onNavigateHomeCallback()
 	if GameSceneMgr.instance:isPushBoxScene() then
 		GameSceneMgr.instance:getCurScene().gameMgr:hideRoot()
 	end
@@ -286,29 +298,30 @@ function var_0_0._onNavigateHomeCallback(arg_19_0)
 	NavigateButtonsView.homeClick()
 end
 
-function var_0_0.onClose(arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._playOpenAudio, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._delaySelectEpisode, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._delayEnterGame, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._playNewFinish, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._updateDeadline, arg_20_0)
+function VersionActivityPushBoxLevelView:onClose()
+	TaskDispatcher.cancelTask(self._playOpenAudio, self)
+	TaskDispatcher.cancelTask(self._delaySelectEpisode, self)
+	TaskDispatcher.cancelTask(self._delayEnterGame, self)
+	TaskDispatcher.cancelTask(self._playNewFinish, self)
+	TaskDispatcher.cancelTask(self._updateDeadline, self)
 
-	if arg_20_0._episode_list then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._episode_list) do
-			local var_20_0 = arg_20_0["_golevel" .. iter_20_0]
+	if self._episode_list then
+		for i, config in ipairs(self._episode_list) do
+			local obj = self["_golevel" .. i]
+			local click = gohelper.findChildClickWithAudio(obj, "btn_click")
 
-			gohelper.findChildClickWithAudio(var_20_0, "btn_click"):RemoveClickListener()
-			var_20_0:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Close)
+			click:RemoveClickListener()
+			obj:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Close)
 		end
 	end
 
-	arg_20_0.viewContainer._navigateButtonView:setOverrideClose(nil, nil)
-	arg_20_0.viewContainer._navigateButtonView:setOverrideHome(nil, nil)
-	arg_20_0:closeThis()
+	self.viewContainer._navigateButtonView:setOverrideClose(nil, nil)
+	self.viewContainer._navigateButtonView:setOverrideHome(nil, nil)
+	self:closeThis()
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	arg_21_0._simagebg:UnLoadImage()
+function VersionActivityPushBoxLevelView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivityPushBoxLevelView

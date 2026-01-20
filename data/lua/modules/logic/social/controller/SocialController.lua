@@ -1,39 +1,45 @@
-﻿module("modules.logic.social.controller.SocialController", package.seeall)
+﻿-- chunkname: @modules/logic/social/controller/SocialController.lua
 
-local var_0_0 = class("SocialController", BaseController)
+module("modules.logic.social.controller.SocialController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SocialController = class("SocialController", BaseController)
+
+function SocialController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function SocialController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function SocialController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function SocialController:reInit()
 	return
 end
 
-function var_0_0.openSocialView(arg_5_0, arg_5_1)
+function SocialController:openSocialView(viewParam)
 	if SDKNativeUtil.isGamePad() then
 		GameFacade.showToast(ToastEnum.ClassShow)
 	else
-		ViewMgr.instance:openView(ViewName.SocialView, arg_5_1)
+		ViewMgr.instance:openView(ViewName.SocialView, viewParam)
 	end
 end
 
-function var_0_0.AddFriend(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if PlayerModel.instance:getMyUserId() == arg_6_1 then
+function SocialController:AddFriend(userId, callback, callbackObj)
+	local myUserId = PlayerModel.instance:getMyUserId()
+
+	if myUserId == userId then
 		GameFacade.showToast(ToastEnum.SocialIsMyFriend)
 
 		return false
 	end
 
-	if SocialModel.instance:isMyFriendByUserId(arg_6_1) then
+	local isMyFriend = SocialModel.instance:isMyFriendByUserId(userId)
+
+	if isMyFriend then
 		GameFacade.showToast(ToastEnum.SocialIsMaxFriend)
 
 		return false
@@ -45,28 +51,28 @@ function var_0_0.AddFriend(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 		return false
 	end
 
-	FriendRpc.instance:sendApplyRequest(arg_6_1, arg_6_2, arg_6_3)
+	FriendRpc.instance:sendApplyRequest(userId, callback, callbackObj)
 end
 
-function var_0_0.openInformPlayerTipView(arg_7_0, arg_7_1)
+function SocialController:openInformPlayerTipView(viewParam)
 	if not ReportTypeListModel.instance:initDone() then
-		arg_7_0.informPlayerTipViewParam = arg_7_1
+		self.informPlayerTipViewParam = viewParam
 
-		ChatRpc.instance:sendGetReportTypeRequest(arg_7_0.onReceiveGetReportTypeReplay, arg_7_0)
+		ChatRpc.instance:sendGetReportTypeRequest(self.onReceiveGetReportTypeReplay, self)
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.InformPlayerTipView, arg_7_1)
+	ViewMgr.instance:openView(ViewName.InformPlayerTipView, viewParam)
 end
 
-function var_0_0.onReceiveGetReportTypeReplay(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	ReportTypeListModel.instance:initType(arg_8_3.reportTypes)
-	ViewMgr.instance:openView(ViewName.InformPlayerTipView, arg_8_0.informPlayerTipViewParam)
+function SocialController:onReceiveGetReportTypeReplay(cmd, resultCode, msg)
+	ReportTypeListModel.instance:initType(msg.reportTypes)
+	ViewMgr.instance:openView(ViewName.InformPlayerTipView, self.informPlayerTipViewParam)
 
-	arg_8_0.informPlayerTipViewParam = nil
+	self.informPlayerTipViewParam = nil
 end
 
-var_0_0.instance = var_0_0.New()
+SocialController.instance = SocialController.New()
 
-return var_0_0
+return SocialController

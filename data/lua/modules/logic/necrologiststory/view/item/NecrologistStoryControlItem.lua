@@ -1,17 +1,27 @@
-﻿module("modules.logic.necrologiststory.view.item.NecrologistStoryControlItem", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/item/NecrologistStoryControlItem.lua
 
-local var_0_0 = class("NecrologistStoryControlItem", NecrologistStoryBaseItem)
+module("modules.logic.necrologiststory.view.item.NecrologistStoryControlItem", package.seeall)
 
-function var_0_0.playControl(arg_1_0, arg_1_1, ...)
-	arg_1_0._controlParam = arg_1_1
+local NecrologistStoryControlItem = class("NecrologistStoryControlItem", NecrologistStoryBaseItem)
 
-	arg_1_0:setCallback(...)
-	arg_1_0:onPlayStory()
-	arg_1_0:refreshHeight()
+function NecrologistStoryControlItem:playControl(controlParam, ...)
+	self._controlParam = controlParam
+
+	self:setCallback(...)
+	self:onPlayStory()
+	self:refreshHeight()
 end
 
-function var_0_0.getItemType(arg_2_0)
+function NecrologistStoryControlItem:getItemType()
 	return nil
 end
 
-return var_0_0
+function NecrologistStoryControlItem:setStoryId(storyId)
+	self._storyId = storyId
+end
+
+function NecrologistStoryControlItem:getStoryId(storyId)
+	return self._storyId
+end
+
+return NecrologistStoryControlItem

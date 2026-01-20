@@ -1,43 +1,45 @@
-﻿module("modules.logic.room.utils.fsm.SimpleFSMBaseTransition", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/fsm/SimpleFSMBaseTransition.lua
 
-local var_0_0 = class("SimpleFSMBaseTransition")
+module("modules.logic.room.utils.fsm.SimpleFSMBaseTransition", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.name = string.format("%s_to_%s_by_%s", arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fromStateName = arg_1_1
-	arg_1_0.toStateName = arg_1_2
-	arg_1_0.eventId = arg_1_3
-	arg_1_0.fsm = nil
-	arg_1_0.context = nil
+local SimpleFSMBaseTransition = class("SimpleFSMBaseTransition")
+
+function SimpleFSMBaseTransition:ctor(fromStateName, toStateName, eventId)
+	self.name = string.format("%s_to_%s_by_%s", fromStateName, toStateName, eventId)
+	self.fromStateName = fromStateName
+	self.toStateName = toStateName
+	self.eventId = eventId
+	self.fsm = nil
+	self.context = nil
 end
 
-function var_0_0.register(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.fsm = arg_2_1
-	arg_2_0.context = arg_2_2
+function SimpleFSMBaseTransition:register(fsm, context)
+	self.fsm = fsm
+	self.context = context
 end
 
-function var_0_0.onDone(arg_3_0)
-	arg_3_0.fsm:endTransition(arg_3_0.toStateName)
+function SimpleFSMBaseTransition:onDone()
+	self.fsm:endTransition(self.toStateName)
 end
 
-function var_0_0.start(arg_4_0)
+function SimpleFSMBaseTransition:start()
 	return
 end
 
-function var_0_0.check(arg_5_0)
+function SimpleFSMBaseTransition:check()
 	return true
 end
 
-function var_0_0.onStart(arg_6_0, arg_6_1)
-	arg_6_0:onDone()
+function SimpleFSMBaseTransition:onStart(param)
+	self:onDone()
 end
 
-function var_0_0.stop(arg_7_0)
+function SimpleFSMBaseTransition:stop()
 	return
 end
 
-function var_0_0.clear(arg_8_0)
+function SimpleFSMBaseTransition:clear()
 	return
 end
 
-return var_0_0
+return SimpleFSMBaseTransition

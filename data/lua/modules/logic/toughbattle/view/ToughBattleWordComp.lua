@@ -1,179 +1,181 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleWordComp", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleWordComp.lua
 
-local var_0_0 = class("ToughBattleWordComp", LuaCompBase)
-local var_0_1 = "<size=40><alpha=#00>.<alpha=#ff></size>"
+module("modules.logic.toughbattle.view.ToughBattleWordComp", package.seeall)
 
-local function var_0_2(arg_1_0)
-	local var_1_0
+local ToughBattleWordComp = class("ToughBattleWordComp", LuaCompBase)
+local kSpace = "<size=40><alpha=#00>.<alpha=#ff></size>"
+
+local function _getUCharArr(str)
+	local wordList
 
 	if LangSettings.instance:isEn() then
-		var_1_0 = {
-			string.byte(arg_1_0, 1, -1)
+		wordList = {
+			string.byte(str, 1, -1)
 		}
 
-		for iter_1_0 = 1, #var_1_0 do
-			if var_1_0[iter_1_0] == 32 then
-				var_1_0[iter_1_0] = var_0_1
+		for i = 1, #wordList do
+			if wordList[i] == 32 then
+				wordList[i] = kSpace
 			else
-				var_1_0[iter_1_0] = string.char(var_1_0[iter_1_0])
+				wordList[i] = string.char(wordList[i])
 			end
 		end
 	else
-		var_1_0 = LuaUtil.getUCharArr(arg_1_0)
+		wordList = LuaUtil.getUCharArr(str)
 	end
 
-	return var_1_0 or {}
+	return wordList or {}
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0._co = arg_2_1.co
-	arg_2_0._res = arg_2_1.res
+function ToughBattleWordComp:ctor(params)
+	self._co = params.co
+	self._res = params.res
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0._sign = gohelper.findChild(arg_3_1, "sign")
-	arg_3_0._line1 = gohelper.findChild(arg_3_1, "line1")
-	arg_3_0._line2 = gohelper.findChild(arg_3_1, "line2")
+function ToughBattleWordComp:init(go)
+	self.go = go
+	self._sign = gohelper.findChild(go, "sign")
+	self._line1 = gohelper.findChild(go, "line1")
+	self._line2 = gohelper.findChild(go, "line2")
 
-	arg_3_0:createTxt()
+	self:createTxt()
 end
 
-function var_0_0.createTxt(arg_4_0)
-	local var_4_0 = ToughBattleEnum.WordTxtOpen + ToughBattleEnum.WordTxtIdle + ToughBattleEnum.WordTxtClose
+function ToughBattleWordComp:createTxt()
+	local oneWordTime = ToughBattleEnum.WordTxtOpen + ToughBattleEnum.WordTxtIdle + ToughBattleEnum.WordTxtClose
 
-	arg_4_0._allAnimWork = {}
+	self._allAnimWork = {}
 
-	local var_4_1, var_4_2 = arg_4_0:getRes(arg_4_0._sign, true)
+	local imageAnim, image = self:getRes(self._sign, true)
 
-	var_4_2:LoadImage(ResUrl.getSignature(arg_4_0._co.sign))
+	image:LoadImage(ResUrl.getSignature(self._co.sign))
 
-	local var_4_3 = string.split(arg_4_0._co.desc, "\n")
-	local var_4_4 = var_0_2(var_4_3[1])
+	local arr = string.split(self._co.desc, "\n")
+	local words1 = _getUCharArr(arr[1])
 
-	for iter_4_0 = 1, #var_4_4 do
-		local var_4_5, var_4_6 = arg_4_0:getRes(arg_4_0._line1, false)
+	for i = 1, #words1 do
+		local txtAnim, txt = self:getRes(self._line1, false)
 
-		var_4_6.text = var_4_4[iter_4_0]
+		txt.text = words1[i]
 
-		local var_4_7 = var_4_6.transform.parent
+		local p = txt.transform.parent
 
-		recthelper.setWidth(var_4_7, var_4_6.preferredWidth)
-		table.insert(arg_4_0._allAnimWork, {
+		recthelper.setWidth(p, txt.preferredWidth)
+		table.insert(self._allAnimWork, {
 			playAnim = "open",
-			anim = var_4_5,
-			time = (iter_4_0 - 1) * ToughBattleEnum.WordTxtInterval
+			anim = txtAnim,
+			time = (i - 1) * ToughBattleEnum.WordTxtInterval
 		})
-		table.insert(arg_4_0._allAnimWork, {
+		table.insert(self._allAnimWork, {
 			playAnim = "close",
-			anim = var_4_5,
-			time = (iter_4_0 - 1) * ToughBattleEnum.WordTxtInterval + var_4_0 - ToughBattleEnum.WordTxtClose
+			anim = txtAnim,
+			time = (i - 1) * ToughBattleEnum.WordTxtInterval + oneWordTime - ToughBattleEnum.WordTxtClose
 		})
 	end
 
-	local var_4_8 = var_0_2(var_4_3[2])
+	local words2 = _getUCharArr(arr[2])
 
-	for iter_4_1 = 1, #var_4_8 do
-		local var_4_9, var_4_10 = arg_4_0:getRes(arg_4_0._line2, false)
+	for i = 1, #words2 do
+		local txtAnim, txt = self:getRes(self._line2, false)
 
-		var_4_10.text = var_4_8[iter_4_1]
+		txt.text = words2[i]
 
-		local var_4_11 = var_4_10.transform.parent
+		local p = txt.transform.parent
 
-		recthelper.setWidth(var_4_11, var_4_10.preferredWidth)
-		table.insert(arg_4_0._allAnimWork, {
+		recthelper.setWidth(p, txt.preferredWidth)
+		table.insert(self._allAnimWork, {
 			playAnim = "open",
-			anim = var_4_9,
-			time = (iter_4_1 - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay
+			anim = txtAnim,
+			time = (i - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay
 		})
-		table.insert(arg_4_0._allAnimWork, {
+		table.insert(self._allAnimWork, {
 			playAnim = "close",
-			anim = var_4_9,
-			time = (iter_4_1 - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay + var_4_0 - ToughBattleEnum.WordTxtClose
+			anim = txtAnim,
+			time = (i - 1) * ToughBattleEnum.WordTxtInterval + ToughBattleEnum.WordLine2Delay + oneWordTime - ToughBattleEnum.WordTxtClose
 		})
 	end
 
-	table.insert(arg_4_0._allAnimWork, {
+	table.insert(self._allAnimWork, {
 		playAnim = "open",
 		time = 0,
-		anim = var_4_1
+		anim = imageAnim
 	})
 
-	local var_4_12 = var_4_0 + ToughBattleEnum.WordTxtInterval * (#var_4_4 - 1)
-	local var_4_13 = 0
+	local line1TotalTime = oneWordTime + ToughBattleEnum.WordTxtInterval * (#words1 - 1)
+	local line2TotalTime = 0
 
-	if #var_4_8 > 0 then
-		var_4_13 = var_4_0 + ToughBattleEnum.WordTxtInterval * (#var_4_8 - 1)
+	if #words2 > 0 then
+		line2TotalTime = oneWordTime + ToughBattleEnum.WordTxtInterval * (#words2 - 1)
 	end
 
-	local var_4_14 = math.max(var_4_12, var_4_13)
+	local totalTime = math.max(line1TotalTime, line2TotalTime)
 
-	table.insert(arg_4_0._allAnimWork, {
+	table.insert(self._allAnimWork, {
 		playAnim = "close",
-		anim = var_4_1,
-		time = var_4_14 - ToughBattleEnum.WordTxtClose
+		anim = imageAnim,
+		time = totalTime - ToughBattleEnum.WordTxtClose
 	})
-	table.insert(arg_4_0._allAnimWork, {
+	table.insert(self._allAnimWork, {
 		destroy = true,
-		time = var_4_14
+		time = totalTime
 	})
-	table.sort(arg_4_0._allAnimWork, var_0_0.sortAnim)
-	arg_4_0:nextStep()
+	table.sort(self._allAnimWork, ToughBattleWordComp.sortAnim)
+	self:nextStep()
 end
 
-function var_0_0.nextStep(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.nextStep, arg_5_0)
+function ToughBattleWordComp:nextStep()
+	TaskDispatcher.cancelTask(self.nextStep, self)
 
-	local var_5_0 = table.remove(arg_5_0._allAnimWork, 1)
+	local work = table.remove(self._allAnimWork, 1)
 
-	if not var_5_0 then
+	if not work then
 		return
 	end
 
-	if var_5_0.destroy then
-		gohelper.destroy(arg_5_0.go)
+	if work.destroy then
+		gohelper.destroy(self.go)
 
 		return
-	elseif var_5_0.playAnim == "open" then
-		var_5_0.anim.enabled = true
+	elseif work.playAnim == "open" then
+		work.anim.enabled = true
 	else
-		var_5_0.anim:Play(var_5_0.playAnim, 0, 0)
+		work.anim:Play(work.playAnim, 0, 0)
 	end
 
-	local var_5_1 = arg_5_0._allAnimWork[1]
+	local nextWork = self._allAnimWork[1]
 
-	if not var_5_1 then
+	if not nextWork then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_5_0.nextStep, arg_5_0, var_5_1.time - var_5_0.time)
+	TaskDispatcher.runDelay(self.nextStep, self, nextWork.time - work.time)
 end
 
-function var_0_0.sortAnim(arg_6_0, arg_6_1)
-	return arg_6_0.time < arg_6_1.time
+function ToughBattleWordComp.sortAnim(a, b)
+	return a.time < b.time
 end
 
-local var_0_3 = typeof(UnityEngine.Animator)
+local Type_Animtor = typeof(UnityEngine.Animator)
 
-function var_0_0.getRes(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = gohelper.clone(arg_7_0._res, arg_7_1)
-	local var_7_1 = gohelper.findChildSingleImage(var_7_0, "img")
-	local var_7_2 = gohelper.findChildTextMesh(var_7_0, "txt")
-	local var_7_3 = var_7_0:GetComponent(var_0_3)
+function ToughBattleWordComp:getRes(root, isImage)
+	local go = gohelper.clone(self._res, root)
+	local image = gohelper.findChildSingleImage(go, "img")
+	local txt = gohelper.findChildTextMesh(go, "txt")
+	local anim = go:GetComponent(Type_Animtor)
 
-	gohelper.setActive(var_7_1, arg_7_2)
-	gohelper.setActive(var_7_2, not arg_7_2)
-	gohelper.setActive(var_7_0, true)
-	var_7_3:Play("open", 0, 0)
-	var_7_3:Update(0)
+	gohelper.setActive(image, isImage)
+	gohelper.setActive(txt, not isImage)
+	gohelper.setActive(go, true)
+	anim:Play("open", 0, 0)
+	anim:Update(0)
 
-	var_7_3.enabled = false
+	anim.enabled = false
 
-	return var_7_3, arg_7_2 and var_7_1 or var_7_2
+	return anim, isImage and image or txt
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.nextStep, arg_8_0)
+function ToughBattleWordComp:onDestroy()
+	TaskDispatcher.cancelTask(self.nextStep, self)
 end
 
-return var_0_0
+return ToughBattleWordComp

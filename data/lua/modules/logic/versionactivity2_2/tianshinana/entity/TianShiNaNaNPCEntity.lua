@@ -1,3 +1,7 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNPCEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/entity/TianShiNaNaNPCEntity.lua
 
-return (class("TianShiNaNaNPCEntity", TianShiNaNaUnitEntityBase))
+module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNPCEntity", package.seeall)
+
+local TianShiNaNaNPCEntity = class("TianShiNaNaNPCEntity", TianShiNaNaUnitEntityBase)
+
+return TianShiNaNaNPCEntity

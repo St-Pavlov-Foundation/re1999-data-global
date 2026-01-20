@@ -1,99 +1,101 @@
-﻿module("modules.logic.fight.model.data.FightEntityInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightEntityInfoData.lua
 
-local var_0_0 = FightDataClass("FightEntityInfoData")
+module("modules.logic.fight.model.data.FightEntityInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.uid
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.modelId = arg_1_1.modelId
-	arg_1_0.skin = arg_1_1.skin
-	arg_1_0.position = arg_1_1.position
-	arg_1_0.entityType = arg_1_1.entityType
-	arg_1_0.userId = arg_1_1.userId
-	arg_1_0.exPoint = arg_1_1.exPoint
-	arg_1_0.level = arg_1_1.level
-	arg_1_0.currentHp = arg_1_1.currentHp
-	arg_1_0.attr = FightHeroAttributeData.New(arg_1_1.attr)
-	arg_1_0.buffs = {}
+local FightEntityInfoData = FightDataClass("FightEntityInfoData")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.buffs) do
-		table.insert(arg_1_0.buffs, FightBuffInfoData.New(iter_1_1, arg_1_0.id))
+function FightEntityInfoData:onConstructor(proto)
+	self.id = proto.uid
+	self.uid = proto.uid
+	self.modelId = proto.modelId
+	self.skin = proto.skin
+	self.position = proto.position
+	self.entityType = proto.entityType
+	self.userId = proto.userId
+	self.exPoint = proto.exPoint
+	self.level = proto.level
+	self.currentHp = proto.currentHp
+	self.attr = FightHeroAttributeData.New(proto.attr)
+	self.buffs = {}
+
+	for i, oneBuffProto in ipairs(proto.buffs) do
+		table.insert(self.buffs, FightBuffInfoData.New(oneBuffProto, self.id))
 	end
 
-	arg_1_0.skillGroup1 = {}
+	self.skillGroup1 = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.skillGroup1) do
-		table.insert(arg_1_0.skillGroup1, iter_1_3)
+	for i, v in ipairs(proto.skillGroup1) do
+		table.insert(self.skillGroup1, v)
 	end
 
-	arg_1_0.skillGroup2 = {}
+	self.skillGroup2 = {}
 
-	for iter_1_4, iter_1_5 in ipairs(arg_1_1.skillGroup2) do
-		table.insert(arg_1_0.skillGroup2, iter_1_5)
+	for i, v in ipairs(proto.skillGroup2) do
+		table.insert(self.skillGroup2, v)
 	end
 
-	arg_1_0.passiveSkill = {}
+	self.passiveSkill = {}
 
-	for iter_1_6, iter_1_7 in ipairs(arg_1_1.passiveSkill) do
-		table.insert(arg_1_0.passiveSkill, iter_1_7)
+	for i, v in ipairs(proto.passiveSkill) do
+		table.insert(self.passiveSkill, v)
 	end
 
-	arg_1_0.exSkill = arg_1_1.exSkill
-	arg_1_0.shieldValue = arg_1_1.shieldValue
-	arg_1_0.expointMaxAdd = arg_1_1.expointMaxAdd
-	arg_1_0.equipUid = arg_1_1.equipUid
+	self.exSkill = proto.exSkill
+	self.shieldValue = proto.shieldValue
+	self.expointMaxAdd = proto.expointMaxAdd
+	self.equipUid = proto.equipUid
 
-	if arg_1_1:HasField("trialEquip") then
-		local var_1_0 = arg_1_1.trialEquip
+	if proto:HasField("trialEquip") then
+		local trialEquip = proto.trialEquip
 
-		arg_1_0.trialEquip = {}
-		arg_1_0.trialEquip.equipUid = var_1_0.equipUid
-		arg_1_0.trialEquip.equipId = var_1_0.equipId
-		arg_1_0.trialEquip.equipLv = var_1_0.equipLv
-		arg_1_0.trialEquip.refineLv = var_1_0.refineLv
+		self.trialEquip = {}
+		self.trialEquip.equipUid = trialEquip.equipUid
+		self.trialEquip.equipId = trialEquip.equipId
+		self.trialEquip.equipLv = trialEquip.equipLv
+		self.trialEquip.refineLv = trialEquip.refineLv
 	end
 
-	arg_1_0.exSkillLevel = arg_1_1.exSkillLevel
-	arg_1_0.powerInfos = {}
+	self.exSkillLevel = proto.exSkillLevel
+	self.powerInfos = {}
 
-	for iter_1_8, iter_1_9 in ipairs(arg_1_1.powerInfos) do
-		local var_1_1 = FightPowerInfoData.New(iter_1_9)
+	for i, v in ipairs(proto.powerInfos) do
+		local powerData = FightPowerInfoData.New(v)
 
-		table.insert(arg_1_0.powerInfos, var_1_1)
+		table.insert(self.powerInfos, powerData)
 	end
 
-	arg_1_0.SummonedList = {}
+	self.SummonedList = {}
 
-	for iter_1_10, iter_1_11 in ipairs(arg_1_1.SummonedList) do
-		table.insert(arg_1_0.SummonedList, FightSummonedInfoData.New(iter_1_11))
+	for i, v in ipairs(proto.SummonedList) do
+		table.insert(self.SummonedList, FightSummonedInfoData.New(v))
 	end
 
-	arg_1_0.exSkillPointChange = arg_1_1.exSkillPointChange
-	arg_1_0.teamType = arg_1_1.teamType
+	self.exSkillPointChange = proto.exSkillPointChange
+	self.teamType = proto.teamType
 
-	if arg_1_1:HasField("enhanceInfoBox") then
-		arg_1_0.enhanceInfoBox = FightEnhanceInfoBoxData.New(arg_1_1.enhanceInfoBox)
+	if proto:HasField("enhanceInfoBox") then
+		self.enhanceInfoBox = FightEnhanceInfoBoxData.New(proto.enhanceInfoBox)
 	end
 
-	arg_1_0.trialId = arg_1_1.trialId
-	arg_1_0.career = arg_1_1.career
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.guard = arg_1_1.guard
-	arg_1_0.subCd = arg_1_1.subCd
-	arg_1_0.exPointType = arg_1_1.exPointType
+	self.trialId = proto.trialId
+	self.career = proto.career
+	self.status = proto.status
+	self.guard = proto.guard
+	self.subCd = proto.subCd
+	self.exPointType = proto.exPointType
 
-	local var_1_2 = arg_1_1.equips[1]
+	local equipData = proto.equips[1]
 
-	if var_1_2 then
-		arg_1_0.equipRecord = FightEquipRecordData.New(var_1_2)
+	if equipData then
+		self.equipRecord = FightEquipRecordData.New(equipData)
 	end
 
-	if arg_1_1:HasField("destinyStone") and arg_1_1:HasField("destinyRank") then
-		arg_1_0.destinyStone = arg_1_1.destinyStone
-		arg_1_0.destinyRank = arg_1_1.destinyRank
+	if proto:HasField("destinyStone") and proto:HasField("destinyRank") then
+		self.destinyStone = proto.destinyStone
+		self.destinyRank = proto.destinyRank
 	end
 
-	arg_1_0.customUnitId = arg_1_1.customUnitId
+	self.customUnitId = proto.customUnitId
 end
 
-return var_0_0
+return FightEntityInfoData

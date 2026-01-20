@@ -1,77 +1,79 @@
-﻿module("modules.logic.fight.FightTimer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightTimer.lua
 
-local var_0_0 = class("FightTimer")
-local var_0_1 = FightTimerItem
-local var_0_2 = {}
-local var_0_3 = 0
-local var_0_4 = 0
-local var_0_5 = 10
+module("modules.logic.fight.FightTimer", package.seeall)
 
-function var_0_0.registTimer(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	return var_0_0.registRepeatTimer(arg_1_0, arg_1_1, arg_1_2, 1, arg_1_3)
+local FightTimer = class("FightTimer")
+local FightTimerItem = FightTimerItem
+local timerItems = {}
+local listCount = 0
+local updateTime = 0
+local clearTime = 10
+
+function FightTimer.registTimer(callback, handle, time, param)
+	return FightTimer.registRepeatTimer(callback, handle, time, 1, param)
 end
 
-function var_0_0.registRepeatTimer(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = var_0_1.New(arg_2_2, arg_2_3, arg_2_0, arg_2_1, arg_2_4)
+function FightTimer.registRepeatTimer(callback, handle, time, repeatCount, param)
+	local timerItem = FightTimerItem.New(time, repeatCount, callback, handle, param)
 
-	var_0_3 = var_0_3 + 1
-	var_0_2[var_0_3] = var_2_0
+	listCount = listCount + 1
+	timerItems[listCount] = timerItem
 
-	return var_2_0
+	return timerItem
 end
 
-function var_0_0.cancelTimer(arg_3_0)
-	if not arg_3_0 then
+function FightTimer.cancelTimer(timerItem)
+	if not timerItem then
 		return
 	end
 
-	arg_3_0.isDone = true
+	timerItem.isDone = true
 end
 
-function var_0_0.restartRepeatTimer(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0:restart(arg_4_1, arg_4_2, arg_4_3)
+function FightTimer.restartRepeatTimer(timerItem, time, repeatCount, param)
+	timerItem:restart(time, repeatCount, param)
 
-	var_0_3 = var_0_3 + 1
-	var_0_2[var_0_3] = arg_4_0
+	listCount = listCount + 1
+	timerItems[listCount] = timerItem
 
-	return arg_4_0
+	return timerItem
 end
 
-function var_0_0.update(arg_5_0, arg_5_1)
-	if var_0_3 == 0 then
+function FightTimer.update(handle, deltaTime)
+	if listCount == 0 then
 		return
 	end
 
-	for iter_5_0 = 1, var_0_3 do
-		var_0_2[iter_5_0]:update(arg_5_1)
+	for i = 1, listCount do
+		timerItems[i]:update(deltaTime)
 	end
 
-	var_0_4 = var_0_4 + arg_5_1
+	updateTime = updateTime + deltaTime
 
-	if var_0_4 > var_0_5 then
-		var_0_4 = 0
+	if updateTime > clearTime then
+		updateTime = 0
 
-		local var_5_0 = 1
+		local j = 1
 
-		for iter_5_1 = 1, var_0_3 do
-			local var_5_1 = var_0_2[iter_5_1]
+		for i = 1, listCount do
+			local item = timerItems[i]
 
-			if not var_5_1.isDone then
-				if iter_5_1 ~= var_5_0 then
-					var_0_2[var_5_0] = var_5_1
-					var_0_2[iter_5_1] = nil
+			if not item.isDone then
+				if i ~= j then
+					timerItems[j] = item
+					timerItems[i] = nil
 				end
 
-				var_5_0 = var_5_0 + 1
+				j = j + 1
 			else
-				var_0_2[iter_5_1] = nil
+				timerItems[i] = nil
 			end
 		end
 
-		var_0_3 = var_5_0 - 1
+		listCount = j - 1
 	end
 end
 
-FightUpdateMgr.registUpdate(var_0_0.update, var_0_0)
+FightUpdateMgr.registUpdate(FightTimer.update, FightTimer)
 
-return var_0_0
+return FightTimer

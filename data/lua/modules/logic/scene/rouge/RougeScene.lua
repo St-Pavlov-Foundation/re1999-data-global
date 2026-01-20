@@ -1,14 +1,16 @@
-﻿module("modules.logic.scene.rouge.RougeScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/rouge/RougeScene.lua
 
-local var_0_0 = class("RougeScene", BaseScene)
+module("modules.logic.scene.rouge.RougeScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("camera", RougeSceneCameraComp)
-	arg_1_0:_addComp("director", RougeSceneDirector)
-	arg_1_0:_addComp("model", RougeSceneModel)
-	arg_1_0:_addComp("map", RougeSceneMap)
-	arg_1_0:_addComp("view", RougeSceneViewComp)
-	arg_1_0:_addComp("bgm", RougeSceneBgmComp)
+local RougeScene = class("RougeScene", BaseScene)
+
+function RougeScene:_createAllComps()
+	self:_addComp("camera", RougeSceneCameraComp)
+	self:_addComp("director", RougeSceneDirector)
+	self:_addComp("model", RougeSceneModel)
+	self:_addComp("map", RougeSceneMap)
+	self:_addComp("view", RougeSceneViewComp)
+	self:_addComp("bgm", RougeSceneBgmComp)
 end
 
-return var_0_0
+return RougeScene

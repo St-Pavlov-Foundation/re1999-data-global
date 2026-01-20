@@ -1,7 +1,9 @@
-﻿module("modules.logic.fight.model.data.FightEntityDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightEntityDataMgr.lua
 
-local var_0_0 = FightDataClass("FightEntityDataMgr", FightDataMgrBase)
-local var_0_1 = {
+module("modules.logic.fight.model.data.FightEntityDataMgr", package.seeall)
+
+local FightEntityDataMgr = FightDataClass("FightEntityDataMgr", FightDataMgrBase)
+local listType = {
 	normal = "normal",
 	assistBoss = "assistBoss",
 	ASFD_emitter = "ASFD_emitter",
@@ -12,204 +14,214 @@ local var_0_1 = {
 	player = "player"
 }
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.entityDataDic = {}
-	arg_1_0.sideDic = {}
+function FightEntityDataMgr:onConstructor()
+	self.entityDataDic = {}
+	self.sideDic = {}
 
-	local var_1_0 = {
+	local sideType = {
 		FightEnum.EntitySide.MySide,
 		FightEnum.EntitySide.EnemySide
 	}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		arg_1_0.sideDic[iter_1_1] = {}
+	for i, side in ipairs(sideType) do
+		self.sideDic[side] = {}
 
-		for iter_1_2, iter_1_3 in pairs(var_0_1) do
-			arg_1_0.sideDic[iter_1_1][iter_1_3] = {}
+		for k, v in pairs(listType) do
+			self.sideDic[side][v] = {}
 		end
 	end
 
-	arg_1_0.deadUids = {}
-	arg_1_0.heroId2SkinId = {}
+	self.deadUids = {}
+	self.heroId2SkinId = {}
 end
 
-function var_0_0.getAllEntityList(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_1 = arg_2_1 or {}
+function FightEntityDataMgr:getAllEntityList(returnList, includeDead)
+	returnList = returnList or {}
 
-	for iter_2_0, iter_2_1 in pairs(var_0_1) do
-		arg_2_0:getList(FightEnum.EntitySide.MySide, iter_2_1, arg_2_1, arg_2_2)
-		arg_2_0:getList(FightEnum.EntitySide.EnemySide, iter_2_1, arg_2_1, arg_2_2)
+	for _, type in pairs(listType) do
+		self:getList(FightEnum.EntitySide.MySide, type, returnList, includeDead)
+		self:getList(FightEnum.EntitySide.EnemySide, type, returnList, includeDead)
 	end
 
-	return arg_2_1
+	return returnList
 end
 
-function var_0_0.getSideList(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_2 or {}
+function FightEntityDataMgr:getSideList(side, returnList, includeDead)
+	local list = returnList or {}
 
-	for iter_3_0, iter_3_1 in pairs(var_0_1) do
-		arg_3_0:getList(arg_3_1, iter_3_1, var_3_0, arg_3_3)
+	for k, v in pairs(listType) do
+		self:getList(side, v, list, includeDead)
 	end
 
-	return var_3_0
+	return list
 end
 
-function var_0_0.getPlayerList(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	return arg_4_0:getList(arg_4_1, var_0_1.player, arg_4_2, arg_4_3)
+function FightEntityDataMgr:getPlayerList(side, returnList, includeDead)
+	return self:getList(side, listType.player, returnList, includeDead)
 end
 
-function var_0_0.getMyPlayerList(arg_5_0, arg_5_1, arg_5_2)
-	return arg_5_0:getList(FightEnum.EntitySide.MySide, var_0_1.player, arg_5_1, arg_5_2)
+function FightEntityDataMgr:getMyPlayerList(returnList, includeDead)
+	return self:getList(FightEnum.EntitySide.MySide, listType.player, returnList, includeDead)
 end
 
-function var_0_0.getEnemyPlayerList(arg_6_0, arg_6_1, arg_6_2)
-	return arg_6_0:getList(FightEnum.EntitySide.EnemySide, var_0_1.player, arg_6_1, arg_6_2)
+function FightEntityDataMgr:getEnemyPlayerList(returnList, includeDead)
+	return self:getList(FightEnum.EntitySide.EnemySide, listType.player, returnList, includeDead)
 end
 
-function var_0_0.getMyVertin(arg_7_0)
-	return arg_7_0:getMyPlayerList()[1]
+function FightEntityDataMgr:getMyVertin()
+	return self:getMyPlayerList()[1]
 end
 
-function var_0_0.getEnemyVertin(arg_8_0)
-	return arg_8_0:getEnemyPlayerList()[1]
+function FightEntityDataMgr:getEnemyVertin()
+	return self:getEnemyPlayerList()[1]
 end
 
-function var_0_0.getNormalList(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	return arg_9_0:getList(arg_9_1, var_0_1.normal, arg_9_2, arg_9_3)
+function FightEntityDataMgr:getNormalList(side, returnList, includeDead)
+	return self:getList(side, listType.normal, returnList, includeDead)
 end
 
-function var_0_0.getMyNormalList(arg_10_0, arg_10_1, arg_10_2)
-	return arg_10_0:getList(FightEnum.EntitySide.MySide, var_0_1.normal, arg_10_1, arg_10_2)
+function FightEntityDataMgr:getMyNormalList(returnList, includeDead)
+	return self:getList(FightEnum.EntitySide.MySide, listType.normal, returnList, includeDead)
 end
 
-function var_0_0.getEnemyNormalList(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getList(FightEnum.EntitySide.EnemySide, var_0_1.normal, arg_11_1, arg_11_2)
+function FightEntityDataMgr:getEnemyNormalList(returnList, includeDead)
+	local list = self:getList(FightEnum.EntitySide.EnemySide, listType.normal, returnList, includeDead)
 
-	table.sort(var_11_0, FightHelper.sortAssembledMonsterFunc)
+	table.sort(list, FightHelper.sortAssembledMonsterFunc)
 
-	return var_11_0
+	return list
 end
 
-function var_0_0.getSubList(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	return arg_12_0:getList(arg_12_1, var_0_1.sub, arg_12_2, arg_12_3)
+function FightEntityDataMgr:getSubList(side, returnList, includeDead)
+	return self:getList(side, listType.sub, returnList, includeDead)
 end
 
-function var_0_0.getMySubList(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0:getList(FightEnum.EntitySide.MySide, var_0_1.sub, arg_13_1, arg_13_2)
+function FightEntityDataMgr:getMySubList(returnList, includeDead)
+	return self:getList(FightEnum.EntitySide.MySide, listType.sub, returnList, includeDead)
 end
 
-function var_0_0.getEnemySubList(arg_14_0, arg_14_1, arg_14_2)
-	return arg_14_0:getList(FightEnum.EntitySide.EnemySide, var_0_1.sub, arg_14_1, arg_14_2)
+function FightEntityDataMgr:getEnemySubList(returnList, includeDead)
+	return self:getList(FightEnum.EntitySide.EnemySide, listType.sub, returnList, includeDead)
 end
 
-function var_0_0.getSpList(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	return arg_15_0:getList(arg_15_1, var_0_1.sp, arg_15_2, arg_15_3)
+function FightEntityDataMgr:getSpList(side, returnList, includeDead)
+	return self:getList(side, listType.sp, returnList, includeDead)
 end
 
-function var_0_0.getMySpList(arg_16_0, arg_16_1, arg_16_2)
-	return arg_16_0:getList(FightEnum.EntitySide.MySide, var_0_1.sp, arg_16_1, arg_16_2)
+function FightEntityDataMgr:getMySpList(returnList, includeDead)
+	return self:getList(FightEnum.EntitySide.MySide, listType.sp, returnList, includeDead)
 end
 
-function var_0_0.getEnemySpList(arg_17_0, arg_17_1, arg_17_2)
-	return arg_17_0:getList(FightEnum.EntitySide.EnemySide, var_0_1.sp, arg_17_1, arg_17_2)
+function FightEntityDataMgr:getEnemySpList(returnList, includeDead)
+	return self:getList(FightEnum.EntitySide.EnemySide, listType.sp, returnList, includeDead)
 end
 
-function var_0_0.getAssistBoss(arg_18_0)
-	return arg_18_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.assistBoss][1]
+function FightEntityDataMgr:getAssistBoss()
+	return self.sideDic[FightEnum.EntitySide.MySide][listType.assistBoss][1]
 end
 
-function var_0_0.getVorpalith(arg_19_0)
-	return arg_19_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.vorpalith][1]
+function FightEntityDataMgr:getVorpalith()
+	return self.sideDic[FightEnum.EntitySide.MySide][listType.vorpalith][1]
 end
 
-function var_0_0.getASFDEntityMo(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0.sideDic[arg_20_1]
-	local var_20_1 = var_20_0 and var_20_0[var_0_1.ASFD_emitter]
+function FightEntityDataMgr:getRouge2Music()
+	local list = self.sideDic[FightEnum.EntitySide.MySide][listType.spFightEntities]
 
-	return var_20_1 and var_20_1[1]
+	for _, mo in ipairs(list) do
+		if mo.entityType == FightEnum.EntityType.Rouge2Music then
+			return mo
+		end
+	end
 end
 
-function var_0_0.getDeadList(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_2 or {}
+function FightEntityDataMgr:getASFDEntityMo(side)
+	local sideDict = self.sideDic[side]
+	local list = sideDict and sideDict[listType.ASFD_emitter]
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_0.entityDataDic) do
-		if iter_21_1.side == arg_21_1 and iter_21_1:isStatusDead() then
-			table.insert(var_21_0, iter_21_1)
+	return list and list[1]
+end
+
+function FightEntityDataMgr:getDeadList(side, returnList)
+	local list = returnList or {}
+
+	for k, entityMO in pairs(self.entityDataDic) do
+		if entityMO.side == side and entityMO:isStatusDead() then
+			table.insert(list, entityMO)
 		end
 	end
 
-	return var_21_0
+	return list
 end
 
-function var_0_0.getMyDeadList(arg_22_0, arg_22_1)
-	return arg_22_0:getDeadList(FightEnum.EntitySide.MySide, arg_22_1)
+function FightEntityDataMgr:getMyDeadList(returnList)
+	return self:getDeadList(FightEnum.EntitySide.MySide, returnList)
 end
 
-function var_0_0.getEnemyDeadList(arg_23_0, arg_23_1, arg_23_2)
-	return arg_23_0:getDeadList(FightEnum.EntitySide.EnemySide, arg_23_2)
+function FightEntityDataMgr:getEnemyDeadList(side, returnList)
+	return self:getDeadList(FightEnum.EntitySide.EnemySide, returnList)
 end
 
-function var_0_0.getSpFightEntities(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	return arg_24_0:getList(arg_24_1, var_0_1.spFightEntities, arg_24_2, arg_24_3)
+function FightEntityDataMgr:getSpFightEntities(side, returnList, includeDead)
+	return self:getList(side, listType.spFightEntities, returnList, includeDead)
 end
 
-function var_0_0.getMySpFightEntities(arg_25_0, arg_25_1, arg_25_2)
-	return arg_25_0:getSpFightEntities(FightEnum.EntitySide.MySide, arg_25_1, arg_25_2)
+function FightEntityDataMgr:getMySpFightEntities(returnList, includeDead)
+	return self:getSpFightEntities(FightEnum.EntitySide.MySide, returnList, includeDead)
 end
 
-function var_0_0.getEnemySpFightEntities(arg_26_0, arg_26_1, arg_26_2)
-	return arg_26_0:getSpFightEntities(FightEnum.EntitySide.EnemySide, arg_26_1, arg_26_2)
+function FightEntityDataMgr:getEnemySpFightEntities(returnList, includeDead)
+	return self:getSpFightEntities(FightEnum.EntitySide.EnemySide, returnList, includeDead)
 end
 
-function var_0_0.getList(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
-	local var_27_0 = arg_27_3 or {}
+function FightEntityDataMgr:getList(side, key, returnList, includeDead)
+	local list = returnList or {}
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0.sideDic[arg_27_1][arg_27_2]) do
-		local var_27_1 = false
+	for i, v in ipairs(self.sideDic[side][key]) do
+		local continue = false
 
-		if iter_27_1:isStatusDead() and not arg_27_4 then
-			var_27_1 = true
+		if v:isStatusDead() and not includeDead then
+			continue = true
 		end
 
-		if not var_27_1 then
-			table.insert(var_27_0, iter_27_1)
+		if not continue then
+			table.insert(list, v)
 		end
 	end
 
-	return var_27_0
+	return list
 end
 
-function var_0_0.getOriginSide(arg_28_0, arg_28_1)
-	return arg_28_0.sideDic[arg_28_1]
+function FightEntityDataMgr:getOriginSide(side)
+	return self.sideDic[side]
 end
 
-function var_0_0.getOriginNormalList(arg_29_0, arg_29_1)
-	return arg_29_0.sideDic[arg_29_1][var_0_1.normal]
+function FightEntityDataMgr:getOriginNormalList(side)
+	return self.sideDic[side][listType.normal]
 end
 
-function var_0_0.getOriginSubList(arg_30_0, arg_30_1)
-	return arg_30_0.sideDic[arg_30_1][var_0_1.sub]
+function FightEntityDataMgr:getOriginSubList(side)
+	return self.sideDic[side][listType.sub]
 end
 
-function var_0_0.getOriginSpList(arg_31_0, arg_31_1)
-	return arg_31_0.sideDic[arg_31_1][var_0_1.sp]
+function FightEntityDataMgr:getOriginSpList(side)
+	return self.sideDic[side][listType.sp]
 end
 
-function var_0_0.getOriginASFDEmitterList(arg_32_0, arg_32_1)
-	return arg_32_0.sideDic[arg_32_1][var_0_1.ASFD_emitter]
+function FightEntityDataMgr:getOriginASFDEmitterList(side)
+	return self.sideDic[side][listType.ASFD_emitter]
 end
 
-function var_0_0.getOriginListById(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0:getById(arg_33_1)
+function FightEntityDataMgr:getOriginListById(entityId)
+	local entityMO = self:getById(entityId)
 
-	if var_33_0 then
-		local var_33_1 = var_33_0.side
-		local var_33_2 = arg_33_0.sideDic[var_33_1]
+	if entityMO then
+		local side = entityMO.side
+		local sideDic = self.sideDic[side]
 
-		for iter_33_0, iter_33_1 in pairs(var_33_2) do
-			for iter_33_2, iter_33_3 in ipairs(iter_33_1) do
-				if iter_33_3.uid == var_33_0.uid then
-					return iter_33_1
+		for k, list in pairs(sideDic) do
+			for i, tarEntityMO in ipairs(list) do
+				if tarEntityMO.uid == entityMO.uid then
+					return list
 				end
 			end
 		end
@@ -218,86 +230,86 @@ function var_0_0.getOriginListById(arg_33_0, arg_33_1)
 	return {}
 end
 
-function var_0_0.isSub(arg_34_0, arg_34_1)
-	for iter_34_0, iter_34_1 in pairs(arg_34_0.sideDic) do
-		for iter_34_2, iter_34_3 in ipairs(iter_34_1[var_0_1.sub]) do
-			if iter_34_3.id == arg_34_1 then
+function FightEntityDataMgr:isSub(id)
+	for k, v in pairs(self.sideDic) do
+		for i, entityMO in ipairs(v[listType.sub]) do
+			if entityMO.id == id then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isMySub(arg_35_0, arg_35_1)
-	for iter_35_0, iter_35_1 in ipairs(arg_35_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.sub]) do
-		if iter_35_1.id == arg_35_1 then
+function FightEntityDataMgr:isMySub(id)
+	for i, entityMO in ipairs(self.sideDic[FightEnum.EntitySide.MySide][listType.sub]) do
+		if entityMO.id == id then
 			return true
 		end
 	end
 end
 
-function var_0_0.isSp(arg_36_0, arg_36_1)
-	for iter_36_0, iter_36_1 in pairs(arg_36_0.sideDic) do
-		for iter_36_2, iter_36_3 in ipairs(iter_36_1[var_0_1.sp]) do
-			if iter_36_3.id == arg_36_1 then
+function FightEntityDataMgr:isSp(id)
+	for k, v in pairs(self.sideDic) do
+		for i, entityMO in ipairs(v[listType.sp]) do
+			if entityMO.id == id then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isAssistBoss(arg_37_0, arg_37_1)
-	local var_37_0 = arg_37_0:getAssistBoss()
+function FightEntityDataMgr:isAssistBoss(id)
+	local assistBoss = self:getAssistBoss()
 
-	return var_37_0 and var_37_0.id == arg_37_1
+	return assistBoss and assistBoss.id == id
 end
 
-function var_0_0.isAct191Boss(arg_38_0, arg_38_1)
-	local var_38_0 = arg_38_0.entityDataDic[arg_38_1]
+function FightEntityDataMgr:isAct191Boss(id)
+	local entityData = self.entityDataDic[id]
 
-	if not var_38_0 then
+	if not entityData then
 		return false
 	end
 
-	if var_38_0.entityType == FightEnum.EntityType.Act191Boss then
+	if entityData.entityType == FightEnum.EntityType.Act191Boss then
 		return true
 	end
 end
 
-function var_0_0.isMySp(arg_39_0, arg_39_1)
-	for iter_39_0, iter_39_1 in ipairs(arg_39_0.sideDic[FightEnum.EntitySide.MySide][var_0_1.sp]) do
-		if iter_39_1.id == arg_39_1 then
+function FightEntityDataMgr:isMySp(id)
+	for i, entityMO in ipairs(self.sideDic[FightEnum.EntitySide.MySide][listType.sp]) do
+		if entityMO.id == id then
 			return true
 		end
 	end
 end
 
-function var_0_0.addDeadUid(arg_40_0, arg_40_1)
-	arg_40_0.deadUids[arg_40_1] = true
+function FightEntityDataMgr:addDeadUid(uid)
+	self.deadUids[uid] = true
 end
 
-function var_0_0.isDeadUid(arg_41_0, arg_41_1)
-	return arg_41_0.deadUids[arg_41_1]
+function FightEntityDataMgr:isDeadUid(uid)
+	return self.deadUids[uid]
 end
 
-function var_0_0.removeEntity(arg_42_0, arg_42_1)
-	if not arg_42_1 then
+function FightEntityDataMgr:removeEntity(uid)
+	if not uid then
 		return
 	end
 
-	local var_42_0 = arg_42_0.entityDataDic[arg_42_1]
+	local entityMo = self.entityDataDic[uid]
 
-	if not var_42_0 then
+	if not entityMo then
 		return
 	end
 
-	arg_42_0.entityDataDic[arg_42_1] = nil
+	self.entityDataDic[uid] = nil
 
-	for iter_42_0, iter_42_1 in pairs(arg_42_0.sideDic) do
-		for iter_42_2, iter_42_3 in pairs(iter_42_1) do
-			for iter_42_4, iter_42_5 in ipairs(iter_42_3) do
-				if iter_42_5.id == var_42_0.id then
-					table.remove(iter_42_3, iter_42_4)
+	for _, sideDict in pairs(self.sideDic) do
+		for _, list in pairs(sideDict) do
+			for index, _entityMo in ipairs(list) do
+				if _entityMo.id == entityMo.id then
+					table.remove(list, index)
 
 					break
 				end
@@ -305,158 +317,182 @@ function var_0_0.removeEntity(arg_42_0, arg_42_1)
 		end
 	end
 
-	return var_42_0
+	return entityMo
 end
 
-function var_0_0.getById(arg_43_0, arg_43_1)
-	return arg_43_0.entityDataDic[arg_43_1]
+function FightEntityDataMgr:getById(entityId)
+	return self.entityDataDic[entityId]
 end
 
-function var_0_0.getByPosId(arg_44_0, arg_44_1, arg_44_2)
-	for iter_44_0, iter_44_1 in pairs(arg_44_0.sideDic[arg_44_1]) do
-		for iter_44_2, iter_44_3 in ipairs(iter_44_1) do
-			if not iter_44_3:isStatusDead() and iter_44_3.position == arg_44_2 then
-				return iter_44_3
+function FightEntityDataMgr:getByPosId(side, position)
+	for _, list in pairs(self.sideDic[side]) do
+		for _, v in ipairs(list) do
+			if not v:isStatusDead() and v.position == position then
+				return v
 			end
 		end
 	end
 end
 
-function var_0_0.getOldEntityMO(arg_45_0, arg_45_1)
-	local var_45_0 = FightEntityMO.New()
+function FightEntityDataMgr:getOldEntityMO(id)
+	local oldEntityMO = FightEntityMO.New()
 
-	FightDataUtil.coverData(arg_45_0:getById(arg_45_1), var_45_0)
+	FightDataUtil.coverData(self:getById(id), oldEntityMO)
 
-	return var_45_0
+	return oldEntityMO
 end
 
-function var_0_0.getAllEntityData(arg_46_0)
-	return arg_46_0.entityDataDic
+function FightEntityDataMgr:getAllEntityData()
+	return self.entityDataDic
 end
 
-function var_0_0.getAllEntityMO(arg_47_0)
-	return arg_47_0.entityDataDic
+function FightEntityDataMgr:getAllEntityMO()
+	return self.entityDataDic
 end
 
-function var_0_0.addEntityMO(arg_48_0, arg_48_1)
-	return arg_48_0:refreshEntityByEntityMO(arg_48_1)
+function FightEntityDataMgr:addEntityMO(entityMO)
+	return self:refreshEntityByEntityMO(entityMO)
 end
 
-function var_0_0.replaceEntityMO(arg_49_0, arg_49_1)
-	return arg_49_0:refreshEntityByEntityMO(arg_49_1)
+function FightEntityDataMgr:replaceEntityMO(entityMO)
+	return self:refreshEntityByEntityMO(entityMO)
 end
 
-function var_0_0.refreshEntityByEntityMO(arg_50_0, arg_50_1)
-	local var_50_0 = arg_50_0.entityDataDic[arg_50_1.id]
+function FightEntityDataMgr:refreshEntityByEntityMO(entityMO)
+	local entityData = self.entityDataDic[entityMO.id]
 
-	if not var_50_0 then
-		var_50_0 = FightEntityMO.New()
-		arg_50_0.entityDataDic[arg_50_1.id] = var_50_0
+	if not entityData then
+		entityData = FightEntityMO.New()
+		self.entityDataDic[entityMO.id] = entityData
 	end
 
-	FightEntityDataHelper.copyEntityMO(arg_50_1, var_50_0)
+	FightEntityDataHelper.copyEntityMO(entityMO, entityData)
 
-	if var_50_0:isASFDEmitter() then
-		FightDataHelper.ASFDDataMgr:setEmitterEntityMo(var_50_0)
+	if entityData:isASFDEmitter() then
+		FightDataHelper.ASFDDataMgr:setEmitterEntityMo(entityData)
 	end
 
-	arg_50_0.heroId2SkinId[var_50_0.modelId] = var_50_0.skin
+	self.heroId2SkinId[entityData.modelId] = entityData.skin
 
-	return var_50_0
+	return entityData
 end
 
-function var_0_0.addEntityMOByProto(arg_51_0, arg_51_1, arg_51_2)
-	local var_51_0 = FightEntityMO.New()
+function FightEntityDataMgr:addEntityMOByProto(proto, side)
+	local entityMO = FightEntityMO.New()
 
-	var_51_0:init(arg_51_1, arg_51_2)
+	entityMO:init(proto, side)
 
-	if FightModel.instance:getVersion() >= 4 then
-		if var_51_0:isStatusDead() then
-			arg_51_0:addDeadUid(var_51_0.id)
+	local version = FightModel.instance:getVersion()
+
+	if version >= 4 then
+		if entityMO:isStatusDead() then
+			self:addDeadUid(entityMO.id)
 		end
-	elseif var_51_0.currentHp <= 0 then
-		var_51_0:setDead()
-		arg_51_0:addDeadUid(var_51_0.id)
+	elseif entityMO.currentHp <= 0 then
+		entityMO:setDead()
+		self:addDeadUid(entityMO.id)
 	end
 
-	return arg_51_0:addEntityMO(var_51_0)
+	return self:addEntityMO(entityMO)
 end
 
-function var_0_0.initEntityListByProto(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
-	tabletool.clear(arg_52_3)
+function FightEntityDataMgr:initEntityListByProto(protoList, side, sideList)
+	tabletool.clear(sideList)
 
-	for iter_52_0, iter_52_1 in ipairs(arg_52_1) do
-		table.insert(arg_52_3, arg_52_0:addEntityMOByProto(iter_52_1, arg_52_2))
-	end
-end
-
-function var_0_0.initOneEntityListByProto(arg_53_0, arg_53_1, arg_53_2, arg_53_3)
-	tabletool.clear(arg_53_3)
-	table.insert(arg_53_3, arg_53_0:addEntityMOByProto(arg_53_1, arg_53_2))
-end
-
-function var_0_0.updateData(arg_54_0, arg_54_1)
-	local var_54_0 = arg_54_0.sideDic[FightEnum.EntitySide.MySide]
-	local var_54_1 = arg_54_0.sideDic[FightEnum.EntitySide.EnemySide]
-
-	if arg_54_1.attacker.playerEntity then
-		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.playerEntity, FightEnum.EntitySide.MySide, var_54_0[var_0_1.player])
-	end
-
-	arg_54_0:initEntityListByProto(arg_54_1.attacker.entitys, FightEnum.EntitySide.MySide, var_54_0[var_0_1.normal])
-	arg_54_0:initEntityListByProto(arg_54_1.attacker.subEntitys, FightEnum.EntitySide.MySide, var_54_0[var_0_1.sub])
-	arg_54_0:initEntityListByProto(arg_54_1.attacker.spEntitys, FightEnum.EntitySide.MySide, var_54_0[var_0_1.sp])
-	arg_54_0:initEntityListByProto(arg_54_1.attacker.spFightEntities, FightEnum.EntitySide.MySide, var_54_0[var_0_1.spFightEntities])
-
-	if arg_54_1.attacker.assistBoss then
-		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.assistBoss, FightEnum.EntitySide.MySide, var_54_0[var_0_1.assistBoss])
-	end
-
-	if arg_54_1.attacker.emitter then
-		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.emitter, FightEnum.EntitySide.MySide, var_54_0[var_0_1.ASFD_emitter])
-	end
-
-	if arg_54_1.attacker.vorpalith then
-		arg_54_0:initOneEntityListByProto(arg_54_1.attacker.vorpalith, FightEnum.EntitySide.MySide, var_54_0[var_0_1.vorpalith])
-	end
-
-	if arg_54_1.defender.playerEntity then
-		arg_54_0:initOneEntityListByProto(arg_54_1.defender.playerEntity, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.player])
-	end
-
-	arg_54_0:initEntityListByProto(arg_54_1.defender.entitys, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.normal])
-	arg_54_0:initEntityListByProto(arg_54_1.defender.subEntitys, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.sub])
-	arg_54_0:initEntityListByProto(arg_54_1.defender.spEntitys, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.sp])
-	arg_54_0:initEntityListByProto(arg_54_1.defender.spFightEntities, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.spFightEntities])
-
-	if arg_54_1.defender.emitter then
-		arg_54_0:initOneEntityListByProto(arg_54_1.defender.emitter, FightEnum.EntitySide.EnemySide, var_54_1[var_0_1.ASFD_emitter])
+	for i, v in ipairs(protoList) do
+		table.insert(sideList, self:addEntityMOByProto(v, side))
 	end
 end
 
-function var_0_0.clientTestSetEntity(arg_55_0, arg_55_1, arg_55_2, arg_55_3)
-	arg_55_0:clientSetEntityList(arg_55_1, var_0_1.normal, arg_55_2)
-	arg_55_0:clientSetEntityList(arg_55_1, var_0_1.sub, arg_55_3)
+function FightEntityDataMgr:initOneEntityListByProto(proto, side, sideList)
+	tabletool.clear(sideList)
+	table.insert(sideList, self:addEntityMOByProto(proto, side))
 end
 
-function var_0_0.clientSetEntityList(arg_56_0, arg_56_1, arg_56_2, arg_56_3)
-	local var_56_0 = arg_56_0.sideDic[arg_56_1][arg_56_2]
+function FightEntityDataMgr:updateData(fightData)
+	local mySide = self.sideDic[FightEnum.EntitySide.MySide]
+	local enemySide = self.sideDic[FightEnum.EntitySide.EnemySide]
 
-	tabletool.clear(var_56_0)
+	if fightData.attacker.playerEntity then
+		self:initOneEntityListByProto(fightData.attacker.playerEntity, FightEnum.EntitySide.MySide, mySide[listType.player])
+	end
 
-	for iter_56_0, iter_56_1 in ipairs(arg_56_3) do
-		local var_56_1 = arg_56_0:addEntityMO(iter_56_1)
+	self:initEntityListByProto(fightData.attacker.entitys, FightEnum.EntitySide.MySide, mySide[listType.normal])
+	self:initEntityListByProto(fightData.attacker.subEntitys, FightEnum.EntitySide.MySide, mySide[listType.sub])
+	self:initEntityListByProto(fightData.attacker.spEntitys, FightEnum.EntitySide.MySide, mySide[listType.sp])
+	self:initEntityListByProto(fightData.attacker.spFightEntities, FightEnum.EntitySide.MySide, mySide[listType.spFightEntities])
 
-		table.insert(var_56_0, var_56_1)
+	if fightData.attacker.assistBoss then
+		self:initOneEntityListByProto(fightData.attacker.assistBoss, FightEnum.EntitySide.MySide, mySide[listType.assistBoss])
+	end
+
+	if fightData.attacker.emitter then
+		self:initOneEntityListByProto(fightData.attacker.emitter, FightEnum.EntitySide.MySide, mySide[listType.ASFD_emitter])
+	end
+
+	if fightData.attacker.vorpalith then
+		self:initOneEntityListByProto(fightData.attacker.vorpalith, FightEnum.EntitySide.MySide, mySide[listType.vorpalith])
+	end
+
+	if fightData.defender.playerEntity then
+		self:initOneEntityListByProto(fightData.defender.playerEntity, FightEnum.EntitySide.EnemySide, enemySide[listType.player])
+	end
+
+	self:initEntityListByProto(fightData.defender.entitys, FightEnum.EntitySide.EnemySide, enemySide[listType.normal])
+	self:initEntityListByProto(fightData.defender.subEntitys, FightEnum.EntitySide.EnemySide, enemySide[listType.sub])
+	self:initEntityListByProto(fightData.defender.spEntitys, FightEnum.EntitySide.EnemySide, enemySide[listType.sp])
+	self:initEntityListByProto(fightData.defender.spFightEntities, FightEnum.EntitySide.EnemySide, enemySide[listType.spFightEntities])
+
+	if fightData.defender.emitter then
+		self:initOneEntityListByProto(fightData.defender.emitter, FightEnum.EntitySide.EnemySide, enemySide[listType.ASFD_emitter])
 	end
 end
 
-function var_0_0.clientSetSubEntityList(arg_57_0, arg_57_1, arg_57_2)
-	arg_57_0:clientSetEntityList(arg_57_1, var_0_1.sub, arg_57_2)
+function FightEntityDataMgr:clientTestSetEntity(side, main, sub)
+	self:clientSetEntityList(side, listType.normal, main)
+	self:clientSetEntityList(side, listType.sub, sub)
 end
 
-function var_0_0.getHeroSkin(arg_58_0, arg_58_1)
-	return arg_58_0.heroId2SkinId[arg_58_1]
+function FightEntityDataMgr:clientSetEntityList(side, key, list)
+	local originList = self.sideDic[side][key]
+
+	tabletool.clear(originList)
+
+	for i, v in ipairs(list) do
+		local entityMO = self:addEntityMO(v)
+
+		table.insert(originList, entityMO)
+	end
 end
 
-return var_0_0
+function FightEntityDataMgr:clientSetSubEntityList(side, list)
+	self:clientSetEntityList(side, listType.sub, list)
+end
+
+function FightEntityDataMgr:getHeroSkin(heroId)
+	return self.heroId2SkinId[heroId]
+end
+
+function FightEntityDataMgr:checkSideHasBuffAct(side, buffActId)
+	if side == FightEnum.EntitySide.BothSide then
+		return self:_checkSideHasBuffAct(FightEnum.EntitySide.MySide, buffActId) or self:_checkSideHasBuffAct(FightEnum.EntitySide.EnemySide, buffActId)
+	end
+
+	return self:_checkSideHasBuffAct(side, buffActId)
+end
+
+function FightEntityDataMgr:_checkSideHasBuffAct(side, buffActId)
+	local dict = self.sideDic[side]
+
+	for _, list in pairs(dict) do
+		for _, entityMo in ipairs(list) do
+			if entityMo:hasBuffActId(buffActId) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+return FightEntityDataMgr

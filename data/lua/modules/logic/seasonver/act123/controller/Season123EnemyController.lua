@@ -1,45 +1,49 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123EnemyController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123EnemyController.lua
 
-local var_0_0 = class("Season123EnemyController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123EnemyController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	Season123EnemyModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
+local Season123EnemyController = class("Season123EnemyController", BaseController)
+
+function Season123EnemyController:onOpenView(actId, stage, layer)
+	Season123EnemyModel.instance:init(actId, stage, layer)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function Season123EnemyController:onCloseView()
 	Season123EnemyModel.instance:release()
 end
 
-function var_0_0.switchTab(arg_3_0, arg_3_1)
-	if Season123EnemyModel.instance:getSelectedIndex() ~= arg_3_1 then
-		Season123EnemyModel.instance:setSelectIndex(arg_3_1)
+function Season123EnemyController:switchTab(index)
+	local curIndex = Season123EnemyModel.instance:getSelectedIndex()
+
+	if curIndex ~= index then
+		Season123EnemyModel.instance:setSelectIndex(index)
 		Season123Controller.instance:dispatchEvent(Season123Event.EnemyDetailSwitchTab)
 	end
 end
 
-function var_0_0.selectMonster(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = Season123EnemyModel.instance:getCurrentBattleGroupIds()
+function Season123EnemyController:selectMonster(groupIndex, monsterIndex)
+	local groupIds = Season123EnemyModel.instance:getCurrentBattleGroupIds()
 
-	if not var_4_0 then
+	if not groupIds then
 		return
 	end
 
-	local var_4_1 = Season123EnemyModel.instance:getMonsterIds(var_4_0[arg_4_1])
+	local monsterIds = Season123EnemyModel.instance:getMonsterIds(groupIds[groupIndex])
 
-	if not var_4_1 then
+	if not monsterIds then
 		return
 	end
 
-	local var_4_2 = var_4_1[arg_4_2]
+	local monsterId = monsterIds[monsterIndex]
 
-	if var_4_2 ~= Season123EnemyModel.instance.selectMonsterId then
-		Season123EnemyModel.instance:setEnemySelectMonsterId(arg_4_1, arg_4_2, var_4_2)
+	if monsterId ~= Season123EnemyModel.instance.selectMonsterId then
+		Season123EnemyModel.instance:setEnemySelectMonsterId(groupIndex, monsterIndex, monsterId)
 		Season123Controller.instance:dispatchEvent(Season123Event.EnemyDetailSelectEnemy)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EnemyController.instance = Season123EnemyController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Season123EnemyController.instance)
 
-return var_0_0
+return Season123EnemyController

@@ -1,35 +1,38 @@
-﻿module("modules.logic.versionactivity1_6.decalogpresent.model.DecalogPresentModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/decalogpresent/model/DecalogPresentModel.lua
 
-local var_0_0 = class("DecalogPresentModel", BaseModel)
+module("modules.logic.versionactivity1_6.decalogpresent.model.DecalogPresentModel", package.seeall)
 
-var_0_0.REWARD_INDEX = 1
+local DecalogPresentModel = class("DecalogPresentModel", BaseModel)
 
-function var_0_0.getDecalogPresentActId(arg_1_0)
+DecalogPresentModel.REWARD_INDEX = 1
+
+function DecalogPresentModel:getDecalogPresentActId()
 	return ActivityEnum.Activity.V2a8_DecaLogPresent
 end
 
-function var_0_0.isDecalogPresentOpen(arg_2_0)
-	local var_2_0 = false
-	local var_2_1 = arg_2_0:getDecalogPresentActId()
+function DecalogPresentModel:isDecalogPresentOpen()
+	local result = false
+	local actId = self:getDecalogPresentActId()
 
-	if ActivityType101Model.instance:isOpen(var_2_1) then
-		var_2_0 = true
+	if ActivityType101Model.instance:isOpen(actId) then
+		result = true
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.isShowRedDot(arg_3_0)
-	local var_3_0 = false
-	local var_3_1 = arg_3_0:getDecalogPresentActId()
+function DecalogPresentModel:isShowRedDot()
+	local result = false
+	local actId = self:getDecalogPresentActId()
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
 
-	if ActivityType101Model.instance:isOpen(var_3_1) then
-		var_3_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_3_1)
+	if isOpen then
+		result = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
 	end
 
-	return var_3_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+DecalogPresentModel.instance = DecalogPresentModel.New()
 
-return var_0_0
+return DecalogPresentModel

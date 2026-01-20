@@ -1,195 +1,197 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewLatterView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewLatterView.lua
 
-local var_0_0 = class("TurnbackNewLatterView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackNewLatterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gofirst = gohelper.findChild(arg_1_0.viewGO, "first")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "normal")
+local TurnbackNewLatterView = class("TurnbackNewLatterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackNewLatterView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gofirst = gohelper.findChild(self.viewGO, "first")
+	self._gonormal = gohelper.findChild(self.viewGO, "normal")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
+function TurnbackNewLatterView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function TurnbackNewLatterView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function TurnbackNewLatterView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function TurnbackNewLatterView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function TurnbackNewLatterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.day = arg_7_0.viewParam and arg_7_0.viewParam.day or 1
-	arg_7_0._isNormal = arg_7_0.viewParam and arg_7_0.viewParam.isNormal or false
-	arg_7_0.notfirst = arg_7_0.viewParam and arg_7_0.viewParam.notfirst or false
+function TurnbackNewLatterView:onOpen()
+	self.day = self.viewParam and self.viewParam.day or 1
+	self._isNormal = self.viewParam and self.viewParam.isNormal or false
+	self.notfirst = self.viewParam and self.viewParam.notfirst or false
 
-	gohelper.setActive(arg_7_0._gonormal, arg_7_0._isNormal)
-	gohelper.setActive(arg_7_0._gofirst, not arg_7_0._isNormal)
+	gohelper.setActive(self._gonormal, self._isNormal)
+	gohelper.setActive(self._gofirst, not self._isNormal)
 
-	arg_7_0.turnbackId = TurnbackModel.instance:getCurTurnbackId()
-	arg_7_0.config = TurnbackConfig.instance:getTurnbackSignInDayCo(arg_7_0.turnbackId, arg_7_0.day)
+	self.turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	self.config = TurnbackConfig.instance:getTurnbackSignInDayCo(self.turnbackId, self.day)
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_letter_expansion)
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	if arg_8_0._isNormal then
-		arg_8_0:refreshNoraml()
+function TurnbackNewLatterView:refreshUI()
+	if self._isNormal then
+		self:refreshNoraml()
 	else
-		arg_8_0:refreshFirst()
+		self:refreshFirst()
 	end
 end
 
-function var_0_0.refreshNoraml(arg_9_0)
-	arg_9_0._simagerole = gohelper.findChildSingleImage(arg_9_0.viewGO, "normal/simage_page2/#simage_role")
-	arg_9_0._txtdec = gohelper.findChildText(arg_9_0.viewGO, "normal/simage_page2/#scroll_desc/Viewport/#txt_dec")
-	arg_9_0._txtname = gohelper.findChildText(arg_9_0.viewGO, "normal/simage_page2/#scroll_desc/Viewport/#txt_dec/#txt_name")
-	arg_9_0._simagesign = gohelper.findChildSingleImage(arg_9_0.viewGO, "normal/simage_page2/#simage_sign")
+function TurnbackNewLatterView:refreshNoraml()
+	self._simagerole = gohelper.findChildSingleImage(self.viewGO, "normal/simage_page2/#simage_role")
+	self._txtdec = gohelper.findChildText(self.viewGO, "normal/simage_page2/#scroll_desc/Viewport/#txt_dec")
+	self._txtname = gohelper.findChildText(self.viewGO, "normal/simage_page2/#scroll_desc/Viewport/#txt_dec/#txt_name")
+	self._simagesign = gohelper.findChildSingleImage(self.viewGO, "normal/simage_page2/#simage_sign")
 
-	arg_9_0._simagerole:LoadImage(ResUrl.getTurnbackIcon("new/letter/turnback_new_letter_role" .. arg_9_0.day))
+	self._simagerole:LoadImage(ResUrl.getTurnbackIcon("new/letter/turnback_new_letter_role" .. self.day))
 
-	arg_9_0._txtdec.text = arg_9_0.config.content
-	arg_9_0._txtname.text = arg_9_0.config.name
+	self._txtdec.text = self.config.content
+	self._txtname.text = self.config.name
 
-	local var_9_0 = "characterget/" .. tostring(arg_9_0.config.characterId)
+	local path = "characterget/" .. tostring(self.config.characterId)
 
-	arg_9_0._simagesign:LoadImage(ResUrl.getSignature(var_9_0))
+	self._simagesign:LoadImage(ResUrl.getSignature(path))
 end
 
-function var_0_0.refreshFirst(arg_10_0)
-	local var_10_0 = TurnbackConfig.instance:getTurnbackCo(arg_10_0.turnbackId)
+function TurnbackNewLatterView:refreshFirst()
+	local turnbackco = TurnbackConfig.instance:getTurnbackCo(self.turnbackId)
 
-	arg_10_0._simagerole = gohelper.findChildSingleImage(arg_10_0.viewGO, "first/simage_page2/#simage_role")
-	arg_10_0._scrolldesc = gohelper.findChildScrollRect(arg_10_0.viewGO, "first/simage_page2/#scroll_desc")
-	arg_10_0._txtdec = gohelper.findChildText(arg_10_0.viewGO, "first/simage_page2/#scroll_desc/Viewport/#txt_dec")
-	arg_10_0._gorewardicon = gohelper.findChild(arg_10_0.viewGO, "first/simage_page2/go_reward/rewardicon")
-	arg_10_0._goallrewardicon = gohelper.findChild(arg_10_0.viewGO, "first/simage_page3/#scroll_reward/Viewport/Content/rewardicon")
-	arg_10_0._btngoto = gohelper.findChildButton(arg_10_0.viewGO, "first/simage_page3/#btn_goto")
+	self._simagerole = gohelper.findChildSingleImage(self.viewGO, "first/simage_page2/#simage_role")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "first/simage_page2/#scroll_desc")
+	self._txtdec = gohelper.findChildText(self.viewGO, "first/simage_page2/#scroll_desc/Viewport/#txt_dec")
+	self._gorewardicon = gohelper.findChild(self.viewGO, "first/simage_page2/go_reward/rewardicon")
+	self._goallrewardicon = gohelper.findChild(self.viewGO, "first/simage_page3/#scroll_reward/Viewport/Content/rewardicon")
+	self._btngoto = gohelper.findChildButton(self.viewGO, "first/simage_page3/#btn_goto")
 
-	arg_10_0._simagerole:LoadImage(ResUrl.getTurnbackIcon("new/letter/turnback_new_letter_role" .. arg_10_0.day))
+	self._simagerole:LoadImage(ResUrl.getTurnbackIcon("new/letter/turnback_new_letter_role" .. self.day))
 
-	arg_10_0._txtdec.text = arg_10_0.config.content
+	self._txtdec.text = self.config.content
 
-	arg_10_0._btngoto:AddClickListener(arg_10_0._btngotoOnClick, arg_10_0)
-	gohelper.setActive(arg_10_0._btngoto.gameObject, not arg_10_0.notfirst)
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	gohelper.setActive(self._btngoto.gameObject, not self.notfirst)
 
-	arg_10_0.toprewardList = {}
+	self.toprewardList = {}
 
-	local var_10_1 = GameUtil.splitString2(var_10_0.onceBonus, true)
+	local bonusCo = GameUtil.splitString2(turnbackco.onceBonus, true)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-		local var_10_2 = arg_10_0:getUserDataTb_()
+	for index, co in ipairs(bonusCo) do
+		local rewardItem = self:getUserDataTb_()
 
-		var_10_2.goicon = gohelper.cloneInPlace(arg_10_0._gorewardicon, "reward" .. iter_10_0)
-		var_10_2.gorewardicon = gohelper.findChild(var_10_2.goicon, "icon")
-		var_10_2.goreceive = gohelper.findChild(var_10_2.goicon, "go_receive")
+		rewardItem.goicon = gohelper.cloneInPlace(self._gorewardicon, "reward" .. index)
+		rewardItem.gorewardicon = gohelper.findChild(rewardItem.goicon, "icon")
+		rewardItem.goreceive = gohelper.findChild(rewardItem.goicon, "go_receive")
 
-		gohelper.setActive(var_10_2.goicon, true)
+		gohelper.setActive(rewardItem.goicon, true)
 
-		if not var_10_2.itemIcon then
-			var_10_2.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_10_2.gorewardicon)
+		if not rewardItem.itemIcon then
+			rewardItem.itemIcon = IconMgr.instance:getCommonPropItemIcon(rewardItem.gorewardicon)
 		end
 
-		var_10_2.itemIcon:setMOValue(iter_10_1[1], iter_10_1[2], iter_10_1[3], nil, true)
-		var_10_2.itemIcon:setScale(0.5)
-		var_10_2.itemIcon:setCountFontSize(48)
-		table.insert(arg_10_0.toprewardList, var_10_2)
+		rewardItem.itemIcon:setMOValue(co[1], co[2], co[3], nil, true)
+		rewardItem.itemIcon:setScale(0.5)
+		rewardItem.itemIcon:setCountFontSize(48)
+		table.insert(self.toprewardList, rewardItem)
 	end
 
-	arg_10_0:setRewardReceiveState()
+	self:setRewardReceiveState()
 
-	arg_10_0.rewardList = {}
+	self.rewardList = {}
 
-	local var_10_3 = var_10_0.bonusList
+	local allRewardCo = turnbackco.bonusList
 
-	if var_10_3 then
-		local var_10_4 = GameUtil.splitString2(var_10_3, true)
+	if allRewardCo then
+		local bonusCo = GameUtil.splitString2(allRewardCo, true)
 
-		for iter_10_2, iter_10_3 in ipairs(var_10_4) do
-			local var_10_5 = arg_10_0:getUserDataTb_()
+		for index, co in ipairs(bonusCo) do
+			local rewardItem = self:getUserDataTb_()
 
-			var_10_5.goicon = gohelper.cloneInPlace(arg_10_0._goallrewardicon, "reward" .. iter_10_2)
+			rewardItem.goicon = gohelper.cloneInPlace(self._goallrewardicon, "reward" .. index)
 
-			gohelper.setActive(var_10_5.goicon, true)
+			gohelper.setActive(rewardItem.goicon, true)
 
-			if not var_10_5.itemIcon then
-				var_10_5.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_10_5.goicon)
+			if not rewardItem.itemIcon then
+				rewardItem.itemIcon = IconMgr.instance:getCommonPropItemIcon(rewardItem.goicon)
 			end
 
-			var_10_5.itemIcon:setMOValue(iter_10_3[1], iter_10_3[2], iter_10_3[3], nil, true)
-			var_10_5.itemIcon:setScale(0.5)
-			var_10_5.itemIcon:setCountFontSize(48)
-			table.insert(arg_10_0.rewardList, var_10_5)
+			rewardItem.itemIcon:setMOValue(co[1], co[2], co[3], nil, true)
+			rewardItem.itemIcon:setScale(0.5)
+			rewardItem.itemIcon:setCountFontSize(48)
+			table.insert(self.rewardList, rewardItem)
 		end
 	end
 
 	if TurnbackModel.instance:haveOnceBonusReward() then
-		TaskDispatcher.runDelay(arg_10_0.afterAnim, arg_10_0, 1)
+		TaskDispatcher.runDelay(self.afterAnim, self, 1)
 	end
 end
 
-function var_0_0.afterAnim(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.afterAnim, arg_11_0)
+function TurnbackNewLatterView:afterAnim()
+	TaskDispatcher.cancelTask(self.afterAnim, self)
 
-	local var_11_0 = TurnbackModel.instance:getCurTurnbackId()
+	local turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	TurnbackRpc.instance:sendTurnbackOnceBonusRequest(var_11_0)
+	TurnbackRpc.instance:sendTurnbackOnceBonusRequest(turnbackId)
 end
 
-function var_0_0._btngotoOnClick(arg_12_0)
-	local var_12_0 = TurnbackModel.instance:getCurTurnbackId()
-	local var_12_1 = {
-		turnbackId = var_12_0
+function TurnbackNewLatterView:_btngotoOnClick()
+	local turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	local param = {
+		turnbackId = turnbackId
 	}
 
-	TurnbackController.instance:openTurnbackBeginnerView(var_12_1)
-	arg_12_0:closeThis()
+	TurnbackController.instance:openTurnbackBeginnerView(param)
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_13_0)
-	if not arg_13_0._isNormal then
-		arg_13_0._btngoto:RemoveClickListener()
+function TurnbackNewLatterView:onClose()
+	if not self._isNormal then
+		self._btngoto:RemoveClickListener()
 	end
 
-	TaskDispatcher.cancelTask(arg_13_0.afterAnim, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.checkScrollEnd, arg_13_0)
+	TaskDispatcher.cancelTask(self.afterAnim, self)
+	TaskDispatcher.cancelTask(self.checkScrollEnd, self)
 end
 
-function var_0_0._onCloseViewFinish(arg_14_0, arg_14_1)
-	if arg_14_1 == ViewName.CommonPropView and not arg_14_0._isNormal and not arg_14_0.notfirst then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_0.toprewardList) do
-			gohelper.setActive(iter_14_1.goreceive, true)
+function TurnbackNewLatterView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView and not self._isNormal and not self.notfirst then
+		for _, node in ipairs(self.toprewardList) do
+			gohelper.setActive(node.goreceive, true)
 		end
 	end
 end
 
-function var_0_0.setRewardReceiveState(arg_15_0)
-	if not arg_15_0._isNormal and arg_15_0.notfirst then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0.toprewardList) do
-			gohelper.setActive(iter_15_1.goreceive, true)
+function TurnbackNewLatterView:setRewardReceiveState()
+	if not self._isNormal and self.notfirst then
+		for _, node in ipairs(self.toprewardList) do
+			gohelper.setActive(node.goreceive, true)
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function TurnbackNewLatterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackNewLatterView

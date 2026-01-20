@@ -1,58 +1,62 @@
-﻿module("modules.logic.fight.view.FightDouQuQuHuntingView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightDouQuQuHuntingView.lua
 
-local var_0_0 = class("FightDouQuQuHuntingView", FightBaseView)
+module("modules.logic.fight.view.FightDouQuQuHuntingView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.huntingText = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_num")
-	arg_1_0.addEffect = gohelper.findChild(arg_1_0.viewGO, "root/#add")
+local FightDouQuQuHuntingView = class("FightDouQuQuHuntingView", FightBaseView)
+
+function FightDouQuQuHuntingView:onInitView()
+	self.huntingText = gohelper.findChildText(self.viewGO, "root/#txt_num")
+	self.addEffect = gohelper.findChild(self.viewGO, "root/#add")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.UpdateFightParam, arg_2_0.onUpdateFightParam)
+function FightDouQuQuHuntingView:addEvents()
+	self:com_registFightEvent(FightEvent.UpdateFightParam, self.onUpdateFightParam)
 
-	arg_2_0.tweenComp = arg_2_0:addComponent(FightTweenComponent)
+	self.tweenComp = self:addComponent(FightTweenComponent)
 end
 
-function var_0_0.onUpdateFightParam(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if arg_3_1 ~= FightParamData.ParamKey.ACT191_HUNTING then
+function FightDouQuQuHuntingView:onUpdateFightParam(keyId, oldValue, currValue, offset)
+	if keyId ~= FightParamData.ParamKey.ACT191_HUNTING then
 		return
 	end
 
-	arg_3_0:com_killTween(arg_3_0.tweenId)
-	arg_3_0.tweenComp:DOTweenFloat(arg_3_2, arg_3_3, 0.5, arg_3_0.onFrame, nil, arg_3_0)
+	self:com_killTween(self.tweenId)
+	self.tweenComp:DOTweenFloat(oldValue, currValue, 0.5, self.onFrame, nil, self)
 
-	if arg_3_4 > 0 then
-		gohelper.setActive(arg_3_0.addEffect, false)
-		gohelper.setActive(arg_3_0.addEffect, true)
-		arg_3_0:com_registSingleTimer(arg_3_0.hideEffect, 1)
+	if offset > 0 then
+		gohelper.setActive(self.addEffect, false)
+		gohelper.setActive(self.addEffect, true)
+		self:com_registSingleTimer(self.hideEffect, 1)
 	end
 end
 
-function var_0_0.onFrame(arg_4_0, arg_4_1)
-	arg_4_1 = math.ceil(arg_4_1)
+function FightDouQuQuHuntingView:onFrame(value)
+	value = math.ceil(value)
 
-	arg_4_0:refreshData(arg_4_1)
+	self:refreshData(value)
 end
 
-function var_0_0.hideEffect(arg_5_0)
-	gohelper.setActive(arg_5_0.addEffect, false)
+function FightDouQuQuHuntingView:hideEffect()
+	gohelper.setActive(self.addEffect, false)
 end
 
-function var_0_0.refreshData(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1 < arg_6_0.maxValue and "#D97373" or "#65B96F"
+function FightDouQuQuHuntingView:refreshData(hunting)
+	local leftColor = hunting < self.maxValue and "#D97373" or "#65B96F"
 
-	arg_6_0.huntingText.text = string.format("<%s>%s</color>/%s", var_6_0, arg_6_1, arg_6_0.maxValue)
+	self.huntingText.text = string.format("<%s>%s</color>/%s", leftColor, hunting, self.maxValue)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	transformhelper.setLocalScale(arg_7_0.viewGO.transform, 0.8, 0.8, 0.8)
-	recthelper.setAnchorX(arg_7_0.viewGO.transform, 15)
+function FightDouQuQuHuntingView:onOpen()
+	transformhelper.setLocalScale(self.viewGO.transform, 0.8, 0.8, 0.8)
+	recthelper.setAnchorX(self.viewGO.transform, 15)
 
-	arg_7_0.maxValue = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191].minNeedHuntValue
+	local customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191]
 
-	local var_7_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ACT191_HUNTING]
+	self.maxValue = customData.minNeedHuntValue
 
-	arg_7_0:refreshData(var_7_0)
+	local hunting = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ACT191_HUNTING]
+
+	self:refreshData(hunting)
 end
 
-return var_0_0
+return FightDouQuQuHuntingView

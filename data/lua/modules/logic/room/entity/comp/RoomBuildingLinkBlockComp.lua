@@ -1,96 +1,98 @@
-﻿module("modules.logic.room.entity.comp.RoomBuildingLinkBlockComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomBuildingLinkBlockComp.lua
 
-local var_0_0 = class("RoomBuildingLinkBlockComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomBuildingLinkBlockComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+local RoomBuildingLinkBlockComp = class("RoomBuildingLinkBlockComp", LuaCompBase)
+
+function RoomBuildingLinkBlockComp:ctor(entity)
+	self.entity = entity
+	self._effectKey = RoomEnum.EffectKey.BuildingGOKey
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function RoomBuildingLinkBlockComp:init(go)
+	self.go = go
 
-	local var_2_0 = arg_2_0:getMO()
+	local mo = self:getMO()
 
-	arg_2_0._linkBlockDefineIds = string.splitToNumber(var_2_0.config.linkBlock, "#") or {}
-	arg_2_0._linkBlockDefineDict = {}
+	self._linkBlockDefineIds = string.splitToNumber(mo.config.linkBlock, "#") or {}
+	self._linkBlockDefineDict = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._linkBlockDefineIds) do
-		arg_2_0._linkBlockDefineDict[iter_2_1] = true
+	for _, defineId in ipairs(self._linkBlockDefineIds) do
+		self._linkBlockDefineDict[defineId] = true
 	end
 
-	arg_2_0._isLink = arg_2_0:_checkLinkBlock()
+	self._isLink = self:_checkLinkBlock()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.ClientPlaceBlock, arg_3_0._onBlockChange, arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.ClientCancelBlock, arg_3_0._onBlockChange, arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.ConfirmBackBlock, arg_3_0._onBlockChange, arg_3_0)
-	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, arg_3_0._onBlockChange, arg_3_0)
+function RoomBuildingLinkBlockComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.ClientPlaceBlock, self._onBlockChange, self)
+	RoomMapController.instance:registerCallback(RoomEvent.ClientCancelBlock, self._onBlockChange, self)
+	RoomMapController.instance:registerCallback(RoomEvent.ConfirmBackBlock, self._onBlockChange, self)
+	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, self._onBlockChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.ClientPlaceBlock, arg_4_0._onBlockChange, arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.ClientCancelBlock, arg_4_0._onBlockChange, arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.ConfirmBackBlock, arg_4_0._onBlockChange, arg_4_0)
-	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, arg_4_0._onBlockChange, arg_4_0)
+function RoomBuildingLinkBlockComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.ClientPlaceBlock, self._onBlockChange, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.ClientCancelBlock, self._onBlockChange, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.ConfirmBackBlock, self._onBlockChange, self)
+	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, self._onBlockChange, self)
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
-	arg_5_0:removeEventListeners()
+function RoomBuildingLinkBlockComp:beforeDestroy()
+	self:removeEventListeners()
 end
 
-function var_0_0._onBlockChange(arg_6_0)
-	arg_6_0:refreshLink()
+function RoomBuildingLinkBlockComp:_onBlockChange()
+	self:refreshLink()
 end
 
-function var_0_0.refreshLink(arg_7_0)
-	local var_7_0 = arg_7_0:_checkLinkBlock()
+function RoomBuildingLinkBlockComp:refreshLink()
+	local isLink = self:_checkLinkBlock()
 
-	if arg_7_0._isLink ~= var_7_0 then
-		arg_7_0._isLink = var_7_0
+	if self._isLink ~= isLink then
+		self._isLink = isLink
 
-		arg_7_0:_updateLink()
+		self:_updateLink()
 	end
 end
 
-function var_0_0._updateLink(arg_8_0)
-	local var_8_0 = arg_8_0.entity.effect:getGameObjectsByName(arg_8_0._effectKey, RoomEnum.EntityChildKey.BuildingLinkBlockGOKey)
+function RoomBuildingLinkBlockComp:_updateLink()
+	local golist = self.entity.effect:getGameObjectsByName(self._effectKey, RoomEnum.EntityChildKey.BuildingLinkBlockGOKey)
 
-	if var_8_0 and #var_8_0 > 0 then
-		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-			gohelper.setActive(iter_8_1, arg_8_0._isLink)
+	if golist and #golist > 0 then
+		for i, tempGO in ipairs(golist) do
+			gohelper.setActive(tempGO, self._isLink)
 		end
 	end
 end
 
-function var_0_0._checkLinkBlock(arg_9_0)
-	if not arg_9_0._linkBlockDefineIds or #arg_9_0._linkBlockDefineIds < 1 or arg_9_0.entity.id == RoomBuildingController.instance:isPressBuilding() then
+function RoomBuildingLinkBlockComp:_checkLinkBlock()
+	if not self._linkBlockDefineIds or #self._linkBlockDefineIds < 1 or self.entity.id == RoomBuildingController.instance:isPressBuilding() then
 		return false
 	end
 
-	local var_9_0, var_9_1 = arg_9_0:_getOccupyDict()
+	local occupyDict, hexPointList = self:_getOccupyDict()
 
-	if not var_9_0 then
+	if not occupyDict then
 		return false
 	end
 
-	local var_9_2 = RoomMapBlockModel.instance
-	local var_9_3 = HexPoint.directions
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
+	local directions = HexPoint.directions
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		for iter_9_2 = 1, 6 do
-			local var_9_4 = var_9_3[iter_9_2]
-			local var_9_5 = var_9_4.x + iter_9_1.x
-			local var_9_6 = var_9_4.y + iter_9_1.y
+	for i, hexPoint in ipairs(hexPointList) do
+		for direction = 1, 6 do
+			local dirHex = directions[direction]
+			local x = dirHex.x + hexPoint.x
+			local y = dirHex.y + hexPoint.y
 
-			if not var_9_0[var_9_5] or not var_9_0[var_9_5][var_9_6] then
-				local var_9_7 = var_9_2:getBlockMO(var_9_5, var_9_6)
+			if not occupyDict[x] or not occupyDict[x][y] then
+				local blockMO = tRoomMapBlockModel:getBlockMO(x, y)
 
-				if var_9_7 and var_9_7:isInMapBlock() then
-					local var_9_8 = var_9_7:getDefineId()
+				if blockMO and blockMO:isInMapBlock() then
+					local defineId = blockMO:getDefineId()
 
-					if arg_9_0._linkBlockDefineDict[var_9_8] then
+					if self._linkBlockDefineDict[defineId] then
 						return true
 					end
 				end
@@ -101,22 +103,22 @@ function var_0_0._checkLinkBlock(arg_9_0)
 	return false
 end
 
-function var_0_0._getOccupyDict(arg_10_0)
-	return arg_10_0.entity:getOccupyDict()
+function RoomBuildingLinkBlockComp:_getOccupyDict()
+	return self.entity:getOccupyDict()
 end
 
-function var_0_0.getMO(arg_11_0)
-	return arg_11_0.entity:getMO()
+function RoomBuildingLinkBlockComp:getMO()
+	return self.entity:getMO()
 end
 
-function var_0_0.onEffectRebuild(arg_12_0)
-	local var_12_0 = arg_12_0.entity.effect
+function RoomBuildingLinkBlockComp:onEffectRebuild()
+	local effect = self.entity.effect
 
-	if var_12_0:isHasEffectGOByKey(arg_12_0._effectKey) and not var_12_0:isSameResByKey(arg_12_0._effectKey, arg_12_0._effectRes) then
-		arg_12_0._effectRes = var_12_0:getEffectRes(arg_12_0._effectKey)
+	if effect:isHasEffectGOByKey(self._effectKey) and not effect:isSameResByKey(self._effectKey, self._effectRes) then
+		self._effectRes = effect:getEffectRes(self._effectKey)
 
-		arg_12_0:_updateLink()
+		self:_updateLink()
 	end
 end
 
-return var_0_0
+return RoomBuildingLinkBlockComp

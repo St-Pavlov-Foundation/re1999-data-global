@@ -1,173 +1,177 @@
-﻿module("modules.logic.turnback.model.TurnbackTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/model/TurnbackTaskModel.lua
 
-local var_0_0 = class("TurnbackTaskModel", ListScrollModel)
+module("modules.logic.turnback.model.TurnbackTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.tempTaskModel = BaseModel.New()
-	arg_1_0.tempOnlineTaskModel = BaseModel.New()
-	arg_1_0.taskLoopTypeDotDict = {}
-	arg_1_0.taskSearchList = {}
-	arg_1_0.taskSearchDict = {}
+local TurnbackTaskModel = class("TurnbackTaskModel", ListScrollModel)
+
+function TurnbackTaskModel:onInit()
+	self.tempTaskModel = BaseModel.New()
+	self.tempOnlineTaskModel = BaseModel.New()
+	self.taskLoopTypeDotDict = {}
+	self.taskSearchList = {}
+	self.taskSearchDict = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.tempTaskModel:clear()
+function TurnbackTaskModel:reInit()
+	self.tempTaskModel:clear()
 
-	arg_2_0.taskLoopTypeDotDict = {}
-	arg_2_0.taskSearchList = {}
-	arg_2_0.taskSearchDict = {}
+	self.taskLoopTypeDotDict = {}
+	self.taskSearchList = {}
+	self.taskSearchDict = {}
 end
 
-function var_0_0.setTaskInfoList(arg_3_0, arg_3_1)
-	local var_3_0 = {}
-	local var_3_1 = {}
+function TurnbackTaskModel:setTaskInfoList(taskInfoList)
+	local list = {}
+	local onlineList = {}
 
-	arg_3_0.taskSearchList = {}
+	self.taskSearchList = {}
 
-	local var_3_2 = TurnbackModel.instance:isNewType()
+	local curDay = TurnbackModel.instance:getCurrentTurnbackDay()
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_3 = TurnbackConfig.instance:getTurnbackTaskCo(iter_3_1.id)
+	for _, info in ipairs(taskInfoList) do
+		local config = TurnbackConfig.instance:getTurnbackTaskCo(info.id)
 
-		if var_3_3 then
-			local var_3_4 = TaskMo.New()
+		if config then
+			local mo = TaskMo.New()
 
-			var_3_4:init(iter_3_1, var_3_3)
+			mo:init(info, config)
 
-			if var_3_2 then
-				if var_3_3.type ~= TurnbackEnum.TaskEnum.Online then
-					table.insert(var_3_0, var_3_4)
+			local canAdd = not (config.showDay > 0) or not (curDay < config.showDay)
+
+			if canAdd then
+				if config.type ~= TurnbackEnum.TaskEnum.Online then
+					table.insert(list, mo)
 				else
-					table.insert(var_3_1, var_3_4)
+					table.insert(onlineList, mo)
 				end
+			end
 
-				if var_3_3.listenerType == "TodayOnlineSeconds" then
-					table.insert(arg_3_0.taskSearchList, var_3_4)
+			if config.listenerType == "TodayOnlineSeconds" then
+				table.insert(self.taskSearchList, mo)
 
-					arg_3_0.taskSearchDict[var_3_4.id] = var_3_4
-				end
-			else
-				table.insert(var_3_0, var_3_4)
+				self.taskSearchDict[mo.id] = mo
 			end
 		end
 	end
 
-	table.sort(arg_3_0.taskSearchList, SortUtil.keyLower("id"))
-	arg_3_0.tempTaskModel:setList(var_3_0)
-	arg_3_0.tempOnlineTaskModel:setList(var_3_1)
-	arg_3_0:sortList()
-	arg_3_0:checkTaskLoopTypeDotState()
+	table.sort(self.taskSearchList, SortUtil.keyLower("id"))
+	self.tempTaskModel:setList(list)
+	self.tempOnlineTaskModel:setList(onlineList)
+	self:sortList()
+	self:checkTaskLoopTypeDotState()
 end
 
-function var_0_0.sortList(arg_4_0)
-	arg_4_0.tempTaskModel:sort(function(arg_5_0, arg_5_1)
-		local var_5_0 = arg_5_0.finishCount > 0 and 3 or arg_5_0.progress >= arg_5_0.config.maxProgress and 1 or 2
-		local var_5_1 = arg_5_1.finishCount > 0 and 3 or arg_5_1.progress >= arg_5_1.config.maxProgress and 1 or 2
+function TurnbackTaskModel:sortList()
+	self.tempTaskModel:sort(function(a, b)
+		local valueA = a.finishCount > 0 and 3 or a.progress >= a.config.maxProgress and 1 or 2
+		local valueB = b.finishCount > 0 and 3 or b.progress >= b.config.maxProgress and 1 or 2
 
-		if var_5_0 == var_5_1 then
-			if arg_5_0.config.sortId == arg_5_1.config.sortId then
-				return arg_5_0.id < arg_5_1.id
+		if valueA == valueB then
+			if a.config.sortId == b.config.sortId then
+				return a.id < b.id
 			else
-				return arg_5_0.config.sortId < arg_5_1.config.sortId
+				return a.config.sortId < b.config.sortId
 			end
 		else
-			return var_5_0 < var_5_1
+			return valueA < valueB
 		end
 	end)
 end
 
-function var_0_0.updateInfo(arg_6_0, arg_6_1)
-	local var_6_0 = false
+function TurnbackTaskModel:updateInfo(taskInfoList)
+	local isChange = false
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		if iter_6_1.type == TaskEnum.TaskType.Turnback then
-			local var_6_1 = arg_6_0.tempTaskModel:getById(iter_6_1.id)
+	for _, info in ipairs(taskInfoList) do
+		if info.type == TaskEnum.TaskType.Turnback then
+			local mo = self.tempTaskModel:getById(info.id)
 
-			if not var_6_1 then
-				local var_6_2 = TurnbackConfig.instance:getTurnbackTaskCo(iter_6_1.id)
+			if not mo then
+				local config = TurnbackConfig.instance:getTurnbackTaskCo(info.id)
 
-				if var_6_2 then
-					var_6_1 = TaskMo.New()
+				if config then
+					mo = TaskMo.New()
 
-					var_6_1:init(iter_6_1, var_6_2)
-					arg_6_0.tempTaskModel:addAtLast(var_6_1)
+					mo:init(info, config)
+					self.tempTaskModel:addAtLast(mo)
 				else
-					logError("TurnbackTaskConfig by id is not exit: " .. tostring(iter_6_1.id))
+					logError("TurnbackTaskConfig by id is not exit: " .. tostring(info.id))
 				end
 			else
-				var_6_1:update(iter_6_1)
+				mo:update(info)
 			end
 
-			var_6_0 = true
+			isChange = true
 		end
 	end
 
-	if var_6_0 then
-		arg_6_0:sortList()
-		arg_6_0:checkTaskLoopTypeDotState()
+	if isChange then
+		self:sortList()
+		self:checkTaskLoopTypeDotState()
 	end
 
-	return var_6_0
+	return isChange
 end
 
-function var_0_0.checkTaskLoopTypeDotState(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.taskLoopTypeDotDict) do
-		arg_7_0.taskLoopTypeDotDict[iter_7_0] = false
+function TurnbackTaskModel:checkTaskLoopTypeDotState()
+	for index, redDotState in pairs(self.taskLoopTypeDotDict) do
+		self.taskLoopTypeDotDict[index] = false
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(arg_7_0.tempTaskModel:getList()) do
-		if iter_7_3.progress >= iter_7_3.config.maxProgress and iter_7_3.finishCount == 0 then
-			arg_7_0.taskLoopTypeDotDict[iter_7_3.config.loopType] = true
+	for _, taskMO in ipairs(self.tempTaskModel:getList()) do
+		if taskMO.progress >= taskMO.config.maxProgress and taskMO.finishCount == 0 then
+			self.taskLoopTypeDotDict[taskMO.config.loopType] = true
 		end
 	end
 end
 
-function var_0_0.getTaskLoopTypeDotState(arg_8_0)
-	return arg_8_0.taskLoopTypeDotDict
+function TurnbackTaskModel:getTaskLoopTypeDotState()
+	return self.taskLoopTypeDotDict
 end
 
-function var_0_0.refreshListNewTaskList(arg_9_0)
-	local var_9_0 = {}
+function TurnbackTaskModel:refreshListNewTaskList()
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.tempTaskModel:getList()) do
-		if iter_9_1.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() then
-			local var_9_1 = TurnbackModel.instance:getCurTurnbackMo()
+	for _, taskMo in ipairs(self.tempTaskModel:getList()) do
+		if taskMo.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() then
+			local mo = TurnbackModel.instance:getCurTurnbackMo()
+			local currenttime = ServerTime.now()
+			local unlocktime = mo.startTime + (taskMo.config.unlockDay - 1) * TimeUtil.OneDaySecond
 
-			if ServerTime.now() >= var_9_1.startTime + (iter_9_1.config.unlockDay - 1) * TimeUtil.OneDaySecond then
-				table.insert(var_9_0, iter_9_1)
+			if unlocktime <= currenttime then
+				table.insert(list, taskMo)
 			end
 		end
 	end
 
-	local var_9_2 = arg_9_0:checkAndRemoveTask(var_9_0)
+	list = self:checkAndRemoveTask(list)
 
-	arg_9_0:setList(var_9_2)
+	self:setList(list)
 end
 
-function var_0_0.refreshList(arg_10_0, arg_10_1)
-	local var_10_0 = {}
+function TurnbackTaskModel:refreshList(loopType)
+	local list = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.tempTaskModel:getList()) do
-		if iter_10_1.config.loopType == arg_10_1 and iter_10_1.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() then
-			arg_10_0.curTaskLoopType = arg_10_1
+	for _, taskMo in ipairs(self.tempTaskModel:getList()) do
+		if taskMo.config.loopType == loopType and taskMo.config.turnbackId == TurnbackModel.instance:getCurTurnbackId() then
+			self.curTaskLoopType = loopType
 
-			table.insert(var_10_0, iter_10_1)
+			table.insert(list, taskMo)
 		end
 	end
 
-	local var_10_1 = arg_10_0:checkAndRemovePreposeTask(var_10_0)
+	list = self:checkAndRemovePreposeTask(list)
 
-	arg_10_0:setList(var_10_1)
-	arg_10_0:checkTaskLoopTypeDotState()
+	self:setList(list)
+	self:checkTaskLoopTypeDotState()
 end
 
-function var_0_0.getCurTaskLoopType(arg_11_0)
-	return arg_11_0.curTaskLoopType or TurnbackEnum.TaskLoopType.Day
+function TurnbackTaskModel:getCurTaskLoopType()
+	return self.curTaskLoopType or TurnbackEnum.TaskLoopType.Day
 end
 
-function var_0_0.haveTaskItemReward(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.tempTaskModel:getList()) do
-		if iter_12_1.progress >= iter_12_1.config.maxProgress and iter_12_1.finishCount == 0 then
+function TurnbackTaskModel:haveTaskItemReward()
+	for _, taskMo in ipairs(self.tempTaskModel:getList()) do
+		if taskMo.progress >= taskMo.config.maxProgress and taskMo.finishCount == 0 then
 			return true
 		end
 	end
@@ -175,65 +179,79 @@ function var_0_0.haveTaskItemReward(arg_12_0)
 	return false
 end
 
-function var_0_0.isTaskFinished(arg_13_0, arg_13_1)
-	return arg_13_1.finishCount > 0 and arg_13_1.progress >= arg_13_1.config.maxProgress
+function TurnbackTaskModel:isTaskFinished(taskMo)
+	return taskMo.finishCount > 0 and taskMo.progress >= taskMo.config.maxProgress
 end
 
-function var_0_0.getSearchTaskMoList(arg_14_0)
-	return arg_14_0.taskSearchList
+function TurnbackTaskModel:getSearchTaskMoList()
+	return self.taskSearchList
 end
 
-function var_0_0.getSearchTaskMoById(arg_15_0, arg_15_1)
-	return arg_15_0.taskSearchDict[arg_15_1]
+function TurnbackTaskModel:getSearchTaskMoById(id)
+	return self.taskSearchDict[id]
 end
 
-function var_0_0.checkAndRemovePreposeTask(arg_16_0, arg_16_1)
-	local var_16_0 = tabletool.copy(arg_16_1)
+function TurnbackTaskModel:checkSearchTaskCanReceive()
+	if not self.taskSearchList or #self.taskSearchList < 1 then
+		return false
+	end
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_1 = string.split(iter_16_1.config.prepose, "#")
+	for index, taskMo in ipairs(self.taskSearchList) do
+		if taskMo.progress >= taskMo.config.maxProgress and taskMo.finishCount == 0 then
+			return true
+		end
+	end
 
-		for iter_16_2, iter_16_3 in ipairs(var_16_1) do
-			local var_16_2 = arg_16_0.tempTaskModel:getById(tonumber(iter_16_3))
+	return false
+end
 
-			if var_16_2 and not arg_16_0:isTaskFinished(var_16_2) then
-				table.remove(var_16_0, iter_16_0)
+function TurnbackTaskModel:checkAndRemovePreposeTask(taskList)
+	local newTaskList = tabletool.copy(taskList)
+
+	for index, taskMo in ipairs(newTaskList) do
+		local preposTaskTab = string.split(taskMo.config.prepose, "#")
+
+		for _, preposTaskId in ipairs(preposTaskTab) do
+			local preposTaskMo = self.tempTaskModel:getById(tonumber(preposTaskId))
+
+			if preposTaskMo and not self:isTaskFinished(preposTaskMo) then
+				table.remove(newTaskList, index)
 
 				break
 			end
 		end
 	end
 
-	return var_16_0
+	return newTaskList
 end
 
-function var_0_0.checkAndRemoveTask(arg_17_0, arg_17_1)
-	local var_17_0 = tabletool.copy(arg_17_1)
-	local var_17_1 = #arg_17_1
+function TurnbackTaskModel:checkAndRemoveTask(taskList)
+	local newTaskList = tabletool.copy(taskList)
+	local count = #taskList
 
-	for iter_17_0 = 1, var_17_1 do
-		local var_17_2 = arg_17_1[iter_17_0]
-		local var_17_3 = string.split(var_17_2.config.prepose, "#")
+	for i = 1, count do
+		local taskMo = taskList[i]
+		local preposTaskTab = string.split(taskMo.config.prepose, "#")
 
-		for iter_17_1, iter_17_2 in ipairs(var_17_3) do
-			local var_17_4 = arg_17_0.tempTaskModel:getById(tonumber(iter_17_2))
+		for _, preposTaskId in ipairs(preposTaskTab) do
+			local preposTaskMo = self.tempTaskModel:getById(tonumber(preposTaskId))
 
-			if var_17_4 and not arg_17_0:isTaskFinished(var_17_4) then
-				tabletool.removeValue(var_17_0, var_17_2)
+			if preposTaskMo and not self:isTaskFinished(preposTaskMo) then
+				tabletool.removeValue(newTaskList, taskMo)
 			end
 		end
 
-		if var_17_2.config.isOnlineTimeTask then
-			tabletool.removeValue(var_17_0, var_17_2)
+		if taskMo.config.isOnlineTimeTask then
+			tabletool.removeValue(newTaskList, taskMo)
 		end
 	end
 
-	return var_17_0
+	return newTaskList
 end
 
-function var_0_0.checkOnlineTaskAllFinish(arg_18_0)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.taskSearchList) do
-		if not (iter_18_1.finishCount > 0) then
+function TurnbackTaskModel:checkOnlineTaskAllFinish()
+	for _, taskMo in ipairs(self.taskSearchList) do
+		if not (taskMo.finishCount > 0) then
 			return false
 		end
 	end
@@ -241,6 +259,20 @@ function var_0_0.checkOnlineTaskAllFinish(arg_18_0)
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+function TurnbackTaskModel:getCanGetTaskRewardId()
+	local idList = {}
+	local indexList = {}
 
-return var_0_0
+	for index, taskMo in ipairs(self.tempTaskModel:getList()) do
+		if taskMo.progress >= taskMo.config.maxProgress and taskMo.finishCount == 0 then
+			table.insert(idList, taskMo.id)
+			table.insert(indexList, index)
+		end
+	end
+
+	return idList, indexList
+end
+
+TurnbackTaskModel.instance = TurnbackTaskModel.New()
+
+return TurnbackTaskModel

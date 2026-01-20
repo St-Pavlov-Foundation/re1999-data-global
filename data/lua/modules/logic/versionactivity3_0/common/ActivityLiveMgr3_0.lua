@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity3_0.common.ActivityLiveMgr3_0", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/common/ActivityLiveMgr3_0.lua
 
-local var_0_0 = class("ActivityLiveMgr3_0")
+module("modules.logic.versionactivity3_0.common.ActivityLiveMgr3_0", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local ActivityLiveMgr3_0 = class("ActivityLiveMgr3_0")
+
+function ActivityLiveMgr3_0:init()
 	return
 end
 
-function var_0_0.getActId2ViewList(arg_2_0)
+function ActivityLiveMgr3_0:getActId2ViewList()
 	return {
 		[VersionActivity3_0Enum.ActivityId.EnterView] = {
 			ViewName.VersionActivity3_0EnterView
@@ -28,12 +30,12 @@ function var_0_0.getActId2ViewList(arg_2_0)
 	}
 end
 
-function var_0_0.getActIdCheckCloseList(arg_3_0)
+function ActivityLiveMgr3_0:getActIdCheckCloseList()
 	return {
 		[VersionActivity3_0Enum.ActivityId.Dungeon] = DungeonController.closePreviewChapterDungeonMapViewActEnd
 	}
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityLiveMgr3_0.instance = ActivityLiveMgr3_0.New()
 
-return var_0_0
+return ActivityLiveMgr3_0

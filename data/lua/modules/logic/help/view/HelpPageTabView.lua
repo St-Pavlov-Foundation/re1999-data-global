@@ -1,205 +1,207 @@
-﻿module("modules.logic.help.view.HelpPageTabView", package.seeall)
+﻿-- chunkname: @modules/logic/help/view/HelpPageTabView.lua
 
-local var_0_0 = class("HelpPageTabView", BaseView)
+module("modules.logic.help.view.HelpPageTabView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
-	arg_1_0._govoidepage = gohelper.findChild(arg_1_0.viewGO, "#go_voidepage")
-	arg_1_0._gohelpview = gohelper.findChild(arg_1_0.viewGO, "#go_helpview")
-	arg_1_0._gocategorycontent = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/#go_categorycontent")
-	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local HelpPageTabView = class("HelpPageTabView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HelpPageTabView:onInitView()
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._govoidepage = gohelper.findChild(self.viewGO, "#go_voidepage")
+	self._gohelpview = gohelper.findChild(self.viewGO, "#go_helpview")
+	self._gocategorycontent = gohelper.findChild(self.viewGO, "left/scroll_category/viewport/#go_categorycontent")
+	self._gostorecategoryitem = gohelper.findChild(self.viewGO, "left/scroll_category/viewport/#go_categorycontent/#go_storecategoryitem")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+function HelpPageTabView:addEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
+function HelpPageTabView:removeEvents()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.GuideView then
-		arg_4_0:closeThis()
+function HelpPageTabView:_onOpenView(viewName)
+	if viewName == ViewName.GuideView then
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._goleft = gohelper.findChild(arg_5_0.viewGO, "left")
+function HelpPageTabView:_editableInitView()
+	self._goleft = gohelper.findChild(self.viewGO, "left")
 end
 
-function var_0_0.setVideoFullScreen(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1 ~= true
+function HelpPageTabView:setVideoFullScreen(isfull)
+	local isShow = isfull ~= true
 
-	gohelper.setActive(arg_6_0._goleft, var_6_0)
-	gohelper.setActive(arg_6_0._golefttop, var_6_0)
-	gohelper.setActive(arg_6_0._gobtns, var_6_0)
+	gohelper.setActive(self._goleft, isShow)
+	gohelper.setActive(self._golefttop, isShow)
+	gohelper.setActive(self._gobtns, isShow)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam and arg_7_0.viewParam.defaultShowId
+function HelpPageTabView:onUpdateParam()
+	local defaultConfigId = self.viewParam and self.viewParam.defaultShowId
 
-	if var_7_0 then
-		local var_7_1 = lua_help_page_tab.configDict[var_7_0]
+	if defaultConfigId then
+		local defaultShowConfig = lua_help_page_tab.configDict[defaultConfigId]
 
-		if var_7_1 then
-			local var_7_2 = var_7_1.mainTitleId
-			local var_7_3 = tabletool.indexOf(arg_7_0._tagDataList[var_7_2], var_7_1)
+		if defaultShowConfig then
+			local defaultMainIndex = defaultShowConfig.mainTitleId
+			local defaultSubIndex = tabletool.indexOf(self._tagDataList[defaultMainIndex], defaultShowConfig)
 
-			if arg_7_0._curSelectMainIndex == var_7_2 then
-				arg_7_0._curSelectSubIndex = nil
+			if self._curSelectMainIndex == defaultMainIndex then
+				self._curSelectSubIndex = nil
 
-				arg_7_0:_onSubBtnClick(var_7_3)
-				arg_7_0:_btn_tween_open_end()
+				self:_onSubBtnClick(defaultSubIndex)
+				self:_btn_tween_open_end()
 			else
-				arg_7_0:_onBtnClick({
-					index = var_7_2,
-					subIndex = var_7_3
+				self:_onBtnClick({
+					index = defaultMainIndex,
+					subIndex = defaultSubIndex
 				})
 			end
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_8_0)
-	if arg_8_0.viewContainer then
-		arg_8_0:addEventCb(arg_8_0.viewContainer, HelpEvent.UIPageTabSelectChange, arg_8_0._onVoideFullScreenChange, arg_8_0)
-		NavigateMgr.instance:addEscape(arg_8_0.viewContainer.viewName, arg_8_0.closeThis, arg_8_0)
+function HelpPageTabView:onOpen()
+	if self.viewContainer then
+		self:addEventCb(self.viewContainer, HelpEvent.UIPageTabSelectChange, self._onVoideFullScreenChange, self)
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self.closeThis, self)
 	end
 
-	arg_8_0:setPageTabCfg(nil)
+	self:setPageTabCfg(nil)
 end
 
-function var_0_0.onOpenFinish(arg_9_0)
-	arg_9_0._tagDataList = {}
+function HelpPageTabView:onOpenFinish()
+	self._tagDataList = {}
 
-	local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.isGMShowAll or false
-	local var_9_1 = arg_9_0.viewParam and arg_9_0.viewParam.defaultShowId
+	local isGMShowAll = self.viewParam and self.viewParam.isGMShowAll or false
+	local defaultConfigId = self.viewParam and self.viewParam.defaultShowId
 
-	arg_9_0._matchGuideId = nil
-	arg_9_0._matchAllPage = false
+	self._matchGuideId = nil
+	self._matchAllPage = false
 
-	if arg_9_0.viewParam and arg_9_0.viewParam.guideId then
-		arg_9_0._matchGuideId = tonumber(arg_9_0.viewParam.guideId)
-		arg_9_0._matchAllPage = arg_9_0.viewParam.matchAllPage
+	if self.viewParam and self.viewParam.guideId then
+		self._matchGuideId = tonumber(self.viewParam.guideId)
+		self._matchAllPage = self.viewParam.matchAllPage
 	end
 
-	local var_9_2 = {}
-	local var_9_3
+	local temp_tab = {}
+	local defaultShowConfig
 
-	for iter_9_0, iter_9_1 in ipairs(lua_help_page_tab.configList) do
-		if iter_9_1.parentId ~= 0 and arg_9_0:checkIsNeedShowPageTabCfg(iter_9_1, var_9_0) then
-			if not var_9_2[iter_9_1.parentId] then
-				local var_9_4 = lua_help_page_tab.configDict[iter_9_1.parentId] or iter_9_1
+	for _, config in ipairs(lua_help_page_tab.configList) do
+		if config.parentId ~= 0 and self:checkIsNeedShowPageTabCfg(config, isGMShowAll) then
+			if not temp_tab[config.parentId] then
+				local parentCfg = lua_help_page_tab.configDict[config.parentId] or config
 
-				var_9_2[iter_9_1.parentId] = {
-					id = var_9_4.id,
-					sortIdx = var_9_4.sortIdx,
-					config = var_9_4,
+				temp_tab[config.parentId] = {
+					id = parentCfg.id,
+					sortIdx = parentCfg.sortIdx,
+					config = parentCfg,
 					childCfgList = {}
 				}
 			end
 
-			table.insert(var_9_2[iter_9_1.parentId].childCfgList, iter_9_1)
+			table.insert(temp_tab[config.parentId].childCfgList, config)
 
-			if var_9_1 == iter_9_1.id then
-				var_9_3 = iter_9_1
+			if defaultConfigId == config.id then
+				defaultShowConfig = config
 			end
 		end
 	end
 
-	for iter_9_2, iter_9_3 in pairs(var_9_2) do
-		table.sort(var_9_2[iter_9_2].childCfgList, var_0_0._sortSubConfig)
-		table.insert(arg_9_0._tagDataList, var_9_2[iter_9_2])
+	for k, _ in pairs(temp_tab) do
+		table.sort(temp_tab[k].childCfgList, HelpPageTabView._sortSubConfig)
+		table.insert(self._tagDataList, temp_tab[k])
 	end
 
-	table.sort(arg_9_0._tagDataList, var_0_0._sortConfig)
+	table.sort(self._tagDataList, HelpPageTabView._sortConfig)
 
-	arg_9_0._mainBtnTbList = arg_9_0:getUserDataTb_()
-	arg_9_0._subBtnHeightList = {}
-	arg_9_0._subBtnTbList = arg_9_0:getUserDataTb_()
+	self._mainBtnTbList = self:getUserDataTb_()
+	self._subBtnHeightList = {}
+	self._subBtnTbList = self:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onMainBtnShow, arg_9_0._tagDataList, arg_9_0._gocategorycontent, arg_9_0._gostorecategoryitem)
+	gohelper.CreateObjList(self, self._onMainBtnShow, self._tagDataList, self._gocategorycontent, self._gostorecategoryitem)
 
-	if #arg_9_0._tagDataList > 0 then
-		local var_9_5 = 1
-		local var_9_6 = 1
+	if #self._tagDataList > 0 then
+		local defaultMainIndex = 1
+		local defaultSubIndex = 1
 
-		if var_9_3 then
-			var_9_5 = var_9_3.mainTitleId
-			var_9_6 = tabletool.indexOf(arg_9_0._tagDataList[var_9_5], var_9_3)
+		if defaultShowConfig then
+			defaultMainIndex = defaultShowConfig.mainTitleId
+			defaultSubIndex = tabletool.indexOf(self._tagDataList[defaultMainIndex], defaultShowConfig)
 
-			arg_9_0:_onBtnClick({
-				index = var_9_5,
-				subIndex = var_9_6
+			self:_onBtnClick({
+				index = defaultMainIndex,
+				subIndex = defaultSubIndex
 			})
 		else
-			recthelper.setHeight(arg_9_0._mainBtnTbList[1].transform, 130)
-			recthelper.setHeight(arg_9_0._mainBtnTbList[1].go_childcategoryTrs, 0)
+			recthelper.setHeight(self._mainBtnTbList[1].transform, 130)
+			recthelper.setHeight(self._mainBtnTbList[1].go_childcategoryTrs, 0)
 
-			arg_9_0._curSelectMainIndex = var_9_5
-			arg_9_0._curSelectSubIndex = nil
+			self._curSelectMainIndex = defaultMainIndex
+			self._curSelectSubIndex = nil
 
-			arg_9_0:_refreshMainBtnState()
-			arg_9_0:_onSubBtnClick(var_9_6)
-			gohelper.setActive(arg_9_0._mainBtnTbList[1].go_line, false)
-			arg_9_0:_btn_tween_open_end()
+			self:_refreshMainBtnState()
+			self:_onSubBtnClick(defaultSubIndex)
+			gohelper.setActive(self._mainBtnTbList[1].go_line, false)
+			self:_btn_tween_open_end()
 
-			arg_9_0._curSelectMainIndex = nil
+			self._curSelectMainIndex = nil
 		end
 	end
 end
 
-function var_0_0._onVoideFullScreenChange(arg_10_0, arg_10_1)
-	arg_10_0:setPageTabCfg(arg_10_1)
+function HelpPageTabView:_onVoideFullScreenChange(cfg)
+	self:setPageTabCfg(cfg)
 end
 
-function var_0_0.setPageTabCfg(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1 and arg_11_1.showType or -1
+function HelpPageTabView:setPageTabCfg(cfg)
+	local showType = cfg and cfg.showType or -1
 
-	gohelper.setActive(arg_11_0._govoidepage, var_11_0 == HelpEnum.PageTabShowType.Video)
-	gohelper.setActive(arg_11_0._gohelpview, var_11_0 == HelpEnum.PageTabShowType.HelpView)
+	gohelper.setActive(self._govoidepage, showType == HelpEnum.PageTabShowType.Video)
+	gohelper.setActive(self._gohelpview, showType == HelpEnum.PageTabShowType.HelpView)
 end
 
-function var_0_0.checkIsNeedShowPageTabCfg(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_1 and arg_12_1.showType
-	local var_12_1 = arg_12_1 and arg_12_1.helpId
+function HelpPageTabView:checkIsNeedShowPageTabCfg(pageTabCfg, isGMShowAll)
+	local showType = pageTabCfg and pageTabCfg.showType
+	local helpId = pageTabCfg and pageTabCfg.helpId
 
-	if var_12_0 == HelpEnum.PageTabShowType.HelpView then
-		return arg_12_0:_checkHelpViewByHelpId(var_12_1)
-	elseif var_12_0 == HelpEnum.PageTabShowType.Video then
-		return arg_12_0:_checkHelpVideoById(var_12_1)
+	if showType == HelpEnum.PageTabShowType.HelpView then
+		return self:_checkHelpViewByHelpId(helpId)
+	elseif showType == HelpEnum.PageTabShowType.Video then
+		return self:_checkHelpVideoById(helpId)
 	end
 
 	return false
 end
 
-function var_0_0._checkHelpViewByHelpId(arg_13_0, arg_13_1)
-	local var_13_0 = HelpConfig.instance:getHelpCO(arg_13_1)
+function HelpPageTabView:_checkHelpViewByHelpId(helpId)
+	local helpCfg = HelpConfig.instance:getHelpCO(helpId)
 
-	if not var_13_0 or string.nilorempty(var_13_0.page) then
-		logError("请检查帮助说明配置" .. tostring(arg_13_1) .. "相关配置是否完整！")
-
-		return false
-	end
-
-	local var_13_1 = string.split(var_13_0.page, "#")
-
-	if #var_13_1 < 1 then
-		logError("请检查帮助界面" .. tostring(arg_13_1) .. "相关配置是否完整！")
+	if not helpCfg or string.nilorempty(helpCfg.page) then
+		logError("请检查帮助说明配置" .. tostring(helpId) .. "相关配置是否完整！")
 
 		return false
 	end
 
-	for iter_13_0 = 1, #var_13_1 do
-		local var_13_2 = HelpConfig.instance:getHelpPageCo(tonumber(var_13_1[iter_13_0]))
+	local pageIdList = string.split(helpCfg.page, "#")
 
-		if arg_13_0.viewContainer:checkHelpPageCfg(var_13_2, arg_13_0._matchAllPage, arg_13_0._matchGuideId) then
+	if #pageIdList < 1 then
+		logError("请检查帮助界面" .. tostring(helpId) .. "相关配置是否完整！")
+
+		return false
+	end
+
+	for i = 1, #pageIdList do
+		local pageCfg = HelpConfig.instance:getHelpPageCo(tonumber(pageIdList[i]))
+
+		if self.viewContainer:checkHelpPageCfg(pageCfg, self._matchAllPage, self._matchGuideId) then
 			return true
 		end
 	end
@@ -207,223 +209,223 @@ function var_0_0._checkHelpViewByHelpId(arg_13_0, arg_13_1)
 	return false
 end
 
-function var_0_0._checkHelpVideoById(arg_14_0, arg_14_1)
-	local var_14_0 = HelpConfig.instance:getHelpVideoCO(arg_14_1)
+function HelpPageTabView:_checkHelpVideoById(videoId)
+	local videoCfg = HelpConfig.instance:getHelpVideoCO(videoId)
 
-	if not var_14_0 or string.nilorempty(var_14_0.videopath) then
-		logError("请检查【export_帮助视频】" .. tostring(arg_14_1) .. "相关配置是否完整！")
+	if not videoCfg or string.nilorempty(videoCfg.videopath) then
+		logError("请检查【export_帮助视频】" .. tostring(videoId) .. "相关配置是否完整！")
 
 		return false
 	end
 
-	return arg_14_0.viewContainer:checkHelpVideoCfg(var_14_0, arg_14_0._matchAllPage, arg_14_0._matchGuideId)
+	return self.viewContainer:checkHelpVideoCfg(videoCfg, self._matchAllPage, self._matchGuideId)
 end
 
-function var_0_0._onMainBtnShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = arg_15_0:getUserDataTb_()
-	local var_15_1 = arg_15_1.transform
+function HelpPageTabView:_onMainBtnShow(obj, data, index)
+	local tb = self:getUserDataTb_()
+	local transform = obj.transform
 
-	var_15_0.gameObject = arg_15_1
-	var_15_0.go = arg_15_1
-	var_15_0.goTrs = var_15_1
-	var_15_0.transform = var_15_1
-	var_15_0.index = arg_15_3
-	var_15_0.data = arg_15_2
+	tb.gameObject = obj
+	tb.go = obj
+	tb.goTrs = transform
+	tb.transform = transform
+	tb.index = index
+	tb.data = data
 
-	local var_15_2 = arg_15_2.config
+	local config = data.config
 
-	var_15_0.go_selected = gohelper.findChild(arg_15_1, "go_selected")
-	var_15_0.go_unselected = gohelper.findChild(arg_15_1, "go_unselected")
-	var_15_0.go_childcategory = gohelper.findChild(arg_15_1, "go_childcategory")
-	var_15_0.go_childitem = gohelper.findChild(arg_15_1, "go_childcategory/go_childitem")
-	var_15_0.go_line = gohelper.findChild(arg_15_1, "go_line")
-	var_15_0.go_lineTrs = var_15_0.go_line.transform
-	var_15_0.go_childcategoryTrs = var_15_0.go_childcategory.transform
+	tb.go_selected = gohelper.findChild(obj, "go_selected")
+	tb.go_unselected = gohelper.findChild(obj, "go_unselected")
+	tb.go_childcategory = gohelper.findChild(obj, "go_childcategory")
+	tb.go_childitem = gohelper.findChild(obj, "go_childcategory/go_childitem")
+	tb.go_line = gohelper.findChild(obj, "go_line")
+	tb.go_lineTrs = tb.go_line.transform
+	tb.go_childcategoryTrs = tb.go_childcategory.transform
 
-	local var_15_3 = gohelper.findChild(arg_15_1, "clickArea")
-	local var_15_4 = gohelper.getClickWithAudio(var_15_3, AudioEnum.UI.UI_transverse_tabs_click)
-	local var_15_5 = gohelper.findChildText(arg_15_1, "go_unselected/txt_itemcn1")
-	local var_15_6 = gohelper.findChildText(arg_15_1, "go_unselected/txt_itemen1")
-	local var_15_7 = gohelper.findChildText(arg_15_1, "go_selected/txt_itemcn2")
-	local var_15_8 = gohelper.findChildText(arg_15_1, "go_selected/txt_itemen2")
+	local goclickArea = gohelper.findChild(obj, "clickArea")
+	local clickArea = gohelper.getClickWithAudio(goclickArea, AudioEnum.UI.UI_transverse_tabs_click)
+	local txt_itemcn1 = gohelper.findChildText(obj, "go_unselected/txt_itemcn1")
+	local txt_itemen1 = gohelper.findChildText(obj, "go_unselected/txt_itemen1")
+	local txt_itemcn2 = gohelper.findChildText(obj, "go_selected/txt_itemcn2")
+	local txt_itemen2 = gohelper.findChildText(obj, "go_selected/txt_itemen2")
 
-	var_15_5.text = var_15_2.title
-	var_15_6.text = var_15_2.title_en
-	var_15_7.text = var_15_2.title
-	var_15_8.text = var_15_2.title_en
-	arg_15_0._subBelongIndex = arg_15_3
-	arg_15_0._subBtnPosY = -60
+	txt_itemcn1.text = config.title
+	txt_itemen1.text = config.title_en
+	txt_itemcn2.text = config.title
+	txt_itemen2.text = config.title_en
+	self._subBelongIndex = index
+	self._subBtnPosY = -60
 
-	gohelper.CreateObjList(arg_15_0, arg_15_0._onSubBtnShow, arg_15_2.childCfgList, var_15_0.go_childcategory, var_15_0.go_childitem)
+	gohelper.CreateObjList(self, self._onSubBtnShow, data.childCfgList, tb.go_childcategory, tb.go_childitem)
 
-	arg_15_0._subBtnHeightList[arg_15_3] = math.abs(arg_15_0._subBtnPosY + 70)
+	self._subBtnHeightList[index] = math.abs(self._subBtnPosY + 70)
 
-	table.insert(arg_15_0._mainBtnTbList, var_15_0)
-	arg_15_0:removeClickCb(var_15_4)
-	arg_15_0:addClickCb(var_15_4, arg_15_0._onBtnClick, arg_15_0, var_15_0)
+	table.insert(self._mainBtnTbList, tb)
+	self:removeClickCb(clickArea)
+	self:addClickCb(clickArea, self._onBtnClick, self, tb)
 end
 
-function var_0_0._onBtnClick(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.index
-	local var_16_1 = arg_16_1.subIndex or 1
+function HelpPageTabView:_onBtnClick(param)
+	local index = param.index
+	local subIndex = param.subIndex or 1
 
-	if arg_16_0._curSelectMainIndex == var_16_0 then
-		if arg_16_0._btnAniTweenId then
-			ZProj.TweenHelper.KillById(arg_16_0._btnAniTweenId)
+	if self._curSelectMainIndex == index then
+		if self._btnAniTweenId then
+			ZProj.TweenHelper.KillById(self._btnAniTweenId)
 		end
 
-		arg_16_0._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.3, arg_16_0._onBtnAniFrameCallback, arg_16_0._btn_tween_end, arg_16_0)
+		self._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.3, self._onBtnAniFrameCallback, self._btn_tween_end, self)
 
 		return
 	end
 
-	if arg_16_0._curSelectMainIndex then
-		recthelper.setHeight(arg_16_0._mainBtnTbList[arg_16_0._curSelectMainIndex].transform, 130)
-		recthelper.setHeight(arg_16_0._mainBtnTbList[arg_16_0._curSelectMainIndex].go_childcategoryTrs, 0)
+	if self._curSelectMainIndex then
+		recthelper.setHeight(self._mainBtnTbList[self._curSelectMainIndex].transform, 130)
+		recthelper.setHeight(self._mainBtnTbList[self._curSelectMainIndex].go_childcategoryTrs, 0)
 	end
 
-	arg_16_0._curSelectMainIndex = var_16_0
-	arg_16_0._curSelectSubIndex = nil
+	self._curSelectMainIndex = index
+	self._curSelectSubIndex = nil
 
-	arg_16_0:_refreshMainBtnState()
-	arg_16_0:_onSubBtnClick(var_16_1)
+	self:_refreshMainBtnState()
+	self:_onSubBtnClick(subIndex)
 
-	if arg_16_0._btnAniTweenId then
-		ZProj.TweenHelper.KillById(arg_16_0._btnAniTweenId)
+	if self._btnAniTweenId then
+		ZProj.TweenHelper.KillById(self._btnAniTweenId)
 	end
 
-	gohelper.setActive(arg_16_0._mainBtnTbList[arg_16_0._curSelectMainIndex].go_line, true)
+	gohelper.setActive(self._mainBtnTbList[self._curSelectMainIndex].go_line, true)
 
-	arg_16_0._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, arg_16_0._onBtnAniFrameCallback, arg_16_0._btn_tween_open_end, arg_16_0)
+	self._btnAniTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, self._onBtnAniFrameCallback, self._btn_tween_open_end, self)
 end
 
-function var_0_0._onBtnAniFrameCallback(arg_17_0, arg_17_1)
-	recthelper.setHeight(arg_17_0._mainBtnTbList[arg_17_0._curSelectMainIndex].transform, 130 + arg_17_0._subBtnHeightList[arg_17_0._curSelectMainIndex] * arg_17_1)
-	recthelper.setHeight(arg_17_0._mainBtnTbList[arg_17_0._curSelectMainIndex].go_childcategoryTrs, arg_17_0._subBtnHeightList[arg_17_0._curSelectMainIndex] * arg_17_1)
+function HelpPageTabView:_onBtnAniFrameCallback(value)
+	recthelper.setHeight(self._mainBtnTbList[self._curSelectMainIndex].transform, 130 + self._subBtnHeightList[self._curSelectMainIndex] * value)
+	recthelper.setHeight(self._mainBtnTbList[self._curSelectMainIndex].go_childcategoryTrs, self._subBtnHeightList[self._curSelectMainIndex] * value)
 end
 
-function var_0_0.scrollItemIsVisible(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_1.transform:InverseTransformPoint(arg_18_2.transform.position).y + recthelper.getHeight(arg_18_2.transform) / 2
+function HelpPageTabView:scrollItemIsVisible(scroll_view, target_obj)
+	local target_pos_y = scroll_view.transform:InverseTransformPoint(target_obj.transform.position).y + recthelper.getHeight(target_obj.transform) / 2
 
-	if var_18_0 >= 65 or var_18_0 <= -785 then
-		recthelper.setAnchorY(arg_18_0._gocategorycontent.transform, 130 * (arg_18_0._curSelectMainIndex - 1) - 60)
+	if target_pos_y >= 65 or target_pos_y <= -785 then
+		recthelper.setAnchorY(self._gocategorycontent.transform, 130 * (self._curSelectMainIndex - 1) - 60)
 	end
 end
 
-function var_0_0._btn_tween_open_end(arg_19_0)
-	arg_19_0:scrollItemIsVisible(gohelper.findChild(arg_19_0.viewGO, "left/scroll_category"), arg_19_0._mainBtnTbList[arg_19_0._curSelectMainIndex])
+function HelpPageTabView:_btn_tween_open_end()
+	self:scrollItemIsVisible(gohelper.findChild(self.viewGO, "left/scroll_category"), self._mainBtnTbList[self._curSelectMainIndex])
 end
 
-function var_0_0._btn_tween_end(arg_20_0)
-	gohelper.setActive(arg_20_0._mainBtnTbList[arg_20_0._curSelectMainIndex].go_line, false)
+function HelpPageTabView:_btn_tween_end()
+	gohelper.setActive(self._mainBtnTbList[self._curSelectMainIndex].go_line, false)
 
-	arg_20_0._curSelectMainIndex = nil
+	self._curSelectMainIndex = nil
 end
 
-function var_0_0._refreshMainBtnState(arg_21_0)
-	if arg_21_0._mainBtnTbList then
-		local var_21_0 = arg_21_0._mainBtnTbList[arg_21_0._curSelectMainIndex]
+function HelpPageTabView:_refreshMainBtnState()
+	if self._mainBtnTbList then
+		local selectTb = self._mainBtnTbList[self._curSelectMainIndex]
 
-		for iter_21_0, iter_21_1 in ipairs(arg_21_0._mainBtnTbList) do
-			local var_21_1 = iter_21_1 == var_21_0
+		for i, tb in ipairs(self._mainBtnTbList) do
+			local select = tb == selectTb
 
-			gohelper.setActive(iter_21_1.go_line, var_21_1)
-			gohelper.setActive(iter_21_1.go_unselected, not var_21_1)
-			gohelper.setActive(iter_21_1.go_selected, var_21_1)
-			gohelper.setActive(iter_21_1.go_childcategory, var_21_1)
+			gohelper.setActive(tb.go_line, select)
+			gohelper.setActive(tb.go_unselected, not select)
+			gohelper.setActive(tb.go_selected, select)
+			gohelper.setActive(tb.go_childcategory, select)
 		end
 	end
 end
 
-function var_0_0._onSubBtnShow(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = arg_22_0:getUserDataTb_()
-	local var_22_1 = arg_22_1.transform
+function HelpPageTabView:_onSubBtnShow(obj, data, index)
+	local tb = self:getUserDataTb_()
+	local transform = obj.transform
 
-	var_22_0.gameObject = arg_22_1
-	var_22_0.go = arg_22_1
-	var_22_0.transform = var_22_1
-	var_22_0.goTrs = var_22_1
-	var_22_0.data = arg_22_2
-	var_22_0.index = arg_22_3
-	var_22_0.go_selected = gohelper.findChild(arg_22_1, "go_selected")
-	var_22_0.go_unselected = gohelper.findChild(arg_22_1, "go_unselected")
+	tb.gameObject = obj
+	tb.go = obj
+	tb.transform = transform
+	tb.goTrs = transform
+	tb.data = data
+	tb.index = index
+	tb.go_selected = gohelper.findChild(obj, "go_selected")
+	tb.go_unselected = gohelper.findChild(obj, "go_unselected")
 
-	recthelper.setAnchorY(var_22_1, arg_22_0._subBtnPosY)
+	recthelper.setAnchorY(transform, self._subBtnPosY)
 
-	arg_22_0._subBtnPosY = arg_22_0._subBtnPosY - 110
+	self._subBtnPosY = self._subBtnPosY - 110
 
-	local var_22_2 = gohelper.findChild(arg_22_1, "clickArea")
-	local var_22_3 = gohelper.getClickWithAudio(var_22_2, AudioEnum.UI.UI_transverse_tabs_click)
-	local var_22_4 = gohelper.findChildText(arg_22_1, "go_unselected/txt_itemcn1")
-	local var_22_5 = gohelper.findChildText(arg_22_1, "go_unselected/txt_itemen1")
-	local var_22_6 = gohelper.findChildText(arg_22_1, "go_selected/txt_itemcn2")
-	local var_22_7 = gohelper.findChildText(arg_22_1, "go_selected/txt_itemen2")
+	local goclickArea = gohelper.findChild(obj, "clickArea")
+	local clickArea = gohelper.getClickWithAudio(goclickArea, AudioEnum.UI.UI_transverse_tabs_click)
+	local txt_itemcn1 = gohelper.findChildText(obj, "go_unselected/txt_itemcn1")
+	local txt_itemen1 = gohelper.findChildText(obj, "go_unselected/txt_itemen1")
+	local txt_itemcn2 = gohelper.findChildText(obj, "go_selected/txt_itemcn2")
+	local txt_itemen2 = gohelper.findChildText(obj, "go_selected/txt_itemen2")
 
-	var_22_4.text = arg_22_2.title
-	var_22_5.text = arg_22_2.title_en
-	var_22_6.text = arg_22_2.title
-	var_22_7.text = arg_22_2.title_en
+	txt_itemcn1.text = data.title
+	txt_itemen1.text = data.title_en
+	txt_itemcn2.text = data.title
+	txt_itemen2.text = data.title_en
 
-	if not arg_22_0._subBtnTbList[arg_22_0._subBelongIndex] then
-		arg_22_0._subBtnTbList[arg_22_0._subBelongIndex] = {}
+	if not self._subBtnTbList[self._subBelongIndex] then
+		self._subBtnTbList[self._subBelongIndex] = {}
 	end
 
-	table.insert(arg_22_0._subBtnTbList[arg_22_0._subBelongIndex], var_22_0)
-	arg_22_0:removeClickCb(var_22_3)
-	arg_22_0:addClickCb(var_22_3, arg_22_0._onSubBtnClick, arg_22_0, arg_22_3)
+	table.insert(self._subBtnTbList[self._subBelongIndex], tb)
+	self:removeClickCb(clickArea)
+	self:addClickCb(clickArea, self._onSubBtnClick, self, index)
 end
 
-function var_0_0._onSubBtnClick(arg_23_0, arg_23_1)
-	if arg_23_0._curSelectSubIndex == arg_23_1 then
+function HelpPageTabView:_onSubBtnClick(index)
+	if self._curSelectSubIndex == index then
 		return
 	end
 
-	arg_23_0._curSelectSubIndex = arg_23_1
-	arg_23_0._curSelectSubData = arg_23_0._tagDataList[arg_23_0._curSelectMainIndex].childCfgList[arg_23_1]
+	self._curSelectSubIndex = index
+	self._curSelectSubData = self._tagDataList[self._curSelectMainIndex].childCfgList[index]
 
-	arg_23_0:_refreshSubBtnState()
+	self:_refreshSubBtnState()
 
-	if arg_23_0.viewContainer then
-		arg_23_0.viewContainer:dispatchEvent(HelpEvent.UIPageTabSelectChange, arg_23_0._curSelectSubData)
+	if self.viewContainer then
+		self.viewContainer:dispatchEvent(HelpEvent.UIPageTabSelectChange, self._curSelectSubData)
 	end
 end
 
-function var_0_0._refreshSubBtnState(arg_24_0)
-	if arg_24_0._subBtnTbList then
-		local var_24_0 = arg_24_0._subBtnTbList[arg_24_0._curSelectMainIndex]
-		local var_24_1 = var_24_0[arg_24_0._curSelectSubIndex]
+function HelpPageTabView:_refreshSubBtnState()
+	if self._subBtnTbList then
+		local tbList = self._subBtnTbList[self._curSelectMainIndex]
+		local selectTb = tbList[self._curSelectSubIndex]
 
-		for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-			local var_24_2 = iter_24_1 == var_24_1
+		for i, tb in ipairs(tbList) do
+			local select = tb == selectTb
 
-			gohelper.setActive(iter_24_1.go_unselected, not var_24_2)
-			gohelper.setActive(iter_24_1.go_selected, var_24_2)
+			gohelper.setActive(tb.go_unselected, not select)
+			gohelper.setActive(tb.go_selected, select)
 		end
 	end
 end
 
-function var_0_0._sortConfig(arg_25_0, arg_25_1)
-	return var_0_0._sortSubConfig(arg_25_0, arg_25_1)
+function HelpPageTabView._sortConfig(a, b)
+	return HelpPageTabView._sortSubConfig(a, b)
 end
 
-function var_0_0._sortSubConfig(arg_26_0, arg_26_1)
-	if arg_26_0.sortIdx ~= arg_26_1.sortIdx then
-		return arg_26_0.sortIdx < arg_26_1.sortIdx
+function HelpPageTabView._sortSubConfig(a, b)
+	if a.sortIdx ~= b.sortIdx then
+		return a.sortIdx < b.sortIdx
 	end
 
-	if arg_26_0.id ~= arg_26_1.id then
-		return arg_26_0.id < arg_26_1.id
-	end
-end
-
-function var_0_0.onClose(arg_27_0)
-	if arg_27_0._btnAniTweenId then
-		ZProj.TweenHelper.KillById(arg_27_0._btnAniTweenId)
+	if a.id ~= b.id then
+		return a.id < b.id
 	end
 end
 
-function var_0_0.onDestroyView(arg_28_0)
+function HelpPageTabView:onClose()
+	if self._btnAniTweenId then
+		ZProj.TweenHelper.KillById(self._btnAniTweenId)
+	end
+end
+
+function HelpPageTabView:onDestroyView()
 	return
 end
 
-return var_0_0
+return HelpPageTabView

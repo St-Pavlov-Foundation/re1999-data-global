@@ -1,11 +1,13 @@
-﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9StageFinishViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_9/Season123_1_9StageFinishViewContainer.lua
 
-local var_0_0 = class("Season123_1_9StageFinishViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view1_9.Season123_1_9StageFinishViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_1_9StageFinishViewContainer = class("Season123_1_9StageFinishViewContainer", BaseViewContainer)
+
+function Season123_1_9StageFinishViewContainer:buildViews()
 	return {
 		Season123_1_9StageFinishView.New()
 	}
 end
 
-return var_0_0
+return Season123_1_9StageFinishViewContainer

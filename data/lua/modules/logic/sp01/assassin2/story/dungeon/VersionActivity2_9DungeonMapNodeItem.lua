@@ -1,118 +1,120 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapNodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonMapNodeItem.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonMapNodeItem", LuaCompBase)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapNodeItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._index = arg_1_1 and arg_1_1.index
-	arg_1_0._gomesh = arg_1_1 and arg_1_1.meshGO
+local VersionActivity2_9DungeonMapNodeItem = class("VersionActivity2_9DungeonMapNodeItem", LuaCompBase)
+
+function VersionActivity2_9DungeonMapNodeItem:ctor(params)
+	self._index = params and params.index
+	self._gomesh = params and params.meshGO
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._goselectnode = gohelper.findChild(arg_2_0.go, "select")
-	arg_2_0._gounselectnode = gohelper.findChild(arg_2_0.go, "unselect")
-	arg_2_0._gonode = gohelper.cloneInPlace(arg_2_0._gounselectnode, "current")
-	arg_2_0._trannode = arg_2_0._gonode.transform
-	arg_2_0._transelectnode = arg_2_0._goselectnode.transform
-	arg_2_0._tranunselectnode = arg_2_0._gounselectnode.transform
-	arg_2_0._animator = gohelper.onceAddComponent(arg_2_0._gomesh, gohelper.Type_Animator)
+function VersionActivity2_9DungeonMapNodeItem:init(go)
+	self.go = go
+	self._goselectnode = gohelper.findChild(self.go, "select")
+	self._gounselectnode = gohelper.findChild(self.go, "unselect")
+	self._gonode = gohelper.cloneInPlace(self._gounselectnode, "current")
+	self._trannode = self._gonode.transform
+	self._transelectnode = self._goselectnode.transform
+	self._tranunselectnode = self._gounselectnode.transform
+	self._animator = gohelper.onceAddComponent(self._gomesh, gohelper.Type_Animator)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function VersionActivity2_9DungeonMapNodeItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function VersionActivity2_9DungeonMapNodeItem:removeEventListeners()
 	return
 end
 
-function var_0_0.brocastPosition(arg_5_0)
-	local var_5_0, var_5_1, var_5_2 = arg_5_0:getNodeWorldPos()
+function VersionActivity2_9DungeonMapNodeItem:brocastPosition()
+	local posX, posY, posZ = self:getNodeWorldPos()
 
-	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnUpdateEpisodeNodePos, arg_5_0._index, var_5_0, var_5_1, var_5_2)
+	VersionActivity2_9DungeonController.instance:dispatchEvent(VersionActivity2_9Event.OnUpdateEpisodeNodePos, self._index, posX, posY, posZ)
 end
 
-function var_0_0.getNodeLocalPos(arg_6_0)
-	return transformhelper.getLocalPos(arg_6_0._trannode)
+function VersionActivity2_9DungeonMapNodeItem:getNodeLocalPos()
+	return transformhelper.getLocalPos(self._trannode)
 end
 
-function var_0_0.getNodeWorldPos(arg_7_0)
-	return transformhelper.getPos(arg_7_0._trannode)
+function VersionActivity2_9DungeonMapNodeItem:getNodeWorldPos()
+	return transformhelper.getPos(self._trannode)
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 and "selection_open" or "selection_close"
+function VersionActivity2_9DungeonMapNodeItem:onSelect(isSelect)
+	local animClicpName = isSelect and "selection_open" or "selection_close"
 
-	arg_8_0._animator:Play(var_8_0, 0, 0)
-	arg_8_0:tweenMoveNodePos(arg_8_1)
+	self._animator:Play(animClicpName, 0, 0)
+	self:tweenMoveNodePos(isSelect)
 
-	if arg_8_1 then
+	if isSelect then
 		AudioMgr.instance:trigger(AudioEnum2_9.Dungeon.play_ui_selectEpisode)
 	end
 end
 
-function var_0_0.tweenMoveNodePos(arg_9_0, arg_9_1)
-	arg_9_0:_killNodeMoveTween()
+function VersionActivity2_9DungeonMapNodeItem:tweenMoveNodePos(isSelect)
+	self:_killNodeMoveTween()
 
-	local var_9_0, var_9_1, var_9_2 = arg_9_0:getNodeLocalPos()
-	local var_9_3 = arg_9_1 and arg_9_0._transelectnode or arg_9_0._tranunselectnode
-	local var_9_4, var_9_5, var_9_6 = transformhelper.getLocalPos(var_9_3)
-	local var_9_7 = VersionActivity2_9DungeonEnum.EpisodeSelectDuration
+	local curLocalPosX, curLocalPosY, curLocalPosZ = self:getNodeLocalPos()
+	local targetNodeTran = isSelect and self._transelectnode or self._tranunselectnode
+	local targetLocalPosX, targetLocalPosY, targetLocalPosZ = transformhelper.getLocalPos(targetNodeTran)
+	local duration = VersionActivity2_9DungeonEnum.EpisodeSelectDuration
 
-	arg_9_0._tweenId_x = ZProj.TweenHelper.DOTweenFloat(var_9_0, var_9_4, var_9_7, arg_9_0._tweenMoveNodePosXFrameCb, arg_9_0._tweenMoveNodePosDone, arg_9_0)
-	arg_9_0._tweenId_y = ZProj.TweenHelper.DOTweenFloat(var_9_1, var_9_5, var_9_7, arg_9_0._tweenMoveNodePosYFrameCb, arg_9_0._tweenMoveNodePosDone, arg_9_0)
-	arg_9_0._tweenId_z = ZProj.TweenHelper.DOTweenFloat(var_9_2, var_9_6, var_9_7, arg_9_0._tweenMoveNodePosZFrameCb, arg_9_0._tweenMoveNodePosDone, arg_9_0)
+	self._tweenId_x = ZProj.TweenHelper.DOTweenFloat(curLocalPosX, targetLocalPosX, duration, self._tweenMoveNodePosXFrameCb, self._tweenMoveNodePosDone, self)
+	self._tweenId_y = ZProj.TweenHelper.DOTweenFloat(curLocalPosY, targetLocalPosY, duration, self._tweenMoveNodePosYFrameCb, self._tweenMoveNodePosDone, self)
+	self._tweenId_z = ZProj.TweenHelper.DOTweenFloat(curLocalPosZ, targetLocalPosZ, duration, self._tweenMoveNodePosZFrameCb, self._tweenMoveNodePosDone, self)
 end
 
-function var_0_0._tweenMoveNodePosXFrameCb(arg_10_0, arg_10_1)
-	local var_10_0, var_10_1, var_10_2 = arg_10_0:getNodeLocalPos()
+function VersionActivity2_9DungeonMapNodeItem:_tweenMoveNodePosXFrameCb(nodeLocalPosX)
+	local _, curLocalPosY, curLocalPosZ = self:getNodeLocalPos()
 
-	transformhelper.setLocalPos(arg_10_0._trannode, arg_10_1, var_10_1, var_10_2)
-	arg_10_0:brocastPosition()
+	transformhelper.setLocalPos(self._trannode, nodeLocalPosX, curLocalPosY, curLocalPosZ)
+	self:brocastPosition()
 end
 
-function var_0_0._tweenMoveNodePosYFrameCb(arg_11_0, arg_11_1)
-	local var_11_0, var_11_1, var_11_2 = arg_11_0:getNodeLocalPos()
+function VersionActivity2_9DungeonMapNodeItem:_tweenMoveNodePosYFrameCb(nodeLocalPosY)
+	local curLocalPosX, _, curLocalPosZ = self:getNodeLocalPos()
 
-	transformhelper.setLocalPos(arg_11_0._trannode, var_11_0, arg_11_1, var_11_2)
-	arg_11_0:brocastPosition()
+	transformhelper.setLocalPos(self._trannode, curLocalPosX, nodeLocalPosY, curLocalPosZ)
+	self:brocastPosition()
 end
 
-function var_0_0._tweenMoveNodePosZFrameCb(arg_12_0, arg_12_1)
-	local var_12_0, var_12_1 = arg_12_0:getNodeLocalPos()
+function VersionActivity2_9DungeonMapNodeItem:_tweenMoveNodePosZFrameCb(nodeLocalPosZ)
+	local curLocalPosX, curLocalPosY = self:getNodeLocalPos()
 
-	transformhelper.setLocalPos(arg_12_0._trannode, var_12_0, var_12_1, arg_12_1)
-	arg_12_0:brocastPosition()
+	transformhelper.setLocalPos(self._trannode, curLocalPosX, curLocalPosY, nodeLocalPosZ)
+	self:brocastPosition()
 end
 
-function var_0_0._tweenMoveNodePosDone(arg_13_0)
+function VersionActivity2_9DungeonMapNodeItem:_tweenMoveNodePosDone()
 	return
 end
 
-function var_0_0._killNodeMoveTween(arg_14_0)
-	if arg_14_0._tweenId_x then
-		ZProj.TweenHelper.KillById(arg_14_0._tweenId_x)
+function VersionActivity2_9DungeonMapNodeItem:_killNodeMoveTween()
+	if self._tweenId_x then
+		ZProj.TweenHelper.KillById(self._tweenId_x)
 
-		arg_14_0._tweenId_x = nil
+		self._tweenId_x = nil
 	end
 
-	if arg_14_0._tweenId_y then
-		ZProj.TweenHelper.KillById(arg_14_0._tweenId_y)
+	if self._tweenId_y then
+		ZProj.TweenHelper.KillById(self._tweenId_y)
 
-		arg_14_0._tweenId_y = nil
+		self._tweenId_y = nil
 	end
 
-	if arg_14_0._tweenId_z then
-		ZProj.TweenHelper.KillById(arg_14_0._tweenId_z)
+	if self._tweenId_z then
+		ZProj.TweenHelper.KillById(self._tweenId_z)
 
-		arg_14_0._tweenId_z = nil
+		self._tweenId_z = nil
 	end
 end
 
-function var_0_0.onDestroy(arg_15_0)
-	arg_15_0:_killNodeMoveTween()
+function VersionActivity2_9DungeonMapNodeItem:onDestroy()
+	self:_killNodeMoveTween()
 
-	arg_15_0._gomesh = nil
+	self._gomesh = nil
 end
 
-return var_0_0
+return VersionActivity2_9DungeonMapNodeItem

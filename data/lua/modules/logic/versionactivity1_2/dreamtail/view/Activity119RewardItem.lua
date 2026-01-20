@@ -1,142 +1,144 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.view.Activity119RewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/view/Activity119RewardItem.lua
 
-local var_0_0 = class("Activity119RewardItem")
+module("modules.logic.versionactivity1_2.dreamtail.view.Activity119RewardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.taskId = nil
-	arg_1_0.bonusCount = 0
-	arg_1_0.bonusItems = {}
+local Activity119RewardItem = class("Activity119RewardItem")
 
-	arg_1_0:onInitView()
-	arg_1_0:addEvents()
+function Activity119RewardItem:init(go)
+	self.go = go
+	self.taskId = nil
+	self.bonusCount = 0
+	self.bonusItems = {}
+
+	self:onInitView()
+	self:addEvents()
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._rewards = {}
+function Activity119RewardItem:onInitView()
+	self._rewards = {}
 
-	for iter_2_0 = 1, 3 do
-		arg_2_0._rewards[iter_2_0] = {}
-		arg_2_0._rewards[iter_2_0]._goreward = gohelper.findChild(arg_2_0.go, "reward" .. iter_2_0)
-		arg_2_0._rewards[iter_2_0]._bg = gohelper.findChild(arg_2_0._rewards[iter_2_0]._goreward, "bg")
-		arg_2_0._rewards[iter_2_0]._itemposContent = gohelper.findChild(arg_2_0._rewards[iter_2_0]._goreward, "itemposContent")
-		arg_2_0._rewards[iter_2_0]._state = gohelper.findChild(arg_2_0._rewards[iter_2_0]._goreward, "state")
-		arg_2_0._rewards[iter_2_0]._lockbg = gohelper.findChild(arg_2_0._rewards[iter_2_0]._goreward, "lockbg")
+	for i = 1, 3 do
+		self._rewards[i] = {}
+		self._rewards[i]._goreward = gohelper.findChild(self.go, "reward" .. i)
+		self._rewards[i]._bg = gohelper.findChild(self._rewards[i]._goreward, "bg")
+		self._rewards[i]._itemposContent = gohelper.findChild(self._rewards[i]._goreward, "itemposContent")
+		self._rewards[i]._state = gohelper.findChild(self._rewards[i]._goreward, "state")
+		self._rewards[i]._lockbg = gohelper.findChild(self._rewards[i]._goreward, "lockbg")
 
-		for iter_2_1 = 1, 3 do
-			arg_2_0._rewards[iter_2_0]["_itempos" .. iter_2_1] = gohelper.findChild(arg_2_0._rewards[iter_2_0]._itemposContent, "itempos" .. iter_2_1)
+		for j = 1, 3 do
+			self._rewards[i]["_itempos" .. j] = gohelper.findChild(self._rewards[i]._itemposContent, "itempos" .. j)
 		end
 
-		arg_2_0._rewards[iter_2_0]._goclaimed = gohelper.findChild(arg_2_0._rewards[iter_2_0]._state, "go_claimed")
-		arg_2_0._rewards[iter_2_0]._goclaim = gohelper.findChild(arg_2_0._rewards[iter_2_0]._state, "go_claim")
-		arg_2_0._rewards[iter_2_0]._golocked = gohelper.findChild(arg_2_0._rewards[iter_2_0]._state, "go_locked")
-		arg_2_0._rewards[iter_2_0]._btnclaim = gohelper.findChildButtonWithAudio(arg_2_0._rewards[iter_2_0]._state, "go_claim")
-		arg_2_0._rewards[iter_2_0]._canvasGroup = gohelper.onceAddComponent(arg_2_0._rewards[iter_2_0]._itemposContent, typeof(UnityEngine.CanvasGroup))
+		self._rewards[i]._goclaimed = gohelper.findChild(self._rewards[i]._state, "go_claimed")
+		self._rewards[i]._goclaim = gohelper.findChild(self._rewards[i]._state, "go_claim")
+		self._rewards[i]._golocked = gohelper.findChild(self._rewards[i]._state, "go_locked")
+		self._rewards[i]._btnclaim = gohelper.findChildButtonWithAudio(self._rewards[i]._state, "go_claim")
+		self._rewards[i]._canvasGroup = gohelper.onceAddComponent(self._rewards[i]._itemposContent, typeof(UnityEngine.CanvasGroup))
 
-		gohelper.setActive(arg_2_0._rewards[iter_2_0]._goreward, false)
+		gohelper.setActive(self._rewards[i]._goreward, false)
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	for iter_3_0 = 1, 3 do
-		arg_3_0._rewards[iter_3_0]._btnclaim:AddClickListener(arg_3_0.onTaskFinish, arg_3_0)
+function Activity119RewardItem:addEvents()
+	for i = 1, 3 do
+		self._rewards[i]._btnclaim:AddClickListener(self.onTaskFinish, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	for iter_4_0 = 1, 3 do
-		arg_4_0._rewards[iter_4_0]._btnclaim:RemoveClickListener()
+function Activity119RewardItem:removeEvents()
+	for i = 1, 3 do
+		self._rewards[i]._btnclaim:RemoveClickListener()
 	end
 end
 
-function var_0_0.setBonus(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.taskId = arg_5_2
+function Activity119RewardItem:setBonus(bonusStr, taskId, isUnLock)
+	self.taskId = taskId
 
-	local var_5_0 = GameUtil.splitString2(arg_5_1, true)
-	local var_5_1 = #var_5_0
+	local bonus = GameUtil.splitString2(bonusStr, true)
+	local bonusLen = #bonus
 
-	if arg_5_0.bonusCount ~= var_5_1 then
-		if arg_5_0.bonusCount > 0 then
-			gohelper.setActive(arg_5_0._rewards[arg_5_0.bonusCount]._goreward, false)
+	if self.bonusCount ~= bonusLen then
+		if self.bonusCount > 0 then
+			gohelper.setActive(self._rewards[self.bonusCount]._goreward, false)
 		end
 
-		gohelper.setActive(arg_5_0._rewards[var_5_1]._goreward, true)
+		gohelper.setActive(self._rewards[bonusLen]._goreward, true)
 
-		for iter_5_0 = var_5_1 + 1, arg_5_0.bonusCount do
-			gohelper.setActive(arg_5_0.bonusItems[iter_5_0].go, false)
+		for i = bonusLen + 1, self.bonusCount do
+			gohelper.setActive(self.bonusItems[i].go, false)
 		end
 
-		for iter_5_1 = 1, var_5_1 do
-			if not arg_5_0.bonusItems[iter_5_1] then
-				arg_5_0.bonusItems[iter_5_1] = IconMgr.instance:getCommonPropItemIcon(arg_5_0._rewards[var_5_1]["_itempos" .. iter_5_1])
+		for i = 1, bonusLen do
+			if not self.bonusItems[i] then
+				self.bonusItems[i] = IconMgr.instance:getCommonPropItemIcon(self._rewards[bonusLen]["_itempos" .. i])
 			else
-				gohelper.setActive(arg_5_0.bonusItems[iter_5_1].go, true)
-				arg_5_0.bonusItems[iter_5_1].go.transform:SetParent(arg_5_0._rewards[var_5_1]["_itempos" .. iter_5_1].transform, false)
+				gohelper.setActive(self.bonusItems[i].go, true)
+				self.bonusItems[i].go.transform:SetParent(self._rewards[bonusLen]["_itempos" .. i].transform, false)
 			end
 		end
 
-		arg_5_0.bonusCount = var_5_1
+		self.bonusCount = bonusLen
 	end
 
-	local var_5_2 = arg_5_0._rewards[arg_5_0.bonusCount]
+	local reward = self._rewards[self.bonusCount]
 
-	arg_5_3 = true
+	isUnLock = true
 
-	gohelper.setActive(var_5_2._bg, arg_5_3)
-	gohelper.setActive(var_5_2._itemposContent, arg_5_3)
-	gohelper.setActive(var_5_2._state, arg_5_3)
-	gohelper.setActive(var_5_2._lockbg, not arg_5_3)
+	gohelper.setActive(reward._bg, isUnLock)
+	gohelper.setActive(reward._itemposContent, isUnLock)
+	gohelper.setActive(reward._state, isUnLock)
+	gohelper.setActive(reward._lockbg, not isUnLock)
 
-	if arg_5_3 then
-		for iter_5_2 = 1, var_5_1 do
-			local var_5_3 = var_5_0[iter_5_2]
+	if isUnLock then
+		for i = 1, bonusLen do
+			local info = bonus[i]
 
-			arg_5_0.bonusItems[iter_5_2]:setMOValue(var_5_3[1], var_5_3[2], var_5_3[3], nil, true)
-			arg_5_0.bonusItems[iter_5_2]:setCountFontSize(48)
-			arg_5_0.bonusItems[iter_5_2]:SetCountBgHeight(32)
+			self.bonusItems[i]:setMOValue(info[1], info[2], info[3], nil, true)
+			self.bonusItems[i]:setCountFontSize(48)
+			self.bonusItems[i]:SetCountBgHeight(32)
 		end
 	end
 end
 
-function var_0_0.updateTaskStatus(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._rewards[arg_6_0.bonusCount]
+function Activity119RewardItem:updateTaskStatus(status)
+	local reward = self._rewards[self.bonusCount]
 
-	gohelper.setActive(var_6_0._goclaimed, arg_6_1 == 3)
-	gohelper.setActive(var_6_0._goclaim, arg_6_1 == 2)
-	gohelper.setActive(var_6_0._golocked, arg_6_1 == 1)
+	gohelper.setActive(reward._goclaimed, status == 3)
+	gohelper.setActive(reward._goclaim, status == 2)
+	gohelper.setActive(reward._golocked, status == 1)
 
-	var_6_0._canvasGroup.alpha = arg_6_1 == 3 and 0.7 or 1
+	reward._canvasGroup.alpha = status == 3 and 0.7 or 1
 
-	for iter_6_0 = 1, #arg_6_0.bonusItems do
-		arg_6_0.bonusItems[iter_6_0]:setAlpha(arg_6_1 == 3 and 0.5 or 1)
+	for i = 1, #self.bonusItems do
+		self.bonusItems[i]:setAlpha(status == 3 and 0.5 or 1)
 	end
 end
 
-function var_0_0.onTaskFinish(arg_7_0)
+function Activity119RewardItem:onTaskFinish()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards)
-	TaskRpc.instance:sendFinishTaskRequest(arg_7_0.taskId)
+	TaskRpc.instance:sendFinishTaskRequest(self.taskId)
 end
 
-function var_0_0.dispose(arg_8_0)
-	arg_8_0:removeEvents()
+function Activity119RewardItem:dispose()
+	self:removeEvents()
 
-	arg_8_0.go = nil
-	arg_8_0.bonusCount = 0
+	self.go = nil
+	self.bonusCount = 0
 
-	for iter_8_0 = 1, #arg_8_0.bonusItems do
-		arg_8_0.bonusItems[iter_8_0]:onDestroy()
+	for i = 1, #self.bonusItems do
+		self.bonusItems[i]:onDestroy()
 	end
 
-	arg_8_0.bonusItems = nil
+	self.bonusItems = nil
 
-	for iter_8_1 = 1, 3 do
-		for iter_8_2, iter_8_3 in pairs(arg_8_0._rewards[iter_8_1]) do
-			arg_8_0._rewards[iter_8_1][iter_8_2] = nil
+	for i = 1, 3 do
+		for k, v in pairs(self._rewards[i]) do
+			self._rewards[i][k] = nil
 		end
 	end
 
-	arg_8_0._rewards = nil
-	arg_8_0.taskId = nil
+	self._rewards = nil
+	self.taskId = nil
 end
 
-return var_0_0
+return Activity119RewardItem

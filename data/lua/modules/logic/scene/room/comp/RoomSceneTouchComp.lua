@@ -1,27 +1,29 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneTouchComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneTouchComp.lua
 
-local var_0_0 = class("RoomSceneTouchComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneTouchComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneTouchComp = class("RoomSceneTouchComp", BaseSceneComp)
+
+function RoomSceneTouchComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneTouchComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
-	local var_2_0 = arg_2_0._scene.go.sceneGO
+	local sceneGO = self._scene.go.sceneGO
 
-	arg_2_0._touchComp = MonoHelper.addLuaComOnceToGo(var_2_0, RoomTouchComp, var_2_0)
+	self._touchComp = MonoHelper.addLuaComOnceToGo(sceneGO, RoomTouchComp, sceneGO)
 end
 
-function var_0_0.setUIDragScreenScroll(arg_3_0, arg_3_1)
-	if arg_3_0._touchComp then
-		arg_3_0._touchComp:setUIDragScreenScroll(arg_3_1)
+function RoomSceneTouchComp:setUIDragScreenScroll(isDragStart)
+	if self._touchComp then
+		self._touchComp:setUIDragScreenScroll(isDragStart)
 	end
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	arg_4_0._touchComp = nil
+function RoomSceneTouchComp:onSceneClose()
+	self._touchComp = nil
 end
 
-return var_0_0
+return RoomSceneTouchComp

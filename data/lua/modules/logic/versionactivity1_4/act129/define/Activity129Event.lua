@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_4.act129.define.Activity129Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/define/Activity129Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act129.define.Activity129Event", package.seeall)
 
-var_0_0.OnGetInfoSuccess = 1001
-var_0_0.OnLotterySuccess = 1002
-var_0_0.OnEnterPool = 1003
-var_0_0.OnShowReward = 1004
-var_0_0.OnShowSpecialReward = 1005
-var_0_0.OnLotteryEnd = 1006
-var_0_0.OnClickEmptyPool = 1007
+local Activity129Event = _M
 
-return var_0_0
+Activity129Event.OnGetInfoSuccess = 1001
+Activity129Event.OnLotterySuccess = 1002
+Activity129Event.OnEnterPool = 1003
+Activity129Event.OnShowReward = 1004
+Activity129Event.OnShowSpecialReward = 1005
+Activity129Event.OnLotteryEnd = 1006
+Activity129Event.OnClickEmptyPool = 1007
+
+return Activity129Event

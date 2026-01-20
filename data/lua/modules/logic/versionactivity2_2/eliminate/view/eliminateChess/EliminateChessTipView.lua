@@ -1,351 +1,350 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateChessTipView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/EliminateChessTipView.lua
 
-local var_0_0 = class("EliminateChessTipView", ListScrollCellExtend)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateChessTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gochessTip = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip")
-	arg_1_0._imageChessQualityBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip/Info/#image_ChessQualityBG")
-	arg_1_0._imageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_chessTip/Info/#image_Chess")
-	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/#go_Resource")
-	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem")
-	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
-	arg_1_0._txtResourceNum = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
-	arg_1_0._txtFireNum = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Info/image_Fire/#txt_FireNum")
-	arg_1_0._goStar1 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/Stars/#go_Star1")
-	arg_1_0._goStar2 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/Stars/#go_Star2")
-	arg_1_0._goStar3 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/Stars/#go_Star3")
-	arg_1_0._goStar4 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/Stars/#go_Star4")
-	arg_1_0._goStar5 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/Stars/#go_Star5")
-	arg_1_0._goStar6 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/Stars/#go_Star6")
-	arg_1_0._txtChessName = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Info/#txt_ChessName")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Scroll View/Viewport/#txt_Descr")
-	arg_1_0._gochessResourceTip = gohelper.findChild(arg_1_0.viewGO, "#go_chessResourceTip")
-	arg_1_0._goTipsBG = gohelper.findChild(arg_1_0.viewGO, "#go_chessResourceTip/#go_TipsBG")
-	arg_1_0._btnsell = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_chessResourceTip/#btn_sell")
-	arg_1_0._txtopt = gohelper.findChildText(arg_1_0.viewGO, "#go_chessResourceTip/#txt_opt")
-	arg_1_0._goResource2 = gohelper.findChild(arg_1_0.viewGO, "#go_chessResourceTip/#go_Resource_2")
-	arg_1_0._goResourceItem2 = gohelper.findChild(arg_1_0.viewGO, "#go_chessResourceTip/#go_Resource_2/#go_ResourceItem_2")
-	arg_1_0._txtConfirm = gohelper.findChildText(arg_1_0.viewGO, "#go_chessResourceTip/#txt_Confirm")
+local EliminateChessTipView = class("EliminateChessTipView", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EliminateChessTipView:onInitView()
+	self._gochessTip = gohelper.findChild(self.viewGO, "#go_chessTip")
+	self._imageChessQualityBG = gohelper.findChildImage(self.viewGO, "#go_chessTip/Info/#image_ChessQualityBG")
+	self._imageChess = gohelper.findChildSingleImage(self.viewGO, "#go_chessTip/Info/#image_Chess")
+	self._goResource = gohelper.findChild(self.viewGO, "#go_chessTip/Info/#go_Resource")
+	self._goResourceItem = gohelper.findChild(self.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem")
+	self._imageResourceQuality = gohelper.findChildImage(self.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
+	self._txtResourceNum = gohelper.findChildText(self.viewGO, "#go_chessTip/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
+	self._txtFireNum = gohelper.findChildText(self.viewGO, "#go_chessTip/Info/image_Fire/#txt_FireNum")
+	self._goStar1 = gohelper.findChild(self.viewGO, "#go_chessTip/Info/Stars/#go_Star1")
+	self._goStar2 = gohelper.findChild(self.viewGO, "#go_chessTip/Info/Stars/#go_Star2")
+	self._goStar3 = gohelper.findChild(self.viewGO, "#go_chessTip/Info/Stars/#go_Star3")
+	self._goStar4 = gohelper.findChild(self.viewGO, "#go_chessTip/Info/Stars/#go_Star4")
+	self._goStar5 = gohelper.findChild(self.viewGO, "#go_chessTip/Info/Stars/#go_Star5")
+	self._goStar6 = gohelper.findChild(self.viewGO, "#go_chessTip/Info/Stars/#go_Star6")
+	self._txtChessName = gohelper.findChildText(self.viewGO, "#go_chessTip/Info/#txt_ChessName")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#go_chessTip/Scroll View/Viewport/#txt_Descr")
+	self._gochessResourceTip = gohelper.findChild(self.viewGO, "#go_chessResourceTip")
+	self._goTipsBG = gohelper.findChild(self.viewGO, "#go_chessResourceTip/#go_TipsBG")
+	self._btnsell = gohelper.findChildButtonWithAudio(self.viewGO, "#go_chessResourceTip/#btn_sell")
+	self._txtopt = gohelper.findChildText(self.viewGO, "#go_chessResourceTip/#txt_opt")
+	self._goResource2 = gohelper.findChild(self.viewGO, "#go_chessResourceTip/#go_Resource_2")
+	self._goResourceItem2 = gohelper.findChild(self.viewGO, "#go_chessResourceTip/#go_Resource_2/#go_ResourceItem_2")
+	self._txtConfirm = gohelper.findChildText(self.viewGO, "#go_chessResourceTip/#txt_Confirm")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsell:AddClickListener(arg_2_0._btnsellOnClick, arg_2_0)
+function EliminateChessTipView:addEvents()
+	self._btnsell:AddClickListener(self._btnsellOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsell:RemoveClickListener()
+function EliminateChessTipView:removeEvents()
+	self._btnsell:RemoveClickListener()
 end
 
-local var_0_1 = ZProj.UIEffectsCollection
+local ZProj_UIEffectsCollection = ZProj.UIEffectsCollection
 
-function var_0_0._btnsellOnClick(arg_4_0)
+function EliminateChessTipView:_btnsellOnClick()
 	if not EliminateLevelModel.instance:sellChessIsUnLock() then
 		GameFacade.showToast(ToastEnum.EliminateChessSellLocked)
 
 		return
 	end
 
-	if not arg_4_0:canSell() then
+	if not self:canSell() then
 		return
 	end
 
-	if arg_4_0._uid == nil and arg_4_0._strongholdId == nil then
+	if self._uid == nil and self._strongholdId == nil then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_bank_open)
-	WarChessRpc.instance:sendWarChessPieceSellRequest(arg_4_0._uid, arg_4_0._strongholdId, arg_4_0._onSellChess, arg_4_0)
+	WarChessRpc.instance:sendWarChessPieceSellRequest(self._uid, self._strongholdId, self._onSellChess, self)
 end
 
-function var_0_0._onSellChess(arg_5_0)
-	if arg_5_0._sellCb and arg_5_0._sellCbTarget then
-		arg_5_0._sellCb(arg_5_0._sellCbTarget)
+function EliminateChessTipView:_onSellChess()
+	if self._sellCb and self._sellCbTarget then
+		self._sellCb(self._sellCbTarget)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.sellUIEffect = var_0_1.Get(arg_6_0._btnsell.gameObject)
-	arg_6_0._gochessTipAni = arg_6_0._gochessTip:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._gochessResourceTipAni = arg_6_0._gochessResourceTip:GetComponent(typeof(UnityEngine.Animator))
+function EliminateChessTipView:_editableInitView()
+	self.sellUIEffect = ZProj_UIEffectsCollection.Get(self._btnsell.gameObject)
+	self._gochessTipAni = self._gochessTip:GetComponent(typeof(UnityEngine.Animator))
+	self._gochessResourceTipAni = self._gochessResourceTip:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function EliminateChessTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
+function EliminateChessTipView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_9_0)
+function EliminateChessTipView:onClose()
 	return
 end
 
-function var_0_0.hideView(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._lastState = nil
-	arg_10_0._hideCb = arg_10_1
-	arg_10_0._hideCbTarget = arg_10_2
+function EliminateChessTipView:hideView(cb, cbTarget)
+	self._lastState = nil
+	self._hideCb = cb
+	self._hideCbTarget = cbTarget
 
-	if arg_10_0._gochessTipAni and arg_10_0._gochessResourceTipAni then
-		arg_10_0._gochessTipAni:Play("close")
-		arg_10_0._gochessResourceTipAni:Play("close")
-		TaskDispatcher.runDelay(arg_10_0.hideViewGo, arg_10_0, 0.33)
+	if self._gochessTipAni and self._gochessResourceTipAni then
+		self._gochessTipAni:Play("close")
+		self._gochessResourceTipAni:Play("close")
+		TaskDispatcher.runDelay(self.hideViewGo, self, 0.33)
 	else
-		arg_10_0:hideViewGo()
+		self:hideViewGo()
 	end
 end
 
-function var_0_0.hideViewGo(arg_11_0)
-	arg_11_0:setViewActive(false)
+function EliminateChessTipView:hideViewGo()
+	self:setViewActive(false)
 
-	if arg_11_0._hideCb then
-		arg_11_0._hideCb(arg_11_0._hideCbTarget)
+	if self._hideCb then
+		self._hideCb(self._hideCbTarget)
 	end
 end
 
-function var_0_0.setViewActive(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._showType == EliminateTeamChessEnum.ChessTipType.showDragTip or arg_12_0._showType == EliminateTeamChessEnum.ChessTipType.showSell
-	local var_12_1 = arg_12_0._showType == EliminateTeamChessEnum.ChessTipType.showDesc or arg_12_0._showType == EliminateTeamChessEnum.ChessTipType.showSell
+function EliminateChessTipView:setViewActive(active)
+	local isShowResourceTip = self._showType == EliminateTeamChessEnum.ChessTipType.showDragTip or self._showType == EliminateTeamChessEnum.ChessTipType.showSell
+	local isShowChessTip = self._showType == EliminateTeamChessEnum.ChessTipType.showDesc or self._showType == EliminateTeamChessEnum.ChessTipType.showSell
 
-	gohelper.setActive(arg_12_0._gochessResourceTip, var_12_0 and arg_12_1)
-	gohelper.setActive(arg_12_0._gochessTip, var_12_1 and arg_12_1)
+	gohelper.setActive(self._gochessResourceTip, isShowResourceTip and active)
+	gohelper.setActive(self._gochessTip, isShowChessTip and active)
 end
 
-function var_0_0.setSoliderIdAndShowType(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._soliderId = arg_13_1
-	arg_13_0._showType = arg_13_2
-	arg_13_0._config = EliminateConfig.instance:getSoldierChessConfig(arg_13_0._soliderId)
-	arg_13_0._cost, arg_13_0._costNumber = EliminateConfig.instance:getSoldierChessConfigConst(arg_13_0._soliderId)
+function EliminateChessTipView:setSoliderIdAndShowType(id, showType)
+	self._soliderId = id
+	self._showType = showType
+	self._config = EliminateConfig.instance:getSoldierChessConfig(self._soliderId)
+	self._cost, self._costNumber = EliminateConfig.instance:getSoldierChessConfigConst(self._soliderId)
 
-	if arg_13_0._config then
-		SurvivalUnitIconHelper.instance:setNpcIcon(arg_13_0._imageChess, arg_13_0._config.resPic)
-		UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_13_0._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. arg_13_0._config.level, false)
+	if self._config then
+		SurvivalUnitIconHelper.instance:setNpcIcon(self._imageChess, self._config.resPic)
+		UISpriteSetMgr.instance:setV2a2EliminateSprite(self._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. self._config.level, false)
 	end
 
-	arg_13_0:refreshInfo()
-	arg_13_0:refreshResource()
-	arg_13_0:refreshSellResource()
-	arg_13_0:refreshViewState()
+	self:refreshInfo()
+	self:refreshResource()
+	self:refreshSellResource()
+	self:refreshViewState()
 end
 
-function var_0_0.canSell(arg_14_0)
+function EliminateChessTipView:canSell()
 	if not EliminateLevelModel.instance:sellChessIsUnLock() then
 		return false
 	end
 
-	local var_14_0 = arg_14_0._config.sell
+	local sell = self._config.sell
 
-	if var_14_0 and var_14_0 == 1 then
+	if sell and sell == 1 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.setSellCb(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._sellCb = arg_15_1
-	arg_15_0._sellCbTarget = arg_15_2
+function EliminateChessTipView:setSellCb(cb, cbTarget)
+	self._sellCb = cb
+	self._sellCbTarget = cbTarget
 end
 
-function var_0_0.setChessUidAndStrongHoldId(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._uid = arg_16_1
-	arg_16_0._strongholdId = arg_16_2
+function EliminateChessTipView:setChessUidAndStrongHoldId(uid, strongholdId)
+	self._uid = uid
+	self._strongholdId = strongholdId
 end
 
-function var_0_0.refreshViewState(arg_17_0)
-	local var_17_0 = arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showDragTip
-	local var_17_1 = arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showSell
-	local var_17_2
+function EliminateChessTipView:refreshViewState()
+	local isShowDragTip = self._showType == EliminateTeamChessEnum.ChessTipType.showDragTip
+	local isShowSell = self._showType == EliminateTeamChessEnum.ChessTipType.showSell
+	local isShowDesc = self._showType == EliminateTeamChessEnum.ChessTipType.showDesc
+	local isShowResourceTip = self._showType == EliminateTeamChessEnum.ChessTipType.showDragTip or self._showType == EliminateTeamChessEnum.ChessTipType.showSell
+	local isShowChessTip = self._showType == EliminateTeamChessEnum.ChessTipType.showDesc or self._showType == EliminateTeamChessEnum.ChessTipType.showSell
 
-	var_17_2 = arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showDesc
+	gohelper.setActive(self._btnsell.gameObject, isShowSell)
+	gohelper.setActive(self._goConfirm, isShowDragTip)
+	gohelper.setActive(self._goTipsBG, isShowDragTip)
 
-	local var_17_3 = arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showDragTip or arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showSell
-	local var_17_4 = arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showDesc or arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showSell
-
-	gohelper.setActive(arg_17_0._btnsell.gameObject, var_17_1)
-	gohelper.setActive(arg_17_0._goConfirm, var_17_0)
-	gohelper.setActive(arg_17_0._goTipsBG, var_17_0)
-
-	if var_17_1 and arg_17_0.sellUIEffect then
-		arg_17_0.sellUIEffect:SetGray(not arg_17_0:canSell())
+	if isShowSell and self.sellUIEffect then
+		self.sellUIEffect:SetGray(not self:canSell())
 	end
 
-	arg_17_0._txtopt.text = var_17_1 and "＋" or "－"
+	self._txtopt.text = isShowSell and "＋" or "－"
 
-	gohelper.setActive(arg_17_0._txtConfirm.gameObject, var_17_0)
-	gohelper.setActive(arg_17_0._goResource2, var_17_3)
-	gohelper.setActive(arg_17_0._gochessResourceTip, var_17_3)
-	gohelper.setActive(arg_17_0._gochessTip, var_17_4)
+	gohelper.setActive(self._txtConfirm.gameObject, isShowDragTip)
+	gohelper.setActive(self._goResource2, isShowResourceTip)
+	gohelper.setActive(self._gochessResourceTip, isShowResourceTip)
+	gohelper.setActive(self._gochessTip, isShowChessTip)
 
-	if arg_17_0._showType == EliminateTeamChessEnum.ChessTipType.showSell then
+	if self._showType == EliminateTeamChessEnum.ChessTipType.showSell then
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.SoliderChessSellViewOpen)
 	end
 end
 
-function var_0_0.updateViewPositionByEntity(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_1 == nil or arg_18_0._config == nil then
+function EliminateChessTipView:updateViewPositionByEntity(entity, offset, showAdd)
+	if entity == nil or self._config == nil then
 		return
 	end
 
-	local var_18_0 = arg_18_2 and arg_18_2.soliderTipOffsetX or EliminateTeamChessEnum.soliderTipOffsetX
-	local var_18_1 = arg_18_2 and arg_18_2.soliderTipOffsetY or EliminateTeamChessEnum.soliderTipOffsetY
-	local var_18_2, var_18_3, var_18_4 = arg_18_1:getPosXYZ()
+	local soliderTipOffsetX = offset and offset.soliderTipOffsetX or EliminateTeamChessEnum.soliderTipOffsetX
+	local soliderTipOffsetY = offset and offset.soliderTipOffsetY or EliminateTeamChessEnum.soliderTipOffsetY
+	local worldPosX, worldPosY, worldPosZ = entity:getPosXYZ()
 
-	if isTypeOf(arg_18_1, TeamChessEmptyUnit) then
-		var_18_2, var_18_3, var_18_4 = arg_18_1:getTopPosXYZ()
+	if isTypeOf(entity, TeamChessEmptyUnit) then
+		worldPosX, worldPosY, worldPosZ = entity:getTopPosXYZ()
 	end
 
-	if arg_18_0._showType == EliminateTeamChessEnum.ChessTipType.showSell then
-		transformhelper.setPos(arg_18_0._gochessResourceTip.transform, var_18_2 + var_18_0, var_18_3 + var_18_1, var_18_4)
-		transformhelper.setPos(arg_18_0._gochessTip.transform, var_18_2 + EliminateTeamChessEnum.soliderSellTipOffsetX, var_18_3 + EliminateTeamChessEnum.soliderSellTipOffsetY, var_18_4)
+	if self._showType == EliminateTeamChessEnum.ChessTipType.showSell then
+		transformhelper.setPos(self._gochessResourceTip.transform, worldPosX + soliderTipOffsetX, worldPosY + soliderTipOffsetY, worldPosZ)
+		transformhelper.setPos(self._gochessTip.transform, worldPosX + EliminateTeamChessEnum.soliderSellTipOffsetX, worldPosY + EliminateTeamChessEnum.soliderSellTipOffsetY, worldPosZ)
 	end
 
-	if arg_18_0._showType == EliminateTeamChessEnum.ChessTipType.showDragTip then
-		var_18_0 = EliminateTeamChessEnum.soliderItemDragTipOffsetX
-		var_18_1 = EliminateTeamChessEnum.soliderItemDragTipOffsetY
+	if self._showType == EliminateTeamChessEnum.ChessTipType.showDragTip then
+		soliderTipOffsetX = EliminateTeamChessEnum.soliderItemDragTipOffsetX
+		soliderTipOffsetY = EliminateTeamChessEnum.soliderItemDragTipOffsetY
 
-		transformhelper.setPos(arg_18_0._gochessResourceTip.transform, var_18_2 + var_18_0, var_18_3 + var_18_1, var_18_4)
-		arg_18_0:refreshAddState(arg_18_3)
+		transformhelper.setPos(self._gochessResourceTip.transform, worldPosX + soliderTipOffsetX, worldPosY + soliderTipOffsetY, worldPosZ)
+		self:refreshAddState(showAdd)
 	end
 
-	if arg_18_0._showType == EliminateTeamChessEnum.ChessTipType.showDesc then
-		transformhelper.setPos(arg_18_0._gochessTip.transform, var_18_2 + var_18_0, var_18_3 + var_18_1, var_18_4)
-	end
-end
-
-function var_0_0.refreshAddState(arg_19_0, arg_19_1)
-	if arg_19_1 == nil then
-		arg_19_1 = true
-	end
-
-	if arg_19_0._lastState == nil or arg_19_0._lastState ~= arg_19_1 then
-		arg_19_0._txtopt.text = arg_19_1 and "－" or ""
-
-		gohelper.setActive(arg_19_0._goResource2, arg_19_1)
-
-		arg_19_0._txtConfirm.text = arg_19_1 and luaLang("EliminateChessTipView_1") or luaLang("EliminateChessTipView_2")
-		arg_19_0._lastState = arg_19_1
+	if self._showType == EliminateTeamChessEnum.ChessTipType.showDesc then
+		transformhelper.setPos(self._gochessTip.transform, worldPosX + soliderTipOffsetX, worldPosY + soliderTipOffsetY, worldPosZ)
 	end
 end
 
-function var_0_0.refreshInfo(arg_20_0)
-	arg_20_0._txtFireNum.text = arg_20_0._config.defaultPower
-	arg_20_0._txtChessName.text = arg_20_0._config.name
+function EliminateChessTipView:refreshAddState(showAdd)
+	if showAdd == nil then
+		showAdd = true
+	end
 
-	local var_20_0 = EliminateConfig.instance:getSoldierChessDesc(arg_20_0._soliderId)
+	if self._lastState == nil or self._lastState ~= showAdd then
+		self._txtopt.text = showAdd and "－" or ""
 
-	arg_20_0._txtDescr.text = EliminateLevelModel.instance.formatString(var_20_0)
+		gohelper.setActive(self._goResource2, showAdd)
+
+		self._txtConfirm.text = showAdd and luaLang("EliminateChessTipView_1") or luaLang("EliminateChessTipView_2")
+		self._lastState = showAdd
+	end
 end
 
-function var_0_0.refreshResource(arg_21_0)
-	if not arg_21_0._cost then
+function EliminateChessTipView:refreshInfo()
+	self._txtFireNum.text = self._config.defaultPower
+	self._txtChessName.text = self._config.name
+
+	local desc = EliminateConfig.instance:getSoldierChessDesc(self._soliderId)
+
+	self._txtDescr.text = EliminateLevelModel.instance.formatString(desc)
+end
+
+function EliminateChessTipView:refreshResource()
+	if not self._cost then
 		return
 	end
 
-	if arg_21_0._resourceItem == nil then
-		arg_21_0._resourceItem = arg_21_0:getUserDataTb_()
+	if self._resourceItem == nil then
+		self._resourceItem = self:getUserDataTb_()
 	end
 
-	for iter_21_0 = 1, #arg_21_0._resourceItem do
-		local var_21_0 = arg_21_0._resourceItem[iter_21_0]
+	for i = 1, #self._resourceItem do
+		local data = self._resourceItem[i]
 
-		gohelper.setActive(var_21_0.item, false)
+		gohelper.setActive(data.item, false)
 	end
 
-	for iter_21_1, iter_21_2 in ipairs(arg_21_0._cost) do
-		local var_21_1 = iter_21_2[1]
-		local var_21_2 = iter_21_2[2]
-		local var_21_3 = arg_21_0._resourceItem[iter_21_1]
+	for index, cost in ipairs(self._cost) do
+		local resourceId = cost[1]
+		local num = cost[2]
+		local data = self._resourceItem[index]
 
-		if var_21_3 == nil then
-			local var_21_4 = gohelper.clone(arg_21_0._goResourceItem, arg_21_0._goResource, var_21_1)
-			local var_21_5 = gohelper.findChildImage(var_21_4, "#image_ResourceQuality")
-			local var_21_6 = gohelper.findChildText(var_21_4, "#image_ResourceQuality/#txt_ResourceNum")
+		if data == nil then
+			local item = gohelper.clone(self._goResourceItem, self._goResource, resourceId)
+			local resourceImage = gohelper.findChildImage(item, "#image_ResourceQuality")
+			local resourceNumberText = gohelper.findChildText(item, "#image_ResourceQuality/#txt_ResourceNum")
 
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(var_21_5, EliminateTeamChessEnum.ResourceTypeToImagePath[var_21_1], false)
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 
-			var_21_6.text = var_21_2
-			var_21_3 = {
-				item = var_21_4,
-				resourceImage = var_21_5,
-				resourceNumberText = var_21_6
+			resourceNumberText.text = num
+			data = {
+				item = item,
+				resourceImage = resourceImage,
+				resourceNumberText = resourceNumberText
 			}
 
-			table.insert(arg_21_0._resourceItem, var_21_3)
+			table.insert(self._resourceItem, data)
 		else
-			var_21_3.resourceNumberText.text = var_21_2
+			data.resourceNumberText.text = num
 
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(var_21_3.resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[var_21_1], false)
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(data.resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 		end
 
-		local var_21_7 = arg_21_0._resourceItem[iter_21_1]
+		local data = self._resourceItem[index]
 
-		gohelper.setActive(var_21_7.item, true)
+		gohelper.setActive(data.item, true)
 	end
 end
 
-function var_0_0.refreshSellResource(arg_22_0)
-	if not arg_22_0._cost then
+function EliminateChessTipView:refreshSellResource()
+	if not self._cost then
 		return
 	end
 
-	local var_22_0 = arg_22_0._cost
+	local cost = self._cost
 
-	if arg_22_0._showType == EliminateTeamChessEnum.ChessTipType.showSell then
-		var_22_0 = EliminateTeamChessModel.instance:getSellResourceData(arg_22_0._cost)
+	if self._showType == EliminateTeamChessEnum.ChessTipType.showSell then
+		cost = EliminateTeamChessModel.instance:getSellResourceData(self._cost)
 	end
 
-	if arg_22_0._resourceItem2 == nil then
-		arg_22_0._resourceItem2 = arg_22_0:getUserDataTb_()
+	if self._resourceItem2 == nil then
+		self._resourceItem2 = self:getUserDataTb_()
 	end
 
-	for iter_22_0 = 1, #arg_22_0._resourceItem2 do
-		local var_22_1 = arg_22_0._resourceItem2[iter_22_0]
+	for i = 1, #self._resourceItem2 do
+		local data = self._resourceItem2[i]
 
-		gohelper.setActive(var_22_1.item, false)
+		gohelper.setActive(data.item, false)
 	end
 
-	for iter_22_1, iter_22_2 in ipairs(var_22_0) do
-		local var_22_2 = iter_22_2[1]
-		local var_22_3 = tonumber(iter_22_2[2])
-		local var_22_4 = arg_22_0._resourceItem2[iter_22_1]
+	for index, cost in ipairs(cost) do
+		local resourceId = cost[1]
+		local num = tonumber(cost[2])
+		local data = self._resourceItem2[index]
 
-		if var_22_4 == nil then
-			local var_22_5 = gohelper.clone(arg_22_0._goResourceItem2, arg_22_0._goResource2, var_22_2)
-			local var_22_6 = gohelper.findChildImage(var_22_5, "#image_ResourceQuality")
-			local var_22_7 = gohelper.findChildText(var_22_5, "#image_ResourceQuality/#txt_ResourceNum")
+		if data == nil then
+			local item = gohelper.clone(self._goResourceItem2, self._goResource2, resourceId)
+			local resourceImage = gohelper.findChildImage(item, "#image_ResourceQuality")
+			local resourceNumberText = gohelper.findChildText(item, "#image_ResourceQuality/#txt_ResourceNum")
 
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(var_22_6, EliminateTeamChessEnum.ResourceTypeToImagePath[var_22_2], false)
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 
-			var_22_7.text = var_22_3
-			var_22_4 = {
-				item = var_22_5,
-				resourceImage = var_22_6,
-				resourceNumberText = var_22_7
+			resourceNumberText.text = num
+			data = {
+				item = item,
+				resourceImage = resourceImage,
+				resourceNumberText = resourceNumberText
 			}
 
-			table.insert(arg_22_0._resourceItem2, var_22_4)
+			table.insert(self._resourceItem2, data)
 		else
-			var_22_4.resourceNumberText.text = var_22_3
+			data.resourceNumberText.text = num
 
-			UISpriteSetMgr.instance:setV2a2EliminateSprite(var_22_4.resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[var_22_2], false)
+			UISpriteSetMgr.instance:setV2a2EliminateSprite(data.resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 		end
 
-		local var_22_8 = arg_22_0._resourceItem2[iter_22_1]
+		local data = self._resourceItem2[index]
 
-		gohelper.setActive(var_22_8.item, true)
+		gohelper.setActive(data.item, true)
 	end
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.hideViewGo, arg_23_0)
+function EliminateChessTipView:onDestroyView()
+	TaskDispatcher.cancelTask(self.hideViewGo, self)
 
-	arg_23_0._sellCb = nil
-	arg_23_0._sellCbTarget = nil
+	self._sellCb = nil
+	self._sellCbTarget = nil
 end
 
-return var_0_0
+return EliminateChessTipView

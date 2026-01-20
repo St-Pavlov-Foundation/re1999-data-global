@@ -1,90 +1,92 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeTrackView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeTrackView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeTrackView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeTrackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotranscribelist = gohelper.findChild(arg_1_0.viewGO, "root/left/scroll_transcribelist/viewport/#go_transcribe_list")
+local VersionActivity2_4MusicFreeTrackView = class("VersionActivity2_4MusicFreeTrackView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeTrackView:onInitView()
+	self._gotranscribelist = gohelper.findChild(self.viewGO, "root/left/scroll_transcribelist/viewport/#go_transcribe_list")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_4MusicFreeTrackView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_4MusicFreeTrackView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:_initTrackList()
+function VersionActivity2_4MusicFreeTrackView:_editableInitView()
+	self:_initTrackList()
 end
 
-function var_0_0._initTrackList(arg_5_0)
-	arg_5_0._trackList = arg_5_0:getUserDataTb_()
+function VersionActivity2_4MusicFreeTrackView:_initTrackList()
+	self._trackList = self:getUserDataTb_()
 
-	local var_5_0 = VersionActivity2_4MusicFreeModel.instance:getTrackList()
+	local list = VersionActivity2_4MusicFreeModel.instance:getTrackList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		arg_5_0:_addTrack(iter_5_1)
+	for i, v in ipairs(list) do
+		self:_addTrack(v)
 	end
 
-	arg_5_0:_selectedTrackItem(1)
+	self:_selectedTrackItem(1)
 end
 
-function var_0_0._addTrack(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.index
-	local var_6_1 = arg_6_0.viewContainer:getSetting().otherRes[1]
-	local var_6_2 = arg_6_0:getResInst(var_6_1, arg_6_0._gotranscribelist, "track_" .. tostring(var_6_0))
-	local var_6_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_2, VersionActivity2_4MusicFreeTrackItem)
+function VersionActivity2_4MusicFreeTrackView:_addTrack(mo)
+	local index = mo.index
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local childGO = self:getResInst(path, self._gotranscribelist, "track_" .. tostring(index))
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, VersionActivity2_4MusicFreeTrackItem)
 
-	arg_6_0._trackList[var_6_0] = var_6_3
+	self._trackList[index] = item
 
-	var_6_3:onUpdateMO(arg_6_1)
+	item:onUpdateMO(mo)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function VersionActivity2_4MusicFreeTrackView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.ClickTrackItem, arg_8_0._onClickTrackItem, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.UpdateTrackList, arg_8_0._onUpdateTrackList, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.ActionStatusChange, arg_8_0._onActionStatusChange, arg_8_0)
+function VersionActivity2_4MusicFreeTrackView:onOpen()
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.ClickTrackItem, self._onClickTrackItem, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.UpdateTrackList, self._onUpdateTrackList, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.ActionStatusChange, self._onActionStatusChange, self)
 end
 
-function var_0_0._onActionStatusChange(arg_9_0)
-	arg_9_0:_onUpdateTrackList()
+function VersionActivity2_4MusicFreeTrackView:_onActionStatusChange()
+	self:_onUpdateTrackList()
 end
 
-function var_0_0._onUpdateTrackList(arg_10_0)
-	local var_10_0 = VersionActivity2_4MusicFreeModel.instance:getTrackList()
+function VersionActivity2_4MusicFreeTrackView:_onUpdateTrackList()
+	local list = VersionActivity2_4MusicFreeModel.instance:getTrackList()
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._trackList) do
-		iter_10_1:onUpdateMO(var_10_0[iter_10_0])
-	end
-end
-
-function var_0_0._onClickTrackItem(arg_11_0, arg_11_1)
-	arg_11_0:_selectedTrackItem(arg_11_1)
-end
-
-function var_0_0._selectedTrackItem(arg_12_0, arg_12_1)
-	VersionActivity2_4MusicFreeModel.instance:setSelectedTrackIndex(arg_12_1)
-
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._trackList) do
-		iter_12_1:updateSelected()
+	for i, v in ipairs(self._trackList) do
+		v:onUpdateMO(list[i])
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
+function VersionActivity2_4MusicFreeTrackView:_onClickTrackItem(index)
+	self:_selectedTrackItem(index)
+end
+
+function VersionActivity2_4MusicFreeTrackView:_selectedTrackItem(index)
+	VersionActivity2_4MusicFreeModel.instance:setSelectedTrackIndex(index)
+
+	for k, v in pairs(self._trackList) do
+		v:updateSelected()
+	end
+end
+
+function VersionActivity2_4MusicFreeTrackView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function VersionActivity2_4MusicFreeTrackView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeTrackView

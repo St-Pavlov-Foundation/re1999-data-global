@@ -1,37 +1,49 @@
-﻿module("modules.logic.messagebox.config.MessageBoxConfig", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/config/MessageBoxConfig.lua
 
-local var_0_0 = class("MessageBoxConfig", BaseConfig)
+module("modules.logic.messagebox.config.MessageBoxConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._messageBoxConfig = nil
+local MessageBoxConfig = class("MessageBoxConfig", BaseConfig)
+
+function MessageBoxConfig:ctor()
+	self._messageBoxConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function MessageBoxConfig:reqConfigNames()
 	return {
 		"messagebox"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "messagebox" then
-		arg_3_0._messageBoxConfig = arg_3_2
+function MessageBoxConfig:onConfigLoaded(configName, configTable)
+	if configName == "messagebox" then
+		self._messageBoxConfig = configTable
 	end
 end
 
-function var_0_0.getMessageBoxCO(arg_4_0, arg_4_1)
-	return arg_4_0._messageBoxConfig.configDict[arg_4_1]
+function MessageBoxConfig:getMessageBoxCO(id)
+	return self._messageBoxConfig.configDict[id]
 end
 
-function var_0_0.getMessage(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getMessageBoxCO(arg_5_1)
+function MessageBoxConfig:getMessage(id)
+	local messageBoxConfig = self:getMessageBoxCO(id)
 
-	if not var_5_0 then
-		logError("找不到弹窗配置, id: " .. tostring(arg_5_1))
+	if not messageBoxConfig then
+		logError("找不到弹窗配置, id: " .. tostring(id))
 	end
 
-	return var_5_0 and var_5_0.content or ""
+	return messageBoxConfig and messageBoxConfig.content or ""
 end
 
-var_0_0.instance = var_0_0.New()
+function MessageBoxConfig:getMessageTitle(id)
+	local messageBoxConfig = self:getMessageBoxCO(id)
 
-return var_0_0
+	if not messageBoxConfig then
+		logError("找不到弹窗标题配置, id: " .. tostring(id))
+	end
+
+	return messageBoxConfig and messageBoxConfig.title or ""
+end
+
+MessageBoxConfig.instance = MessageBoxConfig.New()
+
+return MessageBoxConfig

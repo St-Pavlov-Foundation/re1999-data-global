@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.mgr.FightUserDataClassMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightUserDataClassMgr.lua
 
-local var_0_0 = class("FightUserDataClassMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightUserDataClassMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightUserDataClassMgr = class("FightUserDataClassMgr", FightBaseClass)
+
+function FightUserDataClassMgr:onConstructor()
 	return
 end
 
-function var_0_0.onDestructor(arg_2_0)
+function FightUserDataClassMgr:onDestructor()
 	return
 end
 
-return var_0_0
+return FightUserDataClassMgr

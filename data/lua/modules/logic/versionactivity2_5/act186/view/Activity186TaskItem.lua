@@ -1,121 +1,126 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186TaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186TaskItem.lua
 
-local var_0_0 = class("Activity186TaskItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_5.act186.view.Activity186TaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.txtIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "txtIndex")
-	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "txtDesc")
-	arg_1_0.goReward = gohelper.findChild(arg_1_0.viewGO, "#go_reward")
-	arg_1_0.txtNum = gohelper.findChildTextMesh(arg_1_0.goReward, "#txt_num")
-	arg_1_0.btnCanget = gohelper.findChildButtonWithAudio(arg_1_0.goReward, "go_canget")
-	arg_1_0.goReceive = gohelper.findChild(arg_1_0.goReward, "go_receive")
-	arg_1_0.btnJump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnJump")
-	arg_1_0.goDoing = gohelper.findChild(arg_1_0.viewGO, "goDoing")
-	arg_1_0.goLightBg = gohelper.findChild(arg_1_0.goReward, "go_lightbg")
-	arg_1_0.anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0.isOpen = true
+local Activity186TaskItem = class("Activity186TaskItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity186TaskItem:onInitView()
+	self.txtIndex = gohelper.findChildTextMesh(self.viewGO, "txtIndex")
+	self.txtDesc = gohelper.findChildTextMesh(self.viewGO, "txtDesc")
+	self.goReward = gohelper.findChild(self.viewGO, "#go_reward")
+	self.txtNum = gohelper.findChildTextMesh(self.goReward, "#txt_num")
+	self.btnCanget = gohelper.findChildButtonWithAudio(self.goReward, "go_canget")
+	self.goReceive = gohelper.findChild(self.goReward, "go_receive")
+	self.btnJump = gohelper.findChildButtonWithAudio(self.viewGO, "btnJump")
+	self.goDoing = gohelper.findChild(self.viewGO, "goDoing")
+	self.goLightBg = gohelper.findChild(self.goReward, "go_lightbg")
+	self.anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self.isOpen = true
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.btnCanget:AddClickListener(arg_2_0.onClickBtnCanget, arg_2_0)
-	arg_2_0.btnJump:AddClickListener(arg_2_0.onClickBtnJump, arg_2_0)
+function Activity186TaskItem:addEvents()
+	self.btnCanget:AddClickListener(self.onClickBtnCanget, self)
+	self.btnJump:AddClickListener(self.onClickBtnJump, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0.btnCanget:RemoveClickListener()
-	arg_3_0.btnJump:RemoveClickListener()
+function Activity186TaskItem:removeEvents()
+	self.btnCanget:RemoveClickListener()
+	self.btnJump:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity186TaskItem:_editableInitView()
 	return
 end
 
-function var_0_0.onClickBtnCanget(arg_5_0)
-	if not arg_5_0._mo then
+function Activity186TaskItem:onClickBtnCanget()
+	if not self._mo then
 		return
 	end
 
-	if not arg_5_0._mo.canGetReward then
+	if not self._mo.canGetReward then
 		return
 	end
 
-	local var_5_0 = arg_5_0._mo.config
+	local config = self._mo.config
 
-	if arg_5_0._mo.isGlobalTask then
-		TaskRpc.instance:sendFinishTaskRequest(var_5_0.id)
+	if self._mo.isGlobalTask then
+		TaskRpc.instance:sendFinishTaskRequest(config.id)
 	else
-		Activity186Rpc.instance:sendFinishAct186TaskRequest(var_5_0.activityId, var_5_0.id)
+		Activity186Rpc.instance:sendFinishAct186TaskRequest(config.activityId, config.id)
 	end
 end
 
-function var_0_0.onClickBtnJump(arg_6_0)
-	if not arg_6_0._mo then
+function Activity186TaskItem:onClickBtnJump()
+	if not self._mo then
 		return
 	end
 
-	local var_6_0 = arg_6_0._mo.config.jumpId
+	local config = self._mo.config
+	local jumpId = config.jumpId
 
-	if var_6_0 and var_6_0 ~= 0 then
-		GameFacade.jump(var_6_0)
+	if jumpId and jumpId ~= 0 then
+		GameFacade.jump(jumpId)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._mo = arg_7_1
-	arg_7_0.config = arg_7_0._mo.config
+function Activity186TaskItem:onUpdateMO(mo)
+	self._mo = mo
+	self.config = self._mo.config
 
-	arg_7_0:refreshDesc()
-	arg_7_0:refreshJump()
-	arg_7_0:refreshReward()
+	self:refreshDesc()
+	self:refreshJump()
+	self:refreshReward()
 
-	if arg_7_0.isOpen then
-		arg_7_0.anim:Play("open", 0, 0)
+	if self.isOpen then
+		self.anim:Play("open", 0, 0)
 	else
-		arg_7_0.anim:Play("open", 0, 1)
+		self.anim:Play("open", 0, 1)
 	end
 
-	arg_7_0.isOpen = false
+	self.isOpen = false
 end
 
-function var_0_0.refreshDesc(arg_8_0)
-	arg_8_0.txtIndex.text = tostring(arg_8_0._mo.index)
+function Activity186TaskItem:refreshDesc()
+	self.txtIndex.text = tostring(self._mo.index)
 
-	local var_8_0 = Activity173Controller.numberDisplay(arg_8_0._mo.progress)
-	local var_8_1 = Activity173Controller.numberDisplay(arg_8_0.config and arg_8_0.config.maxProgress or 0)
+	local progress = Activity173Controller.numberDisplay(self._mo.progress)
+	local maxProgress = Activity173Controller.numberDisplay(self.config and self.config.maxProgress or 0)
 
-	arg_8_0.txtDesc.text = string.format("%s\n(%s/%s)", arg_8_0.config and arg_8_0.config.desc or "", var_8_0, var_8_1)
+	self.txtDesc.text = string.format("%s\n(%s/%s)", self.config and self.config.desc or "", progress, maxProgress)
 end
 
-function var_0_0.refreshJump(arg_9_0)
-	local var_9_0 = arg_9_0._mo.canGetReward
-	local var_9_1 = arg_9_0._mo.hasGetBonus
+function Activity186TaskItem:refreshJump()
+	local canGetReward = self._mo.canGetReward
+	local hasGetReward = self._mo.hasGetBonus
 
-	gohelper.setActive(arg_9_0.btnCanget, var_9_0)
-	gohelper.setActive(arg_9_0.goLightBg, var_9_0)
-	gohelper.setActive(arg_9_0.goReceive, var_9_1)
+	gohelper.setActive(self.btnCanget, canGetReward)
+	gohelper.setActive(self.goLightBg, canGetReward)
+	gohelper.setActive(self.goReceive, hasGetReward)
 
-	local var_9_2 = arg_9_0._mo.config.jumpId
-	local var_9_3 = var_9_2 and var_9_2 ~= 0 and not var_9_0 and not var_9_1
+	local config = self._mo.config
+	local jumpId = config.jumpId
+	local canShowJump = jumpId and jumpId ~= 0 and not canGetReward and not hasGetReward
 
-	gohelper.setActive(arg_9_0.btnJump, var_9_3)
+	gohelper.setActive(self.btnJump, canShowJump)
 
-	local var_9_4 = not var_9_0 and not var_9_1 and not var_9_3
+	local isDoing = not canGetReward and not hasGetReward and not canShowJump
 
-	gohelper.setActive(arg_9_0.goDoing, var_9_4)
+	gohelper.setActive(self.goDoing, isDoing)
 end
 
-function var_0_0.refreshReward(arg_10_0)
-	local var_10_0 = (GameUtil.splitString2(arg_10_0.config and arg_10_0.config.bonus, true) or {})[1]
+function Activity186TaskItem:refreshReward()
+	local reward = GameUtil.splitString2(self.config and self.config.bonus, true) or {}
+	local itemCo = reward[1]
 
-	arg_10_0.txtNum.text = string.format("×%s", var_10_0 and var_10_0[3] or 0)
+	self.txtNum.text = string.format("×%s", itemCo and itemCo[3] or 0)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function Activity186TaskItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity186TaskItem

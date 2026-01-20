@@ -1,105 +1,107 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardViewTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/view/ArmRewardViewTaskItem.lua
 
-local var_0_0 = class("ArmRewardViewTaskItem", ListScrollCellExtend)
+module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardViewTaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Num")
-	arg_1_0._txtTaskDesc = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_TaskDesc")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "Root/#scroll_Rewards/Viewport/#gorewards")
-	arg_1_0._goclaimedBG = gohelper.findChild(arg_1_0.viewGO, "Root/image_ClaimedBG")
-	arg_1_0._gocollecticon = gohelper.findChild(arg_1_0.viewGO, "Root/#go_collecticon")
+local ArmRewardViewTaskItem = class("ArmRewardViewTaskItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ArmRewardViewTaskItem:onInitView()
+	self._txtNum = gohelper.findChildText(self.viewGO, "Root/#txt_Num")
+	self._txtTaskDesc = gohelper.findChildText(self.viewGO, "Root/#txt_TaskDesc")
+	self._gorewards = gohelper.findChild(self.viewGO, "Root/#scroll_Rewards/Viewport/#gorewards")
+	self._goclaimedBG = gohelper.findChild(self.viewGO, "Root/image_ClaimedBG")
+	self._gocollecticon = gohelper.findChild(self.viewGO, "Root/#go_collecticon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ArmRewardViewTaskItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ArmRewardViewTaskItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gocollecticon, false)
+function ArmRewardViewTaskItem:_editableInitView()
+	gohelper.setActive(self._gocollecticon, false)
 
-	arg_4_0._animator = arg_4_0.viewGO:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
+	self._animator = self.viewGO:GetComponent(ArmPuzzlePipeEnum.ComponentType.Animator)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function ArmRewardViewTaskItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function ArmRewardViewTaskItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.getAnimator(arg_7_0)
-	return arg_7_0._animator
+function ArmRewardViewTaskItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._rewardMO = arg_8_1
+function ArmRewardViewTaskItem:onUpdateMO(mo)
+	self._rewardMO = mo
 
-	arg_8_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
+function ArmRewardViewTaskItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function ArmRewardViewTaskItem:onDestroyView()
 	return
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	local var_11_0 = arg_11_0._rewardMO
+function ArmRewardViewTaskItem:_refreshUI()
+	local atMO = self._rewardMO
 
-	if var_11_0 and var_11_0.config then
-		local var_11_1 = var_11_0.config
+	if atMO and atMO.config then
+		local cfg = atMO.config
 
-		arg_11_0._txtNum.text = arg_11_0:_getNumStr(var_11_1.episodeId)
-		arg_11_0._txtTaskDesc.text = var_11_1.name
+		self._txtNum.text = self:_getNumStr(cfg.episodeId)
+		self._txtTaskDesc.text = cfg.name
 
-		local var_11_2 = ItemModel.instance:getItemDataListByConfigStr(var_11_0.config.firstBonus)
+		local itemList = ItemModel.instance:getItemDataListByConfigStr(atMO.config.firstBonus)
 
-		arg_11_0.itemList = var_11_2
-		arg_11_0._isReceived = Activity124Model.instance:isReceived(var_11_1.activityId, var_11_1.episodeId)
+		self.itemList = itemList
+		self._isReceived = Activity124Model.instance:isReceived(cfg.activityId, cfg.episodeId)
 
-		IconMgr.instance:getCommonPropItemIconList(arg_11_0, arg_11_0._onItemShow, var_11_2, arg_11_0._gorewards)
-		gohelper.setActive(arg_11_0._goclaimedBG, arg_11_0._isReceived)
+		IconMgr.instance:getCommonPropItemIconList(self, self._onItemShow, itemList, self._gorewards)
+		gohelper.setActive(self._goclaimedBG, self._isReceived)
 	end
 end
 
-function var_0_0._getNumStr(arg_12_0, arg_12_1)
-	if arg_12_1 < 10 then
-		return "0" .. arg_12_1
+function ArmRewardViewTaskItem:_getNumStr(num)
+	if num < 10 then
+		return "0" .. num
 	end
 
-	return tostring(arg_12_1)
+	return tostring(num)
 end
 
-function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_1:onUpdateMO(arg_13_2)
-	arg_13_1:setConsume(true)
-	arg_13_1:showStackableNum2()
-	arg_13_1:isShowEffect(true)
-	arg_13_1:setAutoPlay(true)
-	arg_13_1:setCountFontSize(48)
+function ArmRewardViewTaskItem:_onItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
 
-	if not arg_13_1._gocollecticon then
-		arg_13_1._gocollecticon = gohelper.clone(arg_13_0._gocollecticon, arg_13_1.viewGO)
+	if not cell_component._gocollecticon then
+		cell_component._gocollecticon = gohelper.clone(self._gocollecticon, cell_component.viewGO)
 
-		local var_13_0 = arg_13_1._gocollecticon.transform
+		local trs = cell_component._gocollecticon.transform
 
-		transformhelper.setLocalPos(var_13_0, 0, 0, 0)
+		transformhelper.setLocalPos(trs, 0, 0, 0)
 	end
 
-	gohelper.setActive(arg_13_1._gocollecticon, arg_13_0._isReceived)
+	gohelper.setActive(cell_component._gocollecticon, self._isReceived)
 end
 
-var_0_0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_arm/v1a3_armreward_taskitem.prefab"
+ArmRewardViewTaskItem.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_arm/v1a3_armreward_taskitem.prefab"
 
-return var_0_0
+return ArmRewardViewTaskItem

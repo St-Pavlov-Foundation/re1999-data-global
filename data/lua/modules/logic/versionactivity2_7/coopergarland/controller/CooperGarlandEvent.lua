@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.controller.CooperGarlandEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/controller/CooperGarlandEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_7.coopergarland.controller.CooperGarlandEvent", package.seeall)
 
-var_0_0.OnAct192InfoUpdate = var_0_1()
-var_0_0.OnClickEpisode = var_0_1()
-var_0_0.OneClickClaimReward = var_0_1()
-var_0_0.ChangePanelAngle = var_0_1()
-var_0_0.ResetJoystick = var_0_1()
-var_0_0.OnRemoveModeChange = var_0_1()
-var_0_0.OnRemoveComponent = var_0_1()
-var_0_0.OnBallKeyChange = var_0_1()
-var_0_0.OnChangeControlMode = var_0_1()
-var_0_0.PlayFinishEpisodeStarVX = var_0_1()
-var_0_0.FirstFinishEpisode = var_0_1()
-var_0_0.PlayEnterNextRoundAnim = var_0_1()
-var_0_0.OnEnterNextRound = var_0_1()
-var_0_0.OnResetGame = var_0_1()
-var_0_0.OnGameStopChange = var_0_1()
-var_0_0.GuideOnEnterMap = var_0_1()
-var_0_0.triggerGuideDialogue = var_0_1()
+local CooperGarlandEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+CooperGarlandEvent.OnAct192InfoUpdate = _get()
+CooperGarlandEvent.OnClickEpisode = _get()
+CooperGarlandEvent.OneClickClaimReward = _get()
+CooperGarlandEvent.ChangePanelAngle = _get()
+CooperGarlandEvent.ResetJoystick = _get()
+CooperGarlandEvent.OnRemoveModeChange = _get()
+CooperGarlandEvent.OnRemoveComponent = _get()
+CooperGarlandEvent.OnBallKeyChange = _get()
+CooperGarlandEvent.OnChangeControlMode = _get()
+CooperGarlandEvent.PlayFinishEpisodeStarVX = _get()
+CooperGarlandEvent.FirstFinishEpisode = _get()
+CooperGarlandEvent.PlayEnterNextRoundAnim = _get()
+CooperGarlandEvent.OnEnterNextRound = _get()
+CooperGarlandEvent.OnResetGame = _get()
+CooperGarlandEvent.OnGameStopChange = _get()
+CooperGarlandEvent.GuideOnEnterMap = _get()
+CooperGarlandEvent.triggerGuideDialogue = _get()
+
+return CooperGarlandEvent

@@ -1,98 +1,100 @@
-﻿module("modules.logic.versionactivity1_6.act152.view.NewYearEveGiftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act152/view/NewYearEveGiftView.lua
 
-local var_0_0 = class("NewYearEveGiftView", BaseView)
+module("modules.logic.versionactivity1_6.act152.view.NewYearEveGiftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_Title")
-	arg_1_0._simageItem = gohelper.findChildSingleImage(arg_1_0.viewGO, "Item/#simage_Item")
-	arg_1_0._simagesign = gohelper.findChildSingleImage(arg_1_0.viewGO, "Item/#simage_sign")
-	arg_1_0._gocontentroot = gohelper.findChild(arg_1_0.viewGO, "#go_contentroot")
-	arg_1_0._goconversation = gohelper.findChild(arg_1_0.viewGO, "#go_contentroot/#go_conversation")
-	arg_1_0._gohead = gohelper.findChild(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_head")
-	arg_1_0._goheadgrey = gohelper.findChild(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_head/#go_headgrey")
-	arg_1_0._simagehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_head/#simage_head")
-	arg_1_0._goname = gohelper.findChild(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_name")
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_name/namelayout/#txt_namecn")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_name/namelayout/#txt_nameen")
-	arg_1_0._gocontents = gohelper.findChild(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_contents")
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#go_contentroot/#go_conversation/#go_contents/go_normalcontent/Viewport/#txt_content")
+local NewYearEveGiftView = class("NewYearEveGiftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NewYearEveGiftView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#txt_Title")
+	self._simageItem = gohelper.findChildSingleImage(self.viewGO, "Item/#simage_Item")
+	self._simagesign = gohelper.findChildSingleImage(self.viewGO, "Item/#simage_sign")
+	self._gocontentroot = gohelper.findChild(self.viewGO, "#go_contentroot")
+	self._goconversation = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation")
+	self._gohead = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_head")
+	self._goheadgrey = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_head/#go_headgrey")
+	self._simagehead = gohelper.findChildSingleImage(self.viewGO, "#go_contentroot/#go_conversation/#go_head/#simage_head")
+	self._goname = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_name")
+	self._txtnamecn = gohelper.findChildText(self.viewGO, "#go_contentroot/#go_conversation/#go_name/namelayout/#txt_namecn")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "#go_contentroot/#go_conversation/#go_name/namelayout/#txt_nameen")
+	self._gocontents = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_contents")
+	self._txtcontent = gohelper.findChildText(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/go_normalcontent/Viewport/#txt_content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function NewYearEveGiftView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function NewYearEveGiftView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._clickbg = gohelper.getClickWithAudio(arg_4_0._simageFullBG.gameObject)
+function NewYearEveGiftView:_editableInitView()
+	self._clickbg = gohelper.getClickWithAudio(self._simageFullBG.gameObject)
 
-	arg_4_0._clickbg:AddClickListener(arg_4_0._onBgClick, arg_4_0)
+	self._clickbg:AddClickListener(self._onBgClick, self)
 end
 
-function var_0_0._onBgClick(arg_5_0)
-	arg_5_0:_checkNextStep()
+function NewYearEveGiftView:_onBgClick()
+	self:_checkNextStep()
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
-	arg_6_0:_checkNextStep()
+function NewYearEveGiftView:onClickModalMask()
+	self:_checkNextStep()
 end
 
-function var_0_0._checkNextStep(arg_7_0)
-	if arg_7_0._dialogIndex >= #arg_7_0._dialogs then
-		arg_7_0:closeThis()
+function NewYearEveGiftView:_checkNextStep()
+	if self._dialogIndex >= #self._dialogs then
+		self:closeThis()
 
 		return
 	end
 
-	arg_7_0._dialogIndex = arg_7_0._dialogIndex + 1
+	self._dialogIndex = self._dialogIndex + 1
 
-	arg_7_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._presentId = arg_8_0.viewParam
+function NewYearEveGiftView:onOpen()
+	self._presentId = self.viewParam
 
 	AudioMgr.instance:trigger(AudioEnum.NewYearEve.play_ui_shuori_evegift_popup)
 
-	arg_8_0._dialogIndex = 1
+	self._dialogIndex = 1
 
-	local var_8_0 = Activity152Config.instance:getAct152Co(arg_8_0._presentId)
+	local giftCo = Activity152Config.instance:getAct152Co(self._presentId)
 
-	arg_8_0._dialogs = string.split(var_8_0.dialog, "|")
+	self._dialogs = string.split(giftCo.dialog, "|")
 
-	arg_8_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_9_0)
-	local var_9_0 = Activity152Config.instance:getAct152Co(arg_9_0._presentId)
+function NewYearEveGiftView:_refreshUI()
+	local giftCo = Activity152Config.instance:getAct152Co(self._presentId)
 
-	arg_9_0._simageItem:LoadImage(ResUrl.getAntiqueIcon(var_9_0.presentIcon))
-	arg_9_0._simagesign:LoadImage(ResUrl.getSignature(var_9_0.presentSign))
-	arg_9_0._simagehead:LoadImage(ResUrl.getHeadIconSmall(var_9_0.roleIcon))
+	self._simageItem:LoadImage(ResUrl.getAntiqueIcon(giftCo.presentIcon))
+	self._simagesign:LoadImage(ResUrl.getSignature(giftCo.presentSign))
+	self._simagehead:LoadImage(ResUrl.getHeadIconSmall(giftCo.roleIcon))
 
-	arg_9_0._txtTitle.text = var_9_0.presentName
-	arg_9_0._txtnamecn.text = var_9_0.roleName
-	arg_9_0._txtnameen.text = "/ " .. var_9_0.roleNameEn
-	arg_9_0._txtcontent.text = arg_9_0._dialogs[arg_9_0._dialogIndex]
+	self._txtTitle.text = giftCo.presentName
+	self._txtnamecn.text = giftCo.roleName
+	self._txtnameen.text = "/ " .. giftCo.roleNameEn
+	self._txtcontent.text = self._dialogs[self._dialogIndex]
 end
 
-function var_0_0.onClose(arg_10_0)
+function NewYearEveGiftView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simageItem:UnLoadImage()
-	arg_11_0._simagesign:UnLoadImage()
-	arg_11_0._simagehead:UnLoadImage()
-	arg_11_0._clickbg:RemoveClickListener()
+function NewYearEveGiftView:onDestroyView()
+	self._simageItem:UnLoadImage()
+	self._simagesign:UnLoadImage()
+	self._simagehead:UnLoadImage()
+	self._clickbg:RemoveClickListener()
 end
 
-return var_0_0
+return NewYearEveGiftView

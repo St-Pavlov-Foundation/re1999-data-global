@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkRandomDiceUseSkill353", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRandomDiceUseSkill353.lua
 
-local var_0_0 = class("FightWorkRandomDiceUseSkill353", FightWorkEffectDice)
+module("modules.logic.fight.system.work.FightWorkRandomDiceUseSkill353", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
+local FightWorkRandomDiceUseSkill353 = class("FightWorkRandomDiceUseSkill353", FightWorkEffectDice)
+
+function FightWorkRandomDiceUseSkill353:onConstructor()
 	FightDataHelper.tempMgr.douQuQuDice = true
 end
 
-function var_0_0.onDestructor(arg_2_0)
+function FightWorkRandomDiceUseSkill353:onDestructor()
 	return
 end
 
-return var_0_0
+return FightWorkRandomDiceUseSkill353

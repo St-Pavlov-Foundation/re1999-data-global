@@ -1,322 +1,328 @@
-﻿module("modules.logic.summon.view.SummonEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonEquipView.lua
 
-local var_0_0 = class("SummonEquipView", BaseView)
+module("modules.logic.summon.view.SummonEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goresult = gohelper.findChild(arg_1_0.viewGO, "#go_result")
-	arg_1_0._goresultitem = gohelper.findChild(arg_1_0.viewGO, "#go_result/resultcontent/#go_resultitem")
-	arg_1_0._btnopenall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_openall")
-	arg_1_0._btnreturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_return")
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "#go_drag")
-	arg_1_0._gocontroller = gohelper.findChild(arg_1_0.viewGO, "#go_controller")
-	arg_1_0._goguide = gohelper.findChild(arg_1_0.viewGO, "#go_drag/#go_guide")
+local SummonEquipView = class("SummonEquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonEquipView:onInitView()
+	self._goresult = gohelper.findChild(self.viewGO, "#go_result")
+	self._goresultitem = gohelper.findChild(self.viewGO, "#go_result/resultcontent/#go_resultitem")
+	self._btnopenall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#btn_openall")
+	self._btnreturn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#btn_return")
+	self._godrag = gohelper.findChild(self.viewGO, "#go_drag")
+	self._gocontroller = gohelper.findChild(self.viewGO, "#go_controller")
+	self._goguide = gohelper.findChild(self.viewGO, "#go_drag/#go_guide")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreturn:AddClickListener(arg_2_0._btnreturnOnClick, arg_2_0)
+function SummonEquipView:addEvents()
+	self._btnreturn:AddClickListener(self._btnreturnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreturn:RemoveClickListener()
+function SummonEquipView:removeEvents()
+	self._btnreturn:RemoveClickListener()
 end
 
-function var_0_0._btnreturnOnClick(arg_4_0)
-	arg_4_0:_summonEnd()
+function SummonEquipView:_btnreturnOnClick()
+	self:_summonEnd()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0:checkInitDrawComp()
+function SummonEquipView:_editableInitView()
+	self:checkInitDrawComp()
 
-	arg_5_0._animMonitor = arg_5_0._gocontroller:GetComponent(typeof(UnityEngine.Animation))
-	arg_5_0._animLight = gohelper.findChild(arg_5_0._gocontroller, "shiying"):GetComponent(typeof(UnityEngine.Animation))
+	self._animMonitor = self._gocontroller:GetComponent(typeof(UnityEngine.Animation))
 
-	local var_5_0
+	local goLight = gohelper.findChild(self._gocontroller, "shiying")
 
-	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0._godrag)
+	self._animLight = goLight:GetComponent(typeof(UnityEngine.Animation))
+	goLight = nil
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._godrag)
 
-	arg_5_0._drag:AddDragListener(arg_5_0.onDrag, arg_5_0)
-	arg_5_0._drag:AddDragBeginListener(arg_5_0.onDragBegin, arg_5_0)
-	arg_5_0._drag:AddDragEndListener(arg_5_0.onDragEnd, arg_5_0)
+	self._drag:AddDragListener(self.onDrag, self)
+	self._drag:AddDragBeginListener(self.onDragBegin, self)
+	self._drag:AddDragEndListener(self.onDragEnd, self)
 end
 
-function var_0_0.handleSkip(arg_6_0)
-	if not arg_6_0._isDrawing then
+function SummonEquipView:handleSkip()
+	if not self._isDrawing then
 		return
 	end
 
-	arg_6_0:_hideGuide()
+	self:_hideGuide()
 
-	if arg_6_0:checkInitDrawComp() then
-		arg_6_0._drawComp:skip()
+	if self:checkInitDrawComp() then
+		self._drawComp:skip()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
 	SummonController.instance:playSkipAnimation(false)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function SummonEquipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_8_0.startDraw, arg_8_0)
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, arg_8_0.handleAnimStartDraw, arg_8_0)
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonDraw, arg_8_0.onDragComplete, arg_8_0)
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_8_0.onSummonAnimEnd, arg_8_0)
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonResultClose, arg_8_0._summonEnd, arg_8_0)
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_8_0.handleSkip, arg_8_0)
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_8_0.handleCloseView, arg_8_0)
+function SummonEquipView:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.startDraw, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, self.handleAnimStartDraw, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonDraw, self.onDragComplete, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, self.onSummonAnimEnd, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonResultClose, self._summonEnd, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, self.handleSkip, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.handleCloseView, self)
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_9_0.startDraw, arg_9_0)
-	arg_9_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, arg_9_0.handleAnimStartDraw, arg_9_0)
-	arg_9_0:removeEventCb(SummonController.instance, SummonEvent.onSummonDraw, arg_9_0.onDragComplete, arg_9_0)
-	arg_9_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_9_0.onSummonAnimEnd, arg_9_0)
-	arg_9_0:removeEventCb(SummonController.instance, SummonEvent.onSummonResultClose, arg_9_0._summonEnd, arg_9_0)
-	arg_9_0:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_9_0.handleSkip, arg_9_0)
-	arg_9_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_9_0.handleCloseView, arg_9_0)
+function SummonEquipView:onClose()
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.startDraw, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, self.handleAnimStartDraw, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonDraw, self.onDragComplete, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, self.onSummonAnimEnd, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonResultClose, self._summonEnd, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, self.handleSkip, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.handleCloseView, self)
 end
 
-function var_0_0.startDraw(arg_10_0)
-	if not arg_10_0:checkInitDrawComp() then
-		arg_10_0:handleSkip()
+function SummonEquipView:startDraw()
+	if not self:checkInitDrawComp() then
+		self:handleSkip()
 	end
 
 	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.Summon), AudioMgr.instance:getIdFromString(AudioEnum.SwitchState.SummonAward))
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_callfor_open)
 	AudioMgr.instance:trigger(AudioEnum.Summon.Trigger_Music)
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_inscription_amb)
-	gohelper.setActive(arg_10_0._goresult, false)
-	gohelper.setActive(arg_10_0._gocontroller, true)
+	gohelper.setActive(self._goresult, false)
+	gohelper.setActive(self._gocontroller, true)
 	SummonController.instance:resetAnim()
 
-	arg_10_0.summonResult = SummonModel.instance:getSummonResult(true)
+	self.summonResult = SummonModel.instance:getSummonResult(true)
 
-	local var_10_0 = SummonModel.getBestRare(arg_10_0.summonResult)
+	local bestRare = SummonModel.getBestRare(self.summonResult)
 
-	arg_10_0:_summonMoniterAnimIn()
+	self:_summonMoniterAnimIn()
 
-	if arg_10_0.summonResult and #arg_10_0.summonResult > 0 then
-		arg_10_0._isDrawing = true
+	if self.summonResult and #self.summonResult > 0 then
+		self._isDrawing = true
 
-		arg_10_0._drawComp:resetDraw(var_10_0, #arg_10_0.summonResult > 1)
+		self._drawComp:resetDraw(bestRare, #self.summonResult > 1)
 
 		if not SummonController.instance:getIsGuideAnim() then
 			SummonController.instance:startPlayAnim()
 		else
-			arg_10_0:handleAnimStartDraw()
+			self:handleAnimStartDraw()
 		end
 	end
 end
 
-function var_0_0.checkInitDrawComp(arg_11_0)
-	if arg_11_0._drawComp == nil then
-		arg_11_0._drawComp = VirtualSummonScene.instance:getSummonScene().director:getDrawComp(SummonEnum.ResultType.Equip)
+function SummonEquipView:checkInitDrawComp()
+	if self._drawComp == nil then
+		local summonScene = VirtualSummonScene.instance:getSummonScene()
+
+		self._drawComp = summonScene.director:getDrawComp(SummonEnum.ResultType.Equip)
 	end
 
-	return arg_11_0._drawComp ~= nil
+	return self._drawComp ~= nil
 end
 
-function var_0_0.handleAnimStartDraw(arg_12_0)
-	local var_12_0 = SummonModel.getBestRare(arg_12_0.summonResult)
+function SummonEquipView:handleAnimStartDraw()
+	local bestRare = SummonModel.getBestRare(self.summonResult)
 
-	gohelper.setActive(arg_12_0._godrag.gameObject, true)
+	gohelper.setActive(self._godrag.gameObject, true)
 	SummonController.instance:forbidAnim()
-	arg_12_0:_initDragArea(var_12_0)
-	arg_12_0:_showGuide()
+	self:_initDragArea(bestRare)
+	self:_showGuide()
 end
 
-function var_0_0._initDragArea(arg_13_0, arg_13_1)
-	arg_13_0._dragAreaInitialized = true
+function SummonEquipView:_initDragArea(rare)
+	self._dragAreaInitialized = true
 end
 
-function var_0_0.onDragComplete(arg_14_0)
-	gohelper.setActive(arg_14_0._godrag, false)
-	arg_14_0:_hideGuide()
-	arg_14_0:_summonStart()
+function SummonEquipView:onDragComplete()
+	gohelper.setActive(self._godrag, false)
+	self:_hideGuide()
+	self:_summonStart()
 end
 
-function var_0_0._summonStart(arg_15_0)
+function SummonEquipView:_summonStart()
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_inscription_draw_card)
-	gohelper.setActive(arg_15_0._godrag.gameObject, false)
+	gohelper.setActive(self._godrag.gameObject, false)
 
-	if #arg_15_0.summonResult > 1 then
+	if #self.summonResult > 1 then
 		SummonController.instance:drawEquipAnim()
 	else
 		SummonController.instance:drawEquipOnlyAnim()
 	end
 
-	arg_15_0:_boomEffect()
+	self:_boomEffect()
 end
 
-function var_0_0._summonMoniterAnimIn(arg_16_0)
-	arg_16_0._animLight.enabled = true
+function SummonEquipView:_summonMoniterAnimIn()
+	self._animLight.enabled = true
 
-	arg_16_0._animMonitor:Play(SummonEnum.EquipUIAnim.RootGachaIn)
+	self._animMonitor:Play(SummonEnum.EquipUIAnim.RootGachaIn)
 
-	if #arg_16_0.summonResult > 1 then
-		arg_16_0._animLight:Play(SummonEnum.EquipUIAnim.LightGacha10)
+	if #self.summonResult > 1 then
+		self._animLight:Play(SummonEnum.EquipUIAnim.LightGacha10)
 	else
-		arg_16_0._animLight:Play(SummonEnum.EquipUIAnim.LightGacha1)
+		self._animLight:Play(SummonEnum.EquipUIAnim.LightGacha1)
 	end
 end
 
-function var_0_0._boomEffect(arg_17_0)
-	local var_17_0 = SummonModel.getBestRare(arg_17_0.summonResult)
-	local var_17_1
-	local var_17_2
+function SummonEquipView:_boomEffect()
+	local bestRare = SummonModel.getBestRare(self.summonResult)
+	local uiMonitorAnimName, effectUrl
 
-	if #arg_17_0.summonResult > 1 then
-		var_17_1 = SummonEnum.EquipUIAnim.RootGachaStart10Prefix
+	if #self.summonResult > 1 then
+		uiMonitorAnimName = SummonEnum.EquipUIAnim.RootGachaStart10Prefix
 	else
-		var_17_1 = SummonEnum.EquipUIAnim.RootGachaStart1Prefix
+		uiMonitorAnimName = SummonEnum.EquipUIAnim.RootGachaStart1Prefix
 	end
 
-	if var_17_0 == 2 then
-		var_17_2 = SummonEnum.SummonPreloadPath.EquipBoomN
-		var_17_1 = var_17_1 .. SummonEnum.EquipUIAnim.RootGachaStartRare3
-	elseif var_17_0 == 3 then
-		var_17_2 = SummonEnum.SummonPreloadPath.EquipBoomR
-		var_17_1 = var_17_1 .. SummonEnum.EquipUIAnim.RootGachaStartRare4
-	elseif var_17_0 == 4 then
-		var_17_2 = SummonEnum.SummonPreloadPath.EquipBoomSR
-		var_17_1 = var_17_1 .. SummonEnum.EquipUIAnim.RootGachaStartRare5
-	elseif var_17_0 >= 5 then
-		var_17_2 = SummonEnum.SummonPreloadPath.EquipBoomSSR
-		var_17_1 = var_17_1 .. SummonEnum.EquipUIAnim.RootGachaStartRare5
+	if bestRare == 2 then
+		effectUrl = SummonEnum.SummonPreloadPath.EquipBoomN
+		uiMonitorAnimName = uiMonitorAnimName .. SummonEnum.EquipUIAnim.RootGachaStartRare3
+	elseif bestRare == 3 then
+		effectUrl = SummonEnum.SummonPreloadPath.EquipBoomR
+		uiMonitorAnimName = uiMonitorAnimName .. SummonEnum.EquipUIAnim.RootGachaStartRare4
+	elseif bestRare == 4 then
+		effectUrl = SummonEnum.SummonPreloadPath.EquipBoomSR
+		uiMonitorAnimName = uiMonitorAnimName .. SummonEnum.EquipUIAnim.RootGachaStartRare5
+	elseif bestRare >= 5 then
+		effectUrl = SummonEnum.SummonPreloadPath.EquipBoomSSR
+		uiMonitorAnimName = uiMonitorAnimName .. SummonEnum.EquipUIAnim.RootGachaStartRare5
 	end
 
-	if var_17_2 then
-		local var_17_3 = SummonController.instance:getBoomNode(SummonEnum.ResultType.Equip)
+	if effectUrl then
+		local boomGO = SummonController.instance:getBoomNode(SummonEnum.ResultType.Equip)
 
-		arg_17_0._boomEffectWrap = SummonEffectPool.getEffect(var_17_2, var_17_3)
+		self._boomEffectWrap = SummonEffectPool.getEffect(effectUrl, boomGO)
 
-		arg_17_0._boomEffectWrap:setAnimationName(SummonEnum.BoomEquipEffectAnimationName[var_17_2])
-		arg_17_0._boomEffectWrap:play()
+		self._boomEffectWrap:setAnimationName(SummonEnum.BoomEquipEffectAnimationName[effectUrl])
+		self._boomEffectWrap:play()
 	end
 
-	arg_17_0._animLight.enabled = false
+	self._animLight.enabled = false
 
-	arg_17_0._animMonitor:Play(var_17_1)
+	self._animMonitor:Play(uiMonitorAnimName)
 end
 
-function var_0_0.onSummonAnimEnd(arg_18_0)
-	gohelper.setActive(arg_18_0._goresult, true)
-	gohelper.setActive(arg_18_0._btnreturn.gameObject, false)
-	gohelper.setActive(arg_18_0._btnopenall.gameObject, #arg_18_0.summonResult > 1)
+function SummonEquipView:onSummonAnimEnd()
+	gohelper.setActive(self._goresult, true)
+	gohelper.setActive(self._btnreturn.gameObject, false)
+	gohelper.setActive(self._btnopenall.gameObject, #self.summonResult > 1)
 end
 
-function var_0_0._summonEnd(arg_19_0)
+function SummonEquipView:_summonEnd()
 	SummonController.instance:clearSummonPopupList()
 
-	arg_19_0.summonResult = {}
+	self.summonResult = {}
 
 	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.Summon), AudioMgr.instance:getIdFromString(AudioEnum.SwitchState.SummonNormal))
 	AudioMgr.instance:trigger(AudioEnum.Summon.Trigger_Music)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
-	gohelper.setActive(arg_19_0._gosummon, true)
-	gohelper.setActive(arg_19_0._goresult, false)
-	gohelper.setActive(arg_19_0._gocontroller, false)
+	gohelper.setActive(self._gosummon, true)
+	gohelper.setActive(self._goresult, false)
+	gohelper.setActive(self._gocontroller, false)
 
-	if arg_19_0._boomEffectWrap then
-		SummonEffectPool.returnEffect(arg_19_0._boomEffectWrap)
+	if self._boomEffectWrap then
+		SummonEffectPool.returnEffect(self._boomEffectWrap)
 
-		arg_19_0._boomEffectWrap = nil
+		self._boomEffectWrap = nil
 	end
 
 	SummonController.instance:resetAnim()
 
-	local var_19_0 = {
-		jumpPoolId = SummonController.instance:getLastPoolId()
-	}
+	local param = {}
 
-	SummonMainController.instance:openSummonView(var_19_0)
-	arg_19_0:_gc()
+	param.jumpPoolId = SummonController.instance:getLastPoolId()
+
+	SummonMainController.instance:openSummonView(param)
+	self:_gc()
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonEquipEnd)
 end
 
-function var_0_0._showGuide(arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._showGuide, arg_20_0)
-	gohelper.setActive(arg_20_0._goguide, true)
+function SummonEquipView:_showGuide()
+	TaskDispatcher.cancelTask(self._showGuide, self)
+	gohelper.setActive(self._goguide, true)
 end
 
-function var_0_0._hideGuide(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._showGuide, arg_21_0)
-	gohelper.setActive(arg_21_0._goguide, false)
+function SummonEquipView:_hideGuide()
+	TaskDispatcher.cancelTask(self._showGuide, self)
+	gohelper.setActive(self._goguide, false)
 end
 
-function var_0_0.onDragBegin(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0._lastDragTime = nil
-	arg_22_0._lastDragPos = nil
-	arg_22_0._lastDragPos = recthelper.screenPosToAnchorPos(arg_22_2.position, arg_22_0._godrag.transform)
+function SummonEquipView:onDragBegin(param, eventData)
+	self._lastDragTime = nil
+	self._lastDragPos = nil
+	self._lastDragPos = recthelper.screenPosToAnchorPos(eventData.position, self._godrag.transform)
 
-	arg_22_0._drawComp:startDrag()
+	self._drawComp:startDrag()
 end
 
-function var_0_0.onDragEnd(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_0._lastDragPos = nil
+function SummonEquipView:onDragEnd(param, eventData)
+	self._lastDragPos = nil
 
-	arg_23_0._drawComp:endDrag()
+	self._drawComp:endDrag()
 end
 
-function var_0_0.onDrag(arg_24_0, arg_24_1, arg_24_2)
-	if not arg_24_0._dragAreaInitialized then
+function SummonEquipView:onDrag(param, eventData)
+	if not self._dragAreaInitialized then
 		return
 	end
 
-	local var_24_0 = 0.2
-	local var_24_1 = recthelper.screenPosToAnchorPos(arg_24_2.position, arg_24_0._godrag.transform)
+	local threshold = 0.2
+	local curPos = recthelper.screenPosToAnchorPos(eventData.position, self._godrag.transform)
 
-	if not arg_24_0._lastDragPos then
-		arg_24_0._lastDragPos = var_24_1
+	if not self._lastDragPos then
+		self._lastDragPos = curPos
 
 		return
 	end
 
-	if var_24_0 < math.abs(var_24_1.y - arg_24_0._lastDragPos.y) then
-		arg_24_0._drawComp:updateDistance(var_24_1.y - arg_24_0._lastDragPos.y)
+	local distance = math.abs(curPos.y - self._lastDragPos.y)
 
-		arg_24_0._lastDragPos = var_24_1
+	if threshold < distance then
+		self._drawComp:updateDistance(curPos.y - self._lastDragPos.y)
+
+		self._lastDragPos = curPos
 	end
 end
 
-function var_0_0.handleCloseView(arg_25_0, arg_25_1)
-	if arg_25_1 == ViewName.SummonEquipGainView then
-		if arg_25_0.summonResult then
-			if #arg_25_0.summonResult == 1 then
-				arg_25_0:_summonEnd()
+function SummonEquipView:handleCloseView(viewName)
+	if viewName == ViewName.SummonEquipGainView then
+		if self.summonResult then
+			if #self.summonResult == 1 then
+				self:_summonEnd()
 			else
 				SummonController.instance:nextSummonPopupParam()
 			end
 		end
-	elseif arg_25_1 == ViewName.CommonPropView and arg_25_0.summonResult and #arg_25_0.summonResult == 10 then
-		arg_25_0:_summonEnd()
+	elseif viewName == ViewName.CommonPropView and self.summonResult and #self.summonResult == 10 then
+		self:_summonEnd()
 	end
 end
 
-function var_0_0._gc(arg_26_0)
-	arg_26_0._summonCount = (arg_26_0._summonCount or 0) + (arg_26_0.summonResult and #arg_26_0.summonResult)
+function SummonEquipView:_gc()
+	self._summonCount = (self._summonCount or 0) + (self.summonResult and #self.summonResult)
 
-	if arg_26_0._summonCount >= 10 then
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_26_0)
+	if self._summonCount >= 10 then
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, self)
 
-		arg_26_0._summonCount = 0
+		self._summonCount = 0
 	end
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	if arg_27_0._drag then
-		arg_27_0._drag:RemoveDragListener()
-		arg_27_0._drag:RemoveDragBeginListener()
-		arg_27_0._drag:RemoveDragEndListener()
+function SummonEquipView:onDestroyView()
+	if self._drag then
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_27_0._drag = nil
+		self._drag = nil
 	end
 end
 
-return var_0_0
+return SummonEquipView

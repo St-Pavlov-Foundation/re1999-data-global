@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.act147.view.FurnaceTreasureBuyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act147/view/FurnaceTreasureBuyViewContainer.lua
 
-local var_0_0 = class("FurnaceTreasureBuyViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.act147.view.FurnaceTreasureBuyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FurnaceTreasureBuyViewContainer = class("FurnaceTreasureBuyViewContainer", BaseViewContainer)
+
+function FurnaceTreasureBuyViewContainer:buildViews()
 	return {
 		FurnaceTreasureBuyView.New()
 	}
 end
 
-return var_0_0
+return FurnaceTreasureBuyViewContainer

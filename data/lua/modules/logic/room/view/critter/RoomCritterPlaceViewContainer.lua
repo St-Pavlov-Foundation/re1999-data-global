@@ -1,96 +1,101 @@
-﻿module("modules.logic.room.view.critter.RoomCritterPlaceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomCritterPlaceViewContainer.lua
 
-local var_0_0 = class("RoomCritterPlaceViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.RoomCritterPlaceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterPlaceViewContainer = class("RoomCritterPlaceViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterPlaceView.New())
+function RoomCritterPlaceViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = arg_1_0:getScrollParam1()
-	local var_1_2 = arg_1_0:getScrollParam2()
-	local var_1_3 = LuaListScrollView.New(RoomCritterPlaceListModel.instance, var_1_1)
-	local var_1_4 = LuaListScrollView.New(RoomCritterPlaceListModel.instance, var_1_2)
+	table.insert(views, RoomCritterPlaceView.New())
 
-	table.insert(var_1_0, var_1_3)
-	table.insert(var_1_0, var_1_4)
+	local scrollParam1 = self:getScrollParam1()
+	local scrollParam2 = self:getScrollParam2()
+	local critterPlaceListView1 = LuaListScrollView.New(RoomCritterPlaceListModel.instance, scrollParam1)
+	local critterPlaceListView2 = LuaListScrollView.New(RoomCritterPlaceListModel.instance, scrollParam2)
 
-	return var_1_0
+	table.insert(views, critterPlaceListView1)
+	table.insert(views, critterPlaceListView2)
+
+	return views
 end
 
-function var_0_0.getScrollParam1(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function RoomCritterPlaceViewContainer:getScrollParam1()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "#go_critterview1/critterscroll"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_2_0.prefabUrl = "#go_critterview1/critterscroll/Viewport/#go_critterContent1/#go_critterItem"
-	var_2_0.cellClass = RoomCritterPlaceItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirH
-	var_2_0.cellWidth = 150
-	var_2_0.cellHeight = 200
-	var_2_0.cellSpaceH = 30
-	var_2_0.startSpace = 30
+	scrollParam.scrollGOPath = "#go_critterview1/critterscroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_critterview1/critterscroll/Viewport/#go_critterContent1/#go_critterItem"
+	scrollParam.cellClass = RoomCritterPlaceItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.cellWidth = 150
+	scrollParam.cellHeight = 200
+	scrollParam.cellSpaceH = 30
+	scrollParam.startSpace = 30
 
-	return var_2_0
+	return scrollParam
 end
 
-function var_0_0.getScrollParam2(arg_3_0)
-	local var_3_0 = "#go_critterview2/critterscroll"
-	local var_3_1 = arg_3_0:_getScrollWidth(var_3_0)
-	local var_3_2 = ListScrollParam.New()
+function RoomCritterPlaceViewContainer:getScrollParam2()
+	local scrollPath = "#go_critterview2/critterscroll"
+	local scrollWidth = self:_getScrollWidth(scrollPath)
+	local scrollParam = ListScrollParam.New()
 
-	var_3_2.scrollGOPath = var_3_0
-	var_3_2.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_3_2.prefabUrl = "#go_critterview2/critterscroll/Viewport/#go_critterContent2/#go_critterItem"
-	var_3_2.cellClass = RoomCritterPlaceItem
-	var_3_2.scrollDir = ScrollEnum.ScrollDirV
-	var_3_2.cellWidth = 180
-	var_3_2.cellHeight = 150
-	var_3_2.lineCount = arg_3_0:_getLineCount(var_3_1, var_3_2.cellWidth)
-	var_3_2.cellSpaceV = 20
-	var_3_2.startSpace = 10
+	scrollParam.scrollGOPath = scrollPath
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_critterview2/critterscroll/Viewport/#go_critterContent2/#go_critterItem"
+	scrollParam.cellClass = RoomCritterPlaceItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.cellWidth = 180
+	scrollParam.cellHeight = 150
+	scrollParam.lineCount = self:_getLineCount(scrollWidth, scrollParam.cellWidth)
+	scrollParam.cellSpaceV = 20
+	scrollParam.startSpace = 10
 
-	return var_3_2
+	return scrollParam
 end
 
-function var_0_0._getScrollWidth(arg_4_0, arg_4_1)
-	local var_4_0 = gohelper.findChildComponent(arg_4_0.viewGO, arg_4_1, gohelper.Type_Transform)
+function RoomCritterPlaceViewContainer:_getScrollWidth(path)
+	local scrollTrans = gohelper.findChildComponent(self.viewGO, path, gohelper.Type_Transform)
 
-	if var_4_0 then
-		return recthelper.getWidth(var_4_0)
+	if scrollTrans then
+		return recthelper.getWidth(scrollTrans)
 	end
 
-	local var_4_1 = 1080 / UnityEngine.Screen.height
+	local scale = 1080 / UnityEngine.Screen.height
+	local screenWidth = math.floor(UnityEngine.Screen.width * scale + 0.5)
 
-	return (math.floor(UnityEngine.Screen.width * var_4_1 + 0.5))
+	return screenWidth
 end
 
-function var_0_0._getLineCount(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = math.floor(arg_5_1 / arg_5_2)
+function RoomCritterPlaceViewContainer:_getLineCount(scrollWidth, cellWidth)
+	local lineCount = math.floor(scrollWidth / cellWidth)
 
-	return (math.max(var_5_0, 1))
+	lineCount = math.max(lineCount, 1)
+
+	return lineCount
 end
 
-function var_0_0.onContainerInit(arg_6_0)
-	arg_6_0:setContainerViewBuildingUid(arg_6_0.viewParam and arg_6_0.viewParam.buildingUid)
+function RoomCritterPlaceViewContainer:onContainerInit()
+	self:setContainerViewBuildingUid(self.viewParam and self.viewParam.buildingUid)
 end
 
-function var_0_0.onContainerClose(arg_7_0)
-	arg_7_0:setContainerViewBuildingUid()
+function RoomCritterPlaceViewContainer:onContainerClose()
+	self:setContainerViewBuildingUid()
 end
 
-function var_0_0.setContainerViewBuildingUid(arg_8_0, arg_8_1)
-	arg_8_0._viewBuildingUid = arg_8_1
+function RoomCritterPlaceViewContainer:setContainerViewBuildingUid(buildingUid)
+	self._viewBuildingUid = buildingUid
 end
 
-function var_0_0.getContainerViewBuilding(arg_9_0, arg_9_1)
-	local var_9_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_9_0._viewBuildingUid)
+function RoomCritterPlaceViewContainer:getContainerViewBuilding(nilError)
+	local viewBuildingMO = RoomMapBuildingModel.instance:getBuildingMOById(self._viewBuildingUid)
 
-	if not var_9_0 and arg_9_1 then
-		logError(string.format("RoomCritterPlaceViewContainer:getContainerViewBuilding error, buildingMO is nil, uid:%s", arg_9_0._viewBuildingUid))
+	if not viewBuildingMO and nilError then
+		logError(string.format("RoomCritterPlaceViewContainer:getContainerViewBuilding error, buildingMO is nil, uid:%s", self._viewBuildingUid))
 	end
 
-	return arg_9_0._viewBuildingUid, var_9_0
+	return self._viewBuildingUid, viewBuildingMO
 end
 
-return var_0_0
+return RoomCritterPlaceViewContainer

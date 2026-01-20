@@ -1,349 +1,364 @@
-﻿module("modules.logic.dungeon.view.jump.DungeonJumpGameView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/jump/DungeonJumpGameView.lua
 
-local var_0_0 = class("DungeonJumpGameView", BaseViewExtended)
-local var_0_1 = 0.5
-local var_0_2 = 1
-local var_0_3 = 800
-local var_0_4 = 0.2
-local var_0_5 = 1.5
-local var_0_6 = 0.4
-local var_0_7 = {
+module("modules.logic.dungeon.view.jump.DungeonJumpGameView", package.seeall)
+
+local DungeonJumpGameView = class("DungeonJumpGameView", BaseViewExtended)
+local jumpTime = 0.5
+local dropTime = 1
+local dropDistance = 800
+local localJumpTime = 0.2
+local jumpPowerNum = 1.5
+local guidePowerRange = 0.4
+local jumpResultEnum = {
 	Final = 4,
 	Fall = 3,
 	ToNext = 2,
 	Original = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goNodeItemRoot = gohelper.findChild(arg_1_0.viewGO, "Map/NodeRoot")
-	arg_1_0._goNodeItem = gohelper.findChild(arg_1_0.viewGO, "Map/NodeRoot/nodeItem")
-	arg_1_0._btnRestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._jumpChessRoot = gohelper.findChild(arg_1_0.viewGO, "Map/#go_chess")
-	arg_1_0._jumpChess = gohelper.findChild(arg_1_0.viewGO, "Map/#go_chess/#chess")
-	arg_1_0._jumpChessImage = gohelper.findChild(arg_1_0.viewGO, "Map/#go_chess/#chess/#image_chess")
-	arg_1_0._jumpChessAnimator = arg_1_0._jumpChess:GetComponent(gohelper.Type_Animator)
-	arg_1_0._jumpCircle = gohelper.findChild(arg_1_0.viewGO, "Map/#go_chess/#chess/circle")
-	arg_1_0._pressStateCircle = gohelper.findChild(arg_1_0._jumpCircle, "StateRoot/#go_State/State2")
-	arg_1_0._goGreenNormalRange = gohelper.findChild(arg_1_0._jumpCircle, "#go_CircleNormal")
-	arg_1_0._goCurrentAreaRange = gohelper.findChild(arg_1_0._jumpCircle, "#go_CircleCurrent")
-	arg_1_0._goGreenLightRange = gohelper.findChild(arg_1_0._jumpCircle, "#go_CircleLight")
-	arg_1_0._goDrakRange = gohelper.findChild(arg_1_0._jumpCircle, "#go_CircleBlack")
-	arg_1_0._outRangeStateCircle = gohelper.findChild(arg_1_0._jumpCircle, "StateRoot/#go_State/State3")
-	arg_1_0._jumpBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "jumpClick")
-	arg_1_0._jumpBtnGo = gohelper.findChild(arg_1_0.viewGO, "jumpClick")
-	arg_1_0._jumpBtnlongpress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._jumpBtnGo)
-	arg_1_0._jumpBtn = SLFramework.UGUI.UIClickListener.Get(arg_1_0._jumpBtnGo)
-	arg_1_0._goMap = gohelper.findChild(arg_1_0.viewGO, "Map")
-	arg_1_0._goBg = gohelper.findChild(arg_1_0.viewGO, "fullbg")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "Title")
-	arg_1_0._textTitle = gohelper.findChildText(arg_1_0._goTitle, "#txt_Title")
-	arg_1_0._tipsClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/tipsClick")
-	arg_1_0._goSnowEffect1 = gohelper.findChild(arg_1_0.viewGO, "bg_eff/vx_snow01")
-	arg_1_0._goSnowEffect2 = gohelper.findChild(arg_1_0.viewGO, "bg_eff/vx_snow02")
-	arg_1_0._goSnowEffect3 = gohelper.findChild(arg_1_0.viewGO, "bg_eff/vx_snow03")
-	arg_1_0._goFallEffect = gohelper.findChild(arg_1_0.viewGO, "vx_dead")
-	arg_1_0._goCircleEffect1 = gohelper.findChild(arg_1_0.viewGO, "Map/#go_chess/#chess/circle/glow1")
-	arg_1_0._goCircleEffect2 = gohelper.findChild(arg_1_0.viewGO, "Map/#go_chess/#chess/circle/glow2")
+function DungeonJumpGameView:onInitView()
+	self._goNodeItemRoot = gohelper.findChild(self.viewGO, "Map/NodeRoot")
+	self._goNodeItem = gohelper.findChild(self.viewGO, "Map/NodeRoot/nodeItem")
+	self._btnRestart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._jumpChessRoot = gohelper.findChild(self.viewGO, "Map/#go_chess")
+	self._jumpChess = gohelper.findChild(self.viewGO, "Map/#go_chess/#chess")
+	self._jumpChessImage = gohelper.findChild(self.viewGO, "Map/#go_chess/#chess/#image_chess")
+	self._jumpChessAnimator = self._jumpChess:GetComponent(gohelper.Type_Animator)
+	self._jumpCircle = gohelper.findChild(self.viewGO, "Map/#go_chess/#chess/circle")
+	self._pressStateCircle = gohelper.findChild(self._jumpCircle, "StateRoot/#go_State/State2")
+	self._goGreenNormalRange = gohelper.findChild(self._jumpCircle, "#go_CircleNormal")
+	self._goCurrentAreaRange = gohelper.findChild(self._jumpCircle, "#go_CircleCurrent")
+	self._goGreenLightRange = gohelper.findChild(self._jumpCircle, "#go_CircleLight")
+	self._goDrakRange = gohelper.findChild(self._jumpCircle, "#go_CircleBlack")
+	self._outRangeStateCircle = gohelper.findChild(self._jumpCircle, "StateRoot/#go_State/State3")
+	self._jumpBtn = gohelper.findChildButtonWithAudio(self.viewGO, "jumpClick")
+	self._jumpBtnGo = gohelper.findChild(self.viewGO, "jumpClick")
+	self._jumpBtnlongpress = SLFramework.UGUI.UILongPressListener.Get(self._jumpBtnGo)
+	self._jumpBtn = SLFramework.UGUI.UIClickListener.Get(self._jumpBtnGo)
+	self._goMap = gohelper.findChild(self.viewGO, "Map")
+	self._goBg = gohelper.findChild(self.viewGO, "fullbg")
+	self._goTitle = gohelper.findChild(self.viewGO, "Title")
+	self._textTitle = gohelper.findChildText(self._goTitle, "#txt_Title")
+	self._tipsClick = gohelper.findChildButtonWithAudio(self.viewGO, "Title/tipsClick")
+	self._goSnowEffect1 = gohelper.findChild(self.viewGO, "bg_eff/vx_snow01")
+	self._goSnowEffect2 = gohelper.findChild(self.viewGO, "bg_eff/vx_snow02")
+	self._goSnowEffect3 = gohelper.findChild(self.viewGO, "bg_eff/vx_snow03")
+	self._goFallEffect = gohelper.findChild(self.viewGO, "vx_dead")
+	self._goCircleEffect1 = gohelper.findChild(self.viewGO, "Map/#go_chess/#chess/circle/glow1")
+	self._goCircleEffect2 = gohelper.findChild(self.viewGO, "Map/#go_chess/#chess/circle/glow2")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._autoJump = false
-	arg_2_0._preparingJump = false
-	arg_2_0._maxDistance = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.MaxJumpDistance).size)
-	arg_2_0._maxDistance = arg_2_0._maxDistance or 700
-	arg_2_0._distancePerSecond = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.DistancePerSecond).size)
-	arg_2_0._distancePerSecond = arg_2_0._distancePerSecond or 400
-	arg_2_0._jumpTime = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.JumpTime).size)
-	arg_2_0._jumpTime = arg_2_0._jumpTime or 0.5
-	arg_2_0._maxCircleSize = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.MaxCircleSize).size)
-	arg_2_0._maxCircleSize = arg_2_0._maxCircleSize or 200
+function DungeonJumpGameView:_editableInitView()
+	self._autoJump = false
+	self._preparingJump = false
+	self._maxDistance = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.MaxJumpDistance).size)
+	self._maxDistance = self._maxDistance or 700
+	self._distancePerSecond = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.DistancePerSecond).size)
+	self._distancePerSecond = self._distancePerSecond or 400
+	self._jumpTime = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.JumpTime).size)
+	self._jumpTime = self._jumpTime or 0.5
+	self._maxCircleSize = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.MaxCircleSize).size)
+	self._maxCircleSize = self._maxCircleSize or 200
 
-	local var_2_0 = DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.ShowSnowEffectParams)
-	local var_2_1 = var_2_0 and string.splitToNumber(var_2_0.size, "#") or {
+	local showSnowIdxParams = DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.ShowSnowEffectParams)
+	local showSnowIdxParamArr = showSnowIdxParams and string.splitToNumber(showSnowIdxParams.size, "#") or {
 		12,
 		18
 	}
 
-	arg_2_0._showSnow2Idx = var_2_1[1]
-	arg_2_0._showSnow3Idx = var_2_1[2]
-	arg_2_0._maxDistance = arg_2_0._maxDistance or 700
+	self._showSnow2Idx = showSnowIdxParamArr[1]
+	self._showSnow3Idx = showSnowIdxParamArr[2]
+	self._maxDistance = self._maxDistance or 700
 
-	gohelper.setActive(arg_2_0._outRangeStateCircle, false)
-	gohelper.setActive(arg_2_0._goGreenLightRange, true)
+	gohelper.setActive(self._outRangeStateCircle, false)
+	gohelper.setActive(self._goGreenLightRange, true)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnRestart:AddClickListener(arg_3_0._doClickRestartAction, arg_3_0)
-	arg_3_0._jumpBtnlongpress:AddLongPressListener(arg_3_0._onJumpLongPress, arg_3_0)
-	arg_3_0._jumpBtnlongpress:SetLongPressTime({
-		var_0_4,
+function DungeonJumpGameView:addEvents()
+	self._btnRestart:AddClickListener(self._doClickRestartAction, self)
+	self._jumpBtnlongpress:AddLongPressListener(self._onJumpLongPress, self)
+	self._jumpBtnlongpress:SetLongPressTime({
+		localJumpTime,
 		0.1
 	})
-	arg_3_0._jumpBtn:AddClickUpListener(arg_3_0._onClickJumpBtnUp, arg_3_0)
-	arg_3_0._jumpBtn:AddClickDownListener(arg_3_0._onClickJumpDown, arg_3_0)
-	arg_3_0._tipsClick:AddClickListener(arg_3_0._onClickTips, arg_3_0)
-	arg_3_0:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.AutoJumpOnMaxDistance, arg_3_0.onAutoJumpOnMaxDistance, arg_3_0)
-	arg_3_0:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameReStart, arg_3_0.onRevertChess, arg_3_0)
-	arg_3_0:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameCompleted, arg_3_0.onCompleted, arg_3_0)
-	arg_3_0:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameExit, arg_3_0.onExit, arg_3_0)
-	arg_3_0:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameGuideCompleted, arg_3_0.onGuideCompleted, arg_3_0)
+	self._jumpBtn:AddClickUpListener(self._onClickJumpBtnUp, self)
+	self._jumpBtn:AddClickDownListener(self._onClickJumpDown, self)
+	self._tipsClick:AddClickListener(self._onClickTips, self)
+	self:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.AutoJumpOnMaxDistance, self.onAutoJumpOnMaxDistance, self)
+	self:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameReStart, self.onRevertChess, self)
+	self:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameCompleted, self.onCompleted, self)
+	self:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameExit, self.onExit, self)
+	self:addEventCb(DungeonJumpGameController.instance, DungeonJumpGameEvent.JumpGameGuideCompleted, self.onGuideCompleted, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnRestart:RemoveClickListener()
-	arg_4_0._jumpBtn:RemoveClickUpListener()
-	arg_4_0._jumpBtn:RemoveClickDownListener()
-	arg_4_0._jumpBtnlongpress:RemoveLongPressListener()
-	arg_4_0._tipsClick:RemoveClickListener()
+function DungeonJumpGameView:removeEvents()
+	self._btnRestart:RemoveClickListener()
+	self._jumpBtn:RemoveClickUpListener()
+	self._jumpBtn:RemoveClickDownListener()
+	self._jumpBtnlongpress:RemoveLongPressListener()
+	self._tipsClick:RemoveClickListener()
 end
 
-function var_0_0._doClickRestartAction(arg_5_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act176PuzzleMazeResetGame, MsgBoxEnum.BoxType.Yes_No, arg_5_0.onRestart, nil, nil, arg_5_0)
+function DungeonJumpGameView:_doClickRestartAction()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act176PuzzleMazeResetGame, MsgBoxEnum.BoxType.Yes_No, self.onRestart, nil, nil, self)
 end
 
-function var_0_0.onRestart(arg_6_0)
-	DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[4], arg_6_0._curIdx)
+function DungeonJumpGameView:onRestart()
+	DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[4], self._curIdx)
 	DungeonJumpGameController.instance:ClearProgress()
 	DungeonJumpGameController.instance:initStatData()
-	arg_6_0:setJumpable(true)
-	arg_6_0:_refreashFallEffect(false)
-	arg_6_0:_initMap()
-	arg_6_0:doMapTrans()
+	self:setJumpable(true)
+	self:_refreashFallEffect(false)
+	self:_initMap()
+	self:doMapTrans()
 end
 
-function var_0_0._onJumpLongPress(arg_7_0)
-	if not arg_7_0._preparingJump then
+function DungeonJumpGameView:_onJumpLongPress()
+	if not self._preparingJump then
 		return
 	end
 
-	local var_7_0 = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.JumpGameLongPressGuide)
+	local isInJumpGameGuide = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.JumpGameLongPressGuide)
 
-	arg_7_0._currPercent = arg_7_0._currPercent + Time.deltaTime * var_0_5
+	self._currPercent = self._currPercent + Time.deltaTime * jumpPowerNum
 
-	if var_7_0 then
-		if arg_7_0._currPercent > var_0_6 then
-			arg_7_0:setJumpable(false)
+	if isInJumpGameGuide then
+		if self._currPercent > guidePowerRange then
+			self:setJumpable(false)
 			DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.JumpGameLongPressGuide)
 		else
-			arg_7_0:_refreshJumpPressingView()
+			self:_refreshJumpPressingView()
 		end
 
 		return
 	end
 
-	arg_7_0:_refreshJumpPressingView()
+	self:_refreshJumpPressingView()
 end
 
-function var_0_0._refreshJumpPressingView(arg_8_0)
-	if arg_8_0._autoJump then
-		transformhelper.setLocalScale(arg_8_0._jumpChessImage.transform, 1, 1, 1)
-		arg_8_0._nodeItemsDict[arg_8_0._curIdx]:setNodeScale(1, 1)
+function DungeonJumpGameView:_refreshJumpPressingView()
+	if self._autoJump then
+		transformhelper.setLocalScale(self._jumpChessImage.transform, 1, 1, 1)
+
+		local curNode = self._nodeItemsDict[self._curIdx]
+
+		curNode:setNodeScale(1, 1)
 
 		return
 	end
 
-	local var_8_0 = 1 + arg_8_0._currPercent * 0.1
+	local scaleX = 1 + self._currPercent * 0.1
 
-	if var_8_0 > 1.25 then
-		var_8_0 = 1.25
+	if scaleX > 1.25 then
+		scaleX = 1.25
 	end
 
-	local var_8_1 = 1 - arg_8_0._currPercent * 0.1
+	local scaleY = 1 - self._currPercent * 0.1
 
-	if var_8_1 < 0.75 then
-		var_8_1 = 0.75
+	if scaleY < 0.75 then
+		scaleY = 0.75
 	end
 
-	transformhelper.setLocalScale(arg_8_0._jumpChessImage.transform, var_8_0, var_8_1, 1)
-	arg_8_0._nodeItemsDict[arg_8_0._curIdx]:setNodeScale(var_8_0, var_8_1)
-	arg_8_0:refreshPressState(arg_8_0._currPercent)
+	transformhelper.setLocalScale(self._jumpChessImage.transform, scaleX, scaleY, 1)
+
+	local curNode = self._nodeItemsDict[self._curIdx]
+
+	curNode:setNodeScale(scaleX, scaleY)
+	self:refreshPressState(self._currPercent)
 end
 
-function var_0_0._onClickJumpDown(arg_9_0)
-	if not arg_9_0:checkJumpable() then
-		arg_9_0._preparingJump = false
+function DungeonJumpGameView:_onClickJumpDown()
+	if not self:checkJumpable() then
+		self._preparingJump = false
 
 		return
 	end
 
-	arg_9_0._preparingJump = true
+	self._preparingJump = true
 
-	recthelper.setHeight(arg_9_0._pressStateCircle.transform, 0)
+	recthelper.setHeight(self._pressStateCircle.transform, 0)
 
-	local var_9_0, var_9_1 = recthelper.getAnchor(arg_9_0._jumpChess.transform)
-	local var_9_2 = arg_9_0._curIdx + 1
+	local x, y = recthelper.getAnchor(self._jumpChess.transform)
+	local nextIdx = self._curIdx + 1
 
-	if var_9_2 > #arg_9_0._nodeDatas then
+	if nextIdx > #self._nodeDatas then
 		return
 	end
 
-	gohelper.setActive(arg_9_0._goCircleEffect1, false)
-	gohelper.setActive(arg_9_0._goCircleEffect2, false)
+	gohelper.setActive(self._goCircleEffect1, false)
+	gohelper.setActive(self._goCircleEffect2, false)
 
-	local var_9_3 = arg_9_0._nodeDatas[var_9_2]
-	local var_9_4 = var_9_3.x
-	local var_9_5 = var_9_3.y
-	local var_9_6 = var_9_3.size
+	local targetNode = self._nodeDatas[nextIdx]
+	local targetNodeX = targetNode.x
+	local targetNodeY = targetNode.y
+	local targetNodeSize = targetNode.size
 
-	arg_9_0:refreshCircleSize(true, var_9_0, var_9_1, var_9_4, var_9_5, var_9_6)
+	self:refreshCircleSize(true, x, y, targetNodeX, targetNodeY, targetNodeSize)
 
-	arg_9_0._currPercent = 0
+	self._currPercent = 0
 
 	AudioMgr.instance:trigger(AudioEnum2_8.DungeonGame.play_ui_fuleyuan_tiaoyitiao_xuli)
 end
 
-function var_0_0._onClickJumpBtnUp(arg_10_0)
-	if arg_10_0._autoJump then
-		arg_10_0._autoJump = false
+function DungeonJumpGameView:_onClickJumpBtnUp()
+	if self._autoJump then
+		self._autoJump = false
 
 		return
 	end
 
-	if not arg_10_0._preparingJump then
+	if not self._preparingJump then
 		return
 	end
 
-	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.JumpGameLongPressGuide) then
+	local isInJumpGameGuide = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.JumpGameLongPressGuide)
+
+	if isInJumpGameGuide then
 		return
 	end
 
-	arg_10_0:setJumpable(false)
-	arg_10_0:_doJumpView()
+	self:setJumpable(false)
+	self:_doJumpView()
 	AudioMgr.instance:trigger(AudioEnum2_8.DungeonGame.stop_ui_fuleyuan_tiaoyitiao_xuli)
 end
 
-function var_0_0._doJumpView(arg_11_0)
-	arg_11_0:refreshCircleSize(false)
-	transformhelper.setLocalScale(arg_11_0._jumpChessImage.transform, 1, 1, 1)
-	arg_11_0._nodeItemsDict[arg_11_0._curIdx]:setNodeScale(1, 1)
+function DungeonJumpGameView:_doJumpView()
+	self:refreshCircleSize(false)
+	transformhelper.setLocalScale(self._jumpChessImage.transform, 1, 1, 1)
 
-	local var_11_0 = arg_11_0._curIdx
-	local var_11_1 = arg_11_0._nodeDatas[var_11_0]
-	local var_11_2 = var_11_1.x
-	local var_11_3 = var_11_1.y
-	local var_11_4, var_11_5 = recthelper.getAnchor(arg_11_0._jumpChess.transform)
-	local var_11_6 = var_11_0 + 1
-	local var_11_7 = arg_11_0._nodeDatas[var_11_6]
-	local var_11_8 = var_11_7.x
-	local var_11_9 = var_11_7.y
-	local var_11_10 = math.sqrt((var_11_8 - var_11_4) * (var_11_8 - var_11_4) + (var_11_9 - var_11_5) * (var_11_9 - var_11_5))
-	local var_11_11 = arg_11_0._currPercent * arg_11_0._distancePerSecond
-	local var_11_12 = var_11_4 + (var_11_8 - var_11_4) * var_11_11 / var_11_10
-	local var_11_13 = var_11_5 + (var_11_9 - var_11_5) * var_11_11 / var_11_10
-	local var_11_14 = arg_11_0:checkJumpingResult(var_11_1, var_11_7, var_11_12, var_11_13)
+	local curNode = self._nodeItemsDict[self._curIdx]
 
-	if var_11_14 == var_0_7.Original then
-		arg_11_0:setJumpable(true)
+	curNode:setNodeScale(1, 1)
+
+	local curIdx = self._curIdx
+	local curNode = self._nodeDatas[curIdx]
+	local curNodeX = curNode.x
+	local curNodeY = curNode.y
+	local x, y = recthelper.getAnchor(self._jumpChess.transform)
+	local nextIdx = curIdx + 1
+	local targetNode = self._nodeDatas[nextIdx]
+	local targetNodeX = targetNode.x
+	local targetNodeY = targetNode.y
+	local distance = math.sqrt((targetNodeX - x) * (targetNodeX - x) + (targetNodeY - y) * (targetNodeY - y))
+	local jumpDistance = self._currPercent * self._distancePerSecond
+	local jumpTargetX = x + (targetNodeX - x) * jumpDistance / distance
+	local jumpTargetY = y + (targetNodeY - y) * jumpDistance / distance
+	local jumpResult = self:checkJumpingResult(curNode, targetNode, jumpTargetX, jumpTargetY)
+
+	if jumpResult == jumpResultEnum.Original then
+		self:setJumpable(true)
 
 		return
-	elseif var_11_14 == var_0_7.ToNext then
-		arg_11_0:_jumpTo(arg_11_0._jumpChess, var_11_4, var_11_5, var_11_8, var_11_9)
+	elseif jumpResult == jumpResultEnum.ToNext then
+		self:_jumpTo(self._jumpChess, x, y, targetNodeX, targetNodeY)
 	else
-		arg_11_0:_jumpTo(arg_11_0._jumpChess, var_11_4, var_11_5, var_11_12, var_11_13)
+		self:_jumpTo(self._jumpChess, x, y, jumpTargetX, jumpTargetY)
 	end
 
-	TaskDispatcher.runDelay(arg_11_0.onAfterJump, arg_11_0, var_0_1)
+	TaskDispatcher.runDelay(self.onAfterJump, self, jumpTime)
 end
 
-function var_0_0.onAfterJump(arg_12_0)
+function DungeonJumpGameView:onAfterJump()
 	AudioMgr.instance:trigger(AudioEnum2_8.DungeonGame.play_ui_fuleyuan_tiaoyitiao_fall)
 
-	arg_12_0.continueGame, arg_12_0.win = arg_12_0:checkJumpResult()
+	self.continueGame, self.win = self:checkJumpResult()
 
-	arg_12_0:doMapTrans()
+	self:doMapTrans()
 
-	if not arg_12_0:doNodeEvent() then
-		arg_12_0:setJumpable(true)
-		arg_12_0:_refreashNextNodeItem()
+	local hasNodeEvent = self:doNodeEvent()
 
-		if not arg_12_0.continueGame then
-			if not arg_12_0.win then
-				DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[2], arg_12_0._curIdx)
+	if not hasNodeEvent then
+		self:setJumpable(true)
+		self:_refreashNextNodeItem()
 
-				local var_12_0 = recthelper.getAnchorY(arg_12_0._jumpChess.transform)
-				local var_12_1 = recthelper.getAnchorX(arg_12_0._jumpChess.transform)
+		if not self.continueGame then
+			if not self.win then
+				DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[2], self._curIdx)
 
-				arg_12_0._jumpChessRoot.transform:SetSiblingIndex(0)
+				local y = recthelper.getAnchorY(self._jumpChess.transform)
+				local x = recthelper.getAnchorX(self._jumpChess.transform)
 
-				arg_12_0._dropingTween = ZProj.TweenHelper.DOAnchorPos(arg_12_0._jumpChess.transform, var_12_1 + 300, var_12_0 - var_0_3, var_0_2)
+				self._jumpChessRoot.transform:SetSiblingIndex(0)
 
-				arg_12_0:_refreashFallEffect(true)
+				self._dropingTween = ZProj.TweenHelper.DOAnchorPos(self._jumpChess.transform, x + 300, y - dropDistance, dropTime)
+
+				self:_refreashFallEffect(true)
 			else
-				DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[1], arg_12_0._curIdx)
+				DungeonJumpGameController.instance:sandStatData(DungeonMazeEnum.resultStat[1], self._curIdx)
 			end
 
-			arg_12_0._gameResult = arg_12_0.win
+			self._gameResult = self.win
 
-			arg_12_0:setJumpable(false)
-			TaskDispatcher.runDelay(arg_12_0._showGameResultView, arg_12_0, var_0_1)
+			self:setJumpable(false)
+			TaskDispatcher.runDelay(self._showGameResultView, self, jumpTime)
 
 			return
 		end
 	end
 
-	DungeonJumpGameController.instance:SaveCurProgress(arg_12_0._curIdx)
-	arg_12_0._jumpChessAnimator:Play(UIAnimationName.Jump, 0, 0)
+	DungeonJumpGameController.instance:SaveCurProgress(self._curIdx)
+	self._jumpChessAnimator:Play(UIAnimationName.Jump, 0, 0)
 end
 
-function var_0_0._showGameResultView(arg_13_0)
-	if arg_13_0._gameResult then
-		DungeonRpc.instance:sendMapElementRequest(arg_13_0._elementId)
+function DungeonJumpGameView:_showGameResultView()
+	if self._gameResult then
+		DungeonRpc.instance:sendMapElementRequest(self._elementId)
 	end
 
-	DungeonJumpGameController.instance:openResultView(arg_13_0._gameResult, arg_13_0._elementId)
+	DungeonJumpGameController.instance:openResultView(self._gameResult, self._elementId)
 
-	arg_13_0._gameResult = nil
+	self._gameResult = nil
 end
 
-function var_0_0.checkJumpingResult(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	local var_14_0 = arg_14_1.x
-	local var_14_1 = arg_14_1.y
-	local var_14_2 = arg_14_2
-	local var_14_3 = var_14_2.x
-	local var_14_4 = var_14_2.y
-	local var_14_5 = var_14_2.size
-	local var_14_6 = math.sqrt((var_14_0 - arg_14_3) * (var_14_0 - arg_14_3) + (var_14_1 - arg_14_4) * (var_14_1 - arg_14_4))
+function DungeonJumpGameView:checkJumpingResult(curNode, targetNode, x, y)
+	local curNodeX = curNode.x
+	local curNodeY = curNode.y
+	local nextNode = targetNode
+	local nextNodeX = nextNode.x
+	local nextNodeY = nextNode.y
+	local nextNodeSize = nextNode.size
+	local distanceToCur = math.sqrt((curNodeX - x) * (curNodeX - x) + (curNodeY - y) * (curNodeY - y))
 
-	if var_14_6 - var_14_5 / 2 < 0 then
-		return var_0_7.Original
+	if distanceToCur - nextNodeSize / 2 < 0 then
+		return jumpResultEnum.Original
 	end
 
-	local var_14_7 = math.sqrt((var_14_3 - arg_14_3) * (var_14_3 - arg_14_3) + (var_14_4 - arg_14_4) * (var_14_4 - arg_14_4))
+	local distanceToNext = math.sqrt((nextNodeX - x) * (nextNodeX - x) + (nextNodeY - y) * (nextNodeY - y))
 
-	if var_14_6 - var_14_5 / 2 > 0 and var_14_7 - var_14_5 / 2 < 0 then
-		return var_0_7.ToNext
+	if distanceToCur - nextNodeSize / 2 > 0 and distanceToNext - nextNodeSize / 2 < 0 then
+		return jumpResultEnum.ToNext
 	else
-		return var_0_7.Fall
+		return jumpResultEnum.Fall
 	end
 end
 
-function var_0_0.checkJumpResult(arg_15_0)
-	local var_15_0 = arg_15_0._nodeDatas[arg_15_0._curIdx]
-	local var_15_1 = var_15_0.x
-	local var_15_2 = var_15_0.y
-	local var_15_3, var_15_4 = recthelper.getAnchor(arg_15_0._jumpChess.transform)
-	local var_15_5 = math.sqrt((var_15_1 - var_15_3) * (var_15_1 - var_15_3) + (var_15_2 - var_15_4) * (var_15_2 - var_15_4))
-	local var_15_6 = var_15_0.size
-	local var_15_7 = arg_15_0._nodeDatas[arg_15_0._curIdx + 1]
-	local var_15_8 = var_15_7.x
-	local var_15_9 = var_15_7.y
-	local var_15_10 = var_15_7.size
-	local var_15_11 = math.sqrt((var_15_8 - var_15_3) * (var_15_8 - var_15_3) + (var_15_9 - var_15_4) * (var_15_9 - var_15_4))
+function DungeonJumpGameView:checkJumpResult()
+	local curNode = self._nodeDatas[self._curIdx]
+	local curNodeX = curNode.x
+	local curNodeY = curNode.y
+	local x, y = recthelper.getAnchor(self._jumpChess.transform)
+	local distance = math.sqrt((curNodeX - x) * (curNodeX - x) + (curNodeY - y) * (curNodeY - y))
+	local nodeSize = curNode.size
+	local nextNode = self._nodeDatas[self._curIdx + 1]
+	local nextNodeX = nextNode.x
+	local nextNodeY = nextNode.y
+	local nextNodeSize = nextNode.size
+	local distanceToNext = math.sqrt((nextNodeX - x) * (nextNodeX - x) + (nextNodeY - y) * (nextNodeY - y))
 
-	if var_15_5 - var_15_6 / 2 < 0 then
+	if distance - nodeSize / 2 < 0 then
 		return true
-	elseif var_15_5 - var_15_6 / 2 > 0 and var_15_11 - var_15_10 / 2 < 0 then
-		if arg_15_0._curIdx + 1 == #arg_15_0._nodeDatas then
-			arg_15_0._curIdx = arg_15_0._curIdx + 1
+	elseif distance - nodeSize / 2 > 0 and distanceToNext - nextNodeSize / 2 < 0 then
+		if self._curIdx + 1 == #self._nodeDatas then
+			self._curIdx = self._curIdx + 1
 
 			return false, true
 		end
 
-		arg_15_0._curIdx = arg_15_0._curIdx + 1
+		self._curIdx = self._curIdx + 1
 
 		return true
 	else
@@ -351,85 +366,86 @@ function var_0_0.checkJumpResult(arg_15_0)
 	end
 end
 
-function var_0_0.checkFinish(arg_16_0)
-	return arg_16_0._curIdx == #arg_16_0._nodeDatas
+function DungeonJumpGameView:checkFinish()
+	return self._curIdx == #self._nodeDatas
 end
 
-function var_0_0.doMapTrans(arg_17_0)
-	local var_17_0 = arg_17_0._jumpChess.transform.localPosition.x
-	local var_17_1 = arg_17_0._jumpChess.transform.localPosition.y
+function DungeonJumpGameView:doMapTrans()
+	local chessPosX = self._jumpChess.transform.localPosition.x
+	local chessPosY = self._jumpChess.transform.localPosition.y
 
-	if arg_17_0._curIdx > #arg_17_0._nodeDatas - 1 then
-		local var_17_2 = arg_17_0._nodeDatas[#arg_17_0._nodeDatas - 1]
+	if self._curIdx > #self._nodeDatas - 1 then
+		local nextNode = self._nodeDatas[#self._nodeDatas - 1]
 
-		var_17_0 = var_17_2.x
-		var_17_1 = var_17_2.y
+		chessPosX = nextNode.x
+		chessPosY = nextNode.y
 	end
 
-	arg_17_0._mapTween = ZProj.TweenHelper.DOAnchorPos(arg_17_0._goMap.transform, -var_17_0 - 100, -var_17_1 - 150, 0.5)
+	self._mapTween = ZProj.TweenHelper.DOAnchorPos(self._goMap.transform, -chessPosX - 100, -chessPosY - 150, 0.5)
 
-	ZProj.TweenHelper.DOAnchorPos(arg_17_0._goBg.transform, -var_17_0 - 100, -var_17_1 - 150, 0.5)
+	ZProj.TweenHelper.DOAnchorPos(self._goBg.transform, -chessPosX - 100, -chessPosY - 150, 0.5)
 end
 
-function var_0_0.doNodeEvent(arg_18_0)
-	local var_18_0 = arg_18_0._nodeDatas[arg_18_0._curIdx]
+function DungeonJumpGameView:doNodeEvent()
+	local nodeData = self._nodeDatas[self._curIdx]
 
-	if not var_18_0 then
+	if not nodeData then
 		return
 	end
 
-	if var_18_0.type == 2 then
-		if var_18_0.toggled then
+	if nodeData.type == 2 then
+		if nodeData.toggled then
 			return false
 		end
 
-		local var_18_1 = var_18_0.evenid
+		local tipsEventParams = nodeData.evenid
 
-		arg_18_0._tipsEventArray = string.splitToNumber(var_18_1, "#")
+		self._tipsEventArray = string.splitToNumber(tipsEventParams, "#")
 
-		arg_18_0:_onClickTips()
+		self:_onClickTips()
 
-		var_18_0.toggled = true
+		nodeData.toggled = true
 
 		return true
-	elseif var_18_0.type == 4 then
-		if var_18_0.toggled then
+	elseif nodeData.type == 4 then
+		if nodeData.toggled then
 			return false
 		end
 
-		local var_18_2 = tonumber(var_18_0.evenid)
+		local dialogId = tonumber(nodeData.evenid)
 
-		DialogueController.instance:enterDialogue(var_18_2, arg_18_0._onPlayDialogFinished, arg_18_0)
+		DialogueController.instance:enterDialogue(dialogId, self._onPlayDialogFinished, self)
 
-		var_18_0.toggled = true
+		nodeData.toggled = true
 
 		return true
-	elseif var_18_0.type == 5 then
-		local var_18_3 = tonumber(var_18_0.evenid)
-		local var_18_4 = 0
-		local var_18_5 = DungeonConfig.instance:getEpisodeCO(var_18_3)
+	elseif nodeData.type == 5 then
+		local episodeId = tonumber(nodeData.evenid)
+		local chapterId = 0
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		if var_18_5 == nil then
+		if config == nil then
 			return false
 		end
 
-		local var_18_6 = DungeonModel.instance:hasPassLevel(var_18_3)
+		local passEpisode = DungeonModel.instance:hasPassLevel(episodeId)
 
-		if var_18_0.toggled and var_18_6 then
+		if nodeData.toggled and passEpisode then
 			return false
 		end
 
-		var_18_0.toggled = true
+		nodeData.toggled = true
 
-		DungeonModel.instance:SetSendChapterEpisodeId(var_18_4, var_18_3)
-		DungeonFightController.instance:enterFightByBattleId(var_18_5.chapterId, var_18_3, var_18_5.battleId)
+		DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
+		DungeonFightController.instance:enterFightByBattleId(config.chapterId, episodeId, config.battleId)
 
 		return true
-	elseif var_18_0.type == 3 then
-		local var_18_7 = tonumber(var_18_0.evenid)
+	elseif nodeData.type == 3 then
+		local guideId = tonumber(nodeData.evenid)
+		local isGuideRunning = GuideModel.instance:isGuideRunning(guideId)
 
-		if GuideModel.instance:isGuideRunning(var_18_7) then
-			DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.JumpGameArriveNode, arg_18_0._curIdx)
+		if isGuideRunning then
+			DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.JumpGameArriveNode, self._curIdx)
 
 			return true
 		end
@@ -440,98 +456,102 @@ function var_0_0.doNodeEvent(arg_18_0)
 	return false
 end
 
-function var_0_0.doNodeEventOnEnterGame(arg_19_0)
-	local var_19_0 = arg_19_0._nodeDatas[arg_19_0._curIdx]
+function DungeonJumpGameView:doNodeEventOnEnterGame()
+	local nodeData = self._nodeDatas[self._curIdx]
 
-	if not var_19_0 then
+	if not nodeData then
 		return
 	end
 
-	if var_19_0.type == 2 then
-		if var_19_0.toggled then
+	if nodeData.type == 2 then
+		if nodeData.toggled then
 			return
 		end
 
-		local var_19_1 = var_19_0.evenid
+		local tipsEventParams = nodeData.evenid
 
-		arg_19_0._tipsEventArray = string.splitToNumber(var_19_1, "#")
+		self._tipsEventArray = string.splitToNumber(tipsEventParams, "#")
 
-		arg_19_0:_onClickTips()
+		self:_onClickTips()
 
-		var_19_0.toggled = true
-	elseif var_19_0.type == 4 then
-		if var_19_0.toggled then
+		nodeData.toggled = true
+	elseif nodeData.type == 4 then
+		if nodeData.toggled then
 			return false
 		end
 
-		local var_19_2 = tonumber(var_19_0.evenid)
+		local dialogId = tonumber(nodeData.evenid)
 
-		DialogueController.instance:enterDialogue(var_19_2, arg_19_0._onPlayDialogFinished, arg_19_0)
+		DialogueController.instance:enterDialogue(dialogId, self._onPlayDialogFinished, self)
 
-		var_19_0.toggled = true
-	elseif var_19_0.type == 3 then
-		local var_19_3 = tonumber(var_19_0.evenid)
+		nodeData.toggled = true
+	elseif nodeData.type == 3 then
+		local guideId = tonumber(nodeData.evenid)
+		local isGuideRunning = GuideModel.instance:isGuideRunning(guideId)
 
-		if GuideModel.instance:isGuideRunning(var_19_3) then
-			DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.JumpGameArriveNode, arg_19_0._curIdx)
+		if isGuideRunning then
+			DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.JumpGameArriveNode, self._curIdx)
 		end
 	end
 end
 
-function var_0_0._onClickTips(arg_20_0)
-	if arg_20_0._tipsEventArray and #arg_20_0._tipsEventArray > 0 then
-		local var_20_0 = DungeonGameConfig.instance:getJumpGameEventCfg(arg_20_0._tipsEventArray[1]).desc
+function DungeonJumpGameView:_onClickTips()
+	if self._tipsEventArray and #self._tipsEventArray > 0 then
+		local eventCfg = DungeonGameConfig.instance:getJumpGameEventCfg(self._tipsEventArray[1])
+		local eventDesc = eventCfg.desc
 
-		table.remove(arg_20_0._tipsEventArray, 1)
-		gohelper.setActive(arg_20_0._goTitle, false)
-		gohelper.setActive(arg_20_0._goTitle, true)
+		table.remove(self._tipsEventArray, 1)
+		gohelper.setActive(self._goTitle, false)
+		gohelper.setActive(self._goTitle, true)
 
-		arg_20_0._textTitle.text = var_20_0
+		self._textTitle.text = eventDesc
 	else
-		gohelper.setActive(arg_20_0._goTitle, false)
-		arg_20_0:setJumpable(true)
-		arg_20_0:_refreashNextNodeItem()
+		gohelper.setActive(self._goTitle, false)
+		self:setJumpable(true)
+		self:_refreashNextNodeItem()
 
-		arg_20_0._showingTips = false
+		self._showingTips = false
 	end
 end
 
-function var_0_0._onClickFight(arg_21_0)
-	local var_21_0 = arg_21_0._nodeDatas[arg_21_0._curIdx]
+function DungeonJumpGameView:_onClickFight()
+	local curNode = self._nodeDatas[self._curIdx]
 
-	if not var_21_0.isBattle then
+	if not curNode.isBattle then
 		return
 	end
 
-	local var_21_1 = tonumber(var_21_0.evenid)
+	local episodeId = tonumber(curNode.evenid)
+	local passEpisode = DungeonModel.instance:hasPassLevel(episodeId)
 
-	if DungeonModel.instance:hasPassLevel(var_21_1) and var_21_0.toggled then
+	if passEpisode and curNode.toggled then
 		return
 	end
 
-	local var_21_2 = 0
-	local var_21_3 = DungeonConfig.instance:getEpisodeCO(var_21_1)
+	local chapterId = 0
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_21_3 == nil then
+	if config == nil then
 		return
 	end
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_21_2, var_21_1)
-	DungeonFightController.instance:enterFightByBattleId(var_21_3.chapterId, var_21_1, var_21_3.battleId)
+	DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
+	DungeonFightController.instance:enterFightByBattleId(config.chapterId, episodeId, config.battleId)
 end
 
-function var_0_0._onPlayDialogFinished(arg_22_0)
-	arg_22_0:setJumpable(true)
-	arg_22_0:_refreashNextNodeItem()
+function DungeonJumpGameView:_onPlayDialogFinished()
+	self:setJumpable(true)
+	self:_refreashNextNodeItem()
 end
 
-function var_0_0.checkJumpable(arg_23_0)
-	local var_23_0 = arg_23_0._nodeDatas[arg_23_0._curIdx]
+function DungeonJumpGameView:checkJumpable()
+	local curNode = self._nodeDatas[self._curIdx]
 
-	if var_23_0.isBattle then
-		local var_23_1 = tonumber(var_23_0.evenid)
+	if curNode.isBattle then
+		local episodeId = tonumber(curNode.evenid)
+		local passEpisode = DungeonModel.instance:hasPassLevel(episodeId)
 
-		if not DungeonModel.instance:hasPassLevel(var_23_1) then
+		if not passEpisode then
 			return false
 		end
 	end
@@ -539,276 +559,280 @@ function var_0_0.checkJumpable(arg_23_0)
 	return true
 end
 
-function var_0_0.setJumpable(arg_24_0, arg_24_1)
-	if not arg_24_1 then
-		arg_24_0._jumpBtnlongpress:RemoveLongPressListener()
+function DungeonJumpGameView:setJumpable(able)
+	if not able then
+		self._jumpBtnlongpress:RemoveLongPressListener()
 	else
-		arg_24_0._jumpBtnlongpress:AddLongPressListener(arg_24_0._onJumpLongPress, arg_24_0)
-		arg_24_0._jumpBtnlongpress:SetLongPressTime({
-			var_0_4,
+		self._jumpBtnlongpress:AddLongPressListener(self._onJumpLongPress, self)
+		self._jumpBtnlongpress:SetLongPressTime({
+			localJumpTime,
 			0.1
 		})
 	end
 
-	arg_24_0._jumpBtn.enabled = arg_24_1
+	self._jumpBtn.enabled = able
 end
 
-function var_0_0.onAutoJumpOnMaxDistance(arg_25_0)
-	if arg_25_0._gameResult ~= nil then
+function DungeonJumpGameView:onAutoJumpOnMaxDistance()
+	if self._gameResult ~= nil then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_8.DungeonGame.stop_ui_fuleyuan_tiaoyitiao_xuli)
-	arg_25_0:setJumpable(false)
-	arg_25_0:_doJumpView()
+	self:setJumpable(false)
+	self:_doJumpView()
 end
 
-function var_0_0.onRevertChess(arg_26_0)
+function DungeonJumpGameView:onRevertChess()
 	DungeonJumpGameController.instance:initStatData()
-	arg_26_0:_refreashFallEffect(false)
-	arg_26_0:setJumpable(true)
-	recthelper.setAnchor(arg_26_0._jumpChess.transform, arg_26_0._nodeDatas[arg_26_0._curIdx].x, arg_26_0._nodeDatas[arg_26_0._curIdx].y)
-	arg_26_0._jumpChessRoot.transform:SetSiblingIndex(1)
-	arg_26_0:doMapTrans()
+	self:_refreashFallEffect(false)
+	self:setJumpable(true)
+	recthelper.setAnchor(self._jumpChess.transform, self._nodeDatas[self._curIdx].x, self._nodeDatas[self._curIdx].y)
+	self._jumpChessRoot.transform:SetSiblingIndex(1)
+	self:doMapTrans()
 end
 
-function var_0_0.onCompleted(arg_27_0)
-	arg_27_0:closeThis()
+function DungeonJumpGameView:onCompleted()
+	self:closeThis()
 end
 
-function var_0_0.onExit(arg_28_0)
-	arg_28_0:closeThis()
+function DungeonJumpGameView:onExit()
+	self:closeThis()
 end
 
-function var_0_0.onGuideCompleted(arg_29_0)
-	arg_29_0:setJumpable(true)
-	arg_29_0:refreshCircleSize(false)
-	transformhelper.setLocalScale(arg_29_0._jumpChessImage.transform, 1, 1, 1)
-	arg_29_0._nodeItemsDict[arg_29_0._curIdx]:setNodeScale(1, 1)
-	arg_29_0:_refreashNextNodeItem()
+function DungeonJumpGameView:onGuideCompleted()
+	self:setJumpable(true)
+	self:refreshCircleSize(false)
+	transformhelper.setLocalScale(self._jumpChessImage.transform, 1, 1, 1)
 
-	if arg_29_0:checkFinish() then
-		arg_29_0._gameResult = true
+	local curNode = self._nodeItemsDict[self._curIdx]
 
-		arg_29_0:setJumpable(false)
-		TaskDispatcher.runDelay(arg_29_0._showGameResultView, arg_29_0, var_0_1)
+	curNode:setNodeScale(1, 1)
+	self:_refreashNextNodeItem()
+
+	if self:checkFinish() then
+		self._gameResult = true
+
+		self:setJumpable(false)
+		TaskDispatcher.runDelay(self._showGameResultView, self, jumpTime)
 
 		return
-	elseif not arg_29_0.continueGame then
-		arg_29_0._gameResult = arg_29_0.win
+	elseif not self.continueGame then
+		self._gameResult = self.win
 
-		arg_29_0:setJumpable(false)
-		TaskDispatcher.runDelay(arg_29_0._showGameResultView, arg_29_0, var_0_1)
+		self:setJumpable(false)
+		TaskDispatcher.runDelay(self._showGameResultView, self, jumpTime)
 
 		return
 	end
 end
 
-function var_0_0.onOpen(arg_30_0)
-	arg_30_0._elementId = arg_30_0.viewParam and arg_30_0.viewParam.elementId
-	arg_30_0._elementId = arg_30_0._elementId and arg_30_0._elementId or DungeonJumpGameEnum.elementId
-	arg_30_0.jumpGameMapId = arg_30_0._elementId and DungeonJumpGameEnum.EleementId2JumpMapIdDict[arg_30_0._elementId]
-	arg_30_0.jumpGameMapId = arg_30_0.jumpGameMapId or 1001
-	arg_30_0._oriBgX, arg_30_0._oriBgY = recthelper.getAnchor(arg_30_0._goBg.transform)
+function DungeonJumpGameView:onOpen()
+	self._elementId = self.viewParam and self.viewParam.elementId
+	self._elementId = self._elementId and self._elementId or DungeonJumpGameEnum.elementId
+	self.jumpGameMapId = self._elementId and DungeonJumpGameEnum.EleementId2JumpMapIdDict[self._elementId]
+	self.jumpGameMapId = self.jumpGameMapId or 1001
+	self._oriBgX, self._oriBgY = recthelper.getAnchor(self._goBg.transform)
 
-	arg_30_0:_initMap()
+	self:_initMap()
 
-	local var_30_0 = arg_30_0._nodeDatas[arg_30_0._curIdx]
+	local curNode = self._nodeDatas[self._curIdx]
 
-	if var_30_0 and var_30_0.isBattle then
+	if curNode and curNode.isBattle then
 		GuideController.instance:startGudie(DungeonJumpGameEnum.battleGuideId)
 	end
 
-	arg_30_0:doNodeEventOnEnterGame()
+	self:doNodeEventOnEnterGame()
 end
 
-function var_0_0.onOpenFinish(arg_31_0)
-	DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.JumpGameEnter, arg_31_0._curIdx)
+function DungeonJumpGameView:onOpenFinish()
+	DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.JumpGameEnter, self._curIdx)
 end
 
-function var_0_0.onClose(arg_32_0)
+function DungeonJumpGameView:onClose()
 	return
 end
 
-function var_0_0._initMap(arg_33_0)
-	recthelper.setSize(arg_33_0._goGreenLightRange.transform, arg_33_0._maxCircleSize, arg_33_0._maxCircleSize)
-	gohelper.setActive(arg_33_0._goTitle, false)
-	recthelper.setAnchor(arg_33_0._goMap.transform, 0, 0)
-	recthelper.setAnchor(arg_33_0._goBg.transform, arg_33_0._oriBgX, arg_33_0._oriBgY)
+function DungeonJumpGameView:_initMap()
+	recthelper.setSize(self._goGreenLightRange.transform, self._maxCircleSize, self._maxCircleSize)
+	gohelper.setActive(self._goTitle, false)
+	recthelper.setAnchor(self._goMap.transform, 0, 0)
+	recthelper.setAnchor(self._goBg.transform, self._oriBgX, self._oriBgY)
 
-	local var_33_0 = DungeonJumpGameController.instance:LoadProgress()
+	local curIdx = DungeonJumpGameController.instance:LoadProgress()
 
-	arg_33_0._curIdx = var_33_0 and var_33_0 or 1
+	self._curIdx = curIdx and curIdx or 1
 
-	arg_33_0:_createNodeItems()
-	recthelper.setAnchor(arg_33_0._jumpChess.transform, arg_33_0._nodeDatas[arg_33_0._curIdx].x, arg_33_0._nodeDatas[arg_33_0._curIdx].y)
-	arg_33_0._jumpChessRoot.transform:SetSiblingIndex(1)
-	arg_33_0:doMapTrans()
-	arg_33_0:_refreashSnowEffect()
+	self:_createNodeItems()
+	recthelper.setAnchor(self._jumpChess.transform, self._nodeDatas[self._curIdx].x, self._nodeDatas[self._curIdx].y)
+	self._jumpChessRoot.transform:SetSiblingIndex(1)
+	self:doMapTrans()
+	self:_refreashSnowEffect()
 
-	arg_33_0.continueGame = true
-	arg_33_0.win = false
+	self.continueGame = true
+	self.win = false
 end
 
-function var_0_0._createNodeItems(arg_34_0)
-	local var_34_0 = DungeonGameConfig.instance:getJumpMap(arg_34_0.jumpGameMapId)
+function DungeonJumpGameView:_createNodeItems()
+	local mapCfg = DungeonGameConfig.instance:getJumpMap(self.jumpGameMapId)
 
-	arg_34_0._nodeDatas = {}
-	arg_34_0._nodeDatasForSibling = {}
+	self._nodeDatas = {}
+	self._nodeDatasForSibling = {}
 
-	local var_34_1 = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.NodeSize).size)
+	local nodeSize = tonumber(DungeonGameConfig.instance:getJumpGameConst(DungeonJumpGameEnum.ConstId.NodeSize).size)
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
-		local var_34_2 = {}
-		local var_34_3 = string.splitToNumber(iter_34_1.coord, "#")
+	for idx, nodeCfg in ipairs(mapCfg) do
+		local nodeData = {}
+		local coord = string.splitToNumber(nodeCfg.coord, "#")
 
-		var_34_2.x = var_34_3[1]
-		var_34_2.y = var_34_3[2]
-		var_34_2.type = iter_34_1.celltype
-		var_34_2.size = var_34_1
-		var_34_2.evenid = iter_34_1.evenid
-		var_34_2.toggled = false
-		var_34_2.idx = iter_34_0
-		var_34_2.bg = iter_34_1.cellspecies
-		var_34_2.isBattle = iter_34_1.celltype == 5
+		nodeData.x = coord[1]
+		nodeData.y = coord[2]
+		nodeData.type = nodeCfg.celltype
+		nodeData.size = nodeSize
+		nodeData.evenid = nodeCfg.evenid
+		nodeData.toggled = false
+		nodeData.idx = idx
+		nodeData.bg = nodeCfg.cellspecies
+		nodeData.isBattle = nodeCfg.celltype == 5
 
-		if iter_34_0 <= arg_34_0._curIdx then
-			var_34_2.toggled = true
+		if idx <= self._curIdx then
+			nodeData.toggled = true
 		end
 
-		arg_34_0._nodeDatas[iter_34_0] = var_34_2
-		arg_34_0._nodeDatasForSibling[#var_34_0 - iter_34_0 + 1] = var_34_2
+		self._nodeDatas[idx] = nodeData
+		self._nodeDatasForSibling[#mapCfg - idx + 1] = nodeData
 	end
 
-	arg_34_0._nodeItemsDict = {}
+	self._nodeItemsDict = {}
 
-	gohelper.CreateObjList(arg_34_0, arg_34_0._createNodeItem, arg_34_0._nodeDatasForSibling, arg_34_0._goNodeItemRoot, arg_34_0._goNodeItem, DungeonJumpGameNodeItem)
+	gohelper.CreateObjList(self, self._createNodeItem, self._nodeDatasForSibling, self._goNodeItemRoot, self._goNodeItem, DungeonJumpGameNodeItem)
 end
 
-function var_0_0._createNodeItem(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	arg_35_1:onUpdateData(arg_35_2)
-	arg_35_1:initNode()
+function DungeonJumpGameView:_createNodeItem(cardItemComp, nodeData, index)
+	cardItemComp:onUpdateData(nodeData)
+	cardItemComp:initNode()
 
-	arg_35_0._nodeItemsDict[#arg_35_0._nodeDatasForSibling - arg_35_3 + 1] = arg_35_1
+	self._nodeItemsDict[#self._nodeDatasForSibling - index + 1] = cardItemComp
 
-	local var_35_0 = arg_35_0:_checkNodeActive(#arg_35_0._nodeDatasForSibling - arg_35_3 + 1)
+	local active = self:_checkNodeActive(#self._nodeDatasForSibling - index + 1)
 
-	arg_35_1:setNodeActive(var_35_0)
-	arg_35_1:setFightAction(arg_35_0._onClickFight, arg_35_0)
+	cardItemComp:setNodeActive(active)
+	cardItemComp:setFightAction(self._onClickFight, self)
 end
 
-function var_0_0._checkNodeActive(arg_36_0, arg_36_1)
-	if arg_36_1 > arg_36_0._curIdx + 1 then
+function DungeonJumpGameView:_checkNodeActive(index)
+	if index > self._curIdx + 1 then
 		return false
 	end
 
-	local var_36_0 = arg_36_0._nodeItemsDict[arg_36_1]
+	local curNode = self._nodeItemsDict[index]
 
-	if var_36_0.type == 2 or var_36_0.type == 4 then
-		return var_36_0.toggled
-	elseif var_36_0.type == 5 then
-		local var_36_1 = tonumber(var_36_0.evenid)
+	if curNode.type == 2 or curNode.type == 4 then
+		return curNode.toggled
+	elseif curNode.type == 5 then
+		local episodeId = tonumber(curNode.evenid)
+		local passEpisode = DungeonModel.instance:hasPassLevel(episodeId)
 
-		return not DungeonModel.instance:hasPassLevel(var_36_1)
+		return not passEpisode
 	else
 		return true
 	end
 end
 
-function var_0_0._refreashNextNodeItem(arg_37_0)
-	local var_37_0 = arg_37_0._nodeItemsDict[arg_37_0._curIdx + 1]
+function DungeonJumpGameView:_refreashNextNodeItem()
+	local nextNode = self._nodeItemsDict[self._curIdx + 1]
 
-	if var_37_0 then
-		var_37_0:setNodeActive(true)
+	if nextNode then
+		nextNode:setNodeActive(true)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_8.DungeonGame.play_ui_fuleyuan_tiaoyitiao_drop)
-	arg_37_0:_refreashSnowEffect()
+	self:_refreashSnowEffect()
 end
 
-function var_0_0._refreashSnowEffect(arg_38_0)
-	local var_38_0 = arg_38_0._curIdx < arg_38_0._showSnow2Idx
-	local var_38_1 = not var_38_0 and arg_38_0._curIdx < arg_38_0._showSnow3Idx
-	local var_38_2 = arg_38_0._curIdx >= arg_38_0._showSnow3Idx
+function DungeonJumpGameView:_refreashSnowEffect()
+	local showSnow1 = self._curIdx < self._showSnow2Idx
+	local showSnow2 = not showSnow1 and self._curIdx < self._showSnow3Idx
+	local showSnow3 = self._curIdx >= self._showSnow3Idx
 
-	gohelper.setActive(arg_38_0._goSnowEffect1, var_38_0)
-	gohelper.setActive(arg_38_0._goSnowEffect2, var_38_1)
-	gohelper.setActive(arg_38_0._goSnowEffect3, var_38_2)
+	gohelper.setActive(self._goSnowEffect1, showSnow1)
+	gohelper.setActive(self._goSnowEffect2, showSnow2)
+	gohelper.setActive(self._goSnowEffect3, showSnow3)
 end
 
-function var_0_0._refreashFallEffect(arg_39_0, arg_39_1)
-	if not arg_39_1 and arg_39_0._dropingTween then
-		ZProj.TweenHelper.KillById(arg_39_0._dropingTween)
+function DungeonJumpGameView:_refreashFallEffect(active)
+	if not active and self._dropingTween then
+		ZProj.TweenHelper.KillById(self._dropingTween)
 
-		arg_39_0._dropingTween = nil
+		self._dropingTween = nil
 	end
 
-	gohelper.setActive(arg_39_0._goFallEffect, arg_39_1)
+	gohelper.setActive(self._goFallEffect, active)
 end
 
-function var_0_0._jumpTo(arg_40_0, arg_40_1, arg_40_2, arg_40_3, arg_40_4, arg_40_5)
-	local var_40_0 = 300
-	local var_40_1 = 1
+function DungeonJumpGameView:_jumpTo(chess, oriX, oriY, targetX, targetY)
+	local jumpHeight = 300
+	local jumpCount = 1
 
-	ZProj.TweenHelper.DOLocalJump(arg_40_1.transform, Vector3(arg_40_4, arg_40_5, 0), var_40_0, var_40_1, var_0_1)
+	ZProj.TweenHelper.DOLocalJump(chess.transform, Vector3(targetX, targetY, 0), jumpHeight, jumpCount, jumpTime)
 end
 
-function var_0_0.getCurCellIdx(arg_41_0)
-	return arg_41_0._curIdx
+function DungeonJumpGameView:getCurCellIdx()
+	return self._curIdx
 end
 
-function var_0_0.refreshCircleSize(arg_42_0, arg_42_1, arg_42_2, arg_42_3, arg_42_4, arg_42_5, arg_42_6)
-	arg_42_0._jumpCircle:SetActive(arg_42_1)
+function DungeonJumpGameView:refreshCircleSize(beginPress, curX, curY, TargetX, TargetY, TargetNodeLength)
+	self._jumpCircle:SetActive(beginPress)
 
-	if not arg_42_1 then
+	if not beginPress then
 		return
 	end
 
-	local var_42_0 = math.sqrt((arg_42_4 - arg_42_2) * (arg_42_4 - arg_42_2) + (arg_42_5 - arg_42_3) * (arg_42_5 - arg_42_3))
+	local distance = math.sqrt((TargetX - curX) * (TargetX - curX) + (TargetY - curY) * (TargetY - curY))
 
-	if var_42_0 > arg_42_0._maxDistance - arg_42_6 / 2 then
-		var_42_0 = arg_42_0._maxDistance - arg_42_6 / 2
+	if distance > self._maxDistance - TargetNodeLength / 2 then
+		distance = self._maxDistance - TargetNodeLength / 2
 	end
 
-	arg_42_0._unCatchLength = var_42_0 - arg_42_6 / 2
-	arg_42_0._overCatchLength = var_42_0 + arg_42_6 / 2
-	arg_42_0._toNextNodeLength = var_42_0
-	arg_42_0._jumpSuccessMaxDistance = arg_42_0._overCatchLength
-	arg_42_0._jumpSuccessMinDistance = arg_42_0._unCatchLength
-	arg_42_0._greenCirSize = arg_42_0._overCatchLength / arg_42_0._maxDistance * arg_42_0._maxCircleSize
-	arg_42_0._drakCirSize = arg_42_0._unCatchLength / arg_42_0._maxDistance * arg_42_0._maxCircleSize
+	self._unCatchLength = distance - TargetNodeLength / 2
+	self._overCatchLength = distance + TargetNodeLength / 2
+	self._toNextNodeLength = distance
+	self._jumpSuccessMaxDistance = self._overCatchLength
+	self._jumpSuccessMinDistance = self._unCatchLength
+	self._greenCirSize = self._overCatchLength / self._maxDistance * self._maxCircleSize
+	self._drakCirSize = self._unCatchLength / self._maxDistance * self._maxCircleSize
 
-	recthelper.setSize(arg_42_0._goGreenNormalRange.transform, arg_42_0._greenCirSize, arg_42_0._greenCirSize)
-	recthelper.setSize(arg_42_0._goCurrentAreaRange.transform, arg_42_0._greenCirSize, arg_42_0._greenCirSize)
-	recthelper.setSize(arg_42_0._goDrakRange.transform, arg_42_0._drakCirSize, arg_42_0._drakCirSize)
-	gohelper.setActive(arg_42_0._outRangeStateCircle, false)
-	recthelper.setSize(arg_42_0._pressStateCircle.transform, 0, 0)
+	recthelper.setSize(self._goGreenNormalRange.transform, self._greenCirSize, self._greenCirSize)
+	recthelper.setSize(self._goCurrentAreaRange.transform, self._greenCirSize, self._greenCirSize)
+	recthelper.setSize(self._goDrakRange.transform, self._drakCirSize, self._drakCirSize)
+	gohelper.setActive(self._outRangeStateCircle, false)
+	recthelper.setSize(self._pressStateCircle.transform, 0, 0)
 end
 
-function var_0_0.refreshPressState(arg_43_0, arg_43_1)
-	local var_43_0 = arg_43_1 * arg_43_0._distancePerSecond
+function DungeonJumpGameView:refreshPressState(curSizePercent)
+	local curJumpDistance = curSizePercent * self._distancePerSecond
 
-	gohelper.setActive(arg_43_0._outRangeStateCircle, var_43_0 >= arg_43_0._jumpSuccessMaxDistance)
-	gohelper.setActive(arg_43_0._goCurrentAreaRange, var_43_0 > arg_43_0._jumpSuccessMinDistance and var_43_0 < arg_43_0._jumpSuccessMaxDistance)
-	gohelper.setActive(arg_43_0._goGreenNormalRange, var_43_0 < arg_43_0._jumpSuccessMinDistance or var_43_0 > arg_43_0._jumpSuccessMaxDistance)
+	gohelper.setActive(self._outRangeStateCircle, curJumpDistance >= self._jumpSuccessMaxDistance)
+	gohelper.setActive(self._goCurrentAreaRange, curJumpDistance > self._jumpSuccessMinDistance and curJumpDistance < self._jumpSuccessMaxDistance)
+	gohelper.setActive(self._goGreenNormalRange, curJumpDistance < self._jumpSuccessMinDistance or curJumpDistance > self._jumpSuccessMaxDistance)
 
-	local var_43_1 = var_43_0 >= arg_43_0._jumpSuccessMinDistance and var_43_0 < arg_43_0._jumpSuccessMaxDistance
+	local isCurrentArea = curJumpDistance >= self._jumpSuccessMinDistance and curJumpDistance < self._jumpSuccessMaxDistance
 
-	gohelper.setActive(arg_43_0._goCircleEffect1, var_43_1)
-	gohelper.setActive(arg_43_0._goCircleEffect2, var_43_1)
+	gohelper.setActive(self._goCircleEffect1, isCurrentArea)
+	gohelper.setActive(self._goCircleEffect2, isCurrentArea)
 
-	local var_43_2 = var_43_0 / arg_43_0._maxDistance * arg_43_0._maxCircleSize
+	local curSize = curJumpDistance / self._maxDistance * self._maxCircleSize
 
-	if var_43_0 <= arg_43_0._maxDistance + 30 then
-		recthelper.setSize(arg_43_0._pressStateCircle.transform, var_43_2, var_43_2)
-		recthelper.setSize(arg_43_0._outRangeStateCircle.transform, var_43_2, var_43_2)
+	if curJumpDistance <= self._maxDistance + 30 then
+		recthelper.setSize(self._pressStateCircle.transform, curSize, curSize)
+		recthelper.setSize(self._outRangeStateCircle.transform, curSize, curSize)
 	else
 		DungeonJumpGameController.instance:dispatchEvent(DungeonJumpGameEvent.AutoJumpOnMaxDistance)
 	end
 end
 
-function var_0_0.onDestroyView(arg_44_0)
+function DungeonJumpGameView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonJumpGameView

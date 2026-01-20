@@ -1,19 +1,21 @@
-﻿module("modules.logic.tower.defines.TowerEnum", package.seeall)
+﻿-- chunkname: @modules/logic/tower/defines/TowerEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.tower.defines.TowerEnum", package.seeall)
 
-var_0_0.TowerType = {
+local TowerEnum = _M
+
+TowerEnum.TowerType = {
 	Boss = 2,
 	Limited = 3,
 	Normal = 1
 }
-var_0_0.TowerStatus = {
+TowerEnum.TowerStatus = {
 	Ready = 1,
 	Open = 2,
 	Close = 3,
 	None = 0
 }
-var_0_0.PermanentUI = {
+TowerEnum.PermanentUI = {
 	SingleItemH = 120,
 	DeepScrollH = 800,
 	LockTipH = 200,
@@ -21,32 +23,32 @@ var_0_0.PermanentUI = {
 	ItemSpaceH = 90,
 	StageTitleH = 80
 }
-var_0_0.PermanentTowerId = 0
-var_0_0.ActTaskType = 1
-var_0_0.MaxShowStarNum = 4
-var_0_0.BossGuideId = 23205
-var_0_0.TimeLimitGuideId = 23207
-var_0_0.PermanentEliteEpisodeState = {
+TowerEnum.PermanentTowerId = 0
+TowerEnum.ActTaskType = 1
+TowerEnum.MaxShowStarNum = 4
+TowerEnum.BossGuideId = 23205
+TowerEnum.TimeLimitGuideId = 23207
+TowerEnum.PermanentEliteEpisodeState = {
 	Finish = 2,
 	FinishSelect = 1,
 	NormalSelect = 3,
 	Normal = 4
 }
-var_0_0.PassEpisodeState = {
+TowerEnum.PassEpisodeState = {
 	Pass = 1,
 	NotPass = 0
 }
-var_0_0.ShowState = {
+TowerEnum.ShowState = {
 	Hide = 0,
 	Show = 1
 }
-var_0_0.JumpId = {
+TowerEnum.JumpId = {
 	TowerBoss = 2,
 	TowerBossTeach = 4,
 	TowerLimited = 3,
 	TowerPermanent = 1
 }
-var_0_0.ConstId = {
+TowerEnum.ConstId = {
 	MopUpOpenLayerNum = 113,
 	CustomTalentPlanCount = 119,
 	MaxMopUpTimes = 101,
@@ -64,7 +66,7 @@ var_0_0.ConstId = {
 	TeachBossLevel = 121,
 	TimeLimitHardMulti = 106
 }
-var_0_0.LocalPrefsKey = {
+TowerEnum.LocalPrefsKey = {
 	MopUpDailyRefresh = "MopUpDailyRefresh",
 	TowerBossSPEpisodeFinishEffect = "TowerBossSPEpisodeFinishEffect",
 	NewBossSpOpen = "NewBossSpOpen",
@@ -80,26 +82,26 @@ var_0_0.LocalPrefsKey = {
 	ReddotNewTimeLimitOpen = "ReddotNewTimeLimitOpen",
 	ReddotNewHeroTrial = "ReddotNewHeroTrial"
 }
-var_0_0.LockKey = 0
-var_0_0.UnlockKey = 1
-var_0_0.Difficulty = {
+TowerEnum.LockKey = 0
+TowerEnum.UnlockKey = 1
+TowerEnum.Difficulty = {
 	Normal = 2,
 	Hard = 3,
 	Easy = 1
 }
-var_0_0.AttrKey = {
+TowerEnum.AttrKey = {
 	CriDmg = "criDmg",
 	Attack = "attack",
 	Cri = "cri"
 }
-var_0_0.UpAttrId = {
-	[var_0_0.AttrKey.Cri] = 1,
-	[var_0_0.AttrKey.CriDmg] = 1
+TowerEnum.UpAttrId = {
+	[TowerEnum.AttrKey.Cri] = 1,
+	[TowerEnum.AttrKey.CriDmg] = 1
 }
-var_0_0.AttrKey2AttrId = {
-	[var_0_0.AttrKey.Attack] = CharacterEnum.AttrId.Attack,
-	[var_0_0.AttrKey.Cri] = CharacterEnum.AttrId.Cri,
-	[var_0_0.AttrKey.CriDmg] = CharacterEnum.AttrId.CriDmg
+TowerEnum.AttrKey2AttrId = {
+	[TowerEnum.AttrKey.Attack] = CharacterEnum.AttrId.Attack,
+	[TowerEnum.AttrKey.Cri] = CharacterEnum.AttrId.Cri,
+	[TowerEnum.AttrKey.CriDmg] = CharacterEnum.AttrId.CriDmg
 }
 
-return var_0_0
+return TowerEnum

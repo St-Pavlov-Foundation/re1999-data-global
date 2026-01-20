@@ -1,91 +1,93 @@
-﻿module("modules.logic.necrologiststory.rpc.NecrologistStoryRpc", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/rpc/NecrologistStoryRpc.lua
 
-local var_0_0 = class("NecrologistStoryRpc", BaseRpc)
+module("modules.logic.necrologiststory.rpc.NecrologistStoryRpc", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._sendTypeDict = nil
+local NecrologistStoryRpc = class("NecrologistStoryRpc", BaseRpc)
+
+function NecrologistStoryRpc:onInit()
+	self._sendTypeDict = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._sendTypeDict = nil
+function NecrologistStoryRpc:reInit()
+	self._sendTypeDict = nil
 
-	TaskDispatcher.cancelTask(arg_2_0._delaySendUpdateInfo, arg_2_0)
+	TaskDispatcher.cancelTask(self._delaySendUpdateInfo, self)
 end
 
-function var_0_0.sendGetNecrologistStoryRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = NecrologistStoryModule_pb.GetNecrologistStoryRequest()
+function NecrologistStoryRpc:sendGetNecrologistStoryRequest(storyId, callback, callbackObj)
+	local req = NecrologistStoryModule_pb.GetNecrologistStoryRequest()
 
-	var_3_0.storyId = arg_3_1 or 0
+	req.storyId = storyId or 0
 
-	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetNecrologistStoryReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		NecrologistStoryModel.instance:updateStoryInfos(arg_4_2.story)
+function NecrologistStoryRpc:onReceiveGetNecrologistStoryReply(resultCode, msg)
+	if resultCode == 0 then
+		NecrologistStoryModel.instance:updateStoryInfos(msg.story)
 	end
 end
 
-function var_0_0.sendUpdateNecrologistStoryRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	if not arg_5_3 then
-		if not arg_5_0._sendTypeDict then
-			arg_5_0._sendTypeDict = {}
+function NecrologistStoryRpc:sendUpdateNecrologistStoryRequest(storyId, data, callback, callbackObj)
+	if not callback then
+		if not self._sendTypeDict then
+			self._sendTypeDict = {}
 		end
 
-		arg_5_0._sendTypeDict[arg_5_1] = arg_5_2
+		self._sendTypeDict[storyId] = data
 
-		TaskDispatcher.cancelTask(arg_5_0._delaySendUpdateInfo, arg_5_0)
-		TaskDispatcher.runDelay(arg_5_0._delaySendUpdateInfo, arg_5_0, 0.1)
+		TaskDispatcher.cancelTask(self._delaySendUpdateInfo, self)
+		TaskDispatcher.runDelay(self._delaySendUpdateInfo, self, 0.1)
 
 		return
 	end
 
-	return arg_5_0:_sendUpdateNecrologistStoryRequest(arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	return self:_sendUpdateNecrologistStoryRequest(storyId, data, callback, callbackObj)
 end
 
-function var_0_0._sendUpdateNecrologistStoryRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = NecrologistStoryModule_pb.UpdateNecrologistStoryRequest()
+function NecrologistStoryRpc:_sendUpdateNecrologistStoryRequest(storyId, data, callback, callbackObj)
+	local req = NecrologistStoryModule_pb.UpdateNecrologistStoryRequest()
 
-	var_6_0.storyId = arg_6_1
+	req.storyId = storyId
 
-	if arg_6_2 then
-		arg_6_2:setNecrologistStoryRequest(var_6_0)
+	if data then
+		data:setNecrologistStoryRequest(req)
 	end
 
-	return arg_6_0:sendMsg(var_6_0, arg_6_3, arg_6_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveUpdateNecrologistStoryReply(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == 0 then
-		NecrologistStoryModel.instance:updateStoryInfo(arg_7_2)
+function NecrologistStoryRpc:onReceiveUpdateNecrologistStoryReply(resultCode, msg)
+	if resultCode == 0 then
+		NecrologistStoryModel.instance:updateStoryInfo(msg)
 	end
 end
 
-function var_0_0._delaySendUpdateInfo(arg_8_0)
-	if arg_8_0._sendTypeDict then
-		for iter_8_0, iter_8_1 in pairs(arg_8_0._sendTypeDict) do
-			arg_8_0:_sendUpdateNecrologistStoryRequest(iter_8_0, iter_8_1)
+function NecrologistStoryRpc:_delaySendUpdateInfo()
+	if self._sendTypeDict then
+		for storyId, mo in pairs(self._sendTypeDict) do
+			self:_sendUpdateNecrologistStoryRequest(storyId, mo)
 		end
 
-		arg_8_0._sendTypeDict = nil
+		self._sendTypeDict = nil
 	end
 end
 
-function var_0_0.sendFinishNecrologistStoryModeRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = NecrologistStoryModule_pb.FinishNecrologistStoryModeRequest()
+function NecrologistStoryRpc:sendFinishNecrologistStoryModeRequest(storyId, modeId, callback, callbackObj)
+	local req = NecrologistStoryModule_pb.FinishNecrologistStoryModeRequest()
 
-	var_9_0.storyId = arg_9_1
-	var_9_0.modeId = arg_9_2
+	req.storyId = storyId
+	req.modeId = modeId
 
-	return arg_9_0:sendMsg(var_9_0, arg_9_3, arg_9_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveFinishNecrologistStoryModeReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == 0 then
+function NecrologistStoryRpc:onReceiveFinishNecrologistStoryModeReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+NecrologistStoryRpc.instance = NecrologistStoryRpc.New()
 
-return var_0_0
+return NecrologistStoryRpc

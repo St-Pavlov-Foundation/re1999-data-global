@@ -1,11 +1,13 @@
-﻿module("modules.logic.video.adjust.MediaPlayer_adjust", package.seeall)
+﻿-- chunkname: @modules/logic/video/adjust/MediaPlayer_adjust.lua
 
-local var_0_0 = class("MediaPlayer_adjust")
+module("modules.logic.video.adjust.MediaPlayer_adjust", package.seeall)
 
-function var_0_0.CloseMedia(arg_1_0)
+local MediaPlayer_adjust = class("MediaPlayer_adjust")
+
+function MediaPlayer_adjust:CloseMedia()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+MediaPlayer_adjust.instance = MediaPlayer_adjust.New()
 
-return var_0_0
+return MediaPlayer_adjust

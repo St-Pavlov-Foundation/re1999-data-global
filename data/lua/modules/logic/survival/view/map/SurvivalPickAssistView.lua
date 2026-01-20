@@ -1,18 +1,24 @@
-﻿module("modules.logic.survival.view.map.SurvivalPickAssistView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalPickAssistView.lua
 
-local var_0_0 = class("SurvivalPickAssistView", PickAssistView)
+module("modules.logic.survival.view.map.SurvivalPickAssistView", package.seeall)
 
-function var_0_0._btnconfirmOnClick(arg_1_0)
-	local var_1_0 = PickAssistListModel.instance:getSelectedMO()
+local SurvivalPickAssistView = class("SurvivalPickAssistView", PickAssistView)
 
-	if var_1_0 and SurvivalShelterModel.instance:getWeekInfo():getHeroMo(var_1_0.heroMO.heroId).health <= 0 then
-		GameFacade.showToast(ToastEnum.SurvivalHeroDead)
+function SurvivalPickAssistView:_btnconfirmOnClick()
+	local selectedMO = PickAssistListModel.instance:getSelectedMO()
 
-		return
+	if selectedMO then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+		if weekInfo:getHeroMo(selectedMO.heroMO.heroId).health <= 0 then
+			GameFacade.showToast(ToastEnum.SurvivalHeroDead)
+
+			return
+		end
 	end
 
 	PickAssistController.instance:pickOver()
-	arg_1_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return SurvivalPickAssistView

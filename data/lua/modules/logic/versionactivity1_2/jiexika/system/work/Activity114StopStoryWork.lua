@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114StopStoryWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114StopStoryWork.lua
 
-local var_0_0 = class("Activity114StopStoryWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114StopStoryWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local Activity114StopStoryWork = class("Activity114StopStoryWork", Activity114BaseWork)
+
+function Activity114StopStoryWork:onStart()
 	if ViewMgr.instance:isOpen(ViewName.StoryView) then
 		Activity114Controller.instance:markStoryWillFinish()
 	end
 
 	StoryController.instance:dispatchEvent(StoryEvent.AllStepFinished, true)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return Activity114StopStoryWork

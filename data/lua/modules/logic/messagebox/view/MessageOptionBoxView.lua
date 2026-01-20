@@ -1,182 +1,184 @@
-﻿module("modules.logic.messagebox.view.MessageOptionBoxView", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/view/MessageOptionBoxView.lua
 
-local var_0_0 = class("MessageOptionBoxView", BaseView)
+module("modules.logic.messagebox.view.MessageOptionBoxView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "tipContent/#txt_desc")
-	arg_1_0._toggleoption = gohelper.findChildToggle(arg_1_0.viewGO, "tipContent/#toggle_option")
-	arg_1_0._txtoption = gohelper.findChildText(arg_1_0.viewGO, "tipContent/#toggle_option/#txt_option")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "tipContent/btnContent/#btn_yes")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "tipContent/btnContent/#btn_no")
+local MessageOptionBoxView = class("MessageOptionBoxView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MessageOptionBoxView:onInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "tipContent/#txt_desc")
+	self._toggleoption = gohelper.findChildToggle(self.viewGO, "tipContent/#toggle_option")
+	self._txtoption = gohelper.findChildText(self.viewGO, "tipContent/#toggle_option/#txt_option")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "tipContent/btnContent/#btn_yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "tipContent/btnContent/#btn_no")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0._toggleoption:AddOnValueChanged(arg_2_0._toggleOptionOnClick, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0, LuaEventSystem.Low)
+function MessageOptionBoxView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self._toggleoption:AddOnValueChanged(self._toggleOptionOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0._toggleoption:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0, LuaEventSystem.Low)
+function MessageOptionBoxView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
+	self._toggleoption:RemoveOnValueChanged()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self, LuaEventSystem.Low)
 end
 
-local var_0_1 = MsgBoxEnum.CloseType
-local var_0_2 = MsgBoxEnum.BoxType
+local closeType = MsgBoxEnum.CloseType
+local boxType = MsgBoxEnum.BoxType
 
-function var_0_0._btnyesOnClick(arg_4_0)
-	arg_4_0:_closeInvokeCallback(var_0_1.Yes)
+function MessageOptionBoxView:_btnyesOnClick()
+	self:_closeInvokeCallback(closeType.Yes)
 end
 
-function var_0_0._btnnoOnClick(arg_5_0)
-	arg_5_0:_closeInvokeCallback(var_0_1.No)
+function MessageOptionBoxView:_btnnoOnClick()
+	self:_closeInvokeCallback(closeType.No)
 end
 
-function var_0_0._toggleOptionOnClick(arg_6_0)
+function MessageOptionBoxView:_toggleOptionOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0._closeInvokeCallback(arg_7_0, arg_7_1)
-	if arg_7_1 == var_0_1.Yes then
-		if arg_7_0._toggleoption.isOn then
-			arg_7_0:saveOptionData()
+function MessageOptionBoxView:_closeInvokeCallback(result)
+	if result == closeType.Yes then
+		if self._toggleoption.isOn then
+			self:saveOptionData()
 		end
 
-		if arg_7_0.viewParam.yesCallback then
-			arg_7_0.viewParam.yesCallback(arg_7_0.viewParam.yesCallbackObj)
+		if self.viewParam.yesCallback then
+			self.viewParam.yesCallback(self.viewParam.yesCallbackObj)
 		end
-	elseif arg_7_0.viewParam.noCallback then
-		arg_7_0.viewParam.noCallback(arg_7_0.viewParam.noCallbackObj)
+	elseif self.viewParam.noCallback then
+		self.viewParam.noCallback(self.viewParam.noCallbackObj)
 	end
 
-	arg_7_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._onOpenViewFinish(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.MessageBoxView or arg_8_1 == ViewName.TopMessageBoxView then
-		arg_8_0:closeThis()
+function MessageOptionBoxView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.MessageBoxView or viewName == ViewName.TopMessageBoxView then
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._goNo = arg_9_0._btnno.gameObject
-	arg_9_0._goYes = arg_9_0._btnyes.gameObject
+function MessageOptionBoxView:_editableInitView()
+	self._goNo = self._btnno.gameObject
+	self._goYes = self._btnyes.gameObject
 
 	if MessageBoxController.instance.enableClickAudio then
-		gohelper.addUIClickAudio(arg_9_0._btnyes.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
-		gohelper.addUIClickAudio(arg_9_0._btnno.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+		gohelper.addUIClickAudio(self._btnyes.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+		gohelper.addUIClickAudio(self._btnno.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
 	end
 
-	arg_9_0._txtYes = gohelper.findChildText(arg_9_0._goYes, "yes")
-	arg_9_0._txtNo = gohelper.findChildText(arg_9_0._goNo, "no")
-	arg_9_0._txtYesen = gohelper.findChildText(arg_9_0._goYes, "yesen")
-	arg_9_0._txtNoen = gohelper.findChildText(arg_9_0._goNo, "noen")
-	arg_9_0._toggleoption.isOn = false
+	self._txtYes = gohelper.findChildText(self._goYes, "yes")
+	self._txtNo = gohelper.findChildText(self._goNo, "no")
+	self._txtYesen = gohelper.findChildText(self._goYes, "yesen")
+	self._txtNoen = gohelper.findChildText(self._goNo, "noen")
+	self._toggleoption.isOn = false
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	arg_10_0:onOpen()
+function MessageOptionBoxView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	if arg_11_0.viewParam.openCallback then
-		if arg_11_0.viewParam.openCallbackObj then
-			arg_11_0.viewParam.openCallback(arg_11_0.viewParam.openCallbackObj, arg_11_0)
+function MessageOptionBoxView:onOpen()
+	if self.viewParam.openCallback then
+		if self.viewParam.openCallbackObj then
+			self.viewParam.openCallback(self.viewParam.openCallbackObj, self)
 		else
-			arg_11_0.viewParam.openCallback(arg_11_0)
+			self.viewParam.openCallback(self)
 		end
 	end
 
-	arg_11_0:refreshDesc()
-	arg_11_0:refreshBtn()
-	arg_11_0:refreshOptionUI()
+	self:refreshDesc()
+	self:refreshBtn()
+	self:refreshOptionUI()
 end
 
-function var_0_0.refreshDesc(arg_12_0)
-	if not string.nilorempty(arg_12_0.viewParam.msg) and arg_12_0.viewParam.extra and #arg_12_0.viewParam.extra > 0 then
-		local var_12_0 = arg_12_0.viewParam.msg
-		local var_12_1 = GameUtil.getSubPlaceholderLuaLang(var_12_0, arg_12_0.viewParam.extra)
+function MessageOptionBoxView:refreshDesc()
+	if not string.nilorempty(self.viewParam.msg) and self.viewParam.extra and #self.viewParam.extra > 0 then
+		local tip = self.viewParam.msg
 
-		arg_12_0._txtdesc.text = var_12_1
+		tip = GameUtil.getSubPlaceholderLuaLang(tip, self.viewParam.extra)
+		self._txtdesc.text = tip
 	else
-		arg_12_0._txtdesc.text = arg_12_0.viewParam.msg or ""
+		self._txtdesc.text = self.viewParam.msg or ""
 	end
 end
 
-function var_0_0.refreshBtn(arg_13_0)
-	local var_13_0 = arg_13_0.viewParam.yesStr or luaLang("confirm")
-	local var_13_1 = arg_13_0.viewParam.noStr or luaLang("cancel")
-	local var_13_2 = arg_13_0.viewParam.yesStrEn or "CONFIRM"
-	local var_13_3 = arg_13_0.viewParam.noStrEn or "CANCEL"
+function MessageOptionBoxView:refreshBtn()
+	local yesStr = self.viewParam.yesStr or luaLang("confirm")
+	local noStr = self.viewParam.noStr or luaLang("cancel")
+	local yesStrEn = self.viewParam.yesStrEn or "CONFIRM"
+	local noStrEn = self.viewParam.noStrEn or "CANCEL"
 
-	arg_13_0._txtYes.text = var_13_0
-	arg_13_0._txtNo.text = var_13_1
-	arg_13_0._txtYesen.text = var_13_2
-	arg_13_0._txtNoen.text = var_13_3
+	self._txtYes.text = yesStr
+	self._txtNo.text = noStr
+	self._txtYesen.text = yesStrEn
+	self._txtNoen.text = noStrEn
 
-	if arg_13_0.viewParam.msgBoxType == var_0_2.Yes then
-		gohelper.setActive(arg_13_0._goNo, false)
-		gohelper.setActive(arg_13_0._goYes, true)
-	elseif arg_13_0.viewParam.msgBoxType == var_0_2.NO then
-		gohelper.setActive(arg_13_0._goYes, false)
-		gohelper.setActive(arg_13_0._goNo, true)
-	elseif arg_13_0.viewParam.msgBoxType == var_0_2.Yes_No then
-		gohelper.setActive(arg_13_0._goNo, true)
-		gohelper.setActive(arg_13_0._goYes, true)
+	if self.viewParam.msgBoxType == boxType.Yes then
+		gohelper.setActive(self._goNo, false)
+		gohelper.setActive(self._goYes, true)
+	elseif self.viewParam.msgBoxType == boxType.NO then
+		gohelper.setActive(self._goYes, false)
+		gohelper.setActive(self._goNo, true)
+	elseif self.viewParam.msgBoxType == boxType.Yes_No then
+		gohelper.setActive(self._goNo, true)
+		gohelper.setActive(self._goYes, true)
 	end
 
-	NavigateMgr.instance:addEscape(ViewName.MessageOptionBoxView, arg_13_0._onEscapeBtnClick, arg_13_0)
+	NavigateMgr.instance:addEscape(ViewName.MessageOptionBoxView, self._onEscapeBtnClick, self)
 end
 
-function var_0_0._onEscapeBtnClick(arg_14_0)
-	if arg_14_0._goNo.gameObject.activeInHierarchy then
-		arg_14_0:_closeInvokeCallback(var_0_1.No)
+function MessageOptionBoxView:_onEscapeBtnClick()
+	if self._goNo.gameObject.activeInHierarchy then
+		self:_closeInvokeCallback(closeType.No)
 	end
 end
 
-function var_0_0.refreshOptionUI(arg_15_0)
-	gohelper.setActive(arg_15_0._toggleoption.gameObject, true)
+function MessageOptionBoxView:refreshOptionUI()
+	gohelper.setActive(self._toggleoption.gameObject, true)
 
-	arg_15_0.optionType = arg_15_0.viewParam.optionType
-	arg_15_0.optionExParam = arg_15_0.viewParam.optionExParam
-	arg_15_0.messageBoxId = arg_15_0.viewParam.messageBoxId
+	self.optionType = self.viewParam.optionType
+	self.optionExParam = self.viewParam.optionExParam
+	self.messageBoxId = self.viewParam.messageBoxId
 
-	if arg_15_0.optionType == MsgBoxEnum.optionType.Daily then
-		arg_15_0._txtoption.text = luaLang("messageoptionbox_daily")
-	elseif arg_15_0.viewParam.optionType == MsgBoxEnum.optionType.NotShow then
-		arg_15_0._txtoption.text = luaLang("messageoptionbox_notshow")
+	if self.optionType == MsgBoxEnum.optionType.Daily then
+		self._txtoption.text = luaLang("messageoptionbox_daily")
+	elseif self.viewParam.optionType == MsgBoxEnum.optionType.NotShow then
+		self._txtoption.text = luaLang("messageoptionbox_notshow")
 	else
-		gohelper.setActive(arg_15_0._toggleoption.gameObject, false)
+		gohelper.setActive(self._toggleoption.gameObject, false)
 	end
 end
 
-function var_0_0.saveOptionData(arg_16_0)
-	if arg_16_0.optionType <= 0 or not arg_16_0._toggleoption.isOn then
+function MessageOptionBoxView:saveOptionData()
+	if self.optionType <= 0 or not self._toggleoption.isOn then
 		return
 	end
 
-	local var_16_0 = MessageBoxController.instance:getOptionLocalKey(arg_16_0.messageBoxId, arg_16_0.optionType, arg_16_0.optionExParam)
+	local key = MessageBoxController.instance:getOptionLocalKey(self.messageBoxId, self.optionType, self.optionExParam)
 
-	if arg_16_0.optionType == MsgBoxEnum.optionType.Daily then
-		TimeUtil.setDayFirstLoginRed(var_16_0)
-	elseif arg_16_0.optionType == MsgBoxEnum.optionType.NotShow then
-		PlayerPrefsHelper.setString(var_16_0, arg_16_0.optionType)
+	if self.optionType == MsgBoxEnum.optionType.Daily then
+		TimeUtil.setDayFirstLoginRed(key)
+	elseif self.optionType == MsgBoxEnum.optionType.NotShow then
+		PlayerPrefsHelper.setString(key, self.optionType)
 	end
 end
 
-function var_0_0.onClose(arg_17_0)
+function MessageOptionBoxView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function MessageOptionBoxView:onDestroyView()
 	return
 end
 
-return var_0_0
+return MessageOptionBoxView

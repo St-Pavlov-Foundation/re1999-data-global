@@ -1,122 +1,126 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.herogroup.Act183HeroGroupFightLayoutView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/herogroup/Act183HeroGroupFightLayoutView.lua
 
-local var_0_0 = class("Act183HeroGroupFightLayoutView", BaseView)
+module("modules.logic.versionactivity2_5.challenge.view.herogroup.Act183HeroGroupFightLayoutView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.heroContainer = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/area")
+local Act183HeroGroupFightLayoutView = class("Act183HeroGroupFightLayoutView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act183HeroGroupFightLayoutView:onInitView()
+	self.heroContainer = gohelper.findChild(self.viewGO, "herogroupcontain/area")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act183HeroGroupFightLayoutView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act183HeroGroupFightLayoutView:removeEvents()
 	return
 end
 
-var_0_0.MoveOffsetX = 125
+Act183HeroGroupFightLayoutView.MoveOffsetX = 125
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.isSeason166Episode = Season166HeroGroupModel.instance:isSeason166Episode()
+function Act183HeroGroupFightLayoutView:_editableInitView()
+	self.isSeason166Episode = Season166HeroGroupModel.instance:isSeason166Episode()
 
-	if not arg_4_0.isSeason166Episode then
+	if not self.isSeason166Episode then
 		return
 	end
 
-	arg_4_0.goHeroGroupContain = gohelper.findChild(arg_4_0.viewGO, "herogroupcontain")
-	arg_4_0.heroGroupContainRectTr = arg_4_0.goHeroGroupContain:GetComponent(gohelper.Type_RectTransform)
-	arg_4_0.maxHeroCount = Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
+	self.goHeroGroupContain = gohelper.findChild(self.viewGO, "herogroupcontain")
+	self.heroGroupContainRectTr = self.goHeroGroupContain:GetComponent(gohelper.Type_RectTransform)
+	self.maxHeroCount = Season166HeroGroupModel.instance:getMaxHeroCountInGroup()
 
-	arg_4_0:initItemName()
+	self:initItemName()
 
-	arg_4_0.heroItemList = {}
+	self.heroItemList = {}
 
-	for iter_4_0 = 1, arg_4_0.maxHeroCount do
-		local var_4_0 = arg_4_0:getUserDataTb_()
+	for i = 1, self.maxHeroCount do
+		local heroItem = self:getUserDataTb_()
 
-		var_4_0.bgRectTr = gohelper.findChildComponent(arg_4_0.viewGO, "herogroupcontain/hero/bg" .. iter_4_0, gohelper.Type_RectTransform)
-		var_4_0.posGoTr = gohelper.findChildComponent(arg_4_0.viewGO, "herogroupcontain/area/pos" .. iter_4_0, gohelper.Type_RectTransform)
-		var_4_0.bgX = recthelper.getAnchorX(var_4_0.bgRectTr)
-		var_4_0.posX = recthelper.getAnchorX(var_4_0.posGoTr)
+		heroItem.bgRectTr = gohelper.findChildComponent(self.viewGO, "herogroupcontain/hero/bg" .. i, gohelper.Type_RectTransform)
+		heroItem.posGoTr = gohelper.findChildComponent(self.viewGO, "herogroupcontain/area/pos" .. i, gohelper.Type_RectTransform)
+		heroItem.bgX = recthelper.getAnchorX(heroItem.bgRectTr)
+		heroItem.posX = recthelper.getAnchorX(heroItem.posGoTr)
 
-		table.insert(arg_4_0.heroItemList, var_4_0)
+		table.insert(self.heroItemList, heroItem)
 	end
 
-	arg_4_0.mainFrameBgTr = gohelper.findChildComponent(arg_4_0.viewGO, "frame/#go_mainFrameBg", gohelper.Type_RectTransform)
-	arg_4_0.mainFrameBgWidth = recthelper.getWidth(arg_4_0.mainFrameBgTr)
-	arg_4_0.mainFrameBgX = recthelper.getAnchorX(arg_4_0.mainFrameBgTr)
-	arg_4_0.helpFrameBgTr = gohelper.findChildComponent(arg_4_0.viewGO, "frame/#go_helpFrameBg", gohelper.Type_RectTransform)
-	arg_4_0.helpFrameBgWidth = recthelper.getWidth(arg_4_0.helpFrameBgTr)
-	arg_4_0.helpFrameBgX = recthelper.getAnchorX(arg_4_0.helpFrameBgTr)
+	self.mainFrameBgTr = gohelper.findChildComponent(self.viewGO, "frame/#go_mainFrameBg", gohelper.Type_RectTransform)
+	self.mainFrameBgWidth = recthelper.getWidth(self.mainFrameBgTr)
+	self.mainFrameBgX = recthelper.getAnchorX(self.mainFrameBgTr)
+	self.helpFrameBgTr = gohelper.findChildComponent(self.viewGO, "frame/#go_helpFrameBg", gohelper.Type_RectTransform)
+	self.helpFrameBgWidth = recthelper.getWidth(self.helpFrameBgTr)
+	self.helpFrameBgX = recthelper.getAnchorX(self.helpFrameBgTr)
 
-	arg_4_0:addEventCb(Season166HeroGroupController.instance, Season166Event.OnCreateHeroItemDone, arg_4_0.onCreateHeroItemDone, arg_4_0)
+	self:addEventCb(Season166HeroGroupController.instance, Season166Event.OnCreateHeroItemDone, self.onCreateHeroItemDone, self)
 end
 
-function var_0_0.initItemName(arg_5_0)
-	if arg_5_0.maxHeroCount == Season166Enum.MaxHeroCount then
+function Act183HeroGroupFightLayoutView:initItemName()
+	if self.maxHeroCount == Season166Enum.MaxHeroCount then
 		return
 	end
 
-	local var_5_0 = arg_5_0.maxHeroCount / 2 + 1
+	local middleHeroNum = self.maxHeroCount / 2 + 1
 
-	for iter_5_0 = 1, Season166Enum.MaxHeroCount do
-		local var_5_1 = gohelper.findChild(arg_5_0.heroContainer, "pos" .. iter_5_0)
-		local var_5_2 = gohelper.findChild(arg_5_0.viewGO, "herogroupcontain/hero/bg" .. iter_5_0)
+	for i = 1, Season166Enum.MaxHeroCount do
+		local pos = gohelper.findChild(self.heroContainer, "pos" .. i)
+		local bg = gohelper.findChild(self.viewGO, "herogroupcontain/hero/bg" .. i)
 
-		gohelper.setActive(var_5_1, iter_5_0 % var_5_0 ~= 0)
-		gohelper.setActive(var_5_2, iter_5_0 % var_5_0 ~= 0)
+		gohelper.setActive(pos, i % middleHeroNum ~= 0)
+		gohelper.setActive(bg, i % middleHeroNum ~= 0)
 
-		if iter_5_0 % var_5_0 == 0 then
-			var_5_1.name = string.format("pos_%d_1", iter_5_0)
-			var_5_2.name = string.format("bg_%d_1", iter_5_0)
+		if i % middleHeroNum == 0 then
+			pos.name = string.format("pos_%d_1", i)
+			bg.name = string.format("bg_%d_1", i)
 		end
 
-		if var_5_0 <= iter_5_0 and iter_5_0 % var_5_0 ~= 0 then
-			local var_5_3 = iter_5_0 - math.floor(iter_5_0 / var_5_0)
+		if middleHeroNum <= i and i % middleHeroNum ~= 0 then
+			local nameIndex = i - math.floor(i / middleHeroNum)
 
-			var_5_1.name = "pos" .. var_5_3
-			var_5_2.name = "bg" .. var_5_3
-		end
-	end
-end
-
-function var_0_0.onCreateHeroItemDone(arg_6_0)
-	for iter_6_0 = 1, arg_6_0.maxHeroCount do
-		arg_6_0.heroItemList[iter_6_0].heroItemRectTr = gohelper.findChildComponent(arg_6_0.goHeroGroupContain, "hero/item" .. iter_6_0, gohelper.Type_RectTransform)
-	end
-
-	arg_6_0:setUIPos()
-end
-
-function var_0_0.setUIPos(arg_7_0)
-	local var_7_0 = arg_7_0.maxHeroCount == Season166Enum.MaxHeroCount and 0 or var_0_0.MoveOffsetX
-
-	for iter_7_0 = 1, arg_7_0.maxHeroCount do
-		local var_7_1 = arg_7_0.heroItemList[iter_7_0]
-
-		recthelper.setAnchorX(var_7_1.bgRectTr, var_7_1.bgX + var_7_0)
-		recthelper.setAnchorX(var_7_1.posGoTr, var_7_1.posX + var_7_0)
-
-		local var_7_2 = var_7_1.heroItemRectTr
-
-		if not gohelper.isNil(var_7_2) then
-			local var_7_3 = recthelper.rectToRelativeAnchorPos(var_7_1.posGoTr.position, arg_7_0.heroGroupContainRectTr)
-
-			recthelper.setAnchor(var_7_2, var_7_3.x, var_7_3.y)
+			pos.name = "pos" .. nameIndex
+			bg.name = "bg" .. nameIndex
 		end
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
+function Act183HeroGroupFightLayoutView:onCreateHeroItemDone()
+	for i = 1, self.maxHeroCount do
+		local heroItem = self.heroItemList[i]
+
+		heroItem.heroItemRectTr = gohelper.findChildComponent(self.goHeroGroupContain, "hero/item" .. i, gohelper.Type_RectTransform)
+	end
+
+	self:setUIPos()
+end
+
+function Act183HeroGroupFightLayoutView:setUIPos()
+	local moveOffsetX = self.maxHeroCount == Season166Enum.MaxHeroCount and 0 or Act183HeroGroupFightLayoutView.MoveOffsetX
+
+	for i = 1, self.maxHeroCount do
+		local heroItem = self.heroItemList[i]
+
+		recthelper.setAnchorX(heroItem.bgRectTr, heroItem.bgX + moveOffsetX)
+		recthelper.setAnchorX(heroItem.posGoTr, heroItem.posX + moveOffsetX)
+
+		local heroItemTr = heroItem.heroItemRectTr
+
+		if not gohelper.isNil(heroItemTr) then
+			local anchorPos = recthelper.rectToRelativeAnchorPos(heroItem.posGoTr.position, self.heroGroupContainRectTr)
+
+			recthelper.setAnchor(heroItemTr, anchorPos.x, anchorPos.y)
+		end
+	end
+end
+
+function Act183HeroGroupFightLayoutView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function Act183HeroGroupFightLayoutView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Act183HeroGroupFightLayoutView

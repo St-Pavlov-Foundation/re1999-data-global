@@ -1,20 +1,24 @@
-﻿module("modules.logic.fight.controller.FightEventExtend", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightEventExtend.lua
 
-local var_0_0 = class("FightEventExtend")
+module("modules.logic.fight.controller.FightEventExtend", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0.onStageChange, arg_1_0)
+local FightEventExtend = class("FightEventExtend")
+
+function FightEventExtend:addConstEvents()
+	FightController.instance:registerCallback(FightEvent.StageChanged, self.onStageChange, self)
 end
 
-function var_0_0.onStageChange(arg_2_0, arg_2_1)
-	if arg_2_1 ~= FightStageMgr.StageType.Operate then
+function FightEventExtend:onStageChange(stageType)
+	if stageType ~= FightStageMgr.StageType.Operate then
 		return
 	end
 
-	local var_2_0 = FightDataHelper.handCardMgr.handCard
+	local cards = FightDataHelper.handCardMgr.handCard
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		if FightDataHelper.entityMgr:getById(iter_2_1.uid) and FightCardDataHelper.isBigSkill(iter_2_1.skillId) then
+	for _, card in ipairs(cards) do
+		local entityMO = FightDataHelper.entityMgr:getById(card.uid)
+
+		if entityMO and FightCardDataHelper.isBigSkill(card.skillId) then
 			FightController.instance:dispatchEvent(FightEvent.OnGuideGetUniqueCard)
 
 			return
@@ -22,4 +26,4 @@ function var_0_0.onStageChange(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return FightEventExtend

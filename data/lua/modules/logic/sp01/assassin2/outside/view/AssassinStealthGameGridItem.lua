@@ -1,324 +1,327 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameGridItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinStealthGameGridItem.lua
 
-local var_0_0 = class("AssassinStealthGameGridItem", LuaCompBase)
+module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameGridItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_0.go.transform
+local AssassinStealthGameGridItem = class("AssassinStealthGameGridItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinStealthGameGridItem:init(go)
+	self.go = go
+	self.trans = self.go.transform
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._gocontent = gohelper.findChild(arg_2_0.go, "#go_content")
-	arg_2_0._transcontent = arg_2_0._gocontent.transform
-	arg_2_0._simagegrid = gohelper.findChildSingleImage(arg_2_0.go, "#go_content/#simage_grid")
-	arg_2_0._transimggrid = arg_2_0._simagegrid.transform
-	arg_2_0._goqte = gohelper.findChild(arg_2_0.go, "#go_content/#go_qte")
-	arg_2_0._gopointparent = gohelper.findChild(arg_2_0.go, "#go_content/#go_points")
-	arg_2_0._gopointitem = gohelper.findChild(arg_2_0.go, "#go_content/#go_points/#go_pointItem")
-	arg_2_0._gotrace = gohelper.findChild(arg_2_0.go, "#go_content/#go_trace")
-	arg_2_0._transtrace = arg_2_0._gotrace.transform
-	arg_2_0._gowarning = gohelper.findChild(arg_2_0.go, "#go_content/#go_warring")
-	arg_2_0._goInfoLayout = gohelper.findChild(arg_2_0.go, "#go_content/#go_infoLayout")
-	arg_2_0._goEnemyRefresh = gohelper.findChild(arg_2_0.go, "#go_content/#go_infoLayout/#image_legend")
-	arg_2_0._imageEnemyRefreshIcon = gohelper.findChildImage(arg_2_0.go, "#go_content/#go_infoLayout/#image_legend")
-	arg_2_0._goexpose = gohelper.findChild(arg_2_0.go, "#go_content/#go_infoLayout/#go_expose")
-	arg_2_0._txtexpose = gohelper.findChildText(arg_2_0.go, "#go_content/#go_infoLayout/#go_expose/#txt_expose")
-	arg_2_0._entranceNodeDict = arg_2_0:getUserDataTb_()
+function AssassinStealthGameGridItem:_editableInitView()
+	self._gocontent = gohelper.findChild(self.go, "#go_content")
+	self._transcontent = self._gocontent.transform
+	self._simagegrid = gohelper.findChildSingleImage(self.go, "#go_content/#simage_grid")
+	self._transimggrid = self._simagegrid.transform
+	self._goqte = gohelper.findChild(self.go, "#go_content/#go_qte")
+	self._gopointparent = gohelper.findChild(self.go, "#go_content/#go_points")
+	self._gopointitem = gohelper.findChild(self.go, "#go_content/#go_points/#go_pointItem")
+	self._gotrace = gohelper.findChild(self.go, "#go_content/#go_trace")
+	self._transtrace = self._gotrace.transform
+	self._gowarning = gohelper.findChild(self.go, "#go_content/#go_warring")
+	self._goInfoLayout = gohelper.findChild(self.go, "#go_content/#go_infoLayout")
+	self._goEnemyRefresh = gohelper.findChild(self.go, "#go_content/#go_infoLayout/#image_legend")
+	self._imageEnemyRefreshIcon = gohelper.findChildImage(self.go, "#go_content/#go_infoLayout/#image_legend")
+	self._goexpose = gohelper.findChild(self.go, "#go_content/#go_infoLayout/#go_expose")
+	self._txtexpose = gohelper.findChildText(self.go, "#go_content/#go_infoLayout/#go_expose/#txt_expose")
+	self._entranceNodeDict = self:getUserDataTb_()
 
-	local var_2_0 = gohelper.findChild(arg_2_0.go, "#go_content/#go_roofEntrance/#go_up")
-	local var_2_1 = gohelper.findChild(arg_2_0.go, "#go_content/#go_roofEntrance/#go_down")
-	local var_2_2 = gohelper.findChild(arg_2_0.go, "#go_content/#go_roofEntrance/#go_left")
-	local var_2_3 = gohelper.findChild(arg_2_0.go, "#go_content/#go_roofEntrance/#go_right")
+	local goup = gohelper.findChild(self.go, "#go_content/#go_roofEntrance/#go_up")
+	local godown = gohelper.findChild(self.go, "#go_content/#go_roofEntrance/#go_down")
+	local goleft = gohelper.findChild(self.go, "#go_content/#go_roofEntrance/#go_left")
+	local goright = gohelper.findChild(self.go, "#go_content/#go_roofEntrance/#go_right")
 
-	arg_2_0._entranceNodeDict[AssassinEnum.RoofEntranceDir.Up] = var_2_0.transform
-	arg_2_0._entranceNodeDict[AssassinEnum.RoofEntranceDir.Down] = var_2_1.transform
-	arg_2_0._entranceNodeDict[AssassinEnum.RoofEntranceDir.Left] = var_2_2.transform
-	arg_2_0._entranceNodeDict[AssassinEnum.RoofEntranceDir.Right] = var_2_3.transform
-	arg_2_0._btnclick = gohelper.findChildClickWithAudio(arg_2_0.go, "#go_content/#go_clickParent/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_2_0._gohlicon = gohelper.findChild(arg_2_0.go, "#go_content/#go_clickParent/#btn_click/#go_hlicon")
-	arg_2_0._imagehlicon = gohelper.findChildImage(arg_2_0.go, "#go_content/#go_clickParent/#btn_click/#go_hlicon/#image_hlicon")
-	arg_2_0._transclick = arg_2_0._btnclick.transform
-	arg_2_0._transclickParent = gohelper.findChild(arg_2_0.go, "#go_content/#go_clickParent").transform
-	arg_2_0._effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0.go, AssassinStealthGameEffectComp)
+	self._entranceNodeDict[AssassinEnum.RoofEntranceDir.Up] = goup.transform
+	self._entranceNodeDict[AssassinEnum.RoofEntranceDir.Down] = godown.transform
+	self._entranceNodeDict[AssassinEnum.RoofEntranceDir.Left] = goleft.transform
+	self._entranceNodeDict[AssassinEnum.RoofEntranceDir.Right] = goright.transform
+	self._btnclick = gohelper.findChildClickWithAudio(self.go, "#go_content/#go_clickParent/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._gohlicon = gohelper.findChild(self.go, "#go_content/#go_clickParent/#btn_click/#go_hlicon")
+	self._imagehlicon = gohelper.findChildImage(self.go, "#go_content/#go_clickParent/#btn_click/#go_hlicon/#image_hlicon")
+	self._transclick = self._btnclick.transform
+	self._transclickParent = gohelper.findChild(self.go, "#go_content/#go_clickParent").transform
+	self._effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.go, AssassinStealthGameEffectComp)
 
-	arg_2_0:_initPoints()
-	arg_2_0:_checkShow()
+	self:_initPoints()
+	self:_checkShow()
 end
 
-function var_0_0._initPoints(arg_3_0)
-	arg_3_0.pointItemList = {}
+function AssassinStealthGameGridItem:_initPoints()
+	self.pointItemList = {}
 
-	local var_3_0 = AssassinConfig.instance:getGridPointPosList()
+	local allPointPosList = AssassinConfig.instance:getGridPointPosList()
 
-	gohelper.CreateObjList(arg_3_0, arg_3_0._onCreatePointItem, var_3_0, arg_3_0._gopointparent, arg_3_0._gopointitem)
+	gohelper.CreateObjList(self, self._onCreatePointItem, allPointPosList, self._gopointparent, self._gopointitem)
 end
 
-function var_0_0._onCreatePointItem(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_0:getUserDataTb_()
+function AssassinStealthGameGridItem:_onCreatePointItem(obj, data, index)
+	local pointItem = self:getUserDataTb_()
 
-	var_4_0.go = arg_4_1
-	var_4_0.trans = var_4_0.go.transform
-	var_4_0.go.name = arg_4_3
-	var_4_0.gocontent = gohelper.findChild(var_4_0.go, "#go_pointContent")
-	var_4_0.transcontent = var_4_0.gocontent.transform
-	var_4_0.imageicon = gohelper.findChildImage(var_4_0.go, "#go_pointContent/#image_icon")
-	var_4_0.iconTrans = var_4_0.imageicon.transform
-	var_4_0.btn = gohelper.findChildClickWithAudio(var_4_0.go, "#go_pointContent/#image_icon/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	var_4_0.normalhl = gohelper.findChild(var_4_0.go, "#go_pointContent/#image_icon/#btn_click/highlight")
-	var_4_0.gardenhl = gohelper.findChild(var_4_0.go, "#go_pointContent/#image_icon/#btn_click/highlight_garden")
-	var_4_0.haystackhl = gohelper.findChild(var_4_0.go, "#go_pointContent/#image_icon/#btn_click/highlight_haystack")
-	var_4_0.haystackhl1 = gohelper.findChild(var_4_0.go, "#go_pointContent/#image_icon/#btn_click/highlight_haystack_01")
+	pointItem.go = obj
+	pointItem.trans = pointItem.go.transform
+	pointItem.go.name = index
+	pointItem.gocontent = gohelper.findChild(pointItem.go, "#go_pointContent")
+	pointItem.transcontent = pointItem.gocontent.transform
+	pointItem.imageicon = gohelper.findChildImage(pointItem.go, "#go_pointContent/#image_icon")
+	pointItem.iconTrans = pointItem.imageicon.transform
+	pointItem.btn = gohelper.findChildClickWithAudio(pointItem.go, "#go_pointContent/#image_icon/#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	pointItem.normalhl = gohelper.findChild(pointItem.go, "#go_pointContent/#image_icon/#btn_click/highlight")
+	pointItem.gardenhl = gohelper.findChild(pointItem.go, "#go_pointContent/#image_icon/#btn_click/highlight_garden")
+	pointItem.haystackhl = gohelper.findChild(pointItem.go, "#go_pointContent/#image_icon/#btn_click/highlight_haystack")
+	pointItem.haystackhl1 = gohelper.findChild(pointItem.go, "#go_pointContent/#image_icon/#btn_click/highlight_haystack_01")
 
-	var_4_0.btn:AddClickListener(arg_4_0._clickPoint, arg_4_0, arg_4_3)
-	transformhelper.setLocalPosXY(var_4_0.trans, arg_4_2.x, arg_4_2.y)
+	pointItem.btn:AddClickListener(self._clickPoint, self, index)
+	transformhelper.setLocalPosXY(pointItem.trans, data.x, data.y)
 
-	arg_4_0.pointItemList[arg_4_3] = var_4_0
+	self.pointItemList[index] = pointItem
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	arg_5_0._btnclick:AddClickListener(arg_5_0._btnclickOnClick, arg_5_0)
+function AssassinStealthGameGridItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	arg_6_0._btnclick:RemoveClickListener()
+function AssassinStealthGameGridItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.pointItemList) do
-		iter_6_1.btn:RemoveClickListener()
+	for _, pointItem in ipairs(self.pointItemList) do
+		pointItem.btn:RemoveClickListener()
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_7_0)
-	AssassinStealthGameController.instance:clickGridItem(arg_7_0.id)
+function AssassinStealthGameGridItem:_btnclickOnClick()
+	AssassinStealthGameController.instance:clickGridItem(self.id)
 end
 
-function var_0_0._clickPoint(arg_8_0, arg_8_1)
-	AssassinStealthGameController.instance:clickGridItem(arg_8_0.id, arg_8_1)
+function AssassinStealthGameGridItem:_clickPoint(index)
+	AssassinStealthGameController.instance:clickGridItem(self.id, index)
 end
 
-function var_0_0.initData(arg_9_0, arg_9_1)
-	arg_9_0.id = arg_9_1
-	arg_9_0.go.name = arg_9_0.id
-	arg_9_0._goInfoLayout.name = string.format("gridInfo-%s", arg_9_0.id)
+function AssassinStealthGameGridItem:initData(gridId)
+	self.id = gridId
+	self.go.name = self.id
+	self._goInfoLayout.name = string.format("gridInfo-%s", self.id)
 end
 
-function var_0_0.setEffParent(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._effectParent = arg_10_1
-	arg_10_0._effectParentTrans = arg_10_2
+function AssassinStealthGameGridItem:setEffParent(effParentGo, effParentTrans)
+	self._effectParent = effParentGo
+	self._effectParentTrans = effParentTrans
 end
 
-function var_0_0.setMap(arg_11_0, arg_11_1)
-	arg_11_0.mapId = arg_11_1
+function AssassinStealthGameGridItem:setMap(mapId)
+	self.mapId = mapId
 
-	local var_11_0 = arg_11_0:getGoPosition()
+	local worldPos = self:getGoPosition()
 
-	arg_11_0._effPos = arg_11_0._effectParentTrans:InverseTransformPoint(var_11_0)
+	self._effPos = self._effectParentTrans:InverseTransformPoint(worldPos)
 
-	arg_11_0:_checkShow()
+	self:_checkShow()
 end
 
-function var_0_0._checkShow(arg_12_0)
-	arg_12_0._isShow = AssassinConfig.instance:isShowGrid(arg_12_0.mapId, arg_12_0.id)
+function AssassinStealthGameGridItem:_checkShow()
+	self._isShow = AssassinConfig.instance:isShowGrid(self.mapId, self.id)
 
-	arg_12_0:setGrid()
-	arg_12_0:refresh()
+	self:setGrid()
+	self:refresh()
 
-	local var_12_0
+	local infoParent
 
-	if arg_12_0._isShow then
-		var_12_0 = AssassinStealthGameEntityMgr.instance:getInfoTrans()
+	if self._isShow then
+		infoParent = AssassinStealthGameEntityMgr.instance:getInfoTrans()
 	end
 
-	if gohelper.isNil(var_12_0) then
-		var_12_0 = arg_12_0._transcontent
+	if gohelper.isNil(infoParent) then
+		infoParent = self._transcontent
 	end
 
-	arg_12_0._goInfoLayout.transform:SetParent(var_12_0, true)
-	gohelper.setActive(arg_12_0._gocontent, arg_12_0._isShow)
+	self._goInfoLayout.transform:SetParent(infoParent, true)
+	gohelper.setActive(self._gocontent, self._isShow)
 end
 
-function var_0_0.setGrid(arg_13_0)
-	if not arg_13_0._isShow then
+function AssassinStealthGameGridItem:setGrid()
+	if not self._isShow then
 		return
 	end
 
-	arg_13_0:setGridType()
-	arg_13_0:setPoint()
-	arg_13_0:setIsEasyExpose()
+	self:setGridType()
+	self:setPoint()
+	self:setIsEasyExpose()
 end
 
-function var_0_0.setGridType(arg_14_0)
-	local var_14_0 = AssassinConfig.instance:getStealthGridImg(arg_14_0.mapId, arg_14_0.id)
+function AssassinStealthGameGridItem:setGridType()
+	local img = AssassinConfig.instance:getStealthGridImg(self.mapId, self.id)
 
-	if not string.nilorempty(var_14_0) then
-		local var_14_1 = ResUrl.getSp01AssassinSingleBg("stealth/" .. var_14_0)
+	if not string.nilorempty(img) then
+		local imgPath = ResUrl.getSp01AssassinSingleBg("stealth/" .. img)
 
-		arg_14_0._simagegrid:LoadImage(var_14_1)
+		self._simagegrid:LoadImage(imgPath)
 	end
 
-	local var_14_2 = AssassinConfig.instance:getStealthGridRotation(arg_14_0.mapId, arg_14_0.id)
+	local rotation = AssassinConfig.instance:getStealthGridRotation(self.mapId, self.id)
 
-	transformhelper.setLocalRotation(arg_14_0._transimggrid, 0, 0, var_14_2)
+	transformhelper.setLocalRotation(self._transimggrid, 0, 0, rotation)
 end
 
-function var_0_0.setPoint(arg_15_0)
-	if not arg_15_0.pointItemList then
+function AssassinStealthGameGridItem:setPoint()
+	if not self.pointItemList then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.pointItemList) do
-		local var_15_0 = 0
-		local var_15_1 = 0
-		local var_15_2 = AssassinConfig.instance:getGridPointType(arg_15_0.mapId, arg_15_0.id, iter_15_0)
+	for index, pointItem in ipairs(self.pointItemList) do
+		local x = 0
+		local y = 0
+		local pointType = AssassinConfig.instance:getGridPointType(self.mapId, self.id, index)
 
-		if var_15_2 and var_15_2 ~= AssassinEnum.StealthGamePointType.Empty then
-			local var_15_3, var_15_4 = AssassinConfig.instance:getPointTypeShowData(arg_15_0.mapId, arg_15_0.id, iter_15_0)
+		if pointType and pointType ~= AssassinEnum.StealthGamePointType.Empty then
+			local icon, rotation = AssassinConfig.instance:getPointTypeShowData(self.mapId, self.id, index)
 
-			if var_15_2 == AssassinEnum.StealthGamePointType.Tower then
-				local var_15_5 = AssassinEnum.TowerPointPos[iter_15_0]
+			if pointType == AssassinEnum.StealthGamePointType.Tower then
+				local pos = AssassinEnum.TowerPointPos[index]
 
-				var_15_0 = var_15_5 and var_15_5.x or var_15_0
-				var_15_1 = var_15_5 and var_15_5.y or var_15_1
-				var_15_3 = string.format("%s_%s", var_15_3, iter_15_0)
-			elseif var_15_2 == AssassinEnum.StealthGamePointType.Garden then
-				gohelper.setActive(iter_15_1.normalhl, false)
-				gohelper.setActive(iter_15_1.gardenhl, true)
-				gohelper.setActive(iter_15_1.haystackhl, false)
-				gohelper.setActive(iter_15_1.haystackhl1, false)
-			elseif var_15_2 == AssassinEnum.StealthGamePointType.HayStack then
-				gohelper.setActive(iter_15_1.normalhl, false)
-				gohelper.setActive(iter_15_1.gardenhl, false)
+				x = pos and pos.x or x
+				y = pos and pos.y or y
+				icon = string.format("%s_%s", icon, index)
+			elseif pointType == AssassinEnum.StealthGamePointType.Garden then
+				gohelper.setActive(pointItem.normalhl, false)
+				gohelper.setActive(pointItem.gardenhl, true)
+				gohelper.setActive(pointItem.haystackhl, false)
+				gohelper.setActive(pointItem.haystackhl1, false)
+			elseif pointType == AssassinEnum.StealthGamePointType.HayStack then
+				gohelper.setActive(pointItem.normalhl, false)
+				gohelper.setActive(pointItem.gardenhl, false)
 
-				local var_15_6 = var_15_3 == "assassin2_stealth_game_haystack_01"
+				local isExtraIcon = icon == "assassin2_stealth_game_haystack_01"
 
-				gohelper.setActive(iter_15_1.haystackhl, not var_15_6)
-				gohelper.setActive(iter_15_1.haystackhl1, var_15_6)
+				gohelper.setActive(pointItem.haystackhl, not isExtraIcon)
+				gohelper.setActive(pointItem.haystackhl1, isExtraIcon)
 			else
-				gohelper.setActive(iter_15_1.normalhl, true)
-				gohelper.setActive(iter_15_1.gardenhl, false)
-				gohelper.setActive(iter_15_1.haystackhl, false)
-				gohelper.setActive(iter_15_1.haystackhl1, false)
+				gohelper.setActive(pointItem.normalhl, true)
+				gohelper.setActive(pointItem.gardenhl, false)
+				gohelper.setActive(pointItem.haystackhl, false)
+				gohelper.setActive(pointItem.haystackhl1, false)
 			end
 
-			UISpriteSetMgr.instance:setSp01AssassinSprite(iter_15_1.imageicon, var_15_3, true)
-			transformhelper.setEulerAngles(iter_15_1.transcontent, 0, 0, var_15_4)
-			gohelper.setActive(iter_15_1.gocontent, true)
+			UISpriteSetMgr.instance:setSp01AssassinSprite(pointItem.imageicon, icon, true)
+			transformhelper.setEulerAngles(pointItem.transcontent, 0, 0, rotation)
+			gohelper.setActive(pointItem.gocontent, true)
 		else
-			gohelper.setActive(iter_15_1.gocontent, false)
+			gohelper.setActive(pointItem.gocontent, false)
 		end
 
-		transformhelper.setLocalPosXY(iter_15_1.iconTrans, var_15_0, var_15_1)
+		transformhelper.setLocalPosXY(pointItem.iconTrans, x, y)
 	end
 end
 
-function var_0_0.setIsEasyExpose(arg_16_0)
-	local var_16_0 = AssassinConfig.instance:getGridIsEasyExpose(arg_16_0.mapId, arg_16_0.id)
+function AssassinStealthGameGridItem:setIsEasyExpose()
+	local isEasyExpose = AssassinConfig.instance:getGridIsEasyExpose(self.mapId, self.id)
 
-	gohelper.setActive(arg_16_0._gowarning, var_16_0)
+	gohelper.setActive(self._gowarning, isEasyExpose)
 end
 
-function var_0_0.changeHighlightClickParent(arg_17_0, arg_17_1)
-	if gohelper.isNil(arg_17_1) then
-		arg_17_0._transclick:SetParent(arg_17_0._transclickParent)
+function AssassinStealthGameGridItem:changeHighlightClickParent(parentTrans)
+	if gohelper.isNil(parentTrans) then
+		self._transclick:SetParent(self._transclickParent)
 	else
-		arg_17_0._transclick:SetParent(arg_17_1)
+		self._transclick:SetParent(parentTrans)
 	end
 
-	arg_17_0:refreshHighlightPos()
+	self:refreshHighlightPos()
 end
 
-function var_0_0.refreshHighlightPos(arg_18_0)
-	local var_18_0 = arg_18_0:getGoPosition()
-	local var_18_1 = arg_18_0._transclick.parent:InverseTransformPoint(var_18_0)
+function AssassinStealthGameGridItem:refreshHighlightPos()
+	local worldPos = self:getGoPosition()
+	local pos = self._transclick.parent:InverseTransformPoint(worldPos)
 
-	transformhelper.setLocalPosXY(arg_18_0._transclick, var_18_1.x, var_18_1.y)
+	transformhelper.setLocalPosXY(self._transclick, pos.x, pos.y)
 end
 
-function var_0_0.refresh(arg_19_0, arg_19_1)
-	arg_19_0:refreshGridCanClick()
-	arg_19_0:refreshPointCanClick()
-	arg_19_0:refreshIsQteGrid()
-	arg_19_0:refreshTrace()
-	arg_19_0:refreshEnemyRefreshPoint()
-	arg_19_0:refreshTrap()
-	arg_19_0:playEffect(arg_19_1)
+function AssassinStealthGameGridItem:refresh(effectId)
+	self:refreshGridCanClick()
+	self:refreshPointCanClick()
+	self:refreshIsQteGrid()
+	self:refreshTrace()
+	self:refreshEnemyRefreshPoint()
+	self:refreshTrap()
+	self:playEffect(effectId)
 end
 
-function var_0_0.refreshGridCanClick(arg_20_0)
-	if not arg_20_0._isShow then
+function AssassinStealthGameGridItem:refreshGridCanClick()
+	if not self._isShow then
 		return
 	end
 
-	local var_20_0 = AssassinStealthGameHelper.isSelectedHeroCanMoveTo(arg_20_0.id)
-	local var_20_1 = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(arg_20_0.id)
-	local var_20_2 = AssassinStealthGameModel.instance:isHasAliveEnemy(arg_20_0.id)
+	local isCanMove = AssassinStealthGameHelper.isSelectedHeroCanMoveTo(self.id)
+	local isCanUseSkillProp2Grid = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(self.id)
+	local hasAliveEnemy = AssassinStealthGameModel.instance:isHasAliveEnemy(self.id)
 
-	if var_20_0 and var_20_2 then
-		local var_20_3 = AssassinStealthGameModel.instance:getExposeRate(arg_20_0.id)
+	if isCanMove and hasAliveEnemy then
+		local exposeRate = AssassinStealthGameModel.instance:getExposeRate(self.id)
 
-		arg_20_0._txtexpose.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("percent"), var_20_3)
+		self._txtexpose.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("percent"), exposeRate)
 
-		gohelper.setActive(arg_20_0._goexpose, true)
+		gohelper.setActive(self._goexpose, true)
 	else
-		gohelper.setActive(arg_20_0._goexpose, false)
+		gohelper.setActive(self._goexpose, false)
 	end
 
-	if var_20_1 then
-		local var_20_4, var_20_5 = AssassinStealthGameModel.instance:getSelectedSkillProp()
+	if isCanUseSkillProp2Grid then
+		local selectedSkillPropId, selectedIsSkill = AssassinStealthGameModel.instance:getSelectedSkillProp()
 
-		if var_20_5 then
-			AssassinHelper.setAssassinSkillIcon(var_20_4, arg_20_0._imagehlicon)
+		if selectedIsSkill then
+			AssassinHelper.setAssassinSkillIcon(selectedSkillPropId, self._imagehlicon)
 		else
-			AssassinHelper.setAssassinItemIcon(var_20_4, arg_20_0._imagehlicon)
+			AssassinHelper.setAssassinItemIcon(selectedSkillPropId, self._imagehlicon)
 		end
 	end
 
-	gohelper.setActive(arg_20_0._gohlicon, var_20_1)
-	gohelper.setActive(arg_20_0._btnclick, var_20_0 or var_20_1)
+	gohelper.setActive(self._gohlicon, isCanUseSkillProp2Grid)
+	gohelper.setActive(self._btnclick, isCanMove or isCanUseSkillProp2Grid)
 end
 
-function var_0_0.refreshPointCanClick(arg_21_0)
-	if not arg_21_0._isShow then
+function AssassinStealthGameGridItem:refreshPointCanClick()
+	if not self._isShow then
 		return
 	end
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0.pointItemList) do
-		local var_21_0 = false
-		local var_21_1 = AssassinConfig.instance:getGridPointType(arg_21_0.mapId, arg_21_0.id, iter_21_0)
+	for index, pointItem in ipairs(self.pointItemList) do
+		local isCanMove = false
+		local pointType = AssassinConfig.instance:getGridPointType(self.mapId, self.id, index)
 
-		if var_21_1 and var_21_1 ~= AssassinEnum.StealthGamePointType.Empty then
-			var_21_0 = AssassinStealthGameHelper.isSelectedHeroCanMoveTo(arg_21_0.id, iter_21_0)
+		if pointType and pointType ~= AssassinEnum.StealthGamePointType.Empty then
+			isCanMove = AssassinStealthGameHelper.isSelectedHeroCanMoveTo(self.id, index)
 		end
 
-		gohelper.setActive(iter_21_1.btn, var_21_0)
+		gohelper.setActive(pointItem.btn, isCanMove)
 	end
 end
 
-function var_0_0.refreshIsQteGrid(arg_22_0)
-	if not arg_22_0._isShow then
+function AssassinStealthGameGridItem:refreshIsQteGrid()
+	if not self._isShow then
 		return
 	end
 
-	local var_22_0 = false
+	local isShowQte = false
+	local isQTEGrid = AssassinStealthGameModel.instance:isQTEInteractGrid(self.id)
 
-	if AssassinStealthGameModel.instance:isQTEInteractGrid(arg_22_0.id) then
-		var_22_0 = true
+	if isQTEGrid then
+		isShowQte = true
 	else
-		local var_22_1 = AssassinStealthGameModel.instance:getMissionId()
+		local missionId = AssassinStealthGameModel.instance:getMissionId()
 
-		if var_22_1 and var_22_1 ~= 0 then
-			local var_22_2 = AssassinConfig.instance:getStealthMissionType(var_22_1)
+		if missionId and missionId ~= 0 then
+			local missionType = AssassinConfig.instance:getStealthMissionType(missionId)
 
-			if var_22_2 == AssassinEnum.MissionType.TargetGrid1 or var_22_2 == AssassinEnum.MissionType.TargetGrid2 or var_22_2 == AssassinEnum.MissionType.TargetGrid3 then
-				local var_22_3 = AssassinConfig.instance:getStealthMissionParam(var_22_1, true)
+			if missionType == AssassinEnum.MissionType.TargetGrid1 or missionType == AssassinEnum.MissionType.TargetGrid2 or missionType == AssassinEnum.MissionType.TargetGrid3 then
+				local targetGrids = AssassinConfig.instance:getStealthMissionParam(missionId, true)
 
-				if var_22_3 then
-					for iter_22_0, iter_22_1 in ipairs(var_22_3) do
-						if iter_22_1 == arg_22_0.id then
-							var_22_0 = true
+				if targetGrids then
+					for _, targetGridId in ipairs(targetGrids) do
+						if targetGridId == self.id then
+							isShowQte = true
 
 							break
 						end
@@ -328,114 +331,117 @@ function var_0_0.refreshIsQteGrid(arg_22_0)
 		end
 	end
 
-	gohelper.setActive(arg_22_0._goqte, var_22_0)
+	gohelper.setActive(self._goqte, isShowQte)
 end
 
-function var_0_0.refreshTrace(arg_23_0)
-	local var_23_0
-	local var_23_1 = AssassinStealthGameModel.instance:getGridMo(arg_23_0.id)
-	local var_23_2 = var_23_1 and var_23_1:getTracePointIndex()
+function AssassinStealthGameGridItem:refreshTrace()
+	local pointTrans
+	local gridMo = AssassinStealthGameModel.instance:getGridMo(self.id)
+	local tracePointIndex = gridMo and gridMo:getTracePointIndex()
 
-	if var_23_2 and var_23_2 > 0 then
-		var_23_0 = arg_23_0:getPointTrans(var_23_2)
+	if tracePointIndex and tracePointIndex > 0 then
+		pointTrans = self:getPointTrans(tracePointIndex)
 	end
 
-	if gohelper.isNil(var_23_0) then
-		gohelper.setActive(arg_23_0._gotrace, false)
+	if gohelper.isNil(pointTrans) then
+		gohelper.setActive(self._gotrace, false)
 	else
-		arg_23_0._transtrace:SetParent(var_23_0, false)
-		gohelper.setActive(arg_23_0._gotrace, true)
+		self._transtrace:SetParent(pointTrans, false)
+		gohelper.setActive(self._gotrace, true)
 	end
 end
 
-function var_0_0.refreshEnemyRefreshPoint(arg_24_0)
-	local var_24_0
-	local var_24_1 = AssassinStealthGameModel.instance:getMissionId()
+function AssassinStealthGameGridItem:refreshEnemyRefreshPoint()
+	local refreshData
+	local missionId = AssassinStealthGameModel.instance:getMissionId()
 
-	if var_24_1 and var_24_1 ~= 0 then
-		local var_24_2 = AssassinStealthGameModel.instance:isAlertBellRing()
-		local var_24_3, var_24_4 = AssassinConfig.instance:getStealthMissionRefresh(var_24_1)
-		local var_24_5 = var_24_2 and var_24_4 or var_24_3
+	if missionId and missionId ~= 0 then
+		local isAlertBellRing = AssassinStealthGameModel.instance:isAlertBellRing()
+		local refreshId1, refreshId2 = AssassinConfig.instance:getStealthMissionRefresh(missionId)
+		local refreshId = isAlertBellRing and refreshId2 or refreshId1
 
-		var_24_0 = AssassinConfig.instance:getEnemyRefreshData(var_24_5, arg_24_0.id)
+		refreshData = AssassinConfig.instance:getEnemyRefreshData(refreshId, self.id)
 	end
 
-	if var_24_0 then
-		UISpriteSetMgr.instance:setSp01AssassinSprite(arg_24_0._imageEnemyRefreshIcon, string.format("%s%s", "assassinstealthoverview_legend_enemy_refresh_", var_24_0.index))
+	if refreshData then
+		UISpriteSetMgr.instance:setSp01AssassinSprite(self._imageEnemyRefreshIcon, string.format("%s%s", "assassinstealthoverview_legend_enemy_refresh_", refreshData.index))
 	end
 
-	gohelper.setActive(arg_24_0._goEnemyRefresh, var_24_0)
+	gohelper.setActive(self._goEnemyRefresh, refreshData)
 end
 
-function var_0_0.refreshTrap(arg_25_0)
-	local var_25_0 = AssassinStealthGameModel.instance:getGridMo(arg_25_0.id)
+function AssassinStealthGameGridItem:refreshTrap()
+	local gridMo = AssassinStealthGameModel.instance:getGridMo(self.id)
 
-	if not var_25_0 then
+	if not gridMo then
 		return
 	end
 
-	if var_25_0:getHasFog() then
-		arg_25_0:playEffect(AssassinEnum.EffectId.GridFog)
+	local hasFog = gridMo:getHasFog()
+
+	if hasFog then
+		self:playEffect(AssassinEnum.EffectId.GridFog)
 	else
-		arg_25_0:removeEffect(AssassinEnum.EffectId.GridFog)
+		self:removeEffect(AssassinEnum.EffectId.GridFog)
 	end
 
-	local var_25_1 = AssassinConfig.instance:getTrapTypeList()
+	local trapTypeDict = AssassinConfig.instance:getTrapTypeList()
 
-	for iter_25_0, iter_25_1 in ipairs(var_25_1) do
-		local var_25_2 = AssassinConfig.instance:getAssassinTrapEffectId(iter_25_1[1])
+	for trapType, trapIdList in ipairs(trapTypeDict) do
+		local effectId = AssassinConfig.instance:getAssassinTrapEffectId(trapIdList[1])
+		local hasTrap = gridMo:hasTrapType(trapType)
 
-		if var_25_0:hasTrapType(iter_25_0) then
-			arg_25_0:playEffect(var_25_2)
+		if hasTrap then
+			self:playEffect(effectId)
 		else
-			arg_25_0:removeEffect(var_25_2)
+			self:removeEffect(effectId)
 		end
 	end
 end
 
-function var_0_0.playEffect(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6)
-	if arg_26_0._isShow and arg_26_0._effectComp then
-		if gohelper.isNil(arg_26_5) then
-			arg_26_0._effectComp:playEffect(arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_0._effectParent, arg_26_0._effPos)
+function AssassinStealthGameGridItem:playEffect(effectId, finishCb, finishCbObj, finishCbParam, parentObj, localPos)
+	if self._isShow and self._effectComp then
+		if gohelper.isNil(parentObj) then
+			self._effectComp:playEffect(effectId, finishCb, finishCbObj, finishCbParam, self._effectParent, self._effPos)
 		else
-			arg_26_0._effectComp:playEffect(arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6)
+			self._effectComp:playEffect(effectId, finishCb, finishCbObj, finishCbParam, parentObj, localPos)
 		end
 	end
 end
 
-function var_0_0.removeEffect(arg_27_0, arg_27_1)
-	if not arg_27_0._effectComp or not arg_27_1 or arg_27_1 == 0 then
+function AssassinStealthGameGridItem:removeEffect(effectId)
+	if not self._effectComp or not effectId or effectId == 0 then
 		return
 	end
 
-	arg_27_0._effectComp:removeEffect(arg_27_1)
+	self._effectComp:removeEffect(effectId)
 end
 
-function var_0_0.isShow(arg_28_0)
-	return arg_28_0._isShow
+function AssassinStealthGameGridItem:isShow()
+	return self._isShow
 end
 
-function var_0_0.getGoPosition(arg_29_0)
-	return arg_29_0.trans.position
+function AssassinStealthGameGridItem:getGoPosition()
+	return self.trans.position
 end
 
-function var_0_0.getPointTrans(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0.pointItemList[arg_30_1]
+function AssassinStealthGameGridItem:getPointTrans(pointIndex)
+	local pointItem = self.pointItemList[pointIndex]
 
-	return var_30_0 and var_30_0.trans
+	return pointItem and pointItem.trans
 end
 
-function var_0_0.getEntranceNodeTrans(arg_31_0, arg_31_1)
-	return arg_31_0._entranceNodeDict[arg_31_1]
+function AssassinStealthGameGridItem:getEntranceNodeTrans(dir)
+	return self._entranceNodeDict[dir]
 end
 
-function var_0_0.onDestroy(arg_32_0)
-	arg_32_0._simagegrid:UnLoadImage()
+function AssassinStealthGameGridItem:onDestroy()
+	self._simagegrid:UnLoadImage()
 
-	arg_32_0.pointItemList = nil
+	self.pointItemList = nil
 
-	gohelper.destroy(arg_32_0._transclick)
-	gohelper.destroy(arg_32_0._goInfoLayout)
+	gohelper.destroy(self._transclick)
+	gohelper.destroy(self._goInfoLayout)
 end
 
-return var_0_0
+return AssassinStealthGameGridItem

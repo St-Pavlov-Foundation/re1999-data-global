@@ -1,80 +1,82 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8AdditionRuleTipView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8AdditionRuleTipView.lua
 
-local var_0_0 = class("Season123_1_8AdditionRuleTipView", BaseView)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8AdditionRuleTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_ruleitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._itemList = {}
+local Season123_1_8AdditionRuleTipView = class("Season123_1_8AdditionRuleTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_1_8AdditionRuleTipView:onInitView()
+	self._goitem = gohelper.findChild(self.viewGO, "content/layout/#go_ruleitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._itemList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Season123_1_8AdditionRuleTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Season123_1_8AdditionRuleTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season123_1_8AdditionRuleTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam.actId
-	local var_5_1 = arg_5_0.viewParam.stage
-	local var_5_2 = Season123Config.instance:getRuleTips(var_5_0, var_5_1)
-	local var_5_3 = {}
+function Season123_1_8AdditionRuleTipView:onOpen()
+	local actId = self.viewParam.actId
+	local stage = self.viewParam.stage
+	local dict = Season123Config.instance:getRuleTips(actId, stage)
+	local list = {}
 
-	for iter_5_0, iter_5_1 in pairs(var_5_2) do
-		table.insert(var_5_3, iter_5_0)
+	for id, state in pairs(dict) do
+		table.insert(list, id)
 	end
 
-	for iter_5_2 = 1, math.max(#var_5_3, #arg_5_0._itemList) do
-		local var_5_4 = arg_5_0:getOrCreateItem(iter_5_2)
+	for i = 1, math.max(#list, #self._itemList) do
+		local item = self:getOrCreateItem(i)
 
-		arg_5_0:updateItem(var_5_4, var_5_3[iter_5_2])
+		self:updateItem(item, list[i])
 	end
 
-	NavigateMgr.instance:addEscape(arg_5_0.viewName, arg_5_0.closeThis, arg_5_0)
+	NavigateMgr.instance:addEscape(self.viewName, self.closeThis, self)
 end
 
-function var_0_0.getOrCreateItem(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._itemList[arg_6_1]
+function Season123_1_8AdditionRuleTipView:getOrCreateItem(index)
+	local item = self._itemList[index]
 
-	if not var_6_0 then
-		var_6_0 = arg_6_0:getUserDataTb_()
-		var_6_0.go = gohelper.cloneInPlace(arg_6_0._goitem, "item" .. tostring(arg_6_1))
-		var_6_0.icon = gohelper.findChildImage(var_6_0.go, "mask/icon")
-		var_6_0.txtTag = gohelper.findChildTextMesh(var_6_0.go, "mask/scroll_tag/Viewport/Content/tag")
-		arg_6_0._itemList[arg_6_1] = var_6_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._goitem, "item" .. tostring(index))
+		item.icon = gohelper.findChildImage(item.go, "mask/icon")
+		item.txtTag = gohelper.findChildTextMesh(item.go, "mask/scroll_tag/Viewport/Content/tag")
+		self._itemList[index] = item
 	end
 
-	return var_6_0
+	return item
 end
 
-function var_0_0.updateItem(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_2 then
-		gohelper.setActive(arg_7_1.go, false)
+function Season123_1_8AdditionRuleTipView:updateItem(item, ruleId)
+	if not ruleId then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_7_0 = lua_rule.configDict[arg_7_2]
+	local ruleCo = lua_rule.configDict[ruleId]
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(arg_7_1.icon, var_7_0.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(item.icon, ruleCo.icon)
 
-	arg_7_1.txtTag.text = var_7_0.desc
+	item.txtTag.text = ruleCo.desc
 end
 
-function var_0_0.onClose(arg_8_0)
+function Season123_1_8AdditionRuleTipView:onClose()
 	return
 end
 
-return var_0_0
+return Season123_1_8AdditionRuleTipView

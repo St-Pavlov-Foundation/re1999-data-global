@@ -1,25 +1,29 @@
-﻿module("modules.ugui.icon.common.CommonHeroHelper", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonHeroHelper.lua
 
-local var_0_0 = class("CommonHeroHelper")
+module("modules.ugui.icon.common.CommonHeroHelper", package.seeall)
 
-function var_0_0.setGrayState(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:_getGrayStateTab()[arg_1_1] = arg_1_2
+local CommonHeroHelper = class("CommonHeroHelper")
+
+function CommonHeroHelper:setGrayState(id, flag)
+	local grayTab = self:_getGrayStateTab()
+
+	grayTab[id] = flag
 end
 
-function var_0_0.getGrayState(arg_2_0, arg_2_1)
-	return arg_2_0:_getGrayStateTab()[arg_2_1]
+function CommonHeroHelper:getGrayState(id)
+	return self:_getGrayStateTab()[id]
 end
 
-function var_0_0._getGrayStateTab(arg_3_0)
-	arg_3_0.grayTab = arg_3_0.grayTab or {}
+function CommonHeroHelper:_getGrayStateTab()
+	self.grayTab = self.grayTab or {}
 
-	return arg_3_0.grayTab
+	return self.grayTab
 end
 
-function var_0_0.resetGrayState(arg_4_0)
-	arg_4_0.grayTab = {}
+function CommonHeroHelper:resetGrayState()
+	self.grayTab = {}
 end
 
-var_0_0.instance = var_0_0.New()
+CommonHeroHelper.instance = CommonHeroHelper.New()
 
-return var_0_0
+return CommonHeroHelper

@@ -1,19 +1,21 @@
-﻿module("modules.logic.room.model.transport.quicklink.RoomTransportNodeMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/transport/quicklink/RoomTransportNodeMO.lua
 
-local var_0_0 = pureTable("RoomTransportNodeMO")
+module("modules.logic.room.model.transport.quicklink.RoomTransportNodeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.hexPoint = arg_1_1
+local RoomTransportNodeMO = pureTable("RoomTransportNodeMO")
 
-	arg_1_0:resetParam()
+function RoomTransportNodeMO:init(hexPoint)
+	self.hexPoint = hexPoint
+
+	self:resetParam()
 end
 
-function var_0_0.resetParam(arg_2_0)
-	arg_2_0.isBuilding = false
-	arg_2_0.linkNum = 0
-	arg_2_0.searchIndex = -1
-	arg_2_0.isBlock = false
-	arg_2_0.isSelectPath = false
+function RoomTransportNodeMO:resetParam()
+	self.isBuilding = false
+	self.linkNum = 0
+	self.searchIndex = -1
+	self.isBlock = false
+	self.isSelectPath = false
 end
 
-return var_0_0
+return RoomTransportNodeMO

@@ -1,76 +1,78 @@
-﻿module("modules.logic.seasonver.act166.view.Season166WordEffectView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166WordEffectView.lua
 
-local var_0_0 = class("Season166WordEffectView", BaseView)
+module("modules.logic.seasonver.act166.view.Season166WordEffectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.content = gohelper.findChild(arg_1_0.viewGO, "#go_wordEffectContent")
+local Season166WordEffectView = class("Season166WordEffectView", BaseView)
+
+function Season166WordEffectView:onInitView()
+	self.content = gohelper.findChild(self.viewGO, "#go_wordEffectContent")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0.wordContentGO = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[1], arg_2_0.content)
-	arg_2_0.wordEffect = arg_2_0:getResInst(arg_2_0.viewContainer._viewSetting.otherRes[2], arg_2_0.wordContentGO)
-	arg_2_0.viewType = arg_2_0.viewParam.viewType
-	arg_2_0.actId = arg_2_0.viewParam.actId
+function Season166WordEffectView:onOpen()
+	self.wordContentGO = self:getResInst(self.viewContainer._viewSetting.otherRes[1], self.content)
+	self.wordEffect = self:getResInst(self.viewContainer._viewSetting.otherRes[2], self.wordContentGO)
+	self.viewType = self.viewParam.viewType
+	self.actId = self.viewParam.actId
 
-	gohelper.setActive(arg_2_0.wordContentGO, false)
-	gohelper.setActive(arg_2_0.wordEffect, false)
+	gohelper.setActive(self.wordContentGO, false)
+	gohelper.setActive(self.wordEffect, false)
 
-	arg_2_0.wordEffectConfigList = Season166Config.instance:getSeasonWordEffectConfigList(arg_2_0.viewParam.actId, arg_2_0.viewType)
+	self.wordEffectConfigList = Season166Config.instance:getSeasonWordEffectConfigList(self.viewParam.actId, self.viewType)
 
-	TaskDispatcher.runRepeat(arg_2_0._createWord, arg_2_0, Season166Enum.WordInterval, -1)
-	arg_2_0:_createWord()
+	TaskDispatcher.runRepeat(self._createWord, self, Season166Enum.WordInterval, -1)
+	self:_createWord()
 end
 
-function var_0_0._createWord(arg_3_0)
+function Season166WordEffectView:_createWord()
 	AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_checkpoint_aekn_piaozi)
 
-	if not arg_3_0._nowPosIndex then
-		arg_3_0._nowPosIndex = math.random(1, #arg_3_0.wordEffectConfigList)
+	if not self._nowPosIndex then
+		self._nowPosIndex = math.random(1, #self.wordEffectConfigList)
 	else
-		local var_3_0 = math.random(1, #arg_3_0.wordEffectConfigList - 1)
+		local posIndex = math.random(1, #self.wordEffectConfigList - 1)
 
-		if var_3_0 >= arg_3_0._nowPosIndex then
-			var_3_0 = var_3_0 + 1
+		if posIndex >= self._nowPosIndex then
+			posIndex = posIndex + 1
 		end
 
-		arg_3_0._nowPosIndex = var_3_0
+		self._nowPosIndex = posIndex
 	end
 
-	arg_3_0._coIndexSort = arg_3_0._coIndexSort or {}
+	self._coIndexSort = self._coIndexSort or {}
 
-	if arg_3_0._coIndexSort[1] then
-		arg_3_0._nowCoIndex = table.remove(arg_3_0._coIndexSort, 1)
+	if self._coIndexSort[1] then
+		self._nowCoIndex = table.remove(self._coIndexSort, 1)
 	else
-		for iter_3_0 = 1, #arg_3_0.wordEffectConfigList do
-			arg_3_0._coIndexSort[iter_3_0] = iter_3_0
+		for i = 1, #self.wordEffectConfigList do
+			self._coIndexSort[i] = i
 		end
 
-		arg_3_0._coIndexSort = GameUtil.randomTable(arg_3_0._coIndexSort)
+		self._coIndexSort = GameUtil.randomTable(self._coIndexSort)
 
-		if arg_3_0._nowCoIndex == arg_3_0._coIndexSort[1] then
-			arg_3_0._nowCoIndex = table.remove(arg_3_0._coIndexSort, 2)
+		if self._nowCoIndex == self._coIndexSort[1] then
+			self._nowCoIndex = table.remove(self._coIndexSort, 2)
 		else
-			arg_3_0._nowCoIndex = table.remove(arg_3_0._coIndexSort, 1)
+			self._nowCoIndex = table.remove(self._coIndexSort, 1)
 		end
 	end
 
-	local var_3_1 = gohelper.cloneInPlace(arg_3_0.wordContentGO)
+	local cloneGo = gohelper.cloneInPlace(self.wordContentGO)
 
-	gohelper.setActive(var_3_1, true)
+	gohelper.setActive(cloneGo, true)
 
-	local var_3_2 = arg_3_0.wordEffectConfigList[arg_3_0._nowCoIndex]
-	local var_3_3 = Season166Config.instance:getSeasonWordEffectPosConfig(arg_3_0.actId, var_3_2.id)
-	local var_3_4 = string.splitToNumber(var_3_3.pos, "#")
+	local wordEffectCofig = self.wordEffectConfigList[self._nowCoIndex]
+	local wordEffectPosConfig = Season166Config.instance:getSeasonWordEffectPosConfig(self.actId, wordEffectCofig.id)
+	local pos = string.splitToNumber(wordEffectPosConfig.pos, "#")
 
-	recthelper.setAnchor(var_3_1.transform, var_3_4[1], var_3_4[2])
-	MonoHelper.addNoUpdateLuaComOnceToGo(var_3_1, Season166WordEffectComp, {
-		co = var_3_2,
-		res = arg_3_0.wordEffect
+	recthelper.setAnchor(cloneGo.transform, pos[1], pos[2])
+	MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, Season166WordEffectComp, {
+		co = wordEffectCofig,
+		res = self.wordEffect
 	})
 end
 
-function var_0_0.onClose(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._createWord, arg_4_0)
+function Season166WordEffectView:onClose()
+	TaskDispatcher.cancelTask(self._createWord, self)
 end
 
-return var_0_0
+return Season166WordEffectView

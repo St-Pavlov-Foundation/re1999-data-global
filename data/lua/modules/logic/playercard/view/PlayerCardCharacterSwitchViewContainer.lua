@@ -1,77 +1,80 @@
-﻿module("modules.logic.playercard.view.PlayerCardCharacterSwitchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardCharacterSwitchViewContainer.lua
 
-local var_0_0 = class("PlayerCardCharacterSwitchViewContainer", BaseViewContainer)
+module("modules.logic.playercard.view.PlayerCardCharacterSwitchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerCardCharacterSwitchViewContainer = class("PlayerCardCharacterSwitchViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PlayerCardCharacterSwitchView.New())
+function PlayerCardCharacterSwitchViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, PlayerCardCharacterSwitchView.New())
 
-	var_1_1.scrollGOPath = "#go_characterswitchview/characterswitchview/right/mask/#scroll_card"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = PlayerCardCharacterSwitchItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 3
-	var_1_1.cellWidth = 170
-	var_1_1.cellHeight = 208
-	var_1_1.cellSpaceH = 5
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 5
-	var_1_1.endSpace = 0
-	arg_1_0.scrollView = LuaListScrollView.New(PlayerCardCharacterSwitchListModel.instance, var_1_1)
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0.scrollView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	scrollParam.scrollGOPath = "#go_characterswitchview/characterswitchview/right/mask/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = PlayerCardCharacterSwitchItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 170
+	scrollParam.cellHeight = 208
+	scrollParam.cellSpaceH = 5
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 5
+	scrollParam.endSpace = 0
+	self.scrollView = LuaListScrollView.New(PlayerCardCharacterSwitchListModel.instance, scrollParam)
 
-	return var_1_0
+	table.insert(views, self.scrollView)
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function PlayerCardCharacterSwitchViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
+		self.navigateView:setOverrideClose(self._overrideClose, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._overrideClose(arg_3_0)
+function PlayerCardCharacterSwitchViewContainer:_overrideClose()
 	if not PlayerCardModel.instance:checkHeroDiff() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardSelectTips, MsgBoxEnum.BoxType.Yes_No, var_0_0.yesCallback, var_0_0.cancel)
+		GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardSelectTips, MsgBoxEnum.BoxType.Yes_No, PlayerCardCharacterSwitchViewContainer.yesCallback, PlayerCardCharacterSwitchViewContainer.cancel)
 	else
-		arg_3_0:closeFunc()
+		self:closeFunc()
 	end
 end
 
-function var_0_0.cancel()
-	local var_4_0, var_4_1, var_4_2, var_4_3 = PlayerCardModel.instance:getCardInfo():getMainHero()
-	local var_4_4 = {
-		heroId = var_4_0,
-		skinId = var_4_1
+function PlayerCardCharacterSwitchViewContainer.cancel()
+	local playercardinfo = PlayerCardModel.instance:getCardInfo()
+	local heroId, skinId, _, isL2d = playercardinfo:getMainHero()
+	local param = {
+		heroId = heroId,
+		skinId = skinId
 	}
 
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshSwitchView, var_4_4)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshSwitchView, param)
 	ViewMgr.instance:closeView(ViewName.PlayerCardCharacterSwitchView, nil, true)
 end
 
-function var_0_0.yesCallback()
-	local var_5_0, var_5_1 = PlayerCardModel.instance:getSelectHero()
+function PlayerCardCharacterSwitchViewContainer.yesCallback()
+	local heroId, skinId = PlayerCardModel.instance:getSelectHero()
 
-	PlayerCardCharacterSwitchListModel.instance:changeMainHero(var_5_0, var_5_1)
+	PlayerCardCharacterSwitchListModel.instance:changeMainHero(heroId, skinId)
 end
 
-function var_0_0.closeFunc(arg_6_0)
+function PlayerCardCharacterSwitchViewContainer:closeFunc()
 	ViewMgr.instance:closeView(ViewName.PlayerCardCharacterSwitchView, nil, true)
 end
 
-return var_0_0
+return PlayerCardCharacterSwitchViewContainer

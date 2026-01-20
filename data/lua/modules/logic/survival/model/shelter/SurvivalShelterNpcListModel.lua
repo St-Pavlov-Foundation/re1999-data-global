@@ -1,70 +1,73 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterNpcListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterNpcListModel.lua
 
-local var_0_0 = class("SurvivalShelterNpcListModel", ListScrollModel)
+module("modules.logic.survival.model.shelter.SurvivalShelterNpcListModel", package.seeall)
 
-function var_0_0.initViewParam(arg_1_0)
-	arg_1_0.selectNpcId = 0
+local SurvivalShelterNpcListModel = class("SurvivalShelterNpcListModel", ListScrollModel)
+
+function SurvivalShelterNpcListModel:initViewParam()
+	self.selectNpcId = 0
 end
 
-function var_0_0.setSelectNpcId(arg_2_0, arg_2_1)
-	if arg_2_0.selectNpcId == arg_2_1 then
+function SurvivalShelterNpcListModel:setSelectNpcId(npcId)
+	if self.selectNpcId == npcId then
 		return
 	end
 
-	arg_2_0.selectNpcId = arg_2_1
+	self.selectNpcId = npcId
 
 	return true
 end
 
-function var_0_0.isSelectNpc(arg_3_0, arg_3_1)
-	return arg_3_0.selectNpcId == arg_3_1
+function SurvivalShelterNpcListModel:isSelectNpc(npcId)
+	return self.selectNpcId == npcId
 end
 
-function var_0_0.getSelectNpc(arg_4_0)
-	return arg_4_0.selectNpcId
+function SurvivalShelterNpcListModel:getSelectNpc()
+	return self.selectNpcId
 end
 
-function var_0_0.refreshList(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = SurvivalShelterModel.instance:getWeekInfo().npcDict
+function SurvivalShelterNpcListModel:refreshList(filterList)
+	local list = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local npcDict = weekInfo.npcDict
 
-	if var_5_1 then
-		for iter_5_0, iter_5_1 in pairs(var_5_1) do
-			if SurvivalBagSortHelper.filterNpc(arg_5_1, iter_5_1) and iter_5_1.co.takeOut == 0 then
-				table.insert(var_5_0, iter_5_1)
+	if npcDict then
+		for _, v in pairs(npcDict) do
+			if SurvivalBagSortHelper.filterNpc(filterList, v) and v.co.takeOut == 0 then
+				table.insert(list, v)
 			end
 		end
 	end
 
-	if #var_5_0 > 1 then
-		table.sort(var_5_0, SurvivalShelterNpcMo.sort)
+	if #list > 1 then
+		table.sort(list, SurvivalShelterNpcMo.sort)
 	end
 
-	local var_5_2 = {}
-	local var_5_3 = 4
+	local dataList = {}
+	local lineCount = 4
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_0) do
-		local var_5_4 = math.floor((iter_5_2 - 1) / var_5_3) + 1
-		local var_5_5 = var_5_2[var_5_4]
+	for i, v in ipairs(list) do
+		local index = math.floor((i - 1) / lineCount) + 1
+		local item = dataList[index]
 
-		if not var_5_5 then
-			var_5_5 = {
-				id = iter_5_2,
+		if not item then
+			item = {
+				id = i,
 				dataList = {}
 			}
-			var_5_2[var_5_4] = var_5_5
+			dataList[index] = item
 		end
 
-		table.insert(var_5_5.dataList, iter_5_3)
+		table.insert(item.dataList, v)
 	end
 
-	if arg_5_0.selectNpcId == nil or arg_5_0.selectNpcId == 0 then
-		arg_5_0.selectNpcId = var_5_0[1] and var_5_0[1].id
+	if self.selectNpcId == nil or self.selectNpcId == 0 then
+		self.selectNpcId = list[1] and list[1].id
 	end
 
-	arg_5_0:setList(var_5_2)
+	self:setList(dataList)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterNpcListModel.instance = SurvivalShelterNpcListModel.New()
 
-return var_0_0
+return SurvivalShelterNpcListModel

@@ -1,74 +1,76 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/view/WuErLiXiGameView.lua
 
-local var_0_0 = class("WuErLiXiGameView", BaseView)
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0._goimgbg1 = gohelper.findChild(arg_1_0.viewGO, "#simage_FullBG1")
-	arg_1_0._bgClick = gohelper.getClick(arg_1_0._goimgbg1)
-	arg_1_0._goimgbg2 = gohelper.findChild(arg_1_0.viewGO, "#simage_FullBG2")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "#go_Target")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#go_Right")
-	arg_1_0._gosuccessright = gohelper.findChild(arg_1_0.viewGO, "#go_SuccessRight")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_SuccessRight/Click")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_Success")
-	arg_1_0._closeClick = gohelper.getClick(arg_1_0._goclick)
+local WuErLiXiGameView = class("WuErLiXiGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WuErLiXiGameView:onInitView()
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._goimgbg1 = gohelper.findChild(self.viewGO, "#simage_FullBG1")
+	self._bgClick = gohelper.getClick(self._goimgbg1)
+	self._goimgbg2 = gohelper.findChild(self.viewGO, "#simage_FullBG2")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._gotarget = gohelper.findChild(self.viewGO, "#go_Target")
+	self._goright = gohelper.findChild(self.viewGO, "#go_Right")
+	self._gosuccessright = gohelper.findChild(self.viewGO, "#go_SuccessRight")
+	self._goclick = gohelper.findChild(self.viewGO, "#go_SuccessRight/Click")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_Success")
+	self._closeClick = gohelper.getClick(self._goclick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._bgClick:AddClickListener(arg_2_0._onBgClick, arg_2_0)
-	arg_2_0._closeClick:AddClickListener(arg_2_0._onCloseClick, arg_2_0)
+function WuErLiXiGameView:addEvents()
+	self._bgClick:AddClickListener(self._onBgClick, self)
+	self._closeClick:AddClickListener(self._onCloseClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._bgClick:RemoveClickListener()
-	arg_3_0._closeClick:RemoveClickListener()
+function WuErLiXiGameView:removeEvents()
+	self._bgClick:RemoveClickListener()
+	self._closeClick:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:_addEvents()
+function WuErLiXiGameView:_editableInitView()
+	self:_addEvents()
 end
 
-function var_0_0._onBgClick(arg_5_0)
+function WuErLiXiGameView:_onBgClick()
 	WuErLiXiMapModel.instance:clearSelectUnit()
 	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.NodeClicked)
 end
 
-function var_0_0._onCloseClick(arg_6_0)
-	if arg_6_0._gameSuccess then
-		if arg_6_0.viewParam.callback then
-			arg_6_0.viewParam.callback(arg_6_0.viewParam.callbackObj)
+function WuErLiXiGameView:_onCloseClick()
+	if self._gameSuccess then
+		if self.viewParam.callback then
+			self.viewParam.callback(self.viewParam.callbackObj)
 		end
 
-		WuErLiXiMapModel.instance:resetMap(arg_6_0._mapId)
+		WuErLiXiMapModel.instance:resetMap(self._mapId)
 	end
 
-	TaskDispatcher.runDelay(arg_6_0.closeThis, arg_6_0, 0.5)
+	TaskDispatcher.runDelay(self.closeThis, self, 0.5)
 end
 
-function var_0_0._addEvents(arg_7_0)
-	arg_7_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapConnectSuccess, arg_7_0._onGameSuccess, arg_7_0)
-	arg_7_0:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, arg_7_0._onMapReset, arg_7_0)
+function WuErLiXiGameView:_addEvents()
+	self:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapConnectSuccess, self._onGameSuccess, self)
+	self:addEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, self._onMapReset, self)
 end
 
-function var_0_0._removeEvents(arg_8_0)
-	arg_8_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapConnectSuccess, arg_8_0._onGameSuccess, arg_8_0)
-	arg_8_0:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, arg_8_0._onMapReset, arg_8_0)
+function WuErLiXiGameView:_removeEvents()
+	self:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapConnectSuccess, self._onGameSuccess, self)
+	self:removeEventCb(WuErLiXiController.instance, WuErLiXiEvent.MapResetClicked, self._onMapReset, self)
 end
 
-function var_0_0._onGameSuccess(arg_9_0)
-	arg_9_0._gameSuccess = true
+function WuErLiXiGameView:_onGameSuccess()
+	self._gameSuccess = true
 
-	gohelper.setActive(arg_9_0._gotopleft, false)
+	gohelper.setActive(self._gotopleft, false)
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_success)
-	arg_9_0._anim:Play("success", 0, 0)
+	self._anim:Play("success", 0, 0)
 	StatController.instance:track(StatEnum.EventName.WuErLiXiGameOperation, {
-		[StatEnum.EventProperties.MapId] = tostring(arg_9_0._mapId),
+		[StatEnum.EventProperties.MapId] = tostring(self._mapId),
 		[StatEnum.EventProperties.OperationType] = "success",
 		[StatEnum.EventProperties.DouQuQuFightUseTime] = ServerTime.now() - WuErLiXiMapModel.instance:getMapStartTime(),
 		[StatEnum.EventProperties.Result] = "success",
@@ -77,31 +79,31 @@ function var_0_0._onGameSuccess(arg_9_0)
 	})
 end
 
-function var_0_0._onMapReset(arg_10_0)
+function WuErLiXiGameView:_onMapReset()
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_signal)
-	arg_10_0._anim:Play("reset", 0, 0)
+	self._anim:Play("reset", 0, 0)
 end
 
-function var_0_0.onOpen(arg_11_0)
+function WuErLiXiGameView:onOpen()
 	WuErLiXiMapModel.instance:setMapStartTime()
 	WuErLiXiMapModel.instance:clearOperations()
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_signal)
 
-	arg_11_0._actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
-	arg_11_0._mapId = WuErLiXiConfig.instance:getEpisodeCo(arg_11_0._actId, arg_11_0.viewParam.episodeId).mapId
+	self._actId = VersionActivity2_4Enum.ActivityId.WuErLiXi
+	self._mapId = WuErLiXiConfig.instance:getEpisodeCo(self._actId, self.viewParam.episodeId).mapId
 
-	WuErLiXiMapModel.instance:setCurMapId(arg_11_0._mapId)
+	WuErLiXiMapModel.instance:setCurMapId(self._mapId)
 
-	arg_11_0._mapMo = WuErLiXiMapModel.instance:getMap(arg_11_0._mapId)
+	self._mapMo = WuErLiXiMapModel.instance:getMap(self._mapId)
 end
 
-function var_0_0.onClose(arg_12_0)
+function WuErLiXiGameView:onClose()
 	WuErLiXiMapModel.instance:clearSelectUnit()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._successShowEnd, arg_13_0)
-	arg_13_0:_removeEvents()
+function WuErLiXiGameView:onDestroyView()
+	TaskDispatcher.cancelTask(self._successShowEnd, self)
+	self:_removeEvents()
 end
 
-return var_0_0
+return WuErLiXiGameView

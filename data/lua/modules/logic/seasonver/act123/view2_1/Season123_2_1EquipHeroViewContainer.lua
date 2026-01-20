@@ -1,68 +1,73 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1EquipHeroViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1EquipHeroViewContainer.lua
 
-local var_0_0 = class("Season123_2_1EquipHeroViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1EquipHeroViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = arg_1_0:createEquipItemsParam()
-	local var_1_1 = Season123_2_1EquipTagSelect.New()
+local Season123_2_1EquipHeroViewContainer = class("Season123_2_1EquipHeroViewContainer", BaseViewContainer)
 
-	var_1_1:init(Season123EquipHeroController.instance, "#go_normal/right/#drop_filter")
+function Season123_2_1EquipHeroViewContainer:buildViews()
+	local scrollParam = self:createEquipItemsParam()
+	local filterView = Season123_2_1EquipTagSelect.New()
+
+	filterView:init(Season123EquipHeroController.instance, "#go_normal/right/#drop_filter")
 
 	return {
 		Season123_2_1EquipHeroView.New(),
 		Season123_2_1EquipHeroSpineView.New(),
-		var_1_1,
-		LuaListScrollView.New(Season123EquipHeroItemListModel.instance, var_1_0),
+		filterView,
+		LuaListScrollView.New(Season123EquipHeroItemListModel.instance, scrollParam),
 		TabViewGroup.New(1, "#go_btn")
 	}
 end
 
-var_0_0.ColumnCount = 5
+Season123_2_1EquipHeroViewContainer.ColumnCount = 5
 
-function var_0_0.createEquipItemsParam(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function Season123_2_1EquipHeroViewContainer:createEquipItemsParam()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "#go_normal/right/#scroll_card"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-	var_2_0.cellClass = Season123_2_1EquipHeroItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = var_0_0.ColumnCount
-	var_2_0.cellWidth = 170
-	var_2_0.cellHeight = 235
-	var_2_0.cellSpaceH = 9.2
-	var_2_0.cellSpaceV = 2.18
-	var_2_0.frameUpdateMs = 100
-	var_2_0.minUpdateCountInFrame = var_0_0.ColumnCount
+	scrollParam.scrollGOPath = "#go_normal/right/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = Season123_2_1EquipHeroItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = Season123_2_1EquipHeroViewContainer.ColumnCount
+	scrollParam.cellWidth = 170
+	scrollParam.cellHeight = 235
+	scrollParam.cellSpaceH = 9.2
+	scrollParam.cellSpaceV = 2.18
+	scrollParam.frameUpdateMs = 100
+	scrollParam.minUpdateCountInFrame = Season123_2_1EquipHeroViewContainer.ColumnCount
 
-	return var_2_0
+	return scrollParam
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function Season123_2_1EquipHeroViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-var_0_0.Close_Anim_Time = 0.17
+Season123_2_1EquipHeroViewContainer.Close_Anim_Time = 0.17
 
-function var_0_0.playCloseTransition(arg_4_0)
+function Season123_2_1EquipHeroViewContainer:playCloseTransition()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play("close", 0, 0)
-	TaskDispatcher.runDelay(arg_4_0.delayOnPlayCloseAnim, arg_4_0, var_0_0.Close_Anim_Time)
+
+	local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	animator:Play("close", 0, 0)
+	TaskDispatcher.runDelay(self.delayOnPlayCloseAnim, self, Season123_2_1EquipHeroViewContainer.Close_Anim_Time)
 end
 
-function var_0_0.delayOnPlayCloseAnim(arg_5_0)
+function Season123_2_1EquipHeroViewContainer:delayOnPlayCloseAnim()
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	arg_5_0:onPlayCloseTransitionFinish()
+	self:onPlayCloseTransitionFinish()
 end
 
-return var_0_0
+return Season123_2_1EquipHeroViewContainer

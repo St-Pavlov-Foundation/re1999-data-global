@@ -1,55 +1,57 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityTaskViewContainer.lua
 
-local var_0_0 = class("VersionActivityTaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local VersionActivityTaskViewContainer = class("VersionActivityTaskViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_right"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = VersionActivityTaskItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 1070
-	var_1_0.cellHeight = 163
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = -6
+function VersionActivityTaskViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	scrollParam.scrollGOPath = "#scroll_right"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = VersionActivityTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1070
+	scrollParam.cellHeight = 163
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = -6
 
-	var_1_1.scrollGOPath = "#scroll_left"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#scroll_left/Viewport/Content/#go_item"
-	var_1_1.cellClass = VersionActivityTaskBonusItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 610
-	var_1_1.cellHeight = 165
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
+	local leftScrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	leftScrollParam.scrollGOPath = "#scroll_left"
+	leftScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	leftScrollParam.prefabUrl = "#scroll_left/Viewport/Content/#go_item"
+	leftScrollParam.cellClass = VersionActivityTaskBonusItem
+	leftScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	leftScrollParam.lineCount = 1
+	leftScrollParam.cellWidth = 610
+	leftScrollParam.cellHeight = 165
+	leftScrollParam.cellSpaceH = 0
+	leftScrollParam.cellSpaceV = 0
 
-	for iter_1_0 = 1, 8 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.04
+	local times = {}
+
+	for i = 1, 8 do
+		times[i] = (i - 1) * 0.04
 	end
 
-	local var_1_3 = LuaListScrollViewWithAnimator.New(VersionActivityTaskListModel.instance, var_1_0, var_1_2)
+	local scrollView = LuaListScrollViewWithAnimator.New(VersionActivityTaskListModel.instance, scrollParam, times)
 
-	var_1_3.dontPlayCloseAnimation = true
-	arg_1_0._taskScrollView = var_1_3
-	arg_1_0._taskBonusScrollView = LuaListScrollViewWithAnimator.New(VersionActivityTaskBonusListModel.instance, var_1_1, var_1_2)
+	scrollView.dontPlayCloseAnimation = true
+	self._taskScrollView = scrollView
+	self._taskBonusScrollView = LuaListScrollViewWithAnimator.New(VersionActivityTaskBonusListModel.instance, leftScrollParam, times)
 
 	return {
-		var_1_3,
-		arg_1_0._taskBonusScrollView,
+		scrollView,
+		self._taskBonusScrollView,
 		VersionActivityTaskView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function VersionActivityTaskViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -59,14 +61,14 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_3_0._taskScrollView)
+function VersionActivityTaskViewContainer:onContainerInit()
+	self.taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self._taskScrollView)
 
-	arg_3_0.taskAnimRemoveItem:setMoveInterval(0)
+	self.taskAnimRemoveItem:setMoveInterval(0)
 end
 
-function var_0_0.setTaskBonusScrollViewIndexOffset(arg_4_0, arg_4_1)
-	arg_4_0._taskBonusScrollView.indexOffset = arg_4_1
+function VersionActivityTaskViewContainer:setTaskBonusScrollViewIndexOffset(offset)
+	self._taskBonusScrollView.indexOffset = offset
 end
 
-return var_0_0
+return VersionActivityTaskViewContainer

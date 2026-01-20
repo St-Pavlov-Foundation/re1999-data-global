@@ -1,14 +1,16 @@
-﻿module("projbooter.sdk.SDKMgr", package.seeall)
+﻿-- chunkname: @projbooter/sdk/SDKMgr.lua
 
-local var_0_0 = class("SDKMgr")
+module("projbooter.sdk.SDKMgr", package.seeall)
 
-var_0_0.ShareContentType = {
+local SDKMgr = class("SDKMgr")
+
+SDKMgr.ShareContentType = {
 	Text = 1,
 	Image = 2,
 	Web = 3,
 	Video = 4
 }
-var_0_0.SharePlatform = {
+SDKMgr.SharePlatform = {
 	WechatMoment = 3,
 	LINE = 13,
 	QQZone = 5,
@@ -23,167 +25,184 @@ var_0_0.SharePlatform = {
 	Twitter = 12,
 	QQ = 4
 }
-var_0_0.ChannelId = {
+SDKMgr.ChannelId = {
 	Douyin = "107",
 	QQMobile = "102"
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.csharpInst = ZProj.SDKManager.Instance
-	arg_1_0._callbackList = {
-		[arg_1_0.csharpInst.initCallbackType] = arg_1_0._initSDKCallback,
-		[arg_1_0.csharpInst.loginCallBackType] = arg_1_0._loginCallback,
-		[arg_1_0.csharpInst.logoutCallbackType] = arg_1_0._logoutCallback,
-		[arg_1_0.csharpInst.exitCallbackType] = arg_1_0._exitCallback,
-		[arg_1_0.csharpInst.vistorUpGradeCallBackType] = arg_1_0._vistorUpGradeCallBack,
-		[arg_1_0.csharpInst.socialShareCallBackType] = arg_1_0._socialShareCallBack,
-		[arg_1_0.csharpInst.screenShotCallBackType] = arg_1_0._screenShotCallBack,
-		[arg_1_0.csharpInst.payCallBackType] = arg_1_0._payCallBack,
-		[arg_1_0.csharpInst.earphoneStatusChangeCallBackType] = arg_1_0._changeEarphoneContact,
-		[arg_1_0.csharpInst.windowsModeChangedCallbackType] = arg_1_0._windowsModeChanged,
-		[arg_1_0.csharpInst.recordVideoCallbackType] = arg_1_0._handleRecordVideoCalled,
-		[arg_1_0.csharpInst.queryProductDetailsCallbackType] = arg_1_0._queryProductDetailsCallBack
+function SDKMgr:ctor()
+	self.csharpInst = ZProj.SDKMgr.Instance
+	self._callbackList = {
+		[self.csharpInst.initCallbackType] = self._initSDKCallback,
+		[self.csharpInst.loginCallBackType] = self._loginCallback,
+		[self.csharpInst.logoutCallbackType] = self._logoutCallback,
+		[self.csharpInst.exitCallbackType] = self._exitCallback,
+		[self.csharpInst.visitorUpGradeCallBackType] = self._visitorUpGradeCallBack,
+		[self.csharpInst.socialShareCallBackType] = self._socialShareCallBack,
+		[self.csharpInst.screenShotCallBackType] = self._screenShotCallBack,
+		[self.csharpInst.payCallBackType] = self._payCallBack,
+		[self.csharpInst.earphoneStatusChangeCallBackType] = self._changeEarphoneContact,
+		[self.csharpInst.windowsModeChangedCallbackType] = self._windowsModeChanged,
+		[self.csharpInst.recordVideoCallbackType] = self._handleRecordVideoCalled,
+		[self.csharpInst.queryProductDetailsCallbackType] = self._queryProductDetailsCallBack,
+		[self.csharpInst.dataPropertiesChangeCallbackType] = self._dataPropertiesChangeCallBack,
+		[self.csharpInst.readNfcCallbackType] = self._handleReadNfcCalled,
+		[self.csharpInst.networkStatusCallBackType] = self._handleNetworkStatusCalled,
+		[self.csharpInst.batteryInfoCallBackType] = self._handleBatteryInfoCalled,
+		[self.csharpInst.authenticatePlayerCallBackType] = self._handleAuthenticatePlayerCalled,
+		[self.csharpInst.updateAchievementCallBackType] = self._handleUpdateAchievementCalled
 	}
 
-	if VersionUtil.isVersionLargeEqual("2.4.0") or SLFramework.FrameworkSettings.IsEditor then
-		arg_1_0._callbackList[arg_1_0.csharpInst.dataPropertiesChangeCallbackType] = arg_1_0._dataPropertiesChangeCallBack
-		arg_1_0._callbackList[arg_1_0.csharpInst.readNfcCallbackType] = arg_1_0._handleReadNfcCalled
-	else
-		arg_1_0._callbackList[arg_1_0.csharpInst.dataPropertiesChangeCallBackType] = arg_1_0._dataPropertiesChangeCallBack
-	end
+	self.csharpInst:AddCallback(self._callback, self)
 
-	arg_1_0.csharpInst:AddCallback(arg_1_0._callback, arg_1_0)
-
-	arg_1_0._moduleSocialShareCallBack = nil
-	arg_1_0._moduleSocialShareCallBackObj = nil
-	arg_1_0._moduleScreenShotCallBack = nil
-	arg_1_0._moduleScreenShotCallBackObj = nil
-	arg_1_0._moduleQueryProductDetailsCallBack = nil
-	arg_1_0._moduleQueryProductDetailsCallBackObj = nil
-	arg_1_0._moduleDataPropertiesChangeCallBack = nil
-	arg_1_0._moduleDataPropertiesChangeCallBackObj = nil
+	self._moduleSocialShareCallBack = nil
+	self._moduleSocialShareCallBackObj = nil
+	self._moduleScreenShotCallBack = nil
+	self._moduleScreenShotCallBackObj = nil
+	self._moduleQueryProductDetailsCallBack = nil
+	self._moduleQueryProductDetailsCallBackObj = nil
+	self._moduleDataPropertiesChangeCallBack = nil
+	self._moduleDataPropertiesChangeCallBackObj = nil
 end
 
-function var_0_0._callback(arg_2_0, arg_2_1, ...)
-	local var_2_0 = arg_2_0._callbackList[arg_2_1]
+function SDKMgr:_callback(callbackType, ...)
+	local callback = self._callbackList[callbackType]
 
-	if var_2_0 then
-		var_2_0(arg_2_0, unpack({
+	if callback then
+		callback(self, unpack({
 			...
 		}))
-	elseif VersionUtil.isVersionLess("2.4.0") and arg_2_1 == arg_2_0.csharpInst.readNfcCallbackType then
+	elseif VersionUtil.isVersionLess("2.4.0") and callbackType == self.csharpInst.readNfcCallbackType then
 		-- block empty
 	else
-		logError("SDKMgr callbackType error callbackType:", tonumber(arg_2_1))
+		logError("SDKMgr callbackType error callbackType:", tonumber(callbackType))
 	end
 end
 
-function var_0_0.initSDK(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0._isInitSDK then
+function SDKMgr:initSDK(callback, callbackObj)
+	if self._isInitSDK then
 		logError("SDKMgr initSDK call repeatedly")
 
 		return
 	end
 
-	arg_3_0._callbackNum = 0
-	arg_3_0._isInitSDK = true
-	arg_3_0._initCallback = {
-		arg_3_1,
-		arg_3_2
+	self._callbackNum = 0
+	self._isInitSDK = true
+	self._initCallback = {
+		callback,
+		callbackObj
 	}
 
-	arg_3_0.csharpInst:InitSDK()
+	self.csharpInst:InitSDK()
 end
 
-function var_0_0._initSDKCallback(arg_4_0)
-	arg_4_0._callbackNum = arg_4_0._callbackNum + 1
+function SDKMgr:_initSDKCallback()
+	self._callbackNum = self._callbackNum + 1
 
-	if not arg_4_0._initCallback then
-		logError(string.format("SDKMgr initSDK callback error _isInitSDK:%s _callbackNum:%s", arg_4_0._isInitSDK, arg_4_0._callbackNum))
+	if not self._initCallback then
+		logError(string.format("SDKMgr initSDK callback error _isInitSDK:%s _callbackNum:%s", self._isInitSDK, self._callbackNum))
 
 		return
 	end
 
-	local var_4_0 = arg_4_0._initCallback[1]
-	local var_4_1 = arg_4_0._initCallback[2]
+	ZProj.LinkBoostController.Instance:SetHotUpdateLinkboostRequestAction()
 
-	arg_4_0._initCallback = nil
+	local isAccelerating = SDKMgr.instance:isAccelerating()
 
-	arg_4_0:_initSDKDataTrackMgr()
-	var_4_0(var_4_1)
+	SLFramework.GameUpdate.HotUpdateInfoMgr.useLinkboost = isAccelerating
+
+	if isAccelerating then
+		logNormal("LinkboostOpen")
+	end
+
+	local callback = self._initCallback[1]
+	local callbackObj = self._initCallback[2]
+
+	self._initCallback = nil
+
+	self:_initSDKDataTrackMgr()
+	callback(callbackObj)
 end
 
-function var_0_0._initSDKDataTrackMgr(arg_5_0)
+function SDKMgr:_initSDKDataTrackMgr()
 	SDKDataTrackMgr.instance:initSDKDataTrack()
 	SDKDataTrackMgr.instance:getDataTrackProperties()
 end
 
-function var_0_0.useSimulateLogin(arg_6_0)
-	return arg_6_0.csharpInst:UseSimulateLogin()
+function SDKMgr:isAccelerating()
+	if GameChannelConfig.isGpGlobal() or GameChannelConfig.isGpJapan() then
+		return self.csharpInst:isAccelerating()
+	else
+		return false
+	end
 end
 
-function var_0_0.isLogin(arg_7_0)
-	return arg_7_0.csharpInst:IsLogin()
+function SDKMgr:useSimulateLogin()
+	return self.csharpInst:UseSimulateLogin()
 end
 
-function var_0_0.login(arg_8_0)
-	if arg_8_0._loginSuccess then
+function SDKMgr:isLogin()
+	return self.csharpInst:IsLogin()
+end
+
+function SDKMgr:login()
+	if self._loginSuccess then
 		return
 	end
 
-	arg_8_0._isStartLogin = true
+	self._isStartLogin = true
 
-	arg_8_0.csharpInst:Login()
+	self.csharpInst:Login()
 	logNormal("SDKMgr login 请求登录")
 end
 
-function var_0_0.isLoginSuccess(arg_9_0)
-	return arg_9_0._loginSuccess
+function SDKMgr:isLoginSuccess()
+	return self._loginSuccess
 end
 
-function var_0_0._loginCallback(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7)
-	logNormal("SDKMgr login callback result:" .. tostring(arg_10_1))
+function SDKMgr:_loginCallback(success, msg, sessionId, userId, channelId, gameCode, gameId)
+	logNormal("SDKMgr login callback result:" .. tostring(success))
 
-	if not arg_10_0._isStartLogin then
+	if not self._isStartLogin then
 		logNormal("SDKMgr login callback 重复收到回调，忽略掉")
 
 		return
 	end
 
-	arg_10_0._isStartLogin = nil
-	arg_10_0._loginSuccess = arg_10_1
+	self._isStartLogin = nil
+	self._loginSuccess = success
 
-	if arg_10_1 then
-		LoginModel.instance:setChannelParam(arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7)
+	if success then
+		LoginModel.instance:setChannelParam(sessionId, userId, channelId, gameCode, gameId)
 		LoginController.instance:login({})
 
-		if not var_0_0.instance:isAdult() and var_0_0.instance:getUserType() == 99 then
-			arg_10_0:showMinorLoginTipDialog()
+		if not SDKMgr.instance:isAdult() and SDKMgr.instance:getUserType() == 99 then
+			self:showMinorLoginTipDialog()
 		end
 	else
-		logWarn("SDKMgr login fail: msg = " .. (arg_10_2 or "nil"))
+		logWarn("SDKMgr login fail: msg = " .. (msg or "nil"))
 	end
 
-	LoginController.instance:dispatchEvent(LoginEvent.OnSdkLoginReturn, arg_10_1, arg_10_2)
+	LoginController.instance:dispatchEvent(LoginEvent.OnSdkLoginReturn, success, msg)
 end
 
-function var_0_0.logout(arg_11_0)
-	if arg_11_0._loginSuccess then
-		arg_11_0._loginSuccess = false
+function SDKMgr:logout()
+	if self._loginSuccess then
+		self._loginSuccess = false
 
-		arg_11_0.csharpInst:Logout()
+		self.csharpInst:Logout()
 	end
 end
 
-function var_0_0._logoutCallback(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._loginSuccess = false
+function SDKMgr:_logoutCallback(success, msg)
+	self._loginSuccess = false
 
 	if LoginController then
 		LoginController.instance:onSdkLogout()
 	end
 end
 
-function var_0_0._exitCallback(arg_13_0, arg_13_1, arg_13_2)
+function SDKMgr:_exitCallback(success, msg)
 	if LoginController then
 		LoginController.instance:dispose()
 	end
@@ -193,292 +212,298 @@ function var_0_0._exitCallback(arg_13_0, arg_13_1, arg_13_2)
 	end
 end
 
-function var_0_0._vistorUpGradeCallBack(arg_14_0, arg_14_1, arg_14_2)
+function SDKMgr:_visitorUpGradeCallBack(success, msg)
 	return
 end
 
-function var_0_0._socialShareCallBack(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0._moduleSocialShareCallBack then
-		arg_15_0._moduleSocialShareCallBack(arg_15_0._moduleSocialShareCallBackObj, arg_15_1, arg_15_2)
+function SDKMgr:_socialShareCallBack(code, msg)
+	if self._moduleSocialShareCallBack then
+		self._moduleSocialShareCallBack(self._moduleSocialShareCallBackObj, code, msg)
 	end
 end
 
-function var_0_0.setSocialShareCallBack(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._moduleSocialShareCallBack = arg_16_1
-	arg_16_0._moduleSocialShareCallBackObj = arg_16_2
+function SDKMgr:setSocialShareCallBack(callback, callbackObj)
+	self._moduleSocialShareCallBack = callback
+	self._moduleSocialShareCallBackObj = callbackObj
 end
 
-function var_0_0._screenShotCallBack(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_0._moduleScreenShotCallBack then
-		arg_17_0._moduleScreenShotCallBack(arg_17_0._moduleScreenShotCallBackObj, arg_17_1, arg_17_2)
+function SDKMgr:_screenShotCallBack(success, msg)
+	if self._moduleScreenShotCallBack then
+		self._moduleScreenShotCallBack(self._moduleScreenShotCallBackObj, success, msg)
 	end
 end
 
-function var_0_0.setScreenShotCallBack(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._moduleScreenShotCallBack = arg_18_1
-	arg_18_0._moduleScreenShotCallBackObj = arg_18_2
+function SDKMgr:setScreenShotCallBack(callback, callbackObj)
+	self._moduleScreenShotCallBack = callback
+	self._moduleScreenShotCallBackObj = callbackObj
 end
 
-function var_0_0._payCallBack(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_0._modulePayCallBack then
-		arg_19_0._modulePayCallBack(arg_19_0._modulePayCallBackObj, arg_19_1, arg_19_2)
+function SDKMgr:_payCallBack(code, msg)
+	if self._modulePayCallBack then
+		self._modulePayCallBack(self._modulePayCallBackObj, code, msg)
 	end
 end
 
-function var_0_0.setPayCallBack(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._modulePayCallBack = arg_20_1
-	arg_20_0._modulePayCallBackObj = arg_20_2
+function SDKMgr:setPayCallBack(callback, callbackObj)
+	self._modulePayCallBack = callback
+	self._modulePayCallBackObj = callbackObj
 end
 
-function var_0_0._queryProductDetailsCallBack(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_0._moduleQueryProductDetailsCallBack then
-		arg_21_0._moduleQueryProductDetailsCallBack(arg_21_0._moduleQueryProductDetailsCallBackObj, arg_21_1, arg_21_2)
+function SDKMgr:_queryProductDetailsCallBack(code, msg)
+	if self._moduleQueryProductDetailsCallBack then
+		self._moduleQueryProductDetailsCallBack(self._moduleQueryProductDetailsCallBackObj, code, msg)
 	end
 end
 
-function var_0_0.setQueryProductDetailsCallBack(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0._moduleQueryProductDetailsCallBack = arg_22_1
-	arg_22_0._moduleQueryProductDetailsCallBackObj = arg_22_2
+function SDKMgr:setQueryProductDetailsCallBack(callback, callbackObj)
+	self._moduleQueryProductDetailsCallBack = callback
+	self._moduleQueryProductDetailsCallBackObj = callbackObj
 end
 
-function var_0_0._dataPropertiesChangeCallBack(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_0._moduleDataPropertiesChangeCallBack then
-		arg_23_0._moduleDataPropertiesChangeCallBack(arg_23_0._moduleDataPropertiesChangeCallBackObj, arg_23_1, arg_23_2)
+function SDKMgr:_dataPropertiesChangeCallBack(code, msg)
+	if self._moduleDataPropertiesChangeCallBack then
+		self._moduleDataPropertiesChangeCallBack(self._moduleDataPropertiesChangeCallBackObj, code, msg)
 	end
 end
 
-function var_0_0.setDataPropertiesChangeCallBack(arg_24_0, arg_24_1, arg_24_2)
-	arg_24_0._moduleDataPropertiesChangeCallBack = arg_24_1
-	arg_24_0._moduleDataPropertiesChangeCallBackObj = arg_24_2
+function SDKMgr:setDataPropertiesChangeCallBack(callback, callbackObj)
+	self._moduleDataPropertiesChangeCallBack = callback
+	self._moduleDataPropertiesChangeCallBackObj = callbackObj
 end
 
-function var_0_0.showVistorPlayTimeOutDialog(arg_25_0)
-	arg_25_0.csharpInst:CallVoidFunc("showVistorPlayTimeOutDialog")
+function SDKMgr:showVistorPlayTimeOutDialog()
+	self.csharpInst:CallVoidFunc("showVistorPlayTimeOutDialog")
 end
 
-function var_0_0.showVistorUpgradeDialog(arg_26_0)
-	arg_26_0.csharpInst:CallVoidFunc("showVistorUpgradeDialog")
+function SDKMgr:showVistorUpgradeDialog()
+	self.csharpInst:CallVoidFunc("showVistorUpgradeDialog")
 end
 
-function var_0_0.showMinorLoginTipDialog(arg_27_0)
-	arg_27_0.csharpInst:CallVoidFunc("showMinorLoginTipDialog")
+function SDKMgr:showMinorLoginTipDialog()
+	self.csharpInst:CallVoidFunc("showMinorLoginTipDialog")
 end
 
-function var_0_0.showMinorPlayTimeOutDialog(arg_28_0)
-	arg_28_0.csharpInst:CallVoidFunc("showMinorPlayTimeOutDialog")
+function SDKMgr:showMinorPlayTimeOutDialog()
+	self.csharpInst:CallVoidFunc("showMinorPlayTimeOutDialog")
 end
 
-function var_0_0.showMinorLimitLoginTimeDialog(arg_29_0)
-	arg_29_0.csharpInst:CallVoidFunc("showMinorLimitLoginTimeDialog")
+function SDKMgr:showMinorLimitLoginTimeDialog()
+	self.csharpInst:CallVoidFunc("showMinorLimitLoginTimeDialog")
 end
 
-function var_0_0.exitSdk(arg_30_0)
-	arg_30_0.csharpInst:CallVoidFunc("exitSdk")
+function SDKMgr:exitSdk()
+	self.csharpInst:CallVoidFunc("exitSdk")
 end
 
-function var_0_0.destroyGame(arg_31_0)
-	arg_31_0.csharpInst:CallVoidFunc("destroyGame")
+function SDKMgr:destroyGame()
+	self.csharpInst:CallVoidFunc("destroyGame")
 end
 
-function var_0_0.getGameCode(arg_32_0)
+function SDKMgr:getGameCode()
 	if SLFramework.FrameworkSettings.IsEditor or GameChannelConfig.isSlsdk() then
 		return GameChannelConfig.getGameCode()
 	end
 
-	return arg_32_0.csharpInst:CallGetStrFunc("getGameCode")
+	return self.csharpInst:CallGetStrFunc("getGameCode")
 end
 
-function var_0_0.getGameId(arg_33_0)
+function SDKMgr:getGameId()
 	if SLFramework.FrameworkSettings.IsEditor or GameChannelConfig.isSlsdk() then
 		return GameChannelConfig.getGameId()
 	end
 
-	return arg_33_0.csharpInst:CallGetStrFunc("getGameId")
+	return self.csharpInst:CallGetStrFunc("getGameId")
 end
 
-function var_0_0.getGameSdkToken(arg_34_0)
+function SDKMgr:getGameSdkToken()
 	if SLFramework.FrameworkSettings.IsEditor or GameChannelConfig.isSlsdk() then
 		return ""
 	end
 
-	return arg_34_0.csharpInst:CallGetStrFunc("getGameSdkToken")
+	return self.csharpInst:CallGetStrFunc("getGameSdkToken")
 end
 
-function var_0_0.getChannelId(arg_35_0)
+function SDKMgr:getChannelId()
 	if SLFramework.FrameworkSettings.IsEditor or GameChannelConfig.isSlsdk() then
 		return GameChannelConfig.getChannelId()
 	end
 
-	return arg_35_0.csharpInst:CallGetStrFunc("getChannelId")
+	return self.csharpInst:CallGetStrFunc("getChannelId")
 end
 
-function var_0_0.getSubChannelId(arg_36_0)
+function SDKMgr:getSubChannelId()
 	if SLFramework.FrameworkSettings.IsEditor or GameChannelConfig.isSlsdk() then
 		return GameChannelConfig.getSubChannelId()
 	end
 
-	return arg_36_0.csharpInst:CallGetStrFunc("getSubChannelId")
+	return self.csharpInst:CallGetStrFunc("getSubChannelId")
 end
 
-function var_0_0.getUserType(arg_37_0)
+function SDKMgr:getUserType()
 	if SLFramework.FrameworkSettings.IsEditor or GameChannelConfig.isSlsdk() then
 		return 99
 	end
 
-	local var_37_0 = arg_37_0.csharpInst:CallGetStrFunc("getUserType")
+	local userType = self.csharpInst:CallGetStrFunc("getUserType")
 
-	return tonumber(var_37_0)
+	return tonumber(userType)
 end
 
-function var_0_0.isAdult(arg_38_0)
+function SDKMgr:isAdult()
 	if SLFramework.FrameworkSettings.IsEditor or GameChannelConfig.isSlsdk() then
 		return true
 	end
 
-	return arg_38_0.csharpInst:CallGetStrFunc("isAdult") ~= "False"
+	local isAdult = self.csharpInst:CallGetStrFunc("isAdult")
+
+	return isAdult ~= "False"
 end
 
-function var_0_0.setScreenLightingOff(arg_39_0, arg_39_1)
-	if not arg_39_1 then
-		arg_39_0.csharpInst:CallToolVoidFunc("turnOffScreenLighting")
+function SDKMgr:setScreenLightingOff(on)
+	if not on then
+		self.csharpInst:CallToolVoidFunc("turnOffScreenLighting")
 	else
-		arg_39_0.csharpInst:CallToolVoidFunc("turnOnScreenLighting")
+		self.csharpInst:CallToolVoidFunc("turnOnScreenLighting")
 	end
 end
 
-function var_0_0.openLauncher(arg_40_0)
-	arg_40_0.csharpInst:CallVoidFunc("sdkOpenLauncher")
+function SDKMgr:openLauncher()
+	self.csharpInst:CallVoidFunc("sdkOpenLauncher")
 end
 
-function var_0_0.openCostumerService(arg_41_0, arg_41_1)
-	arg_41_0.csharpInst:CallVoidFuncWithParams("openCostumerService", arg_41_1)
+function SDKMgr:openCostumerService(titleName)
+	self.csharpInst:CallVoidFuncWithParams("openCostumerService", titleName)
 end
 
-function var_0_0.shareMedia(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	arg_42_0.csharpInst:ShareMedia(arg_42_1, arg_42_2, arg_42_3)
+function SDKMgr:shareMedia(sharePlatform, shareContentType, shareContent)
+	self.csharpInst:ShareMedia(sharePlatform, shareContentType, shareContent)
 end
 
-function var_0_0.saveImage(arg_43_0, arg_43_1)
-	arg_43_0.csharpInst:SaveImage(arg_43_1)
+function SDKMgr:saveImage(imagePath)
+	self.csharpInst:SaveImage(imagePath)
 end
 
-function var_0_0.enterGame(arg_44_0, arg_44_1)
-	arg_44_0.csharpInst:EnterGame(arg_44_1)
+function SDKMgr:enterGame(roleInfo)
+	self.csharpInst:EnterGame(roleInfo)
 end
 
-function var_0_0.createRole(arg_45_0, arg_45_1)
-	arg_45_0.csharpInst:CreateRole(arg_45_1)
+function SDKMgr:createRole(roleInfo)
+	self.csharpInst:CreateRole(roleInfo)
 end
 
-function var_0_0.upgradeRole(arg_46_0, arg_46_1)
-	arg_46_0.csharpInst:UpgradeRole(arg_46_1)
+function SDKMgr:upgradeRole(roleInfo)
+	self.csharpInst:UpgradeRole(roleInfo)
 end
 
-function var_0_0.updateRole(arg_47_0, arg_47_1)
-	arg_47_0.csharpInst:UpdateRole(arg_47_1)
+function SDKMgr:updateRole(roleInfo)
+	self.csharpInst:UpdateRole(roleInfo)
 end
 
-function var_0_0.payGoods(arg_48_0, arg_48_1)
-	arg_48_0.csharpInst:PayGoods(arg_48_1)
+function SDKMgr:payGoods(payInfo)
+	self.csharpInst:PayGoods(payInfo)
 end
 
-function var_0_0.queryProductDetailEntity(arg_49_0, arg_49_1, arg_49_2)
-	arg_49_0.csharpInst:queryProductList(arg_49_1, arg_49_2)
+function SDKMgr:queryProductDetailEntity(payType, queryProductDetailEntity)
+	self.csharpInst:queryProductList(payType, queryProductDetailEntity)
 end
 
-function var_0_0.getProductList(arg_50_0)
-	return arg_50_0.csharpInst:getProductList()
+function SDKMgr:getProductList()
+	return self.csharpInst:getProductList()
 end
 
-function var_0_0.getWinPackageName(arg_51_0)
+function SDKMgr:getWinPackageName()
 	if GameChannelConfig.isSlsdk() then
 		return "com.shenlan.m.proj1"
 	else
-		return arg_51_0.csharpInst:GetWinPackageName()
+		return self.csharpInst:GetWinPackageName()
 	end
 end
 
-function var_0_0.pcLoginForQrCode(arg_52_0)
-	arg_52_0.csharpInst:PcLoginForQrcode()
+function SDKMgr:pcLoginForQrCode()
+	self.csharpInst:PcLoginForQrcode()
 end
 
-function var_0_0.isShowUserCenter(arg_53_0)
-	return arg_53_0.csharpInst:IsShowUserCenter()
+function SDKMgr:isShowUserCenter()
+	return self.csharpInst:IsShowUserCenter()
 end
 
-function var_0_0.isShowUnregisterButton(arg_54_0)
-	return arg_54_0.csharpInst:CallGetStrFunc("isShowUnregisterButton") ~= "False"
+function SDKMgr:isShowUnregisterButton()
+	local isShowShareButton = self.csharpInst:CallGetStrFunc("isShowUnregisterButton")
+
+	return isShowShareButton ~= "False"
 end
 
-function var_0_0.isNotificationEnable(arg_55_0)
-	return arg_55_0.csharpInst:IsNotificationEnable()
+function SDKMgr:isNotificationEnable()
+	return self.csharpInst:IsNotificationEnable()
 end
 
-function var_0_0.openNotificationSettings(arg_56_0)
-	arg_56_0.csharpInst:OpenNotificationSettings()
+function SDKMgr:openNotificationSettings()
+	self.csharpInst:OpenNotificationSettings()
 end
 
-function var_0_0.unregisterSdk(arg_57_0)
-	arg_57_0.csharpInst:CallVoidFunc("unregisterSdk")
+function SDKMgr:unregisterSdk()
+	self.csharpInst:CallVoidFunc("unregisterSdk")
 end
 
-function var_0_0.isShowShareButton(arg_58_0)
-	return arg_58_0.csharpInst:CallGetStrFunc("isShowShareButton") ~= "False"
+function SDKMgr:isShowShareButton()
+	local isShowShareButton = self.csharpInst:CallGetStrFunc("isShowShareButton")
+
+	return isShowShareButton ~= "False"
 end
 
-function var_0_0.isShowAgreementButton(arg_59_0)
-	return arg_59_0.csharpInst:IsShowAgreementButton()
+function SDKMgr:isShowAgreementButton()
+	return self.csharpInst:IsShowAgreementButton()
 end
 
-function var_0_0.isShowPcLoginButton(arg_60_0)
-	return arg_60_0.csharpInst:IsShowPcLoginButton()
+function SDKMgr:isShowPcLoginButton()
+	return self.csharpInst:IsShowPcLoginButton()
 end
 
-function var_0_0.showUserCenter(arg_61_0)
-	arg_61_0.csharpInst:ShowUserCenter()
+function SDKMgr:showUserCenter()
+	self.csharpInst:ShowUserCenter()
 end
 
-function var_0_0.isEarphoneContact(arg_62_0)
-	if arg_62_0._isInitSDK then
-		return arg_62_0.csharpInst:IsEarphoneContact()
+function SDKMgr:isEarphoneContact()
+	if self._isInitSDK then
+		return self.csharpInst:IsEarphoneContact()
 	end
 end
 
-function var_0_0.isEmulator(arg_63_0)
-	return BootNativeUtil.isAndroid() and arg_63_0.csharpInst:IsEmulator()
+function SDKMgr:isEmulator()
+	return BootNativeUtil.isAndroid() and self.csharpInst:IsEmulator()
 end
 
-function var_0_0.showAgreement(arg_64_0)
-	arg_64_0.csharpInst:CallVoidFunc("showAgreement")
+function SDKMgr:showAgreement()
+	self.csharpInst:CallVoidFunc("showAgreement")
 end
 
-function var_0_0._changeEarphoneContact(arg_65_0)
+function SDKMgr:_changeEarphoneContact()
 	if AudioMgr and AudioMgr.instance then
 		AudioMgr.instance:changeEarMode()
 	end
 end
 
-function var_0_0._windowsModeChanged(arg_66_0, arg_66_1, arg_66_2)
+function SDKMgr:_windowsModeChanged(code, screenArgs)
 	return
 end
 
-function var_0_0._handleRecordVideoCalled(arg_67_0, arg_67_1, arg_67_2)
-	logNormal(string.format("_handleRecordVideoCalled code = [%s], msg = [%s]", arg_67_1, arg_67_2))
-	ToastController.instance:showToastWithString(tostring(arg_67_2))
+function SDKMgr:_handleRecordVideoCalled(code, msg)
+	logNormal(string.format("_handleRecordVideoCalled code = [%s], msg = [%s]", code, msg))
+	ToastController.instance:showToastWithString(tostring(msg))
 end
 
-function var_0_0._handleQueryProductDetailsCalled(arg_68_0, arg_68_1, arg_68_2)
-	logNormal(string.format("_handleQueryProductDetailsCalled code = [%s], msg = [%s]", arg_68_1, arg_68_2))
-	ToastController.instance:showToastWithString(tostring(arg_68_2))
+function SDKMgr:_handleQueryProductDetailsCalled(code, msg)
+	logNormal(string.format("_handleQueryProductDetailsCalled code = [%s], msg = [%s]", code, msg))
+	ToastController.instance:showToastWithString(tostring(msg))
 end
 
-function var_0_0._handleDataPropertiesChangeCalled(arg_69_0, arg_69_1, arg_69_2)
-	logNormal(string.format("_handleDataPropertiesChangeCalled code = [%s], msg = [%s]", arg_69_1, arg_69_2))
-	ToastController.instance:showToastWithString(tostring(arg_69_2))
+function SDKMgr:_handleDataPropertiesChangeCalled(code, msg)
+	logNormal(string.format("_handleDataPropertiesChangeCalled code = [%s], msg = [%s]", code, msg))
+	ToastController.instance:showToastWithString(tostring(msg))
 end
 
-function var_0_0._handleReadNfcCalled(arg_70_0, arg_70_1, arg_70_2)
-	logNormal(string.format("_handleReadNfcCalled code = [%s], msg = [%s]", arg_70_1, arg_70_2))
+function SDKMgr:_handleReadNfcCalled(code, msg)
+	logNormal(string.format("_handleReadNfcCalled code = [%s], msg = [%s]", code, msg))
 
 	if NFCController == nil or NFCController.instance == nil then
 		logNormal("NFCController is nil")
@@ -486,177 +511,270 @@ function var_0_0._handleReadNfcCalled(arg_70_0, arg_70_1, arg_70_2)
 		return
 	end
 
-	NFCController.instance:onNFCRead(arg_70_2)
+	NFCController.instance:onNFCRead(msg)
 end
 
-function var_0_0.requestReadAndWritePermission(arg_71_0)
-	arg_71_0.csharpInst:RequestReadAndWritePermission()
+function SDKMgr:_handleNetworkStatusCalled(code, msg)
+	logNormal(string.format("_handleNetworkStatusCalled code = [%s], msg = [%s]", code, msg))
+
+	if DeviceController == nil or DeviceController.instance == nil then
+		self._initDeviceInfo = self._initDeviceInfo or {}
+		self._initDeviceInfo.networkType = msg
+
+		logNormal("DeviceController is nil")
+
+		return
+	end
+
+	DeviceController.instance:onNetworkTypeChange(msg)
 end
 
-function var_0_0.showRecordBubble(arg_72_0)
+function SDKMgr:_handleBatteryInfoCalled(code, msg)
+	logNormal(string.format("_handleBatteryInfoCalled code = [%s], msg = [%s]", code, msg))
+
+	if DeviceController == nil or DeviceController.instance == nil then
+		self._initDeviceInfo = self._initDeviceInfo or {}
+		self._initDeviceInfo.batteryStatus = code
+		self._initDeviceInfo.batteryValue = msg
+
+		logNormal("DeviceController is nil")
+
+		return
+	end
+
+	DeviceController.instance:onBatteryStatusChange(code)
+	DeviceController.instance:onBatteryValueChange(msg)
+end
+
+function SDKMgr:_handleAuthenticatePlayerCalled(code, msg)
 	return
 end
 
-function var_0_0.hideRecordBubble(arg_73_0)
+function SDKMgr:_handleUpdateAchievementCalled(code, msg)
 	return
 end
 
-function var_0_0.startRecord(arg_74_0)
+function SDKMgr:requestReadAndWritePermission()
+	self.csharpInst:RequestReadAndWritePermission()
+end
+
+function SDKMgr:showRecordBubble()
 	return
 end
 
-function var_0_0.stopRecord(arg_75_0)
+function SDKMgr:hideRecordBubble()
 	return
 end
 
-function var_0_0.isRecording(arg_76_0)
+function SDKMgr:startRecord()
+	return
+end
+
+function SDKMgr:stopRecord()
+	return
+end
+
+function SDKMgr:isRecording()
 	return false
 end
 
-function var_0_0.isSupportRecord(arg_77_0)
+function SDKMgr:isSupportRecord()
 	return false
 end
 
-function var_0_0.openVideosPage(arg_78_0)
-	arg_78_0.csharpInst:CallVoidFunc("openVideosPage")
+function SDKMgr:openVideosPage()
+	self.csharpInst:CallVoidFunc("openVideosPage")
 end
 
-function var_0_0.setLanguage(arg_79_0, arg_79_1)
-	arg_79_0.csharpInst:setLanguage(arg_79_1)
+function SDKMgr:setLanguage(language)
+	self.csharpInst:setLanguage(language)
 end
 
-function var_0_0.openSoJump(arg_80_0, arg_80_1)
-	arg_80_0.csharpInst:openSoJump(arg_80_1)
+function SDKMgr:openSoJump(paramsJson)
+	self.csharpInst:openSoJump(paramsJson)
 end
 
-function var_0_0.checkReadExternalStoragePermissions(arg_81_0)
+function SDKMgr:checkReadExternalStoragePermissions()
 	if BootNativeUtil.isAndroid() then
-		return arg_81_0.csharpInst:CheckPermissions("android.permission.READ_EXTERNAL_STORAGE")
+		return self.csharpInst:CheckPermissions("android.permission.READ_EXTERNAL_STORAGE")
 	else
 		return true
 	end
 end
 
-function var_0_0.appReview(arg_82_0)
+function SDKMgr:appReview()
 	if VersionValidator.instance:isInReviewing() then
 		return
 	end
 
-	local var_82_0 = {}
+	local luaProperties = {}
 
-	var_82_0.eventName = "appReview"
+	luaProperties.eventName = "appReview"
 
-	local var_82_1 = cjson.encode(var_82_0)
+	local resultJson = cjson.encode(luaProperties)
 
-	arg_82_0.csharpInst:appReview(var_82_1)
+	self.csharpInst:appReview(resultJson)
 end
 
-function var_0_0.stopService(arg_83_0)
-	arg_83_0.csharpInst:stopService()
+function SDKMgr:stopService()
+	self.csharpInst:stopService()
 end
 
-function var_0_0.isShowStopServiceBaffle(arg_84_0)
-	return arg_84_0.csharpInst:isShowStopServiceBaffle()
+function SDKMgr:isShowStopServiceBaffle()
+	return self.csharpInst:isShowStopServiceBaffle()
 end
 
-function var_0_0.openAccountBind(arg_85_0)
-	arg_85_0.csharpInst:openAccountBind()
+function SDKMgr:openAccountBind()
+	self.csharpInst:openAccountBind()
 end
 
-function var_0_0.showATTDialog(arg_86_0, arg_86_1)
+function SDKMgr:showATTDialog(triggerName)
 	if BootNativeUtil.isIOS() and GameChannelConfig.isEfun() then
-		arg_86_0.csharpInst:showATTDialog(arg_86_1)
+		self.csharpInst:showATTDialog(triggerName)
 	end
 end
 
-function var_0_0.getUserInfo(arg_87_0)
-	return arg_87_0.csharpInst:CallGetStrFunc("getUserInfo")
+function SDKMgr:getUserInfo()
+	return self.csharpInst:CallGetStrFunc("getUserInfo")
 end
 
-function var_0_0.getUserInfoExtraParams(arg_88_0)
-	local var_88_0 = cjson.decode(arg_88_0:getUserInfo() or "{}").extraJson
+function SDKMgr:getUserInfoExtraParams()
+	local userInfo = cjson.decode(self:getUserInfo() or "{}")
+	local extraParams = userInfo.extraJson
 
-	if var_88_0 == nil then
+	if extraParams == nil then
 		return nil
 	end
 
-	return cjson.decode(var_88_0)
+	return cjson.decode(extraParams)
 end
 
-function var_0_0.restartGame(arg_89_0)
-	arg_89_0.csharpInst:CallVoidFunc("restartGame")
+function SDKMgr:restartGame()
+	self.csharpInst:CallVoidFunc("restartGame")
 end
 
-function var_0_0.getSystemMediaVolume(arg_90_0)
-	return arg_90_0.csharpInst:GetSystemMediaVolume()
+function SDKMgr:getSystemMediaVolume()
+	return self.csharpInst:GetSystemMediaVolume()
 end
 
-function var_0_0.setSystemMediaVolume(arg_91_0, arg_91_1)
-	arg_91_0.csharpInst:SetSystemMediaVolume(arg_91_1)
+function SDKMgr:setSystemMediaVolume(volume)
+	self.csharpInst:SetSystemMediaVolume(volume)
 end
 
-function var_0_0.isIgnoreFileMissing(arg_92_0)
+function SDKMgr:isIgnoreFileMissing()
 	if BootNativeUtil.getPackageName() == "com.shenlan.m.reverse1999.nearme.gamecenter" then
 		return false
 	else
-		return arg_92_0.csharpInst:IsIgnoreFileMissing()
+		return self.csharpInst:IsIgnoreFileMissing()
 	end
 end
 
-function var_0_0.isUnsupportChangeVolume(arg_93_0)
-	return arg_93_0.csharpInst:IsUnsupportChangeVolume()
+function SDKMgr:isUnsupportChangeVolume()
+	return self.csharpInst:IsUnsupportChangeVolume()
 end
 
-function var_0_0.getDeviceInfo(arg_94_0)
-	if not arg_94_0._deviceInfo then
-		local var_94_0 = arg_94_0.csharpInst:CallGetStrFunc("getDeviceInfo")
+function SDKMgr:getDeviceInfo()
+	if not self._deviceInfo then
+		local deviceInfoJson = self.csharpInst:CallGetStrFunc("getDeviceInfo")
 
-		if not string.nilorempty(var_94_0) then
-			arg_94_0._deviceInfo = cjson.decode(var_94_0)
+		if not string.nilorempty(deviceInfoJson) then
+			self._deviceInfo = cjson.decode(deviceInfoJson)
 		else
-			arg_94_0._deviceInfo = {}
+			self._deviceInfo = {}
 		end
 	end
 
-	return arg_94_0._deviceInfo
+	return self._deviceInfo
 end
 
-function var_0_0.getGameSdkConfig(arg_95_0)
-	if not arg_95_0._gameSdkConfig then
-		local var_95_0 = arg_95_0.csharpInst:CallGetStrFunc("getGameSdkConfig")
+function SDKMgr:getGameSdkConfig()
+	if not self._gameSdkConfig then
+		local gameSdkConfigJson = self.csharpInst:CallGetStrFunc("getGameSdkConfig")
 
-		if not string.nilorempty(var_95_0) then
-			arg_95_0._gameSdkConfig = cjson.decode(var_95_0)
+		if not string.nilorempty(gameSdkConfigJson) then
+			self._gameSdkConfig = cjson.decode(gameSdkConfigJson)
 		else
-			arg_95_0._gameSdkConfig = {}
+			self._gameSdkConfig = {}
 		end
 	end
 
-	return arg_95_0._gameSdkConfig
+	return self._gameSdkConfig
 end
 
-function var_0_0.getShowNotice(arg_96_0)
-	local var_96_0 = arg_96_0:getGameSdkConfig()
+function SDKMgr:getShowNotice()
+	local sdkConfig = self:getGameSdkConfig()
 
-	if var_96_0 and var_96_0.showButtons then
-		return var_96_0.showButtons.Notice
+	if sdkConfig and sdkConfig.showButtons then
+		return sdkConfig.showButtons.Notice
 	end
 
 	return true
 end
 
-function var_0_0.getIntMetaData(arg_97_0, arg_97_1)
-	return ZProj.SDKManager.Instance:GetIntMetaData(arg_97_1)
+function SDKMgr:getInitDeviceInfo(isClear)
+	local info = self._initDeviceInfo
+
+	if isClear then
+		self._initDeviceInfo = nil
+	end
+
+	return info
 end
 
-function var_0_0.getBoolMetaData(arg_98_0, arg_98_1)
-	return ZProj.SDKManager.Instance:GetBoolMetaData(arg_98_1)
+function SDKMgr:getIntMetaData(key)
+	return ZProj.SDKMgr.Instance:GetIntMetaData(key)
 end
 
-function var_0_0.getStringMetaData(arg_99_0, arg_99_1)
-	return ZProj.SDKManager.Instance:GetStringMetaData(arg_99_1)
+function SDKMgr:getBoolMetaData(key)
+	return ZProj.SDKMgr.Instance:GetBoolMetaData(key)
 end
 
-var_0_0.instance = var_0_0.New()
+function SDKMgr:getStringMetaData(key)
+	return ZProj.SDKMgr.Instance:GetStringMetaData(key)
+end
 
-return var_0_0
+function SDKMgr:requestLocationPermission()
+	if SettingsModel.instance:isOverseas() then
+		return
+	end
+
+	self.csharpInst:RequestLocationPermission()
+end
+
+function SDKMgr:getCurrentLocation()
+	if SettingsModel.instance:isOverseas() then
+		return ""
+	end
+
+	local result = ZProj.SDKMgr.Instance:GetCurrentLocation()
+
+	logNormal(string.format("getCurrentLocation result = [%s]", result))
+
+	return result
+end
+
+function SDKMgr:authenticatePlayer()
+	return ZProj.SDKMgr.Instance:AuthenticatePlayer()
+end
+
+function SDKMgr:updateAchievement(achievementJsonStr)
+	return ZProj.SDKMgr.Instance:UpdateAchievement(achievementJsonStr)
+end
+
+function SDKMgr:showAchievementPage()
+	return ZProj.SDKMgr.Instance:ShowAchievementPage()
+end
+
+function SDKMgr:showATTWithGetIDFA()
+	return ZProj.SDKMgr.Instance:ShowATTWithGetIDFA()
+end
+
+function SDKMgr:stopAllDownload()
+	print("stopAllDownload")
+
+	return self.csharpInst:StopAllDownload()
+end
+
+SDKMgr.instance = SDKMgr.New()
+
+return SDKMgr

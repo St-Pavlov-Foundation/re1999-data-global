@@ -262,5 +262,17 @@
     "collectionBonus": "11#13103#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 3201,
+    "name": "language_10103695",
+    "nameEn": "Echoes of the Seine",
+    "desc": "language_10103771",
+    "rewardIcon": "1702200",
+    "building": "13201|13202|13203",
+    "packages": "3201|3202|3203|3204",
+    "collectionBonus": "11#13203#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

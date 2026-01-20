@@ -1,176 +1,182 @@
-﻿module("modules.logic.versionactivity1_3.astrology.model.VersionActivity1_3AstrologyModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/astrology/model/VersionActivity1_3AstrologyModel.lua
 
-local var_0_0 = class("VersionActivity1_3AstrologyModel", BaseModel)
+module("modules.logic.versionactivity1_3.astrology.model.VersionActivity1_3AstrologyModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._planetList = {}
+local VersionActivity1_3AstrologyModel = class("VersionActivity1_3AstrologyModel", BaseModel)
+
+function VersionActivity1_3AstrologyModel:onInit()
+	self._planetList = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._planetList = {}
-	arg_2_0._rewardList = nil
-	arg_2_0._exchangeList = nil
+function VersionActivity1_3AstrologyModel:reInit()
+	self._planetList = {}
+	self._rewardList = nil
+	self._exchangeList = nil
 end
 
-function var_0_0.initData(arg_3_0)
-	local var_3_0 = Activity126Model.instance:getStarProgressStr()
+function VersionActivity1_3AstrologyModel:initData()
+	local starProgress = Activity126Model.instance:getStarProgressStr()
 
-	if string.nilorempty(var_3_0) then
-		var_3_0 = Activity126Config.instance:getConst(VersionActivity1_3Enum.ActivityId.Act310, Activity126Enum.constId.initAngle).value2
+	if string.nilorempty(starProgress) then
+		starProgress = Activity126Config.instance:getConst(VersionActivity1_3Enum.ActivityId.Act310, Activity126Enum.constId.initAngle).value2
 	end
 
-	local var_3_1 = string.splitToNumber(var_3_0, "#")
+	local angleList = string.splitToNumber(starProgress, "#")
 
-	for iter_3_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		local var_3_2 = VersionActivity1_3AstrologyEnum.PlanetItem[iter_3_0]
-		local var_3_3 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, var_3_2)
+	for id = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local itemId = VersionActivity1_3AstrologyEnum.PlanetItem[id]
+		local num = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, itemId)
 
-		arg_3_0:_addPlanetData(iter_3_0, var_3_1[iter_3_0 - 1] or 0, var_3_3)
+		self:_addPlanetData(id, angleList[id - 1] or 0, num)
 	end
 end
 
-function var_0_0._addPlanetData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_0._planetList[arg_4_1] or VersionActivity1_3AstrologyPlanetMo.New()
+function VersionActivity1_3AstrologyModel:_addPlanetData(id, angle, num)
+	local mo = self._planetList[id] or VersionActivity1_3AstrologyPlanetMo.New()
 
-	var_4_0:init({
-		id = arg_4_1,
-		angle = arg_4_2,
-		previewAngle = arg_4_2,
-		num = arg_4_3
+	mo:init({
+		id = id,
+		angle = angle,
+		previewAngle = angle,
+		num = num
 	})
 
-	arg_4_0._planetList[arg_4_1] = var_4_0
+	self._planetList[id] = mo
 end
 
-function var_0_0.getQuadrantResult(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = {}
+function VersionActivity1_3AstrologyModel:getQuadrantResult()
+	local quadrantInfoMap = {}
+	local quadrantMap = {}
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._planetList) do
-		local var_5_2 = iter_5_1:getQuadrant()
-		local var_5_3 = var_5_0[var_5_2] or {
+	for id, v in pairs(self._planetList) do
+		local quadrant = v:getQuadrant()
+		local quadrantInfo = quadrantInfoMap[quadrant] or {
 			minId = 100,
 			num = 0,
-			quadrant = var_5_2,
+			quadrant = quadrant,
 			planetList = {}
 		}
 
-		var_5_3.num = var_5_3.num + 1
+		quadrantInfo.num = quadrantInfo.num + 1
 
-		if iter_5_0 < var_5_3.minId then
-			var_5_3.minId = iter_5_0
+		if id < quadrantInfo.minId then
+			quadrantInfo.minId = id
 		end
 
-		var_5_0[var_5_2] = var_5_3
-		var_5_1[iter_5_0] = var_5_2
+		quadrantInfoMap[quadrant] = quadrantInfo
+		quadrantMap[id] = quadrant
 	end
 
-	local var_5_4 = var_5_1[VersionActivity1_3AstrologyEnum.Planet.yueliang]
+	local quadrant = quadrantMap[VersionActivity1_3AstrologyEnum.Planet.yueliang]
 
-	if var_5_4 == 7 or var_5_4 == 8 then
-		return var_5_4
+	if quadrant == 7 or quadrant == 8 then
+		return quadrant
 	end
 
-	local var_5_5 = {}
+	local list = {}
 
-	for iter_5_2, iter_5_3 in pairs(var_5_0) do
-		table.insert(var_5_5, iter_5_3)
+	for k, v in pairs(quadrantInfoMap) do
+		table.insert(list, v)
 	end
 
-	table.sort(var_5_5, arg_5_0._sortResult)
+	table.sort(list, self._sortResult)
 
-	return var_5_5[1].quadrant
+	return list[1].quadrant
 end
 
-function var_0_0._sortResult(arg_6_0, arg_6_1)
-	if arg_6_0.num == arg_6_1.num then
-		return arg_6_0.minId < arg_6_1.minId
+function VersionActivity1_3AstrologyModel._sortResult(a, b)
+	if a.num == b.num then
+		return a.minId < b.minId
 	end
 
-	return arg_6_0.num > arg_6_1.num
+	return a.num > b.num
 end
 
-function var_0_0.generateStarProgressStr(arg_7_0)
-	local var_7_0
+function VersionActivity1_3AstrologyModel:generateStarProgressStr()
+	local result
 
-	for iter_7_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		local var_7_1 = arg_7_0._planetList[iter_7_0].previewAngle
+	for id = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local planet = self._planetList[id]
+		local angle = planet.previewAngle
 
-		if string.nilorempty(var_7_0) then
-			var_7_0 = string.format("%s", var_7_1)
+		if string.nilorempty(result) then
+			result = string.format("%s", angle)
 		else
-			var_7_0 = string.format("%s#%s", var_7_0, var_7_1)
+			result = string.format("%s#%s", result, angle)
 		end
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0.generateStarProgressCost(arg_8_0)
-	local var_8_0 = {}
-	local var_8_1 = {}
+function VersionActivity1_3AstrologyModel:generateStarProgressCost()
+	local result = {}
+	local planetList = {}
 
-	for iter_8_0 = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
-		local var_8_2 = arg_8_0._planetList[iter_8_0]:getCostNum()
+	for id = VersionActivity1_3AstrologyEnum.Planet.shuixing, VersionActivity1_3AstrologyEnum.Planet.tuxing do
+		local planet = self._planetList[id]
+		local costNum = planet:getCostNum()
 
-		if var_8_2 > 0 then
-			var_8_1[iter_8_0] = true
+		if costNum > 0 then
+			planetList[id] = true
 
-			for iter_8_1 = 1, var_8_2 do
-				table.insert(var_8_0, VersionActivity1_3AstrologyEnum.PlanetItem[iter_8_0])
+			for i = 1, costNum do
+				table.insert(result, VersionActivity1_3AstrologyEnum.PlanetItem[id])
 			end
 		end
 	end
 
-	return var_8_0, var_8_1
+	return result, planetList
 end
 
-function var_0_0.getPlanetMo(arg_9_0, arg_9_1)
-	return arg_9_0._planetList[arg_9_1]
+function VersionActivity1_3AstrologyModel:getPlanetMo(id)
+	return self._planetList[id]
 end
 
-function var_0_0.hasAdjust(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._planetList) do
-		if iter_10_1:hasAdjust() then
+function VersionActivity1_3AstrologyModel:hasAdjust()
+	for k, v in pairs(self._planetList) do
+		if v:hasAdjust() then
 			return true
 		end
 	end
 end
 
-function var_0_0.isEffectiveAdjust(arg_11_0)
-	if Activity126Model.instance:getStarNum() >= 10 then
+function VersionActivity1_3AstrologyModel:isEffectiveAdjust()
+	local num = Activity126Model.instance:getStarNum()
+
+	if num >= 10 then
 		return false
 	end
 
-	return arg_11_0:hasAdjust()
+	return self:hasAdjust()
 end
 
-function var_0_0.getAdjustNum(arg_12_0)
-	local var_12_0 = 0
+function VersionActivity1_3AstrologyModel:getAdjustNum()
+	local num = 0
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._planetList) do
-		var_12_0 = var_12_0 + iter_12_1:getCostNum()
+	for k, v in pairs(self._planetList) do
+		num = num + v:getCostNum()
 	end
 
-	return var_12_0
+	return num
 end
 
-function var_0_0.setStarReward(arg_13_0, arg_13_1)
-	arg_13_0._rewardList = arg_13_1
+function VersionActivity1_3AstrologyModel:setStarReward(list)
+	self._rewardList = list
 end
 
-function var_0_0.getStarReward(arg_14_0)
-	return arg_14_0._rewardList
+function VersionActivity1_3AstrologyModel:getStarReward()
+	return self._rewardList
 end
 
-function var_0_0.setExchangeList(arg_15_0, arg_15_1)
-	arg_15_0._exchangeList = arg_15_1
+function VersionActivity1_3AstrologyModel:setExchangeList(list)
+	self._exchangeList = list
 end
 
-function var_0_0.getExchangeList(arg_16_0)
-	return arg_16_0._exchangeList
+function VersionActivity1_3AstrologyModel:getExchangeList()
+	return self._exchangeList
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_3AstrologyModel.instance = VersionActivity1_3AstrologyModel.New()
 
-return var_0_0
+return VersionActivity1_3AstrologyModel

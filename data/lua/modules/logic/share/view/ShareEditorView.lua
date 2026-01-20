@@ -1,46 +1,48 @@
-﻿module("modules.logic.share.view.ShareEditorView", package.seeall)
+﻿-- chunkname: @modules/logic/share/view/ShareEditorView.lua
 
-local var_0_0 = class("ShareEditorView", BaseView)
+module("modules.logic.share.view.ShareEditorView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorawImage = gohelper.findChild(arg_1_0.viewGO, "container/frame/#go_rawImage")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "container/frame/#go_content")
-	arg_1_0._goplatformitem = gohelper.findChild(arg_1_0.viewGO, "container/frame/#go_platformitem")
-	arg_1_0._togglehideview = gohelper.findChildToggle(arg_1_0.viewGO, "container/frame/#toggle_hideview")
-	arg_1_0._simagelogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_logo")
+local ShareEditorView = class("ShareEditorView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ShareEditorView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorawImage = gohelper.findChild(self.viewGO, "container/frame/#go_rawImage")
+	self._gocontent = gohelper.findChild(self.viewGO, "container/frame/#go_content")
+	self._goplatformitem = gohelper.findChild(self.viewGO, "container/frame/#go_platformitem")
+	self._togglehideview = gohelper.findChildToggle(self.viewGO, "container/frame/#toggle_hideview")
+	self._simagelogo = gohelper.findChildSingleImage(self.viewGO, "#simage_logo")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ShareEditorView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ShareEditorView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._viewOpen = false
+function ShareEditorView:_editableInitView()
+	self._viewOpen = false
 
-	gohelper.setActive(arg_4_0._togglehideview.gameObject, false)
+	gohelper.setActive(self._togglehideview.gameObject, false)
 
-	local var_4_0
+	local list
 
 	if SDKMgr.instance:getChannelId() == SDKMgr.ChannelId.QQMobile then
-		var_4_0 = {
+		list = {
 			"fenxiang_qq",
 			"fenxiang_kongjian"
 		}
 	elseif SDKMgr.instance:getChannelId() == SDKMgr.ChannelId.Douyin then
-		var_4_0 = {
+		list = {
 			"fenxiang_douyin"
 		}
 	else
-		var_4_0 = {
+		list = {
 			"fenxiang_weixin",
 			"fenxiang_pengyouqvan",
 			"fenxiang_weibo",
@@ -53,7 +55,7 @@ function var_0_0._editableInitView(arg_4_0)
 	end
 
 	if GameChannelConfig.isEfun() then
-		var_4_0 = {
+		list = {
 			"fenxiang_facebook",
 			"fenxiang_instagram",
 			"fenxiang_line",
@@ -61,182 +63,182 @@ function var_0_0._editableInitView(arg_4_0)
 			"fenxiang_xiazai"
 		}
 	else
-		var_4_0 = {
+		list = {
 			"fenxiang_facebook",
 			"fenxiang_twitter",
 			"fenxiang_xiazai"
 		}
 	end
 
-	arg_4_0._listenerList = arg_4_0:getUserDataTb_()
+	self._listenerList = self:getUserDataTb_()
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_1 = gohelper.clone(arg_4_0._goplatformitem, arg_4_0._gocontent, iter_4_1)
+	for i, name in ipairs(list) do
+		local go = gohelper.clone(self._goplatformitem, self._gocontent, name)
 
-		gohelper.setActive(var_4_1, true)
+		gohelper.setActive(go, true)
 
-		local var_4_2 = var_4_1:GetComponent(gohelper.Type_Image)
+		local img = go:GetComponent(gohelper.Type_Image)
 
-		UISpriteSetMgr.instance:setShareSprite(var_4_2, iter_4_1)
+		UISpriteSetMgr.instance:setShareSprite(img, name)
 
-		local var_4_3 = SLFramework.UGUI.UIClickListener.Get(var_4_1)
+		local clickListener = SLFramework.UGUI.UIClickListener.Get(go)
 
-		var_4_3:AddClickListener(arg_4_0._onClick, arg_4_0, iter_4_1)
-		table.insert(arg_4_0._listenerList, var_4_3)
+		clickListener:AddClickListener(self._onClick, self, name)
+		table.insert(self._listenerList, clickListener)
 	end
 end
 
-function var_0_0._onClick(arg_5_0, arg_5_1)
-	if not arg_5_0._canClick then
+function ShareEditorView:_onClick(name)
+	if not self._canClick then
 		return
 	end
 
-	if string.nilorempty(arg_5_0._msg) then
+	if string.nilorempty(self._msg) then
 		logError("图片地址为空")
 
 		return
 	end
 
-	logNormal(arg_5_0._msg)
+	logNormal(self._msg)
 
-	if arg_5_1 == "fenxiang_weixin" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatFriend, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_pengyouqvan" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatMoment, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_weibo" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.SinaWeibo, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_douyin" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.TikTok, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_xiaohongshu" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.XiaoHongShu, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_qq" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQ, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_kongjian" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQZone, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_xiazai" then
-		SDKMgr.instance:saveImage(arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_facebook" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Facebook, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_twitter" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Twitter, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_line" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.LINE, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_whatsapp" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WHATSAPP, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_instagram" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.INSTAGRAM, SDKMgr.ShareContentType.Image, arg_5_0._msg)
-	elseif arg_5_1 == "fenxiang_discord" then
-		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.DISCORD, SDKMgr.ShareContentType.Image, arg_5_0._msg)
+	if name == "fenxiang_weixin" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatFriend, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_pengyouqvan" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WechatMoment, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_weibo" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.SinaWeibo, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_douyin" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.TikTok, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_xiaohongshu" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.XiaoHongShu, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_qq" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQ, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_kongjian" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.QQZone, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_xiazai" then
+		SDKMgr.instance:saveImage(self._msg)
+	elseif name == "fenxiang_facebook" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Facebook, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_twitter" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.Twitter, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_line" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.LINE, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_whatsapp" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.WHATSAPP, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_instagram" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.INSTAGRAM, SDKMgr.ShareContentType.Image, self._msg)
+	elseif name == "fenxiang_discord" then
+		SDKMgr.instance:shareMedia(SDKMgr.SharePlatform.DISCORD, SDKMgr.ShareContentType.Image, self._msg)
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._viewOpen = true
-	arg_6_0._canClick = false
-	arg_6_0._texture = arg_6_0.viewParam
-	arg_6_0._image = gohelper.onceAddComponent(arg_6_0._gorawImage, gohelper.Type_RawImage)
-	arg_6_0._image.texture = arg_6_0._texture
+function ShareEditorView:onOpen()
+	self._viewOpen = true
+	self._canClick = false
+	self._texture = self.viewParam
+	self._image = gohelper.onceAddComponent(self._gorawImage, gohelper.Type_RawImage)
+	self._image.texture = self._texture
 
-	arg_6_0._simagelogo:LoadImage(ResUrl.getLoginBgLangIcon("bg_logo"), arg_6_0._logoLoaded, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._overTime, arg_6_0, 1)
+	self._simagelogo:LoadImage(ResUrl.getLoginBgLangIcon("bg_logo"), self._logoLoaded, self)
+	TaskDispatcher.runDelay(self._overTime, self, 1)
 end
 
-function var_0_0._overTime(arg_7_0)
-	arg_7_0._canClick = true
+function ShareEditorView:_overTime()
+	self._canClick = true
 end
 
-function var_0_0._logoLoaded(arg_8_0)
-	if not arg_8_0._viewOpen then
+function ShareEditorView:_logoLoaded()
+	if not self._viewOpen then
 		return
 	end
 
-	local var_8_0 = arg_8_0._simagelogo.gameObject:GetComponent(typeof(UnityEngine.UI.Image))
+	local logoImage = self._simagelogo.gameObject:GetComponent(typeof(UnityEngine.UI.Image))
 
-	var_8_0:SetNativeSize()
+	logoImage:SetNativeSize()
 
-	local var_8_1 = var_8_0.sprite.texture
-	local var_8_2 = arg_8_0:_getRect(arg_8_0._texture, arg_8_0._simagelogo.gameObject)
+	local logoTexture = logoImage.sprite.texture
+	local rect = self:_getRect(self._texture, self._simagelogo.gameObject)
 
-	arg_8_0._co = coroutine.start(arg_8_0._addLogo, arg_8_0, arg_8_0._texture, var_8_1, var_8_2)
+	self._co = coroutine.start(self._addLogo, self, self._texture, logoTexture, rect)
 end
 
-function var_0_0._onCoroutineDone(arg_9_0)
-	arg_9_0._msg = arg_9_0:_saveImage(arg_9_0._texture)
-	arg_9_0._image.texture = arg_9_0._texture
-	arg_9_0._canClick = true
+function ShareEditorView:_onCoroutineDone()
+	self._msg = self:_saveImage(self._texture)
+	self._image.texture = self._texture
+	self._canClick = true
 end
 
-function var_0_0._getRect(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = gohelper.find("UICamera"):GetComponent(typeof(UnityEngine.Camera))
-	local var_10_1 = arg_10_2:GetComponent(typeof(UnityEngine.RectTransform))
-	local var_10_2 = System.Array.CreateInstance(typeof(Vector3), 4)
+function ShareEditorView:_getRect(texture, logoGO)
+	local camera = gohelper.find("UICamera"):GetComponent(typeof(UnityEngine.Camera))
+	local logoRectTransform = logoGO:GetComponent(typeof(UnityEngine.RectTransform))
+	local logoCorners = System.Array.CreateInstance(typeof(Vector3), 4)
 
-	var_10_1:GetWorldCorners(var_10_2)
+	logoRectTransform:GetWorldCorners(logoCorners)
 
-	local var_10_3 = System.Array.CreateInstance(typeof(Vector2), 4)
+	local logoPositions = System.Array.CreateInstance(typeof(Vector2), 4)
 
-	for iter_10_0 = 0, 3 do
-		var_10_3[iter_10_0] = UnityEngine.RectTransformUtility.WorldToScreenPoint(var_10_0, var_10_2[iter_10_0])
+	for i = 0, 3 do
+		logoPositions[i] = UnityEngine.RectTransformUtility.WorldToScreenPoint(camera, logoCorners[i])
 	end
 
-	local var_10_4 = var_10_3[2] - var_10_3[0]
-	local var_10_5 = Vector2(arg_10_1.width - var_10_4.x, arg_10_1.height - var_10_4.y)
+	local size = logoPositions[2] - logoPositions[0]
+	local position = Vector2(texture.width - size.x, texture.height - size.y)
 
-	return UnityEngine.Rect.New(var_10_5, var_10_4)
+	return UnityEngine.Rect.New(position, size)
 end
 
-function var_0_0._addLogo(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+function ShareEditorView:_addLogo(texture, logoTexture, rect)
 	WaitForEndOfFrame()
 
-	local var_11_0 = UnityEngine.RenderTexture.GetTemporary(arg_11_1.width, arg_11_1.height, 0, UnityEngine.RenderTextureFormat.Default)
-	local var_11_1 = UnityEngine.RenderTexture.active
+	local rt = UnityEngine.RenderTexture.GetTemporary(texture.width, texture.height, 0, UnityEngine.RenderTextureFormat.Default)
+	local original = UnityEngine.RenderTexture.active
 
-	UnityEngine.RenderTexture.active = var_11_0
+	UnityEngine.RenderTexture.active = rt
 
 	UnityEngine.GL.PushMatrix()
-	UnityEngine.GL.LoadPixelMatrix(0, arg_11_1.width, arg_11_1.height, 0)
-	UnityEngine.Graphics.Blit(arg_11_1, var_11_0)
-	UnityEngine.Graphics.DrawTexture(arg_11_3, arg_11_2)
-	arg_11_1:ReadPixels(UnityEngine.Rect.New(0, 0, arg_11_1.width, arg_11_1.height), 0, 0)
-	arg_11_1:Apply()
+	UnityEngine.GL.LoadPixelMatrix(0, texture.width, texture.height, 0)
+	UnityEngine.Graphics.Blit(texture, rt)
+	UnityEngine.Graphics.DrawTexture(rect, logoTexture)
+	texture:ReadPixels(UnityEngine.Rect.New(0, 0, texture.width, texture.height), 0, 0)
+	texture:Apply()
 	UnityEngine.GL.PopMatrix()
 
-	UnityEngine.RenderTexture.active = var_11_1
+	UnityEngine.RenderTexture.active = original
 
-	UnityEngine.RenderTexture.ReleaseTemporary(var_11_0)
-	arg_11_0:_onCoroutineDone()
+	UnityEngine.RenderTexture.ReleaseTemporary(rt)
+	self:_onCoroutineDone()
 end
 
-function var_0_0._saveImage(arg_12_0, arg_12_1)
-	local var_12_0 = UnityEngine.ImageConversion.EncodeToPNG(arg_12_1)
-	local var_12_1 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot")
-	local var_12_2 = System.DateTime.Now
-	local var_12_3 = string.format("screenshot_%s%s%s_%s%s%s%s.png", var_12_2.Year, var_12_2.Month, var_12_2.Day, var_12_2.Hour, var_12_2.Minute, var_12_2.Second, var_12_2.Millisecond)
-	local var_12_4 = System.IO.Path.Combine(var_12_1, var_12_3)
+function ShareEditorView:_saveImage(texture)
+	local bytes = UnityEngine.ImageConversion.EncodeToPNG(texture)
+	local directory = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot")
+	local now = System.DateTime.Now
+	local fileName = string.format("screenshot_%s%s%s_%s%s%s%s.png", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Millisecond)
+	local path = System.IO.Path.Combine(directory, fileName)
 
-	SLFramework.FileHelper.WriteAllBytesToPath(var_12_4, var_12_0)
+	SLFramework.FileHelper.WriteAllBytesToPath(path, bytes)
 
-	return var_12_4
+	return path
 end
 
-function var_0_0.onClose(arg_13_0)
-	arg_13_0._viewOpen = false
+function ShareEditorView:onClose()
+	self._viewOpen = false
 
-	UnityEngine.Object.Destroy(arg_13_0._texture)
+	UnityEngine.Object.Destroy(self._texture)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	if arg_14_0._co then
-		coroutine.stop(arg_14_0._co)
+function ShareEditorView:onDestroyView()
+	if self._co then
+		coroutine.stop(self._co)
 	end
 
-	TaskDispatcher.cancelTask(arg_14_0._overTime, arg_14_0)
+	TaskDispatcher.cancelTask(self._overTime, self)
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._listenerList) do
-		iter_14_1:RemoveClickListener()
+	for i, v in ipairs(self._listenerList) do
+		v:RemoveClickListener()
 	end
 
-	arg_14_0._simagelogo:UnLoadImage()
+	self._simagelogo:UnLoadImage()
 end
 
-return var_0_0
+return ShareEditorView

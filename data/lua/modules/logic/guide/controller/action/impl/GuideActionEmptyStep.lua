@@ -1,10 +1,12 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionEmptyStep", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionEmptyStep.lua
 
-local var_0_0 = class("GuideActionEmptyStep", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionEmptyStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	arg_1_0:onDone(true)
+local GuideActionEmptyStep = class("GuideActionEmptyStep", BaseGuideAction)
+
+function GuideActionEmptyStep:onStart(context)
+	GuideActionEmptyStep.super.onStart(self, context)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionEmptyStep

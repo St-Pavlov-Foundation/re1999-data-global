@@ -1,241 +1,246 @@
-﻿module("modules.logic.scene.view.LoadingView", package.seeall)
+﻿-- chunkname: @modules/logic/scene/view/LoadingView.lua
 
-local var_0_0 = class("LoadingView", BaseView)
-local var_0_1 = 5
-local var_0_2 = 0.1
+module("modules.logic.scene.view.LoadingView", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._totalWeight = 0
+local LoadingView = class("LoadingView", BaseView)
+local ForceCloseLoadingDelay = 5
+local DelayCloseLoadingTime = 0.1
+
+function LoadingView:ctor()
+	self._totalWeight = 0
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.root = gohelper.findChild(arg_2_0.viewGO, "root")
-	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_bg")
-	arg_2_0._iconList = arg_2_0:getUserDataTb_()
+function LoadingView:onInitView()
+	self.root = gohelper.findChild(self.viewGO, "root")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._iconList = self:getUserDataTb_()
 
-	for iter_2_0 = 1, 3 do
-		local var_2_0 = gohelper.findChildSingleImage(arg_2_0.viewGO, "root/center/image_pic" .. iter_2_0)
+	for i = 1, 3 do
+		local icon = gohelper.findChildSingleImage(self.viewGO, "root/center/image_pic" .. i)
 
-		table.insert(arg_2_0._iconList, var_2_0)
+		table.insert(self._iconList, icon)
 	end
 
-	arg_2_0._txttip = gohelper.findChildText(arg_2_0.viewGO, "root/center/#txt_tip")
-	arg_2_0._animator = arg_2_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._txttip = gohelper.findChildText(self.viewGO, "root/center/#txt_tip")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onOpen(arg_3_0)
-	gohelper.setActive(arg_3_0.viewGO, true)
-	gohelper.setSibling(arg_3_0.viewGO, 2)
-	arg_3_0._simagebg:LoadImage(ResUrl.getLoadingBg("full/bg_loading"))
+function LoadingView:onOpen()
+	gohelper.setActive(self.viewGO, true)
+	gohelper.setSibling(self.viewGO, 2)
+	self._simagebg:LoadImage(ResUrl.getLoadingBg("full/bg_loading"))
 
-	arg_3_0._enableClose = false
-	arg_3_0._waitClose = false
+	self._enableClose = false
+	self._waitClose = false
 
-	arg_3_0._animator:Play(UIAnimationName.Open, 0, 0)
-	TaskDispatcher.runDelay(arg_3_0._onDelayStartAudio, arg_3_0, 0.8)
-	arg_3_0:_setIcon()
-	arg_3_0:_setRandomText()
-	arg_3_0:addEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, arg_3_0._againOpenLoading, arg_3_0)
-	arg_3_0:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, arg_3_0._delayCloseLoading, arg_3_0)
-	arg_3_0:addEventCb(GameSceneMgr.instance, SceneEventName.SetManualClose, arg_3_0._setManualClose, arg_3_0)
-	arg_3_0:addEventCb(GameSceneMgr.instance, SceneEventName.ManualClose, arg_3_0._manualClose, arg_3_0)
+	self._animator:Play(UIAnimationName.Open, 0, 0)
+	TaskDispatcher.runDelay(self._onDelayStartAudio, self, 0.8)
+	self:_setIcon()
+	self:_setRandomText()
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, self._againOpenLoading, self)
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, self._delayCloseLoading, self)
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.SetManualClose, self._setManualClose, self)
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.ManualClose, self._manualClose, self)
 end
 
-function var_0_0.setlineWidth(arg_4_0)
-	local var_4_0 = 242
-	local var_4_1 = 115
-	local var_4_2 = UnityEngine.Screen.width / 2 - var_4_0 - var_4_1
+function LoadingView:setlineWidth()
+	local leftOffset = 242
+	local rightOffset = 115
+	local halfScreenWidth = UnityEngine.Screen.width / 2
+	local lineWidth = halfScreenWidth - leftOffset - rightOffset
 
-	for iter_4_0 = 1, 2 do
-		local var_4_3 = string.format("duan_xian%s", iter_4_0)
-		local var_4_4 = string.format("xian%s", iter_4_0)
-		local var_4_5 = gohelper.findChild(arg_4_0.root, var_4_3).transform
-		local var_4_6 = gohelper.findChild(arg_4_0.root, var_4_4).transform
+	for i = 1, 2 do
+		local str1 = string.format("duan_xian%s", i)
+		local str2 = string.format("xian%s", i)
+		local duanxianTrs = gohelper.findChild(self.root, str1).transform
+		local xianTrs = gohelper.findChild(self.root, str2).transform
 
-		recthelper.setWidth(var_4_5, var_4_2)
-		recthelper.setWidth(var_4_6, var_4_2)
+		recthelper.setWidth(duanxianTrs, lineWidth)
+		recthelper.setWidth(xianTrs, lineWidth)
 	end
 end
 
-function var_0_0._onDelayStartAudio(arg_5_0)
+function LoadingView:_onDelayStartAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_loading_scene)
 end
 
-function var_0_0.onClose(arg_6_0)
+function LoadingView:onClose()
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
 		RoomHelper.logEnd("关闭loading")
 	end
 
-	gohelper.setActive(arg_6_0.viewGO, false)
-	arg_6_0._simagebg:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_6_0._errorCloseLoading, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._waitClose, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._onDelayStartAudio, arg_6_0)
-	arg_6_0:removeEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, arg_6_0._againOpenLoading, arg_6_0)
-	arg_6_0:removeEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, arg_6_0._delayCloseLoading, arg_6_0)
-	arg_6_0:removeEventCb(GameSceneMgr.instance, SceneEventName.SetManualClose, arg_6_0._setManualClose, arg_6_0)
-	arg_6_0:removeEventCb(GameSceneMgr.instance, SceneEventName.ManualClose, arg_6_0._manualClose, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.closeThis, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.loadingAnimEnd, arg_6_0)
+	gohelper.setActive(self.viewGO, false)
+	self._simagebg:UnLoadImage()
+	TaskDispatcher.cancelTask(self._errorCloseLoading, self)
+	TaskDispatcher.cancelTask(self._waitClose, self)
+	TaskDispatcher.cancelTask(self._onDelayStartAudio, self)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.AgainOpenLoading, self._againOpenLoading, self)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, self._delayCloseLoading, self)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.SetManualClose, self._setManualClose, self)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.ManualClose, self._manualClose, self)
+	TaskDispatcher.cancelTask(self.closeThis, self)
+	TaskDispatcher.cancelTask(self.loadingAnimEnd, self)
 end
 
-function var_0_0._againOpenLoading(arg_7_0)
+function LoadingView:_againOpenLoading()
 	logNormal("loading打开状态下，又调用了打开loading，取消计时，继续走")
-	TaskDispatcher.cancelTask(arg_7_0._errorCloseLoading, arg_7_0)
+	TaskDispatcher.cancelTask(self._errorCloseLoading, self)
 end
 
-function var_0_0._setIcon(arg_8_0)
-	local var_8_0 = arg_8_0:_getFitIcons()
-	local var_8_1 = arg_8_0:_getRandomCO(var_8_0)
+function LoadingView:_setIcon()
+	local fitIcons = self:_getFitIcons()
+	local iconCo = self:_getRandomCO(fitIcons)
 
-	if var_8_1 then
-		local var_8_2 = var_8_1.pic
+	if iconCo then
+		local resName = iconCo.pic
 
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._iconList) do
-			iter_8_1:LoadImage(ResUrl.getLoadingBg(var_8_2 .. "_" .. iter_8_0))
+		for i, v in ipairs(self._iconList) do
+			v:LoadImage(ResUrl.getLoadingBg(resName .. "_" .. i))
 		end
 	end
 end
 
-function var_0_0._getFitIcons(arg_9_0)
-	local var_9_0 = var_0_0.getLoadingSceneType(arg_9_0.viewParam)
-	local var_9_1 = SceneConfig.instance:getLoadingIcons()
-	local var_9_2 = {}
+function LoadingView:_getFitIcons()
+	local sceneType = LoadingView.getLoadingSceneType(self.viewParam)
+	local iconCos = SceneConfig.instance:getLoadingIcons()
+	local fits = {}
 
-	for iter_9_0, iter_9_1 in pairs(var_9_1) do
-		local var_9_3 = string.splitToNumber(iter_9_1.scenes, "#")
+	for _, v in pairs(iconCos) do
+		local scenes = string.splitToNumber(v.scenes, "#")
 
-		for iter_9_2, iter_9_3 in pairs(var_9_3) do
-			if iter_9_3 == var_9_0 then
-				table.insert(var_9_2, iter_9_1)
+		for _, scene in pairs(scenes) do
+			if scene == sceneType then
+				table.insert(fits, v)
 			end
 		end
 	end
 
-	return var_9_2
+	return fits
 end
 
-function var_0_0._setRandomText(arg_10_0)
-	local var_10_0 = arg_10_0:_getFitTips()
-	local var_10_1 = arg_10_0:_getRandomCO(var_10_0)
+function LoadingView:_setRandomText()
+	local textCoList = self:_getFitTips()
+	local txtCo = self:_getRandomCO(textCoList)
 
-	if var_10_1 and arg_10_0._txttip then
-		arg_10_0._txttip.text = var_10_1.content
+	if txtCo and self._txttip then
+		self._txttip.text = txtCo.content
 	else
-		arg_10_0._txttip.text = ""
+		self._txttip.text = ""
 	end
 end
 
-function var_0_0.getLoadingSceneType(arg_11_0)
-	local var_11_0 = LoadingEnum.LoadingSceneType.Other
+function LoadingView.getLoadingSceneType(sceneType)
+	local type = LoadingEnum.LoadingSceneType.Other
 
-	if arg_11_0 == SceneType.Main then
-		var_11_0 = LoadingEnum.LoadingSceneType.Main
-	elseif arg_11_0 == SceneType.Summon then
-		var_11_0 = LoadingEnum.LoadingSceneType.Summon
-	elseif arg_11_0 == SceneType.Room then
-		var_11_0 = LoadingEnum.LoadingSceneType.Room
-	elseif arg_11_0 == SceneType.Explore then
-		var_11_0 = LoadingEnum.LoadingSceneType.Explore
+	if sceneType == SceneType.Main then
+		type = LoadingEnum.LoadingSceneType.Main
+	elseif sceneType == SceneType.Summon then
+		type = LoadingEnum.LoadingSceneType.Summon
+	elseif sceneType == SceneType.Room then
+		type = LoadingEnum.LoadingSceneType.Room
+	elseif sceneType == SceneType.Explore then
+		type = LoadingEnum.LoadingSceneType.Explore
 	end
 
-	return var_11_0
+	return type
 end
 
-function var_0_0._getFitTips(arg_12_0)
-	local var_12_0 = var_0_0.getLoadingSceneType(arg_12_0.viewParam)
-	local var_12_1 = PlayerModel.instance:getPlayerLevel()
-	local var_12_2 = {}
+function LoadingView:_getFitTips()
+	local sceneType = LoadingView.getLoadingSceneType(self.viewParam)
+	local level = PlayerModel.instance:getPlayerLevel()
+	local fits = {}
 
-	for iter_12_0, iter_12_1 in pairs(SceneConfig.instance:getLoadingTexts()) do
-		local var_12_3 = string.splitToNumber(iter_12_1.scenes, "#")
+	for _, v in pairs(SceneConfig.instance:getLoadingTexts()) do
+		local scenes = string.splitToNumber(v.scenes, "#")
 
-		for iter_12_2, iter_12_3 in pairs(var_12_3) do
-			if iter_12_3 == var_12_0 then
-				if var_12_1 == 0 then
-					table.insert(var_12_2, iter_12_1)
-				elseif var_12_1 >= iter_12_1.unlocklevel then
-					table.insert(var_12_2, iter_12_1)
+		for _, scene in pairs(scenes) do
+			if scene == sceneType then
+				if level == 0 then
+					table.insert(fits, v)
+				elseif level >= v.unlocklevel then
+					table.insert(fits, v)
 				end
 			end
 		end
 	end
 
-	return var_12_2
+	return fits
 end
 
-function var_0_0._getRandomCO(arg_13_0, arg_13_1)
-	local var_13_0 = 0
+function LoadingView:_getRandomCO(list)
+	local totalWeight = 0
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		var_13_0 = var_13_0 + iter_13_1.weight
+	for _, co in ipairs(list) do
+		totalWeight = totalWeight + co.weight
 	end
 
-	local var_13_1 = math.floor(math.random() * var_13_0)
+	local rand = math.floor(math.random() * totalWeight)
 
-	for iter_13_2, iter_13_3 in ipairs(arg_13_1) do
-		if var_13_1 < iter_13_3.weight then
-			return iter_13_3
+	for _, co in ipairs(list) do
+		if rand < co.weight then
+			return co
 		else
-			var_13_1 = var_13_1 - iter_13_3.weight
+			rand = rand - co.weight
 		end
 	end
 
-	local var_13_2 = #arg_13_1
+	local count = #list
 
-	if var_13_2 > 1 then
-		return arg_13_1[math.random(1, var_13_2)]
-	elseif var_13_2 == 1 then
-		return arg_13_1[1]
+	if count > 1 then
+		local randIndex = math.random(1, count)
+
+		return list[randIndex]
+	elseif count == 1 then
+		return list[1]
 	end
 end
 
-function var_0_0._errorCloseLoading(arg_14_0)
-	local var_14_0 = GameSceneMgr.instance:getCurSceneType()
-	local var_14_1 = GameSceneMgr.instance:getCurSceneId()
-	local var_14_2 = GameSceneMgr.instance:isLoading()
+function LoadingView:_errorCloseLoading()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+	local sceneId = GameSceneMgr.instance:getCurSceneId()
+	local isLoading = GameSceneMgr.instance:isLoading()
 
-	logError(string.format("loading超时，关闭loading看看 sceneType_%d sceneId_%d isLoading_%s", var_14_0 or -1, var_14_1 or -1, var_14_2 and "true" or "false"))
-	arg_14_0:_delayCloseLoading()
+	logError(string.format("loading超时，关闭loading看看 sceneType_%d sceneId_%d isLoading_%s", sceneType or -1, sceneId or -1, isLoading and "true" or "false"))
+	self:_delayCloseLoading()
 end
 
-function var_0_0._delayCloseLoading(arg_15_0)
-	if not arg_15_0._needManualClose then
-		arg_15_0:_closeLoading()
+function LoadingView:_delayCloseLoading()
+	if not self._needManualClose then
+		self:_closeLoading()
 	else
 		logNormal("暂时无法关闭loading，设置了手动关闭")
 	end
 end
 
-function var_0_0._closeLoading(arg_16_0)
-	arg_16_0._animator:Play("loading_close")
-	TaskDispatcher.cancelTask(arg_16_0._onDelayStartAudio, arg_16_0)
+function LoadingView:_closeLoading()
+	self._animator:Play("loading_close")
+	TaskDispatcher.cancelTask(self._onDelayStartAudio, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_loading_scene)
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
 		RoomHelper.logElapse("进入小屋场景完成，开始关闭loading")
 	end
 
-	TaskDispatcher.runDelay(arg_16_0.closeThis, arg_16_0, 1)
-	TaskDispatcher.runDelay(arg_16_0.loadingAnimEnd, arg_16_0, 0.5)
+	TaskDispatcher.runDelay(self.closeThis, self, 1)
+	TaskDispatcher.runDelay(self.loadingAnimEnd, self, 0.5)
 end
 
-function var_0_0.loadingAnimEnd(arg_17_0)
+function LoadingView:loadingAnimEnd()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.LoadingAnimEnd)
 end
 
-function var_0_0._setManualClose(arg_18_0)
+function LoadingView:_setManualClose()
 	logNormal(Time.time .. " LoadingView:_setManualClose")
 
-	arg_18_0._needManualClose = true
+	self._needManualClose = true
 end
 
-function var_0_0._manualClose(arg_19_0)
+function LoadingView:_manualClose()
 	logNormal(Time.time .. " LoadingView:_manualClose")
 
-	arg_19_0._needManualClose = nil
+	self._needManualClose = nil
 
-	arg_19_0:_closeLoading()
+	self:_closeLoading()
 end
 
-return var_0_0
+return LoadingView

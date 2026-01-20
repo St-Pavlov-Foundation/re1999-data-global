@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.rpc.Activity119Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/rpc/Activity119Rpc.lua
 
-local var_0_0 = class("Activity119Rpc", BaseRpc)
+module("modules.logic.versionactivity1_2.dreamtail.rpc.Activity119Rpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local Activity119Rpc = class("Activity119Rpc", BaseRpc)
 
-return var_0_0
+Activity119Rpc.instance = Activity119Rpc.New()
+
+return Activity119Rpc

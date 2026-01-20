@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_explore_story", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_explore_story.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_explore_story", package.seeall)
+
+local lua_explore_story = {}
+local fields = {
 	type = 6,
 	res = 5,
 	chapterId = 1,
@@ -10,18 +12,18 @@ local var_0_1 = {
 	content = 7,
 	desc = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"chapterId",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	title = 1,
 	content = 3,
 	desc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_explore_story.onLoad(json)
+	lua_explore_story.configList, lua_explore_story.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_explore_story

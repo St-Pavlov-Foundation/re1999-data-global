@@ -1,100 +1,107 @@
-﻿module("modules.logic.popup.controller.PopupCacheController", package.seeall)
+﻿-- chunkname: @modules/logic/popup/controller/PopupCacheController.lua
 
-local var_0_0 = class("PopupCacheController", BaseController)
+module("modules.logic.popup.controller.PopupCacheController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local PopupCacheController = class("PopupCacheController", BaseController)
+
+function PopupCacheController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function PopupCacheController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._viewChangeCheckIsInMainView, arg_3_0)
+function PopupCacheController:addConstEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._viewChangeCheckIsInMainView, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_4_0, arg_4_1)
-	if arg_4_1 ~= ViewName.MainView then
+function PopupCacheController:_onOpenViewFinish(viewName)
+	if viewName ~= ViewName.MainView then
 		return
 	end
 
-	arg_4_0:_viewChangeCheckIsInMainView()
+	self:_viewChangeCheckIsInMainView()
 end
 
-function var_0_0._viewChangeCheckIsInMainView(arg_5_0)
-	local var_5_0 = PopupCacheModel.instance:getCount()
+function PopupCacheController:_viewChangeCheckIsInMainView()
+	local cacheCount = PopupCacheModel.instance:getCount()
 
-	if not var_5_0 or var_5_0 <= 0 then
+	if not cacheCount or cacheCount <= 0 then
 		return
 	end
 
-	if not MainController.instance:isInMainView() then
+	local isInMainView = MainController.instance:isInMainView()
+
+	if not isInMainView then
 		return
 	end
 
-	if PopupHelper.checkInGuide() then
+	local isInGuide = PopupHelper.checkInGuide()
+
+	if isInGuide then
 		return
 	end
 
-	arg_5_0:showCachePopupView()
+	self:showCachePopupView()
 end
 
-function var_0_0.showCachePopupView(arg_6_0)
-	local var_6_0 = PopupCacheModel.instance:popNextPopupParam()
+function PopupCacheController:showCachePopupView()
+	local popupParam = PopupCacheModel.instance:popNextPopupParam()
 
-	if not var_6_0 then
+	if not popupParam then
 		return
 	end
 
-	local var_6_1 = var_6_0.customPopupFunc
+	local customPopupFunc = popupParam.customPopupFunc
 
-	if var_6_1 then
-		var_6_1(var_6_0)
+	if customPopupFunc then
+		customPopupFunc(popupParam)
 	else
-		arg_6_0:defaultShowCommonPropView(var_6_0)
+		self:defaultShowCommonPropView(popupParam)
 	end
 end
 
-function var_0_0.defaultShowCommonPropView(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1 and arg_7_1.materialDataMOList
+function PopupCacheController:defaultShowCommonPropView(param)
+	local co = param and param.materialDataMOList
 
-	if not var_7_0 then
+	if not co then
 		return
 	end
 
-	RoomController.instance:popUpRoomBlockPackageView(var_7_0)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, var_7_0)
+	RoomController.instance:popUpRoomBlockPackageView(co)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, co)
 end
 
-function var_0_0.tryCacheGetPropView(arg_8_0, arg_8_1, arg_8_2)
-	if type(arg_8_2) ~= "table" then
+function PopupCacheController:tryCacheGetPropView(getApproach, param)
+	if type(param) ~= "table" then
 		logError(string.format("PopupCacheController:tryCacheGetPropView error, need table param"))
 
 		return false
 	end
 
-	local var_8_0 = false
-	local var_8_1 = arg_8_1 and PopupEnum.CheckCacheGetApproach[arg_8_1] or {}
+	local result = false
+	local checkList = getApproach and PopupEnum.CheckCacheGetApproach[getApproach] or {}
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = PopupEnum.CheckCacheHandler[iter_8_1]
+	for _, cacheType in ipairs(checkList) do
+		local checkHandler = PopupEnum.CheckCacheHandler[cacheType]
+		local needCache = checkHandler and checkHandler() or false
 
-		if var_8_2 and var_8_2() or false then
-			arg_8_2.cacheType = iter_8_1
+		if needCache then
+			param.cacheType = cacheType
 
-			PopupCacheModel.instance:recordCachePopupParam(arg_8_2)
+			PopupCacheModel.instance:recordCachePopupParam(param)
 
-			var_8_0 = true
+			result = true
 
 			break
 		end
 	end
 
-	return var_8_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+PopupCacheController.instance = PopupCacheController.New()
 
-return var_0_0
+return PopupCacheController

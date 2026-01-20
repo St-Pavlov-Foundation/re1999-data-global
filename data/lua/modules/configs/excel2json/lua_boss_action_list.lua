@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_boss_action_list", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_boss_action_list.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_boss_action_list", package.seeall)
+
+local lua_boss_action_list = {}
+local fields = {
 	actionId = 1,
 	actionId3 = 5,
 	actionId7 = 9,
@@ -15,13 +17,13 @@ local var_0_1 = {
 	actionId9 = 11,
 	actionId2 = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"actionId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_boss_action_list.onLoad(json)
+	lua_boss_action_list.configList, lua_boss_action_list.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_boss_action_list

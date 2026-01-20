@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.StrongHoldPowerChangeStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/StrongHoldPowerChangeStep.lua
 
-local var_0_0 = class("StrongHoldPowerChangeStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.StrongHoldPowerChangeStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
+local StrongHoldPowerChangeStep = class("StrongHoldPowerChangeStep", EliminateTeamChessStepBase)
 
-	if var_1_0.teamType == nil or var_1_0.diffValue == nil or var_1_0.strongholdId == nil then
-		arg_1_0:onDone(true)
+function StrongHoldPowerChangeStep:onStart()
+	local data = self._data
+
+	if data.teamType == nil or data.diffValue == nil or data.strongholdId == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	EliminateTeamChessModel.instance:updateStrongholdsScore(var_1_0.strongholdId, var_1_0.teamType, var_1_0.diffValue)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.StrongHoldPowerChange, var_1_0.strongholdId, var_1_0.teamType, var_1_0.diffValue)
-	arg_1_0:onDone(true)
+	EliminateTeamChessModel.instance:updateStrongholdsScore(data.strongholdId, data.teamType, data.diffValue)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.StrongHoldPowerChange, data.strongholdId, data.teamType, data.diffValue)
+	self:onDone(true)
 end
 
-return var_0_0
+return StrongHoldPowerChangeStep

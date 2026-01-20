@@ -1,252 +1,259 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.outside.Act174RotationView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/outside/Act174RotationView.lua
 
-local var_0_0 = class("Act174RotationView", BaseView)
+module("modules.logic.versionactivity2_3.act174.view.outside.Act174RotationView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroleitem = gohelper.findChild(arg_1_0.viewGO, "right/scroll_rule/Viewport/go_content/role/#go_roleitem")
-	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "right/scroll_rule/Viewport/go_content/collection/#go_collectionitem")
-	arg_1_0._gobuffitem = gohelper.findChild(arg_1_0.viewGO, "right/scroll_rule/Viewport/go_content/buff/#go_buffitem")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Act174RotationView = class("Act174RotationView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act174RotationView:onInitView()
+	self._goroleitem = gohelper.findChild(self.viewGO, "right/scroll_rule/Viewport/go_content/role/#go_roleitem")
+	self._gocollectionitem = gohelper.findChild(self.viewGO, "right/scroll_rule/Viewport/go_content/collection/#go_collectionitem")
+	self._gobuffitem = gohelper.findChild(self.viewGO, "right/scroll_rule/Viewport/go_content/buff/#go_buffitem")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act174RotationView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act174RotationView:removeEvents()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function Act174RotationView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.anim = gohelper.findChild(arg_5_0.viewGO, "right"):GetComponent(gohelper.Type_Animator)
-	arg_5_0._txtRule2 = gohelper.findChildText(arg_5_0.viewGO, "right/simage_rightbg/txt_rule2")
+function Act174RotationView:_editableInitView()
+	local goAnim = gohelper.findChild(self.viewGO, "right")
+
+	self.anim = goAnim:GetComponent(gohelper.Type_Animator)
+	self._txtRule2 = gohelper.findChildText(self.viewGO, "right/simage_rightbg/txt_rule2")
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Act174RotationView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.actId = Activity174Model.instance:getCurActId()
-	arg_7_0.actInfo = Activity174Model.instance:getActInfo()
+function Act174RotationView:onOpen()
+	self.actId = Activity174Model.instance:getCurActId()
+	self.actInfo = Activity174Model.instance:getActInfo()
 
-	arg_7_0:refreshSeason()
-	arg_7_0:initCharacterItem()
-	arg_7_0:initCollectionItem()
-	arg_7_0:initBuffItem()
+	self:refreshSeason()
+	self:initCharacterItem()
+	self:initCollectionItem()
+	self:initBuffItem()
 end
 
-function var_0_0.refreshSeason(arg_8_0)
-	local var_8_0 = {}
+function Act174RotationView:refreshSeason()
+	local seasonConfigDic = {}
 
-	for iter_8_0, iter_8_1 in ipairs(lua_activity174_season.configList) do
-		if iter_8_1.activityId == arg_8_0.actId then
-			var_8_0[iter_8_1.season] = iter_8_1
+	for _, co in ipairs(lua_activity174_season.configList) do
+		if co.activityId == self.actId then
+			seasonConfigDic[co.season] = co
 		end
 	end
 
-	local var_8_1 = arg_8_0.actInfo.season
-	local var_8_2 = var_8_0[var_8_1 + 1]
+	local season = self.actInfo.season
+	local seasonCo = seasonConfigDic[season + 1]
 
-	if var_8_2 and not string.nilorempty(var_8_2.openTime) then
-		local var_8_3 = TimeUtil.stringToTimestamp(var_8_2.openTime) + ServerTime.clientToServerOffset() - ServerTime.now()
-		local var_8_4 = TimeUtil.secondsToDDHHMMSS(var_8_3)
-		local var_8_5 = luaLang("act174_rotation_rule2")
+	if seasonCo and not string.nilorempty(seasonCo.openTime) then
+		local leftSec = TimeUtil.stringToTimestamp(seasonCo.openTime) + ServerTime.clientToServerOffset()
 
-		arg_8_0._txtRule2.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_8_5, GameUtil.getNum2Chinese(var_8_4))
+		leftSec = leftSec - ServerTime.now()
+
+		local remainDay = TimeUtil.secondsToDDHHMMSS(leftSec)
+		local txt = luaLang("act174_rotation_rule2")
+
+		self._txtRule2.text = GameUtil.getSubPlaceholderLuaLangOneParam(txt, GameUtil.getNum2Chinese(remainDay))
 	end
 
-	gohelper.setActive(arg_8_0._txtRule2, var_8_0[var_8_1 + 1])
+	gohelper.setActive(self._txtRule2, seasonConfigDic[season + 1])
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0:closeTipView()
+function Act174RotationView:onClose()
+	self:closeTipView()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mln_unlock)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.characterItemList) do
-		iter_10_1.heroIcon:UnLoadImage()
+function Act174RotationView:onDestroyView()
+	for _, item in ipairs(self.characterItemList) do
+		item.heroIcon:UnLoadImage()
 	end
 
-	for iter_10_2, iter_10_3 in ipairs(arg_10_0.collectionItemList) do
-		iter_10_3.collectionIcon:UnLoadImage()
+	for _, item in ipairs(self.collectionItemList) do
+		item.collectionIcon:UnLoadImage()
 	end
 
-	for iter_10_4, iter_10_5 in ipairs(arg_10_0.buffItemList) do
-		iter_10_5.buffIcon:UnLoadImage()
+	for _, item in ipairs(self.buffItemList) do
+		item.buffIcon:UnLoadImage()
 	end
 end
 
-function var_0_0.initCharacterItem(arg_11_0)
-	arg_11_0.characterItemList = {}
+function Act174RotationView:initCharacterItem()
+	self.characterItemList = {}
 
-	local var_11_0 = arg_11_0.actInfo:getRuleHeroCoList()
+	local heroCoList = self.actInfo:getRuleHeroCoList()
 
-	table.sort(var_11_0, Activity174Helper.sortActivity174RoleCo)
+	table.sort(heroCoList, Activity174Helper.sortActivity174RoleCo)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_1 = arg_11_0:getUserDataTb_()
+	for index, heroCo in ipairs(heroCoList) do
+		local item = self:getUserDataTb_()
 
-		var_11_1.config = iter_11_1
+		item.config = heroCo
 
-		local var_11_2 = gohelper.cloneInPlace(arg_11_0._goroleitem)
-		local var_11_3 = gohelper.findButtonWithAudio(var_11_2)
+		local go = gohelper.cloneInPlace(self._goroleitem)
+		local btnClick = gohelper.findButtonWithAudio(go)
 
-		arg_11_0:addClickCb(var_11_3, arg_11_0.clickCharacterItem, arg_11_0, iter_11_0)
+		self:addClickCb(btnClick, self.clickCharacterItem, self, index)
 
-		local var_11_4 = gohelper.findChildImage(var_11_2, "rare")
+		local imageRare = gohelper.findChildImage(go, "rare")
 
-		var_11_1.heroIcon = gohelper.findChildSingleImage(var_11_2, "heroicon")
-		var_11_1.goSelect = gohelper.findChild(var_11_2, "go_select")
+		item.heroIcon = gohelper.findChildSingleImage(go, "heroicon")
+		item.goSelect = gohelper.findChild(go, "go_select")
 
-		var_11_1.heroIcon:LoadImage(ResUrl.getHeadIconSmall(iter_11_1.skinId))
-		UISpriteSetMgr.instance:setCommonSprite(var_11_4, "bgequip" .. tostring(CharacterEnum.Color[iter_11_1.rare]))
+		item.heroIcon:LoadImage(ResUrl.getHeadIconSmall(heroCo.skinId))
+		UISpriteSetMgr.instance:setCommonSprite(imageRare, "bgequip" .. tostring(CharacterEnum.Color[heroCo.rare]))
 
-		arg_11_0.characterItemList[iter_11_0] = var_11_1
+		self.characterItemList[index] = item
 	end
 
-	gohelper.setActive(arg_11_0._goroleitem, false)
+	gohelper.setActive(self._goroleitem, false)
 end
 
-function var_0_0.clickCharacterItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.characterItemList[arg_12_1]
+function Act174RotationView:clickCharacterItem(index)
+	local item = self.characterItemList[index]
 
-	if var_12_0 == arg_12_0.selectItem then
-		arg_12_0:closeTipView()
-		arg_12_0:refreshSelect()
+	if item == self.selectItem then
+		self:closeTipView()
+		self:refreshSelect()
 	else
-		local var_12_1 = {
-			type = Activity174Enum.ItemTipType.Character,
-			co = var_12_0.config,
-			pos = Vector2.New(-470, 0)
-		}
+		local viewParam = {}
 
-		Activity174Controller.instance:openItemTipView(var_12_1)
-		arg_12_0:refreshSelect(var_12_0)
+		viewParam.type = Activity174Enum.ItemTipType.Character
+		viewParam.co = item.config
+		viewParam.pos = Vector2.New(-470, 0)
+
+		Activity174Controller.instance:openItemTipView(viewParam)
+		self:refreshSelect(item)
 	end
 end
 
-function var_0_0.initCollectionItem(arg_13_0)
-	arg_13_0.collectionItemList = {}
+function Act174RotationView:initCollectionItem()
+	self.collectionItemList = {}
 
-	local var_13_0 = arg_13_0.actInfo:getRuleCollectionCoList()
+	local collectionCoList = self.actInfo:getRuleCollectionCoList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_1 = arg_13_0:getUserDataTb_()
+	for index, config in ipairs(collectionCoList) do
+		local item = self:getUserDataTb_()
 
-		var_13_1.config = iter_13_1
+		item.config = config
 
-		local var_13_2 = gohelper.cloneInPlace(arg_13_0._gocollectionitem)
-		local var_13_3 = gohelper.findButtonWithAudio(var_13_2)
+		local go = gohelper.cloneInPlace(self._gocollectionitem)
+		local btnClick = gohelper.findButtonWithAudio(go)
 
-		arg_13_0:addClickCb(var_13_3, arg_13_0.clickCollectionItem, arg_13_0, iter_13_0)
+		self:addClickCb(btnClick, self.clickCollectionItem, self, index)
 
-		local var_13_4 = gohelper.findChildImage(var_13_2, "rare")
+		local imageRare = gohelper.findChildImage(go, "rare")
 
-		var_13_1.collectionIcon = gohelper.findChildSingleImage(var_13_2, "collectionicon")
-		var_13_1.goSelect = gohelper.findChild(var_13_2, "go_select")
+		item.collectionIcon = gohelper.findChildSingleImage(go, "collectionicon")
+		item.goSelect = gohelper.findChild(go, "go_select")
 
-		UISpriteSetMgr.instance:setAct174Sprite(var_13_4, "act174_propitembg_" .. iter_13_1.rare)
-		var_13_1.collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(iter_13_1.icon))
+		UISpriteSetMgr.instance:setAct174Sprite(imageRare, "act174_propitembg_" .. config.rare)
+		item.collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(config.icon))
 
-		arg_13_0.collectionItemList[iter_13_0] = var_13_1
+		self.collectionItemList[index] = item
 	end
 
-	gohelper.setActive(arg_13_0._gocollectionitem, false)
+	gohelper.setActive(self._gocollectionitem, false)
 end
 
-function var_0_0.clickCollectionItem(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.collectionItemList[arg_14_1]
+function Act174RotationView:clickCollectionItem(index)
+	local item = self.collectionItemList[index]
 
-	if var_14_0 == arg_14_0.selectItem then
-		arg_14_0:closeTipView()
-		arg_14_0:refreshSelect()
+	if item == self.selectItem then
+		self:closeTipView()
+		self:refreshSelect()
 	else
-		local var_14_1 = {
-			type = Activity174Enum.ItemTipType.Collection,
-			co = var_14_0.config,
-			pos = Vector2.New(-300, 0)
-		}
+		local viewParam = {}
 
-		Activity174Controller.instance:openItemTipView(var_14_1)
-		arg_14_0:refreshSelect(var_14_0)
+		viewParam.type = Activity174Enum.ItemTipType.Collection
+		viewParam.co = item.config
+		viewParam.pos = Vector2.New(-300, 0)
+
+		Activity174Controller.instance:openItemTipView(viewParam)
+		self:refreshSelect(item)
 	end
 end
 
-function var_0_0.initBuffItem(arg_15_0)
-	arg_15_0.buffItemList = {}
+function Act174RotationView:initBuffItem()
+	self.buffItemList = {}
 
-	local var_15_0 = arg_15_0.actInfo:getRuleBuffCoList()
+	local buffCoList = self.actInfo:getRuleBuffCoList()
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_1 = arg_15_0:getUserDataTb_()
+	for index, config in ipairs(buffCoList) do
+		local item = self:getUserDataTb_()
 
-		var_15_1.config = iter_15_1
+		item.config = config
 
-		local var_15_2 = gohelper.cloneInPlace(arg_15_0._gobuffitem)
-		local var_15_3 = gohelper.findButtonWithAudio(var_15_2)
+		local go = gohelper.cloneInPlace(self._gobuffitem)
+		local btnClick = gohelper.findButtonWithAudio(go)
 
-		arg_15_0:addClickCb(var_15_3, arg_15_0.clickBuffItem, arg_15_0, iter_15_0)
+		self:addClickCb(btnClick, self.clickBuffItem, self, index)
 
-		local var_15_4 = gohelper.findChildImage(var_15_2, "rare")
+		local imageRare = gohelper.findChildImage(go, "rare")
 
-		var_15_1.buffIcon = gohelper.findChildSingleImage(var_15_2, "bufficon")
+		item.buffIcon = gohelper.findChildSingleImage(go, "bufficon")
 
-		var_15_1.buffIcon:LoadImage(ResUrl.getAct174BuffIcon(iter_15_1.icon))
+		item.buffIcon:LoadImage(ResUrl.getAct174BuffIcon(config.icon))
 
-		var_15_1.goSelect = gohelper.findChild(var_15_2, "go_select")
+		item.goSelect = gohelper.findChild(go, "go_select")
 
-		UISpriteSetMgr.instance:setAct174Sprite(var_15_4, "act174_propitembg_3")
+		UISpriteSetMgr.instance:setAct174Sprite(imageRare, "act174_propitembg_3")
 
-		arg_15_0.buffItemList[iter_15_0] = var_15_1
+		self.buffItemList[index] = item
 	end
 
-	gohelper.setActive(arg_15_0._gobuffitem, false)
+	gohelper.setActive(self._gobuffitem, false)
 end
 
-function var_0_0.clickBuffItem(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.buffItemList[arg_16_1]
+function Act174RotationView:clickBuffItem(index)
+	local item = self.buffItemList[index]
 
-	if var_16_0 == arg_16_0.selectItem then
-		arg_16_0:closeTipView()
-		arg_16_0:refreshSelect()
+	if item == self.selectItem then
+		self:closeTipView()
+		self:refreshSelect()
 	else
-		local var_16_1 = {
-			type = Activity174Enum.ItemTipType.Buff,
-			co = var_16_0.config,
-			pos = Vector2.New(-300, 0)
-		}
+		local viewParam = {}
 
-		Activity174Controller.instance:openItemTipView(var_16_1)
-		arg_16_0:refreshSelect(var_16_0)
+		viewParam.type = Activity174Enum.ItemTipType.Buff
+		viewParam.co = item.config
+		viewParam.pos = Vector2.New(-300, 0)
+
+		Activity174Controller.instance:openItemTipView(viewParam)
+		self:refreshSelect(item)
 	end
 end
 
-function var_0_0.refreshSelect(arg_17_0, arg_17_1)
-	if arg_17_0.selectItem then
-		gohelper.setActive(arg_17_0.selectItem.goSelect, false)
+function Act174RotationView:refreshSelect(clickItem)
+	if self.selectItem then
+		gohelper.setActive(self.selectItem.goSelect, false)
 	end
 
-	if arg_17_1 then
-		gohelper.setActive(arg_17_1.goSelect, true)
+	if clickItem then
+		gohelper.setActive(clickItem.goSelect, true)
 	end
 
-	arg_17_0.selectItem = arg_17_1
+	self.selectItem = clickItem
 end
 
-function var_0_0.closeTipView(arg_18_0)
+function Act174RotationView:closeTipView()
 	if ViewMgr.instance:isOpen(ViewName.Act174ItemTipView) then
 		ViewMgr.instance:closeView(ViewName.Act174ItemTipView, false, true)
 	end
 end
 
-return var_0_0
+return Act174RotationView

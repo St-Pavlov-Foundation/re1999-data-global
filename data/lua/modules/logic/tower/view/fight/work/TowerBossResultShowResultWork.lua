@@ -1,35 +1,37 @@
-﻿module("modules.logic.tower.view.fight.work.TowerBossResultShowResultWork", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/work/TowerBossResultShowResultWork.lua
 
-local var_0_0 = class("TowerBossResultShowResultWork", BaseWork)
-local var_0_1 = 1
+module("modules.logic.tower.view.fight.work.TowerBossResultShowResultWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.goResult = arg_1_1
-	arg_1_0.audioId = arg_1_2
-	arg_1_0.callback = arg_1_3
-	arg_1_0.callbackObj = arg_1_4
+local TowerBossResultShowResultWork = class("TowerBossResultShowResultWork", BaseWork)
+local SHOW_TIME = 1
+
+function TowerBossResultShowResultWork:ctor(goResult, audioId, callback, callbackObj)
+	self.goResult = goResult
+	self.audioId = audioId
+	self.callback = callback
+	self.callbackObj = callbackObj
 end
 
-function var_0_0.onStart(arg_2_0)
-	gohelper.setActive(arg_2_0.goResult, true)
+function TowerBossResultShowResultWork:onStart()
+	gohelper.setActive(self.goResult, true)
 
-	if arg_2_0.audioId then
-		AudioMgr.instance:trigger(arg_2_0.audioId)
+	if self.audioId then
+		AudioMgr.instance:trigger(self.audioId)
 	end
 
-	if arg_2_0.callback then
-		arg_2_0.callback(arg_2_0.callbackObj)
+	if self.callback then
+		self.callback(self.callbackObj)
 	end
 
-	TaskDispatcher.runDelay(arg_2_0._delayFinish, arg_2_0, var_0_1)
+	TaskDispatcher.runDelay(self._delayFinish, self, SHOW_TIME)
 end
 
-function var_0_0._delayFinish(arg_3_0)
-	arg_3_0:onDone(true)
+function TowerBossResultShowResultWork:_delayFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayFinish, arg_4_0)
+function TowerBossResultShowResultWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayFinish, self)
 end
 
-return var_0_0
+return TowerBossResultShowResultWork

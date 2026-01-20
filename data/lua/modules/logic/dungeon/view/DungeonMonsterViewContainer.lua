@@ -1,35 +1,37 @@
-﻿module("modules.logic.dungeon.view.DungeonMonsterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMonsterViewContainer.lua
 
-local var_0_0 = class("DungeonMonsterViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonMonsterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonMonsterViewContainer = class("DungeonMonsterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonMonsterView.New())
+function DungeonMonsterViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, DungeonMonsterView.New())
 
-	var_1_1.scrollGOPath = "#scroll_monster"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "content_prefab"
-	var_1_1.cellClass = DungeonMonsterItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 4
-	var_1_1.cellWidth = 130
-	var_1_1.cellHeight = 130
-	var_1_1.cellSpaceH = 40
-	var_1_1.cellSpaceV = 40
-	var_1_1.startSpace = 24
-	var_1_1.endSpace = 0
-	arg_1_0._scrollView = LuaListScrollView.New(DungeonMonsterListModel.instance, var_1_1)
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0._scrollView)
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	scrollParam.scrollGOPath = "#scroll_monster"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "content_prefab"
+	scrollParam.cellClass = DungeonMonsterItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 4
+	scrollParam.cellWidth = 130
+	scrollParam.cellHeight = 130
+	scrollParam.cellSpaceH = 40
+	scrollParam.cellSpaceV = 40
+	scrollParam.startSpace = 24
+	scrollParam.endSpace = 0
+	self._scrollView = LuaListScrollView.New(DungeonMonsterListModel.instance, scrollParam)
 
-	return var_1_0
+	table.insert(views, self._scrollView)
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function DungeonMonsterViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -39,8 +41,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.getScrollView(arg_3_0)
-	return arg_3_0._scrollView
+function DungeonMonsterViewContainer:getScrollView()
+	return self._scrollView
 end
 
-return var_0_0
+return DungeonMonsterViewContainer

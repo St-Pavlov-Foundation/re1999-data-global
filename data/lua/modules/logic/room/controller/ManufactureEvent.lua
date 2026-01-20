@@ -1,23 +1,25 @@
-﻿module("modules.logic.room.controller.ManufactureEvent", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/ManufactureEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.room.controller.ManufactureEvent", package.seeall)
 
-var_0_0.ChangeSelectedSlotItem = 1
-var_0_0.PlayAddManufactureItemEff = 2
-var_0_0.OneKeySelectCustomManufactureItem = 3
-var_0_0.ChangeSelectedCritterSlotItem = 13
-var_0_0.ChangeSelectedTransportPath = 14
-var_0_0.OnEnterManufactureBuildingView = 15
-var_0_0.ManufactureBuildingViewChange = 16
-var_0_0.ManufactureReadNewFormula = 17
-var_0_0.PlayCritterBuildingBgm = 18
-var_0_0.ManufactureOverViewFocusAddPop = 19
-var_0_0.OnWrongTipViewChange = 20
-var_0_0.ManufactureInfoUpdate = 100
-var_0_0.TradeLevelChange = 101
-var_0_0.ManufactureBuildingInfoChange = 102
-var_0_0.CritterWorkInfoChange = 103
-var_0_0.GuideFocusCritter = 200
-var_0_0.OnCloseManufactureBuildingDetailView = 300
+local ManufactureEvent = _M
 
-return var_0_0
+ManufactureEvent.ChangeSelectedSlotItem = 1
+ManufactureEvent.PlayAddManufactureItemEff = 2
+ManufactureEvent.OneKeySelectCustomManufactureItem = 3
+ManufactureEvent.ChangeSelectedCritterSlotItem = 13
+ManufactureEvent.ChangeSelectedTransportPath = 14
+ManufactureEvent.OnEnterManufactureBuildingView = 15
+ManufactureEvent.ManufactureBuildingViewChange = 16
+ManufactureEvent.ManufactureReadNewFormula = 17
+ManufactureEvent.PlayCritterBuildingBgm = 18
+ManufactureEvent.ManufactureOverViewFocusAddPop = 19
+ManufactureEvent.OnWrongTipViewChange = 20
+ManufactureEvent.ManufactureInfoUpdate = 100
+ManufactureEvent.TradeLevelChange = 101
+ManufactureEvent.ManufactureBuildingInfoChange = 102
+ManufactureEvent.CritterWorkInfoChange = 103
+ManufactureEvent.GuideFocusCritter = 200
+ManufactureEvent.OnCloseManufactureBuildingDetailView = 300
+
+return ManufactureEvent

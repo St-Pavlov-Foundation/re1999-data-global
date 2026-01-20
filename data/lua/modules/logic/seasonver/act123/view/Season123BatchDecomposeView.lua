@@ -1,303 +1,310 @@
-﻿module("modules.logic.seasonver.act123.view.Season123BatchDecomposeView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123BatchDecomposeView.lua
 
-local var_0_0 = class("Season123BatchDecomposeView", BaseView)
+module("modules.logic.seasonver.act123.view.Season123BatchDecomposeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goequipsort = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_equipsort")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_rarerank")
-	arg_1_0._gorareRankSelect = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_rarerank/#go_rareRankSelect")
-	arg_1_0._gorareRankNormal = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_rarerank/#go_rareRankNormal")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_filter")
-	arg_1_0._gonotfilter = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_filter/#go_notfilter")
-	arg_1_0._gofilter = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_equipsort/#btn_filter/#go_filter")
-	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_cost")
-	arg_1_0._btnfastadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_cost/fast/#btn_fastadd")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "left_container/#go_cost/txt_selected/#txt_num")
-	arg_1_0._txtmaxNum = gohelper.findChildText(arg_1_0.viewGO, "left_container/#go_cost/txt_selected/#txt_num/#txt_maxNum")
-	arg_1_0._goscrollcontainer = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_scrollcontainer")
-	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "left_container/#go_scrollcontainer/#scroll_equip")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_empty")
-	arg_1_0._goclear = gohelper.findChild(arg_1_0.viewGO, "left_container/#go_clear")
-	arg_1_0._btnclear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left_container/#go_clear/#btn_clear")
-	arg_1_0._gocoinItem = gohelper.findChild(arg_1_0.viewGO, "right_container/#go_coinItem")
-	arg_1_0._txtcoinName = gohelper.findChildText(arg_1_0.viewGO, "right_container/#txt_coinName")
-	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "right_container/#txt_count")
-	arg_1_0._btndecompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right_container/#btn_decompose")
-	arg_1_0._golefttopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_lefttopbtns")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
-	arg_1_0._countAnim = gohelper.findChild(arg_1_0.viewGO, "right_container/vx_count/ani"):GetComponent(typeof(UnityEngine.Animator))
+local Season123BatchDecomposeView = class("Season123BatchDecomposeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123BatchDecomposeView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goequipsort = gohelper.findChild(self.viewGO, "left_container/#go_equipsort")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/#go_equipsort/#btn_rarerank")
+	self._gorareRankSelect = gohelper.findChild(self.viewGO, "left_container/#go_equipsort/#btn_rarerank/#go_rareRankSelect")
+	self._gorareRankNormal = gohelper.findChild(self.viewGO, "left_container/#go_equipsort/#btn_rarerank/#go_rareRankNormal")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/#go_equipsort/#btn_filter")
+	self._gonotfilter = gohelper.findChild(self.viewGO, "left_container/#go_equipsort/#btn_filter/#go_notfilter")
+	self._gofilter = gohelper.findChild(self.viewGO, "left_container/#go_equipsort/#btn_filter/#go_filter")
+	self._gocost = gohelper.findChild(self.viewGO, "left_container/#go_cost")
+	self._btnfastadd = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/#go_cost/fast/#btn_fastadd")
+	self._txtnum = gohelper.findChildText(self.viewGO, "left_container/#go_cost/txt_selected/#txt_num")
+	self._txtmaxNum = gohelper.findChildText(self.viewGO, "left_container/#go_cost/txt_selected/#txt_num/#txt_maxNum")
+	self._goscrollcontainer = gohelper.findChild(self.viewGO, "left_container/#go_scrollcontainer")
+	self._scrollequip = gohelper.findChildScrollRect(self.viewGO, "left_container/#go_scrollcontainer/#scroll_equip")
+	self._goempty = gohelper.findChild(self.viewGO, "left_container/#go_empty")
+	self._goclear = gohelper.findChild(self.viewGO, "left_container/#go_clear")
+	self._btnclear = gohelper.findChildButtonWithAudio(self.viewGO, "left_container/#go_clear/#btn_clear")
+	self._gocoinItem = gohelper.findChild(self.viewGO, "right_container/#go_coinItem")
+	self._txtcoinName = gohelper.findChildText(self.viewGO, "right_container/#txt_coinName")
+	self._txtcount = gohelper.findChildText(self.viewGO, "right_container/#txt_count")
+	self._btndecompose = gohelper.findChildButtonWithAudio(self.viewGO, "right_container/#btn_decompose")
+	self._golefttopbtns = gohelper.findChild(self.viewGO, "#go_lefttopbtns")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+	self._countAnim = gohelper.findChild(self.viewGO, "right_container/vx_count/ani"):GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
-	arg_2_0._btnfastadd:AddClickListener(arg_2_0._btnfastaddOnClick, arg_2_0)
-	arg_2_0._btnclear:AddClickListener(arg_2_0._btnclearOnClick, arg_2_0)
-	arg_2_0._btndecompose:AddClickListener(arg_2_0._btndecomposeOnClick, arg_2_0)
-	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnResetBatchDecomposeView, arg_2_0.resetDataUI, arg_2_0)
-	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeItemSelect, arg_2_0.onDecomposeItemClick, arg_2_0)
-	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, arg_2_0.refreshUI, arg_2_0)
+function Season123BatchDecomposeView:addEvents()
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
+	self._btnfastadd:AddClickListener(self._btnfastaddOnClick, self)
+	self._btnclear:AddClickListener(self._btnclearOnClick, self)
+	self._btndecompose:AddClickListener(self._btndecomposeOnClick, self)
+	self:addEventCb(Season123EquipBookController.instance, Season123Event.OnResetBatchDecomposeView, self.resetDataUI, self)
+	self:addEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeItemSelect, self.onDecomposeItemClick, self)
+	self:addEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnfilter:RemoveClickListener()
-	arg_3_0._btnfastadd:RemoveClickListener()
-	arg_3_0._btnclear:RemoveClickListener()
-	arg_3_0._btndecompose:RemoveClickListener()
-	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnResetBatchDecomposeView, arg_3_0.resetDataUI, arg_3_0)
-	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeItemSelect, arg_3_0.onDecomposeItemClick, arg_3_0)
-	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, arg_3_0.refreshUI, arg_3_0)
+function Season123BatchDecomposeView:removeEvents()
+	self._btnrarerank:RemoveClickListener()
+	self._btnfilter:RemoveClickListener()
+	self._btnfastadd:RemoveClickListener()
+	self._btnclear:RemoveClickListener()
+	self._btndecompose:RemoveClickListener()
+	self:removeEventCb(Season123EquipBookController.instance, Season123Event.OnResetBatchDecomposeView, self.resetDataUI, self)
+	self:removeEventCb(Season123EquipBookController.instance, Season123Event.OnDecomposeItemSelect, self.onDecomposeItemClick, self)
+	self:removeEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, self.refreshUI, self)
 end
 
-var_0_0.maxOverCount = 4
+Season123BatchDecomposeView.maxOverCount = 4
 
-function var_0_0._btnrarerankOnClick(arg_4_0)
-	arg_4_0.isRareAscend = not arg_4_0.isRareAscend
+function Season123BatchDecomposeView:_btnrarerankOnClick()
+	self.isRareAscend = not self.isRareAscend
 
-	Season123DecomposeModel.instance:setRareAscendState(arg_4_0.isRareAscend)
-	transformhelper.setLocalScale(arg_4_0.rareArrowTrans, 1, arg_4_0.isRareAscend and 1 or -1, 1)
+	Season123DecomposeModel.instance:setRareAscendState(self.isRareAscend)
+	transformhelper.setLocalScale(self.rareArrowTrans, 1, self.isRareAscend and 1 or -1, 1)
 	Season123DecomposeModel.instance:sortDecomposeItemListByRare()
 end
 
-function var_0_0._btnfilterOnClick(arg_5_0)
+function Season123BatchDecomposeView:_btnfilterOnClick()
 	ViewMgr.instance:openView(ViewName.Season123DecomposeFilterView)
 end
 
-function var_0_0._btnfastaddOnClick(arg_6_0)
+function Season123BatchDecomposeView:_btnfastaddOnClick()
 	Season123DecomposeModel.instance:selectOverPartItem()
 
-	local var_6_0 = Season123DecomposeModel.instance.curSelectItemCount
+	local selectCount = Season123DecomposeModel.instance.curSelectItemCount
 
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnRefleshDecomposeItemUI)
-	arg_6_0:refreshUI()
+	self:refreshUI()
 
-	if var_6_0 == 0 then
+	if selectCount == 0 then
 		GameFacade.showToast(ToastEnum.SeasonNotConformCardTip)
 
 		return
 	end
 end
 
-function var_0_0._btnclearOnClick(arg_7_0)
+function Season123BatchDecomposeView:_btnclearOnClick()
 	Season123EquipBookController.instance:clearItemSelectState()
-	arg_7_0:resetDataUI()
+	self:resetDataUI()
 end
 
-function var_0_0._btndecomposeOnClick(arg_8_0)
-	if Season123DecomposeModel.instance.curSelectItemCount == 0 then
+function Season123BatchDecomposeView:_btndecomposeOnClick()
+	local selectItemCount = Season123DecomposeModel.instance.curSelectItemCount
+
+	if selectItemCount == 0 then
 		return
 	end
 
-	local var_8_0 = Season123DecomposeModel.instance.curSelectItemDict
+	local curSelectItemDict = Season123DecomposeModel.instance.curSelectItemDict
+	local isItemUsedByHero = Season123DecomposeModel.instance:isDecomposeItemUsedByHero(curSelectItemDict)
 
-	if Season123DecomposeModel.instance:isDecomposeItemUsedByHero(var_8_0) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SeasonComposeMatIsEquiped, MsgBoxEnum.BoxType.Yes_No, arg_8_0.showDecomposeTip, nil, nil, arg_8_0)
+	if isItemUsedByHero then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SeasonComposeMatIsEquiped, MsgBoxEnum.BoxType.Yes_No, self.showDecomposeTip, nil, nil, self)
 	else
-		arg_8_0:showDecomposeTip()
+		self:showDecomposeTip()
 	end
 end
 
-function var_0_0.showDecomposeTip(arg_9_0)
-	local var_9_0 = Season123DecomposeModel.instance.curSelectItemDict
-	local var_9_1 = GameUtil.getTabLen(var_9_0)
-	local var_9_2 = CurrencyConfig.instance:getCurrencyCo(arg_9_0.coinId)
-	local var_9_3 = 0
+function Season123BatchDecomposeView:showDecomposeTip()
+	local selectItemTab = Season123DecomposeModel.instance.curSelectItemDict
+	local selectCount = GameUtil.getTabLen(selectItemTab)
+	local coinConfig = CurrencyConfig.instance:getCurrencyCo(self.coinId)
+	local totalCount = 0
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0) do
-		var_9_3 = var_9_3 + Season123Config.instance:getSeasonEquipCo(iter_9_1.itemId).decomposeGet
+	for id, itemMO in pairs(selectItemTab) do
+		local config = Season123Config.instance:getSeasonEquipCo(itemMO.itemId)
+
+		totalCount = totalCount + config.decomposeGet
 	end
 
-	local var_9_4 = string.format("<color=#AB5220>%s</color>", var_9_1)
-	local var_9_5
+	local selectCountStr = string.format("<color=#AB5220>%s</color>", selectCount)
+	local getCoinStr
 
 	if LangSettings.instance:isEn() then
-		var_9_5 = string.format("<color=#AB5220>%s %s</color>", var_9_3, var_9_2.name)
+		getCoinStr = string.format("<color=#AB5220>%s %s</color>", totalCount, coinConfig.name)
 	else
-		var_9_5 = string.format("<color=#AB5220>%s%s</color>", var_9_3, var_9_2.name)
+		getCoinStr = string.format("<color=#AB5220>%s%s</color>", totalCount, coinConfig.name)
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.Season123DecomposeTip, MsgBoxEnum.BoxType.Yes_No, arg_9_0.decomposeYesCallBack, nil, nil, arg_9_0, nil, nil, var_9_4, var_9_5)
+	GameFacade.showMessageBox(MessageBoxIdDefine.Season123DecomposeTip, MsgBoxEnum.BoxType.Yes_No, self.decomposeYesCallBack, nil, nil, self, nil, nil, selectCountStr, getCoinStr)
 end
 
-function var_0_0.decomposeYesCallBack(arg_10_0)
-	local var_10_0 = Season123DecomposeModel.instance.curSelectItemDict
+function Season123BatchDecomposeView:decomposeYesCallBack()
+	local selectDecomposeList = Season123DecomposeModel.instance.curSelectItemDict
 
-	arg_10_0.selectlist = {}
+	self.selectlist = {}
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		table.insert(arg_10_0.selectlist, iter_10_1.uid)
+	for id, itemMO in pairs(selectDecomposeList) do
+		table.insert(self.selectlist, itemMO.uid)
 	end
 
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnBatchDecomposeEffectPlay)
 	UIBlockMgr.instance:startBlock("playBatchDecomposeEffect")
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_molu_button_display)
-	TaskDispatcher.runDelay(arg_10_0.sendDecomposeRequest, arg_10_0, 1)
+	TaskDispatcher.runDelay(self.sendDecomposeRequest, self, 1)
 end
 
-function var_0_0.sendDecomposeRequest(arg_11_0)
+function Season123BatchDecomposeView:sendDecomposeRequest()
 	UIBlockMgr.instance:endBlock("playBatchDecomposeEffect")
-	Activity123Rpc.instance:sendDecomposeAct123EquipRequest(arg_11_0.actId, arg_11_0.selectlist)
+	Activity123Rpc.instance:sendDecomposeAct123EquipRequest(self.actId, self.selectlist)
 end
 
-function var_0_0._dropFilterOnClick(arg_12_0)
+function Season123BatchDecomposeView:_dropFilterOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	arg_13_0.rareArrowTrans = gohelper.findChild(arg_13_0._gorareRankNormal, "txt/arrow"):GetComponent(gohelper.Type_Transform)
-	arg_13_0.isRareAscend = false
+function Season123BatchDecomposeView:_editableInitView()
+	self.rareArrowTrans = gohelper.findChild(self._gorareRankNormal, "txt/arrow"):GetComponent(gohelper.Type_Transform)
+	self.isRareAscend = false
 
-	Season123DecomposeModel.instance:setRareAscendState(arg_13_0.isRareAscend)
-	transformhelper.setLocalScale(arg_13_0.rareArrowTrans, 1, arg_13_0.isRareAscend and 1 or -1, 1)
-	arg_13_0:initDropFilter()
+	Season123DecomposeModel.instance:setRareAscendState(self.isRareAscend)
+	transformhelper.setLocalScale(self.rareArrowTrans, 1, self.isRareAscend and 1 or -1, 1)
+	self:initDropFilter()
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0.actId = arg_14_0.viewParam.actId
-	arg_14_0.coinId = Season123Config.instance:getEquipItemCoin(arg_14_0.actId, Activity123Enum.Const.EquipItemCoin)
+function Season123BatchDecomposeView:onOpen()
+	self.actId = self.viewParam.actId
+	self.coinId = Season123Config.instance:getEquipItemCoin(self.actId, Activity123Enum.Const.EquipItemCoin)
 
-	arg_14_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.initDropFilter(arg_15_0)
-	arg_15_0._dropFilter = gohelper.findChildDropdown(arg_15_0.viewGO, "left_container/#go_cost/#drop_filter")
-	arg_15_0._txtLabel = gohelper.findChildText(arg_15_0._dropFilter.gameObject, "Label")
-	arg_15_0._imageArrow = gohelper.findChildImage(arg_15_0._dropFilter.gameObject, "Arrow")
-	arg_15_0._arrowTrans = arg_15_0._imageArrow:GetComponent(gohelper.Type_Transform)
+function Season123BatchDecomposeView:initDropFilter()
+	self._dropFilter = gohelper.findChildDropdown(self.viewGO, "left_container/#go_cost/#drop_filter")
+	self._txtLabel = gohelper.findChildText(self._dropFilter.gameObject, "Label")
+	self._imageArrow = gohelper.findChildImage(self._dropFilter.gameObject, "Arrow")
+	self._arrowTrans = self._imageArrow:GetComponent(gohelper.Type_Transform)
 
-	arg_15_0._dropFilter:AddOnValueChanged(arg_15_0.dropFilterValueChanged, arg_15_0)
+	self._dropFilter:AddOnValueChanged(self.dropFilterValueChanged, self)
 
-	arg_15_0._clickDropFilter = gohelper.getClick(arg_15_0._dropFilter.gameObject)
+	self._clickDropFilter = gohelper.getClick(self._dropFilter.gameObject)
 
-	arg_15_0._clickDropFilter:AddClickListener(arg_15_0._dropFilterOnClick, arg_15_0)
+	self._clickDropFilter:AddClickListener(self._dropFilterOnClick, self)
 
-	arg_15_0.dropFilterItemTab = {}
-	arg_15_0.dropFilterLabelList = {}
+	self.dropFilterItemTab = {}
+	self.dropFilterLabelList = {}
 
-	local var_15_0 = luaLang("common_all")
+	local allLabel = luaLang("common_all")
 
-	arg_15_0.dropFilterItemTab[0] = var_15_0
+	self.dropFilterItemTab[0] = allLabel
 
-	table.insert(arg_15_0.dropFilterLabelList, var_15_0)
+	table.insert(self.dropFilterLabelList, allLabel)
 
-	for iter_15_0 = 1, var_0_0.maxOverCount do
-		table.insert(arg_15_0.dropFilterLabelList, string.format(luaLang("Season123DecomposeOverPart"), iter_15_0))
+	for i = 1, Season123BatchDecomposeView.maxOverCount do
+		table.insert(self.dropFilterLabelList, string.format(luaLang("Season123DecomposeOverPart"), i))
 
-		arg_15_0.dropFilterItemTab[iter_15_0] = string.format(luaLang("Season123DecomposeOverPart"), iter_15_0)
+		self.dropFilterItemTab[i] = string.format(luaLang("Season123DecomposeOverPart"), i)
 	end
 
-	arg_15_0._dropFilter:ClearOptions()
-	arg_15_0._dropFilter:AddOptions(arg_15_0.dropFilterLabelList)
-	arg_15_0._dropFilter:SetValue(1)
+	self._dropFilter:ClearOptions()
+	self._dropFilter:AddOptions(self.dropFilterLabelList)
+	self._dropFilter:SetValue(1)
 
-	arg_15_0.dropShowHide = DropDownExtend.Get(arg_15_0._dropFilter.gameObject)
+	self.dropShowHide = DropDownExtend.Get(self._dropFilter.gameObject)
 
-	arg_15_0.dropShowHide:init(arg_15_0.onDropListShow, arg_15_0.onDropListHide, arg_15_0)
+	self.dropShowHide:init(self.onDropListShow, self.onDropListHide, self)
 end
 
-function var_0_0.refreshUI(arg_16_0)
-	local var_16_0 = CurrencyConfig.instance:getCurrencyCo(arg_16_0.coinId)
+function Season123BatchDecomposeView:refreshUI()
+	local coinConfig = CurrencyConfig.instance:getCurrencyCo(self.coinId)
 
-	arg_16_0._txtcoinName.text = var_16_0.name
+	self._txtcoinName.text = coinConfig.name
 
-	arg_16_0:initCoinItem()
+	self:initCoinItem()
 
-	arg_16_0._txtcount.text = luaLang("multiple") .. arg_16_0:getDecomposeCoin()
+	self._txtcount.text = luaLang("multiple") .. self:getDecomposeCoin()
 
-	local var_16_1 = Season123DecomposeModel.instance.curSelectItemCount
+	local selectItemCount = Season123DecomposeModel.instance.curSelectItemCount
 
-	ZProj.UGUIHelper.SetGrayscale(arg_16_0._btndecompose.gameObject, var_16_1 == 0)
+	ZProj.UGUIHelper.SetGrayscale(self._btndecompose.gameObject, selectItemCount == 0)
 
-	arg_16_0._txtmaxNum = string.format("/%s", Activity123Enum.maxDecomposeCount)
-	arg_16_0._txtnum.text = var_16_1 >= Activity123Enum.maxDecomposeCount and string.format("<color=#ff7933>%s</color>", var_16_1) or var_16_1
+	self._txtmaxNum = string.format("/%s", Activity123Enum.maxDecomposeCount)
+	self._txtnum.text = selectItemCount >= Activity123Enum.maxDecomposeCount and string.format("<color=#ff7933>%s</color>", selectItemCount) or selectItemCount
 
-	gohelper.setActive(arg_16_0._goclear, var_16_1 > 0)
+	gohelper.setActive(self._goclear, selectItemCount > 0)
 
-	local var_16_2 = Season123DecomposeModel.instance:hasSelectFilterItem()
+	local hasSelectFilterItem = Season123DecomposeModel.instance:hasSelectFilterItem()
 
-	gohelper.setActive(arg_16_0._gofilter, var_16_2)
-	gohelper.setActive(arg_16_0._gonotfilter, not var_16_2)
-	gohelper.setActive(arg_16_0._goempty, Season123DecomposeModel.instance:getCount() == 0)
+	gohelper.setActive(self._gofilter, hasSelectFilterItem)
+	gohelper.setActive(self._gonotfilter, not hasSelectFilterItem)
+	gohelper.setActive(self._goempty, Season123DecomposeModel.instance:getCount() == 0)
 end
 
-function var_0_0.initCoinItem(arg_17_0)
-	if not arg_17_0.cointItem then
-		arg_17_0.coinItem = IconMgr.instance:getCommonPropItemIcon(arg_17_0._gocoinItem)
+function Season123BatchDecomposeView:initCoinItem()
+	if not self.cointItem then
+		self.coinItem = IconMgr.instance:getCommonPropItemIcon(self._gocoinItem)
 
-		arg_17_0.coinItem:setMOValue(MaterialEnum.MaterialType.Currency, arg_17_0.coinId, 1, nil, true)
-		arg_17_0.coinItem:isShowEquipAndItemCount(false)
-		arg_17_0.coinItem:setShowCountFlag(false)
-		arg_17_0.coinItem:hideEquipLvAndBreak(true)
-		arg_17_0.coinItem:setHideLvAndBreakFlag(true)
+		self.coinItem:setMOValue(MaterialEnum.MaterialType.Currency, self.coinId, 1, nil, true)
+		self.coinItem:isShowEquipAndItemCount(false)
+		self.coinItem:setShowCountFlag(false)
+		self.coinItem:hideEquipLvAndBreak(true)
+		self.coinItem:setHideLvAndBreakFlag(true)
 	end
 end
 
-function var_0_0.onDecomposeItemClick(arg_18_0)
-	arg_18_0._countAnim:Play("vx_count", 0, 0)
+function Season123BatchDecomposeView:onDecomposeItemClick()
+	self._countAnim:Play("vx_count", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_checkpoint_light_up)
-	arg_18_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.resetDataUI(arg_19_0)
-	arg_19_0._txtcount.text = luaLang("multiple") .. 0
-	arg_19_0._txtnum.text = 0
+function Season123BatchDecomposeView:resetDataUI()
+	self._txtcount.text = luaLang("multiple") .. 0
+	self._txtnum.text = 0
 
-	ZProj.UGUIHelper.SetGrayscale(arg_19_0._btndecompose.gameObject, true)
-	gohelper.setActive(arg_19_0._goclear, false)
+	ZProj.UGUIHelper.SetGrayscale(self._btndecompose.gameObject, true)
+	gohelper.setActive(self._goclear, false)
 end
 
-function var_0_0.getDecomposeCoin(arg_20_0)
-	local var_20_0 = Season123DecomposeModel.instance.curSelectItemDict
-	local var_20_1 = 0
+function Season123BatchDecomposeView:getDecomposeCoin()
+	local curSelectItems = Season123DecomposeModel.instance.curSelectItemDict
+	local totalCoin = 0
 
-	for iter_20_0, iter_20_1 in pairs(var_20_0) do
-		local var_20_2 = Season123Config.instance:getSeasonEquipCo(iter_20_1.itemId)
+	for itemUid, itemMO in pairs(curSelectItems) do
+		local config = Season123Config.instance:getSeasonEquipCo(itemMO.itemId)
 
-		if var_20_2 ~= nil then
-			var_20_1 = var_20_1 + var_20_2.decomposeGet
+		if config ~= nil then
+			totalCoin = totalCoin + config.decomposeGet
 		end
 	end
 
-	return var_20_1
+	return totalCoin
 end
 
-function var_0_0.dropFilterValueChanged(arg_21_0, arg_21_1)
-	Season123DecomposeModel.instance:setCurOverPartSelectIndex(arg_21_1)
+function Season123BatchDecomposeView:dropFilterValueChanged(index)
+	Season123DecomposeModel.instance:setCurOverPartSelectIndex(index)
 end
 
-function var_0_0.onDropListShow(arg_22_0)
-	transformhelper.setLocalScale(arg_22_0._arrowTrans, 1, -1, 1)
+function Season123BatchDecomposeView:onDropListShow()
+	transformhelper.setLocalScale(self._arrowTrans, 1, -1, 1)
 end
 
-function var_0_0.onDropListHide(arg_23_0)
-	transformhelper.setLocalScale(arg_23_0._arrowTrans, 1, 1, 1)
+function Season123BatchDecomposeView:onDropListHide()
+	transformhelper.setLocalScale(self._arrowTrans, 1, 1, 1)
 end
 
-function var_0_0.onClose(arg_24_0)
+function Season123BatchDecomposeView:onClose()
 	Season123DecomposeModel.instance._itemStartAnimTime = nil
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function Season123BatchDecomposeView:onDestroyView()
 	Season123DecomposeModel.instance:clear()
 	UIBlockMgr.instance:endBlock("playBatchDecomposeEffect")
 
-	if arg_25_0._dropFilter then
-		arg_25_0._dropFilter:RemoveOnValueChanged()
+	if self._dropFilter then
+		self._dropFilter:RemoveOnValueChanged()
 
-		arg_25_0._dropFilter = nil
+		self._dropFilter = nil
 	end
 
-	if arg_25_0._clickDropFilter then
-		arg_25_0._clickDropFilter:RemoveClickListener()
+	if self._clickDropFilter then
+		self._clickDropFilter:RemoveClickListener()
 
-		arg_25_0._clickDropFilter = nil
+		self._clickDropFilter = nil
 	end
 end
 
-return var_0_0
+return Season123BatchDecomposeView

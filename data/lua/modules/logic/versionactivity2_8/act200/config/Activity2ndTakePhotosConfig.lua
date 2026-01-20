@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_8.act200.config.Activity2ndTakePhotosConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act200/config/Activity2ndTakePhotosConfig.lua
 
-local var_0_0 = class("Activity2ndTakePhotosConfig", BaseConfig)
+module("modules.logic.versionactivity2_8.act200.config.Activity2ndTakePhotosConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity2ndTakePhotosConfig = class("Activity2ndTakePhotosConfig", BaseConfig)
+
+function Activity2ndTakePhotosConfig:reqConfigNames()
 	return {
 		"activity200"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._config = {}
+function Activity2ndTakePhotosConfig:onInit()
+	self._config = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity200" then
-		arg_3_0._config = arg_3_2
+function Activity2ndTakePhotosConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity200" then
+		self._config = configTable
 	end
 end
 
-function var_0_0.getConfigList(arg_4_0)
-	return arg_4_0._config.configList
+function Activity2ndTakePhotosConfig:getConfigList()
+	return self._config.configList
 end
 
-function var_0_0.getConfigById(arg_5_0, arg_5_1)
-	return arg_5_0._config.configList[arg_5_1]
+function Activity2ndTakePhotosConfig:getConfigById(id)
+	return self._config.configList[id]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity2ndTakePhotosConfig.instance = Activity2ndTakePhotosConfig.New()
 
-return var_0_0
+return Activity2ndTakePhotosConfig

@@ -1,161 +1,166 @@
-﻿module("modules.logic.survival.view.handbook.SurvivalHandbookAmplifierComp", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/handbook/SurvivalHandbookAmplifierComp.lua
 
-local var_0_0 = class("SurvivalHandbookAmplifierComp", SurvivalHandbookViewComp)
+module("modules.logic.survival.view.handbook.SurvivalHandbookAmplifierComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._parentView = arg_1_1
-	arg_1_0.handbookType = SurvivalEnum.HandBookType.Amplifier
-	arg_1_0.handBookDatas = {}
+local SurvivalHandbookAmplifierComp = class("SurvivalHandbookAmplifierComp", SurvivalHandbookViewComp)
+
+function SurvivalHandbookAmplifierComp:ctor(parentView)
+	self._parentView = parentView
+	self.handbookType = SurvivalEnum.HandBookType.Amplifier
+	self.handBookDatas = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function SurvivalHandbookAmplifierComp:init(go)
+	SurvivalHandbookAmplifierComp.super.init(self, go)
 
-	arg_2_0.scroll = gohelper.findChild(arg_2_1, "#scroll")
-	arg_2_0.tabContent = gohelper.findChild(arg_2_1, "tabScroll/Viewport/#tabContent")
-	arg_2_0._goAmplifierTab = gohelper.findChild(arg_2_1, "tabScroll/Viewport/#go_AmplifierTab")
+	self.scroll = gohelper.findChild(go, "#scroll")
+	self.tabContent = gohelper.findChild(go, "tabScroll/Viewport/#tabContent")
+	self._goAmplifierTab = gohelper.findChild(go, "tabScroll/Viewport/#go_AmplifierTab")
 
-	gohelper.setActive(arg_2_0._goAmplifierTab, false)
+	gohelper.setActive(self._goAmplifierTab, false)
 
-	arg_2_0.tabs = {}
+	self.tabs = {}
 
-	local var_2_0 = SurvivalEnum.HandBookAmplifierSubTypeUIPos
+	local HandBookAmplifierSubTypeUIPos = SurvivalEnum.HandBookAmplifierSubTypeUIPos
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_1 = gohelper.clone(arg_2_0._goAmplifierTab, arg_2_0.tabContent)
+	for i, subType in ipairs(HandBookAmplifierSubTypeUIPos) do
+		local obj = gohelper.clone(self._goAmplifierTab, self.tabContent)
 
-		gohelper.setActive(var_2_1, true)
+		gohelper.setActive(obj, true)
 
-		local var_2_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, SurvivalHandbookAmplifierTab)
+		local survivalHandbookAmplifierTab = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SurvivalHandbookAmplifierTab)
 
-		var_2_2:setData({
-			index = iter_2_0,
-			handbookType = arg_2_0.handbookType,
-			subType = iter_2_1,
-			onClickTabCallBack = arg_2_0.onClickTab,
-			onClickTabContext = arg_2_0,
-			isLast = iter_2_0 == #var_2_0
+		survivalHandbookAmplifierTab:setData({
+			index = i,
+			handbookType = self.handbookType,
+			subType = subType,
+			onClickTabCallBack = self.onClickTab,
+			onClickTabContext = self,
+			isLast = i == #HandBookAmplifierSubTypeUIPos
 		})
-		table.insert(arg_2_0.tabs, var_2_2)
+		table.insert(self.tabs, survivalHandbookAmplifierTab)
 	end
 
-	local var_2_3 = arg_2_0._parentView.viewContainer:getSetting().otherRes.survivalmapbagitem
+	local resPath = self._parentView.viewContainer:getSetting().otherRes.survivalmapbagitem
 
-	arg_2_0._item = arg_2_0._parentView:getResInst(var_2_3, arg_2_0.go)
+	self._item = self._parentView:getResInst(resPath, self.go)
 
-	gohelper.setActive(arg_2_0._item, false)
+	gohelper.setActive(self._item, false)
 
-	arg_2_0._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0.scroll, SurvivalSimpleListPart, {
+	self._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self.scroll, SurvivalSimpleListPart, {
 		minUpdate = 6
 	})
 
-	arg_2_0._simpleList:setCellUpdateCallBack(arg_2_0._createItem, arg_2_0, SurvivalBagItem, arg_2_0._item)
+	self._simpleList:setCellUpdateCallBack(self._createItem, self, SurvivalBagItem, self._item)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:selectTab(1, true)
+function SurvivalHandbookAmplifierComp:onOpen()
+	self:selectTab(1, true)
 end
 
-function var_0_0.onClose(arg_4_0)
-	arg_4_0:selectTab(nil)
+function SurvivalHandbookAmplifierComp:onClose()
+	self:selectTab(nil)
 end
 
-function var_0_0.addEventListeners(arg_5_0)
+function SurvivalHandbookAmplifierComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
+function SurvivalHandbookAmplifierComp:removeEventListeners()
 	return
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function SurvivalHandbookAmplifierComp:onDestroy()
 	return
 end
 
-function var_0_0.onClickTab(arg_8_0, arg_8_1)
-	arg_8_0:selectTab(arg_8_1.index)
+function SurvivalHandbookAmplifierComp:onClickTab(survivalHandbookAmplifierTab)
+	self:selectTab(survivalHandbookAmplifierTab.index)
 end
 
-function var_0_0._createItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_2:getSurvivalBagItemMo()
+function SurvivalHandbookAmplifierComp:_createItem(obj, data, index)
+	local itemMo = data:getSurvivalBagItemMo()
 
-	arg_9_1:updateMo(var_9_0, {
+	obj:updateMo(itemMo, {
 		jumpAnimHas = true
 	})
-	arg_9_1:setShowNum(false)
-	arg_9_1:setClickCallback(arg_9_0.onClickItem, arg_9_0)
-	arg_9_1:setExtraParam({
-		index = arg_9_3,
-		survivalHandbookMo = arg_9_2
+	obj:setShowNum(false)
+	obj:setClickCallback(self.onClickItem, self)
+	obj:setExtraParam({
+		index = index,
+		survivalHandbookMo = data
 	})
 
-	local var_9_1 = arg_9_2.isUnlock and var_9_0.co.name
-	local var_9_2 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_9_1._textName, "...") + 0.1
-	local var_9_3 = GameUtil.getBriefNameByWidth(var_9_1, arg_9_1._textName, var_9_2, "...")
-	local var_9_4 = string.format("<color=#422415>%s</color>", var_9_3)
+	local name = data.isUnlock and itemMo.co.name
+	local offset = SLFramework.UGUI.GuiHelper.GetPreferredWidth(obj._textName, "...") + 0.1
+	local str = GameUtil.getBriefNameByWidth(name, obj._textName, offset, "...")
 
-	arg_9_1:setTextName(arg_9_2.isUnlock, var_9_4)
+	str = string.format("<color=#422415>%s</color>", str)
+
+	obj:setTextName(data.isUnlock, str)
 end
 
-function var_0_0.onClickItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1.extraParam.survivalHandbookMo
+function SurvivalHandbookAmplifierComp:onClickItem(item)
+	local survivalHandbookMo = item.extraParam.survivalHandbookMo
 
-	if var_10_0.isUnlock then
-		local var_10_1 = arg_10_0:getIndex(var_10_0)
+	if survivalHandbookMo.isUnlock then
+		local index = self:getIndex(survivalHandbookMo)
 
 		ViewMgr.instance:openView(ViewName.SurvivalHandbookInfoView, {
-			handBookType = arg_10_0.handbookType,
-			handBookDatas = arg_10_0.handBookDatas,
-			select = var_10_1
+			handBookType = self.handbookType,
+			handBookDatas = self.handBookDatas,
+			select = index
 		})
 	end
 end
 
-function var_0_0.refreshList(arg_11_0, arg_11_1)
-	if arg_11_0.curSelect == nil then
-		arg_11_0._simpleList:setList({})
+function SurvivalHandbookAmplifierComp:refreshList(isAnim)
+	if self.curSelect == nil then
+		self._simpleList:setList({})
 
 		return
 	end
 
-	tabletool.clear(arg_11_0.handBookDatas)
+	tabletool.clear(self.handBookDatas)
 
-	local var_11_0 = SurvivalHandbookModel.instance:getHandBookDatas(arg_11_0.handbookType, arg_11_0.tabs[arg_11_0.curSelect].subType)
+	local datas = SurvivalHandbookModel.instance:getHandBookDatas(self.handbookType, self.tabs[self.curSelect].subType)
 
-	table.sort(var_11_0, SurvivalHandbookModel.instance.handBookSortFunc)
+	table.sort(datas, SurvivalHandbookModel.instance.handBookSortFunc)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if iter_11_1.isUnlock then
-			table.insert(arg_11_0.handBookDatas, iter_11_1)
+	for i, mo in ipairs(datas) do
+		if mo.isUnlock then
+			table.insert(self.handBookDatas, mo)
 		end
 	end
 
-	if arg_11_1 then
-		arg_11_0._simpleList:setOpenAnimation(0.03, 6)
+	if isAnim then
+		self._simpleList:setOpenAnimation(0.03, 6)
 	end
 
-	arg_11_0._simpleList:setList(var_11_0)
+	self._simpleList:setList(datas)
 end
 
-function var_0_0.getIndex(arg_12_0, arg_12_1)
-	return tabletool.indexOf(arg_12_0.handBookDatas, arg_12_1)
+function SurvivalHandbookAmplifierComp:getIndex(survivalHandbookMo)
+	return tabletool.indexOf(self.handBookDatas, survivalHandbookMo)
 end
 
-function var_0_0.selectTab(arg_13_0, arg_13_1, arg_13_2)
-	if (not arg_13_1 or not arg_13_0.curSelect or arg_13_0.curSelect ~= arg_13_1) and (not not arg_13_1 or not not arg_13_0.curSelect) then
-		if arg_13_0.curSelect then
-			arg_13_0.tabs[arg_13_0.curSelect]:setSelect(false)
+function SurvivalHandbookAmplifierComp:selectTab(tarSelect, isAnim)
+	local haveChange = (not tarSelect or not self.curSelect or self.curSelect ~= tarSelect) and (not not tarSelect or not not self.curSelect)
+
+	if haveChange then
+		if self.curSelect then
+			self.tabs[self.curSelect]:setSelect(false)
 		end
 
-		arg_13_0.curSelect = arg_13_1
+		self.curSelect = tarSelect
 
-		if arg_13_0.curSelect then
-			SurvivalHandbookController.instance:markNewHandbook(arg_13_0.handbookType, arg_13_0.tabs[arg_13_0.curSelect].subType)
-			arg_13_0.tabs[arg_13_0.curSelect]:setSelect(true)
+		if self.curSelect then
+			SurvivalHandbookController.instance:markNewHandbook(self.handbookType, self.tabs[self.curSelect].subType)
+			self.tabs[self.curSelect]:setSelect(true)
 		end
 
-		arg_13_0:refreshList(arg_13_2)
+		self:refreshList(isAnim)
 	end
 end
 
-return var_0_0
+return SurvivalHandbookAmplifierComp

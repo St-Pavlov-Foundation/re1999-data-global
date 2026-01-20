@@ -1,200 +1,208 @@
-﻿module("modules.logic.versionactivity2_3.dungeon.model.VersionActivity2_3DungeonModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/dungeon/model/VersionActivity2_3DungeonModel.lua
 
-local var_0_0 = class("VersionActivity2_3DungeonModel", BaseModel)
+module("modules.logic.versionactivity2_3.dungeon.model.VersionActivity2_3DungeonModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_3DungeonModel = class("VersionActivity2_3DungeonModel", BaseModel)
+
+function VersionActivity2_3DungeonModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:init()
+function VersionActivity2_3DungeonModel:reInit()
+	self:init()
 end
 
-function var_0_0.init(arg_3_0)
-	arg_3_0:setLastEpisodeId()
-	arg_3_0:setShowInteractView()
+function VersionActivity2_3DungeonModel:init()
+	self:setLastEpisodeId()
+	self:setShowInteractView()
 end
 
-function var_0_0.setLastEpisodeId(arg_4_0, arg_4_1)
-	arg_4_0.lastEpisodeId = arg_4_1
+function VersionActivity2_3DungeonModel:setLastEpisodeId(episodeId)
+	self.lastEpisodeId = episodeId
 end
 
-function var_0_0.getLastEpisodeId(arg_5_0)
-	return arg_5_0.lastEpisodeId
+function VersionActivity2_3DungeonModel:getLastEpisodeId()
+	return self.lastEpisodeId
 end
 
-function var_0_0.setShowInteractView(arg_6_0, arg_6_1)
-	arg_6_0.isShowInteractView = arg_6_1
+function VersionActivity2_3DungeonModel:setShowInteractView(isShow)
+	self.isShowInteractView = isShow
 end
 
-function var_0_0.checkIsShowInteractView(arg_7_0)
-	return arg_7_0.isShowInteractView
+function VersionActivity2_3DungeonModel:checkIsShowInteractView()
+	return self.isShowInteractView
 end
 
-function var_0_0.setIsNotShowNewElement(arg_8_0, arg_8_1)
-	arg_8_0.notShowNewElement = arg_8_1
+function VersionActivity2_3DungeonModel:setIsNotShowNewElement(isNotShow)
+	self.notShowNewElement = isNotShow
 end
 
-function var_0_0.isNotShowNewElement(arg_9_0)
-	return arg_9_0.notShowNewElement
+function VersionActivity2_3DungeonModel:isNotShowNewElement()
+	return self.notShowNewElement
 end
 
-function var_0_0.setMapNeedTweenState(arg_10_0, arg_10_1)
-	arg_10_0.isMapNeedTween = arg_10_1
+function VersionActivity2_3DungeonModel:setMapNeedTweenState(needState)
+	self.isMapNeedTween = needState
 end
 
-function var_0_0.getMapNeedTweenState(arg_11_0)
-	return arg_11_0.isMapNeedTween
+function VersionActivity2_3DungeonModel:getMapNeedTweenState()
+	return self.isMapNeedTween
 end
 
-function var_0_0.isUnlockAct165Btn(arg_12_0)
-	local var_12_0 = Activity165Model.instance:getActivityId()
-	local var_12_1 = ActivityConfig.instance:getActivityCo(var_12_0)
+function VersionActivity2_3DungeonModel:isUnlockAct165Btn()
+	local act165Id = Activity165Model.instance:getActivityId()
+	local actConfig = ActivityConfig.instance:getActivityCo(act165Id)
 
-	if var_12_1 then
-		if OpenConfig.instance:getOpenCo(var_12_1.openId) then
-			local var_12_2 = OpenModel.instance:isFunctionUnlock(var_12_1.openId)
-			local var_12_3 = Activity165Model.instance:hasUnlockStory()
+	if actConfig then
+		local openConfig = OpenConfig.instance:getOpenCo(actConfig.openId)
 
-			return var_12_2 and var_12_3
+		if openConfig then
+			local isUnlock = OpenModel.instance:isFunctionUnlock(actConfig.openId)
+			local hasUnlockStory = Activity165Model.instance:hasUnlockStory()
+
+			return isUnlock and hasUnlockStory
 		else
-			logError("openConfig is not exit: " .. var_12_1.openId)
+			logError("openConfig is not exit: " .. actConfig.openId)
 		end
 	end
 
 	return false
 end
 
-function var_0_0.getElementCoList(arg_13_0, arg_13_1)
-	local var_13_0 = {}
-	local var_13_1 = DungeonMapModel.instance:getAllElements()
+function VersionActivity2_3DungeonModel:getElementCoList(mapId)
+	local normalElementCoList = {}
+	local allElements = DungeonMapModel.instance:getAllElements()
 
-	for iter_13_0, iter_13_1 in pairs(var_13_1) do
-		local var_13_2 = DungeonConfig.instance:getChapterMapElement(iter_13_1)
-		local var_13_3 = lua_chapter_map.configDict[var_13_2.mapId]
+	for _, elementId in pairs(allElements) do
+		local elementCo = DungeonConfig.instance:getChapterMapElement(elementId)
+		local mapCo = lua_chapter_map.configDict[elementCo.mapId]
 
-		if var_13_3 and var_13_3.chapterId == VersionActivity2_3DungeonEnum.DungeonChapterId.Story and arg_13_1 == var_13_2.mapId then
-			table.insert(var_13_0, var_13_2)
+		if mapCo and mapCo.chapterId == VersionActivity2_3DungeonEnum.DungeonChapterId.Story and mapId == elementCo.mapId then
+			table.insert(normalElementCoList, elementCo)
 		end
 	end
 
-	return var_13_0
+	return normalElementCoList
 end
 
-function var_0_0.getElementCoListWithFinish(arg_14_0, arg_14_1)
-	local var_14_0 = {}
-	local var_14_1 = arg_14_0:getAllNormalElementCoList(arg_14_1)
+function VersionActivity2_3DungeonModel:getElementCoListWithFinish(mapId)
+	local finishElementCoList = {}
+	local mapAllElementList = self:getAllNormalElementCoList(mapId)
 
-	for iter_14_0, iter_14_1 in pairs(var_14_1) do
-		local var_14_2 = iter_14_1.id
-		local var_14_3 = lua_chapter_map.configDict[iter_14_1.mapId]
+	for _, elementCo in pairs(mapAllElementList) do
+		local elementId = elementCo.id
+		local mapCo = lua_chapter_map.configDict[elementCo.mapId]
 
-		if var_14_3 and var_14_3.chapterId == VersionActivity2_3DungeonEnum.DungeonChapterId.Story then
-			local var_14_4 = DungeonMapModel.instance:elementIsFinished(var_14_2)
-			local var_14_5 = DungeonMapModel.instance:getElementById(var_14_2)
+		if mapCo and mapCo.chapterId == VersionActivity2_3DungeonEnum.DungeonChapterId.Story then
+			local isFinish = DungeonMapModel.instance:elementIsFinished(elementId)
+			local elementData = DungeonMapModel.instance:getElementById(elementId)
 
-			if arg_14_1 == iter_14_1.mapId and var_14_4 and not var_14_5 then
-				table.insert(var_14_0, iter_14_1)
+			if mapId == elementCo.mapId and isFinish and not elementData then
+				table.insert(finishElementCoList, elementCo)
 			end
 		end
 	end
 
-	return var_14_0, var_14_1
+	return finishElementCoList, mapAllElementList
 end
 
-function var_0_0.getAllNormalElementCoList(arg_15_0, arg_15_1)
-	local var_15_0 = {}
-	local var_15_1 = DungeonConfig.instance:getMapElements(arg_15_1)
+function VersionActivity2_3DungeonModel:getAllNormalElementCoList(mapId)
+	local elements = {}
+	local mapAllElementList = DungeonConfig.instance:getMapElements(mapId)
 
-	if var_15_1 then
-		for iter_15_0, iter_15_1 in pairs(var_15_1) do
-			table.insert(var_15_0, iter_15_1)
+	if mapAllElementList then
+		for _, elementCo in pairs(mapAllElementList) do
+			table.insert(elements, elementCo)
 		end
 	end
 
-	return var_15_0
+	return elements
 end
 
-function var_0_0.setDungeonBaseMo(arg_16_0, arg_16_1)
-	arg_16_0.actDungeonBaseMo = arg_16_1
+function VersionActivity2_3DungeonModel:setDungeonBaseMo(dungeonMo)
+	self.actDungeonBaseMo = dungeonMo
 end
 
-function var_0_0.getDungeonBaseMo(arg_17_0)
-	return arg_17_0.actDungeonBaseMo
+function VersionActivity2_3DungeonModel:getDungeonBaseMo()
+	return self.actDungeonBaseMo
 end
 
-function var_0_0.getInitEpisodeId(arg_18_0)
-	local var_18_0 = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity2_3DungeonEnum.DungeonChapterId.Story)
-	local var_18_1 = 0
-	local var_18_2 = 0
+function VersionActivity2_3DungeonModel:getInitEpisodeId()
+	local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(VersionActivity2_3DungeonEnum.DungeonChapterId.Story)
+	local minUnlockEpisodeId = 0
+	local maxBattleEpisodeId = 0
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		local var_18_3 = DungeonModel.instance:isUnlock(iter_18_1)
+	for _, epCo in ipairs(episodeList) do
+		local isUnlock = DungeonModel.instance:isUnlock(epCo)
+		local isBattleEpisode = DungeonModel.instance.isBattleEpisode(epCo)
 
-		if DungeonModel.instance.isBattleEpisode(iter_18_1) then
-			var_18_2 = var_18_2 > iter_18_1.id and var_18_2 or iter_18_1.id
+		if isBattleEpisode then
+			maxBattleEpisodeId = maxBattleEpisodeId > epCo.id and maxBattleEpisodeId or epCo.id
 		end
 
-		if var_18_3 and var_18_1 < iter_18_1.id then
-			var_18_1 = iter_18_1.id
+		if isUnlock and minUnlockEpisodeId < epCo.id then
+			minUnlockEpisodeId = epCo.id
 		end
 	end
 
-	if DungeonModel.instance:chapterIsPass(VersionActivity2_3DungeonEnum.DungeonChapterId.Story) then
-		var_18_1 = var_18_2
+	local isChapterPass = DungeonModel.instance:chapterIsPass(VersionActivity2_3DungeonEnum.DungeonChapterId.Story)
+
+	if isChapterPass then
+		minUnlockEpisodeId = maxBattleEpisodeId
 	end
 
-	return var_18_1
+	return minUnlockEpisodeId
 end
 
-function var_0_0.checkStoryCanUnlock(arg_19_0, arg_19_1)
-	local var_19_0
-	local var_19_1 = Activity165Model.instance:getActivityId()
-	local var_19_2 = Activity165Config.instance:getAllStoryCoList(var_19_1)
+function VersionActivity2_3DungeonModel:checkStoryCanUnlock(elementId)
+	local unlockStoryCo
+	local actId = Activity165Model.instance:getActivityId()
+	local storyList = Activity165Config.instance:getAllStoryCoList(actId)
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_2) do
-		local var_19_3 = Activity165Config.instance:getStoryElements(var_19_1, iter_19_1.storyId)
+	for _, storyCo in ipairs(storyList) do
+		local elementList = Activity165Config.instance:getStoryElements(actId, storyCo.storyId)
+		local finalElement = elementList[#elementList]
 
-		if var_19_3[#var_19_3] == arg_19_1 then
-			var_19_0 = iter_19_1
+		if finalElement == elementId then
+			unlockStoryCo = storyCo
 
 			break
 		end
 	end
 
-	return var_19_0
+	return unlockStoryCo
 end
 
-function var_0_0.getUnFinishStoryElements(arg_20_0)
-	local var_20_0 = {}
-	local var_20_1 = DungeonMapModel.instance:getAllElements()
-	local var_20_2 = Activity165Model.instance:getAllElements()
+function VersionActivity2_3DungeonModel:getUnFinishStoryElements()
+	local unfinishStoryElementList = {}
+	local unfinishElements = DungeonMapModel.instance:getAllElements()
+	local allStoryElements = Activity165Model.instance:getAllElements()
 
-	for iter_20_0, iter_20_1 in pairs(var_20_1) do
-		if LuaUtil.tableContains(var_20_2, iter_20_1) then
-			table.insert(var_20_0, iter_20_1)
+	for _, elementId in pairs(unfinishElements) do
+		if LuaUtil.tableContains(allStoryElements, elementId) then
+			table.insert(unfinishStoryElementList, elementId)
 		end
 	end
 
-	return var_20_0
+	return unfinishStoryElementList
 end
 
-function var_0_0.checkAndGetUnfinishStoryElementCo(arg_21_0, arg_21_1)
-	local var_21_0
-	local var_21_1 = DungeonConfig.instance:getMapElements(arg_21_1) or {}
-	local var_21_2 = arg_21_0:getUnFinishStoryElements()
+function VersionActivity2_3DungeonModel:checkAndGetUnfinishStoryElementCo(mapId)
+	local unfinishElementCo
+	local mapAllElementCoList = DungeonConfig.instance:getMapElements(mapId) or {}
+	local unfinishStoryElementList = self:getUnFinishStoryElements()
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_1) do
-		if LuaUtil.tableContains(var_21_2, iter_21_1.id) then
-			var_21_0 = iter_21_1
+	for _, elementCo in ipairs(mapAllElementCoList) do
+		if LuaUtil.tableContains(unfinishStoryElementList, elementCo.id) then
+			unfinishElementCo = elementCo
 
 			break
 		end
 	end
 
-	return var_21_0
+	return unfinishElementCo
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_3DungeonModel.instance = VersionActivity2_3DungeonModel.New()
 
-return var_0_0
+return VersionActivity2_3DungeonModel

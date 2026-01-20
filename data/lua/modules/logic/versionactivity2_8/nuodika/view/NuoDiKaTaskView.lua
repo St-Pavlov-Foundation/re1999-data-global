@@ -1,64 +1,66 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaTaskView.lua
 
-local var_0_0 = class("NuoDiKaTaskView", BaseView)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+local NuoDiKaTaskView = class("NuoDiKaTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NuoDiKaTaskView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onOpen(arg_2_0)
+function NuoDiKaTaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0._oneClaimReward, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0._onFinishTask, arg_2_0)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	NuoDiKaTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity180
-	}, arg_2_0._oneClaimReward, arg_2_0)
-	TaskDispatcher.runRepeat(arg_2_0._showLeftTime, arg_2_0, 60)
-	arg_2_0:_showLeftTime()
+	}, self._oneClaimReward, self)
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 60)
+	self:_showLeftTime()
 end
 
-function var_0_0._oneClaimReward(arg_3_0)
+function NuoDiKaTaskView:_oneClaimReward()
 	NuoDiKaTaskListModel.instance:init(VersionActivity2_8Enum.ActivityId.NuoDiKa)
 end
 
-function var_0_0._onFinishTask(arg_4_0, arg_4_1)
-	if NuoDiKaTaskListModel.instance:getById(arg_4_1) then
+function NuoDiKaTaskView:_onFinishTask(taskId)
+	if NuoDiKaTaskListModel.instance:getById(taskId) then
 		NuoDiKaTaskListModel.instance:init(VersionActivity2_8Enum.ActivityId.NuoDiKa)
 	end
 end
 
-function var_0_0._showLeftTime(arg_5_0)
-	arg_5_0._txtLimitTime.text = var_0_0.getLimitTimeStr()
+function NuoDiKaTaskView:_showLeftTime()
+	self._txtLimitTime.text = NuoDiKaTaskView.getLimitTimeStr()
 end
 
-function var_0_0.getLimitTimeStr()
-	local var_6_0 = ActivityModel.instance:getActMO(VersionActivity2_8Enum.ActivityId.NuoDiKa)
+function NuoDiKaTaskView.getLimitTimeStr()
+	local actInfoMo = ActivityModel.instance:getActMO(VersionActivity2_8Enum.ActivityId.NuoDiKa)
 
-	if not var_6_0 then
+	if not actInfoMo then
 		return ""
 	end
 
-	local var_6_1 = var_6_0:getRealEndTimeStamp() - ServerTime.now()
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_6_1 > 0 then
-		return TimeUtil.SecondToActivityTimeFormat(var_6_1)
+	if offsetSecond > 0 then
+		return TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 	end
 
 	return ""
 end
 
-function var_0_0.onClose(arg_7_0)
+function NuoDiKaTaskView:onClose()
 	NuoDiKaController.instance:dispatchEvent(NuoDiKaEvent.OnCloseTask)
-	TaskDispatcher.cancelTask(arg_7_0._showLeftTime, arg_7_0)
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function NuoDiKaTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return NuoDiKaTaskView

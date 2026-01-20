@@ -1,35 +1,39 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoleStoryTicketExchange", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoleStoryTicketExchange.lua
 
-local var_0_0 = class("WaitGuideActionRoleStoryTicketExchange", BaseGuideAction)
-local var_0_1 = 1.6
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoleStoryTicketExchange", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionRoleStoryTicketExchange = class("WaitGuideActionRoleStoryTicketExchange", BaseGuideAction)
+local WaitTicketAnimTime = 1.6
 
-	local var_1_0 = RoleStoryModel.instance.lastExchangeTime
+function WaitGuideActionRoleStoryTicketExchange:onStart(context)
+	WaitGuideActionRoleStoryTicketExchange.super.onStart(self, context)
 
-	if CommonConfig.instance:getConstNum(ConstEnum.RoleStoryPowerCost) <= RoleStoryModel.instance:getLeftNum() and RoleStoryModel.instance:checkTodayCanExchange() then
-		RoleStoryController.instance:registerCallback(RoleStoryEvent.ExchangeTick, arg_1_0._onExchangeTick, arg_1_0)
-	elseif var_1_0 and Time.time - var_1_0 < var_0_1 then
-		arg_1_0:_onExchangeTick()
+	local lastExchangeTime = RoleStoryModel.instance.lastExchangeTime
+	local cost = CommonConfig.instance:getConstNum(ConstEnum.RoleStoryPowerCost)
+	local cur = RoleStoryModel.instance:getLeftNum()
+
+	if cost <= cur and RoleStoryModel.instance:checkTodayCanExchange() then
+		RoleStoryController.instance:registerCallback(RoleStoryEvent.ExchangeTick, self._onExchangeTick, self)
+	elseif lastExchangeTime and Time.time - lastExchangeTime < WaitTicketAnimTime then
+		self:_onExchangeTick()
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onExchangeTick(arg_2_0)
-	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, arg_2_0._onExchangeTick, arg_2_0)
-	GuideBlockMgr.instance:startBlock(var_0_1)
-	TaskDispatcher.runDelay(arg_2_0._onDone, arg_2_0, var_0_1)
+function WaitGuideActionRoleStoryTicketExchange:_onExchangeTick()
+	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, self._onExchangeTick, self)
+	GuideBlockMgr.instance:startBlock(WaitTicketAnimTime)
+	TaskDispatcher.runDelay(self._onDone, self, WaitTicketAnimTime)
 end
 
-function var_0_0._onDone(arg_3_0)
-	arg_3_0:onDone(true)
+function WaitGuideActionRoleStoryTicketExchange:_onDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onDone, true)
-	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, arg_4_0._onExchangeTick, arg_4_0)
+function WaitGuideActionRoleStoryTicketExchange:clearWork()
+	TaskDispatcher.cancelTask(self._onDone, true)
+	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, self._onExchangeTick, self)
 end
 
-return var_0_0
+return WaitGuideActionRoleStoryTicketExchange

@@ -1,152 +1,161 @@
-﻿module("modules.logic.tower.model.TowerEpisodeMo", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerEpisodeMo.lua
 
-local var_0_0 = pureTable("TowerEpisodeMo")
+module("modules.logic.tower.model.TowerEpisodeMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.towerType = arg_1_1
+local TowerEpisodeMo = pureTable("TowerEpisodeMo")
 
-	arg_1_0:initEpisode(arg_1_2)
+function TowerEpisodeMo:init(towerType, config)
+	self.towerType = towerType
+
+	self:initEpisode(config)
 end
 
-function var_0_0.initEpisode(arg_2_0, arg_2_1)
-	arg_2_0.episodeList = {}
-	arg_2_0.preEpisodeDict = {}
-	arg_2_0.normalEpisodeCountDict = {}
-	arg_2_0.configDict = arg_2_1.configDict
+function TowerEpisodeMo:initEpisode(config)
+	self.episodeList = {}
+	self.preEpisodeDict = {}
+	self.normalEpisodeCountDict = {}
+	self.configDict = config.configDict
 
-	local var_2_0
+	local towerId
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_1.configList) do
-		local var_2_1 = iter_2_1.towerId
-		local var_2_2 = arg_2_0.preEpisodeDict[var_2_1]
+	for _, episode in pairs(config.configList) do
+		towerId = episode.towerId
 
-		if not var_2_2 then
-			var_2_2 = {}
-			arg_2_0.preEpisodeDict[var_2_1] = var_2_2
+		local preEpisodeDict = self.preEpisodeDict[towerId]
+
+		if not preEpisodeDict then
+			preEpisodeDict = {}
+			self.preEpisodeDict[towerId] = preEpisodeDict
 		end
 
-		var_2_2[iter_2_1.preLayerId] = iter_2_1.layerId
+		preEpisodeDict[episode.preLayerId] = episode.layerId
 	end
 
-	local var_2_3
-	local var_2_4
-	local var_2_5
+	local episodeConfig, nextEpisode, episodes
 
-	for iter_2_2, iter_2_3 in pairs(arg_2_0.preEpisodeDict) do
-		local var_2_6 = arg_2_0.episodeList[iter_2_2]
+	for towerId, dict in pairs(self.preEpisodeDict) do
+		local episodeList = self.episodeList[towerId]
 
-		if not var_2_6 then
-			var_2_6 = {}
-			arg_2_0.episodeList[iter_2_2] = var_2_6
+		if not episodeList then
+			episodeList = {}
+			self.episodeList[towerId] = episodeList
 		end
 
-		local var_2_7 = iter_2_3[0]
-		local var_2_8 = arg_2_0:getEpisodeDict(iter_2_2)
+		nextEpisode = dict[0]
+		episodes = self:getEpisodeDict(towerId)
 
-		while var_2_7 ~= nil do
-			if var_2_8[var_2_7].openRound > 0 and arg_2_0.normalEpisodeCountDict[iter_2_2] == nil then
-				arg_2_0.normalEpisodeCountDict[iter_2_2] = #var_2_6
+		while nextEpisode ~= nil do
+			episodeConfig = episodes[nextEpisode]
+
+			if episodeConfig.openRound > 0 and self.normalEpisodeCountDict[towerId] == nil then
+				self.normalEpisodeCountDict[towerId] = #episodeList
 			end
 
-			table.insert(var_2_6, var_2_7)
+			table.insert(episodeList, nextEpisode)
 
-			var_2_7 = iter_2_3[var_2_7]
+			nextEpisode = dict[nextEpisode]
 		end
 
-		if arg_2_0.normalEpisodeCountDict[iter_2_2] == nil then
-			arg_2_0.normalEpisodeCountDict[iter_2_2] = #var_2_6
+		if self.normalEpisodeCountDict[towerId] == nil then
+			self.normalEpisodeCountDict[towerId] = #episodeList
 		end
 	end
 end
 
-function var_0_0.getEpisodeList(arg_3_0, arg_3_1)
-	return arg_3_0.episodeList[arg_3_1]
+function TowerEpisodeMo:getEpisodeList(towerId)
+	return self.episodeList[towerId]
 end
 
-function var_0_0.getEpisodeDict(arg_4_0, arg_4_1)
-	return arg_4_0.configDict[arg_4_1]
+function TowerEpisodeMo:getEpisodeDict(towerId)
+	return self.configDict[towerId]
 end
 
-function var_0_0.getEpisodeConfig(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getEpisodeDict(arg_5_1)
-	local var_5_1 = var_5_0 and var_5_0[arg_5_2]
+function TowerEpisodeMo:getEpisodeConfig(towerId, layer)
+	local dict = self:getEpisodeDict(towerId)
+	local config = dict and dict[layer]
 
-	if var_5_1 == nil and arg_5_2 ~= 0 then
-		logError(string.format("episode config is nil, towerType:%s,towerId:%s,layer:%s", arg_5_0.towerType, arg_5_1, arg_5_2))
+	if config == nil and layer ~= 0 then
+		logError(string.format("episode config is nil, towerType:%s,towerId:%s,layer:%s", self.towerType, towerId, layer))
 	end
 
-	return var_5_1
+	return config
 end
 
-function var_0_0.getNextEpisodeLayer(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0.preEpisodeDict[arg_6_1]
+function TowerEpisodeMo:getNextEpisodeLayer(towerId, layer)
+	local dict = self.preEpisodeDict[towerId]
 
-	return var_6_0 and var_6_0[arg_6_2]
+	return dict and dict[layer]
 end
 
-function var_0_0.getEpisodeIndex(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_0:getEpisodeConfig(arg_7_1, arg_7_2)
+function TowerEpisodeMo:getEpisodeIndex(towerId, layerId, realIndex)
+	local config = self:getEpisodeConfig(towerId, layerId)
 
-	if not var_7_0 then
+	if not config then
 		return 0
 	end
 
-	local var_7_1 = var_7_0.openRound > 0
-	local var_7_2 = arg_7_0:getEpisodeList(arg_7_1)
-	local var_7_3 = tabletool.indexOf(var_7_2, arg_7_2)
+	local isSp = config.openRound > 0
+	local list = self:getEpisodeList(towerId)
+	local index = tabletool.indexOf(list, layerId)
 
-	if not arg_7_3 then
-		var_7_3 = var_7_3 - (var_7_1 and arg_7_0.normalEpisodeCountDict[arg_7_1] or 0)
+	if not realIndex then
+		local begin = isSp and self.normalEpisodeCountDict[towerId] or 0
+
+		index = index - begin
 	end
 
-	return var_7_3
+	return index
 end
 
-function var_0_0.getSpEpisodes(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1 = arg_8_0.normalEpisodeCountDict[arg_8_1]
+function TowerEpisodeMo:getSpEpisodes(towerId)
+	local list = {}
+	local begin = self.normalEpisodeCountDict[towerId]
 
-	if var_8_1 then
-		local var_8_2 = arg_8_0:getEpisodeList(arg_8_1)
+	if begin then
+		local episodeList = self:getEpisodeList(towerId)
 
-		for iter_8_0 = var_8_1 + 1, #var_8_2 do
-			table.insert(var_8_0, var_8_2[iter_8_0])
+		for i = begin + 1, #episodeList do
+			table.insert(list, episodeList[i])
 		end
 	end
 
-	return var_8_0
+	return list
 end
 
-function var_0_0.getLayerCount(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0.normalEpisodeCountDict[arg_9_1] or 0
+function TowerEpisodeMo:getLayerCount(towerId, isSp)
+	local count = self.normalEpisodeCountDict[towerId] or 0
 
-	if arg_9_2 then
-		var_9_0 = #arg_9_0:getEpisodeList(arg_9_1) - var_9_0
+	if isSp then
+		local episodeList = self:getEpisodeList(towerId)
+
+		count = #episodeList - count
 	end
 
-	return var_9_0
+	return count
 end
 
-function var_0_0.isPassAllUnlockLayers(arg_10_0, arg_10_1)
-	local var_10_0 = TowerModel.instance:getTowerInfoById(arg_10_0.towerType, arg_10_1)
-	local var_10_1 = var_10_0 and var_10_0.passLayerId or 0
-	local var_10_2 = arg_10_0:getNextEpisodeLayer(arg_10_1, var_10_1)
+function TowerEpisodeMo:isPassAllUnlockLayers(towerId)
+	local towerInfo = TowerModel.instance:getTowerInfoById(self.towerType, towerId)
+	local passLayerId = towerInfo and towerInfo.passLayerId or 0
+	local nextLayerId = self:getNextEpisodeLayer(towerId, passLayerId)
 
-	if not var_10_2 then
+	if not nextLayerId then
 		return true
 	end
 
-	local var_10_3 = arg_10_0:getEpisodeConfig(arg_10_1, var_10_2)
+	local layerConfig = self:getEpisodeConfig(towerId, nextLayerId)
 
-	if not var_10_3 then
+	if not layerConfig then
 		return true
 	end
 
-	if not (var_10_3.openRound > 0) then
+	local isSp = layerConfig.openRound > 0
+
+	if not isSp then
 		return false
 	end
 
-	return not var_10_0:isSpLayerOpen(var_10_2)
+	return not towerInfo:isSpLayerOpen(nextLayerId)
 end
 
-return var_0_0
+return TowerEpisodeMo

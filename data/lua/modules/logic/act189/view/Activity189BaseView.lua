@@ -1,81 +1,83 @@
-﻿module("modules.logic.act189.view.Activity189BaseView", package.seeall)
+﻿-- chunkname: @modules/logic/act189/view/Activity189BaseView.lua
 
-local var_0_0 = class("Activity189BaseView", BaseView)
+module("modules.logic.act189.view.Activity189BaseView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, arg_1_0._refresh, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_1_0._onUpdateTaskList, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, arg_1_0._onFinishTask, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_1_0._onFinishTask, arg_1_0)
-	arg_1_0:onUpdateParam()
+local Activity189BaseView = class("Activity189BaseView", BaseView)
+
+function Activity189BaseView:onOpen()
+	TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, self._refresh, self)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
+	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, self._onFinishTask, self)
+	self:onUpdateParam()
 end
 
-function var_0_0.onUpdateParam(arg_2_0)
-	Activity189Controller.instance:sendGetTaskInfoRequest(arg_2_0._refresh, arg_2_0)
+function Activity189BaseView:onUpdateParam()
+	Activity189Controller.instance:sendGetTaskInfoRequest(self._refresh, self)
 end
 
-function var_0_0.onClose(arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, arg_3_0._refresh, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, arg_3_0._onFinishTask, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_3_0._onFinishTask, arg_3_0)
+function Activity189BaseView:onClose()
+	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, self._refresh, self)
+	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
+	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, self._onFinishTask, self)
 end
 
-function var_0_0._refresh(arg_4_0)
-	Activity189_TaskListModel.instance:setTaskList(arg_4_0:actId())
+function Activity189BaseView:_refresh()
+	Activity189_TaskListModel.instance:setTaskList(self:actId())
 end
 
-function var_0_0._getTaskType(arg_5_0)
+function Activity189BaseView:_getTaskType()
 	return Activity189Config.instance:getTaskType()
 end
 
-function var_0_0._onUpdateTaskList(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function Activity189BaseView:_onUpdateTaskList(msg)
+	if not msg then
 		return
 	end
 
-	local var_6_0 = arg_6_1.taskInfo
-	local var_6_1 = arg_6_0:_getTaskType()
+	local taskInfo = msg.taskInfo
+	local taskType = self:_getTaskType()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0 or {}) do
-		if iter_6_1.type == var_6_1 then
-			arg_6_0:_refresh()
+	for _, v in ipairs(taskInfo or {}) do
+		if v.type == taskType then
+			self:_refresh()
 
 			break
 		end
 	end
 end
 
-function var_0_0._onFinishTask(arg_7_0)
-	arg_7_0:_refresh()
-	Activity189Controller.dispatchEventUpdateActTag(arg_7_0:actId())
+function Activity189BaseView:_onFinishTask()
+	self:_refresh()
+	Activity189Controller.dispatchEventUpdateActTag(self:actId())
 end
 
-function var_0_0.getRemainTimeStr(arg_8_0)
-	local var_8_0 = Activity189Model.instance:getRemainTimeSec(arg_8_0:actId())
+function Activity189BaseView:getRemainTimeStr()
+	local remainTimeSec = Activity189Model.instance:getRemainTimeSec(self:actId())
 
-	if var_8_0 <= 0 then
+	if remainTimeSec <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	local var_8_1, var_8_2, var_8_3, var_8_4 = TimeUtil.secondsToDDHHMMSS(var_8_0)
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
 
-	if var_8_1 > 0 then
+	if day > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
-			var_8_1,
-			var_8_2
+			day,
+			hour
 		})
-	elseif var_8_2 > 0 then
+	elseif hour > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
-			var_8_2,
-			var_8_3
+			hour,
+			min
 		})
-	elseif var_8_3 > 0 then
+	elseif min > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
-			var_8_3
+			min
 		})
-	elseif var_8_4 > 0 then
+	elseif sec > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
 			1
@@ -85,8 +87,8 @@ function var_0_0.getRemainTimeStr(arg_8_0)
 	return luaLang("turnback_end")
 end
 
-function var_0_0.actId(arg_9_0)
-	return arg_9_0.viewContainer:actId()
+function Activity189BaseView:actId()
+	return self.viewContainer:actId()
 end
 
-return var_0_0
+return Activity189BaseView

@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity2_2.act169.rpc.SummonNewCustomPickViewRpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/rpc/SummonNewCustomPickViewRpc.lua
 
-local var_0_0 = class("SummonNewCustomPickViewRpc", BaseRpc)
+module("modules.logic.versionactivity2_2.act169.rpc.SummonNewCustomPickViewRpc", package.seeall)
 
-function var_0_0.sendGet169InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity169Module_pb.Get169InfoRequest()
+local SummonNewCustomPickViewRpc = class("SummonNewCustomPickViewRpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function SummonNewCustomPickViewRpc:sendGet169InfoRequest(activityId, callBack, callBackObj)
+	local req = Activity169Module_pb.Get169InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	self:sendMsg(req, callBack, callBackObj)
 end
 
-function var_0_0.onReceiveGet169InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		SummonNewCustomPickViewModel.instance:onGetInfo(arg_2_2.activityId, arg_2_2.heroId)
-		SummonNewCustomPickViewController.instance:dispatchEvent(SummonNewCustomPickEvent.OnGetServerInfoReply, arg_2_2.activityId, arg_2_2.heroId)
+function SummonNewCustomPickViewRpc:onReceiveGet169InfoReply(resultCode, msg)
+	if resultCode == 0 then
+		SummonNewCustomPickViewModel.instance:onGetInfo(msg.activityId, msg.heroId)
+		SummonNewCustomPickViewController.instance:dispatchEvent(SummonNewCustomPickEvent.OnGetServerInfoReply, msg.activityId, msg.heroId)
 	end
 end
 
-function var_0_0.sendAct169SummonRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = Activity169Module_pb.Act169SummonRequest()
+function SummonNewCustomPickViewRpc:sendAct169SummonRequest(activityId, heroId)
+	local req = Activity169Module_pb.Act169SummonRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.heroId = arg_3_2 or 0
+	req.activityId = activityId
+	req.heroId = heroId or 0
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct169SummonReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
+function SummonNewCustomPickViewRpc:onReceiveAct169SummonReply(resultCode, msg)
+	if resultCode == 0 then
 		if not SummonNewCustomPickChoiceListModel.instance:haveAllRole() then
-			SummonNewCustomPickViewController.instance:dispatchEvent(SummonNewCustomPickEvent.OnSummonCustomGet, arg_4_2.activityId, arg_4_2.heroId)
+			SummonNewCustomPickViewController.instance:dispatchEvent(SummonNewCustomPickEvent.OnSummonCustomGet, msg.activityId, msg.heroId)
 		end
 
-		SummonNewCustomPickViewModel.instance:setReward(arg_4_2.activityId, arg_4_2.heroId)
-		SummonNewCustomPickViewModel.instance:setGetRewardFxState(arg_4_2.activityId, true)
-		SummonNewCustomPickViewController.instance:dispatchEvent(SummonNewCustomPickEvent.OnGetReward, arg_4_2.activityId, arg_4_2.heroId)
+		SummonNewCustomPickViewModel.instance:setReward(msg.activityId, msg.heroId)
+		SummonNewCustomPickViewModel.instance:setGetRewardFxState(msg.activityId, true)
+		SummonNewCustomPickViewController.instance:dispatchEvent(SummonNewCustomPickEvent.OnGetReward, msg.activityId, msg.heroId)
 		CharacterModel.instance:setGainHeroViewShowState(false)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SummonNewCustomPickViewRpc.instance = SummonNewCustomPickViewRpc.New()
 
-return var_0_0
+return SummonNewCustomPickViewRpc

@@ -1,233 +1,245 @@
-﻿module("modules.logic.fight.view.assistboss.FightAssistBoss4", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/assistboss/FightAssistBoss4.lua
 
-local var_0_0 = class("FightAssistBoss4", FightAssistBossBase)
+module("modules.logic.fight.view.assistboss.FightAssistBoss4", package.seeall)
 
-function var_0_0.setPrefabPath(arg_1_0)
-	arg_1_0.prefabPath = "ui/viewres/assistboss/boss4.prefab"
+local FightAssistBoss4 = class("FightAssistBoss4", FightAssistBossBase)
+
+function FightAssistBoss4:setPrefabPath()
+	self.prefabPath = "ui/viewres/assistboss/boss4.prefab"
 end
 
-function var_0_0.initView(arg_2_0)
-	var_0_0.super.initView(arg_2_0)
+function FightAssistBoss4:initView()
+	FightAssistBoss4.super.initView(self)
 
-	arg_2_0.goCanUseFrame = gohelper.findChild(arg_2_0.viewGo, "head/canuse_frame")
-	arg_2_0.goBg = gohelper.findChild(arg_2_0.viewGo, "head/bg")
-	arg_2_0.pointList = {}
+	self.goCanUseFrame = gohelper.findChild(self.viewGo, "head/canuse_frame")
+	self.goBg = gohelper.findChild(self.viewGo, "head/bg")
+	self.pointList = {}
 
-	arg_2_0:createPointItem(gohelper.findChild(arg_2_0.viewGo, "head/point1"))
-	arg_2_0:createPointItem(gohelper.findChild(arg_2_0.viewGo, "head/point2"))
-	arg_2_0:createPointItem(gohelper.findChild(arg_2_0.viewGo, "head/point3"))
+	self:createPointItem(gohelper.findChild(self.viewGo, "head/point1"))
+	self:createPointItem(gohelper.findChild(self.viewGo, "head/point2"))
+	self:createPointItem(gohelper.findChild(self.viewGo, "head/point3"))
 end
 
-function var_0_0.addEvents(arg_3_0)
-	var_0_0.super.addEvents(arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0.onBuffUpdate, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_3_0.onMySideRoundEnd, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0.stageChange, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_3_0.onSkillPlayFinish, arg_3_0)
+function FightAssistBoss4:addEvents()
+	FightAssistBoss4.super.addEvents(self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, self.onMySideRoundEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.stageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self.onSkillPlayFinish, self)
 end
 
-function var_0_0.createPointItem(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getUserDataTb_()
+function FightAssistBoss4:createPointItem(goPoint)
+	local pointItem = self:getUserDataTb_()
 
-	var_4_0.go = arg_4_1
-	var_4_0.goUsing = gohelper.findChild(arg_4_1, "canuse")
-	var_4_0.goOver = gohelper.findChild(arg_4_1, "over")
-	var_4_0.energyImage = gohelper.findChildImage(arg_4_1, "energybg/energy")
-	var_4_0.goFull = gohelper.findChild(arg_4_1, "full")
-	var_4_0.energyImage.fillAmount = 0
+	pointItem.go = goPoint
+	pointItem.goUsing = gohelper.findChild(goPoint, "canuse")
+	pointItem.goOver = gohelper.findChild(goPoint, "over")
+	pointItem.energyImage = gohelper.findChildImage(goPoint, "energybg/energy")
+	pointItem.goFull = gohelper.findChild(goPoint, "full")
+	pointItem.energyImage.fillAmount = 0
 
-	table.insert(arg_4_0.pointList, var_4_0)
-	arg_4_0:resetPointItem(var_4_0)
+	table.insert(self.pointList, pointItem)
+	self:resetPointItem(pointItem)
 
-	return var_4_0
+	return pointItem
 end
 
-function var_0_0.resetPointItem(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_1.goFull, false)
-	gohelper.setActive(arg_5_1.goUsing, false)
-	gohelper.setActive(arg_5_1.goOver, false)
+function FightAssistBoss4:resetPointItem(pointItem)
+	gohelper.setActive(pointItem.goFull, false)
+	gohelper.setActive(pointItem.goUsing, false)
+	gohelper.setActive(pointItem.goOver, false)
 end
 
-function var_0_0.refreshPower(arg_6_0)
-	arg_6_0:killTween()
+function FightAssistBoss4:refreshPower()
+	self:killTween()
 
-	local var_6_0, var_6_1 = FightDataHelper.paTaMgr:getAssistBossServerPower()
-	local var_6_2 = arg_6_0:getBeforePowerRate()
-	local var_6_3 = var_6_0 / var_6_1
+	local power, maxPower = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local beforeRate = self:getBeforePowerRate()
+	local targetRate = power / maxPower
 
-	arg_6_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_6_2, var_6_3, FightAssistBossBase.Duration, arg_6_0.onBoss4FrameCallback, arg_6_0.onTweenDone, arg_6_0, nil, EaseType.Linear)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(beforeRate, targetRate, FightAssistBossBase.Duration, self.onBoss4FrameCallback, self.onTweenDone, self, nil, EaseType.Linear)
 
-	arg_6_0:refreshOver()
-	arg_6_0:refreshUsing()
-	arg_6_0:refreshHeadImageColor()
-	arg_6_0:refreshCanUse()
+	self:refreshOver()
+	self:refreshUsing()
+	self:refreshHeadImageColor()
+	self:refreshCanUse()
 end
 
-function var_0_0.getBeforePowerRate(arg_7_0)
-	return 0 + arg_7_0.pointList[1].energyImage.fillAmount / 2 + arg_7_0.pointList[2].energyImage.fillAmount / 2
+function FightAssistBoss4:getBeforePowerRate()
+	local rate = 0
+
+	rate = rate + self.pointList[1].energyImage.fillAmount / 2
+	rate = rate + self.pointList[2].energyImage.fillAmount / 2
+
+	return rate
 end
 
-function var_0_0.onBoss4FrameCallback(arg_8_0, arg_8_1)
-	local var_8_0
+function FightAssistBoss4:onBoss4FrameCallback(value)
+	local index
 
-	if arg_8_1 <= 0.5 then
-		var_8_0 = 1
+	if value <= 0.5 then
+		index = 1
 	else
-		var_8_0 = 2
-		arg_8_1 = arg_8_1 - 0.5
+		index = 2
+		value = value - 0.5
 	end
 
-	arg_8_1 = arg_8_1 * 2
+	value = value * 2
 
-	local var_8_1 = arg_8_0.pointList[var_8_0]
+	local pointItem = self.pointList[index]
 
-	var_8_1.energyImage.fillAmount = arg_8_1
+	pointItem.energyImage.fillAmount = value
 
-	gohelper.setActive(var_8_1.goFull, arg_8_1 >= 1)
+	gohelper.setActive(pointItem.goFull, value >= 1)
 end
 
-function var_0_0.onTweenDone(arg_9_0)
-	local var_9_0, var_9_1 = FightDataHelper.paTaMgr:getAssistBossServerPower()
-	local var_9_2 = var_9_0 / var_9_1
-	local var_9_3 = var_9_2
+function FightAssistBoss4:onTweenDone()
+	local power, maxPower = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local srcRate = power / maxPower
+	local rate = srcRate
 
-	if var_9_2 <= 0.5 then
-		var_9_3 = var_9_3 * 2
+	if srcRate <= 0.5 then
+		rate = rate * 2
 	else
-		var_9_3 = 1
+		rate = 1
 	end
 
-	arg_9_0.pointList[1].energyImage.fillAmount = var_9_3
+	self.pointList[1].energyImage.fillAmount = rate
 
-	gohelper.setActive(arg_9_0.pointList[1].goFull, var_9_3 >= 1)
+	gohelper.setActive(self.pointList[1].goFull, rate >= 1)
 
-	local var_9_4 = (var_9_2 - 0.5) * 2
+	rate = srcRate - 0.5
+	rate = rate * 2
+	self.pointList[2].energyImage.fillAmount = math.max(rate, 0)
 
-	arg_9_0.pointList[2].energyImage.fillAmount = math.max(var_9_4, 0)
-
-	gohelper.setActive(arg_9_0.pointList[2].goFull, var_9_4 >= 1)
+	gohelper.setActive(self.pointList[2].goFull, rate >= 1)
 end
 
-function var_0_0.refreshOver(arg_10_0)
-	local var_10_0 = arg_10_0:checkIsOver()
+function FightAssistBoss4:refreshOver()
+	local isOver = self:checkIsOver()
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.pointList) do
-		gohelper.setActive(iter_10_1.goOver, var_10_0)
-	end
-end
-
-function var_0_0.refreshUsing(arg_11_0)
-	local var_11_0 = FightDataHelper.paTaMgr:getUseCardCount()
-
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.pointList) do
-		gohelper.setActive(iter_11_1.goUsing, iter_11_0 <= var_11_0)
+	for _, pointItem in ipairs(self.pointList) do
+		gohelper.setActive(pointItem.goOver, isOver)
 	end
 end
 
-var_0_0.OverColor = Color(0.7058823529411765, 0.7058823529411765, 0.7058823529411765)
+function FightAssistBoss4:refreshUsing()
+	local useCardCount = FightDataHelper.paTaMgr:getUseCardCount()
 
-function var_0_0.refreshHeadImageColor(arg_12_0)
-	local var_12_0 = arg_12_0:checkIsOver()
-
-	ZProj.UGUIHelper.SetGrayscale(arg_12_0.goBg, var_12_0)
-
-	arg_12_0.headImage.color = var_12_0 and var_0_0.OverColor or Color.white
+	for index, pointItem in ipairs(self.pointList) do
+		gohelper.setActive(pointItem.goUsing, index <= useCardCount)
+	end
 end
 
-function var_0_0.refreshCanUse(arg_13_0)
-	gohelper.setActive(arg_13_0.goCanUseFrame, arg_13_0:canUseSkill() ~= nil)
+FightAssistBoss4.OverColor = Color(0.7058823529411765, 0.7058823529411765, 0.7058823529411765)
+
+function FightAssistBoss4:refreshHeadImageColor()
+	local isOver = self:checkIsOver()
+
+	ZProj.UGUIHelper.SetGrayscale(self.goBg, isOver)
+
+	self.headImage.color = isOver and FightAssistBoss4.OverColor or Color.white
 end
 
-function var_0_0.canUseSkill(arg_14_0)
-	local var_14_0 = var_0_0.super.canUseSkill(arg_14_0)
+function FightAssistBoss4:refreshCanUse()
+	gohelper.setActive(self.goCanUseFrame, self:canUseSkill() ~= nil)
+end
 
-	if not var_14_0 then
+function FightAssistBoss4:canUseSkill()
+	local useSkill = FightAssistBoss4.super.canUseSkill(self)
+
+	if not useSkill then
 		return
 	end
 
-	if arg_14_0:checkIsOver() then
+	if self:checkIsOver() then
 		return
 	end
 
-	return var_14_0
+	return useSkill
 end
 
-function var_0_0.refreshCD(arg_15_0)
+function FightAssistBoss4:refreshCD()
 	return
 end
 
-var_0_0.OverBuffId = 12410011
+FightAssistBoss4.OverBuffId = 12410011
 
-function var_0_0.checkIsOver(arg_16_0)
-	local var_16_0 = FightDataHelper.entityMgr:getAssistBoss()
+function FightAssistBoss4:checkIsOver()
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-	return var_16_0 and var_16_0:hasBuffId(var_0_0.OverBuffId)
+	return assistBoss and assistBoss:hasBuffId(FightAssistBoss4.OverBuffId)
 end
 
-function var_0_0.onBuffUpdate(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = FightDataHelper.entityMgr:getAssistBoss()
+function FightAssistBoss4:onBuffUpdate(entityId, effectType, buffId, buffUid)
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-	if not var_17_0 then
+	if not assistBoss then
 		return
 	end
 
-	if var_17_0.uid ~= arg_17_1 then
+	if assistBoss.uid ~= entityId then
 		return
 	end
 
-	arg_17_0:refreshOver()
-	arg_17_0:refreshHeadImageColor()
-	arg_17_0:refreshCanUse()
+	self:refreshOver()
+	self:refreshHeadImageColor()
+	self:refreshCanUse()
 
-	if arg_17_2 == FightEnum.EffectType.BUFFADD and arg_17_3 == var_0_0.OverBuffId then
+	if effectType == FightEnum.EffectType.BUFFADD and buffId == FightAssistBoss4.OverBuffId then
 		AudioMgr.instance:trigger(20247004)
 	end
 end
 
-function var_0_0.refreshSpecialPoint(arg_18_0)
-	local var_18_0 = arg_18_0.pointList[3]
+function FightAssistBoss4:refreshSpecialPoint()
+	local pointItem = self.pointList[3]
 
-	if arg_18_0:checkIsOver() then
-		gohelper.setActive(var_18_0.goOver, true)
-		gohelper.setActive(var_18_0.goFull, false)
+	if self:checkIsOver() then
+		gohelper.setActive(pointItem.goOver, true)
+		gohelper.setActive(pointItem.goFull, false)
 
-		var_18_0.energyImage.fillAmount = 0
+		pointItem.energyImage.fillAmount = 0
 
 		return
 	end
 
-	local var_18_1, var_18_2 = FightDataHelper.paTaMgr:getAssistBossServerPower()
-	local var_18_3 = var_18_1 == var_18_2
+	local power, maxPower = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local full = power == maxPower
 
-	var_18_0.energyImage.fillAmount = var_18_3 and 1 or 0
+	pointItem.energyImage.fillAmount = full and 1 or 0
 
-	gohelper.setActive(var_18_0.goFull, var_18_3)
-	gohelper.setActive(var_18_0.goOver, false)
+	gohelper.setActive(pointItem.goFull, full)
+	gohelper.setActive(pointItem.goOver, false)
 end
 
-function var_0_0.onSkillPlayFinish(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	local var_19_0 = FightDataHelper.paTaMgr:getBossSkillInfoList()
-	local var_19_1 = var_19_0 and var_19_0[3]
+function FightAssistBoss4:onSkillPlayFinish(entity, skillId, fightStepData, timelineName)
+	local infoList = FightDataHelper.paTaMgr:getBossSkillInfoList()
+	local skillInfo = infoList and infoList[3]
+	local lastSkillId = skillInfo and skillInfo.skillId
 
-	if (var_19_1 and var_19_1.skillId) == arg_19_2 then
-		arg_19_0:refreshSpecialPoint()
+	if lastSkillId == skillId then
+		self:refreshSpecialPoint()
 	end
 end
 
-function var_0_0.stageChange(arg_20_0)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		arg_20_0:refreshSpecialPoint()
+function FightAssistBoss4:stageChange()
+	local curStage = FightDataHelper.stageMgr:getCurStage()
+
+	if curStage == FightStageMgr.StageType.Operate then
+		self:refreshSpecialPoint()
 	end
 end
 
-function var_0_0.onMySideRoundEnd(arg_21_0)
-	return arg_21_0:refreshSpecialPoint()
+function FightAssistBoss4:onMySideRoundEnd()
+	return self:refreshSpecialPoint()
 end
 
-function var_0_0.playAssistBossCard(arg_22_0)
-	if var_0_0.super.playAssistBossCard(arg_22_0) then
+function FightAssistBoss4:playAssistBossCard()
+	local playSuccess = FightAssistBoss4.super.playAssistBossCard(self)
+
+	if playSuccess then
 		AudioMgr.instance:trigger(20247003)
 	end
 end
 
-return var_0_0
+return FightAssistBoss4

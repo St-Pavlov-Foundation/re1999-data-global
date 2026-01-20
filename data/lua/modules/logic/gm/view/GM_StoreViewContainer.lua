@@ -1,23 +1,25 @@
-﻿module("modules.logic.gm.view.GM_StoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_StoreViewContainer.lua
 
-local var_0_0 = class("GM_StoreViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_StoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_StoreViewContainer = class("GM_StoreViewContainer", BaseViewContainer)
+
+function GM_StoreViewContainer:buildViews()
 	return {
 		GM_StoreView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_StoreViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.StoreView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
+function GM_StoreViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.StoreView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.StoreView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
+function GM_StoreViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.StoreView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-return var_0_0
+return GM_StoreViewContainer

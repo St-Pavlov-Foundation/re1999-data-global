@@ -1,11 +1,13 @@
-﻿module("modules.logic.summon.view.luckybag.SummonLuckyBagChoiceContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/luckybag/SummonLuckyBagChoiceContainer.lua
 
-local var_0_0 = class("SummonLuckyBagChoiceContainer", BaseViewContainer)
+module("modules.logic.summon.view.luckybag.SummonLuckyBagChoiceContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SummonLuckyBagChoiceContainer = class("SummonLuckyBagChoiceContainer", BaseViewContainer)
+
+function SummonLuckyBagChoiceContainer:buildViews()
 	return {
 		SummonLuckyBagChoice.New()
 	}
 end
 
-return var_0_0
+return SummonLuckyBagChoiceContainer

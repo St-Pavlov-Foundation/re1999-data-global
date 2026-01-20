@@ -1,19 +1,21 @@
-﻿module("modules.logic.dungeon.model.DungeonPuzzleMazeDrawMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonPuzzleMazeDrawMO.lua
 
-local var_0_0 = pureTable("DungeonPuzzleMazeDrawMO")
+module("modules.logic.dungeon.model.DungeonPuzzleMazeDrawMO", package.seeall)
 
-function var_0_0.initByPos(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.x, arg_1_0.y = arg_1_1, arg_1_2
-	arg_1_0.objType = arg_1_3
-	arg_1_0.val = arg_1_4 or 0
-	arg_1_0.isPos = true
+local DungeonPuzzleMazeDrawMO = pureTable("DungeonPuzzleMazeDrawMO")
+
+function DungeonPuzzleMazeDrawMO:initByPos(x, y, objType, val)
+	self.x, self.y = x, y
+	self.objType = objType
+	self.val = val or 0
+	self.isPos = true
 end
 
-function var_0_0.initByLine(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
-	arg_2_0.x1, arg_2_0.y1, arg_2_0.x2, arg_2_0.y2 = arg_2_1, arg_2_2, arg_2_3, arg_2_4
-	arg_2_0.objType = arg_2_5
-	arg_2_0.val = arg_2_6 or 0
-	arg_2_0.isPos = false
+function DungeonPuzzleMazeDrawMO:initByLine(x1, y1, x2, y2, objType, val)
+	self.x1, self.y1, self.x2, self.y2 = x1, y1, x2, y2
+	self.objType = objType
+	self.val = val or 0
+	self.isPos = false
 end
 
-return var_0_0
+return DungeonPuzzleMazeDrawMO

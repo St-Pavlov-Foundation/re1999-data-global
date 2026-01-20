@@ -1,38 +1,38 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractDestroyableTrap", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/interacts/Va3ChessInteractDestroyableTrap.lua
 
-local var_0_0 = class("Va3ChessInteractDestroyableTrap", Va3ChessInteractBase)
+module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractDestroyableTrap", package.seeall)
 
-function var_0_0.showStateView(arg_1_0, arg_1_1, arg_1_2)
-	if arg_1_1 == Va3ChessEnum.ObjState.Idle then
-		arg_1_0:showIdleStateView()
-	elseif arg_1_1 == Va3ChessEnum.ObjState.Interoperable then
-		arg_1_0:showInteroperableStateView(arg_1_2)
+local Va3ChessInteractDestroyableTrap = class("Va3ChessInteractDestroyableTrap", Va3ChessInteractBase)
+
+function Va3ChessInteractDestroyableTrap:showStateView(objState, params)
+	if objState == Va3ChessEnum.ObjState.Idle then
+		self:showIdleStateView()
+	elseif objState == Va3ChessEnum.ObjState.Interoperable then
+		self:showInteroperableStateView(params)
 	end
 end
 
-function var_0_0.showIdleStateView(arg_2_0)
-	local var_2_0 = arg_2_0._target.originData.posX
-	local var_2_1 = arg_2_0._target.originData.posY
+function Va3ChessInteractDestroyableTrap:showIdleStateView()
+	local x, y = self._target.originData.posX, self._target.originData.posY
 
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmAreaOnXY, var_2_0, var_2_1, false)
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmAreaOnXY, x, y, false)
 end
 
-function var_0_0.showInteroperableStateView(arg_3_0, arg_3_1)
-	if arg_3_1.objType == Va3ChessEnum.InteractType.Player then
-		local var_3_0 = arg_3_0._target.originData.posX
-		local var_3_1 = arg_3_0._target.originData.posY
+function Va3ChessInteractDestroyableTrap:showInteroperableStateView(params)
+	if params.objType == Va3ChessEnum.InteractType.Player then
+		local x, y = self._target.originData.posX, self._target.originData.posY
 
-		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmAreaOnXY, var_3_0, var_3_1, true)
+		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmAreaOnXY, x, y, true)
 	end
 end
 
-function var_0_0.playDeleteObjView(arg_4_0)
+function Va3ChessInteractDestroyableTrap:playDeleteObjView()
 	AudioMgr.instance:trigger(AudioEnum.Role2ChessGame1_3.FireHurt)
 end
 
-function var_0_0.dispose(arg_5_0)
-	arg_5_0:showIdleStateView()
-	var_0_0.super.dispose(arg_5_0)
+function Va3ChessInteractDestroyableTrap:dispose()
+	self:showIdleStateView()
+	Va3ChessInteractDestroyableTrap.super.dispose(self)
 end
 
-return var_0_0
+return Va3ChessInteractDestroyableTrap

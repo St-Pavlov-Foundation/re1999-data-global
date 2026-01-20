@@ -1,162 +1,167 @@
-﻿module("modules.logic.store.model.StoreClothesGoodsItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/StoreClothesGoodsItemListModel.lua
 
-local var_0_0 = class("StoreClothesGoodsItemListModel", StoreNormalGoodsItemListModel)
+module("modules.logic.store.model.StoreClothesGoodsItemListModel", package.seeall)
 
-function var_0_0.setMOList(arg_1_0, arg_1_1)
-	arg_1_0._moList = {}
+local StoreClothesGoodsItemListModel = class("StoreClothesGoodsItemListModel", StoreNormalGoodsItemListModel)
 
-	if arg_1_1 then
-		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-			table.insert(arg_1_0._moList, iter_1_1)
+function StoreClothesGoodsItemListModel:setMOList(moList)
+	self._moList = {}
+
+	if moList then
+		for _, mo in pairs(moList) do
+			table.insert(self._moList, mo)
 		end
 
-		if #arg_1_0._moList > 1 then
-			table.sort(arg_1_0._moList, StoreNormalGoodsItemListModel._sortFunction)
+		if #self._moList > 1 then
+			table.sort(self._moList, StoreNormalGoodsItemListModel._sortFunction)
 		end
 	end
 
-	if next(arg_1_0._moList) then
+	if next(self._moList) then
 		StoreController.instance:dispatchEvent(StoreEvent.CheckSkinViewEmpty, false)
 	else
 		StoreController.instance:dispatchEvent(StoreEvent.CheckSkinViewEmpty, true)
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0.findMOByProduct(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_0:getList()
-	local var_2_1 = #var_2_0
+function StoreClothesGoodsItemListModel:findMOByProduct(type, itemId)
+	local moList = self:getList()
+	local count = #moList
 
-	for iter_2_0 = 1, var_2_1 do
-		local var_2_2 = var_2_0[iter_2_0]
+	for i = 1, count do
+		local mo = moList[i]
 
-		if var_2_2 and var_2_2:hasProduct(arg_2_1, arg_2_2) then
-			return var_2_2
+		if mo and mo:hasProduct(type, itemId) then
+			return mo
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getGoodIndex(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:getList()
+function StoreClothesGoodsItemListModel:getGoodIndex(goodId)
+	local moList = self:getList()
 
-	for iter_3_0 = 1, #var_3_0 do
-		if var_3_0[iter_3_0].goodsId == arg_3_1 then
-			return iter_3_0
+	for i = 1, #moList do
+		if moList[i].goodsId == goodId then
+			return i
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.initViewParam(arg_4_0)
-	arg_4_0._isLive2d = false
-	arg_4_0._selectIndex = nil
-	arg_4_0.startTime = ServerTime.now()
+function StoreClothesGoodsItemListModel:initViewParam()
+	self._isLive2d = false
+	self._selectIndex = nil
+	self.startTime = ServerTime.now()
 end
 
-function var_0_0.getSelectIndex(arg_5_0)
-	return arg_5_0._selectIndex or 1
+function StoreClothesGoodsItemListModel:getSelectIndex()
+	return self._selectIndex or 1
 end
 
-function var_0_0.getSelectGoods(arg_6_0)
-	local var_6_0 = arg_6_0:getSelectIndex()
+function StoreClothesGoodsItemListModel:getSelectGoods()
+	local index = self:getSelectIndex()
 
-	return arg_6_0:getGoodsByIndex(var_6_0)
+	return self:getGoodsByIndex(index)
 end
 
-function var_0_0.getGoodsByIndex(arg_7_0, arg_7_1)
-	return arg_7_0:getList()[arg_7_1]
+function StoreClothesGoodsItemListModel:getGoodsByIndex(index)
+	local moList = self:getList()
+
+	return moList[index]
 end
 
-function var_0_0.setSelectIndex(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:getSelectIndex()
+function StoreClothesGoodsItemListModel:setSelectIndex(index, isDrag)
+	local selectIndex = self:getSelectIndex()
 
-	if var_8_0 == arg_8_1 then
+	if selectIndex == index then
 		return
 	end
 
-	local var_8_1 = ServerTime.now()
+	local curTime = ServerTime.now()
 
-	if arg_8_0.startTime then
-		local var_8_2 = arg_8_0:getGoodsByIndex(var_8_0)
-		local var_8_3 = arg_8_0:getGoodsByIndex(arg_8_1)
-		local var_8_4 = var_8_1 - arg_8_0.startTime
+	if self.startTime then
+		local lastGoods = self:getGoodsByIndex(selectIndex)
+		local afterGoods = self:getGoodsByIndex(index)
+		local browseTime = curTime - self.startTime
 
 		StatController.instance:track(StatEnum.EventName.SkinStoreSwitchSkin, {
-			[StatEnum.EventProperties.SkinStoreBeforeGoodsId] = var_8_2 and var_8_2.goodsId,
-			[StatEnum.EventProperties.SkinStoreAfterGoodsId] = var_8_3 and var_8_3.goodsId,
-			[StatEnum.EventProperties.SkinStoreBrowseTime] = var_8_4
+			[StatEnum.EventProperties.SkinStoreBeforeGoodsId] = lastGoods and lastGoods.goodsId,
+			[StatEnum.EventProperties.SkinStoreAfterGoodsId] = afterGoods and afterGoods.goodsId,
+			[StatEnum.EventProperties.SkinStoreBrowseTime] = browseTime
 		})
 	end
 
-	arg_8_0.startTime = var_8_1
-	arg_8_0._selectIndex = arg_8_1
+	self.startTime = curTime
+	self._selectIndex = index
 
-	StoreController.instance:dispatchEvent(StoreEvent.SkinPreviewChanged, arg_8_2)
+	StoreController.instance:dispatchEvent(StoreEvent.SkinPreviewChanged, isDrag)
 end
 
-function var_0_0.getIsLive2d(arg_9_0)
-	return arg_9_0._isLive2d
+function StoreClothesGoodsItemListModel:getIsLive2d()
+	return self._isLive2d
 end
 
-function var_0_0.switchIsLive2d(arg_10_0)
-	arg_10_0._isLive2d = not arg_10_0._isLive2d
+function StoreClothesGoodsItemListModel:switchIsLive2d()
+	self._isLive2d = not self._isLive2d
 end
 
-function var_0_0.moveToNewGoods(arg_11_0)
-	local var_11_0 = arg_11_0._scrollViews[1]
+function StoreClothesGoodsItemListModel:moveToNewGoods()
+	local scrollView = self._scrollViews[1]
 
-	if not var_11_0 then
+	if not scrollView then
 		return
 	end
 
-	local var_11_1 = arg_11_0:findNewGoodsIndex()
+	local newIndex = self:findNewGoodsIndex()
 
-	if not var_11_1 then
+	if not newIndex then
 		return
 	end
 
-	var_11_0:moveToByIndex(var_11_1, 0.1)
+	scrollView:moveToByIndex(newIndex, 0.1)
 end
 
-function var_0_0.findNewGoodsIndex(arg_12_0)
-	local var_12_0 = arg_12_0._scrollViews[1]
+function StoreClothesGoodsItemListModel:findNewGoodsIndex()
+	local scrollView = self._scrollViews[1]
 
-	if not var_12_0 then
+	if not scrollView then
 		return
 	end
 
-	local var_12_1 = var_12_0:getCsListScroll()
-	local var_12_2 = arg_12_0:getList()
-	local var_12_3
-	local var_12_4 = false
-	local var_12_5 = false
+	local csList = scrollView:getCsListScroll()
+	local moList = self:getList()
+	local newIndex
+	local hasInit = false
+	local isVisual = false
 
-	for iter_12_0 = 1, #var_12_2 do
-		local var_12_6 = var_12_2[iter_12_0]
-		local var_12_7 = var_12_1:IsVisual(iter_12_0 - 1)
+	for i = 1, #moList do
+		local mo = moList[i]
 
-		if not var_12_4 and var_12_7 then
-			var_12_4 = true
+		isVisual = csList:IsVisual(i - 1)
+
+		if not hasInit and isVisual then
+			hasInit = true
 		end
 
-		if var_12_4 and not var_12_7 and var_12_6:checkShowNewRedDot() then
-			var_12_3 = iter_12_0
+		if hasInit and not isVisual and mo:checkShowNewRedDot() then
+			newIndex = i
 
 			break
 		end
 	end
 
-	return var_12_3
+	return newIndex
 end
 
-function var_0_0.isEmpty(arg_13_0)
-	return arg_13_0:getCount() == 0
+function StoreClothesGoodsItemListModel:isEmpty()
+	return self:getCount() == 0
 end
 
-var_0_0.instance = var_0_0.New()
+StoreClothesGoodsItemListModel.instance = StoreClothesGoodsItemListModel.New()
 
-return var_0_0
+return StoreClothesGoodsItemListModel

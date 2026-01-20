@@ -1,95 +1,97 @@
-﻿module("modules.logic.survival.controller.work.SurvivalSceneEndPushWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalSceneEndPushWork.lua
 
-local var_0_0 = class("SurvivalSceneEndPushWork", SurvivalMsgPushWork)
+module("modules.logic.survival.controller.work.SurvivalSceneEndPushWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
+local SurvivalSceneEndPushWork = class("SurvivalSceneEndPushWork", SurvivalMsgPushWork)
 
-	if not var_1_0 then
-		arg_1_0:onDone(true)
+function SurvivalSceneEndPushWork:onStart(context)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	if not weekInfo then
+		self:onDone(true)
 
 		return
 	end
 
-	var_1_0.inSurvival = false
-	SurvivalMapModel.instance.result = arg_1_0._msg.isWin and SurvivalEnum.MapResult.Win or SurvivalEnum.MapResult.Lose
+	weekInfo.inSurvival = false
+	SurvivalMapModel.instance.result = self._msg.isWin and SurvivalEnum.MapResult.Win or SurvivalEnum.MapResult.Lose
 
-	SurvivalMapModel.instance.resultData:init(arg_1_0._msg)
+	SurvivalMapModel.instance.resultData:init(self._msg)
 
 	if ViewMgr.instance:isOpen(ViewName.SurvivalLoadingView) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onViewClose, arg_1_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onViewClose, self)
 	else
-		arg_1_0:_tweenToPlayerAndDestoryUnit()
+		self:_tweenToPlayerAndDestoryUnit()
 	end
 end
 
-function var_0_0._onViewClose(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.SurvivalLoadingView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onViewClose, arg_2_0)
-		arg_2_0:_tweenToPlayerAndDestoryUnit()
+function SurvivalSceneEndPushWork:_onViewClose(viewName)
+	if viewName == ViewName.SurvivalLoadingView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onViewClose, self)
+		self:_tweenToPlayerAndDestoryUnit()
 	end
 end
 
-function var_0_0._tweenToPlayerAndDestoryUnit(arg_3_0)
+function SurvivalSceneEndPushWork:_tweenToPlayerAndDestoryUnit()
 	ViewMgr.instance:closeAllModalViews()
 
-	local var_3_0 = arg_3_0._msg.reason == 1 or arg_3_0._msg.reason == 2 or arg_3_0._msg.reason == 4
+	local isPlayAnim = self._msg.reason == 1 or self._msg.reason == 2 or self._msg.reason == 4
 
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Survival or not var_3_0 then
-		arg_3_0:openResultView()
+	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Survival or not isPlayAnim then
+		self:openResultView()
 
 		return
 	end
 
-	local var_3_1 = SurvivalMapModel.instance:getSceneMo()
-	local var_3_2 = var_3_1.player
-	local var_3_3, var_3_4, var_3_5 = SurvivalHelper.instance:hexPointToWorldPoint(var_3_2.pos.q, var_3_2.pos.r)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local player = sceneMo.player
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(player.pos.q, player.pos.r)
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(var_3_3, var_3_4, var_3_5))
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(x, y, z))
 
-	local var_3_6 = var_3_1:getUnitByPos(var_3_2.pos, true, true)
+	local list = sceneMo:getUnitByPos(player.pos, true, true)
 
-	if var_3_6 then
-		for iter_3_0 = #var_3_6, 1, -1 do
-			local var_3_7 = var_3_6[iter_3_0]
+	if list then
+		for i = #list, 1, -1 do
+			local unitMo = list[i]
 
-			var_3_1:deleteUnit(var_3_7.id, false)
+			sceneMo:deleteUnit(unitMo.id, false)
 		end
 	end
 
-	local var_3_8 = SurvivalMapHelper.instance:getEntity(0)
+	local entity = SurvivalMapHelper.instance:getEntity(0)
 
-	if var_3_8 and var_3_2:isDefaultModel() then
+	if entity and player:isDefaultModel() then
 		UIBlockHelper.instance:startBlock("SurvivalCheckMapEndWork", 1.9)
-		var_3_8:playAnim("die")
-		TaskDispatcher.runDelay(arg_3_0.openResultView, arg_3_0, 1.9)
+		entity:playAnim("die")
+		TaskDispatcher.runDelay(self.openResultView, self, 1.9)
 	else
-		arg_3_0:openResultView()
+		self:openResultView()
 	end
 end
 
-function var_0_0.openResultView(arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_4_0.onViewClose, arg_4_0)
+function SurvivalSceneEndPushWork:openResultView()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self.onViewClose, self)
 	ViewMgr.instance:openView(ViewName.SurvivalMapResultPanelView, {
 		isWin = SurvivalMapModel.instance.result == SurvivalEnum.MapResult.Win
 	})
 
-	if not arg_4_0.context.fastExecute then
-		arg_4_0.context.fastExecute = true
+	if not self.context.fastExecute then
+		self.context.fastExecute = true
 	end
 end
 
-function var_0_0.onViewClose(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.SurvivalMapResultView then
-		arg_5_0:onDone(true)
+function SurvivalSceneEndPushWork:onViewClose(viewName)
+	if viewName == ViewName.SurvivalMapResultView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_6_0)
-	var_0_0.super.clearWork(arg_6_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_6_0.onViewClose, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.openResultView, arg_6_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0._onViewClose, arg_6_0)
+function SurvivalSceneEndPushWork:clearWork()
+	SurvivalSceneEndPushWork.super.clearWork(self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self.onViewClose, self)
+	TaskDispatcher.cancelTask(self.openResultView, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onViewClose, self)
 end
 
-return var_0_0
+return SurvivalSceneEndPushWork

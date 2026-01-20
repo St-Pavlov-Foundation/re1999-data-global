@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity1_4.act136.rpc.Activity136Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/rpc/Activity136Rpc.lua
 
-local var_0_0 = class("Activity136Rpc", BaseRpc)
+module("modules.logic.versionactivity1_4.act136.rpc.Activity136Rpc", package.seeall)
 
-function var_0_0.sendGet136InfoRequest(arg_1_0, arg_1_1)
-	local var_1_0 = Activity136Module_pb.Get136InfoRequest()
+local Activity136Rpc = class("Activity136Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity136Rpc:sendGet136InfoRequest(activityId)
+	local req = Activity136Module_pb.Get136InfoRequest()
 
-	return arg_1_0:sendMsg(var_1_0)
+	req.activityId = activityId
+
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGet136InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		Activity136Model.instance:setActivityInfo(arg_2_2)
+function Activity136Rpc:onReceiveGet136InfoReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity136Model.instance:setActivityInfo(msg)
 	end
 end
 
-function var_0_0.sendAct136SelectRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = Activity136Module_pb.Act136SelectRequest()
+function Activity136Rpc:sendAct136SelectRequest(activityId, selectCharacterId)
+	local req = Activity136Module_pb.Act136SelectRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.selectHeroId = arg_3_2
+	req.activityId = activityId
+	req.selectHeroId = selectCharacterId
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct136SelectReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		Activity136Model.instance:setActivityInfo(arg_4_2)
+function Activity136Rpc:onReceiveAct136SelectReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity136Model.instance:setActivityInfo(msg)
 		Activity136Controller.instance:confirmReceiveCharacterCallback()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity136Rpc.instance = Activity136Rpc.New()
 
-return var_0_0
+return Activity136Rpc

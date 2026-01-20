@@ -1,168 +1,170 @@
-﻿module("modules.logic.tower.view.bosstower.TowerBossSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/bosstower/TowerBossSelectView.lua
 
-local var_0_0 = class("TowerBossSelectView", BaseView)
+module("modules.logic.tower.view.bosstower.TowerBossSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnbossHandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bossHandbook/#btn_bossHandbook")
-	arg_1_0.bossContainer = gohelper.findChild(arg_1_0.viewGO, "root/bosscontainer")
-	arg_1_0._gohandBookNewEffect = gohelper.findChild(arg_1_0.viewGO, "bossHandbook/#saoguang")
-	arg_1_0._scrollBoss = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_boss")
-	arg_1_0._gobossContent = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_boss/Viewport/#go_bossContent")
-	arg_1_0._gobossItem = gohelper.findChild(arg_1_0.viewGO, "root/#scroll_boss/Viewport/#go_bossContent/#go_bossItem")
+local TowerBossSelectView = class("TowerBossSelectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerBossSelectView:onInitView()
+	self._btnbossHandbook = gohelper.findChildButtonWithAudio(self.viewGO, "bossHandbook/#btn_bossHandbook")
+	self.bossContainer = gohelper.findChild(self.viewGO, "root/bosscontainer")
+	self._gohandBookNewEffect = gohelper.findChild(self.viewGO, "bossHandbook/#saoguang")
+	self._scrollBoss = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_boss")
+	self._gobossContent = gohelper.findChild(self.viewGO, "root/#scroll_boss/Viewport/#go_bossContent")
+	self._gobossItem = gohelper.findChild(self.viewGO, "root/#scroll_boss/Viewport/#go_bossContent/#go_bossItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbossHandbook:AddClickListener(arg_2_0._btnbossHandbookOnClick, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.LocalKeyChange, arg_2_0.onLocalKeyChange, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, arg_2_0.onTowerTaskUpdated, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_2_0.onTowerUpdate, arg_2_0)
+function TowerBossSelectView:addEvents()
+	self._btnbossHandbook:AddClickListener(self._btnbossHandbookOnClick, self)
+	self:addEventCb(TowerController.instance, TowerEvent.LocalKeyChange, self.onLocalKeyChange, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.onTowerTaskUpdated, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, self.onTowerUpdate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbossHandbook:RemoveClickListener()
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.LocalKeyChange, arg_3_0.onLocalKeyChange, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, arg_3_0.onTowerTaskUpdated, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_3_0.onTowerUpdate, arg_3_0)
+function TowerBossSelectView:removeEvents()
+	self._btnbossHandbook:RemoveClickListener()
+	self:removeEventCb(TowerController.instance, TowerEvent.LocalKeyChange, self.onLocalKeyChange, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.onTowerTaskUpdated, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, self.onTowerUpdate, self)
 end
 
-function var_0_0._btnbossHandbookOnClick(arg_4_0)
+function TowerBossSelectView:_btnbossHandbookOnClick()
 	TowerController.instance:openAssistBossView()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._gohandBookNewEffect, false)
-	gohelper.setActive(arg_5_0._gobossItem, false)
+function TowerBossSelectView:_editableInitView()
+	gohelper.setActive(self._gohandBookNewEffect, false)
+	gohelper.setActive(self._gobossItem, false)
 
-	arg_5_0.itemList = arg_5_0:getUserDataTb_()
+	self.itemList = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:refreshView()
+function TowerBossSelectView:onUpdateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
+function TowerBossSelectView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mln_day_night)
 	TowerModel.instance:setCurTowerType(TowerEnum.TowerType.Boss)
-	arg_7_0:refreshView()
-	TaskDispatcher.runDelay(arg_7_0.checkShowEffect, arg_7_0, 0.6)
+	self:refreshView()
+	TaskDispatcher.runDelay(self.checkShowEffect, self, 0.6)
 end
 
-function var_0_0.onTowerTaskUpdated(arg_8_0)
-	arg_8_0:refreshTask()
+function TowerBossSelectView:onTowerTaskUpdated()
+	self:refreshTask()
 end
 
-function var_0_0.onTowerUpdate(arg_9_0)
-	arg_9_0:refreshView()
+function TowerBossSelectView:onTowerUpdate()
+	self:refreshView()
 end
 
-function var_0_0.onLocalKeyChange(arg_10_0)
-	if arg_10_0.itemList then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0.itemList) do
-			iter_10_1.item:refreshTag()
+function TowerBossSelectView:onLocalKeyChange()
+	if self.itemList then
+		for i, v in ipairs(self.itemList) do
+			v.item:refreshTag()
 		end
 	end
 end
 
-function var_0_0.refreshView(arg_11_0)
-	arg_11_0:refreshBossList()
-	arg_11_0:refreshTime()
-	arg_11_0:refreshUI()
+function TowerBossSelectView:refreshView()
+	self:refreshBossList()
+	self:refreshTime()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	local var_12_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossHandbookOpen)
-	local var_12_1 = TowerPermanentModel.instance:getCurPermanentPassLayer()
+function TowerBossSelectView:refreshUI()
+	local bossHandBookOpenLayerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossHandbookOpen)
+	local permanentPassLayerNum = TowerPermanentModel.instance:getCurPermanentPassLayer()
 
-	gohelper.setActive(arg_12_0._gobossHandbook, var_12_1 >= tonumber(var_12_0))
+	gohelper.setActive(self._gobossHandbook, permanentPassLayerNum >= tonumber(bossHandBookOpenLayerNum))
 end
 
-function var_0_0.refreshBossList(arg_13_0)
-	arg_13_0.bossOpenMOList = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
+function TowerBossSelectView:refreshBossList()
+	self.bossOpenMOList = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
 
-	if #arg_13_0.bossOpenMOList > 1 then
-		table.sort(arg_13_0.bossOpenMOList, TowerAssistBossModel.sortBossList)
+	if #self.bossOpenMOList > 1 then
+		table.sort(self.bossOpenMOList, TowerAssistBossModel.sortBossList)
 	end
 
-	arg_13_0:initBossList()
+	self:initBossList()
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.itemList) do
-		iter_13_1.item:updateItem(arg_13_0.bossOpenMOList and arg_13_0.bossOpenMOList[iter_13_0])
+	for i, v in ipairs(self.itemList) do
+		v.item:updateItem(self.bossOpenMOList and self.bossOpenMOList[i])
 	end
 end
 
-function var_0_0.initBossList(arg_14_0)
-	for iter_14_0 = 1, #arg_14_0.bossOpenMOList do
-		local var_14_0 = arg_14_0.itemList[iter_14_0]
+function TowerBossSelectView:initBossList()
+	for i = 1, #self.bossOpenMOList do
+		local bossItem = self.itemList[i]
 
-		if not var_14_0 then
-			var_14_0 = {
-				go = gohelper.clone(arg_14_0._gobossItem, arg_14_0._gobossContent)
+		if not bossItem then
+			bossItem = {
+				go = gohelper.clone(self._gobossItem, self._gobossContent)
 			}
-			var_14_0.item = arg_14_0:createItem(iter_14_0, var_14_0.go)
-			arg_14_0.itemList[iter_14_0] = var_14_0
+			bossItem.item = self:createItem(i, bossItem.go)
+			self.itemList[i] = bossItem
 		end
 
-		gohelper.setActive(var_14_0.go, true)
+		gohelper.setActive(bossItem.go, true)
 
-		var_14_0.go.name = "boss" .. arg_14_0.bossOpenMOList[iter_14_0].id
+		bossItem.go.name = "boss" .. self.bossOpenMOList[i].id
 	end
 
-	for iter_14_1 = #arg_14_0.bossOpenMOList + 1, #arg_14_0.itemList do
-		gohelper.setActive(arg_14_0.itemList[iter_14_1].go, false)
+	for i = #self.bossOpenMOList + 1, #self.itemList do
+		gohelper.setActive(self.itemList[i].go, false)
 	end
 
-	arg_14_0._scrollBoss.horizontalNormalizedPosition = 0
+	self._scrollBoss.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.createItem(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0.viewContainer:getSetting().otherRes.itemRes
-	local var_15_1 = arg_15_0.viewContainer:getResInst(var_15_0, arg_15_2)
+function TowerBossSelectView:createItem(index, parentGO)
+	local resPath = self.viewContainer:getSetting().otherRes.itemRes
+	local instGO = self.viewContainer:getResInst(resPath, parentGO)
 
-	recthelper.setAnchorY(var_15_1.transform, arg_15_1 % 2 == 0 and -70 or 0)
+	recthelper.setAnchorY(instGO.transform, index % 2 == 0 and -70 or 0)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1, TowerBossSelectItem)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(instGO, TowerBossSelectItem)
 end
 
-function var_0_0.refreshTime(arg_16_0)
-	local var_16_0 = TowerModel.instance:getTowerOpenList(TowerEnum.TowerType.Boss)
-	local var_16_1
-	local var_16_2
+function TowerBossSelectView:refreshTime()
+	local list = TowerModel.instance:getTowerOpenList(TowerEnum.TowerType.Boss)
+	local minTime, towerId
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		if iter_16_1.status == TowerEnum.TowerStatus.Open and (var_16_1 == nil or var_16_1 > iter_16_1.nextTime) then
-			var_16_2 = iter_16_1.towerId
-			var_16_1 = iter_16_1.nextTime
+	for _, mo in pairs(list) do
+		if mo.status == TowerEnum.TowerStatus.Open and (minTime == nil or minTime > mo.nextTime) then
+			towerId = mo.towerId
+			minTime = mo.nextTime
 		end
 	end
 
-	for iter_16_2, iter_16_3 in ipairs(arg_16_0.itemList) do
-		iter_16_3.item:refreshTime(var_16_2)
+	for i, v in ipairs(self.itemList) do
+		v.item:refreshTime(towerId)
 	end
 end
 
-function var_0_0.refreshTask(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.itemList) do
-		iter_17_1.item:refreshTask()
+function TowerBossSelectView:refreshTask()
+	for i, v in ipairs(self.itemList) do
+		v.item:refreshTask()
 	end
 end
 
-function var_0_0.checkShowEffect(arg_18_0)
-	local var_18_0 = TowerController.instance:getPlayerPrefs(TowerEnum.LocalPrefsKey.TowerBossSelectHandBookEffect, 0) == 0
+function TowerBossSelectView:checkShowEffect()
+	local saveHandBookEffect = TowerController.instance:getPlayerPrefs(TowerEnum.LocalPrefsKey.TowerBossSelectHandBookEffect, 0)
+	local canShowHandBookEffect = saveHandBookEffect == 0
 
-	gohelper.setActive(arg_18_0._gohandBookNewEffect, var_18_0)
+	gohelper.setActive(self._gohandBookNewEffect, canShowHandBookEffect)
 end
 
-function var_0_0.onClose(arg_19_0)
+function TowerBossSelectView:onClose()
 	TowerController.instance:setPlayerPrefs(TowerEnum.LocalPrefsKey.TowerBossSelectHandBookEffect, 1)
-	TaskDispatcher.cancelTask(arg_19_0.checkShowEffect, arg_19_0)
+	TaskDispatcher.cancelTask(self.checkShowEffect, self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function TowerBossSelectView:onDestroyView()
 	TowerModel.instance:cleanTrialData()
 end
 
-return var_0_0
+return TowerBossSelectView

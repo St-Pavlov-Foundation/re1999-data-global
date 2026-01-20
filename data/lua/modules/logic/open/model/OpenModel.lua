@@ -1,82 +1,84 @@
-﻿module("modules.logic.open.model.OpenModel", package.seeall)
+﻿-- chunkname: @modules/logic/open/model/OpenModel.lua
 
-local var_0_0 = class("OpenModel", BaseModel)
+module("modules.logic.open.model.OpenModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._unlocks = {}
+local OpenModel = class("OpenModel", BaseModel)
+
+function OpenModel:onInit()
+	self._unlocks = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._unlocks = {}
+function OpenModel:reInit()
+	self._unlocks = {}
 end
 
-function var_0_0.setOpenInfo(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_0 = tonumber(iter_3_1.id)
-		local var_3_1 = iter_3_1.isOpen
+function OpenModel:setOpenInfo(info)
+	for _, v in ipairs(info) do
+		local id = tonumber(v.id)
+		local isOpen = v.isOpen
 
 		if VersionValidator.instance:isInReviewing() then
-			local var_3_2 = OpenConfig.instance:getOpenCo(var_3_0)
+			local co = OpenConfig.instance:getOpenCo(id)
 
-			var_3_1 = var_3_1 and var_3_2.verifingHide == 0
+			isOpen = isOpen and co.verifingHide == 0
 		end
 
-		arg_3_0._unlocks[var_3_0] = var_3_1
+		self._unlocks[id] = isOpen
 	end
 end
 
-function var_0_0.updateOpenInfo(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = tonumber(iter_4_1.id)
-		local var_4_1 = iter_4_1.isOpen
+function OpenModel:updateOpenInfo(info)
+	for _, v in ipairs(info) do
+		local id = tonumber(v.id)
+		local isOpen = v.isOpen
 
 		if VersionValidator.instance:isInReviewing() then
-			local var_4_2 = OpenConfig.instance:getOpenCo(var_4_0)
+			local co = OpenConfig.instance:getOpenCo(id)
 
-			var_4_1 = var_4_1 and var_4_2.verifingHide == 0
+			isOpen = isOpen and co.verifingHide == 0
 		end
 
-		arg_4_0._unlocks[var_4_0] = var_4_1
+		self._unlocks[id] = isOpen
 	end
 end
 
-function var_0_0.isFunctionUnlock(arg_5_0, arg_5_1)
-	return arg_5_0._unlocks[tonumber(arg_5_1)]
+function OpenModel:isFunctionUnlock(id)
+	return self._unlocks[tonumber(id)]
 end
 
-function var_0_0.isFuncBtnShow(arg_6_0, arg_6_1)
-	local var_6_0 = OpenConfig.instance:getOpenCo(arg_6_1)
+function OpenModel:isFuncBtnShow(id)
+	local co = OpenConfig.instance:getOpenCo(id)
 
-	if VersionValidator.instance:isInReviewing() and var_6_0.verifingHide == 1 then
+	if VersionValidator.instance:isInReviewing() and co.verifingHide == 1 then
 		return false
 	end
 
-	if tonumber(var_6_0.isOnline) == 0 then
+	if tonumber(co.isOnline) == 0 then
 		return false
 	end
 
-	return tonumber(var_6_0.isAlwaysShowBtn) > 0 or arg_6_0._unlocks[arg_6_1]
+	return tonumber(co.isAlwaysShowBtn) > 0 or self._unlocks[id]
 end
 
-function var_0_0.getFuncUnlockDesc(arg_7_0, arg_7_1)
-	local var_7_0 = OpenConfig.instance:getOpenCo(arg_7_1)
-	local var_7_1 = var_7_0.dec
+function OpenModel:getFuncUnlockDesc(id)
+	local openCo = OpenConfig.instance:getOpenCo(id)
+	local descId = openCo.dec
 
-	if var_7_1 == 2003 then
-		local var_7_2 = VersionValidator.instance:isInReviewing() and var_7_0.verifingEpisodeId or var_7_0.episodeId
+	if descId == 2003 then
+		local episodeId = VersionValidator.instance:isInReviewing() and openCo.verifingEpisodeId or openCo.episodeId
 
-		if not var_7_2 or var_7_2 == 0 then
-			return var_7_1
+		if not episodeId or episodeId == 0 then
+			return descId
 		end
 
-		local var_7_3 = DungeonConfig.instance:getEpisodeDisplay(var_7_2)
+		local episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(episodeId)
 
-		return var_7_1, var_7_3
+		return descId, episodeDisplay
 	end
 
-	return var_7_1
+	return descId
 end
 
-var_0_0.instance = var_0_0.New()
+OpenModel.instance = OpenModel.New()
 
-return var_0_0
+return OpenModel

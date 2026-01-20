@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.comp.MaLiAnNaSlotBaseComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/comp/MaLiAnNaSlotBaseComp.lua
 
-local var_0_0 = class("MaLiAnNaSlotBaseComp", LuaCompBase)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.comp.MaLiAnNaSlotBaseComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
+local MaLiAnNaSlotBaseComp = class("MaLiAnNaSlotBaseComp", LuaCompBase)
+
+function MaLiAnNaSlotBaseComp:init(go)
+	self.go = go
+	self._tr = go.transform
 end
 
-function var_0_0.initPos(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._localPosX = arg_2_1
-	arg_2_0._localPosY = arg_2_2
+function MaLiAnNaSlotBaseComp:initPos(posX, posY)
+	self._localPosX = posX
+	self._localPosY = posY
 
-	transformhelper.setLocalPosXY(arg_2_0._tr, arg_2_1, arg_2_2)
+	transformhelper.setLocalPosXY(self._tr, posX, posY)
 end
 
-function var_0_0.getLocalPos(arg_3_0)
-	return arg_3_0._localPosX, arg_3_0._localPosY
+function MaLiAnNaSlotBaseComp:getLocalPos()
+	return self._localPosX, self._localPosY
 end
 
-return var_0_0
+return MaLiAnNaSlotBaseComp

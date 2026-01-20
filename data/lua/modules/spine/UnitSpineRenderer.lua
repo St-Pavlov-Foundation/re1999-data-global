@@ -1,216 +1,236 @@
-﻿module("modules.spine.UnitSpineRenderer", package.seeall)
+﻿-- chunkname: @modules/spine/UnitSpineRenderer.lua
 
-local var_0_0 = class("UnitSpineRenderer", LuaCompBase)
-local var_0_1 = "_ScriptCtrlColor"
+module("modules.spine.UnitSpineRenderer", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._entity = arg_1_1
-	arg_1_0._color = nil
-	arg_1_0._unitSpine = nil
-	arg_1_0._alphaTweenId = nil
+local UnitSpineRenderer = class("UnitSpineRenderer", LuaCompBase)
+local ShaderColorName = "_ScriptCtrlColor"
+
+function UnitSpineRenderer:ctor(entity)
+	self._entity = entity
+	self._color = nil
+	self._unitSpine = nil
+	self._alphaTweenId = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function UnitSpineRenderer:init(go)
+	self.go = go
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	arg_3_0:_stopAlphaTween()
-	gohelper.destroy(arg_3_0._replaceMat)
-	gohelper.destroy(arg_3_0._cloneOriginMat)
+function UnitSpineRenderer:onDestroy()
+	self:_stopAlphaTween()
+	gohelper.destroy(self._replaceMat)
+	gohelper.destroy(self._cloneOriginMat)
 
-	arg_3_0._color = nil
-	arg_3_0._unitSpine = nil
-	arg_3_0._skeletonAnim = nil
-	arg_3_0._spineRenderer = nil
-	arg_3_0._replaceMat = nil
-	arg_3_0._sharedMaterial = nil
-	arg_3_0._cloneOriginMat = nil
+	self._color = nil
+	self._unitSpine = nil
+	self._skeletonAnim = nil
+	self._spineRenderer = nil
+	self._replaceMat = nil
+	self._sharedMaterial = nil
+	self._cloneOriginMat = nil
 end
 
-function var_0_0.setSpine(arg_4_0, arg_4_1)
-	arg_4_0._unitSpine = arg_4_1
-	arg_4_0._skeletonAnim = arg_4_0._unitSpine:getSpineGO():GetComponent(UnitSpine.TypeSkeletonAnimtion)
-	arg_4_0._spineRenderer = arg_4_0._unitSpine:getSpineGO():GetComponent(typeof(UnityEngine.MeshRenderer))
+function UnitSpineRenderer:setSpine(unitSpine)
+	self._unitSpine = unitSpine
+	self._skeletonAnim = self._unitSpine:getSpineGO():GetComponent(UnitSpine.TypeSkeletonAnimtion)
+	self._spineRenderer = self._unitSpine:getSpineGO():GetComponent(typeof(UnityEngine.MeshRenderer))
 
-	if not gohelper.isNil(arg_4_1:getSpineGO()) then
-		arg_4_0._sharedMaterial = arg_4_0._spineRenderer.sharedMaterial
+	if not gohelper.isNil(unitSpine:getSpineGO()) then
+		self._sharedMaterial = self:_getSpinePrimaryMaterial()
 
-		if arg_4_0._replaceMat then
-			arg_4_0:replaceSpineMat(arg_4_0._replaceMat)
+		if self._replaceMat then
+			self:replaceSpineMat(self._replaceMat)
 		end
 	end
 end
 
-function var_0_0.getReplaceMat(arg_5_0)
-	if not arg_5_0._replaceMat then
-		arg_5_0._replaceMat = arg_5_0:getSpineRenderMat()
-		arg_5_0._cloneOriginMat = arg_5_0._replaceMat
-
-		if arg_5_0._sharedMaterial and arg_5_0._replaceMat then
-			arg_5_0:_setReplaceMat(arg_5_0._sharedMaterial, arg_5_0._replaceMat)
-		end
-	end
-
-	return arg_5_0._replaceMat
+function UnitSpineRenderer:hasSkeletonAnim()
+	return gohelper.isNil(self._skeletonAnim) ~= nil
 end
 
-function var_0_0.getCloneOriginMat(arg_6_0)
-	return arg_6_0._cloneOriginMat
-end
-
-function var_0_0.getSpineRenderMat(arg_7_0)
-	return arg_7_0._spineRenderer and arg_7_0._spineRenderer.material
-end
-
-function var_0_0._setReplaceMat(arg_8_0, arg_8_1, arg_8_2)
-	if gohelper.isNil(arg_8_1) then
+function UnitSpineRenderer:_getSpinePrimaryMaterial()
+	if gohelper.isNil(self._skeletonAnim) then
 		return
 	end
 
-	if arg_8_0._skeletonAnim then
-		local var_8_0 = arg_8_0._skeletonAnim.CustomMaterialOverride
+	return self._skeletonAnim.skeletonDataAsset.atlasAssets[0].PrimaryMaterial
+end
 
-		if var_8_0 then
-			var_8_0:Clear()
+function UnitSpineRenderer:getReplaceMat()
+	if not self._replaceMat then
+		local mat = self:_getSpinePrimaryMaterial()
 
-			if not gohelper.isNil(arg_8_2) then
-				var_8_0:Add(arg_8_1, arg_8_2)
+		if not mat then
+			return
+		end
+
+		self._replaceMat = UnityEngine.Material.New(mat)
+		self._cloneOriginMat = self._replaceMat
+
+		if self._sharedMaterial and self._replaceMat then
+			self:_setReplaceMat(self._sharedMaterial, self._replaceMat)
+		end
+	end
+
+	return self._replaceMat
+end
+
+function UnitSpineRenderer:getCloneOriginMat()
+	return self._cloneOriginMat
+end
+
+function UnitSpineRenderer:getSpineRenderMat()
+	return self._spineRenderer and self._spineRenderer.material
+end
+
+function UnitSpineRenderer:_setReplaceMat(originMat, replaceMat)
+	if gohelper.isNil(originMat) then
+		return
+	end
+
+	if self._skeletonAnim then
+		local dict = self._skeletonAnim.CustomMaterialOverride
+
+		if dict then
+			dict:Clear()
+
+			if not gohelper.isNil(replaceMat) then
+				dict:Add(originMat, replaceMat)
 			end
 		end
 	end
 end
 
-function var_0_0.replaceSpineMat(arg_9_0, arg_9_1)
-	if arg_9_1 then
-		arg_9_0._replaceMat = arg_9_1
+function UnitSpineRenderer:replaceSpineMat(mat)
+	if mat then
+		self._replaceMat = mat
 
-		if arg_9_0._skeletonAnim then
-			local var_9_0 = arg_9_0:getSpineRenderMat()
+		if self._skeletonAnim then
+			local curMat = self:getSpineRenderMat()
 
-			FightSpineMatPool.returnMat(var_9_0)
-			arg_9_0:_setReplaceMat(arg_9_0._sharedMaterial, arg_9_0._replaceMat)
-			arg_9_0._replaceMat:SetTexture("_MainTex", var_9_0:GetTexture("_MainTex"))
-			arg_9_0._replaceMat:SetTexture("_NormalMap", var_9_0:GetTexture("_NormalMap"))
-			arg_9_0._replaceMat:SetVector("_RoleST", var_9_0:GetVector("_RoleST"))
-			arg_9_0._replaceMat:SetVector("_RoleSheet", var_9_0:GetVector("_RoleSheet"))
+			FightSpineMatPool.returnMat(curMat)
+			self:_setReplaceMat(self._sharedMaterial, self._replaceMat)
+			self._replaceMat:SetTexture("_MainTex", curMat:GetTexture("_MainTex"))
+			self._replaceMat:SetTexture("_NormalMap", curMat:GetTexture("_NormalMap"))
+			self._replaceMat:SetVector("_RoleST", curMat:GetVector("_RoleST"))
+			self._replaceMat:SetVector("_RoleSheet", curMat:GetVector("_RoleSheet"))
 		end
 	else
 		logError("replaceSpineMat fail, mat = nil")
 	end
 end
 
-function var_0_0.resetSpineMat(arg_10_0)
-	if arg_10_0._replaceMat then
-		if arg_10_0._cloneOriginMat then
-			if arg_10_0._replaceMat ~= arg_10_0._cloneOriginMat then
-				FightSpineMatPool.returnMat(arg_10_0._replaceMat)
+function UnitSpineRenderer:resetSpineMat()
+	if self._replaceMat then
+		if self._cloneOriginMat then
+			if self._replaceMat ~= self._cloneOriginMat then
+				FightSpineMatPool.returnMat(self._replaceMat)
 
-				arg_10_0._replaceMat = arg_10_0._cloneOriginMat
+				self._replaceMat = self._cloneOriginMat
 
-				arg_10_0:_setReplaceMat(arg_10_0._sharedMaterial, arg_10_0._cloneOriginMat)
+				self:_setReplaceMat(self._sharedMaterial, self._cloneOriginMat)
 			end
 		else
-			FightSpineMatPool.returnMat(arg_10_0._replaceMat)
+			FightSpineMatPool.returnMat(self._replaceMat)
 
-			arg_10_0._replaceMat = nil
+			self._replaceMat = nil
 
-			arg_10_0:getReplaceMat()
+			self:getReplaceMat()
 		end
 	end
 end
 
-function var_0_0.setAlpha(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_0._unitSpine then
+function UnitSpineRenderer:setAlpha(alpha, duration)
+	if not self._unitSpine then
 		return
 	end
 
-	local var_11_0 = arg_11_0._sharedMaterial
+	local sharedMaterial = self._sharedMaterial
 
-	if gohelper.isNil(var_11_0) or not var_11_0:HasProperty(var_0_1) then
+	if gohelper.isNil(sharedMaterial) or not sharedMaterial:HasProperty(ShaderColorName) then
 		return
 	end
 
-	arg_11_0:_stopAlphaTween()
+	self:_stopAlphaTween()
 
-	local var_11_1 = arg_11_0:getReplaceMat()
+	local replaceMat = self:getReplaceMat()
 
-	arg_11_0._color = arg_11_0._color or var_11_1:GetColor(var_0_1)
+	self._color = self._color or replaceMat:GetColor(ShaderColorName)
 
-	if arg_11_0._color.a == arg_11_1 then
-		arg_11_0:setColor(arg_11_0._color)
-		arg_11_0:_setRendererEnabled(arg_11_1 > 0)
-
-		return
-	end
-
-	if not arg_11_2 or arg_11_2 <= 0 then
-		arg_11_0._color.a = arg_11_1
-
-		arg_11_0:setColor(arg_11_0._color)
-		arg_11_0:_setRendererEnabled(arg_11_1 > 0)
+	if self._color.a == alpha then
+		self:setColor(self._color)
+		self:_setRendererEnabled(alpha > 0)
 
 		return
 	end
 
-	arg_11_0:_setRendererEnabled(true)
+	if not duration or duration <= 0 then
+		self._color.a = alpha
 
-	arg_11_0._alphaTweenId = ZProj.TweenHelper.DOTweenFloat(arg_11_0._color.a, arg_11_1, arg_11_2, arg_11_0._frameCallback, arg_11_0._finishCallback, arg_11_0)
-end
-
-function var_0_0.setColor(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getReplaceMat()
-
-	var_12_0:SetColor(var_0_1, arg_12_1)
-
-	if arg_12_0._cloneOriginMat and arg_12_0._cloneOriginMat ~= var_12_0 then
-		arg_12_0._cloneOriginMat:SetColor(var_0_1, arg_12_1)
-	end
-end
-
-function var_0_0._frameCallback(arg_13_0, arg_13_1)
-	if not arg_13_0._unitSpine then
-		return
-	end
-
-	local var_13_0 = arg_13_0:getReplaceMat()
-
-	arg_13_0._color = arg_13_0._color or var_13_0:GetColor(var_0_1)
-
-	if arg_13_0._color.a == arg_13_1 then
-		arg_13_0:setColor(arg_13_0._color)
-		arg_13_0:_setRendererEnabled(arg_13_1 > 0)
+		self:setColor(self._color)
+		self:_setRendererEnabled(alpha > 0)
 
 		return
 	end
 
-	arg_13_0._color.a = arg_13_1
+	self:_setRendererEnabled(true)
 
-	arg_13_0:setColor(arg_13_0._color)
-	arg_13_0:_setRendererEnabled(arg_13_1 > 0)
+	self._alphaTweenId = ZProj.TweenHelper.DOTweenFloat(self._color.a, alpha, duration, self._frameCallback, self._finishCallback, self)
 end
 
-function var_0_0._finishCallback(arg_14_0)
-	local var_14_0 = arg_14_0:getReplaceMat()
-	local var_14_1 = var_14_0 and var_14_0:GetColor(var_0_1)
+function UnitSpineRenderer:setColor(color)
+	local replaceMat = self:getReplaceMat()
 
-	arg_14_0:_setRendererEnabled(var_14_1 and var_14_1.a > 0)
+	replaceMat:SetColor(ShaderColorName, color)
 
-	arg_14_0._color = nil
-end
-
-function var_0_0._stopAlphaTween(arg_15_0)
-	if arg_15_0._alphaTweenId then
-		ZProj.TweenHelper.KillById(arg_15_0._alphaTweenId)
-
-		arg_15_0._alphaTweenId = nil
+	if self._cloneOriginMat and self._cloneOriginMat ~= replaceMat then
+		self._cloneOriginMat:SetColor(ShaderColorName, color)
 	end
 end
 
-function var_0_0._setRendererEnabled(arg_16_0, arg_16_1)
-	if arg_16_0._spineRenderer then
-		arg_16_0._spineRenderer.enabled = arg_16_1
+function UnitSpineRenderer:_frameCallback(alpha)
+	if not self._unitSpine then
+		return
+	end
+
+	local replaceMat = self:getReplaceMat()
+
+	self._color = self._color or replaceMat:GetColor(ShaderColorName)
+
+	if self._color.a == alpha then
+		self:setColor(self._color)
+		self:_setRendererEnabled(alpha > 0)
+
+		return
+	end
+
+	self._color.a = alpha
+
+	self:setColor(self._color)
+	self:_setRendererEnabled(alpha > 0)
+end
+
+function UnitSpineRenderer:_finishCallback()
+	local replaceMat = self:getReplaceMat()
+	local color = replaceMat and replaceMat:GetColor(ShaderColorName)
+
+	self:_setRendererEnabled(color and color.a > 0)
+
+	self._color = nil
+end
+
+function UnitSpineRenderer:_stopAlphaTween()
+	if self._alphaTweenId then
+		ZProj.TweenHelper.KillById(self._alphaTweenId)
+
+		self._alphaTweenId = nil
 	end
 end
 
-return var_0_0
+function UnitSpineRenderer:_setRendererEnabled(state)
+	if self._spineRenderer then
+		self._spineRenderer.enabled = state
+	end
+end
+
+return UnitSpineRenderer

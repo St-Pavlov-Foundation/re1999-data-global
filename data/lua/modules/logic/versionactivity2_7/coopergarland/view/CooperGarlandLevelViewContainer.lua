@@ -1,58 +1,60 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/view/CooperGarlandLevelViewContainer.lua
 
-local var_0_0 = class("CooperGarlandLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CooperGarlandLevelViewContainer = class("CooperGarlandLevelViewContainer", BaseViewContainer)
 
-	arg_1_0._levelView = CooperGarlandLevelView.New()
+function CooperGarlandLevelViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._levelView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	self._levelView = CooperGarlandLevelView.New()
 
-	return var_1_0
+	table.insert(views, self._levelView)
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function CooperGarlandLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.setVisibleInternal(arg_3_0, arg_3_1)
-	var_0_0.super.setVisibleInternal(arg_3_0, arg_3_1)
+function CooperGarlandLevelViewContainer:setVisibleInternal(isVisible)
+	CooperGarlandLevelViewContainer.super.setVisibleInternal(self, isVisible)
 
-	arg_3_0._levelView.openAnimComplete = false
+	self._levelView.openAnimComplete = false
 
-	if arg_3_1 then
-		arg_3_0:playAnim(UIAnimationName.Open, arg_3_0._playOpenAnimFinish, arg_3_0)
+	if isVisible then
+		self:playAnim(UIAnimationName.Open, self._playOpenAnimFinish, self)
 	end
 end
 
-function var_0_0._playOpenAnimFinish(arg_4_0)
-	if not arg_4_0._levelView then
+function CooperGarlandLevelViewContainer:_playOpenAnimFinish()
+	if not self._levelView then
 		return
 	end
 
-	arg_4_0._levelView.openAnimComplete = true
+	self._levelView.openAnimComplete = true
 
-	arg_4_0._levelView:playEpisodeFinishAnim()
+	self._levelView:playEpisodeFinishAnim()
 end
 
-function var_0_0.playAnim(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0.viewGO)
+function CooperGarlandLevelViewContainer:playAnim(aniName, cb, cbObj)
+	self.animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 
-	if arg_5_0.animatorPlayer then
-		arg_5_0.animatorPlayer:Play(arg_5_1, arg_5_2, arg_5_3)
+	if self.animatorPlayer then
+		self.animatorPlayer:Play(aniName, cb, cbObj)
 	end
 end
 
-return var_0_0
+return CooperGarlandLevelViewContainer

@@ -1,9 +1,11 @@
-﻿module("projbooter.gamepad.define.GamepadEvent", package.seeall)
+﻿-- chunkname: @projbooter/gamepad/define/GamepadEvent.lua
 
-local var_0_0 = _M
+module("projbooter.gamepad.define.GamepadEvent", package.seeall)
 
-var_0_0.AxisChange = 1
-var_0_0.KeyUp = 2
-var_0_0.KeyDown = 3
+local GamepadEvent = _M
 
-return var_0_0
+GamepadEvent.AxisChange = 1
+GamepadEvent.KeyUp = 2
+GamepadEvent.KeyDown = 3
+
+return GamepadEvent

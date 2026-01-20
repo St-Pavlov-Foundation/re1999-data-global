@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.define.Role37PuzzleEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/define/Role37PuzzleEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.puzzle.define.Role37PuzzleEvent", package.seeall)
 
-var_0_0.AddOption = 1
-var_0_0.RemoveOption = 2
-var_0_0.ExchangeOption = 3
-var_0_0.RepleaceOption = 4
-var_0_0.MoveOption = 5
-var_0_0.Reset = 6
-var_0_0.PuzzleResult = 7
-var_0_0.RecordCntChange = 8
-var_0_0.ErrorOperChange = 9
+local Role37PuzzleEvent = _M
 
-return var_0_0
+Role37PuzzleEvent.AddOption = 1
+Role37PuzzleEvent.RemoveOption = 2
+Role37PuzzleEvent.ExchangeOption = 3
+Role37PuzzleEvent.RepleaceOption = 4
+Role37PuzzleEvent.MoveOption = 5
+Role37PuzzleEvent.Reset = 6
+Role37PuzzleEvent.PuzzleResult = 7
+Role37PuzzleEvent.RecordCntChange = 8
+Role37PuzzleEvent.ErrorOperChange = 9
+
+return Role37PuzzleEvent

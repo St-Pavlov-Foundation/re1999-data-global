@@ -1,538 +1,543 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/model/Va3ChessGameModel.lua
 
-local var_0_0 = class("Va3ChessGameModel", BaseModel)
+module("modules.logic.versionactivity1_3.va3chess.game.model.Va3ChessGameModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._mapTileMOList = {}
+local Va3ChessGameModel = class("Va3ChessGameModel", BaseModel)
+
+function Va3ChessGameModel:onInit()
+	self._mapTileMOList = {}
 end
 
-function var_0_0.reInit(arg_2_0)
+function Va3ChessGameModel:reInit()
 	return
 end
 
-function var_0_0.release(arg_3_0)
-	arg_3_0.width = nil
-	arg_3_0.height = nil
-	arg_3_0._mapTileBaseList = nil
-	arg_3_0._mapInteractObjs = nil
-	arg_3_0._mapInteractObjDict = nil
-	arg_3_0._actId = nil
-	arg_3_0._mapId = nil
-	arg_3_0._optList = nil
-	arg_3_0._round = nil
-	arg_3_0._result = nil
-	arg_3_0._finishInteract = nil
-	arg_3_0._allFinishInteract = nil
-	arg_3_0.failReason = nil
-	arg_3_0.lastMapRound = nil
-	arg_3_0._playingStory = nil
+function Va3ChessGameModel:release()
+	self.width = nil
+	self.height = nil
+	self._mapTileBaseList = nil
+	self._mapInteractObjs = nil
+	self._mapInteractObjDict = nil
+	self._actId = nil
+	self._mapId = nil
+	self._optList = nil
+	self._round = nil
+	self._result = nil
+	self._finishInteract = nil
+	self._allFinishInteract = nil
+	self.failReason = nil
+	self.lastMapRound = nil
+	self._playingStory = nil
 end
 
-function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = Va3ChessConfig.instance:getMapCo(arg_4_1, arg_4_2)
+function Va3ChessGameModel:initData(actId, mapId)
+	local mapCo = Va3ChessConfig.instance:getMapCo(actId, mapId)
 
-	arg_4_0._actId = arg_4_1
-	arg_4_0._mapId = arg_4_2
-	arg_4_0.width = var_4_0.width
-	arg_4_0.height = var_4_0.height
-	arg_4_0._optList = {}
+	self._actId = actId
+	self._mapId = mapId
+	self.width = mapCo.width
+	self.height = mapCo.height
+	self._optList = {}
 
-	arg_4_0:_initTileNum()
+	self:_initTileNum()
 
-	arg_4_0._mapTileBaseList = {}
+	self._mapTileBaseList = {}
 
-	local var_4_1 = string.split(var_4_0.tilebase, ",") or {}
+	local tileArr = string.split(mapCo.tilebase, ",") or {}
 
-	for iter_4_0 = 1, #arg_4_0._mapTileMOList do
-		arg_4_0._mapTileMOList[iter_4_0]:setParamStr(var_4_1[iter_4_0])
+	for i = 1, #self._mapTileMOList do
+		local mo = self._mapTileMOList[i]
+
+		mo:setParamStr(tileArr[i])
 	end
 end
 
-function var_0_0._initTileNum(arg_5_0)
-	arg_5_0._mapTileMOList = {}
+function Va3ChessGameModel:_initTileNum()
+	self._mapTileMOList = {}
 
-	local var_5_0 = arg_5_0.width * arg_5_0.height
+	local num = self.width * self.height
 
-	for iter_5_0 = 1, var_5_0 do
-		local var_5_1 = arg_5_0._mapTileMOList[iter_5_0]
+	for i = 1, num do
+		local mo = self._mapTileMOList[i]
 
-		if not var_5_1 then
-			var_5_1 = Va3ChessGameTileMO.New()
-			arg_5_0._mapTileMOList[iter_5_0] = var_5_1
+		if not mo then
+			mo = Va3ChessGameTileMO.New()
+			self._mapTileMOList[i] = mo
 		end
 
-		var_5_1:init(iter_5_0)
+		mo:init(i)
 	end
 end
 
-function var_0_0.addInteractData(arg_6_0, arg_6_1)
-	table.insert(arg_6_0._mapInteractObjs, arg_6_1)
+function Va3ChessGameModel:addInteractData(data)
+	table.insert(self._mapInteractObjs, data)
 
-	arg_6_0._mapInteractObjDict[arg_6_1.id] = arg_6_1
+	self._mapInteractObjDict[data.id] = data
 end
 
-function var_0_0.removeInteractData(arg_7_0, arg_7_1)
-	tabletool.removeValue(arg_7_0._mapInteractObjs, arg_7_1)
+function Va3ChessGameModel:removeInteractData(data)
+	tabletool.removeValue(self._mapInteractObjs, data)
 
-	arg_7_0._mapInteractObjDict[arg_7_1.id] = nil
+	self._mapInteractObjDict[data.id] = nil
 end
 
-function var_0_0.initObjects(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._mapInteractObjs = {}
-	arg_8_0._mapInteractObjDict = {}
+function Va3ChessGameModel:initObjects(actId, serverObjList)
+	self._mapInteractObjs = {}
+	self._mapInteractObjDict = {}
 
-	local var_8_0 = #arg_8_2
+	local len = #serverObjList
 
-	for iter_8_0 = 1, var_8_0 do
-		local var_8_1 = arg_8_2[iter_8_0]
+	for i = 1, len do
+		local serverObj = serverObjList[i]
 
-		if Va3ChessConfig.instance:getInteractObjectCo(arg_8_1, var_8_1.id) then
-			local var_8_2 = Va3ChessGameInteractMO.New()
+		if Va3ChessConfig.instance:getInteractObjectCo(actId, serverObj.id) then
+			local mo = Va3ChessGameInteractMO.New()
 
-			var_8_2:init(arg_8_1, var_8_1)
-			table.insert(arg_8_0._mapInteractObjs, var_8_2)
+			mo:init(actId, serverObj)
+			table.insert(self._mapInteractObjs, mo)
 
-			arg_8_0._mapInteractObjDict[var_8_2.id] = var_8_2
-		end
-	end
-end
-
-function var_0_0.addObject(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = Va3ChessGameInteractMO.New()
-
-	var_9_0:init(arg_9_1, arg_9_2)
-	table.insert(arg_9_0._mapInteractObjs, var_9_0)
-
-	arg_9_0._mapInteractObjDict[var_9_0.id] = var_9_0
-
-	return var_9_0
-end
-
-function var_0_0.removeObjectById(arg_10_0, arg_10_1)
-	for iter_10_0 = 1, #arg_10_0._mapInteractObjs do
-		if arg_10_0._mapInteractObjs[iter_10_0].id == arg_10_1 then
-			local var_10_0 = arg_10_0._mapInteractObjs[iter_10_0]
-
-			table.remove(arg_10_0._mapInteractObjs, iter_10_0)
-
-			arg_10_0._mapInteractObjDict[arg_10_1] = nil
-
-			return var_10_0
+			self._mapInteractObjDict[mo.id] = mo
 		end
 	end
 end
 
-function var_0_0.syncObjectData(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0
-	local var_11_1 = arg_11_0._mapInteractObjDict[arg_11_1]
+function Va3ChessGameModel:addObject(actId, serverData)
+	local mo = Va3ChessGameInteractMO.New()
 
-	if var_11_1 then
-		local var_11_2 = var_11_1.data
+	mo:init(actId, serverData)
+	table.insert(self._mapInteractObjs, mo)
 
-		var_11_0 = arg_11_0:compareObjectData(var_11_2, arg_11_2)
-		var_11_1.data = arg_11_2
+	self._mapInteractObjDict[mo.id] = mo
+
+	return mo
+end
+
+function Va3ChessGameModel:removeObjectById(id)
+	for i = 1, #self._mapInteractObjs do
+		if self._mapInteractObjs[i].id == id then
+			local oldObj = self._mapInteractObjs[i]
+
+			table.remove(self._mapInteractObjs, i)
+
+			self._mapInteractObjDict[id] = nil
+
+			return oldObj
+		end
+	end
+end
+
+function Va3ChessGameModel:syncObjectData(id, newData)
+	local deltaDatas
+	local mo = self._mapInteractObjDict[id]
+
+	if mo then
+		local oldData = mo.data
+
+		deltaDatas = self:compareObjectData(oldData, newData)
+		mo.data = newData
 	end
 
-	return var_11_0
+	return deltaDatas
 end
 
-function var_0_0.compareObjectData(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = {}
+function Va3ChessGameModel:compareObjectData(oldData, newData)
+	local deltaDatas = {}
 
-	arg_12_0:compareAlertArea(var_12_0, arg_12_1, arg_12_2)
-	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "goToObject")
-	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "lostTarget")
-	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "status")
-	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "attributes")
-	arg_12_0:compareValueTypeField(var_12_0, arg_12_1, arg_12_2, "pedalStatus")
+	self:compareAlertArea(deltaDatas, oldData, newData)
+	self:compareValueTypeField(deltaDatas, oldData, newData, "goToObject")
+	self:compareValueTypeField(deltaDatas, oldData, newData, "lostTarget")
+	self:compareValueTypeField(deltaDatas, oldData, newData, "status")
+	self:compareValueTypeField(deltaDatas, oldData, newData, "attributes")
+	self:compareValueTypeField(deltaDatas, oldData, newData, "pedalStatus")
 
-	return var_12_0
+	return deltaDatas
 end
 
-function var_0_0.compareAlertArea(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_2 and arg_13_3 and arg_13_2.alertArea and arg_13_3.alertArea and #arg_13_2.alertArea == #arg_13_3.alertArea then
-		for iter_13_0 = 1, #arg_13_2.alertArea do
-			if arg_13_2.alertArea[iter_13_0].x ~= arg_13_3.alertArea[iter_13_0].x or arg_13_2.alertArea[iter_13_0].y ~= arg_13_3.alertArea[iter_13_0].y then
-				arg_13_1.alertArea = arg_13_3.alertArea
+function Va3ChessGameModel:compareAlertArea(deltaDatas, oldData, newData)
+	if oldData and newData and oldData.alertArea and newData.alertArea and #oldData.alertArea == #newData.alertArea then
+		for i = 1, #oldData.alertArea do
+			if oldData.alertArea[i].x ~= newData.alertArea[i].x or oldData.alertArea[i].y ~= newData.alertArea[i].y then
+				deltaDatas.alertArea = newData.alertArea
 
 				break
 			end
 		end
 	else
-		arg_13_0:compareValueOverride(arg_13_1, arg_13_2, arg_13_3, "alertArea")
+		self:compareValueOverride(deltaDatas, oldData, newData, "alertArea")
 	end
 end
 
-function var_0_0.compareValueTypeField(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	if arg_14_2 and arg_14_3 then
-		if arg_14_2[arg_14_4] ~= arg_14_3[arg_14_4] then
-			if arg_14_2[arg_14_4] ~= nil and arg_14_3[arg_14_4] == nil then
-				arg_14_1.__deleteFields = arg_14_1.__deleteFields or {}
-				arg_14_1.__deleteFields[arg_14_4] = true
+function Va3ChessGameModel:compareValueTypeField(deltaDatas, oldData, newData, fieldName)
+	if oldData and newData then
+		if oldData[fieldName] ~= newData[fieldName] then
+			if oldData[fieldName] ~= nil and newData[fieldName] == nil then
+				deltaDatas.__deleteFields = deltaDatas.__deleteFields or {}
+				deltaDatas.__deleteFields[fieldName] = true
 			else
-				arg_14_1[arg_14_4] = arg_14_3[arg_14_4]
+				deltaDatas[fieldName] = newData[fieldName]
 			end
 		end
 	else
-		arg_14_0:compareValueOverride(arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+		self:compareValueOverride(deltaDatas, oldData, newData, fieldName)
 	end
 end
 
-function var_0_0.compareValueOverride(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	if arg_15_2 and arg_15_2[arg_15_4] ~= nil and (arg_15_3 == null or arg_15_3[arg_15_4] == nil) then
-		arg_15_1.__deleteFields = arg_15_1.__deleteFields or {}
-		arg_15_1.__deleteFields[arg_15_4] = true
-	elseif arg_15_3 then
-		arg_15_1[arg_15_4] = arg_15_3[arg_15_4]
+function Va3ChessGameModel:compareValueOverride(deltaDatas, oldData, newData, fieldName)
+	if oldData and oldData[fieldName] ~= nil and (newData == null or newData[fieldName] == nil) then
+		deltaDatas.__deleteFields = deltaDatas.__deleteFields or {}
+		deltaDatas.__deleteFields[fieldName] = true
+	elseif newData then
+		deltaDatas[fieldName] = newData[fieldName]
 	end
 end
 
-function var_0_0.getObjectDataById(arg_16_0, arg_16_1)
-	return arg_16_0._mapInteractObjDict[arg_16_1]
+function Va3ChessGameModel:getObjectDataById(id)
+	return self._mapInteractObjDict[id]
 end
 
-function var_0_0.appendOpt(arg_17_0, arg_17_1)
-	table.insert(arg_17_0._optList, arg_17_1)
+function Va3ChessGameModel:appendOpt(opt)
+	table.insert(self._optList, opt)
 end
 
-function var_0_0.getOptList(arg_18_0)
-	return arg_18_0._optList
+function Va3ChessGameModel:getOptList()
+	return self._optList
 end
 
-function var_0_0.cleanOptList(arg_19_0)
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._optList) do
-		arg_19_0._optList[iter_19_0] = nil
+function Va3ChessGameModel:cleanOptList()
+	for k, v in pairs(self._optList) do
+		self._optList[k] = nil
 	end
 end
 
-function var_0_0.updateFinishInteracts(arg_20_0, arg_20_1)
-	arg_20_0._finishInteract = {}
+function Va3ChessGameModel:updateFinishInteracts(ids)
+	self._finishInteract = {}
 
-	if arg_20_1 then
-		for iter_20_0 = 1, #arg_20_1 do
-			arg_20_0._finishInteract[arg_20_1[iter_20_0]] = true
+	if ids then
+		for i = 1, #ids do
+			self._finishInteract[ids[i]] = true
 		end
 	end
 end
 
-function var_0_0.updateBrokenTilebases(arg_21_0, arg_21_1, arg_21_2)
-	if not arg_21_2 then
+function Va3ChessGameModel:updateBrokenTilebases(actId, brokenTilebases)
+	if not brokenTilebases then
 		return
 	end
 
-	if Activity142Model.instance:getActivityId() == arg_21_1 then
-		for iter_21_0, iter_21_1 in ipairs(arg_21_2) do
-			local var_21_0 = Va3ChessEnum.TileTrigger.Broken
-			local var_21_1 = Va3ChessEnum.TriggerStatus[var_21_0].Broken
+	local tmpActId = Activity142Model.instance:getActivityId()
 
-			arg_21_0:updateTileTriggerStatus(iter_21_1.x, iter_21_1.y, var_21_0, var_21_1)
-			arg_21_0:addTileFinishTrigger(iter_21_1.x, iter_21_1.y, var_21_0)
+	if tmpActId == actId then
+		for _, pos in ipairs(brokenTilebases) do
+			local brokenTriggerType = Va3ChessEnum.TileTrigger.Broken
+			local status = Va3ChessEnum.TriggerStatus[brokenTriggerType].Broken
+
+			self:updateTileTriggerStatus(pos.x, pos.y, brokenTriggerType, status)
+			self:addTileFinishTrigger(pos.x, pos.y, brokenTriggerType)
 		end
 	else
-		for iter_21_2, iter_21_3 in ipairs(arg_21_2) do
-			arg_21_0:addTileFinishTrigger(iter_21_3.x, iter_21_3.y, Va3ChessEnum.TileTrigger.PoSui)
+		for _, pos in ipairs(brokenTilebases) do
+			self:addTileFinishTrigger(pos.x, pos.y, Va3ChessEnum.TileTrigger.PoSui)
 		end
 	end
 end
 
-function var_0_0.updateLightUpBrazier(arg_22_0, arg_22_1, arg_22_2)
-	if not arg_22_2 then
+function Va3ChessGameModel:updateLightUpBrazier(actId, lightUpBrazierList)
+	if not lightUpBrazierList then
 		return
 	end
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_2) do
-		local var_22_0 = arg_22_0:getObjectDataById(iter_22_1)
+	for _, brazierId in ipairs(lightUpBrazierList) do
+		local interactMO = self:getObjectDataById(brazierId)
 
-		if var_22_0 then
-			var_22_0:setBrazierIsLight(true)
+		if interactMO then
+			interactMO:setBrazierIsLight(true)
 		end
 	end
 end
 
-function var_0_0.updateFragileTilebases(arg_23_0, arg_23_1, arg_23_2)
-	if not arg_23_2 then
+function Va3ChessGameModel:updateFragileTilebases(actId, fragileTilebases)
+	if not fragileTilebases then
 		return
 	end
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
-		local var_23_0 = Va3ChessEnum.TileTrigger.Broken
-		local var_23_1 = Va3ChessEnum.TriggerStatus[var_23_0].Fragile
+	for _, pos in ipairs(fragileTilebases) do
+		local brokenTriggerType = Va3ChessEnum.TileTrigger.Broken
+		local status = Va3ChessEnum.TriggerStatus[brokenTriggerType].Fragile
 
-		arg_23_0:updateTileTriggerStatus(iter_23_1.x, iter_23_1.y, var_23_0, var_23_1)
+		self:updateTileTriggerStatus(pos.x, pos.y, brokenTriggerType, status)
 	end
 end
 
-function var_0_0.updateTileTriggerStatus(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	local var_24_0 = arg_24_0:getTileMO(arg_24_1, arg_24_2)
+function Va3ChessGameModel:updateTileTriggerStatus(x, y, triggerId, status)
+	local tileMO = self:getTileMO(x, y)
 
-	if var_24_0 then
-		var_24_0:updateTrigger(arg_24_3, arg_24_4)
+	if tileMO then
+		tileMO:updateTrigger(triggerId, status)
 	end
 end
 
-function var_0_0.addTileFinishTrigger(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = arg_25_0:getTileMO(arg_25_1, arg_25_2)
+function Va3ChessGameModel:addTileFinishTrigger(x, y, triggerId)
+	local tileMO = self:getTileMO(x, y)
 
-	if var_25_0 then
-		var_25_0:addFinishTrigger(arg_25_3)
+	if tileMO then
+		tileMO:addFinishTrigger(triggerId)
 	end
 end
 
-function var_0_0.addFinishInteract(arg_26_0, arg_26_1)
-	arg_26_0._finishInteract[arg_26_1] = true
+function Va3ChessGameModel:addFinishInteract(id)
+	self._finishInteract[id] = true
 end
 
-function var_0_0.isInteractFinish(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_2 and arg_27_0._allFinishInteract then
-		return arg_27_0._allFinishInteract[arg_27_1]
+function Va3ChessGameModel:isInteractFinish(id, checkAllMap)
+	if checkAllMap and self._allFinishInteract then
+		return self._allFinishInteract[id]
 	end
 
-	if arg_27_0._finishInteract then
-		return arg_27_0._finishInteract[arg_27_1]
+	if self._finishInteract then
+		return self._finishInteract[id]
 	end
 end
 
-function var_0_0.findInteractFinishIds(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0._finishInteract
+function Va3ChessGameModel:findInteractFinishIds(checkAllMap)
+	local finishDict = self._finishInteract
 
-	if arg_28_1 then
-		var_28_0 = arg_28_0._allFinishInteract
+	if checkAllMap then
+		finishDict = self._allFinishInteract
 	end
 
-	if not var_28_0 then
+	if not finishDict then
 		return nil
 	end
 
-	local var_28_1 = {}
+	local ids = {}
 
-	for iter_28_0, iter_28_1 in pairs(var_28_0) do
-		if iter_28_1 == true then
-			table.insert(var_28_1, iter_28_0)
+	for id, finish in pairs(finishDict) do
+		if finish == true then
+			table.insert(ids, id)
 		end
 	end
 
-	return var_28_1
+	return ids
 end
 
-function var_0_0.addAllMapFinishInteract(arg_29_0, arg_29_1)
-	arg_29_0._allFinishInteract[arg_29_1] = true
+function Va3ChessGameModel:addAllMapFinishInteract(id)
+	self._allFinishInteract[id] = true
 end
 
-function var_0_0.updateAllFinishInteracts(arg_30_0, arg_30_1)
-	arg_30_0._allFinishInteract = {}
+function Va3ChessGameModel:updateAllFinishInteracts(ids)
+	self._allFinishInteract = {}
 
-	if arg_30_1 then
-		for iter_30_0 = 1, #arg_30_1 do
-			arg_30_0._allFinishInteract[arg_30_1[iter_30_0]] = true
+	if ids then
+		for i = 1, #ids do
+			self._allFinishInteract[ids[i]] = true
 		end
 	end
 end
 
-function var_0_0.getTileMO(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_0:getIndex(arg_31_1, arg_31_2)
+function Va3ChessGameModel:getTileMO(x, y)
+	local index = self:getIndex(x, y)
 
-	return arg_31_0._mapTileMOList[var_31_0]
+	return self._mapTileMOList[index]
 end
 
-function var_0_0.getBaseTile(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0:getTileMO(arg_32_1, arg_32_2)
+function Va3ChessGameModel:getBaseTile(x, y)
+	local tileMO = self:getTileMO(x, y)
 
-	return var_32_0 and var_32_0.tileType
+	return tileMO and tileMO.tileType
 end
 
-function var_0_0.setBaseTile(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	local var_33_0 = arg_33_0:getTileMO(arg_33_1, arg_33_2)
+function Va3ChessGameModel:setBaseTile(x, y, tileType)
+	local tileMO = self:getTileMO(x, y)
 
-	if var_33_0 then
-		var_33_0.tileType = arg_33_3
+	if tileMO then
+		tileMO.tileType = tileType
 	end
 end
 
-function var_0_0.setResult(arg_34_0, arg_34_1)
-	arg_34_0._isWin = arg_34_1
+function Va3ChessGameModel:setResult(isWin)
+	self._isWin = isWin
 end
 
-function var_0_0.getResult(arg_35_0)
-	return arg_35_0._isWin
+function Va3ChessGameModel:getResult()
+	return self._isWin
 end
 
-function var_0_0.setFailReason(arg_36_0, arg_36_1)
-	arg_36_0.failReason = arg_36_1
+function Va3ChessGameModel:setFailReason(failReason)
+	self.failReason = failReason
 end
 
-function var_0_0.getFailReason(arg_37_0)
-	return arg_37_0.failReason
+function Va3ChessGameModel:getFailReason()
+	return self.failReason
 end
 
-function var_0_0.getInteractDatas(arg_38_0)
-	return arg_38_0._mapInteractObjs
+function Va3ChessGameModel:getInteractDatas()
+	return self._mapInteractObjs
 end
 
-function var_0_0.getIndex(arg_39_0, arg_39_1, arg_39_2)
-	return arg_39_2 * arg_39_0.width + arg_39_1 + 1
+function Va3ChessGameModel:getIndex(x, y)
+	return y * self.width + x + 1
 end
 
-function var_0_0.getGameSize(arg_40_0)
-	return arg_40_0.width, arg_40_0.height
+function Va3ChessGameModel:getGameSize()
+	return self.width, self.height
 end
 
-function var_0_0.getMapId(arg_41_0)
-	return arg_41_0._mapId
+function Va3ChessGameModel:getMapId()
+	return self._mapId
 end
 
-function var_0_0.getActId(arg_42_0)
-	return arg_42_0._actId
+function Va3ChessGameModel:getActId()
+	return self._actId
 end
 
-function var_0_0.getRound(arg_43_0)
-	return math.max(arg_43_0._round or 1, 1)
+function Va3ChessGameModel:getRound()
+	return math.max(self._round or 1, 1)
 end
 
-function var_0_0.setRound(arg_44_0, arg_44_1)
-	if arg_44_0.lastMapRound then
-		arg_44_0._round = arg_44_1 + arg_44_0.lastMapRound
+function Va3ChessGameModel:setRound(round)
+	if self.lastMapRound then
+		self._round = round + self.lastMapRound
 
 		return
 	end
 
-	arg_44_0._round = arg_44_1
+	self._round = round
 end
 
-function var_0_0.recordLastMapRound(arg_45_0)
-	arg_45_0.lastMapRound = arg_45_0._round
+function Va3ChessGameModel:recordLastMapRound()
+	self.lastMapRound = self._round
 end
 
-function var_0_0.clearLastMapRound(arg_46_0)
-	arg_46_0.lastMapRound = nil
+function Va3ChessGameModel:clearLastMapRound()
+	self.lastMapRound = nil
 end
 
-function var_0_0.getHp(arg_47_0)
-	return math.max(arg_47_0._hp or 1, 1)
+function Va3ChessGameModel:getHp()
+	return math.max(self._hp or 1, 1)
 end
 
-function var_0_0.setHp(arg_48_0, arg_48_1)
-	arg_48_0._hp = arg_48_1
+function Va3ChessGameModel:setHp(value)
+	self._hp = value
 end
 
-function var_0_0.setPlayingStory(arg_49_0, arg_49_1)
-	arg_49_0._playingStory = arg_49_1
+function Va3ChessGameModel:setPlayingStory(value)
+	self._playingStory = value
 end
 
-function var_0_0.isPlayingStory(arg_50_0)
-	return arg_50_0._playingStory
+function Va3ChessGameModel:isPlayingStory()
+	return self._playingStory
 end
 
-function var_0_0.isPosInChessBoard(arg_51_0, arg_51_1, arg_51_2)
-	return arg_51_1 >= 0 and arg_51_1 < arg_51_0.width and arg_51_2 >= 0 and arg_51_2 < arg_51_0.height
+function Va3ChessGameModel:isPosInChessBoard(x, y)
+	return x >= 0 and x < self.width and y >= 0 and y < self.height
 end
 
-function var_0_0.isPosValid(arg_52_0, arg_52_1, arg_52_2)
+function Va3ChessGameModel:isPosValid(x, y)
 	return
 end
 
-function var_0_0.setFinishedTargetNum(arg_53_0, arg_53_1)
-	arg_53_0._finishedTargetNum = arg_53_1
+function Va3ChessGameModel:setFinishedTargetNum(value)
+	self._finishedTargetNum = value
 end
 
-function var_0_0.getFinishedTargetNum(arg_54_0)
-	return arg_54_0._finishedTargetNum
+function Va3ChessGameModel:getFinishedTargetNum()
+	return self._finishedTargetNum
 end
 
-function var_0_0.getFinishGoalNum(arg_55_0)
-	if not arg_55_0._actId then
+function Va3ChessGameModel:getFinishGoalNum()
+	if not self._actId then
 		return 0
 	end
 
-	local var_55_0 = Va3ChessModel.instance:getEpisodeId()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
 
-	if not var_55_0 then
+	if not episodeId then
 		return 0
 	end
 
-	local var_55_1 = Va3ChessConfig.instance:getEpisodeCo(arg_55_0._actId, var_55_0)
-	local var_55_2
-	local var_55_3
+	local episodeCfg = Va3ChessConfig.instance:getEpisodeCo(self._actId, episodeId)
+	local mainCondition, extraCondition
 
-	if arg_55_0._actId == VersionActivity1_3Enum.ActivityId.Act304 then
-		var_55_2 = var_55_1.starCondition
-		var_55_3 = var_55_1.extStarCondition
-	elseif arg_55_0._actId == VersionActivity1_3Enum.ActivityId.Act306 then
-		var_55_2 = var_55_1.mainConfition
-		var_55_3 = var_55_1.extStarCondition
+	if self._actId == VersionActivity1_3Enum.ActivityId.Act304 then
+		mainCondition = episodeCfg.starCondition
+		extraCondition = episodeCfg.extStarCondition
+	elseif self._actId == VersionActivity1_3Enum.ActivityId.Act306 then
+		mainCondition = episodeCfg.mainConfition
+		extraCondition = episodeCfg.extStarCondition
 	end
 
-	local var_55_4 = {}
+	local conditionList = {}
 
-	if not string.nilorempty(var_55_2) then
-		for iter_55_0, iter_55_1 in ipairs(GameUtil.splitString2(var_55_2, true)) do
-			table.insert(var_55_4, iter_55_1)
+	if not string.nilorempty(mainCondition) then
+		for _, condition in ipairs(GameUtil.splitString2(mainCondition, true)) do
+			table.insert(conditionList, condition)
 		end
 	end
 
-	if not string.nilorempty(var_55_3) then
-		for iter_55_2, iter_55_3 in ipairs(GameUtil.splitString2(var_55_3, true)) do
-			table.insert(var_55_4, iter_55_3)
+	if not string.nilorempty(extraCondition) then
+		for _, condition in ipairs(GameUtil.splitString2(extraCondition, true)) do
+			table.insert(conditionList, condition)
 		end
 	end
 
-	local var_55_5 = 0
+	local count = 0
 
-	if arg_55_0:getResult() then
-		var_55_5 = var_55_5 + 1
+	if self:getResult() then
+		count = count + 1
 	end
 
-	for iter_55_4, iter_55_5 in ipairs(var_55_4) do
-		if Va3ChessMapUtils.isClearConditionFinish(iter_55_5, arg_55_0._actId) then
-			var_55_5 = var_55_5 + 1
+	for i, condition in ipairs(conditionList) do
+		if Va3ChessMapUtils.isClearConditionFinish(condition, self._actId) then
+			count = count + 1
 		end
 	end
 
-	return var_55_5
+	return count
 end
 
-function var_0_0.isGoalFinished(arg_56_0, arg_56_1)
-	if not arg_56_0._actId then
+function Va3ChessGameModel:isGoalFinished(condition)
+	if not self._actId then
 		return false
 	end
 
-	if not string.nilorempty(arg_56_1) then
-		local var_56_0 = string.splitToNumber(arg_56_1, "#")
+	if not string.nilorempty(condition) then
+		local params = string.splitToNumber(condition, "#")
 
-		return Va3ChessMapUtils.isClearConditionFinish(var_56_0, arg_56_0._actId)
+		return Va3ChessMapUtils.isClearConditionFinish(params, self._actId)
 	else
-		return arg_56_0:getResult() == true
+		return self:getResult() == true
 	end
 end
 
-function var_0_0.getFireBallCount(arg_57_0)
-	return arg_57_0._fireBallCount or 0
+function Va3ChessGameModel:getFireBallCount()
+	return self._fireBallCount or 0
 end
 
-function var_0_0.setFireBallCount(arg_58_0, arg_58_1, arg_58_2)
-	if not arg_58_1 or arg_58_1 < 0 then
-		arg_58_1 = 0
+function Va3ChessGameModel:setFireBallCount(count, updateInteract)
+	if not count or count < 0 then
+		count = 0
 	end
 
-	arg_58_0._fireBallCount = arg_58_1
+	self._fireBallCount = count
 
-	if not arg_58_2 then
+	if not updateInteract then
 		return
 	end
 
-	local var_58_0
-	local var_58_1 = Va3ChessGameController.instance.interacts
+	local handler
+	local interactMgr = Va3ChessGameController.instance.interacts
 
-	if var_58_1 then
-		local var_58_2 = var_58_1:getMainPlayer(true)
+	if interactMgr then
+		local mainPlayer = interactMgr:getMainPlayer(true)
 
-		var_58_0 = var_58_2 and var_58_2:getHandler() or nil
+		handler = mainPlayer and mainPlayer:getHandler() or nil
 	end
 
-	if var_58_0 and var_58_0.updateFireBallCount then
-		var_58_0:updateFireBallCount()
+	if handler and handler.updateFireBallCount then
+		handler:updateFireBallCount()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Va3ChessGameModel.instance = Va3ChessGameModel.New()
 
-return var_0_0
+return Va3ChessGameModel

@@ -1,72 +1,74 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaMapScene.lua
 
-local var_0_0 = class("LanShouPaMapScene", BaseView)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local LanShouPaMapScene = class("LanShouPaMapScene", BaseView)
+
+function LanShouPaMapScene:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(LanShouPaController.instance, LanShouPaEvent.SetScenePos, arg_2_0._onSetScenePos, arg_2_0)
+function LanShouPaMapScene:addEvents()
+	self:addEventCb(LanShouPaController.instance, LanShouPaEvent.SetScenePos, self._onSetScenePos, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(LanShouPaController.instance, LanShouPaEvent.SetScenePos, arg_3_0._onSetScenePos, arg_3_0)
+function LanShouPaMapScene:removeEvents()
+	self:removeEventCb(LanShouPaController.instance, LanShouPaEvent.SetScenePos, self._onSetScenePos, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	local var_4_0 = CameraMgr.instance:getSceneRoot()
+function LanShouPaMapScene:_editableInitView()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_4_0._sceneRoot = UnityEngine.GameObject.New("LanShouPaScene")
+	self._sceneRoot = UnityEngine.GameObject.New("LanShouPaScene")
 
-	gohelper.addChild(var_4_0, arg_4_0._sceneRoot)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 
-	arg_4_0._loader = PrefabInstantiate.Create(arg_4_0._sceneRoot)
+	self._loader = PrefabInstantiate.Create(self._sceneRoot)
 
-	arg_4_0._loader:startLoad("scenes/v2a1_m_s12_lsp_jshd/scenes_prefab/v2a1_m_s12_lsp_background_p.prefab")
-	transformhelper.setLocalPos(arg_4_0._sceneRoot.transform, 0, 5.8, 0)
+	self._loader:startLoad("scenes/v2a1_m_s12_lsp_jshd/scenes_prefab/v2a1_m_s12_lsp_background_p.prefab")
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, 5.8, 0)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._sceneGos = arg_5_0:getUserDataTb_()
+function LanShouPaMapScene:onOpen()
+	self._sceneGos = self:getUserDataTb_()
 
-	MainCameraMgr.instance:addView(ViewName.LanShouPaMapView, arg_5_0._initCamera, nil, arg_5_0)
+	MainCameraMgr.instance:addView(ViewName.LanShouPaMapView, self._initCamera, nil, self)
 end
 
-function var_0_0._initCamera(arg_6_0)
-	local var_6_0 = CameraMgr.instance:getMainCamera()
-	local var_6_1 = GameUtil.getAdapterScale(true)
+function LanShouPaMapScene:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale(true)
 
-	var_6_0.orthographic = true
-	var_6_0.orthographicSize = 7.5 * var_6_1
+	camera.orthographic = true
+	camera.orthographicSize = 7.5 * scale
 end
 
-function var_0_0.setSceneVisible(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0._sceneRoot, arg_7_1)
+function LanShouPaMapScene:setSceneVisible(isVisible)
+	gohelper.setActive(self._sceneRoot, isVisible)
 end
 
-function var_0_0._onSetScenePos(arg_8_0, arg_8_1)
-	transformhelper.setPosXY(arg_8_0._sceneRoot.transform, arg_8_1, 5.8)
+function LanShouPaMapScene:_onSetScenePos(posX)
+	transformhelper.setPosXY(self._sceneRoot.transform, posX, 5.8)
 end
 
-function var_0_0.onClose(arg_9_0)
+function LanShouPaMapScene:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	if arg_10_0._loader then
-		arg_10_0._loader:dispose()
+function LanShouPaMapScene:onDestroyView()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_10_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_10_0._sceneRoot then
-		gohelper.destroy(arg_10_0._sceneRoot)
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_10_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 end
 
-return var_0_0
+return LanShouPaMapScene

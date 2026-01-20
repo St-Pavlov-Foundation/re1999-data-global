@@ -1,32 +1,37 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.view.V3a1_GaoSiNiao_TaskViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/view/V3a1_GaoSiNiao_TaskViewItem.lua
 
-local var_0_0 = class("V3a1_GaoSiNiao_TaskViewItem", CorvusTaskItem)
+module("modules.logic.versionactivity3_1.gaosiniao.view.V3a1_GaoSiNiao_TaskViewItem", package.seeall)
 
-function var_0_0._getRewardList(arg_1_0)
-	local var_1_0 = arg_1_0._mo.config.bonus
+local V3a1_GaoSiNiao_TaskViewItem = class("V3a1_GaoSiNiao_TaskViewItem", CorvusTaskItem)
 
-	if string.nilorempty(var_1_0) then
+function V3a1_GaoSiNiao_TaskViewItem:_getRewardList()
+	local mo = self._mo
+	local CO = mo.config
+	local bonus = CO.bonus
+
+	if string.nilorempty(bonus) then
 		return {}
 	end
 
-	local var_1_1 = tonumber(var_1_0)
-	local var_1_2 = {}
+	bonus = tonumber(bonus)
 
-	if tonumber(var_1_1) then
-		local var_1_3 = DungeonConfig.instance:getRewardItems(tonumber(var_1_1))
+	local rewardList = {}
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-			var_1_2[iter_1_0] = {
-				iter_1_1[1],
-				iter_1_1[2],
-				iter_1_1[3]
+	if tonumber(bonus) then
+		local list = DungeonConfig.instance:getRewardItems(tonumber(bonus))
+
+		for k, v in ipairs(list) do
+			rewardList[k] = {
+				v[1],
+				v[2],
+				v[3]
 			}
 		end
 	else
-		var_1_2 = ItemModel.instance:getItemDataListByConfigStr(var_1_1)
+		rewardList = ItemModel.instance:getItemDataListByConfigStr(bonus)
 	end
 
-	return var_1_2
+	return rewardList
 end
 
-return var_0_0
+return V3a1_GaoSiNiao_TaskViewItem

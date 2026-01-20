@@ -1,29 +1,33 @@
-﻿module("modules.logic.turnback.view.TurnbackSignInViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackSignInViewContainer.lua
 
-local var_0_0 = class("TurnbackSignInViewContainer", BaseViewContainer)
+module("modules.logic.turnback.view.TurnbackSignInViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local TurnbackSignInViewContainer = class("TurnbackSignInViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_daylist"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_0.cellClass = TurnbackSignInItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirH
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 200
-	var_1_0.cellHeight = 600
-	var_1_0.cellSpaceH = 5
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 0
-	var_1_0.frameUpdateMs = 100
-	arg_1_0._scrollView = LuaListScrollView.New(TurnbackSignInModel.instance, var_1_0)
-	arg_1_0._scrollParam = var_1_0
+function TurnbackSignInViewContainer:buildViews()
+	local scrollParam = ListScrollParam.New()
 
-	return {
-		arg_1_0._scrollView,
+	scrollParam.scrollGOPath = "#scroll_daylist"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = TurnbackSignInItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 600
+	scrollParam.cellSpaceH = 5
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.frameUpdateMs = 100
+	self._scrollView = LuaListScrollView.New(TurnbackSignInModel.instance, scrollParam)
+	self._scrollParam = scrollParam
+
+	local views = {
+		self._scrollView,
 		TurnbackSignInView.New()
 	}
+
+	return views
 end
 
-return var_0_0
+return TurnbackSignInViewContainer

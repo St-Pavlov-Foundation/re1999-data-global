@@ -1,27 +1,29 @@
-﻿module("modules.logic.room.view.building.RoomFormulaMsgBoxItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/building/RoomFormulaMsgBoxItem.lua
 
-local var_0_0 = class("RoomFormulaMsgBoxItem", ListScrollCell)
+module("modules.logic.room.view.building.RoomFormulaMsgBoxItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0._go, "#image_rare")
-	arg_1_0._simageproduceitem = gohelper.findChildSingleImage(arg_1_0._go, "#simage_produceitem")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0._go, "image_NumBG/#txt_Num")
+local RoomFormulaMsgBoxItem = class("RoomFormulaMsgBoxItem", ListScrollCell)
+
+function RoomFormulaMsgBoxItem:init(go)
+	self._go = go
+	self._imagerare = gohelper.findChildImage(self._go, "#image_rare")
+	self._simageproduceitem = gohelper.findChildSingleImage(self._go, "#simage_produceitem")
+	self._txtNum = gohelper.findChildText(self._go, "image_NumBG/#txt_Num")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	local var_2_0, var_2_1 = ItemModel.instance:getItemConfigAndIcon(arg_2_1.type, arg_2_1.id)
+function RoomFormulaMsgBoxItem:onUpdateMO(mo)
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(mo.type, mo.id)
 
-	arg_2_0._simageproduceitem:LoadImage(var_2_1)
-	UISpriteSetMgr.instance:setRoomSprite(arg_2_0._imagerare, "bg_wupindi_" .. tostring(ItemEnum.Color[var_2_0.rare]))
+	self._simageproduceitem:LoadImage(icon)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagerare, "bg_wupindi_" .. tostring(ItemEnum.Color[config.rare]))
 
-	local var_2_2 = GameUtil.numberDisplay(arg_2_1.quantity)
+	local numDisplay = GameUtil.numberDisplay(mo.quantity)
 
-	arg_2_0._txtNum.text = luaLang("multiple") .. tostring(var_2_2)
+	self._txtNum.text = luaLang("multiple") .. tostring(numDisplay)
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	arg_3_0._simageproduceitem:UnLoadImage()
+function RoomFormulaMsgBoxItem:onDestroy()
+	self._simageproduceitem:UnLoadImage()
 end
 
-return var_0_0
+return RoomFormulaMsgBoxItem

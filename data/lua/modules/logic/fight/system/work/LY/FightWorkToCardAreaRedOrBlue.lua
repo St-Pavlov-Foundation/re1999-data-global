@@ -1,12 +1,14 @@
-﻿module("modules.logic.fight.system.work.LY.FightWorkToCardAreaRedOrBlue", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/LY/FightWorkToCardAreaRedOrBlue.lua
 
-local var_0_0 = class("FightWorkToCardAreaRedOrBlue", FightEffectBase)
+module("modules.logic.fight.system.work.LY.FightWorkToCardAreaRedOrBlue", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightPlayCardModel.instance:setUsedCard(arg_1_0.actEffectData.cardInfoList)
+local FightWorkToCardAreaRedOrBlue = class("FightWorkToCardAreaRedOrBlue", FightEffectBase)
+
+function FightWorkToCardAreaRedOrBlue:onStart()
+	FightPlayCardModel.instance:setUsedCard(self.actEffectData.cardInfoList)
 	FightController.instance:dispatchEvent(FightEvent.SetUseCards)
 	FightViewPartVisible.set(false, false, false, false, true)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkToCardAreaRedOrBlue

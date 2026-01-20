@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity1_6.act152.rpc.Activity152Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act152/rpc/Activity152Rpc.lua
 
-local var_0_0 = class("Activity152Rpc", BaseRpc)
+module("modules.logic.versionactivity1_6.act152.rpc.Activity152Rpc", package.seeall)
 
-function var_0_0.sendGet152InfoRequest(arg_1_0, arg_1_1)
-	local var_1_0 = Activity152Module_pb.Get152InfoRequest()
+local Activity152Rpc = class("Activity152Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity152Rpc:sendGet152InfoRequest(activityId)
+	local req = Activity152Module_pb.Get152InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0)
+	req.activityId = activityId
+
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGet152InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity152Rpc:onReceiveGet152InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity152Model.instance:setActivity152Infos(arg_2_2.presentIds)
+	Activity152Model.instance:setActivity152Infos(msg.presentIds)
 end
 
-function var_0_0.sendAct152AcceptPresentRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = Activity152Module_pb.Act152AcceptPresentRequest()
+function Activity152Rpc:sendAct152AcceptPresentRequest(activityId, presentId, callback, callbackObj)
+	local req = Activity152Module_pb.Act152AcceptPresentRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.presentId = arg_3_2
+	req.activityId = activityId
+	req.presentId = presentId
 
-	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct152AcceptPresentReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Activity152Rpc:onReceiveAct152AcceptPresentReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity152Rpc.instance = Activity152Rpc.New()
 
-return var_0_0
+return Activity152Rpc

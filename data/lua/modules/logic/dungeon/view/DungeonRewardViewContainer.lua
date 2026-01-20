@@ -1,17 +1,19 @@
-﻿module("modules.logic.dungeon.view.DungeonRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonRewardViewContainer.lua
 
-local var_0_0 = class("DungeonRewardViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonRewardViewContainer = class("DungeonRewardViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonRewardView.New())
+function DungeonRewardViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonRewardView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function DungeonRewardViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return DungeonRewardViewContainer

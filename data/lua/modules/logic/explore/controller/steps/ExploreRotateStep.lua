@@ -1,17 +1,19 @@
-﻿module("modules.logic.explore.controller.steps.ExploreRotateStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreRotateStep.lua
 
-local var_0_0 = class("ExploreRotateStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreRotateStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = ExploreController.instance:getMap():getCompByType(ExploreEnum.MapStatus.RotateUnit)
+local ExploreRotateStep = class("ExploreRotateStep", ExploreStepBase)
 
-	if not var_1_0 then
-		arg_1_0:onDone()
+function ExploreRotateStep:onStart()
+	local comp = ExploreController.instance:getMap():getCompByType(ExploreEnum.MapStatus.RotateUnit)
+
+	if not comp then
+		self:onDone()
 
 		return
 	end
 
-	var_1_0:rotateByServer(arg_1_0._data.interactId, arg_1_0._data.newDir, arg_1_0.onDone, arg_1_0)
+	comp:rotateByServer(self._data.interactId, self._data.newDir, self.onDone, self)
 end
 
-return var_0_0
+return ExploreRotateStep

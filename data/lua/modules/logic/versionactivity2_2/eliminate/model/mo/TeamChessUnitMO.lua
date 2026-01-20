@@ -1,66 +1,70 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.TeamChessUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/mo/TeamChessUnitMO.lua
 
-local var_0_0 = class("TeamChessUnitMO")
+module("modules.logic.versionactivity2_2.eliminate.model.mo.TeamChessUnitMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
-	arg_1_0.uid = arg_1_1 or 0
-	arg_1_0.soldierId = arg_1_2 or 0
-	arg_1_0.stronghold = arg_1_3 or 0
-	arg_1_0.pos = arg_1_4 or 0
-	arg_1_0.teamType = arg_1_5 or 0
+local TeamChessUnitMO = class("TeamChessUnitMO")
+
+function TeamChessUnitMO:init(uid, id, stronghold, pos, teamType)
+	self.uid = uid or 0
+	self.soldierId = id or 0
+	self.stronghold = stronghold or 0
+	self.pos = pos or 0
+	self.teamType = teamType or 0
 end
 
-function var_0_0.update(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_0.uid = arg_2_1
-	arg_2_0.soldierId = arg_2_2
-	arg_2_0.stronghold = arg_2_3
-	arg_2_0.pos = arg_2_4
-	arg_2_0.teamType = arg_2_5
+function TeamChessUnitMO:update(uid, id, stronghold, pos, teamType)
+	self.uid = uid
+	self.soldierId = id
+	self.stronghold = stronghold
+	self.pos = pos
+	self.teamType = teamType
 end
 
-function var_0_0.getUid(arg_3_0)
-	return arg_3_0.uid
+function TeamChessUnitMO:getUid()
+	return self.uid
 end
 
-function var_0_0.getSoldierConfig(arg_4_0)
-	return EliminateConfig.instance:getSoldierChessConfig(arg_4_0.soldierId)
+function TeamChessUnitMO:getSoldierConfig()
+	return EliminateConfig.instance:getSoldierChessConfig(self.soldierId)
 end
 
-function var_0_0.getUnitPath(arg_5_0)
-	return EliminateConfig.instance:getSoldierChessModelPath(arg_5_0.soldierId)
+function TeamChessUnitMO:getUnitPath()
+	return EliminateConfig.instance:getSoldierChessModelPath(self.soldierId)
 end
 
-function var_0_0.getScale(arg_6_0)
-	return arg_6_0:getSoldierConfig().resZoom
+function TeamChessUnitMO:getScale()
+	return self:getSoldierConfig().resZoom
 end
 
-function var_0_0.getOrder(arg_7_0)
-	local var_7_0 = 0
-	local var_7_1 = EliminateTeamChessModel.instance:getStronghold(arg_7_0.stronghold)
+function TeamChessUnitMO:getOrder()
+	local index = 0
+	local stronghold = EliminateTeamChessModel.instance:getStronghold(self.stronghold)
 
-	if arg_7_0.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		var_7_0 = EliminateConfig.instance:getStrongHoldConfig(arg_7_0.stronghold).enemyCapacity - var_7_1:getEnemySideIndexByUid(arg_7_0.uid)
+	if self.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		local config = EliminateConfig.instance:getStrongHoldConfig(self.stronghold)
+
+		index = config.enemyCapacity - stronghold:getEnemySideIndexByUid(self.uid)
 	end
 
-	if arg_7_0.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
-		var_7_0 = var_7_1:getMySideIndexByUid(arg_7_0.uid)
+	if self.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		index = stronghold:getMySideIndexByUid(self.uid)
 	end
 
-	return var_7_0
+	return index
 end
 
-function var_0_0.canActiveMove(arg_8_0)
-	local var_8_0 = EliminateTeamChessModel.instance:getChess(arg_8_0.uid)
+function TeamChessUnitMO:canActiveMove()
+	local chess = EliminateTeamChessModel.instance:getChess(self.uid)
 
-	return var_8_0 and var_8_0:canActiveMove() or false
+	return chess and chess:canActiveMove() or false
 end
 
-function var_0_0.clear(arg_9_0)
-	arg_9_0.uid = 0
-	arg_9_0.soldierId = 0
-	arg_9_0.stronghold = 0
-	arg_9_0.pos = 0
-	arg_9_0.teamType = 0
+function TeamChessUnitMO:clear()
+	self.uid = 0
+	self.soldierId = 0
+	self.stronghold = 0
+	self.pos = 0
+	self.teamType = 0
 end
 
-return var_0_0
+return TeamChessUnitMO

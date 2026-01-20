@@ -1,28 +1,30 @@
-﻿module("modules.logic.scene.summon.comp.SummonSceneBgmComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/comp/SummonSceneBgmComp.lua
 
-local var_0_0 = class("SummonSceneBgmComp", BaseSceneComp)
+module("modules.logic.scene.summon.comp.SummonSceneBgmComp", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._sceneLevelCO = lua_scene_level.configDict[arg_1_2]
+local SummonSceneBgmComp = class("SummonSceneBgmComp", BaseSceneComp)
 
-	if arg_1_0._sceneLevelCO and arg_1_0._sceneLevelCO.bgm and arg_1_0._sceneLevelCO.bgm > 0 then
-		arg_1_0._bgmId = arg_1_0._sceneLevelCO.bgm
+function SummonSceneBgmComp:onSceneStart(sceneId, levelId)
+	self._sceneLevelCO = lua_scene_level.configDict[levelId]
+
+	if self._sceneLevelCO and self._sceneLevelCO.bgm and self._sceneLevelCO.bgm > 0 then
+		self._bgmId = self._sceneLevelCO.bgm
 	end
 
-	if arg_1_0._bgmId then
-		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.Summon, arg_1_0._bgmId, AudioEnum.UI.Stop_UIMusic, nil, nil, AudioEnum.SwitchGroup.Summon, AudioEnum.SwitchState.SummonNormal)
+	if self._bgmId then
+		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.Summon, self._bgmId, AudioEnum.UI.Stop_UIMusic, nil, nil, AudioEnum.SwitchGroup.Summon, AudioEnum.SwitchState.SummonNormal)
 	end
 end
 
-function var_0_0.Play(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1 == SummonEnum.ResultType.Equip and AudioEnum.SwitchState.SummonEquip or AudioEnum.SwitchState.SummonChar
+function SummonSceneBgmComp:Play(resultType)
+	local switchKey = resultType == SummonEnum.ResultType.Equip and AudioEnum.SwitchState.SummonEquip or AudioEnum.SwitchState.SummonChar
 
-	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.SummonTab), AudioMgr.instance:getIdFromString(var_2_0))
+	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.SummonTab), AudioMgr.instance:getIdFromString(switchKey))
 end
 
-function var_0_0.onSceneClose(arg_3_0)
-	if arg_3_0._bgmId then
-		arg_3_0._bgmId = nil
+function SummonSceneBgmComp:onSceneClose()
+	if self._bgmId then
+		self._bgmId = nil
 
 		AudioBgmManager.instance:stopAndClear(AudioBgmEnum.Layer.Summon)
 	end
@@ -31,8 +33,8 @@ function var_0_0.onSceneClose(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_help_close)
 end
 
-function var_0_0.onSceneHide(arg_4_0)
-	arg_4_0:onSceneClose()
+function SummonSceneBgmComp:onSceneHide()
+	self:onSceneClose()
 end
 
-return var_0_0
+return SummonSceneBgmComp

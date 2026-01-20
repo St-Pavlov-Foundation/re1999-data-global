@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessItemUpdateInfoStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/EliminateChessItemUpdateInfoStep.lua
 
-local var_0_0 = class("EliminateChessItemUpdateInfoStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessItemUpdateInfoStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data.x
-	local var_1_1 = arg_1_0._data.y
+local EliminateChessItemUpdateInfoStep = class("EliminateChessItemUpdateInfoStep", EliminateChessStepBase)
 
-	if var_1_0 == nil or var_1_1 == nil then
-		arg_1_0:onDone(true)
+function EliminateChessItemUpdateInfoStep:onStart()
+	local x = self._data.x
+	local y = self._data.y
+
+	if x == nil or y == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_2 = LocalEliminateChessModel.instance:changeCellId(var_1_0, var_1_1, EliminateEnum_2_7.ChessTypeToIndex.stone)
-	local var_1_3 = LengZhou6EliminateChessItemController.instance:getChessItem(var_1_0, var_1_1)
+	local data = LocalEliminateChessModel.instance:changeCellId(x, y, EliminateEnum_2_7.ChessTypeToIndex.stone)
+	local viewItem = LengZhou6EliminateChessItemController.instance:getChessItem(x, y)
 
-	if var_1_2 ~= nil and var_1_3 ~= nil then
-		var_1_3:initData(var_1_2)
+	if data ~= nil and viewItem ~= nil then
+		viewItem:initData(data)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessItemUpdateInfoStep

@@ -1,123 +1,154 @@
-﻿module("modules.logic.activity.controller.ActivityBeginnerController", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/ActivityBeginnerController.lua
 
-local var_0_0 = class("ActivityBeginnerController", BaseController)
+module("modules.logic.activity.controller.ActivityBeginnerController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_initHandlers()
+local ActivityBeginnerController = class("ActivityBeginnerController", BaseController)
+
+function ActivityBeginnerController:onInit()
+	self:_initHandlers()
 end
 
-function var_0_0.reInit(arg_2_0)
+function ActivityBeginnerController:reInit()
 	return
 end
 
-function var_0_0._initHandlers(arg_3_0)
-	if arg_3_0._handlerList then
+function ActivityBeginnerController:_initHandlers()
+	if self._handlerList then
 		return
 	end
 
-	arg_3_0._handlerList = {
+	self._actTypeIdFirstEndterMap = {
+		[ActivityEnum.ActivityTypeID.Act201] = true,
+		[ActivityEnum.ActivityTypeID.Act209] = true,
+		[ActivityEnum.ActivityTypeID.Act212] = true,
+		[ActivityEnum.ActivityTypeID.Act214] = true,
+		[ActivityEnum.ActivityTypeID.Act100] = true
+	}
+	self._actIdFirstEndterMap = {
+		[ActivityEnum.Activity.DreamShow] = true,
+		[ActivityEnum.Activity.V2a2_TurnBack_H5] = true,
+		[VersionActivity2_2Enum.ActivityId.LimitDecorate] = true,
+		[VersionActivity3_2Enum.ActivityId.ActivityCollect] = true,
+		[VersionActivity3_2Enum.ActivityId.CruiseTripleDrop] = true
+	}
+	self._handlerList = {
 		[ActivityEnum.Activity.StoryShow] = {
-			arg_3_0.checkRedDotWithActivityId,
-			arg_3_0.checkFirstEnter
+			self.checkRedDotWithActivityId,
+			self.checkFirstEnter
 		},
 		[ActivityEnum.Activity.DreamShow] = {
-			arg_3_0.checkRedDot,
-			arg_3_0.checkFirstEnter
+			self.checkRedDot,
+			self.checkFirstEnter
 		},
 		[ActivityEnum.Activity.ClassShow] = {
-			arg_3_0.checkRedDotWithActivityId,
-			arg_3_0.checkFirstEnter
+			self.checkRedDotWithActivityId,
+			self.checkFirstEnter
 		},
 		[ActivityEnum.Activity.V2a4_WarmUp] = {
-			arg_3_0.checkRedDotWithActivityId,
+			self.checkRedDotWithActivityId,
 			Activity125Controller.checkRed_Task
 		}
 	}
-	arg_3_0._defaultHandler = {
-		arg_3_0.checkRedDotWithActivityId
+	self._defaultHandler = {
+		self.checkRedDotWithActivityId
 	}
 end
 
-function var_0_0.showRedDot(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._handlerList[arg_4_1]
+function ActivityBeginnerController:showRedDot(activityId)
+	local handlers = self._handlerList[activityId]
 
-	if not var_4_0 then
-		if arg_4_1 == DoubleDropModel.instance:getActId() then
-			var_4_0 = arg_4_0._handlerList[ActivityEnum.Activity.ClassShow]
+	if not handlers then
+		if activityId == DoubleDropModel.instance:getActId() then
+			handlers = self._handlerList[ActivityEnum.Activity.ClassShow]
 		else
-			var_4_0 = arg_4_0._defaultHandler
+			handlers = self._defaultHandler
 		end
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		if iter_4_1(arg_4_0, arg_4_1) then
+	for i, handler in ipairs(handlers) do
+		local result = handler(self, activityId)
+
+		if result then
 			return true
 		end
 	end
 
+	if (self._actIdFirstEndterMap[activityId] or activityId == DoubleDropModel.instance:getActId()) and self:checkFirstEnter(activityId) then
+		return true
+	end
+
+	local actCo = ActivityConfig.instance:getActivityCo(activityId)
+
+	if actCo and self._actTypeIdFirstEndterMap[actCo.typeId] and self:checkFirstEnter(activityId) then
+		return true
+	end
+
 	return false
 end
 
-function var_0_0._getRedDotId(arg_5_0, arg_5_1)
-	local var_5_0 = ActivityConfig.instance:getActivityCo(arg_5_1)
+function ActivityBeginnerController:_getRedDotId(activityId)
+	local config = ActivityConfig.instance:getActivityCo(activityId)
 
-	if not var_5_0 then
+	if not config then
 		return 0
 	end
 
-	local var_5_1 = var_5_0.redDotId
+	local reddotid = config.redDotId
 
-	if var_5_1 > 0 then
-		return var_5_1
+	if reddotid > 0 then
+		return reddotid
 	end
 
-	local var_5_2 = var_5_0.showCenter
-	local var_5_3 = ActivityConfig.instance:getActivityCenterCo(var_5_2)
+	local center = config.showCenter
 
-	if not var_5_3 then
+	config = ActivityConfig.instance:getActivityCenterCo(center)
+
+	if not config then
 		return 0
 	end
 
-	return var_5_3.reddotid
+	reddotid = config.reddotid
+
+	return reddotid
 end
 
-function var_0_0.checkRedDot(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:_getRedDotId(arg_6_1)
+function ActivityBeginnerController:checkRedDot(activityId)
+	local reddotid = self:_getRedDotId(activityId)
 
-	if var_6_0 > 0 then
-		return RedDotModel.instance:isDotShow(var_6_0)
+	if reddotid > 0 then
+		return RedDotModel.instance:isDotShow(reddotid)
 	end
 
 	return false
 end
 
-function var_0_0.checkRedDotWithActivityId(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:_getRedDotId(arg_7_1)
+function ActivityBeginnerController:checkRedDotWithActivityId(activityId)
+	local reddotid = self:_getRedDotId(activityId)
 
-	if var_7_0 > 0 then
-		return RedDotModel.instance:isDotShow(var_7_0, arg_7_1)
+	if reddotid > 0 then
+		return RedDotModel.instance:isDotShow(reddotid, activityId)
 	end
 
 	return false
 end
 
-function var_0_0.checkFirstEnter(arg_8_0, arg_8_1)
-	local var_8_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_8_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
-	local var_8_1 = PlayerPrefsHelper.getString(var_8_0, "")
+function ActivityBeginnerController:checkFirstEnter(activityId)
+	local key = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local data = PlayerPrefsHelper.getString(key, "")
 
-	return string.nilorempty(var_8_1)
+	return string.nilorempty(data)
 end
 
-function var_0_0.setFirstEnter(arg_9_0, arg_9_1)
-	local var_9_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_9_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function ActivityBeginnerController:setFirstEnter(activityId)
+	local key = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(var_9_0, "hasEnter")
+	PlayerPrefsHelper.setString(key, "hasEnter")
 end
 
-function var_0_0.checkActivityNewStage(arg_10_0, arg_10_1)
-	return ActivityModel.instance:getActivityInfo()[arg_10_1]:isNewStageOpen()
+function ActivityBeginnerController:checkActivityNewStage(activityId)
+	return ActivityModel.instance:getActivityInfo()[activityId]:isNewStageOpen()
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityBeginnerController.instance = ActivityBeginnerController.New()
 
-return var_0_0
+return ActivityBeginnerController

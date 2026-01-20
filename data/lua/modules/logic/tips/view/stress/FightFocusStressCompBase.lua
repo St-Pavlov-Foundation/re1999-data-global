@@ -1,81 +1,85 @@
-﻿module("modules.logic.tips.view.stress.FightFocusStressCompBase", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/stress/FightFocusStressCompBase.lua
 
-local var_0_0 = class("FightFocusStressCompBase", UserDataDispose)
+module("modules.logic.tips.view.stress.FightFocusStressCompBase", package.seeall)
 
-var_0_0.PrefabPath = FightNameUIStressMgr.PrefabPath
+local FightFocusStressCompBase = class("FightFocusStressCompBase", UserDataDispose)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+FightFocusStressCompBase.PrefabPath = FightNameUIStressMgr.PrefabPath
 
-	arg_1_0.goStress = arg_1_1
+function FightFocusStressCompBase:init(goStress)
+	self:__onInit()
 
-	arg_1_0:loadPrefab()
+	self.goStress = goStress
+
+	self:loadPrefab()
 end
 
-function var_0_0.getUiType(arg_2_0)
+function FightFocusStressCompBase:getUiType()
 	return FightNameUIStressMgr.UiType.Normal
 end
 
-function var_0_0.loadPrefab(arg_3_0)
-	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.goStress)
+function FightFocusStressCompBase:loadPrefab()
+	self.loader = PrefabInstantiate.Create(self.goStress)
 
-	local var_3_0 = FightNameUIStressMgr.UiType2PrefabPath[arg_3_0:getUiType()] or FightNameUIStressMgr.UiType2PrefabPath[FightNameUIStressMgr.UiType.Normal]
+	local res = FightNameUIStressMgr.UiType2PrefabPath[self:getUiType()]
 
-	arg_3_0.loader:startLoad(var_3_0, arg_3_0.onLoadFinish, arg_3_0)
+	res = res or FightNameUIStressMgr.UiType2PrefabPath[FightNameUIStressMgr.UiType.Normal]
+
+	self.loader:startLoad(res, self.onLoadFinish, self)
 end
 
-function var_0_0.onLoadFinish(arg_4_0)
-	arg_4_0.instanceGo = arg_4_0.loader:getInstGO()
-	arg_4_0.loaded = true
+function FightFocusStressCompBase:onLoadFinish()
+	self.instanceGo = self.loader:getInstGO()
+	self.loaded = true
 
-	arg_4_0:initUI()
-	arg_4_0:refreshStress(arg_4_0.cacheEntityMo)
+	self:initUI()
+	self:refreshStress(self.cacheEntityMo)
 
-	arg_4_0.cacheEntityMo = nil
+	self.cacheEntityMo = nil
 end
 
-function var_0_0.initUI(arg_5_0)
+function FightFocusStressCompBase:initUI()
 	return
 end
 
-function var_0_0.show(arg_6_0)
-	gohelper.setActive(arg_6_0.instanceGo, true)
+function FightFocusStressCompBase:show()
+	gohelper.setActive(self.instanceGo, true)
 end
 
-function var_0_0.hide(arg_7_0)
-	gohelper.setActive(arg_7_0.instanceGo, false)
+function FightFocusStressCompBase:hide()
+	gohelper.setActive(self.instanceGo, false)
 end
 
-function var_0_0.refreshStress(arg_8_0, arg_8_1)
-	if not arg_8_0.loaded then
-		arg_8_0.cacheEntityMo = arg_8_1
+function FightFocusStressCompBase:refreshStress(entityMo)
+	if not self.loaded then
+		self.cacheEntityMo = entityMo
 
 		return
 	end
 
-	arg_8_0.entityMo = arg_8_1
+	self.entityMo = entityMo
 
-	if not arg_8_1 then
-		arg_8_0:hide()
-
-		return
-	end
-
-	if not arg_8_1:hasStress() then
-		arg_8_0:hide()
+	if not entityMo then
+		self:hide()
 
 		return
 	end
 
-	arg_8_0.entityMo = arg_8_1
+	if not entityMo:hasStress() then
+		self:hide()
+
+		return
+	end
+
+	self.entityMo = entityMo
 end
 
-function var_0_0.destroy(arg_9_0)
-	arg_9_0.loader:dispose()
+function FightFocusStressCompBase:destroy()
+	self.loader:dispose()
 
-	arg_9_0.loader = nil
+	self.loader = nil
 
-	arg_9_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightFocusStressCompBase

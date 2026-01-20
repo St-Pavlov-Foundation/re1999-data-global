@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.config.Activity114Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/config/Activity114Config.lua
 
-local var_0_0 = class("Activity114Config", BaseConfig)
+module("modules.logic.versionactivity1_2.jiexika.config.Activity114Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity114Config = class("Activity114Config", BaseConfig)
+
+function Activity114Config:reqConfigNames()
 	return {
 		"activity114_photo",
 		"activity114_round",
@@ -19,400 +21,398 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._attrVerify = nil
-	arg_2_0._eventDict = nil
-	arg_2_0._eduEventDict = nil
-	arg_2_0._restEventDict = nil
-	arg_2_0._rateDescDict = nil
-	arg_2_0._allActivityIds = nil
-	arg_2_0._answerFailDict = nil
-	arg_2_0._motionDic = nil
+function Activity114Config:onInit()
+	self._attrVerify = nil
+	self._eventDict = nil
+	self._eduEventDict = nil
+	self._restEventDict = nil
+	self._rateDescDict = nil
+	self._allActivityIds = nil
+	self._answerFailDict = nil
+	self._motionDic = nil
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity114_attribute" then
-		arg_3_0._attrVerify = {}
+function Activity114Config:onConfigLoaded(configName, configTable)
+	if configName == "activity114_attribute" then
+		self._attrVerify = {}
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
-			local var_3_0 = string.split(iter_3_1.attributeNum, "|")
-			local var_3_1 = {}
+		for _, attrCo in ipairs(configTable.configList) do
+			local list = string.split(attrCo.attributeNum, "|")
+			local arr = {}
 
-			for iter_3_2, iter_3_3 in ipairs(var_3_0) do
-				var_3_1[iter_3_2] = string.splitToNumber(iter_3_3, "#")
+			for k, v in ipairs(list) do
+				arr[k] = string.splitToNumber(v, "#")
 			end
 
-			if not arg_3_0._attrVerify[iter_3_1.activityId] then
-				arg_3_0._attrVerify[iter_3_1.activityId] = {}
+			if not self._attrVerify[attrCo.activityId] then
+				self._attrVerify[attrCo.activityId] = {}
 			end
 
-			arg_3_0._attrVerify[iter_3_1.activityId][iter_3_1.id] = var_3_1
+			self._attrVerify[attrCo.activityId][attrCo.id] = arr
 		end
-	elseif arg_3_1 == "activity114_event" then
-		arg_3_0._eventDict = {}
-		arg_3_0._eduEventDict = {}
-		arg_3_0._restEventDict = {}
-		arg_3_0._allActivityIds = {}
+	elseif configName == "activity114_event" then
+		self._eventDict = {}
+		self._eduEventDict = {}
+		self._restEventDict = {}
+		self._allActivityIds = {}
 
-		for iter_3_4, iter_3_5 in ipairs(arg_3_2.configList) do
-			if not arg_3_0._eventDict[iter_3_5.activityId] then
-				arg_3_0._eventDict[iter_3_5.activityId] = {}
+		for _, eventCo in ipairs(configTable.configList) do
+			if not self._eventDict[eventCo.activityId] then
+				self._eventDict[eventCo.activityId] = {}
 			end
 
-			arg_3_0._allActivityIds[iter_3_5.activityId] = true
+			self._allActivityIds[eventCo.activityId] = true
 
-			local var_3_2 = {}
-			local var_3_3 = {}
-			local var_3_4 = {}
-			local var_3_5 = {}
-			local var_3_6 = {}
-			local var_3_7 = {}
+			local successVerify = {}
+			local successFeatures = {}
+			local failureVerify = {}
+			local failureFeatures = {}
+			local successBattleVerify = {}
+			local successBattleFeatures = {}
 
-			arg_3_0:_splitVerifyInfo(iter_3_5.successVerify, var_3_3, var_3_2)
-			arg_3_0:_splitVerifyInfo(iter_3_5.failureVerify, var_3_5, var_3_4)
-			arg_3_0:_splitVerifyInfo(iter_3_5.successBattle, var_3_7, var_3_6)
+			self:_splitVerifyInfo(eventCo.successVerify, successFeatures, successVerify)
+			self:_splitVerifyInfo(eventCo.failureVerify, failureFeatures, failureVerify)
+			self:_splitVerifyInfo(eventCo.successBattle, successBattleFeatures, successBattleVerify)
 
-			local var_3_8 = {
-				config = iter_3_5,
-				successVerify = var_3_2,
-				failureVerify = var_3_4,
-				successFeatures = var_3_3,
-				failureFeatures = var_3_5,
-				successBattleFeatures = var_3_7,
-				successBattleVerify = var_3_6
+			local co = {
+				config = eventCo,
+				successVerify = successVerify,
+				failureVerify = failureVerify,
+				successFeatures = successFeatures,
+				failureFeatures = failureFeatures,
+				successBattleFeatures = successBattleFeatures,
+				successBattleVerify = successBattleVerify
 			}
 
-			arg_3_0._eventDict[iter_3_5.activityId][iter_3_5.id] = var_3_8
+			self._eventDict[eventCo.activityId][eventCo.id] = co
 
-			if iter_3_5.eventType == Activity114Enum.EventType.Edu then
-				if not arg_3_0._eduEventDict[iter_3_5.activityId] then
-					arg_3_0._eduEventDict[iter_3_5.activityId] = {}
+			if eventCo.eventType == Activity114Enum.EventType.Edu then
+				if not self._eduEventDict[eventCo.activityId] then
+					self._eduEventDict[eventCo.activityId] = {}
 				end
 
-				arg_3_0._eduEventDict[iter_3_5.activityId][tonumber(iter_3_5.param)] = var_3_8
-			elseif iter_3_5.eventType == Activity114Enum.EventType.Rest then
-				if not arg_3_0._restEventDict[iter_3_5.activityId] then
-					arg_3_0._restEventDict[iter_3_5.activityId] = {}
+				self._eduEventDict[eventCo.activityId][tonumber(eventCo.param)] = co
+			elseif eventCo.eventType == Activity114Enum.EventType.Rest then
+				if not self._restEventDict[eventCo.activityId] then
+					self._restEventDict[eventCo.activityId] = {}
 				end
 
-				arg_3_0._restEventDict[iter_3_5.activityId][tonumber(iter_3_5.param)] = var_3_8
+				self._restEventDict[eventCo.activityId][tonumber(eventCo.param)] = co
 			end
 		end
-	elseif arg_3_1 == "activity114_difficulty" then
-		arg_3_0._rateDescDict = {}
+	elseif configName == "activity114_difficulty" then
+		self._rateDescDict = {}
 
-		for iter_3_6, iter_3_7 in ipairs(arg_3_2.configList) do
-			local var_3_9 = string.splitToNumber(iter_3_7.interval, ",")
+		for k, co in ipairs(configTable.configList) do
+			local arr = string.splitToNumber(co.interval, ",")
 
-			arg_3_0._rateDescDict[iter_3_6] = {
-				min = var_3_9[1],
-				max = var_3_9[2],
-				co = iter_3_7
+			self._rateDescDict[k] = {
+				min = arr[1],
+				max = arr[2],
+				co = co
 			}
 		end
-	elseif arg_3_1 == "activity114_test" then
-		arg_3_0._answerFailDict = {}
+	elseif configName == "activity114_test" then
+		self._answerFailDict = {}
 
-		for iter_3_8, iter_3_9 in pairs(arg_3_2.configDict) do
-			arg_3_0._answerFailDict[iter_3_8] = {}
+		for activityId, list in pairs(configTable.configDict) do
+			self._answerFailDict[activityId] = {}
 
-			for iter_3_10, iter_3_11 in pairs(iter_3_9) do
-				if not arg_3_0._answerFailDict[iter_3_8][iter_3_11.testId] then
-					local var_3_10 = string.splitToNumber(iter_3_11.result, "#")
+			for _, co in pairs(list) do
+				if not self._answerFailDict[activityId][co.testId] then
+					local arr = string.splitToNumber(co.result, "#")
 
-					arg_3_0._answerFailDict[iter_3_8][iter_3_11.testId] = var_3_10[1]
+					self._answerFailDict[activityId][co.testId] = arr[1]
 				end
 			end
 		end
-	elseif arg_3_1 == "activity114_motion" then
-		arg_3_0._motionDic = {}
+	elseif configName == "activity114_motion" then
+		self._motionDic = {}
 
-		for iter_3_12, iter_3_13 in ipairs(arg_3_2.configList) do
-			if iter_3_13.type == Activity114Enum.MotionType.Time then
-				if not arg_3_0._motionDic[iter_3_13.type] then
-					arg_3_0._motionDic[iter_3_13.type] = {}
+		for k, co in ipairs(configTable.configList) do
+			if co.type == Activity114Enum.MotionType.Time then
+				if not self._motionDic[co.type] then
+					self._motionDic[co.type] = {}
 
-					local var_3_11 = string.splitToNumber(iter_3_13.param, "#")
+					local info = string.splitToNumber(co.param, "#")
 
-					arg_3_0._motionDic.firstTime = var_3_11[1] or 0
-					arg_3_0._motionDic.nextTime = var_3_11[2] or 0
+					self._motionDic.firstTime = info[1] or 0
+					self._motionDic.nextTime = info[2] or 0
 				end
 
-				table.insert(arg_3_0._motionDic[iter_3_13.type], iter_3_13)
-			elseif iter_3_13.type == Activity114Enum.MotionType.Click then
-				arg_3_0._motionDic[iter_3_13.type] = iter_3_13
+				table.insert(self._motionDic[co.type], co)
+			elseif co.type == Activity114Enum.MotionType.Click then
+				self._motionDic[co.type] = co
 			else
-				if not arg_3_0._motionDic[iter_3_13.type] then
-					arg_3_0._motionDic[iter_3_13.type] = {}
+				if not self._motionDic[co.type] then
+					self._motionDic[co.type] = {}
 				end
 
-				arg_3_0._motionDic[iter_3_13.type][tonumber(iter_3_13.param)] = iter_3_13
+				self._motionDic[co.type][tonumber(co.param)] = co
 			end
 		end
 	end
 end
 
-function var_0_0._splitVerifyInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if string.nilorempty(arg_4_1) then
+function Activity114Config:_splitVerifyInfo(str, tb1, tb2)
+	if string.nilorempty(str) then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in pairs(string.split(arg_4_1, "|")) do
-		local var_4_0 = string.splitToNumber(iter_4_1, "#")
+	for _, v in pairs(string.split(str, "|")) do
+		local arr = string.splitToNumber(v, "#")
 
-		if not var_4_0[1] then
-			logError("洁西卡事件奖励配置错误：" .. arg_4_1)
+		if not arr[1] then
+			logError("洁西卡事件奖励配置错误：" .. str)
 		end
 
-		if var_4_0[1] == Activity114Enum.AddAttrType.Feature then
-			table.insert(arg_4_2, var_4_0[2])
-		elseif var_4_0[1] and var_4_0[1] < Activity114Enum.Attr.End or var_4_0[1] == Activity114Enum.AddAttrType.Attention or var_4_0[1] == Activity114Enum.AddAttrType.KeyDayScore or var_4_0[1] == Activity114Enum.AddAttrType.LastKeyDayScore then
-			arg_4_3[var_4_0[1]] = (arg_4_3[var_4_0[1]] or 0) + var_4_0[2]
-		elseif var_4_0[1] then
-			arg_4_3[var_4_0[1]] = arg_4_3[var_4_0[1]] or {}
+		if arr[1] == Activity114Enum.AddAttrType.Feature then
+			table.insert(tb1, arr[2])
+		elseif arr[1] and arr[1] < Activity114Enum.Attr.End or arr[1] == Activity114Enum.AddAttrType.Attention or arr[1] == Activity114Enum.AddAttrType.KeyDayScore or arr[1] == Activity114Enum.AddAttrType.LastKeyDayScore then
+			tb2[arr[1]] = (tb2[arr[1]] or 0) + arr[2]
+		elseif arr[1] then
+			tb2[arr[1]] = tb2[arr[1]] or {}
 
-			table.insert(arg_4_3[var_4_0[1]], var_4_0[2])
+			table.insert(tb2[arr[1]], arr[2])
 		end
 	end
 end
 
-function var_0_0.getUnlockIds(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = {}
+function Activity114Config:getUnlockIds(activityId)
+	local showUnlockMeetingId = {}
+	local showUnlockTravelId = {}
 
-	for iter_5_0, iter_5_1 in pairs(lua_activity114_meeting.configDict[arg_5_1]) do
-		if string.find(iter_5_1.condition, "^1#") then
-			var_5_0[iter_5_1.id] = true
-		end
-	end
-
-	for iter_5_2, iter_5_3 in pairs(lua_activity114_travel.configDict[arg_5_1]) do
-		if string.find(iter_5_3.condition, "^1#") then
-			var_5_1[iter_5_3.id] = true
+	for k, v in pairs(lua_activity114_meeting.configDict[activityId]) do
+		if string.find(v.condition, "^1#") then
+			showUnlockMeetingId[v.id] = true
 		end
 	end
 
-	return var_5_0, var_5_1
-end
-
-function var_0_0.getAllActivityIds(arg_6_0)
-	return arg_6_0._allActivityIds
-end
-
-function var_0_0.getFeatureCo(arg_7_0, arg_7_1, arg_7_2)
-	return lua_activity114_feature.configDict[arg_7_1][arg_7_2]
-end
-
-function var_0_0.getFeatureName(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-
-	for iter_8_0, iter_8_1 in pairs(lua_activity114_feature.configDict[arg_8_1]) do
-		table.insert(var_8_0, iter_8_1.features)
+	for k, v in pairs(lua_activity114_travel.configDict[activityId]) do
+		if string.find(v.condition, "^1#") then
+			showUnlockTravelId[v.id] = true
+		end
 	end
 
-	return var_8_0
+	return showUnlockMeetingId, showUnlockTravelId
 end
 
-function var_0_0.getMotionCo(arg_9_0)
-	return arg_9_0._motionDic
+function Activity114Config:getAllActivityIds()
+	return self._allActivityIds
 end
 
-function var_0_0.getAttrVerify(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if not arg_10_0._attrVerify[arg_10_1][arg_10_2] then
+function Activity114Config:getFeatureCo(activityId, featureId)
+	return lua_activity114_feature.configDict[activityId][featureId]
+end
+
+function Activity114Config:getFeatureName(activityId)
+	local nameList = {}
+
+	for _, co in pairs(lua_activity114_feature.configDict[activityId]) do
+		table.insert(nameList, co.features)
+	end
+
+	return nameList
+end
+
+function Activity114Config:getMotionCo()
+	return self._motionDic
+end
+
+function Activity114Config:getAttrVerify(activityId, attrType, nowAttr)
+	if not self._attrVerify[activityId][attrType] then
 		return 0
 	end
 
-	local var_10_0
+	local max
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._attrVerify[arg_10_1][arg_10_2]) do
-		if arg_10_3 >= iter_10_1[1] then
-			var_10_0 = iter_10_1[2]
+	for _, verifyInfo in ipairs(self._attrVerify[activityId][attrType]) do
+		if nowAttr >= verifyInfo[1] then
+			max = verifyInfo[2]
 		else
 			break
 		end
 	end
 
-	return var_10_0 or 0
+	return max or 0
 end
 
-function var_0_0.getEduEventCo(arg_11_0, arg_11_1, arg_11_2)
-	return arg_11_0._eduEventDict[arg_11_1][arg_11_2]
+function Activity114Config:getEduEventCo(activityId, attrType)
+	return self._eduEventDict[activityId][attrType]
 end
 
-function var_0_0.getRestEventCo(arg_12_0, arg_12_1, arg_12_2)
-	return arg_12_0._restEventDict[arg_12_1][arg_12_2]
+function Activity114Config:getRestEventCo(activityId, statu)
+	return self._restEventDict[activityId][statu]
 end
 
-function var_0_0.getEventCoById(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0._eventDict[arg_13_1][arg_13_2]
+function Activity114Config:getEventCoById(activityId, id)
+	return self._eventDict[activityId][id]
 end
 
-function var_0_0.getMeetingCoList(arg_14_0, arg_14_1)
-	return lua_activity114_meeting.configDict[arg_14_1]
+function Activity114Config:getMeetingCoList(activityId)
+	return lua_activity114_meeting.configDict[activityId]
 end
 
-function var_0_0.getTravelCoList(arg_15_0, arg_15_1)
-	return lua_activity114_travel.configDict[arg_15_1]
+function Activity114Config:getTravelCoList(activityId)
+	return lua_activity114_travel.configDict[activityId]
 end
 
-function var_0_0.getTaskCoById(arg_16_0, arg_16_1, arg_16_2)
-	return lua_activity114_task.configDict[arg_16_1][arg_16_2]
+function Activity114Config:getTaskCoById(activityId, taskId)
+	return lua_activity114_task.configDict[activityId][taskId]
 end
 
-function var_0_0.getAnswerCo(arg_17_0, arg_17_1, arg_17_2)
-	return lua_activity114_test.configDict[arg_17_1][arg_17_2]
+function Activity114Config:getAnswerCo(activityId, id)
+	return lua_activity114_test.configDict[activityId][id]
 end
 
-function var_0_0.getAnswerResult(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_0:getAnswerCo(arg_18_1, arg_18_2)
-	local var_18_1 = string.splitToNumber(var_18_0.result, "#")
+function Activity114Config:getAnswerResult(activityId, id, score)
+	local co = self:getAnswerCo(activityId, id)
+	local results = string.splitToNumber(co.result, "#")
 
-	for iter_18_0 = 3, 1, -1 do
-		if var_18_1[iter_18_0] > 0 then
-			local var_18_2, var_18_3 = arg_18_0:getConstValue(arg_18_1, var_18_1[iter_18_0])
+	for i = 3, 1, -1 do
+		if results[i] > 0 then
+			local val, str = self:getConstValue(activityId, results[i])
 
-			if var_18_2 <= arg_18_3 then
-				return iter_18_0, var_18_3
+			if val <= score then
+				return i, str
 			end
 		end
 	end
 
-	if var_18_1[1] > 0 then
-		local var_18_4, var_18_5 = arg_18_0:getConstValue(arg_18_1, var_18_1[1])
+	if results[1] > 0 then
+		local val, str = self:getConstValue(activityId, results[1])
 
-		return 1, var_18_5
+		return 1, str
 	end
 
-	logError("查找结果失败>>" .. var_18_0.id .. " >>> " .. arg_18_3)
+	logError("查找结果失败>>" .. co.id .. " >>> " .. score)
 
 	return 1, ""
 end
 
-function var_0_0.getRoundCo(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	return lua_activity114_round.configDict[arg_19_1][arg_19_2][arg_19_3]
+function Activity114Config:getRoundCo(activityId, day, round)
+	return lua_activity114_round.configDict[activityId][day][round]
 end
 
-function var_0_0.getRoundCount(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_3
+function Activity114Config:getRoundCount(activityId, day, round)
+	local totalRound = round
 
-	for iter_20_0 = 1, arg_20_2 - 1 do
-		var_20_0 = var_20_0 + #lua_activity114_round.configDict[arg_20_1][iter_20_0]
+	for i = 1, day - 1 do
+		totalRound = totalRound + #lua_activity114_round.configDict[activityId][i]
 	end
 
-	return var_20_0
+	return totalRound
 end
 
-function var_0_0.getKeyDayCo(arg_21_0, arg_21_1, arg_21_2)
+function Activity114Config:getKeyDayCo(activityId, day)
 	while true do
-		local var_21_0 = lua_activity114_round.configDict[arg_21_1][arg_21_2 + 1]
+		local co = lua_activity114_round.configDict[activityId][day + 1]
 
-		if not var_21_0 or not var_21_0[1] then
+		if not co or not co[1] then
 			return
 		end
 
-		if var_21_0[1].type == Activity114Enum.RoundType.KeyDay then
-			return var_21_0[1]
+		if co[1].type == Activity114Enum.RoundType.KeyDay then
+			return co[1]
 		end
 
-		arg_21_2 = arg_21_2 + 1
+		day = day + 1
 	end
 end
 
-function var_0_0.getPhotoCoList(arg_22_0, arg_22_1)
-	return lua_activity114_photo.configDict[arg_22_1]
+function Activity114Config:getPhotoCoList(activityId)
+	return lua_activity114_photo.configDict[activityId]
 end
 
-function var_0_0.getRateDes(arg_23_0, arg_23_1)
-	for iter_23_0, iter_23_1 in pairs(arg_23_0._rateDescDict) do
-		if arg_23_1 >= iter_23_1.min and arg_23_1 <= iter_23_1.max then
-			return iter_23_1.co.word, iter_23_0
+function Activity114Config:getRateDes(rate)
+	for level, info in pairs(self._rateDescDict) do
+		if rate >= info.min and rate <= info.max then
+			return info.co.word, level
 		end
 	end
 
 	return "??", 1
 end
 
-function var_0_0.getEduSuccessRate(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_0:getAttrCo(arg_24_1, arg_24_2)
+function Activity114Config:getEduSuccessRate(activityId, attrId, nowAttention)
+	local attrCo = self:getAttrCo(activityId, attrId)
 
-	if not var_24_0 then
+	if not attrCo then
 		return 0
 	end
 
-	local var_24_1 = string.splitToNumber(var_24_0.educationAttentionConsts, "#")
-	local var_24_2
-	local var_24_3
-	local var_24_4
-	local var_24_5 = (var_24_1[1] or 0) / 1000
-	local var_24_6 = (var_24_1[2] or 0) / 1000
-	local var_24_7 = (var_24_1[3] or 0) / 1000
+	local arr = string.splitToNumber(attrCo.educationAttentionConsts, "#")
+	local a, b, c
 
-	arg_24_3 = Mathf.Clamp(arg_24_3, 0, 100)
+	a = (arr[1] or 0) / 1000
+	b = (arr[2] or 0) / 1000
+	c = (arr[3] or 0) / 1000
+	nowAttention = Mathf.Clamp(nowAttention, 0, 100)
 
-	local var_24_8 = Mathf.Floor(var_24_5 * arg_24_3^2 + var_24_6 * arg_24_3 + var_24_7)
+	local rate = Mathf.Floor(a * nowAttention^2 + b * nowAttention + c)
 
-	return Mathf.Clamp(var_24_8, 0, 100)
+	return Mathf.Clamp(rate, 0, 100)
 end
 
-function var_0_0.getAttrName(arg_25_0, arg_25_1, arg_25_2)
-	return lua_activity114_attribute.configDict[arg_25_1][arg_25_2].attrName
+function Activity114Config:getAttrName(activityId, attrType)
+	return lua_activity114_attribute.configDict[activityId][attrType].attrName
 end
 
-function var_0_0.getAttrCo(arg_26_0, arg_26_1, arg_26_2)
-	return lua_activity114_attribute.configDict[arg_26_1][arg_26_2]
+function Activity114Config:getAttrCo(activityId, attrType)
+	return lua_activity114_attribute.configDict[activityId][attrType]
 end
 
-function var_0_0.getAttrMaxValue(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_0._attrVerify[arg_27_1][arg_27_2]
+function Activity114Config:getAttrMaxValue(activityId, attrType)
+	local arr = self._attrVerify[activityId][attrType]
 
-	if not var_27_0 then
+	if not arr then
 		return 0
 	end
 
-	return var_27_0[#var_27_0][1]
+	return arr[#arr][1]
 end
 
-function var_0_0.getConstValue(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = lua_activity114_const.configDict[arg_28_1]
-	local var_28_1 = var_28_0 and var_28_0[arg_28_2]
+function Activity114Config:getConstValue(activityId, id)
+	local dict = lua_activity114_const.configDict[activityId]
+	local config = dict and dict[id]
 
-	if not var_28_1 then
+	if not config then
 		return 0, ""
 	end
 
-	return var_28_1.value, var_28_1.value2
+	return config.value, config.value2
 end
 
-function var_0_0.getDiceRate(arg_29_0, arg_29_1)
-	if arg_29_1 <= 2 then
+function Activity114Config:getDiceRate(totalNum)
+	if totalNum <= 2 then
 		return 100
 	end
 
-	if arg_29_1 > 12 then
+	if totalNum > 12 then
 		return 0
 	end
 
-	if arg_29_1 >= 7 then
-		arg_29_1 = 14 - arg_29_1
+	if totalNum >= 7 then
+		totalNum = 14 - totalNum
 
-		local var_29_0 = 0
+		local total = 0
 
-		for iter_29_0 = 1, arg_29_1 - 1 do
-			var_29_0 = var_29_0 + iter_29_0
+		for i = 1, totalNum - 1 do
+			total = total + i
 		end
 
-		return Mathf.Round(var_29_0 / 36 * 100)
+		return Mathf.Round(total / 36 * 100)
 	else
-		local var_29_1 = 0
+		local total = 0
 
-		for iter_29_1 = 2, arg_29_1 - 1 do
-			var_29_1 = var_29_1 + iter_29_1 - 1
+		for i = 2, totalNum - 1 do
+			total = total + i - 1
 		end
 
-		return Mathf.Round(100 - var_29_1 / 36 * 100)
+		return Mathf.Round(100 - total / 36 * 100)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity114Config.instance = Activity114Config.New()
 
-return var_0_0
+return Activity114Config

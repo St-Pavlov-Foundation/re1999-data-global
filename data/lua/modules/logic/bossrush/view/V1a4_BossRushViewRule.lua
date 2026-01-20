@@ -1,49 +1,57 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRushViewRule", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRushViewRule.lua
 
-local var_0_0 = class("V1a4_BossRushViewRule", WeekWalkEnemyInfoViewRule)
+module("modules.logic.bossrush.view.V1a4_BossRushViewRule", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if not arg_1_0.viewContainer:diffRootChild(arg_1_0) then
-		var_0_0.super.onInitView(arg_1_0)
+local V1a4_BossRushViewRule = class("V1a4_BossRushViewRule", WeekWalkEnemyInfoViewRule)
+
+function V1a4_BossRushViewRule:onInitView()
+	local isDiff = self.viewContainer:diffRootChild(self)
+
+	if not isDiff then
+		V1a4_BossRushViewRule.super.onInitView(self)
 	end
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._addRuleItem(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = gohelper.clone(arg_2_0._goruletemp, arg_2_0._gorulelist, arg_2_1.id)
+function V1a4_BossRushViewRule:_addRuleItem(ruleCo, targetId)
+	local go = gohelper.clone(self._goruletemp, self._gorulelist, ruleCo.id)
 
-	table.insert(arg_2_0._childGoList, var_2_0)
-	gohelper.setActive(var_2_0, true)
+	table.insert(self._childGoList, go)
+	gohelper.setActive(go, true)
 
-	local var_2_1 = gohelper.findChildImage(var_2_0, "#image_tagicon")
+	local tagicon = gohelper.findChildImage(go, "#image_tagicon")
 
-	UISpriteSetMgr.instance:setCommonSprite(var_2_1, "wz_" .. arg_2_2)
+	UISpriteSetMgr.instance:setCommonSprite(tagicon, "wz_" .. targetId)
 
-	local var_2_2 = gohelper.findChildImage(var_2_0, "")
+	local simage = gohelper.findChildImage(go, "")
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_2_2, arg_2_1.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(simage, ruleCo.icon)
 
-	var_2_1.maskable = true
-	var_2_2.maskable = true
+	tagicon.maskable = true
+	simage.maskable = true
 end
 
-function var_0_0._btnadditionRuleOnClick(arg_3_0)
-	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
-		offSet = {
-			-180,
-			0
-		},
-		ruleList = arg_3_0._ruleList,
-		closeCb = arg_3_0._btncloseruleOnClick,
-		closeCbObj = arg_3_0
-	})
+function V1a4_BossRushViewRule:_btnadditionRuleOnClick()
+	self.offsetAnchor = self.offsetAnchor or {
+		-180,
+		0
+	}
 
-	if arg_3_0._isHardMode then
+	local param = {
+		offSet = self.offsetAnchor,
+		ruleList = self._ruleList,
+		closeCb = self._btncloseruleOnClick,
+		closeCbObj = self
+	}
+
+	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, param)
+
+	if self._isHardMode then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeShowRuleDesc)
 	end
 end
 
-return var_0_0
+return V1a4_BossRushViewRule

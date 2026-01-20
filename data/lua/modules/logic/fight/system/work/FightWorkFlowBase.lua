@@ -1,44 +1,46 @@
-﻿module("modules.logic.fight.system.work.FightWorkFlowBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFlowBase.lua
 
-local var_0_0 = class("FightWorkFlowBase", FightWorkItem)
-local var_0_1 = 10
+module("modules.logic.fight.system.work.FightWorkFlowBase", package.seeall)
 
-function var_0_0.start(arg_1_0, arg_1_1)
-	if arg_1_0.PARENT_ROOT_OBJECT then
-		if isTypeOf(arg_1_0.PARENT_ROOT_OBJECT, FightWorkFlowSequence) or isTypeOf(arg_1_0.PARENT_ROOT_OBJECT, var_0_0) then
-			arg_1_0.ROOTFLOW = arg_1_0.PARENT_ROOT_OBJECT.ROOTFLOW
-			arg_1_0.ROOTFLOW.COUNTERDEEP = arg_1_0.ROOTFLOW.COUNTERDEEP + 1
-			arg_1_0.COUNTERDEEP = arg_1_0.ROOTFLOW.COUNTERDEEP
+local FightWorkFlowBase = class("FightWorkFlowBase", FightWorkItem)
+local deepLimit = 10
+
+function FightWorkFlowBase:start(context)
+	if self.PARENT_ROOT_OBJECT then
+		if isTypeOf(self.PARENT_ROOT_OBJECT, FightWorkFlowSequence) or isTypeOf(self.PARENT_ROOT_OBJECT, FightWorkFlowBase) then
+			self.ROOTFLOW = self.PARENT_ROOT_OBJECT.ROOTFLOW
+			self.ROOTFLOW.COUNTERDEEP = self.ROOTFLOW.COUNTERDEEP + 1
+			self.COUNTERDEEP = self.ROOTFLOW.COUNTERDEEP
 		else
-			arg_1_0.ROOTFLOW = arg_1_0
-			arg_1_0.COUNTERDEEP = 0
+			self.ROOTFLOW = self
+			self.COUNTERDEEP = 0
 		end
 	else
-		arg_1_0.ROOTFLOW = arg_1_0
-		arg_1_0.COUNTERDEEP = 0
+		self.ROOTFLOW = self
+		self.COUNTERDEEP = 0
 	end
 
-	if arg_1_0.COUNTERDEEP == 0 then
-		return FightWorkItem.start(arg_1_0, arg_1_1)
-	elseif arg_1_0.COUNTERDEEP % var_0_1 == 0 then
-		return arg_1_0:com_registTimer(FightWorkItem.start, 0.01, arg_1_1)
+	if self.COUNTERDEEP == 0 then
+		return FightWorkItem.start(self, context)
+	elseif self.COUNTERDEEP % deepLimit == 0 then
+		return self:com_registTimer(FightWorkItem.start, 0.01, context)
 	else
-		return FightWorkItem.start(arg_1_0, arg_1_1)
+		return FightWorkItem.start(self, context)
 	end
 end
 
-function var_0_0.onDestructorFinish(arg_2_0)
-	if not arg_2_0.COUNTERDEEP then
-		return FightWorkItem.onDestructorFinish(arg_2_0)
+function FightWorkFlowBase:onDestructorFinish()
+	if not self.COUNTERDEEP then
+		return FightWorkItem.onDestructorFinish(self)
 	end
 
-	if arg_2_0.COUNTERDEEP == 0 then
-		return FightWorkItem.onDestructorFinish(arg_2_0)
-	elseif arg_2_0.COUNTERDEEP % var_0_1 == 0 then
-		return FightTimer.registTimer(FightWorkItem.onDestructorFinish, arg_2_0, 0.01)
+	if self.COUNTERDEEP == 0 then
+		return FightWorkItem.onDestructorFinish(self)
+	elseif self.COUNTERDEEP % deepLimit == 0 then
+		return FightTimer.registTimer(FightWorkItem.onDestructorFinish, self, 0.01)
 	else
-		return FightWorkItem.onDestructorFinish(arg_2_0)
+		return FightWorkItem.onDestructorFinish(self)
 	end
 end
 
-return var_0_0
+return FightWorkFlowBase

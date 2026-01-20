@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.data.FightAiJiAoAutoSequenceForGM", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightAiJiAoAutoSequenceForGM.lua
 
-local var_0_0 = FightDataClass("FightAiJiAoAutoSequenceForGM")
+module("modules.logic.fight.model.data.FightAiJiAoAutoSequenceForGM", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.autoSequence = {}
-	arg_1_0.index = 0
+local FightAiJiAoAutoSequenceForGM = FightDataClass("FightAiJiAoAutoSequenceForGM")
+
+function FightAiJiAoAutoSequenceForGM:onConstructor()
+	self.autoSequence = {}
+	self.index = 0
 end
 
-return var_0_0
+return FightAiJiAoAutoSequenceForGM

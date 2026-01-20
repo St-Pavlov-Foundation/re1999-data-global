@@ -1,33 +1,35 @@
-﻿module("modules.logic.store.view.StoreLinkGiftGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreLinkGiftGoodsViewContainer.lua
 
-local var_0_0 = class("StoreLinkGiftGoodsViewContainer", BaseViewContainer)
+module("modules.logic.store.view.StoreLinkGiftGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoreLinkGiftGoodsViewContainer = class("StoreLinkGiftGoodsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
-	table.insert(var_1_0, StoreLinkGiftGoodsView.New())
+function StoreLinkGiftGoodsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+	table.insert(views, StoreLinkGiftGoodsView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._currencyView = CurrencyView.New({})
+function StoreLinkGiftGoodsViewContainer:buildTabViews(tabContainerId)
+	self._currencyView = CurrencyView.New({})
 
-	local var_2_0 = CurrencyEnum.CurrencyType
+	local currencyType = CurrencyEnum.CurrencyType
 
-	arg_2_0._currencyView:setCurrencyType({
-		var_2_0.Diamond,
-		var_2_0.FreeDiamondCoupon
+	self._currencyView:setCurrencyType({
+		currencyType.Diamond,
+		currencyType.FreeDiamondCoupon
 	})
 
 	return {
-		arg_2_0._currencyView
+		self._currencyView
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
-	arg_3_0:closeThis()
+function StoreLinkGiftGoodsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return StoreLinkGiftGoodsViewContainer

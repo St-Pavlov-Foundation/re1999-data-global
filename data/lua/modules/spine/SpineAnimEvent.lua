@@ -1,8 +1,10 @@
-﻿module("modules.spine.SpineAnimEvent", package.seeall)
+﻿-- chunkname: @modules/spine/SpineAnimEvent.lua
 
-local var_0_0 = _M
+module("modules.spine.SpineAnimEvent", package.seeall)
 
-var_0_0.ActionStart = "Start"
-var_0_0.ActionComplete = "Complete"
+local SpineAnimEvent = _M
 
-return var_0_0
+SpineAnimEvent.ActionStart = "Start"
+SpineAnimEvent.ActionComplete = "Complete"
+
+return SpineAnimEvent

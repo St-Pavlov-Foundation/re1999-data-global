@@ -1,23 +1,25 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneGraphicsComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneGraphicsComp.lua
 
-local var_0_0 = class("RoomSceneGraphicsComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneGraphicsComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.LAYER_MASK_CullByDistance = LayerMask.GetMask("CullByDistance")
-	arg_1_0.LAYER_MASK_CullOnLowQuality = LayerMask.GetMask("CullOnLowQuality")
-	arg_1_0.LAYER_INDEX_CullByDistance = LayerMask.NameToLayer("CullByDistance")
-	arg_1_0.LAYER_INDEX_CullOnLowQuality = LayerMask.NameToLayer("CullOnLowQuality")
-	arg_1_0.highQualityCullingDistance = 6
-	arg_1_0.middleQualityCullingDistance = 5.5
-	arg_1_0.lowQualityCullingDistance = 3.5
+local RoomSceneGraphicsComp = class("RoomSceneGraphicsComp", BaseSceneComp)
+
+function RoomSceneGraphicsComp:onInit()
+	self.LAYER_MASK_CullByDistance = LayerMask.GetMask("CullByDistance")
+	self.LAYER_MASK_CullOnLowQuality = LayerMask.GetMask("CullOnLowQuality")
+	self.LAYER_INDEX_CullByDistance = LayerMask.NameToLayer("CullByDistance")
+	self.LAYER_INDEX_CullOnLowQuality = LayerMask.NameToLayer("CullOnLowQuality")
+	self.highQualityCullingDistance = 6
+	self.middleQualityCullingDistance = 5.5
+	self.lowQualityCullingDistance = 3.5
 
 	if BootNativeUtil.isAndroid() then
-		local var_1_0 = UnityEngine.SystemInfo.graphicsDeviceName
+		local gpuName = UnityEngine.SystemInfo.graphicsDeviceName
 
-		arg_1_0.compatibility = string.find(var_1_0, "^Adreno") or string.find(var_1_0, "^Mali")
-		arg_1_0.compatibility = arg_1_0.compatibility or SDKMgr.instance:isEmulator()
+		self.compatibility = string.find(gpuName, "^Adreno") or string.find(gpuName, "^Mali")
+		self.compatibility = self.compatibility or SDKMgr.instance:isEmulator()
 	else
-		arg_1_0.compatibility = true
+		self.compatibility = true
 	end
 
 	if SDKMgr.instance:isEmulator() then
@@ -25,222 +27,239 @@ function var_0_0.onInit(arg_1_0)
 	end
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._unitPPVolume = gohelper.findChildComponent(CameraMgr.instance:getMainCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
+function RoomSceneGraphicsComp:init(sceneId, levelId)
+	self._unitPPVolume = gohelper.findChildComponent(CameraMgr.instance:getMainCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
 
-	arg_2_0:_refreshGraphics()
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, arg_2_0._refreshGraphics, arg_2_0)
+	self:_refreshGraphics()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, self._refreshGraphics, self)
 
-	arg_2_0.projPhysics = UnityEngine.Physics.autoSimulation
-	arg_2_0.projTransforms = UnityEngine.Physics.autoSyncTransforms
-	UnityEngine.Physics.autoSimulation = false
+	self.projPhysics = UnityEngine.Physics.simulationMode
+	self.projTransforms = UnityEngine.Physics.autoSyncTransforms
+	UnityEngine.Physics.simulationMode = UnityEngine.SimulationMode.Script
 	UnityEngine.Physics.autoSyncTransforms = true
 
-	local var_2_0 = CameraMgr.instance:getMainCamera()
-	local var_2_1 = var_2_0:GetComponent(PostProcessingMgr.PPCustomCamDataType)
+	local camera = CameraMgr.instance:getMainCamera()
+	local mainCustomCameraData = camera:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-	arg_2_0.useLightData = var_2_1.useLightData
-	arg_2_0.useLightmap = var_2_1.useLightmap
-	arg_2_0.useProbe = var_2_1.useProbe
-	var_2_1.useProbe = false
-	var_2_1.useLightmap = false
-	var_2_1.useLightData = false
-	arg_2_0.uiCameraData = CameraMgr.instance:getUICamera():GetComponent(PostProcessingMgr.PPCustomCamDataType)
-	arg_2_0.cacheUINeedLights = arg_2_0.uiCameraData.needLights
-	arg_2_0.uiCameraData.needLights = false
-	arg_2_0.lodBias = UnityEngine.QualitySettings.lodBias
+	self.useLightData = mainCustomCameraData.useLightData
+	self.useLightmap = mainCustomCameraData.useLightmap
+	self.useProbe = mainCustomCameraData.useProbe
+	mainCustomCameraData.useProbe = false
+	mainCustomCameraData.useLightmap = false
+	mainCustomCameraData.useLightData = false
+
+	local uiCamera = CameraMgr.instance:getUICamera()
+
+	self.uiCameraData = uiCamera:GetComponent(PostProcessingMgr.PPCustomCamDataType)
+	self.cacheUINeedLights = self.uiCameraData.needLights
+	self.uiCameraData.needLights = false
+	self.lodBias = UnityEngine.QualitySettings.lodBias
 
 	UnityEngine.Shader.EnableKeyword("_FASTER_BLOOM")
-	arg_2_0:getCurScene().go.sceneAmbient:SetReflectionType(0)
+
+	local ambient = self:getCurScene().go.sceneAmbient
+
+	ambient:SetReflectionType(0)
 
 	RenderPipelineSetting.useRenderOpaqueWithSceneColorPass = true
 
-	PostProcessingMgr.setCameraLayerInt(var_2_0, arg_2_0.LAYER_MASK_CullByDistance, true)
-	PostProcessingMgr.setCameraLayerInt(var_2_0, arg_2_0.LAYER_MASK_CullOnLowQuality, false)
+	PostProcessingMgr.setCameraLayerInt(camera, self.LAYER_MASK_CullByDistance, true)
+	PostProcessingMgr.setCameraLayerInt(camera, self.LAYER_MASK_CullOnLowQuality, false)
 
-	var_2_0.layerCullSpherical = true
+	camera.layerCullSpherical = true
 
 	if BootNativeUtil.isWindows() then
 		RenderPipelineSetting.ForwardPlusToggle = true
 	end
 
-	if BootNativeUtil.isWindows() and GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.High then
-		arg_2_0:getCurScene().loader:makeSureLoaded({
-			RoomScenePreloader.DiffuseGI
-		}, arg_2_0._OnGetInstance, arg_2_0)
+	if BootNativeUtil.isWindows() then
+		local quality = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+
+		if quality == ModuleEnum.Performance.High then
+			self:getCurScene().loader:makeSureLoaded({
+				RoomScenePreloader.DiffuseGI
+			}, self._OnGetInstance, self)
+		end
 	end
 end
 
-function var_0_0._OnGetInstance(arg_3_0)
-	arg_3_0.go_GI = RoomGOPool.getInstance(RoomScenePreloader.DiffuseGI, arg_3_0:getCurScene().go.sceneGO, "diffuse_gi")
+function RoomSceneGraphicsComp:_OnGetInstance()
+	self.go_GI = RoomGOPool.getInstance(RoomScenePreloader.DiffuseGI, self:getCurScene().go.sceneGO, "diffuse_gi")
 
-	transformhelper.setPos(arg_3_0.go_GI.transform, 0, 0, 0)
+	transformhelper.setPos(self.go_GI.transform, 0, 0, 0)
 end
 
-function var_0_0.setPPValue(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._unitPPVolume then
-		arg_4_0._unitPPVolume.refresh = true
-		arg_4_0._unitPPVolume[arg_4_1] = arg_4_2
+function RoomSceneGraphicsComp:setPPValue(key, value)
+	if self._unitPPVolume then
+		self._unitPPVolume.refresh = true
+		self._unitPPVolume[key] = value
 	end
 end
 
-function var_0_0.onSceneClose(arg_5_0)
+function RoomSceneGraphicsComp:onSceneClose()
 	UnityEngine.Shader.DisableKeyword("_FASTER_BLOOM")
 
-	arg_5_0.uiCameraData.needLights = arg_5_0.cacheUINeedLights
-	arg_5_0.uiCameraData = nil
+	self.uiCameraData.needLights = self.cacheUINeedLights
+	self.uiCameraData = nil
 
 	PostProcessingMgr.instance:setRenderShadow(true)
 	PostProcessingMgr.instance:clearLayerCullDistance()
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, arg_5_0._refreshGraphics, arg_5_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, self._refreshGraphics, self)
 
-	local var_5_0 = CameraMgr.instance:getMainCamera()
-	local var_5_1 = var_5_0:GetComponent(PostProcessingMgr.PPCustomCamDataType)
+	local camera = CameraMgr.instance:getMainCamera()
+	local mainCustomCameraData = camera:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-	arg_5_0.overLookFlag = nil
-	var_5_1.renderScale = 1
-	var_5_1.useProbe = arg_5_0.useProbe
-	var_5_1.useLightmap = arg_5_0.useLightmap
-	var_5_1.useLightData = arg_5_0.useLightData
-	var_5_1.disableTransparentBackToFrontSort = false
-	UnityEngine.Physics.autoSimulation = arg_5_0.projPhysics
-	UnityEngine.Physics.autoSyncTransforms = arg_5_0.projTransforms
-	arg_5_0.projPhysics = nil
-	arg_5_0.projTransforms = nil
-	UnityEngine.QualitySettings.lodBias = arg_5_0.lodBias
+	self.overLookFlag = nil
+	mainCustomCameraData.renderScale = 1
+	mainCustomCameraData.useProbe = self.useProbe
+	mainCustomCameraData.useLightmap = self.useLightmap
+	mainCustomCameraData.useLightData = self.useLightData
+	mainCustomCameraData.disableTransparentBackToFrontSort = false
+	UnityEngine.Physics.simulationMode = self.projPhysics
+	UnityEngine.Physics.autoSyncTransforms = self.projTransforms
+	self.projPhysics = nil
+	self.projTransforms = nil
+	UnityEngine.QualitySettings.lodBias = self.lodBias
 
-	PostProcessingMgr.setCameraLayerInt(var_5_0, arg_5_0.LAYER_MASK_CullOnLowQuality, false)
-	PostProcessingMgr.setCameraLayerInt(var_5_0, arg_5_0.LAYER_MASK_CullByDistance, false)
+	PostProcessingMgr.setCameraLayerInt(camera, self.LAYER_MASK_CullOnLowQuality, false)
+	PostProcessingMgr.setCameraLayerInt(camera, self.LAYER_MASK_CullByDistance, false)
 
-	var_5_0.layerCullSpherical = false
+	camera.layerCullSpherical = false
 
-	arg_5_0:setPPValue("ssaoEnable", false)
+	self:setPPValue("ssaoEnable", false)
 
-	arg_5_0._unitPPVolume = nil
+	self._unitPPVolume = nil
 	RenderPipelineSetting.useRenderOpaqueWithSceneColorPass = false
-	UnityEngine.QualitySettings.masterTextureLimit = 0
+	UnityEngine.QualitySettings.globalTextureMipmapLimit = 0
 
 	if BootNativeUtil.isWindows() then
 		RenderPipelineSetting.ForwardPlusToggle = false
 	end
 
-	arg_5_0.go_GI = nil
+	self.go_GI = nil
 end
 
-function var_0_0._refreshGraphics(arg_6_0)
-	local var_6_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
-	local var_6_1 = CameraMgr.instance:getMainCamera():GetComponent(PostProcessingMgr.PPCustomCamDataType)
-	local var_6_2 = arg_6_0:getCurScene().go.sceneCulling
+function RoomSceneGraphicsComp:_refreshGraphics()
+	local quality = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+	local camera = CameraMgr.instance:getMainCamera()
+	local mainCustomCameraData = camera:GetComponent(PostProcessingMgr.PPCustomCamDataType)
+	local sceneCulling = self:getCurScene().go.sceneCulling
 
-	if var_6_0 == ModuleEnum.Performance.High then
+	if quality == ModuleEnum.Performance.High then
 		PostProcessingMgr.instance:setRenderShadow(true)
 
-		var_6_1.renderScale = 1
-		var_6_2.smallRate = 0.005
-		var_6_2.proxyRate = 0.015
+		mainCustomCameraData.renderScale = 1
+		sceneCulling.smallRate = 0.005
+		sceneCulling.proxyRate = 0.015
 		UnityEngine.QualitySettings.lodBias = 1
 
-		if arg_6_0.compatibility then
-			arg_6_0:setPPValue("ssaoEnable", true)
-			arg_6_0:setPPValue("ssaoIntensity", 0.38)
-			arg_6_0:setPPValue("ssaoRadius", 0.07)
-			arg_6_0:setPPValue("ssaoRenderScale", 0.2)
-			arg_6_0:setPPValue("ssaoDepthQuality", 1)
+		if self.compatibility then
+			self:setPPValue("ssaoEnable", true)
+			self:setPPValue("ssaoIntensity", 0.38)
+			self:setPPValue("ssaoRadius", 0.07)
+			self:setPPValue("ssaoRenderScale", 0.2)
+			self:setPPValue("ssaoDepthQuality", 1)
 		end
 
-		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullByDistance, arg_6_0.highQualityCullingDistance)
-		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullOnLowQuality, arg_6_0.highQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(self.LAYER_INDEX_CullByDistance, self.highQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(self.LAYER_INDEX_CullOnLowQuality, self.highQualityCullingDistance)
 
-		UnityEngine.QualitySettings.masterTextureLimit = 0
-	elseif var_6_0 == ModuleEnum.Performance.Middle then
-		var_6_1.renderScale = 0.8
+		UnityEngine.QualitySettings.globalTextureMipmapLimit = 0
+	elseif quality == ModuleEnum.Performance.Middle then
+		mainCustomCameraData.renderScale = 0.8
 		UnityEngine.QualitySettings.lodBias = 0.9
 
 		PostProcessingMgr.instance:setRenderShadow(true)
-		arg_6_0:setPPValue("ssaoEnable", false)
-		arg_6_0:getCurScene().go.sceneAmbient:SetReflectionType(0)
-		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullByDistance, arg_6_0.middleQualityCullingDistance)
-		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullOnLowQuality, arg_6_0.middleQualityCullingDistance)
+		self:setPPValue("ssaoEnable", false)
 
-		var_6_2.smallRate = 0.02
-		var_6_2.proxyRate = 0.03
-		UnityEngine.QualitySettings.masterTextureLimit = 0
-	elseif var_6_0 == ModuleEnum.Performance.Low then
-		var_6_1.renderScale = 0.7
+		local ambient = self:getCurScene().go.sceneAmbient
+
+		ambient:SetReflectionType(0)
+		PostProcessingMgr.instance:setLayerCullDistance(self.LAYER_INDEX_CullByDistance, self.middleQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(self.LAYER_INDEX_CullOnLowQuality, self.middleQualityCullingDistance)
+
+		sceneCulling.smallRate = 0.02
+		sceneCulling.proxyRate = 0.03
+		UnityEngine.QualitySettings.globalTextureMipmapLimit = 0
+	elseif quality == ModuleEnum.Performance.Low then
+		mainCustomCameraData.renderScale = 0.7
 		UnityEngine.QualitySettings.lodBias = 0.7
 
 		PostProcessingMgr.instance:setRenderShadow(false)
-		arg_6_0:setPPValue("ssaoEnable", false)
-		arg_6_0:getCurScene().go.sceneAmbient:SetReflectionType(0)
-		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullByDistance, arg_6_0.lowQualityCullingDistance)
-		PostProcessingMgr.instance:setLayerCullDistance(arg_6_0.LAYER_INDEX_CullOnLowQuality, arg_6_0.lowQualityCullingDistance)
+		self:setPPValue("ssaoEnable", false)
 
-		var_6_2.smallRate = 0.03
-		var_6_2.proxyRate = 0.075
-		UnityEngine.QualitySettings.masterTextureLimit = 1
+		local ambient = self:getCurScene().go.sceneAmbient
+
+		ambient:SetReflectionType(0)
+		PostProcessingMgr.instance:setLayerCullDistance(self.LAYER_INDEX_CullByDistance, self.lowQualityCullingDistance)
+		PostProcessingMgr.instance:setLayerCullDistance(self.LAYER_INDEX_CullOnLowQuality, self.lowQualityCullingDistance)
+
+		sceneCulling.smallRate = 0.03
+		sceneCulling.proxyRate = 0.075
+		UnityEngine.QualitySettings.globalTextureMipmapLimit = 1
 	end
 end
 
-function var_0_0.setupShadowParam(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0.overLookFlag ~= arg_7_1 then
-		local var_7_0
-		local var_7_1
-		local var_7_2 = arg_7_0:getCurScene()
-		local var_7_3 = CameraMgr.instance:getMainCamera()
+function RoomSceneGraphicsComp:setupShadowParam(isOverlook, distance)
+	if self.overLookFlag ~= isOverlook then
+		local sceneShadow, ambient
+		local scene = self:getCurScene()
+		local camera = CameraMgr.instance:getMainCamera()
 
-		if var_7_2 ~= nil and var_7_2.go ~= nil then
-			var_7_0 = var_7_2.go.sceneShadow
-			var_7_1 = var_7_2.go.sceneAmbient
+		if scene ~= nil and scene.go ~= nil then
+			sceneShadow = scene.go.sceneShadow
+			ambient = scene.go.sceneAmbient
 		end
 
-		if var_7_0 ~= nil then
-			if arg_7_1 then
-				var_7_0.overrideShadowCascadesOption = true
-				var_7_0.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.NoCascades
-				var_7_0.overrideShadowResolution = true
-				var_7_0.shadowResolution = 1600
-				var_7_0.softShadow = true
+		if sceneShadow ~= nil then
+			if isOverlook then
+				sceneShadow.overrideShadowCascadesOption = true
+				sceneShadow.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.NoCascades
+				sceneShadow.overrideShadowResolution = true
+				sceneShadow.shadowResolution = 1600
+				sceneShadow.softShadow = true
 			else
-				var_7_0.overrideShadowCascadesOption = true
-				var_7_0.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.TwoCascades
-				var_7_0.overrideShadowResolution = true
-				var_7_0.shadowResolution = 2048
-				var_7_0.softShadow = true
+				sceneShadow.overrideShadowCascadesOption = true
+				sceneShadow.shadowCascadesOption = UnityEngine.Rendering.Universal.ShadowCascadesOption.TwoCascades
+				sceneShadow.overrideShadowResolution = true
+				sceneShadow.shadowResolution = 2048
+				sceneShadow.softShadow = true
 			end
 
-			var_7_0:ApplyProperty()
+			sceneShadow:ApplyProperty()
 		end
 
-		local var_7_4 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+		local quality = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+		local isHighQuality = quality == ModuleEnum.Performance.High
 
-		if var_7_4 == ModuleEnum.Performance.High and arg_7_0.compatibility then
-			if arg_7_1 then
-				var_7_1:SetReflectionType(0)
-				arg_7_0:setPPValue("ssaoIntensity", 0.38)
-				arg_7_0:setPPValue("ssaoRadius", 0.07)
+		if isHighQuality and self.compatibility then
+			if isOverlook then
+				ambient:SetReflectionType(0)
+				self:setPPValue("ssaoIntensity", 0.38)
+				self:setPPValue("ssaoRadius", 0.07)
 			else
-				var_7_1:SetReflectionType(1)
-				arg_7_0:setPPValue("ssaoIntensity", 0.38)
-				arg_7_0:setPPValue("ssaoRadius", 0.015)
+				ambient:SetReflectionType(1)
+				self:setPPValue("ssaoIntensity", 0.38)
+				self:setPPValue("ssaoRadius", 0.015)
 			end
 		end
 
-		if arg_7_1 then
-			PostProcessingMgr.setCameraLayerInt(var_7_3, arg_7_0.LAYER_MASK_CullOnLowQuality, false)
-		elseif var_7_4 ~= ModuleEnum.Performance.Low then
-			PostProcessingMgr.setCameraLayerInt(var_7_3, arg_7_0.LAYER_MASK_CullOnLowQuality, true)
+		if isOverlook then
+			PostProcessingMgr.setCameraLayerInt(camera, self.LAYER_MASK_CullOnLowQuality, false)
+		elseif quality ~= ModuleEnum.Performance.Low then
+			PostProcessingMgr.setCameraLayerInt(camera, self.LAYER_MASK_CullOnLowQuality, true)
 		end
 
-		local var_7_5 = var_7_3:GetComponent(PostProcessingMgr.PPCustomCamDataType)
+		local mainCustomCameraData = camera:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-		if arg_7_1 then
-			var_7_5.disableTransparentBackToFrontSort = true
+		if isOverlook then
+			mainCustomCameraData.disableTransparentBackToFrontSort = true
 		else
-			var_7_5.disableTransparentBackToFrontSort = false
+			mainCustomCameraData.disableTransparentBackToFrontSort = false
 		end
 
-		arg_7_0.overLookFlag = arg_7_1
+		self.overLookFlag = isOverlook
 	end
 end
 
-return var_0_0
+return RoomSceneGraphicsComp

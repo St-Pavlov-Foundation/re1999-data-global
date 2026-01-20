@@ -1,11 +1,13 @@
-﻿module("modules.logic.voyage.config.VoyageEnum", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/config/VoyageEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.voyage.config.VoyageEnum", package.seeall)
 
-var_0_0.State = {
+local VoyageEnum = _M
+
+VoyageEnum.State = {
 	Got = 2,
 	Available = 1,
 	None = 0
 }
 
-return var_0_0
+return VoyageEnum

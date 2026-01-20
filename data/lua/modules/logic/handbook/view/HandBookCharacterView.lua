@@ -1,196 +1,190 @@
-﻿module("modules.logic.handbook.view.HandBookCharacterView", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandBookCharacterView.lua
 
-local var_0_0 = class("HandBookCharacterView", BaseView)
+module("modules.logic.handbook.view.HandBookCharacterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goContainer = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0._goContainer, "bg/#simage_bg")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0._goContainer, "bg/#simage_line")
-	arg_1_0._gocover = gohelper.findChild(arg_1_0._goContainer, "#go_cover")
-	arg_1_0._simagecoverbg2 = gohelper.findChildSingleImage(arg_1_0._goContainer, "#go_cover/#simage_coverbg2")
-	arg_1_0._txttitleName = gohelper.findChildText(arg_1_0._goContainer, "#go_cover/left/#txt_titleName")
-	arg_1_0._simagecovericon = gohelper.findChildSingleImage(arg_1_0._goContainer, "#go_cover/left/mask/#simage_covericon")
-	arg_1_0._gocoverrightpage = gohelper.findChild(arg_1_0._goContainer, "#go_cover/right/#go_coverrightpage")
-	arg_1_0._simagepagebg = gohelper.findChild(arg_1_0._goContainer, "#simage_pagebg")
-	arg_1_0._gocharacteritem = gohelper.findChild(arg_1_0._goContainer, "#go_characteritem")
-	arg_1_0._goleftpage = gohelper.findChild(arg_1_0._goContainer, "#go_leftpage")
-	arg_1_0._goleftarrow = gohelper.findChild(arg_1_0._goContainer, "#go_leftarrow")
-	arg_1_0._gorightpage = gohelper.findChild(arg_1_0._goContainer, "#go_rightpage")
-	arg_1_0._gorightarrow = gohelper.findChild(arg_1_0._goContainer, "#go_rightarrow")
-	arg_1_0._gocoverrightarrow = gohelper.findChild(arg_1_0._goContainer, "#go_coverrightarrow")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_upleft/#btn_rarerank")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_upleft/#btn_rarerank/btn2/txt/#go_arrow")
-	arg_1_0._btnclassify = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_center/handbookcharacterview/#go_upleft/#btn_classify")
-	arg_1_0._txtpagecount = gohelper.findChildText(arg_1_0.viewGO, "#go_center/handbookcharacterview/#txt_pagecount")
-	arg_1_0._gohumantip = gohelper.findChild(arg_1_0._goContainer, "#go_tips")
-	arg_1_0._gohumantipAnimtor = arg_1_0._gohumantip:GetComponent(gohelper.Type_Animator)
-	arg_1_0._gohumansubtip = gohelper.findChild(arg_1_0._goContainer, "#go_tips/Tips")
-	arg_1_0._gotipclose = gohelper.findChild(arg_1_0._goContainer, "#go_tipclose")
-	arg_1_0._gohumantipbutton = gohelper.findChildButtonWithAudio(arg_1_0._goContainer, "#go_tips/Button")
-	arg_1_0._gotipcloseclick = gohelper.getClickWithDefaultAudio(arg_1_0._gotipclose)
+local HandBookCharacterView = class("HandBookCharacterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandBookCharacterView:onInitView()
+	self._goContainer = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview")
+	self._simagebg = gohelper.findChildSingleImage(self._goContainer, "bg/#simage_bg")
+	self._simageline = gohelper.findChildSingleImage(self._goContainer, "bg/#simage_line")
+	self._gocover = gohelper.findChild(self._goContainer, "#go_cover")
+	self._simagecoverbg2 = gohelper.findChildSingleImage(self._goContainer, "#go_cover/#simage_coverbg2")
+	self._txttitleName = gohelper.findChildText(self._goContainer, "#go_cover/left/#txt_titleName")
+	self._simagecovericon = gohelper.findChildSingleImage(self._goContainer, "#go_cover/left/mask/#simage_covericon")
+	self._gocoverrightpage = gohelper.findChild(self._goContainer, "#go_cover/right/#go_coverrightpage")
+	self._simagepagebg = gohelper.findChild(self._goContainer, "#simage_pagebg")
+	self._gocharacteritem = gohelper.findChild(self._goContainer, "#go_characteritem")
+	self._goleftpage = gohelper.findChild(self._goContainer, "#go_leftpage")
+	self._goleftarrow = gohelper.findChild(self._goContainer, "#go_leftarrow")
+	self._gorightpage = gohelper.findChild(self._goContainer, "#go_rightpage")
+	self._gorightarrow = gohelper.findChild(self._goContainer, "#go_rightarrow")
+	self._gocoverrightarrow = gohelper.findChild(self._goContainer, "#go_coverrightarrow")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_center/handbookcharacterview/#go_upleft/#btn_rarerank")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_center/handbookcharacterview/#go_upleft/#btn_rarerank/btn2/txt/#go_arrow")
+	self._btnclassify = gohelper.findChildButtonWithAudio(self.viewGO, "#go_center/handbookcharacterview/#go_upleft/#btn_classify")
+	self._txtpagecount = gohelper.findChildText(self.viewGO, "#go_center/handbookcharacterview/#txt_pagecount")
+	self._gohumantip = gohelper.findChild(self._goContainer, "#go_tips")
+	self._gohumantipAnimtor = self._gohumantip:GetComponent(gohelper.Type_Animator)
+	self._gohumansubtip = gohelper.findChild(self._goContainer, "#go_tips/Tips")
+	self._gotipclose = gohelper.findChild(self._goContainer, "#go_tipclose")
+	self._gohumantipbutton = gohelper.findChildButtonWithAudio(self._goContainer, "#go_tips/Button")
+	self._gotipcloseclick = gohelper.getClickWithDefaultAudio(self._gotipclose)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnclassify:AddClickListener(arg_2_0._btnclassifyOnClick, arg_2_0)
-	arg_2_0._gohumantipbutton:AddClickListener(arg_2_0.onClickTipBtn, arg_2_0)
-	arg_2_0._gotipcloseclick:AddClickListener(arg_2_0.onClickCloseTipBtn, arg_2_0)
+function HandBookCharacterView:addEvents()
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnclassify:AddClickListener(self._btnclassifyOnClick, self)
+	self._gohumantipbutton:AddClickListener(self.onClickTipBtn, self)
+	self._gotipcloseclick:AddClickListener(self.onClickCloseTipBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnclassify:RemoveClickListener()
-	arg_3_0._gohumantipbutton:RemoveClickListener()
-	arg_3_0._gotipcloseclick:RemoveClickListener()
+function HandBookCharacterView:removeEvents()
+	self._btnrarerank:RemoveClickListener()
+	self._btnclassify:RemoveClickListener()
+	self._gohumantipbutton:RemoveClickListener()
+	self._gotipcloseclick:RemoveClickListener()
 end
 
-function var_0_0.onClickTipBtn(arg_4_0)
-	if arg_4_0.heroType ~= 6 then
+function HandBookCharacterView:onClickTipBtn()
+	if self.heroType ~= 6 then
 		return
 	end
 
-	gohelper.setActive(arg_4_0._gohumansubtip, true)
-	gohelper.setActive(arg_4_0._gotipclose, true)
+	gohelper.setActive(self._gohumansubtip, true)
+	gohelper.setActive(self._gotipclose, true)
 end
 
-function var_0_0.onClickCloseTipBtn(arg_5_0)
-	if arg_5_0.heroType ~= 6 then
+function HandBookCharacterView:onClickCloseTipBtn()
+	if self.heroType ~= 6 then
 		return
 	end
 
-	gohelper.setActive(arg_5_0._gohumansubtip, false)
-	gohelper.setActive(arg_5_0._gotipclose, false)
+	gohelper.setActive(self._gohumansubtip, false)
+	gohelper.setActive(self._gotipclose, false)
 end
 
-function var_0_0._btnrarerankOnClick(arg_6_0)
-	arg_6_0._isSortL2H = not arg_6_0._isSortL2H
+function HandBookCharacterView:_btnrarerankOnClick()
+	self._isSortL2H = not self._isSortL2H
 
-	arg_6_0:_refreshFilterState()
-	arg_6_0:_refreshShowFirstPage()
+	self:_refreshFilterState()
+	self:_refreshShowFirstPage()
 end
 
-function var_0_0._btnclassifyOnClick(arg_7_0)
-	local var_7_0 = {
-		dmgs = {},
-		attrs = {},
-		locations = {}
-	}
+function HandBookCharacterView:_btnclassifyOnClick()
+	local param = {}
 
-	tabletool.addValues(var_7_0.dmgs, arg_7_0._selectDmgs)
-	tabletool.addValues(var_7_0.attrs, arg_7_0._selectCareers)
-	tabletool.addValues(var_7_0.locations, arg_7_0._selectLocations)
-	CharacterController.instance:openCharacterFilterView(var_7_0)
+	param.dmgs = {}
+	param.attrs = {}
+	param.locations = {}
+
+	tabletool.addValues(param.dmgs, self._selectDmgs)
+	tabletool.addValues(param.attrs, self._selectCareers)
+	tabletool.addValues(param.locations, self._selectLocations)
+	CharacterController.instance:openCharacterFilterView(param)
 end
 
-function var_0_0._onFilterList(arg_8_0, arg_8_1)
-	if arg_8_0:_isAllHeroType() then
-		for iter_8_0 = 1, #arg_8_1.dmgs do
-			arg_8_0._selectDmgs[iter_8_0] = arg_8_1.dmgs[iter_8_0]
+function HandBookCharacterView:_onFilterList(param)
+	if self:_isAllHeroType() then
+		for i = 1, #param.dmgs do
+			self._selectDmgs[i] = param.dmgs[i]
 		end
 
-		for iter_8_1 = 1, #arg_8_1.attrs do
-			arg_8_0._selectCareers[iter_8_1] = arg_8_1.attrs[iter_8_1]
+		for i = 1, #param.attrs do
+			self._selectCareers[i] = param.attrs[i]
 		end
 
-		for iter_8_2 = 1, #arg_8_1.locations do
-			arg_8_0._selectLocations[iter_8_2] = arg_8_1.locations[iter_8_2]
+		for i = 1, #param.locations do
+			self._selectLocations[i] = param.locations[i]
 		end
 
-		arg_8_0._dmgFilterCount = arg_8_0:_findFilterCount(arg_8_0._selectDmgs)
-		arg_8_0._careerFilterCount = arg_8_0:_findFilterCount(arg_8_0._selectCareers)
-		arg_8_0._locationFilterCount = arg_8_0:_findFilterCount(arg_8_0._selectLocations)
+		self._dmgFilterCount = self:_findFilterCount(self._selectDmgs)
+		self._careerFilterCount = self:_findFilterCount(self._selectCareers)
+		self._locationFilterCount = self:_findFilterCount(self._selectLocations)
 
-		arg_8_0:_refreshFilterState()
-		arg_8_0:_refreshShowFirstPage()
+		self:_refreshFilterState()
+		self:_refreshShowFirstPage()
 	end
 end
 
-function var_0_0._findFilterCount(arg_9_0, arg_9_1)
-	local var_9_0 = 0
+function HandBookCharacterView:_findFilterCount(filters)
+	local count = 0
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_1) do
-		if iter_9_1 then
-			var_9_0 = var_9_0 + 1
+	for k, v in pairs(filters) do
+		if v then
+			count = count + 1
 		end
 	end
 
-	return var_9_0
+	return count
 end
 
-var_0_0.DragAbsPositionX = 50
-var_0_0.AnimatorBlockName = "animatorBlockName"
+HandBookCharacterView.DragAbsPositionX = 50
+HandBookCharacterView.AnimatorBlockName = "animatorBlockName"
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._simagecoverbg1peper1 = gohelper.findChildSingleImage(arg_10_0._goContainer, "#go_cover/#simage_coverbg1/peper1")
-	arg_10_0._simagecoverbg1peper2 = gohelper.findChildSingleImage(arg_10_0._goContainer, "#go_cover/#simage_coverbg1/peper2")
-	arg_10_0._coverAnim = arg_10_0._gocover:GetComponent(typeof(UnityEngine.Animator))
-	arg_10_0._containerAnim = ZProj.ProjAnimatorPlayer.Get(arg_10_0._goContainer)
+function HandBookCharacterView:_editableInitView()
+	self._simagecoverbg1peper1 = gohelper.findChildSingleImage(self._goContainer, "#go_cover/#simage_coverbg1/peper1")
+	self._simagecoverbg1peper2 = gohelper.findChildSingleImage(self._goContainer, "#go_cover/#simage_coverbg1/peper2")
+	self._coverAnim = self._gocover:GetComponent(typeof(UnityEngine.Animator))
+	self._containerAnim = ZProj.ProjAnimatorPlayer.Get(self._goContainer)
 
-	gohelper.setActive(arg_10_0._gocharacteritem, false)
+	gohelper.setActive(self._gocharacteritem, false)
 
-	arg_10_0._goarrowTrs = arg_10_0._goarrow.transform
-	arg_10_0.items = {}
-	arg_10_0.coveritems = {}
-	arg_10_0.characterClickTabs = arg_10_0:getUserDataTb_()
+	self._goarrowTrs = self._goarrow.transform
+	self.items = {}
+	self.coveritems = {}
+	self.characterClickTabs = self:getUserDataTb_()
 
-	local var_10_0 = arg_10_0._btnclassify.gameObject
+	local temGo = self._btnclassify.gameObject
 
-	arg_10_0._goFiltering = gohelper.findChild(var_10_0, "btn2")
-	arg_10_0._goFilterno = gohelper.findChild(var_10_0, "btn1")
+	self._goFiltering = gohelper.findChild(temGo, "btn2")
+	self._goFilterno = gohelper.findChild(temGo, "btn1")
 
-	for iter_10_0 = 1, 7 do
-		arg_10_0["_gocharacter" .. iter_10_0] = iter_10_0 >= 4 and gohelper.findChild(arg_10_0._gorightpage, "#go_character" .. iter_10_0) or gohelper.findChild(arg_10_0._goleftpage, "#go_character" .. iter_10_0)
+	for i = 1, 7 do
+		self["_gocharacter" .. i] = i >= 4 and gohelper.findChild(self._gorightpage, "#go_character" .. i) or gohelper.findChild(self._goleftpage, "#go_character" .. i)
 
-		local var_10_1 = gohelper.getClick(arg_10_0["_gocharacter" .. iter_10_0])
+		local characterClick = gohelper.getClick(self["_gocharacter" .. i])
 
-		var_10_1:AddClickListener(arg_10_0.characterOnClick, arg_10_0, iter_10_0)
-		table.insert(arg_10_0.characterClickTabs, var_10_1)
-		table.insert(arg_10_0.items, arg_10_0:findItemSubNodes(arg_10_0["_gocharacter" .. iter_10_0]))
+		characterClick:AddClickListener(self.characterOnClick, self, i)
+		table.insert(self.characterClickTabs, characterClick)
+		table.insert(self.items, self:findItemSubNodes(self["_gocharacter" .. i]))
 	end
 
-	for iter_10_1 = 4, 7 do
-		arg_10_0["_gocorvercharacter" .. iter_10_1] = gohelper.findChild(arg_10_0._gocoverrightpage, "#go_corvercharacter" .. iter_10_1)
+	for i = 4, 7 do
+		self["_gocorvercharacter" .. i] = gohelper.findChild(self._gocoverrightpage, "#go_corvercharacter" .. i)
 
-		local var_10_2 = gohelper.getClick(arg_10_0["_gocorvercharacter" .. iter_10_1])
+		local corvercharacterClick = gohelper.getClick(self["_gocorvercharacter" .. i])
 
-		var_10_2:AddClickListener(arg_10_0.characterOnClick, arg_10_0, iter_10_1)
-		table.insert(arg_10_0.characterClickTabs, var_10_2)
-		table.insert(arg_10_0.coveritems, arg_10_0:findItemSubNodes(arg_10_0["_gocorvercharacter" .. iter_10_1]))
+		corvercharacterClick:AddClickListener(self.characterOnClick, self, i)
+		table.insert(self.characterClickTabs, corvercharacterClick)
+		table.insert(self.coveritems, self:findItemSubNodes(self["_gocorvercharacter" .. i]))
 	end
 
-	arg_10_0._leftArrowClick = gohelper.findChildClickWithAudio(arg_10_0._goleftarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
-	arg_10_0._rightArrowClick = gohelper.findChildClickWithAudio(arg_10_0._gorightarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
-	arg_10_0._coverRightArrowClick = gohelper.findChildClickWithAudio(arg_10_0._gocoverrightarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
+	self._leftArrowClick = gohelper.findChildClickWithAudio(self._goleftarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
+	self._rightArrowClick = gohelper.findChildClickWithAudio(self._gorightarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
+	self._coverRightArrowClick = gohelper.findChildClickWithAudio(self._gocoverrightarrow, "clickArea", AudioEnum.UI.play_ui_screenplay_photo_click)
 
-	arg_10_0._leftArrowClick:AddClickListener(arg_10_0.leftPageOnClick, arg_10_0)
-	arg_10_0._rightArrowClick:AddClickListener(arg_10_0.rightPageOnClick, arg_10_0)
-	arg_10_0._coverRightArrowClick:AddClickListener(arg_10_0.rightPageOnClick, arg_10_0)
+	self._leftArrowClick:AddClickListener(self.leftPageOnClick, self)
+	self._rightArrowClick:AddClickListener(self.rightPageOnClick, self)
+	self._coverRightArrowClick:AddClickListener(self.rightPageOnClick, self)
 
-	arg_10_0.currentPage = 1
-	arg_10_0.maxPage = 1
-	arg_10_0.startDragPosX = 0
-	arg_10_0._firstPageNum = 4
-	arg_10_0._isSortL2H = false
-	arg_10_0._dmgFilterCount = 0
-	arg_10_0._careerFilterCount = 0
-	arg_10_0._locationFilterCount = 0
-	arg_10_0._selectDmgs = {
+	self.currentPage = 1
+	self.maxPage = 1
+	self.startDragPosX = 0
+	self._firstPageNum = 4
+	self._isSortL2H = false
+	self._dmgFilterCount = 0
+	self._careerFilterCount = 0
+	self._locationFilterCount = 0
+	self._selectDmgs = {
 		false,
 		false
 	}
-	arg_10_0._selectCareers = {
-		false,
-		false,
-		false,
-		false,
-		false,
-		false
-	}
-	arg_10_0._selectLocations = {
+	self._selectCareers = {
 		false,
 		false,
 		false,
@@ -198,231 +192,239 @@ function var_0_0._editableInitView(arg_10_0)
 		false,
 		false
 	}
+	self._selectLocations = {
+		false,
+		false,
+		false,
+		false,
+		false,
+		false
+	}
 
-	arg_10_0._simagebg:LoadImage(ResUrl.getHandbookCharacterIcon("full/bg111"))
-	arg_10_0._simageline:LoadImage(ResUrl.getHandbookCharacterIcon("bg_xian"))
-	arg_10_0._simagecoverbg2:LoadImage(ResUrl.getHandbookCharacterIcon("zhi2"))
-	arg_10_0._simagecoverbg1peper1:LoadImage(ResUrl.getHandbookCharacterIcon("peper_01"))
-	arg_10_0._simagecoverbg1peper2:LoadImage(ResUrl.getHandbookCharacterIcon("peper_02"))
+	self._simagebg:LoadImage(ResUrl.getHandbookCharacterIcon("full/bg111"))
+	self._simageline:LoadImage(ResUrl.getHandbookCharacterIcon("bg_xian"))
+	self._simagecoverbg2:LoadImage(ResUrl.getHandbookCharacterIcon("zhi2"))
+	self._simagecoverbg1peper1:LoadImage(ResUrl.getHandbookCharacterIcon("peper_01"))
+	self._simagecoverbg1peper2:LoadImage(ResUrl.getHandbookCharacterIcon("peper_02"))
 end
 
-function var_0_0.characterOnClick(arg_11_0, arg_11_1)
+function HandBookCharacterView:characterOnClick(index)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Player_Interface_Open)
 
-	local var_11_0 = (arg_11_0.currentPage - 2) * 7 + arg_11_0:getFirstPageHeroNum()
-	local var_11_1 = arg_11_0.configHeroList[var_11_0 + arg_11_1]
+	local currentPageStartIndex = (self.currentPage - 2) * 7 + self:getFirstPageHeroNum()
+	local heroCfg = self.configHeroList[currentPageStartIndex + index]
 
-	if not var_11_1 then
+	if not heroCfg then
 		return
 	end
 
-	local var_11_2 = var_11_1.id
-	local var_11_3 = HeroModel.instance:getByHeroId(var_11_2)
+	local heroId = heroCfg.id
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	if arg_11_0:_isAllHeroType() then
-		local var_11_4 = {
-			heroId = var_11_2,
-			skinId = var_11_1.skinId
+	if self:_isAllHeroType() then
+		local param = {
+			heroId = heroId,
+			skinId = heroCfg.skinId
 		}
 
-		if not var_11_3 then
-			var_11_4.skinColorStr = "#1A1A1A"
+		if not heroMo then
+			param.skinColorStr = "#1A1A1A"
 		end
 
-		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, var_11_4)
-	elseif var_11_3 then
-		arg_11_0:openCharacterView(var_11_2)
+		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, param)
+	elseif heroMo then
+		self:openCharacterView(heroId)
 	else
 		GameFacade.showToast(ToastEnum.HandBook1)
 	end
 
-	if var_11_3 and not HandbookModel.instance:isRead(HandbookEnum.Type.Character, var_11_2) then
-		HandbookRpc.instance:sendHandbookReadRequest(HandbookEnum.Type.Character, var_11_2)
+	if heroMo and not HandbookModel.instance:isRead(HandbookEnum.Type.Character, heroId) then
+		HandbookRpc.instance:sendHandbookReadRequest(HandbookEnum.Type.Character, heroId)
 
-		if arg_11_0.currentPage == 1 and not arg_11_0:_isAllHeroType() then
-			gohelper.setActive(arg_11_0.coveritems[arg_11_1 - 3].gonew, false)
+		if self.currentPage == 1 and not self:_isAllHeroType() then
+			gohelper.setActive(self.coveritems[index - 3].gonew, false)
 		else
-			gohelper.setActive(arg_11_0.items[arg_11_1].gonew, false)
+			gohelper.setActive(self.items[index].gonew, false)
 		end
 	end
 end
 
-function var_0_0.openCharacterView(arg_12_0, arg_12_1)
+function HandBookCharacterView:openCharacterView(heroId)
 	CharacterController.instance:openCharacterDataView({
 		fromHandbookView = true,
-		heroId = arg_12_1
+		heroId = heroId
 	})
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
+function HandBookCharacterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:addEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, arg_14_0.reallyOpenView, arg_14_0)
-	arg_14_0:addEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchCloseAnim, arg_14_0._playCloseViewAnim, arg_14_0)
-	arg_14_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_14_0._onCloseFullView, arg_14_0, LuaEventSystem.Low)
-	arg_14_0:addEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, arg_14_0._onFilterList, arg_14_0)
+function HandBookCharacterView:onOpen()
+	self:addEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, self.reallyOpenView, self)
+	self:addEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchCloseAnim, self._playCloseViewAnim, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self, LuaEventSystem.Low)
+	self:addEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
 end
 
-function var_0_0.findItemSubNodes(arg_15_0, arg_15_1)
-	local var_15_0 = gohelper.clone(arg_15_0._gocharacteritem, arg_15_1)
+function HandBookCharacterView:findItemSubNodes(goItem)
+	local characterItemGO = gohelper.clone(self._gocharacteritem, goItem)
 
-	gohelper.setActive(var_15_0, true)
+	gohelper.setActive(characterItemGO, true)
 
-	local var_15_1 = {
-		gohero = gohelper.findChild(var_15_0, "hero"),
-		gonohero = gohelper.findChild(var_15_0, "nohero"),
-		goempty = gohelper.findChild(var_15_0, "#go_empty"),
-		gocircle = gohelper.findChild(var_15_0, "circle"),
-		simagehero = gohelper.findChildSingleImage(var_15_0, "hero/simage_hero"),
-		simagesignature = gohelper.findChildSingleImage(var_15_0, "hero/simage_signature"),
-		careerIcon = gohelper.findChildImage(var_15_0, "hero/image_career"),
-		gonew = gohelper.findChild(var_15_0, "hero/go_new"),
-		txtname = gohelper.findChildTextMesh(var_15_0, "hero/txt_name"),
-		gostars = {}
-	}
+	local o = {}
 
-	for iter_15_0 = 1, 6 do
-		table.insert(var_15_1.gostars, gohelper.findChild(var_15_0, "hero/star/star" .. iter_15_0))
+	o.gohero = gohelper.findChild(characterItemGO, "hero")
+	o.gonohero = gohelper.findChild(characterItemGO, "nohero")
+	o.goempty = gohelper.findChild(characterItemGO, "#go_empty")
+	o.gocircle = gohelper.findChild(characterItemGO, "circle")
+	o.simagehero = gohelper.findChildSingleImage(characterItemGO, "hero/simage_hero")
+	o.simagesignature = gohelper.findChildSingleImage(characterItemGO, "hero/simage_signature")
+	o.careerIcon = gohelper.findChildImage(characterItemGO, "hero/image_career")
+	o.gonew = gohelper.findChild(characterItemGO, "hero/go_new")
+	o.txtname = gohelper.findChildTextMesh(characterItemGO, "hero/txt_name")
+	o.gostars = {}
+
+	for i = 1, 6 do
+		table.insert(o.gostars, gohelper.findChild(characterItemGO, "hero/star/star" .. i))
 	end
 
-	var_15_1.simagenohero = gohelper.findChildSingleImage(var_15_0, "nohero/simage_nohero")
-	var_15_1.txtnoheroname = gohelper.findChildTextMesh(var_15_0, "nohero/txt_noheroname")
+	o.simagenohero = gohelper.findChildSingleImage(characterItemGO, "nohero/simage_nohero")
+	o.txtnoheroname = gohelper.findChildTextMesh(characterItemGO, "nohero/txt_noheroname")
 
-	gohelper.setActive(var_15_1.gonew, false)
+	gohelper.setActive(o.gonew, false)
 
-	return var_15_1
+	return o
 end
 
-function var_0_0._onCloseFullView(arg_16_0)
-	if arg_16_0.currentPage == 1 then
-		arg_16_0._coverAnim:Play(UIAnimationName.Open, 0, 0)
+function HandBookCharacterView:_onCloseFullView()
+	if self.currentPage == 1 then
+		self._coverAnim:Play(UIAnimationName.Open, 0, 0)
 	end
 
-	arg_16_0._containerAnim:Play(UIAnimationName.Open)
+	self._containerAnim:Play(UIAnimationName.Open)
 end
 
-function var_0_0.leftPageOnClick(arg_17_0)
-	if arg_17_0.currentPage > 1 then
-		UIBlockMgr.instance:startBlock(var_0_0.AnimatorBlockName)
-		arg_17_0._containerAnim:Play("right_out", function(arg_18_0)
-			arg_18_0:refreshCharacterBook(arg_18_0.currentPage - 1)
-			arg_18_0._containerAnim:Play("right_in")
-			UIBlockMgr.instance:endBlock(var_0_0.AnimatorBlockName)
-		end, arg_17_0)
-	end
-end
-
-function var_0_0.rightPageOnClick(arg_19_0)
-	if arg_19_0.currentPage < arg_19_0.maxPage then
-		UIBlockMgr.instance:startBlock(var_0_0.AnimatorBlockName)
-		arg_19_0._containerAnim:Play("left_out", function(arg_20_0)
-			arg_20_0:refreshCharacterBook(arg_20_0.currentPage + 1)
-			arg_20_0._containerAnim:Play("left_in")
-			UIBlockMgr.instance:endBlock(var_0_0.AnimatorBlockName)
-		end, arg_19_0)
+function HandBookCharacterView:leftPageOnClick()
+	if self.currentPage > 1 then
+		UIBlockMgr.instance:startBlock(HandBookCharacterView.AnimatorBlockName)
+		self._containerAnim:Play("right_out", function(self)
+			self:refreshCharacterBook(self.currentPage - 1)
+			self._containerAnim:Play("right_in")
+			UIBlockMgr.instance:endBlock(HandBookCharacterView.AnimatorBlockName)
+		end, self)
 	end
 end
 
-function var_0_0.reallyOpenView(arg_21_0, arg_21_1)
-	arg_21_0.heroType = arg_21_1
-
-	arg_21_0:refreshHumanTip()
-	arg_21_0:_resetFilterParam()
-
-	arg_21_0.configHeroList = arg_21_0:_getConfigHeroList()
-	arg_21_0.maxPage = arg_21_0:calculateMaxPageNum()
-
-	arg_21_0:refreshCharacterBook(1)
-	arg_21_0:refreshCoverInfo()
-
-	arg_21_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_21_0._goContainer)
-
-	arg_21_0._drag:AddDragBeginListener(arg_21_0.onDragBeginHandle, arg_21_0)
-	arg_21_0._drag:AddDragEndListener(arg_21_0.onDragEndHandle, arg_21_0)
-	arg_21_0._coverAnim:Play(UIAnimationName.Open, 0, 0)
-	arg_21_0._gohumantipAnimtor:Play(UIAnimationName.Open, 0, 0)
-	arg_21_0:_refreshFilterState()
-end
-
-function var_0_0.refreshHumanTip(arg_22_0)
-	gohelper.setActive(arg_22_0._gohumantip, arg_22_0.heroType == 6)
-	gohelper.setActive(arg_22_0._gohumansubtip, false)
-	gohelper.setActive(arg_22_0._gotipclose, false)
-end
-
-function var_0_0._resetFilterParam(arg_23_0)
-	arg_23_0:_resetFilterList(arg_23_0._selectDmgs)
-	arg_23_0:_resetFilterList(arg_23_0._selectCareers)
-	arg_23_0:_resetFilterList(arg_23_0._selectLocations)
-
-	arg_23_0._dmgFilterCount = 0
-	arg_23_0._careerFilterCount = 0
-	arg_23_0._locationFilterCount = 0
-	arg_23_0._isSortL2H = false
-end
-
-function var_0_0._resetFilterList(arg_24_0, arg_24_1)
-	for iter_24_0 = 1, #arg_24_1 do
-		arg_24_1[iter_24_0] = false
+function HandBookCharacterView:rightPageOnClick()
+	if self.currentPage < self.maxPage then
+		UIBlockMgr.instance:startBlock(HandBookCharacterView.AnimatorBlockName)
+		self._containerAnim:Play("left_out", function(self)
+			self:refreshCharacterBook(self.currentPage + 1)
+			self._containerAnim:Play("left_in")
+			UIBlockMgr.instance:endBlock(HandBookCharacterView.AnimatorBlockName)
+		end, self)
 	end
 end
 
-function var_0_0._refreshShowFirstPage(arg_25_0)
-	arg_25_0.configHeroList = arg_25_0:_getConfigHeroList()
-	arg_25_0.maxPage = arg_25_0:calculateMaxPageNum()
+function HandBookCharacterView:reallyOpenView(heroType)
+	self.heroType = heroType
 
-	arg_25_0:refreshCharacterBook(1)
-	arg_25_0:refreshCoverInfo()
+	self:refreshHumanTip()
+	self:_resetFilterParam()
+
+	self.configHeroList = self:_getConfigHeroList()
+	self.maxPage = self:calculateMaxPageNum()
+
+	self:refreshCharacterBook(1)
+	self:refreshCoverInfo()
+
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._goContainer)
+
+	self._drag:AddDragBeginListener(self.onDragBeginHandle, self)
+	self._drag:AddDragEndListener(self.onDragEndHandle, self)
+	self._coverAnim:Play(UIAnimationName.Open, 0, 0)
+	self._gohumantipAnimtor:Play(UIAnimationName.Open, 0, 0)
+	self:_refreshFilterState()
 end
 
-function var_0_0._refreshFilterState(arg_26_0)
-	if arg_26_0:_isAllHeroType() then
-		local var_26_0 = arg_26_0._dmgFilterCount > 0 or arg_26_0._careerFilterCount > 0 or arg_26_0._locationFilterCount > 0
+function HandBookCharacterView:refreshHumanTip()
+	gohelper.setActive(self._gohumantip, self.heroType == 6)
+	gohelper.setActive(self._gohumansubtip, false)
+	gohelper.setActive(self._gotipclose, false)
+end
 
-		gohelper.setActive(arg_26_0._goFiltering, var_26_0)
-		gohelper.setActive(arg_26_0._goFilterno, not var_26_0)
-		transformhelper.setLocalScale(arg_26_0._goarrowTrs, 1, arg_26_0._isSortL2H and -1 or 1, 1)
+function HandBookCharacterView:_resetFilterParam()
+	self:_resetFilterList(self._selectDmgs)
+	self:_resetFilterList(self._selectCareers)
+	self:_resetFilterList(self._selectLocations)
+
+	self._dmgFilterCount = 0
+	self._careerFilterCount = 0
+	self._locationFilterCount = 0
+	self._isSortL2H = false
+end
+
+function HandBookCharacterView:_resetFilterList(filterList)
+	for i = 1, #filterList do
+		filterList[i] = false
 	end
 end
 
-function var_0_0._getConfigHeroList(arg_27_0)
-	local var_27_0 = {}
-	local var_27_1 = var_0_0._sortFuncH2L
-	local var_27_2 = HeroConfig.instance:getHeroesList()
+function HandBookCharacterView:_refreshShowFirstPage()
+	self.configHeroList = self:_getConfigHeroList()
+	self.maxPage = self:calculateMaxPageNum()
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_2) do
-		if arg_27_0:_checkConfig(iter_27_1) then
-			table.insert(var_27_0, iter_27_1)
+	self:refreshCharacterBook(1)
+	self:refreshCoverInfo()
+end
+
+function HandBookCharacterView:_refreshFilterState()
+	if self:_isAllHeroType() then
+		local isFiltering = self._dmgFilterCount > 0 or self._careerFilterCount > 0 or self._locationFilterCount > 0
+
+		gohelper.setActive(self._goFiltering, isFiltering)
+		gohelper.setActive(self._goFilterno, not isFiltering)
+		transformhelper.setLocalScale(self._goarrowTrs, 1, self._isSortL2H and -1 or 1, 1)
+	end
+end
+
+function HandBookCharacterView:_getConfigHeroList()
+	local cfgList = {}
+	local sortFunc = HandBookCharacterView._sortFuncH2L
+	local allList = HeroConfig.instance:getHeroesList()
+
+	for _, cfg in ipairs(allList) do
+		if self:_checkConfig(cfg) then
+			table.insert(cfgList, cfg)
 		end
 	end
 
-	if arg_27_0:_isAllHeroType() and arg_27_0._isSortL2H then
-		var_27_1 = var_0_0._sortFuncL2H
+	if self:_isAllHeroType() and self._isSortL2H then
+		sortFunc = HandBookCharacterView._sortFuncL2H
 	end
 
-	table.sort(var_27_0, var_27_1)
+	table.sort(cfgList, sortFunc)
 
-	return var_27_0
+	return cfgList
 end
 
-function var_0_0._checkConfig(arg_28_0, arg_28_1)
-	if arg_28_1.stat == CharacterEnum.StatType.NotStat and not HeroModel.instance:getByHeroId(arg_28_1.id) then
+function HandBookCharacterView:_checkConfig(cfg)
+	if cfg.stat == CharacterEnum.StatType.NotStat and not HeroModel.instance:getByHeroId(cfg.id) then
 		return false
 	end
 
-	if not arg_28_0:_isAllHeroType() then
-		local var_28_0 = HeroModel.instance:getByHeroId(arg_28_1.id)
+	if not self:_isAllHeroType() then
+		local heroMo = HeroModel.instance:getByHeroId(cfg.id)
 
-		if var_28_0 then
-			return var_28_0:getHeroType() == arg_28_0.heroType
+		if heroMo then
+			return heroMo:getHeroType() == self.heroType
 		end
 
-		return arg_28_1.heroType == arg_28_0.heroType
+		return cfg.heroType == self.heroType
 	end
 
-	local var_28_1 = {
+	local tagTabs = {
 		101,
 		102,
 		103,
@@ -431,16 +433,16 @@ function var_0_0._checkConfig(arg_28_0, arg_28_1)
 		107
 	}
 
-	if (arg_28_0._dmgFilterCount == 0 or arg_28_0._selectDmgs[arg_28_1.dmgType]) and (arg_28_0._careerFilterCount == 0 or arg_28_0._selectCareers[arg_28_1.career]) then
-		if arg_28_0._locationFilterCount == 0 then
+	if (self._dmgFilterCount == 0 or self._selectDmgs[cfg.dmgType]) and (self._careerFilterCount == 0 or self._selectCareers[cfg.career]) then
+		if self._locationFilterCount == 0 then
 			return true
 		end
 
-		local var_28_2 = string.splitToNumber(arg_28_1.battleTag, "#")
+		local filterTags = string.splitToNumber(cfg.battleTag, "#")
 
-		for iter_28_0, iter_28_1 in ipairs(var_28_1) do
-			for iter_28_2, iter_28_3 in pairs(var_28_2) do
-				if arg_28_0._selectLocations[iter_28_0] and iter_28_3 == iter_28_1 then
+		for key, tab in ipairs(tagTabs) do
+			for _, tag in pairs(filterTags) do
+				if self._selectLocations[key] and tag == tab then
 					return true
 				end
 			end
@@ -450,206 +452,207 @@ function var_0_0._checkConfig(arg_28_0, arg_28_1)
 	return false
 end
 
-function var_0_0._sortFuncH2L(arg_29_0, arg_29_1)
-	if arg_29_0.rare ~= arg_29_1.rare then
-		return arg_29_0.rare > arg_29_1.rare
+function HandBookCharacterView._sortFuncH2L(a, b)
+	if a.rare ~= b.rare then
+		return a.rare > b.rare
 	else
-		return arg_29_0.id < arg_29_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0._sortFuncL2H(arg_30_0, arg_30_1)
-	if arg_30_0.rare ~= arg_30_1.rare then
-		return arg_30_0.rare < arg_30_1.rare
+function HandBookCharacterView._sortFuncL2H(a, b)
+	if a.rare ~= b.rare then
+		return a.rare < b.rare
 	else
-		return arg_30_0.id < arg_30_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0.refreshCoverInfo(arg_31_0)
-	local var_31_0 = not arg_31_0:_isAllHeroType()
+function HandBookCharacterView:refreshCoverInfo()
+	local isShow = not self:_isAllHeroType()
 
-	gohelper.setActive(arg_31_0._txttitleName, var_31_0)
-	gohelper.setActive(arg_31_0._simagecovericon, var_31_0)
+	gohelper.setActive(self._txttitleName, isShow)
+	gohelper.setActive(self._simagecovericon, isShow)
 
-	if var_31_0 then
-		local var_31_1 = lua_handbook_character.configDict[arg_31_0.heroType]
+	if isShow then
+		local heroTypeCo = lua_handbook_character.configDict[self.heroType]
 
-		arg_31_0._txttitleName.text = var_31_1.name
+		self._txttitleName.text = heroTypeCo.name
 
-		arg_31_0._simagecovericon:LoadImage(ResUrl.getHandbookCharacterIcon("coer" .. var_31_1.icon))
+		self._simagecovericon:LoadImage(ResUrl.getHandbookCharacterIcon("coer" .. heroTypeCo.icon))
 	end
 end
 
-function var_0_0.refreshCharacterBook(arg_32_0, arg_32_1)
-	if arg_32_1 > arg_32_0.maxPage then
-		arg_32_1 = arg_32_0.maxPage
+function HandBookCharacterView:refreshCharacterBook(page)
+	if page > self.maxPage then
+		page = self.maxPage
 	end
 
-	if arg_32_1 < 1 then
-		arg_32_1 = 1
+	if page < 1 then
+		page = 1
 	end
 
-	arg_32_0.currentPage = arg_32_1
+	self.currentPage = page
 
-	if arg_32_1 == 1 then
-		local var_32_0 = arg_32_0:getFirstPageLeftHeroNum()
+	if page == 1 then
+		local leftNum = self:getFirstPageLeftHeroNum()
 
-		gohelper.setActive(arg_32_0._gocover, true)
-		gohelper.setActive(arg_32_0._simagepagebg.gameObject, false)
-		gohelper.setActive(arg_32_0._goleftpage, var_32_0 > 0)
-		gohelper.setActive(arg_32_0._gorightpage, false)
+		gohelper.setActive(self._gocover, true)
+		gohelper.setActive(self._simagepagebg.gameObject, false)
+		gohelper.setActive(self._goleftpage, leftNum > 0)
+		gohelper.setActive(self._gorightpage, false)
 
-		for iter_32_0 = 1, 4 do
-			arg_32_0:showBookItem(arg_32_0.coveritems[iter_32_0], arg_32_0.configHeroList[iter_32_0 + var_32_0], iter_32_0 + 3, true)
+		for i = 1, 4 do
+			self:showBookItem(self.coveritems[i], self.configHeroList[i + leftNum], i + 3, true)
 		end
 
-		for iter_32_1 = 1, var_32_0 do
-			arg_32_0:showBookItem(arg_32_0.items[iter_32_1], arg_32_0.configHeroList[iter_32_1], iter_32_1, false)
+		for i = 1, leftNum do
+			self:showBookItem(self.items[i], self.configHeroList[i], i, false)
 		end
 	else
-		gohelper.setActive(arg_32_0._gocover, false)
-		gohelper.setActive(arg_32_0._simagepagebg.gameObject, true)
-		gohelper.setActive(arg_32_0._goleftpage, true)
-		gohelper.setActive(arg_32_0._gorightpage, true)
+		gohelper.setActive(self._gocover, false)
+		gohelper.setActive(self._simagepagebg.gameObject, true)
+		gohelper.setActive(self._goleftpage, true)
+		gohelper.setActive(self._gorightpage, true)
 
-		local var_32_1 = (arg_32_1 - 2) * 7 + arg_32_0:getFirstPageHeroNum()
+		local startIndex = (page - 2) * 7 + self:getFirstPageHeroNum()
 
-		for iter_32_2 = 1, 7 do
-			arg_32_0:showBookItem(arg_32_0.items[iter_32_2], arg_32_0.configHeroList[var_32_1 + iter_32_2], iter_32_2, false)
+		for i = 1, 7 do
+			self:showBookItem(self.items[i], self.configHeroList[startIndex + i], i, false)
 		end
 	end
 
-	gohelper.setActive(arg_32_0._goleftarrow, arg_32_0.currentPage > 1)
-	gohelper.setActive(arg_32_0._gorightarrow, arg_32_0.currentPage < arg_32_0.maxPage)
-	gohelper.setActive(arg_32_0._gocoverrightarrow, arg_32_0.currentPage < arg_32_0.maxPage)
-	gohelper.setActive(arg_32_0._txtpagecount, arg_32_0:_isAllHeroType())
+	gohelper.setActive(self._goleftarrow, self.currentPage > 1)
+	gohelper.setActive(self._gorightarrow, self.currentPage < self.maxPage)
+	gohelper.setActive(self._gocoverrightarrow, self.currentPage < self.maxPage)
+	gohelper.setActive(self._txtpagecount, self:_isAllHeroType())
 
-	if arg_32_0:_isAllHeroType() then
-		arg_32_0._txtpagecount.text = arg_32_0.currentPage .. "/" .. arg_32_0.maxPage
+	if self:_isAllHeroType() then
+		self._txtpagecount.text = self.currentPage .. "/" .. self.maxPage
 	end
 end
 
-function var_0_0.showBookItem(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
-	local var_33_0 = arg_33_0:_isAllHeroType()
+function HandBookCharacterView:showBookItem(item, heroCo, characterIndex, isFirstPage)
+	local isAllHeroType = self:_isAllHeroType()
 
-	if arg_33_4 then
-		gohelper.setActive(arg_33_0["_gocorvercharacter" .. arg_33_3], var_33_0 or arg_33_2)
+	if isFirstPage then
+		gohelper.setActive(self["_gocorvercharacter" .. characterIndex], isAllHeroType or heroCo)
 	else
-		gohelper.setActive(arg_33_0["_gocharacter" .. arg_33_3], var_33_0 or arg_33_2)
+		gohelper.setActive(self["_gocharacter" .. characterIndex], isAllHeroType or heroCo)
 	end
 
-	if arg_33_2 then
-		local var_33_1 = HeroModel.instance:getByHeroId(arg_33_2.id) and true or false
-		local var_33_2 = var_33_1 or var_33_0
+	if heroCo then
+		local heroMo = HeroModel.instance:getByHeroId(heroCo.id)
+		local hasHero = heroMo and true or false
+		local showName = hasHero or isAllHeroType
 
-		gohelper.setActive(arg_33_1.gohero, var_33_2)
-		gohelper.setActive(arg_33_1.gonohero, not var_33_1)
-		gohelper.setActive(arg_33_1.simagehero, var_33_1)
+		gohelper.setActive(item.gohero, showName)
+		gohelper.setActive(item.gonohero, not hasHero)
+		gohelper.setActive(item.simagehero, hasHero)
 
-		if var_33_1 then
-			arg_33_1.simagehero:LoadImage(ResUrl.getHandbookheroIcon(arg_33_2.skinId))
+		if hasHero then
+			item.simagehero:LoadImage(ResUrl.getHandbookheroIcon(heroCo.skinId))
 		else
-			arg_33_1.simagenohero:LoadImage(ResUrl.getHandbookheroIcon(arg_33_2.skinId))
-			gohelper.setActive(arg_33_1.txtnoheroname, not var_33_2)
+			item.simagenohero:LoadImage(ResUrl.getHandbookheroIcon(heroCo.skinId))
+			gohelper.setActive(item.txtnoheroname, not showName)
 		end
 
-		if var_33_2 then
-			arg_33_1.simagesignature:LoadImage(ResUrl.getSignature(arg_33_2.signature))
-			UISpriteSetMgr.instance:setCommonSprite(arg_33_1.careerIcon, "lssx_" .. tostring(arg_33_2.career))
+		if showName then
+			item.simagesignature:LoadImage(ResUrl.getSignature(heroCo.signature))
+			UISpriteSetMgr.instance:setCommonSprite(item.careerIcon, "lssx_" .. tostring(heroCo.career))
 
-			local var_33_3 = LangSettings.instance:getCurLangShortcut()
+			local curLang = LangSettings.instance:getCurLangShortcut()
 
-			for iter_33_0 = 1, 6 do
-				gohelper.setActive(arg_33_1.gostars[iter_33_0], iter_33_0 <= arg_33_2.rare + 1)
+			for i = 1, 6 do
+				gohelper.setActive(item.gostars[i], i <= heroCo.rare + 1)
 			end
 
-			arg_33_1.txtname.text = arg_33_2.name
+			item.txtname.text = heroCo.name
 		end
 	else
-		gohelper.setActive(arg_33_1.gohero, false)
-		gohelper.setActive(arg_33_1.gonohero, false)
+		gohelper.setActive(item.gohero, false)
+		gohelper.setActive(item.gonohero, false)
 	end
 
-	gohelper.setActive(arg_33_1.gocircle, arg_33_2)
-	gohelper.setActive(arg_33_1.goempty, var_33_0 and not arg_33_2)
+	gohelper.setActive(item.gocircle, heroCo)
+	gohelper.setActive(item.goempty, isAllHeroType and not heroCo)
 end
 
-function var_0_0.calculateMaxPageNum(arg_34_0)
-	return math.ceil((#arg_34_0.configHeroList - arg_34_0:getFirstPageHeroNum()) / 7) + 1
+function HandBookCharacterView:calculateMaxPageNum()
+	return math.ceil((#self.configHeroList - self:getFirstPageHeroNum()) / 7) + 1
 end
 
-function var_0_0.getFirstPageLeftHeroNum(arg_35_0)
-	return math.max(0, arg_35_0:getFirstPageHeroNum() - 4)
+function HandBookCharacterView:getFirstPageLeftHeroNum()
+	return math.max(0, self:getFirstPageHeroNum() - 4)
 end
 
-function var_0_0.getFirstPageHeroNum(arg_36_0)
-	if arg_36_0:_isAllHeroType() then
+function HandBookCharacterView:getFirstPageHeroNum()
+	if self:_isAllHeroType() then
 		return 7
 	end
 
 	return 4
 end
 
-function var_0_0._isAllHeroType(arg_37_0)
-	return arg_37_0.heroType == HandbookEnum.HeroType.AllHero
+function HandBookCharacterView:_isAllHeroType()
+	return self.heroType == HandbookEnum.HeroType.AllHero
 end
 
-function var_0_0.onDragBeginHandle(arg_38_0, arg_38_1, arg_38_2)
-	arg_38_0.startDragPosX = arg_38_2.position.x
+function HandBookCharacterView:onDragBeginHandle(param, pointerEventData)
+	self.startDragPosX = pointerEventData.position.x
 end
 
-function var_0_0.onDragEndHandle(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = arg_39_2.position.x
+function HandBookCharacterView:onDragEndHandle(param, pointerEventData)
+	local endDragPosX = pointerEventData.position.x
 
-	if math.abs(var_39_0 - arg_39_0.startDragPosX) > var_0_0.DragAbsPositionX then
+	if math.abs(endDragPosX - self.startDragPosX) > HandBookCharacterView.DragAbsPositionX then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_screenplay_photo_click)
 
-		if var_39_0 < arg_39_0.startDragPosX then
-			arg_39_0:rightPageOnClick()
+		if endDragPosX < self.startDragPosX then
+			self:rightPageOnClick()
 		else
-			arg_39_0:leftPageOnClick()
+			self:leftPageOnClick()
 		end
 	end
 end
 
-function var_0_0._playCloseViewAnim(arg_40_0)
-	if arg_40_0.currentPage == 1 then
-		arg_40_0._coverAnim:Play(UIAnimationName.Close, 0, 0)
+function HandBookCharacterView:_playCloseViewAnim()
+	if self.currentPage == 1 then
+		self._coverAnim:Play(UIAnimationName.Close, 0, 0)
 	end
 
-	arg_40_0._containerAnim:Play(UIAnimationName.Close)
-	arg_40_0._gohumantipAnimtor:Play(UIAnimationName.Close)
-	gohelper.setActive(arg_40_0._gohumansubtip, false)
-	gohelper.setActive(arg_40_0._gotipclose, false)
+	self._containerAnim:Play(UIAnimationName.Close)
+	self._gohumantipAnimtor:Play(UIAnimationName.Close)
+	gohelper.setActive(self._gohumansubtip, false)
+	gohelper.setActive(self._gotipclose, false)
 end
 
-function var_0_0.onClose(arg_41_0)
-	arg_41_0._simagebg:UnLoadImage()
-	arg_41_0._simageline:UnLoadImage()
-	arg_41_0._simagecoverbg2:UnLoadImage()
-	arg_41_0._simagecoverbg1peper1:UnLoadImage()
-	arg_41_0._simagecoverbg1peper1:UnLoadImage()
+function HandBookCharacterView:onClose()
+	self._simagebg:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagecoverbg2:UnLoadImage()
+	self._simagecoverbg1peper1:UnLoadImage()
+	self._simagecoverbg1peper1:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_42_0)
-	arg_42_0._leftArrowClick:RemoveClickListener()
-	arg_42_0._rightArrowClick:RemoveClickListener()
-	arg_42_0._coverRightArrowClick:RemoveClickListener()
+function HandBookCharacterView:onDestroyView()
+	self._leftArrowClick:RemoveClickListener()
+	self._rightArrowClick:RemoveClickListener()
+	self._coverRightArrowClick:RemoveClickListener()
 
-	for iter_42_0, iter_42_1 in ipairs(arg_42_0.characterClickTabs) do
-		iter_42_1:RemoveClickListener()
+	for k, v in ipairs(self.characterClickTabs) do
+		v:RemoveClickListener()
 	end
 
-	if arg_42_0._drag then
-		arg_42_0._drag:RemoveDragBeginListener()
-		arg_42_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 	end
 
-	arg_42_0:removeEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, arg_42_0.reallyOpenView, arg_42_0)
-	arg_42_0:removeEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchCloseAnim, arg_42_0._playCloseViewAnim, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, arg_42_0._onFilterList, arg_42_0)
-	arg_42_0._simagecovericon:UnLoadImage()
+	self:removeEventCb(HandbookController.instance, HandbookController.EventName.OnShowSubCharacterView, self.reallyOpenView, self)
+	self:removeEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchCloseAnim, self._playCloseViewAnim, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
+	self._simagecovericon:UnLoadImage()
 end
 
-return var_0_0
+return HandBookCharacterView

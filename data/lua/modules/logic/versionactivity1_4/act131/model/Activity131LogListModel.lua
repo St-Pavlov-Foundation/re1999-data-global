@@ -1,87 +1,90 @@
-﻿module("modules.logic.versionactivity1_4.act131.model.Activity131LogListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/model/Activity131LogListModel.lua
 
-local var_0_0 = class("Activity131LogListModel", MixScrollModel)
+module("modules.logic.versionactivity1_4.act131.model.Activity131LogListModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local Activity131LogListModel = class("Activity131LogListModel", MixScrollModel)
 
-	arg_1_0._infos = nil
+function Activity131LogListModel:ctor()
+	Activity131LogListModel.super.ctor(self)
+
+	self._infos = nil
 end
 
-function var_0_0.setLogList(arg_2_0, arg_2_1)
-	arg_2_0._infos = {}
+function Activity131LogListModel:setLogList(infos)
+	self._infos = {}
 
-	local var_2_0 = {}
+	local moList = {}
 
-	if arg_2_1 then
-		arg_2_0._infos = arg_2_1
+	if infos then
+		self._infos = infos
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-			local var_2_1 = Activity131LogMo.New()
-			local var_2_2 = string.split(iter_2_1.param, "#")
-			local var_2_3 = tonumber(var_2_2[2])
+		for _, info in ipairs(infos) do
+			local logMo = Activity131LogMo.New()
+			local params = string.split(info.param, "#")
+			local audioId = tonumber(params[2])
 
-			var_2_1:init(iter_2_1.speaker, iter_2_1.content, var_2_3)
-			table.insert(var_2_0, var_2_1)
+			logMo:init(info.speaker, info.content, audioId)
+			table.insert(moList, logMo)
 		end
 	end
 
-	arg_2_0:setList(var_2_0)
+	self:setList(moList)
 end
 
-function var_0_0.getInfoList(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function Activity131LogListModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
 
-	if not arg_3_0._infos or #arg_3_0._infos <= 0 then
-		return var_3_0
+	if not self._infos or #self._infos <= 0 then
+		return mixCellInfos
 	end
 
-	local var_3_1 = gohelper.findChildText(arg_3_1, "Viewport/logcontent/storylogitem/go_normal/txt_content")
-	local var_3_2 = 0
-	local var_3_3
+	local textComp = gohelper.findChildText(scrollGO, "Viewport/logcontent/storylogitem/go_normal/txt_content")
+	local mixType = 0
+	local lastInfo
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._infos) do
-		local var_3_4 = 0
-		local var_3_5 = GameUtil.filterRichText(iter_3_1.content)
-		local var_3_6 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(var_3_1, var_3_5) + 13.96
-		local var_3_7
+	for i, info in ipairs(self._infos) do
+		local lineWidth = 0
+		local text = GameUtil.filterRichText(info.content)
 
-		if var_3_3 and iter_3_1.speaker == var_3_3.speaker then
-			var_3_7 = 1
+		lineWidth = SLFramework.UGUI.GuiHelper.GetPreferredHeight(textComp, text)
+		lineWidth = lineWidth + 13.96
+
+		if lastInfo and info.speaker == lastInfo.speaker then
+			mixType = 1
 		else
-			if iter_3_0 > 1 then
-				var_3_0[iter_3_0 - 1].lineLength = var_3_0[iter_3_0 - 1].lineLength + 40
+			if i > 1 then
+				mixCellInfos[i - 1].lineLength = mixCellInfos[i - 1].lineLength + 40
 			end
 
-			var_3_7 = 0
+			mixType = 0
 		end
 
-		table.insert(var_3_0, SLFramework.UGUI.MixCellInfo.New(var_3_7, var_3_6, nil))
+		table.insert(mixCellInfos, SLFramework.UGUI.MixCellInfo.New(mixType, lineWidth, nil))
 
-		var_3_3 = iter_3_1
+		lastInfo = info
 	end
 
-	return var_3_0
+	return mixCellInfos
 end
 
-function var_0_0.clearData(arg_4_0)
-	arg_4_0._infos = nil
+function Activity131LogListModel:clearData()
+	self._infos = nil
 end
 
-function var_0_0.setPlayingLogAudio(arg_5_0, arg_5_1)
-	arg_5_0._playingId = arg_5_1
+function Activity131LogListModel:setPlayingLogAudio(audioId)
+	self._playingId = audioId
 end
 
-function var_0_0.setPlayingLogAudioFinished(arg_6_0, arg_6_1)
-	if arg_6_0._playingId == arg_6_1 then
-		arg_6_0._playingId = 0
+function Activity131LogListModel:setPlayingLogAudioFinished(audioId)
+	if self._playingId == audioId then
+		self._playingId = 0
 	end
 end
 
-function var_0_0.getPlayingLogAudioId(arg_7_0)
-	return arg_7_0._playingId
+function Activity131LogListModel:getPlayingLogAudioId()
+	return self._playingId
 end
 
-var_0_0.instance = var_0_0.New()
+Activity131LogListModel.instance = Activity131LogListModel.New()
 
-return var_0_0
+return Activity131LogListModel

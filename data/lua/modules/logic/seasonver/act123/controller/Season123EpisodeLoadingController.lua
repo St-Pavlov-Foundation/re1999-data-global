@@ -1,16 +1,18 @@
-﻿module("modules.logic.seasonver.act123.controller.Season123EpisodeLoadingController", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/controller/Season123EpisodeLoadingController.lua
 
-local var_0_0 = class("Season123EpisodeLoadingController", BaseController)
+module("modules.logic.seasonver.act123.controller.Season123EpisodeLoadingController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	Season123EpisodeLoadingModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
+local Season123EpisodeLoadingController = class("Season123EpisodeLoadingController", BaseController)
+
+function Season123EpisodeLoadingController:onOpenView(actId, stage, layer)
+	Season123EpisodeLoadingModel.instance:init(actId, stage, layer)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function Season123EpisodeLoadingController:onCloseView()
 	Season123EpisodeLoadingModel.instance:release()
 end
 
-function var_0_0.openEpisodeDetailView(arg_3_0)
+function Season123EpisodeLoadingController:openEpisodeDetailView()
 	ViewMgr.instance:openView(Season123Controller.instance:getEpisodeMarketViewName(), {
 		actId = Season123EpisodeLoadingModel.instance.activityId,
 		stage = Season123EpisodeLoadingModel.instance.stage,
@@ -18,6 +20,6 @@ function var_0_0.openEpisodeDetailView(arg_3_0)
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EpisodeLoadingController.instance = Season123EpisodeLoadingController.New()
 
-return var_0_0
+return Season123EpisodeLoadingController

@@ -1,180 +1,183 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryEnterView.lua
 
-local var_0_0 = class("RoleStoryEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.dungeon.view.rolestory.RoleStoryEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/#txt_LimitTime")
-	arg_1_0._btnenter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#image_reddot")
-	arg_1_0._simagephoto = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Photo")
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	arg_1_0._txttitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/Title/#txt_Title")
-	arg_1_0._txttitleen = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/Title/#txt_Titleen")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_signature")
-	arg_1_0.rewardItems = {}
+local RoleStoryEnterView = class("RoleStoryEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoleStoryEnterView:onInitView()
+	self._txttime = gohelper.findChildTextMesh(self.viewGO, "Left/#txt_LimitTime")
+	self._btnenter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._goreddot = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#image_reddot")
+	self._simagephoto = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Photo")
+	self._gorewardcontent = gohelper.findChild(self.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	self._txttitle = gohelper.findChildTextMesh(self.viewGO, "Left/Title/#txt_Title")
+	self._txttitleen = gohelper.findChildTextMesh(self.viewGO, "Left/Title/#txt_Titleen")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_signature")
+	self.rewardItems = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnenter:AddClickListener(arg_2_0._onClickEnter, arg_2_0)
+function RoleStoryEnterView:addEvents()
+	self._btnenter:AddClickListener(self._onClickEnter, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnenter:RemoveClickListener()
+function RoleStoryEnterView:removeEvents()
+	self._btnenter:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoleStoryEnterView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.actId = arg_5_0.viewContainer.activityId
+function RoleStoryEnterView:onOpen()
+	self.actId = self.viewContainer.activityId
 
-	var_0_0.super.onOpen(arg_5_0)
-	arg_5_0:refreshUI()
+	RoleStoryEnterView.super.onOpen(self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_6_0)
-	var_0_0.super.onClose(arg_6_0)
+function RoleStoryEnterView:onClose()
+	RoleStoryEnterView.super.onClose(self)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	if arg_7_0._simagephoto then
-		arg_7_0._simagephoto:UnLoadImage()
+function RoleStoryEnterView:onDestroyView()
+	if self._simagephoto then
+		self._simagephoto:UnLoadImage()
 
-		arg_7_0._simagephoto = nil
+		self._simagephoto = nil
 	end
 
-	if arg_7_0.rewardItems then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0.rewardItems) do
-			iter_7_1:onDestroy()
+	if self.rewardItems then
+		for k, v in pairs(self.rewardItems) do
+			v:onDestroy()
 		end
 
-		arg_7_0.rewardItems = nil
+		self.rewardItems = nil
 	end
 
-	if arg_7_0._simagesignature then
-		arg_7_0._simagesignature:UnLoadImage()
+	if self._simagesignature then
+		self._simagesignature:UnLoadImage()
 
-		arg_7_0._simagesignature = nil
+		self._simagesignature = nil
 	end
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:refreshRemainTime()
-	arg_8_0:refreshStory()
+function RoleStoryEnterView:refreshUI()
+	self:refreshRemainTime()
+	self:refreshStory()
 end
 
-function var_0_0.refreshStory(arg_9_0)
-	local var_9_0 = RoleStoryModel.instance:getCurActStoryId()
+function RoleStoryEnterView:refreshStory()
+	local curStoryId = RoleStoryModel.instance:getCurActStoryId()
 
-	if not var_9_0 or var_9_0 == 0 then
-		var_9_0 = RoleStoryConfig.instance:getStoryIdByActivityId(arg_9_0.actId)
+	if not curStoryId or curStoryId == 0 then
+		curStoryId = RoleStoryConfig.instance:getStoryIdByActivityId(self.actId)
 	end
 
-	if var_9_0 and var_9_0 > 0 then
-		local var_9_1 = RoleStoryConfig.instance:getStoryById(var_9_0)
+	if curStoryId and curStoryId > 0 then
+		local cfg = RoleStoryConfig.instance:getStoryById(curStoryId)
 
-		arg_9_0:refreshTitle(var_9_1)
+		self:refreshTitle(cfg)
 
-		local var_9_2 = var_9_1.photo
+		local photo = cfg.photo
 
-		arg_9_0._simagephoto:LoadImage(ResUrl.getRoleStoryPhotoIcon(var_9_2))
-		arg_9_0._simagesignature:LoadImage(ResUrl.getSignature(var_9_1.signature))
+		self._simagephoto:LoadImage(ResUrl.getRoleStoryPhotoIcon(photo))
+		self._simagesignature:LoadImage(ResUrl.getSignature(cfg.signature))
 	end
 
-	local var_9_3 = ActivityConfig.instance:getActivityCo(arg_9_0.actId)
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	RedDotController.instance:addRedDot(arg_9_0._goreddot, var_9_3.redDotId)
+	RedDotController.instance:addRedDot(self._goreddot, actCo.redDotId)
 
-	local var_9_4 = GameUtil.splitString2(var_9_3.activityBonus, true) or {}
+	local rewards = GameUtil.splitString2(actCo.activityBonus, true) or {}
 
-	for iter_9_0 = 1, math.max(#var_9_4, #arg_9_0.rewardItems) do
-		local var_9_5 = arg_9_0.rewardItems[iter_9_0]
-		local var_9_6 = var_9_4[iter_9_0]
+	for i = 1, math.max(#rewards, #self.rewardItems) do
+		local item = self.rewardItems[i]
+		local data = rewards[i]
 
-		if not var_9_5 then
-			var_9_5 = IconMgr.instance:getCommonPropItemIcon(arg_9_0._gorewardcontent)
+		if not item then
+			item = IconMgr.instance:getCommonPropItemIcon(self._gorewardcontent)
 
-			table.insert(arg_9_0.rewardItems, var_9_5)
+			table.insert(self.rewardItems, item)
 		end
 
-		if var_9_6 then
-			gohelper.setActive(var_9_5.go, true)
-			var_9_5:setMOValue(var_9_6[1], var_9_6[2], var_9_6[3] or 1, nil, true)
-			var_9_5:isShowEquipAndItemCount(false)
-			var_9_5:hideEquipLvAndBreak(true)
+		if data then
+			gohelper.setActive(item.go, true)
+			item:setMOValue(data[1], data[2], data[3] or 1, nil, true)
+			item:isShowEquipAndItemCount(false)
+			item:hideEquipLvAndBreak(true)
 		else
-			gohelper.setActive(var_9_5.go, false)
+			gohelper.setActive(item.go, false)
 		end
 	end
 end
 
-function var_0_0.refreshTitle(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function RoleStoryEnterView:refreshTitle(cfg)
+	if not cfg then
 		return
 	end
 
-	local var_10_0 = arg_10_1.name
-	local var_10_1 = GameUtil.utf8len(var_10_0)
-	local var_10_2 = GameUtil.utf8sub(var_10_0, 1, 1)
-	local var_10_3 = ""
-	local var_10_4 = ""
+	local name = cfg.name
+	local strLen = GameUtil.utf8len(name)
+	local first = GameUtil.utf8sub(name, 1, 1)
+	local second = ""
+	local remain = ""
 
-	if var_10_1 > 1 then
-		var_10_3 = GameUtil.utf8sub(var_10_0, 2, 2)
+	if strLen > 1 then
+		second = GameUtil.utf8sub(name, 2, 2)
 	end
 
-	if var_10_1 > 3 then
-		var_10_4 = GameUtil.utf8sub(var_10_0, 4, var_10_1 - 3)
+	if strLen > 3 then
+		remain = GameUtil.utf8sub(name, 4, strLen - 3)
 	end
 
-	arg_10_0._txttitle.text = string.format("<size=105>%s</size><size=70>%s</size>%s", var_10_2, var_10_3, var_10_4)
-	arg_10_0._txttitleen.text = arg_10_1.nameEn
+	self._txttitle.text = string.format("<size=105>%s</size><size=70>%s</size>%s", first, second, remain)
+	self._txttitleen.text = cfg.nameEn
 end
 
-function var_0_0.everySecondCall(arg_11_0)
-	arg_11_0:refreshRemainTime()
+function RoleStoryEnterView:everySecondCall()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshRemainTime(arg_12_0)
-	local var_12_0 = ActivityModel.instance:getActMO(arg_12_0.actId):getRealEndTimeStamp() - ServerTime.now()
+function RoleStoryEnterView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActMO(self.actId)
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	gohelper.setActive(arg_12_0._txttime, var_12_0 > 0)
+	gohelper.setActive(self._txttime, offsetSecond > 0)
 
-	if var_12_0 > 0 then
-		local var_12_1, var_12_2, var_12_3, var_12_4 = TimeUtil.secondsToDDHHMMSS(var_12_0)
-		local var_12_5
+	if offsetSecond > 0 then
+		local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(offsetSecond)
+		local timeFormat
 
 		if LangSettings.instance:isEn() then
-			local var_12_6 = "<color=#BC5E18>%s</color>%s <color=#BC5E18>%s</color>%s"
+			local kFmt = "<color=#BC5E18>%s</color>%s <color=#BC5E18>%s</color>%s"
 
-			if var_12_1 > 0 then
-				var_12_5 = string.format(var_12_6, var_12_1, luaLang("time_day"), var_12_2, luaLang("time_hour2"))
-			elseif var_12_2 > 0 then
-				var_12_5 = string.format(var_12_6, var_12_2, luaLang("time_hour2"), var_12_3, luaLang("time_minute2"))
+			if day > 0 then
+				timeFormat = string.format(kFmt, day, luaLang("time_day"), hour, luaLang("time_hour2"))
+			elseif hour > 0 then
+				timeFormat = string.format(kFmt, hour, luaLang("time_hour2"), min, luaLang("time_minute2"))
 			else
-				var_12_5 = string.format(var_12_6, var_12_3, luaLang("time_minute2"), var_12_4, luaLang("time_second"))
+				timeFormat = string.format(kFmt, min, luaLang("time_minute2"), sec, luaLang("time_second"))
 			end
-		elseif var_12_1 > 0 then
-			var_12_5 = string.format("<color=#BC5E18>%s</color>%s<color=#BC5E18>%s</color>%s", var_12_1, luaLang("time_day"), var_12_2, luaLang("time_hour2"))
-		elseif var_12_2 > 0 then
-			var_12_5 = string.format("<color=#BC5E18>%s</color>%s<color=#BC5E18>%s</color>%s", var_12_2, luaLang("time_hour2"), var_12_3, luaLang("time_minute2"))
+		elseif day > 0 then
+			timeFormat = string.format("<color=#BC5E18>%s</color>%s<color=#BC5E18>%s</color>%s", day, luaLang("time_day"), hour, luaLang("time_hour2"))
+		elseif hour > 0 then
+			timeFormat = string.format("<color=#BC5E18>%s</color>%s<color=#BC5E18>%s</color>%s", hour, luaLang("time_hour2"), min, luaLang("time_minute2"))
 		else
-			var_12_5 = string.format("<color=#BC5E18>%s</color>%s<color=#BC5E18>%s</color>%s", var_12_3, luaLang("time_minute2"), var_12_4, luaLang("time_second"))
+			timeFormat = string.format("<color=#BC5E18>%s</color>%s<color=#BC5E18>%s</color>%s", min, luaLang("time_minute2"), sec, luaLang("time_second"))
 		end
 
-		arg_12_0._txttime.text = string.format("%s%s", luaLang("activity_remain"), var_12_5)
+		self._txttime.text = string.format("%s%s", luaLang("activity_remain"), timeFormat)
 	end
 end
 
-function var_0_0._onClickEnter(arg_13_0)
-	local var_13_0 = RoleStoryModel.instance:getCurActStoryId()
+function RoleStoryEnterView:_onClickEnter()
+	local curStoryId = RoleStoryModel.instance:getCurActStoryId()
 
-	NecrologistStoryController.instance:openGameView(var_13_0)
+	NecrologistStoryController.instance:openGameView(curStoryId)
 end
 
-return var_0_0
+return RoleStoryEnterView

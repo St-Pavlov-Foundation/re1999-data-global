@@ -1,33 +1,38 @@
-﻿module("modules.logic.fight.system.work.FightWorkChangeFightScene", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkChangeFightScene.lua
 
-local var_0_0 = class("FightWorkChangeFightScene", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkChangeFightScene", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.episodeId = arg_1_1
-	arg_1_0.battleId = arg_1_2
+local FightWorkChangeFightScene = class("FightWorkChangeFightScene", FightWorkItem)
 
-	local var_1_0, var_1_1 = FightHelper.buildSceneAndLevel(arg_1_1, arg_1_2)
+function FightWorkChangeFightScene:onConstructor(episodeId, battleId, sceneId, levelId)
+	self.episodeId = episodeId
+	self.battleId = battleId
 
-	if var_1_0 and var_1_1 then
-		arg_1_0.sceneId = var_1_0[1]
-		arg_1_0.levelId = var_1_1[1]
+	local sceneIds, levelIds = FightHelper.buildSceneAndLevel(episodeId, battleId)
+
+	if sceneIds and levelIds then
+		self.sceneId = sceneIds[1]
+		self.levelId = levelIds[1]
 	end
 
-	arg_1_0.SAFETIME = 30
+	self.SAFETIME = 30
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:_startLoadLevel()
+function FightWorkChangeFightScene:onStart()
+	self:_startLoadLevel()
 end
 
-function var_0_0._startLoadLevel(arg_3_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
-	GameSceneMgr.instance:getScene(SceneType.Fight).level:onSceneStart(arg_3_0.sceneId, arg_3_0.levelId)
+function FightWorkChangeFightScene:_startLoadLevel()
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+
+	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
+
+	fightScene.level:onSceneStart(self.sceneId, self.levelId)
 end
 
-function var_0_0._onLevelLoaded(arg_4_0)
+function FightWorkChangeFightScene:_onLevelLoaded()
 	GameSceneMgr.instance:getCurScene().camera:setSceneCameraOffset()
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkChangeFightScene

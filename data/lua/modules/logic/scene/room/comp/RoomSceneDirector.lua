@@ -1,253 +1,264 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneDirector.lua
 
-local var_0_0 = class("RoomSceneDirector", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneDirector", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneDirector = class("RoomSceneDirector", BaseSceneComp)
+
+function RoomSceneDirector:onInit()
 	return
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+function RoomSceneDirector:onSceneStart(sceneId, levelId)
 	RoomHelper.logElapse("RoomSceneDirector:onSceneStart")
 
-	if GameGlobalMgr.instance:getScreenState():getLocalQuality() == ModuleEnum.Performance.Low then
-		UnityEngine.QualitySettings.masterTextureLimit = 1
+	local quality = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+
+	if quality == ModuleEnum.Performance.Low then
+		UnityEngine.QualitySettings.globalTextureMipmapLimit = 1
 	else
-		UnityEngine.QualitySettings.masterTextureLimit = 0
+		UnityEngine.QualitySettings.globalTextureMipmapLimit = 0
 	end
 
-	RoomHelper.logElapse("RoomSceneDirector:set masterTextureLimit")
+	RoomHelper.logElapse("RoomSceneDirector:set globalTextureMipmapLimit")
 	RoomPreloadMgr.instance:dispose()
 
-	arg_2_0._scene = arg_2_0:getCurScene()
-	arg_2_0._compInitSequence = FlowSequenceRoom.New()
+	self._scene = self:getCurScene()
+	self._compInitSequence = FlowSequenceRoom.New()
 
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.tween))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.timer))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.init))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.tween))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.timer))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.init))
 
-	local var_2_0 = FlowParallelRoom.New()
+	local levelAndPreloadWork = FlowParallelRoom.New()
 
-	arg_2_0._compInitSequence:addWork(var_2_0)
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.level, CommonSceneLevelComp.OnLevelLoaded))
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.preloader, RoomScenePreloader.OnPreloadFinish))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.loader))
-	arg_2_0._compInitSequence:addWork(WorkWaitSeconds.New(0.01))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.bloom))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.go))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.fog))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.bending))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.ocean))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.light))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.weather))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.mapmgr))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.inventorymgr))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.buildingmgr))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.sitemgr))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.graphics))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.ambient))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.camera))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.cameraFollow))
-	arg_2_0._compInitSequence:addWork(RoomPreloadCharacterWork.New())
-	arg_2_0._compInitSequence:registerDoneListener(arg_2_0._compInitDone, arg_2_0)
-	arg_2_0._compInitSequence:start({
-		sceneId = arg_2_1,
-		levelId = arg_2_2
+	self._compInitSequence:addWork(levelAndPreloadWork)
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.level, CommonSceneLevelComp.OnLevelLoaded))
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.preloader, RoomScenePreloader.OnPreloadFinish))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.loader))
+	self._compInitSequence:addWork(WorkWaitSeconds.New(0.01))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.bloom))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.go))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.fog))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.bending))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.ocean))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.light))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.weather))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.mapmgr))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.inventorymgr))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.buildingmgr))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.sitemgr))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.graphics))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.ambient))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.camera))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.cameraFollow))
+	self._compInitSequence:addWork(RoomPreloadCharacterWork.New())
+	self._compInitSequence:registerDoneListener(self._compInitDone, self)
+	self._compInitSequence:start({
+		sceneId = sceneId,
+		levelId = levelId
 	})
 end
 
-function var_0_0._compInitDone(arg_3_0)
-	arg_3_0:_getInteractionReward()
-	GameGlobalMgr.instance:getScreenState():resetMaxFileLoadingCount()
-	arg_3_0._scene:onPrepared()
+function RoomSceneDirector:_compInitDone()
+	self:_getInteractionReward()
+
+	local gameScreenState = GameGlobalMgr.instance:getScreenState()
+
+	gameScreenState:resetMaxFileLoadingCount()
+	self._scene:onPrepared()
 	RoomHelper.logElapse("onPrepared")
 
-	if RoomMapController.instance:isResetEdit() then
+	local isResetEdit = RoomMapController.instance:isResetEdit()
+
+	if isResetEdit then
 		RoomMapController.instance:dispatchEvent(RoomEvent.Reset)
 	end
 
 	RoomHelper.initSceneRootTrs()
 
-	if GameSceneMgr.instance:getPreSceneType() == SceneType.Room then
+	local preSceneType = GameSceneMgr.instance:getPreSceneType()
+
+	if preSceneType == SceneType.Room then
 		if RoomController.instance:isObMode() then
-			arg_3_0._scene.camera:playCameraAnim("out_show")
+			self._scene.camera:playCameraAnim("out_show")
 		elseif RoomController.instance:isEditMode() then
-			arg_3_0._scene.camera:playCameraAnim("out_edit")
+			self._scene.camera:playCameraAnim("out_edit")
 		else
-			arg_3_0._scene.camera:playCameraAnim("idle")
+			self._scene.camera:playCameraAnim("idle")
 		end
 	else
-		arg_3_0._scene.camera:playCameraAnim("idle")
+		self._scene.camera:playCameraAnim("idle")
 		RoomMapController.instance:statRoomStart()
 	end
 
-	arg_3_0._compLateInitFlow = FlowParallelRoom.New()
+	self._compLateInitFlow = FlowParallelRoom.New()
 
-	local var_3_0 = FlowSequenceRoom.New()
-	local var_3_1 = FlowSequenceRoom.New()
+	local flowSequence1 = FlowSequenceRoom.New()
+	local flowSequence2 = FlowSequenceRoom.New()
 
-	arg_3_0._compLateInitFlow:addWork(var_3_0)
-	arg_3_0._compLateInitFlow:addWork(var_3_1)
-	var_3_0:addWork(WorkWaitSeconds.New(0.2))
-	var_3_0:addWork(RoomSceneWaitEventCompWork.New(arg_3_0._scene.view, RoomSceneViewComp.OnOpenView))
+	self._compLateInitFlow:addWork(flowSequence1)
+	self._compLateInitFlow:addWork(flowSequence2)
+	flowSequence1:addWork(WorkWaitSeconds.New(0.2))
+	flowSequence1:addWork(RoomSceneWaitEventCompWork.New(self._scene.view, RoomSceneViewComp.OnOpenView))
 
-	if arg_3_0._scene.confirmview then
-		var_3_0:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.confirmview))
+	if self._scene.confirmview then
+		flowSequence1:addWork(RoomSceneCommonCompWork.New(self._scene.confirmview))
 	end
 
-	var_3_0:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.debug))
-	var_3_0:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.audio))
-	var_3_1:addWork(WorkWaitSeconds.New(0.01))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.touch))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.path))
-	var_3_1:addWork(RoomSceneWaitAStarWork.New(arg_3_0._scene))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.character))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.charactermgr))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.fovblock))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.vehiclemgr))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.crittermgr))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.buildingcrittermgr))
-	var_3_1:addWork(RoomSceneCommonCompWork.New(arg_3_0._scene.fsm))
-	var_3_1:addWork(RoomSceneCharacterInteractionWork.New(arg_3_0._scene))
-	var_3_0:addWork(WorkWaitSeconds.New(0.1))
-	var_3_0:addWork(RoomSceneWaitEventCompWork.New(arg_3_0._scene.view, RoomSceneViewComp.OnOpenView))
-	var_3_1:addWork(WorkWaitSeconds.New(0.5))
-	arg_3_0._compLateInitFlow:registerDoneListener(arg_3_0._compLateInitDone, arg_3_0)
-	arg_3_0._compLateInitFlow:start({})
+	flowSequence1:addWork(RoomSceneCommonCompWork.New(self._scene.debug))
+	flowSequence1:addWork(RoomSceneCommonCompWork.New(self._scene.audio))
+	flowSequence2:addWork(WorkWaitSeconds.New(0.01))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.touch))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.path))
+	flowSequence2:addWork(RoomSceneWaitAStarWork.New(self._scene))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.character))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.charactermgr))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.fovblock))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.vehiclemgr))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.crittermgr))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.buildingcrittermgr))
+	flowSequence2:addWork(RoomSceneCommonCompWork.New(self._scene.fsm))
+	flowSequence2:addWork(RoomSceneCharacterInteractionWork.New(self._scene))
+	flowSequence1:addWork(WorkWaitSeconds.New(0.1))
+	flowSequence1:addWork(RoomSceneWaitEventCompWork.New(self._scene.view, RoomSceneViewComp.OnOpenView))
+	flowSequence2:addWork(WorkWaitSeconds.New(0.5))
+	self._compLateInitFlow:registerDoneListener(self._compLateInitDone, self)
+	self._compLateInitFlow:start({})
 end
 
-function var_0_0.switchMode(arg_4_0)
+function RoomSceneDirector:switchMode()
 	if RoomController.instance:isObMode() then
-		arg_4_0._scene.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
-		arg_4_0._scene.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
-		arg_4_0._scene.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBuilding)
+		self._scene.fsm:triggerEvent(RoomSceneEvent.CancelBackBlock)
+		self._scene.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
+		self._scene.fsm:triggerEvent(RoomSceneEvent.CancelPlaceBuilding)
 	end
 
-	local var_4_0 = RoomController.instance:isObMode() and (RoomModel.instance:hasEdit() or RoomController.instance:isReset())
+	local needRebuildPath = RoomController.instance:isObMode() and (RoomModel.instance:hasEdit() or RoomController.instance:isReset())
 
 	RoomModel.instance:clearEditFlag()
-	arg_4_0._scene.view:onSceneClose()
-	arg_4_0._scene.camera:onSceneClose()
-	arg_4_0._scene.init:onSceneClose()
-	arg_4_0._scene.audio:onSceneClose()
+	self._scene.view:onSceneClose()
+	self._scene.camera:onSceneClose()
+	self._scene.init:onSceneClose()
+	self._scene.audio:onSceneClose()
 
 	if RoomController.instance:isReset() then
 		RoomMapController.instance:initMap()
-		arg_4_0._scene.mapmgr:onSwitchMode()
-		arg_4_0._scene.inventorymgr:onSceneClose()
-		arg_4_0._scene.buildingmgr:onSwitchMode()
-		arg_4_0._scene.sitemgr:onSwitchMode()
-		arg_4_0._scene.vehiclemgr:onStopMode()
+		self._scene.mapmgr:onSwitchMode()
+		self._scene.inventorymgr:onSceneClose()
+		self._scene.buildingmgr:onSwitchMode()
+		self._scene.sitemgr:onSwitchMode()
+		self._scene.vehiclemgr:onStopMode()
 	end
 
-	if var_4_0 then
-		arg_4_0._scene.path:doNeedPathGOs()
-		arg_4_0._scene.path:onSceneClose()
+	if needRebuildPath then
+		self._scene.path:doNeedPathGOs()
+		self._scene.path:onSceneClose()
 	end
 
-	arg_4_0._scene.character:onSceneClose()
-	arg_4_0._scene.charactermgr:onSceneClose()
-	arg_4_0._scene.fovblock:onSceneClose()
-	arg_4_0._scene.crittermgr:onSceneClose()
-	arg_4_0._scene.buildingcrittermgr:onSceneClose()
-	arg_4_0._scene.fsm:onSceneClose()
-	arg_4_0._scene.preloader:clearPools()
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, arg_4_0)
+	self._scene.character:onSceneClose()
+	self._scene.charactermgr:onSceneClose()
+	self._scene.fovblock:onSceneClose()
+	self._scene.crittermgr:onSceneClose()
+	self._scene.buildingcrittermgr:onSceneClose()
+	self._scene.fsm:onSceneClose()
+	self._scene.preloader:clearPools()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, self)
 
-	arg_4_0._switchModeInitFlow = FlowSequenceRoom.New()
+	self._switchModeInitFlow = FlowSequenceRoom.New()
 
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.init))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.camera))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.init))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.camera))
 
 	if RoomController.instance:isReset() then
-		arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.mapmgr))
-		arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.inventorymgr))
-		arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.buildingmgr))
-		arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.sitemgr))
-		arg_4_0._switchModeInitFlow:addWork(RoomSceneWaitEventCompWork.New(arg_4_0._scene.preloader, RoomScenePreloader.OnPreloadFinish))
+		self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.mapmgr))
+		self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.inventorymgr))
+		self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.buildingmgr))
+		self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.sitemgr))
+		self._switchModeInitFlow:addWork(RoomSceneWaitEventCompWork.New(self._scene.preloader, RoomScenePreloader.OnPreloadFinish))
 	end
 
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.audio))
-	arg_4_0._switchModeInitFlow:addWork(RoomPreloadCharacterWork.New())
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.audio))
+	self._switchModeInitFlow:addWork(RoomPreloadCharacterWork.New())
 
-	if var_4_0 then
-		arg_4_0._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.01))
-		arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.path))
+	if needRebuildPath then
+		self._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.01))
+		self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.path))
 	end
 
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneWaitAStarWork.New(arg_4_0._scene))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.character))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.charactermgr))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.fovblock))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.fsm))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCharacterInteractionWork.New(arg_4_0._scene))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.ambient))
-	arg_4_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.cameraFollow))
-	arg_4_0._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.01))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.crittermgr))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(arg_4_0._scene.buildingcrittermgr))
-	arg_4_0._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.01))
-	arg_4_0._switchModeInitFlow:addWork(RoomSceneWaitEventCompWork.New(arg_4_0._scene.view, RoomSceneViewComp.OnOpenView))
-	arg_4_0._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.1))
-	arg_4_0._switchModeInitFlow:registerDoneListener(arg_4_0._switchModeInitDone, arg_4_0)
-	arg_4_0._switchModeInitFlow:start({})
+	self._switchModeInitFlow:addWork(RoomSceneWaitAStarWork.New(self._scene))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.character))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.charactermgr))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.fovblock))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.fsm))
+	self._switchModeInitFlow:addWork(RoomSceneCharacterInteractionWork.New(self._scene))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.ambient))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.cameraFollow))
+	self._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.01))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.crittermgr))
+	self._switchModeInitFlow:addWork(RoomSceneCommonCompWork.New(self._scene.buildingcrittermgr))
+	self._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.01))
+	self._switchModeInitFlow:addWork(RoomSceneWaitEventCompWork.New(self._scene.view, RoomSceneViewComp.OnOpenView))
+	self._switchModeInitFlow:addWork(WorkWaitSeconds.New(0.1))
+	self._switchModeInitFlow:registerDoneListener(self._switchModeInitDone, self)
+	self._switchModeInitFlow:start({})
 end
 
-function var_0_0._compLateInitDone(arg_5_0)
+function RoomSceneDirector:_compLateInitDone()
 	RoomHelper.logElapse("late init done")
 	RoomController.instance:dispatchEvent(RoomEvent.OnLateInitDone)
 end
 
-function var_0_0._switchModeInitDone(arg_6_0)
+function RoomSceneDirector:_switchModeInitDone()
 	RoomHelper.logElapse("switch mode init done")
 
 	if RoomController.instance:isObMode() then
-		arg_6_0._scene.camera:playCameraAnim("out_show")
+		self._scene.camera:playCameraAnim("out_show")
 	elseif RoomController.instance:isEditMode() then
-		arg_6_0._scene.camera:playCameraAnim("out_edit")
+		self._scene.camera:playCameraAnim("out_edit")
 	else
-		arg_6_0._scene.camera:playCameraAnim("idle")
+		self._scene.camera:playCameraAnim("idle")
 	end
 
-	arg_6_0._scene.vehiclemgr:onSwitchMode()
+	self._scene.vehiclemgr:onSwitchMode()
 	RoomController.instance:dispatchEvent(RoomEvent.OnSwitchModeDone)
 end
 
-function var_0_0._getInteractionReward(arg_7_0)
+function RoomSceneDirector:_getInteractionReward()
 	if not RoomController.instance:isObMode() then
 		return
 	end
 
-	local var_7_0 = RoomModel.instance:getExistInteractionDict()
+	local existInteractionDict = RoomModel.instance:getExistInteractionDict()
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if iter_7_1 == RoomCharacterEnum.InteractionState.Start and not RoomCharacterHelper.interactionIsDialogWithSelect(iter_7_0) then
-			RoomRpc.instance:sendGetCharacterInteractionBonusRequest(iter_7_0)
+	for id, state in pairs(existInteractionDict) do
+		if state == RoomCharacterEnum.InteractionState.Start and not RoomCharacterHelper.interactionIsDialogWithSelect(id) then
+			RoomRpc.instance:sendGetCharacterInteractionBonusRequest(id)
 		end
 	end
 end
 
-function var_0_0.onSceneClose(arg_8_0)
+function RoomSceneDirector:onSceneClose()
 	ViewMgr.instance:closeAllPopupViews()
-	arg_8_0._compInitSequence:unregisterDoneListener(arg_8_0._compInitDone, arg_8_0)
-	arg_8_0._compInitSequence:stop()
+	self._compInitSequence:unregisterDoneListener(self._compInitDone, self)
+	self._compInitSequence:stop()
 
-	arg_8_0._compInitSequence = nil
+	self._compInitSequence = nil
 
-	if arg_8_0._compLateInitFlow then
-		arg_8_0._compLateInitFlow:unregisterDoneListener(arg_8_0._compInitDone, arg_8_0)
-		arg_8_0._compLateInitFlow:stop()
+	if self._compLateInitFlow then
+		self._compLateInitFlow:unregisterDoneListener(self._compInitDone, self)
+		self._compLateInitFlow:stop()
 
-		arg_8_0._compLateInitFlow = nil
+		self._compLateInitFlow = nil
 	end
 
-	if arg_8_0._switchModeInitFlow then
-		arg_8_0._switchModeInitFlow:unregisterDoneListener(arg_8_0._switchModeInitDone, arg_8_0)
-		arg_8_0._switchModeInitFlow:stop()
+	if self._switchModeInitFlow then
+		self._switchModeInitFlow:unregisterDoneListener(self._switchModeInitDone, self)
+		self._switchModeInitFlow:stop()
 
-		arg_8_0._switchModeInitFlow = nil
+		self._switchModeInitFlow = nil
 	end
 
 	ZProj.RoomHelper.ReleaseRaycastHitsAlloc()
 end
 
-return var_0_0
+return RoomSceneDirector

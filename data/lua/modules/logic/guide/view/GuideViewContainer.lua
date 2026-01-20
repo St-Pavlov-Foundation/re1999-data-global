@@ -1,8 +1,10 @@
-﻿module("modules.logic.guide.view.GuideViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/guide/view/GuideViewContainer.lua
 
-local var_0_0 = class("GuideViewContainer", BaseViewContainer)
+module("modules.logic.guide.view.GuideViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GuideViewContainer = class("GuideViewContainer", BaseViewContainer)
+
+function GuideViewContainer:buildViews()
 	return {
 		GuideView.New(),
 		GuideMaskView.New(),
@@ -12,4 +14,4 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-return var_0_0
+return GuideViewContainer

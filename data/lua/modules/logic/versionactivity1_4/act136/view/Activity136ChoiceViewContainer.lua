@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity1_4.act136.view.Activity136ChoiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/view/Activity136ChoiceViewContainer.lua
 
-local var_0_0 = class("Activity136ChoiceViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act136.view.Activity136ChoiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Activity136ChoiceViewContainer = class("Activity136ChoiceViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "root/#scroll_item"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = Activity136ChoiceItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 6
-	var_1_1.cellWidth = 200
-	var_1_1.cellHeight = 225
-	var_1_1.cellSpaceH = 30
-	var_1_1.startSpace = 10
+function Activity136ChoiceViewContainer:buildViews()
+	local views = {}
+	local listScrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, Activity136ChoiceView.New())
-	table.insert(var_1_0, LuaListScrollView.New(Activity136ChoiceViewListModel.instance, var_1_1))
+	listScrollParam.scrollGOPath = "root/#scroll_item"
+	listScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	listScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	listScrollParam.cellClass = Activity136ChoiceItem
+	listScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	listScrollParam.lineCount = 6
+	listScrollParam.cellWidth = 200
+	listScrollParam.cellHeight = 225
+	listScrollParam.cellSpaceH = 30
+	listScrollParam.startSpace = 10
 
-	return var_1_0
+	table.insert(views, Activity136ChoiceView.New())
+	table.insert(views, LuaListScrollView.New(Activity136ChoiceViewListModel.instance, listScrollParam))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Activity136ChoiceViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity136ChoiceViewContainer

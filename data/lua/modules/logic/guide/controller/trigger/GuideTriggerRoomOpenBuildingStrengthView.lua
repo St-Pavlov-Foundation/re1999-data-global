@@ -1,19 +1,26 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomOpenBuildingStrengthView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerRoomOpenBuildingStrengthView.lua
 
-local var_0_0 = class("GuideTriggerRoomOpenBuildingStrengthView", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerRoomOpenBuildingStrengthView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local GuideTriggerRoomOpenBuildingStrengthView = class("GuideTriggerRoomOpenBuildingStrengthView", BaseGuideTrigger)
+
+function GuideTriggerRoomOpenBuildingStrengthView:ctor(triggerKey)
+	GuideTriggerRoomOpenBuildingStrengthView.super.ctor(self, triggerKey)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return GameSceneMgr.instance:getCurSceneType() == SceneType.Room
+function GuideTriggerRoomOpenBuildingStrengthView:assertGuideSatisfy(param, configParam)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+	local isRoomScene = sceneType == SceneType.Room
+
+	return isRoomScene
 end
 
-function var_0_0._onOpenBuildingStrengthView(arg_3_0, arg_3_1)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerRoomOpenBuildingStrengthView:_onOpenBuildingStrengthView(buildingId)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Room then
+		self:checkStartGuide(buildingId)
 	end
 end
 
-return var_0_0
+return GuideTriggerRoomOpenBuildingStrengthView

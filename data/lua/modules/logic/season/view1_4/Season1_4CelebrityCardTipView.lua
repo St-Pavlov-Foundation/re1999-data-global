@@ -1,281 +1,283 @@
-﻿module("modules.logic.season.view1_4.Season1_4CelebrityCardTipView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_4/Season1_4CelebrityCardTipView.lua
 
-local var_0_0 = class("Season1_4CelebrityCardTipView", BaseView)
+module("modules.logic.season.view1_4.Season1_4CelebrityCardTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local Season1_4CelebrityCardTipView = class("Season1_4CelebrityCardTipView", BaseView)
 
-	local var_1_0 = GMController.instance:getGMNode("seasoncelebritycardtipview", arg_1_0.viewGO)
+function Season1_4CelebrityCardTipView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 
-	if var_1_0 then
-		arg_1_0._gogm = gohelper.findChild(var_1_0, "#go_gm")
-		arg_1_0._txtmattip = gohelper.findChildText(var_1_0, "#go_gm/bg/#txt_mattip")
-		arg_1_0._btnone = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_one")
-		arg_1_0._btnten = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_ten")
-		arg_1_0._btnhundred = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_hundred")
-		arg_1_0._btnthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_thousand")
-		arg_1_0._btntenthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenthousand")
-		arg_1_0._btntenmillion = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenmillion")
-		arg_1_0._btninput = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_input")
+	local guideGMNode = GMController.instance:getGMNode("seasoncelebritycardtipview", self.viewGO)
+
+	if guideGMNode then
+		self._gogm = gohelper.findChild(guideGMNode, "#go_gm")
+		self._txtmattip = gohelper.findChildText(guideGMNode, "#go_gm/bg/#txt_mattip")
+		self._btnone = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_one")
+		self._btnten = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_ten")
+		self._btnhundred = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_hundred")
+		self._btnthousand = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_thousand")
+		self._btntenthousand = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_tenthousand")
+		self._btntenmillion = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_tenmillion")
+		self._btninput = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_input")
 	end
 
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
-	arg_1_0._txtpropname = gohelper.findChildText(arg_1_0.viewGO, "#txt_propname")
-	arg_1_0._txtpropnameen = gohelper.findChildText(arg_1_0.viewGO, "#txt_propname/#txt_propnameen")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effect")
-	arg_1_0._goeffectitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effect/#go_effectitem")
-	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc")
-	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/#go_effectdescitem")
-	arg_1_0._txthadnumber = gohelper.findChildText(arg_1_0.viewGO, "#go_quantity/#txt_hadnumber")
-	arg_1_0._goquantity = gohelper.findChild(arg_1_0.viewGO, "#go_quantity")
-	arg_1_0._gocard = gohelper.findChild(arg_1_0.viewGO, "#go_card")
-	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "#go_ctrl/#go_targetcardpos/#go_carditem")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
+	self._txtpropname = gohelper.findChildText(self.viewGO, "#txt_propname")
+	self._txtpropnameen = gohelper.findChildText(self.viewGO, "#txt_propname/#txt_propnameen")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._goeffect = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/#go_effect")
+	self._goeffectitem = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/#go_effect/#go_effectitem")
+	self._goeffectdesc = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/#go_effectdesc")
+	self._goeffectdescitem = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/#go_effectdescitem")
+	self._txthadnumber = gohelper.findChildText(self.viewGO, "#go_quantity/#txt_hadnumber")
+	self._goquantity = gohelper.findChild(self.viewGO, "#go_quantity")
+	self._gocard = gohelper.findChild(self.viewGO, "#go_card")
+	self._gocarditem = gohelper.findChild(self.viewGO, "#go_ctrl/#go_targetcardpos/#go_carditem")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
-	end
-end
-
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-
-	if arg_2_0._gogm then
-		arg_2_0._btnone:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 1)
-		arg_2_0._btnten:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 10)
-		arg_2_0._btnhundred:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 100)
-		arg_2_0._btnthousand:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 1000)
-		arg_2_0._btntenthousand:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 10000)
-		arg_2_0._btntenmillion:AddClickListener(arg_2_0.onClickGMAdd, arg_2_0, 10000000)
-		arg_2_0._btninput:AddClickListener(arg_2_0._btninputOnClick, arg_2_0)
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Season1_4CelebrityCardTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 
-	if arg_3_0._gogm then
-		arg_3_0._btnone:RemoveClickListener()
-		arg_3_0._btnten:RemoveClickListener()
-		arg_3_0._btnhundred:RemoveClickListener()
-		arg_3_0._btnthousand:RemoveClickListener()
-		arg_3_0._btntenthousand:RemoveClickListener()
-		arg_3_0._btntenmillion:RemoveClickListener()
-		arg_3_0._btninput:RemoveClickListener()
+	if self._gogm then
+		self._btnone:AddClickListener(self.onClickGMAdd, self, 1)
+		self._btnten:AddClickListener(self.onClickGMAdd, self, 10)
+		self._btnhundred:AddClickListener(self.onClickGMAdd, self, 100)
+		self._btnthousand:AddClickListener(self.onClickGMAdd, self, 1000)
+		self._btntenthousand:AddClickListener(self.onClickGMAdd, self, 10000)
+		self._btntenmillion:AddClickListener(self.onClickGMAdd, self, 10000000)
+		self._btninput:AddClickListener(self._btninputOnClick, self)
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season1_4CelebrityCardTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+
+	if self._gogm then
+		self._btnone:RemoveClickListener()
+		self._btnten:RemoveClickListener()
+		self._btnhundred:RemoveClickListener()
+		self._btnthousand:RemoveClickListener()
+		self._btntenthousand:RemoveClickListener()
+		self._btntenmillion:RemoveClickListener()
+		self._btninput:RemoveClickListener()
+	end
 end
 
-function var_0_0.onClickGMAdd(arg_5_0, arg_5_1)
-	GameFacade.showToast(ToastEnum.GMTool5, arg_5_0.viewParam.id)
-	GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", arg_5_0.viewParam.type, arg_5_0.viewParam.id, 10))
+function Season1_4CelebrityCardTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btninputOnClick(arg_6_0)
-	local var_6_0 = CommonInputMO.New()
+function Season1_4CelebrityCardTipView:onClickGMAdd(count)
+	GameFacade.showToast(ToastEnum.GMTool5, self.viewParam.id)
+	GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", self.viewParam.type, self.viewParam.id, 10))
+end
 
-	var_6_0.title = "请输入增加道具数量！"
-	var_6_0.defaultInput = "Enter Item Num"
+function Season1_4CelebrityCardTipView:_btninputOnClick()
+	local inputMo = CommonInputMO.New()
 
-	function var_6_0.sureCallback(arg_7_0)
+	inputMo.title = "请输入增加道具数量！"
+	inputMo.defaultInput = "Enter Item Num"
+
+	function inputMo.sureCallback(inputStr)
 		GameFacade.closeInputBox()
 
-		local var_7_0 = tonumber(arg_7_0)
+		local inputNum = tonumber(inputStr)
 
-		if var_7_0 and var_7_0 > 0 then
-			GameFacade.showToast(ToastEnum.GMTool5, arg_6_0.viewParam.id)
-			GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", arg_6_0.viewParam.type, arg_6_0.viewParam.id, var_7_0))
+		if inputNum and inputNum > 0 then
+			GameFacade.showToast(ToastEnum.GMTool5, self.viewParam.id)
+			GMRpc.instance:sendGMRequest(string.format("add material %d#%d#%d", self.viewParam.type, self.viewParam.id, inputNum))
 		end
 	end
 
-	GameFacade.openInputBox(var_6_0)
+	GameFacade.openInputBox(inputMo)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_8_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function Season1_4CelebrityCardTipView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	arg_8_0._goSkillTitle = gohelper.findChild(arg_8_0.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/title")
-	arg_8_0._propItems = {}
-	arg_8_0._skillItems = {}
+	self._goSkillTitle = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/#go_effectdesc/title")
+	self._propItems = {}
+	self._skillItems = {}
 
-	if arg_8_0._gogm then
-		gohelper.setActive(arg_8_0._gogm, GMController.instance:isOpenGM())
+	if self._gogm then
+		gohelper.setActive(self._gogm, GMController.instance:isOpenGM())
 	end
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simagebg1:UnLoadImage()
-	arg_9_0._simagebg2:UnLoadImage()
+function Season1_4CelebrityCardTipView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 
-	if arg_9_0._icon then
-		arg_9_0._icon:disposeUI()
+	if self._icon then
+		self._icon:disposeUI()
 
-		arg_9_0._icon = nil
+		self._icon = nil
 	end
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._itemId = arg_10_0.viewParam.id
-	arg_10_0._itemCfg = ItemModel.instance:getItemConfigAndIcon(arg_10_0.viewParam.type, arg_10_0._itemId)
-	arg_10_0._activityId = arg_10_0.viewParam.actId or Activity104Model.instance:getCurSeasonId()
+function Season1_4CelebrityCardTipView:onOpen()
+	self._itemId = self.viewParam.id
+	self._itemCfg = ItemModel.instance:getItemConfigAndIcon(self.viewParam.type, self._itemId)
+	self._activityId = self.viewParam.actId or Activity104Model.instance:getCurSeasonId()
 
-	if not arg_10_0._itemCfg then
-		logError("can't find card cfg : " .. tostring(arg_10_0._itemId))
+	if not self._itemCfg then
+		logError("can't find card cfg : " .. tostring(self._itemId))
 
 		return
 	end
 
-	arg_10_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_11_0)
+function Season1_4CelebrityCardTipView:onClose()
 	return
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	arg_12_0._txtpropname.text = arg_12_0._itemCfg.name
+function Season1_4CelebrityCardTipView:refreshUI()
+	self._txtpropname.text = self._itemCfg.name
 
-	if arg_12_0._txtmattip then
-		arg_12_0._txtmattip.text = tostring(arg_12_0.viewParam.type) .. "#" .. tostring(arg_12_0.viewParam.id)
+	if self._txtmattip then
+		self._txtmattip.text = tostring(self.viewParam.type) .. "#" .. tostring(self.viewParam.id)
 	end
 
-	arg_12_0:checkCreateIcon()
-	arg_12_0._icon:updateData(arg_12_0._itemId)
-	arg_12_0:refreshQuantity()
+	self:checkCreateIcon()
+	self._icon:updateData(self._itemId)
+	self:refreshQuantity()
 
-	local var_12_0 = arg_12_0:refreshProps()
-	local var_12_1 = arg_12_0:refreshSkills()
+	local isPropDirty = self:refreshProps()
+	local isSkillDirty = self:refreshSkills()
 
-	if not var_12_0 or not var_12_1 then
-		gohelper.setActive(arg_12_0._goSkillTitle, false)
+	if not isPropDirty or not isSkillDirty then
+		gohelper.setActive(self._goSkillTitle, false)
 	end
 end
 
-function var_0_0.refreshQuantity(arg_13_0)
-	if arg_13_0.viewParam.needQuantity then
-		gohelper.setActive(arg_13_0._goquantity, true)
+function Season1_4CelebrityCardTipView:refreshQuantity()
+	if self.viewParam.needQuantity then
+		gohelper.setActive(self._goquantity, true)
 
-		local var_13_0
+		local numStr
 
-		if arg_13_0.viewParam.fakeQuantity then
-			var_13_0 = tostring(arg_13_0.viewParam.fakeQuantity)
-		elseif arg_13_0._activityId then
-			var_13_0 = tostring(GameUtil.numberDisplay(SeasonEquipMetaUtils.getEquipCount(arg_13_0._activityId, arg_13_0._itemId)))
+		if self.viewParam.fakeQuantity then
+			numStr = tostring(self.viewParam.fakeQuantity)
+		elseif self._activityId then
+			numStr = tostring(GameUtil.numberDisplay(SeasonEquipMetaUtils.getEquipCount(self._activityId, self._itemId)))
 		else
-			var_13_0 = tostring(SeasonEquipMetaUtils.getCurSeasonEquipCount(arg_13_0._itemId))
+			numStr = tostring(SeasonEquipMetaUtils.getCurSeasonEquipCount(self._itemId))
 		end
 
-		arg_13_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_13_0)
+		self._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", numStr)
 	else
-		gohelper.setActive(arg_13_0._goquantity, false)
+		gohelper.setActive(self._goquantity, false)
 	end
 end
 
-function var_0_0.refreshProps(arg_14_0)
-	local var_14_0 = false
-	local var_14_1 = SeasonEquipMetaUtils.getEquipPropsStrList(arg_14_0._itemCfg.attrId, true)
-	local var_14_2 = SeasonEquipMetaUtils.getCareerColorBrightBg(arg_14_0._itemId)
-	local var_14_3 = {}
+function Season1_4CelebrityCardTipView:refreshProps()
+	local isDirty = false
+	local propsList = SeasonEquipMetaUtils.getEquipPropsStrList(self._itemCfg.attrId, true)
+	local colorStr = SeasonEquipMetaUtils.getCareerColorBrightBg(self._itemId)
+	local processedSet = {}
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_4 = arg_14_0:getOrCreatePropText(iter_14_0)
+	for index, propStr in ipairs(propsList) do
+		local item = self:getOrCreatePropText(index)
 
-		gohelper.setActive(var_14_4.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_14_4.txtDesc.text = iter_14_1
+		item.txtDesc.text = propStr
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_14_4.txtDesc, var_14_2)
-		SLFramework.UGUI.GuiHelper.SetColor(var_14_4.imagePoint, var_14_2)
+		SLFramework.UGUI.GuiHelper.SetColor(item.txtDesc, colorStr)
+		SLFramework.UGUI.GuiHelper.SetColor(item.imagePoint, colorStr)
 
-		var_14_3[var_14_4] = true
-		var_14_0 = true
+		processedSet[item] = true
+		isDirty = true
 	end
 
-	for iter_14_2, iter_14_3 in pairs(arg_14_0._propItems) do
-		if not var_14_3[iter_14_3] then
-			gohelper.setActive(iter_14_3.go, false)
+	for _, item in pairs(self._propItems) do
+		if not processedSet[item] then
+			gohelper.setActive(item.go, false)
 		end
 	end
 
-	gohelper.setActive(arg_14_0._goeffect, var_14_0)
+	gohelper.setActive(self._goeffect, isDirty)
 
-	return var_14_0
+	return isDirty
 end
 
-function var_0_0.refreshSkills(arg_15_0)
-	local var_15_0 = SeasonEquipMetaUtils.getSkillEffectStrList(arg_15_0._itemCfg)
-	local var_15_1 = SeasonEquipMetaUtils.getCareerColorBrightBg(arg_15_0._itemId)
-	local var_15_2 = false
-	local var_15_3 = {}
+function Season1_4CelebrityCardTipView:refreshSkills()
+	local skillList = SeasonEquipMetaUtils.getSkillEffectStrList(self._itemCfg)
+	local colorStr = SeasonEquipMetaUtils.getCareerColorBrightBg(self._itemId)
+	local isDirty = false
+	local processedSet = {}
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_4 = arg_15_0:getOrCreateSkillText(iter_15_0)
+	for index, skillStr in ipairs(skillList) do
+		local item = self:getOrCreateSkillText(index)
 
-		gohelper.setActive(var_15_4.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_15_4.txtDesc.text = iter_15_1
+		item.txtDesc.text = skillStr
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_15_4.txtDesc, var_15_1)
-		SLFramework.UGUI.GuiHelper.SetColor(var_15_4.imagePoint, var_15_1)
+		SLFramework.UGUI.GuiHelper.SetColor(item.txtDesc, colorStr)
+		SLFramework.UGUI.GuiHelper.SetColor(item.imagePoint, colorStr)
 
-		var_15_3[var_15_4] = true
-		var_15_2 = true
+		processedSet[item] = true
+		isDirty = true
 	end
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_0._skillItems) do
-		if not var_15_3[iter_15_3] then
-			gohelper.setActive(iter_15_3.go, false)
+	for _, item in pairs(self._skillItems) do
+		if not processedSet[item] then
+			gohelper.setActive(item.go, false)
 		end
 	end
 
-	return var_15_2
+	return isDirty
 end
 
-function var_0_0.checkCreateIcon(arg_16_0)
-	if not arg_16_0._icon then
-		local var_16_0 = arg_16_0.viewContainer:getSetting().otherRes[1]
-		local var_16_1 = arg_16_0:getResInst(var_16_0, arg_16_0._gocard, "icon")
+function Season1_4CelebrityCardTipView:checkCreateIcon()
+	if not self._icon then
+		local path = self.viewContainer:getSetting().otherRes[1]
+		local go = self:getResInst(path, self._gocard, "icon")
 
-		arg_16_0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_1, Season1_4CelebrityCardEquip)
+		self._icon = MonoHelper.addNoUpdateLuaComOnceToGo(go, Season1_4CelebrityCardEquip)
 	end
 end
 
-function var_0_0.getOrCreatePropText(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._propItems[arg_17_1]
+function Season1_4CelebrityCardTipView:getOrCreatePropText(index)
+	local item = self._propItems[index]
 
-	if not var_17_0 then
-		var_17_0 = arg_17_0:getUserDataTb_()
-		var_17_0.go = gohelper.cloneInPlace(arg_17_0._goeffectitem, "propname_" .. tostring(arg_17_1))
-		var_17_0.txtDesc = gohelper.findChildText(var_17_0.go, "txt_desc")
-		var_17_0.imagePoint = gohelper.findChildImage(var_17_0.go, "point")
-		arg_17_0._propItems[arg_17_1] = var_17_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._goeffectitem, "propname_" .. tostring(index))
+		item.txtDesc = gohelper.findChildText(item.go, "txt_desc")
+		item.imagePoint = gohelper.findChildImage(item.go, "point")
+		self._propItems[index] = item
 	end
 
-	return var_17_0
+	return item
 end
 
-function var_0_0.getOrCreateSkillText(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._skillItems[arg_18_1]
+function Season1_4CelebrityCardTipView:getOrCreateSkillText(index)
+	local item = self._skillItems[index]
 
-	if not var_18_0 then
-		var_18_0 = arg_18_0:getUserDataTb_()
-		var_18_0.go = gohelper.cloneInPlace(arg_18_0._goeffectdescitem, "skill_" .. tostring(arg_18_1))
-		var_18_0.txtDesc = gohelper.findChildText(var_18_0.go, "txt_desc")
-		var_18_0.imagePoint = gohelper.findChildImage(var_18_0.go, "point")
-		arg_18_0._skillItems[arg_18_1] = var_18_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._goeffectdescitem, "skill_" .. tostring(index))
+		item.txtDesc = gohelper.findChildText(item.go, "txt_desc")
+		item.imagePoint = gohelper.findChildImage(item.go, "point")
+		self._skillItems[index] = item
 	end
 
-	return var_18_0
+	return item
 end
 
-function var_0_0.onClickModalMask(arg_19_0)
-	arg_19_0:closeThis()
+function Season1_4CelebrityCardTipView:onClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Season1_4CelebrityCardTipView

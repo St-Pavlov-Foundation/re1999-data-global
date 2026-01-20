@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroLevelViewContainer.lua
 
-local var_0_0 = class("DiceHeroLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	DiceHeroModel.instance.guideChapter = arg_1_0.viewParam.chapterId
+local DiceHeroLevelViewContainer = class("DiceHeroLevelViewContainer", BaseViewContainer)
+
+function DiceHeroLevelViewContainer:buildViews()
+	DiceHeroModel.instance.guideChapter = self.viewParam.chapterId
 
 	return {
 		DiceHeroLevelView.New(),
@@ -11,8 +13,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function DiceHeroLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -23,4 +25,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return DiceHeroLevelViewContainer

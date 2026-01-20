@@ -1,778 +1,822 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapEpisode", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapEpisode.lua
 
-local var_0_0 = class("DungeonMapEpisode", BaseView)
+module("modules.logic.dungeon.view.map.DungeonMapEpisode", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobgcanvas = gohelper.findChild(arg_1_0.viewGO, "bgcanvas")
-	arg_1_0._gobgcontainerold = gohelper.findChild(arg_1_0.viewGO, "bgcanvas/#go_bgcontainerold")
-	arg_1_0._gobgcontainer = gohelper.findChild(arg_1_0.viewGO, "bgcanvas/#go_bgcontainer")
-	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_content")
-	arg_1_0._gochaptercontentitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_content/#go_chaptercontentitem")
-	arg_1_0._gochapterlist = gohelper.findChild(arg_1_0.viewGO, "#go_res/chapter/#go_chapterlist")
-	arg_1_0._gochapterlineItem = gohelper.findChild(arg_1_0.viewGO, "#go_res/chapter/#go_chapterlist/#go_chapterlineItem")
-	arg_1_0._goitemline = gohelper.findChild(arg_1_0.viewGO, "#go_res/chapter/#go_chapterlist/#go_itemline")
-	arg_1_0._goBgCg = gohelper.findChild(arg_1_0.viewGO, "bgcanvas/#go_bgcg")
-	arg_1_0.bgCgCtrl = arg_1_0._goBgCg:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	arg_1_0.animBgCg = arg_1_0._goBgCg:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goUnlockedBg = gohelper.findChild(arg_1_0._goBgCg, "unlocked")
-	arg_1_0._unlocksimagecgbg = gohelper.findChildSingleImage(arg_1_0._goUnlockedBg, "#simage_cgbg")
-	arg_1_0._unlockimagecgbg = gohelper.findChildImage(arg_1_0._goUnlockedBg, "#simage_cgbg")
-	arg_1_0._goLockedBg = gohelper.findChild(arg_1_0._goBgCg, "locked")
-	arg_1_0._locksimagecgbg = gohelper.findChildSingleImage(arg_1_0._goLockedBg, "bgmask/#simage_cgbg")
-	arg_1_0._lockimagecgbg = gohelper.findChildImage(arg_1_0._goLockedBg, "bgmask/#simage_cgbg")
+local DungeonMapEpisode = class("DungeonMapEpisode", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMapEpisode:onInitView()
+	self._gobgcanvas = gohelper.findChild(self.viewGO, "bgcanvas")
+	self._gobgcontainerold = gohelper.findChild(self.viewGO, "bgcanvas/#go_bgcontainerold")
+	self._gobgcontainer = gohelper.findChild(self.viewGO, "bgcanvas/#go_bgcontainer")
+	self._scrollcontent = gohelper.findChildScrollRect(self.viewGO, "#scroll_content")
+	self._gochaptercontentitem = gohelper.findChild(self.viewGO, "#scroll_content/#go_chaptercontentitem")
+	self._gochapterlist = gohelper.findChild(self.viewGO, "#go_res/chapter/#go_chapterlist")
+	self._gochapterlineItem = gohelper.findChild(self.viewGO, "#go_res/chapter/#go_chapterlist/#go_chapterlineItem")
+	self._goitemline = gohelper.findChild(self.viewGO, "#go_res/chapter/#go_chapterlist/#go_itemline")
+	self._goBgCg = gohelper.findChild(self.viewGO, "bgcanvas/#go_bgcg")
+	self.bgCgCtrl = self._goBgCg:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self.animBgCg = self._goBgCg:GetComponent(typeof(UnityEngine.Animator))
+	self._goUnlockedBg = gohelper.findChild(self._goBgCg, "unlocked")
+	self._unlocksimagecgbg = gohelper.findChildSingleImage(self._goUnlockedBg, "#simage_cgbg")
+	self._unlockimagecgbg = gohelper.findChildImage(self._goUnlockedBg, "#simage_cgbg")
+	self._goLockedBg = gohelper.findChild(self._goBgCg, "locked")
+	self._locksimagecgbg = gohelper.findChildSingleImage(self._goLockedBg, "bgmask/#simage_cgbg")
+	self._lockimagecgbg = gohelper.findChildImage(self._goLockedBg, "bgmask/#simage_cgbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonMapEpisode:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonMapEpisode:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function DungeonMapEpisode:_editableInitView()
 	DungeonModel.instance.chapterBgTweening = false
-	arg_4_0._chapterLineItemList = arg_4_0:getUserDataTb_()
-	arg_4_0._chapterLineList = arg_4_0:getUserDataTb_()
-	arg_4_0._rectmask2D = arg_4_0._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	arg_4_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_4_0._scrollcontent.gameObject, DungeonMapEpisodeAudio, arg_4_0._scrollcontent)
-	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._scrollcontent.gameObject)
+	self._chapterLineItemList = self:getUserDataTb_()
+	self._chapterLineList = self:getUserDataTb_()
+	self._rectmask2D = self._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._scrollcontent.gameObject, DungeonMapEpisodeAudio, self._scrollcontent)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._scrollcontent.gameObject)
 
-	arg_4_0._drag:AddDragBeginListener(arg_4_0._onDragBeginHandler, arg_4_0)
-	arg_4_0._drag:AddDragEndListener(arg_4_0._onDragEndHandler, arg_4_0)
+	self._drag:AddDragBeginListener(self._onDragBeginHandler, self)
+	self._drag:AddDragEndListener(self._onDragEndHandler, self)
 
-	arg_4_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_4_0._scrollcontent.gameObject)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._scrollcontent.gameObject)
 
-	arg_4_0._touch:AddClickDownListener(arg_4_0._onClickDownHandler, arg_4_0)
+	self._touch:AddClickDownListener(self._onClickDownHandler, self)
 
-	arg_4_0._scrollcontent:GetComponent(typeof(ZProj.LimitedScrollRect)).scrollSpeed = 0.5
+	local limitedScrollRect = self._scrollcontent:GetComponent(typeof(ZProj.LimitedScrollRect))
 
-	gohelper.setActive(arg_4_0._gochaptercontentitem, false)
+	limitedScrollRect.scrollSpeed = 0.5
 
-	arg_4_0._bgCanvas = arg_4_0._gobgcontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_4_0._olgBgCanvas = arg_4_0._gobgcontainerold:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_4_0._realscrollcontent = arg_4_0._scrollcontent:GetComponent(typeof(UnityEngine.UI.ScrollRect))
-	arg_4_0._fadeTime = 1
+	gohelper.setActive(self._gochaptercontentitem, false)
+
+	self._bgCanvas = self._gobgcontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._olgBgCanvas = self._gobgcontainerold:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._realscrollcontent = self._scrollcontent:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+	self._fadeTime = 1
 end
 
-function var_0_0._onScrollValueChanged(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:_checkEpisodeVision(arg_5_1, arg_5_2)
+function DungeonMapEpisode:_onScrollValueChanged(x, y)
+	self:_checkEpisodeVision(x, y)
 end
 
-function var_0_0._checkEpisodeVision(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0._scrollPosX or math.abs(arg_6_0._scrollPosX - arg_6_1) >= 0.01 then
-		if arg_6_0._scrollPosX then
-			arg_6_0:_onCheckVision()
+function DungeonMapEpisode:_checkEpisodeVision(x, y)
+	if not self._scrollPosX or math.abs(self._scrollPosX - x) >= 0.01 then
+		if self._scrollPosX then
+			self:_onCheckVision()
 		end
 
-		arg_6_0._scrollPosX = arg_6_1
+		self._scrollPosX = x
 	end
 
-	TaskDispatcher.cancelTask(arg_6_0._onEndScroll, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._onEndScroll, arg_6_0, 0.1)
+	TaskDispatcher.cancelTask(self._onEndScroll, self)
+	TaskDispatcher.runDelay(self._onEndScroll, self, 0.1)
 end
 
-function var_0_0._onCheckVision(arg_7_0)
-	if arg_7_0._chapterLayout then
-		arg_7_0._chapterLayout:CheckVision()
+function DungeonMapEpisode:_onCheckVision()
+	if self._chapterLayout then
+		self._chapterLayout:CheckVision()
 	end
 end
 
-function var_0_0._onEndScroll(arg_8_0)
-	arg_8_0._scrollPosX = nil
+function DungeonMapEpisode:_onEndScroll()
+	self._scrollPosX = nil
 
-	arg_8_0:_onCheckVision()
+	self:_onCheckVision()
 end
 
-function var_0_0._initChapterItem(arg_9_0)
-	arg_9_0:_updateChapterList()
-	arg_9_0:changeChapter(DungeonModel.instance.curLookChapterId)
+function DungeonMapEpisode:_initChapterItem()
+	self:_updateChapterList()
+	self:changeChapter(DungeonModel.instance.curLookChapterId)
 end
 
-function var_0_0._onDragBeginHandler(arg_10_0)
-	arg_10_0._audioScroll:onDragBegin()
+function DungeonMapEpisode:_onDragBeginHandler()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEndHandler(arg_11_0)
-	arg_11_0._audioScroll:onDragEnd()
+function DungeonMapEpisode:_onDragEndHandler()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDownHandler(arg_12_0)
-	arg_12_0._audioScroll:onClickDown()
+function DungeonMapEpisode:_onClickDownHandler()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0._updateChapterList(arg_13_0)
-	arg_13_0._chapterId = arg_13_0.viewParam.chapterId
-	arg_13_0._isResChapter = DungeonConfig.instance:getChapterCO(arg_13_0._chapterId).type ~= DungeonEnum.ChapterType.Normal
+function DungeonMapEpisode:_updateChapterList()
+	self._chapterId = self.viewParam.chapterId
 
-	if not arg_13_0._isResChapter then
+	local chapterConfig = DungeonConfig.instance:getChapterCO(self._chapterId)
+
+	self._isResChapter = chapterConfig.type ~= DungeonEnum.ChapterType.Normal
+
+	if not self._isResChapter then
 		return
 	end
 
-	if arg_13_0._isResChapter then
-		gohelper.setActive(arg_13_0._gochapterlist, false)
+	if self._isResChapter then
+		gohelper.setActive(self._gochapterlist, false)
 
 		return
 	end
 
-	for iter_13_0 = 1, #arg_13_0._chapterLineItemList do
-		arg_13_0._chapterLineItemList[iter_13_0]:destroyView()
+	for i = 1, #self._chapterLineItemList do
+		self._chapterLineItemList[i]:destroyView()
 
-		arg_13_0._chapterLineItemList[iter_13_0] = nil
+		self._chapterLineItemList[i] = nil
 	end
 
-	for iter_13_1 = 1, #arg_13_0._chapterLineList do
-		gohelper.destroy(arg_13_0._chapterLineList[iter_13_1])
+	for i = 1, #self._chapterLineList do
+		gohelper.destroy(self._chapterLineList[i])
 
-		arg_13_0._chapterLineList[iter_13_1] = nil
+		self._chapterLineList[i] = nil
 	end
 
-	local var_13_0 = DungeonChapterListModel.instance:getChapterList(arg_13_0._chapterId)
+	local fbList = DungeonChapterListModel.instance:getChapterList(self._chapterId)
 
-	if #var_13_0 <= 1 then
+	if #fbList <= 1 then
 		return
 	end
 
-	for iter_13_2 = 1, #var_13_0 do
-		if iter_13_2 == 1 then
-			arg_13_0:_addLine()
+	for i = 1, #fbList do
+		if i == 1 then
+			self:_addLine()
 		end
 
-		arg_13_0:_addChapterItem(iter_13_2, var_13_0[iter_13_2])
-		arg_13_0:_addLine()
+		self:_addChapterItem(i, fbList[i])
+		self:_addLine()
 	end
 end
 
-function var_0_0._addChapterItem(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = gohelper.clone(arg_14_0._gochapterlineItem, arg_14_0._gochapterlist, "ChapterLineItem")
+function DungeonMapEpisode:_addChapterItem(index, config)
+	local child = gohelper.clone(self._gochapterlineItem, self._gochapterlist, "ChapterLineItem")
 
-	gohelper.setActive(var_14_0, true)
+	gohelper.setActive(child, true)
 
-	local var_14_1 = DungeonMapChapterLineItem.New()
+	local item = DungeonMapChapterLineItem.New()
 
-	var_14_1:initView(var_14_0, {
-		index = arg_14_1,
-		config = arg_14_2
+	item:initView(child, {
+		index = index,
+		config = config
 	})
-	table.insert(arg_14_0._chapterLineItemList, var_14_1)
+	table.insert(self._chapterLineItemList, item)
 end
 
-function var_0_0._addLine(arg_15_0)
-	local var_15_0 = gohelper.clone(arg_15_0._goitemline, arg_15_0._gochapterlist, "itemline")
+function DungeonMapEpisode:_addLine()
+	local tempLine = gohelper.clone(self._goitemline, self._gochapterlist, "itemline")
 
-	gohelper.setActive(var_15_0, true)
-	table.insert(arg_15_0._chapterLineList, var_15_0)
+	gohelper.setActive(tempLine, true)
+	table.insert(self._chapterLineList, tempLine)
 end
 
-function var_0_0.changeChapter(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._curChapter == arg_16_1
+function DungeonMapEpisode:changeChapter(chapter)
+	local sameChapter = self._curChapter == chapter
 
-	arg_16_0._curChapter = arg_16_1
-	DungeonModel.instance.curLookChapterId = arg_16_1
+	self._curChapter = chapter
+	DungeonModel.instance.curLookChapterId = chapter
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._chapterLineItemList) do
-		iter_16_1:updateStatus()
+	for i, v in ipairs(self._chapterLineItemList) do
+		v:updateStatus()
 	end
 
-	if var_16_0 then
+	if sameChapter then
 		return
 	end
 
-	arg_16_0:_clearEpisodeListTween()
+	self:_clearEpisodeListTween()
 
-	if arg_16_1 ~= arg_16_0._curChapterId then
-		if arg_16_0._curChapterId then
-			DungeonAudio.instance:closeChapterAmbientSound(arg_16_0._curChapterId)
+	if chapter ~= self._curChapterId then
+		if self._curChapterId then
+			DungeonAudio.instance:closeChapterAmbientSound(self._curChapterId)
 		end
 
-		arg_16_0._curChapterId = arg_16_1
+		self._curChapterId = chapter
 
 		DungeonAudio.instance:openChapterAmbientSound()
 	end
 
-	local var_16_1 = DungeonConfig.instance:getChapterCO(arg_16_0._curChapterId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(self._curChapterId)
 
-	arg_16_0._isResChapter = var_16_1.type ~= DungeonEnum.ChapterType.Normal
+	self._isResChapter = chapterConfig.type ~= DungeonEnum.ChapterType.Normal
 
-	arg_16_0:_switchLayout(arg_16_1)
+	self:_switchLayout(chapter)
 
-	if arg_16_0._isResChapter then
-		arg_16_0:_switchBg(arg_16_1)
+	if self._isResChapter then
+		self:_switchBg(chapter)
 	end
 
-	arg_16_0:_loadNewLayout(arg_16_1)
+	self:_loadNewLayout(chapter)
 
-	if arg_16_0._isResChapter and var_16_1.type ~= DungeonEnum.ChapterType.RoleStory then
-		arg_16_0:_loadNewBg(arg_16_1)
+	if self._isResChapter and chapterConfig.type ~= DungeonEnum.ChapterType.RoleStory then
+		self:_loadNewBg(chapter)
 	end
 
-	arg_16_0:refreshRoleStoryBg()
-	gohelper.setActive(arg_16_0._gobgcanvas, arg_16_0._isResChapter)
+	self:refreshRoleStoryBg()
+	gohelper.setActive(self._gobgcanvas, self._isResChapter)
 end
 
-function var_0_0.refreshRoleStoryBg(arg_17_0)
-	if DungeonConfig.instance:getChapterCO(arg_17_0._curChapterId).type ~= DungeonEnum.ChapterType.RoleStory then
-		gohelper.setActive(arg_17_0._goBgCg, false)
+function DungeonMapEpisode:refreshRoleStoryBg()
+	local chapterConfig = DungeonConfig.instance:getChapterCO(self._curChapterId)
+
+	if chapterConfig.type ~= DungeonEnum.ChapterType.RoleStory then
+		gohelper.setActive(self._goBgCg, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_17_0._goBgCg, true)
+	gohelper.setActive(self._goBgCg, true)
 
-	local var_17_0 = RoleStoryModel.instance:getCurStoryId()
-	local var_17_1 = RoleStoryConfig.instance:getStoryById(var_17_0)
-	local var_17_2 = var_17_1.cgUnlockEpisodeId
-	local var_17_3 = var_17_2 == 0 or DungeonModel.instance:hasPassLevel(var_17_2)
+	local storyId = RoleStoryModel.instance:getCurStoryId()
+	local storyCo = RoleStoryConfig.instance:getStoryById(storyId)
+	local unlockEpisodeId = storyCo.cgUnlockEpisodeId
+	local unlock = unlockEpisodeId == 0 or DungeonModel.instance:hasPassLevel(unlockEpisodeId)
 
-	if var_17_3 and RoleStoryModel.instance:canPlayDungeonUnlockAnim(var_17_0) then
+	if unlock and RoleStoryModel.instance:canPlayDungeonUnlockAnim(storyId) then
 		if ViewMgr.instance:isOpen(ViewName.StoryView) then
-			gohelper.setActive(arg_17_0._goUnlockedBg, false)
-			gohelper.setActive(arg_17_0._goLockedBg, true)
-			arg_17_0.animBgCg:Play("idle")
-			arg_17_0:refreshRoleStoryLockBg(var_17_1)
+			gohelper.setActive(self._goUnlockedBg, false)
+			gohelper.setActive(self._goLockedBg, true)
+			self.animBgCg:Play("idle")
+			self:refreshRoleStoryLockBg(storyCo)
 		else
-			RoleStoryModel.instance:setPlayDungeonUnlockAnimFlag(var_17_0)
-			gohelper.setActive(arg_17_0._goUnlockedBg, true)
-			gohelper.setActive(arg_17_0._goLockedBg, true)
-			arg_17_0:refreshRoleStoryUnlockBg(var_17_1)
-			arg_17_0:refreshRoleStoryLockBg(var_17_1)
-			arg_17_0.animBgCg:Play("unlock", 0, 0)
+			RoleStoryModel.instance:setPlayDungeonUnlockAnimFlag(storyId)
+			gohelper.setActive(self._goUnlockedBg, true)
+			gohelper.setActive(self._goLockedBg, true)
+			self:refreshRoleStoryUnlockBg(storyCo)
+			self:refreshRoleStoryLockBg(storyCo)
+			self.animBgCg:Play("unlock", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoin_chapter_unlock)
 		end
 	else
-		gohelper.setActive(arg_17_0._goUnlockedBg, var_17_3)
-		gohelper.setActive(arg_17_0._goLockedBg, not var_17_3)
-		arg_17_0.animBgCg:Play("idle")
+		gohelper.setActive(self._goUnlockedBg, unlock)
+		gohelper.setActive(self._goLockedBg, not unlock)
+		self.animBgCg:Play("idle")
 
-		if var_17_3 then
-			arg_17_0:refreshRoleStoryUnlockBg(var_17_1)
+		if unlock then
+			self:refreshRoleStoryUnlockBg(storyCo)
 		else
-			arg_17_0:refreshRoleStoryLockBg(var_17_1)
+			self:refreshRoleStoryLockBg(storyCo)
 		end
 	end
 end
 
-function var_0_0.refreshRoleStoryUnlockBg(arg_18_0, arg_18_1)
-	arg_18_0._unlocksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", arg_18_1.cgBg), arg_18_0._onLoadUnlockCgCallback, arg_18_0)
-	recthelper.setAnchor(arg_18_0._unlockimagecgbg.transform, arg_18_0._cgTargetPos or 0, 0)
-	transformhelper.setLocalScale(arg_18_0._unlockimagecgbg.transform, 1, 1, 1)
+function DungeonMapEpisode:refreshRoleStoryUnlockBg(storyCo)
+	self._unlocksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", storyCo.cgBg), self._onLoadUnlockCgCallback, self)
+	recthelper.setAnchor(self._unlockimagecgbg.transform, self._cgTargetPos or 0, 0)
+	transformhelper.setLocalScale(self._unlockimagecgbg.transform, 1, 1, 1)
 end
 
-function var_0_0.refreshRoleStoryLockBg(arg_19_0, arg_19_1)
-	arg_19_0._locksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", arg_19_1.cgBg), arg_19_0._onLoadLockCgCallback, arg_19_0)
+function DungeonMapEpisode:refreshRoleStoryLockBg(storyCo)
+	self._locksimagecgbg:LoadImage(string.format("singlebg/dungeon/rolestory_bg_singlebg/%s.png", storyCo.cgBg), self._onLoadLockCgCallback, self)
 
-	local var_19_0 = string.splitToNumber(arg_19_1.cgPos, "#")
+	local poss = string.splitToNumber(storyCo.cgPos, "#")
 
-	recthelper.setAnchor(arg_19_0._lockimagecgbg.transform, var_19_0[1] or 0, var_19_0[2] or 0)
-	transformhelper.setLocalScale(arg_19_0._lockimagecgbg.transform, tonumber(arg_19_1.cgScale) or 1, tonumber(arg_19_1.cgScale) or 1, 1)
+	recthelper.setAnchor(self._lockimagecgbg.transform, poss[1] or 0, poss[2] or 0)
+	transformhelper.setLocalScale(self._lockimagecgbg.transform, tonumber(storyCo.cgScale) or 1, tonumber(storyCo.cgScale) or 1, 1)
 end
 
-function var_0_0._onLoadUnlockCgCallback(arg_20_0)
-	arg_20_0._unlockimagecgbg:SetNativeSize()
+function DungeonMapEpisode:_onLoadUnlockCgCallback()
+	self._unlockimagecgbg:SetNativeSize()
 end
 
-function var_0_0._onLoadLockCgCallback(arg_21_0)
-	arg_21_0._lockimagecgbg:SetNativeSize()
+function DungeonMapEpisode:_onLoadLockCgCallback()
+	self._lockimagecgbg:SetNativeSize()
 end
 
-function var_0_0._switchLayout(arg_22_0, arg_22_1)
-	arg_22_0:_disposeOldLayout()
+function DungeonMapEpisode:_switchLayout(chapter)
+	self:_disposeOldLayout()
 
-	if arg_22_0._chapterLayout then
-		arg_22_0._oldChapterLayout = arg_22_0._chapterLayout
-		arg_22_0._chapterLayout = nil
+	if self._chapterLayout then
+		self._oldChapterLayout = self._chapterLayout
+		self._chapterLayout = nil
 	end
 
-	if arg_22_0._gochaptercontent then
-		arg_22_0._oldChapterContent = arg_22_0._gochaptercontent
-		arg_22_0._gochaptercontent = nil
-		arg_22_0._oldChapterContent.name = "old"
+	if self._gochaptercontent then
+		self._oldChapterContent = self._gochaptercontent
+		self._gochaptercontent = nil
+		self._oldChapterContent.name = "old"
 	end
 
-	if arg_22_0._uiLoader then
-		arg_22_0._prevUILoader = arg_22_0._uiLoader
-		arg_22_0._uiLoader = nil
+	if self._uiLoader then
+		self._prevUILoader = self._uiLoader
+		self._uiLoader = nil
 	end
 
-	if arg_22_0._layoutCanvas then
-		arg_22_0._oldLayoutCanvas = arg_22_0._layoutCanvas
-		arg_22_0._oldLayoutCanvas.blocksRaycasts = false
-		arg_22_0._oldLayoutCanvas.interactable = false
-		arg_22_0._layoutCanvas = nil
+	if self._layoutCanvas then
+		self._oldLayoutCanvas = self._layoutCanvas
+		self._oldLayoutCanvas.blocksRaycasts = false
+		self._oldLayoutCanvas.interactable = false
+		self._layoutCanvas = nil
 	end
 end
 
-function var_0_0._loadNewLayout(arg_23_0, arg_23_1)
-	arg_23_0._uiLoader = MultiAbLoader.New()
+function DungeonMapEpisode:_loadNewLayout(chapter)
+	self._uiLoader = MultiAbLoader.New()
 
-	local var_23_0 = "ui/viewres/dungeon/chaptermap/chaptermaplayout.prefab"
+	local url = "ui/viewres/dungeon/chaptermap/chaptermaplayout.prefab"
 
-	arg_23_0._uiLoader:addPath(var_23_0)
-	arg_23_0._uiLoader:startLoad(function(arg_24_0)
-		local var_24_0 = arg_23_0._uiLoader:getAssetItem(var_23_0):GetResource(var_23_0)
+	self._uiLoader:addPath(url)
+	self._uiLoader:startLoad(function(multiAbLoader)
+		local assetItem = self._uiLoader:getAssetItem(url)
+		local mainPrefab = assetItem:GetResource(url)
 
-		arg_23_0._gochaptercontent = gohelper.cloneInPlace(arg_23_0._gochaptercontentitem, "#go_chaptercontent")
+		self._gochaptercontent = gohelper.cloneInPlace(self._gochaptercontentitem, "#go_chaptercontent")
 
-		gohelper.setAsLastSibling(arg_23_0._gochaptercontent)
-		gohelper.setActive(arg_23_0._gochaptercontent, true)
+		gohelper.setAsLastSibling(self._gochaptercontent)
+		gohelper.setActive(self._gochaptercontent, true)
 
-		arg_23_0._realscrollcontent.content = arg_23_0._gochaptercontent.transform
-		arg_23_0._realscrollcontent.velocity = Vector2(0, 0)
-		arg_23_0._scrollcontent.horizontalNormalizedPosition = 0
+		self._realscrollcontent.content = self._gochaptercontent.transform
+		self._realscrollcontent.velocity = Vector2(0, 0)
+		self._scrollcontent.horizontalNormalizedPosition = 0
 
-		local var_24_1 = gohelper.clone(var_24_0, arg_23_0._gochaptercontent)
-		local var_24_2 = DungeonMapChapterLayout.New()
+		local uiGO = gohelper.clone(mainPrefab, self._gochaptercontent)
+		local chapterLayout = DungeonMapChapterLayout.New()
 
-		var_24_2:initView(var_24_1, {
-			arg_23_0._gochaptercontent,
-			arg_23_0.viewContainer:getMapTaskInfo(),
-			arg_23_0._scrollcontent,
-			arg_23_0,
-			arg_23_0._curChapter
+		chapterLayout:initView(uiGO, {
+			self._gochaptercontent,
+			self.viewContainer:getMapTaskInfo(),
+			self._scrollcontent,
+			self,
+			self._curChapter
 		})
 
-		arg_23_0._chapterLayout = var_24_2
+		self._chapterLayout = chapterLayout
 
-		arg_23_0._chapterLayout:onRefresh(arg_23_0._jumpEpisodeId)
+		self._chapterLayout:onRefresh(self._jumpEpisodeId)
 
-		arg_23_0._jumpEpisodeId = nil
-		arg_23_0._layoutCanvas = arg_23_0._gochaptercontent:GetComponent(typeof(UnityEngine.CanvasGroup))
-		arg_23_0._targetTrans = var_24_1.transform
+		self._jumpEpisodeId = nil
+		self._layoutCanvas = self._gochaptercontent:GetComponent(typeof(UnityEngine.CanvasGroup))
+		self._targetTrans = uiGO.transform
 
-		arg_23_0:_layoutTweenFinish()
+		self:_layoutTweenFinish()
 	end)
 end
 
-function var_0_0._layoutTweenFrame(arg_25_0, arg_25_1)
-	if arg_25_1 > 0.4 then
-		arg_25_0._layoutCanvas.alpha = (arg_25_1 - 0.4) / 0.6
+function DungeonMapEpisode:_layoutTweenFrame(value)
+	if value > 0.4 then
+		self._layoutCanvas.alpha = (value - 0.4) / 0.6
 	else
-		arg_25_0._layoutCanvas.alpha = 0
+		self._layoutCanvas.alpha = 0
 	end
 
-	if arg_25_0._oldLayoutCanvas then
-		if arg_25_1 >= 0.6 then
-			arg_25_0._oldLayoutCanvas.alpha = 0
+	if self._oldLayoutCanvas then
+		if value >= 0.6 then
+			self._oldLayoutCanvas.alpha = 0
 		else
-			arg_25_0._oldLayoutCanvas.alpha = (0.6 - arg_25_1) / 0.6
+			self._oldLayoutCanvas.alpha = (0.6 - value) / 0.6
 		end
 	end
 end
 
-function var_0_0._layoutTweenFinish(arg_26_0)
-	arg_26_0._layoutCanvas.alpha = 1
+function DungeonMapEpisode:_layoutTweenFinish()
+	self._layoutCanvas.alpha = 1
 
-	arg_26_0:_disposeOldLayout()
+	self:_disposeOldLayout()
 end
 
-function var_0_0._switchBg(arg_27_0, arg_27_1)
-	local var_27_0 = ResUrl.getDungeonChapterBg("chapter_" .. arg_27_1)
-	local var_27_1 = false
+function DungeonMapEpisode:_switchBg(chapter)
+	local bgUrl = ResUrl.getDungeonChapterBg("chapter_" .. chapter)
+	local changeBg = false
 
-	if not arg_27_0._bgUrl or arg_27_0._bgUrl ~= var_27_0 then
-		var_27_1 = true
+	if not self._bgUrl or self._bgUrl ~= bgUrl then
+		changeBg = true
 	end
 
-	if not var_27_1 then
+	if not changeBg then
 		return
 	end
 
-	arg_27_0:_disposeOldBg()
+	self:_disposeOldBg()
 
 	DungeonModel.instance.chapterBgTweening = true
-	arg_27_0._olgBgCanvas.alpha = arg_27_0._bgCanvas.alpha
+	self._olgBgCanvas.alpha = self._bgCanvas.alpha
 
-	if arg_27_0._bgGO then
-		arg_27_0._oldBgGO = arg_27_0._bgGO
-		arg_27_0._bgGO = nil
+	if self._bgGO then
+		self._oldBgGO = self._bgGO
+		self._bgGO = nil
 
-		gohelper.addChild(arg_27_0._gobgcontainerold, arg_27_0._oldBgGO)
+		gohelper.addChild(self._gobgcontainerold, self._oldBgGO)
 	end
 
-	if arg_27_0._bgCtrl then
-		arg_27_0._oldBgCtrl = arg_27_0._bgCtrl
-		arg_27_0._bgCtrl = nil
+	if self._bgCtrl then
+		self._oldBgCtrl = self._bgCtrl
+		self._bgCtrl = nil
 	end
 
-	if arg_27_0._bgLoader then
-		arg_27_0._prevBgLoader = arg_27_0._bgLoader
-		arg_27_0._bgLoader = nil
+	if self._bgLoader then
+		self._prevBgLoader = self._bgLoader
+		self._bgLoader = nil
 	end
 end
 
-function var_0_0._loadNewBg(arg_28_0, arg_28_1)
-	local var_28_0 = ResUrl.getDungeonChapterBg("chapter_" .. arg_28_1)
+function DungeonMapEpisode:_loadNewBg(chapter)
+	local bgUrl = ResUrl.getDungeonChapterBg("chapter_" .. chapter)
 
-	arg_28_0._bgLoader = MultiAbLoader.New()
+	self._bgLoader = MultiAbLoader.New()
 
-	arg_28_0._bgLoader:addPath(var_28_0)
-	arg_28_0._bgLoader:startLoad(function(arg_29_0)
-		local var_29_0 = arg_28_0._bgLoader:getAssetItem(var_28_0):GetResource(var_28_0)
+	self._bgLoader:addPath(bgUrl)
+	self._bgLoader:startLoad(function(multiAbLoader)
+		local bgItem = self._bgLoader:getAssetItem(bgUrl)
+		local bgPrefab = bgItem:GetResource(bgUrl)
 
-		arg_28_0._bgGO = gohelper.clone(var_29_0, arg_28_0._gobgcontainer, "bg")
-		arg_28_0._bgCtrl = arg_28_0._bgGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-		arg_28_0._bgUrl = var_28_0
+		self._bgGO = gohelper.clone(bgPrefab, self._gobgcontainer, "bg")
+		self._bgCtrl = self._bgGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+		self._bgUrl = bgUrl
 
-		if arg_28_0._oldBgGO then
-			arg_28_0._bgCanvas.alpha = 0
-			arg_28_0._bgTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, arg_28_0._fadeTime, arg_28_0._bgTweenFrame, arg_28_0._bgTweenFinish, arg_28_0, nil, EaseType.Linear)
+		if self._oldBgGO then
+			self._bgCanvas.alpha = 0
+			self._bgTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, self._fadeTime, self._bgTweenFrame, self._bgTweenFinish, self, nil, EaseType.Linear)
 		else
-			arg_28_0:_bgTweenFinish()
+			self:_bgTweenFinish()
 		end
 	end)
 end
 
-function var_0_0._bgTweenFrame(arg_30_0, arg_30_1)
-	if arg_30_1 > 0.4 then
-		arg_30_0._bgCanvas.alpha = (arg_30_1 - 0.4) / 0.6
+function DungeonMapEpisode:_bgTweenFrame(value)
+	if value > 0.4 then
+		self._bgCanvas.alpha = (value - 0.4) / 0.6
 	else
-		arg_30_0._bgCanvas.alpha = 0
+		self._bgCanvas.alpha = 0
 	end
 
-	if arg_30_1 >= 0.6 then
-		arg_30_0._olgBgCanvas.alpha = 0
+	if value >= 0.6 then
+		self._olgBgCanvas.alpha = 0
 	else
-		arg_30_0._olgBgCanvas.alpha = (0.6 - arg_30_1) / 0.6
+		self._olgBgCanvas.alpha = (0.6 - value) / 0.6
 	end
 end
 
-function var_0_0._bgTweenFinish(arg_31_0)
+function DungeonMapEpisode:_bgTweenFinish()
 	DungeonModel.instance.chapterBgTweening = false
-	arg_31_0._bgCanvas.alpha = 1
-	arg_31_0._olgBgCanvas.alpha = 0
+	self._bgCanvas.alpha = 1
+	self._olgBgCanvas.alpha = 0
 
-	arg_31_0:_disposeOldBg()
+	self:_disposeOldBg()
 end
 
-function var_0_0._setEpisodeListVisible(arg_32_0, arg_32_1, arg_32_2)
-	if not arg_32_0._chapterLayout then
+function DungeonMapEpisode:_setEpisodeListVisible(value, sourceType)
+	if not self._chapterLayout then
 		return
 	end
 
-	if arg_32_2 == DungeonEnum.EpisodeListVisibleSource.ToughBattle then
+	if sourceType == DungeonEnum.EpisodeListVisibleSource.ToughBattle then
 		return
 	end
 
-	arg_32_0:_clearEpisodeListTween()
+	self:_clearEpisodeListTween()
 
-	local var_32_0 = 0.2
+	local time = 0.2
 
-	if arg_32_1 then
-		arg_32_0._episodeListTweenId = ZProj.TweenHelper.DOAnchorPosY(arg_32_0._chapterLayout.viewGO.transform, arg_32_0._chapterLayout.defaultY, var_32_0)
+	if value then
+		self._episodeListTweenId = ZProj.TweenHelper.DOAnchorPosY(self._chapterLayout.viewGO.transform, self._chapterLayout.defaultY, time)
 	else
-		arg_32_0._episodeListTweenId = ZProj.TweenHelper.DOAnchorPosY(arg_32_0._chapterLayout.viewGO.transform, -260, var_32_0)
+		self._episodeListTweenId = ZProj.TweenHelper.DOAnchorPosY(self._chapterLayout.viewGO.transform, -260, time)
 	end
 end
 
-function var_0_0._clearEpisodeListTween(arg_33_0)
-	if arg_33_0._episodeListTweenId then
-		ZProj.TweenHelper.KillById(arg_33_0._episodeListTweenId)
+function DungeonMapEpisode:_clearEpisodeListTween()
+	if self._episodeListTweenId then
+		ZProj.TweenHelper.KillById(self._episodeListTweenId)
 
-		arg_33_0._episodeListTweenId = nil
+		self._episodeListTweenId = nil
 	end
 end
 
-function var_0_0.onUpdateParam(arg_34_0)
-	arg_34_0._jumpEpisodeId = arg_34_0.viewParam and arg_34_0.viewParam.episodeId
+function DungeonMapEpisode:onUpdateParam()
+	self._jumpEpisodeId = self.viewParam and self.viewParam.episodeId
 
-	if arg_34_0._chapterLayout then
-		arg_34_0._chapterLayout:setFocusEpisodeId(arg_34_0._jumpEpisodeId, false, false)
+	if self._chapterLayout then
+		self._chapterLayout:setFocusEpisodeId(self._jumpEpisodeId, false, false)
 	end
 
-	arg_34_0:_initChapterItem()
+	self:_initChapterItem()
 end
 
-function var_0_0.onOpen(arg_35_0)
-	arg_35_0._chapterId = arg_35_0.viewParam and arg_35_0.viewParam.chapterId
-	arg_35_0._jumpEpisodeId = arg_35_0.viewParam and arg_35_0.viewParam.episodeId
+function DungeonMapEpisode:onOpen()
+	self._chapterId = self.viewParam and self.viewParam.chapterId
+	self._jumpEpisodeId = self.viewParam and self.viewParam.episodeId
 
-	if not arg_35_0._jumpEpisodeId and CommandStationController.instance:chapterInCommandStation(arg_35_0._chapterId) then
-		arg_35_0._jumpEpisodeId = CommandStationController.instance:getRecordEpisodeId()
+	if not self._jumpEpisodeId and CommandStationController.instance:chapterInCommandStation(self._chapterId) then
+		self._jumpEpisodeId = CommandStationController.instance:getRecordEpisodeId()
 
 		CommandStationController.instance:setRecordEpisodeId(nil)
 	end
 
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, arg_35_0._onChangeFocusEpisodeItem, arg_35_0)
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapter, arg_35_0._onChangeChapter, arg_35_0)
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnJumpChangeFocusEpisodeItem, arg_35_0._OnJumpChangeFocusEpisodeItem, arg_35_0)
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_35_0._onUpdateDungeonInfo, arg_35_0)
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnClickFocusEpisode, arg_35_0._onClickFocusEpisode, arg_35_0)
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnUnlockNewChapter, arg_35_0._startUnlockNewChapter, arg_35_0)
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_35_0._setEpisodeListVisible, arg_35_0)
-	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_35_0._onOpenView, arg_35_0)
-	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_35_0._onCloseView, arg_35_0)
-	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_35_0._onCloseViewFinish, arg_35_0)
-	arg_35_0:_initChapterItem()
-	arg_35_0:_startUnlockNewChapter()
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnChangeFocusEpisodeItem, self._onChangeFocusEpisodeItem, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapter, self._onChangeChapter, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnJumpChangeFocusEpisodeItem, self._OnJumpChangeFocusEpisodeItem, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnClickFocusEpisode, self._onClickFocusEpisode, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUnlockNewChapter, self._startUnlockNewChapter, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, self._setEpisodeListVisible, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnJumpEpisodeItemAndElement, self._OnJumpEpisodeItemAndElement, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnChangeMap, self._OnChangeMap, self)
+	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnNormalDungeonInitElements, self._initElements, self, LuaEventSystem.Low)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:_initChapterItem()
+	self:_startUnlockNewChapter()
 end
 
-function var_0_0.onOpenFinish(arg_36_0)
-	arg_36_0._scrollcontent:AddOnValueChanged(arg_36_0._onScrollValueChanged, arg_36_0)
+function DungeonMapEpisode:onOpenFinish()
+	self._scrollcontent:AddOnValueChanged(self._onScrollValueChanged, self)
 end
 
-function var_0_0._tryShowFirstHelp(arg_37_0, arg_37_1)
-	if not arg_37_1 and arg_37_0.viewParam and arg_37_0.viewParam.notOpenHelp then
+function DungeonMapEpisode:_tryShowFirstHelp(close)
+	if not close and self.viewParam and self.viewParam.notOpenHelp then
 		return
 	end
 
-	if DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal then
+	local chapterType = DungeonModel.instance.curChapterType
+
+	if chapterType == DungeonEnum.ChapterType.Normal then
 		HelpController.instance:tryShowFirstHelp(HelpEnum.HelpId.Dungeon)
 	end
 end
 
-function var_0_0._startUnlockNewChapter(arg_38_0)
+function DungeonMapEpisode:_startUnlockNewChapter()
 	if DungeonModel.instance.chapterTriggerNewChapter then
 		return
 	end
 
 	if DungeonModel.instance.unlockNewChapterId then
-		TaskDispatcher.runDelay(arg_38_0._readyUnlockNewChapter, arg_38_0, 0.3)
+		TaskDispatcher.runDelay(self._readyUnlockNewChapter, self, 0.3)
 	end
 end
 
-function var_0_0._readyUnlockNewChapter(arg_39_0)
+function DungeonMapEpisode:_readyUnlockNewChapter()
 	DungeonModel.instance.chapterTriggerNewChapter = true
 end
 
-function var_0_0._OnUnlockNewChapter(arg_40_0)
+function DungeonMapEpisode:_OnUnlockNewChapter()
 	return
 end
 
-function var_0_0.onClose(arg_41_0)
-	arg_41_0._scrollcontent:RemoveOnValueChanged()
-	DungeonAudio.instance:closeChapterAmbientSound(arg_41_0._curChapterId)
+function DungeonMapEpisode:onClose()
+	self._scrollcontent:RemoveOnValueChanged()
+	DungeonAudio.instance:closeChapterAmbientSound(self._curChapterId)
 
-	if arg_41_0.viewContainer:isManualClose() then
+	if self.viewContainer:isManualClose() then
 		DungeonAudio.instance:closeChapter()
 	end
 
-	arg_41_0:_clearEpisodeListTween()
+	self:_clearEpisodeListTween()
 end
 
-function var_0_0._onOpenView(arg_42_0, arg_42_1)
+function DungeonMapEpisode:_onOpenView(viewName)
 	return
 end
 
-function var_0_0._onCloseView(arg_43_0, arg_43_1)
-	if arg_43_1 == ViewName.StoryView then
-		TaskDispatcher.runDelay(arg_43_0.refreshRoleStoryBg, arg_43_0, 0.3)
+function DungeonMapEpisode:_onCloseView(viewName)
+	if viewName == ViewName.StoryView then
+		TaskDispatcher.runDelay(self.refreshRoleStoryBg, self, 0.3)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_44_0, arg_44_1)
-	if arg_44_1 == ViewName.DungeonStoryEntranceView then
+function DungeonMapEpisode:_onCloseViewFinish(viewName)
+	if viewName == ViewName.DungeonStoryEntranceView then
 		-- block empty
 	end
 end
 
-function var_0_0._OnJumpChangeFocusEpisodeItem(arg_45_0, arg_45_1)
-	if arg_45_0._chapterLayout then
-		arg_45_0._chapterLayout:changeFocusEpisodeItem(arg_45_1)
+function DungeonMapEpisode:_OnJumpChangeFocusEpisodeItem(episodeId)
+	if self._chapterLayout then
+		self._chapterLayout:changeFocusEpisodeItem(episodeId)
 	end
 end
 
-function var_0_0._onChangeChapter(arg_46_0, arg_46_1)
-	arg_46_0:changeChapter(arg_46_1)
+function DungeonMapEpisode:_OnJumpEpisodeItemAndElement(episodeId, elementId)
+	self._clickElementId = elementId
+
+	TaskDispatcher.cancelTask(self._delayClickElement, self)
+	TaskDispatcher.runDelay(self._delayClickElement, self, 0.1)
+	self:_OnJumpChangeFocusEpisodeItem(episodeId)
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_47_0, arg_47_1)
-	if arg_47_0._chapterLayout then
-		if CommandStationController.instance:chapterInCommandStation(arg_47_0._chapterId) then
-			arg_47_0._chapterLayout:skipFocusItem(true)
+function DungeonMapEpisode:_delayClickElement()
+	local elementId = self._clickElementId
+
+	self._clickElementId = nil
+
+	if elementId then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, elementId)
+	end
+end
+
+function DungeonMapEpisode:_OnChangeMap()
+	TaskDispatcher.cancelTask(self._delayClickElement, self)
+end
+
+function DungeonMapEpisode:_initElements()
+	self:_delayClickElement()
+end
+
+function DungeonMapEpisode:_onChangeChapter(chapter)
+	self:changeChapter(chapter)
+end
+
+function DungeonMapEpisode:_onUpdateDungeonInfo(dungeonInfo)
+	if self._chapterLayout then
+		if CommandStationController.instance:chapterInCommandStation(self._chapterId) then
+			self._chapterLayout:skipFocusItem(true)
 		end
 
-		arg_47_0._chapterLayout:onRefresh()
-		arg_47_0._chapterLayout:skipFocusItem(false)
+		self._chapterLayout:onRefresh()
+		self._chapterLayout:skipFocusItem(false)
 	end
 
-	arg_47_0:refreshRoleStoryBg()
+	self:refreshRoleStoryBg()
 end
 
-function var_0_0._onClickFocusEpisode(arg_48_0, arg_48_1)
-	arg_48_0._realscrollcontent.enabled = false
-	arg_48_0._realscrollcontent.enabled = true
+function DungeonMapEpisode:_onClickFocusEpisode(dungeonEpisodeItem)
+	self._realscrollcontent.enabled = false
+	self._realscrollcontent.enabled = true
 
-	if arg_48_0._chapterLayout then
-		arg_48_0._chapterLayout:setFocusEpisodeItem(arg_48_1, true)
+	if self._chapterLayout then
+		self._chapterLayout:setFocusEpisodeItem(dungeonEpisodeItem, true)
 	end
 
-	arg_48_0:_onChangeFocusEpisodeItem(arg_48_1, true)
+	self:_onChangeFocusEpisodeItem(dungeonEpisodeItem, true)
 end
 
-function var_0_0._onChangeFocusEpisodeItem(arg_49_0, arg_49_1, arg_49_2)
+function DungeonMapEpisode:_onChangeFocusEpisodeItem(dungeonEpisodeItem, tween)
 	if not DungeonModel.instance:chapterListIsRoleStory() then
 		return
 	end
 
-	if not arg_49_1 or not arg_49_0._chapterLayout then
+	if not dungeonEpisodeItem or not self._chapterLayout then
 		return
 	end
 
-	arg_49_0:setCgIndex(arg_49_1:getIndex(), arg_49_0._chapterLayout:getEpisodeCount(), arg_49_2)
+	self:setCgIndex(dungeonEpisodeItem:getIndex(), self._chapterLayout:getEpisodeCount(), tween)
 end
 
-function var_0_0.setCgIndex(arg_50_0, arg_50_1, arg_50_2, arg_50_3)
-	if not arg_50_2 or arg_50_2 <= 1 then
-		arg_50_2 = 2
+function DungeonMapEpisode:setCgIndex(index, count, tween)
+	if not count or count <= 1 then
+		count = 2
 	end
 
-	local var_50_0 = recthelper.getWidth(arg_50_0._unlockimagecgbg.transform)
-	local var_50_1 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
-	local var_50_2 = math.abs(var_50_0 - var_50_1)
-	local var_50_3 = math.max(var_50_2 * ((arg_50_1 - 1) / (arg_50_2 - 1)), 0)
-	local var_50_4 = var_50_2 / 2 - var_50_3
+	local bgWidth = recthelper.getWidth(self._unlockimagecgbg.transform)
+	local screenWidth = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local widthOffset = math.abs(bgWidth - screenWidth)
+	local posX = math.max(widthOffset * ((index - 1) / (count - 1)), 0)
+	local left = widthOffset / 2
+	local goPosX = left - posX
 
-	if var_50_4 == arg_50_0._cgTargetPos then
+	if goPosX == self._cgTargetPos then
 		return
 	end
 
-	arg_50_0._cgTargetPos = var_50_4
+	self._cgTargetPos = goPosX
 
-	if arg_50_0.cgTweenId then
-		ZProj.TweenHelper.KillById(arg_50_0.cgTweenId)
+	if self.cgTweenId then
+		ZProj.TweenHelper.KillById(self.cgTweenId)
 
-		arg_50_0.cgTweenId = nil
+		self.cgTweenId = nil
 	end
 
-	local var_50_5 = math.max(0.35 * ((arg_50_1 - 1) / (arg_50_2 - 1)), 0)
+	local offsetX = math.max(0.35 * ((index - 1) / (count - 1)), 0)
 
-	arg_50_0.bgCgCtrl:GetIndexProp(0, 2)
+	self.bgCgCtrl:GetIndexProp(0, 2)
 
-	local var_50_6 = arg_50_0.bgCgCtrl.vector_03
+	local vector = self.bgCgCtrl.vector_03
 
-	arg_50_0.bgCgCtrl.vector_03 = Vector4.New(var_50_6.x, var_50_6.y, -var_50_5, var_50_6.w)
+	self.bgCgCtrl.vector_03 = Vector4.New(vector.x, vector.y, -offsetX, vector.w)
 
-	arg_50_0.bgCgCtrl:SetIndexProp(0, 2)
+	self.bgCgCtrl:SetIndexProp(0, 2)
 
-	if arg_50_3 then
-		arg_50_0.cgTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_50_0._unlockimagecgbg.transform, var_50_4, 0.8)
+	if tween then
+		self.cgTweenId = ZProj.TweenHelper.DOAnchorPosX(self._unlockimagecgbg.transform, goPosX, 0.8)
 	else
-		recthelper.setAnchorX(arg_50_0._unlockimagecgbg.transform, var_50_4)
+		recthelper.setAnchorX(self._unlockimagecgbg.transform, goPosX)
 	end
 end
 
-function var_0_0.onDestroyView(arg_51_0)
-	if arg_51_0.cgTweenId then
-		ZProj.TweenHelper.KillById(arg_51_0.cgTweenId)
+function DungeonMapEpisode:onDestroyView()
+	if self.cgTweenId then
+		ZProj.TweenHelper.KillById(self.cgTweenId)
 
-		arg_51_0.cgTweenId = nil
+		self.cgTweenId = nil
 	end
 
-	if arg_51_0._uiLoader then
-		arg_51_0._uiLoader:dispose()
+	if self._uiLoader then
+		self._uiLoader:dispose()
 	end
 
-	if arg_51_0._bgLoader then
-		arg_51_0._bgLoader:dispose()
+	if self._bgLoader then
+		self._bgLoader:dispose()
 	end
 
-	if arg_51_0._chapterLayout then
-		arg_51_0._chapterLayout:destroyView()
+	if self._chapterLayout then
+		self._chapterLayout:destroyView()
 
-		arg_51_0._chapterLayout = nil
+		self._chapterLayout = nil
 	end
 
-	if arg_51_0._audioScroll then
-		arg_51_0._audioScroll:dispose()
+	if self._audioScroll then
+		self._audioScroll:dispose()
 
-		arg_51_0._audioScroll = nil
+		self._audioScroll = nil
 	end
 
-	arg_51_0:_disposeOldLayout()
-	arg_51_0:_disposeOldBg()
+	self:_disposeOldLayout()
+	self:_disposeOldBg()
 
-	if arg_51_0._drag then
-		arg_51_0._drag:RemoveDragBeginListener()
-		arg_51_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_51_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_51_0._touch then
-		arg_51_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_51_0._touch = nil
+		self._touch = nil
 	end
 
-	if arg_51_0._scrollTouchEventMgr then
-		arg_51_0._scrollTouchEventMgr:ClearAllCallback()
+	if self._scrollTouchEventMgr then
+		self._scrollTouchEventMgr:ClearAllCallback()
 
-		arg_51_0._scrollTouchEventMgr = nil
+		self._scrollTouchEventMgr = nil
 	end
 
-	for iter_51_0, iter_51_1 in ipairs(arg_51_0._chapterLineItemList) do
-		iter_51_1:destroyView()
+	for i, v in ipairs(self._chapterLineItemList) do
+		v:destroyView()
 	end
 
-	TaskDispatcher.cancelTask(arg_51_0._onCheckVision, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0._onEndScroll, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0.refreshRoleStoryBg, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0._delaySetMask2D, arg_51_0)
+	TaskDispatcher.cancelTask(self._onCheckVision, self)
+	TaskDispatcher.cancelTask(self._onEndScroll, self)
+	TaskDispatcher.cancelTask(self.refreshRoleStoryBg, self)
+	TaskDispatcher.cancelTask(self._delaySetMask2D, self)
+	TaskDispatcher.cancelTask(self._delayClickElement, self)
 
-	if arg_51_0._unlocksimagecgbg then
-		arg_51_0._unlocksimagecgbg:UnLoadImage()
+	if self._unlocksimagecgbg then
+		self._unlocksimagecgbg:UnLoadImage()
 	end
 
-	if arg_51_0._locksimagecgbg then
-		arg_51_0._locksimagecgbg:UnLoadImage()
-	end
-end
-
-function var_0_0._disposeOldLayout(arg_52_0)
-	arg_52_0._rectmask2D.enabled = false
-
-	if arg_52_0._prevUILoader then
-		arg_52_0._prevUILoader:dispose()
-
-		arg_52_0._prevUILoader = nil
-	end
-
-	if arg_52_0._oldChapterLayout then
-		arg_52_0._oldChapterLayout:destroyView()
-
-		arg_52_0._oldChapterLayout = nil
-	end
-
-	if arg_52_0._layoutTweenId then
-		ZProj.TweenHelper.KillById(arg_52_0._layoutTweenId)
-	end
-
-	if arg_52_0._oldChapterContent then
-		gohelper.destroy(arg_52_0._oldChapterContent)
-
-		arg_52_0._oldChapterContent = nil
-	end
-
-	TaskDispatcher.cancelTask(arg_52_0._delaySetMask2D, arg_52_0)
-	TaskDispatcher.runDelay(arg_52_0._delaySetMask2D, arg_52_0, 0)
-end
-
-function var_0_0._delaySetMask2D(arg_53_0)
-	arg_53_0._rectmask2D.enabled = true
-end
-
-function var_0_0._disposeOldBg(arg_54_0)
-	if arg_54_0._prevBgLoader then
-		arg_54_0._prevBgLoader:dispose()
-
-		arg_54_0._prevBgLoader = nil
-	end
-
-	if arg_54_0._oldBgGO then
-		gohelper.destroy(arg_54_0._oldBgGO)
-
-		arg_54_0._oldBgGO = nil
-	end
-
-	arg_54_0._oldBgCtrl = nil
-
-	if arg_54_0._bgTweenId then
-		ZProj.TweenHelper.KillById(arg_54_0._bgTweenId)
+	if self._locksimagecgbg then
+		self._locksimagecgbg:UnLoadImage()
 	end
 end
 
-return var_0_0
+function DungeonMapEpisode:_disposeOldLayout()
+	self._rectmask2D.enabled = false
+
+	if self._prevUILoader then
+		self._prevUILoader:dispose()
+
+		self._prevUILoader = nil
+	end
+
+	if self._oldChapterLayout then
+		self._oldChapterLayout:destroyView()
+
+		self._oldChapterLayout = nil
+	end
+
+	if self._layoutTweenId then
+		ZProj.TweenHelper.KillById(self._layoutTweenId)
+	end
+
+	if self._oldChapterContent then
+		gohelper.destroy(self._oldChapterContent)
+
+		self._oldChapterContent = nil
+	end
+
+	TaskDispatcher.cancelTask(self._delaySetMask2D, self)
+	TaskDispatcher.runDelay(self._delaySetMask2D, self, 0)
+end
+
+function DungeonMapEpisode:_delaySetMask2D()
+	self._rectmask2D.enabled = true
+end
+
+function DungeonMapEpisode:_disposeOldBg()
+	if self._prevBgLoader then
+		self._prevBgLoader:dispose()
+
+		self._prevBgLoader = nil
+	end
+
+	if self._oldBgGO then
+		gohelper.destroy(self._oldBgGO)
+
+		self._oldBgGO = nil
+	end
+
+	self._oldBgCtrl = nil
+
+	if self._bgTweenId then
+		ZProj.TweenHelper.KillById(self._bgTweenId)
+	end
+end
+
+return DungeonMapEpisode

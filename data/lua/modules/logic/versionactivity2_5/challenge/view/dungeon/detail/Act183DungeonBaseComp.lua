@@ -1,148 +1,150 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBaseComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonBaseComp.lua
 
-local var_0_0 = class("Act183DungeonBaseComp", LuaCompBase)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBaseComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local Act183DungeonBaseComp = class("Act183DungeonBaseComp", LuaCompBase)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.tran = arg_1_1.transform
+function Act183DungeonBaseComp:init(go)
+	self:__onInit()
+
+	self.go = go
+	self.tran = go.transform
 end
 
-function var_0_0.checkIsVisible(arg_2_0)
+function Act183DungeonBaseComp:checkIsVisible()
 	return true
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0:updateInfo(arg_3_1)
-	arg_3_0:refresh()
+function Act183DungeonBaseComp:onUpdateMO(episodeMo)
+	self:updateInfo(episodeMo)
+	self:refresh()
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	arg_4_0._episodeMo = arg_4_1
-	arg_4_0._status = arg_4_0._episodeMo:getStatus()
-	arg_4_0._episodeCo = arg_4_0._episodeMo:getConfig()
-	arg_4_0._episodeId = arg_4_0._episodeMo:getEpisodeId()
-	arg_4_0._episodeType = arg_4_0._episodeMo:getEpisodeType()
-	arg_4_0._passOrder = arg_4_0._episodeMo:getPassOrder()
-	arg_4_0._groupId = arg_4_0._episodeCo.groupId
-	arg_4_0._activityId = arg_4_0._episodeCo.activityId
-	arg_4_0._groupEpisodeMo = Act183Model.instance:getGroupEpisodeMo(arg_4_0._groupId)
-	arg_4_0._groupType = arg_4_0._groupEpisodeMo:getGroupType()
+function Act183DungeonBaseComp:updateInfo(episodeMo)
+	self._episodeMo = episodeMo
+	self._status = self._episodeMo:getStatus()
+	self._episodeCo = self._episodeMo:getConfig()
+	self._episodeId = self._episodeMo:getEpisodeId()
+	self._episodeType = self._episodeMo:getEpisodeType()
+	self._passOrder = self._episodeMo:getPassOrder()
+	self._groupId = self._episodeCo.groupId
+	self._activityId = self._episodeCo.activityId
+	self._groupEpisodeMo = Act183Model.instance:getGroupEpisodeMo(self._groupId)
+	self._groupType = self._groupEpisodeMo:getGroupType()
 end
 
-function var_0_0.refresh(arg_5_0)
-	arg_5_0._isVisible = arg_5_0:checkIsVisible()
+function Act183DungeonBaseComp:refresh()
+	self._isVisible = self:checkIsVisible()
 
-	gohelper.setActive(arg_5_0.go, arg_5_0._isVisible)
+	gohelper.setActive(self.go, self._isVisible)
 
-	if not arg_5_0._isVisible then
+	if not self._isVisible then
 		return
 	end
 
-	arg_5_0:show()
+	self:show()
 end
 
-function var_0_0.show(arg_6_0)
+function Act183DungeonBaseComp:show()
 	return
 end
 
-function var_0_0.createObjList(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6)
-	if not arg_7_1 or not arg_7_2 or not arg_7_3 or not arg_7_4 or not arg_7_5 or not arg_7_6 then
+function Act183DungeonBaseComp:createObjList(dataList, goTable, gotemplate, initFunc, refreshFunc, freeFunc)
+	if not dataList or not goTable or not gotemplate or not initFunc or not refreshFunc or not freeFunc then
 		logError("缺失参数")
 
 		return
 	end
 
-	local var_7_0 = {}
+	local useMap = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		local var_7_1 = arg_7_0:_getOrCreateItem(iter_7_0, arg_7_2, arg_7_3, arg_7_4)
+	for index, data in ipairs(dataList) do
+		local goItem = self:_getOrCreateItem(index, goTable, gotemplate, initFunc)
 
-		gohelper.setActive(var_7_1.go, true)
-		arg_7_5(arg_7_0, var_7_1, iter_7_1, iter_7_0)
+		gohelper.setActive(goItem.go, true)
+		refreshFunc(self, goItem, data, index)
 
-		var_7_0[var_7_1] = true
+		useMap[goItem] = true
 	end
 
-	for iter_7_2, iter_7_3 in pairs(arg_7_2) do
-		if not var_7_0[iter_7_3] then
-			arg_7_6(arg_7_0, iter_7_3)
+	for _, goItem in pairs(goTable) do
+		if not useMap[goItem] then
+			freeFunc(self, goItem)
 		end
 	end
 
-	gohelper.setActive(arg_7_3, false)
+	gohelper.setActive(gotemplate, false)
 end
 
-function var_0_0.createObjListNum(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6)
-	if not arg_8_1 or not arg_8_2 or not arg_8_3 or not arg_8_4 or not arg_8_5 or not arg_8_6 then
+function Act183DungeonBaseComp:createObjListNum(count, goTable, gotemplate, initFunc, refreshFunc, freeFunc)
+	if not count or not goTable or not gotemplate or not initFunc or not refreshFunc or not freeFunc then
 		logError("缺失参数")
 
 		return
 	end
 
-	local var_8_0 = {}
+	local useMap = {}
 
-	for iter_8_0 = 1, arg_8_1 do
-		local var_8_1 = arg_8_0:_getOrCreateItem(iter_8_0, arg_8_2, arg_8_3, arg_8_4)
+	for index = 1, count do
+		local goItem = self:_getOrCreateItem(index, goTable, gotemplate, initFunc)
 
-		arg_8_5(arg_8_0, var_8_1, nil, iter_8_0)
-		gohelper.setActive(var_8_1.go, true)
+		refreshFunc(self, goItem, nil, index)
+		gohelper.setActive(goItem.go, true)
 
-		var_8_0[var_8_1] = true
+		useMap[goItem] = true
 	end
 
-	for iter_8_1, iter_8_2 in pairs(arg_8_2) do
-		if not var_8_0[iter_8_2] then
-			arg_8_6(arg_8_0, iter_8_2)
+	for _, goItem in pairs(goTable) do
+		if not useMap[goItem] then
+			freeFunc(self, goItem)
 		end
 	end
 
-	gohelper.setActive(arg_8_3, false)
+	gohelper.setActive(gotemplate, false)
 end
 
-function var_0_0._getOrCreateItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	local var_9_0 = arg_9_2[arg_9_1]
+function Act183DungeonBaseComp:_getOrCreateItem(index, goTable, gotemplate, initFunc)
+	local goItemTab = goTable[index]
 
-	if not var_9_0 then
-		var_9_0 = arg_9_0:getUserDataTb_()
-		var_9_0.go = gohelper.cloneInPlace(arg_9_3, "item_" .. arg_9_1)
-		var_9_0.index = arg_9_1
+	if not goItemTab then
+		goItemTab = self:getUserDataTb_()
+		goItemTab.go = gohelper.cloneInPlace(gotemplate, "item_" .. index)
+		goItemTab.index = index
 
-		arg_9_4(arg_9_0, var_9_0, arg_9_1)
+		initFunc(self, goItemTab, index)
 
-		arg_9_2[arg_9_1] = var_9_0
+		goTable[index] = goItemTab
 	end
 
-	return var_9_0
+	return goItemTab
 end
 
-function var_0_0._defaultItemFreeFunc(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_1.go, false)
+function Act183DungeonBaseComp:_defaultItemFreeFunc(goItem)
+	gohelper.setActive(goItem.go, false)
 end
 
-function var_0_0.getHeight(arg_11_0)
-	if not arg_11_0.tran then
-		logError(string.format("Transform组件不存在 cls = %s", arg_11_0.__cname))
+function Act183DungeonBaseComp:getHeight()
+	if not self.tran then
+		logError(string.format("Transform组件不存在 cls = %s", self.__cname))
 
 		return 0
 	end
 
-	if not arg_11_0._isVisible then
+	if not self._isVisible then
 		return 0
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_11_0.tran)
+	ZProj.UGUIHelper.RebuildLayout(self.tran)
 
-	return recthelper.getHeight(arg_11_0.tran)
+	return recthelper.getHeight(self.tran)
 end
 
-function var_0_0.focus(arg_12_0, arg_12_1)
+function Act183DungeonBaseComp:focus(params)
 	return 0
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	arg_13_0:__onDispose()
+function Act183DungeonBaseComp:onDestroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return Act183DungeonBaseComp

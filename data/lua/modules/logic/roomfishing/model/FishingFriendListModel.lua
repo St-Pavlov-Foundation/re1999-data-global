@@ -1,80 +1,83 @@
-﻿module("modules.logic.roomfishing.model.FishingFriendListModel", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/model/FishingFriendListModel.lua
 
-local var_0_0 = class("FishingFriendListModel", ListScrollModel)
+module("modules.logic.roomfishing.model.FishingFriendListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
+local FishingFriendListModel = class("FishingFriendListModel", ListScrollModel)
+
+function FishingFriendListModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function FishingFriendListModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0._selectedTab = nil
-	arg_3_0.unFishingFriendList = {}
+function FishingFriendListModel:clearData()
+	self._selectedTab = nil
+	self.unFishingFriendList = {}
 end
 
-function var_0_0.updateFriendListInfo(arg_4_0, arg_4_1)
-	arg_4_0.unFishingFriendList = {}
+function FishingFriendListModel:updateFriendListInfo(notFishingFriendInfo)
+	self.unFishingFriendList = {}
 
-	if arg_4_1 then
-		arg_4_0.unFishingFriendList = GameUtil.rpcInfosToList(arg_4_1, FishingFriendInfoMO)
+	if notFishingFriendInfo then
+		self.unFishingFriendList = GameUtil.rpcInfosToList(notFishingFriendInfo, FishingFriendInfoMO)
 	end
 
-	arg_4_0:setFriendList()
+	self:setFriendList()
 end
 
-function var_0_0.onSelectFriendTab(arg_5_0, arg_5_1)
-	if arg_5_0._selectedTab == arg_5_1 then
+function FishingFriendListModel:onSelectFriendTab(selectedTab)
+	if self._selectedTab == selectedTab then
 		return
 	end
 
-	arg_5_0._selectedTab = arg_5_1
+	self._selectedTab = selectedTab
 
-	arg_5_0:setFriendList()
+	self:setFriendList()
 end
 
-local function var_0_1(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.userId or 0
-	local var_6_1 = arg_6_1.userId or 0
-	local var_6_2 = FishingModel.instance:getCurShowingUserId()
-	local var_6_3 = var_6_0 == var_6_2
+local function _sortFriend(aFriendInfo, bFriendInfo)
+	local aUserId = aFriendInfo.userId or 0
+	local bUserId = bFriendInfo.userId or 0
+	local curPoolUserId = FishingModel.instance:getCurShowingUserId()
+	local isVisitA = aUserId == curPoolUserId
+	local isVisitB = bUserId == curPoolUserId
 
-	if var_6_3 ~= (var_6_1 == var_6_2) then
-		return var_6_3
+	if isVisitA ~= isVisitB then
+		return isVisitA
 	end
 
-	local var_6_4 = FishingModel.instance:getMyFishingProgress(var_6_0)
-	local var_6_5 = FishingModel.instance:getMyFishingProgress(var_6_1)
+	local aProgress = FishingModel.instance:getMyFishingProgress(aUserId)
+	local bProgress = FishingModel.instance:getMyFishingProgress(bUserId)
 
-	if var_6_4 ~= var_6_5 then
-		return var_6_5 < var_6_4
+	if aProgress ~= bProgress then
+		return bProgress < aProgress
 	end
 
-	return var_6_0 < var_6_1
+	return aUserId < bUserId
 end
 
-function var_0_0.setFriendList(arg_7_0)
-	arg_7_0:clear()
+function FishingFriendListModel:setFriendList()
+	self:clear()
 
-	local var_7_0 = {}
+	local list = {}
 
-	if arg_7_0._selectedTab == FishingEnum.FriendListTag.UnFishing then
-		var_7_0 = arg_7_0.unFishingFriendList
-	elseif arg_7_0._selectedTab == FishingEnum.FriendListTag.Fishing then
-		var_7_0 = FishingModel.instance:getMyFishingFriendList()
+	if self._selectedTab == FishingEnum.FriendListTag.UnFishing then
+		list = self.unFishingFriendList
+	elseif self._selectedTab == FishingEnum.FriendListTag.Fishing then
+		list = FishingModel.instance:getMyFishingFriendList()
 	end
 
-	table.sort(var_7_0, var_0_1)
-	arg_7_0:setList(var_7_0)
+	table.sort(list, _sortFriend)
+	self:setList(list)
 end
 
-function var_0_0.getSelectedTab(arg_8_0)
-	return arg_8_0._selectedTab
+function FishingFriendListModel:getSelectedTab()
+	return self._selectedTab
 end
 
-var_0_0.instance = var_0_0.New()
+FishingFriendListModel.instance = FishingFriendListModel.New()
 
-return var_0_0
+return FishingFriendListModel

@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTimelineTrackItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTimelineTrackItem.lua
 
-local var_0_0 = class("FightTimelineTrackItem", FightBaseClass)
+module("modules.logic.fight.entity.comp.skill.FightTimelineTrackItem", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.id = arg_1_1
-	arg_1_0.type = arg_1_2
-	arg_1_0.binder = arg_1_3
-	arg_1_0.timelineItem = arg_1_4
-	arg_1_0.workTimelineItem = arg_1_4.workTimelineItem
+local FightTimelineTrackItem = class("FightTimelineTrackItem", FightBaseClass)
+
+function FightTimelineTrackItem:onConstructor(id, type, binder, timelineItem)
+	self.id = id
+	self.type = type
+	self.binder = binder
+	self.timelineItem = timelineItem
+	self.workTimelineItem = timelineItem.workTimelineItem
 end
 
-function var_0_0.onTrackStart(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function FightTimelineTrackItem:onTrackStart(fightStepData, duration, paramsArr)
 	return
 end
 
-function var_0_0.onTrackEnd(arg_3_0)
+function FightTimelineTrackItem:onTrackEnd()
 	return
 end
 
-function var_0_0.addWork2TimelineFinishWork(arg_4_0, arg_4_1)
-	arg_4_0.timelineItem:addWork2FinishWork(arg_4_1)
+function FightTimelineTrackItem:addWork2TimelineFinishWork(work)
+	self.timelineItem:addWork2FinishWork(work)
 end
 
-function var_0_0.onDestructor(arg_5_0)
+function FightTimelineTrackItem:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTimelineTrackItem

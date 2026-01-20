@@ -1,14 +1,16 @@
-﻿module("modules.logic.chargepush.model.ChargePushMO", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/model/ChargePushMO.lua
 
-local var_0_0 = pureTable("ChargePushMO")
+module("modules.logic.chargepush.model.ChargePushMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
-	arg_1_0.config = ChargePushConfig.instance:getPushGoodsConfig(arg_1_1)
+local ChargePushMO = pureTable("ChargePushMO")
+
+function ChargePushMO:init(id)
+	self.id = id
+	self.config = ChargePushConfig.instance:getPushGoodsConfig(id)
 end
 
-function var_0_0.sortFunction(arg_2_0, arg_2_1)
-	return arg_2_0.id < arg_2_1.id
+function ChargePushMO.sortFunction(a, b)
+	return a.id < b.id
 end
 
-return var_0_0
+return ChargePushMO

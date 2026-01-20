@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardHeatValueChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardHeatValueChange.lua
 
-local var_0_0 = class("FightWorkCardHeatValueChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardHeatValueChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendFightEvent(FightEvent.RefreshCardHeatShow)
-	arg_1_0:onDone(true)
+local FightWorkCardHeatValueChange = class("FightWorkCardHeatValueChange", FightEffectBase)
+
+function FightWorkCardHeatValueChange:onStart()
+	self:com_sendFightEvent(FightEvent.RefreshCardHeatShow)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCardHeatValueChange

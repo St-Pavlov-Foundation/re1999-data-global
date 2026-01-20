@@ -1,13 +1,15 @@
-﻿module("modules.logic.chargepush.view.ChargePushMonthCardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/view/ChargePushMonthCardViewContainer.lua
 
-local var_0_0 = class("ChargePushMonthCardViewContainer", BaseViewContainer)
+module("modules.logic.chargepush.view.ChargePushMonthCardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ChargePushMonthCardViewContainer = class("ChargePushMonthCardViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ChargePushMonthCardView.New())
+function ChargePushMonthCardViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ChargePushMonthCardView.New())
+
+	return views
 end
 
-return var_0_0
+return ChargePushMonthCardViewContainer

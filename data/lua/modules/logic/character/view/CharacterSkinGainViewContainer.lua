@@ -1,13 +1,15 @@
-﻿module("modules.logic.character.view.CharacterSkinGainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinGainViewContainer.lua
 
-local var_0_0 = class("CharacterSkinGainViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterSkinGainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterSkinGainViewContainer = class("CharacterSkinGainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CharacterSkinGainView.New())
+function CharacterSkinGainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CharacterSkinGainView.New())
+
+	return views
 end
 
-return var_0_0
+return CharacterSkinGainViewContainer

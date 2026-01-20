@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_7.enter.view.VersionActivity1_7EnterViewTabItem1", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/enter/view/VersionActivity1_7EnterViewTabItem1.lua
 
-local var_0_0 = class("VersionActivity1_7EnterViewTabItem1", VersionActivity1_7EnterViewBaseTabItem)
+module("modules.logic.versionactivity1_7.enter.view.VersionActivity1_7EnterViewTabItem1", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity1_7EnterViewTabItem1 = class("VersionActivity1_7EnterViewTabItem1", VersionActivity1_7EnterViewBaseTabItem)
 
-	arg_1_0.simageSelectTabImg = gohelper.findChildSingleImage(arg_1_0.rootGo, "#go_select/#simage_tabimg")
-	arg_1_0.simageUnSelectTabImg = gohelper.findChildSingleImage(arg_1_0.rootGo, "#go_unselect/#simage_tabimg")
+function VersionActivity1_7EnterViewTabItem1:_editableInitView()
+	VersionActivity1_7EnterViewTabItem1.super._editableInitView(self)
 
-	arg_1_0.simageSelectTabImg:LoadImage(VersionActivity1_7Enum.ActId2SelectImgPath[arg_1_0.actId])
-	arg_1_0.simageUnSelectTabImg:LoadImage(VersionActivity1_7Enum.ActId2UnSelectImgPath[arg_1_0.actId])
+	self.simageSelectTabImg = gohelper.findChildSingleImage(self.rootGo, "#go_select/#simage_tabimg")
+	self.simageUnSelectTabImg = gohelper.findChildSingleImage(self.rootGo, "#go_unselect/#simage_tabimg")
+
+	self.simageSelectTabImg:LoadImage(VersionActivity1_7Enum.ActId2SelectImgPath[self.actId])
+	self.simageUnSelectTabImg:LoadImage(VersionActivity1_7Enum.ActId2UnSelectImgPath[self.actId])
 end
 
-function var_0_0.dispose(arg_2_0)
-	arg_2_0.simageSelectTabImg:UnLoadImage()
-	arg_2_0.simageUnSelectTabImg:UnLoadImage()
-	var_0_0.super.dispose(arg_2_0)
+function VersionActivity1_7EnterViewTabItem1:dispose()
+	self.simageSelectTabImg:UnLoadImage()
+	self.simageUnSelectTabImg:UnLoadImage()
+	VersionActivity1_7EnterViewTabItem1.super.dispose(self)
 end
 
-return var_0_0
+return VersionActivity1_7EnterViewTabItem1

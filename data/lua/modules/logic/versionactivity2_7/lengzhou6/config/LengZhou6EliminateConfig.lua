@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.config.LengZhou6EliminateConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/config/LengZhou6EliminateConfig.lua
 
-local var_0_0 = class("LengZhou6EliminateConfig", EliminateConfig)
+module("modules.logic.versionactivity2_7.lengzhou6.config.LengZhou6EliminateConfig", package.seeall)
 
-function var_0_0._initEliminateChessConfig(arg_1_0)
-	var_0_0.super._initEliminateChessConfig(arg_1_0)
+local LengZhou6EliminateConfig = class("LengZhou6EliminateConfig", EliminateConfig)
 
-	arg_1_0._eliminateLevelConfig = {}
+function LengZhou6EliminateConfig:_initEliminateChessConfig()
+	LengZhou6EliminateConfig.super._initEliminateChessConfig(self)
 
-	for iter_1_0 = 1, #T_lua_eliminate_level do
-		local var_1_0 = T_lua_eliminate_level[iter_1_0]
+	self._eliminateLevelConfig = {}
 
-		arg_1_0._eliminateLevelConfig[var_1_0.id] = var_1_0
+	for i = 1, #T_lua_eliminate_level do
+		local data = T_lua_eliminate_level[i]
+
+		self._eliminateLevelConfig[data.id] = data
 	end
 end
 
-function var_0_0.getEliminateChessLevelConfig(arg_2_0, arg_2_1)
-	if arg_2_0._eliminateLevelConfig == nil then
-		arg_2_0:_initEliminateChessConfig()
+function LengZhou6EliminateConfig:getEliminateChessLevelConfig(levelId)
+	if self._eliminateLevelConfig == nil then
+		self:_initEliminateChessConfig()
 	end
 
-	return arg_2_0._eliminateLevelConfig[arg_2_1] and arg_2_0._eliminateLevelConfig[arg_2_1].chess or ""
+	return self._eliminateLevelConfig[levelId] and self._eliminateLevelConfig[levelId].chess or ""
 end
 
-var_0_0.instance = var_0_0.New()
+LengZhou6EliminateConfig.instance = LengZhou6EliminateConfig.New()
 
-return var_0_0
+return LengZhou6EliminateConfig

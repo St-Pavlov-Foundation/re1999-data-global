@@ -1,25 +1,30 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.LengZhou6EnemyGenerateSkillStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/LengZhou6EnemyGenerateSkillStep.lua
 
-local var_0_0 = class("LengZhou6EnemyGenerateSkillStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.LengZhou6EnemyGenerateSkillStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local LengZhou6EnemyGenerateSkillStep = class("LengZhou6EnemyGenerateSkillStep", EliminateChessStepBase)
+
+function LengZhou6EnemyGenerateSkillStep:onStart()
 	LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.UpdateEnemySkill)
 
-	local var_1_0 = LengZhou6GameModel.instance:getEnemy():getAction():calCurResidueCd()
-	local var_1_1 = 0
+	local enemy = LengZhou6GameModel.instance:getEnemy()
+	local action = enemy:getAction()
+	local residueCd = action:calCurResidueCd()
+	local delayTime = 0
+	local enemy = LengZhou6GameModel.instance:getEnemy()
 
-	if LengZhou6GameModel.instance:getEnemy():havePoisonBuff() then
-		var_1_1 = LengZhou6Enum.EnemyBuffEffectShowTime
+	if enemy:havePoisonBuff() then
+		delayTime = LengZhou6Enum.EnemyBuffEffectShowTime
 	end
 
 	LengZhou6GameModel.instance:setCurGameStep(LengZhou6Enum.BattleStep.poisonSettlement)
-	LengZhou6GameController.instance:dispatchEvent(LengZhou6Event.EnemySkillRound, var_1_0)
+	LengZhou6GameController.instance:dispatchEvent(LengZhou6Event.EnemySkillRound, residueCd)
 
-	if var_1_1 ~= 0 then
-		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_1)
+	if delayTime ~= 0 then
+		TaskDispatcher.runDelay(self._onDone, self, delayTime)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return LengZhou6EnemyGenerateSkillStep

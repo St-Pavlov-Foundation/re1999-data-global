@@ -1,33 +1,35 @@
-﻿module("modules.logic.character.config.CharacterRecommedConfig", package.seeall)
+﻿-- chunkname: @modules/logic/character/config/CharacterRecommedConfig.lua
 
-local var_0_0 = class("CharacterRecommedConfig", BaseConfig)
+module("modules.logic.character.config.CharacterRecommedConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local CharacterRecommedConfig = class("CharacterRecommedConfig", BaseConfig)
+
+function CharacterRecommedConfig:reqConfigNames()
 	return {
 		"character_recommend"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._heroConfigDict = {}
+function CharacterRecommedConfig:onInit()
+	self._heroConfigDict = {}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "character_recommend" then
-		arg_3_0._heroConfigDict = arg_3_2.configDict
+function CharacterRecommedConfig:onConfigLoaded(configName, configTable)
+	if configName == "character_recommend" then
+		self._heroConfigDict = configTable.configDict
 
-		CharacterRecommedModel.instance:initMO(arg_3_0._heroConfigDict)
+		CharacterRecommedModel.instance:initMO(self._heroConfigDict)
 	end
 end
 
-function var_0_0.getAllHeroConfigs(arg_4_0)
-	return arg_4_0._heroConfigDict
+function CharacterRecommedConfig:getAllHeroConfigs()
+	return self._heroConfigDict
 end
 
-function var_0_0.getHeroConfig(arg_5_0, arg_5_1)
-	return arg_5_0._heroConfigDict[arg_5_1]
+function CharacterRecommedConfig:getHeroConfig(heroId)
+	return self._heroConfigDict[heroId]
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterRecommedConfig.instance = CharacterRecommedConfig.New()
 
-return var_0_0
+return CharacterRecommedConfig

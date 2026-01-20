@@ -1,56 +1,58 @@
-﻿module("modules.logic.rouge.view.RougeCollectionHandBookFavoriteView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionHandBookFavoriteView.lua
 
-local var_0_0 = class("RougeCollectionHandBookFavoriteView", RougeCollectionHandBookView)
+module("modules.logic.rouge.view.RougeCollectionHandBookFavoriteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnLayout = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_layout")
-	arg_1_0._goUnselectLayout = gohelper.findChild(arg_1_0._btnLayout.gameObject, "unselected")
-	arg_1_0._goSelectLayout = gohelper.findChild(arg_1_0._btnLayout.gameObject, "selected")
+local RougeCollectionHandBookFavoriteView = class("RougeCollectionHandBookFavoriteView", RougeCollectionHandBookView)
 
-	var_0_0.super.onInitView(arg_1_0)
+function RougeCollectionHandBookFavoriteView:onInitView()
+	self._btnLayout = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_layout")
+	self._goUnselectLayout = gohelper.findChild(self._btnLayout.gameObject, "unselected")
+	self._goSelectLayout = gohelper.findChild(self._btnLayout.gameObject, "selected")
+
+	RougeCollectionHandBookFavoriteView.super.onInitView(self)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnLayout:AddClickListener(arg_2_0._btnLayoutOnClick, arg_2_0)
+function RougeCollectionHandBookFavoriteView:addEvents()
+	RougeCollectionHandBookFavoriteView.super.addEvents(self)
+	self._btnLayout:AddClickListener(self._btnLayoutOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._btnLayout:RemoveClickListener()
+function RougeCollectionHandBookFavoriteView:removeEvents()
+	RougeCollectionHandBookFavoriteView.super.removeEvents(self)
+	self._btnLayout:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	var_0_0.super._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._btnLayout, true)
-	arg_4_0:_setFilterSelected(false)
+function RougeCollectionHandBookFavoriteView:_editableInitView()
+	RougeCollectionHandBookFavoriteView.super._editableInitView(self)
+	gohelper.setActive(self._btnLayout, true)
+	self:_setFilterSelected(false)
 end
 
-function var_0_0._btnLayoutOnClick(arg_5_0)
-	if arg_5_0._isAllSelected then
+function RougeCollectionHandBookFavoriteView:_btnLayoutOnClick()
+	if self._isAllSelected then
 		return
 	end
 
-	arg_5_0:_setFilterSelected(false)
+	self:_setFilterSelected(false)
 end
 
-function var_0_0._setFilterSelected(arg_6_0, arg_6_1)
-	var_0_0.super._setFilterSelected(arg_6_0, arg_6_1)
-	arg_6_0:_setAllSelected(not arg_6_1)
+function RougeCollectionHandBookFavoriteView:_setFilterSelected(value)
+	RougeCollectionHandBookFavoriteView.super._setFilterSelected(self, value)
+	self:_setAllSelected(not value)
 end
 
-function var_0_0._setAllSelected(arg_7_0, arg_7_1)
-	arg_7_0._isAllSelected = arg_7_1
+function RougeCollectionHandBookFavoriteView:_setAllSelected(value)
+	self._isAllSelected = value
 
-	gohelper.setActive(arg_7_0._goSelectLayout, arg_7_1)
-	gohelper.setActive(arg_7_0._goUnselectLayout, not arg_7_1)
+	gohelper.setActive(self._goSelectLayout, value)
+	gohelper.setActive(self._goUnselectLayout, not value)
 
-	if arg_7_0._isAllSelected then
-		arg_7_0._baseTagSelectMap = {}
-		arg_7_0._extraTagSelectMap = {}
+	if self._isAllSelected then
+		self._baseTagSelectMap = {}
+		self._extraTagSelectMap = {}
 
 		RougeCollectionHandBookListModel.instance:onInitData()
 	end
 end
 
-return var_0_0
+return RougeCollectionHandBookFavoriteView

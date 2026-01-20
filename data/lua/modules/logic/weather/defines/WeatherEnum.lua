@@ -1,36 +1,38 @@
-﻿module("modules.logic.weather.defines.WeatherEnum", package.seeall)
+﻿-- chunkname: @modules/logic/weather/defines/WeatherEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.weather.defines.WeatherEnum", package.seeall)
 
-var_0_0.LightMode = {
+local WeatherEnum = _M
+
+WeatherEnum.LightMode = {
 	"During",
 	"Overcast",
 	"Dusk",
 	"Night"
 }
-var_0_0.LightModeDuring = 1
-var_0_0.LightModeOvercast = 2
-var_0_0.LightModeDusk = 3
-var_0_0.LightModeNight = 4
-var_0_0.DayTimeFireworks = 9
-var_0_0.NightTimeFireworks = 10
-var_0_0.SpRainStorm = 11
-var_0_0.EffectAudioTime = {
-	[var_0_0.DayTimeFireworks] = 40,
-	[var_0_0.NightTimeFireworks] = 40,
-	[var_0_0.SpRainStorm] = 15
+WeatherEnum.LightModeDuring = 1
+WeatherEnum.LightModeOvercast = 2
+WeatherEnum.LightModeDusk = 3
+WeatherEnum.LightModeNight = 4
+WeatherEnum.DayTimeFireworks = 9
+WeatherEnum.NightTimeFireworks = 10
+WeatherEnum.SpRainStorm = 11
+WeatherEnum.EffectAudioTime = {
+	[WeatherEnum.DayTimeFireworks] = 40,
+	[WeatherEnum.NightTimeFireworks] = 40,
+	[WeatherEnum.SpRainStorm] = 15
 }
-var_0_0.EffectPlayAudio = {
-	[var_0_0.DayTimeFireworks] = 20250601,
-	[var_0_0.NightTimeFireworks] = 20250601,
-	[var_0_0.SpRainStorm] = 20305004
+WeatherEnum.EffectPlayAudio = {
+	[WeatherEnum.DayTimeFireworks] = 20250601,
+	[WeatherEnum.NightTimeFireworks] = 20250601,
+	[WeatherEnum.SpRainStorm] = 20305004
 }
-var_0_0.EffectStopAudio = {
-	[var_0_0.DayTimeFireworks] = 20250602,
-	[var_0_0.NightTimeFireworks] = 20250602,
-	[var_0_0.SpRainStorm] = 20305005
+WeatherEnum.EffectStopAudio = {
+	[WeatherEnum.DayTimeFireworks] = 20250602,
+	[WeatherEnum.NightTimeFireworks] = 20250602,
+	[WeatherEnum.SpRainStorm] = 20305005
 }
-var_0_0.EffectMode = {
+WeatherEnum.EffectMode = {
 	"Normal",
 	"Sunny",
 	"Light_Rain",
@@ -43,7 +45,7 @@ var_0_0.EffectMode = {
 	"Normal",
 	"Heavy_Rainstorm"
 }
-var_0_0.EffectAirColor = {
+WeatherEnum.EffectAirColor = {
 	{
 		255,
 		255,
@@ -69,7 +71,7 @@ var_0_0.EffectAirColor = {
 		148
 	}
 }
-var_0_0.DoorLightColor = {
+WeatherEnum.DoorLightColor = {
 	{
 		247,
 		245,
@@ -95,21 +97,21 @@ var_0_0.DoorLightColor = {
 		255
 	}
 }
-var_0_0.BloomFactor = 1
-var_0_0.Percent = 1
-var_0_0.BloomFactor2 = {
+WeatherEnum.BloomFactor = 1
+WeatherEnum.Percent = 1
+WeatherEnum.BloomFactor2 = {
 	0,
 	0,
 	0,
 	0
 }
-var_0_0.Luminance = {
+WeatherEnum.Luminance = {
 	0,
 	0.223,
 	0,
 	0
 }
-var_0_0.FrameTintColor = {
+WeatherEnum.FrameTintColor = {
 	{
 		1,
 		1,
@@ -135,50 +137,50 @@ var_0_0.FrameTintColor = {
 		0.54
 	}
 }
-var_0_0.FrameLumFactor = {
+WeatherEnum.FrameLumFactor = {
 	0.5,
 	0.77,
 	0.77,
 	0.77
 }
-var_0_0.HeroInFrameColor = {
+WeatherEnum.HeroInFrameColor = {
 	Color.New(0.74, 0.68, 0.59, 1),
 	Color.New(0.51, 0.48, 0.45, 1),
 	Color.New(0.44, 0.43, 0.39, 1),
 	Color.New(0.41, 0.44, 0.5, 1)
 }
-var_0_0.HeroInFrameLumFactor = {
+WeatherEnum.HeroInFrameLumFactor = {
 	0.25,
 	0.5,
 	0.5,
 	0.5
 }
-var_0_0.HeroInSceneLumFactor = 0
-var_0_0.Default = 0
-var_0_0.Heavy_Rain = 4
-var_0_0.Heavy_Rainstorm = 5
-var_0_0.RainOn = {
-	[var_0_0.Default] = 0,
-	[var_0_0.Heavy_Rain] = 1,
-	[var_0_0.Heavy_Rainstorm] = 1
+WeatherEnum.HeroInSceneLumFactor = 0
+WeatherEnum.Default = 0
+WeatherEnum.Heavy_Rain = 4
+WeatherEnum.Heavy_Rainstorm = 5
+WeatherEnum.RainOn = {
+	[WeatherEnum.Default] = 0,
+	[WeatherEnum.Heavy_Rain] = 1,
+	[WeatherEnum.Heavy_Rainstorm] = 1
 }
-var_0_0.RainValue = {
-	[var_0_0.Default] = 0,
-	[var_0_0.Heavy_Rain] = 1,
-	[var_0_0.Heavy_Rainstorm] = 1
+WeatherEnum.RainValue = {
+	[WeatherEnum.Default] = 0,
+	[WeatherEnum.Heavy_Rain] = 1,
+	[WeatherEnum.Heavy_Rainstorm] = 1
 }
-var_0_0.RainDistortionFactor = {
-	[var_0_0.Default] = Vector4(0, 0, 0, 0),
-	[var_0_0.Heavy_Rain] = Vector4(0, 1.3, 4.7, 0),
-	[var_0_0.Heavy_Rainstorm] = Vector4(3, 1.3, 4.7, 0)
+WeatherEnum.RainDistortionFactor = {
+	[WeatherEnum.Default] = Vector4(0, 0, 0, 0),
+	[WeatherEnum.Heavy_Rain] = Vector4(0, 1.3, 4.7, 0),
+	[WeatherEnum.Heavy_Rainstorm] = Vector4(3, 1.3, 4.7, 0)
 }
-var_0_0.RainEmission = {
-	[var_0_0.Default] = Vector4(0, 0, 0, 0),
-	[var_0_0.Heavy_Rain] = Vector4(0, 3.5, 1.86, 0),
-	[var_0_0.Heavy_Rainstorm] = Vector4(1.5, 3, 1.86, 0)
+WeatherEnum.RainEmission = {
+	[WeatherEnum.Default] = Vector4(0, 0, 0, 0),
+	[WeatherEnum.Heavy_Rain] = Vector4(0, 3.5, 1.86, 0),
+	[WeatherEnum.Heavy_Rainstorm] = Vector4(1.5, 3, 1.86, 0)
 }
-var_0_0.EffectTag = {
+WeatherEnum.EffectTag = {
 	Frame = "frame"
 }
 
-return var_0_0
+return WeatherEnum

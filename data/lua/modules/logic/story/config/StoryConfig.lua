@@ -1,30 +1,33 @@
-﻿module("modules.logic.story.config.StoryConfig", package.seeall)
+﻿-- chunkname: @modules/logic/story/config/StoryConfig.lua
 
-local var_0_0 = class("StoryConfig", BaseConfig)
+module("modules.logic.story.config.StoryConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._groupConfigs = {}
-	arg_1_0._stepConfigs = {}
-	arg_1_0._cutConfig = {}
-	arg_1_0._skipConfig = {}
-	arg_1_0._txtdiffConfig = {}
-	arg_1_0._fadeConfig = {}
-	arg_1_0._activityOpenConfig = {}
-	arg_1_0._prologueConfig = {}
-	arg_1_0._textRefrectConfig = {}
-	arg_1_0._leadHeroSpineConfig = {}
-	arg_1_0._picTxtsConfig = {}
-	arg_1_0._storyHeroConfig = {}
-	arg_1_0._storyBgEffTransConfig = {}
-	arg_1_0._storyBgZoneConfig = {}
-	arg_1_0._audioSwitchConfig = {}
+local StoryConfig = class("StoryConfig", BaseConfig)
+
+function StoryConfig:ctor()
+	self._groupConfigs = {}
+	self._stepConfigs = {}
+	self._cutConfig = {}
+	self._skipConfig = {}
+	self._txtdiffConfig = {}
+	self._fadeConfig = {}
+	self._activityOpenConfig = {}
+	self._prologueConfig = {}
+	self._textRefrectConfig = {}
+	self._leadHeroSpineConfig = {}
+	self._picTxtsConfig = {}
+	self._storyHeroConfig = {}
+	self._storyBgEffTransConfig = {}
+	self._storyBgZoneConfig = {}
+	self._audioSwitchConfig = {}
+	self._bgEffStarburstConfig = {}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0:_loadStoryConfig()
+function StoryConfig:onInit()
+	self:_loadStoryConfig()
 end
 
-function var_0_0.reqConfigNames(arg_3_0)
+function StoryConfig:reqConfigNames()
 	return {
 		"herocut",
 		"storyskip",
@@ -35,66 +38,69 @@ function var_0_0.reqConfigNames(arg_3_0)
 		"story_text_reflect",
 		"story_leadherospine",
 		"story_pictxt",
-		"story_audio_switch"
+		"story_audio_switch",
+		"story_starburst"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == "herocut" then
-		arg_4_0._cutConfig = arg_4_2
-	elseif arg_4_1 == "storyskip" then
-		arg_4_0._skipConfig = arg_4_2
-	elseif arg_4_1 == "story_txtdiff" then
-		arg_4_0._txtdiffConfig = arg_4_2
-	elseif arg_4_1 == "storydialogfade" then
-		arg_4_0._fadeConfig = arg_4_2
-	elseif arg_4_1 == "story_activity_open" then
-		arg_4_0._activityOpenConfig = arg_4_2
-	elseif arg_4_1 == "story_prologue_synopsis" then
-		arg_4_0._prologueConfig = arg_4_2
-	elseif arg_4_1 == "story_text_reflect" then
-		arg_4_0._textRefrectConfig = arg_4_2
-	elseif arg_4_1 == "story_leadherospine" then
-		arg_4_0._leadHeroSpineConfig = arg_4_2
-	elseif arg_4_1 == "story_pictxt" then
-		arg_4_0._picTxtsConfig = arg_4_2
-	elseif arg_4_1 == "story_audio_switch" then
-		arg_4_0._audioSwitchConfig = arg_4_2
+function StoryConfig:onConfigLoaded(configName, configTable)
+	if configName == "herocut" then
+		self._cutConfig = configTable
+	elseif configName == "storyskip" then
+		self._skipConfig = configTable
+	elseif configName == "story_txtdiff" then
+		self._txtdiffConfig = configTable
+	elseif configName == "storydialogfade" then
+		self._fadeConfig = configTable
+	elseif configName == "story_activity_open" then
+		self._activityOpenConfig = configTable
+	elseif configName == "story_prologue_synopsis" then
+		self._prologueConfig = configTable
+	elseif configName == "story_text_reflect" then
+		self._textRefrectConfig = configTable
+	elseif configName == "story_leadherospine" then
+		self._leadHeroSpineConfig = configTable
+	elseif configName == "story_pictxt" then
+		self._picTxtsConfig = configTable
+	elseif configName == "story_audio_switch" then
+		self._audioSwitchConfig = configTable
+	elseif configName == "story_starburst" then
+		self._bgEffStarburstConfig = configTable
 	end
 end
 
-function var_0_0._loadStoryConfig(arg_5_0)
-	local var_5_0 = addGlobalModule("modules.configs.story.lua_story_heroparam")
+function StoryConfig:_loadStoryConfig()
+	local heroConfig = addGlobalModule("modules.configs.story.lua_story_heroparam")
 
-	StoryHeroLibraryModel.instance:setStoryHeroLibraryList(var_5_0)
+	StoryHeroLibraryModel.instance:setStoryHeroLibraryList(heroConfig)
 
-	local var_5_1 = addGlobalModule("modules.configs.story.lua_story_bgefftranstype")
+	local bgEffTransConfig = addGlobalModule("modules.configs.story.lua_story_bgefftranstype")
 
-	StoryBgEffectTransModel.instance:setStoryBgEffectTransList(var_5_1)
+	StoryBgEffectTransModel.instance:setStoryBgEffectTransList(bgEffTransConfig)
 
 	if GameResMgr.IsFromEditorDir then
-		local var_5_2 = "configs/story/json_zone_storybg.json"
+		local zonePath = "configs/story/json_zone_storybg.json"
 
-		loadNonAbAsset(var_5_2, SLFramework.AssetType.TEXT, function(arg_6_0)
-			if not arg_6_0.IsLoadSuccess then
-				logError("config load fail: " .. arg_6_0.ResPath)
+		loadNonAbAsset(zonePath, SLFramework.AssetType.TEXT, function(assetItem)
+			if not assetItem.IsLoadSuccess then
+				logError("config load fail: " .. assetItem.ResPath)
 
 				return
 			end
 
-			local var_6_0 = cjson.decode(arg_6_0.TextAsset)
+			local json = cjson.decode(assetItem.TextAsset)
 
-			StoryBgZoneModel.instance:setZoneList(var_6_0)
+			StoryBgZoneModel.instance:setZoneList(json)
 		end)
 	else
-		local var_5_3 = "configs/story/json_zone_storybg.json"
+		local zonePath = "configs/story/json_zone_storybg.json"
 
-		loadAbAsset("configs/story", false, function(arg_7_0)
-			if arg_7_0.IsLoadSuccess then
-				local var_7_0 = cjson.decode(arg_7_0:GetResource(var_5_3).text)
+		loadAbAsset("configs/story", false, function(assetItem)
+			if assetItem.IsLoadSuccess then
+				local zoneJson = cjson.decode(assetItem:GetResource(zonePath).text)
 
-				StoryBgZoneModel.instance:setZoneList(var_7_0)
-				arg_7_0:Retain()
+				StoryBgZoneModel.instance:setZoneList(zoneJson)
+				assetItem:Retain()
 			else
 				logError("加载剧情bgzone json出错！")
 			end
@@ -102,74 +108,74 @@ function var_0_0._loadStoryConfig(arg_5_0)
 	end
 end
 
-function var_0_0.loadStoryConfig(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function StoryConfig:loadStoryConfig(storyId, callback, callbackObj)
 	if GameResMgr.IsFromEditorDir then
-		local var_8_0 = string.format("configs/story/steps/json_story_step_%s.json", arg_8_1)
-		local var_8_1 = false
-		local var_8_2 = false
+		local stepPath = string.format("configs/story/steps/json_story_step_%s.json", storyId)
+		local isStepLoaded = false
+		local isGroupLoaded = false
 
-		loadNonAbAsset(var_8_0, SLFramework.AssetType.TEXT, function(arg_9_0)
-			if not arg_9_0.IsLoadSuccess then
-				logError("config load fail: " .. arg_9_0.ResPath)
+		loadNonAbAsset(stepPath, SLFramework.AssetType.TEXT, function(assetItem)
+			if not assetItem.IsLoadSuccess then
+				logError("config load fail: " .. assetItem.ResPath)
 
 				return
 			end
 
-			local var_9_0 = cjson.decode(arg_9_0.TextAsset)
+			local json = cjson.decode(assetItem.TextAsset)
 
-			StoryStepModel.instance:setStepList(var_9_0[3])
+			StoryStepModel.instance:setStepList(json[3])
 			TaskDispatcher.runDelay(function()
-				SLFramework.ResMgr.Instance:ClearItem(arg_9_0)
+				SLFramework.ResMgr.Instance:ClearItem(assetItem)
 			end, nil, 0.1)
 
-			var_8_1 = true
+			isStepLoaded = true
 
-			if var_8_2 and arg_8_2 then
-				arg_8_2(arg_8_3)
+			if isGroupLoaded and callback then
+				callback(callbackObj)
 			end
 		end)
 
-		local var_8_3 = string.format("configs/story/groups/json_story_group_%s.json", arg_8_1)
+		local groupPath = string.format("configs/story/groups/json_story_group_%s.json", storyId)
 
-		loadNonAbAsset(var_8_3, SLFramework.AssetType.TEXT, function(arg_11_0)
-			if not arg_11_0.IsLoadSuccess then
-				logError("config load fail: " .. arg_11_0.ResPath)
+		loadNonAbAsset(groupPath, SLFramework.AssetType.TEXT, function(assetItem)
+			if not assetItem.IsLoadSuccess then
+				logError("config load fail: " .. assetItem.ResPath)
 
 				return
 			end
 
-			local var_11_0 = cjson.decode(arg_11_0.TextAsset)
+			local json = cjson.decode(assetItem.TextAsset)
 
-			StoryGroupModel.instance:setGroupList(var_11_0)
+			StoryGroupModel.instance:setGroupList(json)
 			TaskDispatcher.runDelay(function()
-				SLFramework.ResMgr.Instance:ClearItem(arg_11_0)
+				SLFramework.ResMgr.Instance:ClearItem(assetItem)
 			end, nil, 0.1)
 
-			var_8_2 = true
+			isGroupLoaded = true
 
-			if var_8_1 and arg_8_2 then
-				arg_8_2(arg_8_3)
+			if isStepLoaded and callback then
+				callback(callbackObj)
 			end
 		end)
 	else
-		local var_8_4 = string.format("configs/story/steps/json_story_step_%s.json", arg_8_1)
-		local var_8_5 = string.format("configs/story/groups/json_story_group_%s.json", arg_8_1)
+		local storyStepPath = string.format("configs/story/steps/json_story_step_%s.json", storyId)
+		local storyGroupPath = string.format("configs/story/groups/json_story_group_%s.json", storyId)
 
-		loadAbAsset("configs/story", false, function(arg_13_0)
-			if arg_13_0.IsLoadSuccess then
-				local var_13_0 = cjson.decode(arg_13_0:GetResource(var_8_4).text)
+		loadAbAsset("configs/story", false, function(assetItem)
+			if assetItem.IsLoadSuccess then
+				local stepJson = cjson.decode(assetItem:GetResource(storyStepPath).text)
 
-				StoryStepModel.instance:setStepList(var_13_0[3])
+				StoryStepModel.instance:setStepList(stepJson[3])
 
-				local var_13_1 = cjson.decode(arg_13_0:GetResource(var_8_5).text)
+				local groupJson = cjson.decode(assetItem:GetResource(storyGroupPath).text)
 
-				StoryGroupModel.instance:setGroupList(var_13_1)
+				StoryGroupModel.instance:setGroupList(groupJson)
 
-				if arg_8_2 then
-					arg_8_2(arg_8_3)
+				if callback then
+					callback(callbackObj)
 				end
 
-				arg_13_0:Retain()
+				assetItem:Retain()
 			else
 				logError("加载剧情运行json出错！")
 			end
@@ -177,98 +183,104 @@ function var_0_0.loadStoryConfig(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	end
 end
 
-function var_0_0.getActivityOpenConfig(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0._activityOpenConfig.configDict[arg_14_1]
+function StoryConfig:getActivityOpenConfig(chapter, part)
+	local chapterCos = self._activityOpenConfig.configDict[chapter]
 
-	return var_14_0 and var_14_0[arg_14_2]
+	return chapterCos and chapterCos[part]
 end
 
-function var_0_0.getStoryCutConfig(arg_15_0)
-	return arg_15_0._cutConfig.configDict
+function StoryConfig:getStoryCutConfig()
+	return self._cutConfig.configDict
 end
 
-function var_0_0.getStorySkipConfig(arg_16_0, arg_16_1)
-	return arg_16_0._skipConfig.configDict[arg_16_1]
+function StoryConfig:getStorySkipConfig(id)
+	return self._skipConfig.configDict[id]
 end
 
-function var_0_0.getStoryTxtDiffConfig(arg_17_0)
-	return arg_17_0._txtdiffConfig.configDict
+function StoryConfig:getStoryTxtDiffConfig()
+	return self._txtdiffConfig.configDict
 end
 
-function var_0_0.getStoryDialogFadeConfig(arg_18_0)
-	return arg_18_0._fadeConfig.configDict
+function StoryConfig:getStoryDialogFadeConfig()
+	return self._fadeConfig.configDict
 end
 
-function var_0_0.getStoryPrologueSkipConfig(arg_19_0)
-	return arg_19_0._prologueConfig.configDict
+function StoryConfig:getStoryPrologueSkipConfig()
+	return self._prologueConfig.configDict
 end
 
-function var_0_0.getStoryTextReflectConfig(arg_20_0)
-	return arg_20_0._textRefrectConfig.configDict
+function StoryConfig:getStoryTextReflectConfig()
+	return self._textRefrectConfig.configDict
 end
 
-function var_0_0.getStoryLeadHeroSpine(arg_21_0)
-	return arg_21_0._leadHeroSpineConfig.configDict
+function StoryConfig:getStoryLeadHeroSpine()
+	return self._leadHeroSpineConfig.configDict
 end
 
-function var_0_0.getStoryPicTxtConfig(arg_22_0, arg_22_1)
-	return arg_22_0._picTxtsConfig.configDict[arg_22_1]
+function StoryConfig:getStoryPicTxtConfig(id)
+	return self._picTxtsConfig.configDict[id]
 end
 
-function var_0_0.getStoryAudioSwitchConfig(arg_23_0, arg_23_1)
-	return arg_23_0._audioSwitchConfig.configDict[arg_23_1]
+function StoryConfig:getStoryAudioSwitchConfig(id)
+	return self._audioSwitchConfig.configDict[id]
 end
 
-function var_0_0.getEpisodeStoryIds(arg_24_0, arg_24_1)
-	local var_24_0 = {}
+function StoryConfig:getStoryStarburstConfig(id)
+	return self._bgEffStarburstConfig.configDict[id]
+end
 
-	if not arg_24_1 then
-		return var_24_0
+function StoryConfig:getEpisodeStoryIds(config)
+	local storyIds = {}
+
+	if not config then
+		return storyIds
 	end
 
-	if arg_24_1.beforeStory > 0 then
-		table.insert(var_24_0, arg_24_1.beforeStory)
+	if config.beforeStory > 0 then
+		table.insert(storyIds, config.beforeStory)
 	end
 
-	local var_24_1 = arg_24_0:getEpisodeFightStory(arg_24_1)
+	local fightStories = self:getEpisodeFightStory(config)
 
-	tabletool.addValues(var_24_0, var_24_1)
+	tabletool.addValues(storyIds, fightStories)
 
-	if arg_24_1.afterStory > 0 then
-		table.insert(var_24_0, arg_24_1.afterStory)
+	if config.afterStory > 0 then
+		table.insert(storyIds, config.afterStory)
 	end
 
-	return var_24_0
+	return storyIds
 end
 
-function var_0_0.getEpisodeFightStory(arg_25_0, arg_25_1)
-	local var_25_0 = {}
+function StoryConfig:getEpisodeFightStory(config)
+	local storyIds = {}
 
-	if not string.nilorempty(arg_25_1.story) then
-		local var_25_1 = string.split(arg_25_1.story, "|")
+	if not string.nilorempty(config.story) then
+		local storiesParams = string.split(config.story, "|")
 
-		for iter_25_0 = 1, #var_25_1 do
-			local var_25_2 = var_25_1[iter_25_0]
-			local var_25_3 = string.split(var_25_2, "#")
-			local var_25_4 = var_25_3[3] and tonumber(var_25_3[3])
+		for i = 1, #storiesParams do
+			local storyParams = storiesParams[i]
 
-			if var_25_4 and var_25_4 > 0 then
-				table.insert(var_25_0, var_25_4)
+			storyParams = string.split(storyParams, "#")
+
+			local storyId = storyParams[3] and tonumber(storyParams[3])
+
+			if storyId and storyId > 0 then
+				table.insert(storyIds, storyId)
 			end
 		end
 	end
 
-	return var_25_0
+	return storyIds
 end
 
-function var_0_0.replaceStoryMagicText(arg_26_0, arg_26_1)
-	for iter_26_0, iter_26_1 in pairs(arg_26_0._textRefrectConfig.configDict) do
-		arg_26_1 = string.gsub(arg_26_1, iter_26_1.magicText, iter_26_1.normalText)
+function StoryConfig:replaceStoryMagicText(txt)
+	for _, config in pairs(self._textRefrectConfig.configDict) do
+		txt = string.gsub(txt, config.magicText, config.normalText)
 	end
 
-	return arg_26_1
+	return txt
 end
 
-var_0_0.instance = var_0_0.New()
+StoryConfig.instance = StoryConfig.New()
 
-return var_0_0
+return StoryConfig

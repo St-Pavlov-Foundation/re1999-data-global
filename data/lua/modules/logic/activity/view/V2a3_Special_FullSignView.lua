@@ -1,72 +1,74 @@
-﻿module("modules.logic.activity.view.V2a3_Special_FullSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a3_Special_FullSignView.lua
 
-local var_0_0 = class("V2a3_Special_FullSignView", V2a3_Special_BaseView)
+module("modules.logic.activity.view.V2a3_Special_FullSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+local V2a3_Special_FullSignView = class("V2a3_Special_FullSignView", V2a3_Special_BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a3_Special_FullSignView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
+function V2a3_Special_FullSignView:addEvents()
+	V2a3_Special_FullSignView.super.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
+function V2a3_Special_FullSignView:removeEvents()
+	V2a3_Special_FullSignView.super.removeEvents(self)
 end
 
-function var_0_0.ctor(arg_4_0, ...)
-	var_0_0.super.ctor(arg_4_0, ...)
+function V2a3_Special_FullSignView:ctor(...)
+	V2a3_Special_FullSignView.super.ctor(self, ...)
 
-	arg_4_0._inited = false
+	self._inited = false
 
-	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._txtLimitTime.text = ""
+function V2a3_Special_FullSignView:_editableInitView()
+	self._txtLimitTime.text = ""
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_clearTimeTick()
-	TaskDispatcher.runRepeat(arg_6_0._refreshTimeTick, arg_6_0, 1)
+function V2a3_Special_FullSignView:onOpen()
+	self:_clearTimeTick()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 
-	if not arg_6_0._inited then
-		arg_6_0:internal_onOpen()
+	if not self._inited then
+		self:internal_onOpen()
 
-		arg_6_0._inited = true
+		self._inited = true
 	else
-		arg_6_0:_refresh()
+		self:_refresh()
 	end
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:_clearTimeTick()
+function V2a3_Special_FullSignView:onClose()
+	self:_clearTimeTick()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0:_clearTimeTick()
-	var_0_0.super.onDestroyView(arg_8_0)
+function V2a3_Special_FullSignView:onDestroyView()
+	self:_clearTimeTick()
+	V2a3_Special_FullSignView.super.onDestroyView(self)
 end
 
-function var_0_0._clearTimeTick(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._refreshTimeTick, arg_9_0)
+function V2a3_Special_FullSignView:_clearTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_10_0)
-	arg_10_0:_refreshList()
-	arg_10_0:_refreshTimeTick()
+function V2a3_Special_FullSignView:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_11_0)
-	arg_11_0._txtLimitTime.text = arg_11_0:getRemainTimeStr()
+function V2a3_Special_FullSignView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0.onFindChind_RewardGo(arg_12_0, arg_12_1)
-	return gohelper.findChild(arg_12_0.viewGO, "Root/reward/node" .. arg_12_1)
+function V2a3_Special_FullSignView:onFindChind_RewardGo(i)
+	return gohelper.findChild(self.viewGO, "Root/reward/node" .. i)
 end
 
-return var_0_0
+return V2a3_Special_FullSignView

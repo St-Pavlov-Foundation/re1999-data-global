@@ -1,74 +1,93 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_AssessIcon", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_AssessIcon.lua
 
-local var_0_0 = class("V1a4_BossRush_AssessIcon", LuaCompBase)
+module("modules.logic.bossrush.view.V1a4_BossRush_AssessIcon", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._goAssessEmpty = gohelper.findChild(arg_1_1, "#go_AssessEmpty")
-	arg_1_0._goNotEmpty = gohelper.findChild(arg_1_1, "#go_NotEmpty")
-	arg_1_0._imageAssessIcon = gohelper.findChildSingleImage(arg_1_1, "#go_NotEmpty/#image_AssessIcon")
-	arg_1_0._imageAssessIconTran = arg_1_0._imageAssessIcon:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0._goAssessEmptyTran = arg_1_0._goAssessEmpty.transform
-	arg_1_0.lastLevel = nil
+local V1a4_BossRush_AssessIcon = class("V1a4_BossRush_AssessIcon", LuaCompBase)
+
+function V1a4_BossRush_AssessIcon:init(go)
+	self._goAssessEmpty = gohelper.findChild(go, "#go_AssessEmpty")
+	self._goNotEmpty = gohelper.findChild(go, "#go_NotEmpty")
+	self._imageAssessIcon = gohelper.findChildSingleImage(go, "#go_NotEmpty/#image_AssessIcon")
+	self._imageAssessIconTran = self._imageAssessIcon:GetComponent(gohelper.Type_RectTransform)
+	self._goAssessEmptyTran = self._goAssessEmpty.transform
+	self.lastLevel = nil
+
+	local gos = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_s")
+	local go2s = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_ss")
+	local go3s = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_sss")
+	local go4s = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_sss2")
+	local go5s = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_sss3")
+	local go6s = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_sss4")
+
+	self._govx = self:getUserDataTb_()
+	self._govx[BossRushEnum.ScoreLevelStr.SSS] = go3s
+	self._govx[BossRushEnum.ScoreLevelStr.SSSS] = go4s
+	self._govx[BossRushEnum.ScoreLevelStr.SSSSS] = go5s
+	self._govx[BossRushEnum.ScoreLevelStr.SSSSSS] = go6s
 end
 
-local var_0_1 = 1.6842105263157894
+local kEmptyWidthOverHeight = 1.6842105263157894
 
-function var_0_0.setIconSize(arg_2_0, arg_2_1)
-	recthelper.setSize(arg_2_0._imageAssessIconTran, arg_2_1, arg_2_1)
-	recthelper.setSize(arg_2_0._goAssessEmptyTran, arg_2_1 * var_0_1, arg_2_1)
+function V1a4_BossRush_AssessIcon:setIconSize(size)
+	recthelper.setSize(self._imageAssessIconTran, size, size)
+	recthelper.setSize(self._goAssessEmptyTran, size * kEmptyWidthOverHeight, size)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0, var_3_1 = BossRushConfig.instance:getAssessSpriteName(arg_3_1, arg_3_2, arg_3_3)
-	local var_3_2 = var_3_0 == ""
-	local var_3_3 = var_3_1 > 0 and var_3_1 ~= arg_3_0.lastLevel
+function V1a4_BossRush_AssessIcon:setData(stage, score, type)
+	local spriteName, level, strLevel = BossRushConfig.instance:getAssessSpriteName(stage, score, type)
+	local isEmpty = spriteName == ""
+	local isChange = level > 0 and level ~= self.lastLevel
 
-	if not var_3_2 then
-		local var_3_4 = arg_3_3 and 1.2 or 1
+	if not isEmpty then
+		local scale = type == BossRushEnum.AssessType.Layer4 and 1.2 or 1
 
-		transformhelper.setLocalScale(arg_3_0._imageAssessIcon.transform, var_3_4, var_3_4, var_3_4)
-		arg_3_0._imageAssessIcon:LoadImage(ResUrl.getV1a4BossRushAssessIcon(var_3_0))
+		transformhelper.setLocalScale(self._imageAssessIcon.transform, scale, scale, scale)
+		self._imageAssessIcon:LoadImage(ResUrl.getV1a4BossRushAssessIcon(spriteName))
 	end
 
-	gohelper.setActive(arg_3_0._goAssessEmpty, var_3_2)
-	gohelper.setActive(arg_3_0._goNotEmpty, not var_3_2)
+	gohelper.setActive(self._goAssessEmpty, isEmpty)
+	gohelper.setActive(self._goNotEmpty, not isEmpty)
 
-	if var_3_3 then
-		arg_3_0:playVX()
+	if isChange then
+		self:playVX()
 
-		arg_3_0.lastLevel = var_3_1
+		self.lastLevel = level
+	end
+
+	for lv, go in pairs(self._govx) do
+		gohelper.setActive(go, lv == strLevel)
 	end
 end
 
-function var_0_0.playVX(arg_4_0)
-	if arg_4_0._parentView and arg_4_0._isPlayVX then
-		TaskDispatcher.cancelTask(arg_4_0.delayDisVX, arg_4_0)
-		arg_4_0._parentView:playVX()
-		TaskDispatcher.runDelay(arg_4_0.delayDisVX, arg_4_0, 0.8)
+function V1a4_BossRush_AssessIcon:playVX()
+	if self._parentView and self._isPlayVX then
+		TaskDispatcher.cancelTask(self.delayDisVX, self)
+		self._parentView:playVX()
+		TaskDispatcher.runDelay(self.delayDisVX, self, 0.8)
 	end
 end
 
-function var_0_0.delayDisVX(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.delayDisVX, arg_5_0)
+function V1a4_BossRush_AssessIcon:delayDisVX()
+	TaskDispatcher.cancelTask(self.delayDisVX, self)
 
-	if arg_5_0._parentView and arg_5_0._isPlayVX then
-		arg_5_0._parentView:stopVX()
+	if self._parentView and self._isPlayVX then
+		self._parentView:stopVX()
 	end
 end
 
-function var_0_0.initData(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._parentView = arg_6_1
-	arg_6_0._isPlayVX = arg_6_2
+function V1a4_BossRush_AssessIcon:initData(view, isPlayVX)
+	self._parentView = view
+	self._isPlayVX = isPlayVX
 
-	TaskDispatcher.cancelTask(arg_6_0.delayDisVX, arg_6_0)
+	TaskDispatcher.cancelTask(self.delayDisVX, self)
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	arg_7_0:onDestroyView()
+function V1a4_BossRush_AssessIcon:onDestroy()
+	self:onDestroyView()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._imageAssessIcon:UnLoadImage()
+function V1a4_BossRush_AssessIcon:onDestroyView()
+	self._imageAssessIcon:UnLoadImage()
 end
 
-return var_0_0
+return V1a4_BossRush_AssessIcon

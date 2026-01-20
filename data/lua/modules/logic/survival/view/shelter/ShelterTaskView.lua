@@ -1,57 +1,59 @@
-﻿module("modules.logic.survival.view.shelter.ShelterTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterTaskView.lua
 
-local var_0_0 = class("ShelterTaskView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goEmpty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
-	arg_1_0.tabList = {}
+local ShelterTaskView = class("ShelterTaskView", BaseView)
+
+function ShelterTaskView:onInitView()
+	self.goEmpty = gohelper.findChild(self.viewGO, "#go_empty")
+	self.tabList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskDataUpdate, arg_2_0.onTaskDataUpdate, arg_2_0)
+function ShelterTaskView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskDataUpdate, self.onTaskDataUpdate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskDataUpdate, arg_3_0.onTaskDataUpdate, arg_3_0)
+function ShelterTaskView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskDataUpdate, self.onTaskDataUpdate, self)
 end
 
-function var_0_0.onClickTab(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function ShelterTaskView:onClickTab(tab)
+	if not tab then
 		return
 	end
 
-	if SurvivalTaskModel.instance:setSelectType(arg_4_1.taskType) then
-		arg_4_0:refreshTabList()
+	if SurvivalTaskModel.instance:setSelectType(tab.taskType) then
+		self:refreshTabList()
 	end
 end
 
-function var_0_0.onTaskDataUpdate(arg_5_0)
-	arg_5_0:refreshView()
+function ShelterTaskView:onTaskDataUpdate()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function ShelterTaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_general_2)
-	arg_6_0:refreshParam()
-	arg_6_0:refreshView()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function ShelterTaskView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam or {}
+function ShelterTaskView:refreshParam()
+	local viewParam = self.viewParam or {}
 
-	SurvivalTaskModel.instance:initViewParam(var_8_0.moduleId, var_8_0.taskId)
+	SurvivalTaskModel.instance:initViewParam(viewParam.moduleId, viewParam.taskId)
 end
 
-function var_0_0.refreshView(arg_9_0)
-	arg_9_0:refreshTabList()
+function ShelterTaskView:refreshView()
+	self:refreshTabList()
 end
 
-function var_0_0.refreshTabList(arg_10_0)
-	local var_10_0 = {
+function ShelterTaskView:refreshTabList()
+	local list = {
 		{
 			isShow = true,
 			taskType = SurvivalEnum.TaskModule.MainTask
@@ -61,116 +63,117 @@ function var_0_0.refreshTabList(arg_10_0)
 			taskType = SurvivalEnum.TaskModule.StoryTask
 		}
 	}
-	local var_10_1 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	table.insert(var_10_0, {
+	table.insert(list, {
 		taskType = SurvivalEnum.TaskModule.NormalTask,
-		isShow = var_10_1.inSurvival
+		isShow = weekInfo.inSurvival
 	})
 
-	for iter_10_0 = 1, #var_10_0 do
-		arg_10_0:refreshTab(iter_10_0, var_10_0[iter_10_0])
+	for i = 1, #list do
+		self:refreshTab(i, list[i])
 	end
 
-	TaskDispatcher.cancelTask(arg_10_0.refreshTaskView, arg_10_0)
+	TaskDispatcher.cancelTask(self.refreshTaskView, self)
 
-	if arg_10_0.isNotFirstOpen then
-		arg_10_0:refreshTaskView()
+	if self.isNotFirstOpen then
+		self:refreshTaskView()
 	else
-		TaskDispatcher.runDelay(arg_10_0.refreshTaskView, arg_10_0, 0.4)
+		TaskDispatcher.runDelay(self.refreshTaskView, self, 0.4)
 
-		arg_10_0.isNotFirstOpen = true
+		self.isNotFirstOpen = true
 	end
 end
 
-function var_0_0.refreshTaskView(arg_11_0)
+function ShelterTaskView:refreshTaskView()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTaskViewUpdate, SurvivalTaskModel.instance:getSelectType())
 end
 
-function var_0_0.refreshTab(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_2.taskType
-	local var_12_1 = arg_12_2.isShow
-	local var_12_2 = SurvivalTaskModel.instance:getSelectType() == var_12_0
-	local var_12_3 = arg_12_0.tabList[arg_12_1]
+function ShelterTaskView:refreshTab(index, data)
+	local taskType = data.taskType
+	local isShow = data.isShow
+	local selectType = SurvivalTaskModel.instance:getSelectType()
+	local isSelect = selectType == taskType
+	local tab = self.tabList[index]
 
-	if not var_12_3 then
-		var_12_3 = arg_12_0:getUserDataTb_()
-		var_12_3.go = gohelper.findChild(arg_12_0.viewGO, string.format("#go_tabcontainer/container/#go_tabitem%s", arg_12_1))
-		var_12_3.goSelect = gohelper.findChild(var_12_3.go, "#go_select")
-		var_12_3.goSelectFinished = gohelper.findChild(var_12_3.goSelect, "finished")
-		var_12_3.goSelectUnFinish = gohelper.findChild(var_12_3.goSelect, "unfinish")
-		var_12_3.txtSelectNum = gohelper.findChildTextMesh(var_12_3.goSelect, "unfinish/#txt_num")
-		var_12_3.goUnSelect = gohelper.findChild(var_12_3.go, "#go_unselect")
-		var_12_3.goUnSelectFinished = gohelper.findChild(var_12_3.goUnSelect, "finished")
-		var_12_3.goUnSelectUnFinish = gohelper.findChild(var_12_3.goUnSelect, "unfinish")
-		var_12_3.txtUnSelectNum = gohelper.findChildTextMesh(var_12_3.goUnSelect, "unfinish/#txt_num")
-		var_12_3.btn = gohelper.findButtonWithAudio(var_12_3.go)
+	if not tab then
+		tab = self:getUserDataTb_()
+		tab.go = gohelper.findChild(self.viewGO, string.format("#go_tabcontainer/container/#go_tabitem%s", index))
+		tab.goSelect = gohelper.findChild(tab.go, "#go_select")
+		tab.goSelectFinished = gohelper.findChild(tab.goSelect, "finished")
+		tab.goSelectUnFinish = gohelper.findChild(tab.goSelect, "unfinish")
+		tab.txtSelectNum = gohelper.findChildTextMesh(tab.goSelect, "unfinish/#txt_num")
+		tab.goUnSelect = gohelper.findChild(tab.go, "#go_unselect")
+		tab.goUnSelectFinished = gohelper.findChild(tab.goUnSelect, "finished")
+		tab.goUnSelectUnFinish = gohelper.findChild(tab.goUnSelect, "unfinish")
+		tab.txtUnSelectNum = gohelper.findChildTextMesh(tab.goUnSelect, "unfinish/#txt_num")
+		tab.btn = gohelper.findButtonWithAudio(tab.go)
 
-		var_12_3.btn:AddClickListener(arg_12_0.onClickTab, arg_12_0, var_12_3)
+		tab.btn:AddClickListener(self.onClickTab, self, tab)
 
-		arg_12_0.tabList[arg_12_1] = var_12_3
+		self.tabList[index] = tab
 	end
 
-	var_12_3.taskType = var_12_0
+	tab.taskType = taskType
 
-	gohelper.setActive(var_12_3.go, var_12_1)
+	gohelper.setActive(tab.go, isShow)
 
-	if not var_12_1 then
+	if not isShow then
 		return
 	end
 
-	gohelper.setActive(var_12_3.goSelect, var_12_2)
-	gohelper.setActive(var_12_3.goUnSelect, not var_12_2)
+	gohelper.setActive(tab.goSelect, isSelect)
+	gohelper.setActive(tab.goUnSelect, not isSelect)
 
-	local var_12_4, var_12_5 = SurvivalTaskModel.instance:getTaskFinishedNum(var_12_0)
+	local finishedNum, taskNum = SurvivalTaskModel.instance:getTaskFinishedNum(taskType)
 
-	if var_12_0 == SurvivalEnum.TaskModule.MainTask then
-		local var_12_6, var_12_7 = SurvivalTaskModel.instance:getTaskFinishedNum(SurvivalEnum.TaskModule.SubTask)
+	if taskType == SurvivalEnum.TaskModule.MainTask then
+		local subfinishedNum, subtaskNum = SurvivalTaskModel.instance:getTaskFinishedNum(SurvivalEnum.TaskModule.SubTask)
 
-		var_12_4 = var_12_4 + var_12_6
-		var_12_5 = var_12_5 + var_12_7
+		finishedNum = finishedNum + subfinishedNum
+		taskNum = taskNum + subtaskNum
 	end
 
-	if var_12_0 == SurvivalEnum.TaskModule.NormalTask then
-		local var_12_8, var_12_9 = SurvivalTaskModel.instance:getTaskFinishedNum(SurvivalEnum.TaskModule.MapMainTarget)
+	if taskType == SurvivalEnum.TaskModule.NormalTask then
+		local mapfinishedNum, maptaskNum = SurvivalTaskModel.instance:getTaskFinishedNum(SurvivalEnum.TaskModule.MapMainTarget)
 
-		var_12_4 = var_12_4 + var_12_8
-		var_12_5 = var_12_5 + var_12_9
+		finishedNum = finishedNum + mapfinishedNum
+		taskNum = taskNum + maptaskNum
 	end
 
-	local var_12_10 = var_12_5 == 0
-	local var_12_11 = not var_12_10 and var_12_4 == var_12_5
+	local isEmpty = taskNum == 0
+	local isAllFinished = not isEmpty and finishedNum == taskNum
 
-	gohelper.setActive(var_12_3.go, true)
+	gohelper.setActive(tab.go, true)
 
-	if var_12_2 then
-		gohelper.setActive(arg_12_0.goEmpty, var_12_10)
-		gohelper.setActive(var_12_3.goSelectFinished, var_12_11)
-		gohelper.setActive(var_12_3.goSelectUnFinish, not var_12_11)
+	if isSelect then
+		gohelper.setActive(self.goEmpty, isEmpty)
+		gohelper.setActive(tab.goSelectFinished, isAllFinished)
+		gohelper.setActive(tab.goSelectUnFinish, not isAllFinished)
 
-		if var_12_10 then
-			var_12_3.txtSelectNum.text = ""
+		if isEmpty then
+			tab.txtSelectNum.text = ""
 		else
-			var_12_3.txtSelectNum.text = string.format("<size=50>%s</size>/%s", var_12_4, var_12_5)
+			tab.txtSelectNum.text = string.format("<size=50>%s</size>/%s", finishedNum, taskNum)
 		end
 	else
-		gohelper.setActive(var_12_3.goUnSelectFinished, var_12_11)
-		gohelper.setActive(var_12_3.goUnSelectUnFinish, not var_12_11)
+		gohelper.setActive(tab.goUnSelectFinished, isAllFinished)
+		gohelper.setActive(tab.goUnSelectUnFinish, not isAllFinished)
 
-		if var_12_10 then
-			var_12_3.txtUnSelectNum.text = ""
+		if isEmpty then
+			tab.txtUnSelectNum.text = ""
 		else
-			var_12_3.txtUnSelectNum.text = string.format("<color=#FFFFFF><size=50>%s</size></color>/%s", var_12_4, var_12_5)
+			tab.txtUnSelectNum.text = string.format("<color=#FFFFFF><size=50>%s</size></color>/%s", finishedNum, taskNum)
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.tabList) do
-		iter_13_1.btn:RemoveClickListener()
+function ShelterTaskView:onDestroyView()
+	for _, v in pairs(self.tabList) do
+		v.btn:RemoveClickListener()
 	end
 
-	TaskDispatcher.cancelTask(arg_13_0.refreshTaskView, arg_13_0)
+	TaskDispatcher.cancelTask(self.refreshTaskView, self)
 end
 
-return var_0_0
+return ShelterTaskView

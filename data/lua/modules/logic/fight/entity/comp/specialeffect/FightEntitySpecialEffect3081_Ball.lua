@@ -1,144 +1,164 @@
-﻿module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3081_Ball", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/specialeffect/FightEntitySpecialEffect3081_Ball.lua
 
-local var_0_0 = class("FightEntitySpecialEffect3081_Ball", FightEntitySpecialEffectBase)
+module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3081_Ball", package.seeall)
 
-function var_0_0.initClass(arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, arg_1_0._onSetBuffEffectVisible, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0, LuaEventSystem.High)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, arg_1_0._onBeforeEnterStepBehaviour, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_1_0._onBeforeDeadEffect, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, arg_1_0._onSkillEditorRefreshBuff, arg_1_0)
+local FightEntitySpecialEffect3081_Ball = class("FightEntitySpecialEffect3081_Ball", FightEntitySpecialEffectBase)
 
-	arg_1_0._ballEffect = {}
+function FightEntitySpecialEffect3081_Ball:initClass()
+	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.High)
+	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
+	self:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, self._onSkillEditorRefreshBuff, self)
+
+	self._ballEffect = {}
 end
 
-local var_0_1 = "default"
+local defaultEffect = "default"
 
-var_0_0.skin2EffectPath = {
+FightEntitySpecialEffect3081_Ball.skin2EffectPath = {
 	{
 		[308103] = "v2a1_ysed_jscq/ysed_jscq_idle_01_head02",
-		[var_0_1] = "v1a7_ysed/ysed_idle_01_head02"
+		[defaultEffect] = "v1a7_ysed/ysed_idle_01_head02"
 	},
 	{
 		[308103] = "v2a1_ysed_jscq/ysed_jscq_idle_02_head02",
-		[var_0_1] = "v1a7_ysed/ysed_idle_02_head02"
+		[defaultEffect] = "v1a7_ysed/ysed_idle_02_head02"
 	},
 	{
 		[308103] = "v2a1_ysed_jscq/ysed_jscq_idle_03_head02",
-		[var_0_1] = "v1a7_ysed/ysed_idle_03_head02"
+		[defaultEffect] = "v1a7_ysed/ysed_idle_03_head02"
 	}
 }
-var_0_0.buffId2EffectPath = {
-	[30810101] = var_0_0.skin2EffectPath[1],
-	[30810102] = var_0_0.skin2EffectPath[2],
-	[30810110] = var_0_0.skin2EffectPath[2],
-	[30810112] = var_0_0.skin2EffectPath[2],
-	[30810114] = var_0_0.skin2EffectPath[2],
-	[30810103] = var_0_0.skin2EffectPath[3],
-	[30810111] = var_0_0.skin2EffectPath[3],
-	[30810113] = var_0_0.skin2EffectPath[3],
-	[30810115] = var_0_0.skin2EffectPath[3]
+FightEntitySpecialEffect3081_Ball.buffId2EffectPath = {
+	[30810101] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[1],
+	[30810102] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[2],
+	[30810110] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[2],
+	[30810112] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[2],
+	[30810114] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[2],
+	[30810103] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[3],
+	[30810111] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[3],
+	[30810113] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[3],
+	[30810115] = FightEntitySpecialEffect3081_Ball.skin2EffectPath[3]
 }
 
-function var_0_0._onBuffUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if arg_2_1 ~= arg_2_0._entity.id then
+function FightEntitySpecialEffect3081_Ball:_onBuffUpdate(targetId, effectType, buffId, buffUid)
+	if targetId ~= self._entity.id then
 		return
 	end
 
-	if not lua_skill_buff.configDict[arg_2_3] then
-		logError("buff表找不到id:" .. arg_2_3)
+	local buffConfig = lua_skill_buff.configDict[buffId]
+
+	if not buffConfig then
+		logError("buff表找不到id:" .. buffId)
 
 		return
 	end
 
-	local var_2_0 = arg_2_0._entity:getMO()
+	local entityMO = self._entity:getMO()
 
-	if not var_2_0 then
+	if not entityMO then
 		return
 	end
 
-	local var_2_1 = var_0_0.buffId2EffectPath[arg_2_3]
+	local config = lua_fight_yi_suo_er_de_ball.configDict[entityMO.skin]
 
-	if var_2_1 then
-		var_2_1 = var_2_1[var_2_0.skin] or var_2_1[var_0_1]
+	if not config then
+		return
+	end
 
-		if arg_2_2 == FightEnum.EffectType.BUFFADD then
-			arg_2_0:_releaseEffect(arg_2_3)
+	config = config[buffId]
 
-			local var_2_2 = arg_2_0._entity.effect:addHangEffect(var_2_1, ModuleEnum.SpineHangPointRoot)
+	if not config then
+		return
+	end
 
-			var_2_2:setRenderOrder(FightRenderOrderMgr.MinSpecialOrder * FightEnum.OrderRegion + 9)
+	local effectPath = config.effect
 
-			local var_2_3 = arg_2_0._entity:isMySide() and 1 or -1
+	if effectPath then
+		if effectType == FightEnum.EffectType.BUFFADD then
+			self:_releaseEffect(buffId)
 
-			var_2_2:setLocalPos(var_2_3, 3.1, 0)
+			local effectWrap = self._entity.effect:addHangEffect(effectPath, ModuleEnum.SpineHangPointRoot)
 
-			arg_2_0._ballEffect[arg_2_3] = var_2_2
-		elseif arg_2_2 == FightEnum.EffectType.BUFFDEL then
-			arg_2_0:_releaseEffect(arg_2_3)
+			effectWrap:setRenderOrder(FightRenderOrderMgr.MinSpecialOrder * FightEnum.OrderRegion + 9)
+
+			local xPos = self._entity:isMySide() and 1 or -1
+
+			effectWrap:setLocalPos(xPos, 3.1, 0)
+
+			self._ballEffect[buffId] = effectWrap
+
+			local audio = config.audio
+
+			if audio ~= 0 then
+				AudioMgr.instance:trigger(audio)
+			end
+		elseif effectType == FightEnum.EffectType.BUFFDEL then
+			self:_releaseEffect(buffId)
 		end
 	end
 end
 
-function var_0_0._onBeforeEnterStepBehaviour(arg_3_0)
-	local var_3_0 = arg_3_0._entity:getMO()
+function FightEntitySpecialEffect3081_Ball:_onBeforeEnterStepBehaviour()
+	local entityMO = self._entity:getMO()
 
-	if var_3_0 then
-		local var_3_1 = var_3_0:getBuffDic()
+	if entityMO then
+		local buffDic = entityMO:getBuffDic()
 
-		for iter_3_0, iter_3_1 in pairs(var_3_1) do
-			arg_3_0:_onBuffUpdate(arg_3_0._entity.id, FightEnum.EffectType.BUFFADD, iter_3_1.buffId, iter_3_1.uid)
+		for i, v in pairs(buffDic) do
+			self:_onBuffUpdate(self._entity.id, FightEnum.EffectType.BUFFADD, v.buffId, v.uid)
 		end
 	end
 end
 
-function var_0_0._onSkillEditorRefreshBuff(arg_4_0)
-	arg_4_0:releaseAllEffect()
-	arg_4_0:_onBeforeEnterStepBehaviour()
+function FightEntitySpecialEffect3081_Ball:_onSkillEditorRefreshBuff()
+	self:releaseAllEffect()
+	self:_onBeforeEnterStepBehaviour()
 end
 
-function var_0_0._onSetBuffEffectVisible(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_0._entity.id == arg_5_1 and arg_5_0._ballEffect then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._ballEffect) do
-			iter_5_1:setActive(arg_5_2, arg_5_3 or "FightEntitySpecialEffect3081_Ball")
+function FightEntitySpecialEffect3081_Ball:_onSetBuffEffectVisible(entityId, state, sign)
+	if self._entity.id == entityId and self._ballEffect then
+		for i, v in pairs(self._ballEffect) do
+			v:setActive(state, sign or "FightEntitySpecialEffect3081_Ball")
 		end
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_6_0, arg_6_1)
-	arg_6_0:_onSetBuffEffectVisible(arg_6_1.id, false, "FightEntitySpecialEffect3081_Ball_PlaySkill")
+function FightEntitySpecialEffect3081_Ball:_onSkillPlayStart(entity)
+	self:_onSetBuffEffectVisible(entity.id, false, "FightEntitySpecialEffect3081_Ball_PlaySkill")
 end
 
-function var_0_0._onSkillPlayFinish(arg_7_0, arg_7_1)
-	arg_7_0:_onSetBuffEffectVisible(arg_7_1.id, true, "FightEntitySpecialEffect3081_Ball_PlaySkill")
+function FightEntitySpecialEffect3081_Ball:_onSkillPlayFinish(entity)
+	self:_onSetBuffEffectVisible(entity.id, true, "FightEntitySpecialEffect3081_Ball_PlaySkill")
 end
 
-function var_0_0._releaseEffect(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._ballEffect[arg_8_1]
+function FightEntitySpecialEffect3081_Ball:_releaseEffect(buffId)
+	local effectWrap = self._ballEffect[buffId]
 
-	if var_8_0 then
-		arg_8_0._entity.effect:removeEffect(var_8_0)
+	if effectWrap then
+		self._entity.effect:removeEffect(effectWrap)
 	end
 
-	arg_8_0._ballEffect[arg_8_1] = nil
+	self._ballEffect[buffId] = nil
 end
 
-function var_0_0.releaseAllEffect(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._ballEffect) do
-		arg_9_0:_releaseEffect(iter_9_0)
-	end
-end
-
-function var_0_0._onBeforeDeadEffect(arg_10_0, arg_10_1)
-	if arg_10_1 == arg_10_0._entity.id then
-		arg_10_0:releaseAllEffect()
+function FightEntitySpecialEffect3081_Ball:releaseAllEffect()
+	for buffId, effect in pairs(self._ballEffect) do
+		self:_releaseEffect(buffId)
 	end
 end
 
-function var_0_0.releaseSelf(arg_11_0)
-	arg_11_0:releaseAllEffect()
+function FightEntitySpecialEffect3081_Ball:_onBeforeDeadEffect(entityId)
+	if entityId == self._entity.id then
+		self:releaseAllEffect()
+	end
 end
 
-return var_0_0
+function FightEntitySpecialEffect3081_Ball:releaseSelf()
+	self:releaseAllEffect()
+end
+
+return FightEntitySpecialEffect3081_Ball

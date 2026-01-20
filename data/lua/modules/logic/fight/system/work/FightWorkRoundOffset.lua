@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkRoundOffset", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRoundOffset.lua
 
-local var_0_0 = class("FightWorkRoundOffset", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkRoundOffset", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getMaxRound()
-	local var_1_1 = arg_1_0.actEffectData.effectNum
+local FightWorkRoundOffset = class("FightWorkRoundOffset", FightEffectBase)
 
-	FightModel.instance.maxRound = var_1_0 + var_1_1
+function FightWorkRoundOffset:onStart()
+	local srcMaxRound = FightModel.instance:getMaxRound()
+	local roundOffset = self.actEffectData.effectNum
 
-	FightModel.instance:setRoundOffset(var_1_1)
+	FightModel.instance.maxRound = srcMaxRound + roundOffset
+
+	FightModel.instance:setRoundOffset(roundOffset)
 	FightController.instance:dispatchEvent(FightEvent.RefreshUIRound)
 
-	return arg_1_0:onDone(true)
+	return self:onDone(true)
 end
 
-return var_0_0
+return FightWorkRoundOffset

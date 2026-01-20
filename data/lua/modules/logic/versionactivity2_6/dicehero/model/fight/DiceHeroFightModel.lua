@@ -1,30 +1,32 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/fight/DiceHeroFightModel.lua
 
-local var_0_0 = class("DiceHeroFightModel", BaseModel)
+module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.finishResult = DiceHeroEnum.GameStatu.None
-	arg_1_0.tempRoundEnd = false
+local DiceHeroFightModel = class("DiceHeroFightModel", BaseModel)
+
+function DiceHeroFightModel:onInit()
+	self.finishResult = DiceHeroEnum.GameStatu.None
+	self.tempRoundEnd = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function DiceHeroFightModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.setGameData(arg_3_0, arg_3_1)
-	if not arg_3_0._gameData then
-		arg_3_0._gameData = DiceHeroFightData.New(arg_3_1)
+function DiceHeroFightModel:setGameData(data)
+	if not self._gameData then
+		self._gameData = DiceHeroFightData.New(data)
 	else
-		arg_3_0._gameData:init(arg_3_1)
+		self._gameData:init(data)
 	end
 
-	arg_3_0._gameData.initHp = arg_3_0._gameData.allyHero and arg_3_0._gameData.allyHero.hp or 0
+	self._gameData.initHp = self._gameData.allyHero and self._gameData.allyHero.hp or 0
 end
 
-function var_0_0.getGameData(arg_4_0)
-	return arg_4_0._gameData
+function DiceHeroFightModel:getGameData()
+	return self._gameData
 end
 
-var_0_0.instance = var_0_0.New()
+DiceHeroFightModel.instance = DiceHeroFightModel.New()
 
-return var_0_0
+return DiceHeroFightModel

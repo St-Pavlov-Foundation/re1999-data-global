@@ -1,89 +1,93 @@
-﻿module("modules.logic.tower.controller.TowerController", package.seeall)
+﻿-- chunkname: @modules/logic/tower/controller/TowerController.lua
 
-local var_0_0 = class("TowerController", BaseController)
+module("modules.logic.tower.controller.TowerController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.jumpFlow = nil
+local TowerController = class("TowerController", BaseController)
+
+function TowerController:onInit()
+	self.jumpFlow = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	if arg_2_0.jumpFlow then
-		arg_2_0.jumpFlow:onDestroyInternal()
+function TowerController:reInit()
+	if self.jumpFlow then
+		self.jumpFlow:onDestroyInternal()
 	end
 
-	arg_2_0.jumpFlow = nil
+	self.jumpFlow = nil
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0.onUpdateTaskList, arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_3_0.onSetTaskList, arg_3_0)
-	arg_3_0:registerCallback(TowerEvent.DailyReresh, arg_3_0.dailyReddotRefresh, arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_3_0._trySendTowerDeepRPC, arg_3_0)
+function TowerController:addConstEvents()
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self.onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self.onSetTaskList, self)
+	self:registerCallback(TowerEvent.DailyReresh, self.dailyReddotRefresh, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._trySendTowerDeepRPC, self)
 end
 
-function var_0_0.jumpView(arg_4_0, arg_4_1)
+function TowerController:jumpView(param)
 	if not ViewMgr.instance:isOpen(ViewName.TowerMainView) then
-		arg_4_0.jumpFlow = FlowSequence.New()
+		self.jumpFlow = FlowSequence.New()
 
-		local var_4_0 = TowerEnterWork.New()
+		local towerEnterWork = TowerEnterWork.New()
 
-		arg_4_0.jumpFlow:addWork(var_4_0)
-		arg_4_0.jumpFlow:addWork(FunctionWork.New(arg_4_0.realJumpTowerView, arg_4_0, arg_4_1))
-		arg_4_0.jumpFlow:registerDoneListener(arg_4_0.flowDone, arg_4_0)
-		arg_4_0.jumpFlow:start()
+		self.jumpFlow:addWork(towerEnterWork)
+		self.jumpFlow:addWork(FunctionWork.New(self.realJumpTowerView, self, param))
+		self.jumpFlow:registerDoneListener(self.flowDone, self)
+		self.jumpFlow:start()
 	else
-		arg_4_0:realJumpTowerView(arg_4_1)
+		self:realJumpTowerView(param)
 	end
 end
 
-function var_0_0.realJumpTowerView(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.towerType
-	local var_5_1 = arg_5_1.towerId
+function TowerController:realJumpTowerView(param)
+	local towerType = param.towerType
+	local towerId = param.towerId
 
-	if var_5_0 == TowerEnum.TowerType.Boss then
-		arg_5_0:openBossTowerEpisodeView(var_5_0, var_5_1)
-	elseif var_5_0 == TowerEnum.TowerType.Limited then
-		arg_5_0:openTowerTimeLimitLevelView()
-	elseif var_5_0 == TowerEnum.TowerType.Normal then
-		arg_5_0:openTowerPermanentView()
+	if towerType == TowerEnum.TowerType.Boss then
+		self:openBossTowerEpisodeView(towerType, towerId)
+	elseif towerType == TowerEnum.TowerType.Limited then
+		self:openTowerTimeLimitLevelView()
+	elseif towerType == TowerEnum.TowerType.Normal then
+		self:openTowerPermanentView()
 	end
 
-	if arg_5_0.jumpFlow then
-		arg_5_0.jumpFlow:onDone(true)
+	if self.jumpFlow then
+		self.jumpFlow:onDone(true)
 	end
 end
 
-function var_0_0.flowDone(arg_6_0, arg_6_1)
-	arg_6_0.jumpFlow = nil
+function TowerController:flowDone(isSuccess)
+	self.jumpFlow = nil
 end
 
-function var_0_0.openMainView(arg_7_0, arg_7_1)
-	arg_7_0._mainviewParam = arg_7_1
+function TowerController:openMainView(param)
+	self._mainviewParam = param
 
-	TowerRpc.instance:sendGetTowerInfoRequest(arg_7_0._openMainView, arg_7_0)
+	TowerRpc.instance:sendGetTowerInfoRequest(self._openMainView, self)
 end
 
-function var_0_0._openMainView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 ~= 0 then
+function TowerController:_openMainView(_, resultCode, _)
+	if resultCode ~= 0 then
 		return
 	end
 
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Tower,
 		TaskEnum.TaskType.TowerPermanentDeep
-	}, function(arg_9_0, arg_9_1, arg_9_2)
-		if arg_9_1 == 0 then
-			StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.TowerStore, function(arg_10_0, arg_10_1, arg_10_2)
-				if arg_10_1 == 0 then
-					if TowerPermanentDeepModel.instance:checkDeepLayerUnlock() then
-						TowerDeepRpc.instance:sendTowerDeepGetInfoRequest(function(arg_11_0, arg_11_1, arg_11_2)
-							if arg_11_1 == 0 then
-								ViewMgr.instance:openView(ViewName.TowerMainView, arg_8_0._mainviewParam)
+	}, function(_, taskCode, _)
+		if taskCode == 0 then
+			StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.TowerStore, function(_, storeCode, _)
+				if storeCode == 0 then
+					local isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+
+					if isDeepLayerUnlock then
+						TowerDeepRpc.instance:sendTowerDeepGetInfoRequest(function(_, towerDeepCode, _)
+							if towerDeepCode == 0 then
+								ViewMgr.instance:openView(ViewName.TowerMainView, self._mainviewParam)
 							end
 						end)
 					else
-						ViewMgr.instance:openView(ViewName.TowerMainView, arg_8_0._mainviewParam)
+						ViewMgr.instance:openView(ViewName.TowerMainView, self._mainviewParam)
 					end
 				end
 			end)
@@ -91,463 +95,477 @@ function var_0_0._openMainView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	end)
 end
 
-function var_0_0.openBossTowerEpisodeView(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not arg_12_1 or not arg_12_2 then
+function TowerController:openBossTowerEpisodeView(towerType, towerId, param)
+	if not towerType or not towerId then
 		return
 	end
 
-	local var_12_0 = TowerModel.instance:getEpisodeMoByTowerType(arg_12_1)
-	local var_12_1 = TowerModel.instance:getTowerInfoById(arg_12_1, arg_12_2)
+	local episodeMo = TowerModel.instance:getEpisodeMoByTowerType(towerType)
+	local towerInfo = TowerModel.instance:getTowerInfoById(towerType, towerId)
+	local openInfo = TowerModel.instance:getTowerOpenInfo(towerType, towerId)
 
-	if not TowerModel.instance:getTowerOpenInfo(arg_12_1, arg_12_2) then
+	if not openInfo then
 		return
 	end
 
-	local var_12_2 = var_12_1 and var_12_1.passLayerId or 0
-	local var_12_3 = var_12_0:getNextEpisodeLayer(arg_12_2, var_12_2) or var_12_2
-	local var_12_4 = var_12_0:getEpisodeConfig(arg_12_2, var_12_3)
+	local passLayerId = towerInfo and towerInfo.passLayerId or 0
+	local curLayerId = episodeMo:getNextEpisodeLayer(towerId, passLayerId) or passLayerId
+	local curEpisodeConfig = episodeMo:getEpisodeConfig(towerId, curLayerId)
 
-	if var_12_4 then
-		local var_12_5 = arg_12_3 or {}
+	if curEpisodeConfig then
+		local viewParam = param or {}
 
-		var_12_5.episodeConfig = var_12_4
+		viewParam.episodeConfig = curEpisodeConfig
 
-		if var_12_4.openRound > 0 then
-			if var_12_1:isSpLayerOpen(var_12_4.layerId) then
-				ViewMgr.instance:openView(ViewName.TowerBossSpEpisodeView, var_12_5)
+		if curEpisodeConfig.openRound > 0 then
+			if towerInfo:isSpLayerOpen(curEpisodeConfig.layerId) then
+				ViewMgr.instance:openView(ViewName.TowerBossSpEpisodeView, viewParam)
 			else
-				var_12_5.episodeConfig = var_12_0:getEpisodeConfig(arg_12_2, var_12_2)
+				viewParam.episodeConfig = episodeMo:getEpisodeConfig(towerId, passLayerId)
 
-				if var_12_5.episodeConfig.openRound > 0 then
-					ViewMgr.instance:openView(ViewName.TowerBossSpEpisodeView, var_12_5)
+				if viewParam.episodeConfig.openRound > 0 then
+					ViewMgr.instance:openView(ViewName.TowerBossSpEpisodeView, viewParam)
 				else
-					ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, var_12_5)
+					ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, viewParam)
 				end
 			end
 		else
-			ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, var_12_5)
+			ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, viewParam)
 		end
 
 		TowerModel.instance:setCurTowerType(TowerEnum.TowerType.Boss)
 	end
 end
 
-function var_0_0.openAssistBossView(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
-	local var_13_0 = {
-		bossId = arg_13_1,
-		isFromHeroGroup = arg_13_2,
-		towerType = arg_13_3,
-		towerId = arg_13_4
+function TowerController:openAssistBossView(bossId, isFromHeroGroup, towerType, towerId, otherParam)
+	local param = {
+		bossId = bossId,
+		isFromHeroGroup = isFromHeroGroup,
+		towerType = towerType,
+		towerId = towerId
 	}
 
-	if arg_13_5 then
-		var_13_0.otherParam = arg_13_5
+	if otherParam then
+		param.otherParam = otherParam
 	end
 
-	ViewMgr.instance:openView(ViewName.TowerAssistBossView, var_13_0)
+	ViewMgr.instance:openView(ViewName.TowerAssistBossView, param)
 end
 
-function var_0_0.enterFight(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function TowerController:enterFight(param)
+	if not param then
 		return
 	end
 
-	arg_14_0.enterFightParam = arg_14_1
+	self.enterFightParam = param
 
-	local var_14_0 = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit
+	local snapshotId = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit
 
-	if arg_14_1.towerType == TowerEnum.TowerType.Boss then
-		var_14_0 = ModuleEnum.HeroGroupSnapshotType.TowerBoss
+	if param.towerType == TowerEnum.TowerType.Boss then
+		snapshotId = ModuleEnum.HeroGroupSnapshotType.TowerBoss
 	end
 
-	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(var_14_0, arg_14_0._enterFight, arg_14_0)
+	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(snapshotId, self._enterFight, self)
 end
 
-function var_0_0._enterFight(arg_15_0)
-	local var_15_0 = arg_15_0.enterFightParam
+function TowerController:_enterFight()
+	local param = self.enterFightParam
 
-	if not var_15_0 then
+	if not param then
 		return
 	end
 
-	local var_15_1 = var_15_0.episodeId
+	local episodeId = param.episodeId
 
-	TowerModel.instance:setRecordFightParam(var_15_0.towerType, var_15_0.towerId, var_15_0.layerId, var_15_0.difficulty, var_15_1)
+	TowerModel.instance:setRecordFightParam(param.towerType, param.towerId, param.layerId, param.difficulty, episodeId)
 
-	local var_15_2 = var_15_0.speed or 1
-	local var_15_3 = DungeonConfig.instance:getEpisodeCO(var_15_1)
+	local speed = param.speed or 1
+	local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	DungeonFightController.instance:enterFight(var_15_3.chapterId, var_15_1, var_15_2)
+	DungeonFightController.instance:enterFight(config.chapterId, episodeId, speed)
 end
 
-function var_0_0.startFight(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if not arg_16_1 then
+function TowerController:startFight(param, callback, callbackObj)
+	if not param then
 		return
 	end
 
-	DungeonModel.instance:SetSendChapterEpisodeId(arg_16_1.chapterId, arg_16_1.episodeId)
-	TowerRpc.instance:sendStartTowerBattleRequest(arg_16_1, arg_16_2, arg_16_3)
+	DungeonModel.instance:SetSendChapterEpisodeId(param.chapterId, param.episodeId)
+	TowerRpc.instance:sendStartTowerBattleRequest(param, callback, callbackObj)
 end
 
-function var_0_0.restartStage(arg_17_0)
-	local var_17_0 = {}
-	local var_17_1 = FightModel.instance:getFightParam()
+function TowerController:restartStage()
+	local param = {}
+	local fightParam = FightModel.instance:getFightParam()
 
-	var_17_0.fightParam = var_17_1
-	var_17_0.chapterId = var_17_1.chapterId
-	var_17_0.episodeId = var_17_1.episodeId
-	var_17_0.useRecord = var_17_1.isReplay
-	var_17_0.multiplication = var_17_1.multiplication
-	var_17_0.isRestart = true
+	param.fightParam = fightParam
+	param.chapterId = fightParam.chapterId
+	param.episodeId = fightParam.episodeId
+	param.useRecord = fightParam.isReplay
+	param.multiplication = fightParam.multiplication
+	param.isRestart = true
 
-	arg_17_0:startFight(var_17_0)
+	self:startFight(param)
 end
 
-function var_0_0.openTowerMopUpView(arg_18_0, arg_18_1)
-	ViewMgr.instance:openView(ViewName.TowerMopUpView, arg_18_1)
+function TowerController:openTowerMopUpView(param)
+	ViewMgr.instance:openView(ViewName.TowerMopUpView, param)
 end
 
-function var_0_0.openTowerPermanentView(arg_19_0, arg_19_1)
+function TowerController:openTowerPermanentView(param)
 	TowerPermanentModel.instance:onInit()
 	TowerPermanentModel.instance:InitData()
 
-	local var_19_0 = false
+	local isDeepLayer = false
 
-	if arg_19_1 and tabletool.len(arg_19_1) > 0 then
-		local var_19_1 = TowerPermanentDeepModel.instance:checkIsDeepEpisode(arg_19_1.episodeId)
+	if param and tabletool.len(param) > 0 then
+		local isDeepEpisode = TowerPermanentDeepModel.instance:checkIsDeepEpisode(param.episodeId)
 
-		TowerPermanentDeepModel.instance:setInDeepLayerState(var_19_1)
-		TowerPermanentDeepModel.instance:setIsSelectDeepCategory(var_19_1)
+		TowerPermanentDeepModel.instance:setInDeepLayerState(isDeepEpisode)
+		TowerPermanentDeepModel.instance:setIsSelectDeepCategory(isDeepEpisode)
 
-		var_19_0 = var_19_1
+		isDeepLayer = isDeepEpisode
 
-		if not var_19_0 then
-			local var_19_2 = TowerConfig.instance:getPermanentEpisodeCo(arg_19_1.layerId)
-			local var_19_3 = var_19_2.stageId
-			local var_19_4 = var_19_2.index
+		if not isDeepLayer then
+			local towerConfig = TowerConfig.instance:getPermanentEpisodeCo(param.layerId)
+			local stage = towerConfig.stageId
+			local layerIndex = towerConfig.index
 
-			TowerPermanentModel.instance:setCurSelectLayer(var_19_4, var_19_3)
-			TowerPermanentModel.instance:setCurSelectStage(var_19_3)
+			TowerPermanentModel.instance:setCurSelectLayer(layerIndex, stage)
+			TowerPermanentModel.instance:setCurSelectStage(stage)
 		end
 	else
-		local var_19_5 = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
-		local var_19_6 = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish()
-		local var_19_7 = var_19_5 and var_19_6
+		local isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+		local isEnterDeepGuideFinish = TowerPermanentDeepModel.instance:checkEnterDeepLayerGuideFinish()
+		local isInDeepLayer = isDeepLayerUnlock and isEnterDeepGuideFinish
 
-		var_19_0 = var_19_7
+		isDeepLayer = isInDeepLayer
 
-		TowerPermanentDeepModel.instance:setInDeepLayerState(var_19_7)
-		TowerPermanentDeepModel.instance:setIsSelectDeepCategory(var_19_7)
+		TowerPermanentDeepModel.instance:setInDeepLayerState(isInDeepLayer)
+		TowerPermanentDeepModel.instance:setIsSelectDeepCategory(isInDeepLayer)
 	end
 
 	TowerPermanentModel.instance:initStageUnFoldState()
 
-	if var_19_0 then
+	if isDeepLayer then
 		TowerDeepRpc.instance:sendTowerDeepGetInfoRequest(function()
-			ViewMgr.instance:openView(ViewName.TowerPermanentView, arg_19_1)
-		end, arg_19_0)
+			ViewMgr.instance:openView(ViewName.TowerPermanentView, param)
+		end, self)
 	else
-		ViewMgr.instance:openView(ViewName.TowerPermanentView, arg_19_1)
+		ViewMgr.instance:openView(ViewName.TowerPermanentView, param)
 	end
 
 	TowerModel.instance:setCurTowerType(TowerEnum.TowerType.Normal)
 end
 
-function var_0_0.openTowerStoreView(arg_21_0)
+function TowerController:openTowerStoreView()
 	StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.TowerStore, function()
-		local var_22_0 = {}
+		local viewParam = {}
 
-		ViewMgr.instance:openView(ViewName.TowerStoreView, var_22_0)
-	end, arg_21_0)
+		ViewMgr.instance:openView(ViewName.TowerStoreView, viewParam)
+	end, self)
 end
 
-function var_0_0.openTowerHeroTrialView(arg_23_0, arg_23_1)
-	ViewMgr.instance:openView(ViewName.TowerHeroTrialView, arg_23_1)
+function TowerController:openTowerHeroTrialView(param)
+	ViewMgr.instance:openView(ViewName.TowerHeroTrialView, param)
 end
 
-function var_0_0.openTowerBossTeachView(arg_24_0, arg_24_1)
-	ViewMgr.instance:openView(ViewName.TowerBossTeachView, arg_24_1)
+function TowerController:openTowerBossTeachView(param)
+	ViewMgr.instance:openView(ViewName.TowerBossTeachView, param)
 end
 
-function var_0_0.openTowerTaskView(arg_25_0, arg_25_1)
-	local var_25_0 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+function TowerController:openTowerTaskView(param)
+	local curOpenTimeLimitTowerMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+	local timeLimitTowerId = curOpenTimeLimitTowerMo and curOpenTimeLimitTowerMo.towerId or 1
+	local viewParam = param or {}
 
-	if not var_25_0 or not var_25_0.towerId then
-		local var_25_1 = 1
-	end
-
-	local var_25_2 = arg_25_1 or {}
-
-	var_25_2.towerType = arg_25_1 and arg_25_1.towerType
-	var_25_2.towerId = arg_25_1 and arg_25_1.towerId
+	viewParam.towerType = param and param.towerType
+	viewParam.towerId = param and param.towerId
 
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Tower
 	}, function()
-		ViewMgr.instance:openView(ViewName.TowerTaskView, var_25_2)
+		ViewMgr.instance:openView(ViewName.TowerTaskView, viewParam)
 	end)
 end
 
-function var_0_0.selectDefaultTowerTask(arg_27_0)
-	local var_27_0 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
-	local var_27_1 = var_27_0 and var_27_0.towerId or 1
+function TowerController:selectDefaultTowerTask()
+	local curOpenTimeLimitTowerMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+	local timeLimitTowerId = curOpenTimeLimitTowerMo and curOpenTimeLimitTowerMo.towerId or 1
 
-	TowerTaskModel.instance:setCurSelectTowerTypeAndId(TowerEnum.TowerType.Limited, var_27_1)
+	TowerTaskModel.instance:setCurSelectTowerTypeAndId(TowerEnum.TowerType.Limited, timeLimitTowerId)
 end
 
-function var_0_0.onUpdateTaskList(arg_28_0, arg_28_1)
-	if TowerTaskModel.instance:updateTaskInfo(arg_28_1.taskInfo) then
+function TowerController:onUpdateTaskList(msg)
+	local isChange = TowerTaskModel.instance:updateTaskInfo(msg.taskInfo)
+
+	if isChange then
 		TowerTaskModel.instance:refreshList()
 	end
 
-	if TowerDeepTaskModel.instance:updateTaskInfo(arg_28_1.taskInfo) then
+	local isDeepChange = TowerDeepTaskModel.instance:updateTaskInfo(msg.taskInfo)
+
+	if isDeepChange then
 		TowerDeepTaskModel.instance:refreshList()
 	end
 
-	arg_28_0:dispatchEvent(TowerEvent.TowerTaskUpdated)
+	self:dispatchEvent(TowerEvent.TowerTaskUpdated)
 end
 
-function var_0_0.onSetTaskList(arg_29_0)
+function TowerController:onSetTaskList()
 	RedDotRpc.instance:sendGetRedDotInfosRequest({
 		RedDotEnum.DotNode.TowerTask
 	})
 
-	local var_29_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}
+	local towerTasks = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}
 
-	TowerTaskModel.instance:setTaskInfoList(var_29_0)
+	TowerTaskModel.instance:setTaskInfoList(towerTasks)
 	TowerDeepTaskModel.instance:setTaskInfoList()
 
-	local var_29_1 = TowerTaskModel.instance.curSelectTowerType
+	local curTaskSelectType = TowerTaskModel.instance.curSelectTowerType
 
-	TowerTaskModel.instance:refreshList(var_29_1)
+	TowerTaskModel.instance:refreshList(curTaskSelectType)
 	TowerDeepTaskModel.instance:refreshList()
-	arg_29_0:dispatchEvent(TowerEvent.TowerTaskUpdated)
+	self:dispatchEvent(TowerEvent.TowerTaskUpdated)
 end
 
-function var_0_0.openTowerTimeLimitLevelView(arg_30_0, arg_30_1)
-	ViewMgr.instance:openView(ViewName.TowerTimeLimitLevelView, arg_30_1)
+function TowerController:openTowerTimeLimitLevelView(param)
+	ViewMgr.instance:openView(ViewName.TowerTimeLimitLevelView, param)
 	TowerModel.instance:setCurTowerType(TowerEnum.TowerType.Limited)
 end
 
-function var_0_0.getRecommendList(arg_31_0, arg_31_1)
-	local var_31_0 = {}
-	local var_31_1 = lua_battle.configDict[arg_31_1]
+function TowerController:getRecommendList(battleId)
+	local recommendedList = {}
+	local battleConfig = lua_battle.configDict[battleId]
 
-	if var_31_1 and not string.nilorempty(var_31_1.monsterGroupIds) then
-		local var_31_2 = string.splitToNumber(var_31_1.monsterGroupIds, "#")
+	if battleConfig and not string.nilorempty(battleConfig.monsterGroupIds) then
+		local monsterGroupIds = string.splitToNumber(battleConfig.monsterGroupIds, "#")
 
-		for iter_31_0, iter_31_1 in ipairs(var_31_2) do
-			local var_31_3 = string.splitToNumber(lua_monster_group.configDict[iter_31_1].monster, "#")
+		for i, v in ipairs(monsterGroupIds) do
+			local ids = string.splitToNumber(lua_monster_group.configDict[v].monster, "#")
 
-			for iter_31_2, iter_31_3 in ipairs(var_31_3) do
-				local var_31_4 = lua_monster.configDict[iter_31_3].career
+			for index, id in ipairs(ids) do
+				local enemy_career = lua_monster.configDict[id].career
 
-				if not tabletool.indexOf(var_31_0, var_31_4) then
-					table.insert(var_31_0, var_31_4)
+				if not tabletool.indexOf(recommendedList, enemy_career) then
+					table.insert(recommendedList, enemy_career)
 				end
 			end
 		end
 
-		var_31_0 = FightHelper.getAttributeCounter(var_31_2, false)
+		recommendedList = FightHelper.getAttributeCounter(monsterGroupIds, false)
 	end
 
-	return var_31_0
+	return recommendedList
 end
 
-function var_0_0.setPlayerPrefs(arg_32_0, arg_32_1, arg_32_2)
-	if string.nilorempty(arg_32_1) or not arg_32_2 then
+function TowerController:setPlayerPrefs(key, value)
+	if string.nilorempty(key) or not value then
 		return
 	end
 
-	if type(arg_32_2) == "number" then
-		GameUtil.playerPrefsSetNumberByUserId(arg_32_1, arg_32_2)
+	local isNumber = type(value) == "number"
+
+	if isNumber then
+		GameUtil.playerPrefsSetNumberByUserId(key, value)
 	else
-		GameUtil.playerPrefsSetStringByUserId(arg_32_1, arg_32_2)
+		GameUtil.playerPrefsSetStringByUserId(key, value)
 	end
 
-	arg_32_0:dispatchEvent(TowerEvent.LocalKeyChange)
+	self:dispatchEvent(TowerEvent.LocalKeyChange)
 end
 
-function var_0_0.getPlayerPrefs(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_2 or ""
+function TowerController:getPlayerPrefs(key, defaultValue)
+	local value = defaultValue or ""
 
-	if string.nilorempty(arg_33_1) then
-		return var_33_0
+	if string.nilorempty(key) then
+		return value
 	end
 
-	if type(var_33_0) == "number" then
-		var_33_0 = GameUtil.playerPrefsGetNumberByUserId(arg_33_1, var_33_0)
+	local isNumber = type(value) == "number"
+
+	if isNumber then
+		value = GameUtil.playerPrefsGetNumberByUserId(key, value)
 	else
-		var_33_0 = GameUtil.playerPrefsGetStringByUserId(arg_33_1, var_33_0)
+		value = GameUtil.playerPrefsGetStringByUserId(key, value)
 	end
 
-	return var_33_0
+	return value
 end
 
-function var_0_0.isOpen(arg_34_0)
+function TowerController:isOpen()
 	return OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Tower)
 end
 
-function var_0_0.isBossTowerOpen(arg_35_0)
-	local var_35_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
-	local var_35_1 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Normal, 0)
+function TowerController:isBossTowerOpen()
+	local layerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
+	local towerInfo = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Normal, 0)
+	local passLayer = towerInfo and towerInfo.passLayerId or 0
+	local isOpen = passLayer >= tonumber(layerNum)
 
-	return (var_35_1 and var_35_1.passLayerId or 0) >= tonumber(var_35_0)
+	return isOpen
 end
 
-function var_0_0.isTimeLimitTowerOpen(arg_36_0)
-	local var_36_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)
-	local var_36_1 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Normal, 0)
+function TowerController:isTimeLimitTowerOpen()
+	local layerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)
+	local towerInfo = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Normal, 0)
+	local passLayer = towerInfo and towerInfo.passLayerId or 0
+	local isOpen = passLayer >= tonumber(layerNum)
 
-	return (var_36_1 and var_36_1.passLayerId or 0) >= tonumber(var_36_0)
+	return isOpen
 end
 
-function var_0_0.isTowerStoreOpen(arg_37_0)
-	local var_37_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.StoreOpen)
-	local var_37_1 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Normal, 0)
+function TowerController:isTowerStoreOpen()
+	local storeOpenLayer = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.StoreOpen)
+	local towerInfo = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Normal, 0)
+	local passLayer = towerInfo and towerInfo.passLayerId or 0
+	local isStoreOpen = passLayer >= tonumber(storeOpenLayer)
 
-	return (var_37_1 and var_37_1.passLayerId or 0) >= tonumber(var_37_0)
+	return isStoreOpen
 end
 
-function var_0_0.checkMopUpReddotShow(arg_38_0)
-	local var_38_0 = TowerPermanentModel.instance:checkCanShowMopUpReddot() and 1 or 0
-	local var_38_1 = {
+function TowerController:checkMopUpReddotShow()
+	local needShowRedDot = TowerPermanentModel.instance:checkCanShowMopUpReddot() and 1 or 0
+	local redDotInfoList = {
 		{
 			uid = 0,
 			id = RedDotEnum.DotNode.TowerMopUp,
-			value = var_38_0
+			value = needShowRedDot
 		}
 	}
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_38_1, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
 end
 
-function var_0_0.checkReddotHasNewUpdateTower(arg_39_0)
-	local var_39_0 = arg_39_0:isTimeLimitTowerOpen()
-	local var_39_1 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
-	local var_39_2 = TowerEnum.LockKey
+function TowerController:checkReddotHasNewUpdateTower()
+	local isTimeLimitOpen = self:isTimeLimitTowerOpen()
+	local curTimeLimitTowerOpenMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+	local localTimeNewState = TowerEnum.LockKey
 
-	if var_39_1 then
-		var_39_2 = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewTimeLimitOpen, var_39_1.id, var_39_1, TowerEnum.LockKey)
+	if curTimeLimitTowerOpenMo then
+		localTimeNewState = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewTimeLimitOpen, curTimeLimitTowerOpenMo.id, curTimeLimitTowerOpenMo, TowerEnum.LockKey)
 	end
 
-	local var_39_3 = var_39_0 and var_39_1 and (not var_39_2 or var_39_2 == TowerEnum.LockKey)
-	local var_39_4 = arg_39_0:isBossTowerOpen()
-	local var_39_5 = false
-	local var_39_6 = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
+	local hasNewTimeLimitOpen = isTimeLimitOpen and curTimeLimitTowerOpenMo and (not localTimeNewState or localTimeNewState == TowerEnum.LockKey)
+	local isBossOpen = self:isBossTowerOpen()
+	local hasNewBossOpen = false
+	local list = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
 
-	for iter_39_0, iter_39_1 in ipairs(var_39_6) do
-		local var_39_7 = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewBossOpen, iter_39_1.towerId, iter_39_1, TowerEnum.LockKey)
-		local var_39_8 = TowerEnum.UnlockKey
+	for i, v in ipairs(list) do
+		local newState = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewBossOpen, v.towerId, v, TowerEnum.LockKey)
+		local curNewState = TowerEnum.UnlockKey
+		local canShowNew = newState == TowerEnum.LockKey and curNewState == TowerEnum.UnlockKey
 
-		if var_39_7 == TowerEnum.LockKey and var_39_8 == TowerEnum.UnlockKey then
-			var_39_5 = true
+		if canShowNew then
+			hasNewBossOpen = true
 
 			break
 		end
 	end
 
-	return var_39_3 or var_39_5 and var_39_4
+	return hasNewTimeLimitOpen or hasNewBossOpen and isBossOpen
 end
 
-function var_0_0.checkNewUpdateTowerRddotShow(arg_40_0)
-	local var_40_0 = arg_40_0:checkReddotHasNewUpdateTower() and 1 or 0
-	local var_40_1 = {
+function TowerController:checkNewUpdateTowerRddotShow()
+	local hasNewUpdateTower = self:checkReddotHasNewUpdateTower() and 1 or 0
+	local redDotInfoList = {
 		{
 			uid = 0,
 			id = RedDotEnum.DotNode.TowerNewUpdate,
-			value = var_40_0
+			value = hasNewUpdateTower
 		}
 	}
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_40_1, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
 end
 
-function var_0_0.dailyReddotRefresh(arg_41_0)
-	arg_41_0:checkMopUpReddotShow()
-	arg_41_0:checkNewUpdateTowerRddotShow()
+function TowerController:dailyReddotRefresh()
+	self:checkMopUpReddotShow()
+	self:checkNewUpdateTowerRddotShow()
 end
 
-function var_0_0._onDailyRefresh(arg_42_0)
+function TowerController:_onDailyRefresh()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
-		TowerRpc.instance:sendGetTowerInfoRequest(arg_42_0.towerTaskDataRequest, arg_42_0)
+		TowerRpc.instance:sendGetTowerInfoRequest(self.towerTaskDataRequest, self)
 	end
 end
 
-function var_0_0.towerTaskDataRequest(arg_43_0)
+function TowerController:towerTaskDataRequest()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Tower
-	}, arg_43_0.dailyRefresh, arg_43_0)
+	}, self.dailyRefresh, self)
 end
 
-function var_0_0.dailyRefresh(arg_44_0)
+function TowerController:dailyRefresh()
 	StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.TowerStore)
-	var_0_0.instance:dispatchEvent(TowerEvent.DailyReresh)
+	TowerController.instance:dispatchEvent(TowerEvent.DailyReresh)
 end
 
-function var_0_0.saveNewUpdateTowerReddot(arg_45_0)
-	local var_45_0 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+function TowerController:saveNewUpdateTowerReddot()
+	local curOpenTimeLimitMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 
-	if var_45_0 then
-		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewTimeLimitOpen, var_45_0.id, var_45_0, TowerEnum.UnlockKey)
+	if curOpenTimeLimitMo then
+		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewTimeLimitOpen, curOpenTimeLimitMo.id, curOpenTimeLimitMo, TowerEnum.UnlockKey)
 	end
 
-	local var_45_1 = TowerModel.instance:getTowerOpenList(TowerEnum.TowerType.Boss)
+	local bossTowerOpenList = TowerModel.instance:getTowerOpenList(TowerEnum.TowerType.Boss)
 
-	for iter_45_0, iter_45_1 in ipairs(var_45_1) do
-		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewBossOpen, iter_45_1.towerId, iter_45_1, TowerEnum.UnlockKey)
-	end
-end
-
-function var_0_0.checkTowerIsEnd(arg_46_0, arg_46_1, arg_46_2)
-	local var_46_0 = TowerModel.instance:getTowerOpenInfo(arg_46_1, arg_46_2)
-
-	if not var_46_0 or var_46_0.status ~= TowerEnum.TowerStatus.Open then
-		local var_46_1 = arg_46_1 == TowerEnum.TowerType.Boss and MessageBoxIdDefine.TowerEnd or MessageBoxIdDefine.TimeLimitTowerEnd
-
-		MessageBoxController.instance:showSystemMsgBox(var_46_1, MsgBoxEnum.BoxType.Yes, var_0_0.yesCallback)
+	for i, openInfoMO in ipairs(bossTowerOpenList) do
+		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.ReddotNewBossOpen, openInfoMO.towerId, openInfoMO, TowerEnum.UnlockKey)
 	end
 end
 
-function var_0_0.yesCallback()
+function TowerController:checkTowerIsEnd(towerType, towerId)
+	local openInfo = TowerModel.instance:getTowerOpenInfo(towerType, towerId)
+
+	if not openInfo or openInfo.status ~= TowerEnum.TowerStatus.Open then
+		local boxId = towerType == TowerEnum.TowerType.Boss and MessageBoxIdDefine.TowerEnd or MessageBoxIdDefine.TimeLimitTowerEnd
+
+		MessageBoxController.instance:showSystemMsgBox(boxId, MsgBoxEnum.BoxType.Yes, TowerController.yesCallback)
+	end
+end
+
+function TowerController.yesCallback()
 	NavigateButtonsView.homeClick()
-	var_0_0.instance:openMainView()
+	TowerController.instance:openMainView()
 end
 
-function var_0_0.openTowerDeepTeamSaveView(arg_48_0, arg_48_1)
-	ViewMgr.instance:openView(ViewName.TowerDeepTeamSaveView, arg_48_1)
+function TowerController:openTowerDeepTeamSaveView(viewParam)
+	ViewMgr.instance:openView(ViewName.TowerDeepTeamSaveView, viewParam)
 end
 
-function var_0_0.openTowerDeepTaskView(arg_49_0, arg_49_1)
+function TowerController:openTowerDeepTaskView(viewParam)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.TowerPermanentDeep
 	}, function()
-		ViewMgr.instance:openView(ViewName.TowerDeepTaskView, arg_49_1)
+		ViewMgr.instance:openView(ViewName.TowerDeepTaskView, viewParam)
 	end)
 end
 
-function var_0_0.endFightEnterTowerDeepHeroGroup(arg_51_0, arg_51_1)
-	local var_51_0 = DungeonConfig.instance:getEpisodeBattleId(arg_51_1.id)
+function TowerController:endFightEnterTowerDeepHeroGroup(episodeCO)
+	local battleId = DungeonConfig.instance:getEpisodeBattleId(episodeCO.id)
 
-	HeroGroupModel.instance:setParam(var_51_0, arg_51_1.id)
+	HeroGroupModel.instance:setParam(battleId, episodeCO.id)
 
-	local var_51_1 = GameSceneMgr.instance:getPreSceneType()
-	local var_51_2 = GameSceneMgr.instance:getPreSceneId()
-	local var_51_3 = GameSceneMgr.instance:getPreLevelId()
+	local preSceneType = GameSceneMgr.instance:getPreSceneType()
+	local preSceneId = GameSceneMgr.instance:getPreSceneId()
+	local preLevelId = GameSceneMgr.instance:getPreLevelId()
 
 	GameSceneMgr.instance:closeScene(nil, nil, nil, true)
-	GameSceneMgr.instance:setPrevScene(var_51_1, var_51_2, var_51_3)
+	GameSceneMgr.instance:setPrevScene(preSceneType, preSceneId, preLevelId)
 	TowerPermanentDeepModel.instance:setIsFightFailNotEndState(true)
 	TowerPermanentDeepModel.instance:setInDeepLayerState(true)
-	DungeonFightController.instance:enterFight(arg_51_1.chapterId, arg_51_1.id, DungeonModel.instance.curSelectTicketId)
+	DungeonFightController.instance:enterFight(episodeCO.chapterId, episodeCO.id, DungeonModel.instance.curSelectTicketId)
 end
 
-function var_0_0._trySendTowerDeepRPC(arg_52_0)
-	if TowerPermanentDeepModel.instance:checkDeepLayerUnlock() then
+function TowerController:_trySendTowerDeepRPC()
+	local isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+
+	if isDeepLayerUnlock then
 		TowerDeepRpc.instance:sendTowerDeepGetInfoRequest()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+TowerController.instance = TowerController.New()
 
-return var_0_0
+return TowerController

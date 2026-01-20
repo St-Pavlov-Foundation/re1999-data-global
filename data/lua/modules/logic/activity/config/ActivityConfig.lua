@@ -1,17 +1,19 @@
-﻿module("modules.logic.activity.config.ActivityConfig", package.seeall)
+﻿-- chunkname: @modules/logic/activity/config/ActivityConfig.lua
 
-local var_0_0 = class("ActivityConfig", BaseConfig)
+module("modules.logic.activity.config.ActivityConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._activityConfig = nil
-	arg_1_0._activityCenterConfig = nil
-	arg_1_0._norSignConfig = nil
-	arg_1_0._activityDungeonConfig = nil
-	arg_1_0._activityShowConfig = nil
-	arg_1_0.chapterId2ActId = {}
+local ActivityConfig = class("ActivityConfig", BaseConfig)
+
+function ActivityConfig:ctor()
+	self._activityConfig = nil
+	self._activityCenterConfig = nil
+	self._norSignConfig = nil
+	self._activityDungeonConfig = nil
+	self._activityShowConfig = nil
+	self.chapterId2ActId = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ActivityConfig:reqConfigNames()
 	return {
 		"activity",
 		"activity_center",
@@ -24,323 +26,334 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity" then
-		arg_3_0:__init_activity(arg_3_2)
-	elseif arg_3_1 == "activity_center" then
-		arg_3_0._activityCenterConfig = arg_3_2
-	elseif arg_3_1 == "activity101" then
-		arg_3_0._norSignConfig = arg_3_2
-	elseif arg_3_1 == "activity_dungeon" then
-		arg_3_0._activityDungeonConfig = arg_3_2
+function ActivityConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity" then
+		self:__init_activity(configTable)
+	elseif configName == "activity_center" then
+		self._activityCenterConfig = configTable
+	elseif configName == "activity101" then
+		self._norSignConfig = configTable
+	elseif configName == "activity_dungeon" then
+		self._activityDungeonConfig = configTable
 
-		arg_3_0:initActivityDungeon()
-	elseif arg_3_1 == "activity_show" then
-		arg_3_0._activityShowConfig = arg_3_2
-	elseif arg_3_1 == "main_act_extra_display" then
-		arg_3_0:_initMainActExtraDisplay()
-	elseif arg_3_1 == "main_act_atmosphere" then
-		arg_3_0:_initMainActAtmosphere()
+		self:initActivityDungeon()
+	elseif configName == "activity_show" then
+		self._activityShowConfig = configTable
+	elseif configName == "main_act_extra_display" then
+		self:_initMainActExtraDisplay()
+	elseif configName == "main_act_atmosphere" then
+		self:_initMainActAtmosphere()
 	end
 end
 
-local function var_0_1(arg_4_0)
-	return lua_activity_const.configDict[arg_4_0]
+local function _constCO(id)
+	return lua_activity_const.configDict[id]
 end
 
-function var_0_0._initMainActAtmosphere(arg_5_0)
-	local var_5_0 = #lua_main_act_atmosphere.configList
+function ActivityConfig:_initMainActAtmosphere()
+	local len = #lua_main_act_atmosphere.configList
+	local lastConfig = lua_main_act_atmosphere.configList[len]
 
-	arg_5_0._mainActAtmosphereConfig = lua_main_act_atmosphere.configList[var_5_0]
+	self._mainActAtmosphereConfig = lastConfig
 end
 
-function var_0_0.getMainActAtmosphereConfig(arg_6_0)
-	return arg_6_0._mainActAtmosphereConfig
+function ActivityConfig:getMainActAtmosphereConfig()
+	return self._mainActAtmosphereConfig
 end
 
-function var_0_0._initMainActExtraDisplay(arg_7_0)
-	arg_7_0._mainActExtraDisplayList = {}
+function ActivityConfig:_initMainActExtraDisplay()
+	self._mainActExtraDisplayList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(lua_main_act_extra_display.configList) do
-		if iter_7_1.show == 1 then
-			table.insert(arg_7_0._mainActExtraDisplayList, iter_7_1)
+	for i, v in ipairs(lua_main_act_extra_display.configList) do
+		if v.show == 1 then
+			table.insert(self._mainActExtraDisplayList, v)
 		end
 	end
 
-	table.sort(arg_7_0._mainActExtraDisplayList, function(arg_8_0, arg_8_1)
-		if arg_8_0.sortId == arg_8_1.sortId then
-			return arg_8_0.id < arg_8_1.id
+	table.sort(self._mainActExtraDisplayList, function(a, b)
+		if a.sortId == b.sortId then
+			return a.id < b.id
 		end
 
-		return arg_8_0.sortId < arg_8_1.sortId
+		return a.sortId < b.sortId
 	end)
 
-	if not arg_7_0._activityConfig then
+	if not self._activityConfig then
 		logError("ActivityConfig:_initMainActExtraDisplay activityConfig is nil")
 
 		return
 	end
 
-	arg_7_0._seasonActivityConfig = nil
-	arg_7_0._rougeActivityConfig = nil
-	arg_7_0._displayBindActivityList = {}
+	self._seasonActivityConfig = nil
+	self._rougeActivityConfig = nil
+	self._displayBindActivityList = {}
 
-	local var_7_0 = 100
-	local var_7_1 = #lua_activity.configList
+	local maxFindNum = 100
+	local num = #lua_activity.configList
 
-	for iter_7_2 = var_7_1, 1, -1 do
-		local var_7_2 = lua_activity.configList[iter_7_2]
+	for i = num, 1, -1 do
+		local activityConfig = lua_activity.configList[i]
 
-		if var_7_2.extraDisplayId > 0 and not arg_7_0._displayBindActivityList[var_7_2.extraDisplayId] then
-			arg_7_0._displayBindActivityList[var_7_2.extraDisplayId] = var_7_2
+		if activityConfig.extraDisplayId > 0 and not self._displayBindActivityList[activityConfig.extraDisplayId] then
+			self._displayBindActivityList[activityConfig.extraDisplayId] = activityConfig
 		end
 
-		if var_7_0 < var_7_1 - iter_7_2 then
+		if maxFindNum < num - i then
 			break
 		end
 	end
 
-	arg_7_0._seasonActivityConfig = arg_7_0._displayBindActivityList[ActivityEnum.MainViewActivityState.SeasonActivity]
-	arg_7_0._rougeActivityConfig = arg_7_0._displayBindActivityList[ActivityEnum.MainViewActivityState.Rouge]
+	self._seasonActivityConfig = self._displayBindActivityList[ActivityEnum.MainViewActivityState.SeasonActivity]
+	self._rougeActivityConfig = self._displayBindActivityList[ActivityEnum.MainViewActivityState.Rouge]
 
-	if not arg_7_0._seasonActivityConfig then
+	if not self._seasonActivityConfig then
 		logWarn("ActivityConfig:_initMainActExtraDisplay seasonActivityConfig is nil")
 
 		return
 	end
 
-	if not arg_7_0._rougeActivityConfig then
+	if not self._rougeActivityConfig then
 		logWarn("ActivityConfig:_initMainActExtraDisplay rougeActivityConfig is nil")
 
 		return
 	end
 end
 
-function var_0_0.getActivityByExtraDisplayId(arg_9_0, arg_9_1)
-	return arg_9_1 and arg_9_0._displayBindActivityList[arg_9_1]
+function ActivityConfig:getActivityByExtraDisplayId(extraDisplayId)
+	return extraDisplayId and self._displayBindActivityList[extraDisplayId]
 end
 
-function var_0_0.getSesonActivityConfig(arg_10_0)
-	return arg_10_0._seasonActivityConfig
+function ActivityConfig:getSesonActivityConfig()
+	return self._seasonActivityConfig
 end
 
-function var_0_0.getRougeActivityConfig(arg_11_0)
-	return arg_11_0._rougeActivityConfig
+function ActivityConfig:getRougeActivityConfig()
+	return self._rougeActivityConfig
 end
 
-function var_0_0.getMainActExtraDisplayList(arg_12_0)
-	return arg_12_0._mainActExtraDisplayList
+function ActivityConfig:getMainActExtraDisplayList()
+	return self._mainActExtraDisplayList
 end
 
-function var_0_0.getActivityCo(arg_13_0, arg_13_1)
-	if not arg_13_0._activityConfig.configDict[arg_13_1] then
-		logError("前端活动配置表不存在活动:" .. tostring(arg_13_1))
+function ActivityConfig:getActivityCo(id)
+	if not self._activityConfig.configDict[id] then
+		logError("前端活动配置表不存在活动:" .. tostring(id))
 	end
 
-	return arg_13_0._activityConfig.configDict[arg_13_1]
+	return self._activityConfig.configDict[id]
 end
 
-function var_0_0.getActivityCenterCo(arg_14_0, arg_14_1)
-	if not arg_14_0._activityCenterConfig.configDict[arg_14_1] then
-		logError("前端活动配置表不存在活动中心:" .. tostring(arg_14_1))
+function ActivityConfig:getActivityCenterCo(id)
+	if not self._activityCenterConfig.configDict[id] then
+		logError("前端活动配置表不存在活动中心:" .. tostring(id))
 	end
 
-	return arg_14_0._activityCenterConfig.configDict[arg_14_1]
+	return self._activityCenterConfig.configDict[id]
 end
 
-function var_0_0.getNorSignActivityCo(arg_15_0, arg_15_1, arg_15_2)
-	return arg_15_0._norSignConfig.configDict[arg_15_1][arg_15_2]
+function ActivityConfig:getNorSignActivityCo(actId, day)
+	return self._norSignConfig.configDict[actId][day]
 end
 
-function var_0_0.getNorSignActivityCos(arg_16_0, arg_16_1)
-	return arg_16_0._norSignConfig.configDict[arg_16_1]
+function ActivityConfig:getNorSignActivityCos(actId)
+	return self._norSignConfig.configDict[actId]
 end
 
-function var_0_0.initActivityDungeon(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._activityDungeonConfig.configList) do
-		arg_17_0:addChapterId2ActId(iter_17_1.story1ChapterId, iter_17_1.id)
-		arg_17_0:addChapterId2ActId(iter_17_1.story2ChapterId, iter_17_1.id)
-		arg_17_0:addChapterId2ActId(iter_17_1.story3ChapterId, iter_17_1.id)
-		arg_17_0:addChapterId2ActId(iter_17_1.hardChapterId, iter_17_1.id)
+function ActivityConfig:initActivityDungeon()
+	for _, activityDungeonCo in ipairs(self._activityDungeonConfig.configList) do
+		self:addChapterId2ActId(activityDungeonCo.story1ChapterId, activityDungeonCo.id)
+		self:addChapterId2ActId(activityDungeonCo.story2ChapterId, activityDungeonCo.id)
+		self:addChapterId2ActId(activityDungeonCo.story3ChapterId, activityDungeonCo.id)
+		self:addChapterId2ActId(activityDungeonCo.hardChapterId, activityDungeonCo.id)
 	end
 end
 
-function var_0_0.addChapterId2ActId(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 == 0 then
+function ActivityConfig:addChapterId2ActId(chapterId, actId)
+	if chapterId == 0 then
 		return
 	end
 
-	if arg_18_0.chapterId2ActId[arg_18_1] then
-		logError(string.format("chapterId : %s multiple, exist actId : %s, current actId : %s", arg_18_1, arg_18_0.chapterId2ActId[arg_18_1], arg_18_2))
+	if self.chapterId2ActId[chapterId] then
+		logError(string.format("chapterId : %s multiple, exist actId : %s, current actId : %s", chapterId, self.chapterId2ActId[chapterId], actId))
 
 		return
 	end
 
-	arg_18_0.chapterId2ActId[arg_18_1] = arg_18_2
+	self.chapterId2ActId[chapterId] = actId
 end
 
-function var_0_0.getActIdByChapterId(arg_19_0, arg_19_1)
-	return arg_19_0.chapterId2ActId[arg_19_1]
+function ActivityConfig:getActIdByChapterId(chapterId)
+	return self.chapterId2ActId[chapterId]
 end
 
-function var_0_0.getActivityDungeonConfig(arg_20_0, arg_20_1)
-	return arg_20_0._activityDungeonConfig.configDict[arg_20_1]
+function ActivityConfig:getActivityDungeonConfig(actId)
+	return self._activityDungeonConfig.configDict[actId]
 end
 
-function var_0_0.getChapterIdMode(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getActIdByChapterId(arg_21_1)
+function ActivityConfig:getChapterIdMode(chapterId)
+	local actId = self:getActIdByChapterId(chapterId)
 
-	if not var_21_0 then
+	if not actId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.None
 	end
 
-	local var_21_1 = arg_21_0:getActivityDungeonConfig(var_21_0)
+	local co = self:getActivityDungeonConfig(actId)
 
-	if arg_21_1 == var_21_1.story1ChapterId then
+	if chapterId == co.story1ChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Story
-	elseif arg_21_1 == var_21_1.story2ChapterId then
+	elseif chapterId == co.story2ChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Story2
-	elseif arg_21_1 == var_21_1.story3ChapterId then
+	elseif chapterId == co.story3ChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Story3
-	elseif arg_21_1 == var_21_1.hardChapterId then
+	elseif chapterId == co.hardChapterId then
 		return VersionActivityDungeonBaseEnum.DungeonMode.Hard
 	else
 		return VersionActivityDungeonBaseEnum.DungeonMode.None
 	end
 end
 
-function var_0_0.getActivityShowTaskList(arg_22_0, arg_22_1, arg_22_2)
-	return arg_22_0._activityShowConfig.configDict[arg_22_1][arg_22_2]
+function ActivityConfig:getActivityShowTaskList(actId, taskId)
+	return self._activityShowConfig.configDict[actId][taskId]
 end
 
-function var_0_0.getActivityShowTaskCount(arg_23_0, arg_23_1)
-	return arg_23_0._activityShowConfig.configDict[arg_23_1]
+function ActivityConfig:getActivityShowTaskCount(actId)
+	return self._activityShowConfig.configDict[actId]
 end
 
-function var_0_0.getActivityTabBgPathes(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getActivityCo(arg_24_1).tabBgPath
+function ActivityConfig:getActivityTabBgPathes(actId)
+	local actCfg = self:getActivityCo(actId)
+	local bgPathArrStr = actCfg.tabBgPath
+	local bgPathArr = string.split(bgPathArrStr, "#")
 
-	return (string.split(var_24_0, "#"))
+	return bgPathArr
 end
 
-function var_0_0.getActivityTabButtonState(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0:getActivityCo(arg_25_1).tabButton
-	local var_25_1 = string.splitToNumber(var_25_0, "#")
-	local var_25_2 = var_25_1 and var_25_1[1] == 1
-	local var_25_3 = var_25_1 and var_25_1[2] == 1
-	local var_25_4 = var_25_1 and var_25_1[3] == 1
+function ActivityConfig:getActivityTabButtonState(actId)
+	local actCfg = self:getActivityCo(actId)
+	local btnStateArrStr = actCfg.tabButton
+	local btnStateArr = string.splitToNumber(btnStateArrStr, "#")
+	local replayBtn = btnStateArr and btnStateArr[1] == 1
+	local achivermentBtn = btnStateArr and btnStateArr[2] == 1
+	local tabRemainTime = btnStateArr and btnStateArr[3] == 1
 
-	return var_25_2, var_25_3, var_25_4
+	return replayBtn, achivermentBtn, tabRemainTime
 end
 
-function var_0_0.getActivityEnterViewBgm(arg_26_0, arg_26_1)
-	return arg_26_0:getActivityCo(arg_26_1).tabBgmId
+function ActivityConfig:getActivityEnterViewBgm(actId)
+	local actCfg = self:getActivityCo(actId)
+	local bgmId = actCfg.tabBgmId
+
+	return bgmId
 end
 
-function var_0_0.isPermanent(arg_27_0, arg_27_1)
-	return arg_27_0:getActivityCo(arg_27_1).isRetroAcitivity == ActivityEnum.RetroType.Permanent
+function ActivityConfig:isPermanent(actId)
+	local actCfg = self:getActivityCo(actId)
+
+	return actCfg.isRetroAcitivity == ActivityEnum.RetroType.Permanent
 end
 
-function var_0_0.getPermanentChildActList(arg_28_0, arg_28_1)
-	local var_28_0 = {}
+function ActivityConfig:getPermanentChildActList(actId)
+	local result = {}
 
-	if not arg_28_0._belongPermanentActDict then
-		arg_28_0:_initBelongPermanentActDict()
+	if not self._belongPermanentActDict then
+		self:_initBelongPermanentActDict()
 	end
 
-	var_28_0 = arg_28_0._belongPermanentActDict[arg_28_1] or var_28_0
+	result = self._belongPermanentActDict[actId] or result
 
-	return var_28_0
+	return result
 end
 
-function var_0_0._initBelongPermanentActDict(arg_29_0)
-	arg_29_0._belongPermanentActDict = {}
+function ActivityConfig:_initBelongPermanentActDict()
+	self._belongPermanentActDict = {}
 
-	for iter_29_0, iter_29_1 in pairs(arg_29_0._activityConfig.configDict) do
-		if arg_29_0:isPermanent(iter_29_0) then
-			local var_29_0 = iter_29_1.permanentParentAcitivityId
+	for actId, cfg in pairs(self._activityConfig.configDict) do
+		if self:isPermanent(actId) then
+			local belongActId = cfg.permanentParentAcitivityId
 
-			if var_29_0 ~= 0 then
-				local var_29_1 = arg_29_0._belongPermanentActDict[var_29_0]
+			if belongActId ~= 0 then
+				local dict = self._belongPermanentActDict[belongActId]
 
-				if not var_29_1 then
-					var_29_1 = {}
-					arg_29_0._belongPermanentActDict[var_29_0] = var_29_1
+				if not dict then
+					dict = {}
+					self._belongPermanentActDict[belongActId] = dict
 				end
 
-				table.insert(var_29_1, iter_29_0)
+				table.insert(dict, actId)
 			end
 		end
 	end
 end
 
-function var_0_0.getActivityRedDotId(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0:getActivityCo(arg_30_1)
+function ActivityConfig:getActivityRedDotId(actId)
+	local CO = self:getActivityCo(actId)
 
-	return var_30_0 and var_30_0.redDotId or 0
+	return CO and CO.redDotId or 0
 end
 
-function var_0_0.getActivityCenterRedDotId(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_0:getActivityCenterCo(arg_31_1)
+function ActivityConfig:getActivityCenterRedDotId(actCenterId)
+	local CO = self:getActivityCenterCo(actCenterId)
 
-	return var_31_0 and var_31_0.reddotid or 0
+	return CO and CO.reddotid or 0
 end
 
-function var_0_0.__init_activity(arg_32_0, arg_32_1)
-	arg_32_0._activityConfig = arg_32_1
-	arg_32_0._typeId2ActivityCOList = {}
+function ActivityConfig:__init_activity(configTable)
+	self._activityConfig = configTable
+	self._typeId2ActivityCOList = {}
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_1.configList) do
-		local var_32_0 = iter_32_1.typeId
+	for _, CO in ipairs(configTable.configList) do
+		local typeId = CO.typeId
 
-		arg_32_0._typeId2ActivityCOList[var_32_0] = arg_32_0._typeId2ActivityCOList[var_32_0] or {}
+		self._typeId2ActivityCOList[typeId] = self._typeId2ActivityCOList[typeId] or {}
 
-		table.insert(arg_32_0._typeId2ActivityCOList[var_32_0], iter_32_1)
+		table.insert(self._typeId2ActivityCOList[typeId], CO)
 	end
 
-	for iter_32_2, iter_32_3 in pairs(arg_32_0._typeId2ActivityCOList) do
-		table.sort(iter_32_3, function(arg_33_0, arg_33_1)
-			return arg_33_0.id > arg_33_1.id
+	for _, COList in pairs(self._typeId2ActivityCOList) do
+		table.sort(COList, function(a, b)
+			return a.id > b.id
 		end)
 	end
 end
 
-function var_0_0.typeId2ActivityCOList(arg_34_0, arg_34_1)
-	if not arg_34_1 then
+function ActivityConfig:typeId2ActivityCOList(typeId)
+	if not typeId then
 		return {}
 	end
 
-	return arg_34_0._typeId2ActivityCOList[arg_34_1] or {}
+	return self._typeId2ActivityCOList[typeId] or {}
 end
 
-function var_0_0.getConstAsNum(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = var_0_1(arg_35_1)
+function ActivityConfig:getConstAsNum(id, fallback)
+	local CO = _constCO(id)
 
-	if not var_35_0 then
-		return arg_35_2
+	if not CO then
+		return fallback
 	end
 
-	return tonumber(var_35_0.strValue) or arg_35_2
+	return tonumber(CO.strValue) or fallback
 end
 
-function var_0_0.getConstAsNumList(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	arg_36_2 = arg_36_2 or "#"
+function ActivityConfig:getConstAsNumList(id, delimiter, fallback)
+	delimiter = delimiter or "#"
 
-	local var_36_0 = var_0_1(arg_36_1)
+	local CO = _constCO(id)
 
-	if not var_36_0 then
-		return arg_36_3
+	if not CO then
+		return fallback
 	end
 
-	local var_36_1 = var_36_0.strValue
+	local strValue = CO.strValue
 
-	if string.nilorempty(var_36_1) then
-		return arg_36_3
+	if string.nilorempty(strValue) then
+		return fallback
 	end
 
-	return string.splitToNumber(var_36_1, arg_36_2) or arg_36_3
+	local numList = string.splitToNumber(strValue, delimiter)
+
+	return numList or fallback
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityConfig.instance = ActivityConfig.New()
 
-return var_0_0
+return ActivityConfig

@@ -1,12 +1,14 @@
-﻿module("modules.logic.tower.config.TowerDeepConfig", package.seeall)
+﻿-- chunkname: @modules/logic/tower/config/TowerDeepConfig.lua
 
-local var_0_0 = class("TowerDeepConfig", BaseConfig)
+module("modules.logic.tower.config.TowerDeepConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.TowerDeepConfig = nil
+local TowerDeepConfig = class("TowerDeepConfig", BaseConfig)
+
+function TowerDeepConfig:ctor()
+	self.TowerDeepConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function TowerDeepConfig:reqConfigNames()
 	return {
 		"tower_deep_const",
 		"tower_deep_task",
@@ -14,50 +16,50 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "tower_deep_const" then
-		arg_3_0._constConfig = arg_3_2
-	elseif arg_3_1 == "tower_deep_task" then
-		arg_3_0._taskConfig = arg_3_2
-	elseif arg_3_1 == "tower_deep_monster" then
-		arg_3_0._deepMonsterConfig = arg_3_2
+function TowerDeepConfig:onConfigLoaded(configName, configTable)
+	if configName == "tower_deep_const" then
+		self._constConfig = configTable
+	elseif configName == "tower_deep_task" then
+		self._taskConfig = configTable
+	elseif configName == "tower_deep_monster" then
+		self._deepMonsterConfig = configTable
 	end
 end
 
-function var_0_0.getConstConfigValue(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._constConfig.configDict[arg_4_1]
+function TowerDeepConfig:getConstConfigValue(id, isString)
+	local config = self._constConfig.configDict[id]
 
-	if var_4_0 then
-		return arg_4_2 and var_4_0.value or tonumber(var_4_0.value)
+	if config then
+		return isString and config.value or tonumber(config.value)
 	end
 end
 
-function var_0_0.getConstConfigLangValue(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._constConfig.configDict[arg_5_1]
+function TowerDeepConfig:getConstConfigLangValue(id)
+	local config = self._constConfig.configDict[id]
 
-	if var_5_0 then
-		return var_5_0.value2
+	if config then
+		return config.value2
 	end
 end
 
-function var_0_0.getTaskConfig(arg_6_0, arg_6_1)
-	return arg_6_0._taskConfig.configDict[arg_6_1]
+function TowerDeepConfig:getTaskConfig(id)
+	return self._taskConfig.configDict[id]
 end
 
-function var_0_0.getTaskConfigList(arg_7_0)
-	return arg_7_0._taskConfig.configList
+function TowerDeepConfig:getTaskConfigList()
+	return self._taskConfig.configList
 end
 
-function var_0_0.getDeepMonsterId(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._deepMonsterConfig.configList) do
-		if arg_8_1 >= iter_8_1.startHighDeep and arg_8_1 <= iter_8_1.endHighDeep then
-			return iter_8_1.bossId
+function TowerDeepConfig:getDeepMonsterId(deepHigh)
+	for index, config in ipairs(self._deepMonsterConfig.configList) do
+		if deepHigh >= config.startHighDeep and deepHigh <= config.endHighDeep then
+			return config.bossId
 		end
 	end
 
-	return arg_8_0._deepMonsterConfig.configList[1].bossId
+	return self._deepMonsterConfig.configList[1].bossId
 end
 
-var_0_0.instance = var_0_0.New()
+TowerDeepConfig.instance = TowerDeepConfig.New()
 
-return var_0_0
+return TowerDeepConfig

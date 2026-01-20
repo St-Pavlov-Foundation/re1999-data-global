@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_fight_boss_evolution_client", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_boss_evolution_client.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_boss_evolution_client", package.seeall)
+
+local lua_fight_boss_evolution_client = {}
+local fields = {
 	nextSkinId = 2,
 	id = 1,
 	timeline = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_boss_evolution_client.onLoad(json)
+	lua_fight_boss_evolution_client.configList, lua_fight_boss_evolution_client.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_boss_evolution_client

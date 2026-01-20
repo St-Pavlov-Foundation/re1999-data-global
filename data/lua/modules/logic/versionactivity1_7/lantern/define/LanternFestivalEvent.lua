@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_7.lantern.define.LanternFestivalEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/lantern/define/LanternFestivalEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_7.lantern.define.LanternFestivalEvent", package.seeall)
 
-var_0_0.SelectPuzzleItem = 1001
-var_0_0.PuzzleRewardGet = 1002
-var_0_0.InfosRefresh = 1003
-var_0_0.ShowUnlockNewPuzzle = 1004
+local LanternFestivalEvent = _M
 
-return var_0_0
+LanternFestivalEvent.SelectPuzzleItem = 1001
+LanternFestivalEvent.PuzzleRewardGet = 1002
+LanternFestivalEvent.InfosRefresh = 1003
+LanternFestivalEvent.ShowUnlockNewPuzzle = 1004
+
+return LanternFestivalEvent

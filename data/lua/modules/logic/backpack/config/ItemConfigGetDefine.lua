@@ -1,118 +1,130 @@
-﻿module("modules.logic.backpack.config.ItemConfigGetDefine", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/config/ItemConfigGetDefine.lua
 
-local var_0_0 = class("ItemConfigGetDefine", BaseConfig)
+module("modules.logic.backpack.config.ItemConfigGetDefine", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._defineList = {
-		[MaterialEnum.MaterialType.Item] = var_0_0._getItem,
-		[MaterialEnum.MaterialType.Currency] = var_0_0._getCurrency,
-		[MaterialEnum.MaterialType.PowerPotion] = var_0_0._getPowerPotion,
-		[MaterialEnum.MaterialType.HeroSkin] = var_0_0._getHeroSkin,
-		[MaterialEnum.MaterialType.Hero] = var_0_0._getHero,
-		[MaterialEnum.MaterialType.Equip] = var_0_0._getEquip,
-		[MaterialEnum.MaterialType.PlayerCloth] = var_0_0._getPlayerCloth,
-		[MaterialEnum.MaterialType.Building] = var_0_0._getBuilding,
-		[MaterialEnum.MaterialType.Formula] = var_0_0._getFormula,
-		[MaterialEnum.MaterialType.BlockPackage] = var_0_0._getBlockPackage,
-		[MaterialEnum.MaterialType.SpecialBlock] = var_0_0._getSpecialBlock,
-		[MaterialEnum.MaterialType.RoomTheme] = var_0_0._getRoomTheme,
-		[MaterialEnum.MaterialType.Explore] = var_0_0._getExplore,
-		[MaterialEnum.MaterialType.EquipCard] = var_0_0._getEquipCard,
-		[MaterialEnum.MaterialType.Antique] = var_0_0._getAntique,
-		[MaterialEnum.MaterialType.V1a5AiZiLa] = var_0_0._getV1a5AiZiLaItem,
-		[MaterialEnum.MaterialType.Season123EquipCard] = var_0_0._getSeason123EquipCard,
-		[MaterialEnum.MaterialType.NewInsight] = var_0_0._getNewInsight,
-		[MaterialEnum.MaterialType.Critter] = var_0_0._getCritter,
-		[MaterialEnum.MaterialType.UnlockVoucher] = var_0_0._getUnlockVoucher
+local ItemConfigGetDefine = class("ItemConfigGetDefine", BaseConfig)
+
+function ItemConfigGetDefine:ctor()
+	self._defineList = {
+		[MaterialEnum.MaterialType.Item] = ItemConfigGetDefine._getItem,
+		[MaterialEnum.MaterialType.Currency] = ItemConfigGetDefine._getCurrency,
+		[MaterialEnum.MaterialType.PowerPotion] = ItemConfigGetDefine._getPowerPotion,
+		[MaterialEnum.MaterialType.HeroSkin] = ItemConfigGetDefine._getHeroSkin,
+		[MaterialEnum.MaterialType.Hero] = ItemConfigGetDefine._getHero,
+		[MaterialEnum.MaterialType.Equip] = ItemConfigGetDefine._getEquip,
+		[MaterialEnum.MaterialType.PlayerCloth] = ItemConfigGetDefine._getPlayerCloth,
+		[MaterialEnum.MaterialType.Building] = ItemConfigGetDefine._getBuilding,
+		[MaterialEnum.MaterialType.Formula] = ItemConfigGetDefine._getFormula,
+		[MaterialEnum.MaterialType.BlockPackage] = ItemConfigGetDefine._getBlockPackage,
+		[MaterialEnum.MaterialType.SpecialBlock] = ItemConfigGetDefine._getSpecialBlock,
+		[MaterialEnum.MaterialType.RoomTheme] = ItemConfigGetDefine._getRoomTheme,
+		[MaterialEnum.MaterialType.Explore] = ItemConfigGetDefine._getExplore,
+		[MaterialEnum.MaterialType.EquipCard] = ItemConfigGetDefine._getEquipCard,
+		[MaterialEnum.MaterialType.Antique] = ItemConfigGetDefine._getAntique,
+		[MaterialEnum.MaterialType.V1a5AiZiLa] = ItemConfigGetDefine._getV1a5AiZiLaItem,
+		[MaterialEnum.MaterialType.Season123EquipCard] = ItemConfigGetDefine._getSeason123EquipCard,
+		[MaterialEnum.MaterialType.NewInsight] = ItemConfigGetDefine._getNewInsight,
+		[MaterialEnum.MaterialType.Critter] = ItemConfigGetDefine._getCritter,
+		[MaterialEnum.MaterialType.UnlockVoucher] = ItemConfigGetDefine._getUnlockVoucher,
+		[MaterialEnum.MaterialType.TalentItem] = ItemConfigGetDefine._getTalentItem,
+		[MaterialEnum.MaterialType.SpecialExpiredItem] = ItemConfigGetDefine._getSpecialExpiredItem
 	}
 end
 
-function var_0_0._getItem(arg_2_0)
-	return ItemConfig.instance:getItemCo(arg_2_0)
+function ItemConfigGetDefine._getItem(id)
+	return ItemConfig.instance:getItemCo(id)
 end
 
-function var_0_0._getCurrency(arg_3_0)
-	return CurrencyConfig.instance:getCurrencyCo(arg_3_0)
+function ItemConfigGetDefine._getCurrency(id)
+	return CurrencyConfig.instance:getCurrencyCo(id)
 end
 
-function var_0_0._getPowerPotion(arg_4_0)
-	return ItemConfig.instance:getPowerItemCo(arg_4_0)
+function ItemConfigGetDefine._getPowerPotion(id)
+	return ItemConfig.instance:getPowerItemCo(id)
 end
 
-function var_0_0._getHeroSkin(arg_5_0)
-	return SkinConfig.instance:getSkinCo(arg_5_0)
+function ItemConfigGetDefine._getHeroSkin(id)
+	return SkinConfig.instance:getSkinCo(id)
 end
 
-function var_0_0._getHero(arg_6_0)
-	return HeroConfig.instance:getHeroCO(arg_6_0)
+function ItemConfigGetDefine._getHero(id)
+	return HeroConfig.instance:getHeroCO(id)
 end
 
-function var_0_0._getEquip(arg_7_0)
-	return EquipConfig.instance:getEquipCo(arg_7_0)
+function ItemConfigGetDefine._getEquip(id)
+	return EquipConfig.instance:getEquipCo(id)
 end
 
-function var_0_0._getPlayerCloth(arg_8_0)
-	return PlayerConfig.instance:getPlayerClothConfig(arg_8_0)
+function ItemConfigGetDefine._getPlayerCloth(id)
+	return PlayerConfig.instance:getPlayerClothConfig(id)
 end
 
-function var_0_0._getBuilding(arg_9_0)
-	return RoomConfig.instance:getBuildingConfig(arg_9_0)
+function ItemConfigGetDefine._getBuilding(id)
+	return RoomConfig.instance:getBuildingConfig(id)
 end
 
-function var_0_0._getFormula(arg_10_0)
-	return RoomConfig.instance:getFormulaConfig(arg_10_0)
+function ItemConfigGetDefine._getFormula(id)
+	return RoomConfig.instance:getFormulaConfig(id)
 end
 
-function var_0_0._getBlockPackage(arg_11_0)
-	return RoomConfig.instance:getBlockPackageConfig(arg_11_0)
+function ItemConfigGetDefine._getBlockPackage(id)
+	return RoomConfig.instance:getBlockPackageConfig(id)
 end
 
-function var_0_0._getSpecialBlock(arg_12_0)
-	return RoomConfig.instance:getSpecialBlockConfig(arg_12_0)
+function ItemConfigGetDefine._getSpecialBlock(id)
+	return RoomConfig.instance:getSpecialBlockConfig(id)
 end
 
-function var_0_0._getRoomTheme(arg_13_0)
-	return RoomConfig.instance:getThemeConfig(arg_13_0)
+function ItemConfigGetDefine._getRoomTheme(id)
+	return RoomConfig.instance:getThemeConfig(id)
 end
 
-function var_0_0._getV1a5AiZiLaItem(arg_14_0)
-	return AiZiLaConfig.instance:getItemCo(arg_14_0)
+function ItemConfigGetDefine._getV1a5AiZiLaItem(id)
+	return AiZiLaConfig.instance:getItemCo(id)
 end
 
-function var_0_0._getExplore(arg_15_0)
-	return ExploreConfig.instance:getItemCo(arg_15_0)
+function ItemConfigGetDefine._getExplore(id)
+	return ExploreConfig.instance:getItemCo(id)
 end
 
-function var_0_0._getEquipCard(arg_16_0)
-	return SeasonConfig.instance:getSeasonEquipCo(arg_16_0)
+function ItemConfigGetDefine._getEquipCard(id)
+	return SeasonConfig.instance:getSeasonEquipCo(id)
 end
 
-function var_0_0._getAntique(arg_17_0)
-	return AntiqueConfig.instance:getAntiqueCo(arg_17_0)
+function ItemConfigGetDefine._getAntique(id)
+	return AntiqueConfig.instance:getAntiqueCo(id)
 end
 
-function var_0_0._getSeason123EquipCard(arg_18_0)
-	return Season123Config.instance:getSeasonEquipCo(arg_18_0)
+function ItemConfigGetDefine._getSeason123EquipCard(id)
+	return Season123Config.instance:getSeasonEquipCo(id)
 end
 
-function var_0_0._getNewInsight(arg_19_0)
-	return ItemConfig.instance:getInsightItemCo(arg_19_0)
+function ItemConfigGetDefine._getNewInsight(id)
+	return ItemConfig.instance:getInsightItemCo(id)
 end
 
-function var_0_0._getCritter(arg_20_0)
-	return CritterConfig.instance:getCritterCfg(arg_20_0)
+function ItemConfigGetDefine._getCritter(id)
+	return CritterConfig.instance:getCritterCfg(id)
 end
 
-function var_0_0._getUnlockVoucher(arg_21_0)
-	return UnlockVoucherConfig.instance:getUnlockVoucherCfg(arg_21_0, true)
+function ItemConfigGetDefine._getUnlockVoucher(id)
+	return UnlockVoucherConfig.instance:getUnlockVoucherCfg(id, true)
 end
 
-function var_0_0.getItemConfigFunc(arg_22_0, arg_22_1)
-	arg_22_1 = tonumber(arg_22_1)
-
-	return arg_22_0._defineList[arg_22_1]
+function ItemConfigGetDefine._getTalentItem(id)
+	return ItemTalentConfig.instance:getTalentItemCo(id)
 end
 
-var_0_0.instance = var_0_0.New()
+function ItemConfigGetDefine._getSpecialExpiredItem(id)
+	return ItemConfig.instance:getItemSpecialExpiredItemCo(id)
+end
 
-return var_0_0
+function ItemConfigGetDefine:getItemConfigFunc(type)
+	type = tonumber(type)
+
+	return self._defineList[type]
+end
+
+ItemConfigGetDefine.instance = ItemConfigGetDefine.New()
+
+return ItemConfigGetDefine

@@ -1,202 +1,207 @@
-﻿module("modules.logic.activity.view.V1a5_DoubleFestival_FullSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a5_DoubleFestival_FullSignView.lua
 
-local var_0_0 = class("V1a5_DoubleFestival_FullSignView", Activity101SignViewBase)
+module("modules.logic.activity.view.V1a5_DoubleFestival_FullSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._goSign = gohelper.findChild(arg_1_0.viewGO, "Root/#go_Sign")
-	arg_1_0._imageSignNext = gohelper.findChildImage(arg_1_0.viewGO, "Root/#go_Sign/#image_SignNext")
-	arg_1_0._imageSignNow = gohelper.findChildImage(arg_1_0.viewGO, "Root/#go_Sign/#image_SignNow")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Descr")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
-	arg_1_0._goBlock = gohelper.findChild(arg_1_0.viewGO, "#go_Block")
+local V1a5_DoubleFestival_FullSignView = class("V1a5_DoubleFestival_FullSignView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a5_DoubleFestival_FullSignView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._goSign = gohelper.findChild(self.viewGO, "Root/#go_Sign")
+	self._imageSignNext = gohelper.findChildImage(self.viewGO, "Root/#go_Sign/#image_SignNext")
+	self._imageSignNow = gohelper.findChildImage(self.viewGO, "Root/#go_Sign/#image_SignNow")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Root/#txt_Descr")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+	self._goBlock = gohelper.findChild(self.viewGO, "#go_Block")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function V1a5_DoubleFestival_FullSignView:addEvents()
+	Activity101SignViewBase.addEvents(self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function V1a5_DoubleFestival_FullSignView:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-local var_0_1 = ActivityEnum.Activity.DoubleFestivalSign_1_5
-local var_0_2 = "onSwitchEnd"
+local actId = ActivityEnum.Activity.DoubleFestivalSign_1_5
+local kAnimEvt = "onSwitchEnd"
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._imageSignNextTran = arg_4_0._imageSignNext.transform
-	arg_4_0._imageSignNowTran = arg_4_0._imageSignNow.transform
-	arg_4_0._animSelf = arg_4_0._goSign:GetComponent(gohelper.Type_Animator)
-	arg_4_0._animEvent = arg_4_0._goSign:GetComponent(gohelper.Type_AnimationEventWrap)
+function V1a5_DoubleFestival_FullSignView:_editableInitView()
+	self._imageSignNextTran = self._imageSignNext.transform
+	self._imageSignNowTran = self._imageSignNow.transform
+	self._animSelf = self._goSign:GetComponent(gohelper.Type_Animator)
+	self._animEvent = self._goSign:GetComponent(gohelper.Type_AnimationEventWrap)
 
-	arg_4_0._animEvent:AddEventListener(var_0_2, arg_4_0._onSwitchEnd, arg_4_0)
-	arg_4_0._simageTitle:LoadImage(ResUrl.getV1a5SignSingleBgLang("v1a5_sign_df_title"))
-	arg_4_0._simageFullBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_df_sign_fullbg"))
+	self._animEvent:AddEventListener(kAnimEvt, self._onSwitchEnd, self)
+	self._simageTitle:LoadImage(ResUrl.getV1a5SignSingleBgLang("v1a5_sign_df_title"))
+	self._simageFullBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_df_sign_fullbg"))
 
-	arg_4_0._txtDescr.text = ""
+	self._txtDescr.text = ""
 end
 
-function var_0_0.onOpen(arg_5_0)
+function V1a5_DoubleFestival_FullSignView:onOpen()
 	ActivityType101Model.instance:setCurIndex(nil)
 
-	arg_5_0._lastDay = nil
-	arg_5_0._txtLimitTime.text = ""
+	self._lastDay = nil
+	self._txtLimitTime.text = ""
 
-	arg_5_0:_setActiveBlock(false)
-	arg_5_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
-	arg_5_0:internal_onOpen()
+	self:_setActiveBlock(false)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	self:internal_onOpen()
 
-	local var_5_0 = ActivityType101Model.instance:getLastGetIndex(var_0_1)
+	local day = ActivityType101Model.instance:getLastGetIndex(actId)
 
-	arg_5_0:_resetByDay(var_5_0)
-	TaskDispatcher.runRepeat(arg_5_0._refreshTimeTick, arg_5_0, 1)
+	self:_resetByDay(day)
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0._animEvent:RemoveEventListener(var_0_2)
+function V1a5_DoubleFestival_FullSignView:onClose()
+	self._animEvent:RemoveEventListener(kAnimEvt)
 
-	if arg_6_0._fTimer then
-		arg_6_0._fTimer:Stop()
+	if self._fTimer then
+		self._fTimer:Stop()
 
-		arg_6_0._fTimer = nil
+		self._fTimer = nil
 	end
 
-	arg_6_0._isFirstUpdateScrollPos = nil
+	self._isFirstUpdateScrollPos = nil
 
-	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
-	arg_6_0:_setActiveBlock(false)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	self:_setActiveBlock(false)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	Activity101SignViewBase._internal_onDestroy(arg_7_0)
-	arg_7_0._simageTitle:UnLoadImage()
-	arg_7_0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_7_0._refreshTimeTick, arg_7_0)
+function V1a5_DoubleFestival_FullSignView:onDestroyView()
+	Activity101SignViewBase._internal_onDestroy(self)
+	self._simageTitle:UnLoadImage()
+	self._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_8_0)
-	arg_8_0:_refreshList()
-	arg_8_0:_refreshTimeTick()
+function V1a5_DoubleFestival_FullSignView:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_9_0)
-	arg_9_0._txtLimitTime.text = arg_9_0:getRemainTimeStr()
+function V1a5_DoubleFestival_FullSignView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0._setPinStartIndex(arg_10_0, arg_10_1)
-	local var_10_0, var_10_1 = arg_10_0:getRewardCouldGetIndex()
-	local var_10_2 = var_10_1 <= 4 and 1 or 3
+function V1a5_DoubleFestival_FullSignView:_setPinStartIndex(dataList)
+	local _, index = self:getRewardCouldGetIndex()
 
-	arg_10_0.viewContainer:getScrollModel():setStartPinIndex(var_10_2)
+	index = index <= 4 and 1 or 3
+
+	local scrollModel = self.viewContainer:getScrollModel()
+
+	scrollModel:setStartPinIndex(index)
 end
 
-function var_0_0._resetByDay(arg_11_0, arg_11_1)
-	local var_11_0 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_0_1, arg_11_1)
+function V1a5_DoubleFestival_FullSignView:_resetByDay(day)
+	local co = ActivityType101Config.instance:getDoubleFestivalCOByDay(actId, day)
 
-	GameUtil.setActive01(arg_11_0._imageSignNowTran, var_11_0 ~= nil)
-	GameUtil.setActive01(arg_11_0._imageSignNextTran, false)
+	GameUtil.setActive01(self._imageSignNowTran, co ~= nil)
+	GameUtil.setActive01(self._imageSignNextTran, false)
 
-	if var_11_0 then
-		UISpriteSetMgr.instance:setV1a5DfSignSprite(arg_11_0._imageSignNow, var_11_0.bgSpriteName)
+	if co then
+		UISpriteSetMgr.instance:setV1a5DfSignSprite(self._imageSignNow, co.bgSpriteName)
 	end
 
-	arg_11_0._lastDay = arg_11_1
+	self._lastDay = day
 
-	arg_11_0._animSelf:Play(UIAnimationName.Idle, 0, 1)
+	self._animSelf:Play(UIAnimationName.Idle, 0, 1)
 
-	arg_11_0._txtDescr.text = var_11_0.blessContentType or ""
+	self._txtDescr.text = co.blessContentType or ""
 end
 
-function var_0_0._setActiveBlock(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._goBlock, arg_12_1)
+function V1a5_DoubleFestival_FullSignView:_setActiveBlock(isActive)
+	gohelper.setActive(self._goBlock, isActive)
 end
 
-function var_0_0._tweenSprite(arg_13_0, arg_13_1)
-	if not arg_13_1 then
+function V1a5_DoubleFestival_FullSignView:_tweenSprite(day)
+	if not day then
 		return
 	end
 
-	arg_13_0:_setActiveBlock(true)
+	self:_setActiveBlock(true)
 
-	arg_13_0._curDay = arg_13_1
+	self._curDay = day
 
-	local var_13_0 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_0_1, arg_13_0._lastDay)
-	local var_13_1 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_0_1, arg_13_1)
+	local lastCO = ActivityType101Config.instance:getDoubleFestivalCOByDay(actId, self._lastDay)
+	local co = ActivityType101Config.instance:getDoubleFestivalCOByDay(actId, day)
 
-	GameUtil.setActive01(arg_13_0._imageSignNextTran, var_13_1 ~= nil)
+	GameUtil.setActive01(self._imageSignNextTran, co ~= nil)
 
-	if var_13_1 then
-		local var_13_2 = var_13_1.bgSpriteName
+	if co then
+		local bgSpriteName = co.bgSpriteName
 
-		if var_13_0 and var_13_0.bgSpriteName == var_13_2 then
-			arg_13_0:_onSwitchEnd()
+		if lastCO and lastCO.bgSpriteName == bgSpriteName then
+			self:_onSwitchEnd()
 
 			return
 		end
 
-		UISpriteSetMgr.instance:setV1a5DfSignSprite(arg_13_0._imageSignNext, var_13_2)
+		UISpriteSetMgr.instance:setV1a5DfSignSprite(self._imageSignNext, bgSpriteName)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_5_wulu.play_ui_wulu_seal_cutting_eft)
-	arg_13_0._animSelf:Play(UIAnimationName.Switch, 0, 0)
+	self._animSelf:Play(UIAnimationName.Switch, 0, 0)
 end
 
-function var_0_0._onSwitchEnd(arg_14_0)
-	local var_14_0 = arg_14_0._curDay
+function V1a5_DoubleFestival_FullSignView:_onSwitchEnd()
+	local day = self._curDay
 
-	arg_14_0:_showWish(var_14_0)
-	arg_14_0:_setActiveBlock(false)
+	self:_showWish(day)
+	self:_setActiveBlock(false)
 end
 
-function var_0_0._showWish(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function V1a5_DoubleFestival_FullSignView:_showWish(day)
+	if not day then
 		return
 	end
 
-	if not arg_15_0._fTimer then
-		arg_15_0._fTimer = FrameTimer.New(nil, 0, 0)
+	if not self._fTimer then
+		self._fTimer = FrameTimer.New(nil, 0, 0)
 	end
 
-	local var_15_0 = true
+	local isFirst = true
 
-	arg_15_0._fTimer:Reset(function()
-		if var_15_0 then
-			var_15_0 = false
+	self._fTimer:Reset(function()
+		if isFirst then
+			isFirst = false
 
 			ViewMgr.instance:openView(ViewName.V1a5_DoubleFestival_WishPanel, {
-				day = arg_15_1
+				day = day
 			})
 		else
-			arg_15_0:_resetByDay(arg_15_1)
+			self:_resetByDay(day)
 		end
 	end, 1, 2)
-	arg_15_0._fTimer:Start()
+	self._fTimer:Start()
 end
 
-function var_0_0._onCloseView(arg_17_0, arg_17_1)
-	if arg_17_1 ~= ViewName.CommonPropView then
+function V1a5_DoubleFestival_FullSignView:_onCloseView(viewName)
+	if viewName ~= ViewName.CommonPropView then
 		return
 	end
 
-	local var_17_0 = ActivityType101Model.instance:getCurIndex()
+	local day = ActivityType101Model.instance:getCurIndex()
 
-	if not var_17_0 then
+	if not day then
 		return
 	end
 
-	if arg_17_0._lastDay == var_17_0 then
+	if self._lastDay == day then
 		return
 	end
 
-	arg_17_0:_tweenSprite(var_17_0)
+	self:_tweenSprite(day)
 end
 
-return var_0_0
+return V1a5_DoubleFestival_FullSignView

@@ -616,5 +616,35 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "3_2_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "3_2_opening_1",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "3_2_activity_04",
+    "supportLang": [
+      "zh"
+    ]
+  },
+  {
+    "name": "3_2_activity_03",
+    "supportLang": [
+      "zh"
+    ]
   }
 ]

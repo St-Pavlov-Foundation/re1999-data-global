@@ -1,58 +1,61 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalEndPart", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalEndPart.lua
 
-local var_0_0 = class("SurvivalEndPart", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalEndPart", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.view = arg_1_1.view
+local SurvivalEndPart = class("SurvivalEndPart", LuaCompBase)
+
+function SurvivalEndPart:ctor(param)
+	self.view = param.view
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.goDefaultBg = gohelper.findChild(arg_2_1, "#simage_FullBG")
-	arg_2_0.txtDefaultTime = gohelper.findChildTextMesh(arg_2_0.goDefaultBg, "image_LimitTimeBG/#txt_LimitTime")
-	arg_2_0.goEndBg = gohelper.findChild(arg_2_1, "#simage_FullBG2")
-	arg_2_0.txtEndTime = gohelper.findChildTextMesh(arg_2_0.goEndBg, "image_LimitTimeBG/#txt_LimitTime")
-	arg_2_0.goSpecialBg = gohelper.findChild(arg_2_0.goEndBg, "#go_babieta")
+function SurvivalEndPart:init(go)
+	self.go = go
+	self.goDefaultBg = gohelper.findChild(go, "#simage_FullBG")
+	self.txtDefaultTime = gohelper.findChildTextMesh(self.goDefaultBg, "image_LimitTimeBG/#txt_LimitTime")
+	self.goEndBg = gohelper.findChild(go, "#simage_FullBG2")
+	self.txtEndTime = gohelper.findChildTextMesh(self.goEndBg, "image_LimitTimeBG/#txt_LimitTime")
+	self.goSpecialBg = gohelper.findChild(self.goEndBg, "#go_babieta")
 end
 
-function var_0_0.refreshView(arg_3_0)
-	local var_3_0 = arg_3_0:isFailEnd()
+function SurvivalEndPart:refreshView()
+	local isFail = self:isFailEnd()
 
-	gohelper.setActive(arg_3_0.goDefaultBg, var_3_0)
-	gohelper.setActive(arg_3_0.goEndBg, not var_3_0)
+	gohelper.setActive(self.goDefaultBg, isFail)
+	gohelper.setActive(self.goEndBg, not isFail)
 
-	if not var_3_0 then
-		arg_3_0.view._txtLimitTime = arg_3_0.txtEndTime
+	if not isFail then
+		self.view._txtLimitTime = self.txtEndTime
 
-		local var_3_1 = arg_3_0:isSpecialEnd()
+		local isSpecial = self:isSpecialEnd()
 
-		gohelper.setActive(arg_3_0.goSpecialBg, var_3_1)
+		gohelper.setActive(self.goSpecialBg, isSpecial)
 	else
-		arg_3_0.view._txtLimitTime = arg_3_0.txtDefaultTime
+		self.view._txtLimitTime = self.txtDefaultTime
 	end
 end
 
-function var_0_0.isFailEnd(arg_4_0)
-	local var_4_0 = arg_4_0:getEndConfig()
+function SurvivalEndPart:isFailEnd()
+	local endConfig = self:getEndConfig()
 
-	return not var_4_0 or var_4_0.type == 1
+	return not endConfig or endConfig.type == 1
 end
 
-function var_0_0.isSpecialEnd(arg_5_0)
-	local var_5_0 = arg_5_0:getEndConfig()
+function SurvivalEndPart:isSpecialEnd()
+	local endConfig = self:getEndConfig()
 
-	return var_5_0 and var_5_0.type == 3
+	return endConfig and endConfig.type == 3
 end
 
-function var_0_0.getEndConfig(arg_6_0)
-	local var_6_0 = SurvivalModel.instance:getOutSideInfo()
-	local var_6_1 = var_6_0 and var_6_0:getEndId() or 0
+function SurvivalEndPart:getEndConfig()
+	local outSideInfo = SurvivalModel.instance:getOutSideInfo()
+	local endId = outSideInfo and outSideInfo:getEndId() or 0
+	local endConfig = lua_survival_end.configDict[endId]
 
-	return lua_survival_end.configDict[var_6_1]
+	return endConfig
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function SurvivalEndPart:onDestroy()
 	return
 end
 
-return var_0_0
+return SurvivalEndPart

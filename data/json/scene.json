@@ -4109,5 +4109,133 @@
     "levels": [
       23002
     ]
+  },
+  {
+    "id": 3201,
+    "name": "language_10097661",
+    "nameen": "§UdimoScene",
+    "levels": [
+      80101
+    ]
+  },
+  {
+    "id": 328,
+    "name": "language_10097662",
+    "nameen": "",
+    "levels": [
+      32801
+    ]
+  },
+  {
+    "id": 329,
+    "name": "language_10097663",
+    "nameen": "",
+    "levels": [
+      32901
+    ]
+  },
+  {
+    "id": 330,
+    "name": "language_10097664",
+    "nameen": "",
+    "levels": [
+      33001
+    ]
+  },
+  {
+    "id": 331,
+    "name": "language_10097665",
+    "nameen": "",
+    "levels": [
+      33101
+    ]
+  },
+  {
+    "id": 332,
+    "name": "language_10097666",
+    "nameen": "",
+    "levels": [
+      33201
+    ]
+  },
+  {
+    "id": 333,
+    "name": "language_10097667",
+    "nameen": "",
+    "levels": [
+      33301
+    ]
+  },
+  {
+    "id": 32801,
+    "name": "language_10097668",
+    "nameen": "Eiffel Tower",
+    "levels": [
+      32801
+    ]
+  },
+  {
+    "id": 32901,
+    "name": "language_10097668",
+    "nameen": "Eiffel Tower",
+    "levels": [
+      32901
+    ]
+  },
+  {
+    "id": 33001,
+    "name": "language_10097664",
+    "nameen": "Banquet Hall",
+    "levels": [
+      33001
+    ]
+  },
+  {
+    "id": 33101,
+    "name": "language_10097665",
+    "nameen": "The Catacombs",
+    "levels": [
+      33101
+    ]
+  },
+  {
+    "id": 33102,
+    "name": "language_10097669",
+    "nameen": "Secret Chamber, Catacombs",
+    "levels": [
+      33101
+    ]
+  },
+  {
+    "id": 33201,
+    "name": "language_10097666",
+    "nameen": "Street, Paris",
+    "levels": [
+      33201
+    ]
+  },
+  {
+    "id": 33202,
+    "name": "language_10097670",
+    "nameen": "Cafe, Night",
+    "levels": [
+      33201
+    ]
+  },
+  {
+    "id": 33203,
+    "name": "language_10097671",
+    "nameen": "Street, Night",
+    "levels": [
+      33201
+    ]
+  },
+  {
+    "id": 33301,
+    "name": "language_10097672",
+    "nameen": "Hallway, Parlor of Crystals",
+    "levels": [
+      33301
+    ]
   }
 ]

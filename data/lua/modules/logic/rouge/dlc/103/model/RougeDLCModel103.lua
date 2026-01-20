@@ -1,7 +1,9 @@
-﻿module("modules.logic.rouge.dlc.103.model.RougeDLCModel103", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/103/model/RougeDLCModel103.lua
 
-local var_0_0 = class("RougeDLCModel103", BaseModel)
+module("modules.logic.rouge.dlc.103.model.RougeDLCModel103", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local RougeDLCModel103 = class("RougeDLCModel103", BaseModel)
 
-return var_0_0
+RougeDLCModel103.instance = RougeDLCModel103.New()
+
+return RougeDLCModel103

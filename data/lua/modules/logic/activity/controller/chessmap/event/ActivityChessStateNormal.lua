@@ -1,58 +1,62 @@
-﻿module("modules.logic.activity.controller.chessmap.event.ActivityChessStateNormal", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/event/ActivityChessStateNormal.lua
 
-local var_0_0 = class("ActivityChessStateNormal", ActivityChessStateBase)
+module("modules.logic.activity.controller.chessmap.event.ActivityChessStateNormal", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local ActivityChessStateNormal = class("ActivityChessStateNormal", ActivityChessStateBase)
+
+function ActivityChessStateNormal:start()
 	logNormal("ActivityChessStateNormal start")
 end
 
-function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0, var_2_1 = ActivityChessGameController.instance:searchInteractByPos(arg_2_1, arg_2_2, ActivityChessGameController.filterSelectable)
-	local var_2_2 = ActivityChessGameController.instance:getClickStatus()
+function ActivityChessStateNormal:onClickPos(x, y, manualClick)
+	local len, result = ActivityChessGameController.instance:searchInteractByPos(x, y, ActivityChessGameController.filterSelectable)
+	local clickStatus = ActivityChessGameController.instance:getClickStatus()
 
-	if var_2_2 == ActivityChessEnum.SelectPosStatus.None then
-		arg_2_0:onClickInNoneStatus(var_2_0, var_2_1, arg_2_3)
-	elseif var_2_2 == ActivityChessEnum.SelectPosStatus.SelectObjWaitPos then
-		arg_2_0:onClickInSelectObjWaitPosStatus(arg_2_1, arg_2_2, var_2_0, var_2_1, arg_2_3)
+	if clickStatus == ActivityChessEnum.SelectPosStatus.None then
+		self:onClickInNoneStatus(len, result, manualClick)
+	elseif clickStatus == ActivityChessEnum.SelectPosStatus.SelectObjWaitPos then
+		self:onClickInSelectObjWaitPosStatus(x, y, len, result, manualClick)
 	end
 end
 
-function var_0_0.onClickInNoneStatus(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_1 >= 1 then
-		local var_3_0 = arg_3_1 > 1 and arg_3_2[1] or arg_3_2
+function ActivityChessStateNormal:onClickInNoneStatus(clickObjLength, result, manualClick)
+	if clickObjLength >= 1 then
+		local clickObj = clickObjLength > 1 and result[1] or result
 
-		if var_3_0.objType ~= ActivityChessEnum.InteractType.Player then
+		if clickObj.objType ~= ActivityChessEnum.InteractType.Player then
 			GameFacade.showToast(ToastEnum.ChessCanNotSelect)
 		else
-			if arg_3_0._lastSelectObj ~= var_3_0 and arg_3_3 then
-				if var_3_0.config.avatar == ActivityChessEnum.RoleAvatar.Apple then
+			if self._lastSelectObj ~= clickObj and manualClick then
+				if clickObj.config.avatar == ActivityChessEnum.RoleAvatar.Apple then
 					AudioMgr.instance:trigger(AudioEnum.ChessGame.SelectApple)
-				elseif var_3_0.config.avatar == ActivityChessEnum.RoleAvatar.PKLS then
+				elseif clickObj.config.avatar == ActivityChessEnum.RoleAvatar.PKLS then
 					AudioMgr.instance:trigger(AudioEnum.ChessGame.SelectPKLS)
-				elseif var_3_0.config.avatar == ActivityChessEnum.RoleAvatar.WJYS then
+				elseif clickObj.config.avatar == ActivityChessEnum.RoleAvatar.WJYS then
 					AudioMgr.instance:trigger(AudioEnum.ChessGame.SelectWJYS)
 				end
 			end
 
-			ActivityChessGameController.instance:setSelectObj(var_3_0)
+			ActivityChessGameController.instance:setSelectObj(clickObj)
 
-			arg_3_0._lastSelectObj = ActivityChessGameController.instance:getSelectObj()
+			self._lastSelectObj = ActivityChessGameController.instance:getSelectObj()
 		end
 	end
 end
 
-function var_0_0.onClickInSelectObjWaitPosStatus(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	local var_4_0 = ActivityChessGameController.instance:getSelectObj()
+function ActivityChessStateNormal:onClickInSelectObjWaitPosStatus(x, y, len, result, manualClick)
+	local obj = ActivityChessGameController.instance:getSelectObj()
 
-	arg_4_0._lastSelectObj = var_4_0
+	self._lastSelectObj = obj
 
-	if var_4_0 and var_4_0:getHandler() then
-		if var_4_0:getHandler():onSelectPos(arg_4_1, arg_4_2) then
-			arg_4_0:onClickPos(arg_4_1, arg_4_2, arg_4_5)
+	if obj and obj:getHandler() then
+		local rs = obj:getHandler():onSelectPos(x, y)
+
+		if rs then
+			self:onClickPos(x, y, manualClick)
 		end
 	else
 		logError("select obj missing!")
 	end
 end
 
-return var_0_0
+return ActivityChessStateNormal

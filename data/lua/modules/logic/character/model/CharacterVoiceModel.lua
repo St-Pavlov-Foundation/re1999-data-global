@@ -1,40 +1,42 @@
-﻿module("modules.logic.character.model.CharacterVoiceModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/CharacterVoiceModel.lua
 
-local var_0_0 = class("CharacterVoiceModel", ListScrollModel)
+module("modules.logic.character.model.CharacterVoiceModel", package.seeall)
 
-function var_0_0.setVoiceList(arg_1_0, arg_1_1)
-	arg_1_0._moList = {}
+local CharacterVoiceModel = class("CharacterVoiceModel", ListScrollModel)
 
-	if arg_1_1 then
-		arg_1_0._moList = arg_1_1
+function CharacterVoiceModel:setVoiceList(infos)
+	self._moList = {}
 
-		table.sort(arg_1_0._moList, function(arg_2_0, arg_2_1)
-			local var_2_0 = CharacterDataModel.instance:isCurHeroAudioLocked(arg_2_0.id) and 1 or 0
-			local var_2_1 = CharacterDataModel.instance:isCurHeroAudioLocked(arg_2_1.id) and 1 or 0
+	if infos then
+		self._moList = infos
 
-			if var_2_0 ~= var_2_1 then
-				return var_2_0 < var_2_1
-			elseif arg_2_0.score ~= arg_2_1.score and var_2_0 == 1 and var_2_1 == 1 then
-				return arg_2_0.score < arg_2_1.score
-			elseif arg_2_0.sortId ~= arg_2_1.sortId then
-				return arg_2_0.sortId < arg_2_1.sortId
+		table.sort(self._moList, function(a, b)
+			local alock = CharacterDataModel.instance:isCurHeroAudioLocked(a.id) and 1 or 0
+			local block = CharacterDataModel.instance:isCurHeroAudioLocked(b.id) and 1 or 0
+
+			if alock ~= block then
+				return alock < block
+			elseif a.score ~= b.score and alock == 1 and block == 1 then
+				return a.score < b.score
+			elseif a.sortId ~= b.sortId then
+				return a.sortId < b.sortId
 			else
-				return arg_2_0.id < arg_2_1.id
+				return a.id < b.id
 			end
 		end)
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0.setNeedItemAni(arg_3_0, arg_3_1)
-	arg_3_0._needItemAni = arg_3_1
+function CharacterVoiceModel:setNeedItemAni(need)
+	self._needItemAni = need
 end
 
-function var_0_0.isNeedItemAni(arg_4_0)
-	return arg_4_0._needItemAni
+function CharacterVoiceModel:isNeedItemAni()
+	return self._needItemAni
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterVoiceModel.instance = CharacterVoiceModel.New()
 
-return var_0_0
+return CharacterVoiceModel

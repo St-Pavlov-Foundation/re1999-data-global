@@ -1,30 +1,33 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalUpdateEventPanelWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalUpdateEventPanelWork.lua
 
-local var_0_0 = class("SurvivalUpdateEventPanelWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalUpdateEventPanelWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._stepMo.panel
+local SurvivalUpdateEventPanelWork = class("SurvivalUpdateEventPanelWork", SurvivalStepBaseWork)
 
-	if var_1_0.type == SurvivalEnum.PanelType.Search and ViewMgr.instance:isOpen(ViewName.SurvivalMapSearchView) and not arg_1_0.context.fastExecute then
-		SurvivalController.instance:registerCallback(SurvivalEvent.SurvivalSearchAnimFinish, arg_1_0._delayDone, arg_1_0)
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnSearchEventUpdate, var_1_0:getSearchItems())
+function SurvivalUpdateEventPanelWork:onStart(context)
+	local panel = self._stepMo.panel
+	local type = panel.type
+
+	if type == SurvivalEnum.PanelType.Search and ViewMgr.instance:isOpen(ViewName.SurvivalMapSearchView) and not self.context.fastExecute then
+		SurvivalController.instance:registerCallback(SurvivalEvent.SurvivalSearchAnimFinish, self._delayDone, self)
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnSearchEventUpdate, panel:getSearchItems())
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function SurvivalUpdateEventPanelWork:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.SurvivalSearchAnimFinish, arg_3_0._delayDone, arg_3_0)
+function SurvivalUpdateEventPanelWork:clearWork()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.SurvivalSearchAnimFinish, self._delayDone, self)
 end
 
-function var_0_0.getRunOrder(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_1.havePanelUpdate = true
+function SurvivalUpdateEventPanelWork:getRunOrder(params, flow)
+	params.havePanelUpdate = true
 
 	return SurvivalEnum.StepRunOrder.After
 end
 
-return var_0_0
+return SurvivalUpdateEventPanelWork

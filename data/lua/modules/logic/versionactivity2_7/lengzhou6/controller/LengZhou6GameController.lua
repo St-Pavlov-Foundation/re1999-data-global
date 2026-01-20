@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.LengZhou6GameController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/LengZhou6GameController.lua
 
-local var_0_0 = class("LengZhou6GameController", BaseController)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.LengZhou6GameController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local LengZhou6GameController = class("LengZhou6GameController", BaseController)
+
+function LengZhou6GameController:onInit()
 	return
 end
 
-function var_0_0.enterEpisodeId(arg_2_0, arg_2_1)
-	local var_2_0 = 12702
+function LengZhou6GameController:enterEpisodeId(episodeId)
+	local activityId = 12702
 
-	arg_2_0:enterLevel(var_2_0, arg_2_1)
+	self:enterLevel(activityId, episodeId)
 end
 
-function var_0_0.enterLevel(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = LengZhou6Config.instance:getEpisodeConfig(arg_3_1, arg_3_2)
-	local var_3_1 = var_3_0.eliminateLevelId
+function LengZhou6GameController:enterLevel(activityId, episodeId)
+	local config = LengZhou6Config.instance:getEpisodeConfig(activityId, episodeId)
+	local eliminateLevelId = config.eliminateLevelId
 
-	if var_3_1 ~= 0 then
+	if eliminateLevelId ~= 0 then
 		LengZhou6StatHelper.instance:enterGame()
-		LengZhou6GameModel.instance:enterLevel(var_3_0)
-		LengZhou6EliminateController.instance:enterLevel(var_3_1)
+		LengZhou6GameModel.instance:enterLevel(config)
+		LengZhou6EliminateController.instance:enterLevel(eliminateLevelId)
 		ViewMgr.instance:openView(ViewName.LengZhou6GameView)
 	end
 end
 
-function var_0_0.restartLevel(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = LengZhou6Config.instance:getEpisodeConfig(arg_4_1, arg_4_2)
-	local var_4_1 = var_4_0.eliminateLevelId
+function LengZhou6GameController:restartLevel(activityId, episodeId)
+	local config = LengZhou6Config.instance:getEpisodeConfig(activityId, episodeId)
+	local eliminateLevelId = config.eliminateLevelId
 
-	if var_4_1 ~= 0 then
+	if eliminateLevelId ~= 0 then
 		LengZhou6StatHelper.instance:enterGame()
-		LengZhou6GameModel.instance:enterLevel(var_4_0)
-		LengZhou6EliminateController.instance:enterLevel(var_4_1)
-		arg_4_0:dispatchEvent(LengZhou6Event.GameReStart)
+		LengZhou6GameModel.instance:enterLevel(config)
+		LengZhou6EliminateController.instance:enterLevel(eliminateLevelId)
+		self:dispatchEvent(LengZhou6Event.GameReStart)
 	end
 end
 
-function var_0_0.gameUpdateRound(arg_5_0, arg_5_1)
-	arg_5_0:_damageAndHpSettle(arg_5_1)
+function LengZhou6GameController:gameUpdateRound(isRound)
+	self:_damageAndHpSettle(isRound)
 end
 
-function var_0_0._damageAndHpSettle(arg_6_0, arg_6_1)
-	local var_6_0 = LengZhou6GameModel.instance:getEnemySettleCount()
-	local var_6_1 = 0
-	local var_6_2 = 0
+function LengZhou6GameController:_damageAndHpSettle(isRound)
+	local enemySettleCount = LengZhou6GameModel.instance:getEnemySettleCount()
+	local totalPlayerDamage = 0
+	local totalPlayerHp = 0
 
-	for iter_6_0 = 1, var_6_0 do
+	for i = 1, enemySettleCount do
 		LengZhou6GameModel.instance:setCurGameStep(LengZhou6Enum.BattleStep.attackBefore)
 
-		local var_6_3, var_6_4 = LengZhou6GameModel.instance:getTotalPlayerSettle()
+		local playerDamage, playerHp = LengZhou6GameModel.instance:getTotalPlayerSettle()
 
-		var_6_1 = var_6_1 + var_6_3
-		var_6_2 = var_6_2 + var_6_4
+		totalPlayerDamage = totalPlayerDamage + playerDamage
+		totalPlayerHp = totalPlayerHp + playerHp
 
 		LengZhou6GameModel.instance:setCurGameStep(LengZhou6Enum.BattleStep.attackAfter)
 		LengZhou6GameModel.instance:setCurGameStep(LengZhou6Enum.BattleStep.attackComplete)
@@ -59,75 +61,81 @@ function var_0_0._damageAndHpSettle(arg_6_0, arg_6_1)
 
 	LengZhou6GameModel.instance:resetEnemySettleCount()
 
-	local var_6_5 = {
-		damage = var_6_1,
-		hp = var_6_2,
-		isRound = arg_6_1
+	local data = {
+		damage = totalPlayerDamage,
+		hp = totalPlayerHp,
+		isRound = isRound
 	}
-	local var_6_6 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateChessUpdateDamage, var_6_5)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateChessUpdateDamage, data)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_6_6)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0._updateRoundAndCD(arg_7_0, arg_7_1)
-	if arg_7_1 then
+function LengZhou6GameController:_updateRoundAndCD(isRound)
+	if isRound then
 		LengZhou6GameModel.instance:changeRound(-1)
-		LengZhou6GameModel.instance:getPlayer():updateActiveSkillCD()
+
+		local playerEntity = LengZhou6GameModel.instance:getPlayer()
+
+		playerEntity:updateActiveSkillCD()
 	end
 
-	if LengZhou6GameModel.instance:gameIsOver() then
-		local var_7_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateChessUpdateGameInfo)
+	local isOver = LengZhou6GameModel.instance:gameIsOver()
 
-		LengZhou6EliminateController.instance:buildSeqFlow(var_7_0)
+	if isOver then
+		local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateChessUpdateGameInfo)
+
+		LengZhou6EliminateController.instance:buildSeqFlow(step)
 
 		return
 	end
 
-	arg_7_0:_enemySkillRelease(arg_7_1)
+	self:_enemySkillRelease(isRound)
 end
 
-function var_0_0._enemySkillRelease(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		local var_8_0, var_8_1 = LengZhou6GameModel.instance:getEnemy():getAllCanUseSkillId()
+function LengZhou6GameController:_enemySkillRelease(isRound)
+	if isRound then
+		local enemyEntity = LengZhou6GameModel.instance:getEnemy()
+		local allSkill, residueCd = enemyEntity:getAllCanUseSkillId()
 
 		LengZhou6GameModel.instance:setCurGameStep(LengZhou6Enum.BattleStep.enemyCheckInterval)
-		arg_8_0:dispatchEvent(LengZhou6Event.EnemySkillRound, var_8_1)
+		self:dispatchEvent(LengZhou6Event.EnemySkillRound, residueCd)
 
-		if var_8_0 == nil then
+		if allSkill == nil then
 			LengZhou6GameModel.instance:setCurGameStep(LengZhou6Enum.BattleStep.poisonSettlement)
 
 			return
 		end
 
-		for iter_8_0 = 1, #var_8_0 do
-			local var_8_2 = var_8_0[iter_8_0]
-			local var_8_3 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.LengZhou6EnemyReleaseSkillStep, var_8_2)
+		for i = 1, #allSkill do
+			local skill = allSkill[i]
+			local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.LengZhou6EnemyReleaseSkillStep, skill)
 
-			LengZhou6EliminateController.instance:buildSeqFlow(var_8_3)
+			LengZhou6EliminateController.instance:buildSeqFlow(step)
 		end
 
-		local var_8_4 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.LengZhou6EnemyGenerateSkillStep)
+		local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.LengZhou6EnemyGenerateSkillStep)
 
-		LengZhou6EliminateController.instance:buildSeqFlow(var_8_4)
+		LengZhou6EliminateController.instance:buildSeqFlow(step)
 	end
 
-	local var_8_5 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateChessUpdateGameInfo)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateChessUpdateGameInfo)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_8_5)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0.playerSettle(arg_9_0)
+function LengZhou6GameController:playerSettle()
 	LengZhou6GameModel.instance:playerSettle()
 end
 
-function var_0_0.gameEnd(arg_10_0)
-	local var_10_0 = LengZhou6GameModel.instance:getBattleModel()
-	local var_10_1 = LengZhou6GameModel.instance:playerIsWin()
+function LengZhou6GameController:gameEnd()
+	local model = LengZhou6GameModel.instance:getBattleModel()
+	local isWin = LengZhou6GameModel.instance:playerIsWin()
 
-	if var_10_0 == LengZhou6Enum.BattleModel.infinite and var_10_1 then
+	if model == LengZhou6Enum.BattleModel.infinite and isWin then
 		if LengZhou6GameModel.instance:canSelectSkill() then
 			LengZhou6GameModel.instance:setEndLessBattleProgress(LengZhou6Enum.BattleProgress.selectSkill)
-			arg_10_0:recordProgress()
+			self:recordProgress()
 		else
 			LengZhou6GameModel.instance:enterNextLayer()
 		end
@@ -135,14 +143,14 @@ function var_0_0.gameEnd(arg_10_0)
 		return
 	end
 
-	arg_10_0:dispatchEvent(LengZhou6Event.GameEnd, var_10_1)
+	self:dispatchEvent(LengZhou6Event.GameEnd, isWin)
 	ViewMgr.instance:openView(ViewName.LengZhou6GameResult)
 end
 
-function var_0_0.levelGame(arg_11_0, arg_11_1)
-	arg_11_0:recordProgress()
+function LengZhou6GameController:levelGame(closeGameView)
+	self:recordProgress()
 
-	if arg_11_1 then
+	if closeGameView then
 		ViewMgr.instance:closeView(ViewName.LengZhou6GameView)
 		LengZhou6EliminateController.instance:clear()
 	end
@@ -150,31 +158,34 @@ function var_0_0.levelGame(arg_11_0, arg_11_1)
 	LengZhou6GameModel.instance:clear()
 end
 
-function var_0_0.recordProgress(arg_12_0)
-	local var_12_0 = LengZhou6GameModel.instance:playerIsWin()
-	local var_12_1 = LengZhou6GameModel.instance:getBattleModel()
+function LengZhou6GameController:recordProgress()
+	local isWin = LengZhou6GameModel.instance:playerIsWin()
+	local battleModel = LengZhou6GameModel.instance:getBattleModel()
 
-	if var_12_1 == LengZhou6Enum.BattleModel.infinite or var_12_0 then
-		local var_12_2
+	if battleModel == LengZhou6Enum.BattleModel.infinite or isWin then
+		local progress
 
-		if var_12_1 == LengZhou6Enum.BattleModel.infinite then
-			var_12_2 = LengZhou6GameModel.instance:getRecordServerData():getRecordData()
+		if battleModel == LengZhou6Enum.BattleModel.infinite then
+			local recordServerData = LengZhou6GameModel.instance:getRecordServerData()
 
-			local var_12_3 = LengZhou6GameModel.instance:getPlayer()
+			progress = recordServerData:getRecordData()
 
-			if LengZhou6GameModel.instance:getCurRound() <= 0 or var_12_3:getHp() <= 0 then
-				var_12_2 = ""
+			local player = LengZhou6GameModel.instance:getPlayer()
+			local round = LengZhou6GameModel.instance:getCurRound()
+
+			if round <= 0 or player:getHp() <= 0 then
+				progress = ""
 			end
 		end
 
-		local var_12_4 = LengZhou6Model.instance:getCurEpisodeId()
+		local episodeId = LengZhou6Model.instance:getCurEpisodeId()
 
 		if not LengZhou6Enum.enterGM then
-			LengZhou6Controller.instance:finishLevel(var_12_4, var_12_2)
+			LengZhou6Controller.instance:finishLevel(episodeId, progress)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+LengZhou6GameController.instance = LengZhou6GameController.New()
 
-return var_0_0
+return LengZhou6GameController

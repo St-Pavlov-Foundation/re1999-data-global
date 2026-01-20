@@ -1,9 +1,11 @@
-﻿module("modules.logic.scene.fight.FightSceneEvent", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/FightSceneEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.scene.fight.FightSceneEvent", package.seeall)
 
-var_0_0.OnAllEntityLoaded = 101
-var_0_0.OnPreloadFinish = 102
-var_0_0.OnPrepareFinish = 103
+local FightSceneEvent = _M
 
-return var_0_0
+FightSceneEvent.OnAllEntityLoaded = 101
+FightSceneEvent.OnPreloadFinish = 102
+FightSceneEvent.OnPrepareFinish = 103
+
+return FightSceneEvent

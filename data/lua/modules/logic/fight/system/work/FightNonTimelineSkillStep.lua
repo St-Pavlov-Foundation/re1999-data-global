@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.system.work.FightNonTimelineSkillStep", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightNonTimelineSkillStep.lua
 
-local var_0_0 = class("FightNonTimelineSkillStep", BaseWork)
+module("modules.logic.fight.system.work.FightNonTimelineSkillStep", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fightStepData = arg_1_1
+local FightNonTimelineSkillStep = class("FightNonTimelineSkillStep", BaseWork)
+
+function FightNonTimelineSkillStep:ctor(fightStepData, preFightStepData, skillCounter)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	FightController.instance:dispatchEvent(FightEvent.OnInvokeSkill, arg_2_0.fightStepData)
-	arg_2_0:onDone(true)
+function FightNonTimelineSkillStep:onStart()
+	FightController.instance:dispatchEvent(FightEvent.OnInvokeSkill, self.fightStepData)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightNonTimelineSkillStep

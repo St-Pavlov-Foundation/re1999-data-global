@@ -1,78 +1,82 @@
-﻿module("modules.logic.survival.view.rewardinherit.SurvivalRewardInheritNpcSelectComp", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/rewardinherit/SurvivalRewardInheritNpcSelectComp.lua
 
-local var_0_0 = class("SurvivalRewardInheritNpcSelectComp", LuaCompBase)
+module("modules.logic.survival.view.rewardinherit.SurvivalRewardInheritNpcSelectComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.parentView = arg_1_1.parentView
-	arg_1_0.refreshFunc = arg_1_1.refreshFunc
-	arg_1_0.npcItem = {}
+local SurvivalRewardInheritNpcSelectComp = class("SurvivalRewardInheritNpcSelectComp", LuaCompBase)
+
+function SurvivalRewardInheritNpcSelectComp:ctor(param)
+	self.parentView = param.parentView
+	self.refreshFunc = param.refreshFunc
+	self.npcItem = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._txttips = gohelper.findChildText(arg_2_1, "layout/#txt_tips")
-	arg_2_0._gogrid1 = gohelper.findChild(arg_2_1, "layout/#go_grid1")
-	arg_2_0._goitem1 = gohelper.findChild(arg_2_1, "layout/#go_grid1/#go_item1")
-	arg_2_0._goitem2 = gohelper.findChild(arg_2_1, "layout/#go_grid1/#go_item2")
-	arg_2_0._gogrid2 = gohelper.findChild(arg_2_1, "layout/#go_grid2")
-	arg_2_0._goitem3 = gohelper.findChild(arg_2_1, "layout/#go_grid2/#go_item3")
-	arg_2_0._goitem4 = gohelper.findChild(arg_2_1, "layout/#go_grid2/#go_item4")
-	arg_2_0.itemPos = {
-		arg_2_0._goitem1,
-		arg_2_0._goitem3,
-		arg_2_0._goitem4
+function SurvivalRewardInheritNpcSelectComp:init(go)
+	self.go = go
+	self._txttips = gohelper.findChildText(go, "layout/#txt_tips")
+	self._gogrid1 = gohelper.findChild(go, "layout/#go_grid1")
+	self._goitem1 = gohelper.findChild(go, "layout/#go_grid1/#go_item1")
+	self._goitem2 = gohelper.findChild(go, "layout/#go_grid1/#go_item2")
+	self._gogrid2 = gohelper.findChild(go, "layout/#go_grid2")
+	self._goitem3 = gohelper.findChild(go, "layout/#go_grid2/#go_item3")
+	self._goitem4 = gohelper.findChild(go, "layout/#go_grid2/#go_item4")
+	self.itemPos = {
+		self._goitem1,
+		self._goitem3,
+		self._goitem4
 	}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.itemPos) do
-		gohelper.setActive(iter_2_1, false)
+	for i, v in ipairs(self.itemPos) do
+		gohelper.setActive(v, false)
 	end
 
-	arg_2_0.npcSelectMo = SurvivalRewardInheritModel.instance.npcSelectMo
+	self.npcSelectMo = SurvivalRewardInheritModel.instance.npcSelectMo
 end
 
-function var_0_0.refreshInheritSelect(arg_3_0, arg_3_1, arg_3_2)
-	gohelper.setActive(arg_3_0._gogrid1, true)
-	gohelper.setActive(arg_3_0._gogrid2, arg_3_0.npcSelectMo.maxAmount > 2)
+function SurvivalRewardInheritNpcSelectComp:refreshInheritSelect(isFirst, readyPos)
+	gohelper.setActive(self._gogrid1, true)
+	gohelper.setActive(self._gogrid2, self.npcSelectMo.maxAmount > 2)
 
-	for iter_3_0 = 1, arg_3_0.npcSelectMo.maxAmount do
-		if arg_3_0.npcItem[iter_3_0] == nil then
-			local var_3_0 = arg_3_0.parentView.viewContainer:getSetting().otherRes.survivalnpcheaditem
-			local var_3_1 = arg_3_0.parentView:getResInst(var_3_0, arg_3_0.itemPos[iter_3_0])
+	for pos = 1, self.npcSelectMo.maxAmount do
+		if self.npcItem[pos] == nil then
+			local resPath = self.parentView.viewContainer:getSetting().otherRes.survivalnpcheaditem
+			local item = self.parentView:getResInst(resPath, self.itemPos[pos])
 
-			gohelper.setActive(arg_3_0.itemPos[iter_3_0], true)
+			gohelper.setActive(self.itemPos[pos], true)
 
-			local var_3_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_1, SurvivalNpcHeadItem)
+			local survivalNpcHeadItem = MonoHelper.addNoUpdateLuaComOnceToGo(item, SurvivalNpcHeadItem)
 
-			arg_3_0.npcItem[iter_3_0] = var_3_2
+			self.npcItem[pos] = survivalNpcHeadItem
 		end
 
-		local var_3_3
-		local var_3_4 = arg_3_0.npcSelectMo.selectIdDic[iter_3_0]
+		local npcId
+		local id = self.npcSelectMo.selectIdDic[pos]
 
-		if var_3_4 then
-			var_3_3 = SurvivalHandbookModel.instance:getMoById(var_3_4):getCellCfgId()
+		if id then
+			local mo = SurvivalHandbookModel.instance:getMoById(id)
+
+			npcId = mo:getCellCfgId()
 		end
 
-		local var_3_5 = iter_3_0 == arg_3_2
+		local isSelect = pos == readyPos
 
-		arg_3_0.npcItem[iter_3_0]:setData({
+		self.npcItem[pos]:setData({
 			isShowBtnRemove = true,
 			isPlayPutEffect = true,
-			isFirst = arg_3_1,
-			pos = iter_3_0,
-			npcId = var_3_3,
-			onClickContext = arg_3_0,
-			onClickBtnRemoveCallBack = arg_3_0.onClickBtnRemoveCallBack,
-			isSelect = var_3_5
+			isFirst = isFirst,
+			pos = pos,
+			npcId = npcId,
+			onClickContext = self,
+			onClickBtnRemoveCallBack = self.onClickBtnRemoveCallBack,
+			isSelect = isSelect
 		})
 	end
 end
 
-function var_0_0.onClickBtnRemoveCallBack(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.pos
+function SurvivalRewardInheritNpcSelectComp:onClickBtnRemoveCallBack(survivalNpcHeadItem)
+	local pos = survivalNpcHeadItem.pos
 
-	arg_4_0.npcSelectMo:removeOneByPos(var_4_0)
-	arg_4_0.refreshFunc(arg_4_0.parentView)
+	self.npcSelectMo:removeOneByPos(pos)
+	self.refreshFunc(self.parentView)
 end
 
-return var_0_0
+return SurvivalRewardInheritNpcSelectComp

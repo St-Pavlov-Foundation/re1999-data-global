@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaMapCollapseStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/step/TianShiNaNaMapCollapseStep.lua
 
-local var_0_0 = class("TianShiNaNaMapCollapseStep", BaseWork)
+module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaMapCollapseStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local TianShiNaNaMapCollapseStep = class("TianShiNaNaMapCollapseStep", BaseWork)
+
+function TianShiNaNaMapCollapseStep:onStart(context)
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.CheckMapCollapse)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return TianShiNaNaMapCollapseStep

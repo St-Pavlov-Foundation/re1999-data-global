@@ -1,67 +1,71 @@
-﻿module("modules.logic.achievement.model.AchievementLevelModel", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/model/AchievementLevelModel.lua
 
-local var_0_0 = class("AchievementLevelModel", BaseModel)
+module("modules.logic.achievement.model.AchievementLevelModel", package.seeall)
 
-function var_0_0.initData(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._achievementId = arg_1_1
-	arg_1_0._achievementIds = arg_1_2
+local AchievementLevelModel = class("AchievementLevelModel", BaseModel)
 
-	arg_1_0:initAchievement()
+function AchievementLevelModel:initData(achievementId, achievementIdList)
+	self._achievementId = achievementId
+	self._achievementIds = achievementIdList
+
+	self:initAchievement()
 end
 
-function var_0_0.initAchievement(arg_2_0)
-	arg_2_0._taskList = AchievementConfig.instance:getTasksByAchievementId(arg_2_0._achievementId)
-	arg_2_0._selectIndex = arg_2_0:initSelectIndex()
+function AchievementLevelModel:initAchievement()
+	local taskCOs = AchievementConfig.instance:getTasksByAchievementId(self._achievementId)
+
+	self._taskList = taskCOs
+	self._selectIndex = self:initSelectIndex()
 end
 
-function var_0_0.initSelectIndex(arg_3_0)
-	if arg_3_0._taskList then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._taskList) do
-			local var_3_0 = AchievementModel.instance:getById(iter_3_1.id)
+function AchievementLevelModel:initSelectIndex()
+	if self._taskList then
+		for k, taskCO in ipairs(self._taskList) do
+			local taskMO = AchievementModel.instance:getById(taskCO.id)
 
-			if var_3_0 and not var_3_0.hasFinished then
-				return iter_3_0
+			if taskMO and not taskMO.hasFinished then
+				return k
 			end
 		end
 
-		return #arg_3_0._taskList
+		return #self._taskList
 	end
 
 	return 0
 end
 
-function var_0_0.setSelectTask(arg_4_0, arg_4_1)
-	local var_4_0 = AchievementConfig.instance:getTask(arg_4_1)
+function AchievementLevelModel:setSelectTask(taskId)
+	local taskCO = AchievementConfig.instance:getTask(taskId)
 
-	if var_4_0 then
-		arg_4_0._selectIndex = tabletool.indexOf(arg_4_0._taskList, var_4_0) or 0
+	if taskCO then
+		self._selectIndex = tabletool.indexOf(self._taskList, taskCO) or 0
 	end
 end
 
-function var_0_0.getCurrentTask(arg_5_0)
-	if arg_5_0._selectIndex ~= 0 then
-		return arg_5_0._taskList[arg_5_0._selectIndex]
+function AchievementLevelModel:getCurrentTask()
+	if self._selectIndex ~= 0 then
+		return self._taskList[self._selectIndex]
 	end
 end
 
-function var_0_0.getTaskByIndex(arg_6_0, arg_6_1)
-	return arg_6_0._taskList[arg_6_1]
+function AchievementLevelModel:getTaskByIndex(index)
+	return self._taskList[index]
 end
 
-function var_0_0.scrollTask(arg_7_0, arg_7_1)
-	local var_7_0 = tabletool.indexOf(arg_7_0._achievementIds, arg_7_0._achievementId)
+function AchievementLevelModel:scrollTask(isNext)
+	local index = tabletool.indexOf(self._achievementIds, self._achievementId)
 
-	if var_7_0 then
-		if arg_7_1 and arg_7_0:hasNext() then
-			arg_7_0._achievementId = arg_7_0._achievementIds[var_7_0 + 1]
+	if index then
+		if isNext and self:hasNext() then
+			self._achievementId = self._achievementIds[index + 1]
 
-			arg_7_0:initAchievement()
+			self:initAchievement()
 
 			return true
-		elseif not arg_7_1 and arg_7_0:hasPrev() then
-			arg_7_0._achievementId = arg_7_0._achievementIds[var_7_0 - 1]
+		elseif not isNext and self:hasPrev() then
+			self._achievementId = self._achievementIds[index - 1]
 
-			arg_7_0:initAchievement()
+			self:initAchievement()
 
 			return true
 		end
@@ -70,38 +74,38 @@ function var_0_0.scrollTask(arg_7_0, arg_7_1)
 	return false
 end
 
-function var_0_0.hasNext(arg_8_0)
-	local var_8_0 = tabletool.indexOf(arg_8_0._achievementIds, arg_8_0._achievementId)
+function AchievementLevelModel:hasNext()
+	local index = tabletool.indexOf(self._achievementIds, self._achievementId)
 
-	if var_8_0 then
-		return var_8_0 < #arg_8_0._achievementIds
+	if index then
+		return index < #self._achievementIds
 	end
 end
 
-function var_0_0.hasPrev(arg_9_0)
-	local var_9_0 = tabletool.indexOf(arg_9_0._achievementIds, arg_9_0._achievementId)
+function AchievementLevelModel:hasPrev()
+	local index = tabletool.indexOf(self._achievementIds, self._achievementId)
 
-	if var_9_0 then
-		return var_9_0 > 1
+	if index then
+		return index > 1
 	end
 end
 
-function var_0_0.getCurPageIndex(arg_10_0)
-	return tabletool.indexOf(arg_10_0._achievementIds, arg_10_0._achievementId)
+function AchievementLevelModel:getCurPageIndex()
+	return tabletool.indexOf(self._achievementIds, self._achievementId)
 end
 
-function var_0_0.getTotalPageCount(arg_11_0)
-	return arg_11_0._achievementIds and #arg_11_0._achievementIds or 0
+function AchievementLevelModel:getTotalPageCount()
+	return self._achievementIds and #self._achievementIds or 0
 end
 
-function var_0_0.getAchievement(arg_12_0)
-	return arg_12_0._achievementId
+function AchievementLevelModel:getAchievement()
+	return self._achievementId
 end
 
-function var_0_0.getCurrentSelectIndex(arg_13_0)
-	return arg_13_0._selectIndex
+function AchievementLevelModel:getCurrentSelectIndex()
+	return self._selectIndex
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementLevelModel.instance = AchievementLevelModel.New()
 
-return var_0_0
+return AchievementLevelModel

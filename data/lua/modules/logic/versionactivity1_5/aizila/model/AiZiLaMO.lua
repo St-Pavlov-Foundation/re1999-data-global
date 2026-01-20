@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaMO.lua
 
-local var_0_0 = pureTable("AiZiLaMO")
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
-	arg_1_0.activityId = arg_1_1
+local AiZiLaMO = pureTable("AiZiLaMO")
+
+function AiZiLaMO:init(actId)
+	self.id = actId
+	self.activityId = actId
 end
 
-return var_0_0
+return AiZiLaMO

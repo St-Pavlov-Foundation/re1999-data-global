@@ -1,81 +1,83 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.base.MaLiAnNaLaLevelMoRoad", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/mo/base/MaLiAnNaLaLevelMoRoad.lua
 
-local var_0_0 = class("MaLiAnNaLaLevelMoRoad")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.mo.base.MaLiAnNaLaLevelMoRoad", package.seeall)
 
-function var_0_0.create(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.New()
+local MaLiAnNaLaLevelMoRoad = class("MaLiAnNaLaLevelMoRoad")
 
-	var_1_0.id = arg_1_0
+function MaLiAnNaLaLevelMoRoad.create(id, roadType)
+	local instance = MaLiAnNaLaLevelMoRoad.New()
 
-	if arg_1_1 ~= nil then
-		var_1_0._roadType = arg_1_1
+	instance.id = id
+
+	if roadType ~= nil then
+		instance._roadType = roadType
 	end
 
-	return var_1_0
+	return instance
 end
 
-function var_0_0.ctor(arg_2_0)
-	arg_2_0.id = 0
-	arg_2_0.beginPosX = 0
-	arg_2_0.beginPosY = 0
-	arg_2_0.endPosX = 0
-	arg_2_0.endPosY = 0
-	arg_2_0._roadType = Activity201MaLiAnNaEnum.RoadType.RailWay
-	arg_2_0._beginSlotId = 0
-	arg_2_0._endSlotId = 0
+function MaLiAnNaLaLevelMoRoad:ctor()
+	self.id = 0
+	self.beginPosX = 0
+	self.beginPosY = 0
+	self.endPosX = 0
+	self.endPosY = 0
+	self._roadType = Activity201MaLiAnNaEnum.RoadType.RailWay
+	self._beginSlotId = 0
+	self._endSlotId = 0
 end
 
-function var_0_0.updatePos(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0.beginPosX = arg_3_1
-	arg_3_0.beginPosY = arg_3_2
-	arg_3_0.endPosX = arg_3_3
-	arg_3_0.endPosY = arg_3_4
+function MaLiAnNaLaLevelMoRoad:updatePos(beginPosX, beginPosY, endPosX, endPosY)
+	self.beginPosX = beginPosX
+	self.beginPosY = beginPosY
+	self.endPosX = endPosX
+	self.endPosY = endPosY
 end
 
-function var_0_0.getBeginPos(arg_4_0)
-	return arg_4_0.beginPosX, arg_4_0.beginPosY
+function MaLiAnNaLaLevelMoRoad:getBeginPos()
+	return self.beginPosX, self.beginPosY
 end
 
-function var_0_0.getEndPos(arg_5_0)
-	return arg_5_0.endPosX, arg_5_0.endPosY
+function MaLiAnNaLaLevelMoRoad:getEndPos()
+	return self.endPosX, self.endPosY
 end
 
-function var_0_0.updateSlot(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._beginSlotId = arg_6_1
-	arg_6_0._endSlotId = arg_6_2
+function MaLiAnNaLaLevelMoRoad:updateSlot(beginSlotId, endSlotId)
+	self._beginSlotId = beginSlotId
+	self._endSlotId = endSlotId
 end
 
-function var_0_0.haveSlot(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0._beginSlotId == arg_7_1 and arg_7_0._endSlotId == arg_7_2 then
+function MaLiAnNaLaLevelMoRoad:haveSlot(slotIdA, slotIdB)
+	if self._beginSlotId == slotIdA and self._endSlotId == slotIdB then
 		return true
 	end
 
-	if arg_7_0._beginSlotId == arg_7_2 and arg_7_0._endSlotId == arg_7_1 then
+	if self._beginSlotId == slotIdB and self._endSlotId == slotIdA then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.findHaveSlot(arg_8_0, arg_8_1)
-	local var_8_0 = false
-	local var_8_1
+function MaLiAnNaLaLevelMoRoad:findHaveSlot(slotId)
+	local haveSlot = false
+	local otherSlotId
 
-	if arg_8_0._beginSlotId == arg_8_1 then
-		var_8_0 = true
-		var_8_1 = arg_8_0._endSlotId
+	if self._beginSlotId == slotId then
+		haveSlot = true
+		otherSlotId = self._endSlotId
 	end
 
-	if arg_8_0._endSlotId == arg_8_1 then
-		var_8_0 = true
-		var_8_1 = arg_8_0._beginSlotId
+	if self._endSlotId == slotId then
+		haveSlot = true
+		otherSlotId = self._beginSlotId
 	end
 
-	return var_8_0, var_8_1
+	return haveSlot, otherSlotId
 end
 
-function var_0_0.getStr(arg_9_0)
-	return string.format("id = %d, beginPosX = %d, beginPosY = %d, endPosX = %d, endPosY = %d, beginSlotId = %d, endSlotId = %d, roadType = %d", arg_9_0.id, arg_9_0.beginPosX, arg_9_0.beginPosY, arg_9_0.endPosX, arg_9_0.endPosY, arg_9_0._beginSlotId, arg_9_0._endSlotId, arg_9_0._roadType)
+function MaLiAnNaLaLevelMoRoad:getStr()
+	return string.format("id = %d, beginPosX = %d, beginPosY = %d, endPosX = %d, endPosY = %d, beginSlotId = %d, endSlotId = %d, roadType = %d", self.id, self.beginPosX, self.beginPosY, self.endPosX, self.endPosY, self._beginSlotId, self._endSlotId, self._roadType)
 end
 
-return var_0_0
+return MaLiAnNaLaLevelMoRoad

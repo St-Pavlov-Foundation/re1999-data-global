@@ -1,93 +1,97 @@
-﻿module("modules.logic.scene.survival.comp.SurvivalSceneMapBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivalSceneMapBlock.lua
 
-local var_0_0 = class("SurvivalSceneMapBlock", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivalSceneMapBlock", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_1_0._onPreloadFinish, arg_1_0)
+local SurvivalSceneMapBlock = class("SurvivalSceneMapBlock", BaseSceneComp)
+
+function SurvivalSceneMapBlock:init()
+	self:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	arg_2_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
+function SurvivalSceneMapBlock:_onPreloadFinish()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 
-	arg_2_0._sceneGo = arg_2_0:getCurScene():getSceneContainerGO()
-	arg_2_0._blockRoot = gohelper.create3d(arg_2_0._sceneGo, "BlockRoot")
+	self._sceneGo = self:getCurScene():getSceneContainerGO()
+	self._blockRoot = gohelper.create3d(self._sceneGo, "BlockRoot")
 
-	local var_2_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_2_1 = {}
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local dict = {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0.blocks) do
-		SurvivalHelper.instance:addNodeToDict(var_2_1, iter_2_1.pos)
+	for k, v in pairs(sceneMo.blocks) do
+		SurvivalHelper.instance:addNodeToDict(dict, v.pos)
 
-		for iter_2_2, iter_2_3 in pairs(iter_2_1.exPoints) do
-			SurvivalHelper.instance:addNodeToDict(var_2_1, iter_2_3)
+		for _, vv in pairs(v.exPoints) do
+			SurvivalHelper.instance:addNodeToDict(dict, vv)
 		end
 	end
 
-	local var_2_2 = SurvivalMapModel.instance:getCurMapCo()
+	local mapCo = SurvivalMapModel.instance:getCurMapCo()
 
-	arg_2_0._allBlocks = {}
+	self._allBlocks = {}
 
-	for iter_2_4, iter_2_5 in ipairs(var_2_2.allBlocks) do
-		local var_2_3 = iter_2_5.pos
+	for i, v in ipairs(mapCo.allBlocks) do
+		local pos = v.pos
 
-		if not SurvivalHelper.instance:getValueFromDict(var_2_0.allDestroyPos, var_2_3) and not SurvivalHelper.instance:getValueFromDict(var_2_1, var_2_3) then
-			local var_2_4 = SurvivalBlockEntity.Create(iter_2_5, arg_2_0._blockRoot)
+		if not SurvivalHelper.instance:getValueFromDict(sceneMo.allDestroyPos, pos) and not SurvivalHelper.instance:getValueFromDict(dict, pos) then
+			local block = SurvivalBlockEntity.Create(v, self._blockRoot)
 
-			if not arg_2_0._allBlocks[var_2_3.q] then
-				arg_2_0._allBlocks[var_2_3.q] = {}
+			if not self._allBlocks[pos.q] then
+				self._allBlocks[pos.q] = {}
 			end
 
-			arg_2_0._allBlocks[var_2_3.q][var_2_3.r] = var_2_4
+			self._allBlocks[pos.q][pos.r] = block
 		end
 	end
 
-	for iter_2_6, iter_2_7 in ipairs(var_2_0.extraBlock) do
-		local var_2_5 = iter_2_7.pos
+	for _, v in ipairs(sceneMo.extraBlock) do
+		local pos = v.pos
 
-		if not SurvivalHelper.instance:getValueFromDict(var_2_0.allDestroyPos, var_2_5) and not SurvivalHelper.instance:getValueFromDict(var_2_1, var_2_5) then
-			local var_2_6 = SurvivalExBlockEntity.Create(iter_2_7, arg_2_0._blockRoot)
+		if not SurvivalHelper.instance:getValueFromDict(sceneMo.allDestroyPos, pos) and not SurvivalHelper.instance:getValueFromDict(dict, pos) then
+			local block = SurvivalExBlockEntity.Create(v, self._blockRoot)
 
-			if not arg_2_0._allBlocks[var_2_5.q] then
-				arg_2_0._allBlocks[var_2_5.q] = {}
+			if not self._allBlocks[pos.q] then
+				self._allBlocks[pos.q] = {}
 			end
 
-			arg_2_0._allBlocks[var_2_5.q][var_2_5.r] = var_2_6
+			self._allBlocks[pos.q][pos.r] = block
 
-			var_2_2:setWalkByUnitMo(iter_2_7, true)
+			mapCo:setWalkByUnitMo(v, true)
 		end
 	end
 
-	arg_2_0:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
+	self:dispatchEvent(SurvivalEvent.OnSurvivalBlockLoadFinish)
 end
 
-function var_0_0.addExBlock(arg_3_0, arg_3_1)
-	local var_3_0 = SurvivalExBlockEntity.Create(arg_3_1, arg_3_0._blockRoot)
-	local var_3_1 = arg_3_1.pos
+function SurvivalSceneMapBlock:addExBlock(mo)
+	local block = SurvivalExBlockEntity.Create(mo, self._blockRoot)
+	local pos = mo.pos
 
-	if not arg_3_0._allBlocks[var_3_1.q] then
-		arg_3_0._allBlocks[var_3_1.q] = {}
+	if not self._allBlocks[pos.q] then
+		self._allBlocks[pos.q] = {}
 	end
 
-	arg_3_0._allBlocks[var_3_1.q][var_3_1.r] = var_3_0
+	self._allBlocks[pos.q][pos.r] = block
 
-	SurvivalMapModel.instance:getCurMapCo():setWalkByUnitMo(arg_3_1, true)
+	local mapCo = SurvivalMapModel.instance:getCurMapCo()
+
+	mapCo:setWalkByUnitMo(mo, true)
 end
 
-function var_0_0.setBlockActive(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._allBlocks[arg_4_1.q] and arg_4_0._allBlocks[arg_4_1.q][arg_4_1.r]
+function SurvivalSceneMapBlock:setBlockActive(pos, isActive)
+	local block = self._allBlocks[pos.q] and self._allBlocks[pos.q][pos.r]
 
-	if var_4_0 then
-		gohelper.setActive(var_4_0.go, arg_4_2)
+	if block then
+		gohelper.setActive(block.go, isActive)
 	end
 end
 
-function var_0_0.onSceneClose(arg_5_0)
-	arg_5_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_5_0._onPreloadFinish, arg_5_0)
-	gohelper.destroy(arg_5_0._blockRoot)
+function SurvivalSceneMapBlock:onSceneClose()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
+	gohelper.destroy(self._blockRoot)
 
-	arg_5_0._blockRoot = nil
-	arg_5_0._sceneGo = nil
-	arg_5_0._allBlocks = {}
+	self._blockRoot = nil
+	self._sceneGo = nil
+	self._allBlocks = {}
 end
 
-return var_0_0
+return SurvivalSceneMapBlock

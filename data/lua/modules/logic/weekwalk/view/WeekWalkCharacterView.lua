@@ -1,136 +1,138 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkCharacterView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkCharacterView.lua
 
-local var_0_0 = class("WeekWalkCharacterView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkCharacterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gorolecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer")
-	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rolecontainer/#scroll_card")
-	arg_1_0._gorolesort = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort")
-	arg_1_0._btnlvrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
-	arg_1_0._btnfaithrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_faithrank")
-	arg_1_0._btnexskillrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
-	arg_1_0._goexarrow = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
+local WeekWalkCharacterView = class("WeekWalkCharacterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkCharacterView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gorolecontainer = gohelper.findChild(self.viewGO, "#go_rolecontainer")
+	self._scrollcard = gohelper.findChildScrollRect(self.viewGO, "#go_rolecontainer/#scroll_card")
+	self._gorolesort = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort")
+	self._btnlvrank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
+	self._btnfaithrank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_faithrank")
+	self._btnexskillrank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
+	self._goexarrow = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlvrank:AddClickListener(arg_2_0._btnlvrankOnClick, arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnfaithrank:AddClickListener(arg_2_0._btnfaithrankOnClick, arg_2_0)
-	arg_2_0._btnexskillrank:AddClickListener(arg_2_0._btnexskillrankOnClick, arg_2_0)
+function WeekWalkCharacterView:addEvents()
+	self._btnlvrank:AddClickListener(self._btnlvrankOnClick, self)
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnfaithrank:AddClickListener(self._btnfaithrankOnClick, self)
+	self._btnexskillrank:AddClickListener(self._btnexskillrankOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlvrank:RemoveClickListener()
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnfaithrank:RemoveClickListener()
-	arg_3_0._btnexskillrank:RemoveClickListener()
+function WeekWalkCharacterView:removeEvents()
+	self._btnlvrank:RemoveClickListener()
+	self._btnrarerank:RemoveClickListener()
+	self._btnfaithrank:RemoveClickListener()
+	self._btnexskillrank:RemoveClickListener()
 end
 
-function var_0_0._btnlvrankOnClick(arg_4_0)
+function WeekWalkCharacterView:_btnlvrankOnClick()
 	WeekWalkCharacterModel.instance:setCardListByLevel()
-	arg_4_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnrarerankOnClick(arg_5_0)
+function WeekWalkCharacterView:_btnrarerankOnClick()
 	WeekWalkCharacterModel.instance:setCardListByRare()
-	arg_5_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnfaithrankOnClick(arg_6_0)
+function WeekWalkCharacterView:_btnfaithrankOnClick()
 	WeekWalkCharacterModel.instance:setCardListByFaith()
-	arg_6_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnexskillrankOnClick(arg_7_0)
+function WeekWalkCharacterView:_btnexskillrankOnClick()
 	WeekWalkCharacterModel.instance:setCardListByExSkill()
-	arg_7_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._refreshBtnIcon(arg_8_0)
-	local var_8_0 = WeekWalkCharacterModel.instance:getRankState()
-	local var_8_1 = WeekWalkCharacterModel.instance:getBtnTag()
+function WeekWalkCharacterView:_refreshBtnIcon()
+	local state = WeekWalkCharacterModel.instance:getRankState()
+	local tag = WeekWalkCharacterModel.instance:getBtnTag()
 
-	gohelper.setActive(arg_8_0._lvBtns[1], var_8_1 ~= 1)
-	gohelper.setActive(arg_8_0._lvBtns[2], var_8_1 == 1)
-	gohelper.setActive(arg_8_0._rareBtns[1], var_8_1 ~= 2)
-	gohelper.setActive(arg_8_0._rareBtns[2], var_8_1 == 2)
-	gohelper.setActive(arg_8_0._faithBtns[1], var_8_1 ~= 3)
-	gohelper.setActive(arg_8_0._faithBtns[2], var_8_1 == 3)
-	transformhelper.setLocalScale(arg_8_0._lvArrow[1], 1, var_8_0[1], 1)
-	transformhelper.setLocalScale(arg_8_0._lvArrow[2], 1, var_8_0[1], 1)
-	transformhelper.setLocalScale(arg_8_0._rareArrow[1], 1, var_8_0[2], 1)
-	transformhelper.setLocalScale(arg_8_0._rareArrow[2], 1, var_8_0[2], 1)
-	transformhelper.setLocalScale(arg_8_0._faithArrow[1], 1, var_8_0[3], 1)
-	transformhelper.setLocalScale(arg_8_0._faithArrow[2], 1, var_8_0[3], 1)
+	gohelper.setActive(self._lvBtns[1], tag ~= 1)
+	gohelper.setActive(self._lvBtns[2], tag == 1)
+	gohelper.setActive(self._rareBtns[1], tag ~= 2)
+	gohelper.setActive(self._rareBtns[2], tag == 2)
+	gohelper.setActive(self._faithBtns[1], tag ~= 3)
+	gohelper.setActive(self._faithBtns[2], tag == 3)
+	transformhelper.setLocalScale(self._lvArrow[1], 1, state[1], 1)
+	transformhelper.setLocalScale(self._lvArrow[2], 1, state[1], 1)
+	transformhelper.setLocalScale(self._rareArrow[1], 1, state[2], 1)
+	transformhelper.setLocalScale(self._rareArrow[2], 1, state[2], 1)
+	transformhelper.setLocalScale(self._faithArrow[1], 1, state[3], 1)
+	transformhelper.setLocalScale(self._faithArrow[2], 1, state[3], 1)
 end
 
-function var_0_0._updateHeroList(arg_9_0)
+function WeekWalkCharacterView:_updateHeroList()
 	WeekWalkCharacterModel.instance:updateCardList()
 	WeekWalkCharacterModel.instance:setCharacterList()
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._imgBg = gohelper.findChildSingleImage(arg_10_0.viewGO, "bg/bgimg")
+function WeekWalkCharacterView:_editableInitView()
+	self._imgBg = gohelper.findChildSingleImage(self.viewGO, "bg/bgimg")
 
-	arg_10_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/juesebeibao_005"))
+	self._imgBg:LoadImage(ResUrl.getCommonViewBg("full/juesebeibao_005"))
 
-	arg_10_0._dropclassify = gohelper.findChildDropdown(arg_10_0.viewGO, "#go_rolecontainer/#go_rolesort/#drop_classify")
+	self._dropclassify = gohelper.findChildDropdown(self.viewGO, "#go_rolecontainer/#go_rolesort/#drop_classify")
 
 	WeekWalkCharacterModel.instance:setCardListByCareerIndex(0)
-	arg_10_0._dropclassify:SetValue(WeekWalkCharacterModel.instance:getRankIndex())
-	arg_10_0._dropclassify:AddOnValueChanged(arg_10_0._onValueChanged, arg_10_0)
+	self._dropclassify:SetValue(WeekWalkCharacterModel.instance:getRankIndex())
+	self._dropclassify:AddOnValueChanged(self._onValueChanged, self)
 
-	arg_10_0._lvBtns = arg_10_0:getUserDataTb_()
-	arg_10_0._lvArrow = arg_10_0:getUserDataTb_()
-	arg_10_0._rareBtns = arg_10_0:getUserDataTb_()
-	arg_10_0._rareArrow = arg_10_0:getUserDataTb_()
-	arg_10_0._faithBtns = arg_10_0:getUserDataTb_()
-	arg_10_0._faithArrow = arg_10_0:getUserDataTb_()
+	self._lvBtns = self:getUserDataTb_()
+	self._lvArrow = self:getUserDataTb_()
+	self._rareBtns = self:getUserDataTb_()
+	self._rareArrow = self:getUserDataTb_()
+	self._faithBtns = self:getUserDataTb_()
+	self._faithArrow = self:getUserDataTb_()
 
-	for iter_10_0 = 1, 2 do
-		arg_10_0._lvBtns[iter_10_0] = gohelper.findChild(arg_10_0._btnlvrank.gameObject, "btn" .. tostring(iter_10_0))
-		arg_10_0._lvArrow[iter_10_0] = gohelper.findChild(arg_10_0._lvBtns[iter_10_0], "arrow").transform
-		arg_10_0._rareBtns[iter_10_0] = gohelper.findChild(arg_10_0._btnrarerank.gameObject, "btn" .. tostring(iter_10_0))
-		arg_10_0._rareArrow[iter_10_0] = gohelper.findChild(arg_10_0._rareBtns[iter_10_0], "arrow").transform
-		arg_10_0._faithBtns[iter_10_0] = gohelper.findChild(arg_10_0._btnfaithrank.gameObject, "btn" .. tostring(iter_10_0))
-		arg_10_0._faithArrow[iter_10_0] = gohelper.findChild(arg_10_0._faithBtns[iter_10_0], "arrow").transform
+	for i = 1, 2 do
+		self._lvBtns[i] = gohelper.findChild(self._btnlvrank.gameObject, "btn" .. tostring(i))
+		self._lvArrow[i] = gohelper.findChild(self._lvBtns[i], "arrow").transform
+		self._rareBtns[i] = gohelper.findChild(self._btnrarerank.gameObject, "btn" .. tostring(i))
+		self._rareArrow[i] = gohelper.findChild(self._rareBtns[i], "arrow").transform
+		self._faithBtns[i] = gohelper.findChild(self._btnfaithrank.gameObject, "btn" .. tostring(i))
+		self._faithArrow[i] = gohelper.findChild(self._faithBtns[i], "arrow").transform
 	end
 
-	gohelper.addUIClickAudio(arg_10_0._btnlvrank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.addUIClickAudio(arg_10_0._btnrarerank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.addUIClickAudio(arg_10_0._btnfaithrank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
-	gohelper.addUIClickAudio(arg_10_0._dropclassify.gameObject, AudioEnum.UI.play_ui_hero_card_property)
+	gohelper.addUIClickAudio(self._btnlvrank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	gohelper.addUIClickAudio(self._btnfaithrank.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	gohelper.addUIClickAudio(self._dropclassify.gameObject, AudioEnum.UI.play_ui_hero_card_property)
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function WeekWalkCharacterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
+function WeekWalkCharacterView:onOpen()
 	WeekWalkCharacterModel.instance:setCharacterList()
-	arg_12_0:_refreshBtnIcon()
-	arg_12_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_12_0._updateHeroList, arg_12_0)
+	self:_refreshBtnIcon()
+	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._updateHeroList, self)
 end
 
-function var_0_0.onClose(arg_13_0)
+function WeekWalkCharacterView:onClose()
 	CommonHeroHelper.instance:resetGrayState()
 end
 
-function var_0_0._onValueChanged(arg_14_0, arg_14_1)
-	WeekWalkCharacterModel.instance:setCardListByCareerIndex(arg_14_1)
+function WeekWalkCharacterView:_onValueChanged(index)
+	WeekWalkCharacterModel.instance:setCardListByCareerIndex(index)
 	WeekWalkCharacterModel.instance:setCharacterList()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._imgBg:UnLoadImage()
-	arg_15_0._dropclassify:RemoveOnValueChanged()
+function WeekWalkCharacterView:onDestroyView()
+	self._imgBg:UnLoadImage()
+	self._dropclassify:RemoveOnValueChanged()
 end
 
-return var_0_0
+return WeekWalkCharacterView

@@ -1,90 +1,92 @@
-﻿module("modules.logic.scene.shelter.comp.SurvivalShelterSceneLevel", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/SurvivalShelterSceneLevel.lua
 
-local var_0_0 = class("SurvivalShelterSceneLevel", CommonSceneLevelComp)
-local var_0_1 = UnityEngine.Shader
+module("modules.logic.scene.shelter.comp.SurvivalShelterSceneLevel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:loadLevel(arg_1_2)
+local SurvivalShelterSceneLevel = class("SurvivalShelterSceneLevel", CommonSceneLevelComp)
+local Shader = UnityEngine.Shader
+
+function SurvivalShelterSceneLevel:init(sceneId, levelId)
+	self:loadLevel(levelId)
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._sceneId = arg_2_1
-	arg_2_0._levelId = arg_2_2
+function SurvivalShelterSceneLevel:onSceneStart(sceneId, levelId)
+	self._sceneId = sceneId
+	self._levelId = levelId
 end
 
-function var_0_0.loadLevel(arg_3_0, arg_3_1)
-	if arg_3_0._isLoadingRes then
-		logError("is loading scene level res, cur id = " .. (arg_3_0._levelId or "nil") .. ", try to load id = " .. (arg_3_1 or "nil"))
+function SurvivalShelterSceneLevel:loadLevel(levelId)
+	if self._isLoadingRes then
+		logError("is loading scene level res, cur id = " .. (self._levelId or "nil") .. ", try to load id = " .. (levelId or "nil"))
 
 		return
 	end
 
-	if arg_3_0._assetItem then
-		gohelper.destroy(arg_3_0._instGO)
-		arg_3_0._assetItem:Release()
+	if self._assetItem then
+		gohelper.destroy(self._instGO)
+		self._assetItem:Release()
 
-		arg_3_0._assetItem = nil
-		arg_3_0._instGO = nil
+		self._assetItem = nil
+		self._instGO = nil
 	end
 
-	arg_3_0._isLoadingRes = true
-	arg_3_0._levelId = arg_3_1
+	self._isLoadingRes = true
+	self._levelId = levelId
 
-	arg_3_0:getCurScene():setCurLevelId(arg_3_0._levelId)
+	self:getCurScene():setCurLevelId(self._levelId)
 
-	arg_3_0._resPath = ResUrl.getSurvivalSceneLevelUrl(arg_3_1)
+	self._resPath = ResUrl.getSurvivalSceneLevelUrl(levelId)
 
-	loadAbAsset(arg_3_0._resPath, false, arg_3_0._onLoadCallback, arg_3_0)
+	loadAbAsset(self._resPath, false, self._onLoadCallback, self)
 end
 
-function var_0_0._onLoadCallback(arg_4_0, arg_4_1)
-	var_0_0.super._onLoadCallback(arg_4_0, arg_4_1)
+function SurvivalShelterSceneLevel:_onLoadCallback(assetItem)
+	SurvivalShelterSceneLevel.super._onLoadCallback(self, assetItem)
 
-	if not arg_4_0._instGO then
+	if not self._instGO then
 		return
 	end
 
-	arg_4_0:loadLightGo()
+	self:loadLightGo()
 end
 
-function var_0_0.getLightName(arg_5_0)
+function SurvivalShelterSceneLevel:getLightName()
 	return "light3"
 end
 
-function var_0_0.loadLightGo(arg_6_0)
-	local var_6_0 = arg_6_0:getLightName()
+function SurvivalShelterSceneLevel:loadLightGo()
+	local name = self:getLightName()
 
-	if not var_6_0 then
+	if not name then
 		return
 	end
 
-	local var_6_1 = "survival/common/light/" .. var_6_0 .. ".prefab"
+	local assetPath = "survival/common/light/" .. name .. ".prefab"
 
-	if not arg_6_0._lightLoader then
-		local var_6_2 = gohelper.create3d(arg_6_0._instGO, "Light")
+	if not self._lightLoader then
+		local go = gohelper.create3d(self._instGO, "Light")
 
-		arg_6_0._lightLoader = PrefabInstantiate.Create(var_6_2)
+		self._lightLoader = PrefabInstantiate.Create(go)
 	end
 
-	arg_6_0._lightLoader:dispose()
-	arg_6_0._lightLoader:startLoad(var_6_1, arg_6_0._onLoadedLight, arg_6_0)
+	self._lightLoader:dispose()
+	self._lightLoader:startLoad(assetPath, self._onLoadedLight, self)
 end
 
-function var_0_0._onLoadedLight(arg_7_0)
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.SceneLightLoaded, arg_7_0._lightLoader:getInstGO())
+function SurvivalShelterSceneLevel:_onLoadedLight()
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.SceneLightLoaded, self._lightLoader:getInstGO())
 end
 
-function var_0_0.onSceneClose(arg_8_0)
-	if arg_8_0._lightLoader then
-		arg_8_0._lightLoader:dispose()
+function SurvivalShelterSceneLevel:onSceneClose()
+	if self._lightLoader then
+		self._lightLoader:dispose()
 
-		arg_8_0._lightLoader = nil
+		self._lightLoader = nil
 	end
 
-	var_0_1.DisableKeyword("_SURVIAL_SCENE")
-	var_0_1.DisableKeyword("_ENABLE_SURVIVAL_RAIN_DISTORTION")
-	var_0_1.DisableKeyword("_ENABLE_SURVIVAL_RAIN_GLITCH")
-	var_0_0.super.onSceneClose(arg_8_0)
+	Shader.DisableKeyword("_SURVIAL_SCENE")
+	Shader.DisableKeyword("_ENABLE_SURVIVAL_RAIN_DISTORTION")
+	Shader.DisableKeyword("_ENABLE_SURVIVAL_RAIN_GLITCH")
+	SurvivalShelterSceneLevel.super.onSceneClose(self)
 end
 
-return var_0_0
+return SurvivalShelterSceneLevel

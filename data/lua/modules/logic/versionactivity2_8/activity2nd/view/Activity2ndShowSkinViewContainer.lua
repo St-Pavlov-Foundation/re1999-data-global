@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndShowSkinViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/Activity2ndShowSkinViewContainer.lua
 
-local var_0_0 = class("Activity2ndShowSkinViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndShowSkinViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity2ndShowSkinViewContainer = class("Activity2ndShowSkinViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity2ndShowSkinView.New())
+function Activity2ndShowSkinViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity2ndShowSkinView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity2ndShowSkinViewContainer

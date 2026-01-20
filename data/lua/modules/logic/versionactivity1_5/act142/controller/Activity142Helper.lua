@@ -1,299 +1,327 @@
-﻿module("modules.logic.versionactivity1_5.act142.controller.Activity142Helper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/controller/Activity142Helper.lua
 
-local var_0_0 = {
-	showToastByEpisodeId = function(arg_1_0)
-		local var_1_0 = Activity142Model.instance:getActivityId()
+module("modules.logic.versionactivity1_5.act142.controller.Activity142Helper", package.seeall)
 
-		if not Activity142Config.instance:getEpisodeCo(var_1_0, arg_1_0, true) then
-			return
-		end
+local Activity142Helper = {}
 
-		if not Activity142Model.instance:isOpenDay(var_1_0, arg_1_0) then
-			GameFacade.showToast(ToastEnum.Activity142EpisodeNotInOpenDay)
+function Activity142Helper.showToastByEpisodeId(episodeId)
+	local actId = Activity142Model.instance:getActivityId()
+	local episodeCfg = Activity142Config.instance:getEpisodeCo(actId, episodeId, true)
 
-			return
-		end
-
-		if not Activity142Model.instance:isPreEpisodeClear(var_1_0, arg_1_0) then
-			GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
-		end
-	end,
-	setAct142UIBlock = function(arg_2_0, arg_2_1)
-		if arg_2_0 then
-			UIBlockMgr.instance:startBlock(arg_2_1 or Activity142Enum.UI_BlOCK_KEY)
-		else
-			UIBlockMgr.instance:endBlock(arg_2_1 or Activity142Enum.UI_BlOCK_KEY)
-		end
+	if not episodeCfg then
+		return
 	end
-}
 
-function var_0_0.openWinResult()
-	local var_3_0 = Va3ChessModel.instance:getEpisodeId()
-	local var_3_1 = "OnChessWinPause" .. var_3_0
-	local var_3_2 = GuideEvent[var_3_1]
-	local var_3_3 = GuideEvent.OnChessWinContinue
-	local var_3_4 = var_0_0._openSuccessView
-	local var_3_5
+	local isOpen = Activity142Model.instance:isOpenDay(actId, episodeId)
 
-	GuideController.instance:GuideFlowPauseAndContinue(var_3_1, var_3_2, var_3_3, var_3_4, var_3_5)
+	if not isOpen then
+		GameFacade.showToast(ToastEnum.Activity142EpisodeNotInOpenDay)
+
+		return
+	end
+
+	local preEpisodePass = Activity142Model.instance:isPreEpisodeClear(actId, episodeId)
+
+	if not preEpisodePass then
+		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
+	end
 end
 
-function var_0_0._openSuccessView()
+function Activity142Helper.setAct142UIBlock(isSetBlock, blockKey)
+	if isSetBlock then
+		UIBlockMgr.instance:startBlock(blockKey or Activity142Enum.UI_BlOCK_KEY)
+	else
+		UIBlockMgr.instance:endBlock(blockKey or Activity142Enum.UI_BlOCK_KEY)
+	end
+end
+
+function Activity142Helper.openWinResult()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
+	local v1 = "OnChessWinPause" .. episodeId
+	local v2 = GuideEvent[v1]
+	local v3 = GuideEvent.OnChessWinContinue
+	local v4 = Activity142Helper._openSuccessView
+	local v5
+
+	GuideController.instance:GuideFlowPauseAndContinue(v1, v2, v3, v4, v5)
+end
+
+function Activity142Helper._openSuccessView()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 	ViewMgr.instance:openView(ViewName.Activity142ResultView)
 end
 
-function var_0_0.checkConditionIsFinish(arg_5_0, arg_5_1)
-	local var_5_0 = true
-	local var_5_1 = GameUtil.splitString2(arg_5_0, true, "|", "#")
+function Activity142Helper.checkConditionIsFinish(str, actId)
+	local result = true
+	local params2 = GameUtil.splitString2(str, true, "|", "#")
 
-	if not var_5_1 then
-		return var_5_0
+	if not params2 then
+		return result
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		if not Va3ChessMapUtils.isClearConditionFinish(iter_5_1, arg_5_1) then
-			var_5_0 = false
+	for _, params in ipairs(params2) do
+		if not Va3ChessMapUtils.isClearConditionFinish(params, actId) then
+			result = false
 
 			break
 		end
 	end
 
-	return var_5_0
+	return result
 end
 
-function var_0_0.filterInteractType(arg_6_0, arg_6_1)
-	local var_6_0 = false
+function Activity142Helper.filterInteractType(targetObj, filterDict)
+	local result = false
 
-	if arg_6_1 and arg_6_0 and arg_6_0.config then
-		var_6_0 = arg_6_1[arg_6_0.config.interactType] or false
+	if filterDict and targetObj and targetObj.config then
+		local targetInteractType = targetObj.config.interactType
+
+		result = filterDict[targetInteractType] or false
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.filterCanBlockFireBall(arg_7_0)
-	return (var_0_0.filterInteractType(arg_7_0, Activity142Enum.CanBlockFireBallInteractType))
+function Activity142Helper.filterCanBlockFireBall(targetObj)
+	local result = Activity142Helper.filterInteractType(targetObj, Activity142Enum.CanBlockFireBallInteractType)
+
+	return result
 end
 
-function var_0_0.filterCanMoveKill(arg_8_0)
-	return (var_0_0.filterInteractType(arg_8_0, Activity142Enum.CanMoveKillInteractType))
+function Activity142Helper.filterCanMoveKill(targetObj)
+	local result = Activity142Helper.filterInteractType(targetObj, Activity142Enum.CanMoveKillInteractType)
+
+	return result
 end
 
-function var_0_0.filterCanFireKill(arg_9_0)
-	return (var_0_0.filterInteractType(arg_9_0, Activity142Enum.CanFireKillInteractType))
+function Activity142Helper.filterCanFireKill(targetObj)
+	local result = Activity142Helper.filterInteractType(targetObj, Activity142Enum.CanFireKillInteractType)
+
+	return result
 end
 
-function var_0_0.getBaffleDataList(arg_10_0, arg_10_1)
-	local var_10_0 = {}
+function Activity142Helper.getBaffleDataList(tileData, baffleTypeData)
+	local result = {}
 
-	for iter_10_0, iter_10_1 in pairs(Va3ChessEnum.Direction) do
-		if var_0_0.isHasBaffleInDir(arg_10_0, iter_10_1) then
-			local var_10_1 = iter_10_1 - 1
-			local var_10_2 = bit.lshift(3, var_10_1)
-			local var_10_3 = bit.band(arg_10_1, var_10_2)
-			local var_10_4 = bit.rshift(var_10_3, var_10_1)
-			local var_10_5 = {
-				direction = iter_10_1,
-				type = var_10_4
+	for _, tmpDir in pairs(Va3ChessEnum.Direction) do
+		local isHasBaffle = Activity142Helper.isHasBaffleInDir(tileData, tmpDir)
+
+		if isHasBaffle then
+			local offset = tmpDir - 1
+			local typeMaskBit = bit.lshift(3, offset)
+			local typeVerifyResult = bit.band(baffleTypeData, typeMaskBit)
+			local baffleType = bit.rshift(typeVerifyResult, offset)
+			local data = {
+				direction = tmpDir,
+				type = baffleType
 			}
 
-			var_10_0[#var_10_0 + 1] = var_10_5
+			result[#result + 1] = data
 		end
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.isHasBaffleInDir(arg_11_0, arg_11_1)
-	local var_11_0 = false
-	local var_11_1 = bit.lshift(1, arg_11_1)
+function Activity142Helper.isHasBaffleInDir(tileData, dir)
+	local result = false
+	local maskBit = bit.lshift(1, dir)
+	local verifyCode = bit.band(tileData, maskBit)
 
-	return bit.band(arg_11_0, var_11_1) ~= 0
+	result = verifyCode ~= 0
+
+	return result
 end
 
-local var_0_1 = {
+local Dir2Order = {
 	[Va3ChessEnum.Direction.Up] = 1,
 	[Va3ChessEnum.Direction.Down] = -1,
 	[Va3ChessEnum.Direction.Left] = 1,
 	[Va3ChessEnum.Direction.Right] = -1
 }
 
-function var_0_0.calBafflePosInScene(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = var_0_1[arg_12_2]
-	local var_12_1, var_12_2, var_12_3 = Va3ChessGameController.instance:calcTilePosInScene(arg_12_0, arg_12_1, var_12_0, true)
+function Activity142Helper.calBafflePosInScene(tileX, tileY, direction)
+	local order = Dir2Order[direction]
+	local x, y, z = Va3ChessGameController.instance:calcTilePosInScene(tileX, tileY, order, true)
 
-	if arg_12_2 == Va3ChessEnum.Direction.Left then
-		var_12_1 = var_12_1 - Activity142Enum.BaffleOffset.baffleOffsetX
-		var_12_2 = var_12_2 + Activity142Enum.BaffleOffset.baffleOffsetY
-	elseif arg_12_2 == Va3ChessEnum.Direction.Up then
-		var_12_1 = var_12_1 + Activity142Enum.BaffleOffset.baffleOffsetX
-		var_12_2 = var_12_2 + Activity142Enum.BaffleOffset.baffleOffsetY
-	elseif arg_12_2 == Va3ChessEnum.Direction.Right then
-		var_12_1 = var_12_1 + Activity142Enum.BaffleOffset.baffleOffsetX
-		var_12_2 = var_12_2 - Activity142Enum.BaffleOffset.baffleOffsetY
-	elseif arg_12_2 == Va3ChessEnum.Direction.Down then
-		var_12_1 = var_12_1 - Activity142Enum.BaffleOffset.baffleOffsetX
-		var_12_2 = var_12_2 - Activity142Enum.BaffleOffset.baffleOffsetY
+	if direction == Va3ChessEnum.Direction.Left then
+		x = x - Activity142Enum.BaffleOffset.baffleOffsetX
+		y = y + Activity142Enum.BaffleOffset.baffleOffsetY
+	elseif direction == Va3ChessEnum.Direction.Up then
+		x = x + Activity142Enum.BaffleOffset.baffleOffsetX
+		y = y + Activity142Enum.BaffleOffset.baffleOffsetY
+	elseif direction == Va3ChessEnum.Direction.Right then
+		x = x + Activity142Enum.BaffleOffset.baffleOffsetX
+		y = y - Activity142Enum.BaffleOffset.baffleOffsetY
+	elseif direction == Va3ChessEnum.Direction.Down then
+		x = x - Activity142Enum.BaffleOffset.baffleOffsetX
+		y = y - Activity142Enum.BaffleOffset.baffleOffsetY
 	else
-		logError("un support direction, please check ... " .. arg_12_2)
+		logError("un support direction, please check ... " .. direction)
 	end
 
-	return var_12_1, var_12_2, var_12_3
+	return x, y, z
 end
 
-function var_0_0.getBaffleResPath(arg_13_0)
-	if not arg_13_0 then
+function Activity142Helper.getBaffleResPath(baffleData)
+	if not baffleData then
 		return
 	end
 
-	local var_13_0 = arg_13_0.direction
-	local var_13_1 = arg_13_0.type
+	local dir = baffleData.direction
+	local type = baffleData.type
 
-	if not var_13_0 or not var_13_1 then
+	if not dir or not type then
 		return
 	end
 
-	if var_13_0 == Va3ChessEnum.Direction.Left or var_13_0 == Va3ChessEnum.Direction.Right then
-		return Activity142Enum.VerBaffleResPath[var_13_1] or Activity142Enum.VerBaffleResPath[1]
+	if dir == Va3ChessEnum.Direction.Left or dir == Va3ChessEnum.Direction.Right then
+		return Activity142Enum.VerBaffleResPath[type] or Activity142Enum.VerBaffleResPath[1]
 	else
-		return Activity142Enum.HorBaffleResPath[var_13_1] or Activity142Enum.HorBaffleResPath[1]
+		return Activity142Enum.HorBaffleResPath[type] or Activity142Enum.HorBaffleResPath[1]
 	end
 end
 
-function var_0_0.isSurroundPlayer(arg_14_0, arg_14_1)
-	local var_14_0 = false
-	local var_14_1 = Va3ChessGameController.instance.interacts
-	local var_14_2 = var_14_1 and var_14_1:getMainPlayer(true)
+function Activity142Helper.isSurroundPlayer(x, y)
+	local isSurroundPlayer = false
+	local interactMgr = Va3ChessGameController.instance.interacts
+	local mainPlayer = interactMgr and interactMgr:getMainPlayer(true)
 
-	if not var_14_2 then
-		return var_14_0
+	if not mainPlayer then
+		return isSurroundPlayer
 	end
 
-	local var_14_3 = var_14_2.originData.posX
-	local var_14_4 = var_14_2.originData.posY
-	local var_14_5 = var_14_3 == arg_14_0
-	local var_14_6 = var_14_4 == arg_14_1
-	local var_14_7 = math.abs(var_14_3 - arg_14_0)
-	local var_14_8 = math.abs(var_14_4 - arg_14_1)
+	local playerX, playerY = mainPlayer.originData.posX, mainPlayer.originData.posY
+	local isSameX = playerX == x
+	local isSameY = playerY == y
+	local absDiffX = math.abs(playerX - x)
+	local absDiffY = math.abs(playerY - y)
 
-	return var_14_5 and var_14_8 == 1 or var_14_6 and var_14_7 == 1
+	isSurroundPlayer = isSameX and absDiffY == 1 or isSameY and absDiffX == 1
+
+	return isSurroundPlayer
 end
 
-function var_0_0.isCanMoveKill(arg_15_0)
-	local var_15_0 = false
+function Activity142Helper.isCanMoveKill(interactObj)
+	local result = false
 
-	if not arg_15_0 then
-		return var_15_0
+	if not interactObj then
+		return result
 	end
 
-	local var_15_1 = arg_15_0.originData.posX
-	local var_15_2 = arg_15_0.originData.posY
+	local x, y = interactObj.originData.posX, interactObj.originData.posY
+	local isSurroundPlayer = Activity142Helper.isSurroundPlayer(x, y)
 
-	if var_0_0.isSurroundPlayer(var_15_1, var_15_2) then
-		local var_15_3 = Va3ChessGameController.instance.interacts
-		local var_15_4 = var_15_3 and var_15_3:getMainPlayer(true) or nil
+	if isSurroundPlayer then
+		local interactMgr = Va3ChessGameController.instance.interacts
+		local mainPlayer = interactMgr and interactMgr:getMainPlayer(true) or nil
 
-		if var_15_4 then
-			local var_15_5 = var_15_4.originData.posX
-			local var_15_6 = var_15_4.originData.posY
-			local var_15_7 = Va3ChessMapUtils.ToDirection(var_15_5, var_15_6, var_15_1, var_15_2)
-			local var_15_8 = Va3ChessGameController.instance:posCanWalk(var_15_1, var_15_2, var_15_7, var_15_4.objType)
-			local var_15_9 = arg_15_0:getObjType()
-			local var_15_10 = Activity142Enum.CanMoveKillInteractType[var_15_9] or false
+		if mainPlayer then
+			local curX, curY = mainPlayer.originData.posX, mainPlayer.originData.posY
+			local dir = Va3ChessMapUtils.ToDirection(curX, curY, x, y)
+			local isCanWalk = Va3ChessGameController.instance:posCanWalk(x, y, dir, mainPlayer.objType)
+			local targetInteractType = interactObj:getObjType()
+			local isCanBeMoveKillType = Activity142Enum.CanMoveKillInteractType[targetInteractType] or false
 
-			var_15_0 = var_15_8 and var_15_10
+			result = isCanWalk and isCanBeMoveKillType
 		end
 	end
 
-	return var_15_0
+	return result
 end
 
-function var_0_0.isCanFireKill(arg_16_0)
-	local var_16_0 = false
-	local var_16_1
-	local var_16_2 = Va3ChessGameController.instance.interacts
-	local var_16_3 = var_16_2 and var_16_2:getMainPlayer(true)
+function Activity142Helper.isCanFireKill(interactObj)
+	local result = false
+	local targetInteractId
+	local interactMgr = Va3ChessGameController.instance.interacts
+	local mainPlayer = interactMgr and interactMgr:getMainPlayer(true)
 
-	if not arg_16_0 or not var_16_3 then
-		return var_16_0, var_16_1
+	if not interactObj or not mainPlayer then
+		return result, targetInteractId
 	end
 
-	local var_16_4 = var_16_3.originData.posX
-	local var_16_5 = var_16_3.originData.posY
-	local var_16_6 = arg_16_0.originData.posX
-	local var_16_7 = arg_16_0.originData.posY
-	local var_16_8 = var_16_4 == var_16_6
-	local var_16_9 = var_16_5 == var_16_7
-	local var_16_10 = var_16_8 and var_16_9
+	local curX, curY = mainPlayer.originData.posX, mainPlayer.originData.posY
+	local x, y = interactObj.originData.posX, interactObj.originData.posY
+	local isSameX = curX == x
+	local isSameY = curY == y
+	local isSamePos = isSameX and isSameY
 
-	if not var_16_8 and not var_16_9 or var_16_10 then
-		return var_16_0, var_16_1
+	if not isSameX and not isSameY or isSamePos then
+		return result, targetInteractId
 	end
 
-	if var_0_0.isCanMoveKill(arg_16_0) then
-		return var_16_0, var_16_1
+	local isCanMoveKill = Activity142Helper.isCanMoveKill(interactObj)
+
+	if isCanMoveKill then
+		return result, targetInteractId
 	end
 
-	if Va3ChessGameModel.instance:getFireBallCount() <= 0 then
-		return var_16_0, var_16_1
+	local fireBallCount = Va3ChessGameModel.instance:getFireBallCount()
+	local notHasFireBall = fireBallCount <= 0
+
+	if notHasFireBall then
+		return result, targetInteractId
 	end
 
-	if var_0_0.isBlockFireBall(var_16_4, var_16_5, var_16_6, var_16_7) then
-		return var_16_0, var_16_1
+	local isBlockFireBall = Activity142Helper.isBlockFireBall(curX, curY, x, y)
+
+	if isBlockFireBall then
+		return result, targetInteractId
 	end
 
-	local var_16_11 = arg_16_0:getObjType()
+	local targetInteractType = interactObj:getObjType()
 
-	return Activity142Enum.CanFireKillInteractType[var_16_11]
+	result = Activity142Enum.CanFireKillInteractType[targetInteractType]
+
+	return result
 end
 
-function var_0_0.isBlockFireBall(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = false
-	local var_17_1 = arg_17_0 == arg_17_2
-	local var_17_2 = arg_17_1 == arg_17_3
-	local var_17_3 = var_17_1 and var_17_2
-	local var_17_4 = var_0_0.isSurroundPlayer(arg_17_2, arg_17_3)
+function Activity142Helper.isBlockFireBall(curX, curY, x, y)
+	local result = false
+	local isSameX = curX == x
+	local isSameY = curY == y
+	local isSamePos = isSameX and isSameY
+	local isSurroundPlayer = Activity142Helper.isSurroundPlayer(x, y)
 
-	if not var_17_1 and not var_17_2 or var_17_3 or var_17_4 then
-		return var_17_0
+	if not isSameX and not isSameY or isSamePos or isSurroundPlayer then
+		return result
 	end
 
-	if var_17_1 then
-		local var_17_5 = arg_17_1 < arg_17_3
-		local var_17_6 = var_17_5 and arg_17_1 + 1 or arg_17_3 + 1
-		local var_17_7 = var_17_5 and math.max(arg_17_3 - 1, 0) or math.max(arg_17_1 - 1, 0)
+	if isSameX then
+		local isUp = curY < y
+		local beginY = isUp and curY + 1 or y + 1
+		local endY = isUp and math.max(y - 1, 0) or math.max(curY - 1, 0)
 
-		for iter_17_0 = var_17_6, var_17_7 do
-			local var_17_8, var_17_9 = Va3ChessGameController.instance:searchInteractByPos(arg_17_0, iter_17_0, var_0_0.filterCanBlockFireBall)
+		for tmpY = beginY, endY do
+			local blockLen, _ = Va3ChessGameController.instance:searchInteractByPos(curX, tmpY, Activity142Helper.filterCanBlockFireBall)
 
-			if var_17_8 > 0 then
-				var_17_0 = true
+			if blockLen > 0 then
+				result = true
 
 				break
 			end
 		end
 	else
-		local var_17_10 = arg_17_0 < arg_17_2
-		local var_17_11 = var_17_10 and arg_17_0 + 1 or arg_17_2 + 1
-		local var_17_12 = var_17_10 and math.max(arg_17_2 - 1, 0) or math.max(arg_17_0 - 1, 0)
+		local isRight = curX < x
+		local beginX = isRight and curX + 1 or x + 1
+		local endX = isRight and math.max(x - 1, 0) or math.max(curX - 1, 0)
 
-		for iter_17_1 = var_17_11, var_17_12 do
-			local var_17_13, var_17_14 = Va3ChessGameController.instance:searchInteractByPos(iter_17_1, arg_17_1, var_0_0.filterCanBlockFireBall)
+		for tmpX = beginX, endX do
+			local blockLen, _ = Va3ChessGameController.instance:searchInteractByPos(tmpX, curY, Activity142Helper.filterCanBlockFireBall)
 
-			if var_17_13 > 0 then
-				var_17_0 = true
+			if blockLen > 0 then
+				result = true
 
 				break
 			end
 		end
 	end
 
-	return var_17_0
+	return result
 end
 
-function var_0_0.getPosHashKey(arg_18_0, arg_18_1)
-	return arg_18_0 .. "." .. arg_18_1
+function Activity142Helper.getPosHashKey(posX, posY)
+	return posX .. "." .. posY
 end
 
-return var_0_0
+return Activity142Helper

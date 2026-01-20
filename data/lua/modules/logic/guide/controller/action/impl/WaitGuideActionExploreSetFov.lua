@@ -1,51 +1,53 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreSetFov", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionExploreSetFov.lua
 
-local var_0_0 = class("WaitGuideActionExploreSetFov", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreSetFov", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
-	local var_1_1 = var_1_0[1] or 35
-	local var_1_2 = var_1_0[2] or 0
-	local var_1_3 = var_1_0[3] or EaseType.Linear
-	local var_1_4 = GameSceneMgr.instance:getCurScene().camera
+local WaitGuideActionExploreSetFov = class("WaitGuideActionExploreSetFov", BaseGuideAction)
 
-	if not var_1_4 or not isTypeOf(var_1_4, ExploreSceneCameraComp) then
-		arg_1_0:onDone(true)
+function WaitGuideActionExploreSetFov:onStart(context)
+	local arr = string.splitToNumber(self.actionParam, "#")
+	local fov = arr[1] or 35
+	local time = arr[2] or 0
+	local easeType = arr[3] or EaseType.Linear
+	local cameraComp = GameSceneMgr.instance:getCurScene().camera
+
+	if not cameraComp or not isTypeOf(cameraComp, ExploreSceneCameraComp) then
+		self:onDone(true)
 
 		return
 	end
 
-	if var_1_2 > 0 then
-		var_1_4:setEaseTime(var_1_2)
-		var_1_4:setEaseType(var_1_3)
-		var_1_4:setFov(var_1_1)
-		TaskDispatcher.runDelay(arg_1_0.onCameraChangeDone, arg_1_0, var_1_2)
+	if time > 0 then
+		cameraComp:setEaseTime(time)
+		cameraComp:setEaseType(easeType)
+		cameraComp:setFov(fov)
+		TaskDispatcher.runDelay(self.onCameraChangeDone, self, time)
 	else
-		var_1_4:setFov(var_1_1)
-		var_1_4:applyDirectly()
-		arg_1_0:onDone(true)
+		cameraComp:setFov(fov)
+		cameraComp:applyDirectly()
+		self:onDone(true)
 	end
 end
 
-function var_0_0.onCameraChangeDone(arg_2_0)
-	arg_2_0:resetCameraParam()
-	arg_2_0:onDone(true)
+function WaitGuideActionExploreSetFov:onCameraChangeDone()
+	self:resetCameraParam()
+	self:onDone(true)
 end
 
-function var_0_0.resetCameraParam(arg_3_0)
-	local var_3_0 = GameSceneMgr.instance:getCurScene().camera
+function WaitGuideActionExploreSetFov:resetCameraParam()
+	local cameraComp = GameSceneMgr.instance:getCurScene().camera
 
-	if not var_3_0 or not isTypeOf(var_3_0, ExploreSceneCameraComp) then
+	if not cameraComp or not isTypeOf(cameraComp, ExploreSceneCameraComp) then
 		return
 	end
 
-	var_3_0:setEaseTime(ExploreConstValue.CameraTraceTime)
-	var_3_0:setEaseType(EaseType.Linear)
+	cameraComp:setEaseTime(ExploreConstValue.CameraTraceTime)
+	cameraComp:setEaseType(EaseType.Linear)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	arg_4_0:resetCameraParam()
-	TaskDispatcher.cancelTask(arg_4_0.onCameraChangeDone, arg_4_0)
+function WaitGuideActionExploreSetFov:clearWork()
+	self:resetCameraParam()
+	TaskDispatcher.cancelTask(self.onCameraChangeDone, self)
 end
 
-return var_0_0
+return WaitGuideActionExploreSetFov

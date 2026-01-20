@@ -1,59 +1,61 @@
-﻿module("modules.logic.scene.room.preloadwork.RoomPreloadBuildingWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/preloadwork/RoomPreloadBuildingWork.lua
 
-local var_0_0 = class("RoomPreloadBuildingWork", BaseWork)
+module("modules.logic.scene.room.preloadwork.RoomPreloadBuildingWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:_getUIUrlList()
+local RoomPreloadBuildingWork = class("RoomPreloadBuildingWork", BaseWork)
 
-	arg_1_0._loader = MultiAbLoader.New()
+function RoomPreloadBuildingWork:onStart(context)
+	local uiUrlList = self:_getUIUrlList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		arg_1_0._loader:addPath(iter_1_1)
+	self._loader = MultiAbLoader.New()
+
+	for _, resPath in ipairs(uiUrlList) do
+		self._loader:addPath(resPath)
 	end
 
-	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:setLoadFailCallback(self._onPreloadOneFail)
+	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1:getAssetItemDict()
+function RoomPreloadBuildingWork:_onPreloadFinish(loader)
+	local assetItemDict = loader:getAssetItemDict()
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_0, iter_2_1)
+	for url, assetItem in pairs(assetItemDict) do
+		self.context.callback(self.context.callbackObj, url, assetItem)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
-	logError("RoomPreloadBuildingWork: 加载失败, url: " .. arg_3_2.ResPath)
+function RoomPreloadBuildingWork:_onPreloadOneFail(loader, assetItem)
+	logError("RoomPreloadBuildingWork: 加载失败, url: " .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function RoomPreloadBuildingWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_4_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._getUIUrlList(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+function RoomPreloadBuildingWork:_getUIUrlList()
+	local urlList = {}
+	local ownBuildingList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		local var_5_2 = RoomResHelper.getBuildingPath(iter_5_1.buildingId, iter_5_1.level)
+	for _, buildingMO in ipairs(ownBuildingList) do
+		local url = RoomResHelper.getBuildingPath(buildingMO.buildingId, buildingMO.level)
 
-		table.insert(var_5_0, var_5_2)
+		table.insert(urlList, url)
 	end
 
-	table.insert(var_5_0, RoomScenePreloader.ResInitBuilding)
+	table.insert(urlList, RoomScenePreloader.ResInitBuilding)
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_0) do
-		arg_5_0.context.poolGODict[iter_5_3] = 0
+	for i, url in ipairs(urlList) do
+		self.context.poolGODict[url] = 0
 	end
 
-	return var_5_0
+	return urlList
 end
 
-return var_0_0
+return RoomPreloadBuildingWork

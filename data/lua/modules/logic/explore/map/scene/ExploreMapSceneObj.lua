@@ -1,131 +1,133 @@
-﻿module("modules.logic.explore.map.scene.ExploreMapSceneObj", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/scene/ExploreMapSceneObj.lua
 
-local var_0_0 = class("ExploreMapSceneObj", UserDataDispose)
-local var_0_1 = typeof(UnityEngine.MeshRenderer)
+module("modules.logic.explore.map.scene.ExploreMapSceneObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ExploreMapSceneObj = class("ExploreMapSceneObj", UserDataDispose)
+local MeshRenderer = typeof(UnityEngine.MeshRenderer)
 
-	arg_1_0._container = arg_1_1
-	arg_1_0.isActive = false
-	arg_1_0._go = nil
-	arg_1_0.ishide = true
+function ExploreMapSceneObj:ctor(container)
+	self:__onInit()
+
+	self._container = container
+	self.isActive = false
+	self._go = nil
+	self.ishide = true
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.path = arg_2_1.path
-	arg_2_0.pos = arg_2_1.pos
-	arg_2_0.scale = arg_2_1.scale
-	arg_2_0.rotation = arg_2_1.rotation
-	arg_2_0.rendererInfos = arg_2_1.rendererInfos
-	arg_2_0.useLightMapIndexList = {}
-	arg_2_0.effectType = arg_2_1.effectType
-	arg_2_0.areaId = arg_2_1.areaId
-	arg_2_0.overridderLayer = arg_2_1.overridderLayer or -1
-	arg_2_0._destoryInterval = ExploreConstValue.MapSceneObjDestoryInterval[arg_2_1.effectType] or ExploreConstValue.CHECK_INTERVAL.MapSceneObjDestory
+function ExploreMapSceneObj:setData(config)
+	self.id = config.id
+	self.path = config.path
+	self.pos = config.pos
+	self.scale = config.scale
+	self.rotation = config.rotation
+	self.rendererInfos = config.rendererInfos
+	self.useLightMapIndexList = {}
+	self.effectType = config.effectType
+	self.areaId = config.areaId
+	self.overridderLayer = config.overridderLayer or -1
+	self._destoryInterval = ExploreConstValue.MapSceneObjDestoryInterval[config.effectType] or ExploreConstValue.CHECK_INTERVAL.MapSceneObjDestory
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.rendererInfos) do
-		if tabletool.indexOf(arg_2_0.useLightMapIndexList, iter_2_1.lightmapIndex) == nil then
-			table.insert(arg_2_0.useLightMapIndexList, iter_2_1.lightmapIndex)
+	for i, v in ipairs(self.rendererInfos) do
+		if tabletool.indexOf(self.useLightMapIndexList, v.lightmapIndex) == nil then
+			table.insert(self.useLightMapIndexList, v.lightmapIndex)
 		end
 	end
 end
 
-function var_0_0.show(arg_3_0)
-	arg_3_0.isActive = true
+function ExploreMapSceneObj:show()
+	self.isActive = true
 
-	if arg_3_0._go then
+	if self._go then
 		-- block empty
 	else
-		arg_3_0._assetId = ResMgr.getAbAsset(arg_3_0.path, arg_3_0._loadedCb, arg_3_0, arg_3_0._assetId)
+		self._assetId = ResMgr.getAbAsset(self.path, self._loadedCb, self, self._assetId)
 	end
 
-	return arg_3_0._go == nil
+	return self._go == nil
 end
 
-function var_0_0.markShow(arg_4_0)
-	arg_4_0.ishide = false
+function ExploreMapSceneObj:markShow()
+	self.ishide = false
 
-	TaskDispatcher.cancelTask(arg_4_0.release, arg_4_0)
+	TaskDispatcher.cancelTask(self.release, self)
 end
 
-function var_0_0.hide(arg_5_0)
-	if arg_5_0._go and arg_5_0.isActive == true then
-		TaskDispatcher.runDelay(arg_5_0.release, arg_5_0, arg_5_0._destoryInterval)
+function ExploreMapSceneObj:hide()
+	if self._go and self.isActive == true then
+		TaskDispatcher.runDelay(self.release, self, self._destoryInterval)
 	end
 
-	ResMgr.removeCallBack(arg_5_0._assetId)
+	ResMgr.removeCallBack(self._assetId)
 
-	local var_5_0 = arg_5_0.ishide ~= true
+	local changed = self.ishide ~= true
 
-	arg_5_0.isActive = false
-	arg_5_0.ishide = true
+	self.isActive = false
+	self.ishide = true
 
-	return var_5_0
+	return changed
 end
 
-function var_0_0.unloadnow(arg_6_0)
-	if arg_6_0._go and arg_6_0.ishide == true then
-		arg_6_0:release()
+function ExploreMapSceneObj:unloadnow()
+	if self._go and self.ishide == true then
+		self:release()
 	end
 end
 
-local var_0_2 = UnityLayer.SceneOpaqueOcclusionClip
+local clipLayer = UnityLayer.SceneOpaqueOcclusionClip
 
-function var_0_0._loadedCb(arg_7_0, arg_7_1)
-	if arg_7_0._go == nil and arg_7_0.isActive and arg_7_1.IsLoadSuccess then
-		arg_7_0._go = arg_7_1:getInstance(nil, nil, arg_7_0._container)
+function ExploreMapSceneObj:_loadedCb(assetMO)
+	if self._go == nil and self.isActive and assetMO.IsLoadSuccess then
+		self._go = assetMO:getInstance(nil, nil, self._container)
 
-		local var_7_0 = arg_7_0._go.transform
+		local trans = self._go.transform
 
-		transformhelper.setPos(var_7_0, arg_7_0.pos[1], arg_7_0.pos[2], arg_7_0.pos[3])
-		transformhelper.setLocalScale(var_7_0, arg_7_0.scale[1], arg_7_0.scale[2], arg_7_0.scale[3])
-		transformhelper.setLocalRotation(var_7_0, arg_7_0.rotation[1], arg_7_0.rotation[2], arg_7_0.rotation[3])
+		transformhelper.setPos(trans, self.pos[1], self.pos[2], self.pos[3])
+		transformhelper.setLocalScale(trans, self.scale[1], self.scale[2], self.scale[3])
+		transformhelper.setLocalRotation(trans, self.rotation[1], self.rotation[2], self.rotation[3])
 
-		if arg_7_0.overridderLayer ~= -1 then
-			gohelper.setLayer(arg_7_0._go, arg_7_0.overridderLayer, false)
+		if self.overridderLayer ~= -1 then
+			gohelper.setLayer(self._go, self.overridderLayer, false)
 
-			local var_7_1 = arg_7_0.overridderLayer == var_0_2
-			local var_7_2 = arg_7_0._go:GetComponentsInChildren(typeof(UnityEngine.Collider))
+			local needClip = self.overridderLayer == clipLayer
+			local colliderList = self._go:GetComponentsInChildren(typeof(UnityEngine.Collider))
 
-			for iter_7_0 = 0, var_7_2.Length - 1 do
-				var_7_2[iter_7_0].enabled = var_7_1
+			for i = 0, colliderList.Length - 1 do
+				colliderList[i].enabled = needClip
 			end
 		end
 
-		local var_7_3 = arg_7_0._go:GetComponentsInChildren(var_0_1, true)
+		local renderers = self._go:GetComponentsInChildren(MeshRenderer, true)
 
-		for iter_7_1 = 0, var_7_3.Length - 1 do
-			local var_7_4 = var_7_3[iter_7_1]
-			local var_7_5 = arg_7_0.rendererInfos[iter_7_1 + 1]
+		for i = 0, renderers.Length - 1 do
+			local renderer = renderers[i]
+			local info = self.rendererInfos[i + 1]
 
-			if var_7_5 then
-				var_7_4.lightmapIndex = var_7_5.lightmapIndex
-				var_7_4.lightmapScaleOffset = Vector4.New(var_7_5.lightmapOffsetScale[1], var_7_5.lightmapOffsetScale[2], var_7_5.lightmapOffsetScale[3], var_7_5.lightmapOffsetScale[4])
+			if info then
+				renderer.lightmapIndex = info.lightmapIndex
+				renderer.lightmapScaleOffset = Vector4.New(info.lightmapOffsetScale[1], info.lightmapOffsetScale[2], info.lightmapOffsetScale[3], info.lightmapOffsetScale[4])
 			end
 		end
 	end
 
 	ExploreController.instance:dispatchEvent(ExploreEvent.SceneObjLoadedCb)
-	gohelper.setActive(arg_7_0._go, arg_7_0.isActive)
+	gohelper.setActive(self._go, self.isActive)
 end
 
-function var_0_0.release(arg_8_0)
-	arg_8_0:_clear()
+function ExploreMapSceneObj:release()
+	self:_clear()
 end
 
-function var_0_0.dispose(arg_9_0)
-	arg_9_0:_clear()
-	arg_9_0:__onDispose()
+function ExploreMapSceneObj:dispose()
+	self:_clear()
+	self:__onDispose()
 end
 
-function var_0_0._clear(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.release, arg_10_0)
-	ResMgr.removeCallBack(arg_10_0._assetId)
-	ResMgr.ReleaseObj(arg_10_0._go)
+function ExploreMapSceneObj:_clear()
+	TaskDispatcher.cancelTask(self.release, self)
+	ResMgr.removeCallBack(self._assetId)
+	ResMgr.ReleaseObj(self._go)
 
-	arg_10_0._go = nil
+	self._go = nil
 end
 
-return var_0_0
+return ExploreMapSceneObj

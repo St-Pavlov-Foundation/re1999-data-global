@@ -1,108 +1,110 @@
-﻿module("modules.logic.seasonver.act123.utils.Season123HeroUtils", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/utils/Season123HeroUtils.lua
 
-local var_0_0 = class("Season123HeroUtils")
+module("modules.logic.seasonver.act123.utils.Season123HeroUtils", package.seeall)
 
-function var_0_0.createHeroMOByAssistMO(arg_1_0, arg_1_1)
-	local var_1_0 = HeroConfig.instance:getHeroCO(arg_1_0.heroId)
-	local var_1_1 = HeroDef_pb.HeroInfo()
+local Season123HeroUtils = class("Season123HeroUtils")
 
-	var_1_1.uid = arg_1_0.heroUid
+function Season123HeroUtils.createHeroMOByAssistMO(assistMO, checkIsBalance)
+	local heroCo = HeroConfig.instance:getHeroCO(assistMO.heroId)
+	local heroInfo = HeroDef_pb.HeroInfo()
 
-	local var_1_2 = arg_1_0.level
-	local var_1_3 = arg_1_0.rank
-	local var_1_4 = arg_1_0.balanceLevel
-	local var_1_5 = false
+	heroInfo.uid = assistMO.heroUid
 
-	if arg_1_1 and var_1_4 ~= var_1_2 then
-		var_1_2 = var_1_4
+	local level = assistMO.level
+	local rank = assistMO.rank
+	local balanceLevel = assistMO.balanceLevel
+	local isBalance = false
 
-		local var_1_6, var_1_7 = HeroConfig.instance:getShowLevel(var_1_4)
+	if checkIsBalance and balanceLevel ~= level then
+		level = balanceLevel
 
-		var_1_3 = var_1_7
-		var_1_5 = true
+		local _, balanceRank = HeroConfig.instance:getShowLevel(balanceLevel)
+
+		rank = balanceRank
+		isBalance = true
 	end
 
-	var_1_1.level = var_1_2
-	var_1_1.heroId = arg_1_0.heroId
-	var_1_1.skin = arg_1_0.skin
-	var_1_1.defaultEquipUid = "0"
-	var_1_1.rank = var_1_3
-	var_1_1.talent = arg_1_0.talent
-	var_1_1.exSkillLevel = arg_1_0.exSkillLevel
+	heroInfo.level = level
+	heroInfo.heroId = assistMO.heroId
+	heroInfo.skin = assistMO.skin
+	heroInfo.defaultEquipUid = "0"
+	heroInfo.rank = rank
+	heroInfo.talent = assistMO.talent
+	heroInfo.exSkillLevel = assistMO.exSkillLevel
 
-	if arg_1_0.passiveSkillLevel then
-		for iter_1_0 = 1, #arg_1_0.passiveSkillLevel do
-			table.insert(var_1_1.passiveSkillLevel, arg_1_0.passiveSkillLevel[iter_1_0])
+	if assistMO.passiveSkillLevel then
+		for i = 1, #assistMO.passiveSkillLevel do
+			table.insert(heroInfo.passiveSkillLevel, assistMO.passiveSkillLevel[i])
 		end
 	else
-		local var_1_8 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_1_0.heroId, var_1_2)
+		local passiveLevel = SkillConfig.instance:getHeroExSkillLevelByLevel(assistMO.heroId, level)
 
-		for iter_1_1 = 1, var_1_8 do
-			table.insert(var_1_1.passiveSkillLevel, iter_1_1)
+		for i = 1, passiveLevel do
+			table.insert(heroInfo.passiveSkillLevel, i)
 		end
 	end
 
-	local var_1_9 = SkillConfig.instance:getBaseAttr(arg_1_0.heroId, var_1_2)
+	local baseAttr = SkillConfig.instance:getBaseAttr(assistMO.heroId, level)
 
-	var_1_1.baseAttr.attack = var_1_9.atk
-	var_1_1.baseAttr.defense = var_1_9.def
-	var_1_1.baseAttr.hp = var_1_9.hp
-	var_1_1.baseAttr.mdefense = var_1_9.mdef
-	var_1_1.baseAttr.technic = var_1_9.technic
-	var_1_1.exAttr.addDmg = var_1_9.add_dmg
-	var_1_1.exAttr.cri = var_1_9.cri
-	var_1_1.exAttr.criDef = var_1_9.cri_def
-	var_1_1.exAttr.dropDmg = var_1_9.drop_dmg
-	var_1_1.exAttr.recri = var_1_9.recri
-	var_1_1.exAttr.criDmg = var_1_9.cri_dmg
+	heroInfo.baseAttr.attack = baseAttr.atk
+	heroInfo.baseAttr.defense = baseAttr.def
+	heroInfo.baseAttr.hp = baseAttr.hp
+	heroInfo.baseAttr.mdefense = baseAttr.mdef
+	heroInfo.baseAttr.technic = baseAttr.technic
+	heroInfo.exAttr.addDmg = baseAttr.add_dmg
+	heroInfo.exAttr.cri = baseAttr.cri
+	heroInfo.exAttr.criDef = baseAttr.cri_def
+	heroInfo.exAttr.dropDmg = baseAttr.drop_dmg
+	heroInfo.exAttr.recri = baseAttr.recri
+	heroInfo.exAttr.criDmg = baseAttr.cri_dmg
 
-	local var_1_10 = HeroMo.New()
+	local heroMO = HeroMo.New()
 
-	var_1_10:init(var_1_1, var_1_0)
+	heroMO:init(heroInfo, heroCo)
 
-	var_1_10.talentCubeInfos = arg_1_0.talentCubeInfos
+	heroMO.talentCubeInfos = assistMO.talentCubeInfos
 
-	var_1_10:setIsBelongOtherPlayer(true)
-	var_1_10:setIsBalance(var_1_5)
-	var_1_10:setOtherPlayerIsOpenTalent(arg_1_0.isOpenTalent)
-	var_1_10:setOtherPlayerTalentStyle(arg_1_0.style)
+	heroMO:setIsBelongOtherPlayer(true)
+	heroMO:setIsBalance(isBalance)
+	heroMO:setOtherPlayerIsOpenTalent(assistMO.isOpenTalent)
+	heroMO:setOtherPlayerTalentStyle(assistMO.style)
 
-	var_1_10.destinyStoneMo = HeroDestinyStoneMO.New(arg_1_0.heroId)
+	heroMO.destinyStoneMo = HeroDestinyStoneMO.New(assistMO.heroId)
 
-	var_1_10.destinyStoneMo:refreshMo(arg_1_0.destinyRank, arg_1_0.destinyLevel, arg_1_0.destinyStone, arg_1_0.destinyStoneUnlock)
+	heroMO.destinyStoneMo:refreshMo(assistMO.destinyRank, assistMO.destinyLevel, assistMO.destinyStone, assistMO.destinyStoneUnlock)
 
-	var_1_10.extraMo = var_1_10.extraMo or CharacterExtraMO.New(var_1_10)
+	heroMO.extraMo = heroMO.extraMo or CharacterExtraMO.New(heroMO)
 
-	var_1_10.extraMo:refreshMo(arg_1_0.extraStr)
+	heroMO.extraMo:refreshMo(assistMO.extraStr)
 
-	return var_1_10
+	return heroMO
 end
 
-function var_0_0.createSeasonPickAssistMO(arg_2_0)
-	if not arg_2_0 then
+function Season123HeroUtils.createSeasonPickAssistMO(dungeonAssistHeroMo)
+	if not dungeonAssistHeroMo then
 		return
 	end
 
-	local var_2_0 = arg_2_0:getHeroInfo()
-	local var_2_1 = Season123PickAssistMO.New()
+	local heroInfo = dungeonAssistHeroMo:getHeroInfo()
+	local mo = Season123PickAssistMO.New()
 
-	var_2_1:init(var_2_0)
+	mo:init(heroInfo)
 
-	return var_2_1
+	return mo
 end
 
-function var_0_0.getHeroMO(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = HeroModel.instance:getById(arg_3_1)
+function Season123HeroUtils.getHeroMO(actId, heroUid, stage)
+	local heroMO = HeroModel.instance:getById(heroUid)
 
-	if not var_3_0 and arg_3_2 ~= nil then
-		local var_3_1, var_3_2 = Season123Model.instance:getAssistData(arg_3_0, arg_3_2)
+	if not heroMO and stage ~= nil then
+		local assistHeroMO, assistMO = Season123Model.instance:getAssistData(actId, stage)
 
-		if var_3_2 and var_3_2.heroUid == arg_3_1 then
-			return var_3_1
+		if assistMO and assistMO.heroUid == heroUid then
+			return assistHeroMO
 		end
 	else
-		return var_3_0
+		return heroMO
 	end
 end
 
-return var_0_0
+return Season123HeroUtils

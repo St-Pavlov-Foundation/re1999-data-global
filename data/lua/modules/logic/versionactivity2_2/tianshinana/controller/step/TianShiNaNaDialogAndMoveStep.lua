@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDialogAndMoveStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/step/TianShiNaNaDialogAndMoveStep.lua
 
-local var_0_0 = class("TianShiNaNaDialogAndMoveStep", TianShiNaNaDialogStep)
+module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaDialogAndMoveStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if arg_1_0._data.isMonsterMove == 1 then
-		return arg_1_0:beginPlayDialog()
+local TianShiNaNaDialogAndMoveStep = class("TianShiNaNaDialogAndMoveStep", TianShiNaNaDialogStep)
+
+function TianShiNaNaDialogAndMoveStep:onStart(context)
+	if self._data.isMonsterMove == 1 then
+		return self:beginPlayDialog()
 	end
 
-	local var_1_0 = TianShiNaNaModel.instance:getHeroMo()
+	local playerMo = TianShiNaNaModel.instance:getHeroMo()
 
-	if not var_1_0 then
+	if not playerMo then
 		logError("对话时，角色不存在")
 
-		return arg_1_0:onDone(true)
+		return self:onDone(true)
 	end
 
-	local var_1_1 = TianShiNaNaEntityMgr.instance:getEntity(var_1_0.co.id)
+	local playerEntity = TianShiNaNaEntityMgr.instance:getEntity(playerMo.co.id)
 
-	arg_1_0._targetEntity = TianShiNaNaEntityMgr.instance:getEntity(arg_1_0._data.interactId)
+	self._targetEntity = TianShiNaNaEntityMgr.instance:getEntity(self._data.interactId)
 
-	if not var_1_1 then
+	if not playerEntity then
 		logError("对话时，角色不存在")
 
-		return arg_1_0:onDone(true)
+		return self:onDone(true)
 	end
 
-	if not arg_1_0._targetEntity then
+	if not self._targetEntity then
 		logError("对话时，目标不存在")
 
-		return arg_1_0:onDone(true)
+		return self:onDone(true)
 	end
 
-	return var_1_1:moveToHalf(arg_1_0._targetEntity._unitMo.x, arg_1_0._targetEntity._unitMo.y, arg_1_0._onEndMove, arg_1_0)
+	return playerEntity:moveToHalf(self._targetEntity._unitMo.x, self._targetEntity._unitMo.y, self._onEndMove, self)
 end
 
-function var_0_0._onEndMove(arg_2_0)
-	local var_2_0 = TianShiNaNaModel.instance:getHeroMo()
+function TianShiNaNaDialogAndMoveStep:_onEndMove()
+	local playerMo = TianShiNaNaModel.instance:getHeroMo()
 
-	arg_2_0._targetEntity:changeDir(var_2_0.x, var_2_0.y)
-	arg_2_0:beginPlayDialog()
+	self._targetEntity:changeDir(playerMo.x, playerMo.y)
+	self:beginPlayDialog()
 end
 
-return var_0_0
+return TianShiNaNaDialogAndMoveStep

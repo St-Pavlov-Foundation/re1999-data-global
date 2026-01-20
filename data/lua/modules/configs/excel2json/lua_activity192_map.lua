@@ -1,29 +1,31 @@
-﻿module("modules.configs.excel2json.lua_activity192_map", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity192_map.lua
 
-local var_0_0 = {}
+module("modules.configs.excel2json.lua_activity192_map", package.seeall)
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = var_0_0.json_parse(arg_1_0)
+local lua_activity192_map = {}
+
+function lua_activity192_map.onLoad(json)
+	lua_activity192_map.configList, lua_activity192_map.configDict = lua_activity192_map.json_parse(json)
 end
 
-function var_0_0.json_parse(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
+function lua_activity192_map.json_parse(json)
+	local configList = {}
+	local configDict = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
-		table.insert(var_2_0, iter_2_1)
+	for _, cfg in ipairs(json) do
+		table.insert(configList, cfg)
 
-		local var_2_2 = var_2_1[iter_2_1.mapId]
+		local mapCfgDict = configDict[cfg.mapId]
 
-		if not var_2_2 then
-			var_2_2 = {}
-			var_2_1[iter_2_1.mapId] = var_2_2
+		if not mapCfgDict then
+			mapCfgDict = {}
+			configDict[cfg.mapId] = mapCfgDict
 		end
 
-		var_2_2[iter_2_1.componentId] = iter_2_1
+		mapCfgDict[cfg.componentId] = cfg
 	end
 
-	return var_2_0, var_2_1
+	return configList, configDict
 end
 
-return var_0_0
+return lua_activity192_map

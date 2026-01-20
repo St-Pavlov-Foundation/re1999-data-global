@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_character_talent", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_character_talent.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_character_talent", package.seeall)
+
+local lua_character_talent = {}
+local fields = {
 	requirement = 5,
 	heroId = 1,
 	consume = 6,
@@ -9,14 +11,14 @@ local var_0_1 = {
 	talentMould = 3,
 	talentId = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"heroId",
 	"talentId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_character_talent.onLoad(json)
+	lua_character_talent.configList, lua_character_talent.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_character_talent

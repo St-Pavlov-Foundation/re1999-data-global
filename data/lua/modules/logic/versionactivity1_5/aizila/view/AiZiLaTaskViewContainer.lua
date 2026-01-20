@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaTaskViewContainer.lua
 
-local var_0_0 = class("AiZiLaTaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = MixScrollParam.New()
+local AiZiLaTaskViewContainer = class("AiZiLaTaskViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_TaskList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = AiZiLaTaskItem.prefabPath
-	var_1_1.cellClass = AiZiLaTaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+function AiZiLaTaskViewContainer:buildViews()
+	local views = {}
+	local scrollParam = MixScrollParam.New()
 
-	table.insert(var_1_0, LuaMixScrollView.New(AiZiLaTaskListModel.instance, var_1_1))
-	table.insert(var_1_0, AiZiLaTaskView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	scrollParam.scrollGOPath = "#scroll_TaskList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = AiZiLaTaskItem.prefabPath
+	scrollParam.cellClass = AiZiLaTaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
 
-	return var_1_0
+	table.insert(views, LuaMixScrollView.New(AiZiLaTaskListModel.instance, scrollParam))
+	table.insert(views, AiZiLaTaskView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaTaskViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function AiZiLaTaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -36,4 +38,4 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-return var_0_0
+return AiZiLaTaskViewContainer

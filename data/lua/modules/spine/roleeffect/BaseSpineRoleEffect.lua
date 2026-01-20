@@ -1,25 +1,27 @@
-﻿module("modules.spine.roleeffect.BaseSpineRoleEffect", package.seeall)
+﻿-- chunkname: @modules/spine/roleeffect/BaseSpineRoleEffect.lua
 
-local var_0_0 = class("BaseSpineRoleEffect")
+module("modules.spine.roleeffect.BaseSpineRoleEffect", package.seeall)
 
-function var_0_0.setSpine(arg_1_0, arg_1_1)
-	arg_1_0._spine = arg_1_1
+local BaseSpineRoleEffect = class("BaseSpineRoleEffect")
+
+function BaseSpineRoleEffect:setSpine(spine)
+	self._spine = spine
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
+function BaseSpineRoleEffect:init(roleEffectConfig)
 	return
 end
 
-function var_0_0.showBodyEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function BaseSpineRoleEffect:showBodyEffect(bodyName, callback, callbackTarget)
 	return
 end
 
-function var_0_0.playBodyEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function BaseSpineRoleEffect:playBodyEffect(showEffect, child, bodyName)
 	return
 end
 
-function var_0_0.onDestroy(arg_5_0)
+function BaseSpineRoleEffect:onDestroy()
 	return
 end
 
-return var_0_0
+return BaseSpineRoleEffect

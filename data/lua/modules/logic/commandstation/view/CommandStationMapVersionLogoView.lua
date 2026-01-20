@@ -1,74 +1,78 @@
-﻿module("modules.logic.commandstation.view.CommandStationMapVersionLogoView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationMapVersionLogoView.lua
 
-local var_0_0 = class("CommandStationMapVersionLogoView", BaseView)
+module("modules.logic.commandstation.view.CommandStationMapVersionLogoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goVersion = gohelper.findChild(arg_1_0.viewGO, "#go_Version")
+local CommandStationMapVersionLogoView = class("CommandStationMapVersionLogoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationMapVersionLogoView:onInitView()
+	self._goVersion = gohelper.findChild(self.viewGO, "#go_Version")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._loader = PrefabInstantiate.Create(arg_2_0._goVersion)
-	arg_2_0._versionLogoAnimator = nil
+function CommandStationMapVersionLogoView:_editableInitView()
+	self._loader = PrefabInstantiate.Create(self._goVersion)
+	self._versionLogoAnimator = nil
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:addEventCb(CommandStationController.instance, CommandStationEvent.ChangeVersionId, arg_3_0._onChangeVersionId, arg_3_0)
-	arg_3_0:_onChangeVersionId()
+function CommandStationMapVersionLogoView:onOpen()
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.ChangeVersionId, self._onChangeVersionId, self)
+	self:_onChangeVersionId()
 end
 
-function var_0_0._onChangeVersionId(arg_4_0)
-	if arg_4_0._versionLogoAnimator then
-		arg_4_0._versionLogoAnimator:Play("close", arg_4_0._closeAnimDone, arg_4_0)
+function CommandStationMapVersionLogoView:_onChangeVersionId()
+	if self._versionLogoAnimator then
+		self._versionLogoAnimator:Play("close", self._closeAnimDone, self)
 
 		return
 	end
 
-	arg_4_0:_loadVersionLogo()
+	self:_loadVersionLogo()
 end
 
-function var_0_0._loadVersionLogo(arg_5_0)
-	if not (CommandStationMapModel.instance:getVersionId() ~= CommandStationEnum.AllVersion) then
+function CommandStationMapVersionLogoView:_loadVersionLogo()
+	local hasVersionLogo = CommandStationMapModel.instance:getVersionId() ~= CommandStationEnum.AllVersion
+
+	if not hasVersionLogo then
 		return
 	end
 
-	arg_5_0._loader:dispose()
+	self._loader:dispose()
 
-	local var_5_0 = CommandStationMapModel.instance:getVersionId()
-	local var_5_1 = string.format("ui/viewres/commandstation/commandstation_versionitem_%s.prefab", var_5_0)
+	local versionId = CommandStationMapModel.instance:getVersionId()
+	local path = string.format("ui/viewres/commandstation/commandstation_versionitem_%s.prefab", versionId)
 
-	arg_5_0._loader:startLoad(var_5_1, arg_5_0._onLoadedDone, arg_5_0)
+	self._loader:startLoad(path, self._onLoadedDone, self)
 
-	arg_5_0._versionId = var_5_0
+	self._versionId = versionId
 end
 
-function var_0_0._onLoadedDone(arg_6_0)
-	local var_6_0 = arg_6_0._loader:getInstGO()
+function CommandStationMapVersionLogoView:_onLoadedDone()
+	local go = self._loader:getInstGO()
 
-	arg_6_0._versionLogoAnimator = var_6_0 and SLFramework.AnimatorPlayer.Get(var_6_0)
+	self._versionLogoAnimator = go and SLFramework.AnimatorPlayer.Get(go)
 
-	if arg_6_0._versionLogoAnimator then
-		arg_6_0._versionLogoAnimator:Play("open", arg_6_0._openAnimDone, arg_6_0)
+	if self._versionLogoAnimator then
+		self._versionLogoAnimator:Play("open", self._openAnimDone, self)
 	end
 end
 
-function var_0_0._closeAnimDone(arg_7_0)
-	arg_7_0._loader:dispose()
+function CommandStationMapVersionLogoView:_closeAnimDone()
+	self._loader:dispose()
 
-	arg_7_0._versionLogoAnimator = nil
+	self._versionLogoAnimator = nil
 
-	arg_7_0:_loadVersionLogo()
+	self:_loadVersionLogo()
 end
 
-function var_0_0._openAnimDone(arg_8_0)
+function CommandStationMapVersionLogoView:_openAnimDone()
 	return
 end
 
-function var_0_0.onClose(arg_9_0)
+function CommandStationMapVersionLogoView:onClose()
 	return
 end
 
-return var_0_0
+return CommandStationMapVersionLogoView

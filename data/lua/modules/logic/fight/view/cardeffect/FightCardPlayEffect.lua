@@ -1,244 +1,248 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardPlayEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardPlayEffect.lua
 
-local var_0_0 = class("FightCardPlayEffect", BaseWork)
-local var_0_1 = 1
+module("modules.logic.fight.view.cardeffect.FightCardPlayEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0._dt = 0.033 * var_0_1 / FightModel.instance:getUISpeed()
-	arg_1_0._tweenParamList = nil
+local FightCardPlayEffect = class("FightCardPlayEffect", BaseWork)
+local TimeFactor = 1
 
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+function FightCardPlayEffect:onStart(context)
+	local dt = 0.033 * TimeFactor
+
+	self._dt = dt / FightModel.instance:getUISpeed()
+	self._tweenParamList = nil
+
+	FightCardPlayEffect.super.onStart(self, context)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightPlayCard)
 
-	local var_1_0 = table.remove(arg_1_1.handCardItemList, arg_1_1.from)
+	local playCardItem = table.remove(context.handCardItemList, context.from)
 
-	table.insert(arg_1_1.handCardItemList, var_1_0)
-	FightViewHandCard.refreshCardIndex(arg_1_1.handCardItemList)
-	var_1_0:setASFDActive(false)
+	table.insert(context.handCardItemList, playCardItem)
+	FightViewHandCard.refreshCardIndex(context.handCardItemList)
+	playCardItem:setASFDActive(false)
 
-	if var_1_0._cardItem then
-		var_1_0._cardItem:setHeatRootVisible(false)
+	if playCardItem._cardItem then
+		playCardItem._cardItem:setHeatRootVisible(false)
 
-		local var_1_1 = arg_1_1.fightBeginRoundOp.param3
+		local param3 = context.fightBeginRoundOp.param3
 
-		if var_1_1 and var_1_1 ~= 0 then
-			var_1_0._cardItem:updateItem(var_1_0.cardInfoMO.uid, var_1_1, var_1_0.cardInfoMO)
+		if param3 and param3 ~= 0 then
+			playCardItem._cardItem:updateItem(playCardItem.cardInfoMO.uid, param3, playCardItem.cardInfoMO)
 		end
 	end
 
-	arg_1_0._cardInfoMO = var_1_0.cardInfoMO:clone()
-	arg_1_0._clonePlayCardGO = gohelper.cloneInPlace(var_1_0.go)
+	self._cardInfoMO = playCardItem.cardInfoMO:clone()
+	self._clonePlayCardGO = gohelper.cloneInPlace(playCardItem.go)
 
-	local var_1_2 = arg_1_0._clonePlayCardGO.transform
+	local playCardTr = self._clonePlayCardGO.transform
 
-	gohelper.setActive(var_1_0.go, false)
-	var_1_0:updateItem(#arg_1_1.handCardItemList, nil)
-	arg_1_0:_addTrailEffect(var_1_2)
+	gohelper.setActive(playCardItem.go, false)
+	playCardItem:updateItem(#context.handCardItemList, nil)
+	self:_addTrailEffect(playCardTr)
 
-	local var_1_3 = true
-	local var_1_4 = false
+	local checkCombine = true
+	local needDiscard = false
 
-	if arg_1_0.context.needDiscard then
-		var_1_3 = false
-		var_1_4 = true
+	if self.context.needDiscard then
+		checkCombine = false
+		needDiscard = true
 	end
 
-	local var_1_5 = false
-	local var_1_6 = arg_1_1.dissolveCardIndexsAfterPlay
+	local needRemove = false
+	local removeIndexes = context.dissolveCardIndexsAfterPlay
 
-	if var_1_6 and #var_1_6 > 0 then
-		var_1_3 = false
-		var_1_5 = true
+	if removeIndexes and #removeIndexes > 0 then
+		checkCombine = false
+		needRemove = true
 	end
 
-	local var_1_7 = false
+	local need_cobine_card = false
 
-	if var_1_3 then
-		var_1_7 = FightCardDataHelper.canCombineCardListForPerformance(FightDataHelper.handCardMgr.handCard) or false
+	if checkCombine then
+		need_cobine_card = FightCardDataHelper.canCombineCardListForPerformance(FightDataHelper.handCardMgr.handCard) or false
 	end
 
-	if var_1_7 then
-		arg_1_0._stepCount = 1
-	elseif var_1_4 or var_1_5 then
-		arg_1_0._stepCount = 2
+	if need_cobine_card then
+		self._stepCount = 1
+	elseif needDiscard or needRemove then
+		self._stepCount = 2
 	elseif FightDataHelper.operationDataMgr:isCardOpEnd() and #FightDataHelper.operationDataMgr:getOpList() > 0 then
-		arg_1_0._stepCount = 2
+		self._stepCount = 2
 	else
-		arg_1_0._stepCount = 1
+		self._stepCount = 1
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, arg_1_0._onPlayCardFlayFinish, arg_1_0)
+	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, self._onPlayCardFlayFinish, self)
 
-	if arg_1_0._stepCount == 2 then
-		FightController.instance:registerCallback(FightEvent.PlayCardFlayFinish, arg_1_0._onPlayCardFlayFinish, arg_1_0)
+	if self._stepCount == 2 then
+		FightController.instance:registerCallback(FightEvent.PlayCardFlayFinish, self._onPlayCardFlayFinish, self)
 	end
 
-	arg_1_0._main_flow = FlowSequence.New()
+	self._main_flow = FlowSequence.New()
 
-	local var_1_8 = FlowSequence.New()
+	local sequence = FlowSequence.New()
+	local roundOp = self.context.fightBeginRoundOp
 
-	var_1_8:addWork(FunctionWork.New(function()
-		FightController.instance:dispatchEvent(FightEvent.ShowPlayCardFlyEffect, arg_1_0._cardInfoMO, arg_1_0._clonePlayCardGO, arg_1_0.context.fightBeginRoundOp)
+	if roundOp.costActPoint <= 0 then
+		sequence:addWork(self:_buildNoActCostMoveFlow(self.context.fightBeginRoundOp))
+	end
+
+	sequence:addWork(FunctionWork.New(function()
+		FightController.instance:dispatchEvent(FightEvent.ShowPlayCardFlyEffect, self._cardInfoMO, self._clonePlayCardGO, self.context.fightBeginRoundOp)
 	end))
+	sequence:addWork(WorkWaitSeconds.New(self._dt * 1))
 
-	if arg_1_0.context.fightBeginRoundOp.costActPoint <= 0 then
-		var_1_8:addWork(arg_1_0:_buildNoActCostMoveFlow())
-	end
-
-	var_1_8:addWork(WorkWaitSeconds.New(arg_1_0._dt * 1))
-
-	if var_1_7 then
-		var_1_8:addWork(FunctionWork.New(function()
-			arg_1_0:_playShrinkFlow()
+	if need_cobine_card then
+		sequence:addWork(FunctionWork.New(function()
+			self:_playShrinkFlow()
 		end))
-		var_1_8:addWork(WorkWaitSeconds.New(arg_1_0._dt * 6))
+		sequence:addWork(WorkWaitSeconds.New(self._dt * 6))
 	else
-		var_1_8:addWork(arg_1_0:_startShrinkFlow())
+		sequence:addWork(self:_startShrinkFlow())
 	end
 
-	arg_1_0._main_flow:addWork(var_1_8)
-	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 10 / FightModel.instance:getUISpeed())
-	arg_1_0._main_flow:registerDoneListener(arg_1_0._onPlayCardDone, arg_1_0)
-	arg_1_0._main_flow:start(arg_1_1)
+	self._main_flow:addWork(sequence)
+	TaskDispatcher.runDelay(self._delayDone, self, 10 / FightModel.instance:getUISpeed())
+	self._main_flow:registerDoneListener(self._onPlayCardDone, self)
+	self._main_flow:start(context)
 end
 
-function var_0_0._onPlayCardFlayFinish(arg_4_0, arg_4_1)
-	if arg_4_1 == arg_4_0.context.fightBeginRoundOp then
-		arg_4_0:_checkDone()
+function FightCardPlayEffect:_onPlayCardFlayFinish(roundOp)
+	if roundOp == self.context.fightBeginRoundOp then
+		self:_checkDone()
 	end
 end
 
-function var_0_0._delayDone(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
+function FightCardPlayEffect:_delayDone()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 	logError("出牌流程超过了10秒,可能卡住了,先强制结束")
 
-	arg_5_0._stepCount = 1
+	self._stepCount = 1
 
-	arg_5_0:_onPlayCardDone()
-	arg_5_0:onStop()
+	self:_onPlayCardDone()
+	self:onStop()
 end
 
-function var_0_0._onPlayCardDone(arg_6_0)
-	arg_6_0._main_flow:unregisterDoneListener(arg_6_0._onPlayCardDone, arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._delayDone, arg_6_0)
-	arg_6_0:_checkDone()
+function FightCardPlayEffect:_onPlayCardDone()
+	self._main_flow:unregisterDoneListener(self._onPlayCardDone, self)
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	self:_checkDone()
 end
 
-function var_0_0._checkDone(arg_7_0)
-	arg_7_0._stepCount = arg_7_0._stepCount - 1
+function FightCardPlayEffect:_checkDone()
+	self._stepCount = self._stepCount - 1
 
-	if arg_7_0._stepCount <= 0 then
-		arg_7_0:onDone(true)
+	if self._stepCount <= 0 then
+		self:onDone(true)
 	end
 end
 
-function var_0_0._addTrailEffect(arg_8_0, arg_8_1)
+function FightCardPlayEffect:_addTrailEffect(playCardTr)
 	if GMFightShowState.cards then
-		local var_8_0 = ResUrl.getUIEffect(FightPreloadViewWork.ui_kapaituowei)
-		local var_8_1 = FightHelper.getPreloadAssetItem(var_8_0)
+		local url = ResUrl.getUIEffect(FightPreloadViewWork.ui_kapaituowei)
+		local assetItem = FightHelper.getPreloadAssetItem(url)
 
-		arg_8_0._tailEffectGO = gohelper.clone(var_8_1:GetResource(var_8_0), arg_8_1.gameObject)
-		arg_8_0._tailEffectGO.name = FightPreloadViewWork.ui_kapaituowei
+		self._tailEffectGO = gohelper.clone(assetItem:GetResource(url), playCardTr.gameObject)
+		self._tailEffectGO.name = FightPreloadViewWork.ui_kapaituowei
 	end
 end
 
-function var_0_0._buildNoActCostMoveFlow(arg_9_0)
-	local var_9_0 = FlowSequence.New()
-	local var_9_1 = FlowParallel.New()
-	local var_9_2, var_9_3 = FightViewPlayCard.getMaxItemCount()
-	local var_9_4 = arg_9_0.context.view.viewContainer.fightViewPlayCard._playCardItemList
-	local var_9_5 = arg_9_0.context.view.viewContainer.fightViewPlayCard:getShowIndex(arg_9_0.context.fightBeginRoundOp)
+function FightCardPlayEffect:_buildNoActCostMoveFlow()
+	local sequence = FlowSequence.New()
+	local noActCostMoveFlow = FlowParallel.New()
+	local showPlayItemCount = FightViewPlayCard.getMaxItemCountIncludeExtraMoveAct()
+	local playCardItemList = self.context.view.viewContainer.fightViewPlayCard._playCardItemList
+	local start_index = self.context.view.viewContainer.fightViewPlayCard:getShowIndex(self.context.fightBeginRoundOp)
 
-	if var_9_2 > FightViewPlayCard.VisibleCount then
+	if showPlayItemCount > FightViewPlayCard.VisibleCount then
 		-- block empty
 	else
-		for iter_9_0 = 1, #var_9_4 do
-			local var_9_6 = var_9_4[iter_9_0].tr
-			local var_9_7 = iter_9_0
+		for i = 1, #playCardItemList do
+			local playCardItemTran = playCardItemList[i].tr
+			local finalIndex = i
 
-			if var_9_5 < iter_9_0 then
-				var_9_7 = var_9_7 + 1
+			if start_index < i then
+				finalIndex = finalIndex + 1
 			end
 
-			local var_9_8 = FightViewPlayCard.calcCardPosX(var_9_7, var_9_2)
+			local posX = FightViewPlayCard.calcCardPosX(finalIndex, showPlayItemCount)
 
-			var_9_1:addWork(TweenWork.New({
+			noActCostMoveFlow:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = var_9_6,
-				to = var_9_8,
-				t = arg_9_0._dt * 3
+				tr = playCardItemTran,
+				to = posX,
+				t = self._dt * 3
 			}))
 		end
 	end
 
-	var_9_0:addWork(var_9_1)
-	var_9_0:addWork(FunctionWork.New(function()
+	sequence:addWork(noActCostMoveFlow)
+	sequence:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
 	end))
 
-	return var_9_0
+	return sequence
 end
 
-function var_0_0._playShrinkFlow(arg_11_0)
-	arg_11_0._shrinkFlow = arg_11_0:_startShrinkFlow()
+function FightCardPlayEffect:_playShrinkFlow()
+	self._shrinkFlow = self:_startShrinkFlow()
 
-	arg_11_0._shrinkFlow:start()
+	self._shrinkFlow:start()
 end
 
-function var_0_0._startShrinkFlow(arg_12_0)
-	local var_12_0 = FlowSequence.New()
+function FightCardPlayEffect:_startShrinkFlow()
+	local main_sequence = FlowSequence.New()
 
-	var_12_0:addWork(WorkWaitSeconds.New(arg_12_0._dt * 2))
+	main_sequence:addWork(WorkWaitSeconds.New(self._dt * 2))
 
-	local var_12_1 = FlowParallel.New()
-	local var_12_2 = 1
+	local flow = FlowParallel.New()
+	local delayIndex = 1
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.context.handCardItemList) do
-		if iter_12_1.go.activeInHierarchy and iter_12_0 >= arg_12_0.context.from then
-			local var_12_3 = iter_12_0
-			local var_12_4 = FightViewHandCard.calcCardPosX(var_12_3)
-			local var_12_5 = FlowSequence.New()
-			local var_12_6 = var_12_2 * arg_12_0._dt
+	for i, item in ipairs(self.context.handCardItemList) do
+		if item.go.activeInHierarchy and i >= self.context.from then
+			local newIndex = i
+			local targetPos = FightViewHandCard.calcCardPosX(newIndex)
+			local oneCardFlow = FlowSequence.New()
+			local delay = delayIndex * self._dt
 
-			var_12_2 = var_12_2 + 1
+			delayIndex = delayIndex + 1
 
-			if var_12_6 > 0 then
-				var_12_5:addWork(WorkWaitSeconds.New(var_12_6))
+			if delay > 0 then
+				oneCardFlow:addWork(WorkWaitSeconds.New(delay))
 			end
 
-			local var_12_7 = {
+			local tweenParam = {
 				type = "DOAnchorPosX",
-				tr = iter_12_1.tr,
-				to = var_12_4,
-				t = arg_12_0._dt * 5,
+				tr = item.tr,
+				to = targetPos,
+				t = self._dt * 5,
 				ease = EaseType.OutQuart
 			}
 
-			var_12_5:addWork(TweenWork.New(var_12_7))
-			var_12_1:addWork(var_12_5)
+			oneCardFlow:addWork(TweenWork.New(tweenParam))
+			flow:addWork(oneCardFlow)
 		end
 	end
 
-	var_12_0:addWork(var_12_1)
+	main_sequence:addWork(flow)
 
-	return var_12_0
+	return main_sequence
 end
 
-function var_0_0.clearWork(arg_13_0)
-	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, arg_13_0._onPlayCardFlayFinish, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._delayDone, arg_13_0)
+function FightCardPlayEffect:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, self._onPlayCardFlayFinish, self)
+	TaskDispatcher.cancelTask(self._delayDone, self)
 
-	if arg_13_0._main_flow then
-		arg_13_0._main_flow:stop()
+	if self._main_flow then
+		self._main_flow:stop()
 
-		arg_13_0._main_flow = nil
+		self._main_flow = nil
 	end
 
-	if arg_13_0._shrinkFlow then
-		arg_13_0._shrinkFlow:stop()
+	if self._shrinkFlow then
+		self._shrinkFlow:stop()
 
-		arg_13_0._shrinkFlow = nil
+		self._shrinkFlow = nil
 	end
 end
 
-return var_0_0
+return FightCardPlayEffect

@@ -1,50 +1,54 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_MapElementItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/VersionActivity_1_2_MapElementItem.lua
 
-local var_0_0 = class("VersionActivity_1_2_MapElementItem", BaseViewExtended)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity_1_2_MapElementItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._icon1 = gohelper.findChild(arg_1_0.viewGO, "ani/icon1/anim")
-	arg_1_0._icon2 = gohelper.findChild(arg_1_0.viewGO, "ani/icon2/anim")
-	arg_1_0._icon3 = gohelper.findChild(arg_1_0.viewGO, "ani/icon3/anim")
+local VersionActivity_1_2_MapElementItem = class("VersionActivity_1_2_MapElementItem", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity_1_2_MapElementItem:onInitView()
+	self._icon1 = gohelper.findChild(self.viewGO, "ani/icon1/anim")
+	self._icon2 = gohelper.findChild(self.viewGO, "ani/icon2/anim")
+	self._icon3 = gohelper.findChild(self.viewGO, "ani/icon3/anim")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity_1_2_MapElementItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity_1_2_MapElementItem:removeEvents()
 	return
 end
 
-function var_0_0._onClick(arg_4_0)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, arg_4_0._elementId)
+function VersionActivity_1_2_MapElementItem:_onClick()
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, self._elementId)
 end
 
-function var_0_0.onRefreshViewParam(arg_5_0, arg_5_1)
-	arg_5_0._elementId = arg_5_1
-	arg_5_0._elementConfig = lua_chapter_map_element.configDict[arg_5_1]
+function VersionActivity_1_2_MapElementItem:onRefreshViewParam(elementId)
+	self._elementId = elementId
+	self._elementConfig = lua_chapter_map_element.configDict[elementId]
 
-	local var_5_0 = tonumber(arg_5_0._elementConfig.param)
+	local episodeId = tonumber(self._elementConfig.param)
 
-	arg_5_0._episodeConfig = VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(arg_5_0._elementId) or DungeonConfig.instance:getEpisodeCO(var_5_0)
+	self._episodeConfig = VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(self._elementId) or DungeonConfig.instance:getEpisodeCO(episodeId)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	gohelper.setActive(arg_6_0._icon2, true)
+function VersionActivity_1_2_MapElementItem:onOpen()
+	gohelper.setActive(self._icon2, true)
 
-	gohelper.findChild(arg_6_0._icon2, "num"):GetComponent(typeof(TMPro.TextMeshPro)).text = ""
+	local txt = gohelper.findChild(self._icon2, "num"):GetComponent(typeof(TMPro.TextMeshPro))
+
+	txt.text = ""
 end
 
-function var_0_0.onClose(arg_7_0)
+function VersionActivity_1_2_MapElementItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function VersionActivity_1_2_MapElementItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity_1_2_MapElementItem

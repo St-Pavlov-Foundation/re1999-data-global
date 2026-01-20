@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/model/VersionActivity2_4MusicModel.lua
 
-local var_0_0 = class("VersionActivity2_4MusicModel", BaseModel)
+module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_4MusicModel = class("VersionActivity2_4MusicModel", BaseModel)
+
+function VersionActivity2_4MusicModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity2_4MusicModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_4MusicModel.instance = VersionActivity2_4MusicModel.New()
 
-return var_0_0
+return VersionActivity2_4MusicModel

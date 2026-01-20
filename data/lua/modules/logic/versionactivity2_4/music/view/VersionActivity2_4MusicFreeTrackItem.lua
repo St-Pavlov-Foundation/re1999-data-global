@@ -1,279 +1,282 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeTrackItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeTrackItem.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeTrackItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeTrackItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._imageslider = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/#image_slider")
-	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_num1")
-	arg_1_0._txttime1 = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_time1")
-	arg_1_0._godelstate = gohelper.findChild(arg_1_0.viewGO, "#go_delstate")
-	arg_1_0._txtnum3 = gohelper.findChildText(arg_1_0.viewGO, "#go_delstate/#txt_num3")
-	arg_1_0._txttime3 = gohelper.findChildText(arg_1_0.viewGO, "#go_delstate/#txt_time3")
-	arg_1_0._goadd = gohelper.findChild(arg_1_0.viewGO, "#go_add")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._gorecorded = gohelper.findChild(arg_1_0.viewGO, "#go_recorded")
-	arg_1_0._imagerecordbg = gohelper.findChildImage(arg_1_0.viewGO, "#go_recorded/#image_recordbg")
-	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.viewGO, "#go_recorded/#txt_num2")
-	arg_1_0._txttime2 = gohelper.findChildText(arg_1_0.viewGO, "#go_recorded/#txt_time2")
-	arg_1_0._btnmute = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_recorded/rightbtn/#btn_mute")
-	arg_1_0._btnunmute = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_recorded/rightbtn/#btn__unmute")
-	arg_1_0._goselectframe = gohelper.findChild(arg_1_0.viewGO, "#go_selectframe")
+local VersionActivity2_4MusicFreeTrackItem = class("VersionActivity2_4MusicFreeTrackItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeTrackItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._imageslider = gohelper.findChildImage(self.viewGO, "#go_normal/#image_slider")
+	self._txtnum1 = gohelper.findChildText(self.viewGO, "#go_normal/#txt_num1")
+	self._txttime1 = gohelper.findChildText(self.viewGO, "#go_normal/#txt_time1")
+	self._godelstate = gohelper.findChild(self.viewGO, "#go_delstate")
+	self._txtnum3 = gohelper.findChildText(self.viewGO, "#go_delstate/#txt_num3")
+	self._txttime3 = gohelper.findChildText(self.viewGO, "#go_delstate/#txt_time3")
+	self._goadd = gohelper.findChild(self.viewGO, "#go_add")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._gorecorded = gohelper.findChild(self.viewGO, "#go_recorded")
+	self._imagerecordbg = gohelper.findChildImage(self.viewGO, "#go_recorded/#image_recordbg")
+	self._txtnum2 = gohelper.findChildText(self.viewGO, "#go_recorded/#txt_num2")
+	self._txttime2 = gohelper.findChildText(self.viewGO, "#go_recorded/#txt_time2")
+	self._btnmute = gohelper.findChildButtonWithAudio(self.viewGO, "#go_recorded/rightbtn/#btn_mute")
+	self._btnunmute = gohelper.findChildButtonWithAudio(self.viewGO, "#go_recorded/rightbtn/#btn__unmute")
+	self._goselectframe = gohelper.findChild(self.viewGO, "#go_selectframe")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnmute:AddClickListener(arg_2_0._btnmuteOnClick, arg_2_0)
-	arg_2_0._btnunmute:AddClickListener(arg_2_0._btnunmuteOnClick, arg_2_0)
+function VersionActivity2_4MusicFreeTrackItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnmute:AddClickListener(self._btnmuteOnClick, self)
+	self._btnunmute:AddClickListener(self._btnunmuteOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnmute:RemoveClickListener()
-	arg_3_0._btnunmute:RemoveClickListener()
+function VersionActivity2_4MusicFreeTrackItem:removeEvents()
+	self._btnclick:RemoveClickListener()
+	self._btnmute:RemoveClickListener()
+	self._btnunmute:RemoveClickListener()
 end
 
-function var_0_0._btnmuteOnClick(arg_4_0)
-	arg_4_0:_updateMuteStatus(true)
+function VersionActivity2_4MusicFreeTrackItem:_btnmuteOnClick()
+	self:_updateMuteStatus(true)
 end
 
-function var_0_0._btnunmuteOnClick(arg_5_0)
-	arg_5_0:_updateMuteStatus(false)
+function VersionActivity2_4MusicFreeTrackItem:_btnunmuteOnClick()
+	self:_updateMuteStatus(false)
 end
 
-function var_0_0._btnclickOnClick(arg_6_0)
-	if arg_6_0._isRecord or arg_6_0._isPlay then
+function VersionActivity2_4MusicFreeTrackItem:_btnclickOnClick()
+	if self._isRecord or self._isPlay then
 		return
 	end
 
-	if arg_6_0._isDelStatus then
-		arg_6_0._mo:setDelSelected(not arg_6_0._mo.isDelSelected)
-		arg_6_0:updateSelected()
+	if self._isDelStatus then
+		self._mo:setDelSelected(not self._mo.isDelSelected)
+		self:updateSelected()
 		VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.TrackDelSelectedChange)
 
 		return
 	end
 
-	if arg_6_0._isAddStatus then
+	if self._isAddStatus then
 		VersionActivity2_4MusicFreeModel.instance:addTrack()
 		VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.UpdateTrackList)
 
 		return
 	end
 
-	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.ClickTrackItem, arg_6_0._index)
+	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.ClickTrackItem, self._index)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	gohelper.setActive(arg_7_0._goselectframe, false)
+function VersionActivity2_4MusicFreeTrackItem:_editableInitView()
+	gohelper.setActive(self._goselectframe, false)
 end
 
-function var_0_0._editableAddEvents(arg_8_0)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartRecord, arg_8_0._onStartRecord, arg_8_0, LuaEventSystem.Low)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndRecord, arg_8_0._onEndRecord, arg_8_0, LuaEventSystem.Low)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordPause, arg_8_0._onRecordPause, arg_8_0, LuaEventSystem.Low)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordContinue, arg_8_0._onRecordContinue, arg_8_0, LuaEventSystem.Low)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartPlay, arg_8_0._onStartPlay, arg_8_0, LuaEventSystem.Low)
-	arg_8_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndPlay, arg_8_0._onEndPlay, arg_8_0, LuaEventSystem.Low)
+function VersionActivity2_4MusicFreeTrackItem:_editableAddEvents()
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartRecord, self._onStartRecord, self, LuaEventSystem.Low)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndRecord, self._onEndRecord, self, LuaEventSystem.Low)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordPause, self._onRecordPause, self, LuaEventSystem.Low)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordContinue, self._onRecordContinue, self, LuaEventSystem.Low)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.StartPlay, self._onStartPlay, self, LuaEventSystem.Low)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.EndPlay, self._onEndPlay, self, LuaEventSystem.Low)
 end
 
-function var_0_0._onStartPlay(arg_9_0)
-	arg_9_0._isPlay = true
+function VersionActivity2_4MusicFreeTrackItem:_onStartPlay()
+	self._isPlay = true
 
-	arg_9_0:_updateStatus()
+	self:_updateStatus()
 
-	if arg_9_0._mo.recordTotalTime > 0 then
-		arg_9_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.PlayFrame, arg_9_0._onPlayFrame, arg_9_0)
+	if self._mo.recordTotalTime > 0 then
+		self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.PlayFrame, self._onPlayFrame, self)
 	end
 end
 
-function var_0_0._onEndPlay(arg_10_0)
-	arg_10_0._isPlay = false
+function VersionActivity2_4MusicFreeTrackItem:_onEndPlay()
+	self._isPlay = false
 
-	arg_10_0:_updateStatus()
-	arg_10_0:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.PlayFrame, arg_10_0._onPlayFrame, arg_10_0)
+	self:_updateStatus()
+	self:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.PlayFrame, self._onPlayFrame, self)
 end
 
-function var_0_0._onPlayFrame(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._mo.recordTotalTime
+function VersionActivity2_4MusicFreeTrackItem:_onPlayFrame(playTotalTime)
+	local recordTotalTime = self._mo.recordTotalTime
 
-	if var_11_0 <= arg_11_1 then
-		arg_11_0:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.PlayFrame, arg_11_0._onPlayFrame, arg_11_0)
+	if recordTotalTime <= playTotalTime then
+		self:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.PlayFrame, self._onPlayFrame, self)
 	end
 
-	local var_11_1 = arg_11_1 / var_11_0
+	local percent = playTotalTime / recordTotalTime
 
-	arg_11_0._imagerecordbg.fillAmount = var_11_1
+	self._imagerecordbg.fillAmount = percent
 
-	local var_11_2 = math.ceil(var_11_0 - arg_11_1)
+	local remainTime = math.ceil(recordTotalTime - playTotalTime)
 
-	if var_11_0 < var_11_2 then
-		var_11_2 = math.floor(var_11_0)
+	if recordTotalTime < remainTime then
+		remainTime = math.floor(recordTotalTime)
 	end
 
-	if var_11_2 <= 0 then
-		var_11_2 = 0
+	if remainTime <= 0 then
+		remainTime = 0
 	end
 
-	arg_11_0._txttime2.text = string.format("%s", TimeUtil.second2TimeString(var_11_2))
+	self._txttime2.text = string.format("%s", TimeUtil.second2TimeString(remainTime))
 end
 
-function var_0_0._onStartRecord(arg_12_0)
-	arg_12_0._isRecord = true
+function VersionActivity2_4MusicFreeTrackItem:_onStartRecord()
+	self._isRecord = true
 
-	arg_12_0:_updateStatus()
+	self:_updateStatus()
 
-	if arg_12_0._isSelected then
-		arg_12_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, arg_12_0._onRecordFrame, arg_12_0)
+	if self._isSelected then
+		self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, self._onRecordFrame, self)
 
 		return
 	end
 
-	if arg_12_0._mo.recordTotalTime > 0 then
-		arg_12_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, arg_12_0._onPlayFrame, arg_12_0)
+	if self._mo.recordTotalTime > 0 then
+		self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, self._onPlayFrame, self)
 	end
 end
 
-function var_0_0._onEndRecord(arg_13_0)
-	arg_13_0._isRecord = false
+function VersionActivity2_4MusicFreeTrackItem:_onEndRecord()
+	self._isRecord = false
 
-	arg_13_0:_updateStatus()
-	arg_13_0:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, arg_13_0._onRecordFrame, arg_13_0)
-	arg_13_0:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, arg_13_0._onPlayFrame, arg_13_0)
+	self:_updateStatus()
+	self:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, self._onRecordFrame, self)
+	self:removeEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.RecordFrame, self._onPlayFrame, self)
 end
 
-function var_0_0._onRecordPause(arg_14_0)
+function VersionActivity2_4MusicFreeTrackItem:_onRecordPause()
 	return
 end
 
-function var_0_0._onRecordContinue(arg_15_0)
+function VersionActivity2_4MusicFreeTrackItem:_onRecordContinue()
 	return
 end
 
-function var_0_0._onRecordFrame(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1 / arg_16_0._trackLengthConst
+function VersionActivity2_4MusicFreeTrackItem:_onRecordFrame(recordTotalTime)
+	local percent = recordTotalTime / self._trackLengthConst
 
-	arg_16_0._imageslider.fillAmount = var_16_0
-	arg_16_0._txttime1.text = string.format("%s/%s", TimeUtil.second2TimeString(arg_16_1), arg_16_0._trackLengthConstStr)
+	self._imageslider.fillAmount = percent
+	self._txttime1.text = string.format("%s/%s", TimeUtil.second2TimeString(recordTotalTime), self._trackLengthConstStr)
 end
 
-function var_0_0._editableRemoveEvents(arg_17_0)
+function VersionActivity2_4MusicFreeTrackItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_18_0, arg_18_1)
-	arg_18_0._mo = arg_18_1
-	arg_18_0._index = arg_18_0._mo.index
-	arg_18_0._trackLengthConst = VersionActivity2_4MusicFreeModel.instance:getTrackLength()
-	arg_18_0._trackLengthConstStr = TimeUtil.second2TimeString(arg_18_0._trackLengthConst)
+function VersionActivity2_4MusicFreeTrackItem:onUpdateMO(mo)
+	self._mo = mo
+	self._index = self._mo.index
+	self._trackLengthConst = VersionActivity2_4MusicFreeModel.instance:getTrackLength()
+	self._trackLengthConstStr = TimeUtil.second2TimeString(self._trackLengthConst)
 
-	arg_18_0:_updateStatus()
-	arg_18_0:_updateName(GameUtil.getRomanNums(arg_18_0._index))
+	self:_updateStatus()
+	self:_updateName(GameUtil.getRomanNums(self._index))
 end
 
-function var_0_0._updateStatus(arg_19_0)
-	local var_19_0 = arg_19_0._mo.status
+function VersionActivity2_4MusicFreeTrackItem:_updateStatus()
+	local status = self._mo.status
+	local isInactive = status == VersionActivity2_4MusicEnum.TrackStatus.Inactive
 
-	if var_19_0 == VersionActivity2_4MusicEnum.TrackStatus.Inactive then
-		gohelper.setActive(arg_19_0.viewGO, false)
+	if isInactive then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	arg_19_0._isAddStatus = var_19_0 == VersionActivity2_4MusicEnum.TrackStatus.Add
+	self._isAddStatus = status == VersionActivity2_4MusicEnum.TrackStatus.Add
 
-	if arg_19_0._isRecord and arg_19_0._isAddStatus then
-		gohelper.setActive(arg_19_0.viewGO, false)
-
-		return
-	end
-
-	local var_19_1 = arg_19_0._index == VersionActivity2_4MusicFreeModel.instance:getSelectedTrackIndex()
-
-	gohelper.setActive(arg_19_0.viewGO, true)
-
-	arg_19_0._isUnRecorded = var_19_0 == VersionActivity2_4MusicEnum.TrackStatus.UnRecorded
-	arg_19_0._isDelStatus = var_19_0 == VersionActivity2_4MusicEnum.TrackStatus.Del
-	arg_19_0._isFinishedStatus = arg_19_0._mo.recordTotalTime > 0
-
-	if var_19_1 and arg_19_0._isRecord and arg_19_0._isUnRecorded then
-		arg_19_0._isFinishedStatus = false
-	end
-
-	if arg_19_0._isDelStatus then
-		arg_19_0._isFinishedStatus = false
-	end
-
-	if arg_19_0._isFinishedStatus then
-		arg_19_0._isUnRecorded = false
-	end
-
-	gohelper.setActive(arg_19_0._goadd, arg_19_0._isAddStatus)
-	gohelper.setActive(arg_19_0._godelstate, arg_19_0._isDelStatus)
-	gohelper.setActive(arg_19_0._gonormal, arg_19_0._isUnRecorded)
-	gohelper.setActive(arg_19_0._gorecorded, arg_19_0._isFinishedStatus)
-
-	if arg_19_0._isUnRecorded then
-		local var_19_2 = arg_19_0._mo.recordTotalTime / arg_19_0._trackLengthConst
-
-		arg_19_0._imageslider.fillAmount = var_19_2
-		arg_19_0._txttime1.text = string.format("%s/%s", TimeUtil.second2TimeString(arg_19_0._mo.recordTotalTime), arg_19_0._trackLengthConstStr)
-	end
-
-	arg_19_0._mo:setDelSelected(false)
-
-	if arg_19_0._isDelStatus then
-		arg_19_0._txttime3.text = string.format("%s/%s", TimeUtil.second2TimeString(arg_19_0._mo.recordTotalTime), arg_19_0._trackLengthConstStr)
-	end
-
-	if arg_19_0._isFinishedStatus then
-		local var_19_3 = 1
-
-		arg_19_0._imagerecordbg.fillAmount = var_19_3
-		arg_19_0._txttime2.text = TimeUtil.second2TimeString(arg_19_0._mo.recordTotalTime)
-
-		arg_19_0:_updateMuteStatus(arg_19_0._mo.mute == VersionActivity2_4MusicEnum.MuteStatus.Open)
-	end
-
-	arg_19_0:updateSelected()
-end
-
-function var_0_0._updateMuteStatus(arg_20_0, arg_20_1)
-	gohelper.setActive(arg_20_0._btnmute, not arg_20_1)
-	gohelper.setActive(arg_20_0._btnunmute, arg_20_1)
-	arg_20_0._mo:setMute(arg_20_1)
-end
-
-function var_0_0._updateName(arg_21_0, arg_21_1)
-	arg_21_0._txtnum1.text = arg_21_1
-	arg_21_0._txtnum2.text = arg_21_1
-	arg_21_0._txtnum3.text = arg_21_1
-end
-
-function var_0_0.updateSelected(arg_22_0)
-	if arg_22_0._isDelStatus then
-		arg_22_0._isSelected = nil
-
-		gohelper.setActive(arg_22_0._goselectframe, arg_22_0._mo.isDelSelected)
+	if self._isRecord and self._isAddStatus then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	arg_22_0._isSelected = arg_22_0._index == VersionActivity2_4MusicFreeModel.instance:getSelectedTrackIndex()
+	local isSelected = self._index == VersionActivity2_4MusicFreeModel.instance:getSelectedTrackIndex()
 
-	if arg_22_0._isPlay then
-		arg_22_0._isSelected = false
+	gohelper.setActive(self.viewGO, true)
+
+	self._isUnRecorded = status == VersionActivity2_4MusicEnum.TrackStatus.UnRecorded
+	self._isDelStatus = status == VersionActivity2_4MusicEnum.TrackStatus.Del
+	self._isFinishedStatus = self._mo.recordTotalTime > 0
+
+	if isSelected and self._isRecord and self._isUnRecorded then
+		self._isFinishedStatus = false
 	end
 
-	gohelper.setActive(arg_22_0._goselectframe, arg_22_0._isSelected)
+	if self._isDelStatus then
+		self._isFinishedStatus = false
+	end
+
+	if self._isFinishedStatus then
+		self._isUnRecorded = false
+	end
+
+	gohelper.setActive(self._goadd, self._isAddStatus)
+	gohelper.setActive(self._godelstate, self._isDelStatus)
+	gohelper.setActive(self._gonormal, self._isUnRecorded)
+	gohelper.setActive(self._gorecorded, self._isFinishedStatus)
+
+	if self._isUnRecorded then
+		local percent = self._mo.recordTotalTime / self._trackLengthConst
+
+		self._imageslider.fillAmount = percent
+		self._txttime1.text = string.format("%s/%s", TimeUtil.second2TimeString(self._mo.recordTotalTime), self._trackLengthConstStr)
+	end
+
+	self._mo:setDelSelected(false)
+
+	if self._isDelStatus then
+		self._txttime3.text = string.format("%s/%s", TimeUtil.second2TimeString(self._mo.recordTotalTime), self._trackLengthConstStr)
+	end
+
+	if self._isFinishedStatus then
+		local percent = 1
+
+		self._imagerecordbg.fillAmount = percent
+		self._txttime2.text = TimeUtil.second2TimeString(self._mo.recordTotalTime)
+
+		self:_updateMuteStatus(self._mo.mute == VersionActivity2_4MusicEnum.MuteStatus.Open)
+	end
+
+	self:updateSelected()
 end
 
-function var_0_0.onDestroyView(arg_23_0)
+function VersionActivity2_4MusicFreeTrackItem:_updateMuteStatus(value)
+	gohelper.setActive(self._btnmute, not value)
+	gohelper.setActive(self._btnunmute, value)
+	self._mo:setMute(value)
+end
+
+function VersionActivity2_4MusicFreeTrackItem:_updateName(name)
+	self._txtnum1.text = name
+	self._txtnum2.text = name
+	self._txtnum3.text = name
+end
+
+function VersionActivity2_4MusicFreeTrackItem:updateSelected()
+	if self._isDelStatus then
+		self._isSelected = nil
+
+		gohelper.setActive(self._goselectframe, self._mo.isDelSelected)
+
+		return
+	end
+
+	self._isSelected = self._index == VersionActivity2_4MusicFreeModel.instance:getSelectedTrackIndex()
+
+	if self._isPlay then
+		self._isSelected = false
+	end
+
+	gohelper.setActive(self._goselectframe, self._isSelected)
+end
+
+function VersionActivity2_4MusicFreeTrackItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeTrackItem

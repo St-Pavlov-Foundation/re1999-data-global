@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity2_8.act199.controller.V2a8_SelfSelectSix_PickChoiceController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act199/controller/V2a8_SelfSelectSix_PickChoiceController.lua
 
-local var_0_0 = class("V2a8_SelfSelectSix_PickChoiceController", BaseController)
+module("modules.logic.versionactivity2_8.act199.controller.V2a8_SelfSelectSix_PickChoiceController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._pickHandler = nil
-	arg_1_0._pickHandlerObj = nil
-	arg_1_0._showMsgBoxFunc = nil
-	arg_1_0._showMsgBoxFuncObj = nil
-	arg_1_0._tmpViewParam = nil
+local V2a8_SelfSelectSix_PickChoiceController = class("V2a8_SelfSelectSix_PickChoiceController", BaseController)
+
+function V2a8_SelfSelectSix_PickChoiceController:onInit()
+	self._pickHandler = nil
+	self._pickHandlerObj = nil
+	self._showMsgBoxFunc = nil
+	self._showMsgBoxFuncObj = nil
+	self._tmpViewParam = nil
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function V2a8_SelfSelectSix_PickChoiceController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function V2a8_SelfSelectSix_PickChoiceController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0:onInit()
+function V2a8_SelfSelectSix_PickChoiceController:reInit()
+	self:onInit()
 end
 
-function var_0_0.onOpenView(arg_5_0)
-	arg_5_0:dispatchEvent(V2a8_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged)
+function V2a8_SelfSelectSix_PickChoiceController:onOpenView()
+	self:dispatchEvent(V2a8_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged)
 end
 
-function var_0_0.setSelect(arg_6_0, arg_6_1)
-	local var_6_0 = V2a8_SelfSelectSix_PickChoiceListModel.instance:isHeroIdSelected(arg_6_1)
-	local var_6_1 = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectCount()
-	local var_6_2 = V2a8_SelfSelectSix_PickChoiceListModel.instance:getMaxSelectCount()
+function V2a8_SelfSelectSix_PickChoiceController:setSelect(heroId)
+	local isSelected = V2a8_SelfSelectSix_PickChoiceListModel.instance:isHeroIdSelected(heroId)
+	local selectCount = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectCount()
+	local maxSelectCount = V2a8_SelfSelectSix_PickChoiceListModel.instance:getMaxSelectCount()
 
-	if not var_6_0 and var_6_2 <= var_6_1 then
-		if var_6_2 > 1 then
+	if not isSelected and maxSelectCount <= selectCount then
+		if maxSelectCount > 1 then
 			GameFacade.showToast(ToastEnum.CustomPickPleaseCancel)
 
 			return
@@ -41,79 +43,80 @@ function var_0_0.setSelect(arg_6_0, arg_6_1)
 		end
 	end
 
-	V2a8_SelfSelectSix_PickChoiceListModel.instance:setSelectId(arg_6_1)
-	arg_6_0:dispatchEvent(V2a8_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged)
+	V2a8_SelfSelectSix_PickChoiceListModel.instance:setSelectId(heroId)
+	self:dispatchEvent(V2a8_SelfSelectSix_PickChoiceEvent.onCustomPickListChanged)
 end
 
-function var_0_0.tryChoice(arg_7_0, arg_7_1)
-	local var_7_0 = V2a8_SelfSelectSix_PickChoiceListModel.instance:getMaxSelectCount()
-	local var_7_1 = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectCount()
+function V2a8_SelfSelectSix_PickChoiceController:tryChoice(viewParam)
+	local maxSelectCount = V2a8_SelfSelectSix_PickChoiceListModel.instance:getMaxSelectCount()
+	local selectCount = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectCount()
 
-	if not var_7_1 or var_7_0 < var_7_1 then
+	if not selectCount or maxSelectCount < selectCount then
 		return false
 	end
 
-	if var_7_1 < var_7_0 then
+	if selectCount < maxSelectCount then
 		GameFacade.showToast(ToastEnum.NoChoiceHero)
 
 		return false
 	end
 
-	arg_7_0._tmpViewParam = arg_7_1
+	self._tmpViewParam = viewParam
 
-	if arg_7_0._showMsgBoxFunc then
-		if arg_7_0._showMsgBoxFuncObj then
-			arg_7_0._showMsgBoxFunc(arg_7_0._showMsgBoxFuncObj, arg_7_0.realChoice, arg_7_0)
+	if self._showMsgBoxFunc then
+		if self._showMsgBoxFuncObj then
+			self._showMsgBoxFunc(self._showMsgBoxFuncObj, self.realChoice, self)
 		else
-			arg_7_0._showMsgBoxFunc(arg_7_0.realChoice, arg_7_0)
+			self._showMsgBoxFunc(self.realChoice, self)
 		end
 	else
-		local var_7_2
-		local var_7_3 = false
-		local var_7_4 = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectIds()
+		local heroNames
+		local hasHero = false
+		local selectList = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectIds()
 
-		if var_7_4 then
-			for iter_7_0, iter_7_1 in ipairs(var_7_4) do
-				local var_7_5 = HeroModel.instance:getByHeroId(iter_7_1)
+		if selectList then
+			for _, heroId in ipairs(selectList) do
+				local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-				if not var_7_3 and var_7_5 then
-					var_7_3 = true
+				if not hasHero and heroMo then
+					hasHero = true
 				end
 
-				local var_7_6 = HeroConfig.instance:getHeroCO(iter_7_1)
+				local heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
-				if var_7_6 then
-					local var_7_7 = var_7_6 and var_7_6.name or ""
+				if heroConfig then
+					local name = heroConfig and heroConfig.name or ""
 
-					if string.nilorempty(var_7_2) then
-						var_7_2 = var_7_7
+					if string.nilorempty(heroNames) then
+						heroNames = name
 					else
-						var_7_2 = GameUtil.getSubPlaceholderLuaLang(luaLang("custompickchoice_select_heros"), {
-							var_7_2,
-							var_7_7
+						heroNames = GameUtil.getSubPlaceholderLuaLang(luaLang("custompickchoice_select_heros"), {
+							heroNames,
+							name
 						})
 					end
 				end
 			end
 		end
 
-		local var_7_8 = var_7_3 and MessageBoxIdDefine.V2a8_SelfSelectSix_PickChoiceHasHero or MessageBoxIdDefine.V2a8_SelfSelectSix_PickChoiceConfirm
+		local msgBoxId = hasHero and MessageBoxIdDefine.V2a8_SelfSelectSix_PickChoiceHasHero or MessageBoxIdDefine.V2a8_SelfSelectSix_PickChoiceConfirm
 
-		GameFacade.showMessageBox(var_7_8, MsgBoxEnum.BoxType.Yes_No, arg_7_0.realChoice, nil, nil, arg_7_0, nil, nil, var_7_2)
+		GameFacade.showMessageBox(msgBoxId, MsgBoxEnum.BoxType.Yes_No, self.realChoice, nil, nil, self, nil, nil, heroNames)
 	end
 end
 
-function var_0_0.realChoice(arg_8_0)
-	local var_8_0 = V2a8_SelfSelectSix_PickChoiceListModel.instance:getActivityId()
-	local var_8_1 = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectIds()[1]
+function V2a8_SelfSelectSix_PickChoiceController:realChoice()
+	local activityId = V2a8_SelfSelectSix_PickChoiceListModel.instance:getActivityId()
+	local selectList = V2a8_SelfSelectSix_PickChoiceListModel.instance:getSelectIds()
+	local heroId = selectList[1]
 
-	Activity199Rpc.instance:sendAct199GainRequest(var_8_0, var_8_1)
+	Activity199Rpc.instance:sendAct199GainRequest(activityId, heroId)
 end
 
-function var_0_0.onCloseView(arg_9_0)
+function V2a8_SelfSelectSix_PickChoiceController:onCloseView()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+V2a8_SelfSelectSix_PickChoiceController.instance = V2a8_SelfSelectSix_PickChoiceController.New()
 
-return var_0_0
+return V2a8_SelfSelectSix_PickChoiceController

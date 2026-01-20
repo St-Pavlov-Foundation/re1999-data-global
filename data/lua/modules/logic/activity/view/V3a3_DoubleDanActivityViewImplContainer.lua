@@ -1,82 +1,84 @@
-﻿module("modules.logic.activity.view.V3a3_DoubleDanActivityViewImplContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V3a3_DoubleDanActivityViewImplContainer.lua
 
-local var_0_0 = class("V3a3_DoubleDanActivityViewImplContainer", BaseViewContainer)
+module("modules.logic.activity.view.V3a3_DoubleDanActivityViewImplContainer", package.seeall)
 
-function var_0_0.actId(arg_1_0)
-	return assert(arg_1_0.viewParam.actId, "please pass viewParam.actId!!")
+local V3a3_DoubleDanActivityViewImplContainer = class("V3a3_DoubleDanActivityViewImplContainer", BaseViewContainer)
+
+function V3a3_DoubleDanActivityViewImplContainer:actId()
+	return assert(self.viewParam.actId, "please pass viewParam.actId!!")
 end
 
-function var_0_0.getDayCO(arg_2_0, arg_2_1)
-	return ActivityType101Config.instance:getDayCO(arg_2_0:actId(), arg_2_1)
+function V3a3_DoubleDanActivityViewImplContainer:getDayCO(day)
+	return ActivityType101Config.instance:getDayCO(self:actId(), day)
 end
 
-function var_0_0.getSignMaxDay(arg_3_0)
-	return ActivityType101Config.instance:getSignMaxDay(arg_3_0:actId())
+function V3a3_DoubleDanActivityViewImplContainer:getSignMaxDay()
+	return ActivityType101Config.instance:getSignMaxDay(self:actId())
 end
 
-function var_0_0.getDayBonusList(arg_4_0, arg_4_1)
-	arg_4_0.__cacheBonusList = arg_4_0.__cacheBonusList or {}
+function V3a3_DoubleDanActivityViewImplContainer:getDayBonusList(day)
+	self.__cacheBonusList = self.__cacheBonusList or {}
 
-	if arg_4_0.__cacheBonusList[arg_4_1] then
-		return arg_4_0.__cacheBonusList[arg_4_1]
+	if self.__cacheBonusList[day] then
+		return self.__cacheBonusList[day]
 	end
 
-	local var_4_0 = ActivityType101Config.instance:getDayBonusList(arg_4_0:actId(), arg_4_1)
+	local list = ActivityType101Config.instance:getDayBonusList(self:actId(), day)
 
-	arg_4_0.__cacheBonusList[arg_4_1] = var_4_0
+	self.__cacheBonusList[day] = list
 
-	return var_4_0
+	return list
 end
 
-function var_0_0.isType101RewardGet(arg_5_0, arg_5_1)
-	return ActivityType101Model.instance:isType101RewardGet(arg_5_0:actId(), arg_5_1)
+function V3a3_DoubleDanActivityViewImplContainer:isType101RewardGet(day)
+	return ActivityType101Model.instance:isType101RewardGet(self:actId(), day)
 end
 
-function var_0_0.isType101RewardCouldGet(arg_6_0, arg_6_1)
-	return ActivityType101Model.instance:isType101RewardCouldGet(arg_6_0:actId(), arg_6_1)
+function V3a3_DoubleDanActivityViewImplContainer:isType101RewardCouldGet(day)
+	return ActivityType101Model.instance:isType101RewardCouldGet(self:actId(), day)
 end
 
-function var_0_0.getFirstAvailableIndex(arg_7_0)
-	return ActivityType101Model.instance:getFirstAvailableIndex(arg_7_0:actId())
+function V3a3_DoubleDanActivityViewImplContainer:getFirstAvailableIndex()
+	return ActivityType101Model.instance:getFirstAvailableIndex(self:actId())
 end
 
-function var_0_0.isDayOpen(arg_8_0, arg_8_1)
-	return ActivityType101Model.instance:isDayOpen(arg_8_0:actId(), arg_8_1)
+function V3a3_DoubleDanActivityViewImplContainer:isDayOpen(day)
+	return ActivityType101Model.instance:isDayOpen(self:actId(), day)
 end
 
-function var_0_0.getType101LoginCount(arg_9_0)
-	return ActivityType101Model.instance:getType101LoginCount(arg_9_0:actId())
+function V3a3_DoubleDanActivityViewImplContainer:getType101LoginCount()
+	return ActivityType101Model.instance:getType101LoginCount(self:actId())
 end
 
-function var_0_0.sendGet101BonusRequest(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	return Activity101Rpc.instance:sendGet101BonusRequest(arg_10_0:actId(), arg_10_1, arg_10_2, arg_10_3)
+function V3a3_DoubleDanActivityViewImplContainer:sendGet101BonusRequest(day, cb, cbObj)
+	return Activity101Rpc.instance:sendGet101BonusRequest(self:actId(), day, cb, cbObj)
 end
 
-function var_0_0.getRemainTimeStr(arg_11_0)
-	local var_11_0 = arg_11_0:getRemainTimeSec()
+function V3a3_DoubleDanActivityViewImplContainer:getRemainTimeStr()
+	local remainTimeSec = self:getRemainTimeSec()
 
-	if var_11_0 <= 0 then
+	if remainTimeSec <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	local var_11_1, var_11_2, var_11_3, var_11_4 = TimeUtil.secondsToDDHHMMSS(var_11_0)
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
 
-	if var_11_1 > 0 then
+	if day > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
-			var_11_1,
-			var_11_2
+			day,
+			hour
 		})
-	elseif var_11_2 > 0 then
+	elseif hour > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
-			var_11_2,
-			var_11_3
+			hour,
+			min
 		})
-	elseif var_11_3 > 0 then
+	elseif min > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
-			var_11_3
+			min
 		})
-	elseif var_11_4 > 0 then
+	elseif sec > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
 			1
@@ -86,34 +88,35 @@ function var_0_0.getRemainTimeStr(arg_11_0)
 	return luaLang("turnback_end")
 end
 
-function var_0_0.getRemainTimeSec(arg_12_0)
-	local var_12_0 = arg_12_0:actId()
+function V3a3_DoubleDanActivityViewImplContainer:getRemainTimeSec()
+	local actId = self:actId()
+	local remainTimeSec = ActivityModel.instance:getRemainTimeSec(actId)
 
-	return ActivityModel.instance:getRemainTimeSec(var_12_0) or 0
+	return remainTimeSec or 0
 end
 
-function var_0_0.getSkinCo(arg_13_0)
-	local var_13_0 = ActivityType101Config.instance:getDoubleDanSkinId()
+function V3a3_DoubleDanActivityViewImplContainer:getSkinCo()
+	local skinId = ActivityType101Config.instance:getDoubleDanSkinId()
 
-	return SkinConfig.instance:getSkinCo(var_13_0)
+	return SkinConfig.instance:getSkinCo(skinId)
 end
 
-function var_0_0.getSkinCo_characterId(arg_14_0)
-	local var_14_0 = arg_14_0:getSkinCo()
+function V3a3_DoubleDanActivityViewImplContainer:getSkinCo_characterId()
+	local CO = self:getSkinCo()
 
-	if not var_14_0 then
+	if not CO then
 		return 0
 	end
 
-	return var_14_0.characterId
+	return CO.characterId
 end
 
-function var_0_0.getHeroCO(arg_15_0)
-	return HeroConfig.instance:getHeroCO(arg_15_0:getSkinCo_characterId())
+function V3a3_DoubleDanActivityViewImplContainer:getHeroCO()
+	return HeroConfig.instance:getHeroCO(self:getSkinCo_characterId())
 end
 
-function var_0_0.getActivityCo(arg_16_0)
-	return ActivityConfig.instance:getActivityCo(arg_16_0:actId())
+function V3a3_DoubleDanActivityViewImplContainer:getActivityCo()
+	return ActivityConfig.instance:getActivityCo(self:actId())
 end
 
-return var_0_0
+return V3a3_DoubleDanActivityViewImplContainer

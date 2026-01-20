@@ -1,63 +1,65 @@
-﻿module("modules.logic.activity.view.V2a7_Labor_FullSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a7_Labor_FullSignView.lua
 
-local var_0_0 = class("V2a7_Labor_FullSignView", Activity101SignViewBase)
+module("modules.logic.activity.view.V2a7_Labor_FullSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDec = gohelper.findChildText(arg_1_0.viewGO, "Root/image_DecBG/#txt_Dec")
-	arg_1_0._goNormalBG = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_NormalBG")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Root/Task/#go_NormalBG/scroll_desc/Viewport/Content/#txt_dec")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Root/Task/#go_NormalBG/#txt_num")
-	arg_1_0._simagereward = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Task/#go_NormalBG/#simage_reward")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_canget")
-	arg_1_0._goFinishedBG = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_FinishedBG")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
+local V2a7_Labor_FullSignView = class("V2a7_Labor_FullSignView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a7_Labor_FullSignView:onInitView()
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDec = gohelper.findChildText(self.viewGO, "Root/image_DecBG/#txt_Dec")
+	self._goNormalBG = gohelper.findChild(self.viewGO, "Root/Task/#go_NormalBG")
+	self._txtdec = gohelper.findChildText(self.viewGO, "Root/Task/#go_NormalBG/scroll_desc/Viewport/Content/#txt_dec")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Root/Task/#go_NormalBG/#txt_num")
+	self._simagereward = gohelper.findChildSingleImage(self.viewGO, "Root/Task/#go_NormalBG/#simage_reward")
+	self._gocanget = gohelper.findChild(self.viewGO, "Root/Task/#go_canget")
+	self._goFinishedBG = gohelper.findChild(self.viewGO, "Root/Task/#go_FinishedBG")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
+function V2a7_Labor_FullSignView:addEvents()
+	Activity101SignViewBase.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
+function V2a7_Labor_FullSignView:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._txtLimitTime.text = ""
+function V2a7_Labor_FullSignView:_editableInitView()
+	self._txtLimitTime.text = ""
 
-	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:internal_onOpen()
-	arg_5_0:_clearTimeTick()
-	TaskDispatcher.runRepeat(arg_5_0._refreshTimeTick, arg_5_0, 1)
+function V2a7_Labor_FullSignView:onOpen()
+	self:internal_onOpen()
+	self:_clearTimeTick()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0:_clearTimeTick()
+function V2a7_Labor_FullSignView:onClose()
+	self:_clearTimeTick()
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	Activity101SignViewBase._internal_onDestroy(arg_7_0)
-	arg_7_0:_clearTimeTick()
+function V2a7_Labor_FullSignView:onDestroyView()
+	Activity101SignViewBase._internal_onDestroy(self)
+	self:_clearTimeTick()
 end
 
-function var_0_0._clearTimeTick(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._refreshTimeTick, arg_8_0)
+function V2a7_Labor_FullSignView:_clearTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_9_0)
-	arg_9_0:_refreshList()
-	arg_9_0:_refreshTimeTick()
+function V2a7_Labor_FullSignView:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_10_0)
-	arg_10_0._txtLimitTime.text = arg_10_0:getRemainTimeStr()
+function V2a7_Labor_FullSignView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-return var_0_0
+return V2a7_Labor_FullSignView

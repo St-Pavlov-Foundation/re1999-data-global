@@ -1,15 +1,17 @@
-﻿module("modules.logic.rouge.view.RougeCollectionTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionTipViewContainer.lua
 
-local var_0_0 = class("RougeCollectionTipViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeCollectionTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local RougeCollectionTipViewContainer = class("RougeCollectionTipViewContainer", BaseViewContainer)
+
+function RougeCollectionTipViewContainer:buildViews()
 	return {
 		RougeCollectionTipView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function RougeCollectionTipViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return RougeCollectionTipViewContainer

@@ -12,5 +12,12 @@
     "itemId": 350002,
     "icon": "mainsceneswitch_ui_pic02",
     "previewIcon": "mainsceneswitch_ui_02"
+  },
+  {
+    "id": 3,
+    "defaultUnlock": 0,
+    "itemId": 350003,
+    "icon": "mainsceneswitch_ui_pic03",
+    "previewIcon": "mainsceneswitch_ui_03"
   }
 ]

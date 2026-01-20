@@ -1,15 +1,17 @@
-﻿module("modules.logic.player.view.WaterMarkViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/WaterMarkViewContainer.lua
 
-local var_0_0 = class("WaterMarkViewContainer", BaseViewContainer)
+module("modules.logic.player.view.WaterMarkViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WaterMarkViewContainer = class("WaterMarkViewContainer", BaseViewContainer)
 
-	arg_1_0.waterMarkView = WaterMarkView.New()
+function WaterMarkViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.waterMarkView)
+	self.waterMarkView = WaterMarkView.New()
 
-	return var_1_0
+	table.insert(views, self.waterMarkView)
+
+	return views
 end
 
-return var_0_0
+return WaterMarkViewContainer

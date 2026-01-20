@@ -1,21 +1,23 @@
-﻿module("modules.configs.excel2json.lua_activity126_dreamland_card", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity126_dreamland_card.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity126_dreamland_card", package.seeall)
+
+local lua_activity126_dreamland_card = {}
+local fields = {
 	id = 1,
 	desc = 4,
 	activityId = 2,
 	skillId = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity126_dreamland_card.onLoad(json)
+	lua_activity126_dreamland_card.configList, lua_activity126_dreamland_card.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity126_dreamland_card

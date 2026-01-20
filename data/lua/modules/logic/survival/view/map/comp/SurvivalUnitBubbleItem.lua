@@ -1,55 +1,57 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalUnitBubbleItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalUnitBubbleItem.lua
 
-local var_0_0 = class("SurvivalUnitBubbleItem", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalUnitBubbleItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._params = arg_1_1
+local SurvivalUnitBubbleItem = class("SurvivalUnitBubbleItem", LuaCompBase)
+
+function SurvivalUnitBubbleItem:ctor(params)
+	self._params = params
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._anim = SLFramework.AnimatorPlayer.Get(arg_2_1)
-	arg_2_0._icon = gohelper.findChildImage(arg_2_1, "icon")
+function SurvivalUnitBubbleItem:init(go)
+	self.go = go
+	self._anim = SLFramework.AnimatorPlayer.Get(go)
+	self._icon = gohelper.findChildImage(go, "icon")
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_2_0._icon, "survival_map_emoji_" .. arg_2_0._params.type)
+	UISpriteSetMgr.instance:setSurvivalSprite(self._icon, "survival_map_emoji_" .. self._params.type)
 
-	if arg_2_0._params.time > 0 then
-		TaskDispatcher.runDelay(arg_2_0._delayDestroy, arg_2_0, arg_2_0._params.time)
+	if self._params.time > 0 then
+		TaskDispatcher.runDelay(self._delayDestroy, self, self._params.time)
 	end
 
-	arg_2_0._uiFollower = gohelper.onceAddComponent(arg_2_0.go, typeof(ZProj.UIFollower))
+	self._uiFollower = gohelper.onceAddComponent(self.go, typeof(ZProj.UIFollower))
 
-	local var_2_0 = SurvivalMapHelper.instance:getEntity(arg_2_0._params.unitId)
-	local var_2_1 = CameraMgr.instance:getMainCamera()
-	local var_2_2 = CameraMgr.instance:getUICamera()
-	local var_2_3 = ViewMgr.instance:getUIRoot().transform
+	local entity = SurvivalMapHelper.instance:getEntity(self._params.unitId)
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local plane = ViewMgr.instance:getUIRoot().transform
 
-	arg_2_0._uiFollower:Set(var_2_1, var_2_2, var_2_3, var_2_0.go.transform, 0, 0.4, 0, 0, 0)
-	arg_2_0._uiFollower:SetEnable(true)
+	self._uiFollower:Set(mainCamera, uiCamera, plane, entity.go.transform, 0, 0.4, 0, 0, 0)
+	self._uiFollower:SetEnable(true)
 end
 
-function var_0_0.updateParam(arg_3_0, arg_3_1)
-	arg_3_0._params = arg_3_1
+function SurvivalUnitBubbleItem:updateParam(params)
+	self._params = params
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_3_0._icon, "survival_map_emoji_" .. arg_3_0._params.type)
-	TaskDispatcher.cancelTask(arg_3_0._delayDestroy, arg_3_0)
+	UISpriteSetMgr.instance:setSurvivalSprite(self._icon, "survival_map_emoji_" .. self._params.type)
+	TaskDispatcher.cancelTask(self._delayDestroy, self)
 
-	if arg_3_0._params.time > 0 then
-		TaskDispatcher.runDelay(arg_3_0._delayDestroy, arg_3_0, arg_3_0._params.time)
+	if self._params.time > 0 then
+		TaskDispatcher.runDelay(self._delayDestroy, self, self._params.time)
 	end
 end
 
-function var_0_0._delayDestroy(arg_4_0)
-	arg_4_0._params.callback(arg_4_0._params.callobj, arg_4_0._params.unitId)
+function SurvivalUnitBubbleItem:_delayDestroy()
+	self._params.callback(self._params.callobj, self._params.unitId)
 end
 
-function var_0_0.tryDestroy(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDestroy, arg_5_0)
-	arg_5_0._anim:Play("close", arg_5_0._destroySelf, arg_5_0)
+function SurvivalUnitBubbleItem:tryDestroy()
+	TaskDispatcher.cancelTask(self._delayDestroy, self)
+	self._anim:Play("close", self._destroySelf, self)
 end
 
-function var_0_0._destroySelf(arg_6_0)
-	gohelper.destroy(arg_6_0.go)
+function SurvivalUnitBubbleItem:_destroySelf()
+	gohelper.destroy(self.go)
 end
 
-return var_0_0
+return SurvivalUnitBubbleItem

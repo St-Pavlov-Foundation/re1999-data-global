@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityPuzzleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityPuzzleViewContainer.lua
 
-local var_0_0 = class("VersionActivityPuzzleViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityPuzzleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityPuzzleViewContainer = class("VersionActivityPuzzleViewContainer", BaseViewContainer)
+
+function VersionActivityPuzzleViewContainer:buildViews()
 	return {
 		VersionActivityPuzzleView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function VersionActivityPuzzleViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return VersionActivityPuzzleViewContainer

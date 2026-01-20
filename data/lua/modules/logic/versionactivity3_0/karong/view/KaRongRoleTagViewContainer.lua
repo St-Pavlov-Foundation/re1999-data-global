@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.KaRongRoleTagViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/KaRongRoleTagViewContainer.lua
 
-local var_0_0 = class("KaRongRoleTagViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.karong.view.KaRongRoleTagViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local KaRongRoleTagViewContainer = class("KaRongRoleTagViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, KaRongRoleTagView.New())
+function KaRongRoleTagViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, KaRongRoleTagView.New())
+
+	return views
 end
 
-return var_0_0
+return KaRongRoleTagViewContainer

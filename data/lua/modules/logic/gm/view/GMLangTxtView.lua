@@ -1,179 +1,182 @@
-﻿module("modules.logic.gm.view.GMLangTxtView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMLangTxtView.lua
 
-local var_0_0 = class("GMLangTxtView", BaseView)
-local var_0_1 = 1
-local var_0_2 = 2
-local var_0_3 = 3
+module("modules.logic.gm.view.GMLangTxtView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnClose")
-	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnShow")
-	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnHide")
-	arg_1_0._btnDelete = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/title/btnDelete")
-	arg_1_0._rect = gohelper.findChild(arg_1_0.viewGO, "view").transform
-	arg_1_0._inputSearch = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "view/title/InputField")
-	arg_1_0._dropLangChange = gohelper.findChildDropdown(arg_1_0.viewGO, "view/title/dropdown_lang")
+local GMLangTxtView = class("GMLangTxtView", BaseView)
+local StateShow = 1
+local StateHide = 2
+local StateTweening = 3
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "view/right/scroll/Viewport/content/item")
+function GMLangTxtView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnClose")
+	self._btnShow = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnShow")
+	self._btnHide = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnHide")
+	self._btnDelete = gohelper.findChildButtonWithAudio(self.viewGO, "view/title/btnDelete")
+	self._rect = gohelper.findChild(self.viewGO, "view").transform
+	self._inputSearch = gohelper.findChildTextMeshInputField(self.viewGO, "view/title/InputField")
+	self._dropLangChange = gohelper.findChildDropdown(self.viewGO, "view/title/dropdown_lang")
 
-	arg_1_0._goLangItemList = {}
+	local _goLangItem = gohelper.findChild(self.viewGO, "view/right/scroll/Viewport/content/item")
 
-	local var_1_1 = GameConfig:GetSupportedLangs()
-	local var_1_2 = var_1_1.Length
+	self._goLangItemList = {}
 
-	arg_1_0.supportLangs = {}
+	local cSharpArr = GameConfig:GetSupportedLangs()
+	local length = cSharpArr.Length
 
-	for iter_1_0 = 0, var_1_2 - 1 do
-		table.insert(arg_1_0.supportLangs, LangSettings.shortcutTab[var_1_1[iter_1_0]])
+	self.supportLangs = {}
 
-		local var_1_3 = GMLangTxtLangItem.New()
+	for i = 0, length - 1 do
+		table.insert(self.supportLangs, LangSettings.shortcutTab[cSharpArr[i]])
 
-		var_1_3:init(gohelper.cloneInPlace(var_1_0, "item"), LangSettings.shortcutTab[var_1_1[iter_1_0]])
-		table.insert(arg_1_0._goLangItemList, var_1_3)
+		local item = GMLangTxtLangItem.New()
+
+		item:init(gohelper.cloneInPlace(_goLangItem, "item"), LangSettings.shortcutTab[cSharpArr[i]])
+		table.insert(self._goLangItemList, item)
 	end
 
-	arg_1_0._dropLangChange:ClearOptions()
-	arg_1_0._dropLangChange:AddOptions(arg_1_0.supportLangs)
+	self._dropLangChange:ClearOptions()
+	self._dropLangChange:AddOptions(self.supportLangs)
 
-	local var_1_4 = LangSettings.instance:getCurLangShortcut()
+	local curLang = LangSettings.instance:getCurLangShortcut()
 
-	for iter_1_1 = 1, #arg_1_0.supportLangs do
-		if arg_1_0.supportLangs[iter_1_1] == var_1_4 then
-			arg_1_0._dropLangChange:SetValue(iter_1_1 - 1)
+	for i = 1, #self.supportLangs do
+		if self.supportLangs[i] == curLang then
+			self._dropLangChange:SetValue(i - 1)
 
 			break
 		end
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnShow:AddClickListener(arg_2_0._onClickShow, arg_2_0)
-	arg_2_0._btnHide:AddClickListener(arg_2_0._onClickHide, arg_2_0)
-	arg_2_0._btnDelete:AddClickListener(arg_2_0._onClickDelete, arg_2_0)
-	arg_2_0._inputSearch:AddOnValueChanged(arg_2_0._onSearchValueChanged, arg_2_0)
-	arg_2_0._inputSearch:AddOnEndEdit(arg_2_0._onSearchEndEdit, arg_2_0)
-	arg_2_0._dropLangChange:AddOnValueChanged(arg_2_0._onLangChange, arg_2_0)
+function GMLangTxtView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnShow:AddClickListener(self._onClickShow, self)
+	self._btnHide:AddClickListener(self._onClickHide, self)
+	self._btnDelete:AddClickListener(self._onClickDelete, self)
+	self._inputSearch:AddOnValueChanged(self._onSearchValueChanged, self)
+	self._inputSearch:AddOnEndEdit(self._onSearchEndEdit, self)
+	self._dropLangChange:AddOnValueChanged(self._onLangChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnShow:RemoveClickListener()
-	arg_3_0._btnHide:RemoveClickListener()
-	arg_3_0._btnDelete:RemoveClickListener()
+function GMLangTxtView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnShow:RemoveClickListener()
+	self._btnHide:RemoveClickListener()
+	self._btnDelete:RemoveClickListener()
 
-	if arg_3_0._inputSearch then
-		arg_3_0._inputSearch:RemoveOnValueChanged()
-		arg_3_0._inputSearch:RemoveOnEndEdit()
+	if self._inputSearch then
+		self._inputSearch:RemoveOnValueChanged()
+		self._inputSearch:RemoveOnEndEdit()
 	end
 
-	arg_3_0._dropLangChange:RemoveOnValueChanged()
+	self._dropLangChange:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._state = var_0_1
+function GMLangTxtView:onOpen()
+	self._state = StateShow
 
-	arg_4_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0.onClose(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._goLangItemList) do
-		iter_5_1:onClose()
+function GMLangTxtView:onClose()
+	for i, item in ipairs(self._goLangItemList) do
+		item:onClose()
 	end
 
-	if arg_5_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_5_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_5_0._tweenId = nil
-	end
-end
-
-function var_0_0._onClickShow(arg_6_0)
-	if arg_6_0._state == var_0_2 then
-		arg_6_0._state = var_0_3
-		arg_6_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_6_0._rect, 0, 0.2, arg_6_0._onShow, arg_6_0)
+		self._tweenId = nil
 	end
 end
 
-function var_0_0._onShow(arg_7_0)
-	arg_7_0._tweenId = nil
-	arg_7_0._state = var_0_1
-
-	arg_7_0:_updateBtns()
-end
-
-function var_0_0._onClickHide(arg_8_0)
-	if arg_8_0._state == var_0_1 then
-		arg_8_0._state = var_0_3
-		arg_8_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_8_0._rect, -1740, 0.2, arg_8_0._onHide, arg_8_0)
+function GMLangTxtView:_onClickShow()
+	if self._state == StateHide then
+		self._state = StateTweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, 0, 0.2, self._onShow, self)
 	end
 end
 
-function var_0_0._onClickDelete(arg_9_0)
+function GMLangTxtView:_onShow()
+	self._tweenId = nil
+	self._state = StateShow
+
+	self:_updateBtns()
+end
+
+function GMLangTxtView:_onClickHide()
+	if self._state == StateShow then
+		self._state = StateTweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, -1740, 0.2, self._onHide, self)
+	end
+end
+
+function GMLangTxtView:_onClickDelete()
 	GMLangController.instance:clearInUse()
 end
 
-function var_0_0._onSearchValueChanged(arg_10_0, arg_10_1)
-	GMLangTxtModel.instance:setSearch(arg_10_1)
+function GMLangTxtView:_onSearchValueChanged(value)
+	GMLangTxtModel.instance:setSearch(value)
 end
 
-function GMLangTxtModel._onSearchEndEdit(arg_11_0, arg_11_1)
+function GMLangTxtModel:_onSearchEndEdit(value)
 	return
 end
 
-function var_0_0._onHide(arg_12_0)
-	arg_12_0._tweenId = nil
-	arg_12_0._state = var_0_2
+function GMLangTxtView:_onHide()
+	self._tweenId = nil
+	self._state = StateHide
 
-	arg_12_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._updateBtns(arg_13_0)
-	gohelper.setActive(arg_13_0._btnShow.gameObject, arg_13_0._state == var_0_2)
-	gohelper.setActive(arg_13_0._btnHide.gameObject, arg_13_0._state == var_0_1)
+function GMLangTxtView:_updateBtns()
+	gohelper.setActive(self._btnShow.gameObject, self._state == StateHide)
+	gohelper.setActive(self._btnHide.gameObject, self._state == StateShow)
 end
 
-function var_0_0._onLangChange(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.supportLangs[arg_14_1 + 1]
-	local var_14_1 = ViewMgr.instance:getUIRoot()
-	local var_14_2 = GMLangController.instance:getInUseDic()
-	local var_14_3 = var_14_1:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+function GMLangTxtView:_onLangChange(index)
+	local selectLang = self.supportLangs[index + 1]
+	local root = ViewMgr.instance:getUIRoot()
+	local inUseDic = GMLangController.instance:getInUseDic()
+	local listTMP = root:GetComponentsInChildren(gohelper.Type_TextMesh, true)
 
-	for iter_14_0 = 0, var_14_3.Length - 1 do
-		local var_14_4 = var_14_3[iter_14_0]
-		local var_14_5 = var_14_2[var_14_4.text]
+	for i = 0, listTMP.Length - 1 do
+		local tmpText = listTMP[i]
+		local txt = tmpText.text
+		local data = inUseDic[txt]
 
-		if var_14_5 then
-			var_14_4.text = var_14_5[var_14_0]
+		if data then
+			tmpText.text = data[selectLang]
 		end
 	end
 
-	GMLangController.instance:changeLang(var_14_0)
+	GMLangController.instance:changeLang(selectLang)
 
-	local var_14_6 = {}
-	local var_14_7 = var_14_1:GetComponentsInChildren(typeof(SLFramework.UGUI.SingleImage), true)
+	local tmpPathDic = {}
+	local listImg = root:GetComponentsInChildren(typeof(SLFramework.UGUI.SingleImage), true)
 
-	for iter_14_1 = 0, var_14_7.Length - 1 do
-		local var_14_8 = var_14_7[iter_14_1]
+	for i = 0, listImg.Length - 1 do
+		local img = listImg[i]
 
-		var_14_6[var_14_8] = var_14_8.curImageUrl
+		tmpPathDic[img] = img.curImageUrl
 
-		var_14_8:UnLoadImage()
+		img:UnLoadImage()
 	end
 
 	SLFramework.UnityHelper.ResGC()
 
-	for iter_14_2, iter_14_3 in pairs(var_14_6) do
-		if not string.nilorempty(iter_14_3) then
-			iter_14_2:LoadImage(iter_14_3)
+	for img, path in pairs(tmpPathDic) do
+		if not string.nilorempty(path) then
+			img:LoadImage(path)
 		end
 	end
 end
 
-function var_0_0.onLangTxtClick(arg_15_0, arg_15_1)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._goLangItemList) do
-		iter_15_1:updateStr(arg_15_1)
+function GMLangTxtView:onLangTxtClick(langStr)
+	for i, item in ipairs(self._goLangItemList) do
+		item:updateStr(langStr)
 	end
 end
 
-return var_0_0
+return GMLangTxtView

@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.state.YaXianStateBattle", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/state/YaXianStateBattle.lua
 
-local var_0_0 = class("YaXianStateBattle", YaXianStateBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.state.YaXianStateBattle", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0.stateType = YaXianGameEnum.GameStateType.Battle
+local YaXianStateBattle = class("YaXianStateBattle", YaXianStateBase)
+
+function YaXianStateBattle:start()
+	self.stateType = YaXianGameEnum.GameStateType.Battle
 
 	logNormal("YaXianStateBattle start")
 
 	if YaXianGameModel.instance:gameIsLoadDone() then
-		arg_1_0:startBattle()
+		self:startBattle()
 	else
-		YaXianGameController.instance:registerCallback(YaXianEvent.OnGameLoadDone, arg_1_0.onGameLoadDone, arg_1_0)
+		YaXianGameController.instance:registerCallback(YaXianEvent.OnGameLoadDone, self.onGameLoadDone, self)
 	end
 end
 
-function var_0_0.onGameLoadDone(arg_2_0)
-	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, arg_2_0.onGameLoadDone, arg_2_0)
-	arg_2_0:startBattle()
+function YaXianStateBattle:onGameLoadDone()
+	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, self.onGameLoadDone, self)
+	self:startBattle()
 end
 
-function var_0_0.startBattle(arg_3_0)
-	arg_3_0.playerInteractItem = YaXianGameController.instance:getPlayerInteractItem()
-	arg_3_0.enemyInteractItem = YaXianGameController.instance:getInteractItem(arg_3_0.originData.interactId)
+function YaXianStateBattle:startBattle()
+	self.playerInteractItem = YaXianGameController.instance:getPlayerInteractItem()
+	self.enemyInteractItem = YaXianGameController.instance:getInteractItem(self.originData.interactId)
 
 	AudioMgr.instance:trigger(AudioEnum.YaXian.Fight)
-	arg_3_0.playerInteractItem:showEffect(YaXianGameEnum.EffectType.Fight)
-	arg_3_0.enemyInteractItem:showEffect(YaXianGameEnum.EffectType.Fight, arg_3_0.openTipView, arg_3_0)
+	self.playerInteractItem:showEffect(YaXianGameEnum.EffectType.Fight)
+	self.enemyInteractItem:showEffect(YaXianGameEnum.EffectType.Fight, self.openTipView, self)
 end
 
-function var_0_0.openTipView(arg_4_0)
+function YaXianStateBattle:openTipView()
 	ViewMgr.instance:openView(ViewName.YaXianGameTipView, {
-		interactId = arg_4_0.originData.interactId
+		interactId = self.originData.interactId
 	})
 end
 
-function var_0_0.dispose(arg_5_0)
-	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, arg_5_0.onGameLoadDone, arg_5_0)
-	arg_5_0.playerInteractItem:cancelEffectTask()
-	arg_5_0.enemyInteractItem:cancelEffectTask()
-	var_0_0.super.dispose(arg_5_0)
+function YaXianStateBattle:dispose()
+	YaXianGameController.instance:unregisterCallback(YaXianEvent.OnGameLoadDone, self.onGameLoadDone, self)
+	self.playerInteractItem:cancelEffectTask()
+	self.enemyInteractItem:cancelEffectTask()
+	YaXianStateBattle.super.dispose(self)
 end
 
-return var_0_0
+return YaXianStateBattle

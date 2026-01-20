@@ -1,88 +1,90 @@
-﻿module("modules.logic.versionactivity1_4.act132.view.Activity132CollectItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/view/Activity132CollectItem.lua
 
-local var_0_0 = class("Activity132CollectItem", UserDataDispose)
+module("modules.logic.versionactivity1_4.act132.view.Activity132CollectItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local Activity132CollectItem = class("Activity132CollectItem", UserDataDispose)
 
-	arg_1_0._viewGO = arg_1_1
-	arg_1_0._goSelect = gohelper.findChild(arg_1_1, "beselected")
-	arg_1_0._goUnSelected = gohelper.findChild(arg_1_1, "unselected")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_1, "btnclick")
-	arg_1_0._selectNameTxt = gohelper.findChildTextMesh(arg_1_0._goSelect, "chapternamecn")
-	arg_1_0._selectNameEnTxt = gohelper.findChildTextMesh(arg_1_0._goSelect, "chapternameen")
-	arg_1_0._unselectNameTxt = gohelper.findChildTextMesh(arg_1_0._goUnSelected, "chapternamecn")
-	arg_1_0._unselectNameEnTxt = gohelper.findChildTextMesh(arg_1_0._goUnSelected, "chapternameen")
-	arg_1_0.goRedDot = gohelper.findChild(arg_1_1, "#go_reddot")
+function Activity132CollectItem:ctor(go)
+	self:__onInit()
 
-	arg_1_0:addClickCb(arg_1_0._btnclick, arg_1_0.onClickBtn, arg_1_0)
+	self._viewGO = go
+	self._goSelect = gohelper.findChild(go, "beselected")
+	self._goUnSelected = gohelper.findChild(go, "unselected")
+	self._btnclick = gohelper.findChildButtonWithAudio(go, "btnclick")
+	self._selectNameTxt = gohelper.findChildTextMesh(self._goSelect, "chapternamecn")
+	self._selectNameEnTxt = gohelper.findChildTextMesh(self._goSelect, "chapternameen")
+	self._unselectNameTxt = gohelper.findChildTextMesh(self._goUnSelected, "chapternamecn")
+	self._unselectNameEnTxt = gohelper.findChildTextMesh(self._goUnSelected, "chapternameen")
+	self.goRedDot = gohelper.findChild(go, "#go_reddot")
+
+	self:addClickCb(self._btnclick, self.onClickBtn, self)
 end
 
-function var_0_0.onClickBtn(arg_2_0)
-	if not arg_2_0.data or arg_2_0.isSelect then
+function Activity132CollectItem:onClickBtn()
+	if not self.data or self.isSelect then
 		return
 	end
 
-	Activity132Model.instance:setSelectCollectId(arg_2_0.data.activityId, arg_2_0.data.collectId)
+	Activity132Model.instance:setSelectCollectId(self.data.activityId, self.data.collectId)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.data = arg_3_1
+function Activity132CollectItem:setData(data, selectId)
+	self.data = data
 
-	if not arg_3_1 then
-		gohelper.setActive(arg_3_0._viewGO, false)
+	if not data then
+		gohelper.setActive(self._viewGO, false)
 
-		if arg_3_0._redDot then
-			arg_3_0._redDot:setId()
-			arg_3_0._redDot:refreshDot()
+		if self._redDot then
+			self._redDot:setId()
+			self._redDot:refreshDot()
 		end
 
 		return
 	end
 
-	gohelper.setActive(arg_3_0._viewGO, true)
+	gohelper.setActive(self._viewGO, true)
 
-	local var_3_0 = arg_3_1:getName()
-	local var_3_1 = GameUtil.utf8sub(var_3_0, 1, 1)
-	local var_3_2 = ""
-	local var_3_3 = GameUtil.utf8len(var_3_0)
+	local name = data:getName()
+	local first = GameUtil.utf8sub(name, 1, 1)
+	local remain = ""
+	local nameLen = GameUtil.utf8len(name)
 
-	if var_3_3 >= 2 then
-		var_3_2 = GameUtil.utf8sub(var_3_0, 2, var_3_3 - 1)
+	if nameLen >= 2 then
+		remain = GameUtil.utf8sub(name, 2, nameLen - 1)
 	end
 
-	local var_3_4 = string.format("<size=46>%s</size>%s", var_3_1, var_3_2)
+	local rename = string.format("<size=46>%s</size>%s", first, remain)
 
-	arg_3_0._selectNameTxt.text = var_3_4
-	arg_3_0._selectNameEnTxt.text = arg_3_1.nameEn
-	arg_3_0._unselectNameTxt.text = var_3_4
-	arg_3_0._unselectNameEnTxt.text = arg_3_1.nameEn
+	self._selectNameTxt.text = rename
+	self._selectNameEnTxt.text = data.nameEn
+	self._unselectNameTxt.text = rename
+	self._unselectNameEnTxt.text = data.nameEn
 
-	arg_3_0:setSelectId(arg_3_2)
+	self:setSelectId(selectId)
 
-	if not arg_3_0._redDot then
-		arg_3_0._redDot = RedDotController.instance:addRedDot(arg_3_0.goRedDot, 1081, arg_3_1.collectId)
+	if not self._redDot then
+		self._redDot = RedDotController.instance:addRedDot(self.goRedDot, 1081, data.collectId)
 	else
-		arg_3_0._redDot:setId(1081, arg_3_1.collectId)
-		arg_3_0._redDot:refreshDot()
+		self._redDot:setId(1081, data.collectId)
+		self._redDot:refreshDot()
 	end
 end
 
-function var_0_0.setSelectId(arg_4_0, arg_4_1)
-	if not arg_4_0.data then
+function Activity132CollectItem:setSelectId(selectId)
+	if not self.data then
 		return
 	end
 
-	local var_4_0 = arg_4_1 == arg_4_0.data.collectId
+	local isSelect = selectId == self.data.collectId
 
-	arg_4_0.isSelect = var_4_0
+	self.isSelect = isSelect
 
-	gohelper.setActive(arg_4_0._goSelect, var_4_0)
-	gohelper.setActive(arg_4_0._goUnSelected, not var_4_0)
+	gohelper.setActive(self._goSelect, isSelect)
+	gohelper.setActive(self._goUnSelected, not isSelect)
 end
 
-function var_0_0.destroy(arg_5_0)
-	arg_5_0:__onDispose()
+function Activity132CollectItem:destroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return Activity132CollectItem

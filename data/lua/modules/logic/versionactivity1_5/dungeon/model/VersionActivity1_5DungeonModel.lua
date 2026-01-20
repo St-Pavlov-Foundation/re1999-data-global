@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5DungeonModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/model/VersionActivity1_5DungeonModel.lua
 
-local var_0_0 = class("VersionActivity1_5DungeonModel", BaseModel)
+module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5DungeonModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_5DungeonModel = class("VersionActivity1_5DungeonModel", BaseModel)
+
+function VersionActivity1_5DungeonModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_5DungeonModel:reInit()
 	return
 end
 
-function var_0_0.init(arg_3_0)
-	arg_3_0.dispatchInfoDict = {}
-	arg_3_0.elementId2DispatchMoDict = {}
-	arg_3_0.dispatchedHeroDict = {}
-	arg_3_0.needCheckDispatchInfoList = {}
+function VersionActivity1_5DungeonModel:init()
+	self.dispatchInfoDict = {}
+	self.elementId2DispatchMoDict = {}
+	self.dispatchedHeroDict = {}
+	self.needCheckDispatchInfoList = {}
 end
 
-function var_0_0.checkDispatchFinish(arg_4_0)
-	local var_4_0 = #arg_4_0.needCheckDispatchInfoList
+function VersionActivity1_5DungeonModel:checkDispatchFinish()
+	local len = #self.needCheckDispatchInfoList
 
-	if var_4_0 <= 0 then
+	if len <= 0 then
 		return
 	end
 
-	local var_4_1 = false
+	local needDispatchEvent = false
 
-	for iter_4_0 = var_4_0, 1, -1 do
-		local var_4_2 = arg_4_0.needCheckDispatchInfoList[iter_4_0]
+	for index = len, 1, -1 do
+		local dispatchMo = self.needCheckDispatchInfoList[index]
 
-		if var_4_2:isFinish() then
-			var_4_1 = true
+		if dispatchMo:isFinish() then
+			needDispatchEvent = true
 
-			for iter_4_1, iter_4_2 in ipairs(var_4_2.heroIdList) do
-				arg_4_0.dispatchedHeroDict[iter_4_2] = nil
+			for _, heroId in ipairs(dispatchMo.heroIdList) do
+				self.dispatchedHeroDict[heroId] = nil
 			end
 
-			table.remove(arg_4_0.needCheckDispatchInfoList, iter_4_0)
+			table.remove(self.needCheckDispatchInfoList, index)
 		end
 	end
 
-	if var_4_1 then
+	if needDispatchEvent then
 		VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.OnDispatchFinish)
 		RedDotRpc.instance:sendGetRedDotInfosRequest({
 			RedDotEnum.DotNode.V1a5DungeonExploreTask
@@ -48,145 +50,145 @@ function var_0_0.checkDispatchFinish(arg_4_0)
 	end
 end
 
-function var_0_0.addDispatchInfos(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_0 = arg_5_0.dispatchInfoDict[iter_5_1.id]
+function VersionActivity1_5DungeonModel:addDispatchInfos(dispatchInfos)
+	for _, dispatchInfo in ipairs(dispatchInfos) do
+		local dispatchMo = self.dispatchInfoDict[dispatchInfo.id]
 
-		if not var_5_0 then
-			var_5_0 = VersionActivity1_5DispatchMo.New()
+		if not dispatchMo then
+			dispatchMo = VersionActivity1_5DispatchMo.New()
 
-			var_5_0:init(iter_5_1)
+			dispatchMo:init(dispatchInfo)
 
-			arg_5_0.dispatchInfoDict[iter_5_1.id] = var_5_0
+			self.dispatchInfoDict[dispatchInfo.id] = dispatchMo
 		else
-			var_5_0:update(iter_5_1)
+			dispatchMo:update(dispatchInfo)
 		end
 
-		if var_5_0:isRunning() then
-			for iter_5_2, iter_5_3 in ipairs(iter_5_1.heroIds) do
-				arg_5_0.dispatchedHeroDict[iter_5_3] = true
+		if dispatchMo:isRunning() then
+			for _, heroId in ipairs(dispatchInfo.heroIds) do
+				self.dispatchedHeroDict[heroId] = true
 			end
 
-			table.insert(arg_5_0.needCheckDispatchInfoList, var_5_0)
+			table.insert(self.needCheckDispatchInfoList, dispatchMo)
 		end
 	end
 end
 
-function var_0_0.addOneDispatchInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = VersionActivity1_5DispatchMo.New()
+function VersionActivity1_5DungeonModel:addOneDispatchInfo(dispatchId, endTime, heroIds)
+	local dispatchMo = VersionActivity1_5DispatchMo.New()
 
-	var_6_0:init({
-		id = arg_6_1,
-		endTime = arg_6_2,
-		heroIds = arg_6_3
+	dispatchMo:init({
+		id = dispatchId,
+		endTime = endTime,
+		heroIds = heroIds
 	})
 
-	arg_6_0.dispatchInfoDict[arg_6_1] = var_6_0
+	self.dispatchInfoDict[dispatchId] = dispatchMo
 
-	if var_6_0:isRunning() then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_3) do
-			arg_6_0.dispatchedHeroDict[iter_6_1] = true
+	if dispatchMo:isRunning() then
+		for _, heroId in ipairs(heroIds) do
+			self.dispatchedHeroDict[heroId] = true
 		end
 
-		table.insert(arg_6_0.needCheckDispatchInfoList, var_6_0)
+		table.insert(self.needCheckDispatchInfoList, dispatchMo)
 	end
 
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.AddDispatchInfo, arg_6_1)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.AddDispatchInfo, dispatchId)
 end
 
-function var_0_0.removeOneDispatchInfo(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.dispatchInfoDict[arg_7_1]
+function VersionActivity1_5DungeonModel:removeOneDispatchInfo(dispatchId)
+	local dispatchMo = self.dispatchInfoDict[dispatchId]
 
-	arg_7_0.dispatchInfoDict[arg_7_1] = nil
+	self.dispatchInfoDict[dispatchId] = nil
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0.heroIdList) do
-		arg_7_0.dispatchedHeroDict[iter_7_1] = nil
+	for _, heroId in ipairs(dispatchMo.heroIdList) do
+		self.dispatchedHeroDict[heroId] = nil
 	end
 
-	tabletool.removeValue(arg_7_0.needCheckDispatchInfoList, var_7_0)
+	tabletool.removeValue(self.needCheckDispatchInfoList, dispatchMo)
 
-	for iter_7_2, iter_7_3 in pairs(arg_7_0.elementId2DispatchMoDict) do
-		if iter_7_3.id == arg_7_1 then
-			arg_7_0.elementId2DispatchMoDict[iter_7_2] = nil
+	for elementId, _dispatchMo in pairs(self.elementId2DispatchMoDict) do
+		if _dispatchMo.id == dispatchId then
+			self.elementId2DispatchMoDict[elementId] = nil
 
 			break
 		end
 	end
 
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.RemoveDispatchInfo, arg_7_1)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.RemoveDispatchInfo, dispatchId)
 end
 
-function var_0_0.getDispatchMo(arg_8_0, arg_8_1)
-	return arg_8_0.dispatchInfoDict[arg_8_1]
+function VersionActivity1_5DungeonModel:getDispatchMo(dispatchId)
+	return self.dispatchInfoDict[dispatchId]
 end
 
-function var_0_0.getDispatchStatus(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.dispatchInfoDict[arg_9_1]
+function VersionActivity1_5DungeonModel:getDispatchStatus(dispatchId)
+	local dispatchMo = self.dispatchInfoDict[dispatchId]
 
-	if not var_9_0 then
+	if not dispatchMo then
 		return VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch
-	elseif var_9_0:isFinish() then
+	elseif dispatchMo:isFinish() then
 		return VersionActivity1_5DungeonEnum.DispatchStatus.Finished
 	else
 		return VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching
 	end
 end
 
-function var_0_0.isDispatched(arg_10_0, arg_10_1)
-	return arg_10_0.dispatchedHeroDict[arg_10_1]
+function VersionActivity1_5DungeonModel:isDispatched(heroId)
+	return self.dispatchedHeroDict[heroId]
 end
 
-function var_0_0.getElementCoList(arg_11_0, arg_11_1)
-	local var_11_0 = {}
-	local var_11_1 = {}
-	local var_11_2 = DungeonMapModel.instance:getAllElements()
+function VersionActivity1_5DungeonModel:getElementCoList(mapId)
+	local normalElementCoList = {}
+	local shareElementCoList = {}
+	local allElements = DungeonMapModel.instance:getAllElements()
 
-	for iter_11_0, iter_11_1 in pairs(var_11_2) do
-		local var_11_3 = DungeonConfig.instance:getChapterMapElement(iter_11_1)
-		local var_11_4 = lua_chapter_map.configDict[var_11_3.mapId]
+	for _, elementId in pairs(allElements) do
+		local elementCo = DungeonConfig.instance:getChapterMapElement(elementId)
+		local mapCo = lua_chapter_map.configDict[elementCo.mapId]
 
-		if var_11_4 and var_11_4.chapterId == VersionActivity1_5DungeonEnum.DungeonChapterId.Story then
-			local var_11_5 = lua_activity11502_episode_element.configDict[var_11_3.id]
+		if mapCo and mapCo.chapterId == VersionActivity1_5DungeonEnum.DungeonChapterId.Story then
+			local elementExtendCo = lua_activity11502_episode_element.configDict[elementCo.id]
 
-			if var_11_5 and not string.nilorempty(var_11_5.mapIds) then
-				local var_11_6 = string.splitToNumber(var_11_5.mapIds, "#")
+			if elementExtendCo and not string.nilorempty(elementExtendCo.mapIds) then
+				local belongMapIdList = string.splitToNumber(elementExtendCo.mapIds, "#")
 
-				if tabletool.indexOf(var_11_6, arg_11_1) then
-					table.insert(var_11_1, var_11_3)
+				if tabletool.indexOf(belongMapIdList, mapId) then
+					table.insert(shareElementCoList, elementCo)
 				end
-			elseif arg_11_1 == var_11_3.mapId then
-				table.insert(var_11_0, var_11_3)
+			elseif mapId == elementCo.mapId then
+				table.insert(normalElementCoList, elementCo)
 			end
 		end
 	end
 
-	return var_11_0, var_11_1
+	return normalElementCoList, shareElementCoList
 end
 
-function var_0_0.getDispatchMoByElementId(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.elementId2DispatchMoDict[arg_12_1]
+function VersionActivity1_5DungeonModel:getDispatchMoByElementId(elementId)
+	local dispatchMo = self.elementId2DispatchMoDict[elementId]
 
-	if var_12_0 then
-		return var_12_0
+	if dispatchMo then
+		return dispatchMo
 	end
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.dispatchInfoDict) do
-		if iter_12_1.config.elementId == arg_12_1 then
-			arg_12_0.elementId2DispatchMoDict[arg_12_1] = iter_12_1
+	for _, _dispatchMo in pairs(self.dispatchInfoDict) do
+		if _dispatchMo.config.elementId == elementId then
+			self.elementId2DispatchMoDict[elementId] = _dispatchMo
 
-			return iter_12_1
+			return _dispatchMo
 		end
 	end
 end
 
-function var_0_0.setShowInteractView(arg_13_0, arg_13_1)
-	arg_13_0.isShowInteractView = arg_13_1
+function VersionActivity1_5DungeonModel:setShowInteractView(isShow)
+	self.isShowInteractView = isShow
 end
 
-function var_0_0.checkIsShowInteractView(arg_14_0)
-	return arg_14_0.isShowInteractView
+function VersionActivity1_5DungeonModel:checkIsShowInteractView()
+	return self.isShowInteractView
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_5DungeonModel.instance = VersionActivity1_5DungeonModel.New()
 
-return var_0_0
+return VersionActivity1_5DungeonModel

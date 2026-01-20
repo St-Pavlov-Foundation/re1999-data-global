@@ -1,97 +1,99 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaSkillItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/MaLiAnNaSkillItem.lua
 
-local var_0_0 = class("MaLiAnNaSkillItem", ListScrollCellExtend)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaSkillItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Selected")
-	arg_1_0._imageSkill = gohelper.findChildImage(arg_1_0.viewGO, "image/#image_Skill")
-	arg_1_0._imageCD = gohelper.findChildImage(arg_1_0.viewGO, "#image_CD")
+local MaLiAnNaSkillItem = class("MaLiAnNaSkillItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MaLiAnNaSkillItem:onInitView()
+	self._goSelected = gohelper.findChild(self.viewGO, "#go_Selected")
+	self._imageSkill = gohelper.findChildImage(self.viewGO, "image/#image_Skill")
+	self._imageCD = gohelper.findChildImage(self.viewGO, "#image_CD")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MaLiAnNaSkillItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MaLiAnNaSkillItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = gohelper.getClickWithDefaultAudio(arg_4_0.viewGO)
+function MaLiAnNaSkillItem:_editableInitView()
+	self._click = gohelper.getClickWithDefaultAudio(self.viewGO)
 
-	arg_4_0._click:AddClickListener(arg_4_0.onClick, arg_4_0)
+	self._click:AddClickListener(self.onClick, self)
 
-	arg_4_0._goVx = gohelper.findChild(arg_4_0.viewGO, "vx_tips")
+	self._goVx = gohelper.findChild(self.viewGO, "vx_tips")
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function MaLiAnNaSkillItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function MaLiAnNaSkillItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onClick(arg_7_0)
-	if arg_7_0._skillData == nil or arg_7_0._skillData:isInCD() then
+function MaLiAnNaSkillItem:onClick()
+	if self._skillData == nil or self._skillData:isInCD() then
 		return
 	end
 
-	Activity201MaLiAnNaGameController.instance:dispatchEvent(Activity201MaLiAnNaEvent.OnSelectActiveSkill, arg_7_0._skillData)
+	Activity201MaLiAnNaGameController.instance:dispatchEvent(Activity201MaLiAnNaEvent.OnSelectActiveSkill, self._skillData)
 end
 
-function var_0_0.initData(arg_8_0, arg_8_1)
-	arg_8_0._skillData = arg_8_1
+function MaLiAnNaSkillItem:initData(data)
+	self._skillData = data
 
-	local var_8_0 = arg_8_0._skillData:getConfig()
+	local skillConfig = self._skillData:getConfig()
 
-	if var_8_0 and var_8_0.icon then
-		UISpriteSetMgr.instance:setMaliAnNaSprite(arg_8_0._imageSkill, var_8_0.icon)
+	if skillConfig and skillConfig.icon then
+		UISpriteSetMgr.instance:setMaliAnNaSprite(self._imageSkill, skillConfig.icon)
 	end
 end
 
-function var_0_0.updateInfo(arg_9_0, arg_9_1)
-	arg_9_0._skillData = arg_9_1
+function MaLiAnNaSkillItem:updateInfo(data)
+	self._skillData = data
 
-	if arg_9_0._skillData == nil then
+	if self._skillData == nil then
 		return
 	end
 
-	local var_9_0 = arg_9_1:getCDPercent()
+	local value = data:getCDPercent()
 
-	if arg_9_0._cdValue == nil or arg_9_0._cdValue ~= var_9_0 then
-		arg_9_0._imageCD.fillAmount = var_9_0
+	if self._cdValue == nil or self._cdValue ~= value then
+		self._imageCD.fillAmount = value
 
-		if arg_9_0._cdValue ~= nil and var_9_0 <= 0 then
+		if self._cdValue ~= nil and value <= 0 then
 			AudioMgr.instance:trigger(AudioEnum3_0.MaLiAnNa.play_ui_activity_level_chosen)
 		end
 
-		gohelper.setActive(arg_9_0._goVx, var_9_0 <= 0)
+		gohelper.setActive(self._goVx, value <= 0)
 
-		arg_9_0._cdValue = var_9_0
+		self._cdValue = value
 	end
 end
 
-function var_0_0.refreshSelect(arg_10_0, arg_10_1)
-	if arg_10_1 == nil then
-		gohelper.setActive(arg_10_0._goSelected, false)
+function MaLiAnNaSkillItem:refreshSelect(skillData)
+	if skillData == nil then
+		gohelper.setActive(self._goSelected, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0._goSelected, arg_10_0._skillData._id == arg_10_1._id)
+	gohelper.setActive(self._goSelected, self._skillData._id == skillData._id)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	if arg_11_0._click then
-		arg_11_0._click:RemoveClickListener()
+function MaLiAnNaSkillItem:onDestroyView()
+	if self._click then
+		self._click:RemoveClickListener()
 
-		arg_11_0._click = nil
+		self._click = nil
 	end
 end
 
-return var_0_0
+return MaLiAnNaSkillItem

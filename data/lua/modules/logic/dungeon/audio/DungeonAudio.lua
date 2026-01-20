@@ -1,7 +1,9 @@
-﻿module("modules.logic.dungeon.audio.DungeonAudio", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/audio/DungeonAudio.lua
 
-local var_0_0 = class("DungeonAudio")
-local var_0_1 = {
+module("modules.logic.dungeon.audio.DungeonAudio", package.seeall)
+
+local DungeonAudio = class("DungeonAudio")
+local audioConfig = {
 	[DungeonEnum.ChapterListType.Story] = {
 		changeCategory = AudioEnum.UI.UI_checkpoint_story_Click,
 		openChapter = AudioEnum.UI.UI_checkpoint_story_open,
@@ -32,40 +34,42 @@ local var_0_1 = {
 	}
 }
 
-function var_0_0._trigger(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:getChapterListType()
-	local var_1_1 = var_0_1[var_1_0] and var_0_1[var_1_0][arg_1_1]
+function DungeonAudio:_trigger(key)
+	local type = self:getChapterListType()
+	local id = audioConfig[type] and audioConfig[type][key]
 
-	if var_1_1 then
-		AudioMgr.instance:trigger(var_1_1)
+	if id then
+		AudioMgr.instance:trigger(id)
 	end
 end
 
-function var_0_0.changeCategory(arg_2_0)
-	arg_2_0:_trigger("changeCategory")
+function DungeonAudio:changeCategory()
+	self:_trigger("changeCategory")
 end
 
-function var_0_0.openChapter(arg_3_0)
-	arg_3_0:_trigger("openChapter")
+function DungeonAudio:openChapter()
+	self:_trigger("openChapter")
 end
 
-function var_0_0.closeChapter(arg_4_0)
-	arg_4_0:_trigger("closeChapter")
+function DungeonAudio:closeChapter()
+	self:_trigger("closeChapter")
 end
 
-function var_0_0.openChapterAmbientSound(arg_5_0)
-	local var_5_0 = arg_5_0:getChapterAmbientMusic()
+function DungeonAudio:openChapterAmbientSound()
+	local id = self:getChapterAmbientMusic()
 
-	if var_5_0 <= 0 then
+	if id <= 0 then
 		return
 	end
 
-	AudioBgmManager.instance:modifyBgm(AudioBgmEnum.Layer.DungeonAmbientSound, var_5_0, AudioEnum.UI.stop_ui_noise_allarea)
-	AudioMgr.instance:trigger(var_5_0)
+	AudioBgmManager.instance:modifyBgm(AudioBgmEnum.Layer.DungeonAmbientSound, id, AudioEnum.UI.stop_ui_noise_allarea)
+	AudioMgr.instance:trigger(id)
 end
 
-function var_0_0.closeChapterAmbientSound(arg_6_0, arg_6_1)
-	if arg_6_0:getChapterAmbientMusic(arg_6_1) <= 0 then
+function DungeonAudio:closeChapterAmbientSound(chapterId)
+	local id = self:getChapterAmbientMusic(chapterId)
+
+	if id <= 0 then
 		return
 	end
 
@@ -73,40 +77,40 @@ function var_0_0.closeChapterAmbientSound(arg_6_0, arg_6_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 end
 
-function var_0_0.chapterListBoundary(arg_7_0)
-	arg_7_0:_trigger("chapterListBoundary")
+function DungeonAudio:chapterListBoundary()
+	self:_trigger("chapterListBoundary")
 end
 
-function var_0_0.cardPass(arg_8_0)
-	arg_8_0:_trigger("cardPass")
+function DungeonAudio:cardPass()
+	self:_trigger("cardPass")
 end
 
-function var_0_0.getChapterListType(arg_9_0)
-	local var_9_0, var_9_1, var_9_2, var_9_3 = DungeonModel.instance:getChapterListTypes()
+function DungeonAudio:getChapterListType()
+	local isNormalType, isResourceType, isBreakType, isWeekWalkType = DungeonModel.instance:getChapterListTypes()
 
-	if var_9_0 then
+	if isNormalType then
 		return DungeonEnum.ChapterListType.Story
 	end
 
-	if var_9_1 then
+	if isResourceType then
 		return DungeonEnum.ChapterListType.Resource
 	end
 
-	if var_9_2 then
+	if isBreakType then
 		return DungeonEnum.ChapterListType.Insight
 	end
 
-	if var_9_3 then
+	if isWeekWalkType then
 		return DungeonEnum.ChapterListType.WeekWalk
 	end
 end
 
-function var_0_0.getChapterAmbientMusic(arg_10_0, arg_10_1)
-	local var_10_0 = DungeonConfig.instance:getChapterCO(arg_10_1 or DungeonModel.instance.curLookChapterId)
+function DungeonAudio:getChapterAmbientMusic(chapterId)
+	local co = DungeonConfig.instance:getChapterCO(chapterId or DungeonModel.instance.curLookChapterId)
 
-	return var_10_0 and var_10_0.ambientMusic or 0
+	return co and co.ambientMusic or 0
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonAudio.instance = DungeonAudio.New()
 
-return var_0_0
+return DungeonAudio

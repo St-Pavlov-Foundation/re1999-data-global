@@ -1,81 +1,83 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeInstrumentItem.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeInstrumentItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeInstrumentItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._imagecir = gohelper.findChildImage(arg_1_0.viewGO, "#image_cir")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_click")
+local VersionActivity2_4MusicFreeInstrumentItem = class("VersionActivity2_4MusicFreeInstrumentItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeInstrumentItem:onInitView()
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#image_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._imagecir = gohelper.findChildImage(self.viewGO, "#image_cir")
+	self._goclick = gohelper.findChild(self.viewGO, "#go_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_4MusicFreeInstrumentItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_4MusicFreeInstrumentItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._clickEffect = gohelper.findChild(arg_4_0.viewGO, "#click")
+function VersionActivity2_4MusicFreeInstrumentItem:_editableInitView()
+	self._clickEffect = gohelper.findChild(self.viewGO, "#click")
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goclick, VersionActivity2_4MusicTouchComp, {
-		callback = arg_4_0._onClickDown,
-		callbackTarget = arg_4_0
+	MonoHelper.addNoUpdateLuaComOnceToGo(self._goclick, VersionActivity2_4MusicTouchComp, {
+		callback = self._onClickDown,
+		callbackTarget = self
 	})
 end
 
-function var_0_0._onClickDown(arg_5_0)
-	local var_5_0 = arg_5_0:getNoteAudioId(1)
+function VersionActivity2_4MusicFreeInstrumentItem:_onClickDown()
+	local audioId = self:getNoteAudioId(1)
 
-	if var_5_0 == nil then
+	if audioId == nil then
 		return
 	end
 
-	AudioMgr.instance:trigger(var_5_0)
-	gohelper.setActive(arg_5_0._clickEffect, false)
-	gohelper.setActive(arg_5_0._clickEffect, true)
+	AudioMgr.instance:trigger(audioId)
+	gohelper.setActive(self._clickEffect, false)
+	gohelper.setActive(self._clickEffect, true)
 
 	if not VersionActivity2_4MusicFreeModel.instance:isRecording() then
 		return
 	end
 
-	VersionActivity2_4MusicFreeModel.instance:addNote(var_5_0)
+	VersionActivity2_4MusicFreeModel.instance:addNote(audioId)
 end
 
-function var_0_0.getNoteAudioId(arg_6_0, arg_6_1)
-	local var_6_0 = Activity179Config.instance:getNoteConfig(arg_6_0._mo.id, arg_6_1)
+function VersionActivity2_4MusicFreeInstrumentItem:getNoteAudioId(index)
+	local config = Activity179Config.instance:getNoteConfig(self._mo.id, index)
 
-	return var_6_0 and var_6_0.resource
+	return config and config.resource
 end
 
-function var_0_0._editableAddEvents(arg_7_0)
+function VersionActivity2_4MusicFreeInstrumentItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_8_0)
+function VersionActivity2_4MusicFreeInstrumentItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._mo = arg_9_1
-	arg_9_0._txtname.text = arg_9_1.name
+function VersionActivity2_4MusicFreeInstrumentItem:onUpdateMO(mo)
+	self._mo = mo
+	self._txtname.text = mo.name
 
-	UISpriteSetMgr.instance:setMusicSprite(arg_9_0._imagecir, "v2a4_bakaluoer_freeinstrument_dianji_" .. arg_9_1.icon)
-	UISpriteSetMgr.instance:setMusicSprite(arg_9_0._imageicon, "v2a4_bakaluoer_freeinstrument_" .. arg_9_1.icon)
+	UISpriteSetMgr.instance:setMusicSprite(self._imagecir, "v2a4_bakaluoer_freeinstrument_dianji_" .. mo.icon)
+	UISpriteSetMgr.instance:setMusicSprite(self._imageicon, "v2a4_bakaluoer_freeinstrument_" .. mo.icon)
 end
 
-function var_0_0.onSelect(arg_10_0, arg_10_1)
+function VersionActivity2_4MusicFreeInstrumentItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function VersionActivity2_4MusicFreeInstrumentItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeInstrumentItem

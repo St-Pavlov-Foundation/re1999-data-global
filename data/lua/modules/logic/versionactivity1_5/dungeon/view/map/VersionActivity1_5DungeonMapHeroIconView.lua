@@ -1,255 +1,260 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapHeroIconView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/map/VersionActivity1_5DungeonMapHeroIconView.lua
 
-local var_0_0 = class("VersionActivity1_5DungeonMapHeroIconView", BaseView)
+module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapHeroIconView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gomapdirection = gohelper.findChild(arg_1_0.viewGO, "#go_mapdirection")
-	arg_1_0._goherorightitem = gohelper.findChild(arg_1_0.viewGO, "#go_mapdirection/#go_rightitem")
-	arg_1_0._goheroleftitem = gohelper.findChild(arg_1_0.viewGO, "#go_mapdirection/#go_leftitem")
-	arg_1_0._goherotopitem = gohelper.findChild(arg_1_0.viewGO, "#go_mapdirection/#go_topitem")
-	arg_1_0._goherobottomitem = gohelper.findChild(arg_1_0.viewGO, "#go_mapdirection/#go_bottomitem")
+local VersionActivity1_5DungeonMapHeroIconView = class("VersionActivity1_5DungeonMapHeroIconView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_5DungeonMapHeroIconView:onInitView()
+	self._gomapdirection = gohelper.findChild(self.viewGO, "#go_mapdirection")
+	self._goherorightitem = gohelper.findChild(self.viewGO, "#go_mapdirection/#go_rightitem")
+	self._goheroleftitem = gohelper.findChild(self.viewGO, "#go_mapdirection/#go_leftitem")
+	self._goherotopitem = gohelper.findChild(self.viewGO, "#go_mapdirection/#go_topitem")
+	self._goherobottomitem = gohelper.findChild(self.viewGO, "#go_mapdirection/#go_bottomitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_5DungeonMapHeroIconView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_5DungeonMapHeroIconView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.heroItemDict = {}
-	arg_4_0.dirToFocusElementDict = {
+function VersionActivity1_5DungeonMapHeroIconView:_editableInitView()
+	self.heroItemDict = {}
+	self.dirToFocusElementDict = {
 		[VersionActivity1_5DungeonEnum.MapDir.Right] = {},
 		[VersionActivity1_5DungeonEnum.MapDir.Left] = {},
 		[VersionActivity1_5DungeonEnum.MapDir.Top] = {},
 		[VersionActivity1_5DungeonEnum.MapDir.Bottom] = {}
 	}
-	arg_4_0.focusElementDataPool = {}
+	self.focusElementDataPool = {}
 
-	arg_4_0:createHeroItem(arg_4_0._goherorightitem, VersionActivity1_5DungeonEnum.MapDir.Right)
-	arg_4_0:createHeroItem(arg_4_0._goheroleftitem, VersionActivity1_5DungeonEnum.MapDir.Left)
-	arg_4_0:createHeroItem(arg_4_0._goherotopitem, VersionActivity1_5DungeonEnum.MapDir.Top)
-	arg_4_0:createHeroItem(arg_4_0._goherobottomitem, VersionActivity1_5DungeonEnum.MapDir.Bottom)
+	self:createHeroItem(self._goherorightitem, VersionActivity1_5DungeonEnum.MapDir.Right)
+	self:createHeroItem(self._goheroleftitem, VersionActivity1_5DungeonEnum.MapDir.Left)
+	self:createHeroItem(self._goherotopitem, VersionActivity1_5DungeonEnum.MapDir.Top)
+	self:createHeroItem(self._goherobottomitem, VersionActivity1_5DungeonEnum.MapDir.Bottom)
 
-	arg_4_0.taskMoList = {}
+	self.taskMoList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(VersionActivity1_5RevivalTaskModel.instance:getTaskMoList() or {}) do
-		if not iter_4_1:isExploreTask() then
-			table.insert(arg_4_0.taskMoList, iter_4_1)
+	for _, taskMo in ipairs(VersionActivity1_5RevivalTaskModel.instance:getTaskMoList() or {}) do
+		if not taskMo:isExploreTask() then
+			table.insert(self.taskMoList, taskMo)
 		end
 	end
 
-	arg_4_0.mapSceneElementsView = arg_4_0.viewContainer.mapSceneElements
-	arg_4_0.mainCamera = CameraMgr.instance:getMainCamera()
-	arg_4_0._tempVector = Vector3()
-	arg_4_0.loadedElements = false
-	arg_4_0.canShowHeroIcon = true
+	self.mapSceneElementsView = self.viewContainer.mapSceneElements
+	self.mainCamera = CameraMgr.instance:getMainCamera()
+	self._tempVector = Vector3()
+	self.loadedElements = false
+	self.canShowHeroIcon = true
 
-	arg_4_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnHideInteractUI, arg_4_0.onHideInteractUI, arg_4_0)
-	arg_4_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnClickElement, arg_4_0.onClickElement, arg_4_0)
-	arg_4_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnMapPosChanged, arg_4_0.onMapPosChanged, arg_4_0)
-	arg_4_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnRemoveElement, arg_4_0.onRemoveElement, arg_4_0)
-	arg_4_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnInitElements, arg_4_0.onInitElements, arg_4_0, LuaEventSystem.Low)
-	arg_4_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, arg_4_0.onDisposeOldMap, arg_4_0)
-	arg_4_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeScene, arg_4_0.onDisposeScene, arg_4_0)
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0.onOpenView, arg_4_0)
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0.onCloseView, arg_4_0)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnHideInteractUI, self.onHideInteractUI, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnClickElement, self.onClickElement, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnMapPosChanged, self.onMapPosChanged, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnRemoveElement, self.onRemoveElement, self)
+	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnInitElements, self.onInitElements, self, LuaEventSystem.Low)
+	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeOldMap, self.onDisposeOldMap, self)
+	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnDisposeScene, self.onDisposeScene, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 end
 
-function var_0_0.onClickElement(arg_5_0)
-	arg_5_0:hideMapDir()
+function VersionActivity1_5DungeonMapHeroIconView:onClickElement()
+	self:hideMapDir()
 end
 
-function var_0_0.onHideInteractUI(arg_6_0)
-	arg_6_0:showMapDir()
+function VersionActivity1_5DungeonMapHeroIconView:onHideInteractUI()
+	self:showMapDir()
 end
 
-function var_0_0.onOpenView(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.VersionActivity1_5DungeonMapLevelView then
-		arg_7_0:hideMapDir()
+function VersionActivity1_5DungeonMapHeroIconView:onOpenView(viewName)
+	if viewName == ViewName.VersionActivity1_5DungeonMapLevelView then
+		self:hideMapDir()
 	end
 end
 
-function var_0_0.onCloseView(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.VersionActivity1_5DungeonMapLevelView then
-		arg_8_0:showMapDir()
+function VersionActivity1_5DungeonMapHeroIconView:onCloseView(viewName)
+	if viewName == ViewName.VersionActivity1_5DungeonMapLevelView then
+		self:showMapDir()
 	end
 end
 
-function var_0_0.onDisposeOldMap(arg_9_0)
-	arg_9_0.loadedElements = false
+function VersionActivity1_5DungeonMapHeroIconView:onDisposeOldMap()
+	self.loadedElements = false
 
-	arg_9_0:hideMapHeroIcon()
+	self:hideMapHeroIcon()
 end
 
-function var_0_0.onDisposeScene(arg_10_0)
-	arg_10_0.loadedElements = false
+function VersionActivity1_5DungeonMapHeroIconView:onDisposeScene()
+	self.loadedElements = false
 
-	arg_10_0:hideMapHeroIcon()
+	self:hideMapHeroIcon()
 end
 
-function var_0_0.hideMapDir(arg_11_0)
-	arg_11_0.canShowHeroIcon = false
+function VersionActivity1_5DungeonMapHeroIconView:hideMapDir()
+	self.canShowHeroIcon = false
 
-	gohelper.setActive(arg_11_0._gomapdirection, arg_11_0.canShowHeroIcon)
+	gohelper.setActive(self._gomapdirection, self.canShowHeroIcon)
 end
 
-function var_0_0.showMapDir(arg_12_0)
-	arg_12_0.canShowHeroIcon = true
+function VersionActivity1_5DungeonMapHeroIconView:showMapDir()
+	self.canShowHeroIcon = true
 
-	gohelper.setActive(arg_12_0._gomapdirection, arg_12_0.canShowHeroIcon)
-	arg_12_0:refreshHeroIcon()
+	gohelper.setActive(self._gomapdirection, self.canShowHeroIcon)
+	self:refreshHeroIcon()
 end
 
-function var_0_0.hideMapHeroIcon(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.heroItemDict) do
-		gohelper.setActive(iter_13_1.go, false)
+function VersionActivity1_5DungeonMapHeroIconView:hideMapHeroIcon()
+	for dir, heroItem in pairs(self.heroItemDict) do
+		gohelper.setActive(heroItem.go, false)
 	end
 end
 
-function var_0_0.onInitElements(arg_14_0)
-	if arg_14_0.activityDungeonMo:isHardMode() then
-		arg_14_0:hideMapHeroIcon()
+function VersionActivity1_5DungeonMapHeroIconView:onInitElements()
+	if self.activityDungeonMo:isHardMode() then
+		self:hideMapHeroIcon()
 
 		return
 	end
 
-	arg_14_0.loadedElements = true
+	self.loadedElements = true
 
-	arg_14_0:refreshHeroIcon()
+	self:refreshHeroIcon()
 end
 
-function var_0_0.createHeroItem(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getUserDataTb_()
+function VersionActivity1_5DungeonMapHeroIconView:createHeroItem(itemGo, dir)
+	local heroItem = self:getUserDataTb_()
 
-	var_15_0.go = arg_15_1
+	heroItem.go = itemGo
 
-	gohelper.setActive(var_15_0.go, false)
+	gohelper.setActive(heroItem.go, false)
 
-	var_15_0.goHeroIcon1 = gohelper.findChild(var_15_0.go, "heroicon_container/heroicon1")
-	var_15_0.goHeroIcon2 = gohelper.findChild(var_15_0.go, "heroicon_container/heroicon2")
-	var_15_0.heroHeadImage1 = gohelper.findChildSingleImage(var_15_0.go, "heroicon_container/heroicon1/#simage_herohead")
-	var_15_0.heroHeadImage2 = gohelper.findChildSingleImage(var_15_0.go, "heroicon_container/heroicon2/#simage_herohead")
-	var_15_0.click1 = gohelper.getClickWithDefaultAudio(var_15_0.heroHeadImage1.gameObject)
-	var_15_0.click2 = gohelper.getClickWithDefaultAudio(var_15_0.heroHeadImage2.gameObject)
+	heroItem.goHeroIcon1 = gohelper.findChild(heroItem.go, "heroicon_container/heroicon1")
+	heroItem.goHeroIcon2 = gohelper.findChild(heroItem.go, "heroicon_container/heroicon2")
+	heroItem.heroHeadImage1 = gohelper.findChildSingleImage(heroItem.go, "heroicon_container/heroicon1/#simage_herohead")
+	heroItem.heroHeadImage2 = gohelper.findChildSingleImage(heroItem.go, "heroicon_container/heroicon2/#simage_herohead")
+	heroItem.click1 = gohelper.getClickWithDefaultAudio(heroItem.heroHeadImage1.gameObject)
+	heroItem.click2 = gohelper.getClickWithDefaultAudio(heroItem.heroHeadImage2.gameObject)
 
-	var_15_0.click1:AddClickListener(arg_15_0.onClickHeroHeadIcon, arg_15_0, {
+	heroItem.click1:AddClickListener(self.onClickHeroHeadIcon, self, {
 		index = 1,
-		dir = arg_15_2
+		dir = dir
 	})
-	var_15_0.click2:AddClickListener(arg_15_0.onClickHeroHeadIcon, arg_15_0, {
+	heroItem.click2:AddClickListener(self.onClickHeroHeadIcon, self, {
 		index = 2,
-		dir = arg_15_2
+		dir = dir
 	})
 
-	arg_15_0.heroItemDict[arg_15_2] = var_15_0
+	self.heroItemDict[dir] = heroItem
 
-	return var_15_0
+	return heroItem
 end
 
-function var_0_0.onClickHeroHeadIcon(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.dirToFocusElementDict[arg_16_1.dir][arg_16_1.index].focusElementId
+function VersionActivity1_5DungeonMapHeroIconView:onClickHeroHeadIcon(data)
+	local elementId = self.dirToFocusElementDict[data.dir][data.index].focusElementId
 
-	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.FocusElement, var_16_0)
+	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.FocusElement, elementId)
 end
 
-function var_0_0.getElementData(arg_17_0)
-	if #arg_17_0.focusElementDataPool > 0 then
-		return table.remove(arg_17_0.focusElementDataPool)
+function VersionActivity1_5DungeonMapHeroIconView:getElementData()
+	if #self.focusElementDataPool > 0 then
+		return table.remove(self.focusElementDataPool)
 	end
 
 	return {}
 end
 
-function var_0_0.onMapPosChanged(arg_18_0)
-	arg_18_0:refreshHeroIcon()
+function VersionActivity1_5DungeonMapHeroIconView:onMapPosChanged()
+	self:refreshHeroIcon()
 end
 
-function var_0_0.onRemoveElement(arg_19_0)
-	arg_19_0:refreshHeroIcon()
+function VersionActivity1_5DungeonMapHeroIconView:onRemoveElement()
+	self:refreshHeroIcon()
 end
 
-function var_0_0.refreshHeroIcon(arg_20_0)
-	if not arg_20_0.loadedElements then
+function VersionActivity1_5DungeonMapHeroIconView:refreshHeroIcon()
+	if not self.loadedElements then
 		return
 	end
 
-	if not arg_20_0.canShowHeroIcon then
+	if not self.canShowHeroIcon then
 		return
 	end
 
-	if arg_20_0.activityDungeonMo:isHardMode() then
+	if self.activityDungeonMo:isHardMode() then
 		return
 	end
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0.dirToFocusElementDict) do
-		for iter_20_2 = 1, #iter_20_1 do
-			table.insert(arg_20_0.focusElementDataPool, table.remove(iter_20_1))
+	for _, list in pairs(self.dirToFocusElementDict) do
+		for i = 1, #list do
+			table.insert(self.focusElementDataPool, table.remove(list))
 		end
 	end
 
-	for iter_20_3, iter_20_4 in ipairs(arg_20_0.taskMoList) do
-		local var_20_0, var_20_1 = arg_20_0:getTaskMoFirstNotFinishElement(iter_20_4)
+	for _, taskMo in ipairs(self.taskMoList) do
+		local elementId, viewPortPos = self:getTaskMoFirstNotFinishElement(taskMo)
 
-		if var_20_0 then
-			local var_20_2 = arg_20_0:getElementData()
+		if elementId then
+			local elementData = self:getElementData()
 
-			var_20_2.focusElementId = var_20_0
-			var_20_2.heroId = iter_20_4.config.heroId
+			elementData.focusElementId = elementId
+			elementData.heroId = taskMo.config.heroId
 
-			table.insert(arg_20_0.dirToFocusElementDict[arg_20_0:getDir(var_20_1.x, var_20_1.y)], var_20_2)
+			table.insert(self.dirToFocusElementDict[self:getDir(viewPortPos.x, viewPortPos.y)], elementData)
 		end
 	end
 
-	for iter_20_5, iter_20_6 in pairs(arg_20_0.dirToFocusElementDict) do
-		local var_20_3 = #iter_20_6 > 0
+	for dir, elementDataList in pairs(self.dirToFocusElementDict) do
+		local isShow = #elementDataList > 0
 
-		gohelper.setActive(arg_20_0.heroItemDict[iter_20_5].go, var_20_3)
+		gohelper.setActive(self.heroItemDict[dir].go, isShow)
 
-		if var_20_3 then
-			gohelper.setActive(arg_20_0.heroItemDict[iter_20_5].goHeroIcon1, false)
-			gohelper.setActive(arg_20_0.heroItemDict[iter_20_5].goHeroIcon2, false)
+		if isShow then
+			gohelper.setActive(self.heroItemDict[dir].goHeroIcon1, false)
+			gohelper.setActive(self.heroItemDict[dir].goHeroIcon2, false)
 
-			for iter_20_7, iter_20_8 in ipairs(iter_20_6) do
-				arg_20_0:refreshHeroItemPos(iter_20_5, iter_20_7, iter_20_8)
+			for index, elementData in ipairs(elementDataList) do
+				self:refreshHeroItemPos(dir, index, elementData)
 			end
 		end
 	end
 end
 
-function var_0_0.getTaskMoFirstNotFinishElement(arg_21_0, arg_21_1)
-	if not arg_21_1:isUnlock() then
+function VersionActivity1_5DungeonMapHeroIconView:getTaskMoFirstNotFinishElement(taskMo)
+	if not taskMo:isUnlock() then
 		return
 	end
 
-	if arg_21_1.gainedReward then
+	if taskMo.gainedReward then
 		return
 	end
 
-	local var_21_0 = arg_21_1:getSubTaskCoList()
+	local subTaskCoList = taskMo:getSubTaskCoList()
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
-		if VersionActivity1_5RevivalTaskModel.instance:getSubHeroTaskStatus(iter_21_1) == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal then
-			for iter_21_2, iter_21_3 in ipairs(iter_21_1.elementList) do
-				if not DungeonMapModel.instance:elementIsFinished(iter_21_3) then
-					local var_21_1 = arg_21_0.mapSceneElementsView:getElementComp(iter_21_3)
+	for _, subTaskCo in ipairs(subTaskCoList) do
+		local subTaskStatus = VersionActivity1_5RevivalTaskModel.instance:getSubHeroTaskStatus(subTaskCo)
 
-					if var_21_1 then
-						local var_21_2, var_21_3, var_21_4 = transformhelper.getPos(var_21_1:getTransform())
+		if subTaskStatus == VersionActivity1_5DungeonEnum.SubHeroTaskStatus.Normal then
+			for _, elementId in ipairs(subTaskCo.elementList) do
+				if not DungeonMapModel.instance:elementIsFinished(elementId) then
+					local elementComp = self.mapSceneElementsView:getElementComp(elementId)
 
-						arg_21_0._tempVector:Set(var_21_2, var_21_3, var_21_4)
+					if elementComp then
+						local x, y, z = transformhelper.getPos(elementComp:getTransform())
 
-						local var_21_5 = arg_21_0.mainCamera:WorldToViewportPoint(arg_21_0._tempVector)
-						local var_21_6, var_21_7 = var_21_5.x, var_21_5.y
+						self._tempVector:Set(x, y, z)
 
-						if var_21_6 < 0 or var_21_6 > 1 or var_21_7 < 0 or var_21_7 > 1 then
-							return iter_21_3, var_21_5
+						local viewPortPos = self.mainCamera:WorldToViewportPoint(self._tempVector)
+
+						x, y = viewPortPos.x, viewPortPos.y
+
+						if x < 0 or x > 1 or y < 0 or y > 1 then
+							return elementId, viewPortPos
 						end
 					end
 				end
@@ -258,27 +263,27 @@ function var_0_0.getTaskMoFirstNotFinishElement(arg_21_0, arg_21_1)
 	end
 end
 
-function var_0_0.refreshHeroItemPos(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	if arg_22_2 > 2 then
+function VersionActivity1_5DungeonMapHeroIconView:refreshHeroItemPos(dir, index, elementData)
+	if index > 2 then
 		return
 	end
 
-	local var_22_0 = arg_22_0.heroItemDict[arg_22_1]
+	local heroItem = self.heroItemDict[dir]
 
-	gohelper.setActive(var_22_0.go, true)
+	gohelper.setActive(heroItem.go, true)
 
-	local var_22_1 = arg_22_2 == 1 and var_22_0.heroHeadImage1 or var_22_0.heroHeadImage2
-	local var_22_2 = arg_22_2 == 1 and var_22_0.goHeroIcon1 or var_22_0.goHeroIcon2
+	local simage = index == 1 and heroItem.heroHeadImage1 or heroItem.heroHeadImage2
+	local goHeroIcon = index == 1 and heroItem.goHeroIcon1 or heroItem.goHeroIcon2
 
-	gohelper.setActive(var_22_2, true)
-	var_22_1:LoadImage(ResUrl.getHeadIconSmall(arg_22_3.heroId .. "01"))
+	gohelper.setActive(goHeroIcon, true)
+	simage:LoadImage(ResUrl.getHeadIconSmall(elementData.heroId .. "01"))
 end
 
-function var_0_0.getDir(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 < 0 then
+function VersionActivity1_5DungeonMapHeroIconView:getDir(x, y)
+	if x < 0 then
 		return VersionActivity1_5DungeonEnum.MapDir.Left
-	elseif arg_23_1 >= 0 and arg_23_1 <= 1 then
-		if arg_23_2 < 0 then
+	elseif x >= 0 and x <= 1 then
+		if y < 0 then
 			return VersionActivity1_5DungeonEnum.MapDir.Bottom
 		else
 			return VersionActivity1_5DungeonEnum.MapDir.Top
@@ -288,13 +293,13 @@ function var_0_0.getDir(arg_23_0, arg_23_1, arg_23_2)
 	end
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	for iter_24_0, iter_24_1 in pairs(arg_24_0.heroItemDict) do
-		iter_24_1.click1:RemoveClickListener()
-		iter_24_1.click2:RemoveClickListener()
-		iter_24_1.heroHeadImage1:UnLoadImage()
-		iter_24_1.heroHeadImage2:UnLoadImage()
+function VersionActivity1_5DungeonMapHeroIconView:onDestroyView()
+	for _, heroItem in pairs(self.heroItemDict) do
+		heroItem.click1:RemoveClickListener()
+		heroItem.click2:RemoveClickListener()
+		heroItem.heroHeadImage1:UnLoadImage()
+		heroItem.heroHeadImage2:UnLoadImage()
 	end
 end
 
-return var_0_0
+return VersionActivity1_5DungeonMapHeroIconView

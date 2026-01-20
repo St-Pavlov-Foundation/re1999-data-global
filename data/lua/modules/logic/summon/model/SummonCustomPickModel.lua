@@ -1,46 +1,48 @@
-﻿module("modules.logic.summon.model.SummonCustomPickModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonCustomPickModel.lua
 
-local var_0_0 = class("SummonCustomPickModel", BaseModel)
+module("modules.logic.summon.model.SummonCustomPickModel", package.seeall)
 
-function var_0_0.isCustomPickOver(arg_1_0, arg_1_1)
-	local var_1_0 = SummonMainModel.instance:getPoolServerMO(arg_1_1)
+local SummonCustomPickModel = class("SummonCustomPickModel", BaseModel)
 
-	if var_1_0 and var_1_0.customPickMO then
-		return var_1_0.customPickMO:isPicked(arg_1_1)
+function SummonCustomPickModel:isCustomPickOver(poolId)
+	local summonServerMO = SummonMainModel.instance:getPoolServerMO(poolId)
+
+	if summonServerMO and summonServerMO.customPickMO then
+		return summonServerMO.customPickMO:isPicked(poolId)
 	end
 
 	return false
 end
 
-function var_0_0.isHaveFirstSSR(arg_2_0, arg_2_1)
-	local var_2_0 = SummonMainModel.instance:getPoolServerMO(arg_2_1)
+function SummonCustomPickModel:isHaveFirstSSR(poolId)
+	local summonServerMO = SummonMainModel.instance:getPoolServerMO(poolId)
 
-	if var_2_0 and var_2_0.customPickMO then
-		return var_2_0.customPickMO:isHaveFirstSSR()
+	if summonServerMO and summonServerMO.customPickMO then
+		return summonServerMO.customPickMO:isHaveFirstSSR()
 	end
 
 	return false
 end
 
-function var_0_0.getMaxSelectCount(arg_3_0, arg_3_1)
-	local var_3_0 = SummonConfig.instance:getSummonPool(arg_3_1)
-	local var_3_1 = -1
+function SummonCustomPickModel:getMaxSelectCount(poolId)
+	local summonPoolCfg = SummonConfig.instance:getSummonPool(poolId)
+	local maxSelectCount = -1
 
-	if var_3_0 then
-		if var_3_0.type == SummonEnum.Type.StrongCustomOnePick then
-			var_3_1 = 1
+	if summonPoolCfg then
+		if summonPoolCfg.type == SummonEnum.Type.StrongCustomOnePick then
+			maxSelectCount = 1
 		else
-			local var_3_2 = string.split(var_3_0.param, "|")
+			local splitStrs = string.split(summonPoolCfg.param, "|")
 
-			if var_3_2 and #var_3_2 > 0 then
-				var_3_1 = tonumber(var_3_2[1]) or 0
+			if splitStrs and #splitStrs > 0 then
+				maxSelectCount = tonumber(splitStrs[1]) or 0
 			end
 		end
 	end
 
-	return var_3_1
+	return maxSelectCount
 end
 
-var_0_0.instance = var_0_0.New()
+SummonCustomPickModel.instance = SummonCustomPickModel.New()
 
-return var_0_0
+return SummonCustomPickModel

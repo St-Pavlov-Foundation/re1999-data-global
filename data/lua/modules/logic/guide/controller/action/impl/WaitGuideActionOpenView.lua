@@ -1,44 +1,46 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionOpenView.lua
 
-local var_0_0 = class("WaitGuideActionOpenView", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenView", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionOpenView = class("WaitGuideActionOpenView", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
+function WaitGuideActionOpenView:onStart(context)
+	WaitGuideActionOpenView.super.onStart(self, context)
 
-	arg_1_0._viewName = var_1_0[1]
+	local paramList = string.split(self.actionParam, "#")
 
-	local var_1_1 = #var_1_0 >= 2 and tonumber(var_1_0[2])
+	self._viewName = paramList[1]
 
-	if ViewMgr.instance:isOpen(arg_1_0._viewName) then
-		arg_1_0:onDone(true)
+	local timeoutSecond = #paramList >= 2 and tonumber(paramList[2])
+
+	if ViewMgr.instance:isOpen(self._viewName) then
+		self:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._checkOpenView, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._checkOpenView, self)
 
-	if var_1_1 and var_1_1 > 0 then
-		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, var_1_1)
+	if timeoutSecond and timeoutSecond > 0 then
+		TaskDispatcher.runDelay(self._delayDone, self, timeoutSecond)
 	end
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:clearWork()
-	arg_2_0:onDone(true)
+function WaitGuideActionOpenView:_delayDone()
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0._checkOpenView(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0._viewName == arg_3_1 then
-		arg_3_0:clearWork()
-		arg_3_0:onDone(true)
+function WaitGuideActionOpenView:_checkOpenView(viewName, viewParam)
+	if self._viewName == viewName then
+		self:clearWork()
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_4_0._checkOpenView, arg_4_0)
+function WaitGuideActionOpenView:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._checkOpenView, self)
 end
 
-return var_0_0
+return WaitGuideActionOpenView

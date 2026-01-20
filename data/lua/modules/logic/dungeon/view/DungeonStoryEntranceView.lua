@@ -1,76 +1,78 @@
-﻿module("modules.logic.dungeon.view.DungeonStoryEntranceView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonStoryEntranceView.lua
 
-local var_0_0 = class("DungeonStoryEntranceView", BaseView)
+module("modules.logic.dungeon.view.DungeonStoryEntranceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnblack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_black")
-	arg_1_0._btnplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_play")
-	arg_1_0._txtchapter = gohelper.findChildText(arg_1_0.viewGO, "#txt_chapter")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "#txt_nameen")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
+local DungeonStoryEntranceView = class("DungeonStoryEntranceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonStoryEntranceView:onInitView()
+	self._btnblack = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_black")
+	self._btnplay = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_play")
+	self._txtchapter = gohelper.findChildText(self.viewGO, "#txt_chapter")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "#txt_nameen")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnblack:AddClickListener(arg_2_0._btnblackOnClick, arg_2_0)
-	arg_2_0._btnplay:AddClickListener(arg_2_0._btnplayOnClick, arg_2_0)
+function DungeonStoryEntranceView:addEvents()
+	self._btnblack:AddClickListener(self._btnblackOnClick, self)
+	self._btnplay:AddClickListener(self._btnplayOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnblack:RemoveClickListener()
-	arg_3_0._btnplay:RemoveClickListener()
+function DungeonStoryEntranceView:removeEvents()
+	self._btnblack:RemoveClickListener()
+	self._btnplay:RemoveClickListener()
 end
 
-function var_0_0._btnblackOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function DungeonStoryEntranceView:_btnblackOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnplayOnClick(arg_5_0)
-	DungeonRpc.instance:sendStartDungeonRequest(arg_5_0._config.chapterId, arg_5_0._config.id)
+function DungeonStoryEntranceView:_btnplayOnClick()
+	DungeonRpc.instance:sendStartDungeonRequest(self._config.chapterId, self._config.id)
 
-	local var_5_0 = {}
+	local param = {}
 
-	var_5_0.mark = true
-	var_5_0.episodeId = arg_5_0._config.id
+	param.mark = true
+	param.episodeId = self._config.id
 
-	StoryController.instance:playStory(arg_5_0._config.beforeStory, var_5_0, arg_5_0.onStoryFinished, arg_5_0)
+	StoryController.instance:playStory(self._config.beforeStory, param, self.onStoryFinished, self)
 end
 
-function var_0_0.onStoryFinished(arg_6_0)
+function DungeonStoryEntranceView:onStoryFinished()
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(arg_6_0._config.id)
+	DungeonModel.instance:setLastSendEpisodeId(self._config.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
-	ViewMgr.instance:closeView(arg_6_0.viewName)
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function DungeonStoryEntranceView:_editableInitView()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Copiesdetails)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function DungeonStoryEntranceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._config = arg_9_0.viewParam[1]
-	arg_9_0._txtname.text = arg_9_0._config.name
-	arg_9_0._txtnameen.text = arg_9_0._config.name_En
-	arg_9_0._txtdesc.text = arg_9_0._config.desc
+function DungeonStoryEntranceView:onOpen()
+	self._config = self.viewParam[1]
+	self._txtname.text = self._config.name
+	self._txtnameen.text = self._config.name_En
+	self._txtdesc.text = self._config.desc
 
-	DungeonLevelItem.showEpisodeName(arg_9_0._config, arg_9_0.viewParam[3], arg_9_0.viewParam[4], arg_9_0._txtchapter)
+	DungeonLevelItem.showEpisodeName(self._config, self.viewParam[3], self.viewParam[4], self._txtchapter)
 end
 
-function var_0_0.onClose(arg_10_0)
+function DungeonStoryEntranceView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function DungeonStoryEntranceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonStoryEntranceView

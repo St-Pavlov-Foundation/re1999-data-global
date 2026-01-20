@@ -1,23 +1,25 @@
-﻿module("modules.logic.gm.model.GMBattleModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMBattleModel.lua
 
-local var_0_0 = class("GMBattleModel")
+module("modules.logic.gm.model.GMBattleModel", package.seeall)
 
-function var_0_0.setBattleParam(arg_1_0, arg_1_1)
-	arg_1_0._battleParam = arg_1_1
+local GMBattleModel = class("GMBattleModel")
+
+function GMBattleModel:setBattleParam(param)
+	self._battleParam = param
 end
 
-function var_0_0.getBattleParam(arg_2_0)
-	return arg_2_0._battleParam
+function GMBattleModel:getBattleParam()
+	return self._battleParam
 end
 
-function var_0_0.setGMFightRecordEnable(arg_3_0)
-	arg_3_0.enableGMFightRecord = true
+function GMBattleModel:setGMFightRecordEnable()
+	self.enableGMFightRecord = true
 end
 
-function var_0_0.setGMFightRecord(arg_4_0, arg_4_1)
-	arg_4_0.fightRecordMsg = arg_4_1
+function GMBattleModel:setGMFightRecord(msg)
+	self.fightRecordMsg = msg
 end
 
-var_0_0.instance = var_0_0.New()
+GMBattleModel.instance = GMBattleModel.New()
 
-return var_0_0
+return GMBattleModel

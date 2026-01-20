@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_9.matildagift.view.V1a9_MatildagiftViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/matildagift/view/V1a9_MatildagiftViewContainer.lua
 
-local var_0_0 = class("V1a9_MatildagiftViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.matildagift.view.V1a9_MatildagiftViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V1a9_MatildagiftViewContainer = class("V1a9_MatildagiftViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V1a9_MatildagiftView.New())
+function V1a9_MatildagiftViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V1a9_MatildagiftView.New())
+
+	return views
 end
 
-return var_0_0
+return V1a9_MatildagiftViewContainer

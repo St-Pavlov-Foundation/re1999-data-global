@@ -1,27 +1,29 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreSpikeUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreSpikeUnitMO.lua
 
-local var_0_0 = pureTable("ExploreSpikeUnitMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreSpikeUnitMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	local var_1_0 = string.split(arg_1_0.specialDatas[1], "#")
-	local var_1_1 = string.split(arg_1_0.specialDatas[2], "#")
+local ExploreSpikeUnitMO = pureTable("ExploreSpikeUnitMO", ExploreBaseUnitMO)
 
-	arg_1_0.intervalTime = tonumber(var_1_1[1])
-	arg_1_0.keepTime = tonumber(var_1_1[2])
-	arg_1_0.playAudio = tonumber(var_1_1[3]) == 1
-	arg_1_0.enterTriggerType = true
-	arg_1_0.heroDir = tonumber(var_1_0[3]) or 0
-	arg_1_0.triggerEffects = tabletool.copy(arg_1_0.triggerEffects)
+function ExploreSpikeUnitMO:initTypeData()
+	local arr = string.split(self.specialDatas[1], "#")
+	local intervalInfos = string.split(self.specialDatas[2], "#")
 
-	local var_1_2 = {
+	self.intervalTime = tonumber(intervalInfos[1])
+	self.keepTime = tonumber(intervalInfos[2])
+	self.playAudio = tonumber(intervalInfos[3]) == 1
+	self.enterTriggerType = true
+	self.heroDir = tonumber(arr[3]) or 0
+	self.triggerEffects = tabletool.copy(self.triggerEffects)
+
+	local data = {
 		ExploreEnum.TriggerEvent.Spike
 	}
 
-	table.insert(arg_1_0.triggerEffects, var_1_2)
+	table.insert(self.triggerEffects, data)
 end
 
-function var_0_0.getUnitClass(arg_2_0)
+function ExploreSpikeUnitMO:getUnitClass()
 	return ExploreSpikeUnit
 end
 
-return var_0_0
+return ExploreSpikeUnitMO

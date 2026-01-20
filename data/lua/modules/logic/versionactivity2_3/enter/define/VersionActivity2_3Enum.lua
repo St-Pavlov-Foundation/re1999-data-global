@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_3.enter.define.VersionActivity2_3Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/enter/define/VersionActivity2_3Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_3.enter.define.VersionActivity2_3Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity2_3Enum = _M
+
+VersionActivity2_3Enum.ActivityId = {
 	Dungeon = 12302,
 	Act174Store = 12319,
 	ZhiXinQuanEr = 12306,
@@ -16,44 +18,44 @@ var_0_0.ActivityId = {
 	DuDuGu = 12305,
 	EnterView = 12301
 }
-var_0_0.EnterViewActSetting = {
+VersionActivity2_3Enum.EnterViewActSetting = {
 	{
-		actId = var_0_0.ActivityId.Dungeon,
+		actId = VersionActivity2_3Enum.ActivityId.Dungeon,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.First,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.DungeonStore
+		storeId = VersionActivity2_3Enum.ActivityId.DungeonStore
 	},
 	{
-		actId = var_0_0.ActivityId.Act174,
+		actId = VersionActivity2_3Enum.ActivityId.Act174,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.DuDuGu,
+		actId = VersionActivity2_3Enum.ActivityId.DuDuGu,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = var_0_0.ActivityId.DuDuGu
+		redDotUid = VersionActivity2_3Enum.ActivityId.DuDuGu
 	},
 	{
-		actId = var_0_0.ActivityId.ZhiXinQuanEr,
+		actId = VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		redDotUid = var_0_0.ActivityId.ZhiXinQuanEr
+		redDotUid = VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr
 	},
 	{
-		actId = var_0_0.ActivityId.Season,
+		actId = VersionActivity2_3Enum.ActivityId.Season,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.SeasonStore
+		storeId = VersionActivity2_3Enum.ActivityId.SeasonStore
 	},
 	{
-		actId = var_0_0.ActivityId.BossRush,
+		actId = VersionActivity2_3Enum.ActivityId.BossRush,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
 		actId = {
-			var_0_0.ActivityId.RoleStory1
+			VersionActivity2_3Enum.ActivityId.RoleStory1
 		},
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Multi
@@ -70,18 +72,18 @@ var_0_0.EnterViewActSetting = {
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	}
 }
-var_0_0.EnterViewActIdListWithRedDot = {
-	var_0_0.ActivityId.Dungeon,
-	var_0_0.ActivityId.Season
+VersionActivity2_3Enum.EnterViewActIdListWithRedDot = {
+	VersionActivity2_3Enum.ActivityId.Dungeon,
+	VersionActivity2_3Enum.ActivityId.Season
 }
-var_0_0.TabSetting = {
+VersionActivity2_3Enum.TabSetting = {
 	select = {
 		fontSize = 42,
 		cnColor = "#FFFFFF",
 		enFontSize = 14,
 		enColor = "#337C61",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a3_mainactivity_singlebg/v2a3_enterview_itemtitleselected.png"
+			[VersionActivity2_3Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a3_mainactivity_singlebg/v2a3_enterview_itemtitleselected.png"
 		}
 	},
 	unselect = {
@@ -90,11 +92,11 @@ var_0_0.TabSetting = {
 		enFontSize = 14,
 		enColor = "#485143",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a3_mainactivity_singlebg/v2a3_enterview_itemtitleunselected.png"
+			[VersionActivity2_3Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a3_mainactivity_singlebg/v2a3_enterview_itemtitleunselected.png"
 		}
 	}
 }
-var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-var_0_0.RedDotOffsetY = 56
+VersionActivity2_3Enum.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+VersionActivity2_3Enum.RedDotOffsetY = 56
 
-return var_0_0
+return VersionActivity2_3Enum

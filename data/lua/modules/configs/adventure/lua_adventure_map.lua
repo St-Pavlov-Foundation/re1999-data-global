@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/adventure/lua_adventure_map.lua
+
+return {
 	{
 		{
 			"100",

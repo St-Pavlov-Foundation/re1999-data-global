@@ -1,46 +1,50 @@
-﻿module("modules.logic.scene.cachot.comp.CachotSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/comp/CachotSceneViewComp.lua
 
-local var_0_0 = class("CachotSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.cachot.comp.CachotSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+local CachotSceneViewComp = class("CachotSceneViewComp", BaseSceneComp)
+
+function CachotSceneViewComp:onScenePrepared(sceneId, levelId)
 	if not V1a6_CachotModel.instance:isInRogue() then
 		ViewMgr.instance:openView(ViewName.V1a6_CachotMainView)
 
-		if V1a6_CachotModel.instance:getRogueEndingInfo() then
+		local rogueEndingInfo = V1a6_CachotModel.instance:getRogueEndingInfo()
+
+		if rogueEndingInfo then
 			V1a6_CachotController.instance:openV1a6_CachotFinishView()
 		end
 	else
 		ViewMgr.instance:openView(ViewName.V1a6_CachotRoomView)
 
-		local var_1_0 = V1a6_CachotRoomModel.instance:getNowTopEventMo()
+		local topEventMo = V1a6_CachotRoomModel.instance:getNowTopEventMo()
 
-		if var_1_0 then
-			local var_1_1 = lua_rogue_event.configDict[var_1_0.eventId]
+		if topEventMo then
+			local eventCo = lua_rogue_event.configDict[topEventMo.eventId]
 
-			if not var_1_1 or var_1_1.type == V1a6_CachotEnum.EventType.Battle and not var_1_0:isBattleSuccess() then
+			if not eventCo or eventCo.type == V1a6_CachotEnum.EventType.Battle and not topEventMo:isBattleSuccess() then
 				return
 			end
 
-			local var_1_2 = V1a6_CachotModel.instance:getRogueInfo()
+			local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-			for iter_1_0, iter_1_1 in ipairs(var_1_2.selectedEvents) do
-				V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerTriggerInteract, iter_1_1)
+			for _, eventMo in ipairs(rogueInfo.selectedEvents) do
+				V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerTriggerInteract, eventMo)
 			end
 		end
 	end
 end
 
-function var_0_0.getRoot(arg_2_0)
-	return arg_2_0._uiRoot
+function CachotSceneViewComp:getRoot()
+	return self._uiRoot
 end
 
-function var_0_0.setActive(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0._uiRoot, arg_3_1)
+function CachotSceneViewComp:setActive(isActive)
+	gohelper.setActive(self._uiRoot, isActive)
 end
 
-function var_0_0.onSceneClose(arg_4_0, arg_4_1, arg_4_2)
+function CachotSceneViewComp:onSceneClose(sceneId, levelId)
 	ViewMgr.instance:closeView(ViewName.V1a6_CachotMainView)
 	ViewMgr.instance:closeView(ViewName.V1a6_CachotRoomView)
 end
 
-return var_0_0
+return CachotSceneViewComp

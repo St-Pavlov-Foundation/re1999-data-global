@@ -1,114 +1,118 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186GameInviteView.lua
 
-local var_0_0 = class("Activity186GameInviteView", BaseView)
+module("modules.logic.versionactivity2_5.act186.view.Activity186GameInviteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "root/goSelect")
-	arg_1_0.goRight = gohelper.findChild(arg_1_0.viewGO, "root/right")
-	arg_1_0.btnSure = gohelper.findChildButtonWithAudio(arg_1_0.goSelect, "btnSure")
-	arg_1_0.btnCancel = gohelper.findChildButtonWithAudio(arg_1_0.goSelect, "btnCancel")
-	arg_1_0.txtTitle = gohelper.findChildTextMesh(arg_1_0.goSelect, "content")
-	arg_1_0.txtSure = gohelper.findChildTextMesh(arg_1_0.goSelect, "btnSure/txt")
+local Activity186GameInviteView = class("Activity186GameInviteView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity186GameInviteView:onInitView()
+	self.goSelect = gohelper.findChild(self.viewGO, "root/goSelect")
+	self.goRight = gohelper.findChild(self.viewGO, "root/right")
+	self.btnSure = gohelper.findChildButtonWithAudio(self.goSelect, "btnSure")
+	self.btnCancel = gohelper.findChildButtonWithAudio(self.goSelect, "btnCancel")
+	self.txtTitle = gohelper.findChildTextMesh(self.goSelect, "content")
+	self.txtSure = gohelper.findChildTextMesh(self.goSelect, "btnSure/txt")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnSure, arg_2_0.onClickBtnSure, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCancel, arg_2_0.onClickBtnCancel, arg_2_0)
+function Activity186GameInviteView:addEvents()
+	self:addClickCb(self.btnSure, self.onClickBtnSure, self)
+	self:addClickCb(self.btnCancel, self.onClickBtnCancel, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity186GameInviteView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity186GameInviteView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickBtnSure(arg_5_0)
-	Activity186Controller.instance:enterGame(arg_5_0.actId, arg_5_0.gameId)
+function Activity186GameInviteView:onClickBtnSure()
+	Activity186Controller.instance:enterGame(self.actId, self.gameId)
 end
 
-function var_0_0.onClickBtnCancel(arg_6_0)
-	arg_6_0:closeThis()
+function Activity186GameInviteView:onClickBtnCancel()
+	self:closeThis()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function Activity186GameInviteView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_8_0)
+function Activity186GameInviteView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_leimi_theft_open)
-	arg_8_0:refreshParam()
-	arg_8_0:refreshView()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_9_0)
-	arg_9_0.actId = arg_9_0.viewParam.activityId
-	arg_9_0.gameId = arg_9_0.viewParam.gameId
-	arg_9_0.gameStatus = arg_9_0.viewParam.gameStatus
-	arg_9_0.gameType = arg_9_0.viewParam.gameType
+function Activity186GameInviteView:refreshParam()
+	self.actId = self.viewParam.activityId
+	self.gameId = self.viewParam.gameId
+	self.gameStatus = self.viewParam.gameStatus
+	self.gameType = self.viewParam.gameType
 end
 
-function var_0_0.refreshView(arg_10_0)
-	gohelper.setActive(arg_10_0.goSelect, arg_10_0.gameStatus == Activity186Enum.GameStatus.Start)
-	gohelper.setActive(arg_10_0.goRight, arg_10_0.gameStatus == Activity186Enum.GameStatus.Playing)
+function Activity186GameInviteView:refreshView()
+	gohelper.setActive(self.goSelect, self.gameStatus == Activity186Enum.GameStatus.Start)
+	gohelper.setActive(self.goRight, self.gameStatus == Activity186Enum.GameStatus.Playing)
 
-	if arg_10_0.gameStatus == Activity186Enum.GameStatus.Start then
-		if arg_10_0.gameType == 1 then
-			arg_10_0.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content1"))
+	if self.gameStatus == Activity186Enum.GameStatus.Start then
+		if self.gameType == 1 then
+			self.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content1"))
 
-			arg_10_0.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title1")
-			arg_10_0.txtSure.text = luaLang("p_activity186gameinviteview_txt_start2")
+			self.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title1")
+			self.txtSure.text = luaLang("p_activity186gameinviteview_txt_start2")
 		else
-			arg_10_0.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content2"))
+			self.viewContainer.heroView:showText(luaLang("p_activity186gameinviteview_txt_content2"))
 
-			arg_10_0.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title2")
-			arg_10_0.txtSure.text = luaLang("p_activity186gameinviteview_txt_start")
+			self.txtTitle.text = luaLang("p_activity186gameinviteview_txt_title2")
+			self.txtSure.text = luaLang("p_activity186gameinviteview_txt_start")
 		end
 
-		arg_10_0:_showDeadline()
+		self:_showDeadline()
 	else
-		TaskDispatcher.cancelTask(arg_10_0._onRefreshDeadline, arg_10_0)
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 	end
 end
 
-function var_0_0._showDeadline(arg_11_0)
-	arg_11_0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(arg_11_0._onRefreshDeadline, arg_11_0)
-	TaskDispatcher.runRepeat(arg_11_0._onRefreshDeadline, arg_11_0, 1)
+function Activity186GameInviteView:_showDeadline()
+	self:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
 end
 
-function var_0_0._onRefreshDeadline(arg_12_0)
-	arg_12_0:checkGameNotOnline()
+function Activity186GameInviteView:_onRefreshDeadline()
+	self:checkGameNotOnline()
 end
 
-function var_0_0.checkGameNotOnline(arg_13_0)
-	local var_13_0 = Activity186Model.instance:getById(arg_13_0.actId)
+function Activity186GameInviteView:checkGameNotOnline()
+	local mo = Activity186Model.instance:getById(self.actId)
 
-	if not var_13_0 then
+	if not mo then
 		return
 	end
 
-	if not var_13_0:getGameInfo(arg_13_0.gameId) then
+	local gameInfo = mo:getGameInfo(self.gameId)
+
+	if not gameInfo then
 		return
 	end
 
-	if not var_13_0:isGameOnline(arg_13_0.gameId) then
-		arg_13_0:closeThis()
+	if not mo:isGameOnline(self.gameId) then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function Activity186GameInviteView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._onRefreshDeadline, arg_15_0)
+function Activity186GameInviteView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 end
 
-return var_0_0
+return Activity186GameInviteView

@@ -1,9 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.map.V1a6_HeroGroupFightLayoutView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/map/V1a6_HeroGroupFightLayoutView.lua
 
-local var_0_0 = class("V1a6_HeroGroupFightLayoutView", HeroGroupFightLayoutView)
+module("modules.logic.versionactivity1_6.dungeon.view.map.V1a6_HeroGroupFightLayoutView", package.seeall)
 
-function var_0_0.checkNeedSetOffset(arg_1_0)
-	return (OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60101))
+local V1a6_HeroGroupFightLayoutView = class("V1a6_HeroGroupFightLayoutView", HeroGroupFightLayoutView)
+
+function V1a6_HeroGroupFightLayoutView:checkNeedSetOffset()
+	local isAct148Unlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60101)
+
+	return isAct148Unlock
 end
 
-return var_0_0
+return V1a6_HeroGroupFightLayoutView

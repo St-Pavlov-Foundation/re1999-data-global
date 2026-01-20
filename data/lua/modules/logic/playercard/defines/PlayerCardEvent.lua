@@ -1,26 +1,28 @@
-﻿module("modules.logic.playercard.defines.PlayerCardEvent", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/defines/PlayerCardEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.playercard.defines.PlayerCardEvent", package.seeall)
 
-var_0_0.UpdateCardInfo = 1001
-var_0_0.ShowListBtn = 1002
-var_0_0.SwitchHero = 1003
-var_0_0.RefreshSwitchView = 1004
-var_0_0.SwitchHeroSkin = 1005
-var_0_0.SwitchHeroL2d = 1006
-var_0_0.ShowTheme = 1007
-var_0_0.SwitchTheme = 1008
-var_0_0.RefreshMainHeroSkin = 1009
-var_0_0.CloseLayout = 1010
-var_0_0.SelectNumChange = 1011
-var_0_0.SelectCritter = 1012
-var_0_0.OnCloseHeroView = 1013
-var_0_0.OnCloseProgressView = 1014
-var_0_0.OnCloseBaseInfoView = 1015
-var_0_0.OnCloseCritterView = 1016
-var_0_0.RefreshProgressView = 1017
-var_0_0.RefreshBaseInfoView = 1018
-var_0_0.OnCloseBottomView = 1019
-var_0_0.ChangeSkin = 1020
+local PlayerCardEvent = _M
 
-return var_0_0
+PlayerCardEvent.UpdateCardInfo = 1001
+PlayerCardEvent.ShowListBtn = 1002
+PlayerCardEvent.SwitchHero = 1003
+PlayerCardEvent.RefreshSwitchView = 1004
+PlayerCardEvent.SwitchHeroSkin = 1005
+PlayerCardEvent.SwitchHeroL2d = 1006
+PlayerCardEvent.ShowTheme = 1007
+PlayerCardEvent.SwitchTheme = 1008
+PlayerCardEvent.RefreshMainHeroSkin = 1009
+PlayerCardEvent.CloseLayout = 1010
+PlayerCardEvent.SelectNumChange = 1011
+PlayerCardEvent.SelectCritter = 1012
+PlayerCardEvent.OnCloseHeroView = 1013
+PlayerCardEvent.OnCloseProgressView = 1014
+PlayerCardEvent.OnCloseBaseInfoView = 1015
+PlayerCardEvent.OnCloseCritterView = 1016
+PlayerCardEvent.RefreshProgressView = 1017
+PlayerCardEvent.RefreshBaseInfoView = 1018
+PlayerCardEvent.OnCloseBottomView = 1019
+PlayerCardEvent.ChangeSkin = 1020
+
+return PlayerCardEvent

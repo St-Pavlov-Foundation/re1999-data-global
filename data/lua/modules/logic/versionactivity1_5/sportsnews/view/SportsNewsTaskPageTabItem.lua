@@ -1,54 +1,59 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTaskPageTabItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/view/SportsNewsTaskPageTabItem.lua
 
-local var_0_0 = class("SportsNewsTaskPageTabItem", SportsNewsPageTabItem)
+module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTaskPageTabItem", package.seeall)
 
-function var_0_0.initData(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.initData(arg_1_0, arg_1_1, arg_1_2)
+local SportsNewsTaskPageTabItem = class("SportsNewsTaskPageTabItem", SportsNewsPageTabItem)
+
+function SportsNewsTaskPageTabItem:initData(index, go)
+	SportsNewsTaskPageTabItem.super.initData(self, index, go)
 end
 
-function var_0_0.getTabStatus(arg_2_0)
-	local var_2_0 = ActivityWarmUpTaskListModel.instance:getSelectedDay() == arg_2_0._index
+function SportsNewsTaskPageTabItem:getTabStatus()
+	local isSelect = ActivityWarmUpTaskListModel.instance:getSelectedDay() == self._index
+	local isLock = self._index > ActivityWarmUpModel.instance:getCurrentDay()
 
-	if arg_2_0._index > ActivityWarmUpModel.instance:getCurrentDay() then
+	if isLock then
 		return SportsNewsEnum.PageTabStatus.Lock
-	elseif var_2_0 then
+	elseif isSelect then
 		return SportsNewsEnum.PageTabStatus.Select
 	else
 		return SportsNewsEnum.PageTabStatus.UnSelect
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_3_0)
-	if arg_3_0:getTabStatus() == SportsNewsEnum.PageTabStatus.UnSelect then
-		ActivityWarmUpTaskController.instance:changeSelectedDay(arg_3_0._index)
+function SportsNewsTaskPageTabItem:_btnclickOnClick()
+	local status = self:getTabStatus()
+
+	if status == SportsNewsEnum.PageTabStatus.UnSelect then
+		ActivityWarmUpTaskController.instance:changeSelectedDay(self._index)
 		SportsNewsController.instance:dispatchEvent(SportsNewsEvent.OnCutTab, 2)
 	end
 end
 
-function var_0_0.onRefresh(arg_4_0)
-	var_0_0.super.onRefresh(arg_4_0)
-	arg_4_0:redDot()
+function SportsNewsTaskPageTabItem:onRefresh()
+	SportsNewsTaskPageTabItem.super.onRefresh(self)
+	self:redDot()
 end
 
-function var_0_0.redDot(arg_5_0)
-	local var_5_0 = arg_5_0:isShowRedDot()
+function SportsNewsTaskPageTabItem:redDot()
+	local _isShowRedDot = self:isShowRedDot()
 
-	arg_5_0:enableRedDot(var_5_0, RedDotEnum.DotNode.v1a5NewsTaskBonus)
+	self:enableRedDot(_isShowRedDot, RedDotEnum.DotNode.v1a5NewsTaskBonus)
 end
 
-function var_0_0.isShowRedDot(arg_6_0)
-	if arg_6_0._index > ActivityWarmUpModel.instance:getCurrentDay() then
+function SportsNewsTaskPageTabItem:isShowRedDot()
+	if self._index > ActivityWarmUpModel.instance:getCurrentDay() then
 		return false
 	end
 
-	local var_6_0 = SportsNewsModel.instance:getSelectedDayTask(arg_6_0._index)
+	local taskMo = SportsNewsModel.instance:getSelectedDayTask(self._index)
 
-	if var_6_0 then
-		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-			local var_6_1 = iter_6_1:isFinished()
-			local var_6_2 = iter_6_1:alreadyGotReward()
+	if taskMo then
+		for _, mo in ipairs(taskMo) do
+			local finish = mo:isFinished()
+			local gotbonus = mo:alreadyGotReward()
 
-			if var_6_1 and not var_6_2 then
+			if finish and not gotbonus then
 				return true
 			end
 		end
@@ -57,8 +62,8 @@ function var_0_0.isShowRedDot(arg_6_0)
 	return false
 end
 
-function var_0_0.playTabAnim(arg_7_0)
+function SportsNewsTaskPageTabItem:playTabAnim()
 	return
 end
 
-return var_0_0
+return SportsNewsTaskPageTabItem

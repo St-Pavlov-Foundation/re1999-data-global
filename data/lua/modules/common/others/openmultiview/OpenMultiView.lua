@@ -1,15 +1,19 @@
-﻿module("modules.common.others.openmultiview.OpenMultiView", package.seeall)
+﻿-- chunkname: @modules/common/others/openmultiview/OpenMultiView.lua
 
-return {
-	openView = function(arg_1_0)
-		local var_1_0 = FlowSequence.New()
+module("modules.common.others.openmultiview.OpenMultiView", package.seeall)
 
-		for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
-			local var_1_1 = OpenViewWork.New(iter_1_1)
+local OpenMultiView = {}
 
-			var_1_0:addWork(var_1_1)
-		end
+function OpenMultiView.openView(openViewParamList)
+	local flow = FlowSequence.New()
 
-		var_1_0:start()
+	for i, openViewParam in ipairs(openViewParamList) do
+		local work = OpenViewWork.New(openViewParam)
+
+		flow:addWork(work)
 	end
-}
+
+	flow:start()
+end
+
+return OpenMultiView

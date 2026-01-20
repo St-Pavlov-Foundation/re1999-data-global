@@ -1,277 +1,282 @@
-﻿module("modules.logic.summon.model.SummonPoolHistoryModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonPoolHistoryModel.lua
 
-local var_0_0 = class("SummonPoolHistoryModel", BaseModel)
+module("modules.logic.summon.model.SummonPoolHistoryModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._dataList = {}
-	arg_1_0._allMaxNum = 0
-	arg_1_0._getNextTime = 0
-	arg_1_0._typeNums = {}
-	arg_1_0._requestPools = {}
-	arg_1_0._token = nil
-	arg_1_0._tokenEndTime = 0
-	arg_1_0._summonShowTypeDic = nil
+local SummonPoolHistoryModel = class("SummonPoolHistoryModel", BaseModel)
+
+function SummonPoolHistoryModel:onInit()
+	self._dataList = {}
+	self._allMaxNum = 0
+	self._getNextTime = 0
+	self._typeNums = {}
+	self._requestPools = {}
+	self._token = nil
+	self._tokenEndTime = 0
+	self._summonShowTypeDic = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._dataList = {}
-	arg_2_0._allMaxNum = 0
-	arg_2_0._getNextTime = 0
-	arg_2_0._typeNums = {}
-	arg_2_0._requestPools = {}
-	arg_2_0._token = nil
-	arg_2_0._tokenEndTime = 0
-	arg_2_0._summonShowTypeDic = nil
+function SummonPoolHistoryModel:reInit()
+	self._dataList = {}
+	self._allMaxNum = 0
+	self._getNextTime = 0
+	self._typeNums = {}
+	self._requestPools = {}
+	self._token = nil
+	self._tokenEndTime = 0
+	self._summonShowTypeDic = nil
 end
 
-function var_0_0.isDataValidity(arg_3_0)
-	if arg_3_0._getNextTime > Time.time then
+function SummonPoolHistoryModel:isDataValidity()
+	if self._getNextTime > Time.time then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.onGetInfo(arg_4_0, arg_4_1)
-	if arg_4_1 == nil or arg_4_1.pageData == nil or #arg_4_1.pageData < 1 then
-		if arg_4_0._allMaxNum > 0 then
-			arg_4_0:reInit()
+function SummonPoolHistoryModel:onGetInfo(data)
+	if data == nil or data.pageData == nil or #data.pageData < 1 then
+		if self._allMaxNum > 0 then
+			self:reInit()
 		end
 
 		return
 	end
 
-	arg_4_0._dataList = arg_4_1.pageData
+	self._dataList = data.pageData
 
-	local var_4_0 = 0
-	local var_4_1 = {}
+	local count = 0
+	local typeNums = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._dataList) do
-		iter_4_1.gainIds = iter_4_1.gainIds or {}
-		iter_4_1.gainHeroList = iter_4_1.gainHeroList or {}
+	for _, history in ipairs(self._dataList) do
+		history.gainIds = history.gainIds or {}
+		history.gainHeroList = history.gainHeroList or {}
 
-		if iter_4_1.luckyBagIds ~= nil and #iter_4_1.luckyBagIds > 0 then
-			iter_4_1.luckyBagIdSet = {}
+		if history.luckyBagIds ~= nil and #history.luckyBagIds > 0 then
+			history.luckyBagIdSet = {}
 
-			for iter_4_2, iter_4_3 in ipairs(iter_4_1.luckyBagIds) do
-				iter_4_1.luckyBagIdSet[iter_4_3] = true
+			for _, luckyBagId in ipairs(history.luckyBagIds) do
+				history.luckyBagIdSet[luckyBagId] = true
 			end
 		end
 
-		local var_4_2 = arg_4_0:_getShowPoolType(iter_4_1.poolId, iter_4_1.poolType)
+		local poolType = self:_getShowPoolType(history.poolId, history.poolType)
 
-		if var_4_2 then
-			var_4_0 = var_4_0 + #iter_4_1.gainIds
+		if poolType then
+			count = count + #history.gainIds
 
-			if not var_4_1[var_4_2] then
-				var_4_1[var_4_2] = 0
+			if not typeNums[poolType] then
+				typeNums[poolType] = 0
 			end
 
-			var_4_1[var_4_2] = var_4_1[var_4_2] + #iter_4_1.gainIds
-		end
-	end
-
-	arg_4_0._allMaxNum = var_4_0
-	arg_4_0._typeNums = var_4_1
-	arg_4_0._getNextTime = Time.time + 600
-end
-
-function var_0_0.getShowPoolTypeByPoolId(arg_5_0, arg_5_1)
-	local var_5_0 = SummonConfig.instance:getSummonPool(arg_5_1)
-
-	return var_5_0 and arg_5_0:_getShowPoolType(arg_5_1, var_5_0.type)
-end
-
-function var_0_0._getShowPoolType(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0._summonShowTypeDic then
-		arg_6_0._summonShowTypeDic = {}
-
-		local var_6_0 = SummonConfig.instance:getSummonPoolList()
-
-		for iter_6_0 = 1, #var_6_0 do
-			local var_6_1 = var_6_0[iter_6_0]
-
-			if var_6_1.historyShowType and var_6_1.historyShowType ~= 0 and SummonConfig.instance:getPoolDetailConfig(var_6_1.historyShowType) then
-				arg_6_0._summonShowTypeDic[var_6_1.id] = var_6_1.historyShowType
-			end
+			typeNums[poolType] = typeNums[poolType] + #history.gainIds
 		end
 	end
 
-	return arg_6_0._summonShowTypeDic[arg_6_1] or arg_6_2
+	self._allMaxNum = count
+	self._typeNums = typeNums
+	self._getNextTime = Time.time + 600
 end
 
-function var_0_0.getNumByPoolId(arg_7_0, arg_7_1)
-	if arg_7_1 == nil then
+function SummonPoolHistoryModel:getShowPoolTypeByPoolId(poolId)
+	local cfg = SummonConfig.instance:getSummonPool(poolId)
+
+	return cfg and self:_getShowPoolType(poolId, cfg.type)
+end
+
+function SummonPoolHistoryModel:_getShowPoolType(poolId, poolType)
+	if not self._summonShowTypeDic then
+		self._summonShowTypeDic = {}
+
+		local list = SummonConfig.instance:getSummonPoolList()
+
+		for i = 1, #list do
+			local cfg = list[i]
+
+			if cfg.historyShowType and cfg.historyShowType ~= 0 and SummonConfig.instance:getPoolDetailConfig(cfg.historyShowType) then
+				self._summonShowTypeDic[cfg.id] = cfg.historyShowType
+			end
+		end
+	end
+
+	return self._summonShowTypeDic[poolId] or poolType
+end
+
+function SummonPoolHistoryModel:getNumByPoolId(poolId)
+	if poolId == nil then
 		return 0
 	end
 
-	return arg_7_0._typeNums[arg_7_1] or 0
+	return self._typeNums[poolId] or 0
 end
 
-function var_0_0.updateSummonResult(arg_8_0, arg_8_1)
-	if arg_8_1 and #arg_8_1 > 0 then
-		local var_8_0 = Time.time + 300
+function SummonPoolHistoryModel:updateSummonResult(summonResult)
+	if summonResult and #summonResult > 0 then
+		local nextTime = Time.time + 300
 
-		if arg_8_0._getNextTime == nil or var_8_0 < arg_8_0._getNextTime then
-			arg_8_0._getNextTime = var_8_0
+		if self._getNextTime == nil or nextTime < self._getNextTime then
+			self._getNextTime = nextTime
 		end
 	end
 end
 
-function var_0_0.getHistoryListByIndexOf(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = {}
-	local var_9_1 = 0
+function SummonPoolHistoryModel:getHistoryListByIndexOf(start, num, poolType)
+	local list = {}
+	local count = 0
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._dataList) do
-		if arg_9_3 == arg_9_0:_getShowPoolType(iter_9_1.poolId, iter_9_1.poolType) then
-			if arg_9_1 <= var_9_1 then
-				arg_9_0:_addHistoryToList(var_9_0, iter_9_1, 1 - arg_9_1, arg_9_2 - #var_9_0)
-			elseif var_9_1 < arg_9_1 and arg_9_1 <= var_9_1 + #iter_9_1.gainIds then
-				arg_9_0:_addHistoryToList(var_9_0, iter_9_1, arg_9_1 - var_9_1, arg_9_2 - #var_9_0)
+	for _, histroy in ipairs(self._dataList) do
+		local histroyType = self:_getShowPoolType(histroy.poolId, histroy.poolType)
+
+		if poolType == histroyType then
+			if start <= count then
+				self:_addHistoryToList(list, histroy, 1 - start, num - #list)
+			elseif count < start and start <= count + #histroy.gainIds then
+				self:_addHistoryToList(list, histroy, start - count, num - #list)
 			end
 
-			var_9_1 = var_9_1 + #iter_9_1.gainIds
+			count = count + #histroy.gainIds
 		end
 
-		if arg_9_2 <= #var_9_0 then
+		if num <= #list then
 			break
 		end
 	end
 
-	return var_9_0
+	return list
 end
 
-function var_0_0._addHistoryToList(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if not arg_10_2.gainIds or #arg_10_2.gainIds < 1 then
+function SummonPoolHistoryModel:_addHistoryToList(list, historyData, start, num)
+	if not historyData.gainIds or #historyData.gainIds < 1 then
 		return
 	end
 
-	local var_10_0 = #arg_10_2.gainIds
+	local gainIdCount = #historyData.gainIds
 
-	arg_10_1 = arg_10_1 or {}
-	arg_10_3 = math.max(1, arg_10_3)
+	list = list or {}
+	start = math.max(1, start)
 
-	local var_10_1 = arg_10_3 + arg_10_4
-	local var_10_2 = math.min(var_10_1, var_10_0)
+	local len = start + num
 
-	for iter_10_0 = arg_10_3, var_10_2 do
-		local var_10_3 = var_10_0 - iter_10_0 + 1
-		local var_10_4 = arg_10_2.gainIds[var_10_3]
-		local var_10_5 = {
-			createTime = arg_10_2.createTime,
-			summonType = arg_10_2.summonType,
-			poolName = arg_10_2.poolName,
-			gainId = var_10_4,
-			poolId = arg_10_2.poolId,
-			poolType = arg_10_2.poolType
+	len = math.min(len, gainIdCount)
+
+	for i = start, len do
+		local index = gainIdCount - i + 1
+		local gainId = historyData.gainIds[index]
+		local tmpData = {
+			createTime = historyData.createTime,
+			summonType = historyData.summonType,
+			poolName = historyData.poolName,
+			gainId = gainId,
+			poolId = historyData.poolId,
+			poolType = historyData.poolType
 		}
 
-		if SummonConfig.poolTypeIsLuckyBag(arg_10_2.poolType) and arg_10_2.luckyBagIdSet and arg_10_2.luckyBagIdSet[var_10_4] then
-			var_10_5.isLuckyBag = true
+		if SummonConfig.poolTypeIsLuckyBag(historyData.poolType) and historyData.luckyBagIdSet and historyData.luckyBagIdSet[gainId] then
+			tmpData.isLuckyBag = true
 		end
 
-		table.insert(arg_10_1, var_10_5)
+		table.insert(list, tmpData)
 	end
 
-	return arg_10_1
+	return list
 end
 
-function var_0_0.getHistoryValidPools(arg_11_0)
-	local var_11_0 = arg_11_0._typeNums
-	local var_11_1 = {}
-	local var_11_2 = {}
-	local var_11_3 = SummonConfig.instance:getPoolDetailConfigList()
+function SummonPoolHistoryModel:getHistoryValidPools()
+	local typeNums = self._typeNums
+	local result = {}
+	local resultDict = {}
+	local poolDetailCfgList = SummonConfig.instance:getPoolDetailConfigList()
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_3) do
-		if iter_11_1.historyShowType == 1 then
-			arg_11_0:_addHistoryValidPools(var_11_1, var_11_2, iter_11_1.id)
+	for i, pooldetailCfg in ipairs(poolDetailCfgList) do
+		if pooldetailCfg.historyShowType == 1 then
+			self:_addHistoryValidPools(result, resultDict, pooldetailCfg.id)
 		end
 	end
 
-	local var_11_4 = SummonMainModel.getValidPools()
+	local poolCfgs = SummonMainModel.getValidPools()
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_4) do
-		local var_11_5 = arg_11_0:_getShowPoolType(iter_11_3.id, iter_11_3.type)
+	for _, cfg in ipairs(poolCfgs) do
+		local poolType = self:_getShowPoolType(cfg.id, cfg.type)
 
-		arg_11_0:_addHistoryValidPools(var_11_1, var_11_2, var_11_5)
+		self:_addHistoryValidPools(result, resultDict, poolType)
 	end
 
-	local var_11_6 = Time.time
+	local curTime = Time.time
 
-	for iter_11_4, iter_11_5 in pairs(arg_11_0._requestPools) do
-		if var_11_6 <= iter_11_5 then
-			local var_11_7 = SummonConfig.instance:getSummonPool(iter_11_4)
+	for poolId, time in pairs(self._requestPools) do
+		if curTime <= time then
+			local cfg = SummonConfig.instance:getSummonPool(poolId)
 
-			if var_11_7 then
-				local var_11_8 = arg_11_0:_getShowPoolType(var_11_7.id, var_11_7.type)
+			if cfg then
+				local poolType = self:_getShowPoolType(cfg.id, cfg.type)
 
-				arg_11_0:_addHistoryValidPools(var_11_1, var_11_2, var_11_8)
+				self:_addHistoryValidPools(result, resultDict, poolType)
 			else
-				logNormal(string.format("配置表找不到id为%s的卡池", iter_11_4))
+				logNormal(string.format("配置表找不到id为%s的卡池", poolId))
 			end
 		end
 	end
 
-	for iter_11_6, iter_11_7 in pairs(var_11_0) do
-		arg_11_0:_addHistoryValidPools(var_11_1, var_11_2, iter_11_6)
+	for pooltype, _ in pairs(typeNums) do
+		self:_addHistoryValidPools(result, resultDict, pooltype)
 	end
 
-	if #var_11_1 > 1 then
-		table.sort(var_11_1, function(arg_12_0, arg_12_1)
-			if arg_12_0.order ~= arg_12_1.order then
-				return arg_12_0.order < arg_12_1.order
+	if #result > 1 then
+		table.sort(result, function(a, b)
+			if a.order ~= b.order then
+				return a.order < b.order
 			end
 		end)
 	end
 
-	return var_11_1
+	return result
 end
 
-function var_0_0._addHistoryValidPools(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_3 == nil or arg_13_2[arg_13_3] then
+function SummonPoolHistoryModel:_addHistoryValidPools(list, dict, poolType)
+	if poolType == nil or dict[poolType] then
 		return
 	end
 
-	local var_13_0 = SummonConfig.instance:getPoolDetailConfig(arg_13_3)
+	local pooldetailCfg = SummonConfig.instance:getPoolDetailConfig(poolType)
 
-	if arg_13_0:isCanShowByPoolTypeId(arg_13_3) then
-		arg_13_2[arg_13_3] = true
+	if self:isCanShowByPoolTypeId(poolType) then
+		dict[poolType] = true
 
-		table.insert(arg_13_1, var_13_0)
+		table.insert(list, pooldetailCfg)
 	end
 end
 
-function var_0_0.isCanShowByPoolTypeId(arg_14_0, arg_14_1)
-	local var_14_0 = SummonConfig.instance:getPoolDetailConfig(arg_14_1)
+function SummonPoolHistoryModel:isCanShowByPoolTypeId(poolTypeId)
+	local pooldetailCfg = SummonConfig.instance:getPoolDetailConfig(poolTypeId)
 
-	if var_14_0 and var_14_0.historyShowType ~= 99 and (var_14_0.openId == nil or var_14_0.openId == 0 or OpenModel.instance:isFunctionUnlock(var_14_0.openId)) then
+	if pooldetailCfg and pooldetailCfg.historyShowType ~= 99 and (pooldetailCfg.openId == nil or pooldetailCfg.openId == 0 or OpenModel.instance:isFunctionUnlock(pooldetailCfg.openId)) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.addRequestHistoryPool(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function SummonPoolHistoryModel:addRequestHistoryPool(poolId)
+	if not poolId then
 		return
 	end
 
-	arg_15_0._requestPools[arg_15_1] = Time.time + 3600
+	self._requestPools[poolId] = Time.time + 3600
 end
 
-function var_0_0.getToken(arg_16_0, arg_16_1)
-	return arg_16_0._token
+function SummonPoolHistoryModel:getToken(token)
+	return self._token
 end
 
-function var_0_0.setToken(arg_17_0, arg_17_1)
-	arg_17_0._token = arg_17_1
-	arg_17_0._tokenEndTime = Time.time + 300 - 10
+function SummonPoolHistoryModel:setToken(token)
+	self._token = token
+	self._tokenEndTime = Time.time + 300 - 10
 end
 
-function var_0_0.isTokenValidity(arg_18_0)
-	return arg_18_0._tokenEndTime > Time.time
+function SummonPoolHistoryModel:isTokenValidity()
+	return self._tokenEndTime > Time.time
 end
 
-var_0_0.instance = var_0_0.New()
+SummonPoolHistoryModel.instance = SummonPoolHistoryModel.New()
 
-return var_0_0
+return SummonPoolHistoryModel

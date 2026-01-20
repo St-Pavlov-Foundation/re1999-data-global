@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiUnitTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/view/WuErLiXiUnitTipViewContainer.lua
 
-local var_0_0 = class("WuErLiXiUnitTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiUnitTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local WuErLiXiUnitTipViewContainer = class("WuErLiXiUnitTipViewContainer", BaseViewContainer)
+
+function WuErLiXiUnitTipViewContainer:buildViews()
 	return {
 		WuErLiXiUnitTipView.New()
 	}
 end
 
-return var_0_0
+return WuErLiXiUnitTipViewContainer

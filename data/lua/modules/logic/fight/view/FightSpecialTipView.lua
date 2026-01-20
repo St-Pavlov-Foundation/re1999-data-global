@@ -1,329 +1,333 @@
-﻿module("modules.logic.fight.view.FightSpecialTipView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSpecialTipView.lua
 
-local var_0_0 = class("FightSpecialTipView", BaseView)
+module("modules.logic.fight.view.FightSpecialTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goSimageBg = gohelper.findChild(arg_1_0.viewGO, "content/#simage_bg")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_bg")
-	arg_1_0._goBossRushLayer4 = gohelper.findChild(arg_1_0.viewGO, "content/#simage_bg/#go_BossRushLayer4")
-	arg_1_0._gospecialTip = gohelper.findChild(arg_1_0.viewGO, "content/#go_specialTip")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "content/#go_specialTip/#txt_desc")
-	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "content/layout")
-	arg_1_0._goadditionTip = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent/#go_Content")
-	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent/#go_Content/#go_ruleitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goadditionTip2 = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_additionTip")
-	arg_1_0.additionTipLayout = arg_1_0._goadditionTip2:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
-	arg_1_0.additionTipLayoutElement = arg_1_0._goadditionTip2:GetComponent(typeof(UnityEngine.UI.LayoutElement))
-	arg_1_0.goViewPort = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_additionTip/Viewport")
-	arg_1_0.viewPortLayout = arg_1_0.goViewPort:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
-	arg_1_0.viewPortTrans = arg_1_0.goViewPort:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0.goLayoutContent = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent")
-	arg_1_0.layoutContentTrans = arg_1_0.goLayoutContent:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0.layoutContentSizeFilter = arg_1_0.goLayoutContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
-	arg_1_0._go_weekwalkheart = gohelper.findChild(arg_1_0.viewGO, "content/#go_weekwalkheart")
+local FightSpecialTipView = class("FightSpecialTipView", BaseView)
 
-	gohelper.setActive(arg_1_0._go_weekwalkheart, false)
+function FightSpecialTipView:onInitView()
+	self.goSimageBg = gohelper.findChild(self.viewGO, "content/#simage_bg")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "content/#simage_bg")
+	self._goBossRushLayer4 = gohelper.findChild(self.viewGO, "content/#simage_bg/#go_BossRushLayer4")
+	self._gospecialTip = gohelper.findChild(self.viewGO, "content/#go_specialTip")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "content/#go_specialTip/#txt_desc")
+	self._golayout = gohelper.findChild(self.viewGO, "content/layout")
+	self._goadditionTip = gohelper.findChild(self.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent/#go_Content")
+	self._goruleitem = gohelper.findChild(self.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent/#go_Content/#go_ruleitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._goadditionTip2 = gohelper.findChild(self.viewGO, "content/layout/#go_additionTip")
+	self.additionTipLayout = self._goadditionTip2:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	self.additionTipLayoutElement = self._goadditionTip2:GetComponent(typeof(UnityEngine.UI.LayoutElement))
+	self.goViewPort = gohelper.findChild(self.viewGO, "content/layout/#go_additionTip/Viewport")
+	self.viewPortLayout = self.goViewPort:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	self.viewPortTrans = self.goViewPort:GetComponent(gohelper.Type_RectTransform)
+	self.goLayoutContent = gohelper.findChild(self.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent")
+	self.layoutContentTrans = self.goLayoutContent:GetComponent(gohelper.Type_RectTransform)
+	self.layoutContentSizeFilter = self.goLayoutContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	self._go_weekwalkheart = gohelper.findChild(self.viewGO, "content/#go_weekwalkheart")
 
-	arg_1_0._weekwalkTagText = gohelper.findChildText(arg_1_0.viewGO, "content/#go_weekwalkheart/#go_ruleitem/scroll_tag/Viewport/Content/tag")
-	arg_1_0._weekwalkTagIcon = gohelper.findChildImage(arg_1_0.viewGO, "content/#go_weekwalkheart/#go_ruleitem/scroll_tag/Viewport/Content/tag/icon")
+	gohelper.setActive(self._go_weekwalkheart, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._weekwalkTagText = gohelper.findChildText(self.viewGO, "content/#go_weekwalkheart/#go_ruleitem/scroll_tag/Viewport/Content/tag")
+	self._weekwalkTagIcon = gohelper.findChildImage(self.viewGO, "content/#go_weekwalkheart/#go_ruleitem/scroll_tag/Viewport/Content/tag/icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnPlayVideo, arg_2_0._onPlayVideo, arg_2_0)
+function FightSpecialTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(FightController.instance, FightEvent.OnPlayVideo, self._onPlayVideo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnPlayVideo, arg_3_0._onPlayVideo, arg_3_0)
+function FightSpecialTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnPlayVideo, self._onPlayVideo, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goruleitem, false)
+function FightSpecialTipView:_editableInitView()
+	gohelper.setActive(self._goruleitem, false)
 
-	arg_4_0._additionTips = arg_4_0:getUserDataTb_()
-	arg_4_0._ruleItems = arg_4_0:getUserDataTb_()
+	self._additionTips = self:getUserDataTb_()
+	self._ruleItems = self:getUserDataTb_()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0._anim:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(arg_5_0._closeView, arg_5_0, 0.133)
+function FightSpecialTipView:_btncloseOnClick()
+	self._anim:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(self._closeView, self, 0.133)
 end
 
-function var_0_0._onOpenView(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.GuideView or arg_6_1 == ViewName.StoryView then
-		arg_6_0:closeThis()
+function FightSpecialTipView:_onOpenView(viewName)
+	if viewName == ViewName.GuideView or viewName == ViewName.StoryView then
+		self:closeThis()
 	end
 end
 
-function var_0_0._onPlayVideo(arg_7_0, arg_7_1)
-	arg_7_0:closeThis()
+function FightSpecialTipView:_onPlayVideo(videoName)
+	self:closeThis()
 end
 
-function var_0_0._closeView(arg_8_0)
-	arg_8_0:closeThis()
+function FightSpecialTipView:_closeView()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_9_0)
+function FightSpecialTipView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_jump)
-	arg_9_0._simagebg:LoadImage(ResUrl.getFightSpecialTipIcon("img_tishi_bg.png"))
+	self._simagebg:LoadImage(ResUrl.getFightSpecialTipIcon("img_tishi_bg.png"))
 
-	local var_9_0 = FightModel.instance:getFightParam()
-	local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0.episodeId)
-	local var_9_2
+	local fightParam = FightModel.instance:getFightParam()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(fightParam.episodeId)
+	local show_type
 
-	if var_9_1 and not string.nilorempty(var_9_1.battleDesc) then
-		var_9_2 = FightEnum.FightSpecialTipsType.Special
-		arg_9_0._txtdesc.text = var_9_1.battleDesc
+	if episode_config and not string.nilorempty(episode_config.battleDesc) then
+		show_type = FightEnum.FightSpecialTipsType.Special
+		self._txtdesc.text = episode_config.battleDesc
 	end
 
-	local var_9_3 = var_9_1 and var_9_1.type
-	local var_9_4 = lua_battle.configDict[var_9_0.battleId]
+	local episodeType = episode_config and episode_config.type
+	local battleConfig = lua_battle.configDict[fightParam.battleId]
 
-	if var_9_3 == DungeonEnum.EpisodeType.Rouge then
-		local var_9_5 = RougeMapModel.instance:getCurNode()
-		local var_9_6 = var_9_5 and var_9_5.eventMo
-		local var_9_7 = var_9_6 and var_9_6:getSurpriseAttackList()
-		local var_9_8 = var_9_4.additionRule
-		local var_9_9
+	if episodeType == DungeonEnum.EpisodeType.Rouge then
+		local curNode = RougeMapModel.instance:getCurNode()
+		local eventMo = curNode and curNode.eventMo
+		local surpriseAttackList = eventMo and eventMo:getSurpriseAttackList()
+		local additionRule = battleConfig.additionRule
+		local data_list
 
-		if not string.nilorempty(var_9_4.additionRule) then
-			var_9_9 = GameUtil.splitString2(var_9_8, true, "|", "#")
+		if not string.nilorempty(battleConfig.additionRule) then
+			data_list = GameUtil.splitString2(additionRule, true, "|", "#")
 		end
 
-		if var_9_7 then
-			var_9_9 = var_9_9 or {}
+		if surpriseAttackList then
+			data_list = data_list or {}
 
-			for iter_9_0, iter_9_1 in ipairs(var_9_7) do
-				local var_9_10 = lua_rouge_surprise_attack.configDict[iter_9_1].additionRule
+			for _, ruleId in ipairs(surpriseAttackList) do
+				local co = lua_rouge_surprise_attack.configDict[ruleId]
+				local rule = co.additionRule
 
-				if not string.nilorempty(var_9_10) then
-					table.insert(var_9_9, string.splitToNumber(var_9_10, "#"))
+				if not string.nilorempty(rule) then
+					table.insert(data_list, string.splitToNumber(rule, "#"))
 				end
 			end
 		end
 
-		if var_9_9 and #var_9_9 > 0 then
-			if #var_9_9 > 2 and #var_9_9 % 2 == 1 then
-				table.insert(var_9_9, {})
+		if data_list and #data_list > 0 then
+			if #data_list > 2 and #data_list % 2 == 1 then
+				table.insert(data_list, {})
 			end
 
-			gohelper.CreateObjList(arg_9_0, arg_9_0._onRuleItemShow, var_9_9, arg_9_0._goadditionTip, arg_9_0._goruleitem)
+			gohelper.CreateObjList(self, self._onRuleItemShow, data_list, self._goadditionTip, self._goruleitem)
 		end
 
-		var_9_2 = FightEnum.FightSpecialTipsType.Addition
+		show_type = FightEnum.FightSpecialTipsType.Addition
 
-		gohelper.setActive(arg_9_0._gospecialTip, var_9_2 == FightEnum.FightSpecialTipsType.Special)
-		gohelper.setActive(arg_9_0._golayout, var_9_2 == FightEnum.FightSpecialTipsType.Addition)
+		gohelper.setActive(self._gospecialTip, show_type == FightEnum.FightSpecialTipsType.Special)
+		gohelper.setActive(self._golayout, show_type == FightEnum.FightSpecialTipsType.Addition)
 
 		return
 	end
 
-	local var_9_11
+	local data_list
 
-	if var_9_4 and not string.nilorempty(var_9_4.additionRule) then
-		var_9_2 = FightEnum.FightSpecialTipsType.Addition
+	if battleConfig and not string.nilorempty(battleConfig.additionRule) then
+		show_type = FightEnum.FightSpecialTipsType.Addition
 
-		local var_9_12 = var_9_4.additionRule
+		local additionRule = battleConfig.additionRule
 
-		var_9_11 = GameUtil.splitString2(var_9_12, true, "|", "#")
+		data_list = GameUtil.splitString2(additionRule, true, "|", "#")
 
-		local var_9_13 = var_9_1 and var_9_1.type
+		local episodeType = episode_config and episode_config.type
 
-		if Activity104Model.instance:isSeasonEpisodeType(var_9_13) then
-			var_9_11 = SeasonConfig.instance:filterRule(var_9_11)
-		elseif Season123Controller.isSeason123EpisodeType(var_9_13) then
-			local var_9_14 = Season123Model.instance:getBattleContext()
+		if Activity104Model.instance:isSeasonEpisodeType(episodeType) then
+			data_list = SeasonConfig.instance:filterRule(data_list)
+		elseif Season123Controller.isSeason123EpisodeType(episodeType) then
+			local context = Season123Model.instance:getBattleContext()
 
-			if var_9_14 then
-				var_9_11 = Season123HeroGroupModel.filterRule(var_9_14.actId, var_9_11)
+			if context then
+				data_list = Season123HeroGroupModel.filterRule(context.actId, data_list)
 
-				if var_9_14.stage then
-					var_9_11 = Season123Config.instance:filterRule(var_9_11, var_9_14.stage)
+				if context.stage then
+					data_list = Season123Config.instance:filterRule(data_list, context.stage)
 				end
 			end
 		end
 	end
 
-	local var_9_15 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act183]
+	local data183 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act183]
 
-	if var_9_15 then
-		local var_9_16 = var_9_15
+	if data183 then
+		local jsonData = data183
 
-		if var_9_16.currRules then
-			var_9_11 = var_9_11 or {}
+		if jsonData.currRules then
+			data_list = data_list or {}
 
-			for iter_9_2, iter_9_3 in ipairs(var_9_16.currRules) do
-				local var_9_17 = GameUtil.splitString2(iter_9_3, true, "|", "#")
+			for i, v in ipairs(jsonData.currRules) do
+				local arr = GameUtil.splitString2(v, true, "|", "#")
 
-				tabletool.addValues(var_9_11, var_9_17)
+				tabletool.addValues(data_list, arr)
 			end
 		end
 
-		if var_9_16.transferRules then
-			var_9_11 = var_9_11 or {}
+		if jsonData.transferRules then
+			data_list = data_list or {}
 
-			for iter_9_4, iter_9_5 in ipairs(var_9_16.transferRules) do
-				local var_9_18 = GameUtil.splitString2(iter_9_5, true, "|", "#")
+			for i, v in ipairs(jsonData.transferRules) do
+				local arr = GameUtil.splitString2(v, true, "|", "#")
 
-				tabletool.addValues(var_9_11, var_9_18)
+				tabletool.addValues(data_list, arr)
 			end
 		end
 	end
 
-	local var_9_19 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2]
+	local dataWeekwalkVer2 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2]
 
-	if var_9_19 then
-		local var_9_20 = cjson.decode(var_9_19).ruleMap
+	if dataWeekwalkVer2 then
+		local jsonData = cjson.decode(dataWeekwalkVer2)
+		local ruleMap = jsonData.ruleMap
 
-		if var_9_20 then
-			var_9_11 = var_9_11 or {}
+		if ruleMap then
+			data_list = data_list or {}
 
-			if var_9_20.chooseSkill then
-				gohelper.setActive(arg_9_0.goSimageBg, #var_9_20.chooseSkill > 0)
+			if ruleMap.chooseSkill then
+				gohelper.setActive(self.goSimageBg, #ruleMap.chooseSkill > 0)
 
-				for iter_9_6, iter_9_7 in ipairs(var_9_20.chooseSkill) do
-					local var_9_21 = GameUtil.splitString2(iter_9_7, true, "|", "#")
+				for i, v in ipairs(ruleMap.chooseSkill) do
+					local arr = GameUtil.splitString2(v, true, "|", "#")
 
-					tabletool.addValues(var_9_11, var_9_21)
+					tabletool.addValues(data_list, arr)
 				end
 			else
-				gohelper.setActive(arg_9_0.goSimageBg, false)
+				gohelper.setActive(self.goSimageBg, false)
 			end
 
-			if var_9_20.defaultRule then
-				gohelper.setActive(arg_9_0._go_weekwalkheart, true)
+			if ruleMap.defaultRule then
+				gohelper.setActive(self._go_weekwalkheart, true)
 
-				local var_9_22 = GameUtil.splitString2(var_9_20.defaultRule[1], true, "|", "#")[1]
-				local var_9_23 = {
+				local data = GameUtil.splitString2(ruleMap.defaultRule[1], true, "|", "#")[1]
+				local tagColor = {
 					"#5283ca",
 					"#de4d4d",
 					"#dd9446",
 					"#ff0000"
 				}
-				local var_9_24 = lua_rule.configDict[var_9_22[2]]
-				local var_9_25 = var_9_22[1]
-				local var_9_26 = var_9_24.desc
-				local var_9_27 = SkillHelper.buildDesc(var_9_26, nil, "#5283ca")
-				local var_9_28 = luaLang("dungeon_add_rule_target_" .. var_9_25)
-				local var_9_29 = var_9_23[var_9_25]
+				local rule_config = lua_rule.configDict[data[2]]
+				local targetId = data[1]
+				local srcDesc = rule_config.desc
+				local descContent = SkillHelper.buildDesc(srcDesc, nil, "#5283ca")
+				local side = luaLang("dungeon_add_rule_target_" .. targetId)
+				local color = tagColor[targetId]
 
-				arg_9_0._weekwalkTagText.text = SkillConfig.instance:fmtTagDescColor(var_9_28, var_9_27, var_9_29)
+				self._weekwalkTagText.text = SkillConfig.instance:fmtTagDescColor(side, descContent, color)
 
-				UISpriteSetMgr.instance:setDungeonLevelRuleSprite(arg_9_0._weekwalkTagIcon, var_9_24.icon, true)
+				UISpriteSetMgr.instance:setDungeonLevelRuleSprite(self._weekwalkTagIcon, rule_config.icon, true)
 			end
 		end
 	end
 
-	if var_9_3 == DungeonEnum.EpisodeType.Survival then
-		var_9_11 = SurvivalShelterModel.instance:addExRule(var_9_11)
+	if episodeType == DungeonEnum.EpisodeType.Survival then
+		data_list = SurvivalShelterModel.instance:addExRule(data_list)
 	end
 
-	if var_9_11 and #var_9_11 > 0 then
-		var_9_2 = FightEnum.FightSpecialTipsType.Addition
+	if data_list and #data_list > 0 then
+		show_type = FightEnum.FightSpecialTipsType.Addition
 
-		if var_9_3 == DungeonEnum.EpisodeType.Meilanni then
-			var_9_11 = HeroGroupFightViewRule.meilanniExcludeRules(var_9_11)
+		if episodeType == DungeonEnum.EpisodeType.Meilanni then
+			data_list = HeroGroupFightViewRule.meilanniExcludeRules(data_list)
 		end
 
-		if #var_9_11 > 2 and #var_9_11 % 2 == 1 then
-			table.insert(var_9_11, {})
+		if #data_list > 2 and #data_list % 2 == 1 then
+			table.insert(data_list, {})
 		end
 
-		gohelper.CreateObjList(arg_9_0, arg_9_0._onRuleItemShow, var_9_11, arg_9_0._goadditionTip, arg_9_0._goruleitem)
+		gohelper.CreateObjList(self, self._onRuleItemShow, data_list, self._goadditionTip, self._goruleitem)
 	end
 
-	gohelper.setActive(arg_9_0._gospecialTip, var_9_2 == FightEnum.FightSpecialTipsType.Special)
-	gohelper.setActive(arg_9_0._golayout, var_9_2 == FightEnum.FightSpecialTipsType.Addition)
+	gohelper.setActive(self._gospecialTip, show_type == FightEnum.FightSpecialTipsType.Special)
+	gohelper.setActive(self._golayout, show_type == FightEnum.FightSpecialTipsType.Addition)
 
-	local var_9_30 = BossRushModel.instance:isSpecialLayerCurBattle()
+	local isInBossRushSpecial = BossRushModel.instance:isSpecialLayerCurBattle()
 
-	gohelper.setActive(arg_9_0._goBossRushLayer4, var_9_30)
-	arg_9_0:setTipLayout(var_9_11)
+	gohelper.setActive(self._goBossRushLayer4, isInBossRushSpecial)
+	self:setTipLayout(data_list)
 end
 
-function var_0_0.setTipLayout(arg_10_0, arg_10_1)
-	local var_10_0 = 720
+function FightSpecialTipView:setTipLayout(data_list)
+	local maxTipHeight = 720
 
-	if arg_10_1 and #arg_10_1 > 6 then
-		arg_10_0.additionTipLayout.enabled = false
-		arg_10_0.additionTipLayoutElement.enabled = true
-		arg_10_0.viewPortLayout.enabled = false
-		arg_10_0.layoutContentSizeFilter.enabled = true
+	if data_list and #data_list > 6 then
+		self.additionTipLayout.enabled = false
+		self.additionTipLayoutElement.enabled = true
+		self.viewPortLayout.enabled = false
+		self.layoutContentSizeFilter.enabled = true
 
-		recthelper.setHeight(arg_10_0.viewPortTrans, var_10_0)
+		recthelper.setHeight(self.viewPortTrans, maxTipHeight)
 
-		local var_10_1 = Vector2(0, 1)
+		local anchorVector = Vector2(0, 1)
 
-		arg_10_0.viewPortTrans.pivot = var_10_1
-		arg_10_0.viewPortTrans.anchorMin = var_10_1
-		arg_10_0.viewPortTrans.anchorMax = var_10_1
-		arg_10_0.layoutContentTrans.pivot = var_10_1
-		arg_10_0.layoutContentTrans.anchorMin = var_10_1
-		arg_10_0.layoutContentTrans.anchorMax = var_10_1
+		self.viewPortTrans.pivot = anchorVector
+		self.viewPortTrans.anchorMin = anchorVector
+		self.viewPortTrans.anchorMax = anchorVector
+		self.layoutContentTrans.pivot = anchorVector
+		self.layoutContentTrans.anchorMin = anchorVector
+		self.layoutContentTrans.anchorMax = anchorVector
 
-		recthelper.setAnchorY(arg_10_0.viewPortTrans, 0)
-		recthelper.setAnchorY(arg_10_0.layoutContentTrans, 0)
+		recthelper.setAnchorY(self.viewPortTrans, 0)
+		recthelper.setAnchorY(self.layoutContentTrans, 0)
 	end
 end
 
-function var_0_0._onRuleItemShow(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = {
+function FightSpecialTipView:_onRuleItemShow(obj, data, index)
+	local tagColor = {
 		"#5283ca",
 		"#de4d4d",
 		"#dd9446",
 		"#ff0000"
 	}
 
-	gohelper.setActive(arg_11_1, true)
+	gohelper.setActive(obj, true)
 
-	local var_11_1 = arg_11_1.transform
-	local var_11_2 = var_11_1:Find("scroll_tag")
-	local var_11_3 = var_11_1:Find("scroll_tag/Viewport/Content/tag"):GetComponent(gohelper.Type_TextMesh)
-	local var_11_4 = var_11_1:Find("icon"):GetComponent(gohelper.Type_Image)
-	local var_11_5 = string.nilorempty(arg_11_2[2])
+	local transform = obj.transform
+	local scrolltag = transform:Find("scroll_tag")
+	local tag = transform:Find("scroll_tag/Viewport/Content/tag"):GetComponent(gohelper.Type_TextMesh)
+	local ruleIcon = transform:Find("icon"):GetComponent(gohelper.Type_Image)
+	local notData = string.nilorempty(data[2])
 
-	gohelper.setActive(var_11_2.gameObject, not var_11_5)
-	gohelper.setActive(var_11_4.gameObject, not var_11_5)
+	gohelper.setActive(scrolltag.gameObject, not notData)
+	gohelper.setActive(ruleIcon.gameObject, not notData)
 
-	if var_11_5 then
+	if notData then
 		return
 	end
 
-	local var_11_6 = lua_rule.configDict[arg_11_2[2]]
-	local var_11_7 = arg_11_2[1]
+	local rule_config = lua_rule.configDict[data[2]]
+	local targetId = data[1]
 
-	SkillHelper.addHyperLinkClick(var_11_3)
+	SkillHelper.addHyperLinkClick(tag)
 
-	local var_11_8 = var_11_6.desc
-	local var_11_9 = SkillHelper.buildDesc(var_11_8, nil, "#5283ca")
-	local var_11_10 = luaLang("dungeon_add_rule_target_" .. var_11_7)
-	local var_11_11 = var_11_0[var_11_7]
+	local srcDesc = rule_config.desc
+	local descContent = SkillHelper.buildDesc(srcDesc, nil, "#5283ca")
+	local side = luaLang("dungeon_add_rule_target_" .. targetId)
+	local color = tagColor[targetId]
 
-	var_11_3.text = SkillConfig.instance:fmtTagDescColor(var_11_10, var_11_9, var_11_11)
+	tag.text = SkillConfig.instance:fmtTagDescColor(side, descContent, color)
 
-	var_11_3:ForceMeshUpdate(true, true)
+	tag:ForceMeshUpdate(true, true)
 
-	local var_11_12 = var_11_3:GetRenderedValues()
+	local v = tag:GetRenderedValues()
 
-	recthelper.setHeight(var_11_3.transform, var_11_12.y)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_11_4, var_11_6.icon)
+	recthelper.setHeight(tag.transform, v.y)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(ruleIcon, rule_config.icon)
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._closeView, arg_12_0)
+function FightSpecialTipView:onClose()
+	TaskDispatcher.cancelTask(self._closeView, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simagebg:UnLoadImage()
+function FightSpecialTipView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return FightSpecialTipView

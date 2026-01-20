@@ -1,38 +1,40 @@
-﻿module("modules.logic.playercard.view.PlayerCardLayoutViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardLayoutViewContainer.lua
 
-local var_0_0 = class("PlayerCardLayoutViewContainer", BaseViewContainer)
+module("modules.logic.playercard.view.PlayerCardLayoutViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerCardLayoutViewContainer = class("PlayerCardLayoutViewContainer", BaseViewContainer)
 
-	arg_1_0.layoutView = PlayerCardLayoutView.New()
+function PlayerCardLayoutViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.layoutView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	self.layoutView = PlayerCardLayoutView.New()
 
-	return var_1_0
+	table.insert(views, self.layoutView)
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function PlayerCardLayoutViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._closeFunc, arg_2_0)
+		self.navigateView:setOverrideClose(self._closeFunc, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._closeFunc(arg_3_0)
-	if arg_3_0.layoutView then
-		arg_3_0.layoutView:playCloseAnim()
+function PlayerCardLayoutViewContainer:_closeFunc()
+	if self.layoutView then
+		self.layoutView:playCloseAnim()
 	end
 end
 
-return var_0_0
+return PlayerCardLayoutViewContainer

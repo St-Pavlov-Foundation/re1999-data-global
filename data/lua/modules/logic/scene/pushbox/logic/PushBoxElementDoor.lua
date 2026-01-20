@@ -1,71 +1,78 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxElementDoor", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxElementDoor.lua
 
-local var_0_0 = class("PushBoxElementDoor", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxElementDoor", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local PushBoxElementDoor = class("PushBoxElementDoor", UserDataDispose)
 
-	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	arg_1_0._gameObject = arg_1_1
-	arg_1_0._transform = arg_1_1.transform
-	arg_1_0._cell = arg_1_2
+function PushBoxElementDoor:ctor(gameObject, cell)
+	self:__onInit()
 
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._gameObject = gameObject
+	self._transform = gameObject.transform
+	self._cell = cell
+
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, self._onRefreshElement, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, self._onStepFinished, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, self._onRevertStep, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, self._onStartElement, self)
 end
 
-function var_0_0.setRendererIndex(arg_2_0)
-	local var_2_0 = arg_2_0._cell:getRendererIndex() + 1 - 10000
+function PushBoxElementDoor:setRendererIndex()
+	local final_renderer_index = self._cell:getRendererIndex()
 
-	for iter_2_0 = 0, arg_2_0._transform.childCount - 1 do
-		arg_2_0._transform:GetChild(iter_2_0):GetChild(0):GetComponent("MeshRenderer").sortingOrder = var_2_0
+	final_renderer_index = final_renderer_index + 1 - 10000
+
+	for i = 0, self._transform.childCount - 1 do
+		local tar_transform = self._transform:GetChild(i)
+		local meshRenderer = tar_transform:GetChild(0):GetComponent("MeshRenderer")
+
+		meshRenderer.sortingOrder = final_renderer_index
 	end
 end
 
-function var_0_0.refreshDoorState(arg_3_0, arg_3_1)
-	local var_3_0 = gohelper.findChild(arg_3_0._gameObject, "Close")
-	local var_3_1 = gohelper.findChild(arg_3_0._gameObject, "Open")
+function PushBoxElementDoor:refreshDoorState(open_door)
+	local close_obj = gohelper.findChild(self._gameObject, "Close")
+	local open_obj = gohelper.findChild(self._gameObject, "Open")
 
-	gohelper.setActive(var_3_1, arg_3_1)
-	gohelper.setActive(var_3_0, not arg_3_1)
+	gohelper.setActive(open_obj, open_door)
+	gohelper.setActive(close_obj, not open_door)
 end
 
-function var_0_0._onStartElement(arg_4_0)
+function PushBoxElementDoor:_onStartElement()
 	return
 end
 
-function var_0_0._onRevertStep(arg_5_0)
+function PushBoxElementDoor:_onRevertStep()
 	return
 end
 
-function var_0_0._onRefreshElement(arg_6_0)
+function PushBoxElementDoor:_onRefreshElement()
 	return
 end
 
-function var_0_0._onStepFinished(arg_7_0)
+function PushBoxElementDoor:_onStepFinished()
 	return
 end
 
-function var_0_0.getPosX(arg_8_0)
-	return arg_8_0._cell:getPosX()
+function PushBoxElementDoor:getPosX()
+	return self._cell:getPosX()
 end
 
-function var_0_0.getPosY(arg_9_0)
-	return arg_9_0._cell:getPosY()
+function PushBoxElementDoor:getPosY()
+	return self._cell:getPosY()
 end
 
-function var_0_0.getObj(arg_10_0)
-	return arg_10_0._gameObject
+function PushBoxElementDoor:getObj()
+	return self._gameObject
 end
 
-function var_0_0.getCell(arg_11_0)
-	return arg_11_0._cell
+function PushBoxElementDoor:getCell()
+	return self._cell
 end
 
-function var_0_0.releaseSelf(arg_12_0)
-	arg_12_0:__onDispose()
+function PushBoxElementDoor:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return PushBoxElementDoor

@@ -1,77 +1,79 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewSignInView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewSignInView.lua
 
-local var_0_0 = class("TurnbackNewSignInView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackNewSignInView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "content")
+local TurnbackNewSignInView = class("TurnbackNewSignInView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackNewSignInView:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	TurnbackController.instance:registerCallback(TurnbackEvent.RefreshView, arg_2_0.refreshItem, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.refreshItem, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
+function TurnbackNewSignInView:addEvents()
+	TurnbackController.instance:registerCallback(TurnbackEvent.RefreshView, self.refreshItem, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.refreshItem, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	TurnbackController.instance:unregisterCallback(TurnbackEvent.RefreshView, arg_3_0.refreshItem, arg_3_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.refreshItem, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function TurnbackNewSignInView:removeEvents()
+	TurnbackController.instance:unregisterCallback(TurnbackEvent.RefreshView, self.refreshItem, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.refreshItem, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._signItems = {}
+function TurnbackNewSignInView:_editableInitView()
+	self._signItems = {}
 
-	for iter_4_0 = 1, 7 do
-		local var_4_0 = arg_4_0:getUserDataTb_()
+	for day = 1, 7 do
+		local item = self:getUserDataTb_()
 
-		var_4_0.go = gohelper.findChild(arg_4_0._gocontent, "node" .. iter_4_0)
-		var_4_0.cls = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0.go, TurnbackNewSignInItem)
+		item.go = gohelper.findChild(self._gocontent, "node" .. day)
+		item.cls = MonoHelper.addNoUpdateLuaComOnceToGo(item.go, TurnbackNewSignInItem)
 
-		table.insert(arg_4_0._signItems, var_4_0)
-		var_4_0.cls:initItem(iter_4_0)
+		table.insert(self._signItems, item)
+		item.cls:initItem(day)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function TurnbackNewSignInView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.parent
+function TurnbackNewSignInView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_6_0, arg_6_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_Interface_entry_04)
 end
 
-function var_0_0.refreshItem(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._signItems) do
-		iter_7_1.cls:initItem(iter_7_0)
+function TurnbackNewSignInView:refreshItem()
+	for day, item in ipairs(self._signItems) do
+		item.cls:initItem(day)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.CommonPropView then
-		local var_8_0 = TurnbackModel.instance:getLastGetSigninReward()
+function TurnbackNewSignInView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		local day = TurnbackModel.instance:getLastGetSigninReward()
 
-		if var_8_0 then
+		if day then
 			ViewMgr.instance:openView(ViewName.TurnbackNewLatterView, {
 				isNormal = true,
-				day = var_8_0
+				day = day
 			})
 		end
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function TurnbackNewSignInView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function TurnbackNewSignInView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackNewSignInView

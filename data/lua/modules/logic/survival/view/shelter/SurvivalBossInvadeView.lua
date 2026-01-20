@@ -1,56 +1,58 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalBossInvadeView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalBossInvadeView.lua
 
-local var_0_0 = class("SurvivalBossInvadeView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalBossInvadeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simageFrame = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Frame")
+local SurvivalBossInvadeView = class("SurvivalBossInvadeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SurvivalBossInvadeView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simageFrame = gohelper.findChildSingleImage(self.viewGO, "#simage_Frame")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function SurvivalBossInvadeView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function SurvivalBossInvadeView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function SurvivalBossInvadeView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function SurvivalBossInvadeView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function SurvivalBossInvadeView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, arg_7_0._destroyViewFinish, arg_7_0)
+function SurvivalBossInvadeView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, self._destroyViewFinish, self)
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_warn)
 end
 
-function var_0_0._destroyViewFinish(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.SurvivalLoadingView then
-		gohelper.setActive(arg_8_0.viewGO, false)
-		gohelper.setActive(arg_8_0.viewGO, true)
+function SurvivalBossInvadeView:_destroyViewFinish(_viewName)
+	if _viewName == ViewName.SurvivalLoadingView then
+		gohelper.setActive(self.viewGO, false)
+		gohelper.setActive(self.viewGO, true)
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function SurvivalBossInvadeView:onClose()
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalMonsterEventView, {
 		showType = SurvivalEnum.SurvivalMonsterEventViewShowType.Watch
 	})
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function SurvivalBossInvadeView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SurvivalBossInvadeView

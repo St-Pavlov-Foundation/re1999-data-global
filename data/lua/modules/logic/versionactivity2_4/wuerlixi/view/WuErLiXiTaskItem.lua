@@ -1,199 +1,201 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/view/WuErLiXiTaskItem.lua
 
-local var_0_0 = class("WuErLiXiTaskItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiTaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_normalbg")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_notfinishbg")
-	arg_1_0._gonojump = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_nojump")
-	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_finishbg")
-	arg_1_0._goallfinish = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_allfinish")
-	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
-	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_getall/#simage_getallbg")
-	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_getall/#btn_getall/#btn_getall")
+local WuErLiXiTaskItem = class("WuErLiXiTaskItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WuErLiXiTaskItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._simagenormalbg = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_normalbg")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num")
+	self._txttotal = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num/#txt_total")
+	self._txttaskdes = gohelper.findChildText(self.viewGO, "#go_normal/#txt_taskdes")
+	self._gorewards = gohelper.findChild(self.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_notfinishbg")
+	self._gonojump = gohelper.findChild(self.viewGO, "#go_normal/#go_nojump")
+	self._btnfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_finishbg")
+	self._goallfinish = gohelper.findChild(self.viewGO, "#go_normal/#go_allfinish")
+	self._gogetall = gohelper.findChild(self.viewGO, "#go_getall")
+	self._simagegetallbg = gohelper.findChildSingleImage(self.viewGO, "#go_getall/#simage_getallbg")
+	self._btngetall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_getall/#btn_getall/#btn_getall")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
-	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
-	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
+function WuErLiXiTaskItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
+	self._btngetall:AddClickListener(self._btngetallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:RemoveClickListener()
-	arg_3_0._btnfinishbg:RemoveClickListener()
-	arg_3_0._btngetall:RemoveClickListener()
+function WuErLiXiTaskItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
+	self._btngetall:RemoveClickListener()
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_4_0)
-	if arg_4_0._act180TaskMO.config.jumpId > 0 then
-		GameFacade.jump(arg_4_0._act180TaskMO.config.jumpId)
+function WuErLiXiTaskItem:_btnnotfinishbgOnClick()
+	if self._act180TaskMO.config.jumpId > 0 then
+		GameFacade.jump(self._act180TaskMO.config.jumpId)
 	end
 end
 
-function var_0_0._btnfinishbgOnClick(arg_5_0)
-	arg_5_0:_onOneClickClaimReward(arg_5_0._act180TaskMO.activityId)
+function WuErLiXiTaskItem:_btnfinishbgOnClick()
+	self:_onOneClickClaimReward(self._act180TaskMO.activityId)
 	UIBlockHelper.instance:startBlock("WuErLiXiTaskItem_finishAnim", 0.5)
-	TaskDispatcher.runDelay(arg_5_0._delayFinish, arg_5_0, 0.5)
+	TaskDispatcher.runDelay(self._delayFinish, self, 0.5)
 end
 
-function var_0_0._btngetallOnClick(arg_6_0)
-	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.OneClickClaimReward, arg_6_0._act180TaskMO.activityId)
+function WuErLiXiTaskItem:_btngetallOnClick()
+	WuErLiXiController.instance:dispatchEvent(WuErLiXiEvent.OneClickClaimReward, self._act180TaskMO.activityId)
 	UIBlockHelper.instance:startBlock("WuErLiXiTaskItem_finishAnim", 0.5)
-	TaskDispatcher.runDelay(arg_6_0._delayFinishAll, arg_6_0, 0.5)
+	TaskDispatcher.runDelay(self._delayFinishAll, self, 0.5)
 end
 
-function var_0_0._delayFinish(arg_7_0)
-	TaskRpc.instance:sendFinishTaskRequest(arg_7_0._act180TaskMO.config.id)
+function WuErLiXiTaskItem:_delayFinish()
+	TaskRpc.instance:sendFinishTaskRequest(self._act180TaskMO.config.id)
 end
 
-function var_0_0._delayFinishAll(arg_8_0)
+function WuErLiXiTaskItem:_delayFinishAll()
 	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity180)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._animator = arg_9_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_9_0.viewTrs = arg_9_0.viewGO.transform
-	arg_9_0._scrollRewards = gohelper.findChildComponent(arg_9_0.viewGO, "#go_normal/#scroll_rewards", typeof(ZProj.LimitedScrollRect))
+function WuErLiXiTaskItem:_editableInitView()
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.viewTrs = self.viewGO.transform
+	self._scrollRewards = gohelper.findChildComponent(self.viewGO, "#go_normal/#scroll_rewards", typeof(ZProj.LimitedScrollRect))
 end
 
-function var_0_0._editableAddEvents(arg_10_0)
-	WuErLiXiController.instance:registerCallback(WuErLiXiEvent.OneClickClaimReward, arg_10_0._onOneClickClaimReward, arg_10_0)
+function WuErLiXiTaskItem:_editableAddEvents()
+	WuErLiXiController.instance:registerCallback(WuErLiXiEvent.OneClickClaimReward, self._onOneClickClaimReward, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_11_0)
-	WuErLiXiController.instance:unregisterCallback(WuErLiXiEvent.OneClickClaimReward, arg_11_0._onOneClickClaimReward, arg_11_0)
+function WuErLiXiTaskItem:_editableRemoveEvents()
+	WuErLiXiController.instance:unregisterCallback(WuErLiXiEvent.OneClickClaimReward, self._onOneClickClaimReward, self)
 end
 
-function var_0_0._onOneClickClaimReward(arg_12_0, arg_12_1)
-	if arg_12_0._act180TaskMO and arg_12_0._act180TaskMO.activityId == arg_12_1 and arg_12_0._act180TaskMO:alreadyGotReward() then
-		arg_12_0._playFinishAnin = true
+function WuErLiXiTaskItem:_onOneClickClaimReward(actId)
+	if self._act180TaskMO and self._act180TaskMO.activityId == actId and self._act180TaskMO:alreadyGotReward() then
+		self._playFinishAnin = true
 
-		arg_12_0._animator:Play("finish", 0, 0)
+		self._animator:Play("finish", 0, 0)
 	end
 end
 
-function var_0_0.getAnimator(arg_13_0)
-	return arg_13_0._animator
+function WuErLiXiTaskItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
-	arg_14_0._act180TaskMO = arg_14_1
+function WuErLiXiTaskItem:onUpdateMO(mo)
+	self._act180TaskMO = mo
 
-	local var_14_0 = WuErLiXiTaskListModel.instance:getRankDiff(arg_14_1)
+	local rankDiff = WuErLiXiTaskListModel.instance:getRankDiff(mo)
 
-	arg_14_0._scrollRewards.parentGameObject = arg_14_0._view._csListScroll.gameObject
+	self._scrollRewards.parentGameObject = self._view._csListScroll.gameObject
 
-	arg_14_0:_refreshUI()
-	arg_14_0:_moveByRankDiff(var_14_0)
+	self:_refreshUI()
+	self:_moveByRankDiff(rankDiff)
 end
 
-function var_0_0._moveByRankDiff(arg_15_0, arg_15_1)
-	if arg_15_1 and arg_15_1 ~= 0 then
-		if arg_15_0._rankDiffMoveId then
-			ZProj.TweenHelper.KillById(arg_15_0._rankDiffMoveId)
+function WuErLiXiTaskItem:_moveByRankDiff(rankDiff)
+	if rankDiff and rankDiff ~= 0 then
+		if self._rankDiffMoveId then
+			ZProj.TweenHelper.KillById(self._rankDiffMoveId)
 
-			arg_15_0._rankDiffMoveId = nil
+			self._rankDiffMoveId = nil
 		end
 
-		local var_15_0, var_15_1, var_15_2 = transformhelper.getLocalPos(arg_15_0.viewTrs)
+		local posx, posy, posz = transformhelper.getLocalPos(self.viewTrs)
 
-		transformhelper.setLocalPosXY(arg_15_0.viewTrs, var_15_0, 165 * arg_15_1)
+		transformhelper.setLocalPosXY(self.viewTrs, posx, 165 * rankDiff)
 
-		arg_15_0._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_15_0.viewTrs, 0, 0.15)
+		self._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(self.viewTrs, 0, 0.15)
 	end
 end
 
-function var_0_0.onSelect(arg_16_0, arg_16_1)
+function WuErLiXiTaskItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0._refreshUI(arg_17_0)
-	local var_17_0 = arg_17_0._act180TaskMO
+function WuErLiXiTaskItem:_refreshUI()
+	local atMO = self._act180TaskMO
 
-	if not var_17_0 then
+	if not atMO then
 		return
 	end
 
-	local var_17_1 = var_17_0.id ~= -99999
+	local isNormal = atMO.id ~= -99999
 
-	gohelper.setActive(arg_17_0._gogetall, not var_17_1)
-	gohelper.setActive(arg_17_0._gonormal, var_17_1)
+	gohelper.setActive(self._gogetall, not isNormal)
+	gohelper.setActive(self._gonormal, isNormal)
 
-	if var_17_1 then
-		if arg_17_0._playFinishAnin then
-			arg_17_0._playFinishAnin = false
+	if isNormal then
+		if self._playFinishAnin then
+			self._playFinishAnin = false
 
-			arg_17_0._animator:Play("idle", 0, 1)
+			self._animator:Play("idle", 0, 1)
 		end
 
-		gohelper.setActive(arg_17_0._goallfinish, false)
-		gohelper.setActive(arg_17_0._btnnotfinishbg, false)
-		gohelper.setActive(arg_17_0._btnfinishbg, false)
-		gohelper.setActive(arg_17_0._gonojump, false)
+		gohelper.setActive(self._goallfinish, false)
+		gohelper.setActive(self._btnnotfinishbg, false)
+		gohelper.setActive(self._btnfinishbg, false)
+		gohelper.setActive(self._gonojump, false)
 
-		if var_17_0:isFinished() then
-			gohelper.setActive(arg_17_0._goallfinish, true)
-		elseif var_17_0:alreadyGotReward() then
-			gohelper.setActive(arg_17_0._btnfinishbg, true)
-		elseif var_17_0.config.jumpId > 0 then
-			gohelper.setActive(arg_17_0._btnnotfinishbg, true)
+		if atMO:isFinished() then
+			gohelper.setActive(self._goallfinish, true)
+		elseif atMO:alreadyGotReward() then
+			gohelper.setActive(self._btnfinishbg, true)
+		elseif atMO.config.jumpId > 0 then
+			gohelper.setActive(self._btnnotfinishbg, true)
 		else
-			gohelper.setActive(arg_17_0._gonojump, true)
+			gohelper.setActive(self._gonojump, true)
 		end
 
-		local var_17_2 = var_17_0.config and var_17_0.config.offestProgress or 0
+		local offestPro = atMO.config and atMO.config.offestProgress or 0
 
-		arg_17_0._txtnum.text = math.max(var_17_0:getFinishProgress() + var_17_2, 0)
-		arg_17_0._txttotal.text = math.max(var_17_0:getMaxProgress() + var_17_2, 0)
-		arg_17_0._txttaskdes.text = var_17_0.config and var_17_0.config.desc or ""
+		self._txtnum.text = math.max(atMO:getFinishProgress() + offestPro, 0)
+		self._txttotal.text = math.max(atMO:getMaxProgress() + offestPro, 0)
+		self._txttaskdes.text = atMO.config and atMO.config.desc or ""
 
-		local var_17_3 = DungeonConfig.instance:getRewardItems(tonumber(var_17_0.config.bonus))
-		local var_17_4 = {}
+		local list = DungeonConfig.instance:getRewardItems(tonumber(atMO.config.bonus))
+		local item_list = {}
 
-		for iter_17_0, iter_17_1 in ipairs(var_17_3) do
-			var_17_4[iter_17_0] = {
+		for k, v in ipairs(list) do
+			item_list[k] = {
 				isIcon = true,
-				materilType = iter_17_1[1],
-				materilId = iter_17_1[2],
-				quantity = iter_17_1[3]
+				materilType = v[1],
+				materilId = v[2],
+				quantity = v[3]
 			}
 		end
 
-		arg_17_0.item_list = var_17_4
+		self.item_list = item_list
 
-		IconMgr.instance:getCommonPropItemIconList(arg_17_0, arg_17_0._onItemShow, var_17_4, arg_17_0._gorewards)
+		IconMgr.instance:getCommonPropItemIconList(self, self._onItemShow, item_list, self._gorewards)
 
-		arg_17_0._scrollRewards.horizontalNormalizedPosition = 0
+		self._scrollRewards.horizontalNormalizedPosition = 0
 	end
 end
 
-function var_0_0._onItemShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	arg_18_1:onUpdateMO(arg_18_2)
-	arg_18_1:setConsume(true)
-	arg_18_1:showStackableNum2()
-	arg_18_1:isShowEffect(true)
-	arg_18_1:setAutoPlay(true)
-	arg_18_1:setCountFontSize(48)
+function WuErLiXiTaskItem:_onItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	if arg_19_0._rankDiffMoveId then
-		ZProj.TweenHelper.KillById(arg_19_0._rankDiffMoveId)
+function WuErLiXiTaskItem:onDestroyView()
+	if self._rankDiffMoveId then
+		ZProj.TweenHelper.KillById(self._rankDiffMoveId)
 
-		arg_19_0._rankDiffMoveId = nil
+		self._rankDiffMoveId = nil
 	end
 end
 
-var_0_0.prefabPath = "ui/viewres/versionactivity_2_4/v2a4_wuerlixi/v2a4_wuerlixi_taskitem.prefab"
+WuErLiXiTaskItem.prefabPath = "ui/viewres/versionactivity_2_4/v2a4_wuerlixi/v2a4_wuerlixi_taskitem.prefab"
 
-return var_0_0
+return WuErLiXiTaskItem

@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepMapUpdate", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepMapUpdate.lua
 
-local var_0_0 = class("Va3ChessStepMapUpdate", Va3ChessStepBase)
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepMapUpdate", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0:processMapUpdate()
+local Va3ChessStepMapUpdate = class("Va3ChessStepMapUpdate", Va3ChessStepBase)
+
+function Va3ChessStepMapUpdate:start()
+	self:processMapUpdate()
 end
 
-function var_0_0.processMapUpdate(arg_2_0)
-	local var_2_0 = Va3ChessModel.instance:getActId()
+function Va3ChessStepMapUpdate:processMapUpdate()
+	local actId = Va3ChessModel.instance:getActId()
 
-	Va3ChessGameController.instance:updateServerMap(var_2_0, arg_2_0.originData)
-	arg_2_0:finish()
+	Va3ChessGameController.instance:updateServerMap(actId, self.originData)
+	self:finish()
 end
 
-return var_0_0
+return Va3ChessStepMapUpdate

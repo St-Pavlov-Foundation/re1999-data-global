@@ -1,98 +1,103 @@
-﻿module("modules.logic.minors.view.DateOfBirthSelectionViewItem", package.seeall)
+﻿-- chunkname: @modules/logic/minors/view/DateOfBirthSelectionViewItem.lua
 
-local var_0_0 = class("DateOfBirthSelectionViewItem", ListScrollCellExtend)
+module("modules.logic.minors.view.DateOfBirthSelectionViewItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._dropdown = gohelper.findChildDropdown(arg_1_0.viewGO, "")
-	arg_1_0._arrowTran = gohelper.findChild(arg_1_0.viewGO, "arrow").transform
-	arg_1_0._dropdownClick = gohelper.getClick(arg_1_0.viewGO, "")
+local DateOfBirthSelectionViewItem = class("DateOfBirthSelectionViewItem", ListScrollCellExtend)
+
+function DateOfBirthSelectionViewItem:onInitView()
+	self._dropdown = gohelper.findChildDropdown(self.viewGO, "")
+	self._arrowTran = gohelper.findChild(self.viewGO, "arrow").transform
+	self._dropdownClick = gohelper.getClick(self.viewGO, "")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._dropdownClick:AddClickListener(arg_2_0._onDropdownClick, arg_2_0)
-	arg_2_0._dropdown:AddOnValueChanged(arg_2_0._onDropDownValueChange, arg_2_0)
+function DateOfBirthSelectionViewItem:addEvents()
+	self._dropdownClick:AddClickListener(self._onDropdownClick, self)
+	self._dropdown:AddOnValueChanged(self._onDropDownValueChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._dropdown:RemoveOnValueChanged()
-	arg_3_0._dropdownClick:RemoveClickListener()
+function DateOfBirthSelectionViewItem:removeEvents()
+	self._dropdown:RemoveOnValueChanged()
+	self._dropdownClick:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function DateOfBirthSelectionViewItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_4_0:_refresh()
+	self:_refresh()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function DateOfBirthSelectionViewItem:onDestroyView()
 	return
 end
 
-function var_0_0._onDropDownValueChange(arg_6_0)
-	local var_6_0 = arg_6_0._mo
-	local var_6_1 = var_6_0._parent
-	local var_6_2 = var_6_0.type
-	local var_6_3 = arg_6_0._dropdown:GetValue()
+function DateOfBirthSelectionViewItem:_onDropDownValueChange()
+	local mo = self._mo
+	local parent = mo._parent
+	local type = mo.type
+	local newDropDownIndex = self._dropdown:GetValue()
+	local last = parent:getDropDownSelectedIndex(type)
 
-	if var_6_1:getDropDownSelectedIndex(var_6_2) ~= var_6_3 then
-		var_6_1:onClickDropDownOption(var_6_2, var_6_3)
+	if last ~= newDropDownIndex then
+		parent:onClickDropDownOption(type, newDropDownIndex)
 	end
 end
 
-function var_0_0._refresh(arg_7_0)
-	arg_7_0._dropdown:ClearOptions()
+function DateOfBirthSelectionViewItem:_refresh()
+	self._dropdown:ClearOptions()
 
-	arg_7_0._options = arg_7_0:_getOptions()
+	self._options = self:_getOptions()
 
-	arg_7_0._dropdown:AddOptions(arg_7_0._options)
-	arg_7_0._dropdown:SetValue(arg_7_0:_getSelectedIndex())
+	self._dropdown:AddOptions(self._options)
+	self._dropdown:SetValue(self:_getSelectedIndex())
 end
 
-function var_0_0._getOptions(arg_8_0)
-	local var_8_0 = arg_8_0._mo
-	local var_8_1 = var_8_0.type
+function DateOfBirthSelectionViewItem:_getOptions()
+	local mo = self._mo
+	local type = mo.type
+	local parent = mo._parent
 
-	return var_8_0._parent:getDropDownOption(var_8_1)
+	return parent:getDropDownOption(type)
 end
 
-function var_0_0._getSelectedIndex(arg_9_0)
-	local var_9_0 = arg_9_0._mo
-	local var_9_1 = var_9_0.type
+function DateOfBirthSelectionViewItem:_getSelectedIndex()
+	local mo = self._mo
+	local type = mo.type
+	local parent = mo._parent
 
-	return var_9_0._parent:getDropDownSelectedIndex(var_9_1)
+	return parent:getDropDownSelectedIndex(type)
 end
 
-local var_0_1 = UnityEngine.UI.ScrollRect
-local var_0_2 = 12
-local var_0_3 = 73
-local var_0_4 = 5
-local var_0_5 = var_0_2 + var_0_3
+local ScrollRect = UnityEngine.UI.ScrollRect
+local kScrollRectGapV = 12
+local kItemHeight = 73
+local kViewportMaxCount = 5
+local kStep = kScrollRectGapV + kItemHeight
 
-function var_0_0._onDropdownClick(arg_10_0)
-	local var_10_0 = arg_10_0._dropdown:GetValue()
-	local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "Dropdown List")
+function DateOfBirthSelectionViewItem:_onDropdownClick()
+	local dropdownIndex = self._dropdown:GetValue()
+	local dropDownTemplate = gohelper.findChild(self.viewGO, "Dropdown List")
 
-	if not var_10_1 then
+	if not dropDownTemplate then
 		return
 	end
 
-	local var_10_2 = var_10_1:GetComponent(typeof(var_0_1))
+	local scrollRect = dropDownTemplate:GetComponent(typeof(ScrollRect))
 
-	if not var_10_2 then
+	if not scrollRect then
 		return
 	end
 
-	local var_10_3 = var_10_2.content
+	local contentTran = scrollRect.content
 
-	if not var_10_3 then
+	if not contentTran then
 		return
 	end
 
-	local var_10_4 = arg_10_0._options and #arg_10_0._options or 0
-	local var_10_5 = var_10_0 * var_0_5
-	local var_10_6 = math.max(0, (var_10_4 - var_0_4) * var_0_5)
+	local maxCount = self._options and #self._options or 0
+	local y = dropdownIndex * kStep
+	local maxY = math.max(0, (maxCount - kViewportMaxCount) * kStep)
 
-	recthelper.setAnchorY(var_10_3, math.min(var_10_6, var_10_5))
+	recthelper.setAnchorY(contentTran, math.min(maxY, y))
 end
 
-return var_0_0
+return DateOfBirthSelectionViewItem

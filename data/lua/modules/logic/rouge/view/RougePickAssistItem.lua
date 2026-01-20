@@ -1,41 +1,43 @@
-﻿module("modules.logic.rouge.view.RougePickAssistItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougePickAssistItem.lua
 
-local var_0_0 = class("RougePickAssistItem", PickAssistItem)
+module("modules.logic.rouge.view.RougePickAssistItem", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
-	arg_1_0:_initCapacity()
+local RougePickAssistItem = class("RougePickAssistItem", PickAssistItem)
+
+function RougePickAssistItem:_editableInitView()
+	RougePickAssistItem.super._editableInitView(self)
+	self:_initCapacity()
 end
 
-function var_0_0._initCapacity(arg_2_0)
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "volume")
+function RougePickAssistItem:_initCapacity()
+	local volumeGo = gohelper.findChild(self.viewGO, "volume")
 
-	arg_2_0._capacityComp = RougeCapacityComp.Add(var_2_0, nil, nil, true)
+	self._capacityComp = RougeCapacityComp.Add(volumeGo, nil, nil, true)
 
-	arg_2_0._capacityComp:setSpriteType(RougeCapacityComp.SpriteType3, RougeCapacityComp.SpriteType3)
+	self._capacityComp:setSpriteType(RougeCapacityComp.SpriteType3, RougeCapacityComp.SpriteType3)
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	var_0_0.super.onUpdateMO(arg_3_0, arg_3_1)
+function RougePickAssistItem:onUpdateMO(mo)
+	RougePickAssistItem.super.onUpdateMO(self, mo)
 
-	local var_3_0 = arg_3_0._mo.heroMO
-	local var_3_1 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(var_3_0.heroId)
+	local heroMO = self._mo.heroMO
+	local lv = RougeHeroGroupBalanceHelper.getHeroBalanceLv(heroMO.heroId)
 
-	if var_3_1 > var_3_0.level then
-		arg_3_0._heroItem:setBalanceLv(var_3_1)
+	if lv > heroMO.level then
+		self._heroItem:setBalanceLv(lv)
 	end
 
-	local var_3_2 = RougeConfig1.instance:getRoleCapacity(arg_3_1.heroMO.config.rare)
+	local capacity = RougeConfig1.instance:getRoleCapacity(mo.heroMO.config.rare)
 
-	arg_3_0._capacity = var_3_2
+	self._capacity = capacity
 
-	arg_3_0._capacityComp:updateMaxNum(var_3_2)
+	self._capacityComp:updateMaxNum(capacity)
 end
 
-function var_0_0._checkClick(arg_4_0)
-	local var_4_0 = RougeController.instance.pickAssistViewParams
+function RougePickAssistItem:_checkClick()
+	local capacityParams = RougeController.instance.pickAssistViewParams
 
-	if var_4_0.curCapacity + arg_4_0._capacity > var_4_0.totalCapacity then
+	if capacityParams.curCapacity + self._capacity > capacityParams.totalCapacity then
 		GameFacade.showToast(ToastEnum.RougeTeamSelectHeroCapacityFull)
 
 		return false
@@ -44,4 +46,4 @@ function var_0_0._checkClick(arg_4_0)
 	return true
 end
 
-return var_0_0
+return RougePickAssistItem

@@ -1,37 +1,39 @@
-﻿module("modules.logic.act189.view.ShortenAct_FullView", package.seeall)
+﻿-- chunkname: @modules/logic/act189/view/ShortenAct_FullView.lua
 
-local var_0_0 = class("ShortenAct_FullView", ShortenActView_impl)
+module("modules.logic.act189.view.ShortenAct_FullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/right/limittimebg/#txt_time")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/#simage_title")
-	arg_1_0._scrolltasklist = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/right/#scroll_tasklist")
-	arg_1_0._go28days = gohelper.findChild(arg_1_0.viewGO, "root/#go_28days")
-	arg_1_0._go35days = gohelper.findChild(arg_1_0.viewGO, "root/#go_35days")
+local ShortenAct_FullView = class("ShortenAct_FullView", ShortenActView_impl)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ShortenAct_FullView:onInitView()
+	self._txttime = gohelper.findChildText(self.viewGO, "root/right/limittimebg/#txt_time")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "root/right/#simage_title")
+	self._scrolltasklist = gohelper.findChildScrollRect(self.viewGO, "root/right/#scroll_tasklist")
+	self._go28days = gohelper.findChild(self.viewGO, "root/#go_28days")
+	self._go35days = gohelper.findChild(self.viewGO, "root/#go_35days")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ShortenAct_FullView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ShortenAct_FullView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	var_0_0.super._editableInitView(arg_4_0)
-	Activity189Controller.instance:sendGetAct189InfoRequest(arg_4_0:actId())
+function ShortenAct_FullView:_editableInitView()
+	ShortenAct_FullView.super._editableInitView(self)
+	Activity189Controller.instance:sendGetAct189InfoRequest(self:actId())
 end
 
-function var_0_0.onOpen(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam.parent
+function ShortenAct_FullView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_5_0, arg_5_0.viewGO)
-	var_0_0.super.onOpen(arg_5_0)
+	gohelper.addChild(parentGO, self.viewGO)
+	ShortenAct_FullView.super.onOpen(self)
 end
 
-return var_0_0
+return ShortenAct_FullView

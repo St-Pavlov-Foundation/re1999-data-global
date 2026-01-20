@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_5.act146.controller.Activity146Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act146/controller/Activity146Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_5.act146.controller.Activity146Event", package.seeall)
 
-var_0_0.DataUpdate = 101
-var_0_0.OnEpisodeFinished = 102
-var_0_0.OnBeginDrag = 103
-var_0_0.OnChannelItemClick = 104
+local Activity146Event = _M
 
-return var_0_0
+Activity146Event.DataUpdate = 101
+Activity146Event.OnEpisodeFinished = 102
+Activity146Event.OnBeginDrag = 103
+Activity146Event.OnChannelItemClick = 104
+
+return Activity146Event

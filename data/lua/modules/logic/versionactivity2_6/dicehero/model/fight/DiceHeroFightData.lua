@@ -1,122 +1,124 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightData", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/fight/DiceHeroFightData.lua
 
-local var_0_0 = class("DiceHeroFightData")
+module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightData", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:init(arg_1_1)
+local DiceHeroFightData = class("DiceHeroFightData")
+
+function DiceHeroFightData:ctor(data)
+	self:init(data)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.round = arg_2_1.round
-	arg_2_0.status = arg_2_1.status
-	arg_2_0.allyHero = DiceHeroFightEntityMo.New()
+function DiceHeroFightData:init(data)
+	self.round = data.round
+	self.status = data.status
+	self.allyHero = DiceHeroFightEntityMo.New()
 
-	arg_2_0.allyHero:init(arg_2_1.allyHero)
+	self.allyHero:init(data.allyHero)
 
-	if arg_2_0.allyHero.id ~= 0 then
-		arg_2_0.allyHero.co = lua_dice_character.configDict[arg_2_0.allyHero.id]
+	if self.allyHero.id ~= 0 then
+		self.allyHero.co = lua_dice_character.configDict[self.allyHero.id]
 	end
 
-	arg_2_0.enemyHeros = {}
-	arg_2_0.enemyHerosByUid = arg_2_0.enemyHerosByUid or {}
+	self.enemyHeros = {}
+	self.enemyHerosByUid = self.enemyHerosByUid or {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.enemyHeros) do
-		arg_2_0.enemyHeros[iter_2_0] = arg_2_0.enemyHerosByUid[iter_2_1.uid] or DiceHeroFightEntityMo.New()
+	for k, v in ipairs(data.enemyHeros) do
+		self.enemyHeros[k] = self.enemyHerosByUid[v.uid] or DiceHeroFightEntityMo.New()
 
-		arg_2_0.enemyHeros[iter_2_0]:init(iter_2_1)
+		self.enemyHeros[k]:init(v)
 
-		arg_2_0.enemyHerosByUid[iter_2_1.uid] = arg_2_0.enemyHeros[iter_2_0]
+		self.enemyHerosByUid[v.uid] = self.enemyHeros[k]
 
-		arg_2_0.enemyHeros[iter_2_0]:clearBehavior()
+		self.enemyHeros[k]:clearBehavior()
 
-		if arg_2_0.enemyHeros[iter_2_0].id ~= 0 then
-			arg_2_0.enemyHeros[iter_2_0].co = lua_dice_enemy.configDict[arg_2_0.enemyHeros[iter_2_0].id]
+		if self.enemyHeros[k].id ~= 0 then
+			self.enemyHeros[k].co = lua_dice_enemy.configDict[self.enemyHeros[k].id]
 		end
 	end
 
-	arg_2_0.enemyHerosByUid = {}
+	self.enemyHerosByUid = {}
 
-	for iter_2_2, iter_2_3 in pairs(arg_2_0.enemyHeros) do
-		arg_2_0.enemyHerosByUid[iter_2_3.uid] = iter_2_3
+	for _, v in pairs(self.enemyHeros) do
+		self.enemyHerosByUid[v.uid] = v
 	end
 
-	arg_2_0.skillCards = {}
-	arg_2_0.heroSkillCards = {}
-	arg_2_0.skillCardsBySkillId = arg_2_0.skillCardsBySkillId or {}
+	self.skillCards = {}
+	self.heroSkillCards = {}
+	self.skillCardsBySkillId = self.skillCardsBySkillId or {}
 
-	for iter_2_4, iter_2_5 in ipairs(arg_2_1.skillCards) do
-		local var_2_0 = arg_2_0.skillCardsBySkillId[iter_2_5.skillId] or DiceHeroFightSkillCardMo.New()
+	for k, v in ipairs(data.skillCards) do
+		local skillCardMo = self.skillCardsBySkillId[v.skillId] or DiceHeroFightSkillCardMo.New()
 
-		var_2_0:init(iter_2_5, arg_2_0.round)
+		skillCardMo:init(v, self.round)
 
-		arg_2_0.skillCardsBySkillId[iter_2_5.skillId] = var_2_0
+		self.skillCardsBySkillId[v.skillId] = skillCardMo
 
-		if var_2_0.co.type == DiceHeroEnum.CardType.Hero then
-			table.insert(arg_2_0.heroSkillCards, var_2_0)
+		if skillCardMo.co.type == DiceHeroEnum.CardType.Hero then
+			table.insert(self.heroSkillCards, skillCardMo)
 		else
-			table.insert(arg_2_0.skillCards, var_2_0)
+			table.insert(self.skillCards, skillCardMo)
 		end
 	end
 
-	arg_2_0.skillCardsBySkillId = {}
+	self.skillCardsBySkillId = {}
 
-	for iter_2_6, iter_2_7 in pairs(arg_2_0.skillCards) do
-		arg_2_0.skillCardsBySkillId[iter_2_7.skillId] = iter_2_7
+	for _, v in pairs(self.skillCards) do
+		self.skillCardsBySkillId[v.skillId] = v
 	end
 
-	for iter_2_8, iter_2_9 in pairs(arg_2_0.heroSkillCards) do
-		arg_2_0.skillCardsBySkillId[iter_2_9.skillId] = iter_2_9
+	for _, v in pairs(self.heroSkillCards) do
+		self.skillCardsBySkillId[v.skillId] = v
 	end
 
-	arg_2_0.allyHero:setSkills(arg_2_0.heroSkillCards)
+	self.allyHero:setSkills(self.heroSkillCards)
 
-	arg_2_0.diceBox = DiceHeroFightDiceBoxMo.New()
+	self.diceBox = DiceHeroFightDiceBoxMo.New()
 
-	arg_2_0.diceBox:init(arg_2_1.diceBox)
+	self.diceBox:init(data.diceBox)
 
-	arg_2_0.confirmed = arg_2_1.confirmed
+	self.confirmed = data.confirmed
 
-	for iter_2_10, iter_2_11 in ipairs(arg_2_1.behaviors) do
-		if arg_2_0.enemyHerosByUid[iter_2_11.fromId] then
-			arg_2_0.enemyHerosByUid[iter_2_11.fromId]:addBehavior(iter_2_11, arg_2_0.allyHero.uid)
+	for _, v in ipairs(data.behaviors) do
+		if self.enemyHerosByUid[v.fromId] then
+			self.enemyHerosByUid[v.fromId]:addBehavior(v, self.allyHero.uid)
 		end
 	end
 
-	arg_2_0.curSelectCardMo = nil
-	arg_2_0.curSelectEnemyMo = nil
+	self.curSelectCardMo = nil
+	self.curSelectEnemyMo = nil
 
-	for iter_2_12, iter_2_13 in ipairs(arg_2_0.skillCards) do
-		iter_2_13:initMatchDices(arg_2_0.diceBox.dices, arg_2_0.allyHero:isMixDice())
+	for k, v in ipairs(self.skillCards) do
+		v:initMatchDices(self.diceBox.dices, self.allyHero:isMixDice())
 	end
 
 	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.SkillCardSelectChange)
 
-	arg_2_0._autoSelectEnemyUid = arg_2_0._autoSelectEnemyUid
+	self._autoSelectEnemyUid = self._autoSelectEnemyUid
 end
 
-function var_0_0.setCurSelectCard(arg_3_0, arg_3_1)
-	if arg_3_0.curSelectCardMo then
-		arg_3_0.curSelectCardMo:clearSelects()
+function DiceHeroFightData:setCurSelectCard(cardMo)
+	if self.curSelectCardMo then
+		self.curSelectCardMo:clearSelects()
 	end
 
-	arg_3_0.curSelectEnemyMo = nil
-	arg_3_0.curSelectCardMo = arg_3_1
+	self.curSelectEnemyMo = nil
+	self.curSelectCardMo = cardMo
 
-	if arg_3_0.curSelectCardMo and arg_3_0.curSelectCardMo.co.aim1 == DiceHeroEnum.SkillCardTargetType.SingleEnemy then
-		local var_3_0 = arg_3_0.enemyHerosByUid[arg_3_0._autoSelectEnemyUid]
+	if self.curSelectCardMo and self.curSelectCardMo.co.aim1 == DiceHeroEnum.SkillCardTargetType.SingleEnemy then
+		local enemyMo = self.enemyHerosByUid[self._autoSelectEnemyUid]
 
-		if not var_3_0 or var_3_0.hp <= 0 then
-			arg_3_0._autoSelectEnemyUid = nil
-			var_3_0 = nil
+		if not enemyMo or enemyMo.hp <= 0 then
+			self._autoSelectEnemyUid = nil
+			enemyMo = nil
 		else
-			arg_3_0.curSelectEnemyMo = var_3_0
+			self.curSelectEnemyMo = enemyMo
 		end
 
-		if not var_3_0 then
-			for iter_3_0, iter_3_1 in ipairs(arg_3_0.enemyHeros) do
-				if iter_3_1.hp > 0 then
-					arg_3_0.curSelectEnemyMo = iter_3_1
-					arg_3_0._autoSelectEnemyUid = iter_3_1.uid
+		if not enemyMo then
+			for _, enemyHero in ipairs(self.enemyHeros) do
+				if enemyHero.hp > 0 then
+					self.curSelectEnemyMo = enemyHero
+					self._autoSelectEnemyUid = enemyHero.uid
 
 					break
 				end
@@ -127,31 +129,31 @@ function var_0_0.setCurSelectCard(arg_3_0, arg_3_1)
 	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.SkillCardSelectChange)
 end
 
-function var_0_0.getCardMoBySkillId(arg_4_0, arg_4_1)
-	return arg_4_0.skillCardsBySkillId[arg_4_1]
+function DiceHeroFightData:getCardMoBySkillId(skillId)
+	return self.skillCardsBySkillId[skillId]
 end
 
-function var_0_0.onStepEnd(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.skillCards) do
-		iter_5_1:initMatchDices(arg_5_0.diceBox.dices, arg_5_0.allyHero:isMixDice())
+function DiceHeroFightData:onStepEnd()
+	for k, v in ipairs(self.skillCards) do
+		v:initMatchDices(self.diceBox.dices, self.allyHero:isMixDice())
 	end
 
-	arg_5_0:setCurSelectCard(nil)
+	self:setCurSelectCard(nil)
 end
 
-function var_0_0.setCurEnemy(arg_6_0, arg_6_1)
-	if not arg_6_0.curSelectCardMo or arg_6_0.curSelectCardMo.co.aim1 ~= DiceHeroEnum.SkillCardTargetType.SingleEnemy then
+function DiceHeroFightData:setCurEnemy(enemyMo)
+	if not self.curSelectCardMo or self.curSelectCardMo.co.aim1 ~= DiceHeroEnum.SkillCardTargetType.SingleEnemy then
 		return
 	end
 
-	if arg_6_1 and arg_6_1.hp == 0 then
+	if enemyMo and enemyMo.hp == 0 then
 		return
 	end
 
-	arg_6_0.curSelectEnemyMo = arg_6_1
-	arg_6_0._autoSelectEnemyUid = arg_6_1.uid
+	self.curSelectEnemyMo = enemyMo
+	self._autoSelectEnemyUid = enemyMo.uid
 
 	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.EnemySelectChange)
 end
 
-return var_0_0
+return DiceHeroFightData

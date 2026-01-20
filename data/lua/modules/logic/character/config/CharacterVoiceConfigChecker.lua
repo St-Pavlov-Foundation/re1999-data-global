@@ -1,226 +1,230 @@
-﻿module("modules.logic.character.config.CharacterVoiceConfigChecker", package.seeall)
+﻿-- chunkname: @modules/logic/character/config/CharacterVoiceConfigChecker.lua
 
-local var_0_0 = class("CharacterVoiceConfigChecker")
-local var_0_1 = 1
-local var_0_2 = 5
+module("modules.logic.character.config.CharacterVoiceConfigChecker", package.seeall)
 
-function var_0_0.checkConfig(arg_1_0)
+local CharacterVoiceConfigChecker = class("CharacterVoiceConfigChecker")
+local triggerMinIndex = 1
+local triggerMaxIndex = 5
+
+function CharacterVoiceConfigChecker:checkConfig()
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	local var_1_0 = {
-		[CharacterEnum.VoiceType.HeroGroup] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.EnterFight] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.FightCardStar12] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.FightCardStar3] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.FightCardUnique] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.FightBehit] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.FightResult] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.FightDie] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.GetSkin] = arg_1_0._handlerGetSkin,
-		[CharacterEnum.VoiceType.BreakThrough] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.Summon] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.MainViewSpecialTouch] = arg_1_0._handlerMainViewSpecialTouch,
-		[CharacterEnum.VoiceType.MainViewNormalTouch] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.WeatherChange] = arg_1_0._handlerWeatherChange,
-		[CharacterEnum.VoiceType.MainViewWelcome] = arg_1_0._handlerMainViewWelcome,
-		[CharacterEnum.VoiceType.MainViewNoInteraction] = arg_1_0._handlerMainViewNoInteraction,
-		[CharacterEnum.VoiceType.Greeting] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.Skill] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.GreetingInThumbnail] = arg_1_0._handlerGreetingInThumbnail,
-		[CharacterEnum.VoiceType.SpecialIdle1] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.SpecialIdle2] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.LimitedEntrance] = arg_1_0._handlerSkip,
-		[CharacterEnum.VoiceType.MainViewSpecialInteraction] = arg_1_0._handlerMainViewSpecialInteraction,
-		[CharacterEnum.VoiceType.MainViewSpecialRespond] = arg_1_0._handlerMainViewSpecialRespond,
-		[CharacterEnum.VoiceType.MainViewDragSpecialRespond] = arg_1_0._handlerMainViewDragSpecialRespond,
-		[CharacterEnum.VoiceType.MultiVoice] = arg_1_0._handlerMultiVoice,
-		[CharacterEnum.VoiceType.FightCardSkill3] = arg_1_0._handlerFightCardSkill3Voice
+	local typeHandler = {
+		[CharacterEnum.VoiceType.HeroGroup] = self._handlerSkip,
+		[CharacterEnum.VoiceType.EnterFight] = self._handlerSkip,
+		[CharacterEnum.VoiceType.FightCardStar12] = self._handlerSkip,
+		[CharacterEnum.VoiceType.FightCardStar3] = self._handlerSkip,
+		[CharacterEnum.VoiceType.FightCardUnique] = self._handlerSkip,
+		[CharacterEnum.VoiceType.FightBehit] = self._handlerSkip,
+		[CharacterEnum.VoiceType.FightResult] = self._handlerSkip,
+		[CharacterEnum.VoiceType.FightDie] = self._handlerSkip,
+		[CharacterEnum.VoiceType.GetSkin] = self._handlerGetSkin,
+		[CharacterEnum.VoiceType.BreakThrough] = self._handlerSkip,
+		[CharacterEnum.VoiceType.Summon] = self._handlerSkip,
+		[CharacterEnum.VoiceType.MainViewSpecialTouch] = self._handlerMainViewSpecialTouch,
+		[CharacterEnum.VoiceType.MainViewNormalTouch] = self._handlerSkip,
+		[CharacterEnum.VoiceType.WeatherChange] = self._handlerWeatherChange,
+		[CharacterEnum.VoiceType.MainViewWelcome] = self._handlerMainViewWelcome,
+		[CharacterEnum.VoiceType.MainViewNoInteraction] = self._handlerMainViewNoInteraction,
+		[CharacterEnum.VoiceType.Greeting] = self._handlerSkip,
+		[CharacterEnum.VoiceType.Skill] = self._handlerSkip,
+		[CharacterEnum.VoiceType.GreetingInThumbnail] = self._handlerGreetingInThumbnail,
+		[CharacterEnum.VoiceType.SpecialIdle1] = self._handlerSkip,
+		[CharacterEnum.VoiceType.SpecialIdle2] = self._handlerSkip,
+		[CharacterEnum.VoiceType.LimitedEntrance] = self._handlerSkip,
+		[CharacterEnum.VoiceType.MainViewSpecialInteraction] = self._handlerMainViewSpecialInteraction,
+		[CharacterEnum.VoiceType.MainViewSpecialRespond] = self._handlerMainViewSpecialRespond,
+		[CharacterEnum.VoiceType.MainViewDragSpecialRespond] = self._handlerMainViewDragSpecialRespond,
+		[CharacterEnum.VoiceType.MultiVoice] = self._handlerMultiVoice,
+		[CharacterEnum.VoiceType.FightCardSkill3] = self._handlerFightCardSkill3Voice
 	}
 
-	for iter_1_0, iter_1_1 in ipairs(lua_character_voice.configList) do
-		if not callWithCatch(arg_1_0._commonCheck, arg_1_0, iter_1_1) then
-			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s is invalid", iter_1_1.audio, iter_1_1.type))
+	for i, config in ipairs(lua_character_voice.configList) do
+		local result = callWithCatch(self._commonCheck, self, config)
+
+		if not result then
+			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s is invalid", config.audio, config.type))
 		end
 
-		local var_1_1 = var_1_0[iter_1_1.type]
+		local handler = typeHandler[config.type]
 
-		if var_1_1 then
-			if not callWithCatch(var_1_1, arg_1_0, iter_1_1) then
-				logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s is invalid", iter_1_1.audio, iter_1_1.type))
+		if handler then
+			local result = callWithCatch(handler, self, config)
+
+			if not result then
+				logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s is invalid", config.audio, config.type))
 			end
 		else
-			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s no handler", iter_1_1.audio, iter_1_1.type))
+			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s no handler", config.audio, config.type))
 		end
 	end
 end
 
-function var_0_0._commonCheck(arg_2_0, arg_2_1)
-	local var_2_0 = string.splitToNumber(arg_2_1.skins, "#")
+function CharacterVoiceConfigChecker:_commonCheck(config)
+	local list = string.splitToNumber(config.skins, "#")
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		if not lua_skin.configDict[iter_2_1] then
-			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s skinId:%s is invalid", arg_2_1.audio, arg_2_1.type, iter_2_1))
+	for i, skinId in ipairs(list) do
+		if not lua_skin.configDict[skinId] then
+			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s skinId:%s is invalid", config.audio, config.type, skinId))
 		end
 	end
 
-	arg_2_0:_addAudioCheck(arg_2_1)
+	self:_addAudioCheck(config)
 end
 
-function var_0_0._addAudioCheck(arg_3_0, arg_3_1)
-	if string.nilorempty(arg_3_1.addaudio) then
+function CharacterVoiceConfigChecker:_addAudioCheck(config)
+	if string.nilorempty(config.addaudio) then
 		return
 	end
 
-	local var_3_0 = string.split(arg_3_1.addaudio, "|")
+	local addAudiosParams = string.split(config.addaudio, "|")
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		local var_3_1 = string.split(iter_3_1, "#")
+	for _, audioParam in pairs(addAudiosParams) do
+		local addlist = string.split(audioParam, "#")
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_1) do
-			if not tonumber(iter_3_3) then
-				logError(string.format("CharacterVoiceConfigChecker _addAudioCheck audio:%s type:%s audioParam:%s index:%s is invalid", arg_3_1.audio, arg_3_1.type, iter_3_1, iter_3_2))
+		for i, v in ipairs(addlist) do
+			if not tonumber(v) then
+				logError(string.format("CharacterVoiceConfigChecker _addAudioCheck audio:%s type:%s audioParam:%s index:%s is invalid", config.audio, config.type, audioParam, i))
 			end
 		end
 	end
 end
 
-function var_0_0._handlerSkip(arg_4_0, arg_4_1)
+function CharacterVoiceConfigChecker:_handlerSkip(config)
 	return
 end
 
-function var_0_0._handlerGetSkin(arg_5_0, arg_5_1)
-	if not lua_skin.configDict[tonumber(arg_5_1.param)] then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_5_1.audio, arg_5_1.type, arg_5_1.param))
+function CharacterVoiceConfigChecker:_handlerGetSkin(config)
+	if not lua_skin.configDict[tonumber(config.param)] then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 
 		return
 	end
 end
 
-function var_0_0._handlerMainViewSpecialTouch(arg_6_0, arg_6_1)
-	local var_6_0 = tonumber(arg_6_1.param)
+function CharacterVoiceConfigChecker:_handlerMainViewSpecialTouch(config)
+	local index = tonumber(config.param)
 
-	if var_6_0 < var_0_1 or var_6_0 > var_0_2 then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_6_1.audio, arg_6_1.type, arg_6_1.param))
+	if index < triggerMinIndex or index > triggerMaxIndex then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 	end
 end
 
-function var_0_0._handlerWeatherChange(arg_7_0, arg_7_1)
-	local var_7_0 = string.splitToNumber(arg_7_1.param, "#")
+function CharacterVoiceConfigChecker:_handlerWeatherChange(config)
+	local list = string.splitToNumber(config.param, "#")
 
-	if #var_7_0 == 0 then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_7_1.audio, arg_7_1.type, arg_7_1.param))
+	if #list == 0 then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 
 		return
 	end
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if not lua_weather_report.configDict[iter_7_1] then
-			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_7_1.audio, arg_7_1.type, arg_7_1.param))
+	for k, v in pairs(list) do
+		if not lua_weather_report.configDict[v] then
+			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 
 			break
 		end
 	end
 end
 
-function var_0_0._handlerMainViewWelcome(arg_8_0, arg_8_1)
-	local var_8_0 = string.split(arg_8_1.time, "#")
-	local var_8_1 = string.split(var_8_0[1], ":")
-	local var_8_2
-
-	var_8_2 = tonumber(var_8_1[1]) < 12
+function CharacterVoiceConfigChecker:_handlerMainViewWelcome(config)
+	local param = string.split(config.time, "#")
+	local timeList = string.split(param[1], ":")
+	local h = tonumber(timeList[1])
+	local inTheMorning = h < 12
 end
 
-function var_0_0._handlerMainViewNoInteraction(arg_9_0, arg_9_1)
-	local var_9_0 = string.splitToNumber(arg_9_1.param, "#")
+function CharacterVoiceConfigChecker:_handlerMainViewNoInteraction(config)
+	local list = string.splitToNumber(config.param, "#")
 
-	if #var_9_0 == 0 or not var_9_0[1] or not var_9_0[2] then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_9_1.audio, arg_9_1.type, arg_9_1.param))
+	if #list == 0 or not list[1] or not list[2] then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 
 		return
 	end
 end
 
-function var_0_0._handlerGreetingInThumbnail(arg_10_0, arg_10_1)
-	local var_10_0 = string.split(arg_10_1.time, "#")
-	local var_10_1 = string.split(var_10_0[1], ":")
-	local var_10_2
-
-	var_10_2 = tonumber(var_10_1[1]) < 12
+function CharacterVoiceConfigChecker:_handlerGreetingInThumbnail(config)
+	local param = string.split(config.time, "#")
+	local timeList = string.split(param[1], ":")
+	local h = tonumber(timeList[1])
+	local inTheMorning = h < 12
 end
 
-function var_0_0._handlerMainViewSpecialInteraction(arg_11_0, arg_11_1)
-	local var_11_0 = string.splitToNumber(arg_11_1.param, "#")
+function CharacterVoiceConfigChecker:_handlerMainViewSpecialInteraction(config)
+	local list = string.splitToNumber(config.param, "#")
 
-	if #var_11_0 == 0 or not var_11_0[1] or not var_11_0[2] then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_11_1.audio, arg_11_1.type, arg_11_1.param))
+	if #list == 0 or not list[1] or not list[2] then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 	end
 
-	local var_11_1 = tonumber(arg_11_1.param2)
+	local id = tonumber(config.param2)
 
-	if not var_11_1 or not lua_character_special_interaction_voice.configDict[var_11_1] then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param2:%s is invalid", arg_11_1.audio, arg_11_1.type, arg_11_1.param2))
+	if not id or not lua_character_special_interaction_voice.configDict[id] then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param2:%s is invalid", config.audio, config.type, config.param2))
 	end
 end
 
-function var_0_0._handlerMainViewSpecialRespond(arg_12_0, arg_12_1)
-	local var_12_0 = tonumber(arg_12_1.param) or 0
+function CharacterVoiceConfigChecker:_handlerMainViewSpecialRespond(config)
+	local index = tonumber(config.param) or 0
 
-	if var_12_0 == 0 then
+	if index == 0 then
 		return
 	end
 
-	if var_12_0 < var_0_1 or var_12_0 > var_0_2 then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_12_1.audio, arg_12_1.type, arg_12_1.param))
+	if index < triggerMinIndex or index > triggerMaxIndex then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 	end
 end
 
-function var_0_0._handlerMainViewDragSpecialRespond(arg_13_0, arg_13_1)
-	if not string.nilorempty(arg_13_1.param2) then
-		local var_13_0 = string.split(arg_13_1.param2, "#")
+function CharacterVoiceConfigChecker:_handlerMainViewDragSpecialRespond(config)
+	if not string.nilorempty(config.param2) then
+		local list = string.split(config.param2, "#")
 
-		if #var_13_0 == 0 or not var_13_0[1] or not tonumber(var_13_0[2]) or not tonumber(var_13_0[3]) then
-			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param2:%s is invalid", arg_13_1.audio, arg_13_1.type, arg_13_1.param2))
+		if #list == 0 or not list[1] or not tonumber(list[2]) or not tonumber(list[3]) then
+			logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param2:%s is invalid", config.audio, config.type, config.param2))
 		end
 	end
 
-	local var_13_1 = tonumber(arg_13_1.param) or 0
+	local index = tonumber(config.param) or 0
 
-	if var_13_1 == 0 then
+	if index == 0 then
 		return
 	end
 
-	if var_13_1 < var_0_1 or var_13_1 > var_0_2 then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_13_1.audio, arg_13_1.type, arg_13_1.param))
+	if index < triggerMinIndex or index > triggerMaxIndex then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 	end
 end
 
-function var_0_0._handlerMultiVoice(arg_14_0, arg_14_1)
-	local var_14_0 = lua_character_voice.configDict[arg_14_1.heroId][tonumber(arg_14_1.param)]
+function CharacterVoiceConfigChecker:_handlerMultiVoice(config)
+	local targetConfig = lua_character_voice.configDict[config.heroId][tonumber(config.param)]
 
-	if not var_14_0 or var_14_0 == arg_14_1 then
-		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_14_1.audio, arg_14_1.type, arg_14_1.param))
+	if not targetConfig or targetConfig == config then
+		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", config.audio, config.type, config.param))
 	end
 end
 
-function var_0_0._handlerFightCardSkill3Voice(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.param
-	local var_15_1 = string.split(var_15_0, "#")
+function CharacterVoiceConfigChecker:_handlerFightCardSkill3Voice(config)
+	local timelineStr = config.param
+	local timelineList = string.split(timelineStr, "#")
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-		if not string.nilorempty(iter_15_1) then
-			iter_15_1 = FightHelper.getRolesTimelinePath(iter_15_1)
+	for _, timeline in ipairs(timelineList) do
+		if not string.nilorempty(timeline) then
+			timeline = FightHelper.getRolesTimelinePath(timeline)
 
-			local var_15_2 = SLFramework.FrameworkSettings.AssetRootDir .. "/" .. iter_15_1
+			local filePath = SLFramework.FrameworkSettings.AssetRootDir .. "/" .. timeline
 
-			if not SLFramework.FileHelper.IsFileExists(var_15_2) then
-				logError(string.format("[CharacterVoiceConfigChecker] 角色语音表配置的timeline不存在, audio:%s, type:%s, param:%s, is invalid", arg_15_1.audio, arg_15_1.type, arg_15_1.param))
+			if not SLFramework.FileHelper.IsFileExists(filePath) then
+				logError(string.format("[CharacterVoiceConfigChecker] 角色语音表配置的timeline不存在, audio:%s, type:%s, param:%s, is invalid", config.audio, config.type, config.param))
 			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterVoiceConfigChecker.instance = CharacterVoiceConfigChecker.New()
 
-return var_0_0
+return CharacterVoiceConfigChecker

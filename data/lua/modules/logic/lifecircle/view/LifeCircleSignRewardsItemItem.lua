@@ -1,147 +1,155 @@
-﻿module("modules.logic.lifecircle.view.LifeCircleSignRewardsItemItem", package.seeall)
+﻿-- chunkname: @modules/logic/lifecircle/view/LifeCircleSignRewardsItemItem.lua
 
-local var_0_0 = class("LifeCircleSignRewardsItemItem", RougeSimpleItemBase)
+module("modules.logic.lifecircle.view.LifeCircleSignRewardsItemItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "#image_bg")
-	arg_1_0._simageReward = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Reward")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "#go_hasget")
-	arg_1_0._txtrewardcount = gohelper.findChildText(arg_1_0.viewGO, "#txt_rewardcount")
+local LifeCircleSignRewardsItemItem = class("LifeCircleSignRewardsItemItem", RougeSimpleItemBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LifeCircleSignRewardsItemItem:onInitView()
+	self._imagebg = gohelper.findChildImage(self.viewGO, "#image_bg")
+	self._simageReward = gohelper.findChildSingleImage(self.viewGO, "#simage_Reward")
+	self._gohasget = gohelper.findChild(self.viewGO, "#go_hasget")
+	self._txtrewardcount = gohelper.findChildText(self.viewGO, "#txt_rewardcount")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function LifeCircleSignRewardsItemItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function LifeCircleSignRewardsItemItem:removeEvents()
 	return
 end
 
-local var_0_1 = Color.New(0.6941177, 0.6941177, 0.6941177, 1)
-local var_0_2 = Color.New(1, 1, 1, 1)
-local var_0_3 = Color.New(0.5, 0.5, 0.5, 1)
-local var_0_4 = Color.New(1, 1, 1, 1)
-local var_0_5 = Color.New(0.227451, 0.227451, 0.227451, 1)
-local var_0_6 = Color.New(0.227451, 0.227451, 0.227451, 1)
+local COLOR_REWARD_GOT = Color.New(0.6941177, 0.6941177, 0.6941177, 1)
+local COLOR_REWARD_NORMAL = Color.New(1, 1, 1, 1)
+local COLOR_BG_GOT = Color.New(0.5, 0.5, 0.5, 1)
+local COLOR_BG_NORMAL = Color.New(1, 1, 1, 1)
+local COLOR_COUNT_GOT = Color.New(0.227451, 0.227451, 0.227451, 1)
+local COLOR_COUNT_NORMAL = Color.New(0.227451, 0.227451, 0.227451, 1)
 
-function var_0_0.ctor(arg_4_0, ...)
-	arg_4_0:__onInit()
-	var_0_0.super.ctor(arg_4_0, ...)
+function LifeCircleSignRewardsItemItem:ctor(...)
+	self:__onInit()
+	LifeCircleSignRewardsItemItem.super.ctor(self, ...)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	var_0_0.super._editableInitView(arg_5_0)
+function LifeCircleSignRewardsItemItem:_editableInitView()
+	LifeCircleSignRewardsItemItem.super._editableInitView(self)
 
-	arg_5_0._simageRewardGo = arg_5_0._simageReward.gameObject
-	arg_5_0._simageRewardImg = arg_5_0._simageReward:GetComponent(gohelper.Type_Image)
-	arg_5_0._imagebgGo = arg_5_0._imagebg.gameObject
-	arg_5_0._itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_5_0._simageRewardGo)
+	self._simageRewardGo = self._simageReward.gameObject
+	self._simageRewardImg = self._simageReward:GetComponent(gohelper.Type_Image)
+	self._imagebgGo = self._imagebg.gameObject
+	self._itemIcon = IconMgr.instance:getCommonPropItemIcon(self._simageRewardGo)
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	GameUtil.onDestroyViewMember(arg_6_0, "_itemIcon")
-	var_0_0.super.onDestroyView(arg_6_0)
-	arg_6_0:__onDispose()
+function LifeCircleSignRewardsItemItem:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_itemIcon")
+	LifeCircleSignRewardsItemItem.super.onDestroyView(self)
+	self:__onDispose()
 end
 
-function var_0_0._isClaimed(arg_7_0)
-	return arg_7_0:parent():isClaimed()
+function LifeCircleSignRewardsItemItem:_isClaimed()
+	local p = self:parent()
+
+	return p:isClaimed()
 end
 
-function var_0_0._logindaysid(arg_8_0)
-	return arg_8_0:parent():logindaysid()
+function LifeCircleSignRewardsItemItem:_logindaysid()
+	local p = self:parent()
+
+	return p:logindaysid()
 end
 
-function var_0_0._setData_Normal(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1[1]
-	local var_9_1 = arg_9_1[2]
-	local var_9_2 = arg_9_1[3]
-	local var_9_3, var_9_4 = ItemModel.instance:getItemConfigAndIcon(var_9_0, var_9_1)
+function LifeCircleSignRewardsItemItem:_setData_Normal(mo)
+	local itemType = mo[1]
+	local itemId = mo[2]
+	local itemCount = mo[3]
+	local itemCO, iconResUrl = ItemModel.instance:getItemConfigAndIcon(itemType, itemId)
 
-	arg_9_0._itemIcon:setMOValue(var_9_0, var_9_1, var_9_2)
-	arg_9_0._itemIcon:isShowQuality(false)
-	arg_9_0._itemIcon:isShowEquipAndItemCount(false)
-	arg_9_0._itemIcon:customOnClickCallback(arg_9_0._onItemClick, arg_9_0)
+	self._itemIcon:setMOValue(itemType, itemId, itemCount)
+	self._itemIcon:isShowQuality(false)
+	self._itemIcon:isShowEquipAndItemCount(false)
+	self._itemIcon:customOnClickCallback(self._onItemClick, self)
 
-	if arg_9_0._itemIcon:isEquipIcon() then
-		arg_9_0._itemIcon:setScale(0.7)
+	if self._itemIcon:isEquipIcon() then
+		self._itemIcon:setScale(0.7)
 	else
-		arg_9_0._itemIcon:setScale(0.8)
+		self._itemIcon:setScale(0.8)
 	end
 
-	arg_9_0:_setBg(var_9_3.rare)
+	self:_setBg(itemCO.rare)
 
-	arg_9_0._txtrewardcount.text = var_9_2 and luaLang("multiple") .. var_9_2 or ""
+	self._txtrewardcount.text = itemCount and luaLang("multiple") .. itemCount or ""
 end
 
-function var_0_0._setBg(arg_10_0, arg_10_1)
-	UISpriteSetMgr.instance:setUiFBSprite(arg_10_0._imagebg, "bg_pinjidi_" .. tostring(arg_10_1 or 0))
+function LifeCircleSignRewardsItemItem:_setBg(itemRare)
+	UISpriteSetMgr.instance:setUiFBSprite(self._imagebg, "bg_pinjidi_" .. tostring(itemRare or 0))
 end
 
-function var_0_0._setData_LastOne(arg_11_0)
-	arg_11_0._txtrewardcount.text = ""
+function LifeCircleSignRewardsItemItem:_setData_LastOne()
+	self._txtrewardcount.text = ""
 
-	gohelper.setActive(arg_11_0._imagebgGo, true)
-	UISpriteSetMgr.instance:setUiFBSprite(arg_11_0._imagebg, "bg_pinjidi_0")
-	arg_11_0:_setBg(0)
+	gohelper.setActive(self._imagebgGo, true)
+	UISpriteSetMgr.instance:setUiFBSprite(self._imagebg, "bg_pinjidi_0")
+	self:_setBg(0)
 end
 
-function var_0_0.setData(arg_12_0, arg_12_1)
-	var_0_0.super.setData(arg_12_0, arg_12_1)
+function LifeCircleSignRewardsItemItem:setData(mo)
+	LifeCircleSignRewardsItemItem.super.setData(self, mo)
 
-	local var_12_0 = arg_12_0:_isClaimed()
-	local var_12_1 = var_12_0 and var_0_1 or var_0_2
-	local var_12_2 = var_12_0 and var_0_3 or var_0_4
-	local var_12_3 = var_12_0 and var_0_5 or var_0_6
+	local isClaimed = self:_isClaimed()
+	local rewardColor = isClaimed and COLOR_REWARD_GOT or COLOR_REWARD_NORMAL
+	local bgColor = isClaimed and COLOR_BG_GOT or COLOR_BG_NORMAL
+	local countColor = isClaimed and COLOR_COUNT_GOT or COLOR_COUNT_NORMAL
 
-	gohelper.setActive(arg_12_0._simageRewardGo, arg_12_1 and true or false)
+	gohelper.setActive(self._simageRewardGo, mo and true or false)
 
-	local var_12_4 = arg_12_1 and true or false
+	local isShowCommonPropItemIcon = mo and true or false
 
-	arg_12_0:_setActive_itemIcon(var_12_4)
+	self:_setActive_itemIcon(isShowCommonPropItemIcon)
 
-	arg_12_0._simageRewardImg.enabled = not var_12_4
+	self._simageRewardImg.enabled = not isShowCommonPropItemIcon
 
-	if not arg_12_1 then
-		arg_12_0:_setData_LastOne()
+	if not mo then
+		self:_setData_LastOne()
 	else
-		arg_12_0:_setData_Normal(arg_12_1)
+		self:_setData_Normal(mo)
 	end
 
-	arg_12_0._simageRewardImg.color = var_12_1
-	arg_12_0._imagebg.color = var_12_2
-	arg_12_0._txtrewardcount.color = var_12_3
+	self._simageRewardImg.color = rewardColor
+	self._imagebg.color = bgColor
+	self._txtrewardcount.color = countColor
 
-	gohelper.setActive(arg_12_0._gohasget, var_12_0)
+	gohelper.setActive(self._gohasget, isClaimed)
 end
 
-function var_0_0._onItemClick(arg_13_0)
-	if not arg_13_0:parent():onItemClick() then
+function LifeCircleSignRewardsItemItem:_onItemClick()
+	local p = self:parent()
+
+	if not p:onItemClick() then
 		return
 	end
 
-	local var_13_0 = arg_13_0._mo
+	local mo = self._mo
 
-	if not var_13_0 then
+	if not mo then
 		return
 	end
 
-	local var_13_1 = var_13_0[1]
-	local var_13_2 = var_13_0[2]
+	local itemType = mo[1]
+	local itemId = mo[2]
 
-	MaterialTipController.instance:showMaterialInfo(var_13_1, var_13_2)
+	MaterialTipController.instance:showMaterialInfo(itemType, itemId)
 end
 
-function var_0_0._setActive_itemIcon(arg_14_0, arg_14_1)
-	if arg_14_1 then
-		arg_14_0._itemIcon:setPropItemScale(1)
+function LifeCircleSignRewardsItemItem:_setActive_itemIcon(isActive)
+	if isActive then
+		self._itemIcon:setPropItemScale(1)
 	else
-		arg_14_0._itemIcon:setPropItemScale(0)
+		self._itemIcon:setPropItemScale(0)
 	end
 end
 
-return var_0_0
+return LifeCircleSignRewardsItemItem

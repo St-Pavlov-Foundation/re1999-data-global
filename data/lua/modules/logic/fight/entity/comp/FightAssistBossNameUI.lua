@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.entity.comp.FightAssistBossNameUI", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightAssistBossNameUI.lua
 
-local var_0_0 = class("FightAssistBossNameUI", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightAssistBossNameUI", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
+local FightAssistBossNameUI = class("FightAssistBossNameUI", LuaCompBase)
+
+function FightAssistBossNameUI:ctor(entity)
 	return
 end
 
-function var_0_0.load(arg_2_0, arg_2_1)
+function FightAssistBossNameUI:load(url)
 	return
 end
 
-function var_0_0.beforeDestroy(arg_3_0)
+function FightAssistBossNameUI:beforeDestroy()
 	return
 end
 
-function var_0_0.onDestroy(arg_4_0)
+function FightAssistBossNameUI:onDestroy()
 	return
 end
 
-return var_0_0
+return FightAssistBossNameUI

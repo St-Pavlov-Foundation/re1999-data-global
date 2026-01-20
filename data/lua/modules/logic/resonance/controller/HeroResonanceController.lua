@@ -1,39 +1,41 @@
-﻿module("modules.logic.resonance.controller.HeroResonanceController", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/controller/HeroResonanceController.lua
 
-local var_0_0 = class("HeroResonanceController", BaseController)
+module("modules.logic.resonance.controller.HeroResonanceController", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local HeroResonanceController = class("HeroResonanceController", BaseController)
+
+function HeroResonanceController:ctor()
 	return
 end
 
-function var_0_0.statShareCode(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = {}
+function HeroResonanceController:statShareCode(heroMo, isUse, code)
+	local stateGroupList = {}
 
-	if arg_2_1 and arg_2_1.talentCubeInfos and arg_2_1.talentCubeInfos.data_list then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_1.talentCubeInfos.data_list) do
-			local var_2_1 = iter_2_1.cubeId
-			local var_2_2 = arg_2_1.talentCubeInfos.own_main_cube_id
+	if heroMo and heroMo.talentCubeInfos and heroMo.talentCubeInfos.data_list then
+		for _, data in ipairs(heroMo.talentCubeInfos.data_list) do
+			local cubeId = data.cubeId
+			local mainCubeId = heroMo.talentCubeInfos.own_main_cube_id
 
-			if iter_2_1.cubeId == var_2_2 then
-				var_2_1 = arg_2_1:getHeroUseStyleCubeId()
+			if data.cubeId == mainCubeId then
+				cubeId = heroMo:getHeroUseStyleCubeId()
 			end
 
-			table.insert(var_2_0, var_2_1)
+			table.insert(stateGroupList, cubeId)
 		end
 	end
 
-	arg_2_3 = arg_2_3 or HeroResonaceModel.instance:getShareCode() or ""
+	code = code or HeroResonaceModel.instance:getShareCode() or ""
 
-	local var_2_3 = arg_2_2 and StatEnum.EventName.TalentUseRuenCode or StatEnum.EventName.TalentCopyRuenCode
+	local eventName = isUse and StatEnum.EventName.TalentUseRuenCode or StatEnum.EventName.TalentCopyRuenCode
 
-	StatController.instance:track(var_2_3, {
-		[StatEnum.EventProperties.TalentShareCode] = arg_2_3,
-		[StatEnum.EventProperties.HeroId] = arg_2_1.heroId,
-		[StatEnum.EventProperties.HeroName] = arg_2_1.config.name,
-		[StatEnum.EventProperties.TalentRuensStateGroup] = var_2_0
+	StatController.instance:track(eventName, {
+		[StatEnum.EventProperties.TalentShareCode] = code,
+		[StatEnum.EventProperties.HeroId] = heroMo.heroId,
+		[StatEnum.EventProperties.HeroName] = heroMo.config.name,
+		[StatEnum.EventProperties.TalentRuensStateGroup] = stateGroupList
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+HeroResonanceController.instance = HeroResonanceController.New()
 
-return var_0_0
+return HeroResonanceController

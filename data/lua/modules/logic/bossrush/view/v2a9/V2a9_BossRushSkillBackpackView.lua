@@ -1,116 +1,119 @@
-﻿module("modules.logic.bossrush.view.v2a9.V2a9_BossRushSkillBackpackView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v2a9/V2a9_BossRushSkillBackpackView.lua
 
-local var_0_0 = class("V2a9_BossRushSkillBackpackView", BaseView)
+module("modules.logic.bossrush.view.v2a9.V2a9_BossRushSkillBackpackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "root/#go_info")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "root/#go_info/#txt_name")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_info/#simage_icon")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "root/#go_info/#simage_icon/#txt_num")
-	arg_1_0._gofightEff = gohelper.findChild(arg_1_0.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_fightEff")
-	arg_1_0._txtfightEffDesc = gohelper.findChildText(arg_1_0.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_fightEff/#txt_fightEffDesc")
-	arg_1_0._gostealthEff = gohelper.findChild(arg_1_0.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_stealthEff")
-	arg_1_0._txtstealthEffDesc = gohelper.findChildText(arg_1_0.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_stealthEff/#txt_stealthEffDesc")
-	arg_1_0._goremove = gohelper.findChild(arg_1_0.viewGO, "root/#go_info/change/#go_remove")
-	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "root/#go_info/change/#go_equip")
-	arg_1_0._goban = gohelper.findChild(arg_1_0.viewGO, "root/#go_info/change/#go_ban")
-	arg_1_0._btnchange = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "root/#go_info/change/#btn_change")
-	arg_1_0._goIsEquiped = gohelper.findChild(arg_1_0.viewGO, "root/#go_info/#go_Equip")
+local V2a9_BossRushSkillBackpackView = class("V2a9_BossRushSkillBackpackView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a9_BossRushSkillBackpackView:onInitView()
+	self._goinfo = gohelper.findChild(self.viewGO, "root/#go_info")
+	self._txtname = gohelper.findChildText(self.viewGO, "root/#go_info/#txt_name")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#go_info/#simage_icon")
+	self._txtnum = gohelper.findChildText(self.viewGO, "root/#go_info/#simage_icon/#txt_num")
+	self._gofightEff = gohelper.findChild(self.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_fightEff")
+	self._txtfightEffDesc = gohelper.findChildText(self.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_fightEff/#txt_fightEffDesc")
+	self._gostealthEff = gohelper.findChild(self.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_stealthEff")
+	self._txtstealthEffDesc = gohelper.findChildText(self.viewGO, "root/#go_info/ScrollView/Viewport/#go_layoutEff/#go_stealthEff/#txt_stealthEffDesc")
+	self._goremove = gohelper.findChild(self.viewGO, "root/#go_info/change/#go_remove")
+	self._goequip = gohelper.findChild(self.viewGO, "root/#go_info/change/#go_equip")
+	self._goban = gohelper.findChild(self.viewGO, "root/#go_info/change/#go_ban")
+	self._btnchange = gohelper.findChildClickWithAudio(self.viewGO, "root/#go_info/change/#btn_change")
+	self._goIsEquiped = gohelper.findChild(self.viewGO, "root/#go_info/#go_Equip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnchange:AddClickListener(arg_2_0._btnchangeOnClick, arg_2_0)
-	arg_2_0:addEventCb(BossRushController.instance, BossRushEvent.OnSelectV2a9SpItem, arg_2_0.onSelectItem, arg_2_0)
+function V2a9_BossRushSkillBackpackView:addEvents()
+	self._btnchange:AddClickListener(self._btnchangeOnClick, self)
+	self:addEventCb(BossRushController.instance, BossRushEvent.OnSelectV2a9SpItem, self.onSelectItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnchange:RemoveClickListener()
-	arg_3_0:removeEventCb(BossRushController.instance, BossRushEvent.OnSelectV2a9SpItem, arg_3_0.onSelectItem, arg_3_0)
+function V2a9_BossRushSkillBackpackView:removeEvents()
+	self._btnchange:RemoveClickListener()
+	self:removeEventCb(BossRushController.instance, BossRushEvent.OnSelectV2a9SpItem, self.onSelectItem, self)
 end
 
-function var_0_0._btnchangeOnClick(arg_4_0)
-	V2a9BossRushModel.instance:changeEquippedSelectItem(arg_4_0._stage, arg_4_0.refreshView, arg_4_0)
+function V2a9_BossRushSkillBackpackView:_btnchangeOnClick()
+	V2a9BossRushModel.instance:changeEquippedSelectItem(self._stage, self.refreshView, self)
 end
 
-function var_0_0.onSelectItem(arg_5_0)
-	arg_5_0:refreshSelectedItemInfo()
+function V2a9_BossRushSkillBackpackView:onSelectItem()
+	self:refreshSelectedItemInfo()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function V2a9_BossRushSkillBackpackView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = HeroGroupModel.instance.episodeId
+function V2a9_BossRushSkillBackpackView:onOpen()
+	local episodeId = HeroGroupModel.instance.episodeId
+	local co = BossRushConfig.instance:getEpisodeCoByEpisodeId(episodeId)
 
-	arg_7_0._stage = BossRushConfig.instance:getEpisodeCoByEpisodeId(var_7_0).stage
+	self._stage = co.stage
 
 	V2a9BossRushSkillBackpackListModel.instance:initSelect()
-	arg_7_0:refreshSelectedItemInfo()
+	self:refreshSelectedItemInfo()
 end
 
-function var_0_0.refreshSelectedItemInfo(arg_8_0)
-	local var_8_0 = V2a9BossRushModel.instance:getSelectedItemId()
+function V2a9_BossRushSkillBackpackView:refreshSelectedItemInfo()
+	local selectedItemId = V2a9BossRushModel.instance:getSelectedItemId()
 
-	if not var_8_0 then
-		gohelper.setActive(arg_8_0._goinfo, false)
+	if not selectedItemId then
+		gohelper.setActive(self._goinfo, false)
 
 		return
 	end
 
-	arg_8_0._txtname.text = AssassinConfig.instance:getAssassinItemName(var_8_0)
+	self._txtname.text = AssassinConfig.instance:getAssassinItemName(selectedItemId)
 
-	AssassinHelper.setAssassinItemIcon(var_8_0, arg_8_0._imageicon)
+	AssassinHelper.setAssassinItemIcon(selectedItemId, self._imageicon)
 
-	arg_8_0._txtnum.text = AssassinItemModel.instance:getAssassinItemCount(var_8_0)
+	self._txtnum.text = AssassinItemModel.instance:getAssassinItemCount(selectedItemId)
 
-	local var_8_1 = AssassinConfig.instance:getAssassinItemFightEffDesc(var_8_0)
-	local var_8_2 = not string.nilorempty(var_8_1)
+	local fightEffDesc = AssassinConfig.instance:getAssassinItemFightEffDesc(selectedItemId)
+	local hasFightEff = not string.nilorempty(fightEffDesc)
 
-	if var_8_2 then
-		arg_8_0._txtfightEffDesc.text = var_8_1
+	if hasFightEff then
+		self._txtfightEffDesc.text = fightEffDesc
 	end
 
-	gohelper.setActive(arg_8_0._gofightEff, var_8_2)
+	gohelper.setActive(self._gofightEff, hasFightEff)
 
-	local var_8_3 = AssassinConfig.instance:getAssassinItemStealthEffDesc(var_8_0)
-	local var_8_4 = not string.nilorempty(var_8_3)
+	local stealthEffDesc = AssassinConfig.instance:getAssassinItemStealthEffDesc(selectedItemId)
+	local hasStealthEff = not string.nilorempty(stealthEffDesc)
 
-	if var_8_4 then
-		arg_8_0._txtstealthEffDesc.text = var_8_3
+	if hasStealthEff then
+		self._txtstealthEffDesc.text = stealthEffDesc
 	end
 
-	gohelper.setActive(arg_8_0._gostealthEff, var_8_4)
-	arg_8_0:refreshBtn()
+	gohelper.setActive(self._gostealthEff, hasStealthEff)
+	self:refreshBtn()
 end
 
-function var_0_0.refreshBtn(arg_9_0)
-	local var_9_0 = V2a9BossRushModel.instance:isFullEquip(arg_9_0._stage)
-	local var_9_1 = V2a9BossRushModel.instance:getSelectedItemId()
-	local var_9_2 = V2a9BossRushModel.instance:isEquip(arg_9_0._stage, var_9_1)
+function V2a9_BossRushSkillBackpackView:refreshBtn()
+	local isFullEquip = V2a9BossRushModel.instance:isFullEquip(self._stage)
+	local id = V2a9BossRushModel.instance:getSelectedItemId()
+	local isEquip = V2a9BossRushModel.instance:isEquip(self._stage, id)
 
-	gohelper.setActive(arg_9_0._goremove, var_9_2)
-	gohelper.setActive(arg_9_0._goequip, not var_9_0 and not var_9_2)
-	gohelper.setActive(arg_9_0._goban, var_9_0 and not var_9_2)
-	gohelper.setActive(arg_9_0._goIsEquiped, var_9_2)
-	gohelper.setActive(arg_9_0._goinfo, true)
+	gohelper.setActive(self._goremove, isEquip)
+	gohelper.setActive(self._goequip, not isFullEquip and not isEquip)
+	gohelper.setActive(self._goban, isFullEquip and not isEquip)
+	gohelper.setActive(self._goIsEquiped, isEquip)
+	gohelper.setActive(self._goinfo, true)
 end
 
-function var_0_0.refreshView(arg_10_0)
-	arg_10_0:refreshBtn()
+function V2a9_BossRushSkillBackpackView:refreshView()
+	self:refreshBtn()
 	V2a9BossRushSkillBackpackListModel.instance:onModelUpdate()
 end
 
-function var_0_0.onClose(arg_11_0)
+function V2a9_BossRushSkillBackpackView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function V2a9_BossRushSkillBackpackView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V2a9_BossRushSkillBackpackView

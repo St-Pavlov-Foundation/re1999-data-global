@@ -1,41 +1,43 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/view/TianShiNaNaMainViewContainer.lua
 
-local var_0_0 = class("TianShiNaNaMainViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._mapViewScene = TianShiNaNaMainScene.New()
+local TianShiNaNaMainViewContainer = class("TianShiNaNaMainViewContainer", BaseViewContainer)
+
+function TianShiNaNaMainViewContainer:buildViews()
+	self._mapViewScene = TianShiNaNaMainScene.New()
 
 	return {
-		arg_1_0._mapViewScene,
+		self._mapViewScene,
 		TianShiNaNaMainView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function TianShiNaNaMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function TianShiNaNaMainViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity2_2Enum.ActivityId.TianShiNaNa)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity2_2Enum.ActivityId.TianShiNaNa
 	})
 end
 
-function var_0_0.setVisibleInternal(arg_4_0, arg_4_1)
-	arg_4_0._mapViewScene:setSceneVisible(arg_4_1)
-	var_0_0.super.setVisibleInternal(arg_4_0, arg_4_1)
+function TianShiNaNaMainViewContainer:setVisibleInternal(isVisible)
+	self._mapViewScene:setSceneVisible(isVisible)
+	TianShiNaNaMainViewContainer.super.setVisibleInternal(self, isVisible)
 end
 
-return var_0_0
+return TianShiNaNaMainViewContainer

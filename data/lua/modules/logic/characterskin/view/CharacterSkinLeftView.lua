@@ -1,435 +1,445 @@
-﻿module("modules.logic.characterskin.view.CharacterSkinLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/characterskin/view/CharacterSkinLeftView.lua
 
-local var_0_0 = class("CharacterSkinLeftView", BaseView)
+module("modules.logic.characterskin.view.CharacterSkinLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._gozs = gohelper.findChild(arg_1_0.viewGO, "zs")
-	arg_1_0._simagebgmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgmask")
-	arg_1_0._gosmallspine = gohelper.findChild(arg_1_0.viewGO, "smalldynamiccontainer/#go_smallspine")
-	arg_1_0._simageskin = gohelper.findChildSingleImage(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
-	arg_1_0._simagel2d = gohelper.findChildSingleImage(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#simage_l2d")
-	arg_1_0._gobigspine = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "desc/#simage_signature")
-	arg_1_0._simagesignatureicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "desc/#simage_signatureicon")
-	arg_1_0._txtcharacterName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_characterName")
-	arg_1_0._txtskinName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName")
-	arg_1_0._txtskinNameEn = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc")
-	arg_1_0._btnshowDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#txt_characterName/#btn_showDetail")
-	arg_1_0._btntag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_tag")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_switch")
-	arg_1_0._btnvideo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_video")
-	arg_1_0._txtswitch = gohelper.findChildText(arg_1_0.viewGO, "desc/#btn_switch/#txt_switch")
-	arg_1_0._goLeftStoryInfo = gohelper.findChild(arg_1_0.viewGO, "#go_left")
-	arg_1_0._textStoryDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_left/#scroll_contentlist/viewport/content/#txt_dec")
-	arg_1_0._imageStoryDescBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_left/simage_leftbg")
-	arg_1_0._btnStoryDesc = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_detail")
-	arg_1_0._btnStoryReturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_storyReturn")
-	arg_1_0._goskinItemListRoot = gohelper.findChild(arg_1_0.viewGO, "container/normal/skinSwitch/#scroll_skinSwitch")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local CharacterSkinLeftView = class("CharacterSkinLeftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkinLeftView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._gozs = gohelper.findChild(self.viewGO, "zs")
+	self._simagebgmask = gohelper.findChildSingleImage(self.viewGO, "#simage_bgmask")
+	self._gosmallspine = gohelper.findChild(self.viewGO, "smalldynamiccontainer/#go_smallspine")
+	self._simageskin = gohelper.findChildSingleImage(self.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
+	self._simagel2d = gohelper.findChildSingleImage(self.viewGO, "characterSpine/#go_skincontainer/#simage_l2d")
+	self._gobigspine = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "desc/#simage_signature")
+	self._simagesignatureicon = gohelper.findChildSingleImage(self.viewGO, "desc/#simage_signatureicon")
+	self._txtcharacterName = gohelper.findChildText(self.viewGO, "desc/#txt_characterName")
+	self._txtskinName = gohelper.findChildText(self.viewGO, "desc/#txt_skinName")
+	self._txtskinNameEn = gohelper.findChildText(self.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "desc/#txt_desc")
+	self._btnshowDetail = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#txt_characterName/#btn_showDetail")
+	self._btntag = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_tag")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_switch")
+	self._btnvideo = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_video")
+	self._txtswitch = gohelper.findChildText(self.viewGO, "desc/#btn_switch/#txt_switch")
+	self._goLeftStoryInfo = gohelper.findChild(self.viewGO, "#go_left")
+	self._textStoryDesc = gohelper.findChildText(self.viewGO, "#go_left/#scroll_contentlist/viewport/content/#txt_dec")
+	self._imageStoryDescBg = gohelper.findChildSingleImage(self.viewGO, "#go_left/simage_leftbg")
+	self._btnStoryDesc = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_detail")
+	self._btnStoryReturn = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_storyReturn")
+	self._goskinItemListRoot = gohelper.findChild(self.viewGO, "container/normal/skinSwitch/#scroll_skinSwitch")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnshowDetail:AddClickListener(arg_2_0._btnshowDetailOnClick, arg_2_0)
-	arg_2_0._btntag:AddClickListener(arg_2_0._btntagOnClick, arg_2_0)
-	arg_2_0._btnvideo:AddClickListener(arg_2_0._btnvideoOnClick, arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
-	arg_2_0._btnStoryDesc:AddClickListener(arg_2_0._btnStoryOnClick, arg_2_0)
-	arg_2_0._btnStoryReturn:AddClickListener(arg_2_0._btnStoryReturnOnClick, arg_2_0)
+function CharacterSkinLeftView:addEvents()
+	self._btnshowDetail:AddClickListener(self._btnshowDetailOnClick, self)
+	self._btntag:AddClickListener(self._btntagOnClick, self)
+	self._btnvideo:AddClickListener(self._btnvideoOnClick, self)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
+	self._btnStoryDesc:AddClickListener(self._btnStoryOnClick, self)
+	self._btnStoryReturn:AddClickListener(self._btnStoryReturnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnshowDetail:RemoveClickListener()
-	arg_3_0._btntag:RemoveClickListener()
-	arg_3_0._btnvideo:RemoveClickListener()
-	arg_3_0._btnswitch:RemoveClickListener()
-	arg_3_0._btnStoryDesc:RemoveClickListener()
-	arg_3_0._btnStoryReturn:RemoveClickListener()
+function CharacterSkinLeftView:removeEvents()
+	self._btnshowDetail:RemoveClickListener()
+	self._btntag:RemoveClickListener()
+	self._btnvideo:RemoveClickListener()
+	self._btnswitch:RemoveClickListener()
+	self._btnStoryDesc:RemoveClickListener()
+	self._btnStoryReturn:RemoveClickListener()
 end
 
-function var_0_0.onSwitchAnimDone(arg_4_0)
-	arg_4_0:setShaderKeyWord(false)
+function CharacterSkinLeftView:onSwitchAnimDone()
+	self:setShaderKeyWord(false)
 end
 
-function var_0_0._btnswitchOnClick(arg_5_0)
+function CharacterSkinLeftView:_btnswitchOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_switch_skin_l2d)
 
-	arg_5_0.showDynamicVertical = not arg_5_0.showDynamicVertical
+	self.showDynamicVertical = not self.showDynamicVertical
 
-	local var_5_0 = (arg_5_0._isStoryMode or arg_5_0._enterStoryMode) and "left_swicth" or "switch"
+	local isInStoryMode = self._isStoryMode or self._enterStoryMode
+	local switchAniName = isInStoryMode and "left_swicth" or "switch"
 
-	arg_5_0._animator:Play(var_5_0, 0, 0)
-	arg_5_0:setShaderKeyWord(true)
-	arg_5_0:refreshTxtSwitch()
-	TaskDispatcher.runDelay(arg_5_0.refreshBigVertical, arg_5_0, 0.16)
-	TaskDispatcher.runDelay(arg_5_0.onSwitchAnimDone, arg_5_0, 0.6)
+	self._animator:Play(switchAniName, 0, 0)
+	self:setShaderKeyWord(true)
+	self:refreshTxtSwitch()
+	TaskDispatcher.runDelay(self.refreshBigVertical, self, 0.16)
+	TaskDispatcher.runDelay(self.onSwitchAnimDone, self, 0.6)
 
-	local var_5_1 = arg_5_0.heroCo and arg_5_0.heroCo.id
-	local var_5_2 = arg_5_0.skinCo and arg_5_0.skinCo.id
+	local heroId = self.heroCo and self.heroCo.id
+	local skinId = self.skinCo and self.skinCo.id
 
-	CharacterController.instance:trackInteractiveSkinDetails(var_5_1, var_5_2, StatEnum.ClickType.Switch)
+	CharacterController.instance:trackInteractiveSkinDetails(heroId, skinId, StatEnum.ClickType.Switch)
 end
 
-function var_0_0._btnvideoOnClick(arg_6_0)
-	if not arg_6_0.skinCo then
+function CharacterSkinLeftView:_btnvideoOnClick()
+	if not self.skinCo then
 		return
 	end
 
-	local var_6_0 = arg_6_0.skinCo.characterId
-	local var_6_1 = arg_6_0.skinCo.id
-	local var_6_2 = HeroConfig.instance:getHeroCO(var_6_0)
+	local heroId = self.skinCo.characterId
+	local skinId = self.skinCo.id
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
 
-	if not var_6_2 then
+	if not heroCfg then
 		return
 	end
 
-	local var_6_3 = WebViewController.instance:getVideoUrl(var_6_0, var_6_1)
+	local url = WebViewController.instance:getVideoUrl(heroId, skinId)
 
-	logNormal("播放视频,当前英雄id:" .. var_6_0 .. " 皮肤id: " .. var_6_1 .. " url: " .. var_6_3)
+	logNormal("播放视频,当前英雄id:" .. heroId .. " 皮肤id: " .. skinId .. " url: " .. url)
 
-	if UnityEngine.Application.version == "2.6.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
-		GameUtil.openURL(var_6_3)
+	local version = UnityEngine.Application.version
+
+	if version == "2.6.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
+		GameUtil.openURL(url)
 	else
-		WebViewController.instance:openWebView(var_6_3, false, arg_6_0.OnWebViewBack, arg_6_0)
+		WebViewController.instance:openWebView(url, false, self.OnWebViewBack, self)
 	end
 
-	CharacterController.instance:statCharacterSkinVideoData(var_6_0, var_6_2.name, var_6_1, arg_6_0.skinCo.name)
+	CharacterController.instance:statCharacterSkinVideoData(heroId, heroCfg.name, skinId, self.skinCo.name)
 end
 
-function var_0_0.OnWebViewBack(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == WebViewEnum.WebViewCBType.Cb and arg_7_2 == "webClose" then
+function CharacterSkinLeftView:OnWebViewBack(errorType, msg)
+	if errorType == WebViewEnum.WebViewCBType.Cb and msg == "webClose" then
 		ViewMgr.instance:closeView(ViewName.WebView)
 	end
 
-	logNormal("URL Jump Callback msg" .. arg_7_2)
+	logNormal("URL Jump Callback msg" .. msg)
 end
 
-function var_0_0._btntagOnClick(arg_8_0)
-	gohelper.setActive(arg_8_0._btnvideo, false)
+function CharacterSkinLeftView:_btntagOnClick()
+	gohelper.setActive(self._btnvideo, false)
 	ViewMgr.instance:openView(ViewName.CharacterSkinTagView, {
-		skinCo = arg_8_0.skinCo,
-		isInStoryMode = arg_8_0._isStoryMode or arg_8_0._enterStoryMode
+		skinCo = self.skinCo,
+		isInStoryMode = self._isStoryMode or self._enterStoryMode
 	})
 
-	local var_8_0 = arg_8_0.heroCo and arg_8_0.heroCo.id
-	local var_8_1 = arg_8_0.skinCo and arg_8_0.skinCo.id
+	local heroId = self.heroCo and self.heroCo.id
+	local skinId = self.skinCo and self.skinCo.id
 
-	CharacterController.instance:trackInteractiveSkinDetails(var_8_0, var_8_1, StatEnum.ClickType.Tag)
+	CharacterController.instance:trackInteractiveSkinDetails(heroId, skinId, StatEnum.ClickType.Tag)
 end
 
-function var_0_0._btnshowDetailOnClick(arg_9_0)
-	CharacterController.instance:openCharacterSkinFullScreenView(arg_9_0.skinCo, false, arg_9_0.showDynamicVertical and CharacterEnum.ShowSkinEnum.Dynamic or CharacterEnum.ShowSkinEnum.Static)
+function CharacterSkinLeftView:_btnshowDetailOnClick()
+	CharacterController.instance:openCharacterSkinFullScreenView(self.skinCo, false, self.showDynamicVertical and CharacterEnum.ShowSkinEnum.Dynamic or CharacterEnum.ShowSkinEnum.Static)
 
-	local var_9_0 = arg_9_0.heroCo and arg_9_0.heroCo.id
-	local var_9_1 = arg_9_0.skinCo and arg_9_0.skinCo.id
+	local heroId = self.heroCo and self.heroCo.id
+	local skinId = self.skinCo and self.skinCo.id
 
-	CharacterController.instance:trackInteractiveSkinDetails(var_9_0, var_9_1, StatEnum.ClickType.Detail)
+	CharacterController.instance:trackInteractiveSkinDetails(heroId, skinId, StatEnum.ClickType.Detail)
 end
 
-function var_0_0._btnStoryOnClick(arg_10_0)
-	local var_10_0 = gohelper.findChild(arg_10_0.viewGO, "drag")
+function CharacterSkinLeftView:_btnStoryOnClick()
+	local goDrag = gohelper.findChild(self.viewGO, "drag")
 
-	if var_10_0 then
-		gohelper.setActive(var_10_0, false)
+	if goDrag then
+		gohelper.setActive(goDrag, false)
 	end
 
-	arg_10_0._enterStoryMode = true
+	self._enterStoryMode = true
 
-	arg_10_0:refreshSkinStoryMode(true)
+	self:refreshSkinStoryMode(true)
 end
 
-function var_0_0._btnStoryReturnOnClick(arg_11_0)
-	local var_11_0 = gohelper.findChild(arg_11_0.viewGO, "drag")
+function CharacterSkinLeftView:_btnStoryReturnOnClick()
+	local goDrag = gohelper.findChild(self.viewGO, "drag")
 
-	if var_11_0 then
-		gohelper.setActive(var_11_0, true)
+	if goDrag then
+		gohelper.setActive(goDrag, true)
 	end
 
-	arg_11_0._enterStoryMode = false
+	self._enterStoryMode = false
 
-	arg_11_0:refreshSkinStoryMode(false)
+	self:refreshSkinStoryMode(false)
 end
 
-function var_0_0._onOpenView(arg_12_0, arg_12_1)
-	if arg_12_0.showDynamicVertical and arg_12_1 == ViewName.CharacterSkinFullScreenView then
-		gohelper.setActive(arg_12_0.goBigDynamicContainer, false)
-	end
-end
-
-function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1)
-	if ViewHelper.instance:checkViewOnTheTop(arg_13_0.viewName) then
-		arg_13_0:setShaderKeyWord(false)
+function CharacterSkinLeftView:_onOpenView(viewName)
+	if self.showDynamicVertical and viewName == ViewName.CharacterSkinFullScreenView then
+		gohelper.setActive(self.goBigDynamicContainer, false)
 	end
 end
 
-function var_0_0._onCloseView(arg_14_0, arg_14_1)
-	if arg_14_0.showDynamicVertical and arg_14_1 == ViewName.CharacterSkinFullScreenView then
-		gohelper.setActive(arg_14_0.goBigDynamicContainer, true)
-	end
-
-	if arg_14_1 == ViewName.CharacterSkinTagView then
-		arg_14_0:_refreshVideoBtnState(false)
+function CharacterSkinLeftView:_onCloseViewFinish(viewName)
+	if ViewHelper.instance:checkViewOnTheTop(self.viewName) then
+		self:setShaderKeyWord(false)
 	end
 end
 
-function var_0_0._editableInitView(arg_15_0)
-	arg_15_0.showDynamicVertical = false
-	arg_15_0.smallSpine = GuiSpine.Create(arg_15_0._gosmallspine, false)
-	arg_15_0.goBigDynamicContainer = gohelper.findChild(arg_15_0.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer")
-	arg_15_0.goBigStaticContainer = arg_15_0._simageskin.gameObject
+function CharacterSkinLeftView:_onCloseView(viewName)
+	if self.showDynamicVertical and viewName == ViewName.CharacterSkinFullScreenView then
+		gohelper.setActive(self.goBigDynamicContainer, true)
+	end
 
-	arg_15_0._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
-	arg_15_0._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
-	arg_15_0:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSkin, arg_15_0.switchSkin, arg_15_0)
-	arg_15_0:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSkinVertical, arg_15_0.switchSkinVertical, arg_15_0)
-	arg_15_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_15_0._onCloseView, arg_15_0)
-	arg_15_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_15_0._onCloseViewFinish, arg_15_0)
-	arg_15_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_15_0._onOpenView, arg_15_0)
-end
-
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0._isStoryMode = arg_16_0.viewParam and LuaUtil.isTable(arg_16_0.viewParam) and arg_16_0.viewParam.storyMode
-
-	arg_16_0:refreshSkinStoryView(arg_16_0._isStoryMode)
-end
-
-function var_0_0.refreshTxtSwitch(arg_17_0)
-	arg_17_0._txtswitch.text = arg_17_0.showDynamicVertical and luaLang("storeskinpreviewview_btnswitch") or "L2D"
-end
-
-function var_0_0.switchSkinVertical(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0.viewName == arg_18_2 then
-		arg_18_0.showDynamicVertical = arg_18_1
+	if viewName == ViewName.CharacterSkinTagView then
+		self:_refreshVideoBtnState(false)
 	end
 end
 
-function var_0_0.switchSkin(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_0.viewName == arg_19_2 then
-		arg_19_0.skinCo = arg_19_1
-		arg_19_0.heroCo = HeroConfig.instance:getHeroCO(arg_19_0.skinCo.characterId)
+function CharacterSkinLeftView:_editableInitView()
+	self.showDynamicVertical = false
+	self.smallSpine = GuiSpine.Create(self._gosmallspine, false)
+	self.goBigDynamicContainer = gohelper.findChild(self.viewGO, "characterSpine/#go_skincontainer/#go_spinecontainer")
+	self.goBigStaticContainer = self._simageskin.gameObject
 
-		arg_19_0:refreshSkin()
+	self._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
+	self._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
+	self:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSkin, self.switchSkin, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSkinVertical, self.switchSkinVertical, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+end
+
+function CharacterSkinLeftView:onOpen()
+	self._isStoryMode = self.viewParam and LuaUtil.isTable(self.viewParam) and self.viewParam.storyMode
+
+	self:refreshSkinStoryView(self._isStoryMode)
+end
+
+function CharacterSkinLeftView:refreshTxtSwitch()
+	self._txtswitch.text = self.showDynamicVertical and luaLang("storeskinpreviewview_btnswitch") or "L2D"
+end
+
+function CharacterSkinLeftView:switchSkinVertical(isShowDynamic, viewName)
+	if self.viewName == viewName then
+		self.showDynamicVertical = isShowDynamic
 	end
 end
 
-function var_0_0.refreshSignature(arg_20_0)
-	arg_20_0._simagesignature:LoadImage(ResUrl.getSignature(arg_20_0.heroCo.signature, "characterget"))
+function CharacterSkinLeftView:switchSkin(skinCo, viewName)
+	if self.viewName == viewName then
+		self.skinCo = skinCo
+		self.heroCo = HeroConfig.instance:getHeroCO(self.skinCo.characterId)
 
-	if arg_20_0.skinCo.signature == "3011" then
-		arg_20_0._simagesignatureicon:LoadImage(ResUrl.getSignature("3011_2", "characterget"))
-		gohelper.setActive(arg_20_0._simagesignatureicon.gameObject, true)
+		self:refreshSkin()
+	end
+end
+
+function CharacterSkinLeftView:refreshSignature()
+	self._simagesignature:LoadImage(ResUrl.getSignature(self.heroCo.signature, "characterget"))
+
+	if self.skinCo.signature == "3011" then
+		self._simagesignatureicon:LoadImage(ResUrl.getSignature("3011_2", "characterget"))
+		gohelper.setActive(self._simagesignatureicon.gameObject, true)
 	else
-		gohelper.setActive(arg_20_0._simagesignatureicon.gameObject, false)
+		gohelper.setActive(self._simagesignatureicon.gameObject, false)
 	end
 end
 
-function var_0_0.refreshSkin(arg_21_0)
-	arg_21_0:resetRes()
-	arg_21_0:refreshSignature()
-	arg_21_0:refreshBigVertical()
-	arg_21_0:refreshSmallVertical()
-	arg_21_0:_refreshSkinInfo()
+function CharacterSkinLeftView:refreshSkin()
+	self:resetRes()
+	self:refreshSignature()
+	self:refreshBigVertical()
+	self:refreshSmallVertical()
+	self:_refreshSkinInfo()
 
-	local var_21_0 = arg_21_0._isStoryMode or arg_21_0._enterStoryMode
+	local isInStoryMode = self._isStoryMode or self._enterStoryMode
 
-	arg_21_0:refreshSkinStoryView(var_21_0)
-	CharacterController.instance:dispatchEvent(CharacterEvent.OnSkinSwitchSpine, arg_21_0.skinCo.id)
+	self:refreshSkinStoryView(isInStoryMode)
+	CharacterController.instance:dispatchEvent(CharacterEvent.OnSkinSwitchSpine, self.skinCo.id)
 end
 
-function var_0_0.resetRes(arg_22_0)
-	if arg_22_0.bigSpine then
-		arg_22_0.bigSpine:onDestroy()
+function CharacterSkinLeftView:resetRes()
+	if self.bigSpine then
+		self.bigSpine:onDestroy()
 	end
 
-	arg_22_0._simageskin:UnLoadImage()
-	arg_22_0._simagel2d:UnLoadImage()
+	self._simageskin:UnLoadImage()
+	self._simagel2d:UnLoadImage()
 end
 
-function var_0_0.refreshBigVertical(arg_23_0)
-	gohelper.setActive(arg_23_0.goBigDynamicContainer, arg_23_0.showDynamicVertical)
-	gohelper.setActive(arg_23_0._simageskin.gameObject, not arg_23_0.showDynamicVertical)
+function CharacterSkinLeftView:refreshBigVertical()
+	gohelper.setActive(self.goBigDynamicContainer, self.showDynamicVertical)
+	gohelper.setActive(self._simageskin.gameObject, not self.showDynamicVertical)
 
-	if arg_23_0.showDynamicVertical then
-		if arg_23_0.bigSpine == nil then
-			arg_23_0.bigSpine = GuiModelAgent.Create(arg_23_0._gobigspine, true)
+	if self.showDynamicVertical then
+		if self.bigSpine == nil then
+			self.bigSpine = GuiModelAgent.Create(self._gobigspine, true)
 
-			arg_23_0.bigSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, arg_23_0.viewName)
+			self.bigSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self.viewName)
 		end
 
-		arg_23_0.bigSpine:setResPath(arg_23_0.skinCo, arg_23_0.onBigSpineLoaded, arg_23_0)
+		self.bigSpine:setResPath(self.skinCo, self.onBigSpineLoaded, self)
 	else
-		arg_23_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_23_0.skinCo.id), arg_23_0._loadedImage, arg_23_0)
+		self._simageskin:LoadImage(ResUrl.getHeadIconImg(self.skinCo.id), self._loadedImage, self)
 	end
 
-	local var_23_0 = arg_23_0.skinCo.live2dbg
+	local live2dbg = self.skinCo.live2dbg
 
-	if not string.nilorempty(var_23_0) then
-		gohelper.setActive(arg_23_0._simagel2d.gameObject, arg_23_0.showDynamicVertical)
-		gohelper.setActive(arg_23_0._gozs, arg_23_0.showDynamicVertical)
-		arg_23_0._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(var_23_0))
-	else
-		gohelper.setActive(arg_23_0._simagel2d.gameObject, false)
-		gohelper.setActive(arg_23_0._gozs, false)
-	end
-end
-
-function var_0_0._refreshSkinInfo(arg_24_0)
-	gohelper.setActive(arg_24_0._btnswitch, arg_24_0.skinCo.showSwitchBtn == 1)
-
-	local var_24_0 = HeroConfig.instance:getHeroCO(arg_24_0.skinCo.characterId)
-
-	arg_24_0._txtcharacterName.text = var_24_0.name
-	arg_24_0._txtdesc.text = arg_24_0.skinCo.skinDescription
-
-	arg_24_0:_refreshVideoBtnState(true)
-
-	if string.nilorempty(arg_24_0.skinCo.characterSkin) then
-		gohelper.setActive(arg_24_0._txtskinName.gameObject, false)
-
-		arg_24_0._txtskinNameEn.text = ""
-	else
-		gohelper.setActive(arg_24_0._txtskinName.gameObject, true)
-
-		arg_24_0._txtskinName.text = arg_24_0.skinCo.characterSkin
-		arg_24_0._txtskinNameEn.text = arg_24_0.skinCo.characterSkinNameEng
-	end
-
-	gohelper.setActive(arg_24_0._btntag.gameObject, not string.nilorempty(arg_24_0.skinCo.storeTag))
-	arg_24_0:refreshTxtSwitch()
-end
-
-function var_0_0._refreshVideoBtnState(arg_25_0, arg_25_1)
-	local var_25_0 = not VersionValidator.instance:isInReviewing() and arg_25_0.skinCo.isSkinVideo
-
-	gohelper.setActive(arg_25_0._btnvideo, var_25_0)
-
-	if var_25_0 and arg_25_1 then
-		CharacterController.instance:dispatchEvent(CharacterEvent.onVideoBtnDisplay, arg_25_0.viewContainer.viewName)
-	end
-end
-
-function var_0_0.onBigSpineLoaded(arg_26_0)
-	arg_26_0.bigSpine:setAllLayer(UnityLayer.SceneEffect)
-
-	local var_26_0 = arg_26_0.skinCo.skinViewLive2dOffset
-
-	if string.nilorempty(var_26_0) then
-		var_26_0 = arg_26_0.skinCo.characterViewOffset
-	end
-
-	local var_26_1 = SkinConfig.instance:getSkinOffset(var_26_0)
-
-	recthelper.setAnchor(arg_26_0._gobigspine.transform, tonumber(var_26_1[1]), tonumber(var_26_1[2]))
-	transformhelper.setLocalScale(arg_26_0._gobigspine.transform, tonumber(var_26_1[3]), tonumber(var_26_1[3]), tonumber(var_26_1[3]))
-end
-
-function var_0_0._loadedImage(arg_27_0)
-	ZProj.UGUIHelper.SetImageSize(arg_27_0._simageskin.gameObject)
-
-	local var_27_0 = arg_27_0.skinCo.skinViewImgOffset
-
-	if not string.nilorempty(var_27_0) then
-		local var_27_1 = string.splitToNumber(var_27_0, "#")
-
-		recthelper.setAnchor(arg_27_0._simageskin.transform, tonumber(var_27_1[1]), tonumber(var_27_1[2]))
-		transformhelper.setLocalScale(arg_27_0._simageskin.transform, tonumber(var_27_1[3]), tonumber(var_27_1[3]), tonumber(var_27_1[3]))
-	else
-		recthelper.setAnchor(arg_27_0._simageskin.transform, -150, -150)
-		transformhelper.setLocalScale(arg_27_0._simageskin.transform, 0.6, 0.6, 0.6)
-	end
-end
-
-function var_0_0.refreshSmallVertical(arg_28_0)
-	arg_28_0.smallSpine:stopVoice()
-	arg_28_0.smallSpine:setResPath(ResUrl.getSpineUIPrefab(arg_28_0.skinCo.spine), arg_28_0.onSmallSpineLoaded, arg_28_0, true)
-end
-
-function var_0_0.onSmallSpineLoaded(arg_29_0)
-	local var_29_0 = SkinConfig.instance:getSkinOffset(arg_29_0.skinCo.skinSpineOffset)
-
-	recthelper.setAnchor(arg_29_0._gosmallspine.transform, tonumber(var_29_0[1]), tonumber(var_29_0[2]))
-	transformhelper.setLocalScale(arg_29_0._gosmallspine.transform, tonumber(var_29_0[3]), tonumber(var_29_0[3]), tonumber(var_29_0[3]))
-end
-
-function var_0_0.refreshSkinStoryMode(arg_30_0, arg_30_1)
-	arg_30_0:refreshSkinStoryView(arg_30_1)
-	arg_30_0:refreshSkinStoryModeAni(arg_30_1)
-end
-
-function var_0_0.refreshSkinStoryView(arg_31_0, arg_31_1)
-	local var_31_0 = HandbookConfig.instance:getSkinSuitIdBySkinId(arg_31_0.skinCo.id)
-
-	if arg_31_1 then
-		gohelper.setActive(arg_31_0._goskinItemListRoot, false)
-		gohelper.setActive(arg_31_0._goLeftStoryInfo, true)
-
-		arg_31_0._textStoryDesc.text = arg_31_0.skinCo.skinStory
-
-		arg_31_0._imageStoryDescBg:LoadImage(ResUrl.getCharacterSkinStoryBg(var_31_0))
-		gohelper.setActive(arg_31_0._btnStoryDesc.gameObject, false)
-
-		if arg_31_0._enterStoryMode then
-			gohelper.setActive(arg_31_0._btnStoryReturn.gameObject, true)
+	if not string.nilorempty(live2dbg) then
+		if VersionValidator.instance:isInReviewing() then
+			gohelper.setActive(self._simagel2d.gameObject, false)
+		else
+			gohelper.setActive(self._simagel2d.gameObject, self.showDynamicVertical)
+			gohelper.setActive(self._gozs, self.showDynamicVertical)
+			self._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(live2dbg))
 		end
 	else
-		gohelper.setActive(arg_31_0._goskinItemListRoot, true)
-		gohelper.setActive(arg_31_0._goLeftStoryInfo, false)
-		gohelper.setActive(arg_31_0._btnStoryDesc.gameObject, var_31_0 ~= nil)
-		gohelper.setActive(arg_31_0._btnStoryReturn.gameObject, false)
+		gohelper.setActive(self._simagel2d.gameObject, false)
+		gohelper.setActive(self._gozs, false)
 	end
 end
 
-function var_0_0.refreshSkinStoryModeAni(arg_32_0, arg_32_1)
-	if arg_32_1 then
-		arg_32_0._animator:Play("left_open", 0, 0)
+function CharacterSkinLeftView:_refreshSkinInfo()
+	gohelper.setActive(self._btnswitch, self.skinCo.showSwitchBtn == 1)
+
+	local heroCo = HeroConfig.instance:getHeroCO(self.skinCo.characterId)
+
+	self._txtcharacterName.text = heroCo.name
+	self._txtdesc.text = self.skinCo.skinDescription
+
+	self:_refreshVideoBtnState(true)
+
+	if string.nilorempty(self.skinCo.characterSkin) then
+		gohelper.setActive(self._txtskinName.gameObject, false)
+
+		self._txtskinNameEn.text = ""
 	else
-		arg_32_0._animator:Play("left_close", 0, 0)
+		gohelper.setActive(self._txtskinName.gameObject, true)
+
+		self._txtskinName.text = self.skinCo.characterSkin
+		self._txtskinNameEn.text = self.skinCo.characterSkinNameEng
+	end
+
+	gohelper.setActive(self._btntag.gameObject, not string.nilorempty(self.skinCo.storeTag))
+	self:refreshTxtSwitch()
+end
+
+function CharacterSkinLeftView:_refreshVideoBtnState(sendEvent)
+	local isReview = VersionValidator.instance:isInReviewing()
+	local showVideo = not isReview and self.skinCo.isSkinVideo
+
+	gohelper.setActive(self._btnvideo, showVideo)
+
+	if showVideo and sendEvent then
+		CharacterController.instance:dispatchEvent(CharacterEvent.onVideoBtnDisplay, self.viewContainer.viewName)
 	end
 end
 
-function var_0_0.onClose(arg_33_0)
-	arg_33_0._simageskin:UnLoadImage()
-	arg_33_0._simagesignature:UnLoadImage()
-	arg_33_0._simagesignatureicon:UnLoadImage()
-	arg_33_0._simagel2d:UnLoadImage()
-	arg_33_0._imageStoryDescBg:UnLoadImage()
+function CharacterSkinLeftView:onBigSpineLoaded()
+	self.bigSpine:setAllLayer(UnityLayer.SceneEffect)
 
-	if arg_33_0.bigSpine then
-		arg_33_0.bigSpine:setModelVisible(false)
+	local offsetStr = self.skinCo.skinSwitchLive2dOffset
+
+	if string.nilorempty(offsetStr) then
+		offsetStr = self.skinCo.characterViewOffset
+	end
+
+	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
+
+	recthelper.setAnchor(self._gobigspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gobigspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
+end
+
+function CharacterSkinLeftView:_loadedImage()
+	ZProj.UGUIHelper.SetImageSize(self._simageskin.gameObject)
+
+	local offsetStr = self.skinCo.skinViewImgOffset
+
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
+
+		recthelper.setAnchor(self._simageskin.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		transformhelper.setLocalScale(self._simageskin.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
+	else
+		recthelper.setAnchor(self._simageskin.transform, -150, -150)
+		transformhelper.setLocalScale(self._simageskin.transform, 0.6, 0.6, 0.6)
 	end
 end
 
-function var_0_0.setShaderKeyWord(arg_34_0, arg_34_1)
-	if arg_34_1 then
+function CharacterSkinLeftView:refreshSmallVertical()
+	self.smallSpine:stopVoice()
+	self.smallSpine:setResPath(ResUrl.getSpineUIPrefab(self.skinCo.spine), self.onSmallSpineLoaded, self, true)
+end
+
+function CharacterSkinLeftView:onSmallSpineLoaded()
+	local offsets = SkinConfig.instance:getSkinOffset(self.skinCo.skinSpineOffset)
+
+	recthelper.setAnchor(self._gosmallspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gosmallspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
+end
+
+function CharacterSkinLeftView:refreshSkinStoryMode(active)
+	self:refreshSkinStoryView(active)
+	self:refreshSkinStoryModeAni(active)
+end
+
+function CharacterSkinLeftView:refreshSkinStoryView(active)
+	local suitId = HandbookConfig.instance:getSkinSuitIdBySkinId(self.skinCo.id)
+
+	if active then
+		gohelper.setActive(self._goskinItemListRoot, false)
+		gohelper.setActive(self._goLeftStoryInfo, true)
+
+		self._textStoryDesc.text = self.skinCo.skinStory
+
+		self._imageStoryDescBg:LoadImage(ResUrl.getCharacterSkinStoryBg(suitId))
+		gohelper.setActive(self._btnStoryDesc.gameObject, false)
+
+		if self._enterStoryMode then
+			gohelper.setActive(self._btnStoryReturn.gameObject, true)
+		end
+	else
+		gohelper.setActive(self._goskinItemListRoot, true)
+		gohelper.setActive(self._goLeftStoryInfo, false)
+		gohelper.setActive(self._btnStoryDesc.gameObject, suitId ~= nil)
+		gohelper.setActive(self._btnStoryReturn.gameObject, false)
+	end
+end
+
+function CharacterSkinLeftView:refreshSkinStoryModeAni(active)
+	if active then
+		self._animator:Play("left_open", 0, 0)
+	else
+		self._animator:Play("left_close", 0, 0)
+	end
+end
+
+function CharacterSkinLeftView:onClose()
+	self._simageskin:UnLoadImage()
+	self._simagesignature:UnLoadImage()
+	self._simagesignatureicon:UnLoadImage()
+	self._simagel2d:UnLoadImage()
+	self._imageStoryDescBg:UnLoadImage()
+
+	if self.bigSpine then
+		self.bigSpine:setModelVisible(false)
+	end
+end
+
+function CharacterSkinLeftView:setShaderKeyWord(enable)
+	if enable then
 		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 	else
 		UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 	end
 end
 
-function var_0_0.onDestroyView(arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0.onSwitchAnimDone, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0.refreshBigVertical, arg_35_0)
+function CharacterSkinLeftView:onDestroyView()
+	TaskDispatcher.cancelTask(self.onSwitchAnimDone, self)
+	TaskDispatcher.cancelTask(self.refreshBigVertical, self)
 
-	if arg_35_0.smallSpine then
-		arg_35_0.smallSpine:stopVoice()
+	if self.smallSpine then
+		self.smallSpine:stopVoice()
 
-		arg_35_0.smallSpine = nil
+		self.smallSpine = nil
 	end
 
-	if arg_35_0.bigSpine then
-		arg_35_0.bigSpine:onDestroy()
+	if self.bigSpine then
+		self.bigSpine:onDestroy()
 
-		arg_35_0.bigSpine = nil
+		self.bigSpine = nil
 	end
 
-	arg_35_0._simagebg:UnLoadImage()
-	arg_35_0._simagebgmask:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagebgmask:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSkinLeftView

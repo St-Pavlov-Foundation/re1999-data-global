@@ -1,27 +1,29 @@
-﻿module("modules.logic.room.view.critter.train.RoomCritterTrainCritterItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/train/RoomCritterTrainCritterItem.lua
 
-local var_0_0 = class("RoomCritterTrainCritterItem", LuaCompBase)
+module("modules.logic.room.view.critter.train.RoomCritterTrainCritterItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goshadow = gohelper.create2d(arg_1_1, "critter_shadow")
+local RoomCritterTrainCritterItem = class("RoomCritterTrainCritterItem", LuaCompBase)
 
-	gohelper.setAsFirstSibling(arg_1_0._goshadow)
-	gohelper.setActive(arg_1_0._goshadow, false)
+function RoomCritterTrainCritterItem:init(go)
+	self._go = go
+	self._goshadow = gohelper.create2d(go, "critter_shadow")
 
-	arg_1_0._roleSpine = GuiSpine.Create(arg_1_1, false)
-	arg_1_0._canvasGroup = gohelper.onceAddComponent(arg_1_1, typeof(UnityEngine.CanvasGroup))
+	gohelper.setAsFirstSibling(self._goshadow)
+	gohelper.setActive(self._goshadow, false)
 
-	gohelper.setActive(arg_1_1, true)
+	self._roleSpine = GuiSpine.Create(go, false)
+	self._canvasGroup = gohelper.onceAddComponent(go, typeof(UnityEngine.CanvasGroup))
 
-	arg_1_0._effs = {}
-	arg_1_0._tamingEffs = {}
-	arg_1_0._effLoader = MultiAbLoader.New()
-	arg_1_0._tamingEffLoader = MultiAbLoader.New()
-	arg_1_0._shadowLoader = MultiAbLoader.New()
+	gohelper.setActive(go, true)
+
+	self._effs = {}
+	self._tamingEffs = {}
+	self._effLoader = MultiAbLoader.New()
+	self._tamingEffLoader = MultiAbLoader.New()
+	self._shadowLoader = MultiAbLoader.New()
 end
 
-local var_0_1 = {
+local effTbs = {
 	"roomcritteremoji1",
 	"roomcritteremoji2",
 	"roomcritteremoji3",
@@ -30,318 +32,319 @@ local var_0_1 = {
 	"roomcritteremoji6"
 }
 
-function var_0_0.showByEffectType(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._critterMo = arg_2_1
-	arg_2_0._critterPos = arg_2_2
-	arg_2_0._inDialog = arg_2_3
+function RoomCritterTrainCritterItem:showByEffectType(critterMo, pos, indialog)
+	self._critterMo = critterMo
+	self._critterPos = pos
+	self._inDialog = indialog
 
-	arg_2_0:_refreshItem()
+	self:_refreshItem()
 end
 
-function var_0_0.showByEffectName(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._critterMo = arg_3_1
-	arg_3_0._critterPos = arg_3_2
-	arg_3_0._inDialog = arg_3_3
+function RoomCritterTrainCritterItem:showByEffectName(critterMO, pos, indialog)
+	self._critterMo = critterMO
+	self._critterPos = pos
+	self._inDialog = indialog
 
-	arg_3_0:_refreshItem()
+	self:_refreshItem()
 end
 
-local var_0_2 = "ui/viewres/room/critter/roomcrittershadowitem.prefab"
+local shadowPath = "ui/viewres/room/critter/roomcrittershadowitem.prefab"
 
-function var_0_0.showShadow(arg_4_0, arg_4_1)
-	gohelper.setActive(arg_4_0._goshadow, arg_4_1)
+function RoomCritterTrainCritterItem:showShadow(show)
+	gohelper.setActive(self._goshadow, show)
 
-	if arg_4_1 and not arg_4_0._shadowGo then
-		arg_4_0._shadowLoader:addPath(var_0_2)
-		arg_4_0._shadowLoader:startLoad(arg_4_0._loadShadowFinished, arg_4_0)
+	if show and not self._shadowGo then
+		self._shadowLoader:addPath(shadowPath)
+		self._shadowLoader:startLoad(self._loadShadowFinished, self)
 	end
 end
 
-function var_0_0._loadShadowFinished(arg_5_0)
-	local var_5_0 = arg_5_0._shadowLoader:getAssetItem(var_0_2)
+function RoomCritterTrainCritterItem:_loadShadowFinished()
+	local assetItem = self._shadowLoader:getAssetItem(shadowPath)
 
-	arg_5_0._shadowGo = gohelper.clone(var_5_0:GetResource(), arg_5_0._goshadow)
+	self._shadowGo = gohelper.clone(assetItem:GetResource(), self._goshadow)
 
-	local var_5_1 = gohelper.findChild(arg_5_0._spineGo, "mountroot/mountbottom")
-	local var_5_2, var_5_3, var_5_4 = transformhelper.getPos(var_5_1.transform)
+	local circleBottomGo = gohelper.findChild(self._spineGo, "mountroot/mountbottom")
+	local x, y, z = transformhelper.getPos(circleBottomGo.transform)
 
-	transformhelper.setPos(arg_5_0._shadowGo.transform, var_5_2, var_5_3, var_5_4)
+	transformhelper.setPos(self._shadowGo.transform, x, y, z)
 end
 
-function var_0_0.showTamingEffects(arg_6_0, arg_6_1, arg_6_2)
-	if LuaUtil.tableNotEmpty(arg_6_0._tamingEffs) then
-		for iter_6_0, iter_6_1 in pairs(arg_6_0._tamingEffs) do
-			for iter_6_2, iter_6_3 in pairs(iter_6_1.effGos) do
-				gohelper.setActive(iter_6_3, arg_6_1)
+function RoomCritterTrainCritterItem:showTamingEffects(show, index)
+	if LuaUtil.tableNotEmpty(self._tamingEffs) then
+		for _, eff in pairs(self._tamingEffs) do
+			for _, go in pairs(eff.effGos) do
+				gohelper.setActive(go, show)
 			end
 		end
 	else
-		local var_6_0 = CritterConfig.instance:getCritterSkinCfg(arg_6_0._critterMo:getSkinId())
+		local skinConfig = CritterConfig.instance:getCritterSkinCfg(self._critterMo:getSkinId())
 
-		if LuaUtil.isEmptyStr(var_6_0.handEffects) then
+		if LuaUtil.isEmptyStr(skinConfig.handEffects) then
 			return
 		end
 
-		local var_6_1 = string.split(var_6_0.handEffects, ";")
+		local tamingEff = string.split(skinConfig.handEffects, ";")
 
-		if not var_6_1[arg_6_2] or LuaUtil.isEmptyStr(var_6_1[arg_6_2]) then
+		if not tamingEff[index] or LuaUtil.isEmptyStr(tamingEff[index]) then
 			return
 		end
 
-		local var_6_2 = string.split(var_6_1[arg_6_2], "&")
+		local rootEffects = string.split(tamingEff[index], "&")
 
-		for iter_6_4, iter_6_5 in pairs(var_6_2) do
-			local var_6_3 = string.split(iter_6_5, "|")
-			local var_6_4 = {
-				root = string.format("mountroot/%s", var_6_3[1]),
-				effPaths = {}
-			}
-			local var_6_5 = string.split(var_6_3[2], "#")
+		for _, rootEff in pairs(rootEffects) do
+			local paths = string.split(rootEff, "|")
+			local eff = {}
 
-			for iter_6_6, iter_6_7 in ipairs(var_6_5) do
-				table.insert(var_6_4.effPaths, iter_6_7)
+			eff.root = string.format("mountroot/%s", paths[1])
+			eff.effPaths = {}
+
+			local pathEffs = string.split(paths[2], "#")
+
+			for _, path in ipairs(pathEffs) do
+				table.insert(eff.effPaths, path)
 			end
 
-			table.insert(arg_6_0._tamingEffs, var_6_4)
+			table.insert(self._tamingEffs, eff)
 		end
 
-		arg_6_0:_loadTamingEffects()
+		self:_loadTamingEffects()
 	end
 end
 
-function var_0_0._loadTamingEffects(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._tamingEffs) do
-		for iter_7_2, iter_7_3 in pairs(iter_7_1.effPaths) do
-			local var_7_0 = string.format("effects/prefabs_ui/%s.prefab", iter_7_3)
+function RoomCritterTrainCritterItem:_loadTamingEffects()
+	for _, eff in pairs(self._tamingEffs) do
+		for _, path in pairs(eff.effPaths) do
+			local effPath = string.format("effects/prefabs_ui/%s.prefab", path)
 
-			arg_7_0._tamingEffLoader:addPath(var_7_0)
+			self._tamingEffLoader:addPath(effPath)
 		end
 	end
 
-	arg_7_0._tamingEffLoader:startLoad(arg_7_0._loadTamingEffsResFinish, arg_7_0)
+	self._tamingEffLoader:startLoad(self._loadTamingEffsResFinish, self)
 end
 
-function var_0_0._loadTamingEffsResFinish(arg_8_0)
-	for iter_8_0 = 1, #arg_8_0._tamingEffs do
-		arg_8_0._tamingEffs[iter_8_0].effGos = {}
+function RoomCritterTrainCritterItem:_loadTamingEffsResFinish()
+	for i = 1, #self._tamingEffs do
+		self._tamingEffs[i].effGos = {}
 
-		for iter_8_1, iter_8_2 in pairs(arg_8_0._tamingEffs[iter_8_0].effPaths) do
-			local var_8_0 = string.format("effects/prefabs_ui/%s.prefab", iter_8_2)
-			local var_8_1 = arg_8_0._tamingEffLoader:getAssetItem(var_8_0)
-			local var_8_2 = gohelper.findChild(arg_8_0._spineGo, arg_8_0._tamingEffs[iter_8_0].root)
-			local var_8_3 = gohelper.clone(var_8_1:GetResource(), var_8_2)
+		for _, path in pairs(self._tamingEffs[i].effPaths) do
+			local effPath = string.format("effects/prefabs_ui/%s.prefab", path)
+			local assetItem = self._tamingEffLoader:getAssetItem(effPath)
+			local parentGo = gohelper.findChild(self._spineGo, self._tamingEffs[i].root)
+			local effGo = gohelper.clone(assetItem:GetResource(), parentGo)
 
-			table.insert(arg_8_0._tamingEffs[iter_8_0].effGos, var_8_3)
-		end
-	end
-end
-
-function var_0_0.setEffectByName(arg_9_0, arg_9_1)
-	arg_9_0._critterEffType = 0
-
-	for iter_9_0, iter_9_1 in ipairs(var_0_1) do
-		if string.find(arg_9_1, iter_9_1) then
-			arg_9_0._critterEffType = iter_9_0
+			table.insert(self._tamingEffs[i].effGos, effGo)
 		end
 	end
 end
 
-function var_0_0.setEffectByType(arg_10_0, arg_10_1)
-	arg_10_0._critterEffType = arg_10_1
-end
+function RoomCritterTrainCritterItem:setEffectByName(effName)
+	self._critterEffType = 0
 
-function var_0_0.hideEffects(arg_11_0)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._effs) do
-		gohelper.setActive(iter_11_1, false)
+	for type, eff in ipairs(effTbs) do
+		if string.find(effName, eff) then
+			self._critterEffType = type
+		end
 	end
 end
 
-function var_0_0.setCritterPos(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._critterPos = arg_12_1
-	arg_12_0._inDialog = arg_12_2
-
-	arg_12_0:_refreshItem()
+function RoomCritterTrainCritterItem:setEffectByType(effType)
+	self._critterEffType = effType
 end
 
-function var_0_0.getCritterPos(arg_13_0)
-	return arg_13_0._critterPos
+function RoomCritterTrainCritterItem:hideEffects()
+	for _, v in pairs(self._effs) do
+		gohelper.setActive(v, false)
+	end
 end
 
-function var_0_0.setCritterEffectOffset(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._effOffsetX = arg_14_1
-	arg_14_0._effOffsetY = arg_14_2
+function RoomCritterTrainCritterItem:setCritterPos(pos, indialog)
+	self._critterPos = pos
+	self._inDialog = indialog
+
+	self:_refreshItem()
 end
 
-function var_0_0.setCritterEffectScale(arg_15_0, arg_15_1)
-	arg_15_0._scale = arg_15_1
+function RoomCritterTrainCritterItem:getCritterPos()
+	return self._critterPos
 end
 
-local var_0_3 = {
+function RoomCritterTrainCritterItem:setCritterEffectOffset(offsetX, offsetY)
+	self._effOffsetX = offsetX
+	self._effOffsetY = offsetY
+end
+
+function RoomCritterTrainCritterItem:setCritterEffectScale(scale)
+	self._scale = scale
+end
+
+local dialogPosY = {
 	[true] = -160,
 	[false] = -140
 }
-local var_0_4 = {
+local effPos = {
 	-150,
 	0,
 	150
 }
-local var_0_5 = {
+local critterScale = {
 	2,
 	1.5,
 	2
 }
 
-function var_0_0._onSpineLoaded(arg_16_0)
-	arg_16_0._spineGo = arg_16_0._roleSpine:getSpineGo()
+function RoomCritterTrainCritterItem:_onSpineLoaded()
+	self._spineGo = self._roleSpine:getSpineGo()
 
-	arg_16_0:_setSpine()
+	self:_setSpine()
 end
 
-function var_0_0.playBodyAnim(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._roleSpine:play(arg_17_1, arg_17_2)
+function RoomCritterTrainCritterItem:playBodyAnim(bodyName, isLoop)
+	self._roleSpine:play(bodyName, isLoop)
 
-	if arg_17_0._critterMo then
-		local var_17_0 = arg_17_0._critterMo:getDefineId()
-		local var_17_1 = CritterConfig.instance:getCritterInteractionAudioList(var_17_0, arg_17_1)
+	if self._critterMo then
+		local critterId = self._critterMo:getDefineId()
+		local audioIdList = CritterConfig.instance:getCritterInteractionAudioList(critterId, bodyName)
 
-		if var_17_1 then
-			for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-				AudioMgr.instance:trigger(iter_17_1)
+		if audioIdList then
+			for _, audioId in ipairs(audioIdList) do
+				AudioMgr.instance:trigger(audioId)
 			end
 		end
 	end
 end
 
-function var_0_0.fadeIn(arg_18_0)
+function RoomCritterTrainCritterItem:fadeIn()
 	UIBlockMgr.instance:startBlock("fadeShow")
-	arg_18_0:_clearTweens()
-	arg_18_0:_fadeUpdate(0)
+	self:_clearTweens()
+	self:_fadeUpdate(0)
 
-	arg_18_0._fadeInTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, arg_18_0._fadeUpdate, arg_18_0._fadeInFinished, arg_18_0, nil, EaseType.Linear)
+	self._fadeInTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, self._fadeUpdate, self._fadeInFinished, self, nil, EaseType.Linear)
 end
 
-function var_0_0._fadeUpdate(arg_19_0, arg_19_1)
-	arg_19_0._canvasGroup.alpha = arg_19_1
+function RoomCritterTrainCritterItem:_fadeUpdate(value)
+	self._canvasGroup.alpha = value
 end
 
-function var_0_0._fadeInFinished(arg_20_0)
+function RoomCritterTrainCritterItem:_fadeInFinished()
 	UIBlockMgr.instance:endBlock("fadeShow")
 end
 
-function var_0_0.fadeOut(arg_21_0)
+function RoomCritterTrainCritterItem:fadeOut()
 	UIBlockMgr.instance:startBlock("fadeShow")
-	arg_21_0:_clearTweens()
-	arg_21_0:_fadeUpdate(1)
+	self:_clearTweens()
+	self:_fadeUpdate(1)
 
-	arg_21_0._fadeOutTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.35, arg_21_0._fadeUpdate, arg_21_0._fadeOutFinished, arg_21_0, nil, EaseType.Linear)
+	self._fadeOutTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.35, self._fadeUpdate, self._fadeOutFinished, self, nil, EaseType.Linear)
 end
 
-function var_0_0._fadeOutFinished(arg_22_0)
+function RoomCritterTrainCritterItem:_fadeOutFinished()
 	UIBlockMgr.instance:endBlock("fadeShow")
 end
 
-function var_0_0._clearTweens(arg_23_0)
-	if arg_23_0._fadeInTweenId then
-		ZProj.TweenHelper.KillById(arg_23_0._fadeInTweenId)
+function RoomCritterTrainCritterItem:_clearTweens()
+	if self._fadeInTweenId then
+		ZProj.TweenHelper.KillById(self._fadeInTweenId)
 
-		arg_23_0._fadeInTweenId = nil
+		self._fadeInTweenId = nil
 	end
 
-	if arg_23_0._fadeOutTweenId then
-		ZProj.TweenHelper.KillById(arg_23_0._fadeOutTweenId)
+	if self._fadeOutTweenId then
+		ZProj.TweenHelper.KillById(self._fadeOutTweenId)
 
-		arg_23_0._fadeOutTweenId = nil
+		self._fadeOutTweenId = nil
 	end
 end
 
-function var_0_0._setSpine(arg_24_0)
-	local var_24_0 = var_0_4[arg_24_0._critterPos]
-	local var_24_1 = var_0_3[arg_24_0._inDialog]
-	local var_24_2 = var_0_5[arg_24_0._critterPos]
-	local var_24_3 = arg_24_0._scale and arg_24_0._scale / var_24_2 or 1 / var_24_2
+function RoomCritterTrainCritterItem:_setSpine()
+	local posX = effPos[self._critterPos]
+	local posY = dialogPosY[self._inDialog]
+	local critterScale = critterScale[self._critterPos]
+	local effScale = self._scale and self._scale / critterScale or 1 / critterScale
 
-	transformhelper.setLocalPos(arg_24_0._spineGo.transform, var_24_0, var_24_1, 0)
-	transformhelper.setLocalScale(arg_24_0._go.transform, var_24_2, var_24_2, 1)
+	transformhelper.setLocalPos(self._spineGo.transform, posX, posY, 0)
+	transformhelper.setLocalScale(self._go.transform, critterScale, critterScale, 1)
 
-	for iter_24_0, iter_24_1 in pairs(arg_24_0._effs) do
-		transformhelper.setLocalScale(iter_24_1.transform, var_24_3, var_24_3, 1)
+	for _, v in pairs(self._effs) do
+		transformhelper.setLocalScale(v.transform, effScale, effScale, 1)
 	end
 
-	arg_24_0:showShadow(arg_24_0._critterPos == CritterEnum.PosType.Middle)
+	self:showShadow(self._critterPos == CritterEnum.PosType.Middle)
 end
 
-function var_0_0._refreshItem(arg_25_0)
-	if arg_25_0._critterMo then
-		if not arg_25_0._spineGo then
-			local var_25_0 = CritterConfig.instance:getCritterSkinCfg(arg_25_0._critterMo:getSkinId())
-			local var_25_1 = ResUrl.getSpineUIPrefab(var_25_0.spine)
+function RoomCritterTrainCritterItem:_refreshItem()
+	if self._critterMo then
+		if not self._spineGo then
+			local skinCo = CritterConfig.instance:getCritterSkinCfg(self._critterMo:getSkinId())
+			local path = ResUrl.getSpineUIPrefab(skinCo.spine)
 
-			arg_25_0._roleSpine:setResPath(var_25_1, arg_25_0._onSpineLoaded, arg_25_0, true)
+			self._roleSpine:setResPath(path, self._onSpineLoaded, self, true)
 		else
-			arg_25_0:_setSpine()
+			self:_setSpine()
 		end
 	end
 
-	arg_25_0:hideEffects()
+	self:hideEffects()
 
-	if not arg_25_0._critterEffType or arg_25_0._critterEffType == 0 then
+	if not self._critterEffType or self._critterEffType == 0 then
 		return
 	end
 
-	if arg_25_0._effs[arg_25_0._critterEffType] then
-		gohelper.setActive(arg_25_0._effs[arg_25_0._critterEffType], true)
-		transformhelper.setLocalPos(arg_25_0._effs[arg_25_0._critterEffType].transform, arg_25_0._effOffsetX or 0, arg_25_0._effOffsetY or 0, 0)
+	if self._effs[self._critterEffType] then
+		gohelper.setActive(self._effs[self._critterEffType], true)
+		transformhelper.setLocalPos(self._effs[self._critterEffType].transform, self._effOffsetX or 0, self._effOffsetY or 0, 0)
 	else
-		local var_25_2 = string.format("ui/viewres/story/%s.prefab", var_0_1[arg_25_0._critterEffType])
+		local path = string.format("ui/viewres/story/%s.prefab", effTbs[self._critterEffType])
 
-		arg_25_0._effLoader:addPath(var_25_2)
-		arg_25_0._effLoader:startLoad(function()
-			local var_26_0 = arg_25_0._effLoader:getAssetItem(var_25_2):GetResource(var_25_2)
-			local var_26_1
+		self._effLoader:addPath(path)
+		self._effLoader:startLoad(function()
+			local prefab = self._effLoader:getAssetItem(path):GetResource(path)
+			local go
 
-			if arg_25_0._spineGo then
-				var_26_1 = gohelper.findChild(arg_25_0._spineGo, "mountroot/mounthead")
+			if self._spineGo then
+				go = gohelper.findChild(self._spineGo, "mountroot/mounthead")
 			end
 
-			local var_26_2 = gohelper.clone(var_26_0, var_26_1 or arg_25_0._go)
+			local effGo = gohelper.clone(prefab, go or self._go)
 
-			arg_25_0._effs[arg_25_0._critterEffType] = var_26_2
+			self._effs[self._critterEffType] = effGo
 
-			transformhelper.setLocalPos(var_26_2.transform, arg_25_0._effOffsetX or 0, arg_25_0._effOffsetY or 0, 0)
+			transformhelper.setLocalPos(effGo.transform, self._effOffsetX or 0, self._effOffsetY or 0, 0)
 		end)
 	end
 end
 
-function var_0_0.onDestroy(arg_27_0)
-	arg_27_0:_clearTweens()
+function RoomCritterTrainCritterItem:onDestroy()
+	self:_clearTweens()
 
-	if arg_27_0._effs then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0._effs) do
-			gohelper.destroy(iter_27_1)
+	if self._effs then
+		for _, v in pairs(self._effs) do
+			gohelper.destroy(v)
 		end
 
-		arg_27_0._effs = nil
+		self._effs = nil
 	end
 
-	if arg_27_0._effLoader then
-		arg_27_0._effLoader:dispose()
+	if self._effLoader then
+		self._effLoader:dispose()
 
-		arg_27_0._effLoader = nil
+		self._effLoader = nil
 	end
 
-	if arg_27_0._tamingEffLoader then
-		arg_27_0._tamingEffLoader:dispose()
+	if self._tamingEffLoader then
+		self._tamingEffLoader:dispose()
 
-		arg_27_0._tamingEffLoader = nil
+		self._tamingEffLoader = nil
 	end
 
-	if arg_27_0._shadowLoader then
-		arg_27_0._shadowLoader:dispose()
+	if self._shadowLoader then
+		self._shadowLoader:dispose()
 
-		arg_27_0._shadowLoader = nil
+		self._shadowLoader = nil
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Room.stop_mi_bus)
 end
 
-return var_0_0
+return RoomCritterTrainCritterItem

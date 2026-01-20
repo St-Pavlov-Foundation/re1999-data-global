@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity1_6.act152.config.Activity152Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act152/config/Activity152Config.lua
 
-local var_0_0 = class("Activity152Config", BaseConfig)
+module("modules.logic.versionactivity1_6.act152.config.Activity152Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._activityConfig = {}
+local Activity152Config = class("Activity152Config", BaseConfig)
+
+function Activity152Config:ctor()
+	self._activityConfig = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity152Config:reqConfigNames()
 	return {
 		"activity152"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity152" then
-		arg_3_0._activityConfig = arg_3_2.configDict
+function Activity152Config:onConfigLoaded(configName, configTable)
+	if configName == "activity152" then
+		self._activityConfig = configTable.configDict
 	end
 end
 
-function var_0_0.getAct152Co(arg_4_0, arg_4_1)
-	return arg_4_0._activityConfig[ActivityEnum.Activity.NewYearEve][arg_4_1]
+function Activity152Config:getAct152Co(id)
+	return self._activityConfig[ActivityEnum.Activity.NewYearEve][id]
 end
 
-function var_0_0.getAct152Cos(arg_5_0)
-	return arg_5_0._activityConfig[ActivityEnum.Activity.NewYearEve]
+function Activity152Config:getAct152Cos()
+	return self._activityConfig[ActivityEnum.Activity.NewYearEve]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity152Config.instance = Activity152Config.New()
 
-return var_0_0
+return Activity152Config

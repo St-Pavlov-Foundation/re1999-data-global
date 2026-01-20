@@ -1,66 +1,73 @@
-﻿module("modules.logic.herogrouppreset.model.HeroGroupPresetTabListModel", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/model/HeroGroupPresetTabListModel.lua
 
-local var_0_0 = class("HeroGroupPresetTabListModel", ListScrollModel)
+module("modules.logic.herogrouppreset.model.HeroGroupPresetTabListModel", package.seeall)
 
-function var_0_0.initTabList(arg_1_0)
-	local var_1_0 = HeroGroupPresetConfig.instance:getHeroTeamList()
-	local var_1_1 = arg_1_0:_getTargetList(var_1_0)
-	local var_1_2 = arg_1_0:_getOnlineList(var_1_1)
+local HeroGroupPresetTabListModel = class("HeroGroupPresetTabListModel", ListScrollModel)
 
-	arg_1_0:setList(var_1_2)
-	arg_1_0:setSelectedCell(1, true)
+function HeroGroupPresetTabListModel:initTabList()
+	local list = HeroGroupPresetConfig.instance:getHeroTeamList()
+
+	list = self:_getTargetList(list)
+	list = self:_getOnlineList(list)
+
+	self:setList(list)
+	self:setSelectedCell(1, true)
 end
 
-function var_0_0._getOnlineList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function HeroGroupPresetTabListModel:_getOnlineList(list)
+	local result = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		if arg_2_0:_isUnlock(iter_2_1.unlockId) then
-			if iter_2_1.actType == 0 then
-				table.insert(var_2_0, iter_2_1)
-			elseif ActivityModel.instance:tryGetFirstOpenedActCOByTypeId(iter_2_1.actType) then
-				table.insert(var_2_0, iter_2_1)
+	for i, v in ipairs(list) do
+		if self:_isUnlock(v.unlockId) then
+			if v.actType == 0 then
+				table.insert(result, v)
+			else
+				local config = ActivityModel.instance:tryGetFirstOpenedActCOByTypeId(v.actType)
+
+				if config then
+					table.insert(result, v)
+				end
 			end
 		end
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0._isUnlock(arg_3_0, arg_3_1)
-	if arg_3_1 == 0 then
+function HeroGroupPresetTabListModel:_isUnlock(id)
+	if id == 0 then
 		return true
 	end
 
-	return OpenModel.instance:isFunctionUnlock(arg_3_1)
+	return OpenModel.instance:isFunctionUnlock(id)
 end
 
-function var_0_0._getTargetList(arg_4_0, arg_4_1)
-	local var_4_0 = HeroGroupPresetController.instance:getHeroGroupTypeList()
+function HeroGroupPresetTabListModel:_getTargetList(list)
+	local targetList = HeroGroupPresetController.instance:getHeroGroupTypeList()
 
-	if var_4_0 then
-		local var_4_1 = {}
+	if targetList then
+		local result = {}
 
-		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-			if tabletool.indexOf(var_4_0, iter_4_1.id) then
-				table.insert(var_4_1, iter_4_1)
+		for i, v in ipairs(list) do
+			if tabletool.indexOf(targetList, v.id) then
+				table.insert(result, v)
 			end
 		end
 
-		return var_4_1
+		return result
 	end
 
-	return arg_4_1
+	return list
 end
 
-function var_0_0.setSelectedCell(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:selectCell(arg_5_1, arg_5_2)
+function HeroGroupPresetTabListModel:setSelectedCell(index, value)
+	self:selectCell(index, value)
 
-	local var_5_0 = arg_5_0:getByIndex(arg_5_1)
+	local mo = self:getByIndex(index)
 
-	HeroGroupPresetItemListModel.instance:initList(var_5_0)
+	HeroGroupPresetItemListModel.instance:initList(mo)
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupPresetTabListModel.instance = HeroGroupPresetTabListModel.New()
 
-return var_0_0
+return HeroGroupPresetTabListModel

@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114CheckAttrItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114CheckAttrItem.lua
 
-local var_0_0 = class("Activity114CheckAttrItem", ListScrollCell)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114CheckAttrItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txtLevel = gohelper.findChildTextMesh(arg_1_1, "txt_info")
+local Activity114CheckAttrItem = class("Activity114CheckAttrItem", ListScrollCell)
+
+function Activity114CheckAttrItem:init(go)
+	self._txtLevel = gohelper.findChildTextMesh(go, "txt_info")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._txtLevel.text = string.format("%d[%s]", arg_2_1.value, arg_2_1.name)
+function Activity114CheckAttrItem:onUpdateMO(mo)
+	self._txtLevel.text = string.format("%d[%s]", mo.value, mo.name)
 
-	if arg_2_1.isAttr then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._txtLevel, "#e55151")
+	if mo.isAttr then
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtLevel, "#e55151")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._txtLevel, "#9ee091")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtLevel, "#9ee091")
 	end
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	arg_3_0._txtLevel = nil
+function Activity114CheckAttrItem:onDestroyView()
+	self._txtLevel = nil
 end
 
-return var_0_0
+return Activity114CheckAttrItem

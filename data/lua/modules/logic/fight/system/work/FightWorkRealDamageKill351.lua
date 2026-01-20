@@ -1,59 +1,61 @@
-﻿module("modules.logic.fight.system.work.FightWorkRealDamageKill351", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRealDamageKill351.lua
 
-local var_0_0 = class("FightWorkRealDamageKill351", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkRealDamageKill351", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:getKillCo()
+local FightWorkRealDamageKill351 = class("FightWorkRealDamageKill351", FightEffectBase)
 
-	if not var_1_0 then
-		return arg_1_0:onDone(true)
+function FightWorkRealDamageKill351:onStart()
+	local killCo = self:getKillCo()
+
+	if not killCo then
+		return self:onDone(true)
 	end
 
-	local var_1_1 = arg_1_0.actEffectData.targetId
-	local var_1_2 = FightHelper.getEntity(var_1_1)
+	local targetId = self.actEffectData.targetId
+	local targetEntity = FightHelper.getEntity(targetId)
 
-	if not var_1_2 then
-		return arg_1_0:onDone(true)
+	if not targetEntity then
+		return self:onDone(true)
 	end
 
-	local var_1_3 = var_1_0.effect
-	local var_1_4 = var_1_0.effectHangPoint
-	local var_1_5 = var_1_0.duration
-	local var_1_6 = var_1_2.effect:addHangEffect(var_1_3, var_1_4, nil, var_1_5)
+	local effect = killCo.effect
+	local hangPoint = killCo.effectHangPoint
+	local duration = killCo.duration
+	local effectWrap = targetEntity.effect:addHangEffect(effect, hangPoint, nil, duration)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(var_1_1, var_1_6)
-	var_1_6:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(targetId, effectWrap)
+	effectWrap:setLocalPos(0, 0, 0)
 
-	local var_1_7 = var_1_0.audio
+	local audioId = killCo.audio
 
-	if var_1_7 ~= 0 then
-		AudioMgr.instance:trigger(var_1_7)
+	if audioId ~= 0 then
+		AudioMgr.instance:trigger(audioId)
 	end
 
-	local var_1_8 = var_1_0.waitTime
+	local waitTime = killCo.waitTime
 
-	if var_1_8 <= 0 then
-		return arg_1_0:onDone(true)
+	if waitTime <= 0 then
+		return self:onDone(true)
 	end
 
-	TaskDispatcher.runDelay(arg_1_0.finishWork, arg_1_0, var_1_8)
+	TaskDispatcher.runDelay(self.finishWork, self, waitTime)
 end
 
-function var_0_0.getKillCo(arg_2_0)
-	local var_2_0 = FightDataHelper.entityMgr:getMyNormalList()
+function FightWorkRealDamageKill351:getKillCo()
+	local entityList = FightDataHelper.entityMgr:getMyNormalList()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_1 = iter_2_1.originSkin
-		local var_2_2 = lua_fight_kill.configDict[var_2_1]
+	for _, entity in ipairs(entityList) do
+		local skinId = entity.originSkin
+		local co = lua_fight_kill.configDict[skinId]
 
-		if var_2_2 then
-			return var_2_2
+		if co then
+			return co
 		end
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.finishWork, arg_3_0)
+function FightWorkRealDamageKill351:clearWork()
+	TaskDispatcher.cancelTask(self.finishWork, self)
 end
 
-return var_0_0
+return FightWorkRealDamageKill351

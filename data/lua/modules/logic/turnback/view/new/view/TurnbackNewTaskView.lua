@@ -1,643 +1,650 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewTaskView.lua
 
-local var_0_0 = class("TurnbackNewTaskView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackNewTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnreplay = gohelper.findChildButton(arg_1_0.viewGO, "top/#btn_replay")
-	arg_1_0._btnreplay2 = gohelper.findChildButton(arg_1_0.viewGO, "top/#btn_replay2")
-	arg_1_0._btntips = gohelper.findChildButton(arg_1_0.viewGO, "top/tips/#btn_tips")
-	arg_1_0._btnclosetips = gohelper.findChildButton(arg_1_0.viewGO, "top/tips/go_tips/#btn_close")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "top/tips/go_tips")
-	arg_1_0._btnbuy = gohelper.findChildButton(arg_1_0.viewGO, "top/normalbg/#btn_buy")
-	arg_1_0._gotop = gohelper.findChild(arg_1_0.viewGO, "top")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "right")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "top/normalbg")
-	arg_1_0._godouble = gohelper.findChild(arg_1_0.viewGO, "top/doublebg")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "top/#scroll_view")
-	arg_1_0._scrolltask = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_task")
-	arg_1_0._gorewardviewport = gohelper.findChild(arg_1_0.viewGO, "top/#scroll_view/Viewport")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "top/#scroll_view/Viewport/Content")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "top/#scroll_view/Viewport/Content/#go_rewarditem")
-	arg_1_0._gobigrewardItem = gohelper.findChild(arg_1_0.viewGO, "top/#go_special")
-	arg_1_0._imgFill = gohelper.findChildImage(arg_1_0.viewGO, "top/#scroll_view/Viewport/Content/progressbg/fill")
-	arg_1_0._txtActiveNum = gohelper.findChildText(arg_1_0.viewGO, "top/#txt_activeNum")
-	arg_1_0._btnleft = gohelper.findChildButton(arg_1_0.viewGO, "right/simage_rightbg/#btn_last")
-	arg_1_0._btnright = gohelper.findChildButton(arg_1_0.viewGO, "right/simage_rightbg/#btn_next")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "right/simage_rightbg/numbg/#txt_num")
-	arg_1_0._gonumbg = gohelper.findChild(arg_1_0.viewGO, "right/simage_rightbg/numbg")
-	arg_1_0._gotitlebg = gohelper.findChild(arg_1_0.viewGO, "right/simage_rightbg/titlebg")
-	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.viewGO, "right/unfinish")
-	arg_1_0._gofinished = gohelper.findChild(arg_1_0.viewGO, "right/finished")
-	arg_1_0._simageHero = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/unfinish/simage_role")
-	arg_1_0._goscrolldesc = gohelper.findChild(arg_1_0.viewGO, "right/unfinish/#scroll_desc")
-	arg_1_0._txtHeroDesc = gohelper.findChildText(arg_1_0.viewGO, "right/unfinish/#scroll_desc/Viewport/#txt_dec")
-	arg_1_0._btnexchange = gohelper.findChildButton(arg_1_0.viewGO, "right/unfinish/#btn_exchange")
-	arg_1_0._rewardNodeList = {}
-	arg_1_0._heroIndex = 1
-	arg_1_0._isreverse = false
-	arg_1_0._isfinish = false
-	arg_1_0._isopentips = false
-	arg_1_0._topAnimator = arg_1_0._gotop:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._rightAnimator = arg_1_0._goright:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._rightTextAnim = arg_1_0._goscrolldesc:GetComponent(typeof(UnityEngine.Animation))
-	arg_1_0.fullscrollWidth = 780
-	arg_1_0.normalscrollWidth = 604
+local TurnbackNewTaskView = class("TurnbackNewTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackNewTaskView:onInitView()
+	self._btnreplay = gohelper.findChildButton(self.viewGO, "top/#btn_replay")
+	self._btnreplay2 = gohelper.findChildButton(self.viewGO, "top/#btn_replay2")
+	self._btntips = gohelper.findChildButton(self.viewGO, "top/tips/#btn_tips")
+	self._btnclosetips = gohelper.findChildButton(self.viewGO, "top/tips/go_tips/#btn_close")
+	self._gotips = gohelper.findChild(self.viewGO, "top/tips/go_tips")
+	self._btnbuy = gohelper.findChildButton(self.viewGO, "top/normalbg/#btn_buy")
+	self._gotop = gohelper.findChild(self.viewGO, "top")
+	self._goright = gohelper.findChild(self.viewGO, "right")
+	self._gonormal = gohelper.findChild(self.viewGO, "top/normalbg")
+	self._godouble = gohelper.findChild(self.viewGO, "top/doublebg")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "top/#scroll_view")
+	self._scrolltask = gohelper.findChildScrollRect(self.viewGO, "left/#scroll_task")
+	self._gorewardviewport = gohelper.findChild(self.viewGO, "top/#scroll_view/Viewport")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "top/#scroll_view/Viewport/Content")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "top/#scroll_view/Viewport/Content/#go_rewarditem")
+	self._gobigrewardItem = gohelper.findChild(self.viewGO, "top/#go_special")
+	self._imgFill = gohelper.findChildImage(self.viewGO, "top/#scroll_view/Viewport/Content/progressbg/fill")
+	self._txtActiveNum = gohelper.findChildText(self.viewGO, "top/#txt_activeNum")
+	self._btnleft = gohelper.findChildButton(self.viewGO, "right/simage_rightbg/#btn_last")
+	self._btnright = gohelper.findChildButton(self.viewGO, "right/simage_rightbg/#btn_next")
+	self._txtnum = gohelper.findChildText(self.viewGO, "right/simage_rightbg/numbg/#txt_num")
+	self._gonumbg = gohelper.findChild(self.viewGO, "right/simage_rightbg/numbg")
+	self._gotitlebg = gohelper.findChild(self.viewGO, "right/simage_rightbg/titlebg")
+	self._gounfinish = gohelper.findChild(self.viewGO, "right/unfinish")
+	self._gofinished = gohelper.findChild(self.viewGO, "right/finished")
+	self._simageHero = gohelper.findChildSingleImage(self.viewGO, "right/unfinish/simage_role")
+	self._goscrolldesc = gohelper.findChild(self.viewGO, "right/unfinish/#scroll_desc")
+	self._txtHeroDesc = gohelper.findChildText(self.viewGO, "right/unfinish/#scroll_desc/Viewport/#txt_dec")
+	self._btnexchange = gohelper.findChildButton(self.viewGO, "right/unfinish/#btn_exchange")
+	self._rewardNodeList = {}
+	self._heroIndex = 1
+	self._isreverse = false
+	self._isfinish = false
+	self._isopentips = false
+	self._topAnimator = self._gotop:GetComponent(typeof(UnityEngine.Animator))
+	self._rightAnimator = self._goright:GetComponent(typeof(UnityEngine.Animator))
+	self._rightTextAnim = self._goscrolldesc:GetComponent(typeof(UnityEngine.Animation))
+	self.fullscrollWidth = 780
+	self.normalscrollWidth = 604
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreplay:AddClickListener(arg_2_0.onClickReplay, arg_2_0)
-	arg_2_0._btnreplay2:AddClickListener(arg_2_0.onClickReplay2, arg_2_0)
-	arg_2_0._btntips:AddClickListener(arg_2_0.onClickBtnTips, arg_2_0)
-	arg_2_0._btnclosetips:AddClickListener(arg_2_0.onClickBtnCloseTips, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0.onClickBuy, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0.onClickLeft, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0.onClickRight, arg_2_0)
-	arg_2_0._btnexchange:AddClickListener(arg_2_0.onCilckReverse, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, arg_2_0._playGetRewardFinishAnim, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.onCurrencyChange, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0._refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_2_0.succbuydoublereward, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseViewFinish, arg_2_0)
-	arg_2_0._scrollreward:AddOnValueChanged(arg_2_0._onScrollRectValueChanged, arg_2_0)
+function TurnbackNewTaskView:addEvents()
+	self._btnreplay:AddClickListener(self.onClickReplay, self)
+	self._btnreplay2:AddClickListener(self.onClickReplay2, self)
+	self._btntips:AddClickListener(self.onClickBtnTips, self)
+	self._btnclosetips:AddClickListener(self.onClickBtnCloseTips, self)
+	self._btnbuy:AddClickListener(self.onClickBuy, self)
+	self._btnleft:AddClickListener(self.onClickLeft, self)
+	self._btnright:AddClickListener(self.onClickRight, self)
+	self._btnexchange:AddClickListener(self.onCilckReverse, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onCurrencyChange, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self._refreshUI, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, self.succbuydoublereward, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	self._scrollreward:AddOnValueChanged(self._onScrollRectValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreplay:RemoveClickListener()
-	arg_3_0._btnreplay2:RemoveClickListener()
-	arg_3_0._btntips:RemoveClickListener()
-	arg_3_0._btnclosetips:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnexchange:RemoveClickListener()
-	arg_3_0._scrollreward:RemoveOnValueChanged()
-	arg_3_0._scrolltask:RemoveOnValueChanged()
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, arg_3_0._playGetRewardFinishAnim, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.onCurrencyChange, arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_3_0._refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_3_0.succbuydoublereward, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function TurnbackNewTaskView:removeEvents()
+	self._btnreplay:RemoveClickListener()
+	self._btnreplay2:RemoveClickListener()
+	self._btntips:RemoveClickListener()
+	self._btnclosetips:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._btnexchange:RemoveClickListener()
+	self._scrollreward:RemoveOnValueChanged()
+	self._scrolltask:RemoveOnValueChanged()
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onCurrencyChange, self)
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self._refreshUI, self)
+	self:removeEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, self.succbuydoublereward, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._rewardNodeList) do
-		iter_3_1.btnclick:RemoveClickListener()
+	for index, node in ipairs(self._rewardNodeList) do
+		node.btnclick:RemoveClickListener()
 	end
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._turnbackId = TurnbackModel.instance:getCurTurnbackId()
+function TurnbackNewTaskView:_editableInitView()
+	self._turnbackId = TurnbackModel.instance:getCurTurnbackId()
 
-	arg_4_0:_initRewardNode()
-	arg_4_0:_initBigRewardNode()
-	arg_4_0:_refreshFill()
-	arg_4_0:refreshTopBg()
+	self:_initRewardNode()
+	self:_initBigRewardNode()
+	self:_refreshFill()
+	self:refreshTopBg()
 
-	local var_4_0 = TurnbackModel.instance:checkHasGetAllTaskReward()
+	local isAllReceive = TurnbackModel.instance:checkHasGetAllTaskReward()
 
-	gohelper.setActive(arg_4_0._btnreplay2.gameObject, var_4_0)
+	gohelper.setActive(self._btnreplay2.gameObject, isAllReceive)
 
-	local var_4_1 = TurnbackModel.instance:getUnlockHeroList()
+	local list = TurnbackModel.instance:getUnlockHeroList()
 
-	arg_4_0._heroIndex = #var_4_1
-	arg_4_0._maxUnlockHeroIndex = #var_4_1
+	self._heroIndex = #list
+	self._maxUnlockHeroIndex = #list
 
-	arg_4_0:_refreshHero()
+	self:_refreshHero()
 
-	arg_4_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_4_0.viewContainer._scrollView)
+	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self.viewContainer._scrollView)
 
-	arg_4_0._taskAnimRemoveItem:setMoveInterval(0)
-	arg_4_0._taskAnimRemoveItem:setMoveAnimationTime(TurnbackEnum.TaskMaskTime - TurnbackEnum.TaskGetAnimTime)
+	self._taskAnimRemoveItem:setMoveInterval(0)
+	self._taskAnimRemoveItem:setMoveAnimationTime(TurnbackEnum.TaskMaskTime - TurnbackEnum.TaskGetAnimTime)
 
-	gohelper.findChildText(arg_4_0.viewGO, "left/txt_dec").text = ServerTime.ReplaceUTCStr(luaLang("p_turnbacknewtaskview_txt_daily"))
+	local txt_dec = gohelper.findChildText(self.viewGO, "left/txt_dec")
+
+	txt_dec.text = ServerTime.ReplaceUTCStr(luaLang("p_turnbacknewtaskview_txt_daily"))
 end
 
-function var_0_0._onScrollRectValueChanged(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:checkNeedHideReward(arg_5_1)
+function TurnbackNewTaskView:_onScrollRectValueChanged(scrollX, scrollY)
+	self:checkNeedHideReward(scrollX)
 
-	if not arg_5_0._scrollTime then
-		arg_5_0._scrollTime = 0
-		arg_5_0._scrollX = arg_5_1
+	if not self._scrollTime then
+		self._scrollTime = 0
+		self._scrollX = scrollX
 
-		TaskDispatcher.runRepeat(arg_5_0.checkScrollEnd, arg_5_0, 0)
+		TaskDispatcher.runRepeat(self.checkScrollEnd, self, 0)
 	end
 
-	if arg_5_0._scrollTime and math.abs(arg_5_0._scrollX - arg_5_1) > 0.05 then
-		arg_5_0._scrollTime = 0
-		arg_5_0._scrollX = arg_5_1
-	end
-end
-
-function var_0_0.checkScrollEnd(arg_6_0)
-	arg_6_0._scrollTime = arg_6_0._scrollTime + UnityEngine.Time.deltaTime
-
-	if arg_6_0._scrollTime > 0.05 then
-		arg_6_0._scrollTime = nil
-
-		TaskDispatcher.cancelTask(arg_6_0.checkScrollEnd, arg_6_0)
+	if self._scrollTime and math.abs(self._scrollX - scrollX) > 0.05 then
+		self._scrollTime = 0
+		self._scrollX = scrollX
 	end
 end
 
-function var_0_0.checkNeedHideReward(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function TurnbackNewTaskView:checkScrollEnd()
+	self._scrollTime = self._scrollTime + UnityEngine.Time.deltaTime
+
+	if self._scrollTime > 0.05 then
+		self._scrollTime = nil
+
+		TaskDispatcher.cancelTask(self.checkScrollEnd, self)
+	end
+end
+
+function TurnbackNewTaskView:checkNeedHideReward(percent)
+	if not percent then
 		return
 	end
 
-	if arg_7_1 > 0.8 then
-		recthelper.setWidth(arg_7_0._scrollreward.transform, arg_7_0.fullscrollWidth)
-		gohelper.setActive(arg_7_0._gobigrewardItem, false)
+	if percent > 0.8 then
+		recthelper.setWidth(self._scrollreward.transform, self.fullscrollWidth)
+		gohelper.setActive(self._gobigrewardItem, false)
 	else
-		recthelper.setWidth(arg_7_0._scrollreward.transform, arg_7_0.normalscrollWidth)
-		gohelper.setActive(arg_7_0._gobigrewardItem, true)
+		recthelper.setWidth(self._scrollreward.transform, self.normalscrollWidth)
+		gohelper.setActive(self._gobigrewardItem, true)
 	end
 end
 
-function var_0_0._refreshUI(arg_8_0)
-	arg_8_0:refreshTopBg()
-	arg_8_0:_refreshFill()
-	arg_8_0:_refreshHero()
-	arg_8_0:refreshBigRewardNode()
+function TurnbackNewTaskView:_refreshUI()
+	self:refreshTopBg()
+	self:_refreshFill()
+	self:_refreshHero()
+	self:refreshBigRewardNode()
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._rewardNodeList) do
-		arg_8_0:refreshRewardNode(iter_8_1)
+	for index, node in ipairs(self._rewardNodeList) do
+		self:refreshRewardNode(node)
 	end
 
-	local var_8_0 = TurnbackModel.instance:checkHasGetAllTaskReward()
+	local isAllReceive = TurnbackModel.instance:checkHasGetAllTaskReward()
 
-	gohelper.setActive(arg_8_0._btnreplay2.gameObject, var_8_0)
+	gohelper.setActive(self._btnreplay2.gameObject, isAllReceive)
 
-	if var_8_0 then
-		local var_8_1 = TurnbackConfig.instance:getTurnbackCo(arg_8_0._turnbackId)
+	if isAllReceive then
+		local config = TurnbackConfig.instance:getTurnbackCo(self._turnbackId)
+		local canPlay = config and not StoryModel.instance:isStoryFinished(config.endStory)
 
-		if var_8_1 and not StoryModel.instance:isStoryFinished(var_8_1.endStory) then
-			local var_8_2 = var_8_1.endStory
+		if canPlay then
+			local storyId = config.endStory
 
-			if var_8_2 then
-				StoryController.instance:playStory(var_8_2)
+			if storyId then
+				StoryController.instance:playStory(storyId)
 			else
-				logError(string.format("TurnbackTaskView endStoryId is nil", var_8_2))
+				logError(string.format("TurnbackTaskView endStoryId is nil", storyId))
 			end
 		end
 	end
 end
 
-function var_0_0._refreshHero(arg_9_0)
-	arg_9_0._unlockHeroCoList = TurnbackModel.instance:getUnlockHeroList()
+function TurnbackNewTaskView:_refreshHero()
+	self._unlockHeroCoList = TurnbackModel.instance:getUnlockHeroList()
 
-	local var_9_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_9_0._turnbackId)
-	local var_9_1 = arg_9_0._heroIndex > 1
-	local var_9_2 = arg_9_0._heroIndex < #arg_9_0._unlockHeroCoList
+	local rewardColist = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self._turnbackId)
+	local canleft = self._heroIndex > 1
+	local canright = self._heroIndex < #self._unlockHeroCoList
 
-	gohelper.setActive(arg_9_0._btnleft.gameObject, var_9_1)
-	gohelper.setActive(arg_9_0._btnright.gameObject, var_9_2)
+	gohelper.setActive(self._btnleft.gameObject, canleft)
+	gohelper.setActive(self._btnright.gameObject, canright)
 
-	if arg_9_0._heroIndex == #var_9_0 then
-		gohelper.setActive(arg_9_0._btnright.gameObject, true)
+	if self._heroIndex == #rewardColist then
+		gohelper.setActive(self._btnright.gameObject, true)
 	end
 
-	local var_9_3 = arg_9_0._unlockHeroCoList[arg_9_0._heroIndex]
+	local heroco = self._unlockHeroCoList[self._heroIndex]
 
-	if not var_9_3 then
+	if not heroco then
 		return
 	end
 
-	arg_9_0._txtHeroDesc.text = var_9_3.content
+	self._txtHeroDesc.text = heroco.content
 
-	arg_9_0._simageHero:LoadImage(ResUrl.getTurnbackIcon("new/task/turnback_new_task_role" .. arg_9_0._heroIndex))
+	self._simageHero:LoadImage(ResUrl.getTurnbackIcon("new/task/turnback_new_task_role" .. self._heroIndex))
 
-	local var_9_4 = TurnbackModel.instance:getCanGetRewardList()
+	local cangetlist = TurnbackModel.instance:getCanGetRewardList()
 
-	if arg_9_0._heroIndex > 1 then
-		local var_9_5 = arg_9_0._unlockHeroCoList[arg_9_0._heroIndex - 1]
+	if self._heroIndex > 1 then
+		local co = self._unlockHeroCoList[self._heroIndex - 1]
 
-		arg_9_0._txtnum.text = var_9_5.needPoint
+		self._txtnum.text = co.needPoint
 
-		gohelper.setActive(arg_9_0._gonumbg, true)
+		gohelper.setActive(self._gonumbg, true)
 	else
-		gohelper.setActive(arg_9_0._gonumbg, false)
+		gohelper.setActive(self._gonumbg, false)
 	end
 end
 
-function var_0_0.getSchedule(arg_10_0)
-	local var_10_0 = 0
-	local var_10_1 = 0.06
-	local var_10_2 = 1
-	local var_10_3 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_10_0._turnbackId)
-	local var_10_4 = #var_10_3
-	local var_10_5 = var_10_3[1].needPoint
-	local var_10_6 = TurnbackModel.instance:getCurrentPointId(arg_10_0._turnbackId)
-	local var_10_7 = 0
-	local var_10_8 = 0
-	local var_10_9 = 0
+function TurnbackNewTaskView:getSchedule()
+	local fillAmount = 0
+	local firstFillAmount = 0.06
+	local maxFillAmount = 1
+	local rewardColist = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self._turnbackId)
+	local rewardCount = #rewardColist
+	local firstNum = rewardColist[1].needPoint
+	local havenum = TurnbackModel.instance:getCurrentPointId(self._turnbackId)
+	local currentIndex = 0
+	local currentIndexNum = 0
+	local nextIndexNum = 0
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_3) do
-		if var_10_6 >= iter_10_1.needPoint then
-			var_10_7 = iter_10_0
-			var_10_8 = iter_10_1.needPoint
+	for index, rewardco in ipairs(rewardColist) do
+		local indexNum = rewardco.needPoint
+
+		if indexNum <= havenum then
+			currentIndex = index
+			currentIndexNum = rewardco.needPoint
 		else
-			var_10_9 = iter_10_1.needPoint
+			nextIndexNum = rewardco.needPoint
 
 			break
 		end
 	end
 
-	local var_10_10 = (var_10_2 - var_10_1) / (var_10_4 - 1)
-	local var_10_11 = (var_10_6 - var_10_8) / (var_10_9 - var_10_8)
+	local per = (maxFillAmount - firstFillAmount) / (rewardCount - 1)
+	local progress = (havenum - currentIndexNum) / (nextIndexNum - currentIndexNum)
 
-	if var_10_7 == var_10_4 then
-		var_10_0 = 1
-	elseif var_10_7 - 1 + var_10_11 <= 0 then
-		var_10_0 = var_10_6 / var_10_5 * var_10_1
+	if currentIndex == rewardCount then
+		fillAmount = 1
+	elseif currentIndex - 1 + progress <= 0 then
+		fillAmount = havenum / firstNum * firstFillAmount
 	else
-		var_10_0 = var_10_1 + var_10_10 * (var_10_7 - 1 + var_10_11)
+		fillAmount = firstFillAmount + per * (currentIndex - 1 + progress)
 	end
 
-	return var_10_0
+	return fillAmount
 end
 
-function var_0_0.refreshTopBg(arg_11_0)
-	local var_11_0 = TurnbackModel.instance:getBuyDoubleBonus()
+function TurnbackNewTaskView:refreshTopBg()
+	local buyDouble = TurnbackModel.instance:getBuyDoubleBonus()
 
-	gohelper.setActive(arg_11_0._gonormal, not var_11_0)
-	gohelper.setActive(arg_11_0._godouble, var_11_0)
+	gohelper.setActive(self._gonormal, not buyDouble)
+	gohelper.setActive(self._godouble, buyDouble)
 
-	local var_11_1 = 50
-	local var_11_2 = 50
-	local var_11_3 = 100
-	local var_11_4 = 100
-	local var_11_5 = TurnbackModel.instance:getNextUnlockReward()
-	local var_11_6 = TurnbackModel.instance:getContentWidth() - arg_11_0.normalscrollWidth
+	local startSpace = 50
+	local endSpace = 50
+	local itemspace = 100
+	local itemWidth = 100
+	local index = TurnbackModel.instance:getNextUnlockReward()
+	local contentwidth = TurnbackModel.instance:getContentWidth()
+	local allwidth = contentwidth - self.normalscrollWidth
 
 	if TurnbackModel.instance:checkHasGetAllTaskReward() then
-		arg_11_0._scrollreward.horizontalNormalizedPosition = 1
-	elseif var_11_5 > 1 then
-		local var_11_7 = var_11_5 - 2
-		local var_11_8 = 0
-		local var_11_9 = (var_11_4 * var_11_7 + var_11_3 * (var_11_7 - 1) + var_11_1 + var_11_2) / var_11_6
+		self._scrollreward.horizontalNormalizedPosition = 1
+	elseif index > 1 then
+		index = index - 2
 
-		if var_11_9 >= 1 then
-			arg_11_0._scrollreward.horizontalNormalizedPosition = 1
+		local per = 0
+		local currentWitdh = itemWidth * index + itemspace * (index - 1) + startSpace + endSpace
+
+		per = currentWitdh / allwidth
+
+		if per >= 1 then
+			self._scrollreward.horizontalNormalizedPosition = 1
 		else
-			arg_11_0._scrollreward.horizontalNormalizedPosition = var_11_9
+			self._scrollreward.horizontalNormalizedPosition = per
 		end
 	else
-		arg_11_0._scrollreward.horizontalNormalizedPosition = 0
+		self._scrollreward.horizontalNormalizedPosition = 0
 	end
 end
 
-function var_0_0.onCurrencyChange(arg_12_0)
-	arg_12_0:_refreshFill()
+function TurnbackNewTaskView:onCurrencyChange()
+	self:_refreshFill()
 
-	arg_12_0._unlockHeroCoList = TurnbackModel.instance:getUnlockHeroList()
+	self._unlockHeroCoList = TurnbackModel.instance:getUnlockHeroList()
 
-	local var_12_0 = #arg_12_0._unlockHeroCoList
+	local index = #self._unlockHeroCoList
 
-	if var_12_0 > arg_12_0._maxUnlockHeroIndex then
-		arg_12_0._maxUnlockHeroIndex = var_12_0
-		arg_12_0._heroIndex = var_12_0
+	if index > self._maxUnlockHeroIndex then
+		self._maxUnlockHeroIndex = index
+		self._heroIndex = index
 
-		if arg_12_0._isreverse then
-			arg_12_0._isreverse = not arg_12_0._isreverse
+		if self._isreverse then
+			self._isreverse = not self._isreverse
 
-			gohelper.setActive(arg_12_0._simageHero.gameObject, not arg_12_0._isreverse)
-			gohelper.setActive(arg_12_0._goscrolldesc, arg_12_0._isreverse)
+			gohelper.setActive(self._simageHero.gameObject, not self._isreverse)
+			gohelper.setActive(self._goscrolldesc, self._isreverse)
 		end
 	end
 
-	arg_12_0:_refreshHero()
-	arg_12_0:refreshTopBg()
+	self:_refreshHero()
+	self:refreshTopBg()
 end
 
-function var_0_0._refreshFill(arg_13_0)
-	local var_13_0 = TurnbackConfig.instance:getTurnbackLastBounsPoint(arg_13_0._turnbackId)
-	local var_13_1 = TurnbackModel.instance:getCurrentPointId(arg_13_0._turnbackId)
+function TurnbackNewTaskView:_refreshFill()
+	local lastPoint = TurnbackConfig.instance:getTurnbackLastBounsPoint(self._turnbackId)
+	local currentPoint = TurnbackModel.instance:getCurrentPointId(self._turnbackId)
 
-	arg_13_0._txtActiveNum.text = var_13_1 .. "/" .. var_13_0
-	arg_13_0._imgFill.fillAmount = arg_13_0:getSchedule()
+	self._txtActiveNum.text = currentPoint .. "/" .. lastPoint
+	self._imgFill.fillAmount = self:getSchedule()
 end
 
-function var_0_0._initRewardNode(arg_14_0)
-	local var_14_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_14_0._turnbackId)
+function TurnbackNewTaskView:_initRewardNode()
+	local rewardCoList = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self._turnbackId)
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_1 = arg_14_0:getUserDataTb_()
+	for index, co in ipairs(rewardCoList) do
+		local node = self:getUserDataTb_()
 
-		var_14_1.co = iter_14_1
-		var_14_1.go = gohelper.cloneInPlace(arg_14_0._gorewardItem, "node" .. iter_14_0)
-		var_14_1.imgquality = gohelper.findChildImage(var_14_1.go, "#image_quality")
-		var_14_1.imgCircle = gohelper.findChildImage(var_14_1.go, "#image_circle")
-		var_14_1.goicon = gohelper.findChild(var_14_1.go, "go_icon")
-		var_14_1.txtNum = gohelper.findChildText(var_14_1.go, "#txt_num")
-		var_14_1.gocanget = gohelper.findChild(var_14_1.go, "go_canget")
-		var_14_1.goreceive = gohelper.findChild(var_14_1.go, "go_receive")
-		var_14_1.txtPoint = gohelper.findChildText(var_14_1.go, "point/#txt_point")
-		var_14_1.golight = gohelper.findChild(var_14_1.go, "point/light")
-		var_14_1.gogrey = gohelper.findChild(var_14_1.go, "point/grey")
-		var_14_1.btnclick = gohelper.findChildButton(var_14_1.go, "go_canget/btn_click")
+		node.co = co
+		node.go = gohelper.cloneInPlace(self._gorewardItem, "node" .. index)
+		node.imgquality = gohelper.findChildImage(node.go, "#image_quality")
+		node.imgCircle = gohelper.findChildImage(node.go, "#image_circle")
+		node.goicon = gohelper.findChild(node.go, "go_icon")
+		node.txtNum = gohelper.findChildText(node.go, "#txt_num")
+		node.gocanget = gohelper.findChild(node.go, "go_canget")
+		node.goreceive = gohelper.findChild(node.go, "go_receive")
+		node.txtPoint = gohelper.findChildText(node.go, "point/#txt_point")
+		node.golight = gohelper.findChild(node.go, "point/light")
+		node.gogrey = gohelper.findChild(node.go, "point/grey")
+		node.btnclick = gohelper.findChildButton(node.go, "go_canget/btn_click")
 
-		local function var_14_2()
-			local var_15_0 = {
-				id = TurnbackModel.instance:getCurTurnbackId(),
-				bonusPointId = var_14_1.co.id
-			}
+		local function func()
+			local param = {}
 
-			TurnbackRpc.instance:sendTurnbackBonusPointRequest(var_15_0)
+			param.id = TurnbackModel.instance:getCurTurnbackId()
+			param.bonusPointId = node.co.id
+
+			TurnbackRpc.instance:sendTurnbackBonusPointRequest(param)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_replay_buttonegg)
 		end
 
-		var_14_1.btnclick:AddClickListener(var_14_2, arg_14_0)
-		gohelper.setActive(var_14_1.go, true)
-		table.insert(arg_14_0._rewardNodeList, var_14_1)
+		node.btnclick:AddClickListener(func, self)
+		gohelper.setActive(node.go, true)
+		table.insert(self._rewardNodeList, node)
 
-		local var_14_3 = string.splitToNumber(iter_14_1.bonus, "#")
-		local var_14_4 = var_14_3[1]
-		local var_14_5 = var_14_3[2]
-		local var_14_6 = var_14_3[3]
-		local var_14_7 = ItemConfig.instance:getItemConfig(var_14_4, var_14_5)
+		local rewardco = string.splitToNumber(co.bonus, "#")
+		local type, id, num = rewardco[1], rewardco[2], rewardco[3]
+		local itemco = ItemConfig.instance:getItemConfig(type, id)
 
-		UISpriteSetMgr.instance:setUiFBSprite(var_14_1.imgquality, "bg2_pinjidi_" .. var_14_7.rare)
-		UISpriteSetMgr.instance:setUiFBSprite(var_14_1.imgCircle, "bg_pinjidi_lanse_" .. var_14_7.rare)
+		UISpriteSetMgr.instance:setUiFBSprite(node.imgquality, "bg2_pinjidi_" .. itemco.rare)
+		UISpriteSetMgr.instance:setUiFBSprite(node.imgCircle, "bg_pinjidi_lanse_" .. itemco.rare)
 
-		if var_14_3 then
-			if not var_14_1.itemIcon then
-				var_14_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_14_1.goicon)
+		if rewardco then
+			if not node.itemIcon then
+				node.itemIcon = IconMgr.instance:getCommonPropItemIcon(node.goicon)
 			end
 
-			var_14_1.itemIcon:setMOValue(var_14_3[1], var_14_3[2], var_14_3[3], nil, true)
-			var_14_1.itemIcon:isShowQuality(false)
-			var_14_1.itemIcon:isShowCount(false)
+			node.itemIcon:setMOValue(rewardco[1], rewardco[2], rewardco[3], nil, true)
+			node.itemIcon:isShowQuality(false)
+			node.itemIcon:isShowCount(false)
 		end
 
-		var_14_1.txtNum.text = var_14_6
-		var_14_1.txtPoint.text = iter_14_1.needPoint
+		node.txtNum.text = num
+		node.txtPoint.text = co.needPoint
 
-		arg_14_0:refreshRewardNode(var_14_1)
+		self:refreshRewardNode(node)
 	end
 end
 
-function var_0_0.refreshRewardNode(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.co.id
-	local var_16_1 = TurnbackModel.instance:checkBonusCanGetById(var_16_0)
-	local var_16_2 = TurnbackModel.instance:checkBonusGetById(var_16_0)
+function TurnbackNewTaskView:refreshRewardNode(node)
+	local id = node.co.id
+	local canget = TurnbackModel.instance:checkBonusCanGetById(id)
+	local hadget = TurnbackModel.instance:checkBonusGetById(id)
 
-	gohelper.setActive(arg_16_1.gocanget, var_16_1)
-	gohelper.setActive(arg_16_1.goreceive, var_16_2)
+	gohelper.setActive(node.gocanget, canget)
+	gohelper.setActive(node.goreceive, hadget)
 
-	if var_16_1 or var_16_2 then
-		gohelper.setActive(arg_16_1.golight, true)
-		gohelper.setActive(arg_16_1.gogrey, false)
+	if canget or hadget then
+		gohelper.setActive(node.golight, true)
+		gohelper.setActive(node.gogrey, false)
 	else
-		gohelper.setActive(arg_16_1.golight, false)
-		gohelper.setActive(arg_16_1.gogrey, true)
+		gohelper.setActive(node.golight, false)
+		gohelper.setActive(node.gogrey, true)
 	end
 end
 
-function var_0_0._initBigRewardNode(arg_17_0)
-	arg_17_0.bignode = arg_17_0:getUserDataTb_()
+function TurnbackNewTaskView:_initBigRewardNode()
+	self.bignode = self:getUserDataTb_()
 
-	local var_17_0 = arg_17_0._gobigrewardItem
+	local go = self._gobigrewardItem
 
-	arg_17_0.bignode.go = var_17_0
-	arg_17_0.bignode.imgquality = gohelper.findChildImage(var_17_0, "#image_quality")
-	arg_17_0.bignode.imgCircle = gohelper.findChildImage(var_17_0, "#image_circle")
-	arg_17_0.bignode.goicon = gohelper.findChild(var_17_0, "go_icon")
-	arg_17_0.bignode.txtNum = gohelper.findChildText(var_17_0, "#txt_num")
-	arg_17_0.bignode.gocanget = gohelper.findChild(var_17_0, "go_canget")
-	arg_17_0.bignode.goreceive = gohelper.findChild(var_17_0, "go_receive")
-	arg_17_0.bignode.txtPoint = gohelper.findChildText(var_17_0, "point/#txt_point")
-	arg_17_0.bignode.golight = gohelper.findChild(var_17_0, "point/light")
-	arg_17_0.bignode.gogrey = gohelper.findChild(var_17_0, "point/grey")
+	self.bignode.go = go
+	self.bignode.imgquality = gohelper.findChildImage(go, "#image_quality")
+	self.bignode.imgCircle = gohelper.findChildImage(go, "#image_circle")
+	self.bignode.goicon = gohelper.findChild(go, "go_icon")
+	self.bignode.txtNum = gohelper.findChildText(go, "#txt_num")
+	self.bignode.gocanget = gohelper.findChild(go, "go_canget")
+	self.bignode.goreceive = gohelper.findChild(go, "go_receive")
+	self.bignode.txtPoint = gohelper.findChildText(go, "point/#txt_point")
+	self.bignode.golight = gohelper.findChild(go, "point/light")
+	self.bignode.gogrey = gohelper.findChild(go, "point/grey")
 
-	local var_17_1 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_17_0._turnbackId)
-	local var_17_2 = var_17_1[#var_17_1]
+	local rewardCoList = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self._turnbackId)
+	local config = rewardCoList[#rewardCoList]
 
-	arg_17_0.bignode.config = var_17_2
+	self.bignode.config = config
 
-	local var_17_3 = string.splitToNumber(var_17_2.bonus, "#")
-	local var_17_4 = var_17_3[1]
-	local var_17_5 = var_17_3[2]
-	local var_17_6 = var_17_3[3]
-	local var_17_7 = ItemConfig.instance:getItemConfig(var_17_4, var_17_5)
+	local rewardco = string.splitToNumber(config.bonus, "#")
+	local type, id, num = rewardco[1], rewardco[2], rewardco[3]
+	local itemco = ItemConfig.instance:getItemConfig(type, id)
 
-	UISpriteSetMgr.instance:setUiFBSprite(arg_17_0.bignode.imgquality, "bg2_pinjidi_" .. var_17_7.rare)
-	UISpriteSetMgr.instance:setUiFBSprite(arg_17_0.bignode.imgCircle, "bg_pinjidi_lanse_" .. var_17_7.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(self.bignode.imgquality, "bg2_pinjidi_" .. itemco.rare)
+	UISpriteSetMgr.instance:setUiFBSprite(self.bignode.imgCircle, "bg_pinjidi_lanse_" .. itemco.rare)
 
-	if var_17_3 then
-		if not arg_17_0.bignode.itemIcon then
-			arg_17_0.bignode.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_17_0.bignode.goicon)
+	if rewardco then
+		if not self.bignode.itemIcon then
+			self.bignode.itemIcon = IconMgr.instance:getCommonPropItemIcon(self.bignode.goicon)
 		end
 
-		arg_17_0.bignode.itemIcon:setMOValue(var_17_3[1], var_17_3[2], var_17_3[3], nil, true)
-		arg_17_0.bignode.itemIcon:isShowQuality(false)
-		arg_17_0.bignode.itemIcon:isShowCount(false)
+		self.bignode.itemIcon:setMOValue(rewardco[1], rewardco[2], rewardco[3], nil, true)
+		self.bignode.itemIcon:isShowQuality(false)
+		self.bignode.itemIcon:isShowCount(false)
 	end
 
-	arg_17_0.bignode.txtNum.text = var_17_6
-	arg_17_0.bignode.txtPoint.text = var_17_2.needPoint
+	self.bignode.txtNum.text = num
+	self.bignode.txtPoint.text = config.needPoint
 
-	arg_17_0:refreshBigRewardNode()
+	self:refreshBigRewardNode()
 end
 
-function var_0_0.refreshBigRewardNode(arg_18_0)
-	local var_18_0 = TurnbackModel.instance:checkBonusGetById(arg_18_0.bignode.config.id)
+function TurnbackNewTaskView:refreshBigRewardNode()
+	local hadget = TurnbackModel.instance:checkBonusGetById(self.bignode.config.id)
 
-	gohelper.setActive(arg_18_0.bignode.goreceive, var_18_0)
-	gohelper.setActive(arg_18_0.bignode.golight, var_18_0)
-	gohelper.setActive(arg_18_0.bignode.gogrey, not var_18_0)
+	gohelper.setActive(self.bignode.goreceive, hadget)
+	gohelper.setActive(self.bignode.golight, hadget)
+	gohelper.setActive(self.bignode.gogrey, not hadget)
 end
 
-function var_0_0.onClickReplay(arg_19_0)
-	local var_19_0 = TurnbackModel.instance:getCurTurnbackMo()
-	local var_19_1 = var_19_0 and var_19_0.config and var_19_0.config.startStory
+function TurnbackNewTaskView:onClickReplay()
+	local TurnbackMo = TurnbackModel.instance:getCurTurnbackMo()
+	local storyId = TurnbackMo and TurnbackMo.config and TurnbackMo.config.startStory
 
-	if var_19_1 then
-		StoryController.instance:playStory(var_19_1)
+	if storyId then
+		StoryController.instance:playStory(storyId)
 	else
-		logError(string.format("TurnbackRewardShowView startStoryId is nil", var_19_1))
+		logError(string.format("TurnbackRewardShowView startStoryId is nil", storyId))
 	end
 end
 
-function var_0_0.onClickReplay2(arg_20_0)
-	local var_20_0 = TurnbackModel.instance:getCurTurnbackMo()
-	local var_20_1 = var_20_0 and var_20_0.config and var_20_0.config.endStory
+function TurnbackNewTaskView:onClickReplay2()
+	local TurnbackMo = TurnbackModel.instance:getCurTurnbackMo()
+	local storyId = TurnbackMo and TurnbackMo.config and TurnbackMo.config.endStory
 
-	if var_20_1 then
-		StoryController.instance:playStory(var_20_1)
+	if storyId then
+		StoryController.instance:playStory(storyId)
 	else
-		logError(string.format("TurnbackRewardShowView startStoryId is nil", var_20_1))
+		logError(string.format("TurnbackRewardShowView startStoryId is nil", storyId))
 	end
 end
 
-function var_0_0.onClickBtnTips(arg_21_0)
-	arg_21_0._isopentips = not arg_21_0._isopentips
+function TurnbackNewTaskView:onClickBtnTips()
+	self._isopentips = not self._isopentips
 
-	gohelper.setActive(arg_21_0._gotips, arg_21_0._isopentips)
+	gohelper.setActive(self._gotips, self._isopentips)
 end
 
-function var_0_0.onClickBtnCloseTips(arg_22_0)
-	arg_22_0._isopentips = false
+function TurnbackNewTaskView:onClickBtnCloseTips()
+	self._isopentips = false
 
-	gohelper.setActive(arg_22_0._gotips, arg_22_0._isopentips)
+	gohelper.setActive(self._gotips, self._isopentips)
 end
 
-function var_0_0.onClickBuy(arg_23_0)
+function TurnbackNewTaskView:onClickBuy()
 	if not TurnbackModel.instance:getBuyDoubleBonus() then
 		ViewMgr.instance:openView(ViewName.TurnbackDoubleRewardChargeView)
 		StatController.instance:track(StatEnum.EventName.ClickReflowDoubleClaim, {})
 	end
 end
 
-function var_0_0.onClickLeft(arg_24_0)
-	if arg_24_0._heroIndex > 1 then
-		arg_24_0._rightAnimator:Update(0)
-		arg_24_0._rightAnimator:Play("leftout")
-		TaskDispatcher.runDelay(arg_24_0._afterleftout, arg_24_0, 0.3)
+function TurnbackNewTaskView:onClickLeft()
+	if self._heroIndex > 1 then
+		self._rightAnimator:Update(0)
+		self._rightAnimator:Play("leftout")
+		TaskDispatcher.runDelay(self._afterleftout, self, 0.3)
 		AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 	end
 end
 
-function var_0_0._afterleftout(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._afterleftout, arg_25_0)
-	arg_25_0._rightAnimator:Update(0)
-	arg_25_0._rightAnimator:Play("leftin")
+function TurnbackNewTaskView:_afterleftout()
+	TaskDispatcher.cancelTask(self._afterleftout, self)
+	self._rightAnimator:Update(0)
+	self._rightAnimator:Play("leftin")
 
-	local var_25_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_25_0._turnbackId)
+	local colist = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self._turnbackId)
 
-	if arg_25_0._heroIndex == #var_25_0 and arg_25_0._isfinish then
-		arg_25_0._isfinish = false
+	if self._heroIndex == #colist and self._isfinish then
+		self._isfinish = false
 
-		gohelper.setActive(arg_25_0._gofinished, arg_25_0._isfinish)
-		gohelper.setActive(arg_25_0._gounfinish, not arg_25_0._isfinish)
-		gohelper.setActive(arg_25_0._gonumbg, not arg_25_0._isfinish)
-		gohelper.setActive(arg_25_0._gotitlebg, not arg_25_0._isfinish)
-		gohelper.setActive(arg_25_0._btnright.gameObject, not arg_25_0._isfinish)
+		gohelper.setActive(self._gofinished, self._isfinish)
+		gohelper.setActive(self._gounfinish, not self._isfinish)
+		gohelper.setActive(self._gonumbg, not self._isfinish)
+		gohelper.setActive(self._gotitlebg, not self._isfinish)
+		gohelper.setActive(self._btnright.gameObject, not self._isfinish)
 	else
-		arg_25_0._heroIndex = arg_25_0._heroIndex - 1
+		self._heroIndex = self._heroIndex - 1
 
-		arg_25_0:_refreshHero()
+		self:_refreshHero()
 	end
 
-	TaskDispatcher.runDelay(arg_25_0._afterleftin, arg_25_0, 0.3)
+	TaskDispatcher.runDelay(self._afterleftin, self, 0.3)
 end
 
-function var_0_0._afterleftin(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._afterleftin, arg_26_0)
+function TurnbackNewTaskView:_afterleftin()
+	TaskDispatcher.cancelTask(self._afterleftin, self)
 end
 
-function var_0_0._afterrightout(arg_27_0)
-	TaskDispatcher.cancelTask(arg_27_0._afterrightout, arg_27_0)
-	arg_27_0._rightAnimator:Update(0)
-	arg_27_0._rightAnimator:Play("rightin")
+function TurnbackNewTaskView:_afterrightout()
+	TaskDispatcher.cancelTask(self._afterrightout, self)
+	self._rightAnimator:Update(0)
+	self._rightAnimator:Play("rightin")
 
-	local var_27_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_27_0._turnbackId)
+	local colist = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(self._turnbackId)
 
-	if arg_27_0._heroIndex < #var_27_0 then
-		arg_27_0._heroIndex = arg_27_0._heroIndex + 1
+	if self._heroIndex < #colist then
+		self._heroIndex = self._heroIndex + 1
 
-		arg_27_0:_refreshHero()
+		self:_refreshHero()
 	else
-		arg_27_0._isfinish = true
+		self._isfinish = true
 
-		gohelper.setActive(arg_27_0._gofinished, arg_27_0._isfinish)
-		gohelper.setActive(arg_27_0._gounfinish, not arg_27_0._isfinish)
-		gohelper.setActive(arg_27_0._gonumbg, not arg_27_0._isfinish)
-		gohelper.setActive(arg_27_0._gotitlebg, not arg_27_0._isfinish)
-		gohelper.setActive(arg_27_0._btnright.gameObject, not arg_27_0._isfinish)
+		gohelper.setActive(self._gofinished, self._isfinish)
+		gohelper.setActive(self._gounfinish, not self._isfinish)
+		gohelper.setActive(self._gonumbg, not self._isfinish)
+		gohelper.setActive(self._gotitlebg, not self._isfinish)
+		gohelper.setActive(self._btnright.gameObject, not self._isfinish)
 	end
 
-	TaskDispatcher.runDelay(arg_27_0._afterrightin, arg_27_0, 0.3)
+	TaskDispatcher.runDelay(self._afterrightin, self, 0.3)
 end
 
-function var_0_0._afterrightin(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._afterrightin, arg_28_0)
+function TurnbackNewTaskView:_afterrightin()
+	TaskDispatcher.cancelTask(self._afterrightin, self)
 end
 
-function var_0_0.onClickRight(arg_29_0)
-	arg_29_0._rightAnimator:Update(0)
-	arg_29_0._rightAnimator:Play("rightout")
-	TaskDispatcher.runDelay(arg_29_0._afterrightout, arg_29_0, 0.3)
+function TurnbackNewTaskView:onClickRight()
+	self._rightAnimator:Update(0)
+	self._rightAnimator:Play("rightout")
+	TaskDispatcher.runDelay(self._afterrightout, self, 0.3)
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 end
 
-function var_0_0.onCilckReverse(arg_30_0)
-	arg_30_0._isreverse = not arg_30_0._isreverse
+function TurnbackNewTaskView:onCilckReverse()
+	self._isreverse = not self._isreverse
 
-	gohelper.setActive(arg_30_0._simageHero.gameObject, not arg_30_0._isreverse)
-	gohelper.setActive(arg_30_0._goscrolldesc, arg_30_0._isreverse)
+	gohelper.setActive(self._simageHero.gameObject, not self._isreverse)
+	gohelper.setActive(self._goscrolldesc, self._isreverse)
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 
-	if arg_30_0._isreverse then
-		arg_30_0._rightTextAnim:Play()
+	if self._isreverse then
+		self._rightTextAnim:Play()
 	end
 end
 
-function var_0_0._playGetRewardFinishAnim(arg_31_0, arg_31_1)
-	if arg_31_1 then
-		arg_31_0.removeIndexTab = {
-			arg_31_1
+function TurnbackNewTaskView:_playGetRewardFinishAnim(index)
+	if index then
+		self.removeIndexTab = {
+			index
 		}
 	end
 
-	TaskDispatcher.runDelay(arg_31_0.delayPlayFinishAnim, arg_31_0, TurnbackEnum.TaskGetAnimTime)
+	TaskDispatcher.runDelay(self.delayPlayFinishAnim, self, TurnbackEnum.TaskGetAnimTime)
 end
 
-function var_0_0.delayPlayFinishAnim(arg_32_0)
-	arg_32_0._taskAnimRemoveItem:removeByIndexs(arg_32_0.removeIndexTab)
+function TurnbackNewTaskView:delayPlayFinishAnim()
+	self._taskAnimRemoveItem:removeByIndexs(self.removeIndexTab)
 end
 
-function var_0_0.succbuydoublereward(arg_33_0)
-	arg_33_0._needPlayAnim = true
+function TurnbackNewTaskView:succbuydoublereward()
+	self._needPlayAnim = true
 end
 
-function var_0_0._afterbuyanim(arg_34_0)
-	arg_34_0._needPlayAnim = false
+function TurnbackNewTaskView:_afterbuyanim()
+	self._needPlayAnim = false
 
-	TaskDispatcher.cancelTask(arg_34_0._afterbuyanim, arg_34_0)
-	gohelper.setActive(arg_34_0._gonormal, true)
-	gohelper.setActive(arg_34_0._godouble, true)
-	arg_34_0._topAnimator:Play("unlock")
-	TaskDispatcher.runDelay(arg_34_0._afterunlockanim, arg_34_0, 0.6)
+	TaskDispatcher.cancelTask(self._afterbuyanim, self)
+	gohelper.setActive(self._gonormal, true)
+	gohelper.setActive(self._godouble, true)
+	self._topAnimator:Play("unlock")
+	TaskDispatcher.runDelay(self._afterunlockanim, self, 0.6)
 end
 
-function var_0_0._afterunlockanim(arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._afterunlockanim, arg_35_0)
-	arg_35_0:refreshTopBg()
+function TurnbackNewTaskView:_afterunlockanim()
+	TaskDispatcher.cancelTask(self._afterunlockanim, self)
+	self:refreshTopBg()
 end
 
-function var_0_0._onCloseViewFinish(arg_36_0, arg_36_1)
-	if arg_36_1 == ViewName.CommonPropView then
-		arg_36_0:_refreshUI()
+function TurnbackNewTaskView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView then
+		self:_refreshUI()
 	end
 
-	if arg_36_0._needPlayAnim then
-		TaskDispatcher.runDelay(arg_36_0._afterbuyanim, arg_36_0, 0.3)
+	if self._needPlayAnim then
+		TaskDispatcher.runDelay(self._afterbuyanim, self, 0.3)
 	end
 end
 
-function var_0_0.onOpen(arg_37_0)
-	local var_37_0 = arg_37_0.viewParam.parent
+function TurnbackNewTaskView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_37_0, arg_37_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_Interface_entry_01)
-	arg_37_0:refreshTopBg()
+	self:refreshTopBg()
 end
 
-function var_0_0.onClose(arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._afterbuyanim, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._afterunlockanim, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._afterleftin, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._afterleftout, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._afterrightin, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._afterrightout, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0.checkScrollEnd, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0.checkTaskScrollEnd, arg_38_0)
-	arg_38_0._simageHero:UnLoadImage()
+function TurnbackNewTaskView:onClose()
+	TaskDispatcher.cancelTask(self._afterbuyanim, self)
+	TaskDispatcher.cancelTask(self._afterunlockanim, self)
+	TaskDispatcher.cancelTask(self._afterleftin, self)
+	TaskDispatcher.cancelTask(self._afterleftout, self)
+	TaskDispatcher.cancelTask(self._afterrightin, self)
+	TaskDispatcher.cancelTask(self._afterrightout, self)
+	TaskDispatcher.cancelTask(self.checkScrollEnd, self)
+	TaskDispatcher.cancelTask(self.checkTaskScrollEnd, self)
+	self._simageHero:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_39_0)
-	TaskDispatcher.cancelTask(arg_39_0.delayPlayFinishAnim, arg_39_0)
+function TurnbackNewTaskView:onDestroyView()
+	TaskDispatcher.cancelTask(self.delayPlayFinishAnim, self)
 end
 
-return var_0_0
+return TurnbackNewTaskView

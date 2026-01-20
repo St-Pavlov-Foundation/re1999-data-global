@@ -1,19 +1,21 @@
-﻿module("modules.logic.resonance.defines.HeroResonanceEnum", package.seeall)
+﻿-- chunkname: @modules/logic/resonance/defines/HeroResonanceEnum.lua
 
-local var_0_0 = {}
+module("modules.logic.resonance.defines.HeroResonanceEnum", package.seeall)
 
-var_0_0.PutCube = 0
-var_0_0.GetCube = 1
-var_0_0.FromRabbet = 2
-var_0_0.FromBag = 3
-var_0_0.StyleCubeState = {
+local HeroResonanceEnum = {}
+
+HeroResonanceEnum.PutCube = 0
+HeroResonanceEnum.GetCube = 1
+HeroResonanceEnum.FromRabbet = 2
+HeroResonanceEnum.FromBag = 3
+HeroResonanceEnum.StyleCubeState = {
 	Lock = 3,
 	Select = 2,
 	New = 5,
 	Use = 4,
 	Normal = 1
 }
-var_0_0.QuickLayoutType = {
+HeroResonanceEnum.QuickLayoutType = {
 	{
 		isNeedParam = true,
 		name = "character_copy_talentLayout_copy_code"
@@ -27,7 +29,7 @@ var_0_0.QuickLayoutType = {
 		name = "character_copy_talentLayout_default"
 	}
 }
-var_0_0.AttrChange = {
+HeroResonanceEnum.AttrChange = {
 	[0] = {
 		NumColor = "#CAC8C5"
 	},
@@ -41,4 +43,4 @@ var_0_0.AttrChange = {
 	}
 }
 
-return var_0_0
+return HeroResonanceEnum

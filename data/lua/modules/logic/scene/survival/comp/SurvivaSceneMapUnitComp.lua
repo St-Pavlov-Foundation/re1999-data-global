@@ -1,159 +1,163 @@
-﻿module("modules.logic.scene.survival.comp.SurvivaSceneMapUnitComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/comp/SurvivaSceneMapUnitComp.lua
 
-local var_0_0 = class("SurvivaSceneMapUnitComp", BaseSceneComp)
+module("modules.logic.scene.survival.comp.SurvivaSceneMapUnitComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._sceneGo = arg_1_0:getCurScene().level:getSceneGo()
-	arg_1_0._unitRoot = gohelper.create3d(arg_1_0._sceneGo, "UnitRoot")
-	arg_1_0._allUnits = {}
+local SurvivaSceneMapUnitComp = class("SurvivaSceneMapUnitComp", BaseSceneComp)
 
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivaSceneMapUnitComp:onScenePrepared(sceneId, levelId)
+	self._sceneGo = self:getCurScene().level:getSceneGo()
+	self._unitRoot = gohelper.create3d(self._sceneGo, "UnitRoot")
+	self._allUnits = {}
 
-	if not var_1_0 then
+	local mapSceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	if not mapSceneMo then
 		return
 	end
 
-	arg_1_0:addEvents()
+	self:addEvents()
 
-	arg_1_0._player = SurvivalPlayerEntity.Create(var_1_0.player, arg_1_0._unitRoot)
+	self._player = SurvivalPlayerEntity.Create(mapSceneMo.player, self._unitRoot)
 
-	SurvivalMapHelper.instance:addEntity(0, arg_1_0._player)
+	SurvivalMapHelper.instance:addEntity(0, self._player)
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0.unitsById) do
-		arg_1_0._allUnits[iter_1_0] = SurvivalUnitEntity.Create(iter_1_1, arg_1_0._unitRoot)
+	for id, unitMo in pairs(mapSceneMo.unitsById) do
+		self._allUnits[id] = SurvivalUnitEntity.Create(unitMo, self._unitRoot)
 
-		SurvivalMapHelper.instance:addEntity(iter_1_0, arg_1_0._allUnits[iter_1_0])
+		SurvivalMapHelper.instance:addEntity(id, self._allUnits[id])
 
-		local var_1_1 = iter_1_1:getWarmingRange()
+		local warmingRange = unitMo:getWarmingRange()
 
-		if var_1_1 then
-			arg_1_0:_showEffect(iter_1_1.id, iter_1_1.pos, var_1_1)
+		if warmingRange then
+			self:_showEffect(unitMo.id, unitMo.pos, warmingRange)
 		end
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitAdd, arg_2_0._onUnitAdd, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitPosChange, arg_2_0._onUnitPosChange, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, arg_2_0._onUnitChange, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, arg_2_0._onUnitDel, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, arg_2_0._onAttrUpdate, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapDestoryPosAdd, arg_2_0.onMapDestoryPosAdd, arg_2_0)
+function SurvivaSceneMapUnitComp:addEvents()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitAdd, self._onUnitAdd, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitPosChange, self._onUnitPosChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, self._onUnitChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, self._onAttrUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapDestoryPosAdd, self.onMapDestoryPosAdd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitAdd, arg_3_0._onUnitAdd, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitPosChange, arg_3_0._onUnitPosChange, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, arg_3_0._onUnitChange, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, arg_3_0._onUnitDel, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, arg_3_0._onAttrUpdate, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapDestoryPosAdd, arg_3_0.onMapDestoryPosAdd, arg_3_0)
+function SurvivaSceneMapUnitComp:removeEvents()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitAdd, self._onUnitAdd, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitPosChange, self._onUnitPosChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, self._onUnitChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, self._onAttrUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapDestoryPosAdd, self.onMapDestoryPosAdd, self)
 end
 
-function var_0_0._onAttrUpdate(arg_4_0, arg_4_1)
-	if arg_4_1 == SurvivalEnum.AttrType.HeroFightLevel then
-		local var_4_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivaSceneMapUnitComp:_onAttrUpdate(attrId)
+	if attrId == SurvivalEnum.AttrType.HeroFightLevel then
+		local mapSceneMo = SurvivalMapModel.instance:getSceneMo()
 
-		if not var_4_0 then
+		if not mapSceneMo then
 			return
 		end
 
-		for iter_4_0, iter_4_1 in pairs(var_4_0.unitsById) do
-			if not iter_4_1:getWarmingRange() then
-				SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(iter_4_1.id)
+		for id, unitMo in pairs(mapSceneMo.unitsById) do
+			if not unitMo:getWarmingRange() then
+				SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
 			end
 		end
 	end
 end
 
-function var_0_0.onMapDestoryPosAdd(arg_5_0)
-	local var_5_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivaSceneMapUnitComp:onMapDestoryPosAdd()
+	local mapSceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if not var_5_0 then
+	if not mapSceneMo then
 		return
 	end
 
-	for iter_5_0, iter_5_1 in pairs(var_5_0.unitsById) do
-		local var_5_1 = iter_5_1:getWarmingRange()
+	for id, unitMo in pairs(mapSceneMo.unitsById) do
+		local warmingRange = unitMo:getWarmingRange()
 
-		if var_5_1 then
-			arg_5_0:_showEffect(iter_5_1.id, iter_5_1.pos, var_5_1)
+		if warmingRange then
+			self:_showEffect(unitMo.id, unitMo.pos, warmingRange)
 		end
 	end
 end
 
-function var_0_0._onUnitDel(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._allUnits[arg_6_1.id] then
-		if arg_6_1:getWarmingRange() then
-			SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(arg_6_1.id)
+function SurvivaSceneMapUnitComp:_onUnitDel(unitMo, isPlayDeadAnim)
+	if self._allUnits[unitMo.id] then
+		local warmingRange = unitMo:getWarmingRange()
+
+		if warmingRange then
+			SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
 		end
 
-		arg_6_0._allUnits[arg_6_1.id]:tryRemove(arg_6_2)
+		self._allUnits[unitMo.id]:tryRemove(isPlayDeadAnim)
 
-		arg_6_0._allUnits[arg_6_1.id] = nil
+		self._allUnits[unitMo.id] = nil
 	end
 end
 
-function var_0_0._onUnitAdd(arg_7_0, arg_7_1)
-	if not arg_7_0._allUnits[arg_7_1.id] then
-		local var_7_0 = arg_7_1:getWarmingRange()
+function SurvivaSceneMapUnitComp:_onUnitAdd(unitMo)
+	if not self._allUnits[unitMo.id] then
+		local warmingRange = unitMo:getWarmingRange()
 
-		if var_7_0 then
-			arg_7_0:_showEffect(arg_7_1.id, arg_7_1.pos, var_7_0)
+		if warmingRange then
+			self:_showEffect(unitMo.id, unitMo.pos, warmingRange)
 		end
 
-		arg_7_0._allUnits[arg_7_1.id] = SurvivalUnitEntity.Create(arg_7_1, arg_7_0._unitRoot)
+		self._allUnits[unitMo.id] = SurvivalUnitEntity.Create(unitMo, self._unitRoot)
 
-		SurvivalMapHelper.instance:addEntity(arg_7_1.id, arg_7_0._allUnits[arg_7_1.id])
+		SurvivalMapHelper.instance:addEntity(unitMo.id, self._allUnits[unitMo.id])
 	end
 end
 
-function var_0_0._onUnitPosChange(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2.visionVal == 8 or arg_8_3 then
+function SurvivaSceneMapUnitComp:_onUnitPosChange(_, unitMo, isDel)
+	if unitMo.visionVal == 8 or isDel then
 		return
 	end
 
-	local var_8_0 = arg_8_2:getWarmingRange()
+	local warmingRange = unitMo:getWarmingRange()
 
-	if var_8_0 then
-		SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(arg_8_2.id)
-		arg_8_0:_showEffect(arg_8_2.id, arg_8_2.pos, var_8_0)
+	if warmingRange then
+		SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
+		self:_showEffect(unitMo.id, unitMo.pos, warmingRange)
 	end
 end
 
-function var_0_0._onUnitChange(arg_9_0, arg_9_1)
-	local var_9_0 = SurvivalMapModel.instance:getSceneMo().unitsById[arg_9_1]
+function SurvivaSceneMapUnitComp:_onUnitChange(unitId)
+	local unitMo = SurvivalMapModel.instance:getSceneMo().unitsById[unitId]
 
-	if not var_9_0 then
+	if not unitMo then
 		return
 	end
 
-	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(arg_9_1)
+	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitId)
 
-	local var_9_1 = var_9_0:getWarmingRange()
+	local warmingRange = unitMo:getWarmingRange()
 
-	if var_9_1 and var_9_0.visionVal ~= 8 then
-		arg_9_0:_showEffect(var_9_0.id, var_9_0.pos, var_9_1)
+	if warmingRange and unitMo.visionVal ~= 8 then
+		self:_showEffect(unitMo.id, unitMo.pos, warmingRange)
 	end
 end
 
-function var_0_0._showEffect(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = SurvivalMapModel.instance:getCurMapCo().walkables
+function SurvivaSceneMapUnitComp:_showEffect(id, pos, range)
+	local walkablePos = SurvivalMapModel.instance:getCurMapCo().walkables
 
-	for iter_10_0, iter_10_1 in ipairs(SurvivalHelper.instance:getAllPointsByDis(arg_10_2, arg_10_3)) do
-		if SurvivalHelper.instance:getValueFromDict(var_10_0, iter_10_1) then
-			SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(arg_10_1, iter_10_1.q, iter_10_1.r, 1)
+	for i, v in ipairs(SurvivalHelper.instance:getAllPointsByDis(pos, range)) do
+		if SurvivalHelper.instance:getValueFromDict(walkablePos, v) then
+			SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(id, v.q, v.r, 1)
 		end
 	end
 end
 
-function var_0_0.onSceneClose(arg_11_0)
-	arg_11_0:removeEvents()
-	gohelper.destroy(arg_11_0._unitRoot)
+function SurvivaSceneMapUnitComp:onSceneClose()
+	self:removeEvents()
+	gohelper.destroy(self._unitRoot)
 
-	arg_11_0._unitRoot = nil
-	arg_11_0._sceneGo = nil
-	arg_11_0._allUnits = {}
+	self._unitRoot = nil
+	self._sceneGo = nil
+	self._allUnits = {}
 end
 
-return var_0_0
+return SurvivaSceneMapUnitComp

@@ -1,70 +1,75 @@
-﻿module("modules.logic.player.view.PlayerClothItem", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerClothItem.lua
 
-local var_0_0 = class("PlayerClothItem", ListScrollCell)
+module("modules.logic.player.view.PlayerClothItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._bg = gohelper.findChildImage(arg_1_1, "bg")
-	arg_1_0._imgBg = gohelper.findChildSingleImage(arg_1_1, "skillicon")
-	arg_1_0._inUseGO = gohelper.findChild(arg_1_1, "inuse")
-	arg_1_0._beSelectedGO = gohelper.findChild(arg_1_1, "beselected")
-	arg_1_0._clickThis = gohelper.getClick(arg_1_1)
+local PlayerClothItem = class("PlayerClothItem", ListScrollCell)
+
+function PlayerClothItem:init(go)
+	self._bg = gohelper.findChildImage(go, "bg")
+	self._imgBg = gohelper.findChildSingleImage(go, "skillicon")
+	self._inUseGO = gohelper.findChild(go, "inuse")
+	self._beSelectedGO = gohelper.findChild(go, "beselected")
+	self._clickThis = gohelper.getClick(go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._clickThis:AddClickListener(arg_2_0._onClickThis, arg_2_0)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnModifyHeroGroup, arg_2_0._onChangeClothId, arg_2_0)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, arg_2_0._onChangeClothId, arg_2_0)
+function PlayerClothItem:addEventListeners()
+	self._clickThis:AddClickListener(self._onClickThis, self)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnModifyHeroGroup, self._onChangeClothId, self)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, self._onChangeClothId, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._clickThis:RemoveClickListener()
-	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnModifyHeroGroup, arg_3_0._onChangeClothId, arg_3_0)
-	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnSnapshotSaveSucc, arg_3_0._onChangeClothId, arg_3_0)
+function PlayerClothItem:removeEventListeners()
+	self._clickThis:RemoveClickListener()
+	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnModifyHeroGroup, self._onChangeClothId, self)
+	HeroGroupController.instance:unregisterCallback(HeroGroupEvent.OnSnapshotSaveSucc, self._onChangeClothId, self)
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0.mo = arg_4_1
+function PlayerClothItem:onUpdateMO(mo)
+	self.mo = mo
 
-	local var_4_0 = lua_cloth.configDict[arg_4_1.clothId]
+	local co = lua_cloth.configDict[mo.clothId]
 
-	arg_4_0._imgBg:LoadImage(ResUrl.getPlayerClothIcon(tostring(arg_4_1.clothId)))
+	self._imgBg:LoadImage(ResUrl.getPlayerClothIcon(tostring(mo.clothId)))
 
-	if arg_4_0._view:getFirstSelect() == arg_4_1 then
-		arg_4_0:onSelect(true)
+	local firstSelectMO = self._view:getFirstSelect()
+
+	if firstSelectMO == mo then
+		self:onSelect(true)
 	end
 
-	arg_4_0:_updateOnUse()
+	self:_updateOnUse()
 end
 
-function var_0_0._updateOnUse(arg_5_0)
-	local var_5_0 = PlayerClothListViewModel.instance:getGroupModel()
-	local var_5_1 = var_5_0 and var_5_0:getCurGroupMO()
-	local var_5_2 = (PlayerClothModel.instance:getSpEpisodeClothID() or var_5_1 and var_5_1.clothId) == arg_5_0.mo.clothId
+function PlayerClothItem:_updateOnUse()
+	local groupModel = PlayerClothListViewModel.instance:getGroupModel()
+	local curGroupMO = groupModel and groupModel:getCurGroupMO()
+	local cloth_id = PlayerClothModel.instance:getSpEpisodeClothID() or curGroupMO and curGroupMO.clothId
+	local isUsing = cloth_id == self.mo.clothId
 
-	gohelper.setActive(arg_5_0._beSelectedGO, arg_5_0._isSelect)
-	gohelper.setActive(arg_5_0._inUseGO, var_5_2)
+	gohelper.setActive(self._beSelectedGO, self._isSelect)
+	gohelper.setActive(self._inUseGO, isUsing)
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
-	arg_6_0._isSelect = arg_6_1
+function PlayerClothItem:onSelect(isSelect)
+	self._isSelect = isSelect
 
-	arg_6_0:_updateOnUse()
+	self:_updateOnUse()
 end
 
-function var_0_0._onChangeClothId(arg_7_0)
-	arg_7_0:_updateOnUse()
+function PlayerClothItem:_onChangeClothId()
+	self:_updateOnUse()
 end
 
-function var_0_0._onClickThis(arg_8_0)
+function PlayerClothItem:_onClickThis()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
 	if PlayerClothModel.instance:getSpEpisodeClothID() then
 		return
 	end
 
-	if not arg_8_0._isSelect then
-		PlayerController.instance:dispatchEvent(PlayerEvent.SelectCloth, arg_8_0.mo.clothId)
+	if not self._isSelect then
+		PlayerController.instance:dispatchEvent(PlayerEvent.SelectCloth, self.mo.clothId)
 	end
 end
 
-return var_0_0
+return PlayerClothItem

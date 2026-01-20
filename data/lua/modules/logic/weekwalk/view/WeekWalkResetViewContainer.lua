@@ -1,26 +1,28 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkResetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkResetViewContainer.lua
 
-local var_0_0 = class("WeekWalkResetViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkResetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WeekWalkResetViewContainer = class("WeekWalkResetViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
-	table.insert(var_1_0, WeekWalkResetView.New())
+function WeekWalkResetViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+	table.insert(views, WeekWalkResetView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function WeekWalkResetViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		false,
 		true
 	}, HelpEnum.HelpId.WeekWalkReset)
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-return var_0_0
+return WeekWalkResetViewContainer

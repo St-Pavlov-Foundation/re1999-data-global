@@ -1,27 +1,29 @@
-﻿module("modules.logic.gift.view.OptionalGiftMultipleChoiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gift/view/OptionalGiftMultipleChoiceViewContainer.lua
 
-local var_0_0 = class("OptionalGiftMultipleChoiceViewContainer", BaseViewContainer)
+module("modules.logic.gift.view.OptionalGiftMultipleChoiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local OptionalGiftMultipleChoiceViewContainer = class("OptionalGiftMultipleChoiceViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "root/#scroll_item"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = GiftMultipleChoiceListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 6
-	var_1_1.cellWidth = 200
-	var_1_1.cellHeight = 300
-	var_1_1.cellSpaceH = 41
-	var_1_1.cellSpaceV = 56
-	var_1_1.startSpace = 11
+function OptionalGiftMultipleChoiceViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(GiftMultipleChoiceListModel.instance, var_1_1))
-	table.insert(var_1_0, OptionalGiftMultipleChoiceView.New())
+	scrollParam.scrollGOPath = "root/#scroll_item"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = GiftMultipleChoiceListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 6
+	scrollParam.cellWidth = 200
+	scrollParam.cellHeight = 300
+	scrollParam.cellSpaceH = 41
+	scrollParam.cellSpaceV = 56
+	scrollParam.startSpace = 11
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(GiftMultipleChoiceListModel.instance, scrollParam))
+	table.insert(views, OptionalGiftMultipleChoiceView.New())
+
+	return views
 end
 
-return var_0_0
+return OptionalGiftMultipleChoiceViewContainer

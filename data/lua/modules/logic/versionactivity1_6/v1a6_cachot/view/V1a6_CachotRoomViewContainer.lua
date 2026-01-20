@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoomViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotRoomViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotRoomViewContainer = class("V1a6_CachotRoomViewContainer", BaseViewContainer)
+
+function V1a6_CachotRoomViewContainer:buildViews()
 	return {
 		V1a6_CachotRoomView.New(),
 		V1a6_CachotPlayCtrlView.New(),
@@ -17,4 +19,4 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-return var_0_0
+return V1a6_CachotRoomViewContainer

@@ -1,184 +1,184 @@
-﻿module("modules.logic.herogroup.view.HeroGroupFightViewRule", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupFightViewRule.lua
 
-local var_0_0 = class("HeroGroupFightViewRule", BaseView)
+module("modules.logic.herogroup.view.HeroGroupFightViewRule", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goadditionRule = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule")
-	arg_1_0._goruletemp = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_ruletemp")
-	arg_1_0._imagetagicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_ruletemp/#image_tagicon")
-	arg_1_0._gorulelist = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_rulelist")
-	arg_1_0._btnadditionRuleclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_rulelist/#btn_additionRuleclick")
-	arg_1_0._gobalance = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_balance")
-	arg_1_0._txtBalanceRoleLv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/roleLvTxtbg/roleLvTxt/#txt_roleLv")
-	arg_1_0._txtBalanceEquipLv = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/equipLvTxtbg/equipLvTxt/#txt_equipLv")
-	arg_1_0._txtBalanceTalent = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/talentTxtbg/talentTxt/#txt_talent")
-	arg_1_0._goruledesc = gohelper.findChild(arg_1_0.viewGO, "#go_container2/#go_ruledesc")
+local HeroGroupFightViewRule = class("HeroGroupFightViewRule", BaseView)
 
-	gohelper.setActive(arg_1_0._goruledesc, false)
+function HeroGroupFightViewRule:onInitView()
+	self._goadditionRule = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule")
+	self._goruletemp = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_ruletemp")
+	self._imagetagicon = gohelper.findChildImage(self.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_ruletemp/#image_tagicon")
+	self._gorulelist = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_rulelist")
+	self._btnadditionRuleclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_info/infocontain/#go_additionRule/#go_rulelist/#btn_additionRuleclick")
+	self._gobalance = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/#go_balance")
+	self._txtBalanceRoleLv = gohelper.findChildTextMesh(self.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/roleLvTxtbg/roleLvTxt/#txt_roleLv")
+	self._txtBalanceEquipLv = gohelper.findChildTextMesh(self.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/equipLvTxtbg/equipLvTxt/#txt_equipLv")
+	self._txtBalanceTalent = gohelper.findChildTextMesh(self.viewGO, "#go_container/#scroll_info/infocontain/#go_balance/balancecontain/talentTxtbg/talentTxt/#txt_talent")
+	self._goruledesc = gohelper.findChild(self.viewGO, "#go_container2/#go_ruledesc")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	gohelper.setActive(self._goruledesc, false)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnadditionRuleclick:AddClickListener(arg_2_0._btnadditionRuleOnClick, arg_2_0)
-	arg_2_0:addEventCb(arg_2_0.viewContainer, HeroGroupEvent.SwitchBalance, arg_2_0._refreshUI, arg_2_0)
+function HeroGroupFightViewRule:addEvents()
+	self._btnadditionRuleclick:AddClickListener(self._btnadditionRuleOnClick, self)
+	self:addEventCb(self.viewContainer, HeroGroupEvent.SwitchBalance, self._refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnadditionRuleclick:RemoveClickListener()
-	arg_3_0:removeEventCb(arg_3_0.viewContainer, HeroGroupEvent.SwitchBalance, arg_3_0._refreshUI, arg_3_0)
+function HeroGroupFightViewRule:removeEvents()
+	self._btnadditionRuleclick:RemoveClickListener()
+	self:removeEventCb(self.viewContainer, HeroGroupEvent.SwitchBalance, self._refreshUI, self)
 end
 
-function var_0_0._btncloseruleOnClick(arg_4_0)
-	if arg_4_0._isHardMode then
+function HeroGroupFightViewRule:_btncloseruleOnClick()
+	if self._isHardMode then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeHideRuleDesc)
 	end
 end
 
-function var_0_0._btnadditionRuleOnClick(arg_5_0)
+function HeroGroupFightViewRule:_btnadditionRuleOnClick()
 	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
-		ruleList = arg_5_0._ruleList,
-		closeCb = arg_5_0._btncloseruleOnClick,
-		closeCbObj = arg_5_0
+		ruleList = self._ruleList,
+		closeCb = self._btncloseruleOnClick,
+		closeCbObj = self
 	})
 
-	if arg_5_0._isHardMode then
+	if self._isHardMode then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.HardModeShowRuleDesc)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.setActive(arg_6_0._goruletemp, false)
+function HeroGroupFightViewRule:_editableInitView()
+	gohelper.setActive(self._goruletemp, false)
 
-	arg_6_0._rulesimageList = arg_6_0:getUserDataTb_()
-	arg_6_0._rulesimagelineList = arg_6_0:getUserDataTb_()
-	arg_6_0._simageList = arg_6_0:getUserDataTb_()
+	self._rulesimageList = self:getUserDataTb_()
+	self._rulesimagelineList = self:getUserDataTb_()
+	self._simageList = self:getUserDataTb_()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:_refreshUI()
+function HeroGroupFightViewRule:onOpen()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_8_0)
-	arg_8_0._episodeId = HeroGroupModel.instance.episodeId
-	arg_8_0._battleId = HeroGroupModel.instance.battleId
+function HeroGroupFightViewRule:_refreshUI()
+	self._episodeId = HeroGroupModel.instance.episodeId
+	self._battleId = HeroGroupModel.instance.battleId
 
-	local var_8_0 = DungeonConfig.instance:getEpisodeCO(arg_8_0._episodeId)
-	local var_8_1 = DungeonConfig.instance:getChapterCO(var_8_0.chapterId)
-	local var_8_2, var_8_3, var_8_4 = HeroGroupBalanceHelper.getBalanceLv()
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+	local roleLv, talent, equipLv = HeroGroupBalanceHelper.getBalanceLv()
 
-	if var_8_2 then
-		gohelper.setActive(arg_8_0._gobalance, true)
+	if roleLv then
+		gohelper.setActive(self._gobalance, true)
 
-		arg_8_0._txtBalanceRoleLv.text = HeroConfig.instance:getCommonLevelDisplay(var_8_2)
-		arg_8_0._txtBalanceEquipLv.text = luaLang("level") .. var_8_4
-		arg_8_0._txtBalanceTalent.text = luaLang("level") .. var_8_3
+		self._txtBalanceRoleLv.text = HeroConfig.instance:getCommonLevelDisplay(roleLv)
+		self._txtBalanceEquipLv.text = luaLang("level") .. equipLv
+		self._txtBalanceTalent.text = luaLang("level") .. talent
 	else
-		gohelper.setActive(arg_8_0._gobalance, false)
+		gohelper.setActive(self._gobalance, false)
 	end
 
-	arg_8_0._isHardMode = var_8_1.type == DungeonEnum.ChapterType.Hard
+	self._isHardMode = chapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	local var_8_5
+	local weekwalkMode = chapterConfig.type == DungeonEnum.ChapterType.WeekWalk
 
-	var_8_5 = var_8_1.type == DungeonEnum.ChapterType.WeekWalk
-
-	if var_8_1.type == DungeonEnum.ChapterType.Normal then
-		gohelper.setActive(arg_8_0._goadditionRule, false)
+	if chapterConfig.type == DungeonEnum.ChapterType.Normal then
+		gohelper.setActive(self._goadditionRule, false)
 
 		return
 	end
 
-	local var_8_6 = arg_8_0:_getRuleList(var_8_0)
+	local ruleList = self:_getRuleList(episodeConfig)
 
-	if not var_8_6 or #var_8_6 == 0 then
-		gohelper.setActive(arg_8_0._goadditionRule, false)
+	if not ruleList or #ruleList == 0 then
+		gohelper.setActive(self._goadditionRule, false)
 
 		return
 	end
 
-	arg_8_0._cloneRuleGos = arg_8_0._cloneRuleGos or arg_8_0:getUserDataTb_()
+	self._cloneRuleGos = self._cloneRuleGos or self:getUserDataTb_()
 
-	arg_8_0:_clearRules()
+	self:_clearRules()
 
-	arg_8_0._ruleList = var_8_6
+	self._ruleList = ruleList
 
-	gohelper.setActive(arg_8_0._goadditionRule, true)
+	gohelper.setActive(self._goadditionRule, true)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_6) do
-		local var_8_7 = iter_8_1[1]
-		local var_8_8 = iter_8_1[2]
-		local var_8_9 = lua_rule.configDict[var_8_8]
+	for i, v in ipairs(ruleList) do
+		local targetId = v[1]
+		local ruleId = v[2]
+		local ruleCo = lua_rule.configDict[ruleId]
 
-		if var_8_9 then
-			arg_8_0:_addRuleItem(var_8_9, var_8_7)
+		if ruleCo then
+			self:_addRuleItem(ruleCo, targetId)
 		end
 
-		if iter_8_0 == #var_8_6 then
-			gohelper.setActive(arg_8_0._rulesimagelineList[iter_8_0], false)
+		if i == #ruleList then
+			gohelper.setActive(self._rulesimagelineList[i], false)
 		end
 	end
 end
 
-function var_0_0._getRuleList(arg_9_0, arg_9_1)
-	local var_9_0 = lua_battle.configDict[arg_9_0._battleId]
-	local var_9_1 = var_9_0 and var_9_0.additionRule or ""
-	local var_9_2 = FightStrUtil.instance:getSplitString2Cache(var_9_1, true, "|", "#")
+function HeroGroupFightViewRule:_getRuleList(episodeConfig)
+	local battleCo = lua_battle.configDict[self._battleId]
+	local additionRule = battleCo and battleCo.additionRule or ""
+	local ruleList = FightStrUtil.instance:getSplitString2Cache(additionRule, true, "|", "#")
 
-	if arg_9_1.type == DungeonEnum.EpisodeType.Meilanni then
-		var_9_2 = var_0_0.meilanniExcludeRules(var_9_2)
+	if episodeConfig.type == DungeonEnum.EpisodeType.Meilanni then
+		ruleList = HeroGroupFightViewRule.meilanniExcludeRules(ruleList)
 	end
 
-	return var_9_2
+	return ruleList
 end
 
-function var_0_0._addRuleItem(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = gohelper.clone(arg_10_0._goruletemp, arg_10_0._gorulelist, arg_10_1.id)
+function HeroGroupFightViewRule:_addRuleItem(ruleCo, targetId)
+	local go = gohelper.clone(self._goruletemp, self._gorulelist, ruleCo.id)
 
-	gohelper.setActive(var_10_0, true)
-	table.insert(arg_10_0._cloneRuleGos, var_10_0)
+	gohelper.setActive(go, true)
+	table.insert(self._cloneRuleGos, go)
 
-	local var_10_1 = gohelper.findChildImage(var_10_0, "#image_tagicon")
+	local tagicon = gohelper.findChildImage(go, "#image_tagicon")
 
-	UISpriteSetMgr.instance:setCommonSprite(var_10_1, "wz_" .. arg_10_2)
+	UISpriteSetMgr.instance:setCommonSprite(tagicon, "wz_" .. targetId)
 
-	local var_10_2 = gohelper.findChildImage(var_10_0, "")
+	local simage = gohelper.findChildImage(go, "")
 
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_10_2, arg_10_1.icon)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(simage, ruleCo.icon)
 end
 
-function var_0_0._clearRules(arg_11_0)
-	for iter_11_0 = #arg_11_0._cloneRuleGos, 1, -1 do
-		gohelper.destroy(arg_11_0._cloneRuleGos[iter_11_0])
+function HeroGroupFightViewRule:_clearRules()
+	for i = #self._cloneRuleGos, 1, -1 do
+		gohelper.destroy(self._cloneRuleGos[i])
 
-		arg_11_0._cloneRuleGos[iter_11_0] = nil
+		self._cloneRuleGos[i] = nil
 	end
 end
 
-function var_0_0.meilanniExcludeRules(arg_12_0)
-	if not arg_12_0 or #arg_12_0 == 0 then
+function HeroGroupFightViewRule.meilanniExcludeRules(ruleList)
+	if not ruleList or #ruleList == 0 then
 		return
 	end
 
-	local var_12_0 = MeilanniModel.instance:getCurMapId()
-	local var_12_1 = var_12_0 and MeilanniModel.instance:getMapInfo(var_12_0)
-	local var_12_2 = {}
+	local mapId = MeilanniModel.instance:getCurMapId()
+	local mapInfo = mapId and MeilanniModel.instance:getMapInfo(mapId)
+	local result = {}
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0) do
-		local var_12_3 = iter_12_1[2]
+	for i, v in ipairs(ruleList) do
+		local ruleId = v[2]
 
-		if var_12_1 and not var_12_1:isExcludeRule(var_12_3) then
-			table.insert(var_12_2, iter_12_1)
+		if mapInfo and not mapInfo:isExcludeRule(ruleId) then
+			table.insert(result, v)
 		end
 	end
 
-	return var_12_2
+	return result
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function HeroGroupFightViewRule:onDestroyView()
 	return
 end
 
-return var_0_0
+return HeroGroupFightViewRule

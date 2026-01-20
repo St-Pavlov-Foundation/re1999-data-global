@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_OpenView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoWork_OpenView.lua
 
-local var_0_0 = class("GaoSiNiaoWork_OpenView", GaoSiNiaoWorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_OpenView", package.seeall)
 
-function var_0_0.s_create(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local GaoSiNiaoWork_OpenView = class("GaoSiNiaoWork_OpenView", GaoSiNiaoWorkBase)
 
-	var_1_0._viewName = arg_1_0
+function GaoSiNiaoWork_OpenView.s_create(viewName)
+	local work = GaoSiNiaoWork_OpenView.New()
 
-	return var_1_0
+	work._viewName = viewName
+
+	return work
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:clearWork()
+function GaoSiNiaoWork_OpenView:onStart()
+	self:clearWork()
 
-	local var_2_0 = arg_2_0._viewName
+	local viewName = self._viewName
 
-	if not ViewMgr.instance:isOpen(var_2_0) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
-		ViewMgr.instance:openView(var_2_0)
+	if not ViewMgr.instance:isOpen(viewName) then
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+		ViewMgr.instance:openView(viewName)
 	else
-		arg_2_0:onSucc()
+		self:onSucc()
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_3_0, arg_3_1)
-	if arg_3_0._viewName == arg_3_1 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
-		arg_3_0:onSucc()
+function GaoSiNiaoWork_OpenView:_onOpenViewFinish(viewName)
+	if self._viewName == viewName then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+		self:onSucc()
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	var_0_0.super.clearWork(arg_4_0)
+function GaoSiNiaoWork_OpenView:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	GaoSiNiaoWork_OpenView.super.clearWork(self)
 end
 
-return var_0_0
+return GaoSiNiaoWork_OpenView

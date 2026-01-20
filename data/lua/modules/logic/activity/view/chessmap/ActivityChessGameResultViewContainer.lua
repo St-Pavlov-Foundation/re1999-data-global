@@ -1,13 +1,15 @@
-﻿module("modules.logic.activity.view.chessmap.ActivityChessGameResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/chessmap/ActivityChessGameResultViewContainer.lua
 
-local var_0_0 = class("ActivityChessGameResultViewContainer", BaseViewContainer)
+module("modules.logic.activity.view.chessmap.ActivityChessGameResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityChessGameResultViewContainer = class("ActivityChessGameResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityChessGameResultView.New())
+function ActivityChessGameResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityChessGameResultView.New())
+
+	return views
 end
 
-return var_0_0
+return ActivityChessGameResultViewContainer

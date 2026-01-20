@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotProgressListMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotProgressListMO.lua
 
-local var_0_0 = pureTable("V1a6_CachotProgressListMO")
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotProgressListMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.index = arg_1_1
-	arg_1_0.id = arg_1_2
-	arg_1_0.isLocked = arg_1_3
+local V1a6_CachotProgressListMO = pureTable("V1a6_CachotProgressListMO")
+
+function V1a6_CachotProgressListMO:init(index, id, isLocked)
+	self.index = index
+	self.id = id
+	self.isLocked = isLocked
 end
 
-function var_0_0.getLineWidth(arg_2_0)
-	if not arg_2_0.isLocked then
+function V1a6_CachotProgressListMO:getLineWidth()
+	if not self.isLocked then
 		return V1a6_CachotEnum.UnLockedRewardItemWidth
 	end
 
-	local var_2_0 = V1a6_CachotProgressListModel.instance._scrollViews
-	local var_2_1 = var_2_0 and var_2_0[1]
-	local var_2_2 = 0
+	local scrollViews = V1a6_CachotProgressListModel.instance._scrollViews
+	local scroll = scrollViews and scrollViews[1]
+	local scrollWidth = 0
 
-	if var_2_1 then
-		local var_2_3 = var_2_1:getCsScroll()
+	if scroll then
+		local csListView = scroll:getCsScroll()
 
-		var_2_2 = recthelper.getWidth(var_2_3.transform)
+		scrollWidth = recthelper.getWidth(csListView.transform)
 	end
 
-	local var_2_4 = V1a6_CachotEnum.LockedRewardItemWidth
-	local var_2_5 = (arg_2_0.index - 1) * V1a6_CachotEnum.UnLockedRewardItemWidth - var_2_2
+	local lockedRewardItemWidth = V1a6_CachotEnum.LockedRewardItemWidth
+	local nearScrollEdgeDistance = (self.index - 1) * V1a6_CachotEnum.UnLockedRewardItemWidth - scrollWidth
 
-	if var_2_5 < 0 then
-		var_2_4 = math.abs(var_2_5)
+	if nearScrollEdgeDistance < 0 then
+		lockedRewardItemWidth = math.abs(nearScrollEdgeDistance)
 	end
 
-	return var_2_4
+	return lockedRewardItemWidth
 end
 
-function var_0_0.computeLockedItemWidth(arg_3_0)
+function V1a6_CachotProgressListMO:computeLockedItemWidth()
 	return
 end
 
-return var_0_0
+return V1a6_CachotProgressListMO

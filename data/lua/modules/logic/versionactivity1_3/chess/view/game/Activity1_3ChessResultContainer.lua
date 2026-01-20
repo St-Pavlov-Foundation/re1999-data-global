@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessResultContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/game/Activity1_3ChessResultContainer.lua
 
-local var_0_0 = class("Activity1_3ChessResultContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessResultContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity1_3ChessResultContainer = class("Activity1_3ChessResultContainer", BaseViewContainer)
 
-	arg_1_0._resultview = Activity1_3ChessResultView.New()
-	var_1_0[#var_1_0 + 1] = arg_1_0._resultview
+function Activity1_3ChessResultContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	self._resultview = Activity1_3ChessResultView.New()
+	views[#views + 1] = self._resultview
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Activity1_3ChessResultContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity1_3ChessResultContainer

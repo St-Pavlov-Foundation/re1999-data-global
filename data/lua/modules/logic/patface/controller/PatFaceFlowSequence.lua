@@ -1,63 +1,69 @@
-﻿module("modules.logic.patface.controller.PatFaceFlowSequence", package.seeall)
+﻿-- chunkname: @modules/logic/patface/controller/PatFaceFlowSequence.lua
 
-local var_0_0 = class("PatFaceFlowSequence", FlowSequence)
-local var_0_1 = "PatFaceUIBlock"
+module("modules.logic.patface.controller.PatFaceFlowSequence", package.seeall)
 
-function var_0_0.isContinuePopView(arg_1_0)
-	return arg_1_0._curIndex < #arg_1_0._workList
+local PatFaceFlowSequence = class("PatFaceFlowSequence", FlowSequence)
+local PAT_FACE_BLOCK = "PatFaceUIBlock"
+
+function PatFaceFlowSequence:isContinuePopView()
+	return self._curIndex < #self._workList
 end
 
-function var_0_0._runNext(arg_2_0)
-	local var_2_0 = arg_2_0._curIndex + 1
+function PatFaceFlowSequence:_runNext()
+	local tmpNextIndex = self._curIndex + 1
 
-	if var_2_0 > #arg_2_0._workList then
-		arg_2_0._curIndex = var_2_0
+	if tmpNextIndex > #self._workList then
+		self._curIndex = tmpNextIndex
 
-		arg_2_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	UIBlockMgr.instance:startBlock(var_0_1)
-	arg_2_0:_waitInMainView()
+	UIBlockMgr.instance:startBlock(PAT_FACE_BLOCK)
+	self:_waitInMainView()
 end
 
-function var_0_0._waitInMainView(arg_3_0)
-	UIBlockMgr.instance:endBlock(var_0_1)
+function PatFaceFlowSequence:_waitInMainView()
+	UIBlockMgr.instance:endBlock(PAT_FACE_BLOCK)
 
-	if MainController.instance:isInMainView() then
-		var_0_0.super._runNext(arg_3_0)
+	local isInMainView = MainController.instance:isInMainView()
+
+	if isInMainView then
+		PatFaceFlowSequence.super._runNext(self)
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._viewChangeCheckIsInMainView, arg_3_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._viewChangeCheckIsInMainView, self)
 	end
 end
 
-function var_0_0._removeViewChangeEvent(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._viewChangeCheckIsInMainView, arg_4_0)
+function PatFaceFlowSequence:_removeViewChangeEvent()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._viewChangeCheckIsInMainView, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_5_0, arg_5_1)
-	if arg_5_1 ~= ViewName.MainView then
+function PatFaceFlowSequence:_onOpenViewFinish(viewName)
+	if viewName ~= ViewName.MainView then
 		return
 	end
 
-	arg_5_0:_viewChangeCheckIsInMainView()
+	self:_viewChangeCheckIsInMainView()
 end
 
-function var_0_0._viewChangeCheckIsInMainView(arg_6_0)
-	if not MainController.instance:isInMainView() then
+function PatFaceFlowSequence:_viewChangeCheckIsInMainView()
+	local isInMainView = MainController.instance:isInMainView()
+
+	if not isInMainView then
 		return
 	end
 
-	arg_6_0:_removeViewChangeEvent()
-	arg_6_0:_runNext()
+	self:_removeViewChangeEvent()
+	self:_runNext()
 end
 
-function var_0_0.clearWork(arg_7_0)
-	arg_7_0:_removeViewChangeEvent()
-	UIBlockMgr.instance:endBlock(var_0_1)
+function PatFaceFlowSequence:clearWork()
+	self:_removeViewChangeEvent()
+	UIBlockMgr.instance:endBlock(PAT_FACE_BLOCK)
 end
 
-return var_0_0
+return PatFaceFlowSequence

@@ -1,9 +1,11 @@
-﻿module("modules.logic.store.defines.PackageStoreEnum", package.seeall)
+﻿-- chunkname: @modules/logic/store/defines/PackageStoreEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.store.defines.PackageStoreEnum", package.seeall)
 
-var_0_0.AnimHeadDict = {
+local PackageStoreEnum = _M
+
+PackageStoreEnum.AnimHeadDict = {
 	[6142802] = true
 }
 
-return var_0_0
+return PackageStoreEnum

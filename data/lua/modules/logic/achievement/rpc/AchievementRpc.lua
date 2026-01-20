@@ -1,67 +1,69 @@
-﻿module("modules.logic.achievement.rpc.AchievementRpc", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/rpc/AchievementRpc.lua
 
-local var_0_0 = class("AchievementRpc", BaseRpc)
+module("modules.logic.achievement.rpc.AchievementRpc", package.seeall)
 
-function var_0_0.sendGetAchievementInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = AchievementModule_pb.GetAchievementInfoRequest()
+local AchievementRpc = class("AchievementRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function AchievementRpc:sendGetAchievementInfoRequest(callback, callbackObj)
+	local req = AchievementModule_pb.GetAchievementInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetAchievementInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		AchievementModel.instance:initDatas(arg_2_2.infos)
+function AchievementRpc:onReceiveGetAchievementInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		AchievementModel.instance:initDatas(msg.infos)
 		AchievementController.instance:onUpdateAchievements()
 		AchievementController.instance:dispatchEvent(AchievementEvent.UpdateAchievements)
 	end
 end
 
-function var_0_0.onReceiveUpdateAchievementPush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == 0 then
-		AchievementModel.instance:updateDatas(arg_3_2.infos)
-		AchievementToastModel.instance:updateNeedPushToast(arg_3_2.infos)
+function AchievementRpc:onReceiveUpdateAchievementPush(resultCode, msg)
+	if resultCode == 0 then
+		AchievementModel.instance:updateDatas(msg.infos)
+		AchievementToastModel.instance:updateNeedPushToast(msg.infos)
 		AchievementController.instance:onUpdateAchievements()
 		AchievementToastController.instance:onUpdateAchievements()
 		AchievementController.instance:dispatchEvent(AchievementEvent.UpdateAchievements)
 	end
 end
 
-function var_0_0.sendShowAchievementRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local var_4_0 = AchievementModule_pb.ShowAchievementRequest()
+function AchievementRpc:sendShowAchievementRequest(idList, groupId, callback, callbackObj)
+	local req = AchievementModule_pb.ShowAchievementRequest()
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		var_4_0.ids:append(iter_4_1)
+	for i, id in ipairs(idList) do
+		req.ids:append(id)
 	end
 
-	var_4_0.groupId = arg_4_2
+	req.groupId = groupId
 
-	return arg_4_0:sendMsg(var_4_0, arg_4_3, arg_4_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveShowAchievementReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
+function AchievementRpc:onReceiveShowAchievementReply(resultCode, msg)
+	if resultCode == 0 then
 		GameFacade.showToast(ToastEnum.AchievementSaveSucc)
 		AchievementController.instance:dispatchEvent(AchievementEvent.AchievementSaveSucc)
 		AchievementStatController.instance:onSaveDisplayAchievementsSucc()
 	end
 end
 
-function var_0_0.sendReadNewAchievementRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = AchievementModule_pb.ReadNewAchievementRequest()
+function AchievementRpc:sendReadNewAchievementRequest(idList, callback, callbackObj)
+	local req = AchievementModule_pb.ReadNewAchievementRequest()
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		var_6_0.ids:append(iter_6_1)
+	for i, id in ipairs(idList) do
+		req.ids:append(id)
 	end
 
-	return arg_6_0:sendMsg(var_6_0, arg_6_2, arg_6_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveReadNewAchievementReply(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == 0 and AchievementModel.instance:cleanAchievementNew(arg_7_2.ids) then
+function AchievementRpc:onReceiveReadNewAchievementReply(resultCode, msg)
+	if resultCode == 0 and AchievementModel.instance:cleanAchievementNew(msg.ids) then
 		AchievementController.instance:dispatchEvent(AchievementEvent.UpdateAchievements)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementRpc.instance = AchievementRpc.New()
 
-return var_0_0
+return AchievementRpc

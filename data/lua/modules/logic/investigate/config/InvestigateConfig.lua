@@ -1,8 +1,10 @@
-﻿module("modules.logic.investigate.config.InvestigateConfig", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/config/InvestigateConfig.lua
 
-local var_0_0 = class("InvestigateConfig", BaseConfig)
+module("modules.logic.investigate.config.InvestigateConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local InvestigateConfig = class("InvestigateConfig", BaseConfig)
+
+function InvestigateConfig:reqConfigNames()
 	return {
 		"investigate_info",
 		"investigate_clue",
@@ -10,71 +12,71 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == "investigate_info" then
-		arg_2_0:_initInvestigateInfo()
-	elseif arg_2_1 == "investigate_clue" then
-		arg_2_0:_initInvestigateClue()
+function InvestigateConfig:onConfigLoaded(configName, configTable)
+	if configName == "investigate_info" then
+		self:_initInvestigateInfo()
+	elseif configName == "investigate_clue" then
+		self:_initInvestigateClue()
 	end
 end
 
-function var_0_0._initInvestigateClue(arg_3_0)
-	arg_3_0._investigateAllClueInfos = {}
-	arg_3_0._investigateRelatedClueInfos = {}
-	arg_3_0._investigateMapElementInfos = {}
+function InvestigateConfig:_initInvestigateClue()
+	self._investigateAllClueInfos = {}
+	self._investigateRelatedClueInfos = {}
+	self._investigateMapElementInfos = {}
 
-	for iter_3_0, iter_3_1 in ipairs(lua_investigate_clue.configList) do
-		arg_3_0._investigateAllClueInfos[iter_3_1.infoID] = arg_3_0._investigateAllClueInfos[iter_3_1.infoID] or {}
+	for i, v in ipairs(lua_investigate_clue.configList) do
+		self._investigateAllClueInfos[v.infoID] = self._investigateAllClueInfos[v.infoID] or {}
 
-		table.insert(arg_3_0._investigateAllClueInfos[iter_3_1.infoID], iter_3_1)
+		table.insert(self._investigateAllClueInfos[v.infoID], v)
 
-		arg_3_0._investigateRelatedClueInfos[iter_3_1.infoID] = arg_3_0._investigateRelatedClueInfos[iter_3_1.infoID] or {}
+		self._investigateRelatedClueInfos[v.infoID] = self._investigateRelatedClueInfos[v.infoID] or {}
 
-		table.insert(arg_3_0._investigateRelatedClueInfos[iter_3_1.infoID], iter_3_1)
+		table.insert(self._investigateRelatedClueInfos[v.infoID], v)
 
-		if iter_3_1.mapElement > 0 then
-			arg_3_0._investigateMapElementInfos[iter_3_1.mapElement] = iter_3_1
+		if v.mapElement > 0 then
+			self._investigateMapElementInfos[v.mapElement] = v
 		end
 	end
 end
 
-function var_0_0.getInvestigateClueInfoByElement(arg_4_0, arg_4_1)
-	return arg_4_0._investigateMapElementInfos[arg_4_1]
+function InvestigateConfig:getInvestigateClueInfoByElement(mapElement)
+	return self._investigateMapElementInfos[mapElement]
 end
 
-function var_0_0.getInvestigateAllClueInfos(arg_5_0, arg_5_1)
-	return arg_5_0._investigateAllClueInfos[arg_5_1]
+function InvestigateConfig:getInvestigateAllClueInfos(group)
+	return self._investigateAllClueInfos[group]
 end
 
-function var_0_0.getInvestigateRelatedClueInfos(arg_6_0, arg_6_1)
-	return arg_6_0._investigateRelatedClueInfos[arg_6_1]
+function InvestigateConfig:getInvestigateRelatedClueInfos(group)
+	return self._investigateRelatedClueInfos[group]
 end
 
-function var_0_0._initInvestigateInfo(arg_7_0)
-	arg_7_0._roleEntranceInfos = {}
-	arg_7_0._roleGroupInfos = {}
+function InvestigateConfig:_initInvestigateInfo()
+	self._roleEntranceInfos = {}
+	self._roleGroupInfos = {}
 
-	for iter_7_0, iter_7_1 in ipairs(lua_investigate_info.configList) do
-		if not arg_7_0._roleEntranceInfos[iter_7_1.entrance] then
-			arg_7_0._roleEntranceInfos[iter_7_1.entrance] = iter_7_1
+	for i, v in ipairs(lua_investigate_info.configList) do
+		if not self._roleEntranceInfos[v.entrance] then
+			self._roleEntranceInfos[v.entrance] = v
 		end
 
-		local var_7_0 = arg_7_0._roleGroupInfos[iter_7_1.group] or {}
+		local list = self._roleGroupInfos[v.group] or {}
 
-		table.insert(var_7_0, iter_7_1)
+		table.insert(list, v)
 
-		arg_7_0._roleGroupInfos[iter_7_1.group] = var_7_0
+		self._roleGroupInfos[v.group] = list
 	end
 end
 
-function var_0_0.getRoleEntranceInfos(arg_8_0)
-	return arg_8_0._roleEntranceInfos
+function InvestigateConfig:getRoleEntranceInfos()
+	return self._roleEntranceInfos
 end
 
-function var_0_0.getRoleGroupInfoList(arg_9_0, arg_9_1)
-	return arg_9_0._roleGroupInfos[arg_9_1]
+function InvestigateConfig:getRoleGroupInfoList(groupId)
+	return self._roleGroupInfos[groupId]
 end
 
-var_0_0.instance = var_0_0.New()
+InvestigateConfig.instance = InvestigateConfig.New()
 
-return var_0_0
+return InvestigateConfig

@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessPieceMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/mo/WarChessPieceMO.lua
 
-local var_0_0 = class("WarChessPieceMO")
+module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessPieceMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.battle = arg_1_1.battle
-	arg_1_0.teamType = arg_1_1.teamType
-	arg_1_0.displacementState = arg_1_1.displacementState
+local WarChessPieceMO = class("WarChessPieceMO")
 
-	if arg_1_1.skill then
-		arg_1_0.skill = GameUtil.rpcInfosToList(arg_1_1.skill, WarChessPieceSkillMO)
+function WarChessPieceMO:init(info)
+	self.uid = info.uid
+	self.id = info.id
+	self.battle = info.battle
+	self.teamType = info.teamType
+	self.displacementState = info.displacementState
+
+	if info.skill then
+		self.skill = GameUtil.rpcInfosToList(info.skill, WarChessPieceSkillMO)
 	end
 end
 
-function var_0_0.updatePower(arg_2_0, arg_2_1)
-	arg_2_0.battle = math.max(arg_2_0.battle + arg_2_1, 0)
+function WarChessPieceMO:updatePower(diffValue)
+	self.battle = math.max(self.battle + diffValue, 0)
 end
 
-function var_0_0.updateDisplacementState(arg_3_0, arg_3_1)
-	arg_3_0.displacementState = arg_3_1
+function WarChessPieceMO:updateDisplacementState(displacementState)
+	self.displacementState = displacementState
 end
 
-function var_0_0.canActiveMove(arg_4_0)
-	if arg_4_0.displacementState then
-		local var_4_0 = EliminateLevelModel.instance:getRoundNumber()
-		local var_4_1 = arg_4_0.displacementState.totalUseCountLimit
-		local var_4_2 = arg_4_0.displacementState.totalUseCount
-		local var_4_3 = arg_4_0.displacementState.effectRound
-		local var_4_4 = 0
+function WarChessPieceMO:canActiveMove()
+	if self.displacementState then
+		local curRound = EliminateLevelModel.instance:getRoundNumber()
+		local totalUseCountLimit = self.displacementState.totalUseCountLimit
+		local totalUseCount = self.displacementState.totalUseCount
+		local effectRound = self.displacementState.effectRound
+		local roundUseCount = 0
 
-		if arg_4_0.displacementState.roundUseCount then
-			for iter_4_0, iter_4_1 in ipairs(arg_4_0.displacementState.roundUseCount) do
-				if iter_4_1.round == var_4_0 then
-					var_4_4 = iter_4_1.count
+		if self.displacementState.roundUseCount then
+			for _, roundData in ipairs(self.displacementState.roundUseCount) do
+				if roundData.round == curRound then
+					roundUseCount = roundData.count
 				end
 			end
 		end
 
-		local var_4_5 = arg_4_0.displacementState.perRoundUseCountLimit
+		local roundUseCountLimit = self.displacementState.perRoundUseCountLimit
 
-		if var_4_3 <= var_4_0 and var_4_4 < var_4_5 and var_4_2 < var_4_1 then
+		if effectRound <= curRound and roundUseCount < roundUseCountLimit and totalUseCount < totalUseCountLimit then
 			return true
 		end
 	end
@@ -48,20 +50,20 @@ function var_0_0.canActiveMove(arg_4_0)
 	return false
 end
 
-function var_0_0.getDisplacementState(arg_5_0)
-	return arg_5_0.displacementState
+function WarChessPieceMO:getDisplacementState()
+	return self.displacementState
 end
 
-function var_0_0.updateSkillGrowUp(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0.skill == nil then
+function WarChessPieceMO:updateSkillGrowUp(skillId, upValue)
+	if self.skill == nil then
 		return false
 	end
 
-	for iter_6_0 = 1, #arg_6_0.skill do
-		local var_6_0 = arg_6_0.skill[iter_6_0]
+	for i = 1, #self.skill do
+		local skill = self.skill[i]
 
-		if var_6_0.id == arg_6_1 then
-			var_6_0:updateSkillGrowUp(arg_6_2)
+		if skill.id == skillId then
+			skill:updateSkillGrowUp(upValue)
 
 			return true
 		end
@@ -70,48 +72,48 @@ function var_0_0.updateSkillGrowUp(arg_6_0, arg_6_1, arg_6_2)
 	return false
 end
 
-function var_0_0.getSkill(arg_7_0, arg_7_1)
-	if arg_7_0.skill == nil then
+function WarChessPieceMO:getSkill(skillId)
+	if self.skill == nil then
 		return nil
 	end
 
-	for iter_7_0 = 1, #arg_7_0.skill do
-		local var_7_0 = arg_7_0.skill[iter_7_0]
+	for i = 1, #self.skill do
+		local skill = self.skill[i]
 
-		if var_7_0.id == arg_7_1 then
-			return var_7_0
+		if skill.id == skillId then
+			return skill
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getActiveSkill(arg_8_0)
-	if arg_8_0.skill ~= nil and #arg_8_0.skill > 0 then
-		return arg_8_0.skill[1]
+function WarChessPieceMO:getActiveSkill()
+	if self.skill ~= nil and #self.skill > 0 then
+		return self.skill[1]
 	end
 end
 
-function var_0_0.diffData(arg_9_0, arg_9_1)
-	local var_9_0 = true
+function WarChessPieceMO:diffData(data)
+	local isSame = true
 
-	if arg_9_0.battle ~= arg_9_1.battle then
-		var_9_0 = false
+	if self.battle ~= data.battle then
+		isSame = false
 	end
 
-	if arg_9_0.teamType ~= arg_9_1.teamType then
-		var_9_0 = false
+	if self.teamType ~= data.teamType then
+		isSame = false
 	end
 
-	if arg_9_0.uid ~= arg_9_1.uid then
-		var_9_0 = false
+	if self.uid ~= data.uid then
+		isSame = false
 	end
 
-	if arg_9_0.id ~= arg_9_1.id then
-		var_9_0 = false
+	if self.id ~= data.id then
+		isSame = false
 	end
 
-	return var_9_0
+	return isSame
 end
 
-return var_0_0
+return WarChessPieceMO

@@ -1,15 +1,17 @@
-﻿module("modules.logic.explore.view.ExploreArchivesViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreArchivesViewContainer.lua
 
-local var_0_0 = class("ExploreArchivesViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreArchivesViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreArchivesViewContainer = class("ExploreArchivesViewContainer", BaseViewContainer)
+
+function ExploreArchivesViewContainer:buildViews()
 	return {
 		ExploreArchivesView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function ExploreArchivesViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,4 +21,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return ExploreArchivesViewContainer

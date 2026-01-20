@@ -1,33 +1,35 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutRenameView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutRenameView.lua
 
-local var_0_0 = class("RoomLayoutRenameView", RoomLayoutInputBaseView)
+module("modules.logic.room.view.layout.RoomLayoutRenameView", package.seeall)
 
-function var_0_0._btnsureOnClick(arg_1_0)
-	local var_1_0 = arg_1_0._inputsignature:GetText()
+local RoomLayoutRenameView = class("RoomLayoutRenameView", RoomLayoutInputBaseView)
 
-	if string.nilorempty(var_1_0) then
+function RoomLayoutRenameView:_btnsureOnClick()
+	local inputStr = self._inputsignature:GetText()
+
+	if string.nilorempty(inputStr) then
 		GameFacade.showToast(RoomEnum.Toast.LayoutRenameEmpty)
 
 		return
 	end
 
-	if arg_1_0._layoutMO then
-		RoomLayoutController.instance:sendSetRoomPlanNameRpc(arg_1_0._layoutMO.id, var_1_0)
+	if self._layoutMO then
+		RoomLayoutController.instance:sendSetRoomPlanNameRpc(self._layoutMO.id, inputStr)
 	end
 end
 
-function var_0_0._refreshInitUI(arg_2_0)
-	local var_2_0 = RoomLayoutListModel.instance:getSelectMO()
+function RoomLayoutRenameView:_refreshInitUI()
+	local layoutMO = RoomLayoutListModel.instance:getSelectMO()
 
-	arg_2_0._layoutMO = var_2_0
+	self._layoutMO = layoutMO
 
-	if var_2_0 then
-		arg_2_0._inputsignature:SetText(var_2_0:getName())
+	if layoutMO then
+		self._inputsignature:SetText(layoutMO:getName())
 	end
 
-	arg_2_0._txttitlecn.text = luaLang("room_layoutplan_rename_title")
-	arg_2_0._txttitleen.text = "RENAME"
-	arg_2_0._txtbtnsurecn.text = luaLang("sure")
+	self._txttitlecn.text = luaLang("room_layoutplan_rename_title")
+	self._txttitleen.text = "RENAME"
+	self._txtbtnsurecn.text = luaLang("sure")
 end
 
-return var_0_0
+return RoomLayoutRenameView

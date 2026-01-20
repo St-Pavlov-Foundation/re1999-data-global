@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.rpc.SportsNewsRpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/rpc/SportsNewsRpc.lua
 
-local var_0_0 = class("SportsNewsRpc", BaseRpc)
+module("modules.logic.versionactivity1_5.sportsnews.rpc.SportsNewsRpc", package.seeall)
 
-function var_0_0.sendFinishReadTaskRequest(arg_1_0, arg_1_1, arg_1_2)
-	return TaskRpc.instance:sendFinishReadTaskRequest(arg_1_2)
+local SportsNewsRpc = class("SportsNewsRpc", BaseRpc)
+
+function SportsNewsRpc:sendFinishReadTaskRequest(actId, orderId)
+	return TaskRpc.instance:sendFinishReadTaskRequest(orderId)
 end
 
-var_0_0.instance = var_0_0.New()
+SportsNewsRpc.instance = SportsNewsRpc.New()
 
-return var_0_0
+return SportsNewsRpc

@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.view.FightSuccViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSuccViewContainer.lua
 
-local var_0_0 = class("FightSuccViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightSuccViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.fightSuccActView = FightSuccActView.New()
+local FightSuccViewContainer = class("FightSuccViewContainer", BaseViewContainer)
 
-	local var_1_0 = {
+function FightSuccViewContainer:buildViews()
+	self.fightSuccActView = FightSuccActView.New()
+
+	local views = {
 		FightSuccView.New(),
-		arg_1_0.fightSuccActView
+		self.fightSuccActView
 	}
 
 	if isDebugBuild and GMBattleModel.instance.enableGMFightRecord then
-		table.insert(var_1_0, FightGMRecordView.New())
+		table.insert(views, FightGMRecordView.New())
 	end
 
-	return var_1_0
+	return views
 end
 
-return var_0_0
+return FightSuccViewContainer

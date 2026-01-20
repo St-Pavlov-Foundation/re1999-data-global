@@ -1,74 +1,72 @@
-﻿module("modules.logic.fight.mgr.FightPerformanceMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightPerformanceMgr.lua
 
-local var_0_0 = class("FightPerformanceMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightPerformanceMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.gamePlayMgr = {}
-	arg_1_0.userDataMgrList = {}
+local FightPerformanceMgr = class("FightPerformanceMgr", FightBaseClass)
 
-	arg_1_0:com_registMsg(FightMsgId.RestartGame, arg_1_0._onRestartGame)
+function FightPerformanceMgr:onConstructor()
+	self.gamePlayMgr = {}
+	self.userDataMgrList = {}
+
+	self:com_registMsg(FightMsgId.RestartGame, self._onRestartGame)
 end
 
-function var_0_0.onLogicEnter(arg_2_0)
-	arg_2_0:registFightMgr()
-	arg_2_0:registGamePlayMgr()
+function FightPerformanceMgr:onLogicEnter()
+	self:registFightMgr()
+	self:registGamePlayMgr()
 end
 
-function var_0_0.registFightMgr(arg_3_0)
+function FightPerformanceMgr:registFightMgr()
 	return
 end
 
-function var_0_0.registGamePlayMgr(arg_4_0)
-	arg_4_0:registGamePlayClass(FightEntityEvolutionMgr)
-	arg_4_0:registGamePlayClass(FightBuffTypeId2EffectMgr)
-	arg_4_0:registGamePlayClass(FightEntrustedWorkMgr)
-
-	arg_4_0.asfdMgr = arg_4_0:registerUserDataClass(FightASFDMgr)
+function FightPerformanceMgr:registGamePlayMgr()
+	self.asfdMgr = self:registerUserDataClass(FightASFDMgr)
 end
 
-function var_0_0.registGamePlayClass(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:newClass(arg_5_1)
+function FightPerformanceMgr:registGamePlayClass(class)
+	local mgr = self:newClass(class)
 
-	table.insert(arg_5_0.gamePlayMgr, var_5_0)
+	table.insert(self.gamePlayMgr, mgr)
 
-	return var_5_0
+	return mgr
 end
 
-function var_0_0.registerUserDataClass(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.New()
+function FightPerformanceMgr:registerUserDataClass(class)
+	local mgr = class.New()
 
-	var_6_0:init()
-	table.insert(arg_6_0.userDataMgrList, var_6_0)
+	mgr:init()
+	table.insert(self.userDataMgrList, mgr)
 
-	return var_6_0
+	return mgr
 end
 
-function var_0_0._onRestartGame(arg_7_0)
-	for iter_7_0 = #arg_7_0.gamePlayMgr, 1, -1 do
-		arg_7_0.gamePlayMgr[iter_7_0]:disposeSelf()
+function FightPerformanceMgr:_onRestartGame()
+	for i = #self.gamePlayMgr, 1, -1 do
+		self.gamePlayMgr[i]:disposeSelf()
 	end
 
-	tabletool.clear(arg_7_0.gamePlayMgr)
-	arg_7_0:clearUserDataMgr()
-	arg_7_0:registGamePlayMgr()
+	tabletool.clear(self.gamePlayMgr)
+	self:clearUserDataMgr()
+	self:registGamePlayMgr()
 end
 
-function var_0_0.clearUserDataMgr(arg_8_0)
-	for iter_8_0 = #arg_8_0.userDataMgrList, 1, -1 do
-		arg_8_0.userDataMgrList[iter_8_0]:dispose()
+function FightPerformanceMgr:clearUserDataMgr()
+	for i = #self.userDataMgrList, 1, -1 do
+		self.userDataMgrList[i]:dispose()
 	end
 
-	tabletool.clear(arg_8_0.userDataMgrList)
+	tabletool.clear(self.userDataMgrList)
 
-	arg_8_0.asfdMgr = nil
+	self.asfdMgr = nil
 end
 
-function var_0_0.getASFDMgr(arg_9_0)
-	return arg_9_0.asfdMgr
+function FightPerformanceMgr:getASFDMgr()
+	return self.asfdMgr
 end
 
-function var_0_0.onDestructor(arg_10_0)
-	arg_10_0:clearUserDataMgr()
+function FightPerformanceMgr:onDestructor()
+	self:clearUserDataMgr()
 end
 
-return var_0_0
+return FightPerformanceMgr

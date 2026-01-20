@@ -1,29 +1,33 @@
-﻿module("modules.logic.backpack.model.MaterialDataMO", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/model/MaterialDataMO.lua
 
-local var_0_0 = pureTable("MaterialDataMO")
+module("modules.logic.backpack.model.MaterialDataMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.materilType = nil
-	arg_1_0.materilId = nil
-	arg_1_0.quantity = nil
-	arg_1_0.uid = nil
-	arg_1_0.roomBuildingLevel = nil
+local MaterialDataMO = pureTable("MaterialDataMO")
+
+function MaterialDataMO:ctor()
+	self.materilType = nil
+	self.materilId = nil
+	self.quantity = nil
+	self.getApproach = nil
+	self.uid = nil
+	self.roomBuildingLevel = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.materilType = arg_2_1.materilType
-	arg_2_0.materilId = arg_2_1.materilId
-	arg_2_0.quantity = arg_2_1.quantity
-	arg_2_0.uid = arg_2_1.uid
-	arg_2_0.roomBuildingLevel = arg_2_1.roomBuildingLevel
+function MaterialDataMO:init(info)
+	self.materilType = info.materilType
+	self.materilId = info.materilId
+	self.quantity = info.quantity
+	self.uid = info.uid
+	self.roomBuildingLevel = info.roomBuildingLevel
 end
 
-function var_0_0.initValue(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	arg_3_0.materilType = arg_3_1
-	arg_3_0.materilId = arg_3_2
-	arg_3_0.quantity = arg_3_3
-	arg_3_0.uid = arg_3_4
-	arg_3_0.roomBuildingLevel = arg_3_5
+function MaterialDataMO:initValue(type, id, quantity, uid, roomBuildingLevel, getApproach)
+	self.materilType = type
+	self.materilId = id
+	self.quantity = quantity
+	self.uid = uid
+	self.getApproach = getApproach
+	self.roomBuildingLevel = roomBuildingLevel
 end
 
-return var_0_0
+return MaterialDataMO

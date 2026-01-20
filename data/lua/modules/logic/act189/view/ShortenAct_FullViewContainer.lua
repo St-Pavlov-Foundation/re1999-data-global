@@ -1,12 +1,14 @@
-﻿module("modules.logic.act189.view.ShortenAct_FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/act189/view/ShortenAct_FullViewContainer.lua
 
-local var_0_0 = class("ShortenAct_FullViewContainer", ShortenActViewContainer_impl)
+module("modules.logic.act189.view.ShortenAct_FullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ShortenAct_FullViewContainer = class("ShortenAct_FullViewContainer", ShortenActViewContainer_impl)
+
+function ShortenAct_FullViewContainer:buildViews()
 	return {
-		arg_1_0:taskScrollView(),
+		self:taskScrollView(),
 		ShortenAct_FullView.New()
 	}
 end
 
-return var_0_0
+return ShortenAct_FullViewContainer

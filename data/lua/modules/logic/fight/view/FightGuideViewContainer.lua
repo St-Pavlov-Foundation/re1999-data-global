@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.view.FightGuideViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightGuideViewContainer.lua
 
-local var_0_0 = class("FightGuideViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightGuideViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightGuideViewContainer = class("FightGuideViewContainer", BaseViewContainer)
+
+function FightGuideViewContainer:buildViews()
 	return {
 		FightGuideView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function FightGuideViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return FightGuideViewContainer

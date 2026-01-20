@@ -1,11 +1,13 @@
-﻿module("modules.logic.prototest.model.ProtoFileHelper", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/model/ProtoFileHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.prototest.model.ProtoFileHelper", package.seeall)
 
-var_0_0.DirPath = SLFramework.FrameworkSettings.StreamingAssetsPath .. "/prototest/"
+local ProtoFileHelper = _M
 
-function var_0_0.getFullPathByFileName(arg_1_0)
-	return var_0_0.DirPath .. arg_1_0 .. ".json"
+ProtoFileHelper.DirPath = SLFramework.FrameworkSettings.StreamingAssetsPath .. "/prototest/"
+
+function ProtoFileHelper.getFullPathByFileName(fileName)
+	return ProtoFileHelper.DirPath .. fileName .. ".json"
 end
 
-return var_0_0
+return ProtoFileHelper

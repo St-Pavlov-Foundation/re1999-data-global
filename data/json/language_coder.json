@@ -1765,15 +1765,15 @@
   },
   {
     "id": "not_purchase",
-    "lang": "language_10029679"
+    "lang": "language_10100338"
   },
   {
     "id": "not_enough_one_day",
-    "lang": "language_10029680"
+    "lang": "language_10100339"
   },
   {
     "id": "remain_day",
-    "lang": "language_10029681"
+    "lang": "language_10100340"
   },
   {
     "id": "today_reward",
@@ -4705,7 +4705,7 @@
   },
   {
     "id": "bp_sp_rule",
-    "lang": "language_10055609"
+    "lang": "language_10100341"
   },
   {
     "id": "bp_sp_level",
@@ -7414,6 +7414,454 @@
   {
     "id": "pata_500M_pogress_desc",
     "lang": "language_10093691"
+  },
+  {
+    "id": "rouge2_illustration_choice_unlock",
+    "lang": "language_10100342"
+  },
+  {
+    "id": "v3a2_loginpagesetting_new_text",
+    "lang": "language_10100343"
+  },
+  {
+    "id": "v3a2_loginpagesetting_random_text",
+    "lang": "language_10090433"
+  },
+  {
+    "id": "huidiaolan_skill_changepos",
+    "lang": "language_10100344"
+  },
+  {
+    "id": "huidiaolan_skill_changecolor",
+    "lang": "language_10100345"
+  },
+  {
+    "id": "huidiaolan_win_target",
+    "lang": "language_10100346"
+  },
+  {
+    "id": "huidiaolan_getdiamond",
+    "lang": "language_10100347"
+  },
+  {
+    "id": "v3a2_udimo_info_gettime",
+    "lang": "language_10100348"
+  },
+  {
+    "id": "v3a2_udimo_info_no_gettime",
+    "lang": "language_10100349"
+  },
+  {
+    "id": "v3a2_udimo_info_fightcount",
+    "lang": "language_10100350"
+  },
+  {
+    "id": "v3a2_udimo_info_herocoverday",
+    "lang": "language_10100351"
+  },
+  {
+    "id": "v3a2_udimo_info_assistcount",
+    "lang": "language_10100352"
+  },
+  {
+    "id": "v3a2_udimo_info_traincrittercount",
+    "lang": "language_10100353"
+  },
+  {
+    "id": "v3a2_udimo_info_clothescount",
+    "lang": "language_10100354"
+  },
+  {
+    "id": "v3a2_udimo_lock_setting_1",
+    "lang": "language_10100355"
+  },
+  {
+    "id": "v3a2_udimo_lock_setting_2",
+    "lang": "language_10100356"
+  },
+  {
+    "id": "v3a2_udimo_lock_setting_3",
+    "lang": "language_10100357"
+  },
+  {
+    "id": "v3a2_udimo_lock_setting_4",
+    "lang": "language_10100358"
+  },
+  {
+    "id": "v3a2_udimo_lock_setting_5",
+    "lang": "language_10100359"
+  },
+  {
+    "id": "v3a2_udimo_lock_setting_6",
+    "lang": "language_10100360"
+  },
+  {
+    "id": "v3a2_udimo_lock_setting_7",
+    "lang": "language_10100361"
+  },
+  {
+    "id": "autochess_beginview_title1",
+    "lang": "language_10100362"
+  },
+  {
+    "id": "autochess_beginview_title2",
+    "lang": "language_10100363"
+  },
+  {
+    "id": "autochess_beginview_title3",
+    "lang": "language_10100364"
+  },
+  {
+    "id": "rouge2_result_material_title",
+    "lang": ""
+  },
+  {
+    "id": "rouge2_result_relicsl_unlock_title",
+    "lang": "language_10032024"
+  },
+  {
+    "id": "rouge2_result_formula_unlock_title",
+    "lang": "language_10100365"
+  },
+  {
+    "id": "rouge2_attributeupview_up",
+    "lang": "language_10100366"
+  },
+  {
+    "id": "rouge2_backpacktabview_career",
+    "lang": "language_10100367"
+  },
+  {
+    "id": "rouge2_backpacktabview_skill",
+    "lang": "language_10100368"
+  },
+  {
+    "id": "rouge2_backpacktabview_buff",
+    "lang": "language_10100369"
+  },
+  {
+    "id": "rouge2_backpacktabview_relics",
+    "lang": "language_90001269"
+  },
+  {
+    "id": "rouge2_mapview_fight",
+    "lang": "language_10030493"
+  },
+  {
+    "id": "rouge2_mapview_move",
+    "lang": "language_10030493"
+  },
+  {
+    "id": "rouge2_backpackskillview_capacity",
+    "lang": "language_10100370"
+  },
+  {
+    "id": "rouge2_attrsplittoolbar_all",
+    "lang": "language_90001267"
+  },
+  {
+    "id": "rouge2_talent_prenode_locked",
+    "lang": "language_10100371"
+  },
+  {
+    "id": "rouge2_mapdiceview_target",
+    "lang": "language_10100372"
+  },
+  {
+    "id": "rouge2_mapdiceview_tips",
+    "lang": "language_10100373"
+  },
+  {
+    "id": "rouge2_alchemy_mainmaterial_not_enough",
+    "lang": "language_10100374"
+  },
+  {
+    "id": "rouge2_resultreportview_txt_dec_end",
+    "lang": "language_10042109"
+  },
+  {
+    "id": "rouge2_alchemy_mainmaterial_not_enough_link",
+    "lang": "language_10100375"
+  },
+  {
+    "id": "rouge2_settlement_score_title_1",
+    "lang": "language_10097961"
+  },
+  {
+    "id": "rouge2_settlement_score_title_2",
+    "lang": "language_10097960"
+  },
+  {
+    "id": "rouge2_settlement_score_title_3",
+    "lang": "language_10097957"
+  },
+  {
+    "id": "rouge2_settlement_score_title_4",
+    "lang": "language_10100376"
+  },
+  {
+    "id": "rouge2_settlement_score_title_5",
+    "lang": "language_10100377"
+  },
+  {
+    "id": "rouge2_settlement_score_title_6",
+    "lang": "language_10030569"
+  },
+  {
+    "id": "rouge2_fight_add_value",
+    "lang": "language_10100378"
+  },
+  {
+    "id": "rouge2_fight_revival_tip_desc",
+    "lang": "language_10100379"
+  },
+  {
+    "id": "rolestory_madierda_gameview_title",
+    "lang": "language_10100380"
+  },
+  {
+    "id": "rolestoryview_tabname_1",
+    "lang": "language_10100381"
+  },
+  {
+    "id": "rolestoryview_tabname_2",
+    "lang": "language_10100382"
+  },
+  {
+    "id": "autochess_warnupview_stage1",
+    "lang": "language_10100383"
+  },
+  {
+    "id": "autochess_warnupview_stage2",
+    "lang": "language_10100384"
+  },
+  {
+    "id": "autochess_warnupview_stage3",
+    "lang": "language_10100385"
+  },
+  {
+    "id": "autochess_warnlevel_unlock",
+    "lang": "language_10100386"
+  },
+  {
+    "id": "autochess_beginview_btn1",
+    "lang": "language_10100387"
+  },
+  {
+    "id": "autochess_beginview_btn2",
+    "lang": "language_10100388"
+  },
+  {
+    "id": "rouge2_difficultyselectview_reward",
+    "lang": "language_10100389"
+  },
+  {
+    "id": "rouge2_careerselectview_careertips",
+    "lang": "language_10019916"
+  },
+  {
+    "id": "cruise_selftask_targetprogress",
+    "lang": "language_10100390"
+  },
+  {
+    "id": "versionsummon_txt_tips1",
+    "lang": "language_10098709"
+  },
+  {
+    "id": "versionsummon_txt_tips2",
+    "lang": "language_10100391"
+  },
+  {
+    "id": "CruiseGame_1",
+    "lang": "language_10100392"
+  },
+  {
+    "id": "CruiseGame_2",
+    "lang": "language_10100393"
+  },
+  {
+    "id": "CruiseGame_3",
+    "lang": "language_10100394"
+  },
+  {
+    "id": "CruiseGame_4",
+    "lang": "language_10100395"
+  },
+  {
+    "id": "CruiseGame_5",
+    "lang": "language_10100396"
+  },
+  {
+    "id": "CruiseGame_6",
+    "lang": "language_10100397"
+  },
+  {
+    "id": "CruiseGame_7",
+    "lang": "language_10100398"
+  },
+  {
+    "id": "CruiseGame_8",
+    "lang": "language_10100399"
+  },
+  {
+    "id": "CruiseGame_9",
+    "lang": "language_10100400"
+  },
+  {
+    "id": "CruiseGame_10",
+    "lang": "language_10100401"
+  },
+  {
+    "id": "BPCruise_1",
+    "lang": "language_10100402"
+  },
+  {
+    "id": "BPCruise_2",
+    "lang": "language_10100403"
+  },
+  {
+    "id": "CumulativeRewardsTipsTitle_1",
+    "lang": "language_10100404"
+  },
+  {
+    "id": "CumulativeRewardsTipsTitle_2",
+    "lang": "language_10100405"
+  },
+  {
+    "id": "BLE_select_crystal",
+    "lang": "language_10100406"
+  },
+  {
+    "id": "triple_drop_remain_times",
+    "lang": "language_10100407"
+  },
+  {
+    "id": "v3a2BossRush_Result_BaseScore",
+    "lang": "language_10100408"
+  },
+  {
+    "id": "v3a2BossRush_Result_RuleScore",
+    "lang": "language_10100409"
+  },
+  {
+    "id": "v3a2BossRush_Result_TotalScore",
+    "lang": "language_10100410"
+  },
+  {
+    "id": "fight_conceal_value",
+    "lang": "language_10100411"
+  },
+  {
+    "id": "character_destinystone_reshape_lv",
+    "lang": "language_10100412"
+  },
+  {
+    "id": "rouge2_maprelicsabandonview_select",
+    "lang": "language_10100413"
+  },
+  {
+    "id": "rouge2_maprelicsabandonview_title",
+    "lang": "language_10100414"
+  },
+  {
+    "id": "rouge2_mapbuffabandonview_title",
+    "lang": "language_10100415"
+  },
+  {
+    "id": "playercard_Act128Level",
+    "lang": "language_10100416"
+  },
+  {
+    "id": "summonsimulation_result_title_1",
+    "lang": "language_10100417"
+  },
+  {
+    "id": "summonsimulation_result_title_2",
+    "lang": "language_10100418"
+  },
+  {
+    "id": "summonsimulation_result_title_3",
+    "lang": "language_10100419"
+  },
+  {
+    "id": "VersionActivity2_3NewCultivationDestinyItem_refresh_desc2ItemList_prefix",
+    "lang": "language_10100420"
+  },
+  {
+    "id": "rouge2_continue_fight",
+    "lang": "language_10030078"
+  },
+  {
+    "id": "rouge2_abort_fight",
+    "lang": "language_10030077"
+  },
+  {
+    "id": "autochess_leaderbuffview_debris",
+    "lang": "language_10100421"
+  },
+  {
+    "id": "autochess_gameview_bosslimit",
+    "lang": "language_10100422"
+  },
+  {
+    "id": "common_use_tips_btn_title",
+    "lang": "language_10100423"
+  },
+  {
+    "id": "autochess_copyskill_multi",
+    "lang": "language_10100424"
+  },
+  {
+    "id": "rouge2_mapchoiceview_continue",
+    "lang": "language_90001273"
+  },
+  {
+    "id": "rouge2_mapchoiceview_end",
+    "lang": "language_10100425"
+  },
+  {
+    "id": "rouge2_unlockhelper_relics",
+    "lang": "language_10001421"
+  },
+  {
+    "id": "rouge2_unlockhelper_buff",
+    "lang": "language_10100369"
+  },
+  {
+    "id": "rouge2_funnytask_fail",
+    "lang": "language_10100426"
+  },
+  {
+    "id": "rouge2_shop",
+    "lang": "language_10100427"
+  },
+  {
+    "id": "rouge2_effecttips",
+    "lang": "language_10100428"
+  },
+  {
+    "id": "rouge2_effecttips2",
+    "lang": "language_10100429"
+  },
+  {
+    "id": "rouge2_attributeupview_maxpassiveskill",
+    "lang": "language_10100430"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode0",
+    "lang": "language_10047747"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode1",
+    "lang": "language_10097064"
+  },
+  {
+    "id": "SettingsGraphicsView_videoMode2",
+    "lang": "language_10097065"
+  },
+  {
+    "id": "FightHeatScaleView_BLE_getCrystalDesc_overseas",
+    "lang": "language_10104434"
   },
   {
     "id": "SettingsGraphicsView_videoMode_0",

@@ -1,192 +1,193 @@
-﻿module("modules.logic.reactivity.view.ReactivityStoreGoodsItem", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/view/ReactivityStoreGoodsItem.lua
 
-local var_0_0 = class("ReactivityStoreGoodsItem", UserDataDispose)
+module("modules.logic.reactivity.view.ReactivityStoreGoodsItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ReactivityStoreGoodsItem = class("ReactivityStoreGoodsItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.goClick = gohelper.getClick(arg_1_1)
-	arg_1_0.goTag = gohelper.findChild(arg_1_0.go, "go_tag")
-	arg_1_0.txtTag = gohelper.findChildText(arg_1_0.go, "go_tag/txt_tag")
-	arg_1_0.txtLimitBuy = gohelper.findChildText(arg_1_0.go, "txt_limitbuy")
-	arg_1_0.imageRare = gohelper.findChildImage(arg_1_0.go, "image_rare")
-	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.go, "simage_icon")
-	arg_1_0.imageIcon = gohelper.findChildImage(arg_1_0.go, "simage_icon")
-	arg_1_0.goQuantity = gohelper.findChild(arg_1_0.go, "quantity")
-	arg_1_0.txtQuantity = gohelper.findChildText(arg_1_0.go, "quantity/txt_quantity")
-	arg_1_0.txtName = gohelper.findChildText(arg_1_0.go, "txt_name")
-	arg_1_0.txtCost = gohelper.findChildText(arg_1_0.go, "txt_cost")
-	arg_1_0.simageCoin = gohelper.findChildSingleImage(arg_1_0.go, "txt_cost/simage_coin")
-	arg_1_0.imageCoin = gohelper.findChildImage(arg_1_0.go, "txt_cost/simage_coin")
-	arg_1_0.goSoldout = gohelper.findChild(arg_1_0.go, "go_soldout")
-	arg_1_0.goSwitch = gohelper.findChild(arg_1_0.go, "switch_icon")
-	arg_1_0.simageSwitchIcon1 = gohelper.findChildSingleImage(arg_1_0.go, "switch_icon/simage_icon1")
-	arg_1_0.imageSwitchIcon1 = gohelper.findChildImage(arg_1_0.go, "switch_icon/simage_icon1")
-	arg_1_0.goQuantity1 = gohelper.findChild(arg_1_0.go, "switch_icon/quantity1")
-	arg_1_0.txtQuantity1 = gohelper.findChildText(arg_1_0.goQuantity1, "txt_quantity")
-	arg_1_0.simageSwitchIcon2 = gohelper.findChildSingleImage(arg_1_0.go, "switch_icon/simage_icon2")
-	arg_1_0.imageSwitchIcon2 = gohelper.findChildImage(arg_1_0.go, "switch_icon/simage_icon2")
-	arg_1_0.goQuantity2 = gohelper.findChild(arg_1_0.go, "switch_icon/quantity2")
-	arg_1_0.txtQuantity2 = gohelper.findChildText(arg_1_0.goQuantity2, "txt_quantity")
-	arg_1_0.goIconExchange = gohelper.findChild(arg_1_0.go, "icon_exchange")
+function ReactivityStoreGoodsItem:onInitView(go)
+	self:__onInit()
 
-	arg_1_0.goClick:AddClickListener(arg_1_0.onClick, arg_1_0)
+	self.go = go
+	self.goClick = gohelper.getClick(go)
+	self.goTag = gohelper.findChild(self.go, "go_tag")
+	self.txtTag = gohelper.findChildText(self.go, "go_tag/txt_tag")
+	self.txtLimitBuy = gohelper.findChildText(self.go, "txt_limitbuy")
+	self.imageRare = gohelper.findChildImage(self.go, "image_rare")
+	self.simageIcon = gohelper.findChildSingleImage(self.go, "simage_icon")
+	self.imageIcon = gohelper.findChildImage(self.go, "simage_icon")
+	self.goQuantity = gohelper.findChild(self.go, "quantity")
+	self.txtQuantity = gohelper.findChildText(self.go, "quantity/txt_quantity")
+	self.txtName = gohelper.findChildText(self.go, "txt_name")
+	self.txtCost = gohelper.findChildText(self.go, "txt_cost")
+	self.simageCoin = gohelper.findChildSingleImage(self.go, "txt_cost/simage_coin")
+	self.imageCoin = gohelper.findChildImage(self.go, "txt_cost/simage_coin")
+	self.goSoldout = gohelper.findChild(self.go, "go_soldout")
+	self.goSwitch = gohelper.findChild(self.go, "switch_icon")
+	self.simageSwitchIcon1 = gohelper.findChildSingleImage(self.go, "switch_icon/simage_icon1")
+	self.imageSwitchIcon1 = gohelper.findChildImage(self.go, "switch_icon/simage_icon1")
+	self.goQuantity1 = gohelper.findChild(self.go, "switch_icon/quantity1")
+	self.txtQuantity1 = gohelper.findChildText(self.goQuantity1, "txt_quantity")
+	self.simageSwitchIcon2 = gohelper.findChildSingleImage(self.go, "switch_icon/simage_icon2")
+	self.imageSwitchIcon2 = gohelper.findChildImage(self.go, "switch_icon/simage_icon2")
+	self.goQuantity2 = gohelper.findChild(self.go, "switch_icon/quantity2")
+	self.txtQuantity2 = gohelper.findChildText(self.goQuantity2, "txt_quantity")
+	self.goIconExchange = gohelper.findChild(self.go, "icon_exchange")
 
-	arg_1_0.goMaxRareEffect = gohelper.findChild(arg_1_0.go, "eff_rare5")
+	self.goClick:AddClickListener(self.onClick, self)
+
+	self.goMaxRareEffect = gohelper.findChild(self.go, "eff_rare5")
 end
 
-function var_0_0.onClick(arg_2_0)
+function ReactivityStoreGoodsItem:onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	if arg_2_0.remainBuyCount <= 0 then
+	if self.remainBuyCount <= 0 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.VersionActivityNormalStoreGoodsView, arg_2_0.storeGoodsCo)
+	ViewMgr.instance:openView(ViewName.VersionActivityNormalStoreGoodsView, self.storeGoodsCo)
 end
 
-function var_0_0.updateInfo(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0.go, true)
+function ReactivityStoreGoodsItem:updateInfo(storeGoodsCo)
+	gohelper.setActive(self.go, true)
 
-	arg_3_0.storeGoodsCo = arg_3_1
+	self.storeGoodsCo = storeGoodsCo
 
-	arg_3_0:refreshRemainBuyCount()
+	self:refreshRemainBuyCount()
 
-	local var_3_0, var_3_1, var_3_2 = arg_3_0:getItemTypeIdQuantity(arg_3_0.storeGoodsCo.product)
-	local var_3_3 = ItemModel.instance:getItemConfigAndIcon(var_3_0, var_3_1)
-	local var_3_4, var_3_5 = ReactivityConfig.instance:checkItemNeedConvert(var_3_0, var_3_1)
-	local var_3_6
-	local var_3_7
+	local productItemType, productItemId, productItemQuantity = self:getItemTypeIdQuantity(self.storeGoodsCo.product)
+	local productItemConfig = ItemModel.instance:getItemConfigAndIcon(productItemType, productItemId)
+	local needConvert, convertPrice = ReactivityConfig.instance:checkItemNeedConvert(productItemType, productItemId)
+	local rare
 
-	if not var_3_3.rare then
+	if not productItemConfig.rare then
 		logWarn("material type : %s, material id : %s not had rare attribute")
 
-		var_3_7 = 5
+		rare = 5
 	else
-		var_3_7 = var_3_3.rare
+		rare = productItemConfig.rare
 	end
 
-	gohelper.setActive(arg_3_0.goMaxRareEffect, var_3_7 >= 5)
-	UISpriteSetMgr.instance:setV1a8MainActivitySprite(arg_3_0.imageRare, "v1a8_store_quality_" .. var_3_7)
+	gohelper.setActive(self.goMaxRareEffect, rare >= 5)
+	UISpriteSetMgr.instance:setV1a8MainActivitySprite(self.imageRare, "v1a8_store_quality_" .. rare)
 
-	if var_3_4 and arg_3_0.remainBuyCount > 0 then
-		gohelper.setActive(arg_3_0.goIconExchange, true)
-		gohelper.setActive(arg_3_0.simageIcon, false)
-		gohelper.setActive(arg_3_0.goSwitch, false)
-		gohelper.setActive(arg_3_0.goSwitch, true)
-		gohelper.setActive(arg_3_0.goQuantity, false)
-		arg_3_0:loadItemSingleImage(arg_3_0.simageSwitchIcon1, arg_3_0.imageSwitchIcon1, var_3_0, var_3_1)
-		arg_3_0:setQuantityTxt(arg_3_0.goQuantity1, arg_3_0.txtQuantity1, var_3_2)
+	if needConvert and self.remainBuyCount > 0 then
+		gohelper.setActive(self.goIconExchange, true)
+		gohelper.setActive(self.simageIcon, false)
+		gohelper.setActive(self.goSwitch, false)
+		gohelper.setActive(self.goSwitch, true)
+		gohelper.setActive(self.goQuantity, false)
+		self:loadItemSingleImage(self.simageSwitchIcon1, self.imageSwitchIcon1, productItemType, productItemId)
+		self:setQuantityTxt(self.goQuantity1, self.txtQuantity1, productItemQuantity)
 
-		local var_3_8 = string.splitToNumber(var_3_5, "#")
+		local convertPriceList = string.splitToNumber(convertPrice, "#")
 
-		arg_3_0:loadItemSingleImage(arg_3_0.simageSwitchIcon2, arg_3_0.imageSwitchIcon2, var_3_8[1], var_3_8[2])
-		arg_3_0:setQuantityTxt(arg_3_0.goQuantity2, arg_3_0.txtQuantity2, var_3_8[3])
+		self:loadItemSingleImage(self.simageSwitchIcon2, self.imageSwitchIcon2, convertPriceList[1], convertPriceList[2])
+		self:setQuantityTxt(self.goQuantity2, self.txtQuantity2, convertPriceList[3])
 	else
-		gohelper.setActive(arg_3_0.goIconExchange, false)
-		gohelper.setActive(arg_3_0.simageIcon, true)
-		gohelper.setActive(arg_3_0.goSwitch, false)
-		arg_3_0:loadItemSingleImage(arg_3_0.simageIcon, arg_3_0.imageIcon, var_3_0, var_3_1)
-		arg_3_0:setQuantityTxt(arg_3_0.goQuantity, arg_3_0.txtQuantity, var_3_2)
+		gohelper.setActive(self.goIconExchange, false)
+		gohelper.setActive(self.simageIcon, true)
+		gohelper.setActive(self.goSwitch, false)
+		self:loadItemSingleImage(self.simageIcon, self.imageIcon, productItemType, productItemId)
+		self:setQuantityTxt(self.goQuantity, self.txtQuantity, productItemQuantity)
 	end
 
-	gohelper.setActive(arg_3_0.txtName, false)
+	gohelper.setActive(self.txtName, false)
 
-	if var_3_7 >= MaterialEnum.ItemRareR then
-		local var_3_9 = gohelper.findChildText(arg_3_0.go, "txt_name" .. var_3_7)
+	if rare >= MaterialEnum.ItemRareR then
+		local rareTxtName = gohelper.findChildText(self.go, "txt_name" .. rare)
 
-		if var_3_9 then
-			arg_3_0.txtName = var_3_9
+		if rareTxtName then
+			self.txtName = rareTxtName
 		end
 	else
-		arg_3_0.txtName = gohelper.findChildText(arg_3_0.go, "txt_name")
+		self.txtName = gohelper.findChildText(self.go, "txt_name")
 	end
 
-	gohelper.setActive(arg_3_0.txtName, true)
+	gohelper.setActive(self.txtName, true)
 
-	arg_3_0.txtName.text = var_3_3.name
-	arg_3_0.costItemType, arg_3_0.costItemId, arg_3_0.costItemQuantity = arg_3_0:getItemTypeIdQuantity(arg_3_0.storeGoodsCo.cost)
-	arg_3_0.txtCost.text = arg_3_0.costItemQuantity
+	self.txtName.text = productItemConfig.name
+	self.costItemType, self.costItemId, self.costItemQuantity = self:getItemTypeIdQuantity(self.storeGoodsCo.cost)
+	self.txtCost.text = self.costItemQuantity
 
-	local var_3_10, var_3_11 = ItemModel.instance:getItemConfigAndIcon(arg_3_0.costItemType, arg_3_0.costItemId)
+	local costCo, costIconUrl = ItemModel.instance:getItemConfigAndIcon(self.costItemType, self.costItemId)
 
-	if arg_3_0.costItemType == MaterialEnum.MaterialType.Currency then
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_3_0.imageCoin, var_3_10.icon .. "_1")
+	if self.costItemType == MaterialEnum.MaterialType.Currency then
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self.imageCoin, costCo.icon .. "_1")
 	else
-		arg_3_0.simageCoin:LoadImage(var_3_11)
+		self.simageCoin:LoadImage(costIconUrl)
 	end
 
-	arg_3_0:refreshTag()
+	self:refreshTag()
 end
 
-function var_0_0.setQuantityTxt(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	gohelper.setActive(arg_4_1, arg_4_3 > 1)
+function ReactivityStoreGoodsItem:setQuantityTxt(goQuantity, txtQuantity, quantity)
+	gohelper.setActive(goQuantity, quantity > 1)
 
-	if arg_4_3 > 1 then
-		arg_4_2.text = luaLang("multiple") .. arg_4_3
+	if quantity > 1 then
+		txtQuantity.text = luaLang("multiple") .. quantity
 	end
 end
 
-function var_0_0.loadItemSingleImage(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0, var_5_1 = ItemModel.instance:getItemConfigAndIcon(arg_5_3, arg_5_4)
+function ReactivityStoreGoodsItem:loadItemSingleImage(simage, imageIcon, itemType, itemId)
+	local itemConfig, iconUrl = ItemModel.instance:getItemConfigAndIcon(itemType, itemId)
 
-	if arg_5_3 == MaterialEnum.MaterialType.Equip then
-		arg_5_1:LoadImage(ResUrl.getHeroDefaultEquipIcon(var_5_0.icon), function()
-			arg_5_2:SetNativeSize()
+	if itemType == MaterialEnum.MaterialType.Equip then
+		simage:LoadImage(ResUrl.getHeroDefaultEquipIcon(itemConfig.icon), function()
+			imageIcon:SetNativeSize()
 		end)
 	else
-		arg_5_1:LoadImage(var_5_1, function()
-			arg_5_2:SetNativeSize()
+		simage:LoadImage(iconUrl, function()
+			imageIcon:SetNativeSize()
 		end)
 	end
 end
 
-function var_0_0.refreshRemainBuyCount(arg_8_0)
-	if arg_8_0.storeGoodsCo.maxBuyCount == 0 then
-		gohelper.setActive(arg_8_0.txtLimitBuy.gameObject, false)
-		gohelper.setActive(arg_8_0.goSoldout, false)
+function ReactivityStoreGoodsItem:refreshRemainBuyCount()
+	if self.storeGoodsCo.maxBuyCount == 0 then
+		gohelper.setActive(self.txtLimitBuy.gameObject, false)
+		gohelper.setActive(self.goSoldout, false)
 
-		arg_8_0.remainBuyCount = 9999
+		self.remainBuyCount = 9999
 	else
-		gohelper.setActive(arg_8_0.txtLimitBuy.gameObject, true)
+		gohelper.setActive(self.txtLimitBuy.gameObject, true)
 
-		arg_8_0.remainBuyCount = arg_8_0.storeGoodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_8_0.storeGoodsCo.activityId, arg_8_0.storeGoodsCo.id)
-		arg_8_0.txtLimitBuy.text = formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_8_0.remainBuyCount)
+		self.remainBuyCount = self.storeGoodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(self.storeGoodsCo.activityId, self.storeGoodsCo.id)
+		self.txtLimitBuy.text = formatLuaLang("v1a4_bossrush_storeview_buylimit", self.remainBuyCount)
 
-		gohelper.setActive(arg_8_0.goSoldout, arg_8_0.remainBuyCount <= 0)
+		gohelper.setActive(self.goSoldout, self.remainBuyCount <= 0)
 	end
 end
 
-function var_0_0.refreshTag(arg_9_0)
-	if arg_9_0.storeGoodsCo.tag == 0 or arg_9_0.remainBuyCount <= 0 then
-		gohelper.setActive(arg_9_0.goTag, false)
+function ReactivityStoreGoodsItem:refreshTag()
+	if self.storeGoodsCo.tag == 0 or self.remainBuyCount <= 0 then
+		gohelper.setActive(self.goTag, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_9_0.goTag, true)
+	gohelper.setActive(self.goTag, true)
 
-	arg_9_0.txtTag.text = ActivityStoreConfig.instance:getTagName(arg_9_0.storeGoodsCo.tag)
+	self.txtTag.text = ActivityStoreConfig.instance:getTagName(self.storeGoodsCo.tag)
 end
 
-function var_0_0.getItemTypeIdQuantity(arg_10_0, arg_10_1)
-	local var_10_0 = string.splitToNumber(arg_10_1, "#")
+function ReactivityStoreGoodsItem:getItemTypeIdQuantity(coStr)
+	local attribute = string.splitToNumber(coStr, "#")
 
-	return var_10_0[1], var_10_0[2], var_10_0[3]
+	return attribute[1], attribute[2], attribute[3]
 end
 
-function var_0_0.hide(arg_11_0)
-	gohelper.setActive(arg_11_0.go, false)
+function ReactivityStoreGoodsItem:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0.goClick:RemoveClickListener()
-	arg_12_0.simageIcon:UnLoadImage()
-	arg_12_0.simageCoin:UnLoadImage()
-	arg_12_0:__onDispose()
+function ReactivityStoreGoodsItem:onDestroy()
+	self.goClick:RemoveClickListener()
+	self.simageIcon:UnLoadImage()
+	self.simageCoin:UnLoadImage()
+	self:__onDispose()
 end
 
-return var_0_0
+return ReactivityStoreGoodsItem

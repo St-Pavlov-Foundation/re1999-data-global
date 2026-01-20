@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.map.unit.ExploreGravityTriggerUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreGravityTriggerUnit.lua
 
-local var_0_0 = class("ExploreGravityTriggerUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreGravityTriggerUnit", package.seeall)
 
-function var_0_0.onRoleEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if arg_1_3:isRole() or arg_1_3.mo.canTriggerGear then
-		arg_1_0:tryTrigger()
+local ExploreGravityTriggerUnit = class("ExploreGravityTriggerUnit", ExploreBaseDisplayUnit)
+
+function ExploreGravityTriggerUnit:onRoleEnter(nowNode, preNode, unit)
+	if unit:isRole() or unit.mo.canTriggerGear then
+		self:tryTrigger()
 	end
 end
 
-return var_0_0
+return ExploreGravityTriggerUnit

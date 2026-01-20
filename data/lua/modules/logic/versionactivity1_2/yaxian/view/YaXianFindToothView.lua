@@ -1,77 +1,79 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianFindToothView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/YaXianFindToothView.lua
 
-local var_0_0 = class("YaXianFindToothView", BaseView)
+module("modules.logic.versionactivity1_2.yaxian.view.YaXianFindToothView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "main/#txt_name")
-	arg_1_0._txtunlockskill = gohelper.findChildText(arg_1_0.viewGO, "main/unlockbg/#txt_unlockskill")
-	arg_1_0._txtup = gohelper.findChildText(arg_1_0.viewGO, "main/#txt_up/")
+local YaXianFindToothView = class("YaXianFindToothView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function YaXianFindToothView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._txtname = gohelper.findChildText(self.viewGO, "main/#txt_name")
+	self._txtunlockskill = gohelper.findChildText(self.viewGO, "main/unlockbg/#txt_unlockskill")
+	self._txtup = gohelper.findChildText(self.viewGO, "main/#txt_up/")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function YaXianFindToothView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function YaXianFindToothView:removeEvents()
 	return
 end
 
-function var_0_0.onFullClick(arg_4_0)
+function YaXianFindToothView:onFullClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getYaXianImage("img_huode_bg_2"))
+function YaXianFindToothView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getYaXianImage("img_huode_bg_2"))
 
-	arg_5_0.fullClick = gohelper.getClick(arg_5_0._simagebg.gameObject)
+	self.fullClick = gohelper.getClick(self._simagebg.gameObject)
 
-	arg_5_0.fullClick:AddClickListener(arg_5_0.onFullClick, arg_5_0)
+	self.fullClick:AddClickListener(self.onFullClick, self)
 
-	arg_5_0.toothIcon = gohelper.findChildSingleImage(arg_5_0.viewGO, "main/iconbg/icon")
-	arg_5_0.goUnlockSkill = gohelper.findChild(arg_5_0.viewGO, "main/unlockbg")
+	self.toothIcon = gohelper.findChildSingleImage(self.viewGO, "main/iconbg/icon")
+	self.goUnlockSkill = gohelper.findChild(self.viewGO, "main/unlockbg")
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:onOpen()
+function YaXianFindToothView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.toothId = arg_7_0.viewParam.toothId
-	arg_7_0.toothConfig = YaXianConfig.instance:getToothConfig(arg_7_0.toothId)
+function YaXianFindToothView:onOpen()
+	self.toothId = self.viewParam.toothId
+	self.toothConfig = YaXianConfig.instance:getToothConfig(self.toothId)
 
-	arg_7_0.toothIcon:LoadImage(ResUrl.getYaXianImage(arg_7_0.toothConfig.icon))
+	self.toothIcon:LoadImage(ResUrl.getYaXianImage(self.toothConfig.icon))
 
-	arg_7_0._txtname.text = arg_7_0.toothConfig.name
+	self._txtname.text = self.toothConfig.name
 
-	local var_7_0 = YaXianConfig.instance:getToothUnlockSkill(arg_7_0.toothId)
+	local unlockSkillId = YaXianConfig.instance:getToothUnlockSkill(self.toothId)
 
-	gohelper.setActive(arg_7_0.goUnlockSkill, var_7_0)
+	gohelper.setActive(self.goUnlockSkill, unlockSkillId)
 
-	if var_7_0 then
-		arg_7_0._txtunlockskill.text = luaLang("versionactivity_1_2_yaxian_unlock_skill_" .. var_7_0)
+	if unlockSkillId then
+		self._txtunlockskill.text = luaLang("versionactivity_1_2_yaxian_unlock_skill_" .. unlockSkillId)
 	end
 
-	local var_7_1 = YaXianConfig.instance:getToothUnlockHeroTemplate(arg_7_0.toothId)
-	local var_7_2 = lua_hero_trial.configDict[YaXianEnum.HeroTrialId][var_7_1]
-	local var_7_3 = HeroConfig.instance:getCommonLevelDisplay(var_7_2 and var_7_2.level or 0)
+	local heroTemplate = YaXianConfig.instance:getToothUnlockHeroTemplate(self.toothId)
+	local templateCo = lua_hero_trial.configDict[YaXianEnum.HeroTrialId][heroTemplate]
+	local showLevel = HeroConfig.instance:getCommonLevelDisplay(templateCo and templateCo.level or 0)
 
-	arg_7_0._txtup.text = string.format(luaLang("versionactivity_1_2_yaxian_up_to_level"), var_7_3)
+	self._txtup.text = string.format(luaLang("versionactivity_1_2_yaxian_up_to_level"), showLevel)
 end
 
-function var_0_0.onClose(arg_8_0)
+function YaXianFindToothView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simagebg:UnLoadImage()
-	arg_9_0.toothIcon:UnLoadImage()
-	arg_9_0.fullClick:RemoveClickListener()
+function YaXianFindToothView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self.toothIcon:UnLoadImage()
+	self.fullClick:RemoveClickListener()
 end
 
-return var_0_0
+return YaXianFindToothView

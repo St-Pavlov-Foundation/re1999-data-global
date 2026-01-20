@@ -1,28 +1,30 @@
-﻿module("modules.logic.seasonver.act166.model.Season166TalentMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166TalentMO.lua
 
-local var_0_0 = pureTable("Season166TalentMO")
+module("modules.logic.seasonver.act166.model.Season166TalentMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.level = 1
-	arg_1_0.skillIds = {}
+local Season166TalentMO = pureTable("Season166TalentMO")
+
+function Season166TalentMO:ctor()
+	self.id = 0
+	self.level = 1
+	self.skillIds = {}
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.level = arg_2_1.level
+function Season166TalentMO:setData(info)
+	self.id = info.id
+	self.level = info.level
 
-	arg_2_0:updateSkillIds(arg_2_1.skillIds)
+	self:updateSkillIds(info.skillIds)
 
-	arg_2_0.config = lua_activity166_talent_style.configDict[arg_2_1.id][arg_2_1.level]
+	self.config = lua_activity166_talent_style.configDict[info.id][info.level]
 end
 
-function var_0_0.updateSkillIds(arg_3_0, arg_3_1)
-	tabletool.clear(arg_3_0.skillIds)
+function Season166TalentMO:updateSkillIds(skillIds)
+	tabletool.clear(self.skillIds)
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		arg_3_0.skillIds[iter_3_0] = iter_3_1
+	for k, id in ipairs(skillIds) do
+		self.skillIds[k] = id
 	end
 end
 
-return var_0_0
+return Season166TalentMO

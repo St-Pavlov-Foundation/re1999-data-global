@@ -1,19 +1,21 @@
-﻿module("modules.logic.dungeon.controller.DungeonMapElementEvent", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/controller/DungeonMapElementEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.dungeon.controller.DungeonMapElementEvent", package.seeall)
 
-var_0_0.OnSetClickDown = 90301
-var_0_0.OnUpdateElementArrow = 90302
-var_0_0.OnChangeMap = 90303
-var_0_0.OnLoadSceneFinish = 90304
-var_0_0.OnDisposeScene = 90305
-var_0_0.OnInitElements = 90306
-var_0_0.OnDisposeOldMap = 90307
-var_0_0.OnFocusElement = 90308
-var_0_0.OnFinishAndDisposeElement = 90309
-var_0_0.OnClickExploreElement = 90310
-var_0_0.OnNormalDungeonInitElements = 90311
-var_0_0.OnElementAdd = 90312
-var_0_0.OnElementRemove = 90313
+local DungeonMapElementEvent = _M
 
-return var_0_0
+DungeonMapElementEvent.OnSetClickDown = 90301
+DungeonMapElementEvent.OnUpdateElementArrow = 90302
+DungeonMapElementEvent.OnChangeMap = 90303
+DungeonMapElementEvent.OnLoadSceneFinish = 90304
+DungeonMapElementEvent.OnDisposeScene = 90305
+DungeonMapElementEvent.OnInitElements = 90306
+DungeonMapElementEvent.OnDisposeOldMap = 90307
+DungeonMapElementEvent.OnFocusElement = 90308
+DungeonMapElementEvent.OnFinishAndDisposeElement = 90309
+DungeonMapElementEvent.OnClickExploreElement = 90310
+DungeonMapElementEvent.OnNormalDungeonInitElements = 90311
+DungeonMapElementEvent.OnElementAdd = 90312
+DungeonMapElementEvent.OnElementRemove = 90313
+
+return DungeonMapElementEvent

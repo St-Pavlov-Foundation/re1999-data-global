@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_3.chess.define.Activity1_3ChessEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/define/Activity1_3ChessEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.chess.define.Activity1_3ChessEvent", package.seeall)
 
-var_0_0.BeginEnterChessGame = 122002
-var_0_0.InitGameScene = 122003
-var_0_0.UpdateGameScene = 122004
-var_0_0.AfterResetChessGame = 122005
-var_0_0.FinishNewEpisode = 122006
-var_0_0.OnReadChessGame = 122007
-var_0_0.ClickReset = 122011
-var_0_0.ClickRead = 122012
-var_0_0.OneClickClaimReward = 122013
-var_0_0.ClickEpisode = 122014
-var_0_0.ShowPassEpisodeEffect = 122015
-var_0_0.SetNodePathEffectToPassNode = 122016
-var_0_0.GameSceneInited = 122021
-var_0_0.GameSceneFireCreated = 122022
-var_0_0.MapSceneActvie = 122023
+local Activity1_3ChessEvent = _M
 
-return var_0_0
+Activity1_3ChessEvent.BeginEnterChessGame = 122002
+Activity1_3ChessEvent.InitGameScene = 122003
+Activity1_3ChessEvent.UpdateGameScene = 122004
+Activity1_3ChessEvent.AfterResetChessGame = 122005
+Activity1_3ChessEvent.FinishNewEpisode = 122006
+Activity1_3ChessEvent.OnReadChessGame = 122007
+Activity1_3ChessEvent.ClickReset = 122011
+Activity1_3ChessEvent.ClickRead = 122012
+Activity1_3ChessEvent.OneClickClaimReward = 122013
+Activity1_3ChessEvent.ClickEpisode = 122014
+Activity1_3ChessEvent.ShowPassEpisodeEffect = 122015
+Activity1_3ChessEvent.SetNodePathEffectToPassNode = 122016
+Activity1_3ChessEvent.GameSceneInited = 122021
+Activity1_3ChessEvent.GameSceneFireCreated = 122022
+Activity1_3ChessEvent.MapSceneActvie = 122023
+
+return Activity1_3ChessEvent

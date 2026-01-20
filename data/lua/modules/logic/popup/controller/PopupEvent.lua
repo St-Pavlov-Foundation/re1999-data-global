@@ -1,7 +1,10 @@
-﻿module("modules.logic.popup.controller.PopupEvent", package.seeall)
+﻿-- chunkname: @modules/logic/popup/controller/PopupEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.popup.controller.PopupEvent", package.seeall)
 
-var_0_0.OnPopupFinish = GameUtil.getUniqueTb()()
+local PopupEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+PopupEvent.OnPopupFinish = _get()
+
+return PopupEvent

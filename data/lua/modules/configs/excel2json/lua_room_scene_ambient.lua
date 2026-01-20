@@ -1,28 +1,30 @@
-﻿module("modules.configs.excel2json.lua_room_scene_ambient", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_room_scene_ambient.lua
 
-local var_0_0 = {}
-local var_0_1 = {}
-local var_0_2 = {
+module("modules.configs.excel2json.lua_room_scene_ambient", package.seeall)
+
+local lua_room_scene_ambient = {}
+local fields = {}
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.confgData = arg_1_0
-	var_0_0.configList, var_0_0.configDict = var_0_0.json_parse(arg_1_0)
+function lua_room_scene_ambient.onLoad(json)
+	lua_room_scene_ambient.confgData = json
+	lua_room_scene_ambient.configList, lua_room_scene_ambient.configDict = lua_room_scene_ambient.json_parse(json)
 end
 
-function var_0_0.json_parse(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
+function lua_room_scene_ambient.json_parse(json)
+	local configList = {}
+	local configDict = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
-		table.insert(var_2_0, iter_2_1)
+	for _, cfg in ipairs(json) do
+		table.insert(configList, cfg)
 
-		var_2_1[iter_2_1.id] = iter_2_1
+		configDict[cfg.id] = cfg
 	end
 
-	return var_2_0, var_2_1
+	return configList, configDict
 end
 
-return var_0_0
+return lua_room_scene_ambient

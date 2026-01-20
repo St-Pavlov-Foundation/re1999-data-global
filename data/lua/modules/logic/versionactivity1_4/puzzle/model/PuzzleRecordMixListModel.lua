@@ -1,44 +1,47 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMixListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/model/PuzzleRecordMixListModel.lua
 
-local var_0_0 = class("PuzzleRecordMixListModel", MixScrollModel)
+module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordMixListModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local PuzzleRecordMixListModel = class("PuzzleRecordMixListModel", MixScrollModel)
 
-	arg_1_0._infos = nil
+function PuzzleRecordMixListModel:ctor()
+	PuzzleRecordMixListModel.super.ctor(self)
+
+	self._infos = nil
 end
 
-function var_0_0.setRecordList(arg_2_0, arg_2_1)
-	arg_2_0._infos = arg_2_1
+function PuzzleRecordMixListModel:setRecordList(recordList)
+	self._infos = recordList
 
-	arg_2_0:setList(arg_2_1)
+	self:setList(recordList)
 end
 
-function var_0_0.getInfoList(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function PuzzleRecordMixListModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
 
-	if not arg_3_0._infos or #arg_3_0._infos <= 0 then
-		return var_3_0
+	if not self._infos or #self._infos <= 0 then
+		return mixCellInfos
 	end
 
-	local var_3_1 = gohelper.findChildText(arg_3_1, "Viewport/Content/RecordItem")
-	local var_3_2 = 0
+	local textComp = gohelper.findChildText(scrollGO, "Viewport/Content/RecordItem")
+	local mixType = 0
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._infos) do
-		local var_3_3 = 0
-		local var_3_4 = GameUtil.filterRichText(iter_3_1:GetRecord())
-		local var_3_5 = GameUtil.getTextHeightByLine(var_3_1, var_3_4 .. "   ", 37.1) + 20
+	for i, info in ipairs(self._infos) do
+		local lineWidth = 0
+		local text = GameUtil.filterRichText(info:GetRecord())
 
-		table.insert(var_3_0, SLFramework.UGUI.MixCellInfo.New(var_3_2, var_3_5, nil))
+		lineWidth = GameUtil.getTextHeightByLine(textComp, text .. "   ", 37.1) + 20
+
+		table.insert(mixCellInfos, SLFramework.UGUI.MixCellInfo.New(mixType, lineWidth, nil))
 	end
 
-	return var_3_0
+	return mixCellInfos
 end
 
-function var_0_0.clearData(arg_4_0)
-	arg_4_0._infos = nil
+function PuzzleRecordMixListModel:clearData()
+	self._infos = nil
 end
 
-var_0_0.instance = var_0_0.New()
+PuzzleRecordMixListModel.instance = PuzzleRecordMixListModel.New()
 
-return var_0_0
+return PuzzleRecordMixListModel

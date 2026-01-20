@@ -1,13 +1,15 @@
-﻿module("modules.logic.roomfishing.controller.FishingEvent", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/controller/FishingEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.roomfishing.controller.FishingEvent", package.seeall)
 
-var_0_0.OnFishingInfoUpdate = var_0_1()
-var_0_0.OnFishingProgressUpdate = var_0_1()
-var_0_0.ShowFishingTip = var_0_1()
-var_0_0.OnSelectFriendTab = var_0_1()
-var_0_0.GuideTouchFishingStore = var_0_1()
-var_0_0.GuideOnOpenFishingView = var_0_1()
+local FishingEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+FishingEvent.OnFishingInfoUpdate = _get()
+FishingEvent.OnFishingProgressUpdate = _get()
+FishingEvent.ShowFishingTip = _get()
+FishingEvent.OnSelectFriendTab = _get()
+FishingEvent.GuideTouchFishingStore = _get()
+FishingEvent.GuideOnOpenFishingView = _get()
+
+return FishingEvent

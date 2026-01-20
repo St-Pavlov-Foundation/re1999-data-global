@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity3_1.enter.view.VersionActivity3_1EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/enter/view/VersionActivity3_1EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity3_1EnterViewContainer", VersionActivityFixedEnterViewContainer)
+module("modules.logic.versionactivity3_1.enter.view.VersionActivity3_1EnterViewContainer", package.seeall)
 
-function var_0_0.getViews(arg_1_0)
+local VersionActivity3_1EnterViewContainer = class("VersionActivity3_1EnterViewContainer", VersionActivityFixedEnterViewContainer)
+
+function VersionActivity3_1EnterViewContainer:getViews()
 	return {
 		VersionActivityFixedHelper.getVersionActivityEnterView().New(),
 		VersionActivity3_1EnterBgmView.New()
 	}
 end
 
-function var_0_0.getMultiViews(arg_2_0)
+function VersionActivity3_1EnterViewContainer:getMultiViews()
 	return {
 		VersionActivity3_1DungeonEnterView.New(),
 		V3a1_Act191EnterView.New(),
@@ -22,4 +24,4 @@ function var_0_0.getMultiViews(arg_2_0)
 	}
 end
 
-return var_0_0
+return VersionActivity3_1EnterViewContainer

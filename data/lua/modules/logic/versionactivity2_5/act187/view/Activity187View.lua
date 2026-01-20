@@ -1,491 +1,504 @@
-﻿module("modules.logic.versionactivity2_5.act187.view.Activity187View", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act187/view/Activity187View.lua
 
-local var_0_0 = class("Activity187View", BaseView)
-local var_0_1 = 0.5
-local var_0_2 = 1
+module("modules.logic.versionactivity2_5.act187.view.Activity187View", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/image_TimeBG/#txt_remainTime")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "#go_lantern/#txt_index")
-	arg_1_0._btnleft = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_lantern/#btn_left")
-	arg_1_0._golowribbon = gohelper.findChild(arg_1_0.viewGO, "#go_lantern/#go_decorationLower")
-	arg_1_0._simagelantern = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#simage_lantern1")
-	arg_1_0._btnlantern = gohelper.findChildClick(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#btn_click")
-	arg_1_0._goupribbon = gohelper.findChild(arg_1_0.viewGO, "#go_lantern/#go_decorationUpper")
-	arg_1_0._simagepicture = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#simage_picture")
-	arg_1_0._gotail = gohelper.findChild(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_tail")
-	arg_1_0._goincomplete = gohelper.findChild(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_tail/#go_incomplete")
-	arg_1_0._btnshowRiddles = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_tail/#btn_showRiddles")
-	arg_1_0._goriddles = gohelper.findChild(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_riddles")
-	arg_1_0._btncloseRiddles = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#btn_closeRiddles")
-	arg_1_0._txtriddles = gohelper.findChildText(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#txt_riddles")
-	arg_1_0._goriddlesRewards = gohelper.findChild(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#go_riddlesRewards")
-	arg_1_0._goriddlesRewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#go_riddlesRewards/#go_riddlesRewardItem")
-	arg_1_0._btnright = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_lantern/#btn_right")
-	arg_1_0._btnpaint = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_paint")
-	arg_1_0._gopaintreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_paint/#go_reddot")
-	arg_1_0._gobegin = gohelper.findChild(arg_1_0.viewGO, "#btn_paint/#go_begin")
-	arg_1_0._txtpaintTimes = gohelper.findChildText(arg_1_0.viewGO, "#btn_paint/#go_begin/#txt_paintTimes")
-	arg_1_0._gonoPaint = gohelper.findChild(arg_1_0.viewGO, "#btn_paint/#go_noPaint")
-	arg_1_0._gorewardBarBg = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#go_grayLine")
-	arg_1_0._gorewardBar = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#go_grayLine/#go_highLine")
-	arg_1_0._gorewardItemLayout = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#go_rewardLayout")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_rewards/#go_rewardLayout/#go_rewardItem")
-	arg_1_0._gopaintingview = gohelper.findChildClick(arg_1_0.viewGO, "v2a5_lanternfestivalpainting")
+local Activity187View = class("Activity187View", BaseView)
+local SWITCH_VIEW_TIME = 0.5
+local REWARD_HAS_GET_ANIM_TIME = 1
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity187View:onInitView()
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "#go_title/image_TimeBG/#txt_remainTime")
+	self._txtindex = gohelper.findChildText(self.viewGO, "#go_lantern/#txt_index")
+	self._btnleft = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#go_lantern/#btn_left")
+	self._golowribbon = gohelper.findChild(self.viewGO, "#go_lantern/#go_decorationLower")
+	self._simagelantern = gohelper.findChildSingleImage(self.viewGO, "#go_lantern/#simage_lantern/#simage_lantern1")
+	self._btnlantern = gohelper.findChildClick(self.viewGO, "#go_lantern/#simage_lantern/#btn_click")
+	self._goupribbon = gohelper.findChild(self.viewGO, "#go_lantern/#go_decorationUpper")
+	self._simagepicture = gohelper.findChildSingleImage(self.viewGO, "#go_lantern/#simage_lantern/#simage_picture")
+	self._gotail = gohelper.findChild(self.viewGO, "#go_lantern/#simage_lantern/#go_tail")
+	self._goincomplete = gohelper.findChild(self.viewGO, "#go_lantern/#simage_lantern/#go_tail/#go_incomplete")
+	self._btnshowRiddles = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#go_lantern/#simage_lantern/#go_tail/#btn_showRiddles")
+	self._goriddles = gohelper.findChild(self.viewGO, "#go_lantern/#simage_lantern/#go_riddles")
+	self._btncloseRiddles = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#btn_closeRiddles")
+	self._txtriddles = gohelper.findChildText(self.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#txt_riddles")
+	self._goriddlesRewards = gohelper.findChild(self.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#go_riddlesRewards")
+	self._goriddlesRewardItem = gohelper.findChild(self.viewGO, "#go_lantern/#simage_lantern/#go_riddles/#go_riddlesRewards/#go_riddlesRewardItem")
+	self._btnright = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#go_lantern/#btn_right")
+	self._btnpaint = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#btn_paint")
+	self._gopaintreddot = gohelper.findChild(self.viewGO, "#btn_paint/#go_reddot")
+	self._gobegin = gohelper.findChild(self.viewGO, "#btn_paint/#go_begin")
+	self._txtpaintTimes = gohelper.findChildText(self.viewGO, "#btn_paint/#go_begin/#txt_paintTimes")
+	self._gonoPaint = gohelper.findChild(self.viewGO, "#btn_paint/#go_noPaint")
+	self._gorewardBarBg = gohelper.findChild(self.viewGO, "#go_rewards/#go_grayLine")
+	self._gorewardBar = gohelper.findChild(self.viewGO, "#go_rewards/#go_grayLine/#go_highLine")
+	self._gorewardItemLayout = gohelper.findChild(self.viewGO, "#go_rewards/#go_rewardLayout")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "#go_rewards/#go_rewardLayout/#go_rewardItem")
+	self._gopaintingview = gohelper.findChildClick(self.viewGO, "v2a5_lanternfestivalpainting")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
-	arg_2_0._btnlantern:AddClickListener(arg_2_0._btnlanternOnClick, arg_2_0)
-	arg_2_0._btnshowRiddles:AddClickListener(arg_2_0._btnshowRiddlesOnClick, arg_2_0)
-	arg_2_0._btncloseRiddles:AddClickListener(arg_2_0._btncloseRiddlesOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0._btnpaint:AddClickListener(arg_2_0._btnpaintOnClick, arg_2_0)
-	arg_2_0._lanternAnimationEvent:AddEventListener("left", arg_2_0._onLeftRefresh, arg_2_0)
-	arg_2_0._lanternAnimationEvent:AddEventListener("right", arg_2_0._onRightRefresh, arg_2_0)
-	NavigateMgr.instance:addEscape(arg_2_0.viewName, arg_2_0.onBtnEsc, arg_2_0)
-	arg_2_0:addEventCb(Activity187Controller.instance, Activity187Event.GetAct187Info, arg_2_0.onGetActInfo, arg_2_0)
-	arg_2_0:addEventCb(Activity187Controller.instance, Activity187Event.FinishPainting, arg_2_0.onFinishPainting, arg_2_0)
-	arg_2_0:addEventCb(Activity187Controller.instance, Activity187Event.GetAccrueReward, arg_2_0.onGetAccrueReward, arg_2_0)
-	arg_2_0:addEventCb(Activity187Controller.instance, Activity187Event.RefreshAccrueReward, arg_2_0.onRefreshAccrueReward, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_2_0.checkActivityInfo, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.checkActivityInfo, arg_2_0)
+function Activity187View:addEvents()
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnlantern:AddClickListener(self._btnlanternOnClick, self)
+	self._btnshowRiddles:AddClickListener(self._btnshowRiddlesOnClick, self)
+	self._btncloseRiddles:AddClickListener(self._btncloseRiddlesOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self._btnpaint:AddClickListener(self._btnpaintOnClick, self)
+	self._lanternAnimationEvent:AddEventListener("left", self._onLeftRefresh, self)
+	self._lanternAnimationEvent:AddEventListener("right", self._onRightRefresh, self)
+	NavigateMgr.instance:addEscape(self.viewName, self.onBtnEsc, self)
+	self:addEventCb(Activity187Controller.instance, Activity187Event.GetAct187Info, self.onGetActInfo, self)
+	self:addEventCb(Activity187Controller.instance, Activity187Event.FinishPainting, self.onFinishPainting, self)
+	self:addEventCb(Activity187Controller.instance, Activity187Event.GetAccrueReward, self.onGetAccrueReward, self)
+	self:addEventCb(Activity187Controller.instance, Activity187Event.RefreshAccrueReward, self.onRefreshAccrueReward, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self.checkActivityInfo, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.checkActivityInfo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnlantern:RemoveClickListener()
-	arg_3_0._btnshowRiddles:RemoveClickListener()
-	arg_3_0._btncloseRiddles:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnpaint:RemoveClickListener()
-	arg_3_0._lanternAnimationEvent:RemoveAllEventListener()
-	arg_3_0:removeEventCb(Activity187Controller.instance, Activity187Event.GetAct187Info, arg_3_0.onGetActInfo, arg_3_0)
-	arg_3_0:removeEventCb(Activity187Controller.instance, Activity187Event.FinishPainting, arg_3_0.onFinishPainting, arg_3_0)
-	arg_3_0:removeEventCb(Activity187Controller.instance, Activity187Event.GetAccrueReward, arg_3_0.onGetAccrueReward, arg_3_0)
-	arg_3_0:removeEventCb(Activity187Controller.instance, Activity187Event.RefreshAccrueReward, arg_3_0.onRefreshAccrueReward, arg_3_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshActivityState, arg_3_0.checkActivityInfo, arg_3_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.checkActivityInfo, arg_3_0)
+function Activity187View:removeEvents()
+	self._btnleft:RemoveClickListener()
+	self._btnlantern:RemoveClickListener()
+	self._btnshowRiddles:RemoveClickListener()
+	self._btncloseRiddles:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._btnpaint:RemoveClickListener()
+	self._lanternAnimationEvent:RemoveAllEventListener()
+	self:removeEventCb(Activity187Controller.instance, Activity187Event.GetAct187Info, self.onGetActInfo, self)
+	self:removeEventCb(Activity187Controller.instance, Activity187Event.FinishPainting, self.onFinishPainting, self)
+	self:removeEventCb(Activity187Controller.instance, Activity187Event.GetAccrueReward, self.onGetAccrueReward, self)
+	self:removeEventCb(Activity187Controller.instance, Activity187Event.RefreshAccrueReward, self.onRefreshAccrueReward, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshActivityState, self.checkActivityInfo, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.checkActivityInfo, self)
 end
 
-function var_0_0._btnleftOnClick(arg_4_0)
-	if arg_4_0._curIndex <= 1 then
+function Activity187View:_btnleftOnClick()
+	if self._curIndex <= 1 then
 		return
 	end
 
-	arg_4_0:refreshLanternIndex()
+	self:refreshLanternIndex()
 
-	arg_4_0._curIndex = arg_4_0._curIndex - 1
+	self._curIndex = self._curIndex - 1
 
-	arg_4_0._lanternAnimator:Play("left", 0, 0)
+	self._lanternAnimator:Play("left", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_yuanxiao_switch)
 end
 
-function var_0_0._onLeftRefresh(arg_5_0)
-	arg_5_0:refreshLanternIndex()
+function Activity187View:_onLeftRefresh()
+	self:refreshLanternIndex()
 end
 
-function var_0_0._btnlanternOnClick(arg_6_0)
-	local var_6_0 = Activity187Model.instance:getFinishPaintingIndex()
-	local var_6_1 = Activity187Model.instance:getPaintingRewardId(arg_6_0._curIndex)
+function Activity187View:_btnlanternOnClick()
+	local finishPaintIndex = Activity187Model.instance:getFinishPaintingIndex()
+	local rewardId = Activity187Model.instance:getPaintingRewardId(self._curIndex)
 
-	if var_6_0 < arg_6_0._curIndex and not var_6_1 then
-		arg_6_0:_btnpaintOnClick()
+	if finishPaintIndex < self._curIndex and not rewardId then
+		self:_btnpaintOnClick()
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function var_0_0._btnshowRiddlesOnClick(arg_7_0)
-	arg_7_0:setRiddlesShow(true)
+function Activity187View:_btnshowRiddlesOnClick()
+	self:setRiddlesShow(true)
 	AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_mln_page_turn)
 end
 
-function var_0_0._btncloseRiddlesOnClick(arg_8_0)
-	arg_8_0:setRiddlesShow(false)
+function Activity187View:_btncloseRiddlesOnClick()
+	self:setRiddlesShow(false)
 end
 
-function var_0_0._btnrightOnClick(arg_9_0)
-	if arg_9_0._curIndex >= arg_9_0._maxIndex then
+function Activity187View:_btnrightOnClick()
+	if self._curIndex >= self._maxIndex then
 		return
 	end
 
-	arg_9_0:refreshLanternIndex()
+	self:refreshLanternIndex()
 
-	arg_9_0._curIndex = arg_9_0._curIndex + 1
+	self._curIndex = self._curIndex + 1
 
-	arg_9_0._lanternAnimator:Play("right", 0, 0)
+	self._lanternAnimator:Play("right", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_yuanxiao_switch)
 end
 
-function var_0_0._onRightRefresh(arg_10_0)
-	arg_10_0:refreshLanternIndex()
+function Activity187View:_onRightRefresh()
+	self:refreshLanternIndex()
 end
 
-function var_0_0._btnpaintOnClick(arg_11_0)
-	if not ((Activity187Model.instance:getRemainPaintingCount() or 0) > 0) then
+function Activity187View:_btnpaintOnClick()
+	local count = Activity187Model.instance:getRemainPaintingCount() or 0
+	local hasCount = count > 0
+
+	if not hasCount then
 		return
 	end
 
-	if Activity187Model.instance:getFinishPaintingIndex() == arg_11_0._maxIndex then
+	local finishPaintIndex = Activity187Model.instance:getFinishPaintingIndex()
+
+	if finishPaintIndex == self._maxIndex then
 		return
 	end
 
-	arg_11_0._curIndex = arg_11_0._maxIndex
+	self._curIndex = self._maxIndex
 
-	arg_11_0:refreshLanternIndex()
-	arg_11_0:setPaintingViewDisplay(true)
+	self:refreshLanternIndex()
+	self:setPaintingViewDisplay(true)
 end
 
-function var_0_0.onBtnEsc(arg_12_0)
-	if arg_12_0.isShowPaintView then
-		arg_12_0:setPaintingViewDisplay(false)
+function Activity187View:onBtnEsc()
+	if self.isShowPaintView then
+		self:setPaintingViewDisplay(false)
 	else
-		arg_12_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0.onGetActInfo(arg_13_0)
-	arg_13_0:setLanternIndex()
-	arg_13_0:setAccrueReward()
-	arg_13_0:refresh()
+function Activity187View:onGetActInfo()
+	self:setLanternIndex()
+	self:setAccrueReward()
+	self:refresh()
 end
 
-function var_0_0.onFinishPainting(arg_14_0, arg_14_1)
-	arg_14_0:setLanternIndex(arg_14_1)
-	arg_14_0:refresh()
-	arg_14_0:refreshAccrueRewardItem()
-	arg_14_0:setRiddlesShow(true)
+function Activity187View:onFinishPainting(finishIndex)
+	self:setLanternIndex(finishIndex)
+	self:refresh()
+	self:refreshAccrueRewardItem()
+	self:setRiddlesShow(true)
 end
 
-function var_0_0.onGetAccrueReward(arg_15_0, arg_15_1)
-	arg_15_0._rewardsMaterials = arg_15_1
+function Activity187View:onGetAccrueReward(materialMOList)
+	self._rewardsMaterials = materialMOList
 
-	arg_15_0:refreshAccrueRewardItem(true)
+	self:refreshAccrueRewardItem(true)
 end
 
-function var_0_0.onRefreshAccrueReward(arg_16_0)
-	arg_16_0:refreshAccrueProgress()
+function Activity187View:onRefreshAccrueReward()
+	self:refreshAccrueProgress()
 
-	if arg_16_0._accrueRewardItemList then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._accrueRewardItemList) do
-			iter_16_1:refreshStatus()
+	if self._accrueRewardItemList then
+		for _, rewardItem in ipairs(self._accrueRewardItemList) do
+			rewardItem:refreshStatus()
 		end
 	end
 end
 
-function var_0_0.checkActivityInfo(arg_17_0, arg_17_1)
-	local var_17_0 = Activity187Model.instance:getAct187Id()
+function Activity187View:checkActivityInfo(argsActId)
+	local actId = Activity187Model.instance:getAct187Id()
 
-	if arg_17_1 and arg_17_1 ~= var_17_0 then
+	if argsActId and argsActId ~= actId then
 		return
 	end
 
-	if Activity187Model.instance:isAct187Open(true) then
+	local isOpen = Activity187Model.instance:isAct187Open(true)
+
+	if isOpen then
 		Activity187Controller.instance:getAct187Info()
 	else
-		arg_17_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_18_0)
-	arg_18_0._lowRibbonDict = arg_18_0:getUserDataTb_()
-	arg_18_0._upRibbonDict = arg_18_0:getUserDataTb_()
+function Activity187View:_editableInitView()
+	self._lowRibbonDict = self:getUserDataTb_()
+	self._upRibbonDict = self:getUserDataTb_()
 
-	arg_18_0:_fillRibbonDict(arg_18_0._golowribbon.transform, arg_18_0._lowRibbonDict)
-	arg_18_0:_fillRibbonDict(arg_18_0._goupribbon.transform, arg_18_0._upRibbonDict)
+	self:_fillRibbonDict(self._golowribbon.transform, self._lowRibbonDict)
+	self:_fillRibbonDict(self._goupribbon.transform, self._upRibbonDict)
 
-	local var_18_0 = gohelper.findChild(arg_18_0.viewGO, "#go_lantern")
+	local golantern = gohelper.findChild(self.viewGO, "#go_lantern")
 
-	arg_18_0._lanternAnimationEvent = var_18_0:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_18_0._lanternAnimator = var_18_0:GetComponent(typeof(UnityEngine.Animator))
-	arg_18_0._barBgWidth = recthelper.getWidth(arg_18_0._gorewardBarBg.transform)
-	arg_18_0._riddlesRewardItemList = {}
+	self._lanternAnimationEvent = golantern:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._lanternAnimator = golantern:GetComponent(typeof(UnityEngine.Animator))
+	self._barBgWidth = recthelper.getWidth(self._gorewardBarBg.transform)
+	self._riddlesRewardItemList = {}
 
-	gohelper.setActive(arg_18_0._goriddlesRewardItem, false)
+	gohelper.setActive(self._goriddlesRewardItem, false)
 
-	arg_18_0.animator = arg_18_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_18_0.isShowPaintView = false
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.isShowPaintView = false
 end
 
-function var_0_0._fillRibbonDict(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_1.childCount
+function Activity187View:_fillRibbonDict(parentTrans, dict)
+	local childCount = parentTrans.childCount
 
-	for iter_19_0 = 1, var_19_0 do
-		local var_19_1 = arg_19_1:GetChild(iter_19_0 - 1)
+	for i = 1, childCount do
+		local child = parentTrans:GetChild(i - 1)
 
-		arg_19_2[var_19_1.name] = var_19_1
+		dict[child.name] = child
 	end
 end
 
-function var_0_0.onUpdateParam(arg_20_0)
+function Activity187View:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_21_0)
-	arg_21_0:setLanternIndex()
-	arg_21_0:setAccrueReward()
-	arg_21_0:refresh()
-	TaskDispatcher.cancelTask(arg_21_0.refreshRemainTime, arg_21_0)
-	TaskDispatcher.runRepeat(arg_21_0.refreshRemainTime, arg_21_0, TimeUtil.OneMinuteSecond)
-	RedDotController.instance:addRedDot(arg_21_0._gopaintreddot, RedDotEnum.DotNode.V2a5_Act187CanPaint)
+function Activity187View:onOpen()
+	self:setLanternIndex()
+	self:setAccrueReward()
+	self:refresh()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
+	RedDotController.instance:addRedDot(self._gopaintreddot, RedDotEnum.DotNode.V2a5_Act187CanPaint)
 	AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_tangren_yuanxiao_open)
 end
 
-function var_0_0.setLanternIndex(arg_22_0, arg_22_1)
-	local var_22_0 = Activity187Model.instance:getFinishPaintingIndex()
-	local var_22_1 = var_22_0
+function Activity187View:setLanternIndex(index)
+	local finishPaintIndex = Activity187Model.instance:getFinishPaintingIndex()
+	local nextIndex = finishPaintIndex
+	local count = Activity187Model.instance:getRemainPaintingCount() or 0
 
-	if (Activity187Model.instance:getRemainPaintingCount() or 0) > 0 then
-		var_22_1 = var_22_0 + 1
+	if count > 0 then
+		nextIndex = finishPaintIndex + 1
 	end
 
-	local var_22_2 = Activity187Config.instance:getAct187Const(Activity187Enum.ConstId.MaxLanternCount)
-	local var_22_3
+	local cfgMaxIndex = Activity187Config.instance:getAct187Const(Activity187Enum.ConstId.MaxLanternCount)
 
-	var_22_3 = tonumber(var_22_2) or 0
+	cfgMaxIndex = tonumber(cfgMaxIndex) or 0
 
-	if var_22_3 < 0 then
-		var_22_3 = var_22_1
+	if cfgMaxIndex < 0 then
+		cfgMaxIndex = nextIndex
 	end
 
-	arg_22_0._maxIndex = math.min(var_22_1, var_22_3)
-	arg_22_0._curIndex = arg_22_1 or arg_22_0._maxIndex
+	self._maxIndex = math.min(nextIndex, cfgMaxIndex)
+	self._curIndex = index or self._maxIndex
 end
 
-local function var_0_3(arg_23_0, arg_23_1)
-	return arg_23_0 < arg_23_1
+local function _sortFunc(a, b)
+	return a < b
 end
 
-function var_0_0.setAccrueReward(arg_24_0)
-	arg_24_0._accrueRewardItemList = {}
+function Activity187View:setAccrueReward()
+	self._accrueRewardItemList = {}
 
-	local var_24_0 = Activity187Model.instance:getAct187Id()
-	local var_24_1 = Activity187Config.instance:getAccrueRewardIdList(var_24_0)
+	local actId = Activity187Model.instance:getAct187Id()
+	local idList = Activity187Config.instance:getAccrueRewardIdList(actId)
 
-	table.sort(var_24_1, var_0_3)
+	table.sort(idList, _sortFunc)
 
-	local var_24_2 = {}
+	local rewardList = {}
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_1) do
-		local var_24_3 = Activity187Config.instance:getAccrueRewards(var_24_0, iter_24_1)
+	for _, id in ipairs(idList) do
+		local rewards = Activity187Config.instance:getAccrueRewards(actId, id)
 
-		var_24_2[#var_24_2 + 1] = var_24_3[1]
+		rewardList[#rewardList + 1] = rewards[1]
 	end
 
-	gohelper.CreateObjList(arg_24_0, arg_24_0._onSetAccrueRewardItem, var_24_2, arg_24_0._gorewardItemLayout, arg_24_0._gorewardItem, Activity187AccrueRewardItem)
+	gohelper.CreateObjList(self, self._onSetAccrueRewardItem, rewardList, self._gorewardItemLayout, self._gorewardItem, Activity187AccrueRewardItem)
 end
 
-function var_0_0._onSetAccrueRewardItem(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	arg_25_1:setData(arg_25_2)
+function Activity187View:_onSetAccrueRewardItem(obj, data, index)
+	obj:setData(data)
 
-	arg_25_0._accrueRewardItemList[arg_25_3] = arg_25_1
+	self._accrueRewardItemList[index] = obj
 end
 
-function var_0_0.setRiddlesShow(arg_26_0, arg_26_1)
-	gohelper.setActive(arg_26_0._gotail, not arg_26_1)
-	gohelper.setActive(arg_26_0._goriddles, arg_26_1)
+function Activity187View:setRiddlesShow(isShow)
+	gohelper.setActive(self._gotail, not isShow)
+	gohelper.setActive(self._goriddles, isShow)
 end
 
-function var_0_0.setPaintingViewDisplay(arg_27_0, arg_27_1)
-	if arg_27_0.isShowPaintView == arg_27_1 then
+function Activity187View:setPaintingViewDisplay(isShow)
+	if self.isShowPaintView == isShow then
 		return
 	end
 
-	arg_27_0.isShowPaintView = arg_27_1
+	self.isShowPaintView = isShow
 
-	if arg_27_0.isShowPaintView then
-		arg_27_0.animator:Play("MainToDraw", 0, 0)
+	if self.isShowPaintView then
+		self.animator:Play("MainToDraw", 0, 0)
 	else
-		arg_27_0.animator:Play("DrawToMain", 0, 0)
+		self.animator:Play("DrawToMain", 0, 0)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_tangren_yuanxiao_pop)
 	UIBlockMgr.instance:startBlock(Activity187Enum.BlockKey.SwitchView)
-	TaskDispatcher.cancelTask(arg_27_0._endBlock, arg_27_0)
-	TaskDispatcher.runDelay(arg_27_0._endBlock, arg_27_0, var_0_1)
-	Activity187Controller.instance:dispatchEvent(Activity187Event.PaintViewDisplayChange, arg_27_0.isShowPaintView, arg_27_0._maxIndex)
+	TaskDispatcher.cancelTask(self._endBlock, self)
+	TaskDispatcher.runDelay(self._endBlock, self, SWITCH_VIEW_TIME)
+	Activity187Controller.instance:dispatchEvent(Activity187Event.PaintViewDisplayChange, self.isShowPaintView, self._maxIndex)
 end
 
-function var_0_0._endBlock(arg_28_0)
+function Activity187View:_endBlock()
 	UIBlockMgr.instance:endBlock(Activity187Enum.BlockKey.SwitchView)
 end
 
-function var_0_0.refresh(arg_29_0)
-	arg_29_0:refreshLanternIndex()
-	arg_29_0:refreshPaintingCount()
-	arg_29_0:refreshAccrueProgress()
-	arg_29_0:refreshRemainTime()
+function Activity187View:refresh()
+	self:refreshLanternIndex()
+	self:refreshPaintingCount()
+	self:refreshAccrueProgress()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshLanternIndex(arg_30_0)
-	local var_30_0 = luaLang("room_wholesale_weekly_revenue")
+function Activity187View:refreshLanternIndex()
+	local lang = luaLang("room_wholesale_weekly_revenue")
 
-	arg_30_0._txtindex.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_30_0, arg_30_0._curIndex, arg_30_0._maxIndex)
+	self._txtindex.text = GameUtil.getSubPlaceholderLuaLangTwoParam(lang, self._curIndex, self._maxIndex)
 
-	arg_30_0:refreshLantern()
-	arg_30_0:refreshArrow()
+	self:refreshLantern()
+	self:refreshArrow()
 end
 
-function var_0_0.refreshLantern(arg_31_0)
-	arg_31_0:hideAllRiddlesRewardItem()
+function Activity187View:refreshLantern()
+	self:hideAllRiddlesRewardItem()
 
-	local var_31_0 = Activity187Enum.EmptyLantern
-	local var_31_1
-	local var_31_2 = Activity187Model.instance:getPaintingRewardId(arg_31_0._curIndex)
+	local lantern = Activity187Enum.EmptyLantern
+	local ribbonIndex
+	local rewardId = Activity187Model.instance:getPaintingRewardId(self._curIndex)
 
-	if var_31_2 then
-		local var_31_3 = Activity187Model.instance:getAct187Id()
+	if rewardId then
+		local actId = Activity187Model.instance:getAct187Id()
 
-		var_31_0 = Activity187Config.instance:getLantern(var_31_3, var_31_2)
-		var_31_1 = Activity187Config.instance:getLanternRibbon(var_31_3, var_31_2)
+		lantern = Activity187Config.instance:getLantern(actId, rewardId)
+		ribbonIndex = Activity187Config.instance:getLanternRibbon(actId, rewardId)
 
-		local var_31_4 = Activity187Config.instance:getLanternImg(var_31_3, var_31_2)
+		local lanternImg = Activity187Config.instance:getLanternImg(actId, rewardId)
 
-		arg_31_0._simagepicture:LoadImage(ResUrl.getAct184LanternIcon(var_31_4))
+		self._simagepicture:LoadImage(ResUrl.getAct184LanternIcon(lanternImg))
 
-		arg_31_0._txtriddles.text = Activity187Config.instance:getBlessing(var_31_3, var_31_2)
+		self._txtriddles.text = Activity187Config.instance:getBlessing(actId, rewardId)
 
-		local var_31_5 = Activity187Model.instance:getPaintingRewardList(arg_31_0._curIndex)
+		local rewardList = Activity187Model.instance:getPaintingRewardList(self._curIndex)
 
-		for iter_31_0, iter_31_1 in ipairs(var_31_5) do
-			arg_31_0:getRiddlesRewardItem(iter_31_0).itemIcon:onUpdateMO(iter_31_1)
+		for i, matMO in ipairs(rewardList) do
+			local rewardItem = self:getRiddlesRewardItem(i)
+
+			rewardItem.itemIcon:onUpdateMO(matMO)
 		end
 	end
 
-	arg_31_0._simagelantern:LoadImage(ResUrl.getAct184LanternIcon(var_31_0))
+	self._simagelantern:LoadImage(ResUrl.getAct184LanternIcon(lantern))
 
-	for iter_31_2, iter_31_3 in pairs(arg_31_0._lowRibbonDict) do
-		gohelper.setActive(iter_31_3, iter_31_2 == var_31_1)
+	for index, go in pairs(self._lowRibbonDict) do
+		gohelper.setActive(go, index == ribbonIndex)
 	end
 
-	for iter_31_4, iter_31_5 in pairs(arg_31_0._upRibbonDict) do
-		gohelper.setActive(iter_31_5, iter_31_4 == var_31_1)
+	for index, go in pairs(self._upRibbonDict) do
+		gohelper.setActive(go, index == ribbonIndex)
 	end
 
-	gohelper.setActive(arg_31_0._simagepicture, var_31_2)
-	gohelper.setActive(arg_31_0._btnshowRiddles, var_31_2)
-	gohelper.setActive(arg_31_0._goincomplete, not var_31_2)
-	arg_31_0:setRiddlesShow(false)
+	gohelper.setActive(self._simagepicture, rewardId)
+	gohelper.setActive(self._btnshowRiddles, rewardId)
+	gohelper.setActive(self._goincomplete, not rewardId)
+	self:setRiddlesShow(false)
 end
 
-function var_0_0.hideAllRiddlesRewardItem(arg_32_0)
-	if not arg_32_0._riddlesRewardItemList then
-		arg_32_0._riddlesRewardItemList = {}
+function Activity187View:hideAllRiddlesRewardItem()
+	if not self._riddlesRewardItemList then
+		self._riddlesRewardItemList = {}
 	end
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_0._riddlesRewardItemList) do
-		gohelper.setActive(iter_32_1.go, false)
+	for _, riddlesRewardItem in ipairs(self._riddlesRewardItemList) do
+		gohelper.setActive(riddlesRewardItem.go, false)
 	end
 end
 
-function var_0_0.getRiddlesRewardItem(arg_33_0, arg_33_1)
-	if not arg_33_0._riddlesRewardItemList then
-		arg_33_0._riddlesRewardItemList = {}
+function Activity187View:getRiddlesRewardItem(index)
+	if not self._riddlesRewardItemList then
+		self._riddlesRewardItemList = {}
 	end
 
-	local var_33_0 = arg_33_0._riddlesRewardItemList[arg_33_1]
+	local rewardItem = self._riddlesRewardItemList[index]
 
-	if not var_33_0 then
-		var_33_0 = arg_33_0:getUserDataTb_()
-		var_33_0.go = gohelper.clone(arg_33_0._goriddlesRewardItem, arg_33_0._goriddlesRewards, arg_33_1)
+	if not rewardItem then
+		rewardItem = self:getUserDataTb_()
+		rewardItem.go = gohelper.clone(self._goriddlesRewardItem, self._goriddlesRewards, index)
 
-		local var_33_1 = gohelper.findChild(var_33_0.go, "#go_item")
+		local itemGo = gohelper.findChild(rewardItem.go, "#go_item")
 
-		var_33_0.itemIcon = IconMgr.instance:getCommonItemIcon(var_33_1)
+		rewardItem.itemIcon = IconMgr.instance:getCommonItemIcon(itemGo)
 
-		var_33_0.itemIcon:setCountFontSize(40)
+		rewardItem.itemIcon:setCountFontSize(40)
 
-		arg_33_0._riddlesRewardItemList[arg_33_1] = var_33_0
+		self._riddlesRewardItemList[index] = rewardItem
 	end
 
-	gohelper.setActive(var_33_0.go, true)
+	gohelper.setActive(rewardItem.go, true)
 
-	return var_33_0
+	return rewardItem
 end
 
-function var_0_0.refreshArrow(arg_34_0)
-	gohelper.setActive(arg_34_0._btnleft, arg_34_0._curIndex > 1)
-	gohelper.setActive(arg_34_0._btnright, arg_34_0._curIndex < arg_34_0._maxIndex)
+function Activity187View:refreshArrow()
+	gohelper.setActive(self._btnleft, self._curIndex > 1)
+	gohelper.setActive(self._btnright, self._curIndex < self._maxIndex)
 end
 
-function var_0_0.refreshPaintingCount(arg_35_0)
-	local var_35_0 = Activity187Model.instance:getRemainPaintingCount() or 0
-	local var_35_1 = var_35_0 > 0
+function Activity187View:refreshPaintingCount()
+	local count = Activity187Model.instance:getRemainPaintingCount() or 0
+	local hasCount = count > 0
 
-	arg_35_0._txtpaintTimes.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act187_painting_count"), var_35_0)
+	self._txtpaintTimes.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("act187_painting_count"), count)
 
-	gohelper.setActive(arg_35_0._gobegin, var_35_1)
-	gohelper.setActive(arg_35_0._gonoPaint, not var_35_1)
+	gohelper.setActive(self._gobegin, hasCount)
+	gohelper.setActive(self._gonoPaint, not hasCount)
 end
 
-function var_0_0.refreshAccrueProgress(arg_36_0)
-	local var_36_0 = Activity187Model.instance:getAct187Id()
-	local var_36_1 = Activity187Config.instance:getAccrueRewardIdList(var_36_0)
+function Activity187View:refreshAccrueProgress()
+	local actId = Activity187Model.instance:getAct187Id()
+	local idList = Activity187Config.instance:getAccrueRewardIdList(actId)
 
-	table.sort(var_36_1, var_0_3)
+	table.sort(idList, _sortFunc)
 
-	local var_36_2 = 0
-	local var_36_3 = Activity187Model.instance:getAccrueRewardIndex()
+	local curIndex = 0
+	local accrueRewardIndex = Activity187Model.instance:getAccrueRewardIndex()
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
-		if iter_36_1 <= var_36_3 then
-			var_36_2 = iter_36_0 - 1
+	for i, id in ipairs(idList) do
+		if id <= accrueRewardIndex then
+			curIndex = i - 1
 		end
 	end
 
-	local var_36_4 = var_36_2 * (1 / (#var_36_1 - 1))
+	local totalRewardCount = #idList
+	local deltaDistance = 1 / (totalRewardCount - 1)
+	local progress = curIndex * deltaDistance
 
-	recthelper.setWidth(arg_36_0._gorewardBar.transform, var_36_4 * arg_36_0._barBgWidth)
+	recthelper.setWidth(self._gorewardBar.transform, progress * self._barBgWidth)
 end
 
-function var_0_0.refreshRemainTime(arg_37_0)
-	local var_37_0 = Activity187Model.instance:getAct187RemainTimeStr()
+function Activity187View:refreshRemainTime()
+	local timeStr = Activity187Model.instance:getAct187RemainTimeStr()
 
-	arg_37_0._txtremainTime.text = var_37_0
+	self._txtremainTime.text = timeStr
 end
 
-function var_0_0.refreshAccrueRewardItem(arg_38_0, arg_38_1)
-	if arg_38_0._accrueRewardItemList then
-		for iter_38_0, iter_38_1 in ipairs(arg_38_0._accrueRewardItemList) do
-			iter_38_1:refreshStatus(arg_38_1)
+function Activity187View:refreshAccrueRewardItem(isPlayAnim)
+	if self._accrueRewardItemList then
+		for _, rewardItem in ipairs(self._accrueRewardItemList) do
+			rewardItem:refreshStatus(isPlayAnim)
 		end
 	end
 
-	if arg_38_0._rewardsMaterials then
+	if self._rewardsMaterials then
 		UIBlockMgr.instance:startBlock(Activity187Enum.BlockKey.GetAccrueReward)
 		AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_single)
-		TaskDispatcher.cancelTask(arg_38_0._showMaterials, arg_38_0)
-		TaskDispatcher.runDelay(arg_38_0._showMaterials, arg_38_0, var_0_2)
+		TaskDispatcher.cancelTask(self._showMaterials, self)
+		TaskDispatcher.runDelay(self._showMaterials, self, REWARD_HAS_GET_ANIM_TIME)
 	end
 end
 
-function var_0_0._showMaterials(arg_39_0)
-	RoomController.instance:popUpRoomBlockPackageView(arg_39_0._rewardsMaterials)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_39_0._rewardsMaterials)
+function Activity187View:_showMaterials()
+	RoomController.instance:popUpRoomBlockPackageView(self._rewardsMaterials)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, self._rewardsMaterials)
 
-	arg_39_0._rewardsMaterials = nil
+	self._rewardsMaterials = nil
 
 	UIBlockMgr.instance:endBlock(Activity187Enum.BlockKey.GetAccrueReward)
 end
 
-function var_0_0.onClose(arg_40_0)
-	arg_40_0._simagepicture:UnLoadImage()
-	arg_40_0._simagelantern:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_40_0._endBlock, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0._showMaterials, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0.refreshRemainTime, arg_40_0)
+function Activity187View:onClose()
+	self._simagepicture:UnLoadImage()
+	self._simagelantern:UnLoadImage()
+	TaskDispatcher.cancelTask(self._endBlock, self)
+	TaskDispatcher.cancelTask(self._showMaterials, self)
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 	UIBlockMgr.instance:endBlock(Activity187Enum.BlockKey.SwitchView)
 	UIBlockMgr.instance:endBlock(Activity187Enum.BlockKey.GetAccrueReward)
 
-	arg_40_0._rewardsMaterials = nil
+	self._rewardsMaterials = nil
 end
 
-function var_0_0.onDestroyView(arg_41_0)
+function Activity187View:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity187View

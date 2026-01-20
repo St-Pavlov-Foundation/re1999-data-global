@@ -1,354 +1,369 @@
-﻿module("modules.logic.versionactivity1_8.windsong.view.ActWindSongLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/windsong/view/ActWindSongLevelView.lua
 
-local var_0_0 = class("ActWindSongLevelView", BaseView)
+module("modules.logic.versionactivity1_8.windsong.view.ActWindSongLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._gostoryPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath")
-	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
-	arg_1_0._gostoryStages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	arg_1_0._gofightPath = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath")
-	arg_1_0._gofightScroll = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll")
-	arg_1_0._gofightStages = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	arg_1_0._btnPlayBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Title/#btn_PlayBtn")
-	arg_1_0._btnStory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Story")
-	arg_1_0._goStoryN = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_UnSelected")
-	arg_1_0._goStoryS = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_Selected")
-	arg_1_0._btnFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Fight")
-	arg_1_0._goFightN = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_UnSelected")
-	arg_1_0._goFightS = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_Selected")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0._animEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_1_0._animPath = gohelper.findChild(arg_1_0._gostoryScroll, "path/path_2"):GetComponent(gohelper.Type_Animator)
-	arg_1_0._animTask = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
-	arg_1_0._scrollStory = gohelper.findChildScrollRect(arg_1_0._gostoryPath, "")
+local ActWindSongLevelView = class("ActWindSongLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActWindSongLevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gostoryPath = gohelper.findChild(self.viewGO, "#go_storyPath")
+	self._gostoryScroll = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll")
+	self._gostoryStages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	self._gofightPath = gohelper.findChild(self.viewGO, "#go_fightPath")
+	self._gofightScroll = gohelper.findChild(self.viewGO, "#go_fightPath/#go_fightScroll")
+	self._gofightStages = gohelper.findChild(self.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
+	self._goTitle = gohelper.findChild(self.viewGO, "#go_Title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_Title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "#go_Title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
+	self._btnPlayBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Title/#btn_PlayBtn")
+	self._btnStory = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Story")
+	self._goStoryN = gohelper.findChild(self._btnStory.gameObject, "go_UnSelected")
+	self._goStoryS = gohelper.findChild(self._btnStory.gameObject, "go_Selected")
+	self._btnFight = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Fight")
+	self._goFightN = gohelper.findChild(self._btnFight.gameObject, "go_UnSelected")
+	self._goFightS = gohelper.findChild(self._btnFight.gameObject, "go_Selected")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+
+	local goPath = gohelper.findChild(self._gostoryScroll, "path/path_2")
+
+	self._animPath = goPath:GetComponent(gohelper.Type_Animator)
+
+	local goTaskAnim = gohelper.findChild(self.viewGO, "#btn_Task/ani")
+
+	self._animTask = goTaskAnim:GetComponent(gohelper.Type_Animator)
+	self._scrollStory = gohelper.findChildScrollRect(self._gostoryPath, "")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnPlayBtn:AddClickListener(arg_2_0._btnPlayBtnOnClick, arg_2_0)
-	arg_2_0._btnStory:AddClickListener(arg_2_0._btnStoryOnClick, arg_2_0)
-	arg_2_0._btnFight:AddClickListener(arg_2_0._btnFightOnClick, arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActWindSongEnum.AnimEvt.OnStoryOpenEnd, arg_2_0._onStoryOpenEnd, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActWindSongEnum.AnimEvt.OnFightOpenEnd, arg_2_0._onFightOpenEnd, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActWindSongEnum.AnimEvt.OnGoStoryEnd, arg_2_0._onGoStoryEnd, arg_2_0)
+function ActWindSongLevelView:addEvents()
+	self._btnPlayBtn:AddClickListener(self._btnPlayBtnOnClick, self)
+	self._btnStory:AddClickListener(self._btnStoryOnClick, self)
+	self._btnFight:AddClickListener(self._btnFightOnClick, self)
+	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
+	self._animEvent:AddEventListener(ActWindSongEnum.AnimEvt.OnStoryOpenEnd, self._onStoryOpenEnd, self)
+	self._animEvent:AddEventListener(ActWindSongEnum.AnimEvt.OnFightOpenEnd, self._onFightOpenEnd, self)
+	self._animEvent:AddEventListener(ActWindSongEnum.AnimEvt.OnGoStoryEnd, self._onGoStoryEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnPlayBtn:RemoveClickListener()
-	arg_3_0._btnStory:RemoveClickListener()
-	arg_3_0._btnFight:RemoveClickListener()
-	arg_3_0._btnTask:RemoveClickListener()
+function ActWindSongLevelView:removeEvents()
+	self._btnPlayBtn:RemoveClickListener()
+	self._btnStory:RemoveClickListener()
+	self._btnFight:RemoveClickListener()
+	self._btnTask:RemoveClickListener()
 end
 
-function var_0_0._btnPlayBtnOnClick(arg_4_0)
-	if arg_4_0.actConfig.storyId > 0 then
-		StoryController.instance:playStory(arg_4_0.actConfig.storyId)
+function ActWindSongLevelView:_btnPlayBtnOnClick()
+	if self.actConfig.storyId > 0 then
+		StoryController.instance:playStory(self.actConfig.storyId)
 	end
 end
 
-function var_0_0._btnStoryOnClick(arg_5_0, arg_5_1)
-	if arg_5_0._gostoryPath.activeInHierarchy then
+function ActWindSongLevelView:_btnStoryOnClick(isOpen)
+	if self._gostoryPath.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_5_0._goStoryN, false)
-	gohelper.setActive(arg_5_0._goStoryS, true)
-	gohelper.setActive(arg_5_0._goFightN, true)
-	gohelper.setActive(arg_5_0._goFightS, false)
-	gohelper.setActive(arg_5_0._btnPlayBtn, arg_5_0.actConfig.storyId > 0)
+	gohelper.setActive(self._goStoryN, false)
+	gohelper.setActive(self._goStoryS, true)
+	gohelper.setActive(self._goFightN, true)
+	gohelper.setActive(self._goFightS, false)
+	gohelper.setActive(self._btnPlayBtn, self.actConfig.storyId > 0)
 
-	if arg_5_1 then
-		arg_5_0._anim:Play("openstory", 0, 0)
+	if isOpen then
+		self._anim:Play("openstory", 0, 0)
 	else
-		arg_5_0._anim:Play("gostory", 0, 0)
+		self._anim:Play("gostory", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_switch)
 	end
 end
 
-function var_0_0._btnFightOnClick(arg_6_0, arg_6_1)
-	if arg_6_0._gofightPath.activeInHierarchy then
+function ActWindSongLevelView:_btnFightOnClick(isOpen)
+	if self._gofightPath.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_6_0._goStoryN, true)
-	gohelper.setActive(arg_6_0._goStoryS, false)
-	gohelper.setActive(arg_6_0._goFightN, false)
-	gohelper.setActive(arg_6_0._goFightS, true)
-	gohelper.setActive(arg_6_0._btnPlayBtn, false)
+	gohelper.setActive(self._goStoryN, true)
+	gohelper.setActive(self._goStoryS, false)
+	gohelper.setActive(self._goFightN, false)
+	gohelper.setActive(self._goFightS, true)
+	gohelper.setActive(self._btnPlayBtn, false)
 
-	if arg_6_1 then
-		arg_6_0._anim:Play("openfight", 0, 0)
+	if isOpen then
+		self._anim:Play("openfight", 0, 0)
 	else
-		arg_6_0._anim:Play("gofight", 0, 0)
+		self._anim:Play("gofight", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_switch)
 	end
 end
 
-function var_0_0._btnTaskOnClick(arg_7_0)
+function ActWindSongLevelView:_btnTaskOnClick()
 	ViewMgr.instance:openView(ViewName.ActWindSongTaskView)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.actId = VersionActivity1_8Enum.ActivityId.WindSong
-	arg_8_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_8_0._gostoryPath)
+function ActWindSongLevelView:_editableInitView()
+	self.actId = VersionActivity1_8Enum.ActivityId.WindSong
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gostoryPath)
 
-	arg_8_0._drag:AddDragBeginListener(arg_8_0._onDragBegin, arg_8_0)
-	arg_8_0._drag:AddDragEndListener(arg_8_0._onDragEnd, arg_8_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_8_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_8_0._gostoryPath)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._gostoryPath)
 
-	arg_8_0._touch:AddClickDownListener(arg_8_0._onClickDown, arg_8_0)
+	self._touch:AddClickDownListener(self._onClickDown, self)
 
-	arg_8_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_8_0._gostoryPath, DungeonMapEpisodeAudio, arg_8_0._scrollStory)
-	arg_8_0.actConfig = ActivityConfig.instance:getActivityCo(arg_8_0.actId)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._gostoryPath, DungeonMapEpisodeAudio, self._scrollStory)
+	self.actConfig = ActivityConfig.instance:getActivityCo(self.actId)
 
-	local var_8_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local rightOffsetX = -300
 
-	arg_8_0._offsetX = (var_8_0 - -300) / 2
-	arg_8_0.minContentAnchorX = -4660 + var_8_0
+	self._offsetX = (width - rightOffsetX) / 2
+	self.minContentAnchorX = -4660 + width
 
 	ActWindSongModel.instance:initData()
-	arg_8_0:_initStageItems()
-	gohelper.setActive(arg_8_0._btnPlayBtn, arg_8_0.actConfig.storyId > 0)
+	self:_initStageItems()
+	gohelper.setActive(self._btnPlayBtn, self.actConfig.storyId > 0)
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(ActWindSongController.instance, ActWindSongEvent.StoryItemClick, arg_9_0.OnStoryItemClick, arg_9_0)
-	arg_9_0:addEventCb(ActWindSongController.instance, ActWindSongEvent.FightItemClick, arg_9_0.OnFightItemClick, arg_9_0)
-	arg_9_0:addEventCb(ActWindSongController.instance, ActWindSongEvent.TabSwitch, arg_9_0.OnTabSwitch, arg_9_0)
-	arg_9_0:addEventCb(StoryController.instance, StoryEvent.Finish, arg_9_0.OnStoryFinish, arg_9_0)
-	arg_9_0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, arg_9_0.OnEndDungeonPush, arg_9_0)
-	arg_9_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_9_0.OnDotChange, arg_9_0)
+function ActWindSongLevelView:onOpen()
+	self:addEventCb(ActWindSongController.instance, ActWindSongEvent.StoryItemClick, self.OnStoryItemClick, self)
+	self:addEventCb(ActWindSongController.instance, ActWindSongEvent.FightItemClick, self.OnFightItemClick, self)
+	self:addEventCb(ActWindSongController.instance, ActWindSongEvent.TabSwitch, self.OnTabSwitch, self)
+	self:addEventCb(StoryController.instance, StoryEvent.Finish, self.OnStoryFinish, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, self.OnEndDungeonPush, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, self.OnDotChange, self)
 
-	local var_9_0 = gohelper.findChild(arg_9_0._btnTask.gameObject, "#go_reddot")
-	local var_9_1 = arg_9_0.actConfig and arg_9_0.actConfig.isRetroAcitivity == 2
-	local var_9_2 = var_9_1 and RedDotEnum.DotNode.PermanentRoleActivityTask or RedDotEnum.DotNode.V1a6RoleActivityTask
+	local goreddot = gohelper.findChild(self._btnTask.gameObject, "#go_reddot")
+	local isRetroAcitivity = self.actConfig and self.actConfig.isRetroAcitivity == 2
+	local reddotId = isRetroAcitivity and RedDotEnum.DotNode.PermanentRoleActivityTask or RedDotEnum.DotNode.V1a6RoleActivityTask
 
-	RedDotController.instance:addRedDot(var_9_0, var_9_2, arg_9_0.actId)
-	arg_9_0:OnDotChange()
-	gohelper.setActive(arg_9_0._gotime.gameObject, not var_9_1)
+	RedDotController.instance:addRedDot(goreddot, reddotId, self.actId)
+	self:OnDotChange()
+	gohelper.setActive(self._gotime.gameObject, not isRetroAcitivity)
 
-	if not var_9_1 then
-		arg_9_0:_showLeftTime()
-		TaskDispatcher.runRepeat(arg_9_0._showLeftTime, arg_9_0, 1)
+	if not isRetroAcitivity then
+		self:_showLeftTime()
+		TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
 	end
 
-	if arg_9_0.viewParam and arg_9_0.viewParam.needShowFight then
-		local var_9_3 = ActWindSongModel.instance:getEnterFightIndex()
+	if self.viewParam and self.viewParam.needShowFight then
+		local fightIndex = ActWindSongModel.instance:getEnterFightIndex()
 
-		if var_9_3 then
-			arg_9_0.latestfightItem = var_9_3
+		if fightIndex then
+			self.latestfightItem = fightIndex
 
-			for iter_9_0, iter_9_1 in ipairs(arg_9_0.fightItemList) do
-				iter_9_1:refreshSelect(var_9_3)
+			for _, fightItem in ipairs(self.fightItemList) do
+				fightItem:refreshSelect(fightIndex)
 			end
 		end
 
-		arg_9_0:_btnFightOnClick(true)
-		arg_9_0:_lockScreen(true)
-		TaskDispatcher.runDelay(arg_9_0._delayOpenFight, arg_9_0, 0.3)
+		self:_btnFightOnClick(true)
+		self:_lockScreen(true)
+		TaskDispatcher.runDelay(self._delayOpenFight, self, 0.3)
 	else
-		arg_9_0:_btnStoryOnClick(true)
+		self:_btnStoryOnClick(true)
 
-		if arg_9_0:_checkFirstEnter() then
-			arg_9_0:_lockScreen(true)
-			arg_9_0.storyItemList[1]:lockStatus()
-			TaskDispatcher.runDelay(arg_9_0._playFirstUnlock, arg_9_0, 0.8)
+		if self:_checkFirstEnter() then
+			self:_lockScreen(true)
+			self.storyItemList[1]:lockStatus()
+			TaskDispatcher.runDelay(self._playFirstUnlock, self, 0.8)
 		end
 	end
 end
 
-function var_0_0._checkFirstEnter(arg_10_0)
-	if not arg_10_0.storyItemList[2]:isUnlock() and PlayerPrefsHelper.getNumber("ActWindSongFirstEnter", 0) == 0 then
-		PlayerPrefsHelper.setNumber("ActWindSongFirstEnter", 1)
+function ActWindSongLevelView:_checkFirstEnter()
+	if not self.storyItemList[2]:isUnlock() then
+		local record = PlayerPrefsHelper.getNumber("ActWindSongFirstEnter", 0)
 
-		return true
+		if record == 0 then
+			PlayerPrefsHelper.setNumber("ActWindSongFirstEnter", 1)
+
+			return true
+		end
 	end
 
 	return false
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._showLeftTime, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._delayOpenFight, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._playFirstUnlock, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._delayOpenStory, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._unlockStoryEnd, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._finishStoryEnd, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._playPathAnim, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._unlockFightEnd, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._unlockStory, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._starShowEnd, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._playStoryFinishAnim, arg_11_0)
-	arg_11_0:_lockScreen(false)
+function ActWindSongLevelView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	TaskDispatcher.cancelTask(self._delayOpenFight, self)
+	TaskDispatcher.cancelTask(self._playFirstUnlock, self)
+	TaskDispatcher.cancelTask(self._delayOpenStory, self)
+	TaskDispatcher.cancelTask(self._unlockStoryEnd, self)
+	TaskDispatcher.cancelTask(self._finishStoryEnd, self)
+	TaskDispatcher.cancelTask(self._playPathAnim, self)
+	TaskDispatcher.cancelTask(self._unlockFightEnd, self)
+	TaskDispatcher.cancelTask(self._unlockStory, self)
+	TaskDispatcher.cancelTask(self._starShowEnd, self)
+	TaskDispatcher.cancelTask(self._playStoryFinishAnim, self)
+	self:_lockScreen(false)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0.storyItemList = nil
-	arg_12_0.fightItemList = nil
+function ActWindSongLevelView:onDestroyView()
+	self.storyItemList = nil
+	self.fightItemList = nil
 
-	if arg_12_0._drag then
-		arg_12_0._drag:RemoveDragBeginListener()
-		arg_12_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_12_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_12_0._touch then
-		arg_12_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_12_0._touch = nil
+		self._touch = nil
 	end
 end
 
-function var_0_0.OnStoryItemClick(arg_13_0, arg_13_1)
-	arg_13_0:_focusStoryItem(arg_13_1, true)
+function ActWindSongLevelView:OnStoryItemClick(index)
+	self:_focusStoryItem(index, true)
 end
 
-function var_0_0.OnFightItemClick(arg_14_0, arg_14_1)
-	if arg_14_0.latestfightItem == arg_14_1 then
+function ActWindSongLevelView:OnFightItemClick(_index)
+	if self.latestfightItem == _index then
 		return
 	end
 
-	arg_14_0.latestfightItem = arg_14_1
+	self.latestfightItem = _index
 
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.fight_switch)
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.fightItemList) do
-		iter_14_1:refreshSelect(arg_14_1)
+	for _, fightItem in ipairs(self.fightItemList) do
+		fightItem:refreshSelect(_index)
 	end
 end
 
-function var_0_0.OnTabSwitch(arg_15_0, arg_15_1)
-	if arg_15_1 then
-		arg_15_0:_btnFightOnClick()
+function ActWindSongLevelView:OnTabSwitch(needShowFight)
+	if needShowFight then
+		self:_btnFightOnClick()
 	else
-		arg_15_0:_btnStoryOnClick()
+		self:_btnStoryOnClick()
 	end
 end
 
-function var_0_0.OnStoryFinish(arg_16_0)
-	TaskDispatcher.runDelay(arg_16_0._delayOpenStory, arg_16_0, 0.4)
+function ActWindSongLevelView:OnStoryFinish()
+	TaskDispatcher.runDelay(self._delayOpenStory, self, 0.4)
 end
 
-function var_0_0.OnEndDungeonPush(arg_17_0)
+function ActWindSongLevelView:OnEndDungeonPush()
 	ActWindSongModel.instance:updateData()
-	TaskDispatcher.runDelay(arg_17_0._playStoryFinishAnim, arg_17_0, 0.73)
+	TaskDispatcher.runDelay(self._playStoryFinishAnim, self, 0.73)
 end
 
-function var_0_0.OnDotChange(arg_18_0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, arg_18_0.actId) then
-		arg_18_0._animTask:Play("loop")
+function ActWindSongLevelView:OnDotChange()
+	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, self.actId)
+
+	if isDotShow then
+		self._animTask:Play("loop")
 	else
-		arg_18_0._animTask:Play("idle")
+		self._animTask:Play("idle")
 	end
 end
 
-function var_0_0._onStoryOpenEnd(arg_19_0)
-	arg_19_0:_initPathStatus()
+function ActWindSongLevelView:_onStoryOpenEnd()
+	self:_initPathStatus()
 end
 
-function var_0_0._onFightOpenEnd(arg_20_0)
-	arg_20_0:_playFightFinishAnim()
+function ActWindSongLevelView:_onFightOpenEnd()
+	self:_playFightFinishAnim()
 end
 
-function var_0_0._onGoStoryEnd(arg_21_0)
-	arg_21_0:_initPathStatus()
+function ActWindSongLevelView:_onGoStoryEnd()
+	self:_initPathStatus()
 end
 
-function var_0_0._onDragBegin(arg_22_0)
-	arg_22_0._audioScroll:onDragBegin()
+function ActWindSongLevelView:_onDragBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_23_0)
-	arg_23_0._audioScroll:onDragEnd()
+function ActWindSongLevelView:_onDragEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDown(arg_24_0)
-	arg_24_0._audioScroll:onClickDown()
+function ActWindSongLevelView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0._initStageItems(arg_25_0)
-	local var_25_0
-	local var_25_1
-	local var_25_2 = arg_25_0.viewContainer:getSetting().otherRes[1]
+function ActWindSongLevelView:_initStageItems()
+	local levelCount, path
 
-	arg_25_0.storyItemList = {}
+	path = self.viewContainer:getSetting().otherRes[1]
+	self.storyItemList = {}
 
-	local var_25_3 = RoleActivityConfig.instance:getStoryLevelList(arg_25_0.actId)
-	local var_25_4 = #var_25_3
+	local storyConfigList = RoleActivityConfig.instance:getStoryLevelList(self.actId)
 
-	for iter_25_0 = 1, var_25_4 do
-		local var_25_5 = gohelper.findChild(arg_25_0._gostoryStages, "stage" .. iter_25_0)
-		local var_25_6 = arg_25_0:getResInst(var_25_2, var_25_5)
-		local var_25_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_6, WindSongStoryItem, arg_25_0)
+	levelCount = #storyConfigList
 
-		arg_25_0.storyItemList[iter_25_0] = var_25_7
+	for i = 1, levelCount do
+		local stageGo = gohelper.findChild(self._gostoryStages, "stage" .. i)
+		local cloneGo = self:getResInst(path, stageGo)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, WindSongStoryItem, self)
 
-		arg_25_0.storyItemList[iter_25_0]:setParam(var_25_3[iter_25_0], iter_25_0)
+		self.storyItemList[i] = stageItem
 
-		if arg_25_0.storyItemList[iter_25_0]:isUnlock() then
-			arg_25_0.latestStoryItem = iter_25_0
+		self.storyItemList[i]:setParam(storyConfigList[i], i)
+
+		if self.storyItemList[i]:isUnlock() then
+			self.latestStoryItem = i
 		end
 	end
 
-	arg_25_0:_focusStoryItem(arg_25_0.latestStoryItem)
+	self:_focusStoryItem(self.latestStoryItem)
 
-	local var_25_8 = arg_25_0.viewContainer:getSetting().otherRes[2]
+	path = self.viewContainer:getSetting().otherRes[2]
+	self.fightItemList = {}
 
-	arg_25_0.fightItemList = {}
+	local fightConfigList = RoleActivityConfig.instance:getBattleLevelList(self.actId)
 
-	local var_25_9 = RoleActivityConfig.instance:getBattleLevelList(arg_25_0.actId)
-	local var_25_10 = #var_25_9 / 2
+	levelCount = #fightConfigList / 2
 
-	for iter_25_1 = 1, var_25_10 do
-		local var_25_11 = gohelper.findChild(arg_25_0._gofightStages, "stage" .. iter_25_1)
-		local var_25_12 = arg_25_0:getResInst(var_25_8, var_25_11)
-		local var_25_13 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_12, WindSongFightItem, arg_25_0)
+	for i = 1, levelCount do
+		local stageGo = gohelper.findChild(self._gofightStages, "stage" .. i)
+		local cloneGo = self:getResInst(path, stageGo)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, WindSongFightItem, self)
 
-		arg_25_0.fightItemList[iter_25_1] = var_25_13
+		self.fightItemList[i] = stageItem
 
-		arg_25_0.fightItemList[iter_25_1]:setParam(var_25_9[2 * iter_25_1 - 1], iter_25_1)
+		self.fightItemList[i]:setParam(fightConfigList[2 * i - 1], i)
 
-		if arg_25_0.fightItemList[iter_25_1]:isUnlock() then
-			arg_25_0.latestfightItem = iter_25_1
+		if self.fightItemList[i]:isUnlock() then
+			self.latestfightItem = i
 		end
 	end
 
-	arg_25_0.fightItemList[arg_25_0.latestfightItem]:refreshSelect()
+	self.fightItemList[self.latestfightItem]:refreshSelect()
 end
 
-function var_0_0._playFirstUnlock(arg_26_0)
-	arg_26_0.finishStoryIndex = 0
+function ActWindSongLevelView:_playFirstUnlock()
+	self.finishStoryIndex = 0
 
-	arg_26_0.storyItemList[1]:playUnlock()
-	TaskDispatcher.runDelay(arg_26_0._unlockStoryEnd, arg_26_0, 1.33)
+	self.storyItemList[1]:playUnlock()
+	TaskDispatcher.runDelay(self._unlockStoryEnd, self, 1.33)
 end
 
-function var_0_0._playStoryFinishAnim(arg_27_0)
-	local var_27_0 = ActWindSongModel.instance:getNewFinishStoryLvl()
+function ActWindSongLevelView:_playStoryFinishAnim()
+	local newFinishStoryLvlId = ActWindSongModel.instance:getNewFinishStoryLvl()
 
-	if var_27_0 then
-		for iter_27_0, iter_27_1 in ipairs(arg_27_0.storyItemList) do
-			if iter_27_1.id == var_27_0 then
-				arg_27_0:_lockScreen(true)
+	if newFinishStoryLvlId then
+		for k, storyItem in ipairs(self.storyItemList) do
+			if storyItem.id == newFinishStoryLvlId then
+				self:_lockScreen(true)
 
-				arg_27_0.finishStoryIndex = iter_27_0
+				self.finishStoryIndex = k
 
-				iter_27_1:playFinish()
-				iter_27_1:playStarAnim()
-				TaskDispatcher.runDelay(arg_27_0._finishStoryEnd, arg_27_0, 1)
+				storyItem:playFinish()
+				storyItem:playStarAnim()
+				TaskDispatcher.runDelay(self._finishStoryEnd, self, 1)
 
 				break
 			end
@@ -358,60 +373,60 @@ function var_0_0._playStoryFinishAnim(arg_27_0)
 	end
 end
 
-function var_0_0._finishStoryEnd(arg_28_0)
-	if arg_28_0.finishStoryIndex == #arg_28_0.storyItemList then
-		arg_28_0.latestStoryItem = arg_28_0.finishStoryIndex
-		arg_28_0.finishStoryIndex = nil
+function ActWindSongLevelView:_finishStoryEnd()
+	if self.finishStoryIndex == #self.storyItemList then
+		self.latestStoryItem = self.finishStoryIndex
+		self.finishStoryIndex = nil
 
-		arg_28_0:_lockScreen(false)
+		self:_lockScreen(false)
 	else
-		arg_28_0.latestStoryItem = arg_28_0.finishStoryIndex + 1
+		self.latestStoryItem = self.finishStoryIndex + 1
 
-		arg_28_0:_playPathAnim()
+		self:_playPathAnim()
 	end
 end
 
-function var_0_0._playPathAnim(arg_29_0)
-	local var_29_0 = "go" .. arg_29_0.finishStoryIndex
+function ActWindSongLevelView:_playPathAnim()
+	local animName = "go" .. self.finishStoryIndex
 
-	arg_29_0._animPath.speed = 1
+	self._animPath.speed = 1
 
-	arg_29_0._animPath:Play(var_29_0)
-	TaskDispatcher.runDelay(arg_29_0._unlockStory, arg_29_0, 0.33)
+	self._animPath:Play(animName)
+	TaskDispatcher.runDelay(self._unlockStory, self, 0.33)
 end
 
-function var_0_0._unlockStory(arg_30_0)
-	arg_30_0.storyItemList[arg_30_0.finishStoryIndex + 1]:playUnlock()
-	TaskDispatcher.runDelay(arg_30_0._unlockStoryEnd, arg_30_0, 1.33)
+function ActWindSongLevelView:_unlockStory()
+	self.storyItemList[self.finishStoryIndex + 1]:playUnlock()
+	TaskDispatcher.runDelay(self._unlockStoryEnd, self, 1.33)
 end
 
-function var_0_0._unlockStoryEnd(arg_31_0)
-	arg_31_0.storyItemList[arg_31_0.finishStoryIndex + 1]:refreshStatus()
+function ActWindSongLevelView:_unlockStoryEnd()
+	self.storyItemList[self.finishStoryIndex + 1]:refreshStatus()
 
-	arg_31_0.finishStoryIndex = nil
+	self.finishStoryIndex = nil
 
-	arg_31_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._playFightFinishAnim(arg_32_0)
-	local var_32_0 = ActWindSongModel.instance:getNewFinishFightLvl()
+function ActWindSongLevelView:_playFightFinishAnim()
+	local newFinishFightLvlId = ActWindSongModel.instance:getNewFinishFightLvl()
 
-	if var_32_0 then
+	if newFinishFightLvlId then
 		ActWindSongModel.instance:updateData()
 
-		for iter_32_0, iter_32_1 in ipairs(arg_32_0.fightItemList) do
-			if iter_32_1.id == var_32_0 then
-				arg_32_0.finishFightIndex = iter_32_0
+		for k, fightItem in ipairs(self.fightItemList) do
+			if fightItem.id == newFinishFightLvlId then
+				self.finishFightIndex = k
 
-				iter_32_1:refreshStar()
-				iter_32_1:playStarAnim(true)
-				TaskDispatcher.runDelay(arg_32_0._starShowEnd, arg_32_0, 0.67)
+				fightItem:refreshStar()
+				fightItem:playStarAnim(true)
+				TaskDispatcher.runDelay(self._starShowEnd, self, 0.67)
 
 				break
-			elseif iter_32_1.hardConfig.id == var_32_0 then
-				iter_32_1:refreshStar()
-				iter_32_1:playStarAnim()
-				arg_32_0:_lockScreen(false)
+			elseif fightItem.hardConfig.id == newFinishFightLvlId then
+				fightItem:refreshStar()
+				fightItem:playStarAnim()
+				self:_lockScreen(false)
 
 				break
 			end
@@ -422,75 +437,75 @@ function var_0_0._playFightFinishAnim(arg_32_0)
 		return
 	end
 
-	arg_32_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._starShowEnd(arg_33_0)
-	arg_33_0.fightItemList[arg_33_0.finishFightIndex]:playHardUnlock()
-	TaskDispatcher.runDelay(arg_33_0._unlockFightEnd, arg_33_0, 1.7)
+function ActWindSongLevelView:_starShowEnd()
+	self.fightItemList[self.finishFightIndex]:playHardUnlock()
+	TaskDispatcher.runDelay(self._unlockFightEnd, self, 1.7)
 
-	if arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1] then
-		arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1]:playUnlock()
+	if self.fightItemList[self.finishFightIndex + 1] then
+		self.fightItemList[self.finishFightIndex + 1]:playUnlock()
 	end
 end
 
-function var_0_0._unlockFightEnd(arg_34_0)
-	arg_34_0.fightItemList[arg_34_0.finishFightIndex]:refreshStatus()
+function ActWindSongLevelView:_unlockFightEnd()
+	self.fightItemList[self.finishFightIndex]:refreshStatus()
 
-	if arg_34_0.fightItemList[arg_34_0.finishFightIndex + 1] then
-		arg_34_0.fightItemList[arg_34_0.finishFightIndex + 1]:refreshStatus()
+	if self.fightItemList[self.finishFightIndex + 1] then
+		self.fightItemList[self.finishFightIndex + 1]:refreshStatus()
 	end
 
-	arg_34_0.finishFightIndex = nil
+	self.finishFightIndex = nil
 
-	arg_34_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._delayOpenStory(arg_35_0)
-	arg_35_0._anim:Play("openstory", 0, 0)
+function ActWindSongLevelView:_delayOpenStory()
+	self._anim:Play("openstory", 0, 0)
 end
 
-function var_0_0._delayOpenFight(arg_36_0)
-	arg_36_0._anim:Play("openfight", 0, 0)
+function ActWindSongLevelView:_delayOpenFight()
+	self._anim:Play("openfight", 0, 0)
 end
 
-function var_0_0._showLeftTime(arg_37_0)
-	arg_37_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(arg_37_0.actId)
+function ActWindSongLevelView:_showLeftTime()
+	self._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0._initPathStatus(arg_38_0)
-	if arg_38_0.latestStoryItem > 1 then
-		arg_38_0._animPath:Play("go" .. arg_38_0.latestStoryItem - 1, 0, 1)
+function ActWindSongLevelView:_initPathStatus()
+	if self.latestStoryItem > 1 then
+		self._animPath:Play("go" .. self.latestStoryItem - 1, 0, 1)
 	else
-		arg_38_0._animPath.speed = 0
+		self._animPath.speed = 0
 
-		arg_38_0._animPath:Play("go1", 0, 0)
+		self._animPath:Play("go1", 0, 0)
 	end
 end
 
-function var_0_0._focusStoryItem(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = recthelper.getAnchorX(arg_39_0.storyItemList[arg_39_1].transform.parent)
-	local var_39_1 = arg_39_0._offsetX - var_39_0
+function ActWindSongLevelView:_focusStoryItem(index, needPlay)
+	local contentAnchorX = recthelper.getAnchorX(self.storyItemList[index].transform.parent)
+	local offsetX = self._offsetX - contentAnchorX
 
-	if var_39_1 > 0 then
-		var_39_1 = 0
-	elseif var_39_1 < arg_39_0.minContentAnchorX then
-		var_39_1 = arg_39_0.minContentAnchorX
+	if offsetX > 0 then
+		offsetX = 0
+	elseif offsetX < self.minContentAnchorX then
+		offsetX = self.minContentAnchorX
 	end
 
-	if arg_39_2 then
-		ZProj.TweenHelper.DOAnchorPosX(arg_39_0._gostoryScroll.transform, var_39_1, 0.26, arg_39_0._onFocusEnd, arg_39_0, arg_39_1)
+	if needPlay then
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26, self._onFocusEnd, self, index)
 	else
-		ZProj.TweenHelper.DOAnchorPosX(arg_39_0._gostoryScroll.transform, var_39_1, 0.26)
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26)
 	end
 end
 
-function var_0_0._onFocusEnd(arg_40_0, arg_40_1)
-	arg_40_0.storyItemList[arg_40_1]:playStory()
+function ActWindSongLevelView:_onFocusEnd(index)
+	self.storyItemList[index]:playStory()
 end
 
-function var_0_0._lockScreen(arg_41_0, arg_41_1)
-	if arg_41_1 then
+function ActWindSongLevelView:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("WindSongLock")
 	else
@@ -499,4 +514,4 @@ function var_0_0._lockScreen(arg_41_0, arg_41_1)
 	end
 end
 
-return var_0_0
+return ActWindSongLevelView

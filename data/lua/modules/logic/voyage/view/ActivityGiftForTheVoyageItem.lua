@@ -1,99 +1,104 @@
-﻿module("modules.logic.voyage.view.ActivityGiftForTheVoyageItem", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/view/ActivityGiftForTheVoyageItem.lua
 
-local var_0_0 = class("ActivityGiftForTheVoyageItem", ActivityGiftForTheVoyageItemBase)
+module("modules.logic.voyage.view.ActivityGiftForTheVoyageItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttaskdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_taskdesc")
-	arg_1_0._gotxttaskdesc1 = gohelper.findChild(arg_1_0.viewGO, "#go_txt_taskdesc1")
-	arg_1_0._gotxttaskdesc2 = gohelper.findChild(arg_1_0.viewGO, "#go_txt_taskdesc2")
-	arg_1_0._gotxttaskdesc3 = gohelper.findChild(arg_1_0.viewGO, "#go_txt_taskdesc3")
-	arg_1_0._txttaskdesc_client = gohelper.findChildText(arg_1_0.viewGO, "#txt_taskdesc_client")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#go_line")
-	arg_1_0._scrollRewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Rewards")
-	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "#scroll_Rewards/Viewport/#go_Rewards")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_Rewards/Viewport/#go_Rewards/#go_Item")
+local ActivityGiftForTheVoyageItem = class("ActivityGiftForTheVoyageItem", ActivityGiftForTheVoyageItemBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityGiftForTheVoyageItem:onInitView()
+	self._txttaskdesc = gohelper.findChildText(self.viewGO, "#txt_taskdesc")
+	self._gotxttaskdesc1 = gohelper.findChild(self.viewGO, "#go_txt_taskdesc1")
+	self._gotxttaskdesc2 = gohelper.findChild(self.viewGO, "#go_txt_taskdesc2")
+	self._gotxttaskdesc3 = gohelper.findChild(self.viewGO, "#go_txt_taskdesc3")
+	self._txttaskdesc_client = gohelper.findChildText(self.viewGO, "#txt_taskdesc_client")
+	self._goline = gohelper.findChild(self.viewGO, "#go_line")
+	self._scrollRewards = gohelper.findChildScrollRect(self.viewGO, "#scroll_Rewards")
+	self._goRewards = gohelper.findChild(self.viewGO, "#scroll_Rewards/Viewport/#go_Rewards")
+	self._goitem = gohelper.findChild(self.viewGO, "#scroll_Rewards/Viewport/#go_Rewards/#go_Item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityGiftForTheVoyageItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityGiftForTheVoyageItem:removeEvents()
 	return
 end
 
-function var_0_0.onRefresh(arg_4_0)
-	local var_4_0 = arg_4_0._mo
-	local var_4_1 = var_4_0.id
-	local var_4_2 = VoyageModel.instance:getStateById(var_4_1)
+function ActivityGiftForTheVoyageItem:onRefresh()
+	local mo = self._mo
+	local id = mo.id
+	local state = VoyageModel.instance:getStateById(id)
 
-	gohelper.setActive(arg_4_0._gotxttaskdesc1, var_4_1 > 0 and var_4_2 == VoyageEnum.State.Got)
-	gohelper.setActive(arg_4_0._gotxttaskdesc2, var_4_1 > 0 and var_4_2 == VoyageEnum.State.Available)
-	gohelper.setActive(arg_4_0._gotxttaskdesc3, var_4_1 > 0 and var_4_2 == VoyageEnum.State.None)
+	gohelper.setActive(self._gotxttaskdesc1, id > 0 and state == VoyageEnum.State.Got)
+	gohelper.setActive(self._gotxttaskdesc2, id > 0 and state == VoyageEnum.State.Available)
+	gohelper.setActive(self._gotxttaskdesc3, id > 0 and state == VoyageEnum.State.None)
 
-	arg_4_0._txttaskdesc.text = var_4_1 > 0 and var_4_0.desc or ""
-	arg_4_0._txttaskdesc_client.text = var_4_1 > 0 and "" or var_4_0.desc
+	self._txttaskdesc.text = id > 0 and mo.desc or ""
+	self._txttaskdesc_client.text = id > 0 and "" or mo.desc
 
-	arg_4_0:_refreshRewards()
+	self:_refreshRewards()
 
-	arg_4_0._scrollRewards.horizontalNormalizedPosition = 0
+	self._scrollRewards.horizontalNormalizedPosition = 0
 end
 
-function var_0_0._onRewardItemShow(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	var_0_0.super._onRewardItemShow(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_1:setGetMask(true)
+function ActivityGiftForTheVoyageItem:_onRewardItemShow(cell_component, data, index)
+	ActivityGiftForTheVoyageItem.super._onRewardItemShow(self, cell_component, data, index)
+	cell_component:setGetMask(true)
 end
 
-function var_0_0.setActiveLine(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0._goline, arg_6_1)
+function ActivityGiftForTheVoyageItem:setActiveLine(bool)
+	gohelper.setActive(self._goline, bool)
 end
 
-function var_0_0._isGot(arg_7_0)
-	local var_7_0 = arg_7_0._mo.id
+function ActivityGiftForTheVoyageItem:_isGot()
+	local mo = self._mo
+	local id = mo.id
+	local state = VoyageModel.instance:getStateById(id)
 
-	return VoyageModel.instance:getStateById(var_7_0) == VoyageEnum.State.Got
+	return state == VoyageEnum.State.Got
 end
 
-function var_0_0._createItemList(arg_8_0)
-	if arg_8_0._itemList then
+function ActivityGiftForTheVoyageItem:_createItemList()
+	if self._itemList then
 		return
 	end
 
-	local var_8_0 = arg_8_0._mo.id
+	local mo = self._mo
+	local id = mo.id
 
-	gohelper.setActive(arg_8_0._goitem, true)
+	gohelper.setActive(self._goitem, true)
 
-	arg_8_0._itemList = {}
+	self._itemList = {}
 
-	local var_8_1 = VoyageConfig.instance:getRewardStrList(var_8_0)
+	local rewardStrList = VoyageConfig.instance:getRewardStrList(id)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = string.splitToNumber(iter_8_1, "#")
-		local var_8_3 = arg_8_0:_createRewardItem(ActivityGiftForTheVoyageItemRewardItem)
+	for _, rewardStr in ipairs(rewardStrList) do
+		local itemCo = string.splitToNumber(rewardStr, "#")
+		local item = self:_createRewardItem(ActivityGiftForTheVoyageItemRewardItem)
 
-		table.insert(arg_8_0._itemList, var_8_3)
-		var_8_3:refreshRewardItem(var_8_2, arg_8_0:_isGot())
+		table.insert(self._itemList, item)
+		item:refreshRewardItem(itemCo, self:_isGot())
 	end
 
-	gohelper.setActive(arg_8_0._goitem, false)
+	gohelper.setActive(self._goitem, false)
 end
 
-function var_0_0._createRewardItem(arg_9_0, arg_9_1)
-	local var_9_0 = gohelper.cloneInPlace(arg_9_0._goitem, arg_9_1.__name)
+function ActivityGiftForTheVoyageItem:_createRewardItem(class)
+	local go = gohelper.cloneInPlace(self._goitem, class.__name)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_9_0, arg_9_1)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, class)
 end
 
-function var_0_0._refreshRewards(arg_10_0)
-	arg_10_0:_createItemList()
+function ActivityGiftForTheVoyageItem:_refreshRewards()
+	self:_createItemList()
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	GameUtil.onDestroyViewMemberList(arg_11_0, "_itemList")
+function ActivityGiftForTheVoyageItem:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_itemList")
 end
 
-return var_0_0
+return ActivityGiftForTheVoyageItem

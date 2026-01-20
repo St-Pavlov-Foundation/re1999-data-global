@@ -1,64 +1,66 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorSceneSelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorSceneSelectItem.lua
 
-local var_0_0 = class("SkillEditorSceneSelectItem", ListScrollCell)
+module("modules.logic.fight.view.preview.SkillEditorSceneSelectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._text = gohelper.findChildText(arg_1_1, "Text")
-	arg_1_0._text1 = gohelper.findChildText(arg_1_1, "imgSelect/Text")
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
-	arg_1_0._selectGO = gohelper.findChild(arg_1_1, "imgSelect")
+local SkillEditorSceneSelectItem = class("SkillEditorSceneSelectItem", ListScrollCell)
+
+function SkillEditorSceneSelectItem:init(go)
+	self._text = gohelper.findChildText(go, "Text")
+	self._text1 = gohelper.findChildText(go, "imgSelect/Text")
+	self._click = SLFramework.UGUI.UIClickListener.Get(go)
+	self._selectGO = gohelper.findChild(go, "imgSelect")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
+function SkillEditorSceneSelectItem:addEventListeners()
+	self._click:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function SkillEditorSceneSelectItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function SkillEditorSceneSelectItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_4_0 = arg_4_1.co
-	local var_4_1 = lua_scene.configDict[var_4_0.sceneId]
+	local co = mo.co
+	local sceneCO = lua_scene.configDict[co.sceneId]
 
-	arg_4_0._text.text = (var_4_1 and var_4_1.name .. "\n" or "") .. var_4_0.id
-	arg_4_0._text1.text = (var_4_1 and var_4_1.name .. "\n" or "") .. var_4_0.id
+	self._text.text = (sceneCO and sceneCO.name .. "\n" or "") .. co.id
+	self._text1.text = (sceneCO and sceneCO.name .. "\n" or "") .. co.id
 end
 
-function var_0_0.onSelect(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._selectGO, arg_5_1)
+function SkillEditorSceneSelectItem:onSelect(isSelect)
+	gohelper.setActive(self._selectGO, isSelect)
 end
 
-function var_0_0._onClickThis(arg_6_0)
-	local var_6_0 = GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
-	local var_6_1 = arg_6_0._mo.co.id
+function SkillEditorSceneSelectItem:_onClickThis()
+	local oldId = GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
+	local newId = self._mo.co.id
 
-	if var_6_0 ~= var_6_1 then
-		local var_6_2 = SkillEditorSceneSelectModel.instance:getIndex(arg_6_0._mo)
+	if oldId ~= newId then
+		local index = SkillEditorSceneSelectModel.instance:getIndex(self._mo)
 
-		SkillEditorSceneSelectModel.instance:selectCell(var_6_2, true)
-		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevel(var_6_1)
-		SkillEditorMgr.instance:setSceneLevelId(var_6_1)
-		arg_6_0:_setCameraOffset(var_6_1)
+		SkillEditorSceneSelectModel.instance:selectCell(index, true)
+		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevel(newId)
+		SkillEditorMgr.instance:setSceneLevelId(newId)
+		self:_setCameraOffset(newId)
 		FightController.instance:dispatchEvent(FightEvent.OnSkillEditorSceneChange)
 	end
 end
 
-function var_0_0._setCameraOffset(arg_7_0, arg_7_1)
-	local var_7_0 = CameraMgr.instance:getVirtualCameraGO()
-	local var_7_1 = lua_scene_level.configDict[arg_7_1]
-	local var_7_2 = var_7_1 and var_7_1.cameraOffset
-	local var_7_3
+function SkillEditorSceneSelectItem:_setCameraOffset(levelId)
+	local virsualCamerasGO = CameraMgr.instance:getVirtualCameraGO()
+	local levelConfig = lua_scene_level.configDict[levelId]
+	local cameraOffsetParam = levelConfig and levelConfig.cameraOffset
+	local pos
 
-	if string.nilorempty(var_7_2) then
-		var_7_3 = Vector3.zero
+	if string.nilorempty(cameraOffsetParam) then
+		pos = Vector3.zero
 	else
-		var_7_3 = Vector3.New(unpack(cjson.decode(var_7_2)))
+		pos = Vector3.New(unpack(cjson.decode(cameraOffsetParam)))
 	end
 
-	var_7_0.transform.localPosition = var_7_3
+	virsualCamerasGO.transform.localPosition = pos
 end
 
-return var_0_0
+return SkillEditorSceneSelectItem

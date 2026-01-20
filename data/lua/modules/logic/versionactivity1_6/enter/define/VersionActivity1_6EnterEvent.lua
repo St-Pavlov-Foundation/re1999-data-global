@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6EnterEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/enter/define/VersionActivity1_6EnterEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6EnterEvent", package.seeall)
 
-var_0_0.OnEnterVideoFinished = 1
+local VersionActivity1_6EnterEvent = _M
 
-return var_0_0
+VersionActivity1_6EnterEvent.OnEnterVideoFinished = 1
+
+return VersionActivity1_6EnterEvent

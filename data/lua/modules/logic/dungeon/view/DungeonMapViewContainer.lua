@@ -1,59 +1,61 @@
-﻿module("modules.logic.dungeon.view.DungeonMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMapViewContainer.lua
 
-local var_0_0 = class("DungeonMapViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonMapViewContainer = class("DungeonMapViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonMapHoleView.New())
+function DungeonMapViewContainer:buildViews()
+	local views = {}
 
-	arg_1_0._mapScene = DungeonMapScene.New()
-	arg_1_0._mapTaskInfo = DungeonMapTaskInfo.New()
+	table.insert(views, DungeonMapHoleView.New())
 
-	table.insert(var_1_0, DungeonMapView.New())
-	table.insert(var_1_0, arg_1_0._mapTaskInfo)
-	table.insert(var_1_0, DungeonMapSceneElements.New())
-	table.insert(var_1_0, arg_1_0._mapScene)
-	table.insert(var_1_0, DungeonMapEpisode.New())
-	table.insert(var_1_0, DungeonMapElementReward.New())
-	table.insert(var_1_0, DungeonMapEquipEntry.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
-	table.insert(var_1_0, DungeonMapOtherBtnView.New())
-	table.insert(var_1_0, DungeonMapActDropView.New())
-	table.insert(var_1_0, DungeonMapToughBattleActView.New())
-	table.insert(var_1_0, BalanceUmbrellaDungeonMapView.New())
-	table.insert(var_1_0, InvestigateDungeonMapView.New())
-	table.insert(var_1_0, DiceHeroDungeonMapView.New())
-	table.insert(var_1_0, VersionActivity2_8BossActDungeonMapView.New())
-	table.insert(var_1_0, CommandStationDungeonMapView.New())
+	self._mapScene = DungeonMapScene.New()
+	self._mapTaskInfo = DungeonMapTaskInfo.New()
 
-	return var_1_0
+	table.insert(views, DungeonMapView.New())
+	table.insert(views, self._mapTaskInfo)
+	table.insert(views, DungeonMapSceneElements.New())
+	table.insert(views, self._mapScene)
+	table.insert(views, DungeonMapEpisode.New())
+	table.insert(views, DungeonMapElementReward.New())
+	table.insert(views, DungeonMapEquipEntry.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+	table.insert(views, DungeonMapOtherBtnView.New())
+	table.insert(views, DungeonMapActDropView.New())
+	table.insert(views, DungeonMapToughBattleActView.New())
+	table.insert(views, BalanceUmbrellaDungeonMapView.New())
+	table.insert(views, InvestigateDungeonMapView.New())
+	table.insert(views, DiceHeroDungeonMapView.New())
+	table.insert(views, VersionActivity2_8BossActDungeonMapView.New())
+	table.insert(views, CommandStationDungeonMapView.New())
+
+	return views
 end
 
-function var_0_0.getMapScene(arg_2_0)
-	return arg_2_0._mapScene
+function DungeonMapViewContainer:getMapScene()
+	return self._mapScene
 end
 
-function var_0_0.getMapTaskInfo(arg_3_0)
-	return arg_3_0._mapTaskInfo
+function DungeonMapViewContainer:getMapTaskInfo()
+	return self._mapTaskInfo
 end
 
-function var_0_0.buildTabViews(arg_4_0, arg_4_1)
-	local var_4_0 = DungeonModel.instance.curChapterType
-	local var_4_1 = var_4_0 == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+function DungeonMapViewContainer:buildTabViews(tabContainerId)
+	local chapterType = DungeonModel.instance.curChapterType
+	local showHelp = chapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
 
-	arg_4_0._navigateButtonView = NavigateButtonsView.New({
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
-		var_4_1
+		showHelp
 	}, HelpEnum.HelpId.Dungeon)
 
-	arg_4_0._navigateButtonView:setOverrideClose(arg_4_0.overrideClose, arg_4_0)
+	self._navigateButtonView:setOverrideClose(self.overrideClose, self)
 
-	if var_4_0 == DungeonEnum.ChapterType.Equip then
-		arg_4_0._navigateButtonView.helpId = nil
+	if chapterType == DungeonEnum.ChapterType.Equip then
+		self._navigateButtonView.helpId = nil
 
-		arg_4_0._navigateButtonView:setParam({
+		self._navigateButtonView:setParam({
 			true,
 			true,
 			false
@@ -61,60 +63,61 @@ function var_0_0.buildTabViews(arg_4_0, arg_4_1)
 	end
 
 	return {
-		arg_4_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0.onContainerInit(arg_5_0)
-	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, arg_5_0.refreshHelpBtnIcon, arg_5_0)
+function DungeonMapViewContainer:onContainerInit()
+	HelpController.instance:registerCallback(HelpEvent.RefreshHelp, self.refreshHelpBtnIcon, self)
 end
 
-function var_0_0.onContainerOpenFinish(arg_6_0)
-	arg_6_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_OperaHouse)
+function DungeonMapViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_OperaHouse)
 end
 
-function var_0_0.onContainerDestroy(arg_7_0)
-	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, arg_7_0.refreshHelpBtnIcon, arg_7_0)
+function DungeonMapViewContainer:onContainerDestroy()
+	HelpController.instance:unregisterCallback(HelpEvent.RefreshHelp, self.refreshHelpBtnIcon, self)
 end
 
-function var_0_0.refreshHelpBtnIcon(arg_8_0)
-	arg_8_0._navigateButtonView:changerHelpId(HelpEnum.HelpId.Dungeon)
+function DungeonMapViewContainer:refreshHelpBtnIcon()
+	self._navigateButtonView:changerHelpId(HelpEnum.HelpId.Dungeon)
 end
 
-function var_0_0.overrideCloseElement(arg_9_0)
+function DungeonMapViewContainer:overrideCloseElement()
 	DungeonController.instance:dispatchEvent(DungeonEvent.closeMapInteractiveItem)
 end
 
-function var_0_0._overrideHelp(arg_10_0)
+function DungeonMapViewContainer:_overrideHelp()
 	ViewMgr.instance:openView(ViewName.DungeonRewardTipView)
 end
 
-function var_0_0.overrideClose(arg_11_0)
-	arg_11_0:closeThis()
+function DungeonMapViewContainer:overrideClose()
+	self:closeThis()
 end
 
-function var_0_0.refreshHelp(arg_12_0)
-	if arg_12_0._navigateButtonView then
-		local var_12_0 = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+function DungeonMapViewContainer:refreshHelp()
+	if self._navigateButtonView then
+		local chapterType = DungeonModel.instance.curChapterType
+		local showHelp = chapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
 
-		arg_12_0._navigateButtonView:setParam({
+		self._navigateButtonView:setParam({
 			true,
 			true,
-			var_12_0
+			showHelp
 		})
 	end
 end
 
-function var_0_0.onContainerUpdateParam(arg_13_0)
-	arg_13_0._mapScene:setSceneVisible(true)
+function DungeonMapViewContainer:onContainerUpdateParam()
+	self._mapScene:setSceneVisible(true)
 end
 
-function var_0_0.setVisibleInternal(arg_14_0, arg_14_1)
-	var_0_0.super.setVisibleInternal(arg_14_0, arg_14_1)
+function DungeonMapViewContainer:setVisibleInternal(isVisible)
+	DungeonMapViewContainer.super.setVisibleInternal(self, isVisible)
 
-	if arg_14_0._mapScene then
-		arg_14_0._mapScene:setSceneVisible(arg_14_1)
+	if self._mapScene then
+		self._mapScene:setSceneVisible(isVisible)
 	end
 end
 
-return var_0_0
+return DungeonMapViewContainer

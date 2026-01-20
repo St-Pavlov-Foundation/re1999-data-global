@@ -1,102 +1,106 @@
-﻿module("modules.logic.versionactivity2_3.dungeon.model.VersionActivity2_3TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/dungeon/model/VersionActivity2_3TaskListModel.lua
 
-local var_0_0 = class("VersionActivity2_3TaskListModel", ListScrollModel)
+module("modules.logic.versionactivity2_3.dungeon.model.VersionActivity2_3TaskListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_3TaskListModel = class("VersionActivity2_3TaskListModel", ListScrollModel)
+
+function VersionActivity2_3TaskListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity2_3TaskListModel:reInit()
 	return
 end
 
-function var_0_0.initTask(arg_3_0)
-	arg_3_0.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, VersionActivity2_3Enum.ActivityId.Dungeon)
+function VersionActivity2_3TaskListModel:initTask()
+	self.taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityDungeon, VersionActivity2_3Enum.ActivityId.Dungeon)
 end
 
-function var_0_0.sortTaskMoList(arg_4_0)
-	local var_4_0 = {}
-	local var_4_1 = {}
-	local var_4_2 = {}
+function VersionActivity2_3TaskListModel:sortTaskMoList()
+	local finishNotGetRewardMoList = {}
+	local notFinishMoList = {}
+	local finishAndGetRewardMoList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.taskMoList) do
-		if iter_4_1.finishCount >= iter_4_1.config.maxFinishCount then
-			table.insert(var_4_2, iter_4_1)
-		elseif iter_4_1.hasFinished then
-			table.insert(var_4_0, iter_4_1)
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.finishCount >= taskMo.config.maxFinishCount then
+			table.insert(finishAndGetRewardMoList, taskMo)
+		elseif taskMo.hasFinished then
+			table.insert(finishNotGetRewardMoList, taskMo)
 		else
-			table.insert(var_4_1, iter_4_1)
+			table.insert(notFinishMoList, taskMo)
 		end
 	end
 
-	table.sort(var_4_0, var_0_0._sortFunc)
-	table.sort(var_4_1, var_0_0._sortFunc)
-	table.sort(var_4_2, var_0_0._sortFunc)
+	table.sort(finishNotGetRewardMoList, VersionActivity2_3TaskListModel._sortFunc)
+	table.sort(notFinishMoList, VersionActivity2_3TaskListModel._sortFunc)
+	table.sort(finishAndGetRewardMoList, VersionActivity2_3TaskListModel._sortFunc)
 
-	arg_4_0.taskMoList = {}
+	self.taskMoList = {}
 
-	tabletool.addValues(arg_4_0.taskMoList, var_4_0)
-	tabletool.addValues(arg_4_0.taskMoList, var_4_1)
-	tabletool.addValues(arg_4_0.taskMoList, var_4_2)
+	tabletool.addValues(self.taskMoList, finishNotGetRewardMoList)
+	tabletool.addValues(self.taskMoList, notFinishMoList)
+	tabletool.addValues(self.taskMoList, finishAndGetRewardMoList)
 end
 
-function var_0_0._sortFunc(arg_5_0, arg_5_1)
-	return arg_5_0.id < arg_5_1.id
+function VersionActivity2_3TaskListModel._sortFunc(a, b)
+	return a.id < b.id
 end
 
-function var_0_0.refreshList(arg_6_0)
-	if arg_6_0:getFinishTaskCount() > 1 then
-		local var_6_0 = tabletool.copy(arg_6_0.taskMoList)
+function VersionActivity2_3TaskListModel:refreshList()
+	local finishTaskCount = self:getFinishTaskCount()
 
-		table.insert(var_6_0, 1, {
+	if finishTaskCount > 1 then
+		local moList = tabletool.copy(self.taskMoList)
+
+		table.insert(moList, 1, {
 			getAll = true
 		})
-		arg_6_0:setList(var_6_0)
+		self:setList(moList)
 	else
-		arg_6_0:setList(arg_6_0.taskMoList)
+		self:setList(self.taskMoList)
 	end
 end
 
-function var_0_0.getFinishTaskCount(arg_7_0)
-	local var_7_0 = 0
+function VersionActivity2_3TaskListModel:getFinishTaskCount()
+	local count = 0
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.taskMoList) do
-		if iter_7_1.hasFinished and iter_7_1.finishCount < iter_7_1.config.maxFinishCount then
-			var_7_0 = var_7_0 + 1
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo.config.maxFinishCount then
+			count = count + 1
 		end
 	end
 
-	return var_7_0
+	return count
 end
 
-function var_0_0.getFinishTaskActivityCount(arg_8_0)
-	local var_8_0 = 0
+function VersionActivity2_3TaskListModel:getFinishTaskActivityCount()
+	local count = 0
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.taskMoList) do
-		if iter_8_1.hasFinished and iter_8_1.finishCount < iter_8_1.config.maxFinishCount then
-			var_8_0 = var_8_0 + iter_8_1.config.activity
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo.config.maxFinishCount then
+			count = count + taskMo.config.activity
 		end
 	end
 
-	return var_8_0
+	return count
 end
 
-function var_0_0.getGetRewardTaskCount(arg_9_0)
-	local var_9_0 = 0
+function VersionActivity2_3TaskListModel:getGetRewardTaskCount()
+	local count = 0
 
-	if not arg_9_0.taskMoList then
+	if not self.taskMoList then
 		return 0
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.taskMoList) do
-		if iter_9_1.finishCount >= iter_9_1.config.maxFinishCount then
-			var_9_0 = var_9_0 + 1
+	for _, taskMo in ipairs(self.taskMoList) do
+		if taskMo.finishCount >= taskMo.config.maxFinishCount then
+			count = count + 1
 		end
 	end
 
-	return var_9_0
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_3TaskListModel.instance = VersionActivity2_3TaskListModel.New()
 
-return var_0_0
+return VersionActivity2_3TaskListModel

@@ -1,69 +1,73 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.view.CorvusTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/view/CorvusTaskView.lua
 
-local var_0_0 = class("CorvusTaskView", BaseView)
+module("modules.logic.versionactivity3_1.gaosiniao.view.CorvusTaskView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_1_0._refresh, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, arg_1_0._refresh, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_1_0._onUpdateTaskList, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, arg_1_0._onFinishTask, arg_1_0)
-	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_1_0._onFinishTask, arg_1_0)
-	arg_1_0:onUpdateParam()
+local CorvusTaskView = class("CorvusTaskView", BaseView)
+
+function CorvusTaskView:onOpen()
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self._refresh, self)
+	TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, self._refresh, self)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
+	TaskController.instance:registerCallback(TaskEvent.onReceiveFinishReadTaskReply, self._onFinishTask, self)
+	self:onUpdateParam()
 end
 
-function var_0_0.onUpdateParam(arg_2_0)
-	arg_2_0.viewContainer:sendGetTaskInfoRequest(arg_2_0._refresh, arg_2_0)
+function CorvusTaskView:onUpdateParam()
+	local c = self.viewContainer
+
+	c:sendGetTaskInfoRequest(self._refresh, self)
 end
 
-function var_0_0.onClose(arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, arg_3_0._refresh, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, arg_3_0._refresh, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, arg_3_0._onFinishTask, arg_3_0)
-	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, arg_3_0._onFinishTask, arg_3_0)
+function CorvusTaskView:onClose()
+	TaskController.instance:unregisterCallback(TaskEvent.SetTaskList, self._refresh, self)
+	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, self._refresh, self)
+	TaskController.instance:unregisterCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	TaskController.instance:unregisterCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
+	TaskController.instance:unregisterCallback(TaskEvent.onReceiveFinishReadTaskReply, self._onFinishTask, self)
 end
 
-function var_0_0._setTaskList(arg_4_0)
-	local var_4_0 = arg_4_0.viewContainer
+function CorvusTaskView:_setTaskList()
+	local c = self.viewContainer
 
-	var_4_0:scrollModel():setTaskListWithGetAll(var_4_0:taskType(), var_4_0:actId())
+	c:scrollModel():setTaskListWithGetAll(c:taskType(), c:actId())
 end
 
-function var_0_0._refresh(arg_5_0)
-	arg_5_0:_setTaskList()
+function CorvusTaskView:_refresh()
+	self:_setTaskList()
 end
 
-function var_0_0._onUpdateTaskList(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function CorvusTaskView:_onUpdateTaskList(msg)
+	if not msg then
 		return
 	end
 
-	local var_6_0 = arg_6_1.taskInfo
-	local var_6_1 = arg_6_0:taskType()
+	local taskInfo = msg.taskInfo
+	local taskType = self:taskType()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0 or {}) do
-		if iter_6_1.type == var_6_1 then
-			arg_6_0:_refresh()
+	for _, v in ipairs(taskInfo or {}) do
+		if v.type == taskType then
+			self:_refresh()
 
 			break
 		end
 	end
 end
 
-function var_0_0._onFinishTask(arg_7_0)
-	arg_7_0:_refresh()
+function CorvusTaskView:_onFinishTask()
+	self:_refresh()
 end
 
-function var_0_0.taskType(arg_8_0)
-	return arg_8_0.viewContainer:taskType()
+function CorvusTaskView:taskType()
+	return self.viewContainer:taskType()
 end
 
-function var_0_0.actId(arg_9_0)
-	return arg_9_0.viewContainer:actId()
+function CorvusTaskView:actId()
+	return self.viewContainer:actId()
 end
 
-function var_0_0.getActivityRemainTimeStr(arg_10_0)
-	return arg_10_0.viewContainer:getActivityRemainTimeStr()
+function CorvusTaskView:getActivityRemainTimeStr()
+	return self.viewContainer:getActivityRemainTimeStr()
 end
 
-return var_0_0
+return CorvusTaskView

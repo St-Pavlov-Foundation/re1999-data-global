@@ -1,89 +1,91 @@
-﻿module("modules.logic.fight.entity.comp.heroCustomComp.FightHeroALFComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/heroCustomComp/FightHeroALFComp.lua
 
-local var_0_0 = class("FightHeroALFComp", FightHeroCustomCompBase)
+module("modules.logic.fight.entity.comp.heroCustomComp.FightHeroALFComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local FightHeroALFComp = class("FightHeroALFComp", FightHeroCustomCompBase)
 
-	local var_1_0 = arg_1_0.entity:getMO()
+function FightHeroALFComp:init(go)
+	FightHeroALFComp.super.init(self, go)
 
-	arg_1_0.alfTimeLineCo = lua_fight_sp_effect_alf_timeline.configDict[var_1_0.skin]
+	local entityMo = self.entity:getMO()
 
-	if not arg_1_0.alfTimeLineCo then
-		logError("阿莱夫插牌timeline未配置，skinId : " .. tostring(var_1_0.skin))
+	self.alfTimeLineCo = lua_fight_sp_effect_alf_timeline.configDict[entityMo.skin]
+
+	if not self.alfTimeLineCo then
+		logError("阿莱夫插牌timeline未配置，skinId : " .. tostring(entityMo.skin))
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.AfterAddUseCardContainer, arg_2_0.onAfterAddUseCardOnContainer, arg_2_0)
+function FightHeroALFComp:addEventListeners()
+	FightController.instance:registerCallback(FightEvent.AfterAddUseCardContainer, self.onAfterAddUseCardOnContainer, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.AfterAddUseCardContainer, arg_3_0.onAfterAddUseCardOnContainer, arg_3_0)
+function FightHeroALFComp:removeEventListeners()
+	FightController.instance:unregisterCallback(FightEvent.AfterAddUseCardContainer, self.onAfterAddUseCardOnContainer, self)
 end
 
-var_0_0.ALFSkillDict = {
+FightHeroALFComp.ALFSkillDict = {
 	[31130152] = true,
 	[31130153] = true,
 	[31130154] = true,
 	[31130151] = true
 }
-var_0_0.CardAddEffect = "ui/viewres/fight/card_alf.prefab"
+FightHeroALFComp.CardAddEffect = "ui/viewres/fight/card_alf.prefab"
 
-function var_0_0.onAfterAddUseCardOnContainer(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function FightHeroALFComp:onAfterAddUseCardOnContainer(fightStepData)
+	if not fightStepData then
 		return
 	end
 
-	if not arg_4_0.alfTimeLineCo then
+	if not self.alfTimeLineCo then
 		return
 	end
 
-	local var_4_0 = 0
-	local var_4_1 = arg_4_1.actEffect
-	local var_4_2 = 0
+	local count = 0
+	local effectList = fightStepData.actEffect
+	local skillId = 0
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		if iter_4_1.effectType == FightEnum.EffectType.ADDUSECARD and var_0_0.ALFSkillDict[iter_4_1.effectNum1] then
-			var_4_0 = var_4_0 + 1
-			var_4_2 = iter_4_1.effectNum1
+	for _, actEffectData in ipairs(effectList) do
+		if actEffectData.effectType == FightEnum.EffectType.ADDUSECARD and FightHeroALFComp.ALFSkillDict[actEffectData.effectNum1] then
+			count = count + 1
+			skillId = actEffectData.effectNum1
 		end
 	end
 
-	if var_4_0 < 1 then
+	if count < 1 then
 		return
 	end
 
-	local var_4_3
+	local timeline
 
-	if var_4_0 <= 2 then
-		var_4_3 = arg_4_0.alfTimeLineCo.timeline_2
-	elseif var_4_0 == 3 then
-		var_4_3 = arg_4_0.alfTimeLineCo.timeline_3
-	elseif var_4_0 == 4 then
-		var_4_3 = arg_4_0.alfTimeLineCo.timeline_4
+	if count <= 2 then
+		timeline = self.alfTimeLineCo.timeline_2
+	elseif count == 3 then
+		timeline = self.alfTimeLineCo.timeline_3
+	elseif count == 4 then
+		timeline = self.alfTimeLineCo.timeline_4
 	else
-		logError("阿莱夫记忆牌大于4了？ count " .. tostring(var_4_0))
+		logError("阿莱夫记忆牌大于4了？ count " .. tostring(count))
 
-		var_4_3 = arg_4_0.alfTimeLineCo.timeline_4
+		timeline = self.alfTimeLineCo.timeline_4
 	end
 
-	if string.nilorempty(var_4_3) then
+	if string.nilorempty(timeline) then
 		return
 	end
 
-	arg_4_1.fromId = arg_4_0.entity.id
-	arg_4_1.actId = var_4_2
+	fightStepData.fromId = self.entity.id
+	fightStepData.actId = skillId
 
-	arg_4_0.entity.skill:playTimeline(var_4_3, arg_4_1)
+	self.entity.skill:playTimeline(timeline, fightStepData)
 end
 
-function var_0_0.setCacheRecordSkillList(arg_5_0, arg_5_1)
-	arg_5_0.cacheSkillList = arg_5_1
+function FightHeroALFComp:setCacheRecordSkillList(skillList)
+	self.cacheSkillList = skillList
 end
 
-function var_0_0.getCacheSkillList(arg_6_0)
-	return arg_6_0.cacheSkillList
+function FightHeroALFComp:getCacheSkillList()
+	return self.cacheSkillList
 end
 
-return var_0_0
+return FightHeroALFComp

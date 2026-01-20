@@ -1,347 +1,348 @@
-﻿module("modules.logic.tower.view.assistboss.TowerAssistBossTalentPlanModifyView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerAssistBossTalentPlanModifyView.lua
 
-local var_0_0 = class("TowerAssistBossTalentPlanModifyView", BaseView)
+module("modules.logic.tower.view.assistboss.TowerAssistBossTalentPlanModifyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goBtnReset = gohelper.findChild(arg_1_0.viewGO, "BOSS/layout/btn_reset")
-	arg_1_0._btnHideTalentPlan = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#btn_hideTalentPlan")
-	arg_1_0._goTalentPlanSelect = gohelper.findChild(arg_1_0.viewGO, "talentPlanSelect")
-	arg_1_0._btnShowTalentPlan = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "talentPlanSelect/#btn_showTalentPlan")
-	arg_1_0._txtTalentPlanName = gohelper.findChildTextMesh(arg_1_0.viewGO, "talentPlanSelect/#btn_showTalentPlan/#txt_talentPlanName")
-	arg_1_0._goArrow = gohelper.findChild(arg_1_0.viewGO, "talentPlanSelect/#btn_showTalentPlan/#go_arrow")
-	arg_1_0._btnChangeName = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "talentPlanSelect/#btn_changeName")
-	arg_1_0._goModifyIcon = gohelper.findChild(arg_1_0.viewGO, "talentPlanSelect/#btn_changeName/#go_modifyIcon")
-	arg_1_0._goAutoIcon = gohelper.findChild(arg_1_0.viewGO, "talentPlanSelect/#btn_changeName/#go_autoIcon")
-	arg_1_0._goTalentPlanContent = gohelper.findChild(arg_1_0.viewGO, "talentPlanSelect/#go_talentPlanContent")
-	arg_1_0._goTalentPlanItem = gohelper.findChild(arg_1_0.viewGO, "talentPlanSelect/#go_talentPlanContent/#go_talentPlanItem")
-	arg_1_0._goTalentPlanTip = gohelper.findChild(arg_1_0.viewGO, "talentPlanSelect/#go_talentPlanTip")
+local TowerAssistBossTalentPlanModifyView = class("TowerAssistBossTalentPlanModifyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerAssistBossTalentPlanModifyView:onInitView()
+	self._goBtnReset = gohelper.findChild(self.viewGO, "BOSS/layout/btn_reset")
+	self._btnHideTalentPlan = gohelper.findChildClickWithAudio(self.viewGO, "#btn_hideTalentPlan")
+	self._goTalentPlanSelect = gohelper.findChild(self.viewGO, "talentPlanSelect")
+	self._btnShowTalentPlan = gohelper.findChildClickWithAudio(self.viewGO, "talentPlanSelect/#btn_showTalentPlan")
+	self._txtTalentPlanName = gohelper.findChildTextMesh(self.viewGO, "talentPlanSelect/#btn_showTalentPlan/#txt_talentPlanName")
+	self._goArrow = gohelper.findChild(self.viewGO, "talentPlanSelect/#btn_showTalentPlan/#go_arrow")
+	self._btnChangeName = gohelper.findChildClickWithAudio(self.viewGO, "talentPlanSelect/#btn_changeName")
+	self._goModifyIcon = gohelper.findChild(self.viewGO, "talentPlanSelect/#btn_changeName/#go_modifyIcon")
+	self._goAutoIcon = gohelper.findChild(self.viewGO, "talentPlanSelect/#btn_changeName/#go_autoIcon")
+	self._goTalentPlanContent = gohelper.findChild(self.viewGO, "talentPlanSelect/#go_talentPlanContent")
+	self._goTalentPlanItem = gohelper.findChild(self.viewGO, "talentPlanSelect/#go_talentPlanContent/#go_talentPlanItem")
+	self._goTalentPlanTip = gohelper.findChild(self.viewGO, "talentPlanSelect/#go_talentPlanTip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnShowTalentPlan:AddClickListener(arg_2_0._onBtnShowTalentPlan, arg_2_0)
-	arg_2_0._btnHideTalentPlan:AddClickListener(arg_2_0._onBtnHideTalentPlan, arg_2_0)
-	arg_2_0._btnChangeName:AddClickListener(arg_2_0._onBtnChangeName, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ChangeTalentPlan, arg_2_0.changeTalentPlan, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, arg_2_0.RenameTalentPlan, arg_2_0)
+function TowerAssistBossTalentPlanModifyView:addEvents()
+	self._btnShowTalentPlan:AddClickListener(self._onBtnShowTalentPlan, self)
+	self._btnHideTalentPlan:AddClickListener(self._onBtnHideTalentPlan, self)
+	self._btnChangeName:AddClickListener(self._onBtnChangeName, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ChangeTalentPlan, self.changeTalentPlan, self)
+	self:addEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, self.RenameTalentPlan, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnShowTalentPlan:RemoveClickListener()
-	arg_3_0._btnHideTalentPlan:RemoveClickListener()
-	arg_3_0._btnChangeName:RemoveClickListener()
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ChangeTalentPlan, arg_3_0.changeTalentPlan, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, arg_3_0.RenameTalentPlan, arg_3_0)
+function TowerAssistBossTalentPlanModifyView:removeEvents()
+	self._btnShowTalentPlan:RemoveClickListener()
+	self._btnHideTalentPlan:RemoveClickListener()
+	self._btnChangeName:RemoveClickListener()
+	self:removeEventCb(TowerController.instance, TowerEvent.ChangeTalentPlan, self.changeTalentPlan, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.RenameTalentPlan, self.RenameTalentPlan, self)
 end
 
-function var_0_0._onBtnChangeName(arg_4_0)
-	if arg_4_0.curSelectTalentPlanData.isAutoPlan == 1 then
+function TowerAssistBossTalentPlanModifyView:_onBtnChangeName()
+	if self.curSelectTalentPlanData.isAutoPlan == 1 then
 		return
 	end
 
-	local var_4_0 = {
-		bossId = arg_4_0.bossId
-	}
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.TowerBossTalentModifyNameView, var_4_0)
+	param.bossId = self.bossId
+
+	ViewMgr.instance:openView(ViewName.TowerBossTalentModifyNameView, param)
 end
 
-function var_0_0._onBtnShowTalentPlan(arg_5_0)
-	if not arg_5_0.isShowTalentPlane then
-		arg_5_0:showTalentPlane()
+function TowerAssistBossTalentPlanModifyView:_onBtnShowTalentPlan()
+	if not self.isShowTalentPlane then
+		self:showTalentPlane()
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_activity_dog_page)
 	else
-		arg_5_0:hideTalentPlane()
+		self:hideTalentPlane()
 		AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_wenming_cut)
 	end
 end
 
-function var_0_0._onBtnHideTalentPlan(arg_6_0)
-	arg_6_0:hideTalentPlane()
+function TowerAssistBossTalentPlanModifyView:_onBtnHideTalentPlan()
+	self:hideTalentPlane()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_wenming_cut)
 end
 
-function var_0_0.showTalentPlane(arg_7_0)
-	gohelper.setActive(arg_7_0._goTalentPlanContent, true)
-	gohelper.setActive(arg_7_0._btnHideTalentPlan.gameObject, true)
-	transformhelper.setLocalScale(arg_7_0._goArrow.transform, 1, -1, 1)
+function TowerAssistBossTalentPlanModifyView:showTalentPlane()
+	gohelper.setActive(self._goTalentPlanContent, true)
+	gohelper.setActive(self._btnHideTalentPlan.gameObject, true)
+	transformhelper.setLocalScale(self._goArrow.transform, 1, -1, 1)
 
-	arg_7_0.isShowTalentPlane = true
+	self.isShowTalentPlane = true
 end
 
-function var_0_0.hideTalentPlane(arg_8_0)
-	gohelper.setActive(arg_8_0._goTalentPlanContent, false)
-	gohelper.setActive(arg_8_0._btnHideTalentPlan.gameObject, false)
-	transformhelper.setLocalScale(arg_8_0._goArrow.transform, 1, 1, 1)
+function TowerAssistBossTalentPlanModifyView:hideTalentPlane()
+	gohelper.setActive(self._goTalentPlanContent, false)
+	gohelper.setActive(self._btnHideTalentPlan.gameObject, false)
+	transformhelper.setLocalScale(self._goArrow.transform, 1, 1, 1)
 
-	arg_8_0.isShowTalentPlane = false
+	self.isShowTalentPlane = false
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0.talentPlanItemList = arg_9_0:getUserDataTb_()
-	arg_9_0.curSelectTalentPlanData = nil
+function TowerAssistBossTalentPlanModifyView:_editableInitView()
+	self.talentPlanItemList = self:getUserDataTb_()
+	self.curSelectTalentPlanData = nil
 
-	gohelper.setActive(arg_9_0._goTalentPlanItem, false)
-	arg_9_0:hideTalentPlane()
+	gohelper.setActive(self._goTalentPlanItem, false)
+	self:hideTalentPlane()
 
-	arg_9_0.isShowTalentPlane = false
+	self.isShowTalentPlane = false
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function TowerAssistBossTalentPlanModifyView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0:initData()
-	arg_11_0:initTalentPlan()
-	arg_11_0:createOrRefreshTalentPlanItem()
-	arg_11_0:initCurSelectItem()
-	arg_11_0:_onBtnHideTalentPlan()
+function TowerAssistBossTalentPlanModifyView:onOpen()
+	self:initData()
+	self:initTalentPlan()
+	self:createOrRefreshTalentPlanItem()
+	self:initCurSelectItem()
+	self:_onBtnHideTalentPlan()
 end
 
-function var_0_0.initData(arg_12_0)
-	arg_12_0.bossId = arg_12_0.viewParam.bossId
-	arg_12_0.bossMo = TowerAssistBossModel.instance:getBoss(arg_12_0.bossId)
-	arg_12_0.bossLevel = arg_12_0.bossMo.level
-	arg_12_0.talentTree = arg_12_0.bossMo:getTalentTree()
+function TowerAssistBossTalentPlanModifyView:initData()
+	self.bossId = self.viewParam.bossId
+	self.bossMo = TowerAssistBossModel.instance:getBoss(self.bossId)
+	self.bossLevel = self.bossMo.level
+	self.talentTree = self.bossMo:getTalentTree()
 end
 
-function var_0_0.initTalentPlan(arg_13_0)
-	arg_13_0.talentPlanDataMap = arg_13_0:getUserDataTb_()
-	arg_13_0.talentPlanDataList = arg_13_0:getUserDataTb_()
+function TowerAssistBossTalentPlanModifyView:initTalentPlan()
+	self.talentPlanDataMap = self:getUserDataTb_()
+	self.talentPlanDataList = self:getUserDataTb_()
 
-	local var_13_0 = TowerModel.instance:getCurTowerType()
+	local curTowerType = TowerModel.instance:getCurTowerType()
 
-	arg_13_0.isTeach = var_13_0 and var_13_0 == TowerEnum.TowerType.Boss and arg_13_0.bossMo.trialLevel > 0
-	arg_13_0.isTempBoss = var_13_0 and var_13_0 == TowerEnum.TowerType.Boss and arg_13_0.bossMo:getTempState()
+	self.isTeach = curTowerType and curTowerType == TowerEnum.TowerType.Boss and self.bossMo.trialLevel > 0
+	self.isTempBoss = curTowerType and curTowerType == TowerEnum.TowerType.Boss and self.bossMo:getTempState()
 
-	local var_13_1 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
+	local limitedTrialLevel = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
 
-	arg_13_0.isLimitedTrial = var_13_0 and var_13_0 == TowerEnum.TowerType.Limited and arg_13_0.bossMo.trialLevel > 0 and var_13_1 > arg_13_0.bossMo.level
+	self.isLimitedTrial = curTowerType and curTowerType == TowerEnum.TowerType.Limited and self.bossMo.trialLevel > 0 and limitedTrialLevel > self.bossMo.level
 
-	gohelper.setActive(arg_13_0._goTalentPlanSelect, true)
+	gohelper.setActive(self._goTalentPlanSelect, true)
 
-	if arg_13_0.isTeach then
-		local var_13_2 = arg_13_0.bossMo.trialTalentPlan
-		local var_13_3 = TowerConfig.instance:getTalentPlanConfig(arg_13_0.bossId, var_13_2)
+	if self.isTeach then
+		local trialPlanId = self.bossMo.trialTalentPlan
+		local planCo = TowerConfig.instance:getTalentPlanConfig(self.bossId, trialPlanId)
 
-		arg_13_0:addAutoTalentPlan({
-			var_13_3
+		self:addAutoTalentPlan({
+			planCo
 		})
-	elseif arg_13_0.isLimitedTrial then
-		arg_13_0:addAutoTalentPlan()
-	elseif arg_13_0.isTempBoss then
-		gohelper.setActive(arg_13_0._goTalentPlanSelect, false)
+	elseif self.isLimitedTrial then
+		self:addAutoTalentPlan()
+	elseif self.isTempBoss then
+		gohelper.setActive(self._goTalentPlanSelect, false)
 	else
-		arg_13_0:addAutoTalentPlan()
-		arg_13_0:addCustomTalentPlan()
+		self:addAutoTalentPlan()
+		self:addCustomTalentPlan()
 	end
 
-	table.sort(arg_13_0.talentPlanDataList, function(arg_14_0, arg_14_1)
-		if arg_14_0.isAutoPlan ~= arg_14_1.isAutoPlan then
-			return arg_14_0.isAutoPlan > arg_14_1.isAutoPlan
+	table.sort(self.talentPlanDataList, function(a, b)
+		if a.isAutoPlan ~= b.isAutoPlan then
+			return a.isAutoPlan > b.isAutoPlan
 		end
 
-		return arg_14_0.planId < arg_14_1.planId
+		return a.planId < b.planId
 	end)
 end
 
-function var_0_0.addAutoTalentPlan(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1 or TowerConfig.instance:getAllTalentPlanConfig(arg_15_0.bossId)
+function TowerAssistBossTalentPlanModifyView:addAutoTalentPlan(planCoList)
+	local talentPlanCoList = planCoList or TowerConfig.instance:getAllTalentPlanConfig(self.bossId)
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_1 = {
-			planId = iter_15_1.planId
-		}
+	for index, config in ipairs(talentPlanCoList) do
+		local planData = {}
 
-		var_15_1.talentIds = TowerConfig.instance:getTalentPlanNodeIds(arg_15_0.bossId, var_15_1.planId, arg_15_0.bossLevel)
-		var_15_1.planName = iter_15_1.planName
-		var_15_1.isAutoPlan = 1
-		arg_15_0.talentPlanDataMap[var_15_1.planId] = var_15_1
+		planData.planId = config.planId
+		planData.talentIds = TowerConfig.instance:getTalentPlanNodeIds(self.bossId, planData.planId, self.bossLevel)
+		planData.planName = config.planName
+		planData.isAutoPlan = 1
+		self.talentPlanDataMap[planData.planId] = planData
 
-		table.insert(arg_15_0.talentPlanDataList, var_15_1)
+		table.insert(self.talentPlanDataList, planData)
 	end
 end
 
-function var_0_0.addCustomTalentPlan(arg_16_0)
-	local var_16_0 = arg_16_0.bossMo:getTalentPlanInfos()
+function TowerAssistBossTalentPlanModifyView:addCustomTalentPlan()
+	local talentPlanInfos = self.bossMo:getTalentPlanInfos()
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		local var_16_1 = {
-			planId = iter_16_1.planId,
-			talentIds = iter_16_1.talentIds,
-			planName = iter_16_1.planName
-		}
+	for index, info in pairs(talentPlanInfos) do
+		local planData = {}
 
-		var_16_1.isAutoPlan = 0
-		arg_16_0.talentPlanDataMap[var_16_1.planId] = var_16_1
+		planData.planId = info.planId
+		planData.talentIds = info.talentIds
+		planData.planName = info.planName
+		planData.isAutoPlan = 0
+		self.talentPlanDataMap[planData.planId] = planData
 
-		table.insert(arg_16_0.talentPlanDataList, var_16_1)
+		table.insert(self.talentPlanDataList, planData)
 	end
 end
 
-function var_0_0.createOrRefreshTalentPlanItem(arg_17_0)
-	for iter_17_0 = 1, #arg_17_0.talentPlanDataList do
-		local var_17_0 = arg_17_0.talentPlanItemList[iter_17_0]
+function TowerAssistBossTalentPlanModifyView:createOrRefreshTalentPlanItem()
+	for i = 1, #self.talentPlanDataList do
+		local talentPlanItem = self.talentPlanItemList[i]
 
-		if not var_17_0 then
-			var_17_0 = {
-				data = arg_17_0.talentPlanDataList[iter_17_0],
-				go = gohelper.cloneInPlace(arg_17_0._goTalentPlanItem)
+		if not talentPlanItem then
+			talentPlanItem = {
+				data = self.talentPlanDataList[i],
+				go = gohelper.cloneInPlace(self._goTalentPlanItem)
 			}
-			var_17_0.goSelect = gohelper.findChild(var_17_0.go, "go_select")
-			var_17_0.goAutoTypeIcon = gohelper.findChild(var_17_0.go, "txt_planName/go_autoTypeIcon")
-			var_17_0.txtPlanName = gohelper.findChildTextMesh(var_17_0.go, "txt_planName")
-			var_17_0.btnClick = gohelper.findChildClickWithAudio(var_17_0.go, "btn_click")
+			talentPlanItem.goSelect = gohelper.findChild(talentPlanItem.go, "go_select")
+			talentPlanItem.goAutoTypeIcon = gohelper.findChild(talentPlanItem.go, "txt_planName/go_autoTypeIcon")
+			talentPlanItem.txtPlanName = gohelper.findChildTextMesh(talentPlanItem.go, "txt_planName")
+			talentPlanItem.btnClick = gohelper.findChildClickWithAudio(talentPlanItem.go, "btn_click")
 
-			var_17_0.btnClick:AddClickListener(arg_17_0.onTalentPlanItemClick, arg_17_0, var_17_0)
+			talentPlanItem.btnClick:AddClickListener(self.onTalentPlanItemClick, self, talentPlanItem)
 
-			arg_17_0.talentPlanItemList[iter_17_0] = var_17_0
+			self.talentPlanItemList[i] = talentPlanItem
 		end
 
-		gohelper.setActive(var_17_0.go, true)
+		gohelper.setActive(talentPlanItem.go, true)
 
-		local var_17_1 = var_17_0.data.isAutoPlan == 1
+		local isAutoType = talentPlanItem.data.isAutoPlan == 1
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_17_0.txtPlanName, var_17_1 and "#EFB785" or "#C3BEB6")
+		SLFramework.UGUI.GuiHelper.SetColor(talentPlanItem.txtPlanName, isAutoType and "#EFB785" or "#C3BEB6")
 
-		var_17_0.txtPlanName.text = var_17_0.data.planName
+		talentPlanItem.txtPlanName.text = talentPlanItem.data.planName
 
-		gohelper.setActive(var_17_0.goAutoTypeIcon, var_17_1)
+		gohelper.setActive(talentPlanItem.goAutoTypeIcon, isAutoType)
 	end
 end
 
-function var_0_0.initCurSelectItem(arg_18_0)
-	if arg_18_0.isTempBoss then
-		gohelper.setActive(arg_18_0._goBtnReset, false)
+function TowerAssistBossTalentPlanModifyView:initCurSelectItem()
+	if self.isTempBoss then
+		gohelper.setActive(self._goBtnReset, false)
 
-		if not arg_18_0.isTeach then
+		if not self.isTeach then
 			return
 		end
 	end
 
-	local var_18_0 = 0
+	local defaultPlanId = 0
 
-	if arg_18_0.isTeach then
-		var_18_0 = arg_18_0.bossMo.trialTalentPlan
-	elseif arg_18_0.isLimitedTrial then
-		var_18_0 = TowerAssistBossModel.instance:getLimitedTrialBossLocalPlan(arg_18_0.bossMo)
+	if self.isTeach then
+		defaultPlanId = self.bossMo.trialTalentPlan
+	elseif self.isLimitedTrial then
+		defaultPlanId = TowerAssistBossModel.instance:getLimitedTrialBossLocalPlan(self.bossMo)
 	else
-		var_18_0 = arg_18_0.bossMo:getCurUseTalentPlan()
+		defaultPlanId = self.bossMo:getCurUseTalentPlan()
 	end
 
-	for iter_18_0, iter_18_1 in pairs(arg_18_0.talentPlanDataList) do
-		if iter_18_1.planId == var_18_0 then
-			arg_18_0.curSelectTalentPlanData = iter_18_1
+	for index, planData in pairs(self.talentPlanDataList) do
+		if planData.planId == defaultPlanId then
+			self.curSelectTalentPlanData = planData
 
 			break
 		end
 	end
 
-	if not arg_18_0.curSelectTalentPlanData then
-		logError("当前保存的天赋id不存在： " .. var_18_0)
+	if not self.curSelectTalentPlanData then
+		logError("当前保存的天赋id不存在： " .. defaultPlanId)
 
-		arg_18_0.curSelectTalentPlanData = arg_18_0.talentPlanDataList[1]
+		self.curSelectTalentPlanData = self.talentPlanDataList[1]
 	end
 
-	arg_18_0:refreshPlanUI(arg_18_0.curSelectTalentPlanData)
+	self:refreshPlanUI(self.curSelectTalentPlanData)
 end
 
-function var_0_0.onTalentPlanItemClick(arg_19_0, arg_19_1)
-	if arg_19_0.curSelectTalentPlanData and arg_19_0.curSelectTalentPlanData.planId == arg_19_1.data.planId then
-		arg_19_0:_onBtnHideTalentPlan()
+function TowerAssistBossTalentPlanModifyView:onTalentPlanItemClick(item)
+	if self.curSelectTalentPlanData and self.curSelectTalentPlanData.planId == item.data.planId then
+		self:_onBtnHideTalentPlan()
 
 		return
 	end
 
-	arg_19_0.curSelectTalentPlanData = arg_19_1.data
+	self.curSelectTalentPlanData = item.data
 
-	if arg_19_0.isLimitedTrial then
-		local var_19_0 = {
-			planId = arg_19_0.curSelectTalentPlanData.planId
-		}
-		local var_19_1 = TowerAssistBossModel.instance:getLimitedTrialBossSaveKey(arg_19_0.bossMo)
+	if self.isLimitedTrial then
+		local info = {}
 
-		TowerController.instance:setPlayerPrefs(var_19_1, arg_19_0.curSelectTalentPlanData.planId)
-		arg_19_0:changeTalentPlan(var_19_0)
-	elseif arg_19_0.isTeach or arg_19_0.isTempBoss then
+		info.planId = self.curSelectTalentPlanData.planId
+
+		local saveKey = TowerAssistBossModel.instance:getLimitedTrialBossSaveKey(self.bossMo)
+
+		TowerController.instance:setPlayerPrefs(saveKey, self.curSelectTalentPlanData.planId)
+		self:changeTalentPlan(info)
+	elseif self.isTeach or self.isTempBoss then
 		-- block empty
 	else
-		TowerRpc.instance:sendTowerChangeTalentPlanRequest(arg_19_0.bossId, arg_19_1.data.planId)
+		TowerRpc.instance:sendTowerChangeTalentPlanRequest(self.bossId, item.data.planId)
 	end
 
-	arg_19_0:_onBtnHideTalentPlan()
+	self:_onBtnHideTalentPlan()
 end
 
-function var_0_0.changeTalentPlan(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_1.planId
+function TowerAssistBossTalentPlanModifyView:changeTalentPlan(info)
+	local selectPlanId = info.planId
 
-	arg_20_0.curSelectTalentPlanData = arg_20_0.talentPlanDataMap[var_20_0]
+	self.curSelectTalentPlanData = self.talentPlanDataMap[selectPlanId]
 
-	arg_20_0:refreshPlanUI(arg_20_0.curSelectTalentPlanData)
-	arg_20_0.bossMo:setCurUseTalentPlan(arg_20_0.curSelectTalentPlanData.planId, arg_20_0.isLimitedTrial)
+	self:refreshPlanUI(self.curSelectTalentPlanData)
+	self.bossMo:setCurUseTalentPlan(self.curSelectTalentPlanData.planId, self.isLimitedTrial)
 	TowerController.instance:dispatchEvent(TowerEvent.RefreshTalent)
 	GameFacade.showToast(ToastEnum.TowerBossTalentPlanChange)
 end
 
-function var_0_0.refreshPlanUI(arg_21_0, arg_21_1)
-	arg_21_0.curSelectTalentPlanData = arg_21_1
+function TowerAssistBossTalentPlanModifyView:refreshPlanUI(planData)
+	self.curSelectTalentPlanData = planData
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_0.talentPlanItemList) do
-		local var_21_0 = iter_21_1.data.isAutoPlan == 1
-		local var_21_1 = iter_21_1.data.planId == arg_21_1.planId
+	for index, talentPlanItem in pairs(self.talentPlanItemList) do
+		local isAutoType = talentPlanItem.data.isAutoPlan == 1
+		local isSelect = talentPlanItem.data.planId == planData.planId
 
-		gohelper.setActive(iter_21_1.goSelect, var_21_1)
+		gohelper.setActive(talentPlanItem.goSelect, isSelect)
 
-		if var_21_0 then
-			SLFramework.UGUI.GuiHelper.SetColor(iter_21_1.txtPlanName, "#EFB785")
+		if isAutoType then
+			SLFramework.UGUI.GuiHelper.SetColor(talentPlanItem.txtPlanName, "#EFB785")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(iter_21_1.txtPlanName, var_21_1 and "#EAF8FF" or "#C3BEB6")
+			SLFramework.UGUI.GuiHelper.SetColor(talentPlanItem.txtPlanName, isSelect and "#EAF8FF" or "#C3BEB6")
 		end
 	end
 
-	local var_21_2 = arg_21_0.curSelectTalentPlanData.isAutoPlan == 1
+	local isSelectAutoType = self.curSelectTalentPlanData.isAutoPlan == 1
 
-	arg_21_0._txtTalentPlanName.text = arg_21_0.curSelectTalentPlanData.planName
+	self._txtTalentPlanName.text = self.curSelectTalentPlanData.planName
 
-	gohelper.setActive(arg_21_0._goModifyIcon, not var_21_2)
-	gohelper.setActive(arg_21_0._goAutoIcon, var_21_2)
-	gohelper.setActive(arg_21_0._goTalentPlanTip, var_21_2)
-	gohelper.setActive(arg_21_0._goBtnReset, not var_21_2)
-	TowerAssistBossTalentListModel.instance:setAutoTalentState(var_21_2)
+	gohelper.setActive(self._goModifyIcon, not isSelectAutoType)
+	gohelper.setActive(self._goAutoIcon, isSelectAutoType)
+	gohelper.setActive(self._goTalentPlanTip, isSelectAutoType)
+	gohelper.setActive(self._goBtnReset, not isSelectAutoType)
+	TowerAssistBossTalentListModel.instance:setAutoTalentState(isSelectAutoType)
 end
 
-function var_0_0.saveLimitedTalent(arg_22_0)
-	local var_22_0 = arg_22_0:getLimitedTrialBossSaveKey(arg_22_0.bossMO)
+function TowerAssistBossTalentPlanModifyView:saveLimitedTalent()
+	local saveKey = self:getLimitedTrialBossSaveKey(self.bossMO)
 
-	TowerController.instance:setPlayerPrefs(var_22_0, arg_22_0.curSelectTalentPlanData.planId)
+	TowerController.instance:setPlayerPrefs(saveKey, self.curSelectTalentPlanData.planId)
 end
 
-function var_0_0.RenameTalentPlan(arg_23_0, arg_23_1)
-	arg_23_0.curSelectTalentPlanData.planName = arg_23_1
+function TowerAssistBossTalentPlanModifyView:RenameTalentPlan(name)
+	self.curSelectTalentPlanData.planName = name
 
-	for iter_23_0, iter_23_1 in pairs(arg_23_0.talentPlanItemList) do
-		if iter_23_1.data.planId == arg_23_0.curSelectTalentPlanData.planId then
-			iter_23_1.txtPlanName.text = arg_23_1
+	for index, talentPlanItem in pairs(self.talentPlanItemList) do
+		if talentPlanItem.data.planId == self.curSelectTalentPlanData.planId then
+			talentPlanItem.txtPlanName.text = name
 
 			break
 		end
 	end
 
-	arg_23_0._txtTalentPlanName.text = arg_23_1
+	self._txtTalentPlanName.text = name
 end
 
-function var_0_0.onClose(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0.talentPlanItemList) do
-		iter_24_1.btnClick:RemoveClickListener()
+function TowerAssistBossTalentPlanModifyView:onClose()
+	for _, talentPlanItem in ipairs(self.talentPlanItemList) do
+		talentPlanItem.btnClick:RemoveClickListener()
 	end
 end
 
-function var_0_0.onDestroyView(arg_25_0)
+function TowerAssistBossTalentPlanModifyView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerAssistBossTalentPlanModifyView

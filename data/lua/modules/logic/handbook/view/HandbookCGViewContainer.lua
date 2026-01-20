@@ -1,46 +1,48 @@
-﻿module("modules.logic.handbook.view.HandbookCGViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookCGViewContainer.lua
 
-local var_0_0 = class("HandbookCGViewContainer", BaseViewContainer)
+module("modules.logic.handbook.view.HandbookCGViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = MixScrollParam.New()
+local HandbookCGViewContainer = class("HandbookCGViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_cg"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = HandbookCGItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	arg_1_0._csScrollView = LuaMixScrollView.New(HandbookCGTripleListModel.instance, var_1_1)
+function HandbookCGViewContainer:buildViews()
+	local views = {}
+	local mixScrollParam = MixScrollParam.New()
 
-	table.insert(var_1_0, HandbookCGView.New())
-	table.insert(var_1_0, arg_1_0._csScrollView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	mixScrollParam.scrollGOPath = "#scroll_cg"
+	mixScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	mixScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	mixScrollParam.cellClass = HandbookCGItem
+	mixScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	self._csScrollView = LuaMixScrollView.New(HandbookCGTripleListModel.instance, mixScrollParam)
 
-	return var_1_0
+	table.insert(views, HandbookCGView.New())
+	table.insert(views, self._csScrollView)
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function HandbookCGViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.getCsScroll(arg_3_0)
-	return arg_3_0._csScrollView
+function HandbookCGViewContainer:getCsScroll()
+	return self._csScrollView
 end
 
-function var_0_0.onContainerOpenFinish(arg_4_0)
-	arg_4_0.navigateView:resetCloseBtnAudioId(AudioEnum.UI.play_ui_screenplay_photo_close)
-	arg_4_0.navigateView:resetHomeBtnAudioId(AudioEnum.UI.play_ui_screenplay_photo_close)
+function HandbookCGViewContainer:onContainerOpenFinish()
+	self.navigateView:resetCloseBtnAudioId(AudioEnum.UI.play_ui_screenplay_photo_close)
+	self.navigateView:resetHomeBtnAudioId(AudioEnum.UI.play_ui_screenplay_photo_close)
 end
 
-return var_0_0
+return HandbookCGViewContainer

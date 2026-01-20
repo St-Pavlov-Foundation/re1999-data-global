@@ -1,104 +1,121 @@
-﻿module("modules.logic.ressplit.model.ResSplitModel", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/model/ResSplitModel.lua
 
-local var_0_0 = class("ResSplitModel", BaseModel)
+module("modules.logic.ressplit.model.ResSplitModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6, arg_1_7, arg_1_8)
-	arg_1_0._excludeDic = {}
-	arg_1_0._excludeStoryIdsDic = {}
-	arg_1_0.audioDic = arg_1_3
-	arg_1_0._includeCharacterIdDic = arg_1_1
-	arg_1_0._includeChapterIdDic = arg_1_2
-	arg_1_0._includeStoryIdDic = arg_1_4
-	arg_1_0._includeGuideIdDic = arg_1_5
-	arg_1_0._includeSkinDic = {}
-	arg_1_0._includeSkillDic = {}
-	arg_1_0._includeTimelineDic = {}
-	arg_1_0.includeSeasonDic = arg_1_8
-	arg_1_0._innerBGMWenDic = {}
+local ResSplitModel = class("ResSplitModel", BaseModel)
 
-	var_0_0.instance:setExclude(ResSplitEnum.Folder, "effects/prefabs", false)
+function ResSplitModel:init(characterIdDic, chapterIdDic, audioDic, storyIdDic, guideIdDic, videoDic, pathDic, seasonDic)
+	self._excludeDic = {}
+	self._includeDic = {}
+	self._excludeStoryIdsDic = {}
+	self.audioDic = audioDic
+	self._includeCharacterIdDic = characterIdDic
+	self._includeChapterIdDic = chapterIdDic
+	self._includeStoryIdDic = storyIdDic
+	self._includeGuideIdDic = guideIdDic
+	self._includeSkinDic = {}
+	self._includeSkillDic = {}
+	self._includeTimelineDic = {}
+	self.includeSeasonDic = seasonDic
+	self._innerBGMWenDic = {}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_6) do
-		var_0_0.instance:setExclude(ResSplitEnum.Video, iter_1_0, false)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, "effects/prefabs", false)
+
+	for path, v in pairs(videoDic) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Video, path, false)
 	end
 
-	for iter_1_2, iter_1_3 in pairs(arg_1_7) do
-		var_0_0.instance:setExclude(ResSplitEnum.Path, iter_1_2, false)
-	end
-end
-
-function var_0_0.isExcludeCharacter(arg_2_0, arg_2_1)
-	return arg_2_0._includeCharacterIdDic[arg_2_1] ~= true
-end
-
-function var_0_0.addIncludeChapter(arg_3_0, arg_3_1)
-	arg_3_0._includeChapterIdDic[arg_3_1] = true
-end
-
-function var_0_0.isExcludeChapter(arg_4_0, arg_4_1)
-	return arg_4_0._includeChapterIdDic[arg_4_1] ~= true
-end
-
-function var_0_0.isExcludeSkin(arg_5_0, arg_5_1)
-	return arg_5_0._includeSkinDic[arg_5_1] ~= true
-end
-
-function var_0_0.isExcludeStoryId(arg_6_0, arg_6_1)
-	return arg_6_0._includeStoryIdDic[arg_6_1] ~= true
-end
-
-function var_0_0.addIncludeStory(arg_7_0, arg_7_1)
-	arg_7_0._includeStoryIdDic[arg_7_1] = true
-end
-
-function var_0_0.addIncludeSkin(arg_8_0, arg_8_1)
-	arg_8_0._includeSkinDic[arg_8_1] = true
-end
-
-function var_0_0.addIncludeSkill(arg_9_0, arg_9_1)
-	arg_9_0._includeSkillDic[arg_9_1] = true
-end
-
-function var_0_0.addInnerBGMWenDic(arg_10_0, arg_10_1)
-	arg_10_0._innerBGMWenDic[arg_10_1] = true
-end
-
-function var_0_0.getInnerBGMWenDic(arg_11_0)
-	return arg_11_0._innerBGMWenDic
-end
-
-function var_0_0.addIncludeTimeline(arg_12_0, arg_12_1)
-	arg_12_0._includeTimelineDic[arg_12_1] = true
-end
-
-function var_0_0.getIncludeSkill(arg_13_0)
-	return arg_13_0._includeSkillDic
-end
-
-function var_0_0.getIncludeGuide(arg_14_0)
-	return arg_14_0._includeGuideIdDic
-end
-
-function var_0_0.getIncludeTimelineDic(arg_15_0)
-	return arg_15_0._includeTimelineDic
-end
-
-function var_0_0.setExclude(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	if arg_16_0._excludeDic[arg_16_1] == nil then
-		arg_16_0._excludeDic[arg_16_1] = {}
-	end
-
-	local var_16_0 = arg_16_0._excludeDic[arg_16_1]
-
-	if var_16_0[arg_16_2] ~= false then
-		var_16_0[arg_16_2] = arg_16_3
+	for path, v in pairs(pathDic) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, false)
 	end
 end
 
-function var_0_0.getExcludeDic(arg_17_0, arg_17_1)
-	return arg_17_0._excludeDic[arg_17_1]
+function ResSplitModel:isExcludeCharacter(characterId)
+	return self._includeCharacterIdDic[characterId] ~= true
 end
 
-var_0_0.instance = var_0_0.New()
+function ResSplitModel:addIncludeChapter(chapterId)
+	self._includeChapterIdDic[chapterId] = true
+end
 
-return var_0_0
+function ResSplitModel:isExcludeChapter(chapterId)
+	return self._includeChapterIdDic[chapterId] ~= true
+end
+
+function ResSplitModel:isExcludeSkin(skinId)
+	return self._includeSkinDic[skinId] ~= true
+end
+
+function ResSplitModel:isExcludeStoryId(storyId)
+	return self._includeStoryIdDic[storyId] ~= true
+end
+
+function ResSplitModel:addIncludeStory(storyId)
+	self._includeStoryIdDic[storyId] = true
+end
+
+function ResSplitModel:addIncludeSkin(skinId)
+	self._includeSkinDic[skinId] = true
+end
+
+function ResSplitModel:addIncludeSkill(skillId)
+	self._includeSkillDic[skillId] = true
+end
+
+function ResSplitModel:addInnerBGMWenDic(path)
+	self._innerBGMWenDic[path] = true
+end
+
+function ResSplitModel:getInnerBGMWenDic()
+	return self._innerBGMWenDic
+end
+
+function ResSplitModel:addIncludeTimeline(timeline)
+	self._includeTimelineDic[timeline] = true
+end
+
+function ResSplitModel:getIncludeSkill()
+	return self._includeSkillDic
+end
+
+function ResSplitModel:getIncludeGuide()
+	return self._includeGuideIdDic
+end
+
+function ResSplitModel:getIncludeTimelineDic()
+	return self._includeTimelineDic
+end
+
+function ResSplitModel:setExclude(type, path, isExclude)
+	if self._excludeDic[type] == nil then
+		self._excludeDic[type] = {}
+	end
+
+	local dic = self._excludeDic[type]
+
+	if dic[path] ~= false then
+		dic[path] = isExclude
+	end
+end
+
+function ResSplitModel:setInclude(type, path)
+	if self._includeDic[type] == nil then
+		self._includeDic[type] = {}
+	end
+
+	local dic = self._includeDic[type]
+
+	dic[path] = true
+end
+
+function ResSplitModel:getExcludeDic(type)
+	return self._excludeDic[type]
+end
+
+function ResSplitModel:getIncludeDic(type)
+	return self._includeDic[type]
+end
+
+ResSplitModel.instance = ResSplitModel.New()
+
+return ResSplitModel

@@ -1,26 +1,32 @@
-﻿module("modules.logic.fight.system.work.trigger.FightWorkTriggerSceneAnimator", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/trigger/FightWorkTriggerSceneAnimator.lua
 
-local var_0_0 = class("FightWorkTriggerSceneAnimator", BaseWork)
+module("modules.logic.fight.system.work.trigger.FightWorkTriggerSceneAnimator", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.actEffectData = arg_1_2
+local FightWorkTriggerSceneAnimator = class("FightWorkTriggerSceneAnimator", BaseWork)
+
+function FightWorkTriggerSceneAnimator:ctor(fightStepData, actEffectData)
+	self.fightStepData = fightStepData
+	self.actEffectData = actEffectData
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._config = lua_trigger_action.configDict[arg_2_0.actEffectData.effectNum]
+function FightWorkTriggerSceneAnimator:onStart()
+	self._config = lua_trigger_action.configDict[self.actEffectData.effectNum]
 
-	local var_2_0 = GameSceneMgr.instance:getCurScene()
+	local fightScene = GameSceneMgr.instance:getCurScene()
 
-	if var_2_0 and var_2_0.level:getSceneGo() then
-		FightController.instance:dispatchEvent(FightEvent.TriggerSceneAnimator, arg_2_0._config)
+	if fightScene then
+		local sceneObj = fightScene.level:getSceneGo()
+
+		if sceneObj then
+			FightController.instance:dispatchEvent(FightEvent.TriggerSceneAnimator, self._config)
+		end
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkTriggerSceneAnimator:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkTriggerSceneAnimator

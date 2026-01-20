@@ -1,20 +1,22 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomPlan", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomPlan.lua
 
-local var_0_0 = class("WaitGuideActionRoomPlan", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomPlan", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	RoomController.instance:registerCallback(RoomEvent.AccelerateGuidePlan, arg_1_0._onAccelerateGuidePlan, arg_1_0)
-	RoomRpc.instance:sendAccelerateGuidePlanRequest(arg_1_0.guideId, arg_1_0.stepId)
+local WaitGuideActionRoomPlan = class("WaitGuideActionRoomPlan", BaseGuideAction)
+
+function WaitGuideActionRoomPlan:onStart(context)
+	WaitGuideActionRoomPlan.super.onStart(self, context)
+	RoomController.instance:registerCallback(RoomEvent.AccelerateGuidePlan, self._onAccelerateGuidePlan, self)
+	RoomRpc.instance:sendAccelerateGuidePlanRequest(self.guideId, self.stepId)
 end
 
-function var_0_0._onAccelerateGuidePlan(arg_2_0, arg_2_1)
-	arg_2_0:clearWork()
-	arg_2_0:onDone(true)
+function WaitGuideActionRoomPlan:_onAccelerateGuidePlan(msg)
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	RoomController.instance:unregisterCallback(RoomEvent.AccelerateGuidePlan, arg_3_0._onAccelerateGuidePlan, arg_3_0)
+function WaitGuideActionRoomPlan:clearWork()
+	RoomController.instance:unregisterCallback(RoomEvent.AccelerateGuidePlan, self._onAccelerateGuidePlan, self)
 end
 
-return var_0_0
+return WaitGuideActionRoomPlan

@@ -1,0 +1,12 @@
+[
+  {
+    "activityId": 13234,
+    "itemId": 540002,
+    "initWeight": "4#850|3#4000|2#4500|1#500",
+    "summonTimes": 3,
+    "poolId": 32191,
+    "constId": 83212,
+    "heroExtraDesc": "5#summonsimulation_probability_extra_desc",
+    "doubleSixRate": 13
+  }
+]

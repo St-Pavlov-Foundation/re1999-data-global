@@ -1,28 +1,32 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomCritterMood", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomCritterMood.lua
 
-local var_0_0 = class("WaitGuideActionRoomCritterMood", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomCritterMood", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	CritterController.instance:registerCallback(CritterEvent.CritterInfoPushUpdate, arg_1_0._onCritterInfoPushUpdate, arg_1_0)
+local WaitGuideActionRoomCritterMood = class("WaitGuideActionRoomCritterMood", BaseGuideAction)
 
-	arg_1_0._moodValue = tonumber(arg_1_0.actionParam)
+function WaitGuideActionRoomCritterMood:onStart(context)
+	WaitGuideActionRoomCritterMood.super.onStart(self, context)
+	CritterController.instance:registerCallback(CritterEvent.CritterInfoPushUpdate, self._onCritterInfoPushUpdate, self)
 
-	arg_1_0:_check()
+	self._moodValue = tonumber(self.actionParam)
+
+	self:_check()
 end
 
-function var_0_0._check(arg_2_0)
-	if #CritterModel.instance:getMoodCritters(arg_2_0._moodValue) > 0 then
-		arg_2_0:onDone(true)
+function WaitGuideActionRoomCritterMood:_check()
+	local list = CritterModel.instance:getMoodCritters(self._moodValue)
+
+	if #list > 0 then
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCritterInfoPushUpdate(arg_3_0)
-	arg_3_0:_check()
+function WaitGuideActionRoomCritterMood:_onCritterInfoPushUpdate()
+	self:_check()
 end
 
-function var_0_0.clearWork(arg_4_0)
-	CritterController.instance:unregisterCallback(CritterEvent.CritterInfoPushUpdate, arg_4_0._onCritterInfoPushUpdate, arg_4_0)
+function WaitGuideActionRoomCritterMood:clearWork()
+	CritterController.instance:unregisterCallback(CritterEvent.CritterInfoPushUpdate, self._onCritterInfoPushUpdate, self)
 end
 
-return var_0_0
+return WaitGuideActionRoomCritterMood

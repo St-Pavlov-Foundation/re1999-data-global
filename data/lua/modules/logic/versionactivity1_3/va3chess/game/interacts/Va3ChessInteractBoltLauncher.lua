@@ -1,107 +1,107 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractBoltLauncher", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/interacts/Va3ChessInteractBoltLauncher.lua
 
-local var_0_0 = class("Va3ChessInteractBoltLauncher", Va3ChessInteractBase)
+module("modules.logic.versionactivity1_3.va3chess.game.interacts.Va3ChessInteractBoltLauncher", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Va3ChessInteractBoltLauncher = class("Va3ChessInteractBoltLauncher", Va3ChessInteractBase)
 
-	arg_1_0._enableAlarm = true
+function Va3ChessInteractBoltLauncher:init(targetObj)
+	Va3ChessInteractBoltLauncher.super.init(self, targetObj)
+
+	self._enableAlarm = true
 end
 
-function var_0_0.onDrawAlert(arg_2_0, arg_2_1)
-	if not arg_2_0._enableAlarm then
+function Va3ChessInteractBoltLauncher:onDrawAlert(map)
+	if not self._enableAlarm then
 		return
 	end
 
-	local var_2_0 = arg_2_0._target.originData:getDirection()
+	local dir = self._target.originData:getDirection()
 
-	if not var_2_0 then
+	if not dir then
 		return
 	end
 
-	local var_2_1
-	local var_2_2
-	local var_2_3, var_2_4 = Va3ChessGameModel.instance:getGameSize()
-	local var_2_5 = arg_2_0._target.originData.posX
-	local var_2_6 = arg_2_0._target.originData.posY
-	local var_2_7 = var_2_0 == Va3ChessEnum.Direction.Up
-	local var_2_8 = var_2_0 == Va3ChessEnum.Direction.Down
-	local var_2_9 = var_2_0 == Va3ChessEnum.Direction.Right
+	local beginPos, endPos
+	local w, h = Va3ChessGameModel.instance:getGameSize()
+	local curX, curY = self._target.originData.posX, self._target.originData.posY
+	local isUp = dir == Va3ChessEnum.Direction.Up
+	local isDown = dir == Va3ChessEnum.Direction.Down
+	local isRight = dir == Va3ChessEnum.Direction.Right
 
-	if var_2_7 or var_2_8 then
-		var_2_1 = var_2_7 and var_2_6 + 1 or 0
-		var_2_2 = var_2_7 and var_2_4 - 1 or var_2_6 - 1
+	if isUp or isDown then
+		beginPos = isUp and curY + 1 or 0
+		endPos = isUp and h - 1 or curY - 1
 	else
-		var_2_1 = var_2_9 and var_2_5 + 1 or 0
-		var_2_2 = var_2_9 and var_2_3 - 1 or var_2_5 - 1
+		beginPos = isRight and curX + 1 or 0
+		endPos = isRight and w - 1 or curX - 1
 	end
 
-	if var_2_1 < 0 or var_2_2 < 0 then
+	if beginPos < 0 or endPos < 0 then
 		return
 	end
 
-	if var_2_2 < var_2_1 then
-		logError(string.format("Va3ChessInteractBoltLauncher:onDrawAlert target error,interactId:%s beginPos:%s endPos:%s", arg_2_0._target.id, var_2_1, var_2_2))
+	if endPos < beginPos then
+		logError(string.format("Va3ChessInteractBoltLauncher:onDrawAlert target error,interactId:%s beginPos:%s endPos:%s", self._target.id, beginPos, endPos))
 
 		return
 	end
 
-	if var_2_7 or var_2_8 then
-		for iter_2_0 = var_2_1, var_2_2 do
-			local var_2_10 = {
+	if isUp or isDown then
+		for y = beginPos, endPos do
+			local showDirLine = {
 				Va3ChessEnum.Direction.Left,
 				Va3ChessEnum.Direction.Right
 			}
 
-			if iter_2_0 == var_2_1 then
-				table.insert(var_2_10, Va3ChessEnum.Direction.Down)
-			elseif iter_2_0 == var_2_2 then
-				table.insert(var_2_10, Va3ChessEnum.Direction.Up)
+			if y == beginPos then
+				table.insert(showDirLine, Va3ChessEnum.Direction.Down)
+			elseif y == endPos then
+				table.insert(showDirLine, Va3ChessEnum.Direction.Up)
 			end
 
-			arg_2_0:_insertToAlertMap(arg_2_1, var_2_5, iter_2_0, var_2_10)
+			self:_insertToAlertMap(map, curX, y, showDirLine)
 		end
 	else
-		for iter_2_1 = var_2_1, var_2_2 do
-			local var_2_11 = {
+		for x = beginPos, endPos do
+			local showDirLine = {
 				Va3ChessEnum.Direction.Up,
 				Va3ChessEnum.Direction.Down
 			}
 
-			if iter_2_1 == var_2_1 then
-				table.insert(var_2_11, Va3ChessEnum.Direction.Left)
-			elseif iter_2_1 == var_2_2 then
-				table.insert(var_2_11, Va3ChessEnum.Direction.Right)
+			if x == beginPos then
+				table.insert(showDirLine, Va3ChessEnum.Direction.Left)
+			elseif x == endPos then
+				table.insert(showDirLine, Va3ChessEnum.Direction.Right)
 			end
 
-			arg_2_0:_insertToAlertMap(arg_2_1, iter_2_1, var_2_6, var_2_11)
+			self:_insertToAlertMap(map, x, curY, showDirLine)
 		end
 	end
 end
 
-function var_0_0._insertToAlertMap(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if Va3ChessGameModel.instance:isPosInChessBoard(arg_3_2, arg_3_3) and Va3ChessGameModel.instance:getBaseTile(arg_3_2, arg_3_3) ~= Va3ChessEnum.TileBaseType.None then
-		arg_3_1[arg_3_2] = arg_3_1[arg_3_2] or {}
-		arg_3_1[arg_3_2][arg_3_3] = arg_3_1[arg_3_2][arg_3_3] or {}
+function Va3ChessInteractBoltLauncher:_insertToAlertMap(map, x, y, showDirLine)
+	if Va3ChessGameModel.instance:isPosInChessBoard(x, y) and Va3ChessGameModel.instance:getBaseTile(x, y) ~= Va3ChessEnum.TileBaseType.None then
+		map[x] = map[x] or {}
+		map[x][y] = map[x][y] or {}
 
-		table.insert(arg_3_1[arg_3_2][arg_3_3], {
+		table.insert(map[x][y], {
 			isStatic = true,
 			resPath = Va3ChessEnum.SceneResPath.AlarmItem2,
-			showDirLine = arg_3_4
+			showDirLine = showDirLine
 		})
 	end
 end
 
-function var_0_0.onAvatarLoaded(arg_4_0)
-	var_0_0.super.onAvatarLoaded(arg_4_0)
+function Va3ChessInteractBoltLauncher:onAvatarLoaded()
+	Va3ChessInteractBoltLauncher.super.onAvatarLoaded(self)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.dispose(arg_5_0)
-	arg_5_0._enableAlarm = false
+function Va3ChessInteractBoltLauncher:dispose()
+	self._enableAlarm = false
 
-	var_0_0.super.dispose(arg_5_0)
+	Va3ChessInteractBoltLauncher.super.dispose(self)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.RefreshAlarmArea)
 end
 
-return var_0_0
+return Va3ChessInteractBoltLauncher

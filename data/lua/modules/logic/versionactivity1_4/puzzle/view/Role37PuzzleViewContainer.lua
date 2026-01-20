@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/view/Role37PuzzleViewContainer.lua
 
-local var_0_0 = class("Role37PuzzleViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.puzzle.view.Role37PuzzleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Role37PuzzleViewContainer = class("Role37PuzzleViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Record/#scroll_record"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "Record/#scroll_record/Viewport/Content/RecordItem"
-	var_1_1.cellClass = PuzzleRecordItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+function Role37PuzzleViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, Role37PuzzleView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	scrollParam.scrollGOPath = "Record/#scroll_record"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "Record/#scroll_record/Viewport/Content/RecordItem"
+	scrollParam.cellClass = PuzzleRecordItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
 
-	return var_1_0
+	table.insert(views, Role37PuzzleView.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Role37PuzzleViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		})
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
-		arg_2_0._navigateButtonView:setHelpId(HelpEnum.HelpId.Role37PuzzleViewHelp)
+		self._navigateButtonView:setOverrideClose(self.overrideCloseFunc, self)
+		self._navigateButtonView:setHelpId(HelpEnum.HelpId.Role37PuzzleViewHelp)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.overrideCloseFunc(arg_3_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130PuzzleExit, MsgBoxEnum.BoxType.Yes_No, arg_3_0.closeFunc, nil, nil, arg_3_0)
+function Role37PuzzleViewContainer:overrideCloseFunc()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Activity130PuzzleExit, MsgBoxEnum.BoxType.Yes_No, self.closeFunc, nil, nil, self)
 end
 
-function var_0_0.closeFunc(arg_4_0)
-	arg_4_0:closeThis()
+function Role37PuzzleViewContainer:closeFunc()
+	self:closeThis()
 end
 
-function var_0_0.onContainerInit(arg_5_0)
+function Role37PuzzleViewContainer:onContainerInit()
 	Activity130Rpc.instance:addGameChallengeNum(Activity130Model.instance:getCurEpisodeId())
 end
 
-return var_0_0
+return Role37PuzzleViewContainer

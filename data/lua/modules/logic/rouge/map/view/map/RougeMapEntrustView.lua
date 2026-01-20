@@ -1,248 +1,250 @@
-﻿module("modules.logic.rouge.map.view.map.RougeMapEntrustView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/map/RougeMapEntrustView.lua
 
-local var_0_0 = class("RougeMapEntrustView", BaseView)
+module("modules.logic.rouge.map.view.map.RougeMapEntrustView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnEntrust = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_entrust")
-	arg_1_0._goEntrustContainer = gohelper.findChild(arg_1_0.viewGO, "Left/#go_entrustcontainer")
-	arg_1_0._txtEntrustDesc = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_entrustcontainer/#txt_entrustdesc")
-	arg_1_0._btnHideEntrust = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_entrustcontainer/#btn_hideentrust")
-	arg_1_0._gocangeteffect = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_entrust/#effect_canget")
+local RougeMapEntrustView = class("RougeMapEntrustView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeMapEntrustView:onInitView()
+	self._btnEntrust = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_entrust")
+	self._goEntrustContainer = gohelper.findChild(self.viewGO, "Left/#go_entrustcontainer")
+	self._txtEntrustDesc = gohelper.findChildText(self.viewGO, "Left/#go_entrustcontainer/#txt_entrustdesc")
+	self._btnHideEntrust = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_entrustcontainer/#btn_hideentrust")
+	self._gocangeteffect = gohelper.findChild(self.viewGO, "Left/#btn_entrust/#effect_canget")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEntrust:AddClickListener(arg_2_0._btnEntrustOnClick, arg_2_0)
-	arg_2_0._btnHideEntrust:AddClickListener(arg_2_0._btnHideEntrustOnClick, arg_2_0)
+function RougeMapEntrustView:addEvents()
+	self._btnEntrust:AddClickListener(self._btnEntrustOnClick, self)
+	self._btnHideEntrust:AddClickListener(self._btnHideEntrustOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEntrust:RemoveClickListener()
-	arg_3_0._btnHideEntrust:RemoveClickListener()
+function RougeMapEntrustView:removeEvents()
+	self._btnEntrust:RemoveClickListener()
+	self._btnHideEntrust:RemoveClickListener()
 end
 
-function var_0_0._btnEntrustOnClick(arg_4_0)
-	if not arg_4_0.hadEntrust then
+function RougeMapEntrustView:_btnEntrustOnClick()
+	if not self.hadEntrust then
 		return
 	end
 
-	arg_4_0.status = RougeMapEnum.EntrustStatus.Detail
+	self.status = RougeMapEnum.EntrustStatus.Detail
 
-	arg_4_0:refreshStatus()
+	self:refreshStatus()
 end
 
-function var_0_0._btnHideEntrustOnClick(arg_5_0)
-	if not arg_5_0.hadEntrust then
+function RougeMapEntrustView:_btnHideEntrustOnClick()
+	if not self.hadEntrust then
 		return
 	end
 
-	arg_5_0:closeEntrust()
+	self:closeEntrust()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.goEntrustBtn = arg_6_0._btnEntrust.gameObject
-	arg_6_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_6_0._goEntrustContainer)
+function RougeMapEntrustView:_editableInitView()
+	self.goEntrustBtn = self._btnEntrust.gameObject
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._goEntrustContainer)
 
-	arg_6_0:addEventCb(RougeMapController.instance, RougeMapEvent.onEntrustChange, arg_6_0.onEntrustChange, arg_6_0)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onEntrustChange, self.onEntrustChange, self)
 end
 
-function var_0_0.onEntrustChange(arg_7_0)
-	arg_7_0:tryShowEntrust()
+function RougeMapEntrustView:onEntrustChange()
+	self:tryShowEntrust()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:tryShowEntrust()
+function RougeMapEntrustView:onOpen()
+	self:tryShowEntrust()
 end
 
-function var_0_0.tryShowEntrust(arg_9_0)
-	arg_9_0.status = RougeMapEnum.EntrustStatus.Detail
+function RougeMapEntrustView:tryShowEntrust()
+	self.status = RougeMapEnum.EntrustStatus.Detail
 
-	arg_9_0:updateHadEntrust()
-	arg_9_0:refreshEntrust()
+	self:updateHadEntrust()
+	self:refreshEntrust()
 
-	if arg_9_0.hadEntrust then
-		TaskDispatcher.cancelTask(arg_9_0.closeEntrust, arg_9_0)
-		TaskDispatcher.runDelay(arg_9_0.closeEntrust, arg_9_0, RougeMapEnum.ChangeEntrustTime)
+	if self.hadEntrust then
+		TaskDispatcher.cancelTask(self.closeEntrust, self)
+		TaskDispatcher.runDelay(self.closeEntrust, self, RougeMapEnum.ChangeEntrustTime)
 	end
 end
 
-function var_0_0.closeEntrust(arg_10_0)
-	if arg_10_0.closing then
+function RougeMapEntrustView:closeEntrust()
+	if self.closing then
 		return
 	end
 
-	arg_10_0.closing = true
+	self.closing = true
 
-	arg_10_0.animatorPlayer:Play("close", arg_10_0.onCloseAnimDone, arg_10_0)
+	self.animatorPlayer:Play("close", self.onCloseAnimDone, self)
 end
 
-function var_0_0.onCloseAnimDone(arg_11_0)
-	arg_11_0.closing = nil
-	arg_11_0.status = RougeMapEnum.EntrustStatus.Brief
+function RougeMapEntrustView:onCloseAnimDone()
+	self.closing = nil
+	self.status = RougeMapEnum.EntrustStatus.Brief
 
-	arg_11_0:refreshStatus()
-	arg_11_0:refreshEffect()
+	self:refreshStatus()
+	self:refreshEffect()
 end
 
-function var_0_0.updateHadEntrust(arg_12_0)
-	local var_12_0 = RougeMapModel.instance:getEntrustId()
+function RougeMapEntrustView:updateHadEntrust()
+	local entrustId = RougeMapModel.instance:getEntrustId()
 
-	arg_12_0.entrustId = var_12_0
-	arg_12_0.hadEntrust = var_12_0 ~= nil
-	arg_12_0.entrustProgress = RougeMapModel.instance:getEntrustProgress()
-	arg_12_0.isFinished = arg_12_0.entrustProgress and arg_12_0.entrustProgress >= 1
+	self.entrustId = entrustId
+	self.hadEntrust = entrustId ~= nil
+	self.entrustProgress = RougeMapModel.instance:getEntrustProgress()
+	self.isFinished = self.entrustProgress and self.entrustProgress >= 1
 end
 
-function var_0_0.refreshEntrust(arg_13_0)
-	if not arg_13_0.hadEntrust then
-		arg_13_0:hideEntrust()
+function RougeMapEntrustView:refreshEntrust()
+	if not self.hadEntrust then
+		self:hideEntrust()
 
 		return
 	end
 
-	local var_13_0 = lua_rouge_entrust.configDict[arg_13_0.entrustId]
-	local var_13_1 = lua_rouge_entrust_desc.configDict[var_13_0.type]
+	local entrustCo = lua_rouge_entrust.configDict[self.entrustId]
+	local entrustDescCo = lua_rouge_entrust_desc.configDict[entrustCo.type]
 
-	arg_13_0:refreshStatus()
-	arg_13_0:initEntrustDescHandle()
-	arg_13_0:refreshEffect()
+	self:refreshStatus()
+	self:initEntrustDescHandle()
+	self:refreshEffect()
 
-	local var_13_2 = arg_13_0.entrustTypeHandleDict[var_13_0.type]
+	local handle = self.entrustTypeHandleDict[entrustCo.type]
 
-	arg_13_0._txtEntrustDesc.text = var_13_2 and var_13_2(arg_13_0, var_13_0, var_13_1) or ""
+	self._txtEntrustDesc.text = handle and handle(self, entrustCo, entrustDescCo) or ""
 end
 
-function var_0_0.refreshStatus(arg_14_0)
-	gohelper.setActive(arg_14_0.goEntrustBtn, arg_14_0.status == RougeMapEnum.EntrustStatus.Brief)
-	gohelper.setActive(arg_14_0._goEntrustContainer, arg_14_0.status == RougeMapEnum.EntrustStatus.Detail)
+function RougeMapEntrustView:refreshStatus()
+	gohelper.setActive(self.goEntrustBtn, self.status == RougeMapEnum.EntrustStatus.Brief)
+	gohelper.setActive(self._goEntrustContainer, self.status == RougeMapEnum.EntrustStatus.Detail)
 end
 
-function var_0_0.refreshEffect(arg_15_0)
-	local var_15_0 = false
+function RougeMapEntrustView:refreshEffect()
+	local canShow = false
 
-	gohelper.setActive(arg_15_0._gocangeteffect, var_15_0)
+	gohelper.setActive(self._gocangeteffect, canShow)
 
-	if var_15_0 then
-		TaskDispatcher.cancelTask(arg_15_0.hideCangetEffect, arg_15_0)
-		TaskDispatcher.runDelay(arg_15_0.hideCangetEffect, arg_15_0, RougeMapEnum.FinishEntrustEffect)
+	if canShow then
+		TaskDispatcher.cancelTask(self.hideCangetEffect, self)
+		TaskDispatcher.runDelay(self.hideCangetEffect, self, RougeMapEnum.FinishEntrustEffect)
 	end
 end
 
-function var_0_0.hideCangetEffect(arg_16_0)
-	gohelper.setActive(arg_16_0._gocangeteffect, false)
+function RougeMapEntrustView:hideCangetEffect()
+	gohelper.setActive(self._gocangeteffect, false)
 end
 
-function var_0_0.hideEntrust(arg_17_0)
-	gohelper.setActive(arg_17_0.goEntrustBtn, false)
-	gohelper.setActive(arg_17_0._goEntrustContainer, false)
+function RougeMapEntrustView:hideEntrust()
+	gohelper.setActive(self.goEntrustBtn, false)
+	gohelper.setActive(self._goEntrustContainer, false)
 end
 
-function var_0_0.initEntrustDescHandle(arg_18_0)
-	if arg_18_0.entrustTypeHandleDict then
+function RougeMapEntrustView:initEntrustDescHandle()
+	if self.entrustTypeHandleDict then
 		return
 	end
 
-	arg_18_0.entrustTypeHandleDict = {
-		[RougeMapEnum.EntrustEventType.MakeMoney] = arg_18_0.makeMoneyHandle,
-		[RougeMapEnum.EntrustEventType.CostMoney] = arg_18_0.costMoneyHandle,
-		[RougeMapEnum.EntrustEventType.Event] = arg_18_0.eventHandle,
-		[RougeMapEnum.EntrustEventType.Curse] = arg_18_0.curseHandle,
-		[RougeMapEnum.EntrustEventType.CostPower] = arg_18_0.costPowerHandle,
-		[RougeMapEnum.EntrustEventType.MakePower] = arg_18_0.makePowerHandle,
-		[RougeMapEnum.EntrustEventType.FinishEvent] = arg_18_0.finishEventHandle,
-		[RougeMapEnum.EntrustEventType.GetCollection] = arg_18_0.getCollectionHandle,
-		[RougeMapEnum.EntrustEventType.LevelUpSpCollection] = arg_18_0.levelupSpCollectionHandle
+	self.entrustTypeHandleDict = {
+		[RougeMapEnum.EntrustEventType.MakeMoney] = self.makeMoneyHandle,
+		[RougeMapEnum.EntrustEventType.CostMoney] = self.costMoneyHandle,
+		[RougeMapEnum.EntrustEventType.Event] = self.eventHandle,
+		[RougeMapEnum.EntrustEventType.Curse] = self.curseHandle,
+		[RougeMapEnum.EntrustEventType.CostPower] = self.costPowerHandle,
+		[RougeMapEnum.EntrustEventType.MakePower] = self.makePowerHandle,
+		[RougeMapEnum.EntrustEventType.FinishEvent] = self.finishEventHandle,
+		[RougeMapEnum.EntrustEventType.GetCollection] = self.getCollectionHandle,
+		[RougeMapEnum.EntrustEventType.LevelUpSpCollection] = self.levelupSpCollectionHandle
 	}
 end
 
-function var_0_0.makeMoneyHandle(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = tonumber(arg_19_1.param)
-	local var_19_1 = RougeMapModel.instance:getEntrustProgress()
-	local var_19_2 = arg_19_0:getDesc(arg_19_2, var_19_0 <= var_19_1)
+function RougeMapEntrustView:makeMoneyHandle(entrustCo, entrustDescCo)
+	local cost = tonumber(entrustCo.param)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local desc = self:getDesc(entrustDescCo, cost <= progress)
 
-	return GameUtil.getSubPlaceholderLuaLangTwoParam(var_19_2, var_19_0, var_19_1)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(desc, cost, progress)
 end
 
-function var_0_0.costMoneyHandle(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = tonumber(arg_20_1.param)
-	local var_20_1 = RougeMapModel.instance:getEntrustProgress()
-	local var_20_2 = arg_20_0:getDesc(arg_20_2, var_20_0 <= var_20_1)
+function RougeMapEntrustView:costMoneyHandle(entrustCo, entrustDescCo)
+	local cost = tonumber(entrustCo.param)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local desc = self:getDesc(entrustDescCo, cost <= progress)
 
-	return GameUtil.getSubPlaceholderLuaLangTwoParam(var_20_2, var_20_0, var_20_1)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(desc, cost, progress)
 end
 
-function var_0_0.eventHandle(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = RougeMapModel.instance:getEntrustProgress()
-	local var_21_1 = string.split(arg_21_1.param, "|")
-	local var_21_2 = string.splitToNumber(var_21_1[1], "#")
+function RougeMapEntrustView:eventHandle(entrustCo, entrustDescCo)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local param = string.split(entrustCo.param, "|")
+	local typeList = string.splitToNumber(param[1], "#")
 
-	for iter_21_0 = 1, #var_21_2 do
-		var_21_2[iter_21_0] = lua_rouge_event_type.configDict[var_21_2[iter_21_0]].name
+	for i = 1, #typeList do
+		typeList[i] = lua_rouge_event_type.configDict[typeList[i]].name
 	end
 
-	local var_21_3 = tonumber(var_21_1[2])
-	local var_21_4 = arg_21_0:getDesc(arg_21_2, var_21_3 <= var_21_0)
+	local total = tonumber(param[2])
+	local desc = self:getDesc(entrustDescCo, total <= progress)
 
-	return GameUtil.getSubPlaceholderLuaLangThreeParam(var_21_4, var_21_3, table.concat(var_21_2, "_"), var_21_0)
+	return GameUtil.getSubPlaceholderLuaLangThreeParam(desc, total, table.concat(typeList, "_"), progress)
 end
 
-function var_0_0.curseHandle(arg_22_0, arg_22_1, arg_22_2)
-	return arg_22_2.desc
+function RougeMapEntrustView:curseHandle(entrustCo, entrustDescCo)
+	return entrustDescCo.desc
 end
 
-function var_0_0.costPowerHandle(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = tonumber(arg_23_1.param)
-	local var_23_1 = RougeMapModel.instance:getEntrustProgress()
-	local var_23_2 = arg_23_0:getDesc(arg_23_2, var_23_0 <= var_23_1)
+function RougeMapEntrustView:costPowerHandle(entrustCo, entrustDescCo)
+	local cost = tonumber(entrustCo.param)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local desc = self:getDesc(entrustDescCo, cost <= progress)
 
-	return GameUtil.getSubPlaceholderLuaLangTwoParam(var_23_2, var_23_0, var_23_1)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(desc, cost, progress)
 end
 
-function var_0_0.makePowerHandle(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = tonumber(arg_24_1.param)
-	local var_24_1 = RougeMapModel.instance:getEntrustProgress()
-	local var_24_2 = arg_24_0:getDesc(arg_24_2, var_24_0 <= var_24_1)
+function RougeMapEntrustView:makePowerHandle(entrustCo, entrustDescCo)
+	local cost = tonumber(entrustCo.param)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local desc = self:getDesc(entrustDescCo, cost <= progress)
 
-	return GameUtil.getSubPlaceholderLuaLangTwoParam(var_24_2, var_24_0, var_24_1)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(desc, cost, progress)
 end
 
-function var_0_0.finishEventHandle(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = RougeMapModel.instance:getEntrustProgress()
-	local var_25_1 = arg_25_0:getDesc(arg_25_2, var_25_0 >= 1)
-	local var_25_2 = tonumber(arg_25_1.param)
-	local var_25_3 = RougeMapConfig.instance:getRougeEvent(var_25_2)
+function RougeMapEntrustView:finishEventHandle(entrustCo, entrustDescCo)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local desc = self:getDesc(entrustDescCo, progress >= 1)
+	local eventId = tonumber(entrustCo.param)
+	local eventCo = RougeMapConfig.instance:getRougeEvent(eventId)
 
-	return GameUtil.getSubPlaceholderLuaLangOneParam(var_25_1, var_25_3.name)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(desc, eventCo.name)
 end
 
-function var_0_0.getCollectionHandle(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = tonumber(arg_26_1.param)
-	local var_26_1 = RougeMapModel.instance:getEntrustProgress()
-	local var_26_2 = arg_26_0:getDesc(arg_26_2, var_26_0 <= var_26_1)
+function RougeMapEntrustView:getCollectionHandle(entrustCo, entrustDescCo)
+	local count = tonumber(entrustCo.param)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local desc = self:getDesc(entrustDescCo, count <= progress)
 
-	return GameUtil.getSubPlaceholderLuaLangTwoParam(var_26_2, var_26_0, var_26_1)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(desc, count, progress)
 end
 
-function var_0_0.levelupSpCollectionHandle(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = tonumber(arg_27_1.param)
-	local var_27_1 = RougeMapModel.instance:getEntrustProgress()
-	local var_27_2 = arg_27_0:getDesc(arg_27_2, var_27_0 <= var_27_1)
+function RougeMapEntrustView:levelupSpCollectionHandle(entrustCo, entrustDescCo)
+	local count = tonumber(entrustCo.param)
+	local progress = RougeMapModel.instance:getEntrustProgress()
+	local desc = self:getDesc(entrustDescCo, count <= progress)
 
-	return GameUtil.getSubPlaceholderLuaLangTwoParam(var_27_2, var_27_0, var_27_1)
+	return GameUtil.getSubPlaceholderLuaLangTwoParam(desc, count, progress)
 end
 
-function var_0_0.getDesc(arg_28_0, arg_28_1, arg_28_2)
-	return arg_28_2 and arg_28_1.finishDesc or arg_28_1.desc
+function RougeMapEntrustView:getDesc(co, finish)
+	return finish and co.finishDesc or co.desc
 end
 
-function var_0_0.onClose(arg_29_0)
-	arg_29_0.closing = nil
+function RougeMapEntrustView:onClose()
+	self.closing = nil
 
-	TaskDispatcher.cancelTask(arg_29_0.closeEntrust, arg_29_0)
-	TaskDispatcher.cancelTask(arg_29_0.hideCangetEffect, arg_29_0)
+	TaskDispatcher.cancelTask(self.closeEntrust, self)
+	TaskDispatcher.cancelTask(self.hideCangetEffect, self)
 end
 
-return var_0_0
+return RougeMapEntrustView

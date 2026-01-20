@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_5.enter.define.VersionActivity1_5Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/enter/define/VersionActivity1_5Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_5.enter.define.VersionActivity1_5Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity1_5Enum = _M
+
+VersionActivity1_5Enum.ActivityId = {
 	EnterView2 = 11517,
 	DungeonExploreTask = 11505,
 	DungeonStore = 11503,
@@ -17,34 +19,34 @@ var_0_0.ActivityId = {
 	AiZiLa = 11509,
 	EnterView = 11501
 }
-var_0_0.EnterViewActIdListWithGroup = {
-	[var_0_0.ActivityId.EnterView] = {
-		var_0_0.ActivityId.Activity142,
-		var_0_0.ActivityId.BossRush,
-		var_0_0.ActivityId.SportsNews,
-		var_0_0.ActivityId.DungeonStore,
-		var_0_0.ActivityId.Dungeon
+VersionActivity1_5Enum.EnterViewActIdListWithGroup = {
+	[VersionActivity1_5Enum.ActivityId.EnterView] = {
+		VersionActivity1_5Enum.ActivityId.Activity142,
+		VersionActivity1_5Enum.ActivityId.BossRush,
+		VersionActivity1_5Enum.ActivityId.SportsNews,
+		VersionActivity1_5Enum.ActivityId.DungeonStore,
+		VersionActivity1_5Enum.ActivityId.Dungeon
 	},
-	[var_0_0.ActivityId.EnterView2] = {
-		var_0_0.ActivityId.PeaceUlu,
-		var_0_0.ActivityId.BossRush,
-		var_0_0.ActivityId.Season,
-		var_0_0.ActivityId.AiZiLa,
-		var_0_0.ActivityId.DungeonStore,
-		var_0_0.ActivityId.Dungeon
+	[VersionActivity1_5Enum.ActivityId.EnterView2] = {
+		VersionActivity1_5Enum.ActivityId.PeaceUlu,
+		VersionActivity1_5Enum.ActivityId.BossRush,
+		VersionActivity1_5Enum.ActivityId.Season,
+		VersionActivity1_5Enum.ActivityId.AiZiLa,
+		VersionActivity1_5Enum.ActivityId.DungeonStore,
+		VersionActivity1_5Enum.ActivityId.Dungeon
 	}
 }
-var_0_0.EnterViewMainActIdList = {
-	var_0_0.ActivityId.EnterView,
-	var_0_0.ActivityId.EnterView2
+VersionActivity1_5Enum.EnterViewMainActIdList = {
+	VersionActivity1_5Enum.ActivityId.EnterView,
+	VersionActivity1_5Enum.ActivityId.EnterView2
 }
-var_0_0.ActId2Ambient = {
-	[var_0_0.ActivityId.EnterView] = 20150002,
-	[var_0_0.ActivityId.EnterView2] = 20150004
+VersionActivity1_5Enum.ActId2Ambient = {
+	[VersionActivity1_5Enum.ActivityId.EnterView] = 20150002,
+	[VersionActivity1_5Enum.ActivityId.EnterView2] = 20150004
 }
-var_0_0.ActId2OpenAudio = {
-	[var_0_0.ActivityId.EnterView] = 20150001,
-	[var_0_0.ActivityId.EnterView2] = 20150003
+VersionActivity1_5Enum.ActId2OpenAudio = {
+	[VersionActivity1_5Enum.ActivityId.EnterView] = 20150001,
+	[VersionActivity1_5Enum.ActivityId.EnterView2] = 20150003
 }
 
-return var_0_0
+return VersionActivity1_5Enum

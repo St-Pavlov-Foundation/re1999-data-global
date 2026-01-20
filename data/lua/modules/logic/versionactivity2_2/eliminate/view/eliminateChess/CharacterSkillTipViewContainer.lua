@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.CharacterSkillTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/CharacterSkillTipViewContainer.lua
 
-local var_0_0 = class("CharacterSkillTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.CharacterSkillTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterSkillTipViewContainer = class("CharacterSkillTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CharacterSkillTipView.New())
+function CharacterSkillTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CharacterSkillTipView.New())
+
+	return views
 end
 
-return var_0_0
+return CharacterSkillTipViewContainer

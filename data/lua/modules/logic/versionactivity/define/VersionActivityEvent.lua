@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity.define.VersionActivityEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/define/VersionActivityEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity.define.VersionActivityEvent", package.seeall)
 
-var_0_0.OnBuy107GoodsSuccess = 1
-var_0_0.AddTaskActivityBonus = 2
-var_0_0.OnReceiveFinishTaskReply = 3
-var_0_0.OnGet107GoodsInfo = 4
-var_0_0.VersionActivity112Update = 11201
-var_0_0.VersionActivity112TaskGetBonus = 11202
-var_0_0.VersionActivity112TaskUpdate = 11203
+local VersionActivityEvent = _M
 
-return var_0_0
+VersionActivityEvent.OnBuy107GoodsSuccess = 1
+VersionActivityEvent.AddTaskActivityBonus = 2
+VersionActivityEvent.OnReceiveFinishTaskReply = 3
+VersionActivityEvent.OnGet107GoodsInfo = 4
+VersionActivityEvent.VersionActivity112Update = 11201
+VersionActivityEvent.VersionActivity112TaskGetBonus = 11202
+VersionActivityEvent.VersionActivity112TaskUpdate = 11203
+
+return VersionActivityEvent

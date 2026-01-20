@@ -1,77 +1,79 @@
-﻿module("modules.logic.rouge.view.RougeScrollAudioView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeScrollAudioView.lua
 
-local var_0_0 = class("RougeScrollAudioView", BaseView)
+module("modules.logic.rouge.view.RougeScrollAudioView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._scrollviewPath = arg_1_1
+local RougeScrollAudioView = class("RougeScrollAudioView", BaseView)
+
+function RougeScrollAudioView:ctor(scrollViewPath)
+	self._scrollviewPath = scrollViewPath
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._scrollview = gohelper.findChildScrollRect(arg_2_0.viewGO, arg_2_0._scrollviewPath or "#scroll_view")
+function RougeScrollAudioView:onInitView()
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, self._scrollviewPath or "#scroll_view")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
+function RougeScrollAudioView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_4_0)
+function RougeScrollAudioView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_5_0._scrollview.gameObject)
+function RougeScrollAudioView:_editableInitView()
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._scrollview.gameObject)
 
-	arg_5_0._drag:AddDragBeginListener(arg_5_0._onDragBegin, arg_5_0)
-	arg_5_0._drag:AddDragEndListener(arg_5_0._onDragEnd, arg_5_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_5_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_5_0._scrollview.gameObject)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._scrollview.gameObject)
 
-	arg_5_0._touch:AddClickDownListener(arg_5_0._onClickDown, arg_5_0)
+	self._touch:AddClickDownListener(self._onClickDown, self)
 
-	arg_5_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_5_0._scrollview.gameObject, DungeonMapEpisodeAudio, arg_5_0._scrollview)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._scrollview.gameObject, DungeonMapEpisodeAudio, self._scrollview)
 end
 
-function var_0_0._onDragBegin(arg_6_0)
-	arg_6_0._audioScroll:onDragBegin()
+function RougeScrollAudioView:_onDragBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_7_0)
-	arg_7_0._audioScroll:onDragEnd()
+function RougeScrollAudioView:_onDragEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDown(arg_8_0)
-	arg_8_0._audioScroll:onClickDown()
+function RougeScrollAudioView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function RougeScrollAudioView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function RougeScrollAudioView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_11_0)
+function RougeScrollAudioView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	if arg_12_0._drag then
-		arg_12_0._drag:RemoveDragBeginListener()
-		arg_12_0._drag:RemoveDragEndListener()
+function RougeScrollAudioView:onDestroyView()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_12_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_12_0._touch then
-		arg_12_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_12_0._touch = nil
+		self._touch = nil
 	end
 end
 
-return var_0_0
+return RougeScrollAudioView

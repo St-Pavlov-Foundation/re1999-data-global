@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131BattleViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131BattleViewContainer.lua
 
-local var_0_0 = class("Activity131BattleViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act131.view.Activity131BattleViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity131BattleViewContainer = class("Activity131BattleViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity131BattleView.New())
+function Activity131BattleViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity131BattleView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity131BattleViewContainer

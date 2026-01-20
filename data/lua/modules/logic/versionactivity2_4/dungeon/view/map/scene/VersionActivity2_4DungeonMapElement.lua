@@ -1,247 +1,253 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.view.map.scene.VersionActivity2_4DungeonMapElement", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/view/map/scene/VersionActivity2_4DungeonMapElement.lua
 
-local var_0_0 = class("VersionActivity2_4DungeonMapElement", LuaCompBase)
-local var_0_1 = 1.6
-local var_0_2 = Vector2(1.5, 1.5)
+module("modules.logic.versionactivity2_4.dungeon.view.map.scene.VersionActivity2_4DungeonMapElement", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._config = arg_1_1[1]
-	arg_1_0._sceneElements = arg_1_1[2]
+local VersionActivity2_4DungeonMapElement = class("VersionActivity2_4DungeonMapElement", LuaCompBase)
+local FINISH_ANIM_TIME = 1.6
+local BOX_COLLIDER_SIZE = Vector2(1.5, 1.5)
+
+function VersionActivity2_4DungeonMapElement:ctor(param)
+	self._config = param[1]
+	self._sceneElements = param[2]
 end
 
-function var_0_0.getElementId(arg_2_0)
-	return arg_2_0._config.id
+function VersionActivity2_4DungeonMapElement:getElementId()
+	return self._config.id
 end
 
-function var_0_0.hide(arg_3_0)
-	gohelper.setActive(arg_3_0._go, false)
+function VersionActivity2_4DungeonMapElement:hide()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.show(arg_4_0)
-	gohelper.setActive(arg_4_0._go, true)
+function VersionActivity2_4DungeonMapElement:show()
+	gohelper.setActive(self._go, true)
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0._go = arg_5_1
-	arg_5_0._transform = arg_5_1.transform
+function VersionActivity2_4DungeonMapElement:init(go)
+	self._go = go
+	self._transform = go.transform
 
-	arg_5_0:updatePos()
+	self:updatePos()
 
-	if arg_5_0._resLoader then
+	if self._resLoader then
 		return
 	end
 
-	arg_5_0._resLoader = MultiAbLoader.New()
-	arg_5_0._resPath = arg_5_0._config.res
+	self._resLoader = MultiAbLoader.New()
+	self._resPath = self._config.res
 
-	if not string.nilorempty(arg_5_0._resPath) then
-		arg_5_0._resLoader:addPath(arg_5_0._resPath)
+	if not string.nilorempty(self._resPath) then
+		self._resLoader:addPath(self._resPath)
 	end
 
-	arg_5_0._effectPath = arg_5_0._config.effect
+	self._effectPath = self._config.effect
 
-	if not string.nilorempty(arg_5_0._effectPath) then
-		arg_5_0._resLoader:addPath(arg_5_0._effectPath)
+	if not string.nilorempty(self._effectPath) then
+		self._resLoader:addPath(self._effectPath)
 	end
 
-	arg_5_0._resLoader:startLoad(arg_5_0._onResLoaded, arg_5_0)
+	self._resLoader:startLoad(self._onResLoaded, self)
 end
 
-function var_0_0._onResLoaded(arg_6_0)
-	arg_6_0:createMainPrefab()
-	arg_6_0:createEffectPrefab()
-	arg_6_0:autoPopInteractView()
-	arg_6_0:tryHideSelf()
+function VersionActivity2_4DungeonMapElement:_onResLoaded()
+	self:createMainPrefab()
+	self:createEffectPrefab()
+	self:autoPopInteractView()
+	self:tryHideSelf()
 end
 
-function var_0_0.createMainPrefab(arg_7_0)
-	if string.nilorempty(arg_7_0._resPath) then
+function VersionActivity2_4DungeonMapElement:createMainPrefab()
+	if string.nilorempty(self._resPath) then
 		return
 	end
 
-	local var_7_0 = arg_7_0._resLoader:getAssetItem(arg_7_0._resPath):GetResource(arg_7_0._resPath)
+	local assetItem = self._resLoader:getAssetItem(self._resPath)
+	local mainPrefab = assetItem:GetResource(self._resPath)
 
-	arg_7_0._itemGo = gohelper.clone(var_7_0, arg_7_0._go)
-	arg_7_0.posTransform = arg_7_0._itemGo.transform
+	self._itemGo = gohelper.clone(mainPrefab, self._go)
+	self.posTransform = self._itemGo.transform
 
-	local var_7_1 = arg_7_0._config.resScale
+	local resScale = self._config.resScale
 
-	if var_7_1 and var_7_1 ~= 0 then
-		transformhelper.setLocalScale(arg_7_0.posTransform, var_7_1, var_7_1, 1)
+	if resScale and resScale ~= 0 then
+		transformhelper.setLocalScale(self.posTransform, resScale, resScale, 1)
 	end
 
-	gohelper.setLayer(arg_7_0._itemGo, UnityLayer.Scene, true)
-	arg_7_0.addBoxColliderListener(arg_7_0._itemGo, arg_7_0._onClickDown, arg_7_0)
-	transformhelper.setLocalPos(arg_7_0.posTransform, 0, 0, -1)
+	gohelper.setLayer(self._itemGo, UnityLayer.Scene, true)
+	self.addBoxColliderListener(self._itemGo, self._onClickDown, self)
+	transformhelper.setLocalPos(self.posTransform, 0, 0, -1)
 end
 
-function var_0_0.addBoxColliderListener(arg_8_0, arg_8_1, arg_8_2)
-	gohelper.addBoxCollider2D(arg_8_0, var_0_2)
+function VersionActivity2_4DungeonMapElement.addBoxColliderListener(go, callback, callbackTarget)
+	gohelper.addBoxCollider2D(go, BOX_COLLIDER_SIZE)
 
-	local var_8_0 = ZProj.BoxColliderClickListener.Get(arg_8_0)
+	local clickListener = ZProj.BoxColliderClickListener.Get(go)
 
-	var_8_0:SetIgnoreUI(true)
-	var_8_0:AddClickListener(arg_8_1, arg_8_2)
+	clickListener:SetIgnoreUI(true)
+	clickListener:AddClickListener(callback, callbackTarget)
 end
 
-function var_0_0.createEffectPrefab(arg_9_0)
-	if string.nilorempty(arg_9_0._effectPath) then
+function VersionActivity2_4DungeonMapElement:createEffectPrefab()
+	if string.nilorempty(self._effectPath) then
 		return
 	end
 
-	local var_9_0 = arg_9_0._config.tipOffsetPos
-	local var_9_1 = string.splitToNumber(var_9_0, "#")
+	local offset = self._config.tipOffsetPos
+	local offsetPos = string.splitToNumber(offset, "#")
 
-	arg_9_0._offsetX = var_9_1[1] or 0
-	arg_9_0._offsetY = var_9_1[2] or 0
+	self._offsetX = offsetPos[1] or 0
+	self._offsetY = offsetPos[2] or 0
 
-	local var_9_2 = arg_9_0._resLoader:getAssetItem(arg_9_0._effectPath):GetResource(arg_9_0._effectPath)
+	local assetItem = self._resLoader:getAssetItem(self._effectPath)
+	local effectPrefab = assetItem:GetResource(self._effectPath)
 
-	arg_9_0._effectGo = gohelper.clone(var_9_2, arg_9_0._go)
-	arg_9_0.posTransform = arg_9_0._effectGo.transform
+	self._effectGo = gohelper.clone(effectPrefab, self._go)
+	self.posTransform = self._effectGo.transform
 
-	transformhelper.setLocalPos(arg_9_0._effectGo.transform, arg_9_0._offsetX, arg_9_0._offsetY, -10)
-	arg_9_0.addBoxColliderListener(arg_9_0._effectGo, arg_9_0._onClickDown, arg_9_0)
+	transformhelper.setLocalPos(self._effectGo.transform, self._offsetX, self._offsetY, -10)
+	self.addBoxColliderListener(self._effectGo, self._onClickDown, self)
 
-	if VersionActivity2_4DungeonModel.instance:checkIsShowInteractView() then
-		arg_9_0:hideElement()
+	local isShowInteractView = VersionActivity2_4DungeonModel.instance:checkIsShowInteractView()
+
+	if isShowInteractView then
+		self:hideElement()
 	end
 end
 
-function var_0_0.autoPopInteractView(arg_10_0)
+function VersionActivity2_4DungeonMapElement:autoPopInteractView()
 	if not DungeonMapModel.instance.lastElementBattleId then
 		return
 	end
 
-	if tonumber(arg_10_0._config.param) == DungeonMapModel.instance.lastElementBattleId then
-		arg_10_0:onClick()
+	if tonumber(self._config.param) == DungeonMapModel.instance.lastElementBattleId then
+		self:onClick()
 
 		DungeonMapModel.instance.lastElementBattleId = nil
 	end
 end
 
-function var_0_0.tryHideSelf(arg_11_0)
+function VersionActivity2_4DungeonMapElement:tryHideSelf()
 	if VersionActivity2_4DungeonModel.instance:checkIsShowInteractView() then
-		arg_11_0:hideElement()
+		self:hideElement()
 	end
 end
 
-function var_0_0.hideElement(arg_12_0)
-	arg_12_0:playEffectAnim("wenhao_a_001_out")
+function VersionActivity2_4DungeonMapElement:hideElement()
+	self:playEffectAnim("wenhao_a_001_out")
 end
 
-function var_0_0.showElement(arg_13_0)
-	arg_13_0:playEffectAnim("wenhao_a_001_in")
+function VersionActivity2_4DungeonMapElement:showElement()
+	self:playEffectAnim("wenhao_a_001_in")
 end
 
-function var_0_0.setFinish(arg_14_0)
-	if not arg_14_0._effectGo then
-		gohelper.destroy(arg_14_0._itemGo)
+function VersionActivity2_4DungeonMapElement:setFinish()
+	if not self._effectGo then
+		gohelper.destroy(self._itemGo)
 
-		arg_14_0._itemGo = nil
+		self._itemGo = nil
 
 		return
 	end
 
-	arg_14_0:playEffectAnim("finish")
+	self:playEffectAnim("finish")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
-	TaskDispatcher.runDelay(arg_14_0.onFinishAnimDone, arg_14_0, var_0_1)
+	TaskDispatcher.runDelay(self.onFinishAnimDone, self, FINISH_ANIM_TIME)
 end
 
-function var_0_0.onFinishAnimDone(arg_15_0)
-	arg_15_0:onDestroy()
+function VersionActivity2_4DungeonMapElement:onFinishAnimDone()
+	self:onDestroy()
 end
 
-function var_0_0.playEffectAnim(arg_16_0, arg_16_1)
-	if gohelper.isNil(arg_16_0._effectGo) then
+function VersionActivity2_4DungeonMapElement:playEffectAnim(name)
+	if gohelper.isNil(self._effectGo) then
 		return
 	end
 
-	if not arg_16_0._effectGo.activeInHierarchy then
+	if not self._effectGo.activeInHierarchy then
 		return
 	end
 
-	if gohelper.isNil(arg_16_0._effectAnimator) then
-		arg_16_0._effectAnimator = SLFramework.AnimatorPlayer.Get(arg_16_0._effectGo)
+	if gohelper.isNil(self._effectAnimator) then
+		self._effectAnimator = SLFramework.AnimatorPlayer.Get(self._effectGo)
 	end
 
-	if not gohelper.isNil(arg_16_0._effectAnimator) then
-		arg_16_0._effectAnimator:Play(arg_16_1, arg_16_0._effectAnimDone, arg_16_0)
+	if not gohelper.isNil(self._effectAnimator) then
+		self._effectAnimator:Play(name, self._effectAnimDone, self)
 	end
 end
 
-function var_0_0._effectAnimDone(arg_17_0)
+function VersionActivity2_4DungeonMapElement:_effectAnimDone()
 	return
 end
 
-function var_0_0.updatePos(arg_18_0)
-	local var_18_0 = string.splitToNumber(arg_18_0._config.pos, "#")
+function VersionActivity2_4DungeonMapElement:updatePos()
+	local pos = string.splitToNumber(self._config.pos, "#")
 
-	transformhelper.setLocalPos(arg_18_0._transform, var_18_0[1] or 0, var_18_0[2] or 0, var_18_0[3] or 0)
+	transformhelper.setLocalPos(self._transform, pos[1] or 0, pos[2] or 0, pos[3] or 0)
 end
 
-function var_0_0.getTransform(arg_19_0)
-	return arg_19_0._transform
+function VersionActivity2_4DungeonMapElement:getTransform()
+	return self._transform
 end
 
-function var_0_0.getElementPos(arg_20_0)
-	if not arg_20_0.posTransform then
+function VersionActivity2_4DungeonMapElement:getElementPos()
+	if not self.posTransform then
 		logError("not pos transform")
 
 		return
 	end
 
-	return transformhelper.getPos(arg_20_0.posTransform)
+	return transformhelper.getPos(self.posTransform)
 end
 
-function var_0_0.getConfig(arg_21_0)
-	return arg_21_0._config
+function VersionActivity2_4DungeonMapElement:getConfig()
+	return self._config
 end
 
-function var_0_0._onClickDown(arg_22_0)
-	arg_22_0._sceneElements:setMouseElementDown(arg_22_0)
+function VersionActivity2_4DungeonMapElement:_onClickDown()
+	self._sceneElements:setMouseElementDown(self)
 end
 
-function var_0_0.onClick(arg_23_0)
-	VersionActivity2_4DungeonController.instance:dispatchEvent(VersionActivity2_4DungeonEvent.OnClickElement, arg_23_0)
+function VersionActivity2_4DungeonMapElement:onClick()
+	VersionActivity2_4DungeonController.instance:dispatchEvent(VersionActivity2_4DungeonEvent.OnClickElement, self)
 end
 
-function var_0_0.isValid(arg_24_0)
-	return not gohelper.isNil(arg_24_0._go)
+function VersionActivity2_4DungeonMapElement:isValid()
+	return not gohelper.isNil(self._go)
 end
 
-function var_0_0.isConfigShowArrow(arg_25_0)
-	return arg_25_0._config.showArrow == 1
+function VersionActivity2_4DungeonMapElement:isConfigShowArrow()
+	return self._config.showArrow == 1
 end
 
-function var_0_0.onDestroy(arg_26_0)
-	gohelper.setActive(arg_26_0._go, true)
+function VersionActivity2_4DungeonMapElement:onDestroy()
+	gohelper.setActive(self._go, true)
 
-	if arg_26_0._effectGo then
-		gohelper.destroy(arg_26_0._effectGo)
+	if self._effectGo then
+		gohelper.destroy(self._effectGo)
 
-		arg_26_0._effectGo = nil
+		self._effectGo = nil
 	end
 
-	if arg_26_0._itemGo then
-		gohelper.destroy(arg_26_0._itemGo)
+	if self._itemGo then
+		gohelper.destroy(self._itemGo)
 
-		arg_26_0._itemGo = nil
+		self._itemGo = nil
 	end
 
-	if arg_26_0._go then
-		gohelper.destroy(arg_26_0._go)
+	if self._go then
+		gohelper.destroy(self._go)
 
-		arg_26_0._go = nil
+		self._go = nil
 	end
 
-	if arg_26_0._resLoader then
-		arg_26_0._resLoader:dispose()
+	if self._resLoader then
+		self._resLoader:dispose()
 
-		arg_26_0._resLoader = nil
+		self._resLoader = nil
 	end
 
-	arg_26_0.destroyed = true
+	self.destroyed = true
 end
 
-return var_0_0
+return VersionActivity2_4DungeonMapElement

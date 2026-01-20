@@ -1,31 +1,33 @@
-﻿module("modules.logic.skin.view.SkinOffsetAdjustViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/skin/view/SkinOffsetAdjustViewContainer.lua
 
-local var_0_0 = class("SkinOffsetAdjustViewContainer", BaseViewContainer)
+module("modules.logic.skin.view.SkinOffsetAdjustViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SkinOffsetAdjustViewContainer = class("SkinOffsetAdjustViewContainer", BaseViewContainer)
 
-	arg_1_0.skinOffsetAdjustView = SkinOffsetAdjustView.New()
+function SkinOffsetAdjustViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.skinOffsetAdjustView)
+	self.skinOffsetAdjustView = SkinOffsetAdjustView.New()
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, self.skinOffsetAdjustView)
 
-	var_1_1.scrollGOPath = "#go_container/component/#go_skincontainer/#scroll_skin"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = SkinOffsetSkinItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 512
-	var_1_1.cellHeight = 40
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 2
-	var_1_1.startSpace = 8
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(SkinOffsetSkinListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "#go_container/component/#go_skincontainer/#scroll_skin"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = SkinOffsetSkinItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 512
+	scrollParam.cellHeight = 40
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 2
+	scrollParam.startSpace = 8
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(SkinOffsetSkinListModel.instance, scrollParam))
+
+	return views
 end
 
-return var_0_0
+return SkinOffsetAdjustViewContainer

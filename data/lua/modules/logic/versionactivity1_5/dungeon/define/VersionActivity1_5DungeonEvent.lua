@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.define.VersionActivity1_5DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/define/VersionActivity1_5DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_5.dungeon.define.VersionActivity1_5DungeonEvent", package.seeall)
 
-var_0_0.ChangeDispatchHeroContainerEvent = 1
-var_0_0.ChangeSelectedHero = 2
-var_0_0.AddDispatchInfo = 3
-var_0_0.RemoveDispatchInfo = 4
-var_0_0.OnDispatchFinish = 5
-var_0_0.OnMapPosChanged = 10
-var_0_0.OnClickElement = 11
-var_0_0.OnHideInteractUI = 12
-var_0_0.FocusElement = 13
-var_0_0.OnAddOneElement = 14
-var_0_0.OnRemoveElement = 15
-var_0_0.OnRecycleAllElement = 16
-var_0_0.TweenMapPosDone = 17
-var_0_0.SelectHeroTaskTabChange = 100
-var_0_0.OnGainedExploreReward = 101
-var_0_0.OnGainedHeroTaskReward = 102
-var_0_0.OnGainedSubHeroTaskReward = 103
-var_0_0.ShowSubTaskDetail = 104
-var_0_0.ShowExploreTip = 105
-var_0_0.HideExploreTip = 106
-var_0_0.OpenAnimPlayingStatusChange = 107
-var_0_0.OnUpdateBuildInfo = 200
-var_0_0.OnUpdateSelectBuild = 201
-var_0_0.OnUpdateGainedBuildReward = 202
-var_0_0.OnSwitchSelectGroupBuild = 203
-var_0_0.SetRevivalTaskBtnActive = 901
-var_0_0.SetBuildingBtnActive = 902
+local VersionActivity1_5DungeonEvent = _M
 
-return var_0_0
+VersionActivity1_5DungeonEvent.ChangeDispatchHeroContainerEvent = 1
+VersionActivity1_5DungeonEvent.ChangeSelectedHero = 2
+VersionActivity1_5DungeonEvent.AddDispatchInfo = 3
+VersionActivity1_5DungeonEvent.RemoveDispatchInfo = 4
+VersionActivity1_5DungeonEvent.OnDispatchFinish = 5
+VersionActivity1_5DungeonEvent.OnMapPosChanged = 10
+VersionActivity1_5DungeonEvent.OnClickElement = 11
+VersionActivity1_5DungeonEvent.OnHideInteractUI = 12
+VersionActivity1_5DungeonEvent.FocusElement = 13
+VersionActivity1_5DungeonEvent.OnAddOneElement = 14
+VersionActivity1_5DungeonEvent.OnRemoveElement = 15
+VersionActivity1_5DungeonEvent.OnRecycleAllElement = 16
+VersionActivity1_5DungeonEvent.TweenMapPosDone = 17
+VersionActivity1_5DungeonEvent.SelectHeroTaskTabChange = 100
+VersionActivity1_5DungeonEvent.OnGainedExploreReward = 101
+VersionActivity1_5DungeonEvent.OnGainedHeroTaskReward = 102
+VersionActivity1_5DungeonEvent.OnGainedSubHeroTaskReward = 103
+VersionActivity1_5DungeonEvent.ShowSubTaskDetail = 104
+VersionActivity1_5DungeonEvent.ShowExploreTip = 105
+VersionActivity1_5DungeonEvent.HideExploreTip = 106
+VersionActivity1_5DungeonEvent.OpenAnimPlayingStatusChange = 107
+VersionActivity1_5DungeonEvent.OnUpdateBuildInfo = 200
+VersionActivity1_5DungeonEvent.OnUpdateSelectBuild = 201
+VersionActivity1_5DungeonEvent.OnUpdateGainedBuildReward = 202
+VersionActivity1_5DungeonEvent.OnSwitchSelectGroupBuild = 203
+VersionActivity1_5DungeonEvent.SetRevivalTaskBtnActive = 901
+VersionActivity1_5DungeonEvent.SetBuildingBtnActive = 902
+
+return VersionActivity1_5DungeonEvent

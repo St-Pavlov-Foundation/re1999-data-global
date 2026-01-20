@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_talent_cube_attr", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_talent_cube_attr.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_talent_cube_attr", package.seeall)
+
+local lua_talent_cube_attr = {}
+local fields = {
 	cri = 9,
 	calculateType = 4,
 	cri_def = 12,
@@ -23,14 +25,14 @@ local var_0_1 = {
 	hp = 5,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"level"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_talent_cube_attr.onLoad(json)
+	lua_talent_cube_attr.configList, lua_talent_cube_attr.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_talent_cube_attr

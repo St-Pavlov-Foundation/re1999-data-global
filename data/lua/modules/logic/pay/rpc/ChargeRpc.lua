@@ -1,48 +1,71 @@
-﻿module("modules.logic.pay.rpc.ChargeRpc", package.seeall)
+﻿-- chunkname: @modules/logic/pay/rpc/ChargeRpc.lua
 
-local var_0_0 = class("ChargeRpc", BaseRpc)
+module("modules.logic.pay.rpc.ChargeRpc", package.seeall)
 
-function var_0_0.sendGetChargeInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = ChargeModule_pb.GetChargeInfoRequest()
+local ChargeRpc = class("ChargeRpc", BaseRpc)
+
+function ChargeRpc:sendGetChargeInfoRequest(callback, callbackObj)
+	local req = ChargeModule_pb.GetChargeInfoRequest()
 
 	PayController.instance:getAllQueryProductDetails()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetChargeInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		PayModel.instance:setSandboxInfo(arg_2_2.sandboxEnable, arg_2_2.sandboxBalance)
-		PayModel.instance:setChargeInfo(arg_2_2.infos)
-		StoreModel.instance:initChargeInfo(arg_2_2.infos)
+function ChargeRpc:onReceiveGetChargeInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		PayModel.instance:setSandboxInfo(msg.sandboxEnable, msg.sandboxBalance)
+		PayModel.instance:setChargeInfo(msg.infos)
+		StoreModel.instance:initChargeInfo(msg.infos)
 		PayController.instance:dispatchEvent(PayEvent.PayInfoChanged)
 	end
 end
 
-function var_0_0.sendNewOrderRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = ChargeModule_pb.NewOrderRequest()
+function ChargeRpc:sendNewOrderRequest(id, selectInfos)
+	local req = ChargeModule_pb.NewOrderRequest()
 
-	var_3_0.id = arg_3_1
-	var_3_0.originCurrency = PayModel.instance:getProductOriginCurrency(arg_3_1)
-	var_3_0.originAmount = PayModel.instance:getProductOriginAmount(arg_3_1)
+	req.id = id
+	req.originCurrency = PayModel.instance:getProductOriginCurrency(id)
+	req.originAmount = PayModel.instance:getProductOriginAmount(id)
 
-	if arg_3_2 then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
-			local var_3_1 = ChargeModule_pb.SelectionInfo()
+	if selectInfos then
+		for areaIndex, itemIndex in ipairs(selectInfos) do
+			local info = ChargeModule_pb.SelectionInfo()
 
-			var_3_1.regionId = iter_3_0
-			var_3_1.selectionPos = iter_3_1 - 1
+			info.regionId = areaIndex
+			info.selectionPos = itemIndex - 1
 
-			table.insert(var_3_0.selectionInfos, var_3_1)
+			table.insert(req.selectionInfos, info)
 		end
 	end
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveNewOrderReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		PayModel.instance:setOrderInfo(arg_4_2)
+function ChargeRpc:sendDictNewOrderRequest(id, selectInfos)
+	local req = ChargeModule_pb.NewOrderRequest()
+
+	req.id = id
+	req.originCurrency = PayModel.instance:getProductOriginCurrency(id)
+	req.originAmount = PayModel.instance:getProductOriginAmount(id)
+
+	if selectInfos then
+		for regionId, selectionPos in pairs(selectInfos) do
+			local info = ChargeModule_pb.SelectionInfo()
+
+			info.regionId = regionId
+			info.selectionPos = selectionPos - 1
+
+			table.insert(req.selectionInfos, info)
+		end
+	end
+
+	self:sendMsg(req)
+end
+
+function ChargeRpc:onReceiveNewOrderReply(resultCode, msg)
+	if resultCode == 0 then
+		PayModel.instance:setOrderInfo(msg)
 		PayController.instance:dispatchEvent(PayEvent.GetSignSuccess)
 
 		return
@@ -51,109 +74,116 @@ function var_0_0.onReceiveNewOrderReply(arg_4_0, arg_4_1, arg_4_2)
 	PayController.instance:dispatchEvent(PayEvent.GetSignFailed)
 end
 
-function var_0_0.onReceiveOrderCompletePush(arg_5_0, arg_5_1, arg_5_2)
-	ChargePushStatController.instance:statPayFinished(arg_5_1, arg_5_2)
+function ChargeRpc:onReceiveOrderCompletePush(resultCode, msg)
+	ChargePushStatController.instance:statPayFinished(resultCode, msg)
 
-	if arg_5_1 == 0 then
-		local var_5_0 = arg_5_2.id
+	if resultCode == 0 then
+		local goodsId = msg.id
 
-		StoreModel.instance:chargeOrderComplete(var_5_0)
-		arg_5_0:_tryUpdateMonthCard(arg_5_2)
+		StoreModel.instance:chargeOrderComplete(goodsId)
+		self:_tryUpdateMonthCard(msg)
 
-		if StoreConfig.instance:getChargeGoodsConfig(var_5_0) then
-			arg_5_0:_tryUpdateStoreLinkPackage(arg_5_2)
-			var_0_0.instance:sendGetChargeInfoRequest()
+		local chargeGoodCfg = StoreConfig.instance:getChargeGoodsConfig(goodsId)
+
+		if chargeGoodCfg then
+			self:_tryUpdateStoreLinkPackage(msg)
+			ChargeRpc.instance:sendGetChargeInfoRequest()
 		end
 
-		PayController.instance:dispatchEvent(PayEvent.PayFinished, arg_5_2.id)
+		PayController.instance:dispatchEvent(PayEvent.PayFinished, msg.id)
 	else
 		PayController.instance:dispatchEvent(PayEvent.PayFailed)
 	end
 end
 
-function var_0_0.sendGetMonthCardInfoRequest(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = ChargeModule_pb.GetMonthCardInfoRequest()
+function ChargeRpc:sendGetMonthCardInfoRequest(callback, callbackObj)
+	local req = ChargeModule_pb.GetMonthCardInfoRequest()
 
-	return arg_6_0:sendMsg(var_6_0, arg_6_1, arg_6_2)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetMonthCardInfoReply(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 ~= 0 then
+function ChargeRpc:onReceiveGetMonthCardInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	StoreModel.instance:updateMonthCardInfo(arg_7_2.infos[1])
+	StoreModel.instance:updateMonthCardInfo(msg.infos[1])
 	StoreController.instance:dispatchEvent(StoreEvent.MonthCardInfoChanged)
 end
 
-function var_0_0.sendGetMonthCardBonusRequest(arg_8_0, arg_8_1)
-	local var_8_0 = ChargeModule_pb.GetMonthCardBonusRequest()
+function ChargeRpc:sendGetMonthCardBonusRequest(id)
+	local req = ChargeModule_pb.GetMonthCardBonusRequest()
 
-	var_8_0.id = arg_8_1
+	req.id = id
 
-	return arg_8_0:sendMsg(var_8_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetMonthCardBonusReply(arg_9_0, arg_9_1, arg_9_2)
+function ChargeRpc:onReceiveGetMonthCardBonusReply(resultCode, msg)
 	return
 end
 
-function var_0_0.sendSandboxChargeRequset(arg_10_0, arg_10_1)
-	local var_10_0 = ChargeModule_pb.SandboxChargeRequset()
+function ChargeRpc:sendSandboxChargeRequset(gameOrderId)
+	local req = ChargeModule_pb.SandboxChargeRequset()
 
-	var_10_0.gameOrderId = arg_10_1
+	req.gameOrderId = gameOrderId
 
-	return arg_10_0:sendMsg(var_10_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveSandboxChargeReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 ~= 0 then
+function ChargeRpc:onReceiveSandboxChargeReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	PayModel.instance:updateSandboxBalance(arg_11_2.sandboxBalance)
+	PayModel.instance:updateSandboxBalance(msg.sandboxBalance)
 end
 
-function var_0_0.sendReadChargeNewRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = ChargeModule_pb.ReadChargeNewRequest()
+function ChargeRpc:sendReadChargeNewRequest(goodsIds, callback, callbackObj)
+	local req = ChargeModule_pb.ReadChargeNewRequest()
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		table.insert(var_12_0.goodsIds, iter_12_1)
+	for i, goodsId in ipairs(goodsIds) do
+		table.insert(req.goodsIds, goodsId)
 	end
 
-	return arg_12_0:sendMsg(var_12_0, arg_12_2, arg_12_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveReadChargeNewReply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
+function ChargeRpc:onReceiveReadChargeNewReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0._tryUpdateMonthCard(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1.id
-	local var_14_1 = StoreConfig.instance:getMonthCardConfig(var_14_0) and true or false
+function ChargeRpc:_tryUpdateMonthCard(msg)
+	local goodsId = msg.id
+	local monthCardConfig = StoreConfig.instance:getMonthCardConfig(goodsId)
+	local isNeedUpdate = monthCardConfig and true or false
 
-	if not var_14_1 and StoreConfig.instance:getChargeGoodsConfig(var_14_0) then
-		var_14_1 = var_14_0 == StoreEnum.SeasonCardGoodsId
+	if not isNeedUpdate then
+		local chargeGoodsConfig = StoreConfig.instance:getChargeGoodsConfig(goodsId)
+
+		if chargeGoodsConfig then
+			isNeedUpdate = goodsId == StoreEnum.SeasonCardGoodsId
+		end
 	end
 
-	if not var_14_1 then
+	if not isNeedUpdate then
 		return
 	end
 
 	SignInController.instance:sendGetSignInInfoRequestIfUnlock()
 end
 
-function var_0_0._tryUpdateStoreLinkPackage(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.id
-	local var_15_1 = StoreConfig.instance:getChargeGoodsConfig(var_15_0)
+function ChargeRpc:_tryUpdateStoreLinkPackage(msg)
+	local goodsId = msg.id
+	local chargeGoodCfg = StoreConfig.instance:getChargeGoodsConfig(goodsId)
 
-	if var_15_1 and var_15_1.taskid ~= 0 then
+	if chargeGoodCfg and chargeGoodCfg.taskid ~= 0 then
 		StoreGoodsTaskController.instance:requestGoodsTaskList()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ChargeRpc.instance = ChargeRpc.New()
 
-return var_0_0
+return ChargeRpc

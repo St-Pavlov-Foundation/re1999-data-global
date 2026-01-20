@@ -1,88 +1,90 @@
-﻿module("modules.logic.fight.view.FightDreamlandTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightDreamlandTaskView.lua
 
-local var_0_0 = class("FightDreamlandTaskView", BaseView)
+module("modules.logic.fight.view.FightDreamlandTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goTask = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/#go_tasktips")
-	arg_1_0._txtTask = gohelper.findChildText(arg_1_0.viewGO, "root/topLeftContent/#go_tasktips/taskitembg/#txt_task")
-	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(arg_1_0._goTask)
+local FightDreamlandTaskView = class("FightDreamlandTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightDreamlandTaskView:onInitView()
+	self._goTask = gohelper.findChild(self.viewGO, "root/topLeftContent/#go_tasktips")
+	self._txtTask = gohelper.findChildText(self.viewGO, "root/topLeftContent/#go_tasktips/taskitembg/#txt_task")
+	self._ani = SLFramework.AnimatorPlayer.Get(self._goTask)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, arg_2_0._refreshDes, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_2_0._onCameraFocusChanged, arg_2_0)
+function FightDreamlandTaskView:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, self._refreshDes, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightDreamlandTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightDreamlandTaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_5_0)
+function FightDreamlandTaskView:onRefreshViewParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = FightModel.instance:getFightParam()
+function FightDreamlandTaskView:onOpen()
+	local fightParam = FightModel.instance:getFightParam()
 
-	arg_6_0._taskConfig = Activity126Config.instance:getDramlandTask(var_6_0 and var_6_0.battleId)
+	self._taskConfig = Activity126Config.instance:getDramlandTask(fightParam and fightParam.battleId)
 
-	arg_6_0:_refreshDes()
+	self:_refreshDes()
 end
 
-function var_0_0._refreshDes(arg_7_0)
-	gohelper.setActive(arg_7_0._goTask, arg_7_0._taskConfig)
+function FightDreamlandTaskView:_refreshDes()
+	gohelper.setActive(self._goTask, self._taskConfig)
 
-	if arg_7_0._taskConfig then
-		local var_7_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_7_0._taskConfig.indicator)
-		local var_7_1 = arg_7_0._taskConfig.num
-		local var_7_2 = string.format(" <color=#cc7f56>(%d/%d)</color>", var_7_0, var_7_1)
+	if self._taskConfig then
+		local curProgress = FightDataHelper.fieldMgr:getIndicatorNum(self._taskConfig.indicator)
+		local tarValue = self._taskConfig.num
+		local progressStr = string.format(" <color=#cc7f56>(%d/%d)</color>", curProgress, tarValue)
 
-		arg_7_0._txtTask.text = arg_7_0._taskConfig.desc .. var_7_2
+		self._txtTask.text = self._taskConfig.desc .. progressStr
 
-		if var_7_1 <= var_7_0 then
-			if arg_7_0._finish then
-				gohelper.setActive(arg_7_0._goTask, false)
+		if tarValue <= curProgress then
+			if self._finish then
+				gohelper.setActive(self._goTask, false)
 
 				return
 			end
 
-			arg_7_0._ani:Play("finish", arg_7_0._finishDone, arg_7_0)
+			self._ani:Play("finish", self._finishDone, self)
 
-			arg_7_0._finish = true
+			self._finish = true
 		else
-			arg_7_0._ani:Play("idle", nil, nil)
+			self._ani:Play("idle", nil, nil)
 
-			arg_7_0._finish = false
+			self._finish = false
 		end
 	end
 end
 
-function var_0_0._finishDone(arg_8_0)
-	gohelper.setActive(arg_8_0._goTask, false)
+function FightDreamlandTaskView:_finishDone()
+	gohelper.setActive(self._goTask, false)
 end
 
-function var_0_0._onCameraFocusChanged(arg_9_0, arg_9_1)
-	if arg_9_1 then
-		gohelper.setActive(arg_9_0._goTask, arg_9_0._taskConfig)
+function FightDreamlandTaskView:_onCameraFocusChanged(isFocus)
+	if isFocus then
+		gohelper.setActive(self._goTask, self._taskConfig)
 	else
-		arg_9_0:_refreshDes()
+		self:_refreshDes()
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function FightDreamlandTaskView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function FightDreamlandTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightDreamlandTaskView

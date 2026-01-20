@@ -1,114 +1,118 @@
-﻿module("modules.logic.fightuiswitch.model.FightUISwitchListModel", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/model/FightUISwitchListModel.lua
 
-local var_0_0 = class("FightUISwitchListModel", MixScrollModel)
+module("modules.logic.fightuiswitch.model.FightUISwitchListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FightUISwitchListModel = class("FightUISwitchListModel", MixScrollModel)
+
+function FightUISwitchListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function FightUISwitchListModel:reInit()
 	return
 end
 
-function var_0_0.initMoList(arg_3_0)
-	arg_3_0:setMoList()
+function FightUISwitchListModel:initMoList()
+	self:setMoList()
 end
 
-function var_0_0.setMoList(arg_4_0)
-	local var_4_0 = FightUISwitchModel.instance:getCurShowStyleClassify()
-	local var_4_1 = FightUISwitchModel.instance:getSelectStyleId(var_4_0)
-	local var_4_2 = FightUISwitchModel.instance:getStyleMoListByClassify(var_4_0)
+function FightUISwitchListModel:setMoList()
+	local classify = FightUISwitchModel.instance:getCurShowStyleClassify()
+	local curSelectId = FightUISwitchModel.instance:getSelectStyleId(classify)
+	local moList = FightUISwitchModel.instance:getStyleMoListByClassify(classify)
 
-	table.sort(var_4_2, var_0_0.sortMo)
-	arg_4_0:setList(var_4_2)
+	table.sort(moList, FightUISwitchListModel.sortMo)
+	self:setList(moList)
 
-	if var_4_1 then
-		arg_4_0:onSelect(var_4_1, true)
+	if curSelectId then
+		self:onSelect(curSelectId, true)
 	else
-		for iter_4_0, iter_4_1 in ipairs(var_4_2) do
-			if iter_4_1:isUse() then
-				arg_4_0:_onSelectByMo(iter_4_1, true)
+		for i, mo in ipairs(moList) do
+			if mo:isUse() then
+				self:_onSelectByMo(mo, true)
 
 				return
 			end
 		end
 	end
 
-	for iter_4_2, iter_4_3 in ipairs(arg_4_0._scrollViews) do
-		for iter_4_4 = 0, #arg_4_0._cellInfoList - 1 do
-			local var_4_3 = iter_4_3:getCsScroll():GetRenderCell(iter_4_4)
+	for _, scrollView in ipairs(self._scrollViews) do
+		for i = 0, #self._cellInfoList - 1 do
+			local cell = scrollView:getCsScroll():GetRenderCell(i)
 
-			if var_4_3 then
-				gohelper.setActive(var_4_3.gameObject, iter_4_4 < #var_4_2)
+			if cell then
+				gohelper.setActive(cell.gameObject, i < #moList)
 			end
 		end
 	end
 end
 
-function var_0_0.sortMo(arg_5_0, arg_5_1)
-	if arg_5_0:isUse() then
+function FightUISwitchListModel.sortMo(x, y)
+	if x:isUse() then
 		return true
 	end
 
-	if arg_5_1:isUse() then
+	if y:isUse() then
 		return false
 	end
 
-	if arg_5_0:isUnlock() ~= arg_5_1:isUnlock() then
-		return arg_5_0:isUnlock()
+	if x:isUnlock() ~= y:isUnlock() then
+		return x:isUnlock()
 	end
 
-	if arg_5_0:getRare() ~= arg_5_1:getRare() then
-		return arg_5_0:getRare() > arg_5_1:getRare()
+	if x:getRare() ~= y:getRare() then
+		return x:getRare() > y:getRare()
 	end
 
-	return arg_5_0.sort > arg_5_1.sort
+	return x.sort > y.sort
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0:getById(arg_6_1)
+function FightUISwitchListModel:onSelect(id, isSelect)
+	local mo = self:getById(id)
 
-	arg_6_0:_onSelectByMo(var_6_0, arg_6_2)
+	self:_onSelectByMo(mo, isSelect)
 end
 
-function var_0_0._onSelectByMo(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._selectedCellIndex = arg_7_0:getIndex(arg_7_1)
+function FightUISwitchListModel:_onSelectByMo(mo, isSelect)
+	local index = self:getIndex(mo)
 
-	arg_7_0:refreshScroll()
+	self._selectedCellIndex = index
+
+	self:refreshScroll()
 end
 
-function var_0_0.getSelectMo(arg_8_0)
-	return arg_8_0:getByIndex(arg_8_0._selectedCellIndex)
+function FightUISwitchListModel:getSelectMo()
+	return self:getByIndex(self._selectedCellIndex)
 end
 
-function var_0_0.refreshScroll(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._scrollViews) do
-		iter_9_1:refreshScroll()
+function FightUISwitchListModel:refreshScroll()
+	for _, scrollView in ipairs(self._scrollViews) do
+		scrollView:refreshScroll()
 	end
 end
 
-function var_0_0.getInfoList(arg_10_0, arg_10_1)
-	arg_10_0._cellInfoList = arg_10_0._cellInfoList or {}
+function FightUISwitchListModel:getInfoList(scrollGO)
+	self._cellInfoList = self._cellInfoList or {}
 
-	local var_10_0 = arg_10_0:getList()
+	local list = self:getList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = arg_10_0._cellInfoList[iter_10_0] or SLFramework.UGUI.MixCellInfo.New(MainSceneSwitchEnum.ItemTypeUnSelected, MainSceneSwitchEnum.ItemHeight, iter_10_0)
+	for i, mo in ipairs(list) do
+		local mixCellInfo = self._cellInfoList[i] or SLFramework.UGUI.MixCellInfo.New(MainSceneSwitchEnum.ItemTypeUnSelected, MainSceneSwitchEnum.ItemHeight, i)
 
-		if iter_10_0 == arg_10_0._selectedCellIndex then
-			var_10_1.type = MainSceneSwitchEnum.ItemTypeSelected
-			var_10_1.lineLength = MainSceneSwitchEnum.ItemHeight
+		if i == self._selectedCellIndex then
+			mixCellInfo.type = MainSceneSwitchEnum.ItemTypeSelected
+			mixCellInfo.lineLength = MainSceneSwitchEnum.ItemHeight
 		else
-			var_10_1.type = MainSceneSwitchEnum.ItemTypeUnSelected
-			var_10_1.lineLength = MainSceneSwitchEnum.ItemUnSelectedHeight
+			mixCellInfo.type = MainSceneSwitchEnum.ItemTypeUnSelected
+			mixCellInfo.lineLength = MainSceneSwitchEnum.ItemUnSelectedHeight
 		end
 
-		arg_10_0._cellInfoList[iter_10_0] = var_10_1
+		self._cellInfoList[i] = mixCellInfo
 	end
 
-	return arg_10_0._cellInfoList
+	return self._cellInfoList
 end
 
-var_0_0.instance = var_0_0.New()
+FightUISwitchListModel.instance = FightUISwitchListModel.New()
 
-return var_0_0
+return FightUISwitchListModel

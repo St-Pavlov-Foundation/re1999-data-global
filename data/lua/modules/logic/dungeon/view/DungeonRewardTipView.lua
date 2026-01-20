@@ -1,85 +1,89 @@
-﻿module("modules.logic.dungeon.view.DungeonRewardTipView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonRewardTipView.lua
 
-local var_0_0 = class("DungeonRewardTipView", BaseView)
+module("modules.logic.dungeon.view.DungeonRewardTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "scrollTips/Viewport/Content/#txt_info")
-	arg_1_0._gorewardContentItem = gohelper.findChild(arg_1_0.viewGO, "scrollTips/Viewport/Content/#go_rewardContentItem")
+local DungeonRewardTipView = class("DungeonRewardTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonRewardTipView:onInitView()
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._txtinfo = gohelper.findChildText(self.viewGO, "scrollTips/Viewport/Content/#txt_info")
+	self._gorewardContentItem = gohelper.findChild(self.viewGO, "scrollTips/Viewport/Content/#go_rewardContentItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonRewardTipView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonRewardTipView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gorewardContentItem, false)
+function DungeonRewardTipView:_editableInitView()
+	gohelper.setActive(self._gorewardContentItem, false)
 
-	local var_4_0 = lua_helppage.configDict[10801]
+	local config = lua_helppage.configDict[10801]
 
-	arg_4_0._txttitle.text = var_4_0.title
-	arg_4_0._txtinfo.text = var_4_0.text
+	self._txttitle.text = config.title
+	self._txtinfo.text = config.text
 
-	local var_4_1 = var_4_0.iconText
-	local var_4_2 = GameUtil.splitString2(var_4_1)
+	local iconText = config.iconText
+	local textList = GameUtil.splitString2(iconText)
 
-	if not var_4_2 or #var_4_2 == 0 then
+	if not textList or #textList == 0 then
 		return
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_2) do
-		local var_4_3 = iter_4_1[1]
-		local var_4_4 = tonumber(iter_4_1[2])
+	for i, v in ipairs(textList) do
+		local title = v[1]
+		local episodeId = tonumber(v[2])
 
-		arg_4_0:_addReward(var_4_3, var_4_4)
+		self:_addReward(title, episodeId)
 	end
 end
 
-function var_0_0._addReward(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = gohelper.cloneInPlace(arg_5_0._gorewardContentItem)
+function DungeonRewardTipView:_addReward(title, episodeId)
+	local go = gohelper.cloneInPlace(self._gorewardContentItem)
 
-	gohelper.setActive(var_5_0, true)
+	gohelper.setActive(go, true)
 
-	gohelper.findChildText(var_5_0, "opentitle").text = arg_5_1
+	local titleTxt = gohelper.findChildText(go, "opentitle")
 
-	local var_5_1 = DungeonModel.instance:getEpisodeRewardDisplayList(arg_5_2)
-	local var_5_2 = gohelper.findChild(var_5_0, "scroll_reward/Viewport/Content")
-	local var_5_3 = gohelper.findChild(var_5_0, "scroll_reward/Viewport/Content/commonitemicon")
+	titleTxt.text = title
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		local var_5_4 = gohelper.cloneInPlace(var_5_3)
+	local rewardList = DungeonModel.instance:getEpisodeRewardDisplayList(episodeId)
+	local content = gohelper.findChild(go, "scroll_reward/Viewport/Content")
+	local commonitemicon = gohelper.findChild(go, "scroll_reward/Viewport/Content/commonitemicon")
 
-		gohelper.setActive(var_5_4, true)
+	for i, reward in ipairs(rewardList) do
+		local child = gohelper.cloneInPlace(commonitemicon)
 
-		local var_5_5 = IconMgr.instance:getCommonPropItemIcon(var_5_4)
+		gohelper.setActive(child, true)
 
-		var_5_5:setMOValue(iter_5_1[1], iter_5_1[2], iter_5_1[3])
-		var_5_5:hideEquipLvAndBreak(true)
+		local item = IconMgr.instance:getCommonPropItemIcon(child)
+
+		item:setMOValue(reward[1], reward[2], reward[3])
+		item:hideEquipLvAndBreak(true)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function DungeonRewardTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
+function DungeonRewardTipView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function DungeonRewardTipView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function DungeonRewardTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return DungeonRewardTipView

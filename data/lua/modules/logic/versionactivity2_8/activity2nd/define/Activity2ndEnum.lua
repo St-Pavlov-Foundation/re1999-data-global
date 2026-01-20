@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.define.Activity2ndEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/define/Activity2ndEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_8.activity2nd.define.Activity2ndEnum", package.seeall)
 
-var_0_0.ActivityId = {
+local Activity2ndEnum = _M
+
+Activity2ndEnum.ActivityId = {
 	V2a8_PVPopupReward = 12881,
 	SkinCuffActivity = 12867,
 	ActiveActivity = 12864,
@@ -11,14 +13,14 @@ var_0_0.ActivityId = {
 	AnnualReview = 12879,
 	welfareActivity = 12863
 }
-var_0_0.ActivityOrder = {
-	var_0_0.ActivityId.AnnualReview,
-	var_0_0.ActivityId.SkinCuffActivity,
-	var_0_0.ActivityId.TakePhotosActivity,
-	var_0_0.ActivityId.welfareActivity,
-	var_0_0.ActivityId.ActiveActivity
+Activity2ndEnum.ActivityOrder = {
+	Activity2ndEnum.ActivityId.AnnualReview,
+	Activity2ndEnum.ActivityId.SkinCuffActivity,
+	Activity2ndEnum.ActivityId.TakePhotosActivity,
+	Activity2ndEnum.ActivityId.welfareActivity,
+	Activity2ndEnum.ActivityId.ActiveActivity
 }
-var_0_0.ShowTipsType = {
+Activity2ndEnum.ShowTipsType = {
 	Error = "anniversary_typingtips_5",
 	HeroName = "anniversary_typingtips_2",
 	DungeonName = "anniversary_typingtips_3",
@@ -26,34 +28,34 @@ var_0_0.ShowTipsType = {
 	SocialMedia = "anniversary_typingtips_4",
 	HasGetReward = "anniversary_typingtips_6"
 }
-var_0_0.RandomType = {
-	var_0_0.ShowTipsType.FirstEnter,
-	var_0_0.ShowTipsType.HeroName,
-	var_0_0.ShowTipsType.DungeonName,
-	var_0_0.ShowTipsType.SocialMedia
+Activity2ndEnum.RandomType = {
+	Activity2ndEnum.ShowTipsType.FirstEnter,
+	Activity2ndEnum.ShowTipsType.HeroName,
+	Activity2ndEnum.ShowTipsType.DungeonName,
+	Activity2ndEnum.ShowTipsType.SocialMedia
 }
-var_0_0.StatButtonName = {
-	[var_0_0.ActivityId.MailActivty] = "act_yearly_letter",
-	[var_0_0.ActivityId.AnnualReview] = "act_yearly_report",
-	[var_0_0.ActivityId.SkinCuffActivity] = "act_skin_collection",
-	[var_0_0.ActivityId.TakePhotosActivity] = "act_shooting",
-	[var_0_0.ActivityId.welfareActivity] = "act_free_role",
-	[var_0_0.ActivityId.ActiveActivity] = "act_28summon"
+Activity2ndEnum.StatButtonName = {
+	[Activity2ndEnum.ActivityId.MailActivty] = "act_yearly_letter",
+	[Activity2ndEnum.ActivityId.AnnualReview] = "act_yearly_report",
+	[Activity2ndEnum.ActivityId.SkinCuffActivity] = "act_skin_collection",
+	[Activity2ndEnum.ActivityId.TakePhotosActivity] = "act_shooting",
+	[Activity2ndEnum.ActivityId.welfareActivity] = "act_free_role",
+	[Activity2ndEnum.ActivityId.ActiveActivity] = "act_28summon"
 }
-var_0_0.ActivityViewName = {
+Activity2ndEnum.ActivityViewName = {
 	ViewName.Activity2ndMailView,
 	ViewName.Activity2ndTakePhotosView,
 	ViewName.Activity197View,
 	ViewName.V2a8_SelfSelectCharacterView,
 	ViewName.Activity2ndShowSkinView
 }
-var_0_0.DISPLAY_SKIN_COUNT = 4
-var_0_0.Index2GoodsId = {
+Activity2ndEnum.DISPLAY_SKIN_COUNT = 4
+Activity2ndEnum.Index2GoodsId = {
 	nil,
 	5102801,
 	5102802,
 	5102803
 }
-var_0_0.ShowSkin4 = 304002
+Activity2ndEnum.ShowSkin4 = 304002
 
-return var_0_0
+return Activity2ndEnum

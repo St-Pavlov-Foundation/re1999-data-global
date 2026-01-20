@@ -1,26 +1,28 @@
-﻿module("modules.logic.herogroup.model.HeroGroupEquipMO", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroGroupEquipMO.lua
 
-local var_0_0 = pureTable("HeroGroupEquipMO")
+module("modules.logic.herogroup.model.HeroGroupEquipMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.index = arg_1_1.index
-	arg_1_0.equipUid = {}
+local HeroGroupEquipMO = pureTable("HeroGroupEquipMO")
 
-	for iter_1_0 = 1, 1 do
-		table.insert(arg_1_0.equipUid, "0")
+function HeroGroupEquipMO:init(info)
+	self.index = info.index
+	self.equipUid = {}
+
+	for i = 1, 1 do
+		table.insert(self.equipUid, "0")
 	end
 
-	if not arg_1_1.equipUid then
+	if not info.equipUid then
 		return
 	end
 
-	for iter_1_1, iter_1_2 in ipairs(arg_1_1.equipUid) do
-		if iter_1_1 > 1 then
+	for i, v in ipairs(info.equipUid) do
+		if i > 1 then
 			break
 		end
 
-		arg_1_0.equipUid[iter_1_1] = iter_1_2
+		self.equipUid[i] = v
 	end
 end
 
-return var_0_0
+return HeroGroupEquipMO

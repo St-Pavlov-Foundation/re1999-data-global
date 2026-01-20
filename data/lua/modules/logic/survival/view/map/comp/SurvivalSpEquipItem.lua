@@ -1,21 +1,23 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalSpEquipItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalSpEquipItem.lua
 
-local var_0_0 = class("SurvivalSpEquipItem", SurvivalEquipItem)
+module("modules.logic.survival.view.map.comp.SurvivalSpEquipItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._imageRare = gohelper.findChildImage(arg_1_1, "#go_drag/item/#image_rare")
-	arg_1_0._imageIcon = gohelper.findChildSingleImage(arg_1_1, "#go_drag/item/simage_Icon")
-	arg_1_0._goEffect6 = gohelper.findChild(arg_1_1, "#go_drag/item/#go_deceffect")
-	arg_1_0._goTag = gohelper.findChild(arg_1_1, "#go_drag/item/go_tag")
+local SurvivalSpEquipItem = class("SurvivalSpEquipItem", SurvivalEquipItem)
 
-	var_0_0.super.init(arg_1_0, arg_1_1)
+function SurvivalSpEquipItem:init(go)
+	self._imageRare = gohelper.findChildImage(go, "#go_drag/item/#image_rare")
+	self._imageIcon = gohelper.findChildSingleImage(go, "#go_drag/item/simage_Icon")
+	self._goEffect6 = gohelper.findChild(go, "#go_drag/item/#go_deceffect")
+	self._goTag = gohelper.findChild(go, "#go_drag/item/go_tag")
+
+	SurvivalSpEquipItem.super.init(self, go)
 end
 
-function var_0_0.updateItemMo(arg_2_0)
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_2_0._imageRare, "survival_bag_itemquality3_" .. arg_2_0.mo.item.co.rare)
-	arg_2_0._imageIcon:LoadImage(ResUrl.getSurvivalItemIcon(arg_2_0.mo.item.co.icon))
-	gohelper.setActive(arg_2_0._goEffect6, arg_2_0.mo.item.co.rare == 6)
-	gohelper.setActive(arg_2_0._goTag, arg_2_0.mo.item.bagReason == 1)
+function SurvivalSpEquipItem:updateItemMo()
+	UISpriteSetMgr.instance:setSurvivalSprite(self._imageRare, "survival_bag_itemquality3_" .. self.mo.item.co.rare)
+	self._imageIcon:LoadImage(ResUrl.getSurvivalItemIcon(self.mo.item.co.icon))
+	gohelper.setActive(self._goEffect6, self.mo.item.co.rare == 6)
+	gohelper.setActive(self._goTag, self.mo.item.bagReason == 1)
 end
 
-return var_0_0
+return SurvivalSpEquipItem

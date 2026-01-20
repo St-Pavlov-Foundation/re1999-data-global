@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.enter.define.VersionActivity2_8Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/enter/define/VersionActivity2_8Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_8.enter.define.VersionActivity2_8Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity2_8Enum = _M
+
+VersionActivity2_8Enum.ActivityId = {
 	MoLiDeEr = 12811,
 	Survival = 12806,
 	RoleStory1 = 12805,
@@ -17,42 +19,42 @@ var_0_0.ActivityId = {
 	EnterView = 12801,
 	ActivityDrop = 12804
 }
-var_0_0.EnterViewActSetting = {
+VersionActivity2_8Enum.EnterViewActSetting = {
 	{
-		actId = var_0_0.ActivityId.Dungeon,
+		actId = VersionActivity2_8Enum.ActivityId.Dungeon,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.First,
 		actType = VersionActivityEnterViewEnum.ActType.Single,
-		storeId = var_0_0.ActivityId.DungeonStore
+		storeId = VersionActivity2_8Enum.ActivityId.DungeonStore
 	},
 	{
-		actId = var_0_0.ActivityId.Survival,
+		actId = VersionActivity2_8Enum.ActivityId.Survival,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
 		actId = {
-			var_0_0.ActivityId.RoleStory1
+			VersionActivity2_8Enum.ActivityId.RoleStory1
 		},
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Multi
 	},
 	{
-		actId = var_0_0.ActivityId.MoLiDeEr,
+		actId = VersionActivity2_8Enum.ActivityId.MoLiDeEr,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.NuoDiKa,
+		actId = VersionActivity2_8Enum.ActivityId.NuoDiKa,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.AutoChess,
+		actId = VersionActivity2_8Enum.ActivityId.AutoChess,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.Challenge,
+		actId = VersionActivity2_8Enum.ActivityId.Challenge,
 		actLevel = VersionActivityEnterViewEnum.ActLevel.Second,
 		actType = VersionActivityEnterViewEnum.ActType.Single
 	},
@@ -74,17 +76,17 @@ var_0_0.EnterViewActSetting = {
 		redDotUid = ActivityEnum.Activity.WeekWalkHeartShow
 	}
 }
-var_0_0.EnterViewActIdListWithRedDot = {
-	var_0_0.ActivityId.Dungeon
+VersionActivity2_8Enum.EnterViewActIdListWithRedDot = {
+	VersionActivity2_8Enum.ActivityId.Dungeon
 }
-var_0_0.TabSetting = {
+VersionActivity2_8Enum.TabSetting = {
 	select = {
 		fontSize = 42,
 		cnColor = "#FFFFFF",
 		enFontSize = 14,
 		enColor = "#337C61",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a8_mainactivity_singlebg/v2a8_enterview_itemtitleselected.png"
+			[VersionActivity2_8Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a8_mainactivity_singlebg/v2a8_enterview_itemtitleselected.png"
 		}
 	},
 	unselect = {
@@ -93,11 +95,11 @@ var_0_0.TabSetting = {
 		enFontSize = 14,
 		enColor = "#485143",
 		act2TabImg = {
-			[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v2a8_mainactivity_singlebg/v2a8_enterview_itemtitleselected.png"
+			[VersionActivity2_8Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v2a8_mainactivity_singlebg/v2a8_enterview_itemtitleselected.png"
 		}
 	}
 }
-var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-var_0_0.RedDotOffsetY = 56
+VersionActivity2_8Enum.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+VersionActivity2_8Enum.RedDotOffsetY = 56
 
-return var_0_0
+return VersionActivity2_8Enum

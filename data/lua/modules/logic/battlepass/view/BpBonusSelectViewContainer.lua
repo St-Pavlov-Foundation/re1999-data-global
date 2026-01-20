@@ -1,11 +1,13 @@
-﻿module("modules.logic.battlepass.view.BpBonusSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpBonusSelectViewContainer.lua
 
-local var_0_0 = class("BpBonusSelectViewContainer", BaseViewContainer)
+module("modules.logic.battlepass.view.BpBonusSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpBonusSelectViewContainer = class("BpBonusSelectViewContainer", BaseViewContainer)
+
+function BpBonusSelectViewContainer:buildViews()
 	return {
 		BpBonusSelectView.New()
 	}
 end
 
-return var_0_0
+return BpBonusSelectViewContainer

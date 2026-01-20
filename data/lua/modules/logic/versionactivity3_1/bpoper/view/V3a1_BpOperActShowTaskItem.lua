@@ -1,108 +1,127 @@
-﻿module("modules.logic.versionactivity3_1.bpoper.view.V3a1_BpOperActShowTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/bpoper/view/V3a1_BpOperActShowTaskItem.lua
 
-local var_0_0 = class("V3a1_BpOperActShowTaskItem", LuaCompBase)
+module("modules.logic.versionactivity3_1.bpoper.view.V3a1_BpOperActShowTaskItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.go = arg_1_1
-	arg_1_0._config = arg_1_2
-	arg_1_0._index = arg_1_3
-	arg_1_0._anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_1, "#txt_taskdes")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_1, "#txt_taskdes/#txt_total")
-	arg_1_0._gobonus = gohelper.findChild(arg_1_1, "#go_bonus")
-	arg_1_0._goitem = gohelper.findChild(arg_1_1, "#go_bonus/go_item")
-	arg_1_0._gonotget = gohelper.findChild(arg_1_1, "#go_notget")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_1, "#go_notget/#btn_notfinishbg")
-	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_1, "#go_notget/#btn_finishbg")
-	arg_1_0._goallfinish = gohelper.findChild(arg_1_1, "#go_notget/#go_allfinish")
-	arg_1_0._goicon = gohelper.findChild(arg_1_1, "#go_notget/#go_allfinish/icon")
-	arg_1_0._goicon2 = gohelper.findChild(arg_1_1, "#go_notget/#go_allfinish/icon2")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_1, "#go_notget/#btn_progress")
+local V3a1_BpOperActShowTaskItem = class("V3a1_BpOperActShowTaskItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0.go, false)
-	arg_1_0:addEvents()
+function V3a1_BpOperActShowTaskItem:init(go, taskCo, index)
+	self.go = go
+	self._config = taskCo
+	self._index = index
+	self._anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self._txttaskdes = gohelper.findChildText(go, "#txt_taskdes")
+	self._txttotal = gohelper.findChildText(go, "#txt_taskdes/#txt_total")
+	self._gobonus = gohelper.findChild(go, "#go_bonus")
+	self._goitem = gohelper.findChild(go, "#go_bonus/go_item")
+	self._gonotget = gohelper.findChild(go, "#go_notget")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(go, "#go_notget/#btn_notfinishbg")
+	self._btnfinishbg = gohelper.findChildButtonWithAudio(go, "#go_notget/#btn_finishbg")
+	self._goallfinish = gohelper.findChild(go, "#go_notget/#go_allfinish")
+	self._goicon = gohelper.findChild(go, "#go_notget/#go_allfinish/icon")
+	self._goicon2 = gohelper.findChild(go, "#go_notget/#go_allfinish/icon2")
+	self._goprogress = gohelper.findChild(go, "#go_notget/#btn_progress")
+
+	gohelper.setActive(self.go, false)
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
-	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
+function V3a1_BpOperActShowTaskItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
+	V3a1_BpOperActController.instance:registerCallback(BpOperActEvent.onStartGetAll, self._onStartGetAll, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:RemoveClickListener()
-	arg_3_0._btnfinishbg:RemoveClickListener()
+function V3a1_BpOperActShowTaskItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
+	V3a1_BpOperActController.instance:unregisterCallback(BpOperActEvent.onStartGetAll, self._onStartGetAll, self)
 end
 
-function var_0_0.show(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 and arg_4_2 then
-		gohelper.setActive(arg_4_0.go, false)
-		TaskDispatcher.runDelay(function()
-			gohelper.setActive(arg_4_0.go, true)
-			arg_4_0._anim:Play("open", 0, 0)
-		end, nil, 0.03 * arg_4_0._index)
+function V3a1_BpOperActShowTaskItem:_onStartGetAll()
+	local isLvMax = BpModel.instance:isMaxLevel()
+	local showFinish = not isLvMax and self._taskMO.hasFinished and self._taskMO.finishCount == 0
+
+	if not showFinish then
+		return
+	end
+
+	self._anim:Play("get", 0, 0)
+end
+
+function V3a1_BpOperActShowTaskItem:show(show, withAnim)
+	if show and withAnim then
+		gohelper.setActive(self.go, false)
+		TaskDispatcher.runDelay(self._playOpen, self, 0.03 * self._index)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0.go, arg_4_1)
+	gohelper.setActive(self.go, show)
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_6_0)
-	if arg_6_0._config.jumpId > 0 then
-		GameFacade.jump(arg_6_0._config.jumpId)
+function V3a1_BpOperActShowTaskItem:_playOpen()
+	gohelper.setActive(self.go, true)
+	self._anim:Play("open", 0, 0)
+end
+
+function V3a1_BpOperActShowTaskItem:_btnnotfinishbgOnClick()
+	if self._config.jumpId > 0 then
+		GameFacade.jump(self._config.jumpId)
 	end
 end
 
-function var_0_0._btnfinishbgOnClick(arg_7_0)
-	arg_7_0._anim:Play("get", 0, 0)
-	TaskDispatcher.runDelay(arg_7_0._delayFinish, arg_7_0, 0.5)
+function V3a1_BpOperActShowTaskItem:_btnfinishbgOnClick()
+	V3a1_BpOperActController.instance:dispatchEvent(BpOperActEvent.onStartGetAll)
+	self._anim:Play("get", 0, 0)
+	TaskDispatcher.runDelay(self._delayFinish, self, 0.5)
 end
 
-function var_0_0._delayFinish(arg_8_0)
-	TaskRpc.instance:sendFinishTaskRequest(arg_8_0._config.id)
+function V3a1_BpOperActShowTaskItem:_delayFinish()
+	TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.BpOperAct)
 end
 
-function var_0_0.refresh(arg_9_0)
-	arg_9_0._taskMO = TaskModel.instance:getTaskById(arg_9_0._config.id)
-	arg_9_0._txttaskdes.text = arg_9_0._config.desc
-	arg_9_0._txttotal.text = string.format("%s/%s", arg_9_0._taskMO.progress, arg_9_0._config.maxProgress)
+function V3a1_BpOperActShowTaskItem:refresh()
+	self._taskMO = TaskModel.instance:getTaskById(self._config.id)
+	self._txttaskdes.text = self._config.desc
+	self._txttotal.text = string.format("%s/%s", self._taskMO.progress, self._config.maxProgress)
 
-	gohelper.setActive(arg_9_0._gonotget, true)
+	gohelper.setActive(self._gonotget, true)
 
-	local var_9_0 = BpModel.instance:isMaxLevel()
-	local var_9_1 = not var_9_0 and not arg_9_0._taskMO.hasFinished and arg_9_0._taskMO.progress < arg_9_0._config.maxProgress and arg_9_0._config.jumpId == 0
-	local var_9_2 = not var_9_0 and not arg_9_0._taskMO.hasFinished and arg_9_0._taskMO.progress < arg_9_0._config.maxProgress and arg_9_0._config.jumpId > 0
-	local var_9_3 = not var_9_0 and arg_9_0._taskMO.hasFinished and arg_9_0._taskMO.finishCount == 0
-	local var_9_4 = arg_9_0._taskMO.finishCount > 0 or var_9_0
+	local isLvMax = BpModel.instance:isMaxLevel()
+	local showProgress = not isLvMax and not self._taskMO.hasFinished and self._taskMO.progress < self._config.maxProgress and self._config.jumpId == 0
+	local showNotFinish = not isLvMax and not self._taskMO.hasFinished and self._taskMO.progress < self._config.maxProgress and self._config.jumpId > 0
+	local showFinish = not isLvMax and self._taskMO.hasFinished and self._taskMO.finishCount == 0
+	local showAllFinish = self._taskMO.finishCount > 0 or isLvMax
 
-	gohelper.setActive(arg_9_0._goprogress, var_9_1)
-	gohelper.setActive(arg_9_0._btnnotfinishbg.gameObject, var_9_2)
-	gohelper.setActive(arg_9_0._btnfinishbg.gameObject, var_9_3)
-	gohelper.setActive(arg_9_0._goallfinish, var_9_4)
+	gohelper.setActive(self._goprogress, showProgress)
+	gohelper.setActive(self._btnnotfinishbg.gameObject, showNotFinish)
+	gohelper.setActive(self._btnfinishbg.gameObject, showFinish)
+	gohelper.setActive(self._goallfinish, showAllFinish)
 
-	local var_9_5 = arg_9_0._taskMO.finishCount > 0
-	local var_9_6 = var_9_0 and arg_9_0._taskMO.finishCount == 0
+	local showIcon = self._taskMO.finishCount > 0
+	local showIcon2 = isLvMax and self._taskMO.finishCount == 0
 
-	gohelper.setActive(arg_9_0._goicon, var_9_5)
-	gohelper.setActive(arg_9_0._goicon2, var_9_6)
+	gohelper.setActive(self._goicon, showIcon)
+	gohelper.setActive(self._goicon2, showIcon2)
 
-	if not arg_9_0._rewardItem then
-		arg_9_0._rewardItem = IconMgr.instance:getCommonPropItemIcon(arg_9_0._goitem)
+	if not self._rewardItem then
+		self._rewardItem = IconMgr.instance:getCommonPropItemIcon(self._goitem)
 	end
 
-	arg_9_0._rewardItem:setMOValue(1, BpEnum.ScoreItemId, arg_9_0._config.bonusScore, nil, true)
-	arg_9_0._rewardItem:setCountFontSize(36)
-	arg_9_0._rewardItem:setScale(0.54)
-	arg_9_0._rewardItem:SetCountLocalY(42)
-	arg_9_0._rewardItem:SetCountBgHeight(22)
-	arg_9_0._rewardItem:showStackableNum2()
-	arg_9_0._rewardItem:setHideLvAndBreakFlag(true)
-	arg_9_0._rewardItem:hideEquipLvAndBreak(true)
+	self._rewardItem:setMOValue(1, BpEnum.ScoreItemId, self._config.bonusScore, nil, true)
+	self._rewardItem:setCountFontSize(36)
+	self._rewardItem:setScale(0.54)
+	self._rewardItem:SetCountLocalY(42)
+	self._rewardItem:SetCountBgHeight(22)
+	self._rewardItem:showStackableNum2()
+	self._rewardItem:setHideLvAndBreakFlag(true)
+	self._rewardItem:hideEquipLvAndBreak(true)
 end
 
-function var_0_0.destroy(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayFinish, arg_10_0)
-	arg_10_0:removeEvents()
+function V3a1_BpOperActShowTaskItem:destroy()
+	TaskDispatcher.cancelTask(self._playOpen, self)
+	TaskDispatcher.cancelTask(self._delayFinish, self)
+	self:removeEvents()
 end
 
-return var_0_0
+return V3a1_BpOperActShowTaskItem

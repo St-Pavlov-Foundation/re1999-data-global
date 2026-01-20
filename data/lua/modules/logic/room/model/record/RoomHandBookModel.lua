@@ -1,72 +1,74 @@
-﻿module("modules.logic.room.model.record.RoomHandBookModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomHandBookModel.lua
 
-local var_0_0 = class("RoomHandBookModel", BaseModel)
+module("modules.logic.room.model.record.RoomHandBookModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._moList = nil
-	arg_1_0._selectMo = nil
-	arg_1_0._isreverse = false
+local RoomHandBookModel = class("RoomHandBookModel", BaseModel)
+
+function RoomHandBookModel:onInit()
+	self._moList = nil
+	self._selectMo = nil
+	self._isreverse = false
 end
 
-function var_0_0.getSelectMo(arg_2_0)
-	return arg_2_0._selectMo
+function RoomHandBookModel:getSelectMo()
+	return self._selectMo
 end
 
-function var_0_0.setSelectMo(arg_3_0, arg_3_1)
-	arg_3_0._selectMo = arg_3_1
+function RoomHandBookModel:setSelectMo(mo)
+	self._selectMo = mo
 end
 
-function var_0_0.checkCritterShowMutateBtn(arg_4_0, arg_4_1)
+function RoomHandBookModel:checkCritterShowMutateBtn(id)
 	return
 end
 
-function var_0_0.checkCritterRelationShip(arg_5_0)
+function RoomHandBookModel:checkCritterRelationShip()
 	return
 end
 
-function var_0_0.onGetInfo(arg_6_0, arg_6_1)
-	arg_6_0._moList = arg_6_1.bookInfos
-	arg_6_0._moDict = {}
+function RoomHandBookModel:onGetInfo(msg)
+	self._moList = msg.bookInfos
+	self._moDict = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._moList) do
-		arg_6_0._moDict[iter_6_1.id] = iter_6_1
+	for index, handbookInfo in ipairs(self._moList) do
+		self._moDict[handbookInfo.id] = handbookInfo
 	end
 end
 
-function var_0_0.getMoById(arg_7_0, arg_7_1)
-	return arg_7_0._moDict and arg_7_0._moDict[arg_7_1]
+function RoomHandBookModel:getMoById(id)
+	return self._moDict and self._moDict[id]
 end
 
-function var_0_0.getCount(arg_8_0)
-	return arg_8_0._moList and #arg_8_0._moList or 0
+function RoomHandBookModel:getCount()
+	return self._moList and #self._moList or 0
 end
 
-function var_0_0.setScrollReverse(arg_9_0)
-	arg_9_0._isreverse = not arg_9_0._isreverse
+function RoomHandBookModel:setScrollReverse()
+	self._isreverse = not self._isreverse
 
-	RoomHandBookListModel.instance:reverseCardBack(arg_9_0._isreverse)
+	RoomHandBookListModel.instance:reverseCardBack(self._isreverse)
 	RoomHandBookController.instance:dispatchEvent(RoomHandBookEvent.reverseIcon)
 end
 
-function var_0_0.getReverse(arg_10_0)
-	return arg_10_0._isreverse
+function RoomHandBookModel:getReverse()
+	return self._isreverse
 end
 
-function var_0_0.getSelectMoBackGroundId(arg_11_0)
-	if arg_11_0._selectMo and arg_11_0._selectMo:getBackGroundId() then
-		return arg_11_0._selectMo:getBackGroundId()
+function RoomHandBookModel:getSelectMoBackGroundId()
+	if self._selectMo and self._selectMo:getBackGroundId() then
+		return self._selectMo:getBackGroundId()
 	end
 end
 
-function var_0_0.setBackGroundId(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1.id
-	local var_12_1 = arg_12_1.backgroundId
+function RoomHandBookModel:setBackGroundId(info)
+	local id = info.id
+	local backgroundId = info.backgroundId
 
-	if arg_12_0._selectMo then
-		arg_12_0._selectMo:setBackGroundId(var_12_1)
+	if self._selectMo then
+		self._selectMo:setBackGroundId(backgroundId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomHandBookModel.instance = RoomHandBookModel.New()
 
-return var_0_0
+return RoomHandBookModel

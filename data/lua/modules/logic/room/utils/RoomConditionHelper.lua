@@ -1,38 +1,40 @@
-﻿module("modules.logic.room.utils.RoomConditionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomConditionHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.RoomConditionHelper", package.seeall)
 
-var_0_0._conditionFunction = nil
+local RoomConditionHelper = {}
 
-function var_0_0._getFuncDict()
-	if not var_0_0._conditionFunction then
-		var_0_0._conditionFunction = {
-			EpisodeFinish = function(arg_2_0)
-				return DungeonModel.instance:hasPassLevelAndStory(tonumber(arg_2_0))
+RoomConditionHelper._conditionFunction = nil
+
+function RoomConditionHelper._getFuncDict()
+	if not RoomConditionHelper._conditionFunction then
+		RoomConditionHelper._conditionFunction = {
+			EpisodeFinish = function(episodeId)
+				return DungeonModel.instance:hasPassLevelAndStory(tonumber(episodeId))
 			end,
-			FinishTask = function(arg_3_0)
-				local var_3_0 = TaskModel.instance:getTaskById(tonumber(arg_3_0))
+			FinishTask = function(taskId)
+				local taskMO = TaskModel.instance:getTaskById(tonumber(taskId))
 
-				return var_3_0 and var_3_0.finishCount >= var_3_0.config.maxFinishCount
+				return taskMO and taskMO.finishCount >= taskMO.config.maxFinishCount
 			end,
-			OpenFunction = function(arg_4_0)
-				return OpenModel.instance:isFunctionUnlock(tonumber(arg_4_0))
+			OpenFunction = function(openId)
+				return OpenModel.instance:isFunctionUnlock(tonumber(openId))
 			end,
-			ChapterMapElement = function(arg_5_0)
-				return DungeonMapModel.instance:elementIsFinished(tonumber(arg_5_0))
+			ChapterMapElement = function(preElementId)
+				return DungeonMapModel.instance:elementIsFinished(tonumber(preElementId))
 			end,
-			HasHeroId = function(arg_6_0)
-				local var_6_0 = HeroModel.instance:getByHeroId(tonumber(arg_6_0))
+			HasHeroId = function(heroId)
+				local heroMo = HeroModel.instance:getByHeroId(tonumber(heroId))
 
-				return var_6_0 and var_6_0:isOwnHero()
+				return heroMo and heroMo:isOwnHero()
 			end,
-			HeroSkinId = function(arg_7_0)
-				local var_7_0 = string.splitToNumber(arg_7_0, "#")
+			HeroSkinId = function(str)
+				local nums = string.splitToNumber(str, "#")
 
-				if var_7_0 and #var_7_0 > 1 then
-					local var_7_1 = HeroModel.instance:getByHeroId(var_7_0[1])
+				if nums and #nums > 1 then
+					local heroMo = HeroModel.instance:getByHeroId(nums[1])
 
-					if var_7_1 and var_7_1.skin == var_7_0[2] then
+					if heroMo and heroMo.skin == nums[2] then
 						return true
 					end
 				end
@@ -42,42 +44,42 @@ function var_0_0._getFuncDict()
 		}
 	end
 
-	return var_0_0._conditionFunction
+	return RoomConditionHelper._conditionFunction
 end
 
-function var_0_0.isConditionStr(arg_8_0)
-	if string.nilorempty(arg_8_0) then
+function RoomConditionHelper.isConditionStr(conditionStr)
+	if string.nilorempty(conditionStr) then
 		return true
 	end
 
-	local var_8_0 = var_0_0._getFuncDict()
-	local var_8_1 = true
-	local var_8_2 = string.split(arg_8_0, " or ")
+	local funcMap = RoomConditionHelper._getFuncDict()
+	local condFlag = true
+	local condStrArr = string.split(conditionStr, " or ")
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-		local var_8_3 = string.split(iter_8_1, " and ")
+	for i, condStr in ipairs(condStrArr) do
+		local condArr = string.split(condStr, " and ")
 
-		if var_8_3 and #var_8_3 > 0 then
-			var_8_1 = true
+		if condArr and #condArr > 0 then
+			condFlag = true
 
-			for iter_8_2, iter_8_3 in ipairs(var_8_3) do
-				local var_8_4 = string.split(iter_8_3, "=")
-				local var_8_5 = var_8_0[string.trim(var_8_4[1])]
+			for _, cond in ipairs(condArr) do
+				local params = string.split(cond, "=")
+				local func = funcMap[string.trim(params[1])]
 
-				if var_8_5 and not var_8_5(var_8_4[2]) then
-					var_8_1 = false
+				if func and not func(params[2]) then
+					condFlag = false
 
 					break
 				end
 			end
 		end
 
-		if var_8_1 then
+		if condFlag then
 			return true
 		end
 	end
 
-	return var_8_1
+	return condFlag
 end
 
-return var_0_0
+return RoomConditionHelper

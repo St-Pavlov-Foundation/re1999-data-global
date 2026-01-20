@@ -1,62 +1,66 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardRemove2", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardRemove2.lua
 
-local var_0_0 = class("FightWorkCardRemove2", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardRemove2", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0.oldHandCard = FightDataUtil.copyData(FightDataHelper.handCardMgr.handCard)
+local FightWorkCardRemove2 = class("FightWorkCardRemove2", FightEffectBase)
+
+function FightWorkCardRemove2:beforePlayEffectData()
+	self.oldHandCard = FightDataUtil.copyData(FightDataHelper.handCardMgr.handCard)
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_2_0.actEffectData) then
-		arg_2_0:onDone(true)
+function FightWorkCardRemove2:onStart()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_2_0._revertVisible = true
+	self._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	local var_2_0 = string.splitToNumber(arg_2_0.actEffectData.reserveStr, "#")
+	local removeIndexes = string.splitToNumber(self.actEffectData.reserveStr, "#")
 
-	if #var_2_0 > 0 then
-		local var_2_1 = arg_2_0.oldHandCard
+	if #removeIndexes > 0 then
+		local cards = self.oldHandCard
 
-		table.sort(var_2_0, var_0_0.sort)
+		table.sort(removeIndexes, FightWorkCardRemove2.sort)
 
-		local var_2_2 = FightCardDataHelper.calcRemoveCardTime(var_2_1, var_2_0)
+		local delayTime = FightCardDataHelper.calcRemoveCardTime(cards, removeIndexes)
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-			table.remove(var_2_1, iter_2_1)
+		for i, v in ipairs(removeIndexes) do
+			table.remove(cards, v)
 		end
 
-		if FightModel.instance:getVersion() >= 4 then
-			arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, var_2_2 / FightModel.instance:getUISpeed())
-			FightController.instance:dispatchEvent(FightEvent.CardRemove2, var_2_0)
+		local version = FightModel.instance:getVersion()
+
+		if version >= 4 then
+			self:com_registTimer(self._delayAfterPerformance, delayTime / FightModel.instance:getUISpeed())
+			FightController.instance:dispatchEvent(FightEvent.CardRemove2, removeIndexes)
 		else
 			FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-			arg_2_0:onDone(true)
+			self:onDone(true)
 		end
 
 		return
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.sort(arg_3_0, arg_3_1)
-	return arg_3_1 < arg_3_0
+function FightWorkCardRemove2.sort(item1, item2)
+	return item2 < item1
 end
 
-function var_0_0._delayAfterPerformance(arg_4_0)
+function FightWorkCardRemove2:_delayAfterPerformance()
 	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	if arg_5_0._revertVisible then
+function FightWorkCardRemove2:clearWork()
+	if self._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return var_0_0
+return FightWorkCardRemove2

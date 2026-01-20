@@ -1,31 +1,47 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/view/VersionActivity2_3NewCultivationRewardItem.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationRewardItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationRewardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
+local VersionActivity2_3NewCultivationRewardItem = class("VersionActivity2_3NewCultivationRewardItem", RougeSimpleItemBase)
 
-	gohelper.setActive(arg_1_1, false)
-
-	arg_1_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_1_1)
+function VersionActivity2_3NewCultivationRewardItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
+	end
 end
 
-function var_0_0.setEnable(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0.go, arg_2_1)
+function VersionActivity2_3NewCultivationRewardItem:addEvents()
+	return
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._itemIcon:setInPack(false)
-	arg_3_0._itemIcon:setMOValue(arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._itemIcon:isShowName(false)
-	arg_3_0._itemIcon:isShowCount(true)
-	arg_3_0._itemIcon:isShowEffect(true)
-	arg_3_0._itemIcon:setRecordFarmItem({
-		type = arg_3_1,
-		id = arg_3_2,
+function VersionActivity2_3NewCultivationRewardItem:removeEvents()
+	return
+end
+
+function VersionActivity2_3NewCultivationRewardItem:ctor(ctorParam)
+	VersionActivity2_3NewCultivationRewardItem.super.ctor(self, ctorParam)
+end
+
+function VersionActivity2_3NewCultivationRewardItem:_editableInitView()
+	self._itemIcon = IconMgr.instance:getCommonItemIcon(self.viewGO)
+end
+
+function VersionActivity2_3NewCultivationRewardItem:setData(mo)
+	self._mo = mo
+
+	local itemCo = mo
+
+	self._itemIcon:setInPack(false)
+	self._itemIcon:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+	self._itemIcon:isShowName(false)
+	self._itemIcon:isShowCount(true)
+	self._itemIcon:isShowEffect(true)
+	self._itemIcon:setRecordFarmItem({
+		type = itemCo[1],
+		id = itemCo[2],
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	})
 end
 
-return var_0_0
+return VersionActivity2_3NewCultivationRewardItem

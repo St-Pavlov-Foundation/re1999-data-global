@@ -1,190 +1,194 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0DecomposeView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0DecomposeView.lua
 
-local var_0_0 = class("Season123_2_0DecomposeView", BaseView)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0DecomposeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocardpos = gohelper.findChild(arg_1_0.viewGO, "object/Info/card/#go_cardpos")
-	arg_1_0._txtcardName = gohelper.findChildText(arg_1_0.viewGO, "object/Info/card/#txt_cardName")
-	arg_1_0._simagegetCoin = gohelper.findChildSingleImage(arg_1_0.viewGO, "object/Info/coin/#simage_getCoin")
-	arg_1_0._txtcoinName = gohelper.findChildText(arg_1_0.viewGO, "object/Info/coin/#txt_coinName")
-	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "object/#go_decompose/valuebg/#input_value")
-	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "object/#go_decompose/#btn_min")
-	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "object/#go_decompose/#btn_sub")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "object/#go_decompose/#btn_add")
-	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "object/#go_decompose/#btn_max")
-	arg_1_0._simagecoin = gohelper.findChildSingleImage(arg_1_0.viewGO, "object/#go_decompose/decomposeGet/txt/#simage_coin")
-	arg_1_0._txtgetCoin = gohelper.findChildText(arg_1_0.viewGO, "object/#go_decompose/decomposeGet/#txt_getCoin")
-	arg_1_0._btndecompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_decompose")
+local Season123_2_0DecomposeView = class("Season123_2_0DecomposeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_0DecomposeView:onInitView()
+	self._gocardpos = gohelper.findChild(self.viewGO, "object/Info/card/#go_cardpos")
+	self._txtcardName = gohelper.findChildText(self.viewGO, "object/Info/card/#txt_cardName")
+	self._simagegetCoin = gohelper.findChildSingleImage(self.viewGO, "object/Info/coin/#simage_getCoin")
+	self._txtcoinName = gohelper.findChildText(self.viewGO, "object/Info/coin/#txt_coinName")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.viewGO, "object/#go_decompose/valuebg/#input_value")
+	self._btnmin = gohelper.findChildButtonWithAudio(self.viewGO, "object/#go_decompose/#btn_min")
+	self._btnsub = gohelper.findChildButtonWithAudio(self.viewGO, "object/#go_decompose/#btn_sub")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "object/#go_decompose/#btn_add")
+	self._btnmax = gohelper.findChildButtonWithAudio(self.viewGO, "object/#go_decompose/#btn_max")
+	self._simagecoin = gohelper.findChildSingleImage(self.viewGO, "object/#go_decompose/decomposeGet/txt/#simage_coin")
+	self._txtgetCoin = gohelper.findChildText(self.viewGO, "object/#go_decompose/decomposeGet/#txt_getCoin")
+	self._btndecompose = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_decompose")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
-	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
-	arg_2_0._btndecompose:AddClickListener(arg_2_0._btndecomposeOnClick, arg_2_0)
-	arg_2_0._inputvalue:AddOnEndEdit(arg_2_0._onEndEdit, arg_2_0)
+function Season123_2_0DecomposeView:addEvents()
+	self._btnmin:AddClickListener(self._btnminOnClick, self)
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnmax:AddClickListener(self._btnmaxOnClick, self)
+	self._btndecompose:AddClickListener(self._btndecomposeOnClick, self)
+	self._inputvalue:AddOnEndEdit(self._onEndEdit, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnmin:RemoveClickListener()
-	arg_3_0._btnsub:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnmax:RemoveClickListener()
-	arg_3_0._btndecompose:RemoveClickListener()
-	arg_3_0._inputvalue:RemoveOnEndEdit()
+function Season123_2_0DecomposeView:removeEvents()
+	self._btnmin:RemoveClickListener()
+	self._btnsub:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
+	self._btnmax:RemoveClickListener()
+	self._btndecompose:RemoveClickListener()
+	self._inputvalue:RemoveOnEndEdit()
 end
 
-function var_0_0._btnminOnClick(arg_4_0)
-	arg_4_0.curCount = arg_4_0.minDecomposeCount
+function Season123_2_0DecomposeView:_btnminOnClick()
+	self.curCount = self.minDecomposeCount
 
-	arg_4_0:refreshInfoBySelectCount()
+	self:refreshInfoBySelectCount()
 end
 
-function var_0_0._btnsubOnClick(arg_5_0)
-	if arg_5_0.curCount <= arg_5_0.minDecomposeCount then
-		arg_5_0.curCount = arg_5_0.minDecomposeCount
+function Season123_2_0DecomposeView:_btnsubOnClick()
+	if self.curCount <= self.minDecomposeCount then
+		self.curCount = self.minDecomposeCount
 
 		return
 	else
-		arg_5_0.curCount = arg_5_0.curCount - 1
+		self.curCount = self.curCount - 1
 	end
 
-	arg_5_0:refreshInfoBySelectCount()
+	self:refreshInfoBySelectCount()
 end
 
-function var_0_0._btnaddOnClick(arg_6_0)
-	if arg_6_0.curCount >= arg_6_0.maxDecomposeCount then
-		arg_6_0.curCount = arg_6_0.maxDecomposeCount
+function Season123_2_0DecomposeView:_btnaddOnClick()
+	if self.curCount >= self.maxDecomposeCount then
+		self.curCount = self.maxDecomposeCount
 
 		GameFacade.showToast(ToastEnum.MaxEquips)
 
 		return
 	else
-		arg_6_0.curCount = arg_6_0.curCount + 1
+		self.curCount = self.curCount + 1
 	end
 
-	arg_6_0:refreshInfoBySelectCount()
+	self:refreshInfoBySelectCount()
 end
 
-function var_0_0._btnmaxOnClick(arg_7_0)
-	arg_7_0.curCount = arg_7_0.maxDecomposeCount
+function Season123_2_0DecomposeView:_btnmaxOnClick()
+	self.curCount = self.maxDecomposeCount
 
-	arg_7_0:refreshInfoBySelectCount()
+	self:refreshInfoBySelectCount()
 end
 
-function var_0_0._btndecomposeOnClick(arg_8_0)
-	arg_8_0.selectDecomposeList = {}
+function Season123_2_0DecomposeView:_btndecomposeOnClick()
+	self.selectDecomposeList = {}
 
-	for iter_8_0 = 1, #arg_8_0.decomposeItemList do
-		if iter_8_0 <= arg_8_0.curCount then
-			table.insert(arg_8_0.selectDecomposeList, arg_8_0.decomposeItemList[iter_8_0])
+	for i = 1, #self.decomposeItemList do
+		if i <= self.curCount then
+			table.insert(self.selectDecomposeList, self.decomposeItemList[i])
 		end
 	end
 
-	if Season123DecomposeModel.instance:isDecomposeItemUsedByHero(arg_8_0.selectDecomposeList) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.SeasonComposeMatIsEquiped, MsgBoxEnum.BoxType.Yes_No, arg_8_0.sendDecomposeEquipRequest, nil, nil, arg_8_0)
+	local isItemUsedByHero = Season123DecomposeModel.instance:isDecomposeItemUsedByHero(self.selectDecomposeList)
+
+	if isItemUsedByHero then
+		GameFacade.showMessageBox(MessageBoxIdDefine.SeasonComposeMatIsEquiped, MsgBoxEnum.BoxType.Yes_No, self.sendDecomposeEquipRequest, nil, nil, self)
 	else
-		arg_8_0:sendDecomposeEquipRequest()
+		self:sendDecomposeEquipRequest()
 	end
 end
 
-function var_0_0.sendDecomposeEquipRequest(arg_9_0)
-	local var_9_0 = {}
+function Season123_2_0DecomposeView:sendDecomposeEquipRequest()
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.selectDecomposeList) do
-		table.insert(var_9_0, iter_9_1.uid)
+	for k, mo in ipairs(self.selectDecomposeList) do
+		table.insert(list, mo.uid)
 	end
 
-	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnDecomposeEffectPlay, var_9_0)
-	arg_9_0:closeThis()
+	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnDecomposeEffectPlay, list)
+	self:closeThis()
 end
 
-function var_0_0._onEndEdit(arg_10_0)
-	local var_10_0 = tonumber(arg_10_0._inputvalue:GetText())
+function Season123_2_0DecomposeView:_onEndEdit()
+	local decomposeCount = tonumber(self._inputvalue:GetText())
 
-	var_10_0 = var_10_0 and math.floor(var_10_0)
+	decomposeCount = decomposeCount and math.floor(decomposeCount)
 
-	if not var_10_0 or var_10_0 <= 0 then
-		var_10_0 = arg_10_0.minDecomposeCount
+	if not decomposeCount or decomposeCount <= 0 then
+		decomposeCount = self.minDecomposeCount
 	end
 
-	arg_10_0.curCount = math.max(math.min(var_10_0, arg_10_0.maxDecomposeCount), arg_10_0.minDecomposeCount)
+	self.curCount = math.max(math.min(decomposeCount, self.maxDecomposeCount), self.minDecomposeCount)
 
-	arg_10_0:refreshInfoBySelectCount()
+	self:refreshInfoBySelectCount()
 end
 
-function var_0_0._editableInitView(arg_11_0)
+function Season123_2_0DecomposeView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0.itemId = arg_12_0.viewParam.itemId
-	arg_12_0.actId = arg_12_0.viewParam.actId
-	arg_12_0.curCount = 1
-	arg_12_0.minDecomposeCount = 1
-	arg_12_0.decomposeItemList = Season123DecomposeModel.instance:getDecomposeItemsByItemId(arg_12_0.actId, arg_12_0.itemId)
-	arg_12_0.maxDecomposeCount = GameUtil.getTabLen(arg_12_0.decomposeItemList)
+function Season123_2_0DecomposeView:onOpen()
+	self.itemId = self.viewParam.itemId
+	self.actId = self.viewParam.actId
+	self.curCount = 1
+	self.minDecomposeCount = 1
+	self.decomposeItemList = Season123DecomposeModel.instance:getDecomposeItemsByItemId(self.actId, self.itemId)
+	self.maxDecomposeCount = GameUtil.getTabLen(self.decomposeItemList)
 
-	arg_12_0:CreateCardIcon()
-	arg_12_0:refreshUI()
+	self:CreateCardIcon()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0.itemConfig = Season123Config.instance:getSeasonEquipCo(arg_13_0.itemId)
-	arg_13_0._txtcardName.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season123_decompose_cardName"), {
-		arg_13_0.itemConfig.name,
+function Season123_2_0DecomposeView:refreshUI()
+	self.itemConfig = Season123Config.instance:getSeasonEquipCo(self.itemId)
+	self._txtcardName.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season123_decompose_cardName"), {
+		self.itemConfig.name,
 		"1"
 	})
 
-	local var_13_0 = Season123Config.instance:getEquipItemCoin(arg_13_0.actId, Activity123Enum.Const.EquipItemCoin)
+	local coinId = Season123Config.instance:getEquipItemCoin(self.actId, Activity123Enum.Const.EquipItemCoin)
 
-	arg_13_0.coinConfig = CurrencyConfig.instance:getCurrencyCo(var_13_0)
+	self.coinConfig = CurrencyConfig.instance:getCurrencyCo(coinId)
 
-	arg_13_0._simagegetCoin:LoadImage(ResUrl.getCurrencyItemIcon(arg_13_0.coinConfig.icon))
-	arg_13_0._simagecoin:LoadImage(ResUrl.getCurrencyItemIcon(arg_13_0.coinConfig.icon))
+	self._simagegetCoin:LoadImage(ResUrl.getCurrencyItemIcon(self.coinConfig.icon))
+	self._simagecoin:LoadImage(ResUrl.getCurrencyItemIcon(self.coinConfig.icon))
 
-	arg_13_0._txtcoinName.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season123_decompose_cardName2"), {
-		arg_13_0.coinConfig.name,
-		arg_13_0.itemConfig.decomposeGet
+	self._txtcoinName.text = GameUtil.getSubPlaceholderLuaLang(luaLang("season123_decompose_cardName2"), {
+		self.coinConfig.name,
+		self.itemConfig.decomposeGet
 	})
-	arg_13_0._txtgetCoin.text = luaLang("multiple") .. arg_13_0.curCount * arg_13_0.itemConfig.decomposeGet
+	self._txtgetCoin.text = luaLang("multiple") .. self.curCount * self.itemConfig.decomposeGet
 end
 
-function var_0_0.refreshInfoBySelectCount(arg_14_0)
-	arg_14_0._inputvalue:SetText(arg_14_0.curCount)
+function Season123_2_0DecomposeView:refreshInfoBySelectCount()
+	self._inputvalue:SetText(self.curCount)
 
-	arg_14_0._txtgetCoin.text = luaLang("multiple") .. arg_14_0.curCount * arg_14_0.itemConfig.decomposeGet
+	self._txtgetCoin.text = luaLang("multiple") .. self.curCount * self.itemConfig.decomposeGet
 end
 
-function var_0_0.CreateCardIcon(arg_15_0)
-	if not arg_15_0.cardIcon then
-		local var_15_0 = arg_15_0.viewContainer:getSetting().otherRes[1]
-		local var_15_1 = arg_15_0:getResInst(var_15_0, arg_15_0._gocardpos, "icon")
+function Season123_2_0DecomposeView:CreateCardIcon()
+	if not self.cardIcon then
+		local path = self.viewContainer:getSetting().otherRes[1]
+		local go = self:getResInst(path, self._gocardpos, "icon")
 
-		arg_15_0.cardIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1, Season123_2_0CelebrityCardEquip)
+		self.cardIcon = MonoHelper.addNoUpdateLuaComOnceToGo(go, Season123_2_0CelebrityCardEquip)
 	end
 
-	arg_15_0.cardIcon:updateData(arg_15_0.itemId)
-	arg_15_0.cardIcon:setClickCall(arg_15_0.showMaterialInfoTip, arg_15_0)
+	self.cardIcon:updateData(self.itemId)
+	self.cardIcon:setClickCall(self.showMaterialInfoTip, self)
 end
 
-function var_0_0.showMaterialInfoTip(arg_16_0)
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, arg_16_0.itemId)
+function Season123_2_0DecomposeView:showMaterialInfoTip()
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, self.itemId)
 end
 
-function var_0_0.onClose(arg_17_0)
+function Season123_2_0DecomposeView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	if arg_18_0.cardIcon then
-		arg_18_0.cardIcon:disposeUI()
+function Season123_2_0DecomposeView:onDestroyView()
+	if self.cardIcon then
+		self.cardIcon:disposeUI()
 	end
 end
 
-return var_0_0
+return Season123_2_0DecomposeView

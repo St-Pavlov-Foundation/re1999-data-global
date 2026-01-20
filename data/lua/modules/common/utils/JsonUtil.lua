@@ -1,56 +1,58 @@
-﻿module("modules.common.utils.JsonUtil", package.seeall)
+﻿-- chunkname: @modules/common/utils/JsonUtil.lua
 
-local var_0_0 = {}
+module("modules.common.utils.JsonUtil", package.seeall)
 
-var_0_0.emptyArrayPlaceholder = "empty_array_placeholder_202205171648"
+local JsonUtil = {}
 
-function var_0_0.encode(arg_1_0)
-	var_0_0._add_placeholder(arg_1_0)
+JsonUtil.emptyArrayPlaceholder = "empty_array_placeholder_202205171648"
 
-	local var_1_0 = cjson.encode(arg_1_0)
+function JsonUtil.encode(t)
+	JsonUtil._add_placeholder(t)
 
-	if not string.nilorempty(var_1_0) then
-		var_1_0 = string.gsub(var_1_0, "%[\"" .. var_0_0.emptyArrayPlaceholder .. "\"]", "[]")
+	local jsonStr = cjson.encode(t)
+
+	if not string.nilorempty(jsonStr) then
+		jsonStr = string.gsub(jsonStr, "%[\"" .. JsonUtil.emptyArrayPlaceholder .. "\"]", "[]")
 	end
 
-	return var_1_0
+	return jsonStr
 end
 
-function var_0_0.markAsArray(arg_2_0)
-	local var_2_0 = getmetatable(arg_2_0) or {}
+function JsonUtil.markAsArray(t)
+	local mt = getmetatable(t) or {}
 
-	var_2_0.__jsontype = "array"
+	mt.__jsontype = "array"
 
-	setmetatable(arg_2_0, var_2_0)
+	setmetatable(t, mt)
 end
 
-function var_0_0._is_marked_as_array(arg_3_0)
-	local var_3_0 = getmetatable(arg_3_0)
+function JsonUtil._is_marked_as_array(t)
+	local mt = getmetatable(t)
 
-	return var_3_0 and var_3_0.__jsontype == "array"
+	return mt and mt.__jsontype == "array"
 end
 
-function var_0_0._add_placeholder(arg_4_0, arg_4_1)
-	if not arg_4_0 or not LuaUtil.isTable(arg_4_0) then
+function JsonUtil._add_placeholder(t, dict)
+	if not t or not LuaUtil.isTable(t) then
 		return
 	end
 
-	local var_4_0 = true
+	local empty = true
 
-	arg_4_1 = arg_4_1 or {}
-	arg_4_1[arg_4_0] = true
+	dict = dict or {}
+	dict[t] = true
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0) do
-		if not arg_4_1[iter_4_1] and LuaUtil.isTable(iter_4_1) then
-			var_0_0._add_placeholder(iter_4_1, arg_4_1)
+	for key, value in pairs(t) do
+		if not dict[value] and LuaUtil.isTable(value) then
+			JsonUtil._add_placeholder(value, dict)
 		end
 
-		var_4_0 = false
+		empty = false
 	end
 
-	if var_0_0._is_marked_as_array(arg_4_0) and var_4_0 then
-		table.insert(arg_4_0, var_0_0.emptyArrayPlaceholder)
+	if JsonUtil._is_marked_as_array(t) and empty then
+		table.insert(t, JsonUtil.emptyArrayPlaceholder)
 	end
 end
 
-return var_0_0
+return JsonUtil

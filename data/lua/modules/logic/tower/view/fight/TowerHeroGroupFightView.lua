@@ -1,89 +1,93 @@
-﻿module("modules.logic.tower.view.fight.TowerHeroGroupFightView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerHeroGroupFightView.lua
 
-local var_0_0 = class("TowerHeroGroupFightView", HeroGroupFightView)
-local var_0_1 = 4
+module("modules.logic.tower.view.fight.TowerHeroGroupFightView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_1 = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication) or var_0_1
-	arg_1_0._multiplication = 1
-	arg_1_0._goherogroupcontain = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain")
-	arg_1_0._goBtnContain = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain")
-	arg_1_0._btnContainAnim = arg_1_0._goBtnContain:GetComponent(typeof(UnityEngine.Animator))
+local TowerHeroGroupFightView = class("TowerHeroGroupFightView", HeroGroupFightView)
+local MaxMultiplication = 4
 
-	gohelper.setActive(arg_1_0._gomask, false)
-	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_1_0._onOpenFullView, arg_1_0)
-	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_1_0._onModifyHeroGroup, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupName, arg_1_0._initFightGroupDrop, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_1_0._onModifySnapshot, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_1_0._onClickHeroGroupItem, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_1_0._respBeginFight, arg_1_0)
-	arg_1_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_1_0.isShowHelpBtnIcon, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, arg_1_0._onUseRecommendGroup, arg_1_0)
-	arg_1_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_1_0._onCurrencyChange, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, arg_1_0._showGuideDragEffect, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUpdateRecommendLevel, arg_1_0._refreshTips, arg_1_0)
-	arg_1_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, arg_1_0._heroMoveForward, arg_1_0)
-	arg_1_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, arg_1_0.refreshDoubleDropTips, arg_1_0)
+function TowerHeroGroupFightView:_editableInitView()
+	MaxMultiplication = CommonConfig.instance:getConstNum(ConstEnum.MaxMultiplication) or MaxMultiplication
+	self._multiplication = 1
+	self._goherogroupcontain = gohelper.findChild(self.viewGO, "herogroupcontain")
+	self._goBtnContain = gohelper.findChild(self.viewGO, "#go_container/btnContain")
+	self._btnContainAnim = self._goBtnContain:GetComponent(typeof(UnityEngine.Animator))
+
+	gohelper.setActive(self._gomask, false)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onModifyHeroGroup, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupName, self._initFightGroupDrop, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onModifySnapshot, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, self._onClickHeroGroupItem, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
+	self:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.isShowHelpBtnIcon, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, self._onUseRecommendGroup, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, self._showGuideDragEffect, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUpdateRecommendLevel, self._refreshTips, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, self._heroMoveForward, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, self.refreshDropTips, self)
 
 	if BossRushController.instance:isInBossRushFight() then
-		gohelper.addUIClickAudio(arg_1_0._btnstart.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
-		gohelper.addUIClickAudio(arg_1_0._btnstarthard.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
-		gohelper.addUIClickAudio(arg_1_0._btnstartreplay.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstarthard.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
+		gohelper.addUIClickAudio(self._btnstartreplay.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
 	else
-		gohelper.addUIClickAudio(arg_1_0._btnstart.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-		gohelper.addUIClickAudio(arg_1_0._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-		gohelper.addUIClickAudio(arg_1_0._btnstartreplay.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstarthard.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+		gohelper.addUIClickAudio(self._btnstartreplay.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
 	end
 
-	gohelper.addUIClickAudio(arg_1_0._btnReplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
+	gohelper.addUIClickAudio(self._btnReplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
 
-	arg_1_0._goskillpos = gohelper.findChild(arg_1_0._btncloth.gameObject, "bg/#go_skillpos")
-	arg_1_0._iconGO = arg_1_0:getResInst(arg_1_0.viewContainer:getSetting().otherRes[1], arg_1_0._goskillpos)
+	self._goskillpos = gohelper.findChild(self._btncloth.gameObject, "bg/#go_skillpos")
+	self._iconGO = self:getResInst(self.viewContainer:getSetting().otherRes[1], self._goskillpos)
 
-	recthelper.setAnchor(arg_1_0._iconGO.transform, 0, 0)
+	recthelper.setAnchor(self._iconGO.transform, 0, 0)
 
-	arg_1_0._tweeningId = 0
-	arg_1_0._replayMode = false
-	arg_1_0._multSpeedItems = {}
+	self._tweeningId = 0
+	self._replayMode = false
+	self._multSpeedItems = {}
 
-	local var_1_0 = arg_1_0._gomultContent.transform
+	local parent = self._gomultContent.transform
 
-	for iter_1_0 = 1, var_0_1 do
-		local var_1_1 = var_1_0:GetChild(iter_1_0 - 1)
+	for i = 1, MaxMultiplication do
+		local item = parent:GetChild(i - 1)
 
-		arg_1_0:_setMultSpeedItem(var_1_1.gameObject, var_0_1 - iter_1_0 + 1)
+		self:_setMultSpeedItem(item.gameObject, MaxMultiplication - i + 1)
 	end
 
-	gohelper.setActive(arg_1_0._gomultispeed, false)
+	gohelper.setActive(self._gomultispeed, false)
 end
 
-function var_0_0._enterFight(arg_2_0)
+function TowerHeroGroupFightView:_enterFight()
 	if HeroGroupModel.instance.episodeId then
-		arg_2_0._closeWithEnteringFight = true
+		self._closeWithEnteringFight = true
 
-		if FightController.instance:setFightHeroSingleGroup() then
-			arg_2_0.viewContainer:dispatchEvent(HeroGroupEvent.BeforeEnterFight)
+		local result = FightController.instance:setFightHeroSingleGroup()
 
-			local var_2_0 = {}
-			local var_2_1 = FightModel.instance:getFightParam()
+		if result then
+			self.viewContainer:dispatchEvent(HeroGroupEvent.BeforeEnterFight)
 
-			var_2_0.fightParam = var_2_1
-			var_2_0.chapterId = var_2_1.chapterId
-			var_2_0.episodeId = var_2_1.episodeId
-			var_2_0.useRecord = arg_2_0._replayMode
+			local param = {}
+			local fightParam = FightModel.instance:getFightParam()
 
-			if arg_2_0._replayMode then
-				var_2_1.isReplay = true
-				var_2_1.multiplication = arg_2_0._multiplication
+			param.fightParam = fightParam
+			param.chapterId = fightParam.chapterId
+			param.episodeId = fightParam.episodeId
+			param.useRecord = self._replayMode
+
+			if self._replayMode then
+				fightParam.isReplay = true
+				fightParam.multiplication = self._multiplication
 			else
-				var_2_1.isReplay = false
-				var_2_1.multiplication = 1
+				fightParam.isReplay = false
+				fightParam.multiplication = 1
 			end
 
-			var_2_0.multiplication = var_2_1.multiplication
+			param.multiplication = fightParam.multiplication
 
-			TowerController.instance:startFight(var_2_0)
+			TowerController.instance:startFight(param)
 			AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 		end
 	else
@@ -91,46 +95,55 @@ function var_0_0._enterFight(arg_2_0)
 	end
 end
 
-function var_0_0._initFightGroupDrop(arg_3_0)
-	if HeroGroupModel.instance:getPresetHeroGroupType() then
-		arg_3_0._dropherogroup.dropDown.enabled = false
+function TowerHeroGroupFightView:_initFightGroupDrop()
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
+
+	if heroGroupType then
+		self._dropherogroup.dropDown.enabled = false
 
 		return
 	end
 
-	local var_3_0 = HeroGroupModel.instance.episodeId
-	local var_3_1 = DungeonConfig.instance:getEpisodeCO(var_3_0).type
-	local var_3_2 = {}
+	local episodeId = HeroGroupModel.instance.episodeId
+	local episdoeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local episodeType = episdoeConfig.type
+	local list = {}
 
-	if var_3_1 == DungeonEnum.EpisodeType.TowerBoss then
-		table.insert(var_3_2, HeroGroupModel.instance:getCommonGroupName())
+	if episodeType == DungeonEnum.EpisodeType.TowerBoss then
+		table.insert(list, HeroGroupModel.instance:getCommonGroupName())
 	else
-		for iter_3_0 = 1, 4 do
-			var_3_2[iter_3_0] = HeroGroupModel.instance:getCommonGroupName(iter_3_0)
+		for i = 1, 4 do
+			list[i] = HeroGroupModel.instance:getCommonGroupName(i)
 		end
 	end
 
-	local var_3_3 = HeroGroupModel.instance:getHeroGroupSelectIndex()
+	local selectIndex = HeroGroupModel.instance:getHeroGroupSelectIndex()
 
-	arg_3_0._dropherogroup:ClearOptions()
-	arg_3_0._dropherogroup:AddOptions(var_3_2)
-	arg_3_0._dropherogroup:SetValue(var_3_3 - 1)
-	gohelper.setActive(arg_3_0._btnmodifyname, false)
+	self._dropherogroup:ClearOptions()
+	self._dropherogroup:AddOptions(list)
+	self._dropherogroup:SetValue(selectIndex - 1)
+	gohelper.setActive(self._btnmodifyname, false)
 end
 
-function var_0_0._onClickHeroGroupItem(arg_4_0, arg_4_1)
-	if TowerModel.instance:getRecordFightParam().isHeroGroupLock then
+function TowerHeroGroupFightView:_onClickHeroGroupItem(id)
+	local param = TowerModel.instance:getRecordFightParam()
+
+	if param.isHeroGroupLock then
 		GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 
 		return
 	end
 
-	var_0_0.super._onClickHeroGroupItem(arg_4_0, arg_4_1)
+	TowerHeroGroupFightView.super._onClickHeroGroupItem(self, id)
 end
 
-function var_0_0._groupDropValueChanged(arg_5_0, arg_5_1)
-	var_0_0.super._groupDropValueChanged(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._btnmodifyname, false)
+function TowerHeroGroupFightView:_groupDropValueChanged(value)
+	TowerHeroGroupFightView.super._groupDropValueChanged(self, value)
+	gohelper.setActive(self._btnmodifyname, false)
 end
 
-return var_0_0
+function TowerHeroGroupFightView:isShowDropHeroGroup()
+	return true
+end
+
+return TowerHeroGroupFightView

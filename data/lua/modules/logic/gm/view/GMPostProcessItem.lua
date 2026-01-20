@@ -1,201 +1,218 @@
-﻿module("modules.logic.gm.view.GMPostProcessItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMPostProcessItem.lua
 
-local var_0_0 = class("GMPostProcessItem", MixScrollCell)
+module("modules.logic.gm.view.GMPostProcessItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._ppvolumeWrap = gohelper.findChildComponent(CameraMgr.instance:getUnitCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
-	arg_1_0._ppvolumeWrap.refresh = true
-	arg_1_0._go = arg_1_1
-	arg_1_0._tr = arg_1_1.transform
-	arg_1_0._togglePrefab = gohelper.findChild(arg_1_1, "toggle")
-	arg_1_0._sliderPrefab = gohelper.findChild(arg_1_1, "slider")
-	arg_1_0._vector2Prefab = gohelper.findChild(arg_1_1, "vector2")
-	arg_1_0._colorPrefab = gohelper.findChild(arg_1_1, "color")
+local GMPostProcessItem = class("GMPostProcessItem", MixScrollCell)
 
-	gohelper.setActive(arg_1_0._togglePrefab, false)
-	gohelper.setActive(arg_1_0._sliderPrefab, false)
-	gohelper.setActive(arg_1_0._vector2Prefab, false)
-	gohelper.setActive(arg_1_0._colorPrefab, false)
+function GMPostProcessItem:init(go)
+	self._ppvolumeWrap = gohelper.findChildComponent(CameraMgr.instance:getUnitCameraGO(), "PPVolume", PostProcessingMgr.PPVolumeWrapType)
+	self._ppvolumeWrap.refresh = true
+	self._go = go
+	self._tr = go.transform
+	self._togglePrefab = gohelper.findChild(go, "toggle")
+	self._sliderPrefab = gohelper.findChild(go, "slider")
+	self._vector2Prefab = gohelper.findChild(go, "vector2")
+	self._colorPrefab = gohelper.findChild(go, "color")
 
-	arg_1_0._typePrefabs = {
-		bool = arg_1_0._togglePrefab,
-		float = arg_1_0._sliderPrefab,
-		int = arg_1_0._sliderPrefab,
-		Vector2 = arg_1_0._vector2Prefab,
-		Color = arg_1_0._colorPrefab
+	gohelper.setActive(self._togglePrefab, false)
+	gohelper.setActive(self._sliderPrefab, false)
+	gohelper.setActive(self._vector2Prefab, false)
+	gohelper.setActive(self._colorPrefab, false)
+
+	self._typePrefabs = {
+		bool = self._togglePrefab,
+		float = self._sliderPrefab,
+		int = self._sliderPrefab,
+		Vector2 = self._vector2Prefab,
+		Color = self._colorPrefab
 	}
-	arg_1_0._itemGOs = {}
+	self._itemGOs = {}
 end
 
-function var_0_0.removeEventListeners(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._itemGOs) do
-		local var_2_0 = gohelper.findChildToggle(iter_2_1, "Toggle")
-		local var_2_1 = gohelper.findChildSlider(iter_2_1, "Slider")
-		local var_2_2 = gohelper.findChildTextMeshInputField(iter_2_1, "inpx")
-		local var_2_3 = gohelper.findChildTextMeshInputField(iter_2_1, "inpy")
-		local var_2_4 = gohelper.findChildTextMeshInputField(iter_2_1, "inp")
+function GMPostProcessItem:removeEventListeners()
+	for _, itemGO in ipairs(self._itemGOs) do
+		local toggle = gohelper.findChildToggle(itemGO, "Toggle")
+		local slider = gohelper.findChildSlider(itemGO, "Slider")
+		local inpx = gohelper.findChildTextMeshInputField(itemGO, "inpx")
+		local inpy = gohelper.findChildTextMeshInputField(itemGO, "inpy")
+		local inp = gohelper.findChildTextMeshInputField(itemGO, "inp")
 
-		if var_2_0 then
-			var_2_0:RemoveOnValueChanged()
+		if toggle then
+			toggle:RemoveOnValueChanged()
 		end
 
-		if var_2_1 then
-			var_2_1:RemoveOnValueChanged()
+		if slider then
+			slider:RemoveOnValueChanged()
 		end
 
-		if var_2_2 then
-			var_2_2:RemoveOnValueChanged()
+		if inpx then
+			inpx:RemoveOnValueChanged()
 		end
 
-		if var_2_3 then
-			var_2_3:RemoveOnValueChanged()
+		if inpy then
+			inpy:RemoveOnValueChanged()
 		end
 
-		if var_2_4 then
-			var_2_4:RemoveOnValueChanged()
+		if inp then
+			inp:RemoveOnValueChanged()
 		end
 	end
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	recthelper.setHeight(arg_3_0._tr, arg_3_3)
+function GMPostProcessItem:onUpdateMO(mo, mixType, param)
+	recthelper.setHeight(self._tr, param)
 
-	arg_3_0._mo = arg_3_1
+	self._mo = mo
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_0 = var_0_0["_update" .. iter_3_1.type]
+	for i, interfaceMO in ipairs(mo) do
+		local func = GMPostProcessItem["_update" .. interfaceMO.type]
 
-		if var_3_0 then
-			local var_3_1 = arg_3_0._itemGOs[iter_3_0]
+		if func then
+			local itemGO = self._itemGOs[i]
 
-			if not var_3_1 then
-				var_3_1 = gohelper.cloneInPlace(arg_3_0._typePrefabs[iter_3_1.type], iter_3_0)
+			if not itemGO then
+				itemGO = gohelper.cloneInPlace(self._typePrefabs[interfaceMO.type], i)
 
-				table.insert(arg_3_0._itemGOs, var_3_1)
-				gohelper.setActive(var_3_1, true)
+				table.insert(self._itemGOs, itemGO)
+				gohelper.setActive(itemGO, true)
 			end
 
-			var_3_0(arg_3_0, iter_3_0, var_3_1, iter_3_1)
+			func(self, i, itemGO, interfaceMO)
 
-			local var_3_2 = gohelper.findChild(var_3_1, "split")
+			local splitGO = gohelper.findChild(itemGO, "split")
 
-			gohelper.setActive(var_3_2, iter_3_0 ~= #arg_3_1)
+			gohelper.setActive(splitGO, i ~= #mo)
 		else
-			logError("fuck no type function: " .. iter_3_1.type)
+			logError("fuck no type function: " .. interfaceMO.type)
 		end
 	end
 end
 
-function var_0_0._updatebool(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = gohelper.findChildToggle(arg_4_2, "Toggle")
+function GMPostProcessItem:_updatebool(index, itemGO, mo)
+	local toggle = gohelper.findChildToggle(itemGO, "Toggle")
 
-	local function var_4_1(arg_5_0, arg_5_1, arg_5_2)
-		arg_5_0:_setPPValue(arg_4_3.val, arg_5_2)
+	local function toggleValueChanged(self, params, isOn)
+		self:_setPPValue(mo.val, isOn)
 	end
 
-	var_4_0:AddOnValueChanged(var_4_1, arg_4_0)
+	toggle:AddOnValueChanged(toggleValueChanged, self)
 
-	gohelper.findChildText(arg_4_2, "Text").text = arg_4_3.name
-	var_4_0.isOn = arg_4_0:_getPPValue(arg_4_3.val)
+	local text = gohelper.findChildText(itemGO, "Text")
+
+	text.text = mo.name
+
+	local isOn = self:_getPPValue(mo.val)
+
+	toggle.isOn = isOn
 end
 
-function var_0_0._updatefloat(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = gohelper.findChildSlider(arg_6_2, "Slider")
-	local var_6_1 = gohelper.findChildText(arg_6_2, "Slider/Text")
+function GMPostProcessItem:_updatefloat(index, itemGO, mo)
+	local slider = gohelper.findChildSlider(itemGO, "Slider")
+	local sliderText = gohelper.findChildText(itemGO, "Slider/Text")
 
-	local function var_6_2(arg_7_0, arg_7_1, arg_7_2)
-		arg_7_0:_setPPValue(arg_6_3.val, arg_7_2)
+	local function sliderChangeFunc(self, params, value)
+		self:_setPPValue(mo.val, value)
 
-		var_6_1.text = string.format("%.2f", arg_7_2)
+		sliderText.text = string.format("%.2f", value)
 	end
 
-	var_6_0:AddOnValueChanged(var_6_2, arg_6_0)
+	slider:AddOnValueChanged(sliderChangeFunc, self)
 
-	var_6_0.slider.wholeNumbers = false
-	var_6_0.slider.minValue = arg_6_3.min
-	var_6_0.slider.maxValue = arg_6_3.max
-	gohelper.findChildText(arg_6_2, "Text").text = arg_6_3.name
+	slider.slider.wholeNumbers = false
+	slider.slider.minValue = mo.min
+	slider.slider.maxValue = mo.max
 
-	local var_6_3 = arg_6_0:_getPPValue(arg_6_3.val)
+	local text = gohelper.findChildText(itemGO, "Text")
 
-	var_6_0:SetValue(var_6_3)
+	text.text = mo.name
 
-	var_6_1.text = string.format("%.2f", var_6_3)
+	local value = self:_getPPValue(mo.val)
+
+	slider:SetValue(value)
+
+	sliderText.text = string.format("%.2f", value)
 end
 
-function var_0_0._updateint(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.findChildSlider(arg_8_2, "Slider")
-	local var_8_1 = gohelper.findChildText(arg_8_2, "Slider/Text")
+function GMPostProcessItem:_updateint(index, itemGO, mo)
+	local slider = gohelper.findChildSlider(itemGO, "Slider")
+	local sliderText = gohelper.findChildText(itemGO, "Slider/Text")
 
-	local function var_8_2(arg_9_0, arg_9_1, arg_9_2)
-		arg_9_0:_setPPValue(arg_8_3.val, arg_9_2)
+	local function sliderChangeFunc(self, params, value)
+		self:_setPPValue(mo.val, value)
 
-		var_8_1.text = string.format("%d", arg_9_2)
+		sliderText.text = string.format("%d", value)
 	end
 
-	var_8_0:AddOnValueChanged(var_8_2, arg_8_0)
+	slider:AddOnValueChanged(sliderChangeFunc, self)
 
-	var_8_0.slider.wholeNumbers = true
-	var_8_0.slider.minValue = arg_8_3.min
-	var_8_0.slider.maxValue = arg_8_3.max
-	gohelper.findChildText(arg_8_2, "Text").text = arg_8_3.name
+	slider.slider.wholeNumbers = true
+	slider.slider.minValue = mo.min
+	slider.slider.maxValue = mo.max
 
-	local var_8_3 = arg_8_0:_getPPValue(arg_8_3.val)
+	local text = gohelper.findChildText(itemGO, "Text")
 
-	var_8_0:SetValue(var_8_3)
+	text.text = mo.name
 
-	var_8_1.text = string.format("%d", var_8_3)
+	local value = self:_getPPValue(mo.val)
+
+	slider:SetValue(value)
+
+	sliderText.text = string.format("%d", value)
 end
 
-function var_0_0._updateVector2(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = gohelper.findChildTextMeshInputField(arg_10_2, "inpx")
-	local var_10_1 = gohelper.findChildTextMeshInputField(arg_10_2, "inpy")
+function GMPostProcessItem:_updateVector2(index, itemGO, mo)
+	local inpx = gohelper.findChildTextMeshInputField(itemGO, "inpx")
+	local inpy = gohelper.findChildTextMeshInputField(itemGO, "inpy")
 
-	local function var_10_2(arg_11_0, arg_11_1)
-		local var_11_0 = tonumber(var_10_0:GetText()) or 0
-		local var_11_1 = tonumber(var_10_1:GetText()) or 0
+	local function inputChangeFunc(self, value)
+		local x = tonumber(inpx:GetText()) or 0
+		local y = tonumber(inpy:GetText()) or 0
 
-		arg_11_0:_setPPValue(arg_10_3.val, Vector2.New(var_11_0, var_11_1))
+		self:_setPPValue(mo.val, Vector2.New(x, y))
 	end
 
-	var_10_0:AddOnValueChanged(var_10_2, arg_10_0)
-	var_10_1:AddOnValueChanged(var_10_2, arg_10_0)
+	inpx:AddOnValueChanged(inputChangeFunc, self)
+	inpy:AddOnValueChanged(inputChangeFunc, self)
 
-	gohelper.findChildText(arg_10_2, "Text").text = arg_10_3.name
+	local text = gohelper.findChildText(itemGO, "Text")
 
-	local var_10_3 = arg_10_0:_getPPValue(arg_10_3.val)
+	text.text = mo.name
 
-	var_10_0:SetText(var_10_3.x)
-	var_10_1:SetText(var_10_3.y)
+	local value = self:_getPPValue(mo.val)
+
+	inpx:SetText(value.x)
+	inpy:SetText(value.y)
 end
 
-function var_0_0._updateColor(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = gohelper.findChildTextMeshInputField(arg_12_2, "inp")
+function GMPostProcessItem:_updateColor(index, itemGO, mo)
+	local inp = gohelper.findChildTextMeshInputField(itemGO, "inp")
 
-	local function var_12_1(arg_13_0, arg_13_1)
-		local var_13_0 = var_12_0:GetText()
+	local function inputChangeFunc(self, value)
+		local colorStr = inp:GetText()
 
-		arg_13_0:_setPPValue(arg_12_3.val, GameUtil.parseColor(var_13_0))
+		self:_setPPValue(mo.val, GameUtil.parseColor(colorStr))
 	end
 
-	var_12_0:AddOnValueChanged(var_12_1, arg_12_0)
+	inp:AddOnValueChanged(inputChangeFunc, self)
 
-	gohelper.findChildText(arg_12_2, "Text").text = arg_12_3.name
+	local text = gohelper.findChildText(itemGO, "Text")
 
-	local var_12_2 = arg_12_0:_getPPValue(arg_12_3.val)
+	text.text = mo.name
 
-	var_12_0:SetText(GameUtil.colorToHex(var_12_2))
+	local value = self:_getPPValue(mo.val)
+
+	inp:SetText(GameUtil.colorToHex(value))
 end
 
-function var_0_0._getPPValue(arg_14_0, arg_14_1)
-	arg_14_1 = string.upper(string.sub(arg_14_1, 1, 1)) .. string.sub(arg_14_1, 2)
+function GMPostProcessItem:_getPPValue(key)
+	key = string.upper(string.sub(key, 1, 1)) .. string.sub(key, 2)
 
-	return arg_14_0._ppvolumeWrap[arg_14_1]
+	return self._ppvolumeWrap[key]
 end
 
-function var_0_0._setPPValue(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_1 = string.lower(string.sub(arg_15_1, 1, 1)) .. string.sub(arg_15_1, 2)
-	arg_15_0._ppvolumeWrap[arg_15_1] = arg_15_2
+function GMPostProcessItem:_setPPValue(key, value)
+	key = string.lower(string.sub(key, 1, 1)) .. string.sub(key, 2)
+	self._ppvolumeWrap[key] = value
 end
 
-return var_0_0
+return GMPostProcessItem

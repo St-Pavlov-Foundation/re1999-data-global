@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_7.enter.define.VersionActivity1_7Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/enter/define/VersionActivity1_7Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_7.enter.define.VersionActivity1_7Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity1_7Enum = _M
+
+VersionActivity1_7Enum.ActivityId = {
 	Warmup = 11720,
 	BossRush = 11704,
 	RoleStory1 = 11715,
@@ -18,119 +20,119 @@ var_0_0.ActivityId = {
 	SeasonStore = 11705,
 	EnterView = 11701
 }
-var_0_0.ActLevel = {
+VersionActivity1_7Enum.ActLevel = {
 	Second = 2,
 	First = 1
 }
-var_0_0.ActType = {
+VersionActivity1_7Enum.ActType = {
 	Multi = 2,
 	Single = 1
 }
-var_0_0.EnterViewActIdList = {
+VersionActivity1_7Enum.EnterViewActIdList = {
 	{
-		actId = var_0_0.ActivityId.Dungeon,
-		actLevel = var_0_0.ActLevel.First,
-		actType = var_0_0.ActType.Single,
-		storeId = var_0_0.ActivityId.DungeonStore
+		actId = VersionActivity1_7Enum.ActivityId.Dungeon,
+		actLevel = VersionActivity1_7Enum.ActLevel.First,
+		actType = VersionActivity1_7Enum.ActType.Single,
+		storeId = VersionActivity1_7Enum.ActivityId.DungeonStore
 	},
 	{
-		actId = var_0_0.ActivityId.Isolde,
-		actLevel = var_0_0.ActLevel.Second,
-		actType = var_0_0.ActType.Single,
-		redDotUid = var_0_0.ActivityId.Isolde
+		actId = VersionActivity1_7Enum.ActivityId.Isolde,
+		actLevel = VersionActivity1_7Enum.ActLevel.Second,
+		actType = VersionActivity1_7Enum.ActType.Single,
+		redDotUid = VersionActivity1_7Enum.ActivityId.Isolde
 	},
 	{
-		actId = var_0_0.ActivityId.Marcus,
-		actLevel = var_0_0.ActLevel.Second,
-		actType = var_0_0.ActType.Single,
-		redDotUid = var_0_0.ActivityId.Marcus
+		actId = VersionActivity1_7Enum.ActivityId.Marcus,
+		actLevel = VersionActivity1_7Enum.ActLevel.Second,
+		actType = VersionActivity1_7Enum.ActType.Single,
+		redDotUid = VersionActivity1_7Enum.ActivityId.Marcus
 	},
 	{
-		actId = var_0_0.ActivityId.BossRush,
-		actLevel = var_0_0.ActLevel.Second,
-		actType = var_0_0.ActType.Single
+		actId = VersionActivity1_7Enum.ActivityId.BossRush,
+		actLevel = VersionActivity1_7Enum.ActLevel.Second,
+		actType = VersionActivity1_7Enum.ActType.Single
 	},
 	{
-		actId = var_0_0.ActivityId.Reactivity,
-		actLevel = var_0_0.ActLevel.Second,
-		actType = var_0_0.ActType.Single,
-		storeId = var_0_0.ActivityId.ReactivityStore
+		actId = VersionActivity1_7Enum.ActivityId.Reactivity,
+		actLevel = VersionActivity1_7Enum.ActLevel.Second,
+		actType = VersionActivity1_7Enum.ActType.Single,
+		storeId = VersionActivity1_7Enum.ActivityId.ReactivityStore
 	},
 	{
 		actId = {
-			var_0_0.ActivityId.RoleStory1,
-			var_0_0.ActivityId.RoleStory2
+			VersionActivity1_7Enum.ActivityId.RoleStory1,
+			VersionActivity1_7Enum.ActivityId.RoleStory2
 		},
-		actLevel = var_0_0.ActLevel.Second,
-		actType = var_0_0.ActType.Multi
+		actLevel = VersionActivity1_7Enum.ActLevel.Second,
+		actType = VersionActivity1_7Enum.ActType.Multi
 	},
 	{
-		actId = var_0_0.ActivityId.Season,
-		actLevel = var_0_0.ActLevel.Second,
-		actType = var_0_0.ActType.Single,
-		storeId = var_0_0.ActivityId.SeasonStore
+		actId = VersionActivity1_7Enum.ActivityId.Season,
+		actLevel = VersionActivity1_7Enum.ActLevel.Second,
+		actType = VersionActivity1_7Enum.ActType.Single,
+		storeId = VersionActivity1_7Enum.ActivityId.SeasonStore
 	}
 }
-var_0_0.EnterViewActIdListWithRedDot = {
-	var_0_0.ActivityId.Dungeon,
-	var_0_0.ActivityId.Isolde,
-	var_0_0.ActivityId.Marcus,
-	var_0_0.ActivityId.BossRush,
-	var_0_0.ActivityId.Reactivity,
-	var_0_0.ActivityId.RoleStory1,
-	var_0_0.ActivityId.RoleStory2,
-	var_0_0.ActivityId.Season
+VersionActivity1_7Enum.EnterViewActIdListWithRedDot = {
+	VersionActivity1_7Enum.ActivityId.Dungeon,
+	VersionActivity1_7Enum.ActivityId.Isolde,
+	VersionActivity1_7Enum.ActivityId.Marcus,
+	VersionActivity1_7Enum.ActivityId.BossRush,
+	VersionActivity1_7Enum.ActivityId.Reactivity,
+	VersionActivity1_7Enum.ActivityId.RoleStory1,
+	VersionActivity1_7Enum.ActivityId.RoleStory2,
+	VersionActivity1_7Enum.ActivityId.Season
 }
-var_0_0.ActId2ShowReplayBtnDict = {
-	[var_0_0.ActivityId.Dungeon] = true,
-	[var_0_0.ActivityId.Isolde] = false,
-	[var_0_0.ActivityId.Marcus] = false,
-	[var_0_0.ActivityId.BossRush] = false,
-	[var_0_0.ActivityId.Reactivity] = false,
-	[var_0_0.ActivityId.RoleStory1] = false,
-	[var_0_0.ActivityId.RoleStory2] = false,
-	[var_0_0.ActivityId.Season] = false
+VersionActivity1_7Enum.ActId2ShowReplayBtnDict = {
+	[VersionActivity1_7Enum.ActivityId.Dungeon] = true,
+	[VersionActivity1_7Enum.ActivityId.Isolde] = false,
+	[VersionActivity1_7Enum.ActivityId.Marcus] = false,
+	[VersionActivity1_7Enum.ActivityId.BossRush] = false,
+	[VersionActivity1_7Enum.ActivityId.Reactivity] = false,
+	[VersionActivity1_7Enum.ActivityId.RoleStory1] = false,
+	[VersionActivity1_7Enum.ActivityId.RoleStory2] = false,
+	[VersionActivity1_7Enum.ActivityId.Season] = false
 }
-var_0_0.ActId2ShowAchievementBtnDict = {
-	[var_0_0.ActivityId.Dungeon] = true,
-	[var_0_0.ActivityId.Isolde] = true,
-	[var_0_0.ActivityId.Marcus] = true,
-	[var_0_0.ActivityId.BossRush] = true,
-	[var_0_0.ActivityId.Reactivity] = false,
-	[var_0_0.ActivityId.RoleStory1] = true,
-	[var_0_0.ActivityId.RoleStory2] = true,
-	[var_0_0.ActivityId.Season] = true
+VersionActivity1_7Enum.ActId2ShowAchievementBtnDict = {
+	[VersionActivity1_7Enum.ActivityId.Dungeon] = true,
+	[VersionActivity1_7Enum.ActivityId.Isolde] = true,
+	[VersionActivity1_7Enum.ActivityId.Marcus] = true,
+	[VersionActivity1_7Enum.ActivityId.BossRush] = true,
+	[VersionActivity1_7Enum.ActivityId.Reactivity] = false,
+	[VersionActivity1_7Enum.ActivityId.RoleStory1] = true,
+	[VersionActivity1_7Enum.ActivityId.RoleStory2] = true,
+	[VersionActivity1_7Enum.ActivityId.Season] = true
 }
-var_0_0.ActId2ShowRemainTimeDict = {
-	[var_0_0.ActivityId.Dungeon] = false,
-	[var_0_0.ActivityId.Isolde] = true,
-	[var_0_0.ActivityId.Marcus] = true,
-	[var_0_0.ActivityId.BossRush] = false,
-	[var_0_0.ActivityId.Reactivity] = false,
-	[var_0_0.ActivityId.RoleStory1] = true,
-	[var_0_0.ActivityId.RoleStory2] = true,
-	[var_0_0.ActivityId.Season] = false
+VersionActivity1_7Enum.ActId2ShowRemainTimeDict = {
+	[VersionActivity1_7Enum.ActivityId.Dungeon] = false,
+	[VersionActivity1_7Enum.ActivityId.Isolde] = true,
+	[VersionActivity1_7Enum.ActivityId.Marcus] = true,
+	[VersionActivity1_7Enum.ActivityId.BossRush] = false,
+	[VersionActivity1_7Enum.ActivityId.Reactivity] = false,
+	[VersionActivity1_7Enum.ActivityId.RoleStory1] = true,
+	[VersionActivity1_7Enum.ActivityId.RoleStory2] = true,
+	[VersionActivity1_7Enum.ActivityId.Season] = false
 }
-var_0_0.ActivityNameColor = {
+VersionActivity1_7Enum.ActivityNameColor = {
 	Select = Color(1, 1, 1, 1),
 	UnSelect = Color(0.5529411764705883, 0.5529411764705883, 0.5529411764705883, 1)
 }
-var_0_0.ActivityNameFontSize = {
+VersionActivity1_7Enum.ActivityNameFontSize = {
 	Select = 42,
 	UnSelect = 38
 }
-var_0_0.ActivityNameEnFontSize = {
+VersionActivity1_7Enum.ActivityNameEnFontSize = {
 	Select = 14,
 	UnSelect = 12
 }
-var_0_0.ActId2UnSelectImgPath = {
-	[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_enterview_itemtitleunselected.png"
+VersionActivity1_7Enum.ActId2UnSelectImgPath = {
+	[VersionActivity1_7Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_enterview_itemtitleunselected.png"
 }
-var_0_0.ActId2SelectImgPath = {
-	[var_0_0.ActivityId.Dungeon] = "singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_enterview_itemtitleselected.png"
+VersionActivity1_7Enum.ActId2SelectImgPath = {
+	[VersionActivity1_7Enum.ActivityId.Dungeon] = "singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_enterview_itemtitleselected.png"
 }
-var_0_0.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
-var_0_0.ScrollTabTopPadding = 16
-var_0_0.RedDotOffsetY = 56
+VersionActivity1_7Enum.MaxShowTimeOffset = 3 * TimeUtil.OneDaySecond
+VersionActivity1_7Enum.ScrollTabTopPadding = 16
+VersionActivity1_7Enum.RedDotOffsetY = 56
 
-return var_0_0
+return VersionActivity1_7Enum

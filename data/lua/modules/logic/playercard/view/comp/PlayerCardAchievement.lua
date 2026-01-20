@@ -1,84 +1,88 @@
-﻿module("modules.logic.playercard.view.comp.PlayerCardAchievement", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/comp/PlayerCardAchievement.lua
 
-local var_0_0 = class("PlayerCardAchievement", BaseView)
+module("modules.logic.playercard.view.comp.PlayerCardAchievement", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
+local PlayerCardAchievement = class("PlayerCardAchievement", BaseView)
 
-	arg_1_0:onInitView()
+function PlayerCardAchievement:init(go)
+	self.viewGO = go
+
+	self:onInitView()
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.go = gohelper.findChild(arg_2_0.viewGO, "root/main/achieve")
-	arg_2_0.btnClick = gohelper.findChildButtonWithAudio(arg_2_0.go, "#btn_click")
-	arg_2_0.txtDec = gohelper.findChildTextMesh(arg_2_0.go, "#txt_dec")
-	arg_2_0.goAchievement = gohelper.findChild(arg_2_0.go, "#go_achievement")
-	arg_2_0.goSingle = gohelper.findChild(arg_2_0.goAchievement, "#go_singlecontainer")
-	arg_2_0.goSingleItem = gohelper.findChild(arg_2_0.goAchievement, "#go_singlecontainer/horizontal/#go_singleitem")
-	arg_2_0.goSingleSelectedEffect = gohelper.findChild(arg_2_0.goAchievement, "#go_singlecontainer/selected_eff")
-	arg_2_0.goGroup = gohelper.findChild(arg_2_0.goAchievement, "#go_group")
-	arg_2_0.groupSimageBg = gohelper.findChildSingleImage(arg_2_0.goAchievement, "#go_group/#image_bg")
-	arg_2_0.goGroupContainer = gohelper.findChild(arg_2_0.goAchievement, "#go_group/#go_groupcontainer")
-	arg_2_0.goGroupSelectedEffect = gohelper.findChild(arg_2_0.goAchievement, "#go_group/selected_eff")
-	arg_2_0.goEmpty = gohelper.findChild(arg_2_0.goAchievement, "#go_showempty")
-	arg_2_0.goMisihai = gohelper.findChild(arg_2_0.go, "#go_misihai")
-	arg_2_0._singleAchieveTabs = {}
-	arg_2_0._iconItems = {}
+function PlayerCardAchievement:onInitView()
+	self.go = gohelper.findChild(self.viewGO, "root/main/achieve")
+	self.btnClick = gohelper.findChildButtonWithAudio(self.go, "#btn_click")
+	self.txtDec = gohelper.findChildTextMesh(self.go, "#txt_dec")
+	self.goAchievement = gohelper.findChild(self.go, "#go_achievement")
+	self.goSingle = gohelper.findChild(self.goAchievement, "#go_singlecontainer")
+	self.goSingleItem = gohelper.findChild(self.goAchievement, "#go_singlecontainer/horizontal/#go_singleitem")
+	self.goSingleSelectedEffect = gohelper.findChild(self.goAchievement, "#go_singlecontainer/selected_eff")
+	self.goGroup = gohelper.findChild(self.goAchievement, "#go_group")
+	self.groupSimageBg = gohelper.findChildSingleImage(self.goAchievement, "#go_group/#image_bg")
+	self.goGroupContainer = gohelper.findChild(self.goAchievement, "#go_group/#go_groupcontainer")
+	self.goGroupSelectedEffect = gohelper.findChild(self.goAchievement, "#go_group/selected_eff")
+	self.goEmpty = gohelper.findChild(self.goAchievement, "#go_showempty")
+	self.goMisihai = gohelper.findChild(self.go, "#go_misihai")
+	self._singleAchieveTabs = {}
+	self._iconItems = {}
 end
 
-function var_0_0.playSelelctEffect(arg_3_0)
-	gohelper.setActive(arg_3_0.goGroupSelectedEffect, false)
-	gohelper.setActive(arg_3_0.goGroupSelectedEffect, true)
-	gohelper.setActive(arg_3_0.goSingleSelectedEffect, false)
-	gohelper.setActive(arg_3_0.goSingleSelectedEffect, true)
+function PlayerCardAchievement:playSelelctEffect()
+	gohelper.setActive(self.goGroupSelectedEffect, false)
+	gohelper.setActive(self.goGroupSelectedEffect, true)
+	gohelper.setActive(self.goSingleSelectedEffect, false)
+	gohelper.setActive(self.goSingleSelectedEffect, true)
 	PlayerCardController.instance:playChangeEffectAudio()
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0.btnClick:AddClickListener(arg_4_0.btnClickOnClick, arg_4_0)
-	arg_4_0:addEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, arg_4_0.onRefreshView, arg_4_0)
+function PlayerCardAchievement:addEvents()
+	self.btnClick:AddClickListener(self.btnClickOnClick, self)
+	self:addEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, self.onRefreshView, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0.btnClick:RemoveClickListener()
-	arg_5_0:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, arg_5_0.onRefreshView, arg_5_0)
+function PlayerCardAchievement:removeEvents()
+	self.btnClick:RemoveClickListener()
+	self:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, self.onRefreshView, self)
 end
 
-function var_0_0.canOpen(arg_6_0)
-	arg_6_0:onOpen()
-	arg_6_0:addEvents()
+function PlayerCardAchievement:canOpen()
+	self:onOpen()
+	self:addEvents()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.userId = arg_7_0.viewParam.userId
+function PlayerCardAchievement:onOpen()
+	local param = self.viewParam
 
-	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes.achieveitem
-	local var_7_1 = arg_7_0.viewContainer:getSetting().otherRes.misihaiitem
+	self.userId = param.userId
 
-	arg_7_0.achieveitemRes = arg_7_0.viewContainer:getRes(var_7_0)
-	arg_7_0.misihaiitemRes = arg_7_0.viewContainer:getRes(var_7_1)
+	local achieveitem = self.viewContainer:getSetting().otherRes.achieveitem
+	local misihaiitem = self.viewContainer:getSetting().otherRes.misihaiitem
 
-	arg_7_0:onRefreshView()
+	self.achieveitemRes = self.viewContainer:getRes(achieveitem)
+	self.misihaiitemRes = self.viewContainer:getRes(misihaiitem)
+
+	self:onRefreshView()
 end
 
-function var_0_0.getCardInfo(arg_8_0)
-	return PlayerCardModel.instance:getCardInfo(arg_8_0.userId)
+function PlayerCardAchievement:getCardInfo()
+	return PlayerCardModel.instance:getCardInfo(self.userId)
 end
 
-function var_0_0.isPlayerSelf(arg_9_0)
-	local var_9_0 = arg_9_0:getCardInfo()
+function PlayerCardAchievement:isPlayerSelf()
+	local cardInfo = self:getCardInfo()
 
-	return var_9_0 and var_9_0:isSelf()
+	return cardInfo and cardInfo:isSelf()
 end
 
-function var_0_0.getPlayerInfo(arg_10_0)
-	local var_10_0 = arg_10_0:getCardInfo()
+function PlayerCardAchievement:getPlayerInfo()
+	local cardInfo = self:getCardInfo()
 
-	return var_10_0 and var_10_0:getPlayerInfo()
+	return cardInfo and cardInfo:getPlayerInfo()
 end
 
-function var_0_0.btnClickOnClick(arg_11_0)
-	if arg_11_0:isPlayerSelf() then
+function PlayerCardAchievement:btnClickOnClick()
+	if self:isPlayerSelf() then
 		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 			ViewMgr.instance:openView(ViewName.PlayerCardAchievementSelectView)
 		else
@@ -87,295 +91,299 @@ function var_0_0.btnClickOnClick(arg_11_0)
 	end
 end
 
-function var_0_0.onRefreshView(arg_12_0)
-	local var_12_0 = arg_12_0:getCardInfo()
+function PlayerCardAchievement:onRefreshView()
+	local cardInfo = self:getCardInfo()
 
-	if not var_12_0 then
+	if not cardInfo then
 		return
 	end
 
-	if var_12_0.achievementCount == -1 then
-		arg_12_0.txtDec.text = PlayerCardEnum.EmptyString2
+	if cardInfo.achievementCount == -1 then
+		self.txtDec.text = PlayerCardEnum.EmptyString2
 	else
-		arg_12_0.txtDec.text = tostring(var_12_0.achievementCount)
+		self.txtDec.text = tostring(cardInfo.achievementCount)
 	end
 
-	arg_12_0:_refreshAchievements()
+	self:_refreshAchievements()
 end
 
-function var_0_0._refreshAchievements(arg_13_0)
-	local var_13_0 = arg_13_0:getCardInfo()
-	local var_13_1 = arg_13_0:getPlayerInfo()
-	local var_13_2 = var_13_0:getShowAchievement() or var_13_1.showAchievement
-	local var_13_3, var_13_4, var_13_5 = PlayerViewAchievementModel.instance:getShowAchievements(var_13_2)
-	local var_13_6 = not var_13_4 or tabletool.len(var_13_4) <= 0
+function PlayerCardAchievement:_refreshAchievements()
+	local cardInfo = self:getCardInfo()
+	local playerInfo = self:getPlayerInfo()
+	local showStr = cardInfo:getShowAchievement() or playerInfo.showAchievement
+	local isGroup, showTaskList, isNamePlate = PlayerViewAchievementModel.instance:getShowAchievements(showStr)
+	local isEmpty = not showTaskList or tabletool.len(showTaskList) <= 0
 
-	gohelper.setActive(arg_13_0.goEmpty, var_13_6)
-	gohelper.setActive(arg_13_0.goGroup, var_13_3 and not var_13_6)
-	gohelper.setActive(arg_13_0.goSingle, not var_13_3 and not var_13_6 and not var_13_5)
-	gohelper.setActive(arg_13_0.goMisihai, not var_13_3 and not var_13_6 and var_13_5)
+	gohelper.setActive(self.goEmpty, isEmpty)
+	gohelper.setActive(self.goGroup, isGroup and not isEmpty)
+	gohelper.setActive(self.goSingle, not isGroup and not isEmpty and not isNamePlate)
+	gohelper.setActive(self.goMisihai, not isGroup and not isEmpty and isNamePlate)
 
-	if arg_13_0.notIsFirst and arg_13_0.showStr ~= var_13_2 then
-		arg_13_0:playSelelctEffect()
+	if self.notIsFirst and self.showStr ~= showStr then
+		self:playSelelctEffect()
 	end
 
-	arg_13_0.showStr = var_13_2
-	arg_13_0.notIsFirst = true
+	self.showStr = showStr
+	self.notIsFirst = true
 
-	if var_13_6 then
+	if isEmpty then
 		return
 	end
 
-	if not var_13_3 then
-		if not var_13_5 then
-			arg_13_0:_refreshSingle(var_13_4)
+	if not isGroup then
+		if not isNamePlate then
+			self:_refreshSingle(showTaskList)
 		else
-			arg_13_0:_refreshNamePlate(var_13_4)
+			self:_refreshNamePlate(showTaskList)
 		end
 	else
-		for iter_13_0, iter_13_1 in pairs(var_13_4) do
-			arg_13_0:_refreshGroup(iter_13_0, iter_13_1)
+		for k, v in pairs(showTaskList) do
+			self:_refreshGroup(k, v)
 
 			break
 		end
 	end
 end
 
-function var_0_0._refreshNamePlate(arg_14_0, arg_14_1)
-	arg_14_0._gonameplateitem = arg_14_0._gonameplateitem or arg_14_0:_getOrCreateNamePlate()
+function PlayerCardAchievement:_refreshNamePlate(showTaskList)
+	self._gonameplateitem = self._gonameplateitem or self:_getOrCreateNamePlate()
 
-	local var_14_0 = AchievementConfig.instance:getTask(arg_14_1[1])
+	local taskCO = AchievementConfig.instance:getTask(showTaskList[1])
 
-	if not var_14_0 then
+	if not taskCO then
 		return
 	end
 
-	local var_14_1 = AchievementConfig.instance:getAchievement(var_14_0.achievementId)
+	local achievementCfg = AchievementConfig.instance:getAchievement(taskCO.achievementId)
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._gonameplateitem.levelItemList) do
-		gohelper.setActive(iter_14_1.go, false)
+	for index, item in ipairs(self._gonameplateitem.levelItemList) do
+		gohelper.setActive(item.go, false)
 	end
 
-	local var_14_2 = arg_14_0._gonameplateitem.levelItemList[var_14_0.level]
-	local var_14_3
-	local var_14_4
+	local item = self._gonameplateitem.levelItemList[taskCO.level]
+	local bgName, titlebgName
 
-	if var_14_0.image and not string.nilorempty(var_14_0.image) then
-		local var_14_5 = string.split(var_14_0.image, "#")
+	if taskCO.image and not string.nilorempty(taskCO.image) then
+		local temp = string.split(taskCO.image, "#")
 
-		var_14_3 = var_14_5[1]
-		var_14_4 = var_14_5[2]
+		bgName = temp[1]
+		titlebgName = temp[2]
 	end
 
-	local function var_14_6()
-		local var_15_0 = var_14_2._bgLoader:getInstGO()
+	local function callback()
+		local go = item._bgLoader:getInstGO()
 	end
 
-	if var_14_2._bgLoader then
-		var_14_2._bgLoader:dispose()
+	if item._bgLoader then
+		item._bgLoader:dispose()
 
-		var_14_2._bgLoader = nil
+		item._bgLoader = nil
 	end
 
-	var_14_2._bgLoader = PrefabInstantiate.Create(var_14_2.gobg)
+	item._bgLoader = PrefabInstantiate.Create(item.gobg)
 
-	var_14_2._bgLoader:startLoad(AchievementUtils.getBgPrefabUrl(var_14_3, true), var_14_6, arg_14_0)
-	var_14_2.simagetitle:LoadImage(ResUrl.getAchievementLangIcon(var_14_4))
+	item._bgLoader:startLoad(AchievementUtils.getBgPrefabUrl(bgName, true), callback, self)
+	item.simagetitle:LoadImage(ResUrl.getAchievementLangIcon(titlebgName))
 
-	local var_14_7 = var_14_0.listenerType
-	local var_14_8 = AchievementUtils.getAchievementProgressBySourceType(var_14_1.rule)
-	local var_14_9
+	local listenerType = taskCO.listenerType
+	local maxProgress = AchievementUtils.getAchievementProgressBySourceType(achievementCfg.rule)
+	local num
 
-	if var_14_7 and var_14_7 == "TowerPassLayer" then
-		if var_14_0.listenerParam and not string.nilorempty(var_14_0.listenerParam) then
-			local var_14_10 = string.split(var_14_0.listenerParam, "#")
+	if listenerType and listenerType == "TowerPassLayer" then
+		if taskCO.listenerParam and not string.nilorempty(taskCO.listenerParam) then
+			local temp = string.split(taskCO.listenerParam, "#")
 
-			var_14_9 = var_14_10 and var_14_10[3]
-			var_14_9 = var_14_9 * 10
+			num = temp and temp[3]
+			num = num * 10
 		end
 	else
-		var_14_9 = var_14_0 and var_14_0.maxProgress
+		num = taskCO and taskCO.maxProgress
 	end
 
-	var_14_2.txtlevel.text = var_14_9 < var_14_8 and var_14_8 or var_14_9
-
-	gohelper.setActive(var_14_2.go, true)
-end
-
-function var_0_0._getOrCreateNamePlate(arg_16_0)
-	local var_16_0 = arg_16_0:getUserDataTb_()
-
-	var_16_0.go = gohelper.clone(arg_16_0.misihaiitemRes, arg_16_0.goMisihai, "nameplate")
-	var_16_0.levelItemList = {}
-
-	for iter_16_0 = 1, 3 do
-		local var_16_1 = {
-			go = gohelper.findChild(var_16_0.go, "go_icon/level" .. iter_16_0)
-		}
-
-		var_16_1.gobg = gohelper.findChild(var_16_1.go, "#simage_bg")
-		var_16_1.simagetitle = gohelper.findChildSingleImage(var_16_1.go, "#simage_title")
-		var_16_1.txtlevel = gohelper.findChildText(var_16_1.go, "#txt_level")
-
-		gohelper.setActive(var_16_1.go, false)
-		table.insert(var_16_0.levelItemList, var_16_1)
+	if self.userId ~= PlayerModel.instance:getMyUserId() then
+		item.txtlevel.text = self:getCardInfo():getTowerLayerMetre()
+	else
+		item.txtlevel.text = num < maxProgress and maxProgress or num
 	end
 
-	return var_16_0
+	gohelper.setActive(item.go, true)
 end
 
-function var_0_0._refreshSingle(arg_17_0, arg_17_1)
-	local var_17_0 = 1
+function PlayerCardAchievement:_getOrCreateNamePlate()
+	local item = self:getUserDataTb_()
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		local var_17_1 = arg_17_0:_getOrCreateSingleItem(var_17_0)
+	item.go = gohelper.clone(self.misihaiitemRes, self.goMisihai, "nameplate")
+	item.levelItemList = {}
 
-		gohelper.setActive(var_17_1.viewGo, true)
-		gohelper.setActive(var_17_1.goempty, false)
-		gohelper.setActive(var_17_1.gohas, true)
+	for i = 1, 3 do
+		local levelitem = {}
 
-		local var_17_2 = AchievementConfig.instance:getTask(iter_17_1)
+		levelitem.go = gohelper.findChild(item.go, "go_icon/level" .. i)
+		levelitem.gobg = gohelper.findChild(levelitem.go, "#simage_bg")
+		levelitem.simagetitle = gohelper.findChildSingleImage(levelitem.go, "#simage_title")
+		levelitem.txtlevel = gohelper.findChildText(levelitem.go, "#txt_level")
 
-		if var_17_2 then
-			var_17_1.simageicon:LoadImage(ResUrl.getAchievementIcon("badgeicon/" .. var_17_2.icon))
+		gohelper.setActive(levelitem.go, false)
+		table.insert(item.levelItemList, levelitem)
+	end
+
+	return item
+end
+
+function PlayerCardAchievement:_refreshSingle(showTaskList)
+	local index = 1
+
+	for k, v in ipairs(showTaskList) do
+		local achievementItem = self:_getOrCreateSingleItem(index)
+
+		gohelper.setActive(achievementItem.viewGo, true)
+		gohelper.setActive(achievementItem.goempty, false)
+		gohelper.setActive(achievementItem.gohas, true)
+
+		local taskCO = AchievementConfig.instance:getTask(v)
+
+		if taskCO then
+			achievementItem.simageicon:LoadImage(ResUrl.getAchievementIcon("badgeicon/" .. taskCO.icon))
 		end
 
-		var_17_0 = var_17_0 + 1
+		index = index + 1
 	end
 
-	for iter_17_2 = var_17_0, AchievementEnum.ShowMaxSingleCount do
-		local var_17_3 = arg_17_0:_getOrCreateSingleItem(iter_17_2)
+	for i = index, AchievementEnum.ShowMaxSingleCount do
+		local achievementItem = self:_getOrCreateSingleItem(i)
 
-		gohelper.setActive(var_17_3.viewGo, true)
-		gohelper.setActive(var_17_3.goempty, true)
-		gohelper.setActive(var_17_3.gohas, false)
-	end
-end
-
-function var_0_0._getOrCreateSingleItem(arg_18_0, arg_18_1)
-	if not arg_18_0._singleAchieveTabs[arg_18_1] then
-		local var_18_0 = arg_18_0:getUserDataTb_()
-
-		var_18_0.viewGo = gohelper.cloneInPlace(arg_18_0.goSingleItem, "singleitem_" .. arg_18_1)
-		var_18_0.goempty = gohelper.findChild(var_18_0.viewGo, "go_empty")
-		var_18_0.gohas = gohelper.findChild(var_18_0.viewGo, "go_has")
-		var_18_0.simageicon = gohelper.findChildSingleImage(var_18_0.viewGo, "go_has/simage_icon")
-
-		table.insert(arg_18_0._singleAchieveTabs, arg_18_1, var_18_0)
-	end
-
-	return arg_18_0._singleAchieveTabs[arg_18_1]
-end
-
-function var_0_0._refreshGroup(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = AchievementConfig.instance:getGroup(arg_19_1)
-
-	if var_19_0 then
-		local var_19_1 = AchievementModel.instance:isAchievementTaskFinished(var_19_0.unLockAchievement)
-		local var_19_2 = AchievementConfig.instance:getGroupBgUrl(arg_19_1, AchievementEnum.GroupParamType.List, var_19_1)
-
-		arg_19_0.groupSimageBg:LoadImage(var_19_2)
-		arg_19_0:refreshSingleInGroup(arg_19_1, arg_19_2)
+		gohelper.setActive(achievementItem.viewGo, true)
+		gohelper.setActive(achievementItem.goempty, true)
+		gohelper.setActive(achievementItem.gohas, false)
 	end
 end
 
-function var_0_0.refreshSingleInGroup(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_20_1)
-	local var_20_1 = arg_20_0:buildAchievementAndTaskMap(arg_20_2)
-	local var_20_2 = {}
-	local var_20_3 = AchievementConfig.instance:getGroupParamIdTab(arg_20_1, AchievementEnum.GroupParamType.List)
-	local var_20_4 = var_20_3 and #var_20_3 or 0
+function PlayerCardAchievement:_getOrCreateSingleItem(index)
+	if not self._singleAchieveTabs[index] then
+		local achievementItem = self:getUserDataTb_()
 
-	for iter_20_0 = 1, math.max(#arg_20_0._iconItems, var_20_4) do
-		local var_20_5 = arg_20_0:_getOrCreateGroupItem(iter_20_0)
-		local var_20_6 = var_20_0 and var_20_0[var_20_3[iter_20_0]]
+		achievementItem.viewGo = gohelper.cloneInPlace(self.goSingleItem, "singleitem_" .. index)
+		achievementItem.goempty = gohelper.findChild(achievementItem.viewGo, "go_empty")
+		achievementItem.gohas = gohelper.findChild(achievementItem.viewGo, "go_has")
+		achievementItem.simageicon = gohelper.findChildSingleImage(achievementItem.viewGo, "go_has/simage_icon")
 
-		arg_20_0:_setGroupAchievementPosAndScale(var_20_5.viewGO, arg_20_1, iter_20_0)
-		gohelper.setActive(var_20_5.viewGO, var_20_6 ~= nil)
+		table.insert(self._singleAchieveTabs, index, achievementItem)
+	end
 
-		if var_20_6 then
-			local var_20_7 = var_20_6.id
-			local var_20_8 = arg_20_0:getExistTaskCo(var_20_1, var_20_6)
+	return self._singleAchieveTabs[index]
+end
 
-			if var_20_8 then
-				var_20_5:setData(var_20_8)
-				var_20_5:setIconVisible(true)
-				var_20_5:setBgVisible(false)
-				var_20_5:setNameTxtVisible(false)
+function PlayerCardAchievement:_refreshGroup(groupId, taskList)
+	local groupCO = AchievementConfig.instance:getGroup(groupId)
+
+	if groupCO then
+		local isUnLockAchievementFinished = AchievementModel.instance:isAchievementTaskFinished(groupCO.unLockAchievement)
+		local groupBgUrl = AchievementConfig.instance:getGroupBgUrl(groupId, AchievementEnum.GroupParamType.List, isUnLockAchievementFinished)
+
+		self.groupSimageBg:LoadImage(groupBgUrl)
+		self:refreshSingleInGroup(groupId, taskList)
+	end
+end
+
+function PlayerCardAchievement:refreshSingleInGroup(groupId, taskList)
+	local achievementCfgs = AchievementConfig.instance:getAchievementsByGroupId(groupId)
+	local achievement2TaskMap = self:buildAchievementAndTaskMap(taskList)
+	local processMap = {}
+	local idTabs = AchievementConfig.instance:getGroupParamIdTab(groupId, AchievementEnum.GroupParamType.List)
+	local idCount = idTabs and #idTabs or 0
+
+	for i = 1, math.max(#self._iconItems, idCount) do
+		local item = self:_getOrCreateGroupItem(i)
+		local achievementCO = achievementCfgs and achievementCfgs[idTabs[i]]
+
+		self:_setGroupAchievementPosAndScale(item.viewGO, groupId, i)
+		gohelper.setActive(item.viewGO, achievementCO ~= nil)
+
+		if achievementCO then
+			local achievementId = achievementCO.id
+			local taskCO = self:getExistTaskCo(achievement2TaskMap, achievementCO)
+
+			if taskCO then
+				item:setData(taskCO)
+				item:setIconVisible(true)
+				item:setBgVisible(false)
+				item:setNameTxtVisible(false)
 			else
-				gohelper.setActive(var_20_5.viewGO, false)
+				gohelper.setActive(item.viewGO, false)
 			end
 		end
 	end
 end
 
-function var_0_0.buildAchievementAndTaskMap(arg_21_0, arg_21_1)
-	local var_21_0 = {}
+function PlayerCardAchievement:buildAchievementAndTaskMap(taskList)
+	local map = {}
 
-	if arg_21_1 then
-		for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
-			local var_21_1 = AchievementConfig.instance:getTask(iter_21_1)
-			local var_21_2 = var_21_1.achievementId
+	if taskList then
+		for k, v in ipairs(taskList) do
+			local taskCo = AchievementConfig.instance:getTask(v)
+			local id = taskCo.achievementId
 
-			if not var_21_0[var_21_2] then
-				var_21_0[var_21_2] = var_21_1
+			if not map[id] then
+				map[id] = taskCo
 			end
 		end
 	end
 
-	return var_21_0
+	return map
 end
 
-function var_0_0._setGroupAchievementPosAndScale(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0, var_22_1, var_22_2, var_22_3 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(arg_22_2, arg_22_3, AchievementEnum.GroupParamType.List)
+function PlayerCardAchievement:_setGroupAchievementPosAndScale(go, groupId, index)
+	local posX, posY, scaleX, scaleY = AchievementConfig.instance:getAchievementPosAndScaleInGroup(groupId, index, AchievementEnum.GroupParamType.List)
 
-	if arg_22_1 then
-		recthelper.setAnchor(arg_22_1.transform, var_22_0 or 0, var_22_1 or 0)
-		transformhelper.setLocalScale(arg_22_1.transform, var_22_2 or 1, var_22_3 or 1, 1)
+	if go then
+		recthelper.setAnchor(go.transform, posX or 0, posY or 0)
+		transformhelper.setLocalScale(go.transform, scaleX or 1, scaleY or 1, 1)
 	end
 end
 
-function var_0_0.getExistTaskCo(arg_23_0, arg_23_1, arg_23_2)
-	return arg_23_1[arg_23_2.id]
+function PlayerCardAchievement:getExistTaskCo(taskMap, achievementCO)
+	local taskCo = taskMap[achievementCO.id]
+
+	return taskCo
 end
 
-function var_0_0._getOrCreateGroupItem(arg_24_0, arg_24_1)
-	if not arg_24_0._iconItems[arg_24_1] then
-		local var_24_0 = AchievementMainIcon.New()
-		local var_24_1 = gohelper.clone(arg_24_0.achieveitemRes, arg_24_0.goGroupContainer, tostring(arg_24_1))
+function PlayerCardAchievement:_getOrCreateGroupItem(index)
+	if not self._iconItems[index] then
+		local icon = AchievementMainIcon.New()
+		local go = gohelper.clone(self.achieveitemRes, self.goGroupContainer, tostring(index))
 
-		var_24_0:init(var_24_1)
+		icon:init(go)
 
-		arg_24_0._iconItems[arg_24_1] = var_24_0
+		self._iconItems[index] = icon
 	end
 
-	return arg_24_0._iconItems[arg_24_1]
+	return self._iconItems[index]
 end
 
-function var_0_0._tryDisposeSingleItems(arg_25_0)
-	if arg_25_0._singleAchieveTabs then
-		for iter_25_0, iter_25_1 in pairs(arg_25_0._singleAchieveTabs) do
-			if iter_25_1.simageicon then
-				iter_25_1.simageicon:UnLoadImage()
+function PlayerCardAchievement:_tryDisposeSingleItems()
+	if self._singleAchieveTabs then
+		for _, v in pairs(self._singleAchieveTabs) do
+			if v.simageicon then
+				v.simageicon:UnLoadImage()
 			end
 		end
 
-		arg_25_0._singleAchieveTabs = nil
+		self._singleAchieveTabs = nil
 	end
 
-	if arg_25_0._iconItems then
-		for iter_25_2, iter_25_3 in pairs(arg_25_0._iconItems) do
-			iter_25_3:dispose()
+	if self._iconItems then
+		for _, v in pairs(self._iconItems) do
+			v:dispose()
 		end
 
-		arg_25_0._iconItems = nil
+		self._iconItems = nil
 	end
 end
 
-function var_0_0.onDestroy(arg_26_0)
-	arg_26_0:_tryDisposeSingleItems()
-	arg_26_0.groupSimageBg:UnLoadImage()
-	arg_26_0:removeEvents()
+function PlayerCardAchievement:onDestroy()
+	self:_tryDisposeSingleItems()
+	self.groupSimageBg:UnLoadImage()
+	self:removeEvents()
 end
 
-return var_0_0
+return PlayerCardAchievement

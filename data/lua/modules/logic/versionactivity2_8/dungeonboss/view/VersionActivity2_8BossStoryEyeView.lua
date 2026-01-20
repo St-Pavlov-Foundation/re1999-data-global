@@ -1,102 +1,104 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryEyeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8BossStoryEyeView.lua
 
-local var_0_0 = class("VersionActivity2_8BossStoryEyeView", BaseView)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryEyeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local VersionActivity2_8BossStoryEyeView = class("VersionActivity2_8BossStoryEyeView", BaseView)
+
+function VersionActivity2_8BossStoryEyeView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_8BossStoryEyeView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_8BossStoryEyeView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function VersionActivity2_8BossStoryEyeView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivity2_8BossStoryEyeView:onUpdateParam()
 	return
 end
 
-var_0_0.camerControllerPath = "bossstory_eye_camera"
+VersionActivity2_8BossStoryEyeView.camerControllerPath = "bossstory_eye_camera"
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, arg_6_0._onHeroGroupExit, arg_6_0)
-	arg_6_0:addEventCb(FightController.instance, FightEvent.ModifyDelayTime, arg_6_0._onModifyDelayTime, arg_6_0)
-	NavigateMgr.instance:addEscape(arg_6_0.viewName, arg_6_0._onEscHandler, arg_6_0)
+function VersionActivity2_8BossStoryEyeView:onOpen()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, self._onHeroGroupExit, self)
+	self:addEventCb(FightController.instance, FightEvent.ModifyDelayTime, self._onModifyDelayTime, self)
+	NavigateMgr.instance:addEscape(self.viewName, self._onEscHandler, self)
 end
 
-function var_0_0._onEscHandler(arg_7_0)
+function VersionActivity2_8BossStoryEyeView:_onEscHandler()
 	return
 end
 
-function var_0_0._onModifyDelayTime(arg_8_0, arg_8_1)
-	if arg_8_0._animLength then
-		arg_8_1.time = arg_8_0._animLength
+function VersionActivity2_8BossStoryEyeView:_onModifyDelayTime(param)
+	if self._animLength then
+		param.time = self._animLength
 	end
 end
 
-function var_0_0._onHeroGroupExit(arg_9_0)
-	local var_9_0 = arg_9_0.viewGO:GetComponent("Animator")
+function VersionActivity2_8BossStoryEyeView:_onHeroGroupExit()
+	local animator = self.viewGO:GetComponent("Animator")
 
-	if var_9_0 then
-		var_9_0:Play("end", 0, 0)
+	if animator then
+		animator:Play("end", 0, 0)
 	end
 
-	arg_9_0:_playCameraAnim()
-	TaskDispatcher.runDelay(arg_9_0._animDone, arg_9_0, arg_9_0._animLength)
+	self:_playCameraAnim()
+	TaskDispatcher.runDelay(self._animDone, self, self._animLength)
 end
 
-function var_0_0.getRes(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0.viewContainer._abLoader:getAssetItem(arg_10_1)
+function VersionActivity2_8BossStoryEyeView:getRes(abPath, assetPath)
+	local assetItem = self.viewContainer._abLoader:getAssetItem(abPath)
 
-	if var_10_0 then
-		return var_10_0:GetResource(arg_10_2)
+	if assetItem then
+		return assetItem:GetResource(assetPath)
 	end
 
 	return nil
 end
 
-function var_0_0._playCameraAnim(arg_11_0)
-	arg_11_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
-	arg_11_0._rawController = arg_11_0._cameraAnimator.runtimeAnimatorController
-	arg_11_0._rawEnabled = arg_11_0._cameraAnimator.enabled
-	arg_11_0._cameraAnimator.enabled = true
+function VersionActivity2_8BossStoryEyeView:_playCameraAnim()
+	self._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	self._rawController = self._cameraAnimator.runtimeAnimatorController
+	self._rawEnabled = self._cameraAnimator.enabled
+	self._cameraAnimator.enabled = true
 
-	local var_11_0 = arg_11_0:getRes(FightHelper.getCameraAniPath(var_0_0.camerControllerPath), ResUrl.getCameraAnim(var_0_0.camerControllerPath))
+	local animatorInst = self:getRes(FightHelper.getCameraAniPath(VersionActivity2_8BossStoryEyeView.camerControllerPath), ResUrl.getCameraAnim(VersionActivity2_8BossStoryEyeView.camerControllerPath))
 
-	arg_11_0._cameraAnimator.runtimeAnimatorController = var_11_0
+	self._cameraAnimator.runtimeAnimatorController = animatorInst
 
-	local var_11_1 = "bossstory_camera_eye"
+	local animName = "bossstory_camera_eye"
 
-	arg_11_0._cameraAnimator:Play(var_11_1, 0, 0)
+	self._cameraAnimator:Play(animName, 0, 0)
 
-	arg_11_0._animLength = 2.2
+	self._animLength = 2.2
 
 	AudioMgr.instance:trigger(AudioEnum2_8.BossStory.play_ui_fuleyuan_boss_eye_open)
 end
 
-function var_0_0._animDone(arg_12_0)
-	arg_12_0:closeThis()
+function VersionActivity2_8BossStoryEyeView:_animDone()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_13_0)
-	if arg_13_0._cameraAnimator then
-		arg_13_0._cameraAnimator.enabled = arg_13_0._rawEnabled
-		arg_13_0._cameraAnimator.runtimeAnimatorController = arg_13_0._rawController
+function VersionActivity2_8BossStoryEyeView:onClose()
+	if self._cameraAnimator then
+		self._cameraAnimator.enabled = self._rawEnabled
+		self._cameraAnimator.runtimeAnimatorController = self._rawController
 	end
 
-	TaskDispatcher.cancelTask(arg_13_0._animDone, arg_13_0)
+	TaskDispatcher.cancelTask(self._animDone, self)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function VersionActivity2_8BossStoryEyeView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_8BossStoryEyeView

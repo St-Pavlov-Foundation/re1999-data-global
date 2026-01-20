@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5DispatchHeroMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/model/VersionActivity1_5DispatchHeroMo.lua
 
-local var_0_0 = pureTable("VersionActivity1_5DispatchVersionActivity1_5DispatchHeroMo")
+module("modules.logic.versionactivity1_5.dungeon.model.VersionActivity1_5DispatchHeroMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.heroId = 0
-	arg_1_0.config = nil
+local VersionActivity1_5DispatchHeroMo = pureTable("VersionActivity1_5DispatchVersionActivity1_5DispatchHeroMo")
+
+function VersionActivity1_5DispatchHeroMo:ctor()
+	self.id = 0
+	self.heroId = 0
+	self.config = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.heroId = arg_2_1.heroId
-	arg_2_0.config = arg_2_1.config
-	arg_2_0.level = arg_2_1.level
-	arg_2_0.rare = arg_2_0.config.rare
+function VersionActivity1_5DispatchHeroMo:init(heroMo)
+	self.id = heroMo.id
+	self.heroId = heroMo.heroId
+	self.config = heroMo.config
+	self.level = heroMo.level
+	self.rare = self.config.rare
 end
 
-function var_0_0.isDispatched(arg_3_0)
-	return VersionActivity1_5DungeonModel.instance:isDispatched(arg_3_0.heroId)
+function VersionActivity1_5DispatchHeroMo:isDispatched()
+	return VersionActivity1_5DungeonModel.instance:isDispatched(self.heroId)
 end
 
-return var_0_0
+return VersionActivity1_5DispatchHeroMo

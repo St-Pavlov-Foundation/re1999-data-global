@@ -1,60 +1,62 @@
-﻿module("modules.logic.season.utils.SeasonEquipLocalRecord", package.seeall)
+﻿-- chunkname: @modules/logic/season/utils/SeasonEquipLocalRecord.lua
 
-local var_0_0 = class("SeasonEquipLocalRecord")
+module("modules.logic.season.utils.SeasonEquipLocalRecord", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.reasonKey = arg_1_2
-	arg_1_0._list = nil
-	arg_1_0._dict = nil
+local SeasonEquipLocalRecord = class("SeasonEquipLocalRecord")
 
-	arg_1_0:initLocalSave()
+function SeasonEquipLocalRecord:init(actId, reasonKey)
+	self.activityId = actId
+	self.reasonKey = reasonKey
+	self._list = nil
+	self._dict = nil
+
+	self:initLocalSave()
 end
 
-function var_0_0.initLocalSave(arg_2_0)
-	arg_2_0._dict = {}
+function SeasonEquipLocalRecord:initLocalSave()
+	self._dict = {}
 
-	local var_2_0 = PlayerPrefsHelper.getString(arg_2_0:getLocalKey(), "")
+	local rs = PlayerPrefsHelper.getString(self:getLocalKey(), "")
 
-	if not string.nilorempty(var_2_0) then
-		arg_2_0._list = cjson.decode(var_2_0)
+	if not string.nilorempty(rs) then
+		self._list = cjson.decode(rs)
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._list) do
-			arg_2_0._dict[iter_2_1] = 1
+		for _, id in ipairs(self._list) do
+			self._dict[id] = 1
 		end
 	else
-		arg_2_0._list = {}
+		self._list = {}
 	end
 end
 
-function var_0_0.recordAllItem(arg_3_0)
-	local var_3_0 = Activity104Model.instance:getAllItemMo(arg_3_0.activityId) or {}
+function SeasonEquipLocalRecord:recordAllItem()
+	local itemMap = Activity104Model.instance:getAllItemMo(self.activityId) or {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		arg_3_0:add(iter_3_0)
+	for itemUid, itemMO in pairs(itemMap) do
+		self:add(itemUid)
 	end
 
-	arg_3_0:save()
+	self:save()
 end
 
-function var_0_0.add(arg_4_0, arg_4_1)
-	if not arg_4_0._dict[arg_4_1] then
-		table.insert(arg_4_0._list, arg_4_1)
+function SeasonEquipLocalRecord:add(id)
+	if not self._dict[id] then
+		table.insert(self._list, id)
 
-		arg_4_0._dict[arg_4_1] = 1
+		self._dict[id] = 1
 	end
 end
 
-function var_0_0.contain(arg_5_0, arg_5_1)
-	return arg_5_0._dict[arg_5_1]
+function SeasonEquipLocalRecord:contain(id)
+	return self._dict[id]
 end
 
-function var_0_0.save(arg_6_0)
-	PlayerPrefsHelper.setString(arg_6_0:getLocalKey(), cjson.encode(arg_6_0._list))
+function SeasonEquipLocalRecord:save()
+	PlayerPrefsHelper.setString(self:getLocalKey(), cjson.encode(self._list))
 end
 
-function var_0_0.getLocalKey(arg_7_0)
-	return tostring(arg_7_0.reasonKey) .. "#" .. tostring(arg_7_0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function SeasonEquipLocalRecord:getLocalKey()
+	return tostring(self.reasonKey) .. "#" .. tostring(self.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-return var_0_0
+return SeasonEquipLocalRecord

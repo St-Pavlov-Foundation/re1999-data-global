@@ -1,49 +1,52 @@
-﻿module("modules.logic.versionactivity1_4.act133.model.Activity133ListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act133/model/Activity133ListModel.lua
 
-local var_0_0 = class("Activity133ListModel", ListScrollModel)
+module("modules.logic.versionactivity1_4.act133.model.Activity133ListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local Activity133ListModel = class("Activity133ListModel", ListScrollModel)
 
-	arg_1_0.scrollgo = arg_1_1
+function Activity133ListModel:init(scrollgo)
+	local list = {}
 
-	local var_1_1 = Activity133Config.instance:getBonusCoList()
+	self.scrollgo = scrollgo
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = Activity133ListMO.New()
+	local bonusCoList = Activity133Config.instance:getBonusCoList()
 
-		var_1_2:init(iter_1_1[1])
-		table.insert(var_1_0, var_1_2)
+	for _, bonusCo in ipairs(bonusCoList) do
+		local mo = Activity133ListMO.New()
+
+		mo:init(bonusCo[1])
+		table.insert(list, mo)
 	end
 
-	table.sort(var_1_0, var_0_0._sortFunction)
+	table.sort(list, Activity133ListModel._sortFunction)
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
-		if not Activity133Model.instance:checkBonusReceived(iter_1_3.id) then
-			local var_1_3 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity
-			local var_1_4 = string.splitToNumber(iter_1_3.config.needTokens, "#")
+	for _, mo in ipairs(list) do
+		if not Activity133Model.instance:checkBonusReceived(mo.id) then
+			local havenum = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Act133).quantity
+			local costs = string.splitToNumber(mo.config.needTokens, "#")
+			local costNum = tonumber(costs[3])
 
-			if var_1_3 >= tonumber(var_1_4[3]) then
-				iter_1_3.showRed = true
+			if costNum <= havenum then
+				mo.showRed = true
 
 				break
 			end
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-function var_0_0._sortFunction(arg_2_0, arg_2_1)
-	if arg_2_0.id ~= arg_2_1.id then
-		return arg_2_0.id < arg_2_1.id
+function Activity133ListModel._sortFunction(x, y)
+	if x.id ~= y.id then
+		return x.id < y.id
 	end
 end
 
-function var_0_0.reInit(arg_3_0)
+function Activity133ListModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity133ListModel.instance = Activity133ListModel.New()
 
-return var_0_0
+return Activity133ListModel

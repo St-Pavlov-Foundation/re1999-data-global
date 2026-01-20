@@ -1,406 +1,414 @@
-﻿module("modules.logic.pay.model.PayModel", package.seeall)
+﻿-- chunkname: @modules/logic/pay/model/PayModel.lua
 
-local var_0_0 = class("PayModel", BaseModel)
+module("modules.logic.pay.model.PayModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._chargeInfos = {}
-	arg_1_0._productInfos = {}
-	arg_1_0._orderInfo = {}
-	arg_1_0._sandboxEnable = false
-	arg_1_0._sandboxBalance = 0
-	arg_1_0._hasInitProductInfo = false
+local PayModel = class("PayModel", BaseModel)
+
+function PayModel:onInit()
+	self._chargeInfos = {}
+	self._productInfos = {}
+	self._orderInfo = {}
+	self._sandboxEnable = false
+	self._sandboxBalance = 0
+	self._hasInitProductInfo = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._productInfos = {}
-	arg_2_0._chargeInfos = {}
-	arg_2_0._orderInfo = {}
-	arg_2_0._sandboxEnable = false
-	arg_2_0._sandboxBalance = 0
-	arg_2_0._hasInitProductInfo = false
+function PayModel:reInit()
+	self._productInfos = {}
+	self._chargeInfos = {}
+	self._orderInfo = {}
+	self._sandboxEnable = false
+	self._sandboxBalance = 0
+	self._hasInitProductInfo = false
 end
 
-function var_0_0.setSandboxInfo(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._sandboxEnable = arg_3_1
-	arg_3_0._sandboxBalance = arg_3_2
+function PayModel:setSandboxInfo(sandboxEnable, sandboxBalance)
+	self._sandboxEnable = sandboxEnable
+	self._sandboxBalance = sandboxBalance
 end
 
-function var_0_0.updateSandboxBalance(arg_4_0, arg_4_1)
-	arg_4_0._sandboxBalance = arg_4_1
+function PayModel:updateSandboxBalance(sandboxBalance)
+	self._sandboxBalance = sandboxBalance
 end
 
-function var_0_0.setChargeInfo(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		arg_5_0._chargeInfos[iter_5_1.id] = iter_5_1
+function PayModel:setChargeInfo(info)
+	for _, v in ipairs(info) do
+		self._chargeInfos[v.id] = v
 	end
 end
 
-function var_0_0.hasInitProductInfo(arg_6_0)
+function PayModel:hasInitProductInfo()
 	if BootNativeUtil.isWindows() and GameChannelConfig.isGpGlobal() == false then
 		return true
 	end
 
-	return arg_6_0._hasInitProductInfo
+	return self._hasInitProductInfo
 end
 
-function var_0_0.setProductInfo(arg_7_0, arg_7_1)
-	if string.nilorempty(arg_7_1) == false and arg_7_1 ~= "null" then
-		local var_7_0 = cjson.decode(arg_7_1)
+function PayModel:setProductInfo(infoStr)
+	if string.nilorempty(infoStr) == false and infoStr ~= "null" then
+		local allJson = cjson.decode(infoStr)
 
-		for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		for _, v in pairs(allJson) do
 			if BootNativeUtil.isWindows() then
-				local var_7_1 = tonumber(iter_7_1.productId)
+				local goodsId = tonumber(v.productId)
 
-				if var_7_1 and GameChannelConfig.isLongCheng() == false and GameChannelConfig.isGpJapan() == false then
-					arg_7_0._productInfos[var_7_1] = iter_7_1
+				if goodsId and GameChannelConfig.isLongCheng() == false and GameChannelConfig.isGpJapan() == false then
+					self._productInfos[goodsId] = v
 				end
 
-				arg_7_0._hasInitProductInfo = true
+				self._hasInitProductInfo = true
 			else
-				local var_7_2 = StoreConfig.instance:getStoreChargeConfigByProductID(iter_7_1.productId)
+				local configList = StoreConfig.instance:getStoreChargeConfigByProductID(v.productId)
 
-				for iter_7_2, iter_7_3 in ipairs(var_7_2) do
-					arg_7_0._hasInitProductInfo = true
+				for i, config in ipairs(configList) do
+					self._hasInitProductInfo = true
 
 					if GameChannelConfig.isLongCheng() == false and GameChannelConfig.isGpJapan() == false then
-						arg_7_0._productInfos[iter_7_3.id] = iter_7_1
+						self._productInfos[config.id] = v
 					end
 				end
 
-				if #var_7_2 == 0 then
-					logError("找不到对应充值商品：" .. iter_7_1.productId)
+				if #configList == 0 then
+					logError("找不到对应充值商品：" .. v.productId)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.setOrderInfo(arg_8_0, arg_8_1)
-	arg_8_0._orderInfo = {}
-	arg_8_0._orderInfo.id = arg_8_1.id
+function PayModel:setOrderInfo(info)
+	self._orderInfo = {}
+	self._orderInfo.id = info.id
 
-	if arg_8_1.passBackParam then
-		arg_8_0._orderInfo.passBackParam = arg_8_1.passBackParam
+	if info.passBackParam then
+		self._orderInfo.passBackParam = info.passBackParam
 	end
 
-	arg_8_0._orderInfo.notifyUrl = arg_8_1.notifyUrl and arg_8_1.notifyUrl or ""
-	arg_8_0._orderInfo.gameOrderId = arg_8_1.gameOrderId
-	arg_8_0._orderInfo.timestamp = arg_8_1.timestamp
-	arg_8_0._orderInfo.sign = arg_8_1.sign
-	arg_8_0._orderInfo.serverId = arg_8_1.serverId
-	arg_8_0._orderInfo.currency = arg_8_1.currency
+	self._orderInfo.notifyUrl = info.notifyUrl and info.notifyUrl or ""
+	self._orderInfo.gameOrderId = info.gameOrderId
+	self._orderInfo.timestamp = info.timestamp
+	self._orderInfo.sign = info.sign
+	self._orderInfo.serverId = info.serverId
+	self._orderInfo.currency = info.currency
 end
 
-function var_0_0.clearOrderInfo(arg_9_0)
-	arg_9_0._orderInfo = {}
+function PayModel:clearOrderInfo()
+	self._orderInfo = {}
 end
 
-function var_0_0.getSandboxEnable(arg_10_0)
-	return arg_10_0._sandboxEnable
+function PayModel:getSandboxEnable()
+	return self._sandboxEnable
 end
 
-function var_0_0.getSandboxBalance(arg_11_0)
-	return arg_11_0._sandboxBalance
+function PayModel:getSandboxBalance()
+	return self._sandboxBalance
 end
 
-function var_0_0.getOrderInfo(arg_12_0)
-	return arg_12_0._orderInfo
+function PayModel:getOrderInfo()
+	return self._orderInfo
 end
 
-function var_0_0.getGamePayInfo(arg_13_0)
-	if not arg_13_0._orderInfo.id then
+function PayModel:getGamePayInfo()
+	if not self._orderInfo.id then
 		return ""
 	end
 
-	local var_13_0 = StoreConfig.instance:getChargeGoodsConfig(arg_13_0._orderInfo.id)
-	local var_13_1 = PlayerModel.instance:getPlayinfo()
-	local var_13_2 = {
-		gameRoleInfo = arg_13_0:getGameRoleInfo(true)
-	}
+	local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(self._orderInfo.id)
+	local playerinfo = PlayerModel.instance:getPlayinfo()
+	local payInfo = {}
 
-	var_13_2.gameRoleInfo.roleEstablishTime = tonumber(var_13_1.registerTime)
-	var_13_2.currency = arg_13_0._orderInfo.currency
-	var_13_2.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(var_13_0.id))
-	var_13_2.goodsId = arg_13_0._orderInfo.id
-	var_13_2.goodsName = var_13_0.name
-	var_13_2.goodsDesc = var_13_0.desc
-	var_13_2.gameOrderId = arg_13_0._orderInfo.gameOrderId
-	var_13_2.passBackParam = arg_13_0._orderInfo.passBackParam and arg_13_0._orderInfo.passBackParam or ""
-	var_13_2.notifyUrl = arg_13_0._orderInfo.notifyUrl
-	var_13_2.timestamp = arg_13_0._orderInfo.timestamp
-	var_13_2.sign = arg_13_0._orderInfo.sign
+	payInfo.gameRoleInfo = self:getGameRoleInfo(true)
+	payInfo.gameRoleInfo.roleEstablishTime = tonumber(playerinfo.registerTime)
+	payInfo.currency = self._orderInfo.currency
+	payInfo.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(chargeConfig.id))
+	payInfo.goodsId = self._orderInfo.id
+	payInfo.goodsName = chargeConfig.name
+	payInfo.goodsDesc = chargeConfig.desc
+	payInfo.gameOrderId = self._orderInfo.gameOrderId
+	payInfo.passBackParam = self._orderInfo.passBackParam and self._orderInfo.passBackParam or ""
+	payInfo.notifyUrl = self._orderInfo.notifyUrl
+	payInfo.timestamp = self._orderInfo.timestamp
+	payInfo.sign = self._orderInfo.sign
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_13_2.productId = ""
+		payInfo.productId = ""
 	else
-		local var_13_3 = SDKMgr.instance:getChannelId()
-		local var_13_4 = StoreConfig.instance:getStoreChargeConfig(arg_13_0._orderInfo.id, BootNativeUtil.getPackageName() .. "_" .. var_13_3, true)
+		local channelId = SDKMgr.instance:getChannelId()
+		local channelIdChargeConfig = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName() .. "_" .. channelId, true)
 
-		if var_13_4 then
-			var_13_2.productId = var_13_4.appStoreProductID
+		if channelIdChargeConfig then
+			payInfo.productId = channelIdChargeConfig.appStoreProductID
 		else
-			var_13_2.productId = StoreConfig.instance:getStoreChargeConfig(arg_13_0._orderInfo.id, BootNativeUtil.getPackageName()).appStoreProductID
+			payInfo.productId = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName()).appStoreProductID
 		end
 	end
 
-	var_13_2.originCurrency = arg_13_0:getProductOriginCurrency(arg_13_0._orderInfo.id)
-	var_13_2.originAmount = arg_13_0:getProductOriginAmount(arg_13_0._orderInfo.id)
+	payInfo.originCurrency = self:getProductOriginCurrency(self._orderInfo.id)
+	payInfo.originAmount = self:getProductOriginAmount(self._orderInfo.id)
 
-	return var_13_2
+	return payInfo
 end
 
-function var_0_0.getProductInfo(arg_14_0, arg_14_1)
-	return arg_14_0._productInfos[arg_14_1]
+function PayModel:getProductInfo(id)
+	return self._productInfos[id]
 end
 
-function var_0_0.getProductPrice(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getProductOriginPriceSymbol(arg_15_1)
-	local var_15_1, var_15_2 = arg_15_0:getProductOriginPriceNum(arg_15_1)
+function PayModel:getProductPrice(id)
+	local symbol = self:getProductOriginPriceSymbol(id)
+	local num, numStr = self:getProductOriginPriceNum(id)
 
-	return string.format("%s%s", var_15_0, var_15_2)
+	return string.format("%s%s", symbol, numStr)
 end
 
-function var_0_0.getProductOriginCurrency(arg_16_0, arg_16_1)
-	if arg_16_0._productInfos[arg_16_1] and arg_16_0._productInfos[arg_16_1].priceCurrencyCode then
-		return arg_16_0._productInfos[arg_16_1].priceCurrencyCode
+function PayModel:getProductOriginCurrency(id)
+	if self._productInfos[id] and self._productInfos[id].priceCurrencyCode then
+		return self._productInfos[id].priceCurrencyCode
 	else
-		return StoreConfig.instance:getChargeGoodsCurrencyCode(arg_16_1)
+		return StoreConfig.instance:getChargeGoodsCurrencyCode(id)
 	end
 end
 
-function var_0_0.getProductInfoPrice(arg_17_0, arg_17_1)
-	if arg_17_0._productInfos[arg_17_1] and arg_17_0._productInfos[arg_17_1].price then
-		return arg_17_0._productInfos[arg_17_1].price
+function PayModel:getProductInfoPrice(id)
+	if self._productInfos[id] and self._productInfos[id].price then
+		return self._productInfos[id].price
 	else
-		local var_17_0 = StoreConfig.instance:getChargeGoodsConfig(arg_17_1)
-		local var_17_1 = "$"
-		local var_17_2 = StoreConfig.instance:getChargeGoodsCurrencyCode(arg_17_1)
+		local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(id)
+		local symbol = "$"
+		local currencyCode = StoreConfig.instance:getChargeGoodsCurrencyCode(id)
 
-		if PayEnum.CurrencySymbol[var_17_2] then
-			var_17_1 = PayEnum.CurrencySymbol[var_17_2]
+		if PayEnum.CurrencySymbol[currencyCode] then
+			symbol = PayEnum.CurrencySymbol[currencyCode]
 		end
 
-		local var_17_3 = StoreConfig.instance:getChargeGoodsPrice(arg_17_1)
+		local price = StoreConfig.instance:getChargeGoodsPrice(id)
 
 		if SDKModel.instance:isDmm() then
-			return string.format("%spt", var_17_3)
+			return string.format("%spt", price)
 		else
-			return string.format("%s%s", var_17_1, var_17_3)
+			return string.format("%s%s", symbol, price)
 		end
 	end
 end
 
-function var_0_0._getConfigProductInfoPrice(arg_18_0, arg_18_1)
-	local var_18_0 = StoreConfig.instance:getChargeGoodsConfig(arg_18_1)
-	local var_18_1 = "$"
-	local var_18_2 = StoreConfig.instance:getChargeGoodsCurrencyCode(arg_18_1)
+function PayModel:_getConfigProductInfoPrice(id)
+	local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(id)
+	local symbol = "$"
+	local currencyCode = StoreConfig.instance:getChargeGoodsCurrencyCode(id)
 
-	if PayEnum.CurrencySymbol[var_18_2] then
-		var_18_1 = PayEnum.CurrencySymbol[var_18_2]
+	if PayEnum.CurrencySymbol[currencyCode] then
+		symbol = PayEnum.CurrencySymbol[currencyCode]
 	end
 
-	local var_18_3 = StoreConfig.instance:getChargeGoodsPrice(arg_18_1)
+	local price = StoreConfig.instance:getChargeGoodsPrice(id)
 
-	return string.format("%s%s", var_18_1, var_18_3)
+	return string.format("%s%s", symbol, price)
 end
 
-function var_0_0.getProductOriginAmountMicro(arg_19_0, arg_19_1)
-	return arg_19_0._productInfos[arg_19_1].priceAmountMicros
+function PayModel:getProductOriginAmountMicro(id)
+	return self._productInfos[id].priceAmountMicros
 end
 
-function var_0_0.getProductOriginPriceSymbol(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getProductInfoPrice(arg_20_1)
-	local var_20_1 = string.find(var_20_0, "%d")
+function PayModel:getProductOriginPriceSymbol(id)
+	local str = self:getProductInfoPrice(id)
+	local index = string.find(str, "%d")
 
-	if not var_20_1 then
-		logError("getProductOriginPriceSymbol fail:" .. var_20_0)
+	if not index then
+		logError("getProductOriginPriceSymbol fail:" .. str)
 
-		var_20_0 = arg_20_0:_getConfigProductInfoPrice(arg_20_1)
-		var_20_1 = string.find(var_20_0, "%d")
+		str = self:_getConfigProductInfoPrice(id)
+		index = string.find(str, "%d")
 	end
 
-	return string.sub(var_20_0, 0, var_20_1 - 1)
+	return string.sub(str, 0, index - 1)
 end
 
-function var_0_0.getProductOriginPriceNum(arg_21_0, arg_21_1)
-	arg_21_0._tmpNum = 0
-	arg_21_0._tmpNumStr = "0"
-	arg_21_0._tmpIsNoDecimalsCurrency = false
+function PayModel:getProductOriginPriceNum(id)
+	self._tmpNum = 0
+	self._tmpNumStr = "0"
+	self._tmpIsNoDecimalsCurrency = false
 
-	if not callWithCatch(arg_21_0._getProductOriginPriceNum, arg_21_0, arg_21_1) then
-		local var_21_0 = arg_21_0:_getConfigProductInfoPrice(arg_21_1)
-		local var_21_1 = arg_21_0:getProductOriginCurrency(arg_21_1)
-		local var_21_2 = string.find(var_21_0, "%d")
-		local var_21_3 = string.sub(var_21_0, var_21_2, string.len(var_21_0))
-		local var_21_4 = string.reverse(var_21_3)
-		local var_21_5 = string.find(var_21_4, "%d")
-		local var_21_6 = string.len(var_21_4) - var_21_5
-		local var_21_7 = string.sub(var_21_3, 1, var_21_6 + 1)
+	if not callWithCatch(self._getProductOriginPriceNum, self, id) then
+		local str = self:_getConfigProductInfoPrice(id)
+		local code = self:getProductOriginCurrency(id)
+		local index = string.find(str, "%d")
+		local numStr = string.sub(str, index, string.len(str))
+		local reverseStr = string.reverse(numStr)
+		local lastIndex = string.find(reverseStr, "%d")
 
-		arg_21_0._tmpNum = string.gsub(var_21_7, ",", "")
-		arg_21_0._tmpNum = tonumber(arg_21_0._tmpNum)
-		arg_21_0._tmpNumStr = var_21_3
-		arg_21_0._tmpIsNoDecimalsCurrency = arg_21_0:isNoDecimalsCurrency(var_21_1)
+		lastIndex = string.len(reverseStr) - lastIndex
 
-		if arg_21_0._tmpIsNoDecimalsCurrency then
-			arg_21_0._tmpNumStr = math.floor(arg_21_0._tmpNum)
+		local numStr2 = string.sub(numStr, 1, lastIndex + 1)
+
+		self._tmpNum = string.gsub(numStr2, ",", "")
+		self._tmpNum = tonumber(self._tmpNum)
+		self._tmpNumStr = numStr
+		self._tmpIsNoDecimalsCurrency = self:isNoDecimalsCurrency(code)
+
+		if self._tmpIsNoDecimalsCurrency then
+			self._tmpNumStr = math.floor(self._tmpNum)
 		end
 	end
 
-	if string.nilorempty(arg_21_0._tmpNum) then
-		arg_21_0._tmpNum = 0
+	if string.nilorempty(self._tmpNum) then
+		self._tmpNum = 0
 	end
 
-	return arg_21_0._tmpNum, arg_21_0._tmpNumStr, arg_21_0._tmpIsNoDecimalsCurrency
+	return self._tmpNum, self._tmpNumStr, self._tmpIsNoDecimalsCurrency
 end
 
-function var_0_0._getProductOriginPriceNum(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getProductInfoPrice(arg_22_1)
-	local var_22_1 = arg_22_0:getProductOriginCurrency(arg_22_1)
-	local var_22_2 = string.find(var_22_0, "%d")
-	local var_22_3 = string.sub(var_22_0, var_22_2, string.len(var_22_0))
-	local var_22_4 = string.reverse(var_22_3)
-	local var_22_5 = string.find(var_22_4, "%d")
-	local var_22_6 = string.len(var_22_4) - var_22_5
-	local var_22_7 = string.sub(var_22_3, 1, var_22_6 + 1)
-	local var_22_8 = string.gsub(var_22_7, ",", "")
+function PayModel:_getProductOriginPriceNum(id)
+	local str = self:getProductInfoPrice(id)
+	local code = self:getProductOriginCurrency(id)
+	local index = string.find(str, "%d")
+	local numStr = string.sub(str, index, string.len(str))
+	local reverseStr = string.reverse(numStr)
+	local lastIndex = string.find(reverseStr, "%d")
 
-	arg_22_0._tmpNum = tonumber(var_22_8)
-	arg_22_0._tmpIsNoDecimalsCurrency = arg_22_0:isNoDecimalsCurrency(var_22_1)
-	arg_22_0._tmpNumStr = var_22_3
+	lastIndex = string.len(reverseStr) - lastIndex
 
-	if arg_22_0._tmpIsNoDecimalsCurrency and SDKModel.instance:isDmm() == false then
-		arg_22_0._tmpNumStr = math.floor(var_22_8)
+	local numStr2 = string.sub(numStr, 1, lastIndex + 1)
+	local num = string.gsub(numStr2, ",", "")
+
+	self._tmpNum = tonumber(num)
+	self._tmpIsNoDecimalsCurrency = self:isNoDecimalsCurrency(code)
+	self._tmpNumStr = numStr
+
+	if self._tmpIsNoDecimalsCurrency and SDKModel.instance:isDmm() == false then
+		self._tmpNumStr = math.floor(num)
 	end
 end
 
-function var_0_0.isNoDecimalsCurrency(arg_23_0, arg_23_1)
-	return PayEnum.NoDecimalsCurrency[arg_23_1] ~= nil
+function PayModel:isNoDecimalsCurrency(code)
+	return PayEnum.NoDecimalsCurrency[code] ~= nil
 end
 
-function var_0_0.getProductOriginAmount(arg_24_0, arg_24_1)
-	arg_24_0._tmpAmount = 0
+function PayModel:getProductOriginAmount(id)
+	self._tmpAmount = 0
 
-	if not callWithCatch(arg_24_0._getProductOriginAmount, arg_24_0, arg_24_1) then
-		arg_24_0._tmpAmount = 0
+	if not callWithCatch(self._getProductOriginAmount, self, id) then
+		self._tmpAmount = 0
 
-		logError("getProductOriginAmount fail:" .. arg_24_0:getProductInfoPrice(arg_24_1))
+		logError("getProductOriginAmount fail:" .. self:getProductInfoPrice(id))
 	end
 
-	if string.nilorempty(arg_24_0._tmpAmount) then
-		arg_24_0._tmpAmount = 0
+	if string.nilorempty(self._tmpAmount) then
+		self._tmpAmount = 0
 
-		logError("getProductOriginAmount fail:" .. arg_24_0:getProductInfoPrice(arg_24_1))
+		logError("getProductOriginAmount fail:" .. self:getProductInfoPrice(id))
 	end
 
-	return arg_24_0._tmpAmount
+	return self._tmpAmount
 end
 
-function var_0_0._getProductOriginAmount(arg_25_0, arg_25_1)
-	if BootNativeUtil.isWindows() and arg_25_0:getProductInfo(arg_25_1) then
-		local var_25_0 = arg_25_0:getProductOriginAmountMicro(arg_25_1)
+function PayModel:_getProductOriginAmount(id)
+	if BootNativeUtil.isWindows() and self:getProductInfo(id) then
+		local originAmountMicro = self:getProductOriginAmountMicro(id)
 
-		if var_25_0 then
-			arg_25_0._tmpAmount = var_25_0
+		if originAmountMicro then
+			self._tmpAmount = originAmountMicro
 		else
-			arg_25_0._tmpAmount = 0
+			self._tmpAmount = 0
 		end
 
 		return
 	end
 
-	local var_25_1 = arg_25_0:getProductInfoPrice(arg_25_1)
-	local var_25_2 = string.find(var_25_1, "%d")
-	local var_25_3 = string.sub(var_25_1, var_25_2, string.len(var_25_1))
-	local var_25_4 = string.reverse(var_25_3)
-	local var_25_5 = string.find(var_25_4, "%d")
-	local var_25_6 = string.len(var_25_4) - var_25_5
-	local var_25_7 = string.sub(var_25_3, 1, var_25_6 + 1)
-	local var_25_8 = string.gsub(var_25_7, ",", "")
-	local var_25_9 = tonumber(var_25_8) * 100
-	local var_25_10 = string.find(var_25_9, "%.")
+	local str = self:getProductInfoPrice(id)
+	local index = string.find(str, "%d")
+	local num = string.sub(str, index, string.len(str))
+	local reverseStr = string.reverse(num)
+	local lastIndex = string.find(reverseStr, "%d")
 
-	if var_25_10 then
-		var_25_9 = string.sub(var_25_9, 0, var_25_10 - 1)
-		var_25_9 = tonumber(var_25_9)
+	lastIndex = string.len(reverseStr) - lastIndex
+
+	local numStr2 = string.sub(num, 1, lastIndex + 1)
+
+	num = string.gsub(numStr2, ",", "")
+	num = tonumber(num)
+	num = num * 100
+	index = string.find(num, "%.")
+
+	if index then
+		num = string.sub(num, 0, index - 1)
+		num = tonumber(num)
 	else
-		var_25_9 = string.sub(var_25_9, 0, string.len(var_25_9))
-		var_25_9 = tonumber(var_25_9)
+		num = string.sub(num, 0, string.len(num))
+		num = tonumber(num)
 	end
 
-	arg_25_0._tmpAmount = var_25_9
+	self._tmpAmount = num
 end
 
-function var_0_0.getGameRoleInfo(arg_26_0, arg_26_1)
-	local var_26_0 = PlayerModel.instance:getPlayinfo()
-	local var_26_1 = CurrencyModel.instance:getFreeDiamond()
-	local var_26_2 = CurrencyModel.instance:getDiamond()
-	local var_26_3 = {
-		roleId = tostring(var_26_0.userId),
-		roleName = tostring(var_26_0.name),
-		currentLevel = tonumber(var_26_0.level)
-	}
+function PayModel:getGameRoleInfo(pay)
+	local playerinfo = PlayerModel.instance:getPlayinfo()
+	local freeDiamond = CurrencyModel.instance:getFreeDiamond()
+	local diamond = CurrencyModel.instance:getDiamond()
+	local roleInfo = {}
 
-	var_26_3.vipLevel = 0
+	roleInfo.roleId = tostring(playerinfo.userId)
+	roleInfo.roleName = tostring(playerinfo.name)
+	roleInfo.currentLevel = tonumber(playerinfo.level)
+	roleInfo.vipLevel = 0
 
-	local var_26_4 = tostring(LoginModel.instance.serverId)
+	local serverId = tostring(LoginModel.instance.serverId)
 
-	if arg_26_1 and arg_26_0._orderInfo.serverId > 0 then
-		var_26_4 = arg_26_0._orderInfo.serverId
+	if pay and self._orderInfo.serverId > 0 then
+		serverId = self._orderInfo.serverId
 	end
 
-	local var_26_5 = DungeonConfig.instance:getEpisodeCO(var_26_0.lastEpisodeId)
-	local var_26_6 = var_26_5 and tostring(var_26_5.name .. var_26_5.id) or ""
+	local lastEpisodeConfig = DungeonConfig.instance:getEpisodeCO(playerinfo.lastEpisodeId)
+	local curProgress = lastEpisodeConfig and tostring(lastEpisodeConfig.name .. lastEpisodeConfig.id) or ""
 
-	var_26_3.serverId = var_26_4
-	var_26_3.serverName = tostring(LoginModel.instance.serverName)
-	var_26_3.roleCTime = tonumber(var_26_0.registerTime)
-	var_26_3.loginTime = tonumber(var_26_0.lastLoginTime)
-	var_26_3.logoutTime = tonumber(var_26_0.lastLogoutTime)
-	var_26_3.accountRegisterTime = tonumber(var_26_0.registerTime)
-	var_26_3.giveCurrencyNum = var_26_1
-	var_26_3.paidCurrencyNum = var_26_2
-	var_26_3.currencyNum = var_26_1 + var_26_2
-	var_26_3.currentProgress = var_26_6
-	var_26_3.roleEstablishTime = tonumber(var_26_0.registerTime)
-	var_26_3.guildLevel = tonumber(var_26_0.level)
-	var_26_3.roleType = StatModel.instance:getRoleType()
-	var_26_3.gameEnv = VersionValidator.instance:isInReviewing() and 1 or 0
+	roleInfo.serverId = serverId
+	roleInfo.serverName = tostring(LoginModel.instance.serverName)
+	roleInfo.roleCTime = tonumber(playerinfo.registerTime)
+	roleInfo.loginTime = tonumber(playerinfo.lastLoginTime)
+	roleInfo.logoutTime = tonumber(playerinfo.lastLogoutTime)
+	roleInfo.accountRegisterTime = tonumber(playerinfo.registerTime)
+	roleInfo.giveCurrencyNum = freeDiamond
+	roleInfo.paidCurrencyNum = diamond
+	roleInfo.currencyNum = freeDiamond + diamond
+	roleInfo.currentProgress = curProgress
+	roleInfo.roleEstablishTime = tonumber(playerinfo.registerTime)
+	roleInfo.guildLevel = tonumber(playerinfo.level)
+	roleInfo.roleType = StatModel.instance:getRoleType()
+	roleInfo.gameEnv = VersionValidator.instance:isInReviewing() and 1 or 0
 
-	return var_26_3
+	return roleInfo
 end
 
-function var_0_0.getQuickUseInfo(arg_27_0)
-	if not arg_27_0._orderInfo then
+function PayModel:getQuickUseInfo()
+	if not self._orderInfo then
 		return
 	end
 
-	local var_27_0 = arg_27_0._orderInfo.id
-	local var_27_1 = StoreConfig.instance:getChargeGoodsConfig(var_27_0)
+	local goodsId = self._orderInfo.id
+	local chargeGoodsConfig = StoreConfig.instance:getChargeGoodsConfig(goodsId)
 
-	if not var_27_1 then
+	if not chargeGoodsConfig then
 		return
 	end
 
-	local var_27_2 = var_27_1.quickUseItemList
+	local quickUseItemList = chargeGoodsConfig.quickUseItemList
 
-	if string.nilorempty(var_27_2) then
+	if string.nilorempty(quickUseItemList) then
 		return
 	end
 
-	local var_27_3 = GameUtil.splitString2(var_27_2, true, "|", "#")
+	local itemList = GameUtil.splitString2(quickUseItemList, true, "|", "#")
 
-	if not var_27_3 or #var_27_3 == 0 then
+	if not itemList or #itemList == 0 then
 		return
 	end
 
 	return {
-		goodsId = var_27_0,
-		chargeGoodsConfig = var_27_1,
-		itemList = var_27_3
+		goodsId = goodsId,
+		chargeGoodsConfig = chargeGoodsConfig,
+		itemList = itemList
 	}
 end
 
-var_0_0.instance = var_0_0.New()
+PayModel.instance = PayModel.New()
 
-return var_0_0
+return PayModel

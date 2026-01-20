@@ -1,162 +1,168 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.controller.VersionActivity2_0DungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/controller/VersionActivity2_0DungeonController.lua
 
-local var_0_0 = class("VersionActivity2_0DungeonController", BaseController)
+module("modules.logic.versionactivity2_0.dungeon.controller.VersionActivity2_0DungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_0DungeonController = class("VersionActivity2_0DungeonController", BaseController)
+
+function VersionActivity2_0DungeonController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity2_0DungeonController:reInit()
 	VersionActivityDungeonBaseController.instance:clearChapterIdLastSelectEpisodeId()
 end
 
-function var_0_0.openTaskView(arg_3_0)
-	local var_3_0 = {
+function VersionActivity2_0DungeonController:openTaskView()
+	local typeIds = {
 		TaskEnum.TaskType.ActivityDungeon
 	}
 
-	TaskRpc.instance:sendGetTaskInfoRequest(var_3_0, arg_3_0._openTaskViewAfterRpc, arg_3_0)
+	TaskRpc.instance:sendGetTaskInfoRequest(typeIds, self._openTaskViewAfterRpc, self)
 end
 
-function var_0_0._openTaskViewAfterRpc(arg_4_0)
+function VersionActivity2_0DungeonController:_openTaskViewAfterRpc()
 	ViewMgr.instance:openView(ViewName.VersionActivity2_0TaskView)
 end
 
-function var_0_0.openStoreView(arg_5_0)
-	local var_5_0 = VersionActivity2_0Enum.ActivityId.DungeonStore
+function VersionActivity2_0DungeonController:openStoreView()
+	local actId = VersionActivity2_0Enum.ActivityId.DungeonStore
 
-	if not VersionActivityEnterHelper.checkCanOpen(var_5_0) then
+	if not VersionActivityEnterHelper.checkCanOpen(actId) then
 		return
 	end
 
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(var_5_0, arg_5_0._openStoreViewAfterRpc, arg_5_0)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, self._openStoreViewAfterRpc, self)
 end
 
-function var_0_0._openStoreViewAfterRpc(arg_6_0)
+function VersionActivity2_0DungeonController:_openStoreViewAfterRpc()
 	ViewMgr.instance:openView(ViewName.VersionActivity2_0StoreView)
 end
 
-function var_0_0.openVersionActivityDungeonMapView(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	arg_7_0.dungeonMapViewParam = {
-		chapterId = arg_7_1,
-		episodeId = arg_7_2
+function VersionActivity2_0DungeonController:openVersionActivityDungeonMapView(chapterId, episodeId, callback, callbackObj)
+	self.dungeonMapViewParam = {
+		chapterId = chapterId,
+		episodeId = episodeId
 	}
-	arg_7_0.openMapViewCallback = arg_7_3
-	arg_7_0.openMapViewCallbackObj = arg_7_4
+	self.openMapViewCallback = callback
+	self.openMapViewCallbackObj = callbackObj
 
 	VersionActivity2_0DungeonModel.instance:init()
 
-	arg_7_0.hasReceivedTaskInfo = false
-	arg_7_0.hasReceivedAct161Info = false
+	self.hasReceivedTaskInfo = false
+	self.hasReceivedAct161Info = false
 
-	local var_7_0 = {
+	local typeIds = {
 		TaskEnum.TaskType.ActivityDungeon
 	}
 
-	TaskRpc.instance:sendGetTaskInfoRequest(var_7_0, arg_7_0._onReceiveTaskInfoReply, arg_7_0)
-	Activity161Controller.instance:initAct161Info(false, true, arg_7_0._onReceiveAct161InfoReply, arg_7_0)
+	TaskRpc.instance:sendGetTaskInfoRequest(typeIds, self._onReceiveTaskInfoReply, self)
+	Activity161Controller.instance:initAct161Info(false, true, self._onReceiveAct161InfoReply, self)
 	Activity113Rpc.instance:sendGetAct113InfoRequest(VersionActivity2_0Enum.ActivityId.Dungeon)
 end
 
-function var_0_0._onReceiveTaskInfoReply(arg_8_0)
-	arg_8_0.hasReceivedTaskInfo = true
+function VersionActivity2_0DungeonController:_onReceiveTaskInfoReply()
+	self.hasReceivedTaskInfo = true
 
-	arg_8_0:_internalOpenVersionActivityDungeonMapView()
+	self:_internalOpenVersionActivityDungeonMapView()
 end
 
-function var_0_0._onReceiveAct161InfoReply(arg_9_0)
-	arg_9_0.hasReceivedAct161Info = true
+function VersionActivity2_0DungeonController:_onReceiveAct161InfoReply()
+	self.hasReceivedAct161Info = true
 
-	arg_9_0:_internalOpenVersionActivityDungeonMapView()
+	self:_internalOpenVersionActivityDungeonMapView()
 end
 
-function var_0_0._internalOpenVersionActivityDungeonMapView(arg_10_0)
-	if not arg_10_0.hasReceivedTaskInfo or not arg_10_0.hasReceivedAct161Info then
+function VersionActivity2_0DungeonController:_internalOpenVersionActivityDungeonMapView()
+	if not self.hasReceivedTaskInfo or not self.hasReceivedAct161Info then
 		return
 	end
 
-	arg_10_0.hasReceivedTaskInfo = false
-	arg_10_0.hasReceivedAct161Info = false
+	self.hasReceivedTaskInfo = false
+	self.hasReceivedAct161Info = false
 
-	local var_10_0 = VersionActivity2_0DungeonModel.instance:getGraffitiEntranceUnlockState()
-	local var_10_1 = VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement()
-	local var_10_2 = VersionActivity2_0DungeonEnum.PlayerPrefsKey.DungeonLastSelectEpisode
-	local var_10_3 = var_0_0.instance:getPlayerPrefs(var_10_2, VersionActivity2_0DungeonEnum.restaurantChapterMap)
+	local isEntranceUnlock = VersionActivity2_0DungeonModel.instance:getGraffitiEntranceUnlockState()
+	local needDoElementId = VersionActivity2_0DungeonModel.instance:getCurNeedUnlockGraffitiElement()
+	local saveEpisodeKey = VersionActivity2_0DungeonEnum.PlayerPrefsKey.DungeonLastSelectEpisode
+	local saveEpisodeId = VersionActivity2_0DungeonController.instance:getPlayerPrefs(saveEpisodeKey, VersionActivity2_0DungeonEnum.restaurantChapterMap)
 
-	if var_10_0 and not arg_10_0.dungeonMapViewParam.episodeId then
-		arg_10_0.dungeonMapViewParam.episodeId = var_10_1 and VersionActivity2_0DungeonEnum.restaurantChapterMap or tonumber(var_10_3)
+	if isEntranceUnlock and not self.dungeonMapViewParam.episodeId then
+		self.dungeonMapViewParam.episodeId = needDoElementId and VersionActivity2_0DungeonEnum.restaurantChapterMap or tonumber(saveEpisodeId)
 	end
 
-	ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonMapView, arg_10_0.dungeonMapViewParam)
+	ViewMgr.instance:openView(ViewName.VersionActivity2_0DungeonMapView, self.dungeonMapViewParam)
 end
 
-function var_0_0.onVersionActivityDungeonMapViewOpen(arg_11_0)
-	if not arg_11_0.openMapViewCallback then
+function VersionActivity2_0DungeonController:onVersionActivityDungeonMapViewOpen()
+	if not self.openMapViewCallback then
 		return
 	end
 
-	arg_11_0.openMapViewCallback(arg_11_0.openMapViewCallbackObj)
+	self.openMapViewCallback(self.openMapViewCallbackObj)
 
-	arg_11_0.openMapViewCallback = nil
-	arg_11_0.openMapViewCallbackObj = nil
+	self.openMapViewCallback = nil
+	self.openMapViewCallbackObj = nil
 end
 
-local function var_0_1(arg_12_0)
-	if string.nilorempty(arg_12_0) then
-		return arg_12_0
+local function prefabKeyAddActId(key)
+	if string.nilorempty(key) then
+		return key
 	end
 
-	return (string.format("2_0Dungeon_%s_%s", VersionActivity2_0Enum.ActivityId.Dungeon, arg_12_0))
+	local result = string.format("2_0Dungeon_%s_%s", VersionActivity2_0Enum.ActivityId.Dungeon, key)
+
+	return result
 end
 
-function var_0_0.savePlayerPrefs(arg_13_0, arg_13_1, arg_13_2)
-	if string.nilorempty(arg_13_1) or not arg_13_2 then
+function VersionActivity2_0DungeonController:savePlayerPrefs(key, value)
+	if string.nilorempty(key) or not value then
 		return
 	end
 
-	local var_13_0 = var_0_1(arg_13_1)
+	local uniqueKey = prefabKeyAddActId(key)
+	local isNumber = type(value) == "number"
 
-	if type(arg_13_2) == "number" then
-		GameUtil.playerPrefsSetNumberByUserId(var_13_0, arg_13_2)
+	if isNumber then
+		GameUtil.playerPrefsSetNumberByUserId(uniqueKey, value)
 	else
-		GameUtil.playerPrefsSetStringByUserId(var_13_0, arg_13_2)
+		GameUtil.playerPrefsSetStringByUserId(uniqueKey, value)
 	end
 end
 
-function var_0_0.getPlayerPrefs(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_2 or ""
+function VersionActivity2_0DungeonController:getPlayerPrefs(key, defaultValue)
+	local value = defaultValue or ""
 
-	if string.nilorempty(arg_14_1) then
-		return var_14_0
+	if string.nilorempty(key) then
+		return value
 	end
 
-	local var_14_1 = var_0_1(arg_14_1)
+	local uniqueKey = prefabKeyAddActId(key)
+	local isNumber = type(value) == "number"
 
-	if type(var_14_0) == "number" then
-		var_14_0 = GameUtil.playerPrefsGetNumberByUserId(var_14_1, var_14_0)
+	if isNumber then
+		value = GameUtil.playerPrefsGetNumberByUserId(uniqueKey, value)
 	else
-		var_14_0 = GameUtil.playerPrefsGetStringByUserId(var_14_1, var_14_0)
+		value = GameUtil.playerPrefsGetStringByUserId(uniqueKey, value)
 	end
 
-	return var_14_0
+	return value
 end
 
-function var_0_0.loadDictFromStr(arg_15_0, arg_15_1)
-	local var_15_0 = {}
+function VersionActivity2_0DungeonController:loadDictFromStr(jsonStr)
+	local result = {}
 
-	if not string.nilorempty(arg_15_1) then
-		var_15_0 = cjson.decode(arg_15_1)
+	if not string.nilorempty(jsonStr) then
+		result = cjson.decode(jsonStr)
 	end
 
-	return var_15_0
+	return result
 end
 
-function var_0_0.openDialogueView(arg_16_0, arg_16_1)
+function VersionActivity2_0DungeonController:openDialogueView(dialogueId)
 	ViewMgr.instance:openView(ViewName.VersionActivity2_0DialogueView, {
-		dialogueId = arg_16_1
+		dialogueId = dialogueId
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_0DungeonController.instance = VersionActivity2_0DungeonController.New()
 
-return var_0_0
+return VersionActivity2_0DungeonController

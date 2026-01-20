@@ -1,193 +1,198 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotEnterView.lua
 
-local var_0_0 = class("V1a6_CachotEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_leftbg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "right/#simage_rightbg/#txt_title")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "right/#simage_rightbg/#txt_desc")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_LimitTime")
-	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/scroll_Reward")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "right/scroll_Reward/Viewport/#go_rewards")
-	arg_1_0._gostart = gohelper.findChild(arg_1_0.viewGO, "right/node/start")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "right/node/locked")
-	arg_1_0._btnlocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/node/locked/#btn_locked")
-	arg_1_0._gocontinue = gohelper.findChild(arg_1_0.viewGO, "right/node/continue")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "right/node/#go_reddot")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/node/start/#btn_start")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "right/node/locked/#txt_tips")
-	arg_1_0._btncontinue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/node/continue/#btn_continue")
-	arg_1_0._btnabandon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/node/continue/#btn_abandon")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "right/node/continue/#go_progress")
-	arg_1_0._simgeprogress = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/node/continue/#go_progress/icon")
-	arg_1_0._txtprogress1 = gohelper.findChildText(arg_1_0.viewGO, "right/node/continue/#go_progress/#txt_progress1")
-	arg_1_0._txtprogress2 = gohelper.findChildText(arg_1_0.viewGO, "right/node/continue/#go_progress/#txt_progress2")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "right/#go_reward")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "right/#go_reward/#txt_score")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_reward/#btn_reward")
-	arg_1_0._gorewardreddot = gohelper.findChild(arg_1_0.viewGO, "right/#go_reward/#go_rewardreddot")
-	arg_1_0._itemObjects = {}
+local V1a6_CachotEnterView = class("V1a6_CachotEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotEnterView:onInitView()
+	self._simagelevelbg = gohelper.findChildSingleImage(self.viewGO, "#simage_levelbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "#simage_leftbg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "right/#simage_rightbg/#txt_title")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "right/#simage_rightbg/#txt_desc")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "right/#txt_LimitTime")
+	self._scrollReward = gohelper.findChildScrollRect(self.viewGO, "right/scroll_Reward")
+	self._gorewards = gohelper.findChild(self.viewGO, "right/scroll_Reward/Viewport/#go_rewards")
+	self._gostart = gohelper.findChild(self.viewGO, "right/node/start")
+	self._golocked = gohelper.findChild(self.viewGO, "right/node/locked")
+	self._btnlocked = gohelper.findChildButtonWithAudio(self.viewGO, "right/node/locked/#btn_locked")
+	self._gocontinue = gohelper.findChild(self.viewGO, "right/node/continue")
+	self._goreddot = gohelper.findChild(self.viewGO, "right/node/#go_reddot")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "right/node/start/#btn_start")
+	self._txttips = gohelper.findChildText(self.viewGO, "right/node/locked/#txt_tips")
+	self._btncontinue = gohelper.findChildButtonWithAudio(self.viewGO, "right/node/continue/#btn_continue")
+	self._btnabandon = gohelper.findChildButtonWithAudio(self.viewGO, "right/node/continue/#btn_abandon")
+	self._goprogress = gohelper.findChild(self.viewGO, "right/node/continue/#go_progress")
+	self._simgeprogress = gohelper.findChildSingleImage(self.viewGO, "right/node/continue/#go_progress/icon")
+	self._txtprogress1 = gohelper.findChildText(self.viewGO, "right/node/continue/#go_progress/#txt_progress1")
+	self._txtprogress2 = gohelper.findChildText(self.viewGO, "right/node/continue/#go_progress/#txt_progress2")
+	self._goreward = gohelper.findChild(self.viewGO, "right/#go_reward")
+	self._txtscore = gohelper.findChildText(self.viewGO, "right/#go_reward/#txt_score")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_reward/#btn_reward")
+	self._gorewardreddot = gohelper.findChild(self.viewGO, "right/#go_reward/#go_rewardreddot")
+	self._itemObjects = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, arg_2_0._refreshUI, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btncontinue:AddClickListener(arg_2_0._btncontinueOnClick, arg_2_0)
-	arg_2_0._btnabandon:AddClickListener(arg_2_0._btnabandonOnClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+function V1a6_CachotEnterView:addEvents()
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, self._refreshUI, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btncontinue:AddClickListener(self._btncontinueOnClick, self)
+	self._btnabandon:AddClickListener(self._btnabandonOnClick, self)
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, arg_3_0._refreshUI, arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnabandon:RemoveClickListener()
-	arg_3_0._btncontinue:RemoveClickListener()
-	arg_3_0._btnlocked:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
+function V1a6_CachotEnterView:removeEvents()
+	self:removeEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnUpdateRogueStateInfo, self._refreshUI, self)
+	self._btnstart:RemoveClickListener()
+	self._btnabandon:RemoveClickListener()
+	self._btncontinue:RemoveClickListener()
+	self._btnlocked:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
 end
 
-function var_0_0._btnabandonOnClick(arg_4_0)
-	local function var_4_0()
+function V1a6_CachotEnterView:_btnabandonOnClick()
+	local function func()
 		V1a6_CachotController.instance:abandonGame()
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6CachotMsgBox01, MsgBoxEnum.BoxType.Yes_No, var_4_0, nil, nil, arg_4_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6CachotMsgBox01, MsgBoxEnum.BoxType.Yes_No, func, nil, nil, self)
 end
 
-function var_0_0._btnrewardOnClick(arg_6_0)
+function V1a6_CachotEnterView:_btnrewardOnClick()
 	V1a6_CachotController.instance:openV1a6_CachotProgressView()
 end
 
-function var_0_0._btnstartOnClick(arg_7_0)
+function V1a6_CachotEnterView:_btnstartOnClick()
 	V1a6_CachotStatController.instance:statStart()
 	V1a6_CachotController.instance:enterMap(false)
 end
 
-function var_0_0._btncontinueOnClick(arg_8_0)
+function V1a6_CachotEnterView:_btncontinueOnClick()
 	V1a6_CachotStatController.instance:statStart()
 	V1a6_CachotController.instance:enterMap(false)
 end
 
-function var_0_0._editableInitView(arg_9_0)
+function V1a6_CachotEnterView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function V1a6_CachotEnterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	var_0_0.super.onOpen(arg_11_0)
-	arg_11_0:_refreshUI()
-	arg_11_0:_showLeftTime()
-	RedDotController.instance:addRedDot(arg_11_0._goreddot, RedDotEnum.DotNode.V1a6RogueRewardEnter)
-	RedDotController.instance:addRedDot(arg_11_0._gorewardreddot, RedDotEnum.DotNode.V1a6RogueRewardEnter)
+function V1a6_CachotEnterView:onOpen()
+	V1a6_CachotEnterView.super.onOpen(self)
+	self:_refreshUI()
+	self:_showLeftTime()
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V1a6RogueRewardEnter)
+	RedDotController.instance:addRedDot(self._gorewardreddot, RedDotEnum.DotNode.V1a6RogueRewardEnter)
 end
 
-function var_0_0._refreshUI(arg_12_0)
-	local var_12_0 = ActivityModel.instance:getActMO(V1a6_CachotEnum.ActivityId)
+function V1a6_CachotEnterView:_refreshUI()
+	local actMo = ActivityModel.instance:getActMO(V1a6_CachotEnum.ActivityId)
 
-	arg_12_0.config = ActivityConfig.instance:getActivityCo(V1a6_CachotEnum.ActivityId)
-	arg_12_0._txtdesc.text = arg_12_0.config.actDesc
+	self.config = ActivityConfig.instance:getActivityCo(V1a6_CachotEnum.ActivityId)
+	self._txtdesc.text = self.config.actDesc
 
-	if var_12_0:isOpen() then
-		local var_12_1 = ActivityConfig.instance:getActivityCo(V1a6_CachotEnum.ActivityId).openId
-		local var_12_2 = var_12_1 and var_12_1 ~= 0 and OpenModel.instance:isFunctionUnlock(var_12_1)
+	local isOpen = actMo:isOpen()
 
-		if var_12_2 then
-			arg_12_0.stateMo = V1a6_CachotModel.instance:getRogueStateInfo()
+	if isOpen then
+		local actCo = ActivityConfig.instance:getActivityCo(V1a6_CachotEnum.ActivityId)
+		local openId = actCo.openId
+		local isUnlock = openId and openId ~= 0 and OpenModel.instance:isFunctionUnlock(openId)
 
-			local var_12_3 = arg_12_0.stateMo and arg_12_0.stateMo:isStart()
+		if isUnlock then
+			self.stateMo = V1a6_CachotModel.instance:getRogueStateInfo()
 
-			if arg_12_0.stateMo and arg_12_0.stateMo.totalScore then
-				arg_12_0._txtscore.text = arg_12_0.stateMo.totalScore
+			local isStart = self.stateMo and self.stateMo:isStart()
+
+			if self.stateMo and self.stateMo.totalScore then
+				self._txtscore.text = self.stateMo.totalScore
 			end
 
-			if var_12_3 then
-				arg_12_0:refreshContinue()
+			if isStart then
+				self:refreshContinue()
 			end
 
-			gohelper.setActive(arg_12_0._gostart, not var_12_3)
-			gohelper.setActive(arg_12_0._gocontinue, var_12_3)
-			recthelper.setAnchorX(arg_12_0._goreward.transform, var_12_3 and 76 or 192)
+			gohelper.setActive(self._gostart, not isStart)
+			gohelper.setActive(self._gocontinue, isStart)
+			recthelper.setAnchorX(self._goreward.transform, isStart and 76 or 192)
 		else
-			local var_12_4 = OpenConfig.instance:getOpenCo(var_12_1).episodeId
-			local var_12_5 = DungeonConfig.instance:getEpisodeDisplay(var_12_4)
+			local episodeId = OpenConfig.instance:getOpenCo(openId).episodeId
+			local episodetxt = DungeonConfig.instance:getEpisodeDisplay(episodeId)
 
-			arg_12_0._txttips.text = formatLuaLang("dungeon_unlock_episode_mode", var_12_5)
+			self._txttips.text = formatLuaLang("dungeon_unlock_episode_mode", episodetxt)
 
-			arg_12_0._btnlocked:AddClickListener(function()
-				GameFacade.showToast(ToastEnum.DungeonMapLevel, var_12_5)
-			end, arg_12_0)
-			gohelper.setActive(arg_12_0._gostart, false)
-			gohelper.setActive(arg_12_0._gocontinue, false)
+			self._btnlocked:AddClickListener(function()
+				GameFacade.showToast(ToastEnum.DungeonMapLevel, episodetxt)
+			end, self)
+			gohelper.setActive(self._gostart, false)
+			gohelper.setActive(self._gocontinue, false)
 		end
 
-		gohelper.setActive(arg_12_0._golocked, not var_12_2)
-		gohelper.setActive(arg_12_0._txttips.gameObject, not var_12_2)
-		gohelper.setActive(arg_12_0._goreward, var_12_2)
+		gohelper.setActive(self._golocked, not isUnlock)
+		gohelper.setActive(self._txttips.gameObject, not isUnlock)
+		gohelper.setActive(self._goreward, isUnlock)
 	end
 
-	arg_12_0:initRewards()
+	self:initRewards()
 
-	arg_12_0._scrollReward.horizontalNormalizedPosition = 0
+	self._scrollReward.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.refreshContinue(arg_14_0)
-	local var_14_0 = V1a6_CachotConfig.instance:getDifficultyConfig(arg_14_0.stateMo.difficulty)
-	local var_14_1 = arg_14_0.stateMo.layer
+function V1a6_CachotEnterView:refreshContinue()
+	local diffco = V1a6_CachotConfig.instance:getDifficultyConfig(self.stateMo.difficulty)
+	local layer = self.stateMo.layer
 
-	arg_14_0._simgeprogress:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_layerchange_level_" .. var_14_1))
+	self._simgeprogress:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_layerchange_level_" .. layer))
 
-	arg_14_0._txtprogress1.text = var_14_0.title
-	arg_14_0._txtprogress2.text = V1a6_CachotRoomConfig.instance:getLayerName(arg_14_0.stateMo.layer, arg_14_0.stateMo.difficulty)
+	self._txtprogress1.text = diffco.title
+	self._txtprogress2.text = V1a6_CachotRoomConfig.instance:getLayerName(self.stateMo.layer, self.stateMo.difficulty)
 end
 
-function var_0_0.initRewards(arg_15_0)
-	local var_15_0 = GameUtil.splitString2(arg_15_0.config.activityBonus, true)
+function V1a6_CachotEnterView:initRewards()
+	local rewards = GameUtil.splitString2(self.config.activityBonus, true)
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			local var_15_1 = arg_15_0._itemObjects[iter_15_0]
+	if rewards then
+		for i, reward in ipairs(rewards) do
+			local item = self._itemObjects[i]
 
-			if not var_15_1 then
-				var_15_1 = IconMgr.instance:getCommonPropItemIcon(arg_15_0._gorewards)
+			if not item then
+				item = IconMgr.instance:getCommonPropItemIcon(self._gorewards)
 
-				table.insert(arg_15_0._itemObjects, var_15_1)
+				table.insert(self._itemObjects, item)
 			end
 
-			var_15_1:setMOValue(iter_15_1[1], iter_15_1[2], 1)
-			var_15_1:isShowCount(false)
+			item:setMOValue(reward[1], reward[2], 1)
+			item:isShowCount(false)
 		end
 	end
 end
 
-function var_0_0._showLeftTime(arg_16_0)
-	local var_16_0 = ActivityModel.instance:getRemainTimeSec(V1a6_CachotEnum.ActivityId)
+function V1a6_CachotEnterView:_showLeftTime()
+	local leftSecond = ActivityModel.instance:getRemainTimeSec(V1a6_CachotEnum.ActivityId)
 
-	if var_16_0 then
-		local var_16_1 = TimeUtil.SecondToActivityTimeFormat(var_16_0)
+	if leftSecond then
+		local dateStr = TimeUtil.SecondToActivityTimeFormat(leftSecond)
 
-		arg_16_0._txtremaintime.text = var_16_1
+		self._txtremaintime.text = dateStr
 	end
 end
 
-function var_0_0.everySecondCall(arg_17_0)
-	arg_17_0:_showLeftTime()
+function V1a6_CachotEnterView:everySecondCall()
+	self:_showLeftTime()
 end
 
-function var_0_0.onClose(arg_18_0)
-	var_0_0.super.onClose(arg_18_0)
-	arg_18_0._simgeprogress:UnLoadImage()
+function V1a6_CachotEnterView:onClose()
+	V1a6_CachotEnterView.super.onClose(self)
+	self._simgeprogress:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function V1a6_CachotEnterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V1a6_CachotEnterView

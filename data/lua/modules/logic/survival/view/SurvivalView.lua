@@ -1,209 +1,213 @@
-﻿module("modules.logic.survival.view.SurvivalView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/SurvivalView.lua
 
-local var_0_0 = class("SurvivalView", BaseView)
+module("modules.logic.survival.view.SurvivalView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnContinue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Continue")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._btnabort = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_abort")
-	arg_1_0._btnachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_achievement")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_reward")
-	arg_1_0._gobooty = gohelper.findChild(arg_1_0.viewGO, "Left/#go_booty")
-	arg_1_0._btnFold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_booty/#btn_fold")
-	arg_1_0._goImageUnFold = gohelper.findChild(arg_1_0.viewGO, "Left/#go_booty/#btn_fold/image_unfold")
-	arg_1_0._goImageFold = gohelper.findChild(arg_1_0.viewGO, "Left/#go_booty/#btn_fold/image_fold")
-	arg_1_0._btnCloseFold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_booty/#go_fold/#btn_close")
-	arg_1_0._goFold = gohelper.findChild(arg_1_0.viewGO, "Left/#go_booty/#go_fold")
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_reward/#go_reddot")
-	arg_1_0.goCanget = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_reward/#canget")
-	arg_1_0.goNormal = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_reward/#normal")
-	arg_1_0._txtDifficulty = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Continue/#go_difficult/#txt_difficult")
-	arg_1_0._txtDay = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_Continue/#go_difficult/#txt_days")
-	arg_1_0.bootyList = {}
-	arg_1_0.goBootyContent = gohelper.findChild(arg_1_0.viewGO, "Left/#go_booty/#go_fold/Scroll/Viewport/Content")
-	arg_1_0.goInfo = gohelper.findChild(arg_1_0.viewGO, "Left/goinfo")
+local SurvivalView = class("SurvivalView", BaseView)
 
-	arg_1_0:setFoldVisible(true)
+function SurvivalView:onInitView()
+	self._btnContinue = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Continue")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._btnabort = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_abort")
+	self._btnachievement = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_achievement")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_reward")
+	self._gobooty = gohelper.findChild(self.viewGO, "Left/#go_booty")
+	self._btnFold = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_booty/#btn_fold")
+	self._goImageUnFold = gohelper.findChild(self.viewGO, "Left/#go_booty/#btn_fold/image_unfold")
+	self._goImageFold = gohelper.findChild(self.viewGO, "Left/#go_booty/#btn_fold/image_fold")
+	self._btnCloseFold = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_booty/#go_fold/#btn_close")
+	self._goFold = gohelper.findChild(self.viewGO, "Left/#go_booty/#go_fold")
+	self._gored = gohelper.findChild(self.viewGO, "Left/#btn_reward/#go_reddot")
+	self.goCanget = gohelper.findChild(self.viewGO, "Left/#btn_reward/#canget")
+	self.goNormal = gohelper.findChild(self.viewGO, "Left/#btn_reward/#normal")
+	self._txtDifficulty = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Continue/#go_difficult/#txt_difficult")
+	self._txtDay = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_Continue/#go_difficult/#txt_days")
+	self.bootyList = {}
+	self.goBootyContent = gohelper.findChild(self.viewGO, "Left/#go_booty/#go_fold/Scroll/Viewport/Content")
+	self.goInfo = gohelper.findChild(self.viewGO, "Left/goinfo")
 
-	arg_1_0.btn_handbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_handbook")
-	arg_1_0.handbook_go_red = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_handbook/#go_red")
+	self:setFoldVisible(true)
+
+	self.btn_handbook = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_handbook")
+	self.handbook_go_red = gohelper.findChild(self.viewGO, "Left/#btn_handbook/#go_red")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnContinue:AddClickListener(arg_2_0._onContinueClick, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._onEnterClick, arg_2_0)
-	arg_2_0._btnabort:AddClickListener(arg_2_0._onAbortClick, arg_2_0)
-	arg_2_0._btnachievement:AddClickListener(arg_2_0._onAchievementClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._onRewardClick, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnOutInfoChange, arg_2_0._refreshView, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnFold, arg_2_0.onClickFold, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnCloseFold, arg_2_0.onClickCloseFold, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btn_handbook, arg_2_0.onClickBtnHandbook, arg_2_0)
+function SurvivalView:addEvents()
+	self._btnContinue:AddClickListener(self._onContinueClick, self)
+	self._btnEnter:AddClickListener(self._onEnterClick, self)
+	self._btnabort:AddClickListener(self._onAbortClick, self)
+	self._btnachievement:AddClickListener(self._onAchievementClick, self)
+	self._btnreward:AddClickListener(self._onRewardClick, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnOutInfoChange, self._refreshView, self)
+	self:addClickCb(self._btnFold, self.onClickFold, self)
+	self:addClickCb(self._btnCloseFold, self.onClickCloseFold, self)
+	self:addClickCb(self.btn_handbook, self.onClickBtnHandbook, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnContinue:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnabort:RemoveClickListener()
-	arg_3_0._btnachievement:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnOutInfoChange, arg_3_0._refreshView, arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0._btnFold)
-	arg_3_0:removeClickCb(arg_3_0._btnCloseFold)
+function SurvivalView:removeEvents()
+	self._btnContinue:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
+	self._btnabort:RemoveClickListener()
+	self._btnachievement:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnOutInfoChange, self._refreshView, self)
+	self:removeClickCb(self._btnFold)
+	self:removeClickCb(self._btnCloseFold)
 end
 
-function var_0_0.onClickFold(arg_4_0)
-	arg_4_0:setFoldVisible(not arg_4_0._foldVisible)
+function SurvivalView:onClickFold()
+	self:setFoldVisible(not self._foldVisible)
 end
 
-function var_0_0.onClickCloseFold(arg_5_0)
-	arg_5_0:setFoldVisible(not arg_5_0._foldVisible)
+function SurvivalView:onClickCloseFold()
+	self:setFoldVisible(not self._foldVisible)
 end
 
-function var_0_0.onClickBtnHandbook(arg_6_0)
+function SurvivalView:onClickBtnHandbook()
 	SurvivalStatHelper.instance:statBtnClick("onClickBtnHandbook", "SurvivalView")
 	SurvivalHandbookController.instance:sendOpenSurvivalHandbookView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	RedDotController.instance:addRedDot(arg_7_0._gored, RedDotEnum.DotNode.V2a8Survival, false, arg_7_0._refreshRed, arg_7_0)
-	TaskDispatcher.runRepeat(arg_7_0.everySecondCall, arg_7_0, 0, -1)
-	arg_7_0:_refreshView()
-	RedDotController.instance:addRedDot(arg_7_0.handbook_go_red, RedDotEnum.DotNode.SurvivalHandbook)
+function SurvivalView:onOpen()
+	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a8Survival, false, self._refreshRed, self)
+	TaskDispatcher.runRepeat(self.everySecondCall, self, 0, -1)
+	self:_refreshView()
+	RedDotController.instance:addRedDot(self.handbook_go_red, RedDotEnum.DotNode.SurvivalHandbook)
 end
 
-function var_0_0._refreshRed(arg_8_0, arg_8_1)
-	arg_8_1:defaultRefreshDot()
+function SurvivalView:_refreshRed(redDot)
+	redDot:defaultRefreshDot()
 
-	local var_8_0 = arg_8_1.show
+	local isShow = redDot.show
 
-	gohelper.setActive(arg_8_0.goCanget, var_8_0)
-	gohelper.setActive(arg_8_0.goNormal, not var_8_0)
+	gohelper.setActive(self.goCanget, isShow)
+	gohelper.setActive(self.goNormal, not isShow)
 end
 
-function var_0_0.everySecondCall(arg_9_0)
-	if arg_9_0._txtLimitTime then
-		arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity3_1Enum.ActivityId.Survival)
+function SurvivalView:everySecondCall()
+	if self._txtLimitTime then
+		self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity3_1Enum.ActivityId.Survival)
 	end
 end
 
-function var_0_0._refreshView(arg_10_0)
-	local var_10_0 = SurvivalModel.instance:getOutSideInfo()
+function SurvivalView:_refreshView()
+	local outSideInfo = SurvivalModel.instance:getOutSideInfo()
 
-	gohelper.setActive(arg_10_0._btnabort, var_10_0.inWeek)
-	gohelper.setActive(arg_10_0._btnContinue, var_10_0.inWeek)
-	gohelper.setActive(arg_10_0._btnEnter, not var_10_0.inWeek)
+	gohelper.setActive(self._btnabort, outSideInfo.inWeek)
+	gohelper.setActive(self._btnContinue, outSideInfo.inWeek)
+	gohelper.setActive(self._btnEnter, not outSideInfo.inWeek)
 
-	if var_10_0.inWeek then
-		local var_10_1 = SurvivalShelterModel.instance:getWeekInfo()
-		local var_10_2 = var_10_1 and var_10_1.difficulty or var_10_0.currMod
-		local var_10_3 = var_10_1 and var_10_1.day or var_10_0.currDay
-		local var_10_4 = lua_survival_hardness_mod.configDict[var_10_2]
+	if outSideInfo.inWeek then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+		local difficulty = weekInfo and weekInfo.difficulty or outSideInfo.currMod
+		local curDay = weekInfo and weekInfo.day or outSideInfo.currDay
+		local config = lua_survival_hardness_mod.configDict[difficulty]
 
-		arg_10_0._txtDifficulty.text = var_10_4 and var_10_4.name
-		arg_10_0._txtDay.text = formatLuaLang("versionactivity_1_2_114daydes", var_10_3)
+		self._txtDifficulty.text = config and config.name
+		self._txtDay.text = formatLuaLang("versionactivity_1_2_114daydes", curDay)
 	end
 
-	arg_10_0:refreshEndBg()
-	arg_10_0:refreshBooty()
+	self:refreshEndBg()
+	self:refreshBooty()
 end
 
-function var_0_0.refreshEndBg(arg_11_0)
-	if not arg_11_0.endPart then
-		local var_11_0 = {
-			view = arg_11_0
-		}
+function SurvivalView:refreshEndBg()
+	if not self.endPart then
+		local param = {}
 
-		arg_11_0.endPart = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0.viewGO, SurvivalEndPart, var_11_0)
+		param.view = self
+		self.endPart = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, SurvivalEndPart, param)
 	end
 
-	arg_11_0.endPart:refreshView()
+	self.endPart:refreshView()
 end
 
-function var_0_0.refreshBooty(arg_12_0)
-	gohelper.setActive(arg_12_0._gobooty, false)
+function SurvivalView:refreshBooty()
+	gohelper.setActive(self._gobooty, false)
 end
 
-function var_0_0.setFoldVisible(arg_13_0, arg_13_1)
-	if arg_13_0._foldVisible == arg_13_1 then
+function SurvivalView:setFoldVisible(visible)
+	if self._foldVisible == visible then
 		return
 	end
 
-	arg_13_0._foldVisible = arg_13_1
+	self._foldVisible = visible
 
-	gohelper.setActive(arg_13_0._goFold, arg_13_1)
-	gohelper.setActive(arg_13_0._goImageFold, not arg_13_1)
-	gohelper.setActive(arg_13_0._goImageUnFold, arg_13_1)
+	gohelper.setActive(self._goFold, visible)
+	gohelper.setActive(self._goImageFold, not visible)
+	gohelper.setActive(self._goImageUnFold, visible)
 end
 
-function var_0_0._onContinueClick(arg_14_0)
+function SurvivalView:_onContinueClick()
 	SurvivalController.instance:enterShelterMap()
 	SurvivalStatHelper.instance:statBtnClick("_onContinueClick", "SurvivalView")
 end
 
-function var_0_0._onEnterClick(arg_15_0)
-	if not SurvivalModel.instance:getOutSideInfo() then
+function SurvivalView:_onEnterClick()
+	local outSideInfo = SurvivalModel.instance:getOutSideInfo()
+
+	if not outSideInfo then
 		return
 	end
 
-	arg_15_0:_enterSurvival()
+	self:_enterSurvival()
 	SurvivalStatHelper.instance:statBtnClick("_onEnterClick", "SurvivalView")
 end
 
-function var_0_0._enterSurvival(arg_16_0)
-	if SurvivalModel.instance:getOutSideInfo():isFirstPlay() then
-		local var_16_0 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryFirstEnter)
-		local var_16_1
+function SurvivalView:_enterSurvival()
+	local outSideInfo = SurvivalModel.instance:getOutSideInfo()
 
-		var_16_1 = tonumber(var_16_0) or 0
+	if outSideInfo:isFirstPlay() then
+		local storyId = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryFirstEnter)
 
-		if var_16_1 > 0 and not StoryModel.instance:isStoryFinished(var_16_1) then
-			StoryController.instance:playStory(var_16_1, nil, arg_16_0._firstEnterSurvival, arg_16_0)
+		storyId = tonumber(storyId) or 0
+
+		if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+			StoryController.instance:playStory(storyId, nil, self._firstEnterSurvival, self)
 		else
-			arg_16_0:_firstEnterSurvival()
+			self:_firstEnterSurvival()
 		end
 	else
-		local var_16_2 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryPassEnter)
-		local var_16_3
+		local storyId = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryPassEnter)
 
-		var_16_3 = tonumber(var_16_2) or 0
+		storyId = tonumber(storyId) or 0
 
-		if var_16_3 > 0 and not StoryModel.instance:isStoryFinished(var_16_3) then
-			StoryController.instance:playStory(var_16_3, nil, arg_16_0._noFirstEnterSurvival, arg_16_0)
+		if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+			StoryController.instance:playStory(storyId, nil, self._noFirstEnterSurvival, self)
 		else
-			arg_16_0:_noFirstEnterSurvival()
+			self:_noFirstEnterSurvival()
 		end
 	end
 end
 
-function var_0_0._firstEnterSurvival(arg_17_0)
+function SurvivalView:_firstEnterSurvival()
 	SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(SurvivalConst.FirstPlayDifficulty)
 end
 
-function var_0_0._noFirstEnterSurvival(arg_18_0)
+function SurvivalView:_noFirstEnterSurvival()
 	ViewMgr.instance:openView(ViewName.SurvivalHardView)
 end
 
-function var_0_0._onAbortClick(arg_19_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalGiveUpWeek, MsgBoxEnum.BoxType.Yes_No, arg_19_0._sendGiveUp, nil, nil, arg_19_0, nil, nil)
+function SurvivalView:_onAbortClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalGiveUpWeek, MsgBoxEnum.BoxType.Yes_No, self._sendGiveUp, nil, nil, self, nil, nil)
 	SurvivalStatHelper.instance:statBtnClick("_onAbortClick", "SurvivalView")
 end
 
-function var_0_0._sendGiveUp(arg_20_0)
-	SurvivalWeekRpc.instance:sendSurvivalGetWeekInfo(arg_20_0._onRecvWeekInfo, arg_20_0)
+function SurvivalView:_sendGiveUp()
+	SurvivalWeekRpc.instance:sendSurvivalGetWeekInfo(self._onRecvWeekInfo, self)
 end
 
-function var_0_0._onRecvWeekInfo(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	if arg_21_2 == 0 then
+function SurvivalView:_onRecvWeekInfo(cmd, resultCode, msg)
+	if resultCode == 0 then
 		SurvivalWeekRpc.instance:sendSurvivalAbandonWeek()
 	end
 end
 
-function var_0_0._onAchievementClick(arg_22_0)
+function SurvivalView:_onAchievementClick()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
-		local var_22_0 = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival).achievementJumpId
+		local config = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
+		local jumpId = config.achievementJumpId
 
-		JumpController.instance:jump(var_22_0)
+		JumpController.instance:jump(jumpId)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Achievement))
 	end
@@ -211,13 +215,13 @@ function var_0_0._onAchievementClick(arg_22_0)
 	SurvivalStatHelper.instance:statBtnClick("_onAchievementClick", "SurvivalView")
 end
 
-function var_0_0._onRewardClick(arg_23_0)
+function SurvivalView:_onRewardClick()
 	ViewMgr.instance:openView(ViewName.SurvivalShelterRewardView)
 	SurvivalStatHelper.instance:statBtnClick("_onRewardClick", "SurvivalView")
 end
 
-function var_0_0.onClose(arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0.everySecondCall, arg_24_0)
+function SurvivalView:onClose()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 end
 
-return var_0_0
+return SurvivalView

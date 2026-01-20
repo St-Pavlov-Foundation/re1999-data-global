@@ -1,295 +1,309 @@
-﻿module("modules.logic.dungeon.model.DungeonChapterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonChapterListModel.lua
 
-local var_0_0 = class("DungeonChapterListModel", ListScrollModel)
+module("modules.logic.dungeon.model.DungeonChapterListModel", package.seeall)
 
-function var_0_0.setFbList(arg_1_0)
-	local var_1_0 = DungeonModel.instance.curChapterType
-	local var_1_1, var_1_2, var_1_3 = DungeonModel.instance:getChapterListTypes()
+local DungeonChapterListModel = class("DungeonChapterListModel", ListScrollModel)
 
-	arg_1_0._showNormal = var_1_1
+function DungeonChapterListModel:setFbList()
+	local chapterType = DungeonModel.instance.curChapterType
+	local isNormalType, isResourceType, isBreakType = DungeonModel.instance:getChapterListTypes()
 
-	if arg_1_0._showNormal then
-		local var_1_4 = DungeonConfig.instance:getChapterCOListByType(var_1_0)
+	self._showNormal = isNormalType
 
-		arg_1_0:refreshChaperIndexDict(var_1_4)
-		arg_1_0:clear()
+	if self._showNormal then
+		local list = DungeonConfig.instance:getChapterCOListByType(chapterType)
 
-		local var_1_5 = {}
+		self:refreshChaperIndexDict(list)
+		self:clear()
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_4) do
-			if DungeonMainStoryModel.instance:isPreviewChapter(iter_1_1.id) then
-				var_1_5[DungeonConfig.instance:getChapterDivideSectionId(iter_1_1.id)] = iter_1_1.id
+		local sectionPreviewStatus = {}
+
+		for i, v in ipairs(list) do
+			if DungeonMainStoryModel.instance:isPreviewChapter(v.id) then
+				local sectionId = DungeonConfig.instance:getChapterDivideSectionId(v.id)
+
+				sectionPreviewStatus[sectionId] = v.id
 			end
 		end
 
-		local var_1_6 = DungeonModel.instance:chapterIsPass(DungeonEnum.ChapterId.Main1_1)
-		local var_1_7 = DungeonConfig.instance:getChapterDivideSectionId(DungeonEnum.ChapterId.Main1_1)
-		local var_1_8 = {}
-		local var_1_9 = {}
+		local firstChapterFinish = DungeonModel.instance:chapterIsPass(DungeonEnum.ChapterId.Main1_1)
+		local firstSectionId = DungeonConfig.instance:getChapterDivideSectionId(DungeonEnum.ChapterId.Main1_1)
+		local result = {}
+		local sectionStatus = {}
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_4) do
-			local var_1_10 = DungeonConfig.instance:getChapterDivideSectionId(iter_1_3.id)
+		for i, v in ipairs(list) do
+			local sectionId = DungeonConfig.instance:getChapterDivideSectionId(v.id)
 
-			if (var_1_10 == var_1_7 or var_1_6) and (not var_1_9[var_1_10] or var_1_5[var_1_10]) then
-				if not DungeonModel.instance:isSpecialMainPlot(iter_1_3.id) then
-					var_1_9[var_1_10] = DungeonModel.instance:chapterIsLock(iter_1_3.id)
+			if (sectionId == firstSectionId or firstChapterFinish) and (not sectionStatus[sectionId] or sectionPreviewStatus[sectionId]) then
+				if not DungeonModel.instance:isSpecialMainPlot(v.id) then
+					sectionStatus[sectionId] = DungeonModel.instance:chapterIsLock(v.id)
 				end
 
-				table.insert(var_1_8, iter_1_3)
+				table.insert(result, v)
 
-				if var_1_5[var_1_10] == iter_1_3.id then
-					var_1_5[var_1_10] = nil
+				if sectionPreviewStatus[sectionId] == v.id then
+					sectionPreviewStatus[sectionId] = nil
 				end
 			end
 		end
 
-		local var_1_11 = var_1_8
+		list = result
 
 		if VersionValidator.instance:isInReviewing() then
-			local var_1_12 = {}
-			local var_1_13 = ResSplitConfig.instance:getAllChapterIds()
+			local tmpList = {}
+			local allChapterIds = ResSplitConfig.instance:getAllChapterIds()
 
-			for iter_1_4, iter_1_5 in ipairs(var_1_11) do
-				if var_1_13[iter_1_5.id] then
-					table.insert(var_1_12, iter_1_5)
+			for i, v in ipairs(list) do
+				if allChapterIds[v.id] then
+					table.insert(tmpList, v)
 				end
 			end
 
-			var_1_11 = var_1_12
+			list = tmpList
 		end
 
-		arg_1_0:setList(var_1_11)
-		DungeonMainStoryModel.instance:setChapterList(var_1_11)
+		self:setList(list)
+		DungeonMainStoryModel.instance:setChapterList(list)
 	else
-		arg_1_0._chapterList = {}
+		self._chapterList = {}
 
-		if var_1_2 then
+		if isResourceType then
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.GoldDungeon) then
-				local var_1_14 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Gold)
+				local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Gold)
 
-				tabletool.addValues(arg_1_0._chapterList, var_1_14)
+				tabletool.addValues(self._chapterList, list)
 			end
 
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ExperienceDungeon) then
-				local var_1_15 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Exp)
+				local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Exp)
 
-				tabletool.addValues(arg_1_0._chapterList, var_1_15)
+				tabletool.addValues(self._chapterList, list)
 			end
 
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.EquipDungeon) then
-				local var_1_16 = DungeonConfig.instance:getChapterCO(DungeonEnum.EquipDungeonChapterId)
+				local config = DungeonConfig.instance:getChapterCO(DungeonEnum.EquipDungeonChapterId)
 
-				table.insert(arg_1_0._chapterList, var_1_16)
+				table.insert(self._chapterList, config)
 			end
 
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Buildings) then
-				local var_1_17 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Buildings)
+				local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Buildings)
 
-				tabletool.addValues(arg_1_0._chapterList, var_1_17)
+				tabletool.addValues(self._chapterList, list)
 			end
-		elseif var_1_3 then
-			arg_1_0._chapterList = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Break)
+		elseif isBreakType then
+			local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Break)
+
+			self._chapterList = list
 		end
 
-		table.sort(arg_1_0._chapterList, var_0_0._sortChapterList)
+		table.sort(self._chapterList, DungeonChapterListModel._sortChapterList)
 	end
 end
 
-function var_0_0.getChapterListByType(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_0 and arg_2_3 then
-		return (DungeonConfig.instance:getChapterCOListByType(arg_2_3))
+function DungeonChapterListModel.getChapterListByType(isNormalType, isResourceType, isBreakType, chapterType)
+	if isNormalType and chapterType then
+		local list = DungeonConfig.instance:getChapterCOListByType(chapterType)
+
+		return list
 	else
-		local var_2_0 = {}
+		local chapterList = {}
 
-		if arg_2_1 then
+		if isResourceType then
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.GoldDungeon) then
-				local var_2_1 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Gold)
+				local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Gold)
 
-				tabletool.addValues(var_2_0, var_2_1)
+				tabletool.addValues(chapterList, list)
 			end
 
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ExperienceDungeon) then
-				local var_2_2 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Exp)
+				local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Exp)
 
-				tabletool.addValues(var_2_0, var_2_2)
+				tabletool.addValues(chapterList, list)
 			end
 
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.EquipDungeon) then
-				local var_2_3 = DungeonConfig.instance:getChapterCO(DungeonEnum.EquipDungeonChapterId)
+				local config = DungeonConfig.instance:getChapterCO(DungeonEnum.EquipDungeonChapterId)
 
-				table.insert(var_2_0, var_2_3)
+				table.insert(chapterList, config)
 			end
 
 			if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Buildings) then
-				local var_2_4 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Buildings)
+				local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Buildings)
 
-				tabletool.addValues(var_2_0, var_2_4)
+				tabletool.addValues(chapterList, list)
 			end
-		elseif arg_2_2 then
-			var_2_0 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Break)
+		elseif isBreakType then
+			local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Break)
+
+			chapterList = list
 		end
 
-		table.sort(var_2_0, var_0_0._sortChapterList)
+		table.sort(chapterList, DungeonChapterListModel._sortChapterList)
 
-		return var_2_0
+		return chapterList
 	end
 end
 
-function var_0_0._getCount(arg_3_0)
-	local var_3_0 = DungeonConfig.instance:getDungeonEveryDayCount(arg_3_0.type)
+function DungeonChapterListModel._getCount(chapterCfg)
+	local maxCount = DungeonConfig.instance:getDungeonEveryDayCount(chapterCfg.type)
+	local curCount = DungeonModel.instance:getChapterTypeNum(chapterCfg.type)
 
-	return var_3_0 - DungeonModel.instance:getChapterTypeNum(arg_3_0.type), var_3_0
+	return maxCount - curCount, maxCount
 end
 
-function var_0_0._sortChapterList(arg_4_0, arg_4_1)
-	local var_4_0, var_4_1 = var_0_0._getCount(arg_4_0)
-	local var_4_2, var_4_3 = var_0_0._getCount(arg_4_1)
+function DungeonChapterListModel._sortChapterList(a, b)
+	local countA, maxCountA = DungeonChapterListModel._getCount(a)
+	local countB, maxCountB = DungeonChapterListModel._getCount(b)
 
-	if var_4_0 ~= var_4_2 then
-		return var_4_2 < var_4_0
+	if countA ~= countB then
+		return countB < countA
 	end
 
-	if var_4_1 ~= var_4_3 then
-		return var_4_1 < var_4_3
+	if maxCountA ~= maxCountB then
+		return maxCountA < maxCountB
 	end
 
-	local var_4_4 = DungeonModel.instance:getChapterOpenTimeValid(arg_4_0)
+	local valueA = DungeonModel.instance:getChapterOpenTimeValid(a)
+	local valueB = DungeonModel.instance:getChapterOpenTimeValid(b)
 
-	if var_4_4 == DungeonModel.instance:getChapterOpenTimeValid(arg_4_1) then
-		return arg_4_0.id < arg_4_1.id
+	if valueA == valueB then
+		return a.id < b.id
 	end
 
-	if var_4_4 then
+	if valueA then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getFbList(arg_5_0)
-	if arg_5_0._showNormal then
-		return arg_5_0:getList()
+function DungeonChapterListModel:getFbList()
+	if self._showNormal then
+		return self:getList()
 	else
-		return arg_5_0._chapterList
+		return self._chapterList
 	end
 end
 
-function var_0_0.getChapterList(arg_6_0, arg_6_1)
-	local var_6_0 = DungeonConfig.instance:getChapterCO(arg_6_1)
+function DungeonChapterListModel:getChapterList(chapterId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
 
-	if var_6_0.type == DungeonEnum.ChapterType.Break then
-		return arg_6_0._chapterList
-	elseif var_6_0.type == DungeonEnum.ChapterType.Equip then
-		return (DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Equip))
+	if chapterConfig.type == DungeonEnum.ChapterType.Break then
+		return self._chapterList
+	elseif chapterConfig.type == DungeonEnum.ChapterType.Equip then
+		local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Equip)
+
+		return list
 	end
 
 	return {}
 end
 
-function var_0_0.getOpenTimeValidEquipChapterId(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		local var_7_0 = DungeonConfig.instance:getChapterCO(arg_7_1)
+function DungeonChapterListModel:getOpenTimeValidEquipChapterId(chapterId)
+	if chapterId then
+		local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
 
-		if var_7_0.type ~= DungeonEnum.ChapterType.Equip then
-			return arg_7_1
+		if chapterConfig.type ~= DungeonEnum.ChapterType.Equip then
+			return chapterId
 		end
 
-		if DungeonModel.instance:getChapterOpenTimeValid(var_7_0) then
-			return arg_7_1
-		end
-	end
-
-	local var_7_1 = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Equip)
-
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if DungeonModel.instance:getChapterOpenTimeValid(iter_7_1) then
-			return iter_7_1.id
+		if DungeonModel.instance:getChapterOpenTimeValid(chapterConfig) then
+			return chapterId
 		end
 	end
 
-	return arg_7_1
+	local list = DungeonConfig.instance:getChapterCOListByType(DungeonEnum.ChapterType.Equip)
+
+	for i, v in ipairs(list) do
+		if DungeonModel.instance:getChapterOpenTimeValid(v) then
+			return v.id
+		end
+	end
+
+	return chapterId
 end
 
-function var_0_0.getSelectedMO(arg_8_0)
-	local var_8_0 = DungeonModel.instance.curChapterType
-	local var_8_1 = DungeonConfig.instance:getChapterCOListByType(var_8_0)
+function DungeonChapterListModel:getSelectedMO()
+	local chapterType = DungeonModel.instance.curChapterType
+	local list = DungeonConfig.instance:getChapterCOListByType(chapterType)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		if iter_8_1.id == DungeonModel.instance.curLookChapterId then
-			return iter_8_1
+	for i, v in ipairs(list) do
+		if v.id == DungeonModel.instance.curLookChapterId then
+			return v
 		end
 	end
 end
 
-function var_0_0.getInfoList(arg_9_0, arg_9_1)
-	arg_9_0._mixCellInfo = {}
+function DungeonChapterListModel:getInfoList(scrollGO)
+	self._mixCellInfo = {}
 
-	local var_9_0 = arg_9_0:getList()
+	local list = self:getList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = DungeonEnum.ChapterWidth.Normal
+	for i, mo in ipairs(list) do
+		local width = DungeonEnum.ChapterWidth.Normal
 
-		if DungeonModel.instance:isSpecialMainPlot(iter_9_1.id) then
-			var_9_1 = DungeonEnum.ChapterWidth.Special
+		if DungeonModel.instance:isSpecialMainPlot(mo.id) then
+			width = DungeonEnum.ChapterWidth.Special
 		end
 
-		local var_9_2 = SLFramework.UGUI.MixCellInfo.New(iter_9_0, var_9_1, iter_9_0)
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(i, width, i)
 
-		table.insert(arg_9_0._mixCellInfo, var_9_2)
+		table.insert(self._mixCellInfo, mixCellInfo)
 	end
 
-	return arg_9_0._mixCellInfo
+	return self._mixCellInfo
 end
 
-function var_0_0.getMixCellPos(arg_10_0, arg_10_1)
-	local var_10_0 = 0
+function DungeonChapterListModel:getMixCellPos(chapterId)
+	local width = 0
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0:getList()) do
-		if iter_10_1.id == arg_10_1 then
-			return var_10_0
+	for i, v in ipairs(self:getList()) do
+		if v.id == chapterId then
+			return width
 		end
 
-		var_10_0 = var_10_0 + arg_10_0._mixCellInfo[iter_10_0].lineLength
+		width = width + self._mixCellInfo[i].lineLength
 	end
 
-	return var_10_0
+	return width
 end
 
-function var_0_0.getLastUnlockChapterId(arg_11_0)
-	local var_11_0
+function DungeonChapterListModel:getLastUnlockChapterId()
+	local id
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0:getList()) do
-		if DungeonModel.instance:chapterIsUnLock(iter_11_1.id) then
-			var_11_0 = iter_11_1.id
+	for i, v in ipairs(self:getList()) do
+		if DungeonModel.instance:chapterIsUnLock(v.id) then
+			id = v.id
 		end
 	end
 
-	return var_11_0
+	return id
 end
 
-function var_0_0.refreshChaperIndexDict(arg_12_0, arg_12_1)
-	arg_12_0.chapter2Index = {}
+function DungeonChapterListModel:refreshChaperIndexDict(list)
+	self.chapter2Index = {}
 
-	if arg_12_1 then
-		local var_12_0 = 0
+	if list then
+		local index = 0
 
-		for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-			if not DungeonModel.instance:isSpecialMainPlot(iter_12_1.id) then
-				var_12_0 = var_12_0 + 1
-				arg_12_0.chapter2Index[iter_12_1.id] = var_12_0
+		for i, v in ipairs(list) do
+			if not DungeonModel.instance:isSpecialMainPlot(v.id) then
+				index = index + 1
+				self.chapter2Index[v.id] = index
 			end
 		end
 	end
 end
 
-function var_0_0.getChapterIndex(arg_13_0, arg_13_1)
-	if not arg_13_1 then
+function DungeonChapterListModel:getChapterIndex(chapterId)
+	if not chapterId then
 		return
 	end
 
-	return arg_13_0.chapter2Index and arg_13_0.chapter2Index[arg_13_1]
+	return self.chapter2Index and self.chapter2Index[chapterId]
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonChapterListModel.instance = DungeonChapterListModel.New()
 
-return var_0_0
+return DungeonChapterListModel

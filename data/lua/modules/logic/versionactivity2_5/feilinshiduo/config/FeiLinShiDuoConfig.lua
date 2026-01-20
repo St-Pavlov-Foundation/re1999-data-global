@@ -1,137 +1,139 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.config.FeiLinShiDuoConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/config/FeiLinShiDuoConfig.lua
 
-local var_0_0 = class("FeiLinShiDuoConfig", BaseConfig)
+module("modules.logic.versionactivity2_5.feilinshiduo.config.FeiLinShiDuoConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.taskDict = {}
+local FeiLinShiDuoConfig = class("FeiLinShiDuoConfig", BaseConfig)
+
+function FeiLinShiDuoConfig:ctor()
+	self.taskDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function FeiLinShiDuoConfig:reqConfigNames()
 	return {
 		"activity185_episode",
 		"activity185_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity185_episode" then
-		arg_3_0._episodeConfig = arg_3_2
+function FeiLinShiDuoConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity185_episode" then
+		self._episodeConfig = configTable
 
-		arg_3_0:buildStageMap()
-	elseif arg_3_1 == "activity185_task" then
-		arg_3_0._taskConfig = arg_3_2
+		self:buildStageMap()
+	elseif configName == "activity185_task" then
+		self._taskConfig = configTable
 	end
 end
 
-function var_0_0.buildStageMap(arg_4_0)
-	arg_4_0.stageMap = {}
+function FeiLinShiDuoConfig:buildStageMap()
+	self.stageMap = {}
 
-	local var_4_0 = 0
+	local curStageIndex = 0
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._episodeConfig.configList) do
-		if var_4_0 ~= iter_4_1.stage then
-			var_4_0 = iter_4_1.stage
-			arg_4_0.stageMap[var_4_0] = {}
+	for index, episodeCo in ipairs(self._episodeConfig.configList) do
+		if curStageIndex ~= episodeCo.stage then
+			curStageIndex = episodeCo.stage
+			self.stageMap[curStageIndex] = {}
 		end
 
-		arg_4_0.stageMap[var_4_0][iter_4_1.episodeId] = iter_4_1
+		self.stageMap[curStageIndex][episodeCo.episodeId] = episodeCo
 	end
 end
 
-function var_0_0.getEpisodeConfig(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0._episodeConfig.configDict[arg_5_1] and not arg_5_0._episodeConfig.configDict[arg_5_1][arg_5_2] then
-		logError(arg_5_1 .. " 活动没有该关卡id信息: " .. arg_5_2)
+function FeiLinShiDuoConfig:getEpisodeConfig(activityId, episodeId)
+	if not self._episodeConfig.configDict[activityId] and not self._episodeConfig.configDict[activityId][episodeId] then
+		logError(activityId .. " 活动没有该关卡id信息: " .. episodeId)
 
 		return nil
 	end
 
-	return arg_5_0._episodeConfig.configDict[arg_5_1][arg_5_2]
+	return self._episodeConfig.configDict[activityId][episodeId]
 end
 
-function var_0_0.getEpisodeConfigList(arg_6_0)
-	return arg_6_0._episodeConfig.configList
+function FeiLinShiDuoConfig:getEpisodeConfigList()
+	return self._episodeConfig.configList
 end
 
-function var_0_0.getNoGameEpisodeList(arg_7_0, arg_7_1)
-	arg_7_0.noGameEpisodeList = arg_7_0.noGameEpisodeList or {}
+function FeiLinShiDuoConfig:getNoGameEpisodeList(activityId)
+	self.noGameEpisodeList = self.noGameEpisodeList or {}
 
-	if not arg_7_0.noGameEpisodeList[arg_7_1] then
-		arg_7_0.noGameEpisodeList[arg_7_1] = {}
+	if not self.noGameEpisodeList[activityId] then
+		self.noGameEpisodeList[activityId] = {}
 
-		local var_7_0 = arg_7_0:getEpisodeConfigList(arg_7_1) or {}
+		local episodeConfigList = self:getEpisodeConfigList(activityId) or {}
 
-		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-			if iter_7_1.storyId > 0 then
-				table.insert(arg_7_0.noGameEpisodeList[arg_7_1], iter_7_1)
+		for index, episodeCo in ipairs(episodeConfigList) do
+			if episodeCo.storyId > 0 then
+				table.insert(self.noGameEpisodeList[activityId], episodeCo)
 			end
 		end
 
-		table.sort(arg_7_0.noGameEpisodeList, arg_7_0.sortEpisode)
+		table.sort(self.noGameEpisodeList, self.sortEpisode)
 	end
 
-	return arg_7_0.noGameEpisodeList[arg_7_1]
+	return self.noGameEpisodeList[activityId]
 end
 
-function var_0_0.sortEpisode(arg_8_0, arg_8_1)
-	return arg_8_0.stage <= arg_8_1.stage
+function FeiLinShiDuoConfig.sortEpisode(a, b)
+	return a.stage <= b.stage
 end
 
-function var_0_0.getGameEpisode(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getEpisodeConfigList()
+function FeiLinShiDuoConfig:getGameEpisode(episodeId)
+	local allConfigList = self:getEpisodeConfigList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if iter_9_1.preEpisodeId == arg_9_1 and iter_9_1.mapId > 0 then
-			return iter_9_1
+	for index, config in ipairs(allConfigList) do
+		if config.preEpisodeId == episodeId and config.mapId > 0 then
+			return config
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getStageEpisodes(arg_10_0, arg_10_1)
-	if not arg_10_0.stageMap[arg_10_1] then
-		logError("当前关卡阶段的配置不存在，请检查" .. arg_10_1)
+function FeiLinShiDuoConfig:getStageEpisodes(stage)
+	if not self.stageMap[stage] then
+		logError("当前关卡阶段的配置不存在，请检查" .. stage)
 
 		return {}
 	end
 
-	return arg_10_0.stageMap[arg_10_1]
+	return self.stageMap[stage]
 end
 
-function var_0_0.getTaskConfig(arg_11_0, arg_11_1)
-	return arg_11_0._taskConfig.configDict[arg_11_1]
+function FeiLinShiDuoConfig:getTaskConfig(taskId)
+	return self._taskConfig.configDict[taskId]
 end
 
-function var_0_0.getTaskByActId(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.taskDict[arg_12_1]
+function FeiLinShiDuoConfig:getTaskByActId(activityId)
+	local list = self.taskDict[activityId]
 
-	if not var_12_0 then
-		var_12_0 = {}
+	if not list then
+		list = {}
 
-		for iter_12_0, iter_12_1 in ipairs(lua_activity185_task.configList) do
-			if iter_12_1.activityId == arg_12_1 then
-				table.insert(var_12_0, iter_12_1)
+		for _, co in ipairs(lua_activity185_task.configList) do
+			if co.activityId == activityId then
+				table.insert(list, co)
 			end
 		end
 
-		arg_12_0.taskDict[arg_12_1] = var_12_0
+		self.taskDict[activityId] = list
 	end
 
-	return var_12_0
+	return list
 end
 
-function var_0_0.getNextEpisode(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getEpisodeConfigList()
+function FeiLinShiDuoConfig:getNextEpisode(episodeId)
+	local allConfigList = self:getEpisodeConfigList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if iter_13_1.preEpisodeId == arg_13_1 then
-			return iter_13_1
+	for index, config in ipairs(allConfigList) do
+		if config.preEpisodeId == episodeId then
+			return config
 		end
 	end
 
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+FeiLinShiDuoConfig.instance = FeiLinShiDuoConfig.New()
 
-return var_0_0
+return FeiLinShiDuoConfig

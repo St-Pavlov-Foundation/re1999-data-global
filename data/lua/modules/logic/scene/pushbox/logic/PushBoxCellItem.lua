@@ -1,154 +1,158 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxCellItem", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxCellItem.lua
 
-local var_0_0 = class("PushBoxCellItem", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxCellItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:__onInit()
+local PushBoxCellItem = class("PushBoxCellItem", UserDataDispose)
 
-	arg_1_0._cell_mgr = arg_1_1
-	arg_1_0._scene_root = arg_1_2
-	arg_1_0._cell_obj = arg_1_3
-	arg_1_0._cell_transform = arg_1_3.transform
-	arg_1_0._element_root = gohelper.findChild(arg_1_2, "Root/ElementRoot")
+function PushBoxCellItem:ctor(cell_mgr, scene_root, cell_obj)
+	self:__onInit()
+
+	self._cell_mgr = cell_mgr
+	self._scene_root = scene_root
+	self._cell_obj = cell_obj
+	self._cell_transform = cell_obj.transform
+	self._element_root = gohelper.findChild(scene_root, "Root/ElementRoot")
 end
 
-function var_0_0.getCellObj(arg_2_0)
-	return arg_2_0._cell_obj
+function PushBoxCellItem:getCellObj()
+	return self._cell_obj
 end
 
-function var_0_0.getRendererIndex(arg_3_0)
-	return arg_3_0._cell_obj.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder + 2 + 20000
+function PushBoxCellItem:getRendererIndex()
+	return self._cell_obj.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder + 2 + 20000
 end
 
-function var_0_0.characterInArea(arg_4_0)
-	arg_4_0._cell_mgr._game_mgr:characterInArea(arg_4_0:getPosX(), arg_4_0:getPosY())
+function PushBoxCellItem:characterInArea()
+	self._cell_mgr._game_mgr:characterInArea(self:getPosX(), self:getPosY())
 end
 
-function var_0_0.doorIsOpend(arg_5_0)
-	return arg_5_0.door_is_opened
+function PushBoxCellItem:doorIsOpend()
+	return self.door_is_opened
 end
 
-function var_0_0.getTransform(arg_6_0)
-	return arg_6_0._cell_transform
+function PushBoxCellItem:getTransform()
+	return self._cell_transform
 end
 
-function var_0_0.getPosX(arg_7_0)
-	return arg_7_0._pos_x
+function PushBoxCellItem:getPosX()
+	return self._pos_x
 end
 
-function var_0_0.getPosY(arg_8_0)
-	return arg_8_0._pos_y
+function PushBoxCellItem:getPosY()
+	return self._pos_y
 end
 
-function var_0_0.getCellType(arg_9_0)
-	return arg_9_0._cell_type
+function PushBoxCellItem:getCellType()
+	return self._cell_type
 end
 
-function var_0_0.setBox(arg_10_0, arg_10_1)
-	arg_10_0._box = arg_10_1
+function PushBoxCellItem:setBox(box)
+	self._box = box
 end
 
-function var_0_0.getBox(arg_11_0)
-	return arg_11_0._box
+function PushBoxCellItem:getBox()
+	return self._box
 end
 
-function var_0_0.initData(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	arg_12_0._pos_x = arg_12_2
-	arg_12_0._pos_y = arg_12_3
-	arg_12_0._cell_type = arg_12_1
+function PushBoxCellItem:initData(cell_type, pos_x, pox_y)
+	self._pos_x = pos_x
+	self._pos_y = pox_y
+	self._cell_type = cell_type
 
-	if arg_12_1 == PushBoxGameMgr.ElementType.Box then
-		arg_12_0._box = true
-		arg_12_0._cell_type = PushBoxGameMgr.ElementType.Road
+	if cell_type == PushBoxGameMgr.ElementType.Box then
+		self._box = true
+		self._cell_type = PushBoxGameMgr.ElementType.Road
 	end
 end
 
-function var_0_0.initElement(arg_13_0, arg_13_1)
-	local var_13_0
-	local var_13_1
+function PushBoxCellItem:initElement(cell_type)
+	local tar_obj, element_logic
 
-	if arg_13_1 == PushBoxGameMgr.ElementType.Goal then
-		var_13_0 = gohelper.create3d(arg_13_0._element_root, "Door" .. arg_13_0._pos_y .. "_" .. arg_13_0._pos_x)
+	if cell_type == PushBoxGameMgr.ElementType.Goal then
+		tar_obj = gohelper.create3d(self._element_root, "Door" .. self._pos_y .. "_" .. self._pos_x)
 
-		gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Goal), var_13_0, "Close")
+		gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Goal), tar_obj, "Close")
 
-		local var_13_2 = gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/DoorOpen"), var_13_0, "Open")
+		local _open = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/DoorOpen"), tar_obj, "Open")
 
-		gohelper.setActive(var_13_2, false)
+		gohelper.setActive(_open, false)
 
-		var_13_1 = PushBoxElementDoor.New(var_13_0, arg_13_0)
+		element_logic = PushBoxElementDoor.New(tar_obj, self)
 
-		var_13_1:setRendererIndex()
-	elseif arg_13_1 == PushBoxGameMgr.ElementType.Box then
-		var_13_0 = gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/" .. arg_13_1), arg_13_0._element_root, "Box" .. arg_13_0._pos_y .. "_" .. arg_13_0._pos_x)
-		var_13_0.transform:GetChild(0):GetComponent("MeshRenderer").sortingOrder = arg_13_0:getRendererIndex() + 3
-		var_13_1 = PushBoxElementBox.New(var_13_0, arg_13_0)
-	elseif arg_13_0._cell_mgr._game_mgr:typeIsEnemy(arg_13_1) then
-		var_13_0 = gohelper.create3d(arg_13_0._element_root, "Enemy")
+		element_logic:setRendererIndex()
+	elseif cell_type == PushBoxGameMgr.ElementType.Box then
+		tar_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/" .. cell_type), self._element_root, "Box" .. self._pos_y .. "_" .. self._pos_x)
 
-		gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/EnemyUp"), var_13_0, PushBoxGameMgr.Direction.Up)
-		gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/EnemyDown"), var_13_0, PushBoxGameMgr.Direction.Down)
-		gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/EnemyLeft"), var_13_0, PushBoxGameMgr.Direction.Left)
-		gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/EnemyRight"), var_13_0, PushBoxGameMgr.Direction.Right)
+		local element_renderer = tar_obj.transform:GetChild(0):GetComponent("MeshRenderer")
 
-		var_13_1 = PushBoxElementEnemy.New(var_13_0, arg_13_0)
+		element_renderer.sortingOrder = self:getRendererIndex() + 3
+		element_logic = PushBoxElementBox.New(tar_obj, self)
+	elseif self._cell_mgr._game_mgr:typeIsEnemy(cell_type) then
+		tar_obj = gohelper.create3d(self._element_root, "Enemy")
 
-		var_13_1:setRendererIndex()
-	elseif arg_13_1 == PushBoxGameMgr.ElementType.Mechanics then
-		var_13_0 = gohelper.create3d(arg_13_0._element_root, "Mechanics" .. arg_13_0._pos_y .. "_" .. arg_13_0._pos_x)
+		gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/EnemyUp"), tar_obj, PushBoxGameMgr.Direction.Up)
+		gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/EnemyDown"), tar_obj, PushBoxGameMgr.Direction.Down)
+		gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/EnemyLeft"), tar_obj, PushBoxGameMgr.Direction.Left)
+		gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/EnemyRight"), tar_obj, PushBoxGameMgr.Direction.Right)
 
-		gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Mechanics), var_13_0, "Normal")
+		element_logic = PushBoxElementEnemy.New(tar_obj, self)
 
-		local var_13_3 = gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/EnabledMechanics"), var_13_0, "Enabled")
+		element_logic:setRendererIndex()
+	elseif cell_type == PushBoxGameMgr.ElementType.Mechanics then
+		tar_obj = gohelper.create3d(self._element_root, "Mechanics" .. self._pos_y .. "_" .. self._pos_x)
 
-		gohelper.setActive(var_13_3, false)
+		gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/" .. PushBoxGameMgr.ElementType.Mechanics), tar_obj, "Normal")
 
-		var_13_1 = PushBoxElementMechanics.New(var_13_0, arg_13_0)
+		local _enabled = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/EnabledMechanics"), tar_obj, "Enabled")
 
-		var_13_1:setRendererIndex()
-	elseif arg_13_1 == PushBoxGameMgr.ElementType.Fan then
-		var_13_0 = gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/" .. arg_13_1), arg_13_0._element_root, "Fan")
-		var_13_1 = PushBoxElementFan.New(var_13_0, arg_13_0)
+		gohelper.setActive(_enabled, false)
 
-		var_13_1:setRendererIndex()
-	elseif arg_13_0._cell_mgr._game_mgr:typeIsLight(arg_13_1) then
-		var_13_0 = gohelper.clone(gohelper.findChild(arg_13_0._scene_root, "Root/OriginElement/" .. arg_13_1), arg_13_0._element_root, "Light" .. arg_13_1)
-		var_13_1 = PushBoxElementLight.New(var_13_0, arg_13_0)
+		element_logic = PushBoxElementMechanics.New(tar_obj, self)
 
-		var_13_1:setRendererIndex()
+		element_logic:setRendererIndex()
+	elseif cell_type == PushBoxGameMgr.ElementType.Fan then
+		tar_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/" .. cell_type), self._element_root, "Fan")
+		element_logic = PushBoxElementFan.New(tar_obj, self)
+
+		element_logic:setRendererIndex()
+	elseif self._cell_mgr._game_mgr:typeIsLight(cell_type) then
+		tar_obj = gohelper.clone(gohelper.findChild(self._scene_root, "Root/OriginElement/" .. cell_type), self._element_root, "Light" .. cell_type)
+		element_logic = PushBoxElementLight.New(tar_obj, self)
+
+		element_logic:setRendererIndex()
 	end
 
-	if var_13_0 then
-		gohelper.setActive(var_13_0, true)
+	if tar_obj then
+		gohelper.setActive(tar_obj, true)
 
-		local var_13_4 = arg_13_0:getTransform().position
+		local cell_pos = self:getTransform().position
 
-		transformhelper.setPos(var_13_0.transform, var_13_4.x, var_13_4.y, var_13_4.z)
+		transformhelper.setPos(tar_obj.transform, cell_pos.x, cell_pos.y, cell_pos.z)
 
-		arg_13_0._element_obj = var_13_0
+		self._element_obj = tar_obj
 	end
 
-	arg_13_0._element_logic = var_13_1
+	self._element_logic = element_logic
 
-	return var_13_1
+	return element_logic
 end
 
-function var_0_0.getElementLogic(arg_14_0)
-	return arg_14_0._element_logic
+function PushBoxCellItem:getElementLogic()
+	return self._element_logic
 end
 
-function var_0_0.setCellInvincible(arg_15_0, arg_15_1)
-	arg_15_0._invincible = arg_15_1
+function PushBoxCellItem:setCellInvincible(state)
+	self._invincible = state
 end
 
-function var_0_0.getInvincible(arg_16_0)
-	return arg_16_0._invincible
+function PushBoxCellItem:getInvincible()
+	return self._invincible
 end
 
-function var_0_0.releaseSelf(arg_17_0)
-	arg_17_0:__onDispose()
+function PushBoxCellItem:releaseSelf()
+	self:__onDispose()
 
-	arg_17_0._element_logic = nil
+	self._element_logic = nil
 end
 
-return var_0_0
+return PushBoxCellItem

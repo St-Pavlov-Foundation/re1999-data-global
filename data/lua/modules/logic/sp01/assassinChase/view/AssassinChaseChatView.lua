@@ -1,93 +1,95 @@
-﻿module("modules.logic.sp01.assassinChase.view.AssassinChaseChatView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassinChase/view/AssassinChaseChatView.lua
 
-local var_0_0 = class("AssassinChaseChatView", BaseView)
+module("modules.logic.sp01.assassinChase.view.AssassinChaseChatView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Click")
-	arg_1_0._gohead = gohelper.findChild(arg_1_0.viewGO, "#go_head")
-	arg_1_0._goheadgrey = gohelper.findChild(arg_1_0.viewGO, "#go_head/#go_headgrey")
-	arg_1_0._simagehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_head/#simage_head")
-	arg_1_0._goname = gohelper.findChild(arg_1_0.viewGO, "#go_name")
-	arg_1_0._txtnamecn1 = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_name/namelayout/#txt_namecn1")
-	arg_1_0._gocontents = gohelper.findChild(arg_1_0.viewGO, "#go_contents")
-	arg_1_0._txtcontentcn = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_contents/txt_contentcn")
+local AssassinChaseChatView = class("AssassinChaseChatView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinChaseChatView:onInitView()
+	self._btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Click")
+	self._gohead = gohelper.findChild(self.viewGO, "#go_head")
+	self._goheadgrey = gohelper.findChild(self.viewGO, "#go_head/#go_headgrey")
+	self._simagehead = gohelper.findChildSingleImage(self.viewGO, "#go_head/#simage_head")
+	self._goname = gohelper.findChild(self.viewGO, "#go_name")
+	self._txtnamecn1 = gohelper.findChildTextMesh(self.viewGO, "#go_name/namelayout/#txt_namecn1")
+	self._gocontents = gohelper.findChild(self.viewGO, "#go_contents")
+	self._txtcontentcn = gohelper.findChildTextMesh(self.viewGO, "#go_contents/txt_contentcn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
+function AssassinChaseChatView:addEvents()
+	self._btnClick:AddClickListener(self._btnClickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClick:RemoveClickListener()
+function AssassinChaseChatView:removeEvents()
+	self._btnClick:RemoveClickListener()
 end
 
-function var_0_0._btnClickOnClick(arg_4_0)
-	arg_4_0:_checkNextStep()
+function AssassinChaseChatView:_btnClickOnClick()
+	self:_checkNextStep()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function AssassinChaseChatView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function AssassinChaseChatView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam
+function AssassinChaseChatView:onOpen()
+	local viewParam = self.viewParam
 
-	arg_7_0._dialogIndex = 1
-	arg_7_0._configIndex = 1
-	arg_7_0._actId = var_7_0.actId
+	self._dialogIndex = 1
+	self._configIndex = 1
+	self._actId = viewParam.actId
 
-	local var_7_1 = AssassinChaseConfig.instance:getDialogueConfigList(var_7_0.actId)
+	local dialogConfigList = AssassinChaseConfig.instance:getDialogueConfigList(viewParam.actId)
 
-	if var_7_1 == nil then
-		logError("奥德赛下半角色活动 对话表为空 actId:" .. tostring(var_7_0.actId))
-		arg_7_0:closeThis()
+	if dialogConfigList == nil then
+		logError("奥德赛下半角色活动 对话表为空 actId:" .. tostring(viewParam.actId))
+		self:closeThis()
 
 		return
 	end
 
-	arg_7_0._configList = var_7_1
-	arg_7_0._configCount = #var_7_1
+	self._configList = dialogConfigList
+	self._configCount = #dialogConfigList
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._checkNextStep(arg_8_0)
-	if arg_8_0._configIndex >= arg_8_0._configCount then
-		arg_8_0:closeThis()
+function AssassinChaseChatView:_checkNextStep()
+	if self._configIndex >= self._configCount then
+		self:closeThis()
 
 		return
 	end
 
-	arg_8_0._configIndex = arg_8_0._configIndex + 1
+	self._configIndex = self._configIndex + 1
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	local var_9_0 = arg_9_0._dialogIndex
-	local var_9_1 = arg_9_0._configIndex
-	local var_9_2 = arg_9_0._configList[var_9_1]
+function AssassinChaseChatView:refreshUI()
+	local dialogIndex = self._dialogIndex
+	local configIndex = self._configIndex
+	local dialogConfig = self._configList[configIndex]
 
-	arg_9_0._simagehead:LoadImage(ResUrl.getHeadIconSmall(var_9_2.roleIcon))
+	self._simagehead:LoadImage(ResUrl.getHeadIconSmall(dialogConfig.roleIcon))
 
-	arg_9_0._txtnamecn1.text = var_9_2.roleName
-	arg_9_0._txtcontentcn.text = var_9_2.dialog
+	self._txtnamecn1.text = dialogConfig.roleName
+	self._txtcontentcn.text = dialogConfig.dialog
 end
 
-function var_0_0.onClose(arg_10_0)
+function AssassinChaseChatView:onClose()
 	AssassinChaseController.instance:dispatchEvent(AssassinChaseEvent.OnDialogueEnd)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagehead:UnLoadImage()
+function AssassinChaseChatView:onDestroyView()
+	self._simagehead:UnLoadImage()
 end
 
-return var_0_0
+return AssassinChaseChatView

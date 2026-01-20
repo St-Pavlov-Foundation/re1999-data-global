@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaGameResultViewContainer.lua
 
-local var_0_0 = class("LanShouPaGameResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaGameResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local LanShouPaGameResultViewContainer = class("LanShouPaGameResultViewContainer", BaseViewContainer)
 
-	arg_1_0._resultview = LanShouPaGameResultView.New()
+function LanShouPaGameResultViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._resultview)
+	self._resultview = LanShouPaGameResultView.New()
 
-	return var_1_0
+	table.insert(views, self._resultview)
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function LanShouPaGameResultViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return LanShouPaGameResultViewContainer

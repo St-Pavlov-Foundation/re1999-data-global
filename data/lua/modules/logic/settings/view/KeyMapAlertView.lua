@@ -1,121 +1,123 @@
-﻿module("modules.logic.settings.view.KeyMapAlertView", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/KeyMapAlertView.lua
 
-local var_0_0 = class("KeyMapAlertView", BaseView)
+module("modules.logic.settings.view.KeyMapAlertView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "txt_desc")
+local KeyMapAlertView = class("KeyMapAlertView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function KeyMapAlertView:onInitView()
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 
-	arg_1_0._toastConfig = lua_toast.configDict
+	self._toastConfig = lua_toast.configDict
 
-	arg_1_0.viewGO:SetActive(false)
+	self.viewGO:SetActive(false)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+function KeyMapAlertView:addEvents()
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
+function KeyMapAlertView:removeEvents()
+	self._btncancel:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
 end
 
-function var_0_0._btncancelOnClick(arg_4_0)
+function KeyMapAlertView:_btncancelOnClick()
 	ViewMgr.instance:closeView(ViewName.KeyMapAlertView)
 end
 
-function var_0_0._btnconfirmOnClick(arg_5_0)
-	arg_5_0:save()
+function KeyMapAlertView:_btnconfirmOnClick()
+	self:save()
 	ViewMgr.instance:closeView(ViewName.KeyMapAlertView)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function KeyMapAlertView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	if arg_7_0.viewParam then
-		arg_7_0._mo = arg_7_0.viewParam.value
-		arg_7_0._modifyKey = arg_7_0._mo[PCInputModel.Configfield.key]
+function KeyMapAlertView:onOpen()
+	if self.viewParam then
+		self._mo = self.viewParam.value
+		self._modifyKey = self._mo[PCInputModel.Configfield.key]
 
-		arg_7_0:setInputKey()
+		self:setInputKey()
 	end
 end
 
-function var_0_0.onBtnReset(arg_8_0)
-	SettingsKeyListModel.instance:Reset(arg_8_0._mo[PCInputModel.Configfield.hud])
+function KeyMapAlertView:onBtnReset()
+	SettingsKeyListModel.instance:Reset(self._mo[PCInputModel.Configfield.hud])
 	ViewMgr.instance:closeView(ViewName.KeyMapAlertView)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.getKey, arg_9_0)
+function KeyMapAlertView:onDestroyView()
+	TaskDispatcher.cancelTask(self.getKey, self)
 end
 
-function var_0_0.listenInputKey(arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0.getKey, arg_10_0, 0)
+function KeyMapAlertView:listenInputKey()
+	TaskDispatcher.runRepeat(self.getKey, self, 0)
 	PCInputController.instance:PauseListen()
 end
 
-function var_0_0.getKey(arg_11_0)
-	local var_11_0 = arg_11_0._mo[PCInputModel.Configfield.hud]
+function KeyMapAlertView:getKey()
+	local activtiyId = self._mo[PCInputModel.Configfield.hud]
 
 	if UnityEngine.Input.anyKeyDown and not UnityEngine.Input.GetMouseButton(0) then
-		TaskDispatcher.cancelTask(arg_11_0.getKey, arg_11_0)
+		TaskDispatcher.cancelTask(self.getKey, self)
 		TaskDispatcher.runDelay(PCInputController.resumeListen, PCInputController.instance, 0.5)
 
-		local var_11_1 = PCInputController.instance:getCurrentPresskey()
+		local key = PCInputController.instance:getCurrentPresskey()
 
-		if PCInputModel.instance:checkKeyCanModify(var_11_0, var_11_1) then
-			local var_11_2 = arg_11_0:checkedKey(var_11_1)
+		if PCInputModel.instance:checkKeyCanModify(activtiyId, key) then
+			local repeatkey = self:checkedKey(key)
 
-			if var_11_2 then
-				arg_11_0:setKeyOccupied(var_11_2, var_11_1)
+			if repeatkey then
+				self:setKeyOccupied(repeatkey, key)
 			else
-				arg_11_0:setKey(var_11_1)
+				self:setKey(key)
 			end
 		else
-			arg_11_0:setCantModify(var_11_1)
+			self:setCantModify(key)
 		end
 	end
 end
 
-function var_0_0.checkedKey(arg_12_0, arg_12_1)
-	return SettingsKeyListModel.instance:checkDunplicateKey(arg_12_0._mo[PCInputModel.Configfield.hud], arg_12_1)
+function KeyMapAlertView:checkedKey(key)
+	return SettingsKeyListModel.instance:checkDunplicateKey(self._mo[PCInputModel.Configfield.hud], key)
 end
 
-function var_0_0.setInputKey(arg_13_0)
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PCInputKeyChange, MsgBoxEnum.BoxType.NO, arg_13_0._btnconfirmOnClick, arg_13_0._btncancelOnClick, nil, arg_13_0, arg_13_0, nil, arg_13_0._mo.description)
-	arg_13_0:listenInputKey()
+function KeyMapAlertView:setInputKey()
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PCInputKeyChange, MsgBoxEnum.BoxType.NO, self._btnconfirmOnClick, self._btncancelOnClick, nil, self, self, nil, self._mo.description)
+	self:listenInputKey()
 end
 
-function var_0_0.setKey(arg_14_0, arg_14_1)
+function KeyMapAlertView:setKey(key)
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PCInputKeyConfirm, MsgBoxEnum.BoxType.Yes_No, arg_14_0._btnconfirmOnClick, arg_14_0._btncancelOnClick, nil, arg_14_0, arg_14_0, nil, arg_14_0._mo.description, PCInputController.instance:KeyNameToDescName(arg_14_1))
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PCInputKeyConfirm, MsgBoxEnum.BoxType.Yes_No, self._btnconfirmOnClick, self._btncancelOnClick, nil, self, self, nil, self._mo.description, PCInputController.instance:KeyNameToDescName(key))
 
-	arg_14_0._modifyKey = arg_14_1
+	self._modifyKey = key
 end
 
-function var_0_0.setCantModify(arg_15_0, arg_15_1)
+function KeyMapAlertView:setCantModify(key)
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
 	ViewMgr.instance:closeView(ViewName.KeyMapAlertView)
 
-	if not arg_15_1 then
+	if not key then
 		return
 	end
 
-	ToastController.instance:showToast(ToastEnum.PCKeyCantModify, PCInputController.instance:KeyNameToDescName(arg_15_1))
+	ToastController.instance:showToast(ToastEnum.PCKeyCantModify, PCInputController.instance:KeyNameToDescName(key))
 end
 
-function var_0_0.setKeyOccupied(arg_16_0, arg_16_1, arg_16_2)
+function KeyMapAlertView:setKeyOccupied(repeatKey, key)
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
 
-	if arg_16_1[PCInputModel.Configfield.hud] == arg_16_0._mo[PCInputModel.Configfield.hud] and arg_16_1[PCInputModel.Configfield.id] == arg_16_0._mo[PCInputModel.Configfield.id] then
+	if repeatKey[PCInputModel.Configfield.hud] == self._mo[PCInputModel.Configfield.hud] and repeatKey[PCInputModel.Configfield.id] == self._mo[PCInputModel.Configfield.id] then
 		ToastController.instance:showToast(ToastEnum.pcKeyTipsOccupied)
 		ViewMgr.instance:closeView(ViewName.KeyMapAlertView)
 
@@ -123,21 +125,21 @@ function var_0_0.setKeyOccupied(arg_16_0, arg_16_1, arg_16_2)
 	end
 
 	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PCInputKeySwap, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_16_0:swapKey(arg_16_1, arg_16_2)
-	end, arg_16_0._btncancelOnClick, nil, nil, nil, nil, PCInputController.instance:KeyNameToDescName(arg_16_2), arg_16_1.description)
+		self:swapKey(repeatKey, key)
+	end, self._btncancelOnClick, nil, nil, nil, nil, PCInputController.instance:KeyNameToDescName(key), repeatKey.description)
 end
 
-function var_0_0.swapKey(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0._mo[PCInputModel.Configfield.key]
+function KeyMapAlertView:swapKey(repeatKey, key)
+	local oldkey = self._mo[PCInputModel.Configfield.key]
 
-	SettingsKeyListModel.instance:modifyKey(arg_18_0._mo[PCInputModel.Configfield.hud], arg_18_0._mo[PCInputModel.Configfield.id], arg_18_2)
-	SettingsKeyListModel.instance:modifyKey(arg_18_1[PCInputModel.Configfield.hud], arg_18_1[PCInputModel.Configfield.id], var_18_0)
+	SettingsKeyListModel.instance:modifyKey(self._mo[PCInputModel.Configfield.hud], self._mo[PCInputModel.Configfield.id], key)
+	SettingsKeyListModel.instance:modifyKey(repeatKey[PCInputModel.Configfield.hud], repeatKey[PCInputModel.Configfield.id], oldkey)
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
 	ViewMgr.instance:closeView(ViewName.KeyMapAlertView)
 end
 
-function var_0_0.save(arg_19_0)
-	SettingsKeyListModel.instance:modifyKey(arg_19_0._mo[PCInputModel.Configfield.hud], arg_19_0._mo[PCInputModel.Configfield.id], arg_19_0._modifyKey)
+function KeyMapAlertView:save()
+	SettingsKeyListModel.instance:modifyKey(self._mo[PCInputModel.Configfield.hud], self._mo[PCInputModel.Configfield.id], self._modifyKey)
 end
 
-return var_0_0
+return KeyMapAlertView

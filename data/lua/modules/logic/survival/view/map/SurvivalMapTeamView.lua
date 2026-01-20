@@ -1,145 +1,147 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapTeamView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapTeamView.lua
 
-local var_0_0 = class("SurvivalMapTeamView", BaseView)
+module("modules.logic.survival.view.map.SurvivalMapTeamView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtWeight = gohelper.findChildTextMesh(arg_1_0.viewGO, "Panel/Weight/#txt_WeightNum")
-	arg_1_0._root = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_Overview")
-	arg_1_0._goherocontent = gohelper.findChild(arg_1_0._root, "Team/Scroll View/Viewport/#go_content")
-	arg_1_0._txtheronum = gohelper.findChildTextMesh(arg_1_0._root, "Team/Title/txt_Team/#txt_MemberNum")
-	arg_1_0._gonpccontent = gohelper.findChild(arg_1_0._root, "Partner/Scroll View/Viewport/#go_content")
-	arg_1_0._txtnpcnum = gohelper.findChildTextMesh(arg_1_0._root, "Partner/Title/txt_Partner/#txt_MemberNum")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0._root, "Left/#btn_equip")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_info")
-	arg_1_0._btnCloseTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/#go_info/#btn_closeinfo")
+local SurvivalMapTeamView = class("SurvivalMapTeamView", BaseView)
+
+function SurvivalMapTeamView:onInitView()
+	self._txtWeight = gohelper.findChildTextMesh(self.viewGO, "Panel/Weight/#txt_WeightNum")
+	self._root = gohelper.findChild(self.viewGO, "Panel/#go_Overview")
+	self._goherocontent = gohelper.findChild(self._root, "Team/Scroll View/Viewport/#go_content")
+	self._txtheronum = gohelper.findChildTextMesh(self._root, "Team/Title/txt_Team/#txt_MemberNum")
+	self._gonpccontent = gohelper.findChild(self._root, "Partner/Scroll View/Viewport/#go_content")
+	self._txtnpcnum = gohelper.findChildTextMesh(self._root, "Partner/Title/txt_Partner/#txt_MemberNum")
+	self._btnequip = gohelper.findChildButtonWithAudio(self._root, "Left/#btn_equip")
+	self._goinfo = gohelper.findChild(self.viewGO, "Panel/#go_info")
+	self._btnCloseTips = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/#go_info/#btn_closeinfo")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnCloseTips:AddClickListener(arg_2_0._btnCloseTipsOnClick, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnClickTeamNpc, arg_2_0._showNpcInfoView, arg_2_0)
+function SurvivalMapTeamView:addEvents()
+	self._btnCloseTips:AddClickListener(self._btnCloseTipsOnClick, self)
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnClickTeamNpc, self._showNpcInfoView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnCloseTips:RemoveClickListener()
-	arg_3_0._btnequip:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnClickTeamNpc, arg_3_0._showNpcInfoView, arg_3_0)
+function SurvivalMapTeamView:removeEvents()
+	self._btnCloseTips:RemoveClickListener()
+	self._btnequip:RemoveClickListener()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnClickTeamNpc, self._showNpcInfoView, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._btnequip.gameObject, SurvivalEquipBtnComp)
-	gohelper.setActive(arg_4_0._goinfo, false)
+function SurvivalMapTeamView:onOpen()
+	MonoHelper.addNoUpdateLuaComOnceToGo(self._btnequip.gameObject, SurvivalEquipBtnComp)
+	gohelper.setActive(self._goinfo, false)
 
-	arg_4_0._teamInfoMo = SurvivalMapModel.instance:getSceneMo().teamInfo
-	arg_4_0._initGroupMo = SurvivalMapModel.instance:getInitGroup()
+	self._teamInfoMo = SurvivalMapModel.instance:getSceneMo().teamInfo
+	self._initGroupMo = SurvivalMapModel.instance:getInitGroup()
 
-	arg_4_0:_initHeroItemList()
-	arg_4_0:_updateHeroList()
-	arg_4_0:_initNPCItemList()
-	arg_4_0:_updateNPCList()
+	self:_initHeroItemList()
+	self:_updateHeroList()
+	self:_initNPCItemList()
+	self:_updateNPCList()
 end
 
-function var_0_0._btnCloseTipsOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._goinfo, false)
+function SurvivalMapTeamView:_btnCloseTipsOnClick()
+	gohelper.setActive(self._goinfo, false)
 end
 
-function var_0_0._btnequipOnClick(arg_6_0)
+function SurvivalMapTeamView:_btnequipOnClick()
 	SurvivalController.instance:openEquipView()
 end
 
-function var_0_0._initHeroItemList(arg_7_0)
-	arg_7_0._heroItemList = arg_7_0:getUserDataTb_()
+function SurvivalMapTeamView:_initHeroItemList()
+	self._heroItemList = self:getUserDataTb_()
 
-	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes.initHeroItemSmall
-	local var_7_1 = arg_7_0._initGroupMo:getCarryHeroCount()
-	local var_7_2 = math.max(var_7_1, arg_7_0._initGroupMo:getCarryHeroMax())
+	local path = self.viewContainer:getSetting().otherRes.initHeroItemSmall
+	local canCarryNum = self._initGroupMo:getCarryHeroCount()
+	local itemCount = math.max(canCarryNum, self._initGroupMo:getCarryHeroMax())
 
-	for iter_7_0 = 1, var_7_2 do
-		local var_7_3 = arg_7_0:getResInst(var_7_0, arg_7_0._goherocontent)
+	for i = 1, itemCount do
+		local itemGo = self:getResInst(path, self._goherocontent)
 
-		var_7_3.name = "item_" .. tostring(iter_7_0)
+		itemGo.name = "item_" .. tostring(i)
 
-		local var_7_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_3, SurvivalInitTeamHeroSmallItem)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, SurvivalInitTeamHeroSmallItem)
 
-		var_7_4:setIndex(iter_7_0)
-		var_7_4:setIsLock(var_7_1 < iter_7_0)
-		var_7_4:setNoShowAdd()
-		var_7_4:setParentView(arg_7_0)
-		table.insert(arg_7_0._heroItemList, var_7_4)
+		item:setIndex(i)
+		item:setIsLock(canCarryNum < i)
+		item:setNoShowAdd()
+		item:setParentView(self)
+		table.insert(self._heroItemList, item)
 	end
 end
 
-function var_0_0._updateHeroList(arg_8_0)
-	local var_8_0 = 0
+function SurvivalMapTeamView:_updateHeroList()
+	local count = 0
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._heroItemList) do
-		local var_8_1 = arg_8_0._teamInfoMo.heros[iter_8_0]
-		local var_8_2, var_8_3 = arg_8_0._teamInfoMo:getHeroMo(var_8_1)
+	for i, heroItem in ipairs(self._heroItemList) do
+		local heroUid = self._teamInfoMo.heros[i]
+		local heroMo, isAssist = self._teamInfoMo:getHeroMo(heroUid)
 
-		iter_8_1:setTrialValue(var_8_3)
-		iter_8_1:onUpdateMO(var_8_2)
+		heroItem:setTrialValue(isAssist)
+		heroItem:onUpdateMO(heroMo)
 
-		if var_8_2 then
-			var_8_0 = var_8_0 + 1
+		if heroMo then
+			count = count + 1
 		end
 	end
 
-	arg_8_0._txtheronum.text = string.format("(%d/%d)", var_8_0, arg_8_0._initGroupMo:getCarryHeroCount())
+	self._txtheronum.text = string.format("(%d/%d)", count, self._initGroupMo:getCarryHeroCount())
 
-	local var_8_4 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+	local exWeight = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
 
-	arg_8_0._txtWeight.text = var_8_4
+	self._txtWeight.text = exWeight
 end
 
-function var_0_0._initNPCItemList(arg_9_0)
-	arg_9_0._npcItemList = arg_9_0:getUserDataTb_()
+function SurvivalMapTeamView:_initNPCItemList()
+	self._npcItemList = self:getUserDataTb_()
 
-	local var_9_0 = arg_9_0.viewContainer:getSetting().otherRes.initNpcItemSmall
-	local var_9_1 = arg_9_0._initGroupMo:getCarryNPCCount()
-	local var_9_2 = math.max(var_9_1, arg_9_0._initGroupMo:getCarryNPCMax())
+	local path = self.viewContainer:getSetting().otherRes.initNpcItemSmall
+	local canCarryNum = self._initGroupMo:getCarryNPCCount()
+	local itemCount = math.max(canCarryNum, self._initGroupMo:getCarryNPCMax())
 
-	for iter_9_0 = 1, var_9_2 do
-		local var_9_3 = arg_9_0:getResInst(var_9_0, arg_9_0._gonpccontent)
+	for i = 1, itemCount do
+		local itemGo = self:getResInst(path, self._gonpccontent)
 
-		var_9_3.name = "item_" .. tostring(iter_9_0)
+		itemGo.name = "item_" .. tostring(i)
 
-		local var_9_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_3, SurvivalInitNPCSmallItem)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, SurvivalInitNPCSmallItem)
 
-		var_9_4:setNoShowAdd()
-		var_9_4:setIsLock(var_9_1 < iter_9_0)
-		var_9_4:setIndex(iter_9_0)
-		var_9_4:setParentView(arg_9_0)
-		table.insert(arg_9_0._npcItemList, var_9_4)
+		item:setNoShowAdd()
+		item:setIsLock(canCarryNum < i)
+		item:setIndex(i)
+		item:setParentView(self)
+		table.insert(self._npcItemList, item)
 	end
 end
 
-function var_0_0._updateNPCList(arg_10_0)
-	local var_10_0 = 0
+function SurvivalMapTeamView:_updateNPCList()
+	local count = 0
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._npcItemList) do
-		local var_10_1 = arg_10_0._teamInfoMo.npcId[iter_10_0]
-		local var_10_2 = SurvivalShelterModel.instance:getWeekInfo():getNpcInfo(var_10_1)
+	for i, npcItem in ipairs(self._npcItemList) do
+		local npcId = self._teamInfoMo.npcId[i]
+		local npcMo = SurvivalShelterModel.instance:getWeekInfo():getNpcInfo(npcId)
 
-		iter_10_1:onUpdateMO(var_10_2)
+		npcItem:onUpdateMO(npcMo)
 
-		if var_10_2 then
-			var_10_0 = var_10_0 + 1
+		if npcMo then
+			count = count + 1
 		end
 	end
 
-	arg_10_0._txtnpcnum.text = string.format("(%d/%d)", var_10_0, arg_10_0._initGroupMo:getCarryNPCCount())
+	self._txtnpcnum.text = string.format("(%d/%d)", count, self._initGroupMo:getCarryNPCCount())
 end
 
-function var_0_0._showNpcInfoView(arg_11_0, arg_11_1)
-	if not arg_11_0.npcInfoView then
-		local var_11_0 = arg_11_0.viewContainer._viewSetting.otherRes.infoView
-		local var_11_1 = arg_11_0:getResInst(var_11_0, arg_11_0._goinfo)
+function SurvivalMapTeamView:_showNpcInfoView(npcMo)
+	if not self.npcInfoView then
+		local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+		local infoGo = self:getResInst(infoViewRes, self._goinfo)
 
-		arg_11_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, SurvivalSelectNPCInfoPart)
+		self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalSelectNPCInfoPart)
 	end
 
-	gohelper.setActive(arg_11_0._goinfo, true)
-	arg_11_0._infoPanel:updateMo(arg_11_1, true)
+	gohelper.setActive(self._goinfo, true)
+	self._infoPanel:updateMo(npcMo, true)
 end
 
-return var_0_0
+return SurvivalMapTeamView

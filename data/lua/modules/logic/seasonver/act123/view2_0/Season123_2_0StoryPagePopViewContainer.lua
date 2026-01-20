@@ -1,15 +1,17 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0StoryPagePopViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0StoryPagePopViewContainer.lua
 
-local var_0_0 = class("Season123_2_0StoryPagePopViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0StoryPagePopViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_2_0StoryPagePopViewContainer = class("Season123_2_0StoryPagePopViewContainer", BaseViewContainer)
+
+function Season123_2_0StoryPagePopViewContainer:buildViews()
 	return {
 		Season123_2_0StoryPagePopView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Season123_2_0StoryPagePopViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Season123_2_0StoryPagePopViewContainer

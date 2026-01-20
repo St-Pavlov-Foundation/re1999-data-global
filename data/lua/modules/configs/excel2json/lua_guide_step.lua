@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_guide_step", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_guide_step.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_guide_step", package.seeall)
+
+local lua_guide_step = {}
+local fields = {
 	desc = 3,
 	exception = 24,
 	storyContent = 12,
@@ -28,18 +30,18 @@ local var_0_1 = {
 	id = 1,
 	tipsDir = 11
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"stepId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	storyContent = 3,
 	tipsTalker = 1,
 	tipsContent = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_guide_step.onLoad(json)
+	lua_guide_step.configList, lua_guide_step.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_guide_step

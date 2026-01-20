@@ -1,41 +1,45 @@
-﻿module("modules.logic.explore.map.unit.ExploreBaseLightUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBaseLightUnit.lua
 
-local var_0_0 = class("ExploreBaseLightUnit", ExploreBaseMoveUnit)
+module("modules.logic.explore.map.unit.ExploreBaseLightUnit", package.seeall)
 
-function var_0_0.initComponents(arg_1_0, ...)
-	var_0_0.super.initComponents(arg_1_0, ...)
-	arg_1_0:addComp("lightComp", ExploreUnitLightComp)
+local ExploreBaseLightUnit = class("ExploreBaseLightUnit", ExploreBaseMoveUnit)
+
+function ExploreBaseLightUnit:initComponents(...)
+	ExploreBaseLightUnit.super.initComponents(self, ...)
+	self:addComp("lightComp", ExploreUnitLightComp)
 end
 
-function var_0_0.onInFOVChange(arg_2_0, arg_2_1)
-	if arg_2_1 then
-		arg_2_0:setupRes()
-		TaskDispatcher.cancelTask(arg_2_0._releaseDisplayGo, arg_2_0)
+function ExploreBaseLightUnit:onInFOVChange(v)
+	if v then
+		self:setupRes()
+		TaskDispatcher.cancelTask(self._releaseDisplayGo, self)
 	else
-		TaskDispatcher.runDelay(arg_2_0._releaseDisplayGo, arg_2_0, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
+		TaskDispatcher.runDelay(self._releaseDisplayGo, self, ExploreConstValue.CHECK_INTERVAL.UnitObjDestory)
 	end
 end
 
-function var_0_0.setActiveAnim(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0:playAnim(ExploreAnimEnum.AnimName.nToA)
+function ExploreBaseLightUnit:setActiveAnim(haveLight)
+	if haveLight then
+		self:playAnim(ExploreAnimEnum.AnimName.nToA)
 	else
-		arg_3_0:playAnim(ExploreAnimEnum.AnimName.aToN)
+		self:playAnim(ExploreAnimEnum.AnimName.aToN)
 	end
 end
 
-function var_0_0.onActiveChange(arg_4_0, arg_4_1)
+function ExploreBaseLightUnit:onActiveChange(nowActive)
 	return
 end
 
-function var_0_0.getIdleAnim(arg_5_0)
-	if not arg_5_0.mo:isInteractEnabled() then
+function ExploreBaseLightUnit:getIdleAnim()
+	local mo = self.mo
+
+	if not mo:isInteractEnabled() then
 		return ExploreAnimEnum.AnimName.unable
-	elseif not arg_5_0:haveLight() then
+	elseif not self:haveLight() then
 		return ExploreAnimEnum.AnimName.normal
 	else
 		return ExploreAnimEnum.AnimName.active
 	end
 end
 
-return var_0_0
+return ExploreBaseLightUnit

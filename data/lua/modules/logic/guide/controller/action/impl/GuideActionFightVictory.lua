@@ -1,60 +1,62 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionFightVictory", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionFightVictory.lua
 
-local var_0_0 = class("GuideActionFightVictory", BaseGuideAction)
-local var_0_1 = 2.5
+module("modules.logic.guide.controller.action.impl.GuideActionFightVictory", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local GuideActionFightVictory = class("GuideActionFightVictory", BaseGuideAction)
+local VictoryTime = 2.5
+
+function GuideActionFightVictory:onStart(context)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
 
-	arg_1_0._playVictoryList = {}
+	self._playVictoryList = {}
 
-	TaskDispatcher.runDelay(arg_1_0._onVictoryEnd, arg_1_0, var_0_1)
+	TaskDispatcher.runDelay(self._onVictoryEnd, self, VictoryTime)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if iter_1_1.spine:hasAnimation(SpineAnimState.victory) then
-			arg_1_0._victoryActName = FightHelper.processEntityActionName(iter_1_1, SpineAnimState.victory)
+	for _, entity in ipairs(entityList) do
+		if entity.spine:hasAnimation(SpineAnimState.victory) then
+			self._victoryActName = FightHelper.processEntityActionName(entity, SpineAnimState.victory)
 
-			iter_1_1.spine:addAnimEventCallback(arg_1_0._onAnimEvent, arg_1_0, iter_1_1)
-			iter_1_1.spine:play(arg_1_0._victoryActName, false, true, true)
+			entity.spine:addAnimEventCallback(self._onAnimEvent, self, entity)
+			entity.spine:play(self._victoryActName, false, true, true)
 
-			if iter_1_1.nameUI then
-				iter_1_1.nameUI:setActive(false)
+			if entity.nameUI then
+				entity.nameUI:setActive(false)
 			end
 
-			table.insert(arg_1_0._playVictoryList, iter_1_1)
+			table.insert(self._playVictoryList, entity)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onAnimEvent(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if arg_2_1 == arg_2_0._victoryActName and arg_2_2 == SpineAnimEvent.ActionComplete then
-		local var_2_0 = arg_2_4
+function GuideActionFightVictory:_onAnimEvent(actionName, eventName, eventArgs, param)
+	if actionName == self._victoryActName and eventName == SpineAnimEvent.ActionComplete then
+		local entity = param
 
-		var_2_0:resetAnimState()
-		var_2_0.spine:removeAnimEventCallback(arg_2_0._onAnimEvent, arg_2_0)
+		entity:resetAnimState()
+		entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
 	end
 end
 
-function var_0_0._onVictoryEnd(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._playVictoryList) do
-		iter_3_1:resetAnimState()
-		iter_3_1.spine:removeAnimEventCallback(arg_3_0._onAnimEvent, arg_3_0)
+function GuideActionFightVictory:_onVictoryEnd()
+	for _, entity in ipairs(self._playVictoryList) do
+		entity:resetAnimState()
+		entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
 	end
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	var_0_0.super.onDestroy(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onVictoryEnd, arg_4_0)
+function GuideActionFightVictory:onDestroy()
+	GuideActionFightVictory.super.onDestroy(self)
+	TaskDispatcher.cancelTask(self._onVictoryEnd, self)
 
-	arg_4_0._playVictoryList = nil
+	self._playVictoryList = nil
 end
 
-return var_0_0
+return GuideActionFightVictory

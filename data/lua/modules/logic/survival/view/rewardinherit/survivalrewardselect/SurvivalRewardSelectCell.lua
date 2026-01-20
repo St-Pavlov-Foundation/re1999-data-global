@@ -1,74 +1,76 @@
-﻿module("modules.logic.survival.view.rewardinherit.survivalrewardselect.SurvivalRewardSelectCell", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/rewardinherit/survivalrewardselect/SurvivalRewardSelectCell.lua
 
-local var_0_0 = class("SurvivalRewardSelectCell", LuaCompBase)
+module("modules.logic.survival.view.rewardinherit.survivalrewardselect.SurvivalRewardSelectCell", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.viewContainer = arg_1_1
+local SurvivalRewardSelectCell = class("SurvivalRewardSelectCell", LuaCompBase)
+
+function SurvivalRewardSelectCell:ctor(viewContainer)
+	self.viewContainer = viewContainer
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0._gobagitem = gohelper.findChild(arg_2_0.viewGO, "#go_bagitem")
-	arg_2_0._goempty = gohelper.findChild(arg_2_0.viewGO, "#go_empty")
-	arg_2_0.btnClick = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#btnClick")
+function SurvivalRewardSelectCell:init(go)
+	self.viewGO = go
+	self._gobagitem = gohelper.findChild(self.viewGO, "#go_bagitem")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self.btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "#btnClick")
 
-	local var_2_0 = arg_2_0.viewContainer:getSetting().otherRes.survivalmapbagitem
-	local var_2_1 = arg_2_0.viewContainer:getResInst(var_2_0, arg_2_0._gobagitem)
+	local survivalmapbagitem = self.viewContainer:getSetting().otherRes.survivalmapbagitem
+	local obj = self.viewContainer:getResInst(survivalmapbagitem, self._gobagitem)
 
-	arg_2_0.survivalBagItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, SurvivalBagItem)
+	self.survivalBagItem = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SurvivalBagItem)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addClickCb(arg_3_0.btnClick, arg_3_0.onClickBtnAdd, arg_3_0)
+function SurvivalRewardSelectCell:addEventListeners()
+	self:addClickCb(self.btnClick, self.onClickBtnAdd, self)
 end
 
-function var_0_0.onClickBtnAdd(arg_4_0)
-	if arg_4_0.inheritId then
+function SurvivalRewardSelectCell:onClickBtnAdd()
+	if self.inheritId then
 		ViewMgr.instance:openView(ViewName.SurvivalRewardSelectView)
 	end
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0.viewGO, arg_5_1 ~= nil)
+function SurvivalRewardSelectCell:setData(data)
+	gohelper.setActive(self.viewGO, data ~= nil)
 
-	if not arg_5_1 then
+	if not data then
 		return
 	end
 
-	arg_5_0.inheritId = arg_5_1.inheritId
-	arg_5_0.itemId = arg_5_1.itemId
+	self.inheritId = data.inheritId
+	self.itemId = data.itemId
 
-	if arg_5_0.itemId then
-		gohelper.setActive(arg_5_0._goempty, false)
-		gohelper.setActive(arg_5_0.survivalBagItem.go, true)
+	if self.itemId then
+		gohelper.setActive(self._goempty, false)
+		gohelper.setActive(self.survivalBagItem.go, true)
 
-		local var_5_0 = SurvivalBagItemMo.New()
+		local mo = SurvivalBagItemMo.New()
 
-		var_5_0:init({
-			id = arg_5_0.itemId,
-			count = arg_5_1.count
+		mo:init({
+			id = self.itemId,
+			count = data.count
 		})
-		arg_5_0.survivalBagItem:updateMo(var_5_0, {
+		self.survivalBagItem:updateMo(mo, {
 			forceShowIcon = true
 		})
-	elseif arg_5_0.inheritId > 0 then
-		gohelper.setActive(arg_5_0._goempty, arg_5_0.inheritId == nil)
-		gohelper.setActive(arg_5_0.survivalBagItem.go, arg_5_0.inheritId ~= nil)
+	elseif self.inheritId > 0 then
+		gohelper.setActive(self._goempty, self.inheritId == nil)
+		gohelper.setActive(self.survivalBagItem.go, self.inheritId ~= nil)
 
-		if not arg_5_0.inheritId then
+		if not self.inheritId then
 			return
 		end
 
-		arg_5_0.handbookMo = SurvivalRewardInheritModel.instance:getInheritMoByInheritIdId(arg_5_0.inheritId)
-		arg_5_0.itemMo = arg_5_0.handbookMo:getSurvivalBagItemMo()
+		self.handbookMo = SurvivalRewardInheritModel.instance:getInheritMoByInheritIdId(self.inheritId)
+		self.itemMo = self.handbookMo:getSurvivalBagItemMo()
 
-		arg_5_0.survivalBagItem:updateMo(arg_5_0.itemMo)
-		arg_5_0.survivalBagItem:setTextName(false)
-		arg_5_0.survivalBagItem:setShowNum(false)
-	elseif arg_5_0.inheritId == -10 then
-		gohelper.setActive(arg_5_0._goempty, true)
-		gohelper.setActive(arg_5_0.survivalBagItem.go, false)
+		self.survivalBagItem:updateMo(self.itemMo)
+		self.survivalBagItem:setTextName(false)
+		self.survivalBagItem:setShowNum(false)
+	elseif self.inheritId == -10 then
+		gohelper.setActive(self._goempty, true)
+		gohelper.setActive(self.survivalBagItem.go, false)
 	end
 end
 
-return var_0_0
+return SurvivalRewardSelectCell

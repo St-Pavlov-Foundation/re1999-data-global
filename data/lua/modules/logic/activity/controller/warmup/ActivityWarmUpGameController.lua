@@ -1,34 +1,36 @@
-﻿module("modules.logic.activity.controller.warmup.ActivityWarmUpGameController", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/warmup/ActivityWarmUpGameController.lua
 
-local var_0_0 = class("ActivityWarmUpGameController", BaseController)
+module("modules.logic.activity.controller.warmup.ActivityWarmUpGameController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ActivityWarmUpGameController = class("ActivityWarmUpGameController", BaseController)
+
+function ActivityWarmUpGameController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function ActivityWarmUpGameController:reInit()
 	return
 end
 
-function var_0_0.openGameView(arg_3_0, arg_3_1)
+function ActivityWarmUpGameController:openGameView(gameSettingId)
 	math.randomseed((tonumber(tostring(ServerTime.now()):reverse():sub(1, 7))))
-	var_0_0.instance:initSettings(arg_3_1)
+	ActivityWarmUpGameController.instance:initSettings(gameSettingId)
 	ViewMgr.instance:openView(ViewName.ActivityWarmUpGameView)
 end
 
-function var_0_0.initSettings(arg_4_0, arg_4_1)
-	arg_4_0:defaultSettings()
-	arg_4_0:overrideSettings(arg_4_1)
+function ActivityWarmUpGameController:initSettings(gameSettingId)
+	self:defaultSettings()
+	self:overrideSettings(gameSettingId)
 
-	arg_4_0._isPlaying = false
-	arg_4_0._startTime = -1
-	arg_4_0._finishTime = -1
+	self._isPlaying = false
+	self._startTime = -1
+	self._finishTime = -1
 end
 
-function var_0_0.defaultSettings(arg_5_0)
+function ActivityWarmUpGameController:defaultSettings()
 	logNormal("defaultSettings")
 
-	arg_5_0.settings = {
+	self.settings = {
 		minBlock = 0.08,
 		pointerSpeed = 0.012,
 		cdTime = 1,
@@ -39,7 +41,7 @@ function var_0_0.defaultSettings(arg_5_0)
 		levelTime = 30,
 		blockInterval = 0.05
 	}
-	arg_5_0.poolTargetIds = {
+	self.poolTargetIds = {
 		110404,
 		110501,
 		110502,
@@ -52,107 +54,107 @@ function var_0_0.defaultSettings(arg_5_0)
 	}
 end
 
-function var_0_0.overrideSettings(arg_6_0, arg_6_1)
-	local var_6_0 = Activity106Config.instance:getMiniGameSettings(arg_6_1)
+function ActivityWarmUpGameController:overrideSettings(gameSettingId)
+	local gameCo = Activity106Config.instance:getMiniGameSettings(gameSettingId)
 
-	if not var_6_0 then
-		logError("minigame settings config not found : " .. tostring(arg_6_1))
+	if not gameCo then
+		logError("minigame settings config not found : " .. tostring(gameSettingId))
 
 		return
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.settings) do
-		if var_6_0[iter_6_0] ~= nil then
-			arg_6_0.settings[iter_6_0] = var_6_0[iter_6_0]
+	for k, v in pairs(self.settings) do
+		if gameCo[k] ~= nil then
+			self.settings[k] = gameCo[k]
 		end
 	end
 
-	arg_6_0.settings.minBlock = tonumber(arg_6_0.settings.minBlock)
-	arg_6_0.settings.randomLength = tonumber(arg_6_0.settings.randomLength)
-	arg_6_0.settings.pointerSpeed = tonumber(arg_6_0.settings.pointerSpeed)
+	self.settings.minBlock = tonumber(self.settings.minBlock)
+	self.settings.randomLength = tonumber(self.settings.randomLength)
+	self.settings.pointerSpeed = tonumber(self.settings.pointerSpeed)
 
-	if not string.nilorempty(var_6_0.matPool) then
-		arg_6_0.poolTargetIds = string.splitToNumber(var_6_0.matPool, ",")
+	if not string.nilorempty(gameCo.matPool) then
+		self.poolTargetIds = string.splitToNumber(gameCo.matPool, ",")
 	end
 end
 
-function var_0_0.prepareGame(arg_7_0)
-	ActivityWarmUpGameModel.instance:init(arg_7_0.settings, arg_7_0.poolTargetIds)
+function ActivityWarmUpGameController:prepareGame()
+	ActivityWarmUpGameModel.instance:init(self.settings, self.poolTargetIds)
 end
 
-function var_0_0.startGame(arg_8_0)
-	arg_8_0:clearLastResult()
+function ActivityWarmUpGameController:startGame()
+	self:clearLastResult()
 
-	arg_8_0._isPlaying = true
-	arg_8_0._moveDir = 1
-	arg_8_0._startTime = ServerTime.now()
-	arg_8_0._finishTime = arg_8_0._startTime + arg_8_0.settings.levelTime
-	arg_8_0._cdStartTime = 0
+	self._isPlaying = true
+	self._moveDir = 1
+	self._startTime = ServerTime.now()
+	self._finishTime = self._startTime + self.settings.levelTime
+	self._cdStartTime = 0
 	ActivityWarmUpGameModel.instance.round = 1
 end
 
-function var_0_0.stopGame(arg_9_0)
-	arg_9_0._isPlaying = false
-	arg_9_0._cdStartTime = 0
+function ActivityWarmUpGameController:stopGame()
+	self._isPlaying = false
+	self._cdStartTime = 0
 end
 
-function var_0_0.saveGameClearResult(arg_10_0)
-	arg_10_0._gameResult = true
+function ActivityWarmUpGameController:saveGameClearResult()
+	self._gameResult = true
 end
 
-function var_0_0.clearLastResult(arg_11_0)
-	arg_11_0._gameResult = false
-	arg_11_0._costTime = -1
+function ActivityWarmUpGameController:clearLastResult()
+	self._gameResult = false
+	self._costTime = -1
 end
 
-function var_0_0.getGameCostTime(arg_12_0)
-	return arg_12_0._costTime
+function ActivityWarmUpGameController:getGameCostTime()
+	return self._costTime
 end
 
-function var_0_0.goNextRound(arg_13_0)
+function ActivityWarmUpGameController:goNextRound()
 	if ActivityWarmUpGameModel.instance.round then
 		ActivityWarmUpGameModel.instance.round = ActivityWarmUpGameModel.instance.round + 1
 
 		logNormal("round = " .. tostring(ActivityWarmUpGameModel.instance.round))
 	end
 
-	ActivityWarmUpGameModel.instance:init(arg_13_0.settings, arg_13_0.poolTargetIds, true)
+	ActivityWarmUpGameModel.instance:init(self.settings, self.poolTargetIds, true)
 end
 
-function var_0_0.gameClear(arg_14_0)
-	arg_14_0:dispatchEvent(ActivityWarmUpEvent.NotifyGameClear)
+function ActivityWarmUpGameController:gameClear()
+	self:dispatchEvent(ActivityWarmUpEvent.NotifyGameClear)
 end
 
-local var_0_1 = 0
+local debugMoveTimes = 0
 
-function var_0_0.onGameUpdate(arg_15_0)
-	if arg_15_0._isPlaying then
-		if arg_15_0:checkTimeOut() then
+function ActivityWarmUpGameController:onGameUpdate()
+	if self._isPlaying then
+		if self:checkTimeOut() then
 			return
 		end
 
-		local var_15_0 = ActivityWarmUpGameModel.instance.pointerVal
-		local var_15_1 = arg_15_0.settings.pointerSpeed * (Time.deltaTime / 0.016667)
-		local var_15_2 = var_15_0 + arg_15_0._moveDir * var_15_1
+		local pointerVal = ActivityWarmUpGameModel.instance.pointerVal
+		local fixedSpeed = self.settings.pointerSpeed * (Time.deltaTime / 0.016667)
+		local nextVal = pointerVal + self._moveDir * fixedSpeed
 
-		if arg_15_0._moveDir > 0 then
-			if var_15_2 >= 1 then
-				arg_15_0._moveDir = -1
-				var_15_2 = 1
+		if self._moveDir > 0 then
+			if nextVal >= 1 then
+				self._moveDir = -1
+				nextVal = 1
 			end
-		elseif var_15_2 <= 0 then
-			arg_15_0._moveDir = 1
-			var_15_2 = 0
+		elseif nextVal <= 0 then
+			self._moveDir = 1
+			nextVal = 0
 		end
 
-		ActivityWarmUpGameModel.instance.pointerVal = var_15_2
-		var_0_1 = var_0_1 + 1
+		ActivityWarmUpGameModel.instance.pointerVal = nextVal
+		debugMoveTimes = debugMoveTimes + 1
 	end
 end
 
-function var_0_0.checkTimeOut(arg_16_0)
-	if ServerTime.now() >= arg_16_0._finishTime then
-		arg_16_0:dispatchEvent(ActivityWarmUpEvent.GameOverTimeOut)
+function ActivityWarmUpGameController:checkTimeOut()
+	if ServerTime.now() >= self._finishTime then
+		self:dispatchEvent(ActivityWarmUpEvent.GameOverTimeOut)
 
 		return true
 	end
@@ -160,74 +162,74 @@ function var_0_0.checkTimeOut(arg_16_0)
 	return false
 end
 
-function var_0_0.pointerTrigger(arg_17_0)
-	local var_17_0 = ActivityWarmUpGameModel.instance.pointerVal
-	local var_17_1 = ActivityWarmUpGameModel.instance:getBlockDataByPointer(var_17_0)
-	local var_17_2 = true
+function ActivityWarmUpGameController:pointerTrigger()
+	local pointerValue = ActivityWarmUpGameModel.instance.pointerVal
+	local block = ActivityWarmUpGameModel.instance:getBlockDataByPointer(pointerValue)
+	local noHit = true
 
-	if var_17_1 ~= nil and ActivityWarmUpGameModel.instance:isCurrentTarget(var_17_1) then
-		var_17_2 = false
+	if block ~= nil and ActivityWarmUpGameModel.instance:isCurrentTarget(block) then
+		noHit = false
 
 		ActivityWarmUpGameModel.instance:gotoNextTarget()
 
 		if ActivityWarmUpGameModel.instance:isAllTargetClean() then
-			arg_17_0:dispatchEvent(ActivityWarmUpEvent.GameTriggerHit, var_17_1)
+			self:dispatchEvent(ActivityWarmUpEvent.GameTriggerHit, block)
 
-			if ActivityWarmUpGameModel.instance.round >= arg_17_0.settings.victoryRound then
-				arg_17_0._costTime = ServerTime.now() - arg_17_0._startTime
+			if ActivityWarmUpGameModel.instance.round >= self.settings.victoryRound then
+				self._costTime = ServerTime.now() - self._startTime
 
-				arg_17_0:dispatchEvent(ActivityWarmUpEvent.GameOverFinished)
+				self:dispatchEvent(ActivityWarmUpEvent.GameOverFinished)
 			else
-				arg_17_0:dispatchEvent(ActivityWarmUpEvent.GameNextRound)
+				self:dispatchEvent(ActivityWarmUpEvent.GameNextRound)
 			end
 
 			return
 		end
 	end
 
-	if var_17_2 then
-		arg_17_0:dispatchEvent(ActivityWarmUpEvent.GameTriggerNoHit)
+	if noHit then
+		self:dispatchEvent(ActivityWarmUpEvent.GameTriggerNoHit)
 	else
-		arg_17_0:dispatchEvent(ActivityWarmUpEvent.GameTriggerHit, var_17_1)
+		self:dispatchEvent(ActivityWarmUpEvent.GameTriggerHit, block)
 	end
 end
 
-function var_0_0.markCDTime(arg_18_0)
-	arg_18_0._cdStartTime = ServerTime.now()
+function ActivityWarmUpGameController:markCDTime()
+	self._cdStartTime = ServerTime.now()
 end
 
-function var_0_0.getIsCD(arg_19_0)
-	local var_19_0 = ServerTime.now()
+function ActivityWarmUpGameController:getIsCD()
+	local curTime = ServerTime.now()
 
-	if not arg_19_0._cdStartTime then
+	if not self._cdStartTime then
 		return false
 	end
 
-	return var_19_0 - arg_19_0._cdStartTime <= arg_19_0.settings.cdTime
+	return curTime - self._cdStartTime <= self.settings.cdTime
 end
 
-function var_0_0.getIsPlaying(arg_20_0)
-	return arg_20_0._isPlaying
+function ActivityWarmUpGameController:getIsPlaying()
+	return self._isPlaying
 end
 
-function var_0_0.getRemainTime(arg_21_0)
-	if arg_21_0._isPlaying then
-		return arg_21_0._finishTime - ServerTime.now()
+function ActivityWarmUpGameController:getRemainTime()
+	if self._isPlaying then
+		return self._finishTime - ServerTime.now()
 	else
 		return nil
 	end
 end
 
-function var_0_0.getSettingRemainTime(arg_22_0)
-	return arg_22_0.settings.levelTime
+function ActivityWarmUpGameController:getSettingRemainTime()
+	return self.settings.levelTime
 end
 
-function var_0_0.getSaveResult(arg_23_0)
-	return arg_23_0._gameResult
+function ActivityWarmUpGameController:getSaveResult()
+	return self._gameResult
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityWarmUpGameController.instance = ActivityWarmUpGameController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(ActivityWarmUpGameController.instance)
 
-return var_0_0
+return ActivityWarmUpGameController

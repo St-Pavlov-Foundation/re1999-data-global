@@ -1,7 +1,9 @@
-﻿module("modules.logic.gm.view.GMFastAddHeroAddItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFastAddHeroAddItem.lua
 
-local var_0_0 = class("GMFastAddHeroAddItem", ListScrollCell)
-local var_0_1 = {
+module("modules.logic.gm.view.GMFastAddHeroAddItem", package.seeall)
+
+local GMFastAddHeroAddItem = class("GMFastAddHeroAddItem", ListScrollCell)
+local ItemColor = {
 	"#319b26",
 	"#4d9af9",
 	"#a368d1",
@@ -9,50 +11,50 @@ local var_0_1 = {
 	"#e11919"
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._itemClick = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+function GMFastAddHeroAddItem:init(go)
+	self._itemClick = SLFramework.UGUI.UIClickListener.Get(go)
 
-	arg_1_0._itemClick:AddClickListener(arg_1_0._onClickItem, arg_1_0)
+	self._itemClick:AddClickListener(self._onClickItem, self)
 
-	arg_1_0._img1 = gohelper.findChildImage(arg_1_1, "img1")
-	arg_1_0._img2 = gohelper.findChildImage(arg_1_1, "img2")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "txtName")
-	arg_1_0._txtId = gohelper.findChildText(arg_1_1, "txtId")
+	self._img1 = gohelper.findChildImage(go, "img1")
+	self._img2 = gohelper.findChildImage(go, "img2")
+	self._txtName = gohelper.findChildText(go, "txtName")
+	self._txtId = gohelper.findChildText(go, "txtId")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0.characterCo = arg_2_1
+function GMFastAddHeroAddItem:onUpdateMO(characterCo)
+	self.characterCo = characterCo
 
-	gohelper.setActive(arg_2_0._img1.gameObject, arg_2_1.id % 2 == 1)
-	gohelper.setActive(arg_2_0._img2.gameObject, arg_2_1.id % 2 == 0)
+	gohelper.setActive(self._img1.gameObject, characterCo.id % 2 == 1)
+	gohelper.setActive(self._img2.gameObject, characterCo.id % 2 == 0)
 
-	arg_2_0._txtName.text = arg_2_0.characterCo.name
-	arg_2_0._txtId.text = arg_2_0.characterCo.id
+	self._txtName.text = self.characterCo.name
+	self._txtId.text = self.characterCo.id
 
-	local var_2_0 = "#666666"
+	local colorStr = "#666666"
 
-	if arg_2_0.characterCo.rare then
-		var_2_0 = var_0_1[tonumber(arg_2_0.characterCo.rare)]
+	if self.characterCo.rare then
+		colorStr = ItemColor[tonumber(self.characterCo.rare)]
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_2_0._txtName, var_2_0)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtName, colorStr)
 
-	local var_2_1 = GameUtil.parseColor(var_2_0)
+	local color = GameUtil.parseColor(colorStr)
 
-	arg_2_0._txtId.color = var_2_1
+	self._txtId.color = color
 end
 
-function var_0_0._onClickItem(arg_3_0)
-	GMAddItemModel.instance:onOnClickItem(arg_3_0.characterCo)
+function GMFastAddHeroAddItem:_onClickItem()
+	GMAddItemModel.instance:onOnClickItem(self.characterCo)
 	GMFastAddHeroHadHeroItemModel.instance:setSelectMo(nil)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	if arg_4_0._itemClick then
-		arg_4_0._itemClick:RemoveClickListener()
+function GMFastAddHeroAddItem:onDestroy()
+	if self._itemClick then
+		self._itemClick:RemoveClickListener()
 
-		arg_4_0._itemClick = nil
+		self._itemClick = nil
 	end
 end
 
-return var_0_0
+return GMFastAddHeroAddItem

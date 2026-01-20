@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "language_10003352",
+    "icon1": "fight_rouge2_skill_1",
+    "icon2": "fight_rouge2_yinfu_1"
+  },
+  {
+    "id": 2,
+    "name": "language_10003350",
+    "icon1": "fight_rouge2_skill_3",
+    "icon2": "fight_rouge2_yinfu_3"
+  },
+  {
+    "id": 3,
+    "name": "language_10003347",
+    "icon1": "fight_rouge2_skill_2",
+    "icon2": "fight_rouge2_yinfu_2"
+  }
+]

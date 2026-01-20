@@ -1,128 +1,130 @@
-﻿module("modules.logic.dungeon.view.DungeonEquipEntryItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonEquipEntryItem.lua
 
-local var_0_0 = class("DungeonEquipEntryItem", BaseView)
+module("modules.logic.dungeon.view.DungeonEquipEntryItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "coverInfo/title/#txt_title")
-	arg_1_0._txttitleEn = gohelper.findChildText(arg_1_0.viewGO, "coverInfo/title/#txt_titleEn")
-	arg_1_0._simagecoverpic = gohelper.findChildSingleImage(arg_1_0.viewGO, "coverInfo/#simage_coverpic")
-	arg_1_0._txtcoverDesc = gohelper.findChildText(arg_1_0.viewGO, "coverInfo/#txt_coverDesc")
-	arg_1_0._imagefill = gohelper.findChildImage(arg_1_0.viewGO, "coverInfo/progress/#image_fill")
-	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "coverInfo/progress/#txt_progress")
-	arg_1_0._txttype = gohelper.findChildText(arg_1_0.viewGO, "detailInfo/clue/#txt_type")
-	arg_1_0._txttypeNameEn = gohelper.findChildText(arg_1_0.viewGO, "detailInfo/clue/#txt_type/#txt_typeNameEn")
-	arg_1_0._txtclueName = gohelper.findChildText(arg_1_0.viewGO, "detailInfo/clue/#txt_clueName")
-	arg_1_0._simagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "detailInfo/clue/#simage_pic")
-	arg_1_0._txtclueDesc = gohelper.findChildText(arg_1_0.viewGO, "detailInfo/desc/#txt_clueDesc")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "detailInfo/#go_reward")
-	arg_1_0._gocomplate = gohelper.findChild(arg_1_0.viewGO, "detailInfo/#go_complate")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "detailInfo/#go_reward/#scroll_reward")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "detailInfo/#go_reward/#scroll_reward/#btn_reward")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "detailInfo/#go_reward/#scroll_reward/Viewport/Content/#go_item")
-	arg_1_0._btnsurveybtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "detailInfo/#go_reward/#btn_surveybtn")
+local DungeonEquipEntryItem = class("DungeonEquipEntryItem", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonEquipEntryItem:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._txttitle = gohelper.findChildText(self.viewGO, "coverInfo/title/#txt_title")
+	self._txttitleEn = gohelper.findChildText(self.viewGO, "coverInfo/title/#txt_titleEn")
+	self._simagecoverpic = gohelper.findChildSingleImage(self.viewGO, "coverInfo/#simage_coverpic")
+	self._txtcoverDesc = gohelper.findChildText(self.viewGO, "coverInfo/#txt_coverDesc")
+	self._imagefill = gohelper.findChildImage(self.viewGO, "coverInfo/progress/#image_fill")
+	self._txtprogress = gohelper.findChildText(self.viewGO, "coverInfo/progress/#txt_progress")
+	self._txttype = gohelper.findChildText(self.viewGO, "detailInfo/clue/#txt_type")
+	self._txttypeNameEn = gohelper.findChildText(self.viewGO, "detailInfo/clue/#txt_type/#txt_typeNameEn")
+	self._txtclueName = gohelper.findChildText(self.viewGO, "detailInfo/clue/#txt_clueName")
+	self._simagepic = gohelper.findChildSingleImage(self.viewGO, "detailInfo/clue/#simage_pic")
+	self._txtclueDesc = gohelper.findChildText(self.viewGO, "detailInfo/desc/#txt_clueDesc")
+	self._goreward = gohelper.findChild(self.viewGO, "detailInfo/#go_reward")
+	self._gocomplate = gohelper.findChild(self.viewGO, "detailInfo/#go_complate")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "detailInfo/#go_reward/#scroll_reward")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "detailInfo/#go_reward/#scroll_reward/#btn_reward")
+	self._goitem = gohelper.findChild(self.viewGO, "detailInfo/#go_reward/#scroll_reward/Viewport/Content/#go_item")
+	self._btnsurveybtn = gohelper.findChildButtonWithAudio(self.viewGO, "detailInfo/#go_reward/#btn_surveybtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnsurveybtn:AddClickListener(arg_2_0._btnsurveybtnOnClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+function DungeonEquipEntryItem:addEvents()
+	self._btnsurveybtn:AddClickListener(self._btnsurveybtnOnClick, self)
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnsurveybtn:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
+function DungeonEquipEntryItem:removeEvents()
+	self._btnsurveybtn:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
 end
 
-function var_0_0._btnsurveybtnOnClick(arg_4_0)
-	DungeonFightController.instance:enterFight(arg_4_0._config.chapterId, arg_4_0._episodeId)
+function DungeonEquipEntryItem:_btnsurveybtnOnClick()
+	DungeonFightController.instance:enterFight(self._config.chapterId, self._episodeId)
 end
 
-function var_0_0._btnrewardOnClick(arg_5_0)
-	DungeonController.instance:openDungeonRewardView(arg_5_0._config)
+function DungeonEquipEntryItem:_btnrewardOnClick()
+	DungeonController.instance:openDungeonRewardView(self._config)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._config = DungeonConfig.instance:getEpisodeCO(arg_6_0._episodeId)
+function DungeonEquipEntryItem:_editableInitView()
+	self._config = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	arg_6_0._simagebg1:LoadImage(ResUrl.getDungeonIcon("entry/bg_teshufuben_diban"))
-	arg_6_0._simagebg2:LoadImage(ResUrl.getDungeonIcon("entry/bg_teshufuben_zhuangshi"))
+	self._simagebg1:LoadImage(ResUrl.getDungeonIcon("entry/bg_teshufuben_diban"))
+	self._simagebg2:LoadImage(ResUrl.getDungeonIcon("entry/bg_teshufuben_zhuangshi"))
 
-	arg_6_0._txttitle.text = arg_6_0._config.name
-	arg_6_0._txttitleEn.text = arg_6_0._config.name_En
-	arg_6_0._txtclueDesc.text = string.format("          %s", arg_6_0._config.battleDesc)
-	arg_6_0._txtcoverDesc.text = arg_6_0._config.desc
+	self._txttitle.text = self._config.name
+	self._txttitleEn.text = self._config.name_En
+	self._txtclueDesc.text = string.format("          %s", self._config.battleDesc)
+	self._txtcoverDesc.text = self._config.desc
 
-	local var_6_0 = {
-		arg_6_0._progress - 1,
-		arg_6_0._episodeNum
+	local tag = {
+		self._progress - 1,
+		self._episodeNum
 	}
 
-	arg_6_0._txtprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeon_map_sp_equip_progress"), var_6_0)
-	arg_6_0._imagefill.fillAmount = (arg_6_0._progress - 1) / arg_6_0._episodeNum
+	self._txtprogress.text = GameUtil.getSubPlaceholderLuaLang(luaLang("dungeon_map_sp_equip_progress"), tag)
+	self._imagefill.fillAmount = (self._progress - 1) / self._episodeNum
 
-	local var_6_1 = DungeonModel.instance:getEpisodeInfo(arg_6_0._episodeId)
-	local var_6_2 = DungeonModel.instance:hasPassLevel(arg_6_0._episodeId) and var_6_1.challengeCount == 1
+	local info = DungeonModel.instance:getEpisodeInfo(self._episodeId)
+	local passed = DungeonModel.instance:hasPassLevel(self._episodeId) and info.challengeCount == 1
 
-	gohelper.setActive(arg_6_0._goreward, not var_6_2)
-	gohelper.setActive(arg_6_0._gocomplate, var_6_2)
+	gohelper.setActive(self._goreward, not passed)
+	gohelper.setActive(self._gocomplate, passed)
 
-	local var_6_3 = arg_6_0._config.navigationpic
+	local navigationpic = self._config.navigationpic
 
-	arg_6_0._simagecoverpic:LoadImage(ResUrl.getDungeonIcon(string.format("entry/bg_%s_%s", var_6_3, 1)))
-	arg_6_0._simagepic:LoadImage(ResUrl.getDungeonIcon(string.format("entry/bg_%s_%s", var_6_3, 2)))
+	self._simagecoverpic:LoadImage(ResUrl.getDungeonIcon(string.format("entry/bg_%s_%s", navigationpic, 1)))
+	self._simagepic:LoadImage(ResUrl.getDungeonIcon(string.format("entry/bg_%s_%s", navigationpic, 2)))
 
-	local var_6_4 = DungeonModel.instance:getEpisodeRewardDisplayList(arg_6_0._episodeId)
+	local rewardList = DungeonModel.instance:getEpisodeRewardDisplayList(self._episodeId)
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_4) do
-		local var_6_5 = gohelper.cloneInPlace(arg_6_0._goitem)
+	for i, reward in ipairs(rewardList) do
+		local child = gohelper.cloneInPlace(self._goitem)
 
-		gohelper.setActive(var_6_5, true)
+		gohelper.setActive(child, true)
 
-		local var_6_6 = IconMgr.instance:getCommonPropItemIcon(var_6_5)
+		local item = IconMgr.instance:getCommonPropItemIcon(child)
 
-		var_6_6:setMOValue(iter_6_1[1], iter_6_1[2], iter_6_1[3])
-		var_6_6:isShowEquipAndItemCount(false)
-		var_6_6:hideEquipLvAndBreak(true)
+		item:setMOValue(reward[1], reward[2], reward[3])
+		item:isShowEquipAndItemCount(false)
+		item:hideEquipLvAndBreak(true)
 	end
 end
 
-function var_0_0.ctor(arg_7_0, arg_7_1)
-	arg_7_0._episodeIndex = arg_7_1[1]
-	arg_7_0._episodeNum = arg_7_1[2]
-	arg_7_0._episodeId = arg_7_1[3]
-	arg_7_0._progress = arg_7_1[4]
+function DungeonEquipEntryItem:ctor(param)
+	self._episodeIndex = param[1]
+	self._episodeNum = param[2]
+	self._episodeId = param[3]
+	self._progress = param[4]
 end
 
-function var_0_0.init(arg_8_0, arg_8_1)
-	arg_8_0.viewGO = arg_8_1
+function DungeonEquipEntryItem:init(go)
+	self.viewGO = go
 
-	arg_8_0:onInitView()
-	arg_8_0:addEvents()
+	self:onInitView()
+	self:addEvents()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function DungeonEquipEntryItem:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function DungeonEquipEntryItem:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_11_0)
+function DungeonEquipEntryItem:onClose()
 	return
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0:removeEvents()
-	arg_12_0._simagebg1:UnLoadImage()
-	arg_12_0._simagebg2:UnLoadImage()
-	arg_12_0._simagecoverpic:UnLoadImage()
-	arg_12_0._simagepic:UnLoadImage()
+function DungeonEquipEntryItem:onDestroy()
+	self:removeEvents()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
+	self._simagecoverpic:UnLoadImage()
+	self._simagepic:UnLoadImage()
 end
 
-return var_0_0
+return DungeonEquipEntryItem

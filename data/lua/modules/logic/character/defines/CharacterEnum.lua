@@ -1,8 +1,10 @@
-﻿module("modules.logic.character.defines.CharacterEnum", package.seeall)
+﻿-- chunkname: @modules/logic/character/defines/CharacterEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.character.defines.CharacterEnum", package.seeall)
 
-var_0_0.VoiceType = {
+local CharacterEnum = _M
+
+CharacterEnum.VoiceType = {
 	FightBehit = 6,
 	Skill = 18,
 	FightCardStar12 = 3,
@@ -31,33 +33,33 @@ var_0_0.VoiceType = {
 	Greeting = 17,
 	MainViewWelcome = 15
 }
-var_0_0.AttrDarkColor = GameUtil.parseColor("#736e6a")
-var_0_0.AttrLightColor = GameUtil.parseColor("#efece6")
-var_0_0.MaxSkillExLevel = 5
-var_0_0.DrawingState = {
+CharacterEnum.AttrDarkColor = GameUtil.parseColor("#736e6a")
+CharacterEnum.AttrLightColor = GameUtil.parseColor("#efece6")
+CharacterEnum.MaxSkillExLevel = 5
+CharacterEnum.DrawingState = {
 	Dynamic = 0,
 	Static = 1
 }
-var_0_0.CharacterSwitchViewOffsetX = -108
-var_0_0.SkinOpen = true
-var_0_0.TalentOpen = false
-var_0_0.Star = {
+CharacterEnum.CharacterSwitchViewOffsetX = -108
+CharacterEnum.SkinOpen = true
+CharacterEnum.TalentOpen = false
+CharacterEnum.Star = {
 	2,
 	3,
 	4,
 	5,
 	6
 }
-var_0_0.Color = {
+CharacterEnum.Color = {
 	2,
 	3,
 	4,
 	5,
 	6
 }
-var_0_0.LevelUpGuideId = 108
-var_0_0.MaxRare = 5
-var_0_0.CareerType = {
+CharacterEnum.LevelUpGuideId = 108
+CharacterEnum.MaxRare = 5
+CharacterEnum.CareerType = {
 	Shou = 4,
 	Zhi = 6,
 	Ling = 5,
@@ -65,22 +67,22 @@ var_0_0.CareerType = {
 	Mu = 3,
 	Yan = 1
 }
-var_0_0.DamageType = {
+CharacterEnum.DamageType = {
 	Real = 1,
 	Spirit = 2
 }
-var_0_0.TalentRank = 2
-var_0_0.showAttributeOption = {
+CharacterEnum.TalentRank = 2
+CharacterEnum.showAttributeOption = {
 	ShowCurrent = 0,
 	ShowMax = 1,
 	ShowMin = -1
 }
-var_0_0.CharacterDataItemType = {
+CharacterEnum.CharacterDataItemType = {
 	Culture = 3,
 	Item = 2,
 	Title = 1
 }
-var_0_0.CharacterDataUnLockType = {
+CharacterEnum.CharacterDataUnLockType = {
 	Faith = 1,
 	TalentLevel = 5,
 	RankLevel = 2,
@@ -88,7 +90,7 @@ var_0_0.CharacterDataUnLockType = {
 	Episode = 6,
 	SkillLevel = 4
 }
-var_0_0.SkinGainApproach = {
+CharacterEnum.SkinGainApproach = {
 	Activity = 3,
 	Store = 2,
 	Rank = 1,
@@ -96,7 +98,7 @@ var_0_0.SkinGainApproach = {
 	Permanent = 5,
 	Init = 0
 }
-var_0_0.FilterType = {
+CharacterEnum.FilterType = {
 	HeroGroup = 2,
 	BackpackHero = 1,
 	AdventureCharacter = 4,
@@ -106,7 +108,7 @@ var_0_0.FilterType = {
 	Survival = 8,
 	WeekWalk = 6
 }
-var_0_0.AttrId = {
+CharacterEnum.AttrId = {
 	Cri = 201,
 	Absorb = 210,
 	Recri = 202,
@@ -141,50 +143,50 @@ var_0_0.AttrId = {
 	LostHp = 99,
 	Defense = 103
 }
-var_0_0.AttrIdToAttrName = {
-	[var_0_0.AttrId.Hp] = "hp",
-	[var_0_0.AttrId.Attack] = "atk",
-	[var_0_0.AttrId.Defense] = "def",
-	[var_0_0.AttrId.Mdefense] = "mdef",
-	[var_0_0.AttrId.Technic] = "technic",
-	[var_0_0.AttrId.Cri] = "cri",
-	[var_0_0.AttrId.Recri] = "recri",
-	[var_0_0.AttrId.CriDmg] = "cri_dmg",
-	[var_0_0.AttrId.CriDef] = "cri_def",
-	[var_0_0.AttrId.AddDmg] = "add_dmg",
-	[var_0_0.AttrId.DropDmg] = "drop_dmg"
+CharacterEnum.AttrIdToAttrName = {
+	[CharacterEnum.AttrId.Hp] = "hp",
+	[CharacterEnum.AttrId.Attack] = "atk",
+	[CharacterEnum.AttrId.Defense] = "def",
+	[CharacterEnum.AttrId.Mdefense] = "mdef",
+	[CharacterEnum.AttrId.Technic] = "technic",
+	[CharacterEnum.AttrId.Cri] = "cri",
+	[CharacterEnum.AttrId.Recri] = "recri",
+	[CharacterEnum.AttrId.CriDmg] = "cri_dmg",
+	[CharacterEnum.AttrId.CriDef] = "cri_def",
+	[CharacterEnum.AttrId.AddDmg] = "add_dmg",
+	[CharacterEnum.AttrId.DropDmg] = "drop_dmg"
 }
-var_0_0.BaseAttrIdList = {
-	var_0_0.AttrId.Attack,
-	var_0_0.AttrId.Hp,
-	var_0_0.AttrId.Defense,
-	var_0_0.AttrId.Mdefense,
-	var_0_0.AttrId.Technic
+CharacterEnum.BaseAttrIdList = {
+	CharacterEnum.AttrId.Attack,
+	CharacterEnum.AttrId.Hp,
+	CharacterEnum.AttrId.Defense,
+	CharacterEnum.AttrId.Mdefense,
+	CharacterEnum.AttrId.Technic
 }
-var_0_0.UpAttrIdList = {
-	var_0_0.AttrId.Cri,
-	var_0_0.AttrId.Recri,
-	var_0_0.AttrId.CriDmg,
-	var_0_0.AttrId.CriDef,
-	var_0_0.AttrId.AddDmg,
-	var_0_0.AttrId.DropDmg,
-	var_0_0.AttrId.NormalSkillRate,
-	var_0_0.AttrId.Clutch,
-	var_0_0.AttrId.Revive,
-	var_0_0.AttrId.Absorb,
-	var_0_0.AttrId.Heal,
-	var_0_0.AttrId.DefenseIgnore
+CharacterEnum.UpAttrIdList = {
+	CharacterEnum.AttrId.Cri,
+	CharacterEnum.AttrId.Recri,
+	CharacterEnum.AttrId.CriDmg,
+	CharacterEnum.AttrId.CriDef,
+	CharacterEnum.AttrId.AddDmg,
+	CharacterEnum.AttrId.DropDmg,
+	CharacterEnum.AttrId.NormalSkillRate,
+	CharacterEnum.AttrId.Clutch,
+	CharacterEnum.AttrId.Revive,
+	CharacterEnum.AttrId.Absorb,
+	CharacterEnum.AttrId.Heal,
+	CharacterEnum.AttrId.DefenseIgnore
 }
-var_0_0.ShowSkinEnum = {
+CharacterEnum.ShowSkinEnum = {
 	Static = 1,
 	Dynamic = 2
 }
-var_0_0.OpenSkinViewEnum = {
+CharacterEnum.OpenSkinViewEnum = {
 	SkinStore = 2,
 	SkinTip = 3,
 	Normal = 1
 }
-var_0_0.TalentTxtByHeroType = {
+CharacterEnum.TalentTxtByHeroType = {
 	"1",
 	"1",
 	"1",
@@ -192,26 +194,26 @@ var_0_0.TalentTxtByHeroType = {
 	"1",
 	"6"
 }
-var_0_0.skillIndex = {
+CharacterEnum.skillIndex = {
 	Skill2 = 2,
 	SkillEx = 3,
 	Skill1 = 1
 }
-var_0_0.DefaultSkinId = {
+CharacterEnum.DefaultSkinId = {
 	DuDuGu = 310401
 }
-var_0_0.StatType = {
+CharacterEnum.StatType = {
 	ALL = -1,
 	NotStat = 1,
 	Normal = 0
 }
 
-setmetatable(var_0_0.TalentTxtByHeroType, {
-	__index = function(arg_1_0, arg_1_1)
+setmetatable(CharacterEnum.TalentTxtByHeroType, {
+	__index = function(t, key)
 		return "1"
 	end
 })
 
-var_0_0.HumanHeroType = 6
+CharacterEnum.HumanHeroType = 6
 
-return var_0_0
+return CharacterEnum

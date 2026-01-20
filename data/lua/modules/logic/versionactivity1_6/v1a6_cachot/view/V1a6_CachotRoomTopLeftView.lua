@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomTopLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoomTopLeftView.lua
 
-local var_0_0 = class("V1a6_CachotRoomTopLeftView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomTopLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnexit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#btn_exit")
-	arg_1_0._btntips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#btn_tips")
-	arg_1_0._txtroomIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "top/#go_level/#txt_level")
-	arg_1_0._golayerTips = gohelper.findChild(arg_1_0.viewGO, "top/#go_level/#go_layertips")
-	arg_1_0._txtlayertitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "top/#go_level/#go_layertips/#txt_title")
-	arg_1_0._golayereventitem = gohelper.findChild(arg_1_0.viewGO, "top/#go_level/#go_layertips/events/#go_tipsitem")
-	arg_1_0._golayereventitemParent = arg_1_0._golayereventitem.transform.parent.gameObject
-	arg_1_0._btnshowlayertips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#go_level/#btn_showlayertips")
-	arg_1_0._eventItem = gohelper.findChild(arg_1_0.viewGO, "top/#go_level/layout/buff1")
-	arg_1_0._eventParent = arg_1_0._eventItem.transform.parent.gameObject
+local V1a6_CachotRoomTopLeftView = class("V1a6_CachotRoomTopLeftView", BaseView)
+
+function V1a6_CachotRoomTopLeftView:onInitView()
+	self._btnexit = gohelper.findChildButtonWithAudio(self.viewGO, "top/#btn_exit")
+	self._btntips = gohelper.findChildButtonWithAudio(self.viewGO, "top/#btn_tips")
+	self._txtroomIndex = gohelper.findChildTextMesh(self.viewGO, "top/#go_level/#txt_level")
+	self._golayerTips = gohelper.findChild(self.viewGO, "top/#go_level/#go_layertips")
+	self._txtlayertitle = gohelper.findChildTextMesh(self.viewGO, "top/#go_level/#go_layertips/#txt_title")
+	self._golayereventitem = gohelper.findChild(self.viewGO, "top/#go_level/#go_layertips/events/#go_tipsitem")
+	self._golayereventitemParent = self._golayereventitem.transform.parent.gameObject
+	self._btnshowlayertips = gohelper.findChildButtonWithAudio(self.viewGO, "top/#go_level/#btn_showlayertips")
+	self._eventItem = gohelper.findChild(self.viewGO, "top/#go_level/layout/buff1")
+	self._eventParent = self._eventItem.transform.parent.gameObject
 end
 
-function var_0_0.addEvents(arg_2_0)
-	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotRoomView, arg_2_0._btnexitOnClick, arg_2_0)
-	arg_2_0._btnexit:AddClickListener(arg_2_0._btnexitOnClick, arg_2_0)
-	arg_2_0._btntips:AddClickListener(arg_2_0._btntipsOnClick, arg_2_0)
-	arg_2_0._btnshowlayertips:AddClickListener(arg_2_0._btnshowlayertipsOnClick, arg_2_0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, arg_2_0._onTouchScreen, arg_2_0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_2_0._refreshRoomInfo, arg_2_0)
+function V1a6_CachotRoomTopLeftView:addEvents()
+	NavigateMgr.instance:addEscape(ViewName.V1a6_CachotRoomView, self._btnexitOnClick, self)
+	self._btnexit:AddClickListener(self._btnexitOnClick, self)
+	self._btntips:AddClickListener(self._btntipsOnClick, self)
+	self._btnshowlayertips:AddClickListener(self._btnshowlayertipsOnClick, self)
+	GameStateMgr.instance:registerCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnUpdateRogueInfo, self._refreshRoomInfo, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V1a6_CachotRoomTopLeftView:removeEvents()
 	NavigateMgr.instance:removeEscape(ViewName.ExploreView)
-	arg_3_0._btnexit:RemoveClickListener()
-	arg_3_0._btntips:RemoveClickListener()
-	arg_3_0._btnshowlayertips:RemoveClickListener()
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, arg_3_0._onTouchScreen, arg_3_0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateRogueInfo, arg_3_0._refreshRoomInfo, arg_3_0)
+	self._btnexit:RemoveClickListener()
+	self._btntips:RemoveClickListener()
+	self._btnshowlayertips:RemoveClickListener()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.OnTouchScreen, self._onTouchScreen, self)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnUpdateRogueInfo, self._refreshRoomInfo, self)
 end
 
-function var_0_0._btnshowlayertipsOnClick(arg_4_0)
-	if not arg_4_0._eventParent.activeSelf then
+function V1a6_CachotRoomTopLeftView:_btnshowlayertipsOnClick()
+	if not self._eventParent.activeSelf then
 		return
 	end
 
-	local var_4_0 = not arg_4_0._golayerTips.activeSelf
+	local isShow = not self._golayerTips.activeSelf
 
-	gohelper.setActive(arg_4_0._golayerTips, var_4_0)
+	gohelper.setActive(self._golayerTips, isShow)
 end
 
-function var_0_0._onTouchScreen(arg_5_0)
-	if gohelper.isMouseOverGo(arg_5_0._btnshowlayertips) then
+function V1a6_CachotRoomTopLeftView:_onTouchScreen()
+	if gohelper.isMouseOverGo(self._btnshowlayertips) then
 		return
 	end
 
-	gohelper.setActive(arg_5_0._golayerTips, false)
+	gohelper.setActive(self._golayerTips, false)
 end
 
-function var_0_0._btntipsOnClick(arg_6_0)
+function V1a6_CachotRoomTopLeftView:_btntipsOnClick()
 	HelpController.instance:showHelp(HelpEnum.HelpId.Cachot1_6TotalHelp)
 end
 
-function var_0_0._btnexitOnClick(arg_7_0)
-	if arg_7_0:isOpenView() then
+function V1a6_CachotRoomTopLeftView:_btnexitOnClick()
+	if self:isOpenView() then
 		return
 	end
 
@@ -70,72 +72,72 @@ function var_0_0._btnexitOnClick(arg_7_0)
 	end)
 end
 
-function var_0_0.isOpenView(arg_9_0)
-	local var_9_0 = not ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotRoomView, {
+function V1a6_CachotRoomTopLeftView:isOpenView()
+	local haveOpenView = not ViewHelper.instance:checkViewOnTheTop(ViewName.V1a6_CachotRoomView, {
 		ViewName.GuideStepEditor
 	})
 
 	if PopupController.instance:getPopupCount() > 0 then
-		var_9_0 = true
+		haveOpenView = true
 	end
 
-	return var_9_0
+	return haveOpenView
 end
 
-function var_0_0.onOpen(arg_10_0)
-	gohelper.setActive(arg_10_0._golayerTips, false)
-	arg_10_0:_refreshRoomInfo()
+function V1a6_CachotRoomTopLeftView:onOpen()
+	gohelper.setActive(self._golayerTips, false)
+	self:_refreshRoomInfo()
 end
 
-function var_0_0._refreshRoomInfo(arg_11_0)
-	arg_11_0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+function V1a6_CachotRoomTopLeftView:_refreshRoomInfo()
+	self._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	if not arg_11_0._rogueInfo then
+	if not self._rogueInfo then
 		return
 	end
 
-	arg_11_0._txtroomIndex.text = arg_11_0._rogueInfo.layer
+	self._txtroomIndex.text = self._rogueInfo.layer
 
-	if #arg_11_0._rogueInfo.nextEvents == 0 then
-		gohelper.setActive(arg_11_0._eventParent, false)
+	if #self._rogueInfo.nextEvents == 0 then
+		gohelper.setActive(self._eventParent, false)
 	else
-		gohelper.setActive(arg_11_0._eventParent, true)
+		gohelper.setActive(self._eventParent, true)
 
-		local var_11_0 = {}
+		local datas = {}
 
-		var_11_0[1] = 1
+		datas[1] = 1
 
-		for iter_11_0 = 1, #arg_11_0._rogueInfo.nextEvents do
-			var_11_0[iter_11_0 + 1] = arg_11_0._rogueInfo.nextEvents[iter_11_0]
+		for i = 1, #self._rogueInfo.nextEvents do
+			datas[i + 1] = self._rogueInfo.nextEvents[i]
 		end
 
-		gohelper.CreateObjList(arg_11_0, arg_11_0._createEventItem, var_11_0, arg_11_0._eventParent, arg_11_0._eventItem, nil, 2)
-		gohelper.CreateObjList(arg_11_0, arg_11_0._createEventItemInfo, arg_11_0._rogueInfo.nextEvents, arg_11_0._golayereventitemParent, arg_11_0._golayereventitem)
+		gohelper.CreateObjList(self, self._createEventItem, datas, self._eventParent, self._eventItem, nil, 2)
+		gohelper.CreateObjList(self, self._createEventItemInfo, self._rogueInfo.nextEvents, self._golayereventitemParent, self._golayereventitem)
 	end
 
-	local var_11_1, var_11_2 = V1a6_CachotRoomConfig.instance:getLayerIndexAndTotal(arg_11_0._rogueInfo.room)
+	local layer, totalLayer = V1a6_CachotRoomConfig.instance:getLayerIndexAndTotal(self._rogueInfo.room)
 
-	arg_11_0._txtlayertitle.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a6_cachot_room_event_title"), {
-		var_11_1,
-		var_11_2
+	self._txtlayertitle.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a6_cachot_room_event_title"), {
+		layer,
+		totalLayer
 	})
 end
 
-function var_0_0._createEventItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = lua_rogue_event.configDict[arg_12_2.eventId]
-	local var_12_1 = arg_12_1:GetComponent(gohelper.Type_Image)
+function V1a6_CachotRoomTopLeftView:_createEventItem(obj, data, index)
+	local eventCo = lua_rogue_event.configDict[data.eventId]
+	local image = obj:GetComponent(gohelper.Type_Image)
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(var_12_1, "v1a6_cachot_room_eventicon_small" .. var_12_0.icon)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(image, "v1a6_cachot_room_eventicon_small" .. eventCo.icon)
 end
 
-function var_0_0._createEventItemInfo(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = lua_rogue_event.configDict[arg_13_2.eventId]
-	local var_13_1 = gohelper.findChildTextMesh(arg_13_1, "desc")
-	local var_13_2 = gohelper.findChildImage(arg_13_1, "desc/icon")
+function V1a6_CachotRoomTopLeftView:_createEventItemInfo(obj, data, index)
+	local eventCo = lua_rogue_event.configDict[data.eventId]
+	local desc = gohelper.findChildTextMesh(obj, "desc")
+	local icon = gohelper.findChildImage(obj, "desc/icon")
 
-	var_13_1.text = var_13_0.title
+	desc.text = eventCo.title
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(var_13_2, "v1a6_cachot_room_eventicon_small" .. var_13_0.icon)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(icon, "v1a6_cachot_room_eventicon_small" .. eventCo.icon)
 end
 
-return var_0_0
+return V1a6_CachotRoomTopLeftView

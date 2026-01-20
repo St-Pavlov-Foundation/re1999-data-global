@@ -1,7 +1,9 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightRoundPreloadEffectWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightRoundPreloadEffectWork.lua
 
-local var_0_0 = class("FightRoundPreloadEffectWork", BaseWork)
-local var_0_1 = {
+module("modules.logic.scene.fight.preloadwork.FightRoundPreloadEffectWork", package.seeall)
+
+local FightRoundPreloadEffectWork = class("FightRoundPreloadEffectWork", BaseWork)
+local TimelineEffectType = {
 	"FightTLEventTargetEffect",
 	nil,
 	nil,
@@ -12,143 +14,144 @@ local var_0_1 = {
 	"FightTLEventDefEffect",
 	[28] = "FightTLEventDefEffect"
 }
-local var_0_2 = {
+local TimelineEventOppositeSide = {
 	[1] = "FightTLEventTargetEffect"
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+function FightRoundPreloadEffectWork:onStart(context)
 	if FightEffectPool.isForbidEffect then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._concurrentCount = 1
-	arg_1_0._interval = 0.1
-	arg_1_0._loadingCount = 0
-	arg_1_0._effectWrapList = {}
-	arg_1_0._needPreloadList = {}
+	self._concurrentCount = 1
+	self._interval = 0.1
+	self._loadingCount = 0
+	self._effectWrapList = {}
+	self._needPreloadList = {}
 
-	local var_1_0 = {}
+	local effectPath2SideDict = {}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0.context.timelineDict) do
-		local var_1_1 = ZProj.SkillTimelineAssetHelper.GeAssetJson(iter_1_1, iter_1_0)
+	for timelineUrl, tlAssetItem in pairs(self.context.timelineDict) do
+		local jsonStr = ZProj.SkillTimelineAssetHelper.GeAssetJson(tlAssetItem, timelineUrl)
 
-		if not string.nilorempty(var_1_1) then
-			local var_1_2 = cjson.decode(var_1_1)
+		if not string.nilorempty(jsonStr) then
+			local jsonArr = cjson.decode(jsonStr)
 
-			for iter_1_2 = 1, #var_1_2, 2 do
-				local var_1_3 = tonumber(var_1_2[iter_1_2])
-				local var_1_4 = var_1_2[iter_1_2 + 1][1]
+			for i = 1, #jsonArr, 2 do
+				local tlType = tonumber(jsonArr[i])
+				local paramList = jsonArr[i + 1]
+				local effectName = paramList[1]
 
-				if var_0_1[var_1_3] and not string.nilorempty(var_1_4) then
-					local var_1_5 = FightHelper.getEffectUrlWithLod(var_1_4)
-					local var_1_6 = arg_1_0.context.timelineUrlDict[iter_1_0]
-					local var_1_7 = var_1_0[var_1_5]
-					local var_1_8 = var_1_6
+				if TimelineEffectType[tlType] and not string.nilorempty(effectName) then
+					local effectUrl = FightHelper.getEffectUrlWithLod(effectName)
+					local timelineSide = self.context.timelineUrlDict[timelineUrl]
+					local oldSide = effectPath2SideDict[effectUrl]
+					local needSide = timelineSide
 
-					if var_0_2[var_1_3] then
-						var_1_8 = var_1_6 == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+					if TimelineEventOppositeSide[tlType] then
+						needSide = timelineSide == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
 					end
 
-					local var_1_9 = var_1_8
+					local newSide = needSide
 
-					if var_1_7 and var_1_7 ~= var_1_8 then
-						var_1_9 = FightEnum.EntitySide.BothSide
+					if oldSide and oldSide ~= needSide then
+						newSide = FightEnum.EntitySide.BothSide
 					end
 
-					var_1_0[var_1_5] = var_1_9
+					effectPath2SideDict[effectUrl] = newSide
 				end
 			end
 		end
 	end
 
-	for iter_1_3, iter_1_4 in pairs(var_1_0) do
-		arg_1_0:_addPreloadEffect(iter_1_3, iter_1_4)
+	for path, side in pairs(effectPath2SideDict) do
+		self:_addPreloadEffect(path, side)
 	end
 
-	arg_1_0:_startPreload()
+	self:_startPreload()
 end
 
-function var_0_0._addPreloadEffect(arg_2_0, arg_2_1, arg_2_2)
-	if FightEffectPool.hasLoaded(arg_2_1) then
+function FightRoundPreloadEffectWork:_addPreloadEffect(path, side)
+	if FightEffectPool.hasLoaded(path) then
 		return
 	end
 
-	if arg_2_2 == nil then
-		table.insert(arg_2_0._needPreloadList, {
-			path = arg_2_1,
+	if side == nil then
+		table.insert(self._needPreloadList, {
+			path = path,
 			side = FightEnum.EntitySide.BothSide
 		})
 	end
 
-	if arg_2_2 == FightEnum.EntitySide.MySide or arg_2_2 == FightEnum.EntitySide.BothSide then
-		table.insert(arg_2_0._needPreloadList, {
-			path = arg_2_1,
+	if side == FightEnum.EntitySide.MySide or side == FightEnum.EntitySide.BothSide then
+		table.insert(self._needPreloadList, {
+			path = path,
 			side = FightEnum.EntitySide.MySide
 		})
 	end
 
-	if arg_2_2 == FightEnum.EntitySide.EnemySide or arg_2_2 == FightEnum.EntitySide.BothSide then
-		table.insert(arg_2_0._needPreloadList, {
-			path = arg_2_1,
+	if side == FightEnum.EntitySide.EnemySide or side == FightEnum.EntitySide.BothSide then
+		table.insert(self._needPreloadList, {
+			path = path,
 			side = FightEnum.EntitySide.EnemySide
 		})
 	end
 end
 
-function var_0_0._startPreload(arg_3_0)
-	arg_3_0._loadingCount = math.min(arg_3_0._concurrentCount, #arg_3_0._needPreloadList)
+function FightRoundPreloadEffectWork:_startPreload()
+	self._loadingCount = math.min(self._concurrentCount, #self._needPreloadList)
 
-	if arg_3_0._loadingCount > 0 then
-		for iter_3_0 = 1, arg_3_0._loadingCount do
-			local var_3_0 = table.remove(arg_3_0._needPreloadList, #arg_3_0._needPreloadList)
+	if self._loadingCount > 0 then
+		for i = 1, self._loadingCount do
+			local last = table.remove(self._needPreloadList, #self._needPreloadList)
 
-			if FightEffectPool.hasLoaded(var_3_0.path) or FightEffectPool.isLoading(var_3_0.path) then
-				arg_3_0:_detectAfterLoaded()
+			if FightEffectPool.hasLoaded(last.path) or FightEffectPool.isLoading(last.path) then
+				self:_detectAfterLoaded()
 			else
-				local var_3_1 = FightEffectPool.getEffect(var_3_0.path, var_3_0.side, arg_3_0._onPreloadOneFinish, arg_3_0, nil, true)
+				local effect = FightEffectPool.getEffect(last.path, last.side, self._onPreloadOneFinish, self, nil, true)
 
-				var_3_1:setLocalPos(50000, 50000, 50000)
-				table.insert(arg_3_0._effectWrapList, var_3_1)
+				effect:setLocalPos(50000, 50000, 50000)
+				table.insert(self._effectWrapList, effect)
 			end
 		end
 	else
-		arg_3_0:_onPreloadAllFinish()
+		self:_onPreloadAllFinish()
 	end
 end
 
-function var_0_0._onPreloadOneFinish(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_2 then
-		logError("战斗特效加载失败：" .. arg_4_1.path)
+function FightRoundPreloadEffectWork:_onPreloadOneFinish(effectWrap, success)
+	if not success then
+		logError("战斗特效加载失败：" .. effectWrap.path)
 	end
 
-	arg_4_0:_detectAfterLoaded()
+	self:_detectAfterLoaded()
 end
 
-function var_0_0._detectAfterLoaded(arg_5_0)
-	arg_5_0._loadingCount = arg_5_0._loadingCount - 1
+function FightRoundPreloadEffectWork:_detectAfterLoaded()
+	self._loadingCount = self._loadingCount - 1
 
-	if arg_5_0._loadingCount <= 0 then
-		TaskDispatcher.runDelay(arg_5_0._startPreload, arg_5_0, arg_5_0._interval)
+	if self._loadingCount <= 0 then
+		TaskDispatcher.runDelay(self._startPreload, self, self._interval)
 	end
 end
 
-function var_0_0._onPreloadAllFinish(arg_6_0)
-	arg_6_0:onDone(true)
+function FightRoundPreloadEffectWork:_onPreloadAllFinish()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._startPreload, arg_7_0, 0.01)
+function FightRoundPreloadEffectWork:clearWork()
+	TaskDispatcher.cancelTask(self._startPreload, self, 0.01)
 
-	if arg_7_0._effectWrapList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._effectWrapList) do
-			FightEffectPool.returnEffect(iter_7_1)
-			iter_7_1:setCallback(nil, nil)
+	if self._effectWrapList then
+		for _, effectWrap in ipairs(self._effectWrapList) do
+			FightEffectPool.returnEffect(effectWrap)
+			effectWrap:setCallback(nil, nil)
 		end
 	end
 
-	arg_7_0._effectWrapList = nil
+	self._effectWrapList = nil
 end
 
-return var_0_0
+return FightRoundPreloadEffectWork

@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicChapterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicChapterViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_4MusicChapterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicChapterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_4MusicChapterViewContainer = class("VersionActivity2_4MusicChapterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_4MusicChapterView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_left"))
+function VersionActivity2_4MusicChapterViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_4MusicChapterView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function VersionActivity2_4MusicChapterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return VersionActivity2_4MusicChapterViewContainer

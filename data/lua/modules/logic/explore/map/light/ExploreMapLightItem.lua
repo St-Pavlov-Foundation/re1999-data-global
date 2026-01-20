@@ -1,72 +1,74 @@
-﻿module("modules.logic.explore.map.light.ExploreMapLightItem", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/light/ExploreMapLightItem.lua
 
-local var_0_0 = class("ExploreMapLightItem")
+module("modules.logic.explore.map.light.ExploreMapLightItem", package.seeall)
 
-var_0_0._itemPool = nil
+local ExploreMapLightItem = class("ExploreMapLightItem")
 
-function var_0_0.getPool()
-	if not var_0_0._itemPool then
-		var_0_0._itemPool = LuaObjPool.New(100, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
+ExploreMapLightItem._itemPool = nil
+
+function ExploreMapLightItem.getPool()
+	if not ExploreMapLightItem._itemPool then
+		ExploreMapLightItem._itemPool = LuaObjPool.New(100, ExploreMapLightItem._poolNew, ExploreMapLightItem._poolRelease, ExploreMapLightItem._poolReset)
 	end
 
-	return var_0_0._itemPool
+	return ExploreMapLightItem._itemPool
 end
 
-function var_0_0._poolNew()
-	return var_0_0.New()
+function ExploreMapLightItem._poolNew()
+	return ExploreMapLightItem.New()
 end
 
-function var_0_0._poolRelease(arg_3_0)
-	arg_3_0:release()
+function ExploreMapLightItem._poolRelease(luaObj)
+	luaObj:release()
 end
 
-function var_0_0._poolReset(arg_4_0)
-	arg_4_0:reset()
+function ExploreMapLightItem._poolReset(luaObj)
+	luaObj:reset()
 end
 
-function var_0_0.release(arg_5_0)
-	if arg_5_0._cloneGo then
-		gohelper.destroy(arg_5_0._cloneGo)
+function ExploreMapLightItem:release()
+	if self._cloneGo then
+		gohelper.destroy(self._cloneGo)
 
-		arg_5_0._cloneGo = nil
+		self._cloneGo = nil
 	end
 
-	arg_5_0._trans = nil
-	arg_5_0._lightCenter = nil
-	arg_5_0._lightLast = nil
+	self._trans = nil
+	self._lightCenter = nil
+	self._lightLast = nil
 end
 
-function var_0_0.reset(arg_6_0)
-	arg_6_0._trans:SetParent(nil)
-	transformhelper.setLocalScale(arg_6_0._trans, 0, 0, 0)
+function ExploreMapLightItem:reset()
+	self._trans:SetParent(nil)
+	transformhelper.setLocalScale(self._trans, 0, 0, 0)
 end
 
-function var_0_0.ctor(arg_7_0)
-	arg_7_0._cloneGo = nil
+function ExploreMapLightItem:ctor()
+	self._cloneGo = nil
 end
 
-function var_0_0.init(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if not arg_8_0._cloneGo then
-		arg_8_0._cloneGo = gohelper.clone(arg_8_3, arg_8_2)
-		arg_8_0._trans = arg_8_0._cloneGo.transform
-		arg_8_0._lightCenter = arg_8_0._trans:Find("zhong")
-		arg_8_0._lightLast = arg_8_0._trans:Find("wei")
+function ExploreMapLightItem:init(lightMO, parent, go)
+	if not self._cloneGo then
+		self._cloneGo = gohelper.clone(go, parent)
+		self._trans = self._cloneGo.transform
+		self._lightCenter = self._trans:Find("zhong")
+		self._lightLast = self._trans:Find("wei")
 	else
-		arg_8_0._trans:SetParent(arg_8_2.transform)
+		self._trans:SetParent(parent.transform)
 	end
 
-	arg_8_0:updateLightMO(arg_8_1)
+	self:updateLightMO(lightMO)
 end
 
-function var_0_0.updateLightMO(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1.dir
-	local var_9_1 = arg_9_1.lightLen
+function ExploreMapLightItem:updateLightMO(lightMO)
+	local dir = lightMO.dir
+	local scale = lightMO.lightLen
 
-	transformhelper.setLocalPos(arg_9_0._trans, 0, 1, 0)
-	transformhelper.setLocalRotation(arg_9_0._trans, 0, var_9_0, 0)
-	transformhelper.setLocalScale(arg_9_0._trans, 1, 1, 1)
-	transformhelper.setLocalScale(arg_9_0._lightCenter, 3, 0.2, var_9_1 - 0.5)
-	transformhelper.setLocalPos(arg_9_0._lightLast, 0, 0, var_9_1 - 0.1)
+	transformhelper.setLocalPos(self._trans, 0, 1, 0)
+	transformhelper.setLocalRotation(self._trans, 0, dir, 0)
+	transformhelper.setLocalScale(self._trans, 1, 1, 1)
+	transformhelper.setLocalScale(self._lightCenter, 3, 0.2, scale - 0.5)
+	transformhelper.setLocalPos(self._lightLast, 0, 0, scale - 0.1)
 end
 
-return var_0_0
+return ExploreMapLightItem

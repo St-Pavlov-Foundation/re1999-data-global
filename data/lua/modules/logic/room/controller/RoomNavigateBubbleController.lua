@@ -1,332 +1,337 @@
-﻿module("modules.logic.room.controller.RoomNavigateBubbleController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomNavigateBubbleController.lua
 
-local var_0_0 = class("RoomNavigateBubbleController", BaseController)
+module("modules.logic.room.controller.RoomNavigateBubbleController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomNavigateBubbleController = class("RoomNavigateBubbleController", BaseController)
+
+function RoomNavigateBubbleController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomNavigateBubbleController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0:release()
+function RoomNavigateBubbleController:clear()
+	self:release()
 end
 
-function var_0_0.init(arg_4_0)
-	arg_4_0._isInited = true
+function RoomNavigateBubbleController:init()
+	self._isInited = true
 
-	RoomController.instance:registerCallback(RoomEvent.UpdateProduceLineData, arg_4_0.refreshData, arg_4_0)
-	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_4_0.onItemChanged, arg_4_0)
-	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, arg_4_0.onItemChanged, arg_4_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, arg_4_0.onFaithChanged, arg_4_0)
-	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, arg_4_0.onFaithChanged, arg_4_0)
-	RoomGiftController.instance:registerCallback(RoomGiftEvent.UpdateActInfo, arg_4_0.onRoomGiftActUpdate, arg_4_0)
-	RoomGiftController.instance:registerCallback(RoomGiftEvent.GetBonus, arg_4_0.onRoomGiftActUpdate, arg_4_0)
-	PCInputController.instance:registerCallback(PCInputEvent.NotifyRoomCharactorFaith, arg_4_0.gainAllFaithReward, arg_4_0)
-	PCInputController.instance:registerCallback(PCInputEvent.NotifyRoomCharactorFaithFull, arg_4_0.focusFaithFullChar, arg_4_0)
-	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureInfoUpdate, arg_4_0.onManufactureInfoUpdate, arg_4_0)
-	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureBuildingInfoChange, arg_4_0.onManufactureInfoUpdate, arg_4_0)
-	CritterController.instance:registerCallback(CritterEvent.CritterInfoPushReply, arg_4_0.startCheckTrainEventTask, arg_4_0)
-	arg_4_0:refreshData()
+	RoomController.instance:registerCallback(RoomEvent.UpdateProduceLineData, self.refreshData, self)
+	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, self.onItemChanged, self)
+	CurrencyController.instance:registerCallback(CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, self.onFaithChanged, self)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, self.onFaithChanged, self)
+	RoomGiftController.instance:registerCallback(RoomGiftEvent.UpdateActInfo, self.onRoomGiftActUpdate, self)
+	RoomGiftController.instance:registerCallback(RoomGiftEvent.GetBonus, self.onRoomGiftActUpdate, self)
+	PCInputController.instance:registerCallback(PCInputEvent.NotifyRoomCharactorFaith, self.gainAllFaithReward, self)
+	PCInputController.instance:registerCallback(PCInputEvent.NotifyRoomCharactorFaithFull, self.focusFaithFullChar, self)
+	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureInfoUpdate, self.onManufactureInfoUpdate, self)
+	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureBuildingInfoChange, self.onManufactureInfoUpdate, self)
+	CritterController.instance:registerCallback(CritterEvent.CritterInfoPushReply, self.startCheckTrainEventTask, self)
+	self:refreshData()
 
-	arg_4_0._clickFaithCharacterDict = nil
+	self._clickFaithCharacterDict = nil
 end
 
-function var_0_0.release(arg_5_0)
-	arg_5_0._isInited = false
+function RoomNavigateBubbleController:release()
+	self._isInited = false
 
-	RoomController.instance:unregisterCallback(RoomEvent.UpdateProduceLineData, arg_5_0.refreshData, arg_5_0)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, arg_5_0.onItemChanged, arg_5_0)
-	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, arg_5_0.onItemChanged, arg_5_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, arg_5_0.onFaithChanged, arg_5_0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, arg_5_0.onFaithChanged, arg_5_0)
-	PCInputController.instance:unregisterCallback(PCInputEvent.NotifyRoomCharactorFaith, arg_5_0.gainAllFaithReward, arg_5_0)
-	PCInputController.instance:unregisterCallback(PCInputEvent.NotifyRoomCharactorFaithFull, arg_5_0.focusFaithFullChar, arg_5_0)
-	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.UpdateActInfo, arg_5_0.onRoomGiftActUpdate, arg_5_0)
-	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.GetBonus, arg_5_0.onRoomGiftActUpdate, arg_5_0)
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureInfoUpdate, arg_5_0.onManufactureInfoUpdate, arg_5_0)
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingInfoChange, arg_5_0.onManufactureInfoUpdate, arg_5_0)
-	CritterController.instance:unregisterCallback(CritterEvent.CritterInfoPushReply, arg_5_0.startCheckTrainEventTask, arg_5_0)
+	RoomController.instance:unregisterCallback(RoomEvent.UpdateProduceLineData, self.refreshData, self)
+	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, self.onItemChanged, self)
+	CurrencyController.instance:unregisterCallback(CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, self.onFaithChanged, self)
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, self.onFaithChanged, self)
+	PCInputController.instance:unregisterCallback(PCInputEvent.NotifyRoomCharactorFaith, self.gainAllFaithReward, self)
+	PCInputController.instance:unregisterCallback(PCInputEvent.NotifyRoomCharactorFaithFull, self.focusFaithFullChar, self)
+	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.UpdateActInfo, self.onRoomGiftActUpdate, self)
+	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.GetBonus, self.onRoomGiftActUpdate, self)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureInfoUpdate, self.onManufactureInfoUpdate, self)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingInfoChange, self.onManufactureInfoUpdate, self)
+	CritterController.instance:unregisterCallback(CritterEvent.CritterInfoPushReply, self.startCheckTrainEventTask, self)
 	RoomNavigateBubbleModel.instance:clear()
 
-	arg_5_0._clickFaithCharacterDict = nil
+	self._clickFaithCharacterDict = nil
 end
 
-function var_0_0.refreshData(arg_6_0)
-	if arg_6_0._isInited then
+function RoomNavigateBubbleController:refreshData()
+	if self._isInited then
 		RoomNavigateBubbleModel.instance:buildCategory()
-		arg_6_0:sortData()
-		arg_6_0:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
+		self:sortData()
+		self:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
 	end
 end
 
-function var_0_0.onItemChanged(arg_7_0)
-	if arg_7_0._isInited then
+function RoomNavigateBubbleController:onItemChanged()
+	if self._isInited then
 		RoomNavigateBubbleModel.instance:updateBuildingUpgrade()
-		arg_7_0:sortData()
-		arg_7_0:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
+		self:sortData()
+		self:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
 	end
 end
 
-function var_0_0.onFaithChanged(arg_8_0)
-	if arg_8_0._isInited then
+function RoomNavigateBubbleController:onFaithChanged()
+	if self._isInited then
 		RoomNavigateBubbleModel.instance:updateHeroFaith()
-		arg_8_0:sortData()
-		arg_8_0:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
+		self:sortData()
+		self:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
 	end
 end
 
-function var_0_0.onRoomGiftActUpdate(arg_9_0)
-	if not arg_9_0._isInited then
+function RoomNavigateBubbleController:onRoomGiftActUpdate()
+	if not self._isInited then
 		return
 	end
 
 	RoomNavigateBubbleModel.instance:updateRoomGift()
-	arg_9_0:sortData()
-	arg_9_0:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
+	self:sortData()
+	self:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
 end
 
-function var_0_0.onManufactureInfoUpdate(arg_10_0)
-	if not arg_10_0._isInited then
+function RoomNavigateBubbleController:onManufactureInfoUpdate()
+	if not self._isInited then
 		return
 	end
 
 	RoomNavigateBubbleModel.instance:updateManufacture()
-	arg_10_0:sortData()
-	arg_10_0:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
+	self:sortData()
+	self:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
 end
 
-function var_0_0.startCheckTrainEventTask(arg_11_0)
-	if not arg_11_0._isHasCheckTrainEventTask then
-		arg_11_0._isHasCheckTrainEventTask = true
+function RoomNavigateBubbleController:startCheckTrainEventTask()
+	if not self._isHasCheckTrainEventTask then
+		self._isHasCheckTrainEventTask = true
 
-		TaskDispatcher.runDelay(arg_11_0._onRunCheckTrainEventTask, arg_11_0, 0.1)
+		TaskDispatcher.runDelay(self._onRunCheckTrainEventTask, self, 0.1)
 	end
 end
 
-function var_0_0._onRunCheckTrainEventTask(arg_12_0)
-	arg_12_0._isHasCheckTrainEventTask = false
+function RoomNavigateBubbleController:_onRunCheckTrainEventTask()
+	self._isHasCheckTrainEventTask = false
 
-	if not arg_12_0._isInited then
+	if not self._isInited then
 		return
 	end
 
 	RoomNavigateBubbleModel.instance:updateCritterEvent()
-	arg_12_0:sortData()
-	arg_12_0:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
+	self:sortData()
+	self:dispatchEvent(RoomEvent.NavigateBubbleUpdate)
 end
 
-function var_0_0.sortData(arg_13_0)
+function RoomNavigateBubbleController:sortData()
 	RoomNavigateBubbleModel.instance:sortCategory()
 end
 
-function var_0_0.sortProductProgress(arg_14_0, arg_14_1)
-	local var_14_0 = RoomProductionModel.instance:getById(arg_14_0)
-	local var_14_1 = RoomProductionModel.instance:getById(arg_14_1)
+function RoomNavigateBubbleController.sortProductProgress(bubbleDataA, bubbleDataB)
+	local productionLineMoA = RoomProductionModel.instance:getById(bubbleDataA)
+	local productionLineMoB = RoomProductionModel.instance:getById(bubbleDataB)
 
-	if var_14_0 ~= nil and var_14_1 ~= nil then
-		return var_0_0.getFinishProgress(var_14_0) > var_0_0.getFinishProgress(var_14_1)
+	if productionLineMoA ~= nil and productionLineMoB ~= nil then
+		return RoomNavigateBubbleController.getFinishProgress(productionLineMoA) > RoomNavigateBubbleController.getFinishProgress(productionLineMoB)
 	else
-		return arg_14_0 < arg_14_1
+		return bubbleDataA < bubbleDataB
 	end
 end
 
-function var_0_0.sortProductLineUpgrade(arg_15_0, arg_15_1)
-	if arg_15_0 == RoomNavigateBubbleEnum.HallId or arg_15_1 == RoomNavigateBubbleEnum.HallId then
-		return arg_15_0 == RoomNavigateBubbleEnum.HallId
+function RoomNavigateBubbleController.sortProductLineUpgrade(bubbleDataA, bubbleDataB)
+	if bubbleDataA == RoomNavigateBubbleEnum.HallId or bubbleDataB == RoomNavigateBubbleEnum.HallId then
+		return bubbleDataA == RoomNavigateBubbleEnum.HallId
 	end
 
-	return arg_15_0 < arg_15_1
+	return bubbleDataA < bubbleDataB
 end
 
-function var_0_0.sortManufacture(arg_16_0, arg_16_1)
-	return arg_16_0 < arg_16_1
+function RoomNavigateBubbleController.sortManufacture(bubbleDataA, bubbleDataB)
+	return bubbleDataA < bubbleDataB
 end
 
-function var_0_0.sortCritter(arg_17_0, arg_17_1)
-	local var_17_0 = CritterModel.instance:getCritterMOByUid(arg_17_0)
-	local var_17_1 = CritterModel.instance:getCritterMOByUid(arg_17_1)
+function RoomNavigateBubbleController.sortCritter(bubbleDataA, bubbleDataB)
+	local aCritterMO = CritterModel.instance:getCritterMOByUid(bubbleDataA)
+	local bCritterMO = CritterModel.instance:getCritterMOByUid(bubbleDataB)
 
-	if not var_17_0 or not var_17_1 then
+	if not aCritterMO or not bCritterMO then
 		return false
 	end
 
-	local var_17_2 = var_17_0:isCultivating()
+	local aIsCultivating = aCritterMO:isCultivating()
+	local bIsCultivating = bCritterMO:isCultivating()
 
-	if var_17_2 ~= var_17_1:isCultivating() then
-		return var_17_2
+	if aIsCultivating ~= bIsCultivating then
+		return aIsCultivating
 	end
 
-	return arg_17_0 < arg_17_1
+	return bubbleDataA < bubbleDataB
 end
 
-function var_0_0.getFinishProgress(arg_18_0)
-	if arg_18_0 then
-		return arg_18_0:getReservePer()
+function RoomNavigateBubbleController.getFinishProgress(detailInfo)
+	if detailInfo then
+		return detailInfo:getReservePer()
 	end
 
 	return 0
 end
 
-var_0_0.sortFunc = {
+RoomNavigateBubbleController.sortFunc = {
 	[RoomNavigateBubbleEnum.CategoryType.Factory] = {
-		[RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress] = var_0_0.sortProductProgress,
-		[RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade] = var_0_0.sortProductLineUpgrade,
-		[RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture] = var_0_0.sortManufacture,
-		[RoomNavigateBubbleEnum.FactoryBubbleType.Critter] = var_0_0.sortCritter
+		[RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress] = RoomNavigateBubbleController.sortProductProgress,
+		[RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade] = RoomNavigateBubbleController.sortProductLineUpgrade,
+		[RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture] = RoomNavigateBubbleController.sortManufacture,
+		[RoomNavigateBubbleEnum.FactoryBubbleType.Critter] = RoomNavigateBubbleController.sortCritter
 	}
 }
 
-function var_0_0.onClickCall(arg_19_0, arg_19_1)
-	if arg_19_1 and arg_19_1:getFirstBubble() then
-		local var_19_0 = arg_19_1:getFirstBubble()
-		local var_19_1 = var_0_0.showFunc[arg_19_1.showType]
+function RoomNavigateBubbleController:onClickCall(bubbleMO)
+	if bubbleMO and bubbleMO:getFirstBubble() then
+		local firstBubble = bubbleMO:getFirstBubble()
+		local func = RoomNavigateBubbleController.showFunc[bubbleMO.showType]
 
-		if var_19_1 then
-			var_19_1(arg_19_0, var_19_0, arg_19_1)
+		if func then
+			func(self, firstBubble, bubbleMO)
 		end
 	end
 end
 
-function var_0_0.lookAtBuildingPart(arg_20_0, arg_20_1)
-	local var_20_0 = RoomConfig.instance:getProductionPartByLineId(arg_20_1)
+function RoomNavigateBubbleController:lookAtBuildingPart(firstBubbleId)
+	local partId = RoomConfig.instance:getProductionPartByLineId(firstBubbleId)
 
-	if var_20_0 ~= nil then
-		RoomBuildingController.instance:tweenCameraFocusPart(var_20_0)
+	if partId ~= nil then
+		RoomBuildingController.instance:tweenCameraFocusPart(partId)
 
 		return
 	end
 
-	arg_20_0:focusInitBuilding()
+	self:focusInitBuilding()
 end
 
-function var_0_0.openBubbleUpgrade(arg_21_0, arg_21_1)
-	if arg_21_1 == RoomNavigateBubbleEnum.HallId then
+function RoomNavigateBubbleController:openBubbleUpgrade(firstBubbleId)
+	if firstBubbleId == RoomNavigateBubbleEnum.HallId then
 		RoomMapController.instance:openRoomLevelUpView()
 	else
-		local var_21_0 = RoomProductionModel.instance:getById(arg_21_1)
+		local mo = RoomProductionModel.instance:getById(firstBubbleId)
 
 		ViewMgr.instance:openView(ViewName.RoomProductLineLevelUpView, {
-			lineMO = var_21_0
+			lineMO = mo
 		})
 	end
 end
 
-function var_0_0.gainAllFaithReward(arg_22_0, arg_22_1)
+function RoomNavigateBubbleController:gainAllFaithReward(firstBubbleId)
 	RoomCharacterController.instance:gainAllCharacterFaith()
 end
 
-function var_0_0.focusFaithFullChar(arg_23_0, arg_23_1)
-	RoomCharacterController.instance:tweenCameraFocusCharacter(arg_23_1, RoomEnum.CameraState.Normal)
-	RoomCharacterController.instance:setCharacterFullFaithChecked(arg_23_1)
+function RoomNavigateBubbleController:focusFaithFullChar(firstBubbleId)
+	RoomCharacterController.instance:tweenCameraFocusCharacter(firstBubbleId, RoomEnum.CameraState.Normal)
+	RoomCharacterController.instance:setCharacterFullFaithChecked(firstBubbleId)
 end
 
-function var_0_0.focusInitBuilding(arg_24_0)
+function RoomNavigateBubbleController:focusInitBuilding()
 	RoomBuildingController.instance:tweenCameraFocusPart()
 end
 
-function var_0_0.openInitBuildingView(arg_25_0, arg_25_1)
-	if arg_25_1 == RoomNavigateBubbleEnum.HallId then
+function RoomNavigateBubbleController:openInitBuildingView(firstBubbleId)
+	if firstBubbleId == RoomNavigateBubbleEnum.HallId then
 		RoomMapController.instance:openRoomInitBuildingView(0.2)
 	else
-		local var_25_0 = arg_25_1
-		local var_25_1 = RoomProductionHelper.getPartIdByLineId(var_25_0)
+		local lineId = firstBubbleId
+		local partId = RoomProductionHelper.getPartIdByLineId(lineId)
 
 		RoomMapController.instance:openRoomInitBuildingView(0.2, {
-			partId = var_25_1,
-			lineId = var_25_0
+			partId = partId,
+			lineId = lineId
 		})
 	end
 end
 
-function var_0_0._sortFaithCharacter(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0:getCurrentInteractionId()
-	local var_26_1 = arg_26_1:getCurrentInteractionId()
+function RoomNavigateBubbleController._sortFaithCharacter(x, y)
+	local xCurrentInteractionId = x:getCurrentInteractionId()
+	local yCurrentInteractionId = y:getCurrentInteractionId()
 
-	if var_26_0 and not var_26_1 then
+	if xCurrentInteractionId and not yCurrentInteractionId then
 		return true
-	elseif not var_26_0 and var_26_1 then
+	elseif not xCurrentInteractionId and yCurrentInteractionId then
 		return false
 	end
 
-	return arg_26_0.currentFaith > arg_26_1.currentFaith
+	return x.currentFaith > y.currentFaith
 end
 
-function var_0_0.checkNextCharacter(arg_27_0)
-	arg_27_0._clickFaithCharacterDict = arg_27_0._clickFaithCharacterDict or {}
+function RoomNavigateBubbleController:checkNextCharacter()
+	self._clickFaithCharacterDict = self._clickFaithCharacterDict or {}
 
-	local var_27_0 = RoomCharacterModel.instance:getList()
-	local var_27_1 = {}
+	local roomCharacterMOList = RoomCharacterModel.instance:getList()
+	local canGetFaithCharacterList = {}
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_0) do
-		if iter_27_1.currentFaith > 0 then
-			table.insert(var_27_1, iter_27_1)
+	for i, roomCharacterMO in ipairs(roomCharacterMOList) do
+		if roomCharacterMO.currentFaith > 0 then
+			table.insert(canGetFaithCharacterList, roomCharacterMO)
 		end
 	end
 
-	if #var_27_1 <= 0 then
+	if #canGetFaithCharacterList <= 0 then
 		return
 	end
 
-	table.sort(var_27_1, var_0_0._sortFaithCharacter)
+	table.sort(canGetFaithCharacterList, RoomNavigateBubbleController._sortFaithCharacter)
 
-	local var_27_2 = var_27_1[1]:getCurrentInteractionId()
+	local currentInteractionId = canGetFaithCharacterList[1]:getCurrentInteractionId()
 
-	if var_27_2 then
-		RoomCharacterController.instance:startInteraction(var_27_2, true, true)
-	elseif arg_27_0:checkShowTimeBuildingInteraction() then
+	if currentInteractionId then
+		RoomCharacterController.instance:startInteraction(currentInteractionId, true, true)
+	elseif self:checkShowTimeBuildingInteraction() then
 		-- block empty
 	else
-		local var_27_3 = var_27_1[math.random(1, #var_27_1)]
+		local index = math.random(1, #canGetFaithCharacterList)
+		local roomCharacterMO = canGetFaithCharacterList[index]
 
-		var_27_3:endMove(true)
+		roomCharacterMO:endMove(true)
 
-		local var_27_4 = var_27_3.currentPosition
-		local var_27_5 = var_27_3.heroId
-		local var_27_6 = GameSceneMgr.instance:getCurScene()
+		local pos = roomCharacterMO.currentPosition
+		local heroId = roomCharacterMO.heroId
+		local scene = GameSceneMgr.instance:getCurScene()
 
-		local function var_27_7()
-			RoomCharacterController.instance:gainAllCharacterFaith(nil, nil, var_27_5)
+		local function callback()
+			RoomCharacterController.instance:gainAllCharacterFaith(nil, nil, heroId)
 
-			local var_28_0 = GameSceneMgr.instance:getCurScene().charactermgr:getCharacterEntity(var_27_5, SceneTag.RoomCharacter)
+			local curScene = GameSceneMgr.instance:getCurScene()
+			local entity = curScene.charactermgr:getCharacterEntity(heroId, SceneTag.RoomCharacter)
 
-			if var_28_0 and var_28_0.characterspine then
-				var_28_0.characterspine:touch(true)
+			if entity and entity.characterspine then
+				entity.characterspine:touch(true)
 			end
 		end
 
-		var_27_6.camera:switchCameraState(RoomEnum.CameraState.Normal, {
-			focusX = var_27_4.x,
-			focusY = var_27_4.z
-		}, nil, var_27_7, nil)
+		scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {
+			focusX = pos.x,
+			focusY = pos.z
+		}, nil, callback, nil)
 	end
 end
 
-function var_0_0.checkShowTimeBuildingInteraction(arg_29_0)
-	local var_29_0 = {}
+function RoomNavigateBubbleController:checkShowTimeBuildingInteraction()
+	local buildingInteractionMOList = {}
 
-	tabletool.addValues(var_29_0, RoomMapInteractionModel.instance:getBuildingInteractionMOList())
-	RoomHelper.randomArray(var_29_0)
+	tabletool.addValues(buildingInteractionMOList, RoomMapInteractionModel.instance:getBuildingInteractionMOList())
+	RoomHelper.randomArray(buildingInteractionMOList)
 
-	local var_29_1 = {}
+	local canInactMOList = {}
 
-	for iter_29_0 = 1, #var_29_0 do
-		local var_29_2 = var_29_0[iter_29_0]
-		local var_29_3 = RoomCharacterModel.instance:getCharacterMOById(var_29_2.config.heroId)
+	for i = 1, #buildingInteractionMOList do
+		local interactionMO = buildingInteractionMOList[i]
+		local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(interactionMO.config.heroId)
 
-		if var_29_2.hasInteraction and var_29_3 then
-			if var_29_3.currentFaith > 0 then
-				table.insert(var_29_1, 1, var_29_2)
+		if interactionMO.hasInteraction and roomCharacterMO then
+			if roomCharacterMO.currentFaith > 0 then
+				table.insert(canInactMOList, 1, interactionMO)
 			else
-				table.insert(var_29_1, var_29_2)
+				table.insert(canInactMOList, interactionMO)
 			end
 		end
 	end
 
-	for iter_29_1 = 1, #var_29_1 do
-		if RoomInteractionController.instance:showTimeByInteractionMO(var_29_1[iter_29_1], RoomCharacterEnum.ShowTimeFaithOp.FaithAll) then
+	for i = 1, #canInactMOList do
+		if RoomInteractionController.instance:showTimeByInteractionMO(canInactMOList[i], RoomCharacterEnum.ShowTimeFaithOp.FaithAll) then
 			return true
 		end
 	end
@@ -334,58 +339,62 @@ function var_0_0.checkShowTimeBuildingInteraction(arg_29_0)
 	return false
 end
 
-function var_0_0.clickedCharacterFaithBubble(arg_30_0)
-	arg_30_0:checkNextCharacter()
+function RoomNavigateBubbleController:clickedCharacterFaithBubble()
+	self:checkNextCharacter()
 end
 
-function var_0_0.focusManufactureBuildingCanReceive(arg_31_0, arg_31_1)
-	RoomBuildingController.instance:tweenCameraFocusBuilding(arg_31_1)
+function RoomNavigateBubbleController:focusManufactureBuildingCanReceive(buildingUid)
+	RoomBuildingController.instance:tweenCameraFocusBuilding(buildingUid)
 end
 
-function var_0_0.clickCritterBubble(arg_32_0, arg_32_1)
-	local var_32_0 = CritterModel.instance:getCritterMOByUid(arg_32_1)
+function RoomNavigateBubbleController:clickCritterBubble(critterUid)
+	local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
 
-	if not var_32_0 then
+	if not critterMO then
 		return
 	end
 
-	if var_32_0:isCultivating() then
-		local var_32_1 = var_32_0.trainInfo:isHasEventTrigger()
-		local var_32_2 = var_32_0.trainInfo:isTrainFinish()
+	local isCultivating = critterMO:isCultivating()
 
-		if var_32_1 or var_32_2 then
-			ManufactureController.instance:openCritterBuildingView(nil, RoomCritterBuildingViewContainer.SubViewTabId.Training, arg_32_1)
+	if isCultivating then
+		local hasTrainEvent = critterMO.trainInfo:isHasEventTrigger()
+		local isTrainFinish = critterMO.trainInfo:isTrainFinish()
+
+		if hasTrainEvent or isTrainFinish then
+			ManufactureController.instance:openCritterBuildingView(nil, RoomCritterBuildingViewContainer.SubViewTabId.Training, critterUid)
 
 			return
 		end
 	end
 
-	if var_32_0:isNoMoodWorking() then
-		local var_32_3 = ManufactureModel.instance:getCritterWorkingBuilding(arg_32_1)
+	local noMoodWorking = critterMO:isNoMoodWorking()
 
-		if var_32_3 then
-			RoomBuildingController.instance:tweenCameraFocusBuilding(var_32_3)
+	if noMoodWorking then
+		local buildingUid = ManufactureModel.instance:getCritterWorkingBuilding(critterUid)
+
+		if buildingUid then
+			RoomBuildingController.instance:tweenCameraFocusBuilding(buildingUid)
 		else
-			local var_32_4 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(arg_32_1)
+			local workingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(critterUid)
 
-			if var_32_4 then
-				local var_32_5 = RoomTransportHelper.fromTo2SiteType(var_32_4.fromType, var_32_4.toType)
+			if workingPathMO then
+				local siteType = RoomTransportHelper.fromTo2SiteType(workingPathMO.fromType, workingPathMO.toType)
 
-				RoomTransportController.instance:openTransportSiteView(var_32_5)
+				RoomTransportController.instance:openTransportSiteView(siteType)
 			end
 		end
 	end
 end
 
-var_0_0.showFunc = {
-	[RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress] = var_0_0.lookAtBuildingPart,
-	[RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade] = var_0_0.lookAtBuildingPart,
-	[RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward] = var_0_0.clickedCharacterFaithBubble,
-	[RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull] = var_0_0.focusFaithFullChar,
-	[RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift] = var_0_0.lookAtBuildingPart,
-	[RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture] = var_0_0.focusManufactureBuildingCanReceive,
-	[RoomNavigateBubbleEnum.FactoryBubbleType.Critter] = var_0_0.clickCritterBubble
+RoomNavigateBubbleController.showFunc = {
+	[RoomNavigateBubbleEnum.FactoryBubbleType.ProductProgress] = RoomNavigateBubbleController.lookAtBuildingPart,
+	[RoomNavigateBubbleEnum.FactoryBubbleType.BuildingUpgrade] = RoomNavigateBubbleController.lookAtBuildingPart,
+	[RoomNavigateBubbleEnum.FactoryBubbleType.FaithReward] = RoomNavigateBubbleController.clickedCharacterFaithBubble,
+	[RoomNavigateBubbleEnum.FactoryBubbleType.FaithFull] = RoomNavigateBubbleController.focusFaithFullChar,
+	[RoomNavigateBubbleEnum.FactoryBubbleType.RoomGift] = RoomNavigateBubbleController.lookAtBuildingPart,
+	[RoomNavigateBubbleEnum.FactoryBubbleType.Manufacture] = RoomNavigateBubbleController.focusManufactureBuildingCanReceive,
+	[RoomNavigateBubbleEnum.FactoryBubbleType.Critter] = RoomNavigateBubbleController.clickCritterBubble
 }
-var_0_0.instance = var_0_0.New()
+RoomNavigateBubbleController.instance = RoomNavigateBubbleController.New()
 
-return var_0_0
+return RoomNavigateBubbleController

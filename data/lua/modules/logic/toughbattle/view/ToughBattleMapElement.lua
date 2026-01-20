@@ -1,215 +1,219 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleMapElement", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleMapElement.lua
 
-local var_0_0 = class("ToughBattleMapElement", LuaCompBase)
-local var_0_1 = Vector2(1.5, 1.5)
+module("modules.logic.toughbattle.view.ToughBattleMapElement", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._config = arg_1_1[1]
-	arg_1_0._sceneElements = arg_1_1[2]
+local ToughBattleMapElement = class("ToughBattleMapElement", LuaCompBase)
+local BOX_COLLIDER_SIZE = Vector2(1.5, 1.5)
+
+function ToughBattleMapElement:ctor(param)
+	self._config = param[1]
+	self._sceneElements = param[2]
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._transform = arg_2_1.transform
+function ToughBattleMapElement:init(go)
+	self._go = go
+	self._transform = go.transform
 
-	arg_2_0:updatePos()
+	self:updatePos()
 
-	if arg_2_0._resLoader then
+	if self._resLoader then
 		return
 	end
 
-	arg_2_0._resLoader = MultiAbLoader.New()
-	arg_2_0._resPath = arg_2_0._config.res
+	self._resLoader = MultiAbLoader.New()
+	self._resPath = self._config.res
 
-	if not string.nilorempty(arg_2_0._resPath) then
-		arg_2_0._resLoader:addPath(arg_2_0._resPath)
+	if not string.nilorempty(self._resPath) then
+		self._resLoader:addPath(self._resPath)
 	end
 
-	arg_2_0._effectPath = arg_2_0._config.effect
+	self._effectPath = self._config.effect
 
-	if not string.nilorempty(arg_2_0._effectPath) then
-		arg_2_0._resLoader:addPath(arg_2_0._effectPath)
+	if not string.nilorempty(self._effectPath) then
+		self._resLoader:addPath(self._effectPath)
 	end
 
-	arg_2_0._resLoader:startLoad(arg_2_0._onResLoaded, arg_2_0)
+	self._resLoader:startLoad(self._onResLoaded, self)
 end
 
-function var_0_0.updatePos(arg_3_0)
-	local var_3_0 = string.splitToNumber(arg_3_0._config.pos, "#")
+function ToughBattleMapElement:updatePos()
+	local pos = string.splitToNumber(self._config.pos, "#")
 
-	transformhelper.setLocalPos(arg_3_0._transform, var_3_0[1] or 0, var_3_0[2] or 0, var_3_0[3] or 0)
+	transformhelper.setLocalPos(self._transform, pos[1] or 0, pos[2] or 0, pos[3] or 0)
 end
 
-function var_0_0._onResLoaded(arg_4_0)
-	arg_4_0:createMainPrefab()
-	arg_4_0:createEffectPrefab()
+function ToughBattleMapElement:_onResLoaded()
+	self:createMainPrefab()
+	self:createEffectPrefab()
 end
 
-function var_0_0.createMainPrefab(arg_5_0)
-	if string.nilorempty(arg_5_0._resPath) then
+function ToughBattleMapElement:createMainPrefab()
+	if string.nilorempty(self._resPath) then
 		return
 	end
 
-	local var_5_0 = arg_5_0._resLoader:getAssetItem(arg_5_0._resPath):GetResource(arg_5_0._resPath)
+	local assetItem = self._resLoader:getAssetItem(self._resPath)
+	local mainPrefab = assetItem:GetResource(self._resPath)
 
-	arg_5_0._itemGo = gohelper.clone(var_5_0, arg_5_0._go)
-	arg_5_0.posTransform = arg_5_0._itemGo.transform
+	self._itemGo = gohelper.clone(mainPrefab, self._go)
+	self.posTransform = self._itemGo.transform
 
-	local var_5_1 = arg_5_0._config.resScale
+	local resScale = self._config.resScale
 
-	if var_5_1 and var_5_1 ~= 0 then
-		transformhelper.setLocalScale(arg_5_0.posTransform, var_5_1, var_5_1, 1)
+	if resScale and resScale ~= 0 then
+		transformhelper.setLocalScale(self.posTransform, resScale, resScale, 1)
 	end
 
-	gohelper.setLayer(arg_5_0._itemGo, UnityLayer.Scene, true)
-	arg_5_0.addBoxColliderListener(arg_5_0._itemGo, arg_5_0._onClickDown, arg_5_0._onClickUp, arg_5_0)
-	transformhelper.setLocalPos(arg_5_0.posTransform, 0, 0, -1)
+	gohelper.setLayer(self._itemGo, UnityLayer.Scene, true)
+	self.addBoxColliderListener(self._itemGo, self._onClickDown, self._onClickUp, self)
+	transformhelper.setLocalPos(self.posTransform, 0, 0, -1)
 end
 
-function var_0_0.addBoxColliderListener(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	gohelper.addBoxCollider2D(arg_6_0, var_0_1)
+function ToughBattleMapElement.addBoxColliderListener(go, callback, clickUpCall, callbackTarget)
+	gohelper.addBoxCollider2D(go, BOX_COLLIDER_SIZE)
 
-	local var_6_0 = ZProj.BoxColliderClickListener.Get(arg_6_0)
+	local clickListener = ZProj.BoxColliderClickListener.Get(go)
 
-	var_6_0:SetIgnoreUI(true)
-	var_6_0:AddClickListener(arg_6_1, arg_6_3)
-	var_6_0:AddMouseUpListener(arg_6_2, arg_6_3)
+	clickListener:SetIgnoreUI(true)
+	clickListener:AddClickListener(callback, callbackTarget)
+	clickListener:AddMouseUpListener(clickUpCall, callbackTarget)
 end
 
-function var_0_0.createEffectPrefab(arg_7_0, arg_7_1, arg_7_2)
-	if string.nilorempty(arg_7_1) then
-		arg_7_1 = arg_7_0._effectPath
-		arg_7_2 = arg_7_0._config.tipOffsetPos
+function ToughBattleMapElement:createEffectPrefab(effectPath, offset)
+	if string.nilorempty(effectPath) then
+		effectPath = self._effectPath
+		offset = self._config.tipOffsetPos
 
-		if string.nilorempty(arg_7_1) then
+		if string.nilorempty(effectPath) then
 			return
 		end
 	end
 
-	local var_7_0 = string.splitToNumber(arg_7_2, "#")
+	local offsetPos = string.splitToNumber(offset, "#")
 
-	arg_7_0._offsetX = var_7_0[1] or 0
-	arg_7_0._offsetY = var_7_0[2] or 0
+	self._offsetX = offsetPos[1] or 0
+	self._offsetY = offsetPos[2] or 0
 
-	local var_7_1 = arg_7_0._resLoader:getAssetItem(arg_7_1):GetResource(arg_7_1)
+	local assetItem = self._resLoader:getAssetItem(effectPath)
+	local effectPrefab = assetItem:GetResource(effectPath)
 
-	arg_7_0._effectGo = gohelper.clone(var_7_1, arg_7_0._go)
-	arg_7_0.posTransform = arg_7_0._effectGo.transform
+	self._effectGo = gohelper.clone(effectPrefab, self._go)
+	self.posTransform = self._effectGo.transform
 
-	transformhelper.setLocalPos(arg_7_0._effectGo.transform, arg_7_0._offsetX, arg_7_0._offsetY, -3)
-	arg_7_0.addBoxColliderListener(arg_7_0._effectGo, arg_7_0._onClickDown, arg_7_0._onClickUp, arg_7_0)
+	transformhelper.setLocalPos(self._effectGo.transform, self._offsetX, self._offsetY, -3)
+	self.addBoxColliderListener(self._effectGo, self._onClickDown, self._onClickUp, self)
 end
 
-function var_0_0._onClickDown(arg_8_0)
-	arg_8_0._sceneElements:setMouseElementDown(arg_8_0, arg_8_0._config)
+function ToughBattleMapElement:_onClickDown()
+	self._sceneElements:setMouseElementDown(self, self._config)
 end
 
-function var_0_0._onClickUp(arg_9_0)
-	arg_9_0._sceneElements:setMouseElementUp(arg_9_0, arg_9_0._config)
+function ToughBattleMapElement:_onClickUp()
+	self._sceneElements:setMouseElementUp(self, self._config)
 end
 
-function var_0_0.hide(arg_10_0)
-	gohelper.setActive(arg_10_0._go, false)
+function ToughBattleMapElement:hide()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.show(arg_11_0)
-	gohelper.setActive(arg_11_0._go, true)
+function ToughBattleMapElement:show()
+	gohelper.setActive(self._go, true)
 end
 
-function var_0_0.getElementId(arg_12_0)
-	return arg_12_0._config.id
+function ToughBattleMapElement:getElementId()
+	return self._config.id
 end
 
-function var_0_0.getTransform(arg_13_0)
-	return arg_13_0._transform
+function ToughBattleMapElement:getTransform()
+	return self._transform
 end
 
-function var_0_0.getElementPos(arg_14_0)
-	if not arg_14_0.posTransform then
+function ToughBattleMapElement:getElementPos()
+	if not self.posTransform then
 		logError("not pos transform")
 
 		return
 	end
 
-	return transformhelper.getPos(arg_14_0.posTransform)
+	return transformhelper.getPos(self.posTransform)
 end
 
-function var_0_0.getConfig(arg_15_0)
-	return arg_15_0._config
+function ToughBattleMapElement:getConfig()
+	return self._config
 end
 
-function var_0_0.isValid(arg_16_0)
-	return not gohelper.isNil(arg_16_0._go)
+function ToughBattleMapElement:isValid()
+	return not gohelper.isNil(self._go)
 end
 
-function var_0_0.setFinish(arg_17_0)
-	if not arg_17_0._effectGo then
-		gohelper.destroy(arg_17_0._itemGo)
+function ToughBattleMapElement:setFinish()
+	if not self._effectGo then
+		gohelper.destroy(self._itemGo)
 
-		arg_17_0._itemGo = nil
+		self._itemGo = nil
 
 		return
 	end
 
-	arg_17_0:playEffectAnim("finish")
+	self:playEffectAnim("finish")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
-	TaskDispatcher.runDelay(arg_17_0.onFinishAnimDone, arg_17_0, 1.6)
+	TaskDispatcher.runDelay(self.onFinishAnimDone, self, 1.6)
 end
 
-function var_0_0.onFinishAnimDone(arg_18_0)
-	arg_18_0:onDestroy()
+function ToughBattleMapElement:onFinishAnimDone()
+	self:onDestroy()
 end
 
-function var_0_0.playEffectAnim(arg_19_0, arg_19_1)
-	arg_19_0._wenhaoAnimName = arg_19_1
+function ToughBattleMapElement:playEffectAnim(name)
+	self._wenhaoAnimName = name
 
-	if gohelper.isNil(arg_19_0._effectGo) then
+	if gohelper.isNil(self._effectGo) then
 		return
 	end
 
-	if not arg_19_0._effectGo.activeInHierarchy then
+	if not self._effectGo.activeInHierarchy then
 		return
 	end
 
-	if gohelper.isNil(arg_19_0._effectAnimator) then
-		arg_19_0._effectAnimator = SLFramework.AnimatorPlayer.Get(arg_19_0._effectGo)
+	if gohelper.isNil(self._effectAnimator) then
+		self._effectAnimator = SLFramework.AnimatorPlayer.Get(self._effectGo)
 	end
 
-	if not gohelper.isNil(arg_19_0._effectAnimator) then
-		arg_19_0._effectAnimator:Play(arg_19_1, arg_19_0._effectAnimDone, arg_19_0)
+	if not gohelper.isNil(self._effectAnimator) then
+		self._effectAnimator:Play(name, self._effectAnimDone, self)
 	end
 end
 
-function var_0_0._effectAnimDone(arg_20_0)
+function ToughBattleMapElement:_effectAnimDone()
 	logNormal("effect anim done")
 end
 
-function var_0_0.onDestroy(arg_21_0)
-	if arg_21_0._effectGo then
-		gohelper.destroy(arg_21_0._effectGo)
+function ToughBattleMapElement:onDestroy()
+	if self._effectGo then
+		gohelper.destroy(self._effectGo)
 
-		arg_21_0._effectGo = nil
+		self._effectGo = nil
 	end
 
-	if arg_21_0._itemGo then
-		gohelper.destroy(arg_21_0._itemGo)
+	if self._itemGo then
+		gohelper.destroy(self._itemGo)
 
-		arg_21_0._itemGo = nil
+		self._itemGo = nil
 	end
 
-	if arg_21_0._go then
-		gohelper.destroy(arg_21_0._go)
+	if self._go then
+		gohelper.destroy(self._go)
 
-		arg_21_0._go = nil
+		self._go = nil
 	end
 
-	if arg_21_0._resLoader then
-		arg_21_0._resLoader:dispose()
+	if self._resLoader then
+		self._resLoader:dispose()
 
-		arg_21_0._resLoader = nil
+		self._resLoader = nil
 	end
 
-	arg_21_0.destroyed = true
+	self.destroyed = true
 end
 
-return var_0_0
+return ToughBattleMapElement

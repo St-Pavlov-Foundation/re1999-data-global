@@ -1,177 +1,179 @@
-﻿module("modules.logic.scene.shelter.comp.SurvivalShelterSceneFogComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/SurvivalShelterSceneFogComp.lua
 
-local var_0_0 = class("SurvivalShelterSceneFogComp", BaseSceneComp)
+module("modules.logic.scene.shelter.comp.SurvivalShelterSceneFogComp", package.seeall)
 
-var_0_0.FogResPath = "survival/common/survialfog.prefab"
+local SurvivalShelterSceneFogComp = class("SurvivalShelterSceneFogComp", BaseSceneComp)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_1_0._onPreloadFinish, arg_1_0)
+SurvivalShelterSceneFogComp.FogResPath = "survival/common/survialfog.prefab"
+
+function SurvivalShelterSceneFogComp:init(sceneId, levelId)
+	self:getCurScene().preloader:registerCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	arg_2_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
+function SurvivalShelterSceneFogComp:_onPreloadFinish()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
 
-	arg_2_0._sceneGo = arg_2_0:getCurScene().level:getSceneGo()
-	arg_2_0._fogRoot = gohelper.create3d(arg_2_0._sceneGo, "FogRoot")
+	self._sceneGo = self:getCurScene().level:getSceneGo()
+	self._fogRoot = gohelper.create3d(self._sceneGo, "FogRoot")
 
-	local var_2_0 = SurvivalMapHelper.instance:getBlockRes(var_0_0.FogResPath)
+	local fogRes = SurvivalMapHelper.instance:getBlockRes(SurvivalShelterSceneFogComp.FogResPath)
 
-	if not var_2_0 then
+	if not fogRes then
 		return
 	end
 
-	local var_2_1 = gohelper.findChild(arg_2_0._sceneGo, "virtualCameraXZ/ocean")
+	local rainEffectRoot = gohelper.findChild(self._sceneGo, "virtualCameraXZ/ocean")
 
-	arg_2_0._rainGo = gohelper.create3d(var_2_1, "survival_rain")
-	arg_2_0._rainTrans = arg_2_0._rainGo and arg_2_0._rainGo.transform
-	arg_2_0._fogGo = gohelper.clone(var_2_0, arg_2_0._fogRoot)
-	arg_2_0._fogComp = arg_2_0._fogGo:GetComponent(typeof(ZProj.SurvivalFog))
-	arg_2_0._rainEntity = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._fogGo, SurvivalRainEntity, {
-		effectRoot = arg_2_0._rainGo,
-		onLoadedFunc = arg_2_0.onRainLoaded,
-		callBackContext = arg_2_0
+	self._rainGo = gohelper.create3d(rainEffectRoot, "survival_rain")
+	self._rainTrans = self._rainGo and self._rainGo.transform
+	self._fogGo = gohelper.clone(fogRes, self._fogRoot)
+	self._fogComp = self._fogGo:GetComponent(typeof(ZProj.SurvivalFog))
+	self._rainEntity = MonoHelper.addNoUpdateLuaComOnceToGo(self._fogGo, SurvivalRainEntity, {
+		effectRoot = self._rainGo,
+		onLoadedFunc = self.onRainLoaded,
+		callBackContext = self
 	})
 
-	local var_2_2 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	arg_2_0._rainEntity:setCurRain(var_2_2.rainType)
-	arg_2_0:setFogSize()
-	arg_2_0:setRainEnable(true)
+	self._rainEntity:setCurRain(weekInfo.rainType)
+	self:setFogSize()
+	self:setRainEnable(true)
 end
 
-function var_0_0.onRainLoaded(arg_3_0)
-	arg_3_0:dispatchEvent(SurvivalEvent.OnSurvivalFogLoaded)
+function SurvivalShelterSceneFogComp:onRainLoaded()
+	self:dispatchEvent(SurvivalEvent.OnSurvivalFogLoaded)
 end
 
-function var_0_0.setRainEnable(arg_4_0, arg_4_1)
-	if not arg_4_0._fogComp then
+function SurvivalShelterSceneFogComp:setRainEnable(enable)
+	if not self._fogComp then
 		return
 	end
 
-	arg_4_0:setFogEnable(false)
+	self:setFogEnable(false)
 
-	if not arg_4_1 then
-		arg_4_0._nowCircle = nil
+	if not enable then
+		self._nowCircle = nil
 
 		return
 	end
 
-	local var_4_0 = SurvivalConfig.instance:getCurShelterMapId()
-	local var_4_1 = lua_survival_shelter.configDict[var_4_0]
-	local var_4_2 = string.splitToNumber(var_4_1.stormCenter, "#")
-	local var_4_3 = SurvivalHexNode.New(var_4_2[1], var_4_2[2])
+	local shelterMapId = SurvivalConfig.instance:getCurShelterMapId()
+	local shelterMapConfig = lua_survival_shelter.configDict[shelterMapId]
+	local posList = string.splitToNumber(shelterMapConfig.stormCenter, "#")
+	local pos = SurvivalHexNode.New(posList[1], posList[2])
 
-	arg_4_0:setRainDis(var_4_3, var_4_1.stormArea)
+	self:setRainDis(pos, shelterMapConfig.stormArea)
 end
 
-function var_0_0.setFogSize(arg_5_0)
-	if not arg_5_0._fogComp then
+function SurvivalShelterSceneFogComp:setFogSize()
+	if not self._fogComp then
 		return
 	end
 
-	local var_5_0 = SurvivalConfig.instance:getShelterMapCo()
+	local mapCo = SurvivalConfig.instance:getShelterMapCo()
 
-	arg_5_0._fogComp:SetCenterAndSize(var_5_0.maxX - var_5_0.minX + 1, var_5_0.maxY - var_5_0.minY + 1, (var_5_0.maxX + var_5_0.minX) / 2, (var_5_0.maxY + var_5_0.minY) / 2)
-	arg_5_0._fogComp:UpdateBoudingBoxData()
+	self._fogComp:SetCenterAndSize(mapCo.maxX - mapCo.minX + 1, mapCo.maxY - mapCo.minY + 1, (mapCo.maxX + mapCo.minX) / 2, (mapCo.maxY + mapCo.minY) / 2)
+	self._fogComp:UpdateBoudingBoxData()
 end
 
-function var_0_0.setBlockStatu(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if not arg_6_0._fogComp then
+function SurvivalShelterSceneFogComp:setBlockStatu(mr, isInFog, isInRain)
+	if not self._fogComp then
 		return
 	end
 
-	if arg_6_2 ~= nil then
-		arg_6_0._fogComp:SetClearFogFlag(arg_6_1, not arg_6_2)
+	if isInFog ~= nil then
+		self._fogComp:SetClearFogFlag(mr, not isInFog)
 	end
 end
 
-function var_0_0.setFogEnable(arg_7_0, arg_7_1)
-	if not arg_7_0._fogComp then
+function SurvivalShelterSceneFogComp:setFogEnable(isEnable)
+	if not self._fogComp then
 		return
 	end
 
-	arg_7_0._fogComp:SetFogToggle(arg_7_1)
+	self._fogComp:SetFogToggle(isEnable)
 end
 
-function var_0_0.setRainDis(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._fogComp then
+function SurvivalShelterSceneFogComp:setRainDis(centerPos, distance)
+	if not self._fogComp then
 		return
 	end
 
-	arg_8_0.centerPos = arg_8_1
+	self.centerPos = centerPos
 
-	if arg_8_0._nowCircle == arg_8_2 then
+	if self._nowCircle == distance then
 		return
 	end
 
-	if not arg_8_0._nowCircle then
-		arg_8_0:frameSetCircle(arg_8_2)
+	if not self._nowCircle then
+		self:frameSetCircle(distance)
 	else
-		arg_8_0:killCirCleTween()
+		self:killCirCleTween()
 
-		arg_8_0._circleTweenId = ZProj.TweenHelper.DOTweenFloat(arg_8_0._nowCircle, arg_8_2, SurvivalConst.PlayerMoveSpeed * math.abs(arg_8_0._nowCircle - arg_8_2), arg_8_0.frameSetCircle, nil, arg_8_0)
+		self._circleTweenId = ZProj.TweenHelper.DOTweenFloat(self._nowCircle, distance, SurvivalConst.PlayerMoveSpeed * math.abs(self._nowCircle - distance), self.frameSetCircle, nil, self)
 	end
 
-	arg_8_0._nowCircle = arg_8_2
+	self._nowCircle = distance
 end
 
-function var_0_0.killCirCleTween(arg_9_0)
-	if arg_9_0._circleTweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._circleTweenId)
+function SurvivalShelterSceneFogComp:killCirCleTween()
+	if self._circleTweenId then
+		ZProj.TweenHelper.KillById(self._circleTweenId)
 
-		arg_9_0._circleTweenId = nil
+		self._circleTweenId = nil
 	end
 end
 
-function var_0_0.frameSetCircle(arg_10_0, arg_10_1)
-	arg_10_0._fogComp:SetRainHex(arg_10_0.centerPos.q, arg_10_0.centerPos.r, arg_10_0.centerPos.s, arg_10_1)
+function SurvivalShelterSceneFogComp:frameSetCircle(value)
+	self._fogComp:SetRainHex(self.centerPos.q, self.centerPos.r, self.centerPos.s, value)
 end
 
-function var_0_0.updateTexture(arg_11_0)
-	if not arg_11_0._fogComp then
+function SurvivalShelterSceneFogComp:updateTexture()
+	if not self._fogComp then
 		return
 	end
 
-	arg_11_0._fogComp:UpdateTexture()
+	self._fogComp:UpdateTexture()
 end
 
-function var_0_0.updateCenterPos(arg_12_0, arg_12_1)
-	if not arg_12_0._rainTrans then
+function SurvivalShelterSceneFogComp:updateCenterPos(pos)
+	if not self._rainTrans then
 		return
 	end
 
-	local var_12_0, var_12_1, var_12_2 = transformhelper.getLocalPos(arg_12_0._rainTrans)
+	local _, y, _ = transformhelper.getLocalPos(self._rainTrans)
 
-	transformhelper.setLocalPos(arg_12_0._rainTrans, arg_12_1.x, var_12_1, arg_12_1.z)
+	transformhelper.setLocalPos(self._rainTrans, pos.x, y, pos.z)
 end
 
-function var_0_0.onSceneClose(arg_13_0)
-	arg_13_0:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, arg_13_0._onPreloadFinish, arg_13_0)
-	arg_13_0:killCirCleTween()
+function SurvivalShelterSceneFogComp:onSceneClose()
+	self:getCurScene().preloader:unregisterCallback(SurvivalEvent.OnSurvivalPreloadFinish, self._onPreloadFinish, self)
+	self:killCirCleTween()
 
-	if arg_13_0._fogGo then
-		gohelper.destroy(arg_13_0._fogGo)
+	if self._fogGo then
+		gohelper.destroy(self._fogGo)
 
-		arg_13_0._fogGo = nil
-		arg_13_0._fogComp = nil
+		self._fogGo = nil
+		self._fogComp = nil
 	end
 
-	if arg_13_0._fogRoot then
-		gohelper.destroy(arg_13_0._fogRoot)
+	if self._fogRoot then
+		gohelper.destroy(self._fogRoot)
 
-		arg_13_0._fogRoot = nil
+		self._fogRoot = nil
 	end
 
-	arg_13_0._sceneGo = nil
-	arg_13_0._rainGo = nil
-	arg_13_0._rainTrans = nil
-	arg_13_0._nowCircle = nil
+	self._sceneGo = nil
+	self._rainGo = nil
+	self._rainTrans = nil
+	self._nowCircle = nil
 
-	if arg_13_0._rainEntity then
-		arg_13_0._rainEntity:onDestroy()
+	if self._rainEntity then
+		self._rainEntity:onDestroy()
 
-		arg_13_0._rainEntity = nil
+		self._rainEntity = nil
 	end
 end
 
-return var_0_0
+return SurvivalShelterSceneFogComp

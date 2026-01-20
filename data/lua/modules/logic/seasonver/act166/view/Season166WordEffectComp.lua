@@ -1,173 +1,176 @@
-﻿module("modules.logic.seasonver.act166.view.Season166WordEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166WordEffectComp.lua
 
-local var_0_0 = class("Season166WordEffectComp", LuaCompBase)
-local var_0_1 = "<size=40><alpha=#00>.<alpha=#ff></size>"
-local var_0_2 = table.insert
-local var_0_3 = string.gmatch
+module("modules.logic.seasonver.act166.view.Season166WordEffectComp", package.seeall)
 
-local function var_0_4(arg_1_0)
-	if not arg_1_0 then
+local Season166WordEffectComp = class("Season166WordEffectComp", LuaCompBase)
+local kSpace = "<size=40><alpha=#00>.<alpha=#ff></size>"
+local ti = table.insert
+local sgmatch = string.gmatch
+
+local function _getUCharArr(str)
+	if not str then
 		return {}
 	end
 
-	local var_1_0 = {}
+	local wordList = {}
 
-	for iter_1_0 in var_0_3(arg_1_0, "[%z\x01-\x7F\xC2-\xF4][\x80-\xBF]*") do
-		if LangSettings.instance:isEn() and iter_1_0 == " " then
-			iter_1_0 = var_0_1
+	for ch in sgmatch(str, "[%z\x01-\x7F\xC2-\xF4][\x80-\xBF]*") do
+		if LangSettings.instance:isEn() and ch == " " then
+			ch = kSpace
 		end
 
-		var_0_2(var_1_0, iter_1_0)
+		ti(wordList, ch)
 	end
 
-	return var_1_0
+	return wordList
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0._co = arg_2_1.co
-	arg_2_0._res = arg_2_1.res
+function Season166WordEffectComp:ctor(params)
+	self._co = params.co
+	self._res = params.res
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0._line1 = gohelper.findChild(arg_3_1, "item/line1")
-	arg_3_0._line2 = gohelper.findChild(arg_3_1, "item/line2")
-	arg_3_0._effect = gohelper.findChild(arg_3_1, "item/effect")
-	arg_3_0._animEffect = arg_3_0._effect:GetComponent(gohelper.Type_Animator)
+function Season166WordEffectComp:init(go)
+	self.go = go
+	self._line1 = gohelper.findChild(go, "item/line1")
+	self._line2 = gohelper.findChild(go, "item/line2")
+	self._effect = gohelper.findChild(go, "item/effect")
+	self._animEffect = self._effect:GetComponent(gohelper.Type_Animator)
 
-	arg_3_0:createTxt()
+	self:createTxt()
 end
 
-function var_0_0.createTxt(arg_4_0)
-	local var_4_0 = Season166Enum.WordTxtOpen + Season166Enum.WordTxtIdle + Season166Enum.WordTxtClose
+function Season166WordEffectComp:createTxt()
+	local oneWordTime = Season166Enum.WordTxtOpen + Season166Enum.WordTxtIdle + Season166Enum.WordTxtClose
 
-	arg_4_0._allAnimWork = {}
+	self._allAnimWork = {}
 
-	local var_4_1 = string.split(arg_4_0._co.desc, "\n")
-	local var_4_2 = var_0_4(var_4_1[1]) or {}
-	local var_4_3 = 0
+	local arr = string.split(self._co.desc, "\n")
+	local words1 = _getUCharArr(arr[1]) or {}
+	local offsetX = 0
 
-	for iter_4_0 = 1, #var_4_2 do
-		local var_4_4, var_4_5 = arg_4_0:getRes(arg_4_0._line1, false)
+	for i = 1, #words1 do
+		local txtAnim, txt = self:getRes(self._line1, false)
 
-		var_4_5.text = var_4_2[iter_4_0]
-		var_4_3 = var_4_3 + var_4_5.preferredWidth + Season166Enum.WordTxtPosXOffset
+		txt.text = words1[i]
+		offsetX = offsetX + txt.preferredWidth + Season166Enum.WordTxtPosXOffset
 
-		local var_4_6 = var_4_5.transform.parent
+		local p = txt.transform.parent
 
-		recthelper.setWidth(var_4_6, var_4_5.preferredWidth)
-		table.insert(arg_4_0._allAnimWork, {
+		recthelper.setWidth(p, txt.preferredWidth)
+		table.insert(self._allAnimWork, {
 			playAnim = "open",
-			anim = var_4_4,
-			time = (iter_4_0 - 1) * Season166Enum.WordTxtInterval
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval
 		})
-		table.insert(arg_4_0._allAnimWork, {
+		table.insert(self._allAnimWork, {
 			playAnim = "close",
-			anim = var_4_4,
-			time = (iter_4_0 - 1) * Season166Enum.WordTxtInterval + var_4_0 - Season166Enum.WordTxtClose
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval + oneWordTime - Season166Enum.WordTxtClose
 		})
 	end
 
-	local var_4_7 = 0
-	local var_4_8 = var_0_4(var_4_1[2]) or {}
+	offsetX = 0
 
-	for iter_4_1 = 1, #var_4_8 do
-		local var_4_9, var_4_10 = arg_4_0:getRes(arg_4_0._line2, false)
+	local words2 = _getUCharArr(arr[2]) or {}
 
-		var_4_10.text = var_4_8[iter_4_1]
-		var_4_7 = var_4_7 + var_4_10.preferredWidth + Season166Enum.WordTxtPosXOffset
+	for i = 1, #words2 do
+		local txtAnim, txt = self:getRes(self._line2, false)
 
-		local var_4_11 = var_4_10.transform.parent
+		txt.text = words2[i]
+		offsetX = offsetX + txt.preferredWidth + Season166Enum.WordTxtPosXOffset
 
-		recthelper.setWidth(var_4_11, var_4_10.preferredWidth)
-		table.insert(arg_4_0._allAnimWork, {
+		local p = txt.transform.parent
+
+		recthelper.setWidth(p, txt.preferredWidth)
+		table.insert(self._allAnimWork, {
 			playAnim = "open",
-			anim = var_4_9,
-			time = (iter_4_1 - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay
 		})
-		table.insert(arg_4_0._allAnimWork, {
+		table.insert(self._allAnimWork, {
 			playAnim = "close",
-			anim = var_4_9,
-			time = (iter_4_1 - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay + var_4_0 - Season166Enum.WordTxtClose
+			anim = txtAnim,
+			time = (i - 1) * Season166Enum.WordTxtInterval + Season166Enum.WordLine2Delay + oneWordTime - Season166Enum.WordTxtClose
 		})
 	end
 
-	local var_4_12 = var_4_0 + Season166Enum.WordTxtInterval * (#var_4_2 - 1)
-	local var_4_13 = 0
+	local line1TotalTime = oneWordTime + Season166Enum.WordTxtInterval * (#words1 - 1)
+	local line2TotalTime = 0
 
-	if #var_4_8 > 0 then
-		var_4_13 = var_4_0 + Season166Enum.WordTxtInterval * (#var_4_8 - 1)
+	if #words2 > 0 then
+		line2TotalTime = oneWordTime + Season166Enum.WordTxtInterval * (#words2 - 1)
 	end
 
-	local var_4_14 = math.max(var_4_12, var_4_13)
+	local totalTime = math.max(line1TotalTime, line2TotalTime)
 
-	table.insert(arg_4_0._allAnimWork, {
+	table.insert(self._allAnimWork, {
 		showEndEffect = true,
-		time = var_4_14 - Season166Enum.WordTxtClose
+		time = totalTime - Season166Enum.WordTxtClose
 	})
-	table.insert(arg_4_0._allAnimWork, {
+	table.insert(self._allAnimWork, {
 		destroy = true,
-		time = var_4_14
+		time = totalTime
 	})
-	table.sort(arg_4_0._allAnimWork, var_0_0.sortAnim)
-	arg_4_0:nextStep()
+	table.sort(self._allAnimWork, Season166WordEffectComp.sortAnim)
+	self:nextStep()
 end
 
-function var_0_0.nextStep(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.nextStep, arg_5_0)
+function Season166WordEffectComp:nextStep()
+	TaskDispatcher.cancelTask(self.nextStep, self)
 
-	local var_5_0 = table.remove(arg_5_0._allAnimWork, 1)
+	local work = table.remove(self._allAnimWork, 1)
 
-	if not var_5_0 then
+	if not work then
 		return
 	end
 
-	if var_5_0.destroy then
-		gohelper.destroy(arg_5_0.go)
+	if work.destroy then
+		gohelper.destroy(self.go)
 
 		return
-	elseif var_5_0.showEndEffect then
-		arg_5_0._animEffect:Play(UIAnimationName.Close, 0, 0)
-	elseif var_5_0.playAnim == "open" then
-		var_5_0.anim.enabled = true
+	elseif work.showEndEffect then
+		self._animEffect:Play(UIAnimationName.Close, 0, 0)
+	elseif work.playAnim == "open" then
+		work.anim.enabled = true
 	else
-		var_5_0.anim:Play(var_5_0.playAnim, 0, 0)
+		work.anim:Play(work.playAnim, 0, 0)
 	end
 
-	local var_5_1 = arg_5_0._allAnimWork[1]
+	local nextWork = self._allAnimWork[1]
 
-	if not var_5_1 then
+	if not nextWork then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_5_0.nextStep, arg_5_0, var_5_1.time - var_5_0.time)
+	TaskDispatcher.runDelay(self.nextStep, self, nextWork.time - work.time)
 end
 
-function var_0_0.sortAnim(arg_6_0, arg_6_1)
-	return arg_6_0.time < arg_6_1.time
+function Season166WordEffectComp.sortAnim(a, b)
+	return a.time < b.time
 end
 
-local var_0_5 = typeof(UnityEngine.Animator)
+local Type_Animtor = typeof(UnityEngine.Animator)
 
-function var_0_0.getRes(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = gohelper.clone(arg_7_0._res, arg_7_1)
-	local var_7_1 = gohelper.findChildSingleImage(var_7_0, "img")
-	local var_7_2 = gohelper.findChildTextMesh(var_7_0, "txt")
-	local var_7_3 = var_7_0:GetComponent(var_0_5)
+function Season166WordEffectComp:getRes(root, isImage)
+	local go = gohelper.clone(self._res, root)
+	local image = gohelper.findChildSingleImage(go, "img")
+	local txt = gohelper.findChildTextMesh(go, "txt")
+	local anim = go:GetComponent(Type_Animtor)
 
-	gohelper.setActive(var_7_1, arg_7_2)
-	gohelper.setActive(var_7_2, not arg_7_2)
-	gohelper.setActive(var_7_0, true)
-	var_7_3:Play("open", 0, 0)
-	var_7_3:Update(0)
+	gohelper.setActive(image, isImage)
+	gohelper.setActive(txt, not isImage)
+	gohelper.setActive(go, true)
+	anim:Play("open", 0, 0)
+	anim:Update(0)
 
-	var_7_3.enabled = false
+	anim.enabled = false
 
-	return var_7_3, arg_7_2 and var_7_1 or var_7_2
+	return anim, isImage and image or txt
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.nextStep, arg_8_0)
+function Season166WordEffectComp:onDestroy()
+	TaskDispatcher.cancelTask(self.nextStep, self)
 end
 
-return var_0_0
+return Season166WordEffectComp

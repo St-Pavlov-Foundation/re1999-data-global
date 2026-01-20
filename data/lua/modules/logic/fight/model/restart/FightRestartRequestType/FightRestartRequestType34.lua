@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType34", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartRequestType/FightRestartRequestType34.lua
 
-local var_0_0 = class("FightRestartRequestType34", FightRestartRequestType1)
+module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType34", package.seeall)
 
-function var_0_0.requestFight(arg_1_0)
-	arg_1_0._fight_work:onDone(true)
+local FightRestartRequestType34 = class("FightRestartRequestType34", FightRestartRequestType1)
+
+function FightRestartRequestType34:requestFight()
+	self._fight_work:onDone(true)
 	TowerController.instance:restartStage()
 end
 
-return var_0_0
+return FightRestartRequestType34

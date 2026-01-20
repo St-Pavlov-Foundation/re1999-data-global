@@ -1,46 +1,48 @@
-﻿module("modules.logic.test.view.TestHeroBagItemView", package.seeall)
+﻿-- chunkname: @modules/logic/test/view/TestHeroBagItemView.lua
 
-local var_0_0 = class("TestHeroBagItemView", BaseViewExtended)
+module("modules.logic.test.view.TestHeroBagItemView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local TestHeroBagItemView = class("TestHeroBagItemView", BaseViewExtended)
+
+function TestHeroBagItemView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function TestHeroBagItemView:addEvents()
 	return
 end
 
-function var_0_0.onScrollItemRefreshData(arg_3_0, arg_3_1)
-	arg_3_0._data = arg_3_1
+function TestHeroBagItemView:onScrollItemRefreshData(data)
+	self._data = data
 
-	if arg_3_0._heroItem then
-		arg_3_0._heroItem:onUpdateMO(arg_3_0._data)
+	if self._heroItem then
+		self._heroItem:onUpdateMO(self._data)
 	end
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:com_loadAsset("ui/viewres/common/item/commonheroitemnew.prefab", arg_4_0._loaded)
+function TestHeroBagItemView:onOpen()
+	self:com_loadAsset("ui/viewres/common/item/commonheroitemnew.prefab", self._loaded)
 end
 
-function var_0_0._loaded(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1:GetResource()
-	local var_5_1 = gohelper.clone(var_5_0, arg_5_0.viewGO)
+function TestHeroBagItemView:_loaded(assetItem)
+	local tarPrefab = assetItem:GetResource()
+	local heroObj = gohelper.clone(tarPrefab, self.viewGO)
 
-	arg_5_0._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, CommonHeroItem)
+	self._heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(heroObj, CommonHeroItem)
 
-	arg_5_0._heroItem:addClickListener(arg_5_0._onItemClick, arg_5_0)
+	self._heroItem:addClickListener(self._onItemClick, self)
 end
 
-function var_0_0._onItemClick(arg_6_0)
-	logError("点击了英雄id:" .. arg_6_0._data.heroId)
+function TestHeroBagItemView:_onItemClick()
+	logError("点击了英雄id:" .. self._data.heroId)
 end
 
-function var_0_0.onClose(arg_7_0)
-	if arg_7_0._heroItem then
-		arg_7_0._heroItem:onDestroy()
+function TestHeroBagItemView:onClose()
+	if self._heroItem then
+		self._heroItem:onDestroy()
 
-		arg_7_0._heroItem = nil
+		self._heroItem = nil
 	end
 end
 
-return var_0_0
+return TestHeroBagItemView

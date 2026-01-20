@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_4.act181.view.Activity181RewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/act181/view/Activity181RewardViewContainer.lua
 
-local var_0_0 = class("Activity181RewardViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.act181.view.Activity181RewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity181RewardViewContainer = class("Activity181RewardViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity181RewardView.New())
+function Activity181RewardViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity181RewardView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity181RewardViewContainer

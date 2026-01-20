@@ -1,194 +1,199 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191MainView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191MainView.lua
 
-local var_0_0 = class("Act191MainView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191MainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetitleeff = gohelper.findChildSingleImage(arg_1_0.viewGO, "simage_title/#simage_titleeff")
-	arg_1_0._btnBadge = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_achieve/scroll_achieve/#btn_Badge")
-	arg_1_0._btnRule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rule/#btn_Rule")
-	arg_1_0._btnEndGame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_EndGame")
-	arg_1_0._btnShop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_Shop")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "layout/#btn_Shop/#txt_num")
-	arg_1_0._goProgress = gohelper.findChild(arg_1_0.viewGO, "layout/#go_Progress")
-	arg_1_0._goHp = gohelper.findChild(arg_1_0.viewGO, "layout/#go_Progress/#go_Hp")
-	arg_1_0._imageHpPercent = gohelper.findChildImage(arg_1_0.viewGO, "layout/#go_Progress/#go_Hp/bg/#image_HpPercent")
-	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_Progress/#txt_Round")
-	arg_1_0._btnEnterGame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_EnterGame")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Act191MainView = class("Act191MainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191MainView:onInitView()
+	self._simagetitleeff = gohelper.findChildSingleImage(self.viewGO, "simage_title/#simage_titleeff")
+	self._btnBadge = gohelper.findChildButtonWithAudio(self.viewGO, "go_achieve/scroll_achieve/#btn_Badge")
+	self._btnRule = gohelper.findChildButtonWithAudio(self.viewGO, "rule/#btn_Rule")
+	self._btnEndGame = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_EndGame")
+	self._btnShop = gohelper.findChildButtonWithAudio(self.viewGO, "layout/#btn_Shop")
+	self._txtnum = gohelper.findChildText(self.viewGO, "layout/#btn_Shop/#txt_num")
+	self._goProgress = gohelper.findChild(self.viewGO, "layout/#go_Progress")
+	self._goHp = gohelper.findChild(self.viewGO, "layout/#go_Progress/#go_Hp")
+	self._imageHpPercent = gohelper.findChildImage(self.viewGO, "layout/#go_Progress/#go_Hp/bg/#image_HpPercent")
+	self._txtRound = gohelper.findChildText(self.viewGO, "layout/#go_Progress/#txt_Round")
+	self._btnEnterGame = gohelper.findChildButtonWithAudio(self.viewGO, "layout/#btn_EnterGame")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnBadge:AddClickListener(arg_2_0._btnBadgeOnClick, arg_2_0)
-	arg_2_0._btnRule:AddClickListener(arg_2_0._btnRuleOnClick, arg_2_0)
-	arg_2_0._btnEndGame:AddClickListener(arg_2_0._btnEndGameOnClick, arg_2_0)
-	arg_2_0._btnShop:AddClickListener(arg_2_0._btnShopOnClick, arg_2_0)
-	arg_2_0._btnEnterGame:AddClickListener(arg_2_0._btnEnterGameOnClick, arg_2_0)
+function Act191MainView:addEvents()
+	self._btnBadge:AddClickListener(self._btnBadgeOnClick, self)
+	self._btnRule:AddClickListener(self._btnRuleOnClick, self)
+	self._btnEndGame:AddClickListener(self._btnEndGameOnClick, self)
+	self._btnShop:AddClickListener(self._btnShopOnClick, self)
+	self._btnEnterGame:AddClickListener(self._btnEnterGameOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnBadge:RemoveClickListener()
-	arg_3_0._btnRule:RemoveClickListener()
-	arg_3_0._btnEndGame:RemoveClickListener()
-	arg_3_0._btnShop:RemoveClickListener()
-	arg_3_0._btnEnterGame:RemoveClickListener()
+function Act191MainView:removeEvents()
+	self._btnBadge:RemoveClickListener()
+	self._btnRule:RemoveClickListener()
+	self._btnEndGame:RemoveClickListener()
+	self._btnShop:RemoveClickListener()
+	self._btnEnterGame:RemoveClickListener()
 end
 
-function var_0_0._btnBadgeOnClick(arg_4_0)
+function Act191MainView:_btnBadgeOnClick()
 	ViewMgr.instance:openView(ViewName.Act191BadgeView)
-	Act191StatController.instance:statButtonClick(arg_4_0.viewName, "_btnBadgeOnClick")
+	Act191StatController.instance:statButtonClick(self.viewName, "_btnBadgeOnClick")
 end
 
-function var_0_0._btnRuleOnClick(arg_5_0)
+function Act191MainView:_btnRuleOnClick()
 	ViewMgr.instance:openView(ViewName.Act191InfoView)
-	Act191StatController.instance:statButtonClick(arg_5_0.viewName, "_btnRuleOnClick")
+	Act191StatController.instance:statButtonClick(self.viewName, "_btnRuleOnClick")
 end
 
-function var_0_0._btnEndGameOnClick(arg_6_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act174EndGameConfirm, MsgBoxEnum.BoxType.Yes_No, arg_6_0.endGame, nil, nil, arg_6_0)
-	Act191StatController.instance:statButtonClick(arg_6_0.viewName, "_btnEndGameOnClick")
+function Act191MainView:_btnEndGameOnClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act174EndGameConfirm, MsgBoxEnum.BoxType.Yes_No, self.endGame, nil, nil, self)
+	Act191StatController.instance:statButtonClick(self.viewName, "_btnEndGameOnClick")
 end
 
-function var_0_0.endGame(arg_7_0)
-	Activity191Rpc.instance:sendEndAct191GameRequest(arg_7_0.actId)
+function Act191MainView:endGame()
+	Activity191Rpc.instance:sendEndAct191GameRequest(self.actId)
 end
 
-function var_0_0._btnShopOnClick(arg_8_0)
+function Act191MainView:_btnShopOnClick()
 	Activity191Controller.instance:openStoreView(VersionActivity3_1Enum.ActivityId.DouQuQu3Store)
-	Act191StatController.instance:statButtonClick(arg_8_0.viewName, "_btnShopOnClick")
+	Act191StatController.instance:statButtonClick(self.viewName, "_btnShopOnClick")
 end
 
-function var_0_0._btnEnterGameOnClick(arg_9_0)
-	Act191StatController.instance:statButtonClick(arg_9_0.viewName, "_btnEnterGameOnClick")
+function Act191MainView:_btnEnterGameOnClick()
+	Act191StatController.instance:statButtonClick(self.viewName, "_btnEnterGameOnClick")
 
-	local var_9_0 = Activity191Model.instance:getCurActId()
+	local actId = Activity191Model.instance:getCurActId()
+	local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 
-	if Activity191Model.instance:getActInfo():getGameInfo().state == Activity191Enum.GameState.None then
-		if arg_9_0.starting then
+	if gameInfo.state == Activity191Enum.GameState.None then
+		if self.starting then
 			return
 		end
 
-		arg_9_0.starting = true
+		self.starting = true
 
-		Activity191Rpc.instance:sendStart191GameRequest(var_9_0, arg_9_0._startGameReply, arg_9_0)
+		Activity191Rpc.instance:sendStart191GameRequest(actId, self._startGameReply, self)
 	else
 		Activity191Controller.instance:nextStep()
 	end
 end
 
-function var_0_0._startGameReply(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0.starting = false
+function Act191MainView:_startGameReply(_, resultCode)
+	self.starting = false
 
-	if arg_10_2 == 0 then
+	if resultCode == 0 then
 		Activity191Controller.instance:nextStep()
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0.badgeGoParent = gohelper.findChild(arg_11_0.viewGO, "go_achieve/scroll_achieve/viewport/content")
-	arg_11_0.badgeGo = gohelper.findChild(arg_11_0.viewGO, "go_achieve/scroll_achieve/viewport/content/go_achievementicon")
-	arg_11_0.actId = Activity191Model.instance:getCurActId()
+function Act191MainView:_editableInitView()
+	self.badgeGoParent = gohelper.findChild(self.viewGO, "go_achieve/scroll_achieve/viewport/content")
+	self.badgeGo = gohelper.findChild(self.viewGO, "go_achieve/scroll_achieve/viewport/content/go_achievementicon")
+	self.actId = Activity191Model.instance:getCurActId()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	Act191StatController.instance:onViewOpen(arg_12_0.viewName)
-	arg_12_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_12_0.refreshCurrency, arg_12_0)
-	arg_12_0:addEventCb(Activity191Controller.instance, Activity191Event.UpdateGameInfo, arg_12_0.refreshUI, arg_12_0)
-	arg_12_0:addEventCb(Activity191Controller.instance, Activity191Event.UpdateBadgeMo, arg_12_0.refreshBadge, arg_12_0)
-	arg_12_0:addEventCb(Activity191Controller.instance, Activity191Event.EndGame, arg_12_0.checkGameEndInfo, arg_12_0)
-	arg_12_0:refreshUI()
+function Act191MainView:onOpen()
+	Act191StatController.instance:onViewOpen(self.viewName)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
+	self:addEventCb(Activity191Controller.instance, Activity191Event.UpdateGameInfo, self.refreshUI, self)
+	self:addEventCb(Activity191Controller.instance, Activity191Event.UpdateBadgeMo, self.refreshBadge, self)
+	self:addEventCb(Activity191Controller.instance, Activity191Event.EndGame, self.checkGameEndInfo, self)
+	self:refreshUI()
 
-	if arg_12_0.viewParam and arg_12_0.viewParam.exitFromFight and not Activity191Controller.instance:checkOpenGetView() then
-		arg_12_0:_btnEnterGameOnClick()
+	if self.viewParam and self.viewParam.exitFromFight and not Activity191Controller.instance:checkOpenGetView() then
+		self:_btnEnterGameOnClick()
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
-	local var_13_0 = arg_13_0.viewContainer:isManualClose()
+function Act191MainView:onClose()
+	local manual = self.viewContainer:isManualClose()
 
-	Act191StatController.instance:statViewClose(arg_13_0.viewName, var_13_0)
+	Act191StatController.instance:statViewClose(self.viewName, manual)
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0.actInfo = Activity191Model.instance:getActInfo()
+function Act191MainView:refreshUI()
+	self.actInfo = Activity191Model.instance:getActInfo()
 
-	gohelper.setActive(arg_14_0._btnEndGame, arg_14_0.actInfo:getGameInfo().state ~= Activity191Enum.GameState.None)
-	arg_14_0:initRule()
-	arg_14_0:refreshBadge()
-	arg_14_0:refreshCurrency()
+	gohelper.setActive(self._btnEndGame, self.actInfo:getGameInfo().state ~= Activity191Enum.GameState.None)
+	self:initRule()
+	self:refreshBadge()
+	self:refreshCurrency()
 end
 
-function var_0_0.initRule(arg_15_0)
-	local var_15_0 = Activity191Config.instance:getShowRoleCoList(arg_15_0.actId)
-	local var_15_1 = #var_15_0
-	local var_15_2 = {}
+function Act191MainView:initRule()
+	local heroCoList = Activity191Config.instance:getShowRoleCoList(self.actId)
+	local count = #heroCoList
+	local showCoList = {}
 
-	for iter_15_0 = 3, 1, -1 do
-		var_15_2[#var_15_2 + 1] = var_15_0[var_15_1 + 1 - iter_15_0]
+	for i = 3, 1, -1 do
+		showCoList[#showCoList + 1] = heroCoList[count + 1 - i]
 	end
 
-	for iter_15_1, iter_15_2 in ipairs(var_15_2) do
-		local var_15_3 = gohelper.findChild(arg_15_0.viewGO, "rule/role/" .. iter_15_1)
-		local var_15_4 = gohelper.findChildImage(var_15_3, "rare")
-		local var_15_5 = gohelper.findChildSingleImage(var_15_3, "heroicon")
-		local var_15_6 = gohelper.findChildImage(var_15_3, "career")
+	for i, roleCo in ipairs(showCoList) do
+		local roleGo = gohelper.findChild(self.viewGO, "rule/role/" .. i)
+		local imageRare = gohelper.findChildImage(roleGo, "rare")
+		local heroIcon = gohelper.findChildSingleImage(roleGo, "heroicon")
+		local imageCareer = gohelper.findChildImage(roleGo, "career")
 
-		var_15_5:LoadImage(Activity191Helper.getHeadIconSmall(iter_15_2))
-		UISpriteSetMgr.instance:setAct174Sprite(var_15_4, "act174_roleframe_" .. tostring(iter_15_2.quality))
-		UISpriteSetMgr.instance:setCommonSprite(var_15_6, "lssx_" .. tostring(iter_15_2.career))
+		heroIcon:LoadImage(Activity191Helper.getHeadIconSmall(roleCo))
+		UISpriteSetMgr.instance:setAct174Sprite(imageRare, "act174_roleframe_" .. tostring(roleCo.quality))
+		UISpriteSetMgr.instance:setCommonSprite(imageCareer, "lssx_" .. tostring(roleCo.career))
 	end
 end
 
-function var_0_0.refreshCurrency(arg_16_0)
-	local var_16_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a1DouQuQu)
+function Act191MainView:refreshCurrency()
+	local currencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a1DouQuQu)
 
-	arg_16_0._txtnum.text = var_16_0.quantity
+	self._txtnum.text = currencyMo.quantity
 end
 
-function var_0_0.refreshBadge(arg_17_0)
-	arg_17_0.badgeItemDic = {}
+function Act191MainView:refreshBadge()
+	self.badgeItemDic = {}
 
-	local var_17_0 = arg_17_0.actInfo:getBadgeMoList()
+	local badgeMoList = self.actInfo:getBadgeMoList()
 
-	gohelper.CreateObjList(arg_17_0, arg_17_0._onSetBadgeItem, var_17_0, arg_17_0.badgeGoParent, arg_17_0.badgeGo)
+	gohelper.CreateObjList(self, self._onSetBadgeItem, badgeMoList, self.badgeGoParent, self.badgeGo)
 end
 
-function var_0_0._onSetBadgeItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_0:getUserDataTb_()
-	local var_18_1 = arg_18_2.id
+function Act191MainView:_onSetBadgeItem(go, badgeMo, index)
+	local badgeItem = self:getUserDataTb_()
+	local id = badgeMo.id
 
-	var_18_0.simageIcon = gohelper.findChildSingleImage(arg_18_1, "root/image_icon")
-	var_18_0.txtNum = gohelper.findChildText(arg_18_1, "root/txt_num")
-	arg_18_0.badgeItemDic[var_18_1] = var_18_0
+	badgeItem.simageIcon = gohelper.findChildSingleImage(go, "root/image_icon")
+	badgeItem.txtNum = gohelper.findChildText(go, "root/txt_num")
+	self.badgeItemDic[id] = badgeItem
 
-	arg_18_0:refreshBadgeItem(var_18_1, arg_18_2)
+	self:refreshBadgeItem(id, badgeMo)
 end
 
-function var_0_0.refreshBadgeItem(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0.badgeItemDic[arg_19_1]
-	local var_19_1 = arg_19_2:getState()
-	local var_19_2 = ResUrl.getAct174BadgeIcon(arg_19_2.config.icon, var_19_1)
+function Act191MainView:refreshBadgeItem(badgeId, badgeMo)
+	local badgeItem = self.badgeItemDic[badgeId]
+	local state = badgeMo:getState()
+	local path = ResUrl.getAct174BadgeIcon(badgeMo.config.icon, state)
 
-	var_19_0.simageIcon:LoadImage(var_19_2)
+	badgeItem.simageIcon:LoadImage(path)
 
-	var_19_0.txtNum.text = arg_19_2.count
+	badgeItem.txtNum.text = badgeMo.count
 end
 
-function var_0_0.checkGameEndInfo(arg_20_0)
-	if arg_20_0.actInfo:getGameEndInfo() then
-		local var_20_0 = Activity191Model.instance:getActInfo():getGameInfo()
+function Act191MainView:checkGameEndInfo()
+	local gameEndInfo = self.actInfo:getGameEndInfo()
 
-		if var_20_0.curNode ~= 0 and var_20_0.curStage ~= 0 then
+	if gameEndInfo then
+		local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
+
+		if gameInfo.curNode ~= 0 and gameInfo.curStage ~= 0 then
 			Activity191Controller.instance:openSettlementView()
 		end
 
-		arg_20_0:refreshUI()
+		self:refreshUI()
 
 		return true
 	end
 end
 
-return var_0_0
+return Act191MainView

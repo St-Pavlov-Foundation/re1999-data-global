@@ -4,7 +4,7 @@
     "name": "language_10083502",
     "desc": "language_10083503",
     "beHidden": "2021#2022#2023#2024",
-    "tagType": 3101,
+    "tagType": 1,
     "effect": 202101,
     "color": 3,
     "suggestMap": ""
@@ -14,7 +14,7 @@
     "name": "language_10072903",
     "desc": "language_10083504",
     "beHidden": "2021#2024#2026#2027",
-    "tagType": 3101,
+    "tagType": 1,
     "effect": 202102,
     "color": 1,
     "suggestMap": ""
@@ -24,7 +24,7 @@
     "name": "language_10083505",
     "desc": "language_10083506",
     "beHidden": "2021#2023#2025#2027",
-    "tagType": 3101,
+    "tagType": 1,
     "effect": 202103,
     "color": 2,
     "suggestMap": ""
@@ -34,7 +34,7 @@
     "name": "language_10047526",
     "desc": "language_10094011",
     "beHidden": "2021#2022#2025#2026",
-    "tagType": 3101,
+    "tagType": 1,
     "effect": 202104,
     "color": 5,
     "suggestMap": ""
@@ -44,7 +44,7 @@
     "name": "language_10083508",
     "desc": "language_10083509",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202001,
     "color": 4,
     "suggestMap": ""
@@ -54,7 +54,7 @@
     "name": "language_10083510",
     "desc": "language_10083511",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202002,
     "color": 6,
     "suggestMap": ""
@@ -64,7 +64,7 @@
     "name": "language_10083512",
     "desc": "language_10083513",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202003,
     "color": 6,
     "suggestMap": ""
@@ -74,7 +74,7 @@
     "name": "language_10083514",
     "desc": "language_10083515",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202004,
     "color": 6,
     "suggestMap": ""
@@ -84,7 +84,7 @@
     "name": "language_10083516",
     "desc": "language_10083517",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202005,
     "color": 6,
     "suggestMap": ""
@@ -94,7 +94,7 @@
     "name": "language_10083518",
     "desc": "language_10083519",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202006,
     "color": 6,
     "suggestMap": ""
@@ -104,7 +104,7 @@
     "name": "language_10083520",
     "desc": "language_10083521",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202007,
     "color": 6,
     "suggestMap": ""
@@ -114,7 +114,7 @@
     "name": "language_10083522",
     "desc": "language_10083523",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202008,
     "color": 6,
     "suggestMap": ""
@@ -124,7 +124,7 @@
     "name": "language_10083524",
     "desc": "language_10083525",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202009,
     "color": 6,
     "suggestMap": ""
@@ -134,7 +134,7 @@
     "name": "language_10083526",
     "desc": "language_10083527",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202010,
     "color": 6,
     "suggestMap": ""
@@ -144,7 +144,7 @@
     "name": "language_10083528",
     "desc": "language_10083529",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202011,
     "color": 6,
     "suggestMap": ""
@@ -154,7 +154,7 @@
     "name": "language_10083530",
     "desc": "language_10083531",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202012,
     "color": 4,
     "suggestMap": ""
@@ -164,7 +164,7 @@
     "name": "language_10083532",
     "desc": "language_10083533",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202013,
     "color": 4,
     "suggestMap": ""
@@ -174,7 +174,7 @@
     "name": "language_10083534",
     "desc": "language_10083535",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202014,
     "color": 4,
     "suggestMap": ""
@@ -184,7 +184,7 @@
     "name": "language_10083536",
     "desc": "language_10083537",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202015,
     "color": 4,
     "suggestMap": ""
@@ -194,7 +194,7 @@
     "name": "language_10083538",
     "desc": "language_10083539",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202016,
     "color": 4,
     "suggestMap": ""
@@ -204,7 +204,7 @@
     "name": "language_10083540",
     "desc": "language_10083541",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202017,
     "color": 4,
     "suggestMap": ""
@@ -214,7 +214,7 @@
     "name": "language_10083542",
     "desc": "language_10083543",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202018,
     "color": 4,
     "suggestMap": ""
@@ -224,7 +224,7 @@
     "name": "language_10083544",
     "desc": "language_10083545",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202019,
     "color": 4,
     "suggestMap": ""
@@ -234,7 +234,7 @@
     "name": "language_10083546",
     "desc": "language_10083547",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202020,
     "color": 4,
     "suggestMap": ""
@@ -244,7 +244,7 @@
     "name": "language_10083548",
     "desc": "language_10083549",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 1,
     "effect": 202021,
     "color": 4,
     "suggestMap": ""
@@ -254,7 +254,7 @@
     "name": "language_10083550",
     "desc": "language_10083551",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 1,
     "effect": 202022,
     "color": 4,
     "suggestMap": ""
@@ -264,7 +264,7 @@
     "name": "language_10083552",
     "desc": "language_10083553",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 1,
     "effect": 202023,
     "color": 4,
     "suggestMap": ""
@@ -274,7 +274,7 @@
     "name": "language_10083554",
     "desc": "language_10083555",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 1,
     "effect": 202024,
     "color": 4,
     "suggestMap": ""
@@ -284,7 +284,7 @@
     "name": "language_10083556",
     "desc": "language_10083557",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 1,
     "effect": 202025,
     "color": 4,
     "suggestMap": ""
@@ -294,7 +294,7 @@
     "name": "language_10083558",
     "desc": "language_10083559",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 1,
     "effect": 202026,
     "color": 4,
     "suggestMap": ""
@@ -304,7 +304,7 @@
     "name": "language_10083560",
     "desc": "language_10083561",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 1,
     "effect": 202027,
     "color": 4,
     "suggestMap": ""
@@ -314,7 +314,7 @@
     "name": "language_10083562",
     "desc": "language_10083563",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202028,
     "color": 4,
     "suggestMap": ""
@@ -324,7 +324,7 @@
     "name": "language_10083564",
     "desc": "language_10083565",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202301,
     "color": 6,
     "suggestMap": ""
@@ -334,7 +334,7 @@
     "name": "language_10083566",
     "desc": "language_10083567",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202302,
     "color": 6,
     "suggestMap": ""
@@ -344,7 +344,7 @@
     "name": "language_10083568",
     "desc": "language_10083569",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 202303,
     "color": 6,
     "suggestMap": ""
@@ -354,7 +354,7 @@
     "name": "language_10083570",
     "desc": "language_10083571",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202304,
     "color": 4,
     "suggestMap": ""
@@ -364,7 +364,7 @@
     "name": "language_10083572",
     "desc": "language_10083573",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202305,
     "color": 4,
     "suggestMap": ""
@@ -374,7 +374,7 @@
     "name": "language_10083574",
     "desc": "language_10083575",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202306,
     "color": 4,
     "suggestMap": ""
@@ -384,7 +384,7 @@
     "name": "language_10083576",
     "desc": "language_10083577",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 0,
     "color": 4,
     "suggestMap": ""
@@ -394,7 +394,7 @@
     "name": "language_10083578",
     "desc": "language_10083579",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 0,
     "color": 4,
     "suggestMap": ""
@@ -404,7 +404,7 @@
     "name": "language_10083580",
     "desc": "language_10083581",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 202203,
     "color": 6,
     "suggestMap": ""
@@ -414,7 +414,7 @@
     "name": "language_10083582",
     "desc": "language_10083583",
     "beHidden": "",
-    "tagType": 3102,
+    "tagType": 2,
     "effect": 0,
     "color": 6,
     "suggestMap": ""
@@ -424,7 +424,7 @@
     "name": "language_10094012",
     "desc": "language_10083584",
     "beHidden": "2021",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 0,
     "color": 6,
     "suggestMap": ""
@@ -434,7 +434,7 @@
     "name": "language_10094013",
     "desc": "language_10083585",
     "beHidden": "2021",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 0,
     "color": 6,
     "suggestMap": ""
@@ -444,7 +444,7 @@
     "name": "language_10094014",
     "desc": "language_10083586",
     "beHidden": "2021",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 0,
     "color": 6,
     "suggestMap": ""
@@ -454,7 +454,7 @@
     "name": "language_10094015",
     "desc": "language_10083587",
     "beHidden": "2021",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 0,
     "color": 6,
     "suggestMap": ""
@@ -464,7 +464,7 @@
     "name": "language_10083588",
     "desc": "language_10083588",
     "beHidden": "2021",
-    "tagType": 3102,
+    "tagType": 3,
     "effect": 0,
     "color": 6,
     "suggestMap": ""
@@ -473,7 +473,7 @@
     "id": 311001,
     "name": "language_10083502",
     "desc": "language_10094016",
-    "beHidden": "311005",
+    "beHidden": "",
     "tagType": 3101,
     "effect": 0,
     "color": 3,
@@ -483,7 +483,7 @@
     "id": 311002,
     "name": "language_10047526",
     "desc": "language_10094017",
-    "beHidden": "311006",
+    "beHidden": "",
     "tagType": 3101,
     "effect": 0,
     "color": 1,
@@ -493,7 +493,7 @@
     "id": 311003,
     "name": "language_10083505",
     "desc": "language_10094018",
-    "beHidden": "311007",
+    "beHidden": "",
     "tagType": 3101,
     "effect": 0,
     "color": 2,
@@ -503,7 +503,7 @@
     "id": 311004,
     "name": "language_10072903",
     "desc": "language_10094019",
-    "beHidden": "311008",
+    "beHidden": "",
     "tagType": 3101,
     "effect": 0,
     "color": 5,
@@ -832,7 +832,7 @@
   {
     "id": 3120111,
     "name": "language_10094080",
-    "desc": "language_10094081",
+    "desc": "language_10103581",
     "beHidden": "",
     "tagType": 3103,
     "effect": 2120111,
@@ -842,7 +842,7 @@
   {
     "id": 3120112,
     "name": "language_10094082",
-    "desc": "language_10094083",
+    "desc": "language_10103582",
     "beHidden": "",
     "tagType": 3103,
     "effect": 2120112,
@@ -852,7 +852,7 @@
   {
     "id": 3120113,
     "name": "language_10094084",
-    "desc": "language_10094085",
+    "desc": "language_10103583",
     "beHidden": "",
     "tagType": 3103,
     "effect": 2120113,
@@ -862,7 +862,7 @@
   {
     "id": 3120114,
     "name": "language_10094086",
-    "desc": "language_10094087",
+    "desc": "language_10103584",
     "beHidden": "",
     "tagType": 3103,
     "effect": 2120114,
@@ -957,7 +957,7 @@
     "tagType": 3102,
     "effect": 212014,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313002,
@@ -967,17 +967,17 @@
     "tagType": 3102,
     "effect": 212015,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313003,
-    "name": "language_10094108",
-    "desc": "language_10094109",
+    "name": "language_10103585",
+    "desc": "language_10103586",
     "beHidden": "",
     "tagType": 3102,
     "effect": 212016,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313004,
@@ -987,7 +987,7 @@
     "tagType": 3104,
     "effect": 212017,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313005,
@@ -997,7 +997,7 @@
     "tagType": 3104,
     "effect": 212018,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313006,
@@ -1007,7 +1007,7 @@
     "tagType": 3104,
     "effect": 212019,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313007,
@@ -1017,7 +1017,7 @@
     "tagType": 3102,
     "effect": 212020,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313008,
@@ -1027,7 +1027,7 @@
     "tagType": 3102,
     "effect": 212021,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313009,
@@ -1037,17 +1037,17 @@
     "tagType": 3104,
     "effect": 212022,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313010,
     "name": "language_10094121",
-    "desc": "language_10094122",
+    "desc": "language_10103587",
     "beHidden": "",
     "tagType": 3102,
     "effect": 212023,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313011,
@@ -1057,17 +1057,17 @@
     "tagType": 3104,
     "effect": 212024,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313012,
     "name": "language_10094125",
-    "desc": "language_10094126",
+    "desc": "language_10103588",
     "beHidden": "",
     "tagType": 3104,
     "effect": 212025,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313013,
@@ -1077,7 +1077,7 @@
     "tagType": 3104,
     "effect": 212026,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313014,
@@ -1087,7 +1087,7 @@
     "tagType": 3104,
     "effect": 212027,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313015,
@@ -1097,7 +1097,7 @@
     "tagType": 3102,
     "effect": 212028,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313016,
@@ -1107,7 +1107,7 @@
     "tagType": 3104,
     "effect": 212029,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313017,
@@ -1117,7 +1117,7 @@
     "tagType": 3104,
     "effect": 212030,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313018,
@@ -1127,7 +1127,7 @@
     "tagType": 3104,
     "effect": 212031,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313019,
@@ -1137,17 +1137,17 @@
     "tagType": 3104,
     "effect": 212032,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313020,
     "name": "language_10094141",
-    "desc": "language_10094142",
+    "desc": "language_10103589",
     "beHidden": "",
     "tagType": 3104,
     "effect": 212033,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313021,
@@ -1157,7 +1157,7 @@
     "tagType": 3104,
     "effect": 212034,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313022,
@@ -1167,17 +1167,17 @@
     "tagType": 3102,
     "effect": 212035,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313023,
     "name": "language_10054424",
-    "desc": "language_10094146",
+    "desc": "language_10103590",
     "beHidden": "",
     "tagType": 3104,
     "effect": 212036,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313024,
@@ -1187,7 +1187,7 @@
     "tagType": 3102,
     "effect": 212037,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313025,
@@ -1197,7 +1197,7 @@
     "tagType": 3102,
     "effect": 212038,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313026,
@@ -1207,7 +1207,7 @@
     "tagType": 3104,
     "effect": 212039,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313027,
@@ -1217,27 +1217,27 @@
     "tagType": 3104,
     "effect": 212040,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313028,
     "name": "language_10094155",
-    "desc": "language_10094156",
+    "desc": "language_10103591",
     "beHidden": "",
     "tagType": 3104,
     "effect": 212041,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313029,
     "name": "language_10094157",
-    "desc": "language_10094158",
+    "desc": "language_10103592",
     "beHidden": "",
     "tagType": 3104,
     "effect": 212042,
     "color": 6,
-    "suggestMap": "1#2#3#4#5#6"
+    "suggestMap": ""
   },
   {
     "id": 313030,

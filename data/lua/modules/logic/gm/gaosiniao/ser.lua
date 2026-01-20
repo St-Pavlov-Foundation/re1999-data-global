@@ -1,53 +1,48 @@
-﻿local var_0_0 = pairs
-local var_0_1 = ipairs
-local var_0_2 = tostring
-local var_0_3 = type
-local var_0_4 = table.concat
-local var_0_5 = string.dump
-local var_0_6 = math.floor
-local var_0_7 = string.format
+﻿-- chunkname: @modules/logic/gm/gaosiniao/ser.lua
 
-local function var_0_8(arg_1_0)
-	return "\\" .. arg_1_0:byte()
+local pairs, ipairs, tostring, type, concat, dump, floor, format = pairs, ipairs, tostring, type, table.concat, string.dump, math.floor, string.format
+
+local function getchr(c)
+	return "\\" .. c:byte()
 end
 
-local function var_0_9(arg_2_0)
-	return ("%q"):format(arg_2_0):gsub("\n", "n"):gsub("[\x80-\xFF]", var_0_8)
+local function make_safe(text)
+	return ("%q"):format(text):gsub("\n", "n"):gsub("[\x80-\xFF]", getchr)
 end
 
-local var_0_10 = {
-	[var_0_2(1 / 0)] = "1/0",
-	[var_0_2(-1 / 0)] = "-1/0",
-	[var_0_2(-(0 / 0))] = "-(0/0)",
-	[var_0_2(0 / 0)] = "0/0"
+local oddvals = {
+	[tostring(1 / 0)] = "1/0",
+	[tostring(-1 / 0)] = "-1/0",
+	[tostring(-(0 / 0))] = "-(0/0)",
+	[tostring(0 / 0)] = "0/0"
 }
 
-local function var_0_11(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = var_0_3(arg_3_0)
+local function write(t, memo, rev_memo)
+	local ty = type(t)
 
-	if var_3_0 == "number" then
-		arg_3_0 = var_0_7("%.17g", arg_3_0)
+	if ty == "number" then
+		t = format("%.17g", t)
 
-		return var_0_10[arg_3_0] or arg_3_0
-	elseif var_3_0 == "boolean" or var_3_0 == "nil" then
-		return var_0_2(arg_3_0)
-	elseif var_3_0 == "string" then
-		return var_0_9(arg_3_0)
-	elseif var_3_0 == "table" or var_3_0 == "function" then
-		if not arg_3_1[arg_3_0] then
-			local var_3_1 = #arg_3_2 + 1
+		return oddvals[t] or t
+	elseif ty == "boolean" or ty == "nil" then
+		return tostring(t)
+	elseif ty == "string" then
+		return make_safe(t)
+	elseif ty == "table" or ty == "function" then
+		if not memo[t] then
+			local index = #rev_memo + 1
 
-			arg_3_1[arg_3_0] = var_3_1
-			arg_3_2[var_3_1] = arg_3_0
+			memo[t] = index
+			rev_memo[index] = t
 		end
 
-		return "_[" .. arg_3_1[arg_3_0] .. "]"
+		return "_[" .. memo[t] .. "]"
 	else
-		error("Trying to serialize unsupported type " .. var_3_0)
+		error("Trying to serialize unsupported type " .. ty)
 	end
 end
 
-local var_0_12 = {
+local kw = {
 	["in"] = true,
 	["end"] = true,
 	["function"] = true,
@@ -72,98 +67,98 @@ local var_0_12 = {
 	["false"] = true
 }
 
-local function var_0_13(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	if var_0_3(arg_4_0) == "string" and arg_4_0:match("^[_%a][_%w]*$") and not var_0_12[arg_4_0] then
-		return (arg_4_4 and arg_4_4 .. "." or "") .. arg_4_0 .. "=" .. var_0_11(arg_4_1, arg_4_2, arg_4_3)
+local function write_key_value_pair(k, v, memo, rev_memo, name)
+	if type(k) == "string" and k:match("^[_%a][_%w]*$") and not kw[k] then
+		return (name and name .. "." or "") .. k .. "=" .. write(v, memo, rev_memo)
 	else
-		return (arg_4_4 or "") .. "[" .. var_0_11(arg_4_0, arg_4_2, arg_4_3) .. "]=" .. var_0_11(arg_4_1, arg_4_2, arg_4_3)
+		return (name or "") .. "[" .. write(k, memo, rev_memo) .. "]=" .. write(v, memo, rev_memo)
 	end
 end
 
-local function var_0_14(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0[arg_5_1]
-	local var_5_1 = arg_5_0[arg_5_2]
+local function is_cyclic(memo, sub, super)
+	local m = memo[sub]
+	local p = memo[super]
 
-	return var_5_0 and var_5_1 and var_5_0 < var_5_1
+	return m and p and m < p
 end
 
-local function var_0_15(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	if var_0_3(arg_6_0) == "function" then
-		return "_[" .. arg_6_4 .. "]=loadstring" .. var_0_9(var_0_5(arg_6_0))
+local function write_table_ex(t, memo, rev_memo, srefs, name)
+	if type(t) == "function" then
+		return "_[" .. name .. "]=loadstring" .. make_safe(dump(t))
 	end
 
-	local var_6_0 = {}
-	local var_6_1 = 1
+	local m = {}
+	local mi = 1
 
-	for iter_6_0 = 1, #arg_6_0 do
-		local var_6_2 = arg_6_0[iter_6_0]
+	for i = 1, #t do
+		local v = t[i]
 
-		if var_6_2 == arg_6_0 or var_0_14(arg_6_1, var_6_2, arg_6_0) then
-			arg_6_3[#arg_6_3 + 1] = {
-				arg_6_4,
-				iter_6_0,
-				var_6_2
+		if v == t or is_cyclic(memo, v, t) then
+			srefs[#srefs + 1] = {
+				name,
+				i,
+				v
 			}
-			var_6_0[var_6_1] = "nil"
-			var_6_1 = var_6_1 + 1
+			m[mi] = "nil"
+			mi = mi + 1
 		else
-			var_6_0[var_6_1] = var_0_11(var_6_2, arg_6_1, arg_6_2)
-			var_6_1 = var_6_1 + 1
+			m[mi] = write(v, memo, rev_memo)
+			mi = mi + 1
 		end
 	end
 
-	for iter_6_1, iter_6_2 in var_0_0(arg_6_0) do
-		if var_0_3(iter_6_1) ~= "number" or var_0_6(iter_6_1) ~= iter_6_1 or iter_6_1 < 1 or iter_6_1 > #arg_6_0 then
-			if iter_6_2 == arg_6_0 or iter_6_1 == arg_6_0 or var_0_14(arg_6_1, iter_6_2, arg_6_0) or var_0_14(arg_6_1, iter_6_1, arg_6_0) then
-				arg_6_3[#arg_6_3 + 1] = {
-					arg_6_4,
-					iter_6_1,
-					iter_6_2
+	for k, v in pairs(t) do
+		if type(k) ~= "number" or floor(k) ~= k or k < 1 or k > #t then
+			if v == t or k == t or is_cyclic(memo, v, t) or is_cyclic(memo, k, t) then
+				srefs[#srefs + 1] = {
+					name,
+					k,
+					v
 				}
 			else
-				var_6_0[var_6_1] = var_0_13(iter_6_1, iter_6_2, arg_6_1, arg_6_2)
-				var_6_1 = var_6_1 + 1
+				m[mi] = write_key_value_pair(k, v, memo, rev_memo)
+				mi = mi + 1
 			end
 		end
 	end
 
-	return "_[" .. arg_6_4 .. "]={" .. var_0_4(var_6_0, ",") .. "}"
+	return "_[" .. name .. "]={" .. concat(m, ",") .. "}"
 end
 
-return function(arg_7_0)
-	local var_7_0 = {
-		[arg_7_0] = 0
+return function(t)
+	local memo = {
+		[t] = 0
 	}
-	local var_7_1 = {
-		[0] = arg_7_0
+	local rev_memo = {
+		[0] = t
 	}
-	local var_7_2 = {}
-	local var_7_3 = {}
-	local var_7_4 = 0
+	local srefs = {}
+	local result = {}
+	local n = 0
 
-	while var_7_1[var_7_4] do
-		var_7_3[var_7_4 + 1] = var_0_15(var_7_1[var_7_4], var_7_0, var_7_1, var_7_2, var_7_4)
-		var_7_4 = var_7_4 + 1
+	while rev_memo[n] do
+		result[n + 1] = write_table_ex(rev_memo[n], memo, rev_memo, srefs, n)
+		n = n + 1
 	end
 
-	for iter_7_0 = 1, var_7_4 * 0.5 do
-		local var_7_5 = var_7_4 - iter_7_0 + 1
+	for i = 1, n * 0.5 do
+		local j = n - i + 1
 
-		var_7_3[iter_7_0], var_7_3[var_7_5] = var_7_3[var_7_5], var_7_3[iter_7_0]
+		result[i], result[j] = result[j], result[i]
 	end
 
-	for iter_7_1, iter_7_2 in var_0_1(var_7_2) do
-		var_7_4 = var_7_4 + 1
-		var_7_3[var_7_4] = var_0_13(iter_7_2[2], iter_7_2[3], var_7_0, var_7_1, "_[" .. iter_7_2[1] .. "]")
+	for i, v in ipairs(srefs) do
+		n = n + 1
+		result[n] = write_key_value_pair(v[2], v[3], memo, rev_memo, "_[" .. v[1] .. "]")
 	end
 
-	if var_7_3[var_7_4]:sub(1, 5) == "_[0]=" then
-		var_7_3[var_7_4] = "return " .. var_7_3[var_7_4]:sub(6)
+	if result[n]:sub(1, 5) == "_[0]=" then
+		result[n] = "return " .. result[n]:sub(6)
 	else
-		var_7_3[var_7_4 + 1] = "return _[0]"
+		result[n + 1] = "return _[0]"
 	end
 
-	local var_7_6 = var_0_4(var_7_3, "\n")
+	result = concat(result, "\n")
 
-	return var_7_4 > 1 and "local _={}\n" .. var_7_6 or var_7_6
+	return n > 1 and "local _={}\n" .. result or result
 end

@@ -1,479 +1,492 @@
-﻿module("modules.logic.room.entity.RoomBuildingEntity", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/RoomBuildingEntity.lua
 
-local var_0_0 = class("RoomBuildingEntity", RoomBaseEntity)
+module("modules.logic.room.entity.RoomBuildingEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
-	arg_1_0:setEntityId(arg_1_1)
+local RoomBuildingEntity = class("RoomBuildingEntity", RoomBaseEntity)
+
+function RoomBuildingEntity:ctor(entityId)
+	RoomBuildingEntity.super.ctor(self)
+	self:setEntityId(entityId)
 end
 
-function var_0_0.setEntityId(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
-	arg_2_0.entityId = arg_2_0.id
+function RoomBuildingEntity:setEntityId(entityId)
+	self.id = entityId
+	self.entityId = self.id
 end
 
-function var_0_0.getTag(arg_3_0)
+function RoomBuildingEntity:getTag()
 	return SceneTag.RoomBuilding
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	arg_4_0.containerGO = gohelper.create3d(arg_4_1, RoomEnum.EntityChildKey.ContainerGOKey)
-	arg_4_0.staticContainerGO = arg_4_0.containerGO
-	arg_4_0.containerGOTrs = arg_4_0.containerGO.transform
-	arg_4_0.goTrs = arg_4_1.transform
+function RoomBuildingEntity:init(go)
+	self.containerGO = gohelper.create3d(go, RoomEnum.EntityChildKey.ContainerGOKey)
+	self.staticContainerGO = self.containerGO
+	self.containerGOTrs = self.containerGO.transform
+	self.goTrs = go.transform
 
-	var_0_0.super.init(arg_4_0, arg_4_1)
+	RoomBuildingEntity.super.init(self, go)
 
-	arg_4_0._buildingPartCountDict = {}
+	self._buildingPartCountDict = {}
 end
 
-function var_0_0.playAudio(arg_5_0, arg_5_1)
-	if arg_5_1 and arg_5_1 ~= 0 then
-		arg_5_0.__isHasAuidoTrigger = true
+function RoomBuildingEntity:playAudio(audioId)
+	if audioId and audioId ~= 0 then
+		self.__isHasAuidoTrigger = true
 
-		AudioMgr.instance:trigger(arg_5_1, arg_5_0.go)
+		AudioMgr.instance:trigger(audioId, self.go)
 	end
 end
 
-function var_0_0.initComponents(arg_6_0)
-	arg_6_0:addComp("effect", RoomEffectComp)
-	arg_6_0:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
+function RoomBuildingEntity:initComponents()
+	self:addComp("effect", RoomEffectComp)
+	self:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
 
-	local var_6_0 = RoomController.instance:isObMode()
+	local isObMode = RoomController.instance:isObMode()
 
-	if var_6_0 then
-		arg_6_0:addComp("atmosphere", RoomAtmosphereComp)
+	if isObMode then
+		self:addComp("atmosphere", RoomAtmosphereComp)
 	end
 
-	if var_6_0 or RoomController.instance:isDebugNormalMode() then
-		arg_6_0:addComp("collider", RoomColliderComp)
+	if isObMode or RoomController.instance:isDebugNormalMode() then
+		self:addComp("collider", RoomColliderComp)
 	end
 
-	local var_6_1 = arg_6_0:getMO()
+	local mo = self:getMO()
 
-	if var_6_1 and var_6_1.config then
-		local var_6_2 = var_6_1.config
+	if mo and mo.config then
+		local config = mo.config
 
-		if var_6_2.crossload ~= 0 then
-			arg_6_0:addComp("crossloadComp", RoomCrossloadComp)
+		if config.crossload ~= 0 then
+			self:addComp("crossloadComp", RoomCrossloadComp)
 		end
 
-		if var_6_2.vehicleType ~= 0 then
-			arg_6_0:addComp("buildingVehicleComp", RoomBuildingVehicleComp)
+		if config.vehicleType ~= 0 then
+			self:addComp("buildingVehicleComp", RoomBuildingVehicleComp)
 		end
 
-		if var_6_2.audioExtendType == RoomBuildingEnum.AudioExtendType.Clock12Hour then
-			arg_6_0:addComp("buildingClockComp", RoomBuildingClockComp)
-		elseif var_6_2.audioExtendType == RoomBuildingEnum.AudioExtendType.AnimatorEvent then
-			arg_6_0:addComp("animEventAudioComp", RoomAnimEventAudioComp)
+		if config.audioExtendType == RoomBuildingEnum.AudioExtendType.Clock12Hour then
+			self:addComp("buildingClockComp", RoomBuildingClockComp)
+		elseif config.audioExtendType == RoomBuildingEnum.AudioExtendType.AnimatorEvent then
+			self:addComp("animEventAudioComp", RoomAnimEventAudioComp)
 		end
 
-		if not string.nilorempty(var_6_1.config.linkBlock) then
-			arg_6_0:addComp("buildingLinkBlockComp", RoomBuildingLinkBlockComp)
+		if not string.nilorempty(mo.config.linkBlock) then
+			self:addComp("buildingLinkBlockComp", RoomBuildingLinkBlockComp)
 		end
 
-		if var_6_2.reflerction == 1 then
-			arg_6_0:addComp("reflerctionComp", RoomBuildingReflectionComp)
+		if config.reflerction == 1 then
+			self:addComp("reflerctionComp", RoomBuildingReflectionComp)
 		end
 
-		if var_6_2.canLevelUp then
-			arg_6_0:addComp("buildingLevelComp", RoomBuildingLevelComp)
+		if config.canLevelUp then
+			self:addComp("buildingLevelComp", RoomBuildingLevelComp)
 		end
 
-		if var_6_2.buildingType == RoomBuildingEnum.BuildingType.Rest then
-			arg_6_0:addComp("summonComp", RoomBuildingSummonComp)
+		if config.buildingType == RoomBuildingEnum.BuildingType.Rest then
+			self:addComp("summonComp", RoomBuildingSummonComp)
 		end
 
-		if var_6_2.buildingType == RoomBuildingEnum.BuildingType.Interact then
-			arg_6_0:addComp("interactComp", RoomBuildingInteractComp)
+		if config.buildingType == RoomBuildingEnum.BuildingType.Interact then
+			self:addComp("interactComp", RoomBuildingInteractComp)
 		end
 	end
 
-	arg_6_0:addComp("nightlight", RoomNightLightComp)
-	arg_6_0:addComp("critter", RoomBuildingCritterComp)
-	arg_6_0:addComp("cameraFollowTargetComp", RoomCameraFollowTargetComp)
+	self:addComp("nightlight", RoomNightLightComp)
+	self:addComp("critter", RoomBuildingCritterComp)
+	self:addComp("cameraFollowTargetComp", RoomCameraFollowTargetComp)
 end
 
-function var_0_0.onStart(arg_7_0)
-	var_0_0.super.onStart(arg_7_0)
-	RoomBuildingController.instance:registerCallback(RoomEvent.PressBuildingUp, arg_7_0._refreshPressEffect, arg_7_0)
-	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, arg_7_0._refreshPressEffect, arg_7_0)
-	RoomBuildingController.instance:registerCallback(RoomEvent.SetBuildingColliderEnable, arg_7_0._setColliderEnable, arg_7_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, arg_7_0._characterListShowChanged, arg_7_0)
+function RoomBuildingEntity:onStart()
+	RoomBuildingEntity.super.onStart(self)
+	RoomBuildingController.instance:registerCallback(RoomEvent.PressBuildingUp, self._refreshPressEffect, self)
+	RoomBuildingController.instance:registerCallback(RoomEvent.DropBuildingDown, self._refreshPressEffect, self)
+	RoomBuildingController.instance:registerCallback(RoomEvent.SetBuildingColliderEnable, self._setColliderEnable, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, self._characterListShowChanged, self)
 end
 
-function var_0_0.refreshName(arg_8_0)
-	local var_8_0 = arg_8_0:getMO()
+function RoomBuildingEntity:refreshName()
+	local mo = self:getMO()
 
-	arg_8_0.go.name = RoomResHelper.getBlockName(var_8_0.hexPoint)
+	self.go.name = RoomResHelper.getBlockName(mo.hexPoint)
 end
 
-function var_0_0.refreshRotation(arg_9_0, arg_9_1)
-	arg_9_1 = false
+function RoomBuildingEntity:refreshRotation(tween)
+	tween = false
 
-	local var_9_0 = arg_9_0:getMO()
+	local mo = self:getMO()
 
-	if arg_9_0._rotationTweenId then
-		ZProj.TweenHelper.KillById(arg_9_0._rotationTweenId)
+	if self._rotationTweenId then
+		ZProj.TweenHelper.KillById(self._rotationTweenId)
 	end
 
-	if arg_9_1 then
-		arg_9_0._rotationTweenId = ZProj.TweenHelper.DOLocalRotate(arg_9_0.containerGOTrs, 0, var_9_0.rotate * 60, 0, 0.1, nil, arg_9_0, nil, EaseType.Linear)
+	if tween then
+		self._rotationTweenId = ZProj.TweenHelper.DOLocalRotate(self.containerGOTrs, 0, mo.rotate * 60, 0, 0.1, nil, self, nil, EaseType.Linear)
 	else
-		transformhelper.setLocalRotation(arg_9_0.containerGOTrs, 0, var_9_0.rotate * 60, 0)
+		transformhelper.setLocalRotation(self.containerGOTrs, 0, mo.rotate * 60, 0)
 	end
 end
 
-function var_0_0.refreshBuilding(arg_10_0)
-	arg_10_0:_refreshBuilding()
-	arg_10_0:_refreshPressEffect()
+function RoomBuildingEntity:refreshBuilding()
+	self:_refreshBuilding()
+	self:_refreshPressEffect()
 
-	if arg_10_0.buildingLinkBlockComp then
-		arg_10_0.buildingLinkBlockComp:refreshLink()
+	if self.buildingLinkBlockComp then
+		self.buildingLinkBlockComp:refreshLink()
 	end
 
-	if arg_10_0.reflerctionComp then
-		arg_10_0.reflerctionComp:refreshReflection()
+	if self.reflerctionComp then
+		self.reflerctionComp:refreshReflection()
 	end
 end
 
-function var_0_0.transformPoint(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	return (arg_11_0.containerGOTrs:TransformPoint(arg_11_1, arg_11_2, arg_11_3))
+function RoomBuildingEntity:transformPoint(x, y, z)
+	local pos = self.containerGOTrs:TransformPoint(x, y, z)
+
+	return pos
 end
 
-function var_0_0._refreshBuilding(arg_12_0)
-	local var_12_0 = arg_12_0:getMO()
-	local var_12_1 = RoomEnum.EffectKey.BuildingGOKey
+function RoomBuildingEntity:_refreshBuilding()
+	local mo = self:getMO()
+	local effectKey = RoomEnum.EffectKey.BuildingGOKey
 
-	if var_12_0 then
-		local var_12_2 = arg_12_0:getAlphaThresholdValue()
-		local var_12_3 = var_12_2 and true or false
+	if mo then
+		local alphaThresholdValue = self:getAlphaThresholdValue()
+		local alphaThreshold = alphaThresholdValue and true or false
 
-		if not arg_12_0.effect:isHasEffectGOByKey(var_12_1) or var_12_0.config.canLevelUp and arg_12_0._lastLevel ~= var_12_0.level then
-			arg_12_0._listalphaThresholdValue = var_12_2
-			arg_12_0._lastLevel = var_12_0.level
+		if not self.effect:isHasEffectGOByKey(effectKey) or mo.config.canLevelUp and self._lastLevel ~= mo.level then
+			self._listalphaThresholdValue = alphaThresholdValue
+			self._lastLevel = mo.level
 
-			local var_12_4 = RoomBuildingEnum.VehicleTypeOffestY[var_12_0.config.vehicleType] or 0
+			local offsetY = RoomBuildingEnum.VehicleTypeOffestY[mo.config.vehicleType] or 0
 
-			arg_12_0.effect:addParams({
-				[var_12_1] = {
+			self.effect:addParams({
+				[effectKey] = {
 					deleteChildPath = "0",
 					pathfinding = true,
-					res = arg_12_0:_getBuildingRes(),
-					alphaThreshold = var_12_3,
-					alphaThresholdValue = var_12_2,
-					localPos = Vector3(0, var_12_4, 0)
+					res = self:_getBuildingRes(),
+					alphaThreshold = alphaThreshold,
+					alphaThresholdValue = alphaThresholdValue,
+					localPos = Vector3(0, offsetY, 0)
 				}
 			})
-			arg_12_0.effect:refreshEffect()
-		elseif arg_12_0._listalphaThresholdValue ~= var_12_2 then
-			arg_12_0._listalphaThresholdValue = var_12_2
+			self.effect:refreshEffect()
+		elseif self._listalphaThresholdValue ~= alphaThresholdValue then
+			self._listalphaThresholdValue = alphaThresholdValue
 
-			arg_12_0.effect:setMPB(var_12_1, false, var_12_3, var_12_2)
+			self.effect:setMPB(effectKey, false, alphaThreshold, alphaThresholdValue)
 		end
-	elseif arg_12_0.effect:isHasKey(var_12_1) then
-		arg_12_0._listalphaThresholdValue = nil
+	elseif self.effect:isHasKey(effectKey) then
+		self._listalphaThresholdValue = nil
 
-		arg_12_0.effect:removeParams({
-			var_12_1
+		self.effect:removeParams({
+			effectKey
 		})
-		arg_12_0.effect:refreshEffect()
+		self.effect:refreshEffect()
 	end
 end
 
-function var_0_0.getAlphaThresholdValue(arg_13_0)
-	local var_13_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function RoomBuildingEntity:getAlphaThresholdValue()
+	local tempMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	if var_13_0 and var_13_0.id == arg_13_0.id then
-		local var_13_1 = RoomConfig.instance:getBuildingConfig(var_13_0.buildingId).alphaThreshold * 0.001
+	if tempMO and tempMO.id == self.id then
+		local cfg = RoomConfig.instance:getBuildingConfig(tempMO.buildingId)
+		local alphaThreshold = cfg.alphaThreshold * 0.001
 
 		if RoomBuildingController.instance:isPressBuilding() then
-			return var_13_1
+			return alphaThreshold
 		end
 
-		local var_13_2 = var_13_0.hexPoint
+		local hexPoint = tempMO.hexPoint
 
-		if RoomBuildingHelper.isInInitBlock(var_13_2) then
-			return var_13_1
+		if RoomBuildingHelper.isInInitBlock(hexPoint) then
+			return alphaThreshold
 		end
 
-		local var_13_3 = RoomMapBlockModel.instance:getBlockMO(var_13_2.x, var_13_2.y)
+		local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-		if var_13_3 and RoomBuildingHelper.checkBuildResId(var_13_0.buildingId, var_13_3:getResourceList(true)) == false then
-			return var_13_1
+		if blockMO and RoomBuildingHelper.checkBuildResId(tempMO.buildingId, blockMO:getResourceList(true)) == false then
+			return alphaThreshold
 		end
 
-		local var_13_4, var_13_5 = RoomBuildingHelper.canConfirmPlace(var_13_0.buildingId, var_13_0.hexPoint, var_13_0.rotate, nil, nil, false, var_13_0.levels, true)
+		local canConfirmParam, errorCode = RoomBuildingHelper.canConfirmPlace(tempMO.buildingId, tempMO.hexPoint, tempMO.rotate, nil, nil, false, tempMO.levels, true)
 
-		if not var_13_4 then
-			return var_13_1
+		if not canConfirmParam then
+			return alphaThreshold
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._refreshPressEffect(arg_14_0)
-	local var_14_0 = RoomBuildingController.instance:isPressBuilding()
+function RoomBuildingEntity:_refreshPressEffect()
+	local pressBuildingUid = RoomBuildingController.instance:isPressBuilding()
 
-	if var_14_0 and var_14_0 == arg_14_0.id then
-		if not arg_14_0.effect:isHasKey(RoomEnum.EffectKey.BuildingPressEffectKey) then
-			local var_14_1 = arg_14_0:getMO()
-			local var_14_2 = RoomMapModel.instance:getBuildingConfigParam(var_14_1.buildingId).offset
+	if pressBuildingUid and pressBuildingUid == self.id then
+		if not self.effect:isHasKey(RoomEnum.EffectKey.BuildingPressEffectKey) then
+			local buildingMO = self:getMO()
+			local buildingConfigParam = RoomMapModel.instance:getBuildingConfigParam(buildingMO.buildingId)
+			local offset = buildingConfigParam.offset
 
-			arg_14_0.effect:addParams({
+			self.effect:addParams({
 				[RoomEnum.EffectKey.BuildingPressEffectKey] = {
 					res = RoomScenePreloader.ResVXXuXian,
-					localPos = Vector3(var_14_2.x, var_14_2.y - 1, var_14_2.z)
+					localPos = Vector3(offset.x, offset.y - 1, offset.z)
 				}
 			})
 		end
 
-		arg_14_0.effect:refreshEffect()
-	elseif arg_14_0.effect:isHasKey(RoomEnum.EffectKey.BuildingPressEffectKey) then
-		arg_14_0.effect:removeParams({
+		self.effect:refreshEffect()
+	elseif self.effect:isHasKey(RoomEnum.EffectKey.BuildingPressEffectKey) then
+		self.effect:removeParams({
 			RoomEnum.EffectKey.BuildingPressEffectKey
 		})
-		arg_14_0.effect:refreshEffect()
+		self.effect:refreshEffect()
 	end
 end
 
-function var_0_0.onEffectRebuild(arg_15_0)
-	if not arg_15_0._isSmokeAnimPlaying then
-		arg_15_0:_playSmokeAnim(false)
+function RoomBuildingEntity:onEffectRebuild()
+	if not self._isSmokeAnimPlaying then
+		self:_playSmokeAnim(false)
 	end
 
-	arg_15_0:setSideIsActive(RoomEnum.EntityChildKey.OutSideKey, true)
-	arg_15_0:setSideIsActive(RoomEnum.EntityChildKey.InSideKey, false)
+	self:setSideIsActive(RoomEnum.EntityChildKey.OutSideKey, true)
+	self:setSideIsActive(RoomEnum.EntityChildKey.InSideKey, false)
 
-	if arg_15_0:getBodyGO() then
+	local bodyGO = self:getBodyGO()
+
+	if bodyGO then
 		RoomMapController.instance:dispatchEvent(RoomEvent.RoomVieiwConfirmRefreshUI)
 	end
 
-	local var_15_0 = RoomCameraController.instance:getRoomScene()
+	local roomScene = RoomCameraController.instance:getRoomScene()
 
-	if var_15_0 then
-		var_15_0.buildingcrittermgr:refreshCritterPosByBuilding(arg_15_0.id)
+	if roomScene then
+		roomScene.buildingcrittermgr:refreshCritterPosByBuilding(self.id)
 	end
 end
 
-function var_0_0._characterListShowChanged(arg_16_0, arg_16_1)
-	arg_16_0:_setColliderEnable(not arg_16_1)
+function RoomBuildingEntity:_characterListShowChanged(isShow)
+	self:_setColliderEnable(not isShow)
 end
 
-function var_0_0._setColliderEnable(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_2 and arg_17_2 ~= arg_17_0.id then
+function RoomBuildingEntity:_setColliderEnable(isEnable, buildingUid)
+	if buildingUid and buildingUid ~= self.id then
 		return
 	end
 
-	if arg_17_0.collider then
-		arg_17_0.collider:setEnable(arg_17_1)
+	if self.collider then
+		self.collider:setEnable(isEnable)
 	end
 end
 
-function var_0_0.getHeadGO(arg_18_0)
-	return arg_18_0:_findBuildingGOChild(RoomEnum.EntityChildKey.HeadGOKey)
+function RoomBuildingEntity:getHeadGO()
+	return self:_findBuildingGOChild(RoomEnum.EntityChildKey.HeadGOKey)
 end
 
-function var_0_0.getBodyGO(arg_19_0)
-	return arg_19_0:_findBuildingGOChild(RoomEnum.EntityChildKey.BodyGOKey)
+function RoomBuildingEntity:getBodyGO()
+	return self:_findBuildingGOChild(RoomEnum.EntityChildKey.BodyGOKey)
 end
 
-function var_0_0.playAnimator(arg_20_0, arg_20_1)
-	return arg_20_0.effect:playEffectAnimator(RoomEnum.EffectKey.BuildingGOKey, arg_20_1)
+function RoomBuildingEntity:playAnimator(animName)
+	return self.effect:playEffectAnimator(RoomEnum.EffectKey.BuildingGOKey, animName)
 end
 
-function var_0_0.playSmokeEffect(arg_21_0)
-	arg_21_0:_returnSmokeEffect()
-	arg_21_0:_playSmokeAnim(true)
+function RoomBuildingEntity:playSmokeEffect()
+	self:_returnSmokeEffect()
+	self:_playSmokeAnim(true)
 
-	arg_21_0._isSmokeAnimPlaying = true
+	self._isSmokeAnimPlaying = true
 
-	TaskDispatcher.runDelay(arg_21_0._delayReturnSmokeEffect, arg_21_0, 3)
+	TaskDispatcher.runDelay(self._delayReturnSmokeEffect, self, 3)
 end
 
-function var_0_0._delayReturnSmokeEffect(arg_22_0)
-	arg_22_0._isSmokeAnimPlaying = false
+function RoomBuildingEntity:_delayReturnSmokeEffect()
+	self._isSmokeAnimPlaying = false
 
-	arg_22_0:_playSmokeAnim(false)
+	self:_playSmokeAnim(false)
 end
 
-function var_0_0._returnSmokeEffect(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._delayReturnSmokeEffect, arg_23_0)
+function RoomBuildingEntity:_returnSmokeEffect()
+	TaskDispatcher.cancelTask(self._delayReturnSmokeEffect, self)
 end
 
-function var_0_0._playSmokeAnim(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:_findBuildingGOChild(RoomEnum.EntityChildKey.SmokeGOKey)
+function RoomBuildingEntity:_playSmokeAnim(isStart)
+	local smokeGO = self:_findBuildingGOChild(RoomEnum.EntityChildKey.SmokeGOKey)
 
-	if var_24_0 then
-		if arg_24_1 then
-			gohelper.setActive(var_24_0, false)
+	if smokeGO then
+		if isStart then
+			gohelper.setActive(smokeGO, false)
 		end
 
-		gohelper.setActive(var_24_0, arg_24_1)
+		gohelper.setActive(smokeGO, isStart)
 	end
 end
 
-function var_0_0.setSideIsActive(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_1 or RoomEnum.EntityChildKey.InSideKey
-	local var_25_1 = string.format("%s/%s", 1, var_25_0)
-	local var_25_2 = arg_25_0:_findBuildingGOChild(var_25_1)
+function RoomBuildingEntity:setSideIsActive(argsSideKey, isActive)
+	local sideKey = argsSideKey or RoomEnum.EntityChildKey.InSideKey
+	local sidePath = string.format("%s/%s", 1, sideKey)
+	local goSide = self:_findBuildingGOChild(sidePath)
 
-	gohelper.setActive(var_25_2, arg_25_2)
+	gohelper.setActive(goSide, isActive)
 end
 
-function var_0_0.getPlayerInsideInteractionNode(arg_26_0)
-	return (arg_26_0:_findBuildingGOChild(RoomEnum.EntityChildKey.PositionZeroKey))
+function RoomBuildingEntity:getPlayerInsideInteractionNode()
+	local positionZeroGO = self:_findBuildingGOChild(RoomEnum.EntityChildKey.PositionZeroKey)
+
+	return positionZeroGO
 end
 
-function var_0_0.getSpineWidgetNode(arg_27_0, arg_27_1)
-	local var_27_0 = string.format(RoomEnum.EntityChildKey.InteractSpineNode, arg_27_1)
+function RoomBuildingEntity:getSpineWidgetNode(index)
+	local name = string.format(RoomEnum.EntityChildKey.InteractSpineNode, index)
+	local goWidgetNode = self:_findBuildingGOChild(name)
 
-	return (arg_27_0:_findBuildingGOChild(var_27_0))
+	return goWidgetNode
 end
 
-function var_0_0.getCritterPoint(arg_28_0, arg_28_1)
-	if not arg_28_1 then
+function RoomBuildingEntity:getCritterPoint(slotId)
+	if not slotId then
 		return
 	end
 
-	local var_28_0 = string.format(RoomEnum.EntityChildKey.CritterPoint, arg_28_1 + 1)
+	local name = string.format(RoomEnum.EntityChildKey.CritterPoint, slotId + 1)
+	local result = self:_findBuildingGOChild(name)
 
-	return (arg_28_0:_findBuildingGOChild(var_28_0))
+	return result
 end
 
-function var_0_0.getBuildingGO(arg_29_0)
-	return arg_29_0.effect:getEffectGO(RoomEnum.EffectKey.BuildingGOKey)
+function RoomBuildingEntity:getBuildingGO()
+	return self.effect:getEffectGO(RoomEnum.EffectKey.BuildingGOKey)
 end
 
-function var_0_0._findBuildingGOChild(arg_30_0, arg_30_1)
-	return arg_30_0.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, arg_30_1)
+function RoomBuildingEntity:_findBuildingGOChild(childPath)
+	return self.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, childPath)
 end
 
-function var_0_0.setLocalPos(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	ZProj.TweenHelper.KillByObj(arg_31_0.go.transform)
+function RoomBuildingEntity:setLocalPos(x, y, z, tween)
+	ZProj.TweenHelper.KillByObj(self.go.transform)
 
-	if arg_31_4 then
-		ZProj.TweenHelper.DOLocalMove(arg_31_0.go.transform, arg_31_1, arg_31_2, arg_31_3, 0.1)
+	if tween then
+		ZProj.TweenHelper.DOLocalMove(self.go.transform, x, y, z, 0.1)
 	else
-		transformhelper.setLocalPos(arg_31_0.go.transform, arg_31_1, arg_31_2, arg_31_3)
+		transformhelper.setLocalPos(self.go.transform, x, y, z)
 	end
 
-	arg_31_0:refreshName()
+	self:refreshName()
 end
 
-function var_0_0.tweenUp(arg_32_0)
+function RoomBuildingEntity:tweenUp()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_board_drag)
-	ZProj.TweenHelper.KillByObj(arg_32_0.containerGO.transform)
-	ZProj.TweenHelper.DOLocalMoveY(arg_32_0.containerGO.transform, arg_32_0:_getBuildingDragUp(), 0.2)
+	ZProj.TweenHelper.KillByObj(self.containerGO.transform)
+	ZProj.TweenHelper.DOLocalMoveY(self.containerGO.transform, self:_getBuildingDragUp(), 0.2)
 end
 
-function var_0_0.tweenDown(arg_33_0)
-	local var_33_0 = arg_33_0:getMO()
+function RoomBuildingEntity:tweenDown()
+	local mo = self:getMO()
 
-	if var_33_0 then
-		AudioMgr.instance:trigger(var_33_0:getPlaceAudioId())
+	if mo then
+		AudioMgr.instance:trigger(mo:getPlaceAudioId())
 	end
 
-	ZProj.TweenHelper.KillByObj(arg_33_0.containerGO.transform)
-	ZProj.TweenHelper.DOLocalMoveY(arg_33_0.containerGO.transform, 0, 0.2)
+	ZProj.TweenHelper.KillByObj(self.containerGO.transform)
+	ZProj.TweenHelper.DOLocalMoveY(self.containerGO.transform, 0, 0.2)
 end
 
-function var_0_0._getBuildingDragUp(arg_34_0)
-	local var_34_0 = arg_34_0:getMO()
-	local var_34_1 = RoomConfig.instance:getBuildingConfig(var_34_0.buildingId)
+function RoomBuildingEntity:_getBuildingDragUp()
+	local mo = self:getMO()
+	local cfg = RoomConfig.instance:getBuildingConfig(mo.buildingId)
 
-	if var_34_1 and var_34_1.dragUpHeight then
-		return var_34_1.dragUpHeight * 0.001
+	if cfg and cfg.dragUpHeight then
+		return cfg.dragUpHeight * 0.001
 	end
 
 	return 1
 end
 
-function var_0_0.tweenAlphaThreshold(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	if arg_35_0.alphaThresholdComp then
-		arg_35_0.alphaThresholdComp:tweenAlphaThreshold(arg_35_1, arg_35_2, arg_35_3)
+function RoomBuildingEntity:tweenAlphaThreshold(from, to, duration)
+	if self.alphaThresholdComp then
+		self.alphaThresholdComp:tweenAlphaThreshold(from, to, duration)
 	end
 end
 
-function var_0_0._getBuildingRes(arg_36_0)
-	local var_36_0 = arg_36_0:getMO()
+function RoomBuildingEntity:_getBuildingRes()
+	local mo = self:getMO()
+	local res = RoomResHelper.getBuildingPath(mo.buildingId, mo.level)
 
-	return (RoomResHelper.getBuildingPath(var_36_0.buildingId, var_36_0.level))
+	return res
 end
 
-function var_0_0._getBuildingPartRes(arg_37_0, arg_37_1, arg_37_2)
-	return RoomResHelper.getPartPathList(arg_37_1, arg_37_2)
+function RoomBuildingEntity:_getBuildingPartRes(levelGroup, level)
+	return RoomResHelper.getPartPathList(levelGroup, level)
 end
 
-function var_0_0.beforeDestroy(arg_38_0)
-	arg_38_0:_returnSmokeEffect()
-	ZProj.TweenHelper.KillByObj(arg_38_0.go.transform)
-	ZProj.TweenHelper.KillByObj(arg_38_0.containerGO.transform)
+function RoomBuildingEntity:beforeDestroy()
+	self:_returnSmokeEffect()
+	ZProj.TweenHelper.KillByObj(self.go.transform)
+	ZProj.TweenHelper.KillByObj(self.containerGO.transform)
 
-	if arg_38_0._rotationTweenId then
-		ZProj.TweenHelper.KillById(arg_38_0._rotationTweenId)
+	if self._rotationTweenId then
+		ZProj.TweenHelper.KillById(self._rotationTweenId)
 	end
 
-	for iter_38_0, iter_38_1 in ipairs(arg_38_0._compList) do
-		if iter_38_1.beforeDestroy then
-			iter_38_1:beforeDestroy()
+	for _, comp in ipairs(self._compList) do
+		if comp.beforeDestroy then
+			comp:beforeDestroy()
 		end
 	end
 
-	if arg_38_0.__isHasAuidoTrigger then
-		arg_38_0.__isHasAuidoTrigger = false
+	if self.__isHasAuidoTrigger then
+		self.__isHasAuidoTrigger = false
 
-		AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home, arg_38_0.go)
+		AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home, self.go)
 	end
 
-	arg_38_0:removeEvent()
+	self:removeEvent()
 end
 
-function var_0_0.removeEvent(arg_39_0)
-	RoomBuildingController.instance:unregisterCallback(RoomEvent.PressBuildingUp, arg_39_0._refreshPressEffect, arg_39_0)
-	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, arg_39_0._refreshPressEffect, arg_39_0)
-	RoomBuildingController.instance:unregisterCallback(RoomEvent.SetBuildingColliderEnable, arg_39_0._setColliderEnable, arg_39_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, arg_39_0._characterListShowChanged, arg_39_0)
+function RoomBuildingEntity:removeEvent()
+	RoomBuildingController.instance:unregisterCallback(RoomEvent.PressBuildingUp, self._refreshPressEffect, self)
+	RoomBuildingController.instance:unregisterCallback(RoomEvent.DropBuildingDown, self._refreshPressEffect, self)
+	RoomBuildingController.instance:unregisterCallback(RoomEvent.SetBuildingColliderEnable, self._setColliderEnable, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, self._characterListShowChanged, self)
 end
 
-function var_0_0.setBatchEnabled(arg_40_0, arg_40_1)
-	arg_40_0.effect:setBatch(RoomEnum.EffectKey.BuildingGOKey, arg_40_1)
+function RoomBuildingEntity:setBatchEnabled(isEnabled)
+	self.effect:setBatch(RoomEnum.EffectKey.BuildingGOKey, isEnabled)
 end
 
-function var_0_0.getMO(arg_41_0)
-	return RoomMapBuildingModel.instance:getBuildingMOById(arg_41_0.id)
+function RoomBuildingEntity:getMO()
+	return RoomMapBuildingModel.instance:getBuildingMOById(self.id)
 end
 
-function var_0_0.getVehicleMO(arg_42_0)
-	return RoomMapVehicleModel.instance:getVehicleMOByBuilingUid(arg_42_0.id)
+function RoomBuildingEntity:getVehicleMO()
+	return RoomMapVehicleModel.instance:getVehicleMOByBuilingUid(self.id)
 end
 
-function var_0_0.getCharacterMeshRendererList(arg_43_0)
-	return arg_43_0.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
+function RoomBuildingEntity:getCharacterMeshRendererList()
+	return self.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
 end
 
-function var_0_0.getOccupyDict(arg_44_0)
-	local var_44_0 = arg_44_0:getMO()
+function RoomBuildingEntity:getOccupyDict()
+	local mo = self:getMO()
 
-	if not var_44_0 or not var_44_0.hexPoint then
+	if not mo or not mo.hexPoint then
 		return nil
 	end
 
-	if arg_44_0._lastHexPoint ~= var_44_0.hexPoint or arg_44_0._lastRotate ~= var_44_0.rotate then
-		arg_44_0._lastHexPoint = HexPoint(var_44_0.hexPoint.x, var_44_0.hexPoint.y)
-		arg_44_0._lastRotate = var_44_0.rotate
-		arg_44_0._lastOccupyDict = RoomBuildingHelper.getOccupyDict(var_44_0.buildingId, var_44_0.hexPoint, var_44_0.rotate, var_44_0.buildingUid)
-		arg_44_0._lastHexPointList = {}
+	if self._lastHexPoint ~= mo.hexPoint or self._lastRotate ~= mo.rotate then
+		self._lastHexPoint = HexPoint(mo.hexPoint.x, mo.hexPoint.y)
+		self._lastRotate = mo.rotate
+		self._lastOccupyDict = RoomBuildingHelper.getOccupyDict(mo.buildingId, mo.hexPoint, mo.rotate, mo.buildingUid)
+		self._lastHexPointList = {}
 
-		for iter_44_0, iter_44_1 in pairs(arg_44_0._lastOccupyDict) do
-			for iter_44_2, iter_44_3 in pairs(iter_44_1) do
-				table.insert(arg_44_0._lastHexPointList, iter_44_3.hexPoint)
+		for x, dic in pairs(self._lastOccupyDict) do
+			for y, buildingParam in pairs(dic) do
+				table.insert(self._lastHexPointList, buildingParam.hexPoint)
 			end
 		end
 	end
 
-	return arg_44_0._lastOccupyDict, arg_44_0._lastHexPointList
+	return self._lastOccupyDict, self._lastHexPointList
 end
 
-return var_0_0
+return RoomBuildingEntity

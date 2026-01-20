@@ -1,30 +1,32 @@
-﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle3", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/specialIdle/EntitySpecialIdle3.lua
 
-local var_0_0 = class("EntitySpecialIdle3", UserDataDispose)
+module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle3", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
+local EntitySpecialIdle3 = class("EntitySpecialIdle3", UserDataDispose)
 
-	arg_1_0._entity = arg_1_1
+function EntitySpecialIdle3:ctor(entity)
+	self:__onInit()
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+
+	self._entity = entity
 end
 
-function var_0_0._onSkillPlayFinish(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1.id ~= arg_2_0._entity.id then
+function EntitySpecialIdle3:_onSkillPlayFinish(entity, skillId)
+	if entity.id ~= self._entity.id then
 		return
 	end
 
-	if FightCardDataHelper.isBigSkill(arg_2_2) then
-		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_2_1.id)
+	if FightCardDataHelper.isBigSkill(skillId) then
+		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, entity.id)
 	end
 end
 
-function var_0_0.releaseSelf(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
+function EntitySpecialIdle3:releaseSelf()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 
-	arg_3_0._entity = nil
+	self._entity = nil
 
-	arg_3_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return EntitySpecialIdle3

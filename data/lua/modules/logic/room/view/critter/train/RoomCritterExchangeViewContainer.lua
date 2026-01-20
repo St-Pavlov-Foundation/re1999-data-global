@@ -1,31 +1,33 @@
-﻿module("modules.logic.room.view.critter.train.RoomCritterExchangeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/train/RoomCritterExchangeViewContainer.lua
 
-local var_0_0 = class("RoomCritterExchangeViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.train.RoomCritterExchangeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterExchangeViewContainer = class("RoomCritterExchangeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterExchangeView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
+function RoomCritterExchangeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCritterExchangeView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_righttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._currencyView = CurrencyView.New({})
-		arg_2_0._currencyView.foreHideBtn = true
+function RoomCritterExchangeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._currencyView = CurrencyView.New({})
+		self._currencyView.foreHideBtn = true
 
 		return {
-			arg_2_0._currencyView
+			self._currencyView
 		}
 	end
 end
 
-function var_0_0.setCurrencyType(arg_3_0, arg_3_1)
-	if arg_3_0._currencyView then
-		arg_3_0._currencyView:setCurrencyType(arg_3_1)
+function RoomCritterExchangeViewContainer:setCurrencyType(currencyTypeParam)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(currencyTypeParam)
 	end
 end
 
-return var_0_0
+return RoomCritterExchangeViewContainer

@@ -1,61 +1,63 @@
-﻿module("modules.logic.guide.controller.GuideViewController", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideViewController.lua
 
-local var_0_0 = class("GuideViewController", BaseController)
+module("modules.logic.guide.controller.GuideViewController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local GuideViewController = class("GuideViewController", BaseController)
+
+function GuideViewController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function GuideViewController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	GuideController.instance:registerCallback(GuideEvent.FadeView, arg_3_0._onReceiveFadeView, arg_3_0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_3_0._onFinishGuide, arg_3_0)
+function GuideViewController:addConstEvents()
+	GuideController.instance:registerCallback(GuideEvent.FadeView, self._onReceiveFadeView, self)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
 end
 
-function var_0_0._onFinishGuide(arg_4_0, arg_4_1)
-	if arg_4_0._isShow == false and arg_4_1 == 501 then
-		arg_4_0._isShow = nil
+function GuideViewController:_onFinishGuide(guideId)
+	if self._isShow == false and guideId == 501 then
+		self._isShow = nil
 
-		arg_4_0:_fadeView(true)
+		self:_fadeView(true)
 	end
 end
 
-function var_0_0._onReceiveFadeView(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1 == "1"
+function GuideViewController:_onReceiveFadeView(param)
+	local show = param == "1"
 
-	arg_5_0._isShow = var_5_0
+	self._isShow = show
 
-	arg_5_0:_fadeView(var_5_0)
+	self:_fadeView(show)
 end
 
-function var_0_0._fadeView(arg_6_0, arg_6_1)
-	local var_6_0 = {
+function GuideViewController:_fadeView(show)
+	local viewList = {
 		ViewName.DungeonMapView,
 		ViewName.MainView
 	}
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = ViewMgr.instance:getContainer(iter_6_1)
+	for i, viewName in ipairs(viewList) do
+		local viewContainer = ViewMgr.instance:getContainer(viewName)
 
-		if var_6_1 and var_6_1:isOpen() and var_6_1.viewGO then
-			if arg_6_1 then
-				var_6_1:_setVisible(true)
-				gohelper.setActive(var_6_1.viewGO, false)
-				gohelper.setActive(var_6_1.viewGO, true)
+		if viewContainer and viewContainer:isOpen() and viewContainer.viewGO then
+			if show then
+				viewContainer:_setVisible(true)
+				gohelper.setActive(viewContainer.viewGO, false)
+				gohelper.setActive(viewContainer.viewGO, true)
 
 				break
 			end
 
-			var_6_1:_setVisible(false)
+			viewContainer:_setVisible(false)
 
 			break
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GuideViewController.instance = GuideViewController.New()
 
-return var_0_0
+return GuideViewController

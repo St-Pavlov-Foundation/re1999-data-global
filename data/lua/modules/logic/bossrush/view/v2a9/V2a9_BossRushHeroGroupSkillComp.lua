@@ -1,117 +1,122 @@
-﻿module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupSkillComp", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v2a9/V2a9_BossRushHeroGroupSkillComp.lua
 
-local var_0_0 = class("V2a9_BossRushHeroGroupSkillComp", LuaCompBase)
+module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupSkillComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.root = gohelper.findChild(arg_1_0.viewGO, "fightassassinwheelview/Root")
-	arg_1_0._txtskillTitle = gohelper.findChildText(arg_1_0.viewGO, "fightassassinwheelview/Root/Image_skillBG/#txt_skillTitle")
+local V2a9_BossRushHeroGroupSkillComp = class("V2a9_BossRushHeroGroupSkillComp", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a9_BossRushHeroGroupSkillComp:init(go)
+	self.viewGO = go
+	self.root = gohelper.findChild(self.viewGO, "fightassassinwheelview/Root")
+	self._txtskillTitle = gohelper.findChildText(self.viewGO, "fightassassinwheelview/Root/Image_skillBG/#txt_skillTitle")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onLoadingCloseView, arg_2_0, LuaEventSystem.High)
+function V2a9_BossRushHeroGroupSkillComp:addEventListeners()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onLoadingCloseView, self, LuaEventSystem.High)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onLoadingCloseView, arg_3_0, LuaEventSystem.High)
+function V2a9_BossRushHeroGroupSkillComp:removeEventListeners()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onLoadingCloseView, self, LuaEventSystem.High)
 end
 
-function var_0_0._onReceiveAct128SpFirstHalfSelectItemReply(arg_4_0)
-	arg_4_0:refreshView()
+function V2a9_BossRushHeroGroupSkillComp:_onReceiveAct128SpFirstHalfSelectItemReply()
+	self:refreshView()
 end
 
-function var_0_0._onLoadingCloseView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.V2a9_BossRushSkillBackpackView then
-		if arg_5_0._skillitems then
-			local var_5_0 = V2a9BossRushModel.instance:getAllEquipMos(arg_5_0._stage)
+function V2a9_BossRushHeroGroupSkillComp:_onLoadingCloseView(viewName)
+	if viewName == ViewName.V2a9_BossRushSkillBackpackView then
+		if self._skillitems then
+			local mos = V2a9BossRushModel.instance:getAllEquipMos(self._stage)
 
-			for iter_5_0 = 1, BossRushEnum.V2a9FightEquipSkillMaxCount do
-				local var_5_1 = var_5_0[iter_5_0] and var_5_0[iter_5_0]:getItemType()
-				local var_5_2 = arg_5_0:_getSkillItem(iter_5_0)
+			for i = 1, BossRushEnum.V2a9FightEquipSkillMaxCount do
+				local itemType = mos[i] and mos[i]:getItemType()
+				local skillitem = self:_getSkillItem(i)
 
-				if var_5_1 then
-					if arg_5_0._equidItemTypes[iter_5_0] then
-						if var_5_1 ~= arg_5_0._equidItemTypes[iter_5_0] then
-							var_5_2:playAnim(BossRushEnum.S01Anim.Load)
+				if itemType then
+					if self._equidItemTypes[i] then
+						if itemType ~= self._equidItemTypes[i] then
+							skillitem:playAnim(BossRushEnum.S01Anim.Load)
 						end
 					else
-						var_5_2:playAnim(BossRushEnum.S01Anim.Load)
+						skillitem:playAnim(BossRushEnum.S01Anim.Load)
 					end
-				elseif arg_5_0._equidItemTypes[iter_5_0] then
-					var_5_2:playAnim(BossRushEnum.S01Anim.Unload)
+				elseif self._equidItemTypes[i] then
+					skillitem:playAnim(BossRushEnum.S01Anim.Unload)
 				end
 			end
 		end
 
-		arg_5_0:refreshView()
+		self:refreshView()
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._skillitemroot = gohelper.findChild(arg_6_0.root, "simage_wheel")
-	arg_6_0._skillitemPrefab = gohelper.findChild(arg_6_0.root, "simage_wheel/go_skillitem")
+function V2a9_BossRushHeroGroupSkillComp:_editableInitView()
+	self._skillitemroot = gohelper.findChild(self.root, "simage_wheel")
+	self._skillitemPrefab = gohelper.findChild(self.root, "simage_wheel/go_skillitem")
 
-	gohelper.setActive(arg_6_0._skillitemPrefab, false)
+	gohelper.setActive(self._skillitemPrefab, false)
 
-	arg_6_0._skillitems = arg_6_0:getUserDataTb_()
-	arg_6_0._txtskillTitle.text = luaLang("bossrush_skillcomp_title")
+	self._skillitems = self:getUserDataTb_()
+	self._txtskillTitle.text = luaLang("bossrush_skillcomp_title")
 end
 
-function var_0_0.onUpdateMO(arg_7_0)
-	local var_7_0 = HeroGroupModel.instance.episodeId
+function V2a9_BossRushHeroGroupSkillComp:onUpdateMO()
+	local episodeId = HeroGroupModel.instance.episodeId
+	local co = BossRushConfig.instance:getEpisodeCoByEpisodeId(episodeId)
 
-	arg_7_0._stage = BossRushConfig.instance:getEpisodeCoByEpisodeId(var_7_0).stage
+	self._stage = co.stage
 
-	local var_7_1 = AssassinOutsideModel.instance:getAct195Id()
+	local actId = AssassinOutsideModel.instance:getAct195Id()
 
-	AssassinOutSideRpc.instance:sendGetAssassinOutSideInfoRequest(var_7_1, arg_7_0._refreshModel, arg_7_0)
+	AssassinOutSideRpc.instance:sendGetAssassinOutSideInfoRequest(actId, self._refreshModel, self)
 end
 
-function var_0_0._refreshModel(arg_8_0)
+function V2a9_BossRushHeroGroupSkillComp:_refreshModel()
 	AssassinBackpackListModel.instance:setAssassinBackpackList()
-	V2a9BossRushSkillBackpackListModel.instance:setMoList(arg_8_0._stage)
-	arg_8_0:refreshView()
+	V2a9BossRushSkillBackpackListModel.instance:setMoList(self._stage)
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0)
-	arg_9_0._equidItemTypes = {}
+function V2a9_BossRushHeroGroupSkillComp:refreshView()
+	self._equidItemTypes = {}
 
-	local var_9_0 = V2a9BossRushModel.instance:getAllEquipMos(arg_9_0._stage)
-	local var_9_1 = 1
+	local mos = V2a9BossRushModel.instance:getAllEquipMos(self._stage)
+	local index = 1
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			arg_9_0:_getSkillItem(var_9_1):onUpdateMO(iter_9_1)
+	if mos then
+		for _, mo in ipairs(mos) do
+			local skillitem = self:_getSkillItem(index)
 
-			var_9_1 = var_9_1 + 1
-			arg_9_0._equidItemTypes[iter_9_1:getIndex()] = iter_9_1:getItemType()
+			skillitem:onUpdateMO(mo)
+
+			index = index + 1
+			self._equidItemTypes[mo:getIndex()] = mo:getItemType()
 		end
 	end
 
-	if arg_9_0._skillitems then
-		for iter_9_2 = 1, #arg_9_0._skillitems do
-			gohelper.setActive(arg_9_0._skillitems[iter_9_2].viewGO, iter_9_2 < var_9_1)
+	if self._skillitems then
+		for i = 1, #self._skillitems do
+			gohelper.setActive(self._skillitems[i].viewGO, i < index)
 		end
 	end
 end
 
-function var_0_0._getSkillItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._skillitems[arg_10_1]
+function V2a9_BossRushHeroGroupSkillComp:_getSkillItem(index)
+	local item = self._skillitems[index]
 
-	if not var_10_0 then
-		local var_10_1 = gohelper.findChild(arg_10_0._skillitemroot, arg_10_1 .. "/go_item")
-		local var_10_2 = gohelper.clone(arg_10_0._skillitemPrefab, var_10_1)
+	if not item then
+		local root = gohelper.findChild(self._skillitemroot, index .. "/go_item")
+		local go = gohelper.clone(self._skillitemPrefab, root)
 
-		var_10_0 = arg_10_0:getUserDataTb_()
-		var_10_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_2, V2a9_BossRushHeroGroupSkillCompItem)
-		arg_10_0._skillitems[arg_10_1] = var_10_0
+		item = self:getUserDataTb_()
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, V2a9_BossRushHeroGroupSkillCompItem)
+		self._skillitems[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-return var_0_0
+return V2a9_BossRushHeroGroupSkillComp

@@ -1,12 +1,14 @@
-﻿module("modules.logic.roomfishing.define.FishingEnum", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/define/FishingEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.roomfishing.define.FishingEnum", package.seeall)
 
-var_0_0.Const = {
+local FishingEnum = _M
+
+FishingEnum.Const = {
 	DefaultMapId = 1,
 	FishingBuilding = 13120
 }
-var_0_0.ConstId = {
+FishingEnum.ConstId = {
 	MaxHasFishingCurrency = 17,
 	ExchangeCostCurrency = 15,
 	MaxCanGetShareRewardTimes = 4,
@@ -22,17 +24,17 @@ var_0_0.ConstId = {
 	MaxInFishingCount = 2,
 	MyPoint = 11
 }
-var_0_0.FriendListTag = {
+FishingEnum.FriendListTag = {
 	UnFishing = 1,
 	Fishing = 2
 }
-var_0_0.OtherPlayerBoatType = {
+FishingEnum.OtherPlayerBoatType = {
 	Stranger = 2,
 	Friend = 1
 }
-var_0_0.FishingProgressType = {
+FishingEnum.FishingProgressType = {
 	Myself = 1,
 	Other = 2
 }
 
-return var_0_0
+return FishingEnum

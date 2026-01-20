@@ -1,20 +1,24 @@
-﻿module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/v1a7_warmup/view/VersionActivity1_7WarmUpViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_7WarmUpViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local VersionActivity1_7WarmUpViewContainer = class("VersionActivity1_7WarmUpViewContainer", BaseViewContainer)
+
+function VersionActivity1_7WarmUpViewContainer:buildViews()
+	local views = {
 		VersionActivity1_7WarmUpView.New(),
 		VersionActivity1_7WarmUpMapView.New()
 	}
+
+	return views
 end
 
-function var_0_0.isPlayingDesc(arg_2_0)
-	return arg_2_0._isPlayingDesc
+function VersionActivity1_7WarmUpViewContainer:isPlayingDesc()
+	return self._isPlayingDesc
 end
 
-function var_0_0.setIsPlayingDesc(arg_3_0, arg_3_1)
-	arg_3_0._isPlayingDesc = arg_3_1
+function VersionActivity1_7WarmUpViewContainer:setIsPlayingDesc(isPlaying)
+	self._isPlayingDesc = isPlaying
 end
 
-return var_0_0
+return VersionActivity1_7WarmUpViewContainer

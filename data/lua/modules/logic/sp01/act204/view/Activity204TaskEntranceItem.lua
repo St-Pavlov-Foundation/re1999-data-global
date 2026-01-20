@@ -1,57 +1,59 @@
-﻿module("modules.logic.sp01.act204.view.Activity204TaskEntranceItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/view/Activity204TaskEntranceItem.lua
 
-local var_0_0 = class("Activity204TaskEntranceItem", Activity204EntranceItemBase)
+module("modules.logic.sp01.act204.view.Activity204TaskEntranceItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Activity204TaskEntranceItem = class("Activity204TaskEntranceItem", Activity204EntranceItemBase)
 
-	arg_1_0._golimitTask = gohelper.findChild(arg_1_0.go, "root/#gp_limitTask")
+function Activity204TaskEntranceItem:init(go)
+	Activity204TaskEntranceItem.super.init(self, go)
+
+	self._golimitTask = gohelper.findChild(self.go, "root/#gp_limitTask")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	var_0_0.super.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(Activity204Controller.instance, Activity204Event.UpdateTask, arg_2_0._onUpdateTask, arg_2_0)
+function Activity204TaskEntranceItem:addEventListeners()
+	Activity204TaskEntranceItem.super.addEventListeners(self)
+	self:addEventCb(Activity204Controller.instance, Activity204Event.UpdateTask, self._onUpdateTask, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	var_0_0.super.removeEventListeners(arg_3_0)
+function Activity204TaskEntranceItem:removeEventListeners()
+	Activity204TaskEntranceItem.super.removeEventListeners(self)
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	var_0_0.super.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0:_chcekHasAnyLimitTask()
+function Activity204TaskEntranceItem:onUpdateMO(actId)
+	Activity204TaskEntranceItem.super.onUpdateMO(self, actId)
+	self:_chcekHasAnyLimitTask()
 end
 
-function var_0_0._onUpdateTask(arg_5_0)
-	arg_5_0:_chcekHasAnyLimitTask()
-	arg_5_0:updateReddot()
+function Activity204TaskEntranceItem:_onUpdateTask()
+	self:_chcekHasAnyLimitTask()
+	self:updateReddot()
 end
 
-function var_0_0._chcekHasAnyLimitTask(arg_6_0)
-	local var_6_0 = Activity204Model.instance:getActMo(arg_6_0._actId)
+function Activity204TaskEntranceItem:_chcekHasAnyLimitTask()
+	local actMo = Activity204Model.instance:getActMo(self._actId)
 
-	if not var_6_0 then
+	if not actMo then
 		return
 	end
 
-	gohelper.setActive(arg_6_0._golimitTask, var_6_0:hasAnyLimitTask())
+	gohelper.setActive(self._golimitTask, actMo:hasAnyLimitTask())
 end
 
-function var_0_0.updateReddot(arg_7_0)
-	if arg_7_0._actCfg and arg_7_0._actCfg.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(arg_7_0._goRedPoint, arg_7_0._actCfg.redDotId, nil, arg_7_0.checkReddotFunc, arg_7_0)
+function Activity204TaskEntranceItem:updateReddot()
+	if self._actCfg and self._actCfg.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(self._goRedPoint, self._actCfg.redDotId, nil, self.checkReddotFunc, self)
 	end
 end
 
-function var_0_0.checkReddotFunc(arg_8_0, arg_8_1)
-	arg_8_1:defaultRefreshDot()
+function Activity204TaskEntranceItem:checkReddotFunc(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	arg_8_1.show = arg_8_1.show or Activity204Model.instance:hasNewTask(arg_8_0._actId)
+	redDotIcon.show = redDotIcon.show or Activity204Model.instance:hasNewTask(self._actId)
 
-	local var_8_0 = RedDotConfig.instance:getRedDotCO(arg_8_0._actCfg.redDotId)
-	local var_8_1 = var_8_0 and var_8_0.style
+	local redDotCo = RedDotConfig.instance:getRedDotCO(self._actCfg.redDotId)
+	local redDotType = redDotCo and redDotCo.style
 
-	arg_8_1:showRedDot(var_8_1)
+	redDotIcon:showRedDot(redDotType)
 end
 
-return var_0_0
+return Activity204TaskEntranceItem

@@ -1,21 +1,23 @@
-﻿module("modules.configs.excel2json.lua_equip_break_cost", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_equip_break_cost.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_equip_break_cost", package.seeall)
+
+local lua_equip_break_cost = {}
+local fields = {
 	cost = 4,
 	scoreCost = 5,
 	breakLevel = 2,
 	rare = 1,
 	level = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"rare",
 	"breakLevel"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_equip_break_cost.onLoad(json)
+	lua_equip_break_cost.configList, lua_equip_break_cost.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_equip_break_cost

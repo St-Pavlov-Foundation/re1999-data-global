@@ -1,43 +1,47 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131TaskViewContainer.lua
 
-local var_0_0 = class("Activity131TaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act131.view.Activity131TaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Activity131TaskViewContainer = class("Activity131TaskViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_TaskList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = Activity131TaskItem.prefabPath
-	var_1_1.cellClass = Activity131TaskItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 1160
-	var_1_1.cellHeight = 165
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function Activity131TaskViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "#scroll_TaskList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = Activity131TaskItem.prefabPath
+	scrollParam.cellClass = Activity131TaskItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 1160
+	scrollParam.cellHeight = 165
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	for iter_1_0 = 1, 10 do
-		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
+	local animationDelayTimes = {}
+
+	for i = 1, 10 do
+		local delayTime = (i - 1) * 0.06
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(Activity131TaskListModel.instance, var_1_1, var_1_2))
-	table.insert(var_1_0, Activity131TaskView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	table.insert(views, LuaListScrollViewWithAnimator.New(Activity131TaskListModel.instance, scrollParam, animationDelayTimes))
+	table.insert(views, Activity131TaskView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Activity131TaskViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function Activity131TaskViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -48,4 +52,4 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-return var_0_0
+return Activity131TaskViewContainer

@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.define.WuErLiXiEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/define/WuErLiXiEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_4.wuerlixi.define.WuErLiXiEvent", package.seeall)
 
-var_0_0.EpisodeFinished = GameUtil.getUniqueTb()
-var_0_0.NodeClicked = GameUtil.getUniqueTb()
-var_0_0.ActUnitDragEnd = GameUtil.getUniqueTb()
-var_0_0.NodeUnitDragEnd = GameUtil.getUniqueTb()
-var_0_0.UnitDraging = GameUtil.getUniqueTb()
-var_0_0.NodeUnitPlaced = GameUtil.getUniqueTb()
-var_0_0.NodeUnitPlaceBack = GameUtil.getUniqueTb()
-var_0_0.MapResetClicked = GameUtil.getUniqueTb()
-var_0_0.NodeSelected = GameUtil.getUniqueTb()
-var_0_0.MapConnectSuccess = GameUtil.getUniqueTb()
-var_0_0.OneClickClaimReward = GameUtil.getUniqueTb()
-var_0_0.OnBackToLevel = GameUtil.getUniqueTb()
-var_0_0.OnCloseTask = GameUtil.getUniqueTb()
-var_0_0.StartGuideDragUnit = GameUtil.getUniqueTb()
-var_0_0.PutUnitGuideFinish = GameUtil.getUniqueTb()
+local WuErLiXiEvent = _M
 
-return var_0_0
+WuErLiXiEvent.EpisodeFinished = GameUtil.getUniqueTb()
+WuErLiXiEvent.NodeClicked = GameUtil.getUniqueTb()
+WuErLiXiEvent.ActUnitDragEnd = GameUtil.getUniqueTb()
+WuErLiXiEvent.NodeUnitDragEnd = GameUtil.getUniqueTb()
+WuErLiXiEvent.UnitDraging = GameUtil.getUniqueTb()
+WuErLiXiEvent.NodeUnitPlaced = GameUtil.getUniqueTb()
+WuErLiXiEvent.NodeUnitPlaceBack = GameUtil.getUniqueTb()
+WuErLiXiEvent.MapResetClicked = GameUtil.getUniqueTb()
+WuErLiXiEvent.NodeSelected = GameUtil.getUniqueTb()
+WuErLiXiEvent.MapConnectSuccess = GameUtil.getUniqueTb()
+WuErLiXiEvent.OneClickClaimReward = GameUtil.getUniqueTb()
+WuErLiXiEvent.OnBackToLevel = GameUtil.getUniqueTb()
+WuErLiXiEvent.OnCloseTask = GameUtil.getUniqueTb()
+WuErLiXiEvent.StartGuideDragUnit = GameUtil.getUniqueTb()
+WuErLiXiEvent.PutUnitGuideFinish = GameUtil.getUniqueTb()
+
+return WuErLiXiEvent

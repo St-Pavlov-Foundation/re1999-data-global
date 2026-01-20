@@ -1,46 +1,48 @@
-﻿module("modules.logic.handbook.rpc.HandbookRpc", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/rpc/HandbookRpc.lua
 
-local var_0_0 = class("HandbookRpc", BaseRpc)
+module("modules.logic.handbook.rpc.HandbookRpc", package.seeall)
 
-function var_0_0.sendGetHandbookInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = HandbookModule_pb.GetHandbookInfoRequest()
+local HandbookRpc = class("HandbookRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function HandbookRpc:sendGetHandbookInfoRequest(callback, callbackObj)
+	local req = HandbookModule_pb.GetHandbookInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetHandbookInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function HandbookRpc:onReceiveGetHandbookInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	HandbookModel.instance:setReadInfos(arg_2_2.infos)
-	HandbookModel.instance:setFragmentInfo(arg_2_2.elementInfo)
+	HandbookModel.instance:setReadInfos(msg.infos)
+	HandbookModel.instance:setFragmentInfo(msg.elementInfo)
 end
 
-function var_0_0.sendHandbookReadRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = HandbookModule_pb.HandbookReadRequest()
+function HandbookRpc:sendHandbookReadRequest(type, id)
+	local req = HandbookModule_pb.HandbookReadRequest()
 
-	var_3_0.type = arg_3_1
-	var_3_0.id = arg_3_2
+	req.type = type
+	req.id = id
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveHandbookReadReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function HandbookRpc:onReceiveHandbookReadReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = {
+	local info = {
 		isRead = true,
-		type = arg_4_2.type,
-		id = arg_4_2.id
+		type = msg.type,
+		id = msg.id
 	}
 
-	HandbookModel.instance:setReadInfo(var_4_0)
-	HandbookController.instance:dispatchEvent(HandbookEvent.OnReadInfoChanged, var_4_0)
+	HandbookModel.instance:setReadInfo(info)
+	HandbookController.instance:dispatchEvent(HandbookEvent.OnReadInfoChanged, info)
 end
 
-var_0_0.instance = var_0_0.New()
+HandbookRpc.instance = HandbookRpc.New()
 
-return var_0_0
+return HandbookRpc

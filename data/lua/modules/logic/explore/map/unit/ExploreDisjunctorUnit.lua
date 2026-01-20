@@ -1,31 +1,33 @@
-﻿module("modules.logic.explore.map.unit.ExploreDisjunctorUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreDisjunctorUnit.lua
 
-local var_0_0 = class("ExploreDisjunctorUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreDisjunctorUnit", package.seeall)
 
-function var_0_0.onTrigger(arg_1_0)
-	var_0_0.super.onTrigger(arg_1_0)
-	arg_1_0:doRotate(arg_1_0.mo.unitDir, ExploreHelper.getDir(arg_1_0.mo.unitDir + 90), 0.5)
+local ExploreDisjunctorUnit = class("ExploreDisjunctorUnit", ExploreBaseDisplayUnit)
 
-	arg_1_0._lockTrigger = true
+function ExploreDisjunctorUnit:onTrigger()
+	ExploreDisjunctorUnit.super.onTrigger(self)
+	self:doRotate(self.mo.unitDir, ExploreHelper.getDir(self.mo.unitDir + 90), 0.5)
 
-	TaskDispatcher.runDelay(arg_1_0._delayUnlock, arg_1_0, 2.5)
+	self._lockTrigger = true
+
+	TaskDispatcher.runDelay(self._delayUnlock, self, 2.5)
 end
 
-function var_0_0.tryTrigger(arg_2_0, ...)
-	if arg_2_0._lockTrigger then
+function ExploreDisjunctorUnit:tryTrigger(...)
+	if self._lockTrigger then
 		return
 	end
 
-	var_0_0.super.tryTrigger(arg_2_0, ...)
+	ExploreDisjunctorUnit.super.tryTrigger(self, ...)
 end
 
-function var_0_0._delayUnlock(arg_3_0)
-	arg_3_0._lockTrigger = false
+function ExploreDisjunctorUnit:_delayUnlock()
+	self._lockTrigger = false
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayUnlock, arg_4_0)
-	var_0_0.super.onDestroy(arg_4_0)
+function ExploreDisjunctorUnit:onDestroy()
+	TaskDispatcher.cancelTask(self._delayUnlock, self)
+	ExploreDisjunctorUnit.super.onDestroy(self)
 end
 
-return var_0_0
+return ExploreDisjunctorUnit

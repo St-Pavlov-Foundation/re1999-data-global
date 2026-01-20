@@ -1,91 +1,93 @@
-﻿module("modules.logic.story.view.StorySelectListItem", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StorySelectListItem.lua
 
-local var_0_0 = class("StorySelectListItem")
-local var_0_1 = 0.6
-local var_0_2 = 0.9
-local var_0_3 = 1.25
-local var_0_4 = 0.5
-local var_0_5 = 300
-local var_0_6 = 0.5
+module("modules.logic.story.view.StorySelectListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.viewGO = gohelper.cloneInPlace(arg_1_1)
+local StorySelectListItem = class("StorySelectListItem")
+local fadeInTime = 0.6
+local fadeOutTime = 0.9
+local selectScale = 1.25
+local selectTweenTime = 0.5
+local optionMoveOffDistance = 300
+local optionMoveOffTime = 0.5
 
-	gohelper.setActive(arg_1_0.viewGO, true)
+function StorySelectListItem:init(go, param)
+	self.viewGO = gohelper.cloneInPlace(go)
 
-	arg_1_0.viewParam = arg_1_2
-	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnselect")
-	arg_1_0._gobgdark = gohelper.findChild(arg_1_0.viewGO, "bgdark")
-	arg_1_0._txtcontentdark = gohelper.findChildText(arg_1_0.viewGO, "bgdark/txtcontentdark")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "bgdark/icon")
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "bgdark/bg")
+	gohelper.setActive(self.viewGO, true)
 
-	arg_1_0._btnselect:AddClickListener(arg_1_0._btnselectOnClick, arg_1_0)
-	arg_1_0:_refreshItem()
+	self.viewParam = param
+	self._btnselect = gohelper.findChildButtonWithAudio(self.viewGO, "btnselect")
+	self._gobgdark = gohelper.findChild(self.viewGO, "bgdark")
+	self._txtcontentdark = gohelper.findChildText(self.viewGO, "bgdark/txtcontentdark")
+	self._goicon = gohelper.findChild(self.viewGO, "bgdark/icon")
+	self._gobg = gohelper.findChild(self.viewGO, "bgdark/bg")
+
+	self._btnselect:AddClickListener(self._btnselectOnClick, self)
+	self:_refreshItem()
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	arg_2_0._btnselect:RemoveClickListener()
+function StorySelectListItem:removeEvents()
+	self._btnselect:RemoveClickListener()
 end
 
-function var_0_0.getOptionIndex(arg_3_0)
-	return arg_3_0.viewParam.index
+function StorySelectListItem:getOptionIndex()
+	return self.viewParam.index
 end
 
-function var_0_0._btnselectOnClick(arg_4_0)
-	local var_4_0 = {
-		stepId = arg_4_0.viewParam.stepId,
-		index = arg_4_0.viewParam.index
-	}
+function StorySelectListItem:_btnselectOnClick()
+	local log = {}
 
-	StoryModel.instance:addLog(var_4_0)
-	StoryController.instance:dispatchEvent(StoryEvent.OnSelectOptionView, arg_4_0.viewParam.index)
+	log.stepId = self.viewParam.stepId
+	log.index = self.viewParam.index
+
+	StoryModel.instance:addLog(log)
+	StoryController.instance:dispatchEvent(StoryEvent.OnSelectOptionView, self.viewParam.index)
 end
 
-function var_0_0.onSelectOptionView(arg_5_0)
-	ZProj.TweenHelper.DOFadeCanvasGroup(arg_5_0.viewGO, 1, 0, var_0_2, arg_5_0._onSelectOption, arg_5_0)
-	ZProj.TweenHelper.DOScale(arg_5_0.viewGO.transform, var_0_3, var_0_3, 1, var_0_4)
+function StorySelectListItem:onSelectOptionView()
+	ZProj.TweenHelper.DOFadeCanvasGroup(self.viewGO, 1, 0, fadeOutTime, self._onSelectOption, self)
+	ZProj.TweenHelper.DOScale(self.viewGO.transform, selectScale, selectScale, 1, selectTweenTime)
 end
 
-function var_0_0._onSelectOption(arg_6_0)
-	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, arg_6_0.viewParam.index)
-	StoryController.instance:playStep(arg_6_0.viewParam.id)
-	arg_6_0:destroy()
+function StorySelectListItem:_onSelectOption()
+	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, self.viewParam.index)
+	StoryController.instance:playStep(self.viewParam.id)
+	self:destroy()
 end
 
-function var_0_0.onSelectOtherOptionView(arg_7_0)
-	ZProj.UGUIHelper.SetGrayscale(arg_7_0._goicon, true)
-	ZProj.UGUIHelper.SetGrayscale(arg_7_0._gobg, true)
-	ZProj.UGUIHelper.SetGrayscale(arg_7_0._txtcontentdark.gameObject, true)
-	ZProj.TweenHelper.DOLocalMoveX(arg_7_0.viewGO.transform, var_0_5, var_0_6)
-	ZProj.TweenHelper.DOFadeCanvasGroup(arg_7_0.viewGO, 1, 0, var_0_2, arg_7_0._OnSelectOtherOption, arg_7_0)
+function StorySelectListItem:onSelectOtherOptionView()
+	ZProj.UGUIHelper.SetGrayscale(self._goicon, true)
+	ZProj.UGUIHelper.SetGrayscale(self._gobg, true)
+	ZProj.UGUIHelper.SetGrayscale(self._txtcontentdark.gameObject, true)
+	ZProj.TweenHelper.DOLocalMoveX(self.viewGO.transform, optionMoveOffDistance, optionMoveOffTime)
+	ZProj.TweenHelper.DOFadeCanvasGroup(self.viewGO, 1, 0, fadeOutTime, self._OnSelectOtherOption, self)
 end
 
-function var_0_0._OnSelectOtherOption(arg_8_0)
-	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, arg_8_0.viewParam.index)
-	arg_8_0:destroy()
+function StorySelectListItem:_OnSelectOtherOption()
+	StoryController.instance:dispatchEvent(StoryEvent.FinishSelectOptionView, self.viewParam.index)
+	self:destroy()
 end
 
-function var_0_0.reset(arg_9_0, arg_9_1)
-	arg_9_0.viewParam = arg_9_1
+function StorySelectListItem:reset(param)
+	self.viewParam = param
 
-	arg_9_0:_refreshItem()
+	self:_refreshItem()
 end
 
-function var_0_0._refreshItem(arg_10_0)
-	ZProj.TweenHelper.KillByObj(arg_10_0.viewGO)
-	ZProj.TweenHelper.DOFadeCanvasGroup(arg_10_0.viewGO, 0, 1, var_0_1)
+function StorySelectListItem:_refreshItem()
+	ZProj.TweenHelper.KillByObj(self.viewGO)
+	ZProj.TweenHelper.DOFadeCanvasGroup(self.viewGO, 0, 1, fadeInTime)
 
-	local var_10_0 = tonumber(arg_10_0.viewParam.name)
-	local var_10_1 = var_10_0 and string.len(arg_10_0.viewParam.name) == string.len(tostring(var_10_0))
+	local num = tonumber(self.viewParam.name)
+	local isLuaLang = num and string.len(self.viewParam.name) == string.len(tostring(num))
 
-	arg_10_0._txtcontentdark.text = var_10_1 and luaLang(arg_10_0.viewParam.name) or arg_10_0.viewParam.name
+	self._txtcontentdark.text = isLuaLang and luaLang(self.viewParam.name) or self.viewParam.name
 end
 
-function var_0_0.destroy(arg_11_0)
-	arg_11_0:removeEvents()
-	ZProj.TweenHelper.KillByObj(arg_11_0.viewGO)
-	gohelper.destroy(arg_11_0.viewGO)
+function StorySelectListItem:destroy()
+	self:removeEvents()
+	ZProj.TweenHelper.KillByObj(self.viewGO)
+	gohelper.destroy(self.viewGO)
 end
 
-return var_0_0
+return StorySelectListItem

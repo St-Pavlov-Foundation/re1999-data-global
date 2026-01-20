@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_2.trade.controller.Activity117Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/controller/Activity117Event.lua
 
-local var_0_0 = {}
+module("modules.logic.versionactivity1_2.trade.controller.Activity117Event", package.seeall)
 
-var_0_0.ReceiveInfos = 102
-var_0_0.BargainStatusChange = 103
-var_0_0.ReceiveNegotiate = 104
-var_0_0.ReceiveDeal = 105
-var_0_0.ReceiveGetBonus = 106
-var_0_0.PlayTalk = 107
-var_0_0.RefreshQuoteView = 108
-var_0_0.ReceiveOrderPush = 109
+local Activity117Event = {}
 
-return var_0_0
+Activity117Event.ReceiveInfos = 102
+Activity117Event.BargainStatusChange = 103
+Activity117Event.ReceiveNegotiate = 104
+Activity117Event.ReceiveDeal = 105
+Activity117Event.ReceiveGetBonus = 106
+Activity117Event.PlayTalk = 107
+Activity117Event.RefreshQuoteView = 108
+Activity117Event.ReceiveOrderPush = 109
+
+return Activity117Event

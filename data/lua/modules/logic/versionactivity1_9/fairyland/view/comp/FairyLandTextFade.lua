@@ -1,261 +1,269 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandTextFade", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/comp/FairyLandTextFade.lua
 
-local var_0_0 = class("FairyLandTextFade", LuaCompBase)
+module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandTextFade", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0.gameObject = arg_1_1
-	arg_1_0.parent = arg_1_0.transform.parent
-	arg_1_0.text = arg_1_1:GetComponent(gohelper.Type_TextMesh)
-	arg_1_0.canvasGroup = gohelper.onceAddComponent(arg_1_0.text.gameObject, typeof(UnityEngine.CanvasGroup))
+local FairyLandTextFade = class("FairyLandTextFade", LuaCompBase)
+
+function FairyLandTextFade:init(go)
+	self.transform = go.transform
+	self.gameObject = go
+	self.parent = self.transform.parent
+	self.text = go:GetComponent(gohelper.Type_TextMesh)
+	self.canvasGroup = gohelper.onceAddComponent(self.text.gameObject, typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0.setScrollContent(arg_2_0, arg_2_1)
-	arg_2_0.scrollContent = arg_2_1
+function FairyLandTextFade:setScrollContent(scrollContent)
+	self.scrollContent = scrollContent
 end
 
-function var_0_0.setText(arg_3_0, arg_3_1)
-	arg_3_0:killTween()
+function FairyLandTextFade:setText(param)
+	self:killTween()
 
-	arg_3_0.layoutCallback = arg_3_1.layoutCallback
-	arg_3_0.callback = arg_3_1.callback
-	arg_3_0.callbackObj = arg_3_1.callbackObj
-	arg_3_0.content = arg_3_1.content
-	arg_3_0.text.text = arg_3_0.content
+	self.layoutCallback = param.layoutCallback
+	self.callback = param.callback
+	self.callbackObj = param.callbackObj
+	self.content = param.content
+	self.text.text = self.content
 
-	local var_3_0 = arg_3_0.text.preferredHeight
+	local textHeight = self.text.preferredHeight
 
-	if arg_3_0.layoutCallback then
-		arg_3_0.layoutCallback(arg_3_0.callbackObj, var_3_0)
+	if self.layoutCallback then
+		self.layoutCallback(self.callbackObj, textHeight)
 	end
 
-	if arg_3_1.tween then
-		arg_3_0.canvasGroup.alpha = 0
+	if param.tween then
+		self.canvasGroup.alpha = 0
 
-		TaskDispatcher.runDelay(arg_3_0._delayShow, arg_3_0, 0.05)
+		TaskDispatcher.runDelay(self._delayShow, self, 0.05)
 	else
-		arg_3_0:onTextFinished()
+		self:onTextFinished()
 	end
 end
 
-function var_0_0._delayShow(arg_4_0)
-	arg_4_0:initText()
+function FairyLandTextFade:_delayShow()
+	self:initText()
 
-	arg_4_0.canvasGroup.alpha = 1
-	arg_4_0.tweenId = ZProj.TweenHelper.DOTweenFloat(1, arg_4_0.characterCount, arg_4_0.delayTime, arg_4_0.frameCallback, arg_4_0.onTextFinished, arg_4_0, nil, EaseType.Linear)
+	self.canvasGroup.alpha = 1
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(1, self.characterCount, self.delayTime, self.frameCallback, self.onTextFinished, self, nil, EaseType.Linear)
 
-	arg_4_0:moveContent()
+	self:moveContent()
 end
 
-function var_0_0.moveContent(arg_5_0)
-	if gohelper.isNil(arg_5_0.scrollContent) then
+function FairyLandTextFade:moveContent()
+	if gohelper.isNil(self.scrollContent) then
 		return
 	end
 
-	local var_5_0 = arg_5_0.scrollContent.transform
-	local var_5_1 = recthelper.getHeight(var_5_0.parent)
-	local var_5_2 = recthelper.getHeight(var_5_0)
-	local var_5_3 = math.max(var_5_2 - var_5_1, 0)
-	local var_5_4 = recthelper.getAnchorY(arg_5_0.transform.parent) + recthelper.getHeight(arg_5_0.transform.parent)
-	local var_5_5 = math.max(var_5_3, var_5_4 - var_5_1)
+	local contentTransform = self.scrollContent.transform
+	local scrollHeight = recthelper.getHeight(contentTransform.parent)
+	local contentHeight = recthelper.getHeight(contentTransform)
+	local maxPos = math.max(contentHeight - scrollHeight, 0)
+	local txtPos = recthelper.getAnchorY(self.transform.parent)
+	local txtHeight = recthelper.getHeight(self.transform.parent)
+	local txtPosY = txtPos + txtHeight
+	local caleMovePosY = math.max(maxPos, txtPosY - scrollHeight)
 
-	arg_5_0.moveId = ZProj.TweenHelper.DOAnchorPosY(var_5_0, var_5_5, arg_5_0.delayTime * 0.8, nil, nil, nil, EaseType.Linear)
+	self.moveId = ZProj.TweenHelper.DOAnchorPosY(contentTransform, caleMovePosY, self.delayTime * 0.8, nil, nil, nil, EaseType.Linear)
 end
 
-function var_0_0._doCallback(arg_6_0)
-	local var_6_0 = arg_6_0.callback
-	local var_6_1 = arg_6_0.callbackObj
+function FairyLandTextFade:_doCallback()
+	local callback = self.callback
+	local callbackObj = self.callbackObj
 
-	arg_6_0.callback = nil
-	arg_6_0.callbackObj = nil
+	self.callback = nil
+	self.callbackObj = nil
 
-	if var_6_0 then
-		var_6_0(var_6_1)
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.frameCallback(arg_7_0, arg_7_1)
-	local var_7_0 = UnityEngine.Screen.width
-	local var_7_1 = CameraMgr.instance:getUICamera()
-	local var_7_2 = 0
+function FairyLandTextFade:frameCallback(value)
+	local screenWidth = UnityEngine.Screen.width
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local maxHeight = 0
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.lineInfoList) do
-		local var_7_3 = iter_7_1[1]
-		local var_7_4 = iter_7_1[2]
-		local var_7_5 = iter_7_1[3]
+	for i, v in ipairs(self.lineInfoList) do
+		local lineInfo = v[1]
+		local startCount = v[2]
+		local endCount = v[3]
 
-		if var_7_4 <= arg_7_1 and arg_7_1 <= var_7_5 then
-			local var_7_6 = arg_7_0.textInfo.characterInfo
-			local var_7_7 = var_7_6[var_7_3.firstVisibleCharacterIndex]
-			local var_7_8 = var_7_6[var_7_3.lastVisibleCharacterIndex]
-			local var_7_9 = var_7_1:WorldToScreenPoint(arg_7_0.transform:TransformPoint(var_7_7.bottomLeft))
-			local var_7_10 = var_7_9
-			local var_7_11 = var_7_9.y
+		if startCount <= value and value <= endCount then
+			local characterInfo = self.textInfo.characterInfo
+			local firstChar = characterInfo[lineInfo.firstVisibleCharacterIndex]
+			local lastChar = characterInfo[lineInfo.lastVisibleCharacterIndex]
+			local firstBL = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(firstChar.bottomLeft))
+			local maxBL = firstBL
+			local minbly = firstBL.y
 
-			for iter_7_2 = var_7_3.firstVisibleCharacterIndex, var_7_3.lastVisibleCharacterIndex do
-				local var_7_12 = var_7_6[iter_7_2]
-				local var_7_13 = var_7_1:WorldToScreenPoint(arg_7_0.transform:TransformPoint(var_7_12.bottomLeft))
+			for j = lineInfo.firstVisibleCharacterIndex, lineInfo.lastVisibleCharacterIndex do
+				local char = characterInfo[j]
+				local tl = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(char.bottomLeft))
 
-				if var_7_11 > var_7_13.y then
-					var_7_11 = var_7_13.y
+				if minbly > tl.y then
+					minbly = tl.y
 				end
 			end
 
-			var_7_10.y = var_7_11
+			maxBL.y = minbly
 
-			local var_7_14 = var_7_1:WorldToScreenPoint(arg_7_0.transform:TransformPoint(var_7_7.topLeft))
-			local var_7_15 = var_7_14
-			local var_7_16 = var_7_14.y
+			local firstTL = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(firstChar.topLeft))
+			local maxTL = firstTL
+			local maxtly = firstTL.y
 
-			for iter_7_3 = var_7_3.firstVisibleCharacterIndex, var_7_3.lastVisibleCharacterIndex do
-				local var_7_17 = var_7_6[iter_7_3]
-				local var_7_18 = var_7_1:WorldToScreenPoint(arg_7_0.transform:TransformPoint(var_7_17.topLeft))
+			for j = lineInfo.firstVisibleCharacterIndex, lineInfo.lastVisibleCharacterIndex do
+				local char = characterInfo[j]
+				local tl = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(char.topLeft))
 
-				if var_7_16 < var_7_18.y then
-					var_7_16 = var_7_18.y
+				if maxtly < tl.y then
+					maxtly = tl.y
 				end
 			end
 
-			var_7_15.y = var_7_16
+			maxTL.y = maxtly
 
-			local var_7_19 = var_7_1:WorldToScreenPoint(arg_7_0.transform:TransformPoint(var_7_8.bottomRight))
+			local lastBR = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(lastChar.bottomRight))
 
-			if iter_7_0 == 1 then
-				arg_7_0._conMat:SetFloat(arg_7_0._LineMinYId, var_7_10.y)
-				arg_7_0._conMat:SetFloat(arg_7_0._LineMaxYId, var_7_15.y + 10)
+			if i == 1 then
+				self._conMat:SetFloat(self._LineMinYId, maxBL.y)
+				self._conMat:SetFloat(self._LineMaxYId, maxTL.y + 10)
 
-				for iter_7_4, iter_7_5 in pairs(arg_7_0._subMeshs) do
-					if iter_7_5.materialForRendering then
-						iter_7_5.materialForRendering:SetFloat(arg_7_0._LineMinYId, var_7_10.y)
-						iter_7_5.materialForRendering:SetFloat(arg_7_0._LineMaxYId, var_7_15.y + 10)
-						iter_7_5.materialForRendering:EnableKeyword("_GRADUAL_ON")
+				for _, mesh in pairs(self._subMeshs) do
+					if mesh.materialForRendering then
+						mesh.materialForRendering:SetFloat(self._LineMinYId, maxBL.y)
+						mesh.materialForRendering:SetFloat(self._LineMaxYId, maxTL.y + 10)
+						mesh.materialForRendering:EnableKeyword("_GRADUAL_ON")
 					end
 				end
 			else
-				arg_7_0._conMat:SetFloat(arg_7_0._LineMinYId, var_7_10.y)
-				arg_7_0._conMat:SetFloat(arg_7_0._LineMaxYId, var_7_15.y)
+				self._conMat:SetFloat(self._LineMinYId, maxBL.y)
+				self._conMat:SetFloat(self._LineMaxYId, maxTL.y)
 
-				for iter_7_6, iter_7_7 in pairs(arg_7_0._subMeshs) do
-					if iter_7_7.materialForRendering then
-						iter_7_7.materialForRendering:SetFloat(arg_7_0._LineMinYId, var_7_10.y)
-						iter_7_7.materialForRendering:SetFloat(arg_7_0._LineMaxYId, var_7_15.y)
-						iter_7_7.materialForRendering:EnableKeyword("_GRADUAL_ON")
+				for _, mesh in pairs(self._subMeshs) do
+					if mesh.materialForRendering then
+						mesh.materialForRendering:SetFloat(self._LineMinYId, maxBL.y)
+						mesh.materialForRendering:SetFloat(self._LineMaxYId, maxTL.y)
+						mesh.materialForRendering:EnableKeyword("_GRADUAL_ON")
 					end
 				end
 			end
 
-			local var_7_20 = arg_7_0.gameObject
+			local go = self.gameObject
 
-			gohelper.setActive(var_7_20, false)
-			gohelper.setActive(var_7_20, true)
+			gohelper.setActive(go, false)
+			gohelper.setActive(go, true)
 
-			local var_7_21 = var_7_4 == var_7_5 and 1 or (arg_7_1 - var_7_4) / (var_7_5 - var_7_4)
-			local var_7_22 = 1 - Mathf.Lerp(var_7_10.x - 10, var_7_19.x + 10, var_7_21) / var_7_0
+			local rate = startCount == endCount and 1 or (value - startCount) / (endCount - startCount)
+			local screenPosX = Mathf.Lerp(maxBL.x - 10, lastBR.x + 10, rate)
+			local posZ = 1 - screenPosX / screenWidth
 
-			transformhelper.setLocalPos(arg_7_0.transform, arg_7_0._contentX, arg_7_0._contentY, var_7_22)
+			transformhelper.setLocalPos(self.transform, self._contentX, self._contentY, posZ)
 		end
 	end
 end
 
-function var_0_0.onTextFinished(arg_8_0)
-	arg_8_0:killTween()
+function FairyLandTextFade:onTextFinished()
+	self:killTween()
 
-	arg_8_0.canvasGroup.alpha = 1
+	self.canvasGroup.alpha = 1
 
-	if arg_8_0.characterCount then
-		arg_8_0:frameCallback(arg_8_0.characterCount)
+	if self.characterCount then
+		self:frameCallback(self.characterCount)
 	end
 
-	local var_8_0, var_8_1, var_8_2 = transformhelper.getLocalPos(arg_8_0.transform)
+	local x, y, z = transformhelper.getLocalPos(self.transform)
 
-	transformhelper.setLocalPos(arg_8_0.transform, var_8_0, var_8_1, 0)
+	transformhelper.setLocalPos(self.transform, x, y, 0)
 
-	if arg_8_0._conMat then
-		arg_8_0._conMat:DisableKeyword("_GRADUAL_ON")
+	if self._conMat then
+		self._conMat:DisableKeyword("_GRADUAL_ON")
 	end
 
-	if arg_8_0._subMeshs then
-		for iter_8_0, iter_8_1 in pairs(arg_8_0._subMeshs) do
-			if iter_8_1.materialForRendering then
-				iter_8_1.materialForRendering:DisableKeyword("_GRADUAL_ON")
+	if self._subMeshs then
+		for _, v in pairs(self._subMeshs) do
+			if v.materialForRendering then
+				v.materialForRendering:DisableKeyword("_GRADUAL_ON")
 			end
 		end
 	end
 
-	arg_8_0:_doCallback()
+	self:_doCallback()
 end
 
-function var_0_0.initText(arg_9_0)
-	arg_9_0._subMeshs = {}
-	arg_9_0._conMat = arg_9_0.text.fontMaterial
+function FairyLandTextFade:initText()
+	self._subMeshs = {}
+	self._conMat = self.text.fontMaterial
 
-	arg_9_0._conMat:EnableKeyword("_GRADUAL_ON")
-	arg_9_0._conMat:DisableKeyword("_DISSOLVE_ON")
+	self._conMat:EnableKeyword("_GRADUAL_ON")
+	self._conMat:DisableKeyword("_DISSOLVE_ON")
 
-	local var_9_0 = UnityEngine.Shader
+	local _shader = UnityEngine.Shader
 
-	arg_9_0._LineMinYId = var_9_0.PropertyToID("_LineMinY")
-	arg_9_0._LineMaxYId = var_9_0.PropertyToID("_LineMaxY")
-	arg_9_0._contentX, arg_9_0._contentY, _ = transformhelper.getLocalPos(arg_9_0.transform)
+	self._LineMinYId = _shader.PropertyToID("_LineMinY")
+	self._LineMaxYId = _shader.PropertyToID("_LineMaxY")
+	self._contentX, self._contentY, _ = transformhelper.getLocalPos(self.transform)
 
-	local var_9_1 = arg_9_0.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+	local subMeshs = self.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
 
-	if var_9_1 then
-		local var_9_2 = var_9_1:GetEnumerator()
+	if subMeshs then
+		local iter = subMeshs:GetEnumerator()
 
-		while var_9_2:MoveNext() do
-			local var_9_3 = var_9_2.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+		while iter:MoveNext() do
+			local subMesh = iter.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
 
-			table.insert(arg_9_0._subMeshs, var_9_3)
+			table.insert(self._subMeshs, subMesh)
 		end
 	end
 
-	arg_9_0.textInfo = arg_9_0.text:GetTextInfo(arg_9_0.content)
-	arg_9_0.lineInfoList = {}
+	self.textInfo = self.text:GetTextInfo(self.content)
+	self.lineInfoList = {}
 
-	local var_9_4 = 0
+	local totalVisibleCharacterCount = 0
 
-	for iter_9_0 = 1, arg_9_0.textInfo.lineCount do
-		local var_9_5 = arg_9_0.textInfo.lineInfo[iter_9_0 - 1]
-		local var_9_6 = var_9_4 + 1
+	for i = 1, self.textInfo.lineCount do
+		local lineInfo = self.textInfo.lineInfo[i - 1]
+		local prevLineTotalCount = totalVisibleCharacterCount + 1
 
-		var_9_4 = var_9_4 + var_9_5.visibleCharacterCount
+		totalVisibleCharacterCount = totalVisibleCharacterCount + lineInfo.visibleCharacterCount
 
-		table.insert(arg_9_0.lineInfoList, {
-			var_9_5,
-			var_9_6,
-			var_9_4
+		table.insert(self.lineInfoList, {
+			lineInfo,
+			prevLineTotalCount,
+			totalVisibleCharacterCount
 		})
 	end
 
-	arg_9_0.characterCount = var_9_4
-	arg_9_0.delayTime = arg_9_0:getDelayTime(var_9_4)
+	self.characterCount = totalVisibleCharacterCount
+	self.delayTime = self:getDelayTime(totalVisibleCharacterCount)
 end
 
-function var_0_0.getDelayTime(arg_10_0, arg_10_1)
-	local var_10_0 = 4
+function FairyLandTextFade:getDelayTime(characterCount)
+	local speed = 4
+	local time = 0.08 * characterCount
 
-	return 0.08 * arg_10_1 / var_10_0
+	time = time / speed
+
+	return time
 end
 
-function var_0_0.killTween(arg_11_0)
-	if arg_11_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0.tweenId)
+function FairyLandTextFade:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_11_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	if arg_11_0.moveId then
-		ZProj.TweenHelper.KillById(arg_11_0.moveId)
+	if self.moveId then
+		ZProj.TweenHelper.KillById(self.moveId)
 
-		arg_11_0.moveId = nil
+		self.moveId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_11_0._delayShow, arg_11_0)
+	TaskDispatcher.cancelTask(self._delayShow, self)
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0:killTween()
+function FairyLandTextFade:onDestroy()
+	self:killTween()
 end
 
-return var_0_0
+return FairyLandTextFade

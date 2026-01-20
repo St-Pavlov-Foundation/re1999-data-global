@@ -1,200 +1,206 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapStageItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/map/EliminateMapStageItem.lua
 
-local var_0_0 = class("EliminateMapStageItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapStageItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.viewGO, "#image_point")
-	arg_1_0._imagepointfinished = gohelper.findChildImage(arg_1_0.viewGO, "#image_pointfinished")
-	arg_1_0._gostage = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage")
-	arg_1_0._gostagefinish = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_stagefinish")
-	arg_1_0._goGame = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_Game")
-	arg_1_0._goStageLine = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_StageLine")
-	arg_1_0._goStageLineFinished = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_StageLineFinished")
-	arg_1_0._imageline = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_line")
-	arg_1_0._imageangle = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_angle")
-	arg_1_0._imagelinefinish = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_linefinish")
-	arg_1_0._imageanglefinish = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_anglefinish")
-	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename")
-	arg_1_0._txtstageNum = gohelper.findChildText(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#txt_stageNum")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star")
-	arg_1_0._gostar1 = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1")
-	arg_1_0._imageStar1 = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/has/#image_Star1")
-	arg_1_0._gostar2 = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2")
-	arg_1_0._imageStar2 = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/has/#image_Star2")
-	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#btn_review")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#btn_click")
-	arg_1_0._imagechess = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_chess")
-	arg_1_0._imageSign = gohelper.findChildImage(arg_1_0.viewGO, "#image_Sign")
+local EliminateMapStageItem = class("EliminateMapStageItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EliminateMapStageItem:onInitView()
+	self._imagepoint = gohelper.findChildImage(self.viewGO, "#image_point")
+	self._imagepointfinished = gohelper.findChildImage(self.viewGO, "#image_pointfinished")
+	self._gostage = gohelper.findChild(self.viewGO, "unlock/#go_stage")
+	self._gostagefinish = gohelper.findChild(self.viewGO, "unlock/#go_stage/#go_stagefinish")
+	self._goGame = gohelper.findChild(self.viewGO, "unlock/#go_stage/#go_Game")
+	self._goStageLine = gohelper.findChild(self.viewGO, "unlock/#go_stage/#go_StageLine")
+	self._goStageLineFinished = gohelper.findChild(self.viewGO, "unlock/#go_stage/#go_StageLineFinished")
+	self._imageline = gohelper.findChildImage(self.viewGO, "unlock/#go_stage/#image_line")
+	self._imageangle = gohelper.findChildImage(self.viewGO, "unlock/#go_stage/#image_angle")
+	self._imagelinefinish = gohelper.findChildImage(self.viewGO, "unlock/#go_stage/#image_linefinish")
+	self._imageanglefinish = gohelper.findChildImage(self.viewGO, "unlock/#go_stage/#image_anglefinish")
+	self._txtstagename = gohelper.findChildText(self.viewGO, "unlock/#go_stage/info/#txt_stagename")
+	self._txtstageNum = gohelper.findChildText(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#txt_stageNum")
+	self._gostar = gohelper.findChild(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star")
+	self._gostar1 = gohelper.findChild(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1")
+	self._imageStar1 = gohelper.findChildImage(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/has/#image_Star1")
+	self._gostar2 = gohelper.findChild(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2")
+	self._imageStar2 = gohelper.findChildImage(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/has/#image_Star2")
+	self._btnreview = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#btn_review")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/#btn_click")
+	self._imagechess = gohelper.findChildImage(self.viewGO, "unlock/#image_chess")
+	self._imageSign = gohelper.findChildImage(self.viewGO, "#image_Sign")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreview:AddClickListener(arg_2_0._btnreviewOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function EliminateMapStageItem:addEvents()
+	self._btnreview:AddClickListener(self._btnreviewOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreview:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
+function EliminateMapStageItem:removeEvents()
+	self._btnreview:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnreviewOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._config.dialogueId
+function EliminateMapStageItem:_btnreviewOnClick()
+	local dialogueId = self._config.dialogueId
 
-	if var_4_0 > 0 then
-		DialogueController.instance:enterDialogue(var_4_0)
+	if dialogueId > 0 then
+		DialogueController.instance:enterDialogue(dialogueId)
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
-	arg_5_0:_onClickEnterEpisode()
+function EliminateMapStageItem:_btnclickOnClick()
+	self:_onClickEnterEpisode()
 end
 
-function var_0_0._onClickEnterEpisode(arg_6_0)
-	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.ClickEpisode, arg_6_0._config)
+function EliminateMapStageItem:_onClickEnterEpisode()
+	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.ClickEpisode, self._config)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._gostarNo1 = gohelper.findChild(arg_7_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/no")
-	arg_7_0._gostarNo2 = gohelper.findChild(arg_7_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/no")
-	arg_7_0._animator = arg_7_0.viewGO:GetComponent("Animator")
-	arg_7_0._goUnlock = gohelper.findChild(arg_7_0.viewGO, "unlock")
-	arg_7_0._chessAnimator = gohelper.findChild(arg_7_0.viewGO, "unlock/#image_chess/ani"):GetComponent("Animator")
+function EliminateMapStageItem:_editableInitView()
+	self._gostarNo1 = gohelper.findChild(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/no")
+	self._gostarNo2 = gohelper.findChild(self.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/no")
+	self._animator = self.viewGO:GetComponent("Animator")
+	self._goUnlock = gohelper.findChild(self.viewGO, "unlock")
 
-	gohelper.setActive(arg_7_0._imageSign, false)
-	gohelper.setActive(arg_7_0._imagepointfinished, false)
-	gohelper.setActive(arg_7_0._imagechess, false)
-	gohelper.setActive(arg_7_0._imagepoint, true)
-	gohelper.setActive(arg_7_0._goGame, false)
+	local chessAniGo = gohelper.findChild(self.viewGO, "unlock/#image_chess/ani")
+
+	self._chessAnimator = chessAniGo:GetComponent("Animator")
+
+	gohelper.setActive(self._imageSign, false)
+	gohelper.setActive(self._imagepointfinished, false)
+	gohelper.setActive(self._imagechess, false)
+	gohelper.setActive(self._imagepoint, true)
+	gohelper.setActive(self._goGame, false)
 end
 
-function var_0_0.playAnim(arg_8_0, arg_8_1)
-	arg_8_0._animator:Play(arg_8_1, 0, 0)
+function EliminateMapStageItem:playAnim(name)
+	self._animator:Play(name, 0, 0)
 end
 
-function var_0_0.playChessAnim(arg_9_0, arg_9_1)
-	arg_9_0._chessAnimator:Play(arg_9_1, 0, 0)
+function EliminateMapStageItem:playChessAnim(name)
+	self._chessAnimator:Play(name, 0, 0)
 end
 
-function var_0_0._editableAddEvents(arg_10_0)
+function EliminateMapStageItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_11_0)
+function EliminateMapStageItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.isBoss(arg_12_0)
-	return arg_12_0._isBoss
+function EliminateMapStageItem:isBoss()
+	return self._isBoss
 end
 
-function var_0_0.getChapterId(arg_13_0)
-	return arg_13_0._config.chapterId
+function EliminateMapStageItem:getChapterId()
+	return self._config.chapterId
 end
 
-function var_0_0.setIndex(arg_14_0, arg_14_1)
-	arg_14_0._index = arg_14_1
+function EliminateMapStageItem:setIndex(index)
+	self._index = index
 end
 
-function var_0_0.onUpdateMO(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._episodeMo = arg_15_1
+function EliminateMapStageItem:onUpdateMO(mo, lastCanFightEpisodeMo)
+	self._episodeMo = mo
 
-	local var_15_0 = arg_15_0._episodeMo.star ~= 0
+	local isPassed = self._episodeMo.star ~= 0
 
-	arg_15_0._config = arg_15_0._episodeMo.config
-	arg_15_0._isBoss = arg_15_0._config.levelPosition == EliminateLevelEnum.levelType.boss
-	arg_15_0._isShowMainInfo = var_15_0 or arg_15_1 == arg_15_2
+	self._config = self._episodeMo.config
+	self._isBoss = self._config.levelPosition == EliminateLevelEnum.levelType.boss
+	self._isShowMainInfo = isPassed or mo == lastCanFightEpisodeMo
 
-	arg_15_0:showMainInfo(arg_15_0._isShowMainInfo)
-	gohelper.setActive(arg_15_0._btnreview, var_15_0 and arg_15_0._config.dialogueId > 0)
+	self:showMainInfo(self._isShowMainInfo)
+	gohelper.setActive(self._btnreview, isPassed and self._config.dialogueId > 0)
 
-	local var_15_1
+	local color
 
-	if arg_15_0._isBoss then
-		var_15_1 = var_15_0 and EliminateMapEnum.BossPassedColor or EliminateMapEnum.BossUnPassedColor
+	if self._isBoss then
+		color = isPassed and EliminateMapEnum.BossPassedColor or EliminateMapEnum.BossUnPassedColor
 	else
-		var_15_1 = var_15_0 and EliminateMapEnum.NormalPassedColor or EliminateMapEnum.NormalUnPassedColor
+		color = isPassed and EliminateMapEnum.NormalPassedColor or EliminateMapEnum.NormalUnPassedColor
 	end
 
-	local var_15_2
+	local txtColor
 
-	if arg_15_0._isBoss then
-		var_15_2 = var_15_0 and EliminateMapEnum.TxtBossPassedColor or EliminateMapEnum.TxtBossUnPassedColor
+	if self._isBoss then
+		txtColor = isPassed and EliminateMapEnum.TxtBossPassedColor or EliminateMapEnum.TxtBossUnPassedColor
 	else
-		var_15_2 = var_15_0 and EliminateMapEnum.TxtNormalPassedColor or EliminateMapEnum.TxtNormalUnPassedColor
+		txtColor = isPassed and EliminateMapEnum.TxtNormalPassedColor or EliminateMapEnum.TxtNormalUnPassedColor
 	end
 
-	arg_15_0._txtstagename.color = var_15_2
-	arg_15_0._imagepoint.color = not arg_15_0._isShowMainInfo and EliminateMapEnum.TxtNormalUnPassedColor or var_15_1
-	arg_15_0._imagepointfinished.color = var_15_1
-	arg_15_0._imageline.color = var_15_1
-	arg_15_0._imageangle.color = var_15_1
-	arg_15_0._txtstagename.text = arg_15_0._config.name
-	arg_15_0._txtstageNum.text = string.format("STAGE <color=#FFC67C>%s-%s</color>", arg_15_0._config.chapterId, arg_15_0._index)
+	self._txtstagename.color = txtColor
+	self._imagepoint.color = not self._isShowMainInfo and EliminateMapEnum.TxtNormalUnPassedColor or color
+	self._imagepointfinished.color = color
+	self._imageline.color = color
+	self._imageangle.color = color
+	self._txtstagename.text = self._config.name
+	self._txtstageNum.text = string.format("STAGE <color=#FFC67C>%s-%s</color>", self._config.chapterId, self._index)
 
-	gohelper.setActive(arg_15_0._goStageLine, not var_15_0)
-	gohelper.setActive(arg_15_0._gostagefinish, var_15_0)
-	gohelper.setActive(arg_15_0._goStageLineFinished, var_15_0)
-	gohelper.setActive(arg_15_0._imageline, not var_15_0)
-	gohelper.setActive(arg_15_0._imageangle, not var_15_0)
-	gohelper.setActive(arg_15_0._imagelinefinish, var_15_0)
-	gohelper.setActive(arg_15_0._imageanglefinish, var_15_0)
-	arg_15_0:_showStars()
+	gohelper.setActive(self._goStageLine, not isPassed)
+	gohelper.setActive(self._gostagefinish, isPassed)
+	gohelper.setActive(self._goStageLineFinished, isPassed)
+	gohelper.setActive(self._imageline, not isPassed)
+	gohelper.setActive(self._imageangle, not isPassed)
+	gohelper.setActive(self._imagelinefinish, isPassed)
+	gohelper.setActive(self._imageanglefinish, isPassed)
+	self:_showStars()
 end
 
-function var_0_0.showMainInfo(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._goUnlock, arg_16_1)
+function EliminateMapStageItem:showMainInfo(value)
+	gohelper.setActive(self._goUnlock, value)
 end
 
-function var_0_0.showChess(arg_17_0, arg_17_1)
-	gohelper.setActive(arg_17_0._imagechess, arg_17_1)
-	gohelper.setActive(arg_17_0._imagepointfinished, arg_17_1)
-	gohelper.setActive(arg_17_0._imageSign, arg_17_1)
-	gohelper.setActive(arg_17_0._goGame, arg_17_1)
+function EliminateMapStageItem:showChess(value)
+	gohelper.setActive(self._imagechess, value)
+	gohelper.setActive(self._imagepointfinished, value)
+	gohelper.setActive(self._imageSign, value)
+	gohelper.setActive(self._goGame, value)
 end
 
-function var_0_0.showPointFinish(arg_18_0, arg_18_1)
-	gohelper.setActive(arg_18_0._imagepointfinished, arg_18_1)
-	gohelper.setActive(arg_18_0._goGame, arg_18_1)
+function EliminateMapStageItem:showPointFinish(value)
+	gohelper.setActive(self._imagepointfinished, value)
+	gohelper.setActive(self._goGame, value)
 end
 
-function var_0_0.showSign(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._imageSign, arg_19_1)
+function EliminateMapStageItem:showSign(value)
+	gohelper.setActive(self._imageSign, value)
 end
 
-function var_0_0._showStars(arg_20_0)
-	local var_20_0 = arg_20_0._config.warChessId
-	local var_20_1 = lua_war_chess_episode.configDict[var_20_0]
-	local var_20_2 = not string.nilorempty(var_20_1.extraWinCondition) and 2 or 1
+function EliminateMapStageItem:_showStars()
+	local warChessId = self._config.warChessId
+	local warBattleConfig = lua_war_chess_episode.configDict[warChessId]
+	local hasMultiConfition = not string.nilorempty(warBattleConfig.extraWinCondition)
+	local starNum = hasMultiConfition and 2 or 1
 
-	for iter_20_0 = 1, 2 do
-		local var_20_3 = arg_20_0["_gostar" .. iter_20_0]
-		local var_20_4 = iter_20_0 <= var_20_2
+	for i = 1, 2 do
+		local go = self["_gostar" .. i]
+		local showStar = i <= starNum
 
-		gohelper.setActive(var_20_3, var_20_4)
+		gohelper.setActive(go, showStar)
 
-		if var_20_4 then
-			local var_20_5 = arg_20_0["_imageStar" .. iter_20_0]
-			local var_20_6 = iter_20_0 <= arg_20_0._episodeMo.star
+		if showStar then
+			local star = self["_imageStar" .. i]
+			local showImageStar = i <= self._episodeMo.star
 
-			gohelper.setActive(var_20_5, var_20_6)
+			gohelper.setActive(star, showImageStar)
 
-			local var_20_7 = arg_20_0["_gostarNo" .. iter_20_0]
+			local noGo = self["_gostarNo" .. i]
 
-			gohelper.setActive(var_20_7, not var_20_6)
+			gohelper.setActive(noGo, not showImageStar)
 		end
 	end
 end
 
-function var_0_0.onSelect(arg_21_0, arg_21_1)
+function EliminateMapStageItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function EliminateMapStageItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return EliminateMapStageItem

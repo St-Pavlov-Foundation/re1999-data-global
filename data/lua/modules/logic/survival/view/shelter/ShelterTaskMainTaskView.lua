@@ -1,346 +1,350 @@
-﻿module("modules.logic.survival.view.shelter.ShelterTaskMainTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterTaskMainTaskView.lua
 
-local var_0_0 = class("ShelterTaskMainTaskView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterTaskMainTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.mainGO = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_main")
-	arg_1_0.itemGO = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_main/#go_mainitem")
-	arg_1_0.rewardItemGO = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_main/#go_rewarditem")
+local ShelterTaskMainTaskView = class("ShelterTaskMainTaskView", BaseView)
 
-	gohelper.setActive(arg_1_0.itemGO, false)
-	gohelper.setActive(arg_1_0.rewardItemGO, false)
+function ShelterTaskMainTaskView:onInitView()
+	self.mainGO = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_main")
+	self.itemGO = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_main/#go_mainitem")
+	self.rewardItemGO = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_main/#go_rewarditem")
 
-	arg_1_0.mainItemList = {}
-	arg_1_0.subItemList = {}
-	arg_1_0.taskType = SurvivalEnum.TaskModule.MainTask
-	arg_1_0.subGO = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_sub")
-	arg_1_0.collectionGO = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_collection")
-	arg_1_0.txtCollection = gohelper.findChildTextMesh(arg_1_0.collectionGO, "#txt_collection")
-	arg_1_0.simageCollection = gohelper.findChildSingleImage(arg_1_0.collectionGO, "layout/collection")
-	arg_1_0.txtChoice = gohelper.findChildTextMesh(arg_1_0.collectionGO, "layout/#txt_choice")
-	arg_1_0.txtBase = gohelper.findChildTextMesh(arg_1_0.collectionGO, "#txt_base")
+	gohelper.setActive(self.itemGO, false)
+	gohelper.setActive(self.rewardItemGO, false)
+
+	self.mainItemList = {}
+	self.subItemList = {}
+	self.taskType = SurvivalEnum.TaskModule.MainTask
+	self.subGO = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_sub")
+	self.collectionGO = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_collection")
+	self.txtCollection = gohelper.findChildTextMesh(self.collectionGO, "#txt_collection")
+	self.simageCollection = gohelper.findChildSingleImage(self.collectionGO, "layout/collection")
+	self.txtChoice = gohelper.findChildTextMesh(self.collectionGO, "layout/#txt_choice")
+	self.txtBase = gohelper.findChildTextMesh(self.collectionGO, "#txt_base")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, arg_2_0.refreshView, arg_2_0)
+function ShelterTaskMainTaskView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, self.refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, arg_3_0.refreshView, arg_3_0)
+function ShelterTaskMainTaskView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, self.refreshView, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function ShelterTaskMainTaskView:onOpen()
 	return
 end
 
-function var_0_0.refreshView(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1 == arg_5_0.taskType
+function ShelterTaskMainTaskView:refreshView(taskType)
+	local isShow = taskType == self.taskType
 
-	arg_5_0:setTaskVisible(var_5_0)
+	self:setTaskVisible(isShow)
 end
 
-function var_0_0.setTaskVisible(arg_6_0, arg_6_1)
-	if arg_6_0._isVisible == arg_6_1 then
-		if arg_6_1 then
-			arg_6_0:refreshMainTask()
-			arg_6_0:refreshSubTask()
-			arg_6_0:refreshTalent()
+function ShelterTaskMainTaskView:setTaskVisible(isVisible)
+	if self._isVisible == isVisible then
+		if isVisible then
+			self:refreshMainTask()
+			self:refreshSubTask()
+			self:refreshTalent()
 		end
 
 		return
 	end
 
-	arg_6_0._isVisible = arg_6_1
+	self._isVisible = isVisible
 
-	gohelper.setActive(arg_6_0.mainGO, false)
-	gohelper.setActive(arg_6_0.subGO, false)
-	gohelper.setActive(arg_6_0.collectionGO, false)
+	gohelper.setActive(self.mainGO, false)
+	gohelper.setActive(self.subGO, false)
+	gohelper.setActive(self.collectionGO, false)
 
-	if arg_6_1 then
-		if not arg_6_0.popupFlow then
-			arg_6_0.popupFlow = FlowSequence.New()
+	if isVisible then
+		if not self.popupFlow then
+			self.popupFlow = FlowSequence.New()
 
-			local var_6_0 = 0.06
-			local var_6_1 = {
-				time = var_6_0,
-				callback = arg_6_0.refreshMainTask,
-				callbackObj = arg_6_0
+			local time = 0.06
+			local param1 = {
+				time = time,
+				callback = self.refreshMainTask,
+				callbackObj = self
 			}
 
-			arg_6_0.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(var_6_1))
+			self.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(param1))
 
-			local var_6_2 = {
-				time = var_6_0,
-				callback = arg_6_0.refreshSubTask,
-				callbackObj = arg_6_0
+			local param2 = {
+				time = time,
+				callback = self.refreshSubTask,
+				callbackObj = self
 			}
 
-			arg_6_0.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(var_6_2))
+			self.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(param2))
 
-			local var_6_3 = {
-				time = var_6_0,
-				callback = arg_6_0.refreshTalent,
-				callbackObj = arg_6_0
+			local param3 = {
+				time = time,
+				callback = self.refreshTalent,
+				callbackObj = self
 			}
 
-			arg_6_0.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(var_6_3))
+			self.popupFlow:addWork(SurvivalDecreeVoteShowWork.New(param3))
 		end
 
-		arg_6_0.popupFlow:start()
-	elseif arg_6_0.popupFlow then
-		arg_6_0.popupFlow:stop()
+		self.popupFlow:start()
+	elseif self.popupFlow then
+		self.popupFlow:stop()
 	end
 end
 
-function var_0_0.refreshMainTask(arg_7_0)
-	local var_7_0 = SurvivalTaskModel.instance:getTaskList(SurvivalEnum.TaskModule.MainTask)
-	local var_7_1 = #var_7_0
+function ShelterTaskMainTaskView:refreshMainTask()
+	local list = SurvivalTaskModel.instance:getTaskList(SurvivalEnum.TaskModule.MainTask)
+	local taskCount = #list
 
-	for iter_7_0 = 1, math.max(var_7_1, #arg_7_0.mainItemList) do
-		local var_7_2 = arg_7_0:getMainItem(iter_7_0)
+	for i = 1, math.max(taskCount, #self.mainItemList) do
+		local item = self:getMainItem(i)
 
-		arg_7_0:updateItem(var_7_2, var_7_0[iter_7_0])
+		self:updateItem(item, list[i])
 	end
 
-	gohelper.setActive(arg_7_0.mainGO, var_7_1 > 0)
+	gohelper.setActive(self.mainGO, taskCount > 0)
 end
 
-function var_0_0.refreshSubTask(arg_8_0)
-	local var_8_0 = SurvivalTaskModel.instance:getTaskList(SurvivalEnum.TaskModule.SubTask)
-	local var_8_1 = #var_8_0
+function ShelterTaskMainTaskView:refreshSubTask()
+	local list = SurvivalTaskModel.instance:getTaskList(SurvivalEnum.TaskModule.SubTask)
+	local taskCount = #list
 
-	for iter_8_0 = 1, math.max(var_8_1, #arg_8_0.subItemList) do
-		local var_8_2 = arg_8_0:getSubItem(iter_8_0)
+	for i = 1, math.max(taskCount, #self.subItemList) do
+		local item = self:getSubItem(i)
 
-		arg_8_0:updateItem(var_8_2, var_8_0[iter_8_0])
+		self:updateItem(item, list[i])
 	end
 
-	gohelper.setActive(arg_8_0.subGO, var_8_1 > 0)
+	gohelper.setActive(self.subGO, taskCount > 0)
 end
 
-function var_0_0.getMainItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.mainItemList[arg_9_1]
+function ShelterTaskMainTaskView:getMainItem(index)
+	local item = self.mainItemList[index]
 
-	if not var_9_0 then
-		var_9_0 = arg_9_0:createItem(arg_9_1, arg_9_0.mainGO)
-		arg_9_0.mainItemList[arg_9_1] = var_9_0
+	if not item then
+		item = self:createItem(index, self.mainGO)
+		self.mainItemList[index] = item
 	end
 
-	return var_9_0
+	return item
 end
 
-function var_0_0.getSubItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.subItemList[arg_10_1]
+function ShelterTaskMainTaskView:getSubItem(index)
+	local item = self.subItemList[index]
 
-	if not var_10_0 then
-		var_10_0 = arg_10_0:createItem(arg_10_1, arg_10_0.subGO)
-		arg_10_0.subItemList[arg_10_1] = var_10_0
+	if not item then
+		item = self:createItem(index, self.subGO)
+		self.subItemList[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.createItem(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getUserDataTb_()
+function ShelterTaskMainTaskView:createItem(index, parentGO)
+	local item = self:getUserDataTb_()
 
-	var_11_0.index = arg_11_1
-	var_11_0.go = gohelper.clone(arg_11_0.itemGO, arg_11_2, tostring(arg_11_1))
-	var_11_0.goFinishing = gohelper.findChild(var_11_0.go, "finishing")
-	var_11_0.goFinishingBg = gohelper.findChild(var_11_0.goFinishing, "bg")
-	var_11_0.txtFinishingDesc = gohelper.findChildTextMesh(var_11_0.goFinishing, "#txt_task")
-	var_11_0.goFinishingRewardContent = gohelper.findChild(var_11_0.goFinishing, "#scroll_Reward/Viewport/Content")
-	var_11_0.goFinished = gohelper.findChild(var_11_0.go, "finished")
-	var_11_0.txtFinishedNum = gohelper.findChildTextMesh(var_11_0.goFinished, "#txt_num")
-	var_11_0.txtFinishedDesc = gohelper.findChildTextMesh(var_11_0.goFinished, "#txt_task")
-	var_11_0.goFinishedRewardContent = gohelper.findChild(var_11_0.goFinished, "#scroll_Reward/Viewport/Content")
-	var_11_0.goUnfinish = gohelper.findChild(var_11_0.go, "unfinish")
-	var_11_0.goUnfinishBg = gohelper.findChild(var_11_0.goUnfinish, "bg")
-	var_11_0.txtUnFinishNum = gohelper.findChildTextMesh(var_11_0.goUnfinish, "#txt_num")
-	var_11_0.txtUnFinishDesc = gohelper.findChildTextMesh(var_11_0.goUnfinish, "#txt_task")
-	var_11_0.goUnfinishRewardContent = gohelper.findChild(var_11_0.goUnfinish, "#scroll_Reward/Viewport/Content")
-	var_11_0.anim = var_11_0.go:GetComponent(typeof(UnityEngine.Animator))
-	var_11_0.rewardList = {}
+	item.index = index
+	item.go = gohelper.clone(self.itemGO, parentGO, tostring(index))
+	item.goFinishing = gohelper.findChild(item.go, "finishing")
+	item.goFinishingBg = gohelper.findChild(item.goFinishing, "bg")
+	item.txtFinishingDesc = gohelper.findChildTextMesh(item.goFinishing, "#txt_task")
+	item.goFinishingRewardContent = gohelper.findChild(item.goFinishing, "#scroll_Reward/Viewport/Content")
+	item.goFinished = gohelper.findChild(item.go, "finished")
+	item.txtFinishedNum = gohelper.findChildTextMesh(item.goFinished, "#txt_num")
+	item.txtFinishedDesc = gohelper.findChildTextMesh(item.goFinished, "#txt_task")
+	item.goFinishedRewardContent = gohelper.findChild(item.goFinished, "#scroll_Reward/Viewport/Content")
+	item.goUnfinish = gohelper.findChild(item.go, "unfinish")
+	item.goUnfinishBg = gohelper.findChild(item.goUnfinish, "bg")
+	item.txtUnFinishNum = gohelper.findChildTextMesh(item.goUnfinish, "#txt_num")
+	item.txtUnFinishDesc = gohelper.findChildTextMesh(item.goUnfinish, "#txt_task")
+	item.goUnfinishRewardContent = gohelper.findChild(item.goUnfinish, "#scroll_Reward/Viewport/Content")
+	item.anim = item.go:GetComponent(typeof(UnityEngine.Animator))
+	item.rewardList = {}
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.getRewardItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = arg_12_1.rewardList[arg_12_2]
+function ShelterTaskMainTaskView:getRewardItem(item, index, parentGO)
+	local rewardItem = item.rewardList[index]
 
-	if not var_12_0 then
-		var_12_0 = arg_12_0:getUserDataTb_()
-		var_12_0.go = gohelper.clone(arg_12_0.rewardItemGO, arg_12_3, tostring(arg_12_2))
-		var_12_0.goIcon = gohelper.findChild(var_12_0.go, "go_icon")
-		var_12_0.goCanget = gohelper.findChild(var_12_0.go, "go_canget")
-		var_12_0.goReceive = gohelper.findChild(var_12_0.go, "go_receive")
-		arg_12_1.rewardList[arg_12_2] = var_12_0
+	if not rewardItem then
+		rewardItem = self:getUserDataTb_()
+		rewardItem.go = gohelper.clone(self.rewardItemGO, parentGO, tostring(index))
+		rewardItem.goIcon = gohelper.findChild(rewardItem.go, "go_icon")
+		rewardItem.goCanget = gohelper.findChild(rewardItem.go, "go_canget")
+		rewardItem.goReceive = gohelper.findChild(rewardItem.go, "go_receive")
+		item.rewardList[index] = rewardItem
 	else
-		gohelper.addChild(arg_12_3, var_12_0.go)
+		gohelper.addChild(parentGO, rewardItem.go)
 	end
 
-	var_12_0.parentItem = arg_12_1
+	rewardItem.parentItem = item
 
-	return var_12_0
+	return rewardItem
 end
 
-function var_0_0.updateItem(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_1.taskMo = arg_13_2
+function ShelterTaskMainTaskView:updateItem(item, taskMo)
+	item.taskMo = taskMo
 
-	gohelper.setActive(arg_13_1.go, arg_13_2 ~= nil)
+	gohelper.setActive(item.go, taskMo ~= nil)
 
-	if not arg_13_2 then
+	if not taskMo then
 		return
 	end
 
-	if arg_13_0.playRewardTaskId == arg_13_2.id then
-		arg_13_0.playRewardTaskId = nil
+	local playFinishTask = self.playRewardTaskId == taskMo.id
 
-		arg_13_0:playItemFinishAnim(arg_13_1)
+	if playFinishTask then
+		self.playRewardTaskId = nil
+
+		self:playItemFinishAnim(item)
 
 		return
 	end
 
-	local var_13_0 = arg_13_2.moduleId == SurvivalEnum.TaskModule.MainTask
-	local var_13_1 = arg_13_2:isFinish()
+	local isMainTask = taskMo.moduleId == SurvivalEnum.TaskModule.MainTask
+	local isFinish = taskMo:isFinish()
 
-	if var_13_0 then
-		var_13_1 = not arg_13_2:isUnFinish()
+	if isMainTask then
+		isFinish = not taskMo:isUnFinish()
 	end
 
-	gohelper.setActive(arg_13_1.goFinished, var_13_1)
-	gohelper.setActive(arg_13_1.goFinishing, var_13_0 and not var_13_1)
-	gohelper.setActive(arg_13_1.goUnfinish, not var_13_0 and not var_13_1)
+	gohelper.setActive(item.goFinished, isFinish)
+	gohelper.setActive(item.goFinishing, isMainTask and not isFinish)
+	gohelper.setActive(item.goUnfinish, not isMainTask and not isFinish)
 
-	local var_13_2
+	local rewardParentGO
 
-	if var_13_1 then
-		arg_13_1.txtFinishedNum.text = tostring(arg_13_1.index)
-		arg_13_1.txtFinishedDesc.text = arg_13_2:getDesc()
-		var_13_2 = arg_13_1.goFinishedRewardContent
-	elseif var_13_0 then
-		gohelper.setActive(arg_13_1.goFinishingBg, arg_13_1.index == 1)
+	if isFinish then
+		item.txtFinishedNum.text = tostring(item.index)
+		item.txtFinishedDesc.text = taskMo:getDesc()
+		rewardParentGO = item.goFinishedRewardContent
+	elseif isMainTask then
+		gohelper.setActive(item.goFinishingBg, item.index == 1)
 
-		arg_13_1.txtFinishingDesc.text = arg_13_2:getDesc()
-		var_13_2 = arg_13_1.goFinishingRewardContent
+		item.txtFinishingDesc.text = taskMo:getDesc()
+		rewardParentGO = item.goFinishingRewardContent
 	else
-		gohelper.setActive(arg_13_1.goUnfinishBg, arg_13_1.index == 1)
+		gohelper.setActive(item.goUnfinishBg, item.index == 1)
 
-		arg_13_1.txtUnFinishNum.text = tostring(arg_13_1.index)
-		arg_13_1.txtUnFinishDesc.text = arg_13_2:getDesc()
-		var_13_2 = arg_13_1.goUnfinishRewardContent
+		item.txtUnFinishNum.text = tostring(item.index)
+		item.txtUnFinishDesc.text = taskMo:getDesc()
+		rewardParentGO = item.goUnfinishRewardContent
 	end
 
-	arg_13_0:refreshItemReward(arg_13_1, arg_13_2.co, var_13_2, arg_13_2.status)
+	self:refreshItemReward(item, taskMo.co, rewardParentGO, taskMo.status)
 end
 
-function var_0_0.refreshItemReward(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	local var_14_0 = GameUtil.splitString2(arg_14_2.dropShow, true, "&", ":")
-	local var_14_1 = var_14_0 and #var_14_0 or 0
+function ShelterTaskMainTaskView:refreshItemReward(item, co, parentGO, status)
+	local rewardList = GameUtil.splitString2(co.dropShow, true, "&", ":")
+	local rewardCount = rewardList and #rewardList or 0
 
-	for iter_14_0 = 1, math.max(var_14_1, #arg_14_1.rewardList) do
-		local var_14_2 = arg_14_0:getRewardItem(arg_14_1, iter_14_0, arg_14_3)
+	for i = 1, math.max(rewardCount, #item.rewardList) do
+		local rewardItem = self:getRewardItem(item, i, parentGO)
 
-		arg_14_0:refreshRewardItem(var_14_2, var_14_0[iter_14_0], arg_14_4)
+		self:refreshRewardItem(rewardItem, rewardList[i], status)
 	end
 end
 
-function var_0_0.refreshRewardItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	gohelper.setActive(arg_15_1.go, arg_15_2 ~= nil)
+function ShelterTaskMainTaskView:refreshRewardItem(rewardItem, rewardData, status)
+	gohelper.setActive(rewardItem.go, rewardData ~= nil)
 
-	if not arg_15_2 then
+	if not rewardData then
 		return
 	end
 
-	local var_15_0 = arg_15_2[1]
-	local var_15_1 = arg_15_2[2]
+	local rewardId = rewardData[1]
+	local rewardNum = rewardData[2]
 
-	gohelper.setActive(arg_15_1.goCanget, arg_15_3 == SurvivalEnum.TaskStatus.Done)
-	gohelper.setActive(arg_15_1.goReceive, arg_15_3 == SurvivalEnum.TaskStatus.Finish)
+	gohelper.setActive(rewardItem.goCanget, status == SurvivalEnum.TaskStatus.Done)
+	gohelper.setActive(rewardItem.goReceive, status == SurvivalEnum.TaskStatus.Finish)
 
-	if not arg_15_1.itemIcon then
-		local var_15_2 = arg_15_0:getIconInstance(arg_15_1.goIcon)
+	if not rewardItem.itemIcon then
+		local iconGO = self:getIconInstance(rewardItem.goIcon)
 
-		arg_15_1.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_2, SurvivalBagItem)
+		rewardItem.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(iconGO, SurvivalBagItem)
 
-		arg_15_1.itemIcon:setClickCallback(arg_15_0.onClicRewardItem, arg_15_0)
+		rewardItem.itemIcon:setClickCallback(self.onClicRewardItem, self)
 	end
 
-	arg_15_1.itemIcon._rewardItem = arg_15_1
+	rewardItem.itemIcon._rewardItem = rewardItem
 
-	arg_15_1.itemIcon:updateByItemId(var_15_0, var_15_1)
-	arg_15_1.itemIcon:setItemSize(100, 100)
+	rewardItem.itemIcon:updateByItemId(rewardId, rewardNum)
+	rewardItem.itemIcon:setItemSize(100, 100)
 end
 
-function var_0_0.getIconInstance(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.viewContainer:getSetting().otherRes.itemRes
+function ShelterTaskMainTaskView:getIconInstance(parentGO)
+	local resPath = self.viewContainer:getSetting().otherRes.itemRes
 
-	return arg_16_0.viewContainer:getResInst(var_16_0, arg_16_1, "itemIcon")
+	return self.viewContainer:getResInst(resPath, parentGO, "itemIcon")
 end
 
-function var_0_0.refreshTalent(arg_17_0)
-	gohelper.setActive(arg_17_0.collectionGO, false)
+function ShelterTaskMainTaskView:refreshTalent()
+	gohelper.setActive(self.collectionGO, false)
 end
 
-function var_0_0.onClicRewardItem(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1._rewardItem
+function ShelterTaskMainTaskView:onClicRewardItem(itemIcon)
+	local rewardItem = itemIcon._rewardItem
 
-	if not var_18_0 then
+	if not rewardItem then
 		return
 	end
 
-	local var_18_1 = var_18_0.parentItem
+	local parentItem = rewardItem.parentItem
 
-	if not var_18_1 then
+	if not parentItem then
 		return
 	end
 
-	local var_18_2 = var_18_1.taskMo
+	local taskMo = parentItem.taskMo
 
-	if not var_18_2 then
+	if not taskMo then
 		return
 	end
 
-	if var_18_2:isCangetReward() then
-		PopupController.instance:setPause(arg_18_0.viewName, true)
+	if taskMo:isCangetReward() then
+		PopupController.instance:setPause(self.viewName, true)
 
-		arg_18_0.playRewardTaskId = var_18_2.id
+		self.playRewardTaskId = taskMo.id
 
-		SurvivalWeekRpc.instance:sendSurvivalReceiveTaskRewardRequest(var_18_2.moduleId, var_18_2.id)
+		SurvivalWeekRpc.instance:sendSurvivalReceiveTaskRewardRequest(taskMo.moduleId, taskMo.id)
 	else
 		ViewMgr.instance:openView(ViewName.SurvivalItemInfoView, {
-			itemMo = arg_18_1._mo
+			itemMo = itemIcon._mo
 		})
 	end
 end
 
-function var_0_0.refreshAnimItem(arg_19_0)
-	if arg_19_0._animItem then
-		arg_19_0:updateItem(arg_19_0._animItem, arg_19_0._animItem.taskMo)
+function ShelterTaskMainTaskView:refreshAnimItem()
+	if self._animItem then
+		self:updateItem(self._animItem, self._animItem.taskMo)
 
-		arg_19_0._animItem = nil
+		self._animItem = nil
 	end
 
-	PopupController.instance:setPause(arg_19_0.viewName, false)
+	PopupController.instance:setPause(self.viewName, false)
 end
 
-function var_0_0.playItemFinishAnim(arg_20_0, arg_20_1)
-	arg_20_1.anim:Play("finished", 0, 0)
+function ShelterTaskMainTaskView:playItemFinishAnim(item)
+	item.anim:Play("finished", 0, 0)
 
-	arg_20_0._animItem = arg_20_1
+	self._animItem = item
 
-	TaskDispatcher.runDelay(arg_20_0.refreshAnimItem, arg_20_0, 0.5)
+	TaskDispatcher.runDelay(self.refreshAnimItem, self, 0.5)
 end
 
-function var_0_0.onClose(arg_21_0)
-	PopupController.instance:setPause(arg_21_0.viewName, false)
-	TaskDispatcher.cancelTask(arg_21_0.refreshAnimItem, arg_21_0)
-	arg_21_0.simageCollection:UnLoadImage()
+function ShelterTaskMainTaskView:onClose()
+	PopupController.instance:setPause(self.viewName, false)
+	TaskDispatcher.cancelTask(self.refreshAnimItem, self)
+	self.simageCollection:UnLoadImage()
 
-	if arg_21_0.popupFlow then
-		arg_21_0.popupFlow:destroy()
+	if self.popupFlow then
+		self.popupFlow:destroy()
 
-		arg_21_0.popupFlow = nil
+		self.popupFlow = nil
 	end
 end
 
-return var_0_0
+return ShelterTaskMainTaskView

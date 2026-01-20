@@ -1,165 +1,169 @@
-﻿module("modules.logic.scene.common.camera.CommonSceneCameraComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/camera/CommonSceneCameraComp.lua
 
-local var_0_0 = class("CommonSceneCameraComp", BaseSceneComp)
+module("modules.logic.scene.common.camera.CommonSceneCameraComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._cameraTrace = CameraMgr.instance:getCameraTrace()
-	arg_1_0._cameraCO = nil
+local CommonSceneCameraComp = class("CommonSceneCameraComp", BaseSceneComp)
+
+function CommonSceneCameraComp:onInit()
+	self._scene = self:getCurScene()
+	self._cameraTrace = CameraMgr.instance:getCameraTrace()
+	self._cameraCO = nil
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._cameraTrace.EnableTrace = true
+function CommonSceneCameraComp:onSceneStart(sceneId, levelId)
+	self._cameraTrace.EnableTrace = true
 
-	arg_2_0:_initCurSceneCameraTrace(arg_2_2)
+	self:_initCurSceneCameraTrace(levelId)
 
-	arg_2_0._cameraTrace.EnableTrace = false
+	self._cameraTrace.EnableTrace = false
 
-	arg_2_0:_hideVirtualCamera()
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_2_0._onScreenResize, arg_2_0)
-	arg_2_0:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
+	self:_hideVirtualCamera()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
 end
 
-function var_0_0.onScenePrepared(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
+function CommonSceneCameraComp:onScenePrepared(sceneId, levelId)
+	self._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	arg_4_0._cameraTrace.EnableTrace = false
+function CommonSceneCameraComp:onSceneClose()
+	self._cameraTrace.EnableTrace = false
 
-	arg_4_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_4_0._onLevelLoaded, arg_4_0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_4_0._onScreenResize, arg_4_0)
+	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
 end
 
-function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._cameraTrace.EnableTrace
+function CommonSceneCameraComp:_onLevelLoaded(levelId)
+	local prevEnable = self._cameraTrace.EnableTrace
 
-	arg_5_0._cameraTrace.EnableTrace = true
+	self._cameraTrace.EnableTrace = true
 
-	arg_5_0:_initCurSceneCameraTrace(arg_5_1)
+	self:_initCurSceneCameraTrace(levelId)
 
-	if not var_5_0 then
-		arg_5_0._cameraTrace.EnableTrace = false
+	if not prevEnable then
+		self._cameraTrace.EnableTrace = false
 	end
 end
 
-function var_0_0.setCameraTraceEnable(arg_6_0, arg_6_1)
-	arg_6_0._cameraTrace.EnableTrace = arg_6_1
+function CommonSceneCameraComp:setCameraTraceEnable(isEnable)
+	self._cameraTrace.EnableTrace = isEnable
 end
 
-function var_0_0._initCurSceneCameraTrace(arg_7_0, arg_7_1)
-	local var_7_0 = lua_scene_level.configDict[arg_7_1]
+function CommonSceneCameraComp:_initCurSceneCameraTrace(levelId)
+	local sceneLevelCO = lua_scene_level.configDict[levelId]
 
-	arg_7_0._cameraCO = lua_camera.configDict[var_7_0.cameraId]
+	self._cameraCO = lua_camera.configDict[sceneLevelCO.cameraId]
 
-	arg_7_0:resetParam()
-	arg_7_0:applyDirectly()
+	self:resetParam()
+	self:applyDirectly()
 end
 
-function var_0_0._hideVirtualCamera(arg_8_0)
+function CommonSceneCameraComp:_hideVirtualCamera()
 	gohelper.setActive(CameraMgr.instance:getVirtualCameraGO(), false)
 	transformhelper.setLocalPos(CameraMgr.instance:getMainCameraTrs(), 0, 0, 0)
 	transformhelper.setLocalRotation(CameraMgr.instance:getMainCameraTrs(), 0, 0, 0)
 end
 
-function var_0_0.resetParam(arg_9_0, arg_9_1)
-	arg_9_1 = arg_9_1 or arg_9_0._cameraCO
+function CommonSceneCameraComp:resetParam(cameraConfig)
+	cameraConfig = cameraConfig or self._cameraCO
 
-	local var_9_0 = arg_9_1.yaw
-	local var_9_1 = arg_9_1.pitch
-	local var_9_2 = arg_9_1.distance
-	local var_9_3 = arg_9_0:_calcFovInternal(arg_9_1)
+	local yaw = cameraConfig.yaw
+	local pitch = cameraConfig.pitch
+	local dist = cameraConfig.distance
+	local fov = self:_calcFovInternal(cameraConfig)
 
-	arg_9_0.yaw = var_9_0
+	self.yaw = yaw
 
-	arg_9_0._cameraTrace:SetTargetParam(var_9_0, var_9_1, var_9_2, var_9_3, 0, 0, 0)
+	self._cameraTrace:SetTargetParam(yaw, pitch, dist, fov, 0, 0, 0)
 
-	local var_9_4 = 0
-	local var_9_5 = arg_9_1.yOffset
-	local var_9_6 = arg_9_1.focusZ
+	local focusX = 0
+	local focusY = cameraConfig.yOffset
+	local focusZ = cameraConfig.focusZ
 
-	arg_9_0:setFocus(var_9_4, var_9_5, var_9_6)
+	self:setFocus(focusX, focusY, focusZ)
 end
 
-function var_0_0._calcFovInternal(arg_10_0, arg_10_1)
-	local var_10_0 = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
-	local var_10_1 = arg_10_1.fov * var_10_0
-	local var_10_2, var_10_3 = arg_10_0:_getMinMaxFov()
+function CommonSceneCameraComp:_calcFovInternal(cameraConfig)
+	local fovRatio = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
+	local fov = cameraConfig.fov * fovRatio
+	local minFov, maxFov = self:_getMinMaxFov()
 
-	return (Mathf.Clamp(var_10_1, var_10_2, var_10_3))
+	fov = Mathf.Clamp(fov, minFov, maxFov)
+
+	return fov
 end
 
-function var_0_0._getMinMaxFov(arg_11_0)
+function CommonSceneCameraComp:_getMinMaxFov()
 	return 35, 120
 end
 
-function var_0_0._onScreenResize(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0:resetParam()
-	arg_12_0:applyDirectly()
+function CommonSceneCameraComp:_onScreenResize(width, height)
+	self:resetParam()
+	self:applyDirectly()
 end
 
-function var_0_0.getCurCO(arg_13_0)
-	return arg_13_0._cameraCO
+function CommonSceneCameraComp:getCurCO()
+	return self._cameraCO
 end
 
-function var_0_0.applyDirectly(arg_14_0)
-	local var_14_0 = CameraMgr.instance:getFocusTrs()
+function CommonSceneCameraComp:applyDirectly()
+	local focusTrs = CameraMgr.instance:getFocusTrs()
 
-	arg_14_0._cameraTrace:SetTargetFocusPos(transformhelper.getPos(var_14_0))
-	arg_14_0._cameraTrace:ApplyDirectly()
+	self._cameraTrace:SetTargetFocusPos(transformhelper.getPos(focusTrs))
+	self._cameraTrace:ApplyDirectly()
 end
 
-function var_0_0.setFocus(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = CameraMgr.instance:getFocusTrs()
+function CommonSceneCameraComp:setFocus(x, y, z)
+	local focusTrs = CameraMgr.instance:getFocusTrs()
 
-	transformhelper.setPos(var_15_0, arg_15_1, arg_15_2, arg_15_3)
+	transformhelper.setPos(focusTrs, x, y, z)
 end
 
-function var_0_0.setFocusX(arg_16_0, arg_16_1)
-	local var_16_0 = CameraMgr.instance:getFocusTrs()
-	local var_16_1, var_16_2, var_16_3 = transformhelper.getPos(var_16_0)
+function CommonSceneCameraComp:setFocusX(x)
+	local focusTrs = CameraMgr.instance:getFocusTrs()
+	local _, focusY, focusZ = transformhelper.getPos(focusTrs)
 
-	transformhelper.setPos(var_16_0, arg_16_1, var_16_2, var_16_3)
+	transformhelper.setPos(focusTrs, x, focusY, focusZ)
 end
 
-function var_0_0.resetFocus(arg_17_0)
-	arg_17_0:setFocus(0, arg_17_0._cameraCO.yOffset, arg_17_0._cameraCO.focusZ)
+function CommonSceneCameraComp:resetFocus()
+	self:setFocus(0, self._cameraCO.yOffset, self._cameraCO.focusZ)
 end
 
-function var_0_0.setEaseTime(arg_18_0, arg_18_1)
-	arg_18_0._cameraTrace:SetEaseTime(arg_18_1)
+function CommonSceneCameraComp:setEaseTime(easeTime)
+	self._cameraTrace:SetEaseTime(easeTime)
 end
 
-function var_0_0.setEaseType(arg_19_0, arg_19_1)
-	arg_19_0._cameraTrace:SetEaseType(arg_19_1)
+function CommonSceneCameraComp:setEaseType(easeType)
+	self._cameraTrace:SetEaseType(easeType)
 end
 
-function var_0_0.setFocusTransform(arg_20_0, arg_20_1)
-	arg_20_0._cameraTrace:SetFocusTransform(arg_20_1)
+function CommonSceneCameraComp:setFocusTransform(transform)
+	self._cameraTrace:SetFocusTransform(transform)
 end
 
-function var_0_0.clearFocusTransform(arg_21_0)
-	arg_21_0._cameraTrace:ClearFocusTransform()
+function CommonSceneCameraComp:clearFocusTransform()
+	self._cameraTrace:ClearFocusTransform()
 end
 
-function var_0_0.setDistance(arg_22_0, arg_22_1)
-	arg_22_0._cameraTrace:SetTargetDistance(arg_22_1)
+function CommonSceneCameraComp:setDistance(distance)
+	self._cameraTrace:SetTargetDistance(distance)
 end
 
-function var_0_0.resetDistance(arg_23_0)
-	arg_23_0._cameraTrace:SetTargetDistance(arg_23_0._cameraCO.distance)
+function CommonSceneCameraComp:resetDistance()
+	self._cameraTrace:SetTargetDistance(self._cameraCO.distance)
 end
 
-function var_0_0.shake(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	arg_24_0._cameraTrace:Shake(arg_24_1, arg_24_2, arg_24_3, arg_24_4)
+function CommonSceneCameraComp:shake(duration, magnitude, shakeType, decreaseRate)
+	self._cameraTrace:Shake(duration, magnitude, shakeType, decreaseRate)
 end
 
-function var_0_0.setRotate(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0._cameraTrace:SetTargetRotate(arg_25_1, arg_25_2)
+function CommonSceneCameraComp:setRotate(yawAngle, pitchAngle)
+	self._cameraTrace:SetTargetRotate(yawAngle, pitchAngle)
 end
 
-function var_0_0.setFov(arg_26_0, arg_26_1)
-	arg_26_0._cameraTrace:SetTargetFov(arg_26_1)
+function CommonSceneCameraComp:setFov(fov)
+	self._cameraTrace:SetTargetFov(fov)
 end
 
-return var_0_0
+return CommonSceneCameraComp

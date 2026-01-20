@@ -1,11 +1,13 @@
-﻿module("modules.logic.toughbattle.view.ToughBattleFightSuccViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/view/ToughBattleFightSuccViewContainer.lua
 
-local var_0_0 = class("ToughBattleFightSuccViewContainer", BaseViewContainer)
+module("modules.logic.toughbattle.view.ToughBattleFightSuccViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ToughBattleFightSuccViewContainer = class("ToughBattleFightSuccViewContainer", BaseViewContainer)
+
+function ToughBattleFightSuccViewContainer:buildViews()
 	return {
 		ToughBattleFightSuccView.New()
 	}
 end
 
-return var_0_0
+return ToughBattleFightSuccViewContainer

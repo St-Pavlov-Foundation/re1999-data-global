@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.mo.FightEquipMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightEquipMO.lua
 
-local var_0_0 = pureTable("FightEquipMO")
+module("modules.logic.fight.model.mo.FightEquipMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.heroUid = nil
-	arg_1_0.equipUid = nil
+local FightEquipMO = pureTable("FightEquipMO")
+
+function FightEquipMO:ctor()
+	self.heroUid = nil
+	self.equipUid = nil
 end
 
-return var_0_0
+return FightEquipMO

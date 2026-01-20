@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.system.work.FightWorkSurvivalHealthChange345", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSurvivalHealthChange345.lua
 
-local var_0_0 = class("FightWorkSurvivalHealthChange345", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkSurvivalHealthChange345", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0.oldHealth = FightHelper.getSurvivalEntityHealth(arg_1_0.actEffectData.targetId)
+local FightWorkSurvivalHealthChange345 = class("FightWorkSurvivalHealthChange345", FightEffectBase)
+
+function FightWorkSurvivalHealthChange345:beforePlayEffectData()
+	self.oldHealth = FightHelper.getSurvivalEntityHealth(self.actEffectData.targetId)
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = FightHelper.getSurvivalEntityHealth(arg_2_0.actEffectData.targetId)
-	local var_2_1 = arg_2_0.actEffectData.effectNum
+function FightWorkSurvivalHealthChange345:onStart()
+	local curValue = FightHelper.getSurvivalEntityHealth(self.actEffectData.targetId)
+	local offset = self.actEffectData.effectNum
 
-	FightController.instance:dispatchEvent(FightEvent.HeroHealthValueChange, arg_2_0.actEffectData.targetId, arg_2_0.oldHealth, var_2_0, var_2_1)
+	FightController.instance:dispatchEvent(FightEvent.HeroHealthValueChange, self.actEffectData.targetId, self.oldHealth, curValue, offset)
 
-	return arg_2_0:onDone(true)
+	return self:onDone(true)
 end
 
-return var_0_0
+return FightWorkSurvivalHealthChange345

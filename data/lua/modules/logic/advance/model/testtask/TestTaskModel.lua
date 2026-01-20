@@ -1,19 +1,21 @@
-﻿module("modules.logic.advance.model.testtask.TestTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/advance/model/testtask/TestTaskModel.lua
 
-local var_0_0 = class("TestTaskModel", BaseModel)
+module("modules.logic.advance.model.testtask.TestTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local TestTaskModel = class("TestTaskModel", BaseModel)
+
+function TestTaskModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function TestTaskModel:reInit()
 	return
 end
 
-function var_0_0.getTaskData(arg_3_0, arg_3_1)
-	return TaskModel.instance:getTaskById(arg_3_1)
+function TestTaskModel:getTaskData(id)
+	return TaskModel.instance:getTaskById(id)
 end
 
-var_0_0.instance = var_0_0.New()
+TestTaskModel.instance = TestTaskModel.New()
 
-return var_0_0
+return TestTaskModel

@@ -1,12 +1,14 @@
-﻿module("modules.logic.necrologiststory.view.control.NecrologistStoryControlStoryPic", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/control/NecrologistStoryControlStoryPic.lua
 
-local var_0_0 = class("NecrologistStoryControlStoryPic", NecrologistStoryControlMgrItem)
+module("modules.logic.necrologiststory.view.control.NecrologistStoryControlStoryPic", package.seeall)
 
-function var_0_0.onPlayControl(arg_1_0)
-	local var_1_0 = arg_1_0.controlParam
+local NecrologistStoryControlStoryPic = class("NecrologistStoryControlStoryPic", NecrologistStoryControlMgrItem)
 
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangePic, var_1_0)
-	arg_1_0:onPlayControlFinish()
+function NecrologistStoryControlStoryPic:onPlayControl()
+	local picName = self.controlParam
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangePic, picName)
+	self:onPlayControlFinish()
 end
 
-return var_0_0
+return NecrologistStoryControlStoryPic

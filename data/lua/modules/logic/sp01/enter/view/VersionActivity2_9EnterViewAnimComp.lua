@@ -1,256 +1,260 @@
-﻿module("modules.logic.sp01.enter.view.VersionActivity2_9EnterViewAnimComp", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/enter/view/VersionActivity2_9EnterViewAnimComp.lua
 
-local var_0_0 = class("VersionActivity2_9EnterViewAnimComp", BaseView)
-local var_0_1 = 1
-local var_0_2 = 2
-local var_0_3 = "VersionActivity2_9EnterViewAnimComp"
+module("modules.logic.sp01.enter.view.VersionActivity2_9EnterViewAnimComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_switch")
+local VersionActivity2_9EnterViewAnimComp = class("VersionActivity2_9EnterViewAnimComp", BaseView)
+local FirstHalfBgIndex = 1
+local SecondHalfBgIndex = 2
+local LockScreenKey = "VersionActivity2_9EnterViewAnimComp"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_9EnterViewAnimComp:onInitView()
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_switch")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0._onRefreshActivityState, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity2_9EnterController.instance, VersionActivity2_9Event.UnlockNextHalf, arg_2_0._onUnlockNextHalf, arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
+function VersionActivity2_9EnterViewAnimComp:addEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onRefreshActivityState, self)
+	self:addEventCb(VersionActivity2_9EnterController.instance, VersionActivity2_9Event.UnlockNextHalf, self._onUnlockNextHalf, self)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnswitch:RemoveClickListener()
+function VersionActivity2_9EnterViewAnimComp:removeEvents()
+	self._btnswitch:RemoveClickListener()
 end
 
-function var_0_0._btnswitchOnClick(arg_4_0)
-	if not ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.EnterView2) then
+function VersionActivity2_9EnterViewAnimComp:_btnswitchOnClick()
+	local isOpen = ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.EnterView2)
+
+	if not isOpen then
 		return
 	end
 
-	AssassinHelper.lockScreen(var_0_3, true)
+	AssassinHelper.lockScreen(LockScreenKey, true)
 	AudioMgr.instance:trigger(AudioEnum2_9.Enter.play_ui_switch)
-	arg_4_0._animator:Play("click", 0, 0)
-	arg_4_0:playCameraAnim()
-	arg_4_0:playHeroTargetAnim("b_click")
-	TaskDispatcher.runDelay(arg_4_0.onSwitchAnimDone, arg_4_0, VersionActivity2_9Enum.DelaySwitchBgTime)
-	TaskDispatcher.runDelay(arg_4_0.playHeroAnim, arg_4_0, VersionActivity2_9Enum.DelaySwitchHero2Idle)
+	self._animator:Play("click", 0, 0)
+	self:playCameraAnim()
+	self:playHeroTargetAnim("b_click")
+	TaskDispatcher.runDelay(self.onSwitchAnimDone, self, VersionActivity2_9Enum.DelaySwitchBgTime)
+	TaskDispatcher.runDelay(self.playHeroAnim, self, VersionActivity2_9Enum.DelaySwitchHero2Idle)
 	VersionActivity2_9EnterController.instance:dispatchEvent(VersionActivity2_9Event.SwitchGroup)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:loadScene()
+function VersionActivity2_9EnterViewAnimComp:onOpen()
+	self:loadScene()
 end
 
-function var_0_0.loadScene(arg_6_0)
-	local var_6_0 = CameraMgr.instance:getSceneRoot()
+function VersionActivity2_9EnterViewAnimComp:loadScene()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_6_0._sceneRoot = gohelper.create3d(var_6_0, "VersionActivity2_9EnterView")
+	self._sceneRoot = gohelper.create3d(sceneRoot, "VersionActivity2_9EnterView")
 
-	transformhelper.setLocalPos(arg_6_0._sceneRoot.transform, 0, 0, 0)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, 0, 0)
 
-	local var_6_1 = arg_6_0.viewContainer:getSetting().otherRes[1]
+	local sceneResUrl = self.viewContainer:getSetting().otherRes[1]
 
-	arg_6_0._sceneGO = arg_6_0:getResInst(var_6_1, arg_6_0._sceneRoot, "scene")
+	self._sceneGO = self:getResInst(sceneResUrl, self._sceneRoot, "scene")
 
-	arg_6_0:loadSceneDone()
+	self:loadSceneDone()
 end
 
-function var_0_0.loadSceneDone(arg_7_0)
-	arg_7_0:initScene()
-	arg_7_0:initCamera()
+function VersionActivity2_9EnterViewAnimComp:loadSceneDone()
+	self:initScene()
+	self:initCamera()
 end
 
-function var_0_0.initScene(arg_8_0)
-	arg_8_0._gocanvas = gohelper.findChild(arg_8_0._sceneGO, "BackGround/#go_bgCanvas")
-	arg_8_0._bgcanvas = arg_8_0._gocanvas:GetComponent("Canvas")
-	arg_8_0._bgcanvas.worldCamera = CameraMgr.instance:getMainCamera()
-	arg_8_0._backgroundTab = arg_8_0:getUserDataTb_()
-	arg_8_0._backgroundTab[1] = gohelper.findChild(arg_8_0._sceneGO, "BackGround/#go_bgCanvas/sp01_m_s17_kv_plant_a")
-	arg_8_0._backgroundTab[2] = gohelper.findChild(arg_8_0._sceneGO, "BackGround/#go_bgCanvas/sp01_m_s17_kv_plant_b")
-	arg_8_0._bgVideoTab = arg_8_0:getUserDataTb_()
-	arg_8_0._bgVideoTab[1] = VersionActivityVideoComp.get(arg_8_0._backgroundTab[1], arg_8_0)
-	arg_8_0._bgVideoTab[2] = VersionActivityVideoComp.get(arg_8_0._backgroundTab[2], arg_8_0)
-	arg_8_0._animator = gohelper.onceAddComponent(arg_8_0._sceneGO, gohelper.Type_Animator)
-	arg_8_0._godynamicspine = gohelper.findChild(arg_8_0._sceneGO, "BackGround/spine")
-	arg_8_0._godynamicspineanim = gohelper.findChild(arg_8_0._sceneGO, "BackGround/spine/aim/spine")
-	arg_8_0._spineAnim = gohelper.onceAddComponent(arg_8_0._godynamicspineanim, typeof(Spine.Unity.SkeletonAnimation))
+function VersionActivity2_9EnterViewAnimComp:initScene()
+	self._gocanvas = gohelper.findChild(self._sceneGO, "BackGround/#go_bgCanvas")
+	self._bgcanvas = self._gocanvas:GetComponent("Canvas")
+	self._bgcanvas.worldCamera = CameraMgr.instance:getMainCamera()
+	self._backgroundTab = self:getUserDataTb_()
+	self._backgroundTab[1] = gohelper.findChild(self._sceneGO, "BackGround/#go_bgCanvas/sp01_m_s17_kv_plant_a")
+	self._backgroundTab[2] = gohelper.findChild(self._sceneGO, "BackGround/#go_bgCanvas/sp01_m_s17_kv_plant_b")
+	self._bgVideoTab = self:getUserDataTb_()
+	self._bgVideoTab[1] = VersionActivityVideoComp.get(self._backgroundTab[1], self)
+	self._bgVideoTab[2] = VersionActivityVideoComp.get(self._backgroundTab[2], self)
+	self._animator = gohelper.onceAddComponent(self._sceneGO, gohelper.Type_Animator)
+	self._godynamicspine = gohelper.findChild(self._sceneGO, "BackGround/spine")
+	self._godynamicspineanim = gohelper.findChild(self._sceneGO, "BackGround/spine/aim/spine")
+	self._spineAnim = gohelper.onceAddComponent(self._godynamicspineanim, typeof(Spine.Unity.SkeletonAnimation))
 
-	arg_8_0:refresh()
+	self:refresh()
 
-	arg_8_0.actId = arg_8_0.viewParam and arg_8_0.viewParam.actId
-	arg_8_0.mainActIdList = arg_8_0.viewParam and arg_8_0.viewParam.mainActIdList or {}
+	self.actId = self.viewParam and self.viewParam.actId
+	self.mainActIdList = self.viewParam and self.viewParam.mainActIdList or {}
 
-	local var_8_0 = tabletool.indexOf(arg_8_0.mainActIdList, arg_8_0.actId) or 1
+	local groupIndex = tabletool.indexOf(self.mainActIdList, self.actId) or 1
 
-	arg_8_0:switchBackGround(var_8_0)
+	self:switchBackGround(groupIndex)
 end
 
-function var_0_0.initCamera(arg_9_0)
-	if arg_9_0._cameraPlayer then
+function VersionActivity2_9EnterViewAnimComp:initCamera()
+	if self._cameraPlayer then
 		return
 	end
 
-	arg_9_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
-	arg_9_0._cameraPlayer = CameraMgr.instance:getCameraRootAnimatorPlayer()
-	arg_9_0._preRuntimeAnimatorController = arg_9_0._cameraAnimator.runtimeAnimatorController
+	self._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	self._cameraPlayer = CameraMgr.instance:getCameraRootAnimatorPlayer()
+	self._preRuntimeAnimatorController = self._cameraAnimator.runtimeAnimatorController
 end
 
-function var_0_0.playCameraAnim(arg_10_0)
-	arg_10_0:setCameraAnimator()
-	arg_10_0._cameraPlayer:Play("click", arg_10_0._resetCameraAnimator, arg_10_0)
+function VersionActivity2_9EnterViewAnimComp:playCameraAnim()
+	self:setCameraAnimator()
+	self._cameraPlayer:Play("click", self._resetCameraAnimator, self)
 end
 
-function var_0_0.setCameraAnimator(arg_11_0)
-	local var_11_0 = gohelper.findChildComponent(arg_11_0._sceneGO, "#go_cameraAnim", gohelper.Type_Animator)
+function VersionActivity2_9EnterViewAnimComp:setCameraAnimator()
+	local cameraAnimator = gohelper.findChildComponent(self._sceneGO, "#go_cameraAnim", gohelper.Type_Animator)
 
-	arg_11_0._cameraAnimator.runtimeAnimatorController = var_11_0.runtimeAnimatorController
+	self._cameraAnimator.runtimeAnimatorController = cameraAnimator.runtimeAnimatorController
 end
 
-function var_0_0._resetCameraAnimator(arg_12_0)
-	if arg_12_0._cameraAnimator then
-		arg_12_0._cameraAnimator.runtimeAnimatorController = arg_12_0._preRuntimeAnimatorController
+function VersionActivity2_9EnterViewAnimComp:_resetCameraAnimator()
+	if self._cameraAnimator then
+		self._cameraAnimator.runtimeAnimatorController = self._preRuntimeAnimatorController
 	end
 end
 
-function var_0_0.refresh(arg_13_0)
-	arg_13_0:playHeroAnim()
-	arg_13_0:playSceneAnim()
+function VersionActivity2_9EnterViewAnimComp:refresh()
+	self:playHeroAnim()
+	self:playSceneAnim()
 end
 
-function var_0_0.playHeroAnim(arg_14_0)
-	arg_14_0:playHeroTargetAnim(StoryAnimName.B_IDLE)
+function VersionActivity2_9EnterViewAnimComp:playHeroAnim()
+	self:playHeroTargetAnim(StoryAnimName.B_IDLE)
 end
 
-function var_0_0.playSceneAnim(arg_15_0)
-	arg_15_0._animator:Play("open", 0, 0)
+function VersionActivity2_9EnterViewAnimComp:playSceneAnim()
+	self._animator:Play("open", 0, 0)
 end
 
-function var_0_0.playHeroTargetAnim(arg_16_0, arg_16_1)
-	if not arg_16_0._spineAnim then
+function VersionActivity2_9EnterViewAnimComp:playHeroTargetAnim(animationName)
+	if not self._spineAnim then
 		return
 	end
 
-	if not arg_16_0._spineAnim:HasAnimation(arg_16_1) then
+	if not self._spineAnim:HasAnimation(animationName) then
 		return
 	end
 
-	arg_16_0._spineAnim:SetAnimation(BaseSpine.FaceTrackIndex, arg_16_1, true, 0)
+	self._spineAnim:SetAnimation(BaseSpine.FaceTrackIndex, animationName, true, 0)
 end
 
-function var_0_0._onRefreshActivityState(arg_17_0, arg_17_1)
-	if arg_17_1 ~= VersionActivity2_9Enum.ActivityId.EnterView2 then
+function VersionActivity2_9EnterViewAnimComp:_onRefreshActivityState(actId)
+	if actId ~= VersionActivity2_9Enum.ActivityId.EnterView2 then
 		return
 	end
 
-	arg_17_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.switchBackGround(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._backgroundTab) do
-		local var_18_0 = arg_18_1 == iter_18_0
+function VersionActivity2_9EnterViewAnimComp:switchBackGround(index)
+	for i, gobackground in pairs(self._backgroundTab) do
+		local isTarget = index == i
 
-		gohelper.setActive(iter_18_1, var_18_0)
+		gohelper.setActive(gobackground, isTarget)
 
-		if var_18_0 then
-			local var_18_1 = arg_18_0:getVideoUrl(arg_18_1)
+		if isTarget then
+			local audioUrl = self:getVideoUrl(index)
 
-			arg_18_0._bgVideoTab[iter_18_0]:play(var_18_1, true)
+			self._bgVideoTab[i]:play(audioUrl, true)
 		end
 	end
 
-	arg_18_0._curBgIndex = arg_18_1
+	self._curBgIndex = index
 end
 
-function var_0_0.getVideoUrl(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.mainActIdList and arg_19_0.mainActIdList[arg_19_1]
-	local var_19_1 = var_19_0 and VersionActivity2_9Enum.ActId2BgAudioName[var_19_0]
+function VersionActivity2_9EnterViewAnimComp:getVideoUrl(groupIndex)
+	local actId = self.mainActIdList and self.mainActIdList[groupIndex]
+	local bgAudioName = actId and VersionActivity2_9Enum.ActId2BgAudioName[actId]
 
-	return langVideoUrl(var_19_1)
+	return bgAudioName
 end
 
-function var_0_0.onSwitchAnimDone(arg_20_0)
-	local var_20_0 = arg_20_0._curBgIndex == var_0_1 and var_0_2 or var_0_1
+function VersionActivity2_9EnterViewAnimComp:onSwitchAnimDone()
+	local targetBgIndex = self._curBgIndex == FirstHalfBgIndex and SecondHalfBgIndex or FirstHalfBgIndex
 
-	arg_20_0:switchBackGround(var_20_0)
-	AssassinHelper.lockScreen(var_0_3, false)
+	self:switchBackGround(targetBgIndex)
+	AssassinHelper.lockScreen(LockScreenKey, false)
 end
 
-function var_0_0._onOpenViewFinish(arg_21_0)
-	gohelper.setActive(arg_21_0._sceneRoot, not arg_21_0:_isAngViewCoverScene())
+function VersionActivity2_9EnterViewAnimComp:_onOpenViewFinish()
+	gohelper.setActive(self._sceneRoot, not self:_isAngViewCoverScene())
 end
 
-function var_0_0._onCloseView(arg_22_0, arg_22_1)
-	if arg_22_1 == arg_22_0.viewName then
+function VersionActivity2_9EnterViewAnimComp:_onCloseView(viewName)
+	if viewName == self.viewName then
 		return
 	end
 
-	if arg_22_1 == ViewName.VersionActivity2_9DungeonMapView then
+	if viewName == ViewName.VersionActivity2_9DungeonMapView then
 		return
 	end
 
-	gohelper.setActive(arg_22_0._sceneRoot, not arg_22_0:_isAngViewCoverScene())
+	gohelper.setActive(self._sceneRoot, not self:_isAngViewCoverScene())
 end
 
-function var_0_0._onCloseViewFinish(arg_23_0, arg_23_1)
-	if arg_23_1 ~= ViewName.VersionActivity2_9DungeonMapView then
+function VersionActivity2_9EnterViewAnimComp:_onCloseViewFinish(viewName)
+	if viewName ~= ViewName.VersionActivity2_9DungeonMapView then
 		return
 	end
 
-	gohelper.setActive(arg_23_0._sceneRoot, not arg_23_0:_isAngViewCoverScene())
+	gohelper.setActive(self._sceneRoot, not self:_isAngViewCoverScene())
 end
 
-function var_0_0._isAngViewCoverScene(arg_24_0)
-	local var_24_0 = false
-	local var_24_1 = ViewMgr.instance:getOpenViewNameList()
+function VersionActivity2_9EnterViewAnimComp:_isAngViewCoverScene()
+	local isCover = false
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_24_0 = #var_24_1, 1, -1 do
-		local var_24_2 = var_24_1[iter_24_0]
+	for i = #viewNameList, 1, -1 do
+		local viewName = viewNameList[i]
 
-		if var_24_2 == arg_24_0.viewName then
+		if viewName == self.viewName then
 			break
 		end
 
-		if ViewMgr.instance:isFull(var_24_2) then
-			var_24_0 = true
+		if ViewMgr.instance:isFull(viewName) then
+			isCover = true
 
 			break
 		end
 	end
 
-	return var_24_0
+	return isCover
 end
 
-function var_0_0._onUnlockNextHalf(arg_25_0)
-	arg_25_0._animator:Play("guid", 0, 0)
+function VersionActivity2_9EnterViewAnimComp:_onUnlockNextHalf()
+	self._animator:Play("guid", 0, 0)
 end
 
-function var_0_0.distroyAudios(arg_26_0)
-	if arg_26_0._bgVideoTab then
-		for iter_26_0, iter_26_1 in pairs(arg_26_0._bgVideoTab) do
-			if iter_26_1 then
-				iter_26_1:destroy()
+function VersionActivity2_9EnterViewAnimComp:distroyAudios()
+	if self._bgVideoTab then
+		for _, video in pairs(self._bgVideoTab) do
+			if video then
+				video:destroy()
 			end
 		end
 	end
 end
 
-function var_0_0.onClose(arg_27_0)
-	AssassinHelper.lockScreen(var_0_3, false)
-	TaskDispatcher.cancelTask(arg_27_0.playHeroAnim, arg_27_0)
-	TaskDispatcher.cancelTask(arg_27_0.onSwitchAnimDone, arg_27_0)
-	arg_27_0:_resetCameraAnimator()
+function VersionActivity2_9EnterViewAnimComp:onClose()
+	AssassinHelper.lockScreen(LockScreenKey, false)
+	TaskDispatcher.cancelTask(self.playHeroAnim, self)
+	TaskDispatcher.cancelTask(self.onSwitchAnimDone, self)
+	self:_resetCameraAnimator()
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	if arg_28_0._sceneRoot then
-		gohelper.destroy(arg_28_0._sceneRoot)
+function VersionActivity2_9EnterViewAnimComp:onDestroyView()
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_28_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 end
 
-return var_0_0
+return VersionActivity2_9EnterViewAnimComp

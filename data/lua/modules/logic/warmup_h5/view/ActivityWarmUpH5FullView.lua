@@ -1,69 +1,80 @@
-﻿module("modules.logic.warmup_h5.view.ActivityWarmUpH5FullView", package.seeall)
+﻿-- chunkname: @modules/logic/warmup_h5/view/ActivityWarmUpH5FullView.lua
 
-local var_0_0 = class("ActivityWarmUpH5FullView", BaseView)
+module("modules.logic.warmup_h5.view.ActivityWarmUpH5FullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_langtxt")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_click")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_LimitTime")
+local ActivityWarmUpH5FullView = class("ActivityWarmUpH5FullView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityWarmUpH5FullView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_langtxt")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_click")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/#txt_LimitTime")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function ActivityWarmUpH5FullView:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function ActivityWarmUpH5FullView:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
+function ActivityWarmUpH5FullView:_btnclickOnClick()
+	StatController.instance:track(StatEnum.EventName.ButtonClick, {
+		[StatEnum.EventProperties.ViewName] = "版本H5预热页",
+		[StatEnum.EventProperties.ButtonName] = "点击参与"
+	})
 	SDKDataTrackMgr.instance:trackClickActivityJumpButton()
 
-	local var_4_0 = arg_4_0.viewContainer:getH5BaseUrl()
+	local baseUrl = self.viewContainer:getH5BaseUrl()
 
-	WebViewController.instance:simpleOpenWebView(var_4_0, arg_4_0._onWebViewCb, arg_4_0)
+	WebViewController.instance:simpleOpenWebView(baseUrl, self._onWebViewCb, self)
 end
 
-function var_0_0._actId(arg_5_0)
-	return arg_5_0.viewContainer:actId()
+function ActivityWarmUpH5FullView:_actId()
+	return self.viewContainer:actId()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._txtLimitTime.text = ""
+function ActivityWarmUpH5FullView:_editableInitView()
+	self._txtLimitTime.text = ""
 end
 
-function var_0_0._onWebViewCb(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == WebViewEnum.WebViewCBType.Cb and string.split(arg_7_2, "#")[1] == "webClose" then
-		ViewMgr.instance:closeView(ViewName.WebView)
+function ActivityWarmUpH5FullView:_onWebViewCb(errorType, msg)
+	if errorType == WebViewEnum.WebViewCBType.Cb then
+		local msgParamList = string.split(msg, "#")
+		local eventName = msgParamList[1]
+
+		if eventName == "webClose" then
+			ViewMgr.instance:closeView(ViewName.WebView)
+		end
 	end
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam.parent
+function ActivityWarmUpH5FullView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_8_0, arg_8_0.viewGO)
-	var_0_0.super.onOpen(arg_8_0)
+	gohelper.addChild(parentGO, self.viewGO)
+	ActivityWarmUpH5FullView.super.onOpen(self)
 	AudioMgr.instance:trigger(AudioEnum3_1.WarmUpH5.play_ui_mingdi_h5_open)
-	arg_8_0:_refreshTimeTick()
-	TaskDispatcher.cancelTask(arg_8_0._refreshTimeTick, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0._refreshTimeTick, arg_8_0, 1)
+	self:_refreshTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0._refreshTimeTick(arg_9_0)
-	arg_9_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_9_0:_actId())
+function ActivityWarmUpH5FullView:_refreshTimeTick()
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self:_actId())
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._refreshTimeTick, arg_10_0)
+function ActivityWarmUpH5FullView:onClose()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._refreshTimeTick, arg_11_0)
+function ActivityWarmUpH5FullView:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-return var_0_0
+return ActivityWarmUpH5FullView

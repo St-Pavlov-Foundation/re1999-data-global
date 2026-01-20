@@ -1,16 +1,18 @@
-﻿module("modules.logic.survival.view.shelter.ShelterRecruitViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterRecruitViewContainer.lua
 
-local var_0_0 = class("ShelterRecruitViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.ShelterRecruitViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ShelterRecruitViewContainer = class("ShelterRecruitViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ShelterRecruitView.New())
-	table.insert(var_1_0, ShelterCurrencyView.New({
+function ShelterRecruitViewContainer:buildViews()
+	local views = {}
+
+	table.insert(views, ShelterRecruitView.New())
+	table.insert(views, ShelterCurrencyView.New({
 		SurvivalEnum.CurrencyType.Build
 	}, "Panel/#go_topright"))
 
-	return var_1_0
+	return views
 end
 
-return var_0_0
+return ShelterRecruitViewContainer

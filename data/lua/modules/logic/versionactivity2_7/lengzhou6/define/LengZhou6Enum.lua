@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.define.LengZhou6Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/define/LengZhou6Enum.lua
 
-local var_0_0 = class("LengZhou6Enum")
+module("modules.logic.versionactivity2_7.lengzhou6.define.LengZhou6Enum", package.seeall)
 
-var_0_0.entityCamp = {
+local LengZhou6Enum = class("LengZhou6Enum")
+
+LengZhou6Enum.entityCamp = {
 	enemy = 2,
 	player = 1
 }
-var_0_0.TaskMOAllFinishId = -99999
-var_0_0.SkillType = {
+LengZhou6Enum.TaskMOAllFinishId = -99999
+LengZhou6Enum.SkillType = {
 	passive = "passive",
 	enemyActive = "enemyActive",
 	active = "active"
 }
-var_0_0.BattleStep = {
+LengZhou6Enum.BattleStep = {
 	attackAfter = 208,
 	attackComplete = 212,
 	enemyCheckInterval = 900,
@@ -24,8 +26,8 @@ var_0_0.BattleStep = {
 	poisonSettlement = 910,
 	gameBegin = 0
 }
-var_0_0.LoadingTime = 1
-var_0_0.SkillEffect = {
+LengZhou6Enum.LoadingTime = 1
+LengZhou6Enum.SkillEffect = {
 	AddBuffByIntensified = "AddBuffByIntensified",
 	EliminationDecreaseCd = "EliminationDecreaseCd",
 	DealsDamage = "DealsDamage",
@@ -44,40 +46,40 @@ var_0_0.SkillEffect = {
 	SuccessiveElimination = "SuccessiveElimination",
 	DamageUpByType = "DamageUpByType"
 }
-var_0_0.NormalEliminateEffect = "normal"
-var_0_0.BuffEffect = {
+LengZhou6Enum.NormalEliminateEffect = "normal"
+LengZhou6Enum.BuffEffect = {
 	damageUp = "damageUp",
 	petrify = "petrify",
 	poison = "poison"
 }
-var_0_0.BattleModel = {
+LengZhou6Enum.BattleModel = {
 	infinite = "infinite",
 	normal = "normal"
 }
-var_0_0.BattleProgress = {
+LengZhou6Enum.BattleProgress = {
 	selectFinish = 2,
 	selectSkill = 1
 }
-var_0_0.EnemySkillTime = 1
-var_0_0.EnemySkillTime_2 = 0.5
-var_0_0.EnemyBuffEffectShowTime = 0.5
-var_0_0.enterGM = false
-var_0_0.DebugPlayerHp = 10000000
-var_0_0.PlayerSkillMaxCount = 3
-var_0_0.DefaultEndLessBeginRound = 1
-var_0_0.EndLessChangeSkillLayer = 5
-var_0_0.BlockKey = {
+LengZhou6Enum.EnemySkillTime = 1
+LengZhou6Enum.EnemySkillTime_2 = 0.5
+LengZhou6Enum.EnemyBuffEffectShowTime = 0.5
+LengZhou6Enum.enterGM = false
+LengZhou6Enum.DebugPlayerHp = 10000000
+LengZhou6Enum.PlayerSkillMaxCount = 3
+LengZhou6Enum.DefaultEndLessBeginRound = 1
+LengZhou6Enum.EndLessChangeSkillLayer = 5
+LengZhou6Enum.BlockKey = {
 	OneClickResetLevel = "LengZhou6OneClickResetLevelKey",
 	OneClickClaimReward = "LengZhou6OneClickClaimRewardBlockKey"
 }
-var_0_0.openViewAniTime = 1.167
-var_0_0.GameResult = {
+LengZhou6Enum.openViewAniTime = 1.167
+LengZhou6Enum.GameResult = {
 	normalCancel = 3,
 	lose = 2,
 	infiniteCancel = 4,
 	win = 1
 }
-var_0_0.defaultEnemy = 227101
-var_0_0.defaultPlayerSkillSelectMax = 3
+LengZhou6Enum.defaultEnemy = 227101
+LengZhou6Enum.defaultPlayerSkillSelectMax = 3
 
-return var_0_0
+return LengZhou6Enum

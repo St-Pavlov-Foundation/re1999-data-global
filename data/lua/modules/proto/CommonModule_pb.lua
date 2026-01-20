@@ -1,50 +1,52 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/CommonModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.CommonModule_pb", package.seeall)
 
-local var_0_1 = {
-	GETSERVERTIMEREPLY_MSG = var_0_0.Descriptor(),
-	GETSERVERTIMEREPLYSERVERTIMEFIELD = var_0_0.FieldDescriptor(),
-	GETSERVERTIMEREPLYOFFSETTIMEFIELD = var_0_0.FieldDescriptor(),
-	GETSERVERTIMEREQUEST_MSG = var_0_0.Descriptor()
-}
+local CommonModule_pb = {}
 
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.name = "serverTime"
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.full_name = ".GetServerTimeReply.serverTime"
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.number = 1
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.index = 0
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.label = 1
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.has_default_value = false
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.default_value = 0
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.type = 4
-var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD.cpp_type = 4
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.name = "offsetTime"
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.full_name = ".GetServerTimeReply.offsetTime"
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.number = 2
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.index = 1
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.label = 1
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.has_default_value = false
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.default_value = 0
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.type = 3
-var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD.cpp_type = 2
-var_0_1.GETSERVERTIMEREPLY_MSG.name = "GetServerTimeReply"
-var_0_1.GETSERVERTIMEREPLY_MSG.full_name = ".GetServerTimeReply"
-var_0_1.GETSERVERTIMEREPLY_MSG.nested_types = {}
-var_0_1.GETSERVERTIMEREPLY_MSG.enum_types = {}
-var_0_1.GETSERVERTIMEREPLY_MSG.fields = {
-	var_0_1.GETSERVERTIMEREPLYSERVERTIMEFIELD,
-	var_0_1.GETSERVERTIMEREPLYOFFSETTIMEFIELD
+CommonModule_pb.GETSERVERTIMEREPLY_MSG = protobuf.Descriptor()
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD = protobuf.FieldDescriptor()
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD = protobuf.FieldDescriptor()
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG = protobuf.Descriptor()
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.name = "serverTime"
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.full_name = ".GetServerTimeReply.serverTime"
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.number = 1
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.index = 0
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.label = 1
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.has_default_value = false
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.default_value = 0
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.type = 4
+CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD.cpp_type = 4
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.name = "offsetTime"
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.full_name = ".GetServerTimeReply.offsetTime"
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.number = 2
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.index = 1
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.label = 1
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.has_default_value = false
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.default_value = 0
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.type = 3
+CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD.cpp_type = 2
+CommonModule_pb.GETSERVERTIMEREPLY_MSG.name = "GetServerTimeReply"
+CommonModule_pb.GETSERVERTIMEREPLY_MSG.full_name = ".GetServerTimeReply"
+CommonModule_pb.GETSERVERTIMEREPLY_MSG.nested_types = {}
+CommonModule_pb.GETSERVERTIMEREPLY_MSG.enum_types = {}
+CommonModule_pb.GETSERVERTIMEREPLY_MSG.fields = {
+	CommonModule_pb.GETSERVERTIMEREPLYSERVERTIMEFIELD,
+	CommonModule_pb.GETSERVERTIMEREPLYOFFSETTIMEFIELD
 }
-var_0_1.GETSERVERTIMEREPLY_MSG.is_extendable = false
-var_0_1.GETSERVERTIMEREPLY_MSG.extensions = {}
-var_0_1.GETSERVERTIMEREQUEST_MSG.name = "GetServerTimeRequest"
-var_0_1.GETSERVERTIMEREQUEST_MSG.full_name = ".GetServerTimeRequest"
-var_0_1.GETSERVERTIMEREQUEST_MSG.nested_types = {}
-var_0_1.GETSERVERTIMEREQUEST_MSG.enum_types = {}
-var_0_1.GETSERVERTIMEREQUEST_MSG.fields = {}
-var_0_1.GETSERVERTIMEREQUEST_MSG.is_extendable = false
-var_0_1.GETSERVERTIMEREQUEST_MSG.extensions = {}
-var_0_1.GetServerTimeReply = var_0_0.Message(var_0_1.GETSERVERTIMEREPLY_MSG)
-var_0_1.GetServerTimeRequest = var_0_0.Message(var_0_1.GETSERVERTIMEREQUEST_MSG)
+CommonModule_pb.GETSERVERTIMEREPLY_MSG.is_extendable = false
+CommonModule_pb.GETSERVERTIMEREPLY_MSG.extensions = {}
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG.name = "GetServerTimeRequest"
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG.full_name = ".GetServerTimeRequest"
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG.nested_types = {}
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG.enum_types = {}
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG.fields = {}
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG.is_extendable = false
+CommonModule_pb.GETSERVERTIMEREQUEST_MSG.extensions = {}
+CommonModule_pb.GetServerTimeReply = protobuf.Message(CommonModule_pb.GETSERVERTIMEREPLY_MSG)
+CommonModule_pb.GetServerTimeRequest = protobuf.Message(CommonModule_pb.GETSERVERTIMEREQUEST_MSG)
 
-return var_0_1
+return CommonModule_pb

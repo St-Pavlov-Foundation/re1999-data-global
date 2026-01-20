@@ -1,9 +1,13 @@
-﻿module("modules.logic.main.controller.work.Activity101SignMonthCardPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/Activity101SignMonthCardPatFaceWork.lua
 
-local var_0_0 = class("Activity101SignMonthCardPatFaceWork", Activity101SignPatFaceWork)
+module("modules.logic.main.controller.work.Activity101SignMonthCardPatFaceWork", package.seeall)
 
-function var_0_0.checkCanPat(arg_1_0)
-	return (V2a9FreeMonthCardModel.instance:isCurDayCouldGet())
+local Activity101SignMonthCardPatFaceWork = class("Activity101SignMonthCardPatFaceWork", Activity101SignPatFaceWork)
+
+function Activity101SignMonthCardPatFaceWork:checkCanPat()
+	local couldGet = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
+
+	return couldGet
 end
 
-return var_0_0
+return Activity101SignMonthCardPatFaceWork

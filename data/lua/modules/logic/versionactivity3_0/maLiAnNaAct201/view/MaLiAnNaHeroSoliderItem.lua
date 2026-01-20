@@ -1,181 +1,183 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaHeroSoliderItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/MaLiAnNaHeroSoliderItem.lua
 
-local var_0_0 = class("MaLiAnNaHeroSoliderItem", ListScrollCellExtend)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaHeroSoliderItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
-	arg_1_0._txtRoleName = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_RoleName")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_dec")
-	arg_1_0._txtRoleHP = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_RoleHP")
-	arg_1_0._goSelf = gohelper.findChild(arg_1_0.viewGO, "#go_Self")
-	arg_1_0._goEnemy = gohelper.findChild(arg_1_0.viewGO, "#go_Enemy")
-	arg_1_0._simageRole = gohelper.findChildSingleImage(arg_1_0.viewGO, "image/#simage_Role")
-	arg_1_0._txtRoleHP2 = gohelper.findChildText(arg_1_0.viewGO, "image_RoleHPNumBG/#txt_RoleHP_2")
-	arg_1_0._goDead = gohelper.findChild(arg_1_0.viewGO, "#go_Dead")
-	arg_1_0._btnrole = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_role")
+local MaLiAnNaHeroSoliderItem = class("MaLiAnNaHeroSoliderItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MaLiAnNaHeroSoliderItem:onInitView()
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._txtRoleName = gohelper.findChildText(self.viewGO, "#go_tips/#txt_RoleName")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#go_tips/#txt_dec")
+	self._txtRoleHP = gohelper.findChildText(self.viewGO, "#go_tips/#txt_RoleHP")
+	self._goSelf = gohelper.findChild(self.viewGO, "#go_Self")
+	self._goEnemy = gohelper.findChild(self.viewGO, "#go_Enemy")
+	self._simageRole = gohelper.findChildSingleImage(self.viewGO, "image/#simage_Role")
+	self._txtRoleHP2 = gohelper.findChildText(self.viewGO, "image_RoleHPNumBG/#txt_RoleHP_2")
+	self._goDead = gohelper.findChild(self.viewGO, "#go_Dead")
+	self._btnrole = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_role")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrole:AddClickListener(arg_2_0._btnroleOnClick, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0.onTouchScreen, arg_2_0)
+function MaLiAnNaHeroSoliderItem:addEvents()
+	self._btnrole:AddClickListener(self._btnroleOnClick, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self.onTouchScreen, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrole:RemoveClickListener()
-	arg_3_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_3_0.onTouchScreen, arg_3_0)
+function MaLiAnNaHeroSoliderItem:removeEvents()
+	self._btnrole:RemoveClickListener()
+	self:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self.onTouchScreen, self)
 end
 
-function var_0_0._btnroleOnClick(arg_4_0)
-	arg_4_0:refreshTip()
+function MaLiAnNaHeroSoliderItem:_btnroleOnClick()
+	self:refreshTip()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._goRoleHP = gohelper.findChild(arg_5_0.viewGO, "image_RoleHPNumBG")
-	arg_5_0._txtReduceHP = gohelper.findChildText(arg_5_0.viewGO, "#txt_reduceHP")
-	arg_5_0._goReduceHp = arg_5_0._txtReduceHP.gameObject
+function MaLiAnNaHeroSoliderItem:_editableInitView()
+	self._goRoleHP = gohelper.findChild(self.viewGO, "image_RoleHPNumBG")
+	self._txtReduceHP = gohelper.findChildText(self.viewGO, "#txt_reduceHP")
+	self._goReduceHp = self._txtReduceHP.gameObject
 
-	arg_5_0:_hideReduce()
+	self:_hideReduce()
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function MaLiAnNaHeroSoliderItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function MaLiAnNaHeroSoliderItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onTouchScreen(arg_8_0)
-	if arg_8_0._gotips then
-		if gohelper.isMouseOverGo(arg_8_0._gotips) or gohelper.isMouseOverGo(arg_8_0._btnrole) then
+function MaLiAnNaHeroSoliderItem:onTouchScreen()
+	if self._gotips then
+		if gohelper.isMouseOverGo(self._gotips) or gohelper.isMouseOverGo(self._btnrole) then
 			return
 		end
 
-		arg_8_0._isShowTips = false
+		self._isShowTips = false
 
-		arg_8_0:_refreshTipState()
+		self:_refreshTipState()
 	end
 end
 
-function var_0_0.refreshTip(arg_9_0)
-	arg_9_0._isShowTips = not arg_9_0._isShowTips
+function MaLiAnNaHeroSoliderItem:refreshTip()
+	self._isShowTips = not self._isShowTips
 
-	arg_9_0:_refreshTipState()
+	self:_refreshTipState()
 end
 
-function var_0_0._refreshTipState(arg_10_0)
-	gohelper.setActive(arg_10_0._gotips, arg_10_0._isShowTips)
-	gohelper.setActive(arg_10_0._goRoleHP, not arg_10_0._isShowTips)
+function MaLiAnNaHeroSoliderItem:_refreshTipState()
+	gohelper.setActive(self._gotips, self._isShowTips)
+	gohelper.setActive(self._goRoleHP, not self._isShowTips)
 end
 
-function var_0_0.initData(arg_11_0, arg_11_1)
-	arg_11_0._soliderMo = arg_11_1
+function MaLiAnNaHeroSoliderItem:initData(mo)
+	self._soliderMo = mo
 
-	if arg_11_0._soliderMo == nil then
+	if self._soliderMo == nil then
 		return
 	end
 
-	local var_11_0 = arg_11_0._soliderMo:getConfig()
+	local config = self._soliderMo:getConfig()
 
-	arg_11_0._txtdec.text = var_11_0.description
-	arg_11_0._txtRoleName.text = var_11_0.name
-	arg_11_0._isShowTips = false
+	self._txtdec.text = config.description
+	self._txtRoleName.text = config.name
+	self._isShowTips = false
 
-	gohelper.setActive(arg_11_0._gotips, false)
-	gohelper.setActive(arg_11_0._goSelf, arg_11_0._soliderMo:getCamp() == Activity201MaLiAnNaEnum.CampType.Player)
-	gohelper.setActive(arg_11_0._goEnemy, arg_11_0._soliderMo:getCamp() == Activity201MaLiAnNaEnum.CampType.Enemy)
-	arg_11_0._simageRole:LoadImage(arg_11_0._soliderMo:getSmallIcon())
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self._goSelf, self._soliderMo:getCamp() == Activity201MaLiAnNaEnum.CampType.Player)
+	gohelper.setActive(self._goEnemy, self._soliderMo:getCamp() == Activity201MaLiAnNaEnum.CampType.Enemy)
+	self._simageRole:LoadImage(self._soliderMo:getSmallIcon())
 end
 
-function var_0_0.updateInfo(arg_12_0, arg_12_1)
-	arg_12_0._soliderMo = arg_12_1
+function MaLiAnNaHeroSoliderItem:updateInfo(mo)
+	self._soliderMo = mo
 
-	if arg_12_0._soliderMo == nil then
+	if self._soliderMo == nil then
 		return
 	end
 
-	local var_12_0 = arg_12_0._soliderMo:getHp()
+	local hp = self._soliderMo:getHp()
 
-	if arg_12_0._lastHp == nil or arg_12_0._lastHp ~= var_12_0 then
-		arg_12_0._txtRoleHP.text = var_12_0
-		arg_12_0._txtRoleHP2.text = var_12_0
-		arg_12_0._lastHp = var_12_0
+	if self._lastHp == nil or self._lastHp ~= hp then
+		self._txtRoleHP.text = hp
+		self._txtRoleHP2.text = hp
+		self._lastHp = hp
 
-		gohelper.setActive(arg_12_0._goDead, arg_12_0._soliderMo:isDead())
+		gohelper.setActive(self._goDead, self._soliderMo:isDead())
 	end
 end
 
-function var_0_0.showDiff(arg_13_0, arg_13_1)
-	if arg_13_0._isShowDiff then
-		if arg_13_0._isShowDiffList == nil then
-			arg_13_0._isShowDiffList = {}
+function MaLiAnNaHeroSoliderItem:showDiff(addValue)
+	if self._isShowDiff then
+		if self._isShowDiffList == nil then
+			self._isShowDiffList = {}
 		end
 
-		table.insert(arg_13_0._isShowDiffList, arg_13_1)
+		table.insert(self._isShowDiffList, addValue)
 	else
-		if arg_13_1 == nil and arg_13_0._isShowDiffList ~= nil and #arg_13_0._isShowDiffList > 0 then
-			arg_13_1 = table.remove(arg_13_0._isShowDiffList, 1)
+		if addValue == nil and self._isShowDiffList ~= nil and #self._isShowDiffList > 0 then
+			addValue = table.remove(self._isShowDiffList, 1)
 		end
 
-		arg_13_0:_showDiff(arg_13_1)
+		self:_showDiff(addValue)
 	end
 end
 
-function var_0_0._showDiff(arg_14_0, arg_14_1)
-	if arg_14_1 == nil then
+function MaLiAnNaHeroSoliderItem:_showDiff(value)
+	if value == nil then
 		return
 	end
 
-	if arg_14_0._goReduceHp.activeSelf then
-		gohelper.setActive(arg_14_0._goReduceHp, false)
+	if self._goReduceHp.activeSelf then
+		gohelper.setActive(self._goReduceHp, false)
 	end
 
-	arg_14_0._txtReduceHP.text = arg_14_1
+	self._txtReduceHP.text = value
 
-	gohelper.setActive(arg_14_0._goReduceHp, true)
+	gohelper.setActive(self._goReduceHp, true)
 
-	arg_14_0._isShowDiff = true
+	self._isShowDiff = true
 
-	local var_14_0 = 1
+	local time = 1
 
-	if arg_14_0._isShowDiffList and #arg_14_0._isShowDiffList > 0 then
-		var_14_0 = var_14_0 * 0.4
+	if self._isShowDiffList and #self._isShowDiffList > 0 then
+		time = time * 0.4
 	end
 
-	TaskDispatcher.runDelay(arg_14_0._hideReduce, arg_14_0, var_14_0)
+	TaskDispatcher.runDelay(self._hideReduce, self, time)
 end
 
-function var_0_0._hideReduce(arg_15_0)
-	gohelper.setActive(arg_15_0._goReduceHp, false)
+function MaLiAnNaHeroSoliderItem:_hideReduce()
+	gohelper.setActive(self._goReduceHp, false)
 
-	arg_15_0._isShowDiff = false
+	self._isShowDiff = false
 
-	arg_15_0:showDiff()
+	self:showDiff()
 end
 
-function var_0_0.reset(arg_16_0)
-	if arg_16_0._isShowDiffList then
-		tabletool.clear(arg_16_0._isShowDiffList)
+function MaLiAnNaHeroSoliderItem:reset()
+	if self._isShowDiffList then
+		tabletool.clear(self._isShowDiffList)
 
-		arg_16_0._isShowDiffList = nil
+		self._isShowDiffList = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_16_0._hideReduce, arg_16_0)
-	arg_16_0:_hideReduce()
+	TaskDispatcher.cancelTask(self._hideReduce, self)
+	self:_hideReduce()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	if arg_17_0._isShowDiffList then
-		tabletool.clear(arg_17_0._isShowDiffList)
+function MaLiAnNaHeroSoliderItem:onDestroyView()
+	if self._isShowDiffList then
+		tabletool.clear(self._isShowDiffList)
 
-		arg_17_0._isShowDiffList = nil
+		self._isShowDiffList = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_17_0._hideReduce, arg_17_0)
+	TaskDispatcher.cancelTask(self._hideReduce, self)
 end
 
-return var_0_0
+return MaLiAnNaHeroSoliderItem

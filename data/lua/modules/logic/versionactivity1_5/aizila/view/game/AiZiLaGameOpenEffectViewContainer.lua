@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameOpenEffectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameOpenEffectViewContainer.lua
 
-local var_0_0 = class("AiZiLaGameOpenEffectViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameOpenEffectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaGameOpenEffectViewContainer = class("AiZiLaGameOpenEffectViewContainer", BaseViewContainer)
 
-	arg_1_0._gameEffectView = AiZiLaGameOpenEffectView.New()
+function AiZiLaGameOpenEffectViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._gameEffectView)
+	self._gameEffectView = AiZiLaGameOpenEffectView.New()
 
-	return var_1_0
+	table.insert(views, self._gameEffectView)
+
+	return views
 end
 
-function var_0_0.playViewAnimator(arg_2_0, arg_2_1)
-	arg_2_0._gameEffectView:playViewAnimator(arg_2_1)
+function AiZiLaGameOpenEffectViewContainer:playViewAnimator(animName)
+	self._gameEffectView:playViewAnimator(animName)
 end
 
-function var_0_0.startViewOpenBlock(arg_3_0)
+function AiZiLaGameOpenEffectViewContainer:startViewOpenBlock()
 	return
 end
 
-function var_0_0.startViewCloseBlock(arg_4_0)
+function AiZiLaGameOpenEffectViewContainer:startViewCloseBlock()
 	return
 end
 
-return var_0_0
+return AiZiLaGameOpenEffectViewContainer

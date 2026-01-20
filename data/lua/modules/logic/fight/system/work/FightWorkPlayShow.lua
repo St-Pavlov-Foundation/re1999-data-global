@@ -1,89 +1,93 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayShow", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayShow.lua
 
-local var_0_0 = class("FightWorkPlayShow", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkPlayShow", package.seeall)
+
+local FightWorkPlayShow = class("FightWorkPlayShow", FightWorkItem)
 
 FightRoundSequence.roundTempData = {}
 
-function var_0_0.onStart(arg_1_0)
+function FightWorkPlayShow:onStart()
 	FightRoundSequence.roundTempData = {}
-	arg_1_0.roundData = FightDataHelper.roundMgr:getRoundData()
+	self.roundData = FightDataHelper.roundMgr:getRoundData()
 
-	local var_1_0 = arg_1_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_1_0:registWork(FightWorkSendEvent, FightEvent.OnRoundSequenceStart)
-	var_1_0:addWork(WorkWaitSeconds.New(0.01))
-	var_1_0:addWork(FightWork2Work.New(FightWorkDialogueBeforeRoundStart))
-	var_1_0:addWork(FightWorkRoundStart.New())
+	flow:registWork(FightWorkSendEvent, FightEvent.OnRoundSequenceStart)
+	flow:addWork(WorkWaitSeconds.New(0.01))
+	flow:addWork(FightWork2Work.New(FightWorkDialogueBeforeRoundStart))
+	flow:addWork(FightWorkRoundStart.New())
 
-	local var_1_1, var_1_2 = FightStepBuilder.buildStepWorkList(arg_1_0.roundData and arg_1_0.roundData.fightStep)
+	local stepWorkList, skillFlowList = FightStepBuilder.buildStepWorkList(self.roundData and self.roundData.fightStep)
 
-	if var_1_1 then
-		local var_1_3 = 1
+	if stepWorkList then
+		local i = 1
 
-		while var_1_3 <= #var_1_1 do
-			local var_1_4 = var_1_1[var_1_3]
+		while i <= #stepWorkList do
+			local work = stepWorkList[i]
 
-			var_1_3 = var_1_3 + 1
+			i = i + 1
 
-			var_1_0:addWork(var_1_4)
+			flow:addWork(work)
 		end
 	end
 
-	var_1_0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
-	var_1_0:addWork(FightWorkRoundEnd.New())
-	var_1_0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
+	flow:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
+	flow:addWork(FightWorkRoundEnd.New())
+	flow:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
 
 	if not FightModel.instance:isFinish() then
-		if FightModel.instance:getVersion() < 4 then
-			var_1_0:addWork(FightWork2Work.New(FightWorkDistributeCard))
+		local version = FightModel.instance:getVersion()
+
+		if version < 4 then
+			flow:addWork(FightWork2Work.New(FightWorkDistributeCard))
 		end
 
-		local var_1_5, var_1_6 = FightStepBuilder.buildStepWorkList(arg_1_0.roundData and arg_1_0.roundData.nextRoundBeginStep)
+		local nextRoundStepWorkList, _ = FightStepBuilder.buildStepWorkList(self.roundData and self.roundData.nextRoundBeginStep)
 
-		if var_1_5 and #var_1_5 > 0 then
-			for iter_1_0, iter_1_1 in ipairs(var_1_5) do
-				var_1_0:addWork(iter_1_1)
+		if nextRoundStepWorkList and #nextRoundStepWorkList > 0 then
+			for _, work in ipairs(nextRoundStepWorkList) do
+				flow:addWork(work)
 			end
 		end
 
-		var_1_0:addWork(FightWorkShowRoundView.New())
-		var_1_0:addWork(FunctionWork.New(function()
+		flow:addWork(FightWorkShowRoundView.New())
+		flow:addWork(FunctionWork.New(function()
 			GameSceneMgr.instance:getCurScene().camera:enablePostProcessSmooth(false)
 			GameSceneMgr.instance:getCurScene().camera:resetParam()
 		end))
-		var_1_0:addWork(FightWorkShowBuffDialog.New())
-		var_1_0:addWork(FightWorkCorrectData.New())
+		flow:addWork(FightWorkShowBuffDialog.New())
+		flow:addWork(FightWorkCorrectData.New())
 	end
 
-	var_1_0:addWork(FightWorkClearAfterRound.New())
-	var_1_0:addWork(FunctionWork.New(function()
-		local var_3_0 = FightDataHelper.roundMgr:getRoundData()
+	flow:addWork(FightWorkClearAfterRound.New())
+	flow:addWork(FunctionWork.New(function()
+		local roundData = FightDataHelper.roundMgr:getRoundData()
 
-		FightDataMgr.instance:afterPlayRoundData(var_3_0)
+		FightDataMgr.instance:afterPlayRoundData(roundData)
 	end))
-	var_1_0:addWork(FightWorkCompareDataAfterPlay.New())
-	var_1_0:addWork(FunctionWork.New(arg_1_0._refreshPosition, arg_1_0))
-	var_1_0:registFinishCallback(arg_1_0.onShowFinish, arg_1_0)
-	arg_1_0:playWorkAndDone(var_1_0, {})
+	flow:addWork(FightWorkCompareDataAfterPlay.New())
+	flow:addWork(FunctionWork.New(self._refreshPosition, self))
+	flow:registFinishCallback(self.onShowFinish, self)
+	self:playWorkAndDone(flow, {})
 end
 
-function var_0_0.onShowFinish(arg_4_0)
+function FightWorkPlayShow:onShowFinish()
 	FightModel.instance:onEndRound()
 	FightController.instance:dispatchEvent(FightEvent.OnRoundSequenceFinish)
 end
 
-function var_0_0._refreshPosition(arg_5_0)
-	local var_5_0 = FightHelper.getAllEntitys()
+function FightWorkPlayShow:_refreshPosition()
+	local entityList = FightHelper.getAllEntitys()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		iter_5_1:resetStandPos()
+	for _, entity in ipairs(entityList) do
+		entity:resetStandPos()
 
-		if iter_5_1.nameUI then
-			iter_5_1.nameUI._nameUIVisible = true
+		if entity.nameUI then
+			entity.nameUI._nameUIVisible = true
 
-			iter_5_1.nameUI:setActive(true)
+			entity.nameUI:setActive(true)
 		end
 	end
 end
 
-return var_0_0
+return FightWorkPlayShow

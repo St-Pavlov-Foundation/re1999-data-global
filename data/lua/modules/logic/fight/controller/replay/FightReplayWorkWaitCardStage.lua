@@ -1,28 +1,32 @@
-﻿module("modules.logic.fight.controller.replay.FightReplayWorkWaitCardStage", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/replay/FightReplayWorkWaitCardStage.lua
 
-local var_0_0 = class("FightReplayWorkWaitCardStage", BaseWork)
+module("modules.logic.fight.controller.replay.FightReplayWorkWaitCardStage", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightReplayWorkWaitCardStage = class("FightReplayWorkWaitCardStage", BaseWork)
+
+function FightReplayWorkWaitCardStage:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		arg_2_0:onDone(true)
+function FightReplayWorkWaitCardStage:onStart()
+	local stage = FightDataHelper.stageMgr:getCurStage()
+
+	if stage == FightStageMgr.StageType.Operate then
+		self:onDone(true)
 	else
-		FightController.instance:registerCallback(FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
+		FightController.instance:registerCallback(FightEvent.StageChanged, self.onStageChange, self)
 	end
 end
 
-function var_0_0.onStageChange(arg_3_0, arg_3_1)
-	if arg_3_1 == FightStageMgr.StageType.Operate then
-		FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_3_0.onStageChange, arg_3_0)
-		arg_3_0:onDone(true)
+function FightReplayWorkWaitCardStage:onStageChange(stageType)
+	if stageType == FightStageMgr.StageType.Operate then
+		FightController.instance:unregisterCallback(FightEvent.StageChanged, self.onStageChange, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_4_0.onStageChange, arg_4_0)
+function FightReplayWorkWaitCardStage:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, self.onStageChange, self)
 end
 
-return var_0_0
+return FightReplayWorkWaitCardStage

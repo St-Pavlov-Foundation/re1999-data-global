@@ -1,36 +1,38 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffRecordByRound", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffRecordByRound.lua
 
-local var_0_0 = class("FightBuffRecordByRound")
+module("modules.logic.fight.entity.comp.buff.FightBuffRecordByRound", package.seeall)
 
-function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.entity = arg_1_1
+local FightBuffRecordByRound = class("FightBuffRecordByRound")
 
-	FightController.instance:registerCallback(FightEvent.ALF_AddRecordCardData, arg_1_0.onUpdateRecordCard, arg_1_0)
-	arg_1_0:onUpdateRecordCard(arg_1_2)
+function FightBuffRecordByRound:onBuffStart(entity, buffMo)
+	self.entity = entity
+
+	FightController.instance:registerCallback(FightEvent.ALF_AddRecordCardData, self.onUpdateRecordCard, self)
+	self:onUpdateRecordCard(buffMo)
 end
 
-function var_0_0.onUpdateRecordCard(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1 and arg_2_1.actCommonParams or ""
-	local var_2_1 = FightStrUtil.instance:getSplitToNumberCache(var_2_0, "#")
-	local var_2_2 = arg_2_0.entity.heroCustomComp and arg_2_0.entity.heroCustomComp:getCustomComp()
+function FightBuffRecordByRound:onUpdateRecordCard(buffMo)
+	local actParam = buffMo and buffMo.actCommonParams or ""
+	local list = FightStrUtil.instance:getSplitToNumberCache(actParam, "#")
+	local alfCustomComp = self.entity.heroCustomComp and self.entity.heroCustomComp:getCustomComp()
 
-	if var_2_2 then
-		var_2_2:setCacheRecordSkillList(var_2_1)
+	if alfCustomComp then
+		alfCustomComp:setCacheRecordSkillList(list)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.ALF_AddRecordCardUI)
 end
 
-function var_0_0.onBuffEnd(arg_3_0)
-	arg_3_0:clear()
+function FightBuffRecordByRound:onBuffEnd()
+	self:clear()
 end
 
-function var_0_0.clear(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.ALF_AddRecordCardData, arg_4_0.onUpdateRecordCard, arg_4_0)
+function FightBuffRecordByRound:clear()
+	FightController.instance:unregisterCallback(FightEvent.ALF_AddRecordCardData, self.onUpdateRecordCard, self)
 end
 
-function var_0_0.dispose(arg_5_0)
-	arg_5_0:clear()
+function FightBuffRecordByRound:dispose()
+	self:clear()
 end
 
-return var_0_0
+return FightBuffRecordByRound

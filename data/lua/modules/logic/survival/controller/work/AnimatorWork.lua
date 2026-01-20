@@ -1,22 +1,24 @@
-﻿module("modules.logic.survival.controller.work.AnimatorWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/AnimatorWork.lua
 
-local var_0_0 = class("AnimatorWork", BaseWork)
+module("modules.logic.survival.controller.work.AnimatorWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.player = SLFramework.AnimatorPlayer.Get(arg_1_1.go)
-	arg_1_0.animName = arg_1_1.animName
+local AnimatorWork = class("AnimatorWork", BaseWork)
+
+function AnimatorWork:ctor(param)
+	self.player = SLFramework.AnimatorPlayer.Get(param.go)
+	self.animName = param.animName
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0.player:Play(arg_2_0.animName, arg_2_0.onPlayFinish, arg_2_0)
+function AnimatorWork:onStart()
+	self.player:Play(self.animName, self.onPlayFinish, self)
 end
 
-function var_0_0.onPlayFinish(arg_3_0)
-	arg_3_0:onDone(true)
+function AnimatorWork:onPlayFinish()
+	self:onDone(true)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	arg_4_0.player = nil
+function AnimatorWork:onDestroy()
+	self.player = nil
 end
 
-return var_0_0
+return AnimatorWork

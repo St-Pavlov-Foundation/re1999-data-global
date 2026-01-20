@@ -1,85 +1,87 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightEntityMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/fight/DiceHeroFightEntityMo.lua
 
-local var_0_0 = pureTable("DiceHeroFightEntityMo")
+module("modules.logic.versionactivity2_6.dicehero.model.fight.DiceHeroFightEntityMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.hp = tonumber(arg_1_1.hp) or 0
-	arg_1_0.shield = tonumber(arg_1_1.shield) or 0
-	arg_1_0.power = tonumber(arg_1_1.power) or 0
-	arg_1_0.maxHp = tonumber(arg_1_1.maxHp) or 0
-	arg_1_0.maxShield = tonumber(arg_1_1.maxShield) or 0
-	arg_1_0.maxPower = tonumber(arg_1_1.maxPower) or 0
-	arg_1_0.buffs = {}
-	arg_1_0.buffsByUid = {}
+local DiceHeroFightEntityMo = pureTable("DiceHeroFightEntityMo")
 
-	if arg_1_0.hp > 0 then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_1.buffContainer.buffs) do
-			local var_1_0 = DiceHeroFightBuffMo.New()
+function DiceHeroFightEntityMo:init(data)
+	self.uid = data.uid
+	self.id = data.id
+	self.status = data.status
+	self.hp = tonumber(data.hp) or 0
+	self.shield = tonumber(data.shield) or 0
+	self.power = tonumber(data.power) or 0
+	self.maxHp = tonumber(data.maxHp) or 0
+	self.maxShield = tonumber(data.maxShield) or 0
+	self.maxPower = tonumber(data.maxPower) or 0
+	self.buffs = {}
+	self.buffsByUid = {}
 
-			var_1_0:init(iter_1_1)
+	if self.hp > 0 then
+		for k, v in ipairs(data.buffContainer.buffs) do
+			local buffMo = DiceHeroFightBuffMo.New()
 
-			if var_1_0.co.visible == 1 then
-				table.insert(arg_1_0.buffs, var_1_0)
+			buffMo:init(v)
+
+			if buffMo.co.visible == 1 then
+				table.insert(self.buffs, buffMo)
 			end
 
-			arg_1_0.buffsByUid[iter_1_1.uid] = var_1_0
+			self.buffsByUid[v.uid] = buffMo
 		end
 	end
 
-	arg_1_0.relicIds = arg_1_1.relicIds
-	arg_1_0.behaviors = {}
+	self.relicIds = data.relicIds
+	self.behaviors = {}
 end
 
-function var_0_0.setHp(arg_2_0, arg_2_1)
-	arg_2_0.hp = arg_2_1
+function DiceHeroFightEntityMo:setHp(hp)
+	self.hp = hp
 
-	if arg_2_0.hp <= 0 then
-		arg_2_0.behaviors = {}
-		arg_2_0.buffs = {}
-		arg_2_0.buffsByUid = {}
+	if self.hp <= 0 then
+		self.behaviors = {}
+		self.buffs = {}
+		self.buffsByUid = {}
 	end
 end
 
-function var_0_0.setSkills(arg_3_0, arg_3_1)
-	arg_3_0.skills = arg_3_1
+function DiceHeroFightEntityMo:setSkills(skills)
+	self.skills = skills
 end
 
-function var_0_0.clearBehavior(arg_4_0)
-	arg_4_0.behaviors = {}
+function DiceHeroFightEntityMo:clearBehavior()
+	self.behaviors = {}
 end
 
-function var_0_0.addBehavior(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.hp <= 0 then
+function DiceHeroFightEntityMo:addBehavior(data, heroUid)
+	if self.hp <= 0 then
 		return
 	end
 
-	if not arg_5_0.behaviors.type then
-		arg_5_0:setBehaviorData(arg_5_0.behaviors, arg_5_1, arg_5_2)
+	if not self.behaviors.type then
+		self:setBehaviorData(self.behaviors, data, heroUid)
 	else
-		arg_5_0.behaviors.exList = arg_5_0.behaviors.exList or {}
+		self.behaviors.exList = self.behaviors.exList or {}
 
-		local var_5_0 = {}
+		local behavior = {}
 
-		arg_5_0:setBehaviorData(var_5_0, arg_5_1, arg_5_2)
-		table.insert(arg_5_0.behaviors.exList, var_5_0)
+		self:setBehaviorData(behavior, data, heroUid)
+		table.insert(self.behaviors.exList, behavior)
 	end
 end
 
-function var_0_0.setBehaviorData(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_1.type = arg_6_2.type
-	arg_6_1.value = arg_6_2.value
-	arg_6_1.isToSelf = arg_6_2.fromId == arg_6_2.targetIds[1]
-	arg_6_1.isToHero = arg_6_3 == arg_6_2.targetIds[1]
-	arg_6_1.isToAll = #arg_6_2.targetIds > 1
-	arg_6_1.isToFriend = not arg_6_1.isToAll and not arg_6_1.isToSelf and not arg_6_1.isToHero
+function DiceHeroFightEntityMo:setBehaviorData(behavior, data, heroUid)
+	behavior.type = data.type
+	behavior.value = data.value
+	behavior.isToSelf = data.fromId == data.targetIds[1]
+	behavior.isToHero = heroUid == data.targetIds[1]
+	behavior.isToAll = #data.targetIds > 1
+	behavior.isToFriend = not behavior.isToAll and not behavior.isToSelf and not behavior.isToHero
 end
 
-function var_0_0.isMixDice(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.buffsByUid) do
-		if iter_7_1.co.effect == DiceHeroEnum.SkillEffectType.DiceMix then
+function DiceHeroFightEntityMo:isMixDice()
+	for _, v in pairs(self.buffsByUid) do
+		if v.co.effect == DiceHeroEnum.SkillEffectType.DiceMix then
 			return true
 		end
 	end
@@ -87,71 +89,71 @@ function var_0_0.isMixDice(arg_7_0)
 	return false
 end
 
-function var_0_0.isBanSkillCard(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.buffsByUid) do
-		if iter_8_1.co.effect == DiceHeroEnum.SkillEffectType.BanSkillCard then
-			local var_8_0 = tonumber(iter_8_1.co.param) or 0
+function DiceHeroFightEntityMo:isBanSkillCard(cardType)
+	for _, v in pairs(self.buffsByUid) do
+		if v.co.effect == DiceHeroEnum.SkillEffectType.BanSkillCard then
+			local banType = tonumber(v.co.param) or 0
 
-			return var_8_0 == arg_8_1 or var_8_0 == 0
+			return banType == cardType or banType == 0
 		end
 	end
 
 	return false
 end
 
-function var_0_0.addOrUpdateBuff(arg_9_0, arg_9_1)
-	if arg_9_0.hp <= 0 then
+function DiceHeroFightEntityMo:addOrUpdateBuff(buffMo)
+	if self.hp <= 0 then
 		return
 	end
 
-	if arg_9_0.buffsByUid[arg_9_1.uid] then
-		arg_9_0.buffsByUid[arg_9_1.uid]:init(arg_9_1)
+	if self.buffsByUid[buffMo.uid] then
+		self.buffsByUid[buffMo.uid]:init(buffMo)
 	else
-		local var_9_0 = DiceHeroFightBuffMo.New()
+		local newBuffMo = DiceHeroFightBuffMo.New()
 
-		var_9_0:init(arg_9_1)
+		newBuffMo:init(buffMo)
 
-		arg_9_0.buffsByUid[arg_9_1.uid] = var_9_0
+		self.buffsByUid[buffMo.uid] = newBuffMo
 
-		if var_9_0.co.visible == 1 then
-			table.insert(arg_9_0.buffs, var_9_0)
+		if newBuffMo.co.visible == 1 then
+			table.insert(self.buffs, newBuffMo)
 		end
 	end
 end
 
-function var_0_0.isAddLayer(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.buffsByUid[arg_10_1.uid]
+function DiceHeroFightEntityMo:isAddLayer(buffMo)
+	local oldBuffMo = self.buffsByUid[buffMo.uid]
 
-	if not var_10_0 then
+	if not oldBuffMo then
 		return true
 	end
 
-	return var_10_0.layer < arg_10_1.layer
+	return oldBuffMo.layer < buffMo.layer
 end
 
-function var_0_0.removeBuff(arg_11_0, arg_11_1)
-	if arg_11_0.buffsByUid[arg_11_1] then
-		tabletool.removeValue(arg_11_0.buffs, arg_11_0.buffsByUid[arg_11_1])
+function DiceHeroFightEntityMo:removeBuff(buffUid)
+	if self.buffsByUid[buffUid] then
+		tabletool.removeValue(self.buffs, self.buffsByUid[buffUid])
 
-		arg_11_0.buffsByUid[arg_11_1] = nil
+		self.buffsByUid[buffUid] = nil
 	end
 end
 
-function var_0_0.canUseHeroSkill(arg_12_0)
-	if arg_12_0.power < arg_12_0.maxPower then
+function DiceHeroFightEntityMo:canUseHeroSkill()
+	if self.power < self.maxPower then
 		return false
 	end
 
-	if arg_12_0:isBanSkillCard(DiceHeroEnum.CardType.Hero) then
+	if self:isBanSkillCard(DiceHeroEnum.CardType.Hero) then
 		return false
 	end
 
-	if not arg_12_0.skills then
+	if not self.skills then
 		return false
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.skills) do
-		if iter_12_1.co.spiritskilltype == DiceHeroEnum.HeroCardType.ActiveSkill then
+	for _, skill in ipairs(self.skills) do
+		if skill.co.spiritskilltype == DiceHeroEnum.HeroCardType.ActiveSkill then
 			return true
 		end
 	end
@@ -159,21 +161,21 @@ function var_0_0.canUseHeroSkill(arg_12_0)
 	return false
 end
 
-function var_0_0.canUsePassiveSkill(arg_13_0)
-	if arg_13_0.power <= 0 then
+function DiceHeroFightEntityMo:canUsePassiveSkill()
+	if self.power <= 0 then
 		return
 	end
 
-	if arg_13_0:isBanSkillCard(DiceHeroEnum.CardType.Hero) then
+	if self:isBanSkillCard(DiceHeroEnum.CardType.Hero) then
 		return false
 	end
 
-	if not arg_13_0.skills then
+	if not self.skills then
 		return false
 	end
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.skills) do
-		if iter_13_1.co.spiritskilltype == DiceHeroEnum.HeroCardType.PassiveSkill then
+	for _, skill in ipairs(self.skills) do
+		if skill.co.spiritskilltype == DiceHeroEnum.HeroCardType.PassiveSkill then
 			return true
 		end
 	end
@@ -181,9 +183,9 @@ function var_0_0.canUsePassiveSkill(arg_13_0)
 	return false
 end
 
-function var_0_0.haveBuff2(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.buffsByUid) do
-		if iter_14_1.co.id == 2 then
+function DiceHeroFightEntityMo:haveBuff2()
+	for _, v in pairs(self.buffsByUid) do
+		if v.co.id == 2 then
 			return true
 		end
 	end
@@ -191,4 +193,4 @@ function var_0_0.haveBuff2(arg_14_0)
 	return false
 end
 
-return var_0_0
+return DiceHeroFightEntityMo

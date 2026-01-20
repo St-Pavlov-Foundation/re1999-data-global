@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/view/ActivityTradeBargainViewContainer.lua
 
-local var_0_0 = class("ActivityTradeBargainViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityTradeBargainViewContainer = class("ActivityTradeBargainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityTradeBargainView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_content"))
+function ActivityTradeBargainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityTradeBargainView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, TabViewGroup.New(2, "#go_content"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function ActivityTradeBargainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.VersionActivity_1_2_Trade)
 
-		arg_2_0._navigateButtonView:setCloseCheck(arg_2_0._closeCheckFunc, arg_2_0)
+		self._navigateButtonView:setCloseCheck(self._closeCheckFunc, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == 2 then
+	elseif tabContainerId == 2 then
 		return {
 			ActivityTradeBargainQuoteView.New(),
 			ActivityTradeBargainRewardView.New()
@@ -33,7 +35,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function ActivityTradeBargainViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_2Enum.ActivityId.Trade)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_2Enum.ActivityId.Trade
@@ -41,12 +43,12 @@ function var_0_0.onContainerInit(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 end
 
-function var_0_0.setActId(arg_4_0, arg_4_1)
-	arg_4_0.actId = arg_4_1
+function ActivityTradeBargainViewContainer:setActId(actId)
+	self.actId = actId
 end
 
-function var_0_0.getActId(arg_5_0)
-	return arg_5_0.actId
+function ActivityTradeBargainViewContainer:getActId()
+	return self.actId
 end
 
-return var_0_0
+return ActivityTradeBargainViewContainer

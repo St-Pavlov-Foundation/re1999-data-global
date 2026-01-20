@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_1.enter.view.VersionActivity2_1EnterViewTabItem2", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/enter/view/VersionActivity2_1EnterViewTabItem2.lua
 
-local var_0_0 = class("VersionActivity2_1EnterViewTabItem2", VersionActivity2_1EnterViewTabItemBase)
+module("modules.logic.versionactivity2_1.enter.view.VersionActivity2_1EnterViewTabItem2", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity2_1EnterViewTabItem2 = class("VersionActivity2_1EnterViewTabItem2", VersionActivity2_1EnterViewTabItemBase)
 
-	arg_1_0.goselect = gohelper.findChild(arg_1_0.go, "#go_unselect")
-	arg_1_0.gounselect = gohelper.findChild(arg_1_0.go, "#go_unselect")
-	arg_1_0.txtselectName = gohelper.findChildText(arg_1_0.go, "#go_select/#txt_name")
-	arg_1_0.txtselectNameEn = gohelper.findChildText(arg_1_0.go, "#go_select/#txt_nameen")
-	arg_1_0.txtunselectName = gohelper.findChildText(arg_1_0.go, "#go_unselect/#txt_name")
-	arg_1_0.txtunselectNameEn = gohelper.findChildText(arg_1_0.go, "#go_unselect/#txt_nameen")
+function VersionActivity2_1EnterViewTabItem2:_editableInitView()
+	VersionActivity2_1EnterViewTabItem2.super._editableInitView(self)
+
+	self.goselect = gohelper.findChild(self.go, "#go_unselect")
+	self.gounselect = gohelper.findChild(self.go, "#go_unselect")
+	self.txtselectName = gohelper.findChildText(self.go, "#go_select/#txt_name")
+	self.txtselectNameEn = gohelper.findChildText(self.go, "#go_select/#txt_nameen")
+	self.txtunselectName = gohelper.findChildText(self.go, "#go_unselect/#txt_name")
+	self.txtunselectNameEn = gohelper.findChildText(self.go, "#go_unselect/#txt_nameen")
 end
 
-function var_0_0.afterSetData(arg_2_0)
-	var_0_0.super.afterSetData(arg_2_0)
+function VersionActivity2_1EnterViewTabItem2:afterSetData()
+	VersionActivity2_1EnterViewTabItem2.super.afterSetData(self)
 
-	arg_2_0.txtselectName.text = arg_2_0.activityCo and arg_2_0.activityCo.name or ""
-	arg_2_0.txtselectNameEn.text = arg_2_0.activityCo and arg_2_0.activityCo.nameEn or ""
-	arg_2_0.txtunselectName.text = arg_2_0.activityCo and arg_2_0.activityCo.name or ""
-	arg_2_0.txtunselectNameEn.text = arg_2_0.activityCo and arg_2_0.activityCo.nameEn or ""
+	self.txtselectName.text = self.activityCo and self.activityCo.name or ""
+	self.txtselectNameEn.text = self.activityCo and self.activityCo.nameEn or ""
+	self.txtunselectName.text = self.activityCo and self.activityCo.name or ""
+	self.txtunselectNameEn.text = self.activityCo and self.activityCo.nameEn or ""
 end
 
-function var_0_0.childRefreshSelect(arg_3_0, arg_3_1)
-	var_0_0.super.childRefreshSelect(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0.goselect, arg_3_0.isSelect)
-	gohelper.setActive(arg_3_0.gounselect, not arg_3_0.isSelect)
+function VersionActivity2_1EnterViewTabItem2:childRefreshSelect(actId)
+	VersionActivity2_1EnterViewTabItem2.super.childRefreshSelect(self, actId)
+	gohelper.setActive(self.goselect, self.isSelect)
+	gohelper.setActive(self.gounselect, not self.isSelect)
 end
 
-return var_0_0
+return VersionActivity2_1EnterViewTabItem2

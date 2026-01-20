@@ -1,96 +1,98 @@
-﻿module("modules.logic.season.view1_3.Season1_3CelebrityCardGetlView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_3/Season1_3CelebrityCardGetlView.lua
 
-local var_0_0 = class("Season1_3CelebrityCardGetlView", BaseViewExtended)
+module("modules.logic.season.view1_3.Season1_3CelebrityCardGetlView", package.seeall)
 
-var_0_0.OpenType = {
+local Season1_3CelebrityCardGetlView = class("Season1_3CelebrityCardGetlView", BaseViewExtended)
+
+Season1_3CelebrityCardGetlView.OpenType = {
 	Get = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
-	arg_1_0._simagebg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg3")
-	arg_1_0._simagebg4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg4")
-	arg_1_0._simagebg5 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg5")
-	arg_1_0._goselfSelect = gohelper.findChild(arg_1_0.viewGO, "#go_selfSelect")
-	arg_1_0._gocardget = gohelper.findChild(arg_1_0.viewGO, "#go_cardget")
-	arg_1_0._scrollcardget = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget")
-	arg_1_0._gocardContent = gohelper.findChild(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent")
-	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent/#go_carditem")
-	arg_1_0._btnclose = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0._contentGrid = arg_1_0._gocardContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
-	arg_1_0._contentSizeFitter = arg_1_0._gocardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+function Season1_3CelebrityCardGetlView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
+	self._simagebg3 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg3")
+	self._simagebg4 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg4")
+	self._simagebg5 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg5")
+	self._goselfSelect = gohelper.findChild(self.viewGO, "#go_selfSelect")
+	self._gocardget = gohelper.findChild(self.viewGO, "#go_cardget")
+	self._scrollcardget = gohelper.findChildScrollRect(self.viewGO, "#go_cardget/mask/#scroll_cardget")
+	self._gocardContent = gohelper.findChild(self.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent")
+	self._gocarditem = gohelper.findChild(self.viewGO, "#go_cardget/mask/#scroll_cardget/Viewport/#go_cardContent/#go_carditem")
+	self._btnclose = gohelper.getClick(self.viewGO)
+	self._contentGrid = self._gocardContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	self._contentSizeFitter = self._gocardContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Season1_3CelebrityCardGetlView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function Season1_3CelebrityCardGetlView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season1_3CelebrityCardGetlView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function Season1_3CelebrityCardGetlView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_celebrity_get)
-	arg_5_0._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
-	arg_5_0._simagebg3:LoadImage(ResUrl.getSeasonIcon("bg_zs.png"))
-	arg_5_0._simagebg5:LoadImage(ResUrl.getSeasonIcon("bg_zs2.png"))
-	arg_5_0._simagebg4:LoadImage(ResUrl.getSeasonIcon("full/img_bg2.png"))
-	gohelper.setActive(arg_5_0._goselfSelect, false)
-	gohelper.setActive(arg_5_0._gocardget, true)
-	arg_5_0:_showGetCard()
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
+	self._simagebg3:LoadImage(ResUrl.getSeasonIcon("bg_zs.png"))
+	self._simagebg5:LoadImage(ResUrl.getSeasonIcon("bg_zs2.png"))
+	self._simagebg4:LoadImage(ResUrl.getSeasonIcon("full/img_bg2.png"))
+	gohelper.setActive(self._goselfSelect, false)
+	gohelper.setActive(self._gocardget, true)
+	self:_showGetCard()
 	Activity104Rpc.instance:sendGetUnlockActivity104EquipIdsRequest(Activity104Model.instance:getCurSeasonId())
 end
 
-function var_0_0._showGetCard(arg_6_0)
-	arg_6_0:com_loadAsset(Season1_3CelebrityCardItem.AssetPath, arg_6_0._onCardItemLoaded)
+function Season1_3CelebrityCardGetlView:_showGetCard()
+	self:com_loadAsset(Season1_3CelebrityCardItem.AssetPath, self._onCardItemLoaded)
 end
 
-function var_0_0._onCardItemLoaded(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1:GetResource()
-	local var_7_1 = gohelper.clone(var_7_0, gohelper.findChild(arg_7_0._gocarditem, "go_itempos"), "root")
+function Season1_3CelebrityCardGetlView:_onCardItemLoaded(loader)
+	local tarPrefab = loader:GetResource()
+	local obj = gohelper.clone(tarPrefab, gohelper.findChild(self._gocarditem, "go_itempos"), "root")
 
-	transformhelper.setLocalScale(var_7_1.transform, 0.65, 0.65, 0.65)
+	transformhelper.setLocalScale(obj.transform, 0.65, 0.65, 0.65)
 
-	arg_7_0._scroll_view = arg_7_0:com_registSimpleScrollView(arg_7_0._scrollcardget.gameObject, ScrollEnum.ScrollDirV, 4)
+	self._scroll_view = self:com_registSimpleScrollView(self._scrollcardget.gameObject, ScrollEnum.ScrollDirV, 4)
 
-	arg_7_0._scroll_view:setClass(Season1_3CelebrityCardGetScrollItem)
-	arg_7_0._scroll_view:setObjItem(var_7_1)
+	self._scroll_view:setClass(Season1_3CelebrityCardGetScrollItem)
+	self._scroll_view:setObjItem(obj)
 
-	local var_7_2 = arg_7_0.viewParam.data
+	local data = self.viewParam.data
 
-	if #var_7_2 > 4 then
-		recthelper.setAnchor(arg_7_0._scrollcardget.transform, 0, -473)
+	if #data > 4 then
+		recthelper.setAnchor(self._scrollcardget.transform, 0, -473)
 
-		arg_7_0._contentGrid.enabled = false
-		arg_7_0._contentSizeFitter.enabled = false
+		self._contentGrid.enabled = false
+		self._contentSizeFitter.enabled = false
 	else
-		recthelper.setAnchor(arg_7_0._scrollcardget.transform, 0, -618)
+		recthelper.setAnchor(self._scrollcardget.transform, 0, -618)
 
-		arg_7_0._contentGrid.enabled = true
-		arg_7_0._contentSizeFitter.enabled = true
+		self._contentGrid.enabled = true
+		self._contentSizeFitter.enabled = true
 	end
 
-	arg_7_0._scroll_view:setData(var_7_2)
+	self._scroll_view:setData(data)
 end
 
-function var_0_0.isItemID(arg_8_0)
-	return arg_8_0.viewParam.is_item_id
+function Season1_3CelebrityCardGetlView:isItemID()
+	return self.viewParam.is_item_id
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0._simagebg1:UnLoadImage()
-	arg_9_0._simagebg3:UnLoadImage()
-	arg_9_0._simagebg4:UnLoadImage()
-	arg_9_0._simagebg5:UnLoadImage()
+function Season1_3CelebrityCardGetlView:onClose()
+	self._simagebg1:UnLoadImage()
+	self._simagebg3:UnLoadImage()
+	self._simagebg4:UnLoadImage()
+	self._simagebg5:UnLoadImage()
 end
 
-return var_0_0
+return Season1_3CelebrityCardGetlView

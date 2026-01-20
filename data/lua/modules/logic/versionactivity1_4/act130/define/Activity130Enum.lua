@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity1_4.act130.define.Activity130Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/define/Activity130Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act130.define.Activity130Enum", package.seeall)
 
-var_0_0.TaskMOAllFinishId = -100
-var_0_0.MinSlideX = 0
-var_0_0.MaxSlideX = 1220
-var_0_0.SceneMaxX = 16.4
-var_0_0.SlideSpeed = 1
-var_0_0.MaxShowEpisodeCount = 5
-var_0_0.ActivityId = {
+local Activity130Enum = _M
+
+Activity130Enum.TaskMOAllFinishId = -100
+Activity130Enum.MinSlideX = 0
+Activity130Enum.MaxSlideX = 1220
+Activity130Enum.SceneMaxX = 16.4
+Activity130Enum.SlideSpeed = 1
+Activity130Enum.MaxShowEpisodeCount = 5
+Activity130Enum.ActivityId = {
 	Act130 = 11402
 }
-var_0_0.AnimatorTime = {
+Activity130Enum.AnimatorTime = {
 	TaskReward = 0.5,
 	TaskRewardMoveUp = 0.15
 }
-var_0_0.ElementType = {
+Activity130Enum.ElementType = {
 	TaskTip = 5,
 	General = 2,
 	Dialog = 4,
@@ -26,30 +28,30 @@ var_0_0.ElementType = {
 	Respawn = 3,
 	CheckDecrypt = 8
 }
-var_0_0.EpisodeState = {
+Activity130Enum.EpisodeState = {
 	Unfinished = 0,
 	Finished = 1
 }
-var_0_0.GeneralType = {
+Activity130Enum.GeneralType = {
 	Audio = 1,
 	Bgm = 0
 }
-var_0_0.ProgressType = {
+Activity130Enum.ProgressType = {
 	Interact = 1,
 	BeforeStory = 0,
 	Finished = 3,
 	AfterStory = 2
 }
-var_0_0.dialogType = {
+Activity130Enum.dialogType = {
 	slector = "slector",
 	option = "option",
 	talk = "talk",
 	dialog = "dialog",
 	tip = "tip"
 }
-var_0_0.lvSceneType = {
+Activity130Enum.lvSceneType = {
 	Light = 1,
 	Moon = 2
 }
 
-return var_0_0
+return Activity130Enum

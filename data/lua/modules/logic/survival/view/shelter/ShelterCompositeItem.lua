@@ -1,78 +1,80 @@
-﻿module("modules.logic.survival.view.shelter.ShelterCompositeItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterCompositeItem.lua
 
-local var_0_0 = class("ShelterCompositeItem", ListScrollCellExtend)
+module("modules.logic.survival.view.shelter.ShelterCompositeItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.compositeView = arg_1_1.compositeView
-	arg_1_0.index = arg_1_1.index
+local ShelterCompositeItem = class("ShelterCompositeItem", ListScrollCellExtend)
+
+function ShelterCompositeItem:ctor(param)
+	self.compositeView = param.compositeView
+	self.index = param.index
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.goUnChoose = gohelper.findChild(arg_2_0.viewGO, "#go_unchoose")
-	arg_2_0.btnAdd = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_unchoose/#btn_click")
-	arg_2_0.goChoose = gohelper.findChild(arg_2_0.viewGO, "#go_choosed")
-	arg_2_0.btnRemove = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#go_choosed/#btn_remove")
-	arg_2_0.goInfoView = gohelper.findChild(arg_2_0.viewGO, "#go_choosed/#go_infoview")
+function ShelterCompositeItem:onInitView()
+	self.goUnChoose = gohelper.findChild(self.viewGO, "#go_unchoose")
+	self.btnAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_unchoose/#btn_click")
+	self.goChoose = gohelper.findChild(self.viewGO, "#go_choosed")
+	self.btnRemove = gohelper.findChildButtonWithAudio(self.viewGO, "#go_choosed/#btn_remove")
+	self.goInfoView = gohelper.findChild(self.viewGO, "#go_choosed/#go_infoview")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addClickCb(arg_3_0.btnAdd, arg_3_0.onClickAdd, arg_3_0)
-	arg_3_0:addClickCb(arg_3_0.btnRemove, arg_3_0.onClickRemove, arg_3_0)
+function ShelterCompositeItem:addEvents()
+	self:addClickCb(self.btnAdd, self.onClickAdd, self)
+	self:addClickCb(self.btnRemove, self.onClickRemove, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0:removeClickCb(arg_4_0.btnAdd)
-	arg_4_0:removeClickCb(arg_4_0.btnRemove)
+function ShelterCompositeItem:removeEvents()
+	self:removeClickCb(self.btnAdd)
+	self:removeClickCb(self.btnRemove)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function ShelterCompositeItem:_editableInitView()
 	return
 end
 
-function var_0_0.onClickAdd(arg_6_0)
-	arg_6_0.compositeView:showMaterialView(arg_6_0.index)
+function ShelterCompositeItem:onClickAdd()
+	self.compositeView:showMaterialView(self.index)
 end
 
-function var_0_0.onClickRemove(arg_7_0)
-	arg_7_0.compositeView:removeMaterialData(arg_7_0.index)
+function ShelterCompositeItem:onClickRemove()
+	self.compositeView:removeMaterialData(self.index)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0.itemMo = arg_8_1
+function ShelterCompositeItem:onUpdateMO(mo)
+	self.itemMo = mo
 
-	arg_8_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0)
-	gohelper.setActive(arg_9_0.goUnChoose, arg_9_0.itemMo == nil)
-	gohelper.setActive(arg_9_0.goChoose, arg_9_0.itemMo ~= nil)
-	arg_9_0:refreshInfoView()
+function ShelterCompositeItem:refreshView()
+	gohelper.setActive(self.goUnChoose, self.itemMo == nil)
+	gohelper.setActive(self.goChoose, self.itemMo ~= nil)
+	self:refreshInfoView()
 end
 
-function var_0_0.refreshInfoView(arg_10_0)
-	if not arg_10_0._infoPanel then
-		local var_10_0 = arg_10_0.compositeView.viewContainer:getSetting().otherRes.infoView
-		local var_10_1 = arg_10_0.compositeView.viewContainer:getResInst(var_10_0, arg_10_0.goInfoView)
+function ShelterCompositeItem:refreshInfoView()
+	if not self._infoPanel then
+		local infoViewRes = self.compositeView.viewContainer:getSetting().otherRes.infoView
+		local infoGo = self.compositeView.viewContainer:getResInst(infoViewRes, self.goInfoView)
 
-		arg_10_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_1, SurvivalBagInfoPart)
+		self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-		local var_10_2 = {
+		local t = {
 			[SurvivalEnum.ItemSource.Shelter] = SurvivalEnum.ItemSource.Info,
 			[SurvivalEnum.ItemSource.Map] = SurvivalEnum.ItemSource.Info
 		}
 
-		arg_10_0._infoPanel:setChangeSource(var_10_2)
+		self._infoPanel:setChangeSource(t)
 	end
 
-	arg_10_0._infoPanel:updateMo(arg_10_0.itemMo)
+	self._infoPanel:updateMo(self.itemMo)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function ShelterCompositeItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return ShelterCompositeItem

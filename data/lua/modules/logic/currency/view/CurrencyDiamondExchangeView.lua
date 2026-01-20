@@ -1,196 +1,202 @@
-﻿module("modules.logic.currency.view.CurrencyDiamondExchangeView", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/CurrencyDiamondExchangeView.lua
 
-local var_0_0 = class("CurrencyDiamondExchangeView", BaseView)
+module("modules.logic.currency.view.CurrencyDiamondExchangeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_leftbg")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_rightbg")
-	arg_1_0._txtleftproductname = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_leftproductname")
-	arg_1_0._simageleftproduct = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_leftproduct")
-	arg_1_0._txtrightproductname = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_rightproductname")
-	arg_1_0._simagerightproduct = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#simage_rightproduct")
-	arg_1_0._gobuy = gohelper.findChild(arg_1_0.viewGO, "#go_buy")
-	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_buy/valuebg/#input_value")
-	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_min")
-	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_sub")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_add")
-	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_max")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_buy")
-	arg_1_0._gobuylimit = gohelper.findChild(arg_1_0.viewGO, "#go_buy/#go_buylimit")
-	arg_1_0._simagecosticon = gohelper.findChildImage(arg_1_0.viewGO, "#go_buy/cost/#simage_costicon")
-	arg_1_0._txtoriginalCost = gohelper.findChildText(arg_1_0.viewGO, "#go_buy/cost/#txt_originalCost")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local CurrencyDiamondExchangeView = class("CurrencyDiamondExchangeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CurrencyDiamondExchangeView:onInitView()
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "decorate/#simage_leftbg")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "decorate/#simage_rightbg")
+	self._txtleftproductname = gohelper.findChildText(self.viewGO, "left/#txt_leftproductname")
+	self._simageleftproduct = gohelper.findChildSingleImage(self.viewGO, "left/#simage_leftproduct")
+	self._txtrightproductname = gohelper.findChildText(self.viewGO, "right/#txt_rightproductname")
+	self._simagerightproduct = gohelper.findChildSingleImage(self.viewGO, "right/#simage_rightproduct")
+	self._gobuy = gohelper.findChild(self.viewGO, "#go_buy")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.viewGO, "#go_buy/valuebg/#input_value")
+	self._btnmin = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_min")
+	self._btnsub = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_sub")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_add")
+	self._btnmax = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_max")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_buy")
+	self._gobuylimit = gohelper.findChild(self.viewGO, "#go_buy/#go_buylimit")
+	self._simagecosticon = gohelper.findChildImage(self.viewGO, "#go_buy/cost/#simage_costicon")
+	self._txtoriginalCost = gohelper.findChildText(self.viewGO, "#go_buy/cost/#txt_originalCost")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
-	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function CurrencyDiamondExchangeView:addEvents()
+	self._btnmin:AddClickListener(self._btnminOnClick, self)
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnmax:AddClickListener(self._btnmaxOnClick, self)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnmin:RemoveClickListener()
-	arg_3_0._btnsub:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnmax:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function CurrencyDiamondExchangeView:removeEvents()
+	self._btnmin:RemoveClickListener()
+	self._btnsub:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
+	self._btnmax:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function CurrencyDiamondExchangeView:_btncloseOnClick()
+	self:closeThis()
 end
 
-var_0_0.ClickStep = 1
-var_0_0.MinAmount = 0
+CurrencyDiamondExchangeView.ClickStep = 1
+CurrencyDiamondExchangeView.MinAmount = 0
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._currenctAmount = var_0_0.MinAmount
+function CurrencyDiamondExchangeView:_editableInitView()
+	self._currenctAmount = CurrencyDiamondExchangeView.MinAmount
 
-	local var_5_0 = MaterialEnum.MaterialType.Currency
-	local var_5_1 = CurrencyEnum.CurrencyType.Diamond
-	local var_5_2, var_5_3 = ItemModel.instance:getItemConfigAndIcon(var_5_0, var_5_1, true)
+	local currencyType = MaterialEnum.MaterialType.Currency
+	local currencyId = CurrencyEnum.CurrencyType.Diamond
+	local itemConfig, itemIcon = ItemModel.instance:getItemConfigAndIcon(currencyType, currencyId, true)
 
-	arg_5_0._txtleftproductname.text = string.format("%s %s1", var_5_2.name, luaLang("multiple"))
+	self._txtleftproductname.text = string.format("%s %s1", itemConfig.name, luaLang("multiple"))
+	currencyId = CurrencyEnum.CurrencyType.FreeDiamondCoupon
+	itemConfig, itemIcon = ItemModel.instance:getItemConfigAndIcon(currencyType, currencyId, true)
+	self._txtrightproductname.text = string.format("%s %s1", itemConfig.name, luaLang("multiple"))
 
-	local var_5_4 = CurrencyEnum.CurrencyType.FreeDiamondCoupon
-	local var_5_5, var_5_6 = ItemModel.instance:getItemConfigAndIcon(var_5_0, var_5_4, true)
+	self._inputvalue:AddOnEndEdit(self._onInputNameEndEdit, self)
 
-	arg_5_0._txtrightproductname.text = string.format("%s %s1", var_5_5.name, luaLang("multiple"))
+	self._inputText = self._inputvalue.inputField.textComponent
+	self._colorDefault = Color.New(0.9058824, 0.8941177, 0.8941177, 1)
 
-	arg_5_0._inputvalue:AddOnEndEdit(arg_5_0._onInputNameEndEdit, arg_5_0)
-
-	arg_5_0._inputText = arg_5_0._inputvalue.inputField.textComponent
-	arg_5_0._colorDefault = Color.New(0.9058824, 0.8941177, 0.8941177, 1)
-
-	arg_5_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_5_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_5_0._simageleftproduct:LoadImage(ResUrl.getCurrencyItemIcon("201"))
-	arg_5_0._simagerightproduct:LoadImage(ResUrl.getCurrencyItemIcon("202"))
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_5_0._simagecosticon, "201_1")
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simageleftproduct:LoadImage(ResUrl.getCurrencyItemIcon("201"))
+	self._simagerightproduct:LoadImage(ResUrl.getCurrencyItemIcon("202"))
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._simagecosticon, "201_1")
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	arg_6_0._inputvalue:RemoveOnEndEdit()
-	arg_6_0._simageleftbg:UnLoadImage()
-	arg_6_0._simagerightbg:UnLoadImage()
-	arg_6_0._simageleftproduct:UnLoadImage()
-	arg_6_0._simagerightproduct:UnLoadImage()
+function CurrencyDiamondExchangeView:onDestroyView()
+	self._inputvalue:RemoveOnEndEdit()
+	self._simageleftbg:UnLoadImage()
+	self._simagerightbg:UnLoadImage()
+	self._simageleftproduct:UnLoadImage()
+	self._simagerightproduct:UnLoadImage()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:onOpen()
+function CurrencyDiamondExchangeView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._currenctAmount = 1
+function CurrencyDiamondExchangeView:onOpen()
+	self._currenctAmount = 1
 
-	arg_8_0:refreshAmount()
-	arg_8_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_8_0.refreshAmount, arg_8_0)
+	self:refreshAmount()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshAmount, self)
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_9_0.refreshAmount, arg_9_0)
+function CurrencyDiamondExchangeView:onClose()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshAmount, self)
 end
 
-function var_0_0.refreshAmount(arg_10_0)
-	arg_10_0:checkCurrenctAmount()
+function CurrencyDiamondExchangeView:refreshAmount()
+	self:checkCurrenctAmount()
 
-	local var_10_0 = tostring(arg_10_0._currenctAmount)
-	local var_10_1 = arg_10_0:getOwnAmount() >= arg_10_0._currenctAmount
-	local var_10_2 = arg_10_0._colorDefault
+	local strAmount = tostring(self._currenctAmount)
+	local enough = self:getOwnAmount() >= self._currenctAmount
+	local color = self._colorDefault
 
-	if not var_10_1 then
-		var_10_2 = Color.red
+	if not enough then
+		color = Color.red
 	end
 
-	arg_10_0._inputText.color = var_10_2
+	self._inputText.color = color
 
-	arg_10_0._inputvalue:SetText(var_10_0)
+	self._inputvalue:SetText(strAmount)
 
-	arg_10_0._txtoriginalCost.text = var_10_0
+	self._txtoriginalCost.text = strAmount
 
-	gohelper.setActive(arg_10_0._btnbuy.gameObject, arg_10_0._currenctAmount > 0)
-	gohelper.setActive(arg_10_0._gobuylimit, arg_10_0._currenctAmount <= 0)
+	gohelper.setActive(self._btnbuy.gameObject, self._currenctAmount > 0)
+	gohelper.setActive(self._gobuylimit, self._currenctAmount <= 0)
 end
 
-function var_0_0._onInputNameEndEdit(arg_11_0)
-	arg_11_0._currenctAmount = tonumber(arg_11_0._inputvalue:GetText())
+function CurrencyDiamondExchangeView:_onInputNameEndEdit()
+	self._currenctAmount = tonumber(self._inputvalue:GetText())
 
-	arg_11_0:refreshAmount()
+	self:refreshAmount()
 end
 
-function var_0_0._btnminOnClick(arg_12_0)
-	if arg_12_0:getOwnAmount() <= 0 then
-		arg_12_0._currenctAmount = 0
+function CurrencyDiamondExchangeView:_btnminOnClick()
+	local ownQuantity = self:getOwnAmount()
+
+	if ownQuantity <= 0 then
+		self._currenctAmount = 0
 	else
-		arg_12_0._currenctAmount = 1
+		self._currenctAmount = 1
 	end
 
-	arg_12_0:refreshAmount()
+	self:refreshAmount()
 end
 
-function var_0_0._btnmaxOnClick(arg_13_0)
-	arg_13_0._currenctAmount = arg_13_0:getOwnAmount()
+function CurrencyDiamondExchangeView:_btnmaxOnClick()
+	local ownQuantity = self:getOwnAmount()
 
-	arg_13_0:refreshAmount()
+	self._currenctAmount = ownQuantity
+
+	self:refreshAmount()
 end
 
-function var_0_0._btnsubOnClick(arg_14_0)
-	if arg_14_0._currenctAmount ~= nil then
-		arg_14_0._currenctAmount = arg_14_0._currenctAmount - var_0_0.ClickStep
+function CurrencyDiamondExchangeView:_btnsubOnClick()
+	if self._currenctAmount ~= nil then
+		self._currenctAmount = self._currenctAmount - CurrencyDiamondExchangeView.ClickStep
 
-		arg_14_0:refreshAmount()
-	end
-end
-
-function var_0_0._btnaddOnClick(arg_15_0)
-	if arg_15_0._currenctAmount ~= nil then
-		arg_15_0._currenctAmount = arg_15_0._currenctAmount + var_0_0.ClickStep
-
-		arg_15_0:refreshAmount()
+		self:refreshAmount()
 	end
 end
 
-function var_0_0._btnbuyOnClick(arg_16_0)
-	if arg_16_0._currenctAmount ~= nil and arg_16_0._currenctAmount > 0 then
-		if arg_16_0:getOwnAmount() >= arg_16_0._currenctAmount then
-			CurrencyRpc.instance:sendExchangeDiamondRequest(arg_16_0._currenctAmount, CurrencyEnum.PayDiamondExchangeSource.HUD, arg_16_0.closeThis, arg_16_0)
+function CurrencyDiamondExchangeView:_btnaddOnClick()
+	if self._currenctAmount ~= nil then
+		self._currenctAmount = self._currenctAmount + CurrencyDiamondExchangeView.ClickStep
+
+		self:refreshAmount()
+	end
+end
+
+function CurrencyDiamondExchangeView:_btnbuyOnClick()
+	if self._currenctAmount ~= nil and self._currenctAmount > 0 then
+		local ownAmount = self:getOwnAmount()
+
+		if ownAmount >= self._currenctAmount then
+			CurrencyRpc.instance:sendExchangeDiamondRequest(self._currenctAmount, CurrencyEnum.PayDiamondExchangeSource.HUD, self.closeThis, self)
 		else
-			local var_16_0 = MaterialEnum.MaterialType.Currency
-			local var_16_1 = CurrencyEnum.CurrencyType.Diamond
-			local var_16_2, var_16_3 = ItemModel.instance:getItemConfigAndIcon(var_16_0, var_16_1, true)
+			local currencyType = MaterialEnum.MaterialType.Currency
+			local currencyId = CurrencyEnum.CurrencyType.Diamond
+			local itemConfig, itemIcon = ItemModel.instance:getItemConfigAndIcon(currencyType, currencyId, true)
 
-			GameFacade.showToast(ToastEnum.DiamondBuy, var_16_2.name)
+			GameFacade.showToast(ToastEnum.DiamondBuy, itemConfig.name)
 		end
 	end
 end
 
-function var_0_0.checkCurrenctAmount(arg_17_0)
-	local var_17_0 = arg_17_0:getOwnAmount()
+function CurrencyDiamondExchangeView:checkCurrenctAmount()
+	local ownQuantity = self:getOwnAmount()
 
-	if arg_17_0._currenctAmount == nil then
-		arg_17_0._currenctAmount = 1
+	if self._currenctAmount == nil then
+		self._currenctAmount = 1
 	end
 
-	if arg_17_0._currenctAmount < var_0_0.MinAmount then
-		arg_17_0._currenctAmount = var_0_0.MinAmount
+	if self._currenctAmount < CurrencyDiamondExchangeView.MinAmount then
+		self._currenctAmount = CurrencyDiamondExchangeView.MinAmount
 	end
 end
 
-function var_0_0.getOwnAmount(arg_18_0)
+function CurrencyDiamondExchangeView:getOwnAmount()
 	return ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.Diamond)
 end
 
-function var_0_0.onClickModalMask(arg_19_0)
-	arg_19_0:closeThis()
+function CurrencyDiamondExchangeView:onClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return CurrencyDiamondExchangeView

@@ -1,58 +1,60 @@
-﻿module("modules.logic.scene.explore.comp.ExploreSceneCameraComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/explore/comp/ExploreSceneCameraComp.lua
 
-local var_0_0 = class("ExploreSceneCameraComp", CommonSceneCameraComp)
+module("modules.logic.scene.explore.comp.ExploreSceneCameraComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
-	arg_1_0._rawcameraTrace = CameraMgr.instance:getCameraTrace()
-	arg_1_0._cameraTrace = arg_1_0._rawcameraTrace
-	arg_1_0._cameraCO = nil
+local ExploreSceneCameraComp = class("ExploreSceneCameraComp", CommonSceneCameraComp)
+
+function ExploreSceneCameraComp:onInit()
+	self._scene = self:getCurScene()
+	self._rawcameraTrace = CameraMgr.instance:getCameraTrace()
+	self._cameraTrace = self._rawcameraTrace
+	self._cameraCO = nil
 end
 
-function var_0_0._onScreenResize(arg_2_0)
-	local var_2_0 = CameraMgr.instance:getFocusTrs()
-	local var_2_1, var_2_2, var_2_3 = transformhelper.getPos(var_2_0)
+function ExploreSceneCameraComp:_onScreenResize()
+	local focusTrs = CameraMgr.instance:getFocusTrs()
+	local x, y, z = transformhelper.getPos(focusTrs)
 
-	arg_2_0._cameraTrace:SetTargetFocusPos(var_2_1, var_2_2, var_2_3)
+	self._cameraTrace:SetTargetFocusPos(x, y, z)
 
-	if arg_2_0._nowFov then
-		arg_2_0:setFov(arg_2_0._nowFov)
-		arg_2_0._cameraTrace:ApplyDirectly()
+	if self._nowFov then
+		self:setFov(self._nowFov)
+		self._cameraTrace:ApplyDirectly()
 	end
 end
 
-function var_0_0.onSceneStart(arg_3_0, ...)
-	arg_3_0._rawcameraTrace.enabled = false
-	arg_3_0._cameraTrace = gohelper.onceAddComponent(arg_3_0._rawcameraTrace, typeof(ZProj.ExploreCameraTrace))
+function ExploreSceneCameraComp:onSceneStart(...)
+	self._rawcameraTrace.enabled = false
+	self._cameraTrace = gohelper.onceAddComponent(self._rawcameraTrace, typeof(ZProj.ExploreCameraTrace))
 
-	arg_3_0._cameraTrace:SetEaseTime(ExploreConstValue.CameraTraceTime)
-	var_0_0.super.onSceneStart(arg_3_0, ...)
+	self._cameraTrace:SetEaseTime(ExploreConstValue.CameraTraceTime)
+	ExploreSceneCameraComp.super.onSceneStart(self, ...)
 end
 
-function var_0_0.setFocus(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = CameraMgr.instance:getFocusTrs()
+function ExploreSceneCameraComp:setFocus(x, y, z)
+	local focusTrs = CameraMgr.instance:getFocusTrs()
 
-	transformhelper.setPos(var_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._cameraTrace:SetTargetFocusPos(arg_4_1, arg_4_2, arg_4_3)
+	transformhelper.setPos(focusTrs, x, y, z)
+	self._cameraTrace:SetTargetFocusPos(x, y, z)
 end
 
-function var_0_0.setFov(arg_5_0, arg_5_1)
-	local var_5_0 = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
-	local var_5_1 = math.max(var_5_0, 1)
+function ExploreSceneCameraComp:setFov(fov)
+	local fovRatio = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
 
-	arg_5_0._nowFov = arg_5_1
+	fovRatio = math.max(fovRatio, 1)
+	self._nowFov = fov
 
-	arg_5_0._cameraTrace:SetTargetFov(arg_5_1 * var_5_1)
+	self._cameraTrace:SetTargetFov(fov * fovRatio)
 end
 
-function var_0_0.onSceneClose(arg_6_0, ...)
-	arg_6_0._rawcameraTrace.enabled = true
+function ExploreSceneCameraComp:onSceneClose(...)
+	self._rawcameraTrace.enabled = true
 
-	gohelper.destroy(arg_6_0._cameraTrace)
+	gohelper.destroy(self._cameraTrace)
 
-	arg_6_0._cameraTrace = arg_6_0._rawcameraTrace
+	self._cameraTrace = self._rawcameraTrace
 
-	var_0_0.super.onSceneClose(arg_6_0, ...)
+	ExploreSceneCameraComp.super.onSceneClose(self, ...)
 end
 
-return var_0_0
+return ExploreSceneCameraComp

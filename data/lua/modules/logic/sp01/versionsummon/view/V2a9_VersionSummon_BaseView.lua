@@ -1,21 +1,23 @@
-﻿module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummon_BaseView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/versionsummon/view/V2a9_VersionSummon_BaseView.lua
 
-local var_0_0 = class("V2a9_VersionSummon_BaseView", Activity101SignViewBase)
+module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummon_BaseView", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local V2a9_VersionSummon_BaseView = class("V2a9_VersionSummon_BaseView", Activity101SignViewBase)
+
+function V2a9_VersionSummon_BaseView:onStart()
 	return
 end
 
-function var_0_0.onRefresh(arg_2_0)
+function V2a9_VersionSummon_BaseView:onRefresh()
 	assert(false, "please override this method in the subclass")
 end
 
-function var_0_0.addEvents(arg_3_0)
-	var_0_0.super.addEvents(arg_3_0)
+function V2a9_VersionSummon_BaseView:addEvents()
+	V2a9_VersionSummon_BaseView.super.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	var_0_0.super.removeEvents(arg_4_0)
+function V2a9_VersionSummon_BaseView:removeEvents()
+	V2a9_VersionSummon_BaseView.super.removeEvents(self)
 end
 
-return var_0_0
+return V2a9_VersionSummon_BaseView

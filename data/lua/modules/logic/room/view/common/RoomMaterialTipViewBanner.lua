@@ -1,387 +1,390 @@
-﻿module("modules.logic.room.view.common.RoomMaterialTipViewBanner", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomMaterialTipViewBanner.lua
 
-local var_0_0 = class("RoomMaterialTipViewBanner", BaseView)
+module("modules.logic.room.view.common.RoomMaterialTipViewBanner", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobannerContent = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent")
-	arg_1_0._goroominfoItem = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
-	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_slider")
-	arg_1_0._gobannerscroll = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_bannerscroll")
-	arg_1_0._gobannerSelectItem = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_slider/go_bannerSelectItem")
+local RoomMaterialTipViewBanner = class("RoomMaterialTipViewBanner", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomMaterialTipViewBanner:onInitView()
+	self._gobannerContent = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent")
+	self._goroominfoItem = gohelper.findChild(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem")
+	self._goslider = gohelper.findChild(self.viewGO, "left/banner/#go_slider")
+	self._gobannerscroll = gohelper.findChild(self.viewGO, "left/banner/#go_bannerscroll")
+	self._gobannerSelectItem = gohelper.findChild(self.viewGO, "left/banner/#go_slider/go_bannerSelectItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._bannerscroll:AddDragBeginListener(arg_2_0._onScrollDragBegin, arg_2_0)
-	arg_2_0._bannerscroll:AddDragEndListener(arg_2_0._onScrollDragEnd, arg_2_0)
+function RoomMaterialTipViewBanner:addEvents()
+	self._bannerscroll:AddDragBeginListener(self._onScrollDragBegin, self)
+	self._bannerscroll:AddDragEndListener(self._onScrollDragEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._bannerscroll:RemoveDragBeginListener()
-	arg_3_0._bannerscroll:RemoveDragEndListener()
+function RoomMaterialTipViewBanner:removeEvents()
+	self._bannerscroll:RemoveDragBeginListener()
+	self._bannerscroll:RemoveDragEndListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gojumpItem, false)
+function RoomMaterialTipViewBanner:_editableInitView()
+	gohelper.setActive(self._gojumpItem, false)
 
-	arg_4_0._bannerscroll = SLFramework.UGUI.UIDragListener.Get(arg_4_0._gobannerscroll)
-	arg_4_0._infoItemTbList = {}
-	arg_4_0._infoItemDataList = {}
-	arg_4_0._pageItemTbList = {}
+	self._bannerscroll = SLFramework.UGUI.UIDragListener.Get(self._gobannerscroll)
+	self._infoItemTbList = {}
+	self._infoItemDataList = {}
+	self._pageItemTbList = {}
 
-	arg_4_0:_createInfoItemUserDataTb_(arg_4_0._goroominfoItem)
-	arg_4_0:_createPageItemUserDataTb_(arg_4_0._gobannerSelectItem)
-	transformhelper.setLocalPosXY(arg_4_0._gobannerContent.transform, -1, 0)
+	self:_createInfoItemUserDataTb_(self._goroominfoItem)
+	self:_createPageItemUserDataTb_(self._gobannerSelectItem)
+	transformhelper.setLocalPosXY(self._gobannerContent.transform, -1, 0)
 end
 
-function var_0_0._getMaxPage(arg_5_0)
-	return arg_5_0._infoItemDataList and #arg_5_0._infoItemDataList or 0
+function RoomMaterialTipViewBanner:_getMaxPage()
+	return self._infoItemDataList and #self._infoItemDataList or 0
 end
 
-function var_0_0._checkCurPage(arg_6_0)
-	local var_6_0 = arg_6_0:_getMaxPage()
+function RoomMaterialTipViewBanner:_checkCurPage()
+	local maxPage = self:_getMaxPage()
 
-	if not arg_6_0._curPage or var_6_0 < arg_6_0._curPage then
-		arg_6_0._curPage = 1
+	if not self._curPage or maxPage < self._curPage then
+		self._curPage = 1
 	end
 
-	if arg_6_0._curPage < 1 then
-		arg_6_0._curPage = var_6_0
+	if self._curPage < 1 then
+		self._curPage = maxPage
 	end
 
-	return arg_6_0._curPage
+	return self._curPage
 end
 
-function var_0_0._isFirstPage(arg_7_0)
-	return arg_7_0:_checkCurPage() <= 1
+function RoomMaterialTipViewBanner:_isFirstPage()
+	return self:_checkCurPage() <= 1
 end
 
-function var_0_0._isLastPage(arg_8_0)
-	return arg_8_0:_checkCurPage() >= arg_8_0:_getMaxPage()
+function RoomMaterialTipViewBanner:_isLastPage()
+	return self:_checkCurPage() >= self:_getMaxPage()
 end
 
-function var_0_0._getItemDataList(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = {
-		itemId = arg_9_0.viewParam.id,
-		itemType = arg_9_0.viewParam.type,
-		roomBuildingLevel = arg_9_0.viewParam.roomBuildingLevel,
-		roomSkinId = arg_9_0.viewParam.roomSkinId
+function RoomMaterialTipViewBanner:_getItemDataList()
+	local list = {}
+	local data = {
+		itemId = self.viewParam.id,
+		itemType = self.viewParam.type,
+		roomBuildingLevel = self.viewParam.roomBuildingLevel,
+		roomSkinId = self.viewParam.roomSkinId
 	}
 
-	table.insert(var_9_0, var_9_1)
+	table.insert(list, data)
 
-	return var_9_0
+	return list
 end
 
-function var_0_0._onScrollDragBegin(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._scrollStartPosX = GamepadController.instance:getMousePosition().x
+function RoomMaterialTipViewBanner:_onScrollDragBegin(param, eventData)
+	self._scrollStartPosX = GamepadController.instance:getMousePosition().x
 end
 
-function var_0_0._onScrollDragEnd(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = GamepadController.instance:getMousePosition().x - arg_11_0._scrollStartPosX
+function RoomMaterialTipViewBanner:_onScrollDragEnd(param, eventData)
+	local scrollEndPos = GamepadController.instance:getMousePosition()
+	local deltaX = scrollEndPos.x - self._scrollStartPosX
 
-	if var_11_0 > 80 then
-		arg_11_0:_runSwithPage(true)
-	elseif var_11_0 < -80 then
-		arg_11_0:_runSwithPage(false)
+	if deltaX > 80 then
+		self:_runSwithPage(true)
+	elseif deltaX < -80 then
+		self:_runSwithPage(false)
 	end
 end
 
-function var_0_0._startAutoSwitch(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onSwitch, arg_12_0)
+function RoomMaterialTipViewBanner:_startAutoSwitch()
+	TaskDispatcher.cancelTask(self._onSwitch, self)
 
-	if arg_12_0:_getMaxPage() > 1 then
-		TaskDispatcher.runRepeat(arg_12_0._onSwitch, arg_12_0, 3)
+	if self:_getMaxPage() > 1 then
+		TaskDispatcher.runRepeat(self._onSwitch, self, 3)
 	end
 end
 
-function var_0_0._onSwitch(arg_13_0)
-	if arg_13_0:_getMaxPage() <= 1 then
-		TaskDispatcher.cancelTask(arg_13_0._onSwitch, arg_13_0)
+function RoomMaterialTipViewBanner:_onSwitch()
+	if self:_getMaxPage() <= 1 then
+		TaskDispatcher.cancelTask(self._onSwitch, self)
 
 		return
 	end
 
-	if not arg_13_0._nextRunSwitchTime or arg_13_0._nextRunSwitchTime <= Time.time then
-		arg_13_0:_runSwithPage(false)
+	if not self._nextRunSwitchTime or self._nextRunSwitchTime <= Time.time then
+		self:_runSwithPage(false)
 	end
 end
 
-function var_0_0._runSwithPage(arg_14_0, arg_14_1)
-	arg_14_0._nextRunSwitchTime = Time.time + 2
+function RoomMaterialTipViewBanner:_runSwithPage(isforward)
+	self._nextRunSwitchTime = Time.time + 2
 
-	local var_14_0 = arg_14_0:_checkCurPage()
-	local var_14_1 = false
+	local curPage = self:_checkCurPage()
+	local isJomp = false
 
-	if arg_14_1 then
-		var_14_1 = arg_14_0:_isFirstPage()
-		arg_14_0._curPage = var_14_0 - 1
+	if isforward then
+		isJomp = self:_isFirstPage()
+		self._curPage = curPage - 1
 	else
-		var_14_1 = arg_14_0:_isLastPage()
-		arg_14_0._curPage = var_14_0 + 1
+		isJomp = self:_isLastPage()
+		self._curPage = curPage + 1
 	end
 
-	if var_14_1 and arg_14_0:_getMaxPage() > 2 then
-		local var_14_2 = arg_14_1 and arg_14_0:_getMaxPage() - 1 or 2
-		local var_14_3 = arg_14_0:_getPosXByPage(var_14_2)
+	if isJomp and self:_getMaxPage() > 2 then
+		local jompPage = isforward and self:_getMaxPage() - 1 or 2
+		local anchorX = self:_getPosXByPage(jompPage)
 
-		recthelper.setAnchorX(arg_14_0._gobannerContent.transform, -var_14_3)
+		recthelper.setAnchorX(self._gobannerContent.transform, -anchorX)
 	end
 
-	if var_14_0 == arg_14_0:_checkCurPage() then
+	if curPage == self:_checkCurPage() then
 		return
 	end
 
-	arg_14_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_15_0)
-	arg_15_0:_refreshPageUI()
-	arg_15_0:_refreshInfoUI()
+function RoomMaterialTipViewBanner:_refreshUI()
+	self:_refreshPageUI()
+	self:_refreshInfoUI()
 end
 
-function var_0_0._refreshPageUI(arg_16_0)
-	local var_16_0 = arg_16_0:_getMaxPage()
-	local var_16_1 = arg_16_0:_checkCurPage()
+function RoomMaterialTipViewBanner:_refreshPageUI()
+	local maxPage = self:_getMaxPage()
+	local curPage = self:_checkCurPage()
 
-	gohelper.setActive(arg_16_0._goslider, var_16_0 > 1)
+	gohelper.setActive(self._goslider, maxPage > 1)
 
-	for iter_16_0 = 1, var_16_0 do
-		local var_16_2 = arg_16_0._pageItemTbList[iter_16_0]
+	for i = 1, maxPage do
+		local tb = self._pageItemTbList[i]
 
-		if not var_16_2 then
-			local var_16_3 = gohelper.clone(arg_16_0._gobannerSelectItem, arg_16_0._goslider, "go_bannerSelectItem" .. iter_16_0)
+		if not tb then
+			local cloneGo = gohelper.clone(self._gobannerSelectItem, self._goslider, "go_bannerSelectItem" .. i)
 
-			var_16_2 = arg_16_0:_createPageItemUserDataTb_(var_16_3)
+			tb = self:_createPageItemUserDataTb_(cloneGo)
 		end
 
-		arg_16_0:_updatePageItemUI(var_16_2, iter_16_0 == var_16_1)
-		gohelper.setActive(var_16_2._go, true)
+		self:_updatePageItemUI(tb, i == curPage)
+		gohelper.setActive(tb._go, true)
 	end
 
-	for iter_16_1 = var_16_0 + 1, #arg_16_0._pageItemTbList do
-		local var_16_4 = arg_16_0._pageItemTbList[iter_16_1]
+	for i = maxPage + 1, #self._pageItemTbList do
+		local tb = self._pageItemTbList[i]
 
-		gohelper.setActive(var_16_4._go, false)
+		gohelper.setActive(tb._go, false)
 	end
 end
 
-function var_0_0._refreshInfoUI(arg_17_0)
-	local var_17_0 = arg_17_0:_getMaxPage()
-	local var_17_1 = arg_17_0:_checkCurPage()
-	local var_17_2 = math.min(3, var_17_0)
+function RoomMaterialTipViewBanner:_refreshInfoUI()
+	local maxPage = self:_getMaxPage()
+	local curPage = self:_checkCurPage()
+	local count = math.min(3, maxPage)
 
-	for iter_17_0 = #arg_17_0._infoItemTbList + 1, var_17_2 do
-		local var_17_3 = gohelper.clone(arg_17_0._goroominfoItem, arg_17_0._gobannerContent, "go_bannerSelectItem" .. iter_17_0)
+	for i = #self._infoItemTbList + 1, count do
+		local cloneGo = gohelper.clone(self._goroominfoItem, self._gobannerContent, "go_bannerSelectItem" .. i)
 
-		arg_17_0:_createInfoItemUserDataTb_(var_17_3)
+		self:_createInfoItemUserDataTb_(cloneGo)
 	end
 
-	local var_17_4 = 0
+	local offPage = 0
 
-	if var_17_0 < #arg_17_0._infoItemTbList or arg_17_0:_isFirstPage() then
-		var_17_4 = 0
-	elseif arg_17_0:_isLastPage() then
-		var_17_4 = var_17_0 - 3
+	if maxPage < #self._infoItemTbList or self:_isFirstPage() then
+		offPage = 0
+	elseif self:_isLastPage() then
+		offPage = maxPage - 3
 	else
-		var_17_4 = var_17_1 - 2
+		offPage = curPage - 2
 	end
 
-	for iter_17_1 = 1, #arg_17_0._infoItemTbList do
-		arg_17_0:_refreshInfoItem(iter_17_1, var_17_4 + iter_17_1)
+	for i = 1, #self._infoItemTbList do
+		self:_refreshInfoItem(i, offPage + i)
 	end
 
-	if var_17_0 > 0 then
-		local var_17_5 = arg_17_0:_getPosXByPage(var_17_1)
+	if maxPage > 0 then
+		local posX = self:_getPosXByPage(curPage)
 
-		ZProj.TweenHelper.DOAnchorPosX(arg_17_0._gobannerContent.transform, -var_17_5, 0.75)
+		ZProj.TweenHelper.DOAnchorPosX(self._gobannerContent.transform, -posX, 0.75)
 	end
 end
 
-function var_0_0._refreshInfoItem(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0._infoItemDataList[arg_18_2]
-	local var_18_1 = arg_18_0._infoItemTbList[arg_18_1]
+function RoomMaterialTipViewBanner:_refreshInfoItem(tbIndex, page)
+	local data = self._infoItemDataList[page]
+	local tb = self._infoItemTbList[tbIndex]
 
-	if var_18_0 then
-		if var_18_0.roomSkinId then
-			arg_18_0:_updateInfoRoomSkinUI(var_18_1, var_18_0.roomSkinId)
+	if data then
+		if data.roomSkinId then
+			self:_updateInfoRoomSkinUI(tb, data.roomSkinId)
 		else
-			arg_18_0:_updateInfoItemUI(var_18_1, var_18_0.itemId, var_18_0.itemType, var_18_0.roomBuildingLevel)
+			self:_updateInfoItemUI(tb, data.itemId, data.itemType, data.roomBuildingLevel)
 		end
 
-		local var_18_2 = arg_18_0:_getPosXByPage(arg_18_2)
+		local posX = self:_getPosXByPage(page)
 
-		transformhelper.setLocalPosXY(var_18_1._go.transform, var_18_2, 0)
+		transformhelper.setLocalPosXY(tb._go.transform, posX, 0)
 	end
 
-	if var_18_1 then
-		gohelper.setActive(var_18_1._go, var_18_0 and true or false)
+	if tb then
+		gohelper.setActive(tb._go, data and true or false)
 	end
 end
 
-function var_0_0._getPosXByPage(arg_19_0, arg_19_1)
-	return (arg_19_1 - 1) * 1030
+function RoomMaterialTipViewBanner:_getPosXByPage(page)
+	return (page - 1) * 1030
 end
 
-function var_0_0._createPageItemUserDataTb_(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0:getUserDataTb_()
+function RoomMaterialTipViewBanner:_createPageItemUserDataTb_(goItem)
+	local tb = self:getUserDataTb_()
 
-	var_20_0._go = arg_20_1
-	var_20_0._gonomalstar = gohelper.findChild(arg_20_1, "go_nomalstar")
-	var_20_0._golightstar = gohelper.findChild(arg_20_1, "go_lightstar")
+	tb._go = goItem
+	tb._gonomalstar = gohelper.findChild(goItem, "go_nomalstar")
+	tb._golightstar = gohelper.findChild(goItem, "go_lightstar")
 
-	table.insert(arg_20_0._pageItemTbList, var_20_0)
+	table.insert(self._pageItemTbList, tb)
 
-	return var_20_0
+	return tb
 end
 
-function var_0_0._updatePageItemUI(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_1
+function RoomMaterialTipViewBanner:_updatePageItemUI(pageItemTb, isSelect)
+	local tb = pageItemTb
 
-	gohelper.setActive(var_21_0._gonomalstar, not arg_21_2)
-	gohelper.setActive(var_21_0._golightstar, arg_21_2)
+	gohelper.setActive(tb._gonomalstar, not isSelect)
+	gohelper.setActive(tb._golightstar, isSelect)
 end
 
-function var_0_0._createInfoItemUserDataTb_(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getUserDataTb_()
+function RoomMaterialTipViewBanner:_createInfoItemUserDataTb_(goItem)
+	local tb = self:getUserDataTb_()
 
-	var_22_0._go = arg_22_1
-	var_22_0._simagetheme = gohelper.findChildSingleImage(arg_22_1, "iconmask/simage_theme")
-	var_22_0._gotag = gohelper.findChild(arg_22_1, "#go_tag")
-	var_22_0._txtdesc = gohelper.findChildText(arg_22_1, "txt_desc")
-	var_22_0._txtname = gohelper.findChildText(arg_22_1, "txt_desc/txt_name")
-	var_22_0._goitemContent = gohelper.findChild(arg_22_1, "go_itemContent")
-	var_22_0._goitemEnergy = gohelper.findChild(arg_22_1, "go_itemContent/bg/go_itemEnergy")
-	var_22_0._goitemBlock = gohelper.findChild(arg_22_1, "go_itemContent/bg/go_itemBlock")
-	var_22_0._txtenergynum = gohelper.findChildText(arg_22_1, "go_itemContent/bg/go_itemEnergy/txt_energynum")
-	var_22_0._txtblocknum = gohelper.findChildText(arg_22_1, "go_itemContent/bg/go_itemBlock/txt_blocknum")
-	var_22_0._simageinfobg = gohelper.findChildSingleImage(arg_22_1, "simage_infobg")
-	arg_22_0._infoItemTbList = arg_22_0._infoItemTbList or {}
+	tb._go = goItem
+	tb._simagetheme = gohelper.findChildSingleImage(goItem, "iconmask/simage_theme")
+	tb._gotag = gohelper.findChild(goItem, "#go_tag")
+	tb._txtdesc = gohelper.findChildText(goItem, "txt_desc")
+	tb._txtname = gohelper.findChildText(goItem, "txt_desc/txt_name")
+	tb._goitemContent = gohelper.findChild(goItem, "go_itemContent")
+	tb._goitemEnergy = gohelper.findChild(goItem, "go_itemContent/bg/go_itemEnergy")
+	tb._goitemBlock = gohelper.findChild(goItem, "go_itemContent/bg/go_itemBlock")
+	tb._txtenergynum = gohelper.findChildText(goItem, "go_itemContent/bg/go_itemEnergy/txt_energynum")
+	tb._txtblocknum = gohelper.findChildText(goItem, "go_itemContent/bg/go_itemBlock/txt_blocknum")
+	tb._simageinfobg = gohelper.findChildSingleImage(goItem, "simage_infobg")
+	self._infoItemTbList = self._infoItemTbList or {}
 
-	table.insert(arg_22_0._infoItemTbList, var_22_0)
+	table.insert(self._infoItemTbList, tb)
 
-	return var_22_0
+	return tb
 end
 
-function var_0_0._updateInfoItemUI(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	local var_23_0 = arg_23_1
-	local var_23_1 = ItemModel.instance:getItemConfig(arg_23_3, arg_23_2)
+function RoomMaterialTipViewBanner:_updateInfoItemUI(itemUserDataTb, itemId, itemType, roomBuildingLevel)
+	local tb = itemUserDataTb
+	local config = ItemModel.instance:getItemConfig(itemType, itemId)
 
-	var_23_0._txtdesc.text = var_23_1.desc
-	var_23_0._txtname.text = var_23_1.name
+	tb._txtdesc.text = config.desc
+	tb._txtname.text = config.name
 
-	local var_23_2 = arg_23_3 == MaterialEnum.MaterialType.BlockPackage
-	local var_23_3 = arg_23_3 == MaterialEnum.MaterialType.BlockPackage or arg_23_3 == MaterialEnum.MaterialType.Building
+	local showItemBlock = itemType == MaterialEnum.MaterialType.BlockPackage
+	local showItemEnergy = itemType == MaterialEnum.MaterialType.BlockPackage or itemType == MaterialEnum.MaterialType.Building
 
-	if var_23_3 and arg_23_3 == MaterialEnum.MaterialType.Building and var_23_1.buildDegree <= 0 then
-		var_23_3 = false
+	if showItemEnergy and itemType == MaterialEnum.MaterialType.Building and config.buildDegree <= 0 then
+		showItemEnergy = false
 	end
 
-	gohelper.setActive(var_23_0._goitemContent, var_23_2 or var_23_3)
-	gohelper.setActive(var_23_0._goitemBlock, var_23_2)
-	gohelper.setActive(var_23_0._goitemEnergy, var_23_3)
-	gohelper.setActive(var_23_0._gotag, false)
-	var_23_0._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
+	gohelper.setActive(tb._goitemContent, showItemBlock or showItemEnergy)
+	gohelper.setActive(tb._goitemBlock, showItemBlock)
+	gohelper.setActive(tb._goitemEnergy, showItemEnergy)
+	gohelper.setActive(tb._gotag, false)
+	tb._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
 
-	if arg_23_3 == MaterialEnum.MaterialType.Building then
-		var_23_0._txtenergynum.text = var_23_1.buildDegree
+	if itemType == MaterialEnum.MaterialType.Building then
+		tb._txtenergynum.text = config.buildDegree
 
-		local var_23_4
+		local rewardIcon
 
-		if arg_23_4 and arg_23_4 >= 0 then
-			local var_23_5 = RoomConfig.instance:getLevelGroupConfig(arg_23_2, arg_23_4)
+		if roomBuildingLevel and roomBuildingLevel >= 0 then
+			local levelConfig = RoomConfig.instance:getLevelGroupConfig(itemId, roomBuildingLevel)
 
-			var_23_4 = var_23_5 and var_23_5.rewardIcon
+			rewardIcon = levelConfig and levelConfig.rewardIcon
 		end
 
-		if string.nilorempty(var_23_4) then
-			var_23_4 = var_23_1.rewardIcon
+		if string.nilorempty(rewardIcon) then
+			rewardIcon = config.rewardIcon
 		end
 
-		var_23_0._simagetheme:LoadImage(ResUrl.getRoomBuildingRewardIcon(var_23_4))
-	elseif arg_23_3 == MaterialEnum.MaterialType.BlockPackage then
-		var_23_0._simagetheme:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(var_23_1.rewardIcon))
+		tb._simagetheme:LoadImage(ResUrl.getRoomBuildingRewardIcon(rewardIcon))
+	elseif itemType == MaterialEnum.MaterialType.BlockPackage then
+		tb._simagetheme:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(config.rewardIcon))
 
-		local var_23_6 = 0
-		local var_23_7 = RoomConfig.instance:getBlockListByPackageId(arg_23_2) or {}
+		local blockNum = 0
+		local blockList = RoomConfig.instance:getBlockListByPackageId(itemId) or {}
 
-		for iter_23_0 = 1, #var_23_7 do
-			local var_23_8 = var_23_7[iter_23_0]
+		for i = 1, #blockList do
+			local blockCfg = blockList[i]
 
-			if var_23_8.ownType ~= RoomBlockEnum.OwnType.Special or RoomModel.instance:isHasBlockById(var_23_8.blockId) then
-				var_23_6 = var_23_6 + 1
+			if blockCfg.ownType ~= RoomBlockEnum.OwnType.Special or RoomModel.instance:isHasBlockById(blockCfg.blockId) then
+				blockNum = blockNum + 1
 			end
 		end
 
-		if var_23_6 < 1 and #var_23_7 >= 1 then
-			var_23_6 = 1
+		if blockNum < 1 and #blockList >= 1 then
+			blockNum = 1
 		end
 
-		var_23_0._txtenergynum.text = var_23_1.blockBuildDegree * var_23_6
-		var_23_0._txtblocknum.text = var_23_6
-	elseif arg_23_3 == MaterialEnum.MaterialType.RoomTheme then
-		var_23_0._simagetheme:LoadImage(ResUrl.getRoomThemeRewardIcon(var_23_1.rewardIcon))
-	elseif arg_23_3 == MaterialEnum.MaterialType.SpecialBlock then
-		local var_23_9 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.BlockPackage, RoomBlockPackageEnum.ID.RoleBirthday)
+		tb._txtenergynum.text = config.blockBuildDegree * blockNum
+		tb._txtblocknum.text = blockNum
+	elseif itemType == MaterialEnum.MaterialType.RoomTheme then
+		tb._simagetheme:LoadImage(ResUrl.getRoomThemeRewardIcon(config.rewardIcon))
+	elseif itemType == MaterialEnum.MaterialType.SpecialBlock then
+		local packageCfg = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.BlockPackage, RoomBlockPackageEnum.ID.RoleBirthday)
 
-		if var_23_9 then
-			var_23_0._simagetheme:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(var_23_9.rewardIcon))
+		if packageCfg then
+			tb._simagetheme:LoadImage(ResUrl.getRoomBlockPackageRewardIcon(packageCfg.rewardIcon))
 		end
 	end
 end
 
-function var_0_0._updateInfoRoomSkinUI(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_1
+function RoomMaterialTipViewBanner:_updateInfoRoomSkinUI(itemUserDataTb, skinId)
+	local tb = itemUserDataTb
 
-	gohelper.setActive(var_24_0._gotag, true)
-	gohelper.setActive(var_24_0._goitemContent, false)
-	var_24_0._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
+	gohelper.setActive(tb._gotag, true)
+	gohelper.setActive(tb._goitemContent, false)
+	tb._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
 
-	local var_24_1 = RoomConfig.instance:getRoomSkinName(arg_24_2)
+	local name = RoomConfig.instance:getRoomSkinName(skinId)
 
-	var_24_0._txtname.text = var_24_1
+	tb._txtname.text = name
 
-	local var_24_2 = RoomConfig.instance:getRoomSkinDesc(arg_24_2)
+	local desc = RoomConfig.instance:getRoomSkinDesc(skinId)
 
-	var_24_0._txtdesc.text = var_24_2
+	tb._txtdesc.text = desc
 
-	local var_24_3 = RoomConfig.instance:getRoomSkinBannerIcon(arg_24_2)
-	local var_24_4 = ResUrl.getRoomBuildingRewardIcon(var_24_3)
+	local bannerIcon = RoomConfig.instance:getRoomSkinBannerIcon(skinId)
+	local bannerIconPath = ResUrl.getRoomBuildingRewardIcon(bannerIcon)
 
-	var_24_0._simagetheme:LoadImage(var_24_4)
+	tb._simagetheme:LoadImage(bannerIconPath)
 end
 
-function var_0_0.onUpdateParam(arg_25_0)
-	arg_25_0._infoItemDataList = {}
+function RoomMaterialTipViewBanner:onUpdateParam()
+	self._infoItemDataList = {}
 
-	tabletool.addValues(arg_25_0._infoItemDataList, arg_25_0:_getItemDataList())
-	arg_25_0:_refreshUI()
-	arg_25_0:_startAutoSwitch()
+	tabletool.addValues(self._infoItemDataList, self:_getItemDataList())
+	self:_refreshUI()
+	self:_startAutoSwitch()
 end
 
-function var_0_0.onOpen(arg_26_0)
-	arg_26_0._infoItemDataList = {}
+function RoomMaterialTipViewBanner:onOpen()
+	self._infoItemDataList = {}
 
-	tabletool.addValues(arg_26_0._infoItemDataList, arg_26_0:_getItemDataList())
-	arg_26_0:_refreshUI()
-	arg_26_0:_startAutoSwitch()
+	tabletool.addValues(self._infoItemDataList, self:_getItemDataList())
+	self:_refreshUI()
+	self:_startAutoSwitch()
 end
 
-function var_0_0.onClose(arg_27_0)
+function RoomMaterialTipViewBanner:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._onSwitch, arg_28_0)
+function RoomMaterialTipViewBanner:onDestroyView()
+	TaskDispatcher.cancelTask(self._onSwitch, self)
 
-	for iter_28_0 = 1, #arg_28_0._infoItemTbList do
-		arg_28_0._infoItemTbList[iter_28_0]._simagetheme:UnLoadImage()
-		arg_28_0._infoItemTbList[iter_28_0]._simageinfobg:UnLoadImage()
+	for i = 1, #self._infoItemTbList do
+		self._infoItemTbList[i]._simagetheme:UnLoadImage()
+		self._infoItemTbList[i]._simageinfobg:UnLoadImage()
 	end
 end
 
-return var_0_0
+return RoomMaterialTipViewBanner

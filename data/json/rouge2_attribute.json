@@ -1,0 +1,652 @@
+[
+  {
+    "id": 101,
+    "name": "language_90001255",
+    "careerDesc": "language_10102770",
+    "icon": "rouge2_skillicon1",
+    "type": 1,
+    "level": "",
+    "min": 0,
+    "showMax": 12
+  },
+  {
+    "id": 102,
+    "name": "language_10102771",
+    "careerDesc": "language_10102772",
+    "icon": "rouge2_skillicon2",
+    "type": 1,
+    "level": "",
+    "min": 0,
+    "showMax": 12
+  },
+  {
+    "id": 103,
+    "name": "language_10102773",
+    "careerDesc": "language_10102774",
+    "icon": "rouge2_skillicon3",
+    "type": 1,
+    "level": "",
+    "min": 0,
+    "showMax": 12
+  },
+  {
+    "id": 104,
+    "name": "language_10102775",
+    "careerDesc": "language_10102776",
+    "icon": "rouge2_skillicon4",
+    "type": 1,
+    "level": "",
+    "min": 0,
+    "showMax": 12
+  },
+  {
+    "id": 105,
+    "name": "language_90001256",
+    "careerDesc": "language_10102777",
+    "icon": "rouge2_skillicon5",
+    "type": 1,
+    "level": "",
+    "min": 0,
+    "showMax": 12
+  },
+  {
+    "id": 106,
+    "name": "language_10102778",
+    "careerDesc": "",
+    "icon": "",
+    "type": 1,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 201,
+    "name": "language_10102779",
+    "careerDesc": "",
+    "icon": "",
+    "type": 2,
+    "level": "",
+    "min": 1,
+    "showMax": 0
+  },
+  {
+    "id": 202,
+    "name": "language_10102780",
+    "careerDesc": "",
+    "icon": "",
+    "type": 2,
+    "level": "",
+    "min": 99,
+    "showMax": 0
+  },
+  {
+    "id": 203,
+    "name": "language_10102781",
+    "careerDesc": "",
+    "icon": "",
+    "type": 2,
+    "level": "",
+    "min": 99,
+    "showMax": 0
+  },
+  {
+    "id": 204,
+    "name": "language_10102782",
+    "careerDesc": "",
+    "icon": "",
+    "type": 2,
+    "level": "",
+    "min": 99,
+    "showMax": 0
+  },
+  {
+    "id": 205,
+    "name": "language_10102783",
+    "careerDesc": "",
+    "icon": "",
+    "type": 2,
+    "level": "",
+    "min": 30,
+    "showMax": 0
+  },
+  {
+    "id": 206,
+    "name": "language_10102784",
+    "careerDesc": "",
+    "icon": "",
+    "type": 2,
+    "level": "",
+    "min": 0,
+    "showMax": 2
+  },
+  {
+    "id": 301,
+    "name": "language_10026438",
+    "careerDesc": "",
+    "icon": "rouge2_skillicon6",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 310,
+    "name": "language_10102785",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 311,
+    "name": "language_10102786",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 312,
+    "name": "language_10102787",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 313,
+    "name": "language_10102788",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 314,
+    "name": "language_10102789",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 315,
+    "name": "language_10102790",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 316,
+    "name": "language_10102791",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 317,
+    "name": "language_10102792",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 318,
+    "name": "language_10102793",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 319,
+    "name": "language_10102794",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 320,
+    "name": "language_10102795",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 321,
+    "name": "language_10102796",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 322,
+    "name": "language_10102797",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 323,
+    "name": "language_10102798",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 324,
+    "name": "language_10102799",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 325,
+    "name": "language_10102800",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 326,
+    "name": "language_10102801",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 327,
+    "name": "language_10102802",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 328,
+    "name": "language_10102803",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 329,
+    "name": "language_10102804",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 330,
+    "name": "language_10102805",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 331,
+    "name": "language_10102806",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 332,
+    "name": "language_10102807",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 333,
+    "name": "language_10102808",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 334,
+    "name": "language_10102809",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 335,
+    "name": "language_10102810",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 401,
+    "name": "language_10102811",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 402,
+    "name": "language_10102812",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 403,
+    "name": "language_10102813",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 404,
+    "name": "language_10102814",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 405,
+    "name": "language_10102815",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 406,
+    "name": "language_10102816",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 407,
+    "name": "language_10102817",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 408,
+    "name": "language_10102818",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 409,
+    "name": "language_10102819",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 410,
+    "name": "language_10102820",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 411,
+    "name": "language_10102821",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 412,
+    "name": "language_10102822",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 413,
+    "name": "language_10102823",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 414,
+    "name": "language_10102824",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 415,
+    "name": "language_10102825",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 416,
+    "name": "language_10102826",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 417,
+    "name": "language_10102827",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 418,
+    "name": "language_10102828",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 419,
+    "name": "language_10102829",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 420,
+    "name": "language_10102830",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 421,
+    "name": "language_10102831",
+    "careerDesc": "",
+    "icon": "",
+    "type": 4,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 501,
+    "name": "language_10102832",
+    "careerDesc": "",
+    "icon": "",
+    "type": 2,
+    "level": "",
+    "min": 12,
+    "showMax": 0
+  },
+  {
+    "id": 502,
+    "name": "language_10102833",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 503,
+    "name": "language_10102834",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 504,
+    "name": "language_10102835",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  },
+  {
+    "id": 505,
+    "name": "language_10102836",
+    "careerDesc": "",
+    "icon": "",
+    "type": 3,
+    "level": "",
+    "min": 0,
+    "showMax": 0
+  }
+]

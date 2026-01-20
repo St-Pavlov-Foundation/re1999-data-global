@@ -1,100 +1,104 @@
-﻿module("modules.logic.critter.controller.CritterIncubateController", package.seeall)
+﻿-- chunkname: @modules/logic/critter/controller/CritterIncubateController.lua
 
-local var_0_0 = class("CritterIncubateController", BaseController)
+module("modules.logic.critter.controller.CritterIncubateController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._incubateCritterList = nil
-	arg_1_0._incubateCritterList = 1
+local CritterIncubateController = class("CritterIncubateController", BaseController)
+
+function CritterIncubateController:onInit()
+	self._incubateCritterList = nil
+	self._incubateCritterList = 1
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function CritterIncubateController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function CritterIncubateController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0._incubateCritterList = nil
-	arg_4_0._incubateCritterList = 1
+function CritterIncubateController:reInit()
+	self._incubateCritterList = nil
+	self._incubateCritterList = 1
 end
 
-function var_0_0.getIncubateCritterIds(arg_5_0)
-	local var_5_0 = CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(1)
-	local var_5_1 = CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(2)
+function CritterIncubateController:getIncubateCritterIds()
+	local uid1 = CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(1)
+	local uid2 = CritterIncubateModel.instance:getSelectParentCritterUIdByIndex(2)
 
-	return var_5_0, var_5_1
+	return uid1, uid2
 end
 
-function var_0_0.onIncubateCritterPreview(arg_6_0)
-	local var_6_0, var_6_1 = arg_6_0:getIncubateCritterIds()
+function CritterIncubateController:onIncubateCritterPreview()
+	local parent1, parent2 = self:getIncubateCritterIds()
 
-	CritterRpc.instance:sendIncubateCritterPreviewRequest(var_6_0, var_6_1)
+	CritterRpc.instance:sendIncubateCritterPreviewRequest(parent1, parent2)
 end
 
-function var_0_0.openRoomCritterDetailView(arg_7_0)
-	local var_7_0 = CritterIncubateModel.instance:getChildMOList()
+function CritterIncubateController:openRoomCritterDetailView()
+	local critterMos = CritterIncubateModel.instance:getChildMOList()
 
-	CritterController.instance:openRoomCritterDetailView(true, nil, true, var_7_0)
+	CritterController.instance:openRoomCritterDetailView(true, nil, true, critterMos)
 end
 
-function var_0_0.onIncubateCritterPreviewReply(arg_8_0, arg_8_1)
-	CritterIncubateModel.instance:setCritterPreviewInfo(arg_8_1.childes)
+function CritterIncubateController:onIncubateCritterPreviewReply(msg)
+	CritterIncubateModel.instance:setCritterPreviewInfo(msg.childes)
 	CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onIncubateCritterPreviewReply)
 end
 
-function var_0_0.onIncubateCritter(arg_9_0)
-	local var_9_0, var_9_1 = arg_9_0:getIncubateCritterIds()
+function CritterIncubateController:onIncubateCritter()
+	local parent1, parent2 = self:getIncubateCritterIds()
 
-	CritterRpc.instance:sendIncubateCritterRequest(var_9_0, var_9_1)
+	CritterRpc.instance:sendIncubateCritterRequest(parent1, parent2)
 end
 
-function var_0_0.incubateCritterReply(arg_10_0, arg_10_1)
-	arg_10_0._incubateCritterList = arg_10_1.childes
-	arg_10_0._showCritterIndex = 1
+function CritterIncubateController:incubateCritterReply(msg)
+	self._incubateCritterList = msg.childes
+	self._showCritterIndex = 1
 
-	if not LuaUtil.tableNotEmpty(arg_10_0._incubateCritterList) then
+	if not LuaUtil.tableNotEmpty(self._incubateCritterList) then
 		return
 	end
 
-	local var_10_0 = arg_10_0._incubateCritterList[arg_10_0._showCritterIndex]
+	local critterInfo = self._incubateCritterList[self._showCritterIndex]
 
-	if LuaUtil.tableNotEmpty(var_10_0) then
-		local var_10_1 = CritterModel.instance:addCritter(var_10_0)
-		local var_10_2 = {
+	if LuaUtil.tableNotEmpty(critterInfo) then
+		local critterMo = CritterModel.instance:addCritter(critterInfo)
+		local param = {
 			mode = RoomSummonEnum.SummonType.Incubate,
-			parent1 = arg_10_1.parent1,
-			parent2 = arg_10_1.parent2,
-			critterMo = var_10_1
+			parent1 = msg.parent1,
+			parent2 = msg.parent2,
+			critterMo = critterMo
 		}
 
-		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onStartSummon, var_10_2)
+		CritterSummonController.instance:dispatchEvent(CritterSummonEvent.onStartSummon, param)
 	end
 end
 
-function var_0_0.checkHasChildCritter(arg_11_0)
-	if not LuaUtil.tableNotEmpty(arg_11_0._incubateCritterList) then
+function CritterIncubateController:checkHasChildCritter()
+	if not LuaUtil.tableNotEmpty(self._incubateCritterList) then
 		return
 	end
 
-	if not arg_11_0._showCritterIndex then
+	if not self._showCritterIndex then
 		return
 	end
 
-	if arg_11_0._showCritterIndex >= #arg_11_0._incubateCritterList then
+	if self._showCritterIndex >= #self._incubateCritterList then
 		return
 	end
 
-	arg_11_0._showCritterIndex = arg_11_0._showCritterIndex + 1
+	self._showCritterIndex = self._showCritterIndex + 1
 
-	local var_11_0 = arg_11_0._incubateCritterList[arg_11_0._showCritterIndex]
+	local critterInfo = self._incubateCritterList[self._showCritterIndex]
 
-	if LuaUtil.tableNotEmpty(var_11_0) then
-		return (CritterModel.instance:addCritter(var_11_0))
+	if LuaUtil.tableNotEmpty(critterInfo) then
+		local critterMo = CritterModel.instance:addCritter(critterInfo)
+
+		return critterMo
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+CritterIncubateController.instance = CritterIncubateController.New()
 
-return var_0_0
+return CritterIncubateController

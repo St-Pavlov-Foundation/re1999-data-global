@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.model.VersionActivity2_3NewCultivationDestinyModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/model/VersionActivity2_3NewCultivationDestinyModel.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationDestinyModel", BaseModel)
+module("modules.logic.versionactivity2_3.newcultivationgift.model.VersionActivity2_3NewCultivationDestinyModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_3NewCultivationDestinyModel = class("VersionActivity2_3NewCultivationDestinyModel", BaseModel)
+
+function VersionActivity2_3NewCultivationDestinyModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity2_3NewCultivationDestinyModel:reInit()
 	return
 end
 
-function var_0_0.getDestinyStoneById(arg_3_0, arg_3_1)
-	if arg_3_1 == nil then
-		return nil
+function VersionActivity2_3NewCultivationDestinyModel:getDestinyStoneById(actId)
+	if actId == nil then
+		return {}
 	end
 
-	local var_3_0 = ActivityConfig.instance:getActivityCo(arg_3_1)
+	local actConfig = ActivityConfig.instance:getActivityCo(actId)
 
-	if var_3_0 == nil then
-		return nil
+	if not actConfig then
+		return {}
 	end
 
-	if string.nilorempty(var_3_0.param) then
-		return nil
+	if string.nilorempty(actConfig.param) then
+		return {}
 	end
 
-	return (string.splitToNumber(var_3_0.param, "#"))
+	return string.splitToNumber(actConfig.param, "#") or {}
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_3NewCultivationDestinyModel.instance = VersionActivity2_3NewCultivationDestinyModel.New()
 
-return var_0_0
+return VersionActivity2_3NewCultivationDestinyModel

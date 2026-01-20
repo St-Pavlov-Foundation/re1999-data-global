@@ -1,77 +1,79 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneLightComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneLightComp.lua
 
-local var_0_0 = class("RoomSceneLightComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneLightComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._lightRangeId = UnityEngine.Shader.PropertyToID("_LightRange")
-	arg_1_0._lightOffsetId = UnityEngine.Shader.PropertyToID("_LightOffset")
-	arg_1_0._linghtMinId = UnityEngine.Shader.PropertyToID("_LightMin")
+local RoomSceneLightComp = class("RoomSceneLightComp", BaseSceneComp)
+
+function RoomSceneLightComp:onInit()
+	self._lightRangeId = UnityEngine.Shader.PropertyToID("_LightRange")
+	self._lightOffsetId = UnityEngine.Shader.PropertyToID("_LightOffset")
+	self._linghtMinId = UnityEngine.Shader.PropertyToID("_LightMin")
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
-	arg_2_0._directionalLightGO = arg_2_0._scene.go.directionalLightGO
-	arg_2_0._directionalLightGOTrs = arg_2_0._directionalLightGO.transform
-	arg_2_0._directionalLight = arg_2_0._directionalLightGO:GetComponent(typeof(UnityEngine.Light))
-	arg_2_0._initRotation = arg_2_0._directionalLightGOTrs.rotation
-	arg_2_0._sceneAmbient = arg_2_0._scene.go.sceneAmbient
-	arg_2_0._sceneAmbientData = arg_2_0._scene.go.sceneAmbientData
-	arg_2_0._lightMinValue = arg_2_0._sceneAmbientData.lightmin
+function RoomSceneLightComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
+	self._directionalLightGO = self._scene.go.directionalLightGO
+	self._directionalLightGOTrs = self._directionalLightGO.transform
+	self._directionalLight = self._directionalLightGO:GetComponent(typeof(UnityEngine.Light))
+	self._initRotation = self._directionalLightGOTrs.rotation
+	self._sceneAmbient = self._scene.go.sceneAmbient
+	self._sceneAmbientData = self._scene.go.sceneAmbientData
+	self._lightMinValue = self._sceneAmbientData.lightmin
 end
 
-function var_0_0._refreshLight(arg_3_0)
-	local var_3_0 = arg_3_0._scene.camera.cameraTrs
-	local var_3_1, var_3_2, var_3_3 = transformhelper.getLocalRotation(var_3_0)
-	local var_3_4 = Quaternion.AngleAxis(var_3_2, Vector3.up)
+function RoomSceneLightComp:_refreshLight()
+	local cameraTrs = self._scene.camera.cameraTrs
+	local rotationX, rotationY, rotationZ = transformhelper.getLocalRotation(cameraTrs)
+	local rotateQuaternion = Quaternion.AngleAxis(rotationY, Vector3.up)
 
-	arg_3_0._directionalLightGOTrs.rotation = var_3_4 * arg_3_0._initRotation
+	self._directionalLightGOTrs.rotation = rotateQuaternion * self._initRotation
 end
 
-function var_0_0.getLightColor(arg_4_0)
-	return arg_4_0._directionalLight.color
+function RoomSceneLightComp:getLightColor()
+	return self._directionalLight.color
 end
 
-function var_0_0.setLightColor(arg_5_0, arg_5_1)
-	arg_5_0._directionalLight.color = arg_5_1
+function RoomSceneLightComp:setLightColor(color)
+	self._directionalLight.color = color
 end
 
-function var_0_0.getLightIntensity(arg_6_0)
-	return arg_6_0._directionalLight.intensity
+function RoomSceneLightComp:getLightIntensity()
+	return self._directionalLight.intensity
 end
 
-function var_0_0.setLightIntensity(arg_7_0, arg_7_1)
-	arg_7_0._directionalLight.intensity = arg_7_1
+function RoomSceneLightComp:setLightIntensity(intensity)
+	self._directionalLight.intensity = intensity
 end
 
-function var_0_0.setLocalRotation(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	transformhelper.setLocalRotation(arg_8_0._directionalLightGOTrs, arg_8_1, arg_8_2, arg_8_3)
+function RoomSceneLightComp:setLocalRotation(x, y, z)
+	transformhelper.setLocalRotation(self._directionalLightGOTrs, x, y, z)
 end
 
-function var_0_0.setLightMin(arg_9_0, arg_9_1)
-	if arg_9_0._lightMinValue and arg_9_0._lightMinValue ~= arg_9_1 then
-		arg_9_0._lightMinValue = arg_9_1
-		arg_9_0._scene.go.sceneAmbientData.lightmin = arg_9_1
-		arg_9_0._sceneAmbient.data = arg_9_0._scene.go.sceneAmbientData
+function RoomSceneLightComp:setLightMin(lightMin)
+	if self._lightMinValue and self._lightMinValue ~= lightMin then
+		self._lightMinValue = lightMin
+		self._scene.go.sceneAmbientData.lightmin = lightMin
+		self._sceneAmbient.data = self._scene.go.sceneAmbientData
 
-		RoomHelper.setGlobalFloat(arg_9_0._linghtMinId, arg_9_1)
+		RoomHelper.setGlobalFloat(self._linghtMinId, lightMin)
 	end
 end
 
-function var_0_0.setLightRange(arg_10_0, arg_10_1)
+function RoomSceneLightComp:setLightRange(lightRange)
 	return
 end
 
-function var_0_0.setLightOffset(arg_11_0, arg_11_1)
+function RoomSceneLightComp:setLightOffset(lightOffset)
 	return
 end
 
-function var_0_0.onSceneClose(arg_12_0)
-	arg_12_0._lightMinValue = nil
-	arg_12_0._sceneAmbientData = nil
-	arg_12_0._sceneAmbient = nil
-	arg_12_0._directionalLightGOTrs = nil
+function RoomSceneLightComp:onSceneClose()
+	self._lightMinValue = nil
+	self._sceneAmbientData = nil
+	self._sceneAmbient = nil
+	self._directionalLightGOTrs = nil
 
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_12_0._refreshLight, arg_12_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._refreshLight, self)
 end
 
-return var_0_0
+return RoomSceneLightComp

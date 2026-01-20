@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/view/ArmRewardView.lua
 
-local var_0_0 = class("ArmRewardView", BaseView)
+module("modules.logic.versionactivity1_3.armpipe.view.ArmRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._simageclosebtn = gohelper.findChildSingleImage(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/Title/#txt_Title")
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_TaskList")
+local ArmRewardView = class("ArmRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ArmRewardView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._simageclosebtn = gohelper.findChildSingleImage(self.viewGO, "#btn_Close")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Root/Title/#txt_Title")
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_TaskList")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+function ArmRewardView:addEvents()
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
+function ArmRewardView:removeEvents()
+	self._btnClose:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function ArmRewardView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simageclosebtn:LoadImage(ResUrl.getJiaLaBoNaIcon("v1a3_role1_igfullmask"))
-	arg_5_0._simagePanelBG:LoadImage(ResUrl.getV1a3ArmSinglebg("v1a3_arm_reward_pop_bg"))
+function ArmRewardView:_editableInitView()
+	self._simageclosebtn:LoadImage(ResUrl.getJiaLaBoNaIcon("v1a3_role1_igfullmask"))
+	self._simagePanelBG:LoadImage(ResUrl.getV1a3ArmSinglebg("v1a3_arm_reward_pop_bg"))
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function ArmRewardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(Activity124Controller.instance, ArmPuzzlePipeEvent.RefreshMapData, arg_7_0.refreshUI, arg_7_0)
-	arg_7_0:addEventCb(Activity124Controller.instance, ArmPuzzlePipeEvent.RefreshReceiveReward, arg_7_0.refreshUI, arg_7_0)
-	arg_7_0:refreshUI()
+function ArmRewardView:onOpen()
+	self:addEventCb(Activity124Controller.instance, ArmPuzzlePipeEvent.RefreshMapData, self.refreshUI, self)
+	self:addEventCb(Activity124Controller.instance, ArmPuzzlePipeEvent.RefreshReceiveReward, self.refreshUI, self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_8_0)
+function ArmRewardView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simageclosebtn:UnLoadImage()
-	arg_9_0._simagePanelBG:UnLoadImage()
+function ArmRewardView:onDestroyView()
+	self._simageclosebtn:UnLoadImage()
+	self._simagePanelBG:UnLoadImage()
 end
 
-function var_0_0.refreshUI(arg_10_0)
+function ArmRewardView:refreshUI()
 	Activity124RewardListModel.instance:init(VersionActivity1_3Enum.ActivityId.Act305)
 end
 
-return var_0_0
+return ArmRewardView

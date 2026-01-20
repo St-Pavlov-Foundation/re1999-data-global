@@ -1,18 +1,20 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonSkipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonSkipViewContainer.lua
 
-local var_0_0 = class("RoomCritterSummonSkipViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonSkipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterSummonSkipViewContainer = class("RoomCritterSummonSkipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterSummonSkipView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_content"))
+function RoomCritterSummonSkipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCritterSummonSkipView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_content"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function RoomCritterSummonSkipViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			MultiView.New({
 				RoomCritterSummonDragView.New()
@@ -21,4 +23,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return RoomCritterSummonSkipViewContainer

@@ -1,86 +1,88 @@
-﻿module("modules.logic.fight.view.FightBossRushHpTrackAIUseCardsItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightBossRushHpTrackAIUseCardsItem.lua
 
-local var_0_0 = class("FightBossRushHpTrackAIUseCardsItem", FightBaseView)
+module("modules.logic.fight.view.FightBossRushHpTrackAIUseCardsItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = arg_1_0.viewGO
+local FightBossRushHpTrackAIUseCardsItem = class("FightBossRushHpTrackAIUseCardsItem", FightBaseView)
 
-	arg_1_0.go = var_1_0
-	arg_1_0.tr = arg_1_0.viewGO.transform
-	arg_1_0._imgMat = gohelper.findChildImage(var_1_0, "imgMat")
-	arg_1_0._imgTag = gohelper.findChildImage(var_1_0, "imgTag")
-	arg_1_0._imgBgs = arg_1_0:getUserDataTb_()
-	arg_1_0._imgBgGos = arg_1_0:getUserDataTb_()
+function FightBossRushHpTrackAIUseCardsItem:onInitView()
+	local go = self.viewGO
 
-	for iter_1_0 = 0, 4 do
-		arg_1_0._imgBgs[iter_1_0] = gohelper.findChildImage(var_1_0, "imgBg/" .. iter_1_0)
-		arg_1_0._imgBgGos[iter_1_0] = gohelper.findChild(var_1_0, "imgBg/" .. iter_1_0)
+	self.go = go
+	self.tr = self.viewGO.transform
+	self._imgMat = gohelper.findChildImage(go, "imgMat")
+	self._imgTag = gohelper.findChildImage(go, "imgTag")
+	self._imgBgs = self:getUserDataTb_()
+	self._imgBgGos = self:getUserDataTb_()
+
+	for i = 0, 4 do
+		self._imgBgs[i] = gohelper.findChildImage(go, "imgBg/" .. i)
+		self._imgBgGos[i] = gohelper.findChild(go, "imgBg/" .. i)
 	end
 
-	arg_1_0._imgBg2 = gohelper.findChildImage(var_1_0, "forbid/mask")
+	self._imgBg2 = gohelper.findChildImage(go, "forbid/mask")
 
 	if isDebugBuild then
-		arg_1_0._imgTag.raycastTarget = true
-		arg_1_0._click = gohelper.getClick(arg_1_0.go)
+		self._imgTag.raycastTarget = true
+		self._click = gohelper.getClick(self.go)
 
-		arg_1_0:com_registClick(arg_1_0._click, arg_1_0._onClickOp)
+		self:com_registClick(self._click, self._onClickOp)
 	end
 
-	arg_1_0.topPosRectTr = gohelper.findChildComponent(var_1_0, "topPos", gohelper.Type_RectTransform)
-	arg_1_0.goEmitNormal = gohelper.findChild(var_1_0, "#emit_normal")
-	arg_1_0.goEmitUitimate = gohelper.findChild(var_1_0, "#emit_uitimate")
+	self.topPosRectTr = gohelper.findChildComponent(go, "topPos", gohelper.Type_RectTransform)
+	self.goEmitNormal = gohelper.findChild(go, "#emit_normal")
+	self.goEmitUitimate = gohelper.findChild(go, "#emit_uitimate")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightBossRushHpTrackAIUseCardsItem:addEvents()
 	return
 end
 
-function var_0_0.onRefreshItemData(arg_3_0, arg_3_1)
-	arg_3_0.cardData = arg_3_1
-	arg_3_0.entityId = arg_3_0.cardData.uid
-	arg_3_0.skillId = arg_3_0.cardData.skillId
-	arg_3_0.entityData = FightDataHelper.entityMgr:getById(arg_3_0.entityId)
-	arg_3_0.isBigSkill = FightCardDataHelper.isBigSkill(arg_3_0.skillId)
+function FightBossRushHpTrackAIUseCardsItem:onRefreshItemData(data)
+	self.cardData = data
+	self.entityId = self.cardData.uid
+	self.skillId = self.cardData.skillId
+	self.entityData = FightDataHelper.entityMgr:getById(self.entityId)
+	self.isBigSkill = FightCardDataHelper.isBigSkill(self.skillId)
 
-	if lua_skill_next.configDict[arg_3_0.skillId] then
-		arg_3_0.isBigSkill = false
+	if lua_skill_next.configDict[self.skillId] then
+		self.isBigSkill = false
 	end
 
-	arg_3_0:refreshCanUseCardState()
+	self:refreshCanUseCardState()
 
-	local var_3_0 = lua_skill.configDict[arg_3_1.skillId]
+	local skillCO = lua_skill.configDict[data.skillId]
 
-	gohelper.setActive(arg_3_0.go, var_3_0 ~= nil)
+	gohelper.setActive(self.go, skillCO ~= nil)
 
-	if not var_3_0 then
+	if not skillCO then
 		return
 	end
 
-	local var_3_1 = FightCardDataHelper.getSkillLv(arg_3_0.entityId, arg_3_0.skillId)
+	local skillLv = FightCardDataHelper.getSkillLv(self.entityId, self.skillId)
 
-	var_3_1 = arg_3_0.isBigSkill and FightEnum.UniqueSkillCardLv or var_3_1 == FightEnum.UniqueSkillCardLv and 1 or var_3_1
+	skillLv = self.isBigSkill and FightEnum.UniqueSkillCardLv or skillLv == FightEnum.UniqueSkillCardLv and 1 or skillLv
 
-	UISpriteSetMgr.instance:setFightSprite(arg_3_0._imgTag, "jnk_gj" .. var_3_0.showTag)
+	UISpriteSetMgr.instance:setFightSprite(self._imgTag, "jnk_gj" .. skillCO.showTag)
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._imgBgs) do
-		gohelper.setActive(iter_3_1.gameObject, iter_3_0 == var_3_1)
+	for level, img in pairs(self._imgBgs) do
+		gohelper.setActive(img.gameObject, level == skillLv)
 	end
 
-	if arg_3_0._imgBg2 and arg_3_0._imgBgs[var_3_1] then
-		arg_3_0._imgBg2.sprite = arg_3_0._imgBgs[var_3_1].sprite
+	if self._imgBg2 and self._imgBgs[skillLv] then
+		self._imgBg2.sprite = self._imgBgs[skillLv].sprite
 	end
 
-	gohelper.setActive(arg_3_0._imgTag.gameObject, var_3_1 ~= FightEnum.UniqueSkillCardLv)
+	gohelper.setActive(self._imgTag.gameObject, skillLv ~= FightEnum.UniqueSkillCardLv)
 end
 
-function var_0_0.refreshCanUseCardState(arg_4_0)
-	arg_4_0.canUseCard = true
+function FightBossRushHpTrackAIUseCardsItem:refreshCanUseCardState()
+	self.canUseCard = true
 end
 
-function var_0_0.onDestructor(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._imgBgs) do
-		iter_5_1.material = nil
+function FightBossRushHpTrackAIUseCardsItem:onDestructor()
+	for level, img in pairs(self._imgBgs) do
+		img.material = nil
 	end
 end
 
-return var_0_0
+return FightBossRushHpTrackAIUseCardsItem

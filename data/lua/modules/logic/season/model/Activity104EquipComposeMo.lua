@@ -1,13 +1,15 @@
-﻿local var_0_0 = pureTable("Activity104EquipComposeMo")
+﻿-- chunkname: @modules/logic/season/model/Activity104EquipComposeMo.lua
 
-function var_0_0.ctor(arg_1_0)
+local Activity104EquipComposeMo = pureTable("Activity104EquipComposeMo")
+
+function Activity104EquipComposeMo:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.uid
-	arg_2_0.itemId = arg_2_1.itemId
-	arg_2_0.originMO = arg_2_1
+function Activity104EquipComposeMo:init(itemMO)
+	self.id = itemMO.uid
+	self.itemId = itemMO.itemId
+	self.originMO = itemMO
 end
 
-return var_0_0
+return Activity104EquipComposeMo

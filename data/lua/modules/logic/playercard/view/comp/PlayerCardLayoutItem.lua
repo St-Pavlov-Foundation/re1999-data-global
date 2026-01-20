@@ -1,234 +1,239 @@
-﻿module("modules.logic.playercard.view.comp.PlayerCardLayoutItem", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/comp/PlayerCardLayoutItem.lua
 
-local var_0_0 = class("PlayerCardLayoutItem", LuaCompBase)
+module("modules.logic.playercard.view.comp.PlayerCardLayoutItem", package.seeall)
 
-var_0_0.TweenDuration = 0.16
+local PlayerCardLayoutItem = class("PlayerCardLayoutItem", LuaCompBase)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._param = arg_1_1
-	arg_1_0.viewRoot = arg_1_1.viewRoot.transform
-	arg_1_0.layout = arg_1_1.layout
-	arg_1_0.cardComp = arg_1_1.cardComp
+PlayerCardLayoutItem.TweenDuration = 0.16
+
+function PlayerCardLayoutItem:ctor(param)
+	self._param = param
+	self.viewRoot = param.viewRoot.transform
+	self.layout = param.layout
+	self.cardComp = param.cardComp
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.transform = arg_2_1.transform
-	arg_2_0.goPut = gohelper.findChild(arg_2_1, "card/put")
-	arg_2_0.frame = gohelper.findChild(arg_2_1, "frame")
-	arg_2_0.goCard = gohelper.findChild(arg_2_1, "card")
-	arg_2_0.animCard = arg_2_0.goCard:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0.trsCard = arg_2_0.goCard.transform
-	arg_2_0.goSelect = gohelper.findChild(arg_2_1, "card/select")
-	arg_2_0.goTop = gohelper.findChild(arg_2_1, "card/top")
-	arg_2_0.trsTop = arg_2_0.goTop.transform
-	arg_2_0.goDown = gohelper.findChild(arg_2_1, "card/down")
-	arg_2_0.trsDown = arg_2_0.goDown.transform
-	arg_2_0.canvasGroup = gohelper.onceAddComponent(arg_2_0.goCard, gohelper.Type_CanvasGroup)
-	arg_2_0.goBlack = gohelper.findChild(arg_2_1, "card/blackmask")
-	arg_2_0.goDrag = gohelper.findChild(arg_2_1, "card/drag")
+function PlayerCardLayoutItem:init(go)
+	self.go = go
+	self.transform = go.transform
+	self.goPut = gohelper.findChild(go, "card/put")
+	self.frame = gohelper.findChild(go, "frame")
+	self.goCard = gohelper.findChild(go, "card")
+	self.animCard = self.goCard:GetComponent(typeof(UnityEngine.Animator))
+	self.trsCard = self.goCard.transform
+	self.goSelect = gohelper.findChild(go, "card/select")
+	self.goTop = gohelper.findChild(go, "card/top")
+	self.trsTop = self.goTop.transform
+	self.goDown = gohelper.findChild(go, "card/down")
+	self.trsDown = self.goDown.transform
+	self.canvasGroup = gohelper.onceAddComponent(self.goCard, gohelper.Type_CanvasGroup)
+	self.goBlack = gohelper.findChild(go, "card/blackmask")
+	self.goDrag = gohelper.findChild(go, "card/drag")
 
-	arg_2_0:AddDrag(arg_2_0.goDrag)
-	gohelper.setActive(arg_2_0.frame, false)
-	gohelper.setActive(arg_2_0.goSelect, false)
+	self:AddDrag(self.goDrag)
+	gohelper.setActive(self.frame, false)
+	gohelper.setActive(self.goSelect, false)
 end
 
-function var_0_0.getCenterScreenPosY(arg_3_0)
-	local var_3_0, var_3_1 = recthelper.uiPosToScreenPos2(arg_3_0.trsCard)
+function PlayerCardLayoutItem:getCenterScreenPosY()
+	local x, y = recthelper.uiPosToScreenPos2(self.trsCard)
 
-	return var_3_1
+	return y
 end
 
-function var_0_0.isInArea(arg_4_0, arg_4_1)
-	local var_4_0, var_4_1 = recthelper.uiPosToScreenPos2(arg_4_0.trsTop)
-	local var_4_2, var_4_3 = recthelper.uiPosToScreenPos2(arg_4_0.trsDown)
+function PlayerCardLayoutItem:isInArea(y)
+	local _, y1 = recthelper.uiPosToScreenPos2(self.trsTop)
+	local _, y2 = recthelper.uiPosToScreenPos2(self.trsDown)
 
-	return arg_4_1 <= var_4_1 and var_4_3 <= arg_4_1
+	return y <= y1 and y2 <= y
 end
 
-function var_0_0.getLayoutGO(arg_5_0)
-	return arg_5_0.go
+function PlayerCardLayoutItem:getLayoutGO()
+	return self.go
 end
 
-function var_0_0.addEventListeners(arg_6_0)
+function PlayerCardLayoutItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
+function PlayerCardLayoutItem:removeEventListeners()
 	return
 end
 
-function var_0_0.getLayoutKey(arg_8_0)
-	return arg_8_0._param.layoutKey
+function PlayerCardLayoutItem:getLayoutKey()
+	return self._param.layoutKey
 end
 
-function var_0_0.setLayoutIndex(arg_9_0, arg_9_1)
-	arg_9_0.index = arg_9_1
+function PlayerCardLayoutItem:setLayoutIndex(index)
+	self.index = index
 end
 
-function var_0_0.exchangeIndex(arg_10_0, arg_10_1)
-	arg_10_0.index, arg_10_1.index = arg_10_1.index, arg_10_0.index
+function PlayerCardLayoutItem:exchangeIndex(item)
+	local index = item.index
+
+	item.index = self.index
+	self.index = index
 end
 
-function var_0_0.setEditMode(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0.frame, arg_11_1)
-	gohelper.setActive(arg_11_0.goSelect, arg_11_1)
+function PlayerCardLayoutItem:setEditMode(isEdit)
+	gohelper.setActive(self.frame, isEdit)
+	gohelper.setActive(self.goSelect, isEdit)
 
-	if arg_11_1 then
-		arg_11_0.animCard:Play("wiggle")
+	if isEdit then
+		self.animCard:Play("wiggle")
 	end
 end
 
-function var_0_0.AddDrag(arg_12_0, arg_12_1)
-	if arg_12_0._drag or gohelper.isNil(arg_12_1) then
+function PlayerCardLayoutItem:AddDrag(go)
+	if self._drag or gohelper.isNil(go) then
 		return
 	end
 
-	arg_12_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_12_1)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(go)
 
-	arg_12_0._drag:AddDragBeginListener(arg_12_0._onBeginDrag, arg_12_0)
-	arg_12_0._drag:AddDragListener(arg_12_0._onDrag, arg_12_0)
-	arg_12_0._drag:AddDragEndListener(arg_12_0._onEndDrag, arg_12_0)
+	self._drag:AddDragBeginListener(self._onBeginDrag, self)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onEndDrag, self)
 end
 
-function var_0_0.canDrag(arg_13_0)
+function PlayerCardLayoutItem:canDrag()
 	return true
 end
 
-function var_0_0._onBeginDrag(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_0:canDrag() then
-		arg_14_0.inDrag = false
+function PlayerCardLayoutItem:_onBeginDrag(dragTransform, pointerEventData)
+	if not self:canDrag() then
+		self.inDrag = false
 
 		return
 	end
 
-	if arg_14_0.inDrag then
+	if self.inDrag then
 		return
 	end
 
-	gohelper.addChildPosStay(arg_14_0.viewRoot, arg_14_0.goCard)
-	gohelper.setAsLastSibling(arg_14_0.goCard)
-	gohelper.setAsLastSibling(arg_14_0.go)
-	arg_14_0:killTweenId()
+	gohelper.addChildPosStay(self.viewRoot, self.goCard)
+	gohelper.setAsLastSibling(self.goCard)
+	gohelper.setAsLastSibling(self.go)
+	self:killTweenId()
 
-	local var_14_0 = recthelper.screenPosToAnchorPos(arg_14_2.position, arg_14_0.viewRoot)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.viewRoot)
 
-	arg_14_0:_tweenToPos(arg_14_0.trsCard, var_14_0)
+	self:_tweenToPos(self.trsCard, anchorPos)
 
-	arg_14_0.inDrag = true
+	self.inDrag = true
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 
-	if arg_14_0.layout then
-		arg_14_0.layout:startUpdate(arg_14_0)
+	if self.layout then
+		self.layout:startUpdate(self)
 	end
 end
 
-function var_0_0._onDrag(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0:canDrag() then
-		arg_15_0.inDrag = false
+function PlayerCardLayoutItem:_onDrag(dragTransform, pointerEventData)
+	if not self:canDrag() then
+		self.inDrag = false
 
 		return
 	end
 
-	if not arg_15_0.inDrag then
+	if not self.inDrag then
 		return
 	end
 
-	local var_15_0 = recthelper.screenPosToAnchorPos(arg_15_2.position, arg_15_0.viewRoot)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self.viewRoot)
 
-	arg_15_0:_tweenToPos(arg_15_0.trsCard, var_15_0)
+	self:_tweenToPos(self.trsCard, anchorPos)
 
-	arg_15_0.inDrag = true
+	self.inDrag = true
 end
 
-function var_0_0._onEndDrag(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_0.inDrag then
+function PlayerCardLayoutItem:_onEndDrag(dragTransform, pointerEventData)
+	if not self.inDrag then
 		return
 	end
 
-	arg_16_0.inDrag = false
+	self.inDrag = false
 
-	local var_16_0 = recthelper.rectToRelativeAnchorPos(arg_16_0.frame.transform.position, arg_16_0.viewRoot)
+	local anchorPos = recthelper.rectToRelativeAnchorPos(self.frame.transform.position, self.viewRoot)
 
 	UIBlockMgr.instance:startBlock("PlayerCardLayoutItem")
-	arg_16_0:_tweenToPos(arg_16_0.trsCard, var_16_0, arg_16_0.onEndDragTweenCallback, arg_16_0)
+	self:_tweenToPos(self.trsCard, anchorPos, self.onEndDragTweenCallback, self)
 
-	if arg_16_0.layout then
-		arg_16_0.layout:closeUpdate()
+	if self.layout then
+		self.layout:closeUpdate()
 	end
 end
 
-function var_0_0.onEndDragTweenCallback(arg_17_0)
+function PlayerCardLayoutItem:onEndDragTweenCallback()
 	UIBlockMgr.instance:endBlock("PlayerCardLayoutItem")
-	gohelper.addChildPosStay(arg_17_0.go, arg_17_0.goCard)
-	gohelper.setAsLastSibling(arg_17_0.goCard)
-	gohelper.setActive(arg_17_0.goPut, false)
-	gohelper.setActive(arg_17_0.goPut, true)
+	gohelper.addChildPosStay(self.go, self.goCard)
+	gohelper.setAsLastSibling(self.goCard)
+	gohelper.setActive(self.goPut, false)
+	gohelper.setActive(self.goPut, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inking_success)
 end
 
-function var_0_0._tweenToPos(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	arg_18_0:killTweenId()
+function PlayerCardLayoutItem:_tweenToPos(transform, anchorPos, callback, callbackObj)
+	self:killTweenId()
 
-	local var_18_0, var_18_1 = recthelper.getAnchor(arg_18_1)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(transform)
 
-	if math.abs(var_18_0 - arg_18_2.x) > 10 or math.abs(var_18_1 - arg_18_2.y) > 10 then
-		arg_18_0.posTweenId = ZProj.TweenHelper.DOAnchorPos(arg_18_1, arg_18_2.x, arg_18_2.y, var_0_0.TweenDuration, arg_18_3, arg_18_4)
+	if math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10 then
+		self.posTweenId = ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, PlayerCardLayoutItem.TweenDuration, callback, callbackObj)
 	else
-		recthelper.setAnchor(arg_18_1, arg_18_2.x, arg_18_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 
-		if arg_18_3 then
-			arg_18_3(arg_18_4)
+		if callback then
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0.killTweenId(arg_19_0)
-	if arg_19_0.posTweenId then
-		ZProj.TweenHelper.KillById(arg_19_0.posTweenId)
+function PlayerCardLayoutItem:killTweenId()
+	if self.posTweenId then
+		ZProj.TweenHelper.KillById(self.posTweenId)
 
-		arg_19_0.posTweenId = nil
+		self.posTweenId = nil
 	end
 end
 
-function var_0_0.updateAlpha(arg_20_0, arg_20_1)
-	arg_20_0.canvasGroup.alpha = arg_20_1
+function PlayerCardLayoutItem:updateAlpha(alpha)
+	self.canvasGroup.alpha = alpha
 end
 
-function var_0_0.getHeight(arg_21_0)
-	if arg_21_0.cardComp and arg_21_0.cardComp.getLayoutHeight then
-		return arg_21_0.cardComp:getLayoutHeight()
+function PlayerCardLayoutItem:getHeight()
+	if self.cardComp and self.cardComp.getLayoutHeight then
+		return self.cardComp:getLayoutHeight()
 	else
-		return recthelper.getHeight(arg_21_0.go.transform)
+		return recthelper.getHeight(self.go.transform)
 	end
 end
 
-function var_0_0.onStartDrag(arg_22_0)
-	arg_22_0:updateAlpha(arg_22_0.inDrag and 1 or 0.6)
+function PlayerCardLayoutItem:onStartDrag()
+	self:updateAlpha(self.inDrag and 1 or 0.6)
 
-	if arg_22_0.inDrag then
-		arg_22_0.animCard:Play("idle")
+	if self.inDrag then
+		self.animCard:Play("idle")
 	end
 
-	gohelper.setActive(arg_22_0.goBlack, not arg_22_0.inDrag)
+	gohelper.setActive(self.goBlack, not self.inDrag)
 end
 
-function var_0_0.onEndDrag(arg_23_0)
-	arg_23_0:updateAlpha(1)
-	arg_23_0.animCard:Play("wiggle")
-	gohelper.setActive(arg_23_0.goBlack, false)
+function PlayerCardLayoutItem:onEndDrag()
+	self:updateAlpha(1)
+	self.animCard:Play("wiggle")
+	gohelper.setActive(self.goBlack, false)
 end
 
-function var_0_0.onDestroy(arg_24_0)
-	if arg_24_0._drag then
-		arg_24_0._drag:RemoveDragBeginListener()
-		arg_24_0._drag:RemoveDragListener()
-		arg_24_0._drag:RemoveDragEndListener()
+function PlayerCardLayoutItem:onDestroy()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
 	end
 
-	arg_24_0:killTweenId()
+	self:killTweenId()
 	UIBlockMgr.instance:endBlock("PlayerCardLayoutItem")
 end
 
-return var_0_0
+return PlayerCardLayoutItem

@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.define.GoldenMilletEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/goldenmilletpresent/define/GoldenMilletEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.goldenmilletpresent.define.GoldenMilletEnum", package.seeall)
 
-var_0_0.REWARD_INDEX = 1
-var_0_0.DISPLAY_SKIN_COUNT = 5
-var_0_0.Index2Skin = {
+local GoldenMilletEnum = _M
+
+GoldenMilletEnum.REWARD_INDEX = 1
+GoldenMilletEnum.DISPLAY_SKIN_COUNT = 5
+GoldenMilletEnum.Index2Skin = {
 	300904,
 	309803,
 	308303,
@@ -12,4 +14,4 @@ var_0_0.Index2Skin = {
 	301202
 }
 
-return var_0_0
+return GoldenMilletEnum

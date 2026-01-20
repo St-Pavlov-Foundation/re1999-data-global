@@ -1,11 +1,13 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2DeepLayerNoticeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2DeepLayerNoticeViewContainer.lua
 
-local var_0_0 = class("WeekWalk_2DeepLayerNoticeViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk_2.view.WeekWalk_2DeepLayerNoticeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local WeekWalk_2DeepLayerNoticeViewContainer = class("WeekWalk_2DeepLayerNoticeViewContainer", BaseViewContainer)
+
+function WeekWalk_2DeepLayerNoticeViewContainer:buildViews()
 	return {
 		WeekWalk_2DeepLayerNoticeView.New()
 	}
 end
 
-return var_0_0
+return WeekWalk_2DeepLayerNoticeViewContainer

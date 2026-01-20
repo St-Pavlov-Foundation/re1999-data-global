@@ -1,139 +1,146 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndMailView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/view/Activity2ndMailView.lua
 
-local var_0_0 = class("Activity2ndMailView", BaseView)
+module("modules.logic.versionactivity2_8.activity2nd.view.Activity2ndMailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagePaper3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_Paper3")
-	arg_1_0._simagePaper2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_Paper2")
-	arg_1_0._simagePaper1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Panel/#simage_Paper1")
-	arg_1_0._scrollDescr = gohelper.findChildScrollRect(arg_1_0.viewGO, "Panel/#scroll_Descr")
-	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "Panel/#scroll_Reward")
-	arg_1_0._gorewarditemcontent = gohelper.findChild(arg_1_0.viewGO, "Panel/#scroll_Reward/Viewport/Content")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "Panel/#scroll_Reward/Viewport/Content/#go_rewarditem")
-	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
+local Activity2ndMailView = class("Activity2ndMailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity2ndMailView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagePaper3 = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_Paper3")
+	self._simagePaper2 = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_Paper2")
+	self._simagePaper1 = gohelper.findChildSingleImage(self.viewGO, "Panel/#simage_Paper1")
+	self._scrollDescr = gohelper.findChildScrollRect(self.viewGO, "Panel/#scroll_Descr")
+	self._scrollReward = gohelper.findChildScrollRect(self.viewGO, "Panel/#scroll_Reward")
+	self._gorewarditemcontent = gohelper.findChild(self.viewGO, "Panel/#scroll_Reward/Viewport/Content")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "Panel/#scroll_Reward/Viewport/Content/#go_rewarditem")
+	self._btnclose = gohelper.findChildButton(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
+function Activity2ndMailView:addEvents()
+	self._btnclose:AddClickListener(self.closeThis, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.refreshUI, arg_3_0)
+function Activity2ndMailView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseView, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._rewardList = {}
+function Activity2ndMailView:_editableInitView()
+	self._rewardList = {}
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Activity2ndMailView:onUpdateParam()
 	return
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	if arg_6_0:checkReceied() then
-		arg_6_0:setReceived()
+function Activity2ndMailView:refreshUI()
+	if self:checkReceied() then
+		self:setReceived()
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._actId = arg_7_0.viewParam.actId
+function Activity2ndMailView:onOpen()
+	self._actId = self.viewParam.actId
 
-	Activity101Rpc.instance:sendGet101InfosRequest(arg_7_0._actId, arg_7_0._tryGetReward, arg_7_0)
+	Activity101Rpc.instance:sendGet101InfosRequest(self._actId, self._tryGetReward, self)
 
-	arg_7_0._config = ActivityConfig.instance:getNorSignActivityCo(arg_7_0._actId, 1)
+	self._config = ActivityConfig.instance:getNorSignActivityCo(self._actId, 1)
 
-	if not arg_7_0._config then
-		logError("没有活动" .. arg_7_0._actId .. "的配置")
+	if not self._config then
+		logError("没有活动" .. self._actId .. "的配置")
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_culture_open)
-	arg_7_0:_initReward()
-	arg_7_0:_tryGetReward()
+	self:_initReward()
+	self:_tryGetReward()
 end
 
-function var_0_0._tryGetReward(arg_8_0)
-	if arg_8_0:checkCanGet() then
-		TaskDispatcher.runDelay(arg_8_0._getReward, arg_8_0, 0.8)
+function Activity2ndMailView:_tryGetReward()
+	if self:checkCanGet() then
+		TaskDispatcher.runDelay(self._getReward, self, 0.8)
 	end
 end
 
-function var_0_0._getReward(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._getReward, arg_9_0)
-	Activity101Rpc.instance:sendGet101BonusRequest(arg_9_0._actId, 1)
+function Activity2ndMailView:_getReward()
+	TaskDispatcher.cancelTask(self._getReward, self)
+	Activity101Rpc.instance:sendGet101BonusRequest(self._actId, 1)
 end
 
-function var_0_0._initReward(arg_10_0)
-	local var_10_0 = GameUtil.splitString2(arg_10_0._config.bonus, true)
+function Activity2ndMailView:_initReward()
+	local rewardConfig = GameUtil.splitString2(self._config.bonus, true)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		if not arg_10_0._rewardList[iter_10_0] then
-			local var_10_1 = arg_10_0:getUserDataTb_()
+	for index, rewardCo in ipairs(rewardConfig) do
+		local item = self._rewardList[index]
 
-			var_10_1.go = gohelper.clone(arg_10_0._gorewarditem, arg_10_0._gorewarditemcontent, "reward" .. iter_10_0)
-			var_10_1.goreceive = gohelper.findChild(var_10_1.go, "go_receive")
-			var_10_1.goitem = gohelper.findChild(var_10_1.go, "go_icon")
-			var_10_1.gocanget = gohelper.findChild(var_10_1.go, "go_canget")
-			var_10_1.goitemcomp = IconMgr.instance:getCommonPropItemIcon(var_10_1.goitem)
+		if not item then
+			item = self:getUserDataTb_()
+			item.go = gohelper.clone(self._gorewarditem, self._gorewarditemcontent, "reward" .. index)
+			item.goreceive = gohelper.findChild(item.go, "go_receive")
+			item.goitem = gohelper.findChild(item.go, "go_icon")
+			item.gocanget = gohelper.findChild(item.go, "go_canget")
+			item.goitemcomp = IconMgr.instance:getCommonPropItemIcon(item.goitem)
 
-			if iter_10_1 and #iter_10_1 > 0 then
-				var_10_1.goitemcomp:setMOValue(iter_10_1[1], iter_10_1[2], iter_10_1[3], nil, true)
+			if rewardCo and #rewardCo > 0 then
+				item.goitemcomp:setMOValue(rewardCo[1], rewardCo[2], rewardCo[3], nil, true)
 			end
 
-			gohelper.setActive(var_10_1.go, true)
-			table.insert(arg_10_0._rewardList, var_10_1)
+			gohelper.setActive(item.go, true)
+			table.insert(self._rewardList, item)
 		end
 	end
 end
 
-function var_0_0._onCloseView(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.CommonPropView then
-		arg_11_0:setReceived()
+function Activity2ndMailView:_onCloseView(viewName)
+	if viewName == ViewName.CommonPropView then
+		self:setReceived()
 	end
 end
 
-function var_0_0.setReceived(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._rewardList) do
-		gohelper.setActive(iter_12_1.goreceive, true)
-		gohelper.setActive(iter_12_1.gocanget, false)
+function Activity2ndMailView:setReceived()
+	for _, node in ipairs(self._rewardList) do
+		gohelper.setActive(node.goreceive, true)
+		gohelper.setActive(node.gocanget, false)
 	end
 end
 
-function var_0_0.checkReceied(arg_13_0)
-	return (ActivityType101Model.instance:isType101RewardGet(arg_13_0._actId, 1))
+function Activity2ndMailView:checkReceied()
+	local received = ActivityType101Model.instance:isType101RewardGet(self._actId, 1)
+
+	return received
 end
 
-function var_0_0.checkCanGet(arg_14_0)
-	return (ActivityType101Model.instance:isType101RewardCouldGet(arg_14_0._actId, 1))
+function Activity2ndMailView:checkCanGet()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(self._actId, 1)
+
+	return couldGet
 end
 
-function var_0_0.onClose(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._getReward, arg_15_0)
+function Activity2ndMailView:onClose()
+	TaskDispatcher.cancelTask(self._getReward, self)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function Activity2ndMailView:onDestroyView()
 	return
 end
 
-function var_0_0.onRefreshActivity(arg_17_0)
-	local var_17_0 = ActivityHelper.getActivityStatus(arg_17_0._actId)
+function Activity2ndMailView:onRefreshActivity()
+	local status = ActivityHelper.getActivityStatus(self._actId)
 
-	if var_17_0 == ActivityEnum.ActivityStatus.NotOnLine or var_17_0 == ActivityEnum.ActivityStatus.Expired then
+	if status == ActivityEnum.ActivityStatus.NotOnLine or status == ActivityEnum.ActivityStatus.Expired then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 
 		return
 	end
 end
 
-return var_0_0
+return Activity2ndMailView

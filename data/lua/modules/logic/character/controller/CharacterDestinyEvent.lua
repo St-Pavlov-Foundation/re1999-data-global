@@ -1,12 +1,15 @@
-﻿module("modules.logic.character.controller.CharacterDestinyEvent", package.seeall)
+﻿-- chunkname: @modules/logic/character/controller/CharacterDestinyEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.character.controller.CharacterDestinyEvent", package.seeall)
 
-var_0_0.OnRankUpReply = 1
-var_0_0.OnLevelUpReply = 2
-var_0_0.OnUnlockStoneReply = 3
-var_0_0.OnUseStoneReply = 4
-var_0_0.OnHeroRedDotReadReply = 5
-var_0_0.OnUnlockSlot = 6
+local CharacterDestinyEvent = {}
 
-return var_0_0
+CharacterDestinyEvent.OnRankUpReply = 1
+CharacterDestinyEvent.OnLevelUpReply = 2
+CharacterDestinyEvent.OnUnlockStoneReply = 3
+CharacterDestinyEvent.OnUseStoneReply = 4
+CharacterDestinyEvent.OnHeroRedDotReadReply = 5
+CharacterDestinyEvent.OnUnlockSlot = 6
+CharacterDestinyEvent.onClickReshapeBtn = 7
+
+return CharacterDestinyEvent

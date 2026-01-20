@@ -1,18 +1,21 @@
-﻿module("modules.logic.guide.config.GuideConfig", package.seeall)
+﻿-- chunkname: @modules/logic/guide/config/GuideConfig.lua
 
-local var_0_0 = class("GuideConfig", BaseConfig)
+module("modules.logic.guide.config.GuideConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._guideList = {}
-	arg_1_0._guide2StepList = {}
-	arg_1_0._stepId2AdditionStepMap = {}
-	arg_1_0._triggerTypeDict = {}
-	arg_1_0._triggerParamDict = {}
-	arg_1_0._invalidTypeListDict = {}
-	arg_1_0._invalidListDict = {}
+local GuideConfig = class("GuideConfig", BaseConfig)
+
+function GuideConfig:ctor()
+	self._guideList = {}
+	self._guide2StepList = {}
+	self._stepId2AdditionStepMap = {}
+	self._stepId2AdditionStepList = {}
+	self._triggerTypeDict = {}
+	self._triggerParamDict = {}
+	self._invalidTypeListDict = {}
+	self._invalidListDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function GuideConfig:reqConfigNames()
 	return {
 		"guide",
 		"guide_step",
@@ -21,131 +24,139 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "guide" then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2.configList) do
-			if iter_3_1.isOnline == 1 then
-				table.insert(arg_3_0._guideList, iter_3_1)
+function GuideConfig:onConfigLoaded(configName, configTable)
+	if configName == "guide" then
+		for _, guideCO in ipairs(configTable.configList) do
+			if guideCO.isOnline == 1 then
+				table.insert(self._guideList, guideCO)
 
-				local var_3_0 = string.split(iter_3_1.trigger, "#")
+				local temp = string.split(guideCO.trigger, "#")
 
-				arg_3_0._triggerTypeDict[iter_3_1.id] = var_3_0[1]
-				arg_3_0._triggerParamDict[iter_3_1.id] = var_3_0[2]
+				self._triggerTypeDict[guideCO.id] = temp[1]
+				self._triggerParamDict[guideCO.id] = temp[2]
+				temp = GameUtil.splitString2(guideCO.invalid, false, "|", "#")
+				self._invalidTypeListDict[guideCO.id] = {}
+				self._invalidListDict[guideCO.id] = {}
 
-				local var_3_1 = GameUtil.splitString2(iter_3_1.invalid, false, "|", "#")
-
-				arg_3_0._invalidTypeListDict[iter_3_1.id] = {}
-				arg_3_0._invalidListDict[iter_3_1.id] = {}
-
-				if not string.nilorempty(iter_3_1.invalid) then
-					for iter_3_2, iter_3_3 in ipairs(var_3_1) do
-						table.insert(arg_3_0._invalidTypeListDict[iter_3_1.id], iter_3_3[1])
-						table.insert(arg_3_0._invalidListDict[iter_3_1.id], iter_3_3)
+				if not string.nilorempty(guideCO.invalid) then
+					for _, one in ipairs(temp) do
+						table.insert(self._invalidTypeListDict[guideCO.id], one[1])
+						table.insert(self._invalidListDict[guideCO.id], one)
 					end
 				end
 			end
 		end
-	elseif arg_3_1 == "guide_step" then
-		for iter_3_4, iter_3_5 in ipairs(arg_3_2.configList) do
-			local var_3_2 = arg_3_0._guide2StepList[iter_3_5.id]
+	elseif configName == "guide_step" then
+		for _, stepCO in ipairs(configTable.configList) do
+			local stepList = self._guide2StepList[stepCO.id]
 
-			if not var_3_2 then
-				var_3_2 = {}
-				arg_3_0._guide2StepList[iter_3_5.id] = var_3_2
+			if not stepList then
+				stepList = {}
+				self._guide2StepList[stepCO.id] = stepList
 			end
 
-			table.insert(var_3_2, iter_3_5)
+			table.insert(stepList, stepCO)
 		end
-	elseif arg_3_1 == "guide_step_addition" then
-		arg_3_0._stepId2AdditionStepMap = arg_3_2.configDict
+	elseif configName == "guide_step_addition" then
+		self._stepId2AdditionStepMap = configTable.configDict
+
+		for _, stepCO in ipairs(configTable.configList) do
+			local stepList = self._stepId2AdditionStepList[stepCO.id]
+
+			if not stepList then
+				stepList = {}
+				self._stepId2AdditionStepList[stepCO.id] = stepList
+			end
+
+			table.insert(stepList, stepCO)
+		end
 	end
 end
 
-function var_0_0.getGuideList(arg_4_0)
-	return arg_4_0._guideList
+function GuideConfig:getGuideList()
+	return self._guideList
 end
 
-function var_0_0.getGuideCO(arg_5_0, arg_5_1)
-	return lua_guide.configDict[arg_5_1]
+function GuideConfig:getGuideCO(guideId)
+	return lua_guide.configDict[guideId]
 end
 
-function var_0_0.getStepList(arg_6_0, arg_6_1)
-	return arg_6_0._guide2StepList[arg_6_1]
+function GuideConfig:getStepList(guideId)
+	return self._guide2StepList[guideId]
 end
 
-function var_0_0.getStepCO(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = lua_guide_step.configDict[arg_7_1]
+function GuideConfig:getStepCO(guideId, stepId)
+	local guideStepDict = lua_guide_step.configDict[guideId]
 
-	if var_7_0 then
-		return var_7_0[arg_7_2]
+	if guideStepDict then
+		return guideStepDict[stepId]
 	else
-		return arg_7_0:getAddtionStepCfg(arg_7_1, arg_7_2)
+		return self:getAddtionStepCfg(guideId, stepId)
 	end
 end
 
-function var_0_0.getAddtionStepCfg(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._stepId2AdditionStepMap[arg_8_1]
+function GuideConfig:getAddtionStepCfg(guideId, stepId)
+	local guideStepDict = self._stepId2AdditionStepMap[guideId]
 
-	if var_8_0 then
-		return var_8_0[arg_8_2]
+	if guideStepDict then
+		return guideStepDict[stepId]
 	end
 end
 
-function var_0_0.getHighestPriorityGuideId(arg_9_0, arg_9_1)
-	local var_9_0
-	local var_9_1
+function GuideConfig:getHighestPriorityGuideId(guideIds)
+	local highestGuideId, priority
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		local var_9_2 = arg_9_0:getGuideCO(iter_9_1)
+	for i, guideId in ipairs(guideIds) do
+		local guideConfig = self:getGuideCO(guideId)
 
-		if var_9_2 and (not var_9_0 or not var_9_1 or var_9_1 < var_9_2.priority) then
-			var_9_0 = iter_9_1
-			var_9_1 = var_9_2.priority
+		if guideConfig and (not highestGuideId or not priority or priority < guideConfig.priority) then
+			highestGuideId = guideId
+			priority = guideConfig.priority
 		end
 	end
 
-	return var_9_0 or arg_9_1 and arg_9_1[1]
+	return highestGuideId or guideIds and guideIds[1]
 end
 
-function var_0_0.getTriggerType(arg_10_0, arg_10_1)
-	return arg_10_0._triggerTypeDict[arg_10_1]
+function GuideConfig:getTriggerType(guideId)
+	return self._triggerTypeDict[guideId]
 end
 
-function var_0_0.getTriggerParam(arg_11_0, arg_11_1)
-	return arg_11_0._triggerParamDict[arg_11_1]
+function GuideConfig:getTriggerParam(guideId)
+	return self._triggerParamDict[guideId]
 end
 
-function var_0_0.getInvalidTypeList(arg_12_0, arg_12_1)
-	return arg_12_0._invalidTypeListDict[arg_12_1]
+function GuideConfig:getInvalidTypeList(guideId)
+	return self._invalidTypeListDict[guideId]
 end
 
-function var_0_0.getInvalidList(arg_13_0, arg_13_1)
-	return arg_13_0._invalidListDict[arg_13_1]
+function GuideConfig:getInvalidList(guideId)
+	return self._invalidListDict[guideId]
 end
 
-function var_0_0.getPrevStepId(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0:getStepList(arg_14_1)
+function GuideConfig:getPrevStepId(guideId, stepId)
+	local stepCOList = self:getStepList(guideId)
 
-	if var_14_0[1].stepId == arg_14_2 then
+	if stepCOList[1].stepId == stepId then
 		return 0
 	end
 
-	for iter_14_0 = 2, #var_14_0 do
-		if var_14_0[iter_14_0].stepId == arg_14_2 then
-			return var_14_0[iter_14_0 - 1].stepId
+	for i = 2, #stepCOList do
+		if stepCOList[i].stepId == stepId then
+			return stepCOList[i - 1].stepId
 		end
 	end
 
 	return -1
 end
 
-function var_0_0.getNextStepId(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getStepList(arg_15_1)
+function GuideConfig:getNextStepId(guideId, stepId)
+	local stepCOList = self:getStepList(guideId) or self._stepId2AdditionStepList[guideId]
 
-	if var_15_0 then
-		for iter_15_0 = 1, #var_15_0 - 1 do
-			if var_15_0[iter_15_0].stepId == arg_15_2 then
-				return var_15_0[iter_15_0 + 1].stepId
+	if stepCOList then
+		for i = 1, #stepCOList - 1 do
+			if stepCOList[i].stepId == stepId then
+				return stepCOList[i + 1].stepId
 			end
 		end
 	end
@@ -153,6 +164,6 @@ function var_0_0.getNextStepId(arg_15_0, arg_15_1, arg_15_2)
 	return -1
 end
 
-var_0_0.instance = var_0_0.New()
+GuideConfig.instance = GuideConfig.New()
 
-return var_0_0
+return GuideConfig

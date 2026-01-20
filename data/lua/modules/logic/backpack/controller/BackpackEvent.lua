@@ -1,13 +1,15 @@
-﻿module("modules.logic.backpack.controller.BackpackEvent", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/controller/BackpackEvent.lua
 
-local var_0_0 = {}
+module("modules.logic.backpack.controller.BackpackEvent", package.seeall)
 
-var_0_0.SelectCategory = 1
-var_0_0.UpdateItemList = 2
-var_0_0.UsePowerPotionFinish = 3
-var_0_0.SelectCategoryById = 4
-var_0_0.UsePowerPotionListFinish = 5
-var_0_0.BeforeUsePowerPotionList = 6
-var_0_0.UseInsightItemFinished = 24001
+local BackpackEvent = {}
 
-return var_0_0
+BackpackEvent.SelectCategory = 1
+BackpackEvent.UpdateItemList = 2
+BackpackEvent.UsePowerPotionFinish = 3
+BackpackEvent.SelectCategoryById = 4
+BackpackEvent.UsePowerPotionListFinish = 5
+BackpackEvent.BeforeUsePowerPotionList = 6
+BackpackEvent.UseInsightItemFinished = 24001
+
+return BackpackEvent

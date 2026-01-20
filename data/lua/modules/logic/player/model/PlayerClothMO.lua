@@ -1,26 +1,28 @@
-﻿module("modules.logic.player.model.PlayerClothMO", package.seeall)
+﻿-- chunkname: @modules/logic/player/model/PlayerClothMO.lua
 
-local var_0_0 = pureTable("PlayerClothMO")
+module("modules.logic.player.model.PlayerClothMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = nil
-	arg_1_0.clothId = nil
-	arg_1_0.level = nil
-	arg_1_0.exp = nil
-	arg_1_0.has = nil
+local PlayerClothMO = pureTable("PlayerClothMO")
+
+function PlayerClothMO:ctor()
+	self.id = nil
+	self.clothId = nil
+	self.level = nil
+	self.exp = nil
+	self.has = nil
 end
 
-function var_0_0.initFromConfig(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.clothId = arg_2_1.id
-	arg_2_0.level = 0
-	arg_2_0.exp = 0
+function PlayerClothMO:initFromConfig(co)
+	self.id = co.id
+	self.clothId = co.id
+	self.level = 0
+	self.exp = 0
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.level = arg_3_1.level
-	arg_3_0.exp = arg_3_1.exp
-	arg_3_0.has = true
+function PlayerClothMO:init(info)
+	self.level = info.level
+	self.exp = info.exp
+	self.has = true
 end
 
-return var_0_0
+return PlayerClothMO

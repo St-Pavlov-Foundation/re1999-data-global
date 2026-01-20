@@ -1,141 +1,143 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchTalkItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchTalkItem.lua
 
-local var_0_0 = class("RoleStoryDispatchTalkItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchTalkItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.scrollconent = arg_1_0.viewGO.transform.parent
-	arg_1_0.itemList = {}
+local RoleStoryDispatchTalkItem = class("RoleStoryDispatchTalkItem", ListScrollCellExtend)
 
-	for iter_1_0 = 1, 2 do
-		local var_1_0 = arg_1_0:getUserDataTb_()
+function RoleStoryDispatchTalkItem:onInitView()
+	self.scrollconent = self.viewGO.transform.parent
+	self.itemList = {}
 
-		arg_1_0.itemList[iter_1_0] = var_1_0
-		var_1_0.txtInfo = gohelper.findChildTextMesh(arg_1_0.viewGO, string.format("info%s", iter_1_0))
-		var_1_0.txtRole = gohelper.findChildTextMesh(arg_1_0.viewGO, string.format("info%s/#txt_role", iter_1_0))
-		var_1_0.canvasGroup = var_1_0.txtInfo.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	for i = 1, 2 do
+		local item = self:getUserDataTb_()
+
+		self.itemList[i] = item
+		item.txtInfo = gohelper.findChildTextMesh(self.viewGO, string.format("info%s", i))
+		item.txtRole = gohelper.findChildTextMesh(self.viewGO, string.format("info%s/#txt_role", i))
+		item.canvasGroup = item.txtInfo.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
 	end
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoleStoryDispatchTalkItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoleStoryDispatchTalkItem:removeEvents()
 	return
 end
 
-function var_0_0.refreshItem(arg_4_0)
-	arg_4_0:killTween()
+function RoleStoryDispatchTalkItem:refreshItem()
+	self:killTween()
 
-	if not arg_4_0.data then
-		arg_4_0:clear()
-		gohelper.setActive(arg_4_0.viewGO, false)
+	if not self.data then
+		self:clear()
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	local var_4_0 = arg_4_0.data.type
+	local type = self.data.type
 
-	arg_4_0.curItem = arg_4_0.itemList[var_4_0]
+	self.curItem = self.itemList[type]
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.itemList) do
-		gohelper.setActive(iter_4_1.txtInfo, var_4_0 == iter_4_0)
+	for i, v in ipairs(self.itemList) do
+		gohelper.setActive(v.txtInfo, type == i)
 	end
 
-	if var_4_0 == RoleStoryEnum.TalkType.Special then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0.curItem.txtRole, string.format("#%s", arg_4_0.data.color))
-		SLFramework.UGUI.GuiHelper.SetColor(arg_4_0.curItem.txtInfo, string.format("#%s", arg_4_0.data.color))
+	if type == RoleStoryEnum.TalkType.Special then
+		SLFramework.UGUI.GuiHelper.SetColor(self.curItem.txtRole, string.format("#%s", self.data.color))
+		SLFramework.UGUI.GuiHelper.SetColor(self.curItem.txtInfo, string.format("#%s", self.data.color))
 	end
 
-	arg_4_0.curItem.canvasGroup.alpha = 1
+	self.curItem.canvasGroup.alpha = 1
 
-	arg_4_0:setText(arg_4_0.data)
+	self:setText(self.data)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.data = arg_5_1
-	arg_5_0.index = arg_5_2
+function RoleStoryDispatchTalkItem:onUpdateMO(data, index)
+	self.data = data
+	self.index = index
 
-	arg_5_0:refreshItem()
+	self:refreshItem()
 end
 
-function var_0_0.startTween(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.callback = arg_6_1
-	arg_6_0.callbackObj = arg_6_2
+function RoleStoryDispatchTalkItem:startTween(callback, callbackObj)
+	self.callback = callback
+	self.callbackObj = callbackObj
 
-	if not arg_6_0.data then
-		arg_6_0:finishTween()
+	if not self.data then
+		self:finishTween()
 
 		return
 	end
 
-	if not arg_6_0.tween then
-		arg_6_0.tween = RoleStoryDispatchTalkItemTween.New()
+	if not self.tween then
+		self.tween = RoleStoryDispatchTalkItemTween.New()
 	end
 
-	arg_6_0.curItem.txtInfo.text = arg_6_0.data.content
-	arg_6_0.curItem.txtRole.text = ""
+	self.curItem.txtInfo.text = self.data.content
+	self.curItem.txtRole.text = ""
 
-	arg_6_0.tween:playTween(arg_6_0.curItem.txtInfo, arg_6_0.data.content, arg_6_0.finishTween, arg_6_0, arg_6_0.scrollconent)
+	self.tween:playTween(self.curItem.txtInfo, self.data.content, self.finishTween, self, self.scrollconent)
 end
 
-function var_0_0.finishTween(arg_7_0)
-	arg_7_0:setText(arg_7_0.data)
+function RoleStoryDispatchTalkItem:finishTween()
+	self:setText(self.data)
 
-	local var_7_0 = arg_7_0.callback
-	local var_7_1 = arg_7_0.callbackObj
+	local callback = self.callback
+	local callbackObj = self.callbackObj
 
-	arg_7_0.callback = nil
-	arg_7_0.callbackObj = nil
+	self.callback = nil
+	self.callbackObj = nil
 
-	if var_7_0 then
-		var_7_0(var_7_1)
-	end
-end
-
-function var_0_0.clearText(arg_8_0)
-	arg_8_0:setText()
-
-	if arg_8_0.curItem then
-		arg_8_0.curItem.canvasGroup.alpha = 0
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.setText(arg_9_0, arg_9_1)
-	if not arg_9_0.curItem then
+function RoleStoryDispatchTalkItem:clearText()
+	self:setText()
+
+	if self.curItem then
+		self.curItem.canvasGroup.alpha = 0
+	end
+end
+
+function RoleStoryDispatchTalkItem:setText(data)
+	if not self.curItem then
 		return
 	end
 
-	arg_9_0.curItem.txtInfo.text = arg_9_1 and arg_9_1.content or ""
-	arg_9_0.curItem.txtRole.text = arg_9_1 and arg_9_1.speaker or ""
+	self.curItem.txtInfo.text = data and data.content or ""
+	self.curItem.txtRole.text = data and data.speaker or ""
 end
 
-function var_0_0.killTween(arg_10_0)
-	if arg_10_0.tween then
-		arg_10_0.tween:killTween()
+function RoleStoryDispatchTalkItem:killTween()
+	if self.tween then
+		self.tween:killTween()
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
+function RoleStoryDispatchTalkItem:_editableInitView()
 	return
 end
 
-function var_0_0.clear(arg_12_0)
+function RoleStoryDispatchTalkItem:clear()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	if arg_13_0.tween then
-		arg_13_0.tween:destroy()
+function RoleStoryDispatchTalkItem:onDestroyView()
+	if self.tween then
+		self.tween:destroy()
 	end
 
-	arg_13_0:clear()
+	self:clear()
 end
 
-return var_0_0
+return RoleStoryDispatchTalkItem

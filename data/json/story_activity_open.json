@@ -3878,5 +3878,293 @@
     "titleEn": "A New Dawn",
     "labelRes": "8",
     "storyBg": ""
+  },
+  {
+    "chapter": 32,
+    "part": 1,
+    "title": "language_10097916",
+    "titleEn": "The French Express",
+    "labelRes": "1",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 2,
+    "title": "language_10097918",
+    "titleEn": "Innocent Bystanders",
+    "labelRes": "2",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 3,
+    "title": "language_10097920",
+    "titleEn": "Encounter Etiquette",
+    "labelRes": "3",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 4,
+    "title": "language_10097922",
+    "titleEn": "Unconscious Hunting",
+    "labelRes": "4",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 5,
+    "title": "language_10097924",
+    "titleEn": "Light That Illuminates All",
+    "labelRes": "5",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 6,
+    "title": "language_10097926",
+    "titleEn": "Midnight Café",
+    "labelRes": "6",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 7,
+    "title": "language_10097928",
+    "titleEn": "\"Sweet Dreams\"",
+    "labelRes": "7",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg2.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 8,
+    "title": "language_10097930",
+    "titleEn": "The French Blue",
+    "labelRes": "8",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 9,
+    "title": "language_10097932",
+    "titleEn": "The Seer",
+    "labelRes": "9",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 10,
+    "title": "language_10097934",
+    "titleEn": "Paris in Hysteria",
+    "labelRes": "10",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 11,
+    "title": "language_10000911",
+    "titleEn": "Confluence",
+    "labelRes": "11",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg3.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 12,
+    "title": "language_10097937",
+    "titleEn": "A Ladder to Heaven",
+    "labelRes": "12",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg3.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 13,
+    "title": "language_10097939",
+    "titleEn": "Soul Mate",
+    "labelRes": "13",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg3.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 14,
+    "title": "language_10097941",
+    "titleEn": "Grand Guignol",
+    "labelRes": "14",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg4.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 15,
+    "title": "language_10097943",
+    "titleEn": "Paris Out of Reach",
+    "labelRes": "15",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg5.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 16,
+    "title": "language_10097945",
+    "titleEn": "Moment of Revelation",
+    "labelRes": "16",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg5.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 17,
+    "title": "language_10097947",
+    "titleEn": "No Need for Promises",
+    "labelRes": "17",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg6.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 18,
+    "title": "language_10097949",
+    "titleEn": "Rain",
+    "labelRes": "18",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg6.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 19,
+    "title": "language_10097951",
+    "titleEn": "The Hero's Journey",
+    "labelRes": "19",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg6.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 20,
+    "title": "language_10097953",
+    "titleEn": "In Ordinary Times",
+    "labelRes": "20",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg6.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 21,
+    "title": "language_10103726",
+    "titleEn": "The Unforeseen",
+    "labelRes": "1",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 22,
+    "title": "language_10103727",
+    "titleEn": "To Answer the Unanswerable",
+    "labelRes": "2",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 23,
+    "title": "language_10103728",
+    "titleEn": "Cracks and Splinters",
+    "labelRes": "3",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 24,
+    "title": "language_10035700",
+    "titleEn": "\"Me\"",
+    "labelRes": "4",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 25,
+    "title": "language_10103729",
+    "titleEn": "To Look Upon Doom",
+    "labelRes": "5",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 26,
+    "title": "language_10103730",
+    "titleEn": "Familiar Strangers",
+    "labelRes": "6",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 27,
+    "title": "language_10008233",
+    "titleEn": "Take No Sides",
+    "labelRes": "7",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 28,
+    "title": "language_10103731",
+    "titleEn": "Aria in the Rain",
+    "labelRes": "8",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 29,
+    "title": "language_10103734",
+    "titleEn": "The Pyromancer",
+    "labelRes": "1",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 30,
+    "title": "language_10103735",
+    "titleEn": "Playing God",
+    "labelRes": "2",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 31,
+    "title": "language_10103736",
+    "titleEn": "Freedom, Dignity, Peace",
+    "labelRes": "3",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 32,
+    "title": "language_10103737",
+    "titleEn": "A Business Opportunity",
+    "labelRes": "4",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 33,
+    "title": "language_10103738",
+    "titleEn": "Against the Inevitable",
+    "labelRes": "5",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 34,
+    "title": "language_10103739",
+    "titleEn": "The Cursebreaker",
+    "labelRes": "6",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 35,
+    "title": "language_10103740",
+    "titleEn": "Why Gemstones Matter",
+    "labelRes": "7",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 32,
+    "part": 36,
+    "title": "language_10103741",
+    "titleEn": "Another World Forsaken",
+    "labelRes": "8",
+    "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
   }
 ]

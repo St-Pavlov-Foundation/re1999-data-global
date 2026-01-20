@@ -1,59 +1,60 @@
-﻿module("modules.logic.guide.controller.exception.GuideExceptionHandler", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/exception/GuideExceptionHandler.lua
 
-local var_0_0 = _M
+module("modules.logic.guide.controller.exception.GuideExceptionHandler", package.seeall)
 
-function var_0_0.finishStep(arg_1_0, arg_1_1)
-	GuideController.instance:finishStep(arg_1_0, arg_1_1, true)
+local GuideExceptionHandler = _M
+
+function GuideExceptionHandler.finishStep(guideId, stepId)
+	GuideController.instance:finishStep(guideId, stepId, true)
 end
 
-function var_0_0.finishGuide(arg_2_0, arg_2_1, arg_2_2)
-	GuideController.instance:oneKeyFinishGuide(arg_2_0, true)
+function GuideExceptionHandler.finishGuide(guideId, stepId, param)
+	GuideController.instance:oneKeyFinishGuide(guideId, true)
 end
 
-function var_0_0.gotoStep(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = GuideModel.instance:getById(arg_3_0)
-	local var_3_1 = tonumber(arg_3_2)
-	local var_3_2
-	local var_3_3
-	local var_3_4 = GuideConfig.instance:getStepList(arg_3_0)
+function GuideExceptionHandler.gotoStep(guideId, stepId, param)
+	local guideMO = GuideModel.instance:getById(guideId)
+	local targetStepId = tonumber(param)
+	local hasFindStep, toSendStepId
+	local stepCOList = GuideConfig.instance:getStepList(guideId)
 
-	for iter_3_0 = #var_3_4, 1, -1 do
-		local var_3_5 = var_3_4[iter_3_0]
-		local var_3_6 = var_3_5.stepId
+	for i = #stepCOList, 1, -1 do
+		local stepCO = stepCOList[i]
+		local tempStepId = stepCO.stepId
 
-		if var_3_6 == var_3_0.currStepId then
-			if var_3_5.keyStep == 1 then
-				var_3_3 = var_3_6
+		if tempStepId == guideMO.currStepId then
+			if stepCO.keyStep == 1 then
+				toSendStepId = tempStepId
 			end
 
 			break
-		elseif var_3_2 then
-			if var_3_5.keyStep == 1 then
-				var_3_3 = var_3_6
+		elseif hasFindStep then
+			if stepCO.keyStep == 1 then
+				toSendStepId = tempStepId
 
 				break
 			end
-		elseif var_3_6 == var_3_1 then
-			var_3_2 = true
+		elseif tempStepId == targetStepId then
+			hasFindStep = true
 		end
 	end
 
-	if var_3_3 then
-		var_3_0:toGotoStep(var_3_1)
-		GuideRpc.instance:sendFinishGuideRequest(arg_3_0, var_3_3)
+	if toSendStepId then
+		guideMO:toGotoStep(targetStepId)
+		GuideRpc.instance:sendFinishGuideRequest(guideId, toSendStepId)
 	else
-		var_3_0:gotoStep(var_3_1)
-		GuideStepController.instance:clearFlow(arg_3_0)
-		GuideController.instance:execNextStep(arg_3_0)
+		guideMO:gotoStep(targetStepId)
+		GuideStepController.instance:clearFlow(guideId)
+		GuideController.instance:execNextStep(guideId)
 	end
 end
 
-function var_0_0.openView(arg_4_0, arg_4_1, arg_4_2)
-	ViewMgr.instance:openView(arg_4_2)
+function GuideExceptionHandler.openView(guideId, stepId, param)
+	ViewMgr.instance:openView(param)
 end
 
-function var_0_0.closeView(arg_5_0, arg_5_1, arg_5_2)
-	ViewMgr.instance:closeView(arg_5_2, true)
+function GuideExceptionHandler.closeView(guideId, stepId, param)
+	ViewMgr.instance:closeView(param, true)
 end
 
-return var_0_0
+return GuideExceptionHandler

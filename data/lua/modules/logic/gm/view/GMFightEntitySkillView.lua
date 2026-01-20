@@ -1,40 +1,42 @@
-﻿module("modules.logic.gm.view.GMFightEntitySkillView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightEntitySkillView.lua
 
-local var_0_0 = class("GMFightEntitySkillView", BaseView)
+module("modules.logic.gm.view.GMFightEntitySkillView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "skill/add/input")
-	arg_1_0._btnAdd = gohelper.findChildButton(arg_1_0.viewGO, "skill/add/btnAdd")
+local GMFightEntitySkillView = class("GMFightEntitySkillView", BaseView)
+
+function GMFightEntitySkillView:onInitView()
+	self._input = gohelper.findChildTextMeshInputField(self.viewGO, "skill/add/input")
+	self._btnAdd = gohelper.findChildButton(self.viewGO, "skill/add/btnAdd")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnAdd:AddClickListener(arg_2_0._onClickAddSkill, arg_2_0)
+function GMFightEntitySkillView:addEvents()
+	self._btnAdd:AddClickListener(self._onClickAddSkill, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnAdd:RemoveClickListener()
+function GMFightEntitySkillView:removeEvents()
+	self._btnAdd:RemoveClickListener()
 end
 
-function var_0_0._onClickAddSkill(arg_4_0)
-	local var_4_0 = tonumber(arg_4_0._input:GetText())
-	local var_4_1 = lua_skill.configDict[var_4_0]
-	local var_4_2 = GMFightEntityModel.instance.entityMO
+function GMFightEntitySkillView:_onClickAddSkill()
+	local skillId = tonumber(self._input:GetText())
+	local skillCO = lua_skill.configDict[skillId]
+	local entityMO = GMFightEntityModel.instance.entityMO
 
-	if tabletool.indexOf(var_4_2.skillList, var_4_0) then
+	if tabletool.indexOf(entityMO.skillList, skillId) then
 		GameFacade.showToast(ToastEnum.IconId, "skill has exist")
-	elseif var_4_1 then
-		GMRpc.instance:sendGMRequest(string.format("fightAddPassiveSkill %s %s", tostring(var_4_2.id), tostring(var_4_0)))
-		var_4_2:addPassiveSkill(var_4_0)
-		GMFightEntityModel.instance:setEntityMO(var_4_2)
+	elseif skillCO then
+		GMRpc.instance:sendGMRequest(string.format("fightAddPassiveSkill %s %s", tostring(entityMO.id), tostring(skillId)))
+		entityMO:addPassiveSkill(skillId)
+		GMFightEntityModel.instance:setEntityMO(entityMO)
 
-		local var_4_3 = FightLocalDataMgr.instance.entityMgr:getById(var_4_2.id)
+		local localData = FightLocalDataMgr.instance.entityMgr:getById(entityMO.id)
 
-		if var_4_3 then
-			FightEntityDataHelper.copyEntityMO(var_4_2, var_4_3)
+		if localData then
+			FightEntityDataHelper.copyEntityMO(entityMO, localData)
 		end
 	else
 		GameFacade.showToast(ToastEnum.IconId, "skill not exist")
 	end
 end
 
-return var_0_0
+return GMFightEntitySkillView

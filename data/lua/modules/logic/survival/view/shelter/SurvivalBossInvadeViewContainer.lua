@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalBossInvadeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalBossInvadeViewContainer.lua
 
-local var_0_0 = class("SurvivalBossInvadeViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalBossInvadeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalBossInvadeViewContainer = class("SurvivalBossInvadeViewContainer", BaseViewContainer)
+
+function SurvivalBossInvadeViewContainer:buildViews()
 	return {
 		SurvivalBossInvadeView.New()
 	}
 end
 
-return var_0_0
+return SurvivalBossInvadeViewContainer

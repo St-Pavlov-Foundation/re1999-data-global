@@ -1,28 +1,31 @@
-﻿module("modules.logic.scene.survival.entity.SurvivalExBlockEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/entity/SurvivalExBlockEntity.lua
 
-local var_0_0 = class("SurvivalExBlockEntity", SurvivalBlockEntity)
+module("modules.logic.scene.survival.entity.SurvivalExBlockEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1)
-	local var_1_0 = gohelper.create3d(arg_1_1, tostring(arg_1_0.pos))
-	local var_1_1, var_1_2, var_1_3 = SurvivalHelper.instance:hexPointToWorldPoint(arg_1_0.pos.q, arg_1_0.pos.r)
-	local var_1_4 = var_1_0.transform
+local SurvivalExBlockEntity = class("SurvivalExBlockEntity", SurvivalBlockEntity)
 
-	transformhelper.setLocalPos(var_1_4, var_1_1, var_1_2, var_1_3)
-	transformhelper.setLocalRotation(var_1_4, 0, arg_1_0.dir * 60 + 30, 0)
+function SurvivalExBlockEntity.Create(blockMo, root)
+	local go = gohelper.create3d(root, tostring(blockMo.pos))
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(blockMo.pos.q, blockMo.pos.r)
+	local rootTrans = go.transform
 
-	if arg_1_0.co then
-		local var_1_5 = SurvivalMapHelper.instance:getSpBlockRes(arg_1_0.co.map, arg_1_0.co.resource)
+	transformhelper.setLocalPos(rootTrans, x, y, z)
+	transformhelper.setLocalRotation(rootTrans, 0, blockMo.dir * 60 + 30, 0)
 
-		if var_1_5 then
-			local var_1_6 = gohelper.clone(var_1_5, var_1_0).transform
+	if blockMo.co then
+		local blockRes = SurvivalMapHelper.instance:getSpBlockRes(blockMo.co.map, blockMo.co.resource)
 
-			transformhelper.setLocalPos(var_1_6, 0, 0, 0)
-			transformhelper.setLocalRotation(var_1_6, 0, 0, 0)
-			transformhelper.setLocalScale(var_1_6, 1, 1, 1)
+		if blockRes then
+			local blockGo = gohelper.clone(blockRes, go)
+			local trans = blockGo.transform
+
+			transformhelper.setLocalPos(trans, 0, 0, 0)
+			transformhelper.setLocalRotation(trans, 0, 0, 0)
+			transformhelper.setLocalScale(trans, 1, 1, 1)
 		end
 	end
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0, var_0_0, arg_1_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalExBlockEntity, blockMo)
 end
 
-return var_0_0
+return SurvivalExBlockEntity

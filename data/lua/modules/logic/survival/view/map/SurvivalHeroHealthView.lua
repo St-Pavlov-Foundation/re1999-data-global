@@ -1,72 +1,75 @@
-﻿module("modules.logic.survival.view.map.SurvivalHeroHealthView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalHeroHealthView.lua
 
-local var_0_0 = class("SurvivalHeroHealthView", BaseView)
+module("modules.logic.survival.view.map.SurvivalHeroHealthView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._slider2 = gohelper.findChildImage(arg_1_0.viewGO, "Bottom/#go_resistance/bg2")
-	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "Bottom/#go_resistance/resistance")
-	arg_1_0._anim = arg_1_0._imagebg:GetComponent(typeof(UnityEngine.Animation))
-	arg_1_0._txtstatu = gohelper.findChildTextMesh(arg_1_0.viewGO, "Bottom/#go_resistance/resistance/#txt_resistance")
-	arg_1_0._scrollbar = gohelper.findChildScrollbar(arg_1_0.viewGO, "Bottom/#go_resistance/Scrollbar Horizon")
+local SurvivalHeroHealthView = class("SurvivalHeroHealthView", BaseView)
+
+function SurvivalHeroHealthView:onInitView()
+	self._slider2 = gohelper.findChildImage(self.viewGO, "Bottom/#go_resistance/bg2")
+	self._imagebg = gohelper.findChildImage(self.viewGO, "Bottom/#go_resistance/resistance")
+	self._anim = self._imagebg:GetComponent(typeof(UnityEngine.Animation))
+	self._txtstatu = gohelper.findChildTextMesh(self.viewGO, "Bottom/#go_resistance/resistance/#txt_resistance")
+	self._scrollbar = gohelper.findChildScrollbar(self.viewGO, "Bottom/#go_resistance/Scrollbar Horizon")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnSurvivalHeroHealthUpdate, arg_2_0._refreshHealth, arg_2_0)
+function SurvivalHeroHealthView:addEvents()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnSurvivalHeroHealthUpdate, self._refreshHealth, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnSurvivalHeroHealthUpdate, arg_3_0._refreshHealth, arg_3_0)
+function SurvivalHeroHealthView:removeEvents()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnSurvivalHeroHealthUpdate, self._refreshHealth, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_refreshHealth()
+function SurvivalHeroHealthView:onOpen()
+	self:_refreshHealth()
 end
 
-local var_0_1 = {
+local colors = {
 	"#C84827",
 	"#C3C827",
 	"#38CF6F"
 }
 
-function var_0_0._refreshHealth(arg_5_0)
-	local var_5_0 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.HeroHealthMax)
-	local var_5_1 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_5_2 = SurvivalMapModel.instance:getSceneMo().teamInfo
-	local var_5_3 = 0
-	local var_5_4 = 0
+function SurvivalHeroHealthView:_refreshHealth()
+	local max = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.HeroHealthMax)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local teamInfo = SurvivalMapModel.instance:getSceneMo().teamInfo
+	local cur = 0
+	local total = 0
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_2.heros) do
-		local var_5_5 = var_5_2:getHeroMo(iter_5_1)
+	for i, v in ipairs(teamInfo.heros) do
+		local heroMo = teamInfo:getHeroMo(v)
+		local healthMo = weekInfo:getHeroMo(heroMo.heroId)
 
-		var_5_3 = var_5_3 + var_5_1:getHeroMo(var_5_5.heroId).health
-		var_5_4 = var_5_4 + var_5_0
+		cur = cur + healthMo.health
+		total = total + max
 	end
 
-	local var_5_6 = var_5_3 / var_5_4
-	local var_5_7, var_5_8 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TeamHealthState)
-	local var_5_9 = 1
-	local var_5_10 = string.splitToNumber(var_5_7, "#")
-	local var_5_11 = string.split(var_5_8, "#")
+	local per = cur / total
+	local valStr, langStr = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TeamHealthState)
+	local state = 1
+	local arr = string.splitToNumber(valStr, "#")
+	local strArr = string.split(langStr, "#")
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_10) do
-		if var_5_6 >= iter_5_3 / 100 then
-			var_5_9 = iter_5_2
+	for k, v in ipairs(arr) do
+		if per >= v / 100 then
+			state = k
 		end
 	end
 
-	local var_5_12 = var_5_11[var_5_9] or ""
+	local stateStr = strArr[state] or ""
 
-	arg_5_0._scrollbar:SetValue(var_5_6)
+	self._scrollbar:SetValue(per)
 
-	arg_5_0._slider2.fillAmount = var_5_6
-	arg_5_0._imagebg.color = GameUtil.parseColor(var_0_1[var_5_9] or var_0_1[1])
-	arg_5_0._txtstatu.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_mainview_teamhealth"), var_5_12)
+	self._slider2.fillAmount = per
+	self._imagebg.color = GameUtil.parseColor(colors[state] or colors[1])
+	self._txtstatu.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_mainview_teamhealth"), stateStr)
 
-	if arg_5_0.state and var_5_9 ~= arg_5_0.state then
-		arg_5_0._anim:Play()
+	if self.state and state ~= self.state then
+		self._anim:Play()
 	end
 
-	arg_5_0.state = var_5_9
+	self.state = state
 end
 
-return var_0_0
+return SurvivalHeroHealthView

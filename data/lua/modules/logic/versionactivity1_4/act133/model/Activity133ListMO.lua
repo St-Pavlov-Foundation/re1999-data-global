@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity1_4.act133.model.Activity133ListMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act133/model/Activity133ListMO.lua
 
-local var_0_0 = pureTable("Activity133ListMO")
+module("modules.logic.versionactivity1_4.act133.model.Activity133ListMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.actid = arg_1_1.activityId
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.config = arg_1_1
-	arg_1_0.desc = arg_1_1.desc
-	arg_1_0.icon = arg_1_1.icon
-	arg_1_0.bonus = arg_1_1.bonus
-	arg_1_0.needTokens = arg_1_1.needTokens
-	arg_1_0.title = arg_1_1.title
-	arg_1_0.pos = arg_1_1.pos
+local Activity133ListMO = pureTable("Activity133ListMO")
+
+function Activity133ListMO:init(co)
+	self.actid = co.activityId
+	self.id = co.id
+	self.config = co
+	self.desc = co.desc
+	self.icon = co.icon
+	self.bonus = co.bonus
+	self.needTokens = co.needTokens
+	self.title = co.title
+	self.pos = co.pos
 end
 
-function var_0_0.isLock(arg_2_0)
+function Activity133ListMO:isLock()
 	return false
 end
 
-function var_0_0.isReceived(arg_3_0)
-	return Activity133Model.instance:checkBonusReceived(arg_3_0.id)
+function Activity133ListMO:isReceived()
+	return Activity133Model.instance:checkBonusReceived(self.id)
 end
 
-function var_0_0.getPos(arg_4_0)
-	local var_4_0 = string.split(arg_4_0.pos, "#")
+function Activity133ListMO:getPos()
+	local pos = string.split(self.pos, "#")
 
-	return var_4_0[1], var_4_0[2]
+	return pos[1], pos[2]
 end
 
-return var_0_0
+return Activity133ListMO

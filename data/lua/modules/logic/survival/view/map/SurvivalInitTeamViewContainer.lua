@@ -1,115 +1,117 @@
-﻿module("modules.logic.survival.view.map.SurvivalInitTeamViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalInitTeamViewContainer.lua
 
-local var_0_0 = class("SurvivalInitTeamViewContainer", BaseViewContainer)
-local var_0_1 = {
+module("modules.logic.survival.view.map.SurvivalInitTeamViewContainer", package.seeall)
+
+local SurvivalInitTeamViewContainer = class("SurvivalInitTeamViewContainer", BaseViewContainer)
+local ViewProcess = {
 	SelectMap = 1,
 	Preview = 2
 }
-local var_0_2 = {}
+local ViewProcessToIndex = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_1) do
-	var_0_2[iter_0_1] = iter_0_0
+for k, v in pairs(ViewProcess) do
+	ViewProcessToIndex[v] = k
 end
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._mapSelectView = SurvivalMapSelectView.New("Panel/#go_Map")
-	arg_1_0._previewTeamView = SurvivalPreviewTeamView.New("Panel/#go_Overview")
+function SurvivalInitTeamViewContainer:buildViews()
+	self._mapSelectView = SurvivalMapSelectView.New("Panel/#go_Map")
+	self._previewTeamView = SurvivalPreviewTeamView.New("Panel/#go_Overview")
 
 	return {
-		arg_1_0._mapSelectView,
-		arg_1_0._previewTeamView,
+		self._mapSelectView,
+		self._previewTeamView,
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function SurvivalInitTeamViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.preStep(arg_3_0)
-	arg_3_0._curProcess = arg_3_0._curProcess - 1
+function SurvivalInitTeamViewContainer:preStep()
+	self._curProcess = self._curProcess - 1
 
-	if var_0_2[arg_3_0._curProcess] then
-		arg_3_0:updateViewShow()
+	if ViewProcessToIndex[self._curProcess] then
+		self:updateViewShow()
 	else
-		arg_3_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0.nextStep(arg_4_0)
-	arg_4_0._curProcess = arg_4_0._curProcess + 1
+function SurvivalInitTeamViewContainer:nextStep()
+	self._curProcess = self._curProcess + 1
 
-	if var_0_2[arg_4_0._curProcess] then
-		arg_4_0:updateViewShow()
+	if ViewProcessToIndex[self._curProcess] then
+		self:updateViewShow()
 	else
-		arg_4_0._curProcess = arg_4_0._curProcess - 1
+		self._curProcess = self._curProcess - 1
 
-		local var_4_0 = SurvivalShelterModel.instance:getWeekInfo()
-		local var_4_1 = SurvivalMapModel.instance:getSelectMapId()
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+		local mapId = SurvivalMapModel.instance:getSelectMapId()
 
 		ViewMgr.instance:openView(ViewName.SurvivalShopView, {
-			shopMo = var_4_0.preExploreShop,
-			mapId = var_4_1
+			shopMo = weekInfo.preExploreShop,
+			mapId = mapId
 		})
 	end
 end
 
-function var_0_0.onContainerInit(arg_5_0)
-	arg_5_0._lights = arg_5_0:getUserDataTb_()
-	arg_5_0._viewAnim = gohelper.findChildAnim(arg_5_0.viewGO, "")
-	arg_5_0._animWeight = gohelper.findChildAnim(arg_5_0.viewGO, "Panel/Weight")
-	arg_5_0._txtWeight = gohelper.findChildTextMesh(arg_5_0.viewGO, "Panel/Weight/#txt_WeightNum")
-	arg_5_0._curProcess = var_0_1.SelectMap
+function SurvivalInitTeamViewContainer:onContainerInit()
+	self._lights = self:getUserDataTb_()
+	self._viewAnim = gohelper.findChildAnim(self.viewGO, "")
+	self._animWeight = gohelper.findChildAnim(self.viewGO, "Panel/Weight")
+	self._txtWeight = gohelper.findChildTextMesh(self.viewGO, "Panel/Weight/#txt_WeightNum")
+	self._curProcess = ViewProcess.SelectMap
 
-	arg_5_0:updateViewShow()
-	arg_5_0:addEventCb(GuideController.instance, GuideEvent.StartGuideStep, arg_5_0._onFinishGuideStep, arg_5_0)
+	self:updateViewShow()
+	self:addEventCb(GuideController.instance, GuideEvent.StartGuideStep, self._onFinishGuideStep, self)
 end
 
-function var_0_0.updateViewShow(arg_6_0)
-	if arg_6_0._curProcess == var_0_1.SelectMap then
+function SurvivalInitTeamViewContainer:updateViewShow()
+	if self._curProcess == ViewProcess.SelectMap then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_wenming_page)
 	else
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_general_1)
 	end
 
-	arg_6_0._previewTeamView:setIsShow(arg_6_0._curProcess == var_0_1.Preview)
-	gohelper.setActive(arg_6_0._animWeight, arg_6_0._curProcess ~= var_0_1.SelectMap)
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitInitViewTab, tostring(arg_6_0._curProcess))
+	self._previewTeamView:setIsShow(self._curProcess == ViewProcess.Preview)
+	gohelper.setActive(self._animWeight, self._curProcess ~= ViewProcess.SelectMap)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitInitViewTab, tostring(self._curProcess))
 end
 
-function var_0_0._onFinishGuideStep(arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._delayProcessEvent, arg_7_0, 0)
+function SurvivalInitTeamViewContainer:_onFinishGuideStep()
+	TaskDispatcher.runDelay(self._delayProcessEvent, self, 0)
 end
 
-function var_0_0._delayProcessEvent(arg_8_0)
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitInitViewTab, tostring(arg_8_0._curProcess))
+function SurvivalInitTeamViewContainer:_delayProcessEvent()
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitInitViewTab, tostring(self._curProcess))
 end
 
-function var_0_0.setWeightNum(arg_9_0)
-	local var_9_0 = SurvivalMapModel.instance:getInitGroup()
-	local var_9_1 = tabletool.len(var_9_0.allSelectHeroMos)
-	local var_9_2 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+function SurvivalInitTeamViewContainer:setWeightNum()
+	local initGroup = SurvivalMapModel.instance:getInitGroup()
+	local heroCount = tabletool.len(initGroup.allSelectHeroMos)
+	local exWeight = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
 
-	arg_9_0._txtWeight.text = var_9_2
+	self._txtWeight.text = exWeight
 end
 
-function var_0_0.playAnim(arg_10_0, arg_10_1)
-	arg_10_0._viewAnim:Play(arg_10_1, 0, 0)
+function SurvivalInitTeamViewContainer:playAnim(animName)
+	self._viewAnim:Play(animName, 0, 0)
 end
 
-function var_0_0.onContainerClose(arg_11_0)
-	arg_11_0:removeEventCb(GuideController.instance, GuideEvent.StartGuideStep, arg_11_0._onFinishGuideStep, arg_11_0)
-	var_0_0.super.onContainerClose(arg_11_0)
+function SurvivalInitTeamViewContainer:onContainerClose()
+	self:removeEventCb(GuideController.instance, GuideEvent.StartGuideStep, self._onFinishGuideStep, self)
+	SurvivalInitTeamViewContainer.super.onContainerClose(self)
 end
 
-return var_0_0
+return SurvivalInitTeamViewContainer

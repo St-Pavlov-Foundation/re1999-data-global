@@ -1,88 +1,90 @@
-﻿module("modules.logic.sp01.act204.view.Activity204TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/view/Activity204TaskView.lua
 
-local var_0_0 = class("Activity204TaskView", BaseView)
+module("modules.logic.sp01.act204.view.Activity204TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "root/leftReward/dailyreward/#go_reddot")
+local Activity204TaskView = class("Activity204TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity204TaskView:onInitView()
+	self._goreddot = gohelper.findChild(self.viewGO, "root/leftReward/dailyreward/#go_reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity204Controller.instance, Activity204Event.UpdateInfo, arg_2_0.onUpdateInfo, arg_2_0)
-	arg_2_0:addEventCb(Activity204Controller.instance, Activity204Event.UpdateTask, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(Activity204Controller.instance, Activity204Event.FinishTask, arg_2_0.onFinishTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0.onDailyRefresh, arg_2_0)
+function Activity204TaskView:addEvents()
+	self:addEventCb(Activity204Controller.instance, Activity204Event.UpdateInfo, self.onUpdateInfo, self)
+	self:addEventCb(Activity204Controller.instance, Activity204Event.UpdateTask, self.refreshTask, self)
+	self:addEventCb(Activity204Controller.instance, Activity204Event.FinishTask, self.onFinishTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self.refreshTask, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self.onDailyRefresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity204TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	RedDotController.instance:addRedDot(arg_4_0._goreddot, RedDotEnum.DotNode.V2a9_Act204DailyGet)
+function Activity204TaskView:_editableInitView()
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V2a9_Act204DailyGet)
 end
 
-function var_0_0.onUpdateInfo(arg_5_0)
-	arg_5_0:refreshView()
+function Activity204TaskView:onUpdateInfo()
+	self:refreshView()
 end
 
-function var_0_0.onFinishTask(arg_6_0)
-	arg_6_0:refreshTask()
+function Activity204TaskView:onFinishTask()
+	self:refreshTask()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function Activity204TaskView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_8_0)
+function Activity204TaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_mln_details_open)
-	arg_8_0:refreshParam()
-	arg_8_0:refreshView()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_9_0)
-	arg_9_0.actId = arg_9_0.viewParam.actId
-	arg_9_0.actMo = Activity204Model.instance:getById(arg_9_0.actId)
+function Activity204TaskView:refreshParam()
+	self.actId = self.viewParam.actId
+	self.actMo = Activity204Model.instance:getById(self.actId)
 
-	Activity204TaskListModel.instance:init(arg_9_0.actId)
-	Activity204Model.instance:recordHasReadNewTask(arg_9_0.actId)
+	Activity204TaskListModel.instance:init(self.actId)
+	Activity204Model.instance:recordHasReadNewTask(self.actId)
 	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateActTag)
 end
 
-function var_0_0.refreshView(arg_10_0)
-	arg_10_0:refreshTask()
+function Activity204TaskView:refreshView()
+	self:refreshTask()
 end
 
-function var_0_0.refreshTask(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.onDailyRefresh, arg_11_0)
+function Activity204TaskView:refreshTask()
+	TaskDispatcher.cancelTask(self.onDailyRefresh, self)
 	Activity204TaskListModel.instance:refresh()
 
-	local var_11_0 = Activity204TaskListModel.instance:getNextRefreshTime()
-	local var_11_1 = var_11_0 and var_11_0 / 1000 - ServerTime.now()
+	local nextRefreshTime = Activity204TaskListModel.instance:getNextRefreshTime()
+	local delayTime = nextRefreshTime and nextRefreshTime / 1000 - ServerTime.now()
 
-	if var_11_1 and var_11_1 > 0 then
-		TaskDispatcher.runDelay(arg_11_0.onDailyRefresh, arg_11_0, var_11_1)
+	if delayTime and delayTime > 0 then
+		TaskDispatcher.runDelay(self.onDailyRefresh, self, delayTime)
 	end
 end
 
-function var_0_0.onDailyRefresh(arg_12_0)
+function Activity204TaskView:onDailyRefresh()
 	Activity204Controller.instance:sendRpc2GetMainTaskInfo()
 end
 
-function var_0_0.onClose(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.onDailyRefresh, arg_13_0)
+function Activity204TaskView:onClose()
+	TaskDispatcher.cancelTask(self.onDailyRefresh, self)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function Activity204TaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity204TaskView

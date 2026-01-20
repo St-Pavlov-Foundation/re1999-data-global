@@ -1,172 +1,176 @@
-﻿module("modules.logic.playercard.model.PlayerCardCharacterSwitchListModel", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/model/PlayerCardCharacterSwitchListModel.lua
 
-local var_0_0 = class("PlayerCardCharacterSwitchListModel", ListScrollModel)
+module("modules.logic.playercard.model.PlayerCardCharacterSwitchListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._tempHeroId = nil
-	arg_1_0._tempSkinId = nil
+local PlayerCardCharacterSwitchListModel = class("PlayerCardCharacterSwitchListModel", ListScrollModel)
+
+function PlayerCardCharacterSwitchListModel:onInit()
+	self._tempHeroId = nil
+	self._tempSkinId = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._tempHeroId = nil
-	arg_2_0._tempSkinId = nil
+function PlayerCardCharacterSwitchListModel:reInit()
+	self._tempHeroId = nil
+	self._tempSkinId = nil
 end
 
-function var_0_0.initHeroList(arg_3_0)
-	arg_3_0._mainHeroList = {}
-	arg_3_0.curHeroId = nil
+function PlayerCardCharacterSwitchListModel:initHeroList()
+	self._mainHeroList = {}
+	self.curHeroId = nil
 
-	local var_3_0 = HeroModel.instance:getList()
+	local heroList = HeroModel.instance:getList()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		local var_3_1 = CharacterMainHeroMO.New()
+	for i, heroMO in ipairs(heroList) do
+		local defaultMainHeroMO = CharacterMainHeroMO.New()
 
-		var_3_1:init(iter_3_1, iter_3_1.config.skinId, false)
-		table.insert(arg_3_0._mainHeroList, var_3_1)
+		defaultMainHeroMO:init(heroMO, heroMO.config.skinId, false)
+		table.insert(self._mainHeroList, defaultMainHeroMO)
 	end
 end
 
-function var_0_0._isDefaultSkinId(arg_4_0, arg_4_1)
-	return arg_4_1.skinId == arg_4_1.heroMO.config.skinId
+function PlayerCardCharacterSwitchListModel:_isDefaultSkinId(mainHeroMO)
+	return mainHeroMO.skinId == mainHeroMO.heroMO.config.skinId
 end
 
-function var_0_0._commonSort(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1.heroMO.heroId == arg_5_0.curHeroId then
+function PlayerCardCharacterSwitchListModel:_commonSort(a, b)
+	if a.heroMO.heroId == self.curHeroId then
 		return true
 	end
 
-	if arg_5_2.heroMO.heroId == arg_5_0.curHeroId then
+	if b.heroMO.heroId == self.curHeroId then
 		return false
 	end
 
-	if arg_5_1.heroMO.heroId == arg_5_2.heroMO.heroId then
-		return arg_5_0:_isDefaultSkinId(arg_5_1) and not arg_5_0:_isDefaultSkinId(arg_5_2)
+	if a.heroMO.heroId == b.heroMO.heroId then
+		return self:_isDefaultSkinId(a) and not self:_isDefaultSkinId(b)
 	end
 
 	return nil
 end
 
-function var_0_0.sortByTime(arg_6_0, arg_6_1)
-	table.sort(arg_6_0._mainHeroList, function(arg_7_0, arg_7_1)
-		local var_7_0 = arg_6_0:_commonSort(arg_7_0, arg_7_1)
+function PlayerCardCharacterSwitchListModel:sortByTime(asceTime)
+	table.sort(self._mainHeroList, function(a, b)
+		local result = self:_commonSort(a, b)
 
-		if var_7_0 ~= nil then
-			return var_7_0
+		if result ~= nil then
+			return result
 		end
 
-		if arg_7_0.heroMO.createTime ~= arg_7_1.heroMO.createTime then
-			if arg_6_1 then
-				return arg_7_0.heroMO.createTime < arg_7_1.heroMO.createTime
+		if a.heroMO.createTime ~= b.heroMO.createTime then
+			if asceTime then
+				return a.heroMO.createTime < b.heroMO.createTime
 			else
-				return arg_7_0.heroMO.createTime > arg_7_1.heroMO.createTime
+				return a.heroMO.createTime > b.heroMO.createTime
 			end
 		end
 
-		return arg_7_0.heroMO.heroId < arg_7_1.heroMO.heroId
+		return a.heroMO.heroId < b.heroMO.heroId
 	end)
-	arg_6_0:setList(arg_6_0._mainHeroList)
+	self:setList(self._mainHeroList)
 end
 
-function var_0_0.sortByRare(arg_8_0, arg_8_1)
-	table.sort(arg_8_0._mainHeroList, function(arg_9_0, arg_9_1)
-		local var_9_0 = arg_8_0:_commonSort(arg_9_0, arg_9_1)
+function PlayerCardCharacterSwitchListModel:sortByRare(asceRare)
+	table.sort(self._mainHeroList, function(a, b)
+		local result = self:_commonSort(a, b)
 
-		if var_9_0 ~= nil then
-			return var_9_0
+		if result ~= nil then
+			return result
 		end
 
-		if arg_9_0.heroMO.config.rare == arg_9_1.heroMO.config.rare then
-			return arg_9_0.heroMO.config.id < arg_9_1.heroMO.config.id
+		if a.heroMO.config.rare == b.heroMO.config.rare then
+			return a.heroMO.config.id < b.heroMO.config.id
 		end
 
-		if arg_9_0.heroMO.config.rare ~= arg_9_1.heroMO.config.rare then
-			if arg_8_1 then
-				return arg_9_0.heroMO.config.rare < arg_9_1.heroMO.config.rare
+		if a.heroMO.config.rare ~= b.heroMO.config.rare then
+			if asceRare then
+				return a.heroMO.config.rare < b.heroMO.config.rare
 			else
-				return arg_9_0.heroMO.config.rare > arg_9_1.heroMO.config.rare
+				return a.heroMO.config.rare > b.heroMO.config.rare
 			end
 		end
 
-		return arg_9_0.heroMO.heroId < arg_9_1.heroMO.heroId
+		return a.heroMO.heroId < b.heroMO.heroId
 	end)
-	arg_8_0:setList(arg_8_0._mainHeroList)
+	self:setList(self._mainHeroList)
 end
 
-function var_0_0.getMoByHeroId(arg_10_0, arg_10_1)
-	if not arg_10_0._mainHeroList then
+function PlayerCardCharacterSwitchListModel:getMoByHeroId(heroId)
+	if not self._mainHeroList then
 		return
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._mainHeroList) do
-		if not iter_10_1.heroMO and not arg_10_1 or iter_10_1.heroMO and iter_10_1.heroMO.heroId == arg_10_1 then
-			return iter_10_1
+	for i, v in ipairs(self._mainHeroList) do
+		if not v.heroMO and not heroId or v.heroMO and v.heroMO.heroId == heroId then
+			return v
 		end
 	end
 end
 
-function var_0_0.getMoByHero(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_0._mainHeroList then
+function PlayerCardCharacterSwitchListModel:getMoByHero(heroId, skinId)
+	if not self._mainHeroList then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._mainHeroList) do
-		if arg_11_2 and iter_11_1.skinId == arg_11_2 then
-			return iter_11_1
+	for i, v in ipairs(self._mainHeroList) do
+		if skinId and v.skinId == skinId then
+			return v
 		end
 
-		if not arg_11_2 and iter_11_1.heroMO.heroId and iter_11_1.skinId == iter_11_1.heroMO.config.skinId then
-			return iter_11_1
+		if not skinId and v.heroMO.heroId and v.skinId == v.heroMO.config.skinId then
+			return v
 		end
 	end
 end
 
-function var_0_0.changeMainHero(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	arg_12_1 = arg_12_1 and tonumber(arg_12_1)
-	arg_12_2 = arg_12_2 and tonumber(arg_12_2)
+function PlayerCardCharacterSwitchListModel:changeMainHero(heroId, skinId, isRandom, isL2d)
+	heroId = heroId and tonumber(heroId)
+	skinId = skinId and tonumber(skinId)
 
-	local var_12_0 = arg_12_4 and 1 or 0
+	local l2dKey = isL2d and 1 or 0
 
-	if not arg_12_2 or arg_12_2 == 0 then
-		arg_12_2 = HeroConfig.instance:getHeroCO(arg_12_1).skinId
+	if not skinId or skinId == 0 then
+		local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+
+		skinId = heroConfig.skinId
 	end
 
-	local var_12_1 = table.concat({
-		arg_12_1,
-		arg_12_2,
-		var_12_0
+	local mainHeroParam = table.concat({
+		heroId,
+		skinId,
+		l2dKey
 	}, "#")
 
-	if not string.nilorempty(var_12_1) then
-		local var_12_2 = PlayerCardModel.instance:isCharacterSwitchFlag()
+	if not string.nilorempty(mainHeroParam) then
+		local flag = PlayerCardModel.instance:isCharacterSwitchFlag()
 
-		if var_12_2 == nil then
+		if flag == nil then
 			ViewMgr.instance:openView(ViewName.PlayerCardCharacterSwitchTipsView, {
-				heroParam = var_12_1
+				heroParam = mainHeroParam
 			})
 		else
-			arg_12_0:changeMainHeroByParam(var_12_1, var_12_2)
+			self:changeMainHeroByParam(mainHeroParam, flag)
 		end
 	end
 end
 
-function var_0_0.changeMainHeroByParam(arg_13_0, arg_13_1, arg_13_2)
-	if string.nilorempty(arg_13_1) then
+function PlayerCardCharacterSwitchListModel:changeMainHeroByParam(heroParam, flag)
+	if string.nilorempty(heroParam) then
 		return
 	end
 
-	if arg_13_2 then
-		local var_13_0 = string.splitToNumber(arg_13_1, "#")
-		local var_13_1 = var_13_0[1]
-		local var_13_2 = var_13_0[2]
+	if flag then
+		local param = string.splitToNumber(heroParam, "#")
+		local heroId = param[1]
+		local skinId = param[2]
 
-		CharacterSwitchListModel.instance:changeMainHero(var_13_1, var_13_2)
+		CharacterSwitchListModel.instance:changeMainHero(heroId, skinId)
 		PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshMainHeroSkin)
-		CharacterController.instance:dispatchEvent(CharacterEvent.MainThumbnailSignature, var_13_1)
+		CharacterController.instance:dispatchEvent(CharacterEvent.MainThumbnailSignature, heroId)
 	end
 
-	PlayerCardRpc.instance:sendSetPlayerCardHeroCoverRequest(arg_13_1)
+	PlayerCardRpc.instance:sendSetPlayerCardHeroCoverRequest(heroParam)
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerCardCharacterSwitchListModel.instance = PlayerCardCharacterSwitchListModel.New()
 
-return var_0_0
+return PlayerCardCharacterSwitchListModel

@@ -1,12 +1,14 @@
-﻿module("modules.logic.activity.define.ActivityChessEnum", package.seeall)
+﻿-- chunkname: @modules/logic/activity/define/ActivityChessEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.activity.define.ActivityChessEnum", package.seeall)
 
-var_0_0.TileBaseType = {
+local ActivityChessEnum = _M
+
+ActivityChessEnum.TileBaseType = {
 	Normal = 1,
 	None = 0
 }
-var_0_0.TileShowSettings = {
+ActivityChessEnum.TileShowSettings = {
 	width = 152.7,
 	height = 54.6,
 	offsetYX = 24.6,
@@ -14,7 +16,7 @@ var_0_0.TileShowSettings = {
 	offsetX = 154.8,
 	offsetXY = -29.3
 }
-var_0_0.InteractType = {
+ActivityChessEnum.InteractType = {
 	PickUpItem = 7,
 	TriggerFail = 5,
 	Enemy = 4,
@@ -24,21 +26,21 @@ var_0_0.InteractType = {
 	Obstacle = 2,
 	NoEffectItem = 8
 }
-var_0_0.InteractSelectPriority = {
-	[var_0_0.InteractType.Player] = 1
+ActivityChessEnum.InteractSelectPriority = {
+	[ActivityChessEnum.InteractType.Player] = 1
 }
-var_0_0.SelectPosStatus = {
+ActivityChessEnum.SelectPosStatus = {
 	SelectObjWaitPos = 2,
 	None = 1
 }
-var_0_0.GameEventType = {
+ActivityChessEnum.GameEventType = {
 	FinishEvent = 3,
 	Battle = 1,
 	UseItem = 2,
 	Lock = -1,
 	Normal = 0
 }
-var_0_0.GameStepType = {
+ActivityChessEnum.GameStepType = {
 	GameFinish = 2,
 	CallEvent = 4,
 	SyncInteractObj = 9,
@@ -49,48 +51,48 @@ var_0_0.GameStepType = {
 	NextRound = 1,
 	Move = 3
 }
-var_0_0.ChessClearCondition = {
+ActivityChessEnum.ChessClearCondition = {
 	InteractFinish = 2,
 	RoundLimit = 1
 }
-var_0_0.ChessSelectType = {
+ActivityChessEnum.ChessSelectType = {
 	UseItem = 2,
 	Normal = 1
 }
-var_0_0.ClickRangeX = 125
-var_0_0.ClickRangeY = 80
-var_0_0.ClickYWeight = 1.2
-var_0_0.ChessBoardOffsetX = -785
-var_0_0.ChessBoardOffsetY = -20
-var_0_0.TaskTypeClearEpisode = "Act109Star"
-var_0_0.EpisodeId = 1160101
-var_0_0.GuideIDForSwitchButton = 747
-var_0_0.ResOffsetXY = {
+ActivityChessEnum.ClickRangeX = 125
+ActivityChessEnum.ClickRangeY = 80
+ActivityChessEnum.ClickYWeight = 1.2
+ActivityChessEnum.ChessBoardOffsetX = -785
+ActivityChessEnum.ChessBoardOffsetY = -20
+ActivityChessEnum.TaskTypeClearEpisode = "Act109Star"
+ActivityChessEnum.EpisodeId = 1160101
+ActivityChessEnum.GuideIDForSwitchButton = 747
+ActivityChessEnum.ResOffsetXY = {
 	pingzi_a = {
 		0,
 		-14.5
 	}
 }
-var_0_0.SceneResPath = {
+ActivityChessEnum.SceneResPath = {
 	SceneFormatPath = "scenes/m_s12_dfw/prefab/%s.prefab",
 	GroundItem = "scenes/common_m_s12_dfw/prefab/m_s12_diban_1×1.prefab",
 	DirItem = "scenes/common_m_s12_dfw/prefab/m_s12_diban_selected.prefab",
 	AlarmItem = "scenes/common_m_s12_dfw/prefab/m_s12_qipan_red_1×1.prefab",
 	DefaultScene = "scenes/m_s12_dfw/prefab/m_s12_pikelesi_a_01_p.prefab"
 }
-var_0_0.FailReason = {
+ActivityChessEnum.FailReason = {
 	CanNotMove = 2,
 	MaxRound = 3,
 	Battle = 1,
 	FailInteract = 4,
 	None = 0
 }
-var_0_0.RoleAvatar = {
+ActivityChessEnum.RoleAvatar = {
 	WJYS = "wajueyishu_a",
 	PKLS = "pikelese_a",
 	Apple = "pingguo_a"
 }
-var_0_0.Res2SortOrder = {
+ActivityChessEnum.Res2SortOrder = {
 	jingcha_b = 1,
 	chuandan_b = 9,
 	wendi_a = 2,
@@ -105,4 +107,4 @@ var_0_0.Res2SortOrder = {
 	chuandan_a = 10
 }
 
-return var_0_0
+return ActivityChessEnum

@@ -1,52 +1,56 @@
-﻿module("modules.logic.activity.model.ActivityBeginnerCategoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityBeginnerCategoryListModel.lua
 
-local var_0_0 = class("ActivityBeginnerCategoryListModel", ListScrollModel)
+module("modules.logic.activity.model.ActivityBeginnerCategoryListModel", package.seeall)
 
-function var_0_0.setSortInfos(arg_1_0, arg_1_1)
-	arg_1_0._sortInfos = {}
+local ActivityBeginnerCategoryListModel = class("ActivityBeginnerCategoryListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		local var_1_0 = iter_1_1.co.id
-		local var_1_1 = ActivityBeginnerController.instance:showRedDot(var_1_0)
+function ActivityBeginnerCategoryListModel:setSortInfos(infos)
+	self._sortInfos = {}
 
-		arg_1_0._sortInfos[var_1_0] = var_1_1
+	for i, v in ipairs(infos) do
+		local activityId = v.co.id
+		local showRedDot = ActivityBeginnerController.instance:showRedDot(activityId)
+
+		self._sortInfos[activityId] = showRedDot
 	end
 end
 
-function var_0_0.checkTargetCategory(arg_2_0, arg_2_1)
-	if ActivityModel.instance:getCurTargetActivityCategoryId() > 0 or not arg_2_1 or #arg_2_1 <= 0 then
+function ActivityBeginnerCategoryListModel:checkTargetCategory(Infos)
+	local id = ActivityModel.instance:getCurTargetActivityCategoryId()
+
+	if id > 0 or not Infos or #Infos <= 0 then
 		return
 	end
 
-	table.sort(arg_2_1, var_0_0._sort)
-	ActivityModel.instance:setTargetActivityCategoryId(arg_2_1[1].co.id)
+	table.sort(Infos, ActivityBeginnerCategoryListModel._sort)
+	ActivityModel.instance:setTargetActivityCategoryId(Infos[1].co.id)
 end
 
-function var_0_0.setCategoryList(arg_3_0, arg_3_1)
-	arg_3_0._moList = arg_3_1 and arg_3_1 or {}
+function ActivityBeginnerCategoryListModel:setCategoryList(Infos)
+	self._moList = Infos and Infos or {}
 
-	table.sort(arg_3_0._moList, var_0_0._sort)
-	arg_3_0:setList(arg_3_0._moList)
+	table.sort(self._moList, ActivityBeginnerCategoryListModel._sort)
+	self:setList(self._moList)
 end
 
-function var_0_0._sort(arg_4_0, arg_4_1)
-	local var_4_0 = var_0_0.instance._sortInfos
-	local var_4_1 = arg_4_0.co.id
-	local var_4_2 = arg_4_1.co.id
-	local var_4_3 = var_4_0[var_4_1] and arg_4_0.co.hintPriority or arg_4_0.co.defaultPriority
-	local var_4_4 = var_4_0[var_4_2] and arg_4_1.co.hintPriority or arg_4_1.co.defaultPriority
+function ActivityBeginnerCategoryListModel._sort(a, b)
+	local sortInfos = ActivityBeginnerCategoryListModel.instance._sortInfos
+	local aId = a.co.id
+	local bId = b.co.id
+	local aPriority = sortInfos[aId] and a.co.hintPriority or a.co.defaultPriority
+	local bPriority = sortInfos[bId] and b.co.hintPriority or b.co.defaultPriority
 
-	if var_4_3 == var_4_4 then
-		return var_4_2 < var_4_1
+	if aPriority == bPriority then
+		return bId < aId
 	end
 
-	return var_4_4 < var_4_3
+	return bPriority < aPriority
 end
 
-function var_0_0.setOpenViewTime(arg_5_0)
-	arg_5_0.openViewTime = Time.realtimeSinceStartup
+function ActivityBeginnerCategoryListModel:setOpenViewTime()
+	self.openViewTime = Time.realtimeSinceStartup
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityBeginnerCategoryListModel.instance = ActivityBeginnerCategoryListModel.New()
 
-return var_0_0
+return ActivityBeginnerCategoryListModel

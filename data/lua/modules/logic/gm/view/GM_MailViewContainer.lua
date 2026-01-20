@@ -1,23 +1,25 @@
-﻿module("modules.logic.gm.view.GM_MailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_MailViewContainer.lua
 
-local var_0_0 = class("GM_MailViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_MailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_MailViewContainer = class("GM_MailViewContainer", BaseViewContainer)
+
+function GM_MailViewContainer:buildViews()
 	return {
 		GM_MailView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_MailViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.MailView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
+function GM_MailViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.MailView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.MailView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
+function GM_MailViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.MailView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
 end
 
-return var_0_0
+return GM_MailViewContainer

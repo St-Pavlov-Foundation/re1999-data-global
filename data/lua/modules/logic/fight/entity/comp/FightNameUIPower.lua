@@ -1,158 +1,165 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUIPower", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUIPower.lua
 
-local var_0_0 = class("FightNameUIPower", UserDataDispose)
+module("modules.logic.fight.entity.comp.FightNameUIPower", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local FightNameUIPower = class("FightNameUIPower", UserDataDispose)
 
-	arg_1_0._parentView = arg_1_1
-	arg_1_0._entity = arg_1_0._parentView.entity
-	arg_1_0._powerId = arg_1_2
-	arg_1_0._objList = arg_1_0:getUserDataTb_()
-	arg_1_0._cloneComp = UICloneComponent.New()
-	arg_1_0._point_ani_sequence = {}
+function FightNameUIPower:ctor(parentView, powerId)
+	self:__onInit()
+
+	self._parentView = parentView
+	self._entity = self._parentView.entity
+	self._powerId = powerId
+	self._objList = self:getUserDataTb_()
+	self._cloneComp = UICloneComponent.New()
+	self._point_ani_sequence = {}
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._energyRoot = gohelper.findChild(arg_2_0._parentView:getUIGO(), "layout/energy")
-	arg_2_0._eneryItem = gohelper.findChild(arg_2_0._parentView:getUIGO(), "layout/energy/energyitem")
+function FightNameUIPower:onOpen()
+	self._energyRoot = gohelper.findChild(self._parentView:getUIGO(), "layout/energy")
+	self._eneryItem = gohelper.findChild(self._parentView:getUIGO(), "layout/energy/energyitem")
 
-	arg_2_0:_correctObjCount()
-	arg_2_0:_refreshUI()
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PowerMaxChange, arg_2_0._onPowerMaxChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_2_0._onPowerChange, arg_2_0)
+	self:_correctObjCount()
+	self:_refreshUI()
+	self:addEventCb(FightController.instance, FightEvent.PowerMaxChange, self._onPowerMaxChange, self)
+	self:addEventCb(FightController.instance, FightEvent.PowerChange, self._onPowerChange, self)
 end
 
-function var_0_0._getPowerData(arg_3_0)
-	local var_3_0 = arg_3_0._entity:getMO()
+function FightNameUIPower:_getPowerData()
+	local entityMO = self._entity:getMO()
 
-	if var_3_0 then
-		return (var_3_0:getPowerInfo(arg_3_0._powerId))
+	if entityMO then
+		local powerData = entityMO:getPowerInfo(self._powerId)
+
+		return powerData
 	end
 end
 
-function var_0_0._refreshUI(arg_4_0)
-	local var_4_0 = arg_4_0:_getPowerData()
+function FightNameUIPower:_refreshUI()
+	local powerData = self:_getPowerData()
 
-	if var_4_0 then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._objList) do
-			local var_4_1 = gohelper.findChild(iter_4_1, "light")
+	if powerData then
+		for i, obj in ipairs(self._objList) do
+			local light = gohelper.findChild(obj, "light")
 
-			gohelper.setActive(var_4_1, iter_4_0 <= var_4_0.num)
+			gohelper.setActive(light, i <= powerData.num)
 		end
 	end
 end
 
-function var_0_0._onPowerMaxChange(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._entity.id == arg_5_1 and arg_5_0._powerId == arg_5_2 then
-		arg_5_0:_correctObjCount()
-		arg_5_0:_refreshUI()
+function FightNameUIPower:_onPowerMaxChange(entityId, powerId)
+	if self._entity.id == entityId and self._powerId == powerId then
+		self:_correctObjCount()
+		self:_refreshUI()
 	end
 end
 
-function var_0_0._onPowerChange(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	if arg_6_0._entity.id == arg_6_1 and arg_6_0._powerId == arg_6_2 and arg_6_3 ~= arg_6_4 then
-		table.insert(arg_6_0._point_ani_sequence, {
-			arg_6_3,
-			arg_6_4
+function FightNameUIPower:_onPowerChange(entityId, powerId, oldNum, newNum)
+	if self._entity.id == entityId and self._powerId == powerId and oldNum ~= newNum then
+		table.insert(self._point_ani_sequence, {
+			oldNum,
+			newNum
 		})
 
-		if arg_6_0._pointPlayType == 1 and arg_6_3 < arg_6_4 then
-			arg_6_0._change_ani_playing = nil
-		elseif arg_6_0._pointPlayType == 2 and arg_6_4 < arg_6_3 then
-			arg_6_0._change_ani_playing = nil
+		if self._pointPlayType == 1 and oldNum < newNum then
+			self._change_ani_playing = nil
+		elseif self._pointPlayType == 2 and newNum < oldNum then
+			self._change_ani_playing = nil
 		end
 
-		if not arg_6_0._change_ani_playing then
-			arg_6_0:_playPointChangeAni()
+		if not self._change_ani_playing then
+			self:_playPointChangeAni()
 		end
 	end
 end
 
-local var_0_1 = "open"
-local var_0_2 = "close"
+local aniOpen = "open"
+local aniClose = "close"
 
-function var_0_0._playPointChangeAni(arg_7_0)
-	local var_7_0 = table.remove(arg_7_0._point_ani_sequence, 1)
+function FightNameUIPower:_playPointChangeAni()
+	local ani_data = table.remove(self._point_ani_sequence, 1)
 
-	if var_7_0 then
-		local var_7_1 = var_7_0[1]
-		local var_7_2 = var_7_0[2]
+	if ani_data then
+		local oldNum = ani_data[1]
+		local newNum = ani_data[2]
+		local entityId = self._entity and self._entity.id
 
-		if arg_7_0._entity and arg_7_0._entity.id then
-			if var_7_1 < var_7_2 then
-				arg_7_0._pointPlayType = 1
+		if entityId then
+			if oldNum < newNum then
+				self._pointPlayType = 1
 
-				arg_7_0:_playAni(var_0_1, var_7_1, var_7_2)
-			elseif var_7_2 < var_7_1 then
-				arg_7_0._pointPlayType = 2
+				self:_playAni(aniOpen, oldNum, newNum)
+			elseif newNum < oldNum then
+				self._pointPlayType = 2
 
-				arg_7_0:_playAni(var_0_2, var_7_1, var_7_2)
+				self:_playAni(aniClose, oldNum, newNum)
 			end
 		end
 	else
-		arg_7_0._change_ani_playing = false
-		arg_7_0._pointPlayType = nil
+		self._change_ani_playing = false
+		self._pointPlayType = nil
 
-		if arg_7_0._entity and arg_7_0._entity:getMO() then
-			arg_7_0:_refreshUI()
+		if self._entity and self._entity:getMO() then
+			self:_refreshUI()
 		end
 	end
 end
 
-local var_0_3 = {
+local stateName2MontionName = {
 	open = "energyitem_open",
 	close = "energyitem_close"
 }
 
-function var_0_0._playAni(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0
-	local var_8_1 = math.min(arg_8_2, arg_8_3)
-	local var_8_2 = math.max(arg_8_2, arg_8_3)
+function FightNameUIPower:_playAni(stateName, oldNum, newNum)
+	local tarAni
+	local min = math.min(oldNum, newNum)
+	local max = math.max(oldNum, newNum)
 
-	for iter_8_0 = var_8_1 + 1, var_8_2 do
-		local var_8_3 = arg_8_0._objList[iter_8_0]
+	for i = min + 1, max do
+		local obj = self._objList[i]
 
-		if var_8_3 then
-			local var_8_4 = gohelper.findChild(var_8_3, "light")
+		if obj then
+			local light = gohelper.findChild(obj, "light")
 
-			gohelper.setActive(var_8_4, true)
+			gohelper.setActive(light, true)
 
-			local var_8_5 = gohelper.onceAddComponent(var_8_3, typeof(UnityEngine.Animator))
+			local ani = gohelper.onceAddComponent(obj, typeof(UnityEngine.Animator))
 
-			var_8_5:Play(arg_8_1, 0, 0)
+			ani:Play(stateName, 0, 0)
 
-			var_8_5.speed = FightModel.instance:getSpeed()
-			arg_8_0._change_ani_playing = true
-			var_8_0 = var_8_5
+			ani.speed = FightModel.instance:getSpeed()
+			self._change_ani_playing = true
+			tarAni = ani
 		end
 	end
 
-	local var_8_6 = GameUtil.getMotionDuration(var_8_0, var_0_3[arg_8_1])
+	local duration = GameUtil.getMotionDuration(tarAni, stateName2MontionName[stateName])
 
-	TaskDispatcher.runDelay(arg_8_0._playPointChangeAni, arg_8_0, var_8_6)
+	TaskDispatcher.runDelay(self._playPointChangeAni, self, duration)
 end
 
-function var_0_0._correctObjCount(arg_9_0)
-	local var_9_0 = arg_9_0:_getPowerData()
+function FightNameUIPower:_correctObjCount()
+	local powerData = self:_getPowerData()
 
-	if var_9_0 then
-		gohelper.setActive(arg_9_0._energyRoot, true)
-		arg_9_0._cloneComp:createObjList(arg_9_0, arg_9_0._onItemShow, var_9_0.max or 0, arg_9_0._energyRoot, arg_9_0._eneryItem)
+	if powerData then
+		gohelper.setActive(self._energyRoot, true)
+		self._cloneComp:createObjList(self, self._onItemShow, powerData.max or 0, self._energyRoot, self._eneryItem)
 	else
-		gohelper.setActive(arg_9_0._energyRoot, false)
+		gohelper.setActive(self._energyRoot, false)
 	end
 end
 
-function var_0_0._onItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	gohelper.onceAddComponent(arg_10_1, typeof(UnityEngine.Animator)):Play("idle", 0, 0)
+function FightNameUIPower:_onItemShow(obj, data, index)
+	local ani = gohelper.onceAddComponent(obj, typeof(UnityEngine.Animator))
 
-	arg_10_0._objList[arg_10_3] = arg_10_0._objList[arg_10_3] or arg_10_1
+	ani:Play("idle", 0, 0)
+
+	self._objList[index] = self._objList[index] or obj
 end
 
-function var_0_0.releaseSelf(arg_11_0)
-	arg_11_0._cloneComp:releaseSelf()
-	arg_11_0:__onDispose()
+function FightNameUIPower:releaseSelf()
+	self._cloneComp:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightNameUIPower

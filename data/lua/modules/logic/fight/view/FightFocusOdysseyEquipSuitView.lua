@@ -1,85 +1,87 @@
-﻿module("modules.logic.fight.view.FightFocusOdysseyEquipSuitView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightFocusOdysseyEquipSuitView.lua
 
-local var_0_0 = class("FightFocusOdysseyEquipSuitView", FightBaseView)
+module("modules.logic.fight.view.FightFocusOdysseyEquipSuitView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.itemRoot = gohelper.findChild(arg_1_0.viewGO, "root/suit")
-	arg_1_0.itemObj = gohelper.findChild(arg_1_0.viewGO, "root/suit/item")
+local FightFocusOdysseyEquipSuitView = class("FightFocusOdysseyEquipSuitView", FightBaseView)
+
+function FightFocusOdysseyEquipSuitView:onInitView()
+	self.itemRoot = gohelper.findChild(self.viewGO, "root/suit")
+	self.itemObj = gohelper.findChild(self.viewGO, "root/suit/item")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightFocusOdysseyEquipSuitView:addEvents()
 	return
 end
 
-function var_0_0.onConstructor(arg_3_0, arg_3_1)
-	arg_3_0.entityMO = arg_3_1
+function FightFocusOdysseyEquipSuitView:onConstructor(entityMO)
+	self.entityMO = entityMO
 end
 
-function var_0_0.refreshEntityMO(arg_4_0, arg_4_1)
-	arg_4_0.entityMO = arg_4_1
+function FightFocusOdysseyEquipSuitView:refreshEntityMO(entityMO)
+	self.entityMO = entityMO
 
-	if arg_4_0.viewGO then
-		arg_4_0:refreshData()
+	if self.viewGO then
+		self:refreshData()
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Odyssey]
-	arg_5_0.customData = arg_5_0.customData or FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act128Sp]
+function FightFocusOdysseyEquipSuitView:onOpen()
+	self.customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Odyssey]
+	self.customData = self.customData or FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act128Sp]
 
-	arg_5_0:refreshData()
+	self:refreshData()
 end
 
-function var_0_0.refreshData(arg_6_0)
-	if arg_6_0.entityMO:isEnemySide() then
-		gohelper.setActive(arg_6_0.viewGO, false)
+function FightFocusOdysseyEquipSuitView:refreshData()
+	if self.entityMO:isEnemySide() then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	local var_6_0 = arg_6_0.customData.equipSuit2Level
-	local var_6_1 = {}
+	local data = self.customData.equipSuit2Level
+	local dataList = {}
 
-	for iter_6_0, iter_6_1 in pairs(var_6_0) do
-		if iter_6_1 > 0 then
-			local var_6_2 = {
-				suitId = tonumber(iter_6_0),
-				level = iter_6_1
-			}
+	for k, v in pairs(data) do
+		if v > 0 then
+			local tab = {}
 
-			table.insert(var_6_1, var_6_2)
+			tab.suitId = tonumber(k)
+			tab.level = v
+
+			table.insert(dataList, tab)
 		end
 	end
 
-	table.sort(var_6_1, function(arg_7_0, arg_7_1)
-		return arg_7_0.suitId < arg_7_1.suitId
+	table.sort(dataList, function(a, b)
+		return a.suitId < b.suitId
 	end)
 
-	if #var_6_1 == 0 then
-		gohelper.setActive(arg_6_0.viewGO, false)
+	if #dataList == 0 then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_6_0.viewGO, true)
-	arg_6_0:com_createObjList(arg_6_0.onItemShow, var_6_1, arg_6_0.itemRoot, arg_6_0.itemObj)
+	gohelper.setActive(self.viewGO, true)
+	self:com_createObjList(self.onItemShow, dataList, self.itemRoot, self.itemObj)
 end
 
-function var_0_0.onItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = OdysseyConfig.instance:getEquipSuitConfig(arg_8_2.suitId)
-	local var_8_1 = gohelper.findChildImage(arg_8_1, "#image_icon")
+function FightFocusOdysseyEquipSuitView:onItemShow(obj, data, index)
+	local config = OdysseyConfig.instance:getEquipSuitConfig(data.suitId)
+	local imageIcon = gohelper.findChildImage(obj, "#image_icon")
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(var_8_1, var_8_0.icon)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(imageIcon, config.icon)
 
-	local var_8_2 = gohelper.findChildClick(arg_8_1, "#btn_click")
+	local click = gohelper.findChildClick(obj, "#btn_click")
 
-	arg_8_0:com_registClick(var_8_2, arg_8_0.onItemClick, arg_8_2)
+	self:com_registClick(click, self.onItemClick, data)
 end
 
-function var_0_0.onItemClick(arg_9_0, arg_9_1)
-	arg_9_1.bagType = OdysseyEnum.BagType.FightPrepare
+function FightFocusOdysseyEquipSuitView:onItemClick(data)
+	data.bagType = OdysseyEnum.BagType.FightPrepare
 
-	OdysseyController.instance:openSuitTipsView(arg_9_1)
+	OdysseyController.instance:openSuitTipsView(data)
 end
 
-return var_0_0
+return FightFocusOdysseyEquipSuitView

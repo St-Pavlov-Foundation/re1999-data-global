@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.view.FightEditorStateViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightEditorStateViewContainer.lua
 
-local var_0_0 = class("FightEditorStateViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightEditorStateViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightEditorStateViewContainer = class("FightEditorStateViewContainer", BaseViewContainer)
+
+function FightEditorStateViewContainer:buildViews()
 	return {
 		FightEditorStateView.New()
 	}
 end
 
-return var_0_0
+return FightEditorStateViewContainer

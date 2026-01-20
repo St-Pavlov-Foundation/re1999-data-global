@@ -1,51 +1,74 @@
-﻿module("modules.logic.fight.entity.FightEntityBuffObject", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityBuffObject.lua
 
-local var_0_0 = class("FightEntityBuffObject", FightBaseClass)
+module("modules.logic.fight.entity.FightEntityBuffObject", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.buffData = arg_1_1
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.entityId = arg_1_1.entityId
-	arg_1_0.buffId = arg_1_1.buffId
+local FightEntityBuffObject = class("FightEntityBuffObject", FightBaseClass)
+
+function FightEntityBuffObject:onConstructor(buffData)
+	self.buffData = buffData
+	self.uid = buffData.uid
+	self.entityId = buffData.entityId
+	self.buffId = buffData.buffId
+	self.buffDic = {}
 end
 
-function var_0_0.onAddBuff(arg_2_0)
-	arg_2_0:showAddEffect()
+function FightEntityBuffObject:onAddBuff()
+	local buffId = self.buffId
+	local uid = self.uid
 
-	if lua_fight_gao_si_niao_buffeffect_electric_level.configDict[arg_2_0.buffId] then
-		arg_2_0:newClass(FightGaoSiNiaoBuffEffectWithElectricLevel, arg_2_0.buffData)
+	self:showAddEffect()
+
+	if lua_fight_gao_si_niao_buffeffect_electric_level.configDict[buffId] then
+		self.buffDic[uid] = self:newClass(FightGaoSiNiaoBuffEffectWithElectricLevel, self.buffData)
 	end
 
-	FightMsgMgr.sendMsg(FightMsgId.OnAddBuff, arg_2_0.buffData)
+	local dicActivity128Const = lua_activity128_const.configDict
+
+	if buffId == dicActivity128Const[7].value1 then
+		self.buffDic[uid] = self:newClass(FightZongMaoWillEnterEyeWitnessRound, self.buffData)
+	elseif buffId == dicActivity128Const[8].value1 then
+		self.buffDic[uid] = self:newClass(FightZongMaoEyeWitnessRound, self.buffData)
+	elseif buffId == dicActivity128Const[9].value1 then
+		self.buffDic[uid] = self:newClass(FightZongMaoEyeWitnessEnd, self.buffData)
+	end
+
+	FightMsgMgr.sendMsg(FightMsgId.OnAddBuff, self.buffData)
 end
 
-function var_0_0.showAddEffect(arg_3_0)
+function FightEntityBuffObject:showAddEffect()
 	return
 end
 
-function var_0_0.onRemoveBuff(arg_4_0, arg_4_1)
-	if arg_4_1 ~= arg_4_0.uid then
+function FightEntityBuffObject:onRemoveBuff(uid)
+	if uid ~= self.uid then
 		return
 	end
 
-	arg_4_0:showRemoveEffect()
-	FightMsgMgr.sendMsg(FightMsgId.OnRemoveBuff, arg_4_1)
+	self:showRemoveEffect()
+
+	local buffObj = self.buffDic[uid]
+
+	if buffObj then
+		buffObj:disposeSelf()
+	end
+
+	FightMsgMgr.sendMsg(FightMsgId.OnRemoveBuff, self.buffData)
 end
 
-function var_0_0.showRemoveEffect(arg_5_0)
+function FightEntityBuffObject:showRemoveEffect()
 	return
 end
 
-function var_0_0.onUpdateBuff(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0.uid then
+function FightEntityBuffObject:onUpdateBuff(uid)
+	if uid ~= self.uid then
 		return
 	end
 
-	FightMsgMgr.sendMsg(FightMsgId.OnUpdateBuff, arg_6_0.buffData)
+	FightMsgMgr.sendMsg(FightMsgId.OnUpdateBuff, self.buffData)
 end
 
-function var_0_0.onDestructor(arg_7_0)
+function FightEntityBuffObject:onDestructor()
 	return
 end
 
-return var_0_0
+return FightEntityBuffObject

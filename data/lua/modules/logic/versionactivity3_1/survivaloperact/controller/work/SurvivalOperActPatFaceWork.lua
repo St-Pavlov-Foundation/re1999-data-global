@@ -1,29 +1,35 @@
-﻿module("modules.logic.versionactivity3_1.survivaloperact.controller.work.SurvivalOperActPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/survivaloperact/controller/work/SurvivalOperActPatFaceWork.lua
 
-local var_0_0 = class("SurvivalOperActPatFaceWork", Activity101SignPatFaceWork)
+module("modules.logic.versionactivity3_1.survivaloperact.controller.work.SurvivalOperActPatFaceWork", package.seeall)
 
-function var_0_0.checkCanPat(arg_1_0)
-	local var_1_0 = arg_1_0:_actId()
+local SurvivalOperActPatFaceWork = class("SurvivalOperActPatFaceWork", Activity101SignPatFaceWork)
 
-	if not ActivityType101Model.instance:isOpen(var_1_0) then
+function SurvivalOperActPatFaceWork:checkCanPat()
+	local actId = self:_actId()
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
+
+	if not isOpen then
 		return false
 	end
 
-	local var_1_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.SurvivalOperActPat)
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.SurvivalOperActPat)
+	local hasPat = PlayerPrefsHelper.getNumber(key, 0)
 
-	if PlayerPrefsHelper.getNumber(var_1_1, 0) ~= 0 then
+	if hasPat ~= 0 then
 		return false
 	end
 
-	if arg_1_0:isType101RewardCouldGetAnyOne() then
-		PlayerPrefsHelper.setNumber(var_1_1, 1)
+	local rewardGet = self:isType101RewardCouldGetAnyOne()
+
+	if rewardGet then
+		PlayerPrefsHelper.setNumber(key, 1)
 
 		return false
 	end
 
-	PlayerPrefsHelper.setNumber(var_1_1, 1)
+	PlayerPrefsHelper.setNumber(key, 1)
 
 	return true
 end
 
-return var_0_0
+return SurvivalOperActPatFaceWork

@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapAudioView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/map/EliminateMapAudioView.lua
 
-local var_0_0 = class("EliminateMapAudioView", BaseView)
+module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapAudioView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local EliminateMapAudioView = class("EliminateMapAudioView", BaseView)
+
+function EliminateMapAudioView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EliminateMapAudioView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EliminateMapAudioView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0)
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
-	arg_4_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnSelectChapterChange, arg_4_0.onSelectChapterChange, arg_4_0)
+function EliminateMapAudioView:_editableInitView()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(EliminateMapController.instance, EliminateMapEvent.OnSelectChapterChange, self.onSelectChapterChange, self)
 end
 
-function var_0_0._onCloseView(arg_5_0, arg_5_1)
+function EliminateMapAudioView:_onCloseView(viewName)
 	return
 end
 
-function var_0_0._onOpenView(arg_6_0, arg_6_1)
+function EliminateMapAudioView:_onOpenView(viewName)
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:playAmbientAudio()
+function EliminateMapAudioView:onOpen()
+	self:playAmbientAudio()
 end
 
-function var_0_0.playAmbientAudio(arg_8_0)
+function EliminateMapAudioView:playAmbientAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 end
 
-function var_0_0.onSelectChapterChange(arg_9_0)
-	arg_9_0:playAmbientAudio()
+function EliminateMapAudioView:onSelectChapterChange()
+	self:playAmbientAudio()
 end
 
-function var_0_0.onClose(arg_10_0)
+function EliminateMapAudioView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 end
 
-return var_0_0
+return EliminateMapAudioView

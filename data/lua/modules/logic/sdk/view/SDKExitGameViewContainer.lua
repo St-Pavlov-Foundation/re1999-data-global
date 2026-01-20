@@ -1,13 +1,15 @@
-﻿module("modules.logic.sdk.view.SDKExitGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/view/SDKExitGameViewContainer.lua
 
-local var_0_0 = class("SDKExitGameViewContainer", BaseViewContainer)
+module("modules.logic.sdk.view.SDKExitGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SDKExitGameViewContainer = class("SDKExitGameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SDKExitGameView.New())
+function SDKExitGameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SDKExitGameView.New())
+
+	return views
 end
 
-return var_0_0
+return SDKExitGameViewContainer

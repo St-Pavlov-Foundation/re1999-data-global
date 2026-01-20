@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_4.act130.config.Activity130Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/config/Activity130Config.lua
 
-local var_0_0 = class("Activity130Config", BaseConfig)
+module("modules.logic.versionactivity1_4.act130.config.Activity130Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act130EpisodeConfig = nil
-	arg_1_0._act130DecryptConfig = nil
-	arg_1_0._act130OperGroupConfig = nil
-	arg_1_0._act130ElementConfig = nil
-	arg_1_0._act130DialogList = nil
-	arg_1_0._act130TaskConfig = nil
+local Activity130Config = class("Activity130Config", BaseConfig)
+
+function Activity130Config:ctor()
+	self._act130EpisodeConfig = nil
+	self._act130DecryptConfig = nil
+	self._act130OperGroupConfig = nil
+	self._act130ElementConfig = nil
+	self._act130DialogList = nil
+	self._act130TaskConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity130Config:reqConfigNames()
 	return {
 		"activity130_episode",
 		"activity130_decrypt",
@@ -22,126 +24,126 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity130_episode" then
-		arg_3_0._act130EpisodeConfig = arg_3_2
-	elseif arg_3_1 == "activity130_decrypt" then
-		arg_3_0._act130DecryptConfig = arg_3_2
-	elseif arg_3_1 == "activity130_oper_group" then
-		arg_3_0._act130OperGroupConfig = arg_3_2
-	elseif arg_3_1 == "activity130_element" then
-		arg_3_0._act130ElementConfig = arg_3_2
-	elseif arg_3_1 == "activity130_dialog" then
-		arg_3_0:_initDialog()
-	elseif arg_3_1 == "activity130_task" then
-		arg_3_0._act130TaskConfig = arg_3_2
+function Activity130Config:onConfigLoaded(configName, configTable)
+	if configName == "activity130_episode" then
+		self._act130EpisodeConfig = configTable
+	elseif configName == "activity130_decrypt" then
+		self._act130DecryptConfig = configTable
+	elseif configName == "activity130_oper_group" then
+		self._act130OperGroupConfig = configTable
+	elseif configName == "activity130_element" then
+		self._act130ElementConfig = configTable
+	elseif configName == "activity130_dialog" then
+		self:_initDialog()
+	elseif configName == "activity130_task" then
+		self._act130TaskConfig = configTable
 	end
 end
 
-function var_0_0.getActivity130EpisodeCos(arg_4_0, arg_4_1)
-	return arg_4_0._act130EpisodeConfig.configDict[arg_4_1]
+function Activity130Config:getActivity130EpisodeCos(actId)
+	return self._act130EpisodeConfig.configDict[actId]
 end
 
-function var_0_0.getActivity130EpisodeCo(arg_5_0, arg_5_1, arg_5_2)
-	return arg_5_0._act130EpisodeConfig.configDict[arg_5_1][arg_5_2]
+function Activity130Config:getActivity130EpisodeCo(actId, id)
+	return self._act130EpisodeConfig.configDict[actId][id]
 end
 
-function var_0_0.getActivity130DecryptCos(arg_6_0, arg_6_1)
-	return arg_6_0._act130DecryptConfig.configDict[arg_6_1]
+function Activity130Config:getActivity130DecryptCos(actId)
+	return self._act130DecryptConfig.configDict[actId]
 end
 
-function var_0_0.getActivity130DecryptCo(arg_7_0, arg_7_1, arg_7_2)
-	return arg_7_0._act130DecryptConfig.configDict[arg_7_1][arg_7_2]
+function Activity130Config:getActivity130DecryptCo(actId, id)
+	return self._act130DecryptConfig.configDict[actId][id]
 end
 
-function var_0_0.getActivity130OperateGroupCos(arg_8_0, arg_8_1, arg_8_2)
-	return arg_8_0._act130OperGroupConfig.configDict[arg_8_1][arg_8_2]
+function Activity130Config:getActivity130OperateGroupCos(actId, groupId)
+	return self._act130OperGroupConfig.configDict[actId][groupId]
 end
 
-function var_0_0.getActivity130ElementCo(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0._act130ElementConfig.configDict[arg_9_1][arg_9_2]
+function Activity130Config:getActivity130ElementCo(actId, id)
+	return self._act130ElementConfig.configDict[actId][id]
 end
 
-function var_0_0.getActivity130DialogCo(arg_10_0, arg_10_1, arg_10_2)
-	return lua_activity130_dialog.configDict[arg_10_1][arg_10_2]
+function Activity130Config:getActivity130DialogCo(dialogId, stepId)
+	return lua_activity130_dialog.configDict[dialogId][stepId]
 end
 
-function var_0_0._initDialog(arg_11_0)
-	arg_11_0._act130DialogList = {}
+function Activity130Config:_initDialog()
+	self._act130DialogList = {}
 
-	local var_11_0
-	local var_11_1 = "0"
+	local sectionId
+	local defaultId = "0"
 
-	for iter_11_0, iter_11_1 in ipairs(lua_activity130_dialog.configList) do
-		local var_11_2 = arg_11_0._act130DialogList[iter_11_1.id]
+	for i, v in ipairs(lua_activity130_dialog.configList) do
+		local group = self._act130DialogList[v.id]
 
-		if not var_11_2 then
-			var_11_2 = {
+		if not group then
+			group = {
 				optionParamList = {}
 			}
-			var_11_0 = var_11_1
-			arg_11_0._act130DialogList[iter_11_1.id] = var_11_2
+			sectionId = defaultId
+			self._act130DialogList[v.id] = group
 		end
 
-		if not string.nilorempty(iter_11_1.option_param) then
-			table.insert(var_11_2.optionParamList, tonumber(iter_11_1.option_param))
+		if not string.nilorempty(v.option_param) then
+			table.insert(group.optionParamList, tonumber(v.option_param))
 		end
 
-		if iter_11_1.type == "selector" then
-			var_11_0 = iter_11_1.param
-			var_11_2[var_11_0] = var_11_2[var_11_0] or {}
-			var_11_2[var_11_0].type = iter_11_1.type
-			var_11_2[var_11_0].option_param = iter_11_1.option_param
-		elseif iter_11_1.type == "selectorend" then
-			var_11_0 = var_11_1
-		elseif iter_11_1.type == "random" then
-			local var_11_3 = iter_11_1.param
+		if v.type == "selector" then
+			sectionId = v.param
+			group[sectionId] = group[sectionId] or {}
+			group[sectionId].type = v.type
+			group[sectionId].option_param = v.option_param
+		elseif v.type == "selectorend" then
+			sectionId = defaultId
+		elseif v.type == "random" then
+			local sectionId = v.param
 
-			var_11_2[var_11_3] = var_11_2[var_11_3] or {}
-			var_11_2[var_11_3].type = iter_11_1.type
-			var_11_2[var_11_3].option_param = iter_11_1.option_param
+			group[sectionId] = group[sectionId] or {}
+			group[sectionId].type = v.type
+			group[sectionId].option_param = v.option_param
 
-			table.insert(var_11_2[var_11_3], iter_11_1)
+			table.insert(group[sectionId], v)
 		else
-			var_11_2[var_11_0] = var_11_2[var_11_0] or {}
+			group[sectionId] = group[sectionId] or {}
 
-			table.insert(var_11_2[var_11_0], iter_11_1)
+			table.insert(group[sectionId], v)
 		end
 	end
 end
 
-function var_0_0.getDialog(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._act130DialogList[arg_12_1]
+function Activity130Config:getDialog(groupId, sectionId)
+	local group = self._act130DialogList[groupId]
 
-	return var_12_0 and var_12_0[arg_12_2]
+	return group and group[sectionId]
 end
 
-function var_0_0.getOptionParamList(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._act130DialogList[arg_13_1]
+function Activity130Config:getOptionParamList(groupId)
+	local group = self._act130DialogList[groupId]
 
-	return var_13_0 and var_13_0.optionParamList
+	return group and group.optionParamList
 end
 
-function var_0_0.getActivity130TaskCo(arg_14_0, arg_14_1)
-	return arg_14_0._act130TaskConfig.configDict[arg_14_1]
+function Activity130Config:getActivity130TaskCo(id)
+	return self._act130TaskConfig.configDict[id]
 end
 
-function var_0_0.getTaskByActId(arg_15_0, arg_15_1)
-	local var_15_0 = {}
+function Activity130Config:getTaskByActId(actId)
+	local list = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._act130TaskConfig.configList) do
-		if iter_15_1.activityId == arg_15_1 then
-			table.insert(var_15_0, iter_15_1)
+	for _, co in ipairs(self._act130TaskConfig.configList) do
+		if co.activityId == actId then
+			table.insert(list, co)
 		end
 	end
 
-	return var_15_0
+	return list
 end
 
-function var_0_0.getOperGroup(arg_16_0, arg_16_1, arg_16_2)
-	return arg_16_0._act130OperGroupConfig.configDict[arg_16_1][arg_16_2]
+function Activity130Config:getOperGroup(actId, groupId)
+	return self._act130OperGroupConfig.configDict[actId][groupId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity130Config.instance = Activity130Config.New()
 
-return var_0_0
+return Activity130Config

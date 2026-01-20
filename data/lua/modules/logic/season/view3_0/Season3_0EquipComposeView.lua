@@ -1,225 +1,235 @@
-﻿module("modules.logic.season.view3_0.Season3_0EquipComposeView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0EquipComposeView.lua
 
-local var_0_0 = class("Season3_0EquipComposeView", BaseView)
+module("modules.logic.season.view3_0.Season3_0EquipComposeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._scrollcardlist = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/mask/#scroll_cardlist")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "left/#go_empty")
-	arg_1_0._simagelight = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/composecontain/#simage_light")
-	arg_1_0._gocard1 = gohelper.findChild(arg_1_0.viewGO, "right/composecontain/cards/#go_card1")
-	arg_1_0._gocard2 = gohelper.findChild(arg_1_0.viewGO, "right/composecontain/cards/#go_card2")
-	arg_1_0._gocard3 = gohelper.findChild(arg_1_0.viewGO, "right/composecontain/cards/#go_card3")
-	arg_1_0._btncompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_compose")
-	arg_1_0._btndiscompose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_discompose")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._btnautoselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_autoselect/#btn_fastadd")
+local Season3_0EquipComposeView = class("Season3_0EquipComposeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season3_0EquipComposeView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._scrollcardlist = gohelper.findChildScrollRect(self.viewGO, "left/mask/#scroll_cardlist")
+	self._goempty = gohelper.findChild(self.viewGO, "left/#go_empty")
+	self._simagelight = gohelper.findChildSingleImage(self.viewGO, "right/composecontain/#simage_light")
+	self._gocard1 = gohelper.findChild(self.viewGO, "right/composecontain/cards/#go_card1")
+	self._gocard2 = gohelper.findChild(self.viewGO, "right/composecontain/cards/#go_card2")
+	self._gocard3 = gohelper.findChild(self.viewGO, "right/composecontain/cards/#go_card3")
+	self._btncompose = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_compose")
+	self._btndiscompose = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_discompose")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnautoselect = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_autoselect/#btn_fastadd")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncompose:AddClickListener(arg_2_0._btncomposeOnClick, arg_2_0)
-	arg_2_0._btndiscompose:AddClickListener(arg_2_0._btndiscomposeOnClick, arg_2_0)
-	arg_2_0._btnautoselect:AddClickListener(arg_2_0._btnautoselectOnClick, arg_2_0)
+function Season3_0EquipComposeView:addEvents()
+	self._btncompose:AddClickListener(self._btncomposeOnClick, self)
+	self._btndiscompose:AddClickListener(self._btndiscomposeOnClick, self)
+	self._btnautoselect:AddClickListener(self._btnautoselectOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncompose:RemoveClickListener()
-	arg_3_0._btndiscompose:RemoveClickListener()
-	arg_3_0._btnautoselect:RemoveClickListener()
+function Season3_0EquipComposeView:removeEvents()
+	self._btncompose:RemoveClickListener()
+	self._btndiscompose:RemoveClickListener()
+	self._btnautoselect:RemoveClickListener()
 end
 
-var_0_0.MaxUICount = 3
+Season3_0EquipComposeView.MaxUICount = 3
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg1:LoadImage(ResUrl.getSeasonIcon("full/hechengye_bj.jpg"))
-	arg_4_0._simagelight:LoadImage(ResUrl.getSeasonIcon("hecheng_guang.png"))
+function Season3_0EquipComposeView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getSeasonIcon("full/hechengye_bj.jpg"))
+	self._simagelight:LoadImage(ResUrl.getSeasonIcon("hecheng_guang.png"))
 
-	arg_4_0._txtHint = gohelper.findChildText(arg_4_0.viewGO, "right/tip")
-	arg_4_0._matItems = {}
+	self._txtHint = gohelper.findChildText(self.viewGO, "right/tip")
+	self._matItems = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0._simagebg1:UnLoadImage()
+function Season3_0EquipComposeView:onDestroyView()
+	self._simagebg1:UnLoadImage()
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._matItems) do
-		gohelper.setActive(iter_5_1.goIcon, true)
+	for i, item in pairs(self._matItems) do
+		gohelper.setActive(item.goIcon, true)
 
-		if iter_5_1.icon then
-			iter_5_1.icon:disposeUI()
+		if item.icon then
+			item.icon:disposeUI()
 		end
 	end
 
 	Activity104EquipComposeController.instance:onCloseView()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.actId
+function Season3_0EquipComposeView:onOpen()
+	local actId = self.viewParam.actId
 
-	Activity104EquipComposeController.instance:onOpenView(var_6_0)
-	arg_6_0:addEventCb(Activity104EquipComposeController.instance, Activity104Event.OnComposeDataChanged, arg_6_0.handleComposeDataChanged, arg_6_0)
-	arg_6_0:addEventCb(Activity104EquipComposeController.instance, Activity104Event.OnComposeSuccess, arg_6_0.handleComposeSucc, arg_6_0)
-	arg_6_0:refreshUI()
+	Activity104EquipComposeController.instance:onOpenView(actId)
+	self:addEventCb(Activity104EquipComposeController.instance, Activity104Event.OnComposeDataChanged, self.handleComposeDataChanged, self)
+	self:addEventCb(Activity104EquipComposeController.instance, Activity104Event.OnComposeSuccess, self.handleComposeSucc, self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
+function Season3_0EquipComposeView:onClose()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	UIBlockMgr.instance:endBlock(var_0_0.Compose_Anim_Block_Key)
-	TaskDispatcher.cancelTask(arg_7_0.onPlayComposeAnimOver, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.delayRefreshView, arg_7_0)
+	UIBlockMgr.instance:endBlock(Season3_0EquipComposeView.Compose_Anim_Block_Key)
+	TaskDispatcher.cancelTask(self.onPlayComposeAnimOver, self)
+	TaskDispatcher.cancelTask(self.delayRefreshView, self)
 end
 
-function var_0_0._btnautoselectOnClick(arg_8_0)
+function Season3_0EquipComposeView:_btnautoselectOnClick()
 	Activity104EquipComposeController.instance:autoSelectEquip()
 end
 
-function var_0_0.handleComposeSucc(arg_9_0)
+function Season3_0EquipComposeView:handleComposeSucc()
 	return
 end
 
-function var_0_0.handleComposeDataChanged(arg_10_0)
-	if arg_10_0._delayRefreshUITime ~= nil and Time.time - arg_10_0._delayRefreshUITime < var_0_0.DelayRefreshTime then
-		return
+function Season3_0EquipComposeView:handleComposeDataChanged()
+	if self._delayRefreshUITime ~= nil then
+		local curTime = Time.time
+
+		if curTime - self._delayRefreshUITime < Season3_0EquipComposeView.DelayRefreshTime then
+			return
+		end
 	end
 
-	arg_10_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = Activity104EquipItemComposeModel.instance:getList()
+function Season3_0EquipComposeView:refreshUI()
+	local list = Activity104EquipItemComposeModel.instance:getList()
 
-	gohelper.setActive(arg_11_0._goempty, not var_11_0 or #var_11_0 == 0)
-	arg_11_0:refreshButtons()
-	arg_11_0:refreshHint()
-	arg_11_0:refreshMatList()
+	gohelper.setActive(self._goempty, not list or #list == 0)
+	self:refreshButtons()
+	self:refreshHint()
+	self:refreshMatList()
 end
 
-function var_0_0.refreshHint(arg_12_0)
-	local var_12_0 = luaLang("season_compose_hint1")
-	local var_12_1 = true
+function Season3_0EquipComposeView:refreshHint()
+	local hintStr = luaLang("season_compose_hint1")
+	local needHint1 = true
 
 	if Activity104EquipItemComposeModel.instance:existSelectedMaterial() then
-		local var_12_2 = Activity104EquipItemComposeModel.instance:getSelectedRare()
+		local rare = Activity104EquipItemComposeModel.instance:getSelectedRare()
 
-		if var_12_2 == Activity104Enum.Rare_Orange or var_12_2 == Activity104Enum.MainRoleRare then
-			var_12_1 = false
+		if rare == Activity104Enum.Rare_Orange or rare == Activity104Enum.MainRoleRare then
+			needHint1 = false
 		end
 	end
 
-	if not var_12_1 then
-		var_12_0 = luaLang("season_compose_hint2")
+	if not needHint1 then
+		hintStr = luaLang("season_compose_hint2")
 	end
 
-	arg_12_0._txtHint.text = var_12_0
+	self._txtHint.text = hintStr
 end
 
-function var_0_0.refreshMatList(arg_13_0)
-	for iter_13_0 = 1, var_0_0.MaxUICount do
-		arg_13_0:refreshMat(iter_13_0)
-	end
-end
-
-function var_0_0.refreshButtons(arg_14_0)
-	local var_14_0 = Activity104EquipItemComposeModel.instance:isMaterialAllReady()
-
-	gohelper.setActive(arg_14_0._btncompose, var_14_0)
-	gohelper.setActive(arg_14_0._btndiscompose, not var_14_0)
-end
-
-function var_0_0.refreshMat(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getOrCreateMatItem(arg_15_1)
-	local var_15_1 = Activity104EquipItemComposeModel.instance.curSelectMap[arg_15_1]
-	local var_15_2 = var_15_1 == Activity104EquipItemComposeModel.EmptyUid
-
-	gohelper.setActive(var_15_0.goIcon, not var_15_2)
-	gohelper.setActive(var_15_0.goEmpty, var_15_2)
-
-	if not var_15_2 then
-		arg_15_0:checkCreateMatItemIcon(var_15_0, arg_15_1)
-
-		local var_15_3 = Activity104EquipItemComposeModel.instance:getEquipMO(var_15_1)
-
-		var_15_0.icon:updateData(var_15_3.itemId)
+function Season3_0EquipComposeView:refreshMatList()
+	for i = 1, Season3_0EquipComposeView.MaxUICount do
+		self:refreshMat(i)
 	end
 end
 
-function var_0_0.getOrCreateMatItem(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0._matItems[arg_16_1]
+function Season3_0EquipComposeView:refreshButtons()
+	local isMatReady = Activity104EquipItemComposeModel.instance:isMaterialAllReady()
 
-	if not var_16_0 then
-		var_16_0 = arg_16_0:getUserDataTb_()
-		var_16_0.go = gohelper.findChild(arg_16_0.viewGO, "right/composecontain/cards/#go_card" .. tostring(arg_16_1))
-		var_16_0.goIcon = gohelper.findChild(var_16_0.go, "go_pos")
-		var_16_0.goEmpty = gohelper.findChild(var_16_0.go, "go_empty")
-		arg_16_0._matItems[arg_16_1] = var_16_0
-	end
-
-	return var_16_0
+	gohelper.setActive(self._btncompose, isMatReady)
+	gohelper.setActive(self._btndiscompose, not isMatReady)
 end
 
-function var_0_0.checkCreateMatItemIcon(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_1.icon then
-		local var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[2]
-		local var_17_1 = arg_17_0:getResInst(var_17_0, arg_17_1.goIcon, "icon" .. tostring(arg_17_2))
+function Season3_0EquipComposeView:refreshMat(index)
+	local item = self:getOrCreateMatItem(index)
+	local itemUid = Activity104EquipItemComposeModel.instance.curSelectMap[index]
+	local isEmpty = itemUid == Activity104EquipItemComposeModel.EmptyUid
 
-		arg_17_1.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, Season3_0CelebrityCardEquip)
+	gohelper.setActive(item.goIcon, not isEmpty)
+	gohelper.setActive(item.goEmpty, isEmpty)
 
-		arg_17_1.icon:setClickCall(arg_17_0.onClickMatSlot, arg_17_0, arg_17_2)
-		gohelper.setAsFirstSibling(var_17_1)
+	if not isEmpty then
+		self:checkCreateMatItemIcon(item, index)
+
+		local itemMO = Activity104EquipItemComposeModel.instance:getEquipMO(itemUid)
+
+		item.icon:updateData(itemMO.itemId)
 	end
 end
 
-function var_0_0.onClickMatSlot(arg_18_0, arg_18_1)
-	local var_18_0 = Activity104EquipItemComposeModel.instance.curSelectMap[arg_18_1]
+function Season3_0EquipComposeView:getOrCreateMatItem(index)
+	local item = self._matItems[index]
 
-	if not (var_18_0 == Activity104EquipItemComposeModel.EmptyUid) then
-		Activity104EquipComposeController.instance:changeSelectCard(var_18_0)
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.findChild(self.viewGO, "right/composecontain/cards/#go_card" .. tostring(index))
+		item.goIcon = gohelper.findChild(item.go, "go_pos")
+		item.goEmpty = gohelper.findChild(item.go, "go_empty")
+		self._matItems[index] = item
+	end
+
+	return item
+end
+
+function Season3_0EquipComposeView:checkCreateMatItemIcon(item, index)
+	if not item.icon then
+		local path = self.viewContainer:getSetting().otherRes[2]
+		local go = self:getResInst(path, item.goIcon, "icon" .. tostring(index))
+
+		item.icon = MonoHelper.addNoUpdateLuaComOnceToGo(go, Season3_0CelebrityCardEquip)
+
+		item.icon:setClickCall(self.onClickMatSlot, self, index)
+		gohelper.setAsFirstSibling(go)
 	end
 end
 
-function var_0_0._btncomposeOnClick(arg_19_0)
+function Season3_0EquipComposeView:onClickMatSlot(index)
+	local itemUid = Activity104EquipItemComposeModel.instance.curSelectMap[index]
+	local isEmpty = itemUid == Activity104EquipItemComposeModel.EmptyUid
+
+	if not isEmpty then
+		Activity104EquipComposeController.instance:changeSelectCard(itemUid)
+	end
+end
+
+function Season3_0EquipComposeView:_btncomposeOnClick()
 	if Activity104EquipComposeController.instance:checkMaterialHasEquiped() then
-		local function var_19_0()
-			arg_19_0:playAnimBeforeSend()
+		local function yesFunc()
+			self:playAnimBeforeSend()
 		end
 
-		GameFacade.showMessageBox(MessageBoxIdDefine.SeasonComposeMatIsEquiped, MsgBoxEnum.BoxType.Yes_No, var_19_0)
+		GameFacade.showMessageBox(MessageBoxIdDefine.SeasonComposeMatIsEquiped, MsgBoxEnum.BoxType.Yes_No, yesFunc)
 	else
-		arg_19_0:playAnimBeforeSend()
+		self:playAnimBeforeSend()
 	end
 end
 
-function var_0_0._btndiscomposeOnClick(arg_21_0)
+function Season3_0EquipComposeView:_btndiscomposeOnClick()
 	GameFacade.showToast(ToastEnum.ClickSeasonDiscompose)
 end
 
-var_0_0.DelaySendTime = 1
-var_0_0.DelayRefreshTime = 1
-var_0_0.Compose_Anim_Block_Key = "Compose_Anim_Block"
+Season3_0EquipComposeView.DelaySendTime = 1
+Season3_0EquipComposeView.DelayRefreshTime = 1
+Season3_0EquipComposeView.Compose_Anim_Block_Key = "Compose_Anim_Block"
 
-function var_0_0.playAnimBeforeSend(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0.onPlayComposeAnimOver, arg_22_0)
-	arg_22_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play("hecherng", 0, 0)
+function Season3_0EquipComposeView:playAnimBeforeSend()
+	TaskDispatcher.cancelTask(self.onPlayComposeAnimOver, self)
+
+	local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	animator:Play("hecherng", 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(var_0_0.Compose_Anim_Block_Key)
-	TaskDispatcher.runDelay(arg_22_0.onPlayComposeAnimOver, arg_22_0, var_0_0.DelaySendTime)
+	UIBlockMgr.instance:startBlock(Season3_0EquipComposeView.Compose_Anim_Block_Key)
+	TaskDispatcher.runDelay(self.onPlayComposeAnimOver, self, Season3_0EquipComposeView.DelaySendTime)
 end
 
-function var_0_0.onPlayComposeAnimOver(arg_23_0)
+function Season3_0EquipComposeView:onPlayComposeAnimOver()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	UIBlockMgr.instance:endBlock(var_0_0.Compose_Anim_Block_Key)
+	UIBlockMgr.instance:endBlock(Season3_0EquipComposeView.Compose_Anim_Block_Key)
 	Activity104EquipComposeController.instance:sendCompose()
 
-	arg_23_0._delayRefreshUITime = Time.time
+	self._delayRefreshUITime = Time.time
 
-	TaskDispatcher.runDelay(arg_23_0.delayRefreshView, arg_23_0, var_0_0.DelayRefreshTime)
+	TaskDispatcher.runDelay(self.delayRefreshView, self, Season3_0EquipComposeView.DelayRefreshTime)
 end
 
-function var_0_0.delayRefreshView(arg_24_0)
-	arg_24_0:refreshUI()
+function Season3_0EquipComposeView:delayRefreshView()
+	self:refreshUI()
 end
 
-return var_0_0
+return Season3_0EquipComposeView

@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameUnitDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaGameUnitDetailViewContainer.lua
 
-local var_0_0 = class("NuoDiKaGameUnitDetailViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameUnitDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local NuoDiKaGameUnitDetailViewContainer = class("NuoDiKaGameUnitDetailViewContainer", BaseViewContainer)
+
+function NuoDiKaGameUnitDetailViewContainer:buildViews()
 	return {
 		NuoDiKaGameUnitDetailView.New()
 	}
 end
 
-return var_0_0
+return NuoDiKaGameUnitDetailViewContainer

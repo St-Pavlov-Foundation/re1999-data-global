@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeonother.view.VersionActivity1_2StoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeonother/view/VersionActivity1_2StoreViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_2StoreViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeonother.view.VersionActivity1_2StoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity1_2StoreViewContainer = class("VersionActivity1_2StoreViewContainer", BaseViewContainer)
+
+function VersionActivity1_2StoreViewContainer:buildViews()
 	return {
 		VersionActivity1_2StoreView.New(),
 		TabViewGroup.New(1, "#go_btns"),
@@ -10,8 +12,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function VersionActivity1_2StoreViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,7 +23,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		}
 	end
 
-	if arg_2_1 == 2 then
+	if tabContainerId == 2 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.LvHuEMen
@@ -30,4 +32,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return VersionActivity1_2StoreViewContainer

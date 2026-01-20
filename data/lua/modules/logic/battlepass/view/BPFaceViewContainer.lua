@@ -1,11 +1,13 @@
-﻿module("modules.logic.battlepass.view.BPFaceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BPFaceViewContainer.lua
 
-local var_0_0 = class("BPFaceViewContainer", BaseViewContainer)
+module("modules.logic.battlepass.view.BPFaceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BPFaceViewContainer = class("BPFaceViewContainer", BaseViewContainer)
+
+function BPFaceViewContainer:buildViews()
 	return {
 		BPFaceView.New()
 	}
 end
 
-return var_0_0
+return BPFaceViewContainer

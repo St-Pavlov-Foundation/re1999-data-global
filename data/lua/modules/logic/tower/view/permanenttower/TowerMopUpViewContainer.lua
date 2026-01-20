@@ -1,13 +1,15 @@
-﻿module("modules.logic.tower.view.permanenttower.TowerMopUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/permanenttower/TowerMopUpViewContainer.lua
 
-local var_0_0 = class("TowerMopUpViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.permanenttower.TowerMopUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerMopUpViewContainer = class("TowerMopUpViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerMopUpView.New())
+function TowerMopUpViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerMopUpView.New())
+
+	return views
 end
 
-return var_0_0
+return TowerMopUpViewContainer

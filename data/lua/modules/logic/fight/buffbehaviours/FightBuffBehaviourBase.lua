@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviourBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviourBase.lua
 
-local var_0_0 = class("FightBuffBehaviourBase", UserDataDispose)
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviourBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:__onInit()
+local FightBuffBehaviourBase = class("FightBuffBehaviourBase", UserDataDispose)
 
-	arg_1_0.viewGo = arg_1_1
-	arg_1_0.viewContainer = arg_1_2
-	arg_1_0.co = arg_1_3
+function FightBuffBehaviourBase:init(viewGo, viewContainer, co)
+	self:__onInit()
+
+	self.viewGo = viewGo
+	self.viewContainer = viewContainer
+	self.co = co
 end
 
-function var_0_0.onAddBuff(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function FightBuffBehaviourBase:onAddBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onUpdateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function FightBuffBehaviourBase:onUpdateBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onRemoveBuff(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function FightBuffBehaviourBase:onRemoveBuff(entityId, buffId, buffMo)
 	return
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0:__onDispose()
+function FightBuffBehaviourBase:onDestroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightBuffBehaviourBase

@@ -1,34 +1,36 @@
-﻿module("modules.logic.scene.survival.SurvivalScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survival/SurvivalScene.lua
 
-local var_0_0 = class("SurvivalScene", BaseScene)
+module("modules.logic.scene.survival.SurvivalScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("pointEffect", SurvivalPointEffectComp)
-	arg_1_0:_addComp("fog", SurvivalSceneFogComp)
-	arg_1_0:_addComp("camera", SurvivalSceneCameraComp)
-	arg_1_0:_addComp("director", SurvivalSceneDirector)
-	arg_1_0:_addComp("block", SurvivalSceneMapBlock)
-	arg_1_0:_addComp("spBlock", SurvivalSceneMapSpBlock)
-	arg_1_0:_addComp("path", SurvivalSceneMapPath)
-	arg_1_0:_addComp("unit", SurvivaSceneMapUnitComp)
-	arg_1_0:_addComp("level", SurvivalSceneLevel)
-	arg_1_0:_addComp("view", SurvivalSceneViewComp)
-	arg_1_0:_addComp("preloader", SurvivalScenePreloader)
-	arg_1_0:_addComp("volume", SurvivalScenePPVolume)
-	arg_1_0:_addComp("graphics", SurvivalSceneGraphicsComp)
-	arg_1_0:_addComp("cloud", SurvivalSceneCloudComp)
-	arg_1_0:_addComp("ambient", SurvivalSceneAmbientComp)
+local SurvivalScene = class("SurvivalScene", BaseScene)
+
+function SurvivalScene:_createAllComps()
+	self:_addComp("pointEffect", SurvivalPointEffectComp)
+	self:_addComp("fog", SurvivalSceneFogComp)
+	self:_addComp("camera", SurvivalSceneCameraComp)
+	self:_addComp("director", SurvivalSceneDirector)
+	self:_addComp("block", SurvivalSceneMapBlock)
+	self:_addComp("spBlock", SurvivalSceneMapSpBlock)
+	self:_addComp("path", SurvivalSceneMapPath)
+	self:_addComp("unit", SurvivaSceneMapUnitComp)
+	self:_addComp("level", SurvivalSceneLevel)
+	self:_addComp("view", SurvivalSceneViewComp)
+	self:_addComp("preloader", SurvivalScenePreloader)
+	self:_addComp("volume", SurvivalScenePPVolume)
+	self:_addComp("graphics", SurvivalSceneGraphicsComp)
+	self:_addComp("cloud", SurvivalSceneCloudComp)
+	self:_addComp("ambient", SurvivalSceneAmbientComp)
 end
 
-function var_0_0.onClose(arg_2_0)
-	local var_2_0 = GameSceneMgr.instance:getNextSceneType()
+function SurvivalScene:onClose()
+	local nextSceneType = GameSceneMgr.instance:getNextSceneType()
 
-	if var_2_0 ~= SceneType.Survival and var_2_0 ~= SceneType.SurvivalShelter and var_2_0 ~= SceneType.SurvivalSummaryAct then
+	if nextSceneType ~= SceneType.Survival and nextSceneType ~= SceneType.SurvivalShelter and nextSceneType ~= SceneType.SurvivalSummaryAct then
 		SurvivalMapHelper.instance:clear()
 	end
 
-	var_0_0.super.onClose(arg_2_0)
+	SurvivalScene.super.onClose(self)
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.stop_ui_fuleyuan_tansuo_dutiao_loop)
 end
 
-return var_0_0
+return SurvivalScene

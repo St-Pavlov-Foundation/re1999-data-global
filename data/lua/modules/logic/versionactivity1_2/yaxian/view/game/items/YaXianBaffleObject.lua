@@ -1,85 +1,87 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.game.items.YaXianBaffleObject", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/game/items/YaXianBaffleObject.lua
 
-local var_0_0 = class("YaXianBaffleObject", UserDataDispose)
+module("modules.logic.versionactivity1_2.yaxian.view.game.items.YaXianBaffleObject", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local YaXianBaffleObject = class("YaXianBaffleObject", UserDataDispose)
 
-	arg_1_0.baffleContainerTr = arg_1_1
+function YaXianBaffleObject:ctor(baffleContainerTr)
+	self:__onInit()
+
+	self.baffleContainerTr = baffleContainerTr
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0:createSceneNode()
+function YaXianBaffleObject:init()
+	self:createSceneNode()
 end
 
-function var_0_0.createSceneNode(arg_3_0)
-	arg_3_0.viewGO = UnityEngine.GameObject.New("baffle_item")
-	arg_3_0.transform = arg_3_0.viewGO.transform
+function YaXianBaffleObject:createSceneNode()
+	self.viewGO = UnityEngine.GameObject.New("baffle_item")
+	self.transform = self.viewGO.transform
 
-	arg_3_0.transform:SetParent(arg_3_0.baffleContainerTr, false)
+	self.transform:SetParent(self.baffleContainerTr, false)
 end
 
-function var_0_0.getBaffleResPath(arg_4_0)
-	if arg_4_0.baffleCo.direction == YaXianGameEnum.BaffleDirection.Left or arg_4_0.baffleCo.direction == YaXianGameEnum.BaffleDirection.Right then
-		return arg_4_0.baffleCo.type == 0 and YaXianGameEnum.SceneResPath.LRBaffle0 or YaXianGameEnum.SceneResPath.LRBaffle1
+function YaXianBaffleObject:getBaffleResPath()
+	if self.baffleCo.direction == YaXianGameEnum.BaffleDirection.Left or self.baffleCo.direction == YaXianGameEnum.BaffleDirection.Right then
+		return self.baffleCo.type == 0 and YaXianGameEnum.SceneResPath.LRBaffle0 or YaXianGameEnum.SceneResPath.LRBaffle1
 	else
-		return arg_4_0.baffleCo.type == 0 and YaXianGameEnum.SceneResPath.TBBaffle0 or YaXianGameEnum.SceneResPath.TBBaffle1
+		return self.baffleCo.type == 0 and YaXianGameEnum.SceneResPath.TBBaffle0 or YaXianGameEnum.SceneResPath.TBBaffle1
 	end
 end
 
-function var_0_0.loadAvatar(arg_5_0)
-	if not gohelper.isNil(arg_5_0.baffleGo) then
-		gohelper.destroy(arg_5_0.baffleGo)
+function YaXianBaffleObject:loadAvatar()
+	if not gohelper.isNil(self.baffleGo) then
+		gohelper.destroy(self.baffleGo)
 	end
 
-	arg_5_0.loader = PrefabInstantiate.Create(arg_5_0.viewGO)
+	self.loader = PrefabInstantiate.Create(self.viewGO)
 
-	arg_5_0.loader:startLoad(arg_5_0:getBaffleResPath(), arg_5_0.onSceneObjectLoadFinish, arg_5_0)
+	self.loader:startLoad(self:getBaffleResPath(), self.onSceneObjectLoadFinish, self)
 end
 
-function var_0_0.onSceneObjectLoadFinish(arg_6_0)
-	arg_6_0.baffleGo = arg_6_0.loader:getInstGO()
+function YaXianBaffleObject:onSceneObjectLoadFinish()
+	self.baffleGo = self.loader:getInstGO()
 
-	if not gohelper.isNil(arg_6_0.baffleGo) then
-		local var_6_0 = gohelper.findChild(arg_6_0.baffleGo, "Canvas")
+	if not gohelper.isNil(self.baffleGo) then
+		local canvasGo = gohelper.findChild(self.baffleGo, "Canvas")
 
-		if var_6_0 then
-			local var_6_1 = var_6_0:GetComponent(typeof(UnityEngine.Canvas))
+		if canvasGo then
+			local canvas = canvasGo:GetComponent(typeof(UnityEngine.Canvas))
 
-			if var_6_1 then
-				var_6_1.worldCamera = CameraMgr.instance:getMainCamera()
+			if canvas then
+				canvas.worldCamera = CameraMgr.instance:getMainCamera()
 			end
 		end
 	end
 
-	transformhelper.setLocalScale(arg_6_0.viewGO.transform, 0.8, 0.8, 0.8)
-	gohelper.setLayer(arg_6_0.viewGO, UnityLayer.Scene, true)
+	transformhelper.setLocalScale(self.viewGO.transform, 0.8, 0.8, 0.8)
+	gohelper.setLayer(self.viewGO, UnityLayer.Scene, true)
 end
 
-function var_0_0.updatePos(arg_7_0, arg_7_1)
-	arg_7_0.baffleCo = arg_7_1
+function YaXianBaffleObject:updatePos(baffleCo)
+	self.baffleCo = baffleCo
 
-	local var_7_0, var_7_1, var_7_2 = YaXianGameHelper.calBafflePosInScene(arg_7_0.baffleCo.x, arg_7_0.baffleCo.y, arg_7_0.baffleCo.direction)
+	local x, y, z = YaXianGameHelper.calBafflePosInScene(self.baffleCo.x, self.baffleCo.y, self.baffleCo.direction)
 
-	transformhelper.setLocalPos(arg_7_0.transform, var_7_0, var_7_1, var_7_2)
-	gohelper.setActive(arg_7_0.viewGO, true)
-	arg_7_0:loadAvatar()
+	transformhelper.setLocalPos(self.transform, x, y, z)
+	gohelper.setActive(self.viewGO, true)
+	self:loadAvatar()
 end
 
-function var_0_0.recycle(arg_8_0)
-	gohelper.setActive(arg_8_0.viewGO, false)
+function YaXianBaffleObject:recycle()
+	gohelper.setActive(self.viewGO, false)
 end
 
-function var_0_0.dispose(arg_9_0)
-	if arg_9_0.loader then
-		arg_9_0.loader:dispose()
+function YaXianBaffleObject:dispose()
+	if self.loader then
+		self.loader:dispose()
 
-		arg_9_0.loader = nil
+		self.loader = nil
 	end
 
-	gohelper.setActive(arg_9_0.viewGO, true)
-	gohelper.destroy(arg_9_0.viewGO)
-	arg_9_0:__onDispose()
+	gohelper.setActive(self.viewGO, true)
+	gohelper.destroy(self.viewGO)
+	self:__onDispose()
 end
 
-return var_0_0
+return YaXianBaffleObject

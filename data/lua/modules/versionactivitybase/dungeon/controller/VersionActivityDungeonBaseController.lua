@@ -1,151 +1,159 @@
-﻿module("modules.versionactivitybase.dungeon.controller.VersionActivityDungeonBaseController", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/dungeon/controller/VersionActivityDungeonBaseController.lua
 
-local var_0_0 = class("VersionActivityDungeonBaseController", BaseController)
+module("modules.versionactivitybase.dungeon.controller.VersionActivityDungeonBaseController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivityDungeonBaseController = class("VersionActivityDungeonBaseController", BaseController)
+
+function VersionActivityDungeonBaseController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_2_0.updateIsFirstPassEpisodeByDungeonInfo, arg_2_0)
+function VersionActivityDungeonBaseController:addConstEvents()
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, self.updateIsFirstPassEpisodeByDungeonInfo, self)
 end
 
-function var_0_0.getChapterLastSelectEpisode(arg_3_0, arg_3_1)
-	if not arg_3_0.chapterIdLastSelectEpisodeIdDict then
-		arg_3_0:initChapterIdLastSelectEpisodeIdDict()
+function VersionActivityDungeonBaseController:getChapterLastSelectEpisode(chapterId)
+	if not self.chapterIdLastSelectEpisodeIdDict then
+		self:initChapterIdLastSelectEpisodeIdDict()
 	end
 
-	if not arg_3_0.chapterIdLastSelectEpisodeIdDict[arg_3_1] then
-		return DungeonConfig.instance:getChapterEpisodeCOList(arg_3_1)[1].id
+	if not self.chapterIdLastSelectEpisodeIdDict[chapterId] then
+		return DungeonConfig.instance:getChapterEpisodeCOList(chapterId)[1].id
 	end
 
-	return arg_3_0.chapterIdLastSelectEpisodeIdDict[arg_3_1]
+	return self.chapterIdLastSelectEpisodeIdDict[chapterId]
 end
 
-function var_0_0.getKey(arg_4_0)
+function VersionActivityDungeonBaseController:getKey()
 	return PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.VersionActivityChapterLastSelectEpisodeId)
 end
 
-function var_0_0.initChapterIdLastSelectEpisodeIdDict(arg_5_0)
-	arg_5_0.chapterIdLastSelectEpisodeIdDict = {}
+function VersionActivityDungeonBaseController:initChapterIdLastSelectEpisodeIdDict()
+	self.chapterIdLastSelectEpisodeIdDict = {}
 
-	local var_5_0 = PlayerPrefsHelper.getString(arg_5_0:getKey(), "")
+	local lastSelectEpisodeStr = PlayerPrefsHelper.getString(self:getKey(), "")
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(lastSelectEpisodeStr) then
 		return
 	end
 
-	local var_5_1
+	local arr
 
-	for iter_5_0, iter_5_1 in ipairs(string.split(var_5_0, ";")) do
-		local var_5_2 = string.splitToNumber(iter_5_1, ":")
+	for _, tempStr in ipairs(string.split(lastSelectEpisodeStr, ";")) do
+		arr = string.splitToNumber(tempStr, ":")
 
-		if var_5_2 and #var_5_2 == 2 then
-			arg_5_0.chapterIdLastSelectEpisodeIdDict[var_5_2[1]] = var_5_2[2]
+		if arr and #arr == 2 then
+			self.chapterIdLastSelectEpisodeIdDict[arr[1]] = arr[2]
 		end
 	end
 end
 
-function var_0_0.setChapterIdLastSelectEpisodeId(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0.chapterIdLastSelectEpisodeIdDict then
-		arg_6_0:initChapterIdLastSelectEpisodeIdDict()
+function VersionActivityDungeonBaseController:setChapterIdLastSelectEpisodeId(chapterId, episodeId)
+	if not self.chapterIdLastSelectEpisodeIdDict then
+		self:initChapterIdLastSelectEpisodeIdDict()
 	end
 
-	if arg_6_0.chapterIdLastSelectEpisodeIdDict[arg_6_1] == arg_6_2 then
+	if self.chapterIdLastSelectEpisodeIdDict[chapterId] == episodeId then
 		return
 	end
 
-	arg_6_0.chapterIdLastSelectEpisodeIdDict[arg_6_1] = arg_6_2
+	self.chapterIdLastSelectEpisodeIdDict[chapterId] = episodeId
 
-	local var_6_0 = {}
+	local arr = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.chapterIdLastSelectEpisodeIdDict) do
-		table.insert(var_6_0, string.format("%s:%s", iter_6_0, iter_6_1))
+	for k, v in pairs(self.chapterIdLastSelectEpisodeIdDict) do
+		table.insert(arr, string.format("%s:%s", k, v))
 	end
 
-	PlayerPrefsHelper.setString(arg_6_0:getKey(), table.concat(var_6_0, ";"))
+	PlayerPrefsHelper.setString(self:getKey(), table.concat(arr, ";"))
 end
 
-function var_0_0.clearChapterIdLastSelectEpisodeId(arg_7_0)
-	arg_7_0.chapterIdLastSelectEpisodeIdDict = nil
+function VersionActivityDungeonBaseController:clearChapterIdLastSelectEpisodeId()
+	self.chapterIdLastSelectEpisodeIdDict = nil
 end
 
-function var_0_0.getIsFirstPassEpisode(arg_8_0)
-	return arg_8_0.checkIsFirstPass, arg_8_0.checkEpisodeId
+function VersionActivityDungeonBaseController:getIsFirstPassEpisode()
+	return self.checkIsFirstPass, self.checkEpisodeId
 end
 
-function var_0_0.resetIsFirstPassEpisode(arg_9_0, arg_9_1)
-	arg_9_0.checkEpisodeId = arg_9_1
-	arg_9_0.checkIsFirstPass = false
+function VersionActivityDungeonBaseController:resetIsFirstPassEpisode(episodeId)
+	self.checkEpisodeId = episodeId
+	self.checkIsFirstPass = false
 
-	if not arg_9_1 then
-		arg_9_0.hasPassEpisode = true
-
-		return
-	end
-
-	arg_9_0.hasPassEpisode = DungeonModel.instance:hasPassLevelAndStory(arg_9_1)
-end
-
-function var_0_0.updateIsFirstPassEpisodeByDungeonInfo(arg_10_0, arg_10_1)
-	if arg_10_1 and arg_10_1.episodeId then
-		arg_10_0:updateIsFirstPassEpisode(arg_10_1.episodeId)
-	end
-end
-
-function var_0_0.updateIsFirstPassEpisode(arg_11_0, arg_11_1)
-	if arg_11_0.checkEpisodeId ~= arg_11_1 then
-		return
-	end
-
-	if arg_11_0.hasPassEpisode then
-		arg_11_0.checkIsFirstPass = false
+	if not episodeId then
+		self.hasPassEpisode = true
 
 		return
 	end
 
-	arg_11_0.checkIsFirstPass = DungeonModel.instance:hasPassLevelAndStory(arg_11_1)
+	self.hasPassEpisode = DungeonModel.instance:hasPassLevelAndStory(episodeId)
 end
 
-function var_0_0.isOpenActivityHardDungeonChapter(arg_12_0, arg_12_1)
-	local var_12_0 = ActivityConfig.instance:getActivityDungeonConfig(arg_12_1)
+function VersionActivityDungeonBaseController:updateIsFirstPassEpisodeByDungeonInfo(dungeonInfo)
+	if dungeonInfo and dungeonInfo.episodeId then
+		self:updateIsFirstPassEpisode(dungeonInfo.episodeId)
+	end
+end
 
-	if not var_12_0 then
-		logError("act Id : " .. arg_12_1 .. " not exist activity dungeon config, please check!!!")
+function VersionActivityDungeonBaseController:updateIsFirstPassEpisode(episodeId)
+	if self.checkEpisodeId ~= episodeId then
+		return
+	end
+
+	if self.hasPassEpisode then
+		self.checkIsFirstPass = false
+
+		return
+	end
+
+	self.checkIsFirstPass = DungeonModel.instance:hasPassLevelAndStory(episodeId)
+end
+
+function VersionActivityDungeonBaseController:isOpenActivityHardDungeonChapter(actId)
+	local activityDungeonConfig = ActivityConfig.instance:getActivityDungeonConfig(actId)
+
+	if not activityDungeonConfig then
+		logError("act Id : " .. actId .. " not exist activity dungeon config, please check!!!")
 
 		return false
 	end
 
-	if not VersionActivityConfig.instance:getAct113DungeonChapterIsOpen(var_12_0.hardChapterId) then
+	local isTimeOpen = VersionActivityConfig.instance:getAct113DungeonChapterIsOpen(activityDungeonConfig.hardChapterId)
+
+	if not isTimeOpen then
 		return false
 	end
 
-	return DungeonModel.instance:chapterIsUnLock(var_12_0.hardChapterId)
+	return DungeonModel.instance:chapterIsUnLock(activityDungeonConfig.hardChapterId)
 end
 
-function var_0_0.isOpenActivityHardDungeonChapterAndGetToast(arg_13_0, arg_13_1)
-	local var_13_0 = ActivityConfig.instance:getActivityDungeonConfig(arg_13_1)
+function VersionActivityDungeonBaseController:isOpenActivityHardDungeonChapterAndGetToast(actId)
+	local activityDungeonConfig = ActivityConfig.instance:getActivityDungeonConfig(actId)
 
-	if not var_13_0 then
-		logError("act Id : " .. arg_13_1 .. " not exist activity dungeon config, please check!!!")
+	if not activityDungeonConfig then
+		logError("act Id : " .. actId .. " not exist activity dungeon config, please check!!!")
 
 		return false, 10301
 	end
 
-	if not VersionActivityConfig.instance:getAct113DungeonChapterIsOpen(var_13_0.hardChapterId) then
+	local isTimeOpen = VersionActivityConfig.instance:getAct113DungeonChapterIsOpen(activityDungeonConfig.hardChapterId)
+
+	if not isTimeOpen then
 		return false, 10301
 	end
 
-	if not DungeonModel.instance:chapterIsUnLock(var_13_0.hardChapterId) then
+	local isUnlock = DungeonModel.instance:chapterIsUnLock(activityDungeonConfig.hardChapterId)
+
+	if not isUnlock then
 		return false, 10302
 	end
 
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivityDungeonBaseController.instance = VersionActivityDungeonBaseController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
-var_0_0.instance:addConstEvents()
+LuaEventSystem.addEventMechanism(VersionActivityDungeonBaseController.instance)
+VersionActivityDungeonBaseController.instance:addConstEvents()
 
-return var_0_0
+return VersionActivityDungeonBaseController

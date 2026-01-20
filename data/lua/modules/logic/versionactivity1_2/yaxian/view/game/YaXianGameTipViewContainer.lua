@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/game/YaXianGameTipViewContainer.lua
 
-local var_0_0 = class("YaXianGameTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local YaXianGameTipViewContainer = class("YaXianGameTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, YaXianGameTipView.New())
+function YaXianGameTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, YaXianGameTipView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function YaXianGameTipViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return YaXianGameTipViewContainer

@@ -1,190 +1,189 @@
-﻿module("modules.logic.sp01.act204.view.Activity204OceanEntranceItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act204/view/Activity204OceanEntranceItem.lua
 
-local var_0_0 = class("Activity204OceanEntranceItem", Activity204EntranceItemBase)
+module("modules.logic.sp01.act204.view.Activity204OceanEntranceItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Activity204OceanEntranceItem = class("Activity204OceanEntranceItem", Activity204EntranceItemBase)
 
-	arg_1_0._gounlockeffect = gohelper.findChild(arg_1_0.go, "root/#saoguang")
-	arg_1_0._gobg1 = gohelper.findChild(arg_1_0.go, "root/#btn_Entrance/go_bg1")
-	arg_1_0._gobg2 = gohelper.findChild(arg_1_0.go, "root/#btn_Entrance/go_bg2")
+function Activity204OceanEntranceItem:init(go)
+	Activity204OceanEntranceItem.super.init(self, go)
 
-	gohelper.setActive(arg_1_0._gounlockeffect, false)
+	self._gounlockeffect = gohelper.findChild(self.go, "root/#saoguang")
+	self._gobg1 = gohelper.findChild(self.go, "root/#btn_Entrance/go_bg1")
+	self._gobg2 = gohelper.findChild(self.go, "root/#btn_Entrance/go_bg2")
+
+	gohelper.setActive(self._gounlockeffect, false)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	var_0_0.super.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+function Activity204OceanEntranceItem:addEventListeners()
+	Activity204OceanEntranceItem.super.addEventListeners(self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.initActInfo(arg_3_0, arg_3_1)
-	var_0_0.super.initActInfo(arg_3_0, arg_3_1)
-	arg_3_0:_initStageList(arg_3_1)
+function Activity204OceanEntranceItem:initActInfo(actId)
+	Activity204OceanEntranceItem.super.initActInfo(self, actId)
+	self:_initStageList(actId)
 end
 
-function var_0_0._getActivityStatus(arg_4_0)
-	local var_4_0, var_4_1, var_4_2 = arg_4_0:_getCurShowStage()
+function Activity204OceanEntranceItem:_getActivityStatus()
+	local _, status, toastId = self:_getCurShowStage()
 
-	if var_4_1 == ActivityEnum.ActivityStatus.Expired then
-		logNormal(arg_4_0._actId .. "活动不满足开放时间: " .. TimeUtil.timestampToString(arg_4_0._startTime) .. "," .. TimeUtil.timestampToString(arg_4_0._endTime))
+	if status == ActivityEnum.ActivityStatus.Expired then
+		logNormal(self._actId .. "活动不满足开放时间: " .. TimeUtil.timestampToString(self._startTime) .. "," .. TimeUtil.timestampToString(self._endTime))
 	end
 
-	return var_4_1, var_4_2
+	return status, toastId
 end
 
-function var_0_0.refreshTitle(arg_5_0)
-	local var_5_0, var_5_1 = arg_5_0:_getCurShowStage()
-	local var_5_2 = var_5_0 and var_5_0.config
+function Activity204OceanEntranceItem:refreshTitle()
+	local curStageMo, status = self:_getCurShowStage()
+	local curStageCo = curStageMo and curStageMo.config
 
-	arg_5_0._txtEntrance.text = var_5_2 and var_5_2.name or ""
-	arg_5_0._isCardGameOpen = var_5_0 and var_5_0.stageId == Act205Enum.GameStageId.Card and var_5_1 == ActivityEnum.ActivityStatus.Normal
+	self._txtEntrance.text = curStageCo and curStageCo.name or ""
+	self._isCardGameOpen = curStageMo and curStageMo.stageId == Act205Enum.GameStageId.Card and status == ActivityEnum.ActivityStatus.Normal
 
-	if arg_5_0._isCardGameOpen and arg_5_0._isCardGameNewOpen == nil then
-		arg_5_0._isCardGameNewOpen = Activity204Controller.instance:getPlayerPrefs(PlayerPrefsKey.Activity204CardNewUnlockEffect, 0) == 0
+	if self._isCardGameOpen and self._isCardGameNewOpen == nil then
+		self._isCardGameNewOpen = Activity204Controller.instance:getPlayerPrefs(PlayerPrefsKey.Activity204CardNewUnlockEffect, 0) == 0
 
-		arg_5_0:tryPlayNewUnlockEffect()
+		self:tryPlayNewUnlockEffect()
 	end
 
-	gohelper.setActive(arg_5_0._gobg1, var_5_0.stageId == Act205Enum.GameStageId.Card)
-	gohelper.setActive(arg_5_0._gobg2, var_5_0.stageId == Act205Enum.GameStageId.Ocean)
+	gohelper.setActive(self._gobg1, curStageMo.stageId == Act205Enum.GameStageId.Card)
+	gohelper.setActive(self._gobg2, curStageMo.stageId == Act205Enum.GameStageId.Ocean)
 end
 
-function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 ~= ViewName.Activity204EntranceView then
+function Activity204OceanEntranceItem:_onOpenViewFinish(viewName)
+	if viewName ~= ViewName.Activity204EntranceView then
 		return
 	end
 
-	arg_6_0:tryPlayNewUnlockEffect()
+	self:tryPlayNewUnlockEffect()
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.Activity204EntranceView then
+function Activity204OceanEntranceItem:_onCloseViewFinish(viewName)
+	if viewName == ViewName.Activity204EntranceView then
 		return
 	end
 
-	arg_7_0:tryPlayNewUnlockEffect()
+	self:tryPlayNewUnlockEffect()
 end
 
-function var_0_0.tryPlayNewUnlockEffect(arg_8_0)
-	if not arg_8_0._isCardGameNewOpen or ViewMgr.instance:isOpening(ViewName.Activity204EntranceView) or not ViewHelper.instance:checkViewOnTheTop(ViewName.Activity204EntranceView) then
+function Activity204OceanEntranceItem:tryPlayNewUnlockEffect()
+	if not self._isCardGameNewOpen or ViewMgr.instance:isOpening(ViewName.Activity204EntranceView) or not ViewHelper.instance:checkViewOnTheTop(ViewName.Activity204EntranceView) then
 		return
 	end
 
-	arg_8_0._isCardGameNewOpen = false
+	self._isCardGameNewOpen = false
 
-	gohelper.setActive(arg_8_0._gounlockeffect, true)
+	gohelper.setActive(self._gounlockeffect, true)
 	Activity204Controller.instance:setPlayerPrefs(PlayerPrefsKey.Activity204CardNewUnlockEffect, 1)
 end
 
-function var_0_0._getTimeStr(arg_9_0)
-	if not arg_9_0._actMo then
+function Activity204OceanEntranceItem:_getTimeStr()
+	if not self._actMo then
 		return
 	end
 
-	local var_9_0, var_9_1 = arg_9_0:_getCurShowStage()
-	local var_9_2 = var_9_0 and var_9_0.startTime
-	local var_9_3 = var_9_0 and var_9_0.endTime
+	local stageMo, status = self:_getCurShowStage()
+	local startTime = stageMo and stageMo.startTime
+	local endTime = stageMo and stageMo.endTime
 
-	return arg_9_0:_decorateTimeStr(var_9_1, var_9_2, var_9_3)
+	return self:_decorateTimeStr(status, startTime, endTime)
 end
 
-function var_0_0._initStageList(arg_10_0, arg_10_1)
-	local var_10_0 = lua_actvity205_stage.configDict[arg_10_1]
+function Activity204OceanEntranceItem:_initStageList(actId)
+	local stageConfigList = lua_actvity205_stage.configDict[actId]
 
-	arg_10_0._stageMoList = {}
+	self._stageMoList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = {
-			config = iter_10_1,
-			stageId = iter_10_1.stageId,
-			activityId = iter_10_1.activityId
-		}
+	for _, stageCo in ipairs(stageConfigList) do
+		local stageMo = {}
 
-		var_10_1.activityCofig = ActivityConfig.instance:getActivityCo(var_10_1.activityId)
-		var_10_1.startTime = Act205Config.instance:getGameStageOpenTimeStamp(iter_10_1.activityId, iter_10_1.stageId)
-		var_10_1.endTime = Act205Config.instance:getGameStageEndTimeStamp(iter_10_1.activityId, iter_10_1.stageId)
+		stageMo.config = stageCo
+		stageMo.stageId = stageCo.stageId
+		stageMo.activityId = stageCo.activityId
+		stageMo.activityCofig = ActivityConfig.instance:getActivityCo(stageMo.activityId)
+		stageMo.startTime = Act205Config.instance:getGameStageOpenTimeStamp(stageCo.activityId, stageCo.stageId)
+		stageMo.endTime = Act205Config.instance:getGameStageEndTimeStamp(stageCo.activityId, stageCo.stageId)
 
-		table.insert(arg_10_0._stageMoList, var_10_1)
+		table.insert(self._stageMoList, stageMo)
 	end
 
-	arg_10_0._stageCount = arg_10_0._stageMoList and #arg_10_0._stageMoList or 0
+	self._stageCount = self._stageMoList and #self._stageMoList or 0
 
-	table.sort(arg_10_0._stageMoList, arg_10_0._stageMoSortFunc)
+	table.sort(self._stageMoList, self._stageMoSortFunc)
 end
 
-function var_0_0._stageMoSortFunc(arg_11_0, arg_11_1)
-	if arg_11_0.startTime ~= arg_11_1.startTime then
-		return arg_11_0.startTime < arg_11_1.startTime
+function Activity204OceanEntranceItem._stageMoSortFunc(aStageMo, bStageMo)
+	if aStageMo.startTime ~= bStageMo.startTime then
+		return aStageMo.startTime < bStageMo.startTime
 	end
 
-	if arg_11_0.endTime ~= arg_11_1.endTime then
-		return arg_11_0.endTime < arg_11_1.endTime
+	if aStageMo.endTime ~= bStageMo.endTime then
+		return aStageMo.endTime < bStageMo.endTime
 	end
 
-	if arg_11_0.activityId ~= arg_11_1.activityId then
-		return arg_11_0.activityId < arg_11_1.activityId
+	if aStageMo.activityId ~= bStageMo.activityId then
+		return aStageMo.activityId < bStageMo.activityId
 	end
 
-	return arg_11_0.stageId ~= arg_11_1.stageId
+	return aStageMo.stageId ~= bStageMo.stageId
 end
 
-function var_0_0._getStageStatus(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function Activity204OceanEntranceItem:_getStageStatus(stageMo)
+	if not stageMo then
 		return
 	end
 
-	local var_12_0, var_12_1, var_12_2 = ActivityHelper.getActivityStatusAndToast(arg_12_1.activityId)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(stageMo.activityId)
 
-	if var_12_0 ~= ActivityEnum.ActivityStatus.Normal then
-		return var_12_0, var_12_1, var_12_2
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		return status, toastId, toastParam
 	end
 
-	local var_12_3 = ServerTime.now()
+	local curServerTime = ServerTime.now()
 
-	if var_12_3 <= arg_12_1.startTime then
+	if curServerTime <= stageMo.startTime then
 		return ActivityEnum.ActivityStatus.NotOpen, ToastEnum.ActivityNotOpen
 	end
 
-	if var_12_3 >= arg_12_1.endTime then
+	if curServerTime >= stageMo.endTime then
 		return ActivityEnum.ActivityStatus.Expired, ToastEnum.ActivityEnd
 	end
 
 	return ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_0._getCurShowStage(arg_13_0)
-	local var_13_0
-	local var_13_1
-	local var_13_2
+function Activity204OceanEntranceItem:_getCurShowStage()
+	local showStageMo, showStatus, showToastId
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._stageMoList) do
-		local var_13_3, var_13_4 = arg_13_0:_getStageStatus(iter_13_1)
+	for _, stageMo in ipairs(self._stageMoList) do
+		local status, toastId = self:_getStageStatus(stageMo)
 
-		var_13_0 = iter_13_1
-		var_13_1 = var_13_3
-		var_13_2 = var_13_4
+		showStageMo = stageMo
+		showStatus = status
+		showToastId = toastId
 
-		if var_13_3 == ActivityEnum.ActivityStatus.NotOpen or var_13_3 == ActivityEnum.ActivityStatus.Normal then
+		if status == ActivityEnum.ActivityStatus.NotOpen or status == ActivityEnum.ActivityStatus.Normal then
 			break
 		end
 	end
 
-	return var_13_0, var_13_1, var_13_2
+	return showStageMo, showStatus, showToastId
 end
 
-function var_0_0.updateReddot(arg_14_0)
-	if arg_14_0._actCfg and arg_14_0._actCfg.redDotId ~= 0 then
-		local var_14_0 = {}
+function Activity204OceanEntranceItem:updateReddot()
+	if self._actCfg and self._actCfg.redDotId ~= 0 then
+		local infoList = {}
 
-		table.insert(var_14_0, {
+		table.insert(infoList, {
 			id = RedDotEnum.DotNode.V2a9_Act205OceanOpen
 		})
-		table.insert(var_14_0, {
-			id = arg_14_0._actCfg.redDotId
+		table.insert(infoList, {
+			id = self._actCfg.redDotId
 		})
-		RedDotController.instance:addMultiRedDot(arg_14_0._goRedPoint, var_14_0)
+		RedDotController.instance:addMultiRedDot(self._goRedPoint, infoList)
 	end
 end
 
-return var_0_0
+return Activity204OceanEntranceItem

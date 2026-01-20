@@ -1,81 +1,85 @@
-﻿module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_PanelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/v2a7_selfselectsix_1/view/V2a7_SelfSelectSix_PanelView.lua
 
-local var_0_0 = class("V2a7_SelfSelectSix_PanelView", BaseView)
+module("modules.logic.versionactivity2_7.v2a7_selfselectsix_1.view.V2a7_SelfSelectSix_PanelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goClaim = gohelper.findChild(arg_1_0.viewGO, "root/simage_panelbg/reward/#btn_Claim")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "root/simage_panelbg/reward/#go_hasget")
-	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/simage_panelbg/reward/#btn_Claim")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_Close")
-	arg_1_0._btnemptyTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyTop")
-	arg_1_0._btnemptyBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyBottom")
-	arg_1_0._btnemptyLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyLeft")
-	arg_1_0._btnemptyRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_emptyRight")
-	arg_1_0._btnGo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_Go")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/simage_panelbg/#txt_desc")
+local V2a7_SelfSelectSix_PanelView = class("V2a7_SelfSelectSix_PanelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a7_SelfSelectSix_PanelView:onInitView()
+	self._goClaim = gohelper.findChild(self.viewGO, "root/simage_panelbg/reward/#btn_Claim")
+	self._gohasget = gohelper.findChild(self.viewGO, "root/simage_panelbg/reward/#go_hasget")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "root/simage_panelbg/reward/#btn_Claim")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_Close")
+	self._btnemptyTop = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyTop")
+	self._btnemptyBottom = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyBottom")
+	self._btnemptyLeft = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyLeft")
+	self._btnemptyRight = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_emptyRight")
+	self._btnGo = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_Go")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/simage_panelbg/#txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClaim:AddClickListener(arg_2_0._btnClaimOnClick, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnemptyTop:AddClickListener(arg_2_0._btnemptyTopOnClick, arg_2_0)
-	arg_2_0._btnemptyBottom:AddClickListener(arg_2_0._btnemptyBottomOnClick, arg_2_0)
-	arg_2_0._btnemptyLeft:AddClickListener(arg_2_0._btnemptyLeftOnClick, arg_2_0)
-	arg_2_0._btnemptyRight:AddClickListener(arg_2_0._btnemptyRightOnClick, arg_2_0)
-	arg_2_0._btnGo:AddClickListener(arg_2_0._btnGoOnClick, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshUI, arg_2_0)
+function V2a7_SelfSelectSix_PanelView:addEvents()
+	self._btnClaim:AddClickListener(self._btnClaimOnClick, self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnemptyTop:AddClickListener(self._btnemptyTopOnClick, self)
+	self._btnemptyBottom:AddClickListener(self._btnemptyBottomOnClick, self)
+	self._btnemptyLeft:AddClickListener(self._btnemptyLeftOnClick, self)
+	self._btnemptyRight:AddClickListener(self._btnemptyRightOnClick, self)
+	self._btnGo:AddClickListener(self._btnGoOnClick, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClaim:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnemptyTop:RemoveClickListener()
-	arg_3_0._btnemptyBottom:RemoveClickListener()
-	arg_3_0._btnemptyLeft:RemoveClickListener()
-	arg_3_0._btnemptyRight:RemoveClickListener()
-	arg_3_0._btnGo:RemoveClickListener()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.refreshUI, arg_3_0)
+function V2a7_SelfSelectSix_PanelView:removeEvents()
+	self._btnClaim:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
+	self._btnemptyTop:RemoveClickListener()
+	self._btnemptyBottom:RemoveClickListener()
+	self._btnemptyLeft:RemoveClickListener()
+	self._btnemptyRight:RemoveClickListener()
+	self._btnGo:RemoveClickListener()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
 end
 
-function var_0_0._btnClaimOnClick(arg_4_0)
-	if not arg_4_0:checkReceied() and arg_4_0:checkCanGet() then
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_4_0._actId, 1)
+function V2a7_SelfSelectSix_PanelView:_btnClaimOnClick()
+	if not self:checkReceied() and self:checkCanGet() then
+		Activity101Rpc.instance:sendGet101BonusRequest(self._actId, 1)
 	end
 end
 
-function var_0_0._btnCloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function V2a7_SelfSelectSix_PanelView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyTopOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function V2a7_SelfSelectSix_PanelView:_btnemptyTopOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyBottomOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function V2a7_SelfSelectSix_PanelView:_btnemptyBottomOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyLeftOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function V2a7_SelfSelectSix_PanelView:_btnemptyLeftOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyRightOnClick(arg_9_0)
-	arg_9_0:closeThis()
+function V2a7_SelfSelectSix_PanelView:_btnemptyRightOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnGoOnClick(arg_10_0)
-	arg_10_0:closeThis()
+function V2a7_SelfSelectSix_PanelView:_btnGoOnClick()
+	self:closeThis()
 
-	local var_10_0 = ActivityModel.instance:getActMO(arg_10_0._actId)
+	local actMo = ActivityModel.instance:getActMO(self._actId)
 
-	if var_10_0 and var_10_0.centerId then
-		ActivityModel.instance:setTargetActivityCategoryId(arg_10_0._actId)
+	if actMo and actMo.centerId then
+		ActivityModel.instance:setTargetActivityCategoryId(self._actId)
 
-		if var_10_0.centerId == ActivityEnum.ActivityType.Beginner then
+		local isActivity = actMo.centerId == ActivityEnum.ActivityType.Beginner
+
+		if isActivity then
 			ActivityController.instance:openActivityBeginnerView()
 		else
 			ActivityController.instance:openActivityWelfareView()
@@ -83,44 +87,48 @@ function var_0_0._btnGoOnClick(arg_10_0)
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
+function V2a7_SelfSelectSix_PanelView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function V2a7_SelfSelectSix_PanelView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
+function V2a7_SelfSelectSix_PanelView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_day_night)
 
-	arg_13_0._actId = arg_13_0.viewParam.actId
-	arg_13_0._actCo = ActivityConfig.instance:getActivityCo(arg_13_0._actId)
-	arg_13_0._txtdesc.text = arg_13_0._actCo.actDesc
+	self._actId = self.viewParam.actId
+	self._actCo = ActivityConfig.instance:getActivityCo(self._actId)
+	self._txtdesc.text = self._actCo.actDesc
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	local var_14_0 = arg_14_0:checkReceied()
-	local var_14_1 = arg_14_0:checkCanGet()
+function V2a7_SelfSelectSix_PanelView:refreshUI()
+	local received = self:checkReceied()
+	local canget = self:checkCanGet()
 
-	gohelper.setActive(arg_14_0._goClaim, not var_14_0 and var_14_1)
-	gohelper.setActive(arg_14_0._gohasget, var_14_0)
+	gohelper.setActive(self._goClaim, not received and canget)
+	gohelper.setActive(self._gohasget, received)
 end
 
-function var_0_0.checkReceied(arg_15_0)
-	return (ActivityType101Model.instance:isType101RewardGet(arg_15_0._actId, 1))
+function V2a7_SelfSelectSix_PanelView:checkReceied()
+	local received = ActivityType101Model.instance:isType101RewardGet(self._actId, 1)
+
+	return received
 end
 
-function var_0_0.checkCanGet(arg_16_0)
-	return (ActivityType101Model.instance:isType101RewardCouldGet(arg_16_0._actId, 1))
+function V2a7_SelfSelectSix_PanelView:checkCanGet()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(self._actId, 1)
+
+	return couldGet
 end
 
-function var_0_0.onClose(arg_17_0)
+function V2a7_SelfSelectSix_PanelView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function V2a7_SelfSelectSix_PanelView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V2a7_SelfSelectSix_PanelView

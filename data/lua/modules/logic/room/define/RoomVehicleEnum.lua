@@ -1,20 +1,22 @@
-﻿module("modules.logic.room.define.RoomVehicleEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomVehicleEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomVehicleEnum", package.seeall)
 
-var_0_0.OwnerType = {
+local RoomVehicleEnum = _M
+
+RoomVehicleEnum.OwnerType = {
 	TransportSite = 2,
 	Building = 1,
 	None = 0
 }
-var_0_0.UseType = {
+RoomVehicleEnum.UseType = {
 	Aircraft = 201,
 	LandWater = 101
 }
-var_0_0.ReplaceType = {
+RoomVehicleEnum.ReplaceType = {
 	Land = 1,
 	Water = 2,
 	None = 0
 }
 
-return var_0_0
+return RoomVehicleEnum

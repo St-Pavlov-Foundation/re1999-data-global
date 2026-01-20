@@ -1,224 +1,232 @@
-﻿local var_0_0 = string.format
-local var_0_1 = table.insert
-local var_0_2 = table.concat
+﻿-- chunkname: @modules/logic/webview/controller/WebViewController.lua
+
+local sf = string.format
+local ti = table.insert
+local tc = table.concat
 
 module("modules.logic.webview.controller.WebViewController", package.seeall)
 
-local var_0_3 = class("WebViewController")
+local WebViewController = class("WebViewController")
 
-function var_0_3.openWebView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6, arg_1_7, arg_1_8, arg_1_9, arg_1_10)
+function WebViewController:openWebView(url, needRecordUser, callback, callbackObj, left, top, right, bottom, autoTop, autoBottom)
 	if SLFramework.FrameworkSettings.IsEditor or BootNativeUtil.isWindows() then
-		if arg_1_2 then
-			arg_1_1 = arg_1_0:getRecordUserUrl(arg_1_1)
+		if needRecordUser then
+			url = self:getRecordUserUrl(url)
 		end
 
-		GameUtil.openURL(arg_1_1)
+		GameUtil.openURL(url)
 
 		return
 	end
 
-	if string.nilorempty(arg_1_1) then
+	if string.nilorempty(url) then
 		logError("url 不能为空")
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.WebView, {
-		url = arg_1_1,
-		needRecordUser = arg_1_2,
-		callback = arg_1_3,
-		callbackObj = arg_1_4,
-		left = arg_1_5,
-		top = arg_1_6,
-		right = arg_1_7,
-		bottom = arg_1_8,
-		autoTop = arg_1_9,
-		autoBottom = arg_1_10
+		url = url,
+		needRecordUser = needRecordUser,
+		callback = callback,
+		callbackObj = callbackObj,
+		left = left,
+		top = top,
+		right = right,
+		bottom = bottom,
+		autoTop = autoTop,
+		autoBottom = autoBottom
 	})
 end
 
-function var_0_3.getRecordUserUrl(arg_2_0, arg_2_1)
-	if string.nilorempty(arg_2_1) then
-		return arg_2_1
+function WebViewController:getRecordUserUrl(baseUrl)
+	if string.nilorempty(baseUrl) then
+		return baseUrl
 	end
 
-	local var_2_0 = {}
-	local var_2_1 = GameChannelConfig.isEfun()
-	local var_2_2 = GameChannelConfig.isLongCheng()
+	local strBuf = {}
+	local isTw = GameChannelConfig.isEfun()
+	local isKr = GameChannelConfig.isLongCheng()
 
 	if SLFramework.FrameworkSettings.IsEditor and isDebugBuild then
-		var_2_1 = var_2_1 or SettingsModel.instance:isTwRegion()
-		var_2_2 = var_2_2 or SettingsModel.instance:isKrRegion()
+		isTw = isTw or SettingsModel.instance:isTwRegion()
+		isKr = isKr or SettingsModel.instance:isKrRegion()
 	end
 
-	if var_2_1 then
-		local var_2_3 = SDKMgr.instance:getUserInfoExtraParams()
-		local var_2_4 = PayModel.instance:getGameRoleInfo()
+	if isTw then
+		local extraParams = SDKMgr.instance:getUserInfoExtraParams()
+		local roleInfo = PayModel.instance:getGameRoleInfo()
 
-		var_0_1(var_2_0, arg_2_1)
-		var_0_1(var_2_0, var_0_0("userId=%s", var_2_3.userId))
-		var_0_1(var_2_0, var_0_0("sign=%s", var_2_3.sign))
-		var_0_1(var_2_0, var_0_0("timestamp=%s", var_2_3.timestamp))
-		var_0_1(var_2_0, "gameCode=twcfwl")
-		var_0_1(var_2_0, var_0_0("serverCode=%s", var_2_4.serverId))
-		var_0_1(var_2_0, var_0_0("roleId=%s", var_2_4.roleId))
-		var_0_1(var_2_0, var_0_0("serverName=%s", arg_2_0:urlEncode(var_2_4.serverName)))
-		var_0_1(var_2_0, var_0_0("roleName=%s", arg_2_0:urlEncode(var_2_4.roleName)))
-		var_0_1(var_2_0, "language=zh-TW")
-	elseif var_2_2 then
-		local var_2_5 = SDKMgr.instance:getUserInfoExtraParams()
-		local var_2_6 = var_2_5 and var_2_5.ko_jwt or "nil"
+		ti(strBuf, baseUrl)
+		ti(strBuf, sf("userId=%s", extraParams.userId))
+		ti(strBuf, sf("sign=%s", extraParams.sign))
+		ti(strBuf, sf("timestamp=%s", extraParams.timestamp))
+		ti(strBuf, "gameCode=twcfwl")
+		ti(strBuf, sf("serverCode=%s", roleInfo.serverId))
+		ti(strBuf, sf("roleId=%s", roleInfo.roleId))
+		ti(strBuf, sf("serverName=%s", self:urlEncode(roleInfo.serverName)))
+		ti(strBuf, sf("roleName=%s", self:urlEncode(roleInfo.roleName)))
+		ti(strBuf, "language=zh-TW")
+	elseif isKr then
+		local extraParams = SDKMgr.instance:getUserInfoExtraParams()
+		local ko_jwt = extraParams and extraParams.ko_jwt or "nil"
 
-		var_0_1(var_2_0, arg_2_1 .. "?" .. var_0_0("jwt=%s", var_2_6))
+		ti(strBuf, baseUrl .. "?" .. sf("jwt=%s", ko_jwt))
 	else
-		var_0_1(var_2_0, arg_2_1 .. "?" .. var_0_0("timestamp=%s", ServerTime.now() * 1000))
-		var_0_1(var_2_0, var_0_0("gameId=%s", SDKMgr.instance:getGameId()))
-		var_0_1(var_2_0, var_0_0("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-		var_0_1(var_2_0, var_0_0("channelUserId=%s", LoginModel.instance.channelUserId))
-		var_0_1(var_2_0, var_0_0("deviceModel=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.deviceModel)))
-		var_0_1(var_2_0, var_0_0("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
-		var_0_1(var_2_0, var_0_0("os=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
-		var_0_1(var_2_0, var_0_0("token=%s", SDKMgr.instance:getGameSdkToken()))
-		var_0_1(var_2_0, var_0_0("channelId=%s", SDKMgr.instance:getChannelId()))
-		var_0_1(var_2_0, var_0_0("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+		ti(strBuf, baseUrl .. "?" .. sf("timestamp=%s", ServerTime.now() * 1000))
+		ti(strBuf, sf("gameId=%s", SDKMgr.instance:getGameId()))
+		ti(strBuf, sf("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
+		ti(strBuf, sf("channelUserId=%s", LoginModel.instance.channelUserId))
+		ti(strBuf, sf("deviceModel=%s", self:urlEncode(UnityEngine.SystemInfo.deviceModel)))
+		ti(strBuf, sf("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+		ti(strBuf, sf("os=%s", self:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
+		ti(strBuf, sf("token=%s", SDKMgr.instance:getGameSdkToken()))
+		ti(strBuf, sf("channelId=%s", SDKMgr.instance:getChannelId()))
+		ti(strBuf, sf("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
 	end
 
-	local var_2_7 = var_0_2(var_2_0, "&")
+	local url = tc(strBuf, "&")
 
-	logNormal(var_2_7)
+	logNormal(url)
 
-	return var_2_7
+	return url
 end
 
-function var_0_3.urlEncode(arg_3_0, arg_3_1)
-	arg_3_1 = string.gsub(arg_3_1, "([^%w%.%- ])", function(arg_4_0)
-		return string.format("%%%02X", string.byte(arg_4_0))
+function WebViewController:urlEncode(s)
+	s = string.gsub(s, "([^%w%.%- ])", function(c)
+		return string.format("%%%02X", string.byte(c))
 	end)
 
-	return (string.gsub(arg_3_1, " ", "+"))
+	local result = string.gsub(s, " ", "+")
+
+	return result
 end
 
-function var_0_3.getVideoUrl(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getVideoUrlHead()
-	local var_5_1 = string.format(var_5_0, arg_5_1)
-	local var_5_2 = {
-		var_5_1 .. string.format("gameId=%s", SDKMgr.instance:getGameId())
+function WebViewController:getVideoUrl(heroId, skinId)
+	local urlHead = self:getVideoUrlHead()
+
+	urlHead = string.format(urlHead, heroId)
+
+	local data = {
+		urlHead .. string.format("gameId=%s", SDKMgr.instance:getGameId())
 	}
 
-	table.insert(var_5_2, string.format("accountId=%s", LoginModel.instance.channelUserId))
-	table.insert(var_5_2, string.format("roleId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(var_5_2, string.format("skinId=%s", arg_5_2))
+	table.insert(data, string.format("accountId=%s", LoginModel.instance.channelUserId))
+	table.insert(data, string.format("roleId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(data, string.format("skinId=%s", skinId))
 
-	local var_5_3 = var_0_3.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut(true))
+	local languageModel = WebViewController.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut(true))
 
-	table.insert(var_5_2, string.format("language=%s", var_5_3))
+	table.insert(data, string.format("language=%s", languageModel))
 
-	local var_5_4 = TurnBackInvitationModel.instance:getCurrentDeviceType()
+	local deviceTypeModel = TurnBackInvitationModel.instance:getCurrentDeviceType()
 
-	table.insert(var_5_2, string.format("deviceType=%s", var_5_4))
+	table.insert(data, string.format("deviceType=%s", deviceTypeModel))
 
-	return (table.concat(var_5_2, "&"))
+	local url = table.concat(data, "&")
+
+	return url
 end
 
-function var_0_3.getVideoUrlHead(arg_6_0)
-	local var_6_0 = SDKMgr.instance:getGameId()
-	local var_6_1
-	local var_6_2 = GameChannelConfig.getServerType()
-	local var_6_3 = var_6_2 == GameChannelConfig.ServerType.OutRelease or var_6_2 == GameChannelConfig.ServerType.OutPreview
+function WebViewController:getVideoUrlHead()
+	local gameId = SDKMgr.instance:getGameId()
+	local urlHead
+	local serverType = GameChannelConfig.getServerType()
+	local isRelease = serverType == GameChannelConfig.ServerType.OutRelease or serverType == GameChannelConfig.ServerType.OutPreview
 
-	if tostring(var_6_0) == "50001" then
-		var_6_1 = var_6_3 and "https://re.bluepoch.com/event/skinvideo/%s?" or "https://re-test.sl916.com/event/skinvideo/%s?"
+	if tostring(gameId) == "50001" then
+		urlHead = isRelease and "https://re.bluepoch.com/event/skinvideo/%s?" or "https://re-test.sl916.com/event/skinvideo/%s?"
 	else
-		var_6_1 = var_6_3 and "https://reverse1999.bluepoch.com/event/skinvideo/%s?" or "https://re1999-hwtest.sl916.com/event/skinvideo/%s?"
+		urlHead = isRelease and "https://reverse1999.bluepoch.com/event/skinvideo/%s?" or "https://re1999-hwtest.sl916.com/event/skinvideo/%s?"
 	end
 
-	return var_6_1
+	return urlHead
 end
 
-function var_0_3.getWebViewTopOffset(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_1 = arg_7_1 or UnityEngine.Screen.width
-	arg_7_2 = arg_7_2 or UnityEngine.Screen.height
-	arg_7_3 = arg_7_3 or WebViewEnum.DefaultMargin.Top
+function WebViewController:getWebViewTopOffset(width, height, contentHeight)
+	width = width or UnityEngine.Screen.width
+	height = height or UnityEngine.Screen.height
+	contentHeight = contentHeight or WebViewEnum.DefaultMargin.Top
 
-	local var_7_0 = 1080
-	local var_7_1 = 1920 / var_7_0
-	local var_7_2 = arg_7_1 / arg_7_2
-	local var_7_3 = arg_7_1 / var_7_1
-	local var_7_4 = 0
-	local var_7_5 = 0
-	local var_7_6 = 0.5
+	local defaultHeight = 1080
+	local defaultWidth = 1920
+	local defaultRatio = defaultWidth / defaultHeight
+	local currentRatio = width / height
+	local targetHeight = width / defaultRatio
+	local btnOffset = 0
+	local offset = 0
+	local ratio = 0.5
 
-	if var_7_2 >= var_7_1 - 0.01 then
-		local var_7_7 = arg_7_3 * (arg_7_2 / var_7_0)
-
-		var_7_5 = math.max(0, (arg_7_2 - var_7_3) * var_7_6) + var_7_7
-	elseif var_7_2 <= var_7_1 - 0.01 then
-		local var_7_8 = arg_7_3 * (var_7_3 / var_7_0)
-
-		var_7_5 = math.max(0, (arg_7_2 - var_7_3) * var_7_6) + var_7_8
+	if currentRatio >= defaultRatio - 0.01 then
+		btnOffset = contentHeight * (height / defaultHeight)
+		offset = math.max(0, (height - targetHeight) * ratio) + btnOffset
+	elseif currentRatio <= defaultRatio - 0.01 then
+		btnOffset = contentHeight * (targetHeight / defaultHeight)
+		offset = math.max(0, (height - targetHeight) * ratio) + btnOffset
 	else
-		var_7_5 = arg_7_3 * (var_7_3 / var_7_0)
+		btnOffset = contentHeight * (targetHeight / defaultHeight)
+		offset = btnOffset
 	end
 
-	return var_7_5
+	return offset
 end
 
-function var_0_3.getWebViewBottomOffset(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_1 = arg_8_1 or UnityEngine.Screen.width
-	arg_8_2 = arg_8_2 or UnityEngine.Screen.height
-	arg_8_3 = arg_8_3 or WebViewEnum.DefaultMargin.Bottom
+function WebViewController:getWebViewBottomOffset(width, height, contentHeight)
+	width = width or UnityEngine.Screen.width
+	height = height or UnityEngine.Screen.height
+	contentHeight = contentHeight or WebViewEnum.DefaultMargin.Bottom
 
-	local var_8_0 = 1080
-	local var_8_1 = 1920 / var_8_0
-	local var_8_2 = arg_8_1 / arg_8_2
-	local var_8_3 = arg_8_1 / var_8_1
-	local var_8_4 = 0
-	local var_8_5 = 0
-	local var_8_6 = 0.5
+	local defaultHeight = 1080
+	local defaultWidth = 1920
+	local defaultRatio = defaultWidth / defaultHeight
+	local currentRatio = width / height
+	local targetHeight = width / defaultRatio
+	local btnOffset = 0
+	local offset = 0
+	local ratio = 0.5
 
-	if var_8_2 >= var_8_1 - 0.01 then
-		local var_8_7 = arg_8_3 * (arg_8_2 / var_8_0)
-
-		var_8_5 = math.max(0, (arg_8_2 - var_8_3) * var_8_6) + var_8_7
-	elseif var_8_2 <= var_8_1 - 0.01 then
-		local var_8_8 = arg_8_3 * (var_8_3 / var_8_0)
-
-		var_8_5 = math.max(0, (arg_8_2 - var_8_3) * var_8_6) + var_8_8
+	if currentRatio >= defaultRatio - 0.01 then
+		btnOffset = contentHeight * (height / defaultHeight)
+		offset = math.max(0, (height - targetHeight) * ratio) + btnOffset
+	elseif currentRatio <= defaultRatio - 0.01 then
+		btnOffset = contentHeight * (targetHeight / defaultHeight)
+		offset = math.max(0, (height - targetHeight) * ratio) + btnOffset
 	else
-		var_8_5 = arg_8_3 * (var_8_3 / var_8_0)
+		btnOffset = contentHeight * (targetHeight / defaultHeight)
+		offset = btnOffset
 	end
 
-	return var_8_5
+	return offset
 end
 
-function var_0_3.urlParse(arg_9_0)
-	local var_9_0 = string.split(arg_9_0, "?")
+function WebViewController.urlParse(url)
+	local query = string.split(url, "?")
 
-	if var_9_0 and var_9_0[2] then
-		local var_9_1 = {}
+	if query and query[2] then
+		local res = {}
 
-		for iter_9_0, iter_9_1 in string.gmatch(var_9_0[2], "([^&=]+)=([^&=]*)") do
-			var_9_1[iter_9_0] = iter_9_1
+		for k, v in string.gmatch(query[2], "([^&=]+)=([^&=]*)") do
+			res[k] = v
 		end
 
-		return var_9_1
+		return res
 	end
 
 	return nil
 end
 
-function var_0_3.simpleOpenWebView(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_0:getRecordUserUrl(arg_10_1)
+function WebViewController:simpleOpenWebView(baseUrl, onWebViewCb, onWebViewCbObj)
+	local url = self:getRecordUserUrl(baseUrl)
 
-	arg_10_0:openWebView(var_10_0, false, arg_10_2, arg_10_3)
+	self:openWebView(url, false, onWebViewCb, onWebViewCbObj)
 end
 
-function var_0_3.simpleOpenWebBrowser(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getRecordUserUrl(arg_11_1)
+function WebViewController:simpleOpenWebBrowser(baseUrl)
+	local url = self:getRecordUserUrl(baseUrl)
 
-	GameUtil.openURL(var_11_0)
+	GameUtil.openURL(url)
 end
 
-var_0_3.instance = var_0_3.New()
+WebViewController.instance = WebViewController.New()
 
-return var_0_3
+return WebViewController

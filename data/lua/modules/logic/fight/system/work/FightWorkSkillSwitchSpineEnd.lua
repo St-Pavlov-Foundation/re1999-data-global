@@ -1,78 +1,80 @@
-﻿module("modules.logic.fight.system.work.FightWorkSkillSwitchSpineEnd", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSkillSwitchSpineEnd.lua
 
-local var_0_0 = class("FightWorkSkillSwitchSpineEnd", BaseWork)
+module("modules.logic.fight.system.work.FightWorkSkillSwitchSpineEnd", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkSkillSwitchSpineEnd = class("FightWorkSkillSwitchSpineEnd", BaseWork)
+
+function FightWorkSkillSwitchSpineEnd:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
+function FightWorkSkillSwitchSpineEnd:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 0.5)
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
-	local var_2_1 = var_2_0 and var_2_0:getMO()
+	local entity = FightHelper.getEntity(self.fightStepData.fromId)
+	local entityMO = entity and entity:getMO()
 
-	if not var_2_1 then
-		arg_2_0:onDone(true)
-
-		return
-	end
-
-	if FightEntityDataHelper.isPlayerUid(var_2_1.id) then
-		arg_2_0:onDone(true)
+	if not entityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_2_2 = arg_2_0.fightStepData.supportHeroId
-
-	if not var_2_2 then
-		arg_2_0:onDone(true)
+	if FightEntityDataHelper.isPlayerUid(entityMO.id) then
+		self:onDone(true)
 
 		return
 	end
 
-	if var_2_2 ~= 0 and var_2_2 ~= var_2_1.modelId then
-		if arg_2_0.context.Custom_OriginSkin then
-			var_2_1.skin = arg_2_0.context.Custom_OriginSkin
+	local modelId = self.fightStepData.supportHeroId
 
-			if var_2_0.spine and var_2_0.spine.releaseSpecialSpine then
-				var_2_0.spine.LOCK_SPECIALSPINE = false
+	if not modelId then
+		self:onDone(true)
+
+		return
+	end
+
+	if modelId ~= 0 and modelId ~= entityMO.modelId then
+		if self.context.Custom_OriginSkin then
+			entityMO.skin = self.context.Custom_OriginSkin
+
+			if entity.spine and entity.spine.releaseSpecialSpine then
+				entity.spine.LOCK_SPECIALSPINE = false
 			end
 		end
 
-		TaskDispatcher.cancelTask(arg_2_0._delayDone, arg_2_0)
-		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 10)
+		TaskDispatcher.cancelTask(self._delayDone, self)
+		TaskDispatcher.runDelay(self._delayDone, self, 10)
 
-		arg_2_0._flow = FlowSequence.New()
+		self._flow = FlowSequence.New()
 
-		arg_2_0._flow:addWork(FightWorkChangeEntitySpine.New(var_2_0))
-		arg_2_0._flow:registerDoneListener(arg_2_0._onFlowDone, arg_2_0)
-		arg_2_0._flow:start()
+		self._flow:addWork(FightWorkChangeEntitySpine.New(entity))
+		self._flow:registerDoneListener(self._onFlowDone, self)
+		self._flow:start()
 
 		return
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onFlowDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkSkillSwitchSpineEnd:_onFlowDone()
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkSkillSwitchSpineEnd:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
+function FightWorkSkillSwitchSpineEnd:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 
-	if arg_5_0._flow then
-		arg_5_0._flow:unregisterDoneListener(arg_5_0._onFlowDone, arg_5_0)
-		arg_5_0._flow:stop()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onFlowDone, self)
+		self._flow:stop()
 
-		arg_5_0._flow = nil
+		self._flow = nil
 	end
 end
 
-return var_0_0
+return FightWorkSkillSwitchSpineEnd

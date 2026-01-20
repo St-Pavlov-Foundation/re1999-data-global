@@ -1,153 +1,259 @@
-﻿module("modules.logic.settings.view.SettingsGameView", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsGameView.lua
 
-local var_0_0 = class("SettingsGameView", BaseView)
+module("modules.logic.settings.view.SettingsGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorecordvideo = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/Content/#go_recordvideo")
-	arg_1_0._btnrecordvideo = gohelper.findChildButtonWithAudio(arg_1_0._gorecordvideo, "switch/btn")
-	arg_1_0._gooffrecordvideo = gohelper.findChild(arg_1_0._gorecordvideo, "switch/btn/off")
-	arg_1_0._goonrecordvideo = gohelper.findChild(arg_1_0._gorecordvideo, "switch/btn/on")
-	arg_1_0._goenteranim = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/Content/#go_enteranim")
-	arg_1_0._goAuto = gohelper.findChild(arg_1_0._goenteranim, "switch/btn/auto")
-	arg_1_0._goHand = gohelper.findChild(arg_1_0._goenteranim, "switch/btn/hand")
-	arg_1_0._btnenteranim = gohelper.findChildButtonWithAudio(arg_1_0._goenteranim, "switch/btn")
-	arg_1_0._gorecommend = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/Content/#go_recommend")
-	arg_1_0._gorecommendon = gohelper.findChild(arg_1_0._gorecommend, "switch/btn/on")
-	arg_1_0._gorecommendoff = gohelper.findChild(arg_1_0._gorecommend, "switch/btn/off")
-	arg_1_0._btnrecommend = gohelper.findChildButtonWithAudio(arg_1_0._gorecommend, "switch/btn")
-	arg_1_0._gochangeenteranim = gohelper.findChild(arg_1_0.viewGO, "scroll/Viewport/Content/#go_changeenteranim")
-	arg_1_0._btnchangeanimFirst = gohelper.findChildButtonWithAudio(arg_1_0._gochangeenteranim, "switch/#btn_first")
-	arg_1_0._btnchangeanimEven = gohelper.findChildButtonWithAudio(arg_1_0._gochangeenteranim, "switch/#btn_even")
-	arg_1_0._gochangeon1 = gohelper.findChild(arg_1_0._gochangeenteranim, "switch/#btn_even/#go_evenon")
-	arg_1_0._gochangeoff1 = gohelper.findChild(arg_1_0._gochangeenteranim, "switch/#btn_even/#go_evenoff")
-	arg_1_0._gochangeon2 = gohelper.findChild(arg_1_0._gochangeenteranim, "switch/#btn_first/#go_firston")
-	arg_1_0._gochangeoff2 = gohelper.findChild(arg_1_0._gochangeenteranim, "switch/#btn_first/#go_firstoff")
+local SettingsGameView = class("SettingsGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SettingsGameView:_onChangeLangTxt()
+	self:_initUdimoDropDown()
+end
+
+function SettingsGameView:onInitView()
+	self._gorecordvideo = gohelper.findChild(self.viewGO, "scroll/Viewport/Content/#go_recordvideo")
+	self._btnrecordvideo = gohelper.findChildButtonWithAudio(self._gorecordvideo, "switch/btn")
+	self._gooffrecordvideo = gohelper.findChild(self._gorecordvideo, "switch/btn/off")
+	self._goonrecordvideo = gohelper.findChild(self._gorecordvideo, "switch/btn/on")
+	self._goenteranim = gohelper.findChild(self.viewGO, "scroll/Viewport/Content/#go_enteranim")
+	self._goAuto = gohelper.findChild(self._goenteranim, "switch/btn/auto")
+	self._goHand = gohelper.findChild(self._goenteranim, "switch/btn/hand")
+	self._btnenteranim = gohelper.findChildButtonWithAudio(self._goenteranim, "switch/btn")
+	self._gorecommend = gohelper.findChild(self.viewGO, "scroll/Viewport/Content/#go_recommend")
+	self._gorecommendon = gohelper.findChild(self._gorecommend, "switch/btn/on")
+	self._gorecommendoff = gohelper.findChild(self._gorecommend, "switch/btn/off")
+	self._btnrecommend = gohelper.findChildButtonWithAudio(self._gorecommend, "switch/btn")
+	self._gochangeenteranim = gohelper.findChild(self.viewGO, "scroll/Viewport/Content/#go_changeenteranim")
+	self._btnchangeanimFirst = gohelper.findChildButtonWithAudio(self._gochangeenteranim, "switch/#btn_first")
+	self._btnchangeanimEven = gohelper.findChildButtonWithAudio(self._gochangeenteranim, "switch/#btn_even")
+	self._gochangeon1 = gohelper.findChild(self._gochangeenteranim, "switch/#btn_even/#go_evenon")
+	self._gochangeoff1 = gohelper.findChild(self._gochangeenteranim, "switch/#btn_even/#go_evenoff")
+	self._gochangeon2 = gohelper.findChild(self._gochangeenteranim, "switch/#btn_first/#go_firston")
+	self._gochangeoff2 = gohelper.findChild(self._gochangeenteranim, "switch/#btn_first/#go_firstoff")
+	self._goudimoenter = gohelper.findChild(self.viewGO, "scroll/Viewport/Content/#go_udimoenter")
+	self._btnudimoenterclick = gohelper.findChildClick(self.viewGO, "scroll/Viewport/Content/#go_udimoenter/txt_udimoenter/#btn_click")
+	self._godropudimo = gohelper.findChild(self.viewGO, "scroll/Viewport/Content/#go_udimoenter/#go_saving/dropudimo")
+	self._udimoDrop = gohelper.findChildDropdown(self.viewGO, "scroll/Viewport/Content/#go_udimoenter/#go_saving/dropudimo")
+	self._udimodropclick = gohelper.getClickWithAudio(self._godropudimo, AudioEnum.UI.play_ui_set_click)
+	self._udimoTemplate = gohelper.findChild(self._godropudimo, "Template")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SettingsGameView:addEvents()
+	self:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, self._onChangeLangTxt, self)
+
 	if SettingsShowHelper.canShowRecordVideo() then
-		arg_2_0._btnrecordvideo:AddClickListener(arg_2_0._btnrecordvideoOnClick, arg_2_0)
+		self._btnrecordvideo:AddClickListener(self._btnrecordvideoOnClick, self)
 	end
 
-	arg_2_0._btnenteranim:AddClickListener(arg_2_0._btnenteranimOnClick, arg_2_0)
-	arg_2_0._btnchangeanimFirst:AddClickListener(arg_2_0._btnchangeanimFirstOnClick, arg_2_0)
-	arg_2_0._btnchangeanimEven:AddClickListener(arg_2_0._btnchangeanimEvenOnClick, arg_2_0)
-	arg_2_0._btnrecommend:AddClickListener(arg_2_0._btnchangerecommendOnClick, arg_2_0)
+	self._btnenteranim:AddClickListener(self._btnenteranimOnClick, self)
+	self._btnchangeanimFirst:AddClickListener(self._btnchangeanimFirstOnClick, self)
+	self._btnchangeanimEven:AddClickListener(self._btnchangeanimEvenOnClick, self)
+	self._btnrecommend:AddClickListener(self._btnchangerecommendOnClick, self)
+	self._btnudimoenterclick:AddClickListener(self._btnudimoenterOnClick, self)
+	self._udimoDrop:AddOnValueChanged(self._onUdimoSettingValueChanged, self)
+	self._udimodropclick:AddClickListener(self.udimoDropOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SettingsGameView:removeEvents()
 	if SettingsShowHelper.canShowRecordVideo() then
-		arg_3_0._btnrecordvideo:RemoveClickListener()
+		self._btnrecordvideo:RemoveClickListener()
 	end
 
-	arg_3_0._btnenteranim:RemoveClickListener()
-	arg_3_0._btnchangeanimFirst:RemoveClickListener()
-	arg_3_0._btnchangeanimEven:RemoveClickListener()
-	arg_3_0._btnrecommend:RemoveClickListener()
+	self._btnenteranim:RemoveClickListener()
+	self._btnchangeanimFirst:RemoveClickListener()
+	self._btnchangeanimEven:RemoveClickListener()
+	self._btnrecommend:RemoveClickListener()
+	self._btnudimoenterclick:RemoveClickListener()
+	self._udimoDrop:RemoveOnValueChanged()
+	self._udimodropclick:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._gorecordvideo, SettingsShowHelper.canShowRecordVideo())
-	arg_4_0:refreshRecordVideo()
-	arg_4_0:refreshEnterAnim()
-	arg_4_0:refreshRecommend()
+function SettingsGameView:_editableInitView()
+	gohelper.setActive(self._gorecordvideo, SettingsShowHelper.canShowRecordVideo())
+	gohelper.setActive(self._goudimoenter, SettingsShowHelper.canShowUdimo())
+	self:_initUdimoDropDown()
+	self:refreshRecordVideo()
+	self:refreshEnterAnim()
+	self:refreshRecommend()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+local UDIMO_DROP_ITEM_HEIGHT = 84
+
+function SettingsGameView:_initUdimoDropDown()
+	local nameList = {}
+
+	self._udimoSettingIdList = UdimoConfig.instance:getLockSettingIdList()
+
+	for _, id in ipairs(self._udimoSettingIdList) do
+		local name = UdimoConfig.instance:getSettingName(id)
+
+		table.insert(nameList, name)
+	end
+
+	self._udimoDrop:ClearOptions()
+	self._udimoDrop:AddOptions(nameList)
+
+	local contentHeight = #nameList * UDIMO_DROP_ITEM_HEIGHT
+
+	recthelper.setHeight(self._udimoTemplate.transform, contentHeight)
+
+	local curUdimoSettingId = UdimoModel.instance:getUdimoSettingId()
+	local index = tabletool.indexOf(self._udimoSettingIdList, curUdimoSettingId)
+
+	if not index then
+		index = 1
+
+		local defaultSetting = UdimoConfig.instance:getDefaultSettingId()
+
+		curUdimoSettingId = defaultSetting
+
+		UdimoController.instance:changeUdimoLockSetting(defaultSetting)
+	end
+
+	self._udimoDrop:SetValue(index - 1)
+
+	self._udimoDropIndex = self._udimoDrop:GetValue()
+end
+
+function SettingsGameView:_onUdimoSettingValueChanged(index)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_plot_common)
+
+	self._udimoDropIndex = index
+
+	local settingId = self._udimoSettingIdList[index + 1]
+
+	UdimoController.instance:changeUdimoLockSetting(settingId)
+	self:_refreshUdimoDropDown()
+	UdimoStatController.instance:gameSetting(settingId)
+end
+
+function SettingsGameView:udimoDropOnClick()
+	self:_refreshUdimoDropDown()
+end
+
+function SettingsGameView:onDestroyView()
 	return
 end
 
-function var_0_0.refreshRecommend(arg_6_0, arg_6_1)
-	if arg_6_1 == nil then
-		arg_6_1 = SettingsModel.instance:isTypeOn(SettingsEnum.PushType.Allow_Recommend)
+function SettingsGameView:refreshRecommend(isOn)
+	if isOn == nil then
+		isOn = SettingsModel.instance:isTypeOn(SettingsEnum.PushType.Allow_Recommend)
 	end
 
-	gohelper.setActive(arg_6_0._gorecommendon, arg_6_1)
-	gohelper.setActive(arg_6_0._gorecommendoff, not arg_6_1)
+	gohelper.setActive(self._gorecommendon, isOn)
+	gohelper.setActive(self._gorecommendoff, not isOn)
 end
 
-function var_0_0.refreshRecordVideo(arg_7_0)
-	local var_7_0 = SettingsModel.instance:getRecordVideo()
+function SettingsGameView:refreshRecordVideo()
+	local isOn = SettingsModel.instance:getRecordVideo()
 
-	gohelper.setActive(arg_7_0._gooffrecordvideo, not var_7_0)
-	gohelper.setActive(arg_7_0._goonrecordvideo, var_7_0)
+	gohelper.setActive(self._gooffrecordvideo, not isOn)
+	gohelper.setActive(self._goonrecordvideo, isOn)
 end
 
-function var_0_0.refreshEnterAnim(arg_8_0)
-	local var_8_0 = SettingsModel.instance.limitedRoleMO
-	local var_8_1 = var_8_0:isAuto()
+function SettingsGameView:refreshEnterAnim()
+	local limitedRoleMO = SettingsModel.instance.limitedRoleMO
+	local isAuto = limitedRoleMO:isAuto()
 
-	gohelper.setActive(arg_8_0._goAuto, var_8_1)
-	gohelper.setActive(arg_8_0._goHand, not var_8_1)
-	gohelper.setActive(arg_8_0._gochangeenteranim, var_8_1)
-	gohelper.setActive(arg_8_0._gochangeon1, var_8_0:isEveryLogin())
-	gohelper.setActive(arg_8_0._gochangeoff1, not var_8_0:isEveryLogin())
-	gohelper.setActive(arg_8_0._gochangeon2, var_8_0:isDaily())
-	gohelper.setActive(arg_8_0._gochangeoff2, not var_8_0:isDaily())
+	gohelper.setActive(self._goAuto, isAuto)
+	gohelper.setActive(self._goHand, not isAuto)
+	gohelper.setActive(self._gochangeenteranim, isAuto)
+	gohelper.setActive(self._gochangeon1, limitedRoleMO:isEveryLogin())
+	gohelper.setActive(self._gochangeoff1, not limitedRoleMO:isEveryLogin())
+	gohelper.setActive(self._gochangeon2, limitedRoleMO:isDaily())
+	gohelper.setActive(self._gochangeoff2, not limitedRoleMO:isDaily())
 end
 
-function var_0_0._btnrecordvideoOnClick(arg_9_0)
+function SettingsGameView:_refreshUdimoDropDown()
+	local content = gohelper.findChild(self._godropudimo, "Dropdown List/Viewport/Content")
+
+	if not content then
+		return
+	end
+
+	local contentTrans = content.transform
+	local childCount = contentTrans.childCount
+
+	for i = 1, childCount do
+		local child = contentTrans:GetChild(i - 1)
+		local bg = gohelper.findChild(child.gameObject, "BG")
+
+		gohelper.setActive(bg, false)
+	end
+
+	local selectedItem = contentTrans:GetChild(self._udimoDropIndex + 1)
+
+	if selectedItem then
+		local bg = gohelper.findChild(selectedItem.gameObject, "BG")
+
+		gohelper.setActive(bg, true)
+	end
+end
+
+function SettingsGameView:_btnrecordvideoOnClick()
 	if SettingsController.instance:checkSwitchRecordVideo() then
-		arg_9_0:refreshRecordVideo()
+		self:refreshRecordVideo()
 	end
 end
 
-function var_0_0._btnenteranimOnClick(arg_10_0)
-	local var_10_0 = SettingsModel.instance.limitedRoleMO
+function SettingsGameView:_btnenteranimOnClick()
+	local limitedRoleMO = SettingsModel.instance.limitedRoleMO
 
-	if var_10_0:isAuto() then
-		var_10_0:setManual()
+	if limitedRoleMO:isAuto() then
+		limitedRoleMO:setManual()
 	else
-		var_10_0:setAuto()
+		limitedRoleMO:setAuto()
 	end
 
-	arg_10_0:_delaySaveSetting()
-	arg_10_0:refreshEnterAnim()
+	self:_delaySaveSetting()
+	self:refreshEnterAnim()
 end
 
-function var_0_0._btnchangeanimFirstOnClick(arg_11_0)
-	local var_11_0 = SettingsModel.instance.limitedRoleMO
+function SettingsGameView:_btnchangeanimFirstOnClick()
+	local limitedRoleMO = SettingsModel.instance.limitedRoleMO
 
-	if var_11_0:isAuto() and not var_11_0:isDaily() then
-		var_11_0:setDaily()
-		arg_11_0:_delaySaveSetting()
-		arg_11_0:refreshEnterAnim()
-	end
-end
-
-function var_0_0._btnchangeanimEvenOnClick(arg_12_0)
-	local var_12_0 = SettingsModel.instance.limitedRoleMO
-
-	if var_12_0:isAuto() and not var_12_0:isEveryLogin() then
-		var_12_0:setEveryLogin()
-		arg_12_0:_delaySaveSetting()
-		arg_12_0:refreshEnterAnim()
+	if limitedRoleMO:isAuto() and not limitedRoleMO:isDaily() then
+		limitedRoleMO:setDaily()
+		self:_delaySaveSetting()
+		self:refreshEnterAnim()
 	end
 end
 
-function var_0_0._btnchangerecommendOnClick(arg_13_0)
-	local var_13_0 = SettingsModel.instance:isTypeOn(SettingsEnum.PushType.Allow_Recommend)
+function SettingsGameView:_btnchangeanimEvenOnClick()
+	local limitedRoleMO = SettingsModel.instance.limitedRoleMO
 
-	UserSettingRpc.instance:sendUpdateSettingInfoRequest(SettingsEnum.PushType.Allow_Recommend, var_13_0 and "0" or "1")
-	arg_13_0:refreshRecommend(not var_13_0)
+	if limitedRoleMO:isAuto() and not limitedRoleMO:isEveryLogin() then
+		limitedRoleMO:setEveryLogin()
+		self:_delaySaveSetting()
+		self:refreshEnterAnim()
+	end
+end
+
+function SettingsGameView:_btnchangerecommendOnClick()
+	local isServerOn = SettingsModel.instance:isTypeOn(SettingsEnum.PushType.Allow_Recommend)
+
+	UserSettingRpc.instance:sendUpdateSettingInfoRequest(SettingsEnum.PushType.Allow_Recommend, isServerOn and "0" or "1")
+	self:refreshRecommend(not isServerOn)
 	StatController.instance:track(StatEnum.EventName.SetFriendRecommended, {
-		[StatEnum.EventProperties.Status] = var_13_0 and StatEnum.OpenCloseStatus.Close or StatEnum.OpenCloseStatus.Open
+		[StatEnum.EventProperties.Status] = isServerOn and StatEnum.OpenCloseStatus.Close or StatEnum.OpenCloseStatus.Open
 	})
 end
 
-function var_0_0._delaySaveSetting(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._saveSetting, arg_14_0)
-	TaskDispatcher.runDelay(arg_14_0._saveSetting, arg_14_0, 0.15)
+function SettingsGameView:_btnudimoenterOnClick()
+	UdimoController.instance:enterUdimo()
 end
 
-function var_0_0._saveSetting(arg_15_0)
+function SettingsGameView:_delaySaveSetting()
+	TaskDispatcher.cancelTask(self._saveSetting, self)
+	TaskDispatcher.runDelay(self._saveSetting, self, 0.15)
+end
+
+function SettingsGameView:_saveSetting()
 	if SDKMgr.instance:isEmulator() then
 		PlayerPrefsHelper.save()
 	end
 end
 
-return var_0_0
+return SettingsGameView

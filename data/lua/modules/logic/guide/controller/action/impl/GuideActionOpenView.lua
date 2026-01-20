@@ -1,22 +1,24 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionOpenView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionOpenView.lua
 
-local var_0_0 = class("GuideActionOpenView", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionOpenView", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionOpenView = class("GuideActionOpenView", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
-	local var_1_1 = var_1_0[1]
-	local var_1_2 = not string.nilorempty(var_1_0[2]) and cjson.decode(var_1_0[2]) or nil
-	local var_1_3 = {}
+function GuideActionOpenView:onStart(context)
+	GuideActionOpenView.super.onStart(self, context)
 
-	var_1_3.openFromGuide = true
-	var_1_3.guideId = arg_1_0.guideId
-	var_1_3.stepId = arg_1_0.stepId
-	var_1_3.viewParam = var_1_2
+	local temp = string.split(self.actionParam, "#")
+	local viewName = temp[1]
+	local viewParam = not string.nilorempty(temp[2]) and cjson.decode(temp[2]) or nil
+	local p = {}
 
-	ViewMgr.instance:openView(var_1_1, var_1_3, true)
-	arg_1_0:onDone(true)
+	p.openFromGuide = true
+	p.guideId = self.guideId
+	p.stepId = self.stepId
+	p.viewParam = viewParam
+
+	ViewMgr.instance:openView(viewName, p, true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionOpenView

@@ -1,149 +1,153 @@
-﻿module("modules.logic.seasonver.act123.model.Season123RecordModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123RecordModel.lua
 
-local var_0_0 = class("Season123RecordModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123RecordModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Season123RecordModel = class("Season123RecordModel", BaseModel)
+
+function Season123RecordModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Season123RecordModel:reInit()
 	return
 end
 
-function var_0_0.setServerDataVerifiableId(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._tmpVerifiableActId = arg_3_1
-	arg_3_0._tmpVerifiableStage = arg_3_2
+function Season123RecordModel:setServerDataVerifiableId(actId, stage)
+	self._tmpVerifiableActId = actId
+	self._tmpVerifiableStage = stage
 end
 
-function var_0_0.setSeason123ServerRecordData(arg_4_0, arg_4_1)
-	arg_4_0:clear()
+function Season123RecordModel:setSeason123ServerRecordData(serverRecord)
+	self:clear()
 
-	if not arg_4_1 then
+	if not serverRecord then
 		return
 	end
 
-	local var_4_0, var_4_1 = arg_4_0:getServerDataVerifiableId()
+	local verifiableActId, verifiableStage = self:getServerDataVerifiableId()
 
-	if arg_4_1.activityId ~= var_4_0 or arg_4_1.stage ~= var_4_1 then
+	if serverRecord.activityId ~= verifiableActId or serverRecord.stage ~= verifiableStage then
 		return
 	end
 
-	arg_4_0:setServerDataVerifiableId()
+	self:setServerDataVerifiableId()
 
-	local var_4_2 = arg_4_1.stageRecords
+	local stageRecords = serverRecord.stageRecords
 
-	if not var_4_2 then
+	if not stageRecords then
 		return
 	end
 
-	for iter_4_0 = 1, Activity123Enum.RecordItemCount do
-		local var_4_3 = {}
-		local var_4_4 = var_4_2[iter_4_0]
+	for i = 1, Activity123Enum.RecordItemCount do
+		local recordInfo = {}
+		local stageRecord = stageRecords[i]
 
-		if var_4_4 then
-			var_4_3.round = var_4_4.round
-			var_4_3.isBest = var_4_4.isBest
+		if stageRecord then
+			recordInfo.round = stageRecord.round
+			recordInfo.isBest = stageRecord.isBest
 
-			local var_4_5, var_4_6 = arg_4_0:_getHeroDataByServerData(var_4_4.stageRecordHeros)
+			local heroList, heroUidDict = self:_getHeroDataByServerData(stageRecord.stageRecordHeros)
 
-			var_4_3.heroList = var_4_5
-			var_4_3.attackStatistics = arg_4_0:_geAttackStatisticsByServerData(var_4_4.attackStatistics, var_4_6)
+			recordInfo.heroList = heroList
+			recordInfo.attackStatistics = self:_geAttackStatisticsByServerData(stageRecord.attackStatistics, heroUidDict)
 		else
-			var_4_3.isEmpty = true
+			recordInfo.isEmpty = true
 		end
 
-		arg_4_0:addAtLast(var_4_3)
+		self:addAtLast(recordInfo)
 	end
 end
 
-function var_0_0.getServerDataVerifiableId(arg_5_0)
-	return arg_5_0._tmpVerifiableActId, arg_5_0._tmpVerifiableStage
+function Season123RecordModel:getServerDataVerifiableId()
+	return self._tmpVerifiableActId, self._tmpVerifiableStage
 end
 
-function var_0_0.getRecordList(arg_6_0, arg_6_1)
-	local var_6_0 = {}
-	local var_6_1 = arg_6_0:getList()
+function Season123RecordModel:getRecordList(getBest)
+	local result = {}
+	local recordDataList = self:getList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		local var_6_2 = iter_6_1.isBest
+	for _, recordInfo in ipairs(recordDataList) do
+		local isBest = recordInfo.isBest
 
-		if arg_6_1 and var_6_2 or not arg_6_1 and not var_6_2 then
-			var_6_0[#var_6_0 + 1] = iter_6_1
+		if getBest and isBest or not getBest and not isBest then
+			result[#result + 1] = recordInfo
 		end
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0._getHeroDataByServerData(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function Season123RecordModel:_getHeroDataByServerData(serverHeroList)
+	if not serverHeroList then
 		return
 	end
 
-	local var_7_0 = {}
-	local var_7_1 = {}
+	local heroList = {}
+	local heroUidDict = {}
 
-	for iter_7_0 = 1, Activity123Enum.PickHeroCount do
-		local var_7_2 = arg_7_1[iter_7_0]
-		local var_7_3 = {
+	for i = 1, Activity123Enum.PickHeroCount do
+		local stageRecordHero = serverHeroList[i]
+		local hero = {
 			heroId = 0,
 			uid = 0
 		}
 
-		if var_7_2 then
-			var_7_3.uid = var_7_2.heroUid
-			var_7_3.heroId = var_7_2.heroId
-			var_7_3.skinId = var_7_2.skinId
-			var_7_3.isAssist = var_7_2.isAssist
-			var_7_3.isBalance = var_7_2.isBalance
-			var_7_3.level = var_7_2.level
+		if stageRecordHero then
+			hero.uid = stageRecordHero.heroUid
+			hero.heroId = stageRecordHero.heroId
+			hero.skinId = stageRecordHero.skinId
+			hero.isAssist = stageRecordHero.isAssist
+			hero.isBalance = stageRecordHero.isBalance
+			hero.level = stageRecordHero.level
 		end
 
-		var_7_0[iter_7_0] = var_7_3
-		var_7_1[var_7_3.uid] = var_7_3
+		heroList[i] = hero
+		heroUidDict[hero.uid] = hero
 	end
 
-	return var_7_0, var_7_1
+	return heroList, heroUidDict
 end
 
-function var_0_0._geAttackStatisticsByServerData(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_1 then
+function Season123RecordModel:_geAttackStatisticsByServerData(serverAttackStatistics, heroUidDict)
+	if not serverAttackStatistics then
 		return
 	end
 
-	local var_8_0 = {}
+	local result = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		local var_8_1 = {
-			heroUid = iter_8_1.heroUid,
-			harm = iter_8_1.harm,
-			hurt = iter_8_1.hurt,
-			heal = iter_8_1.heal
-		}
-		local var_8_2 = {}
+	for i, serverStatInfo in ipairs(serverAttackStatistics) do
+		local statInfo = {}
 
-		for iter_8_2, iter_8_3 in ipairs(iter_8_1.cards) do
-			var_8_2[iter_8_2] = {
-				skillId = iter_8_3.skillId,
-				useCount = iter_8_3.useCount
-			}
+		statInfo.heroUid = serverStatInfo.heroUid
+		statInfo.harm = serverStatInfo.harm
+		statInfo.hurt = serverStatInfo.hurt
+		statInfo.heal = serverStatInfo.heal
+
+		local cards = {}
+
+		for j, v in ipairs(serverStatInfo.cards) do
+			local card = {}
+
+			card.skillId = v.skillId
+			card.useCount = v.useCount
+			cards[j] = card
 		end
 
-		var_8_1.cards = var_8_2
-		var_8_1.getBuffs = iter_8_1.getBuffs
+		statInfo.cards = cards
+		statInfo.getBuffs = serverStatInfo.getBuffs
 
-		local var_8_3 = arg_8_2 and arg_8_2[var_8_1.heroUid] or {}
-		local var_8_4 = var_8_3 and var_8_3.heroId or 0
-		local var_8_5 = var_8_3 and var_8_3.level or 1
-		local var_8_6 = var_8_3 and var_8_3.skinId
+		local heroInfo = heroUidDict and heroUidDict[statInfo.heroUid] or {}
+		local heroId = heroInfo and heroInfo.heroId or 0
+		local level = heroInfo and heroInfo.level or 1
+		local skinId = heroInfo and heroInfo.skinId
 
-		var_8_1.entityMO = FightHelper.getEmptyFightEntityMO(var_8_1.heroUid, var_8_4, var_8_5, var_8_6)
-		var_8_0[iter_8_0] = var_8_1
+		statInfo.entityMO = FightHelper.getEmptyFightEntityMO(statInfo.heroUid, heroId, level, skinId)
+		result[i] = statInfo
 	end
 
-	return var_8_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+Season123RecordModel.instance = Season123RecordModel.New()
 
-return var_0_0
+return Season123RecordModel

@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.view.FightNaNaTargetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightNaNaTargetViewContainer.lua
 
-local var_0_0 = class("FightNaNaTargetViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightNaNaTargetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FightNaNaTargetViewContainer = class("FightNaNaTargetViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FightNaNaTargetView.New())
+function FightNaNaTargetViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FightNaNaTargetView.New())
+
+	return views
 end
 
-return var_0_0
+return FightNaNaTargetViewContainer

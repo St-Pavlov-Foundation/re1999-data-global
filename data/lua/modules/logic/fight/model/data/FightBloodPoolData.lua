@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.data.FightBloodPoolData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightBloodPoolData.lua
 
-local var_0_0 = FightDataClass("FightBloodPoolData")
+module("modules.logic.fight.model.data.FightBloodPoolData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.value = arg_1_1.value
-	arg_1_0.max = arg_1_1.max
+local FightBloodPoolData = FightDataClass("FightBloodPoolData")
+
+function FightBloodPoolData:onConstructor(proto)
+	self.value = proto.value
+	self.max = proto.max
 end
 
-return var_0_0
+return FightBloodPoolData

@@ -1,196 +1,198 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandBubble", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/comp/FairyLandBubble.lua
 
-local var_0_0 = class("FairyLandBubble", UserDataDispose)
+module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandBubble", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FairyLandBubble = class("FairyLandBubble", UserDataDispose)
 
-	arg_1_0.dialogView = arg_1_1
-	arg_1_0._go = gohelper.findChild(arg_1_1.dialogGO, "#go_Dialog")
-	arg_1_0.btnDialogClick = gohelper.findChildButtonWithAudio(arg_1_0._go, "#go_Click")
-	arg_1_0.goBubbleLeft = gohelper.findChild(arg_1_0._go, "#go_BubbleLeft")
-	arg_1_0.goBubbleRight = gohelper.findChild(arg_1_0._go, "#go_BubbleRight")
+function FairyLandBubble:init(dialogView)
+	self:__onInit()
 
-	gohelper.setActive(arg_1_0.goBubbleLeft, false)
-	gohelper.setActive(arg_1_0.goBubbleRight, false)
-	arg_1_0:addClickCb(arg_1_0.btnDialogClick, arg_1_0.onClickDialog, arg_1_0)
+	self.dialogView = dialogView
+	self._go = gohelper.findChild(dialogView.dialogGO, "#go_Dialog")
+	self.btnDialogClick = gohelper.findChildButtonWithAudio(self._go, "#go_Click")
+	self.goBubbleLeft = gohelper.findChild(self._go, "#go_BubbleLeft")
+	self.goBubbleRight = gohelper.findChild(self._go, "#go_BubbleRight")
 
-	arg_1_0.bubbleItems = {}
+	gohelper.setActive(self.goBubbleLeft, false)
+	gohelper.setActive(self.goBubbleRight, false)
+	self:addClickCb(self.btnDialogClick, self.onClickDialog, self)
+
+	self.bubbleItems = {}
 end
 
-function var_0_0.onClickDialog(arg_2_0)
-	if not arg_2_0.dialogId then
+function FairyLandBubble:onClickDialog()
+	if not self.dialogId then
 		return
 	end
 
-	if arg_2_0.isPlaying then
-		arg_2_0:showDialogText()
-	elseif arg_2_0.canNext then
-		arg_2_0:playNextStep()
+	if self.isPlaying then
+		self:showDialogText()
+	elseif self.canNext then
+		self:playNextStep()
 	end
 end
 
-function var_0_0.startDialog(arg_3_0, arg_3_1)
-	arg_3_0.dialogId = arg_3_1.dialogId
-	arg_3_0.leftElement = arg_3_1.leftElement
-	arg_3_0.rightElement = arg_3_1.rightElement
-	arg_3_0.noTweenText = arg_3_1.noTween
+function FairyLandBubble:startDialog(param)
+	self.dialogId = param.dialogId
+	self.leftElement = param.leftElement
+	self.rightElement = param.rightElement
+	self.noTweenText = param.noTween
 
-	gohelper.setActive(arg_3_0._go, true)
-	arg_3_0:selectOption(0)
+	gohelper.setActive(self._go, true)
+	self:selectOption(0)
 end
 
-function var_0_0.selectOption(arg_4_0, arg_4_1)
-	arg_4_0.sectionId = arg_4_1
-	arg_4_0.step = 0
-	arg_4_0.sectionConfig = FairyLandConfig.instance:getDialogConfig(arg_4_0.dialogId, arg_4_0.sectionId)
+function FairyLandBubble:selectOption(sectionId)
+	self.sectionId = sectionId
+	self.step = 0
+	self.sectionConfig = FairyLandConfig.instance:getDialogConfig(self.dialogId, self.sectionId)
 
-	if arg_4_0.sectionConfig then
-		arg_4_0:playNextStep()
+	if self.sectionConfig then
+		self:playNextStep()
 	else
-		arg_4_0:finished()
+		self:finished()
 	end
 end
 
-function var_0_0.playNextStep(arg_5_0)
-	arg_5_0.step = arg_5_0.step + 1
+function FairyLandBubble:playNextStep()
+	self.step = self.step + 1
 
-	local var_5_0 = arg_5_0.sectionConfig[arg_5_0.step]
+	local stepConfig = self.sectionConfig[self.step]
 
-	if not var_5_0 then
-		arg_5_0:finished()
+	if not stepConfig then
+		self:finished()
 
 		return
 	end
 
-	arg_5_0.canNext = false
+	self.canNext = false
 
-	TaskDispatcher.cancelTask(arg_5_0._delayFlag, arg_5_0)
-	TaskDispatcher.runDelay(arg_5_0._delayFlag, arg_5_0, 1)
-	arg_5_0:playStep(var_5_0, true)
+	TaskDispatcher.cancelTask(self._delayFlag, self)
+	TaskDispatcher.runDelay(self._delayFlag, self, 1)
+	self:playStep(stepConfig, true)
 end
 
-function var_0_0.playStep(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_1.elementId == 1 and arg_6_0:getLeftItem() or arg_6_0:getRightItem()
+function FairyLandBubble:playStep(stepConfig, tween)
+	local item = stepConfig.elementId == 1 and self:getLeftItem() or self:getRightItem()
 
-	arg_6_0.isPlaying = true
+	self.isPlaying = true
 
-	local var_6_1 = arg_6_0.sectionConfig[arg_6_0.step + 1] ~= nil
-	local var_6_2 = arg_6_1.elementId == 1 and arg_6_0.leftElement or arg_6_0.rightElement
+	local hasNext = self.sectionConfig[self.step + 1] ~= nil
+	local targetElement = stepConfig.elementId == 1 and self.leftElement or self.rightElement
 
-	if var_6_2 then
-		var_6_2:playDialog()
+	if targetElement then
+		targetElement:playDialog()
 	end
 
-	var_6_0:setTargetGO(var_6_2 and var_6_2.imgChessRoot)
+	item:setTargetGO(targetElement and targetElement.imgChessRoot)
 
-	if arg_6_2 then
-		arg_6_0:playAudio(arg_6_1.audioId)
+	if tween then
+		self:playAudio(stepConfig.audioId)
 	end
 
-	if arg_6_0.noTweenText then
-		arg_6_2 = false
+	if self.noTweenText then
+		tween = false
 	end
 
-	var_6_0:showBubble(arg_6_1.content, arg_6_2, var_6_1)
+	item:showBubble(stepConfig.content, tween, hasNext)
 
-	local var_6_3 = arg_6_1.elementId == 1 and arg_6_0:getRightItem() or arg_6_0:getLeftItem()
+	local otherItem = stepConfig.elementId == 1 and self:getRightItem() or self:getLeftItem()
 
-	if var_6_3 then
-		var_6_3:hide()
+	if otherItem then
+		otherItem:hide()
 	end
 end
 
-function var_0_0._delayFlag(arg_7_0)
-	arg_7_0.canNext = true
+function FairyLandBubble:_delayFlag()
+	self.canNext = true
 end
 
-function var_0_0.showDialogText(arg_8_0)
-	local var_8_0 = arg_8_0.sectionConfig[arg_8_0.step]
+function FairyLandBubble:showDialogText()
+	local stepConfig = self.sectionConfig[self.step]
 
-	if not var_8_0 then
-		arg_8_0:finished()
+	if not stepConfig then
+		self:finished()
 
 		return
 	end
 
-	arg_8_0:playStep(var_8_0)
+	self:playStep(stepConfig)
 end
 
-function var_0_0.onTextPlayFinish(arg_9_0)
-	arg_9_0.isPlaying = false
+function FairyLandBubble:onTextPlayFinish()
+	self.isPlaying = false
 end
 
-function var_0_0.finished(arg_10_0)
-	arg_10_0.dialogId = nil
-	arg_10_0.isPlaying = false
+function FairyLandBubble:finished()
+	self.dialogId = nil
+	self.isPlaying = false
 
-	arg_10_0.dialogView:finished()
+	self.dialogView:finished()
 end
 
-function var_0_0.getLeftItem(arg_11_0)
-	if not arg_11_0.leftItem then
-		arg_11_0.leftItem = FairyLandBubbleTalkItem.New()
+function FairyLandBubble:getLeftItem()
+	if not self.leftItem then
+		self.leftItem = FairyLandBubbleTalkItem.New()
 
-		arg_11_0.leftItem:init(arg_11_0.goBubbleLeft, arg_11_0)
+		self.leftItem:init(self.goBubbleLeft, self)
 	end
 
-	return arg_11_0.leftItem
+	return self.leftItem
 end
 
-function var_0_0.getRightItem(arg_12_0)
-	if not arg_12_0.rightItem then
-		arg_12_0.rightItem = FairyLandBubbleTalkItem.New()
+function FairyLandBubble:getRightItem()
+	if not self.rightItem then
+		self.rightItem = FairyLandBubbleTalkItem.New()
 
-		arg_12_0.rightItem:init(arg_12_0.goBubbleRight, arg_12_0)
+		self.rightItem:init(self.goBubbleRight, self)
 	end
 
-	return arg_12_0.rightItem
+	return self.rightItem
 end
 
-function var_0_0.hide(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._delayFlag, arg_13_0)
-	arg_13_0:stopAudio()
-	gohelper.setActive(arg_13_0._go, false)
+function FairyLandBubble:hide()
+	TaskDispatcher.cancelTask(self._delayFlag, self)
+	self:stopAudio()
+	gohelper.setActive(self._go, false)
 
-	if arg_13_0.leftItem then
-		arg_13_0.leftItem:hide()
+	if self.leftItem then
+		self.leftItem:hide()
 	end
 
-	if arg_13_0.rightItem then
-		arg_13_0.rightItem:hide()
-	end
-end
-
-function var_0_0.playAudio(arg_14_0, arg_14_1)
-	arg_14_0:stopAudio()
-
-	if arg_14_1 and arg_14_1 > 0 then
-		arg_14_0.playingId = AudioMgr.instance:trigger(arg_14_1)
+	if self.rightItem then
+		self.rightItem:hide()
 	end
 end
 
-function var_0_0.stopAudio(arg_15_0)
-	if arg_15_0.playingId then
-		AudioMgr.instance:stopPlayingID(arg_15_0.playingId)
+function FairyLandBubble:playAudio(audioId)
+	self:stopAudio()
 
-		arg_15_0.playingId = nil
+	if audioId and audioId > 0 then
+		self.playingId = AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.dispose(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._delayFlag, arg_16_0)
-	arg_16_0:stopAudio()
+function FairyLandBubble:stopAudio()
+	if self.playingId then
+		AudioMgr.instance:stopPlayingID(self.playingId)
 
-	if arg_16_0.leftItem then
-		arg_16_0.leftItem:dispose()
+		self.playingId = nil
 	end
-
-	if arg_16_0.rightItem then
-		arg_16_0.rightItem:dispose()
-	end
-
-	arg_16_0:__onDispose()
 end
 
-return var_0_0
+function FairyLandBubble:dispose()
+	TaskDispatcher.cancelTask(self._delayFlag, self)
+	self:stopAudio()
+
+	if self.leftItem then
+		self.leftItem:dispose()
+	end
+
+	if self.rightItem then
+		self.rightItem:dispose()
+	end
+
+	self:__onDispose()
+end
+
+return FairyLandBubble

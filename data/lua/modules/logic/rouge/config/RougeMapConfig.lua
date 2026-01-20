@@ -1,9 +1,11 @@
-﻿module("modules.logic.rouge.config.RougeMapConfig", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/config/RougeMapConfig.lua
 
-local var_0_0 = class("RougeMapConfig", BaseConfig)
+module("modules.logic.rouge.config.RougeMapConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
-	return {
+local RougeMapConfig = class("RougeMapConfig", BaseConfig)
+
+function RougeMapConfig:reqConfigNames()
+	local nameTable = {
 		"rouge_layer",
 		"rouge_middle_layer",
 		"rouge_event",
@@ -26,417 +28,423 @@ function var_0_0.reqConfigNames(arg_1_0)
 		"rouge_short_voice_group",
 		"rouge_short_voice"
 	}
+
+	return nameTable
 end
 
-function var_0_0.onInit(arg_2_0)
+function RougeMapConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "rouge_middle_layer" then
-		arg_3_0:initRougeMiddleLayerCo()
-	elseif arg_3_1 == "rouge_short_voice" then
-		arg_3_0:initMapVoiceCo()
-	elseif arg_3_1 == "rouge_effect" then
-		arg_3_0:initRougeEffect()
+function RougeMapConfig:onConfigLoaded(configName, configTable)
+	if configName == "rouge_middle_layer" then
+		self:initRougeMiddleLayerCo()
+	elseif configName == "rouge_short_voice" then
+		self:initMapVoiceCo()
+	elseif configName == "rouge_effect" then
+		self:initRougeEffect()
 	end
 end
 
-function var_0_0.initRougeEffect(arg_4_0)
-	arg_4_0.dropMaxRefreshNumDict = {}
+function RougeMapConfig:initRougeEffect()
+	self.dropMaxRefreshNumDict = {}
 
-	local var_4_0 = lua_rouge_effect.configList
+	local configList = lua_rouge_effect.configList
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		if iter_4_1.type == RougeMapEnum.EffectType.UnlockFightDropRefresh then
-			local var_4_1 = string.splitToNumber(iter_4_1.typeParam, "#")
-			local var_4_2 = var_4_1[1]
-			local var_4_3 = var_4_1[2]
+	for _, co in ipairs(configList) do
+		if co.type == RougeMapEnum.EffectType.UnlockFightDropRefresh then
+			local paramList = string.splitToNumber(co.typeParam, "#")
+			local fightType, maxNum = paramList[1], paramList[2]
 
-			arg_4_0.dropMaxRefreshNumDict[var_4_2] = var_4_3
+			self.dropMaxRefreshNumDict[fightType] = maxNum
 		end
 	end
 end
 
-function var_0_0.initMapVoiceCo(arg_5_0)
-	arg_5_0.groupVoiceList = {}
-	arg_5_0.groupTotalWeight = {}
+function RougeMapConfig:initMapVoiceCo()
+	self.groupVoiceList = {}
+	self.groupTotalWeight = {}
 
-	for iter_5_0, iter_5_1 in ipairs(lua_rouge_short_voice.configList) do
-		local var_5_0 = iter_5_1.groupId
-		local var_5_1 = arg_5_0.groupVoiceList[var_5_0]
+	for _, co in ipairs(lua_rouge_short_voice.configList) do
+		local groupId = co.groupId
+		local list = self.groupVoiceList[groupId]
 
-		if not var_5_1 then
-			var_5_1 = {}
-			arg_5_0.groupVoiceList[var_5_0] = var_5_1
+		if not list then
+			list = {}
+			self.groupVoiceList[groupId] = list
 		end
 
-		local var_5_2 = arg_5_0.groupTotalWeight[var_5_0] or 0
+		local weight = self.groupTotalWeight[groupId] or 0
 
-		arg_5_0.groupTotalWeight[var_5_0] = var_5_2 + iter_5_1.weight
+		self.groupTotalWeight[groupId] = weight + co.weight
 
-		table.insert(var_5_1, iter_5_1)
+		table.insert(list, co)
 	end
 end
 
-function var_0_0.initRougeMiddleLayerCo(arg_6_0)
-	local var_6_0 = {
-		pointPos = var_0_0.pointPosHandle,
-		pathPointPos = var_0_0.pathPointPosHandle,
-		path = var_0_0.pathHandle,
-		pathDict = var_0_0.pathDictHandle,
-		leavePos = var_0_0.leavePosHandle,
-		nextLayerList = var_0_0.nextLayerListHandle,
-		pathSelectList = var_0_0.pathSelectListHandle
+function RougeMapConfig:initRougeMiddleLayerCo()
+	local handleDict = {
+		pointPos = RougeMapConfig.pointPosHandle,
+		pathPointPos = RougeMapConfig.pathPointPosHandle,
+		path = RougeMapConfig.pathHandle,
+		pathDict = RougeMapConfig.pathDictHandle,
+		leavePos = RougeMapConfig.leavePosHandle,
+		nextLayerList = RougeMapConfig.nextLayerListHandle,
+		pathSelectList = RougeMapConfig.pathSelectListHandle
 	}
-	local var_6_1 = getmetatable(lua_rouge_middle_layer.configList[1])
-	local var_6_2 = var_6_1.__index
+	local metaTable = getmetatable(lua_rouge_middle_layer.configList[1])
+	local src__index = metaTable.__index
 
-	function var_6_1.__index(arg_7_0, arg_7_1)
-		local var_7_0 = var_6_0[arg_7_1]
+	function metaTable.__index(t, k)
+		local customHandle = handleDict[k]
 
-		if var_7_0 then
-			return var_7_0(arg_7_0, arg_7_1, var_6_2)
+		if customHandle then
+			return customHandle(t, k, src__index)
 		end
 
-		return var_6_2(arg_7_0, arg_7_1)
+		return src__index(t, k)
 	end
 end
 
-function var_0_0.pointPosHandle(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = rawget(arg_8_0, "pointPosList")
+function RougeMapConfig.pointPosHandle(t, k, src__index)
+	local pointPosList = rawget(t, "pointPosList")
 
-	if not var_8_0 then
-		var_8_0 = {}
+	if not pointPosList then
+		pointPosList = {}
 
-		rawset(arg_8_0, "pointPosList", var_8_0)
+		rawset(t, "pointPosList", pointPosList)
 
-		local var_8_1 = arg_8_2(arg_8_0, arg_8_1)
+		local pointPos = src__index(t, k)
 
-		if not string.nilorempty(var_8_1) then
-			for iter_8_0, iter_8_1 in ipairs(string.split(var_8_1, "|")) do
-				local var_8_2 = string.splitToNumber(iter_8_1, "#")
+		if not string.nilorempty(pointPos) then
+			for _, str in ipairs(string.split(pointPos, "|")) do
+				local arr = string.splitToNumber(str, "#")
 
-				table.insert(var_8_0, Vector3.New(var_8_2[1], var_8_2[2], var_8_2[3]))
+				table.insert(pointPosList, Vector3.New(arr[1], arr[2], arr[3]))
 			end
 		end
 	end
 
-	return var_8_0
+	return pointPosList
 end
 
-function var_0_0.pathPointPosHandle(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = rawget(arg_9_0, "pathPointPosList")
+function RougeMapConfig.pathPointPosHandle(t, k, src__index)
+	local pathPointPosList = rawget(t, "pathPointPosList")
 
-	if not var_9_0 then
-		var_9_0 = {}
+	if not pathPointPosList then
+		pathPointPosList = {}
 
-		rawset(arg_9_0, "pathPointPos", var_9_0)
+		rawset(t, "pathPointPos", pathPointPosList)
 
-		local var_9_1 = arg_9_2(arg_9_0, arg_9_1)
+		local pathPointPos = src__index(t, k)
 
-		if not string.nilorempty(var_9_1) then
-			for iter_9_0, iter_9_1 in ipairs(string.split(var_9_1, "|")) do
-				local var_9_2 = string.splitToNumber(iter_9_1, "#")
+		if not string.nilorempty(pathPointPos) then
+			for _, str in ipairs(string.split(pathPointPos, "|")) do
+				local arr = string.splitToNumber(str, "#")
 
-				table.insert(var_9_0, Vector2.New(var_9_2[1], var_9_2[2]))
+				table.insert(pathPointPosList, Vector2.New(arr[1], arr[2]))
 			end
 		end
 	end
 
-	return var_9_0
+	return pathPointPosList
 end
 
-function var_0_0.pathHandle(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = rawget(arg_10_0, "pathList")
+function RougeMapConfig.pathHandle(t, k, src__index)
+	local pathList = rawget(t, "pathList")
 
-	if not var_10_0 then
-		var_10_0 = {}
+	if not pathList then
+		pathList = {}
 
-		rawset(arg_10_0, "pathList", var_10_0)
+		rawset(t, "pathList", pathList)
 
-		local var_10_1 = arg_10_2(arg_10_0, arg_10_1)
+		local path = src__index(t, k)
 
-		if not string.nilorempty(var_10_1) then
-			for iter_10_0, iter_10_1 in ipairs(string.split(var_10_1, "|")) do
-				local var_10_2 = string.splitToNumber(iter_10_1, "#")
+		if not string.nilorempty(path) then
+			for _, str in ipairs(string.split(path, "|")) do
+				local arr = string.splitToNumber(str, "#")
 
-				table.insert(var_10_0, Vector2.New(var_10_2[1], var_10_2[2]))
+				table.insert(pathList, Vector2.New(arr[1], arr[2]))
 			end
 		end
 	end
 
-	return var_10_0
+	return pathList
 end
 
-function var_0_0.pathDictHandle(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = rawget(arg_11_0, "pathDict")
+function RougeMapConfig.pathDictHandle(t, k, src__index)
+	local pathDict = rawget(t, "pathDict")
 
-	if not var_11_0 then
-		var_11_0 = {}
+	if not pathDict then
+		pathDict = {}
 
-		rawset(arg_11_0, "pathDict", var_11_0)
+		rawset(t, "pathDict", pathDict)
 
-		local var_11_1 = arg_11_2(arg_11_0, "path")
+		local path = src__index(t, "path")
 
-		if not string.nilorempty(var_11_1) then
-			for iter_11_0, iter_11_1 in ipairs(string.split(var_11_1, "|")) do
-				local var_11_2 = string.splitToNumber(iter_11_1, "#")
-				local var_11_3 = var_11_2[1]
-				local var_11_4 = var_11_2[2]
+		if not string.nilorempty(path) then
+			for _, str in ipairs(string.split(path, "|")) do
+				local arr = string.splitToNumber(str, "#")
+				local startIndex = arr[1]
+				local endIndex = arr[2]
 
-				var_11_0[var_11_3] = var_11_0[var_11_3] or {}
-				var_11_0[var_11_4] = var_11_0[var_11_4] or {}
-				var_11_0[var_11_3][var_11_4] = true
-				var_11_0[var_11_4][var_11_3] = true
+				pathDict[startIndex] = pathDict[startIndex] or {}
+				pathDict[endIndex] = pathDict[endIndex] or {}
+				pathDict[startIndex][endIndex] = true
+				pathDict[endIndex][startIndex] = true
 			end
 		end
 	end
 
-	return var_11_0
+	return pathDict
 end
 
-function var_0_0.leavePosHandle(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = rawget(arg_12_0, arg_12_1)
+function RougeMapConfig.leavePosHandle(t, k, src__index)
+	local leavePos = rawget(t, k)
 
-	if not var_12_0 then
-		var_12_0 = arg_12_2(arg_12_0, arg_12_1)
+	if not leavePos then
+		leavePos = src__index(t, k)
 
-		if string.nilorempty(var_12_0) then
+		if string.nilorempty(leavePos) then
 			return
 		end
 
-		var_12_0 = string.splitToNumber(var_12_0, "#")
-		var_12_0 = Vector3.New(var_12_0[1], var_12_0[2], var_12_0[3])
+		leavePos = string.splitToNumber(leavePos, "#")
+		leavePos = Vector3.New(leavePos[1], leavePos[2], leavePos[3])
 
-		rawset(arg_12_0, arg_12_1, var_12_0)
+		rawset(t, k, leavePos)
 	end
 
-	return var_12_0
+	return leavePos
 end
 
-function var_0_0.nextLayerListHandle(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = rawget(arg_13_0, arg_13_1)
+function RougeMapConfig.nextLayerListHandle(t, k, src__index)
+	local nextLayerList = rawget(t, k)
 
-	if not var_13_0 then
-		local var_13_1 = arg_13_2(arg_13_0, "nextLayer")
+	if not nextLayerList then
+		local nextLayer = src__index(t, "nextLayer")
 
-		if string.nilorempty(var_13_1) then
+		if string.nilorempty(nextLayer) then
 			return
 		end
 
-		var_13_0 = string.splitToNumber(var_13_1, "#")
+		nextLayerList = string.splitToNumber(nextLayer, "#")
 
-		rawset(arg_13_0, arg_13_1, var_13_0)
+		rawset(t, k, nextLayerList)
 	end
 
-	return var_13_0
+	return nextLayerList
 end
 
-function var_0_0.pathSelectListHandle(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = rawget(arg_14_0, arg_14_1)
+function RougeMapConfig.pathSelectListHandle(t, k, src__index)
+	local pathSelectList = rawget(t, k)
 
-	if not var_14_0 then
-		local var_14_1 = arg_14_2(arg_14_0, "pathSelect")
+	if not pathSelectList then
+		local pathSelect = src__index(t, "pathSelect")
 
-		if string.nilorempty(var_14_1) then
+		if string.nilorempty(pathSelect) then
 			return
 		end
 
-		var_14_0 = string.splitToNumber(var_14_1, "#")
+		pathSelectList = string.splitToNumber(pathSelect, "#")
 
-		rawset(arg_14_0, arg_14_1, var_14_0)
+		rawset(t, k, pathSelectList)
 	end
 
-	return var_14_0
+	return pathSelectList
 end
 
-function var_0_0.getPathIndexList(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	arg_15_4 = arg_15_4 or {}
-	arg_15_5 = arg_15_5 or 1
+function RougeMapConfig:getPathIndexList(pathDict, startIndex, endIndex, arriveList, level)
+	arriveList = arriveList or {}
+	level = level or 1
 
-	if arg_15_5 > 20 then
+	if level > 20 then
 		logError("房间配置死循环了！！！！！！请检查配置")
 
 		return false
 	end
 
-	if tabletool.indexOf(arg_15_4, arg_15_2) then
+	if tabletool.indexOf(arriveList, startIndex) then
 		return false
 	end
 
-	table.insert(arg_15_4, arg_15_2)
+	table.insert(arriveList, startIndex)
 
-	local var_15_0 = arg_15_1[arg_15_2]
+	local nextDict = pathDict[startIndex]
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in pairs(var_15_0) do
-			if iter_15_0 == arg_15_3 then
-				table.insert(arg_15_4, arg_15_3)
+	if nextDict then
+		for nextIndex, _ in pairs(nextDict) do
+			if nextIndex == endIndex then
+				table.insert(arriveList, endIndex)
 
 				return true
-			elseif arg_15_0:getPathIndexList(arg_15_1, iter_15_0, arg_15_3, arg_15_4, arg_15_5 + 1) then
+			elseif self:getPathIndexList(pathDict, nextIndex, endIndex, arriveList, level + 1) then
 				return true
 			end
 		end
 	end
 
-	table.remove(arg_15_4)
+	table.remove(arriveList)
 
 	return false
 end
 
-function var_0_0.getNextLayerList(arg_16_0, arg_16_1)
-	local var_16_0 = lua_rouge_middle_layer.configDict[arg_16_1]
+function RougeMapConfig:getNextLayerList(middleLayerId)
+	local middleLayerCo = lua_rouge_middle_layer.configDict[middleLayerId]
 
-	if not var_16_0 then
-		logError("not found middle layer co .. " .. tostring(arg_16_1))
-
-		return
-	end
-
-	return var_16_0.nextLayerList
-end
-
-function var_0_0.getPathSelectList(arg_17_0, arg_17_1)
-	local var_17_0 = lua_rouge_middle_layer.configDict[arg_17_1]
-
-	if not var_17_0 then
-		logError("not found middle layer co .. " .. tostring(arg_17_1))
+	if not middleLayerCo then
+		logError("not found middle layer co .. " .. tostring(middleLayerId))
 
 		return
 	end
 
-	return var_17_0.pathSelectList
+	return middleLayerCo.nextLayerList
 end
 
-function var_0_0.getMapResPath(arg_18_0, arg_18_1)
-	return lua_rouge_layer.configDict[arg_18_1].mapRes
-end
+function RougeMapConfig:getPathSelectList(middleLayerId)
+	local middleLayerCo = lua_rouge_middle_layer.configDict[middleLayerId]
 
-function var_0_0.getMiddleMapResPath(arg_19_0, arg_19_1)
-	return lua_rouge_middle_layer.configDict[arg_19_1].mapRes
-end
+	if not middleLayerCo then
+		logError("not found middle layer co .. " .. tostring(middleLayerId))
 
-function var_0_0.getMiddleLayerCo(arg_20_0, arg_20_1)
-	return lua_rouge_middle_layer.configDict[arg_20_1]
-end
-
-function var_0_0.getRougeEvent(arg_21_0, arg_21_1)
-	local var_21_0 = lua_rouge_event.configDict[arg_21_1]
-
-	if not var_21_0 then
-		logError("找不到肉鸽事件配置 ID : " .. tostring(arg_21_1))
+		return
 	end
 
-	return var_21_0
+	return middleLayerCo.pathSelectList
 end
 
-function var_0_0.getFightEvent(arg_22_0, arg_22_1)
-	local var_22_0 = lua_rouge_fight_event.configDict[arg_22_1]
+function RougeMapConfig:getMapResPath(layerId)
+	local co = lua_rouge_layer.configDict[layerId]
 
-	if not var_22_0 then
-		logError("找不到肉鸽战斗事件配置 ID : " .. tostring(arg_22_1))
+	return co.mapRes
+end
+
+function RougeMapConfig:getMiddleMapResPath(layerId)
+	local co = lua_rouge_middle_layer.configDict[layerId]
+
+	return co.mapRes
+end
+
+function RougeMapConfig:getMiddleLayerCo(layerId)
+	local co = lua_rouge_middle_layer.configDict[layerId]
+
+	return co
+end
+
+function RougeMapConfig:getRougeEvent(id)
+	local eventCo = lua_rouge_event.configDict[id]
+
+	if not eventCo then
+		logError("找不到肉鸽事件配置 ID : " .. tostring(id))
 	end
 
-	return var_22_0
+	return eventCo
 end
 
-function var_0_0.getPathSelectInitCameraSize(arg_23_0)
+function RougeMapConfig:getFightEvent(id)
+	local eventCo = lua_rouge_fight_event.configDict[id]
+
+	if not eventCo then
+		logError("找不到肉鸽战斗事件配置 ID : " .. tostring(id))
+	end
+
+	return eventCo
+end
+
+function RougeMapConfig:getPathSelectInitCameraSize()
 	return tonumber(lua_rouge_const.configDict[RougeMapEnum.ConstKey.PathSelectCameraSize].value)
 end
 
-function var_0_0.getStoreRefreshCost(arg_24_0)
-	local var_24_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.StoreRefreshCost]
-	local var_24_1 = string.splitToNumber(var_24_0.value, "#")
-	local var_24_2 = var_24_1[1]
-	local var_24_3 = var_24_1[2]
+function RougeMapConfig:getStoreRefreshCost()
+	local coststr = lua_rouge_const.configDict[RougeMapEnum.ConstKey.StoreRefreshCost]
+	local arr = string.splitToNumber(coststr.value, "#")
+	local cost, increment = arr[1], arr[2]
 
-	return var_24_2, var_24_3
+	return cost, increment
 end
 
-function var_0_0.getRestStoreRefreshCount(arg_25_0)
-	local var_25_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.RestStoreRefreshCount]
+function RougeMapConfig:getRestStoreRefreshCount()
+	local count = lua_rouge_const.configDict[RougeMapEnum.ConstKey.RestStoreRefreshCount]
 
-	return tonumber(var_25_0.value)
+	return tonumber(count.value)
 end
 
-function var_0_0.getRestExchangeCount(arg_26_0)
-	local var_26_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.ExchangeCount]
+function RougeMapConfig:getRestExchangeCount()
+	local count = lua_rouge_const.configDict[RougeMapEnum.ConstKey.ExchangeCount]
 
-	return tonumber(var_26_0.value)
+	return tonumber(count.value)
 end
 
-function var_0_0.getFightRetryNum(arg_27_0)
-	local var_27_0 = lua_rouge_const.configDict[RougeMapEnum.ConstKey.FightRetryNum]
+function RougeMapConfig:getFightRetryNum()
+	local count = lua_rouge_const.configDict[RougeMapEnum.ConstKey.FightRetryNum]
 
-	return tonumber(var_27_0.value)
+	return tonumber(count.value)
 end
 
-function var_0_0.getRandomVoice(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0.groupVoiceList[arg_28_1]
+function RougeMapConfig:getRandomVoice(groupId)
+	local voiceList = self.groupVoiceList[groupId]
 
-	if not var_28_0 then
+	if not voiceList then
 		return
 	end
 
-	local var_28_1 = #var_28_0
+	local voiceCount = #voiceList
 
-	if var_28_1 == 1 then
-		return var_28_0[1]
+	if voiceCount == 1 then
+		return voiceList[1]
 	end
 
-	local var_28_2 = arg_28_0.groupTotalWeight[arg_28_1]
-	local var_28_3 = math.random(var_28_2)
-	local var_28_4 = 0
+	local totalWeight = self.groupTotalWeight[groupId]
+	local randomWeight = math.random(totalWeight)
+	local compareWeight = 0
 
-	for iter_28_0, iter_28_1 in ipairs(var_28_0) do
-		var_28_4 = var_28_4 + iter_28_1.weight
+	for _, co in ipairs(voiceList) do
+		compareWeight = compareWeight + co.weight
 
-		if var_28_3 <= var_28_4 then
-			return iter_28_1
+		if randomWeight <= compareWeight then
+			return co
 		end
 	end
 
-	return var_28_0[var_28_1]
+	return voiceList[voiceCount]
 end
 
-function var_0_0.getVoiceGroupList(arg_29_0)
+function RougeMapConfig:getVoiceGroupList()
 	return lua_rouge_short_voice_group.configList
 end
 
-function var_0_0.getRougeEffect(arg_30_0, arg_30_1)
-	local var_30_0 = lua_rouge_effect.configDict[arg_30_1]
+function RougeMapConfig:getRougeEffect(effectId)
+	local effectCo = lua_rouge_effect.configDict[effectId]
 
-	if not var_30_0 then
-		logError("rouge effect not find effectId : " .. arg_30_1)
+	if not effectCo then
+		logError("rouge effect not find effectId : " .. effectId)
 	end
 
-	return var_30_0
+	return effectCo
 end
 
-function var_0_0.getFightDropMaxRefreshNum(arg_31_0, arg_31_1)
-	return arg_31_0.dropMaxRefreshNumDict[arg_31_1] or 0
+function RougeMapConfig:getFightDropMaxRefreshNum(type)
+	return self.dropMaxRefreshNumDict[type] or 0
 end
 
-function var_0_0.getPieceCo(arg_32_0, arg_32_1)
-	if not arg_32_1 then
+function RougeMapConfig:getPieceCo(pieceId)
+	if not pieceId then
 		logError("piece id is nil")
 
 		return
 	end
 
-	local var_32_0 = lua_rouge_piece.configDict[arg_32_1]
+	local co = lua_rouge_piece.configDict[pieceId]
 
-	if not var_32_0 then
-		logError("piece config not exist, id : " .. tostring(arg_32_1))
+	if not co then
+		logError("piece config not exist, id : " .. tostring(pieceId))
 
 		return
 	end
 
-	return var_32_0
+	return co
 end
 
-var_0_0.instance = var_0_0.New()
+RougeMapConfig.instance = RougeMapConfig.New()
 
-return var_0_0
+return RougeMapConfig

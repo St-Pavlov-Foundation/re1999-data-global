@@ -1,11 +1,13 @@
-﻿module("modules.logic.dungeon.defines.DungeonMazeEvent", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/defines/DungeonMazeEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.dungeon.defines.DungeonMazeEvent", package.seeall)
 
-var_0_0.EnterDungeonMaze = var_0_1()
-var_0_0.DungeonMazeCompleted = var_0_1()
-var_0_0.DungeonMazeExit = var_0_1()
-var_0_0.DungeonMazeReStart = var_0_1()
-var_0_0.ShowMazeObstacleDialog = var_0_1()
-var_0_0.ArriveMazeGameCell = var_0_1()
+local DungeonMazeEvent = _M
+local _get = GameUtil.getUniqueTb()
+
+DungeonMazeEvent.EnterDungeonMaze = _get()
+DungeonMazeEvent.DungeonMazeCompleted = _get()
+DungeonMazeEvent.DungeonMazeExit = _get()
+DungeonMazeEvent.DungeonMazeReStart = _get()
+DungeonMazeEvent.ShowMazeObstacleDialog = _get()
+DungeonMazeEvent.ArriveMazeGameCell = _get()

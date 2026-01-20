@@ -1,43 +1,45 @@
-﻿module("modules.logic.herogrouppreset.view.HeroGroupPresetTeamView", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/view/HeroGroupPresetTeamView.lua
 
-local var_0_0 = class("HeroGroupPresetTeamView", BaseView)
+module("modules.logic.herogrouppreset.view.HeroGroupPresetTeamView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._scrolltab = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tab")
-	arg_1_0._scrollgroup = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_group")
+local HeroGroupPresetTeamView = class("HeroGroupPresetTeamView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupPresetTeamView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._scrolltab = gohelper.findChildScrollRect(self.viewGO, "#scroll_tab")
+	self._scrollgroup = gohelper.findChildScrollRect(self.viewGO, "#scroll_group")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HeroGroupPresetTeamView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HeroGroupPresetTeamView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function HeroGroupPresetTeamView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function HeroGroupPresetTeamView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function HeroGroupPresetTeamView:onOpen()
 	HeroGroupPresetTabListModel.instance:initTabList()
 end
 
-function var_0_0.onClose(arg_7_0)
+function HeroGroupPresetTeamView:onClose()
 	HeroGroupPresetItemListModel.instance:clearInfo()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function HeroGroupPresetTeamView:onDestroyView()
 	return
 end
 
-return var_0_0
+return HeroGroupPresetTeamView

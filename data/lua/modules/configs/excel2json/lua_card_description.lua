@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_card_description", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_card_description.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_card_description", package.seeall)
+
+local lua_card_description = {}
+local fields = {
 	card2 = 4,
 	card1 = 2,
 	cardname_en = 5,
@@ -11,17 +13,17 @@ local var_0_1 = {
 	carddescription1 = 7,
 	attribute = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	carddescription1 = 2,
 	carddescription2 = 3,
 	cardname = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_card_description.onLoad(json)
+	lua_card_description.configList, lua_card_description.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_card_description

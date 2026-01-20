@@ -1,32 +1,34 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapExtraView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonMapExtraView.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonMapExtraView", BaseView)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonMapExtraView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnstealth = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_stealth")
-	arg_1_0._gostealthlocked = gohelper.findChild(arg_1_0.viewGO, "#btn_stealth/#go_stealthlocked")
-	arg_1_0._gostealthunlocked = gohelper.findChild(arg_1_0.viewGO, "#btn_stealth/#go_stealthunlocked")
-	arg_1_0._gostealthreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_stealth/#go_stealthreddot")
+local VersionActivity2_9DungeonMapExtraView = class("VersionActivity2_9DungeonMapExtraView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_9DungeonMapExtraView:onInitView()
+	self._btnstealth = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_stealth")
+	self._gostealthlocked = gohelper.findChild(self.viewGO, "#btn_stealth/#go_stealthlocked")
+	self._gostealthunlocked = gohelper.findChild(self.viewGO, "#btn_stealth/#go_stealthunlocked")
+	self._gostealthreddot = gohelper.findChild(self.viewGO, "#btn_stealth/#go_stealthreddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstealth:AddClickListener(arg_2_0._btnstealthOnClick, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0._refreshActivityState, arg_2_0)
+function VersionActivity2_9DungeonMapExtraView:addEvents()
+	self._btnstealth:AddClickListener(self._btnstealthOnClick, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshActivityState, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstealth:RemoveClickListener()
+function VersionActivity2_9DungeonMapExtraView:removeEvents()
+	self._btnstealth:RemoveClickListener()
 end
 
-function var_0_0._btnstealthOnClick(arg_4_0)
-	local var_4_0, var_4_1, var_4_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity2_9Enum.ActivityId.Outside)
+function VersionActivity2_9DungeonMapExtraView:_btnstealthOnClick()
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(VersionActivity2_9Enum.ActivityId.Outside)
 
-	if var_4_0 ~= ActivityEnum.ActivityStatus.Normal then
-		GameFacade.showToastWithTableParam(var_4_1, var_4_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		GameFacade.showToastWithTableParam(toastId, toastParam)
 
 		return
 	end
@@ -34,33 +36,33 @@ function var_0_0._btnstealthOnClick(arg_4_0)
 	AssassinController.instance:openAssassinMapView(nil, true)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function VersionActivity2_9DungeonMapExtraView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshStealthBtnStatus()
+function VersionActivity2_9DungeonMapExtraView:onOpen()
+	self:refreshStealthBtnStatus()
 end
 
-function var_0_0.refreshStealthBtnStatus(arg_7_0)
-	local var_7_0 = ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.Outside)
+function VersionActivity2_9DungeonMapExtraView:refreshStealthBtnStatus()
+	local isOpen = ActivityHelper.isOpen(VersionActivity2_9Enum.ActivityId.Outside)
 
-	gohelper.setActive(arg_7_0._gostealthunlocked, var_7_0)
-	gohelper.setActive(arg_7_0._gostealthlocked, not var_7_0)
+	gohelper.setActive(self._gostealthunlocked, isOpen)
+	gohelper.setActive(self._gostealthlocked, not isOpen)
 end
 
-function var_0_0._refreshActivityState(arg_8_0, arg_8_1)
-	if not arg_8_1 or arg_8_1 == VersionActivity2_9Enum.ActivityId.Outside then
-		arg_8_0:refreshStealthBtnStatus()
+function VersionActivity2_9DungeonMapExtraView:_refreshActivityState(actId)
+	if not actId or actId == VersionActivity2_9Enum.ActivityId.Outside then
+		self:refreshStealthBtnStatus()
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function VersionActivity2_9DungeonMapExtraView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function VersionActivity2_9DungeonMapExtraView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_9DungeonMapExtraView

@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/FairyLandView.lua
 
-local var_0_0 = class("FairyLandView", BaseView)
+module("modules.logic.versionactivity1_9.fairyland.view.FairyLandView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local FairyLandView = class("FairyLandView", BaseView)
+
+function FairyLandView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FairyLandView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FairyLandView:removeEvents()
 	return
 end
 
-return var_0_0
+return FairyLandView

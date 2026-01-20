@@ -1,28 +1,33 @@
-﻿module("modules.logic.login.view.LoginViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/login/view/LoginViewContainer.lua
 
-local var_0_0 = class("LoginViewContainer", BaseViewContainer)
+module("modules.logic.login.view.LoginViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local LoginViewContainer = class("LoginViewContainer", BaseViewContainer)
+
+function LoginViewContainer:buildViews()
+	local views = {
 		LoginBgView.New("#go_bg"),
 		LoginView.New(),
 		LoginVideoView.New()
 	}
+
+	return views
 end
 
-function var_0_0.setSetting(arg_2_0, arg_2_1, arg_2_2)
-	var_0_0.super.setSetting(arg_2_0, arg_2_1, arg_2_2)
+function LoginViewContainer:setSetting(viewName, viewSetting)
+	LoginViewContainer.super.setSetting(self, viewName, viewSetting)
+	LoginPageController.instance:resetPageCfg()
 
-	local var_2_0 = LoginController.instance:isShowLoginVideo()
+	local pageCfg = LoginPageController.instance:getCurPageCfg()
 
-	if arg_2_2 then
-		arg_2_2.otherRes = {}
-		arg_2_2.otherRes[1] = string.format("ui/viewres/login/%s.prefab", var_2_0 and "loginbgvideo" or "loginbgtype")
+	if viewSetting and pageCfg then
+		viewSetting.otherRes = {}
+		viewSetting.otherRes[1] = string.format("ui/viewres/login/%s.prefab", pageCfg.prefab)
 
-		if var_2_0 then
-			arg_2_2.otherRes[2] = ResUrl.getLoginBg("bg_denglubeijing_b02")
+		if not string.nilorempty(pageCfg.bgimage) then
+			viewSetting.otherRes[2] = ResUrl.getLoginBg(pageCfg.bgimage)
 		end
 	end
 end
 
-return var_0_0
+return LoginViewContainer

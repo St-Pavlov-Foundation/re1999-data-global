@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/enter/view/VersionActivity1_9EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_9EnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity1_9EnterViewContainer = class("VersionActivity1_9EnterViewContainer", BaseViewContainer)
+
+function VersionActivity1_9EnterViewContainer:buildViews()
 	return {
 		VersionActivity1_9EnterView.New(),
 		VersionActivity1_9EnterBgmView.New(),
@@ -11,8 +13,8 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function VersionActivity1_9EnterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -20,8 +22,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 				false
 			})
 		}
-	elseif arg_2_1 == 2 then
-		return {
+	elseif tabContainerId == 2 then
+		local multView = {
 			V1a9_DungeonEnterView.New(),
 			V1a6_BossRush_EnterView.New(),
 			RoleStoryEnterView.New(),
@@ -31,54 +33,56 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			V1a9_RougeEnterView.New(),
 			V1a9_ExploreEnterView.New()
 		}
+
+		return multView
 	end
 end
 
-function var_0_0.selectActTab(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.activityId = arg_3_2
+function VersionActivity1_9EnterViewContainer:selectActTab(tabIndex, activityId)
+	self.activityId = activityId
 
-	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, tabIndex)
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	arg_4_0.isFirstPlaySubViewAnim = true
-	arg_4_0.activityIdList = arg_4_0.viewParam.activityIdList
+function VersionActivity1_9EnterViewContainer:onContainerInit()
+	self.isFirstPlaySubViewAnim = true
+	self.activityIdList = self.viewParam.activityIdList
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.activityIdList) do
-		local var_4_0 = VersionActivityEnterHelper.getActId(iter_4_1)
+	for _, actMo in ipairs(self.activityIdList) do
+		local actId = VersionActivityEnterHelper.getActId(actMo)
 
-		ActivityStageHelper.recordOneActivityStage(var_4_0)
+		ActivityStageHelper.recordOneActivityStage(actId)
 	end
 
-	local var_4_1 = VersionActivityEnterHelper.getTabIndex(arg_4_0.activityIdList, arg_4_0.viewParam.jumpActId)
+	local defaultIndex = VersionActivityEnterHelper.getTabIndex(self.activityIdList, self.viewParam.jumpActId)
 
-	if var_4_1 ~= 1 then
-		arg_4_0.viewParam.defaultTabIds = {}
-		arg_4_0.viewParam.defaultTabIds[2] = var_4_1
+	if defaultIndex ~= 1 then
+		self.viewParam.defaultTabIds = {}
+		self.viewParam.defaultTabIds[2] = defaultIndex
 	else
-		arg_4_0.viewParam.playVideo = true
+		self.viewParam.playVideo = true
 	end
 
-	local var_4_2 = VersionActivityEnterHelper.getActId(arg_4_0.activityIdList[var_4_1])
+	local actId = VersionActivityEnterHelper.getActId(self.activityIdList[defaultIndex])
 
-	ActivityEnterMgr.instance:enterActivity(var_4_2)
+	ActivityEnterMgr.instance:enterActivity(actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		var_4_2
+		actId
 	})
 end
 
-function var_0_0.onContainerClose(arg_5_0)
-	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
+function VersionActivity1_9EnterViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) and not ViewMgr.instance:hasOpenFullView() then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-function var_0_0.getIsFirstPlaySubViewAnim(arg_6_0)
-	return arg_6_0.isFirstPlaySubViewAnim
+function VersionActivity1_9EnterViewContainer:getIsFirstPlaySubViewAnim()
+	return self.isFirstPlaySubViewAnim
 end
 
-function var_0_0.markPlayedSubViewAnim(arg_7_0)
-	arg_7_0.isFirstPlaySubViewAnim = false
+function VersionActivity1_9EnterViewContainer:markPlayedSubViewAnim()
+	self.isFirstPlaySubViewAnim = false
 end
 
-return var_0_0
+return VersionActivity1_9EnterViewContainer

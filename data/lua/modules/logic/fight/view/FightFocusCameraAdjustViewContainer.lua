@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.view.FightFocusCameraAdjustViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightFocusCameraAdjustViewContainer.lua
 
-local var_0_0 = class("FightFocusCameraAdjustViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightFocusCameraAdjustViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightFocusCameraAdjustViewContainer = class("FightFocusCameraAdjustViewContainer", BaseViewContainer)
+
+function FightFocusCameraAdjustViewContainer:buildViews()
 	return {
 		FightFocusCameraAdjustView.New()
 	}
 end
 
-return var_0_0
+return FightFocusCameraAdjustViewContainer

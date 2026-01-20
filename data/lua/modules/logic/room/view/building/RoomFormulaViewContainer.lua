@@ -1,43 +1,48 @@
-﻿module("modules.logic.room.view.building.RoomFormulaViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/building/RoomFormulaViewContainer.lua
 
-local var_0_0 = class("RoomFormulaViewContainer", BaseViewContainer)
+module("modules.logic.room.view.building.RoomFormulaViewContainer", package.seeall)
 
-var_0_0.cellHeightSize = 150
+local RoomFormulaViewContainer = class("RoomFormulaViewContainer", BaseViewContainer)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+RoomFormulaViewContainer.cellHeightSize = 150
 
-	table.insert(var_1_0, RoomFormulaView.New())
-	arg_1_0:_buildFormulaItemListView(var_1_0)
+function RoomFormulaViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomFormulaView.New())
+	self:_buildFormulaItemListView(views)
+
+	return views
 end
 
-function var_0_0._buildFormulaItemListView(arg_2_0, arg_2_1)
-	local var_2_0 = ListScrollParam.New()
+function RoomFormulaViewContainer:_buildFormulaItemListView(views)
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "view/#scroll_formula"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-	var_2_0.cellClass = RoomFormulaItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirV
-	var_2_0.lineCount = 1
-	var_2_0.cellWidth = 980
-	var_2_0.cellHeight = arg_2_0.cellHeightSize
-	var_2_0.cellSpaceH = 0
-	var_2_0.cellSpaceV = 0
-	var_2_0.startSpace = 0
-	arg_2_0.__scrollView = LuaListScrollView.New(RoomFormulaListModel.instance, var_2_0)
+	scrollParam.scrollGOPath = "view/#scroll_formula"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = RoomFormulaItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 980
+	scrollParam.cellHeight = self.cellHeightSize
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	self.__scrollView = LuaListScrollView.New(RoomFormulaListModel.instance, scrollParam)
 
-	table.insert(arg_2_1, arg_2_0.__scrollView)
+	table.insert(views, self.__scrollView)
 end
 
-function var_0_0.getScrollView(arg_3_0)
-	return arg_3_0.__scrollView
+function RoomFormulaViewContainer:getScrollView()
+	return self.__scrollView
 end
 
-function var_0_0.getCsListScroll(arg_4_0)
-	return (arg_4_0:getScrollView():getCsListScroll())
+function RoomFormulaViewContainer:getCsListScroll()
+	local scrollView = self:getScrollView()
+	local csListView = scrollView:getCsListScroll()
+
+	return csListView
 end
 
-return var_0_0
+return RoomFormulaViewContainer

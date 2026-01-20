@@ -1,13 +1,15 @@
-﻿module("modules.logic.playercard.view.PlayerCardCharacterSwitchTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardCharacterSwitchTipsViewContainer.lua
 
-local var_0_0 = class("PlayerCardCharacterSwitchTipsViewContainer", BaseViewContainer)
+module("modules.logic.playercard.view.PlayerCardCharacterSwitchTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerCardCharacterSwitchTipsViewContainer = class("PlayerCardCharacterSwitchTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PlayerCardCharacterSwitchTipsView.New())
+function PlayerCardCharacterSwitchTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, PlayerCardCharacterSwitchTipsView.New())
+
+	return views
 end
 
-return var_0_0
+return PlayerCardCharacterSwitchTipsViewContainer

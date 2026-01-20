@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity2_5.goldenmilletpresent.view.V2a5_GoldenMilletPresentView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/goldenmilletpresent/view/V2a5_GoldenMilletPresentView.lua
 
-local var_0_0 = class("V2a5_GoldenMilletPresentView", BaseViewExtended)
+module("modules.logic.versionactivity2_5.goldenmilletpresent.view.V2a5_GoldenMilletPresentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goReceiveView = gohelper.findChild(arg_1_0.viewGO, "#go_ReceiveView")
-	arg_1_0._goDisplayView = gohelper.findChild(arg_1_0.viewGO, "#go_DisplayView")
+local V2a5_GoldenMilletPresentView = class("V2a5_GoldenMilletPresentView", BaseViewExtended)
 
-	gohelper.setActive(arg_1_0._goReceiveView, false)
-	gohelper.setActive(arg_1_0._goDisplayView, false)
+function V2a5_GoldenMilletPresentView:onInitView()
+	self._goReceiveView = gohelper.findChild(self.viewGO, "#go_ReceiveView")
+	self._goDisplayView = gohelper.findChild(self.viewGO, "#go_DisplayView")
+
+	gohelper.setActive(self._goReceiveView, false)
+	gohelper.setActive(self._goDisplayView, false)
 end
 
-function var_0_0.onOpen(arg_2_0)
-	local var_2_0 = arg_2_0.viewParam and arg_2_0.viewParam.isDisplayView or false
+function V2a5_GoldenMilletPresentView:onOpen()
+	local isDisplayView = self.viewParam and self.viewParam.isDisplayView or false
 
-	arg_2_0:switchExclusiveView(var_2_0)
+	self:switchExclusiveView(isDisplayView)
 end
 
-function var_0_0.switchExclusiveView(arg_3_0, arg_3_1)
-	arg_3_0._showingReceiveView = true
+function V2a5_GoldenMilletPresentView:switchExclusiveView(isDisplayView)
+	self._showingReceiveView = true
 
-	local var_3_0 = arg_3_0.viewContainer.ExclusiveView.ReceiveView
-	local var_3_1 = V2a5_GoldenMilletPresentReceiveView
-	local var_3_2 = arg_3_0._goReceiveView
+	local exclusiveViewIndex = self.viewContainer.ExclusiveView.ReceiveView
+	local exclusiveView = V2a5_GoldenMilletPresentReceiveView
+	local exclusiveViewGO = self._goReceiveView
 
-	if arg_3_1 then
-		var_3_0 = arg_3_0.viewContainer.ExclusiveView.DisplayView
-		var_3_1 = V2a5_GoldenMilletPresentDisplayView
-		var_3_2 = arg_3_0._goDisplayView
-		arg_3_0._showingReceiveView = false
+	if isDisplayView then
+		exclusiveViewIndex = self.viewContainer.ExclusiveView.DisplayView
+		exclusiveView = V2a5_GoldenMilletPresentDisplayView
+		exclusiveViewGO = self._goDisplayView
+		self._showingReceiveView = false
 	end
 
-	arg_3_0:openExclusiveView(nil, var_3_0, var_3_1, var_3_2)
+	self:openExclusiveView(nil, exclusiveViewIndex, exclusiveView, exclusiveViewGO)
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	if arg_4_0._showingReceiveView then
-		arg_4_0:switchExclusiveView(true)
+function V2a5_GoldenMilletPresentView:onClickModalMask()
+	if self._showingReceiveView then
+		self:switchExclusiveView(true)
 	else
-		arg_4_0:closeThis()
+		self:closeThis()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-return var_0_0
+return V2a5_GoldenMilletPresentView

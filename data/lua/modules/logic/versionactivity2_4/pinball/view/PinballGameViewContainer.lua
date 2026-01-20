@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballGameViewContainer.lua
 
-local var_0_0 = class("PinballGameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.pinball.view.PinballGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local PinballGameViewContainer = class("PinballGameViewContainer", BaseViewContainer)
+
+function PinballGameViewContainer:buildViews()
 	return {
 		PinballGameSceneView.New(),
 		PinballGameView.New(),
@@ -10,33 +12,33 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function PinballGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		}, HelpEnum.HelpId.PinballGameHelp)
 
-		var_2_0:setOverrideClose(arg_2_0.defaultOverrideCloseClick, arg_2_0)
+		navView:setOverrideClose(self.defaultOverrideCloseClick, self)
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0.defaultOverrideCloseClick(arg_3_0)
+function PinballGameViewContainer:defaultOverrideCloseClick()
 	if PinballHelper.isBanOper() then
 		return
 	end
 
-	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PinballAbort, MsgBoxEnum.BoxType.Yes_No, arg_3_0.sendEndGameReq, nil, nil, arg_3_0)
+	MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.PinballAbort, MsgBoxEnum.BoxType.Yes_No, self.sendEndGameReq, nil, nil, self)
 end
 
-function var_0_0.sendEndGameReq(arg_4_0)
+function PinballGameViewContainer:sendEndGameReq()
 	if PinballModel.instance.oper == PinballEnum.OperType.Episode then
-		arg_4_0:closeThis()
+		self:closeThis()
 
 		return
 	end
@@ -45,4 +47,4 @@ function var_0_0.sendEndGameReq(arg_4_0)
 	Activity178Rpc.instance:sendAct178EndEpisode(VersionActivity2_4Enum.ActivityId.Pinball, PinballModel.instance.gameAddResDict, PinballModel.instance.leftEpisodeId)
 end
 
-return var_0_0
+return PinballGameViewContainer

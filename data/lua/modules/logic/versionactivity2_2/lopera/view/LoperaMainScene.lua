@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaMainScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaMainScene.lua
 
-local var_0_0 = class("LoperaMainScene", TianShiNaNaBaseSceneView)
+module("modules.logic.versionactivity2_2.lopera.view.LoperaMainScene", package.seeall)
 
-function var_0_0.getScenePath(arg_1_0)
+local LoperaMainScene = class("LoperaMainScene", TianShiNaNaBaseSceneView)
+
+function LoperaMainScene:getScenePath()
 	return "scenes/v2a1_m_s12_lsp_jshd/scenes_prefab/v2a1_m_s12_lsp_background_p.prefab"
 end
 
-return var_0_0
+return LoperaMainScene

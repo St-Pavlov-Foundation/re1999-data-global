@@ -1,100 +1,102 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinBuildingMapView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinBuildingMapView.lua
 
-local var_0_0 = class("AssassinBuildingMapView", BaseViewExtended)
+module("modules.logic.sp01.assassin2.outside.view.AssassinBuildingMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "root/#go_container")
-	arg_1_0._gobuildingicon = gohelper.findChild(arg_1_0.viewGO, "root/#go_container/#go_buildingicon")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#btn_task", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "root/right/#btn_task/#go_taskreddot")
-	arg_1_0._btndevelop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#btn_develop", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._txtcurrencynum = gohelper.findChildText(arg_1_0.viewGO, "root/#go_topright/go_costitem/#txt_currencynum")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "root/#go_topright")
+local AssassinBuildingMapView = class("AssassinBuildingMapView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinBuildingMapView:onInitView()
+	self._gocontainer = gohelper.findChild(self.viewGO, "root/#go_container")
+	self._gobuildingicon = gohelper.findChild(self.viewGO, "root/#go_container/#go_buildingicon")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/#btn_task", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._gotaskreddot = gohelper.findChild(self.viewGO, "root/right/#btn_task/#go_taskreddot")
+	self._btndevelop = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/#btn_develop", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._txtcurrencynum = gohelper.findChildText(self.viewGO, "root/#go_topright/go_costitem/#txt_currencynum")
+	self._gotopright = gohelper.findChild(self.viewGO, "root/#go_topright")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btndevelop:AddClickListener(arg_2_0._btndevelopOnClick, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.FocusBuilding, arg_2_0._onFocusBuilding, arg_2_0)
+function AssassinBuildingMapView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btndevelop:AddClickListener(self._btndevelopOnClick, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.FocusBuilding, self._onFocusBuilding, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btndevelop:RemoveClickListener()
+function AssassinBuildingMapView:removeEvents()
+	self._btntask:RemoveClickListener()
+	self._btndevelop:RemoveClickListener()
 end
 
-function var_0_0._btntaskOnClick(arg_4_0)
+function AssassinBuildingMapView:_btntaskOnClick()
 	AssassinController.instance:openAssassinTaskView()
 end
 
-function var_0_0._btndevelopOnClick(arg_5_0)
+function AssassinBuildingMapView:_btndevelopOnClick()
 	AssassinController.instance:openAssassinHeroView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	RedDotController.instance:addRedDot(arg_6_0._gotaskreddot, RedDotEnum.DotNode.AssassinOutsideTask)
-	gohelper.setActive(arg_6_0._gobuildingicon, false)
+function AssassinBuildingMapView:_editableInitView()
+	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.AssassinOutsideTask)
+	gohelper.setActive(self._gobuildingicon, false)
 
-	arg_6_0._animator = gohelper.onceAddComponent(arg_6_0.viewGO, gohelper.Type_Animator)
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:openSubView(AssassinCurrencyToolView, nil, arg_7_0._gotopright)
-	arg_7_0:initAllBuildings()
+function AssassinBuildingMapView:onOpen()
+	self:openSubView(AssassinCurrencyToolView, nil, self._gotopright)
+	self:initAllBuildings()
 	AudioMgr.instance:trigger(AudioEnum2_9.Dungeon.play_ui_unlockNewEpisode)
 end
 
-function var_0_0.initAllBuildings(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam and arg_8_0.viewParam.buildingType
+function AssassinBuildingMapView:initAllBuildings()
+	local openBuildingType = self.viewParam and self.viewParam.buildingType
 
-	for iter_8_0, iter_8_1 in pairs(AssassinEnum.BuildingType) do
-		local var_8_1 = gohelper.findChild(arg_8_0._gocontainer, "go_pos" .. iter_8_1)
+	for _, buildingType in pairs(AssassinEnum.BuildingType) do
+		local goparent = gohelper.findChild(self._gocontainer, "go_pos" .. buildingType)
 
-		if not gohelper.isNil(var_8_1) then
-			local var_8_2 = gohelper.findChild(var_8_1, "go_posBuilding")
-			local var_8_3 = gohelper.findChild(var_8_1, "go_buildingclickarea")
-			local var_8_4 = gohelper.clone(arg_8_0._gobuildingicon, var_8_1, "building_" .. iter_8_1)
-			local var_8_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_4, AssassinBuildingItemIcon)
+		if not gohelper.isNil(goparent) then
+			local goIconPosFlag = gohelper.findChild(goparent, "go_posBuilding")
+			local goIconClickAreaFlag = gohelper.findChild(goparent, "go_buildingclickarea")
+			local goBuildingIcon = gohelper.clone(self._gobuildingicon, goparent, "building_" .. buildingType)
+			local buildingItemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(goBuildingIcon, AssassinBuildingItemIcon)
 
-			var_8_5:updateIconPosition(var_8_2)
-			var_8_5:updateIconClickArea(var_8_3)
-			var_8_5:setBuildingType(iter_8_1)
+			buildingItemIcon:updateIconPosition(goIconPosFlag)
+			buildingItemIcon:updateIconClickArea(goIconClickAreaFlag)
+			buildingItemIcon:setBuildingType(buildingType)
 
-			if var_8_0 and var_8_0 == iter_8_1 then
-				var_8_5:_btnclickOnClick()
+			if openBuildingType and openBuildingType == buildingType then
+				buildingItemIcon:_btnclickOnClick()
 			end
 		else
-			logError(string.format("建筑入口缺少挂点 buildingType = %s", iter_8_1))
+			logError(string.format("建筑入口缺少挂点 buildingType = %s", buildingType))
 		end
 	end
 end
 
-function var_0_0._onFocusBuilding(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._animator then
+function AssassinBuildingMapView:_onFocusBuilding(buildingType, isFocus)
+	if not self._animator then
 		return
 	end
 
-	local var_9_0 = ""
+	local stateName = ""
 
-	if arg_9_2 then
-		var_9_0 = string.format("building%02d", arg_9_1)
+	if isFocus then
+		stateName = string.format("building%02d", buildingType)
 	else
-		var_9_0 = string.format("back%02d", arg_9_1)
+		stateName = string.format("back%02d", buildingType)
 	end
 
-	arg_9_0._animator:Play(var_9_0, 0, 0)
+	self._animator:Play(stateName, 0, 0)
 end
 
-function var_0_0.onClose(arg_10_0)
+function AssassinBuildingMapView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function AssassinBuildingMapView:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinBuildingMapView

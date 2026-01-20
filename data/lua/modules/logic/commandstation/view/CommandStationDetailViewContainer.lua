@@ -1,13 +1,15 @@
-﻿module("modules.logic.commandstation.view.CommandStationDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationDetailViewContainer.lua
 
-local var_0_0 = class("CommandStationDetailViewContainer", BaseViewContainer)
+module("modules.logic.commandstation.view.CommandStationDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CommandStationDetailViewContainer = class("CommandStationDetailViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CommandStationDetailView.New())
+function CommandStationDetailViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CommandStationDetailView.New())
+
+	return views
 end
 
-return var_0_0
+return CommandStationDetailViewContainer

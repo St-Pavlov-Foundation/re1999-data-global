@@ -1,231 +1,234 @@
-﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9SettlementHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_9/Season123_1_9SettlementHeroItem.lua
 
-local var_0_0 = class("Season123_1_9SettlementHeroItem", BaseViewExtended)
+module("modules.logic.seasonver.act123.view1_9.Season123_1_9SettlementHeroItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "#go_hero")
-	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_hero/#simage_heroicon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "#go_hero/#image_career")
-	arg_1_0._gocard1 = gohelper.findChild(arg_1_0.viewGO, "#go_hero/layout/#go_cards/#go_card1")
-	arg_1_0._gocard2 = gohelper.findChild(arg_1_0.viewGO, "#go_hero/layout/#go_cards/#go_card2")
-	arg_1_0._gosingle = gohelper.findChild(arg_1_0.viewGO, "#go_hero/layout/#go_cards/#go_single")
-	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "#go_hero/layout/#go_equip")
-	arg_1_0._imageequipicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_hero/layout/#go_equip/#image_equipicon")
-	arg_1_0._imageequiprare = gohelper.findChildImage(arg_1_0.viewGO, "#go_hero/layout/#go_equip/#image_equiprare")
-	arg_1_0._gocards = gohelper.findChild(arg_1_0.viewGO, "#go_hero/layout/#go_cards")
-	arg_1_0._equipPart = gohelper.findChild(arg_1_0.viewGO, "#go_hero/layout")
-	arg_1_0._commonHeroCard = CommonHeroCard.create(arg_1_0._simageheroicon.gameObject, arg_1_0.viewName)
+local Season123_1_9SettlementHeroItem = class("Season123_1_9SettlementHeroItem", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_1_9SettlementHeroItem:onInitView()
+	self._gohero = gohelper.findChild(self.viewGO, "#go_hero")
+	self._simageheroicon = gohelper.findChildSingleImage(self.viewGO, "#go_hero/#simage_heroicon")
+	self._imagecareer = gohelper.findChildImage(self.viewGO, "#go_hero/#image_career")
+	self._gocard1 = gohelper.findChild(self.viewGO, "#go_hero/layout/#go_cards/#go_card1")
+	self._gocard2 = gohelper.findChild(self.viewGO, "#go_hero/layout/#go_cards/#go_card2")
+	self._gosingle = gohelper.findChild(self.viewGO, "#go_hero/layout/#go_cards/#go_single")
+	self._goequip = gohelper.findChild(self.viewGO, "#go_hero/layout/#go_equip")
+	self._imageequipicon = gohelper.findChildImage(self.viewGO, "#go_hero/layout/#go_equip/#image_equipicon")
+	self._imageequiprare = gohelper.findChildImage(self.viewGO, "#go_hero/layout/#go_equip/#image_equiprare")
+	self._gocards = gohelper.findChild(self.viewGO, "#go_hero/layout/#go_cards")
+	self._equipPart = gohelper.findChild(self.viewGO, "#go_hero/layout")
+	self._commonHeroCard = CommonHeroCard.create(self._simageheroicon.gameObject, self.viewName)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season123_1_9SettlementHeroItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season123_1_9SettlementHeroItem:removeEvents()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
-	arg_4_0._is_replay = arg_4_1
-	arg_4_0._hero = arg_4_2
-	arg_4_0._equip = arg_4_3
-	arg_4_0._equip_123 = arg_4_4
-	arg_4_0._replay_data = arg_4_5
-	arg_4_0._trail = arg_4_6
+function Season123_1_9SettlementHeroItem:onRefreshViewParam(is_replay, hero, equip, equip_104, replay_data, trail)
+	self._is_replay = is_replay
+	self._hero = hero
+	self._equip = equip
+	self._equip_123 = equip_104
+	self._replay_data = replay_data
+	self._trail = trail
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.actId = Season123Model.instance:getCurSeasonId()
+function Season123_1_9SettlementHeroItem:onOpen()
+	self.actId = Season123Model.instance:getCurSeasonId()
 
-	arg_5_0:setViewVisibleInternal(false)
+	self:setViewVisibleInternal(false)
 
-	if arg_5_0._is_replay then
-		arg_5_0:_showReplayData()
+	if self._is_replay then
+		self:_showReplayData()
 	else
-		arg_5_0:_showNormalData()
+		self:_showNormalData()
 	end
 
-	if arg_5_0._no123Equip and arg_5_0._noEquip then
-		gohelper.setActive(arg_5_0._equipPart, false)
+	if self._no123Equip and self._noEquip then
+		gohelper.setActive(self._equipPart, false)
 	end
 
-	gohelper.setActive(arg_5_0._gocards, not arg_5_0._no123Equip)
+	gohelper.setActive(self._gocards, not self._no123Equip)
 end
 
-function var_0_0._showNormalData(arg_6_0)
-	if arg_6_0._trail then
-		arg_6_0:_showTrailHeroIcon(arg_6_0._trail)
+function Season123_1_9SettlementHeroItem:_showNormalData()
+	if self._trail then
+		self:_showTrailHeroIcon(self._trail)
 	else
-		arg_6_0:_showHeroIcon(arg_6_0._hero)
+		self:_showHeroIcon(self._hero)
 	end
 
-	local var_6_0 = arg_6_0._equip and EquipModel.instance:getEquip(arg_6_0._equip[1])
-	local var_6_1 = var_6_0 and var_6_0.equipId
+	local equip_data = self._equip and EquipModel.instance:getEquip(self._equip[1])
+	local equip_id = equip_data and equip_data.equipId
 
-	arg_6_0:_showEquipIcon(var_6_1)
+	self:_showEquipIcon(equip_id)
 
-	if arg_6_0._equip_123 then
-		local var_6_2 = Season123Model.instance:getAllItemMo(arg_6_0.actId)
-		local var_6_3 = {}
+	if self._equip_123 then
+		local tar_equip_123 = Season123Model.instance:getAllItemMo(self.actId)
+		local uidTab = {}
 
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0._equip_123) do
-			if var_6_2[iter_6_1] then
-				table.insert(var_6_3, var_6_2[iter_6_1].uid)
+		for i, v in ipairs(self._equip_123) do
+			if tar_equip_123[v] then
+				table.insert(uidTab, tar_equip_123[v].uid)
 			end
 		end
 
-		local var_6_4 = #var_6_3
+		local totalEquipCount = #uidTab
 
-		arg_6_0._no123Equip = var_6_4 == 0
+		self._no123Equip = totalEquipCount == 0
 
-		for iter_6_2, iter_6_3 in ipairs(var_6_3) do
-			arg_6_0:_showEquip123(iter_6_2, iter_6_3, var_6_4)
+		for i, v in ipairs(uidTab) do
+			self:_showEquip123(i, v, totalEquipCount)
 		end
 	end
 end
 
-function var_0_0._showTrailHeroIcon(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function Season123_1_9SettlementHeroItem:_showTrailHeroIcon(trail)
+	if not trail then
 		return
 	end
 
-	local var_7_0 = lua_hero_trial.configDict[arg_7_1.trialId][0]
-	local var_7_1 = HeroConfig.instance:getHeroCO(var_7_0.heroId)
-	local var_7_2
+	local trailCo = lua_hero_trial.configDict[trail.trialId][0]
+	local heroCo = HeroConfig.instance:getHeroCO(trailCo.heroId)
+	local skinConfig
 
-	if var_7_0.skin > 0 then
-		var_7_2 = SkinConfig.instance:getSkinCo(var_7_0.skin)
+	if trailCo.skin > 0 then
+		skinConfig = SkinConfig.instance:getSkinCo(trailCo.skin)
 	else
-		var_7_2 = SkinConfig.instance:getSkinCo(var_7_1.skinId)
+		skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 	end
 
-	local var_7_3 = var_7_1.career
+	local career = heroCo.career
 
-	if var_7_2 then
-		arg_7_0._simageheroicon:LoadImage(ResUrl.getHeadIconMiddle(var_7_2.retangleIcon))
+	if skinConfig then
+		self._simageheroicon:LoadImage(ResUrl.getHeadIconMiddle(skinConfig.retangleIcon))
 	else
-		gohelper.setActive(arg_7_0.viewGO.transform.parent.gameObject, false)
+		gohelper.setActive(self.viewGO.transform.parent.gameObject, false)
 	end
 
-	if var_7_3 then
-		UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer, "lssx_" .. tostring(var_7_3))
+	if career then
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(career))
 	end
 
-	if var_7_2 then
-		arg_7_0._commonHeroCard:onUpdateMO(var_7_2)
+	if skinConfig then
+		self._commonHeroCard:onUpdateMO(skinConfig)
 	end
 end
 
-function var_0_0._showHeroIcon(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = HeroModel.instance:getById(arg_8_1)
-	local var_8_1 = arg_8_0:checkAssist(arg_8_1, var_8_0)
-	local var_8_2
-	local var_8_3
+function Season123_1_9SettlementHeroItem:_showHeroIcon(heroId, skinId)
+	local hero_mo = HeroModel.instance:getById(heroId)
 
-	if var_8_1 then
-		arg_8_2 = arg_8_2 or var_8_1.skin
-		var_8_2 = var_8_1.config.career
+	hero_mo = self:checkAssist(heroId, hero_mo)
+
+	local career, skinConfig
+
+	if hero_mo then
+		skinId = skinId or hero_mo.skin
+		career = hero_mo.config.career
 	else
-		local var_8_4 = FightDataHelper.entityMgr:getById(arg_8_1)
+		local entityMo = FightDataHelper.entityMgr:getById(heroId)
 
-		if var_8_4 then
-			local var_8_5 = lua_monster.configDict[var_8_4.modelId]
+		if entityMo then
+			local monCo = lua_monster.configDict[entityMo.modelId]
 
-			if var_8_5 then
-				arg_8_2 = arg_8_2 or var_8_5.skinId
-				var_8_3 = FightConfig.instance:getSkinCO(arg_8_2)
-				var_8_2 = var_8_5.career
+			if monCo then
+				skinId = skinId or monCo.skinId
+				skinConfig = FightConfig.instance:getSkinCO(skinId)
+				career = monCo.career
 			end
 		end
 	end
 
-	if arg_8_2 then
-		var_8_3 = FightConfig.instance:getSkinCO(arg_8_2)
+	if skinId then
+		skinConfig = FightConfig.instance:getSkinCO(skinId)
 
-		if var_8_3 then
-			arg_8_0._simageheroicon:LoadImage(ResUrl.getHeadIconMiddle(var_8_3.retangleIcon))
+		if skinConfig then
+			self._simageheroicon:LoadImage(ResUrl.getHeadIconMiddle(skinConfig.retangleIcon))
 		end
 	else
-		gohelper.setActive(arg_8_0.viewGO.transform.parent.gameObject, false)
+		gohelper.setActive(self.viewGO.transform.parent.gameObject, false)
 	end
 
-	if var_8_2 then
-		UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer, "lssx_" .. tostring(var_8_2))
+	if career then
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(career))
 	end
 
-	if var_8_3 then
-		arg_8_0._commonHeroCard:onUpdateMO(var_8_3)
+	if skinConfig then
+		self._commonHeroCard:onUpdateMO(skinConfig)
 	end
 end
 
-function var_0_0.checkAssist(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_2 then
-		local var_9_0 = Season123Model.instance:getBattleContext()
+function Season123_1_9SettlementHeroItem:checkAssist(heroUid, heroMO)
+	if not heroMO then
+		local context = Season123Model.instance:getBattleContext()
 
-		if var_9_0.stage ~= nil then
-			arg_9_2 = Season123HeroUtils.getHeroMO(var_9_0.actId, arg_9_1, var_9_0.stage)
+		if context.stage ~= nil then
+			heroMO = Season123HeroUtils.getHeroMO(context.actId, heroUid, context.stage)
 		end
 	end
 
-	return arg_9_2
+	return heroMO
 end
 
-function var_0_0._showEquipIcon(arg_10_0, arg_10_1)
-	if arg_10_1 and arg_10_1 ~= 0 then
-		local var_10_0 = EquipConfig.instance:getEquipCo(arg_10_1)
+function Season123_1_9SettlementHeroItem:_showEquipIcon(equip_id)
+	if equip_id and equip_id ~= 0 then
+		local equip_config = EquipConfig.instance:getEquipCo(equip_id)
 
-		UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_10_0._imageequipicon, var_10_0.icon)
-		UISpriteSetMgr.instance:setHeroGroupSprite(arg_10_0._imageequiprare, "bianduixingxian_" .. var_10_0.rare)
+		UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._imageequipicon, equip_config.icon)
+		UISpriteSetMgr.instance:setHeroGroupSprite(self._imageequiprare, "bianduixingxian_" .. equip_config.rare)
 	else
-		gohelper.setActive(arg_10_0._goequip, false)
+		gohelper.setActive(self._goequip, false)
 
-		arg_10_0._noEquip = true
+		self._noEquip = true
 	end
 end
 
-function var_0_0._showEquip123(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	if arg_11_4 == 0 then
+function Season123_1_9SettlementHeroItem:_showEquip123(index, uid, totalEquipCount, equipId)
+	if equipId == 0 then
 		return
 	end
 
-	local var_11_0 = arg_11_3 <= 1 and arg_11_0._gosingle or arg_11_0["_gocard" .. arg_11_1]
+	local parentTran = totalEquipCount <= 1 and self._gosingle or self["_gocard" .. index]
 
-	arg_11_0:openSubView(Season123_1_9CelebrityCardGetItem, Season123_1_9CelebrityCardItem.AssetPath, var_11_0, arg_11_2, nil, arg_11_4)
+	self:openSubView(Season123_1_9CelebrityCardGetItem, Season123_1_9CelebrityCardItem.AssetPath, parentTran, uid, nil, equipId)
 end
 
-function var_0_0._showReplayData(arg_12_0)
-	local var_12_0 = arg_12_0._hero
+function Season123_1_9SettlementHeroItem:_showReplayData()
+	local hero_uid = self._hero
 
-	arg_12_0:_showHeroIcon(var_12_0, arg_12_0._replay_data and arg_12_0._replay_data.skin)
-	arg_12_0:_showEquipIcon(arg_12_0._equip and arg_12_0._equip.equipId)
+	self:_showHeroIcon(hero_uid, self._replay_data and self._replay_data.skin)
+	self:_showEquipIcon(self._equip and self._equip.equipId)
 
-	if var_12_0 ~= "0" and var_12_0 ~= "-100000" and arg_12_0._equip_123 then
-		local var_12_1 = #arg_12_0._equip_123
+	if hero_uid ~= "0" and hero_uid ~= "-100000" and self._equip_123 then
+		local totalEquipCount = #self._equip_123
 
-		arg_12_0._no123Equip = var_12_1 == 0
+		self._no123Equip = totalEquipCount == 0
 
-		for iter_12_0 = 1, var_12_1 do
-			arg_12_0:_showEquip123(iter_12_0, arg_12_0._equip_123[iter_12_0].equipUid, var_12_1, arg_12_0._equip_123[iter_12_0].equipId)
+		for i = 1, totalEquipCount do
+			self:_showEquip123(i, self._equip_123[i].equipUid, totalEquipCount, self._equip_123[i].equipId)
 		end
 	end
 end
 
-local var_0_1 = {}
+local EquipPosTab = {}
 
-function var_0_0._refreshEquipPos(arg_13_0)
+function Season123_1_9SettlementHeroItem:_refreshEquipPos()
 	return
 end
 
-function var_0_0.onClose(arg_14_0)
+function Season123_1_9SettlementHeroItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._simageheroicon:UnLoadImage()
+function Season123_1_9SettlementHeroItem:onDestroyView()
+	self._simageheroicon:UnLoadImage()
 end
 
-return var_0_0
+return Season123_1_9SettlementHeroItem

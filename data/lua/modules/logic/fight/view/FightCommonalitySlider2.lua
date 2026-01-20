@@ -1,68 +1,71 @@
-﻿module("modules.logic.fight.view.FightCommonalitySlider2", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCommonalitySlider2.lua
 
-local var_0_0 = class("FightCommonalitySlider2", FightBaseView)
+module("modules.logic.fight.view.FightCommonalitySlider2", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.sliderBg = gohelper.findChild(arg_1_0.viewGO, "slider/sliderbg")
-	arg_1_0._slider = gohelper.findChildImage(arg_1_0.viewGO, "slider/sliderbg/sliderfg")
-	arg_1_0._sliderText = gohelper.findChildText(arg_1_0.viewGO, "slider/sliderbg/#txt_slidernum")
-	arg_1_0.effective = gohelper.findChild(arg_1_0.viewGO, "slider/#max")
-	arg_1_0.durationText = gohelper.findChildText(arg_1_0.viewGO, "slider/#max/#txt_round")
+local FightCommonalitySlider2 = class("FightCommonalitySlider2", FightBaseView)
+
+function FightCommonalitySlider2:onInitView()
+	self.sliderBg = gohelper.findChild(self.viewGO, "slider/sliderbg")
+	self._slider = gohelper.findChildImage(self.viewGO, "slider/sliderbg/sliderfg")
+	self._sliderText = gohelper.findChildText(self.viewGO, "slider/sliderbg/#txt_slidernum")
+	self.effective = gohelper.findChild(self.viewGO, "slider/#max")
+	self.durationText = gohelper.findChildText(self.viewGO, "slider/#max/#txt_round")
 end
 
-function var_0_0.onConstructor(arg_2_0, arg_2_1)
-	arg_2_0.fightRoot = arg_2_1
+function FightCommonalitySlider2:onConstructor(root)
+	self.fightRoot = root
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:_refreshData(true)
-	arg_3_0:com_registMsg(FightMsgId.FightProgressValueChange, arg_3_0._refreshData)
-	arg_3_0:com_registMsg(FightMsgId.FightMaxProgressValueChange, arg_3_0._refreshData)
-	arg_3_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate)
-	arg_3_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_3_0._refreshData)
+function FightCommonalitySlider2:onOpen()
+	self:_refreshData(true)
+	self:com_registMsg(FightMsgId.FightProgressValueChange, self._refreshData)
+	self:com_registMsg(FightMsgId.FightMaxProgressValueChange, self._refreshData)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._refreshData)
 end
 
-function var_0_0._refreshData(arg_4_0, arg_4_1)
-	local var_4_0 = FightDataHelper.fieldMgr.progress
-	local var_4_1 = FightDataHelper.fieldMgr.progressMax
-	local var_4_2 = var_4_1 <= var_4_0
+function FightCommonalitySlider2:_refreshData(isOpen)
+	local progress = FightDataHelper.fieldMgr.progress
+	local max = FightDataHelper.fieldMgr.progressMax
+	local isMax = max <= progress
 
-	if arg_4_0._lastMax ~= var_4_2 then
-		gohelper.setActive(arg_4_0._max, var_4_2)
+	if self._lastMax ~= isMax then
+		gohelper.setActive(self._max, isMax)
 	end
 
-	local var_4_3 = var_4_0 / var_4_1
+	local percent = progress / max
 
-	arg_4_0._sliderText.text = Mathf.Clamp(var_4_3 * 100, 0, 100) .. "%"
+	self._sliderText.text = Mathf.Clamp(percent * 100, 0, 100) .. "%"
 
-	ZProj.TweenHelper.KillByObj(arg_4_0._slider)
+	ZProj.TweenHelper.KillByObj(self._slider)
 
-	if arg_4_1 then
-		arg_4_0._slider.fillAmount = var_4_3
+	if isOpen then
+		self._slider.fillAmount = percent
 	else
-		ZProj.TweenHelper.DOFillAmount(arg_4_0._slider, var_4_3, 0.2 / FightModel.instance:getUISpeed())
+		ZProj.TweenHelper.DOFillAmount(self._slider, percent, 0.2 / FightModel.instance:getUISpeed())
 	end
 
-	gohelper.setActive(arg_4_0.sliderBg, true)
-	gohelper.setActive(arg_4_0.effective, false)
+	gohelper.setActive(self.sliderBg, true)
+	gohelper.setActive(self.effective, false)
 
-	arg_4_0._lastMax = var_4_2
+	self._lastMax = isMax
 
-	local var_4_4 = false
+	local showScreenEffect = false
+	local progressId = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId]
 
-	if FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId] == 2 then
-		local var_4_5 = FightDataHelper.entityMgr:getMyVertin()
+	if progressId == 2 then
+		local myVertin = FightDataHelper.entityMgr:getMyVertin()
 
-		if var_4_5 then
-			local var_4_6 = var_4_5.buffDic
+		if myVertin then
+			local buffDic = myVertin.buffDic
 
-			for iter_4_0, iter_4_1 in pairs(var_4_6) do
-				if iter_4_1.buffId == 9260101 then
-					gohelper.setActive(arg_4_0.sliderBg, false)
-					gohelper.setActive(arg_4_0.effective, true)
+			for k, buffMO in pairs(buffDic) do
+				if buffMO.buffId == 9260101 then
+					gohelper.setActive(self.sliderBg, false)
+					gohelper.setActive(self.effective, true)
 
-					arg_4_0.durationText.text = iter_4_1.duration
-					var_4_4 = true
+					self.durationText.text = buffMO.duration
+					showScreenEffect = true
 
 					break
 				end
@@ -70,44 +73,44 @@ function var_0_0._refreshData(arg_4_0, arg_4_1)
 		end
 	end
 
-	arg_4_0:checkShowScreenEffect(var_4_4)
+	self:checkShowScreenEffect(showScreenEffect)
 end
 
-function var_0_0.checkShowScreenEffect(arg_5_0, arg_5_1)
-	if not arg_5_0._effectRoot then
-		arg_5_0._effectRoot = gohelper.create2d(arg_5_0.fightRoot, "FightCommonalitySlider2ScreenEffect")
+function FightCommonalitySlider2:checkShowScreenEffect(showScreenEffect)
+	if not self._effectRoot then
+		self._effectRoot = gohelper.create2d(self.fightRoot, "FightCommonalitySlider2ScreenEffect")
 
-		local var_5_0 = arg_5_0._effectRoot.transform
+		local transform = self._effectRoot.transform
 
-		var_5_0.anchorMin = Vector2.zero
-		var_5_0.anchorMax = Vector2.one
-		var_5_0.offsetMin = Vector2.zero
-		var_5_0.offsetMax = Vector2.zero
+		transform.anchorMin = Vector2.zero
+		transform.anchorMax = Vector2.one
+		transform.offsetMin = Vector2.zero
+		transform.offsetMax = Vector2.zero
 
-		arg_5_0:com_loadAsset("ui/viewres/fight/fight_weekwalk_screeneff.prefab", arg_5_0.onScreenEffectLoaded)
+		self:com_loadAsset("ui/viewres/fight/fight_weekwalk_screeneff.prefab", self.onScreenEffectLoaded)
 	end
 
-	gohelper.setActive(arg_5_0._effectRoot, arg_5_1)
+	gohelper.setActive(self._effectRoot, showScreenEffect)
 end
 
-function var_0_0.onScreenEffectLoaded(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_1 then
+function FightCommonalitySlider2:onScreenEffectLoaded(success, loader)
+	if not success then
 		return
 	end
 
-	local var_6_0 = arg_6_2:GetResource()
+	local obj = loader:GetResource()
 
-	gohelper.clone(var_6_0, arg_6_0._effectRoot)
+	gohelper.clone(obj, self._effectRoot)
 end
 
-function var_0_0._onBuffUpdate(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_3 == 9260101 then
-		arg_7_0:_refreshData()
+function FightCommonalitySlider2:_onBuffUpdate(entityId, effectType, buffId)
+	if buffId == 9260101 then
+		self:_refreshData()
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
-	ZProj.TweenHelper.KillByObj(arg_8_0._slider)
+function FightCommonalitySlider2:onClose()
+	ZProj.TweenHelper.KillByObj(self._slider)
 end
 
-return var_0_0
+return FightCommonalitySlider2

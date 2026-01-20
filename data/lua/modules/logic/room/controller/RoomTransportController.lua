@@ -1,471 +1,476 @@
-﻿module("modules.logic.room.controller.RoomTransportController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomTransportController.lua
 
-local var_0_0 = class("RoomTransportController", BaseController)
+module("modules.logic.room.controller.RoomTransportController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomTransportController = class("RoomTransportController", BaseController)
+
+function RoomTransportController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomTransportController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0:_removeEvents()
+function RoomTransportController:clear()
+	self:_removeEvents()
 	RoomTransportPathModel.instance:clear()
 	RoomMapTransportPathModel.instance:clear()
 end
 
-function var_0_0.init(arg_4_0)
-	arg_4_0:_addEvents()
+function RoomTransportController:init()
+	self:_addEvents()
 end
 
-function var_0_0._addEvents(arg_5_0)
-	if arg_5_0._isInitAddEvent then
+function RoomTransportController:_addEvents()
+	if self._isInitAddEvent then
 		return
 	end
 end
 
-function var_0_0._removeEvents(arg_6_0)
-	arg_6_0._isInitAddEvent = false
+function RoomTransportController:_removeEvents()
+	self._isInitAddEvent = false
 end
 
-function var_0_0.initPathData(arg_7_0, arg_7_1)
-	RoomTransportPathModel.instance:initPath(arg_7_1)
-	RoomMapTransportPathModel.instance:initPath(arg_7_1)
+function RoomTransportController:initPathData(roadInfos)
+	RoomTransportPathModel.instance:initPath(roadInfos)
+	RoomMapTransportPathModel.instance:initPath(roadInfos)
 	RoomMapTransportPathModel.instance:updateSiteHexPoint()
 end
 
-var_0_0.SAME_EDIT_PATH_REQUEST = "RoomTransportController.SAME_EDIT_PATH_REQUEST"
+RoomTransportController.SAME_EDIT_PATH_REQUEST = "RoomTransportController.SAME_EDIT_PATH_REQUEST"
 
-function var_0_0.saveEditPath(arg_8_0)
-	local var_8_0 = {}
-	local var_8_1 = {}
-	local var_8_2 = RoomMapTransportPathModel.instance
-	local var_8_3 = RoomTransportPathModel.instance:getTransportPathMOList()
+function RoomTransportController:saveEditPath()
+	local deleteIds = {}
+	local savePathMOList = {}
+	local tRoomMapTransportPathModel = RoomMapTransportPathModel.instance
+	local tRoomTransportPathModel = RoomTransportPathModel.instance
+	local pathMOList = tRoomTransportPathModel:getTransportPathMOList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_3) do
-		local var_8_4 = var_8_2:getTransportPathMOBy2Type(iter_8_1.fromType, iter_8_1.toType)
+	for _, pathMO in ipairs(pathMOList) do
+		local mapPathMO = tRoomMapTransportPathModel:getTransportPathMOBy2Type(pathMO.fromType, pathMO.toType)
 
-		if var_8_4 and var_8_4:isLinkFinish() then
-			var_8_4:updateCritterInfo(iter_8_1)
-			var_8_4:updateBuildingInfo(iter_8_1)
+		if mapPathMO and mapPathMO:isLinkFinish() then
+			mapPathMO:updateCritterInfo(pathMO)
+			mapPathMO:updateBuildingInfo(pathMO)
 
-			var_8_4.id = iter_8_1.id
+			mapPathMO.id = pathMO.id
 
-			table.insert(var_8_1, var_8_4)
-		elseif iter_8_1.id > 0 then
-			table.insert(var_8_0, iter_8_1.id)
+			table.insert(savePathMOList, mapPathMO)
+		elseif pathMO.id > 0 then
+			table.insert(deleteIds, pathMO.id)
 
-			local var_8_5 = RoomTransportHelper.fromTo2SiteType(iter_8_1.fromType, iter_8_1.toType)
+			local siteType = RoomTransportHelper.fromTo2SiteType(pathMO.fromType, pathMO.toType)
 
-			RoomTransportHelper.saveQuickLink(var_8_5, false)
+			RoomTransportHelper.saveQuickLink(siteType, false)
 		end
 	end
 
-	local var_8_6 = var_8_2:getTransportPathMOList()
-	local var_8_7 = -1
+	local mpaPathMOList = tRoomMapTransportPathModel:getTransportPathMOList()
+	local id = -1
 
-	for iter_8_2, iter_8_3 in ipairs(var_8_6) do
-		if iter_8_3:isLinkFinish() then
-			if not tabletool.indexOf(var_8_1, iter_8_3) then
-				iter_8_3.critterUid = 0
-				iter_8_3.buildingUid = 0
-				iter_8_3.buildingId = 0
-				iter_8_3.buildingSkinId = 0
-				iter_8_3.id = var_8_7
-				var_8_7 = var_8_7 - 1
+	for _, mapPathMO in ipairs(mpaPathMOList) do
+		if mapPathMO:isLinkFinish() then
+			if not tabletool.indexOf(savePathMOList, mapPathMO) then
+				mapPathMO.critterUid = 0
+				mapPathMO.buildingUid = 0
+				mapPathMO.buildingId = 0
+				mapPathMO.buildingSkinId = 0
+				mapPathMO.id = id
+				id = id - 1
 
-				table.insert(var_8_1, iter_8_3)
+				table.insert(savePathMOList, mapPathMO)
 			end
 
-			if iter_8_3:getIsEdit() and iter_8_3:getIsQuickLink() ~= nil then
-				local var_8_8 = RoomTransportHelper.fromTo2SiteType(iter_8_3.fromType, iter_8_3.toType)
+			if mapPathMO:getIsEdit() and mapPathMO:getIsQuickLink() ~= nil then
+				local siteType = RoomTransportHelper.fromTo2SiteType(mapPathMO.fromType, mapPathMO.toType)
 
-				RoomTransportHelper.saveQuickLink(var_8_8, iter_8_3:getIsQuickLink())
+				RoomTransportHelper.saveQuickLink(siteType, mapPathMO:getIsQuickLink())
 			end
 		end
 	end
 
-	RoomMapTransportPathModel.instance:setList(var_8_1)
+	RoomMapTransportPathModel.instance:setList(savePathMOList)
 
-	arg_8_0._savePathDeleteOp = #var_8_0 > 0
-	arg_8_0._savePathGeneraterOP = #var_8_1 > 0
-	arg_8_0._coutWaitSuccess = 0
+	self._savePathDeleteOp = #deleteIds > 0
+	self._savePathGeneraterOP = #savePathMOList > 0
+	self._coutWaitSuccess = 0
 
-	if arg_8_0._savePathGeneraterOP then
-		arg_8_0._coutWaitSuccess = arg_8_0._coutWaitSuccess + 1
+	if self._savePathGeneraterOP then
+		self._coutWaitSuccess = self._coutWaitSuccess + 1
 
-		RoomRpc.instance:sendGenerateRoadRequest(var_8_1, var_8_0, arg_8_0._onGenerateRoadReply, arg_8_0)
-	elseif arg_8_0._savePathDeleteOp then
-		arg_8_0._coutWaitSuccess = arg_8_0._coutWaitSuccess + 1
+		RoomRpc.instance:sendGenerateRoadRequest(savePathMOList, deleteIds, self._onGenerateRoadReply, self)
+	elseif self._savePathDeleteOp then
+		self._coutWaitSuccess = self._coutWaitSuccess + 1
 
-		RoomRpc.instance:sendDeleteRoadRequest(var_8_0, arg_8_0._onDeleteRoadReply, arg_8_0)
+		RoomRpc.instance:sendDeleteRoadRequest(deleteIds, self._onDeleteRoadReply, self)
 	end
 
-	if arg_8_0._savePathGeneraterOP or arg_8_0._savePathDeleteOp then
+	if self._savePathGeneraterOP or self._savePathDeleteOp then
 		RoomModel.instance:setEditFlag()
 	end
 
-	arg_8_0:waitRefreshPathLineChanged()
-	arg_8_0:updateBlockUseState()
+	self:waitRefreshPathLineChanged()
+	self:updateBlockUseState()
 end
 
-function var_0_0._onDeleteRoadReply(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_0._savePathDeleteOp = false
+function RoomTransportController:_onDeleteRoadReply(cmd, resultCode, msg)
+	self._savePathDeleteOp = false
 
-	if arg_9_2 == 0 then
-		arg_9_0._coutWaitSuccess = arg_9_0._coutWaitSuccess - 1
+	if resultCode == 0 then
+		self._coutWaitSuccess = self._coutWaitSuccess - 1
 
-		RoomTransportPathModel.instance:removeByIds(arg_9_3.ids)
-		RoomMapTransportPathModel.instance:removeByIds(arg_9_3.ids)
+		RoomTransportPathModel.instance:removeByIds(msg.ids)
+		RoomMapTransportPathModel.instance:removeByIds(msg.ids)
 	end
 
-	arg_9_0:_checkSaveEditPath()
+	self:_checkSaveEditPath()
 end
 
-function var_0_0._onGenerateRoadReply(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._savePathGeneraterOP = false
+function RoomTransportController:_onGenerateRoadReply(cmd, resultCode, msg)
+	self._savePathGeneraterOP = false
 
-	if arg_10_2 == 0 then
-		arg_10_0._coutWaitSuccess = arg_10_0._coutWaitSuccess - 1
+	if resultCode == 0 then
+		self._coutWaitSuccess = self._coutWaitSuccess - 1
 
-		local var_10_0 = arg_10_3.validRoadInfos
+		local roadInfos = msg.validRoadInfos
 
-		RoomTransportPathModel.instance:removeByIds(arg_10_3.ids)
-		RoomMapTransportPathModel.instance:removeByIds(arg_10_3.ids)
-		RoomTransportPathModel.instance:initPath(var_10_0)
-		RoomMapTransportPathModel.instance:initPath(var_10_0)
+		RoomTransportPathModel.instance:removeByIds(msg.ids)
+		RoomMapTransportPathModel.instance:removeByIds(msg.ids)
+		RoomTransportPathModel.instance:initPath(roadInfos)
+		RoomMapTransportPathModel.instance:initPath(roadInfos)
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 	end
 
-	arg_10_0:_checkSaveEditPath()
+	self:_checkSaveEditPath()
 end
 
-function var_0_0.deleteRoadReply(arg_11_0, arg_11_1)
-	arg_11_0:deleteRoadByIds(arg_11_1.ids)
+function RoomTransportController:deleteRoadReply(msg)
+	self:deleteRoadByIds(msg.ids)
 end
 
-function var_0_0.deleteRoadByIds(arg_12_0, arg_12_1)
-	if not arg_12_1 or #arg_12_1 < 1 then
+function RoomTransportController:deleteRoadByIds(ids)
+	if not ids or #ids < 1 then
 		return
 	end
 
-	RoomTransportPathModel.instance:removeByIds(arg_12_1)
-	RoomMapTransportPathModel.instance:removeByIds(arg_12_1)
+	RoomTransportPathModel.instance:removeByIds(ids)
+	RoomMapTransportPathModel.instance:removeByIds(ids)
 	RoomMapTransportPathModel.instance:updateSiteHexPoint()
-	arg_12_0:updateBlockUseState()
+	self:updateBlockUseState()
 end
 
-function var_0_0.allotCritterReply(arg_13_0, arg_13_1)
-	local var_13_0 = {
-		critterUid = arg_13_1.critterUid
+function RoomTransportController:allotCritterReply(msg)
+	local info = {
+		critterUid = msg.critterUid
 	}
-	local var_13_1 = arg_13_0:isTransportWorkingById(arg_13_1.id)
-	local var_13_2
-	local var_13_3 = RoomMapTransportPathModel.instance:getTransportPathMOList()
+	local isTransport = self:isTransportWorkingById(msg.id)
+	local changeMOList
+	local moList = RoomMapTransportPathModel.instance:getTransportPathMOList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_3) do
-		if iter_13_1.id ~= arg_13_1.id and iter_13_1.critterUid == arg_13_1.critterUid then
-			var_13_2 = var_13_2 or {}
+	for i, pathMO in ipairs(moList) do
+		if pathMO.id ~= msg.id and pathMO.critterUid == msg.critterUid then
+			changeMOList = changeMOList or {}
 
-			table.insert(var_13_2, iter_13_1)
+			table.insert(changeMOList, pathMO)
 		end
 	end
 
-	if var_13_2 then
-		local var_13_4 = {
+	if changeMOList then
+		local clearInfo = {
 			critterUid = 0
 		}
 
-		for iter_13_2, iter_13_3 in ipairs(var_13_2) do
-			RoomTransportPathModel.instance:updateInofoById(iter_13_3.id, var_13_4)
-			RoomMapTransportPathModel.instance:updateInofoById(iter_13_3.id, var_13_4)
+		for i, _pathMO in ipairs(changeMOList) do
+			RoomTransportPathModel.instance:updateInofoById(_pathMO.id, clearInfo)
+			RoomMapTransportPathModel.instance:updateInofoById(_pathMO.id, clearInfo)
 		end
 	end
 
-	RoomTransportPathModel.instance:updateInofoById(arg_13_1.id, var_13_0)
-	RoomMapTransportPathModel.instance:updateInofoById(arg_13_1.id, var_13_0)
+	RoomTransportPathModel.instance:updateInofoById(msg.id, info)
+	RoomMapTransportPathModel.instance:updateInofoById(msg.id, info)
 
-	if not var_13_1 and arg_13_0:isTransportWorkingById(arg_13_1.id) then
+	if not isTransport and self:isTransportWorkingById(msg.id) then
 		GameFacade.showToast(ToastEnum.RoomTransportStartMove)
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportCritterChanged)
 end
 
-function var_0_0.isTransportWorkingById(arg_14_0, arg_14_1)
-	local var_14_0 = RoomMapTransportPathModel.instance:getTransportPathMO(arg_14_1)
+function RoomTransportController:isTransportWorkingById(pathId)
+	local pathMO = RoomMapTransportPathModel.instance:getTransportPathMO(pathId)
 
-	if var_14_0 and var_14_0.critterUid and var_14_0.critterUid ~= 0 and (RoomBuildingAreaHelper.isHasWorkingByType(var_14_0.fromType) or RoomBuildingAreaHelper.isHasWorkingByType(var_14_0.toType)) then
+	if pathMO and pathMO.critterUid and pathMO.critterUid ~= 0 and (RoomBuildingAreaHelper.isHasWorkingByType(pathMO.fromType) or RoomBuildingAreaHelper.isHasWorkingByType(pathMO.toType)) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.batchCritterReply(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function RoomTransportController:batchCritterReply(roadInfos)
+	if not roadInfos then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		local var_15_0 = RoomTransportHelper.serverRoadInfo2Info(iter_15_1)
+	for _, roadInfo in ipairs(roadInfos) do
+		local info = RoomTransportHelper.serverRoadInfo2Info(roadInfo)
 
-		RoomTransportPathModel.instance:updateInofoById(var_15_0.id, var_15_0)
-		RoomMapTransportPathModel.instance:updateInofoById(var_15_0.id, var_15_0)
+		RoomTransportPathModel.instance:updateInofoById(info.id, info)
+		RoomMapTransportPathModel.instance:updateInofoById(info.id, info)
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportCritterChanged)
 end
 
-function var_0_0.allotVehicleReply(arg_16_0, arg_16_1)
-	local var_16_0 = {
-		buildingUid = arg_16_1.buildingUid,
-		buildingId = arg_16_1.buildingDefineId,
-		buildingDefineId = arg_16_1.buildingDefineId,
-		buildingSkinId = arg_16_1.skinId
+function RoomTransportController:allotVehicleReply(msg)
+	local info = {
+		buildingUid = msg.buildingUid,
+		buildingId = msg.buildingDefineId,
+		buildingDefineId = msg.buildingDefineId,
+		buildingSkinId = msg.skinId
 	}
-	local var_16_1 = RoomMapTransportPathModel.instance:getTransportPathMO(arg_16_1.id)
+	local pathMO = RoomMapTransportPathModel.instance:getTransportPathMO(msg.id)
 
-	RoomTransportPathModel.instance:updateInofoById(arg_16_1.id, var_16_0)
-	RoomMapTransportPathModel.instance:updateInofoById(arg_16_1.id, var_16_0)
+	RoomTransportPathModel.instance:updateInofoById(msg.id, info)
+	RoomMapTransportPathModel.instance:updateInofoById(msg.id, info)
 
-	if var_16_1 then
-		arg_16_0:_updateVehicle(var_16_1)
+	if pathMO then
+		self:_updateVehicle(pathMO)
 	end
 
 	GameFacade.showToast(ToastEnum.RoomTransportSkinChange)
 	RoomMapController.instance:dispatchEvent(RoomEvent.TransportBuildingChanged)
 end
 
-function var_0_0._updateVehicle(arg_17_0, arg_17_1)
-	if not arg_17_1 then
+function RoomTransportController:_updateVehicle(pathMO)
+	if not pathMO then
 		return
 	end
 
-	local var_17_0 = RoomCameraController.instance:getRoomScene()
+	local scene = RoomCameraController.instance:getRoomScene()
 
-	if not var_17_0 then
+	if not scene then
 		return
 	end
 
-	local var_17_1 = RoomTransportHelper.fromTo2SiteType(arg_17_1.fromType, arg_17_1.toType)
-	local var_17_2 = RoomTransportHelper.getVehicleCfgByBuildingId(arg_17_1.buildingId, arg_17_1.buildingSkinId)
+	local siteType = RoomTransportHelper.fromTo2SiteType(pathMO.fromType, pathMO.toType)
+	local vehicleCfg = RoomTransportHelper.getVehicleCfgByBuildingId(pathMO.buildingId, pathMO.buildingSkinId)
 
-	if var_17_2 then
-		local var_17_3 = RoomMapVehicleModel.instance:getVehicleMOBySiteType(var_17_1)
+	if vehicleCfg then
+		local vehicleMO = RoomMapVehicleModel.instance:getVehicleMOBySiteType(siteType)
 
-		if not var_17_3 then
-			var_17_3 = RoomMapVehicleModel.instance:createVehicleMOBySiteType(var_17_1)
+		if not vehicleMO then
+			vehicleMO = RoomMapVehicleModel.instance:createVehicleMOBySiteType(siteType)
 
-			if var_17_3 then
-				RoomMapVehicleModel.instance:addAtLast(var_17_3)
+			if vehicleMO then
+				RoomMapVehicleModel.instance:addAtLast(vehicleMO)
 			end
 		end
 
-		if var_17_3 then
-			var_17_3.config = var_17_2
-			var_17_3.vehicleId = var_17_2.id
+		if vehicleMO then
+			vehicleMO.config = vehicleCfg
+			vehicleMO.vehicleId = vehicleCfg.id
 
-			local var_17_4 = var_17_0.vehiclemgr:getVehicleEntity(var_17_3.id)
+			local vehicleEntity = scene.vehiclemgr:getVehicleEntity(vehicleMO.id)
 
-			if var_17_4 then
-				var_17_4:refreshReplaceType()
-				var_17_4:refreshVehicle()
+			if vehicleEntity then
+				vehicleEntity:refreshReplaceType()
+				vehicleEntity:refreshVehicle()
 			else
-				var_17_0.vehiclemgr:spawnMapVehicle(var_17_3)
+				scene.vehiclemgr:spawnMapVehicle(vehicleMO)
 			end
 		end
 	else
-		local var_17_5 = RoomMapVehicleModel.instance:getVehicleIdBySiteType(var_17_1)
-		local var_17_6 = var_17_0.vehiclemgr:getVehicleEntity(var_17_5)
+		local id = RoomMapVehicleModel.instance:getVehicleIdBySiteType(siteType)
+		local vehicleEntity = scene.vehiclemgr:getVehicleEntity(id)
 
-		if var_17_6 then
-			var_17_0.vehiclemgr:destroyVehicle(var_17_6)
+		if vehicleEntity then
+			scene.vehiclemgr:destroyVehicle(vehicleEntity)
 		end
 
-		local var_17_7 = RoomMapVehicleModel.instance:getVehicleMOBySiteType(var_17_1)
+		local vehicleMO = RoomMapVehicleModel.instance:getVehicleMOBySiteType(siteType)
 
-		if var_17_7 then
-			RoomMapVehicleModel.instance:remove(var_17_7)
+		if vehicleMO then
+			RoomMapVehicleModel.instance:remove(vehicleMO)
 		end
 	end
 end
 
-function var_0_0._checkSaveEditPath(arg_18_0)
-	if not arg_18_0._savePathDeleteOp and not arg_18_0._savePathGeneraterOP then
-		UIBlockMgr.instance:endBlock(var_0_0.SAME_EDIT_PATH_REQUEST)
+function RoomTransportController:_checkSaveEditPath()
+	if not self._savePathDeleteOp and not self._savePathGeneraterOP then
+		UIBlockMgr.instance:endBlock(RoomTransportController.SAME_EDIT_PATH_REQUEST)
 
-		if arg_18_0._coutWaitSuccess and arg_18_0._coutWaitSuccess < 1 then
+		if self._coutWaitSuccess and self._coutWaitSuccess < 1 then
 			ViewMgr.instance:closeView(ViewName.RoomTransportPathView)
 			GameFacade.showToast(RoomEnum.Toast.LayoutPlanSave)
 		end
 
-		arg_18_0:waitRefreshPathLineChanged()
+		self:waitRefreshPathLineChanged()
 	end
 end
 
-function var_0_0.updateBlockUseState(arg_19_0)
-	local var_19_0 = RoomMapTransportPathModel.instance:getTransportPathMOList()
-	local var_19_1 = RoomMapBlockModel.instance
-	local var_19_2 = {}
-	local var_19_3 = {}
-	local var_19_4 = RoomBlockEnum.UseState.TransportPath
+function RoomTransportController:updateBlockUseState()
+	local pathMOList = RoomMapTransportPathModel.instance:getTransportPathMOList()
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
+	local pathIdDict = {}
+	local pathId2CleanTypeDict = {}
+	local useStateTransportPath = RoomBlockEnum.UseState.TransportPath
 
-	for iter_19_0 = 1, #var_19_0 do
-		local var_19_5 = var_19_0[iter_19_0]
-		local var_19_6 = var_19_5:getHexPointList()
+	for i = 1, #pathMOList do
+		local pathMO = pathMOList[i]
+		local hexPointList = pathMO:getHexPointList()
 
-		for iter_19_1, iter_19_2 in ipairs(var_19_6) do
-			local var_19_7 = var_19_1:getBlockMO(iter_19_2.x, iter_19_2.y)
+		for _, hexPoint in ipairs(hexPointList) do
+			local blockMO = tRoomMapBlockModel:getBlockMO(hexPoint.x, hexPoint.y)
 
-			if var_19_7 then
-				var_19_2[var_19_7.id] = true
-				var_19_3[var_19_7.id] = var_19_5.blockCleanType
+			if blockMO then
+				pathIdDict[blockMO.id] = true
+				pathId2CleanTypeDict[blockMO.id] = pathMO.blockCleanType
 			end
 		end
 	end
 
-	local var_19_8 = var_19_1:getFullBlockMOList()
+	local fullBlockMOList = tRoomMapBlockModel:getFullBlockMOList()
 
-	for iter_19_3, iter_19_4 in ipairs(var_19_8) do
-		local var_19_9 = iter_19_4.id
-		local var_19_10 = iter_19_4:getUseState()
-		local var_19_11 = iter_19_4:getCleanType()
+	for _, blockMO in ipairs(fullBlockMOList) do
+		local blockId = blockMO.id
+		local useState = blockMO:getUseState()
+		local cleanType = blockMO:getCleanType()
 
-		if var_19_2[var_19_9] then
-			local var_19_12 = var_19_3[iter_19_4.id]
+		if pathIdDict[blockId] then
+			local pathCleanType = pathId2CleanTypeDict[blockMO.id]
 
-			if var_19_10 ~= var_19_4 or var_19_12 ~= var_19_11 then
-				iter_19_4:setUseState(var_19_4)
-				iter_19_4:setCleanType(var_19_12)
-				arg_19_0:waitRefreshBlockById(var_19_9)
+			if useState ~= useStateTransportPath or pathCleanType ~= cleanType then
+				blockMO:setUseState(useStateTransportPath)
+				blockMO:setCleanType(pathCleanType)
+				self:waitRefreshBlockById(blockId)
 			end
-		elseif var_19_10 == var_19_4 or var_19_11 ~= RoomBlockEnum.UseState.Normal then
-			iter_19_4:setUseState(nil)
-			iter_19_4:setCleanType(nil)
-			arg_19_0:waitRefreshBlockById(var_19_9)
+		elseif useState == useStateTransportPath or cleanType ~= RoomBlockEnum.UseState.Normal then
+			blockMO:setUseState(nil)
+			blockMO:setCleanType(nil)
+			self:waitRefreshBlockById(blockId)
 		end
 	end
 
-	arg_19_0:waitRefreshPathLineChanged()
+	self:waitRefreshPathLineChanged()
 end
 
-function var_0_0.tweenCameraFocusSite(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._tweenCameraFocusSiteParams = nil
+function RoomTransportController:tweenCameraFocusSite(siteType, isFirstPerson)
+	self._tweenCameraFocusSiteParams = nil
 
-	local var_20_0 = GameSceneMgr.instance:getCurScene()
-	local var_20_1 = RoomMapVehicleModel.instance:getVehicleMOBySiteType(arg_20_1)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local vehicleMO = RoomMapVehicleModel.instance:getVehicleMOBySiteType(siteType)
 
-	if var_20_1 then
-		arg_20_2 = arg_20_2 == true
+	if vehicleMO then
+		isFirstPerson = isFirstPerson == true
 
-		local var_20_2 = var_20_0.vehiclemgr:getVehicleEntity(var_20_1.id)
+		local vehicleEntity = scene.vehiclemgr:getVehicleEntity(vehicleMO.id)
 
-		var_20_0.cameraFollow:setFollowTarget(var_20_2 and var_20_2.cameraFollowTargetComp, arg_20_2)
+		scene.cameraFollow:setFollowTarget(vehicleEntity and vehicleEntity.cameraFollowTargetComp, isFirstPerson)
 
-		if var_20_2 then
-			local var_20_3 = var_20_1.config
-			local var_20_4 = RoomEnum.CameraState.ThirdPerson
-			local var_20_5 = var_20_3 and var_20_3.thirdCameraId
+		if vehicleEntity then
+			local vehicleCfg = vehicleMO.config
+			local cameraState = RoomEnum.CameraState.ThirdPerson
+			local cameraParamId = vehicleCfg and vehicleCfg.thirdCameraId
 
-			if arg_20_2 then
-				var_20_5 = var_20_3 and var_20_3.firstCameraId
-				var_20_4 = RoomEnum.CameraState.FirstPerson
+			if isFirstPerson then
+				cameraParamId = vehicleCfg and vehicleCfg.firstCameraId
+				cameraState = RoomEnum.CameraState.FirstPerson
 			end
 
-			var_20_2.cameraFollowTargetComp:setFollowGOPath(arg_20_2 and RoomEnum.EntityChildKey.FirstPersonCameraGOKey or RoomEnum.EntityChildKey.ThirdPersonCameraGOKey)
+			vehicleEntity.cameraFollowTargetComp:setFollowGOPath(isFirstPerson and RoomEnum.EntityChildKey.FirstPersonCameraGOKey or RoomEnum.EntityChildKey.ThirdPersonCameraGOKey)
 
-			local var_20_6, var_20_7, var_20_8 = var_20_2.cameraFollowTargetComp:getPositionXYZ()
+			local px, py, pz = vehicleEntity.cameraFollowTargetComp:getPositionXYZ()
 
-			var_20_0.cameraFollow:setIsPass(true, var_20_7)
+			scene.cameraFollow:setIsPass(true, py)
 
-			local var_20_9 = {
-				focusX = var_20_6,
-				focusY = var_20_8
+			local cameraParam = {
+				focusX = px,
+				focusY = pz
 			}
 
-			var_20_0.cameraFollow._offsetY = var_20_7
+			scene.cameraFollow._offsetY = py
 
-			if arg_20_2 then
-				local var_20_10, var_20_11, var_20_12 = var_20_2.cameraFollowTargetComp:getRotateXYZ()
+			if isFirstPerson then
+				local rx, ry, rz = vehicleEntity.cameraFollowTargetComp:getRotateXYZ()
 
-				var_20_9.rotate = RoomRotateHelper.getMod(var_20_11, 360) * Mathf.Deg2Rad
+				cameraParam.rotate = RoomRotateHelper.getMod(ry, 360) * Mathf.Deg2Rad
 			end
 
-			var_20_0.camera:setChangeCameraParamsById(var_20_4, var_20_5)
-			var_20_0.camera:switchCameraState(var_20_4, var_20_9, nil, arg_20_0._onTweenCameraFocusSiteFinsh, arg_20_0)
+			scene.camera:setChangeCameraParamsById(cameraState, cameraParamId)
+			scene.camera:switchCameraState(cameraState, cameraParam, nil, self._onTweenCameraFocusSiteFinsh, self)
 
-			arg_20_0._tweenCameraFocusSiteParams = true
+			self._tweenCameraFocusSiteParams = true
 
-			var_20_0.fovblock:setLookVehicleUid(var_20_4, var_20_1.id)
+			scene.fovblock:setLookVehicleUid(cameraState, vehicleMO.id)
 		end
 
 		return
 	end
 
-	local var_20_13 = RoomMapTransportPathModel.instance:getSiteHexPointByType(arg_20_1)
+	local hexPoint = RoomMapTransportPathModel.instance:getSiteHexPointByType(siteType)
 
-	if var_20_13 then
-		var_20_0.cameraFollow:setFollowTarget(nil)
+	if hexPoint then
+		scene.cameraFollow:setFollowTarget(nil)
 
-		local var_20_14, var_20_15 = HexMath.hexXYToPosXY(var_20_13.x, var_20_13.y, RoomBlockEnum.BlockSize)
+		local posX, posZ = HexMath.hexXYToPosXY(hexPoint.x, hexPoint.y, RoomBlockEnum.BlockSize)
 
-		var_20_0.camera:switchCameraState(RoomEnum.CameraState.Normal, {
-			focusX = var_20_14,
-			focusY = var_20_15
+		scene.camera:switchCameraState(RoomEnum.CameraState.Normal, {
+			focusX = posX,
+			focusY = posZ
 		})
 	end
 end
 
-function var_0_0._onTweenCameraFocusSiteFinsh(arg_21_0)
-	if arg_21_0._tweenCameraFocusSiteParams then
-		arg_21_0._tweenCameraFocusSiteParams = nil
+function RoomTransportController:_onTweenCameraFocusSiteFinsh()
+	if self._tweenCameraFocusSiteParams then
+		self._tweenCameraFocusSiteParams = nil
 
-		local var_21_0 = RoomCameraController.instance:getRoomScene()
+		local scene = RoomCameraController.instance:getRoomScene()
 
-		if var_21_0 then
-			var_21_0.cameraFollow:setIsPass(false)
+		if scene then
+			scene.cameraFollow:setIsPass(false)
 		end
 	end
 end
 
-function var_0_0.openTransportSiteView(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_1 = arg_22_0:_findLinkPathSiteType(arg_22_1)
+function RoomTransportController:openTransportSiteView(siteType, replaceCameraState)
+	siteType = self:_findLinkPathSiteType(siteType)
 
-	if arg_22_1 then
-		RoomCameraController.instance:saveCameraStateByKey(ViewName.RoomTransportSiteView, arg_22_2)
+	if siteType then
+		RoomCameraController.instance:saveCameraStateByKey(ViewName.RoomTransportSiteView, replaceCameraState)
 
-		local var_22_0 = false
+		local isFirstPerson = false
 
-		arg_22_0:tweenCameraFocusSite(arg_22_1, var_22_0)
+		self:tweenCameraFocusSite(siteType, isFirstPerson)
 		ViewMgr.instance:openView(ViewName.RoomTransportSiteView, {
-			siteType = arg_22_1,
-			isFirstPerson = var_22_0
+			siteType = siteType,
+			isFirstPerson = isFirstPerson
 		})
 	end
 end
 
-function var_0_0._findLinkPathSiteType(arg_23_0, arg_23_1)
-	local var_23_0, var_23_1 = RoomTransportHelper.getSiteFromToByType(arg_23_1)
+function RoomTransportController:_findLinkPathSiteType(siteType)
+	local fromType, toType = RoomTransportHelper.getSiteFromToByType(siteType)
+	local pathMO = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(fromType, toType)
 
-	if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_23_0, var_23_1) then
-		return arg_23_1
+	if pathMO then
+		return siteType
 	end
 
-	local var_23_2 = RoomTransportHelper.getSiteBuildingTypeList()
+	local siteTypeList = RoomTransportHelper.getSiteBuildingTypeList()
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_2) do
-		local var_23_3, var_23_4 = RoomTransportHelper.getSiteFromToByType(iter_23_1)
+	for i, tempType in ipairs(siteTypeList) do
+		local fromType, toType = RoomTransportHelper.getSiteFromToByType(tempType)
+		local pathMO = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(fromType, toType)
 
-		if RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(var_23_3, var_23_4) and (var_23_3 == arg_23_1 or var_23_4 == arg_23_1) then
-			return iter_23_1
+		if pathMO and (fromType == siteType or toType == siteType) then
+			return tempType
 		end
 	end
 end
 
-function var_0_0.openTransportPathView(arg_24_0)
+function RoomTransportController:openTransportPathView()
 	if RoomMapBuildingAreaModel.instance:getCount() < 2 then
 		GameFacade.showToast(ToastEnum.RoomTranspathUnableEdite)
 
@@ -476,91 +481,92 @@ function var_0_0.openTransportPathView(arg_24_0)
 	ViewMgr.instance:openView(ViewName.RoomTransportPathView)
 end
 
-function var_0_0.isTransportPathShow(arg_25_0)
+function RoomTransportController:isTransportPathShow()
 	return ViewMgr.instance:isOpen(ViewName.RoomTransportPathView)
 end
 
-function var_0_0.isTransportSitShow(arg_26_0)
+function RoomTransportController:isTransportSitShow()
 	return ViewMgr.instance:isOpen(ViewName.RoomTransportSiteView)
 end
 
-function var_0_0.addConstEvents(arg_27_0)
+function RoomTransportController:addConstEvents()
 	return
 end
 
-function var_0_0.waitRefreshBlockById(arg_28_0, arg_28_1)
-	arg_28_0._waitingBlockIdList = arg_28_0._waitingBlockIdList or {}
+function RoomTransportController:waitRefreshBlockById(blockId)
+	self._waitingBlockIdList = self._waitingBlockIdList or {}
 
-	if arg_28_1 and not tabletool.indexOf(arg_28_0._waitingBlockIdList, arg_28_1) then
-		table.insert(arg_28_0._waitingBlockIdList, arg_28_1)
-		arg_28_0:_startWaitRunRefreshTask()
+	if blockId and not tabletool.indexOf(self._waitingBlockIdList, blockId) then
+		table.insert(self._waitingBlockIdList, blockId)
+		self:_startWaitRunRefreshTask()
 	end
 end
 
-function var_0_0.waitRefreshPathLineChanged(arg_29_0)
-	arg_29_0._transportPathLineChanged = true
+function RoomTransportController:waitRefreshPathLineChanged()
+	self._transportPathLineChanged = true
 
-	arg_29_0:_startWaitRunRefreshTask()
+	self:_startWaitRunRefreshTask()
 end
 
-function var_0_0._refreshBlockByIds(arg_30_0, arg_30_1)
-	if arg_30_1 and #arg_30_1 > 0 then
-		local var_30_0 = {}
+function RoomTransportController:_refreshBlockByIds(waitList)
+	if waitList and #waitList > 0 then
+		local entityList = {}
 
-		for iter_30_0 = 1, #arg_30_1 do
-			local var_30_1 = arg_30_1[iter_30_0]
-			local var_30_2 = RoomMapBlockModel.instance:getFullBlockMOById(var_30_1)
+		for i = 1, #waitList do
+			local blockId = waitList[i]
+			local blockMO = RoomMapBlockModel.instance:getFullBlockMOById(blockId)
 
-			if var_30_2 and var_30_2:isInMap() then
-				local var_30_3 = GameSceneMgr.instance:getCurScene().mapmgr:getBlockEntity(var_30_2.id, SceneTag.RoomMapBlock)
+			if blockMO and blockMO:isInMap() then
+				local scene = GameSceneMgr.instance:getCurScene()
+				local entity = scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-				if var_30_3 and not tabletool.indexOf(var_30_0, var_30_3) then
-					table.insert(var_30_0, var_30_3)
+				if entity and not tabletool.indexOf(entityList, entity) then
+					table.insert(entityList, entity)
 				end
 
-				local var_30_4 = RoomBlockHelper.getNearBlockEntity(false, var_30_2.hexPoint, 1, false, true)
+				local nearMapEntityList = RoomBlockHelper.getNearBlockEntity(false, blockMO.hexPoint, 1, false, true)
 
-				for iter_30_1, iter_30_2 in ipairs(var_30_4) do
-					if iter_30_2 and not tabletool.indexOf(var_30_0, iter_30_2) then
-						table.insert(var_30_0, iter_30_2)
+				for _, entity in ipairs(nearMapEntityList) do
+					if entity and not tabletool.indexOf(entityList, entity) then
+						table.insert(entityList, entity)
 					end
 				end
 			end
 		end
 
-		RoomBlockHelper.refreshBlockResourceType(var_30_0)
-		RoomBlockHelper.refreshBlockEntity(var_30_0, "refreshLand")
+		RoomBlockHelper.refreshBlockResourceType(entityList)
+		RoomBlockHelper.refreshBlockEntity(entityList, "refreshLand")
 	end
 end
 
-function var_0_0._startWaitRunRefreshTask(arg_31_0)
-	if not arg_31_0._hasWaitRunRefreshTask then
-		arg_31_0._hasWaitRunRefreshTask = true
+function RoomTransportController:_startWaitRunRefreshTask()
+	if not self._hasWaitRunRefreshTask then
+		self._hasWaitRunRefreshTask = true
 
-		TaskDispatcher.runDelay(arg_31_0._onWaitRunRefreshTask, arg_31_0, 0.001)
+		TaskDispatcher.runDelay(self._onWaitRunRefreshTask, self, 0.001)
 	end
 end
 
-function var_0_0._onWaitRunRefreshTask(arg_32_0)
-	arg_32_0._hasWaitRunRefreshTask = false
+function RoomTransportController:_onWaitRunRefreshTask()
+	self._hasWaitRunRefreshTask = false
 
-	if arg_32_0._waitingBlockIdList and #arg_32_0._waitingBlockIdList > 0 then
-		local var_32_0 = arg_32_0._waitingBlockIdList
+	if self._waitingBlockIdList and #self._waitingBlockIdList > 0 then
+		local waitList = self._waitingBlockIdList
 
-		arg_32_0._waitingBlockIdList = {}
+		self._waitingBlockIdList = {}
 
-		arg_32_0:_refreshBlockByIds(var_32_0)
+		self:_refreshBlockByIds(waitList)
 
-		arg_32_0._transportPathLineChanged = true
+		self._transportPathLineChanged = true
 	end
 
-	if arg_32_0._transportPathLineChanged then
-		arg_32_0._transportPathLineChanged = false
+	if self._transportPathLineChanged then
+		self._transportPathLineChanged = false
 
 		RoomMapController.instance:dispatchEvent(RoomEvent.TransportPathLineChanged)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTransportController.instance = RoomTransportController.New()
 
-return var_0_0
+return RoomTransportController

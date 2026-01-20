@@ -1,11 +1,13 @@
-﻿module("modules.logic.fightuiswitch.controller.FightUISwitchEvent", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/controller/FightUISwitchEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.fightuiswitch.controller.FightUISwitchEvent", package.seeall)
 
-var_0_0.UseFightUIStyle = 1
-var_0_0.SelectFightUIStyle = 2
-var_0_0.SelectFightUIEffect = 3
-var_0_0.LoadFinish = 4
-var_0_0.cancelClassifyReddot = 5
+local FightUISwitchEvent = _M
 
-return var_0_0
+FightUISwitchEvent.UseFightUIStyle = 1
+FightUISwitchEvent.SelectFightUIStyle = 2
+FightUISwitchEvent.SelectFightUIEffect = 3
+FightUISwitchEvent.LoadFinish = 4
+FightUISwitchEvent.cancelClassifyReddot = 5
+
+return FightUISwitchEvent

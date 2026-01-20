@@ -1,98 +1,100 @@
-﻿module("modules.logic.room.view.interact.RoomInteractCharacterItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/interact/RoomInteractCharacterItem.lua
 
-local var_0_0 = class("RoomInteractCharacterItem", ListScrollCellExtend)
+module("modules.logic.room.view.interact.RoomInteractCharacterItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goonbirthdayicon = gohelper.findChild(arg_1_0.viewGO, "#go_onbirthdayicon")
+local RoomInteractCharacterItem = class("RoomInteractCharacterItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomInteractCharacterItem:onInitView()
+	self._goonbirthdayicon = gohelper.findChild(self.viewGO, "#go_onbirthdayicon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomInteractCharacterItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomInteractCharacterItem:removeEvents()
 	return
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._view and arg_4_0._view.viewContainer and arg_4_0._mo then
-		arg_4_0._view.viewContainer:dispatchEvent(RoomEvent.InteractBuildingSelectHero, arg_4_0._mo.heroId)
+function RoomInteractCharacterItem:_btnclickOnClick()
+	if self._view and self._view.viewContainer and self._mo then
+		self._view.viewContainer:dispatchEvent(RoomEvent.InteractBuildingSelectHero, self._mo.heroId)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simageicon = gohelper.findChildSingleImage(arg_5_0.viewGO, "role/heroicon")
-	arg_5_0._gobeplaced = gohelper.findChild(arg_5_0.viewGO, "placeicon")
-	arg_5_0._goclick = gohelper.findChild(arg_5_0.viewGO, "go_click")
-	arg_5_0._goselect = gohelper.findChild(arg_5_0.viewGO, "select")
-	arg_5_0._gotrust = gohelper.findChild(arg_5_0.viewGO, "trust")
-	arg_5_0._txttrust = gohelper.findChildText(arg_5_0.viewGO, "trust/txt_trust")
-	arg_5_0._gorole = gohelper.findChild(arg_5_0.viewGO, "role")
-	arg_5_0._imagecareer = gohelper.findChildImage(arg_5_0.viewGO, "role/career")
-	arg_5_0._imagerare = gohelper.findChildImage(arg_5_0.viewGO, "role/rare")
-	arg_5_0._txtname = gohelper.findChildText(arg_5_0.viewGO, "role/name")
-	arg_5_0._txtnameen = gohelper.findChildText(arg_5_0.viewGO, "role/name/nameEn")
-	arg_5_0._canvasGroup = arg_5_0._gorole:GetComponent(typeof(UnityEngine.CanvasGroup))
+function RoomInteractCharacterItem:_editableInitView()
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "role/heroicon")
+	self._gobeplaced = gohelper.findChild(self.viewGO, "placeicon")
+	self._goclick = gohelper.findChild(self.viewGO, "go_click")
+	self._goselect = gohelper.findChild(self.viewGO, "select")
+	self._gotrust = gohelper.findChild(self.viewGO, "trust")
+	self._txttrust = gohelper.findChildText(self.viewGO, "trust/txt_trust")
+	self._gorole = gohelper.findChild(self.viewGO, "role")
+	self._imagecareer = gohelper.findChildImage(self.viewGO, "role/career")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "role/rare")
+	self._txtname = gohelper.findChildText(self.viewGO, "role/name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "role/name/nameEn")
+	self._canvasGroup = self._gorole:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.addUIClickAudio(arg_5_0._goclick, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._goclick, AudioEnum.UI.UI_Common_Click)
 
-	arg_5_0._uiclick = SLFramework.UGUI.UIClickListener.Get(arg_5_0._goclick)
+	self._uiclick = SLFramework.UGUI.UIClickListener.Get(self._goclick)
 
-	arg_5_0._uiclick:AddClickListener(arg_5_0._btnclickOnClick, arg_5_0)
-	gohelper.setActive(arg_5_0._gotrust, false)
-	gohelper.setActive(arg_5_0._gobeplaced, false)
-	gohelper.setActive(gohelper.findChild(arg_5_0._gobeplaced, "icon"), false)
+	self._uiclick:AddClickListener(self._btnclickOnClick, self)
+	gohelper.setActive(self._gotrust, false)
+	gohelper.setActive(self._gobeplaced, false)
+	gohelper.setActive(gohelper.findChild(self._gobeplaced, "icon"), false)
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function RoomInteractCharacterItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function RoomInteractCharacterItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
+function RoomInteractCharacterItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_8_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
+function RoomInteractCharacterItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._uiclick:RemoveClickListener()
-	arg_10_0._simageicon:UnLoadImage()
+function RoomInteractCharacterItem:onDestroyView()
+	self._uiclick:RemoveClickListener()
+	self._simageicon:UnLoadImage()
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	arg_11_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(arg_11_0._mo.skinConfig.headIcon))
-	gohelper.setActive(arg_11_0._gobeplaced, arg_11_0._mo.use)
+function RoomInteractCharacterItem:_refreshUI()
+	self._simageicon:LoadImage(ResUrl.getRoomHeadIcon(self._mo.skinConfig.headIcon))
+	gohelper.setActive(self._gobeplaced, self._mo.use)
 
-	local var_11_0 = RoomCharacterModel.instance:isOnBirthday(arg_11_0._mo.heroConfig.id)
+	local isOnBirthday = RoomCharacterModel.instance:isOnBirthday(self._mo.heroConfig.id)
 
-	gohelper.setActive(arg_11_0._goonbirthdayicon, var_11_0)
+	gohelper.setActive(self._goonbirthdayicon, isOnBirthday)
 
-	if arg_11_0._mo.use then
-		arg_11_0._canvasGroup.alpha = 0.7
+	if self._mo.use then
+		self._canvasGroup.alpha = 0.7
 	else
-		arg_11_0._canvasGroup.alpha = 1
+		self._canvasGroup.alpha = 1
 	end
 
-	gohelper.addUIClickAudio(arg_11_0._goclick, arg_11_0._mo.use and AudioEnum.UI.UI_Common_Click or AudioEnum.UI.Play_UI_Copies)
-	UISpriteSetMgr.instance:setCommonSprite(arg_11_0._imagecareer, "lssx_" .. arg_11_0._mo.heroConfig.career)
-	UISpriteSetMgr.instance:setCommonSprite(arg_11_0._imagerare, "bgequip" .. CharacterEnum.Color[arg_11_0._mo.heroConfig.rare])
+	gohelper.addUIClickAudio(self._goclick, self._mo.use and AudioEnum.UI.UI_Common_Click or AudioEnum.UI.Play_UI_Copies)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. self._mo.heroConfig.career)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare, "bgequip" .. CharacterEnum.Color[self._mo.heroConfig.rare])
 
-	arg_11_0._txtname.text = arg_11_0._mo.heroConfig.name
-	arg_11_0._txtnameen.text = arg_11_0._mo.heroConfig.nameEng
+	self._txtname.text = self._mo.heroConfig.name
+	self._txtnameen.text = self._mo.heroConfig.nameEng
 end
 
-var_0_0.prefabUrl = "ui/viewres/room/roomcharacterplaceitem.prefab"
+RoomInteractCharacterItem.prefabUrl = "ui/viewres/room/roomcharacterplaceitem.prefab"
 
-return var_0_0
+return RoomInteractCharacterItem

@@ -1,13 +1,15 @@
-﻿module("modules.logic.roomfishing.view.RoomFishingRewardViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/view/RoomFishingRewardViewContainer.lua
 
-local var_0_0 = class("RoomFishingRewardViewContainer", BaseViewContainer)
+module("modules.logic.roomfishing.view.RoomFishingRewardViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomFishingRewardViewContainer = class("RoomFishingRewardViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomFishingRewardView.New())
+function RoomFishingRewardViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomFishingRewardView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomFishingRewardViewContainer

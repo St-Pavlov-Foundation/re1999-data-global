@@ -1,10 +1,12 @@
-﻿module("modules.logic.explore.controller.steps.ExploreBonusSceneStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreBonusSceneStep.lua
 
-local var_0_0 = class("ExploreBonusSceneStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreBonusSceneStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ExploreSimpleModel.instance:onGetBonus(arg_1_0._data.bonusSceneId, arg_1_0._data.options)
-	arg_1_0:onDone()
+local ExploreBonusSceneStep = class("ExploreBonusSceneStep", ExploreStepBase)
+
+function ExploreBonusSceneStep:onStart()
+	ExploreSimpleModel.instance:onGetBonus(self._data.bonusSceneId, self._data.options)
+	self:onDone()
 end
 
-return var_0_0
+return ExploreBonusSceneStep

@@ -1,13 +1,15 @@
-﻿module("modules.logic.tower.view.assistboss.TowerBossTalentModifyNameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerBossTalentModifyNameViewContainer.lua
 
-local var_0_0 = class("TowerBossTalentModifyNameViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.assistboss.TowerBossTalentModifyNameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerBossTalentModifyNameViewContainer = class("TowerBossTalentModifyNameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerBossTalentModifyNameView.New())
+function TowerBossTalentModifyNameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerBossTalentModifyNameView.New())
+
+	return views
 end
 
-return var_0_0
+return TowerBossTalentModifyNameViewContainer

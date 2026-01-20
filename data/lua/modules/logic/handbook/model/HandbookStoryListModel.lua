@@ -1,38 +1,40 @@
-﻿module("modules.logic.handbook.model.HandbookStoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/model/HandbookStoryListModel.lua
 
-local var_0_0 = class("HandbookStoryListModel", ListScrollModel)
+module("modules.logic.handbook.model.HandbookStoryListModel", package.seeall)
 
-function var_0_0.setStoryList(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.moList = {}
+local HandbookStoryListModel = class("HandbookStoryListModel", ListScrollModel)
 
-	local var_1_0 = 0
+function HandbookStoryListModel:setStoryList(storyGroupList, storyChapterId)
+	self.moList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		if iter_1_1.storyChapterId == arg_1_2 and HandbookModel.instance:isStoryGroupUnlock(iter_1_1.id) then
-			var_1_0 = var_1_0 + 1
+	local count = 0
 
-			local var_1_1 = HandbookStoryMO.New()
+	for i, config in ipairs(storyGroupList) do
+		if config.storyChapterId == storyChapterId and HandbookModel.instance:isStoryGroupUnlock(config.id) then
+			count = count + 1
 
-			var_1_1:init(iter_1_1.id, var_1_0)
-			table.insert(arg_1_0.moList, var_1_1)
+			local handbookStoryMO = HandbookStoryMO.New()
+
+			handbookStoryMO:init(config.id, count)
+			table.insert(self.moList, handbookStoryMO)
 		end
 	end
 
-	arg_1_0:setList(arg_1_0.moList)
+	self:setList(self.moList)
 end
 
-function var_0_0.getStoryList(arg_2_0)
-	if GameUtil.getTabLen(arg_2_0.moList) > 0 then
-		return arg_2_0.moList
+function HandbookStoryListModel:getStoryList()
+	if GameUtil.getTabLen(self.moList) > 0 then
+		return self.moList
 	end
 
 	return nil
 end
 
-function var_0_0.clearStoryList(arg_3_0)
-	arg_3_0:setList({})
+function HandbookStoryListModel:clearStoryList()
+	self:setList({})
 end
 
-var_0_0.instance = var_0_0.New()
+HandbookStoryListModel.instance = HandbookStoryListModel.New()
 
-return var_0_0
+return HandbookStoryListModel

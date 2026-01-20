@@ -1,221 +1,223 @@
-﻿module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceChoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/piecechoice/RougeMapPieceChoiceView.lua
 
-local var_0_0 = class("RougeMapPieceChoiceView", RougeMapChoiceBaseView)
+module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceChoiceView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0.goFullBg = gohelper.findChild(arg_1_0.viewGO, "all_bg/#simage_FullBG")
-	arg_1_0.goEpisodeBg = gohelper.findChild(arg_1_0.viewGO, "all_bg/#simage_EpisodeBG")
+local RougeMapPieceChoiceView = class("RougeMapPieceChoiceView", RougeMapChoiceBaseView)
 
-	gohelper.setActive(arg_1_0.goFullBg, false)
-	gohelper.setActive(arg_1_0.goEpisodeBg, false)
+function RougeMapPieceChoiceView:_editableInitView()
+	self.goFullBg = gohelper.findChild(self.viewGO, "all_bg/#simage_FullBG")
+	self.goEpisodeBg = gohelper.findChild(self.viewGO, "all_bg/#simage_EpisodeBG")
 
-	arg_1_0._simageFrameBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "all_bg/#simage_FrameBG")
+	gohelper.setActive(self.goFullBg, false)
+	gohelper.setActive(self.goEpisodeBg, false)
 
-	arg_1_0._simageFrameBG:LoadImage("singlebg/rouge/rouge_illustration_framebg.png")
+	self._simageFrameBG = gohelper.findChildSingleImage(self.viewGO, "all_bg/#simage_FrameBG")
 
-	local var_1_0 = arg_1_0.viewContainer:getSetting().otherRes[2]
+	self._simageFrameBG:LoadImage("singlebg/rouge/rouge_illustration_framebg.png")
 
-	arg_1_0.goOptionItem = arg_1_0.viewContainer:getResInst(var_1_0, arg_1_0._gochoicecontainer)
+	local optionItemResPath = self.viewContainer:getSetting().otherRes[2]
 
-	gohelper.setActive(arg_1_0.goOptionItem, false)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onExitPieceChoiceEvent, arg_1_0.closeThis, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onRefreshPieceChoiceEvent, arg_1_0.onRefreshPieceChoiceEvent, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onRefreshChoiceStore, arg_1_0.onRefreshChoiceStore, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceViewStatusChange, arg_1_0.onChoiceViewStatusChange, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectPieceChoice, arg_1_0.onSelectPieceChoice, arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+	self.goOptionItem = self.viewContainer:getResInst(optionItemResPath, self._gochoicecontainer)
+
+	gohelper.setActive(self.goOptionItem, false)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onExitPieceChoiceEvent, self.closeThis, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onRefreshPieceChoiceEvent, self.onRefreshPieceChoiceEvent, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onRefreshChoiceStore, self.onRefreshChoiceStore, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceViewStatusChange, self.onChoiceViewStatusChange, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectPieceChoice, self.onSelectPieceChoice, self)
+	RougeMapPieceChoiceView.super._editableInitView(self)
 end
 
-function var_0_0.onClickBlockOnFinishState(arg_2_0)
-	arg_2_0:triggerHandle()
+function RougeMapPieceChoiceView:onClickBlockOnFinishState()
+	self:triggerHandle()
 end
 
-function var_0_0.onRefreshChoiceStore(arg_3_0)
-	arg_3_0:noAnimRefreshRight()
+function RougeMapPieceChoiceView:onRefreshChoiceStore()
+	self:noAnimRefreshRight()
 end
 
-function var_0_0.onRefreshPieceChoiceEvent(arg_4_0)
-	arg_4_0:playAnimRefreshRight()
+function RougeMapPieceChoiceView:onRefreshPieceChoiceEvent()
+	self:playAnimRefreshRight()
 end
 
-function var_0_0.onSelectPieceChoice(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.preSelectChoiceId == arg_5_2 then
-		RougeMapPieceTriggerHelper.triggerHandle(arg_5_1, arg_5_2)
+function RougeMapPieceChoiceView:onSelectPieceChoice(pieceMo, choiceId)
+	if self.preSelectChoiceId == choiceId then
+		RougeMapPieceTriggerHelper.triggerHandle(pieceMo, choiceId)
 
 		return
 	end
 
-	local var_5_0 = lua_rouge_piece_select.configDict[arg_5_2]
-	local var_5_1 = var_5_0 and var_5_0.talkDesc
+	local choiceCo = lua_rouge_piece_select.configDict[choiceId]
+	local talkDesc = choiceCo and choiceCo.talkDesc
 
-	arg_5_0._selectPieceMo = arg_5_1
-	arg_5_0._choiceId = arg_5_2
-	arg_5_0.preSelectChoiceId = arg_5_2
+	self._selectPieceMo = pieceMo
+	self._choiceId = choiceId
+	self.preSelectChoiceId = choiceId
 
-	if string.nilorempty(var_5_1) then
-		arg_5_0:triggerHandle()
+	if string.nilorempty(talkDesc) then
+		self:triggerHandle()
 	else
-		arg_5_0:startPlayDialogue(var_5_1, arg_5_0.onSelectDialogueDone, arg_5_0)
+		self:startPlayDialogue(talkDesc, self.onSelectDialogueDone, self)
 	end
 end
 
-function var_0_0.onSelectDialogueDone(arg_6_0)
-	if RougeMapHelper.isRestPiece(arg_6_0._selectPieceMo.pieceCo.entrustType) then
-		arg_6_0:triggerHandle()
+function RougeMapPieceChoiceView:onSelectDialogueDone()
+	if RougeMapHelper.isRestPiece(self._selectPieceMo.pieceCo.entrustType) then
+		self:triggerHandle()
 
 		return
 	end
 
-	arg_6_0:changeState(RougeMapEnum.ChoiceViewState.Finish)
+	self:changeState(RougeMapEnum.ChoiceViewState.Finish)
 end
 
-function var_0_0.triggerHandle(arg_7_0)
-	RougeMapPieceTriggerHelper.triggerHandle(arg_7_0._selectPieceMo, arg_7_0._choiceId)
+function RougeMapPieceChoiceView:triggerHandle()
+	RougeMapPieceTriggerHelper.triggerHandle(self._selectPieceMo, self._choiceId)
 
-	arg_7_0._selectPieceMo = nil
-	arg_7_0._choiceId = nil
+	self._selectPieceMo = nil
+	self._choiceId = nil
 
-	arg_7_0:changeState(RougeMapEnum.ChoiceViewState.WaitSelect)
+	self:changeState(RougeMapEnum.ChoiceViewState.WaitSelect)
 end
 
-function var_0_0.onChoiceViewStatusChange(arg_8_0, arg_8_1)
-	arg_8_0.viewStatus = arg_8_1
+function RougeMapPieceChoiceView:onChoiceViewStatusChange(status)
+	self.viewStatus = status
 
-	arg_8_0:playAnimRefreshRight()
+	self:playAnimRefreshRight()
 end
 
-function var_0_0.initData(arg_9_0)
-	arg_9_0.pieceMo = arg_9_0.viewParam
-	arg_9_0.talkId = arg_9_0.pieceMo.talkId
-	arg_9_0.talkCo = lua_rouge_piece_talk.configDict[arg_9_0.talkId]
-	arg_9_0.preSelectChoiceId = 0
+function RougeMapPieceChoiceView:initData()
+	self.pieceMo = self.viewParam
+	self.talkId = self.pieceMo.talkId
+	self.talkCo = lua_rouge_piece_talk.configDict[self.talkId]
+	self.preSelectChoiceId = 0
 end
 
-function var_0_0.onOpen(arg_10_0)
-	var_0_0.super.onOpen(arg_10_0)
-	arg_10_0.viewContainer:setOverrideClose(arg_10_0.exitCurView, arg_10_0)
+function RougeMapPieceChoiceView:onOpen()
+	RougeMapPieceChoiceView.super.onOpen(self)
+	self.viewContainer:setOverrideClose(self.exitCurView, self)
 
-	arg_10_0.viewStatus = RougeMapEnum.PieceChoiceViewStatus.Choice
+	self.viewStatus = RougeMapEnum.PieceChoiceViewStatus.Choice
 
-	arg_10_0:initData()
-	arg_10_0:refreshUI()
-	arg_10_0:refreshDesc()
+	self:initData()
+	self:refreshUI()
+	self:refreshDesc()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0._txtName.text = arg_11_0.talkCo.title
-	arg_11_0._txtNameEn.text = ""
+function RougeMapPieceChoiceView:refreshUI()
+	self._txtName.text = self.talkCo.title
+	self._txtNameEn.text = ""
 end
 
-function var_0_0.refreshDesc(arg_12_0)
-	local var_12_0 = arg_12_0.talkCo.content
+function RougeMapPieceChoiceView:refreshDesc()
+	local desc = self.talkCo.content
 
-	arg_12_0:startPlayDialogue(var_12_0, arg_12_0.enterDialogueDone, arg_12_0)
+	self:startPlayDialogue(desc, self.enterDialogueDone, self)
 end
 
-function var_0_0.enterDialogueDone(arg_13_0)
-	gohelper.setActive(arg_13_0.goRight, true)
-	gohelper.setActive(arg_13_0.goLeft, true)
-	arg_13_0:playChoiceShowAnim()
-	arg_13_0:refreshChoice()
+function RougeMapPieceChoiceView:enterDialogueDone()
+	gohelper.setActive(self.goRight, true)
+	gohelper.setActive(self.goLeft, true)
+	self:playChoiceShowAnim()
+	self:refreshChoice()
 end
 
-function var_0_0.playAnimRefreshRight(arg_14_0)
+function RougeMapPieceChoiceView:playAnimRefreshRight()
 	AudioMgr.instance:trigger(AudioEnum.UI.ChoiceViewChoiceOpen)
-	arg_14_0.rightAnimator:Play("open", 0, 0)
+	self.rightAnimator:Play("open", 0, 0)
 
-	if arg_14_0.viewStatus == RougeMapEnum.PieceChoiceViewStatus.Choice then
-		arg_14_0:refreshChoice()
+	if self.viewStatus == RougeMapEnum.PieceChoiceViewStatus.Choice then
+		self:refreshChoice()
 	else
-		arg_14_0:refreshStoreGoods()
+		self:refreshStoreGoods()
 	end
 end
 
-function var_0_0.noAnimRefreshRight(arg_15_0)
-	if arg_15_0.viewStatus == RougeMapEnum.PieceChoiceViewStatus.Choice then
-		arg_15_0:refreshChoice()
+function RougeMapPieceChoiceView:noAnimRefreshRight()
+	if self.viewStatus == RougeMapEnum.PieceChoiceViewStatus.Choice then
+		self:refreshChoice()
 	else
-		arg_15_0:refreshStoreGoods()
+		self:refreshStoreGoods()
 	end
 end
 
-function var_0_0.refreshChoice(arg_16_0)
-	local var_16_0 = arg_16_0.talkCo.selectIds
-	local var_16_1 = string.splitToNumber(var_16_0, "|")
+function RougeMapPieceChoiceView:refreshChoice()
+	local selectIdStr = self.talkCo.selectIds
+	local choiceIdList = string.splitToNumber(selectIdStr, "|")
 
-	RougeMapHelper.filterUnActivePieceChoice(var_16_1)
-	table.insert(var_16_1, 0)
+	RougeMapHelper.filterUnActivePieceChoice(choiceIdList)
+	table.insert(choiceIdList, 0)
 
-	arg_16_0.posList = RougeMapEnum.ChoiceItemPos[#var_16_1]
+	self.posList = RougeMapEnum.ChoiceItemPos[#choiceIdList]
 
-	RougeMapHelper.loadItemWithCustomUpdateFunc(arg_16_0.goChoiceItem, RougeMapPieceChoiceItem, var_16_1, arg_16_0.choiceItemList, arg_16_0.updateItem, arg_16_0)
+	RougeMapHelper.loadItemWithCustomUpdateFunc(self.goChoiceItem, RougeMapPieceChoiceItem, choiceIdList, self.choiceItemList, self.updateItem, self)
 
-	if arg_16_0.optionItem then
-		arg_16_0.optionItem:hide()
+	if self.optionItem then
+		self.optionItem:hide()
 	end
 end
 
-function var_0_0.updateItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_1:update(arg_17_3, arg_17_0.posList[arg_17_2], arg_17_0.pieceMo)
+function RougeMapPieceChoiceView:updateItem(item, index, choiceId)
+	item:update(choiceId, self.posList[index], self.pieceMo)
 end
 
-function var_0_0.refreshStoreGoods(arg_18_0)
-	local var_18_0 = arg_18_0.pieceMo.triggerStr and arg_18_0.pieceMo.triggerStr.repairShopCollections
+function RougeMapPieceChoiceView:refreshStoreGoods()
+	local goodsDict = self.pieceMo.triggerStr and self.pieceMo.triggerStr.repairShopCollections
 
-	if not var_18_0 then
+	if not goodsDict then
 		logError("store goods is nil")
 
 		return
 	end
 
-	arg_18_0.collectionList = arg_18_0.collectionList or {}
-	arg_18_0.consumeCoList = arg_18_0.consumeCoList or {}
+	self.collectionList = self.collectionList or {}
+	self.consumeCoList = self.consumeCoList or {}
 
-	tabletool.clear(arg_18_0.collectionList)
-	tabletool.clear(arg_18_0.consumeCoList)
+	tabletool.clear(self.collectionList)
+	tabletool.clear(self.consumeCoList)
 
-	for iter_18_0, iter_18_1 in pairs(var_18_0) do
-		iter_18_0 = tonumber(iter_18_0)
+	for collectionId, consumeId in pairs(goodsDict) do
+		collectionId = tonumber(collectionId)
 
-		local var_18_1 = lua_rouge_repair_shop_price.configDict[iter_18_1]
+		local consumeCo = lua_rouge_repair_shop_price.configDict[consumeId]
 
-		table.insert(arg_18_0.collectionList, iter_18_0)
-		table.insert(arg_18_0.consumeCoList, var_18_1)
+		table.insert(self.collectionList, collectionId)
+		table.insert(self.consumeCoList, consumeCo)
 	end
 
-	local var_18_2 = #arg_18_0.collectionList + 1
+	local len = #self.collectionList + 1
 
-	arg_18_0.posList = RougeMapEnum.ChoiceItemPos[var_18_2]
+	self.posList = RougeMapEnum.ChoiceItemPos[len]
 
-	RougeMapHelper.loadItemWithCustomUpdateFunc(arg_18_0.goChoiceItem, RougeMapPieceChoiceItem, arg_18_0.collectionList, arg_18_0.choiceItemList, arg_18_0.updateStoreGoods, arg_18_0)
+	RougeMapHelper.loadItemWithCustomUpdateFunc(self.goChoiceItem, RougeMapPieceChoiceItem, self.collectionList, self.choiceItemList, self.updateStoreGoods, self)
 
-	if not arg_18_0.optionItem then
-		arg_18_0.optionItem = RougeMapPieceOptionItem.New()
+	if not self.optionItem then
+		self.optionItem = RougeMapPieceOptionItem.New()
 
-		arg_18_0.optionItem:init(arg_18_0.goOptionItem)
+		self.optionItem:init(self.goOptionItem)
 	end
 
-	arg_18_0.optionItem:show()
-	arg_18_0.optionItem:update(arg_18_0.posList[var_18_2], arg_18_0.pieceMo)
+	self.optionItem:show()
+	self.optionItem:update(self.posList[len], self.pieceMo)
 end
 
-function var_0_0.updateStoreGoods(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	arg_19_1:updateStoreGoods(arg_19_3, arg_19_0.consumeCoList[arg_19_2], arg_19_0.posList[arg_19_2], arg_19_0.pieceMo)
+function RougeMapPieceChoiceView:updateStoreGoods(item, index, collectionId)
+	item:updateStoreGoods(collectionId, self.consumeCoList[index], self.posList[index], self.pieceMo)
 end
 
-function var_0_0.exitCurView(arg_20_0)
+function RougeMapPieceChoiceView:exitCurView()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onExitPieceChoiceEvent)
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	if arg_21_0.optionItem then
-		arg_21_0.optionItem:destroy()
+function RougeMapPieceChoiceView:onDestroyView()
+	if self.optionItem then
+		self.optionItem:destroy()
 
-		arg_21_0.optionItem = nil
+		self.optionItem = nil
 	end
 
-	arg_21_0._simageFrameBG:UnLoadImage()
-	var_0_0.super.onDestroyView(arg_21_0)
+	self._simageFrameBG:UnLoadImage()
+	RougeMapPieceChoiceView.super.onDestroyView(self)
 end
 
-return var_0_0
+return RougeMapPieceChoiceView

@@ -1,72 +1,75 @@
-﻿module("modules.logic.versionactivity1_4.act130.view.Activity130CollectItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/view/Activity130CollectItem.lua
 
-local var_0_0 = class("Activity130CollectItem", LuaCompBase)
+module("modules.logic.versionactivity1_4.act130.view.Activity130CollectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._imageitembg = gohelper.findChildImage(arg_1_0._go, "image_ItemBG")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0._go, "#image_Icon")
-	arg_1_0._txtIndex = gohelper.findChildText(arg_1_0._go, "#txt_Num")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0._go, "#txt_Item")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0._go, "#txt_Type")
+local Activity130CollectItem = class("Activity130CollectItem", LuaCompBase)
 
-	arg_1_0:addEventListeners()
+function Activity130CollectItem:init(go)
+	self._go = go
+	self._imageitembg = gohelper.findChildImage(self._go, "image_ItemBG")
+	self._imageicon = gohelper.findChildImage(self._go, "#image_Icon")
+	self._txtIndex = gohelper.findChildText(self._go, "#txt_Num")
+	self._txtDesc = gohelper.findChildText(self._go, "#txt_Item")
+	self._txtTitle = gohelper.findChildText(self._go, "#txt_Type")
+
+	self:addEventListeners()
 end
 
-function var_0_0.setItem(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._config = arg_2_1
-	arg_2_0._index = arg_2_2
+function Activity130CollectItem:setItem(co, index)
+	self._config = co
+	self._index = index
 
-	gohelper.setActive(arg_2_0._go, true)
-	arg_2_0:_refreshItem()
+	gohelper.setActive(self._go, true)
+	self:_refreshItem()
 end
 
-function var_0_0._refreshItem(arg_3_0)
-	arg_3_0._txtIndex.text = string.format("%02d", arg_3_0._index)
+function Activity130CollectItem:_refreshItem()
+	self._txtIndex.text = string.format("%02d", self._index)
 
-	local var_3_0 = Activity130Model.instance:getCurEpisodeId()
-	local var_3_1 = Activity130Model.instance:getCollects(var_3_0)[arg_3_0._index]
+	local episodeId = Activity130Model.instance:getCurEpisodeId()
+	local type = Activity130Model.instance:getCollects(episodeId)[self._index]
+	local unlock = Activity130Model.instance:isCollectUnlock(episodeId, type)
 
-	if not Activity130Model.instance:isCollectUnlock(var_3_0, var_3_1) then
-		arg_3_0._txtDesc.text = "?????"
+	if not unlock then
+		self._txtDesc.text = "?????"
 
-		UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_3_0._imageicon, "v1a4_role37_collectitemiconempty")
+		UISpriteSetMgr.instance:setV1a4Role37Sprite(self._imageicon, "v1a4_role37_collectitemiconempty")
 
 		return
 	end
 
-	arg_3_0._txtDesc.text = arg_3_0._config.operDesc
-	arg_3_0._txtTitle.text = arg_3_0._config.name
+	self._txtDesc.text = self._config.operDesc
+	self._txtTitle.text = self._config.name
 
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_3_0._imageicon, arg_3_0._config.shapegetImg)
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(self._imageicon, self._config.shapegetImg)
 end
 
-function var_0_0.hideItem(arg_4_0)
-	gohelper.setActive(arg_4_0._go, false)
+function Activity130CollectItem:hideItem()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.addEventListeners(arg_5_0)
+function Activity130CollectItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
+function Activity130CollectItem:removeEventListeners()
 	return
 end
 
-function var_0_0._btnclickOnClick(arg_7_0)
+function Activity130CollectItem:_btnclickOnClick()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+function Activity130CollectItem:onUpdateMO(mo)
 	return
 end
 
-function var_0_0.onSelect(arg_9_0)
+function Activity130CollectItem:onSelect()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0:removeEventListeners()
+function Activity130CollectItem:onDestroyView()
+	self:removeEventListeners()
 end
 
-return var_0_0
+return Activity130CollectItem

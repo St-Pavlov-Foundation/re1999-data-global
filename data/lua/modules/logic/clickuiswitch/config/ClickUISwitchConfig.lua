@@ -1,74 +1,78 @@
-﻿module("modules.logic.clickuiswitch.config.ClickUISwitchConfig", package.seeall)
+﻿-- chunkname: @modules/logic/clickuiswitch/config/ClickUISwitchConfig.lua
 
-local var_0_0 = class("ClickUISwitchConfig", BaseConfig)
+module("modules.logic.clickuiswitch.config.ClickUISwitchConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local ClickUISwitchConfig = class("ClickUISwitchConfig", BaseConfig)
+
+function ClickUISwitchConfig:reqConfigNames()
 	return {
 		"scene_click"
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function ClickUISwitchConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "scene_click" then
-		arg_3_0:_initClickUIConfig()
+function ClickUISwitchConfig:onConfigLoaded(configName, configTable)
+	if configName == "scene_click" then
+		self:_initClickUIConfig()
 	end
 end
 
-function var_0_0._initClickUIConfig(arg_4_0)
-	arg_4_0.uiItem = {}
-	arg_4_0._itemSource = {}
+function ClickUISwitchConfig:_initClickUIConfig()
+	self.uiItem = {}
+	self._itemSource = {}
 
-	for iter_4_0, iter_4_1 in ipairs(lua_scene_click.configList) do
-		arg_4_0.uiItem[iter_4_1.itemId] = iter_4_1
+	for _, co in ipairs(lua_scene_click.configList) do
+		self.uiItem[co.itemId] = co
 	end
 
 	ClickUISwitchModel.instance:initConfig()
 end
 
-function var_0_0.getClickUICoByItemId(arg_5_0, arg_5_1)
-	return arg_5_0.uiItem[arg_5_1]
+function ClickUISwitchConfig:getClickUICoByItemId(itemId)
+	local co = self.uiItem[itemId]
+
+	return co
 end
 
-function var_0_0.getItemSource(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._itemSource[arg_6_1]
+function ClickUISwitchConfig:getItemSource(itemId)
+	local t = self._itemSource[itemId]
 
-	if not var_6_0 then
-		var_6_0 = arg_6_0:_collectSource(arg_6_1)
-		arg_6_0._itemSource[arg_6_1] = var_6_0
+	if not t then
+		t = self:_collectSource(itemId)
+		self._itemSource[itemId] = t
 	end
 
-	return var_6_0
+	return t
 end
 
-function var_0_0._collectSource(arg_7_0, arg_7_1)
-	local var_7_0 = lua_item.configDict[arg_7_1].sources
-	local var_7_1 = {}
+function ClickUISwitchConfig:_collectSource(itemId)
+	local itemConfig = lua_item.configDict[itemId]
+	local sourcesStr = itemConfig.sources
+	local sourceTables = {}
 
-	if not string.nilorempty(var_7_0) then
-		local var_7_2 = string.split(var_7_0, "|")
+	if not string.nilorempty(sourcesStr) then
+		local sources = string.split(sourcesStr, "|")
 
-		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-			local var_7_3 = string.splitToNumber(iter_7_1, "#")
-			local var_7_4 = {
-				sourceId = var_7_3[1],
-				probability = var_7_3[2]
-			}
+		for i, source in ipairs(sources) do
+			local sourceParam = string.splitToNumber(source, "#")
+			local sourceTable = {}
 
-			var_7_4.episodeId = JumpConfig.instance:getJumpEpisodeId(var_7_4.sourceId)
+			sourceTable.sourceId = sourceParam[1]
+			sourceTable.probability = sourceParam[2]
+			sourceTable.episodeId = JumpConfig.instance:getJumpEpisodeId(sourceTable.sourceId)
 
-			if var_7_4.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(var_7_4.episodeId) then
-				table.insert(var_7_1, var_7_4)
+			if sourceTable.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(sourceTable.episodeId) then
+				table.insert(sourceTables, sourceTable)
 			end
 		end
 	end
 
-	return var_7_1
+	return sourceTables
 end
 
-var_0_0.instance = var_0_0.New()
+ClickUISwitchConfig.instance = ClickUISwitchConfig.New()
 
-return var_0_0
+return ClickUISwitchConfig

@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEquipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaEquipViewContainer.lua
 
-local var_0_0 = class("AiZiLaEquipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaEquipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaEquipViewContainer = class("AiZiLaEquipViewContainer", BaseViewContainer)
 
-	arg_1_0._equipView = AiZiLaEquipView.New()
+function AiZiLaEquipViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._equipView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	self._equipView = AiZiLaEquipView.New()
 
-	return var_1_0
+	table.insert(views, self._equipView)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function AiZiLaEquipViewContainer:onContainerClickModalMask()
 	return
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		local var_3_0 = true
+function AiZiLaEquipViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local home = true
 
 		if ViewMgr.instance:isOpen(ViewName.AiZiLaGameView) then
-			var_3_0 = false
+			home = false
 		end
 
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
-			var_3_0,
+			home,
 			false
 		})
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-return var_0_0
+return AiZiLaEquipViewContainer

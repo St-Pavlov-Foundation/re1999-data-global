@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.model.data.FightCacheFightDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightCacheFightDataMgr.lua
 
-local var_0_0 = FightDataClass("FightCacheFightDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightCacheFightDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.cacheList = {}
-	arg_1_0.cache = {}
+local FightCacheFightDataMgr = FightDataClass("FightCacheFightDataMgr", FightDataMgrBase)
+
+function FightCacheFightDataMgr:onConstructor()
+	self.cacheList = {}
+	self.cache = {}
 end
 
-function var_0_0.cacheFightWavePush(arg_2_0, arg_2_1)
-	table.insert(arg_2_0.cache, arg_2_1)
-	table.insert(arg_2_0.cacheList, arg_2_1)
+function FightCacheFightDataMgr:cacheFightWavePush(fightData)
+	table.insert(self.cache, fightData)
+	table.insert(self.cacheList, fightData)
 end
 
-function var_0_0.getAndRemove(arg_3_0)
-	return table.remove(arg_3_0.cache, 1)
+function FightCacheFightDataMgr:getAndRemove()
+	return table.remove(self.cache, 1)
 end
 
-function var_0_0.getNextFightData(arg_4_0)
-	return arg_4_0.cache[1]
+function FightCacheFightDataMgr:getNextFightData()
+	return self.cache[1]
 end
 
-return var_0_0
+return FightCacheFightDataMgr

@@ -1,15 +1,17 @@
-﻿module("modules.logic.gm.model.GMAudioBankViewModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMAudioBankViewModel.lua
 
-local var_0_0 = class("GMAudioBankViewModel", ListScrollModel)
+module("modules.logic.gm.model.GMAudioBankViewModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local GMAudioBankViewModel = class("GMAudioBankViewModel", ListScrollModel)
+
+function GMAudioBankViewModel:ctor()
+	GMAudioBankViewModel.super.ctor(self)
 end
 
-function var_0_0.reInit(arg_2_0)
+function GMAudioBankViewModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+GMAudioBankViewModel.instance = GMAudioBankViewModel.New()
 
-return var_0_0
+return GMAudioBankViewModel

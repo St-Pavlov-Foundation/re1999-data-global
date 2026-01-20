@@ -1,19 +1,21 @@
-﻿module("modules.logic.room.controller.RoomTradeEvent", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomTradeEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.room.controller.RoomTradeEvent", package.seeall)
 
-var_0_0.OnGetTradeOrderInfo = 101
-var_0_0.OnFinishOrder = 102
-var_0_0.OnRefreshDailyOrder = 103
-var_0_0.OnTracedDailyOrder = 104
-var_0_0.PlayCloseTVAnim = 105
-var_0_0.OnLockedDailyOrder = 106
-var_0_0.OnCutOrderPage = 110
-var_0_0.OnFlyCurrency = 120
-var_0_0.OnGetTradeTaskInfo = 201
-var_0_0.OnReadNewTradeTaskReply = 202
-var_0_0.OnGetTradeSupportBonusReply = 203
-var_0_0.OnTradeLevelUpReply = 204
-var_0_0.OnGetTradeTaskExtraBonusReply = 205
+local RoomTradeEvent = _M
 
-return var_0_0
+RoomTradeEvent.OnGetTradeOrderInfo = 101
+RoomTradeEvent.OnFinishOrder = 102
+RoomTradeEvent.OnRefreshDailyOrder = 103
+RoomTradeEvent.OnTracedDailyOrder = 104
+RoomTradeEvent.PlayCloseTVAnim = 105
+RoomTradeEvent.OnLockedDailyOrder = 106
+RoomTradeEvent.OnCutOrderPage = 110
+RoomTradeEvent.OnFlyCurrency = 120
+RoomTradeEvent.OnGetTradeTaskInfo = 201
+RoomTradeEvent.OnReadNewTradeTaskReply = 202
+RoomTradeEvent.OnGetTradeSupportBonusReply = 203
+RoomTradeEvent.OnTradeLevelUpReply = 204
+RoomTradeEvent.OnGetTradeTaskExtraBonusReply = 205
+
+return RoomTradeEvent

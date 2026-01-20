@@ -1,38 +1,40 @@
-﻿module("modules.logic.rouge.view.RougeCollectionInitialCollectionTipsTagItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionInitialCollectionTipsTagItem.lua
 
-local var_0_0 = class("RougeCollectionInitialCollectionTipsTagItem", RougeSimpleItemBase)
+module("modules.logic.rouge.view.RougeCollectionInitialCollectionTipsTagItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RougeCollectionInitialCollectionTipsTagItem = class("RougeCollectionInitialCollectionTipsTagItem", RougeSimpleItemBase)
+
+function RougeCollectionInitialCollectionTipsTagItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeCollectionInitialCollectionTipsTagItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeCollectionInitialCollectionTipsTagItem:removeEvents()
 	return
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1)
-	RougeSimpleItemBase.ctor(arg_4_0, arg_4_1)
+function RougeCollectionInitialCollectionTipsTagItem:ctor(ctorParam)
+	RougeSimpleItemBase.ctor(self, ctorParam)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	RougeSimpleItemBase._editableInitView(arg_5_0)
+function RougeCollectionInitialCollectionTipsTagItem:_editableInitView()
+	RougeSimpleItemBase._editableInitView(self)
 
-	arg_5_0._txt = gohelper.findChildText(arg_5_0.viewGO, "")
-	arg_5_0._img = gohelper.findChildImage(arg_5_0.viewGO, "image_tagicon")
+	self._txt = gohelper.findChildText(self.viewGO, "")
+	self._img = gohelper.findChildImage(self.viewGO, "image_tagicon")
 end
 
-function var_0_0.setData(arg_6_0, arg_6_1)
-	local var_6_0 = lua_rouge_tag.configDict[arg_6_1]
+function RougeCollectionInitialCollectionTipsTagItem:setData(tagId)
+	local rougeTagCO = lua_rouge_tag.configDict[tagId]
 
-	arg_6_0._txt.text = var_6_0.name
+	self._txt.text = rougeTagCO.name
 
-	UISpriteSetMgr.instance:setRougeSprite(arg_6_0._img, var_6_0.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(self._img, rougeTagCO.iconUrl)
 end
 
-return var_0_0
+return RougeCollectionInitialCollectionTipsTagItem

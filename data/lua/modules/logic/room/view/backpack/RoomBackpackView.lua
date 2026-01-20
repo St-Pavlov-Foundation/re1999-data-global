@@ -1,132 +1,137 @@
-﻿module("modules.logic.room.view.backpack.RoomBackpackView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/backpack/RoomBackpackView.lua
 
-local var_0_0 = class("RoomBackpackView", BaseView)
+module("modules.logic.room.view.backpack.RoomBackpackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocategoryItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_category/viewport/content/#go_categoryItem")
+local RoomBackpackView = class("RoomBackpackView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBackpackView:onInitView()
+	self._gocategoryItem = gohelper.findChild(self.viewGO, "#scroll_category/viewport/content/#go_categoryItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomBackpackView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomBackpackView:removeEvents()
 	return
 end
 
-function var_0_0._btnTabOnClick(arg_4_0, arg_4_1)
-	if not arg_4_0.viewContainer:checkTabId(arg_4_1) then
-		logError(string.format("RoomBackpackView._btnTabOnClick error, no subview, tabId:%s", arg_4_1))
+function RoomBackpackView:_btnTabOnClick(tabId)
+	local checkResult = self.viewContainer:checkTabId(tabId)
+
+	if not checkResult then
+		logError(string.format("RoomBackpackView._btnTabOnClick error, no subview, tabId:%s", tabId))
 
 		return
 	end
 
-	if arg_4_0._curSelectTab == arg_4_1 then
+	if self._curSelectTab == tabId then
 		return
 	end
 
-	arg_4_0.viewContainer:switchTab(arg_4_1)
+	self.viewContainer:switchTab(tabId)
 
-	arg_4_0._curSelectTab = arg_4_1
+	self._curSelectTab = tabId
 
-	arg_4_0:refreshTab()
+	self:refreshTab()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._gocategoryItem, false)
-	arg_5_0:clearVar()
+function RoomBackpackView:_editableInitView()
+	gohelper.setActive(self._gocategoryItem, false)
+	self:clearVar()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function RoomBackpackView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._curSelectTab = arg_7_0.viewContainer:getDefaultSelectedTab()
+function RoomBackpackView:onOpen()
+	self._curSelectTab = self.viewContainer:getDefaultSelectedTab()
 
-	arg_7_0:setTabItem()
-	arg_7_0:refreshTab()
+	self:setTabItem()
+	self:refreshTab()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_lower)
 end
 
-function var_0_0.setTabItem(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(RoomBackpackViewContainer.TabSettingList) do
-		if not arg_8_0._tabDict[iter_8_0] then
-			local var_8_0 = gohelper.cloneInPlace(arg_8_0._gocategoryItem, iter_8_0)
+function RoomBackpackView:setTabItem()
+	for tabId, tabSetting in ipairs(RoomBackpackViewContainer.TabSettingList) do
+		local tabItem = self._tabDict[tabId]
 
-			if not gohelper.isNil(var_8_0) then
-				local var_8_1 = arg_8_0:getUserDataTb_()
+		if not tabItem then
+			local go = gohelper.cloneInPlace(self._gocategoryItem, tabId)
 
-				var_8_1.go = var_8_0
-				var_8_1.btn = gohelper.getClickWithDefaultAudio(var_8_0)
+			if not gohelper.isNil(go) then
+				tabItem = self:getUserDataTb_()
+				tabItem.go = go
+				tabItem.btn = gohelper.getClickWithDefaultAudio(go)
 
-				var_8_1.btn:AddClickListener(arg_8_0._btnTabOnClick, arg_8_0, iter_8_0)
+				tabItem.btn:AddClickListener(self._btnTabOnClick, self, tabId)
 
-				var_8_1.goselected = gohelper.findChild(var_8_0, "#go_selected")
-				var_8_1.gounselected = gohelper.findChild(var_8_0, "#go_normal")
-				var_8_1.goreddot = gohelper.findChild(var_8_0, "#go_reddot")
+				tabItem.goselected = gohelper.findChild(go, "#go_selected")
+				tabItem.gounselected = gohelper.findChild(go, "#go_normal")
+				tabItem.goreddot = gohelper.findChild(go, "#go_reddot")
 
-				if iter_8_0 == RoomBackpackViewContainer.SubViewTabId.Critter then
-					RedDotController.instance:addRedDot(var_8_1.goreddot, RedDotEnum.DotNode.CritterIsFull)
+				if tabId == RoomBackpackViewContainer.SubViewTabId.Critter then
+					RedDotController.instance:addRedDot(tabItem.goreddot, RedDotEnum.DotNode.CritterIsFull)
 				end
 
-				local var_8_2 = luaLang(iter_8_1.namecn)
-				local var_8_3 = gohelper.findChildText(var_8_0, "#go_normal/#txt_namecn")
-				local var_8_4 = gohelper.findChildText(var_8_0, "#go_selected/#txt_namecn")
+				local namecn = luaLang(tabSetting.namecn)
+				local unselectednamecn = gohelper.findChildText(go, "#go_normal/#txt_namecn")
+				local selectednamecn = gohelper.findChildText(go, "#go_selected/#txt_namecn")
 
-				var_8_3.text = var_8_2
-				var_8_4.text = var_8_2
+				unselectednamecn.text = namecn
+				selectednamecn.text = namecn
 
-				local var_8_5 = luaLang(iter_8_1.nameen)
-				local var_8_6 = gohelper.findChildText(var_8_0, "#go_normal/#txt_nameen")
-				local var_8_7 = gohelper.findChildText(var_8_0, "#go_selected/#txt_nameen")
+				local nameen = luaLang(tabSetting.nameen)
+				local unselectednameen = gohelper.findChildText(go, "#go_normal/#txt_nameen")
+				local selectednameen = gohelper.findChildText(go, "#go_selected/#txt_nameen")
 
-				var_8_6.text = var_8_5
-				var_8_7.text = var_8_5
+				unselectednameen.text = nameen
+				selectednameen.text = nameen
 
-				gohelper.setActive(var_8_0, true)
+				gohelper.setActive(go, true)
 
-				arg_8_0._tabDict[iter_8_0] = var_8_1
+				self._tabDict[tabId] = tabItem
 			end
 		end
 	end
 end
 
-function var_0_0.refreshTab(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._tabDict) do
-		local var_9_0 = iter_9_0 == arg_9_0._curSelectTab
+function RoomBackpackView:refreshTab()
+	for tabId, tab in pairs(self._tabDict) do
+		local isSelected = tabId == self._curSelectTab
 
-		gohelper.setActive(iter_9_1.goselected, var_9_0)
-		gohelper.setActive(iter_9_1.gounselected, not var_9_0)
+		gohelper.setActive(tab.goselected, isSelected)
+		gohelper.setActive(tab.gounselected, not isSelected)
 	end
 end
 
-function var_0_0.clearVar(arg_10_0)
-	arg_10_0._curSelectTab = nil
+function RoomBackpackView:clearVar()
+	self._curSelectTab = nil
 
-	arg_10_0:clearTab()
+	self:clearTab()
 end
 
-function var_0_0.clearTab(arg_11_0)
-	if arg_11_0._tabDict then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0._tabDict) do
-			iter_11_1.btn:RemoveClickListener()
+function RoomBackpackView:clearTab()
+	if self._tabDict then
+		for _, tab in pairs(self._tabDict) do
+			tab.btn:RemoveClickListener()
 		end
 	end
 
-	arg_11_0._tabDict = {}
+	self._tabDict = {}
 end
 
-function var_0_0.onClose(arg_12_0)
+function RoomBackpackView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_normal)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0:clearVar()
+function RoomBackpackView:onDestroyView()
+	self:clearVar()
 end
 
-return var_0_0
+return RoomBackpackView

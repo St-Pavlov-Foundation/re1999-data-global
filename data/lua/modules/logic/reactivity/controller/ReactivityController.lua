@@ -1,90 +1,92 @@
-﻿module("modules.logic.reactivity.controller.ReactivityController", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/controller/ReactivityController.lua
 
-local var_0_0 = class("ReactivityController", BaseController)
+module("modules.logic.reactivity.controller.ReactivityController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ReactivityController = class("ReactivityController", BaseController)
+
+function ReactivityController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function ReactivityController:onInitFinish()
 	return
 end
 
-function var_0_0.openReactivityTaskView(arg_3_0, arg_3_1)
-	arg_3_0:_enterActivityView(ViewName.ReactivityTaskView, arg_3_1, arg_3_0._openTaskView, arg_3_0)
+function ReactivityController:openReactivityTaskView(actId)
+	self:_enterActivityView(ViewName.ReactivityTaskView, actId, self._openTaskView, self)
 end
 
-function var_0_0._openTaskView(arg_4_0, arg_4_1, arg_4_2)
+function ReactivityController:_openTaskView(viewName, actId)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
 	}, function()
-		ViewMgr.instance:openView(arg_4_1, {
-			actId = arg_4_2
+		ViewMgr.instance:openView(viewName, {
+			actId = actId
 		})
 	end)
 end
 
-function var_0_0.getCurReactivityId(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(ReactivityEnum.ActivityDefine) do
-		local var_6_0 = ActivityHelper.getActivityStatus(iter_6_0)
-		local var_6_1 = ActivityHelper.getActivityStatus(iter_6_1.storeActId)
+function ReactivityController:getCurReactivityId()
+	for actId, v in pairs(ReactivityEnum.ActivityDefine) do
+		local status = ActivityHelper.getActivityStatus(actId)
+		local storeStatus = ActivityHelper.getActivityStatus(v.storeActId)
 
-		if var_6_0 == ActivityEnum.ActivityStatus.Normal or var_6_0 == ActivityEnum.ActivityStatus.NotUnlock or var_6_1 == ActivityEnum.ActivityStatus.Normal then
-			return iter_6_0
+		if status == ActivityEnum.ActivityStatus.Normal or status == ActivityEnum.ActivityStatus.NotUnlock or storeStatus == ActivityEnum.ActivityStatus.Normal then
+			return actId
 		end
 	end
 end
 
-function var_0_0.openReactivityStoreView(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = ReactivityEnum.ActivityDefine[arg_7_1]
+function ReactivityController:openReactivityStoreView(actId, viewName)
+	local define = ReactivityEnum.ActivityDefine[actId]
 
-	if not var_7_0 then
+	if not define then
 		return
 	end
 
-	local var_7_1 = var_7_0.storeActId
+	local storeActId = define.storeActId
 
-	arg_7_0:_enterActivityView(arg_7_2 or ViewName.ReactivityStoreView, var_7_1, arg_7_0._openStoreView, arg_7_0)
+	self:_enterActivityView(viewName or ViewName.ReactivityStoreView, storeActId, self._openStoreView, self)
 end
 
-function var_0_0._openStoreView(arg_8_0, arg_8_1, arg_8_2)
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_8_2, function()
-		ViewMgr.instance:openView(arg_8_1, {
-			actId = arg_8_2
+function ReactivityController:_openStoreView(viewName, actId)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, function()
+		ViewMgr.instance:openView(viewName, {
+			actId = actId
 		})
 	end)
 end
 
-function var_0_0._enterActivityView(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5)
-	local var_10_0, var_10_1, var_10_2 = ActivityHelper.getActivityStatusAndToast(arg_10_2)
+function ReactivityController:_enterActivityView(viewName, actId, callback, callbackObj, viewParam)
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_10_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_10_1 then
-			GameFacade.showToastWithTableParam(var_10_1, var_10_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, toastParamList)
 		end
 
 		return
 	end
 
-	if arg_10_3 then
-		arg_10_3(arg_10_4, arg_10_1, arg_10_2, arg_10_5)
+	if callback then
+		callback(callbackObj, viewName, actId, viewParam)
 
 		return
 	end
 
-	local var_10_3 = {
-		actId = arg_10_2
+	local param = {
+		actId = actId
 	}
 
-	if arg_10_5 then
-		for iter_10_0, iter_10_1 in pairs(arg_10_5) do
-			var_10_3[iter_10_0] = iter_10_1
+	if viewParam then
+		for k, v in pairs(viewParam) do
+			param[k] = v
 		end
 	end
 
-	ViewMgr.instance:openView(arg_10_1, var_10_3)
+	ViewMgr.instance:openView(viewName, param)
 end
 
-var_0_0.instance = var_0_0.New()
+ReactivityController.instance = ReactivityController.New()
 
-return var_0_0
+return ReactivityController

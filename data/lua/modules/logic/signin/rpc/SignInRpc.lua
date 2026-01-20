@@ -1,108 +1,124 @@
-﻿module("modules.logic.signin.rpc.SignInRpc", package.seeall)
+﻿-- chunkname: @modules/logic/signin/rpc/SignInRpc.lua
 
-local var_0_0 = class("SignInRpc", BaseRpc)
+module("modules.logic.signin.rpc.SignInRpc", package.seeall)
 
-function var_0_0.sendGetSignInInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = SignInModule_pb.GetSignInInfoRequest()
+local SignInRpc = class("SignInRpc", BaseRpc)
 
-	arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function SignInRpc:sendGetSignInInfoRequest(callback, callbackObj)
+	local req = SignInModule_pb.GetSignInInfoRequest()
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetSignInInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		SignInModel.instance:setSignInInfo(arg_2_2)
+function SignInRpc:onReceiveGetSignInInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:setSignInInfo(msg)
 		SignInController.instance:dispatchEvent(SignInEvent.GetSignInInfo)
 	end
 end
 
-function var_0_0.sendSignInRequest(arg_3_0)
-	local var_3_0 = SignInModule_pb.SignInRequest()
+function SignInRpc:sendSignInRequest()
+	local req = SignInModule_pb.SignInRequest()
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveSignInReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		SignInModel.instance:setSignDayRewardGet(arg_4_2)
+function SignInRpc:onReceiveSignInReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:setSignDayRewardGet(msg)
+		SignInController.instance:checkShowSigninReward(msg)
 		SignInController.instance:dispatchEvent(SignInEvent.GetSignInReply)
 		ChargeRpc.instance:sendGetMonthCardInfoRequest()
 	end
 end
 
-function var_0_0.sendSignInAddupRequest(arg_5_0, arg_5_1)
-	local var_5_0 = SignInModule_pb.SignInAddupRequest()
+function SignInRpc:sendSignInAddupRequest(id)
+	local req = SignInModule_pb.SignInAddupRequest()
 
-	var_5_0.id = arg_5_1
+	req.id = id
 
-	arg_5_0:sendMsg(var_5_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveSignInAddupReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
-		SignInModel.instance:setSignTotalRewardGet(arg_6_2.id)
+function SignInRpc:onReceiveSignInAddupReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:setSignTotalRewardGet(msg.id)
 		SignInController.instance:dispatchEvent(SignInEvent.GetSignInAddUp)
 	end
 end
 
-function var_0_0.sendSignInHistoryRequest(arg_7_0, arg_7_1)
-	local var_7_0 = SignInModule_pb.SignInHistoryRequest()
+function SignInRpc:sendSignInHistoryRequest(month)
+	local req = SignInModule_pb.SignInHistoryRequest()
 
-	var_7_0.month = arg_7_1
+	req.month = month
 
-	arg_7_0:sendMsg(var_7_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveSignInHistoryReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == 0 then
-		SignInModel.instance:setSignInHistory(arg_8_2)
-		SignInController.instance:dispatchEvent(SignInEvent.GetHistorySignInSuccess, arg_8_2.month)
+function SignInRpc:onReceiveSignInHistoryReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:setSignInHistory(msg)
+		SignInController.instance:dispatchEvent(SignInEvent.GetHistorySignInSuccess, msg.month)
 	end
 end
 
-function var_0_0.sendGetHeroBirthdayRequest(arg_9_0, arg_9_1)
-	local var_9_0 = SignInModule_pb.GetHeroBirthdayRequest()
+function SignInRpc:sendGetHeroBirthdayRequest(heroId)
+	local req = SignInModule_pb.GetHeroBirthdayRequest()
 
-	var_9_0.heroId = arg_9_1
+	req.heroId = heroId
 
-	arg_9_0:sendMsg(var_9_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetHeroBirthdayReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == 0 then
-		SignInModel.instance:setHeroBirthdayGet(arg_10_2.heroId)
-		SignInModel.instance:addSignInBirthdayCount(arg_10_2.heroId)
+function SignInRpc:onReceiveGetHeroBirthdayReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:setHeroBirthdayGet(msg.heroId)
+		SignInModel.instance:addSignInBirthdayCount(msg.heroId)
 		SignInController.instance:dispatchEvent(SignInEvent.GetHeroBirthday)
 	end
 end
 
-function var_0_0.sendSignInTotalRewardRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = SignInModule_pb.SignInTotalRewardRequest()
+function SignInRpc:sendSignInTotalRewardRequest(id, callback, callbackObj)
+	local req = SignInModule_pb.SignInTotalRewardRequest()
 
-	var_11_0.id = arg_11_1
+	req.id = id
 
-	return arg_11_0:sendMsg(var_11_0, arg_11_2, arg_11_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSignInTotalRewardReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == 0 then
-		SignInModel.instance:onReceiveSignInTotalRewardReply(arg_12_2)
-		SignInController.instance:dispatchEvent(SignInEvent.OnSignInTotalRewardReply, arg_12_2.id)
+function SignInRpc:onReceiveSignInTotalRewardReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:onReceiveSignInTotalRewardReply(msg)
+		SignInController.instance:dispatchEvent(SignInEvent.OnSignInTotalRewardReply, msg.id)
 	end
 end
 
-function var_0_0.sendSignInTotalRewardAllRequest(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = SignInModule_pb.SignInTotalRewardAllRequest()
+function SignInRpc:sendSignInTotalRewardAllRequest(callback, callbackObj)
+	local req = SignInModule_pb.SignInTotalRewardAllRequest()
 
-	return arg_13_0:sendMsg(var_13_0, arg_13_1, arg_13_2)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSignInTotalRewardAllReply(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == 0 then
-		SignInModel.instance:onReceiveSignInTotalRewardAllReply(arg_14_2)
+function SignInRpc:onReceiveSignInTotalRewardAllReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:onReceiveSignInTotalRewardAllReply(msg)
 		SignInController.instance:dispatchEvent(SignInEvent.OnReceiveSignInTotalRewardAllReply)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function SignInRpc:sendSupplementMonthCardRequest(callback, callbackObj)
+	local req = SignInModule_pb.SupplementMonthCardRequest()
 
-return var_0_0
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function SignInRpc:onReceiveSupplementMonthCardReply(resultCode, msg)
+	if resultCode == 0 then
+		SignInModel.instance:setSupplementMonthCard(msg.days)
+		SignInController.instance:dispatchEvent(SignInEvent.OnReceiveSupplementMonthCardReply)
+	end
+end
+
+SignInRpc.instance = SignInRpc.New()
+
+return SignInRpc

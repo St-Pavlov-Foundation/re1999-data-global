@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTipsContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/view/SportsNewsTipsContainer.lua
 
-local var_0_0 = class("SportsNewsTipsContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTipsContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SportsNewsTipsContainer = class("SportsNewsTipsContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SportsNewsTips.New())
+function SportsNewsTipsContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SportsNewsTips.New())
+
+	return views
 end
 
-return var_0_0
+return SportsNewsTipsContainer

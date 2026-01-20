@@ -1,715 +1,729 @@
-﻿module("modules.logic.activity.view.warmup.ActivityWarmUpGameView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/warmup/ActivityWarmUpGameView.lua
 
-local var_0_0 = class("ActivityWarmUpGameView", BaseView)
+module("modules.logic.activity.view.warmup.ActivityWarmUpGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagebase = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_progress/#simage_base")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._simagemap = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_map")
-	arg_1_0._gocanvas = gohelper.findChild(arg_1_0.viewGO, "#go_canvas")
-	arg_1_0._gobottle = gohelper.findChild(arg_1_0.viewGO, "#go_bottle")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "#go_progress")
-	arg_1_0._gointerval = gohelper.findChild(arg_1_0.viewGO, "#go_progress/#go_interval")
-	arg_1_0._btntrigger = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_trigger")
-	arg_1_0._txttrigger = gohelper.findChildText(arg_1_0.viewGO, "#btn_trigger/#txt_trigger")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._gotargeticon = gohelper.findChild(arg_1_0.viewGO, "go_targets/targets/#go_targeticon")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "remaintimebg/#txt_remaintime")
-	arg_1_0._imagebottle = gohelper.findChildImage(arg_1_0.viewGO, "#go_bottle/#image_bottle")
-	arg_1_0._goresult = gohelper.findChild(arg_1_0.viewGO, "#go_result")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_result/#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_result/#go_fail")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_result/#simage_mask")
-	arg_1_0._gobottletarget = gohelper.findChild(arg_1_0.viewGO, "bottle/hu/#go_bottletarget")
-	arg_1_0._gobottlecurveleft = gohelper.findChild(arg_1_0.viewGO, "bottle/hu/#go_bottlecurveleft")
-	arg_1_0._gobottlecurveright = gohelper.findChild(arg_1_0.viewGO, "bottle/hu/#go_bottlecurveright")
-	arg_1_0._btnhome = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#go_fail/#btn_home")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#go_fail/#btn_restart")
-	arg_1_0._imageremaintip = gohelper.findChildImage(arg_1_0.viewGO, "remaintimebg/#image_remaintip")
+local ActivityWarmUpGameView = class("ActivityWarmUpGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityWarmUpGameView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagebase = gohelper.findChildSingleImage(self.viewGO, "#go_progress/#simage_base")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._simagemap = gohelper.findChildSingleImage(self.viewGO, "#simage_map")
+	self._gocanvas = gohelper.findChild(self.viewGO, "#go_canvas")
+	self._gobottle = gohelper.findChild(self.viewGO, "#go_bottle")
+	self._goprogress = gohelper.findChild(self.viewGO, "#go_progress")
+	self._gointerval = gohelper.findChild(self.viewGO, "#go_progress/#go_interval")
+	self._btntrigger = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_trigger")
+	self._txttrigger = gohelper.findChildText(self.viewGO, "#btn_trigger/#txt_trigger")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._gotargeticon = gohelper.findChild(self.viewGO, "go_targets/targets/#go_targeticon")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "remaintimebg/#txt_remaintime")
+	self._imagebottle = gohelper.findChildImage(self.viewGO, "#go_bottle/#image_bottle")
+	self._goresult = gohelper.findChild(self.viewGO, "#go_result")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_result/#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_result/#go_fail")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#go_result/#simage_mask")
+	self._gobottletarget = gohelper.findChild(self.viewGO, "bottle/hu/#go_bottletarget")
+	self._gobottlecurveleft = gohelper.findChild(self.viewGO, "bottle/hu/#go_bottlecurveleft")
+	self._gobottlecurveright = gohelper.findChild(self.viewGO, "bottle/hu/#go_bottlecurveright")
+	self._btnhome = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#go_fail/#btn_home")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#go_fail/#btn_restart")
+	self._imageremaintip = gohelper.findChildImage(self.viewGO, "remaintimebg/#image_remaintip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntrigger:AddClickListener(arg_2_0._btntriggerOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnhome:AddClickListener(arg_2_0._btnhomeOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
+function ActivityWarmUpGameView:addEvents()
+	self._btntrigger:AddClickListener(self._btntriggerOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnhome:AddClickListener(self._btnhomeOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btntrigger:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnhome:RemoveClickListener()
+function ActivityWarmUpGameView:removeEvents()
+	self._btnrestart:RemoveClickListener()
+	self._btntrigger:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnhome:RemoveClickListener()
 end
 
-var_0_0.ProgressUIWidth = 940.79
+ActivityWarmUpGameView.ProgressUIWidth = 940.79
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getActivityWarmUpBg("full/bj002"))
-	arg_4_0._simagemap:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi2"))
-	arg_4_0._simagebase:LoadImage(ResUrl.getActivityWarmUpBg("bg_xiadi"))
-	arg_4_0._simagemask:LoadImage(ResUrl.getActivityWarmUpBg("bg_bodian"))
+function ActivityWarmUpGameView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getActivityWarmUpBg("full/bj002"))
+	self._simagemap:LoadImage(ResUrl.getActivityWarmUpBg("bg_zi2"))
+	self._simagebase:LoadImage(ResUrl.getActivityWarmUpBg("bg_xiadi"))
+	self._simagemask:LoadImage(ResUrl.getActivityWarmUpBg("bg_bodian"))
 
-	arg_4_0._bgMaterial = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._simagemask.gameObject, SingleBgToMaterial)
+	self._bgMaterial = MonoHelper.addNoUpdateLuaComOnceToGo(self._simagemask.gameObject, SingleBgToMaterial)
 
-	arg_4_0._bgMaterial:loadMaterial(arg_4_0._simagemask, "ui_black2transparent")
+	self._bgMaterial:loadMaterial(self._simagemask, "ui_black2transparent")
 
-	arg_4_0._tfProgress = arg_4_0._goprogress.transform
-	arg_4_0._goblackbg = gohelper.findChild(arg_4_0.viewGO, "#go_result/blackbg")
-	arg_4_0._btnblackbg = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "#go_result/blackbg")
-	arg_4_0._animBtnTrigger = arg_4_0._btntrigger:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._goAnimCountDown = gohelper.findChild(arg_4_0.viewGO, "remaintimebg")
-	arg_4_0._animCountDown = arg_4_0._goAnimCountDown:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._animTargetIcons = gohelper.findChild(arg_4_0.viewGO, "go_targets"):GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._animBottle = gohelper.findChild(arg_4_0.viewGO, "bottle"):GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._flyTargetPos = arg_4_0._gobottletarget.transform.position
-	arg_4_0._flyCurveLeftPos = arg_4_0._gobottlecurveleft.transform.position
-	arg_4_0._flyCurveRightPos = arg_4_0._gobottlecurveright.transform.position
+	self._tfProgress = self._goprogress.transform
+	self._goblackbg = gohelper.findChild(self.viewGO, "#go_result/blackbg")
+	self._btnblackbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/blackbg")
+	self._animBtnTrigger = self._btntrigger:GetComponent(typeof(UnityEngine.Animator))
+	self._goAnimCountDown = gohelper.findChild(self.viewGO, "remaintimebg")
+	self._animCountDown = self._goAnimCountDown:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_4_0:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameTriggerNoHit, arg_4_0.onGameTriggerNoHit, arg_4_0)
-	arg_4_0:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameTriggerHit, arg_4_0.onGameTriggerHit, arg_4_0)
-	arg_4_0:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameNextRound, arg_4_0.onGameNextRound, arg_4_0)
-	arg_4_0:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameOverTimeOut, arg_4_0.onGameTimeOut, arg_4_0)
-	arg_4_0:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameOverFinished, arg_4_0.onGameOverFinished, arg_4_0)
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0.onCloseViewCall, arg_4_0)
-	arg_4_0._btnblackbg:AddClickListener(arg_4_0._btnblackbgOnClick, arg_4_0)
+	local goTargetIcons = gohelper.findChild(self.viewGO, "go_targets")
 
-	arg_4_0._targetItems = {}
-	arg_4_0._blockItems = {}
-	arg_4_0._lockAllClick = false
-	arg_4_0._flyIconFlag = {}
-	arg_4_0._rectBottle = arg_4_0._gobottle.transform
+	self._animTargetIcons = goTargetIcons:GetComponent(typeof(UnityEngine.Animator))
+
+	local goBottle = gohelper.findChild(self.viewGO, "bottle")
+
+	self._animBottle = goBottle:GetComponent(typeof(UnityEngine.Animator))
+	self._flyTargetPos = self._gobottletarget.transform.position
+	self._flyCurveLeftPos = self._gobottlecurveleft.transform.position
+	self._flyCurveRightPos = self._gobottlecurveright.transform.position
+
+	self:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameTriggerNoHit, self.onGameTriggerNoHit, self)
+	self:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameTriggerHit, self.onGameTriggerHit, self)
+	self:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameNextRound, self.onGameNextRound, self)
+	self:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameOverTimeOut, self.onGameTimeOut, self)
+	self:addEventCb(ActivityWarmUpGameController.instance, ActivityWarmUpEvent.GameOverFinished, self.onGameOverFinished, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseViewCall, self)
+	self._btnblackbg:AddClickListener(self._btnblackbgOnClick, self)
+
+	self._targetItems = {}
+	self._blockItems = {}
+	self._lockAllClick = false
+	self._flyIconFlag = {}
+	self._rectBottle = self._gobottle.transform
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._blockItems) do
-		iter_5_1.imageIcon:UnLoadImage()
-		iter_5_1.imageIconCur:UnLoadImage()
+function ActivityWarmUpGameView:onDestroyView()
+	for _, item in pairs(self._blockItems) do
+		item.imageIcon:UnLoadImage()
+		item.imageIconCur:UnLoadImage()
 	end
 
-	for iter_5_2, iter_5_3 in pairs(arg_5_0._targetItems) do
-		iter_5_3.imageIcon:UnLoadImage()
+	for _, item in pairs(self._targetItems) do
+		item.imageIcon:UnLoadImage()
 	end
 
-	arg_5_0._simagebg:UnLoadImage()
-	arg_5_0._simagemap:UnLoadImage()
-	arg_5_0._simagebase:UnLoadImage()
-	arg_5_0._bgMaterial:dispose()
-	arg_5_0._btnblackbg:RemoveClickListener()
+	self._simagebg:UnLoadImage()
+	self._simagemap:UnLoadImage()
+	self._simagebase:UnLoadImage()
+	self._bgMaterial:dispose()
+	self._btnblackbg:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function ActivityWarmUpGameView:onOpen()
 	ActivityWarmUpGameController.instance:clearLastResult()
 	ActivityWarmUpGameController.instance:prepareGame()
 
-	arg_6_0._txttrigger.text = luaLang("p_activitywarmupview_challenge")
+	self._txttrigger.text = luaLang("p_activitywarmupview_challenge")
 
-	arg_6_0._animBtnTrigger:Play(UIAnimationName.Start)
-	arg_6_0:refreshGameDisplay()
-	arg_6_0:updateForRemainTime()
-	arg_6_0:updateForPointerMove()
-	arg_6_0:allBlocksPlayAnim(UIAnimationName.Idle)
+	self._animBtnTrigger:Play(UIAnimationName.Start)
+	self:refreshGameDisplay()
+	self:updateForRemainTime()
+	self:updateForPointerMove()
+	self:allBlocksPlayAnim(UIAnimationName.Idle)
 end
 
-function var_0_0.onOpenFinish(arg_7_0)
-	arg_7_0:refreshAllBlocks()
-	arg_7_0:allBlocksPlayAnim(UIAnimationName.Idle)
+function ActivityWarmUpGameView:onOpenFinish()
+	self:refreshAllBlocks()
+	self:allBlocksPlayAnim(UIAnimationName.Idle)
 end
 
-function var_0_0.onClose(arg_8_0)
+function ActivityWarmUpGameView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.stop_pot_boiling)
 	ActivityWarmUpGameModel.instance:release()
-	TaskDispatcher.cancelTask(arg_8_0.onLockCountDownCompleted, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onSwitchNextRoundCompleted, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onRepeatCountdown, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onGameClearAnimCompleted, arg_8_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_BLOCK_GAME_CLEAR)
+	TaskDispatcher.cancelTask(self.onLockCountDownCompleted, self)
+	TaskDispatcher.cancelTask(self.onSwitchNextRoundCompleted, self)
+	TaskDispatcher.cancelTask(self.onRepeatCountdown, self)
+	TaskDispatcher.cancelTask(self.onGameClearAnimCompleted, self)
+	UIBlockMgr.instance:endBlock(ActivityWarmUpGameView.UI_BLOCK_GAME_CLEAR)
 
-	arg_8_0._waitingFlyIconNextRound = false
-	arg_8_0._waitingFlyIconGameOver = false
+	self._waitingFlyIconNextRound = false
+	self._waitingFlyIconGameOver = false
 
-	arg_8_0:stopAllFlyIcons()
-	arg_8_0:stopEnterFrame()
+	self:stopAllFlyIcons()
+	self:stopEnterFrame()
 end
 
-function var_0_0.onCloseFinish(arg_9_0)
+function ActivityWarmUpGameView:onCloseFinish()
 	if not ActivityWarmUpGameController.instance:getSaveResult() then
 		ActivityWarmUpGameController.instance:dispatchEvent(ActivityWarmUpEvent.NotifyGameCancel)
 	end
 end
 
-function var_0_0._btntriggerOnClick(arg_10_0)
-	if arg_10_0._lockAllClick then
+function ActivityWarmUpGameView:_btntriggerOnClick()
+	if self._lockAllClick then
 		return
 	end
 
 	if not ActivityWarmUpGameController.instance:getIsPlaying() then
-		gohelper.setActive(arg_10_0._goresult, false)
+		gohelper.setActive(self._goresult, false)
 
-		arg_10_0._txtremaintime.text = ""
+		self._txtremaintime.text = ""
 
-		arg_10_0._animCountDown:Play("countdown")
+		self._animCountDown:Play("countdown")
 
-		arg_10_0._lockAllClick = true
-		arg_10_0._waitingFlyIconNextRound = false
-		arg_10_0._waitingFlyIconGameOver = false
+		self._lockAllClick = true
+		self._waitingFlyIconNextRound = false
+		self._waitingFlyIconGameOver = false
 
-		gohelper.setActive(arg_10_0._imageremaintip.gameObject, false)
+		gohelper.setActive(self._imageremaintip.gameObject, false)
 		AudioMgr.instance:trigger(AudioEnum.WarmUpGame.game_count_down)
-		TaskDispatcher.runRepeat(arg_10_0.onRepeatCountdown, arg_10_0, 1)
-		TaskDispatcher.runDelay(arg_10_0.onLockCountDownCompleted, arg_10_0, 3)
-	elseif not ActivityWarmUpGameController.instance:getIsCD() then
-		arg_10_0._animBtnTrigger:Play(UIAnimationName.Click, 0, 0)
-		ActivityWarmUpGameController.instance:pointerTrigger()
+		TaskDispatcher.runRepeat(self.onRepeatCountdown, self, 1)
+		TaskDispatcher.runDelay(self.onLockCountDownCompleted, self, 3)
+	else
+		local isCDNow = ActivityWarmUpGameController.instance:getIsCD()
+
+		if not isCDNow then
+			self._animBtnTrigger:Play(UIAnimationName.Click, 0, 0)
+			ActivityWarmUpGameController.instance:pointerTrigger()
+		end
 	end
 end
 
-function var_0_0.onRepeatCountdown(arg_11_0)
+function ActivityWarmUpGameView:onRepeatCountdown()
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.game_count_down)
 end
 
-function var_0_0.onLockCountDownCompleted(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.onLockCountDownCompleted, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.onRepeatCountdown, arg_12_0)
-	gohelper.setActive(arg_12_0._imageremaintip.gameObject, true)
+function ActivityWarmUpGameView:onLockCountDownCompleted()
+	TaskDispatcher.cancelTask(self.onLockCountDownCompleted, self)
+	TaskDispatcher.cancelTask(self.onRepeatCountdown, self)
+	gohelper.setActive(self._imageremaintip.gameObject, true)
 
-	arg_12_0._lockAllClick = false
+	self._lockAllClick = false
 
-	arg_12_0._animCountDown:Play(UIAnimationName.Idle)
+	self._animCountDown:Play(UIAnimationName.Idle)
 	ActivityWarmUpGameController.instance:startGame()
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.start_pot_boiling)
 
-	arg_12_0._txttrigger.text = luaLang("p_activitywarmupgameview_add")
+	self._txttrigger.text = luaLang("p_activitywarmupgameview_add")
 
-	arg_12_0._animBtnTrigger:Play(UIAnimationName.Idle)
-	arg_12_0._animBottle:Play("bottle")
-	arg_12_0._animTargetIcons:Play(UIAnimationName.Idle)
-	TaskDispatcher.runRepeat(arg_12_0.onEnterFrame, arg_12_0, 0.01)
+	self._animBtnTrigger:Play(UIAnimationName.Idle)
+	self._animBottle:Play("bottle")
+	self._animTargetIcons:Play(UIAnimationName.Idle)
+	TaskDispatcher.runRepeat(self.onEnterFrame, self, 0.01)
 
-	arg_12_0._isBtnCD = false
-	arg_12_0._flyIconFlag = {}
+	self._isBtnCD = false
+	self._flyIconFlag = {}
 
-	arg_12_0:updateForRemainTime()
-	arg_12_0:updateForTriggerCD()
-	arg_12_0:allBlocksPlayAnim(UIAnimationName.Loop)
+	self:updateForRemainTime()
+	self:updateForTriggerCD()
+	self:allBlocksPlayAnim(UIAnimationName.Loop)
 end
 
-function var_0_0._btnresetOnClick(arg_13_0)
-	if arg_13_0._lockAllClick then
+function ActivityWarmUpGameView:_btnresetOnClick()
+	if self._lockAllClick then
 		return
 	end
 
-	local function var_13_0()
-		arg_13_0:onRestartComfirm()
+	local function onYesCall()
+		self:onRestartComfirm()
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.WarmUpGameReFight, MsgBoxEnum.BoxType.Yes_No, var_13_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.WarmUpGameReFight, MsgBoxEnum.BoxType.Yes_No, onYesCall)
 end
 
-function var_0_0.onRestartComfirm(arg_15_0)
+function ActivityWarmUpGameView:onRestartComfirm()
 	if ActivityWarmUpGameController.instance:getIsPlaying() then
 		AudioMgr.instance:trigger(AudioEnum.WarmUpGame.stop_pot_boiling)
-		arg_15_0._animBottle:Play(UIAnimationName.Idle)
+		self._animBottle:Play(UIAnimationName.Idle)
 		ActivityWarmUpGameController.instance:stopGame()
 	end
 
-	gohelper.setActive(arg_15_0._goresult, false)
-	gohelper.setActive(arg_15_0._btntrigger.gameObject, true)
+	gohelper.setActive(self._goresult, false)
+	gohelper.setActive(self._btntrigger.gameObject, true)
 	ActivityWarmUpGameController.instance:clearLastResult()
 	ActivityWarmUpGameController.instance:prepareGame()
 
-	arg_15_0._txttrigger.text = luaLang("p_activitywarmupview_challenge")
+	self._txttrigger.text = luaLang("p_activitywarmupview_challenge")
 
-	arg_15_0._animBtnTrigger:Play(UIAnimationName.Start)
+	self._animBtnTrigger:Play(UIAnimationName.Start)
 
-	arg_15_0._isBtnCD = false
-	arg_15_0._waitingFlyIconNextRound = false
-	arg_15_0._waitingFlyIconGameOver = false
+	self._isBtnCD = false
+	self._waitingFlyIconNextRound = false
+	self._waitingFlyIconGameOver = false
 
-	arg_15_0:stopEnterFrame()
-	arg_15_0:refreshGameDisplay()
-	arg_15_0:updateForRemainTime()
-	arg_15_0:updateForTriggerCD()
-	arg_15_0:updateForPointerMove()
-	arg_15_0:allBlocksPlayAnim("idle")
+	self:stopEnterFrame()
+	self:refreshGameDisplay()
+	self:updateForRemainTime()
+	self:updateForTriggerCD()
+	self:updateForPointerMove()
+	self:allBlocksPlayAnim("idle")
 end
 
-function var_0_0._btnblackbgOnClick(arg_16_0)
-	gohelper.setActive(arg_16_0._goresult, false)
+function ActivityWarmUpGameView:_btnblackbgOnClick()
+	gohelper.setActive(self._goresult, false)
 
 	if ActivityWarmUpGameController.instance:getSaveResult() then
-		arg_16_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._btnhomeOnClick(arg_17_0)
-	arg_17_0:closeThis()
+function ActivityWarmUpGameView:_btnhomeOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnrestartOnClick(arg_18_0)
-	gohelper.setActive(arg_18_0._goresult, false)
-	arg_18_0:onRestartComfirm()
+function ActivityWarmUpGameView:_btnrestartOnClick()
+	gohelper.setActive(self._goresult, false)
+	self:onRestartComfirm()
 end
 
-function var_0_0.onCloseViewCall(arg_19_0, arg_19_1)
-	if arg_19_1 == ViewName.CommonPropView and ActivityWarmUpGameController.instance:getSaveResult() then
-		arg_19_0:closeThis()
+function ActivityWarmUpGameView:onCloseViewCall(viewName)
+	if viewName == ViewName.CommonPropView and ActivityWarmUpGameController.instance:getSaveResult() then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onGameTriggerNoHit(arg_20_0)
+function ActivityWarmUpGameView:onGameTriggerNoHit()
 	logNormal("onGameTriggerNoHit")
 	ActivityWarmUpGameController.instance:markCDTime()
 end
 
-function var_0_0.onGameTriggerHit(arg_21_0, arg_21_1)
+function ActivityWarmUpGameView:onGameTriggerHit(blockData)
 	logNormal("onGameTriggerHit")
-	arg_21_0:refreshAllTargetIcons()
+	self:refreshAllTargetIcons()
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.trigger_click_nice)
-	arg_21_0._animBtnTrigger:Play(UIAnimationName.Selected, 0, 0)
+	self._animBtnTrigger:Play(UIAnimationName.Selected, 0, 0)
 
-	local var_21_0 = arg_21_0:getBlockItemByData(arg_21_1)
+	local itemObj = self:getBlockItemByData(blockData)
 
-	if var_21_0 then
-		arg_21_0._flyIconFlag[var_21_0] = true
+	if itemObj then
+		self._flyIconFlag[itemObj] = true
 
-		TaskDispatcher.runRepeat(var_0_0.playIconFly, var_21_0, 0.01)
+		TaskDispatcher.runRepeat(ActivityWarmUpGameView.playIconFly, itemObj, 0.01)
 	end
 end
 
-function var_0_0.onGameNextRound(arg_22_0)
+function ActivityWarmUpGameView:onGameNextRound()
 	logNormal("onGameNextRound")
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.trigger_click_nice)
 	ActivityWarmUpGameController.instance:goNextRound()
 
-	arg_22_0._lockAllClick = true
+	self._lockAllClick = true
 
-	if tabletool.len(arg_22_0._flyIconFlag) > 0 then
-		arg_22_0._waitingFlyIconNextRound = true
+	if tabletool.len(self._flyIconFlag) > 0 then
+		self._waitingFlyIconNextRound = true
 
 		return
 	end
 
-	arg_22_0:nextRoundPlayAnim()
+	self:nextRoundPlayAnim()
 end
 
-function var_0_0.checkNextRoundWaitFly(arg_23_0)
-	if arg_23_0._waitingFlyIconNextRound and tabletool.len(arg_23_0._flyIconFlag) <= 0 then
-		arg_23_0:nextRoundPlayAnim()
+function ActivityWarmUpGameView:checkNextRoundWaitFly()
+	if self._waitingFlyIconNextRound and tabletool.len(self._flyIconFlag) <= 0 then
+		self:nextRoundPlayAnim()
 
 		return true
 	end
 end
 
-function var_0_0.nextRoundPlayAnim(arg_24_0)
-	arg_24_0._waitingFlyIconNextRound = false
+function ActivityWarmUpGameView:nextRoundPlayAnim()
+	self._waitingFlyIconNextRound = false
 
-	arg_24_0._animTargetIcons:Play(UIAnimationName.Switch)
-	TaskDispatcher.runDelay(arg_24_0.onSwitchNextRoundCompleted, arg_24_0, 0.16)
+	self._animTargetIcons:Play(UIAnimationName.Switch)
+	TaskDispatcher.runDelay(self.onSwitchNextRoundCompleted, self, 0.16)
 end
 
-function var_0_0.onSwitchNextRoundCompleted(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.onSwitchNextRoundCompleted, arg_25_0)
+function ActivityWarmUpGameView:onSwitchNextRoundCompleted()
+	TaskDispatcher.cancelTask(self.onSwitchNextRoundCompleted, self)
 
-	arg_25_0._lockAllClick = false
+	self._lockAllClick = false
 
-	arg_25_0:refreshGameDisplay()
-	arg_25_0:allBlocksPlayAnim(UIAnimationName.Open)
+	self:refreshGameDisplay()
+	self:allBlocksPlayAnim(UIAnimationName.Open)
 end
 
-function var_0_0.onGameTimeOut(arg_26_0)
+function ActivityWarmUpGameView:onGameTimeOut()
 	logNormal("onGameTimeOut")
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.stop_pot_boiling)
-	arg_26_0._animBottle:Play(UIAnimationName.Idle)
+	self._animBottle:Play(UIAnimationName.Idle)
 	ActivityWarmUpGameController.instance:stopGame()
-	arg_26_0:updateForTriggerCD()
-	arg_26_0:stopEnterFrame()
-	gohelper.setActive(arg_26_0._goresult, true)
-	gohelper.setActive(arg_26_0._gosuccess, false)
-	gohelper.setActive(arg_26_0._simagemask.gameObject, true)
-	gohelper.setActive(arg_26_0._gofail, true)
+	self:updateForTriggerCD()
+	self:stopEnterFrame()
+	gohelper.setActive(self._goresult, true)
+	gohelper.setActive(self._gosuccess, false)
+	gohelper.setActive(self._simagemask.gameObject, true)
+	gohelper.setActive(self._gofail, true)
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.play_game_fail)
 end
 
-function var_0_0.onGameOverFinished(arg_27_0)
+function ActivityWarmUpGameView:onGameOverFinished()
 	logNormal("onGameOverFinished")
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.stop_pot_boiling)
-	arg_27_0._animBottle:Play(UIAnimationName.Idle)
+	self._animBottle:Play(UIAnimationName.Idle)
 	ActivityWarmUpGameController.instance:stopGame()
 	ActivityWarmUpGameController.instance:saveGameClearResult()
-	arg_27_0:stopEnterFrame()
+	self:stopEnterFrame()
 
-	arg_27_0._lockAllClick = true
+	self._lockAllClick = true
 
-	if tabletool.len(arg_27_0._flyIconFlag) > 0 then
-		arg_27_0._waitingFlyIconGameOver = true
+	if tabletool.len(self._flyIconFlag) > 0 then
+		self._waitingFlyIconGameOver = true
 
 		return
 	end
 
-	arg_27_0:gameClear()
+	self:gameClear()
 end
 
-function var_0_0.checkGameOverWaitFly(arg_28_0)
-	if arg_28_0._waitingFlyIconGameOver and tabletool.len(arg_28_0._flyIconFlag) <= 0 then
-		arg_28_0._waitingFlyIconGameOver = false
+function ActivityWarmUpGameView:checkGameOverWaitFly()
+	if self._waitingFlyIconGameOver and tabletool.len(self._flyIconFlag) <= 0 then
+		self._waitingFlyIconGameOver = false
 
-		arg_28_0:gameClear()
+		self:gameClear()
 
 		return true
 	end
 end
 
-function var_0_0.onEnterFrame(arg_29_0)
+function ActivityWarmUpGameView:onEnterFrame()
 	ActivityWarmUpGameController.instance:onGameUpdate()
-	arg_29_0:updateForPointerMove()
-	arg_29_0:updateForRemainTime()
-	arg_29_0:updateForTriggerCD()
+	self:updateForPointerMove()
+	self:updateForRemainTime()
+	self:updateForTriggerCD()
 end
 
-var_0_0.UI_BLOCK_GAME_CLEAR = "ActivityWarmUpGameView_gameClear"
+ActivityWarmUpGameView.UI_BLOCK_GAME_CLEAR = "ActivityWarmUpGameView_gameClear"
 
-function var_0_0.gameClear(arg_30_0)
-	arg_30_0._lockAllClick = false
+function ActivityWarmUpGameView:gameClear()
+	self._lockAllClick = false
 
 	AudioMgr.instance:trigger(AudioEnum.WarmUpGame.play_game_victory)
-	gohelper.setActive(arg_30_0._goresult, true)
-	gohelper.setActive(arg_30_0._simagemask.gameObject, false)
-	gohelper.setActive(arg_30_0._gosuccess, true)
-	gohelper.setActive(arg_30_0._gofail, false)
-	gohelper.setActive(arg_30_0._btntrigger.gameObject, false)
-	UIBlockMgr.instance:startBlock(var_0_0.UI_BLOCK_GAME_CLEAR)
-	TaskDispatcher.runDelay(arg_30_0.onGameClearAnimCompleted, arg_30_0, 1.1)
+	gohelper.setActive(self._goresult, true)
+	gohelper.setActive(self._simagemask.gameObject, false)
+	gohelper.setActive(self._gosuccess, true)
+	gohelper.setActive(self._gofail, false)
+	gohelper.setActive(self._btntrigger.gameObject, false)
+	UIBlockMgr.instance:startBlock(ActivityWarmUpGameView.UI_BLOCK_GAME_CLEAR)
+	TaskDispatcher.runDelay(self.onGameClearAnimCompleted, self, 1.1)
 end
 
-function var_0_0.onGameClearAnimCompleted(arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0.onGameClearAnimCompleted, arg_31_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_BLOCK_GAME_CLEAR)
+function ActivityWarmUpGameView:onGameClearAnimCompleted()
+	TaskDispatcher.cancelTask(self.onGameClearAnimCompleted, self)
+	UIBlockMgr.instance:endBlock(ActivityWarmUpGameView.UI_BLOCK_GAME_CLEAR)
 
 	if ActivityWarmUpGameController.instance:getSaveResult() then
 		ActivityWarmUpGameController.instance:gameClear()
 	end
 end
 
-function var_0_0.onPlayFailCompleted(arg_32_0)
-	gohelper.setActive(arg_32_0._goresult, false)
+function ActivityWarmUpGameView:onPlayFailCompleted()
+	gohelper.setActive(self._goresult, false)
 	ActivityWarmUpGameController.instance:prepareGame()
 
-	arg_32_0._txttrigger.text = luaLang("p_activitywarmupview_challenge")
+	self._txttrigger.text = luaLang("p_activitywarmupview_challenge")
 
-	arg_32_0._animBtnTrigger:Play(UIAnimationName.Start)
+	self._animBtnTrigger:Play(UIAnimationName.Start)
 
-	arg_32_0._isBtnCD = false
+	self._isBtnCD = false
 
-	arg_32_0:refreshGameDisplay()
+	self:refreshGameDisplay()
 end
 
-function var_0_0.refreshGameDisplay(arg_33_0)
-	arg_33_0:refreshAllTargetIcons()
-	arg_33_0:refreshAllBlocks()
+function ActivityWarmUpGameView:refreshGameDisplay()
+	self:refreshAllTargetIcons()
+	self:refreshAllBlocks()
 end
 
-var_0_0.FlyProgressSpeed = 0.05
-var_0_0.IconSelectTime = 0.334
+ActivityWarmUpGameView.FlyProgressSpeed = 0.05
+ActivityWarmUpGameView.IconSelectTime = 0.334
 
-function var_0_0.playIconFly(arg_34_0)
-	local var_34_0 = arg_34_0.panel
+function ActivityWarmUpGameView.playIconFly(itemObj)
+	local panel = itemObj.panel
 
-	if not arg_34_0.progress or not arg_34_0.targetCurvePos then
-		arg_34_0.progress = 0
-		arg_34_0.posX, arg_34_0.posY, arg_34_0.posZ = transformhelper.getPos(arg_34_0.tfIcon)
-		arg_34_0.posXCur, arg_34_0.posYCur, arg_34_0.posZCur = transformhelper.getPos(arg_34_0.tfIconCur)
-		arg_34_0.targetCurvePos = arg_34_0.posX > var_34_0._flyTargetPos.x and var_34_0._flyCurveRightPos or var_34_0._flyCurveLeftPos
-		arg_34_0.targetCurvePosCur = arg_34_0.posXCur > var_34_0._flyTargetPos.x and var_34_0._flyCurveRightPos or var_34_0._flyCurveLeftPos
-		arg_34_0.startTime = Time.time
+	if not itemObj.progress or not itemObj.targetCurvePos then
+		itemObj.progress = 0
+		itemObj.posX, itemObj.posY, itemObj.posZ = transformhelper.getPos(itemObj.tfIcon)
+		itemObj.posXCur, itemObj.posYCur, itemObj.posZCur = transformhelper.getPos(itemObj.tfIconCur)
+		itemObj.targetCurvePos = itemObj.posX > panel._flyTargetPos.x and panel._flyCurveRightPos or panel._flyCurveLeftPos
+		itemObj.targetCurvePosCur = itemObj.posXCur > panel._flyTargetPos.x and panel._flyCurveRightPos or panel._flyCurveLeftPos
+		itemObj.startTime = Time.time
 
-		arg_34_0.anim:Play(UIAnimationName.Selected)
-		arg_34_0.animCur:Play(UIAnimationName.Selected)
+		itemObj.anim:Play(UIAnimationName.Selected)
+		itemObj.animCur:Play(UIAnimationName.Selected)
 
-		arg_34_0.isPlayGo = false
+		itemObj.isPlayGo = false
 	end
 
-	if Time.time - arg_34_0.startTime < var_0_0.IconSelectTime then
+	if Time.time - itemObj.startTime < ActivityWarmUpGameView.IconSelectTime then
 		return
-	elseif not arg_34_0.isPlayGo then
-		arg_34_0.isPlayGo = true
+	elseif not itemObj.isPlayGo then
+		itemObj.isPlayGo = true
 
-		arg_34_0.anim:Play("go")
-		arg_34_0.animCur:Play("go")
+		itemObj.anim:Play("go")
+		itemObj.animCur:Play("go")
 	end
 
-	local var_34_1 = math.min(1, arg_34_0.progress)
-	local var_34_2 = math.cos(var_34_1 * math.pi * 0.5)
-	local var_34_3 = Mathf.Lerp(var_34_0._flyTargetPos.x, arg_34_0.targetCurvePos.x, var_34_2)
-	local var_34_4 = Mathf.Lerp(var_34_0._flyTargetPos.y, arg_34_0.targetCurvePos.y, var_34_2)
-	local var_34_5 = Mathf.Lerp(var_34_0._flyTargetPos.z, arg_34_0.targetCurvePos.z, var_34_2)
+	local progress = math.min(1, itemObj.progress)
+	local cosProgress = math.cos(progress * math.pi * 0.5)
+	local tarPosX = Mathf.Lerp(panel._flyTargetPos.x, itemObj.targetCurvePos.x, cosProgress)
+	local tarPosY = Mathf.Lerp(panel._flyTargetPos.y, itemObj.targetCurvePos.y, cosProgress)
+	local tarPosZ = Mathf.Lerp(panel._flyTargetPos.z, itemObj.targetCurvePos.z, cosProgress)
 
-	transformhelper.setPos(arg_34_0.tfIcon, Mathf.Lerp(arg_34_0.posX, var_34_3, var_34_1), Mathf.Lerp(arg_34_0.posY, var_34_4, var_34_1), Mathf.Lerp(arg_34_0.posZ, var_34_5, var_34_1))
-	transformhelper.setPos(arg_34_0.tfIconCur, Mathf.Lerp(arg_34_0.posXCur, var_34_3, var_34_1), Mathf.Lerp(arg_34_0.posYCur, var_34_4, var_34_1), Mathf.Lerp(arg_34_0.posZCur, var_34_5, var_34_1))
+	transformhelper.setPos(itemObj.tfIcon, Mathf.Lerp(itemObj.posX, tarPosX, progress), Mathf.Lerp(itemObj.posY, tarPosY, progress), Mathf.Lerp(itemObj.posZ, tarPosZ, progress))
+	transformhelper.setPos(itemObj.tfIconCur, Mathf.Lerp(itemObj.posXCur, tarPosX, progress), Mathf.Lerp(itemObj.posYCur, tarPosY, progress), Mathf.Lerp(itemObj.posZCur, tarPosZ, progress))
 
-	if var_34_1 >= 1 then
-		var_0_0.onPlayIconFlyCompleted(arg_34_0)
+	if progress >= 1 then
+		ActivityWarmUpGameView.onPlayIconFlyCompleted(itemObj)
 
 		return
 	end
 
-	arg_34_0.progress = var_34_1 + var_0_0.FlyProgressSpeed
+	progress = progress + ActivityWarmUpGameView.FlyProgressSpeed
+	itemObj.progress = progress
 end
 
-function var_0_0.onPlayIconFlyCompleted(arg_35_0)
-	local var_35_0 = arg_35_0.panel
+function ActivityWarmUpGameView.onPlayIconFlyCompleted(itemObj)
+	local panel = itemObj.panel
 
-	var_35_0._flyIconFlag[arg_35_0] = nil
-	arg_35_0.targetCurvePos = nil
-	arg_35_0.progress = nil
-	arg_35_0.isPlayGo = false
+	panel._flyIconFlag[itemObj] = nil
+	itemObj.targetCurvePos = nil
+	itemObj.progress = nil
+	itemObj.isPlayGo = false
 
-	TaskDispatcher.cancelTask(var_0_0.playIconFly, arg_35_0)
+	TaskDispatcher.cancelTask(ActivityWarmUpGameView.playIconFly, itemObj)
 
-	local var_35_1 = var_35_0:checkNextRoundWaitFly()
-	local var_35_2 = var_35_0:checkGameOverWaitFly()
+	local rs1 = panel:checkNextRoundWaitFly()
+	local rs2 = panel:checkGameOverWaitFly()
 
-	if not var_35_1 and not var_35_2 and tabletool.len(var_35_0._flyIconFlag) == 0 then
-		var_35_0:refreshAllBlockAfterFly()
+	if not rs1 and not rs2 and tabletool.len(panel._flyIconFlag) == 0 then
+		panel:refreshAllBlockAfterFly()
 	end
 end
 
-function var_0_0.stopAllFlyIcons(arg_36_0)
-	for iter_36_0, iter_36_1 in pairs(arg_36_0._blockItems) do
-		TaskDispatcher.cancelTask(var_0_0.playIconFly, iter_36_1)
+function ActivityWarmUpGameView:stopAllFlyIcons()
+	for _, itemObj in pairs(self._blockItems) do
+		TaskDispatcher.cancelTask(ActivityWarmUpGameView.playIconFly, itemObj)
 
-		iter_36_1.targetCurvePos = nil
-		iter_36_1.progress = nil
-		iter_36_1.isPlayGo = false
-		arg_36_0._flyIconFlag[iter_36_1] = nil
+		itemObj.targetCurvePos = nil
+		itemObj.progress = nil
+		itemObj.isPlayGo = false
+		self._flyIconFlag[itemObj] = nil
 	end
 end
 
-function var_0_0.refreshAllTargetIcons(arg_37_0)
-	local var_37_0 = ActivityWarmUpGameModel.instance:getTargetMatIDs()
+function ActivityWarmUpGameView:refreshAllTargetIcons()
+	local targetMatList = ActivityWarmUpGameModel.instance:getTargetMatIDs()
 
-	arg_37_0:hideAllTargetIcon()
+	self:hideAllTargetIcon()
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_0) do
-		local var_37_1 = arg_37_0:getOrCreateIcon(iter_37_0)
+	for i, matID in ipairs(targetMatList) do
+		local item = self:getOrCreateIcon(i)
+		local isUsed = ActivityWarmUpGameModel.instance:matIsUsed(matID)
 
-		if ActivityWarmUpGameModel.instance:matIsUsed(iter_37_1) then
-			gohelper.setActive(var_37_1.go, false)
+		if isUsed then
+			gohelper.setActive(item.go, false)
 		else
-			arg_37_0:refreshTargetIcon(var_37_1, iter_37_1, iter_37_0)
+			self:refreshTargetIcon(item, matID, i)
 		end
 	end
 end
 
-function var_0_0.refreshTargetIcon(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	gohelper.setActive(arg_38_1.go, true)
+function ActivityWarmUpGameView:refreshTargetIcon(item, matID, index)
+	gohelper.setActive(item.go, true)
 
-	local var_38_0, var_38_1 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, arg_38_2)
+	local _, iconPath = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, matID)
 
-	if not string.nilorempty(var_38_1) then
-		arg_38_1.imageIcon:LoadImage(var_38_1)
+	if not string.nilorempty(iconPath) then
+		item.imageIcon:LoadImage(iconPath)
 	end
 end
 
-function var_0_0.refreshAllBlocks(arg_39_0)
-	local var_39_0 = ActivityWarmUpGameModel.instance:getBlockDatas()
+function ActivityWarmUpGameView:refreshAllBlocks()
+	local blockList = ActivityWarmUpGameModel.instance:getBlockDatas()
 
-	arg_39_0:stopAllFlyIcons()
-	arg_39_0:hideAllBlock()
+	self:stopAllFlyIcons()
+	self:hideAllBlock()
 
-	for iter_39_0, iter_39_1 in ipairs(var_39_0) do
-		local var_39_1 = arg_39_0:getOrCreateBlock(iter_39_0)
+	for i, blockData in ipairs(blockList) do
+		local item = self:getOrCreateBlock(i)
 
-		arg_39_0:refreshBlock(var_39_1, iter_39_1)
+		self:refreshBlock(item, blockData)
 	end
 end
 
-function var_0_0.allBlocksPlayAnim(arg_40_0, arg_40_1)
-	for iter_40_0, iter_40_1 in pairs(arg_40_0._blockItems) do
-		iter_40_1.anim:Play(arg_40_1, 0, 0)
-		iter_40_1.animCur:Play(arg_40_1, 0, 0)
+function ActivityWarmUpGameView:allBlocksPlayAnim(animName)
+	for _, item in pairs(self._blockItems) do
+		item.anim:Play(animName, 0, 0)
+		item.animCur:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0.refreshAllBlockAfterFly(arg_41_0)
-	local var_41_0 = ActivityWarmUpGameModel.instance:getBlockDatas()
-	local var_41_1 = {}
+function ActivityWarmUpGameView:refreshAllBlockAfterFly()
+	local blockList = ActivityWarmUpGameModel.instance:getBlockDatas()
+	local blockSet = {}
 
-	for iter_41_0, iter_41_1 in ipairs(var_41_0) do
-		local var_41_2 = arg_41_0:getOrCreateBlock(iter_41_0)
+	for i, blockData in ipairs(blockList) do
+		local item = self:getOrCreateBlock(i)
 
-		var_41_1[var_41_2] = true
+		blockSet[item] = true
 
-		arg_41_0:refreshBlock(var_41_2, iter_41_1)
+		self:refreshBlock(item, blockData)
 	end
 
-	for iter_41_2, iter_41_3 in pairs(arg_41_0._blockItems) do
-		if not var_41_1[iter_41_3] then
-			iter_41_3.blockData = nil
+	for _, item in pairs(self._blockItems) do
+		if not blockSet[item] then
+			item.blockData = nil
 
-			gohelper.setActive(iter_41_3.go, false)
+			gohelper.setActive(item.go, false)
 		end
 	end
 end
 
-function var_0_0.refreshBlock(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = ActivityWarmUpGameModel.instance:getBindMatByBlock(arg_42_2)
+function ActivityWarmUpGameView:refreshBlock(item, blockData)
+	local matID = ActivityWarmUpGameModel.instance:getBindMatByBlock(blockData)
 
-	if var_42_0 then
-		local var_42_1, var_42_2 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_42_0)
+	if matID then
+		local _, iconPath = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, matID)
 
-		if not string.nilorempty(var_42_2) then
-			arg_42_1.imageIcon:LoadImage(var_42_2)
-			arg_42_1.imageIconCur:LoadImage(var_42_2)
+		if not string.nilorempty(iconPath) then
+			item.imageIcon:LoadImage(iconPath)
+			item.imageIconCur:LoadImage(iconPath)
 		end
 	end
 
-	gohelper.setActive(arg_42_1.go, not ActivityWarmUpGameModel.instance:matIsUsed(var_42_0))
+	gohelper.setActive(item.go, not ActivityWarmUpGameModel.instance:matIsUsed(matID))
 
-	if arg_42_0._flyIconFlag[arg_42_1] then
+	if self._flyIconFlag[item] then
 		return
 	end
 
-	recthelper.setAnchor(arg_42_1.tfIcon, arg_42_1.iconAnchorX, arg_42_1.iconAnchorY)
-	recthelper.setAnchor(arg_42_1.tfIconCur, arg_42_1.iconCurAnchorX, arg_42_1.iconCurAnchorY)
+	recthelper.setAnchor(item.tfIcon, item.iconAnchorX, item.iconAnchorY)
+	recthelper.setAnchor(item.tfIconCur, item.iconCurAnchorX, item.iconCurAnchorY)
 
-	arg_42_1.blockData = arg_42_2
+	item.blockData = blockData
 
-	local var_42_3 = arg_42_2.endPos - arg_42_2.startPos
+	local intervalLen = blockData.endPos - blockData.startPos
 
-	recthelper.setAnchorX(arg_42_1.rectProgress, var_0_0.ProgressUIWidth * arg_42_2.startPos)
-	recthelper.setWidth(arg_42_1.rectProgress, var_0_0.ProgressUIWidth * var_42_3)
-	arg_42_1.anim:Play(UIAnimationName.Loop)
-	arg_42_1.animCur:Play(UIAnimationName.Loop)
+	recthelper.setAnchorX(item.rectProgress, ActivityWarmUpGameView.ProgressUIWidth * blockData.startPos)
+	recthelper.setWidth(item.rectProgress, ActivityWarmUpGameView.ProgressUIWidth * intervalLen)
+	item.anim:Play(UIAnimationName.Loop)
+	item.animCur:Play(UIAnimationName.Loop)
 
-	local var_42_4 = ActivityWarmUpGameModel.instance:isCurrentTarget(arg_42_2)
+	local isTarget = ActivityWarmUpGameModel.instance:isCurrentTarget(blockData)
 
-	gohelper.setActive(arg_42_1.goNormal, not var_42_4)
-	gohelper.setActive(arg_42_1.goCur, var_42_4)
+	gohelper.setActive(item.goNormal, not isTarget)
+	gohelper.setActive(item.goCur, isTarget)
 end
 
-function var_0_0.stopEnterFrame(arg_43_0)
-	TaskDispatcher.cancelTask(arg_43_0.onEnterFrame, arg_43_0)
+function ActivityWarmUpGameView:stopEnterFrame()
+	TaskDispatcher.cancelTask(self.onEnterFrame, self)
 end
 
-function var_0_0.updateForPointerMove(arg_44_0)
-	local var_44_0 = var_0_0.ProgressUIWidth * (ActivityWarmUpGameModel.instance.pointerVal - 0.5)
+function ActivityWarmUpGameView:updateForPointerMove()
+	local curX = ActivityWarmUpGameView.ProgressUIWidth * (ActivityWarmUpGameModel.instance.pointerVal - 0.5)
 
-	recthelper.setAnchorX(arg_44_0._rectBottle, var_44_0)
+	recthelper.setAnchorX(self._rectBottle, curX)
 
-	local var_44_1 = ActivityWarmUpGameModel.instance.pointerVal
-	local var_44_2 = ActivityWarmUpGameModel.instance:getBlockDataByPointer(var_44_1)
-	local var_44_3 = ActivityWarmUpGameModel.instance:getBindMatByBlock(var_44_2)
+	local pointerValue = ActivityWarmUpGameModel.instance.pointerVal
+	local blockData = ActivityWarmUpGameModel.instance:getBlockDataByPointer(pointerValue)
+	local matID = ActivityWarmUpGameModel.instance:getBindMatByBlock(blockData)
 
-	if var_44_2 and not ActivityWarmUpGameModel.instance:matIsUsed(var_44_3) then
-		arg_44_0._imagebottle.color = Color.New(0.9568627, 0.5294118, 0.3176471, 1)
+	if blockData and not ActivityWarmUpGameModel.instance:matIsUsed(matID) then
+		self._imagebottle.color = Color.New(0.9568627, 0.5294118, 0.3176471, 1)
 	else
-		arg_44_0._imagebottle.color = Color.New(1, 1, 1, 1)
+		self._imagebottle.color = Color.New(1, 1, 1, 1)
 	end
 end
 
-function var_0_0.updateForRemainTime(arg_45_0)
-	local var_45_0 = ActivityWarmUpGameController.instance:getRemainTime() or ActivityWarmUpGameController.instance:getSettingRemainTime()
+function ActivityWarmUpGameView:updateForRemainTime()
+	local remainTime = ActivityWarmUpGameController.instance:getRemainTime() or ActivityWarmUpGameController.instance:getSettingRemainTime()
 
-	if var_45_0 ~= nil then
-		arg_45_0._txtremaintime.text = tostring(var_45_0)
+	if remainTime ~= nil then
+		self._txtremaintime.text = tostring(remainTime)
 
-		if var_45_0 ~= arg_45_0._lastRemainTime then
+		if remainTime ~= self._lastRemainTime then
 			if ActivityWarmUpGameController.instance:getIsPlaying() then
 				AudioMgr.instance:trigger(AudioEnum.WarmUpGame.game_count_down)
 			end
 
-			arg_45_0._lastRemainTime = var_45_0
+			self._lastRemainTime = remainTime
 		end
 	else
-		arg_45_0._txtremaintime.text = ""
+		self._txtremaintime.text = ""
 	end
 end
 
-function var_0_0.updateForTriggerCD(arg_46_0)
-	arg_46_0._isBtnCD = ActivityWarmUpGameController.instance:getIsCD()
+function ActivityWarmUpGameView:updateForTriggerCD()
+	local isCDNow = ActivityWarmUpGameController.instance:getIsCD()
 
-	ZProj.UGUIHelper.SetGrayscale(arg_46_0._btntrigger.gameObject, arg_46_0._isBtnCD)
+	self._isBtnCD = isCDNow
+
+	ZProj.UGUIHelper.SetGrayscale(self._btntrigger.gameObject, self._isBtnCD)
 end
 
-function var_0_0.getOrCreateBlock(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_0._blockItems[arg_47_1]
+function ActivityWarmUpGameView:getOrCreateBlock(index)
+	local item = self._blockItems[index]
 
-	if not var_47_0 then
-		var_47_0 = arg_47_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_47_1 = gohelper.cloneInPlace(arg_47_0._gointerval, "item_interval_" .. tostring(arg_47_1))
+		local go = gohelper.cloneInPlace(self._gointerval, "item_interval_" .. tostring(index))
 
-		var_47_0.go = var_47_1
-		var_47_0.imageProgress = gohelper.findChildImage(var_47_1, "#image_interval")
-		var_47_0.imageIcon = gohelper.findChildSingleImage(var_47_1, "#image_interval/go_normal/#simage_icon")
-		var_47_0.imageIconCur = gohelper.findChildSingleImage(var_47_1, "#image_interval/go_next/#simage_icon")
-		var_47_0.tfIcon = var_47_0.imageIcon.transform
-		var_47_0.tfIconCur = var_47_0.imageIconCur.transform
-		var_47_0.rect = var_47_1.transform
-		var_47_0.rectProgress = var_47_0.imageProgress.transform
-		var_47_0.panel = arg_47_0
+		item.go = go
+		item.imageProgress = gohelper.findChildImage(go, "#image_interval")
+		item.imageIcon = gohelper.findChildSingleImage(go, "#image_interval/go_normal/#simage_icon")
+		item.imageIconCur = gohelper.findChildSingleImage(go, "#image_interval/go_next/#simage_icon")
+		item.tfIcon = item.imageIcon.transform
+		item.tfIconCur = item.imageIconCur.transform
+		item.rect = go.transform
+		item.rectProgress = item.imageProgress.transform
+		item.panel = self
 
-		local var_47_2 = gohelper.findChild(var_47_1, "#image_interval/go_normal")
+		local animGo = gohelper.findChild(go, "#image_interval/go_normal")
 
-		var_47_0.anim = var_47_2:GetComponent(typeof(UnityEngine.Animator))
-		var_47_0.goNormal = var_47_2
-
-		local var_47_3 = gohelper.findChild(var_47_1, "#image_interval/go_next")
-
-		var_47_0.animCur = var_47_3:GetComponent(typeof(UnityEngine.Animator))
-		var_47_0.goCur = var_47_3
-		var_47_0.iconAnchorX, var_47_0.iconAnchorY = recthelper.getAnchor(var_47_0.tfIcon)
-		var_47_0.iconCurAnchorX, var_47_0.iconCurAnchorY = recthelper.getAnchor(var_47_0.tfIconCur)
-		var_47_0.iconPos = var_47_0.rect.position
-		arg_47_0._blockItems[arg_47_1] = var_47_0
+		item.anim = animGo:GetComponent(typeof(UnityEngine.Animator))
+		item.goNormal = animGo
+		animGo = gohelper.findChild(go, "#image_interval/go_next")
+		item.animCur = animGo:GetComponent(typeof(UnityEngine.Animator))
+		item.goCur = animGo
+		item.iconAnchorX, item.iconAnchorY = recthelper.getAnchor(item.tfIcon)
+		item.iconCurAnchorX, item.iconCurAnchorY = recthelper.getAnchor(item.tfIconCur)
+		item.iconPos = item.rect.position
+		self._blockItems[index] = item
 	end
 
-	return var_47_0
+	return item
 end
 
-function var_0_0.getBlockItemByData(arg_48_0, arg_48_1)
-	for iter_48_0, iter_48_1 in pairs(arg_48_0._blockItems) do
-		if iter_48_1.blockData == arg_48_1 then
-			return iter_48_1
+function ActivityWarmUpGameView:getBlockItemByData(blockData)
+	for _, itemObj in pairs(self._blockItems) do
+		if itemObj.blockData == blockData then
+			return itemObj
 		end
 	end
 end
 
-function var_0_0.getOrCreateIcon(arg_49_0, arg_49_1)
-	local var_49_0 = arg_49_0._targetItems[arg_49_1]
+function ActivityWarmUpGameView:getOrCreateIcon(index)
+	local item = self._targetItems[index]
 
-	if not var_49_0 then
-		var_49_0 = arg_49_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_49_1 = gohelper.cloneInPlace(arg_49_0._gotargeticon, "item_icon_" .. tostring(arg_49_1))
+		local go = gohelper.cloneInPlace(self._gotargeticon, "item_icon_" .. tostring(index))
 
-		var_49_0.go = var_49_1
-		var_49_0.imageIcon = gohelper.findChildSingleImage(var_49_1, "#simage_icon")
-		var_49_0.rect = var_49_1.transform
-		arg_49_0._targetItems[arg_49_1] = var_49_0
+		item.go = go
+		item.imageIcon = gohelper.findChildSingleImage(go, "#simage_icon")
+		item.rect = go.transform
+		self._targetItems[index] = item
 	end
 
-	return var_49_0
+	return item
 end
 
-function var_0_0.hideAllTargetIcon(arg_50_0)
-	for iter_50_0, iter_50_1 in pairs(arg_50_0._targetItems) do
-		gohelper.setActive(iter_50_1.go, false)
-	end
-end
-
-function var_0_0.hideAllBlock(arg_51_0)
-	for iter_51_0, iter_51_1 in pairs(arg_51_0._blockItems) do
-		iter_51_1.blockData = nil
-
-		gohelper.setActive(iter_51_1.go, false)
+function ActivityWarmUpGameView:hideAllTargetIcon()
+	for _, item in pairs(self._targetItems) do
+		gohelper.setActive(item.go, false)
 	end
 end
 
-return var_0_0
+function ActivityWarmUpGameView:hideAllBlock()
+	for _, item in pairs(self._blockItems) do
+		item.blockData = nil
+
+		gohelper.setActive(item.go, false)
+	end
+end
+
+return ActivityWarmUpGameView

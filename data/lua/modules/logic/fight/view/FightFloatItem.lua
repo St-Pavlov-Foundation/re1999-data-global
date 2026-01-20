@@ -1,7 +1,9 @@
-﻿module("modules.logic.fight.view.FightFloatItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightFloatItem.lua
 
-local var_0_0 = class("FightFloatItem")
-local var_0_1 = {
+module("modules.logic.fight.view.FightFloatItem", package.seeall)
+
+local FightFloatItem = class("FightFloatItem")
+local Sp01LogoPathDict = {
 	[FightEnum.FloatType.crit_restrain] = "x/sp01_logo",
 	[FightEnum.FloatType.crit_heal] = "x/sp01_logo",
 	[FightEnum.FloatType.crit_damage] = "x/sp01_logo",
@@ -14,239 +16,240 @@ local var_0_1 = {
 	[FightEnum.FloatType.crit_additional_damage] = "x/sp01_logo"
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.entityId = nil
-	arg_1_0.type = arg_1_1
-	arg_1_0._typeGO = arg_1_2
-	arg_1_0._typeRectTr = arg_1_2.transform
-	arg_1_0._halfRandomXRange = arg_1_3 / 2
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_2, "x/txtNum")
-	arg_1_0._csGoActivator = arg_1_0._typeGO:GetComponent(typeof(ZProj.GoActivator))
-	arg_1_0._effectTimeScale = gohelper.onceAddComponent(arg_1_0._typeGO, typeof(ZProj.EffectTimeScale))
+function FightFloatItem:ctor(floatType, typeGO, randomXRange)
+	self.entityId = nil
+	self.type = floatType
+	self._typeGO = typeGO
+	self._typeRectTr = typeGO.transform
+	self._halfRandomXRange = randomXRange / 2
+	self._txtNum = gohelper.findChildText(typeGO, "x/txtNum")
+	self._csGoActivator = self._typeGO:GetComponent(typeof(ZProj.GoActivator))
+	self._effectTimeScale = gohelper.onceAddComponent(self._typeGO, typeof(ZProj.EffectTimeScale))
 
-	gohelper.setActive(arg_1_0._typeGO, false)
+	gohelper.setActive(self._typeGO, false)
 
-	if var_0_1[arg_1_0.type] then
-		arg_1_0.goSp01Logo = gohelper.findChild(arg_1_2, var_0_1[arg_1_0.type])
+	if Sp01LogoPathDict[self.type] then
+		self.goSp01Logo = gohelper.findChild(typeGO, Sp01LogoPathDict[self.type])
 
-		gohelper.setActive(arg_1_0.goSp01Logo, false)
+		gohelper.setActive(self.goSp01Logo, false)
 	end
 
-	arg_1_0._floatFunc = var_0_0.FloatFunc[arg_1_1]
-	arg_1_0._floatEndFunc = var_0_0.FloatEndFunc[arg_1_1]
+	self._floatFunc = FightFloatItem.FloatFunc[floatType]
+	self._floatEndFunc = FightFloatItem.FloatEndFunc[floatType]
 end
 
-function var_0_0.getGO(arg_2_0)
-	return arg_2_0._typeGO
+function FightFloatItem:getGO()
+	return self._typeGO
 end
 
-function var_0_0.startFloat(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0.startTime = Time.time
-	arg_3_0.entityId = arg_3_1
+function FightFloatItem:startFloat(entityId, content, param, isAssassinate)
+	self.startTime = Time.time
+	self.entityId = entityId
 
-	gohelper.setActive(arg_3_0._typeGO, true)
+	gohelper.setActive(self._typeGO, true)
 
-	if arg_3_0._txtNum then
-		local var_3_0 = tostring(arg_3_2)
+	if self._txtNum then
+		local content = tostring(content)
 
-		if arg_3_0.type == FightEnum.FloatType.crit_heal or arg_3_0.type == FightEnum.FloatType.heal then
-			var_3_0 = "+" .. var_3_0
+		if self.type == FightEnum.FloatType.crit_heal or self.type == FightEnum.FloatType.heal then
+			content = "+" .. content
 		end
 
-		arg_3_0._txtNum.text = var_3_0
+		self._txtNum.text = content
 	end
 
-	arg_3_0:floatAssassinate(arg_3_4)
+	self:floatAssassinate(isAssassinate)
 
-	if arg_3_0._floatFunc then
-		arg_3_0._floatFunc(arg_3_0, arg_3_2, arg_3_3, arg_3_4)
+	if self._floatFunc then
+		self._floatFunc(self, content, param, isAssassinate)
 	end
 
-	if arg_3_0.type == FightEnum.FloatType.equipeffect and arg_3_0.can_not_play_equip_effect then
-		arg_3_0:_onFinish()
+	if self.type == FightEnum.FloatType.equipeffect and self.can_not_play_equip_effect then
+		self:_onFinish()
 
 		return
 	end
 
-	if arg_3_0._csGoActivator then
-		arg_3_0._csGoActivator:AddFinishCallback(arg_3_0._onFinish, arg_3_0)
-		arg_3_0._csGoActivator:Play()
+	if self._csGoActivator then
+		self._csGoActivator:AddFinishCallback(self._onFinish, self)
+		self._csGoActivator:Play()
 	else
-		logWarn("no activator in fight float assset, type = " .. arg_3_0.type)
-		arg_3_0:_onFinish()
+		logWarn("no activator in fight float assset, type = " .. self.type)
+		self:_onFinish()
 	end
 
-	if arg_3_0._effectTimeScale then
-		arg_3_0._effectTimeScale:SetTimeScale(FightModel.instance:getUISpeed())
+	if self._effectTimeScale then
+		self._effectTimeScale:SetTimeScale(FightModel.instance:getUISpeed())
 	end
 end
 
-function var_0_0.floatAssassinate(arg_4_0, arg_4_1)
-	if arg_4_1 and not gohelper.isNil(arg_4_0.goSp01Logo) then
-		gohelper.setActive(arg_4_0.goSp01Logo, true)
+function FightFloatItem:floatAssassinate(isAssassinate)
+	if isAssassinate and not gohelper.isNil(self.goSp01Logo) then
+		gohelper.setActive(self.goSp01Logo, true)
 	else
-		gohelper.setActive(arg_4_0.goSp01Logo, false)
+		gohelper.setActive(self.goSp01Logo, false)
 	end
 end
 
-function var_0_0.setPos(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.startX = arg_5_1
-	arg_5_0.startY = arg_5_2
+function FightFloatItem:setPos(x, y)
+	self.startX = x
+	self.startY = y
 
-	recthelper.setAnchor(arg_5_0._typeRectTr, arg_5_1, arg_5_2)
+	recthelper.setAnchor(self._typeRectTr, x, y)
 end
 
-function var_0_0.tweenPosY(arg_6_0, arg_6_1)
-	if arg_6_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_6_0._tweenId)
+function FightFloatItem:tweenPosY(posY)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	if arg_6_0.equip_single_img then
-		arg_6_0:setPos(0, 150)
+	if self.equip_single_img then
+		self:setPos(0, 150)
 
 		return
 	end
 
-	arg_6_0._tweenId = ZProj.TweenHelper.DOAnchorPosY(arg_6_0._typeRectTr, arg_6_1, 0.15 / FightModel.instance:getUISpeed())
+	self._tweenId = ZProj.TweenHelper.DOAnchorPosY(self._typeRectTr, posY, 0.15 / FightModel.instance:getUISpeed())
 end
 
-function var_0_0.stopFloat(arg_7_0)
-	arg_7_0:_onFinish()
+function FightFloatItem:stopFloat()
+	self:_onFinish()
 end
 
-function var_0_0._onFinish(arg_8_0)
-	if arg_8_0._csGoActivator then
-		arg_8_0._csGoActivator:RemoveFinishCallback()
+function FightFloatItem:_onFinish()
+	if self._csGoActivator then
+		self._csGoActivator:RemoveFinishCallback()
 	end
 
-	if arg_8_0._floatEndFunc then
-		arg_8_0._floatEndFunc(arg_8_0)
+	if self._floatEndFunc then
+		self._floatEndFunc(self)
 	end
 
-	FightFloatMgr.instance:floatEnd(arg_8_0)
+	FightFloatMgr.instance:floatEnd(self)
 
-	arg_8_0.entityId = nil
+	self.entityId = nil
 end
 
-function var_0_0.reset(arg_9_0)
-	gohelper.setActive(arg_9_0._typeGO, false)
+function FightFloatItem:reset()
+	gohelper.setActive(self._typeGO, false)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_10_0._tweenId)
+function FightFloatItem:onDestroy()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_10_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	if arg_10_0._csGoActivator then
-		arg_10_0._csGoActivator:Stop()
-		arg_10_0._csGoActivator:RemoveFinishCallback()
+	if self._csGoActivator then
+		self._csGoActivator:Stop()
+		self._csGoActivator:RemoveFinishCallback()
 
-		arg_10_0._csGoActivator = nil
+		self._csGoActivator = nil
 	end
 
-	if arg_10_0._effectTimeScale then
-		arg_10_0._effectTimeScale = nil
+	if self._effectTimeScale then
+		self._effectTimeScale = nil
 	end
 
-	if arg_10_0.equip_single_img then
-		arg_10_0.equip_single_img:UnLoadImage()
+	if self.equip_single_img then
+		self.equip_single_img:UnLoadImage()
 	end
 end
 
-function var_0_0._floatBuff(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = gohelper.findChild(arg_11_0._typeGO, "x/item1")
+function FightFloatItem:_floatBuff(content, param)
+	local itemInner = gohelper.findChild(self._typeGO, "x/item1")
 
-	gohelper.setActive(var_11_0, true)
+	gohelper.setActive(itemInner, true)
 
-	local var_11_1 = var_11_0.transform.childCount
+	local child_count = itemInner.transform.childCount
 
-	if var_11_1 < arg_11_2 then
-		logError("buff飘字类型找不到，或者预设中没有对应类型的样式：", arg_11_2)
+	if child_count < param then
+		logError("buff飘字类型找不到，或者预设中没有对应类型的样式：", param)
 
 		return
 	end
 
-	for iter_11_0 = 1, var_11_1 do
-		local var_11_2 = arg_11_2 == iter_11_0
-		local var_11_3 = var_11_0.transform:Find("type_" .. iter_11_0).gameObject
+	for i = 1, child_count do
+		local is_target = param == i
+		local type_item = itemInner.transform:Find("type_" .. i).gameObject
 
-		gohelper.setActive(var_11_3, var_11_2)
+		gohelper.setActive(type_item, is_target)
 
-		if var_11_2 then
-			gohelper.findChildText(var_11_3, "txtNum").text = arg_11_1
+		if is_target then
+			gohelper.findChildText(type_item, "txtNum").text = content
 		end
 	end
 end
 
-function var_0_0.hideEquipFloat(arg_12_0)
-	if arg_12_0.type == FightEnum.FloatType.equipeffect then
-		gohelper.setActive(arg_12_0._typeGO, false)
+function FightFloatItem:hideEquipFloat()
+	if self.type == FightEnum.FloatType.equipeffect then
+		gohelper.setActive(self._typeGO, false)
 	end
 end
 
-function var_0_0._floatEquipEffect(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = FightHelper.getEntity(arg_13_0.entityId)
+function FightFloatItem:_floatEquipEffect(content, param)
+	local tar_entity = FightHelper.getEntity(self.entityId)
 
-	if var_13_0 and var_13_0.marked_alpha == 0 then
-		arg_13_0:hideEquipFloat()
+	if tar_entity and tar_entity.marked_alpha == 0 then
+		self:hideEquipFloat()
 
-		arg_13_0.can_not_play_equip_effect = true
+		self.can_not_play_equip_effect = true
 
 		return
 	end
 
-	arg_13_0.can_not_play_equip_effect = false
+	self.can_not_play_equip_effect = false
 
-	local var_13_1 = arg_13_0._typeGO.transform:Find("ani")
+	local ani_root = self._typeGO.transform:Find("ani")
 
-	arg_13_0.equip_single_img = arg_13_0.equip_single_img or gohelper.findChildSingleImage(arg_13_0._typeGO, "ani/simage_equipicon")
+	self.equip_single_img = self.equip_single_img or gohelper.findChildSingleImage(self._typeGO, "ani/simage_equipicon")
 
-	local var_13_2 = var_13_1:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	local materialPropsCtrl = ani_root:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 
-	var_13_2.mas:Clear()
+	materialPropsCtrl.mas:Clear()
 
-	for iter_13_0 = 0, var_13_1.childCount - 1 do
-		local var_13_3 = var_13_1:GetChild(iter_13_0):GetComponent(gohelper.Type_Image)
+	for i = 0, ani_root.childCount - 1 do
+		local child_transform = ani_root:GetChild(i):GetComponent(gohelper.Type_Image)
 
-		var_13_3.material = UnityEngine.Object.Instantiate(var_13_3.material)
+		child_transform.material = UnityEngine.Object.Instantiate(child_transform.material)
 
-		var_13_2.mas:Add(var_13_3.material)
+		materialPropsCtrl.mas:Add(child_transform.material)
 	end
 
-	arg_13_0.equip_single_img:LoadImage(ResUrl.getFightEquipFloatIcon("xinxiang" .. arg_13_2.id))
+	self.equip_single_img:LoadImage(ResUrl.getFightEquipFloatIcon("xinxiang" .. param.id))
 end
 
-function var_0_0._floatTotal(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = FightHelper.getEntity(arg_14_2.fromId)
-	local var_14_1 = FightHelper.getEntity(arg_14_2.defenderId)
-	local var_14_2 = gohelper.findChild(arg_14_0._typeGO, "x")
+function FightFloatItem:_floatTotal(content, param, isAssassinate)
+	local from_entity = FightHelper.getEntity(param.fromId)
+	local def_entity = FightHelper.getEntity(param.defenderId)
+	local childRoot = gohelper.findChild(self._typeGO, "x")
 
-	gohelper.setActive(var_14_2, var_14_0 and var_14_1)
+	gohelper.setActive(childRoot, from_entity and def_entity)
 
-	if var_14_0 and var_14_1 then
-		local var_14_3 = var_14_0:getMO()
-		local var_14_4 = var_14_1:getMO()
-		local var_14_5 = var_14_3 and var_14_3:getCO()
-		local var_14_6 = var_14_4 and var_14_4:getCO()
-		local var_14_7 = var_14_5 and var_14_5.career or 0
-		local var_14_8 = var_14_6 and var_14_6.career or 0
-		local var_14_9 = FightConfig.instance:getRestrain(var_14_7, var_14_8) or 1000
-		local var_14_10
-		local var_14_11 = var_14_9 == 1000 and 3 or var_14_9 > 1000 and 1 or 2
+	if from_entity and def_entity then
+		local attackerMO = from_entity:getMO()
+		local defenderMO = def_entity:getMO()
+		local attackerCO = attackerMO and attackerMO:getCO()
+		local defenderCO = defenderMO and defenderMO:getCO()
+		local career1 = attackerCO and attackerCO.career or 0
+		local career2 = defenderCO and defenderCO.career or 0
+		local restrain = FightConfig.instance:getRestrain(career1, career2) or 1000
+		local tar_index
 
-		for iter_14_0 = 1, 3 do
-			local var_14_12 = gohelper.findChildText(arg_14_0._typeGO, "x/txtNum" .. iter_14_0)
-			local var_14_13 = gohelper.findChild(arg_14_0._typeGO, "x/sp01_logo" .. iter_14_0)
+		tar_index = restrain == 1000 and 3 or restrain > 1000 and 1 or 2
 
-			gohelper.setActive(var_14_12.gameObject, iter_14_0 == var_14_11)
-			gohelper.setActive(var_14_13, arg_14_3 and iter_14_0 == var_14_11)
+		for i = 1, 3 do
+			local text = gohelper.findChildText(self._typeGO, "x/txtNum" .. i)
+			local logo = gohelper.findChild(self._typeGO, "x/sp01_logo" .. i)
 
-			if iter_14_0 == var_14_11 then
-				var_14_12.text = arg_14_1
+			gohelper.setActive(text.gameObject, i == tar_index)
+			gohelper.setActive(logo, isAssassinate and i == tar_index)
 
-				if arg_14_3 then
+			if i == tar_index then
+				text.text = content
+
+				if isAssassinate then
 					AudioMgr.instance:trigger(20305030)
 				end
 			end
@@ -254,44 +257,44 @@ function var_0_0._floatTotal(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
 	end
 end
 
-function var_0_0._floatStress(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = gohelper.findChild(arg_15_0._typeGO, "x/item1")
+function FightFloatItem:_floatStress(content, param)
+	local itemInner = gohelper.findChild(self._typeGO, "x/item1")
 
-	gohelper.setActive(var_15_0, true)
+	gohelper.setActive(itemInner, true)
 
-	local var_15_1 = var_15_0.transform.childCount
+	local child_count = itemInner.transform.childCount
 
-	if var_15_1 < arg_15_2 then
-		logError("压力飘字类型找不到，或者预设中没有对应类型的样式：", arg_15_2)
+	if child_count < param then
+		logError("压力飘字类型找不到，或者预设中没有对应类型的样式：", param)
 
 		return
 	end
 
-	for iter_15_0 = 1, var_15_1 do
-		local var_15_2 = arg_15_2 == iter_15_0
-		local var_15_3 = var_15_0.transform:Find("type_" .. iter_15_0).gameObject
+	for i = 1, child_count do
+		local is_target = param == i
+		local type_item = itemInner.transform:Find("type_" .. i).gameObject
 
-		gohelper.setActive(var_15_3, var_15_2)
+		gohelper.setActive(type_item, is_target)
 
-		if var_15_2 then
-			gohelper.findChildText(var_15_3, "txtNum").text = arg_15_1
+		if is_target then
+			gohelper.findChildText(type_item, "txtNum").text = content
 		end
 	end
 end
 
-function var_0_0._floatBuffEnd(arg_16_0)
+function FightFloatItem:_floatBuffEnd()
 	return
 end
 
-var_0_0.FloatFunc = {
-	[FightEnum.FloatType.buff] = var_0_0._floatBuff,
-	[FightEnum.FloatType.equipeffect] = var_0_0._floatEquipEffect,
-	[FightEnum.FloatType.total] = var_0_0._floatTotal,
-	[FightEnum.FloatType.total_origin] = var_0_0._floatTotal,
-	[FightEnum.FloatType.stress] = var_0_0._floatStress
+FightFloatItem.FloatFunc = {
+	[FightEnum.FloatType.buff] = FightFloatItem._floatBuff,
+	[FightEnum.FloatType.equipeffect] = FightFloatItem._floatEquipEffect,
+	[FightEnum.FloatType.total] = FightFloatItem._floatTotal,
+	[FightEnum.FloatType.total_origin] = FightFloatItem._floatTotal,
+	[FightEnum.FloatType.stress] = FightFloatItem._floatStress
 }
-var_0_0.FloatEndFunc = {
-	[FightEnum.FloatType.buff] = var_0_0._floatBuffEnd
+FightFloatItem.FloatEndFunc = {
+	[FightEnum.FloatType.buff] = FightFloatItem._floatBuffEnd
 }
 
-return var_0_0
+return FightFloatItem

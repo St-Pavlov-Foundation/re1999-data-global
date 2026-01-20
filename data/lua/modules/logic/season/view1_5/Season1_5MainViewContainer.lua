@@ -1,105 +1,109 @@
-﻿module("modules.logic.season.view1_5.Season1_5MainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_5/Season1_5MainViewContainer.lua
 
-local var_0_0 = class("Season1_5MainViewContainer", BaseViewContainer)
+module("modules.logic.season.view1_5.Season1_5MainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season1_5MainViewContainer = class("Season1_5MainViewContainer", BaseViewContainer)
 
-	arg_1_0.scene = Season1_5MainScene.New()
-	arg_1_0.view = Season1_5MainView.New()
+function Season1_5MainViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0.scene)
-	table.insert(var_1_0, arg_1_0.view)
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	self.scene = Season1_5MainScene.New()
+	self.view = Season1_5MainView.New()
 
-	return var_1_0
+	table.insert(views, self.scene)
+	table.insert(views, self.view)
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.getScene(arg_2_0)
-	return arg_2_0.scene
+function Season1_5MainViewContainer:getScene()
+	return self.scene
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function Season1_5MainViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
-	}, 100, arg_3_0._closeCallback, arg_3_0._homeCallback, nil, arg_3_0)
+	}, 100, self._closeCallback, self._homeCallback, nil, self)
 
-	arg_3_0._navigateButtonView:setOverrideClose(arg_3_0._overrideClose, arg_3_0)
-	arg_3_0._navigateButtonView:setHelpId(HelpEnum.HelpId.Season1_5MainViewHelp)
+	self._navigateButtonView:setOverrideClose(self._overrideClose, self)
+	self._navigateButtonView:setHelpId(HelpEnum.HelpId.Season1_5MainViewHelp)
 
 	return {
-		arg_3_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	local var_4_0 = Activity104Model.instance:getCurSeasonId()
+function Season1_5MainViewContainer:onContainerInit()
+	local actId = Activity104Model.instance:getCurSeasonId()
 
-	ActivityEnterMgr.instance:enterActivity(var_4_0)
+	ActivityEnterMgr.instance:enterActivity(actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		var_4_0
+		actId
 	})
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_2.play_ui_lvhu_goldcup_open)
 end
 
-function var_0_0.onContainerOpenFinish(arg_5_0)
-	arg_5_0._navigateButtonView:resetOnCloseViewAudio()
+function Season1_5MainViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio()
 end
 
-function var_0_0._closeCallback(arg_6_0)
+function Season1_5MainViewContainer:_closeCallback()
 	return
 end
 
-function var_0_0._homeCallback(arg_7_0)
-	arg_7_0:closeThis()
+function Season1_5MainViewContainer:_homeCallback()
+	self:closeThis()
 end
 
-function var_0_0.stopUI(arg_8_0)
-	arg_8_0:setVisibleInternal(true)
+function Season1_5MainViewContainer:stopUI()
+	self:setVisibleInternal(true)
 
-	arg_8_0._anim.speed = 0
-	arg_8_0._animRetail.speed = 0
+	self._anim.speed = 0
+	self._animRetail.speed = 0
 
-	arg_8_0.view:activeMask(true)
+	self.view:activeMask(true)
 end
 
-function var_0_0.playUI(arg_9_0)
-	arg_9_0:setVisibleInternal(true)
+function Season1_5MainViewContainer:playUI()
+	self:setVisibleInternal(true)
 
-	arg_9_0._anim.speed = 1
-	arg_9_0._animRetail.speed = 1
+	self._anim.speed = 1
+	self._animRetail.speed = 1
 
-	arg_9_0.view:activeMask(false)
+	self.view:activeMask(false)
 end
 
-function var_0_0.setVisibleInternal(arg_10_0, arg_10_1)
-	if not arg_10_0.viewGO then
+function Season1_5MainViewContainer:setVisibleInternal(isVisible)
+	if not self.viewGO then
 		return
 	end
 
-	if not arg_10_0._anim then
-		arg_10_0._anim = arg_10_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	if not self._anim then
+		self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	if arg_10_1 then
-		arg_10_0:_setVisible(true)
-		arg_10_0._anim:Play(UIAnimationName.Switch, 0, 0)
+	if isVisible then
+		self:_setVisible(true)
+		self._anim:Play(UIAnimationName.Switch, 0, 0)
 
-		if not arg_10_0._animRetail then
-			arg_10_0._animRetail = gohelper.findChild(arg_10_0.viewGO, "rightbtns/#go_retail"):GetComponent(typeof(UnityEngine.Animator))
+		if not self._animRetail then
+			local goretail = gohelper.findChild(self.viewGO, "rightbtns/#go_retail")
+
+			self._animRetail = goretail:GetComponent(typeof(UnityEngine.Animator))
 		end
 
-		arg_10_0._animRetail:Play(UIAnimationName.Switch, 0, 0)
+		self._animRetail:Play(UIAnimationName.Switch, 0, 0)
 
-		if arg_10_0.scene then
-			arg_10_0.scene:initCamera()
+		if self.scene then
+			self.scene:initCamera()
 		end
 	else
-		arg_10_0:_setVisible(false)
-		arg_10_0._anim:Play(UIAnimationName.Close)
+		self:_setVisible(false)
+		self._anim:Play(UIAnimationName.Close)
 	end
 end
 
-return var_0_0
+return Season1_5MainViewContainer

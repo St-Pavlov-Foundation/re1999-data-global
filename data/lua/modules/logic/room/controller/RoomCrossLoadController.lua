@@ -1,60 +1,64 @@
-﻿module("modules.logic.room.controller.RoomCrossLoadController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomCrossLoadController.lua
 
-local var_0_0 = class("RoomCrossLoadController", BaseController)
+module("modules.logic.room.controller.RoomCrossLoadController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._lastUpdatePathGraphicTimeDic = {}
+local RoomCrossLoadController = class("RoomCrossLoadController", BaseController)
 
-	arg_1_0:clear()
+function RoomCrossLoadController:onInit()
+	self._lastUpdatePathGraphicTimeDic = {}
+
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomCrossLoadController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
+function RoomCrossLoadController:clear()
 	return
 end
 
-function var_0_0.findDirectionPathList(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._directionPathDic then
-		arg_4_0._directionPathDic = {}
+function RoomCrossLoadController:findDirectionPathList(enterDire, exitDire)
+	if not self._directionPathDic then
+		self._directionPathDic = {}
 	end
 
-	if not arg_4_0._directionPathDic[arg_4_1] then
-		arg_4_0._directionPathDic[arg_4_1] = {}
+	if not self._directionPathDic[enterDire] then
+		self._directionPathDic[enterDire] = {}
 	end
 
-	if not arg_4_0._directionPathDic[arg_4_1][arg_4_2] then
-		local var_4_0 = {
-			arg_4_1
+	if not self._directionPathDic[enterDire][exitDire] then
+		local tempList = {
+			enterDire
 		}
 
-		arg_4_0._directionPathDic[arg_4_1][arg_4_2] = var_4_0
+		self._directionPathDic[enterDire][exitDire] = tempList
 
-		if arg_4_1 ~= arg_4_2 then
-			table.insert(var_4_0, arg_4_2)
+		if enterDire ~= exitDire then
+			table.insert(tempList, exitDire)
 		end
 
-		if math.abs(arg_4_1 - arg_4_2) > 1 and not tabletool.indexOf(var_4_0, 0) then
-			table.insert(var_4_0, 0)
+		if math.abs(enterDire - exitDire) > 1 and not tabletool.indexOf(tempList, 0) then
+			table.insert(tempList, 0)
 		end
 	end
 
-	return arg_4_0._directionPathDic[arg_4_1][arg_4_2]
+	return self._directionPathDic[enterDire][exitDire]
 end
 
-function var_0_0.isEnterBuilingCrossLoad(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = RoomMapBuildingModel.instance:getBuildingParam(arg_5_1, arg_5_2)
+function RoomCrossLoadController:isEnterBuilingCrossLoad(x, y, enterDire, exitDire)
+	local param = RoomMapBuildingModel.instance:getBuildingParam(x, y)
 
-	if var_5_0 and var_5_0.isCrossload and var_5_0.replacResPoins then
-		local var_5_1 = var_5_0.replacResPoins
-		local var_5_2 = arg_5_0:findDirectionPathList(arg_5_3, arg_5_4)
+	if param and param.isCrossload and param.replacResPoins then
+		local replacResPoins = param.replacResPoins
+		local directionList = self:findDirectionPathList(enterDire, exitDire)
 
-		for iter_5_0, iter_5_1 in pairs(var_5_1) do
-			for iter_5_2, iter_5_3 in ipairs(var_5_2) do
-				if iter_5_1[RoomRotateHelper.rotateDirection(iter_5_3, -var_5_0.blockRotate)] then
-					return true, var_5_0.buildingUid
+		for _resid, replaceBlockRes in pairs(replacResPoins) do
+			for _, dire in ipairs(directionList) do
+				local dirIndex = RoomRotateHelper.rotateDirection(dire, -param.blockRotate)
+
+				if replaceBlockRes[dirIndex] then
+					return true, param.buildingUid
 				end
 			end
 		end
@@ -63,82 +67,82 @@ function var_0_0.isEnterBuilingCrossLoad(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg
 	return false
 end
 
-function var_0_0.crossload(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = GameSceneMgr.instance:getCurScene()
+function RoomCrossLoadController:crossload(buildingUid, resId)
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if not var_6_0 then
+	if not scene then
 		return
 	end
 
-	local var_6_1 = var_6_0.buildingmgr:getBuildingEntity(arg_6_1, SceneTag.RoomBuilding)
+	local entity = scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-	if var_6_1 and var_6_1.crossloadComp then
-		var_6_1.crossloadComp:playAnim(arg_6_2)
+	if entity and entity.crossloadComp then
+		entity.crossloadComp:playAnim(resId)
 
-		return var_6_1.crossloadComp:getCurResId(), var_6_1.crossloadComp:getCanMove()
+		return entity.crossloadComp:getCurResId(), entity.crossloadComp:getCanMove()
 	end
 
-	return arg_6_2
+	return resId
 end
 
-function var_0_0.getUpateGraphicTime(arg_7_0, arg_7_1)
-	return arg_7_0._lastUpdatePathGraphicTimeDic[arg_7_1] or 0
+function RoomCrossLoadController:getUpateGraphicTime(buildingUid)
+	return self._lastUpdatePathGraphicTimeDic[buildingUid] or 0
 end
 
-function var_0_0.updatePathGraphic(arg_8_0, arg_8_1)
-	local var_8_0 = GameSceneMgr.instance:getCurScene()
+function RoomCrossLoadController:updatePathGraphic(buildingUid)
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if not var_8_0 then
+	if not scene then
 		return
 	end
 
-	local var_8_1 = var_8_0.buildingmgr:getBuildingEntity(arg_8_1, SceneTag.RoomBuilding)
+	local entity = scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-	if not var_8_1 then
+	if not entity then
 		return
 	end
 
-	local var_8_2 = var_8_1:getMO()
+	local buildingMO = entity:getMO()
 
-	if not var_8_2 then
+	if not buildingMO then
 		return
 	end
 
-	arg_8_0._lastUpdatePathGraphicTimeDic[arg_8_1] = Time.time
+	self._lastUpdatePathGraphicTimeDic[buildingUid] = Time.time
 
-	local var_8_3 = RoomBuildingHelper.getOccupyDict(var_8_2.buildingId, var_8_2.hexPoint, var_8_2.rotate, var_8_2.buildingUid)
+	local occupyDict = RoomBuildingHelper.getOccupyDict(buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate, buildingMO.buildingUid)
 
-	for iter_8_0, iter_8_1 in pairs(var_8_3) do
-		for iter_8_2, iter_8_3 in pairs(iter_8_1) do
-			local var_8_4 = RoomMapBlockModel.instance:getBlockMO(iter_8_0, iter_8_2)
-			local var_8_5 = var_8_0.mapmgr:getBlockEntity(var_8_4.id, SceneTag.RoomMapBlock)
+	for x, dict in pairs(occupyDict) do
+		for y, param in pairs(dict) do
+			local blockMO = RoomMapBlockModel.instance:getBlockMO(x, y)
+			local blockEntity = scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-			if var_8_5 then
-				var_8_0.path:updatePathGraphic(var_8_5.go)
+			if blockEntity then
+				scene.path:updatePathGraphic(blockEntity.go)
 			end
 		end
 	end
 
-	var_8_0.path:updatePathGraphic(var_8_1:getBuildingGO())
+	scene.path:updatePathGraphic(entity:getBuildingGO())
 end
 
-function var_0_0._closeGraphic(arg_9_0, arg_9_1)
-	if not gohelper.isNil(arg_9_1) then
-		local var_9_0 = ZProj.AStarPathBridge.FindChildrenByName(arg_9_1, "#collider")
-		local var_9_1 = {}
+function RoomCrossLoadController:_closeGraphic(go)
+	if not gohelper.isNil(go) then
+		local colliders = ZProj.AStarPathBridge.FindChildrenByName(go, "#collider")
+		local list = {}
 
-		ZProj.AStarPathBridge.ArrayToLuaTable(var_9_0, var_9_1)
+		ZProj.AStarPathBridge.ArrayToLuaTable(colliders, list)
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-			gohelper.setActive(iter_9_1, false)
+		for _, goColliderRoot in ipairs(list) do
+			gohelper.setActive(goColliderRoot, false)
 		end
 	end
 end
 
-function var_0_0.isLock(arg_10_0)
+function RoomCrossLoadController:isLock()
 	return ViewMgr.instance:hasOpenFullView()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomCrossLoadController.instance = RoomCrossLoadController.New()
 
-return var_0_0
+return RoomCrossLoadController

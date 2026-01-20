@@ -1,54 +1,56 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalMonsterEventNpcItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalMonsterEventNpcItem.lua
 
-local var_0_0 = class("SurvivalMonsterEventNpcItem", ListScrollCellExtend)
+module("modules.logic.survival.view.shelter.SurvivalMonsterEventNpcItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goGrid = gohelper.findChild(arg_1_0.viewGO, "Grid")
-	arg_1_0.goSmallItem = gohelper.findChild(arg_1_0.viewGO, "#go_SmallItem")
+local SurvivalMonsterEventNpcItem = class("SurvivalMonsterEventNpcItem", ListScrollCellExtend)
 
-	gohelper.setActive(arg_1_0.goSmallItem, false)
+function SurvivalMonsterEventNpcItem:onInitView()
+	self.goGrid = gohelper.findChild(self.viewGO, "Grid")
+	self.goSmallItem = gohelper.findChild(self.viewGO, "#go_SmallItem")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	gohelper.setActive(self.goSmallItem, false)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SurvivalMonsterEventNpcItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SurvivalMonsterEventNpcItem:removeEvents()
 	return
 end
 
-local var_0_1 = 0.6
+local unNeedTagBgColorAlpha = 0.6
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.itemList = arg_4_0:getUserDataTb_()
+function SurvivalMonsterEventNpcItem:_editableInitView()
+	self.itemList = self:getUserDataTb_()
 end
 
-function var_0_0.onClickGridItem(arg_5_0, arg_5_1)
-	if not arg_5_1.data then
+function SurvivalMonsterEventNpcItem:onClickGridItem(item)
+	if not item.data then
 		return
 	end
 
-	local var_5_0 = arg_5_1.data:getShelterNpcStatus()
+	local status = item.data:getShelterNpcStatus()
 
-	if var_5_0 == SurvivalEnum.ShelterNpcStatus.InDestoryBuild then
+	if status == SurvivalEnum.ShelterNpcStatus.InDestoryBuild then
 		GameFacade.showToast(ToastEnum.SurvivalBossSelectNpcBuildDestroy)
 
 		return
 	end
 
-	if var_5_0 == SurvivalEnum.ShelterNpcStatus.NotInBuild or var_5_0 == SurvivalEnum.ShelterNpcStatus.OutSide then
+	if status == SurvivalEnum.ShelterNpcStatus.NotInBuild or status == SurvivalEnum.ShelterNpcStatus.OutSide then
 		return
 	end
 
-	local var_5_1 = arg_5_1.data.id
+	local npcId = item.data.id
 
-	if SurvivalShelterNpcMonsterListModel.instance:isSelectNpc(var_5_1) then
-		if SurvivalShelterNpcMonsterListModel.instance:cancelSelect(var_5_1) then
-			arg_5_0._view.viewContainer:refreshView()
+	if SurvivalShelterNpcMonsterListModel.instance:isSelectNpc(npcId) then
+		if SurvivalShelterNpcMonsterListModel.instance:cancelSelect(npcId) then
+			self._view.viewContainer:refreshView()
 		end
 	else
 		if not SurvivalShelterNpcMonsterListModel.instance:canSelect() then
@@ -57,127 +59,130 @@ function var_0_0.onClickGridItem(arg_5_0, arg_5_1)
 			return
 		end
 
-		if SurvivalShelterNpcMonsterListModel.instance:setSelectNpcId(var_5_1) then
-			arg_5_0._view.viewContainer:refreshView()
+		if SurvivalShelterNpcMonsterListModel.instance:setSelectNpcId(npcId) then
+			self._view.viewContainer:refreshView()
 		end
 	end
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0.mo = arg_6_1
+function SurvivalMonsterEventNpcItem:onUpdateMO(mo)
+	self.mo = mo
 
-	if not arg_6_1 then
+	if not mo then
 		return
 	end
 
-	local var_6_0 = arg_6_1.dataList
+	local list = mo.dataList
 
-	for iter_6_0 = 1, math.max(#var_6_0, #arg_6_0.itemList) do
-		local var_6_1 = arg_6_0:getGridItem(iter_6_0)
+	for i = 1, math.max(#list, #self.itemList) do
+		local item = self:getGridItem(i)
 
-		arg_6_0:refreshGridItem(var_6_1, var_6_0[iter_6_0])
+		self:refreshGridItem(item, list[i])
 	end
 end
 
-local var_0_2 = ZProj.UIEffectsCollection
+local ZProj_UIEffectsCollection = ZProj.UIEffectsCollection
 
-function var_0_0.getGridItem(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.itemList[arg_7_1]
+function SurvivalMonsterEventNpcItem:getGridItem(index)
+	local item = self.itemList[index]
 
-	if not var_7_0 then
-		var_7_0 = arg_7_0:getUserDataTb_()
-		var_7_0.index = arg_7_1
-		var_7_0.go = gohelper.clone(arg_7_0.goSmallItem, arg_7_0.goGrid, tostring(arg_7_1))
-		var_7_0.imgChess = gohelper.findChildSingleImage(var_7_0.go, "#image_Chess")
-		var_7_0.txtName = gohelper.findChildTextMesh(var_7_0.go, "#txt_PartnerName")
-		var_7_0.goSelect = gohelper.findChild(var_7_0.go, "#go_Selected")
-		var_7_0.goRecommend = gohelper.findChild(var_7_0.go, "#go_recommend")
-		var_7_0.goTagItem = gohelper.findChild(var_7_0.go, "#scroll_tag/viewport/content/#go_tagitem")
-		var_7_0.goEffect = var_0_2.Get(var_7_0.go)
+	if not item then
+		item = self:getUserDataTb_()
+		item.index = index
+		item.go = gohelper.clone(self.goSmallItem, self.goGrid, tostring(index))
+		item.imgChess = gohelper.findChildSingleImage(item.go, "#image_Chess")
+		item.txtName = gohelper.findChildTextMesh(item.go, "#txt_PartnerName")
+		item.goSelect = gohelper.findChild(item.go, "#go_Selected")
+		item.goRecommend = gohelper.findChild(item.go, "#go_recommend")
+		item.goTagItem = gohelper.findChild(item.go, "#scroll_tag/viewport/content/#go_tagitem")
+		item.goEffect = ZProj_UIEffectsCollection.Get(item.go)
 
-		gohelper.setActive(var_7_0.goTagItem, false)
+		gohelper.setActive(item.goTagItem, false)
 
-		var_7_0.btn = gohelper.findButtonWithAudio(var_7_0.go)
+		item.btn = gohelper.findButtonWithAudio(item.go)
 
-		var_7_0.btn:AddClickListener(arg_7_0.onClickGridItem, arg_7_0, var_7_0)
+		item.btn:AddClickListener(self.onClickGridItem, self, item)
 
-		var_7_0.allTags = arg_7_0:getUserDataTb_()
-		arg_7_0.itemList[arg_7_1] = var_7_0
+		item.allTags = self:getUserDataTb_()
+		self.itemList[index] = item
 	end
 
-	return var_7_0
+	return item
 end
 
-function var_0_0.refreshGridItem(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_1.data = arg_8_2
+function SurvivalMonsterEventNpcItem:refreshGridItem(item, data)
+	item.data = data
 
-	if not arg_8_2 then
-		gohelper.setActive(arg_8_1.go, false)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_8_1.go, true)
-	gohelper.setActive(arg_8_1.goSelect, SurvivalShelterNpcMonsterListModel.instance:isSelectNpc(arg_8_2.id))
+	gohelper.setActive(item.go, true)
+	gohelper.setActive(item.goSelect, SurvivalShelterNpcMonsterListModel.instance:isSelectNpc(data.id))
 
-	local var_8_0 = SurvivalShelterMonsterModel.instance:calRecommendNum(arg_8_2.id)
+	local recommendNum = SurvivalShelterMonsterModel.instance:calRecommendNum(data.id)
 
-	gohelper.setActive(arg_8_1.goRecommend, var_8_0 > 0)
+	gohelper.setActive(item.goRecommend, recommendNum > 0)
 
-	arg_8_1.txtName.text = arg_8_2.co.name
+	item.txtName.text = data.co.name
 
-	SurvivalUnitIconHelper.instance:setNpcIcon(arg_8_1.imgChess, arg_8_2.co.headIcon)
+	SurvivalUnitIconHelper.instance:setNpcIcon(item.imgChess, data.co.headIcon)
 
-	if arg_8_1.goEffect then
-		local var_8_1 = arg_8_1.data:getShelterNpcStatus()
-		local var_8_2 = var_8_1 == SurvivalEnum.ShelterNpcStatus.NotInBuild or var_8_1 == SurvivalEnum.ShelterNpcStatus.OutSide
+	if item.goEffect then
+		local status = item.data:getShelterNpcStatus()
+		local showGray = status == SurvivalEnum.ShelterNpcStatus.NotInBuild or status == SurvivalEnum.ShelterNpcStatus.OutSide
 
-		arg_8_1.goEffect:SetGray(var_8_2)
+		item.goEffect:SetGray(showGray)
 	end
 
-	if arg_8_1.allTags then
-		for iter_8_0 = 1, #arg_8_1.allTags do
-			gohelper.destroy(arg_8_1.allTags[iter_8_0])
+	if item.allTags then
+		for i = 1, #item.allTags do
+			gohelper.destroy(item.allTags[i])
 		end
 
-		arg_8_1.allTags = {}
+		item.allTags = {}
 	end
 
-	local var_8_3, var_8_4 = SurvivalConfig.instance:getNpcConfigTag(arg_8_2.id)
+	local _, tags = SurvivalConfig.instance:getNpcConfigTag(data.id)
 
-	for iter_8_1 = 1, #var_8_4 do
-		local var_8_5 = var_8_4[iter_8_1]
+	for i = 1, #tags do
+		local tag = tags[i]
 
-		if var_8_5 then
-			local var_8_6 = lua_survival_tag.configDict[var_8_5]
+		if tag then
+			local config = lua_survival_tag.configDict[tag]
 
-			if var_8_6 ~= nil then
-				local var_8_7 = gohelper.cloneInPlace(arg_8_1.goTagItem, var_8_5)
-				local var_8_8 = gohelper.findChildImage(var_8_7, "#image_Type")
-				local var_8_9 = SurvivalConst.ShelterTagColor[var_8_6.tagType]
+			if config ~= nil then
+				local tagGo = gohelper.cloneInPlace(item.goTagItem, tag)
+				local image = gohelper.findChildImage(tagGo, "#image_Type")
+				local color = SurvivalConst.ShelterTagColor[config.tagType]
 
-				if var_8_9 then
-					local var_8_10 = GameUtil.parseColor(var_8_9)
+				if color then
+					local _color = GameUtil.parseColor(color)
+					local isNeed = SurvivalShelterMonsterModel.instance:isNeedNpcTag(tag)
 
-					var_8_10.a = SurvivalShelterMonsterModel.instance:isNeedNpcTag(var_8_5) and 1 or var_0_1
-					var_8_8.color = var_8_10
+					_color.a = isNeed and 1 or unNeedTagBgColorAlpha
+					image.color = _color
 				end
 
-				gohelper.findChildText(var_8_7, "#txt_Type").text = var_8_6.name
+				local txt = gohelper.findChildText(tagGo, "#txt_Type")
 
-				gohelper.setActive(var_8_7, true)
-				table.insert(arg_8_1.allTags, var_8_7)
+				txt.text = config.name
+
+				gohelper.setActive(tagGo, true)
+				table.insert(item.allTags, tagGo)
 			else
-				logError("SurvivalMonsterEventNpcItem:refreshGridItem tag config is nil, tagId = " .. tostring(var_8_5) .. " npcId = " .. tostring(arg_8_2.id))
+				logError("SurvivalMonsterEventNpcItem:refreshGridItem tag config is nil, tagId = " .. tostring(tag) .. " npcId = " .. tostring(data.id))
 			end
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0.itemList) do
-		iter_9_1.btn:RemoveClickListener()
+function SurvivalMonsterEventNpcItem:onDestroyView()
+	for k, v in pairs(self.itemList) do
+		v.btn:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return SurvivalMonsterEventNpcItem

@@ -1,37 +1,39 @@
-﻿module("modules.logic.rouge.map.work.WaitRougeStoryDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/work/WaitRougeStoryDoneWork.lua
 
-local var_0_0 = class("WaitRougeStoryDoneWork", BaseWork)
-local var_0_1 = 9.99
-local var_0_2 = "starWaitRougeStoryDoneWorktBlock"
+module("modules.logic.rouge.map.work.WaitRougeStoryDoneWork", package.seeall)
 
-function var_0_0._onStoryStart(arg_1_0, arg_1_1)
-	if arg_1_0.storyId ~= arg_1_1 then
+local WaitRougeStoryDoneWork = class("WaitRougeStoryDoneWork", BaseWork)
+local kTimeout = 9.99
+local kBlockName = "starWaitRougeStoryDoneWorktBlock"
+
+function WaitRougeStoryDoneWork:_onStoryStart(storyId)
+	if self.storyId ~= storyId then
 		return
 	end
 
-	UIBlockHelper.instance:endBlock(var_0_2)
+	UIBlockHelper.instance:endBlock(kBlockName)
 end
 
-function var_0_0.ctor(arg_2_0, arg_2_1)
-	arg_2_0.storyId = arg_2_1
+function WaitRougeStoryDoneWork:ctor(storyId)
+	self.storyId = storyId
 end
 
-function var_0_0.onStart(arg_3_0)
-	if not arg_3_0.storyId or arg_3_0.storyId == 0 then
-		return arg_3_0:onDone(true)
+function WaitRougeStoryDoneWork:onStart()
+	if not self.storyId or self.storyId == 0 then
+		return self:onDone(true)
 	end
 
-	StoryController.instance:registerCallback(StoryEvent.Start, arg_3_0._onStoryStart, arg_3_0)
-	UIBlockHelper.instance:startBlock(var_0_2, var_0_1)
-	StoryController.instance:playStory(arg_3_0.storyId, nil, arg_3_0.onStoryDone, arg_3_0)
+	StoryController.instance:registerCallback(StoryEvent.Start, self._onStoryStart, self)
+	UIBlockHelper.instance:startBlock(kBlockName, kTimeout)
+	StoryController.instance:playStory(self.storyId, nil, self.onStoryDone, self)
 end
 
-function var_0_0.onStoryDone(arg_4_0)
-	arg_4_0:onDone(true)
+function WaitRougeStoryDoneWork:onStoryDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	StoryController.instance:unregisterCallback(StoryEvent.Start, arg_5_0._onStoryStart, arg_5_0)
+function WaitRougeStoryDoneWork:clearWork()
+	StoryController.instance:unregisterCallback(StoryEvent.Start, self._onStoryStart, self)
 end
 
-return var_0_0
+return WaitRougeStoryDoneWork

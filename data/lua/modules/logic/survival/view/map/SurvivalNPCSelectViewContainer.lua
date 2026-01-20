@@ -1,11 +1,13 @@
-﻿module("modules.logic.survival.view.map.SurvivalNPCSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalNPCSelectViewContainer.lua
 
-local var_0_0 = class("SurvivalNPCSelectViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.map.SurvivalNPCSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalNPCSelectViewContainer = class("SurvivalNPCSelectViewContainer", BaseViewContainer)
+
+function SurvivalNPCSelectViewContainer:buildViews()
 	return {
 		SurvivalNPCSelectView.New()
 	}
 end
 
-return var_0_0
+return SurvivalNPCSelectViewContainer

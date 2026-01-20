@@ -1,270 +1,275 @@
-﻿module("modules.logic.tower.view.assistboss.TowerAssistBossTalentTreeView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerAssistBossTalentTreeView.lua
 
-local var_0_0 = class("TowerAssistBossTalentTreeView", BaseView)
+module("modules.logic.tower.view.assistboss.TowerAssistBossTalentTreeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goNode = gohelper.findChild(arg_1_0.viewGO, "Scroll/Viewport/Tree/node/#goNode")
-	arg_1_0.goLine = gohelper.findChild(arg_1_0.viewGO, "Scroll/Viewport/Tree/line/#goLine")
-	arg_1_0.nodeItems = {}
-	arg_1_0.lineItems = {}
-	arg_1_0.tempVect2 = Vector2(0, 0)
+local TowerAssistBossTalentTreeView = class("TowerAssistBossTalentTreeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerAssistBossTalentTreeView:onInitView()
+	self.goNode = gohelper.findChild(self.viewGO, "Scroll/Viewport/Tree/node/#goNode")
+	self.goLine = gohelper.findChild(self.viewGO, "Scroll/Viewport/Tree/line/#goLine")
+	self.nodeItems = {}
+	self.lineItems = {}
+	self.tempVect2 = Vector2(0, 0)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_2_0._onSelectTalentItem, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_2_0._onRefreshTalent, arg_2_0)
+function TowerAssistBossTalentTreeView:addEvents()
+	self:addEventCb(TowerController.instance, TowerEvent.ResetTalent, self._onResetTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, self._onActiveTalent, self)
+	self:addEventCb(TowerController.instance, TowerEvent.SelectTalentItem, self._onSelectTalentItem, self)
+	self:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, self._onRefreshTalent, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_3_0._onResetTalent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_3_0._onActiveTalent, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_3_0._onSelectTalentItem, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_3_0._onRefreshTalent, arg_3_0)
+function TowerAssistBossTalentTreeView:removeEvents()
+	self:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, self._onResetTalent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, self._onActiveTalent, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.SelectTalentItem, self._onSelectTalentItem, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, self._onRefreshTalent, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function TowerAssistBossTalentTreeView:_editableInitView()
 	return
 end
 
-function var_0_0._onResetTalent(arg_5_0, arg_5_1)
-	arg_5_0:refreshView()
+function TowerAssistBossTalentTreeView:_onResetTalent(talentId)
+	self:refreshView()
 end
 
-function var_0_0._onActiveTalent(arg_6_0, arg_6_1)
-	arg_6_0:playNodeLightingAnim(arg_6_1)
+function TowerAssistBossTalentTreeView:_onActiveTalent(talentId)
+	self:playNodeLightingAnim(talentId)
 end
 
-function var_0_0._onSelectTalentItem(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.nodeItems) do
-		iter_7_1:refreshSelect()
+function TowerAssistBossTalentTreeView:_onSelectTalentItem()
+	for k, v in pairs(self.nodeItems) do
+		v:refreshSelect()
 	end
 end
 
-function var_0_0._onRefreshTalent(arg_8_0)
-	arg_8_0:refreshParam()
-	arg_8_0:refreshView()
+function TowerAssistBossTalentTreeView:_onRefreshTalent()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:refreshParam()
-	arg_9_0:refreshView()
+function TowerAssistBossTalentTreeView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:refreshParam()
-	TowerAssistBossTalentListModel.instance:initBoss(arg_10_0.bossId)
-	arg_10_0:refreshView()
+function TowerAssistBossTalentTreeView:onOpen()
+	self:refreshParam()
+	TowerAssistBossTalentListModel.instance:initBoss(self.bossId)
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_11_0)
-	arg_11_0.bossId = arg_11_0.viewParam.bossId
-	arg_11_0.bossMo = TowerAssistBossModel.instance:getBoss(arg_11_0.bossId)
-	arg_11_0.talentTree = arg_11_0.bossMo:getTalentTree()
+function TowerAssistBossTalentTreeView:refreshParam()
+	self.bossId = self.viewParam.bossId
+	self.bossMo = TowerAssistBossModel.instance:getBoss(self.bossId)
+	self.talentTree = self.bossMo:getTalentTree()
 end
 
-function var_0_0.refreshView(arg_12_0)
-	arg_12_0:refreshTree()
+function TowerAssistBossTalentTreeView:refreshView()
+	self:refreshTree()
 end
 
-function var_0_0.refreshTree(arg_13_0)
-	local var_13_0 = arg_13_0.talentTree:getList()
+function TowerAssistBossTalentTreeView:refreshTree()
+	local list = self.talentTree:getList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		arg_13_0:updateNode(iter_13_1)
+	for i, v in ipairs(list) do
+		self:updateNode(v)
 	end
 
-	for iter_13_2, iter_13_3 in pairs(arg_13_0.nodeItems) do
-		local var_13_1 = iter_13_3._mo:getParents()
+	for i, v in pairs(self.nodeItems) do
+		local parents = v._mo:getParents()
 
-		for iter_13_4, iter_13_5 in pairs(var_13_1) do
-			if not iter_13_5:isRootNode() then
-				arg_13_0:updateLineItem(iter_13_3._mo.nodeId, iter_13_5.nodeId)
+		for _, parentNode in pairs(parents) do
+			if not parentNode:isRootNode() then
+				self:updateLineItem(v._mo.nodeId, parentNode.nodeId)
 			end
 		end
 	end
 end
 
-function var_0_0.updateNode(arg_14_0, arg_14_1)
-	arg_14_0:getNodeItem(arg_14_1.id):onUpdateMO(arg_14_1)
+function TowerAssistBossTalentTreeView:updateNode(node)
+	local item = self:getNodeItem(node.id)
+
+	item:onUpdateMO(node)
 end
 
-function var_0_0.getNodeItem(arg_15_0, arg_15_1)
-	if not arg_15_0.nodeItems[arg_15_1] then
-		local var_15_0 = gohelper.cloneInPlace(arg_15_0.goNode, tostring(arg_15_1))
-		local var_15_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_0, TowerAssistBossTalentItem)
+function TowerAssistBossTalentTreeView:getNodeItem(nodeId)
+	if not self.nodeItems[nodeId] then
+		local go = gohelper.cloneInPlace(self.goNode, tostring(nodeId))
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, TowerAssistBossTalentItem)
 
-		arg_15_0.nodeItems[arg_15_1] = var_15_1
+		self.nodeItems[nodeId] = item
 	end
 
-	return arg_15_0.nodeItems[arg_15_1]
+	return self.nodeItems[nodeId]
 end
 
-function var_0_0.updateLineItem(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0:getLineItem(arg_16_1, arg_16_2)
-	local var_16_1 = arg_16_0.talentTree:getNode(arg_16_1)
-	local var_16_2 = arg_16_0.talentTree:getNode(arg_16_2)
-	local var_16_3 = var_16_1:isActiveTalent()
-	local var_16_4 = var_16_1:isActiveGroup()
-	local var_16_5 = var_16_1:isParentActive()
-	local var_16_6 = var_16_2:isActiveTalent()
-	local var_16_7 = arg_16_0.talentTree:isSelectedSystemTalentPlan()
-	local var_16_8 = not var_16_3 and not var_16_4 and var_16_5 and var_16_6
+function TowerAssistBossTalentTreeView:updateLineItem(nodeId, preNodeId)
+	local lineItem = self:getLineItem(nodeId, preNodeId)
+	local talentNode = self.talentTree:getNode(nodeId)
+	local preNode = self.talentTree:getNode(preNodeId)
+	local isActive = talentNode:isActiveTalent()
+	local isActiveGroup = talentNode:isActiveGroup()
+	local isParentActive = talentNode:isParentActive()
+	local isPreActive = preNode:isActiveTalent()
+	local isSelectedSystemTalentPlan = self.talentTree:isSelectedSystemTalentPlan()
+	local canActive = not isActive and not isActiveGroup and isParentActive and isPreActive
 
-	if var_16_8 and not var_16_7 then
-		if var_16_0.isGray then
-			var_16_0.anim:Play("tocanlight")
+	if canActive and not isSelectedSystemTalentPlan then
+		if lineItem.isGray then
+			lineItem.anim:Play("tocanlight")
 		else
-			var_16_0.anim:Play("canlight")
+			lineItem.anim:Play("canlight")
 		end
-	elseif var_16_3 and var_16_6 then
-		var_16_0.anim:Play("lighted")
+	elseif isActive and isPreActive then
+		lineItem.anim:Play("lighted")
 	else
-		var_16_0.anim:Play("gray")
+		lineItem.anim:Play("gray")
 	end
 
-	var_16_0.isGray = not var_16_8 and not var_16_3 and not var_16_5
-	var_16_0.isActive = var_16_3 and var_16_5
+	lineItem.isGray = not canActive and not isActive and not isParentActive
+	lineItem.isActive = isActive and isParentActive
 
-	arg_16_0:updateLineItemPos(var_16_0, arg_16_1, arg_16_2)
+	self:updateLineItemPos(lineItem, nodeId, preNodeId)
 
-	return var_16_0
+	return lineItem
 end
 
-function var_0_0.updateLineItemPos(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_0.nodeItems[arg_17_2]
-	local var_17_1 = arg_17_0.nodeItems[arg_17_3]
-	local var_17_2, var_17_3 = var_17_0:getLocalPos()
-	local var_17_4 = var_17_0.transform.anchoredPosition
-	local var_17_5 = var_17_1.transform.anchoredPosition
-	local var_17_6 = var_17_0:getWidth()
-	local var_17_7 = var_17_1:getWidth()
-	local var_17_8 = Vector2.Distance(var_17_5, var_17_4)
-	local var_17_9 = var_17_6 + var_17_8 * 0.5
+function TowerAssistBossTalentTreeView:updateLineItemPos(lineItem, nodeId, preNodeId)
+	local nodeItem = self.nodeItems[nodeId]
+	local preNodeItem = self.nodeItems[preNodeId]
+	local posX, posY = nodeItem:getLocalPos()
+	local initPos = nodeItem.transform.anchoredPosition
+	local prePos = preNodeItem.transform.anchoredPosition
+	local width = nodeItem:getWidth()
+	local preWidth = preNodeItem:getWidth()
+	local distance = Vector2.Distance(prePos, initPos)
+	local lineWidth = distance
+	local len = width + lineWidth * 0.5
 
-	arg_17_0.tempVect2:Set(var_17_4.x - var_17_5.x, var_17_4.y - var_17_5.y)
+	self.tempVect2:Set(initPos.x - prePos.x, initPos.y - prePos.y)
 
-	local var_17_10 = arg_17_0.tempVect2
-	local var_17_11 = (var_17_4 + var_17_5) * 0.5
+	local offsetPos = self.tempVect2
+	local linePos = (initPos + prePos) * 0.5
 
-	recthelper.setAnchor(arg_17_1.transform, var_17_11.x, var_17_11.y)
-	recthelper.setHeight(arg_17_1.imgLine.transform, var_17_8)
-	recthelper.setHeight(arg_17_1.imgLine1.transform, var_17_8)
+	recthelper.setAnchor(lineItem.transform, linePos.x, linePos.y)
+	recthelper.setHeight(lineItem.imgLine.transform, lineWidth)
+	recthelper.setHeight(lineItem.imgLine1.transform, lineWidth)
 
-	local var_17_12 = Mathf.Atan2(var_17_10.y, var_17_10.x) * Mathf.Rad2Deg - 90
+	local angle = Mathf.Atan2(offsetPos.y, offsetPos.x) * Mathf.Rad2Deg - 90
 
-	transformhelper.setLocalRotation(arg_17_1.transform, 0, 0, var_17_12)
+	transformhelper.setLocalRotation(lineItem.transform, 0, 0, angle)
 end
 
-function var_0_0.getLineItem(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = string.format("%s_%s", arg_18_1, arg_18_2)
+function TowerAssistBossTalentTreeView:getLineItem(nodeId, preNodeId)
+	local key = string.format("%s_%s", nodeId, preNodeId)
 
-	if not arg_18_0.lineItems[var_18_0] then
-		local var_18_1 = gohelper.cloneInPlace(arg_18_0.goLine, var_18_0)
-		local var_18_2 = arg_18_0:getUserDataTb_()
+	if not self.lineItems[key] then
+		local go = gohelper.cloneInPlace(self.goLine, key)
+		local item = self:getUserDataTb_()
 
-		var_18_2.key = var_18_0
-		var_18_2.go = var_18_1
-		var_18_2.transform = var_18_1.transform
-		var_18_2.imgLine = gohelper.findChildImage(var_18_1, "#go_Line")
-		var_18_2.imgLine1 = gohelper.findChildImage(var_18_1, "Line1")
-		var_18_2.anim = var_18_1:GetComponent(gohelper.Type_Animator)
+		item.key = key
+		item.go = go
+		item.transform = go.transform
+		item.imgLine = gohelper.findChildImage(go, "#go_Line")
+		item.imgLine1 = gohelper.findChildImage(go, "Line1")
+		item.anim = go:GetComponent(gohelper.Type_Animator)
 
-		gohelper.setActive(var_18_1, true)
+		gohelper.setActive(go, true)
 
-		arg_18_0.lineItems[var_18_0] = var_18_2
+		self.lineItems[key] = item
 	end
 
-	return arg_18_0.lineItems[var_18_0]
+	return self.lineItems[key]
 end
 
-function var_0_0.playNodeLightingAnim(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.talentTree:getNode(arg_19_1)
+function TowerAssistBossTalentTreeView:playNodeLightingAnim(nodeId)
+	local node = self.talentTree:getNode(nodeId)
 
-	if not var_19_0 then
+	if not node then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("playNodeLightingAnim")
 
-	local var_19_1 = {}
-	local var_19_2 = var_19_0:getParents()
+	local activeLines = {}
+	local parents = node:getParents()
 
-	for iter_19_0, iter_19_1 in pairs(var_19_2) do
-		if iter_19_1:isActiveTalent() then
-			local var_19_3 = string.format("%s_%s", arg_19_1, iter_19_1.nodeId)
-			local var_19_4 = arg_19_0.lineItems[var_19_3]
+	for _, parent in pairs(parents) do
+		if parent:isActiveTalent() then
+			local key = string.format("%s_%s", nodeId, parent.nodeId)
+			local line = self.lineItems[key]
 
-			if var_19_4 and not var_19_4.isActive then
-				table.insert(var_19_1, var_19_4)
+			if line and not line.isActive then
+				table.insert(activeLines, line)
 			end
 		end
 	end
 
-	local var_19_5 = var_19_0.childs
+	local childs = node.childs
 
-	for iter_19_2, iter_19_3 in pairs(var_19_5) do
-		if iter_19_3:isActiveTalent() then
-			local var_19_6 = string.format("%s_%s", iter_19_3.nodeId, arg_19_1)
-			local var_19_7 = arg_19_0.lineItems[var_19_6]
+	for _, child in pairs(childs) do
+		if child:isActiveTalent() then
+			local key = string.format("%s_%s", child.nodeId, nodeId)
+			local line = self.lineItems[key]
 
-			if var_19_7 and not var_19_7.isActive then
-				table.insert(var_19_1, var_19_7)
+			if line and not line.isActive then
+				table.insert(activeLines, line)
 			end
 		end
 	end
 
-	for iter_19_4, iter_19_5 in ipairs(var_19_1) do
-		iter_19_5.isActive = true
+	for _, line in ipairs(activeLines) do
+		line.isActive = true
 
-		iter_19_5.anim:Play("lighting")
+		line.anim:Play("lighting")
 	end
 
-	if #var_19_1 > 0 then
-		arg_19_0.lightingNodeId = arg_19_1
+	if #activeLines > 0 then
+		self.lightingNodeId = nodeId
 
-		TaskDispatcher.runDelay(arg_19_0.delayLightNode, arg_19_0, 0.5)
+		TaskDispatcher.runDelay(self.delayLightNode, self, 0.5)
 	else
-		arg_19_0:_lightingNode(arg_19_1)
+		self:_lightingNode(nodeId)
 	end
 end
 
-function var_0_0.delayLightNode(arg_20_0)
-	arg_20_0:_lightingNode(arg_20_0.lightingNodeId)
+function TowerAssistBossTalentTreeView:delayLightNode()
+	self:_lightingNode(self.lightingNodeId)
 end
 
-function var_0_0._lightingNode(arg_21_0, arg_21_1)
+function TowerAssistBossTalentTreeView:_lightingNode(nodeId)
 	UIBlockMgr.instance:endBlock("playNodeLightingAnim")
 
-	arg_21_0.lightingNodeId = nil
+	self.lightingNodeId = nil
 
-	local var_21_0 = arg_21_0.nodeItems[arg_21_1]
+	local nodeItem = self.nodeItems[nodeId]
 
-	if var_21_0 then
-		var_21_0:playLightingAnim()
+	if nodeItem then
+		nodeItem:playLightingAnim()
 	end
 
-	arg_21_0:delayRefreshView()
+	self:delayRefreshView()
 end
 
-function var_0_0.delayRefreshView(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0.refreshView, arg_22_0)
-	TaskDispatcher.runDelay(arg_22_0.refreshView, arg_22_0, 0.5)
+function TowerAssistBossTalentTreeView:delayRefreshView()
+	TaskDispatcher.cancelTask(self.refreshView, self)
+	TaskDispatcher.runDelay(self.refreshView, self, 0.5)
 end
 
-function var_0_0.onClose(arg_23_0)
+function TowerAssistBossTalentTreeView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_24_0)
+function TowerAssistBossTalentTreeView:onDestroyView()
 	UIBlockMgr.instance:endBlock("playNodeLightingAnim")
-	TaskDispatcher.cancelTask(arg_24_0.delayLightNode, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0.refreshView, arg_24_0)
+	TaskDispatcher.cancelTask(self.delayLightNode, self)
+	TaskDispatcher.cancelTask(self.refreshView, self)
 end
 
-return var_0_0
+return TowerAssistBossTalentTreeView

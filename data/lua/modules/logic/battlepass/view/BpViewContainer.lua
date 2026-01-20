@@ -1,33 +1,35 @@
-﻿module("modules.logic.battlepass.view.BpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpViewContainer.lua
 
-local var_0_0 = class("BpViewContainer", BaseViewContainer)
-local var_0_1 = 1
-local var_0_2 = 2
+module("modules.logic.battlepass.view.BpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpViewContainer = class("BpViewContainer", BaseViewContainer)
+local TabView_Navigation = 1
+local TabView_BonusOrTask = 2
+
+function BpViewContainer:buildViews()
 	BpModel.instance.isViewLoading = true
 
 	return {
 		BpBuyBtn.New(),
-		TabViewGroup.New(var_0_1, "#go_btns"),
-		BPTabViewGroup.New(var_0_2, "#go_container"),
+		TabViewGroup.New(TabView_Navigation, "#go_btns"),
+		BPTabViewGroup.New(TabView_BonusOrTask, "#go_container"),
 		BpView.New(),
-		ToggleListView.New(var_0_2, "right/toggleGroup")
+		ToggleListView.New(TabView_BonusOrTask, "right/toggleGroup")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == var_0_1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function BpViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == TabView_Navigation then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == var_0_2 then
+	elseif tabContainerId == TabView_BonusOrTask then
 		return {
 			BpBonusView.New(),
 			BpTaskView.New()
@@ -35,62 +37,92 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
-	local var_3_0 = "tarotopen"
-	local var_3_1 = 1
+function BpViewContainer:playOpenTransition()
+	local anim = "tarotopen"
+	local sec = 1
 
-	if arg_3_0.viewParam and arg_3_0.viewParam.isSwitch then
-		var_3_0 = "switch"
+	if self.viewParam and self.viewParam.isSwitch then
+		anim = "switch"
 	end
 
-	local var_3_2 = not arg_3_0.viewParam or arg_3_0.viewParam.isPlayDayFirstAnim
+	local isPlayDayFirstAnim = not self.viewParam or self.viewParam.isPlayDayFirstAnim
 
 	if BpModel.instance.payStatus == BpEnum.PayStatus.NotPay and TimeUtil.getWeekFirstLoginRed("BpViewOpenAnim") and TimeUtil.getDayFirstLoginRed("BpViewOpenAnim") then
-		if var_3_2 then
-			AudioMgr.instance:trigger(AudioEnum2_6.BP.BpDayFirstAnim)
-			UIBlockMgrExtend.setNeedCircleMv(false)
+		if isPlayDayFirstAnim then
+			self.firstAnimFlow = FlowSequence.New()
 
-			var_3_0 = "tarotopen1"
-			var_3_1 = 3
+			local cfg = BpModel.instance:checkOpenBpUpdatePopup()
 
-			TimeUtil.setWeekFirstLoginRed("BpViewOpenAnim")
+			if cfg then
+				local animatorPlayer = self:__getAnimatorPlayer()
+				local animator = animatorPlayer.animator
+
+				animator.enabled = false
+
+				self.firstAnimFlow:addWork(BpOpenAndWaitOnCloseEventWork.New(ViewName.BpReceiveRewardView, cfg))
+			end
+
+			self.firstAnimFlow:addWork(FunctionWork.New(self.playOpenAnim1, self))
+			self.firstAnimFlow:start()
+
+			return
 		else
-			ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_3_0._checkPlayDayAnim, arg_3_0)
+			ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._checkPlayDayAnim, self)
 		end
 	end
 
-	var_0_0.super.playOpenTransition(arg_3_0, {
-		anim = var_3_0,
-		duration = var_3_1
+	BpViewContainer.super.playOpenTransition(self, {
+		anim = anim,
+		duration = sec
 	})
 end
 
-function var_0_0._checkPlayDayAnim(arg_4_0)
+function BpViewContainer:playOpenAnim1()
+	AudioMgr.instance:trigger(AudioEnum2_6.BP.BpDayFirstAnim)
+	UIBlockMgrExtend.setNeedCircleMv(false)
+
+	local anim = "tarotopen1"
+	local sec = 3
+
+	TimeUtil.setWeekFirstLoginRed("BpViewOpenAnim")
+	BpViewContainer.super.playOpenTransition(self, {
+		anim = anim,
+		duration = sec
+	})
+end
+
+function BpViewContainer:_checkPlayDayAnim()
 	if not ViewHelper.instance:checkViewOnTheTop(ViewName.BpView) then
 		return
 	end
 
-	if arg_4_0.viewParam and not arg_4_0.viewParam.isPlayDayFirstAnim then
-		arg_4_0.viewParam.isPlayDayFirstAnim = true
+	if self.viewParam and not self.viewParam.isPlayDayFirstAnim then
+		self.viewParam.isPlayDayFirstAnim = true
 	end
 
-	arg_4_0:playOpenTransition()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0._checkPlayDayAnim, arg_4_0)
+	self:playOpenTransition()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._checkPlayDayAnim, self)
 end
 
-function var_0_0.onPlayOpenTransitionFinish(arg_5_0)
+function BpViewContainer:onPlayOpenTransitionFinish()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	var_0_0.super.onPlayOpenTransitionFinish(arg_5_0)
+	BpViewContainer.super.onPlayOpenTransitionFinish(self)
 end
 
-function var_0_0.playCloseTransition(arg_6_0)
-	arg_6_0:onPlayCloseTransitionFinish()
+function BpViewContainer:playCloseTransition()
+	self:onPlayCloseTransitionFinish()
 end
 
-function var_0_0.onContainerClose(arg_7_0)
+function BpViewContainer:onContainerClose()
+	if self.firstAnimFlow then
+		self.firstAnimFlow:stop()
+
+		self.firstAnimFlow = nil
+	end
+
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_7_0._checkPlayDayAnim, arg_7_0)
-	var_0_0.super.onContainerClose(arg_7_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._checkPlayDayAnim, self)
+	BpViewContainer.super.onContainerClose(self)
 end
 
-return var_0_0
+return BpViewContainer

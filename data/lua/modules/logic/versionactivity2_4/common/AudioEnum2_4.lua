@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity2_4.common.AudioEnum2_4", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/common/AudioEnum2_4.lua
 
-local var_0_0 = AudioEnum
+module("modules.logic.versionactivity2_4.common.AudioEnum2_4", package.seeall)
 
-var_0_0.VersionActivity2_4Dungeon = {
+local AudioEnum = AudioEnum
+
+AudioEnum.VersionActivity2_4Dungeon = {
 	play_ui_diqiu_complete = 20240060,
 	play_ui_lvhu_clue_write_2 = 20240058,
 	enterview_tab_switch = 20240063,
 	play_ui_diqiu_open = 20240057,
 	play_ui_mln_page_turn = 20240059
 }
-var_0_0.Bakaluoer = {
+AudioEnum.Bakaluoer = {
 	play_ui_diqiu_settle_accounts = 20240050,
 	play_ui_diqiu_unlock = 20240051,
 	play_ui_diqiu_perfect = 20240056,
 	play_ui_diqiu_count_down = 20240049
 }
-var_0_0.Act181 = {
+AudioEnum.Act181 = {
 	play_ui_diqiu_xueye_open = 20240052
 }
-var_0_0.Act178 = {
+AudioEnum.Act178 = {
 	act178_audio8 = 20249008,
 	act178_audio14 = 20249014,
 	bgm_city = 20240047,
@@ -43,7 +45,7 @@ var_0_0.Act178 = {
 	act178_audio2 = 20249002,
 	act178_audio11 = 20249011
 }
-var_0_0.WuErLiXi = {
+AudioEnum.WuErLiXi = {
 	play_ui_diqiu_put = 20246004,
 	bgm_wuerliximapgame = 20240045,
 	play_ui_diqiu_jinru = 20246001,
@@ -54,11 +56,11 @@ var_0_0.WuErLiXi = {
 	play_ui_diqiu_signal = 20246002,
 	play_ui_diqiu_enable = 20246006
 }
-var_0_0.PlayerCard = {
+AudioEnum.PlayerCard = {
 	play_ui_diqiu_card_open_2 = 20240062,
 	play_ui_diqiu_card_open_1 = 20240061
 }
-var_0_0.NewTurnabck = {
+AudioEnum.NewTurnabck = {
 	play_ui_call_back_Interface_entry_04 = 20249025,
 	play_ui_call_back_letter_expansion = 20249021,
 	play_ui_call_back_Interface_entry_01 = 20249022,
@@ -67,32 +69,34 @@ var_0_0.NewTurnabck = {
 	play_ui_call_back_Interface_entry_03 = 20249024
 }
 
-local var_0_1 = {}
-local var_0_2 = {
+local bgm = {
+	Act2_4DungeonBgm = 20240001
+}
+local UI = {
 	play_ui_diqiu_yure_ring_20249041 = 20249041,
 	play_ui_diqiu_yure_click_20249044 = 20249044,
 	play_ui_diqiu_yure_success_20249043 = 20249043,
-	play_ui_mln_remove_effect_20249042 = var_0_0.Meilanni.play_ui_mln_remove_effect
+	play_ui_mln_remove_effect_20249042 = AudioEnum.Meilanni.play_ui_mln_remove_effect
 }
 
-for iter_0_0, iter_0_1 in pairs(var_0_1) do
-	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
-		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
+for key, value in pairs(bgm) do
+	if isDebugBuild and AudioEnum.Bgm[key] then
+		logError("AudioEnum.Bgm重复定义" .. key)
 	end
 
-	var_0_0.Bgm[iter_0_0] = iter_0_1
+	AudioEnum.Bgm[key] = value
 end
 
-for iter_0_2, iter_0_3 in pairs(var_0_2) do
-	if isDebugBuild and var_0_0.UI[iter_0_2] then
-		logError("AudioEnum.UI重复定义" .. iter_0_2)
+for key, value in pairs(UI) do
+	if isDebugBuild and AudioEnum.UI[key] then
+		logError("AudioEnum.UI重复定义" .. key)
 	end
 
-	var_0_0.UI[iter_0_2] = iter_0_3
+	AudioEnum.UI[key] = value
 end
 
-function var_0_0.activate()
+function AudioEnum.activate()
 	return
 end
 
-return var_0_0
+return AudioEnum

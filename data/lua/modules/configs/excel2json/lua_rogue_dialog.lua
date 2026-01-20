@@ -1,23 +1,25 @@
-﻿module("modules.configs.excel2json.lua_rogue_dialog", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rogue_dialog.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rogue_dialog", package.seeall)
+
+local lua_rogue_dialog = {}
+local fields = {
 	text = 3,
 	id = 2,
 	photo = 5,
 	type = 4,
 	group = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"group",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	text = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rogue_dialog.onLoad(json)
+	lua_rogue_dialog.configList, lua_rogue_dialog.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rogue_dialog

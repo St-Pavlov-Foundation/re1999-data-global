@@ -1,54 +1,56 @@
-﻿module("modules.logic.pcInput.PCInputEvent", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/PCInputEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.pcInput.PCInputEvent", package.seeall)
 
-var_0_0.NotifySetMainViewVisible = 1
-var_0_0.NotifyEnterCurActivity = 2
-var_0_0.NotifyEnterActivityCenter = 3
-var_0_0.NotifyEnterRoom = 4
-var_0_0.NotifyEnterRole = 5
-var_0_0.NotifyEnterSummon = 6
-var_0_0.NotifyEnterBook = 7
-var_0_0.NotifyEnterAchievement = 8
-var_0_0.NotifyEnterFriend = 9
-var_0_0.NotifyEnterTravelCollection = 10
-var_0_0.NotifyEnterNotice = 11
-var_0_0.NotifyEnterSetting = 12
-var_0_0.NotifyEnterSign = 13
-var_0_0.NotifyEnterFeedback = 14
-var_0_0.NotifyEnterStore = 15
-var_0_0.NotifyThirdDoorItemSelect = 10
-var_0_0.NotifyThirdDoorOpenBook = 11
-var_0_0.NotifyThirdDoorHelp = 12
-var_0_0.NotifyBattleOpenEnemyInfo = 20
-var_0_0.NotifyBattleOpentips = 21
-var_0_0.NotifyBattleAutoFight = 22
-var_0_0.NotifyBattleSpeedUp = 23
-var_0_0.NotifyBattleSelect = 24
-var_0_0.NotifyBattleSelectCard = 25
-var_0_0.NotifyBattleBackPack = 26
-var_0_0.NotifyBattleMoveCard = 27
-var_0_0.NotifyBattleMoveCardEnd = 28
-var_0_0.NotifyBattleSkillOpen = 29
-var_0_0.NotifyBattleSkillIndex = 30
-var_0_0.NotifyBattleSelectLeft = 31
-var_0_0.NotifyBattleSelectRight = 32
-var_0_0.NotifyRoomBellTower = 40
-var_0_0.NotifyRoomMarket = 41
-var_0_0.NotifyRoomCharactorFaith = 42
-var_0_0.NotifyRoomCharactorFaithFull = 43
-var_0_0.NotifyHide = 44
-var_0_0.NotifyEdit = 45
-var_0_0.NotifyPlace = 46
-var_0_0.Notifylocate = 47
-var_0_0.NotifyBuy = 48
-var_0_0.NotifyLayout = 49
-var_0_0.NotifyStoryDialogNext = 60
-var_0_0.NotifyStoryDialogAuto = 61
-var_0_0.NotifyStoryDialogSkip = 62
-var_0_0.NotifyStoryDialogExit = 63
-var_0_0.NotifyStoryDialogSelect = 64
-var_0_0.NotifyCommonConfirm = 80
-var_0_0.NotifyCommonCancel = 81
+local PCInputEvent = _M
 
-return var_0_0
+PCInputEvent.NotifySetMainViewVisible = 1
+PCInputEvent.NotifyEnterCurActivity = 2
+PCInputEvent.NotifyEnterActivityCenter = 3
+PCInputEvent.NotifyEnterRoom = 4
+PCInputEvent.NotifyEnterRole = 5
+PCInputEvent.NotifyEnterSummon = 6
+PCInputEvent.NotifyEnterBook = 7
+PCInputEvent.NotifyEnterAchievement = 8
+PCInputEvent.NotifyEnterFriend = 9
+PCInputEvent.NotifyEnterTravelCollection = 10
+PCInputEvent.NotifyEnterNotice = 11
+PCInputEvent.NotifyEnterSetting = 12
+PCInputEvent.NotifyEnterSign = 13
+PCInputEvent.NotifyEnterFeedback = 14
+PCInputEvent.NotifyEnterStore = 15
+PCInputEvent.NotifyThirdDoorItemSelect = 10
+PCInputEvent.NotifyThirdDoorOpenBook = 11
+PCInputEvent.NotifyThirdDoorHelp = 12
+PCInputEvent.NotifyBattleOpenEnemyInfo = 20
+PCInputEvent.NotifyBattleOpentips = 21
+PCInputEvent.NotifyBattleAutoFight = 22
+PCInputEvent.NotifyBattleSpeedUp = 23
+PCInputEvent.NotifyBattleSelect = 24
+PCInputEvent.NotifyBattleSelectCard = 25
+PCInputEvent.NotifyBattleBackPack = 26
+PCInputEvent.NotifyBattleMoveCard = 27
+PCInputEvent.NotifyBattleMoveCardEnd = 28
+PCInputEvent.NotifyBattleSkillOpen = 29
+PCInputEvent.NotifyBattleSkillIndex = 30
+PCInputEvent.NotifyBattleSelectLeft = 31
+PCInputEvent.NotifyBattleSelectRight = 32
+PCInputEvent.NotifyRoomBellTower = 40
+PCInputEvent.NotifyRoomMarket = 41
+PCInputEvent.NotifyRoomCharactorFaith = 42
+PCInputEvent.NotifyRoomCharactorFaithFull = 43
+PCInputEvent.NotifyHide = 44
+PCInputEvent.NotifyEdit = 45
+PCInputEvent.NotifyPlace = 46
+PCInputEvent.Notifylocate = 47
+PCInputEvent.NotifyBuy = 48
+PCInputEvent.NotifyLayout = 49
+PCInputEvent.NotifyStoryDialogNext = 60
+PCInputEvent.NotifyStoryDialogAuto = 61
+PCInputEvent.NotifyStoryDialogSkip = 62
+PCInputEvent.NotifyStoryDialogExit = 63
+PCInputEvent.NotifyStoryDialogSelect = 64
+PCInputEvent.NotifyCommonConfirm = 80
+PCInputEvent.NotifyCommonCancel = 81
+
+return PCInputEvent

@@ -1,59 +1,63 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerHeroPlayAnim", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerHeroPlayAnim.lua
 
-local var_0_0 = class("ExploreTriggerHeroPlayAnim", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerHeroPlayAnim", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = string.splitToNumber(arg_1_1, "#")
+local ExploreTriggerHeroPlayAnim = class("ExploreTriggerHeroPlayAnim", ExploreTriggerBase)
 
-	arg_1_0._state = var_1_0[1]
-	arg_1_0._dis = var_1_0[2]
-	arg_1_0._time = var_1_0[3]
+function ExploreTriggerHeroPlayAnim:handle(param, unit)
+	local arr = string.splitToNumber(param, "#")
+
+	self._state = arr[1]
+	self._dis = arr[2]
+	self._time = arr[3]
 
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.PlayTriggerAnim)
 
-	local var_1_1 = ExploreController.instance:getMap():getHero()
+	local hero = ExploreController.instance:getMap():getHero()
 
-	if arg_1_0._dis then
-		var_1_1:setMoveSpeed(arg_1_0._time)
+	if self._dis then
+		hero:setMoveSpeed(self._time)
 
-		arg_1_0._moveDir = ExploreHelper.xyToDir(arg_1_2.mo.nodePos.x - var_1_1.nodePos.x, arg_1_2.mo.nodePos.y - var_1_1.nodePos.y)
+		self._moveDir = ExploreHelper.xyToDir(unit.mo.nodePos.x - hero.nodePos.x, unit.mo.nodePos.y - hero.nodePos.y)
 
-		local var_1_2 = (arg_1_2:getPos() - var_1_1:getPos()):SetNormalize():Mul(arg_1_0._dis):Add(var_1_1:getPos())
+		local finalPos = (unit:getPos() - hero:getPos()):SetNormalize():Mul(self._dis):Add(hero:getPos())
 
-		var_1_1:setTrOffset(arg_1_0._moveDir, var_1_2, arg_1_0._time, arg_1_0.onRoleMoveEnd, arg_1_0)
+		hero:setTrOffset(self._moveDir, finalPos, self._time, self.onRoleMoveEnd, self)
 	else
-		arg_1_0:onRoleMoveEnd()
+		self:onRoleMoveEnd()
 	end
 end
 
-function var_0_0.onRoleMoveEnd(arg_2_0)
-	local var_2_0 = ExploreController.instance:getMap():getHero()
+function ExploreTriggerHeroPlayAnim:onRoleMoveEnd()
+	local hero = ExploreController.instance:getMap():getHero()
 
-	var_2_0:setMoveSpeed(0)
-	ExploreController.instance:registerCallback(ExploreEvent.HeroStatuEnd, arg_2_0.onHeroStateAnimEnd, arg_2_0)
-	var_2_0:setHeroStatus(arg_2_0._state, true, true)
+	hero:setMoveSpeed(0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroStatuEnd, self.onHeroStateAnimEnd, self)
+	hero:setHeroStatus(self._state, true, true)
 end
 
-function var_0_0.onHeroStateAnimEnd(arg_3_0)
-	local var_3_0 = ExploreController.instance:getMap():getHero()
+function ExploreTriggerHeroPlayAnim:onHeroStateAnimEnd()
+	local hero = ExploreController.instance:getMap():getHero()
 
-	if arg_3_0._dis then
-		var_3_0:setMoveSpeed(arg_3_0._time)
-		var_3_0:setTrOffset(arg_3_0._moveDir, var_3_0:getPos(), arg_3_0._time, arg_3_0.onRoleMoveBackEnd, arg_3_0)
+	if self._dis then
+		hero:setMoveSpeed(self._time)
+		hero:setTrOffset(self._moveDir, hero:getPos(), self._time, self.onRoleMoveBackEnd, self)
 	else
 		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.PlayTriggerAnim)
 	end
 
-	arg_3_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.onRoleMoveBackEnd(arg_4_0)
-	ExploreController.instance:getMap():getHero():setMoveSpeed(0)
+function ExploreTriggerHeroPlayAnim:onRoleMoveBackEnd()
+	local hero = ExploreController.instance:getMap():getHero()
+
+	hero:setMoveSpeed(0)
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.PlayTriggerAnim)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroStatuEnd, arg_5_0.onHeroStateAnimEnd, arg_5_0)
+function ExploreTriggerHeroPlayAnim:clearWork()
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroStatuEnd, self.onHeroStateAnimEnd, self)
 end
 
-return var_0_0
+return ExploreTriggerHeroPlayAnim

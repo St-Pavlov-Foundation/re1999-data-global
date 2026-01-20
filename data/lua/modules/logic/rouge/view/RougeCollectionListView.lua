@@ -1,309 +1,313 @@
-﻿module("modules.logic.rouge.view.RougeCollectionListView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionListView.lua
 
-local var_0_0 = class("RougeCollectionListView", BaseView)
+module("modules.logic.rouge.view.RougeCollectionListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_fullbg")
-	arg_1_0._scrollcollection = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_collection")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_collection/Viewport/#go_content")
-	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_filter")
-	arg_1_0._golayout = gohelper.findChild(arg_1_0.viewGO, "Left/#go_layout")
-	arg_1_0._gosmalltitle = gohelper.findChild(arg_1_0.viewGO, "Left/#go_smalltitle")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_smalltitle/#txt_Title")
-	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_smalltitle/#txt_Title/#txt_TitleEn")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_smalltitle/#image_icon")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal")
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_normal/#simage_icon1")
-	arg_1_0._txtcollectionname1 = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_normal/#txt_collectionname1")
-	arg_1_0._gobasetags1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/tags/#go_basetags1")
-	arg_1_0._gobasetagitem1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/tags/#go_basetags1/#go_basetagitem1")
-	arg_1_0._goextratags1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/tags/#go_extratags1")
-	arg_1_0._goextratagitem1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/tags/#go_extratags1/#go_extratagitem1")
-	arg_1_0._goshapecell1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/shape/#go_shapecell1")
-	arg_1_0._scrollcollectiondesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#go_normal/#scroll_collectiondesc")
-	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/#scroll_collectiondesc/Viewport/#go_descContent")
-	arg_1_0._godescitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "Right/#go_locked")
-	arg_1_0._txtlocked = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_locked/locked/#txt_locked")
-	arg_1_0._txtlockedName = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_locked/txt_locked")
-	arg_1_0._gounget = gohelper.findChild(arg_1_0.viewGO, "Right/#go_unget")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_unget/#simage_icon2")
-	arg_1_0._txtcollectionname2 = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_unget/#txt_collectionname2")
-	arg_1_0._gobasetags2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_unget/tags/#go_basetags2")
-	arg_1_0._gobasetagitem2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_unget/tags/#go_basetags2/#go_basetagitem2")
-	arg_1_0._goextratags2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_unget/tags/#go_extratags2")
-	arg_1_0._goextratagitem2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_unget/tags/#go_extratags2/#go_extratagitem2")
-	arg_1_0._goshapecell2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_unget/shape/#go_shapecell2")
-	arg_1_0._gotips1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_normal/tags/#go_tips1")
-	arg_1_0._txttagitem1 = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_normal/tags/#go_tips1/#txt_tagitem1")
-	arg_1_0._gotips2 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_unget/tags/#go_tips2")
-	arg_1_0._txttagitem2 = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_unget/tags/#go_tips2/#txt_tagitem2")
+local RougeCollectionListView = class("RougeCollectionListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionListView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_fullbg")
+	self._scrollcollection = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_collection")
+	self._gocontent = gohelper.findChild(self.viewGO, "Left/#scroll_collection/Viewport/#go_content")
+	self._btnfilter = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_filter")
+	self._golayout = gohelper.findChild(self.viewGO, "Left/#go_layout")
+	self._gosmalltitle = gohelper.findChild(self.viewGO, "Left/#go_smalltitle")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Left/#go_smalltitle/#txt_Title")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "Left/#go_smalltitle/#txt_Title/#txt_TitleEn")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "Left/#go_smalltitle/#image_icon")
+	self._gonormal = gohelper.findChild(self.viewGO, "Right/#go_normal")
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "Right/#go_normal/#simage_icon1")
+	self._txtcollectionname1 = gohelper.findChildText(self.viewGO, "Right/#go_normal/#txt_collectionname1")
+	self._gobasetags1 = gohelper.findChild(self.viewGO, "Right/#go_normal/tags/#go_basetags1")
+	self._gobasetagitem1 = gohelper.findChild(self.viewGO, "Right/#go_normal/tags/#go_basetags1/#go_basetagitem1")
+	self._goextratags1 = gohelper.findChild(self.viewGO, "Right/#go_normal/tags/#go_extratags1")
+	self._goextratagitem1 = gohelper.findChild(self.viewGO, "Right/#go_normal/tags/#go_extratags1/#go_extratagitem1")
+	self._goshapecell1 = gohelper.findChild(self.viewGO, "Right/#go_normal/shape/#go_shapecell1")
+	self._scrollcollectiondesc = gohelper.findChildScrollRect(self.viewGO, "Right/#go_normal/#scroll_collectiondesc")
+	self._godescContent = gohelper.findChild(self.viewGO, "Right/#go_normal/#scroll_collectiondesc/Viewport/#go_descContent")
+	self._godescitem = gohelper.findChild(self.viewGO, "Right/#go_normal/#scroll_collectiondesc/Viewport/#go_descContent/#go_descitem")
+	self._golocked = gohelper.findChild(self.viewGO, "Right/#go_locked")
+	self._txtlocked = gohelper.findChildText(self.viewGO, "Right/#go_locked/locked/#txt_locked")
+	self._txtlockedName = gohelper.findChildText(self.viewGO, "Right/#go_locked/txt_locked")
+	self._gounget = gohelper.findChild(self.viewGO, "Right/#go_unget")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "Right/#go_unget/#simage_icon2")
+	self._txtcollectionname2 = gohelper.findChildText(self.viewGO, "Right/#go_unget/#txt_collectionname2")
+	self._gobasetags2 = gohelper.findChild(self.viewGO, "Right/#go_unget/tags/#go_basetags2")
+	self._gobasetagitem2 = gohelper.findChild(self.viewGO, "Right/#go_unget/tags/#go_basetags2/#go_basetagitem2")
+	self._goextratags2 = gohelper.findChild(self.viewGO, "Right/#go_unget/tags/#go_extratags2")
+	self._goextratagitem2 = gohelper.findChild(self.viewGO, "Right/#go_unget/tags/#go_extratags2/#go_extratagitem2")
+	self._goshapecell2 = gohelper.findChild(self.viewGO, "Right/#go_unget/shape/#go_shapecell2")
+	self._gotips1 = gohelper.findChild(self.viewGO, "Right/#go_normal/tags/#go_tips1")
+	self._txttagitem1 = gohelper.findChildText(self.viewGO, "Right/#go_normal/tags/#go_tips1/#txt_tagitem1")
+	self._gotips2 = gohelper.findChild(self.viewGO, "Right/#go_unget/tags/#go_tips2")
+	self._txttagitem2 = gohelper.findChildText(self.viewGO, "Right/#go_unget/tags/#go_tips2/#txt_tagitem2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
+function RougeCollectionListView:addEvents()
+	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfilter:RemoveClickListener()
+function RougeCollectionListView:removeEvents()
+	self._btnfilter:RemoveClickListener()
 end
 
-function var_0_0._btnfilterOnClick(arg_4_0)
-	local var_4_0 = {
-		confirmCallback = arg_4_0.onConfirmTagFilterCallback,
-		confirmCallbackObj = arg_4_0,
-		baseSelectMap = arg_4_0._baseTagSelectMap,
-		extraSelectMap = arg_4_0._extraTagSelectMap
+function RougeCollectionListView:_btnfilterOnClick()
+	local params = {
+		confirmCallback = self.onConfirmTagFilterCallback,
+		confirmCallbackObj = self,
+		baseSelectMap = self._baseTagSelectMap,
+		extraSelectMap = self._extraTagSelectMap
 	}
 
-	RougeController.instance:openRougeCollectionFilterView(var_4_0)
+	RougeController.instance:openRougeCollectionFilterView(params)
 end
 
-function var_0_0.onConfirmTagFilterCallback(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:filterCompositeList(arg_5_1, arg_5_2)
-	arg_5_0:refreshFilterButtonUI()
+function RougeCollectionListView:onConfirmTagFilterCallback(baseTagMap, extraTagMap)
+	self:filterCompositeList(baseTagMap, extraTagMap)
+	self:refreshFilterButtonUI()
 end
 
-function var_0_0.filterCompositeList(arg_6_0, arg_6_1, arg_6_2)
-	RougeCollectionListModel.instance:onInitData(arg_6_1, arg_6_2, arg_6_0._selectIndex)
+function RougeCollectionListView:filterCompositeList(baseTagMap, extraTagMap)
+	RougeCollectionListModel.instance:onInitData(baseTagMap, extraTagMap, self._selectIndex)
 end
 
-function var_0_0.refreshFilterButtonUI(arg_7_0)
-	local var_7_0 = RougeCollectionListModel.instance:isFiltering()
+function RougeCollectionListView:refreshFilterButtonUI()
+	local isFiltering = RougeCollectionListModel.instance:isFiltering()
 
-	arg_7_0:_setFilterSelected(var_7_0)
+	self:_setFilterSelected(isFiltering)
 end
 
-function var_0_0._btnlistOnClick(arg_8_0)
+function RougeCollectionListView:_btnlistOnClick()
 	return
 end
 
-function var_0_0._btnhandbookOnClick(arg_9_0)
+function RougeCollectionListView:_btnhandbookOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	gohelper.setActive(arg_10_0._txtTitleEn, false)
+function RougeCollectionListView:_editableInitView()
+	gohelper.setActive(self._txtTitleEn, false)
 
-	arg_10_0._gonormalcancomposit = gohelper.findChild(arg_10_0.viewGO, "Right/#go_normal/go_cancomposit")
-	arg_10_0._goungetcancomposit = gohelper.findChild(arg_10_0.viewGO, "Right/#go_unget/go_cancomposit")
-	arg_10_0._goUnselectLayout = gohelper.findChild(arg_10_0._golayout.gameObject, "unselected")
-	arg_10_0._goSelectLayout = gohelper.findChild(arg_10_0._golayout.gameObject, "selected")
-	arg_10_0._goUnselectFilter = gohelper.findChild(arg_10_0._btnfilter.gameObject, "unselect")
-	arg_10_0._goSelectFilter = gohelper.findChild(arg_10_0._btnfilter.gameObject, "select")
-	arg_10_0._goshapecell1Icon = gohelper.findChild(arg_10_0._goshapecell1, "icon")
-	arg_10_0._goshapecell2Icon = gohelper.findChild(arg_10_0._goshapecell2, "icon")
-	arg_10_0._cellModelTab = arg_10_0:getUserDataTb_()
-	arg_10_0._baseTagSelectMap = {}
-	arg_10_0._extraTagSelectMap = {}
+	self._gonormalcancomposit = gohelper.findChild(self.viewGO, "Right/#go_normal/go_cancomposit")
+	self._goungetcancomposit = gohelper.findChild(self.viewGO, "Right/#go_unget/go_cancomposit")
+	self._goUnselectLayout = gohelper.findChild(self._golayout.gameObject, "unselected")
+	self._goSelectLayout = gohelper.findChild(self._golayout.gameObject, "selected")
+	self._goUnselectFilter = gohelper.findChild(self._btnfilter.gameObject, "unselect")
+	self._goSelectFilter = gohelper.findChild(self._btnfilter.gameObject, "select")
+	self._goshapecell1Icon = gohelper.findChild(self._goshapecell1, "icon")
+	self._goshapecell2Icon = gohelper.findChild(self._goshapecell2, "icon")
+	self._cellModelTab = self:getUserDataTb_()
+	self._baseTagSelectMap = {}
+	self._extraTagSelectMap = {}
 
-	arg_10_0:_setFilterSelected(false)
-	arg_10_0:_setAllSelected(true)
+	self:_setFilterSelected(false)
+	self:_setAllSelected(true)
 
-	arg_10_0._enchantList = {}
-	arg_10_0._itemInstTab = arg_10_0:getUserDataTb_()
-	arg_10_0._gocontenttransform = arg_10_0._gocontent.transform
+	self._enchantList = {}
+	self._itemInstTab = self:getUserDataTb_()
+	self._gocontenttransform = self._gocontent.transform
 
-	arg_10_0._scrollcollection:AddOnValueChanged(arg_10_0._onScrollChange, arg_10_0)
+	self._scrollcollection:AddOnValueChanged(self._onScrollChange, self)
 
-	arg_10_0._dropherogroup = gohelper.findChildDropdown(arg_10_0.viewGO, "Left/#go_layout")
+	self._dropherogroup = gohelper.findChildDropdown(self.viewGO, "Left/#go_layout")
 
-	arg_10_0._dropherogroup:AddOnValueChanged(arg_10_0._onDropValueChanged, arg_10_0)
+	self._dropherogroup:AddOnValueChanged(self._onDropValueChanged, self)
 
-	arg_10_0._dropherogrouparrow = gohelper.findChild(arg_10_0.viewGO, "Left/#go_layout/selected/Label/go_arrow").transform
-	arg_10_0._dropgroupchildcount = arg_10_0._goSelectLayout.transform.childCount
-	arg_10_0._selectIndex = 1
+	self._dropherogrouparrow = gohelper.findChild(self.viewGO, "Left/#go_layout/selected/Label/go_arrow").transform
+	self._dropgroupchildcount = self._goSelectLayout.transform.childCount
+	self._selectIndex = 1
 
-	local var_10_0 = {
+	local list = {
 		luaLang("p_all"),
 		luaLang("p_handbookequipviewfilterview_haveget"),
 		luaLang("p_handbookequipviewfilterview_notget")
 	}
 
-	arg_10_0._dropherogroup:ClearOptions()
-	arg_10_0._dropherogroup:AddOptions(var_10_0)
-	arg_10_0._dropherogroup:SetValue(arg_10_0._selectIndex - 1)
-	TaskDispatcher.runRepeat(arg_10_0._checkDropArrow, arg_10_0, 0)
+	self._dropherogroup:ClearOptions()
+	self._dropherogroup:AddOptions(list)
+	self._dropherogroup:SetValue(self._selectIndex - 1)
+	TaskDispatcher.runRepeat(self._checkDropArrow, self, 0)
 
-	local var_10_1 = gohelper.findChild(arg_10_0.viewGO, "Right")
+	local goRight = gohelper.findChild(self.viewGO, "Right")
 
-	arg_10_0._rightAnimator = gohelper.onceAddComponent(var_10_1, gohelper.Type_Animator)
-	arg_10_0._aniamtor = gohelper.onceAddComponent(arg_10_0.viewGO, gohelper.Type_Animator)
-	arg_10_0._baseTagSelectMap = {}
-	arg_10_0._extraTagSelectMap = {}
+	self._rightAnimator = gohelper.onceAddComponent(goRight, gohelper.Type_Animator)
+	self._aniamtor = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+	self._baseTagSelectMap = {}
+	self._extraTagSelectMap = {}
 
-	RougeCollectionListModel.instance:onInitData(arg_10_0._baseTagSelectMap, arg_10_0._extraTagSelectMap, arg_10_0._selectIndex, true)
-	arg_10_0:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionListItem, arg_10_0._onClickCollectionListItem, arg_10_0)
-	arg_10_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_10_0._onSwitchCollectionInfoType, arg_10_0)
-	arg_10_0:_refreshSelectCollectionInfo()
+	RougeCollectionListModel.instance:onInitData(self._baseTagSelectMap, self._extraTagSelectMap, self._selectIndex, true)
+	self:addEventCb(RougeController.instance, RougeEvent.OnClickCollectionListItem, self._onClickCollectionListItem, self)
+	self:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, self._onSwitchCollectionInfoType, self)
+	self:_refreshSelectCollectionInfo()
 end
 
-function var_0_0._onDropValueChanged(arg_11_0, arg_11_1)
-	arg_11_0._selectIndex = arg_11_1 + 1
+function RougeCollectionListView:_onDropValueChanged(value)
+	self._selectIndex = value + 1
 
-	RougeCollectionListModel.instance:onInitData(arg_11_0._baseTagSelectMap, arg_11_0._extraTagSelectMap, arg_11_0._selectIndex)
+	RougeCollectionListModel.instance:onInitData(self._baseTagSelectMap, self._extraTagSelectMap, self._selectIndex)
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio7)
 end
 
-function var_0_0._checkDropArrow(arg_12_0)
-	local var_12_0 = arg_12_0._goSelectLayout.transform.childCount
+function RougeCollectionListView:_checkDropArrow()
+	local childCount = self._goSelectLayout.transform.childCount
 
-	if var_12_0 ~= arg_12_0._dropDownChildCount then
-		arg_12_0._dropDownChildCount = var_12_0
+	if childCount ~= self._dropDownChildCount then
+		self._dropDownChildCount = childCount
 
-		local var_12_1 = arg_12_0._dropgroupchildcount ~= var_12_0
+		local isOpen = self._dropgroupchildcount ~= childCount
 
-		transformhelper.setLocalScale(arg_12_0._dropherogrouparrow, 1, var_12_1 and -1 or 1, 1)
+		transformhelper.setLocalScale(self._dropherogrouparrow, 1, isOpen and -1 or 1, 1)
 	end
 end
 
-function var_0_0._onScrollChange(arg_13_0)
-	local var_13_0 = recthelper.getAnchorY(arg_13_0._gocontenttransform)
-	local var_13_1 = RougeCollectionListModel.instance
-	local var_13_2 = var_13_1:getTypeHeightMap()
-	local var_13_3 = var_13_1:getTypeList()
-	local var_13_4
+function RougeCollectionListView:_onScrollChange()
+	local y = recthelper.getAnchorY(self._gocontenttransform)
+	local model = RougeCollectionListModel.instance
+	local typeMap = model:getTypeHeightMap()
+	local typeList = model:getTypeList()
+	local curType
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_3) do
-		local var_13_5 = iter_13_1.type
+	for i, v in ipairs(typeList) do
+		local type = v.type
+		local height = (typeMap[type] or 0) + 48
 
-		if var_13_0 > (var_13_2[var_13_5] or 0) + 48 then
-			var_13_4 = var_13_5
+		if height < y then
+			curType = type
 		else
 			break
 		end
 	end
 
-	var_13_4 = var_13_4 or var_13_1:getFirstType() or var_13_3[1].type
+	curType = curType or model:getFirstType() or typeList[1].type
 
-	local var_13_6 = var_13_4 ~= nil and #RougeCollectionListModel.instance:getList() > 0
+	local showTitle = curType ~= nil and #RougeCollectionListModel.instance:getList() > 0
 
-	gohelper.setActive(arg_13_0._gosmalltitle, var_13_6)
+	gohelper.setActive(self._gosmalltitle, showTitle)
 
-	if var_13_6 then
-		local var_13_7 = RougeCollectionConfig.instance:getTagConfig(var_13_4)
+	if showTitle then
+		local tagConfig = RougeCollectionConfig.instance:getTagConfig(curType)
 
-		if not var_13_7 then
+		if not tagConfig then
 			return
 		end
 
-		arg_13_0._txtTitle.text = var_13_7.name
+		self._txtTitle.text = tagConfig.name
 
-		UISpriteSetMgr.instance:setRougeSprite(arg_13_0._imageicon, var_13_7.iconUrl)
+		UISpriteSetMgr.instance:setRougeSprite(self._imageicon, tagConfig.iconUrl)
 	end
 end
 
-function var_0_0._setFilterSelected(arg_14_0, arg_14_1)
-	arg_14_0._isFilterSelected = arg_14_1
+function RougeCollectionListView:_setFilterSelected(value)
+	self._isFilterSelected = value
 
-	gohelper.setActive(arg_14_0._goSelectFilter, arg_14_1)
-	gohelper.setActive(arg_14_0._goUnselectFilter, not arg_14_1)
+	gohelper.setActive(self._goSelectFilter, value)
+	gohelper.setActive(self._goUnselectFilter, not value)
 end
 
-function var_0_0._setAllSelected(arg_15_0, arg_15_1)
-	arg_15_0._isAllSelected = arg_15_1
+function RougeCollectionListView:_setAllSelected(value)
+	self._isAllSelected = value
 
-	gohelper.setActive(arg_15_0._goSelectLayout, arg_15_1)
-	gohelper.setActive(arg_15_0._goUnselectLayout, not arg_15_1)
+	gohelper.setActive(self._goSelectLayout, value)
+	gohelper.setActive(self._goUnselectLayout, not value)
 end
 
-function var_0_0._onClickCollectionListItem(arg_16_0)
-	arg_16_0._rightAnimator:Play("switch", 0, 0)
-	TaskDispatcher.cancelTask(arg_16_0._refreshSelectCollectionInfo, arg_16_0)
-	TaskDispatcher.runDelay(arg_16_0._refreshSelectCollectionInfo, arg_16_0, RougeEnum.CollectionListViewDelayTime)
+function RougeCollectionListView:_onClickCollectionListItem()
+	self._rightAnimator:Play("switch", 0, 0)
+	TaskDispatcher.cancelTask(self._refreshSelectCollectionInfo, self)
+	TaskDispatcher.runDelay(self._refreshSelectCollectionInfo, self, RougeEnum.CollectionListViewDelayTime)
 end
 
-function var_0_0._refreshSelectCollectionInfo(arg_17_0)
-	local var_17_0 = RougeCollectionListModel.instance:getSelectedConfig()
+function RougeCollectionListView:_refreshSelectCollectionInfo()
+	local selectedConfig = RougeCollectionListModel.instance:getSelectedConfig()
 
-	if not var_17_0 then
+	if not selectedConfig then
 		return
 	end
 
-	local var_17_1 = var_17_0.id
-	local var_17_2 = RougeCollectionConfig.instance:getCollectionCfg(var_17_1)
+	local productId = selectedConfig.id
+	local productCfg = RougeCollectionConfig.instance:getCollectionCfg(productId)
 
-	if not var_17_2 then
+	if not productCfg then
 		return
 	end
 
-	local var_17_3 = RougeFavoriteModel.instance:collectionIsUnlock(var_17_2.id)
-	local var_17_4 = RougeOutsideModel.instance:collectionIsPass(var_17_2.id)
-	local var_17_5 = var_17_3 and var_17_4
-	local var_17_6 = not var_17_3
-	local var_17_7 = var_17_3 and not var_17_4
+	local isUnlock = RougeFavoriteModel.instance:collectionIsUnlock(productCfg.id)
+	local isPass = RougeOutsideModel.instance:collectionIsPass(productCfg.id)
+	local showNormal = isUnlock and isPass
+	local showLocked = not isUnlock
+	local showUnget = isUnlock and not isPass
 
-	gohelper.setActive(arg_17_0._gonormal, var_17_5)
-	gohelper.setActive(arg_17_0._golocked, var_17_6)
-	gohelper.setActive(arg_17_0._gounget, var_17_7)
+	gohelper.setActive(self._gonormal, showNormal)
+	gohelper.setActive(self._golocked, showLocked)
+	gohelper.setActive(self._gounget, showUnget)
 
-	local var_17_8 = arg_17_0.viewContainer:getDropDownView():getHoleMoList()
+	local dropDownView = self.viewContainer:getDropDownView()
+	local holeList = dropDownView:getHoleMoList()
 
-	tabletool.clear(arg_17_0._enchantList)
+	tabletool.clear(self._enchantList)
 
-	for iter_17_0, iter_17_1 in pairs(var_17_8) do
-		table.insert(arg_17_0._enchantList, iter_17_1.id)
+	for k, v in pairs(holeList) do
+		table.insert(self._enchantList, v.id)
 	end
 
-	if var_17_5 then
-		gohelper.setActive(arg_17_0._gonormalcancomposit, RougeCollectionConfig.instance:canSynthesized(var_17_2.id))
+	if showNormal then
+		gohelper.setActive(self._gonormalcancomposit, RougeCollectionConfig.instance:canSynthesized(productCfg.id))
 
-		arg_17_0._txtcollectionname1.text = RougeCollectionConfig.instance:getCollectionName(var_17_1, arg_17_0._enchantList)
+		self._txtcollectionname1.text = RougeCollectionConfig.instance:getCollectionName(productId, self._enchantList)
 
-		arg_17_0._simageicon1:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_17_1))
-		RougeCollectionHelper.loadCollectionAndEnchantTags(var_17_1, arg_17_0._enchantList, arg_17_0._gobasetags1, arg_17_0._gobasetagitem1)
-		RougeCollectionHelper.loadCollectionAndEnchantTagNames(var_17_1, arg_17_0._enchantList, arg_17_0._gotips1, arg_17_0._txttagitem1.gameObject, RougeCollectionHelper._loadCollectionTagNameCallBack)
+		self._simageicon1:LoadImage(RougeCollectionHelper.getCollectionIconUrl(productId))
+		RougeCollectionHelper.loadCollectionAndEnchantTags(productId, self._enchantList, self._gobasetags1, self._gobasetagitem1)
+		RougeCollectionHelper.loadCollectionAndEnchantTagNames(productId, self._enchantList, self._gotips1, self._txttagitem1.gameObject, RougeCollectionHelper._loadCollectionTagNameCallBack)
 	end
 
-	if var_17_6 then
-		arg_17_0._txtlockedName.text = luaLang("p_rougecollectionchessview_txt_locked")
+	if showLocked then
+		self._txtlockedName.text = luaLang("p_rougecollectionchessview_txt_locked")
 
-		local var_17_9 = lua_rouge_collection_unlock.configDict[var_17_1]
+		local unLockConfig = lua_rouge_collection_unlock.configDict[productId]
 
-		if var_17_9 then
-			arg_17_0._txtlocked.text = RougeMapUnlockHelper.getLockTips(var_17_9.unlockType, var_17_9.unlockParam)
+		if unLockConfig then
+			self._txtlocked.text = RougeMapUnlockHelper.getLockTips(unLockConfig.unlockType, unLockConfig.unlockParam)
 		else
-			logError("缺少造物解锁条件配置:" .. tostring(var_17_1))
+			logError("缺少造物解锁条件配置:" .. tostring(productId))
 		end
 	end
 
-	if var_17_7 then
-		gohelper.setActive(arg_17_0._goungetcancomposit, RougeCollectionConfig.instance:canSynthesized(var_17_2.id))
+	if showUnget then
+		gohelper.setActive(self._goungetcancomposit, RougeCollectionConfig.instance:canSynthesized(productCfg.id))
 
-		arg_17_0._txtcollectionname2.text = RougeCollectionConfig.instance:getCollectionName(var_17_1, arg_17_0._enchantList)
+		self._txtcollectionname2.text = RougeCollectionConfig.instance:getCollectionName(productId, self._enchantList)
 
-		arg_17_0._simageicon2:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_17_1))
-		RougeCollectionHelper.loadCollectionAndEnchantTags(var_17_1, arg_17_0._enchantList, arg_17_0._gobasetags2, arg_17_0._gobasetagitem2)
-		RougeCollectionHelper.loadCollectionAndEnchantTagNames(var_17_1, arg_17_0._enchantList, arg_17_0._gotips2, arg_17_0._txttagitem2.gameObject, RougeCollectionHelper._loadCollectionTagNameCallBack)
+		self._simageicon2:LoadImage(RougeCollectionHelper.getCollectionIconUrl(productId))
+		RougeCollectionHelper.loadCollectionAndEnchantTags(productId, self._enchantList, self._gobasetags2, self._gobasetagitem2)
+		RougeCollectionHelper.loadCollectionAndEnchantTagNames(productId, self._enchantList, self._gotips2, self._txttagitem2.gameObject, RougeCollectionHelper._loadCollectionTagNameCallBack)
 	end
 
-	arg_17_0._productId = var_17_1
+	self._productId = productId
 
-	RougeCollectionDescHelper.setCollectionDescInfos2(var_17_1, arg_17_0._enchantList, arg_17_0._godescContent, arg_17_0._itemInstTab)
-	RougeCollectionHelper.loadShapeGrid(var_17_1, arg_17_0._goshapecell1, arg_17_0._goshapecell1Icon, arg_17_0._cellModelTab, false)
+	RougeCollectionDescHelper.setCollectionDescInfos2(productId, self._enchantList, self._godescContent, self._itemInstTab)
+	RougeCollectionHelper.loadShapeGrid(productId, self._goshapecell1, self._goshapecell1Icon, self._cellModelTab, false)
 end
 
-function var_0_0._onSwitchCollectionInfoType(arg_18_0)
-	RougeCollectionDescHelper.setCollectionDescInfos2(arg_18_0._productId, arg_18_0._enchantList, arg_18_0._godescContent, arg_18_0._itemInstTab)
+function RougeCollectionListView:_onSwitchCollectionInfoType()
+	RougeCollectionDescHelper.setCollectionDescInfos2(self._productId, self._enchantList, self._godescContent, self._itemInstTab)
 end
 
-function var_0_0.onOpen(arg_19_0)
-	arg_19_0._aniamtor:Play("open", 0, 0)
+function RougeCollectionListView:onOpen()
+	self._aniamtor:Play("open", 0, 0)
 end
 
-function var_0_0.onClose(arg_20_0)
+function RougeCollectionListView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	arg_21_0._scrollcollection:RemoveOnValueChanged()
-	arg_21_0._dropherogroup:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(arg_21_0._checkDropArrow, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._refreshSelectCollectionInfo, arg_21_0)
+function RougeCollectionListView:onDestroyView()
+	self._scrollcollection:RemoveOnValueChanged()
+	self._dropherogroup:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(self._checkDropArrow, self)
+	TaskDispatcher.cancelTask(self._refreshSelectCollectionInfo, self)
 end
 
-return var_0_0
+return RougeCollectionListView

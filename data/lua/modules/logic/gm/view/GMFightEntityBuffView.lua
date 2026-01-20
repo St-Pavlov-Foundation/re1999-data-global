@@ -1,171 +1,174 @@
-﻿module("modules.logic.gm.view.GMFightEntityBuffView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightEntityBuffView.lua
 
-local var_0_0 = class("GMFightEntityBuffView", BaseView)
+module("modules.logic.gm.view.GMFightEntityBuffView", package.seeall)
 
-var_0_0.ClickSearchItem = "ClickSearchItem"
+local GMFightEntityBuffView = class("GMFightEntityBuffView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "buff")
+GMFightEntityBuffView.ClickSearchItem = "ClickSearchItem"
 
-	gohelper.setActive(var_1_0, true)
+function GMFightEntityBuffView:onInitView()
+	local buff = gohelper.findChild(self.viewGO, "buff")
 
-	arg_1_0._maskGO = gohelper.findChild(arg_1_0.viewGO, "buff/searchList")
-	arg_1_0._scrollTr = gohelper.findChild(arg_1_0.viewGO, "buff/searchList/scroll").transform
-	arg_1_0._input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "buff/add/input")
-	arg_1_0._btnAdd = gohelper.findChildButton(arg_1_0.viewGO, "buff/add/btnAdd")
+	gohelper.setActive(buff, true)
+
+	self._maskGO = gohelper.findChild(self.viewGO, "buff/searchList")
+	self._scrollTr = gohelper.findChild(self.viewGO, "buff/searchList/scroll").transform
+	self._input = gohelper.findChildTextMeshInputField(self.viewGO, "buff/add/input")
+	self._btnAdd = gohelper.findChildButton(self.viewGO, "buff/add/btnAdd")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnAdd:AddClickListener(arg_2_0._onClickAddBuff, arg_2_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_2_0._input.gameObject):AddClickListener(arg_2_0._onClickInpItem, arg_2_0, nil)
-	SLFramework.UGUI.UIClickListener.Get(arg_2_0._maskGO):AddClickListener(arg_2_0._onClickMask, arg_2_0, nil)
-	arg_2_0._input:AddOnValueChanged(arg_2_0._onInpValueChanged, arg_2_0)
-	GMController.instance:registerCallback(var_0_0.ClickSearchItem, arg_2_0._onClickItem, arg_2_0)
+function GMFightEntityBuffView:addEvents()
+	self._btnAdd:AddClickListener(self._onClickAddBuff, self)
+	SLFramework.UGUI.UIClickListener.Get(self._input.gameObject):AddClickListener(self._onClickInpItem, self, nil)
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):AddClickListener(self._onClickMask, self, nil)
+	self._input:AddOnValueChanged(self._onInpValueChanged, self)
+	GMController.instance:registerCallback(GMFightEntityBuffView.ClickSearchItem, self._onClickItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnAdd:RemoveClickListener()
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._input.gameObject):RemoveClickListener()
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._maskGO):RemoveClickListener()
-	arg_3_0._input:RemoveOnValueChanged()
-	GMController.instance:unregisterCallback(var_0_0.ClickSearchItem, arg_3_0._onClickItem, arg_3_0)
+function GMFightEntityBuffView:removeEvents()
+	self._btnAdd:RemoveClickListener()
+	SLFramework.UGUI.UIClickListener.Get(self._input.gameObject):RemoveClickListener()
+	SLFramework.UGUI.UIClickListener.Get(self._maskGO):RemoveClickListener()
+	self._input:RemoveOnValueChanged()
+	GMController.instance:unregisterCallback(GMFightEntityBuffView.ClickSearchItem, self._onClickItem, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_hideScroll()
-	arg_4_0._input:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMEntityBuffSearch, ""))
+function GMFightEntityBuffView:onOpen()
+	self:_hideScroll()
+	self._input:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMEntityBuffSearch, ""))
 end
 
-function var_0_0._onClickAddBuff(arg_5_0)
-	local var_5_0 = tonumber(arg_5_0._input:GetText())
+function GMFightEntityBuffView:_onClickAddBuff()
+	local buffId = tonumber(self._input:GetText())
+	local buffCO = buffId and lua_skill_buff.configDict[buffId]
 
-	if var_5_0 and lua_skill_buff.configDict[var_5_0] then
-		PlayerPrefsHelper.setString(PlayerPrefsKey.GMEntityBuffSearch, tostring(var_5_0))
-		GameFacade.showToast(ToastEnum.IconId, "add buff " .. var_5_0)
+	if buffCO then
+		PlayerPrefsHelper.setString(PlayerPrefsKey.GMEntityBuffSearch, tostring(buffId))
+		GameFacade.showToast(ToastEnum.IconId, "add buff " .. buffId)
 
-		local var_5_1 = GMFightEntityModel.instance.entityMO
+		local entityMO = GMFightEntityModel.instance.entityMO
 
-		GMRpc.instance:sendGMRequest(string.format("fightAddBuff %s %s", tostring(var_5_1.id), tostring(var_5_0)))
+		GMRpc.instance:sendGMRequest(string.format("fightAddBuff %s %s", tostring(entityMO.id), tostring(buffId)))
 
-		arg_5_0._oldBuffUidDict = {}
+		self._oldBuffUidDict = {}
 
-		for iter_5_0, iter_5_1 in ipairs(var_5_1:getBuffList()) do
-			arg_5_0._oldBuffUidDict[iter_5_1.id] = true
+		for _, buffMO in ipairs(entityMO:getBuffList()) do
+			self._oldBuffUidDict[buffMO.id] = true
 		end
 
-		FightRpc.instance:sendEntityInfoRequest(var_5_1.id)
-		arg_5_0:addEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, arg_5_0._onGetEntityInfo, arg_5_0)
+		FightRpc.instance:sendEntityInfoRequest(entityMO.id)
+		self:addEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, self._onGetEntityInfo, self)
 	else
-		GameFacade.showToast(ToastEnum.IconId, "buff not exist " .. arg_5_0._input:GetText())
+		GameFacade.showToast(ToastEnum.IconId, "buff not exist " .. self._input:GetText())
 	end
 end
 
-function var_0_0._onGetEntityInfo(arg_6_0, arg_6_1)
-	arg_6_0:removeEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, arg_6_0._onGetEntityInfo, arg_6_0)
+function GMFightEntityBuffView:_onGetEntityInfo(msg)
+	self:removeEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, self._onGetEntityInfo, self)
 
-	local var_6_0 = GMFightEntityModel.instance.entityMO
+	local entityMO = GMFightEntityModel.instance.entityMO
 
-	if not var_6_0 then
+	if not entityMO then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0:getBuffList()) do
-		if not arg_6_0._oldBuffUidDict[iter_6_1.id] then
-			logError("add buff " .. iter_6_1.buffId)
+	for _, buffMO in ipairs(entityMO:getBuffList()) do
+		if not self._oldBuffUidDict[buffMO.id] then
+			logError("add buff " .. buffMO.buffId)
 
-			local var_6_1 = FightHelper.getEntity(var_6_0.id)
+			local entity = FightHelper.getEntity(entityMO.id)
 
-			if var_6_1 and var_6_1.buff then
-				FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_6_0.id, FightEnum.EffectType.BUFFADD, iter_6_1.buffId, iter_6_1.uid, 0)
+			if entity and entity.buff then
+				FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFADD, buffMO.buffId, buffMO.uid, 0, buffMO)
 			end
 		else
-			FightController.instance:dispatchEvent(FightEvent.GMForceRefreshNameUIBuff, var_6_0.id)
+			FightController.instance:dispatchEvent(FightEvent.GMForceRefreshNameUIBuff, entityMO.id)
 		end
 	end
 end
 
-function var_0_0._onClickInpItem(arg_7_0)
-	arg_7_0:_showScroll()
+function GMFightEntityBuffView:_onClickInpItem()
+	self:_showScroll()
 end
 
-function var_0_0._onClickMask(arg_8_0)
-	arg_8_0:_hideScroll()
+function GMFightEntityBuffView:_onClickMask()
+	self:_hideScroll()
 end
 
-function var_0_0._showScroll(arg_9_0)
-	gohelper.setActive(arg_9_0._maskGO, true)
-	arg_9_0:_checkBuildItems()
+function GMFightEntityBuffView:_showScroll()
+	gohelper.setActive(self._maskGO, true)
+	self:_checkBuildItems()
 end
 
-function var_0_0._hideScroll(arg_10_0)
-	gohelper.setActive(arg_10_0._maskGO, false)
+function GMFightEntityBuffView:_hideScroll()
+	gohelper.setActive(self._maskGO, false)
 end
 
-function var_0_0._onClickItem(arg_11_0, arg_11_1)
-	arg_11_0._input:SetText(arg_11_1.buffId)
-	arg_11_0:_hideScroll()
+function GMFightEntityBuffView:_onClickItem(mo)
+	self._input:SetText(mo.buffId)
+	self:_hideScroll()
 end
 
-function var_0_0._onInpValueChanged(arg_12_0, arg_12_1)
-	arg_12_0:_checkBuildItems()
+function GMFightEntityBuffView:_onInpValueChanged(inputStr)
+	self:_checkBuildItems()
 end
 
-function var_0_0._checkBuildItems(arg_13_0)
-	if not arg_13_0._searchScrollView then
-		local var_13_0 = ListScrollParam.New()
+function GMFightEntityBuffView:_checkBuildItems()
+	if not self._searchScrollView then
+		local buffSearchListParam = ListScrollParam.New()
 
-		var_13_0.scrollGOPath = "buff/searchList/scroll"
-		var_13_0.prefabType = ScrollEnum.ScrollPrefabFromView
-		var_13_0.prefabUrl = "buff/searchList/scroll/item"
-		var_13_0.cellClass = GMFightEntityBuffSearchItem
-		var_13_0.scrollDir = ScrollEnum.ScrollDirV
-		var_13_0.lineCount = 1
-		var_13_0.cellWidth = 450
-		var_13_0.cellHeight = 50
-		var_13_0.cellSpaceH = 0
-		var_13_0.cellSpaceV = 0
-		arg_13_0._searchScrollModel = ListScrollModel.New()
-		arg_13_0._searchScrollView = LuaListScrollView.New(arg_13_0._searchScrollModel, var_13_0)
+		buffSearchListParam.scrollGOPath = "buff/searchList/scroll"
+		buffSearchListParam.prefabType = ScrollEnum.ScrollPrefabFromView
+		buffSearchListParam.prefabUrl = "buff/searchList/scroll/item"
+		buffSearchListParam.cellClass = GMFightEntityBuffSearchItem
+		buffSearchListParam.scrollDir = ScrollEnum.ScrollDirV
+		buffSearchListParam.lineCount = 1
+		buffSearchListParam.cellWidth = 450
+		buffSearchListParam.cellHeight = 50
+		buffSearchListParam.cellSpaceH = 0
+		buffSearchListParam.cellSpaceV = 0
+		self._searchScrollModel = ListScrollModel.New()
+		self._searchScrollView = LuaListScrollView.New(self._searchScrollModel, buffSearchListParam)
 
-		arg_13_0:addChildView(arg_13_0._searchScrollView)
+		self:addChildView(self._searchScrollView)
 
-		arg_13_0._buffList = {}
+		self._buffList = {}
 
-		for iter_13_0, iter_13_1 in ipairs(lua_skill_buff.configList) do
-			local var_13_1 = {
-				buffId = tostring(iter_13_1.id),
-				name = iter_13_1.name
+		for _, buffCO in ipairs(lua_skill_buff.configList) do
+			local mo = {
+				buffId = tostring(buffCO.id),
+				name = buffCO.name
 			}
 
-			table.insert(arg_13_0._buffList, var_13_1)
+			table.insert(self._buffList, mo)
 		end
 	end
 
-	local var_13_2
-	local var_13_3 = arg_13_0._input:GetText()
+	local targetList
+	local input = self._input:GetText()
 
-	if string.nilorempty(var_13_3) then
-		var_13_2 = arg_13_0._buffList
+	if string.nilorempty(input) then
+		targetList = self._buffList
 	else
-		if arg_13_0._tempList then
-			tabletool.clear(arg_13_0._tempList)
+		if self._tempList then
+			tabletool.clear(self._tempList)
 		else
-			arg_13_0._tempList = {}
+			self._tempList = {}
 		end
 
-		for iter_13_2, iter_13_3 in ipairs(arg_13_0._buffList) do
-			if string.find(iter_13_3.name, var_13_3) or string.find(iter_13_3.buffId, var_13_3) == 1 then
-				table.insert(arg_13_0._tempList, iter_13_3)
+		for _, mo in ipairs(self._buffList) do
+			if string.find(mo.name, input) or string.find(mo.buffId, input) == 1 then
+				table.insert(self._tempList, mo)
 			end
 		end
 
-		var_13_2 = arg_13_0._tempList
+		targetList = self._tempList
 	end
 
-	local var_13_4 = Mathf.Clamp(#var_13_2, 1, 10)
+	local count = Mathf.Clamp(#targetList, 1, 10)
 
-	recthelper.setHeight(arg_13_0._scrollTr, var_13_4 * 50)
-	arg_13_0._searchScrollModel:setList(var_13_2)
+	recthelper.setHeight(self._scrollTr, count * 50)
+	self._searchScrollModel:setList(targetList)
 end
 
-return var_0_0
+return GMFightEntityBuffView

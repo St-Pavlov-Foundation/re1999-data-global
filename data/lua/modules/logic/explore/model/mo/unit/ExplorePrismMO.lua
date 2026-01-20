@@ -1,13 +1,15 @@
-﻿module("modules.logic.explore.model.mo.unit.ExplorePrismMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExplorePrismMO.lua
 
-local var_0_0 = class("ExplorePrismMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExplorePrismMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0.fixItemId = tonumber(arg_1_0.specialDatas[1])
+local ExplorePrismMO = class("ExplorePrismMO", ExploreBaseUnitMO)
+
+function ExplorePrismMO:initTypeData()
+	self.fixItemId = tonumber(self.specialDatas[1])
 end
 
-function var_0_0.getUnitClass(arg_2_0)
+function ExplorePrismMO:getUnitClass()
 	return ExplorePrismUnit
 end
 
-return var_0_0
+return ExplorePrismMO

@@ -1,122 +1,127 @@
-﻿module("modules.logic.versionactivity3_1.towerdeep.controller.work.TowerDeepOperActPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/towerdeep/controller/work/TowerDeepOperActPatFaceWork.lua
 
-local var_0_0 = class("TowerDeepOperActPatFaceWork", PatFaceWorkBase)
+module("modules.logic.versionactivity3_1.towerdeep.controller.work.TowerDeepOperActPatFaceWork", package.seeall)
 
-function var_0_0._viewName(arg_1_0)
-	return PatFaceConfig.instance:getPatFaceViewName(arg_1_0._patFaceId)
+local TowerDeepOperActPatFaceWork = class("TowerDeepOperActPatFaceWork", PatFaceWorkBase)
+
+function TowerDeepOperActPatFaceWork:_viewName()
+	return PatFaceConfig.instance:getPatFaceViewName(self._patFaceId)
 end
 
-function var_0_0._actId(arg_2_0)
-	return PatFaceConfig.instance:getPatFaceActivityId(arg_2_0._patFaceId)
+function TowerDeepOperActPatFaceWork:_actId()
+	return PatFaceConfig.instance:getPatFaceActivityId(self._patFaceId)
 end
 
-function var_0_0.checkCanPat(arg_3_0)
-	local var_3_0 = arg_3_0:_actId()
+function TowerDeepOperActPatFaceWork:checkCanPat()
+	local actId = self:_actId()
 
-	if not ActivityModel.instance:isActOnLine(var_3_0) then
+	if not ActivityModel.instance:isActOnLine(actId) then
 		return false
 	end
 
-	local var_3_1 = ActivityModel.instance:getActMO(var_3_0)
+	local activityInfoMo = ActivityModel.instance:getActMO(actId)
 
-	if not var_3_1 or not var_3_1:isOpen() or var_3_1:isExpired() then
+	if not activityInfoMo or not activityInfoMo:isOpen() or activityInfoMo:isExpired() then
 		return false
 	end
 
-	local var_3_2 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.TowerDeepActPat)
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.TowerDeepActPat)
+	local hasPat = PlayerPrefsHelper.getNumber(key, 0)
 
-	if PlayerPrefsHelper.getNumber(var_3_2, 0) ~= 0 then
+	if hasPat ~= 0 then
 		return false
 	end
 
-	PlayerPrefsHelper.setNumber(var_3_2, 1)
+	PlayerPrefsHelper.setNumber(key, 1)
 
 	return true
 end
 
-function var_0_0.startPat(arg_4_0)
-	arg_4_0:_startBlock()
+function TowerDeepOperActPatFaceWork:startPat()
+	self:_startBlock()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.TowerDeep
-	}, arg_4_0._onGetTaskInfo, arg_4_0)
+	}, self._onGetTaskInfo, self)
 end
 
-function var_0_0._onGetTaskInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_0:_actId()
+function TowerDeepOperActPatFaceWork:_onGetTaskInfo(cmd, resultCode, msg)
+	local actId = self:_actId()
 
-	Activity209Rpc.instance:sendGetAct209InfoRequest(var_5_0, arg_5_0._onGetInfoFinish, arg_5_0)
+	Activity209Rpc.instance:sendGetAct209InfoRequest(actId, self._onGetInfoFinish, self)
 end
 
-function var_0_0._onGetInfoFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0:_endBlock()
+function TowerDeepOperActPatFaceWork:_onGetInfoFinish(cmd, resultCode, msg)
+	self:_endBlock()
 
-	if arg_6_2 == 0 then
-		arg_6_0:_openPanelView()
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_6_0._onCloseViewFinish, arg_6_0)
+	if resultCode == 0 then
+		self:_openPanelView()
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 
 		return
 	end
 
-	arg_6_0:patComplete()
+	self:patComplete()
 end
 
-function var_0_0.clearWork(arg_7_0)
-	arg_7_0:_endBlock()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_7_0._onCloseViewFinish, arg_7_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_7_0.OnGetReward, arg_7_0)
+function TowerDeepOperActPatFaceWork:clearWork()
+	self:_endBlock()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.OnGetReward, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_8_0, arg_8_1)
-	if arg_8_1 ~= arg_8_0:_viewName() then
+function TowerDeepOperActPatFaceWork:_onOpenViewFinish(openingViewName)
+	local viewName = self:_viewName()
+
+	if openingViewName ~= viewName then
 		return
 	end
 
-	arg_8_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_0._onCloseViewFinish(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:_viewName()
+function TowerDeepOperActPatFaceWork:_onCloseViewFinish(closingViewName)
+	local viewName = self:_viewName()
 
-	if arg_9_1 ~= var_9_0 then
+	if closingViewName ~= viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(var_9_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	arg_9_0:patComplete()
+	self:patComplete()
 end
 
-function var_0_0._openPanelView(arg_10_0)
-	local var_10_0 = arg_10_0:_actId()
-	local var_10_1 = arg_10_0:_viewName()
-	local var_10_2 = {
-		actId = var_10_0
+function TowerDeepOperActPatFaceWork:_openPanelView()
+	local actId = self:_actId()
+	local viewName = self:_viewName()
+	local viewParam = {
+		actId = actId
 	}
 
-	ViewMgr.instance:openView(var_10_1, var_10_2)
+	ViewMgr.instance:openView(viewName, viewParam)
 end
 
-function var_0_0._endBlock(arg_11_0)
-	if not arg_11_0:_isBlock() then
+function TowerDeepOperActPatFaceWork:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_12_0)
-	if arg_12_0:_isBlock() then
+function TowerDeepOperActPatFaceWork:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_13_0)
+function TowerDeepOperActPatFaceWork:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-return var_0_0
+return TowerDeepOperActPatFaceWork

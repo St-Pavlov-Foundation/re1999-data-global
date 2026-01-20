@@ -406,7 +406,7 @@
   },
   {
     "id": 311101,
-    "effect": "Drawables/bone/effect-Bone/roleeffect_flsd_kaiji1/root|Drawables/bone2/effect-Bone/roleeffect_flsd_xiangzhi2/root",
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_flsd_xiangzhi2/root",
     "scale": 1.0,
     "changeVisible": 0,
     "delayVisible": 0,
@@ -415,7 +415,7 @@
   },
   {
     "id": 311102,
-    "effect": "Drawables/bone/effect-Bone/roleeffect_flsd_kaiji1/root|Drawables/bone2/effect-Bone/roleeffect_flsd_xiangzhi2/root",
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_flsd_xiangzhi2/root",
     "scale": 1.0,
     "changeVisible": 0,
     "delayVisible": 0,

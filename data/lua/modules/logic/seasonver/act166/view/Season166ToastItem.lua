@@ -1,71 +1,73 @@
-﻿module("modules.logic.seasonver.act166.view.Season166ToastItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166ToastItem.lua
 
-local var_0_0 = class("Season166ToastItem", UserDataDispose)
+module("modules.logic.seasonver.act166.view.Season166ToastItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local Season166ToastItem = class("Season166ToastItem", UserDataDispose)
 
-	arg_1_0._toastItem = arg_1_1
-	arg_1_0._toastParams = arg_1_2
-	arg_1_0._rootGO = arg_1_0._toastItem:getToastRootByType(ToastItem.ToastType.Season166)
+function Season166ToastItem:init(toastItem, toastParams)
+	self:__onInit()
 
-	arg_1_0:_onUpdate()
+	self._toastItem = toastItem
+	self._toastParams = toastParams
+	self._rootGO = self._toastItem:getToastRootByType(ToastItem.ToastType.Season166)
+
+	self:_onUpdate()
 end
 
-var_0_0.ToastGOName = "Season166ToastItem"
+Season166ToastItem.ToastGOName = "Season166ToastItem"
 
-function var_0_0._onUpdate(arg_2_0)
-	arg_2_0.viewGO = gohelper.findChild(arg_2_0._rootGO, var_0_0.ToastGOName)
+function Season166ToastItem:_onUpdate()
+	self.viewGO = gohelper.findChild(self._rootGO, Season166ToastItem.ToastGOName)
 
-	if not arg_2_0.viewGO then
-		local var_2_0 = Season166Controller.instance:tryGetToastAsset(arg_2_0._onToastLoadedCallBack, arg_2_0)
+	if not self.viewGO then
+		local toastPrefab = Season166Controller.instance:tryGetToastAsset(self._onToastLoadedCallBack, self)
 
-		if var_2_0 then
-			arg_2_0.viewGO = gohelper.clone(var_2_0, arg_2_0._rootGO, var_0_0.ToastGOName)
+		if toastPrefab then
+			self.viewGO = gohelper.clone(toastPrefab, self._rootGO, Season166ToastItem.ToastGOName)
 		end
 	end
 
-	if arg_2_0.viewGO then
-		arg_2_0:initComponents()
-		arg_2_0:refreshUI()
+	if self.viewGO then
+		self:initComponents()
+		self:refreshUI()
 	end
 end
 
-function var_0_0._onToastLoadedCallBack(arg_3_0, arg_3_1)
-	arg_3_0:_onUpdate()
+function Season166ToastItem:_onToastLoadedCallBack(loader)
+	self:_onUpdate()
 end
 
-function var_0_0.initComponents(arg_4_0)
-	if arg_4_0.viewGO then
-		arg_4_0._txtToast = gohelper.findChildText(arg_4_0.viewGO, "#go_tips/txt_tips")
-		arg_4_0._imageIcon = gohelper.findChildImage(arg_4_0.viewGO, "#go_tips/icon")
+function Season166ToastItem:initComponents()
+	if self.viewGO then
+		self._txtToast = gohelper.findChildText(self.viewGO, "#go_tips/txt_tips")
+		self._imageIcon = gohelper.findChildImage(self.viewGO, "#go_tips/icon")
 	end
 end
 
-function var_0_0.refreshUI(arg_5_0)
-	arg_5_0._txtToast.text = tostring(arg_5_0._toastParams.toastTip)
+function Season166ToastItem:refreshUI()
+	self._txtToast.text = tostring(self._toastParams.toastTip)
 
-	local var_5_0 = arg_5_0._toastParams.icon or 2
+	local icon = self._toastParams.icon or 2
 
-	UISpriteSetMgr.instance:setSeason166Sprite(arg_5_0._imageIcon, string.format("season166_result_tipsicon%s", var_5_0))
-	arg_5_0._toastItem:setToastType(ToastItem.ToastType.Season166)
+	UISpriteSetMgr.instance:setSeason166Sprite(self._imageIcon, string.format("season166_result_tipsicon%s", icon))
+	self._toastItem:setToastType(ToastItem.ToastType.Season166)
 end
 
-function var_0_0.dispose(arg_6_0)
-	if arg_6_0._toastLoader then
-		arg_6_0._toastLoader:dispose()
+function Season166ToastItem:dispose()
+	if self._toastLoader then
+		self._toastLoader:dispose()
 
-		arg_6_0._toastLoader = nil
+		self._toastLoader = nil
 	end
 
-	if arg_6_0._simageAssessIcon then
-		arg_6_0._simageAssessIcon:UnLoadImage()
+	if self._simageAssessIcon then
+		self._simageAssessIcon:UnLoadImage()
 	end
 
-	arg_6_0._toastItem = nil
-	arg_6_0._toastParams = nil
+	self._toastItem = nil
+	self._toastParams = nil
 
-	arg_6_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return Season166ToastItem

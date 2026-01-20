@@ -1,85 +1,88 @@
-﻿module("modules.logic.character.view.CharacterTalentChessFilterView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentChessFilterView.lua
 
-local var_0_0 = class("CharacterTalentChessFilterView", BaseView)
+module("modules.logic.character.view.CharacterTalentChessFilterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closefilterview")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "container/Scroll View/Viewport/Content/#go_item")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "container/Scroll View/Viewport/Content/#go_item/#go_select")
-	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "container/Scroll View/Viewport/Content/#go_item/#go_locked")
-	arg_1_0._txtstylename = gohelper.findChildText(arg_1_0.viewGO, "container/Scroll View/Viewport/Content/#go_item/layout/#txt_stylename")
-	arg_1_0._gocareer = gohelper.findChild(arg_1_0.viewGO, "container/Scroll View/Viewport/Content/#go_item/layout/#go_career")
-	arg_1_0._txtlabel = gohelper.findChildText(arg_1_0.viewGO, "container/Scroll View/Viewport/Content/#go_item/layout/#go_career/#txt_label")
+local CharacterTalentChessFilterView = class("CharacterTalentChessFilterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterTalentChessFilterView:onInitView()
+	self._btnclosefilterview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closefilterview")
+	self._goitem = gohelper.findChild(self.viewGO, "container/Scroll View/Viewport/Content/#go_item")
+	self._goselect = gohelper.findChild(self.viewGO, "container/Scroll View/Viewport/Content/#go_item/#go_select")
+	self._golocked = gohelper.findChild(self.viewGO, "container/Scroll View/Viewport/Content/#go_item/#go_locked")
+	self._txtstylename = gohelper.findChildText(self.viewGO, "container/Scroll View/Viewport/Content/#go_item/layout/#txt_stylename")
+	self._gocareer = gohelper.findChild(self.viewGO, "container/Scroll View/Viewport/Content/#go_item/layout/#go_career")
+	self._txtlabel = gohelper.findChildText(self.viewGO, "container/Scroll View/Viewport/Content/#go_item/layout/#go_career/#txt_label")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclosefilterview:AddClickListener(arg_2_0._btnclosefilterviewOnClick, arg_2_0)
-	arg_2_0:_addEvents()
+function CharacterTalentChessFilterView:addEvents()
+	self._btnclosefilterview:AddClickListener(self._btnclosefilterviewOnClick, self)
+	self:_addEvents()
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclosefilterview:RemoveClickListener()
-	arg_3_0:_removeEvents()
+function CharacterTalentChessFilterView:removeEvents()
+	self._btnclosefilterview:RemoveClickListener()
+	self:_removeEvents()
 end
 
-function var_0_0._btnclosefilterviewOnClick(arg_4_0)
-	arg_4_0._animPlayer:Play("close", arg_4_0.closeThis, arg_4_0)
+function CharacterTalentChessFilterView:_btnclosefilterviewOnClick()
+	self._animPlayer:Play("close", self.closeThis, self)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._txtTitleCn = gohelper.findChildText(arg_5_0.viewGO, "container/title/dmgTypeCn")
-	arg_5_0._txtTitleEn = gohelper.findChildText(arg_5_0.viewGO, "container/title/dmgTypeCn/dmgTypeEn")
-	arg_5_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_5_0.viewGO)
+function CharacterTalentChessFilterView:_editableInitView()
+	self._txtTitleCn = gohelper.findChildText(self.viewGO, "container/title/dmgTypeCn")
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "container/title/dmgTypeCn/dmgTypeEn")
+	self._animPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function CharacterTalentChessFilterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._heroId = arg_7_0.viewParam.heroId
+function CharacterTalentChessFilterView:onOpen()
+	self._heroId = self.viewParam.heroId
 
-	local var_7_0 = HeroModel.instance:getByHeroId(arg_7_0._heroId):getTalentTxtByHeroType()
-	local var_7_1 = luaLang("talent_style_title_cn_" .. var_7_0)
-	local var_7_2 = luaLang("talent_style_title_en_" .. var_7_0)
+	local _heroMo = HeroModel.instance:getByHeroId(self._heroId)
+	local heroType = _heroMo:getTalentTxtByHeroType()
+	local titleCnStr = luaLang("talent_style_title_cn_" .. heroType)
+	local titleEnStr = luaLang("talent_style_title_en_" .. heroType)
 
-	arg_7_0._txtTitleCn.text = var_7_1
-	arg_7_0._txtTitleEn.text = var_7_2
+	self._txtTitleCn.text = titleCnStr
+	self._txtTitleEn.text = titleEnStr
 
-	TalentStyleModel.instance:openView(arg_7_0._heroId)
-	arg_7_0:_refreshVidew()
+	TalentStyleModel.instance:openView(self._heroId)
+	self:_refreshVidew()
 end
 
-function var_0_0.onClose(arg_8_0)
+function CharacterTalentChessFilterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function CharacterTalentChessFilterView:onDestroyView()
 	return
 end
 
-function var_0_0._addEvents(arg_10_0)
-	arg_10_0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_10_0._onUseTalentStyleReply, arg_10_0)
+function CharacterTalentChessFilterView:_addEvents()
+	self:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, self._onUseTalentStyleReply, self)
 end
 
-function var_0_0._removeEvents(arg_11_0)
-	arg_11_0:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_11_0._onUseTalentStyleReply, arg_11_0)
+function CharacterTalentChessFilterView:_removeEvents()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, self._onUseTalentStyleReply, self)
 end
 
-function var_0_0._onUseTalentStyleReply(arg_12_0, arg_12_1)
-	arg_12_0:_refreshVidew()
+function CharacterTalentChessFilterView:_onUseTalentStyleReply(msg)
+	self:_refreshVidew()
 end
 
-function var_0_0.onClickModalMask(arg_13_0, arg_13_1)
-	arg_13_0:closeThis()
+function CharacterTalentChessFilterView:onClickModalMask(msg)
+	self:closeThis()
 end
 
-function var_0_0._refreshVidew(arg_14_0)
-	TalentStyleListModel.instance:refreshData(arg_14_0._heroId)
+function CharacterTalentChessFilterView:_refreshVidew()
+	TalentStyleListModel.instance:refreshData(self._heroId)
 end
 
-return var_0_0
+return CharacterTalentChessFilterView

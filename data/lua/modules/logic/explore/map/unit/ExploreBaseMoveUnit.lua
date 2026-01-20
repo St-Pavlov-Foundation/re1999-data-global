@@ -1,308 +1,315 @@
-﻿module("modules.logic.explore.map.unit.ExploreBaseMoveUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreBaseMoveUnit.lua
 
-local var_0_0 = class("ExploreBaseMoveUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreBaseMoveUnit", package.seeall)
 
-function var_0_0.canMove(arg_1_0)
-	return arg_1_0.mo.isCanMove
+local ExploreBaseMoveUnit = class("ExploreBaseMoveUnit", ExploreBaseDisplayUnit)
+
+function ExploreBaseMoveUnit:canMove()
+	return self.mo.isCanMove
 end
 
-function var_0_0.isMoving(arg_2_0)
-	return arg_2_0._isMoving
+function ExploreBaseMoveUnit:isMoving()
+	return self._isMoving
 end
 
-function var_0_0.beginPick(arg_3_0)
+function ExploreBaseMoveUnit:beginPick()
 	return
 end
 
-function var_0_0.endPick(arg_4_0)
+function ExploreBaseMoveUnit:endPick()
 	return
 end
 
-function var_0_0.setMoveDir(arg_5_0, arg_5_1)
-	arg_5_0._moveDirKey = arg_5_1
+function ExploreBaseMoveUnit:setMoveDir(v)
+	self._moveDirKey = v
 
-	arg_5_0:tryMoveByDir()
+	self:tryMoveByDir()
 end
 
-function var_0_0.tryMoveByDir(arg_6_0)
-	if arg_6_0:checkUseMoveDir() and not arg_6_0._isMoving and ExploreModel.instance:isHeroInControl() and UIBlockMgr.instance:isBlock() ~= true and ZProj.TouchEventMgr.Fobidden ~= true then
-		local var_6_0 = ExploreHelper.getKey(arg_6_0.nodePos)
-		local var_6_1 = ExploreMapModel.instance:getNode(var_6_0).height
+function ExploreBaseMoveUnit:tryMoveByDir()
+	if self:checkUseMoveDir() and not self._isMoving and ExploreModel.instance:isHeroInControl() and UIBlockMgr.instance:isBlock() ~= true and ZProj.TouchEventMgr.Fobidden ~= true then
+		local nodeKey = ExploreHelper.getKey(self.nodePos)
+		local tempNode = ExploreMapModel.instance:getNode(nodeKey)
+		local startH = tempNode.height
 
-		arg_6_0:_updateRealMoveDir()
+		self:_updateRealMoveDir()
 
-		local var_6_2 = arg_6_0.nodePos + arg_6_0._realMoveDir
-		local var_6_3 = ExploreHelper.getKey(var_6_2)
-		local var_6_4 = ExploreMapModel.instance:getNode(var_6_3)
+		local tarPos = self.nodePos + self._realMoveDir
+		local nodeKey = ExploreHelper.getKey(tarPos)
 
-		if var_6_4 and var_6_4:isWalkable(var_6_1) then
-			arg_6_0:moveTo(var_6_2)
+		tempNode = ExploreMapModel.instance:getNode(nodeKey)
+
+		if tempNode and tempNode:isWalkable(startH) then
+			self:moveTo(tarPos)
 		else
-			arg_6_0:onCheckDir(arg_6_0.nodePos, var_6_2)
+			self:onCheckDir(self.nodePos, tarPos)
 		end
 	end
 end
 
-function var_0_0.moveTo(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0._tarUnitMO = nil
+function ExploreBaseMoveUnit:moveTo(pos, callback, callbackObj)
+	self._tarUnitMO = nil
 
-	arg_7_0:_startMove(arg_7_1, arg_7_2, arg_7_3)
+	self:_startMove(pos, callback, callbackObj)
 end
 
-function var_0_0.moveByPath(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
-	local var_8_0 = #arg_8_1
+function ExploreBaseMoveUnit:moveByPath(path, moveDir, lockDir, callback, callbackObj)
+	local pathLen = #path
 
-	if var_8_0 <= 0 then
-		if arg_8_4 then
-			arg_8_4(arg_8_5, arg_8_0.nodePos, arg_8_0.nodePos)
+	if pathLen <= 0 then
+		if callback then
+			callback(callbackObj, self.nodePos, self.nodePos)
 		end
 
 		return
 	end
 
-	arg_8_0._lockDir = arg_8_3
-	arg_8_0._moveDir = arg_8_2
+	self._lockDir = lockDir
+	self._moveDir = moveDir
 
-	if arg_8_2 then
-		arg_8_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, arg_8_2)
+	if moveDir then
+		self.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, moveDir)
 	end
 
-	arg_8_0._pathArray = arg_8_1
-	arg_8_0._walkDistance = var_8_0
-	arg_8_0._gotoCallback = arg_8_4
-	arg_8_0._gotoCallbackObj = arg_8_5
-	arg_8_0._endPos = arg_8_1[arg_8_0._walkDistance]
+	self._pathArray = path
+	self._walkDistance = pathLen
+	self._gotoCallback = callback
+	self._gotoCallbackObj = callbackObj
+	self._endPos = path[self._walkDistance]
 
-	arg_8_0:_startMove2()
-	arg_8_0:onStartMove()
+	self:_startMove2()
+	self:onStartMove()
 end
 
-function var_0_0.reStartMoving(arg_9_0)
-	if arg_9_0._isMoving then
-		arg_9_0:_startMove(arg_9_0._endPos, arg_9_0._gotoCallback, arg_9_0._gotoCallbackObj)
+function ExploreBaseMoveUnit:reStartMoving()
+	if self._isMoving then
+		self:_startMove(self._endPos, self._gotoCallback, self._gotoCallbackObj)
 	end
 end
 
-function var_0_0.getMoveDistance(arg_10_0)
-	if not arg_10_0._isMoving then
+function ExploreBaseMoveUnit:getMoveDistance()
+	if not self._isMoving then
 		return 0
 	end
 
-	return arg_10_0._walkDistance
+	return self._walkDistance
 end
 
-function var_0_0.getRunTotalTime(arg_11_0)
-	if arg_11_0._isMoving then
-		return arg_11_0._runTotalTime
+function ExploreBaseMoveUnit:getRunTotalTime()
+	if self._isMoving then
+		return self._runTotalTime
 	else
 		return 0
 	end
 end
 
-function var_0_0.stopMoving(arg_12_0, arg_12_1)
-	if not arg_12_0._isMoving then
+function ExploreBaseMoveUnit:stopMoving(force)
+	if not self._isMoving then
 		return
 	end
 
-	if not arg_12_1 then
-		local var_12_0 = arg_12_0._nextNodePos
-		local var_12_1 = ExploreHelper.getKey(var_12_0)
+	if not force then
+		local nextPos = self._nextNodePos
+		local key = ExploreHelper.getKey(nextPos)
+		local node = ExploreMapModel.instance:getNode(key)
 
-		if ExploreMapModel.instance:getNode(var_12_1).nodeType == ExploreEnum.NodeType.Ice then
+		if node.nodeType == ExploreEnum.NodeType.Ice then
 			return
 		end
 
-		arg_12_0._isStopMoving = true
+		self._isStopMoving = true
 
-		return var_12_0
+		return nextPos
 	end
 
-	arg_12_0._isMoving = false
+	self._isMoving = false
 
-	if arg_12_0._moveDir then
-		arg_12_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
+	if self._moveDir then
+		self.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
 	end
 
-	arg_12_0._moveDir = nil
-	arg_12_0._lockDir = nil
-	arg_12_0._nextWorldPos = nil
-	arg_12_0._nextNodePos = nil
-	arg_12_0._oldWorldPos = nil
+	self._moveDir = nil
+	self._lockDir = nil
+	self._nextWorldPos = nil
+	self._nextNodePos = nil
+	self._oldWorldPos = nil
 
-	arg_12_0:onEndMove()
+	self:onEndMove()
 
-	arg_12_0._walkDistance = 0
+	self._walkDistance = 0
 
-	if arg_12_0._tureDir then
-		arg_12_0:onDirChange(arg_12_0._tureDir)
+	if self._tureDir then
+		self:onDirChange(self._tureDir)
 
-		arg_12_0._tureDir = nil
+		self._tureDir = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_12_0.onMoveTick, arg_12_0)
+	TaskDispatcher.cancelTask(self.onMoveTick, self)
 end
 
-function var_0_0.onCheckDir(arg_13_0, arg_13_1, arg_13_2)
+function ExploreBaseMoveUnit:onCheckDir(oldTilemapPos, newTilemapPos)
 	return
 end
 
-function var_0_0.onCheckDirByPos(arg_14_0, arg_14_1, arg_14_2)
+function ExploreBaseMoveUnit:onCheckDirByPos(oldPos, newPos)
 	return
 end
 
-function var_0_0.onDirChange(arg_15_0, arg_15_1)
+function ExploreBaseMoveUnit:onDirChange(tureDir)
 	return
 end
 
-function var_0_0.onMoveTick(arg_16_0)
-	arg_16_0:_moving()
+function ExploreBaseMoveUnit:onMoveTick()
+	self:_moving()
 end
 
-function var_0_0.onStartMove(arg_17_0)
+function ExploreBaseMoveUnit:onStartMove()
 	return
 end
 
-function var_0_0.onEndMove(arg_18_0)
+function ExploreBaseMoveUnit:onEndMove()
 	return
 end
 
-function var_0_0.moveSpeed(arg_19_0)
+function ExploreBaseMoveUnit:moveSpeed()
 	return ExploreAnimEnum.RoleSpeed.walk
 end
 
-function var_0_0.onDestroy(arg_20_0)
-	arg_20_0._gotoCallback = nil
-	arg_20_0._gotoCallbackObj = nil
-	arg_20_0._endPos = nil
-	arg_20_0._exploreMap = nil
+function ExploreBaseMoveUnit:onDestroy()
+	self._gotoCallback = nil
+	self._gotoCallbackObj = nil
+	self._endPos = nil
+	self._exploreMap = nil
 
-	TaskDispatcher.cancelTask(arg_20_0.onMoveTick, arg_20_0)
-	var_0_0.super.onDestroy(arg_20_0)
+	TaskDispatcher.cancelTask(self.onMoveTick, self)
+	ExploreBaseMoveUnit.super.onDestroy(self)
 end
 
-function var_0_0._startMove(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	arg_21_0._gotoCallback = arg_21_2
-	arg_21_0._gotoCallbackObj = arg_21_3
-	arg_21_0._endPos = arg_21_1
+function ExploreBaseMoveUnit:_startMove(pos, callback, callbackObj)
+	self._gotoCallback = callback
+	self._gotoCallbackObj = callbackObj
+	self._endPos = pos
 
-	if not arg_21_0.nodePos or ExploreHelper.isPosEqual(arg_21_0.nodePos, arg_21_0._endPos) then
-		arg_21_0:_onEndMoveCallback()
+	if not self.nodePos or ExploreHelper.isPosEqual(self.nodePos, self._endPos) then
+		self:_onEndMoveCallback()
 
 		return
 	end
 
-	if not arg_21_0._exploreMap then
-		arg_21_0._exploreMap = ExploreController.instance:getMap()
+	if not self._exploreMap then
+		self._exploreMap = ExploreController.instance:getMap()
 	end
 
-	arg_21_0._pathArray = arg_21_0._exploreMap:startFindPath(arg_21_0.nodePos, arg_21_0._endPos)
+	self._pathArray = self._exploreMap:startFindPath(self.nodePos, self._endPos)
 
-	local var_21_0 = #arg_21_0._pathArray
+	local pathLen = #self._pathArray
 
-	if var_21_0 == 0 then
-		arg_21_0:_onEndMoveCallback()
+	if pathLen == 0 then
+		self:_onEndMoveCallback()
 
 		return
 	end
 
-	arg_21_0._walkDistance = var_21_0
+	self._walkDistance = pathLen
 
-	arg_21_0:_startMove2()
-	arg_21_0:onStartMove()
+	self:_startMove2()
+	self:onStartMove()
 end
 
-function var_0_0._startMove2(arg_22_0)
-	arg_22_0._isMoving = true
+function ExploreBaseMoveUnit:_startMove2()
+	self._isMoving = true
 
-	TaskDispatcher.runRepeat(arg_22_0.onMoveTick, arg_22_0, 0)
-	arg_22_0:onMoveTick()
+	TaskDispatcher.runRepeat(self.onMoveTick, self, 0)
+	self:onMoveTick()
 end
 
-function var_0_0._moving(arg_23_0)
-	if arg_23_0._nextWorldPos then
-		arg_23_0._runStartTime = arg_23_0._runStartTime + Time.deltaTime
+function ExploreBaseMoveUnit:_moving()
+	if self._nextWorldPos then
+		self._runStartTime = self._runStartTime + Time.deltaTime
 
-		local var_23_0 = Vector3.Lerp(arg_23_0._oldWorldPos, arg_23_0._nextWorldPos, math.min(1, arg_23_0._runStartTime / arg_23_0._runTotalTime))
+		local runPos = Vector3.Lerp(self._oldWorldPos, self._nextWorldPos, math.min(1, self._runStartTime / self._runTotalTime))
 
-		if arg_23_0._runStartTime >= arg_23_0._runTotalTime then
-			arg_23_0:setPosByNode(arg_23_0._nextNodePos)
+		if self._runStartTime >= self._runTotalTime then
+			self:setPosByNode(self._nextNodePos)
 
-			arg_23_0._nextWorldPos = nil
+			self._nextWorldPos = nil
 
-			if arg_23_0._isStopMoving then
-				arg_23_0._pathArray = {}
-				arg_23_0._isStopMoving = nil
+			if self._isStopMoving then
+				self._pathArray = {}
+				self._isStopMoving = nil
 			end
 
-			arg_23_0:_moving()
+			self:_moving()
 		else
-			arg_23_0:setPos(var_23_0)
+			self:setPos(runPos)
 		end
 
 		return
 	end
 
-	if #arg_23_0._pathArray == 0 then
-		arg_23_0:_addMovePathByDir()
+	if #self._pathArray == 0 then
+		self:_addMovePathByDir()
 	end
 
-	if #arg_23_0._pathArray > 0 then
-		local var_23_1 = arg_23_0.nodePos
+	if #self._pathArray > 0 then
+		local oldTilemapPos = self.nodePos
 
-		arg_23_0._nextNodePos = table.remove(arg_23_0._pathArray)
-		arg_23_0._runTotalTime = arg_23_0:moveSpeed()
+		self._nextNodePos = table.remove(self._pathArray)
+		self._runTotalTime = self:moveSpeed()
 
-		if ExploreHelper.isPosEqual(var_23_1, arg_23_0._nextNodePos) then
+		if ExploreHelper.isPosEqual(oldTilemapPos, self._nextNodePos) then
 			return
 		end
 
-		local var_23_2 = ExploreMapModel.instance:getNode(ExploreHelper.getKey(var_23_1))
-		local var_23_3 = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_23_0._nextNodePos))
+		local oldNode = ExploreMapModel.instance:getNode(ExploreHelper.getKey(oldTilemapPos))
+		local nextNode = ExploreMapModel.instance:getNode(ExploreHelper.getKey(self._nextNodePos))
 
-		if not arg_23_0._lockDir and var_23_3:isWalkable(var_23_2.height) == false then
-			arg_23_0:_endMove()
+		if not self._lockDir and nextNode:isWalkable(oldNode.height) == false then
+			self:_endMove()
 
 			return
 		end
 
-		arg_23_0._oldWorldPos = arg_23_0.position
-		arg_23_0._nextWorldPos = ExploreHelper.tileToPos(arg_23_0._nextNodePos)
-		arg_23_0._nextWorldPos.y = arg_23_0._oldWorldPos.y
-		arg_23_0._runStartTime = 0
+		self._oldWorldPos = self.position
+		self._nextWorldPos = ExploreHelper.tileToPos(self._nextNodePos)
+		self._nextWorldPos.y = self._oldWorldPos.y
+		self._runStartTime = 0
 
-		arg_23_0:onCheckDir(var_23_1, arg_23_0._nextNodePos)
-		arg_23_0:onCheckDirByPos(arg_23_0._oldWorldPos, arg_23_0._nextWorldPos)
+		self:onCheckDir(oldTilemapPos, self._nextNodePos)
+		self:onCheckDirByPos(self._oldWorldPos, self._nextWorldPos)
 
 		return
 	end
 
-	arg_23_0:_endMove()
+	self:_endMove()
 end
 
-function var_0_0._addMovePathByDir(arg_24_0)
-	if arg_24_0:checkUseMoveDir() and ExploreModel.instance:isHeroInControl() and arg_24_0:_checkInUIBlock() == false and ZProj.TouchEventMgr.Fobidden ~= true then
-		local var_24_0 = ExploreHelper.getKey(arg_24_0.nodePos)
-		local var_24_1 = ExploreMapModel.instance:getNode(var_24_0).height
+function ExploreBaseMoveUnit:_addMovePathByDir()
+	if self:checkUseMoveDir() and ExploreModel.instance:isHeroInControl() and self:_checkInUIBlock() == false and ZProj.TouchEventMgr.Fobidden ~= true then
+		local nodeKey = ExploreHelper.getKey(self.nodePos)
+		local tempNode = ExploreMapModel.instance:getNode(nodeKey)
+		local startH = tempNode.height
 
-		arg_24_0:_updateRealMoveDir()
+		self:_updateRealMoveDir()
 
-		local var_24_2 = arg_24_0.nodePos + arg_24_0._realMoveDir
-		local var_24_3 = ExploreHelper.getKey(var_24_2)
-		local var_24_4 = ExploreMapModel.instance:getNode(var_24_3)
+		local tarPos = self.nodePos + self._realMoveDir
+		local nodeKey = ExploreHelper.getKey(tarPos)
 
-		if var_24_4 and var_24_4:isWalkable(var_24_1) then
-			table.insert(arg_24_0._pathArray, var_24_2)
+		tempNode = ExploreMapModel.instance:getNode(nodeKey)
+
+		if tempNode and tempNode:isWalkable(startH) then
+			table.insert(self._pathArray, tarPos)
 		end
 	end
 end
 
-var_0_0.ExploreMoveRequest = 13574
+ExploreBaseMoveUnit.ExploreMoveRequest = 13574
 
-function var_0_0._checkInUIBlock(arg_25_0)
-	for iter_25_0, iter_25_1 in pairs(UIBlockMgr.instance._blockKeyDict) do
-		if iter_25_0 == UIBlockKey.MsgLock then
-			for iter_25_2, iter_25_3 in pairs(GameGlobalMgr.instance:getMsgLockState()._blockCmdDict) do
-				if var_0_0.ExploreMoveRequest ~= iter_25_2 then
+function ExploreBaseMoveUnit:_checkInUIBlock()
+	for blockKey, _ in pairs(UIBlockMgr.instance._blockKeyDict) do
+		if blockKey == UIBlockKey.MsgLock then
+			for cmd, _ in pairs(GameGlobalMgr.instance:getMsgLockState()._blockCmdDict) do
+				if ExploreBaseMoveUnit.ExploreMoveRequest ~= cmd then
 					return true
 				end
 			end
@@ -314,55 +321,59 @@ function var_0_0._checkInUIBlock(arg_25_0)
 	return false
 end
 
-function var_0_0._updateRealMoveDir(arg_26_0)
-	local var_26_0 = ExploreMapModel.instance.nowMapRotate % 360
+function ExploreBaseMoveUnit:_updateRealMoveDir()
+	local rotate = ExploreMapModel.instance.nowMapRotate % 360
 
-	if var_26_0 < 0 then
-		var_26_0 = var_26_0 + 360
+	if rotate < 0 then
+		rotate = rotate + 360
 	end
 
-	local var_26_1 = Mathf.Round(var_26_0 / 90)
-	local var_26_2 = (ExploreEnum.RoleMoveRotateDirIndex[arg_26_0._moveDirKey] + var_26_1) % 4
+	local offIndex = Mathf.Round(rotate / 90)
+	local index = ExploreEnum.RoleMoveRotateDirIndex[self._moveDirKey] + offIndex
 
-	arg_26_0._realMoveDir = ExploreEnum.RoleMoveRotateDir[var_26_2]
+	index = index % 4
+
+	local moveDir = ExploreEnum.RoleMoveRotateDir[index]
+
+	self._realMoveDir = moveDir
 end
 
-function var_0_0.checkUseMoveDir(arg_27_0)
-	return arg_27_0._moveDirKey
+function ExploreBaseMoveUnit:checkUseMoveDir()
+	return self._moveDirKey
 end
 
-function var_0_0._endMove(arg_28_0)
-	arg_28_0._walkDistance = 0
+function ExploreBaseMoveUnit:_endMove()
+	self._walkDistance = 0
 
-	if arg_28_0._tureDir then
-		arg_28_0:onDirChange(arg_28_0._tureDir)
+	if self._tureDir then
+		self:onDirChange(self._tureDir)
 
-		arg_28_0._tureDir = nil
+		self._tureDir = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_28_0.onMoveTick, arg_28_0)
+	TaskDispatcher.cancelTask(self.onMoveTick, self)
 
-	arg_28_0._nextNodePos = nil
+	self._nextNodePos = nil
 
-	arg_28_0:_onEndMoveCallback()
+	self:_onEndMoveCallback()
 end
 
-function var_0_0._onEndMoveCallback(arg_29_0)
-	arg_29_0._isMoving = false
+function ExploreBaseMoveUnit:_onEndMoveCallback()
+	self._isMoving = false
 
-	if arg_29_0._moveDir then
-		arg_29_0.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
+	if self._moveDir then
+		self.animComp:setInteger(ExploreAnimEnum.RoleAnimKey.MoveDir, -1)
 	end
 
-	arg_29_0._moveDir = nil
-	arg_29_0._moveDirKey = nil
-	arg_29_0._lockDir = nil
+	self._moveDir = nil
+	self._moveDirKey = nil
+	self._lockDir = nil
 
-	arg_29_0:onEndMove()
+	self:onEndMove()
 
-	if arg_29_0._gotoCallback then
-		arg_29_0._gotoCallback(arg_29_0._gotoCallbackObj, arg_29_0.nodePos, arg_29_0._endPos)
+	if self._gotoCallback then
+		self._gotoCallback(self._gotoCallbackObj, self.nodePos, self._endPos)
 	end
 end
 
-return var_0_0
+return ExploreBaseMoveUnit

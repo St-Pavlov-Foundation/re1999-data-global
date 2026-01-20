@@ -1,120 +1,125 @@
-﻿module("modules.logic.room.model.trade.RoomDailyOrderMo", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/trade/RoomDailyOrderMo.lua
 
-local var_0_0 = class("RoomDailyOrderMo")
+module("modules.logic.room.model.trade.RoomDailyOrderMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.orderId = nil
-	arg_1_0.lastRefreshTime = nil
-	arg_1_0.buyerId = nil
-	arg_1_0.goodsInfo = nil
-	arg_1_0.isAdvanced = nil
-	arg_1_0.isTraced = nil
-	arg_1_0.waitRefresh = nil
-	arg_1_0.refreshType = nil
-	arg_1_0.isLocked = nil
-	arg_1_0.isFinish = nil
+local RoomDailyOrderMo = class("RoomDailyOrderMo")
+
+function RoomDailyOrderMo:ctor()
+	self.orderId = nil
+	self.lastRefreshTime = nil
+	self.buyerId = nil
+	self.goodsInfo = nil
+	self.isAdvanced = nil
+	self.isTraced = nil
+	self.waitRefresh = nil
+	self.refreshType = nil
+	self.isLocked = nil
+	self.isFinish = nil
 end
 
-function var_0_0.initMo(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.orderId = arg_2_1.orderId
-	arg_2_0.lastRefreshTime = arg_2_1.lastRefreshTime
-	arg_2_0.buyerId = arg_2_1.buyerId
-	arg_2_0.isAdvanced = arg_2_1.isAdvanced
-	arg_2_0.isTraced = arg_2_1.isTraced
-	arg_2_0.refreshType = arg_2_1.refreshType
-	arg_2_0.isLocked = arg_2_1.isLocked
-	arg_2_0.goodsInfo = {}
-	arg_2_0._orderPrice = 0
+function RoomDailyOrderMo:initMo(info, isNewRefresh)
+	self.orderId = info.orderId
+	self.lastRefreshTime = info.lastRefreshTime
+	self.buyerId = info.buyerId
+	self.isAdvanced = info.isAdvanced
+	self.isTraced = info.isTraced
+	self.refreshType = info.refreshType
+	self.isLocked = info.isLocked
+	self.goodsInfo = {}
+	self._orderPrice = 0
 
-	for iter_2_0 = 1, #arg_2_1.goodsInfo do
-		local var_2_0 = RoomProductionMo.New()
+	for i = 1, #info.goodsInfo do
+		local mo = RoomProductionMo.New()
 
-		var_2_0:initMo(arg_2_1.goodsInfo[iter_2_0])
-		table.insert(arg_2_0.goodsInfo, var_2_0)
+		mo:initMo(info.goodsInfo[i])
+		table.insert(self.goodsInfo, mo)
 
-		arg_2_0._orderPrice = arg_2_0._orderPrice + var_2_0:getOrderPrice()
+		self._orderPrice = self._orderPrice + mo:getOrderPrice()
 	end
 
-	local var_2_1 = arg_2_0:getAdvancedRate()
+	local rate = self:getAdvancedRate()
 
-	if arg_2_0.isAdvanced then
-		arg_2_0._orderPrice = arg_2_0._orderPrice * var_2_1
+	if self.isAdvanced then
+		self._orderPrice = self._orderPrice * rate
 	end
 
-	arg_2_0.isNewRefresh = arg_2_2
-	arg_2_0.waitRefresh = nil
-	arg_2_0._orderCo = RoomTradeConfig.instance:getOrderQualityInfo(arg_2_0.orderId)
-	arg_2_0.isFinish = false
+	self.isNewRefresh = isNewRefresh
+	self.waitRefresh = nil
+	self._orderCo = RoomTradeConfig.instance:getOrderQualityInfo(self.orderId)
+	self.isFinish = false
 end
 
-function var_0_0.getAdvancedRate(arg_3_0)
-	return 1 + (RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyHighOrderAddRate, true) or 0) * 0.0001
+function RoomDailyOrderMo:getAdvancedRate()
+	local rate = RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyHighOrderAddRate, true) or 0
+
+	return 1 + rate * 0.0001
 end
 
-function var_0_0.setFinish(arg_4_0)
-	arg_4_0.isFinish = true
+function RoomDailyOrderMo:setFinish()
+	self.isFinish = true
 end
 
-function var_0_0.getPrice(arg_5_0)
-	return arg_5_0._orderCo.co.price
+function RoomDailyOrderMo:getPrice()
+	return self._orderCo.co.price
 end
 
-function var_0_0.getPriceCount(arg_6_0)
-	return GameUtil.numberDisplay(arg_6_0._orderPrice)
+function RoomDailyOrderMo:getPriceCount()
+	return GameUtil.numberDisplay(self._orderPrice)
 end
 
-function var_0_0.setWaitRefresh(arg_7_0, arg_7_1)
-	arg_7_0.waitRefresh = arg_7_1
+function RoomDailyOrderMo:setWaitRefresh(isWait)
+	self.waitRefresh = isWait
 end
 
-function var_0_0.isWaitRefresh(arg_8_0)
-	return arg_8_0.waitRefresh
+function RoomDailyOrderMo:isWaitRefresh()
+	return self.waitRefresh
 end
 
-function var_0_0.cancelNewRefresh(arg_9_0)
-	arg_9_0.isNewRefresh = false
+function RoomDailyOrderMo:cancelNewRefresh()
+	self.isNewRefresh = false
 end
 
-function var_0_0.setTraced(arg_10_0, arg_10_1)
-	arg_10_0.isTraced = arg_10_1
+function RoomDailyOrderMo:setTraced(isTraced)
+	self.isTraced = isTraced
 end
 
-function var_0_0.setLocked(arg_11_0, arg_11_1)
-	arg_11_0.isLocked = arg_11_1
+function RoomDailyOrderMo:setLocked(isLocked)
+	self.isLocked = isLocked
 end
 
-function var_0_0.getLocked(arg_12_0)
-	return arg_12_0.isLocked
+function RoomDailyOrderMo:getLocked()
+	return self.isLocked
 end
 
-function var_0_0.checkGoodsCanProduct(arg_13_0)
-	local var_13_0
-	local var_13_1
+function RoomDailyOrderMo:checkGoodsCanProduct()
+	local wrongTip, findBuildingUid
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.goodsInfo) do
-		if iter_13_1:isPlacedProduceBuilding() then
-			if string.nilorempty(var_13_0) or not var_13_1 then
-				local var_13_2, var_13_3 = iter_13_1:checkProduceBuildingLevel()
+	for _, info in ipairs(self.goodsInfo) do
+		local hasBuilding = info:isPlacedProduceBuilding()
 
-				if var_13_2 then
-					var_13_0 = luaLang("room_produce_building_need_upgrade")
-					var_13_1 = var_13_3
+		if hasBuilding then
+			if string.nilorempty(wrongTip) or not findBuildingUid then
+				local needUpgrade, buildingUid = info:checkProduceBuildingLevel()
+
+				if needUpgrade then
+					wrongTip = luaLang("room_produce_building_need_upgrade")
+					findBuildingUid = buildingUid
 				end
 			end
 		else
-			var_13_0 = luaLang("room_no_produce_building")
-			var_13_1 = nil
+			wrongTip = luaLang("room_no_produce_building")
+			findBuildingUid = nil
 
 			break
 		end
 	end
 
-	return var_13_0, var_13_1
+	return wrongTip, findBuildingUid
 end
 
-function var_0_0.isCanConfirm(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.goodsInfo) do
-		if not iter_14_1:isEnoughCount() then
+function RoomDailyOrderMo:isCanConfirm()
+	for _, info in ipairs(self.goodsInfo) do
+		if not info:isEnoughCount() then
 			return false
 		end
 	end
@@ -122,20 +127,21 @@ function var_0_0.isCanConfirm(arg_14_0)
 	return true
 end
 
-function var_0_0.getRefreshTime(arg_15_0)
-	local var_15_0 = 0
+function RoomDailyOrderMo:getRefreshTime()
+	local time = 0
 
-	if arg_15_0.lastRefreshTime and arg_15_0.refreshType == RoomTradeEnum.RefreshType.ActiveRefresh then
-		local var_15_1 = ServerTime.now() - arg_15_0.lastRefreshTime
+	if self.lastRefreshTime and self.refreshType == RoomTradeEnum.RefreshType.ActiveRefresh then
+		local sec = ServerTime.now() - self.lastRefreshTime
+		local value = RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyOrderRefreshTime, true)
 
-		var_15_0 = RoomTradeConfig.instance:getConstValue(RoomTradeEnum.ConstId.DailyOrderRefreshTime, true) - var_15_1
+		time = value - sec
 	end
 
-	return var_15_0
+	return time
 end
 
-function var_0_0.getGoodsInfo(arg_16_0)
-	return arg_16_0.goodsInfo
+function RoomDailyOrderMo:getGoodsInfo()
+	return self.goodsInfo
 end
 
-return var_0_0
+return RoomDailyOrderMo

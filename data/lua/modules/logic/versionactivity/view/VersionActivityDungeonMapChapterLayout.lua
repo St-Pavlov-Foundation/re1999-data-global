@@ -1,3 +1,7 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapChapterLayout", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityDungeonMapChapterLayout.lua
 
-return (class("VersionActivityDungeonMapChapterLayout", VersionActivityDungeonBaseChapterLayout))
+module("modules.logic.versionactivity.view.VersionActivityDungeonMapChapterLayout", package.seeall)
+
+local VersionActivityDungeonMapChapterLayout = class("VersionActivityDungeonMapChapterLayout", VersionActivityDungeonBaseChapterLayout)
+
+return VersionActivityDungeonMapChapterLayout

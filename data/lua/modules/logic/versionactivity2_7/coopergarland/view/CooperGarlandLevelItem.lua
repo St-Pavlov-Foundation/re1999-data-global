@@ -1,129 +1,130 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/view/CooperGarlandLevelItem.lua
 
-local var_0_0 = class("CooperGarlandLevelItem", LuaCompBase)
+module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandLevelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._goType1 = gohelper.findChild(arg_1_0._go, "#go_Type1")
-	arg_1_0._goIcon = gohelper.findChild(arg_1_0._go, "#go_Type1/image_Stage")
-	arg_1_0._goType2 = gohelper.findChild(arg_1_0._go, "#go_Type2")
-	arg_1_0._goSPIcon = gohelper.findChild(arg_1_0._go, "#go_Type2/image_Stage")
-	arg_1_0._goStageItem = gohelper.findChild(arg_1_0._go, "#go_Type1/#go_StageItem")
-	arg_1_0._imageStageItem = gohelper.findChildImage(arg_1_0._go, "#go_Type1/#go_StageItem")
-	arg_1_0.spStageList = arg_1_0:getUserDataTb_()
-	arg_1_0.spStageImageList = arg_1_0:getUserDataTb_()
+local CooperGarlandLevelItem = class("CooperGarlandLevelItem", LuaCompBase)
 
-	local var_1_0
-	local var_1_1 = 0
+function CooperGarlandLevelItem:init(go)
+	self._go = go
+	self._goType1 = gohelper.findChild(self._go, "#go_Type1")
+	self._goIcon = gohelper.findChild(self._go, "#go_Type1/image_Stage")
+	self._goType2 = gohelper.findChild(self._go, "#go_Type2")
+	self._goSPIcon = gohelper.findChild(self._go, "#go_Type2/image_Stage")
+	self._goStageItem = gohelper.findChild(self._go, "#go_Type1/#go_StageItem")
+	self._imageStageItem = gohelper.findChildImage(self._go, "#go_Type1/#go_StageItem")
+	self.spStageList = self:getUserDataTb_()
+	self.spStageImageList = self:getUserDataTb_()
+
+	local stageGO
+	local gameIndex = 0
 
 	repeat
-		var_1_1 = var_1_1 + 1
+		gameIndex = gameIndex + 1
+		stageGO = gohelper.findChild(self._go, string.format("#go_Type2/#go_StageItem%s", gameIndex))
 
-		local var_1_2 = gohelper.findChild(arg_1_0._go, string.format("#go_Type2/#go_StageItem%s", var_1_1))
-
-		if var_1_2 then
-			arg_1_0.spStageList[var_1_1] = var_1_2
-			arg_1_0.spStageImageList[var_1_1] = var_1_2:GetComponent(gohelper.Type_Image)
+		if stageGO then
+			self.spStageList[gameIndex] = stageGO
+			self.spStageImageList[gameIndex] = stageGO:GetComponent(gohelper.Type_Image)
 		end
-	until gohelper.isNil(var_1_2)
+	until gohelper.isNil(stageGO)
 
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0._go, "#go_Selected")
-	arg_1_0._goLocked = gohelper.findChild(arg_1_0._go, "#go_Locked")
-	arg_1_0._goStar1 = gohelper.findChild(arg_1_0._go, "Stars/#go_Star1")
-	arg_1_0._goStar2 = gohelper.findChild(arg_1_0._go, "Stars/#go_Star2")
-	arg_1_0._goStar3 = gohelper.findChild(arg_1_0._go, "Stars/#go_Star3")
-	arg_1_0._imageStageNum = gohelper.findChildImage(arg_1_0._go, "#image_StageNum")
-	arg_1_0._txtStageName = gohelper.findChildText(arg_1_0._go, "#txt_StageName")
-	arg_1_0._btnclick = gohelper.getClickWithDefaultAudio(arg_1_0._go)
-	arg_1_0._animator = gohelper.findChildAnim(arg_1_0._go, "")
+	self._goSelected = gohelper.findChild(self._go, "#go_Selected")
+	self._goLocked = gohelper.findChild(self._go, "#go_Locked")
+	self._goStar1 = gohelper.findChild(self._go, "Stars/#go_Star1")
+	self._goStar2 = gohelper.findChild(self._go, "Stars/#go_Star2")
+	self._goStar3 = gohelper.findChild(self._go, "Stars/#go_Star3")
+	self._imageStageNum = gohelper.findChildImage(self._go, "#image_StageNum")
+	self._txtStageName = gohelper.findChildText(self._go, "#txt_StageName")
+	self._btnclick = gohelper.getClickWithDefaultAudio(self._go)
+	self._animator = gohelper.findChildAnim(self._go, "")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, arg_2_0.refreshUI, arg_2_0)
+function CooperGarlandLevelItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, self.refreshUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, arg_3_0.refreshUI, arg_3_0)
+function CooperGarlandLevelItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, self.refreshUI, self)
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	CooperGarlandController.instance:clickEpisode(arg_4_0.actId, arg_4_0.episodeId)
+function CooperGarlandLevelItem:_btnclickOnClick()
+	CooperGarlandController.instance:clickEpisode(self.actId, self.episodeId)
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_0.actId = arg_5_1
-	arg_5_0.episodeId = arg_5_2
-	arg_5_0.index = arg_5_3
-	arg_5_0.gameIndex = arg_5_4
+function CooperGarlandLevelItem:setData(actId, episodeId, index, gameIndex)
+	self.actId = actId
+	self.episodeId = episodeId
+	self.index = index
+	self.gameIndex = gameIndex
 
-	arg_5_0:setInfo()
-	arg_5_0:refreshUI()
+	self:setInfo()
+	self:refreshUI()
 end
 
-function var_0_0.setInfo(arg_6_0)
-	arg_6_0._txtStageName.text = CooperGarlandConfig.instance:getEpisodeName(arg_6_0.actId, arg_6_0.episodeId)
+function CooperGarlandLevelItem:setInfo()
+	self._txtStageName.text = CooperGarlandConfig.instance:getEpisodeName(self.actId, self.episodeId)
 
-	UISpriteSetMgr.instance:setV2a7CooperGarlandSprite(arg_6_0._imageStageNum, string.format("v2a7_coopergarland_level_stage_0%s", arg_6_0.index))
+	UISpriteSetMgr.instance:setV2a7CooperGarlandSprite(self._imageStageNum, string.format("v2a7_coopergarland_level_stage_0%s", self.index))
 
-	if arg_6_0.gameIndex then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0.spStageList) do
-			gohelper.setActive(iter_6_1, arg_6_0.gameIndex == iter_6_0)
+	if self.gameIndex then
+		for i, stageGO in ipairs(self.spStageList) do
+			gohelper.setActive(stageGO, self.gameIndex == i)
 		end
 	end
 
-	gohelper.setActive(arg_6_0._goType1, not arg_6_0.gameIndex)
-	gohelper.setActive(arg_6_0._goType2, arg_6_0.gameIndex)
+	gohelper.setActive(self._goType1, not self.gameIndex)
+	gohelper.setActive(self._goType2, self.gameIndex)
 end
 
-function var_0_0.refreshUI(arg_7_0, arg_7_1)
-	arg_7_0:refreshStatus(arg_7_1)
-	arg_7_0:refreshSelected()
+function CooperGarlandLevelItem:refreshUI(animName)
+	self:refreshStatus(animName)
+	self:refreshSelected()
 end
 
-function var_0_0.refreshStatus(arg_8_0, arg_8_1)
-	local var_8_0 = false
-	local var_8_1 = CooperGarlandModel.instance:isUnlockEpisode(arg_8_0.actId, arg_8_0.episodeId)
+function CooperGarlandLevelItem:refreshStatus(animName)
+	local isFinished = false
+	local isUnlock = CooperGarlandModel.instance:isUnlockEpisode(self.actId, self.episodeId)
 
-	if var_8_1 then
-		var_8_0 = CooperGarlandModel.instance:isFinishedEpisode(arg_8_0.actId, arg_8_0.episodeId)
+	if isUnlock then
+		isFinished = CooperGarlandModel.instance:isFinishedEpisode(self.actId, self.episodeId)
 	end
 
-	gohelper.setActive(arg_8_0._goStar1, not var_8_0)
-	gohelper.setActive(arg_8_0._goStar2, var_8_0 and not arg_8_0.gameIndex)
-	gohelper.setActive(arg_8_0._goStar3, var_8_0 and arg_8_0.gameIndex)
+	gohelper.setActive(self._goStar1, not isFinished)
+	gohelper.setActive(self._goStar2, isFinished and not self.gameIndex)
+	gohelper.setActive(self._goStar3, isFinished and self.gameIndex)
 
-	local var_8_2 = var_8_1 and "#FFFFFF" or "#969696"
+	local stageColor = isUnlock and "#FFFFFF" or "#969696"
 
-	if arg_8_0.gameIndex then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_8_0.spStageImageList[arg_8_0.gameIndex], var_8_2)
-		ZProj.UGUIHelper.SetGrayscale(arg_8_0.spStageList[arg_8_0.gameIndex], not var_8_1)
-		ZProj.UGUIHelper.SetGrayscale(arg_8_0._goSPIcon, not var_8_1)
+	if self.gameIndex then
+		SLFramework.UGUI.GuiHelper.SetColor(self.spStageImageList[self.gameIndex], stageColor)
+		ZProj.UGUIHelper.SetGrayscale(self.spStageList[self.gameIndex], not isUnlock)
+		ZProj.UGUIHelper.SetGrayscale(self._goSPIcon, not isUnlock)
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._imageStageItem, var_8_2)
-		ZProj.UGUIHelper.SetGrayscale(arg_8_0._goStageItem, not var_8_1)
-		ZProj.UGUIHelper.SetGrayscale(arg_8_0._goIcon, not var_8_1)
+		SLFramework.UGUI.GuiHelper.SetColor(self._imageStageItem, stageColor)
+		ZProj.UGUIHelper.SetGrayscale(self._goStageItem, not isUnlock)
+		ZProj.UGUIHelper.SetGrayscale(self._goIcon, not isUnlock)
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._imageStageNum, var_8_1 and "#FFFFFF" or "#C8C8C8")
-	ZProj.UGUIHelper.SetGrayscale(arg_8_0._imageStageNum.gameObject, not var_8_1)
-	gohelper.setActive(arg_8_0._goLocked, not var_8_1)
-	arg_8_0:_playAnim(arg_8_1)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imageStageNum, isUnlock and "#FFFFFF" or "#C8C8C8")
+	ZProj.UGUIHelper.SetGrayscale(self._imageStageNum.gameObject, not isUnlock)
+	gohelper.setActive(self._goLocked, not isUnlock)
+	self:_playAnim(animName)
 end
 
-function var_0_0._playAnim(arg_9_0, arg_9_1)
-	if string.nilorempty(arg_9_1) then
+function CooperGarlandLevelItem:_playAnim(animName)
+	if string.nilorempty(animName) then
 		return
 	end
 
-	arg_9_0._animator:Play(arg_9_1, 0, 0)
+	self._animator:Play(animName, 0, 0)
 end
 
-function var_0_0.refreshSelected(arg_10_0)
-	local var_10_0 = CooperGarlandModel.instance:isNewestEpisode(arg_10_0.actId, arg_10_0.episodeId)
+function CooperGarlandLevelItem:refreshSelected()
+	local isSelected = CooperGarlandModel.instance:isNewestEpisode(self.actId, self.episodeId)
 
-	gohelper.setActive(arg_10_0._goSelected, var_10_0)
+	gohelper.setActive(self._goSelected, isSelected)
 end
 
-return var_0_0
+return CooperGarlandLevelItem

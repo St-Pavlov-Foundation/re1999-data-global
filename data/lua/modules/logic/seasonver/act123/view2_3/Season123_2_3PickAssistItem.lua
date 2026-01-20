@@ -1,126 +1,128 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3PickAssistItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3PickAssistItem.lua
 
-local var_0_0 = class("Season123_2_3PickAssistItem", ListScrollCellExtend)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3PickAssistItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._heroGOParent = gohelper.findChild(arg_1_0.viewGO, "heroInfo/hero")
-	arg_1_0._btnHeroDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "heroInfo/tag/btn_detail")
-	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "playerInfo/#go_playericon")
-	arg_1_0._txtplayerName = gohelper.findChildText(arg_1_0.viewGO, "playerInfo/#txt_playerName")
-	arg_1_0._goFriend = gohelper.findChild(arg_1_0.viewGO, "playerInfo/#go_friends")
-	arg_1_0.goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local Season123_2_3PickAssistItem = class("Season123_2_3PickAssistItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_3PickAssistItem:onInitView()
+	self._heroGOParent = gohelper.findChild(self.viewGO, "heroInfo/hero")
+	self._btnHeroDetail = gohelper.findChildButtonWithAudio(self.viewGO, "heroInfo/tag/btn_detail")
+	self._goplayericon = gohelper.findChild(self.viewGO, "playerInfo/#go_playericon")
+	self._txtplayerName = gohelper.findChildText(self.viewGO, "playerInfo/#txt_playerName")
+	self._goFriend = gohelper.findChild(self.viewGO, "playerInfo/#go_friends")
+	self.goSelected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnHeroDetail:AddClickListener(arg_2_0._onHeroDetailClick, arg_2_0)
+function Season123_2_3PickAssistItem:addEvents()
+	self._btnHeroDetail:AddClickListener(self._onHeroDetailClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnHeroDetail:RemoveClickListener()
+function Season123_2_3PickAssistItem:removeEvents()
+	self._btnHeroDetail:RemoveClickListener()
 end
 
-function var_0_0._onHeroItemClick(arg_4_0)
+function Season123_2_3PickAssistItem:_onHeroItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	local var_4_0 = Season123PickAssistListModel.instance:isHeroSelected(arg_4_0._mo)
+	local isSelect = Season123PickAssistListModel.instance:isHeroSelected(self._mo)
 
-	Season123PickAssistController.instance:setHeroSelect(arg_4_0._mo, not var_4_0)
+	Season123PickAssistController.instance:setHeroSelect(self._mo, not isSelect)
 end
 
-function var_0_0._onHeroDetailClick(arg_5_0)
+function Season123_2_3PickAssistItem:_onHeroDetailClick()
 	CharacterBackpackCardListModel.instance:clearCardList()
-	CharacterController.instance:openCharacterView(arg_5_0._mo.heroMO)
+	CharacterController.instance:openCharacterView(self._mo.heroMO)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_6_0._goplayericon)
+function Season123_2_3PickAssistItem:_editableInitView()
+	self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goplayericon)
 
-	arg_6_0._playericon:setEnableClick(false)
-	arg_6_0._playericon:setShowLevel(true)
-	arg_6_0._playericon:setPos("_golevel", 0, -36)
-	arg_6_0._playericon:setPos("_txtlevel", -25, -4)
+	self._playericon:setEnableClick(false)
+	self._playericon:setShowLevel(true)
+	self._playericon:setPos("_golevel", 0, -36)
+	self._playericon:setPos("_txtlevel", -25, -4)
 
-	local var_6_0 = arg_6_0._playericon:getLevelBg()
+	local imgLevelBg = self._playericon:getLevelBg()
 
-	UISpriteSetMgr.instance:setSeason123Sprite(var_6_0, "v1a7_season_img_namebg", true)
+	UISpriteSetMgr.instance:setSeason123Sprite(imgLevelBg, "v1a7_season_img_namebg", true)
 
-	arg_6_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_6_0._heroGOParent)
+	self._heroItem = IconMgr.instance:getCommonHeroItem(self._heroGOParent)
 
-	arg_6_0._heroItem:addClickListener(arg_6_0._onHeroItemClick, arg_6_0)
-	arg_6_0:initHeroItem()
+	self._heroItem:addClickListener(self._onHeroItemClick, self)
+	self:initHeroItem()
 end
 
-function var_0_0.initHeroItem(arg_7_0)
-	local var_7_0 = arg_7_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+function Season123_2_3PickAssistItem:initHeroItem()
+	local heroItemAnimator = self._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
 
-	if var_7_0 then
-		var_7_0.enabled = false
+	if heroItemAnimator then
+		heroItemAnimator.enabled = false
 	end
 
-	arg_7_0._heroItem:setStyle_SeasonPickAssist()
-	arg_7_0._heroItem:_setTranScale("_rankObj", 0.2, 0.2)
-	arg_7_0._heroItem:setSelect(false)
-	arg_7_0._heroItem:isShowSeasonMask(true)
+	self._heroItem:setStyle_SeasonPickAssist()
+	self._heroItem:_setTranScale("_rankObj", 0.2, 0.2)
+	self._heroItem:setSelect(false)
+	self._heroItem:isShowSeasonMask(true)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
+function Season123_2_3PickAssistItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_8_0 = arg_8_0._mo:getPlayerInfo()
+	local playerInfo = self._mo:getPlayerInfo()
 
-	arg_8_0._playericon:onUpdateMO(var_8_0)
+	self._playericon:onUpdateMO(playerInfo)
 
-	arg_8_0._txtplayerName.text = var_8_0.name
+	self._txtplayerName.text = playerInfo.name
 
-	local var_8_1 = SocialModel.instance:isMyFriendByUserId(var_8_0.userId)
+	local isFriend = SocialModel.instance:isMyFriendByUserId(playerInfo.userId)
 
-	gohelper.setActive(arg_8_0._goFriend, var_8_1)
+	gohelper.setActive(self._goFriend, isFriend)
 
-	local var_8_2 = arg_8_0._mo.heroMO
+	local heroMO = self._mo.heroMO
 
-	arg_8_0._heroItem:onUpdateMO(var_8_2)
-	arg_8_0._heroItem:setNewShow(false)
+	self._heroItem:onUpdateMO(heroMO)
+	self._heroItem:setNewShow(false)
 
-	local var_8_3
-	local var_8_4 = arg_8_0._mo.assistMO
+	local balanceLv
+	local assistHeroMO = self._mo.assistMO
 
-	if var_8_4 then
-		local var_8_5 = var_8_4.level
-		local var_8_6 = var_8_4.balanceLevel
+	if assistHeroMO then
+		local tmpLv = assistHeroMO.level
+		local tmpBalanceLv = assistHeroMO.balanceLevel
 
-		if var_8_6 and var_8_5 ~= var_8_6 then
-			var_8_3 = var_8_6
+		if tmpBalanceLv and tmpLv ~= tmpBalanceLv then
+			balanceLv = tmpBalanceLv
 		end
 	end
 
-	if var_8_3 then
-		arg_8_0._heroItem:setBalanceLv(var_8_3)
+	if balanceLv then
+		self._heroItem:setBalanceLv(balanceLv)
 	end
 
-	local var_8_7 = Season123PickAssistListModel.instance:isHeroSelected(arg_8_0._mo)
+	local isSelect = Season123PickAssistListModel.instance:isHeroSelected(self._mo)
 
-	arg_8_0:setSelected(var_8_7)
+	self:setSelected(isSelect)
 end
 
-function var_0_0.setSelected(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0.goSelected, arg_9_1)
+function Season123_2_3PickAssistItem:setSelected(isSelected)
+	gohelper.setActive(self.goSelected, isSelected)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0._heroItem then
-		arg_10_0._heroItem:onDestroy()
+function Season123_2_3PickAssistItem:onDestroy()
+	if self._heroItem then
+		self._heroItem:onDestroy()
 
-		arg_10_0._heroItem = nil
+		self._heroItem = nil
 	end
 end
 
-function var_0_0.getAnimator(arg_11_0)
-	return arg_11_0._animator
+function Season123_2_3PickAssistItem:getAnimator()
+	return self._animator
 end
 
-return var_0_0
+return Season123_2_3PickAssistItem

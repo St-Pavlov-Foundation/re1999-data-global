@@ -1,460 +1,463 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8PickHeroDetailView.lua
 
-local var_0_0 = class("Season123_1_8PickHeroDetailView", BaseView)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gononecharacter = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_nonecharacter")
-	arg_1_0._gocharacterinfo = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo")
-	arg_1_0._imagedmgtype = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
-	arg_1_0._imagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
-	arg_1_0._gospecialitem = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#txt_level")
-	arg_1_0._txtlevelmax = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#txt_level/#txt_levelmax")
-	arg_1_0._btncharacter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/level/#btn_character")
-	arg_1_0._btnattribute = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/attribute/#btn_attribute")
-	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
-	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_skill")
-	arg_1_0._btnpassiveskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
-	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
-	arg_1_0._gopassiveskills = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
-	arg_1_0._gorolesort = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort")
-	arg_1_0._btnlvrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
-	arg_1_0._btnexskillrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
-	arg_1_0._btnclassify = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
-	arg_1_0._goexarrow = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
-	arg_1_0._gosearchfilter = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter")
-	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/#btn_closefilterview")
-	arg_1_0._godmgitem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/dmgContainer/#go_dmgitem")
-	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter/container/attrContainer/#go_attritem")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_reset")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/container/#btn_ok")
+local Season123_1_8PickHeroDetailView = class("Season123_1_8PickHeroDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_1_8PickHeroDetailView:onInitView()
+	self._gononecharacter = gohelper.findChild(self.viewGO, "characterinfo/#go_nonecharacter")
+	self._gocharacterinfo = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo")
+	self._imagedmgtype = gohelper.findChildImage(self.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
+	self._imagecareericon = gohelper.findChildImage(self.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
+	self._txtname = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
+	self._gospecialitem = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/special/#go_specialitem")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/level/#txt_level")
+	self._txtlevelmax = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/level/#txt_level/#txt_levelmax")
+	self._btncharacter = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/level/#btn_character")
+	self._btnattribute = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/attribute/#btn_attribute")
+	self._goattribute = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
+	self._goskill = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_skill")
+	self._btnpassiveskill = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
+	self._txtpassivename = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
+	self._gopassiveskills = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
+	self._gorolesort = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort")
+	self._btnlvrank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_lvrank")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
+	self._btnexskillrank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank")
+	self._btnclassify = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
+	self._goexarrow = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
+	self._gosearchfilter = gohelper.findChild(self.viewGO, "#go_searchfilter")
+	self._btnclosefilterview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/#btn_closefilterview")
+	self._godmgitem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/dmgContainer/#go_dmgitem")
+	self._goattritem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/attrContainer/#go_attritem")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_reset")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_ok")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnpassiveskill:AddClickListener(arg_2_0._btnpassiveskillOnClick, arg_2_0)
-	arg_2_0._btncharacter:AddClickListener(arg_2_0._btncharacterOnClick, arg_2_0)
-	arg_2_0._btnattribute:AddClickListener(arg_2_0._btnattributeOnClick, arg_2_0)
-	arg_2_0._btnlvrank:AddClickListener(arg_2_0._btnlvrankOnClick, arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnexskillrank:AddClickListener(arg_2_0._btnexskillrankOnClick, arg_2_0)
-	arg_2_0._btnclassify:AddClickListener(arg_2_0._btnclassifyOnClick, arg_2_0)
-	arg_2_0._btnclosefilterview:AddClickListener(arg_2_0._btncloseFilterViewOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+function Season123_1_8PickHeroDetailView:addEvents()
+	self._btnpassiveskill:AddClickListener(self._btnpassiveskillOnClick, self)
+	self._btncharacter:AddClickListener(self._btncharacterOnClick, self)
+	self._btnattribute:AddClickListener(self._btnattributeOnClick, self)
+	self._btnlvrank:AddClickListener(self._btnlvrankOnClick, self)
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnexskillrank:AddClickListener(self._btnexskillrankOnClick, self)
+	self._btnclassify:AddClickListener(self._btnclassifyOnClick, self)
+	self._btnclosefilterview:AddClickListener(self._btncloseFilterViewOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnok:AddClickListener(self._btnokOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnpassiveskill:RemoveClickListener()
-	arg_3_0._btncharacter:RemoveClickListener()
-	arg_3_0._btnattribute:RemoveClickListener()
-	arg_3_0._btnlvrank:RemoveClickListener()
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnexskillrank:RemoveClickListener()
-	arg_3_0._btnclassify:RemoveClickListener()
-	arg_3_0._btnclosefilterview:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnok:RemoveClickListener()
+function Season123_1_8PickHeroDetailView:removeEvents()
+	self._btnpassiveskill:RemoveClickListener()
+	self._btncharacter:RemoveClickListener()
+	self._btnattribute:RemoveClickListener()
+	self._btnlvrank:RemoveClickListener()
+	self._btnrarerank:RemoveClickListener()
+	self._btnexskillrank:RemoveClickListener()
+	self._btnclassify:RemoveClickListener()
+	self._btnclosefilterview:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnok:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._careerGOs = {}
-	arg_4_0._lvBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._lvArrow = arg_4_0:getUserDataTb_()
-	arg_4_0._rareBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._rareArrow = arg_4_0:getUserDataTb_()
-	arg_4_0._classifyBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._selectDmgs = {}
-	arg_4_0._dmgSelects = arg_4_0:getUserDataTb_()
-	arg_4_0._dmgUnselects = arg_4_0:getUserDataTb_()
-	arg_4_0._dmgBtnClicks = arg_4_0:getUserDataTb_()
-	arg_4_0._selectAttrs = {}
-	arg_4_0._attrSelects = arg_4_0:getUserDataTb_()
-	arg_4_0._attrUnselects = arg_4_0:getUserDataTb_()
-	arg_4_0._attrBtnClicks = arg_4_0:getUserDataTb_()
-	arg_4_0._selectLocations = {}
-	arg_4_0._locationSelects = arg_4_0:getUserDataTb_()
-	arg_4_0._locationUnselects = arg_4_0:getUserDataTb_()
-	arg_4_0._locationBtnClicks = arg_4_0:getUserDataTb_()
-	arg_4_0._curDmgs = {}
-	arg_4_0._curAttrs = {}
-	arg_4_0._curLocations = {}
+function Season123_1_8PickHeroDetailView:_editableInitView()
+	self._careerGOs = {}
+	self._lvBtns = self:getUserDataTb_()
+	self._lvArrow = self:getUserDataTb_()
+	self._rareBtns = self:getUserDataTb_()
+	self._rareArrow = self:getUserDataTb_()
+	self._classifyBtns = self:getUserDataTb_()
+	self._selectDmgs = {}
+	self._dmgSelects = self:getUserDataTb_()
+	self._dmgUnselects = self:getUserDataTb_()
+	self._dmgBtnClicks = self:getUserDataTb_()
+	self._selectAttrs = {}
+	self._attrSelects = self:getUserDataTb_()
+	self._attrUnselects = self:getUserDataTb_()
+	self._attrBtnClicks = self:getUserDataTb_()
+	self._selectLocations = {}
+	self._locationSelects = self:getUserDataTb_()
+	self._locationUnselects = self:getUserDataTb_()
+	self._locationBtnClicks = self:getUserDataTb_()
+	self._curDmgs = {}
+	self._curAttrs = {}
+	self._curLocations = {}
 
-	for iter_4_0 = 1, 2 do
-		arg_4_0._lvBtns[iter_4_0] = gohelper.findChild(arg_4_0._btnlvrank.gameObject, "btn" .. tostring(iter_4_0))
-		arg_4_0._lvArrow[iter_4_0] = gohelper.findChild(arg_4_0._lvBtns[iter_4_0], "txt/arrow").transform
-		arg_4_0._rareBtns[iter_4_0] = gohelper.findChild(arg_4_0._btnrarerank.gameObject, "btn" .. tostring(iter_4_0))
-		arg_4_0._rareArrow[iter_4_0] = gohelper.findChild(arg_4_0._rareBtns[iter_4_0], "txt/arrow").transform
-		arg_4_0._classifyBtns[iter_4_0] = gohelper.findChild(arg_4_0._btnclassify.gameObject, "btn" .. tostring(iter_4_0))
-		arg_4_0._dmgUnselects[iter_4_0] = gohelper.findChild(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_4_0 .. "/unselected")
-		arg_4_0._dmgSelects[iter_4_0] = gohelper.findChild(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_4_0 .. "/selected")
-		arg_4_0._dmgBtnClicks[iter_4_0] = gohelper.findChildButtonWithAudio(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. iter_4_0 .. "/click")
+	for i = 1, 2 do
+		self._lvBtns[i] = gohelper.findChild(self._btnlvrank.gameObject, "btn" .. tostring(i))
+		self._lvArrow[i] = gohelper.findChild(self._lvBtns[i], "txt/arrow").transform
+		self._rareBtns[i] = gohelper.findChild(self._btnrarerank.gameObject, "btn" .. tostring(i))
+		self._rareArrow[i] = gohelper.findChild(self._rareBtns[i], "txt/arrow").transform
+		self._classifyBtns[i] = gohelper.findChild(self._btnclassify.gameObject, "btn" .. tostring(i))
+		self._dmgUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/unselected")
+		self._dmgSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/selected")
+		self._dmgBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/click")
 
-		arg_4_0._dmgBtnClicks[iter_4_0]:AddClickListener(arg_4_0._dmgBtnOnClick, arg_4_0, iter_4_0)
+		self._dmgBtnClicks[i]:AddClickListener(self._dmgBtnOnClick, self, i)
 	end
 
-	for iter_4_1 = 1, 6 do
-		arg_4_0._attrUnselects[iter_4_1] = gohelper.findChild(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_4_1 .. "/unselected")
-		arg_4_0._attrSelects[iter_4_1] = gohelper.findChild(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_4_1 .. "/selected")
-		arg_4_0._attrBtnClicks[iter_4_1] = gohelper.findChildButtonWithAudio(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. iter_4_1 .. "/click")
+	for i = 1, 6 do
+		self._attrUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/unselected")
+		self._attrSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/selected")
+		self._attrBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/click")
 
-		arg_4_0._attrBtnClicks[iter_4_1]:AddClickListener(arg_4_0._attrBtnOnClick, arg_4_0, iter_4_1)
+		self._attrBtnClicks[i]:AddClickListener(self._attrBtnOnClick, self, i)
 	end
 
-	for iter_4_2 = 1, 6 do
-		arg_4_0._locationUnselects[iter_4_2] = gohelper.findChild(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_4_2 .. "/unselected")
-		arg_4_0._locationSelects[iter_4_2] = gohelper.findChild(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_4_2 .. "/selected")
-		arg_4_0._locationBtnClicks[iter_4_2] = gohelper.findChildButtonWithAudio(arg_4_0._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. iter_4_2 .. "/click")
+	for i = 1, 6 do
+		self._locationUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/unselected")
+		self._locationSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/selected")
+		self._locationBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/click")
 
-		arg_4_0._locationBtnClicks[iter_4_2]:AddClickListener(arg_4_0._locationBtnOnClick, arg_4_0, iter_4_2)
+		self._locationBtnClicks[i]:AddClickListener(self._locationBtnOnClick, self, i)
 	end
 
-	arg_4_0._attributevalues = {}
+	self._attributevalues = {}
 
-	for iter_4_3 = 1, 5 do
-		local var_4_0 = arg_4_0:getUserDataTb_()
+	for i = 1, 5 do
+		local o = self:getUserDataTb_()
 
-		var_4_0.value = gohelper.findChildText(arg_4_0._goattribute, "attribute" .. tostring(iter_4_3) .. "/txt_attribute")
-		var_4_0.name = gohelper.findChildText(arg_4_0._goattribute, "attribute" .. tostring(iter_4_3) .. "/name")
-		var_4_0.icon = gohelper.findChildImage(arg_4_0._goattribute, "attribute" .. tostring(iter_4_3) .. "/icon")
-		arg_4_0._attributevalues[iter_4_3] = var_4_0
+		o.value = gohelper.findChildText(self._goattribute, "attribute" .. tostring(i) .. "/txt_attribute")
+		o.name = gohelper.findChildText(self._goattribute, "attribute" .. tostring(i) .. "/name")
+		o.icon = gohelper.findChildImage(self._goattribute, "attribute" .. tostring(i) .. "/icon")
+		self._attributevalues[i] = o
 	end
 
-	arg_4_0._passiveskillitems = {}
+	self._passiveskillitems = {}
 
-	for iter_4_4 = 1, 3 do
-		local var_4_1 = arg_4_0:getUserDataTb_()
+	for i = 1, 3 do
+		local o = self:getUserDataTb_()
 
-		var_4_1.go = gohelper.findChild(arg_4_0._gopassiveskills, "passiveskill" .. tostring(iter_4_4))
-		var_4_1.on = gohelper.findChild(var_4_1.go, "on")
-		var_4_1.off = gohelper.findChild(var_4_1.go, "off")
-		arg_4_0._passiveskillitems[iter_4_4] = var_4_1
+		o.go = gohelper.findChild(self._gopassiveskills, "passiveskill" .. tostring(i))
+		o.on = gohelper.findChild(o.go, "on")
+		o.off = gohelper.findChild(o.go, "off")
+		self._passiveskillitems[i] = o
 	end
 
-	arg_4_0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goskill, CharacterSkillContainer)
+	self._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(self._goskill, CharacterSkillContainer)
 
-	gohelper.setActive(arg_4_0._gononecharacter, false)
-	gohelper.setActive(arg_4_0._gocharacterinfo, false)
+	gohelper.setActive(self._gononecharacter, false)
+	gohelper.setActive(self._gocharacterinfo, false)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._skillContainer then
-		arg_5_0._skillContainer:onDestroy()
+function Season123_1_8PickHeroDetailView:onDestroyView()
+	if self._skillContainer then
+		self._skillContainer:onDestroy()
 
-		arg_5_0._skillContainer = nil
+		self._skillContainer = nil
 	end
 
-	for iter_5_0 = 1, 2 do
-		arg_5_0._dmgBtnClicks[iter_5_0]:RemoveClickListener()
+	for i = 1, 2 do
+		self._dmgBtnClicks[i]:RemoveClickListener()
 	end
 
-	for iter_5_1 = 1, 6 do
-		arg_5_0._attrBtnClicks[iter_5_1]:RemoveClickListener()
+	for i = 1, 6 do
+		self._attrBtnClicks[i]:RemoveClickListener()
 	end
 
-	for iter_5_2 = 1, 6 do
-		arg_5_0._locationBtnClicks[iter_5_2]:RemoveClickListener()
+	for i = 1, 6 do
+		self._locationBtnClicks[i]:RemoveClickListener()
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.PickViewRefresh, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_6_0.refreshHeroListByFilter, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_6_0.refreshHeroListByFilter, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_6_0.refreshHeroListByFilter, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_6_0.refreshHeroListByFilter, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_6_0._onAttributeChanged, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_6_0._showCharacterRankUpView, arg_6_0)
-	arg_6_0:initStatus()
-	arg_6_0:refreshUI()
+function Season123_1_8PickHeroDetailView:onOpen()
+	self:addEventCb(Season123Controller.instance, Season123Event.PickViewRefresh, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self.refreshHeroListByFilter, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self.refreshHeroListByFilter, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self.refreshHeroListByFilter, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self.refreshHeroListByFilter, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, self._onAttributeChanged, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, self._showCharacterRankUpView, self)
+	self:initStatus()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
+function Season123_1_8PickHeroDetailView:onClose()
 	return
 end
 
-function var_0_0.initStatus(arg_8_0)
-	for iter_8_0 = 1, 6 do
-		arg_8_0._selectAttrs[iter_8_0] = false
+function Season123_1_8PickHeroDetailView:initStatus()
+	for i = 1, 6 do
+		self._selectAttrs[i] = false
 	end
 
-	for iter_8_1 = 1, 2 do
-		arg_8_0._selectDmgs[iter_8_1] = false
+	for i = 1, 2 do
+		self._selectDmgs[i] = false
 	end
 
-	for iter_8_2 = 1, 6 do
-		arg_8_0._selectLocations[iter_8_2] = false
+	for i = 1, 6 do
+		self._selectLocations[i] = false
 	end
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0._heroMO = Season123PickHeroModel.instance:getSelectedHeroMO()
+function Season123_1_8PickHeroDetailView:refreshUI()
+	self._heroMO = Season123PickHeroModel.instance:getSelectedHeroMO()
 
-	if arg_9_0._heroMO then
-		gohelper.setActive(arg_9_0._gononecharacter, false)
-		gohelper.setActive(arg_9_0._gocharacterinfo, true)
-		arg_9_0:_refreshSkill()
-		arg_9_0:_refreshMainInfo()
-		arg_9_0:_refreshAttribute()
-		arg_9_0:_refreshPassiveSkill()
+	if self._heroMO then
+		gohelper.setActive(self._gononecharacter, false)
+		gohelper.setActive(self._gocharacterinfo, true)
+		self:_refreshSkill()
+		self:_refreshMainInfo()
+		self:_refreshAttribute()
+		self:_refreshPassiveSkill()
 	else
-		gohelper.setActive(arg_9_0._gononecharacter, true)
-		gohelper.setActive(arg_9_0._gocharacterinfo, false)
+		gohelper.setActive(self._gononecharacter, true)
+		gohelper.setActive(self._gocharacterinfo, false)
 	end
 
-	arg_9_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._refreshMainInfo(arg_10_0)
-	if arg_10_0._heroMO then
-		UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagecareericon, "sx_biandui_" .. tostring(arg_10_0._heroMO.config.career))
-		UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagedmgtype, "dmgtype" .. tostring(arg_10_0._heroMO.config.dmgType))
+function Season123_1_8PickHeroDetailView:_refreshMainInfo()
+	if self._heroMO then
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "sx_biandui_" .. tostring(self._heroMO.config.career))
+		UISpriteSetMgr.instance:setCommonSprite(self._imagedmgtype, "dmgtype" .. tostring(self._heroMO.config.dmgType))
 
-		arg_10_0._txtname.text = arg_10_0._heroMO.config.name
-		arg_10_0._txtnameen.text = arg_10_0._heroMO.config.nameEng
+		self._txtname.text = self._heroMO.config.name
+		self._txtnameen.text = self._heroMO.config.nameEng
 
-		local var_10_0 = CharacterModel.instance:getrankEffects(arg_10_0._heroMO.heroId, arg_10_0._heroMO.rank)[1]
-		local var_10_1 = HeroConfig.instance:getShowLevel(arg_10_0._heroMO.level)
-		local var_10_2 = HeroConfig.instance:getShowLevel(var_10_0)
+		local maxLevel = CharacterModel.instance:getrankEffects(self._heroMO.heroId, self._heroMO.rank)[1]
+		local showLevel = HeroConfig.instance:getShowLevel(self._heroMO.level)
+		local showMaxLevel = HeroConfig.instance:getShowLevel(maxLevel)
 
-		arg_10_0._txtlevel.text = tostring(var_10_1)
-		arg_10_0._txtlevelmax.text = string.format("/%d", var_10_2)
+		self._txtlevel.text = tostring(showLevel)
+		self._txtlevelmax.text = string.format("/%d", showMaxLevel)
 
-		local var_10_3 = {}
+		local tags = {}
 
-		if not string.nilorempty(arg_10_0._heroMO.config.battleTag) then
-			var_10_3 = string.split(arg_10_0._heroMO.config.battleTag, "#")
+		if not string.nilorempty(self._heroMO.config.battleTag) then
+			tags = string.split(self._heroMO.config.battleTag, "#")
 		end
 
-		for iter_10_0 = 1, #var_10_3 do
-			local var_10_4 = arg_10_0._careerGOs[iter_10_0]
+		for i = 1, #tags do
+			local careerTable = self._careerGOs[i]
 
-			if not var_10_4 then
-				var_10_4 = arg_10_0:getUserDataTb_()
-				var_10_4.go = gohelper.cloneInPlace(arg_10_0._gospecialitem, "item" .. iter_10_0)
-				var_10_4.textfour = gohelper.findChildText(var_10_4.go, "#go_fourword/name")
-				var_10_4.textthree = gohelper.findChildText(var_10_4.go, "#go_threeword/name")
-				var_10_4.texttwo = gohelper.findChildText(var_10_4.go, "#go_twoword/name")
-				var_10_4.containerfour = gohelper.findChild(var_10_4.go, "#go_fourword")
-				var_10_4.containerthree = gohelper.findChild(var_10_4.go, "#go_threeword")
-				var_10_4.containertwo = gohelper.findChild(var_10_4.go, "#go_twoword")
+			if not careerTable then
+				careerTable = self:getUserDataTb_()
+				careerTable.go = gohelper.cloneInPlace(self._gospecialitem, "item" .. i)
+				careerTable.textfour = gohelper.findChildText(careerTable.go, "#go_fourword/name")
+				careerTable.textthree = gohelper.findChildText(careerTable.go, "#go_threeword/name")
+				careerTable.texttwo = gohelper.findChildText(careerTable.go, "#go_twoword/name")
+				careerTable.containerfour = gohelper.findChild(careerTable.go, "#go_fourword")
+				careerTable.containerthree = gohelper.findChild(careerTable.go, "#go_threeword")
+				careerTable.containertwo = gohelper.findChild(careerTable.go, "#go_twoword")
 
-				table.insert(arg_10_0._careerGOs, var_10_4)
+				table.insert(self._careerGOs, careerTable)
 			end
 
-			local var_10_5 = HeroConfig.instance:getBattleTagConfigCO(var_10_3[iter_10_0]).tagName
-			local var_10_6 = GameUtil.utf8len(var_10_5)
+			local desc = HeroConfig.instance:getBattleTagConfigCO(tags[i]).tagName
+			local wordCount = GameUtil.utf8len(desc)
 
-			gohelper.setActive(var_10_4.containertwo, var_10_6 <= 2)
-			gohelper.setActive(var_10_4.containerthree, var_10_6 == 3)
-			gohelper.setActive(var_10_4.containerfour, var_10_6 >= 4)
+			gohelper.setActive(careerTable.containertwo, wordCount <= 2)
+			gohelper.setActive(careerTable.containerthree, wordCount == 3)
+			gohelper.setActive(careerTable.containerfour, wordCount >= 4)
 
-			if var_10_6 <= 2 then
-				var_10_4.texttwo.text = var_10_5
-			elseif var_10_6 == 3 then
-				var_10_4.textthree.text = var_10_5
+			if wordCount <= 2 then
+				careerTable.texttwo.text = desc
+			elseif wordCount == 3 then
+				careerTable.textthree.text = desc
 			else
-				var_10_4.textfour.text = var_10_5
+				careerTable.textfour.text = desc
 			end
 
-			gohelper.setActive(var_10_4.go, true)
+			gohelper.setActive(careerTable.go, true)
 		end
 
-		for iter_10_1 = #var_10_3 + 1, #arg_10_0._careerGOs do
-			gohelper.setActive(arg_10_0._careerGOs[iter_10_1].go, false)
-		end
-	end
-end
-
-function var_0_0._refreshAttribute(arg_11_0)
-	if arg_11_0._heroMO then
-		local var_11_0 = arg_11_0._heroMO:getTotalBaseAttrDict(arg_11_0._equips)
-
-		for iter_11_0, iter_11_1 in ipairs(CharacterEnum.BaseAttrIdList) do
-			local var_11_1 = HeroConfig.instance:getHeroAttributeCO(iter_11_1)
-
-			arg_11_0._attributevalues[iter_11_0].name.text = var_11_1.name
-			arg_11_0._attributevalues[iter_11_0].value.text = var_11_0[iter_11_1]
-
-			CharacterController.instance:SetAttriIcon(arg_11_0._attributevalues[iter_11_0].icon, iter_11_1)
+		for i = #tags + 1, #self._careerGOs do
+			gohelper.setActive(self._careerGOs[i].go, false)
 		end
 	end
 end
 
-function var_0_0._refreshPassiveSkill(arg_12_0)
-	if not arg_12_0._heroMO then
+function Season123_1_8PickHeroDetailView:_refreshAttribute()
+	if self._heroMO then
+		local attrDict = self._heroMO:getTotalBaseAttrDict(self._equips)
+
+		for index, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+			local co = HeroConfig.instance:getHeroAttributeCO(attrId)
+
+			self._attributevalues[index].name.text = co.name
+			self._attributevalues[index].value.text = attrDict[attrId]
+
+			CharacterController.instance:SetAttriIcon(self._attributevalues[index].icon, attrId)
+		end
+	end
+end
+
+function Season123_1_8PickHeroDetailView:_refreshPassiveSkill()
+	if not self._heroMO then
 		return
 	end
 
-	local var_12_0 = SkillConfig.instance:getpassiveskillsCO(arg_12_0._heroMO.heroId)
-	local var_12_1 = var_12_0[1].skillPassive
-	local var_12_2 = lua_skill.configDict[var_12_1]
+	local pskills = SkillConfig.instance:getpassiveskillsCO(self._heroMO.heroId)
+	local firstSkill = pskills[1]
+	local skillId = firstSkill.skillPassive
+	local passiveSkillConfig = lua_skill.configDict[skillId]
 
-	if not var_12_2 then
-		logError("找不到角色被动技能, skillId: " .. tostring(var_12_1))
+	if not passiveSkillConfig then
+		logError("找不到角色被动技能, skillId: " .. tostring(skillId))
 	else
-		arg_12_0._txtpassivename.text = var_12_2.name
+		self._txtpassivename.text = passiveSkillConfig.name
 	end
 
-	for iter_12_0 = 1, #var_12_0 do
-		local var_12_3 = CharacterModel.instance:isPassiveUnlockByHeroMo(arg_12_0._heroMO, iter_12_0)
+	for i = 1, #pskills do
+		local unlock = CharacterModel.instance:isPassiveUnlockByHeroMo(self._heroMO, i)
 
-		gohelper.setActive(arg_12_0._passiveskillitems[iter_12_0].on, var_12_3)
-		gohelper.setActive(arg_12_0._passiveskillitems[iter_12_0].off, not var_12_3)
-		gohelper.setActive(arg_12_0._passiveskillitems[iter_12_0].go, true)
+		gohelper.setActive(self._passiveskillitems[i].on, unlock)
+		gohelper.setActive(self._passiveskillitems[i].off, not unlock)
+		gohelper.setActive(self._passiveskillitems[i].go, true)
 	end
 
-	for iter_12_1 = #var_12_0 + 1, #arg_12_0._passiveskillitems do
-		gohelper.setActive(arg_12_0._passiveskillitems[iter_12_1].go, false)
+	for i = #pskills + 1, #self._passiveskillitems do
+		gohelper.setActive(self._passiveskillitems[i].go, false)
 	end
 end
 
-function var_0_0._refreshSkill(arg_13_0)
-	arg_13_0._skillContainer:onUpdateMO(arg_13_0._heroMO and arg_13_0._heroMO.heroId, false, arg_13_0._heroMO)
+function Season123_1_8PickHeroDetailView:_refreshSkill()
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, false, self._heroMO)
 end
 
-function var_0_0._refreshBtnIcon(arg_14_0)
-	local var_14_0 = CharacterModel.instance:getRankState()
-	local var_14_1 = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
+function Season123_1_8PickHeroDetailView:_refreshBtnIcon()
+	local state = CharacterModel.instance:getRankState()
+	local tag = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
 
-	gohelper.setActive(arg_14_0._lvBtns[1], var_14_1 ~= 1)
-	gohelper.setActive(arg_14_0._lvBtns[2], var_14_1 == 1)
-	gohelper.setActive(arg_14_0._rareBtns[1], var_14_1 ~= 2)
-	gohelper.setActive(arg_14_0._rareBtns[2], var_14_1 == 2)
+	gohelper.setActive(self._lvBtns[1], tag ~= 1)
+	gohelper.setActive(self._lvBtns[2], tag == 1)
+	gohelper.setActive(self._rareBtns[1], tag ~= 2)
+	gohelper.setActive(self._rareBtns[2], tag == 2)
 
-	local var_14_2 = false
+	local hasFilter = false
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._selectDmgs) do
-		if iter_14_1 then
-			var_14_2 = true
+	for _, v in pairs(self._selectDmgs) do
+		if v then
+			hasFilter = true
 		end
 	end
 
-	for iter_14_2, iter_14_3 in pairs(arg_14_0._selectAttrs) do
-		if iter_14_3 then
-			var_14_2 = true
+	for _, v in pairs(self._selectAttrs) do
+		if v then
+			hasFilter = true
 		end
 	end
 
-	gohelper.setActive(arg_14_0._classifyBtns[1], not var_14_2)
-	gohelper.setActive(arg_14_0._classifyBtns[2], var_14_2)
-	transformhelper.setLocalScale(arg_14_0._lvArrow[1], 1, var_14_0[1], 1)
-	transformhelper.setLocalScale(arg_14_0._lvArrow[2], 1, var_14_0[1], 1)
-	transformhelper.setLocalScale(arg_14_0._rareArrow[1], 1, var_14_0[2], 1)
-	transformhelper.setLocalScale(arg_14_0._rareArrow[2], 1, var_14_0[2], 1)
+	gohelper.setActive(self._classifyBtns[1], not hasFilter)
+	gohelper.setActive(self._classifyBtns[2], hasFilter)
+	transformhelper.setLocalScale(self._lvArrow[1], 1, state[1], 1)
+	transformhelper.setLocalScale(self._lvArrow[2], 1, state[1], 1)
+	transformhelper.setLocalScale(self._rareArrow[1], 1, state[2], 1)
+	transformhelper.setLocalScale(self._rareArrow[2], 1, state[2], 1)
 end
 
-function var_0_0._btnattributeOnClick(arg_15_0)
-	if arg_15_0._heroMO then
-		local var_15_0 = {}
+function Season123_1_8PickHeroDetailView:_btnattributeOnClick()
+	if self._heroMO then
+		local info = {}
 
-		var_15_0.tag = "attribute"
-		var_15_0.heroid = arg_15_0._heroMO.heroId
-		var_15_0.equips = arg_15_0._equips
-		var_15_0.showExtraAttr = true
-		var_15_0.fromHeroGroupEditView = true
+		info.tag = "attribute"
+		info.heroid = self._heroMO.heroId
+		info.equips = self._equips
+		info.showExtraAttr = true
+		info.fromHeroGroupEditView = true
 
-		CharacterController.instance:openCharacterTipView(var_15_0)
+		CharacterController.instance:openCharacterTipView(info)
 	end
 end
 
-function var_0_0._btncharacterOnClick(arg_16_0)
-	if arg_16_0._heroMO then
-		local var_16_0 = Season123PickHeroModel.instance.heroMOList or {}
+function Season123_1_8PickHeroDetailView:_btncharacterOnClick()
+	if self._heroMO then
+		local heroMoList = Season123PickHeroModel.instance.heroMOList or {}
 
-		if arg_16_0._heroMO:isOtherPlayerHero() then
-			local var_16_1 = Season123HeroGroupEditModel.instance:getEquipMOByHeroUid(arg_16_0._heroMO.uid)
+		if self._heroMO:isOtherPlayerHero() then
+			local equipMO = Season123HeroGroupEditModel.instance:getEquipMOByHeroUid(self._heroMO.uid)
 
-			if var_16_1 then
-				arg_16_0._heroMO:setOtherPlayerEquipMo(var_16_1)
+			if equipMO then
+				self._heroMO:setOtherPlayerEquipMo(equipMO)
 			end
 		end
 
-		CharacterController.instance:openCharacterView(arg_16_0._heroMO, var_16_0)
+		CharacterController.instance:openCharacterView(self._heroMO, heroMoList)
 	end
 end
 
-function var_0_0._btnpassiveskillOnClick(arg_17_0)
-	if not arg_17_0._heroMO then
+function Season123_1_8PickHeroDetailView:_btnpassiveskillOnClick()
+	if not self._heroMO then
 		return
 	end
 
-	local var_17_0 = {}
+	local info = {}
 
-	var_17_0.tag = "passiveskill"
-	var_17_0.heroid = arg_17_0._heroMO.heroId
-	var_17_0.tipPos = Vector2.New(851, -59)
-	var_17_0.buffTipsX = 1603
-	var_17_0.anchorParams = {
+	info.tag = "passiveskill"
+	info.heroid = self._heroMO.heroId
+	info.tipPos = Vector2.New(851, -59)
+	info.buffTipsX = 1603
+	info.anchorParams = {
 		Vector2.New(0, 0.5),
 		Vector2.New(0, 0.5)
 	}
 
-	CharacterController.instance:openCharacterTipView(var_17_0)
+	CharacterController.instance:openCharacterTipView(info)
 end
 
-function var_0_0._refreshFilterView(arg_18_0)
-	for iter_18_0 = 1, 2 do
-		gohelper.setActive(arg_18_0._dmgUnselects[iter_18_0], not arg_18_0._selectDmgs[iter_18_0])
-		gohelper.setActive(arg_18_0._dmgSelects[iter_18_0], arg_18_0._selectDmgs[iter_18_0])
+function Season123_1_8PickHeroDetailView:_refreshFilterView()
+	for i = 1, 2 do
+		gohelper.setActive(self._dmgUnselects[i], not self._selectDmgs[i])
+		gohelper.setActive(self._dmgSelects[i], self._selectDmgs[i])
 	end
 
-	for iter_18_1 = 1, 6 do
-		gohelper.setActive(arg_18_0._attrUnselects[iter_18_1], not arg_18_0._selectAttrs[iter_18_1])
-		gohelper.setActive(arg_18_0._attrSelects[iter_18_1], arg_18_0._selectAttrs[iter_18_1])
+	for i = 1, 6 do
+		gohelper.setActive(self._attrUnselects[i], not self._selectAttrs[i])
+		gohelper.setActive(self._attrSelects[i], self._selectAttrs[i])
 	end
 
-	for iter_18_2 = 1, 6 do
-		gohelper.setActive(arg_18_0._locationUnselects[iter_18_2], not arg_18_0._selectLocations[iter_18_2])
-		gohelper.setActive(arg_18_0._locationSelects[iter_18_2], arg_18_0._selectLocations[iter_18_2])
+	for i = 1, 6 do
+		gohelper.setActive(self._locationUnselects[i], not self._selectLocations[i])
+		gohelper.setActive(self._locationSelects[i], self._selectLocations[i])
 	end
 end
 
-function var_0_0.refreshHeroListByFilter(arg_19_0)
-	local var_19_0 = {}
+function Season123_1_8PickHeroDetailView:refreshHeroListByFilter()
+	local dmgs = {}
 
-	for iter_19_0 = 1, 2 do
-		if arg_19_0._selectDmgs[iter_19_0] then
-			table.insert(var_19_0, iter_19_0)
+	for i = 1, 2 do
+		if self._selectDmgs[i] then
+			table.insert(dmgs, i)
 		end
 	end
 
-	local var_19_1 = {}
+	local careers = {}
 
-	for iter_19_1 = 1, 6 do
-		if arg_19_0._selectAttrs[iter_19_1] then
-			table.insert(var_19_1, iter_19_1)
+	for i = 1, 6 do
+		if self._selectAttrs[i] then
+			table.insert(careers, i)
 		end
 	end
 
-	local var_19_2 = {}
+	local locations = {}
 
-	for iter_19_2 = 1, 6 do
-		if arg_19_0._selectLocations[iter_19_2] then
-			table.insert(var_19_2, iter_19_2)
+	for i = 1, 6 do
+		if self._selectLocations[i] then
+			table.insert(locations, i)
 		end
 	end
 
-	if #var_19_0 == 0 then
-		var_19_0 = {
+	if #dmgs == 0 then
+		dmgs = {
 			1,
 			2
 		}
 	end
 
-	if #var_19_1 == 0 then
-		var_19_1 = {
+	if #careers == 0 then
+		careers = {
 			1,
 			2,
 			3,
@@ -464,8 +467,8 @@ function var_0_0.refreshHeroListByFilter(arg_19_0)
 		}
 	end
 
-	if #var_19_2 == 0 then
-		var_19_2 = {
+	if #locations == 0 then
+		locations = {
 			1,
 			2,
 			3,
@@ -475,106 +478,106 @@ function var_0_0.refreshHeroListByFilter(arg_19_0)
 		}
 	end
 
-	local var_19_3 = {
-		dmgs = var_19_0,
-		careers = var_19_1,
-		locations = var_19_2
-	}
+	local filterParam = {}
 
-	CharacterModel.instance:filterCardListByDmgAndCareer(var_19_3, false, CharacterEnum.FilterType.HeroGroup)
-	arg_19_0:_refreshBtnIcon()
+	filterParam.dmgs = dmgs
+	filterParam.careers = careers
+	filterParam.locations = locations
+
+	CharacterModel.instance:filterCardListByDmgAndCareer(filterParam, false, CharacterEnum.FilterType.HeroGroup)
+	self:_refreshBtnIcon()
 	Season123PickHeroController.instance:updateFilter()
 end
 
-function var_0_0._onAttributeChanged(arg_20_0, arg_20_1, arg_20_2)
-	CharacterModel.instance:setFakeLevel(arg_20_2, arg_20_1)
+function Season123_1_8PickHeroDetailView:_onAttributeChanged(level, heroId)
+	CharacterModel.instance:setFakeLevel(heroId, level)
 end
 
-function var_0_0._showCharacterRankUpView(arg_21_0, arg_21_1)
-	arg_21_1()
+function Season123_1_8PickHeroDetailView:_showCharacterRankUpView(func)
+	func()
 end
 
-function var_0_0._attrBtnOnClick(arg_22_0, arg_22_1)
-	arg_22_0._selectAttrs[arg_22_1] = not arg_22_0._selectAttrs[arg_22_1]
+function Season123_1_8PickHeroDetailView:_attrBtnOnClick(i)
+	self._selectAttrs[i] = not self._selectAttrs[i]
 
-	arg_22_0:_refreshFilterView()
+	self:_refreshFilterView()
 end
 
-function var_0_0._dmgBtnOnClick(arg_23_0, arg_23_1)
-	if not arg_23_0._selectDmgs[arg_23_1] then
-		arg_23_0._selectDmgs[3 - arg_23_1] = arg_23_0._selectDmgs[arg_23_1]
+function Season123_1_8PickHeroDetailView:_dmgBtnOnClick(i)
+	if not self._selectDmgs[i] then
+		self._selectDmgs[3 - i] = self._selectDmgs[i]
 	end
 
-	arg_23_0._selectDmgs[arg_23_1] = not arg_23_0._selectDmgs[arg_23_1]
+	self._selectDmgs[i] = not self._selectDmgs[i]
 
-	arg_23_0:_refreshFilterView()
+	self:_refreshFilterView()
 end
 
-function var_0_0._locationBtnOnClick(arg_24_0, arg_24_1)
-	arg_24_0._selectLocations[arg_24_1] = not arg_24_0._selectLocations[arg_24_1]
+function Season123_1_8PickHeroDetailView:_locationBtnOnClick(i)
+	self._selectLocations[i] = not self._selectLocations[i]
 
-	arg_24_0:_refreshFilterView()
+	self:_refreshFilterView()
 end
 
-function var_0_0._btncloseFilterViewOnClick(arg_25_0)
-	arg_25_0._selectDmgs = LuaUtil.deepCopy(arg_25_0._curDmgs)
-	arg_25_0._selectAttrs = LuaUtil.deepCopy(arg_25_0._curAttrs)
-	arg_25_0._selectLocations = LuaUtil.deepCopy(arg_25_0._curLocations)
+function Season123_1_8PickHeroDetailView:_btncloseFilterViewOnClick()
+	self._selectDmgs = LuaUtil.deepCopy(self._curDmgs)
+	self._selectAttrs = LuaUtil.deepCopy(self._curAttrs)
+	self._selectLocations = LuaUtil.deepCopy(self._curLocations)
 
-	arg_25_0:_refreshBtnIcon()
-	gohelper.setActive(arg_25_0._gosearchfilter, false)
+	self:_refreshBtnIcon()
+	gohelper.setActive(self._gosearchfilter, false)
 end
 
-function var_0_0._btnclassifyOnClick(arg_26_0)
-	gohelper.setActive(arg_26_0._gosearchfilter, true)
-	arg_26_0:_refreshFilterView()
+function Season123_1_8PickHeroDetailView:_btnclassifyOnClick()
+	gohelper.setActive(self._gosearchfilter, true)
+	self:_refreshFilterView()
 end
 
-function var_0_0._btnresetOnClick(arg_27_0)
-	for iter_27_0 = 1, 6 do
-		arg_27_0._selectAttrs[iter_27_0] = false
+function Season123_1_8PickHeroDetailView:_btnresetOnClick()
+	for i = 1, 6 do
+		self._selectAttrs[i] = false
 	end
 
-	for iter_27_1 = 1, 2 do
-		arg_27_0._selectDmgs[iter_27_1] = false
+	for i = 1, 2 do
+		self._selectDmgs[i] = false
 	end
 
-	for iter_27_2 = 1, 6 do
-		arg_27_0._selectLocations[iter_27_2] = false
+	for i = 1, 6 do
+		self._selectLocations[i] = false
 	end
 
-	arg_27_0:_refreshBtnIcon()
-	arg_27_0:_refreshFilterView()
+	self:_refreshBtnIcon()
+	self:_refreshFilterView()
 end
 
-function var_0_0._btnokOnClick(arg_28_0)
-	gohelper.setActive(arg_28_0._gosearchfilter, false)
-	arg_28_0:refreshHeroListByFilter()
+function Season123_1_8PickHeroDetailView:_btnokOnClick()
+	gohelper.setActive(self._gosearchfilter, false)
+	self:refreshHeroListByFilter()
 
-	arg_28_0._curDmgs = LuaUtil.deepCopy(arg_28_0._selectDmgs)
-	arg_28_0._curAttrs = LuaUtil.deepCopy(arg_28_0._selectAttrs)
-	arg_28_0._curLocations = LuaUtil.deepCopy(arg_28_0._selectLocations)
+	self._curDmgs = LuaUtil.deepCopy(self._selectDmgs)
+	self._curAttrs = LuaUtil.deepCopy(self._selectAttrs)
+	self._curLocations = LuaUtil.deepCopy(self._selectLocations)
 
 	ViewMgr.instance:closeView(ViewName.CharacterLevelUpView)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 end
 
-function var_0_0._btnexskillrankOnClick(arg_29_0)
+function Season123_1_8PickHeroDetailView:_btnexskillrankOnClick()
 	CharacterModel.instance:setCardListByExSkill(false, CharacterEnum.FilterType.HeroGroup)
 	Season123PickHeroController.instance:updateFilter()
-	arg_29_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnlvrankOnClick(arg_30_0)
+function Season123_1_8PickHeroDetailView:_btnlvrankOnClick()
 	CharacterModel.instance:setCardListByLevel(false, CharacterEnum.FilterType.HeroGroup)
 	Season123PickHeroController.instance:updateFilter()
-	arg_30_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-function var_0_0._btnrarerankOnClick(arg_31_0)
+function Season123_1_8PickHeroDetailView:_btnrarerankOnClick()
 	CharacterModel.instance:setCardListByRare(false, CharacterEnum.FilterType.HeroGroup)
 	Season123PickHeroController.instance:updateFilter()
-	arg_31_0:_refreshBtnIcon()
+	self:_refreshBtnIcon()
 end
 
-return var_0_0
+return Season123_1_8PickHeroDetailView

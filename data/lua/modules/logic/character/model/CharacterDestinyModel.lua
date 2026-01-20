@@ -1,154 +1,166 @@
-﻿module("modules.logic.character.model.CharacterDestinyModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/CharacterDestinyModel.lua
 
-local var_0_0 = class("CharacterDestinyModel", BaseModel)
+module("modules.logic.character.model.CharacterDestinyModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local CharacterDestinyModel = class("CharacterDestinyModel", BaseModel)
+
+function CharacterDestinyModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function CharacterDestinyModel:reInit()
 	return
 end
 
-function var_0_0.onRankUp(arg_3_0, arg_3_1)
+function CharacterDestinyModel:onRankUp(heroId)
 	return
 end
 
-function var_0_0.getCurSlotAttrInfos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = {}
-	local var_4_1 = {}
-	local var_4_2 = {}
-	local var_4_3 = CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(arg_4_1, arg_4_2, arg_4_3)
-	local var_4_4 = CharacterDestinyConfig.instance:getNextDestinySlotCo(arg_4_1, arg_4_2, arg_4_3)
-	local var_4_5 = CharacterDestinyConfig.instance:getLockAttr(arg_4_1, arg_4_2)
-	local var_4_6 = {}
+function CharacterDestinyModel:getCurSlotAttrInfos(heroId, rank, level)
+	local attrInfos = {}
+	local specialAttrInfos = {}
+	local lockAttrInfos = {}
+	local curAddAttr = CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(heroId, rank, level)
+	local nextCo = CharacterDestinyConfig.instance:getNextDestinySlotCo(heroId, rank, level)
+	local lockAttr = CharacterDestinyConfig.instance:getLockAttr(heroId, rank)
+	local nextAttrInfo = {}
 
-	if var_4_4 then
-		local var_4_7 = GameUtil.splitString2(var_4_4.effect, true)
+	if nextCo then
+		local effects = GameUtil.splitString2(nextCo.effect, true)
 
-		for iter_4_0, iter_4_1 in ipairs(var_4_7) do
-			local var_4_8 = HeroConfig.instance:getHeroAttributeCO(iter_4_1[1]).showType == 1 and iter_4_1[2] * 0.1 or iter_4_1[2]
+		for _, v in ipairs(effects) do
+			local attrCo = HeroConfig.instance:getHeroAttributeCO(v[1])
+			local num = attrCo.showType == 1 and v[2] * 0.1 or v[2]
 
-			var_4_6[iter_4_1[1]] = var_4_8
+			nextAttrInfo[v[1]] = num
 		end
 	end
 
-	if arg_4_2 > 0 then
-		if var_4_3 then
-			for iter_4_2, iter_4_3 in pairs(var_4_3) do
-				if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, iter_4_2) then
-					local var_4_9 = {
-						attrId = iter_4_2,
-						curNum = var_4_3[iter_4_2],
-						nextNum = var_4_6[iter_4_2]
-					}
+	if rank > 0 then
+		if curAddAttr then
+			for attrId, _ in pairs(curAddAttr) do
+				if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, attrId) then
+					local info = {}
 
-					var_4_9.isSpecial = false
+					info.attrId = attrId
+					info.curNum = curAddAttr[attrId]
+					info.nextNum = nextAttrInfo[attrId]
+					info.isSpecial = false
 
-					table.insert(var_4_0, var_4_9)
+					table.insert(attrInfos, info)
 				else
-					local var_4_10 = {
-						attrId = iter_4_2,
-						curNum = var_4_3[iter_4_2],
-						nextNum = var_4_6[iter_4_2]
-					}
+					local info = {}
 
-					var_4_10.isSpecial = true
+					info.attrId = attrId
+					info.curNum = curAddAttr[attrId]
+					info.nextNum = nextAttrInfo[attrId]
+					info.isSpecial = true
 
-					table.insert(var_4_1, var_4_10)
+					table.insert(specialAttrInfos, info)
 				end
 			end
 
-			table.sort(var_4_0, arg_4_0.sortAttr)
-			table.sort(var_4_1, arg_4_0.sortAttr)
+			table.sort(attrInfos, self.sortAttr)
+			table.sort(specialAttrInfos, self.sortAttr)
 		end
 	else
-		if not var_4_2[1] then
-			var_4_2[1] = {}
+		if not lockAttrInfos[1] then
+			lockAttrInfos[1] = {}
 		end
 
-		for iter_4_4, iter_4_5 in pairs(var_4_6) do
-			if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, iter_4_4) then
-				local var_4_11 = {
-					attrId = iter_4_4,
-					curNum = iter_4_5
-				}
+		for attrId, num in pairs(nextAttrInfo) do
+			if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, attrId) then
+				local info = {}
 
-				table.insert(var_4_2[1], var_4_11)
+				info.attrId = attrId
+				info.curNum = num
+
+				table.insert(lockAttrInfos[1], info)
 			end
 		end
 	end
 
-	if var_4_5 then
-		for iter_4_6, iter_4_7 in pairs(var_4_5) do
-			for iter_4_8, iter_4_9 in pairs(iter_4_7) do
-				local var_4_12 = {
-					attrId = iter_4_8,
-					curNum = iter_4_9
-				}
+	if lockAttr then
+		for rank, attrs in pairs(lockAttr) do
+			for attrId, curNum in pairs(attrs) do
+				local info = {}
 
-				if not arg_4_0:__isHadAttr(var_4_0, iter_4_8) and not arg_4_0:__isHadAttr(var_4_1, iter_4_8) and not arg_4_0:_isHadAttr(var_4_2, iter_4_8) then
-					if not var_4_2[iter_4_6] then
-						var_4_2[iter_4_6] = {}
+				info.attrId = attrId
+				info.curNum = curNum
+
+				local isNewAttr = not self:__isHadAttr(attrInfos, attrId) and not self:__isHadAttr(specialAttrInfos, attrId) and not self:_isHadAttr(lockAttrInfos, attrId)
+
+				if isNewAttr then
+					if not lockAttrInfos[rank] then
+						lockAttrInfos[rank] = {}
 					end
 
-					table.insert(var_4_2[iter_4_6], var_4_12)
+					table.insert(lockAttrInfos[rank], info)
 				end
 			end
 		end
 
-		for iter_4_10, iter_4_11 in pairs(var_4_2) do
-			table.sort(iter_4_11, arg_4_0.sortAttr)
+		for _, infos in pairs(lockAttrInfos) do
+			table.sort(infos, self.sortAttr)
 		end
 	end
 
-	return var_4_0, var_4_1, var_4_2
+	return attrInfos, specialAttrInfos, lockAttrInfos
 end
 
-function var_0_0.sortAttr(arg_5_0, arg_5_1)
-	local var_5_0 = LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, arg_5_0.attrId)
+function CharacterDestinyModel.sortAttr(info1, info2)
+	local isNormalAttr1 = LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, info1.attrId)
+	local isNormalAttr2 = LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, info2.attrId)
 
-	if var_5_0 ~= LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, arg_5_1.attrId) then
-		return var_5_0
+	if isNormalAttr1 ~= isNormalAttr2 then
+		return isNormalAttr1
 	end
 
-	return arg_5_0.attrId < arg_5_1.attrId
+	return info1.attrId < info2.attrId
 end
 
-function var_0_0._isHadAttr(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 then
-		for iter_6_0, iter_6_1 in pairs(arg_6_1) do
-			if arg_6_0:__isHadAttr(iter_6_1, arg_6_2) then
+function CharacterDestinyModel:_isHadAttr(tb, attrId)
+	if tb then
+		for _, info in pairs(tb) do
+			if self:__isHadAttr(info, attrId) then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.__isHadAttr(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-			if iter_7_1.attrId == arg_7_2 then
+function CharacterDestinyModel:__isHadAttr(tb, attrId)
+	if tb then
+		for _, info in ipairs(tb) do
+			if info.attrId == attrId then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.destinyUpBaseReverseParseAttr(arg_8_0, arg_8_1)
-	if not arg_8_0._reverseParseBaseAttrList then
-		arg_8_0._reverseParseBaseAttrList = {}
+function CharacterDestinyModel:destinyUpBaseReverseParseAttr(attrId)
+	if not self._reverseParseBaseAttrList then
+		self._reverseParseBaseAttrList = {}
 
-		for iter_8_0, iter_8_1 in pairs(CharacterDestinyEnum.DestinyUpBaseParseAttr) do
-			for iter_8_2, iter_8_3 in ipairs(iter_8_1) do
-				arg_8_0._reverseParseBaseAttrList[iter_8_3] = iter_8_0
+		for k, v in pairs(CharacterDestinyEnum.DestinyUpBaseParseAttr) do
+			for _, _attrId in ipairs(v) do
+				self._reverseParseBaseAttrList[_attrId] = k
 			end
 		end
 	end
 
-	return arg_8_0._reverseParseBaseAttrList[arg_8_1]
+	return self._reverseParseBaseAttrList[attrId]
 end
 
-var_0_0.instance = var_0_0.New()
+function CharacterDestinyModel:setShowReshape(isShow)
+	self._isShowReshape = isShow
+end
 
-return var_0_0
+function CharacterDestinyModel:getIsShowReshape()
+	return self._isShowReshape
+end
+
+CharacterDestinyModel.instance = CharacterDestinyModel.New()
+
+return CharacterDestinyModel

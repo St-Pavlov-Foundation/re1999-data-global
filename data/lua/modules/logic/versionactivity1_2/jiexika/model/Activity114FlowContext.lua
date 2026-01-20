@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114FlowContext", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/model/Activity114FlowContext.lua
 
-local var_0_0 = class("Activity114FlowContext")
+module("modules.logic.versionactivity1_2.jiexika.model.Activity114FlowContext", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.type = 0
-	arg_1_0.eventId = 0
-	arg_1_0.eventCo = nil
-	arg_1_0.nowDay = 0
-	arg_1_0.nowRound = 0
-	arg_1_0.nowWeek = 0
-	arg_1_0.result = 0
-	arg_1_0.storyId = 0
-	arg_1_0.storyType = 0
-	arg_1_0.storyWorkEnd = nil
-	arg_1_0.transitionId = nil
-	arg_1_0.resultBonus = {}
-	arg_1_0.diceResult = {}
-	arg_1_0.realVerify = 0
-	arg_1_0.preAttention = 0
-	arg_1_0.preAttrs = {}
-	arg_1_0.totalScore = 0
-	arg_1_0.answerIndex = 0
-	arg_1_0.answerIds = {}
+local Activity114FlowContext = class("Activity114FlowContext")
+
+function Activity114FlowContext:ctor()
+	self.type = 0
+	self.eventId = 0
+	self.eventCo = nil
+	self.nowDay = 0
+	self.nowRound = 0
+	self.nowWeek = 0
+	self.result = 0
+	self.storyId = 0
+	self.storyType = 0
+	self.storyWorkEnd = nil
+	self.transitionId = nil
+	self.resultBonus = {}
+	self.diceResult = {}
+	self.realVerify = 0
+	self.preAttention = 0
+	self.preAttrs = {}
+	self.totalScore = 0
+	self.answerIndex = 0
+	self.answerIds = {}
 end
 
-return var_0_0
+return Activity114FlowContext

@@ -1,40 +1,42 @@
-﻿module("modules.logic.guide.view.GuideStoryView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/view/GuideStoryView.lua
 
-local var_0_0 = class("GuideStoryView", BaseView)
+module("modules.logic.guide.view.GuideStoryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._storyGO = gohelper.findChild(arg_1_0.viewGO, "story")
-	arg_1_0._txtContent = gohelper.findChildText(arg_1_0.viewGO, "story/go_content/txt_content")
+local GuideStoryView = class("GuideStoryView", BaseView)
+
+function GuideStoryView:onInitView()
+	self._storyGO = gohelper.findChild(self.viewGO, "story")
+	self._txtContent = gohelper.findChildText(self.viewGO, "story/go_content/txt_content")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0:_updateUI()
-	arg_2_0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_2_0._updateUI, arg_2_0)
+function GuideStoryView:onOpen()
+	self:_updateUI()
+	self:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, self._updateUI, self)
 end
 
-function var_0_0.onUpdateParam(arg_3_0)
-	arg_3_0:_updateUI()
-	arg_3_0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_3_0._updateUI, arg_3_0)
+function GuideStoryView:onUpdateParam()
+	self:_updateUI()
+	self:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, self._updateUI, self)
 end
 
-function var_0_0._updateUI(arg_4_0)
-	if not arg_4_0.viewParam then
+function GuideStoryView:_updateUI()
+	if not self.viewParam then
 		return
 	end
 
-	gohelper.setActive(arg_4_0._storyGO, arg_4_0.viewParam.hasStory)
+	gohelper.setActive(self._storyGO, self.viewParam.hasStory)
 
-	if not arg_4_0.viewParam.hasStory then
+	if not self.viewParam.hasStory then
 		return
 	end
 
-	arg_4_0._txtContent.text = LuaUtil.replaceSpace(arg_4_0.viewParam.storyContent)
+	self._txtContent.text = LuaUtil.replaceSpace(self.viewParam.storyContent)
 
-	LuaUtil.updateTMPRectHeight(arg_4_0._txtContent)
+	LuaUtil.updateTMPRectHeight(self._txtContent)
 end
 
-function var_0_0.onClose(arg_5_0)
+function GuideStoryView:onClose()
 	return
 end
 
-return var_0_0
+return GuideStoryView

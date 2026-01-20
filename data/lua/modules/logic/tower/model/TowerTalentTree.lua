@@ -1,129 +1,131 @@
-﻿module("modules.logic.tower.model.TowerTalentTree", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerTalentTree.lua
 
-local var_0_0 = class("TowerTalentTree")
+module("modules.logic.tower.model.TowerTalentTree", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local TowerTalentTree = class("TowerTalentTree")
+
+function TowerTalentTree:ctor()
 	return
 end
 
-function var_0_0.initTree(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.nodeDict = {}
-	arg_2_0.nodeGroupDict = {}
-	arg_2_0.rootNode = nil
-	arg_2_0.bossMo = arg_2_1
-	arg_2_0.talentCount = 0
+function TowerTalentTree:initTree(mo, talents)
+	self.nodeDict = {}
+	self.nodeGroupDict = {}
+	self.rootNode = nil
+	self.bossMo = mo
+	self.talentCount = 0
 
-	if arg_2_2 then
-		for iter_2_0, iter_2_1 in pairs(arg_2_2) do
-			local var_2_0 = arg_2_0:makeNode(iter_2_1)
+	if talents then
+		for k, v in pairs(talents) do
+			local node = self:makeNode(v)
 
-			arg_2_0.nodeDict[iter_2_1.nodeId] = var_2_0
+			self.nodeDict[v.nodeId] = node
 
-			if var_2_0:isRootNode() then
-				arg_2_0.rootNode = var_2_0
+			if node:isRootNode() then
+				self.rootNode = node
 			end
 
-			if iter_2_1.nodeGroup ~= 0 then
-				if arg_2_0.nodeGroupDict[iter_2_1.nodeGroup] == nil then
-					arg_2_0.nodeGroupDict[iter_2_1.nodeGroup] = {}
+			if v.nodeGroup ~= 0 then
+				if self.nodeGroupDict[v.nodeGroup] == nil then
+					self.nodeGroupDict[v.nodeGroup] = {}
 				end
 
-				table.insert(arg_2_0.nodeGroupDict[iter_2_1.nodeGroup], iter_2_1.nodeId)
+				table.insert(self.nodeGroupDict[v.nodeGroup], v.nodeId)
 			end
 
-			arg_2_0.talentCount = arg_2_0.talentCount + 1
+			self.talentCount = self.talentCount + 1
 		end
 
-		for iter_2_2, iter_2_3 in pairs(arg_2_2) do
-			arg_2_0:setNodeParentAndChild(iter_2_3)
+		for k, v in pairs(talents) do
+			self:setNodeParentAndChild(v)
 		end
 	end
 end
 
-function var_0_0.makeNode(arg_3_0, arg_3_1)
-	local var_3_0 = TowerTalentTreeNode.New()
+function TowerTalentTree:makeNode(config)
+	local node = TowerTalentTreeNode.New()
 
-	var_3_0:init(arg_3_1, arg_3_0)
+	node:init(config, self)
 
-	return var_3_0
+	return node
 end
 
-function var_0_0.setNodeParentAndChild(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getNode(arg_4_1.nodeId)
-	local var_4_1
+function TowerTalentTree:setNodeParentAndChild(config)
+	local curNode = self:getNode(config.nodeId)
+	local list
 
-	if var_4_0.isOr then
-		var_4_1 = string.splitToNumber(arg_4_1.preNodeIds, "#")
+	if curNode.isOr then
+		list = string.splitToNumber(config.preNodeIds, "#")
 	else
-		var_4_1 = string.splitToNumber(arg_4_1.preNodeIds, "&")
+		list = string.splitToNumber(config.preNodeIds, "&")
 	end
 
-	if var_4_1 then
-		for iter_4_0, iter_4_1 in pairs(var_4_1) do
-			local var_4_2 = arg_4_0:getNode(iter_4_1)
+	if list then
+		for k, v in pairs(list) do
+			local preNode = self:getNode(v)
 
-			if var_4_2 then
-				var_4_0:setParent(var_4_2)
-				var_4_2:setChild(var_4_0)
+			if preNode then
+				curNode:setParent(preNode)
+				preNode:setChild(curNode)
 			end
 		end
 	end
 end
 
-function var_0_0.getNode(arg_5_0, arg_5_1)
-	return arg_5_0.nodeDict[arg_5_1]
+function TowerTalentTree:getNode(nodeId)
+	return self.nodeDict[nodeId]
 end
 
-function var_0_0.isActiveTalent(arg_6_0, arg_6_1)
-	return arg_6_0.bossMo:isActiveTalent(arg_6_1)
+function TowerTalentTree:isActiveTalent(nodeId)
+	return self.bossMo:isActiveTalent(nodeId)
 end
 
-function var_0_0.isSelectedSystemTalentPlan(arg_7_0)
-	return arg_7_0.bossMo:isSelectedSystemTalentPlan()
+function TowerTalentTree:isSelectedSystemTalentPlan()
+	return self.bossMo:isSelectedSystemTalentPlan()
 end
 
-function var_0_0.isActiveGroup(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.nodeGroupDict[arg_8_1]
-	local var_8_1 = false
-	local var_8_2
+function TowerTalentTree:isActiveGroup(groupId)
+	local list = self.nodeGroupDict[groupId]
+	local result = false
+	local activeId
 
-	if var_8_0 then
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			if arg_8_0:isActiveTalent(iter_8_1) then
-				var_8_1 = true
-				var_8_2 = iter_8_1
+	if list then
+		for k, v in pairs(list) do
+			if self:isActiveTalent(v) then
+				result = true
+				activeId = v
 
 				break
 			end
 		end
 	end
 
-	return var_8_1, var_8_2
+	return result, activeId
 end
 
-function var_0_0.getTalentPoint(arg_9_0)
-	return arg_9_0.bossMo:getTalentPoint()
+function TowerTalentTree:getTalentPoint()
+	return self.bossMo:getTalentPoint()
 end
 
-function var_0_0.getList(arg_10_0)
-	if not arg_10_0.nodeList then
-		arg_10_0.nodeList = {}
+function TowerTalentTree:getList()
+	if not self.nodeList then
+		self.nodeList = {}
 
-		for iter_10_0, iter_10_1 in pairs(arg_10_0.nodeDict) do
-			table.insert(arg_10_0.nodeList, iter_10_1)
+		for k, v in pairs(self.nodeDict) do
+			table.insert(self.nodeList, v)
 		end
 
-		if #arg_10_0.nodeList > 1 then
-			table.sort(arg_10_0.nodeList, SortUtil.keyLower("nodeId"))
+		if #self.nodeList > 1 then
+			table.sort(self.nodeList, SortUtil.keyLower("nodeId"))
 		end
 	end
 
-	return arg_10_0.nodeList
+	return self.nodeList
 end
 
-function var_0_0.hasTalentCanActive(arg_11_0)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.nodeDict) do
-		if iter_11_1:isTalentCanActive() then
+function TowerTalentTree:hasTalentCanActive()
+	for k, v in pairs(self.nodeDict) do
+		if v:isTalentCanActive() then
 			return true
 		end
 	end
@@ -131,17 +133,17 @@ function var_0_0.hasTalentCanActive(arg_11_0)
 	return false
 end
 
-function var_0_0.getActiveTalentList(arg_12_0)
-	local var_12_0 = arg_12_0:getList()
-	local var_12_1 = {}
+function TowerTalentTree:getActiveTalentList()
+	local nodeList = self:getList()
+	local list = {}
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		if iter_12_1:isActiveTalent() then
-			table.insert(var_12_1, iter_12_1)
+	for i, v in ipairs(nodeList) do
+		if v:isActiveTalent() then
+			table.insert(list, v)
 		end
 	end
 
-	return var_12_1
+	return list
 end
 
-return var_0_0
+return TowerTalentTree

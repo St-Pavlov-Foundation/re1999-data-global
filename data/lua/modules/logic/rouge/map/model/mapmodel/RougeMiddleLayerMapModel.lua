@@ -1,118 +1,124 @@
-﻿module("modules.logic.rouge.map.model.mapmodel.RougeMiddleLayerMapModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/model/mapmodel/RougeMiddleLayerMapModel.lua
 
-local var_0_0 = class("RougeMiddleLayerMapModel")
+module("modules.logic.rouge.map.model.mapmodel.RougeMiddleLayerMapModel", package.seeall)
 
-function var_0_0.initMap(arg_1_0, arg_1_1)
-	arg_1_0.layerId = arg_1_1.layerId
-	arg_1_0.layerCo = lua_rouge_layer.configDict[arg_1_0.layerId]
-	arg_1_0.middleLayerId = arg_1_1.middleLayerId
-	arg_1_0.middleCo = lua_rouge_middle_layer.configDict[arg_1_0.middleLayerId]
-	arg_1_0.curPosIndex = arg_1_1.positionIndex
+local RougeMiddleLayerMapModel = class("RougeMiddleLayerMapModel")
 
-	arg_1_0:initPieceInfo(arg_1_1.pieceInfo)
+function RougeMiddleLayerMapModel:initMap(middleLayerInfo)
+	self.layerId = middleLayerInfo.layerId
+	self.layerCo = lua_rouge_layer.configDict[self.layerId]
+	self.middleLayerId = middleLayerInfo.middleLayerId
+	self.middleCo = lua_rouge_middle_layer.configDict[self.middleLayerId]
+	self.curPosIndex = middleLayerInfo.positionIndex
+
+	self:initPieceInfo(middleLayerInfo.pieceInfo)
 end
 
-function var_0_0.updateMapInfo(arg_2_0, arg_2_1)
-	arg_2_0.curPosIndex = arg_2_1.positionIndex
+function RougeMiddleLayerMapModel:updateMapInfo(middleLayerInfo)
+	self.curPosIndex = middleLayerInfo.positionIndex
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.pieceInfo) do
-		arg_2_0:updateOnePieceInfo(iter_2_1)
+	for _, pieceInfo in ipairs(middleLayerInfo.pieceInfo) do
+		self:updateOnePieceInfo(pieceInfo)
 	end
 end
 
-function var_0_0.updateSimpleMapInfo(arg_3_0, arg_3_1)
-	arg_3_0:updateMapInfo(arg_3_1)
+function RougeMiddleLayerMapModel:updateSimpleMapInfo(middleLayerInfo)
+	self:updateMapInfo(middleLayerInfo)
 end
 
-function var_0_0.initPieceInfo(arg_4_0, arg_4_1)
-	arg_4_0.pieceDict = {}
-	arg_4_0.pieceList = {}
+function RougeMiddleLayerMapModel:initPieceInfo(pieceInfoList)
+	self.pieceDict = {}
+	self.pieceList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = RougePieceInfoMO.New()
+	for _, pieceInfo in ipairs(pieceInfoList) do
+		local pieceMo = RougePieceInfoMO.New()
 
-		var_4_0:init(iter_4_1)
+		pieceMo:init(pieceInfo)
 
-		arg_4_0.pieceDict[var_4_0.index] = var_4_0
+		self.pieceDict[pieceMo.index] = pieceMo
 
-		table.insert(arg_4_0.pieceList, var_4_0)
+		table.insert(self.pieceList, pieceMo)
 	end
 end
 
-function var_0_0.updateOnePieceInfo(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.pieceDict[arg_5_1.index]
+function RougeMiddleLayerMapModel:updateOnePieceInfo(pieceInfo)
+	local pieceMo = self.pieceDict[pieceInfo.index]
 
-	if not arg_5_1 then
-		logError("update a not exist piece .. " .. tostring(arg_5_1.index))
+	if not pieceInfo then
+		logError("update a not exist piece .. " .. tostring(pieceInfo.index))
 
 		return
 	end
 
-	var_5_0:update(arg_5_1)
+	pieceMo:update(pieceInfo)
 end
 
-function var_0_0.getPieceList(arg_6_0)
-	return arg_6_0.pieceList
+function RougeMiddleLayerMapModel:getPieceList()
+	return self.pieceList
 end
 
-function var_0_0.getMiddleLayerPosByIndex(arg_7_0, arg_7_1)
-	return arg_7_0.middleCo.pointPos[arg_7_1]
+function RougeMiddleLayerMapModel:getMiddleLayerPosByIndex(index)
+	return self.middleCo.pointPos[index]
 end
 
-function var_0_0.getPathIndex(arg_8_0, arg_8_1)
-	return arg_8_0:getMiddleLayerPosByIndex(arg_8_1).z
+function RougeMiddleLayerMapModel:getPathIndex(pointIndex)
+	local pos = self:getMiddleLayerPosByIndex(pointIndex)
+
+	return pos.z
 end
 
-function var_0_0.getMiddleLayerPathPos(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getPathIndex(arg_9_1)
+function RougeMiddleLayerMapModel:getMiddleLayerPathPos(pointIndex)
+	local pathIndex = self:getPathIndex(pointIndex)
 
-	return arg_9_0:getMiddleLayerPathPosByPathIndex(var_9_0)
+	return self:getMiddleLayerPathPosByPathIndex(pathIndex)
 end
 
-function var_0_0.getMiddleLayerPathPosByPathIndex(arg_10_0, arg_10_1)
-	return arg_10_0.middleCo.pathPointPos[arg_10_1]
+function RougeMiddleLayerMapModel:getMiddleLayerPathPosByPathIndex(pathIndex)
+	return self.middleCo.pathPointPos[pathIndex]
 end
 
-function var_0_0.getCurPosIndex(arg_11_0)
-	return arg_11_0.curPosIndex
+function RougeMiddleLayerMapModel:getCurPosIndex()
+	return self.curPosIndex
 end
 
-function var_0_0.getMiddleLayerLeavePos(arg_12_0)
-	local var_12_0 = arg_12_0.middleCo.leavePos
+function RougeMiddleLayerMapModel:getMiddleLayerLeavePos()
+	local leavePos = self.middleCo.leavePos
 
-	if not var_12_0 then
-		logError(string.format("间隙层地图id ：%s， 没有配置出口位置", arg_12_0.middleCo.id))
+	if not leavePos then
+		logError(string.format("间隙层地图id ：%s， 没有配置出口位置", self.middleCo.id))
 
 		return 5.68, 0.41
 	end
 
-	return var_12_0.x, var_12_0.y
+	return leavePos.x, leavePos.y
 end
 
-function var_0_0.hadLeavePos(arg_13_0)
-	return arg_13_0.middleCo and arg_13_0.middleCo.leavePos
+function RougeMiddleLayerMapModel:hadLeavePos()
+	return self.middleCo and self.middleCo.leavePos
 end
 
-function var_0_0.getMiddleLayerLeavePathIndex(arg_14_0)
-	return arg_14_0.middleCo.leavePos.z
+function RougeMiddleLayerMapModel:getMiddleLayerLeavePathIndex()
+	local leavePos = self.middleCo.leavePos
+
+	return leavePos.z
 end
 
-function var_0_0.getPieceMo(arg_15_0, arg_15_1)
-	return arg_15_0.pieceDict[arg_15_1]
+function RougeMiddleLayerMapModel:getPieceMo(pieceIndex)
+	return self.pieceDict[pieceIndex]
 end
 
-function var_0_0.getCurPieceMo(arg_16_0)
-	return arg_16_0:getPieceMo(arg_16_0:getCurPosIndex())
+function RougeMiddleLayerMapModel:getCurPieceMo()
+	return self:getPieceMo(self:getCurPosIndex())
 end
 
-function var_0_0.clear(arg_17_0)
-	arg_17_0.layerId = nil
-	arg_17_0.layerCo = nil
-	arg_17_0.middleLayerId = nil
-	arg_17_0.middleCo = nil
-	arg_17_0.curPosition = nil
-	arg_17_0.pieceDict = nil
-	arg_17_0.pieceList = nil
+function RougeMiddleLayerMapModel:clear()
+	self.layerId = nil
+	self.layerCo = nil
+	self.middleLayerId = nil
+	self.middleCo = nil
+	self.curPosition = nil
+	self.pieceDict = nil
+	self.pieceList = nil
 end
 
-return var_0_0
+return RougeMiddleLayerMapModel

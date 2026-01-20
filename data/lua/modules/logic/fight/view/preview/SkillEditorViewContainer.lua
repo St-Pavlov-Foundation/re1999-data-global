@@ -1,96 +1,98 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorViewContainer.lua
 
-local var_0_0 = class("SkillEditorViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.preview.SkillEditorViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local SkillEditorViewContainer = class("SkillEditorViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "selectHeros/scroll"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "selectHeros/scroll/hero"
-	var_1_0.cellClass = SkillEditorHeroSelectItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 6
-	var_1_0.cellWidth = 220
-	var_1_0.cellHeight = 90
-	var_1_0.cellSpaceH = 30
-	var_1_0.cellSpaceV = 10
-	var_1_0.startSpace = 0
+function SkillEditorViewContainer:buildViews()
+	local scrollParamHero = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	scrollParamHero.scrollGOPath = "selectHeros/scroll"
+	scrollParamHero.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParamHero.prefabUrl = "selectHeros/scroll/hero"
+	scrollParamHero.cellClass = SkillEditorHeroSelectItem
+	scrollParamHero.scrollDir = ScrollEnum.ScrollDirV
+	scrollParamHero.lineCount = 6
+	scrollParamHero.cellWidth = 220
+	scrollParamHero.cellHeight = 90
+	scrollParamHero.cellSpaceH = 30
+	scrollParamHero.cellSpaceV = 10
+	scrollParamHero.startSpace = 0
 
-	var_1_1.scrollGOPath = "selectBuff/scroll"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "selectBuff/scroll/item"
-	var_1_1.cellClass = SkillEditorBuffSelectItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 6
-	var_1_1.cellWidth = 220
-	var_1_1.cellHeight = 90
-	var_1_1.cellSpaceH = 30
-	var_1_1.cellSpaceV = 10
-	var_1_1.startSpace = 0
+	local scrollParamBuff = ListScrollParam.New()
 
-	local var_1_2 = ListScrollParam.New()
+	scrollParamBuff.scrollGOPath = "selectBuff/scroll"
+	scrollParamBuff.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParamBuff.prefabUrl = "selectBuff/scroll/item"
+	scrollParamBuff.cellClass = SkillEditorBuffSelectItem
+	scrollParamBuff.scrollDir = ScrollEnum.ScrollDirV
+	scrollParamBuff.lineCount = 6
+	scrollParamBuff.cellWidth = 220
+	scrollParamBuff.cellHeight = 90
+	scrollParamBuff.cellSpaceH = 30
+	scrollParamBuff.cellSpaceV = 10
+	scrollParamBuff.startSpace = 0
 
-	var_1_2.scrollGOPath = "selectScene/scroll"
-	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_2.prefabUrl = "selectScene/scroll/scene"
-	var_1_2.cellClass = SkillEditorSceneSelectItem
-	var_1_2.scrollDir = ScrollEnum.ScrollDirV
-	var_1_2.lineCount = 6
-	var_1_2.cellWidth = 220
-	var_1_2.cellHeight = 90
-	var_1_2.cellSpaceH = 30
-	var_1_2.cellSpaceV = 10
-	var_1_2.startSpace = 0
+	local scrollParamScene = ListScrollParam.New()
 
-	local var_1_3 = ListScrollParam.New()
+	scrollParamScene.scrollGOPath = "selectScene/scroll"
+	scrollParamScene.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParamScene.prefabUrl = "selectScene/scroll/scene"
+	scrollParamScene.cellClass = SkillEditorSceneSelectItem
+	scrollParamScene.scrollDir = ScrollEnum.ScrollDirV
+	scrollParamScene.lineCount = 6
+	scrollParamScene.cellWidth = 220
+	scrollParamScene.cellHeight = 90
+	scrollParamScene.cellSpaceH = 30
+	scrollParamScene.cellSpaceV = 10
+	scrollParamScene.startSpace = 0
 
-	var_1_3.scrollGOPath = "autoPlaySkill/scroll"
-	var_1_3.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_3.prefabUrl = "autoPlaySkill/scroll/item"
-	var_1_3.cellClass = SkillEditorAutoPlaySkillItem
-	var_1_3.scrollDir = ScrollEnum.ScrollDirV
-	var_1_3.lineCount = 4
-	var_1_3.cellWidth = 240
-	var_1_3.cellHeight = 100
-	var_1_3.cellSpaceH = 10
-	var_1_3.cellSpaceV = 10
-	var_1_3.startSpace = 0
+	local scrollParamAutoPlaySkill = ListScrollParam.New()
 
-	local var_1_4 = ListScrollParam.New()
+	scrollParamAutoPlaySkill.scrollGOPath = "autoPlaySkill/scroll"
+	scrollParamAutoPlaySkill.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParamAutoPlaySkill.prefabUrl = "autoPlaySkill/scroll/item"
+	scrollParamAutoPlaySkill.cellClass = SkillEditorAutoPlaySkillItem
+	scrollParamAutoPlaySkill.scrollDir = ScrollEnum.ScrollDirV
+	scrollParamAutoPlaySkill.lineCount = 4
+	scrollParamAutoPlaySkill.cellWidth = 240
+	scrollParamAutoPlaySkill.cellHeight = 100
+	scrollParamAutoPlaySkill.cellSpaceH = 10
+	scrollParamAutoPlaySkill.cellSpaceV = 10
+	scrollParamAutoPlaySkill.startSpace = 0
 
-	var_1_4.scrollGOPath = "autoPlaySkill/selectScroll"
-	var_1_4.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_4.prefabUrl = "autoPlaySkill/selectScroll/item"
-	var_1_4.cellClass = SkillEditorAutoPlaySkillSelectItem
-	var_1_4.scrollDir = ScrollEnum.ScrollDirV
-	var_1_4.lineCount = 4
-	var_1_4.cellWidth = 240
-	var_1_4.cellHeight = 100
-	var_1_4.cellSpaceH = 10
-	var_1_4.cellSpaceV = 10
-	var_1_4.startSpace = 0
-	arg_1_0.leftSkillEditorSideView = SkillEditorSideView.New(FightEnum.EntitySide.EnemySide)
-	arg_1_0.rightSkillEditorSideView = SkillEditorSideView.New(FightEnum.EntitySide.MySide)
+	local scrollParamAutoPlaySkillSelect = ListScrollParam.New()
+
+	scrollParamAutoPlaySkillSelect.scrollGOPath = "autoPlaySkill/selectScroll"
+	scrollParamAutoPlaySkillSelect.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParamAutoPlaySkillSelect.prefabUrl = "autoPlaySkill/selectScroll/item"
+	scrollParamAutoPlaySkillSelect.cellClass = SkillEditorAutoPlaySkillSelectItem
+	scrollParamAutoPlaySkillSelect.scrollDir = ScrollEnum.ScrollDirV
+	scrollParamAutoPlaySkillSelect.lineCount = 4
+	scrollParamAutoPlaySkillSelect.cellWidth = 240
+	scrollParamAutoPlaySkillSelect.cellHeight = 100
+	scrollParamAutoPlaySkillSelect.cellSpaceH = 10
+	scrollParamAutoPlaySkillSelect.cellSpaceV = 10
+	scrollParamAutoPlaySkillSelect.startSpace = 0
+	self.leftSkillEditorSideView = SkillEditorSideView.New(FightEnum.EntitySide.EnemySide)
+	self.rightSkillEditorSideView = SkillEditorSideView.New(FightEnum.EntitySide.MySide)
 
 	return {
 		SkillEditorSkillSelectTargetView.New(FightEnum.EntitySide.MySide),
 		SkillEditorSkillSelectTargetView.New(FightEnum.EntitySide.EnemySide),
-		arg_1_0.leftSkillEditorSideView,
-		arg_1_0.rightSkillEditorSideView,
+		self.leftSkillEditorSideView,
+		self.rightSkillEditorSideView,
 		SkillEditorView.New(),
 		SkillEditorSceneSelectView.New(),
 		SkillEditorHeroSelectView.New(),
 		SkillEditorBuffSelectView.New(),
 		SkillEditorActionSelectView.New(),
 		FightViewSkillFrame.New(true),
-		LuaListScrollView.New(SkillEditorHeroSelectModel.instance, var_1_0),
-		LuaListScrollView.New(SkillEditorBuffSelectModel.instance, var_1_1),
-		LuaListScrollView.New(SkillEditorSceneSelectModel.instance, var_1_2),
-		LuaListScrollView.New(SkillEditorToolAutoPlaySkillModel.instance, var_1_3),
-		LuaListScrollView.New(SkillEditorToolAutoPlaySkillSelectModel.instance, var_1_4),
+		LuaListScrollView.New(SkillEditorHeroSelectModel.instance, scrollParamHero),
+		LuaListScrollView.New(SkillEditorBuffSelectModel.instance, scrollParamBuff),
+		LuaListScrollView.New(SkillEditorSceneSelectModel.instance, scrollParamScene),
+		LuaListScrollView.New(SkillEditorToolAutoPlaySkillModel.instance, scrollParamAutoPlaySkill),
+		LuaListScrollView.New(SkillEditorToolAutoPlaySkillSelectModel.instance, scrollParamAutoPlaySkillSelect),
 		SkillEditorStanceSelectView.New(),
 		SkillEditorCharacterSkinSelectView.New(),
 		SkillEditorMulSkillView.New(),
@@ -98,4 +100,4 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-return var_0_0
+return SkillEditorViewContainer

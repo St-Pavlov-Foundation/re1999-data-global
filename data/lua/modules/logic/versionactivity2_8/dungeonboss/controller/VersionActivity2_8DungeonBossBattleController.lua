@@ -1,75 +1,79 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.controller.VersionActivity2_8DungeonBossBattleController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/controller/VersionActivity2_8DungeonBossBattleController.lua
 
-local var_0_0 = class("VersionActivity2_8DungeonBossBattleController", BaseController)
+module("modules.logic.versionactivity2_8.dungeonboss.controller.VersionActivity2_8DungeonBossBattleController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity2_8DungeonBossBattleController = class("VersionActivity2_8DungeonBossBattleController", BaseController)
+
+function VersionActivity2_8DungeonBossBattleController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_2_0.onOpenDungeonMapView, arg_2_0)
+function VersionActivity2_8DungeonBossBattleController:reInit()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function VersionActivity2_8DungeonBossBattleController:addConstEvents()
 	return
 end
 
-function var_0_0.checkIsBossBattle(arg_4_0)
-	local var_4_0 = DungeonModel.instance.curSendChapterId
-	local var_4_1 = DungeonConfig.instance:getChapterCO(var_4_0)
+function VersionActivity2_8DungeonBossBattleController:checkIsBossBattle()
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 
-	return var_4_1 and var_4_1.id == VersionActivity2_8BossEnum.BossActChapterId
+	return chapterCo and chapterCo.id == VersionActivity2_8BossEnum.BossActChapterId
 end
 
-function var_0_0.enterBossView(arg_5_0, arg_5_1)
-	local var_5_0 = DungeonModel.instance.curSendEpisodeId
-	local var_5_1 = DungeonModel.instance.curSendChapterId
-	local var_5_2 = DungeonConfig.instance:getChapterCO(var_5_1).actId
-	local var_5_3 = ActivityHelper.getActivityStatus(var_5_2) == ActivityEnum.ActivityStatus.Normal
+function VersionActivity2_8DungeonBossBattleController:enterBossView(isFromGroupView)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
+	local actId = chapterCo.actId
+	local status = ActivityHelper.getActivityStatus(actId)
+	local isAct = status == ActivityEnum.ActivityStatus.Normal
 
 	DungeonModel.instance:resetSendChapterEpisodeId()
 
-	arg_5_0._isFromGroupView = arg_5_1
+	self._isFromGroupView = isFromGroupView
 
-	MainController.instance:enterMainScene(arg_5_0._isFromGroupView, false)
+	MainController.instance:enterMainScene(self._isFromGroupView, false)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		arg_5_0._delayOpenViewAndParam = nil
+		self._delayOpenViewAndParam = nil
 
-		if var_5_3 then
-			local var_6_0 = ViewName.VersionActivity2_8BossActEnterView
+		if isAct then
+			local enterView = ViewName.VersionActivity2_8BossActEnterView
 
-			arg_5_0._delayOpenViewAndParam = {
-				var_6_0,
+			self._delayOpenViewAndParam = {
+				enterView,
 				{
-					episodeId = var_5_0
+					episodeId = episodeId
 				}
 			}
 
-			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_6_0)
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, enterView)
 		else
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.DungeonMapView)
 		end
 
-		if arg_5_0._delayOpenViewAndParam then
-			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_5_0.onOpenDungeonMapView, arg_5_0)
+		if self._delayOpenViewAndParam then
+			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 		end
 
 		JumpController.instance:jumpByParam("3#110")
 	end)
 end
 
-function var_0_0.onOpenDungeonMapView(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.DungeonMapView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_7_0.onOpenDungeonMapView, arg_7_0)
+function VersionActivity2_8DungeonBossBattleController:onOpenDungeonMapView(viewName)
+	if viewName == ViewName.DungeonMapView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenDungeonMapView, self)
 
-		if arg_7_0._delayOpenViewAndParam then
-			ViewMgr.instance:openView(unpack(arg_7_0._delayOpenViewAndParam))
+		if self._delayOpenViewAndParam then
+			ViewMgr.instance:openView(unpack(self._delayOpenViewAndParam))
 
-			arg_7_0._delayOpenViewAndParam = nil
+			self._delayOpenViewAndParam = nil
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_8DungeonBossBattleController.instance = VersionActivity2_8DungeonBossBattleController.New()
 
-return var_0_0
+return VersionActivity2_8DungeonBossBattleController

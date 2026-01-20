@@ -1,90 +1,92 @@
-﻿module("modules.logic.explore.view.unit.ExploreUnitBaseView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/unit/ExploreUnitBaseView.lua
 
-local var_0_0 = class("ExploreUnitBaseView", LuaCompBase)
+module("modules.logic.explore.view.unit.ExploreUnitBaseView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.unit = arg_1_1
-	arg_1_0.url = arg_1_2
-	arg_1_0.viewGO = nil
-	arg_1_0.isInitDone = false
+local ExploreUnitBaseView = class("ExploreUnitBaseView", LuaCompBase)
 
-	arg_1_0:startLoad()
+function ExploreUnitBaseView:ctor(unit, url)
+	self.unit = unit
+	self.url = url
+	self.viewGO = nil
+	self.isInitDone = false
+
+	self:startLoad()
 end
 
-function var_0_0.startLoad(arg_2_0)
-	if arg_2_0._uiLoader or not arg_2_0.url then
+function ExploreUnitBaseView:startLoad()
+	if self._uiLoader or not self.url then
 		return
 	end
 
-	arg_2_0._containerGO = gohelper.create2d(GameSceneMgr.instance:getCurScene().view:getRoot(), arg_2_0.unit.id)
-	arg_2_0._uiLoader = PrefabInstantiate.Create(arg_2_0._containerGO)
+	self._containerGO = gohelper.create2d(GameSceneMgr.instance:getCurScene().view:getRoot(), self.unit.id)
+	self._uiLoader = PrefabInstantiate.Create(self._containerGO)
 
-	arg_2_0._uiLoader:startLoad(arg_2_0.url, arg_2_0._onLoaded, arg_2_0)
+	self._uiLoader:startLoad(self.url, self._onLoaded, self)
 end
 
-function var_0_0._onLoaded(arg_3_0)
-	arg_3_0.isInitDone = true
+function ExploreUnitBaseView:_onLoaded()
+	self.isInitDone = true
 
-	local var_3_0 = CameraMgr.instance:getMainCamera()
-	local var_3_1 = CameraMgr.instance:getUICamera()
-	local var_3_2 = ViewMgr.instance:getUIRoot().transform
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local plane = ViewMgr.instance:getUIRoot().transform
 
-	arg_3_0.viewGO = arg_3_0._uiLoader:getInstGO()
-	arg_3_0._uiFollower = gohelper.onceAddComponent(arg_3_0._containerGO, typeof(ZProj.UIFollower))
+	self.viewGO = self._uiLoader:getInstGO()
+	self._uiFollower = gohelper.onceAddComponent(self._containerGO, typeof(ZProj.UIFollower))
 
-	arg_3_0._uiFollower:Set(var_3_0, var_3_1, var_3_2, arg_3_0.unit._displayTr or arg_3_0.unit.trans, 0, 0, 0, 0, arg_3_0._offsetY2d or 15)
-	arg_3_0._uiFollower:SetEnable(true)
-	arg_3_0:onInit()
-	arg_3_0:addEventListeners()
-	arg_3_0:onOpen()
+	self._uiFollower:Set(mainCamera, uiCamera, plane, self.unit._displayTr or self.unit.trans, 0, 0, 0, 0, self._offsetY2d or 15)
+	self._uiFollower:SetEnable(true)
+	self:onInit()
+	self:addEventListeners()
+	self:onOpen()
 end
 
-function var_0_0.setTarget(arg_4_0, arg_4_1)
-	if not arg_4_0.isInitDone then
+function ExploreUnitBaseView:setTarget(go)
+	if not self.isInitDone then
 		return
 	end
 
-	arg_4_0._uiFollower:SetTarget3d(arg_4_1.transform)
+	self._uiFollower:SetTarget3d(go.transform)
 end
 
-function var_0_0.onInit(arg_5_0)
+function ExploreUnitBaseView:onInit()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function ExploreUnitBaseView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_7_0)
+function ExploreUnitBaseView:onClose()
 	return
 end
 
-function var_0_0.closeThis(arg_8_0)
-	arg_8_0.unit.uiComp:removeUI(arg_8_0.class)
+function ExploreUnitBaseView:closeThis()
+	self.unit.uiComp:removeUI(self.class)
 end
 
-function var_0_0.tryDispose(arg_9_0)
-	if arg_9_0.isInitDone then
-		arg_9_0:removeEventListeners()
-		arg_9_0:onClose()
-		arg_9_0:onDestroy()
-		gohelper.destroy(arg_9_0._containerGO)
+function ExploreUnitBaseView:tryDispose()
+	if self.isInitDone then
+		self:removeEventListeners()
+		self:onClose()
+		self:onDestroy()
+		gohelper.destroy(self._containerGO)
 
-		arg_9_0.isInitDone = false
+		self.isInitDone = false
 	end
 
-	arg_9_0._containerGO = nil
-	arg_9_0._uiFollower = nil
+	self._containerGO = nil
+	self._uiFollower = nil
 
-	if arg_9_0._uiLoader then
-		arg_9_0._uiLoader:dispose()
+	if self._uiLoader then
+		self._uiLoader:dispose()
 
-		arg_9_0._uiLoader = nil
+		self._uiLoader = nil
 	end
 
-	arg_9_0.viewGO = nil
-	arg_9_0.unit = nil
-	arg_9_0.url = nil
+	self.viewGO = nil
+	self.unit = nil
+	self.url = nil
 end
 
-return var_0_0
+return ExploreUnitBaseView

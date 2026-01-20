@@ -1,28 +1,30 @@
-﻿module("modules.logic.signin.model.SigninRewardMo", package.seeall)
+﻿-- chunkname: @modules/logic/signin/model/SigninRewardMo.lua
 
-local var_0_0 = pureTable("SigninRewardMo")
+module("modules.logic.signin.model.SigninRewardMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.materilType = nil
-	arg_1_0.materilId = nil
-	arg_1_0.quantity = nil
-	arg_1_0.uid = nil
-	arg_1_0.isGold = nil
+local SigninRewardMo = pureTable("SigninRewardMo")
+
+function SigninRewardMo:ctor()
+	self.materilType = nil
+	self.materilId = nil
+	self.quantity = nil
+	self.uid = nil
+	self.isGold = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.materilType = arg_2_1.materilType
-	arg_2_0.materilId = arg_2_1.materilId
-	arg_2_0.quantity = arg_2_1.quantity
-	arg_2_0.uid = arg_2_1.uid
+function SigninRewardMo:init(info)
+	self.materilType = info.materilType
+	self.materilId = info.materilId
+	self.quantity = info.quantity
+	self.uid = info.uid
 end
 
-function var_0_0.initValue(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	arg_3_0.materilType = arg_3_1
-	arg_3_0.materilId = arg_3_2
-	arg_3_0.quantity = arg_3_3
-	arg_3_0.uid = arg_3_4
-	arg_3_0.isGold = arg_3_5
+function SigninRewardMo:initValue(type, id, quantity, uid, isGold)
+	self.materilType = type
+	self.materilId = id
+	self.quantity = quantity
+	self.uid = uid
+	self.isGold = isGold
 end
 
-return var_0_0
+return SigninRewardMo

@@ -1,153 +1,163 @@
-﻿module("modules.logic.rouge.controller.RougeCollectionExpressionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/controller/RougeCollectionExpressionHelper.lua
 
-local var_0_0 = _M
-local var_0_1 = {
-	__index = function(arg_1_0, arg_1_1)
-		local var_1_0 = arg_1_0.attrMap and arg_1_0.attrMap[arg_1_1]
+module("modules.logic.rouge.controller.RougeCollectionExpressionHelper", package.seeall)
 
-		if not var_1_0 then
-			logError(string.format("尝试解析造物描述失败!!! 失败原因: 无法匹配属性Flag:%s", arg_1_1))
+local RougeCollectionExpressionHelper = _M
+local DefaultMetaTable = {
+	__index = function(tab, key)
+		local attrValue = tab.attrMap and tab.attrMap[key]
+
+		if not attrValue then
+			logError(string.format("尝试解析造物描述失败!!! 失败原因: 无法匹配属性Flag:%s", key))
 		end
 
-		var_1_0 = var_1_0 or 0
+		attrValue = attrValue or 0
 
-		if var_1_0 > 0 then
-			arg_1_0.hasAttrMuchZero = true
+		if attrValue > 0 then
+			tab.hasAttrMuchZero = true
 		end
 
-		return var_1_0
+		return attrValue
 	end
 }
-local var_0_2 = {
+local DefaultEnv = {
 	hasAttrMuchZero = false,
 	min = math.min,
 	max = math.max,
 	attrMap = {}
 }
 
-setmetatable(var_0_2, var_0_1)
+setmetatable(DefaultEnv, DefaultMetaTable)
 
-function var_0_0.getCollectionAttrMap(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_0 then
-		local var_2_0 = RougeCollectionModel.instance:getCollectionByUid(arg_2_0)
+function RougeCollectionExpressionHelper.getCollectionAttrMap(collectionId, collectionCfgId, enchantCfgIds)
+	if collectionId then
+		local collectionMo = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-		return var_0_0._buildCollectionAttrMap2(var_2_0)
+		return RougeCollectionExpressionHelper._buildCollectionAttrMap2(collectionMo)
 	else
-		return var_0_0._buildCollectionAttrMap(arg_2_1, arg_2_2)
+		return RougeCollectionExpressionHelper._buildCollectionAttrMap(collectionCfgId, enchantCfgIds)
 	end
 end
 
-function var_0_0._buildCollectionAttrMap(arg_3_0, arg_3_1)
-	local var_3_0 = RougeCollectionConfig.instance:getCollectionStaticAttrValueMap(arg_3_0)
+function RougeCollectionExpressionHelper._buildCollectionAttrMap(collectionCfgId, enchantCfgIds)
+	local staticAttrMap = RougeCollectionConfig.instance:getCollectionStaticAttrValueMap(collectionCfgId)
+	local resultAttrMap = RougeCollectionExpressionHelper._computeAttrValue(enchantCfgIds, staticAttrMap)
 
-	return (var_0_0._computeAttrValue(arg_3_1, var_3_0))
+	return resultAttrMap
 end
 
-function var_0_0._buildCollectionAttrMap2(arg_4_0)
-	if not arg_4_0 then
+function RougeCollectionExpressionHelper._buildCollectionAttrMap2(collectionMO)
+	if not collectionMO then
 		return
 	end
 
-	local var_4_0 = arg_4_0:getAttrValueMap()
+	local serverAttrMap = collectionMO:getAttrValueMap()
+	local isInSlotArea = RougeCollectionModel.instance:isCollectionPlaceInSlotArea(collectionMO.id)
 
-	if RougeCollectionModel.instance:isCollectionPlaceInSlotArea(arg_4_0.id) then
-		return var_4_0
+	if isInSlotArea then
+		return serverAttrMap
 	end
 
-	local var_4_1 = var_0_0._buildCollectionAttrMap(arg_4_0.cfgId, arg_4_0:getAllEnchantCfgId())
+	local staticAttrMap = RougeCollectionExpressionHelper._buildCollectionAttrMap(collectionMO.cfgId, collectionMO:getAllEnchantCfgId())
 
-	if var_4_0 then
-		for iter_4_0, iter_4_1 in pairs(var_4_0) do
-			var_4_1[iter_4_0] = (var_4_1[iter_4_0] or 0) + iter_4_1
+	if serverAttrMap then
+		for attrId, attrValue in pairs(serverAttrMap) do
+			local originValue = staticAttrMap[attrId] or 0
+
+			staticAttrMap[attrId] = originValue + attrValue
 		end
 	end
 
-	return var_4_1
+	return staticAttrMap
 end
 
-function var_0_0._computeAttrValue(arg_5_0, arg_5_1)
-	local var_5_0 = {}
+function RougeCollectionExpressionHelper._computeAttrValue(enchantCfgIds, staticAttrMap)
+	local resultAttrMap = {}
 
-	if arg_5_0 and arg_5_1 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0) do
-			if iter_5_1 > 0 and arg_5_1[iter_5_1] then
-				for iter_5_2, iter_5_3 in pairs(arg_5_1[iter_5_1]) do
-					local var_5_1 = RougeCollectionConfig.instance:getCollectionAttrByFlag(iter_5_2)
-					local var_5_2 = var_5_1 and var_5_1.id or 0
+	if enchantCfgIds and staticAttrMap then
+		for _, enchantCfgId in ipairs(enchantCfgIds) do
+			if enchantCfgId > 0 and staticAttrMap[enchantCfgId] then
+				for attrFlag, attrValue in pairs(staticAttrMap[enchantCfgId]) do
+					local attrCfg = RougeCollectionConfig.instance:getCollectionAttrByFlag(attrFlag)
+					local attrId = attrCfg and attrCfg.id or 0
 
-					var_5_0[var_5_2] = var_5_0[var_5_2] or 0
-					var_5_0[var_5_2] = var_5_0[var_5_2] + iter_5_3
+					resultAttrMap[attrId] = resultAttrMap[attrId] or 0
+					resultAttrMap[attrId] = resultAttrMap[attrId] + attrValue
 				end
 			end
 		end
 	end
 
-	return var_5_0
+	return resultAttrMap
 end
 
-local var_0_3 = "#CCFF99"
+local attrMuchZeroInfoColor = "#CCFF99"
 
-function var_0_0.getDescExpressionResult(arg_6_0, arg_6_1)
-	if string.nilorempty(arg_6_0) or not arg_6_1 then
-		return arg_6_0
+function RougeCollectionExpressionHelper.getDescExpressionResult(desc, attrValueMap)
+	if string.nilorempty(desc) or not attrValueMap then
+		return desc
 	end
 
-	return (string.gsub(arg_6_0, "%b{}", function(arg_7_0)
-		return var_0_0._loadAndExecuteExpressionFunc(arg_7_0, arg_6_1)
-	end))
+	local result = string.gsub(desc, "%b{}", function(experison)
+		return RougeCollectionExpressionHelper._loadAndExecuteExpressionFunc(experison, attrValueMap)
+	end)
+
+	return result
 end
 
-function var_0_0._loadAndExecuteExpressionFunc(arg_8_0, arg_8_1)
-	arg_8_0 = string.gsub(arg_8_0, "{", "")
-	arg_8_0 = string.gsub(arg_8_0, "}", "")
+function RougeCollectionExpressionHelper._loadAndExecuteExpressionFunc(experison, attrValueMap)
+	experison = string.gsub(experison, "{", "")
+	experison = string.gsub(experison, "}", "")
 
-	local var_8_0 = var_0_0._loadExpressionFunc(arg_8_0)
-	local var_8_1 = var_0_0._buildGsubExperisonEnv(arg_8_1)
+	local expersionExcuteFunc = RougeCollectionExpressionHelper._loadExpressionFunc(experison)
+	local env = RougeCollectionExpressionHelper._buildGsubExperisonEnv(attrValueMap)
 
-	setfenv(var_8_0, var_8_1)
+	setfenv(expersionExcuteFunc, env)
 
-	local var_8_2, var_8_3 = var_8_0()
+	local result, hasAttrMuchZero = expersionExcuteFunc()
 
-	if var_8_3 then
-		var_8_2 = string.format("<%s>%s</color>", var_0_3, var_8_2)
+	if hasAttrMuchZero then
+		result = string.format("<%s>%s</color>", attrMuchZeroInfoColor, result)
 	end
 
-	return var_8_2
+	return result
 end
 
-function var_0_0._loadExpressionFunc(arg_9_0)
-	local var_9_0 = string.format("return %s, hasAttrMuchZero", string.lower(arg_9_0))
-	local var_9_1 = loadstring(var_9_0)
+function RougeCollectionExpressionHelper._loadExpressionFunc(experison)
+	local str = string.format("return %s, hasAttrMuchZero", string.lower(experison))
+	local expersionExcuteFunc = loadstring(str)
 
-	if not var_9_1 then
-		logError("肉鸽造物描述表达式解析失败: 文本内容:" .. tostring(arg_9_0))
+	if not expersionExcuteFunc then
+		logError("肉鸽造物描述表达式解析失败: 文本内容:" .. tostring(experison))
 
-		return arg_9_0
+		return experison
 	end
 
-	return var_9_1
+	return expersionExcuteFunc
 end
 
-function var_0_0._buildGsubExperisonEnv(arg_10_0)
-	local var_10_0 = var_0_2
+function RougeCollectionExpressionHelper._buildGsubExperisonEnv(attrValueMap)
+	local env = DefaultEnv
 
-	var_10_0.hasAttrMuchZero = false
-	var_10_0.attrMap = var_0_0._buildAttrNameAndValueMap(arg_10_0)
+	env.hasAttrMuchZero = false
+	env.attrMap = RougeCollectionExpressionHelper._buildAttrNameAndValueMap(attrValueMap)
 
-	return var_10_0
+	return env
 end
 
-function var_0_0._buildAttrNameAndValueMap(arg_11_0)
-	local var_11_0 = RougeCollectionConfig.instance:getAllCollectionAttrMap()
-	local var_11_1 = {}
+function RougeCollectionExpressionHelper._buildAttrNameAndValueMap(attrValueMap)
+	local allAttrCfgMap = RougeCollectionConfig.instance:getAllCollectionAttrMap()
+	local attrMap = {}
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in pairs(var_11_0) do
-			var_11_1[iter_11_1.flag] = arg_11_0[iter_11_0] or 0
+	if allAttrCfgMap then
+		for attrId, attrCfg in pairs(allAttrCfgMap) do
+			local attrName = attrCfg.flag
+
+			attrMap[attrName] = attrValueMap[attrId] or 0
 		end
 	end
 
-	return var_11_1
+	return attrMap
 end
 
-return var_0_0
+return RougeCollectionExpressionHelper

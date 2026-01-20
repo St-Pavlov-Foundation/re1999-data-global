@@ -1,8 +1,10 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzlePipeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzlePipeViewContainer.lua
 
-local var_0_0 = class("DungeonPuzzlePipeViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzlePipeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DungeonPuzzlePipeViewContainer = class("DungeonPuzzlePipeViewContainer", BaseViewContainer)
+
+function DungeonPuzzlePipeViewContainer:buildViews()
 	return {
 		DungeonPuzzlePipeView.New(),
 		DungeonPuzzlePipes.New(),
@@ -10,7 +12,7 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function DungeonPuzzlePipeViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -20,4 +22,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return DungeonPuzzlePipeViewContainer

@@ -1,54 +1,56 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatResultComboItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicBeatResultComboItem.lua
 
-local var_0_0 = class("VersionActivity2_4MusicBeatResultComboItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatResultComboItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gostate1 = gohelper.findChild(arg_1_0.viewGO, "image_state/#go_state1")
-	arg_1_0._gostate2 = gohelper.findChild(arg_1_0.viewGO, "image_state/#go_state2")
-	arg_1_0._gostate3 = gohelper.findChild(arg_1_0.viewGO, "image_state/#go_state3")
-	arg_1_0._txtcombonum = gohelper.findChildText(arg_1_0.viewGO, "#txt_combonum")
-	arg_1_0._txtscorenum = gohelper.findChildText(arg_1_0.viewGO, "#txt_scorenum")
+local VersionActivity2_4MusicBeatResultComboItem = class("VersionActivity2_4MusicBeatResultComboItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicBeatResultComboItem:onInitView()
+	self._gostate1 = gohelper.findChild(self.viewGO, "image_state/#go_state1")
+	self._gostate2 = gohelper.findChild(self.viewGO, "image_state/#go_state2")
+	self._gostate3 = gohelper.findChild(self.viewGO, "image_state/#go_state3")
+	self._txtcombonum = gohelper.findChildText(self.viewGO, "#txt_combonum")
+	self._txtscorenum = gohelper.findChildText(self.viewGO, "#txt_scorenum")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_4MusicBeatResultComboItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_4MusicBeatResultComboItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	for iter_4_0 = 1, 3 do
-		gohelper.setActive(arg_4_0["_gostate" .. iter_4_0], false)
+function VersionActivity2_4MusicBeatResultComboItem:_editableInitView()
+	for i = 1, 3 do
+		gohelper.setActive(self["_gostate" .. i], false)
 	end
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function VersionActivity2_4MusicBeatResultComboItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function VersionActivity2_4MusicBeatResultComboItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	gohelper.setActive(arg_7_0["_gostate" .. arg_7_1], true)
+function VersionActivity2_4MusicBeatResultComboItem:onUpdateMO(index, count, score)
+	gohelper.setActive(self["_gostate" .. index], true)
 
-	arg_7_0._txtcombonum.text = VersionActivity2_4MusicEnum.times_sign .. arg_7_2
-	arg_7_0._txtscorenum.text = arg_7_3
+	self._txtcombonum.text = VersionActivity2_4MusicEnum.times_sign .. count
+	self._txtscorenum.text = score
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
+function VersionActivity2_4MusicBeatResultComboItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function VersionActivity2_4MusicBeatResultComboItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicBeatResultComboItem

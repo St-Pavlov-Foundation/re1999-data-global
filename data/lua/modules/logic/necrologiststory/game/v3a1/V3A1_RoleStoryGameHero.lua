@@ -1,56 +1,58 @@
-﻿module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryGameHero", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/game/v3a1/V3A1_RoleStoryGameHero.lua
 
-local var_0_0 = class("V3A1_RoleStoryGameHero", LuaCompBase)
+module("modules.logic.necrologiststory.game.v3a1.V3A1_RoleStoryGameHero", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0.moveDuration = 0.3
+local V3A1_RoleStoryGameHero = class("V3A1_RoleStoryGameHero", LuaCompBase)
+
+function V3A1_RoleStoryGameHero:init(go)
+	self.go = go
+	self.transform = go.transform
+	self.moveDuration = 0.3
 end
 
-function var_0_0.setHeroPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_0:clearMoveTween()
+function V3A1_RoleStoryGameHero:setHeroPos(posX, posY, tween, callback, callbackObj)
+	self:clearMoveTween()
 
-	arg_2_0.callback = arg_2_4
-	arg_2_0.callbackObj = arg_2_5
+	self.callback = callback
+	self.callbackObj = callbackObj
 
-	if arg_2_3 then
-		arg_2_0:showBlock()
+	if tween then
+		self:showBlock()
 
-		arg_2_0.moveTweenId = ZProj.TweenHelper.DOAnchorPos(arg_2_0.transform, arg_2_1, arg_2_2, arg_2_0.moveDuration, arg_2_0.onTweenEnd, arg_2_0)
+		self.moveTweenId = ZProj.TweenHelper.DOAnchorPos(self.transform, posX, posY, self.moveDuration, self.onTweenEnd, self)
 	else
-		recthelper.setAnchor(arg_2_0.transform, arg_2_1, arg_2_2)
-		arg_2_0:onTweenEnd()
+		recthelper.setAnchor(self.transform, posX, posY)
+		self:onTweenEnd()
 	end
 end
 
-function var_0_0.clearMoveTween(arg_3_0)
-	if arg_3_0.moveTweenId then
-		ZProj.TweenHelper.KillById(arg_3_0.moveTweenId)
+function V3A1_RoleStoryGameHero:clearMoveTween()
+	if self.moveTweenId then
+		ZProj.TweenHelper.KillById(self.moveTweenId)
 
-		arg_3_0.moveTweenId = nil
+		self.moveTweenId = nil
 	end
 end
 
-function var_0_0.onTweenEnd(arg_4_0)
-	arg_4_0:closeBlock()
+function V3A1_RoleStoryGameHero:onTweenEnd()
+	self:closeBlock()
 
-	if arg_4_0.callback then
-		arg_4_0.callback(arg_4_0.callbackObj)
+	if self.callback then
+		self.callback(self.callbackObj)
 	end
 end
 
-function var_0_0.showBlock(arg_5_0)
+function V3A1_RoleStoryGameHero:showBlock()
 	GameUtil.setActiveUIBlock("V3A1_RoleStoryGameHero", true, false)
 end
 
-function var_0_0.closeBlock(arg_6_0)
+function V3A1_RoleStoryGameHero:closeBlock()
 	GameUtil.setActiveUIBlock("V3A1_RoleStoryGameHero", false, false)
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	arg_7_0:closeBlock()
-	arg_7_0:clearMoveTween()
+function V3A1_RoleStoryGameHero:onDestroy()
+	self:closeBlock()
+	self:clearMoveTween()
 end
 
-return var_0_0
+return V3A1_RoleStoryGameHero

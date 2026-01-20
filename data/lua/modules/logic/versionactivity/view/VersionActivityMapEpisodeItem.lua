@@ -1,3 +1,7 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityMapEpisodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityMapEpisodeItem.lua
 
-return (class("VersionActivityMapEpisodeItem", VersionActivityDungeonBaseEpisodeItem))
+module("modules.logic.versionactivity.view.VersionActivityMapEpisodeItem", package.seeall)
+
+local VersionActivityMapEpisodeItem = class("VersionActivityMapEpisodeItem", VersionActivityDungeonBaseEpisodeItem)
+
+return VersionActivityMapEpisodeItem

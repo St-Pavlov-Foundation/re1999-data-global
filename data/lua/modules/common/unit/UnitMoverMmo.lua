@@ -1,264 +1,268 @@
-﻿module("modules.common.unit.UnitMoverMmo", package.seeall)
+﻿-- chunkname: @modules/common/unit/UnitMoverMmo.lua
 
-local var_0_0 = class("UnitMoverMmo", LuaCompBase)
+module("modules.common.unit.UnitMoverMmo", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._speed = 0
-	arg_1_0._speedX = 0
-	arg_1_0._speedY = 0
-	arg_1_0._speedZ = 0
-	arg_1_0._posX = 0
-	arg_1_0._posY = 0
-	arg_1_0._posZ = 0
-	arg_1_0._wpPool = LuaObjPool.New(100, function()
+local UnitMoverMmo = class("UnitMoverMmo", LuaCompBase)
+
+function UnitMoverMmo:ctor(unit)
+	self._speed = 0
+	self._speedX = 0
+	self._speedY = 0
+	self._speedZ = 0
+	self._posX = 0
+	self._posY = 0
+	self._posZ = 0
+	self._wpPool = LuaObjPool.New(100, function()
 		return {}
-	end, function(arg_3_0)
+	end, function(a)
 		return
-	end, function(arg_4_0)
+	end, function(a)
 		return
 	end)
-	arg_1_0._wayPoints = {}
-	arg_1_0._curWayPoint = nil
-	arg_1_0._accerationTime = 0
-	arg_1_0._startMoveTime = 0
+	self._wayPoints = {}
+	self._curWayPoint = nil
+	self._accerationTime = 0
+	self._startMoveTime = 0
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.simpleMove(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7)
-	local var_5_0 = math.sqrt((arg_5_1 - arg_5_4)^2 + (arg_5_2 - arg_5_5)^2 + (arg_5_3 - arg_5_6)^2)
-	local var_5_1 = var_5_0 > 0 and var_5_0 / arg_5_7 or 100000000
+function UnitMoverMmo:simpleMove(startX, startY, startZ, endX, endY, endZ, duration)
+	local distance = math.sqrt((startX - endX)^2 + (startY - endY)^2 + (startZ - endZ)^2)
+	local speed = distance > 0 and distance / duration or 100000000
 
-	arg_5_0:setSpeed(var_5_1)
-	arg_5_0:setPosDirectly(arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0:addWayPoint(arg_5_4, arg_5_5, arg_5_6)
+	self:setSpeed(speed)
+	self:setPosDirectly(startX, startY, startZ)
+	self:addWayPoint(endX, endY, endZ)
 end
 
-function var_0_0.setPosDirectly(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0:clearWayPoints()
+function UnitMoverMmo:setPosDirectly(x, y, z)
+	self:clearWayPoints()
 
-	arg_6_0._posX = arg_6_1
-	arg_6_0._posY = arg_6_2
-	arg_6_0._posZ = arg_6_3
+	self._posX = x
+	self._posY = y
+	self._posZ = z
 
-	arg_6_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_6_0)
+	self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 end
 
-function var_0_0.getCurWayPoint(arg_7_0)
-	return arg_7_0._curWayPoint
+function UnitMoverMmo:getCurWayPoint()
+	return self._curWayPoint
 end
 
-function var_0_0.getPos(arg_8_0)
-	return arg_8_0._posX, arg_8_0._posY, arg_8_0._posZ
+function UnitMoverMmo:getPos()
+	return self._posX, self._posY, self._posZ
 end
 
-function var_0_0.setSpeed(arg_9_0, arg_9_1)
-	arg_9_0._speed = arg_9_1
+function UnitMoverMmo:setSpeed(speed)
+	self._speed = speed
 
-	if not arg_9_0._curWayPoint then
-		arg_9_0._speedX = 0
-		arg_9_0._speedY = 0
-		arg_9_0._speedZ = 0
+	if not self._curWayPoint then
+		self._speedX = 0
+		self._speedY = 0
+		self._speedZ = 0
 	else
-		local var_9_0 = arg_9_0._curWayPoint.x - arg_9_0._posX
-		local var_9_1 = arg_9_0._curWayPoint.y - arg_9_0._posY
-		local var_9_2 = arg_9_0._curWayPoint.z - arg_9_0._posZ
-		local var_9_3 = math.sqrt(var_9_0 * var_9_0 + var_9_1 * var_9_1 + var_9_2 * var_9_2)
-		local var_9_4 = var_9_0 / var_9_3
-		local var_9_5 = var_9_1 / var_9_3
-		local var_9_6 = var_9_2 / var_9_3
+		local vx = self._curWayPoint.x - self._posX
+		local vy = self._curWayPoint.y - self._posY
+		local vz = self._curWayPoint.z - self._posZ
+		local length = math.sqrt(vx * vx + vy * vy + vz * vz)
 
-		arg_9_0._speedX = var_9_4 * arg_9_0._speed
-		arg_9_0._speedY = var_9_5 * arg_9_0._speed
-		arg_9_0._speedZ = var_9_6 * arg_9_0._speed
+		vx = vx / length
+		vy = vy / length
+		vz = vz / length
+		self._speedX = vx * self._speed
+		self._speedY = vy * self._speed
+		self._speedZ = vz * self._speed
 	end
 end
 
-function var_0_0.setTimeScale(arg_10_0, arg_10_1)
-	if arg_10_1 > 0 then
-		arg_10_0:setSpeed(arg_10_0._speed * arg_10_1)
+function UnitMoverMmo:setTimeScale(timeScale)
+	if timeScale > 0 then
+		self:setSpeed(self._speed * timeScale)
 	else
-		logError("argument illegal, timeScale = " .. arg_10_1)
+		logError("argument illegal, timeScale = " .. timeScale)
 	end
 end
 
-function var_0_0.setAccelerationTime(arg_11_0, arg_11_1)
-	arg_11_0._accerationTime = arg_11_1
+function UnitMoverMmo:setAccelerationTime(time)
+	self._accerationTime = time
 end
 
-function var_0_0.getAccelerationTime(arg_12_0)
-	return arg_12_0._accerationTime
+function UnitMoverMmo:getAccelerationTime()
+	return self._accerationTime
 end
 
-function var_0_0.setWayPoint(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_0._wayPoints then
+function UnitMoverMmo:setWayPoint(x, y, z)
+	if not self._wayPoints then
 		return
 	end
 
-	local var_13_0 = #arg_13_0._wayPoints
+	local len = #self._wayPoints
 
-	for iter_13_0 = 1, var_13_0 do
-		arg_13_0._wpPool:putObject(arg_13_0._wayPoints[iter_13_0])
+	for i = 1, len do
+		self._wpPool:putObject(self._wayPoints[i])
 
-		arg_13_0._wayPoints[iter_13_0] = nil
+		self._wayPoints[i] = nil
 	end
 
-	local var_13_1 = arg_13_0._wpPool:getObject()
+	local wp = self._wpPool:getObject()
 
-	var_13_1.x = arg_13_1
-	var_13_1.y = arg_13_2
-	var_13_1.z = arg_13_3
+	wp.x = x
+	wp.y = y
+	wp.z = z
 
-	arg_13_0:_setNewWayPoint(var_13_1)
+	self:_setNewWayPoint(wp)
 end
 
-function var_0_0.addWayPoint(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	if arg_14_0._posX == arg_14_1 and arg_14_0._posY == arg_14_2 and arg_14_0._posZ == arg_14_3 then
-		if not arg_14_0._curWayPoint then
+function UnitMoverMmo:addWayPoint(x, y, z, duration)
+	if self._posX == x and self._posY == y and self._posZ == z then
+		if not self._curWayPoint then
 			return
-		elseif arg_14_0._curWayPoint.x == arg_14_1 and arg_14_0._curWayPoint.y == arg_14_2 and arg_14_0._curWayPoint.z == arg_14_3 then
+		elseif self._curWayPoint.x == x and self._curWayPoint.y == y and self._curWayPoint.z == z then
 			return
 		end
 	end
 
-	local var_14_0 = arg_14_0._wpPool:getObject()
+	local wp = self._wpPool:getObject()
 
-	var_14_0.x = arg_14_1
-	var_14_0.y = arg_14_2
-	var_14_0.z = arg_14_3
+	wp.x = x
+	wp.y = y
+	wp.z = z
 
-	if arg_14_4 then
-		local var_14_1 = 0
+	if duration then
+		local distance = 0
 
-		if arg_14_0._curWayPoint and arg_14_0._curWayPoint[1] then
-			local var_14_2 = arg_14_0._curWayPoint[#arg_14_0._curWayPoint]
+		if self._curWayPoint and self._curWayPoint[1] then
+			local lastPos = self._curWayPoint[#self._curWayPoint]
 
-			var_14_1 = math.sqrt((var_14_2.x - arg_14_1)^2 + (var_14_2.y - arg_14_2)^2 + (var_14_2.z - arg_14_3)^2)
+			distance = math.sqrt((lastPos.x - x)^2 + (lastPos.y - y)^2 + (lastPos.z - z)^2)
 		else
-			var_14_1 = math.sqrt((arg_14_0._posX - arg_14_1)^2 + (arg_14_0._posY - arg_14_2)^2 + (arg_14_0._posZ - arg_14_3)^2)
+			distance = math.sqrt((self._posX - x)^2 + (self._posY - y)^2 + (self._posZ - z)^2)
 		end
 
-		var_14_0.speed = var_14_1 > 0 and var_14_1 / arg_14_4 or 100000000
+		wp.speed = distance > 0 and distance / duration or 100000000
 	end
 
-	if not arg_14_0._curWayPoint then
-		arg_14_0:_setNewWayPoint(var_14_0)
+	if not self._curWayPoint then
+		self:_setNewWayPoint(wp)
 	else
-		table.insert(arg_14_0._wayPoints, var_14_0)
+		table.insert(self._wayPoints, wp)
 	end
 end
 
-function var_0_0.clearWayPoints(arg_15_0)
-	local var_15_0 = #arg_15_0._wayPoints
+function UnitMoverMmo:clearWayPoints()
+	local len = #self._wayPoints
 
-	for iter_15_0 = 1, var_15_0 do
-		arg_15_0._wpPool:putObject(arg_15_0._wayPoints[iter_15_0])
+	for i = 1, len do
+		self._wpPool:putObject(self._wayPoints[i])
 
-		arg_15_0._wayPoints[iter_15_0] = nil
+		self._wayPoints[i] = nil
 	end
 
-	if arg_15_0._curWayPoint then
-		arg_15_0:_setNewWayPoint(nil)
-		arg_15_0:dispatchEvent(UnitMoveEvent.Interrupt, arg_15_0)
+	if self._curWayPoint then
+		self:_setNewWayPoint(nil)
+		self:dispatchEvent(UnitMoveEvent.Interrupt, self)
 	end
 end
 
-function var_0_0._setNewWayPoint(arg_16_0, arg_16_1)
-	local var_16_0 = false
+function UnitMoverMmo:_setNewWayPoint(wp)
+	local bStartMove = false
 
-	if arg_16_0._curWayPoint then
-		arg_16_0._wpPool:putObject(arg_16_0._curWayPoint)
-	elseif arg_16_1 then
-		var_16_0 = true
+	if self._curWayPoint then
+		self._wpPool:putObject(self._curWayPoint)
+	elseif wp then
+		bStartMove = true
 	end
 
-	arg_16_0._curWayPoint = arg_16_1
+	self._curWayPoint = wp
 
-	if not arg_16_0._curWayPoint then
-		arg_16_0._speedX = 0
-		arg_16_0._speedY = 0
-		arg_16_0._speedZ = 0
+	if not self._curWayPoint then
+		self._speedX = 0
+		self._speedY = 0
+		self._speedZ = 0
 	else
-		if arg_16_1.speed then
-			arg_16_0._speed = arg_16_1.speed
+		if wp.speed then
+			self._speed = wp.speed
 		end
 
-		local var_16_1 = arg_16_0._curWayPoint.x - arg_16_0._posX
-		local var_16_2 = arg_16_0._curWayPoint.y - arg_16_0._posY
-		local var_16_3 = arg_16_0._curWayPoint.z - arg_16_0._posZ
-		local var_16_4 = math.sqrt(var_16_1 * var_16_1 + var_16_2 * var_16_2 + var_16_3 * var_16_3)
-		local var_16_5 = var_16_1 / var_16_4
-		local var_16_6 = var_16_2 / var_16_4
-		local var_16_7 = var_16_3 / var_16_4
+		local vx = self._curWayPoint.x - self._posX
+		local vy = self._curWayPoint.y - self._posY
+		local vz = self._curWayPoint.z - self._posZ
+		local length = math.sqrt(vx * vx + vy * vy + vz * vz)
 
-		arg_16_0._speedX = var_16_5 * arg_16_0._speed
-		arg_16_0._speedY = var_16_6 * arg_16_0._speed
-		arg_16_0._speedZ = var_16_7 * arg_16_0._speed
+		vx = vx / length
+		vy = vy / length
+		vz = vz / length
+		self._speedX = vx * self._speed
+		self._speedY = vy * self._speed
+		self._speedZ = vz * self._speed
 	end
 
-	if var_16_0 then
-		arg_16_0._startMoveTime = Time.time
+	if bStartMove then
+		self._startMoveTime = Time.time
 
-		arg_16_0:dispatchEvent(UnitMoveEvent.StartMove, arg_16_0)
+		self:dispatchEvent(UnitMoveEvent.StartMove, self)
 	end
 end
 
-function var_0_0.onUpdate(arg_17_0)
-	if arg_17_0._curWayPoint then
-		local var_17_0 = Time.deltaTime
+function UnitMoverMmo:onUpdate()
+	if self._curWayPoint then
+		local speedFactor = Time.deltaTime
 
-		if arg_17_0._accerationTime > 0 then
-			local var_17_1 = Time.time - arg_17_0._startMoveTime
+		if self._accerationTime > 0 then
+			local elapsedTime = Time.time - self._startMoveTime
 
-			if var_17_1 < arg_17_0._accerationTime then
-				var_17_0 = var_17_0 * (var_17_1 / arg_17_0._accerationTime)
+			if elapsedTime < self._accerationTime then
+				speedFactor = speedFactor * (elapsedTime / self._accerationTime)
 			end
 		end
 
-		local var_17_2 = arg_17_0._posX + arg_17_0._speedX * var_17_0
-		local var_17_3 = arg_17_0._posY + arg_17_0._speedY * var_17_0
-		local var_17_4 = arg_17_0._posZ + arg_17_0._speedZ * var_17_0
-		local var_17_5 = var_17_2 - arg_17_0._posX
-		local var_17_6 = var_17_3 - arg_17_0._posY
-		local var_17_7 = var_17_4 - arg_17_0._posZ
-		local var_17_8 = arg_17_0._curWayPoint.x - arg_17_0._posX
-		local var_17_9 = arg_17_0._curWayPoint.y - arg_17_0._posY
-		local var_17_10 = arg_17_0._curWayPoint.z - arg_17_0._posZ
+		local nextPosX = self._posX + self._speedX * speedFactor
+		local nextPosY = self._posY + self._speedY * speedFactor
+		local nextPosZ = self._posZ + self._speedZ * speedFactor
+		local vecNowNextX = nextPosX - self._posX
+		local vecNowNextY = nextPosY - self._posY
+		local vecNowNextZ = nextPosZ - self._posZ
+		local vecNowDestX = self._curWayPoint.x - self._posX
+		local vecNowDestY = self._curWayPoint.y - self._posY
+		local vecNowDestZ = self._curWayPoint.z - self._posZ
+		local distNext = vecNowNextX * vecNowNextX + vecNowNextY * vecNowNextY + vecNowNextZ * vecNowNextZ
+		local distDest = vecNowDestX * vecNowDestX + vecNowDestY * vecNowDestY + vecNowDestZ * vecNowDestZ
 
-		if var_17_5 * var_17_5 + var_17_6 * var_17_6 + var_17_7 * var_17_7 >= var_17_8 * var_17_8 + var_17_9 * var_17_9 + var_17_10 * var_17_10 then
-			arg_17_0._posX = arg_17_0._curWayPoint.x
-			arg_17_0._posY = arg_17_0._curWayPoint.y
-			arg_17_0._posZ = arg_17_0._curWayPoint.z
+		if distDest <= distNext then
+			self._posX = self._curWayPoint.x
+			self._posY = self._curWayPoint.y
+			self._posZ = self._curWayPoint.z
 
-			arg_17_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_17_0)
-			arg_17_0:dispatchEvent(UnitMoveEvent.PassWayPoint, arg_17_0._posX, arg_17_0._posY, arg_17_0._posZ)
+			self:dispatchEvent(UnitMoveEvent.PosChanged, self)
+			self:dispatchEvent(UnitMoveEvent.PassWayPoint, self._posX, self._posY, self._posZ)
 
-			if #arg_17_0._wayPoints > 0 then
-				local var_17_11 = arg_17_0._wayPoints[1]
+			if #self._wayPoints > 0 then
+				local newWp = self._wayPoints[1]
 
-				table.remove(arg_17_0._wayPoints, 1)
-				arg_17_0:_setNewWayPoint(var_17_11)
+				table.remove(self._wayPoints, 1)
+				self:_setNewWayPoint(newWp)
 			else
-				arg_17_0:_setNewWayPoint(nil)
-				arg_17_0:dispatchEvent(UnitMoveEvent.Arrive, arg_17_0)
+				self:_setNewWayPoint(nil)
+				self:dispatchEvent(UnitMoveEvent.Arrive, self)
 			end
 		else
-			arg_17_0._posX = var_17_2
-			arg_17_0._posY = var_17_3
-			arg_17_0._posZ = var_17_4
+			self._posX = nextPosX
+			self._posY = nextPosY
+			self._posZ = nextPosZ
 
-			arg_17_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_17_0)
+			self:dispatchEvent(UnitMoveEvent.PosChanged, self)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_18_0)
-	arg_18_0:clearWayPoints()
-	arg_18_0._wpPool:dispose()
+function UnitMoverMmo:onDestroy()
+	self:clearWayPoints()
+	self._wpPool:dispose()
 
-	arg_18_0._wpPool = nil
-	arg_18_0._wayPoints = nil
-	arg_18_0._curWayPoint = nil
+	self._wpPool = nil
+	self._wayPoints = nil
+	self._curWayPoint = nil
 end
 
-return var_0_0
+return UnitMoverMmo

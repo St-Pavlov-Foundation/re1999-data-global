@@ -1,74 +1,76 @@
-﻿module("modules.logic.scene.summon.comp.SummonScenePreloader", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/comp/SummonScenePreloader.lua
 
-local var_0_0 = class("SummonScenePreloader", BaseSceneComp)
+module("modules.logic.scene.summon.comp.SummonScenePreloader", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._isImageLoad = false
-	arg_1_0._assetItemDict = {}
-	arg_1_0._assetItemList = {}
+local SummonScenePreloader = class("SummonScenePreloader", BaseSceneComp)
 
-	arg_1_0:_startLoadImage()
+function SummonScenePreloader:onSceneStart(sceneId, levelId)
+	self._isImageLoad = false
+	self._assetItemDict = {}
+	self._assetItemList = {}
+
+	self:_startLoadImage()
 end
 
-function var_0_0._startLoadImage(arg_2_0)
-	local var_2_0 = SummonMainController.instance:pickAllUIPreloadRes()
+function SummonScenePreloader:_startLoadImage()
+	local imageUrlList = SummonMainController.instance:pickAllUIPreloadRes()
 
-	if #var_2_0 > 0 then
-		arg_2_0._uiLoader = SequenceAbLoader.New()
+	if #imageUrlList > 0 then
+		self._uiLoader = SequenceAbLoader.New()
 
-		arg_2_0._uiLoader:setPathList(var_2_0)
-		arg_2_0._uiLoader:setConcurrentCount(5)
-		arg_2_0._uiLoader:startLoad(arg_2_0._onUIPreloadFinish, arg_2_0)
-	end
-end
-
-function var_0_0._onUIPreloadFinish(arg_3_0)
-	local var_3_0 = arg_3_0._uiLoader:getAssetItemDict()
-
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		iter_3_1:Retain()
-
-		arg_3_0._assetItemDict[iter_3_0] = iter_3_1
-
-		table.insert(arg_3_0._assetItemList, iter_3_1)
-	end
-
-	if arg_3_0._uiLoader then
-		arg_3_0._uiLoader:dispose()
-
-		arg_3_0._uiLoader = nil
-	end
-
-	arg_3_0._isImageLoad = true
-end
-
-function var_0_0.getAssetItem(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._assetItemDict[arg_4_1]
-
-	if var_4_0 then
-		return var_4_0
+		self._uiLoader:setPathList(imageUrlList)
+		self._uiLoader:setConcurrentCount(5)
+		self._uiLoader:startLoad(self._onUIPreloadFinish, self)
 	end
 end
 
-function var_0_0.onSceneClose(arg_5_0)
-	if arg_5_0._uiLoader then
-		arg_5_0._uiLoader:dispose()
+function SummonScenePreloader:_onUIPreloadFinish()
+	local assetItemDict = self._uiLoader:getAssetItemDict()
 
-		arg_5_0._uiLoader = nil
+	for url, assetItem in pairs(assetItemDict) do
+		assetItem:Retain()
+
+		self._assetItemDict[url] = assetItem
+
+		table.insert(self._assetItemList, assetItem)
 	end
 
-	if arg_5_0._assetItemList and #arg_5_0._assetItemList > 0 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._assetItemList) do
-			iter_5_1:Release()
+	if self._uiLoader then
+		self._uiLoader:dispose()
+
+		self._uiLoader = nil
+	end
+
+	self._isImageLoad = true
+end
+
+function SummonScenePreloader:getAssetItem(path)
+	local assetItem = self._assetItemDict[path]
+
+	if assetItem then
+		return assetItem
+	end
+end
+
+function SummonScenePreloader:onSceneClose()
+	if self._uiLoader then
+		self._uiLoader:dispose()
+
+		self._uiLoader = nil
+	end
+
+	if self._assetItemList and #self._assetItemList > 0 then
+		for _, assetItem in ipairs(self._assetItemList) do
+			assetItem:Release()
 		end
 
-		arg_5_0._assetItemList = {}
-		arg_5_0._assetItemDict = {}
+		self._assetItemList = {}
+		self._assetItemDict = {}
 	end
 end
 
-function var_0_0.onSceneHide(arg_6_0)
-	arg_6_0:onSceneClose()
+function SummonScenePreloader:onSceneHide()
+	self:onSceneClose()
 end
 
-return var_0_0
+return SummonScenePreloader

@@ -1,74 +1,80 @@
-﻿module("modules.logic.activity.view.LinkageActivity_Page2RewardBase", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_Page2RewardBase.lua
 
-local var_0_0 = class("LinkageActivity_Page2RewardBase", RougeSimpleItemBase)
+module("modules.logic.activity.view.LinkageActivity_Page2RewardBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local LinkageActivity_Page2RewardBase = class("LinkageActivity_Page2RewardBase", RougeSimpleItemBase)
+
+function LinkageActivity_Page2RewardBase:ctor(ctorParam)
+	self:__onInit()
+	LinkageActivity_Page2RewardBase.super.ctor(self, ctorParam)
 end
 
-function var_0_0.onDestroyView(arg_2_0)
-	var_0_0.super.onDestroyView(arg_2_0)
-	arg_2_0:__onDispose()
+function LinkageActivity_Page2RewardBase:onDestroyView()
+	LinkageActivity_Page2RewardBase.super.onDestroyView(self)
+	self:__onDispose()
 end
 
-function var_0_0.actId(arg_3_0)
-	return arg_3_0:_assetGetParent():actId()
+function LinkageActivity_Page2RewardBase:actId()
+	local p = self:_assetGetParent()
+
+	return p:actId()
 end
 
-function var_0_0.isType101RewardCouldGetAnyOne(arg_4_0)
-	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(arg_4_0:actId())
+function LinkageActivity_Page2RewardBase:isType101RewardCouldGetAnyOne()
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(self:actId())
 end
 
-function var_0_0.isType101RewardGet(arg_5_0)
-	return ActivityType101Model.instance:isType101RewardGet(arg_5_0:actId(), arg_5_0._index)
+function LinkageActivity_Page2RewardBase:isType101RewardGet()
+	return ActivityType101Model.instance:isType101RewardGet(self:actId(), self._index)
 end
 
-function var_0_0.isType101RewardCouldGet(arg_6_0)
-	return ActivityType101Model.instance:isType101RewardCouldGet(arg_6_0:actId(), arg_6_0._index)
+function LinkageActivity_Page2RewardBase:isType101RewardCouldGet()
+	return ActivityType101Model.instance:isType101RewardCouldGet(self:actId(), self._index)
 end
 
-function var_0_0.getType101LoginCount(arg_7_0)
-	return ActivityType101Model.instance:getType101LoginCount(arg_7_0:actId())
+function LinkageActivity_Page2RewardBase:getType101LoginCount()
+	return ActivityType101Model.instance:getType101LoginCount(self:actId())
 end
 
-function var_0_0.getNorSignActivityCo(arg_8_0)
-	return ActivityConfig.instance:getNorSignActivityCo(arg_8_0:actId(), arg_8_0._index)
+function LinkageActivity_Page2RewardBase:getNorSignActivityCo()
+	return ActivityConfig.instance:getNorSignActivityCo(self:actId(), self._index)
 end
 
-function var_0_0.sendGet101BonusRequest(arg_9_0, arg_9_1, arg_9_2)
-	return Activity101Rpc.instance:sendGet101BonusRequest(arg_9_0:actId(), arg_9_0._index, arg_9_1, arg_9_2)
+function LinkageActivity_Page2RewardBase:sendGet101BonusRequest(cb, cbObj)
+	return Activity101Rpc.instance:sendGet101BonusRequest(self:actId(), self._index, cb, cbObj)
 end
 
-function var_0_0.claimAll(arg_10_0, arg_10_1, arg_10_2)
-	return ActivityType101Model.instance:claimAll(arg_10_0:actId(), arg_10_1, arg_10_2)
+function LinkageActivity_Page2RewardBase:claimAll(cb, cbObj)
+	return ActivityType101Model.instance:claimAll(self:actId(), cb, cbObj)
 end
 
-function var_0_0.isActOnLine(arg_11_0)
-	return ActivityModel.instance:isActOnLine(arg_11_0:actId())
+function LinkageActivity_Page2RewardBase:isActOnLine()
+	return ActivityModel.instance:isActOnLine(self:actId())
 end
 
-function var_0_0.refreshRewardItem(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_1:setMOValue(arg_12_2[1], arg_12_2[2], arg_12_2[3])
-	arg_12_1:setCountFontSize(46)
-	arg_12_1:setHideLvAndBreakFlag(true)
-	arg_12_1:hideEquipLvAndBreak(true)
-	arg_12_1:isShowQuality(false)
-	arg_12_1:customOnClickCallback(function()
-		if not arg_12_0:isActOnLine() then
+function LinkageActivity_Page2RewardBase:refreshRewardItem(item, itemCo)
+	item:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+	item:setCountFontSize(46)
+	item:setHideLvAndBreakFlag(true)
+	item:hideEquipLvAndBreak(true)
+	item:isShowQuality(false)
+	item:customOnClickCallback(function()
+		if not self:isActOnLine() then
 			GameFacade.showToast(ToastEnum.BattlePass)
 
 			return
 		end
 
-		if arg_12_0:isType101RewardCouldGet() then
-			arg_12_0:claimAll(arg_12_0._onClaimAllCb, arg_12_0)
+		local couldGet = self:isType101RewardCouldGet()
+
+		if couldGet then
+			self:claimAll(self._onClaimAllCb, self)
 
 			return
 		end
 
-		MaterialTipController.instance:showMaterialInfo(arg_12_2[1], arg_12_2[2])
+		MaterialTipController.instance:showMaterialInfo(itemCo[1], itemCo[2])
 	end)
 end
 
-return var_0_0
+return LinkageActivity_Page2RewardBase

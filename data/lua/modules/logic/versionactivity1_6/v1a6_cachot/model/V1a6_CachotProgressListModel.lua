@@ -1,222 +1,227 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotProgressListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotProgressListModel.lua
 
-local var_0_0 = class("V1a6_CachotProgressListModel", MixScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotProgressListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._totalScore = nil
-	arg_1_0._weekScore = nil
-	arg_1_0._curStage = nil
-	arg_1_0._nextStageSecond = nil
-	arg_1_0._canReceiveRewardList = nil
-	arg_1_0._totalRewardCount = 0
+local V1a6_CachotProgressListModel = class("V1a6_CachotProgressListModel", MixScrollModel)
+
+function V1a6_CachotProgressListModel:onInit()
+	self._totalScore = nil
+	self._weekScore = nil
+	self._curStage = nil
+	self._nextStageSecond = nil
+	self._canReceiveRewardList = nil
+	self._totalRewardCount = 0
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function V1a6_CachotProgressListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.initDatas(arg_3_0)
-	arg_3_0:onInit()
-	arg_3_0:buildProgressData()
-	arg_3_0:buildScrollList()
-	arg_3_0:checkDoubleStoreRefreshRed()
-	arg_3_0:checkRewardStageChangeRed()
+function V1a6_CachotProgressListModel:initDatas()
+	self:onInit()
+	self:buildProgressData()
+	self:buildScrollList()
+	self:checkDoubleStoreRefreshRed()
+	self:checkRewardStageChangeRed()
 end
 
-function var_0_0.buildProgressData(arg_4_0)
-	local var_4_0 = V1a6_CachotModel.instance:getRogueStateInfo()
+function V1a6_CachotProgressListModel:buildProgressData()
+	local rogueStateInfo = V1a6_CachotModel.instance:getRogueStateInfo()
 
-	arg_4_0._totalScore = var_4_0 and var_4_0.totalScore or 0
-	arg_4_0._weekScore = var_4_0 and var_4_0.weekScore or 0
-	arg_4_0._curStage = var_4_0 and var_4_0.stage or 0
-	arg_4_0._nextStageSecond = var_4_0 and tonumber(var_4_0.nextStageSecond) or 0
-	arg_4_0._rewardStateMap = arg_4_0:buildRewardsStateMap(var_4_0)
+	self._totalScore = rogueStateInfo and rogueStateInfo.totalScore or 0
+	self._weekScore = rogueStateInfo and rogueStateInfo.weekScore or 0
+	self._curStage = rogueStateInfo and rogueStateInfo.stage or 0
+	self._nextStageSecond = rogueStateInfo and tonumber(rogueStateInfo.nextStageSecond) or 0
+	self._rewardStateMap = self:buildRewardsStateMap(rogueStateInfo)
 end
 
-function var_0_0.buildRewardsStateMap(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = arg_5_1 and arg_5_1.getRewards
+function V1a6_CachotProgressListModel:buildRewardsStateMap(rogueStateInfo)
+	local rewardStateMap = {}
+	local getRewards = rogueStateInfo and rogueStateInfo.getRewards
 
-	arg_5_0._canReceiveRewardList = {}
-	arg_5_0._totalRewardCount = 0
-	arg_5_0._unLockedRewardCount = 0
+	self._canReceiveRewardList = {}
+	self._totalRewardCount = 0
+	self._unLockedRewardCount = 0
 
-	local var_5_2 = V1a6_CachotScoreConfig.instance:getConfigList()
+	local scoreConfigList = V1a6_CachotScoreConfig.instance:getConfigList()
 
-	if var_5_2 then
-		for iter_5_0, iter_5_1 in ipairs(var_5_2) do
-			local var_5_3 = V1a6_CachotEnum.MilestonesState.Locked
+	if scoreConfigList then
+		for _, v in ipairs(scoreConfigList) do
+			local state = V1a6_CachotEnum.MilestonesState.Locked
 
-			if arg_5_0._curStage >= iter_5_1.stage then
-				if iter_5_1.score <= arg_5_0._totalScore then
-					local var_5_4 = tabletool.indexOf(var_5_1, iter_5_1.id) ~= nil
+			if self._curStage >= v.stage then
+				if v.score <= self._totalScore then
+					local hasReceiveRewards = tabletool.indexOf(getRewards, v.id) ~= nil
 
-					var_5_3 = var_5_4 and V1a6_CachotEnum.MilestonesState.HasReceived or V1a6_CachotEnum.MilestonesState.CanReceive
+					state = hasReceiveRewards and V1a6_CachotEnum.MilestonesState.HasReceived or V1a6_CachotEnum.MilestonesState.CanReceive
 
-					if not var_5_4 then
-						table.insert(arg_5_0._canReceiveRewardList, iter_5_1.id)
+					if not hasReceiveRewards then
+						table.insert(self._canReceiveRewardList, v.id)
 					end
 				else
-					var_5_3 = V1a6_CachotEnum.MilestonesState.UnFinish
+					state = V1a6_CachotEnum.MilestonesState.UnFinish
 				end
 
-				arg_5_0._unLockedRewardCount = arg_5_0._unLockedRewardCount + 1
+				self._unLockedRewardCount = self._unLockedRewardCount + 1
 			end
 
-			var_5_0[iter_5_1.id] = var_5_3
-			arg_5_0._totalRewardCount = arg_5_0._totalRewardCount + 1
+			rewardStateMap[v.id] = state
+			self._totalRewardCount = self._totalRewardCount + 1
 		end
 	end
 
-	return var_5_0
+	return rewardStateMap
 end
 
-function var_0_0.buildScrollList(arg_6_0)
-	local var_6_0 = V1a6_CachotScoreConfig.instance:getConfigList()
+function V1a6_CachotProgressListModel:buildScrollList()
+	local configs = V1a6_CachotScoreConfig.instance:getConfigList()
 
-	if var_6_0 then
-		local var_6_1 = {}
+	if configs then
+		local list = {}
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-			local var_6_2 = arg_6_0:getRewardState(iter_6_1.id) == V1a6_CachotEnum.MilestonesState.Locked
-			local var_6_3 = V1a6_CachotProgressListMO.New()
+		for index, cofig in ipairs(configs) do
+			local state = self:getRewardState(cofig.id)
+			local isLocked = state == V1a6_CachotEnum.MilestonesState.Locked
+			local mo = V1a6_CachotProgressListMO.New()
 
-			var_6_3:init(iter_6_0, iter_6_1.id, var_6_2)
-			table.insert(var_6_1, var_6_3)
+			mo:init(index, cofig.id, isLocked)
+			table.insert(list, mo)
 
-			if var_6_2 then
+			if isLocked then
 				break
 			end
 		end
 
-		arg_6_0:setList(var_6_1)
+		self:setList(list)
 	end
 end
 
-local var_0_1 = {
+local CellType = {
 	Unlocked = 2,
 	Locked = 1
 }
 
-function var_0_0.getInfoList(arg_7_0, arg_7_1)
-	local var_7_0 = {}
-	local var_7_1 = arg_7_0:getList()
+function V1a6_CachotProgressListModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
+	local list = self:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_2 = iter_7_1.isLocked and var_0_1.Locked or var_0_1.Unlocked
-		local var_7_3 = SLFramework.UGUI.MixCellInfo.New(var_7_2, iter_7_1:getLineWidth(), iter_7_0)
+	for i, mo in ipairs(list) do
+		local cellType = mo.isLocked and CellType.Locked or CellType.Unlocked
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(cellType, mo:getLineWidth(), i)
 
-		table.insert(var_7_0, var_7_3)
+		table.insert(mixCellInfos, mixCellInfo)
 	end
 
-	return var_7_0
+	return mixCellInfos
 end
 
-function var_0_0.getCurGetTotalScore(arg_8_0)
-	return arg_8_0._totalScore or 0
+function V1a6_CachotProgressListModel:getCurGetTotalScore()
+	return self._totalScore or 0
 end
 
-function var_0_0.getWeekScore(arg_9_0)
-	return arg_9_0._weekScore or 0
+function V1a6_CachotProgressListModel:getWeekScore()
+	return self._weekScore or 0
 end
 
-function var_0_0.getCurrentStage(arg_10_0)
-	return arg_10_0._curStage or 0
+function V1a6_CachotProgressListModel:getCurrentStage()
+	return self._curStage or 0
 end
 
-function var_0_0.getRewardState(arg_11_0, arg_11_1)
-	if arg_11_0._rewardStateMap then
-		return arg_11_0._rewardStateMap[arg_11_1] or V1a6_CachotEnum.MilestonesState.Locked
+function V1a6_CachotProgressListModel:getRewardState(id)
+	if self._rewardStateMap then
+		return self._rewardStateMap[id] or V1a6_CachotEnum.MilestonesState.Locked
 	end
 end
 
-function var_0_0.getCurFinishRewardCount(arg_12_0)
-	local var_12_0 = V1a6_CachotModel.instance:getRogueStateInfo()
-	local var_12_1 = 0
-	local var_12_2 = arg_12_0._canReceiveRewardList and #arg_12_0._canReceiveRewardList or 0
+function V1a6_CachotProgressListModel:getCurFinishRewardCount()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueStateInfo()
+	local receivePartCount = 0
+	local canReceivePartCount = self._canReceiveRewardList and #self._canReceiveRewardList or 0
 
-	if var_12_0 and var_12_0.getRewards then
-		var_12_1 = #var_12_0.getRewards
+	if rogueInfo and rogueInfo.getRewards then
+		receivePartCount = #rogueInfo.getRewards
 	end
 
-	return var_12_2 + var_12_1
+	return canReceivePartCount + receivePartCount
 end
 
-function var_0_0.getTotalRewardCount(arg_13_0)
-	return arg_13_0._totalRewardCount or 0
+function V1a6_CachotProgressListModel:getTotalRewardCount()
+	return self._totalRewardCount or 0
 end
 
-function var_0_0.getUnLockedRewardCount(arg_14_0)
-	return arg_14_0._unLockedRewardCount or 0
+function V1a6_CachotProgressListModel:getUnLockedRewardCount()
+	return self._unLockedRewardCount or 0
 end
 
-function var_0_0.isAllRewardUnLocked(arg_15_0)
-	return arg_15_0:getTotalRewardCount() <= arg_15_0:getUnLockedRewardCount()
+function V1a6_CachotProgressListModel:isAllRewardUnLocked()
+	return self:getTotalRewardCount() <= self:getUnLockedRewardCount()
 end
 
-function var_0_0.getHasFinishedMoList(arg_16_0)
-	local var_16_0 = {}
-	local var_16_1 = arg_16_0:getList()
+function V1a6_CachotProgressListModel:getHasFinishedMoList()
+	local finishMoList = {}
+	local allMoList = self:getList()
 
-	if var_16_1 then
-		for iter_16_0, iter_16_1 in pairs(var_16_1) do
-			if arg_16_0:getRewardState(iter_16_1.id) == V1a6_CachotEnum.MilestonesState.HasReceived then
-				table.insert(var_16_0, iter_16_1)
+	if allMoList then
+		for _, v in pairs(allMoList) do
+			local isFinish = self:getRewardState(v.id) == V1a6_CachotEnum.MilestonesState.HasReceived
+
+			if isFinish then
+				table.insert(finishMoList, v)
 			end
 		end
 	end
 
-	return var_16_0
+	return finishMoList
 end
 
-function var_0_0.getCanReceivePartIdList(arg_17_0)
-	return arg_17_0._canReceiveRewardList
+function V1a6_CachotProgressListModel:getCanReceivePartIdList()
+	return self._canReceiveRewardList
 end
 
-function var_0_0.getUnLockNextStageRemainTime(arg_18_0)
-	return arg_18_0._nextStageSecond
+function V1a6_CachotProgressListModel:getUnLockNextStageRemainTime()
+	return self._nextStageSecond
 end
 
-function var_0_0.updateUnLockNextStageRemainTime(arg_19_0, arg_19_1)
-	if arg_19_0._nextStageSecond then
-		arg_19_1 = tonumber(arg_19_1) or 0
-		arg_19_0._nextStageSecond = arg_19_0._nextStageSecond - arg_19_1
+function V1a6_CachotProgressListModel:updateUnLockNextStageRemainTime(decreaseTime)
+	if self._nextStageSecond then
+		decreaseTime = tonumber(decreaseTime) or 0
+		self._nextStageSecond = self._nextStageSecond - decreaseTime
 	end
 end
 
-function var_0_0.checkRed(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = {}
-	local var_20_1 = arg_20_2(arg_20_0)
+function V1a6_CachotProgressListModel:checkRed(id, checkfunc, parentId)
+	local redInfoList = {}
+	local isRed = checkfunc(self)
 
-	table.insert(var_20_0, {
-		id = arg_20_1,
-		value = var_20_1 and 1 or 0
+	table.insert(redInfoList, {
+		id = id,
+		value = isRed and 1 or 0
 	})
 
-	if arg_20_3 then
-		table.insert(var_20_0, {
-			id = arg_20_3,
-			value = var_20_1 and 1 or 0
+	if parentId then
+		table.insert(redInfoList, {
+			id = parentId,
+			value = isRed and 1 or 0
 		})
 	end
 
-	return var_20_0
+	return redInfoList
 end
 
-function var_0_0.checkRewardStageChangeRed(arg_21_0)
-	local var_21_0 = arg_21_0:checkRed(RedDotEnum.DotNode.V1a6RogueRewardStage, arg_21_0.checkRewardStageChange) or {}
+function V1a6_CachotProgressListModel:checkRewardStageChangeRed()
+	local redInfoList = self:checkRed(RedDotEnum.DotNode.V1a6RogueRewardStage, self.checkRewardStageChange) or {}
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_21_0, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(redInfoList, true)
 end
 
-function var_0_0.checkRewardStageChange(arg_22_0)
-	local var_22_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueRewardStage
-	local var_22_1 = PlayerPrefsHelper.getNumber(var_22_0, 0)
+function V1a6_CachotProgressListModel:checkRewardStageChange()
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueRewardStage
+	local localstage = PlayerPrefsHelper.getNumber(key, 0)
 
-	if arg_22_0._curStage ~= nil then
-		if var_22_1 == 0 then
-			PlayerPrefsHelper.setNumber(var_22_0, arg_22_0._curStage)
-		elseif var_22_1 < arg_22_0._curStage then
+	if self._curStage ~= nil then
+		if localstage == 0 then
+			PlayerPrefsHelper.setNumber(key, self._curStage)
+		elseif localstage < self._curStage then
 			return true
 		end
 	end
@@ -224,24 +229,24 @@ function var_0_0.checkRewardStageChange(arg_22_0)
 	return false
 end
 
-function var_0_0.checkDoubleStoreRefreshRed(arg_23_0)
-	local var_23_0 = arg_23_0:checkRed(RedDotEnum.DotNode.V1a6RogueDoubleScore, arg_23_0.checkDoubleStoreRefresh) or {}
+function V1a6_CachotProgressListModel:checkDoubleStoreRefreshRed()
+	local redInfoList = self:checkRed(RedDotEnum.DotNode.V1a6RogueDoubleScore, self.checkDoubleStoreRefresh) or {}
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_23_0, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(redInfoList, true)
 end
 
-function var_0_0.checkDoubleStoreRefresh(arg_24_0)
-	local var_24_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueDoubleScore
-	local var_24_1 = ServerTime.now()
-	local var_24_2 = PlayerPrefsHelper.getString(var_24_0, "")
+function V1a6_CachotProgressListModel:checkDoubleStoreRefresh()
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey) .. PlayerPrefsKey.V1a6RogueDoubleScore
+	local time = ServerTime.now()
+	local localtime = PlayerPrefsHelper.getString(key, "")
 
-	if arg_24_0._weekScore ~= nil then
-		if var_24_2 == "" then
-			PlayerPrefsHelper.setNumber(var_24_0, var_24_1)
+	if self._weekScore ~= nil then
+		if localtime == "" then
+			PlayerPrefsHelper.setNumber(key, time)
 		else
-			local var_24_3 = TimeUtil.OneDaySecond * 7 + var_24_2
+			local nextweeksecond = TimeUtil.OneDaySecond * 7 + localtime
 
-			if arg_24_0._weekScore == 0 and var_24_3 < var_24_1 then
+			if self._weekScore == 0 and nextweeksecond < time then
 				return true
 			end
 		end
@@ -250,6 +255,6 @@ function var_0_0.checkDoubleStoreRefresh(arg_24_0)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotProgressListModel.instance = V1a6_CachotProgressListModel.New()
 
-return var_0_0
+return V1a6_CachotProgressListModel

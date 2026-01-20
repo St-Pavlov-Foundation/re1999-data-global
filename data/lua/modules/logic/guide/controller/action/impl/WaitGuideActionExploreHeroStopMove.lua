@@ -1,33 +1,37 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreHeroStopMove", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionExploreHeroStopMove.lua
 
-local var_0_0 = class("WaitGuideActionExploreHeroStopMove", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreHeroStopMove", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = ExploreController.instance:getMap()
+local WaitGuideActionExploreHeroStopMove = class("WaitGuideActionExploreHeroStopMove", BaseGuideAction)
 
-	if not var_1_0 then
-		arg_1_0:onDone(true)
+function WaitGuideActionExploreHeroStopMove:onStart(context)
+	local map = ExploreController.instance:getMap()
+
+	if not map then
+		self:onDone(true)
 
 		return
 	end
 
-	if not var_1_0:getHero():isMoving() then
-		arg_1_0:onDone(true)
+	local hero = map:getHero()
+
+	if not hero:isMoving() then
+		self:onDone(true)
 
 		return
 	end
 
 	GuideBlockMgr.instance:startBlock(99999999)
-	ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, arg_1_0.onMoveEnd, arg_1_0)
+	ExploreController.instance:registerCallback(ExploreEvent.OnHeroMoveEnd, self.onMoveEnd, self)
 end
 
-function var_0_0.onMoveEnd(arg_2_0)
-	arg_2_0:onDone(true)
+function WaitGuideActionExploreHeroStopMove:onMoveEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function WaitGuideActionExploreHeroStopMove:clearWork()
 	GuideBlockMgr.instance:removeBlock()
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, arg_3_0.onMoveEnd, arg_3_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnHeroMoveEnd, self.onMoveEnd, self)
 end
 
-return var_0_0
+return WaitGuideActionExploreHeroStopMove

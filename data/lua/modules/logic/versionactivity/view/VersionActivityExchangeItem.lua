@@ -1,203 +1,211 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityExchangeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityExchangeItem.lua
 
-local var_0_0 = class("VersionActivityExchangeItem", LuaCompBase)
+module("modules.logic.versionactivity.view.VersionActivityExchangeItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._txtneed = gohelper.findChildText(arg_1_0.go, "state/txt_need")
-	arg_1_0._gounfinishstate = gohelper.findChild(arg_1_0.go, "state/go_unfinishstate")
-	arg_1_0._gofinishstate = gohelper.findChild(arg_1_0.go, "state/go_finishstate")
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.go, "#go_rewardcontent")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click")
-	arg_1_0._goget = gohelper.findChild(arg_1_0.go, "go_get")
-	arg_1_0._golingqu = gohelper.findChild(arg_1_0.go, "go_get/#lingqu")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.go, "go_finish")
-	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.go, "go_unfinish")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.go, "go_selected")
-	arg_1_0._goselectedbg = gohelper.findChildSingleImage(arg_1_0.go, "go_selected/bg")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.go, "#go_rewardcontent/anim/#go_rewarditem")
-	arg_1_0._imgiconbgunselect = gohelper.findChildImage(arg_1_0.go, "hero/img_iconbgunselect")
-	arg_1_0._imgiconbgselect = gohelper.findChildImage(arg_1_0.go, "hero/img_iconbgselect")
-	arg_1_0._imgheadicon = gohelper.findChildSingleImage(arg_1_0.go, "hero/mask/img_headicon")
+local VersionActivityExchangeItem = class("VersionActivityExchangeItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityExchangeItem:init(go)
+	self.go = go
+	self._txtneed = gohelper.findChildText(self.go, "state/txt_need")
+	self._gounfinishstate = gohelper.findChild(self.go, "state/go_unfinishstate")
+	self._gofinishstate = gohelper.findChild(self.go, "state/go_finishstate")
+	self._gorewardcontent = gohelper.findChild(self.go, "#go_rewardcontent")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
+	self._goget = gohelper.findChild(self.go, "go_get")
+	self._golingqu = gohelper.findChild(self.go, "go_get/#lingqu")
+	self._gofinish = gohelper.findChild(self.go, "go_finish")
+	self._gounfinish = gohelper.findChild(self.go, "go_unfinish")
+	self._goselected = gohelper.findChild(self.go, "go_selected")
+	self._goselectedbg = gohelper.findChildSingleImage(self.go, "go_selected/bg")
+	self._gorewarditem = gohelper.findChild(self.go, "#go_rewardcontent/anim/#go_rewarditem")
+	self._imgiconbgunselect = gohelper.findChildImage(self.go, "hero/img_iconbgunselect")
+	self._imgiconbgselect = gohelper.findChildImage(self.go, "hero/img_iconbgselect")
+	self._imgheadicon = gohelper.findChildSingleImage(self.go, "hero/mask/img_headicon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0.updateLingqu, arg_2_0)
+function VersionActivityExchangeItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnClickOnClick, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.updateLingqu, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0.updateLingqu, arg_3_0)
+function VersionActivityExchangeItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.updateLingqu, self)
 end
 
-function var_0_0._btnClickOnClick(arg_4_0)
-	if arg_4_0.state == -1 then
+function VersionActivityExchangeItem:_btnClickOnClick()
+	if self.state == -1 then
 		-- block empty
-	elseif arg_4_0.state == 1 then
-		local var_4_0 = {}
+	elseif self.state == 1 then
+		local param = {}
 
-		var_4_0.mark = true
+		param.mark = true
 
-		StoryController.instance:playStory(arg_4_0.config.storyId, var_4_0)
-	elseif ItemModel.instance:getItemQuantity(arg_4_0.needArr[1], arg_4_0.needArr[2]) >= arg_4_0.needArr[3] then
-		local var_4_1 = {}
-
-		var_4_1.mark = true
-
-		StoryController.instance:playStory(arg_4_0.config.storyId, var_4_1, arg_4_0.sendExchange112Request, arg_4_0)
+		StoryController.instance:playStory(self.config.storyId, param)
 	else
-		local var_4_2 = ItemModel.instance:getItemConfigAndIcon(arg_4_0.needArr[1], arg_4_0.needArr[2])
+		local hasQuantity = ItemModel.instance:getItemQuantity(self.needArr[1], self.needArr[2])
 
-		ToastController.instance:showToast(3202, var_4_2 and var_4_2.name or arg_4_0.needArr[2])
+		if hasQuantity >= self.needArr[3] then
+			local param = {}
+
+			param.mark = true
+
+			StoryController.instance:playStory(self.config.storyId, param, self.sendExchange112Request, self)
+		else
+			local config = ItemModel.instance:getItemConfigAndIcon(self.needArr[1], self.needArr[2])
+
+			ToastController.instance:showToast(3202, config and config.name or self.needArr[2])
+		end
 	end
 
-	arg_4_0:onClick()
+	self:onClick()
 end
 
-function var_0_0.sendExchange112Request(arg_5_0)
-	if arg_5_0.state == 0 then
+function VersionActivityExchangeItem:sendExchange112Request()
+	if self.state == 0 then
 		UIBlockMgr.instance:startBlock("VersionActivityExchangeItem")
 
-		if arg_5_0._animatorPlayer then
-			arg_5_0._animatorPlayer:Play(UIAnimationName.Close, arg_5_0.sendRequest, arg_5_0)
+		if self._animatorPlayer then
+			self._animatorPlayer:Play(UIAnimationName.Close, self.sendRequest, self)
 		else
-			arg_5_0:sendRequest()
+			self:sendRequest()
 		end
 	end
 
 	gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, false)
 end
 
-function var_0_0.sendRequest(arg_6_0)
+function VersionActivityExchangeItem:sendRequest()
 	UIBlockMgr.instance:endBlock("VersionActivityExchangeItem")
-	Activity112Rpc.instance:sendExchange112Request(arg_6_0.config.activityId, arg_6_0.config.id)
+	Activity112Rpc.instance:sendExchange112Request(self.config.activityId, self.config.id)
 end
 
-function var_0_0.onClick(arg_7_0)
-	arg_7_0.selectFunc(arg_7_0.selectFuncObj, arg_7_0.config)
+function VersionActivityExchangeItem:onClick()
+	self.selectFunc(self.selectFuncObj, self.config)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.rewardItemList = {}
-	arg_8_0.click = gohelper.findChildClick(arg_8_0.go, "")
+function VersionActivityExchangeItem:_editableInitView()
+	self.rewardItemList = {}
+	self.click = gohelper.findChildClick(self.go, "")
 
-	arg_8_0.click:AddClickListener(arg_8_0.onClick, arg_8_0)
-	arg_8_0._goselectedbg:LoadImage(ResUrl.getVersionActivityExchangeIcon("img_bg_jiangjilan_xuanzhong"))
+	self.click:AddClickListener(self.onClick, self)
+	self._goselectedbg:LoadImage(ResUrl.getVersionActivityExchangeIcon("img_bg_jiangjilan_xuanzhong"))
 
-	arg_8_0._animator = arg_8_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_8_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_8_0.go)
-	arg_8_0._gorewardcontentcg = gohelper.findChild(arg_8_0._gorewardcontent, "anim"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._animator = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.go)
+	self._gorewardcontentcg = gohelper.findChild(self._gorewardcontent, "anim"):GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0.setSelectFunc(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0.selectFunc = arg_9_1
-	arg_9_0.selectFuncObj = arg_9_2
+function VersionActivityExchangeItem:setSelectFunc(selectFunc, selectFuncObj)
+	self.selectFunc = selectFunc
+	self.selectFuncObj = selectFuncObj
 end
 
-function var_0_0.updateSelect(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goselected, arg_10_0.config.id == arg_10_1)
-	gohelper.setActive(arg_10_0._imgiconbgselect.gameObject, arg_10_0.config.id == arg_10_1)
-	gohelper.setActive(arg_10_0._imgiconbgunselect.gameObject, arg_10_0.config.id ~= arg_10_1)
+function VersionActivityExchangeItem:updateSelect(id)
+	gohelper.setActive(self._goselected, self.config.id == id)
+	gohelper.setActive(self._imgiconbgselect.gameObject, self.config.id == id)
+	gohelper.setActive(self._imgiconbgunselect.gameObject, self.config.id ~= id)
 end
 
-var_0_0.DefaultHeadOffsetX = 2.4
-var_0_0.DefaultHeadOffsetY = -70.9
+VersionActivityExchangeItem.DefaultHeadOffsetX = 2.4
+VersionActivityExchangeItem.DefaultHeadOffsetY = -70.9
 
-function var_0_0.updateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_0.config = arg_11_1
-	arg_11_0.needArr = string.splitToNumber(arg_11_1.items, "#")
+function VersionActivityExchangeItem:updateItem(config, index, playAnimator)
+	self.config = config
+	self.needArr = string.splitToNumber(config.items, "#")
 
-	arg_11_0._imgheadicon:LoadImage(arg_11_1.head)
+	self._imgheadicon:LoadImage(config.head)
 
-	local var_11_0 = string.splitToNumber(arg_11_1.chatheadsOffSet, "#")
+	local headoffset = string.splitToNumber(config.chatheadsOffSet, "#")
 
-	recthelper.setAnchor(arg_11_0._imgheadicon.transform, var_11_0[1] or var_0_0.DefaultHeadOffsetX, var_11_0[2] or var_0_0.DefaultHeadOffsetY)
+	recthelper.setAnchor(self._imgheadicon.transform, headoffset[1] or VersionActivityExchangeItem.DefaultHeadOffsetX, headoffset[2] or VersionActivityExchangeItem.DefaultHeadOffsetY)
 
-	arg_11_0.state = -1
-	arg_11_0.state = VersionActivity112Model.instance:getRewardState(arg_11_0.config.activityId, arg_11_0.config.id)
+	self.state = -1
+	self.state = VersionActivity112Model.instance:getRewardState(self.config.activityId, self.config.id)
 
-	local var_11_1 = GameUtil.splitString2(arg_11_1.bonus, true)
+	local arr = GameUtil.splitString2(config.bonus, true)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		local var_11_2 = arg_11_0.rewardItemList[iter_11_0]
+	for i, v in ipairs(arr) do
+		local item = self.rewardItemList[i]
 
-		if var_11_2 == nil then
-			var_11_2 = {
-				go = gohelper.cloneInPlace(arg_11_0._gorewarditem, "item" .. iter_11_0)
+		if item == nil then
+			item = {
+				go = gohelper.cloneInPlace(self._gorewarditem, "item" .. i)
 			}
 
-			local var_11_3 = gohelper.findChild(var_11_2.go, "go_iconroot")
+			local iconroot = gohelper.findChild(item.go, "go_iconroot")
+			local icon = IconMgr.instance:getCommonItemIcon(iconroot)
 
-			var_11_2.icon = IconMgr.instance:getCommonItemIcon(var_11_3)
-			arg_11_0.rewardItemList[iter_11_0] = var_11_2
+			item.icon = icon
+			self.rewardItemList[i] = item
 		end
 
-		var_11_2.icon:setMOValue(iter_11_1[1], iter_11_1[2], iter_11_1[3])
-		var_11_2.icon:isShowCount(true)
-		var_11_2.icon:setScale(0.5, 0.5, 0.5)
-		var_11_2.icon:setCountFontSize(52)
-		gohelper.setActive(var_11_2.go, true)
-		gohelper.setActive(gohelper.findChild(var_11_2.go, "go_finish"), arg_11_0.state == 1)
+		item.icon:setMOValue(v[1], v[2], v[3])
+		item.icon:isShowCount(true)
+		item.icon:setScale(0.5, 0.5, 0.5)
+		item.icon:setCountFontSize(52)
+		gohelper.setActive(item.go, true)
+		gohelper.setActive(gohelper.findChild(item.go, "go_finish"), self.state == 1)
 	end
 
-	for iter_11_2 = #var_11_1 + 1, #arg_11_0.rewardItemList do
-		gohelper.setActive(arg_11_0.rewardItemList[iter_11_2].go, false)
+	for i = #arr + 1, #self.rewardItemList do
+		gohelper.setActive(self.rewardItemList[i].go, false)
 	end
 
-	arg_11_0._gorewardcontentcg.alpha = arg_11_0.state == 1 and 0.45 or 1
+	self._gorewardcontentcg.alpha = self.state == 1 and 0.45 or 1
 
-	gohelper.setActive(arg_11_0._gofinish, arg_11_0.state == 1)
+	gohelper.setActive(self._gofinish, self.state == 1)
 
-	arg_11_0._txtneed.text = arg_11_0.needArr[3]
+	self._txtneed.text = self.needArr[3]
 
-	arg_11_0:updateNeed()
-	arg_11_0:updateLingqu()
+	self:updateNeed()
+	self:updateLingqu()
 
-	arg_11_0._animator.enabled = true
+	self._animator.enabled = true
 
-	if arg_11_3 then
-		arg_11_0._animator:Play(UIAnimationName.Open, 0, 0)
-		arg_11_0._animator:Update(0)
+	if playAnimator then
+		self._animator:Play(UIAnimationName.Open, 0, 0)
+		self._animator:Update(0)
 
-		local var_11_4 = arg_11_0._animator:GetCurrentAnimatorStateInfo(0).length
+		local currentAnimatorStateInfo = self._animator:GetCurrentAnimatorStateInfo(0)
+		local length = currentAnimatorStateInfo.length
 
-		if var_11_4 <= 0 then
-			var_11_4 = 1
+		if length <= 0 then
+			length = 1
 		end
 
-		arg_11_0._animator:Play(UIAnimationName.Open, 0, -0.066 * (arg_11_2 - 1) / var_11_4)
-		arg_11_0._animator:Update(0)
+		self._animator:Play(UIAnimationName.Open, 0, -0.066 * (index - 1) / length)
+		self._animator:Update(0)
 	else
-		arg_11_0._animator:Play(UIAnimationName.Open, 0, 1)
-		arg_11_0._animator:Update(0)
+		self._animator:Play(UIAnimationName.Open, 0, 1)
+		self._animator:Update(0)
 	end
 end
 
-function var_0_0.updateNeed(arg_12_0)
-	local var_12_0 = ItemModel.instance:getItemQuantity(arg_12_0.needArr[1], arg_12_0.needArr[2])
+function VersionActivityExchangeItem:updateNeed()
+	local hasQuantity = ItemModel.instance:getItemQuantity(self.needArr[1], self.needArr[2])
 
-	gohelper.setActive(arg_12_0._gounfinishstate, var_12_0 < arg_12_0.needArr[3])
-	gohelper.setActive(arg_12_0._gofinishstate, var_12_0 >= arg_12_0.needArr[3])
+	gohelper.setActive(self._gounfinishstate, hasQuantity < self.needArr[3])
+	gohelper.setActive(self._gofinishstate, hasQuantity >= self.needArr[3])
 end
 
-function var_0_0.updateLingqu(arg_13_0)
-	local var_13_0 = ItemModel.instance:getItemQuantity(arg_13_0.needArr[1], arg_13_0.needArr[2])
+function VersionActivityExchangeItem:updateLingqu()
+	local hasQuantity = ItemModel.instance:getItemQuantity(self.needArr[1], self.needArr[2])
 
-	gohelper.setActive(arg_13_0._golingqu, true)
-	gohelper.setActive(arg_13_0._goget, arg_13_0.state == 0 and var_13_0 >= arg_13_0.needArr[3])
-	gohelper.setActive(arg_13_0._gounfinish, arg_13_0.state == 0 and var_13_0 < arg_13_0.needArr[3])
+	gohelper.setActive(self._golingqu, true)
+	gohelper.setActive(self._goget, self.state == 0 and hasQuantity >= self.needArr[3])
+	gohelper.setActive(self._gounfinish, self.state == 0 and hasQuantity < self.needArr[3])
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0.rewardItemList = nil
+function VersionActivityExchangeItem:onDestroyView()
+	self.rewardItemList = nil
 
-	arg_14_0.click:RemoveClickListener()
-	arg_14_0._goselectedbg:UnLoadImage()
+	self.click:RemoveClickListener()
+	self._goselectedbg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivityExchangeItem

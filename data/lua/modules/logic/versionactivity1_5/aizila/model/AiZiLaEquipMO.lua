@@ -1,57 +1,59 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaEquipMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaEquipMO.lua
 
-local var_0_0 = pureTable("AiZiLaEquipMO")
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaEquipMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.id = arg_1_1
-	arg_1_0.typeId = arg_1_1
-	arg_1_0._equipId = arg_1_2 or 0
-	arg_1_0.activityId = arg_1_3 or VersionActivity1_5Enum.ActivityId.AiZiLa
-	arg_1_0._needUpdateConfig = true
+local AiZiLaEquipMO = pureTable("AiZiLaEquipMO")
+
+function AiZiLaEquipMO:init(id, equipId, actId)
+	self.id = id
+	self.typeId = id
+	self._equipId = equipId or 0
+	self.activityId = actId or VersionActivity1_5Enum.ActivityId.AiZiLa
+	self._needUpdateConfig = true
 end
 
-function var_0_0.getConfig(arg_2_0)
-	if arg_2_0._needUpdateConfig then
-		arg_2_0._needUpdateConfig = false
-		arg_2_0._config = AiZiLaConfig.instance:getEquipCo(arg_2_0.activityId, arg_2_0._equipId)
-		arg_2_0._nexConfig = AiZiLaConfig.instance:getEquipCoByPreId(arg_2_0.activityId, arg_2_0._equipId, arg_2_0.typeId)
-		arg_2_0._costParams = AiZiLaHelper.getCostParams(arg_2_0._nexConfig)
+function AiZiLaEquipMO:getConfig()
+	if self._needUpdateConfig then
+		self._needUpdateConfig = false
+		self._config = AiZiLaConfig.instance:getEquipCo(self.activityId, self._equipId)
+		self._nexConfig = AiZiLaConfig.instance:getEquipCoByPreId(self.activityId, self._equipId, self.typeId)
+		self._costParams = AiZiLaHelper.getCostParams(self._nexConfig)
 	end
 
-	return arg_2_0._config
+	return self._config
 end
 
-function var_0_0.getNextConfig(arg_3_0)
-	arg_3_0:getConfig()
+function AiZiLaEquipMO:getNextConfig()
+	self:getConfig()
 
-	return arg_3_0._nexConfig
+	return self._nexConfig
 end
 
-function var_0_0.isMaxLevel(arg_4_0)
-	return arg_4_0:getNextConfig() == nil
+function AiZiLaEquipMO:isMaxLevel()
+	return self:getNextConfig() == nil
 end
 
-function var_0_0.isCanUpLevel(arg_5_0)
-	arg_5_0:getConfig()
+function AiZiLaEquipMO:isCanUpLevel()
+	self:getConfig()
 
-	if arg_5_0:isMaxLevel() or arg_5_0._costParams == nil then
+	if self:isMaxLevel() or self._costParams == nil then
 		return false
 	end
 
-	return AiZiLaHelper.checkCostParams(arg_5_0._costParams)
+	return AiZiLaHelper.checkCostParams(self._costParams)
 end
 
-function var_0_0.getCostParams(arg_6_0)
-	arg_6_0:getConfig()
+function AiZiLaEquipMO:getCostParams()
+	self:getConfig()
 
-	return arg_6_0._costParams
+	return self._costParams
 end
 
-function var_0_0.updateInfo(arg_7_0, arg_7_1)
-	if arg_7_0._equipId ~= arg_7_1 then
-		arg_7_0._equipId = arg_7_1
-		arg_7_0._needUpdateConfig = true
+function AiZiLaEquipMO:updateInfo(equipId)
+	if self._equipId ~= equipId then
+		self._equipId = equipId
+		self._needUpdateConfig = true
 	end
 end
 
-return var_0_0
+return AiZiLaEquipMO

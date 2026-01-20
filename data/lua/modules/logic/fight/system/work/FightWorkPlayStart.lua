@@ -1,142 +1,154 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayStart", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayStart.lua
 
-local var_0_0 = class("FightWorkPlayStart", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkPlayStart", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkPlayStart = class("FightWorkPlayStart", FightWorkItem)
+
+function FightWorkPlayStart:onStart()
 	if FightDataHelper.stateMgr.isReplay then
 		FightReplayController.instance._replayErrorFix:startReplayErrorFix()
 	end
 
-	arg_1_0.roundData = FightDataHelper.roundMgr:getRoundData()
+	self.roundData = FightDataHelper.roundMgr:getRoundData()
 
-	local var_1_0 = arg_1_0:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
-	var_1_0:registWork(FightWorkSendEvent, FightEvent.OnStartSequenceStart)
-	var_1_0:addWork(FightWorkDialogBeforeStartFight.New())
-	var_1_0:addWork(FightWorkAppearPerformance.New())
-	var_1_0:addWork(FightWorkDetectReplayEnterSceneActive.New())
+	flow:registWork(FightWorkSendEvent, FightEvent.OnStartSequenceStart)
+	flow:addWork(FightWorkDialogBeforeStartFight.New())
+	flow:addWork(FightWorkAppearPerformance.New())
+	flow:addWork(FightWorkDetectReplayEnterSceneActive.New())
 
 	FightStartSequence.needStopMonsterWave = nil
 
 	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterWave, 1)
 
-	if FightWorkFocusMonster.getFocusEntityId() or FightStartSequence.needStopMonsterWave then
-		arg_1_0:_buildFocusBorn(var_1_0)
+	local focusEntityId = FightWorkFocusMonster.getFocusEntityId()
+
+	if focusEntityId or FightStartSequence.needStopMonsterWave then
+		self:_buildFocusBorn(flow)
 	else
-		arg_1_0:_buildNormalBorn(var_1_0)
+		self:_buildNormalBorn(flow)
 	end
 
-	var_1_0:addWork(FightWorkCompareDataAfterPlay.New())
-	var_1_0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
-	var_1_0:addWork(FunctionWork.New(function()
-		local var_2_0 = FightDataHelper.roundMgr:getRoundData()
+	flow:addWork(FightWorkCompareDataAfterPlay.New())
+	flow:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
+	flow:addWork(FunctionWork.New(function()
+		local roundData = FightDataHelper.roundMgr:getRoundData()
 
-		FightDataMgr.instance:afterPlayRoundData(var_2_0)
+		FightDataMgr.instance:afterPlayRoundData(roundData)
 	end))
-	var_1_0:addWork(FunctionWork.New(function()
+	flow:addWork(FunctionWork.New(function()
 		FightRpc.instance:dealCardInfoPushData()
 	end))
-	var_1_0:addWork(FunctionWork.New(function()
+	flow:addWork(FunctionWork.New(function()
 		FightViewPartVisible.set(true, true, true, false, false)
 	end))
-	var_1_0:registFinishCallback(arg_1_0.onFlowFinish, arg_1_0)
-	arg_1_0:playWorkAndDone(var_1_0, {})
+	flow:registFinishCallback(self.onFlowFinish, self)
+	self:playWorkAndDone(flow, {})
 end
 
-function var_0_0.onFlowFinish(arg_5_0)
+function FightWorkPlayStart:onFlowFinish()
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.Enter)
 	FightController.instance:dispatchEvent(FightEvent.OnStartSequenceFinish)
 end
 
-function var_0_0._buildFocusBorn(arg_6_0, arg_6_1)
+function FightWorkPlayStart:_buildFocusBorn(flow)
 	if FightStartSequence.needStopMonsterWave then
-		arg_6_1:addWork(FunctionWork.New(function()
-			arg_6_0:_setMonsterVisible(false)
+		flow:addWork(FunctionWork.New(function()
+			self:_setMonsterVisible(false)
 		end))
 	end
 
-	arg_6_1:addWork(FightWorkStartBorn.New())
+	flow:addWork(FightWorkStartBorn.New())
 
 	if FightStartSequence.needStopMonsterWave then
-		arg_6_1:addWork(FightWorkWaitDialog.New(1))
-		arg_6_1:addWork(FunctionWork.New(function()
-			arg_6_0:_setMonsterVisible(true)
+		flow:addWork(FightWorkWaitDialog.New(1))
+		flow:addWork(FunctionWork.New(function()
+			self:_setMonsterVisible(true)
 		end))
 	end
 
-	arg_6_1:addWork(FightWorkFocusMonster.New())
+	flow:addWork(FightWorkFocusMonster.New())
 
-	if FightModel.instance:getVersion() < 4 then
-		arg_6_1:addWork(FightWork2Work.New(FightWorkDistributeCard))
+	local version = FightModel.instance:getVersion()
+
+	if version < 4 then
+		flow:addWork(FightWork2Work.New(FightWorkDistributeCard))
 	end
 
-	arg_6_1:addWork(FunctionWork.New(arg_6_0._dealStartBuff))
-	arg_6_1:addWork(FunctionWork.New(function()
+	flow:addWork(FunctionWork.New(self._dealStartBuff))
+	flow:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	local var_6_0 = FightStepBuilder.buildStepWorkList(arg_6_0.roundData.fightStep)
+	local stepWorkList = FightStepBuilder.buildStepWorkList(self.roundData.fightStep)
 
-	if var_6_0 then
-		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-			arg_6_1:addWork(iter_6_1)
+	if stepWorkList then
+		for _, work in ipairs(stepWorkList) do
+			flow:addWork(work)
 		end
 	end
 
-	arg_6_1:addWork(FunctionWork.New(function()
+	flow:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.AfterEnterStepBehaviour)
 	end))
 
 	if FightController.instance:canOpenRoundView() then
-		arg_6_1:addWork(FightWorkBeforeStartNoticeView.New())
+		flow:addWork(FightWorkBeforeStartNoticeView.New())
 	end
 
-	local var_6_1 = arg_6_0:_buildRoundViewWork()
+	flow:addWork(FightWorkCheckOpenRouge2TechniqueView.New())
 
-	if var_6_1 then
-		arg_6_1:addWork(var_6_1)
+	local roundViewWork = self:_buildRoundViewWork()
+
+	if roundViewWork then
+		flow:addWork(roundViewWork)
 	end
 end
 
-function var_0_0._buildNormalBorn(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1:registWork(FightWorkFlowParallel)
+function FightWorkPlayStart:_buildNormalBorn(flow)
+	local parallelFlow = flow:registWork(FightWorkFlowParallel)
 
-	var_11_0:addWork(FightWorkStartBorn.New())
+	parallelFlow:addWork(FightWorkStartBorn.New())
 
-	local var_11_1 = var_11_0:registWork(FightWorkFlowSequence)
+	local distributeFlow = parallelFlow:registWork(FightWorkFlowSequence)
 
-	var_11_1:addWork(WorkWaitSeconds.New(1.4 / FightModel.instance:getSpeed()))
+	distributeFlow:addWork(WorkWaitSeconds.New(1.4 / FightModel.instance:getSpeed()))
 
-	local var_11_2 = arg_11_0:_buildRoundViewWork()
+	local roundViewWork = self:_buildRoundViewWork()
 
-	if var_11_2 then
-		var_11_1:addWork(var_11_2)
-		var_11_1:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getSpeed()))
+	if roundViewWork then
+		distributeFlow:addWork(roundViewWork)
+		distributeFlow:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getSpeed()))
 	end
 
-	if FightModel.instance:getVersion() < 4 then
-		var_11_1:addWork(FightWork2Work.New(FightWorkDistributeCard))
+	local version = FightModel.instance:getVersion()
+
+	if version < 4 then
+		distributeFlow:addWork(FightWork2Work.New(FightWorkDistributeCard))
 	end
 
-	arg_11_1:addWork(FunctionWork.New(arg_11_0._dealStartBuff))
-	arg_11_1:addWork(FunctionWork.New(function()
+	flow:addWork(FunctionWork.New(self._dealStartBuff))
+	flow:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	local var_11_3 = FightStepBuilder.buildStepWorkList(arg_11_0.roundData and arg_11_0.roundData.fightStep)
+	local stepWorkList = FightStepBuilder.buildStepWorkList(self.roundData and self.roundData.fightStep)
 
-	if var_11_3 then
-		for iter_11_0, iter_11_1 in ipairs(var_11_3) do
-			arg_11_1:addWork(iter_11_1)
+	if stepWorkList then
+		for _, work in ipairs(stepWorkList) do
+			flow:addWork(work)
 		end
 	end
 
 	if FightController.instance:canOpenRoundView() then
-		arg_11_1:addWork(FightWorkBeforeStartNoticeView.New())
+		flow:addWork(FightWorkBeforeStartNoticeView.New())
 	end
+
+	flow:addWork(FightWorkCheckOpenRouge2TechniqueView.New())
 end
 
-function var_0_0._buildRoundViewWork(arg_13_0)
+function FightWorkPlayStart:_buildRoundViewWork()
 	if FightController.instance:canOpenRoundView() and GMFightShowState.roundSpecialView then
 		return FunctionWork.New(function()
 			FightController.instance:openRoundView()
@@ -144,20 +156,20 @@ function var_0_0._buildRoundViewWork(arg_13_0)
 	end
 end
 
-function var_0_0._dealStartBuff(arg_15_0)
-	for iter_15_0, iter_15_1 in ipairs(FightHelper.getAllEntitys()) do
-		if iter_15_1.buff then
-			iter_15_1.buff:dealStartBuff()
+function FightWorkPlayStart:_dealStartBuff()
+	for _, entity in ipairs(FightHelper.getAllEntitys()) do
+		if entity.buff then
+			entity.buff:dealStartBuff()
 		end
 	end
 end
 
-function var_0_0._setMonsterVisible(arg_16_0, arg_16_1)
-	local var_16_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
+function FightWorkPlayStart:_setMonsterVisible(visible)
+	local enemySideEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		iter_16_1:setActive(arg_16_1)
+	for _, entity in ipairs(enemySideEntitys) do
+		entity:setActive(visible)
 	end
 end
 
-return var_0_0
+return FightWorkPlayStart

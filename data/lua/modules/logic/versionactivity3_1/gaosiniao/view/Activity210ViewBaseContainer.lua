@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.view.Activity210ViewBaseContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/view/Activity210ViewBaseContainer.lua
 
-local var_0_0 = class("Activity210ViewBaseContainer", TaskViewBaseContainer)
-local var_0_1 = "Activity210|"
+module("modules.logic.versionactivity3_1.gaosiniao.view.Activity210ViewBaseContainer", package.seeall)
 
-function var_0_0.getPrefsKeyPrefix(arg_1_0)
-	return var_0_1 .. tostring(arg_1_0:actId())
+local Activity210ViewBaseContainer = class("Activity210ViewBaseContainer", TaskViewBaseContainer)
+local kPrefix = "Activity210|"
+
+function Activity210ViewBaseContainer:getPrefsKeyPrefix()
+	return kPrefix .. tostring(self:actId())
 end
 
-function var_0_0.saveInt(arg_2_0, arg_2_1, arg_2_2)
-	GameUtil.playerPrefsSetNumberByUserId(arg_2_1, arg_2_2)
+function Activity210ViewBaseContainer:saveInt(key, value)
+	GameUtil.playerPrefsSetNumberByUserId(key, value)
 end
 
-function var_0_0.getInt(arg_3_0, arg_3_1, arg_3_2)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_3_1, arg_3_2)
+function Activity210ViewBaseContainer:getInt(key, defaultValue)
+	return GameUtil.playerPrefsGetNumberByUserId(key, defaultValue)
 end
 
-return var_0_0
+return Activity210ViewBaseContainer

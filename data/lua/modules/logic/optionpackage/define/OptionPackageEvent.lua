@@ -1,9 +1,12 @@
-﻿module("modules.logic.optionpackage.define.OptionPackageEvent", package.seeall)
+﻿-- chunkname: @modules/logic/optionpackage/define/OptionPackageEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.optionpackage.define.OptionPackageEvent", package.seeall)
 
-var_0_0.DownloadProgressRefresh = 10001
-var_0_0.UnZipProgressRefresh = 10002
-var_0_0.DownladErrorMsg = 10003
+local OptionPackageEvent = _M
 
-return var_0_0
+OptionPackageEvent.DownloadProgressRefresh = 10001
+OptionPackageEvent.UnZipProgressRefresh = 10002
+OptionPackageEvent.DownladErrorMsg = 10003
+OptionPackageEvent.DownloadFinish = 10004
+
+return OptionPackageEvent

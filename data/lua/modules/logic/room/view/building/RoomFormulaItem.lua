@@ -1,609 +1,620 @@
-﻿module("modules.logic.room.view.building.RoomFormulaItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/building/RoomFormulaItem.lua
 
-local var_0_0 = class("RoomFormulaItem", ListScrollCellExtend)
+module("modules.logic.room.view.building.RoomFormulaItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/layout/#txt_name")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item")
-	arg_1_0._imagecoinRare = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/image_coinRare")
-	arg_1_0._simagecoinIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/simage_coinIcon")
-	arg_1_0._txtgold = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#txt_gold")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_empty")
-	arg_1_0._txtCombineNum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/layout/itemNum/#txt_num")
-	arg_1_0._simageproduceitem = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_produceitem")
-	arg_1_0._gomaterialitem = gohelper.findChild(arg_1_0.viewGO, "#go_normal/materials/#go_materialitem")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
-	arg_1_0._golockitem = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/locklayout/#go_lockitem")
-	arg_1_0._txtlock = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/#txt_lock")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/raremask/#image_rare")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_click")
-	arg_1_0._btncoin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/#btn_coin")
-	arg_1_0._btnlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_lock/#btn_lock")
-	arg_1_0._goNeedTag = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_TagNeed")
-	arg_1_0._goOwnNum = gohelper.findChild(arg_1_0.viewGO, "#go_normal/itemNum")
-	arg_1_0._txtOwnNum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/itemNum/#txt_num")
-	arg_1_0._goNeed = gohelper.findChild(arg_1_0.viewGO, "#go_normal/layout/#go_Need")
-	arg_1_0._goCanCombine = gohelper.findChild(arg_1_0.viewGO, "#go_normal/layout/#go_Mix")
-	arg_1_0._txtCanCombine = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/layout/#go_Mix/#txt_Mix")
-	arg_1_0._gonormalTrs = arg_1_0._gonormal.transform
-	arg_1_0._golockTrs = arg_1_0._golock.transform
+local RoomFormulaItem = class("RoomFormulaItem", ListScrollCellExtend)
 
-	gohelper.setActive(arg_1_0._goNeed, false)
-	gohelper.setActive(arg_1_0._goOwnNum, false)
-	gohelper.setActive(arg_1_0._goCanCombine, false)
+function RoomFormulaItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_normal/layout/#txt_name")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_normal/materials/#go_coinitem/#go_item")
+	self._imagecoinRare = gohelper.findChildImage(self.viewGO, "#go_normal/materials/#go_coinitem/#go_item/image_coinRare")
+	self._simagecoinIcon = gohelper.findChildSingleImage(self.viewGO, "#go_normal/materials/#go_coinitem/#go_item/simage_coinIcon")
+	self._txtgold = gohelper.findChildText(self.viewGO, "#go_normal/materials/#go_coinitem/#txt_gold")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_normal/materials/#go_coinitem/#go_empty")
+	self._txtCombineNum = gohelper.findChildText(self.viewGO, "#go_normal/layout/itemNum/#txt_num")
+	self._simageproduceitem = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_produceitem")
+	self._gomaterialitem = gohelper.findChild(self.viewGO, "#go_normal/materials/#go_materialitem")
+	self._golock = gohelper.findChild(self.viewGO, "#go_lock")
+	self._golockitem = gohelper.findChildText(self.viewGO, "#go_lock/locklayout/#go_lockitem")
+	self._txtlock = gohelper.findChildText(self.viewGO, "#go_lock/#txt_lock")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#go_normal/raremask/#image_rare")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_click")
+	self._btncoin = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/materials/#go_coinitem/#go_item/#btn_coin")
+	self._btnlock = gohelper.findChildButtonWithAudio(self.viewGO, "#go_lock/#btn_lock")
+	self._goNeedTag = gohelper.findChild(self.viewGO, "#go_normal/#go_TagNeed")
+	self._goOwnNum = gohelper.findChild(self.viewGO, "#go_normal/itemNum")
+	self._txtOwnNum = gohelper.findChildText(self.viewGO, "#go_normal/itemNum/#txt_num")
+	self._goNeed = gohelper.findChild(self.viewGO, "#go_normal/layout/#go_Need")
+	self._goCanCombine = gohelper.findChild(self.viewGO, "#go_normal/layout/#go_Mix")
+	self._txtCanCombine = gohelper.findChildText(self.viewGO, "#go_normal/layout/#go_Mix/#txt_Mix")
+	self._gonormalTrs = self._gonormal.transform
+	self._golockTrs = self._golock.transform
 
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(RoomEnum.ComponentType.Animator)
-	arg_1_0._lineAnimator = arg_1_0._gonormal:GetComponent(RoomEnum.ComponentType.Animator)
+	gohelper.setActive(self._goNeed, false)
+	gohelper.setActive(self._goOwnNum, false)
+	gohelper.setActive(self._goCanCombine, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._animator = self.viewGO:GetComponent(RoomEnum.ComponentType.Animator)
+	self._lineAnimator = self._gonormal:GetComponent(RoomEnum.ComponentType.Animator)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btncoin:AddClickListener(arg_2_0._btncoinOnClick, arg_2_0)
-	arg_2_0._btnlock:AddClickListener(arg_2_0._btnlockOnClick, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, arg_2_0._onFormulaCombineCountRefresh, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, arg_2_0._onHideAnimAnimation, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, arg_2_0._onShowAnimAnimation, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, arg_2_0._onMoveAnimAnimation, arg_2_0)
-	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, arg_2_0._refreshUI, arg_2_0)
+function RoomFormulaItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btncoin:AddClickListener(self._btncoinOnClick, self)
+	self._btnlock:AddClickListener(self._btnlockOnClick, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, self._onFormulaCombineCountRefresh, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, self._onHideAnimAnimation, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, self._onShowAnimAnimation, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, self._onMoveAnimAnimation, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, self._refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btncoin:RemoveClickListener()
-	arg_3_0._btnlock:RemoveClickListener()
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, arg_3_0._onFormulaCombineCountRefresh, arg_3_0)
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, arg_3_0._onHideAnimAnimation, arg_3_0)
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, arg_3_0._onShowAnimAnimation, arg_3_0)
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, arg_3_0._onMoveAnimAnimation, arg_3_0)
-	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, arg_3_0._refreshUI, arg_3_0)
+function RoomFormulaItem:removeEvents()
+	self._btnclick:RemoveClickListener()
+	self._btncoin:RemoveClickListener()
+	self._btnlock:RemoveClickListener()
+	self:removeEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, self._onFormulaCombineCountRefresh, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, self._onHideAnimAnimation, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, self._onShowAnimAnimation, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, self._onMoveAnimAnimation, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, self._refreshUI, self)
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._unlock then
-		local var_4_0 = arg_4_0._mo:getId()
-		local var_4_1 = arg_4_0._mo:getFormulaTreeLevel()
+function RoomFormulaItem:_btnclickOnClick()
+	if self._unlock then
+		local formulaStrId = self._mo:getId()
+		local treeLevel = self._mo:getFormulaTreeLevel()
 
-		RoomBuildingFormulaController.instance:setSelectFormulaStrId(var_4_0, nil, var_4_1)
+		RoomBuildingFormulaController.instance:setSelectFormulaStrId(formulaStrId, nil, treeLevel)
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_transverse_tabs_click)
 	else
-		arg_4_0:_btnlockOnClick()
+		self:_btnlockOnClick()
 	end
 end
 
-function var_0_0._btncoinOnClick(arg_5_0)
-	if not arg_5_0._unlock then
+function RoomFormulaItem:_btncoinOnClick()
+	if not self._unlock then
 		return
 	end
 
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.Gold, false, nil, false, {
 		type = MaterialEnum.MaterialType.Currency,
 		id = CurrencyEnum.CurrencyType.Gold,
-		quantity = arg_5_0.costScore,
+		quantity = self.costScore,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	})
 end
 
-function var_0_0._btnlockOnClick(arg_6_0)
-	local var_6_0 = arg_6_0._mo:getFormulaId()
-	local var_6_1, var_6_2, var_6_3, var_6_4 = RoomProductionHelper.isFormulaUnlock(var_6_0, arg_6_0._lineMO.level)
+function RoomFormulaItem:_btnlockOnClick()
+	local formulaId = self._mo:getFormulaId()
+	local _, needRoomLevel, needProductionLevel, needEpisodeId = RoomProductionHelper.isFormulaUnlock(formulaId, self._lineMO.level)
 
-	if var_6_2 then
-		GameFacade.showToast(ToastEnum.ClickRoomFormulaEpisode, var_6_2)
-	elseif var_6_3 then
-		GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, arg_6_0._lineMO.config.name, var_6_3)
-	elseif var_6_4 then
+	if needRoomLevel then
+		GameFacade.showToast(ToastEnum.ClickRoomFormulaEpisode, needRoomLevel)
+	elseif needProductionLevel then
+		GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, self._lineMO.config.name, needProductionLevel)
+	elseif needEpisodeId then
 		GameFacade.showToast(ToastEnum.ClickRoomFormula)
 	end
 end
 
-function var_0_0._onFormulaCombineCountRefresh(arg_7_0, arg_7_1)
-	if arg_7_1 == arg_7_0._mo:getId() then
-		arg_7_0:_refreshCoinCount()
-		arg_7_0:_refreshMaterialItemCount()
+function RoomFormulaItem:_onFormulaCombineCountRefresh(formulaStrId)
+	local curFormulaStrId = self._mo:getId()
+
+	if formulaStrId == curFormulaStrId then
+		self:_refreshCoinCount()
+		self:_refreshMaterialItemCount()
 	end
 end
 
-function var_0_0._onChangePartStart(arg_8_0, arg_8_1)
-	if arg_8_1 == arg_8_0._mo:getId() then
-		gohelper.setActive(arg_8_0._gosynthesis, false)
-		gohelper.setActive(arg_8_0._gosynthesis, true)
+function RoomFormulaItem:_onChangePartStart(formulaStrId)
+	local curFormulaStrId = self._mo:getId()
+
+	if formulaStrId == curFormulaStrId then
+		gohelper.setActive(self._gosynthesis, false)
+		gohelper.setActive(self._gosynthesis, true)
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._materialItemList = {}
+function RoomFormulaItem:_editableInitView()
+	self._materialItemList = {}
 
-	gohelper.setActive(arg_9_0._gomaterialitem, false)
+	gohelper.setActive(self._gomaterialitem, false)
 
-	arg_9_0._maxMaterialItemCount = 3
+	self._maxMaterialItemCount = 3
 
-	for iter_9_0 = 1, arg_9_0._maxMaterialItemCount do
-		local var_9_0 = arg_9_0:getUserDataTb_()
+	for i = 1, self._maxMaterialItemCount do
+		local materialItem = self:getUserDataTb_()
 
-		var_9_0.go = gohelper.cloneInPlace(arg_9_0._gomaterialitem, "item" .. iter_9_0)
-		var_9_0.goitem = gohelper.findChild(var_9_0.go, "go_item")
-		var_9_0.gopos = gohelper.findChild(var_9_0.go, "go_item/go_pos")
-		var_9_0.txtnum = gohelper.findChildText(var_9_0.go, "go_item/txt_num")
-		var_9_0.goempty = gohelper.findChild(var_9_0.go, "go_empty")
+		materialItem.go = gohelper.cloneInPlace(self._gomaterialitem, "item" .. i)
+		materialItem.goitem = gohelper.findChild(materialItem.go, "go_item")
+		materialItem.gopos = gohelper.findChild(materialItem.go, "go_item/go_pos")
+		materialItem.txtnum = gohelper.findChildText(materialItem.go, "go_item/txt_num")
+		materialItem.goempty = gohelper.findChild(materialItem.go, "go_empty")
 
-		table.insert(arg_9_0._materialItemList, var_9_0)
-		gohelper.setActive(var_9_0.go, true)
+		table.insert(self._materialItemList, materialItem)
+		gohelper.setActive(materialItem.go, true)
 	end
 
-	arg_9_0._canvasGroup = arg_9_0._gonormal:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._canvasGroup = self._gonormal:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.removeUIClickAudio(arg_9_0._btnclick.gameObject)
+	gohelper.removeUIClickAudio(self._btnclick.gameObject)
 
-	arg_9_0._gosynthesis = gohelper.findChild(arg_9_0.viewGO, "#go_normal/#synthesis")
-	arg_9_0._treeLevelItemList = {}
+	self._gosynthesis = gohelper.findChild(self.viewGO, "#go_normal/#synthesis")
+	self._treeLevelItemList = {}
 
-	for iter_9_1 = 1, RoomFormulaModel.MAX_FORMULA_TREE_LEVEL do
-		local var_9_1 = arg_9_0:getUserDataTb_()
+	for i = 1, RoomFormulaModel.MAX_FORMULA_TREE_LEVEL do
+		local item = self:getUserDataTb_()
 
-		var_9_1.go = gohelper.findChild(arg_9_0.viewGO, "#go_normal/#go_BG" .. iter_9_1)
-		var_9_1.goSelect = gohelper.findChild(var_9_1.go, "#go_Select")
-		var_9_1.lineT = gohelper.findChild(var_9_1.go, "#go_LineT")
-		var_9_1.lineTNo = gohelper.findChild(var_9_1.go, "#go_LineT/normal")
-		var_9_1.lineTHL = gohelper.findChild(var_9_1.go, "#go_LineT/highlight")
-		var_9_1.lineL = gohelper.findChild(var_9_1.go, "#go_LineL")
-		var_9_1.lineLNo = gohelper.findChild(var_9_1.go, "#go_LineL/normal")
-		var_9_1.lineLHL = gohelper.findChild(var_9_1.go, "#go_LineL/highlight")
-		var_9_1.lineI1 = gohelper.findChild(var_9_1.go, "#go_LineI1")
-		var_9_1.lineI1No = gohelper.findChild(var_9_1.go, "#go_LineI1/normal")
-		var_9_1.lineI1HL = gohelper.findChild(var_9_1.go, "#go_LineI1/highlight")
-		var_9_1.lineI2 = gohelper.findChild(var_9_1.go, "#go_LineI2")
-		var_9_1.lineI2No = gohelper.findChild(var_9_1.go, "#go_LineI2/normal")
-		var_9_1.lineI2HL = gohelper.findChild(var_9_1.go, "#go_LineI2/highlight")
+		item.go = gohelper.findChild(self.viewGO, "#go_normal/#go_BG" .. i)
+		item.goSelect = gohelper.findChild(item.go, "#go_Select")
+		item.lineT = gohelper.findChild(item.go, "#go_LineT")
+		item.lineTNo = gohelper.findChild(item.go, "#go_LineT/normal")
+		item.lineTHL = gohelper.findChild(item.go, "#go_LineT/highlight")
+		item.lineL = gohelper.findChild(item.go, "#go_LineL")
+		item.lineLNo = gohelper.findChild(item.go, "#go_LineL/normal")
+		item.lineLHL = gohelper.findChild(item.go, "#go_LineL/highlight")
+		item.lineI1 = gohelper.findChild(item.go, "#go_LineI1")
+		item.lineI1No = gohelper.findChild(item.go, "#go_LineI1/normal")
+		item.lineI1HL = gohelper.findChild(item.go, "#go_LineI1/highlight")
+		item.lineI2 = gohelper.findChild(item.go, "#go_LineI2")
+		item.lineI2No = gohelper.findChild(item.go, "#go_LineI2/normal")
+		item.lineI2HL = gohelper.findChild(item.go, "#go_LineI2/highlight")
 
-		table.insert(arg_9_0._treeLevelItemList, var_9_1)
-	end
-end
-
-function var_0_0._editableAddEvents(arg_10_0)
-	arg_10_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_10_0._refreshUI, arg_10_0)
-	arg_10_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_10_0._refreshUI, arg_10_0)
-	arg_10_0:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_10_0._refreshSelect, arg_10_0)
-	arg_10_0:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, arg_10_0._onChangePartStart, arg_10_0)
-end
-
-function var_0_0._editableRemoveEvents(arg_11_0)
-	arg_11_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0._refreshUI, arg_11_0)
-	arg_11_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0._refreshUI, arg_11_0)
-	arg_11_0:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_11_0._refreshSelect, arg_11_0)
-	arg_11_0:removeEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, arg_11_0._onChangePartStart, arg_11_0)
-end
-
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
-	arg_12_0._lineMO = arg_12_0._view.viewParam.lineMO
-	arg_12_0._callback = arg_12_0._view.viewParam.callback
-	arg_12_0._callbackObj = arg_12_0._view.viewParam.callbackObj
-	arg_12_0._mo = arg_12_1
-
-	arg_12_0:_refreshUI()
-	arg_12_0:_refreshSelect()
-	arg_12_0:_checkAnimation()
-	gohelper.setActive(arg_12_0._gosynthesis, false)
-end
-
-function var_0_0._refreshSelect(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._mo:getId()
-
-	if arg_13_1 and var_13_0 == arg_13_1 then
-		arg_13_0:_refreshCoinCount()
-		arg_13_0:_refreshMaterialItemCount()
-	end
-
-	local var_13_1 = RoomFormulaListModel.instance:getSelectFormulaStrId()
-	local var_13_2 = arg_13_0._mo:getFormulaTreeLevel()
-
-	if arg_13_0._treeLevelItemList[var_13_2] then
-		gohelper.setActive(arg_13_0._treeLevelItemList[var_13_2].goSelect, var_13_1 == var_13_0)
+		table.insert(self._treeLevelItemList, item)
 	end
 end
 
-function var_0_0._refreshUI(arg_14_0)
-	local var_14_0
-	local var_14_1
-	local var_14_2
-	local var_14_3 = arg_14_0._mo:getFormulaId()
-	local var_14_4, var_14_5, var_14_6
+function RoomFormulaItem:_editableAddEvents()
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshUI, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, self._refreshSelect, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, self._onChangePartStart, self)
+end
 
-	arg_14_0._unlock, var_14_4, var_14_5, var_14_6 = RoomProductionHelper.isFormulaUnlock(var_14_3, arg_14_0._lineMO.level)
+function RoomFormulaItem:_editableRemoveEvents()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshUI, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshUI, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, self._refreshSelect, self)
+	self:removeEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, self._onChangePartStart, self)
+end
 
-	if not arg_14_0._unlock then
-		arg_14_0:_refreshLockText(var_14_4, var_14_5, var_14_6)
+function RoomFormulaItem:onUpdateMO(mo)
+	self._lineMO = self._view.viewParam.lineMO
+	self._callback = self._view.viewParam.callback
+	self._callbackObj = self._view.viewParam.callbackObj
+	self._mo = mo
+
+	self:_refreshUI()
+	self:_refreshSelect()
+	self:_checkAnimation()
+	gohelper.setActive(self._gosynthesis, false)
+end
+
+function RoomFormulaItem:_refreshSelect(preFormulaStrId)
+	local curFormulaStrId = self._mo:getId()
+
+	if preFormulaStrId and curFormulaStrId == preFormulaStrId then
+		self:_refreshCoinCount()
+		self:_refreshMaterialItemCount()
 	end
 
-	arg_14_0._canvasGroup.alpha = arg_14_0._unlock and 1 or 0.2
+	local selectFormulaId = RoomFormulaListModel.instance:getSelectFormulaStrId()
+	local formulaTreeLevel = self._mo:getFormulaTreeLevel()
 
-	gohelper.setActive(arg_14_0._golock, not arg_14_0._unlock)
-	ZProj.UGUIHelper.SetColorAlpha(arg_14_0._simageproduceitem.gameObject:GetComponent(gohelper.Type_Image), arg_14_0._unlock and 1 or 0.5)
-	UISpriteSetMgr.instance:setRoomSprite(arg_14_0._imagecoinRare, "bg_wupindi_3")
-	arg_14_0._simagecoinIcon:LoadImage(ResUrl.getCurrencyItemIcon("203"))
+	if self._treeLevelItemList[formulaTreeLevel] then
+		gohelper.setActive(self._treeLevelItemList[formulaTreeLevel].goSelect, selectFormulaId == curFormulaStrId)
+	end
+end
 
-	local var_14_7 = RoomProductionHelper.getCostMaterialItemList(var_14_3)
+function RoomFormulaItem:_refreshUI()
+	local needRoomLevel, needProductionLevel, needEpisodeId
+	local formulaId = self._mo:getFormulaId()
 
-	for iter_14_0 = 1, math.min(arg_14_0._maxMaterialItemCount, #var_14_7) do
-		local var_14_8 = var_14_7[iter_14_0]
-		local var_14_9 = arg_14_0._materialItemList[iter_14_0]
+	self._unlock, needRoomLevel, needProductionLevel, needEpisodeId = RoomProductionHelper.isFormulaUnlock(formulaId, self._lineMO.level)
 
-		var_14_9.costItem = var_14_9.costItem or IconMgr.instance:getRoomGoodsItem(var_14_9.gopos, ViewMgr.instance:getContainer(ViewName.RoomFormulaView))
-
-		var_14_9.costItem:canShowRareCircle(false)
-		var_14_9.costItem:setMOValue(var_14_8.type, var_14_8.id, var_14_8.quantity)
-		var_14_9.costItem:isEnableClick(true)
-		var_14_9.costItem:isShowCount(false)
-		var_14_9.costItem:setRecordFarmItem(true)
-		var_14_9.costItem:setConsume(true)
-		var_14_9.costItem:setJumpFinishCallback(arg_14_0.jumpFinishCallback, arg_14_0)
-		gohelper.setActive(var_14_9.goitem, true)
-		gohelper.setActive(var_14_9.goempty, false)
+	if not self._unlock then
+		self:_refreshLockText(needRoomLevel, needProductionLevel, needEpisodeId)
 	end
 
-	for iter_14_1 = math.min(arg_14_0._maxMaterialItemCount, #var_14_7) + 1, #arg_14_0._materialItemList do
-		local var_14_10 = arg_14_0._materialItemList[iter_14_1]
+	self._canvasGroup.alpha = self._unlock and 1 or 0.2
 
-		gohelper.setActive(var_14_10.goempty, true)
-		gohelper.setActive(var_14_10.goitem, false)
+	gohelper.setActive(self._golock, not self._unlock)
+	ZProj.UGUIHelper.SetColorAlpha(self._simageproduceitem.gameObject:GetComponent(gohelper.Type_Image), self._unlock and 1 or 0.5)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagecoinRare, "bg_wupindi_3")
+	self._simagecoinIcon:LoadImage(ResUrl.getCurrencyItemIcon("203"))
+
+	local costItemList = RoomProductionHelper.getCostMaterialItemList(formulaId)
+
+	for i = 1, math.min(self._maxMaterialItemCount, #costItemList) do
+		local costItemParam = costItemList[i]
+		local materialItem = self._materialItemList[i]
+
+		materialItem.costItem = materialItem.costItem or IconMgr.instance:getRoomGoodsItem(materialItem.gopos, ViewMgr.instance:getContainer(ViewName.RoomFormulaView))
+
+		materialItem.costItem:canShowRareCircle(false)
+		materialItem.costItem:setMOValue(costItemParam.type, costItemParam.id, costItemParam.quantity)
+		materialItem.costItem:isEnableClick(true)
+		materialItem.costItem:isShowCount(false)
+		materialItem.costItem:setRecordFarmItem(true)
+		materialItem.costItem:setConsume(true)
+		materialItem.costItem:setJumpFinishCallback(self.jumpFinishCallback, self)
+		gohelper.setActive(materialItem.goitem, true)
+		gohelper.setActive(materialItem.goempty, false)
 	end
 
-	local var_14_11 = false
-	local var_14_12 = RoomProductionHelper.getFormulaProduceItem(var_14_3)
+	for i = math.min(self._maxMaterialItemCount, #costItemList) + 1, #self._materialItemList do
+		local materialItem = self._materialItemList[i]
 
-	gohelper.setActive(arg_14_0._simageproduceitem.gameObject, var_14_12)
-	gohelper.setActive(arg_14_0._txtname.gameObject, var_14_12)
+		gohelper.setActive(materialItem.goempty, true)
+		gohelper.setActive(materialItem.goitem, false)
+	end
 
-	local var_14_13 = 1
+	local isShowNeedTag = false
+	local produceItem = RoomProductionHelper.getFormulaProduceItem(formulaId)
 
-	if var_14_12 then
-		local var_14_14, var_14_15 = ItemModel.instance:getItemConfigAndIcon(var_14_12.type, var_14_12.id)
+	gohelper.setActive(self._simageproduceitem.gameObject, produceItem)
+	gohelper.setActive(self._txtname.gameObject, produceItem)
 
-		arg_14_0._simageproduceitem:LoadImage(var_14_15)
+	local rare = 1
 
-		var_14_13 = var_14_14.rare
-		arg_14_0._txtname.text = var_14_14.name
+	if produceItem then
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(produceItem.type, produceItem.id)
 
-		local var_14_16 = arg_14_0._mo:isTreeFormula()
-		local var_14_17 = JumpModel.instance:getRecordFarmItem()
+		self._simageproduceitem:LoadImage(icon)
 
-		if var_14_17 and not var_14_16 then
-			var_14_11 = var_14_17.id == var_14_12.id
+		rare = config.rare
+		self._txtname.text = config.name
+
+		local isTreeFormula = self._mo:isTreeFormula()
+		local recordFarmItem = JumpModel.instance:getRecordFarmItem()
+
+		if recordFarmItem and not isTreeFormula then
+			isShowNeedTag = recordFarmItem.id == produceItem.id
 		end
 	end
 
-	gohelper.setActive(arg_14_0._goNeedTag, var_14_11)
-	UISpriteSetMgr.instance:setRoomSprite(arg_14_0._imagerare, "huangyuan_pz_" .. CharacterEnum.Color[var_14_13])
-	arg_14_0:_refreshTreeLevel()
-	arg_14_0:_refreshCoinCount()
-	arg_14_0:_refreshMaterialItemCount()
+	gohelper.setActive(self._goNeedTag, isShowNeedTag)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagerare, "huangyuan_pz_" .. CharacterEnum.Color[rare])
+	self:_refreshTreeLevel()
+	self:_refreshCoinCount()
+	self:_refreshMaterialItemCount()
 end
 
-function var_0_0._refreshLockText(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = {}
+function RoomFormulaItem:_refreshLockText(needRoomLevel, needProductionLevel, needEpisodeId)
+	local lockDescList = {}
 
-	if arg_15_1 then
-		table.insert(var_15_0, string.format(luaLang("room_formula_lock_roomlevel"), arg_15_1))
+	if needRoomLevel then
+		table.insert(lockDescList, string.format(luaLang("room_formula_lock_roomlevel"), needRoomLevel))
 	end
 
-	if arg_15_2 then
-		table.insert(var_15_0, string.format(luaLang("room_formula_lock_productionlevel"), arg_15_2))
+	if needProductionLevel then
+		table.insert(lockDescList, string.format(luaLang("room_formula_lock_productionlevel"), needProductionLevel))
 	end
 
-	if arg_15_3 then
-		local var_15_1 = DungeonConfig.instance:getEpisodeCO(arg_15_3)
-		local var_15_2 = var_15_1 and DungeonConfig.instance:getChapterCO(var_15_1.chapterId)
-		local var_15_3 = var_15_1
-		local var_15_4 = ""
+	if needEpisodeId then
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(needEpisodeId)
+		local chapterConfig = episodeConfig and DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+		local normalEpisodeConfig = episodeConfig
+		local hardStr = ""
 
-		if var_15_2 and var_15_2.type == DungeonEnum.ChapterType.Hard then
-			var_15_4 = luaLang("dungeon_lock_tips_hard2")
-			var_15_3 = DungeonConfig.instance:getEpisodeCO(var_15_1.preEpisode)
+		if chapterConfig and chapterConfig.type == DungeonEnum.ChapterType.Hard then
+			hardStr = luaLang("dungeon_lock_tips_hard2")
+			normalEpisodeConfig = DungeonConfig.instance:getEpisodeCO(episodeConfig.preEpisode)
 		end
 
-		table.insert(var_15_0, string.format(luaLang("room_formula_lock_episode"), "<color=#FF0000>" .. var_15_4 .. (var_15_3 and DungeonController.getEpisodeName(var_15_3) or "") .. "</color>"))
+		table.insert(lockDescList, string.format(luaLang("room_formula_lock_episode"), "<color=#FF0000>" .. hardStr .. (normalEpisodeConfig and DungeonController.getEpisodeName(normalEpisodeConfig) or "") .. "</color>"))
 	end
 
-	arg_15_0._golockitem.text = #var_15_0 > 0 and var_15_0[1] or ""
+	self._golockitem.text = #lockDescList > 0 and lockDescList[1] or ""
 end
 
-function var_0_0._refreshTreeLevel(arg_16_0)
-	local var_16_0, var_16_1, var_16_2 = arg_16_0:getShowLineObj()
-	local var_16_3 = arg_16_0._mo:getParentStrId()
+function RoomFormulaItem:_refreshTreeLevel()
+	local lineTOrL, lineI1, lineI2 = self:getShowLineObj()
+	local parentStrId = self._mo:getParentStrId()
 
-	if var_16_3 and var_16_0.hasData then
-		local var_16_4 = RoomFormulaListModel.instance:isSelectedFormula(var_16_3)
+	if parentStrId and lineTOrL.hasData then
+		local isParentSelected = RoomFormulaListModel.instance:isSelectedFormula(parentStrId)
 
-		gohelper.setActive(var_16_0.normal, not var_16_4)
-		gohelper.setActive(var_16_0.highlight, var_16_4)
+		gohelper.setActive(lineTOrL.normal, not isParentSelected)
+		gohelper.setActive(lineTOrL.highlight, isParentSelected)
 	end
 
-	if var_16_1.hasData then
-		local var_16_5 = RoomFormulaListModel.instance:isSelectedFormula(var_16_1.grandParentStrId)
+	if lineI1.hasData then
+		local isGrandParentSelected = RoomFormulaListModel.instance:isSelectedFormula(lineI1.grandParentStrId)
 
-		gohelper.setActive(var_16_1.normal, not var_16_5)
-		gohelper.setActive(var_16_1.highlight, var_16_5)
+		gohelper.setActive(lineI1.normal, not isGrandParentSelected)
+		gohelper.setActive(lineI1.highlight, isGrandParentSelected)
 	end
 
-	if var_16_2.hasData then
-		local var_16_6 = RoomFormulaListModel.instance:isSelectedFormula(var_16_2.greatGrandParentStrId)
+	if lineI2.hasData then
+		local isGreatGrandParentSelected = RoomFormulaListModel.instance:isSelectedFormula(lineI2.greatGrandParentStrId)
 
-		gohelper.setActive(var_16_2.normal, not var_16_6)
-		gohelper.setActive(var_16_2.highlight, var_16_6)
+		gohelper.setActive(lineI2.normal, not isGreatGrandParentSelected)
+		gohelper.setActive(lineI2.highlight, isGreatGrandParentSelected)
 	end
 end
 
-function var_0_0.getShowLineObj(arg_17_0)
-	local var_17_0 = {
+function RoomFormulaItem:getShowLineObj()
+	local lineTOrL = {
 		hasData = false
 	}
-	local var_17_1 = {
+	local lineI1 = {
 		hasData = false
 	}
-	local var_17_2 = {
+	local lineI2 = {
 		hasData = false
 	}
-	local var_17_3 = arg_17_0._mo:getFormulaTreeLevel()
-	local var_17_4 = arg_17_0._mo:getIsLast()
-	local var_17_5 = arg_17_0._mo:getParentStrId()
+	local formulaTreeLevel = self._mo:getFormulaTreeLevel()
+	local isLast = self._mo:getIsLast()
+	local parentStrId = self._mo:getParentStrId()
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._treeLevelItemList) do
-		local var_17_6 = iter_17_0 == var_17_3
+	for i, treeLevelItem in ipairs(self._treeLevelItemList) do
+		local isCurLevelItem = i == formulaTreeLevel
 
-		gohelper.setActive(iter_17_1.go, var_17_6)
+		gohelper.setActive(treeLevelItem.go, isCurLevelItem)
 
-		if var_17_6 then
-			if iter_17_1.lineT then
-				gohelper.setActive(iter_17_1.lineT, not var_17_4)
+		if isCurLevelItem then
+			if treeLevelItem.lineT then
+				gohelper.setActive(treeLevelItem.lineT, not isLast)
 
-				if not var_17_4 then
-					var_17_0.normal = iter_17_1.lineTNo
-					var_17_0.highlight = iter_17_1.lineTHL
-					var_17_0.hasData = true
+				if not isLast then
+					lineTOrL.normal = treeLevelItem.lineTNo
+					lineTOrL.highlight = treeLevelItem.lineTHL
+					lineTOrL.hasData = true
 				end
 			end
 
-			if iter_17_1.lineL then
-				gohelper.setActive(iter_17_1.lineL, var_17_4)
+			if treeLevelItem.lineL then
+				gohelper.setActive(treeLevelItem.lineL, isLast)
 
-				if var_17_4 then
-					var_17_0.normal = iter_17_1.lineLNo
-					var_17_0.highlight = iter_17_1.lineLHL
-					var_17_0.hasData = true
+				if isLast then
+					lineTOrL.normal = treeLevelItem.lineLNo
+					lineTOrL.highlight = treeLevelItem.lineLHL
+					lineTOrL.hasData = true
 				end
 			end
 
-			if var_17_5 then
-				local var_17_7 = RoomFormulaModel.instance:getFormulaParentStrId(var_17_5)
+			if parentStrId then
+				local grandParentStrId = RoomFormulaModel.instance:getFormulaParentStrId(parentStrId)
 
-				if iter_17_1.lineI1 then
-					local var_17_8 = RoomFormulaModel.instance:getFormulaIsLast(var_17_5)
+				if treeLevelItem.lineI1 then
+					local parentIsLast = RoomFormulaModel.instance:getFormulaIsLast(parentStrId)
 
-					gohelper.setActive(iter_17_1.lineI1, not var_17_8)
+					gohelper.setActive(treeLevelItem.lineI1, not parentIsLast)
 
-					if not var_17_8 then
-						var_17_1.normal = iter_17_1.lineI1No
-						var_17_1.highlight = iter_17_1.lineI1HL
-						var_17_1.grandParentStrId = var_17_7
-						var_17_1.hasData = true
+					if not parentIsLast then
+						lineI1.normal = treeLevelItem.lineI1No
+						lineI1.highlight = treeLevelItem.lineI1HL
+						lineI1.grandParentStrId = grandParentStrId
+						lineI1.hasData = true
 					end
 				end
 
-				if iter_17_1.lineI2 then
-					local var_17_9 = RoomFormulaModel.instance:getFormulaIsLast(var_17_7)
+				if treeLevelItem.lineI2 then
+					local grandParentIsLast = RoomFormulaModel.instance:getFormulaIsLast(grandParentStrId)
 
-					gohelper.setActive(iter_17_1.lineI2, not var_17_9)
+					gohelper.setActive(treeLevelItem.lineI2, not grandParentIsLast)
 
-					if not var_17_9 then
-						var_17_2.normal = iter_17_1.lineI2No
-						var_17_2.highlight = iter_17_1.lineI2HL
-						var_17_2.greatGrandParentStrId = RoomFormulaModel.instance:getFormulaParentStrId(var_17_7)
-						var_17_2.hasData = true
+					if not grandParentIsLast then
+						lineI2.normal = treeLevelItem.lineI2No
+						lineI2.highlight = treeLevelItem.lineI2HL
+
+						local greatGrandParentStrId = RoomFormulaModel.instance:getFormulaParentStrId(grandParentStrId)
+
+						lineI2.greatGrandParentStrId = greatGrandParentStrId
+						lineI2.hasData = true
 					end
 				end
 			end
 		end
 	end
 
-	return var_17_0, var_17_1, var_17_2
+	return lineTOrL, lineI1, lineI2
 end
 
-function var_0_0._refreshCoinCount(arg_18_0)
-	arg_18_0.costScore = 0
+function RoomFormulaItem:_refreshCoinCount()
+	self.costScore = 0
 
-	local var_18_0 = arg_18_0._mo:getFormulaId()
-	local var_18_1 = true
-	local var_18_2 = RoomProductionHelper.getCostCoinItemList(var_18_0)[1]
+	local formulaId = self._mo:getFormulaId()
+	local isCoinEnough = true
+	local costCoinItemList = RoomProductionHelper.getCostCoinItemList(formulaId)
+	local costCoinItem = costCoinItemList[1]
 
-	if var_18_2 then
-		local var_18_3 = arg_18_0._mo:getFormulaCombineCount()
+	if costCoinItem then
+		local formulaCombineCount = self._mo:getFormulaCombineCount()
 
-		arg_18_0.costScore = (var_18_2.quantity or 0) * var_18_3
-		var_18_1 = ItemModel.instance:getItemQuantity(var_18_2.type, var_18_2.id) >= arg_18_0.costScore
+		self.costScore = (costCoinItem.quantity or 0) * formulaCombineCount
+
+		local hasQuantity = ItemModel.instance:getItemQuantity(costCoinItem.type, costCoinItem.id)
+
+		isCoinEnough = hasQuantity >= self.costScore
 	end
 
-	if var_18_1 then
-		arg_18_0._txtgold.text = GameUtil.numberDisplay(arg_18_0.costScore)
+	if isCoinEnough then
+		self._txtgold.text = GameUtil.numberDisplay(self.costScore)
 	else
-		arg_18_0._txtgold.text = string.format("<color=#d97373>%s</color>", arg_18_0.costScore)
+		self._txtgold.text = string.format("<color=#d97373>%s</color>", self.costScore)
 	end
 
-	gohelper.setActive(arg_18_0._goitem, arg_18_0.costScore > 0)
-	gohelper.setActive(arg_18_0._goempty, arg_18_0.costScore <= 0)
+	gohelper.setActive(self._goitem, self.costScore > 0)
+	gohelper.setActive(self._goempty, self.costScore <= 0)
 end
 
-function var_0_0._refreshMaterialItemCount(arg_19_0)
-	local var_19_0 = arg_19_0._mo:getFormulaId()
-	local var_19_1 = arg_19_0._mo:getFormulaCombineCount()
-	local var_19_2 = RoomProductionHelper.getCostMaterialItemList(var_19_0)
+function RoomFormulaItem:_refreshMaterialItemCount()
+	local formulaId = self._mo:getFormulaId()
+	local formulaCombineCount = self._mo:getFormulaCombineCount()
+	local costItemList = RoomProductionHelper.getCostMaterialItemList(formulaId)
 
-	for iter_19_0 = 1, math.min(arg_19_0._maxMaterialItemCount, #var_19_2) do
-		local var_19_3 = arg_19_0._materialItemList[iter_19_0]
-		local var_19_4 = var_19_2[iter_19_0]
-		local var_19_5 = var_19_4.quantity * var_19_1
-		local var_19_6 = ItemModel.instance:getItemQuantity(var_19_4.type, var_19_4.id)
-		local var_19_7 = var_19_5 <= var_19_6
+	for i = 1, math.min(self._maxMaterialItemCount, #costItemList) do
+		local materialItem = self._materialItemList[i]
+		local costItem = costItemList[i]
+		local totalNeedQuantity = costItem.quantity * formulaCombineCount
+		local hasQuantity = ItemModel.instance:getItemQuantity(costItem.type, costItem.id)
+		local isMaterialEnough = totalNeedQuantity <= hasQuantity
 
-		if var_19_3.costItem then
-			var_19_3.costItem:setMOValue(var_19_4.type, var_19_4.id, var_19_5)
-			var_19_3.costItem:setGrayscale(not var_19_7)
+		if materialItem.costItem then
+			materialItem.costItem:setMOValue(costItem.type, costItem.id, totalNeedQuantity)
+			materialItem.costItem:setGrayscale(not isMaterialEnough)
 		end
 
-		local var_19_8 = RoomProductionHelper.formatItemNum(var_19_6)
+		local hasQuantityStr = RoomProductionHelper.formatItemNum(hasQuantity)
 
-		if var_19_7 then
-			var_19_3.txtnum.text = string.format("%s/%s", var_19_8, var_19_5)
+		if isMaterialEnough then
+			materialItem.txtnum.text = string.format("%s/%s", hasQuantityStr, totalNeedQuantity)
 		else
-			var_19_3.txtnum.text = string.format("<color=#d97373>%s/%s</color>", var_19_8, var_19_5)
+			materialItem.txtnum.text = string.format("<color=#d97373>%s/%s</color>", hasQuantityStr, totalNeedQuantity)
 		end
 	end
 
-	local var_19_9 = RoomProductionHelper.getFormulaProduceItem(var_19_0)
+	local produceItem = RoomProductionHelper.getFormulaProduceItem(formulaId)
 
-	gohelper.setActive(arg_19_0._txtCombineNum.gameObject, var_19_9)
+	gohelper.setActive(self._txtCombineNum.gameObject, produceItem)
 
-	if var_19_9 then
-		arg_19_0._txtCombineNum.text = luaLang("multiple") .. var_19_9.quantity * var_19_1
+	if produceItem then
+		self._txtCombineNum.text = luaLang("multiple") .. produceItem.quantity * formulaCombineCount
 	end
 end
 
-function var_0_0._refreshOwnQuantityAndTag(arg_20_0)
-	local var_20_0 = arg_20_0._mo:getFormulaId()
-	local var_20_1 = 0
-	local var_20_2 = RoomProductionHelper.getFormulaProduceItem(var_20_0)
+function RoomFormulaItem:_refreshOwnQuantityAndTag()
+	local formulaId = self._mo:getFormulaId()
+	local ownQuantity = 0
+	local produceItemParam = RoomProductionHelper.getFormulaProduceItem(formulaId)
 
-	if var_20_2 then
-		var_20_1 = ItemModel.instance:getItemQuantity(var_20_2.type, var_20_2.id)
+	if produceItemParam then
+		ownQuantity = ItemModel.instance:getItemQuantity(produceItemParam.type, produceItemParam.id)
 	end
 
-	local var_20_3 = arg_20_0._mo:getId()
-	local var_20_4 = RoomProductionHelper.getFormulaNeedQuantity(var_20_3)
+	local formulaStrId = self._mo:getId()
+	local needQuantity = RoomProductionHelper.getFormulaNeedQuantity(formulaStrId)
 
-	if var_20_4 and var_20_4 ~= 0 then
-		local var_20_5 = ""
+	if needQuantity and needQuantity ~= 0 then
+		local showText = ""
+		local isEnough = needQuantity <= ownQuantity
 
-		if var_20_4 <= var_20_1 then
-			var_20_5 = string.format("%s/%s", var_20_1, var_20_4)
+		if isEnough then
+			showText = string.format("%s/%s", ownQuantity, needQuantity)
 
-			gohelper.setActive(arg_20_0._goCanCombine, false)
-			gohelper.setActive(arg_20_0._goNeed, false)
+			gohelper.setActive(self._goCanCombine, false)
+			gohelper.setActive(self._goNeed, false)
 		else
-			var_20_5 = string.format("<color=#d97373>%s</color>/%s", var_20_1, var_20_4)
+			showText = string.format("<color=#d97373>%s</color>/%s", ownQuantity, needQuantity)
 
-			local var_20_6 = RoomProductionHelper.getTotalCanCombineNum(var_20_0)
-			local var_20_7 = var_20_6 ~= 0
+			local canCombineNum = RoomProductionHelper.getTotalCanCombineNum(formulaId)
+			local canCombine = canCombineNum ~= 0
 
-			if var_20_7 then
-				arg_20_0._txtCanCombine.text = formatLuaLang("room_formula_can_combine", var_20_6)
+			if canCombine then
+				self._txtCanCombine.text = formatLuaLang("room_formula_can_combine", canCombineNum)
 			end
 
-			gohelper.setActive(arg_20_0._goCanCombine, var_20_7)
-			gohelper.setActive(arg_20_0._goNeed, not var_20_7)
+			gohelper.setActive(self._goCanCombine, canCombine)
+			gohelper.setActive(self._goNeed, not canCombine)
 		end
 
-		arg_20_0._txtOwnNum.text = var_20_5
+		self._txtOwnNum.text = showText
 	else
-		arg_20_0._txtOwnNum.text = var_20_1
+		self._txtOwnNum.text = ownQuantity
 
-		gohelper.setActive(arg_20_0._goCanCombine, false)
-		gohelper.setActive(arg_20_0._goNeed, false)
+		gohelper.setActive(self._goCanCombine, false)
+		gohelper.setActive(self._goNeed, false)
 	end
 end
 
-function var_0_0._playAnimByName(arg_21_0, arg_21_1)
-	arg_21_0._lastAnimName = arg_21_1
+function RoomFormulaItem:_playAnimByName(animName)
+	self._lastAnimName = animName
 
-	arg_21_0._animator:Play(arg_21_1, 0, 0)
+	self._animator:Play(animName, 0, 0)
 end
 
-function var_0_0._onHideAnimAnimation(arg_22_0, arg_22_1)
-	if arg_22_0:_canTreeAnim(arg_22_1) then
-		arg_22_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeHide)
+function RoomFormulaItem:_onHideAnimAnimation(treeLevel)
+	if self:_canTreeAnim(treeLevel) then
+		self:_playAnimByName(RoomProductLineEnum.AnimName.TreeHide)
 	end
 end
 
-function var_0_0._onShowAnimAnimation(arg_23_0, arg_23_1)
-	arg_23_0._showLevel = arg_23_1
+function RoomFormulaItem:_onShowAnimAnimation(treeLevel)
+	self._showLevel = treeLevel
 end
 
-function var_0_0._onMoveAnimAnimation(arg_24_0, arg_24_1)
-	arg_24_0._checkMove = true
+function RoomFormulaItem:_onMoveAnimAnimation(treeLevel)
+	self._checkMove = true
 end
 
-function var_0_0._checkAnimation(arg_25_0)
-	local var_25_0 = arg_25_0._showLevel
+function RoomFormulaItem:_checkAnimation()
+	local treeLevel = self._showLevel
 
-	arg_25_0._showLevel = nil
+	self._showLevel = nil
 
-	if arg_25_0._checkMove then
-		arg_25_0._lineAnimator:Play(RoomProductLineEnum.AnimName.TreeHide, 0, 0)
+	if self._checkMove then
+		self._lineAnimator:Play(RoomProductLineEnum.AnimName.TreeHide, 0, 0)
 	end
 
-	if var_25_0 and arg_25_0:_canTreeAnim(var_25_0) then
-		arg_25_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeShow, 0, 0)
+	if treeLevel and self:_canTreeAnim(treeLevel) then
+		self:_playAnimByName(RoomProductLineEnum.AnimName.TreeShow, 0, 0)
 
-		arg_25_0._checkMove = false
+		self._checkMove = false
 	end
 
-	arg_25_0:_checkMoveAnimation()
+	self:_checkMoveAnimation()
 
-	if arg_25_0._lastAnimName == RoomProductLineEnum.AnimName.TreeHide then
-		arg_25_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle, 0, 0)
+	if self._lastAnimName == RoomProductLineEnum.AnimName.TreeHide then
+		self:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle, 0, 0)
 	end
 end
 
-function var_0_0._checkMoveAnimation(arg_26_0)
-	if arg_26_0._checkMove ~= true then
-		arg_26_0:_tweenKill(true)
+function RoomFormulaItem:_checkMoveAnimation()
+	if self._checkMove ~= true then
+		self:_tweenKill(true)
 
 		return
 	end
 
-	arg_26_0._checkMove = false
+	self._checkMove = false
 
-	local var_26_0 = RoomFormulaListModel.instance:getRankDiff(arg_26_0._mo)
+	local rankDiff = RoomFormulaListModel.instance:getRankDiff(self._mo)
 
-	if var_26_0 and var_26_0 ~= 0 then
-		arg_26_0:_tweenKill()
-		arg_26_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle)
+	if rankDiff and rankDiff ~= 0 then
+		self:_tweenKill()
+		self:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle)
 
-		local var_26_1 = RoomFormulaViewContainer.cellHeightSize * var_26_0
+		local posy = RoomFormulaViewContainer.cellHeightSize * rankDiff
 
-		transformhelper.setLocalPosXY(arg_26_0._gonormalTrs, 0, var_26_1)
-		transformhelper.setLocalPosXY(arg_26_0._golockTrs, 0, var_26_1)
+		transformhelper.setLocalPosXY(self._gonormalTrs, 0, posy)
+		transformhelper.setLocalPosXY(self._golockTrs, 0, posy)
 
-		arg_26_0._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_26_0._gonormalTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
-		arg_26_0._golockMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_26_0._golockTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
+		self._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(self._gonormalTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
+		self._golockMoveId = ZProj.TweenHelper.DOAnchorPosY(self._golockTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
 	else
-		arg_26_0:_tweenKill(true)
+		self:_tweenKill(true)
 	end
 end
 
-function var_0_0._tweenKill(arg_27_0, arg_27_1)
-	if arg_27_0._rankDiffMoveId then
-		ZProj.TweenHelper.KillById(arg_27_0._rankDiffMoveId)
-		ZProj.TweenHelper.KillById(arg_27_0._golockMoveId)
+function RoomFormulaItem:_tweenKill(resetPos)
+	if self._rankDiffMoveId then
+		ZProj.TweenHelper.KillById(self._rankDiffMoveId)
+		ZProj.TweenHelper.KillById(self._golockMoveId)
 
-		arg_27_0._rankDiffMoveId = nil
-		arg_27_0._golockMoveId = nil
+		self._rankDiffMoveId = nil
+		self._golockMoveId = nil
 
-		if arg_27_1 then
-			transformhelper.setLocalPosXY(arg_27_0._gonormalTrs, 0, 0)
-			transformhelper.setLocalPosXY(arg_27_0._golockTrs, 0, 0)
+		if resetPos then
+			transformhelper.setLocalPosXY(self._gonormalTrs, 0, 0)
+			transformhelper.setLocalPosXY(self._golockTrs, 0, 0)
 		end
 	end
 end
 
-function var_0_0._canTreeAnim(arg_28_0, arg_28_1)
-	if arg_28_1 then
-		local var_28_0 = arg_28_0._mo:getFormulaTreeLevel()
+function RoomFormulaItem:_canTreeAnim(treeLevel)
+	if treeLevel then
+		local curTreeLevel = self._mo:getFormulaTreeLevel()
 
-		if var_28_0 and arg_28_1 < var_28_0 then
+		if curTreeLevel and treeLevel < curTreeLevel then
 			return true
 		end
 	end
@@ -611,14 +622,14 @@ function var_0_0._canTreeAnim(arg_28_0, arg_28_1)
 	return false
 end
 
-function var_0_0.jumpFinishCallback(arg_29_0)
+function RoomFormulaItem:jumpFinishCallback()
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshNeedFormula)
 end
 
-function var_0_0.onDestroyView(arg_30_0)
-	arg_30_0._simageproduceitem:UnLoadImage()
-	arg_30_0._simagecoinIcon:UnLoadImage()
-	arg_30_0:_tweenKill()
+function RoomFormulaItem:onDestroyView()
+	self._simageproduceitem:UnLoadImage()
+	self._simagecoinIcon:UnLoadImage()
+	self:_tweenKill()
 end
 
-return var_0_0
+return RoomFormulaItem

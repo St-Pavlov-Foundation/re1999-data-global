@@ -1,106 +1,108 @@
-﻿module("modules.logic.fightuiswitch.view.FightUISwitchEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/FightUISwitchEquipView.lua
 
-local var_0_0 = class("FightUISwitchEquipView", BaseView)
+module("modules.logic.fightuiswitch.view.FightUISwitchEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_bg")
-	arg_1_0._goScene = gohelper.findChild(arg_1_0.viewGO, "root/#go_Scene")
-	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom")
-	arg_1_0._scrolleffect = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#go_bottom/#scroll_effect")
-	arg_1_0._goeffectItem = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem/#go_normal")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem/#go_normal/#btn_click")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem/#go_select")
-	arg_1_0._goSceneName = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/#go_SceneName")
-	arg_1_0._txtSceneName = gohelper.findChildText(arg_1_0.viewGO, "root/#go_bottom/#go_SceneName/#txt_SceneName")
-	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "root/#go_bottom/#go_SceneName/#txt_SceneName/#txt_Time")
-	arg_1_0._txtSceneDescr = gohelper.findChildText(arg_1_0.viewGO, "root/#go_bottom/#txt_SceneDescr")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_bottom/#btn_equip")
-	arg_1_0._gouse = gohelper.findChild(arg_1_0.viewGO, "root/#go_bottom/#go_use")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+local FightUISwitchEquipView = class("FightUISwitchEquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightUISwitchEquipView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "root/#simage_bg")
+	self._goScene = gohelper.findChild(self.viewGO, "root/#go_Scene")
+	self._gobottom = gohelper.findChild(self.viewGO, "root/#go_bottom")
+	self._scrolleffect = gohelper.findChildScrollRect(self.viewGO, "root/#go_bottom/#scroll_effect")
+	self._goeffectItem = gohelper.findChild(self.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem")
+	self._gonormal = gohelper.findChild(self.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem/#go_normal")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem/#go_normal/#btn_click")
+	self._goselect = gohelper.findChild(self.viewGO, "root/#go_bottom/#scroll_effect/Viewport/Content/#go_effectItem/#go_select")
+	self._goSceneName = gohelper.findChild(self.viewGO, "root/#go_bottom/#go_SceneName")
+	self._txtSceneName = gohelper.findChildText(self.viewGO, "root/#go_bottom/#go_SceneName/#txt_SceneName")
+	self._txtTime = gohelper.findChildText(self.viewGO, "root/#go_bottom/#go_SceneName/#txt_SceneName/#txt_Time")
+	self._txtSceneDescr = gohelper.findChildText(self.viewGO, "root/#go_bottom/#txt_SceneDescr")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_bottom/#btn_equip")
+	self._gouse = gohelper.findChild(self.viewGO, "root/#go_bottom/#go_use")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function FightUISwitchEquipView:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnequip:AddClickListener(self._btnequipOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function FightUISwitchEquipView:removeEvents()
+	self._btnclick:RemoveClickListener()
+	self._btnequip:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
+function FightUISwitchEquipView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._btnequipOnClick(arg_5_0)
-	FightUISwitchModel.instance:useStyleId(arg_5_0._mo.classify, arg_5_0._mo.id)
-	arg_5_0:_refreshBtn()
+function FightUISwitchEquipView:_btnequipOnClick()
+	FightUISwitchModel.instance:useStyleId(self._mo.classify, self._mo.id)
+	self:_refreshBtn()
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function FightUISwitchEquipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function FightUISwitchEquipView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function FightUISwitchEquipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_9_0)
-	arg_9_0:closeThis()
+function FightUISwitchEquipView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._mo = arg_10_0.viewParam.mo
-	arg_10_0._effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_10_0._gobottom, FightUISwitchEffectComp)
+function FightUISwitchEquipView:onOpen()
+	self._mo = self.viewParam.mo
+	self._effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gobottom, FightUISwitchEffectComp)
 
-	arg_10_0:refreshStyle()
+	self:refreshStyle()
 end
 
-function var_0_0.refreshStyle(arg_11_0)
-	if not arg_11_0._mo then
+function FightUISwitchEquipView:refreshStyle()
+	if not self._mo then
 		return
 	end
 
-	arg_11_0._effectComp:refreshEffect(arg_11_0._goScene, arg_11_0._mo, arg_11_0.viewName)
+	self._effectComp:refreshEffect(self._goScene, self._mo, self.viewName)
 
-	local var_11_0 = arg_11_0._mo:getItemConfig()
+	local co = self._mo:getItemConfig()
 
-	if var_11_0 then
-		arg_11_0._txtSceneName.text = var_11_0.name
-		arg_11_0._txtSceneDescr.text = var_11_0.desc
+	if co then
+		self._txtSceneName.text = co.name
+		self._txtSceneDescr.text = co.desc
 	end
 
-	arg_11_0._txtTime.text = arg_11_0._mo:getObtainTime() or ""
+	self._txtTime.text = self._mo:getObtainTime() or ""
 
-	arg_11_0:_refreshBtn()
+	self:_refreshBtn()
 end
 
-function var_0_0._refreshBtn(arg_12_0)
-	local var_12_0 = arg_12_0._mo:isUse()
-	local var_12_1 = arg_12_0._mo:isUnlock()
+function FightUISwitchEquipView:_refreshBtn()
+	local isEquip = self._mo:isUse()
+	local isUnlock = self._mo:isUnlock()
 
-	gohelper.setActive(arg_12_0._btnequip.gameObject, var_12_1 and not var_12_0)
-	gohelper.setActive(arg_12_0._gouse.gameObject, var_12_1 and var_12_0)
+	gohelper.setActive(self._btnequip.gameObject, isUnlock and not isEquip)
+	gohelper.setActive(self._gouse.gameObject, isUnlock and isEquip)
 end
 
-function var_0_0.onClose(arg_13_0)
-	arg_13_0._effectComp:onClose()
+function FightUISwitchEquipView:onClose()
+	self._effectComp:onClose()
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._effectComp:onDestroy()
+function FightUISwitchEquipView:onDestroyView()
+	self._effectComp:onDestroy()
 end
 
-return var_0_0
+return FightUISwitchEquipView

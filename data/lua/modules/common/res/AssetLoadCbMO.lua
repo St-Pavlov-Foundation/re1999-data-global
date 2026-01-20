@@ -1,14 +1,16 @@
-﻿module("modules.common.res.AssetLoadCbMO", package.seeall)
+﻿-- chunkname: @modules/common/res/AssetLoadCbMO.lua
 
-local var_0_0 = class("AssetLoadCbMO")
+module("modules.common.res.AssetLoadCbMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._loadedCb = arg_1_1
-	arg_1_0._loadedObj = arg_1_2
+local AssetLoadCbMO = class("AssetLoadCbMO")
+
+function AssetLoadCbMO:ctor(loadedCb, loadedObj)
+	self._loadedCb = loadedCb
+	self._loadedObj = loadedObj
 end
 
-function var_0_0.call(arg_2_0, ...)
-	arg_2_0._loadedCb(arg_2_0._loadedObj, ...)
+function AssetLoadCbMO:call(...)
+	self._loadedCb(self._loadedObj, ...)
 end
 
-return var_0_0
+return AssetLoadCbMO

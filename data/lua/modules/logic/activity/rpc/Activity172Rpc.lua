@@ -1,32 +1,34 @@
-﻿module("modules.logic.activity.rpc.Activity172Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/activity/rpc/Activity172Rpc.lua
 
-local var_0_0 = class("Activity172Rpc", BaseRpc)
+module("modules.logic.activity.rpc.Activity172Rpc", package.seeall)
 
-function var_0_0.sendGetAct172InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity172Module_pb.GetAct172InfoRequest()
+local Activity172Rpc = class("Activity172Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity172Rpc:sendGetAct172InfoRequest(activityId, cb, cbObj)
+	local req = Activity172Module_pb.GetAct172InfoRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, cb, cbObj)
 end
 
-function var_0_0.onReceiveGetAct172InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity172Rpc:onReceiveGetAct172InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	ActivityType172Model.instance:setType172Info(arg_2_2.activityId, arg_2_2.info)
+	ActivityType172Model.instance:setType172Info(msg.activityId, msg.info)
 end
 
-function var_0_0.onReceiveAct172UseItemTaskIdsUpdatePush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 ~= 0 then
+function Activity172Rpc:onReceiveAct172UseItemTaskIdsUpdatePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	ActivityType172Model.instance:updateType172Info(arg_3_2.activityId, arg_3_2.useItemTaskIds)
+	ActivityType172Model.instance:updateType172Info(msg.activityId, msg.useItemTaskIds)
 	ActivityController.instance:dispatchEvent(ActivityEvent.Act172TaskUpdate)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity172Rpc.instance = Activity172Rpc.New()
 
-return var_0_0
+return Activity172Rpc

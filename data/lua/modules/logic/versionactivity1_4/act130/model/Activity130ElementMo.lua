@@ -1,66 +1,68 @@
-﻿module("modules.logic.versionactivity1_4.act130.model.Activity130ElementMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/model/Activity130ElementMo.lua
 
-local var_0_0 = pureTable("Activity130ElementMo")
+module("modules.logic.versionactivity1_4.act130.model.Activity130ElementMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.elementId = 0
-	arg_1_0.isFinish = false
-	arg_1_0.index = 0
-	arg_1_0.historylist = {}
-	arg_1_0.visible = false
-	arg_1_0.config = {}
-	arg_1_0.typeList = {}
-	arg_1_0.paramList = {}
+local Activity130ElementMo = pureTable("Activity130ElementMo")
+
+function Activity130ElementMo:ctor()
+	self.elementId = 0
+	self.isFinish = false
+	self.index = 0
+	self.historylist = {}
+	self.visible = false
+	self.config = {}
+	self.typeList = {}
+	self.paramList = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.elementId = arg_2_1.elementId
-	arg_2_0.isFinish = arg_2_1.isFinish
-	arg_2_0.index = arg_2_1.index
-	arg_2_0.historylist = {}
+function Activity130ElementMo:init(info)
+	self.elementId = info.elementId
+	self.isFinish = info.isFinish
+	self.index = info.index
+	self.historylist = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.historylist) do
-		table.insert(arg_2_0.historylist, iter_2_1)
+	for _, v in ipairs(info.historylist) do
+		table.insert(self.historylist, v)
 	end
 
-	arg_2_0.visible = arg_2_1.visible
+	self.visible = info.visible
 
-	local var_2_0 = VersionActivity1_4Enum.ActivityId.Role37
+	local actId = VersionActivity1_4Enum.ActivityId.Role37
 
-	arg_2_0.config = Activity130Config.instance:getActivity130ElementCo(var_2_0, arg_2_0.elementId)
+	self.config = Activity130Config.instance:getActivity130ElementCo(actId, self.elementId)
 
-	if not arg_2_0.config then
-		logError(string.format("Activity130ElementMo no config id:%s", arg_2_0.elementId))
+	if not self.config then
+		logError(string.format("Activity130ElementMo no config id:%s", self.elementId))
 
 		return
 	end
 
-	arg_2_0.typeList = string.splitToNumber(arg_2_0.config.type, "#")
-	arg_2_0.paramList = string.split(arg_2_0.config.param, "#")
+	self.typeList = string.splitToNumber(self.config.type, "#")
+	self.paramList = string.split(self.config.param, "#")
 end
 
-function var_0_0.isAvailable(arg_3_0)
-	return not arg_3_0.isFinish and arg_3_0.visible
+function Activity130ElementMo:isAvailable()
+	return not self.isFinish and self.visible
 end
 
-function var_0_0.updateHistoryList(arg_4_0, arg_4_1)
-	arg_4_0.historylist = arg_4_1
+function Activity130ElementMo:updateHistoryList(list)
+	self.historylist = list
 end
 
-function var_0_0.getType(arg_5_0)
-	return arg_5_0.typeList[arg_5_0.index + 1]
+function Activity130ElementMo:getType()
+	return self.typeList[self.index + 1]
 end
 
-function var_0_0.getNextType(arg_6_0)
-	return arg_6_0.typeList[arg_6_0.index + 2]
+function Activity130ElementMo:getNextType()
+	return self.typeList[self.index + 2]
 end
 
-function var_0_0.getParam(arg_7_0)
-	return arg_7_0.paramList[arg_7_0.index + 1]
+function Activity130ElementMo:getParam()
+	return self.paramList[self.index + 1]
 end
 
-function var_0_0.getPrevParam(arg_8_0)
-	return arg_8_0.paramList[arg_8_0.index]
+function Activity130ElementMo:getPrevParam()
+	return self.paramList[self.index]
 end
 
-return var_0_0
+return Activity130ElementMo

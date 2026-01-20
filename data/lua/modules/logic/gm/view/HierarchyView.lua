@@ -1,80 +1,82 @@
-﻿module("modules.logic.gm.view.HierarchyView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/HierarchyView.lua
 
-local var_0_0 = class("HierarchyView", BaseView)
-local var_0_1 = 1
-local var_0_2 = 2
-local var_0_3 = 3
+module("modules.logic.gm.view.HierarchyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go/btnClose")
-	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go/btnShow")
-	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go/btnHide")
-	arg_1_0._rect = gohelper.findChild(arg_1_0.viewGO, "go").transform
+local HierarchyView = class("HierarchyView", BaseView)
+local StateShow = 1
+local StateHide = 2
+local StateTweening = 3
+
+function HierarchyView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "go/btnClose")
+	self._btnShow = gohelper.findChildButtonWithAudio(self.viewGO, "go/btnShow")
+	self._btnHide = gohelper.findChildButtonWithAudio(self.viewGO, "go/btnHide")
+	self._rect = gohelper.findChild(self.viewGO, "go").transform
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnShow:AddClickListener(arg_2_0._onClickShow, arg_2_0)
-	arg_2_0._btnHide:AddClickListener(arg_2_0._onClickHide, arg_2_0)
-	arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_2_0._onTouch, arg_2_0)
+function HierarchyView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnShow:AddClickListener(self._onClickShow, self)
+	self._btnHide:AddClickListener(self._onClickHide, self)
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnShow:RemoveClickListener()
-	arg_3_0._btnHide:RemoveClickListener()
-	arg_3_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_3_0._onTouch, arg_3_0)
+function HierarchyView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnShow:RemoveClickListener()
+	self._btnHide:RemoveClickListener()
+	self:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._state = var_0_1
+function HierarchyView:onOpen()
+	self._state = StateShow
 
-	arg_4_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0.onClose(arg_5_0)
-	if arg_5_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_5_0._tweenId)
+function HierarchyView:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_5_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0._onTouch(arg_6_0)
-	gohelper.setLayer(arg_6_0.viewGO, UnityLayer.UITop, true)
+function HierarchyView:_onTouch()
+	gohelper.setLayer(self.viewGO, UnityLayer.UITop, true)
 end
 
-function var_0_0._onClickShow(arg_7_0)
-	if arg_7_0._state == var_0_2 then
-		arg_7_0._state = var_0_3
-		arg_7_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_7_0._rect, 0, 0.2, arg_7_0._onShow, arg_7_0)
+function HierarchyView:_onClickShow()
+	if self._state == StateHide then
+		self._state = StateTweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, 0, 0.2, self._onShow, self)
 	end
 end
 
-function var_0_0._onShow(arg_8_0)
-	arg_8_0._tweenId = nil
-	arg_8_0._state = var_0_1
+function HierarchyView:_onShow()
+	self._tweenId = nil
+	self._state = StateShow
 
-	arg_8_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._onClickHide(arg_9_0)
-	if arg_9_0._state == var_0_1 then
-		arg_9_0._state = var_0_3
-		arg_9_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_9_0._rect, 800, 0.2, arg_9_0._onHide, arg_9_0)
+function HierarchyView:_onClickHide()
+	if self._state == StateShow then
+		self._state = StateTweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, 800, 0.2, self._onHide, self)
 	end
 end
 
-function var_0_0._onHide(arg_10_0)
-	arg_10_0._tweenId = nil
-	arg_10_0._state = var_0_2
+function HierarchyView:_onHide()
+	self._tweenId = nil
+	self._state = StateHide
 
-	arg_10_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._updateBtns(arg_11_0)
-	gohelper.setActive(arg_11_0._btnShow.gameObject, arg_11_0._state == var_0_2)
-	gohelper.setActive(arg_11_0._btnHide.gameObject, arg_11_0._state == var_0_1)
+function HierarchyView:_updateBtns()
+	gohelper.setActive(self._btnShow.gameObject, self._state == StateHide)
+	gohelper.setActive(self._btnHide.gameObject, self._state == StateShow)
 end
 
-return var_0_0
+return HierarchyView

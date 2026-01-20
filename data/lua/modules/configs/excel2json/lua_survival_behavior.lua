@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_survival_behavior", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_survival_behavior.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_survival_behavior", package.seeall)
+
+local lua_survival_behavior = {}
+local fields = {
 	chooseEvent = 6,
 	priority = 3,
 	chooseDesc = 5,
@@ -10,15 +12,15 @@ local var_0_1 = {
 	dialogueId = 4,
 	isMark = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	chooseDesc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_survival_behavior.onLoad(json)
+	lua_survival_behavior.configList, lua_survival_behavior.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_survival_behavior

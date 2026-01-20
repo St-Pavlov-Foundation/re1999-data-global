@@ -1,81 +1,82 @@
-﻿module("modules.logic.seasonver.act166.view.Season166MainBaseSpotItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166MainBaseSpotItem.lua
 
-local var_0_0 = class("Season166MainBaseSpotItem", LuaCompBase)
+module("modules.logic.seasonver.act166.view.Season166MainBaseSpotItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.param = arg_1_1
+local Season166MainBaseSpotItem = class("Season166MainBaseSpotItem", LuaCompBase)
+
+function Season166MainBaseSpotItem:ctor(param)
+	self.param = param
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0:__onInit()
+function Season166MainBaseSpotItem:init(go)
+	self:__onInit()
 
-	arg_2_0.go = arg_2_1
-	arg_2_0.actId = arg_2_0.param.actId
-	arg_2_0.baseId = arg_2_0.param.baseId
-	arg_2_0.config = arg_2_0.param.config
-	arg_2_0.txtName = gohelper.findChildText(arg_2_0.go, "txt_name")
-	arg_2_0.txtTitle = gohelper.findChildText(arg_2_0.go, "txt_title")
-	arg_2_0.goStars = gohelper.findChild(arg_2_0.go, "go_stars")
-	arg_2_0.btnClick = gohelper.findChildButtonWithAudio(arg_2_0.go, "btn_click")
+	self.go = go
+	self.actId = self.param.actId
+	self.baseId = self.param.baseId
+	self.config = self.param.config
+	self.txtName = gohelper.findChildText(self.go, "txt_name")
+	self.txtTitle = gohelper.findChildText(self.go, "txt_title")
+	self.goStars = gohelper.findChild(self.go, "go_stars")
+	self.btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
 
-	local var_2_0 = Season166Config.instance:getSeasonScoreCos(arg_2_0.actId)
+	local scoreConfigList = Season166Config.instance:getSeasonScoreCos(self.actId)
 
-	arg_2_0.finalLevelScore = var_2_0[#var_2_0].needScore
-	arg_2_0.starTab = arg_2_0:getUserDataTb_()
+	self.finalLevelScore = scoreConfigList[#scoreConfigList].needScore
+	self.starTab = self:getUserDataTb_()
 
-	for iter_2_0 = 1, 3 do
-		local var_2_1 = {
-			star = gohelper.findChild(arg_2_0.goStars, "go_star" .. iter_2_0)
-		}
+	for i = 1, 3 do
+		local starItem = {}
 
-		var_2_1.dark = gohelper.findChild(var_2_1.star, "dark")
-		var_2_1.light = gohelper.findChild(var_2_1.star, "light")
-		var_2_1.imageLight = gohelper.findChildImage(var_2_1.star, "light")
-		var_2_1.imageLight1 = gohelper.findChildImage(var_2_1.star, "light/light1")
+		starItem.star = gohelper.findChild(self.goStars, "go_star" .. i)
+		starItem.dark = gohelper.findChild(starItem.star, "dark")
+		starItem.light = gohelper.findChild(starItem.star, "light")
+		starItem.imageLight = gohelper.findChildImage(starItem.star, "light")
+		starItem.imageLight1 = gohelper.findChildImage(starItem.star, "light/light1")
 
-		table.insert(arg_2_0.starTab, var_2_1)
+		table.insert(self.starTab, starItem)
 	end
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0.btnClick:AddClickListener(arg_3_0.onClickBaseSpotItem, arg_3_0)
+function Season166MainBaseSpotItem:addEventListeners()
+	self.btnClick:AddClickListener(self.onClickBaseSpotItem, self)
 end
 
-function var_0_0.onClickBaseSpotItem(arg_4_0)
-	local var_4_0 = {
-		actId = arg_4_0.actId,
-		baseId = arg_4_0.baseId,
-		config = arg_4_0.config,
-		viewType = Season166Enum.WordBaseSpotType
-	}
+function Season166MainBaseSpotItem:onClickBaseSpotItem()
+	local param = {}
 
-	Season166Controller.instance:openSeasonBaseSpotView(var_4_0)
+	param.actId = self.actId
+	param.baseId = self.baseId
+	param.config = self.config
+	param.viewType = Season166Enum.WordBaseSpotType
+
+	Season166Controller.instance:openSeasonBaseSpotView(param)
 end
 
-function var_0_0.refreshUI(arg_5_0)
-	arg_5_0.txtName.text = arg_5_0.config.name
-	arg_5_0.txtTitle.text = string.format("St.%d", arg_5_0.baseId)
+function Season166MainBaseSpotItem:refreshUI()
+	self.txtName.text = self.config.name
+	self.txtTitle.text = string.format("St.%d", self.baseId)
 
-	local var_5_0 = Season166BaseSpotModel.instance:getStarCount(arg_5_0.actId, arg_5_0.baseId)
-	local var_5_1 = Season166BaseSpotModel.instance:getBaseSpotMaxScore(arg_5_0.actId, arg_5_0.baseId)
+	local lightStarCount = Season166BaseSpotModel.instance:getStarCount(self.actId, self.baseId)
+	local curMaxScore = Season166BaseSpotModel.instance:getBaseSpotMaxScore(self.actId, self.baseId)
 
-	for iter_5_0 = 1, #arg_5_0.starTab do
-		gohelper.setActive(arg_5_0.starTab[iter_5_0].light, iter_5_0 <= var_5_0)
-		gohelper.setActive(arg_5_0.starTab[iter_5_0].dark, var_5_0 < iter_5_0)
+	for i = 1, #self.starTab do
+		gohelper.setActive(self.starTab[i].light, i <= lightStarCount)
+		gohelper.setActive(self.starTab[i].dark, lightStarCount < i)
 
-		local var_5_2 = var_5_1 >= arg_5_0.finalLevelScore and "season166_result_inclinedbulb3" or "season166_result_inclinedbulb2"
+		local lightStarUrl = curMaxScore >= self.finalLevelScore and "season166_result_inclinedbulb3" or "season166_result_inclinedbulb2"
 
-		UISpriteSetMgr.instance:setSeason166Sprite(arg_5_0.starTab[iter_5_0].imageLight, var_5_2)
-		UISpriteSetMgr.instance:setSeason166Sprite(arg_5_0.starTab[iter_5_0].imageLight1, var_5_2)
+		UISpriteSetMgr.instance:setSeason166Sprite(self.starTab[i].imageLight, lightStarUrl)
+		UISpriteSetMgr.instance:setSeason166Sprite(self.starTab[i].imageLight1, lightStarUrl)
 	end
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
-	arg_6_0.btnClick:RemoveClickListener()
+function Season166MainBaseSpotItem:removeEventListeners()
+	self.btnClick:RemoveClickListener()
 end
 
-function var_0_0.destroy(arg_7_0)
-	arg_7_0:__onDispose()
+function Season166MainBaseSpotItem:destroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return Season166MainBaseSpotItem

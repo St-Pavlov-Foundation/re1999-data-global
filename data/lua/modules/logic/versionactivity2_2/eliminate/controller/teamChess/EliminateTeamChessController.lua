@@ -1,181 +1,185 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.EliminateTeamChessController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/EliminateTeamChessController.lua
 
-local var_0_0 = class("EliminateTeamChessController", BaseController)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.EliminateTeamChessController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local EliminateTeamChessController = class("EliminateTeamChessController", BaseController)
+
+function EliminateTeamChessController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function EliminateTeamChessController:reInit()
+	self:clear()
 end
 
-function var_0_0.handleTeamFight(arg_3_0, arg_3_1)
-	EliminateTeamChessModel.instance:handleCurTeamChessWarFightInfo(arg_3_1)
+function EliminateTeamChessController:handleTeamFight(fight)
+	EliminateTeamChessModel.instance:handleCurTeamChessWarFightInfo(fight)
 end
 
-function var_0_0.handleServerTeamFight(arg_4_0, arg_4_1)
-	EliminateTeamChessModel.instance:handleServerTeamChessWarFightInfo(arg_4_1)
+function EliminateTeamChessController:handleServerTeamFight(fight)
+	EliminateTeamChessModel.instance:handleServerTeamChessWarFightInfo(fight)
 end
 
-function var_0_0.handleWarChessRoundEndReply(arg_5_0, arg_5_1)
+function EliminateTeamChessController:handleWarChessRoundEndReply(result)
 	EliminateTeamChessModel.instance:setCurTeamRoundStepState(EliminateTeamChessEnum.TeamChessRoundType.settlement)
-	var_0_0.instance:handleTeamFightTurn(arg_5_1.turn, not arg_5_1.isFinish)
-	var_0_0.instance:handleServerTeamFight(arg_5_1.fight)
-	EliminateLevelModel.instance:setNeedChangeTeamToEliminate(not arg_5_1.isFinish)
+	EliminateTeamChessController.instance:handleTeamFightTurn(result.turn, not result.isFinish)
+	EliminateTeamChessController.instance:handleServerTeamFight(result.fight)
+	EliminateLevelModel.instance:setNeedChangeTeamToEliminate(not result.isFinish)
 end
 
-function var_0_0.handleTeamFightResult(arg_6_0, arg_6_1)
-	EliminateTeamChessModel.instance:handleTeamFightResult(arg_6_1)
-	arg_6_0:buildSeqFlow(EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessFightResult))
+function EliminateTeamChessController:handleTeamFightResult(result)
+	EliminateTeamChessModel.instance:handleTeamFightResult(result)
+	self:buildSeqFlow(EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessFightResult))
 end
 
-function var_0_0.handleTeamFightTurn(arg_7_0, arg_7_1, arg_7_2)
-	EliminateTeamChessModel.instance:handleTeamFightTurn(arg_7_1)
-	arg_7_0:buildFlowByTurn()
-	arg_7_0:buildSeqFlow(EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessServerDataDiff))
+function EliminateTeamChessController:handleTeamFightTurn(turn, needCheckRound)
+	EliminateTeamChessModel.instance:handleTeamFightTurn(turn)
+	self:buildFlowByTurn()
+	self:buildSeqFlow(EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessServerDataDiff))
 
-	if arg_7_2 then
-		arg_7_0:buildSeqFlow(EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessCheckRoundState))
+	if needCheckRound then
+		self:buildSeqFlow(EliminateTeamChessStepUtil.createStep(nil, EliminateTeamChessEnum.StepWorkType.teamChessCheckRoundState))
 	end
 end
 
-function var_0_0.buildFlowByTurn(arg_8_0)
-	local var_8_0 = EliminateTeamChessModel.instance:getTeamChessStepList()
+function EliminateTeamChessController:buildFlowByTurn()
+	local stepList = EliminateTeamChessModel.instance:getTeamChessStepList()
 
-	if var_8_0 == nil or #var_8_0 == 0 then
+	if stepList == nil or #stepList == 0 then
 		return
 	end
 
-	local var_8_1 = #var_8_0
+	local lens = #stepList
 
-	for iter_8_0 = 1, var_8_1 do
-		local var_8_2 = table.remove(var_8_0, 1):buildSteps()
+	for i = 1, lens do
+		local stepMo = table.remove(stepList, 1)
+		local steps = stepMo:buildSteps()
 
-		for iter_8_1, iter_8_2 in ipairs(var_8_2) do
-			arg_8_0:buildSeqFlow(iter_8_2)
+		for _, step in ipairs(steps) do
+			self:buildSeqFlow(step)
 		end
 	end
 end
 
-function var_0_0.buildSeqFlow(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._seqStepFlow == nil
+function EliminateTeamChessController:buildSeqFlow(step)
+	local needStart = self._seqStepFlow == nil
 
-	arg_9_0._seqStepFlow = arg_9_0._seqStepFlow or FlowSequence.New()
+	self._seqStepFlow = self._seqStepFlow or FlowSequence.New()
 
-	arg_9_0._seqStepFlow:addWork(arg_9_1)
+	self._seqStepFlow:addWork(step)
 
-	if var_9_0 and arg_9_0._canStart then
-		arg_9_0:startSeqStepFlow()
+	if needStart and self._canStart then
+		self:startSeqStepFlow()
 	end
 end
 
-function var_0_0.setStartStepFlow(arg_10_0, arg_10_1)
-	arg_10_0._canStart = arg_10_1
+function EliminateTeamChessController:setStartStepFlow(state)
+	self._canStart = state
 end
 
-function var_0_0.startSeqStepFlow(arg_11_0)
-	if arg_11_0._seqStepFlow ~= nil and arg_11_0._seqStepFlow.status ~= WorkStatus.Running and #arg_11_0._seqStepFlow:getWorkList() > 0 then
-		arg_11_0:dispatchEvent(EliminateChessEvent.TeamChessOnFlowStart)
-		arg_11_0._seqStepFlow:registerDoneListener(arg_11_0.seqFlowDone, arg_11_0)
-		arg_11_0._seqStepFlow:start()
+function EliminateTeamChessController:startSeqStepFlow()
+	if self._seqStepFlow ~= nil and self._seqStepFlow.status ~= WorkStatus.Running and #self._seqStepFlow:getWorkList() > 0 then
+		self:dispatchEvent(EliminateChessEvent.TeamChessOnFlowStart)
+		self._seqStepFlow:registerDoneListener(self.seqFlowDone, self)
+		self._seqStepFlow:start()
 	end
 end
 
-function var_0_0.seqFlowDone(arg_12_0, arg_12_1)
-	arg_12_0:dispatchEvent(EliminateChessEvent.TeamChessOnFlowEnd, arg_12_1)
+function EliminateTeamChessController:seqFlowDone(isSuccess)
+	self:dispatchEvent(EliminateChessEvent.TeamChessOnFlowEnd, isSuccess)
 
-	arg_12_0._seqStepFlow = nil
+	self._seqStepFlow = nil
 end
 
-function var_0_0.sendWarChessPiecePlaceRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5, arg_13_6)
-	local var_13_0 = EliminateTeamChessEnum.ChessPlaceType.place
+function EliminateTeamChessController:sendWarChessPiecePlaceRequest(id, uid, strongholdId, extraParams, cb, cbTarget)
+	local type = EliminateTeamChessEnum.ChessPlaceType.place
 
-	if arg_13_2 ~= nil then
-		var_13_0 = EliminateTeamChessEnum.ChessPlaceType.activeMove
+	if uid ~= nil then
+		type = EliminateTeamChessEnum.ChessPlaceType.activeMove
 	end
 
-	logNormal("sendWarChessPiecePlaceRequest", var_13_0, arg_13_1, arg_13_3, arg_13_2, arg_13_4)
-	WarChessRpc.instance:sendWarChessPiecePlaceRequest(var_13_0, arg_13_1, arg_13_3, arg_13_2, arg_13_4, arg_13_5, arg_13_6)
+	logNormal("sendWarChessPiecePlaceRequest", type, id, strongholdId, uid, extraParams)
+	WarChessRpc.instance:sendWarChessPiecePlaceRequest(type, id, strongholdId, uid, extraParams, cb, cbTarget)
 end
 
-function var_0_0.sendWarChessRoundEndRequest(arg_14_0, arg_14_1, arg_14_2)
-	WarChessRpc.instance:sendWarChessRoundEndRequest(arg_14_1, arg_14_2)
+function EliminateTeamChessController:sendWarChessRoundEndRequest(cb, cbTarget)
+	WarChessRpc.instance:sendWarChessRoundEndRequest(cb, cbTarget)
 end
 
-function var_0_0.createPlaceSkill(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	arg_15_0._soliderPlaceSkill = EliminateTeamChessModel.instance:createPlaceMo(arg_15_1, arg_15_2, arg_15_3)
+function EliminateTeamChessController:createPlaceSkill(soliderId, soliderUid, strongholdId)
+	self._soliderPlaceSkill = EliminateTeamChessModel.instance:createPlaceMo(soliderId, soliderUid, strongholdId)
 end
 
-function var_0_0.getPlaceSkill(arg_16_0)
-	return arg_16_0._soliderPlaceSkill
+function EliminateTeamChessController:getPlaceSkill()
+	return self._soliderPlaceSkill
 end
 
-function var_0_0.setShowSkillEntityState(arg_17_0, arg_17_1)
-	if arg_17_0._soliderPlaceSkill then
-		local var_17_0 = arg_17_0._soliderPlaceSkill:getNeedSelectSoliderType()
+function EliminateTeamChessController:setShowSkillEntityState(active)
+	if self._soliderPlaceSkill then
+		local teamType = self._soliderPlaceSkill:getNeedSelectSoliderType()
 
-		if arg_17_1 then
-			TeamChessUnitEntityMgr.instance:setTempShowModeAndCacheByTeamType(var_17_0, EliminateTeamChessEnum.ModeType.Outline)
+		if active then
+			TeamChessUnitEntityMgr.instance:setTempShowModeAndCacheByTeamType(teamType, EliminateTeamChessEnum.ModeType.Outline)
 		else
-			TeamChessUnitEntityMgr.instance:restoreTempShowModeAndCacheByTeamType(var_17_0)
+			TeamChessUnitEntityMgr.instance:restoreTempShowModeAndCacheByTeamType(teamType)
 		end
 	end
 end
 
-function var_0_0.checkAndReleasePlaceSkill(arg_18_0)
-	if arg_18_0._soliderPlaceSkill then
-		return arg_18_0._soliderPlaceSkill:releaseSkill(arg_18_0.clearTemp, arg_18_0)
+function EliminateTeamChessController:checkAndReleasePlaceSkill()
+	if self._soliderPlaceSkill then
+		return self._soliderPlaceSkill:releaseSkill(self.clearTemp, self)
 	end
 
 	return false
 end
 
-function var_0_0.addTempChessAndPlace(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0, var_19_1 = EliminateTeamChessModel.instance:getStronghold(arg_19_3):addTempPiece(EliminateTeamChessEnum.TeamChessTeamType.player, arg_19_1)
+function EliminateTeamChessController:addTempChessAndPlace(soliderId, soliderUid, strongholdId)
+	local stronghold = EliminateTeamChessModel.instance:getStronghold(strongholdId)
+	local chessPiece, index = stronghold:addTempPiece(EliminateTeamChessEnum.TeamChessTeamType.player, soliderId)
 
-	arg_19_0:dispatchEvent(EliminateChessEvent.AddStrongholdChess, var_19_0, arg_19_3, var_19_1)
-	arg_19_0:setShowSkillEntityState(true)
+	self:dispatchEvent(EliminateChessEvent.AddStrongholdChess, chessPiece, strongholdId, index)
+	self:setShowSkillEntityState(true)
 end
 
-function var_0_0.removeTempChessAndPlace(arg_20_0, arg_20_1)
-	local var_20_0 = EliminateTeamChessModel.instance:getStronghold(arg_20_1)
-	local var_20_1 = EliminateTeamChessEnum.tempPieceUid
+function EliminateTeamChessController:removeTempChessAndPlace(strongholdId)
+	local stronghold = EliminateTeamChessModel.instance:getStronghold(strongholdId)
+	local tempUid = EliminateTeamChessEnum.tempPieceUid
 
-	var_20_0:removeChess(var_20_1)
-	arg_20_0:dispatchEvent(EliminateChessEvent.RemoveStrongholdChess, arg_20_1, var_20_1)
-	arg_20_0:setShowSkillEntityState(false)
+	stronghold:removeChess(tempUid)
+	self:dispatchEvent(EliminateChessEvent.RemoveStrongholdChess, strongholdId, tempUid)
+	self:setShowSkillEntityState(false)
 end
 
-function var_0_0.clearTemp(arg_21_0)
-	arg_21_0:clearReleasePlaceSkill()
+function EliminateTeamChessController:clearTemp()
+	self:clearReleasePlaceSkill()
 	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessSelectEffectEnd)
 end
 
-function var_0_0.clearReleasePlaceSkill(arg_22_0)
-	if arg_22_0._soliderPlaceSkill and arg_22_0._soliderPlaceSkill:needClearTemp() then
-		arg_22_0:removeTempChessAndPlace(arg_22_0._soliderPlaceSkill._strongholdId)
+function EliminateTeamChessController:clearReleasePlaceSkill()
+	if self._soliderPlaceSkill and self._soliderPlaceSkill:needClearTemp() then
+		self:removeTempChessAndPlace(self._soliderPlaceSkill._strongholdId)
 	end
 
 	EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.TeamChessSelectEffectEnd)
 
-	arg_22_0._soliderPlaceSkill = nil
+	self._soliderPlaceSkill = nil
 end
 
-function var_0_0.clear(arg_23_0)
-	arg_23_0._canStart = false
+function EliminateTeamChessController:clear()
+	self._canStart = false
 
-	if arg_23_0._seqStepFlow then
-		arg_23_0._seqStepFlow:onDestroyInternal()
+	if self._seqStepFlow then
+		self._seqStepFlow:onDestroyInternal()
 
-		arg_23_0._seqStepFlow = nil
+		self._seqStepFlow = nil
 	end
 
-	arg_23_0:clearReleasePlaceSkill()
+	self:clearReleasePlaceSkill()
 	TeamChessUnitEntityMgr.instance:clear()
 	EliminateTeamChessModel.instance:clear()
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateTeamChessController.instance = EliminateTeamChessController.New()
 
-return var_0_0
+return EliminateTeamChessController

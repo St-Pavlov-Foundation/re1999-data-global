@@ -10,7 +10,8 @@
     "useDesc": "language_10003201",
     "desc": "language_10003202",
     "effect": 60,
-    "sources": "1202|610001"
+    "sources": "1202|610001",
+    "itemSortIdx": 99
   },
   {
     "id": 11,
@@ -23,7 +24,8 @@
     "useDesc": "language_10003204",
     "desc": "language_10003205",
     "effect": 120,
-    "sources": "1202|610001|610002"
+    "sources": "1202|610001|610002",
+    "itemSortIdx": 99
   },
   {
     "id": 20,
@@ -36,7 +38,8 @@
     "useDesc": "language_10003201",
     "desc": "language_10003206",
     "effect": 60,
-    "sources": "1202|610001"
+    "sources": "1202|610001",
+    "itemSortIdx": 99
   },
   {
     "id": 21,
@@ -49,7 +52,8 @@
     "useDesc": "language_10003204",
     "desc": "language_10003207",
     "effect": 120,
-    "sources": "1202|610001|610002"
+    "sources": "1202|610001|610002",
+    "itemSortIdx": 99
   },
   {
     "id": 30,
@@ -62,7 +66,8 @@
     "useDesc": "language_10033887",
     "desc": "language_10033888",
     "effect": 5,
-    "sources": ""
+    "sources": "",
+    "itemSortIdx": 99
   },
   {
     "id": 31,
@@ -75,6 +80,7 @@
     "useDesc": "language_10090742",
     "desc": "language_10090743",
     "effect": 60,
-    "sources": ""
+    "sources": "",
+    "itemSortIdx": 0
   }
 ]

@@ -1,64 +1,66 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneViewComp.lua
 
-local var_0_0 = class("RoomSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneViewComp", package.seeall)
 
-var_0_0.OnOpenView = 1
+local RoomSceneViewComp = class("RoomSceneViewComp", BaseSceneComp)
 
-function var_0_0.onInit(arg_1_0)
+RoomSceneViewComp.OnOpenView = 1
+
+function RoomSceneViewComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneViewComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 
-	arg_2_0._views = {
+	self._views = {
 		[ViewName.RoomView] = false
 	}
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0._views) do
-		ViewMgr.instance:openView(iter_2_0, true)
+	for viewName, _ in pairs(self._views) do
+		ViewMgr.instance:openView(viewName, true)
 	end
 end
 
-function var_0_0._onOpenView(arg_3_0, arg_3_1)
-	if arg_3_0._views[arg_3_1] ~= nil then
-		arg_3_0._views[arg_3_1] = true
+function RoomSceneViewComp:_onOpenView(viewName)
+	if self._views[viewName] ~= nil then
+		self._views[viewName] = true
 
-		arg_3_0:_check()
+		self:_check()
 	end
 end
 
-function var_0_0._check(arg_4_0)
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._views) do
-		if iter_4_1 == false then
+function RoomSceneViewComp:_check()
+	for _, result in pairs(self._views) do
+		if result == false then
 			return
 		end
 	end
 
-	local var_4_0 = RoomController.instance:getOpenViews()
+	local openViews = RoomController.instance:getOpenViews()
 
-	for iter_4_2, iter_4_3 in ipairs(var_4_0) do
-		if iter_4_3.viewName == ViewName.RoomInitBuildingView then
-			RoomMapController.instance:openRoomInitBuildingView(0, iter_4_3.param)
+	for _, viewParams in ipairs(openViews) do
+		if viewParams.viewName == ViewName.RoomInitBuildingView then
+			RoomMapController.instance:openRoomInitBuildingView(0, viewParams.param)
 		else
-			ViewMgr.instance:openView(iter_4_3.viewName, iter_4_3.param)
+			ViewMgr.instance:openView(viewParams.viewName, viewParams.param)
 		end
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
-	arg_4_0:dispatchEvent(var_0_0.OnOpenView)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	self:dispatchEvent(RoomSceneViewComp.OnOpenView)
 end
 
-function var_0_0.onSceneClose(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_5_0._onOpenView, arg_5_0)
+function RoomSceneViewComp:onSceneClose()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._views) do
-		ViewMgr.instance:closeView(iter_5_0, true)
+	for viewName, _ in pairs(self._views) do
+		ViewMgr.instance:closeView(viewName, true)
 	end
 
 	ViewMgr.instance:closeAllPopupViews()
 end
 
-return var_0_0
+return RoomSceneViewComp

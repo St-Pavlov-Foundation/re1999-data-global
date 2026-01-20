@@ -178,5 +178,20 @@
     "storyId": 800004,
     "iconArea": 0,
     "effect": "v1a9_caidai"
+  },
+  {
+    "id": 321001,
+    "name": "language_10103710",
+    "nameen": "Crown of the \"Suitcase King\"",
+    "icon": "v3a2_antique_icon_1",
+    "gifticon": "v3a2_antique_icon_1",
+    "sign": "501208",
+    "title": "language_10103710",
+    "titleen": "Crown of the \"Suitcase King\"",
+    "desc": "language_10103711",
+    "sources": "",
+    "storyId": 800005,
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
   }
 ]

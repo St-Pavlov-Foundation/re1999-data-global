@@ -1,113 +1,114 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandGyroComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/comp/FairyLandGyroComp.lua
 
-local var_0_0 = class("FairyLandGyroComp")
-local var_0_1 = UnityEngine.Input
-local var_0_2 = UnityEngine.Time
+module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandGyroComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.shakeCallback = arg_1_1.callback
-	arg_1_0.shakeCallbackObj = arg_1_1.callbackObj
-	arg_1_0.shakeGO = arg_1_1.go
-	arg_1_0.isMobilePlayer = GameUtil.isMobilePlayerAndNotEmulator()
-	arg_1_0._aniGoList = {}
+local FairyLandGyroComp = class("FairyLandGyroComp")
+local Input = UnityEngine.Input
+local Time = UnityEngine.Time
 
-	local var_1_0 = arg_1_1.posLimit
-	local var_1_1 = {}
-	local var_1_2 = arg_1_0.shakeGO.transform
-	local var_1_3 = var_1_2.localPosition
+function FairyLandGyroComp:init(param)
+	self.shakeCallback = param.callback
+	self.shakeCallbackObj = param.callbackObj
+	self.shakeGO = param.go
+	self.isMobilePlayer = GameUtil.isMobilePlayerAndNotEmulator()
+	self._aniGoList = {}
 
-	var_1_1.posLimit = var_1_0
-	var_1_1.deltaPos = 5
-	var_1_1.lerpPos = 10
+	local posLimit = param.posLimit
+	local shakeGOParam = {}
+	local transform = self.shakeGO.transform
+	local initPos = transform.localPosition
 
-	local var_1_4 = {
-		transform = var_1_2,
-		config = var_1_1,
-		initPos = var_1_3
+	shakeGOParam.posLimit = posLimit
+	shakeGOParam.deltaPos = 5
+	shakeGOParam.lerpPos = 10
+
+	local goParam = {
+		transform = transform,
+		config = shakeGOParam,
+		initPos = initPos
 	}
 
-	table.insert(arg_1_0._aniGoList, var_1_4)
+	table.insert(self._aniGoList, goParam)
 
-	local var_1_5, var_1_6, var_1_7 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+	local curX, curY, curZ = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-	arg_1_0._acceleration = Vector3.New(var_1_5, var_1_6, var_1_7)
-	arg_1_0._curAcceleration = Vector3.New(var_1_5, var_1_6, var_1_7)
-	arg_1_0._offsetPos = Vector3.zero
-	arg_1_0._tempPos = Vector3.zero
+	self._acceleration = Vector3.New(curX, curY, curZ)
+	self._curAcceleration = Vector3.New(curX, curY, curZ)
+	self._offsetPos = Vector3.zero
+	self._tempPos = Vector3.zero
 
-	if not arg_1_0._isRunning then
-		arg_1_0._isRunning = true
+	if not self._isRunning then
+		self._isRunning = true
 
-		LateUpdateBeat:Add(arg_1_0._tick, arg_1_0)
+		LateUpdateBeat:Add(self._tick, self)
 	end
 end
 
-function var_0_0.checkInDrag(arg_2_0)
-	return arg_2_0.shakeCallbackObj.inDrag
+function FairyLandGyroComp:checkInDrag()
+	return self.shakeCallbackObj.inDrag
 end
 
-function var_0_0._tick(arg_3_0)
-	if arg_3_0.isMobilePlayer and not arg_3_0:checkInDrag() then
-		local var_3_0, var_3_1, var_3_2 = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
+function FairyLandGyroComp:_tick()
+	if self.isMobilePlayer and not self:checkInDrag() then
+		local curX, curY, curZ = ZProj.EngineUtil.GetInputAcceleration(0, 0, 0)
 
-		arg_3_0._curAcceleration:Set(var_3_0, var_3_1, var_3_2)
+		self._curAcceleration:Set(curX, curY, curZ)
 
-		local var_3_3 = arg_3_0._offsetPos
-		local var_3_4
-		local var_3_5
-		local var_3_6
-		local var_3_7
-		local var_3_8
+		local offsetPos = self._offsetPos
+		local transform, config, pos, x, y
 
-		if arg_3_0._aniGoList then
-			for iter_3_0, iter_3_1 in ipairs(arg_3_0._aniGoList) do
-				local var_3_9 = iter_3_1.transform
-				local var_3_10 = iter_3_1.config
+		if self._aniGoList then
+			for i, v in ipairs(self._aniGoList) do
+				transform = v.transform
+				config = v.config
+				offsetPos.x = self._curAcceleration.x - self._acceleration.x
+				offsetPos.y = self._curAcceleration.y - self._acceleration.y
+				x, y = transformhelper.getLocalPos(transform)
+				pos = self:calcPos(v.initPos, offsetPos, config.deltaPos)
+				pos = self:clampPos(pos, v.initPos, config.posLimit)
 
-				var_3_3.x = arg_3_0._curAcceleration.x - arg_3_0._acceleration.x
-				var_3_3.y = arg_3_0._curAcceleration.y - arg_3_0._acceleration.y
-
-				local var_3_11, var_3_12 = transformhelper.getLocalPos(var_3_9)
-				local var_3_13 = arg_3_0:calcPos(iter_3_1.initPos, var_3_3, var_3_10.deltaPos)
-				local var_3_14 = arg_3_0:clampPos(var_3_13, iter_3_1.initPos, var_3_10.posLimit)
-
-				transformhelper.setLocalLerp(var_3_9, var_3_14.x, var_3_14.y, var_3_14.z, var_0_2.deltaTime * var_3_10.lerpPos)
+				transformhelper.setLocalLerp(transform, pos.x, pos.y, pos.z, Time.deltaTime * config.lerpPos)
 			end
 		end
 	end
 
-	arg_3_0:doShake()
+	self:doShake()
 end
 
-function var_0_0.clampPos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_3 > Vector3.Distance(arg_4_2, arg_4_1) then
-		return arg_4_1
+function FairyLandGyroComp:clampPos(position, initPos, limit)
+	local distance = Vector3.Distance(initPos, position)
+
+	if distance < limit then
+		return position
 	end
 
-	return arg_4_2 + (arg_4_1 - arg_4_2).normalized * arg_4_3
+	local offsetPos = position - initPos
+	local pos = initPos + offsetPos.normalized * limit
+
+	return pos
 end
 
-function var_0_0.calcPos(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_0._tempPos
+function FairyLandGyroComp:calcPos(initPos, offsetPos, deltaPos)
+	local temp = self._tempPos
 
-	var_5_0.x = arg_5_1.x + arg_5_2.x * arg_5_3
-	var_5_0.y = arg_5_1.y + arg_5_2.y * arg_5_3
+	temp.x = initPos.x + offsetPos.x * deltaPos
+	temp.y = initPos.y + offsetPos.y * deltaPos
 
-	return var_5_0
+	return temp
 end
 
-function var_0_0.doShake(arg_6_0)
-	if arg_6_0.shakeCallback then
-		arg_6_0.shakeCallback(arg_6_0.shakeCallbackObj)
-	end
-end
-
-function var_0_0.closeGyro(arg_7_0)
-	if arg_7_0._isRunning then
-		arg_7_0._isRunning = false
-
-		LateUpdateBeat:Remove(arg_7_0._tick, arg_7_0)
+function FairyLandGyroComp:doShake()
+	if self.shakeCallback then
+		self.shakeCallback(self.shakeCallbackObj)
 	end
 end
 
-return var_0_0
+function FairyLandGyroComp:closeGyro()
+	if self._isRunning then
+		self._isRunning = false
+
+		LateUpdateBeat:Remove(self._tick, self)
+	end
+end
+
+return FairyLandGyroComp

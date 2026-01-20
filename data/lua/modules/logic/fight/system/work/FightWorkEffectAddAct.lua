@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectAddAct", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectAddAct.lua
 
-local var_0_0 = class("FightWorkEffectAddAct", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectAddAct", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkEffectAddAct = class("FightWorkEffectAddAct", FightEffectBase)
+
+function FightWorkEffectAddAct:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectAddAct

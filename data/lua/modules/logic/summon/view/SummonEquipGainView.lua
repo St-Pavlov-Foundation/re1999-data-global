@@ -1,47 +1,49 @@
-﻿module("modules.logic.summon.view.SummonEquipGainView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonEquipGainView.lua
 
-local var_0_0 = class("SummonEquipGainView", BaseView)
+module("modules.logic.summon.view.SummonEquipGainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local SummonEquipGainView = class("SummonEquipGainView", BaseView)
+
+function SummonEquipGainView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SummonEquipGainView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SummonEquipGainView:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:addEventCb(SummonController.instance, SummonEvent.onSummonEquipSingleFinish, arg_4_0.onSummonSingleAnimFinish, arg_4_0)
+function SummonEquipGainView:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonEquipSingleFinish, self.onSummonSingleAnimFinish, self)
 end
 
-function var_0_0.onSummonSingleAnimFinish(arg_5_0)
-	local var_5_0 = arg_5_0.viewParam.summonResultMo
-	local var_5_1 = SummonModel.getRewardList({
-		var_5_0
+function SummonEquipGainView:onSummonSingleAnimFinish()
+	local summonResultMo = self.viewParam.summonResultMo
+	local rewards = SummonModel.getRewardList({
+		summonResultMo
 	})
 
-	if #var_5_1 <= 0 then
+	if #rewards <= 0 then
 		return
 	end
 
-	table.sort(var_5_1, SummonModel.sortRewards)
+	table.sort(rewards, SummonModel.sortRewards)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		if iter_5_1.materilType == MaterialEnum.MaterialType.Currency then
-			local var_5_2, var_5_3 = ItemModel.instance:getItemConfigAndIcon(iter_5_1.materilType, iter_5_1.materilId)
-			local var_5_4 = iter_5_1.quantity
-			local var_5_5 = luaLang("equip_duplicate_tips")
-			local var_5_6 = string.format("%s\n%sX%s", var_5_5, var_5_2.name, var_5_4)
+	for i, reward in ipairs(rewards) do
+		if reward.materilType == MaterialEnum.MaterialType.Currency then
+			local co, icon = ItemModel.instance:getItemConfigAndIcon(reward.materilType, reward.materilId)
+			local quantity = reward.quantity
+			local desc = luaLang("equip_duplicate_tips")
+			local toastStr = string.format("%s\n%sX%s", desc, co.name, quantity)
 
-			GameFacade.showToastWithIcon(ToastEnum.IconId, var_5_3, var_5_6)
+			GameFacade.showToastWithIcon(ToastEnum.IconId, icon, toastStr)
 		end
 	end
 end
 
-return var_0_0
+return SummonEquipGainView

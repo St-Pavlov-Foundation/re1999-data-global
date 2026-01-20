@@ -128,5 +128,20 @@
     "heroId": 3007,
     "slotsId": 3007,
     "facetsId": "300701"
+  },
+  {
+    "heroId": 3070,
+    "slotsId": 3070,
+    "facetsId": "307001"
+  },
+  {
+    "heroId": 3081,
+    "slotsId": 3081,
+    "facetsId": "308101"
+  },
+  {
+    "heroId": 3100,
+    "slotsId": 3100,
+    "facetsId": "310001"
   }
 ]

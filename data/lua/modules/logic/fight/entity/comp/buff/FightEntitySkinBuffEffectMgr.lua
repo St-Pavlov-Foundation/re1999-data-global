@@ -1,3 +1,7 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightEntitySkinBuffEffectMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightEntitySkinBuffEffectMgr.lua
 
-return (class("FightEntitySkinBuffEffectMgr", FightBaseClass))
+module("modules.logic.fight.entity.comp.buff.FightEntitySkinBuffEffectMgr", package.seeall)
+
+local FightEntitySkinBuffEffectMgr = class("FightEntitySkinBuffEffectMgr", FightBaseClass)
+
+return FightEntitySkinBuffEffectMgr

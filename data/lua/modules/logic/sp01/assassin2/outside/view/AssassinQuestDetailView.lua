@@ -1,181 +1,187 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinQuestDetailView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinQuestDetailView.lua
 
-local var_0_0 = class("AssassinQuestDetailView", BaseView)
+module("modules.logic.sp01.assassin2.outside.view.AssassinQuestDetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "root")
-	arg_1_0._goquestItem = gohelper.findChild(arg_1_0.viewGO, "root/#go_questItem")
-	arg_1_0._imagequesItem = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_questItem/image_icon")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "root/#go_tips")
-	arg_1_0._imagequesttype = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_tips/#go_title/#img_icon")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/#go_tips/#go_title/#txt_title")
-	arg_1_0._gopic = gohelper.findChild(arg_1_0.viewGO, "root/#go_tips/#go_pic")
-	arg_1_0._simageinfo = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#go_tips/#go_pic/#simage_info")
-	arg_1_0._btninfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_tips/#go_pic/#btn_info", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/#go_tips/#go_desc/#scroll_desc/Viewport/Content/#txt_desc")
-	arg_1_0._txtunlock = gohelper.findChildText(arg_1_0.viewGO, "root/#go_tips/#go_desc/#scroll_desc/Viewport/Content/#txt_unlock")
-	arg_1_0._txtrecommend = gohelper.findChildText(arg_1_0.viewGO, "root/#go_tips/#go_desc/#scroll_desc/Viewport/Content/#txt_recommend")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "root/#go_tips/#go_desc/#go_reward")
-	arg_1_0._txtrewardnum = gohelper.findChildText(arg_1_0.viewGO, "root/#go_tips/#go_desc/#go_reward/#txt_rewardNum")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_tips/#btn_start", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._txtstart = gohelper.findChildText(arg_1_0.viewGO, "root/#go_tips/#btn_start/txt_start")
+local AssassinQuestDetailView = class("AssassinQuestDetailView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinQuestDetailView:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, "root")
+	self._goquestItem = gohelper.findChild(self.viewGO, "root/#go_questItem")
+	self._imagequesItem = gohelper.findChildImage(self.viewGO, "root/#go_questItem/image_icon")
+	self._gotips = gohelper.findChild(self.viewGO, "root/#go_tips")
+	self._imagequesttype = gohelper.findChildImage(self.viewGO, "root/#go_tips/#go_title/#img_icon")
+	self._txttitle = gohelper.findChildText(self.viewGO, "root/#go_tips/#go_title/#txt_title")
+	self._gopic = gohelper.findChild(self.viewGO, "root/#go_tips/#go_pic")
+	self._simageinfo = gohelper.findChildSingleImage(self.viewGO, "root/#go_tips/#go_pic/#simage_info")
+	self._btninfo = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_tips/#go_pic/#btn_info", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/#go_tips/#go_desc/#scroll_desc/Viewport/Content/#txt_desc")
+	self._txtunlock = gohelper.findChildText(self.viewGO, "root/#go_tips/#go_desc/#scroll_desc/Viewport/Content/#txt_unlock")
+	self._txtrecommend = gohelper.findChildText(self.viewGO, "root/#go_tips/#go_desc/#scroll_desc/Viewport/Content/#txt_recommend")
+	self._goreward = gohelper.findChild(self.viewGO, "root/#go_tips/#go_desc/#go_reward")
+	self._txtrewardnum = gohelper.findChildText(self.viewGO, "root/#go_tips/#go_desc/#go_reward/#txt_rewardNum")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_tips/#btn_start", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._txtstart = gohelper.findChildText(self.viewGO, "root/#go_tips/#btn_start/txt_start")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btninfo:AddClickListener(arg_2_0._btninfoOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+function AssassinQuestDetailView:addEvents()
+	self._btninfo:AddClickListener(self._btninfoOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btninfo:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
+function AssassinQuestDetailView:removeEvents()
+	self._btninfo:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
 end
 
-function var_0_0._btninfoOnClick(arg_4_0)
-	AssassinController.instance:openAssassinStealthGameOverView(arg_4_0._questId)
+function AssassinQuestDetailView:_btninfoOnClick()
+	AssassinController.instance:openAssassinStealthGameOverView(self._questId)
 end
 
-function var_0_0._btnstartOnClick(arg_5_0)
-	AssassinController.instance:startQuest(arg_5_0._questId)
-	arg_5_0:closeThis()
+function AssassinQuestDetailView:_btnstartOnClick()
+	AssassinController.instance:startQuest(self._questId)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._transRoot = arg_6_0._goroot.transform
-	arg_6_0._transQuestItem = arg_6_0._goquestItem.transform
-	arg_6_0._transTips = arg_6_0._gotips.transform
+function AssassinQuestDetailView:_editableInitView()
+	self._transRoot = self._goroot.transform
+	self._transQuestItem = self._goquestItem.transform
+	self._transTips = self._gotips.transform
 
-	local var_6_0 = recthelper.getWidth(arg_6_0._transTips)
+	local tipWidth = recthelper.getWidth(self._transTips)
 
-	arg_6_0._space = recthelper.getAnchorX(arg_6_0._transTips)
-	arg_6_0._tipNeedWidth = arg_6_0._space + var_6_0 / 2
+	self._space = recthelper.getAnchorX(self._transTips)
+	self._tipNeedWidth = self._space + tipWidth / 2
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0._questId = arg_7_0.viewParam.questId
+function AssassinQuestDetailView:onUpdateParam()
+	self._questId = self.viewParam.questId
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:onUpdateParam()
-	arg_8_0:setInfo()
-	arg_8_0:setQuestItem()
+function AssassinQuestDetailView:onOpen()
+	self:onUpdateParam()
+	self:setInfo()
+	self:setQuestItem()
 	AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_taskchoose)
 end
 
-function var_0_0.setInfo(arg_9_0)
-	local var_9_0 = AssassinConfig.instance:getQuestType(arg_9_0._questId)
+function AssassinQuestDetailView:setInfo()
+	local questType = AssassinConfig.instance:getQuestType(self._questId)
 
-	AssassinHelper.setQuestTypeIcon(var_9_0, arg_9_0._imagequesttype)
+	AssassinHelper.setQuestTypeIcon(questType, self._imagequesttype)
 
-	local var_9_1 = "p_assassinquestdetailview_txt_start"
+	local key = "p_assassinquestdetailview_txt_start"
 
-	if var_9_0 == AssassinEnum.QuestType.Dialog then
-		var_9_1 = "p_assassinquestdetailview_txt_start2"
+	if questType == AssassinEnum.QuestType.Dialog then
+		key = "p_assassinquestdetailview_txt_start2"
 	end
 
-	arg_9_0._txtstart.text = luaLang(var_9_1)
+	self._txtstart.text = luaLang(key)
 
-	local var_9_2 = AssassinConfig.instance:getQuestName(arg_9_0._questId)
+	local title = AssassinConfig.instance:getQuestName(self._questId)
 
-	arg_9_0._txttitle.text = var_9_2
+	self._txttitle.text = title
 
-	local var_9_3 = AssassinConfig.instance:getQuestDesc(arg_9_0._questId)
+	local desc = AssassinConfig.instance:getQuestDesc(self._questId)
 
-	arg_9_0._txtdesc.text = var_9_3
+	self._txtdesc.text = desc
 
-	local var_9_4 = AssassinConfig.instance:getQuestPicture(arg_9_0._questId)
+	local pic = AssassinConfig.instance:getQuestPicture(self._questId)
 
-	if string.nilorempty(var_9_4) then
-		gohelper.setActive(arg_9_0._gopic, false)
+	if string.nilorempty(pic) then
+		gohelper.setActive(self._gopic, false)
 	else
-		local var_9_5 = ResUrl.getSp01AssassinSingleBg("map/" .. var_9_4)
+		local path = ResUrl.getSp01AssassinSingleBg("map/" .. pic)
 
-		arg_9_0._simageinfo:LoadImage(var_9_5)
-		gohelper.setActive(arg_9_0._gopic, true)
+		self._simageinfo:LoadImage(path)
+		gohelper.setActive(self._gopic, true)
 	end
 
-	local var_9_6 = AssassinConfig.instance:getQuestRewardCount(arg_9_0._questId)
+	local rewardCount = AssassinConfig.instance:getQuestRewardCount(self._questId)
 
-	arg_9_0._txtrewardnum.text = var_9_6
+	self._txtrewardnum.text = rewardCount
 
-	gohelper.setActive(arg_9_0._goreward, var_9_6 and var_9_6 > 0)
+	gohelper.setActive(self._goreward, rewardCount and rewardCount > 0)
 
-	local var_9_7 = AssassinConfig.instance:getQuestRecommendHeroList(arg_9_0._questId)
+	local heroIdList = AssassinConfig.instance:getQuestRecommendHeroList(self._questId)
 
-	if var_9_7 then
-		local var_9_8
-		local var_9_9 = luaLang("room_levelup_init_and1")
+	if heroIdList then
+		local targetDesc
+		local connchar = luaLang("room_levelup_init_and1")
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_7) do
-			local var_9_10 = AssassinConfig.instance:getHeroCfgByAssassinHeroId(iter_9_1)
+		for _, heroId in ipairs(heroIdList) do
+			local heroCfg = AssassinConfig.instance:getHeroCfgByAssassinHeroId(heroId)
 
-			if var_9_10 then
-				if var_9_8 then
-					var_9_8 = var_9_8 .. var_9_9 .. var_9_10.name
+			if heroCfg then
+				if targetDesc then
+					targetDesc = targetDesc .. connchar .. heroCfg.name
 				else
-					var_9_8 = var_9_10.name
+					targetDesc = heroCfg.name
 				end
 			end
 		end
 
-		local var_9_11 = luaLang("assassin_stealth_game_recommend_hero")
+		local txt = luaLang("assassin_stealth_game_recommend_hero")
 
-		arg_9_0._txtrecommend.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_9_11, var_9_8)
+		self._txtrecommend.text = GameUtil.getSubPlaceholderLuaLangOneParam(txt, targetDesc)
 	else
-		gohelper.setActive(arg_9_0._txtrecommend, false)
+		gohelper.setActive(self._txtrecommend, false)
 	end
 
-	local var_9_12 = AssassinConfig.instance:getUnlockHeroId(arg_9_0._questId)
+	local unlockHeroId = AssassinConfig.instance:getUnlockHeroId(self._questId)
 
-	if var_9_12 then
-		local var_9_13 = AssassinConfig.instance:getHeroCfgByAssassinHeroId(var_9_12)
-		local var_9_14 = var_9_13 and var_9_13.name or ""
-		local var_9_15 = luaLang("assassin_stealth_game_unlock_hero")
+	if unlockHeroId then
+		local heroCfg = AssassinConfig.instance:getHeroCfgByAssassinHeroId(unlockHeroId)
+		local name = heroCfg and heroCfg.name or ""
+		local txt = luaLang("assassin_stealth_game_unlock_hero")
 
-		arg_9_0._txtunlock.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_9_15, var_9_14)
+		self._txtunlock.text = GameUtil.getSubPlaceholderLuaLangOneParam(txt, name)
 	else
-		gohelper.setActive(arg_9_0._txtunlock, false)
+		gohelper.setActive(self._txtunlock, false)
 	end
 
 	UnityEngine.Canvas.ForceUpdateCanvases()
 end
 
-function var_0_0.setQuestItem(arg_10_0)
-	local var_10_0 = AssassinConfig.instance:getQuestType(arg_10_0._questId)
+function AssassinQuestDetailView:setQuestItem()
+	local questType = AssassinConfig.instance:getQuestType(self._questId)
 
-	AssassinHelper.setQuestTypeIcon(var_10_0, arg_10_0._imagequesItem)
+	AssassinHelper.setQuestTypeIcon(questType, self._imagequesItem)
 
-	local var_10_1 = 0
-	local var_10_2 = 0
-	local var_10_3 = arg_10_0.viewParam and arg_10_0.viewParam.worldPos
+	local posX, posY = 0, 0
+	local worldPos = self.viewParam and self.viewParam.worldPos
 
-	if var_10_3 then
-		local var_10_4 = arg_10_0._transRoot:InverseTransformPoint(var_10_3)
+	if worldPos then
+		local pos = self._transRoot:InverseTransformPoint(worldPos)
 
-		var_10_1 = var_10_4.x
-		var_10_2 = var_10_4.y
+		posX = pos.x
+		posY = pos.y
 	end
 
-	recthelper.setAnchor(arg_10_0._transQuestItem, var_10_1, var_10_2)
+	recthelper.setAnchor(self._transQuestItem, posX, posY)
 
-	local var_10_5, var_10_6 = GameUtil.getViewSize()
-	local var_10_7 = var_10_5 / 2 - var_10_1 >= arg_10_0._tipNeedWidth and var_10_1 + arg_10_0._space or var_10_1 - arg_10_0._space
-	local var_10_8 = var_10_6 / 2 - recthelper.getHeight(arg_10_0._transTips) / 2
-	local var_10_9 = Mathf.Clamp(var_10_2, -var_10_8, var_10_8)
+	local viewW, viewH = GameUtil.getViewSize()
+	local halfViewW = viewW / 2
+	local leftRemainWidth = halfViewW - posX
+	local showInRight = leftRemainWidth >= self._tipNeedWidth
+	local tipsX = showInRight and posX + self._space or posX - self._space
+	local halfViewH = viewH / 2
+	local tipHeight = recthelper.getHeight(self._transTips)
+	local maxY = halfViewH - tipHeight / 2
+	local tipsY = Mathf.Clamp(posY, -maxY, maxY)
 
-	recthelper.setAnchor(arg_10_0._transTips, var_10_7, var_10_9)
+	recthelper.setAnchor(self._transTips, tipsX, tipsY)
 end
 
-function var_0_0.onClose(arg_11_0)
+function AssassinQuestDetailView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simageinfo:UnLoadImage()
+function AssassinQuestDetailView:onDestroyView()
+	self._simageinfo:UnLoadImage()
 end
 
-return var_0_0
+return AssassinQuestDetailView

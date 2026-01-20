@@ -1,101 +1,103 @@
-﻿module("modules.logic.chessgame.config.ChessGameConfig", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/config/ChessGameConfig.lua
 
-local var_0_0 = class("ChessGameConfig", BaseConfig)
+module("modules.logic.chessgame.config.ChessGameConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._mapCos = {}
-	arg_1_0._interactList = {}
+local ChessGameConfig = class("ChessGameConfig", BaseConfig)
+
+function ChessGameConfig:ctor()
+	self._mapCos = {}
+	self._interactList = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function ChessGameConfig:reqConfigNames()
 	return
 end
 
-function var_0_0.getMapCo(arg_3_0, arg_3_1)
-	if not arg_3_0._mapCos[arg_3_1] then
-		local var_3_0 = {}
-		local var_3_1 = addGlobalModule("modules.configs.chessgame.lua_chessgame_group_" .. tostring(arg_3_1), "lua_chessgame_group_" .. tostring(arg_3_1))
+function ChessGameConfig:getMapCo(mapGroupId)
+	if not self._mapCos[mapGroupId] then
+		local co = {}
+		local rawCo = addGlobalModule("modules.configs.chessgame.lua_chessgame_group_" .. tostring(mapGroupId), "lua_chessgame_group_" .. tostring(mapGroupId))
 
-		for iter_3_0 = 1, #var_3_1 do
-			var_3_0[iter_3_0] = {}
-			var_3_0[iter_3_0].path = var_3_1[iter_3_0][1]
-			var_3_0[iter_3_0].interacts = {}
+		for i = 1, #rawCo do
+			co[i] = {}
+			co[i].path = rawCo[i][1]
+			co[i].interacts = {}
 
-			for iter_3_1, iter_3_2 in ipairs(var_3_1[iter_3_0][2]) do
-				var_3_0[iter_3_0].interacts[iter_3_1] = {}
+			for k, v in ipairs(rawCo[i][2]) do
+				co[i].interacts[k] = {}
 
-				for iter_3_3, iter_3_4 in pairs(ChessGameInteractField) do
-					var_3_0[iter_3_0].interacts[iter_3_1][iter_3_3] = iter_3_2[iter_3_4]
+				for name, index in pairs(ChessGameInteractField) do
+					co[i].interacts[k][name] = v[index]
 				end
 
-				var_3_0[iter_3_0].interacts[iter_3_1].offset = {
-					x = iter_3_2[8][1],
-					y = iter_3_2[8][2],
-					z = iter_3_2[8][3]
+				co[i].interacts[k].offset = {
+					x = v[8][1],
+					y = v[8][2],
+					z = v[8][3]
 				}
-				var_3_0[iter_3_0].interacts[iter_3_1].effects = {}
+				co[i].interacts[k].effects = {}
 
-				for iter_3_5, iter_3_6 in ipairs(iter_3_2[15]) do
-					var_3_0[iter_3_0].interacts[iter_3_1].effects[iter_3_5] = {
-						type = iter_3_6[1],
-						param = iter_3_6[2]
+				for index, val in ipairs(v[15]) do
+					co[i].interacts[k].effects[index] = {
+						type = val[1],
+						param = val[2]
 					}
 				end
 
-				arg_3_0._interactList[arg_3_1] = arg_3_0._interactList[arg_3_1] or {}
-				arg_3_0._interactList[arg_3_1][iter_3_2[1]] = var_3_0[iter_3_0].interacts[iter_3_1]
+				self._interactList[mapGroupId] = self._interactList[mapGroupId] or {}
+				self._interactList[mapGroupId][v[1]] = co[i].interacts[k]
 			end
 
-			var_3_0[iter_3_0].nodes = {}
+			co[i].nodes = {}
 
-			for iter_3_7, iter_3_8 in ipairs(var_3_1[iter_3_0][3]) do
-				var_3_0[iter_3_0].nodes[iter_3_7] = {
-					x = iter_3_8[1],
-					y = iter_3_8[2]
+			for k, v in ipairs(rawCo[i][3]) do
+				co[i].nodes[k] = {
+					x = v[1],
+					y = v[2]
 				}
 			end
 		end
 
-		arg_3_0._mapCos[arg_3_1] = var_3_0
+		self._mapCos[mapGroupId] = co
 	end
 
-	return arg_3_0._mapCos[arg_3_1]
+	return self._mapCos[mapGroupId]
 end
 
-function var_0_0.getInteractCoById(arg_4_0, arg_4_1, arg_4_2)
-	return arg_4_0._interactList[arg_4_1][arg_4_2]
+function ChessGameConfig:getInteractCoById(mapGroupId, id)
+	return self._interactList[mapGroupId][id]
 end
 
-function var_0_0.setCurrentMapGroupId(arg_5_0, arg_5_1)
-	arg_5_0._currentMapGroupId = arg_5_1
+function ChessGameConfig:setCurrentMapGroupId(id)
+	self._currentMapGroupId = id
 end
 
-function var_0_0.getCurrentMapGroupId(arg_6_0)
-	return arg_6_0._currentMapGroupId
+function ChessGameConfig:getCurrentMapGroupId()
+	return self._currentMapGroupId
 end
 
-function var_0_0.getCurrentMapCo(arg_7_0, arg_7_1)
-	if not arg_7_0._currentMapGroupId then
+function ChessGameConfig:getCurrentMapCo(mapIndex)
+	if not self._currentMapGroupId then
 		return
 	end
 
-	local var_7_0 = arg_7_0._mapCos[arg_7_0._currentMapGroupId]
+	local mapGroupCo = self._mapCos[self._currentMapGroupId]
 
-	if not var_7_0 then
+	if not mapGroupCo then
 		return
 	end
 
-	if not arg_7_1 then
-		return var_7_0[1]
+	if not mapIndex then
+		return mapGroupCo[1]
 	else
-		return var_7_0[arg_7_1]
+		return mapGroupCo[mapIndex]
 	end
 end
 
-function var_0_0.getCurrentMapCoList(arg_8_0)
-	return arg_8_0._mapCos[arg_8_0._currentMapGroupId]
+function ChessGameConfig:getCurrentMapCoList()
+	return self._mapCos[self._currentMapGroupId]
 end
 
-var_0_0.instance = var_0_0.New()
+ChessGameConfig.instance = ChessGameConfig.New()
 
-return var_0_0
+return ChessGameConfig

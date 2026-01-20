@@ -1,173 +1,181 @@
-﻿module("modules.logic.fight.system.work.FightEffectBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightEffectBase.lua
 
-local var_0_0 = class("FightEffectBase", FightWorkItem)
+module("modules.logic.fight.system.work.FightEffectBase", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.skipAutoPlayData = false
+local FightEffectBase = class("FightEffectBase", FightWorkItem)
+
+function FightEffectBase:onConstructor()
+	self.skipAutoPlayData = false
 end
 
-function var_0_0.onLogicEnter(arg_2_0, arg_2_1, arg_2_2)
-	var_0_0.super.onLogicEnter(arg_2_0, arg_2_1, arg_2_2)
+function FightEffectBase:onLogicEnter(fightStepData, actEffectData)
+	FightEffectBase.super.onLogicEnter(self, fightStepData, actEffectData)
 
-	arg_2_0.fightStepData = arg_2_1
-	arg_2_0.actEffectData = arg_2_2
+	self.fightStepData = fightStepData
+	self.actEffectData = actEffectData
 end
 
-function var_0_0._fightWorkSafeTimer(arg_3_0)
-	if arg_3_0.fightStepData then
-		local var_3_0 = string.format("战斗保底 fightwork ondone, className = %s , 步骤类型:%s, actId:%s", arg_3_0.__cname, arg_3_0.fightStepData.actType, arg_3_0.fightStepData.actId)
+function FightEffectBase:_fightWorkSafeTimer()
+	if self.fightStepData then
+		local str = string.format("战斗保底 fightwork ondone, className = %s , 步骤类型:%s, actId:%s", self.__cname, self.fightStepData.actType, self.fightStepData.actId)
 
-		logError(var_3_0)
+		logError(str)
 	end
 
-	arg_3_0:onDone(false)
+	self:onDone(false)
 end
 
-function var_0_0.start(arg_4_0, arg_4_1)
-	if arg_4_0.actEffectData then
-		if arg_4_0.actEffectData:isDone() then
-			arg_4_0:onDone(true)
+function FightEffectBase:start(context)
+	if self.actEffectData then
+		if self.actEffectData:isDone() then
+			self:onDone(true)
 
 			return
 		else
-			xpcall(arg_4_0.beforePlayEffectData, __G__TRACKBACK__, arg_4_0)
+			xpcall(self.beforePlayEffectData, __G__TRACKBACK__, self)
 
-			if not arg_4_0.skipAutoPlayData then
-				arg_4_0:playEffectData()
+			if not self.skipAutoPlayData then
+				self:playEffectData()
 			end
 		end
 	end
 
-	return var_0_0.super.start(arg_4_0, arg_4_1)
+	return FightEffectBase.super.start(self, context)
 end
 
-function var_0_0.getEffectData(arg_5_0)
-	return arg_5_0.actEffectData
+function FightEffectBase:getEffectData()
+	return self.actEffectData
 end
 
-function var_0_0.beforeStart(arg_6_0)
-	if arg_6_0.actEffectData then
-		FightController.instance:dispatchEvent(FightEvent.InvokeFightWorkEffectType, arg_6_0.actEffectData.effectType)
+function FightEffectBase:beforeStart()
+	if self.actEffectData then
+		FightController.instance:dispatchEvent(FightEvent.InvokeFightWorkEffectType, self.actEffectData.effectType)
 	end
 
-	FightSkillBehaviorMgr.instance:playSkillEffectBehavior(arg_6_0.fightStepData, arg_6_0.actEffectData)
+	FightSkillBehaviorMgr.instance:playSkillEffectBehavior(self.fightStepData, self.actEffectData)
 end
 
-function var_0_0.playEffectData(arg_7_0)
-	FightDataHelper.playEffectData(arg_7_0.actEffectData)
+function FightEffectBase:playEffectData()
+	FightDataHelper.playEffectData(self.actEffectData)
 end
 
-function var_0_0.beforePlayEffectData(arg_8_0)
+function FightEffectBase:beforePlayEffectData()
 	return
 end
 
-function var_0_0.beforeClearWork(arg_9_0)
+function FightEffectBase:beforeClearWork()
 	return
 end
 
-function var_0_0.getAdjacentSameEffectList(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = {}
+function FightEffectBase:getAdjacentSameEffectList(parallelEffectType, detectNextStep)
+	local list = {}
 
-	table.insert(var_10_0, {
-		actEffectData = arg_10_0.actEffectData,
-		fightStepData = arg_10_0.fightStepData
+	table.insert(list, {
+		actEffectData = self.actEffectData,
+		fightStepData = self.fightStepData
 	})
-	xpcall(arg_10_0.detectAdjacentSameEffect, __G__TRACKBACK__, arg_10_0, var_10_0, arg_10_1, arg_10_2)
+	xpcall(self.detectAdjacentSameEffect, __G__TRACKBACK__, self, list, parallelEffectType, detectNextStep)
 
-	return var_10_0
+	return list
 end
 
-function var_0_0.detectAdjacentSameEffect(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_0.actEffectData.nextActEffectData
+function FightEffectBase:detectAdjacentSameEffect(list, parallelEffectType, detectNextStep)
+	local actEffectData = self.actEffectData.nextActEffectData
 
-	while var_11_0 do
-		local var_11_1 = var_11_0.effectType
+	while actEffectData do
+		local effectType = actEffectData.effectType
 
-		if arg_11_2 and arg_11_2[var_11_1] then
-			if not var_11_0:isDone() then
-				table.insert(arg_11_1, {
-					actEffectData = var_11_0,
-					fightStepData = arg_11_0.fightStepData
+		if parallelEffectType and parallelEffectType[effectType] then
+			if not actEffectData:isDone() then
+				table.insert(list, {
+					actEffectData = actEffectData,
+					fightStepData = self.fightStepData
 				})
 			end
 
-			if var_11_1 == FightEnum.EffectType.FIGHTSTEP then
-				var_11_0 = var_11_0.fightStepNextActEffectData
+			if effectType == FightEnum.EffectType.FIGHTSTEP then
+				actEffectData = actEffectData.fightStepNextActEffectData
 			else
-				var_11_0 = var_11_0.nextActEffectData
+				actEffectData = actEffectData.nextActEffectData
 			end
-		elseif var_11_1 == arg_11_0.actEffectData.effectType then
-			if not var_11_0:isDone() then
-				table.insert(arg_11_1, {
-					actEffectData = var_11_0,
-					fightStepData = arg_11_0.fightStepData
+		elseif effectType == self.actEffectData.effectType then
+			if not actEffectData:isDone() then
+				table.insert(list, {
+					actEffectData = actEffectData,
+					fightStepData = self.fightStepData
 				})
 			end
 
-			var_11_0 = var_11_0.nextActEffectData
-		elseif var_11_1 == FightEnum.EffectType.FIGHTSTEP then
-			var_11_0 = var_11_0.nextActEffectData
+			actEffectData = actEffectData.nextActEffectData
+		elseif effectType == FightEnum.EffectType.FIGHTSTEP then
+			actEffectData = actEffectData.nextActEffectData
 		else
-			return arg_11_1
+			return list
 		end
 	end
 
-	if arg_11_3 then
-		local var_11_2 = FightDataHelper.roundMgr:getRoundData()
+	if detectNextStep then
+		local roundData = FightDataHelper.roundMgr:getRoundData()
 
-		if not var_11_2 then
+		if not roundData then
 			logError("找不到roundData")
 
-			return arg_11_1
+			return list
 		end
 
-		local var_11_3 = var_11_2.fightStep
+		local fightStepList = roundData.fightStep
 
-		if not arg_11_0.fightStepData.custom_stepIndex then
-			return arg_11_1
+		if not self.fightStepData.custom_stepIndex then
+			return list
 		end
 
-		local var_11_4 = arg_11_0.fightStepData.custom_stepIndex + 1
-		local var_11_5 = var_11_3[var_11_4]
+		local stepIndex = self.fightStepData.custom_stepIndex + 1
+		local nextStep = fightStepList[stepIndex]
 
-		while var_11_5 do
-			if FightHelper.isTimelineStep(var_11_5) then
-				return arg_11_1
+		while nextStep do
+			if FightHelper.isTimelineStep(nextStep) then
+				return list
 			end
 
-			if #var_11_5.actEffect == 0 then
-				var_11_4 = var_11_4 + 1
-				var_11_5 = var_11_3[var_11_4]
-			elseif arg_11_0:addSameEffectDetectNextStep(arg_11_1, arg_11_2, var_11_5) then
-				var_11_4 = var_11_4 + 1
-				var_11_5 = var_11_3[var_11_4]
+			if #nextStep.actEffect == 0 then
+				stepIndex = stepIndex + 1
+				nextStep = fightStepList[stepIndex]
 			else
-				return arg_11_1
+				local allPassed = self:addSameEffectDetectNextStep(list, parallelEffectType, nextStep)
+
+				if allPassed then
+					stepIndex = stepIndex + 1
+					nextStep = fightStepList[stepIndex]
+				else
+					return list
+				end
 			end
 		end
 	end
 
-	return arg_11_1
+	return list
 end
 
-function var_0_0.addSameEffectDetectNextStep(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_3.actEffect) do
-		if arg_12_2 and arg_12_2[iter_12_1.effectType] then
-			if not iter_12_1:isDone() then
-				table.insert(arg_12_1, {
-					actEffectData = iter_12_1,
-					fightStepData = arg_12_3
+function FightEffectBase:addSameEffectDetectNextStep(list, parallelEffectType, nextStep)
+	for i, actEffectData in ipairs(nextStep.actEffect) do
+		if parallelEffectType and parallelEffectType[actEffectData.effectType] then
+			if not actEffectData:isDone() then
+				table.insert(list, {
+					actEffectData = actEffectData,
+					fightStepData = nextStep
 				})
 			end
-		elseif iter_12_1.effectType == arg_12_0.actEffectData.effectType then
-			if not iter_12_1:isDone() then
-				table.insert(arg_12_1, {
-					actEffectData = iter_12_1,
-					fightStepData = arg_12_3
+		elseif actEffectData.effectType == self.actEffectData.effectType then
+			if not actEffectData:isDone() then
+				table.insert(list, {
+					actEffectData = actEffectData,
+					fightStepData = nextStep
 				})
 			end
-		elseif iter_12_1.effectType == FightEnum.EffectType.FIGHTSTEP then
-			if not arg_12_0:addSameEffectDetectNextStep(arg_12_1, arg_12_2, iter_12_1.fightStep) then
+		elseif actEffectData.effectType == FightEnum.EffectType.FIGHTSTEP then
+			local allPassed = self:addSameEffectDetectNextStep(list, parallelEffectType, actEffectData.fightStep)
+
+			if not allPassed then
 				return false
 			end
 		else
@@ -178,4 +186,4 @@ function var_0_0.addSameEffectDetectNextStep(arg_12_0, arg_12_1, arg_12_2, arg_1
 	return true
 end
 
-return var_0_0
+return FightEffectBase

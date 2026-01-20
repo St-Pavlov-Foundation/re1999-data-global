@@ -1,101 +1,103 @@
-﻿module("modules.logic.room.model.critter.RoomTrainHeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomTrainHeroMO.lua
 
-local var_0_0 = pureTable("RoomTrainHeroMO")
+module("modules.logic.room.model.critter.RoomTrainHeroMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = HeroModel.instance:getByHeroId(arg_1_1.heroId)
+local RoomTrainHeroMO = pureTable("RoomTrainHeroMO")
 
-	arg_1_0:initHeroMO(var_1_0)
+function RoomTrainHeroMO:init(info)
+	local heroMO = HeroModel.instance:getByHeroId(info.heroId)
+
+	self:initHeroMO(heroMO)
 end
 
-function var_0_0.initHeroMO(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.heroId
-	arg_2_0.heroId = arg_2_0.id
-	arg_2_0.heroMO = arg_2_1
-	arg_2_0.skinId = arg_2_0.heroMO.skin
-	arg_2_0.heroConfig = HeroConfig.instance:getHeroCO(arg_2_0.heroId)
-	arg_2_0.skinConfig = SkinConfig.instance:getSkinCo(arg_2_0.skinId)
-	arg_2_0.critterHeroConfig = CritterConfig.instance:getCritterHeroPreferenceCfg(arg_2_0.heroId)
-	arg_2_0._prefernectType = nil
-	arg_2_0._prefernectValueNums = nil
+function RoomTrainHeroMO:initHeroMO(heroMO)
+	self.id = heroMO.heroId
+	self.heroId = self.id
+	self.heroMO = heroMO
+	self.skinId = self.heroMO.skin
+	self.heroConfig = HeroConfig.instance:getHeroCO(self.heroId)
+	self.skinConfig = SkinConfig.instance:getSkinCo(self.skinId)
+	self.critterHeroConfig = CritterConfig.instance:getCritterHeroPreferenceCfg(self.heroId)
+	self._prefernectType = nil
+	self._prefernectValueNums = nil
 
-	local var_2_0 = arg_2_0:getAttributeInfoMO()
+	local attrInfoMO = self:getAttributeInfoMO()
 
-	if arg_2_0.critterHeroConfig then
-		arg_2_0._prefernectType = arg_2_0.critterHeroConfig.preferenceType
+	if self.critterHeroConfig then
+		self._prefernectType = self.critterHeroConfig.preferenceType
 
-		var_2_0:setAttr(arg_2_0.critterHeroConfig.effectAttribute, 0)
+		attrInfoMO:setAttr(self.critterHeroConfig.effectAttribute, 0)
 
-		var_2_0.rate = arg_2_0.critterHeroConfig.addIncrRate + 10000
+		attrInfoMO.rate = self.critterHeroConfig.addIncrRate + 10000
 
-		if not string.nilorempty(arg_2_0.critterHeroConfig.preferenceValue) then
-			arg_2_0._prefernectValueNums = string.splitToNumber(arg_2_0.critterHeroConfig.preferenceValue, "#")
+		if not string.nilorempty(self.critterHeroConfig.preferenceValue) then
+			self._prefernectValueNums = string.splitToNumber(self.critterHeroConfig.preferenceValue, "#")
 		end
 	end
 end
 
-function var_0_0.updateSkinId(arg_3_0, arg_3_1)
-	arg_3_0.skinId = arg_3_1
-	arg_3_0.skinConfig = SkinConfig.instance:getSkinCo(arg_3_0.skinId)
+function RoomTrainHeroMO:updateSkinId(skinId)
+	self.skinId = skinId
+	self.skinConfig = SkinConfig.instance:getSkinCo(self.skinId)
 end
 
-function var_0_0.getAttributeInfoMO(arg_4_0)
-	if not arg_4_0._attributeInfoMO then
-		arg_4_0._attributeInfoMO = CritterAttributeInfoMO.New()
+function RoomTrainHeroMO:getAttributeInfoMO()
+	if not self._attributeInfoMO then
+		self._attributeInfoMO = CritterAttributeInfoMO.New()
 
-		arg_4_0._attributeInfoMO:init()
+		self._attributeInfoMO:init()
 	end
 
-	return arg_4_0._attributeInfoMO
+	return self._attributeInfoMO
 end
 
-function var_0_0.getPrefernectType(arg_5_0)
-	return arg_5_0._prefernectType
+function RoomTrainHeroMO:getPrefernectType()
+	return self._prefernectType
 end
 
-function var_0_0.getPrefernectIds(arg_6_0)
-	return arg_6_0._prefernectValueNums
+function RoomTrainHeroMO:getPrefernectIds()
+	return self._prefernectValueNums
 end
 
-function var_0_0.chcekPrefernectCritterId(arg_7_0, arg_7_1)
-	if arg_7_0._prefernectType == CritterEnum.PreferenceType.All then
+function RoomTrainHeroMO:chcekPrefernectCritterId(critterId)
+	if self._prefernectType == CritterEnum.PreferenceType.All then
 		return true
 	end
 
-	if arg_7_0._prefernectType == CritterEnum.PreferenceType.Catalogue then
-		local var_7_0 = CritterConfig.instance
-		local var_7_1 = var_7_0:getCritterCatalogue(arg_7_1)
+	if self._prefernectType == CritterEnum.PreferenceType.Catalogue then
+		local tCritterConfig = CritterConfig.instance
+		local catalogueId = tCritterConfig:getCritterCatalogue(critterId)
 
-		for iter_7_0 = 1, #arg_7_0._prefernectValueNums do
-			local var_7_2 = arg_7_0._prefernectValueNums[iter_7_0]
+		for i = 1, #self._prefernectValueNums do
+			local parentId = self._prefernectValueNums[i]
 
-			if var_7_2 == var_7_1 or var_7_0:isHasCatalogueChildId(var_7_2, var_7_1) then
+			if parentId == catalogueId or tCritterConfig:isHasCatalogueChildId(parentId, catalogueId) then
 				return true
 			end
 		end
-	elseif arg_7_0._prefernectType == CritterEnum.PreferenceType.Critter and tabletool.indexOf(arg_7_0._prefernectValueNums, arg_7_1) then
+	elseif self._prefernectType == CritterEnum.PreferenceType.Critter and tabletool.indexOf(self._prefernectValueNums, critterId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getPrefernectName(arg_8_0)
-	if arg_8_0._prefernectType == CritterEnum.PreferenceType.All then
+function RoomTrainHeroMO:getPrefernectName()
+	if self._prefernectType == CritterEnum.PreferenceType.All then
 		return luaLang("critter_train_hero_prefernect_all_txt")
-	elseif arg_8_0._prefernectType == CritterEnum.PreferenceType.Catalogue then
-		if arg_8_0._prefernectValueNums and #arg_8_0._prefernectValueNums > 0 then
-			local var_8_0 = CritterConfig.instance:getCritterCatalogueCfg(arg_8_0._prefernectValueNums[1])
+	elseif self._prefernectType == CritterEnum.PreferenceType.Catalogue then
+		if self._prefernectValueNums and #self._prefernectValueNums > 0 then
+			local cfg = CritterConfig.instance:getCritterCatalogueCfg(self._prefernectValueNums[1])
 
-			return var_8_0 and var_8_0.name or arg_8_0._prefernectValueNums[1]
+			return cfg and cfg.name or self._prefernectValueNums[1]
 		end
-	elseif arg_8_0._prefernectType == CritterEnum.PreferenceType.Critter and arg_8_0._prefernectValueNums and #arg_8_0._prefernectValueNums > 0 then
-		local var_8_1 = CritterConfig.instance:getCritterCfg(arg_8_0._prefernectValueNums[1])
+	elseif self._prefernectType == CritterEnum.PreferenceType.Critter and self._prefernectValueNums and #self._prefernectValueNums > 0 then
+		local cfg = CritterConfig.instance:getCritterCfg(self._prefernectValueNums[1])
 
-		return var_8_1 and var_8_1.name or arg_8_0._prefernectValueNums[1]
+		return cfg and cfg.name or self._prefernectValueNums[1]
 	end
 
 	return ""
 end
 
-return var_0_0
+return RoomTrainHeroMO

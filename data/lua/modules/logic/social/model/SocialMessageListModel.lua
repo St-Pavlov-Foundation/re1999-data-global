@@ -1,113 +1,115 @@
-﻿module("modules.logic.social.model.SocialMessageListModel", package.seeall)
+﻿-- chunkname: @modules/logic/social/model/SocialMessageListModel.lua
 
-local var_0_0 = class("SocialMessageListModel", MixScrollModel)
+module("modules.logic.social.model.SocialMessageListModel", package.seeall)
 
-function var_0_0.setMessageList(arg_1_0, arg_1_1)
-	arg_1_0._moList = {}
+local SocialMessageListModel = class("SocialMessageListModel", MixScrollModel)
 
-	local var_1_0 = 0
-	local var_1_1 = ServerTime.now()
+function SocialMessageListModel:setMessageList(messageList)
+	self._moList = {}
 
-	if arg_1_1 then
-		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-			local var_1_2 = tonumber(iter_1_1.sendTime) / 1000
+	local preSendTime = 0
+	local nowTime = ServerTime.now()
 
-			if TimeUtil.getDiffDay(var_1_1, var_1_2) >= 1 then
-				if var_1_0 == 0 or TimeUtil.getDiffDay(var_1_0, var_1_2) >= 1 then
-					local var_1_3 = {
-						chattime = TimeUtil.timestampToString2(var_1_2)
-					}
+	if messageList then
+		for _, messageMO in pairs(messageList) do
+			local sendTime = tonumber(messageMO.sendTime) / 1000
 
-					table.insert(arg_1_0._moList, var_1_3)
+			if TimeUtil.getDiffDay(nowTime, sendTime) >= 1 then
+				if preSendTime == 0 or TimeUtil.getDiffDay(preSendTime, sendTime) >= 1 then
+					local mo = {}
 
-					var_1_0 = var_1_2
+					mo.chattime = TimeUtil.timestampToString2(sendTime)
+
+					table.insert(self._moList, mo)
+
+					preSendTime = sendTime
 				end
-			elseif var_1_2 - var_1_0 >= 300 or var_1_0 == 0 or TimeUtil.getDiffDay(var_1_0, var_1_2) >= 1 then
-				local var_1_4 = {
-					chattime = TimeUtil.timestampToString4(var_1_2)
-				}
+			elseif sendTime - preSendTime >= 300 or preSendTime == 0 or TimeUtil.getDiffDay(preSendTime, sendTime) >= 1 then
+				local mo = {}
 
-				table.insert(arg_1_0._moList, var_1_4)
+				mo.chattime = TimeUtil.timestampToString4(sendTime)
 
-				var_1_0 = var_1_2
+				table.insert(self._moList, mo)
+
+				preSendTime = sendTime
 			end
 
-			table.insert(arg_1_0._moList, iter_1_1)
+			table.insert(self._moList, messageMO)
 
-			if SocialConfig.instance:isMsgViolation(iter_1_1.content) then
-				local var_1_5 = {}
+			if SocialConfig.instance:isMsgViolation(messageMO.content) then
+				local mo = {}
 
-				var_1_5.showWarm = 1
+				mo.showWarm = 1
 
-				table.insert(arg_1_0._moList, var_1_5)
+				table.insert(self._moList, mo)
 			end
 		end
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-function var_0_0._sortFunction(arg_2_0, arg_2_1)
-	return arg_2_0.sendTime < arg_2_1.sendTime
+function SocialMessageListModel._sortFunction(x, y)
+	return x.sendTime < y.sendTime
 end
 
-function var_0_0.getInfoList(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:getList()
+function SocialMessageListModel:getInfoList(scrollGO)
+	local moList = self:getList()
 
-	if not var_3_0 or #var_3_0 <= 0 then
+	if not moList or #moList <= 0 then
 		return {}
 	end
 
-	local var_3_1 = gohelper.findChildText(arg_3_1, "#txt_contentself")
-	local var_3_2 = gohelper.findChildText(arg_3_1, "#txt_contentothers")
-	local var_3_3 = gohelper.findChildText(arg_3_1, "#txt_warm")
-	local var_3_4
-	local var_3_5 = {}
+	local textCompSelf = gohelper.findChildText(scrollGO, "#txt_contentself")
+	local textCompOthers = gohelper.findChildText(scrollGO, "#txt_contentothers")
+	local textwarm = gohelper.findChildText(scrollGO, "#txt_warm")
+	local warmHeigh
+	local mixCellInfos = {}
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		local var_3_6 = 1
-		local var_3_7 = 0
+	for i, mo in ipairs(moList) do
+		local type = 1
+		local lineWidth = 0
 
-		if iter_3_1.chattime then
-			var_3_7 = 48
-		elseif iter_3_1.showWarm then
-			if not var_3_4 and var_3_3 then
-				var_3_3.text = luaLang("socialmessageitem_warningtips")
-				var_3_4 = 62.9 + var_3_3.preferredHeight
-				var_3_3.text = ""
+		if mo.chattime then
+			lineWidth = 48
+		elseif mo.showWarm then
+			if not warmHeigh and textwarm then
+				textwarm.text = luaLang("socialmessageitem_warningtips")
+				warmHeigh = 62.9 + textwarm.preferredHeight
+				textwarm.text = ""
 			end
 
-			var_3_7 = var_3_4 or 0
+			lineWidth = warmHeigh or 0
 		else
-			local var_3_8 = PlayerModel.instance:getMyUserId()
-			local var_3_9 = 0
-			local var_3_10 = var_3_0[iter_3_0 + 1]
+			local myUserId = PlayerModel.instance:getMyUserId()
+			local subtract = 0
+			local nextMO = moList[i + 1]
 
-			if var_3_10 then
-				if var_3_10.senderId == var_3_8 and iter_3_1.senderId ~= var_3_8 then
-					var_3_9 = 13
-				elseif var_3_10.senderId ~= var_3_8 and iter_3_1.senderId == var_3_8 then
-					var_3_9 = 13
+			if nextMO then
+				if nextMO.senderId == myUserId and mo.senderId ~= myUserId then
+					subtract = 13
+				elseif nextMO.senderId ~= myUserId and mo.senderId == myUserId then
+					subtract = 13
 				end
 			end
 
-			local var_3_11 = var_3_8 == iter_3_1.senderId and GameUtil.getTextHeightByLine(var_3_1, iter_3_1.content, 37.1) or GameUtil.getTextHeightByLine(var_3_2, iter_3_1.content, 37.1)
+			local height = myUserId == mo.senderId and GameUtil.getTextHeightByLine(textCompSelf, mo.content, 37.1) or GameUtil.getTextHeightByLine(textCompOthers, mo.content, 37.1)
 
-			if iter_3_1:isHasOp() then
-				var_3_11 = var_3_11 + 40
+			if mo:isHasOp() then
+				height = height + 40
 			end
 
-			var_3_7 = math.max(var_3_11 + 82.9, 120) - var_3_9
+			lineWidth = math.max(height + 82.9, 120) - subtract
 		end
 
-		local var_3_12 = SLFramework.UGUI.MixCellInfo.New(var_3_6, var_3_7, nil)
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(type, lineWidth, nil)
 
-		table.insert(var_3_5, var_3_12)
+		table.insert(mixCellInfos, mixCellInfo)
 	end
 
-	return var_3_5
+	return mixCellInfos
 end
 
-var_0_0.instance = var_0_0.New()
+SocialMessageListModel.instance = SocialMessageListModel.New()
 
-return var_0_0
+return SocialMessageListModel

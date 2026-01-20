@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/view/YaXianMapViewContainer.lua
 
-local var_0_0 = class("YaXianMapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.yaxian.view.YaXianMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local YaXianMapViewContainer = class("YaXianMapViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, YaXianMapView.New())
-	table.insert(var_1_0, YaXianMapWindowView.New())
-	table.insert(var_1_0, YaXianMapAudioView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_left"))
+function YaXianMapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, YaXianMapView.New())
+	table.insert(views, YaXianMapWindowView.New())
+	table.insert(views, YaXianMapAudioView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function YaXianMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -25,8 +27,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0:initViewParam()
+function YaXianMapViewContainer:onContainerInit()
+	self:initViewParam()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_2Enum.ActivityId.YaXian)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_2Enum.ActivityId.YaXian
@@ -34,34 +36,36 @@ function var_0_0.onContainerInit(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.YaXian.EnterYaXianMap)
 end
 
-function var_0_0.initViewParam(arg_4_0)
-	arg_4_0.chapterId = arg_4_0.viewParam and arg_4_0.viewParam.chapterId
+function YaXianMapViewContainer:initViewParam()
+	self.chapterId = self.viewParam and self.viewParam.chapterId
 
-	if not arg_4_0.chapterId then
-		arg_4_0.chapterId = YaXianModel.instance:getLastCanFightEpisodeMo().config.chapterId
+	if not self.chapterId then
+		local lastCanFightEpisodeMo = YaXianModel.instance:getLastCanFightEpisodeMo()
+
+		self.chapterId = lastCanFightEpisodeMo.config.chapterId
 	end
 
-	if not YaXianController.instance:checkChapterIsUnlock(arg_4_0.chapterId) then
-		arg_4_0.chapterId = YaXianEnum.DefaultChapterId
+	if not YaXianController.instance:checkChapterIsUnlock(self.chapterId) then
+		self.chapterId = YaXianEnum.DefaultChapterId
 	end
 end
 
-function var_0_0.changeChapterId(arg_5_0, arg_5_1)
-	if arg_5_0.chapterId == arg_5_1 then
+function YaXianMapViewContainer:changeChapterId(chapterId)
+	if self.chapterId == chapterId then
 		return
 	end
 
-	arg_5_0.chapterId = arg_5_1
+	self.chapterId = chapterId
 
 	YaXianController.instance:dispatchEvent(YaXianEvent.OnSelectChapterChange)
 end
 
-function var_0_0.setVisibleInternal(arg_6_0, arg_6_1)
+function YaXianMapViewContainer:setVisibleInternal(isVisible)
 	if YaXianModel.instance:checkIsPlayingClickAnimation() then
 		return
 	end
 
-	var_0_0.super.setVisibleInternal(arg_6_0, arg_6_1)
+	YaXianMapViewContainer.super.setVisibleInternal(self, isVisible)
 end
 
-return var_0_0
+return YaXianMapViewContainer

@@ -1,60 +1,62 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEndPause", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightEndPause.lua
 
-local var_0_0 = class("WaitGuideActionFightEndPause", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightEndPause", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionFightEndPause = class("WaitGuideActionFightEndPause", BaseGuideAction)
 
-	arg_1_0._needSuccess = arg_1_0.actionParam == "1"
+function WaitGuideActionFightEndPause:onStart(context)
+	WaitGuideActionFightEndPause.super.onStart(self, context)
 
-	if arg_1_0.actionParam and string.find(arg_1_0.actionParam, ",") then
-		local var_1_0 = string.splitToNumber(arg_1_0.actionParam, ",")
+	self._needSuccess = self.actionParam == "1"
 
-		arg_1_0._needSuccess = var_1_0[1]
-		arg_1_0._episodeId = var_1_0[2]
+	if self.actionParam and string.find(self.actionParam, ",") then
+		local actionParams = string.splitToNumber(self.actionParam, ",")
+
+		self._needSuccess = actionParams[1]
+		self._episodeId = actionParams[2]
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnGuideFightEndPause, arg_1_0._onGuideFightEndPause, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnGuideFightEndPause, self._onGuideFightEndPause, self)
 end
 
-function var_0_0._onGuideFightEndPause(arg_2_0, arg_2_1)
-	local var_2_0 = FightModel.instance:getRecordMO()
+function WaitGuideActionFightEndPause:_onGuideFightEndPause(guideParam)
+	local fightRecordMO = FightModel.instance:getRecordMO()
 
-	if arg_2_0._episodeId then
-		local var_2_1 = FightModel.instance:getFightParam()
+	if self._episodeId then
+		local fightParam = FightModel.instance:getFightParam()
 
-		if arg_2_0._episodeId == var_2_1.episodeId then
-			if arg_2_0._needSuccess then
-				if var_2_0.fightResult == FightEnum.FightResult.Succ then
-					arg_2_1.OnGuideFightEndPause = true
+		if self._episodeId == fightParam.episodeId then
+			if self._needSuccess then
+				if fightRecordMO.fightResult == FightEnum.FightResult.Succ then
+					guideParam.OnGuideFightEndPause = true
 
-					FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
-					arg_2_0:onDone(true)
+					FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, self._onGuideFightEndPause, self)
+					self:onDone(true)
 				end
 			else
-				arg_2_1.OnGuideFightEndPause = true
+				guideParam.OnGuideFightEndPause = true
 
-				FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
-				arg_2_0:onDone(true)
+				FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, self._onGuideFightEndPause, self)
+				self:onDone(true)
 			end
 		end
-	elseif arg_2_0._needSuccess then
-		if var_2_0.fightResult == FightEnum.FightResult.Succ then
-			arg_2_1.OnGuideFightEndPause = true
+	elseif self._needSuccess then
+		if fightRecordMO.fightResult == FightEnum.FightResult.Succ then
+			guideParam.OnGuideFightEndPause = true
 
-			FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
-			arg_2_0:onDone(true)
+			FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, self._onGuideFightEndPause, self)
+			self:onDone(true)
 		end
 	else
-		arg_2_1.OnGuideFightEndPause = true
+		guideParam.OnGuideFightEndPause = true
 
-		FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_2_0._onGuideFightEndPause, arg_2_0)
-		arg_2_0:onDone(true)
+		FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, self._onGuideFightEndPause, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, arg_3_0._onGuideFightEndPause, arg_3_0)
+function WaitGuideActionFightEndPause:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnGuideFightEndPause, self._onGuideFightEndPause, self)
 end
 
-return var_0_0
+return WaitGuideActionFightEndPause

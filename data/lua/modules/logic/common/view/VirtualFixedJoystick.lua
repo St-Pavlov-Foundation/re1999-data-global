@@ -1,112 +1,115 @@
-﻿module("modules.logic.common.view.VirtualFixedJoystick", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/VirtualFixedJoystick.lua
 
-local var_0_0 = class("VirtualFixedJoystick", LuaCompBase)
-local var_0_1 = 1
-local var_0_2 = 0.5
-local var_0_3 = 0
+module("modules.logic.common.view.VirtualFixedJoystick", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.go, "#go_background")
-	arg_1_0._transbg = arg_1_0._gobg.transform
-	arg_1_0._transbg.pivot.x = var_0_2
-	arg_1_0._transbg.pivot.y = var_0_2
-	arg_1_0._radius = arg_1_0._transbg.sizeDelta.x / 2
-	arg_1_0._gohandle = gohelper.findChild(arg_1_0.go, "#go_background/#go_handle")
-	arg_1_0._transhandle = arg_1_0._gohandle.transform
-	arg_1_0._transhandle.anchorMin.x = var_0_2
-	arg_1_0._transhandle.anchorMin.y = var_0_2
-	arg_1_0._transhandle.anchorMax.x = var_0_2
-	arg_1_0._transhandle.anchorMax.y = var_0_2
-	arg_1_0._transhandle.pivot.x = var_0_2
-	arg_1_0._transhandle.pivot.y = var_0_2
-	arg_1_0._input = Vector2.zero
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_0.go)
-	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0.go)
+local VirtualFixedJoystick = class("VirtualFixedJoystick", LuaCompBase)
+local MAX_INPUT = 1
+local CENTER_PIVOT = 0.5
+local CENTER_POS = 0
+
+function VirtualFixedJoystick:init(go)
+	self.go = go
+	self._gobg = gohelper.findChild(self.go, "#go_background")
+	self._transbg = self._gobg.transform
+	self._transbg.pivot.x = CENTER_PIVOT
+	self._transbg.pivot.y = CENTER_PIVOT
+	self._radius = self._transbg.sizeDelta.x / 2
+	self._gohandle = gohelper.findChild(self.go, "#go_background/#go_handle")
+	self._transhandle = self._gohandle.transform
+	self._transhandle.anchorMin.x = CENTER_PIVOT
+	self._transhandle.anchorMin.y = CENTER_PIVOT
+	self._transhandle.anchorMax.x = CENTER_PIVOT
+	self._transhandle.anchorMax.y = CENTER_PIVOT
+	self._transhandle.pivot.x = CENTER_PIVOT
+	self._transhandle.pivot.y = CENTER_PIVOT
+	self._input = Vector2.zero
+	self._click = SLFramework.UGUI.UIClickListener.Get(self.go)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self.go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickDownListener(arg_2_0._onClickDown, arg_2_0)
-	arg_2_0._drag:AddDragListener(arg_2_0._onDrag, arg_2_0)
-	arg_2_0._click:AddClickUpListener(arg_2_0._onClickUp, arg_2_0)
+function VirtualFixedJoystick:addEventListeners()
+	self._click:AddClickDownListener(self._onClickDown, self)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._click:AddClickUpListener(self._onClickUp, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickDownListener()
-	arg_3_0._drag:RemoveDragListener()
-	arg_3_0._click:RemoveClickUpListener()
+function VirtualFixedJoystick:removeEventListeners()
+	self._click:RemoveClickDownListener()
+	self._drag:RemoveDragListener()
+	self._click:RemoveClickUpListener()
 end
 
-function var_0_0._onClickDown(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_0._dragging then
+function VirtualFixedJoystick:_onClickDown(param, pos, delta)
+	if self._dragging then
 		return
 	end
 
-	arg_4_0._dragging = true
+	self._dragging = true
 
-	arg_4_0:_handleInput(arg_4_2)
+	self:_handleInput(pos)
 end
 
-function var_0_0._onDrag(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0._dragging then
+function VirtualFixedJoystick:_onDrag(param, eventData)
+	if not self._dragging then
 		return
 	end
 
-	arg_5_0:_handleInput(arg_5_2.position)
+	self:_handleInput(eventData.position)
 end
 
-function var_0_0._handleInput(arg_6_0, arg_6_1)
-	local var_6_0, var_6_1 = recthelper.screenPosToAnchorPos2(arg_6_1, arg_6_0._transbg)
-	local var_6_2 = (var_6_0 - var_0_3) / arg_6_0._radius
-	local var_6_3 = (var_6_1 - var_0_3) / arg_6_0._radius
+function VirtualFixedJoystick:_handleInput(pos)
+	local anchorX, anchorY = recthelper.screenPosToAnchorPos2(pos, self._transbg)
+	local x = (anchorX - CENTER_POS) / self._radius
+	local y = (anchorY - CENTER_POS) / self._radius
 
-	arg_6_0:setInPutValue(var_6_2, var_6_3)
+	self:setInPutValue(x, y)
 end
 
-function var_0_0._onClickUp(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if not arg_7_0._dragging then
+function VirtualFixedJoystick:_onClickUp(param, pos, delta)
+	if not self._dragging then
 		return
 	end
 
-	arg_7_0:reset()
+	self:reset()
 end
 
-function var_0_0.setInPutValue(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._input.x = arg_8_1 or var_0_3
-	arg_8_0._input.y = arg_8_2 or var_0_3
+function VirtualFixedJoystick:setInPutValue(x, y)
+	self._input.x = x or CENTER_POS
+	self._input.y = y or CENTER_POS
 
-	if arg_8_0._input.magnitude > var_0_1 then
-		arg_8_0._input = arg_8_0._input.normalized
+	if self._input.magnitude > MAX_INPUT then
+		self._input = self._input.normalized
 	end
 
-	arg_8_0:refreshHandlePos()
+	self:refreshHandlePos()
 end
 
-function var_0_0.refreshHandlePos(arg_9_0)
-	local var_9_0 = arg_9_0._input.x * arg_9_0._radius
-	local var_9_1 = arg_9_0._input.y * arg_9_0._radius
-	local var_9_2 = GameUtil.clamp(var_9_0, -arg_9_0._radius, arg_9_0._radius)
-	local var_9_3 = GameUtil.clamp(var_9_1, -arg_9_0._radius, arg_9_0._radius)
+function VirtualFixedJoystick:refreshHandlePos()
+	local posX = self._input.x * self._radius
+	local posY = self._input.y * self._radius
 
-	transformhelper.setLocalPosXY(arg_9_0._transhandle, var_9_2, var_9_3)
+	posX = GameUtil.clamp(posX, -self._radius, self._radius)
+	posY = GameUtil.clamp(posY, -self._radius, self._radius)
+
+	transformhelper.setLocalPosXY(self._transhandle, posX, posY)
 end
 
-function var_0_0.getIsDragging(arg_10_0)
-	return arg_10_0._dragging
+function VirtualFixedJoystick:getIsDragging()
+	return self._dragging
 end
 
-function var_0_0.getInputValue(arg_11_0)
-	return arg_11_0._input
+function VirtualFixedJoystick:getInputValue()
+	return self._input
 end
 
-function var_0_0.reset(arg_12_0)
-	arg_12_0:setInPutValue()
+function VirtualFixedJoystick:reset()
+	self:setInPutValue()
 
-	arg_12_0._dragging = false
+	self._dragging = false
 end
 
-function var_0_0.onDestroy(arg_13_0)
+function VirtualFixedJoystick:onDestroy()
 	return
 end
 
-return var_0_0
+return VirtualFixedJoystick

@@ -1,70 +1,72 @@
-﻿module("modules.logic.versionactivity2_4.act181.view.Activity181BonusItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/act181/view/Activity181BonusItem.lua
 
-local var_0_0 = class("Activity181BonusItem", LuaCompBase)
+module("modules.logic.versionactivity2_4.act181.view.Activity181BonusItem", package.seeall)
 
-var_0_0.ANI_IDLE = "idle"
-var_0_0.ANI_CAN_GET = "get"
-var_0_0.ANI_COVER_OPEN = "coveropen"
+local Activity181BonusItem = class("Activity181BonusItem", LuaCompBase)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._imgQuality = gohelper.findChildImage(arg_1_1, "OptionalItem/#img_Quality")
-	arg_1_0._simgItem = gohelper.findChildSingleImage(arg_1_1, "OptionalItem/#simage_Item")
-	arg_1_0._goOptionalItem = gohelper.findChild(arg_1_1, "OptionalItem")
-	arg_1_0._goImageBg = gohelper.findChild(arg_1_1, "image_BG")
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_1, "OptionalItem/image_NumBG/#txt_Num")
-	arg_1_0._txtItemName = gohelper.findChildTextMesh(arg_1_1, "OptionalItem/#txt_ItemName")
-	arg_1_0._goCover = gohelper.findChild(arg_1_1, "#go_Cover")
-	arg_1_0._goGet = gohelper.findChild(arg_1_1, "#go_Get")
-	arg_1_0._goCoverClose = gohelper.findChild(arg_1_1, "image_Cover")
-	arg_1_0._goCoverOpen = gohelper.findChild(arg_1_1, "image_CoverOpen")
-	arg_1_0._btnClick = gohelper.findChildButton(arg_1_1, "click")
-	arg_1_0._goType1 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type1")
-	arg_1_0._goType2 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type2")
-	arg_1_0._goType3 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type3")
-	arg_1_0._goType4 = gohelper.findChild(arg_1_1, "#go_Cover/#go_Type4")
+Activity181BonusItem.ANI_IDLE = "idle"
+Activity181BonusItem.ANI_CAN_GET = "get"
+Activity181BonusItem.ANI_COVER_OPEN = "coveropen"
 
-	arg_1_0:initItem()
+function Activity181BonusItem:init(go)
+	self.go = go
+	self._imgQuality = gohelper.findChildImage(go, "OptionalItem/#img_Quality")
+	self._simgItem = gohelper.findChildSingleImage(go, "OptionalItem/#simage_Item")
+	self._goOptionalItem = gohelper.findChild(go, "OptionalItem")
+	self._goImageBg = gohelper.findChild(go, "image_BG")
+	self._txtNum = gohelper.findChildTextMesh(go, "OptionalItem/image_NumBG/#txt_Num")
+	self._txtItemName = gohelper.findChildTextMesh(go, "OptionalItem/#txt_ItemName")
+	self._goCover = gohelper.findChild(go, "#go_Cover")
+	self._goGet = gohelper.findChild(go, "#go_Get")
+	self._goCoverClose = gohelper.findChild(go, "image_Cover")
+	self._goCoverOpen = gohelper.findChild(go, "image_CoverOpen")
+	self._btnClick = gohelper.findChildButton(go, "click")
+	self._goType1 = gohelper.findChild(go, "#go_Cover/#go_Type1")
+	self._goType2 = gohelper.findChild(go, "#go_Cover/#go_Type2")
+	self._goType3 = gohelper.findChild(go, "#go_Cover/#go_Type3")
+	self._goType4 = gohelper.findChild(go, "#go_Cover/#go_Type4")
+
+	self:initItem()
 end
 
-function var_0_0.initItem(arg_2_0)
-	arg_2_0._typeList = {
-		arg_2_0._goType1,
-		arg_2_0._goType2,
-		arg_2_0._goType3,
-		arg_2_0._goType4
+function Activity181BonusItem:initItem()
+	self._typeList = {
+		self._goType1,
+		self._goType2,
+		self._goType3,
+		self._goType4
 	}
 
-	arg_2_0._btnClick:AddClickListener(arg_2_0.onClickItem, arg_2_0)
+	self._btnClick:AddClickListener(self.onClickItem, self)
 
-	arg_2_0._animator = gohelper.findChildComponent(arg_2_0.go, "", gohelper.Type_Animator)
+	self._animator = gohelper.findChildComponent(self.go, "", gohelper.Type_Animator)
 
-	gohelper.setActive(arg_2_0._txtItemName, false)
+	gohelper.setActive(self._txtItemName, false)
 
-	arg_2_0._animator.enabled = true
+	self._animator.enabled = true
 end
 
-function var_0_0.onClickItem(arg_3_0)
+function Activity181BonusItem:onClickItem()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190324)
 
-	if not Activity181Model.instance:isActivityInTime(arg_3_0._activityId) then
+	if not Activity181Model.instance:isActivityInTime(self._activityId) then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
 		return
 	end
 
-	local var_3_0 = Activity181Model.instance:getActivityInfo(arg_3_0._activityId)
+	local info = Activity181Model.instance:getActivityInfo(self._activityId)
 
-	if var_3_0:getBonusState(arg_3_0._pos) == Activity181Enum.BonusState.HaveGet then
-		local var_3_1 = Activity181Config.instance:getBoxListConfig(arg_3_0._activityId, arg_3_0._boxId)
-		local var_3_2 = string.splitToNumber(var_3_1.bonus, "#")
+	if info:getBonusState(self._pos) == Activity181Enum.BonusState.HaveGet then
+		local bonusConfig = Activity181Config.instance:getBoxListConfig(self._activityId, self._boxId)
+		local param = string.splitToNumber(bonusConfig.bonus, "#")
 
-		MaterialTipController.instance:showMaterialInfo(var_3_2[1], var_3_2[2], false)
+		MaterialTipController.instance:showMaterialInfo(param[1], param[2], false)
 
 		return
 	end
 
-	if var_3_0.canGetTimes <= 0 then
+	if info.canGetTimes <= 0 then
 		GameFacade.showToast(ToastEnum.NorSign)
 
 		return
@@ -74,79 +76,78 @@ function var_0_0.onClickItem(arg_3_0)
 		return
 	end
 
-	Activity181Controller.instance:getBonus(arg_3_0._activityId, arg_3_0._pos)
+	Activity181Controller.instance:getBonus(self._activityId, self._pos)
 end
 
-function var_0_0.setEnable(arg_4_0, arg_4_1)
-	gohelper.setActive(arg_4_0.go, arg_4_1)
+function Activity181BonusItem:setEnable(active)
+	gohelper.setActive(self.go, active)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._pos = arg_5_1
-	arg_5_0._activityId = arg_5_2
+function Activity181BonusItem:onUpdateMO(pos, activityId, isOpen)
+	self._pos = pos
+	self._activityId = activityId
 
-	local var_5_0 = Activity181Model.instance:getActivityInfo(arg_5_2)
-	local var_5_1 = var_5_0:getBonusState(arg_5_1) == Activity181Enum.BonusState.HaveGet
-	local var_5_2 = var_5_0:getBonusTimes() > 0
-	local var_5_3
-	local var_5_4
+	local activityInfo = Activity181Model.instance:getActivityInfo(activityId)
+	local haveGet = activityInfo:getBonusState(pos) == Activity181Enum.BonusState.HaveGet
+	local canGet = activityInfo:getBonusTimes() > 0
+	local showItem, animName
 
-	if arg_5_3 then
-		var_5_3 = true
-		var_5_4 = arg_5_0.ANI_COVER_OPEN
+	if isOpen then
+		showItem = true
+		animName = self.ANI_COVER_OPEN
 
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_lvhu_clue_get)
 	else
-		var_5_3 = var_5_1
-		var_5_4 = var_5_2 and not var_5_1 and arg_5_0.ANI_CAN_GET or arg_5_0.ANI_IDLE
+		showItem = haveGet
+		animName = canGet and not haveGet and self.ANI_CAN_GET or self.ANI_IDLE
 	end
 
-	gohelper.setActive(arg_5_0._goImageBg, var_5_3)
-	gohelper.setActive(arg_5_0._goOptionalItem, var_5_3)
-	gohelper.setActive(arg_5_0._goCover, not var_5_1 or arg_5_3)
-	gohelper.setActive(arg_5_0._goCoverClose, not var_5_1)
-	gohelper.setActive(arg_5_0._goCoverOpen, var_5_1)
-	gohelper.setActive(arg_5_0._simgItem.gameObject, var_5_1)
-	arg_5_0._animator:Play(var_5_4)
+	gohelper.setActive(self._goImageBg, showItem)
+	gohelper.setActive(self._goOptionalItem, showItem)
+	gohelper.setActive(self._goCover, not haveGet or isOpen)
+	gohelper.setActive(self._goCoverClose, not haveGet)
+	gohelper.setActive(self._goCoverOpen, haveGet)
+	gohelper.setActive(self._simgItem.gameObject, haveGet)
+	self._animator:Play(animName)
 
-	local var_5_5 = tonumber(PlayerModel.instance:getMyUserId()) * arg_5_1
+	local seed = tonumber(PlayerModel.instance:getMyUserId()) * pos
 
-	math.randomseed(var_5_5)
+	math.randomseed(seed)
 
-	local var_5_6 = #arg_5_0._typeList
-	local var_5_7 = math.random(1, var_5_6)
+	local range = #self._typeList
+	local randomIndex = math.random(1, range)
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._typeList) do
-		gohelper.setActive(iter_5_1, iter_5_0 == var_5_7)
+	for index, go in ipairs(self._typeList) do
+		gohelper.setActive(go, index == randomIndex)
 	end
 
-	if not var_5_1 then
+	if not haveGet then
 		return
 	end
 
-	arg_5_0._boxId = var_5_0:getBonusIdByPos(arg_5_1)
+	self._boxId = activityInfo:getBonusIdByPos(pos)
 
-	local var_5_8 = Activity181Config.instance:getBoxListConfig(arg_5_0._activityId, arg_5_0._boxId)
-	local var_5_9 = string.splitToNumber(var_5_8.bonus, "#")
-	local var_5_10, var_5_11 = ItemModel.instance:getItemConfigAndIcon(var_5_9[1], var_5_9[2], true)
+	local config = Activity181Config.instance:getBoxListConfig(self._activityId, self._boxId)
+	local param = string.splitToNumber(config.bonus, "#")
+	local itemConfig, icon = ItemModel.instance:getItemConfigAndIcon(param[1], param[2], true)
 
-	arg_5_0._txtNum.text = tostring(var_5_9[3])
+	self._txtNum.text = tostring(param[3])
 
-	arg_5_0._simgItem:LoadImage(var_5_11)
-	UISpriteSetMgr.instance:setUiFBSprite(arg_5_0._imgQuality, "bg_pinjidi_" .. tostring(var_5_10.rare))
+	self._simgItem:LoadImage(icon)
+	UISpriteSetMgr.instance:setUiFBSprite(self._imgQuality, "bg_pinjidi_" .. tostring(itemConfig.rare))
 end
 
-function var_0_0.setBonusFxState(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = not arg_6_1 and arg_6_2 and arg_6_0.ANI_CAN_GET or arg_6_0.ANI_IDLE
+function Activity181BonusItem:setBonusFxState(haveGet, canGet)
+	local animName = not haveGet and canGet and self.ANI_CAN_GET or self.ANI_IDLE
 
-	gohelper.setActive(arg_6_0._goCover, not arg_6_1)
-	arg_6_0._animator:Play(var_6_0)
+	gohelper.setActive(self._goCover, not haveGet)
+	self._animator:Play(animName)
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	arg_7_0._btnClick:RemoveClickListener()
+function Activity181BonusItem:onDestroy()
+	self._btnClick:RemoveClickListener()
 
-	arg_7_0._typeList = nil
+	self._typeList = nil
 end
 
-return var_0_0
+return Activity181BonusItem

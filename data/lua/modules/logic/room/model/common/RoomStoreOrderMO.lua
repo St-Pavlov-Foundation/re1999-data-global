@@ -1,116 +1,118 @@
-﻿module("modules.logic.room.model.common.RoomStoreOrderMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomStoreOrderMO.lua
 
-local var_0_0 = pureTable("RoomStoreOrderMO")
+module("modules.logic.room.model.common.RoomStoreOrderMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._materialDateMOList = {}
-	arg_1_0._poolList = {}
+local RoomStoreOrderMO = pureTable("RoomStoreOrderMO")
+
+function RoomStoreOrderMO:ctor()
+	self._materialDateMOList = {}
+	self._poolList = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.id = arg_2_1
-	arg_2_0.goodsId = arg_2_1
-	arg_2_0.themeId = arg_2_2
+function RoomStoreOrderMO:init(_goodsId, themeId)
+	self.id = _goodsId
+	self.goodsId = _goodsId
+	self.themeId = themeId
 
-	arg_2_0:clear()
+	self:clear()
 end
 
-function var_0_0.addValue(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0:getMaterialDateMO(arg_3_1, arg_3_2)
+function RoomStoreOrderMO:addValue(materialType, itemId, num)
+	local mo = self:getMaterialDateMO(materialType, itemId)
 
-	if not var_3_0 then
-		var_3_0 = arg_3_0:_popMaterialDateMO() or MaterialDataMO.New()
+	if not mo then
+		mo = self:_popMaterialDateMO() or MaterialDataMO.New()
 
-		var_3_0:initValue(arg_3_1, arg_3_2, arg_3_3)
+		mo:initValue(materialType, itemId, num)
 
-		var_3_0.tempCount = 0
+		mo.tempCount = 0
 
-		table.insert(arg_3_0._materialDateMOList, var_3_0)
+		table.insert(self._materialDateMOList, mo)
 	else
-		var_3_0.quantity = var_3_0.quantity + arg_3_3
+		mo.quantity = mo.quantity + num
 	end
 end
 
-function var_0_0.getMaterialDateMO(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._materialDateMOList
+function RoomStoreOrderMO:getMaterialDateMO(materialType, itemId)
+	local list = self._materialDateMOList
 
-	for iter_4_0 = 1, #var_4_0 do
-		local var_4_1 = var_4_0[iter_4_0]
+	for i = 1, #list do
+		local mo = list[i]
 
-		if var_4_1.materilId == arg_4_2 and var_4_1.materilType == arg_4_1 then
-			return var_4_1
+		if mo.materilId == itemId and mo.materilType == materialType then
+			return mo
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.isSameValue(arg_5_0, arg_5_1)
-	arg_5_0:_resetListTempCountValue()
+function RoomStoreOrderMO:isSameValue(materialDataMOList)
+	self:_resetListTempCountValue()
 
-	local var_5_0 = true
+	local flag = true
 
-	for iter_5_0 = 1, #arg_5_1 do
-		local var_5_1 = arg_5_1[iter_5_0]
-		local var_5_2 = arg_5_0:getMaterialDateMO(var_5_1.materilType, var_5_1.materilId)
+	for i = 1, #materialDataMOList do
+		local tMO = materialDataMOList[i]
+		local mMO = self:getMaterialDateMO(tMO.materilType, tMO.materilId)
 
-		if var_5_2 then
-			var_5_2.tempCount = var_5_2.tempCount + var_5_1.quantity
+		if mMO then
+			mMO.tempCount = mMO.tempCount + tMO.quantity
 		else
-			var_5_0 = false
+			flag = false
 
 			break
 		end
 	end
 
-	if var_5_0 then
-		local var_5_3 = arg_5_0._materialDateMOList
+	if flag then
+		local list = self._materialDateMOList
 
-		for iter_5_1 = 1, #var_5_3 do
-			local var_5_4 = var_5_3[iter_5_1]
+		for i = 1, #list do
+			local mo = list[i]
 
-			if var_5_4.quantity ~= var_5_4.tempCount then
-				var_5_0 = false
+			if mo.quantity ~= mo.tempCount then
+				flag = false
 
 				break
 			end
 		end
 	end
 
-	arg_5_0:_resetListTempCountValue()
+	self:_resetListTempCountValue()
 
-	return var_5_0
+	return flag
 end
 
-function var_0_0._resetListTempCountValue(arg_6_0)
-	local var_6_0 = arg_6_0._materialDateMOList
+function RoomStoreOrderMO:_resetListTempCountValue()
+	local list = self._materialDateMOList
 
-	for iter_6_0 = 1, #var_6_0 do
-		var_6_0[iter_6_0].tempCount = 0
+	for i = 1, #list do
+		list[i].tempCount = 0
 	end
 end
 
-function var_0_0._popMaterialDateMO(arg_7_0)
-	local var_7_0 = #arg_7_0._poolList
+function RoomStoreOrderMO:_popMaterialDateMO()
+	local count = #self._poolList
 
-	if var_7_0 > 0 then
-		local var_7_1 = arg_7_0._poolList[var_7_0]
+	if count > 0 then
+		local mo = self._poolList[count]
 
-		var_7_1.quantity = 0
-		var_7_1.tempCount = 0
+		mo.quantity = 0
+		mo.tempCount = 0
 
-		table.remove(arg_7_0._poolList, var_7_0)
+		table.remove(self._poolList, count)
 
-		return var_7_1
+		return mo
 	end
 end
 
-function var_0_0.clear(arg_8_0)
-	if #arg_8_0._materialDateMOList > 0 then
-		tabletool.addArray(arg_8_0._poolList, arg_8_0._materialDateMOList)
+function RoomStoreOrderMO:clear()
+	if #self._materialDateMOList > 0 then
+		tabletool.addArray(self._poolList, self._materialDateMOList)
 
-		arg_8_0._materialDateMOList = {}
+		self._materialDateMOList = {}
 	end
 end
 
-return var_0_0
+return RoomStoreOrderMO

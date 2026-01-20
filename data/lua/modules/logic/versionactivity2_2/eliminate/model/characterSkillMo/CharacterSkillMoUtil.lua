@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillMoUtil", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/characterSkillMo/CharacterSkillMoUtil.lua
 
-local var_0_0 = class("CharacterSkillMoUtil")
+module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillMoUtil", package.seeall)
 
-function var_0_0.createMO(arg_1_0)
-	local var_1_0
+local CharacterSkillMoUtil = class("CharacterSkillMoUtil")
 
-	if arg_1_0 == "AddDiamond" then
-		var_1_0 = CharacterSkillAddDiamondMO.New()
+function CharacterSkillMoUtil.createMO(effectName)
+	local mo
+
+	if effectName == "AddDiamond" then
+		mo = CharacterSkillAddDiamondMO.New()
 	end
 
-	if arg_1_0 == "EliminationCross" then
-		var_1_0 = CharacterSkillEliminationCrossMO.New()
+	if effectName == "EliminationCross" then
+		mo = CharacterSkillEliminationCrossMO.New()
 	end
 
-	if arg_1_0 == "EliminationRange" then
-		var_1_0 = CharacterSkillEliminationRangeMO.New()
+	if effectName == "EliminationRange" then
+		mo = CharacterSkillEliminationRangeMO.New()
 	end
 
-	if arg_1_0 == "EliminationSpecificColor" then
-		var_1_0 = CharacterSkillEliminationSpecificColorMO.New()
+	if effectName == "EliminationSpecificColor" then
+		mo = CharacterSkillEliminationSpecificColorMO.New()
 	end
 
-	if arg_1_0 == "EliminationSwap" then
-		var_1_0 = CharacterSkillEliminationSwapMO.New()
+	if effectName == "EliminationSwap" then
+		mo = CharacterSkillEliminationSwapMO.New()
 	end
 
-	if var_1_0 == nil then
-		logError("CharacterSkillMoUtil:createMO" .. arg_1_0 .. " is not exist!")
+	if mo == nil then
+		logError("CharacterSkillMoUtil:createMO" .. effectName .. " is not exist!")
 
-		var_1_0 = CharacterSkillMOBase.New()
+		mo = CharacterSkillMOBase.New()
 	end
 
-	return var_1_0
+	return mo
 end
 
-return var_0_0
+return CharacterSkillMoUtil

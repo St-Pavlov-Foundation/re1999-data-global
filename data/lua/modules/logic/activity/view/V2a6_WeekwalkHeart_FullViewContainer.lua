@@ -1,17 +1,19 @@
-﻿module("modules.logic.activity.view.V2a6_WeekwalkHeart_FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a6_WeekwalkHeart_FullViewContainer.lua
 
-local var_0_0 = class("V2a6_WeekwalkHeart_FullViewContainer", Activity189BaseViewContainer)
+module("modules.logic.activity.view.V2a6_WeekwalkHeart_FullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a6_WeekwalkHeart_FullViewContainer = class("V2a6_WeekwalkHeart_FullViewContainer", Activity189BaseViewContainer)
 
-	table.insert(var_1_0, V2a6_WeekwalkHeart_FullView.New())
+function V2a6_WeekwalkHeart_FullViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V2a6_WeekwalkHeart_FullView.New())
+
+	return views
 end
 
-function var_0_0.actId(arg_2_0)
+function V2a6_WeekwalkHeart_FullViewContainer:actId()
 	return ActivityEnum.Activity.V2a6_WeekwalkHeart
 end
 
-return var_0_0
+return V2a6_WeekwalkHeart_FullViewContainer

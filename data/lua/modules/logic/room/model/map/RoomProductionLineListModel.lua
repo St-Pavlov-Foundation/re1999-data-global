@@ -1,20 +1,22 @@
-﻿module("modules.logic.room.model.map.RoomProductionLineListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomProductionLineListModel.lua
 
-local var_0_0 = class("RoomProductionLineListModel", ListScrollModel)
+module("modules.logic.room.model.map.RoomProductionLineListModel", package.seeall)
 
-function var_0_0.updatePartLines(arg_1_0, arg_1_1)
-	local var_1_0 = RoomConfig.instance:getProductionPartConfig(arg_1_1)
-	local var_1_1 = {}
+local RoomProductionLineListModel = class("RoomProductionLineListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0.productionLines) do
-		local var_1_2 = RoomProductionModel.instance:getLineMO(iter_1_1)
+function RoomProductionLineListModel:updatePartLines(partId)
+	local config = RoomConfig.instance:getProductionPartConfig(partId)
+	local list = {}
 
-		table.insert(var_1_1, var_1_2)
+	for i, v in ipairs(config.productionLines) do
+		local lineMO = RoomProductionModel.instance:getLineMO(v)
+
+		table.insert(list, lineMO)
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomProductionLineListModel.instance = RoomProductionLineListModel.New()
 
-return var_0_0
+return RoomProductionLineListModel

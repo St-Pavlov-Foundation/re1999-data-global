@@ -1,8 +1,10 @@
-﻿module("modules.logic.sp01.enter.view.VersionActivity2_9EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/enter/view/VersionActivity2_9EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_9EnterViewContainer", BaseViewContainer)
+module("modules.logic.sp01.enter.view.VersionActivity2_9EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity2_9EnterViewContainer = class("VersionActivity2_9EnterViewContainer", BaseViewContainer)
+
+function VersionActivity2_9EnterViewContainer:buildViews()
 	return {
 		VersionActivity2_9EnterView.New(),
 		VersionActivity2_9EnterViewAnimComp.New(),
@@ -11,49 +13,51 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function VersionActivity2_9EnterViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
 			true,
 			false
-		}, nil, arg_2_0.customColseBtnCallBack, nil, nil, arg_2_0)
+		}, nil, self.customColseBtnCallBack, nil, nil, self)
 	}
 end
 
-function var_0_0.customColseBtnCallBack(arg_3_0)
+function VersionActivity2_9EnterViewContainer:customColseBtnCallBack()
 	VersionActivity2_9EnterController.instance:clearLastEnterMainActId()
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	local var_4_0 = arg_4_0.viewParam.mainActIdList
+function VersionActivity2_9EnterViewContainer:onContainerInit()
+	local mainActIdList = self.viewParam.mainActIdList
 
-	for iter_4_0 = #var_4_0, 1, -1 do
-		if ActivityHelper.getActivityStatus(var_4_0[iter_4_0]) == ActivityEnum.ActivityStatus.Normal then
-			ActivityStageHelper.recordActivityStage(arg_4_0.viewParam.activityIdListWithGroup[var_4_0[iter_4_0]])
+	for i = #mainActIdList, 1, -1 do
+		local status = ActivityHelper.getActivityStatus(mainActIdList[i])
+
+		if status == ActivityEnum.ActivityStatus.Normal then
+			ActivityStageHelper.recordActivityStage(self.viewParam.activityIdListWithGroup[mainActIdList[i]])
 
 			return
 		end
 	end
 
-	ActivityStageHelper.recordActivityStage(arg_4_0.viewParam.activityIdListWithGroup[var_4_0[1]])
+	ActivityStageHelper.recordActivityStage(self.viewParam.activityIdListWithGroup[mainActIdList[1]])
 end
 
-function var_0_0.playOpenTransition(arg_5_0)
-	arg_5_0:startViewOpenBlock()
+function VersionActivity2_9EnterViewContainer:playOpenTransition()
+	self:startViewOpenBlock()
 
-	if arg_5_0.viewParam.skipOpenAnim then
-		arg_5_0:onPlayOpenTransitionFinish()
+	if self.viewParam.skipOpenAnim then
+		self:onPlayOpenTransitionFinish()
 	else
-		TaskDispatcher.runDelay(arg_5_0.onPlayOpenTransitionFinish, arg_5_0, 1.1)
+		TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, 1.1)
 	end
 end
 
-function var_0_0.onContainerClose(arg_6_0)
-	if arg_6_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function VersionActivity2_9EnterViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-return var_0_0
+return VersionActivity2_9EnterViewContainer

@@ -1,90 +1,112 @@
-﻿module("modules.versionactivitybase.enterview.view.comp.VersionActivityVideoComp", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/enterview/view/comp/VersionActivityVideoComp.lua
 
-local var_0_0 = class("VersionActivityVideoComp", UserDataDispose)
+module("modules.versionactivitybase.enterview.view.comp.VersionActivityVideoComp", package.seeall)
 
-function var_0_0.get(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.New()
+local VersionActivityVideoComp = class("VersionActivityVideoComp", UserDataDispose)
 
-	var_1_0:init(arg_1_0, arg_1_1)
+function VersionActivityVideoComp.get(videoGO, view)
+	local instance = VersionActivityVideoComp.New()
 
-	return var_1_0
+	instance:init(videoGO, view)
+
+	return instance
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0:__onInit()
+function VersionActivityVideoComp:init(videoGO, view)
+	self:__onInit()
 
-	arg_2_0.videoRootGO = arg_2_1
-	arg_2_0.view = arg_2_2
-	arg_2_0.viewContainer = arg_2_2.viewContainer
+	self.videoRootGO = videoGO
+	self.view = view
+	self.viewContainer = view.viewContainer
 end
 
-function var_0_0._initVideo(arg_3_0)
-	if not arg_3_0._initFinish then
-		arg_3_0._initFinish = true
-		arg_3_0._videoPlayer, arg_3_0._displayUGUI, arg_3_0._videoGo = AvProMgr.instance:getVideoPlayer(arg_3_0.videoRootGO, "videoplayer")
+function VersionActivityVideoComp:_initVideo()
+	if not self._initFinish then
+		self._initFinish = true
+		self._videoPlayer, self._videoGo = VideoPlayerMgr.instance:createGoAndVideoPlayer(self.videoRootGO, "videoplayer")
 
-		local var_3_0 = arg_3_0._videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter))
+		self._videoPlayer:setSkipOnDrop(true)
 
-		if var_3_0 then
-			var_3_0.enabled = false
+		local uIBgSelfAdapter = self._videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter))
+
+		if uIBgSelfAdapter then
+			uIBgSelfAdapter.enabled = false
 		end
 	end
 end
 
-function var_0_0._destroyVideo(arg_4_0)
-	if arg_4_0._videoPlayer then
-		arg_4_0._videoPlayer:Stop()
-		arg_4_0._videoPlayer:Clear()
+function VersionActivityVideoComp:_destroyVideo()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
 
-		arg_4_0._videoPlayer = nil
-		arg_4_0._displayUGUI = nil
-		arg_4_0._videoGo = nil
+		self._videoPlayer = nil
+		self._videoGo = nil
 	end
 end
 
-function var_0_0.loadMedia(arg_5_0, arg_5_1)
-	if string.nilorempty(arg_5_1) then
+function VersionActivityVideoComp:loadMedia(videoPath)
+	if string.nilorempty(videoPath) then
 		return
 	end
 
-	arg_5_0:_initVideo()
+	self:_initVideo()
 
-	if arg_5_0._videoPlayer then
-		arg_5_0._videoPlayer:LoadMedia(arg_5_1)
+	if self._videoPlayer then
+		self._videoPlayer:loadMedia(videoPath)
 	end
 end
 
-function var_0_0.play(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0:_initVideo()
-	arg_6_0:_playByPath(arg_6_1, arg_6_2)
+function VersionActivityVideoComp:play(videoPath, isLoop)
+	self:_initVideo()
+	self:_playByPath(videoPath, isLoop)
 end
 
-function var_0_0.resetStart(arg_7_0)
-	arg_7_0:_playByPath(arg_7_0._curPlayVideoPath, arg_7_0._curLoop, true)
+function VersionActivityVideoComp:resetStart()
+	self:_playByPath(self._curPlayVideoPath, self._curLoop, true)
 end
 
-function var_0_0._playByPath(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_2 == true
+function VersionActivityVideoComp:setDisplayUGUITexture(texture)
+	self:_initVideo()
 
-	if not arg_8_1 or string.nilorempty(arg_8_1) or arg_8_3 ~= true and arg_8_0._curPlayVideoPath == arg_8_1 and arg_8_0._curLoop == var_8_0 then
+	if self._videoPlayer then
+		self._videoPlayer:setDisplayUGUITexture(texture)
+	end
+end
+
+function VersionActivityVideoComp:_playByPath(videoPath, isLoop, reset)
+	local tempLoop = isLoop == true
+
+	if not videoPath or string.nilorempty(videoPath) or reset ~= true and self._curPlayVideoPath == videoPath and self._curLoop == tempLoop then
 		return
 	end
 
-	if arg_8_0._videoPlayer then
-		arg_8_0._curPlayVideoPath = arg_8_1
-		arg_8_0._curLoop = var_8_0
+	if self._videoPlayer then
+		self._curPlayVideoPath = videoPath
+		self._curLoop = tempLoop
 
-		arg_8_0._videoPlayer:Play(arg_8_0._displayUGUI, arg_8_1, arg_8_0._curLoop, arg_8_0._videoStatusUpdate, arg_8_0)
+		self._videoPlayer:play(videoPath, self._curLoop, self._videoStatusUpdate, self)
 	end
 end
 
-function var_0_0._videoStatusUpdate(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	logNormal(string.format("VersionActivityVideoComp:_videoStatusUpdate status:%s name:%s ", arg_9_2, AvProEnum.getPlayerStatusEnumName(arg_9_2)))
+function VersionActivityVideoComp:_videoStatusUpdate(path, status, errorCode)
+	logNormal(string.format("VersionActivityVideoComp:_videoStatusUpdate status:%s name:%s ", status, AvProEnum.getPlayerStatusEnumName(status)))
+
+	if status == AvProEnum.PlayerStatus.Started and self._startCallback then
+		self._startCallback(self._startCallbackTarget)
+	end
 end
 
-function var_0_0.destroy(arg_10_0)
-	arg_10_0:__onDispose()
-	arg_10_0:_destroyVideo()
+function VersionActivityVideoComp:setStartCallback(callback, callbackTarget)
+	self._startCallback = callback
+	self._startCallbackTarget = callbackTarget
 end
 
-return var_0_0
+function VersionActivityVideoComp:destroy()
+	self:__onDispose()
+	self:_destroyVideo()
+
+	self._startCallback = nil
+	self._startCallbackTarget = nil
+end
+
+return VersionActivityVideoComp

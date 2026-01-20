@@ -1,206 +1,209 @@
-﻿module("projbooter.hotupdate.optionpackage.OptionPackageHttpGetter", package.seeall)
+﻿-- chunkname: @projbooter/hotupdate/optionpackage/OptionPackageHttpGetter.lua
 
-local var_0_0 = class("OptionPackageHttpGetter")
-local var_0_1 = 5
-local var_0_2 = 3
-local var_0_3 = 0
-local var_0_4 = {}
+module("projbooter.hotupdate.optionpackage.OptionPackageHttpGetter", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	var_0_3 = var_0_3 + 1
-	arg_1_0._httpId = var_0_3
-	arg_1_0._sourceType = arg_1_1 or 2
-	arg_1_0._langPackList = {}
+local OptionPackageHttpGetter = class("OptionPackageHttpGetter")
+local Timeout = 5
+local RetryCount = 3
+local _ctor_count = 0
+local Debug_Url = {}
 
-	tabletool.addValues(arg_1_0._langPackList, arg_1_2)
+function OptionPackageHttpGetter:ctor(sourceType, langPackList)
+	_ctor_count = _ctor_count + 1
+	self._httpId = _ctor_count
+	self._sourceType = sourceType or 2
+	self._langPackList = {}
+
+	tabletool.addValues(self._langPackList, langPackList)
 end
 
-function var_0_0.getHttpId(arg_2_0)
-	return arg_2_0._httpId
+function OptionPackageHttpGetter:getHttpId()
+	return self._httpId
 end
 
-function var_0_0.getSourceType(arg_3_0)
-	return arg_3_0._sourceType
+function OptionPackageHttpGetter:getSourceType()
+	return self._sourceType
 end
 
-function var_0_0.getLangPackList(arg_4_0)
-	return arg_4_0._langPackList
+function OptionPackageHttpGetter:getLangPackList()
+	return self._langPackList
 end
 
-function var_0_0.start(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._langShortcuts, arg_5_0._langVersions = arg_5_0:_getLangVersions()
-	arg_5_0._onGetFinish = arg_5_1
-	arg_5_0._onGetFinishObj = arg_5_2
-	arg_5_0._retryCount = 0
-	arg_5_0._useBackupUrl = false
+function OptionPackageHttpGetter:start(onFinish, finishObj)
+	self._langShortcuts, self._langVersions = self:_getLangVersions()
+	self._onGetFinish = onFinish
+	self._onGetFinishObj = finishObj
+	self._retryCount = 0
+	self._useBackupUrl = false
 
-	arg_5_0:_httpGet()
+	self:_httpGet()
 end
 
-function var_0_0.stop(arg_6_0)
-	if arg_6_0._requestId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_6_0._requestId)
+function OptionPackageHttpGetter:stop()
+	if self._requestId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._requestId)
 
-		arg_6_0._requestId = nil
+		self._requestId = nil
 	end
 
-	arg_6_0:_stopRetryTimer()
+	self:_stopRetryTimer()
 end
 
-function var_0_0._httpGet(arg_7_0)
-	local var_7_0 = arg_7_0:_getUrl()
+function OptionPackageHttpGetter:_httpGet()
+	local url = self:_getUrl()
 
-	logNormal("OptionPackageHttpGetter url: " .. var_7_0)
+	logNormal("OptionPackageHttpGetter url: " .. url)
 
-	if var_0_4 and var_0_4[arg_7_0._sourceType] then
-		var_7_0 = var_0_4[arg_7_0._sourceType]
+	if Debug_Url and Debug_Url[self._sourceType] then
+		url = Debug_Url[self._sourceType]
 
-		logNormal("OptionPackageHttpGetter url: " .. var_7_0)
+		logNormal("OptionPackageHttpGetter url: " .. url)
 	end
 
-	arg_7_0._requestId = SLFramework.SLWebRequest.Instance:Get(var_7_0, arg_7_0._onWebResponse, arg_7_0, var_0_1)
+	self._requestId = SLFramework.SLWebRequestClient.Instance:Get(url, self._onWebResponse, self, Timeout)
 
-	arg_7_0:_stopRetryTimer()
+	self:_stopRetryTimer()
 end
 
-function var_0_0._onWebResponse(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_1 then
-		if arg_8_2 and arg_8_2 ~= "" then
-			logNormal("获取可选资源返回:" .. arg_8_2)
+function OptionPackageHttpGetter:_onWebResponse(isSuccess, msg, errorMsg)
+	if isSuccess then
+		if msg and msg ~= "" then
+			logNormal("获取可选资源返回:" .. msg)
 
-			arg_8_0._result = cjson.decode(arg_8_2)
+			self._result = cjson.decode(msg)
 		else
 			logNormal("获取可选资源返回空串")
 		end
 
-		arg_8_0:_runCallblck(true)
-		arg_8_0:_stopRetryTimer()
+		self:_runCallblck(true)
+		self:_stopRetryTimer()
 	else
-		arg_8_0:_stopRetryTimer()
+		self:_stopRetryTimer()
 
-		arg_8_0._retryTimer = Timer.New(function()
-			arg_8_0._retryTimer = nil
+		self._retryTimer = Timer.New(function()
+			self._retryTimer = nil
 
-			if arg_8_0._retryCount >= var_0_2 then
-				arg_8_0._useBackupUrl = not arg_8_0._useBackupUrl
-				arg_8_0._retryCount = 0
+			if self._retryCount >= RetryCount then
+				self._useBackupUrl = not self._useBackupUrl
+				self._retryCount = 0
 
-				arg_8_0:_runCallblck(false)
+				self:_runCallblck(false)
 			else
-				arg_8_0._retryCount = arg_8_0._retryCount + 1
+				self._retryCount = self._retryCount + 1
 
-				arg_8_0:_httpGet()
+				self:_httpGet()
 			end
 		end, 1)
 
-		arg_8_0._retryTimer:Start()
+		self._retryTimer:Start()
 	end
 end
 
-function var_0_0._stopRetryTimer(arg_10_0)
-	if arg_10_0._retryTimer then
-		local var_10_0 = arg_10_0._retryTimer
+function OptionPackageHttpGetter:_stopRetryTimer()
+	if self._retryTimer then
+		local timer = self._retryTimer
 
-		arg_10_0._retryTimer = nil
+		self._retryTimer = nil
 
-		var_10_0:Stop()
+		timer:Stop()
 	end
 end
 
-function var_0_0._runCallblck(arg_11_0, arg_11_1)
-	if arg_11_0._onGetFinish == nil then
+function OptionPackageHttpGetter:_runCallblck(isSuccess)
+	if self._onGetFinish == nil then
 		return
 	end
 
-	local var_11_0 = arg_11_0._onGetFinish
-	local var_11_1 = arg_11_0._onGetFinishObj
+	local cb = self._onGetFinish
+	local cbObj = self._onGetFinishObj
 
-	arg_11_0._onGetFinish = nil
-	arg_11_0._onGetFinishObj = nil
+	self._onGetFinish = nil
+	self._onGetFinishObj = nil
 
-	var_11_0(var_11_1, arg_11_1, arg_11_0)
+	cb(cbObj, isSuccess, self)
 end
 
-function var_0_0.getHttpResult(arg_12_0)
-	return arg_12_0._result
+function OptionPackageHttpGetter:getHttpResult()
+	return self._result
 end
 
-function var_0_0.getLangSize(arg_13_0, arg_13_1)
-	if not arg_13_0._result then
+function OptionPackageHttpGetter:getLangSize(lang)
+	if not self._result then
 		return 0
 	end
 
-	local var_13_0 = arg_13_0._result[arg_13_1]
+	local langTb = self._result[lang]
 
-	if not var_13_0 or not var_13_0.res then
+	if not langTb or not langTb.res then
 		return 0
 	end
 
-	local var_13_1 = 0
+	local size = 0
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0.res) do
-		var_13_1 = var_13_1 + iter_13_1.length
+	for _, oneRes in ipairs(langTb.res) do
+		size = size + oneRes.length
 	end
 
-	return var_13_1
+	return size
 end
 
-function var_0_0._getUrl(arg_14_0)
-	local var_14_0 = table.concat(arg_14_0._langShortcuts, ",")
-	local var_14_1 = table.concat(arg_14_0._langVersions, ",")
-	local var_14_2 = {}
-	local var_14_3, var_14_4 = GameUrlConfig.getOptionalUpdateUrl()
-	local var_14_5 = arg_14_0._useBackupUrl and var_14_4 or var_14_3
-	local var_14_6 = SLFramework.FrameworkSettings.CurPlatform
+function OptionPackageHttpGetter:_getUrl()
+	local langShortcut = table.concat(self._langShortcuts, ",")
+	local langVersion = table.concat(self._langVersions, ",")
+	local param = {}
+	local url1, url2 = GameUrlConfig.getOptionalUpdateUrl()
+	local url = self._useBackupUrl and url2 or url1
+	local osType = SLFramework.FrameworkSettings.CurPlatform
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_14_6 = 0
+		osType = 0
 	end
 
-	local var_14_7 = GameChannelConfig.getServerType()
+	local serverType = GameChannelConfig.getServerType()
 
-	table.insert(var_14_2, string.format("os_type=%s", var_14_6))
-	table.insert(var_14_2, string.format("lang=%s", var_14_0))
-	table.insert(var_14_2, string.format("version=%s", var_14_1))
-	table.insert(var_14_2, string.format("env_type=%s", var_14_7))
-	table.insert(var_14_2, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
+	table.insert(param, string.format("os_type=%s", osType))
+	table.insert(param, string.format("lang=%s", langShortcut))
+	table.insert(param, string.format("version=%s", langVersion))
+	table.insert(param, string.format("env_type=%s", serverType))
+	table.insert(param, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
 
-	local var_14_8 = SDKMgr.instance:getGameId()
-	local var_14_9 = string.format("/resource/%d/check", var_14_8)
+	local gameId = SDKMgr.instance:getGameId()
+	local suffix = string.format("/resource/%d/check", gameId)
+	local url = url .. suffix .. "?" .. table.concat(param, "&")
 
-	return var_14_5 .. var_14_9 .. "?" .. table.concat(var_14_2, "&")
+	return url
 end
 
-function var_0_0._getLangVersions(arg_15_0)
-	local var_15_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
-	local var_15_1 = {}
-	local var_15_2 = {}
-	local var_15_3 = arg_15_0._langPackList
-	local var_15_4 = arg_15_0:_getBranchVersion()
+function OptionPackageHttpGetter:_getLangVersions()
+	local optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+	local langShortcuts = {}
+	local langVersions = {}
+	local langPackList = self._langPackList
+	local branchVersion = self:_getBranchVersion()
 
-	for iter_15_0 = 1, #var_15_3 do
-		local var_15_5 = var_15_3[iter_15_0]
-		local var_15_6 = var_15_0:GetLocalVersion(var_15_5)
-		local var_15_7 = var_15_4 .. "." .. (string.nilorempty(var_15_6) and "0" or var_15_6)
+	for i = 1, #langPackList do
+		local langPackName = langPackList[i]
+		local localVersion = optionalUpdateInst:GetLocalVersion(langPackName)
+		local version = branchVersion .. "." .. (string.nilorempty(localVersion) and "0" or localVersion)
 
-		table.insert(var_15_1, var_15_5)
-		table.insert(var_15_2, var_15_7)
+		table.insert(langShortcuts, langPackName)
+		table.insert(langVersions, version)
 	end
 
-	return var_15_1, var_15_2
+	return langShortcuts, langVersions
 end
 
-function var_0_0._getBranchVersion(arg_16_0)
-	local var_16_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
-	local var_16_1 = var_16_0.VoiceBranch
+function OptionPackageHttpGetter:_getBranchVersion()
+	local optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+	local voiceBranch = optionalUpdateInst.VoiceBranch
 
-	if string.nilorempty(var_16_1) or not tonumber(var_16_1) then
-		var_16_1 = 1
+	if string.nilorempty(voiceBranch) or not tonumber(voiceBranch) then
+		voiceBranch = 1
 
-		logError("随包的语音分支错误：" .. var_16_0.VoiceBranch)
+		logError("随包的语音分支错误：" .. optionalUpdateInst.VoiceBranch)
 	end
 
-	return var_16_1
+	return voiceBranch
 end
 
-return var_0_0
+return OptionPackageHttpGetter

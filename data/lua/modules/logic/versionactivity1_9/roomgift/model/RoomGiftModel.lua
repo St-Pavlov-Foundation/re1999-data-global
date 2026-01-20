@@ -1,70 +1,74 @@
-﻿module("modules.logic.versionactivity1_9.roomgift.model.RoomGiftModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/roomgift/model/RoomGiftModel.lua
 
-local var_0_0 = class("RoomGiftModel", BaseModel)
+module("modules.logic.versionactivity1_9.roomgift.model.RoomGiftModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:setActivityInfo()
+local RoomGiftModel = class("RoomGiftModel", BaseModel)
+
+function RoomGiftModel:onInit()
+	self:setActivityInfo()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function RoomGiftModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.getActId(arg_3_0)
+function RoomGiftModel:getActId()
 	return ActivityEnum.Activity.RoomGift
 end
 
-function var_0_0.setActivityInfo(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1 or {}
+function RoomGiftModel:setActivityInfo(msg)
+	local tmpMsg = msg or {}
 
-	arg_4_0:setCurDay(var_4_0.currentDay)
-	arg_4_0:setHasGotBonus(var_4_0.hasGetBonus)
+	self:setCurDay(tmpMsg.currentDay)
+	self:setHasGotBonus(tmpMsg.hasGetBonus)
 end
 
-function var_0_0.setCurDay(arg_5_0, arg_5_1)
-	arg_5_0._curDay = arg_5_1
+function RoomGiftModel:setCurDay(curDay)
+	self._curDay = curDay
 end
 
-function var_0_0.setHasGotBonus(arg_6_0, arg_6_1)
-	arg_6_0._hasGotBonus = arg_6_1
+function RoomGiftModel:setHasGotBonus(hasGot)
+	self._hasGotBonus = hasGot
 end
 
-function var_0_0.getHasGotBonus(arg_7_0)
-	return arg_7_0._hasGotBonus
+function RoomGiftModel:getHasGotBonus()
+	return self._hasGotBonus
 end
 
-function var_0_0.isActOnLine(arg_8_0, arg_8_1)
-	local var_8_0 = false
-	local var_8_1 = arg_8_0:getActId()
-	local var_8_2, var_8_3, var_8_4 = ActivityHelper.getActivityStatusAndToast(var_8_1, true)
+function RoomGiftModel:isActOnLine(isToast)
+	local result = false
+	local actId = self:getActId()
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(actId, true)
 
-	if var_8_2 == ActivityEnum.ActivityStatus.Normal then
-		var_8_0 = true
-	elseif arg_8_1 and var_8_3 then
-		GameFacade.showToastWithTableParam(var_8_3, var_8_4)
+	if status == ActivityEnum.ActivityStatus.Normal then
+		result = true
+	elseif isToast and toastId then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.isCanGetBonus(arg_9_0)
-	local var_9_0 = false
+function RoomGiftModel:isCanGetBonus()
+	local result = false
+	local isOnline = self:isActOnLine()
 
-	if arg_9_0:isActOnLine() then
-		local var_9_1 = arg_9_0:getActId()
+	if isOnline then
+		local actId = self:getActId()
+		local hasBonus = RoomGiftConfig.instance:getRoomGiftBonus(actId, self._curDay)
 
-		if RoomGiftConfig.instance:getRoomGiftBonus(var_9_1, arg_9_0._curDay) then
-			local var_9_2 = arg_9_0:getHasGotBonus()
+		if hasBonus then
+			local hasGotBonus = self:getHasGotBonus()
 
-			if var_9_2 ~= nil then
-				var_9_0 = not var_9_2
+			if hasGotBonus ~= nil then
+				result = not hasGotBonus
 			end
 		end
 	end
 
-	return var_9_0
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+RoomGiftModel.instance = RoomGiftModel.New()
 
-return var_0_0
+return RoomGiftModel

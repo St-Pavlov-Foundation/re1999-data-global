@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_equip_skill", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_equip_skill.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_equip_skill", package.seeall)
+
+local lua_equip_skill = {}
+local fields = {
 	skill = 3,
 	skill2 = 4,
 	skillHide = 5,
@@ -26,17 +28,17 @@ local var_0_1 = {
 	hp = 10,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"skillLv"
 }
-local var_0_3 = {
+local mlStringKey = {
 	baseDesc = 1,
 	baseDesc2 = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_equip_skill.onLoad(json)
+	lua_equip_skill.configList, lua_equip_skill.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_equip_skill

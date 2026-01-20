@@ -1,441 +1,444 @@
-﻿module("modules.logic.room.model.map.RoomBuildingMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomBuildingMO.lua
 
-local var_0_0 = pureTable("RoomBuildingMO")
+module("modules.logic.room.model.map.RoomBuildingMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:setUid(arg_1_1.uid)
+local RoomBuildingMO = pureTable("RoomBuildingMO")
 
-	arg_1_0.buildingId = arg_1_1.buildingId or arg_1_1.defineId
-	arg_1_0.rotate = arg_1_1.rotate or 0
-	arg_1_0.buildingState = arg_1_1.buildingState
-	arg_1_0.use = arg_1_1.use
-	arg_1_0.level = arg_1_1.level or 0
+function RoomBuildingMO:init(info)
+	self:setUid(info.uid)
 
-	if arg_1_0:isInMap() then
-		arg_1_0.hexPoint = HexPoint(arg_1_1.x, arg_1_1.y)
-		arg_1_0.resAreaDirection = arg_1_1.resAreaDirection
+	self.buildingId = info.buildingId or info.defineId
+	self.rotate = info.rotate or 0
+	self.buildingState = info.buildingState
+	self.use = info.use
+	self.level = info.level or 0
+
+	if self:isInMap() then
+		self.hexPoint = HexPoint(info.x, info.y)
+		self.resAreaDirection = info.resAreaDirection
 	end
 
-	arg_1_0:refreshCfg()
+	self:refreshCfg()
 
-	arg_1_0._currentInteractionId = nil
+	self._currentInteractionId = nil
 
-	arg_1_0:setBelongUserId(arg_1_1.belongUserId)
+	self:setBelongUserId(info.belongUserId)
 end
 
-function var_0_0.setUid(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
-	arg_2_0.uid = arg_2_1
-	arg_2_0.buildingUid = arg_2_1
+function RoomBuildingMO:setUid(uid)
+	self.id = uid
+	self.uid = uid
+	self.buildingUid = uid
 end
 
-function var_0_0.refreshCfg(arg_3_0)
-	arg_3_0.config = RoomConfig.instance:getBuildingConfig(arg_3_0.buildingId)
+function RoomBuildingMO:refreshCfg()
+	self.config = RoomConfig.instance:getBuildingConfig(self.buildingId)
 
-	if not arg_3_0.config then
-		logError("找不到建筑id: " .. tostring(arg_3_0.buildingId))
-	elseif arg_3_0.config.canLevelUp then
-		local var_3_0 = RoomConfig.instance:getLevelGroupConfig(arg_3_0.buildingId, arg_3_0.level)
+	if not self.config then
+		logError("找不到建筑id: " .. tostring(self.buildingId))
+	elseif self.config.canLevelUp then
+		local levelConfig = RoomConfig.instance:getLevelGroupConfig(self.buildingId, self.level)
 
-		if var_3_0 then
-			arg_3_0.config = RoomHelper.mergeCfg(arg_3_0.config, var_3_0)
+		if levelConfig then
+			self.config = RoomHelper.mergeCfg(self.config, levelConfig)
 		end
 	end
 end
 
-function var_0_0.isInMap(arg_4_0)
-	return arg_4_0.buildingState == RoomBuildingEnum.BuildingState.Map or arg_4_0.buildingState == RoomBuildingEnum.BuildingState.Temp or arg_4_0.buildingState == RoomBuildingEnum.BuildingState.Revert
+function RoomBuildingMO:isInMap()
+	return self.buildingState == RoomBuildingEnum.BuildingState.Map or self.buildingState == RoomBuildingEnum.BuildingState.Temp or self.buildingState == RoomBuildingEnum.BuildingState.Revert
 end
 
-function var_0_0.setBelongUserId(arg_5_0, arg_5_1)
-	arg_5_0._belongUserId = arg_5_1
+function RoomBuildingMO:setBelongUserId(userId)
+	self._belongUserId = userId
 end
 
-function var_0_0.updateBuildingLevels(arg_6_0)
+function RoomBuildingMO:updateBuildingLevels()
 	return
 end
 
-function var_0_0.setCurrentInteractionId(arg_7_0, arg_7_1)
-	arg_7_0._currentInteractionId = arg_7_1
+function RoomBuildingMO:setCurrentInteractionId(interactionId)
+	self._currentInteractionId = interactionId
 end
 
-function var_0_0.getCurrentInteractionId(arg_8_0)
-	return arg_8_0._currentInteractionId
+function RoomBuildingMO:getCurrentInteractionId()
+	return self._currentInteractionId
 end
 
-function var_0_0.getInteractMO(arg_9_0)
-	if arg_9_0:checkSameType(RoomBuildingEnum.BuildingType.Interact) then
-		if not arg_9_0._interactMO then
-			arg_9_0._interactMO = RoomInteractBuildingMO.New()
+function RoomBuildingMO:getInteractMO()
+	if self:checkSameType(RoomBuildingEnum.BuildingType.Interact) then
+		if not self._interactMO then
+			self._interactMO = RoomInteractBuildingMO.New()
 
-			arg_9_0._interactMO:init(arg_9_0)
+			self._interactMO:init(self)
 		end
 
-		return arg_9_0._interactMO
+		return self._interactMO
 	end
 
 	return nil
 end
 
-function var_0_0.getPlaceAudioId(arg_10_0, arg_10_1)
-	if arg_10_0.config and arg_10_0.config.placeAudio and arg_10_0.config.placeAudio ~= 0 then
-		return arg_10_0.config.placeAudio
+function RoomBuildingMO:getPlaceAudioId(isSelf)
+	if self.config and self.config.placeAudio and self.config.placeAudio ~= 0 then
+		return self.config.placeAudio
 	end
 
-	if arg_10_1 then
+	if isSelf then
 		return 0
 	end
 
 	return AudioEnum.Room.play_ui_home_board_lay
 end
 
-function var_0_0.getLevel(arg_11_0)
-	return arg_11_0.level
+function RoomBuildingMO:getLevel()
+	return self.level
 end
 
-function var_0_0.getIcon(arg_12_0)
-	if arg_12_0.config then
-		if arg_12_0.config.canLevelUp and arg_12_0.levelConfig and not string.nilorempty(arg_12_0.levelConfig.icon) then
-			return arg_12_0.levelConfig.icon
+function RoomBuildingMO:getIcon()
+	if self.config then
+		if self.config.canLevelUp and self.levelConfig and not string.nilorempty(self.levelConfig.icon) then
+			return self.levelConfig.icon
 		end
 
-		return arg_12_0.config.icon
+		return self.config.icon
 	end
 end
 
-function var_0_0.getLevelUpIcon(arg_13_0)
-	local var_13_0
+function RoomBuildingMO:getLevelUpIcon()
+	local result
 
-	if arg_13_0.config and arg_13_0.config.canLevelUp then
-		var_13_0 = arg_13_0.config.levelUpIcon
+	if self.config and self.config.canLevelUp then
+		result = self.config.levelUpIcon
 	end
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.getBelongUserId(arg_14_0)
-	return arg_14_0._belongUserId
+function RoomBuildingMO:getBelongUserId()
+	return self._belongUserId
 end
 
-function var_0_0._getCfgParam(arg_15_0)
+function RoomBuildingMO:_getCfgParam()
 	return
 end
 
-function var_0_0.getCanPlaceCritterCount(arg_16_0)
-	local var_16_0 = ManufactureModel.instance:getTradeLevel()
+function RoomBuildingMO:getCanPlaceCritterCount()
+	local tradeLevel = ManufactureModel.instance:getTradeLevel()
+	local canPlaceCritterCount = ManufactureConfig.instance:getBuildingCanPlaceCritterCount(self.buildingId, tradeLevel)
 
-	return (ManufactureConfig.instance:getBuildingCanPlaceCritterCount(arg_16_0.buildingId, var_16_0))
+	return canPlaceCritterCount
 end
 
-function var_0_0.getWorkingCritter(arg_17_0, arg_17_1)
-	local var_17_0
-	local var_17_1 = ManufactureModel.instance:getManufactureMOById(arg_17_0.id)
+function RoomBuildingMO:getWorkingCritter(critterSlotId)
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_17_1 then
-		var_17_0 = var_17_1:getWorkingCritter(arg_17_1)
+	if manufactureInfo then
+		result = manufactureInfo:getWorkingCritter(critterSlotId)
 	end
 
-	return var_17_0
+	return result
 end
 
-function var_0_0.getCritterWorkSlot(arg_18_0, arg_18_1)
-	local var_18_0
-	local var_18_1 = ManufactureModel.instance:getManufactureMOById(arg_18_0.id)
+function RoomBuildingMO:getCritterWorkSlot(critterUid)
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_18_1 then
-		var_18_0 = var_18_1:getCritterWorkSlot(arg_18_1)
+	if manufactureInfo then
+		result = manufactureInfo:getCritterWorkSlot(critterUid)
 	end
 
-	return var_18_0
+	return result
 end
 
-function var_0_0.getSeatSlotMO(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0
-	local var_19_1 = ManufactureModel.instance:getCritterBuildingMOById(arg_19_0.id)
+function RoomBuildingMO:getSeatSlotMO(seatSlotId, nilError)
+	local result
+	local critterBuildingInfo = ManufactureModel.instance:getCritterBuildingMOById(self.id)
 
-	if var_19_1 then
-		var_19_0 = var_19_1:getSeatSlotMO(arg_19_1, arg_19_2)
+	if critterBuildingInfo then
+		result = critterBuildingInfo:getSeatSlotMO(seatSlotId, nilError)
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.getRestingCritter(arg_20_0, arg_20_1)
-	local var_20_0
-	local var_20_1 = arg_20_0:getSeatSlotMO(arg_20_1)
+function RoomBuildingMO:getRestingCritter(seatSlotId)
+	local result
+	local slotMO = self:getSeatSlotMO(seatSlotId)
 
-	if var_20_1 then
-		var_20_0 = var_20_1:getRestingCritter()
+	if slotMO then
+		result = slotMO:getRestingCritter()
 	end
 
-	return var_20_0
+	return result
 end
 
-function var_0_0.isSeatSlotEmpty(arg_21_0, arg_21_1)
-	local var_21_0 = true
-	local var_21_1 = arg_21_0:getSeatSlotMO(arg_21_1)
+function RoomBuildingMO:isSeatSlotEmpty(seatSlotId)
+	local result = true
+	local slotMO = self:getSeatSlotMO(seatSlotId)
 
-	if var_21_1 then
-		var_21_0 = var_21_1:isEmpty()
+	if slotMO then
+		result = slotMO:isEmpty()
 	end
 
-	return var_21_0
+	return result
 end
 
-function var_0_0.isCritterInSeatSlot(arg_22_0, arg_22_1)
-	local var_22_0
-	local var_22_1 = ManufactureModel.instance:getCritterBuildingMOById(arg_22_0.id)
+function RoomBuildingMO:isCritterInSeatSlot(critterUid)
+	local result
+	local critterBuildingInfo = ManufactureModel.instance:getCritterBuildingMOById(self.id)
 
-	if var_22_1 then
-		var_22_0 = var_22_1:isCritterInSeatSlot(arg_22_1)
+	if critterBuildingInfo then
+		result = critterBuildingInfo:isCritterInSeatSlot(critterUid)
 	end
 
-	return var_22_0
+	return result
 end
 
-function var_0_0.getNextEmptyCritterSeatSlot(arg_23_0)
-	local var_23_0
-	local var_23_1 = ManufactureModel.instance:getCritterBuildingMOById(arg_23_0.id)
+function RoomBuildingMO:getNextEmptyCritterSeatSlot()
+	local result
+	local critterBuildingInfo = ManufactureModel.instance:getCritterBuildingMOById(self.id)
 
-	if var_23_1 then
-		var_23_0 = var_23_1:getNextEmptyCritterSeatSlot()
+	if critterBuildingInfo then
+		result = critterBuildingInfo:getNextEmptyCritterSeatSlot()
 	end
 
-	return var_23_0
+	return result
 end
 
-function var_0_0.isCanClaimProduction(arg_24_0)
-	local var_24_0 = false
-	local var_24_1 = ManufactureModel.instance:getManufactureMOById(arg_24_0.id)
+function RoomBuildingMO:isCanClaimProduction()
+	local result = false
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_24_1 then
-		var_24_0 = var_24_1:isHasCompletedProduction()
+	if manufactureInfo then
+		result = manufactureInfo:isHasCompletedProduction()
 	end
 
-	return var_24_0
+	return result
 end
 
-function var_0_0.getNewerCompleteManufactureItem(arg_25_0)
-	local var_25_0
-	local var_25_1 = ManufactureModel.instance:getManufactureMOById(arg_25_0.id)
+function RoomBuildingMO:getNewerCompleteManufactureItem()
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_25_1 then
-		var_25_0 = var_25_1:getNewerCompleteManufactureItem()
+	if manufactureInfo then
+		result = manufactureInfo:getNewerCompleteManufactureItem()
 	end
 
-	return var_25_0
+	return result
 end
 
-function var_0_0.getAllUnlockedSlotIdList(arg_26_0)
-	local var_26_0 = {}
-	local var_26_1 = ManufactureModel.instance:getManufactureMOById(arg_26_0.id)
+function RoomBuildingMO:getAllUnlockedSlotIdList()
+	local result = {}
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_26_1 then
-		var_26_0 = var_26_1:getAllUnlockedSlotIdList()
+	if manufactureInfo then
+		result = manufactureInfo:getAllUnlockedSlotIdList()
 	end
 
-	return var_26_0
+	return result
 end
 
-function var_0_0.getManufactureState(arg_27_0)
-	local var_27_0
-	local var_27_1 = ManufactureModel.instance:getManufactureMOById(arg_27_0.id)
+function RoomBuildingMO:getManufactureState()
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_27_1 then
-		var_27_0 = var_27_1:getManufactureState()
+	if manufactureInfo then
+		result = manufactureInfo:getManufactureState()
 	end
 
-	return var_27_0
+	return result
 end
 
-function var_0_0.getManufactureProgress(arg_28_0)
-	local var_28_0 = 0
-	local var_28_1 = ""
-	local var_28_2 = ManufactureModel.instance:getManufactureMOById(arg_28_0.id)
+function RoomBuildingMO:getManufactureProgress()
+	local progress = 0
+	local strRemainTime = ""
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_28_2 then
-		var_28_0, var_28_1 = var_28_2:getManufactureProgress()
+	if manufactureInfo then
+		progress, strRemainTime = manufactureInfo:getManufactureProgress()
 	end
 
-	return var_28_0, var_28_1
+	return progress, strRemainTime
 end
 
-function var_0_0.getOccupySlotCount(arg_29_0, arg_29_1)
-	local var_29_0 = 0
-	local var_29_1 = ManufactureModel.instance:getManufactureMOById(arg_29_0.id)
+function RoomBuildingMO:getOccupySlotCount(notComplete)
+	local result = 0
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_29_1 then
-		var_29_0 = var_29_1:getOccupySlotCount(arg_29_1)
+	if manufactureInfo then
+		result = manufactureInfo:getOccupySlotCount(notComplete)
 	end
 
-	return var_29_0
+	return result
 end
 
-function var_0_0.getEmptySlotIdList(arg_30_0)
-	local var_30_0 = {}
-	local var_30_1 = ManufactureModel.instance:getManufactureMOById(arg_30_0.id)
+function RoomBuildingMO:getEmptySlotIdList()
+	local result = {}
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_30_1 then
-		var_30_0 = var_30_1:getEmptySlotIdList()
+	if manufactureInfo then
+		result = manufactureInfo:getEmptySlotIdList()
 	end
 
-	return var_30_0
+	return result
 end
 
-function var_0_0.getSlotIdInProgress(arg_31_0)
-	local var_31_0
-	local var_31_1 = ManufactureModel.instance:getManufactureMOById(arg_31_0.id)
+function RoomBuildingMO:getSlotIdInProgress()
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_31_1 then
-		var_31_0 = var_31_1:getSlotIdInProgress()
+	if manufactureInfo then
+		result = manufactureInfo:getSlotIdInProgress()
 	end
 
-	return var_31_0
+	return result
 end
 
-function var_0_0.getCanChangeMaxPriority(arg_32_0)
-	local var_32_0
-	local var_32_1 = ManufactureModel.instance:getManufactureMOById(arg_32_0.id)
+function RoomBuildingMO:getCanChangeMaxPriority()
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_32_1 then
-		var_32_0 = var_32_1:getCanChangeMaxPriority()
+	if manufactureInfo then
+		result = manufactureInfo:getCanChangeMaxPriority()
 	end
 
-	return var_32_0
+	return result
 end
 
-function var_0_0.getSlotMO(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0
-	local var_33_1 = ManufactureModel.instance:getManufactureMOById(arg_33_0.id)
+function RoomBuildingMO:getSlotMO(slotId, nilError)
+	local result
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_33_1 then
-		var_33_0 = var_33_1:getSlotMO(arg_33_1, arg_33_2)
+	if manufactureInfo then
+		result = manufactureInfo:getSlotMO(slotId, nilError)
 	end
 
-	return var_33_0
+	return result
 end
 
-function var_0_0.getSlotState(arg_34_0, arg_34_1, arg_34_2)
-	local var_34_0 = RoomManufactureEnum.SlotState.Locked
-	local var_34_1 = arg_34_0:getSlotMO(arg_34_1)
+function RoomBuildingMO:getSlotState(slotId, getRealState)
+	local result = RoomManufactureEnum.SlotState.Locked
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_34_1 then
-		var_34_0 = var_34_1:getSlotState(arg_34_2)
+	if slotMO then
+		result = slotMO:getSlotState(getRealState)
 	end
 
-	return var_34_0
+	return result
 end
 
-function var_0_0.getSlotProgress(arg_35_0, arg_35_1)
-	local var_35_0 = 0
-	local var_35_1 = arg_35_0:getSlotMO(arg_35_1)
+function RoomBuildingMO:getSlotProgress(slotId)
+	local result = 0
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_35_1 then
-		var_35_0 = var_35_1:getSlotProgress()
+	if slotMO then
+		result = slotMO:getSlotProgress()
 	end
 
-	return var_35_0
+	return result
 end
 
-function var_0_0.getSlotRemainStrTime(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = ""
-	local var_36_1 = arg_36_0:getSlotMO(arg_36_1)
+function RoomBuildingMO:getSlotRemainStrTime(slotId, useEn)
+	local result = ""
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_36_1 then
-		var_36_0 = var_36_1:getSlotRemainStrTime(arg_36_2)
+	if slotMO then
+		result = slotMO:getSlotRemainStrTime(useEn)
 	end
 
-	return var_36_0
+	return result
 end
 
-function var_0_0.getSlotRemainSecTime(arg_37_0, arg_37_1)
-	local var_37_0 = 0
-	local var_37_1 = arg_37_0:getSlotMO(arg_37_1)
+function RoomBuildingMO:getSlotRemainSecTime(slotId)
+	local result = 0
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_37_1 then
-		var_37_0 = var_37_1:getSlotRemainSecTime()
+	if slotMO then
+		result = slotMO:getSlotRemainSecTime()
 	end
 
-	return var_37_0
+	return result
 end
 
-function var_0_0.getAccelerateEff(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = 0
-	local var_38_1 = arg_38_0:getSlotMO(arg_38_1)
+function RoomBuildingMO:getAccelerateEff(slotId, accItemId)
+	local result = 0
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_38_1 then
-		var_38_0 = var_38_1:getSlotAccelerateEff(arg_38_2)
+	if slotMO then
+		result = slotMO:getSlotAccelerateEff(accItemId)
 	end
 
-	return var_38_0
+	return result
 end
 
-function var_0_0.getSlotManufactureItemId(arg_39_0, arg_39_1)
-	local var_39_0
-	local var_39_1 = arg_39_0:getSlotMO(arg_39_1)
+function RoomBuildingMO:getSlotManufactureItemId(slotId)
+	local result
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_39_1 then
-		var_39_0 = var_39_1:getSlotManufactureItemId()
+	if slotMO then
+		result = slotMO:getSlotManufactureItemId()
 	end
 
-	return var_39_0
+	return result
 end
 
-function var_0_0.getSlotFinishCount(arg_40_0, arg_40_1)
-	local var_40_0 = 0
-	local var_40_1 = arg_40_0:getSlotMO(arg_40_1)
+function RoomBuildingMO:getSlotFinishCount(slotId)
+	local result = 0
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_40_1 then
-		var_40_0 = var_40_1:getFinishCount()
+	if slotMO then
+		result = slotMO:getFinishCount()
 	end
 
-	return var_40_0
+	return result
 end
 
-function var_0_0.getSlotPriority(arg_41_0, arg_41_1)
-	local var_41_0
-	local var_41_1 = arg_41_0:getSlotMO(arg_41_1)
+function RoomBuildingMO:getSlotPriority(slotId)
+	local result
+	local slotMO = self:getSlotMO(slotId)
 
-	if var_41_1 then
-		var_41_0 = var_41_1:getSlotPriority()
+	if slotMO then
+		result = slotMO:getSlotPriority()
 	end
 
-	return var_41_0
+	return result
 end
 
-function var_0_0.checkSameType(arg_42_0, arg_42_1)
-	if arg_42_0.config and arg_42_0.config.buildingType == arg_42_1 then
+function RoomBuildingMO:checkSameType(buildingType)
+	if self.config and self.config.buildingType == buildingType then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getSlot2CritterDict(arg_43_0)
-	local var_43_0 = {}
-	local var_43_1 = ManufactureModel.instance:getManufactureMOById(arg_43_0.id)
+function RoomBuildingMO:getSlot2CritterDict()
+	local result = {}
+	local manufactureInfo = ManufactureModel.instance:getManufactureMOById(self.id)
 
-	if var_43_1 then
-		var_43_0 = var_43_1:getSlot2CritterDict()
+	if manufactureInfo then
+		result = manufactureInfo:getSlot2CritterDict()
 	end
 
-	return var_43_0
+	return result
 end
 
-function var_0_0.isBuildingArea(arg_44_0)
-	if arg_44_0.config and RoomBuildingEnum.BuildingArea[arg_44_0.config.buildingType] then
+function RoomBuildingMO:isBuildingArea()
+	if self.config and RoomBuildingEnum.BuildingArea[self.config.buildingType] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isAreaMainBuilding(arg_45_0)
-	if arg_45_0.config and arg_45_0.config.isAreaMainBuilding then
+function RoomBuildingMO:isAreaMainBuilding()
+	if self.config and self.config.isAreaMainBuilding then
 		return true
 	end
 
 	return false
 end
 
-return var_0_0
+return RoomBuildingMO

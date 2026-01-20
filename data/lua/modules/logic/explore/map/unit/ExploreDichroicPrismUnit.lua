@@ -1,10 +1,12 @@
-﻿module("modules.logic.explore.map.unit.ExploreDichroicPrismUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreDichroicPrismUnit.lua
 
-local var_0_0 = class("ExploreDichroicPrismUnit", ExplorePrismUnit)
+module("modules.logic.explore.map.unit.ExploreDichroicPrismUnit", package.seeall)
 
-function var_0_0.addLights(arg_1_0)
-	arg_1_0.lightComp:addLight(arg_1_0.mo.unitDir - 45)
-	arg_1_0.lightComp:addLight(arg_1_0.mo.unitDir + 45)
+local ExploreDichroicPrismUnit = class("ExploreDichroicPrismUnit", ExplorePrismUnit)
+
+function ExploreDichroicPrismUnit:addLights()
+	self.lightComp:addLight(self.mo.unitDir - 45)
+	self.lightComp:addLight(self.mo.unitDir + 45)
 end
 
-return var_0_0
+return ExploreDichroicPrismUnit

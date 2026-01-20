@@ -1,31 +1,33 @@
-﻿module("modules.logic.handbook.view.HandbookSkinSuitDetailView2_1", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookSkinSuitDetailView2_1.lua
 
-local var_0_0 = class("HandbookSkinSuitDetailView2_1", HandbookSkinSuitDetailViewBase)
+module("modules.logic.handbook.view.HandbookSkinSuitDetailView2_1", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	HandbookSkinSuitDetailViewBase.onInitView(arg_1_0)
+local HandbookSkinSuitDetailView2_1 = class("HandbookSkinSuitDetailView2_1", HandbookSkinSuitDetailViewBase)
+
+function HandbookSkinSuitDetailView2_1:onInitView()
+	HandbookSkinSuitDetailViewBase.onInitView(self)
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0.viewGO)
-	arg_2_0._viewMatCtrl = arg_2_0.viewGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+function HandbookSkinSuitDetailView2_1:_editableInitView()
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._viewMatCtrl = self.viewGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
 end
 
-function var_0_0.onOpen(arg_3_0)
-	HandbookSkinSuitDetailViewBase.onOpen(arg_3_0)
+function HandbookSkinSuitDetailView2_1:onOpen()
+	HandbookSkinSuitDetailViewBase.onOpen(self)
 
-	if not arg_3_0._isSuitSwitch and arg_3_0._viewMatCtrl then
-		arg_3_0._viewMatCtrl.vector_02 = Vector4.New(1, 1, 0.18, 0)
+	if not self._isSuitSwitch and self._viewMatCtrl then
+		self._viewMatCtrl.vector_02 = Vector4.New(1, 1, 0.18, 0)
 	end
 
-	arg_3_0:_getPhotoRootGo(#arg_3_0._skinIdList)
-	arg_3_0:_refreshSkinItems()
-	arg_3_0:_refreshDesc()
-	arg_3_0:_refreshBg()
+	self:_getPhotoRootGo(#self._skinIdList)
+	self:_refreshSkinItems()
+	self:_refreshDesc()
+	self:_refreshBg()
 end
 
-function var_0_0._refreshDesc(arg_4_0)
-	arg_4_0._textSkinThemeDescr.text = arg_4_0._skinSuitCfg.des
+function HandbookSkinSuitDetailView2_1:_refreshDesc()
+	self._textSkinThemeDescr.text = self._skinSuitCfg.des
 end
 
-return var_0_0
+return HandbookSkinSuitDetailView2_1

@@ -1,196 +1,198 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorSkillSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorSkillSelectView.lua
 
-local var_0_0 = class("SkillEditorSkillSelectView")
+module("modules.logic.fight.view.preview.SkillEditorSkillSelectView", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._curSkillId = nil
-	arg_1_0._attackerId = nil
-	arg_1_0._entityMO = nil
-	arg_1_0._clickMask = nil
-	arg_1_0._skillIds = {}
-	arg_1_0._skillItemGOs = {}
+local SkillEditorSkillSelectView = class("SkillEditorSkillSelectView")
+
+function SkillEditorSkillSelectView:ctor()
+	self._curSkillId = nil
+	self._attackerId = nil
+	self._entityMO = nil
+	self._clickMask = nil
+	self._skillIds = {}
+	self._skillItemGOs = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._selectSkillGO = gohelper.findChild(arg_2_1, "btnSelectSkill")
-	arg_2_0._txtSelect = gohelper.findChildText(arg_2_1, "btnSelectSkill/Text")
-	arg_2_0.scrollView = gohelper.findChild(arg_2_1, "skillScroll")
-	arg_2_0._skillsGO = gohelper.findChild(arg_2_1, "skillScroll/Viewport/selectSkills")
-	arg_2_0._skillItemPrefab = gohelper.findChild(arg_2_1, "skillScroll/Viewport/selectSkills/skill")
-	arg_2_0._clickMask = gohelper.findChildClick(arg_2_1, "skillScroll/ClickMask")
+function SkillEditorSkillSelectView:init(go)
+	self._selectSkillGO = gohelper.findChild(go, "btnSelectSkill")
+	self._txtSelect = gohelper.findChildText(go, "btnSelectSkill/Text")
+	self.scrollView = gohelper.findChild(go, "skillScroll")
+	self._skillsGO = gohelper.findChild(go, "skillScroll/Viewport/selectSkills")
+	self._skillItemPrefab = gohelper.findChild(go, "skillScroll/Viewport/selectSkills/skill")
+	self._clickMask = gohelper.findChildClick(go, "skillScroll/ClickMask")
 
-	arg_2_0._clickMask:AddClickListener(arg_2_0._onClickMask, arg_2_0)
-	gohelper.setActive(arg_2_0._skillItemPrefab, false)
+	self._clickMask:AddClickListener(self._onClickMask, self)
+	gohelper.setActive(self._skillItemPrefab, false)
 end
 
-function var_0_0.dispose(arg_3_0)
-	arg_3_0._clickMask:RemoveClickListener()
+function SkillEditorSkillSelectView:dispose()
+	self._clickMask:RemoveClickListener()
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._skillItemGOs) do
-		SLFramework.UGUI.UIClickListener.Get(iter_3_1):RemoveClickListener()
+	for _, skillItemGO in ipairs(self._skillItemGOs) do
+		SLFramework.UGUI.UIClickListener.Get(skillItemGO):RemoveClickListener()
 	end
 end
 
-function var_0_0.show(arg_4_0)
-	gohelper.setActive(arg_4_0.scrollView, true)
-	recthelper.setAnchorX(arg_4_0._skillsGO.transform, 0)
-	arg_4_0:_updateSelect()
+function SkillEditorSkillSelectView:show()
+	gohelper.setActive(self.scrollView, true)
+	recthelper.setAnchorX(self._skillsGO.transform, 0)
+	self:_updateSelect()
 end
 
-function var_0_0.hide(arg_5_0)
-	gohelper.setActive(arg_5_0.scrollView, false)
+function SkillEditorSkillSelectView:hide()
+	gohelper.setActive(self.scrollView, false)
 end
 
-function var_0_0.getSelectSkillId(arg_6_0)
-	return arg_6_0._curSkillId
+function SkillEditorSkillSelectView:getSelectSkillId()
+	return self._curSkillId
 end
 
-function var_0_0.setAttacker(arg_7_0, arg_7_1)
-	local var_7_0 = FightDataHelper.entityMgr:getById(arg_7_0._attackerId)
+function SkillEditorSkillSelectView:setAttacker(entityId)
+	local last_entity_mo = FightDataHelper.entityMgr:getById(self._attackerId)
 
-	arg_7_0._attackerId = arg_7_1
-	arg_7_0._entityMO = FightDataHelper.entityMgr:getById(arg_7_0._attackerId)
-	arg_7_0._skillIds = {}
+	self._attackerId = entityId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._attackerId)
+	self._skillIds = {}
 
-	if var_7_0 then
-		if var_7_0.modelId == arg_7_0._entityMO.modelId then
+	if last_entity_mo then
+		if last_entity_mo.modelId == self._entityMO.modelId then
 			-- block empty
 		else
-			arg_7_0._curSkillId = nil
+			self._curSkillId = nil
 		end
 	else
-		arg_7_0._curSkillId = nil
+		self._curSkillId = nil
 	end
 
-	local var_7_1 = arg_7_0:_getEntitySkillCOList(arg_7_0._entityMO)
+	local skillCOList = self:_getEntitySkillCOList(self._entityMO)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_2 = iter_7_1.id
-		local var_7_3 = FightConfig.instance:getSkinSkillTimeline(arg_7_0._entityMO.skin, var_7_2)
+	for i, skillCO in ipairs(skillCOList) do
+		local skillId = skillCO.id
+		local timeline = FightConfig.instance:getSkinSkillTimeline(self._entityMO.skin, skillId)
 
-		table.insert(arg_7_0._skillIds, var_7_2)
+		table.insert(self._skillIds, skillId)
 
-		if not arg_7_0._curSkillId then
-			arg_7_0._curSkillId = var_7_2
-			SkillEditorView.selectSkillId[arg_7_1] = arg_7_0._curSkillId
+		if not self._curSkillId then
+			self._curSkillId = skillId
+			SkillEditorView.selectSkillId[entityId] = self._curSkillId
 		end
 
-		local var_7_4 = arg_7_0._skillItemGOs[iter_7_0]
+		local skillItemGO = self._skillItemGOs[i]
 
-		if not var_7_4 then
-			var_7_4 = gohelper.clone(arg_7_0._skillItemPrefab, arg_7_0._skillsGO, "skill" .. iter_7_0)
+		if not skillItemGO then
+			skillItemGO = gohelper.clone(self._skillItemPrefab, self._skillsGO, "skill" .. i)
 
-			table.insert(arg_7_0._skillItemGOs, var_7_4)
+			table.insert(self._skillItemGOs, skillItemGO)
 		end
 
-		SLFramework.UGUI.UIClickListener.Get(var_7_4):AddClickListener(arg_7_0._onClickSkillItem, arg_7_0, var_7_2)
-		gohelper.setActive(var_7_4, true)
+		SLFramework.UGUI.UIClickListener.Get(skillItemGO):AddClickListener(self._onClickSkillItem, self, skillId)
+		gohelper.setActive(skillItemGO, true)
 
-		local var_7_5 = gohelper.findChildText(var_7_4, "Text")
-		local var_7_6 = string.split(var_7_3, "_")
-		local var_7_7 = arg_7_0:_getStrengthenTag(arg_7_0._entityMO.modelId, var_7_2) or ""
+		local txtSkillName = gohelper.findChildText(skillItemGO, "Text")
+		local temp = string.split(timeline, "_")
+		local tag = self:_getStrengthenTag(self._entityMO.modelId, skillId) or ""
 
-		var_7_5.text = var_7_2 .. "\n" .. iter_7_1.name .. "\n" .. var_7_6[#var_7_6] .. var_7_7
+		txtSkillName.text = skillId .. "\n" .. skillCO.name .. "\n" .. temp[#temp] .. tag
 	end
 
-	for iter_7_2 = #var_7_1 + 1, #arg_7_0._skillItemGOs do
-		gohelper.setActive(arg_7_0._skillItemGOs[iter_7_2], false)
+	for i = #skillCOList + 1, #self._skillItemGOs do
+		gohelper.setActive(self._skillItemGOs[i], false)
 	end
 
-	arg_7_0:_updateSelect()
+	self:_updateSelect()
 end
 
-local var_0_1 = {
+local ExKey = {
 	"skillGroup1",
 	"skillGroup2",
 	"skillEx",
 	"passiveSkill"
 }
 
-function var_0_0._getStrengthenTag(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = lua_skill_ex_level.configDict[arg_8_1]
+function SkillEditorSkillSelectView:_getStrengthenTag(modelId, skillId)
+	local exList = lua_skill_ex_level.configDict[modelId]
 
-	if var_8_0 then
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			for iter_8_2, iter_8_3 in ipairs(var_0_1) do
-				local var_8_1 = iter_8_1[iter_8_3]
-				local var_8_2 = string.splitToNumber(var_8_1, "|")
+	if exList then
+		for _, exCO in pairs(exList) do
+			for _, exKey in ipairs(ExKey) do
+				local skillStr = exCO[exKey]
+				local list = string.splitToNumber(skillStr, "|")
 
-				if tabletool.indexOf(var_8_2, arg_8_2) then
-					return "塑造" .. iter_8_1.skillLevel
+				if tabletool.indexOf(list, skillId) then
+					return "塑造" .. exCO.skillLevel
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._getEntitySkillCOList(arg_9_0, arg_9_1)
-	local var_9_0 = {}
-	local var_9_1 = {}
+function SkillEditorSkillSelectView:_getEntitySkillCOList(entityMO)
+	local skillEffectDict = {}
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1.skillIds) do
-		local var_9_2 = lua_skill.configDict[iter_9_1]
-		local var_9_3 = FightConfig.instance:getSkinSkillTimeline(arg_9_1.skin, iter_9_1)
+	for i, skillId in ipairs(entityMO.skillIds) do
+		local skillCO = lua_skill.configDict[skillId]
+		local timeline = FightConfig.instance:getSkinSkillTimeline(entityMO.skin, skillId)
 
-		if var_9_2 and not string.nilorempty(var_9_3) then
-			var_9_0[var_9_2.skillEffect] = true
+		if skillCO and not string.nilorempty(timeline) then
+			skillEffectDict[skillCO.skillEffect] = true
 
-			table.insert(var_9_1, var_9_2)
+			table.insert(list, skillCO)
 		end
 	end
 
-	local var_9_4 = tostring(arg_9_1.modelId)
+	local modelIdStr = tostring(entityMO.modelId)
 
-	for iter_9_2, iter_9_3 in ipairs(lua_skill.configList) do
-		local var_9_5 = tostring(iter_9_3.id)
-		local var_9_6 = iter_9_3.timeline
+	for _, skillCO in ipairs(lua_skill.configList) do
+		local skillIdStr = tostring(skillCO.id)
+		local timeline = skillCO.timeline
 
-		if string.find(var_9_5, var_9_4) == 1 and not string.nilorempty(var_9_6) and not var_9_0[iter_9_3.skillEffect] then
-			var_9_0[iter_9_3.skillEffect] = true
+		if string.find(skillIdStr, modelIdStr) == 1 and not string.nilorempty(timeline) and not skillEffectDict[skillCO.skillEffect] then
+			skillEffectDict[skillCO.skillEffect] = true
 
-			table.insert(var_9_1, iter_9_3)
+			table.insert(list, skillCO)
 		end
 	end
 
-	return var_9_1
+	return list
 end
 
-function var_0_0._onClickMask(arg_10_0)
-	gohelper.setActive(arg_10_0.scrollView, false)
+function SkillEditorSkillSelectView:_onClickMask()
+	gohelper.setActive(self.scrollView, false)
 end
 
-function var_0_0._onClickSkillItem(arg_11_0, arg_11_1)
-	TaskDispatcher.cancelTask(arg_11_0.hide, arg_11_0)
-	TaskDispatcher.runDelay(arg_11_0.hide, arg_11_0, 0.2)
+function SkillEditorSkillSelectView:_onClickSkillItem(skillId)
+	TaskDispatcher.cancelTask(self.hide, self)
+	TaskDispatcher.runDelay(self.hide, self, 0.2)
 
-	arg_11_0._curSkillId = arg_11_1
-	SkillEditorView.selectSkillId[arg_11_0._attackerId] = arg_11_0._curSkillId
+	self._curSkillId = skillId
+	SkillEditorView.selectSkillId[self._attackerId] = self._curSkillId
 
-	arg_11_0:_updateSelect()
-	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectSkill, arg_11_0._entityMO, arg_11_1)
+	self:_updateSelect()
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectSkill, self._entityMO, skillId)
 end
 
-function var_0_0._updateSelect(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._skillIds) do
-		local var_12_0 = arg_12_0._skillItemGOs[iter_12_0]
+function SkillEditorSkillSelectView:_updateSelect()
+	for i, skillId in ipairs(self._skillIds) do
+		local skillItemGO = self._skillItemGOs[i]
 
-		if var_12_0 then
-			local var_12_1 = gohelper.findChild(var_12_0, "imgSelect")
+		if skillItemGO then
+			local selectGO = gohelper.findChild(skillItemGO, "imgSelect")
 
-			gohelper.setActive(var_12_1, iter_12_1 == arg_12_0._curSkillId)
+			gohelper.setActive(selectGO, skillId == self._curSkillId)
 		end
 	end
 
-	local var_12_2 = lua_skill.configDict[arg_12_0._curSkillId]
+	local skillCO = lua_skill.configDict[self._curSkillId]
 
-	if var_12_2 then
-		local var_12_3 = FightConfig.instance:getSkinSkillTimeline(arg_12_0._entityMO.skin, arg_12_0._curSkillId)
-		local var_12_4 = string.split(var_12_3, "_")
+	if skillCO then
+		local timeline = FightConfig.instance:getSkinSkillTimeline(self._entityMO.skin, self._curSkillId)
+		local temp = string.split(timeline, "_")
 
-		arg_12_0._txtSelect.text = arg_12_0._curSkillId .. "\n" .. var_12_2.name .. "\n" .. var_12_4[#var_12_4]
+		self._txtSelect.text = self._curSkillId .. "\n" .. skillCO.name .. "\n" .. temp[#temp]
 	else
-		arg_12_0._txtSelect.text = "None"
+		self._txtSelect.text = "None"
 	end
 end
 
-return var_0_0
+return SkillEditorSkillSelectView

@@ -1,7 +1,9 @@
-﻿module("modules.logic.mainswitchclassify.controller.MainSwitchClassifyController", package.seeall)
+﻿-- chunkname: @modules/logic/mainswitchclassify/controller/MainSwitchClassifyController.lua
 
-local var_0_0 = class("MainSwitchClassifyController", BaseController)
+module("modules.logic.mainswitchclassify.controller.MainSwitchClassifyController", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local MainSwitchClassifyController = class("MainSwitchClassifyController", BaseController)
 
-return var_0_0
+MainSwitchClassifyController.instance = MainSwitchClassifyController.New()
+
+return MainSwitchClassifyController

@@ -1,22 +1,26 @@
-﻿module("modules.configs.excel2json.lua_fight_buff_layer_effect_nana", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_buff_layer_effect_nana.lua
 
-local var_0_0 = {}
-local var_0_1 = {
-	effectRoot = 4,
-	effect = 3,
-	effectAudio = 5,
+module("modules.configs.excel2json.lua_fight_buff_layer_effect_nana", package.seeall)
+
+local lua_fight_buff_layer_effect_nana = {}
+local fields = {
+	effectRoot = 5,
+	effect = 4,
+	effectAudio = 6,
+	skinId = 2,
 	id = 1,
-	duration = 6,
-	layer = 2
+	duration = 7,
+	layer = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
+	"skinId",
 	"layer"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_buff_layer_effect_nana.onLoad(json)
+	lua_fight_buff_layer_effect_nana.configList, lua_fight_buff_layer_effect_nana.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_buff_layer_effect_nana

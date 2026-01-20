@@ -1,293 +1,296 @@
-﻿module("modules.common.others.TabViewGroupDynamic", package.seeall)
+﻿-- chunkname: @modules/common/others/TabViewGroupDynamic.lua
 
-local var_0_0 = class("TabViewGroupDynamic", BaseView)
+module("modules.common.others.TabViewGroupDynamic", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.ctor(arg_1_0)
+local TabViewGroupDynamic = class("TabViewGroupDynamic", BaseView)
 
-	arg_1_0._tabContainerId = arg_1_1 or 1
-	arg_1_0._tabGOContainerPath = arg_1_2
-	arg_1_0._tabGOContainer = nil
-	arg_1_0._tabAbLoaders = {}
-	arg_1_0._tabMainRes = {}
-	arg_1_0._tabCanvasGroup = {}
-	arg_1_0._tabViews = nil
-	arg_1_0._curTabId = nil
-	arg_1_0._hasOpenFinish = false
-	arg_1_0._UIBlockKey = nil
+function TabViewGroupDynamic:ctor(tabContainerId, tabGOContainerPath)
+	TabViewGroupDynamic.super.ctor(self)
+
+	self._tabContainerId = tabContainerId or 1
+	self._tabGOContainerPath = tabGOContainerPath
+	self._tabGOContainer = nil
+	self._tabAbLoaders = {}
+	self._tabMainRes = {}
+	self._tabCanvasGroup = {}
+	self._tabViews = nil
+	self._curTabId = nil
+	self._hasOpenFinish = false
+	self._UIBlockKey = nil
 end
 
-function var_0_0.setDynamicNodeContainers(arg_2_0, arg_2_1)
-	arg_2_0._dynamicNodeContainers = arg_2_1
+function TabViewGroupDynamic:setDynamicNodeContainers(list)
+	self._dynamicNodeContainers = list
 end
 
-function var_0_0.setDynamicNodeResHandlers(arg_3_0, arg_3_1)
-	arg_3_0._dynamicNodeResHandlers = arg_3_1
+function TabViewGroupDynamic:setDynamicNodeResHandlers(list)
+	self._dynamicNodeResHandlers = list
 end
 
-function var_0_0.stopOpenDefaultTab(arg_4_0, arg_4_1)
-	arg_4_0._isStopOpenDefaultTab = arg_4_1
+function TabViewGroupDynamic:stopOpenDefaultTab(isStop)
+	self._isStopOpenDefaultTab = isStop
 end
 
-function var_0_0.onInitView(arg_5_0)
-	arg_5_0._UIBlockKey = arg_5_0.viewName .. UIBlockKey.TabViewOpening .. arg_5_0._tabContainerId
-	arg_5_0._tabGOContainer = arg_5_0.viewGO
+function TabViewGroupDynamic:onInitView()
+	self._UIBlockKey = self.viewName .. UIBlockKey.TabViewOpening .. self._tabContainerId
+	self._tabGOContainer = self.viewGO
 
-	if not string.nilorempty(arg_5_0._tabGOContainerPath) then
-		arg_5_0._tabGOContainer = gohelper.findChild(arg_5_0.viewGO, arg_5_0._tabGOContainerPath)
+	if not string.nilorempty(self._tabGOContainerPath) then
+		self._tabGOContainer = gohelper.findChild(self.viewGO, self._tabGOContainerPath)
 	end
 
-	if not arg_5_0._tabGOContainer then
-		logError(arg_5_0.viewName .. " tabGOContainer not exist: " .. arg_5_0._tabGOContainerPath)
+	if not self._tabGOContainer then
+		logError(self.viewName .. " tabGOContainer not exist: " .. self._tabGOContainerPath)
 	end
 
-	arg_5_0._tabViews = arg_5_0.viewContainer:buildTabViews(arg_5_0._tabContainerId)
+	self._tabViews = self.viewContainer:buildTabViews(self._tabContainerId)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_6_0._toSwitchTab, arg_6_0)
+function TabViewGroupDynamic:onOpen()
+	self.viewContainer:registerCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 
-	if arg_6_0._isStopOpenDefaultTab then
+	if self._isStopOpenDefaultTab then
 		return
 	end
 
-	local var_6_0 = arg_6_0.viewParam and type(arg_6_0.viewParam) == "table" and arg_6_0.viewParam.defaultTabIds and arg_6_0.viewParam.defaultTabIds[arg_6_0._tabContainerId] or 1
+	local defaultTabId = self.viewParam and type(self.viewParam) == "table" and self.viewParam.defaultTabIds and self.viewParam.defaultTabIds[self._tabContainerId] or 1
 
-	arg_6_0:_openTabView(var_6_0)
+	self:_openTabView(defaultTabId)
 end
 
-function var_0_0.onOpenFinish(arg_7_0)
-	if arg_7_0:_hasLoaded(arg_7_0._curTabId) then
-		arg_7_0._tabViews[arg_7_0._curTabId]:onOpenFinishInternal()
+function TabViewGroupDynamic:onOpenFinish()
+	if self:_hasLoaded(self._curTabId) then
+		self._tabViews[self._curTabId]:onOpenFinishInternal()
 	else
-		arg_7_0._hasOpenFinish = true
+		self._hasOpenFinish = true
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	if arg_8_0:_hasLoaded(arg_8_0._curTabId) then
-		arg_8_0._tabViews[arg_8_0._curTabId]:onUpdateParamInternal()
+function TabViewGroupDynamic:onUpdateParam()
+	if self:_hasLoaded(self._curTabId) then
+		self._tabViews[self._curTabId]:onUpdateParamInternal()
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0._hasOpenFinish = false
+function TabViewGroupDynamic:onClose()
+	self._hasOpenFinish = false
 
-	arg_9_0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, arg_9_0._toSwitchTab, arg_9_0)
-	arg_9_0:_closeTabView()
+	self.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
+	self:_closeTabView()
 end
 
-function var_0_0.onCloseFinish(arg_10_0)
-	if arg_10_0:_hasLoaded(arg_10_0._curTabId) then
-		arg_10_0._tabViews[arg_10_0._curTabId]:onCloseFinishInternal()
+function TabViewGroupDynamic:onCloseFinish()
+	if self:_hasLoaded(self._curTabId) then
+		self._tabViews[self._curTabId]:onCloseFinishInternal()
 	end
 
-	arg_10_0._curTabId = nil
+	self._curTabId = nil
 end
 
-function var_0_0.removeEvents(arg_11_0)
-	if arg_11_0._tabViews then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0._tabViews) do
-			local var_11_0 = arg_11_0._tabAbLoaders[iter_11_0]
+function TabViewGroupDynamic:removeEvents()
+	if self._tabViews then
+		for tabId, item in pairs(self._tabViews) do
+			local tabLoader = self._tabAbLoaders[tabId]
 
-			if var_11_0 and not var_11_0.isLoading then
-				iter_11_1:removeEventsInternal()
+			if tabLoader and not tabLoader.isLoading then
+				item:removeEventsInternal()
 			end
 		end
 	end
 end
 
-function var_0_0.destoryTab(arg_12_0, arg_12_1)
-	if arg_12_0._tabViews then
-		local var_12_0 = arg_12_0._tabAbLoaders[arg_12_1]
+function TabViewGroupDynamic:destoryTab(tabId)
+	if self._tabViews then
+		local tabLoader = self._tabAbLoaders[tabId]
 
-		if var_12_0 then
-			if not var_12_0.isLoading then
-				local var_12_1 = arg_12_0._tabViews[arg_12_1]
+		if tabLoader then
+			if not tabLoader.isLoading then
+				local item = self._tabViews[tabId]
 
-				if var_12_1 then
-					local var_12_2 = var_12_1.viewGO
+				if item then
+					local go = item.viewGO
 
-					var_12_1:removeEventsInternal()
-					var_12_1:onDestroyViewInternal()
-					var_12_1:__onDispose()
-					gohelper.destroy(var_12_2)
+					item:removeEventsInternal()
+					item:onDestroyViewInternal()
+					item:__onDispose()
+					gohelper.destroy(go)
 				end
 			end
 
-			var_12_0:dispose()
+			tabLoader:dispose()
 
-			arg_12_0._tabAbLoaders[arg_12_1] = nil
+			self._tabAbLoaders[tabId] = nil
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	if arg_13_0._tabViews then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._tabViews) do
-			local var_13_0 = arg_13_0._tabAbLoaders[iter_13_0]
+function TabViewGroupDynamic:onDestroyView()
+	if self._tabViews then
+		for tabId, item in pairs(self._tabViews) do
+			local tabLoader = self._tabAbLoaders[tabId]
 
-			if var_13_0 and not var_13_0.isLoading then
-				iter_13_1:onDestroyViewInternal()
-				iter_13_1:__onDispose()
+			if tabLoader and not tabLoader.isLoading then
+				item:onDestroyViewInternal()
+				item:__onDispose()
 			end
 		end
 	end
 
-	for iter_13_2, iter_13_3 in pairs(arg_13_0._tabAbLoaders) do
-		iter_13_3:dispose()
+	for _, tabLoader in pairs(self._tabAbLoaders) do
+		tabLoader:dispose()
 	end
 
-	arg_13_0._tabAbLoaders = nil
-	arg_13_0._tabCanvasGroup = nil
-	arg_13_0._tabGOContainer = nil
-	arg_13_0._tabViews = nil
+	self._tabAbLoaders = nil
+	self._tabCanvasGroup = nil
+	self._tabGOContainer = nil
+	self._tabViews = nil
 end
 
-function var_0_0.getTabContainerId(arg_14_0)
-	return arg_14_0._tabContainerId
+function TabViewGroupDynamic:getTabContainerId()
+	return self._tabContainerId
 end
 
-function var_0_0.getCurTabId(arg_15_0)
-	return arg_15_0._curTabId
+function TabViewGroupDynamic:getCurTabId()
+	return self._curTabId
 end
 
-function var_0_0._toSwitchTab(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 == arg_16_0._tabContainerId then
-		arg_16_0:_openTabView(arg_16_2)
+function TabViewGroupDynamic:_toSwitchTab(tabContainerId, tabId)
+	if tabContainerId == self._tabContainerId then
+		self:_openTabView(tabId)
 	end
 end
 
-function var_0_0._openTabView(arg_17_0, arg_17_1)
-	if arg_17_0._curTabId == arg_17_1 then
+function TabViewGroupDynamic:_openTabView(tabId)
+	if self._curTabId == tabId then
 		return
 	end
 
-	arg_17_0:_closeTabView()
+	self:_closeTabView()
 
-	arg_17_0._curTabId = arg_17_1
+	self._curTabId = tabId
 
-	if not arg_17_0._curTabId then
+	if not self._curTabId then
 		return
 	end
 
-	if arg_17_0._tabAbLoaders[arg_17_0._curTabId] then
-		arg_17_0:_setVisible(arg_17_0._curTabId, true)
-		arg_17_0._tabViews[arg_17_0._curTabId]:onOpenInternal()
+	if self._tabAbLoaders[self._curTabId] then
+		self:_setVisible(self._curTabId, true)
+		self._tabViews[self._curTabId]:onOpenInternal()
 	else
-		local var_17_0 = MultiAbLoader.New()
+		local loader = MultiAbLoader.New()
 
-		arg_17_0._tabAbLoaders[arg_17_0._curTabId] = var_17_0
+		self._tabAbLoaders[self._curTabId] = loader
 
-		local var_17_1 = arg_17_0.viewContainer:getSetting().tabRes
-		local var_17_2 = var_17_1 and var_17_1[arg_17_0._tabContainerId] and var_17_1[arg_17_0._tabContainerId][arg_17_0._curTabId]
+		local tabRes = self.viewContainer:getSetting().tabRes
+		local curTabRes = tabRes and tabRes[self._tabContainerId] and tabRes[self._tabContainerId][self._curTabId]
 
-		arg_17_0._tabMainRes[arg_17_0._curTabId] = var_17_2[1]
+		self._tabMainRes[self._curTabId] = curTabRes[1]
 
-		if arg_17_0._dynamicNodeResHandlers and arg_17_0._dynamicNodeResHandlers[arg_17_0._curTabId] then
-			local var_17_3 = arg_17_0._dynamicNodeResHandlers[arg_17_0._curTabId]()
-			local var_17_4 = {}
+		if self._dynamicNodeResHandlers and self._dynamicNodeResHandlers[self._curTabId] then
+			local resList = self._dynamicNodeResHandlers[self._curTabId]()
+			local allRes = {}
 
-			tabletool.addValues(var_17_4, var_17_2)
-			tabletool.addValues(var_17_4, var_17_3)
+			tabletool.addValues(allRes, curTabRes)
+			tabletool.addValues(allRes, resList)
 
-			var_17_2 = var_17_4
+			curTabRes = allRes
 		end
 
-		if var_17_2 then
-			UIBlockMgr.instance:startBlock(arg_17_0._UIBlockKey)
-			var_17_0:setPathList(var_17_2)
-			var_17_0:startLoad(arg_17_0._finishCallback, arg_17_0)
+		if curTabRes then
+			UIBlockMgr.instance:startBlock(self._UIBlockKey)
+			loader:setPathList(curTabRes)
+			loader:startLoad(self._finishCallback, self)
 		else
-			logError(string.format("TabView no res: tabContainerId_%d, tabId_%d", arg_17_0._tabContainerId, arg_17_0._curTabId))
+			logError(string.format("TabView no res: tabContainerId_%d, tabId_%d", self._tabContainerId, self._curTabId))
 		end
 	end
 end
 
-function var_0_0._closeTabView(arg_18_0)
-	local var_18_0 = arg_18_0._curTabId and arg_18_0._tabAbLoaders[arg_18_0._curTabId]
+function TabViewGroupDynamic:_closeTabView()
+	local curLoader = self._curTabId and self._tabAbLoaders[self._curTabId]
 
-	if var_18_0 then
-		if var_18_0.isLoading then
-			var_18_0:dispose()
+	if curLoader then
+		if curLoader.isLoading then
+			curLoader:dispose()
 
-			arg_18_0._tabAbLoaders[arg_18_0._curTabId] = nil
+			self._tabAbLoaders[self._curTabId] = nil
 
-			UIBlockMgr.instance:endBlock(arg_18_0._UIBlockKey)
+			UIBlockMgr.instance:endBlock(self._UIBlockKey)
 		else
-			arg_18_0._tabViews[arg_18_0._curTabId]:onCloseInternal()
-			arg_18_0:_setVisible(arg_18_0._curTabId, false)
+			self._tabViews[self._curTabId]:onCloseInternal()
+			self:_setVisible(self._curTabId, false)
 		end
 	end
 end
 
-function var_0_0._setVisible(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0._tabCanvasGroup[arg_19_1]
+function TabViewGroupDynamic:_setVisible(tabId, isVisible)
+	local canvasGroup = self._tabCanvasGroup[tabId]
 
-	if not var_19_0 then
-		local var_19_1 = arg_19_0._tabViews[arg_19_1].viewGO
+	if not canvasGroup then
+		local viewGO = self._tabViews[tabId].viewGO
 
-		var_19_0 = gohelper.onceAddComponent(var_19_1, typeof(UnityEngine.CanvasGroup))
-		arg_19_0._tabCanvasGroup[arg_19_1] = var_19_0
+		canvasGroup = gohelper.onceAddComponent(viewGO, typeof(UnityEngine.CanvasGroup))
+		self._tabCanvasGroup[tabId] = canvasGroup
 	end
 
-	if arg_19_2 then
-		var_19_0.alpha = 1
-		var_19_0.interactable = true
-		var_19_0.blocksRaycasts = true
+	if isVisible then
+		canvasGroup.alpha = 1
+		canvasGroup.interactable = true
+		canvasGroup.blocksRaycasts = true
 	else
-		var_19_0.alpha = 0
-		var_19_0.interactable = false
-		var_19_0.blocksRaycasts = false
+		canvasGroup.alpha = 0
+		canvasGroup.interactable = false
+		canvasGroup.blocksRaycasts = false
 	end
 end
 
-function var_0_0._getTabGoContainer(arg_20_0)
-	if arg_20_0._dynamicNodeContainers then
-		local var_20_0 = arg_20_0._dynamicNodeContainers[arg_20_0._curTabId]
+function TabViewGroupDynamic:_getTabGoContainer()
+	if self._dynamicNodeContainers then
+		local path = self._dynamicNodeContainers[self._curTabId]
 
-		if var_20_0 then
-			return gohelper.findChild(arg_20_0.viewGO, var_20_0)
+		if path then
+			return gohelper.findChild(self.viewGO, path)
 		end
 	end
 
-	return arg_20_0._tabGOContainer
+	return self._tabGOContainer
 end
 
-function var_0_0._finishCallback(arg_21_0, arg_21_1)
-	UIBlockMgr.instance:endBlock(arg_21_0._UIBlockKey)
+function TabViewGroupDynamic:_finishCallback(loader)
+	UIBlockMgr.instance:endBlock(self._UIBlockKey)
 
-	local var_21_0 = arg_21_1:getAssetItem(arg_21_0._tabMainRes[arg_21_0._curTabId]):GetResource()
-	local var_21_1 = gohelper.clone(var_21_0, arg_21_0:_getTabGoContainer())
-	local var_21_2 = arg_21_0._tabViews[arg_21_0._curTabId]
+	local firstAssetItem = loader:getAssetItem(self._tabMainRes[self._curTabId])
+	local tabPrefab = firstAssetItem:GetResource()
+	local viewGO = gohelper.clone(tabPrefab, self:_getTabGoContainer())
+	local tabView = self._tabViews[self._curTabId]
 
-	if var_21_2 then
-		var_21_2:__onInit()
+	if tabView then
+		tabView:__onInit()
 
-		var_21_2.rootGO = arg_21_0.viewGO
-		var_21_2.viewGO = var_21_1
-		var_21_2.tabContainer = arg_21_0
-		var_21_2.viewContainer = arg_21_0.viewContainer
-		var_21_2.viewName = arg_21_0.viewName
-		var_21_2.viewParam = arg_21_0.viewParam
+		tabView.rootGO = self.viewGO
+		tabView.viewGO = viewGO
+		tabView.tabContainer = self
+		tabView.viewContainer = self.viewContainer
+		tabView.viewName = self.viewName
+		tabView.viewParam = self.viewParam
 
-		arg_21_0:_setVisible(arg_21_0._curTabId, true)
-		var_21_2:onInitViewInternal()
-		var_21_2:addEventsInternal()
-		var_21_2:onOpenInternal()
+		self:_setVisible(self._curTabId, true)
+		tabView:onInitViewInternal()
+		tabView:addEventsInternal()
+		tabView:onOpenInternal()
 
-		if arg_21_0._hasOpenFinish then
-			var_21_2:onOpenFinishInternal()
+		if self._hasOpenFinish then
+			tabView:onOpenFinishInternal()
 		end
 	else
-		logError(string.format("TabView not exist: tabContainerId_%d, tabId_%d", arg_21_0._tabContainerId, arg_21_0._curTabId))
+		logError(string.format("TabView not exist: tabContainerId_%d, tabId_%d", self._tabContainerId, self._curTabId))
 	end
 end
 
-function var_0_0._hasLoaded(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._tabAbLoaders and arg_22_0._tabAbLoaders[arg_22_1]
+function TabViewGroupDynamic:_hasLoaded(tabId)
+	local curLoader = self._tabAbLoaders and self._tabAbLoaders[tabId]
 
-	return var_22_0 and not var_22_0.isLoading
+	return curLoader and not curLoader.isLoading
 end
 
-return var_0_0
+return TabViewGroupDynamic

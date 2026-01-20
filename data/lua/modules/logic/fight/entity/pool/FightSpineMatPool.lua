@@ -1,58 +1,60 @@
-﻿module("modules.logic.fight.entity.pool.FightSpineMatPool", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/pool/FightSpineMatPool.lua
 
-local var_0_0 = class("FightSpineMatPool")
-local var_0_1 = 10
-local var_0_2 = {}
+module("modules.logic.fight.entity.pool.FightSpineMatPool", package.seeall)
 
-function var_0_0.getMat(arg_1_0)
-	local var_1_0 = var_0_2[arg_1_0]
+local FightSpineMatPool = class("FightSpineMatPool")
+local MaxCount = 10
+local _poolDict = {}
 
-	if not var_1_0 then
-		var_1_0 = {}
-		var_0_2[arg_1_0] = var_1_0
+function FightSpineMatPool.getMat(matName)
+	local pool = _poolDict[matName]
+
+	if not pool then
+		pool = {}
+		_poolDict[matName] = pool
 	end
 
-	if #var_1_0 > 0 then
-		return table.remove(var_1_0, #var_1_0)
+	if #pool > 0 then
+		return table.remove(pool, #pool)
 	else
-		local var_1_1 = ResUrl.getRoleSpineMat(arg_1_0)
-		local var_1_2 = FightHelper.getPreloadAssetItem(var_1_1)
+		local path = ResUrl.getRoleSpineMat(matName)
+		local assetItem = FightHelper.getPreloadAssetItem(path)
 
-		if var_1_2 then
-			local var_1_3 = var_1_2:GetResource()
+		if assetItem then
+			local mat = assetItem:GetResource()
 
-			if var_1_3 then
-				return UnityEngine.Object.Instantiate(var_1_3)
+			if mat then
+				return UnityEngine.Object.Instantiate(mat)
 			end
 		end
 	end
 
-	logError("Material has not preload: " .. arg_1_0)
+	logError("Material has not preload: " .. matName)
 end
 
-function var_0_0.returnMat(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_2[arg_2_0]
+function FightSpineMatPool.returnMat(matName, mat)
+	local pool = _poolDict[matName]
 
-	if not var_2_0 then
-		var_2_0 = {}
-		var_0_2[arg_2_0] = var_2_0
+	if not pool then
+		pool = {}
+		_poolDict[matName] = pool
 	end
 
-	if #var_2_0 > var_0_1 then
-		gohelper.destroy(arg_2_1)
+	if #pool > MaxCount then
+		gohelper.destroy(mat)
 	else
-		table.insert(var_2_0, arg_2_1)
+		table.insert(pool, mat)
 	end
 end
 
-function var_0_0.dispose()
-	for iter_3_0, iter_3_1 in pairs(var_0_2) do
-		for iter_3_2, iter_3_3 in ipairs(iter_3_1) do
-			gohelper.destroy(iter_3_3)
+function FightSpineMatPool.dispose()
+	for _, pool in pairs(_poolDict) do
+		for _, mat in ipairs(pool) do
+			gohelper.destroy(mat)
 		end
 	end
 
-	var_0_2 = {}
+	_poolDict = {}
 end
 
-return var_0_0
+return FightSpineMatPool

@@ -1,28 +1,30 @@
-﻿module("modules.logic.explore.controller.steps.ExploreArchiveClientStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreArchiveClientStep.lua
 
-local var_0_0 = class("ExploreArchiveClientStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreArchiveClientStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseViewFinish, arg_1_0)
+local ExploreArchiveClientStep = class("ExploreArchiveClientStep", ExploreStepBase)
 
-	local var_1_0 = ExploreModel.instance:getMapId()
-	local var_1_1 = ExploreConfig.instance:getMapIdConfig(var_1_0)
+function ExploreArchiveClientStep:onStart()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+
+	local mapId = ExploreModel.instance:getMapId()
+	local mapCo = ExploreConfig.instance:getMapIdConfig(mapId)
 
 	ViewMgr.instance:openView(ViewName.ExploreArchivesDetailView, {
-		id = arg_1_0._data.archiveId,
-		chapterId = var_1_1.chapterId
+		id = self._data.archiveId,
+		chapterId = mapCo.chapterId
 	})
 end
 
-function var_0_0._onCloseViewFinish(arg_2_0, arg_2_1)
-	if ViewName.ExploreArchivesDetailView == arg_2_1 then
-		arg_2_0:onDone()
+function ExploreArchiveClientStep:_onCloseViewFinish(viewName)
+	if ViewName.ExploreArchivesDetailView == viewName then
+		self:onDone()
 	end
 end
 
-function var_0_0.onDestory(arg_3_0)
-	var_0_0.super.onDestory(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function ExploreArchiveClientStep:onDestory()
+	ExploreArchiveClientStep.super.onDestory(self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return ExploreArchiveClientStep

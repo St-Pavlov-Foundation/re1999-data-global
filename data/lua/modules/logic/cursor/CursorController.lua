@@ -1,31 +1,33 @@
-﻿module("modules.logic.cursor.CursorController", package.seeall)
+﻿-- chunkname: @modules/logic/cursor/CursorController.lua
 
-local var_0_0 = class("CursorController", BaseController)
+module("modules.logic.cursor.CursorController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local CursorController = class("CursorController", BaseController)
+
+function CursorController:onInit()
 	if BootNativeUtil.isWindows() then
 		-- block empty
 	end
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function CursorController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function CursorController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function CursorController:reInit()
 	return
 end
 
-function var_0_0.setUp(arg_5_0)
-	local var_5_0 = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.IDCanvasPopUp), "CursorItem")
+function CursorController:setUp()
+	local go = gohelper.create2d(ViewMgr.instance:getUILayer(UILayerName.IDCanvasPopUp), "CursorItem")
 
-	arg_5_0._cursor = MonoHelper.addLuaComOnceToGo(var_5_0, CursorItem)
+	self._cursor = MonoHelper.addLuaComOnceToGo(go, CursorItem)
 end
 
-var_0_0.instance = var_0_0.New()
+CursorController.instance = CursorController.New()
 
-return var_0_0
+return CursorController

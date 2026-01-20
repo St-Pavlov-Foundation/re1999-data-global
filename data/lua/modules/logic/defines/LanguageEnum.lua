@@ -1,8 +1,10 @@
-﻿module("modules.logic.defines.LanguageEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/LanguageEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.LanguageEnum", package.seeall)
 
-var_0_0.LanguageStoryType = {
+local LanguageEnum = _M
+
+LanguageEnum.LanguageStoryType = {
 	KR = 4,
 	DE = 6,
 	JP = 5,
@@ -12,7 +14,7 @@ var_0_0.LanguageStoryType = {
 	FR = 7,
 	EN = 3
 }
-var_0_0.LanguageStoryType2Key = {
+LanguageEnum.LanguageStoryType2Key = {
 	"cn",
 	"tw",
 	"en",
@@ -22,7 +24,7 @@ var_0_0.LanguageStoryType2Key = {
 	"fr",
 	"thai"
 }
-var_0_0.Lang2KeyEFun = {
+LanguageEnum.Lang2KeyEFun = {
 	jp = "ja-JP",
 	kr = "ko-KR",
 	zh = "zh-CN",
@@ -30,7 +32,7 @@ var_0_0.Lang2KeyEFun = {
 	thai = "th-TH",
 	en = "en-US"
 }
-var_0_0.Lang2KeyGlobal = {
+LanguageEnum.Lang2KeyGlobal = {
 	jp = "ja_JP",
 	kr = "ko_KR",
 	zh = "zh_CN",
@@ -39,4 +41,4 @@ var_0_0.Lang2KeyGlobal = {
 	en = "en"
 }
 
-return var_0_0
+return LanguageEnum

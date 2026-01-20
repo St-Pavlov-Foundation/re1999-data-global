@@ -1,54 +1,56 @@
-﻿module("modules.logic.versionactivity1_4.act130.view.Activity130GameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/view/Activity130GameViewContainer.lua
 
-local var_0_0 = class("Activity130GameViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act130.view.Activity130GameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._act130GameView = Activity130GameView.New()
-	arg_1_0._act130MapView = Activity130Map.New()
+local Activity130GameViewContainer = class("Activity130GameViewContainer", BaseViewContainer)
 
-	local var_1_0 = {}
+function Activity130GameViewContainer:buildViews()
+	self._act130GameView = Activity130GameView.New()
+	self._act130MapView = Activity130Map.New()
 
-	table.insert(var_1_0, arg_1_0._act130GameView)
-	table.insert(var_1_0, arg_1_0._act130MapView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topbtns"))
+	local views = {}
 
-	return var_1_0
+	table.insert(views, self._act130GameView)
+	table.insert(views, self._act130MapView)
+	table.insert(views, TabViewGroup.New(1, "#go_topbtns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Activity130GameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		self._navigateButtonView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function Activity130GameViewContainer:onContainerInit()
 	StatActivity130Controller.instance:statStart()
 end
 
-function var_0_0._overrideCloseFunc(arg_4_0)
-	arg_4_0._act130GameView._viewAnim:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(arg_4_0._doClose, arg_4_0, 0.167)
+function Activity130GameViewContainer:_overrideCloseFunc()
+	self._act130GameView._viewAnim:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(self._doClose, self, 0.167)
 end
 
-function var_0_0._doClose(arg_5_0)
-	arg_5_0:closeThis()
+function Activity130GameViewContainer:_doClose()
+	self:closeThis()
 	Activity130Controller.instance:dispatchEvent(Activity130Event.BackToLevelView, true)
 end
 
-function var_0_0.onContainerClose(arg_6_0)
+function Activity130GameViewContainer:onContainerClose()
 	StatActivity130Controller.instance:statAbort()
 	Role37PuzzleModel.instance:clear()
 	PuzzleRecordListModel.instance:clearRecord()
 end
 
-return var_0_0
+return Activity130GameViewContainer

@@ -1,153 +1,155 @@
-﻿module("modules.logic.versionactivity1_4.act130.view.Activity130LevelScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/view/Activity130LevelScene.lua
 
-local var_0_0 = class("Activity130LevelScene", BaseView)
+module("modules.logic.versionactivity1_4.act130.view.Activity130LevelScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local Activity130LevelScene = class("Activity130LevelScene", BaseView)
+
+function Activity130LevelScene:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity130LevelScene:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity130LevelScene:removeEvents()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_4_0)
+function Activity130LevelScene:onUpdateParam()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	local var_5_0 = CameraMgr.instance:getSceneRoot()
+function Activity130LevelScene:_editableInitView()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_5_0._sceneRoot = UnityEngine.GameObject.New("ActivityRole37Map")
+	self._sceneRoot = UnityEngine.GameObject.New("ActivityRole37Map")
 
-	gohelper.addChild(var_5_0, arg_5_0._sceneRoot)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_addEvents()
+function Activity130LevelScene:onOpen()
+	self:_addEvents()
 
-	arg_6_0._sceneGos = arg_6_0:getUserDataTb_()
+	self._sceneGos = self:getUserDataTb_()
 
-	MainCameraMgr.instance:addView(ViewName.Activity130LevelView, arg_6_0._initCamera, nil, arg_6_0)
+	MainCameraMgr.instance:addView(ViewName.Activity130LevelView, self._initCamera, nil, self)
 
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[3]
-	local var_6_1 = arg_6_0:getResInst(var_6_0, arg_6_0._sceneRoot)
+	local path = self.viewContainer:getSetting().otherRes[3]
+	local scene1Go = self:getResInst(path, self._sceneRoot)
 
-	table.insert(arg_6_0._sceneGos, var_6_1)
-	gohelper.setActive(var_6_1, false)
+	table.insert(self._sceneGos, scene1Go)
+	gohelper.setActive(scene1Go, false)
 
-	local var_6_2 = arg_6_0.viewContainer:getSetting().otherRes[4]
-	local var_6_3 = arg_6_0:getResInst(var_6_2, arg_6_0._sceneRoot)
+	local path = self.viewContainer:getSetting().otherRes[4]
+	local scene2Go = self:getResInst(path, self._sceneRoot)
 
-	table.insert(arg_6_0._sceneGos, var_6_3)
-	gohelper.setActive(var_6_3, false)
+	table.insert(self._sceneGos, scene2Go)
+	gohelper.setActive(scene2Go, false)
 
-	local var_6_4 = Activity130Model.instance:getMaxUnlockEpisode()
+	local episodeId = Activity130Model.instance:getMaxUnlockEpisode()
 
-	if arg_6_0.viewParam and arg_6_0.viewParam.episodeId then
-		var_6_4 = arg_6_0.viewParam.episodeId
+	if self.viewParam and self.viewParam.episodeId then
+		episodeId = self.viewParam.episodeId
 	end
 
-	Activity130Model.instance:setCurEpisodeId(var_6_4)
+	Activity130Model.instance:setCurEpisodeId(episodeId)
 
-	local var_6_5 = VersionActivity1_4Enum.ActivityId.Role37
-	local var_6_6 = var_6_4 < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(var_6_5, var_6_4).lvscene
+	local actId = VersionActivity1_4Enum.ActivityId.Role37
+	local sceneType = episodeId < 1 and Activity130Enum.lvSceneType.Light or Activity130Config.instance:getActivity130EpisodeCo(actId, episodeId).lvscene
 
-	gohelper.setActive(arg_6_0._sceneGos[var_6_6], true)
-	transformhelper.setLocalPos(arg_6_0._sceneGos[var_6_6].transform, 0, 0, 0)
+	gohelper.setActive(self._sceneGos[sceneType], true)
+	transformhelper.setLocalPos(self._sceneGos[sceneType].transform, 0, 0, 0)
 
-	arg_6_0._scene1Animator = arg_6_0._sceneGos[1]:GetComponent(typeof(UnityEngine.Animator))
+	self._scene1Animator = self._sceneGos[1]:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_6_0._scene1Animator:Play("open", 0, 0)
+	self._scene1Animator:Play("open", 0, 0)
 
-	arg_6_0._scene2Animator = arg_6_0._sceneGos[2]:GetComponent(typeof(UnityEngine.Animator))
+	self._scene2Animator = self._sceneGos[2]:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_6_0._scene2Animator:Play("open", 0, 0)
+	self._scene2Animator:Play("open", 0, 0)
 end
 
-function var_0_0._initCamera(arg_7_0)
-	local var_7_0 = CameraMgr.instance:getMainCamera()
-	local var_7_1 = GameUtil.getAdapterScale(true)
+function Activity130LevelScene:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale(true)
 
-	var_7_0.orthographic = true
-	var_7_0.orthographicSize = 7.4 * var_7_1
+	camera.orthographic = true
+	camera.orthographicSize = 7.4 * scale
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:_removeEvents()
+function Activity130LevelScene:onClose()
+	self:_removeEvents()
 end
 
-function var_0_0._onSetSceneActive(arg_9_0, arg_9_1)
-	if arg_9_0._sceneRoot then
-		local var_9_0 = VersionActivity1_4Enum.ActivityId.Role37
-		local var_9_1 = Activity130Model.instance:getCurEpisodeId()
-		local var_9_2 = Activity130Config.instance:getActivity130EpisodeCo(var_9_0, var_9_1).lvscene
+function Activity130LevelScene:_onSetSceneActive(isActive)
+	if self._sceneRoot then
+		local actId = VersionActivity1_4Enum.ActivityId.Role37
+		local curEpisodeId = Activity130Model.instance:getCurEpisodeId()
+		local sceneType = Activity130Config.instance:getActivity130EpisodeCo(actId, curEpisodeId).lvscene
 
-		gohelper.setActive(arg_9_0._sceneGos[2], var_9_2 == Activity130Enum.lvSceneType.Moon)
-		gohelper.setActive(arg_9_0._sceneRoot, arg_9_1)
-	end
-end
-
-function var_0_0._onSetScenePos(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._sceneGos) do
-		transformhelper.setPosXY(iter_10_1.transform, arg_10_1, 0)
+		gohelper.setActive(self._sceneGos[2], sceneType == Activity130Enum.lvSceneType.Moon)
+		gohelper.setActive(self._sceneRoot, isActive)
 	end
 end
 
-function var_0_0._onBackToLevelView(arg_11_0)
-	local var_11_0 = VersionActivity1_4Enum.ActivityId.Role37
-	local var_11_1 = Activity130Model.instance:getCurEpisodeId()
+function Activity130LevelScene:_onSetScenePos(posX)
+	for _, sceneGo in pairs(self._sceneGos) do
+		transformhelper.setPosXY(sceneGo.transform, posX, 0)
+	end
+end
 
-	if var_11_1 == 0 then
+function Activity130LevelScene:_onBackToLevelView()
+	local actId = VersionActivity1_4Enum.ActivityId.Role37
+	local curEpisodeId = Activity130Model.instance:getCurEpisodeId()
+
+	if curEpisodeId == 0 then
 		return
 	end
 
-	local var_11_2 = Activity130Config.instance:getActivity130EpisodeCo(var_11_0, var_11_1).lvscene
+	local sceneType = Activity130Config.instance:getActivity130EpisodeCo(actId, curEpisodeId).lvscene
 
-	gohelper.setActive(arg_11_0._sceneGos[2], var_11_2 == Activity130Enum.lvSceneType.Moon)
+	gohelper.setActive(self._sceneGos[2], sceneType == Activity130Enum.lvSceneType.Moon)
 
-	if arg_11_0._sceneRoot then
-		gohelper.setActive(arg_11_0._sceneRoot, true)
-		arg_11_0._scene1Animator:Play("open", 0, 0)
-		arg_11_0._scene2Animator:Play("open", 0, 0)
+	if self._sceneRoot then
+		gohelper.setActive(self._sceneRoot, true)
+		self._scene1Animator:Play("open", 0, 0)
+		self._scene2Animator:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.changeLvScene(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._sceneGos[arg_12_1], true)
+function Activity130LevelScene:changeLvScene(sceneType)
+	gohelper.setActive(self._sceneGos[sceneType], true)
 
-	local var_12_0 = arg_12_0._sceneGos[2]:GetComponent(typeof(UnityEngine.Animator))
+	local animator = self._sceneGos[2]:GetComponent(typeof(UnityEngine.Animator))
 
-	if arg_12_1 == Activity130Enum.lvSceneType.Light then
-		var_12_0:Play("tosun", 0, 0)
+	if sceneType == Activity130Enum.lvSceneType.Light then
+		animator:Play("tosun", 0, 0)
 	else
-		var_12_0:Play("tohaunghun", 0, 0)
+		animator:Play("tohaunghun", 0, 0)
 	end
 end
 
-function var_0_0._addEvents(arg_13_0)
-	arg_13_0:addEventCb(Activity130Controller.instance, Activity130Event.ShowLevelScene, arg_13_0._onSetSceneActive, arg_13_0)
-	arg_13_0:addEventCb(Activity130Controller.instance, Activity130Event.BackToLevelView, arg_13_0._onBackToLevelView, arg_13_0)
-	arg_13_0:addEventCb(Activity130Controller.instance, Activity130Event.SetScenePos, arg_13_0._onSetScenePos, arg_13_0)
+function Activity130LevelScene:_addEvents()
+	self:addEventCb(Activity130Controller.instance, Activity130Event.ShowLevelScene, self._onSetSceneActive, self)
+	self:addEventCb(Activity130Controller.instance, Activity130Event.BackToLevelView, self._onBackToLevelView, self)
+	self:addEventCb(Activity130Controller.instance, Activity130Event.SetScenePos, self._onSetScenePos, self)
 end
 
-function var_0_0._removeEvents(arg_14_0)
-	arg_14_0:removeEventCb(Activity130Controller.instance, Activity130Event.ShowLevelScene, arg_14_0._onSetSceneActive, arg_14_0)
-	arg_14_0:removeEventCb(Activity130Controller.instance, Activity130Event.BackToLevelView, arg_14_0._onBackToLevelView, arg_14_0)
-	arg_14_0:removeEventCb(Activity130Controller.instance, Activity130Event.SetScenePos, arg_14_0._onSetScenePos, arg_14_0)
+function Activity130LevelScene:_removeEvents()
+	self:removeEventCb(Activity130Controller.instance, Activity130Event.ShowLevelScene, self._onSetSceneActive, self)
+	self:removeEventCb(Activity130Controller.instance, Activity130Event.BackToLevelView, self._onBackToLevelView, self)
+	self:removeEventCb(Activity130Controller.instance, Activity130Event.SetScenePos, self._onSetScenePos, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	if arg_15_0._sceneRoot then
-		gohelper.destroy(arg_15_0._sceneRoot)
+function Activity130LevelScene:onDestroyView()
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_15_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 end
 
-return var_0_0
+return Activity130LevelScene

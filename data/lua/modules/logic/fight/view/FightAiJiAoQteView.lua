@@ -1,81 +1,86 @@
-﻿module("modules.logic.fight.view.FightAiJiAoQteView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightAiJiAoQteView.lua
 
-local var_0_0 = class("FightAiJiAoQteView", FightBaseView)
+module("modules.logic.fight.view.FightAiJiAoQteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local FightAiJiAoQteView = class("FightAiJiAoQteView", FightBaseView)
+
+function FightAiJiAoQteView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightAiJiAoQteView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightAiJiAoQteView:removeEvents()
 	return
 end
 
-function var_0_0.onConstructor(arg_4_0)
+function FightAiJiAoQteView:onConstructor()
 	return
 end
 
-function var_0_0._onBtnEsc(arg_5_0)
+function FightAiJiAoQteView:_onBtnEsc()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function FightAiJiAoQteView:onOpen()
 	FightController.instance:dispatchEvent(FightEvent.StopCardCameraAnimator)
-	NavigateMgr.instance:addEscape(arg_6_0.viewContainer.viewName, arg_6_0._onBtnEsc, arg_6_0)
+	NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onBtnEsc, self)
 
-	if arg_6_0.logicView then
-		arg_6_0.logicView:disposeSelf()
+	if self.logicView then
+		self.logicView:disposeSelf()
 	end
 
-	local var_6_0 = arg_6_0.viewParam.fromId
-	local var_6_1 = arg_6_0.viewParam.toId
+	local fromId = self.viewParam.fromId
+	local toId = self.viewParam.toId
 
-	arg_6_0.logicView = arg_6_0:com_openSubView(FightAiJiAoQteLogicView, "ui/viewres/fight/fightaijiaoqteview.prefab", arg_6_0.viewGO, var_6_0, var_6_1)
+	self.logicView = self:com_openSubView(FightAiJiAoQteLogicView, "ui/viewres/fight/fightaijiaoqteview.prefab", self.viewGO, fromId, toId)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:onOpen()
+function FightAiJiAoQteView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function FightAiJiAoQteView:onDestroyView()
 	return
 end
 
-function var_0_0.autoQte(arg_9_0, arg_9_1)
-	local var_9_0 = FightDataModel.instance.aiJiAoAutoSequenceForGM
+function FightAiJiAoQteView.autoQte(fromId, toId)
+	local aiJiAoAutoSequenceForGM = FightDataModel.instance.aiJiAoAutoSequenceForGM
 
-	if var_9_0 then
-		local var_9_1 = var_9_0.autoSequence
+	if aiJiAoAutoSequenceForGM then
+		local autoSequence = aiJiAoAutoSequenceForGM.autoSequence
 
-		if var_9_1 and #var_9_1 > 0 then
-			local var_9_2 = var_9_0.index + 1
+		if autoSequence and #autoSequence > 0 then
+			local index = aiJiAoAutoSequenceForGM.index + 1
 
-			if not var_9_1[var_9_2] then
-				var_9_2 = 1
+			if not autoSequence[index] then
+				index = 1
 			end
 
-			var_9_0.index = var_9_2
+			aiJiAoAutoSequenceForGM.index = index
 
-			local var_9_3 = var_9_1[var_9_2]
+			local selectType = autoSequence[index]
 
-			FightRpc.instance:sendUseClothSkillRequest(var_9_3, arg_9_0, arg_9_1, FightEnum.ClothSkillType.EzioBigSkill)
+			FightRpc.instance:sendUseClothSkillRequest(selectType, fromId, toId, FightEnum.ClothSkillType.EzioBigSkill)
 
 			return
 		end
 	end
 
-	local var_9_4 = FightDataHelper.entityMgr:getById(arg_9_1)
+	local entityData = FightDataHelper.entityMgr:getById(toId)
 
-	if var_9_4 then
-		if var_9_4.currentHp / var_9_4.attrMO.hp >= 0.5 then
-			FightRpc.instance:sendUseClothSkillRequest(2, arg_9_0, arg_9_1, FightEnum.ClothSkillType.EzioBigSkill)
+	if entityData then
+		local curHp = entityData.currentHp
+		local maxHp = entityData.attrMO.hp
+
+		if curHp / maxHp >= 0.5 then
+			FightRpc.instance:sendUseClothSkillRequest(2, fromId, toId, FightEnum.ClothSkillType.EzioBigSkill)
 		else
-			FightRpc.instance:sendUseClothSkillRequest(1, arg_9_0, arg_9_1, FightEnum.ClothSkillType.EzioBigSkill)
+			FightRpc.instance:sendUseClothSkillRequest(1, fromId, toId, FightEnum.ClothSkillType.EzioBigSkill)
 		end
 	end
 end
 
-return var_0_0
+return FightAiJiAoQteView

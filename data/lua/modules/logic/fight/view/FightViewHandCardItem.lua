@@ -1,912 +1,966 @@
-﻿module("modules.logic.fight.view.FightViewHandCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewHandCardItem.lua
 
-local var_0_0 = class("FightViewHandCardItem", LuaCompBase)
+module("modules.logic.fight.view.FightViewHandCardItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._subViewInst = arg_1_1
+local FightViewHandCardItem = class("FightViewHandCardItem", LuaCompBase)
+
+function FightViewHandCardItem:ctor(subViewInst)
+	self._subViewInst = subViewInst
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.tr = arg_2_1.transform
-	arg_2_0._cardItemAni = gohelper.onceAddComponent(arg_2_0.go, typeof(UnityEngine.Animator))
-	arg_2_0._forAnimGO = gohelper.findChild(arg_2_1, "foranim")
+function FightViewHandCardItem:init(go)
+	self.go = go
+	self.tr = go.transform
+	self._cardItemAni = gohelper.onceAddComponent(self.go, typeof(UnityEngine.Animator))
+	self._forAnimGO = gohelper.findChild(go, "foranim")
 
-	local var_2_0 = arg_2_0._subViewInst.viewContainer:getSetting().otherRes[1]
+	local path = self._subViewInst.viewContainer:getSetting().otherRes[1]
 
-	arg_2_0._innerGO = arg_2_0._subViewInst:getResInst(var_2_0, arg_2_0._forAnimGO, "card")
+	self._innerGO = self._subViewInst:getResInst(path, self._forAnimGO, "card")
 
-	gohelper.setAsFirstSibling(arg_2_0._innerGO)
+	gohelper.setAsFirstSibling(self._innerGO)
 
-	arg_2_0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._innerGO, FightViewCardItem, FightEnum.CardShowType.HandCard)
-	arg_2_0._cardAni = arg_2_0._innerGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._cardAni.enabled = false
-	arg_2_0._innerTr = arg_2_0._innerGO.transform
-	arg_2_0._universalGO = gohelper.findChild(arg_2_0._forAnimGO, "universal")
-	arg_2_0._spEffectGO = gohelper.findChild(arg_2_0._forAnimGO, "spEffect")
-	arg_2_0._foranim = arg_2_0._forAnimGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._itemWidth = recthelper.getWidth(arg_2_0.tr)
-	arg_2_0._oldParentX = -999999
-	arg_2_0._click = SLFramework.UGUI.UIClickListener.Get(arg_2_0.go)
-	arg_2_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_2_0.go)
-	arg_2_0._long = SLFramework.UGUI.UILongPressListener.Get(arg_2_0.go)
-	arg_2_0._rightClick = SLFramework.UGUI.UIRightClickListener.Get(arg_2_0.go)
-	arg_2_0._longPressArr = {
+	self._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._innerGO, FightViewCardItem, FightEnum.CardShowType.HandCard)
+	self._cardAni = self._innerGO:GetComponent(typeof(UnityEngine.Animator))
+	self._cardAni.enabled = false
+	self._innerTr = self._innerGO.transform
+	self._universalGO = gohelper.findChild(self._forAnimGO, "universal")
+	self._spEffectGO = gohelper.findChild(self._forAnimGO, "spEffect")
+	self.goRouge2Treasure = gohelper.findChild(self._forAnimGO, "rouge2_treasure")
+
+	gohelper.setActive(self.goRouge2Treasure, false)
+	self._cardItem:setRouge2TreasureRoot(self.goRouge2Treasure)
+
+	self._foranim = self._forAnimGO:GetComponent(typeof(UnityEngine.Animator))
+	self._itemWidth = recthelper.getWidth(self.tr)
+	self._oldParentX = -999999
+	self._click = SLFramework.UGUI.UIClickListener.Get(self.go)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self.go)
+	self._long = SLFramework.UGUI.UILongPressListener.Get(self.go)
+	self._rightClick = SLFramework.UGUI.UIRightClickListener.Get(self.go)
+	self._longPressArr = {
 		0.5,
 		99999
 	}
-	arg_2_0._isDraging = false
-	arg_2_0._isLongPress = false
+	self._isDraging = false
+	self._isLongPress = false
 
-	arg_2_0:setUniversal(false)
+	self:setUniversal(false)
 
-	arg_2_0._keyOffset = 8
-	arg_2_0._keyMaxTipsNum = 9
-	arg_2_0._restrainComp = MonoHelper.addLuaComOnceToGo(arg_2_0.go, FightViewHandCardItemRestrain, arg_2_0)
-	arg_2_0._lockComp = MonoHelper.addLuaComOnceToGo(arg_2_0.go, FightViewHandCardItemLock, arg_2_0)
-	arg_2_0._loader = arg_2_0._loader or LoaderComponent.New()
-	arg_2_0._lockGO = gohelper.findChild(arg_2_0.go, "foranim/lock")
+	self._keyOffset = 8
+	self._keyMaxTipsNum = 9
+	self._restrainComp = MonoHelper.addLuaComOnceToGo(self.go, FightViewHandCardItemRestrain, self)
+	self._lockComp = MonoHelper.addLuaComOnceToGo(self.go, FightViewHandCardItemLock, self)
+	self._loader = self._loader or LoaderComponent.New()
+	self._lockGO = gohelper.findChild(self.go, "foranim/lock")
 
 	if FightCardDataHelper.getCardSkin() == 672801 then
-		var_0_0.replaceLockBg(arg_2_0._lockGO)
+		FightViewHandCardItem.replaceLockBg(self._lockGO)
 	end
 
-	arg_2_0._cardConvertEffect = gohelper.findChild(arg_2_0.go, "foranim/cardConvertEffect")
+	self._cardConvertEffect = gohelper.findChild(self.go, "foranim/cardConvertEffect")
 
-	arg_2_0:setASFDActive(true)
+	self:setASFDActive(true)
+
+	if PCInputController.instance:getIsUse() and GameUtil.playerPrefsGetNumberByUserId("keyTips", 0) ~= 0 then
+		self._cardItem:changeTopLayoutAnchorYOffset(50)
+	end
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function FightViewHandCardItem:addEventListeners()
 	if not FightDataHelper.stateMgr.isReplay then
-		arg_3_0._click:AddClickListener(arg_3_0._onClickThis, arg_3_0)
-		arg_3_0._drag:AddDragBeginListener(arg_3_0._onDragBegin, arg_3_0)
-		arg_3_0._drag:AddDragListener(arg_3_0._onDragThis, arg_3_0)
-		arg_3_0._drag:AddDragEndListener(arg_3_0._onDragEnd, arg_3_0)
-		arg_3_0._long:SetLongPressTime(arg_3_0._longPressArr)
-		arg_3_0._long:AddLongPressListener(arg_3_0._onLongPress, arg_3_0)
+		self._click:AddClickListener(self._onClickThis, self)
+		self._drag:AddDragBeginListener(self._onDragBegin, self)
+		self._drag:AddDragListener(self._onDragThis, self)
+		self._drag:AddDragEndListener(self._onDragEnd, self)
+		self._long:SetLongPressTime(self._longPressArr)
+		self._long:AddLongPressListener(self._onLongPress, self)
 
 		if PCInputController.instance:getIsUse() then
 			-- block empty
 		end
 
-		arg_3_0._rightClick:AddClickListener(arg_3_0._onClickRight, arg_3_0)
+		self._rightClick:AddClickListener(self._onClickRight, self)
 	end
 
-	arg_3_0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_3_0._onSelectSkillTarget, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0.onStageChange, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.DragHandCardBegin, arg_3_0._onDragHandCardBegin, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.DragHandCardEnd, arg_3_0._onDragHandCardEnd, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, arg_3_0._simulateDragHandCardBegin, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCard, arg_3_0._simulateDragHandCard, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, arg_3_0._simulateDragHandCardEnd, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, arg_3_0._simulatePlayHandCard, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.StartReplay, arg_3_0._checkStartReplay, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.RefreshOneHandCard, arg_3_0._onRefreshOneHandCard, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.CardLevelChangeDone, arg_3_0._onCardLevelChangeDone, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, arg_3_0._onGMForceRefreshNameUIBuff, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, arg_3_0._onSeasonSelectChangeHeroTarget, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.ExitOperateState, arg_3_0._onExitOperateState, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.CancelOperation, arg_3_0._onCancelOperation, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, arg_3_0._allocateEnergyDone, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.PlayCardOver, arg_3_0._showASFD, arg_3_0)
+	self:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, self._onSelectSkillTarget, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.DragHandCardBegin, self._onDragHandCardBegin, self)
+	self:addEventCb(FightController.instance, FightEvent.DragHandCardEnd, self._onDragHandCardEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, self._simulateDragHandCardBegin, self)
+	self:addEventCb(FightController.instance, FightEvent.SimulateDragHandCard, self._simulateDragHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, self._simulateDragHandCardEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, self._simulatePlayHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.StartReplay, self._checkStartReplay, self)
+	self:addEventCb(FightController.instance, FightEvent.RefreshOneHandCard, self._onRefreshOneHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.CardLevelChangeDone, self._onCardLevelChangeDone, self)
+	self:addEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, self._onGMForceRefreshNameUIBuff, self)
+	self:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, self._onSeasonSelectChangeHeroTarget, self)
+	self:addEventCb(FightController.instance, FightEvent.ExitOperateState, self._onExitOperateState, self)
+	self:addEventCb(FightController.instance, FightEvent.CancelOperation, self._onCancelOperation, self)
+	self:addEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, self._allocateEnergyDone, self)
+	self:addEventCb(FightController.instance, FightEvent.PlayCardOver, self._showASFD, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._click:RemoveClickListener()
-	arg_4_0._drag:RemoveDragBeginListener()
-	arg_4_0._drag:RemoveDragListener()
-	arg_4_0._drag:RemoveDragEndListener()
-	arg_4_0._long:RemoveLongPressListener()
+function FightViewHandCardItem:removeEventListeners()
+	self._click:RemoveClickListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragEndListener()
+	self._long:RemoveLongPressListener()
 
 	if PCInputController.instance:getIsUse() then
 		-- block empty
 	end
 
-	arg_4_0._rightClick:RemoveClickListener()
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_4_0._onSelectSkillTarget, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.onStageChange, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_4_0._onBuffUpdate, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.DragHandCardBegin, arg_4_0._onDragHandCardBegin, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.DragHandCardEnd, arg_4_0._onDragHandCardEnd, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, arg_4_0._simulateDragHandCardBegin, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCard, arg_4_0._simulateDragHandCard, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, arg_4_0._simulateDragHandCardEnd, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, arg_4_0._simulatePlayHandCard, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.StartReplay, arg_4_0._checkStartReplay, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.RefreshOneHandCard, arg_4_0._onRefreshOneHandCard, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.CardLevelChangeDone, arg_4_0._onCardLevelChangeDone, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, arg_4_0._onGMForceRefreshNameUIBuff, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, arg_4_0._onSeasonSelectChangeHeroTarget, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.ExitOperateState, arg_4_0._onExitOperateState, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.CancelOperation, arg_4_0._onCancelOperation, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, arg_4_0._allocateEnergyDone, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.PlayCardOver, arg_4_0._showASFD, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayDisableAnim, arg_4_0)
+	self._rightClick:RemoveClickListener()
+	self:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, self._onSelectSkillTarget, self)
+	self:removeEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	self:removeEventCb(FightController.instance, FightEvent.DragHandCardBegin, self._onDragHandCardBegin, self)
+	self:removeEventCb(FightController.instance, FightEvent.DragHandCardEnd, self._onDragHandCardEnd, self)
+	self:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardBegin, self._simulateDragHandCardBegin, self)
+	self:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCard, self._simulateDragHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.SimulateDragHandCardEnd, self._simulateDragHandCardEnd, self)
+	self:removeEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, self._simulatePlayHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.StartReplay, self._checkStartReplay, self)
+	self:removeEventCb(FightController.instance, FightEvent.RefreshOneHandCard, self._onRefreshOneHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.CardLevelChangeDone, self._onCardLevelChangeDone, self)
+	self:removeEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, self._onGMForceRefreshNameUIBuff, self)
+	self:removeEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, self._onSeasonSelectChangeHeroTarget, self)
+	self:removeEventCb(FightController.instance, FightEvent.ExitOperateState, self._onExitOperateState, self)
+	self:removeEventCb(FightController.instance, FightEvent.CancelOperation, self._onCancelOperation, self)
+	self:removeEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, self._allocateEnergyDone, self)
+	self:removeEventCb(FightController.instance, FightEvent.PlayCardOver, self._showASFD, self)
+	TaskDispatcher.cancelTask(self._delayDisableAnim, self)
 end
 
-function var_0_0._allocateEnergyDone(arg_5_0)
-	if arg_5_0._cardItem then
-		arg_5_0._cardItem:_allocateEnergyDone()
+function FightViewHandCardItem:_allocateEnergyDone()
+	if self._cardItem then
+		self._cardItem:_allocateEnergyDone()
 	end
 end
 
-function var_0_0.changeEnergy(arg_6_0)
-	if arg_6_0._cardItem then
-		arg_6_0._cardItem:changeEnergy()
+function FightViewHandCardItem:changeEnergy()
+	if self._cardItem then
+		self._cardItem:changeEnergy()
 	end
 end
 
-function var_0_0._showASFD(arg_7_0)
-	arg_7_0:setASFDActive(true)
+function FightViewHandCardItem:_showASFD()
+	self:setASFDActive(true)
 end
 
-function var_0_0._onCancelOperation(arg_8_0)
-	arg_8_0:setASFDActive(true)
+function FightViewHandCardItem:_onCancelOperation()
+	self:setASFDActive(true)
 end
 
-function var_0_0._onSeasonSelectChangeHeroTarget(arg_9_0, arg_9_1)
-	if arg_9_0.cardInfoMO and arg_9_0.cardInfoMO.uid == arg_9_1 then
-		arg_9_0._seasonChangeHeroSelecting = true
+function FightViewHandCardItem:_onSeasonSelectChangeHeroTarget(entityId)
+	if self.cardInfoMO and self.cardInfoMO.uid == entityId then
+		self._seasonChangeHeroSelecting = true
 
-		arg_9_0._cardItemAni:Play("preview")
-	elseif arg_9_0._seasonChangeHeroSelecting then
-		arg_9_0._cardItemAni:Play("idle")
+		self._cardItemAni:Play("preview")
+	elseif self._seasonChangeHeroSelecting then
+		self._cardItemAni:Play("idle")
 
-		arg_9_0._seasonChangeHeroSelecting = false
+		self._seasonChangeHeroSelecting = false
 	end
 end
 
-function var_0_0._onExitOperateState(arg_10_0)
-	if arg_10_0._seasonChangeHeroSelecting then
-		arg_10_0._cardItemAni:Play("idle")
+function FightViewHandCardItem:_onExitOperateState()
+	if self._seasonChangeHeroSelecting then
+		self._cardItemAni:Play("idle")
 
-		arg_10_0._seasonChangeHeroSelecting = false
+		self._seasonChangeHeroSelecting = false
 	end
 end
 
-function var_0_0.setASFDActive(arg_11_0, arg_11_1)
-	if arg_11_0._cardItem then
-		arg_11_0._cardItem:setASFDActive(arg_11_1)
+function FightViewHandCardItem:setASFDActive(active)
+	if self._cardItem then
+		self._cardItem:setASFDActive(active)
 	end
 end
 
-function var_0_0.playASFDAnim(arg_12_0, arg_12_1)
-	if arg_12_0._cardItem then
-		arg_12_0._cardItem:playASFDAnim(arg_12_1)
+function FightViewHandCardItem:playASFDAnim(animName)
+	if self._cardItem then
+		self._cardItem:playASFDAnim(animName)
 	end
 end
 
-function var_0_0.onStart(arg_13_0)
-	arg_13_0:_checkStartReplay()
+function FightViewHandCardItem:hideTopLayout()
+	if self._cardItem then
+		self._cardItem:hideTopLayout()
+	end
 end
 
-function var_0_0._checkStartReplay(arg_14_0)
+function FightViewHandCardItem:showTopLayout()
+	if self._cardItem then
+		self._cardItem:showTopLayout()
+	end
+end
+
+function FightViewHandCardItem:onStart()
+	self:_checkStartReplay()
+end
+
+function FightViewHandCardItem:_checkStartReplay()
 	if FightDataHelper.stateMgr.isReplay then
-		arg_14_0._click:RemoveClickListener()
-		arg_14_0._drag:RemoveDragBeginListener()
-		arg_14_0._drag:RemoveDragListener()
-		arg_14_0._drag:RemoveDragEndListener()
-		arg_14_0._long:RemoveLongPressListener()
-		arg_14_0._long:RemoveHoverListener()
-		arg_14_0._rightClick:RemoveClickListener()
+		self._click:RemoveClickListener()
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragListener()
+		self._drag:RemoveDragEndListener()
+		self._long:RemoveLongPressListener()
+		self._long:RemoveHoverListener()
+		self._rightClick:RemoveClickListener()
 	end
 end
 
-function var_0_0.setUniversal(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0._universalGO, arg_15_1)
+function FightViewHandCardItem:setUniversal(active)
+	gohelper.setActive(self._universalGO, active)
 end
 
-function var_0_0.refreshPreDelete(arg_16_0, arg_16_1)
-	if arg_16_1 then
+function FightViewHandCardItem:refreshPreDelete(needPreDelete)
+	if needPreDelete then
 		-- block empty
 	end
 end
 
-function var_0_0.updateItem(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0.index = arg_17_1 or arg_17_0.index
+function FightViewHandCardItem:updateItem(index, cardInfoMO)
+	self.index = index or self.index
 
-	if arg_17_2 then
-		arg_17_0.cardInfoMO = arg_17_2
-		arg_17_2.clientData.custom_handCardIndex = arg_17_0.index
+	if cardInfoMO then
+		self.cardInfoMO = cardInfoMO
+		cardInfoMO.clientData.custom_handCardIndex = self.index
 
-		if not lua_skill.configDict[arg_17_2.skillId] then
-			logError("skill not exist: " .. arg_17_2.skillId)
+		local skillCO = lua_skill.configDict[cardInfoMO.skillId]
+
+		if not skillCO then
+			logError("skill not exist: " .. cardInfoMO.skillId)
 
 			return
 		end
 
-		arg_17_0._cardItem:updateItem(arg_17_2.uid, arg_17_2.skillId, arg_17_2)
+		self._cardItem:updateItem(cardInfoMO.uid, cardInfoMO.skillId, cardInfoMO)
 
-		arg_17_0._isDraging = false
-		arg_17_0._isLongPress = false
-		arg_17_0._skillId = arg_17_2.skillId
+		self._isDraging = false
+		self._isLongPress = false
+		self._skillId = cardInfoMO.skillId
 
-		arg_17_0:setUniversal(false)
-		arg_17_0:_updateSpEffect()
-		arg_17_0._restrainComp:updateItem(arg_17_2)
-		arg_17_0._lockComp:updateItem(arg_17_2)
-		arg_17_0._cardItem:updateResistanceByCardInfo(arg_17_2)
+		self:setUniversal(false)
+		self:_updateSpEffect()
+		self._restrainComp:updateItem(cardInfoMO)
+		self._lockComp:updateItem(cardInfoMO)
+		self._cardItem:updateResistanceByCardInfo(cardInfoMO)
 	end
 
-	arg_17_0:_hideEffect()
-	arg_17_0:_refreshBlueStar()
-	arg_17_0:showKeytips()
-	arg_17_0:showCardHeat()
+	self:_hideEffect()
+	self:_refreshBlueStar()
+	self:showKeytips()
+	self:showCardHeat()
 end
 
-function var_0_0.showCardHeat(arg_18_0)
-	arg_18_0._cardItem:showCardHeat()
+function FightViewHandCardItem:showCardHeat()
+	self._cardItem:showCardHeat()
 end
 
-function var_0_0.showKeytips(arg_19_0)
-	local var_19_0 = gohelper.findChild(arg_19_0.go, "foranim/card/#go_pcbtn")
+function FightViewHandCardItem:showKeytips()
+	local go = gohelper.findChild(self.go, "foranim/card/#go_pcbtn")
 
-	gohelper.setActive(var_19_0, true)
+	gohelper.setActive(go, true)
 
-	local var_19_1 = #FightDataHelper.handCardMgr.handCard
+	local cardCount = #FightDataHelper.handCardMgr.handCard
 
-	if var_19_1 == 0 then
+	if cardCount == 0 then
 		return
 	end
 
-	local var_19_2 = var_19_1 - arg_19_0.index + 1
+	local pos = cardCount - self.index + 1
 
-	if var_19_2 >= 1 and var_19_2 <= var_19_1 and var_19_2 <= arg_19_0._keyMaxTipsNum then
-		if not arg_19_0._pcTips then
-			arg_19_0._pcTips = PCInputController.instance:showkeyTips(var_19_0, PCInputModel.Activity.battle, var_19_2 + arg_19_0._keyOffset)
+	if pos >= 1 and pos <= cardCount and pos <= self._keyMaxTipsNum then
+		if not self._pcTips then
+			self._pcTips = PCInputController.instance:showkeyTips(go, PCInputModel.Activity.battle, pos + self._keyOffset)
 		else
-			arg_19_0._pcTips:Refresh(PCInputModel.Activity.battle, var_19_2 + arg_19_0._keyOffset)
+			self._pcTips:Refresh(PCInputModel.Activity.battle, pos + self._keyOffset)
 		end
 
-		if arg_19_0._pcTips == nil then
+		if self._pcTips == nil then
 			return
 		end
 
-		if arg_19_0._cardItem and arg_19_0.cardInfoMO and FightCardDataHelper.isBigSkill(arg_19_0.cardInfoMO.skillId) then
-			recthelper.setAnchorY(arg_19_0._pcTips._go.transform, 200)
+		if self._cardItem and self.cardInfoMO and FightCardDataHelper.isBigSkill(self.cardInfoMO.skillId) then
+			recthelper.setAnchorY(self._pcTips._go.transform, 200)
 		else
-			recthelper.setAnchorY(arg_19_0._pcTips._go.transform, 150)
+			recthelper.setAnchorY(self._pcTips._go.transform, 150)
 		end
 
-		arg_19_0._pcTips:Show(true)
-	elseif arg_19_0._pcTips then
-		arg_19_0._pcTips:Show(false)
+		self._pcTips:Show(true)
+	elseif self._pcTips then
+		self._pcTips:Show(false)
 	end
 end
 
-function var_0_0.refreshCardMO(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0.index = arg_20_1
-	arg_20_0.cardInfoMO = arg_20_2
+function FightViewHandCardItem:refreshCardMO(index, cardInfoMO)
+	self.index = index
+	self.cardInfoMO = cardInfoMO
 end
 
-function var_0_0.onLongPressEnd(arg_21_0)
-	arg_21_0._isLongPress = false
+function FightViewHandCardItem:onLongPressEnd()
+	self._isLongPress = false
 end
 
-function var_0_0.getCardItem(arg_22_0)
-	return arg_22_0._cardItem
+function FightViewHandCardItem:getCardItem()
+	return self._cardItem
 end
 
-function var_0_0._onBuffUpdate(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if not arg_23_0.cardInfoMO then
+function FightViewHandCardItem:_onBuffUpdate(entityId, effectType, buffId)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if arg_23_1 ~= arg_23_0.cardInfoMO.uid then
+	if entityId ~= self.cardInfoMO.uid then
 		return
 	end
 
-	arg_23_0:_updateSpEffect()
+	self:_updateSpEffect()
 
-	if arg_23_2 ~= FightEnum.EffectType.BUFFUPDATE and FightConfig.instance:hasBuffFeature(arg_23_3, FightEnum.BuffFeature.SkillLevelJudgeAdd) then
-		arg_23_0:_refreshBlueStar()
+	if effectType ~= FightEnum.EffectType.BUFFUPDATE and FightConfig.instance:hasBuffFeature(buffId, FightEnum.BuffFeature.SkillLevelJudgeAdd) then
+		self:_refreshBlueStar()
 	end
 end
 
-function var_0_0._refreshBlueStar(arg_24_0)
-	local var_24_0 = arg_24_0.cardInfoMO and arg_24_0.cardInfoMO.uid
-	local var_24_1 = arg_24_0.cardInfoMO and arg_24_0.cardInfoMO.skillId
-	local var_24_2 = var_24_0 and var_24_1 and FightCardDataHelper.getSkillLv(var_24_0, var_24_1)
+function FightViewHandCardItem:_refreshBlueStar()
+	local entityId = self.cardInfoMO and self.cardInfoMO.uid
+	local skillId = self.cardInfoMO and self.cardInfoMO.skillId
+	local skillCardLv = entityId and skillId and FightCardDataHelper.getSkillLv(entityId, skillId)
 
-	arg_24_0._cardItem:showBlueStar(var_24_2)
+	self._cardItem:showBlueStar(skillCardLv)
 end
 
-function var_0_0._onDragHandCardBegin(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if not arg_25_0.cardInfoMO then
+function FightViewHandCardItem:_onDragHandCardBegin(index, position, cardInfoMO)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if not FightEnum.UniversalCard[arg_25_3.skillId] or arg_25_3 == arg_25_0.cardInfoMO then
+	if not FightEnum.UniversalCard[cardInfoMO.skillId] or cardInfoMO == self.cardInfoMO then
 		return
 	end
 
-	local var_25_0 = FightCardDataHelper.getSkillLv(arg_25_3.uid, arg_25_3.skillId)
-	local var_25_1 = FightCardDataHelper.getSkillLv(arg_25_0.cardInfoMO.uid, arg_25_0.cardInfoMO.skillId)
+	local dragLevel = FightCardDataHelper.getSkillLv(cardInfoMO.uid, cardInfoMO.skillId)
+	local thisLevel = FightCardDataHelper.getSkillLv(self.cardInfoMO.uid, self.cardInfoMO.skillId)
 
-	if var_25_1 <= var_25_0 then
+	if thisLevel <= dragLevel then
 		return
 	end
 
-	local var_25_2 = gohelper.findChild(arg_25_0._forAnimGO, "universalMask")
+	local universalMaskGO = gohelper.findChild(self._forAnimGO, "universalMask")
 
-	gohelper.setActive(var_25_2, true)
+	gohelper.setActive(universalMaskGO, true)
 
-	for iter_25_0 = 1, 4 do
-		local var_25_3 = gohelper.findChild(var_25_2, "jinengpai_" .. iter_25_0)
+	for i = 1, 4 do
+		local innerGO = gohelper.findChild(universalMaskGO, "jinengpai_" .. i)
 
-		gohelper.setActive(var_25_3, iter_25_0 == var_25_1)
+		gohelper.setActive(innerGO, i == thisLevel)
 	end
 end
 
-function var_0_0._onDragHandCardEnd(arg_26_0)
-	local var_26_0 = gohelper.findChild(arg_26_0._forAnimGO, "universalMask")
+function FightViewHandCardItem:_onDragHandCardEnd()
+	local universalMaskGO = gohelper.findChild(self._forAnimGO, "universalMask")
 
-	gohelper.setActive(var_26_0, false)
+	gohelper.setActive(universalMaskGO, false)
 end
 
-function var_0_0._onSelectSkillTarget(arg_27_0)
-	arg_27_0:_updateSpEffect()
+function FightViewHandCardItem:_onSelectSkillTarget()
+	self:_updateSpEffect()
 end
 
-function var_0_0._updateSpEffect(arg_28_0)
-	if gohelper.isNil(arg_28_0._spEffectGO) then
+function FightViewHandCardItem:_updateSpEffect()
+	if gohelper.isNil(self._spEffectGO) then
 		return
 	end
 
-	if not arg_28_0.cardInfoMO then
+	if not self.cardInfoMO then
 		return
 	end
 
-	local var_28_0 = lua_skill.configDict[arg_28_0._skillId]
+	local skillCO = lua_skill.configDict[self._skillId]
 
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
-		gohelper.setActive(arg_28_0._spEffectGO, false)
+		gohelper.setActive(self._spEffectGO, false)
 
 		return
 	end
 
-	local var_28_1 = false
-	local var_28_2 = {}
+	local active = false
+	local ingoreDic = {}
 
-	for iter_28_0, iter_28_1 in ipairs(FightStrUtil.instance:getSplitToNumberCache(var_28_0.clientIgnoreCondition, "#")) do
-		var_28_2[iter_28_1] = true
+	for i, v in ipairs(FightStrUtil.instance:getSplitToNumberCache(skillCO.clientIgnoreCondition, "#")) do
+		ingoreDic[v] = true
 	end
 
-	for iter_28_2 = 1, FightEnum.MaxBehavior do
-		if not var_28_2[iter_28_2] then
-			local var_28_3 = var_28_0["condition" .. iter_28_2]
-			local var_28_4 = var_28_0["conditionTarget" .. iter_28_2]
-			local var_28_5 = var_28_0["behavior" .. iter_28_2]
+	for i = 1, FightEnum.MaxBehavior do
+		if not ingoreDic[i] then
+			local condition = skillCO["condition" .. i]
+			local conditionTarget = skillCO["conditionTarget" .. i]
+			local behavior = skillCO["behavior" .. i]
+			local result = self:_checkConditionSpEffect(condition, conditionTarget)
 
-			if arg_28_0:_checkConditionSpEffect(var_28_3, var_28_4) or arg_28_0:_checkSkillRateUpBehavior(var_28_5, var_28_4) then
-				var_28_1 = true
+			result = result or self:_checkSkillRateUpBehavior(behavior, conditionTarget)
+
+			if result then
+				active = true
 
 				break
 			end
 		end
 	end
 
-	if var_28_1 ~= arg_28_0._spEffectGO.activeSelf then
-		gohelper.setActive(arg_28_0._spEffectGO, var_28_1)
+	if active ~= self._spEffectGO.activeSelf then
+		gohelper.setActive(self._spEffectGO, active)
 	end
 end
 
-function var_0_0._getConditionTargetUid(arg_29_0, arg_29_1)
-	if arg_29_1 == 103 then
-		return arg_29_0.cardInfoMO.uid
-	elseif arg_29_1 == 0 then
+function FightViewHandCardItem:_getConditionTargetUid(conditionTarget)
+	if conditionTarget == "103" then
+		return self.cardInfoMO.uid
+	elseif conditionTarget == "0" then
 		return FightDataHelper.operationDataMgr.curSelectEntityId
-	elseif arg_29_1 == 202 then
-		for iter_29_0, iter_29_1 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
-			return iter_29_1.id
+	elseif conditionTarget == "202" then
+		for _, mo in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
+			return mo.id
 		end
 	end
 end
 
-function var_0_0._getConditionTargetUids(arg_30_0, arg_30_1)
-	if arg_30_1 == 103 then
+function FightViewHandCardItem:_getConditionTargetUids(conditionTarget)
+	if conditionTarget == "103" then
 		return {
-			arg_30_0.cardInfoMO.uid
+			self.cardInfoMO.uid
 		}
-	elseif arg_30_1 == 0 then
+	elseif conditionTarget == "0" then
 		return {
 			FightDataHelper.operationDataMgr.curSelectEntityId
 		}
-	elseif arg_30_1 == 202 then
-		local var_30_0 = {}
+	elseif conditionTarget == "202" then
+		local temp = {}
 
-		for iter_30_0, iter_30_1 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
-			table.insert(var_30_0, iter_30_1.id)
+		for _, mo in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
+			table.insert(temp, mo.id)
 		end
 
-		return var_30_0
+		return temp
 	end
 
 	return {}
 end
 
-function var_0_0._checkConditionSpEffect(arg_31_0, arg_31_1, arg_31_2)
-	if string.nilorempty(arg_31_1) then
+function FightViewHandCardItem:_checkConditionSpEffect(condition, conditionTarget)
+	if string.nilorempty(condition) then
 		return
 	end
 
-	local var_31_0 = FightStrUtil.instance:getSplitCache(arg_31_1, "&")
+	local arr = FightStrUtil.instance:getSplitCache(condition, "&")
 
-	if #var_31_0 > 1 then
-		local var_31_1 = 0
+	if #arr > 1 then
+		local count = 0
 
-		for iter_31_0, iter_31_1 in ipairs(var_31_0) do
-			if arg_31_0:_checkSingleCondition(iter_31_1, arg_31_2) then
-				var_31_1 = var_31_1 + 1
+		for i, v in ipairs(arr) do
+			if self:_checkSingleCondition(v, conditionTarget) then
+				count = count + 1
 			end
 		end
 
-		if var_31_1 == #var_31_0 then
+		if count == #arr then
 			return true
 		end
 	else
-		local var_31_2 = FightStrUtil.instance:getSplitCache(arg_31_1, "|")
+		arr = FightStrUtil.instance:getSplitCache(condition, "|")
 
-		if #var_31_2 > 1 then
-			for iter_31_2, iter_31_3 in ipairs(var_31_2) do
-				if arg_31_0:_checkSingleCondition(iter_31_3, arg_31_2) then
+		if #arr > 1 then
+			for i, v in ipairs(arr) do
+				if self:_checkSingleCondition(v, conditionTarget) then
 					return true
 				end
 			end
-		elseif arg_31_0:_checkSingleCondition(arg_31_1, arg_31_2) then
+		elseif self:_checkSingleCondition(condition, conditionTarget) then
 			return true
 		end
 	end
 end
 
-function var_0_0._checkSingleCondition(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = FightStrUtil.instance:getSplitCache(arg_32_1, "#")
-	local var_32_1 = tonumber(var_32_0[1])
-	local var_32_2 = lua_skill_behavior_condition.configDict[var_32_1]
+function FightViewHandCardItem:_checkSingleCondition(sin_condition, conditionTarget)
+	local sp = FightStrUtil.instance:getSplitCache(sin_condition, "#")
+	local typeId = tonumber(sp[1])
+	local conditionCO = lua_skill_behavior_condition.configDict[typeId]
 
-	if not var_32_2 or string.nilorempty(var_32_2.type) then
+	if not conditionCO or string.nilorempty(conditionCO.type) then
 		return false
 	end
 
-	local var_32_3 = arg_32_0:_getConditionTargetUid(arg_32_2)
+	local targetUid = self:_getConditionTargetUid(conditionTarget)
 
-	if not var_32_3 or tostring(var_32_3) == "0" then
+	if not targetUid or tostring(targetUid) == "0" then
 		return false
 	end
 
-	local var_32_4 = FightDataHelper.entityMgr:getById(var_32_3)
+	local targetEntityMO = FightDataHelper.entityMgr:getById(targetUid)
 
-	if not var_32_4 then
+	if not targetEntityMO then
 		return false
 	end
 
-	if var_32_2.type == "LifeLess" then
-		return tonumber(var_32_0[2]) * 0.001 > var_32_4.currentHp / var_32_4.attrMO.hp
-	elseif var_32_2.type == "LifeMore" then
-		return tonumber(var_32_0[2]) * 0.001 < var_32_4.currentHp / var_32_4.attrMO.hp
-	elseif var_32_2.type == "HasBuffId" then
-		local var_32_5 = arg_32_0:_getSimulateBuffTypeDic(var_32_4)
+	if conditionCO.type == "LifeLess" then
+		local targetPercent = tonumber(sp[2]) * 0.001
+		local hpPercent = targetEntityMO.currentHp / targetEntityMO.attrMO.hp
 
-		for iter_32_0 = 2, #var_32_0 do
-			local var_32_6 = tonumber(var_32_0[iter_32_0])
+		return hpPercent < targetPercent
+	elseif conditionCO.type == "LifeMore" then
+		local targetPercent = tonumber(sp[2]) * 0.001
+		local hpPercent = targetEntityMO.currentHp / targetEntityMO.attrMO.hp
 
-			if var_32_6 and var_32_5[var_32_6] then
+		return targetPercent < hpPercent
+	elseif conditionCO.type == "HasBuffId" then
+		local has_buff_type_dic = self:_getSimulateBuffTypeDic(targetEntityMO)
+
+		for i = 2, #sp do
+			local buff_type_id = tonumber(sp[i])
+
+			if buff_type_id and has_buff_type_dic[buff_type_id] then
 				return true
 			end
 		end
-	elseif var_32_2.type == "HasBuff" then
-		local var_32_7 = arg_32_0:_getSimulateBuffTypeDic(var_32_4)
-		local var_32_8 = {}
+	elseif conditionCO.type == "HasBuff" then
+		local has_buff_type_dic = self:_getSimulateBuffTypeDic(targetEntityMO)
+		local has_type = {}
 
-		for iter_32_1, iter_32_2 in pairs(var_32_7) do
-			local var_32_9 = lua_skill_bufftype.configDict[iter_32_1]
+		for k, v in pairs(has_buff_type_dic) do
+			local buff_tpye_config = lua_skill_bufftype.configDict[k]
 
-			if var_32_9 then
-				var_32_8[var_32_9.type] = true
+			if buff_tpye_config then
+				has_type[buff_tpye_config.type] = true
 			end
 		end
 
-		for iter_32_3 = 2, #var_32_0 do
-			local var_32_10 = tonumber(var_32_0[iter_32_3])
+		for i = 2, #sp do
+			local tar_type = tonumber(sp[i])
 
-			if var_32_10 and var_32_8[var_32_10] then
+			if tar_type and has_type[tar_type] then
 				return true
 			end
 		end
-	elseif var_32_2.type == "HasBuffGroup" then
-		local var_32_11 = arg_32_0:_getSimulateBuffTypeDic(var_32_4)
-		local var_32_12 = {}
+	elseif conditionCO.type == "HasBuffGroup" then
+		local has_buff_type_dic = self:_getSimulateBuffTypeDic(targetEntityMO)
+		local has_group = {}
 
-		for iter_32_4, iter_32_5 in pairs(var_32_11) do
-			local var_32_13 = lua_skill_bufftype.configDict[iter_32_4]
+		for k, v in pairs(has_buff_type_dic) do
+			local buff_tpye_config = lua_skill_bufftype.configDict[k]
 
-			if var_32_13 then
-				var_32_12[var_32_13.group] = true
+			if buff_tpye_config then
+				has_group[buff_tpye_config.group] = true
 			end
 		end
 
-		for iter_32_6 = 2, #var_32_0 do
-			local var_32_14 = tonumber(var_32_0[iter_32_6])
+		for i = 2, #sp do
+			local tar_group = tonumber(sp[i])
 
-			if var_32_14 and var_32_12[var_32_14] then
+			if tar_group and has_group[tar_group] then
 				return true
 			end
 		end
-	elseif var_32_2.type == "NoBuffId" then
-		local var_32_15 = arg_32_0:_getBuffTypeDic(var_32_4)
-		local var_32_16 = FightStrUtil.instance:getSplitCache(var_32_0[2], ",")
+	elseif conditionCO.type == "NoBuffId" then
+		local has_buff_type_dic = self:_getBuffTypeDic(targetEntityMO)
+		local splitArr = FightStrUtil.instance:getSplitCache(sp[2], ",")
 
-		if #var_32_16 > 1 then
-			for iter_32_7 = 1, #var_32_16 do
-				local var_32_17 = tonumber(var_32_16[iter_32_7])
+		if #splitArr > 1 then
+			for i = 1, #splitArr do
+				local buff_type_id = tonumber(splitArr[i])
 
-				if var_32_17 and var_32_15[var_32_17] then
+				if buff_type_id and has_buff_type_dic[buff_type_id] then
 					return false
 				end
 			end
 		else
-			for iter_32_8 = 2, #var_32_0 do
-				local var_32_18 = tonumber(var_32_0[iter_32_8])
+			for i = 2, #sp do
+				local buff_type_id = tonumber(sp[i])
 
-				if var_32_18 and var_32_15[var_32_18] then
+				if buff_type_id and has_buff_type_dic[buff_type_id] then
 					return false
 				end
 			end
 		end
 
 		return true
-	elseif var_32_2.type == "NoBuff" then
-		local var_32_19 = arg_32_0:_getBuffTypeDic(var_32_4)
-		local var_32_20 = {}
+	elseif conditionCO.type == "NoBuff" then
+		local has_buff_type_dic = self:_getBuffTypeDic(targetEntityMO)
+		local has_type = {}
 
-		for iter_32_9, iter_32_10 in pairs(var_32_19) do
-			local var_32_21 = lua_skill_bufftype.configDict[iter_32_9]
+		for k, v in pairs(has_buff_type_dic) do
+			local buff_tpye_config = lua_skill_bufftype.configDict[k]
 
-			if var_32_21 then
-				var_32_20[var_32_21.type] = true
+			if buff_tpye_config then
+				has_type[buff_tpye_config.type] = true
 			end
 		end
 
-		local var_32_22 = FightStrUtil.instance:getSplitCache(var_32_0[2], ",")
+		local splitArr = FightStrUtil.instance:getSplitCache(sp[2], ",")
 
-		if #var_32_22 > 1 then
-			for iter_32_11 = 1, #var_32_22 do
-				local var_32_23 = tonumber(var_32_22[iter_32_11])
+		if #splitArr > 1 then
+			for i = 1, #splitArr do
+				local tar_type = tonumber(splitArr[i])
 
-				if var_32_23 and var_32_20[var_32_23] then
+				if tar_type and has_type[tar_type] then
 					return false
 				end
 			end
 		else
-			for iter_32_12 = 2, #var_32_0 do
-				local var_32_24 = tonumber(var_32_0[iter_32_12])
+			for i = 2, #sp do
+				local tar_type = tonumber(sp[i])
 
-				if var_32_24 and var_32_20[var_32_24] then
+				if tar_type and has_type[tar_type] then
 					return false
 				end
 			end
 		end
 
 		return true
-	elseif var_32_2.type == "NoBuffGroup" then
-		local var_32_25 = arg_32_0:_getBuffTypeDic(var_32_4)
-		local var_32_26 = {}
+	elseif conditionCO.type == "NoBuffGroup" then
+		local has_buff_type_dic = self:_getBuffTypeDic(targetEntityMO)
+		local has_group = {}
 
-		for iter_32_13, iter_32_14 in pairs(var_32_25) do
-			local var_32_27 = lua_skill_bufftype.configDict[iter_32_13]
+		for k, v in pairs(has_buff_type_dic) do
+			local buff_tpye_config = lua_skill_bufftype.configDict[k]
 
-			if var_32_27 then
-				var_32_26[var_32_27.group] = true
+			if buff_tpye_config then
+				has_group[buff_tpye_config.group] = true
 			end
 		end
 
-		local var_32_28 = FightStrUtil.instance:getSplitCache(var_32_0[2], ",")
+		local splitArr = FightStrUtil.instance:getSplitCache(sp[2], ",")
 
-		if #var_32_28 > 1 then
-			for iter_32_15 = 1, #var_32_28 do
-				local var_32_29 = tonumber(var_32_28[iter_32_15])
+		if #splitArr > 1 then
+			for i = 1, #splitArr do
+				local tar_group = tonumber(splitArr[i])
 
-				if var_32_29 and var_32_26[var_32_29] then
+				if tar_group and has_group[tar_group] then
 					return false
 				end
 			end
 		else
-			for iter_32_16 = 2, #var_32_0 do
-				local var_32_30 = tonumber(var_32_0[iter_32_16])
+			for i = 2, #sp do
+				local tar_group = tonumber(sp[i])
 
-				if var_32_30 and var_32_26[var_32_30] then
+				if tar_group and has_group[tar_group] then
 					return false
 				end
 			end
 		end
 
 		return true
-	elseif var_32_2.type == "PowerCompare" then
-		local var_32_31 = var_32_4:getPowerInfo(tonumber(var_32_0[3]))
+	elseif conditionCO.type == "PowerCompare" then
+		local curPower = targetEntityMO:getPowerInfo(tonumber(sp[3]))
 
-		if var_32_31 then
-			if var_32_0[2] == "1" then
-				return var_32_31.num >= tonumber(var_32_0[4])
+		if curPower then
+			if sp[2] == "1" then
+				return curPower.num >= tonumber(sp[4])
 			end
 		else
 			return false
 		end
-	elseif var_32_2.type == "TypeIdBuffCountMoreThan" then
-		local var_32_32 = tonumber(var_32_0[2])
-		local var_32_33 = tonumber(var_32_0[3])
-		local var_32_34 = var_32_4:getBuffList()
+	elseif conditionCO.type == "TypeIdBuffCountMoreThan" then
+		local buffTypeId = tonumber(sp[2])
+		local count = tonumber(sp[3])
+		local buffList = targetEntityMO:getBuffList()
 
-		for iter_32_17, iter_32_18 in ipairs(var_32_34) do
-			local var_32_35 = lua_skill_buff.configDict[iter_32_18.buffId]
+		for _, buffMO in ipairs(buffList) do
+			local buffConfig = lua_skill_buff.configDict[buffMO.buffId]
 
-			if var_32_35 and var_32_35.typeId == var_32_32 and var_32_33 <= (iter_32_18.layer and iter_32_18.layer > 0 and iter_32_18.layer or 1) then
-				return true
-			end
-		end
-	elseif var_32_2.type == "SelfTeamHasBuffTypeLayerMoreThan" then
-		local var_32_36 = arg_32_0:_getConditionTargetUids(arg_32_2)
-		local var_32_37 = tonumber(var_32_0[3])
-		local var_32_38 = tonumber(var_32_0[2])
-		local var_32_39 = 0
+			if buffConfig and buffConfig.typeId == buffTypeId then
+				local layer = buffMO.layer and buffMO.layer > 0 and buffMO.layer or 1
 
-		for iter_32_19, iter_32_20 in ipairs(var_32_36) do
-			local var_32_40 = FightDataHelper.entityMgr:getById(iter_32_20):getBuffList()
-
-			for iter_32_21, iter_32_22 in ipairs(var_32_40) do
-				local var_32_41 = lua_skill_buff.configDict[iter_32_22.buffId]
-
-				if var_32_41 and var_32_41.typeId == var_32_37 then
-					var_32_39 = var_32_39 + (iter_32_22.layer and iter_32_22.layer > 0 and iter_32_22.layer or 1)
-				end
-			end
-		end
-
-		return var_32_38 <= var_32_39
-	elseif var_32_2.type == "HasTypeIdBuffMoreThan" then
-		local var_32_42 = tonumber(var_32_0[2])
-		local var_32_43 = tonumber(var_32_0[3])
-		local var_32_44 = var_32_4:getBuffList()
-		local var_32_45 = 0
-
-		for iter_32_23, iter_32_24 in ipairs(var_32_44) do
-			local var_32_46 = lua_skill_buff.configDict[iter_32_24.buffId]
-
-			if var_32_46 and var_32_46.typeId == var_32_42 then
-				if FightBuffHelper.isIncludeType(iter_32_24.buffId, FightEnum.BuffIncludeTypes.Stacked) then
-					var_32_45 = var_32_45 + (iter_32_24.layer and iter_32_24.layer > 0 and iter_32_24.layer or 1)
-				else
-					var_32_45 = var_32_45 + 1
-				end
-			end
-		end
-
-		return var_32_43 <= var_32_45
-	elseif var_32_2.type == "EnemyNumIncludeSpMoreThan" then
-		return tonumber(var_32_0[2]) <= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
-	elseif var_32_2.type == "EnemyNumIncludeSpLessThan" then
-		return tonumber(var_32_0[2]) >= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
-	end
-end
-
-function var_0_0._getBuffTypeDic(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_1:getBuffList()
-	local var_33_1 = {}
-
-	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
-		local var_33_2 = lua_skill_buff.configDict[iter_33_1.buffId]
-
-		if var_33_2 then
-			var_33_1[var_33_2.typeId] = true
-		end
-	end
-
-	return var_33_1
-end
-
-function var_0_0._getSimulateBuffTypeDic(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0:_simulateBuffList(arg_34_1)
-	local var_34_1 = {}
-
-	for iter_34_0, iter_34_1 in ipairs(var_34_0) do
-		local var_34_2 = lua_skill_buff.configDict[iter_34_1.buffId]
-
-		if var_34_2 then
-			var_34_1[var_34_2.typeId] = true
-		end
-	end
-
-	return var_34_1
-end
-
-function var_0_0._checkSkillRateUpBehavior(arg_35_0, arg_35_1, arg_35_2)
-	if string.nilorempty(arg_35_1) then
-		return
-	end
-
-	local var_35_0 = FightStrUtil.instance:getSplitCache(arg_35_1, "#")
-	local var_35_1 = tonumber(var_35_0[1])
-	local var_35_2 = lua_skill_behavior.configDict[var_35_1]
-	local var_35_3 = arg_35_0:_getConditionTargetUid(arg_35_2)
-
-	if var_35_3 == 0 then
-		return false
-	end
-
-	local var_35_4 = FightDataHelper.entityMgr:getById(var_35_3)
-
-	if not var_35_4 then
-		return false
-	end
-
-	local var_35_5 = var_35_2.type == "SkillRateUp1" and arg_35_2 == 103
-	local var_35_6 = var_35_2.type == "SkillRateUp2" and arg_35_2 ~= 103
-	local var_35_7 = arg_35_0:_simulateBuffList(var_35_4)
-
-	if var_35_5 or var_35_6 then
-		local var_35_8 = var_35_0[4] and FightStrUtil.instance:getSplitToNumberCache(var_35_0[4], ",") or {}
-
-		for iter_35_0, iter_35_1 in ipairs(var_35_7) do
-			local var_35_9 = lua_skill_buff.configDict[iter_35_1.buffId]
-			local var_35_10 = var_35_9 and lua_skill_bufftype.configDict[var_35_9.typeId]
-
-			if var_35_10 and tabletool.indexOf(var_35_8, var_35_10.type) then
-				return true
-			end
-		end
-	end
-end
-
-function var_0_0._simulateBuffList(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_1:getBuffList()
-	local var_36_1 = FightDataHelper.operationDataMgr:getOpList()
-
-	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
-		if iter_36_1:isPlayCard() then
-			local var_36_2 = lua_skill.configDict[iter_36_1.skillId]
-
-			for iter_36_2 = 1, FightEnum.MaxBehavior do
-				local var_36_3 = var_36_2["condition" .. iter_36_2]
-				local var_36_4 = var_36_2["behavior" .. iter_36_2]
-				local var_36_5 = var_36_2["behaviorTarget" .. iter_36_2]
-				local var_36_6 = var_36_2["conditionTarget" .. iter_36_2]
-
-				if arg_36_0:_checkCanAddBuff(var_36_3) and not string.nilorempty(var_36_4) then
-					local var_36_7 = var_36_5
-
-					if var_36_5 == 0 then
-						var_36_7 = var_36_2.logicTarget
-					elseif var_36_5 == 999 then
-						var_36_7 = var_36_6 ~= 0 and var_36_6 or var_36_2.logicTarget
-					end
-
-					arg_36_0:_simulateSkillehavior(arg_36_1, iter_36_1, var_36_4, var_36_7, var_36_0)
-				end
-			end
-		end
-	end
-
-	return var_36_0
-end
-
-function var_0_0._checkCanAddBuff(arg_37_0, arg_37_1)
-	if string.nilorempty(arg_37_1) then
-		return
-	end
-
-	local var_37_0 = FightStrUtil.instance:getSplitCache(arg_37_1, "&")
-
-	if #var_37_0 > 1 then
-		local var_37_1 = 0
-
-		for iter_37_0, iter_37_1 in ipairs(var_37_0) do
-			if arg_37_0:_checkSingleConditionCanAddBuff(iter_37_1) then
-				var_37_1 = var_37_1 + 1
-			end
-		end
-
-		if var_37_1 == #var_37_0 then
-			return true
-		end
-	else
-		local var_37_2 = FightStrUtil.instance:getSplitCache(arg_37_1, "|")
-
-		if #var_37_2 > 1 then
-			for iter_37_2, iter_37_3 in ipairs(var_37_2) do
-				if arg_37_0:_checkSingleConditionCanAddBuff(iter_37_3) then
+				if count <= layer then
 					return true
 				end
 			end
-		elseif arg_37_0:_checkSingleConditionCanAddBuff(arg_37_1) then
+		end
+	elseif conditionCO.type == "SelfTeamHasBuffTypeLayerMoreThan" then
+		local conditionTargetUids = self:_getConditionTargetUids(conditionTarget)
+		local buffTypeId = tonumber(sp[3])
+		local count = tonumber(sp[2])
+		local total = 0
+
+		for _, entityId in ipairs(conditionTargetUids) do
+			local oneEntityMO = FightDataHelper.entityMgr:getById(entityId)
+			local buffList = oneEntityMO:getBuffList()
+
+			for _, buffMO in ipairs(buffList) do
+				local buffConfig = lua_skill_buff.configDict[buffMO.buffId]
+
+				if buffConfig and buffConfig.typeId == buffTypeId then
+					local layer = buffMO.layer and buffMO.layer > 0 and buffMO.layer or 1
+
+					total = total + layer
+				end
+			end
+		end
+
+		return count <= total
+	elseif conditionCO.type == "HasTypeIdBuffMoreThan" then
+		local buffTypeId = tonumber(sp[2])
+		local count = tonumber(sp[3])
+		local buffList = targetEntityMO:getBuffList()
+		local counter = 0
+
+		for _, buffMO in ipairs(buffList) do
+			local buffConfig = lua_skill_buff.configDict[buffMO.buffId]
+
+			if buffConfig and buffConfig.typeId == buffTypeId then
+				if FightBuffHelper.isIncludeType(buffMO.buffId, FightEnum.BuffIncludeTypes.Stacked) then
+					local layer = buffMO.layer and buffMO.layer > 0 and buffMO.layer or 1
+
+					counter = counter + layer
+				else
+					counter = counter + 1
+				end
+			end
+		end
+
+		return count <= counter
+	elseif conditionCO.type == "EnemyNumIncludeSpMoreThan" then
+		local enemyCount = tonumber(sp[2])
+
+		return enemyCount <= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+	elseif conditionCO.type == "EnemyNumIncludeSpLessThan" then
+		local enemyCount = tonumber(sp[2])
+
+		return enemyCount >= #FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+	end
+end
+
+function FightViewHandCardItem:_getBuffTypeDic(targetEntityMO)
+	local buffList = targetEntityMO:getBuffList()
+	local has_buff_type_dic = {}
+
+	for _, buffMO in ipairs(buffList) do
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+
+		if buffCO then
+			has_buff_type_dic[buffCO.typeId] = true
+		end
+	end
+
+	return has_buff_type_dic
+end
+
+function FightViewHandCardItem:_getSimulateBuffTypeDic(targetEntityMO)
+	local buffList = self:_simulateBuffList(targetEntityMO)
+	local has_buff_type_dic = {}
+
+	for _, buffMO in ipairs(buffList) do
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+
+		if buffCO then
+			has_buff_type_dic[buffCO.typeId] = true
+		end
+	end
+
+	return has_buff_type_dic
+end
+
+function FightViewHandCardItem:_checkSkillRateUpBehavior(behavior, conditionTarget)
+	if string.nilorempty(behavior) then
+		return
+	end
+
+	local sp = FightStrUtil.instance:getSplitCache(behavior, "#")
+	local behaviorId = tonumber(sp[1])
+	local behaviorCO = lua_skill_behavior.configDict[behaviorId]
+
+	if not behaviorCO then
+		logError("技能效果表找不导id:" .. behaviorId)
+
+		return false
+	end
+
+	local targetUid = self:_getConditionTargetUid(conditionTarget)
+
+	if targetUid == 0 then
+		return false
+	end
+
+	local targetEntityMO = FightDataHelper.entityMgr:getById(targetUid)
+
+	if not targetEntityMO then
+		return false
+	end
+
+	local isSkillRateUp1 = behaviorCO.type == "SkillRateUp1" and conditionTarget == "103"
+	local isSkillRateUp2 = behaviorCO.type == "SkillRateUp2" and conditionTarget ~= "103"
+	local buffList = self:_simulateBuffList(targetEntityMO)
+
+	if isSkillRateUp1 or isSkillRateUp2 then
+		local skillRateUpBuffType = sp[4] and FightStrUtil.instance:getSplitToNumberCache(sp[4], ",") or {}
+
+		for _, buffMO in ipairs(buffList) do
+			local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+			local buffTypeCO = buffCO and lua_skill_bufftype.configDict[buffCO.typeId]
+
+			if buffTypeCO and tabletool.indexOf(skillRateUpBuffType, buffTypeCO.type) then
+				return true
+			end
+		end
+	end
+end
+
+function FightViewHandCardItem:_simulateBuffList(entityMO)
+	local buffList = entityMO:getBuffList()
+	local ops = FightDataHelper.operationDataMgr:getOpList()
+
+	for _, op in ipairs(ops) do
+		if op:isPlayCard() then
+			local skillCO = lua_skill.configDict[op.skillId]
+
+			for i = 1, FightEnum.MaxBehavior do
+				local condition = skillCO["condition" .. i]
+				local behavior = skillCO["behavior" .. i]
+				local behaviorTarget = skillCO["behaviorTarget" .. i]
+				local conditionTarget = skillCO["conditionTarget" .. i]
+
+				if self:_checkCanAddBuff(condition) and not string.nilorempty(behavior) then
+					local targetType = behaviorTarget
+
+					if behaviorTarget == "0" then
+						targetType = skillCO.logicTarget
+					elseif behaviorTarget == "999" then
+						targetType = conditionTarget ~= "0" and conditionTarget or skillCO.logicTarget
+					end
+
+					self:_simulateSkillehavior(entityMO, op, behavior, targetType, buffList)
+				end
+			end
+		end
+	end
+
+	return buffList
+end
+
+function FightViewHandCardItem:_checkCanAddBuff(condition)
+	if string.nilorempty(condition) then
+		return
+	end
+
+	local arr = FightStrUtil.instance:getSplitCache(condition, "&")
+
+	if #arr > 1 then
+		local count = 0
+
+		for i, v in ipairs(arr) do
+			if self:_checkSingleConditionCanAddBuff(v) then
+				count = count + 1
+			end
+		end
+
+		if count == #arr then
+			return true
+		end
+	else
+		arr = FightStrUtil.instance:getSplitCache(condition, "|")
+
+		if #arr > 1 then
+			for i, v in ipairs(arr) do
+				if self:_checkSingleConditionCanAddBuff(v) then
+					return true
+				end
+			end
+		elseif self:_checkSingleConditionCanAddBuff(condition) then
 			return true
 		end
 	end
 end
 
-function var_0_0._checkSingleConditionCanAddBuff(arg_38_0, arg_38_1)
-	local var_38_0 = FightStrUtil.instance:getSplitCache(arg_38_1, "#")
-	local var_38_1 = tonumber(var_38_0[1])
-	local var_38_2 = lua_skill_behavior_condition.configDict[var_38_1]
+function FightViewHandCardItem:_checkSingleConditionCanAddBuff(condition)
+	local sp = FightStrUtil.instance:getSplitCache(condition, "#")
+	local typeId = tonumber(sp[1])
+	local conditionCO = lua_skill_behavior_condition.configDict[typeId]
 
-	if not var_38_2 or string.nilorempty(var_38_2.type) then
+	if not conditionCO or string.nilorempty(conditionCO.type) then
 		return false
 	end
 
-	if var_38_2.type == "None" then
+	if conditionCO.type == "None" then
 		return true
 	end
 end
 
-function var_0_0._simulateSkillehavior(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4, arg_39_5)
-	local var_39_0 = FightStrUtil.instance:getSplitToNumberCache(arg_39_3, "#")
-	local var_39_1 = var_39_0[1]
-	local var_39_2 = lua_skill_behavior.configDict[var_39_1]
-	local var_39_3 = false
+function FightViewHandCardItem:_simulateSkillehavior(entityMO, op, behavior, targetType, buffList)
+	local sp = FightStrUtil.instance:getSplitToNumberCache(behavior, "#")
+	local behaviorId = sp[1]
+	local behaviorCO = lua_skill_behavior.configDict[behaviorId]
+	local needBehavior = false
 
-	if FightEnum.LogicTargetClassify.Special[arg_39_4] then
+	if FightEnum.LogicTargetClassify.Special[targetType] then
 		-- block empty
-	elseif FightEnum.LogicTargetClassify.Single[arg_39_4] then
-		if arg_39_2.toId == arg_39_1.id then
-			var_39_3 = true
+	elseif FightEnum.LogicTargetClassify.Single[targetType] then
+		if op.toId == entityMO.id then
+			needBehavior = true
 		end
-	elseif FightEnum.LogicTargetClassify.SingleAndRandom[arg_39_4] then
-		if arg_39_2.toId == arg_39_1.id then
-			var_39_3 = true
+	elseif FightEnum.LogicTargetClassify.SingleAndRandom[targetType] then
+		if op.toId == entityMO.id then
+			needBehavior = true
 		end
-	elseif FightEnum.LogicTargetClassify.EnemySideAll[arg_39_4] then
-		if arg_39_1.side == FightEnum.EntitySide.EnemySide then
-			var_39_3 = true
+	elseif FightEnum.LogicTargetClassify.EnemySideAll[targetType] then
+		if entityMO.side == FightEnum.EntitySide.EnemySide then
+			needBehavior = true
 		end
-	elseif FightEnum.LogicTargetClassify.MySideAll[arg_39_4] then
-		if arg_39_1.side == FightEnum.EntitySide.MySide then
-			var_39_3 = true
+	elseif FightEnum.LogicTargetClassify.MySideAll[targetType] then
+		if entityMO.side == FightEnum.EntitySide.MySide then
+			needBehavior = true
 		end
-	elseif FightEnum.LogicTargetClassify.Me[arg_39_4] and arg_39_2.belongToEntityId == arg_39_1.id then
-		var_39_3 = true
+	elseif FightEnum.LogicTargetClassify.Me[targetType] and op.belongToEntityId == entityMO.id then
+		needBehavior = true
 	end
 
-	if var_39_3 and var_39_2 then
-		local var_39_4
+	if needBehavior and behaviorCO then
+		local addBuffId
 
-		if var_39_2.type == "AddBuff" then
-			var_39_4 = var_39_0[2]
-		elseif var_39_2.type == "CatapultBuff" then
-			var_39_4 = var_39_0[5]
+		if behaviorCO.type == "AddBuff" then
+			addBuffId = sp[2]
+		elseif behaviorCO.type == "CatapultBuff" then
+			addBuffId = sp[5]
 		end
 
-		if var_39_4 then
-			local var_39_5 = FightDef_pb.BuffInfo()
+		if addBuffId then
+			local buffProto = FightDef_pb.BuffInfo()
 
-			var_39_5.uid = "9999"
-			var_39_5.buffId = var_39_4
+			buffProto.uid = "9999"
+			buffProto.buffId = addBuffId
 
-			local var_39_6 = FightBuffInfoData.New(var_39_5, arg_39_1.id)
+			local buffMO = FightBuffInfoData.New(buffProto, entityMO.id)
 
-			table.insert(arg_39_5, var_39_6)
+			table.insert(buffList, buffMO)
 		end
 	end
 end
 
-function var_0_0.onStageChange(arg_40_0, arg_40_1)
-	arg_40_0:_updateSpEffect()
+function FightViewHandCardItem:onStageChange(stage)
+	self:_updateSpEffect()
 end
 
-function var_0_0.playLongPressEffect(arg_41_0)
-	TaskDispatcher.cancelTask(arg_41_0._delayDisableAnim, arg_41_0)
-	TaskDispatcher.runDelay(arg_41_0._delayDisableAnim, arg_41_0, 1)
+function FightViewHandCardItem:playLongPressEffect()
+	TaskDispatcher.cancelTask(self._delayDisableAnim, self)
+	TaskDispatcher.runDelay(self._delayDisableAnim, self, 1)
 end
 
-function var_0_0._delayDisableAnim(arg_42_0)
-	arg_42_0:stopLongPressEffect()
+function FightViewHandCardItem:_delayDisableAnim()
+	self:stopLongPressEffect()
 end
 
-function var_0_0.stopLongPressEffect(arg_43_0)
-	TaskDispatcher.cancelTask(arg_43_0._delayDisableAnim, arg_43_0)
-	recthelper.setAnchor(arg_43_0._forAnimGO.transform, 0, 0)
-	transformhelper.setLocalRotation(arg_43_0._forAnimGO.transform, 0, 0, 0)
+function FightViewHandCardItem:stopLongPressEffect()
+	TaskDispatcher.cancelTask(self._delayDisableAnim, self)
+	recthelper.setAnchor(self._forAnimGO.transform, 0, 0)
+	transformhelper.setLocalRotation(self._forAnimGO.transform, 0, 0, 0)
 end
 
-function var_0_0._onClickThis(arg_44_0)
+function FightViewHandCardItem:_onClickThis()
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -919,8 +973,8 @@ function var_0_0._onClickThis(arg_44_0)
 		return
 	end
 
-	if arg_44_0._isLongPress then
-		arg_44_0._isLongPress = false
+	if self._isLongPress then
+		self._isLongPress = false
 
 		logNormal("has LongPress, can't click card")
 
@@ -938,12 +992,14 @@ function var_0_0._onClickThis(arg_44_0)
 	end
 
 	if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.Discard then
-		if FightDataHelper.entityMgr:getById(arg_44_0.cardInfoMO.uid) and FightCardDataHelper.isBigSkill(arg_44_0.cardInfoMO.skillId) then
+		local entityMO = FightDataHelper.entityMgr:getById(self.cardInfoMO.uid)
+
+		if entityMO and FightCardDataHelper.isBigSkill(self.cardInfoMO.skillId) then
 			return
 		end
 
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
-		FightController.instance:dispatchEvent(FightEvent.PlayDiscardEffect, arg_44_0.index)
+		FightController.instance:dispatchEvent(FightEvent.PlayDiscardEffect, self.index)
 
 		return
 	end
@@ -966,81 +1022,81 @@ function var_0_0._onClickThis(arg_44_0)
 		return
 	end
 
-	if arg_44_0._isDraging then
+	if self._isDraging then
 		return
 	end
 
-	if not FightCardDataHelper.canPlayCard(arg_44_0.cardInfoMO) then
+	if not FightCardDataHelper.canPlayCard(self.cardInfoMO) then
 		return
 	end
 
-	local var_44_0 = arg_44_0.cardInfoMO.skillId
+	local skillId = self.cardInfoMO.skillId
 
-	if FightEnum.UniversalCard[var_44_0] then
+	if FightEnum.UniversalCard[skillId] then
 		return
 	end
 
-	local var_44_1 = 0
+	local opCostActPoint = 0
 
-	for iter_44_0, iter_44_1 in ipairs(FightDataHelper.operationDataMgr:getPlayCardOpList()) do
-		var_44_1 = var_44_1 + iter_44_1.costActPoint
+	for _, op in ipairs(FightDataHelper.operationDataMgr:getPlayCardOpList()) do
+		opCostActPoint = opCostActPoint + op.costActPoint
 	end
 
-	if var_44_1 >= FightDataHelper.operationDataMgr.actPoint then
+	if opCostActPoint >= FightDataHelper.operationDataMgr.actPoint then
 		return
 	end
 
-	local var_44_2 = lua_skill.configDict[var_44_0]
-	local var_44_3 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_44_4 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
-	local var_44_5 = #var_44_3 + #var_44_4
+	local skillCO = lua_skill.configDict[skillId]
+	local mySideList = FightDataHelper.entityMgr:getMyNormalList()
+	local mySideSpList = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+	local mySideEntityCount = #mySideList + #mySideSpList
 
-	if var_44_2 and var_44_2.effectTag == FightEnum.EffectTag.Choice then
-		local var_44_6 = lua_fight_card_choice.configDict[var_44_2.id]
+	if skillCO and skillCO.effectTag == FightEnum.EffectTag.Choice then
+		local config = lua_fight_card_choice.configDict[skillCO.id]
 
-		if var_44_6 then
-			local var_44_7 = {
-				cardData = arg_44_0.cardInfoMO,
-				config = var_44_6,
-				callback = arg_44_0._toPlayCard,
-				handle = arg_44_0
+		if config then
+			local param = {
+				cardData = self.cardInfoMO,
+				config = config,
+				callback = self._toPlayCard,
+				handle = self
 			}
 
-			ViewMgr.instance:openView(ViewName.FightPlayChoiceCardView, var_44_7)
+			ViewMgr.instance:openView(ViewName.FightPlayChoiceCardView, param)
 
 			return
 		end
 	end
 
-	if var_44_2 and FightEnum.ShowLogicTargetView[var_44_2.logicTarget] and var_44_2.targetLimit == FightEnum.TargetLimit.MySide then
-		if var_44_5 > 1 then
+	if skillCO and FightEnum.ShowLogicTargetView[skillCO.logicTarget] and skillCO.targetLimit == FightEnum.TargetLimit.MySide then
+		if mySideEntityCount > 1 then
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
-				fromId = arg_44_0.cardInfoMO.uid,
-				skillId = var_44_0,
-				callback = arg_44_0._toPlayCard,
-				callbackObj = arg_44_0
+				fromId = self.cardInfoMO.uid,
+				skillId = skillId,
+				callback = self._toPlayCard,
+				callbackObj = self
 			})
 
 			return
 		end
 
-		if var_44_5 == 1 then
-			arg_44_0:_toPlayCard(var_44_3[1].id)
+		if mySideEntityCount == 1 then
+			self:_toPlayCard(mySideList[1].id)
 
 			return
 		end
 	end
 
-	arg_44_0:_toPlayCard()
+	self:_toPlayCard()
 end
 
-function var_0_0._toPlayCard(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
+function FightViewHandCardItem:_toPlayCard(entityId, param2, param3)
 	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
-	FightController.instance:dispatchEvent(FightEvent.BeforePlayHandCard, arg_45_0.index, arg_45_1)
-	FightController.instance:dispatchEvent(FightEvent.PlayHandCard, arg_45_0.index, arg_45_1, arg_45_2, arg_45_3)
+	FightController.instance:dispatchEvent(FightEvent.BeforePlayHandCard, self.index, entityId)
+	FightController.instance:dispatchEvent(FightEvent.PlayHandCard, self.index, entityId, param2, param3)
 end
 
-function var_0_0._onDragBegin(arg_46_0, arg_46_1, arg_46_2)
+function FightViewHandCardItem:_onDragBegin(param, pointerEventData)
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -1065,22 +1121,32 @@ function var_0_0._onDragBegin(arg_46_0, arg_46_1, arg_46_2)
 		return
 	end
 
-	local var_46_0 = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightMoveCard)
+	local opCostActPoint = 0
 
-	if var_46_0 and var_46_0.from and var_46_0.from ~= arg_46_0.index then
+	for _, op in ipairs(FightDataHelper.operationDataMgr:getPlayCardOpList()) do
+		opCostActPoint = opCostActPoint + op.costActPoint
+	end
+
+	if opCostActPoint >= FightDataHelper.operationDataMgr.actPoint then
 		return
 	end
 
-	if not FightCardDataHelper.canMoveCard(arg_46_0.cardInfoMO) then
+	local guideFlag = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightMoveCard)
+
+	if guideFlag and guideFlag.from and guideFlag.from ~= self.index then
 		return
 	end
 
-	arg_46_0._isDraging = true
+	if not FightCardDataHelper.canMoveCard(self.cardInfoMO) then
+		return
+	end
 
-	FightController.instance:dispatchEvent(FightEvent.DragHandCardBegin, arg_46_0.index, arg_46_2.position, arg_46_0.cardInfoMO)
+	self._isDraging = true
+
+	FightController.instance:dispatchEvent(FightEvent.DragHandCardBegin, self.index, pointerEventData.position, self.cardInfoMO)
 end
 
-function var_0_0._onDragThis(arg_47_0, arg_47_1, arg_47_2)
+function FightViewHandCardItem:_onDragThis(param, pointerEventData)
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -1101,12 +1167,12 @@ function var_0_0._onDragThis(arg_47_0, arg_47_1, arg_47_2)
 		return
 	end
 
-	if arg_47_0._isDraging then
-		FightController.instance:dispatchEvent(FightEvent.DragHandCard, arg_47_0.index, arg_47_2.position)
+	if self._isDraging then
+		FightController.instance:dispatchEvent(FightEvent.DragHandCard, self.index, pointerEventData.position)
 	end
 end
 
-function var_0_0._onDragEnd(arg_48_0, arg_48_1, arg_48_2)
+function FightViewHandCardItem:_onDragEnd(param, pointerEventData)
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -1127,30 +1193,30 @@ function var_0_0._onDragEnd(arg_48_0, arg_48_1, arg_48_2)
 		return
 	end
 
-	if arg_48_0._isDraging then
-		arg_48_0._isDraging = false
+	if self._isDraging then
+		self._isDraging = false
 
-		FightController.instance:dispatchEvent(FightEvent.DragHandCardEnd, arg_48_0.index, arg_48_2.position)
+		FightController.instance:dispatchEvent(FightEvent.DragHandCardEnd, self.index, pointerEventData.position)
 		GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
 	end
 end
 
-function var_0_0._onClickRight(arg_49_0)
+function FightViewHandCardItem:_onClickRight()
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
 	GameGlobalMgr.instance:playTouchEffect()
 
-	if FightCardModel.instance:getLongPressIndex() ~= arg_49_0.index then
+	if FightCardModel.instance:getLongPressIndex() ~= self.index then
 		FightController.instance:dispatchEvent(FightEvent.LongPressHandCardEnd)
-		arg_49_0:_onLongPress()
+		self:_onLongPress()
 
-		arg_49_0._isLongPress = false
+		self._isLongPress = false
 	end
 end
 
-function var_0_0._onLongPress(arg_50_0)
+function FightViewHandCardItem:_onLongPress()
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -1183,486 +1249,486 @@ function var_0_0._onLongPress(arg_50_0)
 		end
 	end
 
-	if not arg_50_0._isDraging then
-		arg_50_0._isLongPress = true
+	if not self._isDraging then
+		self._isLongPress = true
 
-		FightController.instance:dispatchEvent(FightEvent.LongPressHandCard, arg_50_0.index)
+		FightController.instance:dispatchEvent(FightEvent.LongPressHandCard, self.index)
 	end
 end
 
-function var_0_0._onHover(arg_51_0)
+function FightViewHandCardItem:_onHover()
 	if GuideController.instance:isGuiding() then
 		return
 	end
 
-	if not arg_51_0._isLongPress then
-		arg_51_0:_onLongPress()
+	if not self._isLongPress then
+		self:_onLongPress()
 	end
 
-	if arg_51_0._cardItem then
-		arg_51_0._cardItem:showHightLightEffect(true)
-	end
-end
-
-function var_0_0._OnExitHover(arg_52_0)
-	if arg_52_0._cardItem then
-		arg_52_0._cardItem:showHightLightEffect(false)
+	if self._cardItem then
+		self._cardItem:showHightLightEffect(true)
 	end
 end
 
-function var_0_0._simulateDragHandCardBegin(arg_53_0, arg_53_1)
-	if not arg_53_0.cardInfoMO then
-		return
-	end
-
-	if arg_53_0.index ~= arg_53_1 then
-		return
-	end
-
-	local var_53_0 = recthelper.uiPosToScreenPos(arg_53_0.tr)
-
-	arg_53_0._isDraging = true
-
-	FightController.instance:dispatchEvent(FightEvent.DragHandCardBegin, arg_53_1, var_53_0, arg_53_0.cardInfoMO)
-end
-
-function var_0_0._simulateDragHandCard(arg_54_0, arg_54_1, arg_54_2)
-	if not arg_54_0.cardInfoMO then
-		return
-	end
-
-	if arg_54_0.index ~= arg_54_1 then
-		return
-	end
-
-	local var_54_0 = arg_54_0._subViewInst:getHandCardItem(arg_54_2)
-
-	if var_54_0 then
-		local var_54_1 = recthelper.uiPosToScreenPos(var_54_0.tr)
-
-		FightController.instance:dispatchEvent(FightEvent.DragHandCard, arg_54_0.index, var_54_1)
+function FightViewHandCardItem:_OnExitHover()
+	if self._cardItem then
+		self._cardItem:showHightLightEffect(false)
 	end
 end
 
-function var_0_0._simulateDragHandCardEnd(arg_55_0, arg_55_1, arg_55_2)
-	if not arg_55_0.cardInfoMO then
+function FightViewHandCardItem:_simulateDragHandCardBegin(index)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if arg_55_0.index ~= arg_55_1 then
+	if self.index ~= index then
 		return
 	end
 
-	local var_55_0 = recthelper.uiPosToScreenPos(arg_55_0.tr)
+	local pos = recthelper.uiPosToScreenPos(self.tr)
 
-	arg_55_0._isDraging = false
+	self._isDraging = true
 
-	FightController.instance:dispatchEvent(FightEvent.DragHandCardEnd, arg_55_0.index, var_55_0)
+	FightController.instance:dispatchEvent(FightEvent.DragHandCardBegin, index, pos, self.cardInfoMO)
+end
+
+function FightViewHandCardItem:_simulateDragHandCard(index, toIndex)
+	if not self.cardInfoMO then
+		return
+	end
+
+	if self.index ~= index then
+		return
+	end
+
+	local toItem = self._subViewInst:getHandCardItem(toIndex)
+
+	if toItem then
+		local pos = recthelper.uiPosToScreenPos(toItem.tr)
+
+		FightController.instance:dispatchEvent(FightEvent.DragHandCard, self.index, pos)
+	end
+end
+
+function FightViewHandCardItem:_simulateDragHandCardEnd(index, toIndex)
+	if not self.cardInfoMO then
+		return
+	end
+
+	if self.index ~= index then
+		return
+	end
+
+	local pos = recthelper.uiPosToScreenPos(self.tr)
+
+	self._isDraging = false
+
+	FightController.instance:dispatchEvent(FightEvent.DragHandCardEnd, self.index, pos)
 	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
 end
 
-function var_0_0._simulatePlayHandCard(arg_56_0, arg_56_1, arg_56_2, arg_56_3, arg_56_4)
-	if not arg_56_0.cardInfoMO then
+function FightViewHandCardItem:_simulatePlayHandCard(index, toId, param2, param3)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if arg_56_0.index ~= arg_56_1 then
+	if self.index ~= index then
 		return
 	end
 
-	arg_56_0:_toPlayCard(arg_56_2, arg_56_3, arg_56_4)
+	self:_toPlayCard(toId, param2, param3)
 end
 
-function var_0_0.playCardAni(arg_57_0, arg_57_1, arg_57_2)
-	arg_57_0._cardAniName = arg_57_2 or UIAnimationName.Open
+function FightViewHandCardItem:playCardAni(aniPath, aniname)
+	self._cardAniName = aniname or UIAnimationName.Open
 
-	arg_57_0._loader:loadAsset(arg_57_1, arg_57_0._onCardAniLoaded, arg_57_0)
+	self._loader:loadAsset(aniPath, self._onCardAniLoaded, self)
 end
 
-function var_0_0._onCardAniLoaded(arg_58_0, arg_58_1)
-	arg_58_0._cardAni.runtimeAnimatorController = arg_58_1:GetResource()
-	arg_58_0._cardAni.enabled = true
-	arg_58_0._cardAni.speed = FightModel.instance:getUISpeed()
+function FightViewHandCardItem:_onCardAniLoaded(loader)
+	self._cardAni.runtimeAnimatorController = loader:GetResource()
+	self._cardAni.enabled = true
+	self._cardAni.speed = FightModel.instance:getUISpeed()
 
-	gohelper.setActive(arg_58_0.go, true)
-	SLFramework.AnimatorPlayer.Get(arg_58_0._innerGO):Play(arg_58_0._cardAniName, arg_58_0._onCardAniFinish, arg_58_0)
+	gohelper.setActive(self.go, true)
+	SLFramework.AnimatorPlayer.Get(self._innerGO):Play(self._cardAniName, self._onCardAniFinish, self)
 end
 
-function var_0_0._onCardAniFinish(arg_59_0)
-	arg_59_0._cardAni.enabled = false
+function FightViewHandCardItem:_onCardAniFinish()
+	self._cardAni.enabled = false
 
-	arg_59_0:_hideEffect()
+	self:_hideEffect()
 end
 
-function var_0_0.playAni(arg_60_0, arg_60_1, arg_60_2)
-	arg_60_0._aniName = arg_60_2 or UIAnimationName.Open
+function FightViewHandCardItem:playAni(aniPath, aniname)
+	self._aniName = aniname or UIAnimationName.Open
 
-	arg_60_0._loader:loadAsset(arg_60_1, arg_60_0._onAniLoaded, arg_60_0)
+	self._loader:loadAsset(aniPath, self._onAniLoaded, self)
 end
 
-function var_0_0._onAniLoaded(arg_61_0, arg_61_1)
-	arg_61_0._foranim.runtimeAnimatorController = arg_61_1:GetResource()
-	arg_61_0._foranim.enabled = true
-	arg_61_0._foranim.speed = FightModel.instance:getUISpeed()
+function FightViewHandCardItem:_onAniLoaded(loader)
+	self._foranim.runtimeAnimatorController = loader:GetResource()
+	self._foranim.enabled = true
+	self._foranim.speed = FightModel.instance:getUISpeed()
 
-	gohelper.setActive(arg_61_0.go, true)
-	SLFramework.AnimatorPlayer.Get(arg_61_0._forAnimGO):Play(arg_61_0._aniName, arg_61_0._onAniFinish, arg_61_0)
+	gohelper.setActive(self.go, true)
+	SLFramework.AnimatorPlayer.Get(self._forAnimGO):Play(self._aniName, self._onAniFinish, self)
 end
 
-function var_0_0._onAniFinish(arg_62_0)
-	arg_62_0._foranim.enabled = false
+function FightViewHandCardItem:_onAniFinish()
+	self._foranim.enabled = false
 end
 
-function var_0_0._hideEffect(arg_63_0)
-	gohelper.setActive(gohelper.findChild(arg_63_0._innerGO, "vx_balance"), false)
+function FightViewHandCardItem:_hideEffect()
+	gohelper.setActive(gohelper.findChild(self._innerGO, "vx_balance"), false)
 end
 
-function var_0_0._onRefreshOneHandCard(arg_64_0, arg_64_1)
-	if not arg_64_0.cardInfoMO then
+function FightViewHandCardItem:_onRefreshOneHandCard(index)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if arg_64_1 == arg_64_0.index then
-		arg_64_0:updateItem(arg_64_0.index, arg_64_0.cardInfoMO)
+	if index == self.index then
+		self:updateItem(self.index, self.cardInfoMO)
 	end
 end
 
-function var_0_0._onGMForceRefreshNameUIBuff(arg_65_0)
-	arg_65_0:_onRefreshOneHandCard(arg_65_0.index)
+function FightViewHandCardItem:_onGMForceRefreshNameUIBuff()
+	self:_onRefreshOneHandCard(self.index)
 end
 
-function var_0_0.playDistribute(arg_66_0)
-	if not arg_66_0._distributeFlow then
-		arg_66_0._distributeFlow = FlowSequence.New()
+function FightViewHandCardItem:playDistribute()
+	if not self._distributeFlow then
+		self._distributeFlow = FlowSequence.New()
 
-		arg_66_0._distributeFlow:addWork(FigthCardDistributeEffect.New())
+		self._distributeFlow:addWork(FigthCardDistributeEffect.New())
 	else
-		arg_66_0._distributeFlow:stop()
+		self._distributeFlow:stop()
 	end
 
-	local var_66_0 = arg_66_0:getUserDataTb_()
+	local context = self:getUserDataTb_()
 
-	var_66_0.cards = tabletool.copy(FightDataHelper.handCardMgr.handCard)
-	var_66_0.handCardItemList = arg_66_0._subViewInst._handCardItemList
-	var_66_0.preCardCount = #var_66_0.cards - 1
-	var_66_0.newCardCount = 1
+	context.cards = tabletool.copy(FightDataHelper.handCardMgr.handCard)
+	context.handCardItemList = self._subViewInst._handCardItemList
+	context.preCardCount = #context.cards - 1
+	context.newCardCount = 1
 
-	arg_66_0._distributeFlow:start(var_66_0)
+	self._distributeFlow:start(context)
 end
 
-function var_0_0.playMasterAddHandCard(arg_67_0)
-	if not arg_67_0._masterAddHandCardFlow then
-		arg_67_0._masterAddHandCardFlow = FlowSequence.New()
+function FightViewHandCardItem:playMasterAddHandCard()
+	if not self._masterAddHandCardFlow then
+		self._masterAddHandCardFlow = FlowSequence.New()
 
-		arg_67_0._masterAddHandCardFlow:addWork(FigthMasterAddHandCardEffect.New())
+		self._masterAddHandCardFlow:addWork(FigthMasterAddHandCardEffect.New())
 	else
-		arg_67_0._masterAddHandCardFlow:stop()
+		self._masterAddHandCardFlow:stop()
 	end
 
-	local var_67_0 = arg_67_0:getUserDataTb_()
+	local context = self:getUserDataTb_()
 
-	var_67_0.card = arg_67_0
+	context.card = self
 
-	arg_67_0._masterAddHandCardFlow:start(var_67_0)
+	self._masterAddHandCardFlow:start(context)
 end
 
-function var_0_0.playMasterCardRemove(arg_68_0)
-	if not arg_68_0._masterCardRemoveFlow then
-		arg_68_0._masterCardRemoveFlow = FlowSequence.New()
+function FightViewHandCardItem:playMasterCardRemove()
+	if not self._masterCardRemoveFlow then
+		self._masterCardRemoveFlow = FlowSequence.New()
 
-		arg_68_0._masterCardRemoveFlow:addWork(FigthMasterCardRemoveEffect.New())
+		self._masterCardRemoveFlow:addWork(FigthMasterCardRemoveEffect.New())
 	else
-		arg_68_0._masterCardRemoveFlow:stop()
+		self._masterCardRemoveFlow:stop()
 	end
 
-	local var_68_0 = arg_68_0:getUserDataTb_()
+	local context = self:getUserDataTb_()
 
-	var_68_0.card = arg_68_0
+	context.card = self
 
-	arg_68_0._masterCardRemoveFlow:start(var_68_0)
+	self._masterCardRemoveFlow:start(context)
 end
 
-function var_0_0.dissolveEntityCard(arg_69_0, arg_69_1)
-	if not arg_69_0.cardInfoMO then
+function FightViewHandCardItem:dissolveEntityCard(entityId)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if arg_69_0.cardInfoMO.uid ~= arg_69_1 then
+	if self.cardInfoMO.uid ~= entityId then
 		return
 	end
 
-	arg_69_0:dissolveCard()
+	self:dissolveCard()
 
 	return true
 end
 
-function var_0_0.dissolveCard(arg_70_0)
-	if not arg_70_0.go.activeInHierarchy then
+function FightViewHandCardItem:dissolveCard()
+	if not self.go.activeInHierarchy then
 		return
 	end
 
-	arg_70_0:setASFDActive(false)
-	arg_70_0._cardItem:dissolveCard(transformhelper.getLocalScale(arg_70_0._subViewInst._handCardContainer.transform), arg_70_0.go)
+	self:setASFDActive(false)
+	self._cardItem:dissolveCard(transformhelper.getLocalScale(self._subViewInst._handCardContainer.transform), self.go)
 end
 
-function var_0_0.moveSelfPos(arg_71_0, arg_71_1, arg_71_2)
-	arg_71_0:_releaseMoveFlow()
+function FightViewHandCardItem:moveSelfPos(index, delayCount)
+	self:_releaseMoveFlow()
 
-	arg_71_0._moveCardFlow = FlowParallel.New()
+	self._moveCardFlow = FlowParallel.New()
 
-	local var_71_0 = 0.033 / FightModel.instance:getUISpeed()
-	local var_71_1 = arg_71_0.go.transform
-	local var_71_2 = FlowSequence.New()
+	local dt = 0.033 / FightModel.instance:getUISpeed()
+	local cardItemTr = self.go.transform
+	local oneCardFlow = FlowSequence.New()
 
-	var_71_2:addWork(WorkWaitSeconds.New(3 * arg_71_2 * var_71_0))
+	oneCardFlow:addWork(WorkWaitSeconds.New(3 * delayCount * dt))
 
-	local var_71_3 = FightViewHandCard.calcCardPosX(arg_71_1)
-	local var_71_4 = var_71_3 + 10
+	local cardTargetPosX = FightViewHandCard.calcCardPosX(index)
+	local cardTargetPosXOver = cardTargetPosX + 10
 
-	var_71_2:addWork(TweenWork.New({
+	oneCardFlow:addWork(TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = var_71_1,
-		to = var_71_4,
-		t = var_71_0 * 5
+		tr = cardItemTr,
+		to = cardTargetPosXOver,
+		t = dt * 5
 	}))
-	var_71_2:addWork(TweenWork.New({
+	oneCardFlow:addWork(TweenWork.New({
 		type = "DOAnchorPosX",
-		tr = var_71_1,
-		to = var_71_3,
-		t = var_71_0 * 2
+		tr = cardItemTr,
+		to = cardTargetPosX,
+		t = dt * 2
 	}))
-	arg_71_0._moveCardFlow:addWork(var_71_2)
-	arg_71_0._moveCardFlow:start()
+	self._moveCardFlow:addWork(oneCardFlow)
+	self._moveCardFlow:start()
 end
 
-function var_0_0.playCardLevelChange(arg_72_0, arg_72_1)
-	if not arg_72_0.cardInfoMO then
+function FightViewHandCardItem:playCardLevelChange(oldSkillId)
+	if not self.cardInfoMO then
 		return
 	end
 
-	if not arg_72_0.go.activeInHierarchy then
+	if not self.go.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_72_0._lockGO, false)
-	arg_72_0._cardItem:playCardLevelChange(arg_72_0.cardInfoMO, arg_72_1)
+	gohelper.setActive(self._lockGO, false)
+	self._cardItem:playCardLevelChange(self.cardInfoMO, oldSkillId)
 end
 
-function var_0_0._onCardLevelChangeDone(arg_73_0, arg_73_1)
-	if arg_73_1 == arg_73_0.cardInfoMO then
-		gohelper.setActive(arg_73_0._lockGO, true)
-		arg_73_0:updateItem(arg_73_0.index, arg_73_0.cardInfoMO)
+function FightViewHandCardItem:_onCardLevelChangeDone(cardInfoMO)
+	if cardInfoMO == self.cardInfoMO then
+		gohelper.setActive(self._lockGO, true)
+		self:updateItem(self.index, self.cardInfoMO)
 	end
 end
 
-function var_0_0.playCardAConvertCardB(arg_74_0)
-	if not arg_74_0.cardInfoMO then
+function FightViewHandCardItem:playCardAConvertCardB()
+	if not self.cardInfoMO then
 		return
 	end
 
-	gohelper.setActive(arg_74_0._cardConvertEffect, true)
-	TaskDispatcher.cancelTask(arg_74_0._afterConvertCardEffect, arg_74_0)
+	gohelper.setActive(self._cardConvertEffect, true)
+	TaskDispatcher.cancelTask(self._afterConvertCardEffect, self)
 
-	if arg_74_0._convertEffect then
-		local var_74_0 = arg_74_0._convertEffect.transform
-		local var_74_1 = var_74_0.childCount
-		local var_74_2 = FightCardDataHelper.isBigSkill(arg_74_0.cardInfoMO.skillId)
-		local var_74_3
+	if self._convertEffect then
+		local transform = self._convertEffect.transform
+		local childCount = transform.childCount
+		local uniqueSkill = FightCardDataHelper.isBigSkill(self.cardInfoMO.skillId)
+		local animation
 
-		if var_74_2 then
-			for iter_74_0 = 0, var_74_1 - 1 do
-				local var_74_4 = var_74_0:GetChild(iter_74_0).gameObject
+		if uniqueSkill then
+			for i = 0, childCount - 1 do
+				local obj = transform:GetChild(i).gameObject
 
-				if iter_74_0 == 3 then
-					gohelper.setActive(var_74_4, true)
+				if i == 3 then
+					gohelper.setActive(obj, true)
 
-					var_74_3 = gohelper.onceAddComponent(var_74_4, typeof(UnityEngine.Animation))
+					animation = gohelper.onceAddComponent(obj, typeof(UnityEngine.Animation))
 				else
-					gohelper.setActive(var_74_4, false)
+					gohelper.setActive(obj, false)
 				end
 			end
 		else
-			local var_74_5 = FightCardDataHelper.getSkillLv(arg_74_0.cardInfoMO.uid, arg_74_0.cardInfoMO.skillId)
+			local skillLv = FightCardDataHelper.getSkillLv(self.cardInfoMO.uid, self.cardInfoMO.skillId)
 
-			for iter_74_1 = 0, var_74_1 - 1 do
-				local var_74_6 = var_74_0:GetChild(iter_74_1).gameObject
+			for i = 0, childCount - 1 do
+				local obj = transform:GetChild(i).gameObject
 
-				if iter_74_1 + 1 == var_74_5 then
-					gohelper.setActive(var_74_6, true)
+				if i + 1 == skillLv then
+					gohelper.setActive(obj, true)
 
-					var_74_3 = gohelper.onceAddComponent(var_74_6, typeof(UnityEngine.Animation))
+					animation = gohelper.onceAddComponent(obj, typeof(UnityEngine.Animation))
 				else
-					gohelper.setActive(var_74_6, false)
+					gohelper.setActive(obj, false)
 				end
 			end
 		end
 
-		if var_74_3 then
-			var_74_3.this:get(var_74_3.clip.name).speed = FightModel.instance:getUISpeed()
+		if animation then
+			animation.this:get(animation.clip.name).speed = FightModel.instance:getUISpeed()
 		end
 
-		TaskDispatcher.runDelay(arg_74_0._afterConvertCardEffect, arg_74_0, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
+		TaskDispatcher.runDelay(self._afterConvertCardEffect, self, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 	else
-		arg_74_0._loader:loadAsset("ui/viewres/fight/card_intensive.prefab", arg_74_0._onCardAConvertCardBLoaded, arg_74_0)
+		self._loader:loadAsset("ui/viewres/fight/card_intensive.prefab", self._onCardAConvertCardBLoaded, self)
 	end
 end
 
-function var_0_0._onCardAConvertCardBLoaded(arg_75_0, arg_75_1)
-	local var_75_0 = arg_75_1:GetResource()
+function FightViewHandCardItem:_onCardAConvertCardBLoaded(loader)
+	local tarPrefab = loader:GetResource()
 
-	arg_75_0._convertEffect = gohelper.clone(var_75_0, arg_75_0._cardConvertEffect)
+	self._convertEffect = gohelper.clone(tarPrefab, self._cardConvertEffect)
 
-	arg_75_0:playCardAConvertCardB()
-	TaskDispatcher.runDelay(arg_75_0._afterConvertCardEffect, arg_75_0, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
+	self:playCardAConvertCardB()
+	TaskDispatcher.runDelay(self._afterConvertCardEffect, self, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 end
 
-function var_0_0._afterConvertCardEffect(arg_76_0)
-	gohelper.setActive(arg_76_0._cardConvertEffect, false)
+function FightViewHandCardItem:_afterConvertCardEffect()
+	gohelper.setActive(self._cardConvertEffect, false)
 end
 
-function var_0_0.changeToTempCard(arg_77_0)
-	arg_77_0._cardItem:changeToTempCard()
+function FightViewHandCardItem:changeToTempCard()
+	self._cardItem:changeToTempCard()
 end
 
-function var_0_0.getASFDScreenPos(arg_78_0)
-	return arg_78_0._cardItem:getASFDScreenPos()
+function FightViewHandCardItem:getASFDScreenPos()
+	return self._cardItem:getASFDScreenPos()
 end
 
-function var_0_0.refreshPreDeleteImage(arg_79_0, arg_79_1)
-	if arg_79_0._cardItem then
-		arg_79_0._cardItem:_refreshPreDeleteImage(arg_79_1)
+function FightViewHandCardItem:refreshPreDeleteImage(needShowPreDeleteImage)
+	if self._cardItem then
+		self._cardItem:_refreshPreDeleteImage(needShowPreDeleteImage)
 	end
 end
 
-function var_0_0.setActiveRed(arg_80_0, arg_80_1)
-	if arg_80_0._cardItem then
-		arg_80_0._cardItem:setActiveRed(arg_80_1)
+function FightViewHandCardItem:setActiveRed(active)
+	if self._cardItem then
+		self._cardItem:setActiveRed(active)
 	end
 end
 
-function var_0_0.setActiveBlue(arg_81_0, arg_81_1)
-	if arg_81_0._cardItem then
-		arg_81_0._cardItem:setActiveBlue(arg_81_1)
+function FightViewHandCardItem:setActiveBlue(active)
+	if self._cardItem then
+		self._cardItem:setActiveBlue(active)
 	end
 end
 
-function var_0_0.setActiveBoth(arg_82_0, arg_82_1)
-	if arg_82_0._cardItem then
-		arg_82_0._cardItem:setActiveBoth(arg_82_1)
+function FightViewHandCardItem:setActiveBoth(active)
+	if self._cardItem then
+		self._cardItem:setActiveBoth(active)
 	end
 end
 
-function var_0_0.resetRedAndBlue(arg_83_0)
-	if arg_83_0._cardItem then
-		arg_83_0._cardItem:resetRedAndBlue()
+function FightViewHandCardItem:resetRedAndBlue()
+	if self._cardItem then
+		self._cardItem:resetRedAndBlue()
 	end
 end
 
-function var_0_0._releaseMoveFlow(arg_84_0)
-	if arg_84_0._moveCardFlow then
-		arg_84_0._moveCardFlow:stop()
+function FightViewHandCardItem:_releaseMoveFlow()
+	if self._moveCardFlow then
+		self._moveCardFlow:stop()
 
-		arg_84_0._moveCardFlow = nil
+		self._moveCardFlow = nil
 	end
 end
 
-function var_0_0.releaseSelf(arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._afterConvertCardEffect, arg_85_0)
+function FightViewHandCardItem:releaseSelf()
+	TaskDispatcher.cancelTask(self._afterConvertCardEffect, self)
 
-	if arg_85_0._distributeFlow then
-		arg_85_0._distributeFlow:stop()
+	if self._distributeFlow then
+		self._distributeFlow:stop()
 
-		arg_85_0._distributeFlow = nil
+		self._distributeFlow = nil
 	end
 
-	if arg_85_0._dissolveFlow then
-		arg_85_0._dissolveFlow:stop()
+	if self._dissolveFlow then
+		self._dissolveFlow:stop()
 
-		arg_85_0._dissolveFlow = nil
+		self._dissolveFlow = nil
 	end
 
-	if arg_85_0._masterAddHandCardFlow then
-		arg_85_0._masterAddHandCardFlow:stop()
+	if self._masterAddHandCardFlow then
+		self._masterAddHandCardFlow:stop()
 
-		arg_85_0._masterAddHandCardFlow = nil
+		self._masterAddHandCardFlow = nil
 	end
 
-	if arg_85_0._masterCardRemoveFlow then
-		arg_85_0._masterCardRemoveFlow:stop()
+	if self._masterCardRemoveFlow then
+		self._masterCardRemoveFlow:stop()
 
-		arg_85_0._masterCardRemoveFlow = nil
+		self._masterCardRemoveFlow = nil
 	end
 
-	arg_85_0:_releaseMoveFlow()
+	self:_releaseMoveFlow()
 
-	if arg_85_0._loader then
-		arg_85_0._loader:releaseSelf()
+	if self._loader then
+		self._loader:releaseSelf()
 
-		arg_85_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0.replaceLockBg(arg_86_0)
-	if not arg_86_0 then
+function FightViewHandCardItem.replaceLockBg(obj)
+	if not obj then
 		return
 	end
 
-	local var_86_0
-	local var_86_1
+	local bg, path
 
-	for iter_86_0 = 0, 4 do
-		local var_86_2 = iter_86_0 == 4
-		local var_86_3 = var_86_2 and "card_mask_big" or "card_mask_small"
-		local var_86_4 = var_86_2 and "bigskill" or "normal"
-		local var_86_5 = string.format("%s/%d/seal/ani/mask/di", var_86_4, iter_86_0)
-		local var_86_6 = gohelper.findChildImage(arg_86_0, var_86_5)
+	for i = 0, 4 do
+		local isBig = i == 4
+		local spName = isBig and "card_mask_big" or "card_mask_small"
+		local prefix = isBig and "bigskill" or "normal"
 
-		if var_86_6 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_86_6, var_86_3, true)
+		path = string.format("%s/%d/seal/ani/mask/di", prefix, i)
+		bg = gohelper.findChildImage(obj, path)
+
+		if bg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
 
-		local var_86_7 = string.format("%s/%d/seal/notani/di", var_86_4, iter_86_0)
-		local var_86_8 = gohelper.findChildImage(arg_86_0, var_86_7)
+		path = string.format("%s/%d/seal/notani/di", prefix, i)
+		bg = gohelper.findChildImage(obj, path)
 
-		if var_86_8 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_86_8, var_86_3, true)
+		if bg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
 
-		local var_86_9 = string.format("%s/%d/sealing/ani/di", var_86_4, iter_86_0)
-		local var_86_10 = gohelper.findChildImage(arg_86_0, var_86_9)
+		path = string.format("%s/%d/sealing/ani/di", prefix, i)
+		bg = gohelper.findChildImage(obj, path)
 
-		if var_86_10 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_86_10, var_86_3, true)
+		if bg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
 
-		local var_86_11 = string.format("%s/%d/sealing/ani/mask", var_86_4, iter_86_0)
-		local var_86_12 = gohelper.findChildImage(arg_86_0, var_86_11)
+		path = string.format("%s/%d/sealing/ani/mask", prefix, i)
+		bg = gohelper.findChildImage(obj, path)
 
-		if var_86_12 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_86_12, var_86_3, true)
+		if bg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
 
-		local var_86_13 = string.format("%s/%d/sealing/notani/di", var_86_4, iter_86_0)
-		local var_86_14 = gohelper.findChildImage(arg_86_0, var_86_13)
+		path = string.format("%s/%d/sealing/notani/di", prefix, i)
+		bg = gohelper.findChildImage(obj, path)
 
-		if var_86_14 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_86_14, var_86_3, true)
+		if bg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
 
-		local var_86_15 = string.format("%s/%d/unseal/ani/di", var_86_4, iter_86_0)
-		local var_86_16 = gohelper.findChildImage(arg_86_0, var_86_15)
+		path = string.format("%s/%d/unseal/ani/di", prefix, i)
+		bg = gohelper.findChildImage(obj, path)
 
-		if var_86_16 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_86_16, var_86_3, true)
+		if bg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
 
-		local var_86_17 = string.format("%s/%d/unseal/ani/mask/sanjiao", var_86_4, iter_86_0)
-		local var_86_18 = gohelper.findChildImage(arg_86_0, var_86_17)
+		path = string.format("%s/%d/unseal/ani/mask/sanjiao", prefix, i)
+		bg = gohelper.findChildImage(obj, path)
 
-		if var_86_18 then
-			UISpriteSetMgr.instance:setFightSkillCardSprite(var_86_18, var_86_3, true)
+		if bg then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
 	end
 end
 
-return var_0_0
+return FightViewHandCardItem

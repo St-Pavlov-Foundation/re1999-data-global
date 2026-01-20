@@ -1,38 +1,46 @@
-﻿module("modules.logic.optionpackage.utils.OptionPackageHelper", package.seeall)
+﻿-- chunkname: @modules/logic/optionpackage/utils/OptionPackageHelper.lua
 
-return {
-	formatLangPackName = function(arg_1_0, arg_1_1)
-		return string.format("%s-%s", arg_1_0, arg_1_1)
-	end,
-	getLeftSizeMBorGB = function(arg_2_0, arg_2_1)
-		arg_2_1 = arg_2_1 or 0
+module("modules.logic.optionpackage.utils.OptionPackageHelper", package.seeall)
 
-		local var_2_0 = math.max(0, arg_2_0 - arg_2_1)
-		local var_2_1 = 1073741824
-		local var_2_2 = var_2_0 / var_2_1
-		local var_2_3 = "GB"
+local OptionPackageHelper = {}
 
-		if var_2_2 < 0.1 then
-			var_2_1 = 1048576
-			var_2_2 = var_2_0 / var_2_1
-			var_2_3 = "MB"
+function OptionPackageHelper.formatLangPackName(lang, packeName)
+	return string.format("%s-%s", lang, packeName)
+end
 
-			if var_2_2 < 0.01 then
-				var_2_2 = 0.01
-			end
+function OptionPackageHelper.getLeftSizeMBorGB(size, localSize)
+	localSize = localSize or 0
+
+	local leftSize = math.max(0, size - localSize)
+	local denominator = 1073741824
+	local ret = leftSize / denominator
+	local units = "GB"
+
+	if ret < 0.1 then
+		denominator = 1048576
+		ret = leftSize / denominator
+		units = "MB"
+
+		if ret < 0.01 then
+			ret = 0.01
 		end
-
-		return var_2_2, math.max(0.01, arg_2_0 / var_2_1), var_2_3
-	end,
-	getLeftSizeMBNum = function(arg_3_0, arg_3_1)
-		arg_3_1 = arg_3_1 or 0
-
-		local var_3_0 = math.max(0, arg_3_0 - arg_3_1) / 1048576
-
-		if var_3_0 < 0.01 then
-			var_3_0 = 0.01
-		end
-
-		return var_3_0
 	end
-}
+
+	return ret, math.max(0.01, size / denominator), units
+end
+
+function OptionPackageHelper.getLeftSizeMBNum(size, localSize)
+	localSize = localSize or 0
+
+	local leftSize = math.max(0, size - localSize)
+	local denominator = 1048576
+	local ret = leftSize / denominator
+
+	if ret < 0.01 then
+		ret = 0.01
+	end
+
+	return ret
+end
+
+return OptionPackageHelper

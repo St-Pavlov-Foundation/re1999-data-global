@@ -1,12 +1,14 @@
-﻿module("modules.logic.activity.view.ActivityStarLightSignPart2PaiLianView_1_3", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityStarLightSignPart2PaiLianView_1_3.lua
 
-local var_0_0 = class("ActivityStarLightSignPart2PaiLianView_1_3", ActivityStarLightSignPaiLianViewBase_1_3)
+module("modules.logic.activity.view.ActivityStarLightSignPart2PaiLianView_1_3", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._actId = ActivityEnum.Activity.StarLightSignPart2_1_3
+local ActivityStarLightSignPart2PaiLianView_1_3 = class("ActivityStarLightSignPart2PaiLianView_1_3", ActivityStarLightSignPaiLianViewBase_1_3)
 
-	arg_1_0._simagePanelBG:LoadImage(ResUrl.getActivityBg("v1a3_sign_starlighthalfbg2"))
-	arg_1_0._simageTitle:LoadImage(ResUrl.getActivityLangIcon("v1a3_sign_starlighttitle2"))
+function ActivityStarLightSignPart2PaiLianView_1_3:_editableInitView()
+	self._actId = ActivityEnum.Activity.StarLightSignPart2_1_3
+
+	self._simagePanelBG:LoadImage(ResUrl.getActivityBg("v1a3_sign_starlighthalfbg2"))
+	self._simageTitle:LoadImage(ResUrl.getActivityLangIcon("v1a3_sign_starlighttitle2"))
 end
 
-return var_0_0
+return ActivityStarLightSignPart2PaiLianView_1_3

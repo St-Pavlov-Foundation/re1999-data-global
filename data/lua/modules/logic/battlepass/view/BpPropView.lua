@@ -1,54 +1,56 @@
-﻿module("modules.logic.battlepass.view.BpPropView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpPropView.lua
 
-local var_0_0 = class("BpPropView", BaseView)
+module("modules.logic.battlepass.view.BpPropView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._bgClick = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0._scrollitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_item")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_item/itemcontent")
-	arg_1_0._goeff = gohelper.findChild(arg_1_0.viewGO, "#go_eff")
-	arg_1_0._govideo = gohelper.findChild(arg_1_0.viewGO, "#go_video")
+local BpPropView = class("BpPropView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function BpPropView:onInitView()
+	self._bgClick = gohelper.getClick(self.viewGO)
+	self._scrollitem = gohelper.findChild(self.viewGO, "#scroll_item")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_item/itemcontent")
+	self._goeff = gohelper.findChild(self.viewGO, "#go_eff")
+	self._govideo = gohelper.findChild(self.viewGO, "#go_video")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._bgClick:AddClickListener(arg_2_0._onClickBG, arg_2_0)
+function BpPropView:addEvents()
+	self._bgClick:AddClickListener(self._onClickBG, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._bgClick:RemoveClickListener()
+function BpPropView:removeEvents()
+	self._bgClick:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._contentGrid = arg_4_0._gocontent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
-	arg_4_0._titleAni = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation))
-	arg_4_0._videoPlayer, arg_4_0._displauUGUI = AvProMgr.instance:getVideoPlayer(arg_4_0._govideo)
+function BpPropView:_editableInitView()
+	self._contentGrid = self._gocontent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	self._titleAni = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+	self._videoPlayer = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._govideo)
 
-	arg_4_0._videoPlayer:Play(arg_4_0._displauUGUI, "videos/commonprop.mp4", true, nil, nil)
+	self._videoPlayer:play("videos/commonprop.mp4", true, nil, nil)
 end
 
-function var_0_0._onClickBG(arg_5_0)
-	if arg_5_0._cantClose then
+function BpPropView:_onClickBG()
+	if self._cantClose then
 		return
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._titleAni:Play()
+function BpPropView:onOpen()
+	self._titleAni:Play()
 
 	CommonPropListItem.hasOpen = false
-	arg_6_0._contentGrid.enabled = false
+	self._contentGrid.enabled = false
 
-	arg_6_0:_setPropItems()
-	NavigateMgr.instance:addEscape(ViewName.BpPropView, arg_6_0._onClickBG, arg_6_0)
+	self:_setPropItems()
+	NavigateMgr.instance:addEscape(ViewName.BpPropView, self._onClickBG, self)
 
-	arg_6_0._cantClose = true
-	arg_6_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, nil, arg_6_0._tweenFinish, arg_6_0, nil, EaseType.Linear)
+	self._cantClose = true
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, nil, self._tweenFinish, self, nil, EaseType.Linear)
 
 	if CommonPropListModel.instance:isHadHighRareProp() then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards_High_1)
@@ -57,46 +59,48 @@ function var_0_0.onOpen(arg_6_0)
 	end
 end
 
-function var_0_0._tweenFinish(arg_7_0)
-	arg_7_0._cantClose = false
+function BpPropView:_tweenFinish()
+	self._cantClose = false
 end
 
-function var_0_0.onClose(arg_8_0)
+function BpPropView:onClose()
 	CommonPropListModel.instance:clear()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_shutdown)
 
 	CommonPropListItem.hasOpen = false
 end
 
-function var_0_0.onClickModalMask(arg_9_0)
-	arg_9_0:closeThis()
+function BpPropView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._setPropItems(arg_10_0)
-	CommonPropListModel.instance:setPropList(arg_10_0.viewParam)
+function BpPropView:_setPropItems()
+	CommonPropListModel.instance:setPropList(self.viewParam)
 
-	if #CommonPropListModel.instance:getList() < 6 then
-		transformhelper.setLocalPosXY(arg_10_0._scrollitem.transform, 0, -185)
+	local list = CommonPropListModel.instance:getList()
 
-		arg_10_0._contentGrid.enabled = true
+	if #list < 6 then
+		transformhelper.setLocalPosXY(self._scrollitem.transform, 0, -185)
+
+		self._contentGrid.enabled = true
 	else
-		arg_10_0._contentGrid.enabled = false
+		self._contentGrid.enabled = false
 
-		transformhelper.setLocalPosXY(arg_10_0._scrollitem.transform, 0, -47)
+		transformhelper.setLocalPosXY(self._scrollitem.transform, 0, -47)
 	end
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	if arg_11_0._videoPlayer then
-		arg_11_0._videoPlayer:Stop()
-		arg_11_0._videoPlayer:Clear()
+function BpPropView:onDestroyView()
+	if self._videoPlayer then
+		self._videoPlayer:stop()
+		self._videoPlayer:clear()
 
-		arg_11_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 
-	if arg_11_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 end
 
-return var_0_0
+return BpPropView

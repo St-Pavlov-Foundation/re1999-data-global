@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_4.act132.define.Activity132Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/define/Activity132Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act132.define.Activity132Enum", package.seeall)
 
-var_0_0.ConditionType = {
+local Activity132Enum = _M
+
+Activity132Enum.ConditionType = {
 	TaskIds = 2,
 	TaskNum = 1
 }
-var_0_0.ConditionType = {
+Activity132Enum.ConditionType = {
 	TaskIds = 2,
 	TaskNum = 1
 }
-var_0_0.ContentState = {
+Activity132Enum.ContentState = {
 	Unlock = 2,
 	CanUnlock = 1,
 	Lock = 0
 }
 
-return var_0_0
+return Activity132Enum

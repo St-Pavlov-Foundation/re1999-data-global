@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaStoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/view/JiaLaBoNaStoryViewContainer.lua
 
-local var_0_0 = class("JiaLaBoNaStoryViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaStoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local JiaLaBoNaStoryViewContainer = class("JiaLaBoNaStoryViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#scroll_ChapterList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = JiaLaBoNaStoryViewItem.prefabPath
-	var_1_1.cellClass = JiaLaBoNaStoryViewItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 500
-	var_1_1.cellHeight = 720
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
+function JiaLaBoNaStoryViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(JiaLaBoNaStoryListModel.instance, var_1_1))
-	table.insert(var_1_0, JiaLaBoNaStoryView.New())
+	scrollParam.scrollGOPath = "#scroll_ChapterList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = JiaLaBoNaStoryViewItem.prefabPath
+	scrollParam.cellClass = JiaLaBoNaStoryViewItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 500
+	scrollParam.cellHeight = 720
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
 
-	arg_1_0._storyReviewScene = Va3ChessStoryReviewScene.New()
+	table.insert(views, LuaListScrollView.New(JiaLaBoNaStoryListModel.instance, scrollParam))
+	table.insert(views, JiaLaBoNaStoryView.New())
 
-	table.insert(var_1_0, arg_1_0._storyReviewScene)
+	self._storyReviewScene = Va3ChessStoryReviewScene.New()
 
-	return var_1_0
+	table.insert(views, self._storyReviewScene)
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function JiaLaBoNaStoryViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function JiaLaBoNaStoryViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -45,16 +47,16 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-function var_0_0._setVisible(arg_4_0, arg_4_1)
-	var_0_0.super._setVisible(arg_4_0, arg_4_1)
+function JiaLaBoNaStoryViewContainer:_setVisible(isVisible)
+	JiaLaBoNaStoryViewContainer.super._setVisible(self, isVisible)
 
-	if arg_4_0._storyReviewScene and arg_4_0._storyReviewSceneVisible ~= arg_4_1 then
-		arg_4_0._storyReviewSceneVisible = arg_4_1
+	if self._storyReviewScene and self._storyReviewSceneVisible ~= isVisible then
+		self._storyReviewSceneVisible = isVisible
 
-		if arg_4_1 then
-			arg_4_0._storyReviewScene:resetOpenAnim()
+		if isVisible then
+			self._storyReviewScene:resetOpenAnim()
 		end
 	end
 end
 
-return var_0_0
+return JiaLaBoNaStoryViewContainer

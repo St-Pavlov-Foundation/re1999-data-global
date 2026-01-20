@@ -1,171 +1,182 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotChoiceConditionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/controller/V1a6_CachotChoiceConditionHelper.lua
 
-local var_0_0 = class("V1a6_CachotChoiceConditionHelper")
+module("modules.logic.versionactivity1_6.v1a6_cachot.controller.V1a6_CachotChoiceConditionHelper", package.seeall)
 
-function var_0_0.getConditionToast(arg_1_0, ...)
-	local var_1_0 = var_0_0["conditionType" .. arg_1_0]
+local V1a6_CachotChoiceConditionHelper = class("V1a6_CachotChoiceConditionHelper")
 
-	if not var_1_0 then
+function V1a6_CachotChoiceConditionHelper.getConditionToast(conditionType, ...)
+	local func = V1a6_CachotChoiceConditionHelper["conditionType" .. conditionType]
+
+	if not func then
 		logError("未处理当前条件类型")
 
 		return
 	end
 
-	return var_1_0(...)
+	return func(...)
 end
 
-function var_0_0.conditionType1(arg_2_0)
-	local var_2_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_2_1 = var_2_0 and var_2_0.collectionCfgMap
-	local var_2_2 = var_2_0 and var_2_0.collectionBaseMap
-	local var_2_3 = var_2_1 and var_2_1[arg_2_0]
-	local var_2_4 = var_2_2 and var_2_2[arg_2_0]
-	local var_2_5 = var_2_3 and #var_2_3 > 0
-	local var_2_6 = var_2_4 and #var_2_4 > 0
+function V1a6_CachotChoiceConditionHelper.conditionType1(collectionId)
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local collectionCfgMap = rogueInfo and rogueInfo.collectionCfgMap
+	local collectionBaseMap = rogueInfo and rogueInfo.collectionBaseMap
+	local collectionCfgList = collectionCfgMap and collectionCfgMap[collectionId]
+	local collectionBaseList = collectionBaseMap and collectionBaseMap[collectionId]
+	local hasExistCollection = collectionCfgList and #collectionCfgList > 0
+	local hasExitBaseCollection = collectionBaseList and #collectionBaseList > 0
 
-	if not var_2_5 and not var_2_6 then
-		return ToastEnum.V1a6CachotToast07, lua_rogue_collection.configDict[arg_2_0].name
+	if not hasExistCollection and not hasExitBaseCollection then
+		return ToastEnum.V1a6CachotToast07, lua_rogue_collection.configDict[collectionId].name
 	end
 end
 
-function var_0_0.conditionType2(arg_3_0, arg_3_1)
-	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo().heart
+function V1a6_CachotChoiceConditionHelper.conditionType2(minVal, maxVal)
+	local heartVal = V1a6_CachotModel.instance:getRogueInfo().heart
 
-	if var_3_0 < arg_3_0 or arg_3_1 < var_3_0 then
-		return ToastEnum.V1a6CachotToast08, arg_3_0, arg_3_1
+	if heartVal < minVal or maxVal < heartVal then
+		return ToastEnum.V1a6CachotToast08, minVal, maxVal
 	end
 end
 
-function var_0_0.conditionType3(arg_4_0)
-	if arg_4_0 > V1a6_CachotModel.instance:getRogueInfo().coin then
-		return ToastEnum.V1a6CachotToast24, arg_4_0
+function V1a6_CachotChoiceConditionHelper.conditionType3(count)
+	local coin = V1a6_CachotModel.instance:getRogueInfo().coin
+
+	if coin < count then
+		return ToastEnum.V1a6CachotToast24, count
 	end
 end
 
-function var_0_0.conditionType4(arg_5_0)
-	local var_5_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_5_1 = var_5_0 and var_5_0.collections
+function V1a6_CachotChoiceConditionHelper.conditionType4(count)
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local collectionList = rogueInfo and rogueInfo.collections
+	local collectionCountInBag = collectionList and #collectionList or 0
 
-	if arg_5_0 > (var_5_1 and #var_5_1 or 0) then
-		return ToastEnum.V1a6CachotToast14, arg_5_0
+	if collectionCountInBag < count then
+		return ToastEnum.V1a6CachotToast14, count
 	end
 end
 
-function var_0_0.conditionType5(arg_6_0)
-	local var_6_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_6_1 = var_6_0 and var_6_0.collections
+function V1a6_CachotChoiceConditionHelper.conditionType5(count)
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local collectionList = rogueInfo and rogueInfo.collections
+	local collectionCountInBag = collectionList and #collectionList or 0
 
-	if arg_6_0 < (var_6_1 and #var_6_1 or 0) then
-		return ToastEnum.V1a6CachotToast15, arg_6_0
+	if count < collectionCountInBag then
+		return ToastEnum.V1a6CachotToast15, count
 	end
 end
 
-function var_0_0.conditionType6(arg_7_0, arg_7_1)
-	local var_7_0 = lua_rogue_collection_group.configDict[arg_7_1]
-	local var_7_1 = var_0_0.getMatchCollectionNumInBag(arg_7_1)
-	local var_7_2 = var_7_0 and var_7_0.dropGroupType or ""
+function V1a6_CachotChoiceConditionHelper.conditionType6(count, groupId)
+	local groupCfg = lua_rogue_collection_group.configDict[groupId]
+	local matchCollectionNum = V1a6_CachotChoiceConditionHelper.getMatchCollectionNumInBag(groupId)
+	local dropGroupType = groupCfg and groupCfg.dropGroupType or ""
 
-	if var_7_1 < arg_7_0 then
-		return ToastEnum.V1a6CachotToast16, arg_7_0, var_7_2
+	if matchCollectionNum < count then
+		return ToastEnum.V1a6CachotToast16, count, dropGroupType
 	end
 end
 
-function var_0_0.conditionType7(arg_8_0, arg_8_1)
-	local var_8_0 = lua_rogue_collection_group.configDict[arg_8_1]
-	local var_8_1 = var_0_0.getMatchCollectionNumInBag(arg_8_1)
-	local var_8_2 = var_8_0 and var_8_0.dropGroupType or ""
+function V1a6_CachotChoiceConditionHelper.conditionType7(count, groupId)
+	local groupCfg = lua_rogue_collection_group.configDict[groupId]
+	local matchCollectionNum = V1a6_CachotChoiceConditionHelper.getMatchCollectionNumInBag(groupId)
+	local dropGroupType = groupCfg and groupCfg.dropGroupType or ""
 
-	if arg_8_0 < var_8_1 then
-		return ToastEnum.V1a6CachotToast17, arg_8_0, var_8_2
+	if count < matchCollectionNum then
+		return ToastEnum.V1a6CachotToast17, count, dropGroupType
 	end
 end
 
-function var_0_0.getMatchCollectionNumInBag(arg_9_0)
-	local var_9_0 = 0
+function V1a6_CachotChoiceConditionHelper.getMatchCollectionNumInBag(groupId)
+	local matchCollectionNum = 0
 
-	if arg_9_0 and arg_9_0 ~= 0 then
-		local var_9_1 = V1a6_CachotModel.instance:getRogueInfo()
-		local var_9_2 = var_9_1 and var_9_1.collectionCfgMap
-		local var_9_3 = V1a6_CachotCollectionConfig.instance:getCollectionsByGroupId(arg_9_0)
+	if groupId and groupId ~= 0 then
+		local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+		local collectionMap = rogueInfo and rogueInfo.collectionCfgMap
+		local collectionList = V1a6_CachotCollectionConfig.instance:getCollectionsByGroupId(groupId)
 
-		if var_9_3 and var_9_2 then
-			for iter_9_0, iter_9_1 in pairs(var_9_3) do
-				local var_9_4 = var_9_2[iter_9_1.id]
+		if collectionList and collectionMap then
+			for _, collectionCfg in pairs(collectionList) do
+				local collectionList = collectionMap[collectionCfg.id]
+				local collectionNum = collectionList and #collectionList or 0
 
-				var_9_0 = var_9_0 + (var_9_4 and #var_9_4 or 0)
+				matchCollectionNum = matchCollectionNum + collectionNum
 			end
 		end
 	end
 
-	return var_9_0
+	return matchCollectionNum
 end
 
-function var_0_0.conditionType8(arg_10_0)
-	local var_10_0 = V1a6_CachotModel.instance:getTeamInfo()
+function V1a6_CachotChoiceConditionHelper.conditionType8(num)
+	local info = V1a6_CachotModel.instance:getTeamInfo()
 
-	if not var_10_0 then
+	if not info then
 		return
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0.lifes) do
-		if arg_10_0 < iter_10_1.lifePercent then
-			return ToastEnum.V1a6CachotToast18, arg_10_0
+	for i, heroLifeMo in ipairs(info.lifes) do
+		if num < heroLifeMo.lifePercent then
+			return ToastEnum.V1a6CachotToast18, num
 		end
 	end
 end
 
-function var_0_0.conditionType9(arg_11_0)
-	local var_11_0 = V1a6_CachotModel.instance:getTeamInfo()
+function V1a6_CachotChoiceConditionHelper.conditionType9(num)
+	local info = V1a6_CachotModel.instance:getTeamInfo()
 
-	if not var_11_0 then
+	if not info then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0.lifes) do
-		if arg_11_0 > iter_11_1.lifePercent then
-			return ToastEnum.V1a6CachotToast19, arg_11_0
+	for i, heroLifeMo in ipairs(info.lifes) do
+		if num > heroLifeMo.lifePercent then
+			return ToastEnum.V1a6CachotToast19, num
 		end
 	end
 end
 
-function var_0_0.conditionType10(arg_12_0)
-	local var_12_0 = V1a6_CachotModel.instance:getTeamInfo()
+function V1a6_CachotChoiceConditionHelper.conditionType10(num)
+	local info = V1a6_CachotModel.instance:getTeamInfo()
 
-	if not var_12_0 then
+	if not info then
 		return
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0.lifes) do
-		if arg_12_0 >= iter_12_1.lifePercent then
-			return ToastEnum.V1a6CachotToast20, arg_12_0
+	for i, heroLifeMo in ipairs(info.lifes) do
+		if num >= heroLifeMo.lifePercent then
+			return ToastEnum.V1a6CachotToast20, num
 		end
 	end
 end
 
-function var_0_0.conditionType11(arg_13_0)
-	local var_13_0 = V1a6_CachotModel.instance:getTeamInfo()
+function V1a6_CachotChoiceConditionHelper.conditionType11(num)
+	local info = V1a6_CachotModel.instance:getTeamInfo()
 
-	if not var_13_0 then
+	if not info then
 		return
 	end
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0.lifes) do
-		if arg_13_0 <= iter_13_1.lifePercent then
-			return ToastEnum.V1a6CachotToast21, arg_13_0
+	for i, heroLifeMo in ipairs(info.lifes) do
+		if num <= heroLifeMo.lifePercent then
+			return ToastEnum.V1a6CachotToast21, num
 		end
 	end
 end
 
-function var_0_0.conditionType12(arg_14_0)
-	if arg_14_0 > V1a6_CachotModel.instance:getRogueInfo().heart then
-		return ToastEnum.V1a6CachotToast22, arg_14_0
+function V1a6_CachotChoiceConditionHelper.conditionType12(num)
+	local heartVal = V1a6_CachotModel.instance:getRogueInfo().heart
+
+	if heartVal < num then
+		return ToastEnum.V1a6CachotToast22, num
 	end
 end
 
-function var_0_0.conditionType13(arg_15_0)
-	if arg_15_0 < V1a6_CachotModel.instance:getRogueInfo().heart then
-		return ToastEnum.V1a6CachotToast23, arg_15_0
+function V1a6_CachotChoiceConditionHelper.conditionType13(num)
+	local heartVal = V1a6_CachotModel.instance:getRogueInfo().heart
+
+	if num < heartVal then
+		return ToastEnum.V1a6CachotToast23, num
 	end
 end
 
-return var_0_0
+return V1a6_CachotChoiceConditionHelper

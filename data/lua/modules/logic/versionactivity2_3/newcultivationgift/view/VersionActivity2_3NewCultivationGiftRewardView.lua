@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/view/VersionActivity2_3NewCultivationGiftRewardView.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationGiftRewardView", BaseView)
+module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagedecbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg/#simage_decbg")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_reward")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#scroll_reward/viewport/content/#go_rewarditem")
+local VersionActivity2_3NewCultivationGiftRewardView = class("VersionActivity2_3NewCultivationGiftRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_3NewCultivationGiftRewardView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagedecbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg/#simage_decbg")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "#scroll_reward")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "#scroll_reward/viewport/content/#go_rewarditem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function VersionActivity2_3NewCultivationGiftRewardView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function VersionActivity2_3NewCultivationGiftRewardView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity2_3NewCultivationGiftRewardView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function VersionActivity2_3NewCultivationGiftRewardView:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
+function VersionActivity2_3NewCultivationGiftRewardView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_3NewCultivationGiftRewardView

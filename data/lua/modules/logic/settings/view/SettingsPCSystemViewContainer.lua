@@ -1,17 +1,19 @@
-﻿module("modules.logic.settings.view.SettingsPCSystemViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsPCSystemViewContainer.lua
 
-local var_0_0 = class("SettingsPCSystemViewContainer", BaseViewContainer)
+module("modules.logic.settings.view.SettingsPCSystemViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SettingsPCSystemViewContainer = class("SettingsPCSystemViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SettingsPCSystemView.New())
+function SettingsPCSystemViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SettingsPCSystemView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function SettingsPCSystemViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return SettingsPCSystemViewContainer

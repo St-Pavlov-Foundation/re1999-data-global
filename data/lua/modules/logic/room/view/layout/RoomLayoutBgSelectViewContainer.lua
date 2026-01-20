@@ -1,29 +1,31 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutBgSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutBgSelectViewContainer.lua
 
-local var_0_0 = class("RoomLayoutBgSelectViewContainer", BaseViewContainer)
+module("modules.logic.room.view.layout.RoomLayoutBgSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomLayoutBgSelectViewContainer = class("RoomLayoutBgSelectViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomLayoutBgSelectView.New())
+function RoomLayoutBgSelectViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, RoomLayoutBgSelectView.New())
 
-	var_1_1.scrollGOPath = "#go_content/#scroll_CoverItemList"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#go_content/#go_coveritem"
-	var_1_1.cellClass = RoomLayoutBgSelectItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 520
-	var_1_1.cellHeight = 254
-	var_1_1.cellSpaceH = 20
-	var_1_1.cellSpaceV = 20
-	var_1_1.startSpace = 20
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(RoomLayoutBgResListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "#go_content/#scroll_CoverItemList"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_content/#go_coveritem"
+	scrollParam.cellClass = RoomLayoutBgSelectItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 520
+	scrollParam.cellHeight = 254
+	scrollParam.cellSpaceH = 20
+	scrollParam.cellSpaceV = 20
+	scrollParam.startSpace = 20
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(RoomLayoutBgResListModel.instance, scrollParam))
+
+	return views
 end
 
-return var_0_0
+return RoomLayoutBgSelectViewContainer

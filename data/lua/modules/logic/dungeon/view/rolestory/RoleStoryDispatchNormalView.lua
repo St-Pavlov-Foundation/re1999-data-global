@@ -1,244 +1,251 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchNormalView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchNormalView.lua
 
-local var_0_0 = class("RoleStoryDispatchNormalView", BaseView)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchNormalView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.itemList = {}
-	arg_1_0.goDispatchList = gohelper.findChild(arg_1_0.viewGO, "DispatchList")
-	arg_1_0.goDispatchScroll = gohelper.findChild(arg_1_0.viewGO, "DispatchList/#Scroll_Dispatch")
-	arg_1_0.goDispatch = gohelper.findChild(arg_1_0.viewGO, "DispatchList/#Scroll_Dispatch/Content/#go_NormalDispatch")
-	arg_1_0.content = gohelper.findChild(arg_1_0.viewGO, "DispatchList/#Scroll_Dispatch/Content")
-	arg_1_0._hLayoutGroup = arg_1_0.content:GetComponent(gohelper.Type_HorizontalLayoutGroup)
-	arg_1_0.dispatchType = RoleStoryEnum.DispatchType.Normal
-	arg_1_0.txtTips = gohelper.findChildTextMesh(arg_1_0.goDispatch, "Title/txt/#txt_tips")
+local RoleStoryDispatchNormalView = class("RoleStoryDispatchNormalView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoleStoryDispatchNormalView:onInitView()
+	self.itemList = {}
+	self.goDispatchList = gohelper.findChild(self.viewGO, "DispatchList")
+	self.goDispatchScroll = gohelper.findChild(self.viewGO, "DispatchList/#Scroll_Dispatch")
+	self.goDispatch = gohelper.findChild(self.viewGO, "DispatchList/#Scroll_Dispatch/Content/#go_NormalDispatch")
+	self.content = gohelper.findChild(self.viewGO, "DispatchList/#Scroll_Dispatch/Content")
+	self._hLayoutGroup = self.content:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+	self.dispatchType = RoleStoryEnum.DispatchType.Normal
+	self.txtTips = gohelper.findChildTextMesh(self.goDispatch, "Title/txt/#txt_tips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.NormalDispatchRefresh, arg_2_0._onNormalDispatchRefresh, arg_2_0)
-	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.DispatchSuccess, arg_2_0._onDispatchStateChange, arg_2_0)
-	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.DispatchReset, arg_2_0._onDispatchStateChange, arg_2_0)
-	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.DispatchFinish, arg_2_0._onDispatchStateChange, arg_2_0)
-	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.UpdateInfo, arg_2_0._onDispatchStateChange, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseView, arg_2_0)
+function RoleStoryDispatchNormalView:addEvents()
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.NormalDispatchRefresh, self._onNormalDispatchRefresh, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.DispatchSuccess, self._onDispatchStateChange, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.DispatchReset, self._onDispatchStateChange, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.DispatchFinish, self._onDispatchStateChange, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.UpdateInfo, self._onDispatchStateChange, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoleStoryDispatchNormalView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoleStoryDispatchNormalView:_editableInitView()
 	return
 end
 
-function var_0_0._onCloseView(arg_5_0, arg_5_1)
-	arg_5_0:playUnlockTween()
+function RoleStoryDispatchNormalView:_onCloseView(viewName)
+	self:playUnlockTween()
 end
 
-function var_0_0._onDispatchStateChange(arg_6_0)
-	arg_6_0:refreshView()
+function RoleStoryDispatchNormalView:_onDispatchStateChange()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.storyId = arg_7_0.viewParam.storyId
+function RoleStoryDispatchNormalView:onOpen()
+	self.storyId = self.viewParam.storyId
 
-	if not arg_7_0.storyId then
-		arg_7_0.storyId = RoleStoryModel.instance:getCurActStoryId()
+	if not self.storyId then
+		self.storyId = RoleStoryModel.instance:getCurActStoryId()
 	end
 
-	arg_7_0:refreshView()
+	self:refreshView()
 
-	if arg_7_0.normalViewShow then
-		local var_7_0 = (recthelper.getWidth(arg_7_0.goDispatchList.transform) - recthelper.getWidth(arg_7_0.goDispatch.transform)) / 2
+	if self.normalViewShow then
+		local screenWidth = recthelper.getWidth(self.goDispatchList.transform)
+		local viewWidth = recthelper.getWidth(self.goDispatch.transform)
+		local right = (screenWidth - viewWidth) / 2
 
-		arg_7_0._hLayoutGroup.padding.right = var_7_0
+		self._hLayoutGroup.padding.right = right
 
-		arg_7_0:doDelayShow()
+		self:doDelayShow()
 	end
 end
 
-function var_0_0.playUnlockTween(arg_8_0)
+function RoleStoryDispatchNormalView:playUnlockTween()
 	if ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchTipsView) then
 		return
 	end
 
-	if arg_8_0.needTween then
-		arg_8_0:doDelayShow()
+	if self.needTween then
+		self:doDelayShow()
 	end
 end
 
-function var_0_0.doDelayShow(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._delayShow, arg_9_0)
-	TaskDispatcher.runDelay(arg_9_0.delayShow, arg_9_0, 0.05)
+function RoleStoryDispatchNormalView:doDelayShow()
+	TaskDispatcher.cancelTask(self._delayShow, self)
+	TaskDispatcher.runDelay(self.delayShow, self, 0.05)
 end
 
-function var_0_0.moveLast(arg_10_0, arg_10_1)
-	if arg_10_0.tweenId then
+function RoleStoryDispatchNormalView:moveLast(tween)
+	if self.tweenId then
 		return
 	end
 
-	arg_10_0.needTween = false
+	self.needTween = false
 
-	local var_10_0 = arg_10_0.content.transform
-	local var_10_1 = recthelper.getWidth(var_10_0.parent)
-	local var_10_2 = recthelper.getWidth(var_10_0)
-	local var_10_3 = -math.max(var_10_2 - var_10_1, 0)
+	local contentTransform = self.content.transform
+	local scrollHeight = recthelper.getWidth(contentTransform.parent)
+	local contentHeight = recthelper.getWidth(contentTransform)
+	local maxPos = math.max(contentHeight - scrollHeight, 0)
+	local caleMovePosX = -maxPos
 
-	if arg_10_1 then
+	if tween then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_activitystorysfx_shiji_receive_2)
 
-		arg_10_0.tweenId = ZProj.TweenHelper.DOAnchorPosX(var_10_0, var_10_3, 1, arg_10_0.onMoveEnd, arg_10_0)
+		self.tweenId = ZProj.TweenHelper.DOAnchorPosX(contentTransform, caleMovePosX, 1, self.onMoveEnd, self)
 	else
-		recthelper.setAnchorX(var_10_0, var_10_3)
+		recthelper.setAnchorX(contentTransform, caleMovePosX)
 	end
 end
 
-function var_0_0.onMoveEnd(arg_11_0)
-	if arg_11_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0.tweenId)
+function RoleStoryDispatchNormalView:onMoveEnd()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_11_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	local var_11_0 = RoleStoryModel.instance:getById(arg_11_0.storyId)
+	local storyMo = RoleStoryModel.instance:getById(self.storyId)
 
-	if not var_11_0 then
+	if not storyMo then
 		return
 	end
 
 	GameFacade.showToast(ToastEnum.RoleStoryDispatchNormalUnlock)
 
-	local var_11_1 = var_11_0:getNormalDispatchList()
+	local list = storyMo:getNormalDispatchList()
 
-	arg_11_0:refreshDispatchList(var_11_1, true)
-	var_11_0:setPlayNormalDispatchUnlockAnimFlag()
+	self:refreshDispatchList(list, true)
+	storyMo:setPlayNormalDispatchUnlockAnimFlag()
 end
 
-function var_0_0.delayShow(arg_12_0)
-	arg_12_0:moveLast(arg_12_0.needTween)
+function RoleStoryDispatchNormalView:delayShow()
+	self:moveLast(self.needTween)
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
-	arg_13_0.storyId = arg_13_0.viewParam.storyId
+function RoleStoryDispatchNormalView:onUpdateParam()
+	self.storyId = self.viewParam.storyId
 
-	arg_13_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_14_0)
-	arg_14_0.normalViewShow = false
+function RoleStoryDispatchNormalView:refreshView()
+	self.normalViewShow = false
 
-	local var_14_0 = RoleStoryModel.instance:getById(arg_14_0.storyId)
+	local storyMo = RoleStoryModel.instance:getById(self.storyId)
 
-	if not var_14_0 then
-		arg_14_0:clearItems()
-		gohelper.setActive(arg_14_0.goDispatch, false)
+	if not storyMo then
+		self:clearItems()
+		gohelper.setActive(self.goDispatch, false)
 
 		return
 	end
 
-	local var_14_1 = var_14_0:getNormalDispatchList()
+	local list = storyMo:getNormalDispatchList()
 
-	if #var_14_1 == 0 then
-		arg_14_0:clearItems()
-		gohelper.setActive(arg_14_0.goDispatch, false)
+	if #list == 0 then
+		self:clearItems()
+		gohelper.setActive(self.goDispatch, false)
 
 		return
 	end
 
-	arg_14_0.normalViewShow = true
+	self.normalViewShow = true
 
-	gohelper.setActive(arg_14_0.goDispatch, true)
+	gohelper.setActive(self.goDispatch, true)
 
-	local var_14_2 = 0
+	local finishCount = 0
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		if iter_14_1:getDispatchState() == RoleStoryEnum.DispatchState.Finish then
-			var_14_2 = var_14_2 + 1
+	for i, v in ipairs(list) do
+		if v:getDispatchState() == RoleStoryEnum.DispatchState.Finish then
+			finishCount = finishCount + 1
 		end
 	end
 
-	if var_14_0:isScoreFull() then
-		arg_14_0.txtTips.text = luaLang("rolestoryscoreisfull")
+	if storyMo:isScoreFull() then
+		self.txtTips.text = luaLang("rolestoryscoreisfull")
 	else
-		local var_14_3 = {
-			var_14_2,
-			#var_14_1
+		local tag = {
+			finishCount,
+			#list
 		}
 
-		arg_14_0.txtTips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rolestorynormaldispatchtips"), var_14_3)
+		self.txtTips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rolestorynormaldispatchtips"), tag)
 	end
 
-	if var_14_0:canPlayNormalDispatchUnlockAnim() then
-		arg_14_0:refreshDispatchList(var_14_1, nil, true)
+	local canPlayUnlockAnim = storyMo:canPlayNormalDispatchUnlockAnim()
 
-		arg_14_0.needTween = true
+	if canPlayUnlockAnim then
+		self:refreshDispatchList(list, nil, true)
 
-		arg_14_0:playUnlockTween()
+		self.needTween = true
+
+		self:playUnlockTween()
 	else
-		arg_14_0:refreshDispatchList(var_14_1)
+		self:refreshDispatchList(list)
 	end
 end
 
-function var_0_0.refreshDispatchList(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	for iter_15_0 = 1, math.max(#arg_15_1, #arg_15_0.itemList) do
-		arg_15_0:refreshDispatchItem(arg_15_0.itemList[iter_15_0], arg_15_1[iter_15_0], iter_15_0, {
-			canPlayUnlockAnim = arg_15_2,
-			waitUnlock = arg_15_3
+function RoleStoryDispatchNormalView:refreshDispatchList(list, canPlayUnlockAnim, waitUnlock)
+	for i = 1, math.max(#list, #self.itemList) do
+		self:refreshDispatchItem(self.itemList[i], list[i], i, {
+			canPlayUnlockAnim = canPlayUnlockAnim,
+			waitUnlock = waitUnlock
 		})
 	end
 end
 
-function var_0_0.refreshDispatchItem(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	arg_16_1 = arg_16_1 or arg_16_0:createItem(arg_16_3)
+function RoleStoryDispatchNormalView:refreshDispatchItem(item, data, index, canPlayUnlockAnim)
+	item = item or self:createItem(index)
 
-	arg_16_1:onUpdateMO(arg_16_2, arg_16_0.storyId, arg_16_3, arg_16_4)
+	item:onUpdateMO(data, self.storyId, index, canPlayUnlockAnim)
 end
 
-function var_0_0.createItem(arg_17_0, arg_17_1)
-	local var_17_0 = gohelper.findChild(arg_17_0.goDispatch, string.format("Item/#go_item%s", arg_17_1))
-	local var_17_1 = arg_17_0.viewContainer:getSetting().otherRes.normalItemRes
-	local var_17_2 = arg_17_0.viewContainer:getResInst(var_17_1, var_17_0, "go")
-	local var_17_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_2, RoleStoryDispatchNormalItem)
+function RoleStoryDispatchNormalView:createItem(index)
+	local parentGO = gohelper.findChild(self.goDispatch, string.format("Item/#go_item%s", index))
+	local resPath = self.viewContainer:getSetting().otherRes.normalItemRes
+	local go = self.viewContainer:getResInst(resPath, parentGO, "go")
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, RoleStoryDispatchNormalItem)
 
-	var_17_3.scrollDesc.parentGameObject = arg_17_0.goDispatchScroll
-	arg_17_0.itemList[arg_17_1] = var_17_3
+	item.scrollDesc.parentGameObject = self.goDispatchScroll
+	self.itemList[index] = item
 
-	return var_17_3
+	return item
 end
 
-function var_0_0._onNormalDispatchRefresh(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.playRefreshAudio, arg_18_0)
-	TaskDispatcher.runDelay(arg_18_0.playRefreshAudio, arg_18_0, 0.05)
+function RoleStoryDispatchNormalView:_onNormalDispatchRefresh()
+	TaskDispatcher.cancelTask(self.playRefreshAudio, self)
+	TaskDispatcher.runDelay(self.playRefreshAudio, self, 0.05)
 end
 
-function var_0_0.playRefreshAudio(arg_19_0)
+function RoleStoryDispatchNormalView:playRefreshAudio()
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_5_wulu.play_ui_wulu_seal_cutting_eft)
 end
 
-function var_0_0.onClose(arg_20_0)
+function RoleStoryDispatchNormalView:onClose()
 	return
 end
 
-function var_0_0.clearItems(arg_21_0)
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0.itemList) do
-		iter_21_1:clear()
+function RoleStoryDispatchNormalView:clearItems()
+	for i, v in ipairs(self.itemList) do
+		v:clear()
 	end
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0.playRefreshAudio, arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._delayShow, arg_22_0)
+function RoleStoryDispatchNormalView:onDestroyView()
+	TaskDispatcher.cancelTask(self.playRefreshAudio, self)
+	TaskDispatcher.cancelTask(self._delayShow, self)
 
-	if arg_22_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.tweenId)
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_22_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	arg_22_0:clearItems()
+	self:clearItems()
 end
 
-return var_0_0
+return RoleStoryDispatchNormalView

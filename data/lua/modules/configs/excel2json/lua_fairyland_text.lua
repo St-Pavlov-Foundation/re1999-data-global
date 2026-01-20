@@ -1,22 +1,24 @@
-﻿module("modules.configs.excel2json.lua_fairyland_text", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fairyland_text.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fairyland_text", package.seeall)
+
+local lua_fairyland_text = {}
+local fields = {
 	id = 1,
 	node = 4,
 	question = 2,
 	answer = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	question = 1,
 	answer = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fairyland_text.onLoad(json)
+	lua_fairyland_text.configList, lua_fairyland_text.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fairyland_text

@@ -1,25 +1,27 @@
-﻿module("modules.logic.gm.view.GM_V3a1_GaoSiNiao_GameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_V3a1_GaoSiNiao_GameViewContainer.lua
 
-local var_0_0 = class("GM_V3a1_GaoSiNiao_GameViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_V3a1_GaoSiNiao_GameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_V3a1_GaoSiNiao_GameViewContainer = class("GM_V3a1_GaoSiNiao_GameViewContainer", BaseViewContainer)
+
+function GM_V3a1_GaoSiNiao_GameViewContainer:buildViews()
 	return {
 		GM_V3a1_GaoSiNiao_GameView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_V3a1_GaoSiNiao_GameViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_GameView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_GameView_OnClickSwitchMode, arg_3_0._gm_onClickSwitchMode, arg_3_0)
+function GM_V3a1_GaoSiNiao_GameViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_GameView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:registerCallback(GMEvent.V3a1_GaoSiNiao_GameView_OnClickSwitchMode, viewObj._gm_onClickSwitchMode, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_GameView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_GameView_OnClickSwitchMode, arg_4_0._gm_onClickSwitchMode, arg_4_0)
+function GM_V3a1_GaoSiNiao_GameViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_GameView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.V3a1_GaoSiNiao_GameView_OnClickSwitchMode, viewObj._gm_onClickSwitchMode, viewObj)
 end
 
-return var_0_0
+return GM_V3a1_GaoSiNiao_GameViewContainer

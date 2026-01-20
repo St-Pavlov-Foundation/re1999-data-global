@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiClueView.lua
 
-local var_0_0 = class("AergusiClueView", BaseView)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagenotebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_notebg")
+local AergusiClueView = class("AergusiClueView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AergusiClueView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagenotebg = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_notebg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AergusiClueView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AergusiClueView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:_addEvents()
+function AergusiClueView:_editableInitView()
+	self:_addEvents()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function AergusiClueView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function AergusiClueView:onOpen()
 	return
 end
 
-function var_0_0._addEvents(arg_7_0)
+function AergusiClueView:_addEvents()
 	return
 end
 
-function var_0_0._removeEvents(arg_8_0)
+function AergusiClueView:_removeEvents()
 	return
 end
 
-function var_0_0.onClose(arg_9_0)
+function AergusiClueView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0:_removeEvents()
+function AergusiClueView:onDestroyView()
+	self:_removeEvents()
 end
 
-return var_0_0
+return AergusiClueView

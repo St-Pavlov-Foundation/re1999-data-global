@@ -1,106 +1,111 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufacturePlaceCostView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufacturePlaceCostView.lua
 
-local var_0_0 = class("RoomManufacturePlaceCostView", BaseView)
+module("modules.logic.room.view.manufacture.RoomManufacturePlaceCostView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "go_normalroot/#txt_title")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "go_normalroot/#txt_name")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "go_normalroot/#txt_desc")
-	arg_1_0._btninform = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/#btn_inform")
-	arg_1_0._scrollcost = gohelper.findChildScrollRect(arg_1_0.viewGO, "go_normalroot/#scroll_cost")
-	arg_1_0._gocosts = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/#scroll_cost/Viewport/#go_costs")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_normalroot/#simage_icon")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/#btn_close")
+local RoomManufacturePlaceCostView = class("RoomManufacturePlaceCostView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomManufacturePlaceCostView:onInitView()
+	self._txttitle = gohelper.findChildText(self.viewGO, "go_normalroot/#txt_title")
+	self._txtname = gohelper.findChildText(self.viewGO, "go_normalroot/#txt_name")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "go_normalroot/#txt_desc")
+	self._btninform = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/#btn_inform")
+	self._scrollcost = gohelper.findChildScrollRect(self.viewGO, "go_normalroot/#scroll_cost")
+	self._gocosts = gohelper.findChild(self.viewGO, "go_normalroot/#scroll_cost/Viewport/#go_costs")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "go_normalroot/#simage_icon")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btninform:AddClickListener(arg_2_0._btninformOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomManufacturePlaceCostView:addEvents()
+	self._btninform:AddClickListener(self._btninformOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btninform:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomManufacturePlaceCostView:removeEvents()
+	self._btninform:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomManufacturePlaceCostView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btninformOnClick(arg_5_0)
-	local var_5_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function RoomManufacturePlaceCostView:_btninformOnClick()
+	local tempMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	if not var_5_0 or tonumber(var_5_0.id) > 0 then
-		arg_5_0:closeThis()
-	elseif arg_5_0:_checkCost() then
-		RoomBuildingController.instance:sendBuyManufactureBuildingRpc(var_5_0.buildingId)
+	if not tempMO or tonumber(tempMO.id) > 0 then
+		self:closeThis()
+	elseif self:_checkCost() then
+		RoomBuildingController.instance:sendBuyManufactureBuildingRpc(tempMO.buildingId)
 	else
 		GameFacade.showToast(ToastEnum.RoomPlaceCostItemSufficient)
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function RoomManufacturePlaceCostView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function RoomManufacturePlaceCostView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	if not RoomMapBuildingModel.instance:getTempBuildingMO() then
-		arg_8_0:closeThis()
+function RoomManufacturePlaceCostView:onOpen()
+	local tempMO = RoomMapBuildingModel.instance:getTempBuildingMO()
+
+	if not tempMO then
+		self:closeThis()
 
 		return
 	end
 
-	arg_8_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0._simageicon:UnLoadImage()
+function RoomManufacturePlaceCostView:onClose()
+	self._simageicon:UnLoadImage()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function RoomManufacturePlaceCostView:onDestroyView()
 	return
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	local var_11_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function RoomManufacturePlaceCostView:_refreshUI()
+	local buildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	if not var_11_0 then
+	if not buildingMO then
 		return
 	end
 
-	local var_11_1 = ManufactureConfig.instance:getManufactureBuildingCfg(var_11_0.buildingId)
+	local placeCfg = ManufactureConfig.instance:getManufactureBuildingCfg(buildingMO.buildingId)
 
-	if not var_11_1 then
+	if not placeCfg then
 		return
 	end
 
-	local var_11_2 = var_11_0.config
+	local buildingCfg = buildingMO.config
 
-	arg_11_0._txtname.text = var_11_2.name
-	arg_11_0._txtdesc.text = var_11_2.desc
-	arg_11_0._txttitle.text = var_11_2.useDesc
+	self._txtname.text = buildingCfg.name
+	self._txtdesc.text = buildingCfg.desc
+	self._txttitle.text = buildingCfg.useDesc
 
-	arg_11_0._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. var_11_0:getIcon()))
+	self._simageicon:LoadImage(ResUrl.getRoomImage("building/" .. buildingMO:getIcon()))
 
-	arg_11_0._costDataList = ItemModel.instance:getItemDataListByConfigStr(var_11_1.placeCost)
+	self._costDataList = ItemModel.instance:getItemDataListByConfigStr(placeCfg.placeCost)
 
-	IconMgr.instance:getCommonPropItemIconList(arg_11_0, arg_11_0._onItemShow, arg_11_0._costDataList, arg_11_0._gocosts)
+	IconMgr.instance:getCommonPropItemIconList(self, self._onItemShow, self._costDataList, self._gocosts)
 end
 
-function var_0_0._checkCost(arg_12_0)
-	if arg_12_0._costDataList then
-		for iter_12_0 = 1, #arg_12_0._costDataList do
-			local var_12_0 = arg_12_0._costDataList[iter_12_0]
+function RoomManufacturePlaceCostView:_checkCost()
+	if self._costDataList then
+		for i = 1, #self._costDataList do
+			local cost = self._costDataList[i]
+			local quantity = ItemModel.instance:getItemQuantity(cost.materilType, cost.materilId)
 
-			if ItemModel.instance:getItemQuantity(var_12_0.materilType, var_12_0.materilId) < var_12_0.quantity then
+			if quantity < cost.quantity then
 				return false
 			end
 		end
@@ -109,14 +114,14 @@ function var_0_0._checkCost(arg_12_0)
 	return true
 end
 
-function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_1:onUpdateMO(arg_13_2)
-	arg_13_1:setConsume(true)
-	arg_13_1:showStackableNum2()
-	arg_13_1:isShowEffect(true)
-	arg_13_1:setAutoPlay(true)
-	arg_13_1:setCountFontSize(48)
-	arg_13_1:setCountText(ItemModel.instance:getItemIsEnoughText(arg_13_2))
+function RoomManufacturePlaceCostView:_onItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
+	cell_component:setCountText(ItemModel.instance:getItemIsEnoughText(data))
 end
 
-return var_0_0
+return RoomManufacturePlaceCostView

@@ -1,9 +1,11 @@
-﻿module("modules.logic.ressplit.work.ResSplitSpecialWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/ResSplitSpecialWork.lua
 
-local var_0_0 = class("ResSplitSpecialWork", BaseWork)
+module("modules.logic.ressplit.work.ResSplitSpecialWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = {
+local ResSplitSpecialWork = class("ResSplitSpecialWork", BaseWork)
+
+function ResSplitSpecialWork:onStart(context)
+	local dicList = {
 		"survival/",
 		"singlebg_lang/txt_achievement/",
 		"singlebg/achievement/",
@@ -16,18 +18,29 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"singlebg/toughbattle_singlebg",
 		"ui/viewres/playercard/",
 		"ui/viewres/skinhandbook_singlebg/",
+		"singlebg/skinhandbook_singlebg/",
 		"ui/viewres/playercard/",
 		"ui/viewres/skinhandbook_singlebg/",
 		"singlebg/seasoncelebritycard/",
 		"singlebg/summon/heroversion_1_9/",
 		"singlebg/summon/heroversion_1_8/",
+		"singlebg/summon/heroversion_2_0/",
+		"singlebg/summon/heroversion_2_1/",
+		"singlebg/summon/heroversion_2_2/",
+		"singlebg/summon/heroversion_2_3/",
+		"singlebg/summon/heroversion_2_4/",
+		"singlebg/summon/heroversion_2_5/",
 		"singlebg/summon/heroversion_2_6/",
 		"singlebg/summon/heroversion_2_7/",
 		"singlebg/summon/heroversion_2_8/",
 		"singlebg/summon/heroversion_2_9/",
+		"singlebg/summon/heroversion_3_0/",
+		"singlebg/summon/heroversion_3_1/",
 		"singlebg/summon/heroversion_2_7/",
 		"singlebg/summon/heroversion_2_8/",
 		"singlebg/summon/heroversion_2_9/",
+		"singlebg/summon/heroversion_3_0/",
+		"singlebg/characterskin/live2dbg",
 		"ui/viewres/versionactivity_1_2/",
 		"ui/viewres/versionactivity_1_5/",
 		"ui/viewres/versionactivity_1_8/",
@@ -98,6 +111,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"scenes/dynamic/sp01_m_s08_hddt_b/",
 		"room/configs/",
 		"singlebg/roomget",
+		"effects/prefabs/story/",
 		"effects/prefab/story/",
 		"effects/prefab/buff/",
 		"singlebg/dungeon/fragmenticon/",
@@ -111,9 +125,14 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"singlebg/playercard/",
 		"singlebg/help/v3a1_",
 		"singlebg/dungeon/rolestory_",
-		"singlebg/txt_versionactivityhelp/"
+		"singlebg/txt_versionactivityhelp/",
+		"singlebg_lang/txt_v3a1_storyactivityopenclose",
+		"singlebg_lang/txt_v3a2_storyactivityopenclose",
+		"singlebg_lang/txt_v2a4_storyactivityopenclose",
+		"singlebg_lang/txt_v2a3_storyactivityopenclose",
+		"singlebg_lang/txt_versionactivityhelp"
 	}
-	local var_1_1 = {
+	local videosList = {
 		"s01_opening",
 		"s01_bg",
 		"sp01_kv_up",
@@ -159,9 +178,14 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"2_1_opening_1",
 		"2_0_opening_1",
 		"1_6_opening_1",
-		"1_8_opening_1"
+		"1_8_opening_1",
+		"3_2_opening_1",
+		"v3a1_kv_loop",
+		"v3a1_kv_open",
+		"v3a2_kv_loop",
+		"v3a2_kv_open"
 	}
-	local var_1_2 = {
+	local pathList = {
 		"effects/prefabs/buff/shuzhen_zaowu_znegyi_1_2.prefab",
 		"effects/prefabs/buff/ydzrdzwxm_zengyi.prefab",
 		"effects/prefabs/buff/buff_lg_mu.prefab",
@@ -766,6 +790,39 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"singlebg/help/v2a9_role_help_3.png",
 		"singlebg/help/v2a9_wheel_help_1.png",
 		"singlebg/help/v2a9_wheel_help_2.png",
+		"atlas/ui_survival.spriteatlas",
+		"atlas/ui_survival_8.spriteatlas",
+		"atlas/ui_survival_7.spriteatlas",
+		"atlas/ui_survival_6.spriteatlas",
+		"atlas/ui_survival_5.spriteatlas",
+		"atlas/ui_survival_4.spriteatlas",
+		"atlas/ui_survival_3.spriteatlas",
+		"atlas/ui_survival_2.spriteatlas",
+		"atlas/ui_survival_1.spriteatlas",
+		"atlas/ui_tower.spriteatlas",
+		"atlas/ui_tower_2.spriteatlas",
+		"atlas/ui_tower_3.spriteatlas",
+		"atlas/ui_tower_4.spriteatlas",
+		"atlas/ui_tower_5.spriteatlas",
+		"atlas/ui_rouge.spriteatlas",
+		"atlas/ui_rouge2.spriteatlas",
+		"atlas/ui_rouge3.spriteatlas",
+		"atlas/ui_rouge4.spriteatlas",
+		"atlas/ui_roug5.spriteatlas",
+		"atlas/ui_rouge6.spriteatlas",
+		"atlas/ui_rouge7.spriteatlas",
+		"atlas/ui_rouge8.spriteatlas",
+		"atlas/ui_rouge9.spriteatlas",
+		"atlas/ui_rouge10.spriteatlas",
+		"atlas/ui_rouge11.spriteatlas",
+		"atlas/ui_rouge12.spriteatlas",
+		"atlas/ui_rouge13.spriteatlas",
+		"atlas/sp_rouge.spriteatlas",
+		"atlas/sp_rouge2.spriteatlas",
+		"atlas/sp_rouge3.spriteatlas",
+		"atlas/sp_rouge4.spriteatlas",
+		"atlas/sp_rouge5.spriteatlas",
+		"atlas/sp_rouge6.spriteatlas",
 		"atlas/sp_v1a3_arm_spriteset.spriteatlas",
 		"atlas/sp_v1a3_astrology.spriteatlas",
 		"atlas/sp_v1a3_bufficon.spriteatlas",
@@ -1012,21 +1069,34 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		"atlas/ui_v3a0_mainactivity.spriteatlas",
 		"atlas/ui_v3a0_malianna.spriteatlas",
 		"atlas/ui_v3a0_season.spriteatlas",
-		"atlas/ui_v3a0_warmup.spriteatlas"
+		"atlas/ui_v3a0_warmup.spriteatlas",
+		"atlas/ui_v2a9_act_1.spriteatlas",
+		"atlas/ui_v2a9_act_2.spriteatlas",
+		"atlas/ui_v2a9_act_3.spriteatlas",
+		"atlas/ui_v2a9_bossrush.spriteatlas",
+		"atlas/ui_v3a1_gaosiniao.spriteatlas",
+		"atlas/ui_v3a1_mainactivity.spriteatlas",
+		"atlas/ui_v3a1_towerdeep.spriteatlas",
+		"atlas/ui_v3a1_warmup.spriteatlas",
+		"atlas/ui_v3a1_yeshumei.spriteatlas",
+		"atlas/ui_v3a2_activitycollect.spriteatlas",
+		"atlas/ui_v3a2_beilier.spriteatlas",
+		"atlas/ui_v3a2_cruise.spriteatlas",
+		"atlas/ui_v3a2_huilandiao.spriteatlas"
 	}
 
 	if LangSettings.instance:isOverseas() == false then
-		table.insert(var_1_2, "font/japan.otf")
-		table.insert(var_1_2, "font/japankot.otf")
-		table.insert(var_1_2, "font/korea.ttf")
-		table.insert(var_1_2, "font/regular.ttf")
-		table.insert(var_1_2, "font/meshpro/japanpro.asset")
-		table.insert(var_1_2, "font/meshpro/japankot.asset")
-		table.insert(var_1_2, "font/meshpro/koreapro.asset")
-		table.insert(var_1_2, "font/meshpro/regularpro.asset")
+		table.insert(pathList, "font/japan.otf")
+		table.insert(pathList, "font/japankot.otf")
+		table.insert(pathList, "font/korea.ttf")
+		table.insert(pathList, "font/regular.ttf")
+		table.insert(pathList, "font/meshpro/japanpro.asset")
+		table.insert(pathList, "font/meshpro/japankot.asset")
+		table.insert(pathList, "font/meshpro/koreapro.asset")
+		table.insert(pathList, "font/meshpro/regularpro.asset")
 	end
 
-	local var_1_3 = {
+	local includePathList = {
 		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_chuchang),
 		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang),
 		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang_monster),
@@ -1034,31 +1104,31 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.scene_mask_default),
 		"effects/prefabs/buff/buff_shuxingzengjia.prefab"
 	}
-	local var_1_4 = {
+	local includeDList = {
 		"effects/prefabs/xingti"
 	}
 
-	for iter_1_0, iter_1_1 in pairs(var_1_2) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, iter_1_1, true)
+	for i, v in pairs(pathList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, v, true)
 	end
 
-	for iter_1_2, iter_1_3 in pairs(var_1_3) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, iter_1_3, false)
+	for i, v in pairs(includePathList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, v, false)
 	end
 
-	for iter_1_4, iter_1_5 in pairs(var_1_0) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_5, true)
+	for i, v in pairs(dicList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, v, true)
 	end
 
-	for iter_1_6, iter_1_7 in pairs(var_1_4) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_7, false)
+	for i, v in pairs(includeDList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, v, false)
 	end
 
-	for iter_1_8, iter_1_9 in pairs(var_1_1) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Video, iter_1_9, true)
+	for i, v in pairs(videosList) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Video, v, true)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ResSplitSpecialWork

@@ -1,70 +1,75 @@
-﻿module("modules.logic.fight.system.work.FightWorkDirectStartNewFightAfterEndFight", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDirectStartNewFightAfterEndFight.lua
 
-local var_0_0 = class("FightWorkDirectStartNewFightAfterEndFight", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkDirectStartNewFightAfterEndFight", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightDataHelper.fieldMgr.episodeId
-	local var_1_1, var_1_2 = arg_1_0:getNextEpisodeIdByCurEpisodeId(var_1_0)
+local FightWorkDirectStartNewFightAfterEndFight = class("FightWorkDirectStartNewFightAfterEndFight", FightWorkItem)
+
+function FightWorkDirectStartNewFightAfterEndFight:onStart()
+	local curEpisodeId = FightDataHelper.fieldMgr.episodeId
+	local nextEpisodeId, nextBattleId = self:getNextEpisodeIdByCurEpisodeId(curEpisodeId)
 
 	FightMsgMgr.sendMsg(FightMsgId.RestartGame)
 
-	local var_1_3 = arg_1_0:com_registWorkDoneFlowSequence()
+	local flow = self:com_registWorkDoneFlowSequence()
 
-	var_1_3:registWork(FightWorkClearBeforeRestart)
-	var_1_3:registWork(FightWorkFunction, arg_1_0.clearFight, arg_1_0)
-	arg_1_0:_addTransition(var_1_0, var_1_3)
-	var_1_3:registWork(FightWorkChangeFightScene, var_1_1, var_1_2)
-	var_1_3:registWork(FightWorkFunction, arg_1_0.startNewFight, arg_1_0, var_1_1, var_1_2)
-	var_1_3:start()
+	flow:registWork(FightWorkClearBeforeRestart)
+	flow:registWork(FightWorkFunction, self.clearFight, self)
+	self:_addTransition(curEpisodeId, flow)
+	flow:registWork(FightWorkChangeFightScene, nextEpisodeId, nextBattleId)
+	flow:registWork(FightWorkFunction, self.startNewFight, self, nextEpisodeId, nextBattleId)
+	flow:start()
 end
 
-function var_0_0.startNewFight(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_1).chapterId
+function FightWorkDirectStartNewFightAfterEndFight:startNewFight(nextEpisodeId, nextBattleId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(nextEpisodeId)
+	local chapterId = episodeConfig.chapterId
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_2_0, arg_2_1)
+	DungeonModel.instance:SetSendChapterEpisodeId(chapterId, nextEpisodeId)
 
-	local var_2_1 = FightController.instance:setFightParamByEpisodeId(arg_2_1)
+	local fightParam = FightController.instance:setFightParamByEpisodeId(nextEpisodeId)
 
-	var_2_1:setDungeon(var_2_0, arg_2_1)
+	fightParam:setDungeon(chapterId, nextEpisodeId)
 
-	var_2_1.chapterId = var_2_0
+	fightParam.chapterId = chapterId
 
-	HeroGroupModel.instance:setParam(arg_2_2, arg_2_1)
-	HeroGroupTrialModel.instance:setTrialByBattleId(arg_2_2)
+	HeroGroupModel.instance:setParam(nextBattleId, nextEpisodeId)
+	HeroGroupTrialModel.instance:setTrialByBattleId(nextBattleId)
 
-	if FightController.instance:setFightHeroSingleGroup() then
-		DungeonRpc.instance:sendStartDungeonRequest(var_2_1.chapterId, var_2_1.episodeId, var_2_1)
+	local result = FightController.instance:setFightHeroSingleGroup()
+
+	if result then
+		DungeonRpc.instance:sendStartDungeonRequest(fightParam.chapterId, fightParam.episodeId, fightParam)
 	else
-		logError(string.format("FightWorkDirectStartNewFightAfterEndFight:startNewFight error battleId:%s,episodeId:%s", arg_2_2, arg_2_1))
+		logError(string.format("FightWorkDirectStartNewFightAfterEndFight:startNewFight error battleId:%s,episodeId:%s", nextBattleId, nextEpisodeId))
 	end
 end
 
-function var_0_0.getNextEpisodeIdByCurEpisodeId(arg_3_0, arg_3_1)
-	if arg_3_1 == VersionActivity2_8BossEnum.AutoEnterNextEpisodeFight then
-		local var_3_0 = VersionActivity2_8BossEnum.StoryBossLastEpisode
-		local var_3_1 = DungeonConfig.instance:getEpisodeBattleId(var_3_0)
+function FightWorkDirectStartNewFightAfterEndFight:getNextEpisodeIdByCurEpisodeId(curEpisodeId)
+	if curEpisodeId == VersionActivity2_8BossEnum.AutoEnterNextEpisodeFight then
+		local nextEpisodeId = VersionActivity2_8BossEnum.StoryBossLastEpisode
+		local battleId = DungeonConfig.instance:getEpisodeBattleId(nextEpisodeId)
 
-		return var_3_0, var_3_1
+		return nextEpisodeId, battleId
 	end
 end
 
-function var_0_0.directStartNewFight(arg_4_0)
-	if arg_4_0 == VersionActivity2_8BossEnum.AutoEnterNextEpisodeFight and DungeonModel.instance:hasPassLevelAndStory(arg_4_0) then
+function FightWorkDirectStartNewFightAfterEndFight.directStartNewFight(curEpisodeId)
+	if curEpisodeId == VersionActivity2_8BossEnum.AutoEnterNextEpisodeFight and DungeonModel.instance:hasPassLevelAndStory(curEpisodeId) then
 		return true
 	end
 end
 
-function var_0_0.clearFight(arg_5_0)
+function FightWorkDirectStartNewFightAfterEndFight:clearFight()
 	FightModel.instance:clear()
 end
 
-function var_0_0._addTransition(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == VersionActivity2_8BossEnum.AutoEnterNextEpisodeFight then
-		local var_6_0 = VersionActivity2_8DungeonBossController.instance
+function FightWorkDirectStartNewFightAfterEndFight:_addTransition(curEpisodeId, flow)
+	if curEpisodeId == VersionActivity2_8BossEnum.AutoEnterNextEpisodeFight then
+		local instance = VersionActivity2_8DungeonBossController.instance
 
-		arg_6_2:registWork(FightWorkFunction, var_6_0.openVersionActivity2_8BossStoryEyeView, var_6_0)
-		arg_6_2:registWork(FightWorkDelayTimer, 0.5)
+		flow:registWork(FightWorkFunction, instance.openVersionActivity2_8BossStoryEyeView, instance)
+		flow:registWork(FightWorkDelayTimer, 0.5)
 	end
 end
 
-return var_0_0
+return FightWorkDirectStartNewFightAfterEndFight

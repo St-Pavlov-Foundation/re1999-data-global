@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity1_6.decalogpresent.view.DecalogPresetMainBtnItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/decalogpresent/view/DecalogPresetMainBtnItem.lua
 
-local var_0_0 = class("DecalogPresetMainBtnItem", LuaCompBase)
+module("modules.logic.versionactivity1_6.decalogpresent.view.DecalogPresetMainBtnItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._imgitem = gohelper.findChildImage(arg_1_0.go, "bg")
-	arg_1_0._btnitem = gohelper.findChildClickWithAudio(arg_1_0.go, "bg", AudioEnum.ui_activity.play_ui_activity_open)
-	arg_1_0._redDotParent = gohelper.findChild(arg_1_0.go, "go_activityreddot")
+local DecalogPresetMainBtnItem = class("DecalogPresetMainBtnItem", LuaCompBase)
 
-	UISpriteSetMgr.instance:setMainSprite(arg_1_0._imgitem, "v1a6_act_icon1")
+function DecalogPresetMainBtnItem:init(go)
+	self.go = go
+	self._imgitem = gohelper.findChildImage(self.go, "bg")
+	self._btnitem = gohelper.findChildClickWithAudio(self.go, "bg", AudioEnum.ui_activity.play_ui_activity_open)
+	self._redDotParent = gohelper.findChild(self.go, "go_activityreddot")
 
-	local var_1_0 = DecalogPresentModel.instance:getDecalogPresentActId()
+	UISpriteSetMgr.instance:setMainSprite(self._imgitem, "v1a6_act_icon1")
 
-	if not ActivityType101Model.instance:isInit(var_1_0) then
-		Activity101Rpc.instance:sendGet101InfosRequest(var_1_0)
+	local actId = DecalogPresentModel.instance:getDecalogPresentActId()
+
+	if not ActivityType101Model.instance:isInit(actId) then
+		Activity101Rpc.instance:sendGet101InfosRequest(actId)
 	end
 
-	arg_1_0.redDot = RedDotController.instance:addNotEventRedDot(arg_1_0._redDotParent, DecalogPresentModel.isShowRedDot, DecalogPresentModel.instance)
+	self.redDot = RedDotController.instance:addNotEventRedDot(self._redDotParent, DecalogPresentModel.isShowRedDot, DecalogPresentModel.instance)
 
-	gohelper.setActive(arg_1_0.go, true)
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnitem:AddClickListener(arg_2_0._onItemClick, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshRedDot, arg_2_0)
+function DecalogPresetMainBtnItem:addEventListeners()
+	self._btnitem:AddClickListener(self._onItemClick, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshRedDot, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnitem:RemoveClickListener()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.refreshRedDot, arg_3_0)
+function DecalogPresetMainBtnItem:removeEventListeners()
+	self._btnitem:RemoveClickListener()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshRedDot, self)
 end
 
-function var_0_0._onItemClick(arg_4_0)
+function DecalogPresetMainBtnItem:_onItemClick()
 	DecalogPresentController.instance:openDecalogPresentView()
 end
 
-function var_0_0.refreshRedDot(arg_5_0)
-	if not gohelper.isNil(arg_5_0.redDot.gameObject) then
+function DecalogPresetMainBtnItem:refreshRedDot()
+	if not gohelper.isNil(self.redDot.gameObject) then
 		return
 	end
 
-	arg_5_0.redDot:refreshRedDot()
+	self.redDot:refreshRedDot()
 end
 
-function var_0_0.isShowRedDot(arg_6_0)
-	return arg_6_0.redDot and arg_6_0.redDot.isShowRedDot
+function DecalogPresetMainBtnItem:isShowRedDot()
+	return self.redDot and self.redDot.isShowRedDot
 end
 
-function var_0_0.destroy(arg_7_0)
-	gohelper.setActive(arg_7_0.go, false)
-	gohelper.destroy(arg_7_0.go)
+function DecalogPresetMainBtnItem:destroy()
+	gohelper.setActive(self.go, false)
+	gohelper.destroy(self.go)
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0.go = nil
-	arg_8_0._imgitem = nil
-	arg_8_0._btnitem = nil
-	arg_8_0.redDot = nil
+function DecalogPresetMainBtnItem:onDestroy()
+	self.go = nil
+	self._imgitem = nil
+	self._btnitem = nil
+	self.redDot = nil
 end
 
-return var_0_0
+return DecalogPresetMainBtnItem

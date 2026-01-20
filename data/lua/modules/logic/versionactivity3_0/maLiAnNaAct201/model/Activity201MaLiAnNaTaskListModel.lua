@@ -1,156 +1,160 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.Activity201MaLiAnNaTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/Activity201MaLiAnNaTaskListModel.lua
 
-local var_0_0 = class("Activity201MaLiAnNaTaskListModel", ListScrollModel)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.Activity201MaLiAnNaTaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity203)
-	local var_1_1 = {}
-	local var_1_2 = 0
+local Activity201MaLiAnNaTaskListModel = class("Activity201MaLiAnNaTaskListModel", ListScrollModel)
 
-	if var_1_0 ~= nil then
-		local var_1_3 = Activity201MaLiAnNaConfig.instance:getTaskByActId(arg_1_1)
+function Activity201MaLiAnNaTaskListModel:init(actId)
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity203)
+	local dataList = {}
+	local rewardCount = 0
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-			local var_1_4 = Activity201MaLiAnNaTaskMo.New()
+	if taskDict ~= nil then
+		local taskCfgList = Activity201MaLiAnNaConfig.instance:getTaskByActId(actId)
 
-			var_1_4:init(iter_1_1, var_1_0[iter_1_1.id])
+		for _, taskCfg in ipairs(taskCfgList) do
+			local mo = Activity201MaLiAnNaTaskMo.New()
 
-			if var_1_4:alreadyGotReward() then
-				var_1_2 = var_1_2 + 1
+			mo:init(taskCfg, taskDict[taskCfg.id])
+
+			if mo:alreadyGotReward() then
+				rewardCount = rewardCount + 1
 			end
 
-			table.insert(var_1_1, var_1_4)
+			table.insert(dataList, mo)
 		end
 	end
 
-	if var_1_2 > 1 then
-		local var_1_5 = Activity201MaLiAnNaTaskMo.New()
+	if rewardCount > 1 then
+		local allMO = Activity201MaLiAnNaTaskMo.New()
 
-		var_1_5.id = -99999
-		var_1_5.activityId = arg_1_1
+		allMO.id = -99999
+		allMO.activityId = actId
 
-		table.insert(var_1_1, var_1_5)
+		table.insert(dataList, allMO)
 	end
 
-	table.sort(var_1_1, var_0_0.sortMO)
+	table.sort(dataList, Activity201MaLiAnNaTaskListModel.sortMO)
 
-	arg_1_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_1_0:setList(var_1_1)
+	self:setList(dataList)
 end
 
-function var_0_0.sortMO(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_0.getSortIndex(arg_2_0)
-	local var_2_1 = var_0_0.getSortIndex(arg_2_1)
+function Activity201MaLiAnNaTaskListModel.sortMO(objA, objB)
+	local sidxA = Activity201MaLiAnNaTaskListModel.getSortIndex(objA)
+	local sidxB = Activity201MaLiAnNaTaskListModel.getSortIndex(objB)
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_0 < var_2_1
-	elseif arg_2_0.id ~= arg_2_1.id then
-		return arg_2_0.id < arg_2_1.id
+	if sidxA ~= sidxB then
+		return sidxA < sidxB
+	elseif objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.getSortIndex(arg_3_0)
-	if arg_3_0.id == -99999 then
+function Activity201MaLiAnNaTaskListModel.getSortIndex(objA)
+	if objA.id == -99999 then
 		return 1
-	elseif arg_3_0:isFinished() then
+	elseif objA:isFinished() then
 		return 100
-	elseif arg_3_0:alreadyGotReward() then
+	elseif objA:alreadyGotReward() then
 		return 2
 	end
 
 	return 50
 end
 
-function var_0_0.createMO(arg_4_0, arg_4_1, arg_4_2)
-	return {
-		config = arg_4_2.config,
-		originTaskMO = arg_4_2
-	}
+function Activity201MaLiAnNaTaskListModel:createMO(co, taskMO)
+	local mo = {}
+
+	mo.config = taskMO.config
+	mo.originTaskMO = taskMO
+
+	return mo
 end
 
-function var_0_0.getRankDiff(arg_5_0, arg_5_1)
-	if arg_5_0._hasRankDiff and arg_5_1 then
-		local var_5_0 = tabletool.indexOf(arg_5_0._idIdxList, arg_5_1.id)
-		local var_5_1 = arg_5_0:getIndex(arg_5_1)
+function Activity201MaLiAnNaTaskListModel:getRankDiff(mo)
+	if self._hasRankDiff and mo then
+		local oldIdx = tabletool.indexOf(self._idIdxList, mo.id)
+		local curIdx = self:getIndex(mo)
 
-		if var_5_0 and var_5_1 then
-			arg_5_0._idIdxList[var_5_0] = -2
+		if oldIdx and curIdx then
+			self._idIdxList[oldIdx] = -2
 
-			return var_5_1 - var_5_0
+			return curIdx - oldIdx
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.refreshRankDiff(arg_6_0)
-	arg_6_0._idIdxList = {}
+function Activity201MaLiAnNaTaskListModel:refreshRankDiff()
+	self._idIdxList = {}
 
-	local var_6_0 = arg_6_0:getList()
+	local dataList = self:getList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		table.insert(arg_6_0._idIdxList, iter_6_1.id)
+	for _, mo in ipairs(dataList) do
+		table.insert(self._idIdxList, mo.id)
 	end
 end
 
-function var_0_0.preFinish(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function Activity201MaLiAnNaTaskListModel:preFinish(taskMO)
+	if not taskMO then
 		return
 	end
 
-	local var_7_0 = false
+	local isCanSort = false
 
-	arg_7_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_7_0:refreshRankDiff()
+	self:refreshRankDiff()
 
-	local var_7_1 = 0
-	local var_7_2 = arg_7_0:getList()
+	local preCount = 0
+	local taskMOList = self:getList()
 
-	if arg_7_1.id == -99999 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
-			if iter_7_1:alreadyGotReward() and iter_7_1.id ~= -99999 then
-				iter_7_1.preFinish = true
-				var_7_0 = true
-				var_7_1 = var_7_1 + 1
+	if taskMO.id == -99999 then
+		for _, tempMO in ipairs(taskMOList) do
+			if tempMO:alreadyGotReward() and tempMO.id ~= -99999 then
+				tempMO.preFinish = true
+				isCanSort = true
+				preCount = preCount + 1
 			end
 		end
-	elseif arg_7_1:alreadyGotReward() then
-		arg_7_1.preFinish = true
-		var_7_0 = true
-		var_7_1 = var_7_1 + 1
+	elseif taskMO:alreadyGotReward() then
+		taskMO.preFinish = true
+		isCanSort = true
+		preCount = preCount + 1
 	end
 
-	if var_7_0 then
-		local var_7_3 = arg_7_0:getById(-99999)
+	if isCanSort then
+		local allMO = self:getById(-99999)
 
-		if var_7_3 and arg_7_0:getGotRewardCount() < var_7_1 + 1 then
-			tabletool.removeValue(var_7_2, var_7_3)
+		if allMO and self:getGotRewardCount() < preCount + 1 then
+			tabletool.removeValue(taskMOList, allMO)
 		end
 
-		arg_7_0._hasRankDiff = true
+		self._hasRankDiff = true
 
-		table.sort(var_7_2, var_0_0.sortMO)
-		arg_7_0:setList(var_7_2)
+		table.sort(taskMOList, Activity201MaLiAnNaTaskListModel.sortMO)
+		self:setList(taskMOList)
 
-		arg_7_0._hasRankDiff = false
+		self._hasRankDiff = false
 	end
 end
 
-function var_0_0.getGotRewardCount(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 or arg_8_0:getList()
-	local var_8_1 = 0
+function Activity201MaLiAnNaTaskListModel:getGotRewardCount(moList)
+	local taskMOList = moList or self:getList()
+	local count = 0
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if iter_8_1:alreadyGotReward() and not iter_8_1.preFinish and iter_8_1.id ~= -99999 then
-			var_8_1 = var_8_1 + 1
+	for _, tempMO in ipairs(taskMOList) do
+		if tempMO:alreadyGotReward() and not tempMO.preFinish and tempMO.id ~= -99999 then
+			count = count + 1
 		end
 	end
 
-	return var_8_1
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+Activity201MaLiAnNaTaskListModel.instance = Activity201MaLiAnNaTaskListModel.New()
 
-return var_0_0
+return Activity201MaLiAnNaTaskListModel

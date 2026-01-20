@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.system.work.FightWorkFightCounter", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFightCounter.lua
 
-local var_0_0 = class("FightWorkFightCounter", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkFightCounter", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.effectNum
-	local var_1_1 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+local FightWorkFightCounter = class("FightWorkFightCounter", FightEffectBase)
 
-	if var_1_0 == 13 and var_1_1 then
-		local var_1_2 = GameUtil.getSubPlaceholderLuaLang(luaLang("fight_counter_float13"), {
+function FightWorkFightCounter:onStart()
+	local id = self.actEffectData.effectNum
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
+
+	if id == 13 and entity then
+		local str = GameUtil.getSubPlaceholderLuaLang(luaLang("fight_counter_float13"), {
 			luaLang("multiple"),
-			arg_1_0.actEffectData.configEffect
+			self.actEffectData.configEffect
 		})
 
-		FightFloatMgr.instance:float(var_1_1.id, FightEnum.FloatType.buff, var_1_2, 1, false)
+		FightFloatMgr.instance:float(entity.id, FightEnum.FloatType.buff, str, 1, false)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkFightCounter:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkFightCounter

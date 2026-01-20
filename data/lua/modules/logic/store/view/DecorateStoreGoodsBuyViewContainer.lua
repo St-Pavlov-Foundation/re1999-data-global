@@ -1,29 +1,31 @@
-﻿module("modules.logic.store.view.DecorateStoreGoodsBuyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/DecorateStoreGoodsBuyViewContainer.lua
 
-local var_0_0 = class("DecorateStoreGoodsBuyViewContainer", BaseViewContainer)
+module("modules.logic.store.view.DecorateStoreGoodsBuyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DecorateStoreGoodsBuyViewContainer = class("DecorateStoreGoodsBuyViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DecorateStoreGoodsBuyView.New())
+function DecorateStoreGoodsBuyViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DecorateStoreGoodsBuyView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._currencyView = CurrencyView.New({})
+function DecorateStoreGoodsBuyViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._currencyView = CurrencyView.New({})
 
 		return {
-			arg_2_0._currencyView
+			self._currencyView
 		}
 	end
 end
 
-function var_0_0.setCurrencyType(arg_3_0, arg_3_1)
-	if arg_3_0._currencyView then
-		arg_3_0._currencyView:setCurrencyType(arg_3_1)
+function DecorateStoreGoodsBuyViewContainer:setCurrencyType(currencyTypeParam)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(currencyTypeParam)
 	end
 end
 
-return var_0_0
+return DecorateStoreGoodsBuyViewContainer

@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoEpisodeLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/view/FeiLinShiDuoEpisodeLevelViewContainer.lua
 
-local var_0_0 = class("FeiLinShiDuoEpisodeLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoEpisodeLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FeiLinShiDuoEpisodeLevelViewContainer = class("FeiLinShiDuoEpisodeLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FeiLinShiDuoEpisodeLevelView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function FeiLinShiDuoEpisodeLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FeiLinShiDuoEpisodeLevelView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function FeiLinShiDuoEpisodeLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return FeiLinShiDuoEpisodeLevelViewContainer

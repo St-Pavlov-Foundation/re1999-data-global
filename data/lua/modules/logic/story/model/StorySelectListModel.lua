@@ -1,20 +1,22 @@
-﻿module("modules.logic.story.model.StorySelectListModel", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StorySelectListModel.lua
 
-local var_0_0 = class("StorySelectListModel", ListScrollModel)
+module("modules.logic.story.model.StorySelectListModel", package.seeall)
 
-function var_0_0.setSelectList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local StorySelectListModel = class("StorySelectListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		local var_1_1 = StorySelectMo.New()
+function StorySelectListModel:setSelectList(infos)
+	local moList = {}
 
-		var_1_1:init(iter_1_1)
-		table.insert(var_1_0, var_1_1)
+	for _, info in ipairs(infos) do
+		local selectMo = StorySelectMo.New()
+
+		selectMo:init(info)
+		table.insert(moList, selectMo)
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-var_0_0.instance = var_0_0.New()
+StorySelectListModel.instance = StorySelectListModel.New()
 
-return var_0_0
+return StorySelectListModel

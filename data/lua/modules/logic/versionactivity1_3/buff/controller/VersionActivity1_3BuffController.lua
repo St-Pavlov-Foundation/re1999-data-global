@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_3.buff.controller.VersionActivity1_3BuffController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/buff/controller/VersionActivity1_3BuffController.lua
 
-local var_0_0 = class("VersionActivity1_3BuffController", BaseController)
+module("modules.logic.versionactivity1_3.buff.controller.VersionActivity1_3BuffController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_3BuffController = class("VersionActivity1_3BuffController", BaseController)
+
+function VersionActivity1_3BuffController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_3BuffController:reInit()
 	return
 end
 
-function var_0_0.openBuffView(arg_3_0)
+function VersionActivity1_3BuffController:openBuffView()
 	ViewMgr.instance:openView(ViewName.VersionActivity1_3BuffView)
 end
 
-function var_0_0.openFairyLandView(arg_4_0, arg_4_1)
-	ViewMgr.instance:openView(ViewName.VersionActivity1_3FairyLandView, arg_4_1)
+function VersionActivity1_3BuffController:openFairyLandView(param)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_3FairyLandView, param)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_3BuffController.instance = VersionActivity1_3BuffController.New()
 
-return var_0_0
+return VersionActivity1_3BuffController

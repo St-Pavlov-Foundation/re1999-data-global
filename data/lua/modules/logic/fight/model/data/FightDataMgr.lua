@@ -1,80 +1,83 @@
-﻿module("modules.logic.fight.model.data.FightDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightDataMgr.lua
 
-local var_0_0 = class("FightDataMgr", BaseModel)
+module("modules.logic.fight.model.data.FightDataMgr", package.seeall)
 
-function var_0_0.registMgr(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1.New()
+local FightDataMgr = class("FightDataMgr", BaseModel)
 
-	var_1_0.dataMgr = arg_1_0
+function FightDataMgr:registMgr(class)
+	local obj = class.New()
 
-	table.insert(arg_1_0.mgrList, var_1_0)
+	obj.dataMgr = self
 
-	return var_1_0
+	table.insert(self.mgrList, obj)
+
+	return obj
 end
 
-function var_0_0.initDataMgr(arg_2_0)
-	arg_2_0.mgrList = {}
+function FightDataMgr:initDataMgr()
+	self.mgrList = {}
 
-	arg_2_0:initTrueDataMgr()
-	arg_2_0:initTempDataMgr()
+	self:initTrueDataMgr()
+	self:initTempDataMgr()
 end
 
-function var_0_0.initTrueDataMgr(arg_3_0)
-	arg_3_0.calMgr = arg_3_0:registMgr(FightCalculateDataMgr)
-	arg_3_0.roundMgr = arg_3_0:registMgr(FightRoundDataMgr)
-	arg_3_0.cacheFightMgr = arg_3_0:registMgr(FightCacheFightDataMgr)
-	arg_3_0.protoCacheMgr = arg_3_0:registMgr(FightProtoCacheDataMgr)
-	arg_3_0.entityMgr = arg_3_0:registMgr(FightEntityDataMgr)
-	arg_3_0.entityExMgr = arg_3_0:registMgr(FightEntityExDataMgr)
-	arg_3_0.handCardMgr = arg_3_0:registMgr(FightHandCardDataMgr)
-	arg_3_0.fieldMgr = arg_3_0:registMgr(FightFieldDataMgr)
-	arg_3_0.paTaMgr = arg_3_0:registMgr(FightPaTaDataMgr)
-	arg_3_0.playCardMgr = arg_3_0:registMgr(FightPlayCardDataMgr)
-	arg_3_0.ASFDDataMgr = arg_3_0:registMgr(FightASFDDataMgr)
-	arg_3_0.teamDataMgr = arg_3_0:registMgr(FightTeamDataMgr)
+function FightDataMgr:initTrueDataMgr()
+	self.calMgr = self:registMgr(FightCalculateDataMgr)
+	self.roundMgr = self:registMgr(FightRoundDataMgr)
+	self.cacheFightMgr = self:registMgr(FightCacheFightDataMgr)
+	self.protoCacheMgr = self:registMgr(FightProtoCacheDataMgr)
+	self.entityMgr = self:registMgr(FightEntityDataMgr)
+	self.entityExMgr = self:registMgr(FightEntityExDataMgr)
+	self.handCardMgr = self:registMgr(FightHandCardDataMgr)
+	self.fieldMgr = self:registMgr(FightFieldDataMgr)
+	self.paTaMgr = self:registMgr(FightPaTaDataMgr)
+	self.playCardMgr = self:registMgr(FightPlayCardDataMgr)
+	self.ASFDDataMgr = self:registMgr(FightASFDDataMgr)
+	self.teamDataMgr = self:registMgr(FightTeamDataMgr)
 end
 
-function var_0_0.initTempDataMgr(arg_4_0)
-	arg_4_0.stageMgr = arg_4_0:registMgr(FightStageMgr)
-	arg_4_0.stateMgr = arg_4_0:registMgr(FightStateDataMgr)
-	arg_4_0.lockOperateMgr = arg_4_0:registMgr(FightLockOperateDataMgr)
-	arg_4_0.counterMgr = arg_4_0:registMgr(FightCounterDataMgr)
-	arg_4_0.operationDataMgr = arg_4_0:registMgr(FightOperationDataMgr)
-	arg_4_0.tempMgr = arg_4_0:registMgr(FightTempDataMgr)
-	arg_4_0.LYDataMgr = arg_4_0:registMgr(FightLYDataMgr)
-	arg_4_0.bloodPoolDataMgr = arg_4_0:registMgr(FightBloodPoolDataMgr)
+function FightDataMgr:initTempDataMgr()
+	self.stageMgr = self:registMgr(FightStageMgr)
+	self.stateMgr = self:registMgr(FightStateDataMgr)
+	self.lockOperateMgr = self:registMgr(FightLockOperateDataMgr)
+	self.counterMgr = self:registMgr(FightCounterDataMgr)
+	self.operationDataMgr = self:registMgr(FightOperationDataMgr)
+	self.tempMgr = self:registMgr(FightTempDataMgr)
+	self.LYDataMgr = self:registMgr(FightLYDataMgr)
+	self.bloodPoolDataMgr = self:registMgr(FightBloodPoolDataMgr)
+	self.rouge2MusicDataMgr = self:registMgr(FightRouge2MusicDataMgr)
 end
 
-function var_0_0.cancelOperation(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.mgrList) do
-		iter_5_1:onCancelOperation()
+function FightDataMgr:cancelOperation()
+	for i, mgr in ipairs(self.mgrList) do
+		mgr:onCancelOperation()
 	end
 end
 
-function var_0_0.updateFightData(arg_6_0, arg_6_1)
-	arg_6_0.calMgr:updateFightData(arg_6_1)
+function FightDataMgr:updateFightData(fightData)
+	self.calMgr:updateFightData(fightData)
 end
 
-function var_0_0.getEntityById(arg_7_0, arg_7_1)
-	return arg_7_0.entityMgr:getById(arg_7_1)
+function FightDataMgr:getEntityById(entityId)
+	return self.entityMgr:getById(entityId)
 end
 
-function var_0_0.beforePlayRoundData(arg_8_0, arg_8_1)
-	arg_8_0.calMgr:beforePlayRoundData(arg_8_1)
+function FightDataMgr:beforePlayRoundData(roundData)
+	self.calMgr:beforePlayRoundData(roundData)
 end
 
-function var_0_0.afterPlayRoundData(arg_9_0, arg_9_1)
-	arg_9_0.calMgr:afterPlayRoundData(arg_9_1)
+function FightDataMgr:afterPlayRoundData(roundData)
+	self.calMgr:afterPlayRoundData(roundData)
 end
 
-function var_0_0.dealRoundData(arg_10_0, arg_10_1)
-	arg_10_0.calMgr:playStepDataList(arg_10_1.fightStep)
-	arg_10_0.calMgr:playStepDataList(arg_10_1.nextRoundBeginStep)
-	arg_10_0.calMgr:dealExPointInfo(arg_10_1.exPointInfo)
+function FightDataMgr:dealRoundData(roundData)
+	self.calMgr:playStepDataList(roundData.fightStep)
+	self.calMgr:playStepDataList(roundData.nextRoundBeginStep)
+	self.calMgr:dealExPointInfo(roundData.exPointInfo)
 end
 
-var_0_0.instance = var_0_0.New()
+FightDataMgr.instance = FightDataMgr.New()
 
-var_0_0.instance:initDataMgr()
+FightDataMgr.instance:initDataMgr()
 
-return var_0_0
+return FightDataMgr

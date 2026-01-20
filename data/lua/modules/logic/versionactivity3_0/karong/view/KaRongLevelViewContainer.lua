@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.KaRongLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/KaRongLevelViewContainer.lua
 
-local var_0_0 = class("KaRongLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.karong.view.KaRongLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local KaRongLevelViewContainer = class("KaRongLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, KaRongLevelView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function KaRongLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, KaRongLevelView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function KaRongLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function KaRongLevelViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity3_0Enum.ActivityId.KaRong)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity3_0Enum.ActivityId.KaRong
 	})
 end
 
-return var_0_0
+return KaRongLevelViewContainer

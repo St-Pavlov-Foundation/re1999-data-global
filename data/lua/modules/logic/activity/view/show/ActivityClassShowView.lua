@@ -1,126 +1,130 @@
-﻿module("modules.logic.activity.view.show.ActivityClassShowView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/show/ActivityClassShowView.lua
 
-local var_0_0 = class("ActivityClassShowView", BaseView)
+module("modules.logic.activity.view.show.ActivityClassShowView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_desc")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
-	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
+local ActivityClassShowView = class("ActivityClassShowView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityClassShowView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._txttime = gohelper.findChildText(self.viewGO, "title/#txt_time")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "title/#txt_desc")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "reward/rewardPreview/#scroll_reward")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
+	self._btnjump = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_jump")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0, LuaEventSystem.Low)
+function ActivityClassShowView:addEvents()
+	self._btnjump:AddClickListener(self._btnjumpOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnjump:RemoveClickListener()
+function ActivityClassShowView:removeEvents()
+	self._btnjump:RemoveClickListener()
 end
 
-var_0_0.ShowCount = 1
-var_0_0.unlimitDay = 42
+ActivityClassShowView.ShowCount = 1
+ActivityClassShowView.unlimitDay = 42
 
-function var_0_0._btnjumpOnClick(arg_4_0)
-	local var_4_0 = DungeonModel.instance:getLastEpisodeShowData()
+function ActivityClassShowView:_btnjumpOnClick()
+	local episodeConfig = DungeonModel.instance:getLastEpisodeShowData()
 
-	if not var_4_0 then
+	if not episodeConfig then
 		return
 	end
 
 	if TeachNoteModel.instance:isTeachNoteUnlock() then
-		local var_4_1 = {}
-		local var_4_2 = var_4_0.id
-		local var_4_3 = var_4_0.chapterId
+		local jumpParam = {}
+		local episodeId = episodeConfig.id
+		local chapterId = episodeConfig.chapterId
+		local chapterConfig = lua_chapter.configDict[chapterId]
 
-		var_4_1.chapterType = lua_chapter.configDict[var_4_3].type
-		var_4_1.chapterId = var_4_3
-		var_4_1.episodeId = var_4_2
+		jumpParam.chapterType = chapterConfig.type
+		jumpParam.chapterId = chapterId
+		jumpParam.episodeId = episodeId
 
 		TeachNoteModel.instance:setJumpEnter(false)
-		DungeonController.instance:jumpDungeon(var_4_1)
+		DungeonController.instance:jumpDungeon(jumpParam)
 	else
 		GameFacade.showToast(ToastEnum.ClassShow)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_class_bg"))
-	gohelper.setActive(arg_5_0._gorewarditem, false)
+function ActivityClassShowView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getActivityBg("full/img_class_bg"))
+	gohelper.setActive(self._gorewarditem, false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function ActivityClassShowView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.parent
+function ActivityClassShowView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	arg_7_0._actId = arg_7_0.viewParam.actId
+	self._actId = self.viewParam.actId
 
-	gohelper.addChild(var_7_0, arg_7_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 
-	arg_7_0._rewardItems = arg_7_0:getUserDataTb_()
+	self._rewardItems = self:getUserDataTb_()
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0._config = ActivityConfig.instance:getActivityShowTaskList(arg_8_0._actId, 1)
-	arg_8_0._txtdesc.text = arg_8_0._config.actDesc
+function ActivityClassShowView:refreshUI()
+	self._config = ActivityConfig.instance:getActivityShowTaskList(self._actId, 1)
+	self._txtdesc.text = self._config.actDesc
 
-	local var_8_0, var_8_1 = ActivityModel.instance:getRemainTime(arg_8_0._actId)
+	local day, hour = ActivityModel.instance:getRemainTime(self._actId)
 
-	arg_8_0._txttime.text = var_8_0 > var_0_0.unlimitDay and luaLang("activityshow_unlimittime") or string.format(luaLang("activityshow_remaintime"), var_8_0, var_8_1)
+	self._txttime.text = day > ActivityClassShowView.unlimitDay and luaLang("activityshow_unlimittime") or string.format(luaLang("activityshow_remaintime"), day, hour)
 
-	local var_8_2 = string.split(arg_8_0._config.showBonus, "|")
+	local rewards = string.split(self._config.showBonus, "|")
 
-	for iter_8_0 = 1, #var_8_2 do
-		if not arg_8_0._rewardItems[iter_8_0] then
-			local var_8_3 = arg_8_0:getUserDataTb_()
+	for i = 1, #rewards do
+		local rewardItem = self._rewardItems[i]
 
-			var_8_3.go = gohelper.clone(arg_8_0._gorewarditem, arg_8_0._gorewardContent, "rewarditem" .. iter_8_0)
-			var_8_3.item = IconMgr.instance:getCommonPropItemIcon(var_8_3.go)
+		if not rewardItem then
+			rewardItem = self:getUserDataTb_()
+			rewardItem.go = gohelper.clone(self._gorewarditem, self._gorewardContent, "rewarditem" .. i)
+			rewardItem.item = IconMgr.instance:getCommonPropItemIcon(rewardItem.go)
 
-			table.insert(arg_8_0._rewardItems, var_8_3)
+			table.insert(self._rewardItems, rewardItem)
 		end
 
-		gohelper.setActive(arg_8_0._rewardItems[iter_8_0].go, true)
+		gohelper.setActive(self._rewardItems[i].go, true)
 
-		local var_8_4 = string.splitToNumber(var_8_2[iter_8_0], "#")
+		local itemCo = string.splitToNumber(rewards[i], "#")
 
-		arg_8_0._rewardItems[iter_8_0].item:setMOValue(var_8_4[1], var_8_4[2], var_8_4[3])
-		arg_8_0._rewardItems[iter_8_0].item:isShowCount(var_8_4[4] == var_0_0.ShowCount)
-		arg_8_0._rewardItems[iter_8_0].item:setCountFontSize(56)
-		arg_8_0._rewardItems[iter_8_0].item:setHideLvAndBreakFlag(true)
-		arg_8_0._rewardItems[iter_8_0].item:hideEquipLvAndBreak(true)
+		self._rewardItems[i].item:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+		self._rewardItems[i].item:isShowCount(itemCo[4] == ActivityClassShowView.ShowCount)
+		self._rewardItems[i].item:setCountFontSize(56)
+		self._rewardItems[i].item:setHideLvAndBreakFlag(true)
+		self._rewardItems[i].item:hideEquipLvAndBreak(true)
 	end
 
-	for iter_8_1 = #var_8_2 + 1, #arg_8_0._rewardItems do
-		gohelper.setActive(arg_8_0._rewardItems[iter_8_1].go, false)
+	for i = #rewards + 1, #self._rewardItems do
+		gohelper.setActive(self._rewardItems[i].go, false)
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.DungeonMapView then
+function ActivityClassShowView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.DungeonMapView then
 		TeachNoteController.instance:enterTeachNoteView(nil, false)
 		ViewMgr.instance:closeView(ViewName.ActivityWelfareView, true)
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function ActivityClassShowView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
+function ActivityClassShowView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return ActivityClassShowView

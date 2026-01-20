@@ -1,158 +1,163 @@
-﻿module("modules.logic.rouge.dlc.101.map.RougeMapFogEffect", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/map/RougeMapFogEffect.lua
 
-local var_0_0 = class("RougeMapFogEffect", LuaCompBase)
+module("modules.logic.rouge.dlc.101.map.RougeMapFogEffect", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.effectGO = arg_1_1
-	arg_1_0.fogMeshRenderer = gohelper.findChildComponent(arg_1_0.effectGO, "mask_smoke", typeof(UnityEngine.MeshRenderer))
-	arg_1_0.fogMat = arg_1_0.fogMeshRenderer.sharedMaterial
-	arg_1_0.tempVector4 = Vector4.zero
-	arg_1_0.shaderParamList = arg_1_0:getUserDataTb_()
+local RougeMapFogEffect = class("RougeMapFogEffect", LuaCompBase)
 
-	for iter_1_0 = 1, RougeMapEnum.MaxHoleNum do
-		table.insert(arg_1_0.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. iter_1_0))
+function RougeMapFogEffect:init(effectGO)
+	self.effectGO = effectGO
+	self.fogMeshRenderer = gohelper.findChildComponent(self.effectGO, "mask_smoke", typeof(UnityEngine.MeshRenderer))
+	self.fogMat = self.fogMeshRenderer.sharedMaterial
+	self.tempVector4 = Vector4.zero
+	self.shaderParamList = self:getUserDataTb_()
+
+	for i = 1, RougeMapEnum.MaxHoleNum do
+		table.insert(self.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. i))
 	end
 
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, arg_1_0.onUpdateMapInfo, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onMapPosChange, arg_1_0.onMapPosChanged, arg_1_0)
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onCameraSizeChange, arg_1_0.onCameraSizeChanged, arg_1_0)
-	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_1_0.onCloseViewFinish, arg_1_0)
-	arg_1_0:initAndRefreshFog()
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onUpdateMapInfo, self.onUpdateMapInfo, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onMapPosChange, self.onMapPosChanged, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onCameraSizeChange, self.onCameraSizeChanged, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
+	self:initAndRefreshFog()
 end
 
-function var_0_0.onUpdateMapInfo(arg_2_0)
+function RougeMapFogEffect:onUpdateMapInfo()
 	if not RougeMapHelper.checkMapViewOnTop() then
-		arg_2_0.waitUpdate = true
+		self.waitUpdate = true
 
 		return
 	end
 
-	arg_2_0.waitUpdate = nil
+	self.waitUpdate = nil
 
-	arg_2_0:initNodeInfo()
-	arg_2_0:refreshFog(true)
+	self:initNodeInfo()
+	self:refreshFog(true)
 end
 
-function var_0_0.onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_0.waitUpdate then
-		arg_3_0:onUpdateMapInfo()
+function RougeMapFogEffect:onCloseViewFinish(viewName)
+	if self.waitUpdate then
+		self:onUpdateMapInfo()
 	end
 end
 
-function var_0_0.initAndRefreshFog(arg_4_0)
-	arg_4_0:initNodeInfo()
-	arg_4_0:refreshFog()
+function RougeMapFogEffect:initAndRefreshFog()
+	self:initNodeInfo()
+	self:refreshFog()
 end
 
-function var_0_0.onMapPosChanged(arg_5_0)
-	arg_5_0:refreshFog()
+function RougeMapFogEffect:onMapPosChanged()
+	self:refreshFog()
 end
 
-function var_0_0.onCameraSizeChanged(arg_6_0)
-	arg_6_0:refreshFog()
+function RougeMapFogEffect:onCameraSizeChanged()
+	self:refreshFog()
 end
 
-function var_0_0.refreshFog(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._fogNodeList and #arg_7_0._fogNodeList > 0
+function RougeMapFogEffect:refreshFog(isTweening)
+	local hasFog = self._fogNodeList and #self._fogNodeList > 0
 
-	gohelper.setActive(arg_7_0.effectGO, var_7_0)
+	gohelper.setActive(self.effectGO, hasFog)
 
-	if not var_7_0 then
+	if not hasFog then
 		return
 	end
 
-	arg_7_0:updateFogPosition(arg_7_1)
-	arg_7_0:updateHolesPosition()
+	self:updateFogPosition(isTweening)
+	self:updateHolesPosition()
 end
 
-function var_0_0.initNodeInfo(arg_8_0)
-	arg_8_0._fogNodeList = RougeMapModel.instance:getFogNodeList()
-	arg_8_0._holeNodeList = RougeMapModel.instance:getHoleNodeList()
+function RougeMapFogEffect:initNodeInfo()
+	self._fogNodeList = RougeMapModel.instance:getFogNodeList()
+	self._holeNodeList = RougeMapModel.instance:getHoleNodeList()
 end
 
-function var_0_0.updateFogPosition(arg_9_0, arg_9_1)
-	arg_9_0:_cancelFogTween()
-	arg_9_0:_endFogUIBlock()
+function RougeMapFogEffect:updateFogPosition(isTweening)
+	self:_cancelFogTween()
+	self:_endFogUIBlock()
 
-	local var_9_0 = arg_9_0:getFogNextPositionX()
-	local var_9_1, var_9_2 = transformhelper.getPos(arg_9_0.effectGO.transform)
+	local fogNextPosX = self:getFogNextPositionX()
+	local _, fogNextPosY = transformhelper.getPos(self.effectGO.transform)
 
-	if arg_9_1 then
-		arg_9_0:_startFogUIBlock()
+	if isTweening then
+		self:_startFogUIBlock()
 
-		local var_9_3, var_9_4 = RougeDLCModel101.instance:getFogPrePos()
+		local preFogPosX, preFogPosY = RougeDLCModel101.instance:getFogPrePos()
 
-		transformhelper.setPosXY(arg_9_0.effectGO.transform, var_9_3, var_9_4)
-		RougeDLCModel101.instance:setFogPrePos(var_9_0, var_9_2)
+		transformhelper.setPosXY(self.effectGO.transform, preFogPosX, preFogPosY)
+		RougeDLCModel101.instance:setFogPrePos(fogNextPosX, fogNextPosY)
 
-		arg_9_0._fogTweenId = ZProj.TweenHelper.DOMoveX(arg_9_0.effectGO.transform, var_9_0, RougeMapEnum.FogDuration, arg_9_0._onFogTweenDone, arg_9_0)
+		self._fogTweenId = ZProj.TweenHelper.DOMoveX(self.effectGO.transform, fogNextPosX, RougeMapEnum.FogDuration, self._onFogTweenDone, self)
 	else
-		transformhelper.setPosXY(arg_9_0.effectGO.transform, var_9_0, var_9_2)
+		transformhelper.setPosXY(self.effectGO.transform, fogNextPosX, fogNextPosY)
 	end
 end
 
-function var_0_0.getFogNextPositionX(arg_10_0)
-	local var_10_0 = arg_10_0._fogNodeList and arg_10_0._fogNodeList[1]
-	local var_10_1 = RougeMapController.instance:getMapComp()
-	local var_10_2 = var_10_1 and var_10_1:getMapItem(var_10_0.nodeId)
+function RougeMapFogEffect:getFogNextPositionX()
+	local firstFogNode = self._fogNodeList and self._fogNodeList[1]
+	local mapComp = RougeMapController.instance:getMapComp()
+	local nodeItemGO = mapComp and mapComp:getMapItem(firstFogNode.nodeId)
 
-	if not var_10_2 then
+	if not nodeItemGO then
 		return 0
 	end
 
-	return var_10_2:getScenePos().x + RougeMapEnum.FogOffset[1]
+	local nodePos = nodeItemGO:getScenePos()
+	local effectPosX = nodePos.x + RougeMapEnum.FogOffset[1]
+
+	return effectPosX
 end
 
-function var_0_0._onFogTweenDone(arg_11_0)
-	arg_11_0:_endFogUIBlock()
+function RougeMapFogEffect:_onFogTweenDone()
+	self:_endFogUIBlock()
 end
 
-function var_0_0._startFogUIBlock(arg_12_0)
+function RougeMapFogEffect:_startFogUIBlock()
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("RougeMapFogEffect")
 end
 
-function var_0_0._endFogUIBlock(arg_13_0)
+function RougeMapFogEffect:_endFogUIBlock()
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("RougeMapFogEffect")
 end
 
-function var_0_0._cancelFogTween(arg_14_0)
-	if arg_14_0._fogTweenId then
-		ZProj.TweenHelper.KillById(arg_14_0._fogTweenId)
+function RougeMapFogEffect:_cancelFogTween()
+	if self._fogTweenId then
+		ZProj.TweenHelper.KillById(self._fogTweenId)
 
-		arg_14_0._fogTweenId = nil
+		self._fogTweenId = nil
 	end
 end
 
-function var_0_0.updateHolesPosition(arg_15_0)
-	local var_15_0 = RougeMapController.instance:getMapComp()
+function RougeMapFogEffect:updateHolesPosition()
+	local mapComp = RougeMapController.instance:getMapComp()
 
-	if gohelper.isNil(arg_15_0.fogMat) or not var_15_0 then
+	if gohelper.isNil(self.fogMat) or not mapComp then
 		return
 	end
 
-	for iter_15_0 = 1, RougeMapEnum.MaxHoleNum do
-		local var_15_1 = arg_15_0._holeNodeList and arg_15_0._holeNodeList[iter_15_0]
+	for index = 1, RougeMapEnum.MaxHoleNum do
+		local holeNode = self._holeNodeList and self._holeNodeList[index]
 
-		if var_15_1 then
-			local var_15_2 = var_15_0:getMapItem(var_15_1.nodeId)
-			local var_15_3 = var_15_2 and var_15_2:getScenePos()
-			local var_15_4 = var_15_3.x + RougeMapEnum.HolePosOffset[1]
-			local var_15_5 = var_15_3.y + RougeMapEnum.HolePosOffset[2]
+		if holeNode then
+			local nodeMapItem = mapComp:getMapItem(holeNode.nodeId)
+			local pos = nodeMapItem and nodeMapItem:getScenePos()
+			local posX = pos.x + RougeMapEnum.HolePosOffset[1]
+			local posY = pos.y + RougeMapEnum.HolePosOffset[2]
 
-			arg_15_0.tempVector4:Set(var_15_4, var_15_5, RougeMapEnum.HoleSize)
+			self.tempVector4:Set(posX, posY, RougeMapEnum.HoleSize)
 		else
-			arg_15_0.tempVector4:Set(RougeMapEnum.OutSideAreaPos.X, RougeMapEnum.OutSideAreaPos.Y)
+			self.tempVector4:Set(RougeMapEnum.OutSideAreaPos.X, RougeMapEnum.OutSideAreaPos.Y)
 		end
 
-		arg_15_0.fogMat:SetVector(arg_15_0.shaderParamList[iter_15_0], arg_15_0.tempVector4)
+		self.fogMat:SetVector(self.shaderParamList[index], self.tempVector4)
 	end
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	arg_16_0:_cancelFogTween()
-	arg_16_0:_endFogUIBlock()
+function RougeMapFogEffect:onDestroy()
+	self:_cancelFogTween()
+	self:_endFogUIBlock()
 end
 
-return var_0_0
+return RougeMapFogEffect

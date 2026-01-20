@@ -1,32 +1,34 @@
-﻿module("modules.logic.fight.view.FightAutoBtnView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightAutoBtnView.lua
 
-local var_0_0 = class("FightAutoBtnView", FightBaseView)
+module("modules.logic.fight.view.FightAutoBtnView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btn = gohelper.findButtonWithAudio(arg_1_0.viewGO)
-	arg_1_0.lock = gohelper.findChild(arg_1_0.viewGO, "lock")
-	arg_1_0.image = gohelper.findChildImage(arg_1_0.viewGO, "image")
-	arg_1_0.autoAnimation = arg_1_0.image:GetComponent(typeof(UnityEngine.Animation))
+local FightAutoBtnView = class("FightAutoBtnView", FightBaseView)
+
+function FightAutoBtnView:onInitView()
+	self.btn = gohelper.findButtonWithAudio(self.viewGO)
+	self.lock = gohelper.findChild(self.viewGO, "lock")
+	self.image = gohelper.findChildImage(self.viewGO, "image")
+	self.autoAnimation = self.image:GetComponent(typeof(UnityEngine.Animation))
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0.btn, arg_2_0.onClick)
-	arg_2_0:com_registEvent(PCInputController.instance, PCInputEvent.NotifyBattleAutoFight, arg_2_0.OnKeyAutoPress)
-	arg_2_0:com_registFightEvent(FightEvent.SetAutoState, arg_2_0._updateAutoAnim)
-	arg_2_0:com_registFightEvent(FightEvent.OnGuideStopAutoFight, arg_2_0._onGuideStopAutoFight)
-	arg_2_0:com_registFightEvent(FightEvent.GuideRecordAutoState, arg_2_0.onGuideRecordAutoState)
-	arg_2_0:com_registFightEvent(FightEvent.GuideRefreshAutoStateByRecord, arg_2_0.onGuideRefreshAutoStateByRecord)
+function FightAutoBtnView:addEvents()
+	self:com_registClick(self.btn, self.onClick)
+	self:com_registEvent(PCInputController.instance, PCInputEvent.NotifyBattleAutoFight, self.OnKeyAutoPress)
+	self:com_registFightEvent(FightEvent.SetAutoState, self._updateAutoAnim)
+	self:com_registFightEvent(FightEvent.OnGuideStopAutoFight, self._onGuideStopAutoFight)
+	self:com_registFightEvent(FightEvent.GuideRecordAutoState, self.onGuideRecordAutoState)
+	self:com_registFightEvent(FightEvent.GuideRefreshAutoStateByRecord, self.onGuideRefreshAutoStateByRecord)
 end
 
-function var_0_0.OnKeyAutoPress(arg_3_0)
+function FightAutoBtnView:OnKeyAutoPress()
 	if not FightDataHelper.stateMgr.isReplay then
-		arg_3_0:onClick()
+		self:onClick()
 	end
 end
 
-function var_0_0.onClick(arg_4_0)
+function FightAutoBtnView:onClick()
 	if FightDataHelper.stateMgr.isReplay then
-		gohelper.setActive(arg_4_0.viewGO, false)
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
@@ -48,17 +50,18 @@ function var_0_0.onClick(arg_4_0)
 	end
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightAuto) then
-		local var_4_0, var_4_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightAuto)
+		local desc, param = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightAuto)
 
-		GameFacade.showToast(var_4_0, var_4_1)
+		GameFacade.showToast(desc, param)
 
 		return
 	end
 
-	local var_4_2 = FightDataHelper.fieldMgr.battleId
-	local var_4_3 = var_4_2 and lua_battle.configDict[var_4_2]
+	local battleId = FightDataHelper.fieldMgr.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local episodeCanAutoFight = battleCO and (not battleCO.noAutoFight or battleCO.noAutoFight == 0)
 
-	if not (var_4_3 and (not var_4_3.noAutoFight or var_4_3.noAutoFight == 0)) then
+	if not episodeCanAutoFight then
 		GameFacade.showToast(ToastEnum.EpisodeCantUse)
 
 		return
@@ -72,84 +75,84 @@ function var_0_0.onClick(arg_4_0)
 		return
 	end
 
-	local var_4_4 = not FightDataHelper.stateMgr:getIsAuto()
+	local isAuto = not FightDataHelper.stateMgr:getIsAuto()
 
-	FightDataHelper.stateMgr:setAutoState(var_4_4)
-	FightController.instance:setPlayerPrefKeyAuto(0, var_4_4)
-	arg_4_0:_updateAutoAnim()
+	FightDataHelper.stateMgr:setAutoState(isAuto)
+	FightController.instance:setPlayerPrefKeyAuto(0, isAuto)
+	self:_updateAutoAnim()
 
-	if var_4_4 then
+	if isAuto then
 		FightGameMgr.operateMgr:requestAutoFight()
 	end
 end
 
-function var_0_0._onGuideStopAutoFight(arg_5_0)
+function FightAutoBtnView:_onGuideStopAutoFight()
 	FightDataHelper.stateMgr:setAutoState(false)
-	arg_5_0:_updateAutoAnim()
+	self:_updateAutoAnim()
 end
 
-function var_0_0.onGuideRecordAutoState(arg_6_0)
-	arg_6_0.guideRecordAutoState = FightDataHelper.stateMgr:getIsAuto()
+function FightAutoBtnView:onGuideRecordAutoState()
+	self.guideRecordAutoState = FightDataHelper.stateMgr:getIsAuto()
 
-	if arg_6_0.forceAuto then
-		arg_6_0.guideRecordAutoState = true
+	if self.forceAuto then
+		self.guideRecordAutoState = true
 	end
 end
 
-function var_0_0.onGuideRefreshAutoStateByRecord(arg_7_0)
-	if arg_7_0.guideRecordAutoState then
+function FightAutoBtnView:onGuideRefreshAutoStateByRecord()
+	if self.guideRecordAutoState then
 		FightDataHelper.stateMgr:setAutoState(true)
-		arg_7_0:_updateAutoAnim()
+		self:_updateAutoAnim()
 		FightGameMgr.operateMgr:requestAutoFight()
 	end
 end
 
-function var_0_0._updateAutoAnim(arg_8_0)
+function FightAutoBtnView:_updateAutoAnim()
 	if FightDataHelper.stateMgr:getIsAuto() then
-		arg_8_0.autoAnimation.enabled = true
+		self.autoAnimation.enabled = true
 
-		arg_8_0.autoAnimation:Play()
+		self.autoAnimation:Play()
 	else
-		arg_8_0.autoAnimation:Stop()
+		self.autoAnimation:Stop()
 
-		arg_8_0.autoAnimation.enabled = false
+		self.autoAnimation.enabled = false
 
-		transformhelper.setLocalRotation(arg_8_0.image.transform, 0, 0, 0)
+		transformhelper.setLocalRotation(self.image.transform, 0, 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
+function FightAutoBtnView:onOpen()
 	if FightDataHelper.stateMgr.isReplay then
-		gohelper.setActive(arg_9_0.viewGO, false)
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
 	if not DungeonModel.instance:hasPassLevelAndStory(10101) then
-		gohelper.setActive(arg_9_0.viewGO, false)
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	local var_9_0 = FightDataHelper.fieldMgr.battleId
-	local var_9_1 = var_9_0 and lua_battle.configDict[var_9_0]
-	local var_9_2 = var_9_1 and (not var_9_1.noAutoFight or var_9_1.noAutoFight == 0)
-	local var_9_3 = GuideModel.instance:isDoingFirstGuide()
-	local var_9_4 = GuideController.instance:isForbidGuides()
-	local var_9_5 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightAuto) and (not var_9_3 or var_9_4)
+	local battleId = FightDataHelper.fieldMgr.battleId
+	local battleConfig = battleId and lua_battle.configDict[battleId]
+	local episodeCanAutoFight = battleConfig and (not battleConfig.noAutoFight or battleConfig.noAutoFight == 0)
+	local firstGuide = GuideModel.instance:isDoingFirstGuide()
+	local forbidGuides = GuideController.instance:isForbidGuides()
+	local hasOpenAuto = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightAuto) and (not firstGuide or forbidGuides)
 
-	var_9_5 = var_9_5 and var_9_2
-	arg_9_0.forceAuto = FightDataHelper.stateMgr.forceAuto
+	hasOpenAuto = hasOpenAuto and episodeCanAutoFight
+	self.forceAuto = FightDataHelper.stateMgr.forceAuto
 
-	gohelper.setActive(arg_9_0.lock, arg_9_0.forceAuto or FightDataHelper.fieldMgr:isDouQuQu())
+	gohelper.setActive(self.lock, self.forceAuto or FightDataHelper.fieldMgr:isDouQuQu())
 
-	if var_9_5 then
-		UISpriteSetMgr.instance:setFightSprite(arg_9_0.image, "bt_zd", true)
+	if hasOpenAuto then
+		UISpriteSetMgr.instance:setFightSprite(self.image, "bt_zd", true)
 	else
-		UISpriteSetMgr.instance:setFightSprite(arg_9_0.image, "zd_dis", true)
+		UISpriteSetMgr.instance:setFightSprite(self.image, "zd_dis", true)
 	end
 
-	arg_9_0:com_registTimer(arg_9_0._updateAutoAnim, 0.01)
+	self:com_registTimer(self._updateAutoAnim, 0.01)
 end
 
-return var_0_0
+return FightAutoBtnView

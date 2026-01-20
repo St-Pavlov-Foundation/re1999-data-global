@@ -1,249 +1,272 @@
-﻿module("projbooter.BootResMgr", package.seeall)
+﻿-- chunkname: @projbooter/BootResMgr.lua
 
-local var_0_0 = class("BootResMgr")
+module("projbooter.BootResMgr", package.seeall)
 
-var_0_0.OriginBgPath = "bootres/prefabs/originbg.prefab"
-var_0_0.LoadingViewPath = "bootres/prefabs/loadingview.prefab"
-var_0_0.MsgBoxViewPath = "bootres/prefabs/msgboxview.prefab"
-var_0_0.NoticeViewPath = "bootres/prefabs/noticeview.prefab"
-var_0_0.VoiceViewPath = "bootres/prefabs/voicedownloadview.prefab"
-var_0_0.VersionViewPath = "bootres/prefabs/versionview.prefab"
-var_0_0.AdaptionBgViewPath = "bootres/prefabs/adaptionbg.prefab"
-var_0_0.FontPath = "Font"
+local BootResMgr = class("BootResMgr")
 
-function var_0_0.ctor(arg_1_0)
+BootResMgr.OriginBgPath = "bootres/prefabs/originbg.prefab"
+BootResMgr.LoadingViewPath = "bootres/prefabs/loadingview.prefab"
+BootResMgr.MsgBoxViewPath = "bootres/prefabs/msgboxview.prefab"
+BootResMgr.NoticeViewPath = "bootres/prefabs/noticeview.prefab"
+BootResMgr.VoiceViewPath = "bootres/prefabs/voicedownloadview.prefab"
+BootResMgr.VersionViewPath = "bootres/prefabs/versionview.prefab"
+BootResMgr.AdaptionBgViewPath = "bootres/prefabs/adaptionbg.prefab"
+BootResMgr.FontPath = "Font"
+
+function BootResMgr:ctor()
 	math.randomseed(tonumber(tostring(os.time()):reverse():sub(1, 7)))
 
-	arg_1_0._loadedCount = 0
-	arg_1_0._orginBgRoot = UnityEngine.GameObject.Find("UIRoot/OriginBg")
-	arg_1_0._popupTopRoot = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
-	arg_1_0._topRoot = UnityEngine.GameObject.Find("UIRoot/TOP")
-	arg_1_0._msgRoot = UnityEngine.GameObject.Find("UIRoot/MESSAGE")
-	arg_1_0._allRes = {}
-	arg_1_0._allRes.imgs = {}
-	arg_1_0._hasShowIndexs = {}
+	self._loadedCount = 0
+	self._orginBgRoot = UnityEngine.GameObject.Find("UIRoot/OriginBg")
+	self._popupTopRoot = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
+	self._topRoot = UnityEngine.GameObject.Find("UIRoot/TOP")
+	self._msgRoot = UnityEngine.GameObject.Find("UIRoot/MESSAGE")
+	self._allRes = {}
+	self._allRes.imgs = {}
+	self._hasShowIndexs = {}
 
-	local var_1_0 = arg_1_0:_getRandomCO()
-	local var_1_1 = string.format("bootres/textures/%s.png", var_1_0.bg)
+	local co = self:_getRandomCO()
+	local imgPath = string.format("bootres/textures/%s.png", co.bg)
 
-	arg_1_0._allRes.imgs[var_1_1] = {
-		path = var_1_1,
-		config = var_1_0
+	self._allRes.imgs[imgPath] = {
+		path = imgPath,
+		config = co
 	}
-	arg_1_0._allRes.prefabs = {
-		[var_0_0.OriginBgPath] = {
-			path = var_0_0.OriginBgPath,
-			layer = arg_1_0._orginBgRoot
+	self._allRes.prefabs = {
+		[BootResMgr.OriginBgPath] = {
+			path = BootResMgr.OriginBgPath,
+			layer = self._orginBgRoot
 		},
-		[var_0_0.LoadingViewPath] = {
-			path = var_0_0.LoadingViewPath,
-			layer = arg_1_0._topRoot
+		[BootResMgr.LoadingViewPath] = {
+			path = BootResMgr.LoadingViewPath,
+			layer = self._topRoot
 		},
-		[var_0_0.MsgBoxViewPath] = {
-			path = var_0_0.MsgBoxViewPath,
-			layer = arg_1_0._msgRoot
+		[BootResMgr.MsgBoxViewPath] = {
+			path = BootResMgr.MsgBoxViewPath,
+			layer = self._msgRoot
 		},
-		[var_0_0.NoticeViewPath] = {
-			path = var_0_0.NoticeViewPath,
-			layer = arg_1_0._topRoot
+		[BootResMgr.NoticeViewPath] = {
+			path = BootResMgr.NoticeViewPath,
+			layer = self._topRoot
 		},
-		[var_0_0.VoiceViewPath] = {
-			path = var_0_0.VoiceViewPath,
-			layer = arg_1_0._popupTopRoot
+		[BootResMgr.VoiceViewPath] = {
+			path = BootResMgr.VoiceViewPath,
+			layer = self._topRoot
 		},
-		[var_0_0.VersionViewPath] = {
-			path = var_0_0.VersionViewPath,
-			layer = arg_1_0._popupTopRoot
+		[BootResMgr.VersionViewPath] = {
+			path = BootResMgr.VersionViewPath,
+			layer = self._popupTopRoot
 		},
-		[var_0_0.AdaptionBgViewPath] = {
-			path = var_0_0.AdaptionBgViewPath,
-			layer = arg_1_0._topRoot
+		[BootResMgr.AdaptionBgViewPath] = {
+			path = BootResMgr.AdaptionBgViewPath,
+			layer = self._topRoot
 		}
 	}
 end
 
-function var_0_0.getAutoMaskGo(arg_2_0)
-	return arg_2_0._allRes.prefabs[var_0_0.AutoMaskPath].go
+function BootResMgr:getAutoMaskGo()
+	return self._allRes.prefabs[BootResMgr.AutoMaskPath].go
 end
 
-function var_0_0.getLoadingViewGo(arg_3_0)
-	return arg_3_0._allRes.prefabs[var_0_0.LoadingViewPath].go
+function BootResMgr:getLoadingViewGo()
+	return self._allRes.prefabs[BootResMgr.LoadingViewPath].go
 end
 
-function var_0_0.getMsgBoxGo(arg_4_0)
-	return arg_4_0._allRes.prefabs[var_0_0.MsgBoxViewPath].go
+function BootResMgr:getMsgBoxGo()
+	return self._allRes.prefabs[BootResMgr.MsgBoxViewPath].go
 end
 
-function var_0_0.getNoticeViewGo(arg_5_0)
-	return arg_5_0._allRes.prefabs[var_0_0.NoticeViewPath].go
+function BootResMgr:getNoticeViewGo()
+	return self._allRes.prefabs[BootResMgr.NoticeViewPath].go
 end
 
-function var_0_0.getVoiceViewGo(arg_6_0)
-	return arg_6_0._allRes.prefabs[var_0_0.VoiceViewPath].go
+function BootResMgr:getVoiceViewGo()
+	return self._allRes.prefabs[BootResMgr.VoiceViewPath].go
 end
 
-function var_0_0.getVersionViewGo(arg_7_0)
-	return arg_7_0._allRes.prefabs[var_0_0.VersionViewPath].go
+function BootResMgr:getVersionViewGo()
+	return self._allRes.prefabs[BootResMgr.VersionViewPath].go
 end
 
-function var_0_0.getAdaptionViewGo(arg_8_0)
-	return arg_8_0._allRes.prefabs[var_0_0.AdaptionBgViewPath].go
+function BootResMgr:getAdaptionViewGo()
+	return self._allRes.prefabs[BootResMgr.AdaptionBgViewPath].go
 end
 
-function var_0_0.getOriginBgGo(arg_9_0)
-	return arg_9_0._allRes.prefabs[var_0_0.OriginBgPath].go
+function BootResMgr:getOriginBgGo()
+	return self._allRes.prefabs[BootResMgr.OriginBgPath].go
 end
 
-function var_0_0.getLoadingBg(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_1 == 1 then
-		for iter_10_0, iter_10_1 in pairs(arg_10_0._allRes.imgs) do
-			if arg_10_2 then
-				arg_10_2(arg_10_3, iter_10_1.texture, iter_10_1.config)
+function BootResMgr:getLoadingBg(index, callback, callbackObj)
+	if index == 1 then
+		for _, v in pairs(self._allRes.imgs) do
+			if callback then
+				callback(callbackObj, v.texture, v.config)
 			end
 
 			return
 		end
 	else
-		local var_10_0 = arg_10_0:_getRandomCO()
-		local var_10_1 = string.format("bootres/textures/%s.png", var_10_0.bg)
+		local co = self:_getRandomCO()
+		local imgPath = string.format("bootres/textures/%s.png", co.bg)
 
-		if not arg_10_0._allRes.imgs[var_10_1] then
-			arg_10_0._allRes.imgs[var_10_1] = {}
+		if not self._allRes.imgs[imgPath] then
+			self._allRes.imgs[imgPath] = {}
 		end
 
-		arg_10_0._allRes.imgs[var_10_1].path = var_10_1
-		arg_10_0._allRes.imgs[var_10_1].config = var_10_0
+		self._allRes.imgs[imgPath].path = imgPath
+		self._allRes.imgs[imgPath].config = co
 
-		if not arg_10_0._allRes.imgs[var_10_1].texture then
-			loadAbAsset(arg_10_0._allRes.imgs[var_10_1].path, false, function(arg_11_0)
-				if not arg_10_0._allRes then
+		if not self._allRes.imgs[imgPath].texture then
+			loadAbAsset(self._allRes.imgs[imgPath].path, false, function(assetItem)
+				if not self._allRes then
 					return
 				end
 
-				arg_10_0._allRes.imgs[var_10_1].texture = arg_11_0:GetResource()
+				self._allRes.imgs[imgPath].texture = assetItem:GetResource()
 
-				if arg_10_2 then
-					arg_10_2(arg_10_3, arg_10_0._allRes.imgs[var_10_1].texture, arg_10_0._allRes.imgs[var_10_1].config)
+				if callback then
+					callback(callbackObj, self._allRes.imgs[imgPath].texture, self._allRes.imgs[imgPath].config)
 				end
 			end)
-		elseif arg_10_2 then
-			arg_10_2(arg_10_3, arg_10_0._allRes.imgs[var_10_1].texture, arg_10_0._allRes.imgs[var_10_1].config)
+		elseif callback then
+			callback(callbackObj, self._allRes.imgs[imgPath].texture, self._allRes.imgs[imgPath].config)
 		end
 	end
 end
 
-function var_0_0._getRandomCO(arg_12_0)
-	local var_12_0 = booterLoadingConfig()
-	local var_12_1 = 0
+function BootResMgr:_getPrefsNumber(key, defaultValue)
+	local hasKey = UnityEngine.PlayerPrefs.HasKey(key)
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		if not arg_12_0._hasShowIndexs[iter_12_0] then
-			var_12_1 = var_12_1 + iter_12_1.weight
+	if hasKey then
+		return UnityEngine.PlayerPrefs.GetFloat(key)
+	end
+
+	return defaultValue
+end
+
+function BootResMgr:_getRandomCO()
+	local list = booterLoadingConfig()
+	local bgCos = {}
+	local totalWeight = 0
+
+	for index, co in ipairs(list) do
+		local episodeId = co.episodeId or 0
+
+		if episodeId == 0 or self:_getPrefsNumber("GameEpisodeIdPassKey_" .. episodeId, 0) ~= 0 then
+			table.insert(bgCos, co)
 		end
 	end
 
-	local var_12_2 = math.floor(math.random() * var_12_1)
+	for index, co in ipairs(bgCos) do
+		local episodeId = co.episodeId
 
-	for iter_12_2, iter_12_3 in ipairs(var_12_0) do
-		if not arg_12_0._hasShowIndexs[iter_12_2] then
-			if var_12_2 < iter_12_3.weight then
-				arg_12_0._hasShowIndexs[iter_12_2] = true
+		if not self._hasShowIndexs[index] then
+			totalWeight = totalWeight + co.weight
+		end
+	end
 
-				return iter_12_3
+	local rand = math.floor(math.random() * totalWeight)
+
+	for index, co in ipairs(bgCos) do
+		if not self._hasShowIndexs[index] then
+			if rand < co.weight then
+				self._hasShowIndexs[index] = true
+
+				return co
 			else
-				var_12_2 = var_12_2 - iter_12_3.weight
+				rand = rand - co.weight
 			end
 		end
 	end
 
-	arg_12_0._hasShowIndexs = {}
+	self._hasShowIndexs = {}
 
-	local var_12_3 = math.random(1, #var_12_0)
+	local leftIndex = math.random(1, #bgCos)
 
-	arg_12_0._hasShowIndexs[var_12_3] = true
+	self._hasShowIndexs[leftIndex] = true
 
-	return var_12_0[var_12_3]
+	return bgCos[leftIndex]
 end
 
-function var_0_0.startLoading(arg_13_0, arg_13_1, arg_13_2)
-	logNormal("BootResMgr.startLoading loadedCb = " .. tostring(arg_13_1) .. " cbObj = " .. tostring(arg_13_2))
+function BootResMgr:startLoading(loadedCb, cbObj)
+	logNormal("BootResMgr.startLoading loadedCb = " .. tostring(loadedCb) .. " cbObj = " .. tostring(cbObj))
 
-	arg_13_0._loadedCb = arg_13_1
-	arg_13_0._cbObj = arg_13_2
+	self._loadedCb = loadedCb
+	self._cbObj = cbObj
 
-	local var_13_0 = GameConfig:GetCurLangType()
-	local var_13_1 = BootLangEnum.LangFont[var_13_0] or BootLangEnum.Font.b_hwzs
+	local langType = GameConfig:GetCurLangType()
+	local fontPath = BootLangEnum.LangFont[langType] or BootLangEnum.Font.b_hwzs
 
-	loadAbAsset(var_13_1, false, arg_13_0._onloadedFont, arg_13_0)
+	loadAbAsset(fontPath, false, self._onloadedFont, self)
 end
 
-function var_0_0._onloadedFont(arg_14_0, arg_14_1)
-	if arg_14_1.IsLoadSuccess then
-		local var_14_0 = arg_14_1:GetResource()
+function BootResMgr:_onloadedFont(assetItem)
+	if assetItem.IsLoadSuccess then
+		local go = assetItem:GetResource()
 
-		BootLangFontMgr.instance:init(var_14_0)
+		BootLangFontMgr.instance:init(go)
 	end
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._allRes.prefabs) do
-		arg_14_0._loadedCount = arg_14_0._loadedCount + 1
+	for path, _ in pairs(self._allRes.prefabs) do
+		self._loadedCount = self._loadedCount + 1
 
-		loadAbAsset(iter_14_0, false, arg_14_0._onPrefabLoaded, arg_14_0)
+		loadAbAsset(path, false, self._onPrefabLoaded, self)
 	end
 
-	for iter_14_2, iter_14_3 in pairs(arg_14_0._allRes.imgs) do
-		arg_14_0._loadedCount = arg_14_0._loadedCount + 1
+	for _, img in pairs(self._allRes.imgs) do
+		self._loadedCount = self._loadedCount + 1
 
-		loadAbAsset(iter_14_3.path, false, arg_14_0._onImgLoaded, arg_14_0)
-	end
-end
-
-function var_0_0._onImgLoaded(arg_15_0, arg_15_1)
-	if arg_15_1.IsLoadSuccess then
-		arg_15_0._loadedCount = arg_15_0._loadedCount - 1
-
-		local var_15_0 = arg_15_1:GetResource()
-
-		arg_15_0._allRes.imgs[arg_15_1.ResPath].texture = var_15_0
-
-		arg_15_0:_checkResLoadFinished()
+		loadAbAsset(img.path, false, self._onImgLoaded, self)
 	end
 end
 
-function var_0_0._onPrefabLoaded(arg_16_0, arg_16_1)
-	if arg_16_1.IsLoadSuccess then
-		if var_0_0.AdaptionBgViewPath == arg_16_1.ResPath then
-			GameAdaptionBgMgr.instance:onAssetResLoaded(arg_16_1)
+function BootResMgr:_onImgLoaded(assetItem)
+	if assetItem.IsLoadSuccess then
+		self._loadedCount = self._loadedCount - 1
+
+		local texture = assetItem:GetResource()
+
+		self._allRes.imgs[assetItem.ResPath].texture = texture
+
+		self:_checkResLoadFinished()
+	end
+end
+
+function BootResMgr:_onPrefabLoaded(assetItem)
+	if assetItem.IsLoadSuccess then
+		if BootResMgr.AdaptionBgViewPath == assetItem.ResPath then
+			GameAdaptionBgMgr.instance:onAssetResLoaded(assetItem)
 		end
 
-		arg_16_0._loadedCount = arg_16_0._loadedCount - 1
+		self._loadedCount = self._loadedCount - 1
 
-		local var_16_0 = arg_16_1:GetResource()
-		local var_16_1 = UnityEngine.GameObject.Instantiate(var_16_0)
+		local go = assetItem:GetResource()
+		local newGo = UnityEngine.GameObject.Instantiate(go)
 
-		var_16_1:SetActive(false)
+		newGo:SetActive(false)
 
-		local var_16_2 = arg_16_0._allRes.prefabs[arg_16_1.ResPath].layer or arg_16_0._topRoot
+		local root = self._allRes.prefabs[assetItem.ResPath].layer or self._topRoot
 
-		var_16_1.transform:SetParent(var_16_2.transform, false)
+		newGo.transform:SetParent(root.transform, false)
 
-		arg_16_0._allRes.prefabs[arg_16_1.ResPath].go = var_16_1
+		self._allRes.prefabs[assetItem.ResPath].go = newGo
 
-		arg_16_0:_checkResLoadFinished()
+		self:_checkResLoadFinished()
 	end
 end
 
-function var_0_0._checkResLoadFinished(arg_17_0)
-	if arg_17_0._loadedCount == 0 then
+function BootResMgr:_checkResLoadFinished()
+	if self._loadedCount == 0 then
 		logNormal("BootResMgr onloaded, 所有的启动UI资源都加载完成了！")
 
-		if arg_17_0._loadedCb then
-			arg_17_0._loadedCb(arg_17_0._cbObj)
+		if self._loadedCb then
+			self._loadedCb(self._cbObj)
 		end
 	end
 end
 
-function var_0_0.dispose(arg_18_0)
-	if arg_18_0._disposed then
+function BootResMgr:dispose()
+	if self._disposed then
 		return
 	end
 
@@ -254,17 +277,17 @@ function var_0_0.dispose(arg_18_0)
 	BootVoiceView.instance:dispose()
 	BootVersionView.instance:dispose()
 
-	if arg_18_0._allRes then
-		for iter_18_0, iter_18_1 in pairs(arg_18_0._allRes.prefabs) do
-			UnityEngine.GameObject.Destroy(iter_18_1.go)
+	if self._allRes then
+		for _, v in pairs(self._allRes.prefabs) do
+			UnityEngine.GameObject.Destroy(v.go)
 		end
 
-		arg_18_0._allRes = nil
+		self._allRes = nil
 	end
 
-	arg_18_0._disposed = true
+	self._disposed = true
 end
 
-var_0_0.instance = var_0_0.New()
+BootResMgr.instance = BootResMgr.New()
 
-return var_0_0
+return BootResMgr

@@ -1,99 +1,102 @@
-﻿module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_OfferRoleView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v2a1/V2a1_BossRush_OfferRoleView.lua
 
-local var_0_0 = class("V2a1_BossRush_OfferRoleView", BaseView)
+module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_OfferRoleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollChar = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/Left/#scroll_Char")
-	arg_1_0._scrollEffect = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/Right/#scroll_Effect")
-	arg_1_0._txtCharEffect = gohelper.findChildText(arg_1_0.viewGO, "root/Right/#scroll_Effect/Viewport/Content/Title/#txt_CharEffect")
-	arg_1_0._txtEffect = gohelper.findChildText(arg_1_0.viewGO, "root/Right/#scroll_Effect/Viewport/Content/#txt_Effect")
+local V2a1_BossRush_OfferRoleView = class("V2a1_BossRush_OfferRoleView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a1_BossRush_OfferRoleView:onInitView()
+	self._scrollChar = gohelper.findChildScrollRect(self.viewGO, "root/Left/#scroll_Char")
+	self._scrollEffect = gohelper.findChildScrollRect(self.viewGO, "root/Right/#scroll_Effect")
+	self._txtCharEffect = gohelper.findChildText(self.viewGO, "root/Right/#scroll_Effect/Viewport/Content/Title/#txt_CharEffect")
+	self._txtEffect = gohelper.findChildText(self.viewGO, "root/Right/#scroll_Effect/Viewport/Content/#txt_Effect")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(BossRushController.instance, BossRushEvent.OnSelectEnhanceRole, arg_2_0._OnSelectEnhanceRole, arg_2_0)
+function V2a1_BossRush_OfferRoleView:addEvents()
+	self:addEventCb(BossRushController.instance, BossRushEvent.OnSelectEnhanceRole, self._OnSelectEnhanceRole, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(BossRushController.instance, BossRushEvent.OnSelectEnhanceRole, arg_3_0._OnSelectEnhanceRole, arg_3_0)
+function V2a1_BossRush_OfferRoleView:removeEvents()
+	self:removeEventCb(BossRushController.instance, BossRushEvent.OnSelectEnhanceRole, self._OnSelectEnhanceRole, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V2a1_BossRush_OfferRoleView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function V2a1_BossRush_OfferRoleView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	gohelper.setActive(arg_6_0._txtEffect.gameObject, false)
+function V2a1_BossRush_OfferRoleView:onOpen()
+	gohelper.setActive(self._txtEffect.gameObject, false)
 	BossRushEnhanceRoleViewListModel.instance:setListData()
 end
 
-function var_0_0.onClose(arg_7_0)
+function V2a1_BossRush_OfferRoleView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function V2a1_BossRush_OfferRoleView:onDestroyView()
 	return
 end
 
-function var_0_0._OnSelectEnhanceRole(arg_9_0, arg_9_1)
-	arg_9_0:refreshEnhanceEffect(arg_9_1)
+function V2a1_BossRush_OfferRoleView:_OnSelectEnhanceRole(heroId)
+	self:refreshEnhanceEffect(heroId)
 end
 
-function var_0_0.onClickModalMask(arg_10_0)
-	arg_10_0:closeThis()
+function V2a1_BossRush_OfferRoleView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.refreshEnhanceEffect(arg_11_0, arg_11_1)
-	local var_11_0 = HeroConfig.instance:getHeroCO(arg_11_1)
-	local var_11_1 = luaLang("bossrush_enhance_role_title")
+function V2a1_BossRush_OfferRoleView:refreshEnhanceEffect(heroId)
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
+	local format = luaLang("bossrush_enhance_role_title")
 
-	arg_11_0._txtCharEffect.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_1, var_11_0.name)
+	self._txtCharEffect.text = GameUtil.getSubPlaceholderLuaLangOneParam(format, heroConfig.name)
 
-	local var_11_2 = BossRushConfig.instance:getActRoleEnhanceCoById(arg_11_1).desc
+	local enhanceCo = BossRushConfig.instance:getActRoleEnhanceCoById(heroId)
+	local desc = enhanceCo.desc
 
-	if not string.nilorempty(var_11_2) then
-		local var_11_3 = string.split(var_11_2, "|")
+	if not string.nilorempty(desc) then
+		local dataList = string.split(desc, "|")
 
-		for iter_11_0 = 1, #var_11_3 do
-			local var_11_4 = arg_11_0:_getEffectItem(iter_11_0)
+		for i = 1, #dataList do
+			local item = self:_getEffectItem(i)
 
-			var_11_4:updateInfo(arg_11_0, var_11_3[iter_11_0], arg_11_1)
-			gohelper.setActive(arg_11_0._effectList[iter_11_0].viewGO, true)
+			item:updateInfo(self, dataList[i], heroId)
+			gohelper.setActive(self._effectList[i].viewGO, true)
 
-			local var_11_5 = iter_11_0 < #var_11_3
+			local isShowLine = i < #dataList
 
-			var_11_4:activeLine(var_11_5)
+			item:activeLine(isShowLine)
 		end
 
-		for iter_11_1 = #var_11_3 + 1, #arg_11_0._effectList do
-			gohelper.setActive(arg_11_0._effectList[iter_11_1].viewGO, false)
+		for i = #dataList + 1, #self._effectList do
+			gohelper.setActive(self._effectList[i].viewGO, false)
 		end
 	end
 end
 
-function var_0_0._getEffectItem(arg_12_0, arg_12_1)
-	arg_12_0._effectList = arg_12_0._effectList or arg_12_0:getUserDataTb_()
+function V2a1_BossRush_OfferRoleView:_getEffectItem(index)
+	self._effectList = self._effectList or self:getUserDataTb_()
 
-	local var_12_0 = arg_12_0._effectList[arg_12_1]
+	local item = self._effectList[index]
 
-	if not var_12_0 then
-		var_12_0 = V2a1_BossRush_OfferRoleEffectItem.New()
+	if not item then
+		item = V2a1_BossRush_OfferRoleEffectItem.New()
 
-		local var_12_1 = gohelper.cloneInPlace(arg_12_0._txtEffect.gameObject)
+		local go = gohelper.cloneInPlace(self._txtEffect.gameObject)
 
-		var_12_0:initView(var_12_1)
+		item:initView(go)
 
-		arg_12_0._effectList[arg_12_1] = var_12_0
+		self._effectList[index] = item
 	end
 
-	return var_12_0
+	return item
 end
 
-return var_0_0
+return V2a1_BossRush_OfferRoleView

@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_8.act196.define.Activity196Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act196/define/Activity196Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_8.act196.define.Activity196Enum", package.seeall)
 
-var_0_0.ActId = 12862
-var_0_0.Typewriter = {
+local Activity196Enum = _M
+
+Activity196Enum.ActId = 12862
+Activity196Enum.Typewriter = {
 	"QWERTYUIOP",
 	"ASDFGHJKL",
 	"ZXCVBNM"
 }
 
-return var_0_0
+return Activity196Enum

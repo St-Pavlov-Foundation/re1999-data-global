@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_fight_summoned_stance", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fight_summoned_stance.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fight_summoned_stance", package.seeall)
+
+local lua_fight_summoned_stance = {}
+local fields = {
 	pos3 = 4,
 	pos1 = 2,
 	pos2 = 3,
 	id = 1,
 	pos4 = 5
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fight_summoned_stance.onLoad(json)
+	lua_fight_summoned_stance.configList, lua_fight_summoned_stance.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fight_summoned_stance

@@ -1,13 +1,15 @@
-﻿module("modules.logic.rouge.view.RougerewardThemeTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougerewardThemeTipViewContainer.lua
 
-local var_0_0 = class("RougerewardThemeTipViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougerewardThemeTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougerewardThemeTipViewContainer = class("RougerewardThemeTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougerewardThemeTipView.New())
+function RougerewardThemeTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougerewardThemeTipView.New())
+
+	return views
 end
 
-return var_0_0
+return RougerewardThemeTipViewContainer

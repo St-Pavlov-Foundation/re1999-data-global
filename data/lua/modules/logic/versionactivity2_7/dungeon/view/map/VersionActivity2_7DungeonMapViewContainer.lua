@@ -1,25 +1,29 @@
-﻿module("modules.logic.versionactivity2_7.dungeon.view.map.VersionActivity2_7DungeonMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/dungeon/view/map/VersionActivity2_7DungeonMapViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_7DungeonMapViewContainer", VersionActivityFixedDungeonMapViewContainer)
+module("modules.logic.versionactivity2_7.dungeon.view.map.VersionActivity2_7DungeonMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.mapScene = VersionActivity2_7DungeonMapScene.New()
-	arg_1_0.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements().New()
-	arg_1_0.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView().New()
-	arg_1_0.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView().New()
-	arg_1_0.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView().New()
-	arg_1_0.mapElementReward = DungeonMapElementReward.New()
+local VersionActivity2_7DungeonMapViewContainer = class("VersionActivity2_7DungeonMapViewContainer", VersionActivityFixedDungeonMapViewContainer)
 
-	return {
+function VersionActivity2_7DungeonMapViewContainer:buildViews()
+	self.mapScene = VersionActivity2_7DungeonMapScene.New()
+	self.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements().New()
+	self.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView().New()
+	self.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView().New()
+	self.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView().New()
+	self.mapElementReward = DungeonMapElementReward.New()
+
+	local views = {
 		VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView().New(),
-		arg_1_0.mapScene,
-		arg_1_0.mapSceneElements,
-		arg_1_0.mapView,
-		arg_1_0.mapEpisodeView,
-		arg_1_0.interactView,
-		arg_1_0.mapElementReward,
+		self.mapScene,
+		self.mapSceneElements,
+		self.mapView,
+		self.mapEpisodeView,
+		self.interactView,
+		self.mapElementReward,
 		TabViewGroup.New(1, "#go_topleft")
 	}
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_7DungeonMapViewContainer

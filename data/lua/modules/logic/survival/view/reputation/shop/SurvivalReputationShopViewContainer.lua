@@ -1,30 +1,34 @@
-﻿module("modules.logic.survival.view.reputation.shop.SurvivalReputationShopViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/reputation/shop/SurvivalReputationShopViewContainer.lua
 
-local var_0_0 = class("SurvivalReputationShopViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.reputation.shop.SurvivalReputationShopViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local SurvivalReputationShopViewContainer = class("SurvivalReputationShopViewContainer", BaseViewContainer)
+
+function SurvivalReputationShopViewContainer:buildViews()
+	local views = {
 		TabViewGroup.New(1, "#go_topleft"),
 		SurvivalReputationShopView.New()
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateButtonView = NavigateButtonsView.New({
+function SurvivalReputationShopViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		}, nil)
 
 		return {
-			arg_2_0.navigateButtonView
+			self.navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
+function SurvivalReputationShopViewContainer:onContainerOpenFinish()
+	self.navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-return var_0_0
+return SurvivalReputationShopViewContainer

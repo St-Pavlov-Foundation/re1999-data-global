@@ -1,56 +1,58 @@
-﻿module("modules.logic.fight.model.data.FightBuffInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightBuffInfoData.lua
 
-local var_0_0 = FightDataClass("FightBuffInfoData")
+module("modules.logic.fight.model.data.FightBuffInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = arg_1_1.uid
+local FightBuffInfoData = FightDataClass("FightBuffInfoData")
 
-	arg_1_0.time = tonumber(var_1_0)
-	arg_1_0.entityId = arg_1_2
-	arg_1_0.buffId = arg_1_1.buffId
-	arg_1_0.duration = arg_1_1.duration
-	arg_1_0.uid = var_1_0
-	arg_1_0.id = var_1_0
-	arg_1_0.exInfo = arg_1_1.exInfo
-	arg_1_0.fromUid = arg_1_1.fromUid
-	arg_1_0.count = arg_1_1.count
-	arg_1_0.actCommonParams = arg_1_1.actCommonParams
-	arg_1_0.layer = arg_1_1.layer
-	arg_1_0.type = arg_1_1.type
-	arg_1_0.actInfo = {}
+function FightBuffInfoData:onConstructor(proto, entityId)
+	local uid = proto.uid
 
-	local var_1_1 = arg_1_1.actInfo
+	self.time = tonumber(uid)
+	self.entityId = entityId
+	self.buffId = proto.buffId
+	self.duration = proto.duration
+	self.uid = uid
+	self.id = uid
+	self.exInfo = proto.exInfo
+	self.fromUid = proto.fromUid
+	self.count = proto.count
+	self.actCommonParams = proto.actCommonParams
+	self.layer = proto.layer
+	self.type = proto.type
+	self.actInfo = {}
 
-	if var_1_1 then
-		for iter_1_0 = 1, #var_1_1 do
-			arg_1_0.actInfo[iter_1_0] = FightBuffActInfoData.New(var_1_1[iter_1_0])
+	local protoActInfo = proto.actInfo
+
+	if protoActInfo then
+		for i = 1, #protoActInfo do
+			self.actInfo[i] = FightBuffActInfoData.New(protoActInfo[i])
 		end
 	end
 
-	local var_1_2 = arg_1_0:getCO()
+	local config = self:getCO()
 
-	if not var_1_2 then
-		logError("buff表找不到id:" .. arg_1_0.buffId)
+	if not config then
+		logError("buff表找不到id:" .. self.buffId)
 	end
 
-	arg_1_0.name = var_1_2 and var_1_2.name or ""
-	arg_1_0.clientNum = 0
+	self.name = config and config.name or ""
+	self.clientNum = 0
 end
 
-function var_0_0.clone(arg_2_0)
-	local var_2_0 = var_0_0.New(arg_2_0, arg_2_0.entityId)
+function FightBuffInfoData:clone()
+	local cloneData = FightBuffInfoData.New(self, self.entityId)
 
-	var_2_0.clientNum = arg_2_0.clientNum
+	cloneData.clientNum = self.clientNum
 
-	return var_2_0
+	return cloneData
 end
 
-function var_0_0.getCO(arg_3_0)
-	return lua_skill_buff.configDict[arg_3_0.buffId]
+function FightBuffInfoData:getCO()
+	return lua_skill_buff.configDict[self.buffId]
 end
 
-function var_0_0.setClientNum(arg_4_0, arg_4_1)
-	arg_4_0.clientNum = arg_4_1
+function FightBuffInfoData:setClientNum(num)
+	self.clientNum = num
 end
 
-return var_0_0
+return FightBuffInfoData

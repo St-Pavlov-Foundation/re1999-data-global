@@ -1,18 +1,20 @@
-﻿module("modules.logic.room.view.critter.summon.RoomGetCritterEgg", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomGetCritterEgg.lua
 
-local var_0_0 = class("RoomGetCritterEgg", LuaCompBase)
+module("modules.logic.room.view.critter.summon.RoomGetCritterEgg", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_1_1)
+local RoomGetCritterEgg = class("RoomGetCritterEgg", LuaCompBase)
+
+function RoomGetCritterEgg:init(go)
+	self.go = go
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(go)
 end
 
-function var_0_0.playIdleAnim(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._animatorPlayer:Play("idle", arg_2_1, arg_2_2)
+function RoomGetCritterEgg:playIdleAnim(callback, callbackObj)
+	self._animatorPlayer:Play("idle", callback, callbackObj)
 end
 
-function var_0_0.playOpenAnim(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._animatorPlayer:Play("open", arg_3_1, arg_3_2)
+function RoomGetCritterEgg:playOpenAnim(callback, callbackObj)
+	self._animatorPlayer:Play("open", callback, callbackObj)
 end
 
-return var_0_0
+return RoomGetCritterEgg

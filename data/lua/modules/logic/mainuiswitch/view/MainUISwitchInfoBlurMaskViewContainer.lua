@@ -1,17 +1,19 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISwitchInfoBlurMaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISwitchInfoBlurMaskViewContainer.lua
 
-local var_0_0 = class("MainUISwitchInfoBlurMaskViewContainer", BaseViewContainer)
+module("modules.logic.mainuiswitch.view.MainUISwitchInfoBlurMaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MainUISwitchInfoBlurMaskViewContainer = class("MainUISwitchInfoBlurMaskViewContainer", BaseViewContainer)
 
-	if not arg_1_0.viewParam or arg_1_0.viewParam.isNotShowHero ~= true then
-		table.insert(var_1_0, MainUISwitchInfoHeroView.New())
+function MainUISwitchInfoBlurMaskViewContainer:buildViews()
+	local views = {}
+
+	if not self.viewParam or self.viewParam.isNotShowHero ~= true then
+		table.insert(views, MainUISwitchInfoHeroView.New())
 	end
 
-	table.insert(var_1_0, MainUISwitchInfoBlurMaskView.New())
+	table.insert(views, MainUISwitchInfoBlurMaskView.New())
 
-	return var_1_0
+	return views
 end
 
-return var_0_0
+return MainUISwitchInfoBlurMaskViewContainer

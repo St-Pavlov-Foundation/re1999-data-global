@@ -1,13 +1,15 @@
-﻿module("modules.logic.scene.main.comp.MainSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/main/comp/MainSceneViewComp.lua
 
-local var_0_0 = class("MainSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.main.comp.MainSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
+local MainSceneViewComp = class("MainSceneViewComp", BaseSceneComp)
+
+function MainSceneViewComp:onScenePrepared(sceneId, levelId)
 	if DungeonController.instance:needShowDungeonView() then
-		local var_1_0 = DungeonController.instance:showDungeonView()
+		local viewName = DungeonController.instance:showDungeonView()
 
-		if var_1_0 then
-			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, var_1_0)
+		if viewName then
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, viewName)
 		end
 	elseif GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain) then
 		-- block empty
@@ -17,8 +19,8 @@ function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 	end
 end
 
-function var_0_0.onSceneClose(arg_2_0)
+function MainSceneViewComp:onSceneClose()
 	ViewMgr.instance:closeView(ViewName.MainView)
 end
 
-return var_0_0
+return MainSceneViewComp

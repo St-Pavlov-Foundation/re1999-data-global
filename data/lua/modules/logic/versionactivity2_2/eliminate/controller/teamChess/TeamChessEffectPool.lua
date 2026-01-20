@@ -1,85 +1,89 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.TeamChessEffectPool", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/TeamChessEffectPool.lua
 
-local var_0_0 = class("TeamChessEffectPool")
-local var_0_1 = 1
-local var_0_2 = {}
-local var_0_3 = 10
-local var_0_4
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.TeamChessEffectPool", package.seeall)
 
-function var_0_0.dispose()
-	if var_0_2 ~= nil then
-		for iter_1_0, iter_1_1 in pairs(var_0_2) do
-			iter_1_1:dispose()
+local TeamChessEffectPool = class("TeamChessEffectPool")
+local _uniqueIdCounter = 1
+local _path2WrapPoolDict = {}
+local _maxCount = 10
+local _effectParentGo
+
+function TeamChessEffectPool.dispose()
+	if _path2WrapPoolDict ~= nil then
+		for _, wrap in pairs(_path2WrapPoolDict) do
+			wrap:dispose()
 		end
 
-		var_0_2 = {}
+		_path2WrapPoolDict = {}
 	end
 end
 
-function var_0_0.getEffect(arg_2_0, arg_2_1, arg_2_2)
-	if var_0_2 == nil then
-		var_0_2 = {}
+function TeamChessEffectPool.getEffect(effectType, callback, callbackObj)
+	if _path2WrapPoolDict == nil then
+		_path2WrapPoolDict = {}
 	end
 
-	local var_2_0 = var_0_2[arg_2_0]
+	local warpPool = _path2WrapPoolDict[effectType]
 
-	if var_2_0 == nil then
-		var_2_0 = LuaObjPool.New(var_0_3, function()
-			return (var_0_0._createWrap(arg_2_0))
-		end, function(arg_4_0)
-			if arg_4_0 ~= nil then
-				arg_4_0:onDestroy()
+	if warpPool == nil then
+		warpPool = LuaObjPool.New(_maxCount, function()
+			local effectWrap = TeamChessEffectPool._createWrap(effectType)
+
+			return effectWrap
+		end, function(effectWrap)
+			if effectWrap ~= nil then
+				effectWrap:onDestroy()
 			end
-		end, function(arg_5_0)
-			if arg_5_0 ~= nil then
-				arg_5_0:clear()
+		end, function(effectWrap)
+			if effectWrap ~= nil then
+				effectWrap:clear()
 			end
 		end)
-		var_0_2[arg_2_0] = var_2_0
+		_path2WrapPoolDict[effectType] = warpPool
 	end
 
-	local var_2_1 = var_2_0:getObject()
+	local effectWrap = warpPool:getObject()
 
-	if var_2_1 == nil then
-		var_2_1 = var_0_0._createWrap(arg_2_0)
+	if effectWrap == nil then
+		effectWrap = TeamChessEffectPool._createWrap(effectType)
 	end
 
-	var_2_1:setCallback(arg_2_1, arg_2_2)
+	effectWrap:setCallback(callback, callbackObj)
 
-	return var_2_1
+	return effectWrap
 end
 
-function var_0_0.returnEffect(arg_6_0)
-	if arg_6_0 == nil then
+function TeamChessEffectPool.returnEffect(effectWrap)
+	if effectWrap == nil then
 		return
 	end
 
-	local var_6_0 = var_0_2[arg_6_0.effectType]
+	local warpPool = _path2WrapPoolDict[effectWrap.effectType]
 
-	if var_6_0 ~= nil then
-		var_6_0:putObject(arg_6_0)
+	if warpPool ~= nil then
+		warpPool:putObject(effectWrap)
 	end
 end
 
-function var_0_0.setPoolContainerGO(arg_7_0)
-	var_0_4 = arg_7_0
+function TeamChessEffectPool.setPoolContainerGO(go)
+	_effectParentGo = go
 end
 
-function var_0_0.getPoolContainerGO()
-	return var_0_4
+function TeamChessEffectPool.getPoolContainerGO()
+	return _effectParentGo
 end
 
-function var_0_0._createWrap(arg_9_0)
-	local var_9_0 = gohelper.create3d(var_0_0.getPoolContainerGO(), arg_9_0)
-	local var_9_1 = MonoHelper.addLuaComOnceToGo(var_9_0, TeamChessEffectWrap)
+function TeamChessEffectPool._createWrap(effectType)
+	local go = gohelper.create3d(TeamChessEffectPool.getPoolContainerGO(), effectType)
+	local effectWrap = MonoHelper.addLuaComOnceToGo(go, TeamChessEffectWrap)
 
-	var_9_1:init(var_9_0)
-	var_9_1:setUniqueId(var_0_1)
-	var_9_1:setEffectType(arg_9_0)
+	effectWrap:init(go)
+	effectWrap:setUniqueId(_uniqueIdCounter)
+	effectWrap:setEffectType(effectType)
 
-	var_0_1 = var_0_1 + 1
+	_uniqueIdCounter = _uniqueIdCounter + 1
 
-	return var_9_1
+	return effectWrap
 end
 
-return var_0_0
+return TeamChessEffectPool

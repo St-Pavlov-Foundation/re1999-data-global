@@ -1,71 +1,73 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionAnyEvent", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionAnyEvent.lua
 
-local var_0_0 = class("WaitGuideActionAnyEvent", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionAnyEvent", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionAnyEvent = class("WaitGuideActionAnyEvent", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
-	local var_1_1 = var_1_0[1]
-	local var_1_2 = var_1_0[2]
-	local var_1_3 = var_1_0[3]
+function WaitGuideActionAnyEvent:onStart(context)
+	WaitGuideActionAnyEvent.super.onStart(self, context)
 
-	arg_1_0._param = var_1_0[4]
-	arg_1_0._controller = _G[var_1_1]
+	local temp = string.split(self.actionParam, "#")
+	local controllerName = temp[1]
+	local eventModuleName = temp[2]
+	local eventName = temp[3]
 
-	if not arg_1_0._controller then
-		logError("WaitGuideActionAnyEvent controllerName error:" .. tostring(var_1_1))
+	self._param = temp[4]
+	self._controller = _G[controllerName]
 
-		return
-	end
-
-	arg_1_0._eventModule = _G[var_1_2]
-
-	if not arg_1_0._eventModule then
-		logError("WaitGuideActionAnyEvent eventModuleName error:" .. tostring(var_1_2))
+	if not self._controller then
+		logError("WaitGuideActionAnyEvent controllerName error:" .. tostring(controllerName))
 
 		return
 	end
 
-	arg_1_0._eventName = arg_1_0._eventModule[var_1_3]
+	self._eventModule = _G[eventModuleName]
 
-	if not arg_1_0._eventName then
-		logError("WaitGuideActionAnyEvent eventName error:" .. tostring(var_1_3))
+	if not self._eventModule then
+		logError("WaitGuideActionAnyEvent eventModuleName error:" .. tostring(eventModuleName))
 
 		return
 	end
 
-	arg_1_0._controller.instance:registerCallback(arg_1_0._eventName, arg_1_0._onReceiveEvent, arg_1_0)
+	self._eventName = self._eventModule[eventName]
+
+	if not self._eventName then
+		logError("WaitGuideActionAnyEvent eventName error:" .. tostring(eventName))
+
+		return
+	end
+
+	self._controller.instance:registerCallback(self._eventName, self._onReceiveEvent, self)
 end
 
-function var_0_0._onReceiveEvent(arg_2_0, arg_2_1)
-	if arg_2_0:checkGuideLock() then
+function WaitGuideActionAnyEvent:_onReceiveEvent(param)
+	if self:checkGuideLock() then
 		return
 	end
 
-	local var_2_0 = type(arg_2_1)
-	local var_2_1 = false
+	local paramType = type(param)
+	local isValid = false
 
-	if var_2_0 == "number" then
-		arg_2_1 = tostring(arg_2_1)
-	elseif var_2_0 == "boolean" then
-		arg_2_1 = tostring(arg_2_1)
-	elseif var_2_0 == "function" then
-		var_2_1 = arg_2_1(arg_2_0._param)
+	if paramType == "number" then
+		param = tostring(param)
+	elseif paramType == "boolean" then
+		param = tostring(param)
+	elseif paramType == "function" then
+		isValid = param(self._param)
 	end
 
-	if not var_2_1 and arg_2_0._param and arg_2_0._param ~= arg_2_1 then
+	if not isValid and self._param and self._param ~= param then
 		return
 	end
 
-	arg_2_0._controller.instance:unregisterCallback(arg_2_0._eventName, arg_2_0._onReceiveEvent, arg_2_0)
-	arg_2_0:onDone(true)
+	self._controller.instance:unregisterCallback(self._eventName, self._onReceiveEvent, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	if arg_3_0._controller then
-		arg_3_0._controller.instance:unregisterCallback(arg_3_0._eventName, arg_3_0._onReceiveEvent, arg_3_0)
+function WaitGuideActionAnyEvent:clearWork()
+	if self._controller then
+		self._controller.instance:unregisterCallback(self._eventName, self._onReceiveEvent, self)
 	end
 end
 
-return var_0_0
+return WaitGuideActionAnyEvent

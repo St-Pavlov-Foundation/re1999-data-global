@@ -1,366 +1,368 @@
-﻿module("modules.logic.seasonver.act123.view.Season123TaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123TaskItem.lua
 
-local var_0_0 = class("Season123TaskItem", ListScrollCell)
+module("modules.logic.seasonver.act123.view.Season123TaskItem", package.seeall)
 
-var_0_0.BlockKey = "Season123TaskItemAni"
+local Season123TaskItem = class("Season123TaskItem", ListScrollCell)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._viewGO = arg_1_1
-	arg_1_0._simageBg = gohelper.findChildSingleImage(arg_1_1, "#simage_bg")
-	arg_1_0._goNormal = gohelper.findChild(arg_1_1, "#goNormal")
-	arg_1_0._goTotal = gohelper.findChild(arg_1_1, "#goTotal")
-	arg_1_0._animator = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
+Season123TaskItem.BlockKey = "Season123TaskItemAni"
 
-	arg_1_0:initNormal()
-	arg_1_0:initTotal()
+function Season123TaskItem:init(go)
+	self._viewGO = go
+	self._simageBg = gohelper.findChildSingleImage(go, "#simage_bg")
+	self._goNormal = gohelper.findChild(go, "#goNormal")
+	self._goTotal = gohelper.findChild(go, "#goTotal")
+	self._animator = go:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0.firstEnter = true
+	self:initNormal()
+	self:initTotal()
+
+	self.firstEnter = true
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnGoto:AddClickListener(arg_2_0.onClickGoto, arg_2_0)
-	arg_2_0._btnReceive:AddClickListener(arg_2_0.onClickReceive, arg_2_0)
-	arg_2_0._btnGetTotal:AddClickListener(arg_2_0.onClickGetTotal, arg_2_0)
+function Season123TaskItem:addEventListeners()
+	self._btnGoto:AddClickListener(self.onClickGoto, self)
+	self._btnReceive:AddClickListener(self.onClickReceive, self)
+	self._btnGetTotal:AddClickListener(self.onClickGetTotal, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnGoto:RemoveClickListener()
-	arg_3_0._btnReceive:RemoveClickListener()
-	arg_3_0._btnGetTotal:RemoveClickListener()
+function Season123TaskItem:removeEventListeners()
+	self._btnGoto:RemoveClickListener()
+	self._btnReceive:RemoveClickListener()
+	self._btnGetTotal:RemoveClickListener()
 end
 
-function var_0_0.initNormal(arg_4_0)
-	arg_4_0._txtCurCount = gohelper.findChildTextMesh(arg_4_0._goNormal, "#txt_curcount")
-	arg_4_0._txtMaxCount = gohelper.findChildTextMesh(arg_4_0._goNormal, "#txt_curcount/#txt_maxcount")
-	arg_4_0._txtDesc = gohelper.findChildTextMesh(arg_4_0._goNormal, "#txt_desc")
-	arg_4_0._scrollreward = gohelper.findChild(arg_4_0._goNormal, "#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_4_0._gocontent = gohelper.findChild(arg_4_0._goNormal, "#scroll_rewards/Viewport/Content")
-	arg_4_0._goRewardTemplate = gohelper.findChild(arg_4_0._gocontent, "#go_rewarditem")
+function Season123TaskItem:initNormal()
+	self._txtCurCount = gohelper.findChildTextMesh(self._goNormal, "#txt_curcount")
+	self._txtMaxCount = gohelper.findChildTextMesh(self._goNormal, "#txt_curcount/#txt_maxcount")
+	self._txtDesc = gohelper.findChildTextMesh(self._goNormal, "#txt_desc")
+	self._scrollreward = gohelper.findChild(self._goNormal, "#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._gocontent = gohelper.findChild(self._goNormal, "#scroll_rewards/Viewport/Content")
+	self._goRewardTemplate = gohelper.findChild(self._gocontent, "#go_rewarditem")
 
-	gohelper.setActive(arg_4_0._goRewardTemplate, false)
+	gohelper.setActive(self._goRewardTemplate, false)
 
-	arg_4_0._goMask = gohelper.findChild(arg_4_0._goNormal, "#go_blackmask")
-	arg_4_0._goFinish = gohelper.findChild(arg_4_0._goNormal, "#go_finish")
-	arg_4_0._goGoto = gohelper.findChild(arg_4_0._goNormal, "#btn_goto")
-	arg_4_0._btnGoto = gohelper.findChildButtonWithAudio(arg_4_0._goNormal, "#btn_goto")
-	arg_4_0._goReceive = gohelper.findChild(arg_4_0._goNormal, "#btn_receive")
-	arg_4_0._btnReceive = gohelper.findChildButtonWithAudio(arg_4_0._goNormal, "#btn_receive")
-	arg_4_0._goUnfinish = gohelper.findChild(arg_4_0._goNormal, "#go_unfinish")
-	arg_4_0._goType1 = gohelper.findChild(arg_4_0._goGoto, "#go_gotype1")
-	arg_4_0._goEffect1 = gohelper.findChild(arg_4_0._goGoto, "#go_gotype1/#go_effect1")
-	arg_4_0._goType3 = gohelper.findChild(arg_4_0._goGoto, "#go_gotype3")
-	arg_4_0._goEffect3 = gohelper.findChild(arg_4_0._goGoto, "#go_gotype3/#go_effect3")
-	arg_4_0._goreward = gohelper.findChild(arg_4_0._goNormal, "rewardstar/#go_reward")
-	arg_4_0._gorewardCanvasGroup = arg_4_0._goreward:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_4_0._gorewardredicon = gohelper.findChild(arg_4_0._goNormal, "rewardstar/#go_reward/red")
-	arg_4_0._gorewardlighticon = gohelper.findChild(arg_4_0._goNormal, "rewardstar/#go_reward/light")
-	arg_4_0._gorewarddardicon = gohelper.findChild(arg_4_0._goNormal, "rewardstar/#go_reward/dark")
+	self._goMask = gohelper.findChild(self._goNormal, "#go_blackmask")
+	self._goFinish = gohelper.findChild(self._goNormal, "#go_finish")
+	self._goGoto = gohelper.findChild(self._goNormal, "#btn_goto")
+	self._btnGoto = gohelper.findChildButtonWithAudio(self._goNormal, "#btn_goto")
+	self._goReceive = gohelper.findChild(self._goNormal, "#btn_receive")
+	self._btnReceive = gohelper.findChildButtonWithAudio(self._goNormal, "#btn_receive")
+	self._goUnfinish = gohelper.findChild(self._goNormal, "#go_unfinish")
+	self._goType1 = gohelper.findChild(self._goGoto, "#go_gotype1")
+	self._goEffect1 = gohelper.findChild(self._goGoto, "#go_gotype1/#go_effect1")
+	self._goType3 = gohelper.findChild(self._goGoto, "#go_gotype3")
+	self._goEffect3 = gohelper.findChild(self._goGoto, "#go_gotype3/#go_effect3")
+	self._goreward = gohelper.findChild(self._goNormal, "rewardstar/#go_reward")
+	self._gorewardCanvasGroup = self._goreward:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._gorewardredicon = gohelper.findChild(self._goNormal, "rewardstar/#go_reward/red")
+	self._gorewardlighticon = gohelper.findChild(self._goNormal, "rewardstar/#go_reward/light")
+	self._gorewarddardicon = gohelper.findChild(self._goNormal, "rewardstar/#go_reward/dark")
 end
 
-function var_0_0.initTotal(arg_5_0)
-	arg_5_0._btnGetTotal = gohelper.findChildButtonWithAudio(arg_5_0._goTotal, "#btn_getall")
+function Season123TaskItem:initTotal()
+	self._btnGetTotal = gohelper.findChildButtonWithAudio(self._goTotal, "#btn_getall")
 end
 
-var_0_0.TaskMaskTime = 0.65
-var_0_0.ColumnCount = 1
-var_0_0.AnimRowCount = 7
-var_0_0.OpenAnimTime = 0.06
-var_0_0.OpenAnimStartTime = 0
+Season123TaskItem.TaskMaskTime = 0.65
+Season123TaskItem.ColumnCount = 1
+Season123TaskItem.AnimRowCount = 7
+Season123TaskItem.OpenAnimTime = 0.06
+Season123TaskItem.OpenAnimStartTime = 0
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	if arg_6_1 == nil then
+function Season123TaskItem:onUpdateMO(mo)
+	if mo == nil then
 		return
 	end
 
-	arg_6_0.mo = arg_6_1
-	arg_6_0._scrollreward.parentGameObject = arg_6_0._view._csListScroll.gameObject
+	self.mo = mo
+	self._scrollreward.parentGameObject = self._view._csListScroll.gameObject
 
-	if arg_6_0.mo.canGetAll then
-		gohelper.setActive(arg_6_0._goNormal, false)
-		gohelper.setActive(arg_6_0._goTotal, true)
-		arg_6_0._simageBg:LoadImage(ResUrl.getSeasonIcon("tap2.png"))
+	if self.mo.canGetAll then
+		gohelper.setActive(self._goNormal, false)
+		gohelper.setActive(self._goTotal, true)
+		self._simageBg:LoadImage(ResUrl.getSeasonIcon("tap2.png"))
 	else
-		gohelper.setActive(arg_6_0._goNormal, true)
-		gohelper.setActive(arg_6_0._goTotal, false)
-		arg_6_0:refreshNormal()
+		gohelper.setActive(self._goNormal, true)
+		gohelper.setActive(self._goTotal, false)
+		self:refreshNormal()
 	end
 
-	arg_6_0:checkPlayAnim()
+	self:checkPlayAnim()
 end
 
-function var_0_0.endPlayOpenAnim(arg_7_0)
-	gohelper.setActive(arg_7_0._goEffect1, false)
-	gohelper.setActive(arg_7_0._goEffect3, false)
+function Season123TaskItem:endPlayOpenAnim()
+	gohelper.setActive(self._goEffect1, false)
+	gohelper.setActive(self._goEffect3, false)
 
-	arg_7_0._ani.enabled = true
-	arg_7_0.firstEnter = false
+	self._ani.enabled = true
+	self.firstEnter = false
 end
 
-function var_0_0.checkPlayAnim(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.onDelayPlayOpen, arg_8_0)
+function Season123TaskItem:checkPlayAnim()
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
 
-	local var_8_0 = Season123TaskModel.instance:getDelayPlayTime(arg_8_0.mo)
+	local delayTime = Season123TaskModel.instance:getDelayPlayTime(self.mo)
 
-	if var_8_0 == -1 then
-		arg_8_0._animator:Play("idle", 0, 0)
+	if delayTime == -1 then
+		self._animator:Play("idle", 0, 0)
 
-		arg_8_0._animator.speed = 1
+		self._animator.speed = 1
 
-		gohelper.setActive(arg_8_0._goEffect1, false)
-		gohelper.setActive(arg_8_0._goEffect3, false)
+		gohelper.setActive(self._goEffect1, false)
+		gohelper.setActive(self._goEffect3, false)
 	else
-		arg_8_0._animator:Play("open", 0, 0)
+		self._animator:Play("open", 0, 0)
 
-		arg_8_0._animator.speed = 0
+		self._animator.speed = 0
 
-		gohelper.setActive(arg_8_0._goEffect1, true)
-		gohelper.setActive(arg_8_0._goEffect3, true)
-		TaskDispatcher.runDelay(arg_8_0.onDelayPlayOpen, arg_8_0, var_8_0)
+		gohelper.setActive(self._goEffect1, true)
+		gohelper.setActive(self._goEffect3, true)
+		TaskDispatcher.runDelay(self.onDelayPlayOpen, self, delayTime)
 	end
 end
 
-function var_0_0.onDelayPlayOpen(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.onDelayPlayOpen, arg_9_0)
-	arg_9_0._animator:Play("open", 0, 0)
+function Season123TaskItem:onDelayPlayOpen()
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
+	self._animator:Play("open", 0, 0)
 
-	arg_9_0._animator.speed = 1
+	self._animator.speed = 1
 end
 
-function var_0_0.refreshNormal(arg_10_0)
-	arg_10_0.taskId = arg_10_0.mo.id
-	arg_10_0.jumpId = arg_10_0.mo.config.jumpId
+function Season123TaskItem:refreshNormal()
+	self.taskId = self.mo.id
+	self.jumpId = self.mo.config.jumpId
 
-	arg_10_0:refreshReward()
-	arg_10_0:refreshDesc()
-	arg_10_0:refreshProgress()
-	arg_10_0:refreshState()
+	self:refreshReward()
+	self:refreshDesc()
+	self:refreshProgress()
+	self:refreshState()
 end
 
-function var_0_0.refreshReward(arg_11_0)
-	local var_11_0 = arg_11_0.mo.config
-	local var_11_1 = string.split(var_11_0.bonus, "|")
-	local var_11_2 = {}
+function Season123TaskItem:refreshReward()
+	local config = self.mo.config
+	local rewardStrList = string.split(config.bonus, "|")
+	local dataList = {}
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		if not string.nilorempty(iter_11_1) then
-			local var_11_3 = string.splitToNumber(iter_11_1, "#")
-			local var_11_4 = {
+	for i, v in ipairs(rewardStrList) do
+		if not string.nilorempty(v) then
+			local itemCo = string.splitToNumber(v, "#")
+			local co = {
 				isIcon = true,
-				materilType = var_11_3[1],
-				materilId = var_11_3[2],
-				quantity = var_11_3[3]
+				materilType = itemCo[1],
+				materilId = itemCo[2],
+				quantity = itemCo[3]
 			}
 
-			table.insert(var_11_2, var_11_4)
+			table.insert(dataList, co)
 		end
 	end
 
-	if var_11_0.equipBonus > 0 then
-		table.insert(var_11_2, {
-			equipId = var_11_0.equipBonus
+	if config.equipBonus > 0 then
+		table.insert(dataList, {
+			equipId = config.equipBonus
 		})
 	end
 
-	if not arg_11_0._rewardItems then
-		arg_11_0._rewardItems = {}
+	if not self._rewardItems then
+		self._rewardItems = {}
 	end
 
-	for iter_11_2 = 1, math.max(#arg_11_0._rewardItems, #var_11_2) do
-		local var_11_5 = var_11_2[iter_11_2]
-		local var_11_6 = arg_11_0._rewardItems[iter_11_2] or arg_11_0:createRewardItem(iter_11_2)
+	for i = 1, math.max(#self._rewardItems, #dataList) do
+		local co = dataList[i]
+		local item = self._rewardItems[i] or self:createRewardItem(i)
 
-		arg_11_0:refreshRewardItem(var_11_6, var_11_5)
+		self:refreshRewardItem(item, co)
 	end
 end
 
-function var_0_0.createRewardItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getUserDataTb_()
-	local var_12_1 = gohelper.clone(arg_12_0._goRewardTemplate, arg_12_0._gocontent, "reward_" .. tostring(arg_12_1))
+function Season123TaskItem:createRewardItem(index)
+	local item = self:getUserDataTb_()
+	local itemGo = gohelper.clone(self._goRewardTemplate, self._gocontent, "reward_" .. tostring(index))
 
-	var_12_0.go = var_12_1
-	var_12_0.itemParent = gohelper.findChild(var_12_1, "go_prop")
-	var_12_0.cardParent = gohelper.findChild(var_12_1, "go_card")
-	arg_12_0._rewardItems[arg_12_1] = var_12_0
+	item.go = itemGo
+	item.itemParent = gohelper.findChild(itemGo, "go_prop")
+	item.cardParent = gohelper.findChild(itemGo, "go_card")
+	self._rewardItems[index] = item
 
-	return var_12_0
+	return item
 end
 
-function var_0_0.refreshRewardItem(arg_13_0, arg_13_1, arg_13_2)
-	if not arg_13_2 then
-		gohelper.setActive(arg_13_1.go, false)
+function Season123TaskItem:refreshRewardItem(item, data)
+	if not data then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	if arg_13_2.equipId then
-		gohelper.setActive(arg_13_1.cardParent, true)
-		gohelper.setActive(arg_13_1.itemParent, false)
+	if data.equipId then
+		gohelper.setActive(item.cardParent, true)
+		gohelper.setActive(item.itemParent, false)
 
-		if not arg_13_1.equipIcon then
-			arg_13_1.equipIcon = Season123CelebrityCardItem.New()
+		if not item.equipIcon then
+			item.equipIcon = Season123CelebrityCardItem.New()
 
-			arg_13_1.equipIcon:init(arg_13_1.cardParent, arg_13_2.equipId)
+			item.equipIcon:init(item.cardParent, data.equipId)
 		end
 
-		arg_13_1.equipIcon:reset(arg_13_2.equipId)
+		item.equipIcon:reset(data.equipId)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_1.cardParent, false)
-	gohelper.setActive(arg_13_1.itemParent, true)
+	gohelper.setActive(item.cardParent, false)
+	gohelper.setActive(item.itemParent, true)
 
-	if not arg_13_1.itemIcon then
-		arg_13_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(arg_13_1.itemParent)
+	if not item.itemIcon then
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.itemParent)
 	end
 
-	arg_13_1.itemIcon:onUpdateMO(arg_13_2)
-	arg_13_1.itemIcon:isShowCount(true)
-	arg_13_1.itemIcon:setCountFontSize(40)
-	arg_13_1.itemIcon:showStackableNum2()
-	arg_13_1.itemIcon:setHideLvAndBreakFlag(true)
-	arg_13_1.itemIcon:hideEquipLvAndBreak(true)
+	item.itemIcon:onUpdateMO(data)
+	item.itemIcon:isShowCount(true)
+	item.itemIcon:setCountFontSize(40)
+	item.itemIcon:showStackableNum2()
+	item.itemIcon:setHideLvAndBreakFlag(true)
+	item.itemIcon:hideEquipLvAndBreak(true)
 end
 
-function var_0_0.getAnimator(arg_14_0)
-	return arg_14_0._ani
+function Season123TaskItem:getAnimator()
+	return self._ani
 end
 
-function var_0_0.destroyRewardItem(arg_15_0, arg_15_1)
-	if arg_15_1.itemIcon then
-		arg_15_1.itemIcon:onDestroy()
+function Season123TaskItem:destroyRewardItem(item)
+	if item.itemIcon then
+		item.itemIcon:onDestroy()
 
-		arg_15_1.itemIcon = nil
+		item.itemIcon = nil
 	end
 
-	if arg_15_1.equipIcon then
-		arg_15_1.equipIcon:destroy()
+	if item.equipIcon then
+		item.equipIcon:destroy()
 
-		arg_15_1.equipIcon = nil
+		item.equipIcon = nil
 	end
 end
 
-function var_0_0.refreshDesc(arg_16_0)
-	local var_16_0 = arg_16_0.mo.config
-	local var_16_1 = string.format("tap%s.png", var_16_0.bgType == 1 and 3 or 4)
+function Season123TaskItem:refreshDesc()
+	local config = self.mo.config
+	local bgStr = string.format("tap%s.png", config.bgType == 1 and 3 or 4)
 
-	arg_16_0._simageBg:LoadImage(ResUrl.getSeasonIcon(var_16_1))
+	self._simageBg:LoadImage(ResUrl.getSeasonIcon(bgStr))
 
-	arg_16_0._txtDesc.text = var_16_0.desc
+	self._txtDesc.text = config.desc
 end
 
-function var_0_0.refreshProgress(arg_17_0)
-	local var_17_0 = arg_17_0.mo.progress
-	local var_17_1 = arg_17_0.mo.config.maxProgress
+function Season123TaskItem:refreshProgress()
+	local progress = self.mo.progress
+	local maxProgress = self.mo.config.maxProgress
 
-	arg_17_0._txtCurCount.text = var_17_0
-	arg_17_0._txtMaxCount.text = var_17_1
+	self._txtCurCount.text = progress
+	self._txtMaxCount.text = maxProgress
 
-	local var_17_2 = Season123TaskModel.instance.curTaskType
+	local curTaskType = Season123TaskModel.instance.curTaskType
 
-	gohelper.setActive(arg_17_0._goreward, var_17_2 == Activity123Enum.TaskRewardViewType)
-	gohelper.setActive(arg_17_0._txtCurCount.gameObject, var_17_2 == Activity123Enum.TaskNormalType)
+	gohelper.setActive(self._goreward, curTaskType == Activity123Enum.TaskRewardViewType)
+	gohelper.setActive(self._txtCurCount.gameObject, curTaskType == Activity123Enum.TaskNormalType)
 end
 
-function var_0_0.refreshState(arg_18_0)
-	if arg_18_0.mo.finishCount >= arg_18_0.mo.config.maxFinishCount then
-		gohelper.setActive(arg_18_0._goMask, true)
-		gohelper.setActive(arg_18_0._goFinish, true)
-		gohelper.setActive(arg_18_0._goGoto, false)
-		gohelper.setActive(arg_18_0._goReceive, false)
-		gohelper.setActive(arg_18_0._goUnfinish, false)
-		gohelper.setActive(arg_18_0._gorewardredicon, arg_18_0.mo.config.bgType == Activity123Enum.TaskHardType.Hard)
-		gohelper.setActive(arg_18_0._gorewardlighticon, arg_18_0.mo.config.bgType == Activity123Enum.TaskHardType.Normal)
-		gohelper.setActive(arg_18_0._gorewarddardicon, false)
+function Season123TaskItem:refreshState()
+	if self.mo.finishCount >= self.mo.config.maxFinishCount then
+		gohelper.setActive(self._goMask, true)
+		gohelper.setActive(self._goFinish, true)
+		gohelper.setActive(self._goGoto, false)
+		gohelper.setActive(self._goReceive, false)
+		gohelper.setActive(self._goUnfinish, false)
+		gohelper.setActive(self._gorewardredicon, self.mo.config.bgType == Activity123Enum.TaskHardType.Hard)
+		gohelper.setActive(self._gorewardlighticon, self.mo.config.bgType == Activity123Enum.TaskHardType.Normal)
+		gohelper.setActive(self._gorewarddardicon, false)
 
-		arg_18_0._gorewardCanvasGroup.alpha = 0.3
-	elseif arg_18_0.mo.hasFinished then
-		gohelper.setActive(arg_18_0._goMask, false)
-		gohelper.setActive(arg_18_0._goFinish, false)
-		gohelper.setActive(arg_18_0._goGoto, false)
-		gohelper.setActive(arg_18_0._goReceive, true)
-		gohelper.setActive(arg_18_0._goUnfinish, false)
-		gohelper.setActive(arg_18_0._gorewardredicon, arg_18_0.mo.config.bgType == Activity123Enum.TaskHardType.Hard)
-		gohelper.setActive(arg_18_0._gorewardlighticon, arg_18_0.mo.config.bgType == Activity123Enum.TaskHardType.Normal)
-		gohelper.setActive(arg_18_0._gorewarddardicon, false)
+		self._gorewardCanvasGroup.alpha = 0.3
+	elseif self.mo.hasFinished then
+		gohelper.setActive(self._goMask, false)
+		gohelper.setActive(self._goFinish, false)
+		gohelper.setActive(self._goGoto, false)
+		gohelper.setActive(self._goReceive, true)
+		gohelper.setActive(self._goUnfinish, false)
+		gohelper.setActive(self._gorewardredicon, self.mo.config.bgType == Activity123Enum.TaskHardType.Hard)
+		gohelper.setActive(self._gorewardlighticon, self.mo.config.bgType == Activity123Enum.TaskHardType.Normal)
+		gohelper.setActive(self._gorewarddardicon, false)
 
-		arg_18_0._gorewardCanvasGroup.alpha = 1
+		self._gorewardCanvasGroup.alpha = 1
 	else
-		gohelper.setActive(arg_18_0._goMask, false)
-		gohelper.setActive(arg_18_0._goFinish, false)
-		gohelper.setActive(arg_18_0._goReceive, false)
+		gohelper.setActive(self._goMask, false)
+		gohelper.setActive(self._goFinish, false)
+		gohelper.setActive(self._goReceive, false)
 
-		if arg_18_0.jumpId and arg_18_0.jumpId > 0 then
-			gohelper.setActive(arg_18_0._goGoto, true)
-			gohelper.setActive(arg_18_0._goUnfinish, false)
-			gohelper.setActive(arg_18_0._goType1, arg_18_0.mo.config.bgType ~= 1)
-			gohelper.setActive(arg_18_0._goType3, arg_18_0.mo.config.bgType == 1)
+		if self.jumpId and self.jumpId > 0 then
+			gohelper.setActive(self._goGoto, true)
+			gohelper.setActive(self._goUnfinish, false)
+			gohelper.setActive(self._goType1, self.mo.config.bgType ~= 1)
+			gohelper.setActive(self._goType3, self.mo.config.bgType == 1)
 		else
-			gohelper.setActive(arg_18_0._goGoto, false)
-			gohelper.setActive(arg_18_0._goUnfinish, true)
+			gohelper.setActive(self._goGoto, false)
+			gohelper.setActive(self._goUnfinish, true)
 		end
 
-		gohelper.setActive(arg_18_0._gorewardredicon, false)
-		gohelper.setActive(arg_18_0._gorewardlighticon, false)
-		gohelper.setActive(arg_18_0._gorewarddardicon, true)
+		gohelper.setActive(self._gorewardredicon, false)
+		gohelper.setActive(self._gorewardlighticon, false)
+		gohelper.setActive(self._gorewarddardicon, true)
 
-		arg_18_0._gorewardCanvasGroup.alpha = 1
+		self._gorewardCanvasGroup.alpha = 1
 	end
 end
 
-function var_0_0.onClickGoto(arg_19_0)
-	if not arg_19_0.jumpId then
+function Season123TaskItem:onClickGoto()
+	if not self.jumpId then
 		return
 	end
 
-	GameFacade.jump(arg_19_0.jumpId)
+	GameFacade.jump(self.jumpId)
 end
 
-function var_0_0.onClickReceive(arg_20_0)
-	if not arg_20_0.taskId and not arg_20_0.mo.canGetAll then
+function Season123TaskItem:onClickReceive()
+	if not self.taskId and not self.mo.canGetAll then
 		return
 	end
 
-	gohelper.setActive(arg_20_0._goMask, true)
-	arg_20_0._animator:Play(UIAnimationName.Finish)
-	UIBlockMgr.instance:startBlock(var_0_0.BlockKey)
-	Season123Controller.instance:dispatchEvent(Season123Event.OnTaskRewardGetFinish, arg_20_0._index)
-	TaskDispatcher.runDelay(arg_20_0._onPlayActAniFinished, arg_20_0, var_0_0.TaskMaskTime)
+	gohelper.setActive(self._goMask, true)
+	self._animator:Play(UIAnimationName.Finish)
+	UIBlockMgr.instance:startBlock(Season123TaskItem.BlockKey)
+	Season123Controller.instance:dispatchEvent(Season123Event.OnTaskRewardGetFinish, self._index)
+	TaskDispatcher.runDelay(self._onPlayActAniFinished, self, Season123TaskItem.TaskMaskTime)
 end
 
-function var_0_0._onPlayActAniFinished(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._onPlayActAniFinished, arg_21_0)
+function Season123TaskItem:_onPlayActAniFinished()
+	TaskDispatcher.cancelTask(self._onPlayActAniFinished, self)
 
-	if arg_21_0.mo.canGetAll then
-		local var_21_0 = Season123TaskModel.instance:getAllCanGetList()
+	if self.mo.canGetAll then
+		local canGetIdList = Season123TaskModel.instance:getAllCanGetList()
 
-		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Season123, 0, var_21_0, nil, nil, 0)
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Season123, 0, canGetIdList, nil, nil, 0)
 	else
-		TaskRpc.instance:sendFinishTaskRequest(arg_21_0.taskId)
+		TaskRpc.instance:sendFinishTaskRequest(self.taskId)
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.BlockKey)
+	UIBlockMgr.instance:endBlock(Season123TaskItem.BlockKey)
 end
 
-function var_0_0.onClickGetTotal(arg_22_0)
-	arg_22_0:onClickReceive()
+function Season123TaskItem:onClickGetTotal()
+	self:onClickReceive()
 end
 
-function var_0_0.onDestroy(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._onPlayActAniFinished, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.onDelayPlayOpen, arg_23_0)
+function Season123TaskItem:onDestroy()
+	TaskDispatcher.cancelTask(self._onPlayActAniFinished, self)
+	TaskDispatcher.cancelTask(self.onDelayPlayOpen, self)
 
-	if arg_23_0._rewardItems then
-		for iter_23_0, iter_23_1 in pairs(arg_23_0._rewardItems) do
-			arg_23_0:destroyRewardItem(iter_23_1)
+	if self._rewardItems then
+		for _, item in pairs(self._rewardItems) do
+			self:destroyRewardItem(item)
 		end
 
-		arg_23_0._rewardItems = nil
+		self._rewardItems = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_23_0._onPlayActAniFinished, arg_23_0)
+	TaskDispatcher.cancelTask(self._onPlayActAniFinished, self)
 end
 
-return var_0_0
+return Season123TaskItem

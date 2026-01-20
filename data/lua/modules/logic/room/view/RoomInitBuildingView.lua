@@ -1,1575 +1,1591 @@
-﻿module("modules.logic.room.view.RoomInitBuildingView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomInitBuildingView.lua
 
-local var_0_0 = class("RoomInitBuildingView", BaseView)
-local var_0_1 = 0.3
+module("modules.logic.room.view.RoomInitBuildingView", package.seeall)
 
-var_0_0.TabId = {
+local RoomInitBuildingView = class("RoomInitBuildingView", BaseView)
+local SWITCH_TIME = 0.3
+
+RoomInitBuildingView.TabId = {
 	ProductionLine = 1,
 	BuildDegree = 2
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
-	arg_1_0._gocategoryItem = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_catagory/viewport/content/#go_catagoryItem")
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "left/title")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "left/title/#image_icon")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "left/title/#txt_title")
-	arg_1_0._txttitleEn = gohelper.findChildText(arg_1_0.viewGO, "left/title/#txt_title/#txt_titleEn")
-	arg_1_0._golevelitem = gohelper.findChild(arg_1_0.viewGO, "left/title/activeLv/#go_levelitem")
-	arg_1_0._btnlevelup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/title/layout/#btn_levelup")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot")
-	arg_1_0._btnskin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/title/layout/#btn_skin")
-	arg_1_0._goskinreddot = gohelper.findChild(arg_1_0.viewGO, "left/title/layout/#btn_skin/#go_reddot")
-	arg_1_0._gopart = gohelper.findChild(arg_1_0.viewGO, "right/#go_part")
-	arg_1_0._goinit = gohelper.findChild(arg_1_0.viewGO, "right/#go_init")
-	arg_1_0._goskin = gohelper.findChild(arg_1_0.viewGO, "right/#go_skin")
-	arg_1_0._gohubList = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_hubList")
-	arg_1_0._goactiveList = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_activeList")
-	arg_1_0._btnbuildingHub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_init/buildingLayout/#btn_buildingHub")
-	arg_1_0._btnbuildingActive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_init/buildingLayout/#btn_buildingActive")
-	arg_1_0._gogatherpart = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_hubList/#go_gatherpart")
-	arg_1_0._gochangepart = gohelper.findChild(arg_1_0.viewGO, "right/#go_init/#go_hubList/#go_changepart")
-	arg_1_0._gogather = gohelper.findChild(arg_1_0.viewGO, "right/#go_part/#go_gather")
-	arg_1_0._gochange = gohelper.findChild(arg_1_0.viewGO, "right/#go_part/#go_change")
-	arg_1_0._simagecombinebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#go_part/#go_change/combine/go_combine3/#simage_combinebg")
+function RoomInitBuildingView:onInitView()
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#simage_mask")
+	self._gocategoryItem = gohelper.findChild(self.viewGO, "left/#scroll_catagory/viewport/content/#go_catagoryItem")
+	self._gotitle = gohelper.findChild(self.viewGO, "left/title")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "left/title/#image_icon")
+	self._txttitle = gohelper.findChildText(self.viewGO, "left/title/#txt_title")
+	self._txttitleEn = gohelper.findChildText(self.viewGO, "left/title/#txt_title/#txt_titleEn")
+	self._golevelitem = gohelper.findChild(self.viewGO, "left/title/activeLv/#go_levelitem")
+	self._btnlevelup = gohelper.findChildButtonWithAudio(self.viewGO, "left/title/layout/#btn_levelup")
+	self._goreddot = gohelper.findChild(self.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot")
+	self._btnskin = gohelper.findChildButtonWithAudio(self.viewGO, "left/title/layout/#btn_skin")
+	self._goskinreddot = gohelper.findChild(self.viewGO, "left/title/layout/#btn_skin/#go_reddot")
+	self._gopart = gohelper.findChild(self.viewGO, "right/#go_part")
+	self._goinit = gohelper.findChild(self.viewGO, "right/#go_init")
+	self._goskin = gohelper.findChild(self.viewGO, "right/#go_skin")
+	self._gohubList = gohelper.findChild(self.viewGO, "right/#go_init/#go_hubList")
+	self._goactiveList = gohelper.findChild(self.viewGO, "right/#go_init/#go_activeList")
+	self._btnbuildingHub = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_init/buildingLayout/#btn_buildingHub")
+	self._btnbuildingActive = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_init/buildingLayout/#btn_buildingActive")
+	self._gogatherpart = gohelper.findChild(self.viewGO, "right/#go_init/#go_hubList/#go_gatherpart")
+	self._gochangepart = gohelper.findChild(self.viewGO, "right/#go_init/#go_hubList/#go_changepart")
+	self._gogather = gohelper.findChild(self.viewGO, "right/#go_part/#go_gather")
+	self._gochange = gohelper.findChild(self.viewGO, "right/#go_part/#go_change")
+	self._simagecombinebg = gohelper.findChildSingleImage(self.viewGO, "right/#go_part/#go_change/combine/go_combine3/#simage_combinebg")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnskin:AddClickListener(arg_2_0._btnskinOnClick, arg_2_0)
-	arg_2_0._btnlevelup:AddClickListener(arg_2_0._btnlevelupOnClick, arg_2_0)
-	arg_2_0._btnbuildingHub:AddClickListener(arg_2_0._btnbuildingHubOnClick, arg_2_0)
-	arg_2_0._btnbuildingActive:AddClickListener(arg_2_0._btnbuildingActiveOnClick, arg_2_0)
-	arg_2_0:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, arg_2_0._onSkinListViewShowChange, arg_2_0)
-	arg_2_0:addEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, arg_2_0._refreshSkinReddot, arg_2_0)
+function RoomInitBuildingView:addEvents()
+	self._btnskin:AddClickListener(self._btnskinOnClick, self)
+	self._btnlevelup:AddClickListener(self._btnlevelupOnClick, self)
+	self._btnbuildingHub:AddClickListener(self._btnbuildingHubOnClick, self)
+	self._btnbuildingActive:AddClickListener(self._btnbuildingActiveOnClick, self)
+	self:addEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, self._onSkinListViewShowChange, self)
+	self:addEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, self._refreshSkinReddot, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnskin:RemoveClickListener()
-	arg_3_0._btnlevelup:RemoveClickListener()
-	arg_3_0._btnbuildingHub:RemoveClickListener()
-	arg_3_0._btnbuildingActive:RemoveClickListener()
-	arg_3_0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, arg_3_0._onSkinListViewShowChange, arg_3_0)
-	arg_3_0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, arg_3_0._refreshSkinReddot, arg_3_0)
+function RoomInitBuildingView:removeEvents()
+	self._btnskin:RemoveClickListener()
+	self._btnlevelup:RemoveClickListener()
+	self._btnbuildingHub:RemoveClickListener()
+	self._btnbuildingActive:RemoveClickListener()
+	self:removeEventCb(RoomSkinController.instance, RoomSkinEvent.SkinListViewShowChange, self._onSkinListViewShowChange, self)
+	self:removeEventCb(RoomSkinController.instance, RoomSkinEvent.RoomSkinMarkUpdate, self._refreshSkinReddot, self)
 end
 
-function var_0_0._btnskinOnClick(arg_4_0)
-	RoomSkinController.instance:setRoomSkinListVisible(arg_4_0._selectPartId)
+function RoomInitBuildingView:_btnskinOnClick()
+	RoomSkinController.instance:setRoomSkinListVisible(self._selectPartId)
 end
 
-function var_0_0._btnlevelupOnClick(arg_5_0)
+function RoomInitBuildingView:_btnlevelupOnClick()
 	RoomMapController.instance:openRoomLevelUpView()
 end
 
-function var_0_0._btnbuildingHubOnClick(arg_6_0)
-	arg_6_0:_changeSelectTab(1)
+function RoomInitBuildingView:_btnbuildingHubOnClick()
+	self:_changeSelectTab(1)
 end
 
-function var_0_0._btnbuildingActiveOnClick(arg_7_0)
-	arg_7_0:_changeSelectTab(2)
+function RoomInitBuildingView:_btnbuildingActiveOnClick()
+	self:_changeSelectTab(2)
 end
 
-function var_0_0._categoryItemOnClick(arg_8_0, arg_8_1)
+function RoomInitBuildingView:_categoryItemOnClick(index)
 	if ViewMgr.instance:isOpen(ViewName.RoomFormulaView) then
 		return
 	end
 
-	local var_8_0 = arg_8_0._categoryItemList[arg_8_1]
+	local categoryItem = self._categoryItemList[index]
 
-	arg_8_0:_changeSelectPart(var_8_0.partId, true)
+	self:_changeSelectPart(categoryItem.partId, true)
 
-	if arg_8_0._lastItemIndex ~= arg_8_1 then
-		arg_8_0._lastItemIndex = arg_8_1
+	if self._lastItemIndex ~= index then
+		self._lastItemIndex = index
 
-		if arg_8_1 == 1 then
-			arg_8_0:_changeSelectTab(1)
+		if index == 1 then
+			self:_changeSelectTab(1)
 		end
 	end
 end
 
-function var_0_0._btninitpartproductOnClick(arg_9_0, arg_9_1)
-	local var_9_0 = RoomProductionHelper.getCanGainLineIdList(arg_9_1)
+function RoomInitBuildingView:_btninitpartproductOnClick(partId)
+	local requestLineIdList = RoomProductionHelper.getCanGainLineIdList(partId)
 
-	if #var_9_0 > 0 then
-		arg_9_0._flyEffectRewardInfoList = {}
+	if #requestLineIdList > 0 then
+		self._flyEffectRewardInfoList = {}
 
-		local var_9_1 = arg_9_0:_getPartItemByPartId(arg_9_1)
+		local partItem = self:_getPartItemByPartId(partId)
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			local var_9_2 = RoomProductionModel.instance:getLineMO(iter_9_1)
-			local var_9_3 = var_9_2:getReservePer()
+		for i, lineId in ipairs(requestLineIdList) do
+			local lineMO = RoomProductionModel.instance:getLineMO(lineId)
+			local per = lineMO:getReservePer()
 
-			if not LuaUtil.tableNotEmpty(arg_9_0._flyEffectRewardInfoList) then
-				table.insert(arg_9_0._flyEffectRewardInfoList, {
-					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(var_9_2.formulaId),
-					position = var_9_1.simagereward.gameObject.transform.position
+			if not LuaUtil.tableNotEmpty(self._flyEffectRewardInfoList) then
+				table.insert(self._flyEffectRewardInfoList, {
+					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(lineMO.formulaId),
+					position = partItem.simagereward.gameObject.transform.position
 				})
 			end
 
-			arg_9_0._lineIdPerDict[iter_9_1] = var_9_3
+			self._lineIdPerDict[lineId] = per
 		end
 
-		RoomRpc.instance:sendGainProductionLineRequest(var_9_0, true)
+		RoomRpc.instance:sendGainProductionLineRequest(requestLineIdList, true)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_shop_collect)
 	end
 end
 
-function var_0_0._btninitpartProductOnClick(arg_10_0, arg_10_1)
-	arg_10_0:_changeSelectPart(arg_10_1)
+function RoomInitBuildingView:_btninitpartProductOnClick(partId)
+	self:_changeSelectPart(partId)
 end
 
-function var_0_0._btninitpartChangeOnClick(arg_11_0, arg_11_1)
-	arg_11_0:_changeSelectPart(arg_11_1, false, true)
+function RoomInitBuildingView:_btninitpartChangeOnClick(partId)
+	self:_changeSelectPart(partId, false, true)
 end
 
-function var_0_0._btnupgradeOnClick(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:_getLineItemByIndex(arg_12_1)
-	local var_12_1 = RoomProductionModel.instance:getLineMO(var_12_0.lineId)
+function RoomInitBuildingView:_btnupgradeOnClick(index)
+	local lineItem = self:_getLineItemByIndex(index)
+	local lineMO = RoomProductionModel.instance:getLineMO(lineItem.lineId)
 
 	ViewMgr.instance:openView(ViewName.RoomProductLineLevelUpView, {
-		lineMO = var_12_1,
-		selectPartId = arg_12_0._selectPartId
+		lineMO = lineMO,
+		selectPartId = self._selectPartId
 	})
 end
 
-function var_0_0._lineclickOnClick(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:_getLineItemByIndex(arg_13_1)
-	local var_13_1 = RoomProductionModel.instance:getLineMO(var_13_0.lineId)
+function RoomInitBuildingView:_lineclickOnClick(index)
+	local lineItem = self:_getLineItemByIndex(index)
+	local lineMO = RoomProductionModel.instance:getLineMO(lineItem.lineId)
 
-	if var_13_1:isLock() then
-		arg_13_0:_hideExpandDetailUI()
-		ToastController.instance:showToast(RoomEnum.Toast.RoomProductLineLockTips, var_13_1.config.needRoomLevel)
-	elseif arg_13_0._selectLineId == var_13_0.lineId then
-		if arg_13_0._expandDetailLineId == arg_13_0._selectLineId then
-			arg_13_0._expandDetailLineId = nil
+	if lineMO:isLock() then
+		self:_hideExpandDetailUI()
+		ToastController.instance:showToast(RoomEnum.Toast.RoomProductLineLockTips, lineMO.config.needRoomLevel)
+	elseif self._selectLineId == lineItem.lineId then
+		if self._expandDetailLineId == self._selectLineId then
+			self._expandDetailLineId = nil
 		else
-			arg_13_0._expandDetailLineId = arg_13_0._selectLineId
+			self._expandDetailLineId = self._selectLineId
 		end
 
-		arg_13_0:_refreshDetailPartGather(arg_13_0._selectPartId)
+		self:_refreshDetailPartGather(self._selectPartId)
 	else
-		arg_13_0._expandDetailLineId = var_13_0.lineId
+		self._expandDetailLineId = lineItem.lineId
 
-		arg_13_0:_changeSelectLine(var_13_0.lineId)
+		self:_changeSelectLine(lineItem.lineId)
 	end
 end
 
-function var_0_0._detailgathergetOnClick(arg_14_0)
-	local var_14_0 = RoomProductionHelper.getCanGainLineIdList(arg_14_0._selectPartId)
+function RoomInitBuildingView:_detailgathergetOnClick()
+	local requestLineIdList = RoomProductionHelper.getCanGainLineIdList(self._selectPartId)
 
-	if #var_14_0 > 0 then
-		arg_14_0._flyEffectRewardInfoList = {}
-		arg_14_0._lineIdPerDict = {}
+	if #requestLineIdList > 0 then
+		self._flyEffectRewardInfoList = {}
+		self._lineIdPerDict = {}
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-			local var_14_1 = RoomProductionModel.instance:getLineMO(iter_14_1)
-			local var_14_2 = var_14_1:getReservePer()
+		for i, lineId in ipairs(requestLineIdList) do
+			local lineMO = RoomProductionModel.instance:getLineMO(lineId)
+			local per = lineMO:getReservePer()
 
-			if not LuaUtil.tableNotEmpty(arg_14_0._flyEffectRewardInfoList) then
-				table.insert(arg_14_0._flyEffectRewardInfoList, {
-					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(var_14_1.formulaId),
-					position = arg_14_0._gatherItem.btnget.gameObject.transform.position
+			if not LuaUtil.tableNotEmpty(self._flyEffectRewardInfoList) then
+				table.insert(self._flyEffectRewardInfoList, {
+					rewardInfo = RoomProductionHelper.getFormulaRewardInfo(lineMO.formulaId),
+					position = self._gatherItem.btnget.gameObject.transform.position
 				})
 			end
 
-			arg_14_0._lineIdPerDict[iter_14_1] = var_14_2
+			self._lineIdPerDict[lineId] = per
 		end
 
-		RoomRpc.instance:sendGainProductionLineRequest(var_14_0, true)
+		RoomRpc.instance:sendGainProductionLineRequest(requestLineIdList, true)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_shop_collect)
 	end
 
-	arg_14_0:_hideExpandDetailUI()
+	self:_hideExpandDetailUI()
 end
 
-function var_0_0._gainProductionLineCallback(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 ~= 0 then
+function RoomInitBuildingView:_gainProductionLineCallback(resultCode, lineIds)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_15_0:_playLineAnimation()
+	self:_playLineAnimation()
 
-	if not arg_15_0._flyEffectRewardInfoList or #arg_15_0._flyEffectRewardInfoList <= 0 then
+	if not self._flyEffectRewardInfoList or #self._flyEffectRewardInfoList <= 0 then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._flyEffectRewardInfoList) do
+	for i, flyEffectRewardInfo in ipairs(self._flyEffectRewardInfoList) do
 		RoomMapController.instance:dispatchEvent(RoomEvent.UIFlyEffect, {
-			startPos = iter_15_1.position,
-			itemType = iter_15_1.rewardInfo.type,
-			itemId = iter_15_1.rewardInfo.id,
-			startQuantity = iter_15_1.rewardInfo.quantity
+			startPos = flyEffectRewardInfo.position,
+			itemType = flyEffectRewardInfo.rewardInfo.type,
+			itemId = flyEffectRewardInfo.rewardInfo.id,
+			startQuantity = flyEffectRewardInfo.rewardInfo.quantity
 		})
 	end
 
-	arg_15_0._flyEffectRewardInfoList = nil
+	self._flyEffectRewardInfoList = nil
 end
 
-function var_0_0._playLineAnimation(arg_16_0)
-	if arg_16_0._lineGetTweenId then
-		if arg_16_0._scene.tween then
-			arg_16_0._scene.tween:killById(arg_16_0._lineGetTweenId)
+function RoomInitBuildingView:_playLineAnimation()
+	if self._lineGetTweenId then
+		if self._scene.tween then
+			self._scene.tween:killById(self._lineGetTweenId)
 		else
-			ZProj.TweenHelper.KillById(arg_16_0._lineGetTweenId)
+			ZProj.TweenHelper.KillById(self._lineGetTweenId)
 		end
 
-		arg_16_0._lineGetTweenId = nil
+		self._lineGetTweenId = nil
 	end
 
-	if LuaUtil.tableNotEmpty(arg_16_0._lineIdPerDict) then
-		if arg_16_0._scene.tween then
-			arg_16_0._lineGetTweenId = arg_16_0._scene.tween:tweenFloat(1, 0, 0.5, arg_16_0._lineAnimationFrame, arg_16_0._lineAnimationFinish, arg_16_0)
+	if LuaUtil.tableNotEmpty(self._lineIdPerDict) then
+		if self._scene.tween then
+			self._lineGetTweenId = self._scene.tween:tweenFloat(1, 0, 0.5, self._lineAnimationFrame, self._lineAnimationFinish, self)
 		else
-			arg_16_0._lineGetTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, arg_16_0._lineAnimationFrame, arg_16_0._lineAnimationFinish, arg_16_0)
+			self._lineGetTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.5, self._lineAnimationFrame, self._lineAnimationFinish, self)
 		end
 	end
 end
 
-function var_0_0._lineAnimationFrame(arg_17_0, arg_17_1)
-	if arg_17_0._selectPartId == 0 then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._initPartProductItemList) do
-			for iter_17_2, iter_17_3 in ipairs(iter_17_1.lineItemList) do
-				local var_17_0 = arg_17_0._lineIdPerDict[iter_17_3.lineId]
+function RoomInitBuildingView:_lineAnimationFrame(value)
+	if self._selectPartId == 0 then
+		for _, initPartProductItem in ipairs(self._initPartProductItemList) do
+			for _, lineItem in ipairs(initPartProductItem.lineItemList) do
+				local per = self._lineIdPerDict[lineItem.lineId]
 
-				if var_17_0 then
-					arg_17_0:_refreshLineAnimationShow(var_17_0, arg_17_1, iter_17_3.imageprocess, iter_17_3.txtprocess)
+				if per then
+					self:_refreshLineAnimationShow(per, value, lineItem.imageprocess, lineItem.txtprocess)
 				end
 			end
 		end
 	else
-		for iter_17_4, iter_17_5 in ipairs(arg_17_0._gatherItem.lineItemList) do
-			local var_17_1 = arg_17_0._lineIdPerDict[iter_17_5.lineId]
+		for _, lineItem in ipairs(self._gatherItem.lineItemList) do
+			local per = self._lineIdPerDict[lineItem.lineId]
 
-			if var_17_1 then
-				arg_17_0:_refreshLineAnimationShow(var_17_1, arg_17_1, iter_17_5.imageprocess, iter_17_5.txtprocess)
+			if per then
+				self:_refreshLineAnimationShow(per, value, lineItem.imageprocess, lineItem.txtprocess)
 			end
 		end
 
-		local var_17_2 = arg_17_0._lineIdPerDict[arg_17_0._selectLineId]
+		local per = self._lineIdPerDict[self._selectLineId]
 
-		if var_17_2 then
-			arg_17_0:_refreshLineAnimationShow(var_17_2, arg_17_1, nil, nil)
+		if per then
+			self:_refreshLineAnimationShow(per, value, nil, nil)
 		end
 	end
 end
 
-function var_0_0._refreshLineAnimationShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	arg_18_1 = arg_18_1 * arg_18_2
+function RoomInitBuildingView:_refreshLineAnimationShow(per, value, imageprocess, txtprocess)
+	per = per * value
 
-	if arg_18_3 then
-		arg_18_3.fillAmount = arg_18_1
+	if imageprocess then
+		imageprocess.fillAmount = per
 	end
 
-	if arg_18_4 then
-		local var_18_0 = math.max(0, math.floor(arg_18_1 * 100))
+	if txtprocess then
+		local per100 = math.max(0, math.floor(per * 100))
 
-		arg_18_4.text = string.format("%d%%", var_18_0)
+		txtprocess.text = string.format("%d%%", per100)
 	end
 end
 
-function var_0_0._lineAnimationFinish(arg_19_0)
-	arg_19_0:_lineAnimationFrame(0)
+function RoomInitBuildingView:_lineAnimationFinish()
+	self:_lineAnimationFrame(0)
 
-	arg_19_0._lineIdPerDict = {}
+	self._lineIdPerDict = {}
 end
 
-function var_0_0._clearLineAnimation(arg_20_0)
-	if arg_20_0._lineGetTweenId then
-		if arg_20_0._scene.tween then
-			arg_20_0._scene.tween:killById(arg_20_0._lineGetTweenId)
+function RoomInitBuildingView:_clearLineAnimation()
+	if self._lineGetTweenId then
+		if self._scene.tween then
+			self._scene.tween:killById(self._lineGetTweenId)
 		else
-			ZProj.TweenHelper.KillById(arg_20_0._lineGetTweenId)
+			ZProj.TweenHelper.KillById(self._lineGetTweenId)
 		end
 
-		arg_20_0._lineGetTweenId = nil
+		self._lineGetTweenId = nil
 	end
 
-	arg_20_0._lineIdPerDict = {}
+	self._lineIdPerDict = {}
 end
 
-function var_0_0._editableInitView(arg_21_0)
-	arg_21_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_21_0._selectPartId = 0
-	arg_21_0._selectTabId = var_0_0.TabId.ProductionLine
-	arg_21_0._selectLineId = 0
+function RoomInitBuildingView:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._selectPartId = 0
+	self._selectTabId = RoomInitBuildingView.TabId.ProductionLine
+	self._selectLineId = 0
 
-	arg_21_0.viewContainer:setSelectLine(arg_21_0._selectLineId)
+	self.viewContainer:setSelectLine(self._selectLineId)
 
-	arg_21_0._categoryItemList = {}
+	self._categoryItemList = {}
 
-	gohelper.setActive(arg_21_0._gocategoryItem, false)
+	gohelper.setActive(self._gocategoryItem, false)
 
-	arg_21_0._levelItemList = {}
+	self._levelItemList = {}
 
-	gohelper.setActive(arg_21_0._golevelitem, false)
+	gohelper.setActive(self._golevelitem, false)
 
-	arg_21_0._buildingInfoItemList = {}
-	arg_21_0._detailInitTabHubItem = arg_21_0:_getDetailInitItem(arg_21_0._btnbuildingHub.gameObject)
-	arg_21_0._detailInitTabActiveItem = arg_21_0:_getDetailInitItem(arg_21_0._btnbuildingActive.gameObject)
-	arg_21_0._initPartProductItemList = {}
-	arg_21_0._initPartChangeItemList = {}
+	self._buildingInfoItemList = {}
+	self._detailInitTabHubItem = self:_getDetailInitItem(self._btnbuildingHub.gameObject)
+	self._detailInitTabActiveItem = self:_getDetailInitItem(self._btnbuildingActive.gameObject)
+	self._initPartProductItemList = {}
+	self._initPartChangeItemList = {}
 
-	gohelper.setActive(arg_21_0._gogatherpart, false)
-	gohelper.setActive(arg_21_0._gochangepart, false)
+	gohelper.setActive(self._gogatherpart, false)
+	gohelper.setActive(self._gochangepart, false)
 
-	arg_21_0._animator = arg_21_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_21_0._lineIdPerDict = {}
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._lineIdPerDict = {}
 
-	gohelper.addUIClickAudio(arg_21_0._btnlevelup.gameObject, AudioEnum.UI.UI_Rolesopen)
-	arg_21_0._simagecombinebg:LoadImage(ResUrl.getRoomImage("bg_hechengdiban"))
-	arg_21_0._simagemask:LoadImage(ResUrl.getRoomImage("full/bg_yinyingzhezhao"))
+	gohelper.addUIClickAudio(self._btnlevelup.gameObject, AudioEnum.UI.UI_Rolesopen)
+	self._simagecombinebg:LoadImage(ResUrl.getRoomImage("bg_hechengdiban"))
+	self._simagemask:LoadImage(ResUrl.getRoomImage("full/bg_yinyingzhezhao"))
 
-	arg_21_0._expandDetailLineId = nil
-	arg_21_0._golevelupeffect = gohelper.findChild(arg_21_0.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot/#leveup_effect")
+	self._expandDetailLineId = nil
+	self._golevelupeffect = gohelper.findChild(self.viewGO, "left/title/layout/#btn_levelup/txt/#go_reddot/#leveup_effect")
 end
 
-function var_0_0._getLineItemByIndex(arg_22_0, arg_22_1)
-	if arg_22_1 == 0 then
-		return arg_22_0._changeItem.lineItem
+function RoomInitBuildingView:_getLineItemByIndex(index)
+	if index == 0 then
+		return self._changeItem.lineItem
 	else
-		return arg_22_0._gatherItem.lineItemList[arg_22_1]
+		return self._gatherItem.lineItemList[index]
 	end
 end
 
-function var_0_0._getLineItemByLineId(arg_23_0, arg_23_1)
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._gatherItem.lineItemList) do
-		if iter_23_1.lineId == arg_23_1 then
-			return iter_23_1
+function RoomInitBuildingView:_getLineItemByLineId(lineId)
+	for i, lineItem in ipairs(self._gatherItem.lineItemList) do
+		if lineItem.lineId == lineId then
+			return lineItem
 		end
 	end
 end
 
-function var_0_0._getPartItemByPartId(arg_24_0, arg_24_1)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._initPartProductItemList) do
-		if iter_24_1.partId == arg_24_1 then
-			return iter_24_1
+function RoomInitBuildingView:_getPartItemByPartId(partId)
+	for i, partItem in ipairs(self._initPartProductItemList) do
+		if partItem.partId == partId then
+			return partItem
 		end
 	end
 
-	for iter_24_2, iter_24_3 in ipairs(arg_24_0._initPartChangeItemList) do
-		if iter_24_3.partId == arg_24_1 then
-			return iter_24_3
+	for i, partItem in ipairs(self._initPartChangeItemList) do
+		if partItem.partId == partId then
+			return partItem
 		end
 	end
 end
 
-function var_0_0._initChangeItem(arg_25_0)
-	local var_25_0 = arg_25_0:getUserDataTb_()
+function RoomInitBuildingView:_initChangeItem()
+	local item = self:getUserDataTb_()
 
-	var_25_0.go = arg_25_0._gochange
-	var_25_0.goline = gohelper.findChild(var_25_0.go, "productLineItem")
-	var_25_0.gobgvx = gohelper.findChild(var_25_0.go, "combine/go_combine3/#bgvx")
-	var_25_0.gohechengeffect = gohelper.findChild(var_25_0.go, "combine/#hechengeffect")
-	var_25_0.lineItem = arg_25_0:getUserDataTb_()
+	item.go = self._gochange
+	item.goline = gohelper.findChild(item.go, "productLineItem")
+	item.gobgvx = gohelper.findChild(item.go, "combine/go_combine3/#bgvx")
+	item.gohechengeffect = gohelper.findChild(item.go, "combine/#hechengeffect")
+	item.lineItem = self:getUserDataTb_()
 
-	arg_25_0:_initLine(var_25_0.lineItem, var_25_0.goline, false, 0)
-	gohelper.setActive(var_25_0.goline, true)
+	self:_initLine(item.lineItem, item.goline, false, 0)
+	gohelper.setActive(item.goline, true)
 
-	return var_25_0
+	return item
 end
 
-function var_0_0._initGatherItem(arg_26_0)
-	local var_26_0 = arg_26_0:getUserDataTb_()
+function RoomInitBuildingView:_initGatherItem()
+	local item = self:getUserDataTb_()
 
-	var_26_0.go = arg_26_0._gogather
-	var_26_0.txtname = gohelper.findChildText(var_26_0.go, "collect/txt_productLineName")
-	var_26_0.txtprocess = gohelper.findChildText(var_26_0.go, "collect/txt_collectprocess")
-	var_26_0.goarrow = gohelper.findChild(var_26_0.go, "collect/txt_collectprocess/go_arrow")
-	var_26_0.gopause = gohelper.findChild(var_26_0.go, "collect/txt_collectprocess/go_pause")
-	var_26_0.imagereward = gohelper.findChildImage(var_26_0.go, "collect/image_curcollectitem")
-	var_26_0.goline = gohelper.findChild(var_26_0.go, "scroll_productLine/viewport/content/go_productLineItem")
-	var_26_0.goinfo = gohelper.findChild(var_26_0.go, "go_gatherInfo")
-	var_26_0.txtstore = gohelper.findChildText(var_26_0.go, "go_gatherInfo/collectinfo/right/txt_store")
-	var_26_0.txttime = gohelper.findChildText(var_26_0.go, "go_gatherInfo/collectinfo/right/txt_expspeed")
-	var_26_0.txtremain = gohelper.findChildText(var_26_0.go, "go_gatherInfo/collectinfo/right/txt_time")
-	var_26_0.goget = gohelper.findChild(var_26_0.go, "btn_get/go_get")
-	var_26_0.gonoget = gohelper.findChild(var_26_0.go, "btn_get/go_noget")
-	var_26_0.btnget = gohelper.findChildButton(var_26_0.go, "btn_get")
-	var_26_0.btnnewget = gohelper.findChildButton(var_26_0.go, "collect/btn_get")
-	var_26_0.animatorcircle = gohelper.findChild(var_26_0.go, "collect/bg"):GetComponent(typeof(UnityEngine.Animator))
-	var_26_0.animatorget = var_26_0.btnget.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	item.go = self._gogather
+	item.txtname = gohelper.findChildText(item.go, "collect/txt_productLineName")
+	item.txtprocess = gohelper.findChildText(item.go, "collect/txt_collectprocess")
+	item.goarrow = gohelper.findChild(item.go, "collect/txt_collectprocess/go_arrow")
+	item.gopause = gohelper.findChild(item.go, "collect/txt_collectprocess/go_pause")
+	item.imagereward = gohelper.findChildImage(item.go, "collect/image_curcollectitem")
+	item.goline = gohelper.findChild(item.go, "scroll_productLine/viewport/content/go_productLineItem")
+	item.goinfo = gohelper.findChild(item.go, "go_gatherInfo")
+	item.txtstore = gohelper.findChildText(item.go, "go_gatherInfo/collectinfo/right/txt_store")
+	item.txttime = gohelper.findChildText(item.go, "go_gatherInfo/collectinfo/right/txt_expspeed")
+	item.txtremain = gohelper.findChildText(item.go, "go_gatherInfo/collectinfo/right/txt_time")
+	item.goget = gohelper.findChild(item.go, "btn_get/go_get")
+	item.gonoget = gohelper.findChild(item.go, "btn_get/go_noget")
+	item.btnget = gohelper.findChildButton(item.go, "btn_get")
+	item.btnnewget = gohelper.findChildButton(item.go, "collect/btn_get")
 
-	var_26_0.btnget:AddClickListener(arg_26_0._detailgathergetOnClick, arg_26_0)
-	var_26_0.btnnewget:AddClickListener(arg_26_0._detailgathergetOnClick, arg_26_0)
+	local circleGO = gohelper.findChild(item.go, "collect/bg")
 
-	var_26_0.lineItemList = {}
+	item.animatorcircle = circleGO:GetComponent(typeof(UnityEngine.Animator))
+	item.animatorget = item.btnget.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(var_26_0.goline, false)
+	item.btnget:AddClickListener(self._detailgathergetOnClick, self)
+	item.btnnewget:AddClickListener(self._detailgathergetOnClick, self)
 
-	return var_26_0
+	item.lineItemList = {}
+
+	gohelper.setActive(item.goline, false)
+
+	return item
 end
 
-function var_0_0._initLine(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4)
-	arg_27_1.go = arg_27_2
-	arg_27_1.index = arg_27_4
-	arg_27_1.isGather = arg_27_3
-	arg_27_1.txtname = gohelper.findChildText(arg_27_1.go, "name")
-	arg_27_1.goshowprocess = gohelper.findChild(arg_27_1.go, "go_process")
-	arg_27_1.golevelitem = gohelper.findChild(arg_27_1.go, "name/go_activeLv/go_normalitem")
-	arg_27_1.imageprocess = gohelper.findChildImage(arg_27_1.go, "go_process/go_process/processbar")
-	arg_27_1.txtprocess = gohelper.findChildText(arg_27_1.go, "go_process/go_process/num")
-	arg_27_1.goprocess = gohelper.findChild(arg_27_1.go, "go_process/go_process")
-	arg_27_1.btnupgrade = gohelper.findChildButtonWithAudio(arg_27_1.go, "btn_upgrade")
-	arg_27_1.reddot = gohelper.findChild(arg_27_1.go, "btn_upgrade/reddot")
+function RoomInitBuildingView:_initLine(lineItem, lineGO, isGather, index)
+	lineItem.go = lineGO
+	lineItem.index = index
+	lineItem.isGather = isGather
+	lineItem.txtname = gohelper.findChildText(lineItem.go, "name")
+	lineItem.goshowprocess = gohelper.findChild(lineItem.go, "go_process")
+	lineItem.golevelitem = gohelper.findChild(lineItem.go, "name/go_activeLv/go_normalitem")
+	lineItem.imageprocess = gohelper.findChildImage(lineItem.go, "go_process/go_process/processbar")
+	lineItem.txtprocess = gohelper.findChildText(lineItem.go, "go_process/go_process/num")
+	lineItem.goprocess = gohelper.findChild(lineItem.go, "go_process/go_process")
+	lineItem.btnupgrade = gohelper.findChildButtonWithAudio(lineItem.go, "btn_upgrade")
+	lineItem.reddot = gohelper.findChild(lineItem.go, "btn_upgrade/reddot")
 
-	arg_27_1.btnupgrade:AddClickListener(arg_27_0._btnupgradeOnClick, arg_27_0, arg_27_1.index)
-	gohelper.addUIClickAudio(arg_27_1.btnupgrade.gameObject, AudioEnum.UI.UI_Rolesopen)
+	lineItem.btnupgrade:AddClickListener(self._btnupgradeOnClick, self, lineItem.index)
+	gohelper.addUIClickAudio(lineItem.btnupgrade.gameObject, AudioEnum.UI.UI_Rolesopen)
 
-	arg_27_1.levelItemList = arg_27_0:getUserDataTb_()
+	lineItem.levelItemList = self:getUserDataTb_()
 
-	if arg_27_3 then
-		arg_27_1.gofull = gohelper.findChild(arg_27_1.go, "go_process/go_full")
-		arg_27_1.gonormalbg = gohelper.findChild(arg_27_1.go, "go_normalbg")
-		arg_27_1.gofullbg = gohelper.findChild(arg_27_1.go, "go_fullbg")
-		arg_27_1.goselectbg = gohelper.findChild(arg_27_1.go, "go_selectbg")
-		arg_27_1.golock = gohelper.findChild(arg_27_1.go, "go_lock")
-		arg_27_1.txtlock = gohelper.findChildText(arg_27_1.go, "go_lock/txt_lock")
-		arg_27_1.btnclick = gohelper.findChildButtonWithAudio(arg_27_1.go, "btn_click")
+	if isGather then
+		lineItem.gofull = gohelper.findChild(lineItem.go, "go_process/go_full")
+		lineItem.gonormalbg = gohelper.findChild(lineItem.go, "go_normalbg")
+		lineItem.gofullbg = gohelper.findChild(lineItem.go, "go_fullbg")
+		lineItem.goselectbg = gohelper.findChild(lineItem.go, "go_selectbg")
+		lineItem.golock = gohelper.findChild(lineItem.go, "go_lock")
+		lineItem.txtlock = gohelper.findChildText(lineItem.go, "go_lock/txt_lock")
+		lineItem.btnclick = gohelper.findChildButtonWithAudio(lineItem.go, "btn_click")
 
-		arg_27_1.btnclick:AddClickListener(arg_27_0._lineclickOnClick, arg_27_0, arg_27_1.index)
+		lineItem.btnclick:AddClickListener(self._lineclickOnClick, self, lineItem.index)
 
-		arg_27_1.gatherAnimator = arg_27_1.go:GetComponent(typeof(UnityEngine.Animator))
+		lineItem.gatherAnimator = lineItem.go:GetComponent(typeof(UnityEngine.Animator))
 	else
-		arg_27_1.goselectbg = gohelper.findChild(arg_27_1.go, "selectbg")
-		arg_27_1.animator = arg_27_1.goprocess:GetComponent(typeof(UnityEngine.Animator))
+		lineItem.goselectbg = gohelper.findChild(lineItem.go, "selectbg")
+		lineItem.animator = lineItem.goprocess:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	gohelper.setActive(arg_27_1.golevelitem, false)
+	gohelper.setActive(lineItem.golevelitem, false)
 end
 
-function var_0_0._getDetailInitItem(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0:getUserDataTb_()
+function RoomInitBuildingView:_getDetailInitItem(go)
+	local item = self:getUserDataTb_()
 
-	var_28_0.go = arg_28_1
-	var_28_0.gonormal = gohelper.findChild(var_28_0.go, "go_normalbg")
-	var_28_0.goselect = gohelper.findChild(var_28_0.go, "go_selectbg")
+	item.go = go
+	item.gonormal = gohelper.findChild(item.go, "go_normalbg")
+	item.goselect = gohelper.findChild(item.go, "go_selectbg")
 
-	return var_28_0
+	return item
 end
 
-function var_0_0._changeSelectPart(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	if arg_29_1 ~= 0 and not RoomProductionHelper.hasUnlockLine(arg_29_1) then
-		if RoomProductionHelper.getPartType(arg_29_1) == RoomProductLineEnum.ProductType.Change then
+function RoomInitBuildingView:_changeSelectPart(partId, fromLeftBtn, fromGOChangeBtn)
+	if partId ~= 0 and not RoomProductionHelper.hasUnlockLine(partId) then
+		local productType = RoomProductionHelper.getPartType(partId)
+
+		if productType == RoomProductLineEnum.ProductType.Change then
 			GameFacade.showToast(ToastEnum.MaterialItemLockOnClick2)
 		end
 
 		return
 	end
 
-	if arg_29_0._selectPartId == arg_29_1 then
+	if self._selectPartId == partId then
 		return
 	end
 
-	arg_29_0._expandDetailLineId = nil
-	arg_29_0._waitChangeSelectPartId = arg_29_1
+	self._expandDetailLineId = nil
+	self._waitChangeSelectPartId = partId
 
-	arg_29_0:_refreshCategory()
-	arg_29_0:_refreshCamera()
+	self:_refreshCategory()
+	self:_refreshCamera()
 
-	arg_29_0._keepOpenSkinListAfterChange = RoomSkinModel.instance:getIsShowRoomSkinList()
+	self._keepOpenSkinListAfterChange = RoomSkinModel.instance:getIsShowRoomSkinList()
 
 	RoomSkinController.instance:clearPreviewRoomSkin()
 
-	arg_29_0._animator.enabled = true
+	self._animator.enabled = true
 
-	arg_29_0._animator:Play("swicth", 0, 0)
-	TaskDispatcher.cancelTask(arg_29_0._realChangeSelectPart, arg_29_0)
-	TaskDispatcher.runDelay(arg_29_0._realChangeSelectPart, arg_29_0, var_0_1)
+	self._animator:Play("swicth", 0, 0)
+	TaskDispatcher.cancelTask(self._realChangeSelectPart, self)
+	TaskDispatcher.runDelay(self._realChangeSelectPart, self, SWITCH_TIME)
 
-	if arg_29_2 then
+	if fromLeftBtn then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
 	end
 
-	if arg_29_3 then
+	if fromGOChangeBtn then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_shutdown)
 	end
 end
 
-function var_0_0._realChangeSelectPart(arg_30_0)
-	if not arg_30_0._waitChangeSelectPartId then
+function RoomInitBuildingView:_realChangeSelectPart()
+	if not self._waitChangeSelectPartId then
 		return
 	end
 
-	arg_30_0._selectPartId = arg_30_0._waitChangeSelectPartId
+	self._selectPartId = self._waitChangeSelectPartId
 
-	arg_30_0.viewContainer:setSelectPartId(arg_30_0._selectPartId)
-	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. arg_30_0._selectPartId])
+	self.viewContainer:setSelectPartId(self._selectPartId)
+	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. self._selectPartId])
 
-	arg_30_0._waitChangeSelectPartId = nil
+	self._waitChangeSelectPartId = nil
 
-	arg_30_0:_refreshSelectPart(false, true)
+	self:_refreshSelectPart(false, true)
 
-	if arg_30_0._keepOpenSkinListAfterChange then
-		arg_30_0:_btnskinOnClick()
+	if self._keepOpenSkinListAfterChange then
+		self:_btnskinOnClick()
 
-		arg_30_0._keepOpenSkinListAfterChange = false
+		self._keepOpenSkinListAfterChange = false
 	end
 end
 
-function var_0_0._changeSelectTab(arg_31_0, arg_31_1)
-	if arg_31_0._selectTabId == arg_31_1 then
+function RoomInitBuildingView:_changeSelectTab(tabId)
+	if self._selectTabId == tabId then
 		return
 	end
 
-	arg_31_0._selectTabId = arg_31_1
+	self._selectTabId = tabId
 
-	arg_31_0:_refreshSelectTab()
+	self:_refreshSelectTab()
 end
 
-function var_0_0._changeSelectLine(arg_32_0, arg_32_1)
-	if arg_32_0._selectLineId == arg_32_1 then
+function RoomInitBuildingView:_changeSelectLine(lineId)
+	if self._selectLineId == lineId then
 		return
 	end
 
-	arg_32_0._selectLineId = arg_32_1
+	self._selectLineId = lineId
 
-	arg_32_0.viewContainer:setSelectLine(arg_32_0._selectLineId)
-	arg_32_0:_refreshDetailPartGather(arg_32_0._selectPartId)
+	self.viewContainer:setSelectLine(self._selectLineId)
+	self:_refreshDetailPartGather(self._selectPartId)
 end
 
-function var_0_0._refreshUI(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0.viewParam
+function RoomInitBuildingView:_refreshUI(isInit)
+	local param = self.viewParam
 
-	arg_33_0._selectPartId = var_33_0 and var_33_0.partId or 0
-	arg_33_0._selectLineId = var_33_0 and var_33_0.lineId or 0
+	self._selectPartId = param and param.partId or 0
+	self._selectLineId = param and param.lineId or 0
 
-	arg_33_0.viewContainer:setSelectLine(arg_33_0._selectLineId)
-	arg_33_0.viewContainer:setSelectPartId(arg_33_0._selectPartId)
-	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. arg_33_0._selectPartId])
-	arg_33_0:_refreshSelectPart(arg_33_1)
+	self.viewContainer:setSelectLine(self._selectLineId)
+	self.viewContainer:setSelectPartId(self._selectPartId)
+	RoomController.instance:dispatchEvent(RoomEvent["GuideOpenInitBuilding" .. self._selectPartId])
+	self:_refreshSelectPart(isInit)
 end
 
-function var_0_0._refreshSelectPart(arg_34_0, arg_34_1, arg_34_2)
-	arg_34_0:_clearLineAnimation()
+function RoomInitBuildingView:_refreshSelectPart(isInit, notCamera)
+	self:_clearLineAnimation()
 
-	if not arg_34_1 and not arg_34_2 then
-		arg_34_0:_refreshCamera()
+	if not isInit and not notCamera then
+		self:_refreshCamera()
 	end
 
-	arg_34_0:_refreshCategory()
-	arg_34_0:_refreshTitle()
-	arg_34_0:_refreshLevel()
-	arg_34_0:_realChangeShowSkinList()
-	arg_34_0:_refreshSkinReddot()
-	RoomSkinController.instance:clearInitBuildingEntranceReddot(arg_34_0._selectPartId)
+	self:_refreshCategory()
+	self:_refreshTitle()
+	self:_refreshLevel()
+	self:_realChangeShowSkinList()
+	self:_refreshSkinReddot()
+	RoomSkinController.instance:clearInitBuildingEntranceReddot(self._selectPartId)
 end
 
-function var_0_0._refreshCamera(arg_35_0)
-	local var_35_0 = arg_35_0._waitChangeSelectPartId or arg_35_0._selectPartId
+function RoomInitBuildingView:_refreshCamera()
+	local selectPartId = self._waitChangeSelectPartId or self._selectPartId
 
-	RoomBuildingController.instance:tweenCameraFocusPart(var_35_0, RoomEnum.CameraState.Normal, 0)
+	RoomBuildingController.instance:tweenCameraFocusPart(selectPartId, RoomEnum.CameraState.Normal, 0)
 end
 
-function var_0_0._refreshCategory(arg_36_0)
-	local var_36_0 = {}
+function RoomInitBuildingView:_refreshCategory()
+	local partIdList = {}
 
-	table.insert(var_36_0, 0)
+	table.insert(partIdList, 0)
 
-	local var_36_1 = RoomConfig.instance:getProductionPartConfigList()
+	local partConfigList = RoomConfig.instance:getProductionPartConfigList()
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
-		table.insert(var_36_0, iter_36_1.id)
+	for i, config in ipairs(partConfigList) do
+		table.insert(partIdList, config.id)
 	end
 
-	for iter_36_2 = 1, #var_36_0 do
-		local var_36_2 = var_36_0[iter_36_2]
-		local var_36_3 = arg_36_0._categoryItemList[iter_36_2]
+	for i = 1, #partIdList do
+		local partId = partIdList[i]
+		local categoryItem = self._categoryItemList[i]
 
-		if not var_36_3 then
-			var_36_3 = arg_36_0:getUserDataTb_()
-			var_36_3.index = iter_36_2
-			var_36_3.go = gohelper.cloneInPlace(arg_36_0._gocategoryItem, "categoryItem" .. iter_36_2)
-			var_36_3.gonormal = gohelper.findChild(var_36_3.go, "go_normal")
-			var_36_3.imageiconnormal = gohelper.findChildImage(var_36_3.go, "go_normal/icon")
-			var_36_3.goselect = gohelper.findChild(var_36_3.go, "go_select")
-			var_36_3.imageiconselect = gohelper.findChildImage(var_36_3.go, "go_select/icon")
-			var_36_3.goreddot = gohelper.findChild(var_36_3.go, "reddot")
-			var_36_3.gosubLine = gohelper.findChild(var_36_3.go, "go_subLine")
-			var_36_3.btnclick = gohelper.findChildButtonWithAudio(var_36_3.go, "btn_click")
+		if not categoryItem then
+			categoryItem = self:getUserDataTb_()
+			categoryItem.index = i
+			categoryItem.go = gohelper.cloneInPlace(self._gocategoryItem, "categoryItem" .. i)
+			categoryItem.gonormal = gohelper.findChild(categoryItem.go, "go_normal")
+			categoryItem.imageiconnormal = gohelper.findChildImage(categoryItem.go, "go_normal/icon")
+			categoryItem.goselect = gohelper.findChild(categoryItem.go, "go_select")
+			categoryItem.imageiconselect = gohelper.findChildImage(categoryItem.go, "go_select/icon")
+			categoryItem.goreddot = gohelper.findChild(categoryItem.go, "reddot")
+			categoryItem.gosubLine = gohelper.findChild(categoryItem.go, "go_subLine")
+			categoryItem.btnclick = gohelper.findChildButtonWithAudio(categoryItem.go, "btn_click")
 
-			var_36_3.btnclick:AddClickListener(arg_36_0._categoryItemOnClick, arg_36_0, var_36_3.index)
-			table.insert(arg_36_0._categoryItemList, var_36_3)
+			categoryItem.btnclick:AddClickListener(self._categoryItemOnClick, self, categoryItem.index)
+			table.insert(self._categoryItemList, categoryItem)
 		end
 
-		var_36_3.partId = var_36_2
+		categoryItem.partId = partId
 
-		local var_36_4 = arg_36_0._waitChangeSelectPartId or arg_36_0._selectPartId
+		local selectPartId = self._waitChangeSelectPartId or self._selectPartId
 
-		gohelper.setActive(var_36_3.gosubLine, var_36_2 == 0)
+		gohelper.setActive(categoryItem.gosubLine, partId == 0)
 
-		if var_36_2 == 0 then
-			if var_36_4 ~= var_36_2 then
-				UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconnormal, "bg_init")
+		if partId == 0 then
+			if selectPartId ~= partId then
+				UISpriteSetMgr.instance:setRoomSprite(categoryItem.imageiconnormal, "bg_init")
 			else
-				UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconselect, "bg_init_ovr")
+				UISpriteSetMgr.instance:setRoomSprite(categoryItem.imageiconselect, "bg_init_ovr")
 			end
-		elseif var_36_4 ~= var_36_2 then
-			UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconnormal, "bg_part" .. var_36_2)
+		elseif selectPartId ~= partId then
+			UISpriteSetMgr.instance:setRoomSprite(categoryItem.imageiconnormal, "bg_part" .. partId)
 		else
-			UISpriteSetMgr.instance:setRoomSprite(var_36_3.imageiconselect, "bg_part" .. var_36_2 .. "_ovr")
+			UISpriteSetMgr.instance:setRoomSprite(categoryItem.imageiconselect, "bg_part" .. partId .. "_ovr")
 		end
 
-		gohelper.setActive(var_36_3.gonormal, var_36_4 ~= var_36_2)
-		gohelper.setActive(var_36_3.goselect, var_36_4 == var_36_2)
-		gohelper.setActive(var_36_3.goreddot, false)
-		gohelper.setActive(var_36_3.go, var_36_2 == 0 or RoomProductionHelper.hasUnlockLine(var_36_2))
+		gohelper.setActive(categoryItem.gonormal, selectPartId ~= partId)
+		gohelper.setActive(categoryItem.goselect, selectPartId == partId)
+		gohelper.setActive(categoryItem.goreddot, false)
+		gohelper.setActive(categoryItem.go, partId == 0 or RoomProductionHelper.hasUnlockLine(partId))
 	end
 
-	for iter_36_3 = #var_36_0 + 1, #arg_36_0._categoryItemList do
-		local var_36_5 = arg_36_0._categoryItemList[iter_36_3]
+	for i = #partIdList + 1, #self._categoryItemList do
+		local categoryItem = self._categoryItemList[i]
 
-		gohelper.setActive(var_36_5.go, false)
+		gohelper.setActive(categoryItem.go, false)
 	end
 end
 
-function var_0_0._refreshTitle(arg_37_0)
-	if arg_37_0._selectPartId == 0 then
-		UISpriteSetMgr.instance:setRoomSprite(arg_37_0._imageicon, "bg_init")
+function RoomInitBuildingView:_refreshTitle()
+	if self._selectPartId == 0 then
+		UISpriteSetMgr.instance:setRoomSprite(self._imageicon, "bg_init")
 
-		arg_37_0._txttitle.text = luaLang("room_initbuilding_title")
-		arg_37_0._txttitleEn.text = "Paleohall"
+		self._txttitle.text = luaLang("room_initbuilding_title")
+		self._txttitleEn.text = "Paleohall"
 	else
-		UISpriteSetMgr.instance:setRoomSprite(arg_37_0._imageicon, "bg_part" .. arg_37_0._selectPartId)
+		UISpriteSetMgr.instance:setRoomSprite(self._imageicon, "bg_part" .. self._selectPartId)
 
-		local var_37_0 = RoomConfig.instance:getProductionPartConfig(arg_37_0._selectPartId)
+		local partConfig = RoomConfig.instance:getProductionPartConfig(self._selectPartId)
 
-		arg_37_0._txttitle.text = var_37_0.name
-		arg_37_0._txttitleEn.text = var_37_0.nameEn
+		self._txttitle.text = partConfig.name
+		self._txttitleEn.text = partConfig.nameEn
 	end
 end
 
-function var_0_0._refreshLevel(arg_38_0)
-	local var_38_0 = 0
-	local var_38_1 = 0
+function RoomInitBuildingView:_refreshLevel()
+	local maxLevel = 0
+	local currentLevel = 0
 
-	if arg_38_0._selectPartId == 0 then
-		var_38_0 = RoomConfig.instance:getMaxRoomLevel()
-		var_38_1 = RoomMapModel.instance:getRoomLevel()
+	if self._selectPartId == 0 then
+		maxLevel = RoomConfig.instance:getMaxRoomLevel()
+		currentLevel = RoomMapModel.instance:getRoomLevel()
 	end
 
-	for iter_38_0 = 1, var_38_0 do
-		local var_38_2 = arg_38_0._levelItemList[iter_38_0]
+	for level = 1, maxLevel do
+		local levelItem = self._levelItemList[level]
 
-		if not var_38_2 then
-			var_38_2 = arg_38_0:getUserDataTb_()
-			var_38_2.go = gohelper.cloneInPlace(arg_38_0._golevelitem, "levelitem" .. iter_38_0)
-			var_38_2.golight = gohelper.findChild(var_38_2.go, "go_light")
+		if not levelItem then
+			levelItem = self:getUserDataTb_()
+			levelItem.go = gohelper.cloneInPlace(self._golevelitem, "levelitem" .. level)
+			levelItem.golight = gohelper.findChild(levelItem.go, "go_light")
 
-			table.insert(arg_38_0._levelItemList, var_38_2)
+			table.insert(self._levelItemList, levelItem)
 		end
 
-		gohelper.setActive(var_38_2.golight, iter_38_0 <= var_38_1)
-		gohelper.setActive(var_38_2.go, true)
+		gohelper.setActive(levelItem.golight, level <= currentLevel)
+		gohelper.setActive(levelItem.go, true)
 	end
 
-	for iter_38_1 = var_38_0 + 1, #arg_38_0._levelItemList do
-		local var_38_3 = arg_38_0._levelItemList[iter_38_1]
+	for level = maxLevel + 1, #self._levelItemList do
+		local levelItem = self._levelItemList[level]
 
-		gohelper.setActive(var_38_3.go, false)
+		gohelper.setActive(levelItem.go, false)
 	end
 
-	local var_38_4 = arg_38_0._selectPartId == 0 and var_38_1 < var_38_0
+	local showLevelUpBtn = self._selectPartId == 0 and currentLevel < maxLevel
 
-	gohelper.setActive(arg_38_0._btnlevelup.gameObject, var_38_4)
+	gohelper.setActive(self._btnlevelup.gameObject, showLevelUpBtn)
 
-	if var_38_4 then
-		RedDotController.instance:addRedDot(arg_38_0._goreddot, RedDotEnum.DotNode.RoomInitBuildingLevel)
-		arg_38_0:_refreshRoomLevelUpEffect()
+	if showLevelUpBtn then
+		RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.RoomInitBuildingLevel)
+		self:_refreshRoomLevelUpEffect()
 	end
 end
 
-function var_0_0._refreshSkinReddot(arg_39_0)
-	if not arg_39_0.skinRedDot then
-		arg_39_0.skinRedDot = RedDotController.instance:addNotEventRedDot(arg_39_0._goskinreddot, arg_39_0._checkNewSkinReddot, arg_39_0)
+function RoomInitBuildingView:_refreshSkinReddot()
+	if not self.skinRedDot then
+		self.skinRedDot = RedDotController.instance:addNotEventRedDot(self._goskinreddot, self._checkNewSkinReddot, self)
 
 		return
 	end
 
-	arg_39_0.skinRedDot:refreshRedDot()
+	self.skinRedDot:refreshRedDot()
 end
 
-function var_0_0._checkNewSkinReddot(arg_40_0)
-	return (RoomSkinModel.instance:isHasNewRoomSkin(arg_40_0._selectPartId))
+function RoomInitBuildingView:_checkNewSkinReddot()
+	local result = RoomSkinModel.instance:isHasNewRoomSkin(self._selectPartId)
+
+	return result
 end
 
-function var_0_0._onSkinListViewShowChange(arg_41_0, arg_41_1)
-	arg_41_0._animator.enabled = true
+function RoomInitBuildingView:_onSkinListViewShowChange(playSwitchAnim)
+	self._animator.enabled = true
 
-	if arg_41_1 then
-		arg_41_0._animator:Play("swicth", 0, 0)
+	if playSwitchAnim then
+		self._animator:Play("swicth", 0, 0)
 	end
 
-	TaskDispatcher.cancelTask(arg_41_0._realChangeShowSkinList, arg_41_0)
-	TaskDispatcher.runDelay(arg_41_0._realChangeShowSkinList, arg_41_0, var_0_1)
+	TaskDispatcher.cancelTask(self._realChangeShowSkinList, self)
+	TaskDispatcher.runDelay(self._realChangeShowSkinList, self, SWITCH_TIME)
 end
 
-function var_0_0._realChangeShowSkinList(arg_42_0)
-	local var_42_0 = RoomSkinModel.instance:getIsShowRoomSkinList()
+function RoomInitBuildingView:_realChangeShowSkinList()
+	local isShowSkinList = RoomSkinModel.instance:getIsShowRoomSkinList()
 
-	if var_42_0 then
-		gohelper.setActive(arg_42_0._goinit, false)
-		gohelper.setActive(arg_42_0._gopart, false)
+	if isShowSkinList then
+		gohelper.setActive(self._goinit, false)
+		gohelper.setActive(self._gopart, false)
 	else
-		arg_42_0:_refreshDetail(true)
+		self:_refreshDetail(true)
 	end
 
-	arg_42_0:setTitleShow(not var_42_0)
-	gohelper.setActive(arg_42_0._goskin, var_42_0)
+	self:setTitleShow(not isShowSkinList)
+	gohelper.setActive(self._goskin, isShowSkinList)
 end
 
-function var_0_0.setTitleShow(arg_43_0, arg_43_1)
-	gohelper.setActive(arg_43_0._gotitle, arg_43_1)
+function RoomInitBuildingView:setTitleShow(isShow)
+	gohelper.setActive(self._gotitle, isShow)
 end
 
-function var_0_0._refreshRoomLevelUpEffect(arg_44_0)
-	gohelper.setActive(arg_44_0._golevelupeffect, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomInitBuildingLevel, 0))
+function RoomInitBuildingView:_refreshRoomLevelUpEffect()
+	gohelper.setActive(self._golevelupeffect, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.RoomInitBuildingLevel, 0))
 end
 
-function var_0_0._refreshDetail(arg_45_0, arg_45_1)
-	gohelper.setActive(arg_45_0._goinit, arg_45_0._selectPartId == 0)
-	gohelper.setActive(arg_45_0._gopart, arg_45_0._selectPartId ~= 0)
+function RoomInitBuildingView:_refreshDetail(fromChangePart)
+	gohelper.setActive(self._goinit, self._selectPartId == 0)
+	gohelper.setActive(self._gopart, self._selectPartId ~= 0)
 
-	if arg_45_0._selectPartId == 0 then
-		arg_45_0:_refreshDetailInit()
+	if self._selectPartId == 0 then
+		self:_refreshDetailInit()
 	else
-		arg_45_0:_refreshDetailPart(arg_45_1)
+		self:_refreshDetailPart(fromChangePart)
 	end
 end
 
-function var_0_0._refreshDetailInit(arg_46_0)
-	arg_46_0:_refreshSelectTab()
+function RoomInitBuildingView:_refreshDetailInit()
+	self:_refreshSelectTab()
 end
 
-function var_0_0._refreshSelectTab(arg_47_0)
-	gohelper.setActive(arg_47_0._detailInitTabHubItem.gonormal, arg_47_0._selectTabId ~= var_0_0.TabId.ProductionLine)
-	gohelper.setActive(arg_47_0._detailInitTabHubItem.goselect, arg_47_0._selectTabId == var_0_0.TabId.ProductionLine)
-	gohelper.setActive(arg_47_0._detailInitTabActiveItem.gonormal, arg_47_0._selectTabId ~= var_0_0.TabId.BuildDegree)
-	gohelper.setActive(arg_47_0._detailInitTabActiveItem.goselect, arg_47_0._selectTabId == var_0_0.TabId.BuildDegree)
-	gohelper.setActive(arg_47_0._gohubList, arg_47_0._selectTabId == var_0_0.TabId.ProductionLine)
-	gohelper.setActive(arg_47_0._goactiveList, arg_47_0._selectTabId == 2)
+function RoomInitBuildingView:_refreshSelectTab()
+	gohelper.setActive(self._detailInitTabHubItem.gonormal, self._selectTabId ~= RoomInitBuildingView.TabId.ProductionLine)
+	gohelper.setActive(self._detailInitTabHubItem.goselect, self._selectTabId == RoomInitBuildingView.TabId.ProductionLine)
+	gohelper.setActive(self._detailInitTabActiveItem.gonormal, self._selectTabId ~= RoomInitBuildingView.TabId.BuildDegree)
+	gohelper.setActive(self._detailInitTabActiveItem.goselect, self._selectTabId == RoomInitBuildingView.TabId.BuildDegree)
+	gohelper.setActive(self._gohubList, self._selectTabId == RoomInitBuildingView.TabId.ProductionLine)
+	gohelper.setActive(self._goactiveList, self._selectTabId == 2)
 
-	if arg_47_0._selectTabId == var_0_0.TabId.ProductionLine then
-		arg_47_0:_refreshInitPart()
-	elseif arg_47_0._selectTabId == var_0_0.TabId.BuildDegree then
-		arg_47_0:_refreshBuildDegree()
+	if self._selectTabId == RoomInitBuildingView.TabId.ProductionLine then
+		self:_refreshInitPart()
+	elseif self._selectTabId == RoomInitBuildingView.TabId.BuildDegree then
+		self:_refreshBuildDegree()
 	end
 end
 
-function var_0_0._refreshTabCountText(arg_48_0)
-	local var_48_0 = RoomConfig.instance:getProductionPartConfigList()
+function RoomInitBuildingView:_refreshTabCountText()
+	local partConfigList = RoomConfig.instance:getProductionPartConfigList()
 
-	arg_48_0._detailInitTabHubItem.txtcount.text = #var_48_0
+	self._detailInitTabHubItem.txtcount.text = #partConfigList
 
-	local var_48_1 = RoomMapModel.instance:getAllBuildDegree()
+	local totalDegree = RoomMapModel.instance:getAllBuildDegree()
 
-	arg_48_0._detailInitTabActiveItem.txtcount.text = var_48_1
+	self._detailInitTabActiveItem.txtcount.text = totalDegree
 end
 
-function var_0_0._refreshBuildDegree(arg_49_0)
+function RoomInitBuildingView:_refreshBuildDegree()
 	RoomShowDegreeListModel.instance:setShowDegreeList()
 end
 
-function var_0_0._refreshInitPart(arg_50_0)
-	if arg_50_0._selectPartId ~= 0 then
+function RoomInitBuildingView:_refreshInitPart()
+	if self._selectPartId ~= 0 then
 		return
 	end
 
-	local var_50_0 = RoomConfig.instance:getProductionPartConfigList()
-	local var_50_1 = 0
-	local var_50_2 = 0
+	local partConfigList = RoomConfig.instance:getProductionPartConfigList()
+	local productIndex = 0
+	local changeIndex = 0
 
-	for iter_50_0, iter_50_1 in ipairs(var_50_0) do
-		local var_50_3, var_50_4 = RoomProductionHelper.getPartType(iter_50_1.id)
+	for i, config in ipairs(partConfigList) do
+		local productType, productItemType = RoomProductionHelper.getPartType(config.id)
 
-		if var_50_3 == RoomProductLineEnum.ProductType.Product then
-			var_50_1 = var_50_1 + 1
+		if productType == RoomProductLineEnum.ProductType.Product then
+			productIndex = productIndex + 1
 
-			arg_50_0:_refreshInitPartProduct(iter_50_1, var_50_1)
-		elseif var_50_3 == RoomProductLineEnum.ProductType.Change then
-			var_50_2 = var_50_2 + 1
+			self:_refreshInitPartProduct(config, productIndex)
+		elseif productType == RoomProductLineEnum.ProductType.Change then
+			changeIndex = changeIndex + 1
 
-			arg_50_0:_refreshInitPartChange(iter_50_1, var_50_2)
+			self:_refreshInitPartChange(config, changeIndex)
 		end
 	end
 
-	for iter_50_2 = var_50_1 + 1, #arg_50_0._initPartProductItemList do
-		local var_50_5 = arg_50_0._initPartProductItemList[iter_50_2]
+	for i = productIndex + 1, #self._initPartProductItemList do
+		local item = self._initPartProductItemList[i]
 
-		gohelper.setActive(var_50_5.go, false)
+		gohelper.setActive(item.go, false)
 	end
 
-	for iter_50_3 = var_50_2 + 1, #arg_50_0._initPartChangeItemList do
-		local var_50_6 = arg_50_0._initPartChangeItemList[iter_50_3]
+	for i = changeIndex + 1, #self._initPartChangeItemList do
+		local item = self._initPartChangeItemList[i]
 
-		gohelper.setActive(var_50_6.go, false)
+		gohelper.setActive(item.go, false)
 	end
 
-	arg_50_0:_refreshInitPartProductGet()
+	self:_refreshInitPartProductGet()
 end
 
-function var_0_0._refreshInitPartProduct(arg_51_0, arg_51_1, arg_51_2)
-	local var_51_0 = arg_51_0._initPartProductItemList[arg_51_2]
+function RoomInitBuildingView:_refreshInitPartProduct(config, index)
+	local item = self._initPartProductItemList[index]
 
-	if not var_51_0 then
-		var_51_0 = arg_51_0:getUserDataTb_()
-		var_51_0.partId = arg_51_1.id
-		var_51_0.go = gohelper.cloneInPlace(arg_51_0._gogatherpart, "gatheritem" .. arg_51_2)
-		var_51_0.txtname = gohelper.findChildText(var_51_0.go, "title/txt")
-		var_51_0.txtnameen = gohelper.findChildText(var_51_0.go, "title/txt/txtEn")
-		var_51_0.golineitem = gohelper.findChild(var_51_0.go, "scroll_productline/viewport/content/go_productLineItem")
-		var_51_0.simagereward = gohelper.findChildSingleImage(var_51_0.go, "reward/simage_reward")
-		var_51_0.animator = gohelper.findChild(var_51_0.go, "reward/circle"):GetComponent(typeof(UnityEngine.Animator))
-		var_51_0.btnget = gohelper.findChildButton(var_51_0.go, "reward/btn_get")
-		var_51_0.btnjumpclick = gohelper.findChildButtonWithAudio(var_51_0.go, "btn_jumpclick")
+	if not item then
+		item = self:getUserDataTb_()
+		item.partId = config.id
+		item.go = gohelper.cloneInPlace(self._gogatherpart, "gatheritem" .. index)
+		item.txtname = gohelper.findChildText(item.go, "title/txt")
+		item.txtnameen = gohelper.findChildText(item.go, "title/txt/txtEn")
+		item.golineitem = gohelper.findChild(item.go, "scroll_productline/viewport/content/go_productLineItem")
+		item.simagereward = gohelper.findChildSingleImage(item.go, "reward/simage_reward")
 
-		var_51_0.btnget:AddClickListener(arg_51_0._btninitpartproductOnClick, arg_51_0, var_51_0.partId)
-		var_51_0.btnjumpclick:AddClickListener(arg_51_0._btninitpartProductOnClick, arg_51_0, var_51_0.partId)
+		local circleGO = gohelper.findChild(item.go, "reward/circle")
 
-		var_51_0.lineItemList = {}
+		item.animator = circleGO:GetComponent(typeof(UnityEngine.Animator))
+		item.btnget = gohelper.findChildButton(item.go, "reward/btn_get")
+		item.btnjumpclick = gohelper.findChildButtonWithAudio(item.go, "btn_jumpclick")
 
-		gohelper.setActive(var_51_0.golineitem, false)
-		table.insert(arg_51_0._initPartProductItemList, var_51_0)
+		item.btnget:AddClickListener(self._btninitpartproductOnClick, self, item.partId)
+		item.btnjumpclick:AddClickListener(self._btninitpartProductOnClick, self, item.partId)
+
+		item.lineItemList = {}
+
+		gohelper.setActive(item.golineitem, false)
+		table.insert(self._initPartProductItemList, item)
 	end
 
-	gohelper.setActive(var_51_0.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_51_1, var_51_2 = RoomProductionHelper.getPartType(arg_51_1.id)
+	local productType, productItemType = RoomProductionHelper.getPartType(config.id)
 
-	var_51_0.txtname.text = arg_51_1.name
-	var_51_0.txtnameen.text = arg_51_1.nameEn
+	item.txtname.text = config.name
+	item.txtnameen.text = config.nameEn
 
-	if var_51_2 == RoomProductLineEnum.ProductItemType.ProductExp then
-		var_51_0.simagereward:LoadImage(ResUrl.getPropItemIcon("5"))
-		transformhelper.setLocalPosXY(var_51_0.simagereward.gameObject.transform, -11, 5.45)
+	if productItemType == RoomProductLineEnum.ProductItemType.ProductExp then
+		item.simagereward:LoadImage(ResUrl.getPropItemIcon("5"))
+		transformhelper.setLocalPosXY(item.simagereward.gameObject.transform, -11, 5.45)
 
-		var_51_0.simagereward.gameObject.transform.rotation = Quaternion.Euler(0, 0, -7)
-	elseif var_51_2 == RoomProductLineEnum.ProductItemType.ProductGold then
-		var_51_0.simagereward:LoadImage(ResUrl.getPropItemIcon("3"))
+		item.simagereward.gameObject.transform.rotation = Quaternion.Euler(0, 0, -7)
+	elseif productItemType == RoomProductLineEnum.ProductItemType.ProductGold then
+		item.simagereward:LoadImage(ResUrl.getPropItemIcon("3"))
 	end
 
-	arg_51_0:_refreshInitPartProductLine(var_51_0, arg_51_1)
+	self:_refreshInitPartProductLine(item, config)
 end
 
-function var_0_0._refreshInitPartProductLine(arg_52_0, arg_52_1, arg_52_2)
-	local var_52_0 = arg_52_2.productionLines
+function RoomInitBuildingView:_refreshInitPartProductLine(partItem, partConfig)
+	local lineIdList = partConfig.productionLines
 
-	for iter_52_0, iter_52_1 in ipairs(var_52_0) do
-		local var_52_1 = arg_52_1.lineItemList[iter_52_0]
+	for i, lineId in ipairs(lineIdList) do
+		local lineItem = partItem.lineItemList[i]
 
-		if not var_52_1 then
-			var_52_1 = arg_52_0:getUserDataTb_()
-			var_52_1.lineId = iter_52_1
-			var_52_1.go = gohelper.cloneInPlace(arg_52_1.golineitem, "item" .. iter_52_0)
-			var_52_1.gonormal = gohelper.findChild(var_52_1.go, "go_normal")
-			var_52_1.txtname = gohelper.findChildText(var_52_1.go, "go_normal/name")
-			var_52_1.golevel = gohelper.findChild(var_52_1.go, "go_normal/name/go_activeLv/go_normalitem")
-			var_52_1.gofull = gohelper.findChild(var_52_1.go, "go_normal/go_process/go_full")
-			var_52_1.goprocess = gohelper.findChild(var_52_1.go, "go_normal/go_process/go_process")
-			var_52_1.imageprocess = gohelper.findChildImage(var_52_1.go, "go_normal/go_process/go_process/processbar")
-			var_52_1.txtprocess = gohelper.findChildText(var_52_1.go, "go_normal/go_process/go_process/num")
-			var_52_1.golock = gohelper.findChild(var_52_1.go, "go_lock")
-			var_52_1.lockdesc = gohelper.findChildText(var_52_1.go, "go_lock/txt_lockdesc")
-			var_52_1.levelItemList = {}
+		if not lineItem then
+			lineItem = self:getUserDataTb_()
+			lineItem.lineId = lineId
+			lineItem.go = gohelper.cloneInPlace(partItem.golineitem, "item" .. i)
+			lineItem.gonormal = gohelper.findChild(lineItem.go, "go_normal")
+			lineItem.txtname = gohelper.findChildText(lineItem.go, "go_normal/name")
+			lineItem.golevel = gohelper.findChild(lineItem.go, "go_normal/name/go_activeLv/go_normalitem")
+			lineItem.gofull = gohelper.findChild(lineItem.go, "go_normal/go_process/go_full")
+			lineItem.goprocess = gohelper.findChild(lineItem.go, "go_normal/go_process/go_process")
+			lineItem.imageprocess = gohelper.findChildImage(lineItem.go, "go_normal/go_process/go_process/processbar")
+			lineItem.txtprocess = gohelper.findChildText(lineItem.go, "go_normal/go_process/go_process/num")
+			lineItem.golock = gohelper.findChild(lineItem.go, "go_lock")
+			lineItem.lockdesc = gohelper.findChildText(lineItem.go, "go_lock/txt_lockdesc")
+			lineItem.levelItemList = {}
 
-			gohelper.setActive(var_52_1.golevel, false)
+			gohelper.setActive(lineItem.golevel, false)
 
-			var_52_1.animator = var_52_1.go:GetComponent(typeof(UnityEngine.Animator))
+			lineItem.animator = lineItem.go:GetComponent(typeof(UnityEngine.Animator))
 
-			table.insert(arg_52_1.lineItemList, var_52_1)
+			table.insert(partItem.lineItemList, lineItem)
 		end
 
-		gohelper.setActive(var_52_1.go, true)
+		gohelper.setActive(lineItem.go, true)
 
-		local var_52_2 = RoomProductionModel.instance:getLineMO(iter_52_1)
+		local lineMO = RoomProductionModel.instance:getLineMO(lineId)
 
-		var_52_1.lockdesc.text = string.format(luaLang("room_initbuilding_linelock"), var_52_2.config.needRoomLevel)
-		var_52_1.txtname.text = var_52_2.config.name
+		lineItem.lockdesc.text = string.format(luaLang("room_initbuilding_linelock"), lineMO.config.needRoomLevel)
+		lineItem.txtname.text = lineMO.config.name
 
-		if var_52_2:isLock() or var_52_2:isIdle() then
-			gohelper.setActive(var_52_1.gofull, false)
-			gohelper.setActive(var_52_1.goprocess, false)
-		elseif var_52_2:isFull() then
-			gohelper.setActive(var_52_1.gofull, true)
-			gohelper.setActive(var_52_1.goprocess, false)
+		if lineMO:isLock() or lineMO:isIdle() then
+			gohelper.setActive(lineItem.gofull, false)
+			gohelper.setActive(lineItem.goprocess, false)
+		elseif lineMO:isFull() then
+			gohelper.setActive(lineItem.gofull, true)
+			gohelper.setActive(lineItem.goprocess, false)
 		else
-			gohelper.setActive(var_52_1.gofull, false)
-			gohelper.setActive(var_52_1.goprocess, true)
+			gohelper.setActive(lineItem.gofull, false)
+			gohelper.setActive(lineItem.goprocess, true)
 
-			local var_52_3, var_52_4 = var_52_2:getReservePer()
+			local process, process100 = lineMO:getReservePer()
 
-			if not arg_52_0._lineIdPerDict[var_52_1.lineId] then
-				var_52_1.imageprocess.fillAmount = var_52_3
-				var_52_1.txtprocess.text = string.format("%d%%", var_52_4)
+			if not self._lineIdPerDict[lineItem.lineId] then
+				lineItem.imageprocess.fillAmount = process
+				lineItem.txtprocess.text = string.format("%d%%", process100)
 			end
 		end
 
-		local var_52_5 = var_52_2.level or 0
-		local var_52_6 = var_52_2.maxLevel or 0
+		local currentLevel = lineMO.level or 0
+		local maxLevel = lineMO.maxLevel or 0
 
-		if var_52_2:isLock() then
-			var_52_6 = 0
+		if lineMO:isLock() then
+			maxLevel = 0
 		end
 
-		for iter_52_2 = 1, var_52_6 do
-			local var_52_7 = var_52_1.levelItemList[iter_52_2]
+		for level = 1, maxLevel do
+			local levelItem = lineItem.levelItemList[level]
 
-			if not var_52_7 then
-				var_52_7 = arg_52_0:getUserDataTb_()
-				var_52_7.go = gohelper.cloneInPlace(var_52_1.golevel, "item" .. iter_52_2)
-				var_52_7.golight = gohelper.findChild(var_52_7.go, "go_light")
+			if not levelItem then
+				levelItem = self:getUserDataTb_()
+				levelItem.go = gohelper.cloneInPlace(lineItem.golevel, "item" .. level)
+				levelItem.golight = gohelper.findChild(levelItem.go, "go_light")
 
-				table.insert(var_52_1.levelItemList, var_52_7)
+				table.insert(lineItem.levelItemList, levelItem)
 			end
 
-			gohelper.setActive(var_52_7.golight, iter_52_2 <= var_52_5)
-			gohelper.setActive(var_52_7.go, true)
+			gohelper.setActive(levelItem.golight, level <= currentLevel)
+			gohelper.setActive(levelItem.go, true)
 		end
 
-		for iter_52_3 = var_52_6 + 1, #var_52_1.levelItemList do
-			local var_52_8 = var_52_1.levelItemList[iter_52_3]
+		for level = maxLevel + 1, #lineItem.levelItemList do
+			local levelItem = lineItem.levelItemList[level]
 
-			gohelper.setActive(var_52_8.go, false)
+			gohelper.setActive(levelItem.go, false)
 		end
 
-		if var_52_2:isLock() then
-			var_52_1.animator.speed = 0
+		if lineMO:isLock() then
+			lineItem.animator.speed = 0
 
-			var_52_1.animator:Play("unlock", 0, 0)
-			var_52_1.animator:Update(0)
-		elseif RoomProductionModel.instance:shouldPlayLineUnlock(iter_52_1) then
-			var_52_1.animator.speed = 0
+			lineItem.animator:Play("unlock", 0, 0)
+			lineItem.animator:Update(0)
+		elseif RoomProductionModel.instance:shouldPlayLineUnlock(lineId) then
+			lineItem.animator.speed = 0
 
-			var_52_1.animator:Play("unlock", 0, 0)
-			var_52_1.animator:Update(0)
+			lineItem.animator:Play("unlock", 0, 0)
+			lineItem.animator:Update(0)
 
 			if not RoomMapModel.instance:isRoomLeveling() and not ViewMgr.instance:isOpen(ViewName.RoomLevelUpTipsView) then
-				RoomProductionModel.instance:setPlayLineUnlock(iter_52_1, nil)
-				TaskDispatcher.runDelay(arg_52_0._playLineUnlock, var_52_1, 0.4)
+				RoomProductionModel.instance:setPlayLineUnlock(lineId, nil)
+				TaskDispatcher.runDelay(self._playLineUnlock, lineItem, 0.4)
 			end
 		else
-			var_52_1.animator.speed = 0
+			lineItem.animator.speed = 0
 
-			var_52_1.animator:Play(UIAnimationName.Idle, 0, 0)
-			var_52_1.animator:Update(0)
+			lineItem.animator:Play(UIAnimationName.Idle, 0, 0)
+			lineItem.animator:Update(0)
 		end
 	end
 
-	for iter_52_4 = #var_52_0 + 1, #arg_52_1.lineItemList do
-		local var_52_9 = arg_52_1.lineItemList[iter_52_4]
+	for i = #lineIdList + 1, #partItem.lineItemList do
+		local lineItem = partItem.lineItemList[i]
 
-		gohelper.setActive(var_52_9.go, false)
+		gohelper.setActive(lineItem.go, false)
 	end
 end
 
-function var_0_0._playLineUnlock(arg_53_0)
-	arg_53_0.animator.speed = 1
+function RoomInitBuildingView._playLineUnlock(lineItem)
+	lineItem.animator.speed = 1
 
-	arg_53_0.animator:Play("unlock", 0, 0)
+	lineItem.animator:Play("unlock", 0, 0)
 end
 
-function var_0_0._refreshInitPartProductGet(arg_54_0)
-	for iter_54_0, iter_54_1 in ipairs(arg_54_0._initPartProductItemList) do
-		local var_54_0 = RoomConfig.instance:getProductionPartConfig(iter_54_1.partId).productionLines
-		local var_54_1 = false
-		local var_54_2 = false
+function RoomInitBuildingView:_refreshInitPartProductGet()
+	for _, initPartProductItem in ipairs(self._initPartProductItemList) do
+		local config = RoomConfig.instance:getProductionPartConfig(initPartProductItem.partId)
+		local lineIdList = config.productionLines
+		local unlockOneMore = false
+		local isGathering = false
 
-		for iter_54_2, iter_54_3 in ipairs(var_54_0) do
-			local var_54_3 = RoomProductionModel.instance:getLineMO(iter_54_3)
+		for _, lineId in ipairs(lineIdList) do
+			local lineMO = RoomProductionModel.instance:getLineMO(lineId)
 
-			if var_54_3 and not var_54_3:isLock() then
-				var_54_1 = true
+			if lineMO and not lineMO:isLock() then
+				unlockOneMore = true
 
-				if not var_54_3:isIdle() and not var_54_3:isFull() then
-					var_54_2 = true
+				if not lineMO:isIdle() and not lineMO:isFull() then
+					isGathering = true
 				end
 			end
 		end
 
-		local var_54_4 = #RoomProductionHelper.getCanGainLineIdList(iter_54_1.partId) > 0 and var_54_1
+		local requestLineIdList = RoomProductionHelper.getCanGainLineIdList(initPartProductItem.partId)
+		local canGet = #requestLineIdList > 0 and unlockOneMore
 
-		gohelper.setActive(iter_54_1.btnget.gameObject, var_54_4)
-		iter_54_1.animator:Play(var_54_2 and UIAnimationName.Loop or "idle")
+		gohelper.setActive(initPartProductItem.btnget.gameObject, canGet)
+		initPartProductItem.animator:Play(isGathering and UIAnimationName.Loop or "idle")
 	end
 end
 
-function var_0_0._refreshInitPartChange(arg_55_0, arg_55_1, arg_55_2)
-	local var_55_0 = arg_55_0._initPartChangeItemList[arg_55_2]
+function RoomInitBuildingView:_refreshInitPartChange(config, index)
+	local item = self._initPartChangeItemList[index]
 
-	if not var_55_0 then
-		var_55_0 = arg_55_0:getUserDataTb_()
-		var_55_0.partId = arg_55_1.id
-		var_55_0.go = gohelper.cloneInPlace(arg_55_0._gochangepart, "changeitem" .. arg_55_2)
-		var_55_0.txtname = gohelper.findChildText(var_55_0.go, "title/txt")
-		var_55_0.txtnameen = gohelper.findChildText(var_55_0.go, "title/txt/txtEn")
-		var_55_0.goformulaitem = gohelper.findChild(var_55_0.go, "scroll_productline/viewport/content/go_materialItem")
-		var_55_0.simagedoor = gohelper.findChildSingleImage(var_55_0.go, "reward/simage_door")
-		var_55_0.btncombine = gohelper.findChildButton(var_55_0.go, "reward/btn_combine")
+	if not item then
+		item = self:getUserDataTb_()
+		item.partId = config.id
+		item.go = gohelper.cloneInPlace(self._gochangepart, "changeitem" .. index)
+		item.txtname = gohelper.findChildText(item.go, "title/txt")
+		item.txtnameen = gohelper.findChildText(item.go, "title/txt/txtEn")
+		item.goformulaitem = gohelper.findChild(item.go, "scroll_productline/viewport/content/go_materialItem")
+		item.simagedoor = gohelper.findChildSingleImage(item.go, "reward/simage_door")
+		item.btncombine = gohelper.findChildButton(item.go, "reward/btn_combine")
 
-		var_55_0.btncombine:AddClickListener(arg_55_0._btninitpartChangeOnClick, arg_55_0, var_55_0.partId)
+		item.btncombine:AddClickListener(self._btninitpartChangeOnClick, self, item.partId)
 
-		var_55_0.formulaItemList = {}
+		item.formulaItemList = {}
 
-		gohelper.setActive(var_55_0.goformulaitem, false)
-		table.insert(arg_55_0._initPartChangeItemList, var_55_0)
+		gohelper.setActive(item.goformulaitem, false)
+		table.insert(self._initPartChangeItemList, item)
 	end
 
-	gohelper.setActive(var_55_0.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_55_1 = RoomProductionHelper.getPartMaxLineLevel(arg_55_1.id)
+	local lineLevel = RoomProductionHelper.getPartMaxLineLevel(config.id)
 
-	var_55_0.txtname.text = arg_55_1.name
-	var_55_0.txtnameen.text = arg_55_1.nameEn
+	item.txtname.text = config.name
+	item.txtnameen.text = config.nameEn
 
-	var_55_0.simagedoor:LoadImage(ResUrl.getCurrencyItemIcon("door_room"))
-	arg_55_0:_refreshInitPartChangeFormula(var_55_0, arg_55_1, var_55_1)
+	item.simagedoor:LoadImage(ResUrl.getCurrencyItemIcon("door_room"))
+	self:_refreshInitPartChangeFormula(item, config, lineLevel)
 end
 
-function var_0_0._refreshInitPartChangeFormula(arg_56_0, arg_56_1, arg_56_2, arg_56_3)
-	local var_56_0 = {}
+function RoomInitBuildingView:_refreshInitPartChangeFormula(partItem, partConfig, lineLevel)
+	local showTypeList = {}
 
-	for iter_56_0, iter_56_1 in ipairs(lua_formula_showtype.configList) do
-		table.insert(var_56_0, iter_56_1)
+	for i, showTypeConfig in ipairs(lua_formula_showtype.configList) do
+		table.insert(showTypeList, showTypeConfig)
 	end
 
-	table.sort(var_56_0, function(arg_57_0, arg_57_1)
-		local var_57_0 = RoomProductionHelper.isFormulaShowTypeUnlock(arg_57_0.id) <= arg_56_3
-		local var_57_1 = RoomProductionHelper.isFormulaShowTypeUnlock(arg_57_1.id) <= arg_56_3
+	table.sort(showTypeList, function(x, y)
+		local xUnlock = RoomProductionHelper.isFormulaShowTypeUnlock(x.id) <= lineLevel
+		local yUnlock = RoomProductionHelper.isFormulaShowTypeUnlock(y.id) <= lineLevel
 
-		if var_57_0 and not var_57_1 then
+		if xUnlock and not yUnlock then
 			return true
-		elseif var_57_1 and not var_57_0 then
+		elseif yUnlock and not xUnlock then
 			return false
 		else
-			return arg_57_0.id < arg_57_1.id
+			return x.id < y.id
 		end
 	end)
 
-	local var_56_1 = RoomProductionHelper.hasUnlockLine(arg_56_2.id)
+	local hasUnlockLine = RoomProductionHelper.hasUnlockLine(partConfig.id)
 
-	for iter_56_2, iter_56_3 in ipairs(var_56_0) do
-		local var_56_2 = arg_56_1.formulaItemList[iter_56_2]
-		local var_56_3 = RoomProductionHelper.isFormulaShowTypeUnlock(iter_56_3.id)
-		local var_56_4 = var_56_3 <= arg_56_3 and var_56_1
+	for i, showTypeConfig in ipairs(showTypeList) do
+		local showTypeItem = partItem.formulaItemList[i]
+		local unlockLevel = RoomProductionHelper.isFormulaShowTypeUnlock(showTypeConfig.id)
+		local unlock = unlockLevel <= lineLevel and hasUnlockLine
 
-		if not var_56_2 then
-			var_56_2 = arg_56_0:getUserDataTb_()
-			var_56_2.go = gohelper.cloneInPlace(arg_56_1.goformulaitem, "item" .. iter_56_2)
-			var_56_2.gonormal = gohelper.findChild(var_56_2.go, "go_normal")
-			var_56_2.txtnamenormal = gohelper.findChildText(var_56_2.go, "go_normal/txt_name")
-			var_56_2.golock = gohelper.findChild(var_56_2.go, "go_lock")
-			var_56_2.txtnamelock = gohelper.findChildText(var_56_2.go, "go_lock/txt_name")
-			var_56_2.btnlockclick = gohelper.findChildButtonWithAudio(var_56_2.go, "go_lock/btn_lockclick")
-			var_56_2.param = {}
+		if not showTypeItem then
+			showTypeItem = self:getUserDataTb_()
+			showTypeItem.go = gohelper.cloneInPlace(partItem.goformulaitem, "item" .. i)
+			showTypeItem.gonormal = gohelper.findChild(showTypeItem.go, "go_normal")
+			showTypeItem.txtnamenormal = gohelper.findChildText(showTypeItem.go, "go_normal/txt_name")
+			showTypeItem.golock = gohelper.findChild(showTypeItem.go, "go_lock")
+			showTypeItem.txtnamelock = gohelper.findChildText(showTypeItem.go, "go_lock/txt_name")
+			showTypeItem.btnlockclick = gohelper.findChildButtonWithAudio(showTypeItem.go, "go_lock/btn_lockclick")
+			showTypeItem.param = {}
 
-			table.insert(arg_56_1.formulaItemList, var_56_2)
+			table.insert(partItem.formulaItemList, showTypeItem)
 		end
 
-		var_56_2.btnlockclick:RemoveClickListener()
+		showTypeItem.btnlockclick:RemoveClickListener()
 
-		var_56_2.param.partConfig = arg_56_2
-		var_56_2.param.unlockLevel = var_56_3
-		var_56_2.param.unlockLevel = var_56_3
+		showTypeItem.param.partConfig = partConfig
+		showTypeItem.param.unlockLevel = unlockLevel
+		showTypeItem.param.unlockLevel = unlockLevel
 
-		if not var_56_4 then
-			if var_56_1 then
-				var_56_2.btnlockclick:AddClickListener(arg_56_0._btnMaterialItemLockOnClick, arg_56_0, var_56_2.param)
+		if not unlock then
+			if hasUnlockLine then
+				showTypeItem.btnlockclick:AddClickListener(self._btnMaterialItemLockOnClick, self, showTypeItem.param)
 			else
-				var_56_2.btnlockclick:AddClickListener(arg_56_0._btnMaterialItemLockOnClick2, arg_56_0)
+				showTypeItem.btnlockclick:AddClickListener(self._btnMaterialItemLockOnClick2, self)
 			end
 		end
 
-		gohelper.setActive(var_56_2.gonormal, var_56_4)
-		gohelper.setActive(var_56_2.golock, not var_56_4)
+		gohelper.setActive(showTypeItem.gonormal, unlock)
+		gohelper.setActive(showTypeItem.golock, not unlock)
 
-		if var_56_4 then
-			var_56_2.txtnamenormal.text = iter_56_3.name
+		if unlock then
+			showTypeItem.txtnamenormal.text = showTypeConfig.name
 		else
-			var_56_2.txtnamelock.text = iter_56_3.name
+			showTypeItem.txtnamelock.text = showTypeConfig.name
 		end
 
-		gohelper.setActive(var_56_2.go, true)
+		gohelper.setActive(showTypeItem.go, true)
 	end
 
-	for iter_56_4 = #var_56_0 + 1, #arg_56_1.formulaItemList do
-		local var_56_5 = arg_56_1.formulaItemList[iter_56_4]
+	for i = #showTypeList + 1, #partItem.formulaItemList do
+		local showTypeItem = partItem.formulaItemList[i]
 
-		gohelper.setActive(var_56_5.go, false)
+		gohelper.setActive(showTypeItem.go, false)
 	end
 end
 
-function var_0_0._btnMaterialItemLockOnClick(arg_58_0, arg_58_1)
-	GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, arg_58_1.partConfig.name, arg_58_1.unlockLevel)
+function RoomInitBuildingView:_btnMaterialItemLockOnClick(param)
+	GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, param.partConfig.name, param.unlockLevel)
 end
 
-function var_0_0._btnMaterialItemLockOnClick2(arg_59_0)
+function RoomInitBuildingView:_btnMaterialItemLockOnClick2()
 	GameFacade.showToast(ToastEnum.MaterialItemLockOnClick2)
 end
 
-function var_0_0._refreshDetailPart(arg_60_0, arg_60_1)
-	if arg_60_0._selectPartId == 0 then
+function RoomInitBuildingView:_refreshDetailPart(fromChangePart)
+	if self._selectPartId == 0 then
 		return
 	end
 
-	local var_60_0 = RoomConfig.instance:getProductionPartConfig(arg_60_0._selectPartId).productionLines
+	local partConfig = RoomConfig.instance:getProductionPartConfig(self._selectPartId)
+	local lineIdList = partConfig.productionLines
 
-	if arg_60_0._selectLineId == 0 or not LuaUtil.tableContains(var_60_0, arg_60_0._selectLineId) then
-		arg_60_0._selectLineId = var_60_0[1]
+	if self._selectLineId == 0 or not LuaUtil.tableContains(lineIdList, self._selectLineId) then
+		self._selectLineId = lineIdList[1]
 
-		arg_60_0.viewContainer:setSelectLine(arg_60_0._selectLineId)
+		self.viewContainer:setSelectLine(self._selectLineId)
 	end
 
-	local var_60_1 = RoomProductionHelper.getPartType(arg_60_0._selectPartId)
+	local productType = RoomProductionHelper.getPartType(self._selectPartId)
 
-	gohelper.setActive(arg_60_0._gogather, var_60_1 == RoomProductLineEnum.ProductType.Product)
-	gohelper.setActive(arg_60_0._gochange, var_60_1 == RoomProductLineEnum.ProductType.Change)
+	gohelper.setActive(self._gogather, productType == RoomProductLineEnum.ProductType.Product)
+	gohelper.setActive(self._gochange, productType == RoomProductLineEnum.ProductType.Change)
 
-	if var_60_1 == RoomProductLineEnum.ProductType.Product then
-		arg_60_0:_refreshDetailPartGather(arg_60_0._selectPartId, not arg_60_1)
-	elseif var_60_1 == RoomProductLineEnum.ProductType.Change then
-		arg_60_0:_refreshDetailPartChange(arg_60_0._selectPartId)
+	if productType == RoomProductLineEnum.ProductType.Product then
+		self:_refreshDetailPartGather(self._selectPartId, not fromChangePart)
+	elseif productType == RoomProductLineEnum.ProductType.Change then
+		self:_refreshDetailPartChange(self._selectPartId)
 	end
 end
 
-function var_0_0._refreshDetailPartGather(arg_61_0, arg_61_1, arg_61_2)
-	if arg_61_1 == 0 then
+function RoomInitBuildingView:_refreshDetailPartGather(partId, anim)
+	if partId == 0 then
 		return
 	end
 
-	if not arg_61_0._gatherItem then
-		arg_61_0._gatherItem = arg_61_0:_initGatherItem()
+	if not self._gatherItem then
+		self._gatherItem = self:_initGatherItem()
 	end
 
-	local var_61_0 = RoomConfig.instance:getProductionPartConfig(arg_61_1)
-	local var_61_1 = var_61_0.productionLines
-	local var_61_2 = #RoomProductionHelper.getCanGainLineIdList(arg_61_1) > 0
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
+	local lineIdList = partConfig.productionLines
+	local requestLineIdList = RoomProductionHelper.getCanGainLineIdList(partId)
+	local canGet = #requestLineIdList > 0
 
-	gohelper.setActive(arg_61_0._gatherItem.btnget.gameObject, false)
+	gohelper.setActive(self._gatherItem.btnget.gameObject, false)
 
-	local var_61_3 = false
-	local var_61_4 = 0
-	local var_61_5
+	local isGathering = false
+	local workCount = 0
+	local rewardIcon
 
-	arg_61_0._lastDetailPartGatherCanGet = var_61_2
+	self._lastDetailPartGatherCanGet = canGet
 
-	for iter_61_0, iter_61_1 in ipairs(var_61_1) do
-		local var_61_6 = arg_61_0._gatherItem.lineItemList[iter_61_0]
+	for i, lineId in ipairs(lineIdList) do
+		local lineItem = self._gatherItem.lineItemList[i]
 
-		if not var_61_6 then
-			var_61_6 = arg_61_0:getUserDataTb_()
-			var_61_6.lineId = iter_61_1
-			var_61_6.go = gohelper.cloneInPlace(arg_61_0._gatherItem.goline, "item" .. iter_61_0)
+		if not lineItem then
+			lineItem = self:getUserDataTb_()
+			lineItem.lineId = lineId
+			lineItem.go = gohelper.cloneInPlace(self._gatherItem.goline, "item" .. i)
 
-			arg_61_0:_initLine(var_61_6, var_61_6.go, true, iter_61_0)
-			table.insert(arg_61_0._gatherItem.lineItemList, var_61_6)
+			self:_initLine(lineItem, lineItem.go, true, i)
+			table.insert(self._gatherItem.lineItemList, lineItem)
 		end
 
-		local var_61_7 = RoomProductionModel.instance:getLineMO(iter_61_1)
+		local lineMO = RoomProductionModel.instance:getLineMO(lineId)
 
-		gohelper.setActive(var_61_6.go, true)
-		arg_61_0:_refreshLine(var_61_6, var_61_7, true)
+		gohelper.setActive(lineItem.go, true)
+		self:_refreshLine(lineItem, lineMO, true)
 
-		if not var_61_7:isLock() and not var_61_7:isIdle() and not var_61_7:isFull() then
-			var_61_4 = var_61_4 + 1
-			var_61_3 = true
+		if not lineMO:isLock() and not lineMO:isIdle() and not lineMO:isFull() then
+			workCount = workCount + 1
+			isGathering = true
 		end
 
-		if not var_61_5 then
-			if var_61_7.config.type == RoomProductLineEnum.ProductItemType.ProductExp then
-				var_61_5 = "1_huibiao"
-			elseif var_61_7.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
-				var_61_5 = "2_huibiao"
+		if not rewardIcon then
+			if lineMO.config.type == RoomProductLineEnum.ProductItemType.ProductExp then
+				rewardIcon = "1_huibiao"
+			elseif lineMO.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
+				rewardIcon = "2_huibiao"
 			end
 		end
 	end
 
-	for iter_61_2 = #var_61_1 + 1, #arg_61_0._gatherItem.lineItemList do
-		local var_61_8 = arg_61_0._gatherItem.lineItemList[iter_61_2]
+	for i = #lineIdList + 1, #self._gatherItem.lineItemList do
+		local lineItem = self._gatherItem.lineItemList[i]
 
-		gohelper.setActive(var_61_8.go, false)
+		gohelper.setActive(lineItem.go, false)
 	end
 
-	gohelper.setActive(arg_61_0._gatherItem.btnnewget.gameObject, var_61_2)
+	gohelper.setActive(self._gatherItem.btnnewget.gameObject, canGet)
 
-	arg_61_0._gatherItem.txtname.text = var_61_0.name
+	self._gatherItem.txtname.text = partConfig.name
 
-	local var_61_9 = RoomProductionHelper.getUnlockLineCount(arg_61_1)
+	local unlockNum = RoomProductionHelper.getUnlockLineCount(partId)
 
-	arg_61_0._gatherItem.txtprocess.text = string.format("%s/%s", var_61_4, var_61_9)
+	self._gatherItem.txtprocess.text = string.format("%s/%s", workCount, unlockNum)
 
-	arg_61_0._gatherItem.animatorcircle:Play(var_61_3 and UIAnimationName.Loop or "idle")
-	UISpriteSetMgr.instance:setRoomSprite(arg_61_0._gatherItem.imagereward, var_61_5 or "2_huibiao")
+	self._gatherItem.animatorcircle:Play(isGathering and UIAnimationName.Loop or "idle")
+	UISpriteSetMgr.instance:setRoomSprite(self._gatherItem.imagereward, rewardIcon or "2_huibiao")
 
-	local var_61_10 = var_61_4 == 0 and var_61_9 > 0
+	local isfull = workCount == 0 and unlockNum > 0
 
-	gohelper.setActive(arg_61_0._gatherItem.gopause, var_61_10)
-	gohelper.setActive(arg_61_0._gatherItem.goarrow, not var_61_10)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_61_0._gatherItem.txtprocess, var_61_10 and "#D97373" or "#999999")
-	arg_61_0:_refreshDetailPartGatherSelectLine()
+	gohelper.setActive(self._gatherItem.gopause, isfull)
+	gohelper.setActive(self._gatherItem.goarrow, not isfull)
+	SLFramework.UGUI.GuiHelper.SetColor(self._gatherItem.txtprocess, isfull and "#D97373" or "#999999")
+	self:_refreshDetailPartGatherSelectLine()
 end
 
-function var_0_0._hideExpandDetailUI(arg_62_0)
-	if arg_62_0._expandDetailLineId then
-		arg_62_0._expandDetailLineId = nil
+function RoomInitBuildingView:_hideExpandDetailUI()
+	if self._expandDetailLineId then
+		self._expandDetailLineId = nil
 
-		arg_62_0:_refreshDetailPartGather(arg_62_0._selectPartId)
+		self:_refreshDetailPartGather(self._selectPartId)
 	end
 end
 
-function var_0_0._refreshDetailPartGatherSelectLine(arg_63_0)
-	TaskDispatcher.cancelTask(arg_63_0._updateDetailPartGatherSelectLineTime, arg_63_0)
+function RoomInitBuildingView:_refreshDetailPartGatherSelectLine()
+	TaskDispatcher.cancelTask(self._updateDetailPartGatherSelectLineTime, self)
 
-	if arg_63_0._selectPartId == 0 then
-		gohelper.setActive(arg_63_0._gatherItem.goinfo, false)
+	if self._selectPartId == 0 then
+		gohelper.setActive(self._gatherItem.goinfo, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_63_0._gatherItem.goinfo, arg_63_0._expandDetailLineId == arg_63_0._selectLineId)
+	gohelper.setActive(self._gatherItem.goinfo, self._expandDetailLineId == self._selectLineId)
 
-	if arg_63_0._expandDetailLineId == arg_63_0._selectLineId then
-		local var_63_0 = RoomProductionModel.instance:getLineMO(arg_63_0._selectLineId)
-		local var_63_1 = ""
+	if self._expandDetailLineId == self._selectLineId then
+		local lineMO = RoomProductionModel.instance:getLineMO(self._selectLineId)
+		local productDesc = ""
 
-		if var_63_0.config.type == RoomProductLineEnum.ProductItemType.ProductExp then
-			var_63_1 = luaLang("roominitbuildingview_dust")
-		elseif var_63_0.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
-			var_63_1 = luaLang("roominitbuildingview_coin")
+		if lineMO.config.type == RoomProductLineEnum.ProductItemType.ProductExp then
+			productDesc = luaLang("roominitbuildingview_dust")
+		elseif lineMO.config.type == RoomProductLineEnum.ProductItemType.ProductGold then
+			productDesc = luaLang("roominitbuildingview_coin")
 		end
 
-		arg_63_0._gatherItem.txtstore.text = string.format("<color=#65b96f>%s</color>/%s", var_63_0.useReserve, var_63_0.reserve)
+		self._gatherItem.txtstore.text = string.format("<color=#65b96f>%s</color>/%s", lineMO.useReserve, lineMO.reserve)
 
-		local var_63_2, var_63_3, var_63_4 = TimeUtil.secondToHMS(var_63_0.costTime)
-		local var_63_5 = var_63_3 + var_63_2 * 60
+		local hour, minute, second = TimeUtil.secondToHMS(lineMO.costTime)
+		local minute = minute + hour * 60
 
-		if var_63_5 > 0 then
-			if var_63_4 > 0 then
-				arg_63_0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s<color=#65b96f>%d</color>%s", var_63_0.produceSpeed, var_63_1, var_63_5, luaLang("time_minute"), var_63_4, luaLang("time_second"))
+		if minute > 0 then
+			if second > 0 then
+				self._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s<color=#65b96f>%d</color>%s", lineMO.produceSpeed, productDesc, minute, luaLang("time_minute"), second, luaLang("time_second"))
 			else
-				arg_63_0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", var_63_0.produceSpeed, var_63_1, var_63_5, luaLang("time_minute"))
+				self._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", lineMO.produceSpeed, productDesc, minute, luaLang("time_minute"))
 			end
 		else
-			arg_63_0._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", var_63_0.produceSpeed, var_63_1, var_63_4, luaLang("time_second"))
+			self._gatherItem.txttime.text = string.format("<color=#65b96f>%d </color>%s/<color=#65b96f>%d</color>%s", lineMO.produceSpeed, productDesc, second, luaLang("time_second"))
 		end
 
-		arg_63_0:_updateDetailPartGatherSelectLineTime()
-		TaskDispatcher.runRepeat(arg_63_0._updateDetailPartGatherSelectLineTime, arg_63_0, 1)
+		self:_updateDetailPartGatherSelectLineTime()
+		TaskDispatcher.runRepeat(self._updateDetailPartGatherSelectLineTime, self, 1)
 
-		local var_63_6 = arg_63_0:_getLineItemByLineId(arg_63_0._selectLineId)
+		local lineItem = self:_getLineItemByLineId(self._selectLineId)
 
-		gohelper.addChild(var_63_6.go, arg_63_0._gatherItem.goinfo)
+		gohelper.addChild(lineItem.go, self._gatherItem.goinfo)
 
-		local var_63_7, var_63_8, var_63_9 = transformhelper.getLocalPos(arg_63_0._gatherItem.goinfo.transform)
+		local posX, posY, posZ = transformhelper.getLocalPos(self._gatherItem.goinfo.transform)
 
-		transformhelper.setLocalPos(arg_63_0._gatherItem.goinfo.transform, var_63_7, 0, var_63_9)
+		transformhelper.setLocalPos(self._gatherItem.goinfo.transform, posX, 0, posZ)
 	end
 end
 
-function var_0_0._updateDetailPartGatherSelectLineTime(arg_64_0)
-	if arg_64_0._selectPartId == 0 then
-		TaskDispatcher.cancelTask(arg_64_0._updateDetailPartGatherSelectLineTime, arg_64_0)
+function RoomInitBuildingView:_updateDetailPartGatherSelectLineTime()
+	if self._selectPartId == 0 then
+		TaskDispatcher.cancelTask(self._updateDetailPartGatherSelectLineTime, self)
 
 		return
 	end
 
-	if arg_64_0._selectLineId == 0 then
-		TaskDispatcher.cancelTask(arg_64_0._updateDetailPartGatherSelectLineTime, arg_64_0)
+	if self._selectLineId == 0 then
+		TaskDispatcher.cancelTask(self._updateDetailPartGatherSelectLineTime, self)
 
 		return
 	end
 
-	local var_64_0 = RoomProductionModel.instance:getLineMO(arg_64_0._selectLineId)
+	local lineMO = RoomProductionModel.instance:getLineMO(self._selectLineId)
 
-	if var_64_0.config.logic ~= RoomProductLineEnum.ProductType.Product then
-		TaskDispatcher.cancelTask(arg_64_0._updateDetailPartGatherSelectLineTime, arg_64_0)
+	if lineMO.config.logic ~= RoomProductLineEnum.ProductType.Product then
+		TaskDispatcher.cancelTask(self._updateDetailPartGatherSelectLineTime, self)
 
 		return
 	end
 
-	local var_64_1 = math.floor(var_64_0.allFinishTime - ServerTime.now())
+	local limitSec = math.floor(lineMO.allFinishTime - ServerTime.now())
 
-	if not var_64_0:isIdle() and var_64_0:isFull() then
-		arg_64_0._gatherItem.txtremain.text = luaLang("roominitbuildingview_fullpro")
+	if not lineMO:isIdle() and lineMO:isFull() then
+		self._gatherItem.txtremain.text = luaLang("roominitbuildingview_fullpro")
 	else
-		arg_64_0._gatherItem.txtremain.text = string.format("<color=#65B96F>%s </color>%s", TimeUtil.second2TimeString(math.max(0, var_64_1), true), luaLang("roominitbuildingview_stopproduct"))
+		self._gatherItem.txtremain.text = string.format("<color=#65B96F>%s </color>%s", TimeUtil.second2TimeString(math.max(0, limitSec), true), luaLang("roominitbuildingview_stopproduct"))
 	end
 end
 
-function var_0_0._refreshDetailPartChange(arg_65_0, arg_65_1)
-	if not arg_65_0._changeItem then
-		arg_65_0._changeItem = arg_65_0:_initChangeItem()
+function RoomInitBuildingView:_refreshDetailPartChange(partId)
+	if not self._changeItem then
+		self._changeItem = self:_initChangeItem()
 	end
 
-	arg_65_0:_refreshDetailPartChangeTitle(arg_65_1)
-	gohelper.setActive(arg_65_0._changeItem.gobgvx, false)
-	gohelper.setActive(arg_65_0._changeItem.gohechengeffect, false)
+	self:_refreshDetailPartChangeTitle(partId)
+	gohelper.setActive(self._changeItem.gobgvx, false)
+	gohelper.setActive(self._changeItem.gohechengeffect, false)
 end
 
-function var_0_0._refreshDetailPartChangeTitle(arg_66_0, arg_66_1)
-	local var_66_0 = RoomProductionHelper.getChangePartLineMO(arg_66_1)
+function RoomInitBuildingView:_refreshDetailPartChangeTitle(partId)
+	local lineMO = RoomProductionHelper.getChangePartLineMO(partId)
 
-	arg_66_0:_refreshLine(arg_66_0._changeItem.lineItem, var_66_0, false)
+	self:_refreshLine(self._changeItem.lineItem, lineMO, false)
 end
 
-function var_0_0._refreshLine(arg_67_0, arg_67_1, arg_67_2, arg_67_3)
-	arg_67_1.lineId = arg_67_2.id
-	arg_67_1.txtname.text = arg_67_2.config.name
+function RoomInitBuildingView:_refreshLine(lineItem, lineMO, isGather)
+	lineItem.lineId = lineMO.id
+	lineItem.txtname.text = lineMO.config.name
 
-	gohelper.setActive(arg_67_1.btnupgrade.gameObject, arg_67_2.level < arg_67_2.maxConfigLevel)
+	gohelper.setActive(lineItem.btnupgrade.gameObject, lineMO.level < lineMO.maxConfigLevel)
 
-	if arg_67_3 then
-		gohelper.setActive(arg_67_1.txtname.gameObject, not arg_67_2:isLock())
+	if isGather then
+		gohelper.setActive(lineItem.txtname.gameObject, not lineMO:isLock())
 
-		local var_67_0 = arg_67_2.config.needRoomLevel
+		local needRoomLevel = lineMO.config.needRoomLevel
 
-		arg_67_1.txtlock.text = string.format(luaLang("room_initbuilding_linelock"), var_67_0)
+		lineItem.txtlock.text = string.format(luaLang("room_initbuilding_linelock"), needRoomLevel)
 
-		if arg_67_2:isLock() then
-			gohelper.setActive(arg_67_1.gonormalbg, true)
-			gohelper.setActive(arg_67_1.gofullbg, false)
-			gohelper.setActive(arg_67_1.goshowprocess, false)
-			gohelper.setActive(arg_67_1.btnupgrade.gameObject, false)
-			gohelper.setActive(arg_67_1.goselectbg, false)
+		if lineMO:isLock() then
+			gohelper.setActive(lineItem.gonormalbg, true)
+			gohelper.setActive(lineItem.gofullbg, false)
+			gohelper.setActive(lineItem.goshowprocess, false)
+			gohelper.setActive(lineItem.btnupgrade.gameObject, false)
+			gohelper.setActive(lineItem.goselectbg, false)
 		else
-			gohelper.setActive(arg_67_1.gonormalbg, arg_67_2:isIdle() or not arg_67_2:isFull())
-			gohelper.setActive(arg_67_1.gofullbg, not arg_67_2:isIdle() and arg_67_2:isFull())
-			gohelper.setActive(arg_67_1.goshowprocess, not arg_67_2:isIdle())
-			gohelper.setActive(arg_67_1.goselectbg, arg_67_0._expandDetailLineId == arg_67_2.id)
+			gohelper.setActive(lineItem.gonormalbg, lineMO:isIdle() or not lineMO:isFull())
+			gohelper.setActive(lineItem.gofullbg, not lineMO:isIdle() and lineMO:isFull())
+			gohelper.setActive(lineItem.goshowprocess, not lineMO:isIdle())
+			gohelper.setActive(lineItem.goselectbg, self._expandDetailLineId == lineMO.id)
 
-			if arg_67_2:isIdle() then
-				gohelper.setActive(arg_67_1.gofull, false)
-				gohelper.setActive(arg_67_1.goprocess, false)
-			elseif arg_67_2:isFull() then
-				gohelper.setActive(arg_67_1.gofull, true)
-				gohelper.setActive(arg_67_1.goprocess, false)
+			if lineMO:isIdle() then
+				gohelper.setActive(lineItem.gofull, false)
+				gohelper.setActive(lineItem.goprocess, false)
+			elseif lineMO:isFull() then
+				gohelper.setActive(lineItem.gofull, true)
+				gohelper.setActive(lineItem.goprocess, false)
 			else
-				gohelper.setActive(arg_67_1.gofull, false)
-				gohelper.setActive(arg_67_1.goprocess, true)
+				gohelper.setActive(lineItem.gofull, false)
+				gohelper.setActive(lineItem.goprocess, true)
 
-				local var_67_1, var_67_2 = arg_67_2:getReservePer()
+				local process, process100 = lineMO:getReservePer()
 
-				if not arg_67_0._lineIdPerDict[arg_67_1.lineId] then
-					arg_67_1.imageprocess.fillAmount = var_67_1
-					arg_67_1.txtprocess.text = string.format("%d%%", var_67_2)
+				if not self._lineIdPerDict[lineItem.lineId] then
+					lineItem.imageprocess.fillAmount = process
+					lineItem.txtprocess.text = string.format("%d%%", process100)
 				end
 			end
 		end
 
-		if arg_67_2:isLock() then
-			arg_67_1.gatherAnimator.speed = 0
+		if lineMO:isLock() then
+			lineItem.gatherAnimator.speed = 0
 
-			arg_67_1.gatherAnimator:Play("unlock", 0, 0)
-			arg_67_1.gatherAnimator:Update(0)
-		elseif RoomProductionModel.instance:shouldPlayLineUnlockDetail(arg_67_1.lineId) then
-			RoomProductionModel.instance:setPlayLineUnlockDetail(arg_67_1.lineId, nil)
+			lineItem.gatherAnimator:Play("unlock", 0, 0)
+			lineItem.gatherAnimator:Update(0)
+		elseif RoomProductionModel.instance:shouldPlayLineUnlockDetail(lineItem.lineId) then
+			RoomProductionModel.instance:setPlayLineUnlockDetail(lineItem.lineId, nil)
 
-			arg_67_1.gatherAnimator.speed = 0
+			lineItem.gatherAnimator.speed = 0
 
-			arg_67_1.gatherAnimator:Play("unlock", 0, 0)
-			arg_67_1.gatherAnimator:Update(0)
-			TaskDispatcher.runDelay(arg_67_0._playLineUnlockDetail, arg_67_1, 0.4)
+			lineItem.gatherAnimator:Play("unlock", 0, 0)
+			lineItem.gatherAnimator:Update(0)
+			TaskDispatcher.runDelay(self._playLineUnlockDetail, lineItem, 0.4)
 		else
-			arg_67_1.gatherAnimator.speed = 0
+			lineItem.gatherAnimator.speed = 0
 
-			arg_67_1.gatherAnimator:Play(UIAnimationName.Idle, 0, 0)
-			arg_67_1.gatherAnimator:Update(0)
+			lineItem.gatherAnimator:Play(UIAnimationName.Idle, 0, 0)
+			lineItem.gatherAnimator:Update(0)
 		end
 	else
-		gohelper.setActive(arg_67_1.goselectbg, false)
-		gohelper.setActive(arg_67_1.goshowprocess, true)
+		gohelper.setActive(lineItem.goselectbg, false)
+		gohelper.setActive(lineItem.goshowprocess, true)
 
-		arg_67_1.imageprocess.fillAmount = 0
-		arg_67_1.txtprocess.text = string.format("%d%%", 0)
+		lineItem.imageprocess.fillAmount = 0
+		lineItem.txtprocess.text = string.format("%d%%", 0)
 	end
 
-	local var_67_3 = arg_67_2.level or 0
-	local var_67_4 = arg_67_2.maxLevel or 0
+	local currentLevel = lineMO.level or 0
+	local maxLevel = lineMO.maxLevel or 0
 
-	for iter_67_0 = 1, var_67_4 do
-		local var_67_5 = arg_67_1.levelItemList[iter_67_0]
+	for level = 1, maxLevel do
+		local levelItem = lineItem.levelItemList[level]
 
-		if not var_67_5 then
-			var_67_5 = arg_67_0:getUserDataTb_()
-			var_67_5.go = gohelper.cloneInPlace(arg_67_1.golevelitem, "item" .. iter_67_0)
-			var_67_5.golight = gohelper.findChild(var_67_5.go, "go_light")
+		if not levelItem then
+			levelItem = self:getUserDataTb_()
+			levelItem.go = gohelper.cloneInPlace(lineItem.golevelitem, "item" .. level)
+			levelItem.golight = gohelper.findChild(levelItem.go, "go_light")
 
-			table.insert(arg_67_1.levelItemList, var_67_5)
+			table.insert(lineItem.levelItemList, levelItem)
 		end
 
-		gohelper.setActive(var_67_5.golight, iter_67_0 <= var_67_3)
-		gohelper.setActive(var_67_5.go, true)
+		gohelper.setActive(levelItem.golight, level <= currentLevel)
+		gohelper.setActive(levelItem.go, true)
 	end
 
-	for iter_67_1 = var_67_4 + 1, #arg_67_1.levelItemList do
-		local var_67_6 = arg_67_1.levelItemList[iter_67_1]
+	for level = maxLevel + 1, #lineItem.levelItemList do
+		local levelItem = lineItem.levelItemList[level]
 
-		gohelper.setActive(var_67_6.go, false)
+		gohelper.setActive(levelItem.go, false)
 	end
 
-	RedDotController.instance:addRedDot(arg_67_1.reddot, RedDotEnum.DotNode.RoomProductionLevel, arg_67_1.lineId)
+	RedDotController.instance:addRedDot(lineItem.reddot, RedDotEnum.DotNode.RoomProductionLevel, lineItem.lineId)
 end
 
-function var_0_0._playLineUnlockDetail(arg_68_0)
-	arg_68_0.gatherAnimator.speed = 1
+function RoomInitBuildingView._playLineUnlockDetail(lineItem)
+	lineItem.gatherAnimator.speed = 1
 
-	arg_68_0.gatherAnimator:Play("unlock", 0, 0)
+	lineItem.gatherAnimator:Play("unlock", 0, 0)
 end
 
-function var_0_0._onChangePartStart(arg_69_0)
+function RoomInitBuildingView:_onChangePartStart()
 	PopupController.instance:setPause("roominitbuildingview_changeeffect", true)
 	UIBlockMgr.instance:startBlock("roominitbuildingview_changeeffect")
-	TaskDispatcher.cancelTask(arg_69_0._resetChangeProcessText, arg_69_0)
-	arg_69_0._changeItem.lineItem.animator:Play(UIAnimationName.Open, 0, 0)
+	TaskDispatcher.cancelTask(self._resetChangeProcessText, self)
+	self._changeItem.lineItem.animator:Play(UIAnimationName.Open, 0, 0)
 
-	if arg_69_0._changeItem.lineItem.tweenId then
-		if arg_69_0._scene.tween then
-			arg_69_0._scene.tween:killById(arg_69_0._changeItem.lineItem.tweenId)
+	if self._changeItem.lineItem.tweenId then
+		if self._scene.tween then
+			self._scene.tween:killById(self._changeItem.lineItem.tweenId)
 		else
-			ZProj.TweenHelper.KillById(arg_69_0._changeItem.lineItem.tweenId)
+			ZProj.TweenHelper.KillById(self._changeItem.lineItem.tweenId)
 		end
 
-		arg_69_0._changeItem.lineItem.tweenId = nil
+		self._changeItem.lineItem.tweenId = nil
 	end
 
-	if arg_69_0._scene.tween then
-		arg_69_0._changeItem.lineItem.tweenId = arg_69_0._scene.tween:tweenFloat(0, 1, 1.3, arg_69_0._changeEffectFrame, arg_69_0._changeEffectFinish, arg_69_0)
+	if self._scene.tween then
+		self._changeItem.lineItem.tweenId = self._scene.tween:tweenFloat(0, 1, 1.3, self._changeEffectFrame, self._changeEffectFinish, self)
 	else
-		arg_69_0._changeItem.lineItem.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.3, arg_69_0._changeEffectFrame, arg_69_0._changeEffectFinish, arg_69_0)
+		self._changeItem.lineItem.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.3, self._changeEffectFrame, self._changeEffectFinish, self)
 	end
 end
 
-function var_0_0._changeEffectFrame(arg_70_0, arg_70_1)
-	arg_70_0._changeItem.lineItem.txtprocess.text = string.format("%d%%", math.ceil(arg_70_1 * 100))
+function RoomInitBuildingView:_changeEffectFrame(value)
+	self._changeItem.lineItem.txtprocess.text = string.format("%d%%", math.ceil(value * 100))
 end
 
-function var_0_0._changeEffectFinish(arg_71_0)
-	arg_71_0._changeItem.lineItem.txtprocess.text = "100%"
+function RoomInitBuildingView:_changeEffectFinish()
+	self._changeItem.lineItem.txtprocess.text = "100%"
 
 	PopupController.instance:setPause("roominitbuildingview_changeeffect", false)
 	UIBlockMgr.instance:endBlock("roominitbuildingview_changeeffect")
-	TaskDispatcher.runDelay(arg_71_0._resetChangeProcessText, arg_71_0, 1)
+	TaskDispatcher.runDelay(self._resetChangeProcessText, self, 1)
 end
 
-function var_0_0._resetChangeProcessText(arg_72_0)
-	if arg_72_0._changeItem then
-		arg_72_0._changeItem.lineItem.txtprocess.text = "0%"
+function RoomInitBuildingView:_resetChangeProcessText()
+	if self._changeItem then
+		self._changeItem.lineItem.txtprocess.text = "0%"
 	end
 end
 
-function var_0_0._onCloseView(arg_73_0, arg_73_1)
-	arg_73_0:_resetChangeProcessText()
+function RoomInitBuildingView:_onCloseView(viewName)
+	self:_resetChangeProcessText()
 
-	if arg_73_1 == ViewName.RoomLevelUpTipsView and arg_73_0._selectTabId == var_0_0.TabId.ProductionLine then
-		arg_73_0:_refreshInitPart()
+	if viewName == ViewName.RoomLevelUpTipsView and self._selectTabId == RoomInitBuildingView.TabId.ProductionLine then
+		self:_refreshInitPart()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_74_0)
-	arg_74_0:_refreshUI(true)
+function RoomInitBuildingView:onUpdateParam()
+	self:_refreshUI(true)
 end
 
-function var_0_0.onOpen(arg_75_0)
-	arg_75_0:_refreshUI(true)
+function RoomInitBuildingView:onOpen()
+	self:_refreshUI(true)
 
-	if arg_75_0.viewParam and arg_75_0.viewParam.showFormulaView then
-		arg_75_0:_changeSelectPart(3)
+	if self.viewParam and self.viewParam.showFormulaView then
+		self:_changeSelectPart(3)
 	end
 
-	arg_75_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, arg_75_0._refreshLevel, arg_75_0)
-	arg_75_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, arg_75_0._refreshCategory, arg_75_0)
-	arg_75_0:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, arg_75_0._refreshInitPart, arg_75_0)
-	arg_75_0:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, arg_75_0._refreshDetailPart, arg_75_0)
-	arg_75_0:addEventCb(RoomController.instance, RoomEvent.GainProductionLineReply, arg_75_0._gainProductionLineCallback, arg_75_0)
-	arg_75_0:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, arg_75_0._onChangePartStart, arg_75_0)
-	arg_75_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_75_0._onCloseView, arg_75_0)
-	arg_75_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_75_0._refreshRoomLevelUpEffect, arg_75_0)
-	NavigateMgr.instance:addEscape(ViewName.RoomInitBuildingView, arg_75_0._onEscape, arg_75_0)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, self._refreshLevel, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UpdateRoomLevel, self._refreshCategory, self)
+	self:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, self._refreshInitPart, self)
+	self:addEventCb(RoomController.instance, RoomEvent.UpdateProduceLineData, self._refreshDetailPart, self)
+	self:addEventCb(RoomController.instance, RoomEvent.GainProductionLineReply, self._gainProductionLineCallback, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, self._onChangePartStart, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, self._refreshRoomLevelUpEffect, self)
+	NavigateMgr.instance:addEscape(ViewName.RoomInitBuildingView, self._onEscape, self)
 end
 
-function var_0_0.onClose(arg_76_0)
-	if arg_76_0.viewContainer:isManualClose() then
+function RoomInitBuildingView:onClose()
+	if self.viewContainer:isManualClose() then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_close)
 	end
 end
 
-function var_0_0._onEscape(arg_77_0)
+function RoomInitBuildingView:_onEscape()
 	ViewMgr.instance:closeView(ViewName.RoomInitBuildingView, false, true)
 	RoomMapController.instance:onCloseRoomInitBuildingView()
 end
 
-function var_0_0.onDestroyView(arg_78_0)
+function RoomInitBuildingView:onDestroyView()
 	PopupController.instance:setPause("roominitbuildingview_changeeffect", false)
 	UIBlockMgr.instance:endBlock("roominitbuildingview_changeeffect")
-	TaskDispatcher.cancelTask(arg_78_0._resetChangeProcessText, arg_78_0)
-	TaskDispatcher.cancelTask(arg_78_0._realChangeSelectPart, arg_78_0)
-	TaskDispatcher.cancelTask(arg_78_0._changeShowSkinList, arg_78_0)
-	TaskDispatcher.cancelTask(arg_78_0._updateDetailPartGatherSelectLineTime, arg_78_0)
+	TaskDispatcher.cancelTask(self._resetChangeProcessText, self)
+	TaskDispatcher.cancelTask(self._realChangeSelectPart, self)
+	TaskDispatcher.cancelTask(self._changeShowSkinList, self)
+	TaskDispatcher.cancelTask(self._updateDetailPartGatherSelectLineTime, self)
 
-	arg_78_0._keepOpenSkinListAfterChange = false
+	self._keepOpenSkinListAfterChange = false
 
-	for iter_78_0, iter_78_1 in ipairs(arg_78_0._categoryItemList) do
-		iter_78_1.btnclick:RemoveClickListener()
+	for i, categoryItem in ipairs(self._categoryItemList) do
+		categoryItem.btnclick:RemoveClickListener()
 	end
 
-	for iter_78_2, iter_78_3 in ipairs(arg_78_0._initPartProductItemList) do
-		iter_78_3.simagereward:UnLoadImage()
-		iter_78_3.btnget:RemoveClickListener()
-		iter_78_3.btnjumpclick:RemoveClickListener()
+	for i, initPartProductItem in ipairs(self._initPartProductItemList) do
+		initPartProductItem.simagereward:UnLoadImage()
+		initPartProductItem.btnget:RemoveClickListener()
+		initPartProductItem.btnjumpclick:RemoveClickListener()
 
-		for iter_78_4, iter_78_5 in ipairs(iter_78_3.lineItemList) do
-			TaskDispatcher.cancelTask(arg_78_0._playLineUnlock, iter_78_5)
+		for _, lineItem in ipairs(initPartProductItem.lineItemList) do
+			TaskDispatcher.cancelTask(self._playLineUnlock, lineItem)
 		end
 	end
 
-	for iter_78_6, iter_78_7 in ipairs(arg_78_0._initPartChangeItemList) do
-		iter_78_7.simagedoor:UnLoadImage()
-		iter_78_7.btncombine:RemoveClickListener()
+	for i, initPartChangeItem in ipairs(self._initPartChangeItemList) do
+		initPartChangeItem.simagedoor:UnLoadImage()
+		initPartChangeItem.btncombine:RemoveClickListener()
 
-		for iter_78_8, iter_78_9 in ipairs(iter_78_7.formulaItemList) do
-			iter_78_9.btnlockclick:RemoveClickListener()
+		for _, initPartChangeFormulaItem in ipairs(initPartChangeItem.formulaItemList) do
+			initPartChangeFormulaItem.btnlockclick:RemoveClickListener()
 		end
 	end
 
-	if arg_78_0._changeItem then
-		arg_78_0._changeItem.lineItem.btnupgrade:RemoveClickListener()
+	if self._changeItem then
+		self._changeItem.lineItem.btnupgrade:RemoveClickListener()
 
-		if arg_78_0._changeItem.lineItem.tweenId then
-			if arg_78_0._scene.tween then
-				arg_78_0._scene.tween:killById(arg_78_0._changeItem.lineItem.tweenId)
+		if self._changeItem.lineItem.tweenId then
+			if self._scene.tween then
+				self._scene.tween:killById(self._changeItem.lineItem.tweenId)
 			else
-				ZProj.TweenHelper.KillById(arg_78_0._changeItem.lineItem.tweenId)
+				ZProj.TweenHelper.KillById(self._changeItem.lineItem.tweenId)
 			end
 
-			arg_78_0._changeItem.lineItem.tweenId = nil
+			self._changeItem.lineItem.tweenId = nil
 		end
 
-		arg_78_0._changeItem = nil
+		self._changeItem = nil
 	end
 
-	if arg_78_0._gatherItem then
-		arg_78_0._gatherItem.btnget:RemoveClickListener()
-		arg_78_0._gatherItem.btnnewget:RemoveClickListener()
+	if self._gatherItem then
+		self._gatherItem.btnget:RemoveClickListener()
+		self._gatherItem.btnnewget:RemoveClickListener()
 
-		for iter_78_10, iter_78_11 in ipairs(arg_78_0._gatherItem.lineItemList) do
-			iter_78_11.btnupgrade:RemoveClickListener()
-			iter_78_11.btnclick:RemoveClickListener()
+		for i, lineItem in ipairs(self._gatherItem.lineItemList) do
+			lineItem.btnupgrade:RemoveClickListener()
+			lineItem.btnclick:RemoveClickListener()
 		end
 
-		for iter_78_12, iter_78_13 in ipairs(arg_78_0._gatherItem.lineItemList) do
-			TaskDispatcher.cancelTask(arg_78_0._playLineUnlockDetail, iter_78_13)
+		for _, lineItem in ipairs(self._gatherItem.lineItemList) do
+			TaskDispatcher.cancelTask(self._playLineUnlockDetail, lineItem)
 		end
 
-		arg_78_0._gatherItem = nil
+		self._gatherItem = nil
 	end
 
-	arg_78_0._flyEffectRewardInfoList = nil
+	self._flyEffectRewardInfoList = nil
 
-	arg_78_0:_clearLineAnimation()
-	arg_78_0._simagecombinebg:UnLoadImage()
-	arg_78_0._simagemask:UnLoadImage()
+	self:_clearLineAnimation()
+	self._simagecombinebg:UnLoadImage()
+	self._simagemask:UnLoadImage()
 	RoomSkinController.instance:setRoomSkinListVisible()
 end
 
-return var_0_0
+return RoomInitBuildingView

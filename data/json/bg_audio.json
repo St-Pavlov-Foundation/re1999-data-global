@@ -2126,8 +2126,8 @@
   },
   {
     "id": 3310011,
-    "eventName": "play_activitymusic_pifu_3_1",
-    "bankName": "activity3_1_music"
+    "eventName": "play_activitymusic_tujianskin_3_0",
+    "bankName": "activity3_0_music_tujianskin"
   },
   {
     "id": 3310012,
@@ -2148,5 +2148,45 @@
     "id": 3310015,
     "eventName": "play_battle_mingdi_3_1_misizhidi",
     "bankName": "activity_misizhidi_combataudio"
+  },
+  {
+    "id": 3320001,
+    "eventName": "play_activitymusic_theme_3_2",
+    "bankName": "activity3_2_music"
+  },
+  {
+    "id": 3320002,
+    "eventName": "play_activitymusic_end_3_2",
+    "bankName": "activity3_2_music"
+  },
+  {
+    "id": 3320003,
+    "eventName": "play_activitymusic_strange_3_2",
+    "bankName": "activity3_2_music"
+  },
+  {
+    "id": 3320004,
+    "eventName": "play_ui_3_2_zongmaopost_music",
+    "bankName": "zongmaopost_3_2_music"
+  },
+  {
+    "id": 3320005,
+    "eventName": "play_dungeon2_silent_main",
+    "bankName": "dungeon2_silent_main_music"
+  },
+  {
+    "id": 3320006,
+    "eventName": "play_battle_shengyan_3_2_normalfight",
+    "bankName": "activity_shengyan_combataudio"
+  },
+  {
+    "id": 3320007,
+    "eventName": "play_battle_shengyan_3_2_bossfight",
+    "bankName": "activity_shengyan_combataudio"
+  },
+  {
+    "id": 3320008,
+    "eventName": "play_plot_music_livelyl",
+    "bankName": "plot_music_livelyl"
   }
 ]

@@ -1,229 +1,237 @@
-﻿module("modules.logic.gm.view.Checker_Hero", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/Checker_Hero.lua
 
-local var_0_0 = class("Checker_Hero", Checker_Base)
+module("modules.logic.gm.view.Checker_Hero", package.seeall)
 
-var_0_0.Type = {
+local Checker_Hero = class("Checker_Hero", Checker_Base)
+
+Checker_Hero.Type = {
 	Live2d = 1,
 	Spine = 0
 }
 
-local var_0_1 = {}
-local var_0_2 = {}
+local s_characterSkinCOs = {}
+local s_skinResPath2SkinId = {}
 
-for iter_0_0, iter_0_1 in ipairs(lua_skin.configList) do
-	local var_0_3 = iter_0_1.id
-	local var_0_4 = iter_0_1.characterId
+for _, v in ipairs(lua_skin.configList) do
+	local skinId = v.id
+	local characterId = v.characterId
 
-	if not string.nilorempty(iter_0_1.verticalDrawing) then
-		var_0_2[ResUrl.getRolesPrefabStory(iter_0_1.verticalDrawing)] = var_0_3
+	if not string.nilorempty(v.verticalDrawing) then
+		local resPath = ResUrl.getRolesPrefabStory(v.verticalDrawing)
+
+		s_skinResPath2SkinId[resPath] = skinId
 	end
 
-	if not string.nilorempty(iter_0_1.live2d) then
-		var_0_2[ResUrl.getLightLive2d(iter_0_1.live2d)] = var_0_3
+	if not string.nilorempty(v.live2d) then
+		local resPath = ResUrl.getLightLive2d(v.live2d)
+
+		s_skinResPath2SkinId[resPath] = skinId
 	end
 
-	var_0_1[var_0_4] = var_0_1[var_0_4] or {}
+	s_characterSkinCOs[characterId] = s_characterSkinCOs[characterId] or {}
 
-	table.insert(var_0_1[var_0_4], iter_0_1)
+	table.insert(s_characterSkinCOs[characterId], v)
 end
 
-local function var_0_5(arg_1_0)
-	return lua_character_voice.configDict[arg_1_0]
+local function _characterVoiceCO(heroId)
+	return lua_character_voice.configDict[heroId]
 end
 
-local function var_0_6(arg_2_0, arg_2_1)
-	return var_0_1[arg_2_0][arg_2_1]
+local function _characterSkinCO(heroId, skinId)
+	return s_characterSkinCOs[heroId][skinId]
 end
 
-local function var_0_7(arg_3_0)
-	local var_3_0 = string.match(arg_3_0, ".+/([^/]*%.%w+)$")
-	local var_3_1 = string.match(var_3_0, "(%w+)")
+local function _resPathToSkinId(resPath)
+	local basename = string.match(resPath, ".+/([^/]*%.%w+)$")
+	local skinId = string.match(basename, "(%w+)")
 
-	return assert(tonumber(var_3_1), "invalid resPath: " .. arg_3_0)
+	return assert(tonumber(skinId), "invalid resPath: " .. resPath)
 end
 
-local function var_0_8(arg_4_0, arg_4_1)
-	if not arg_4_0 or not arg_4_1 then
+local function _isValidSkinVoiceCO(CO, skinId)
+	if not CO or not skinId then
 		return false
 	end
 
-	local var_4_0 = arg_4_0.skins
+	local skins = CO.skins
 
-	if string.nilorempty(var_4_0) then
+	if string.nilorempty(skins) then
 		return false
 	end
 
-	return string.find(var_4_0, arg_4_1)
+	return string.find(skins, skinId)
 end
 
-local function var_0_9(arg_5_0)
-	local var_5_0 = arg_5_0.class.__cname
+local function _getInfoFromObj_SpineOrL2dObj(obj)
+	local cname = obj.class.__cname
 
-	if var_5_0 == "GuiSpine" or var_5_0 == "LightSpine" then
-		return var_0_0.Type.Spine, arg_5_0, arg_5_0:getResPath()
-	elseif var_5_0 == "GuiLive2d" or var_5_0 == "LightLive2d" then
-		return var_0_0.Type.Live2d, arg_5_0, arg_5_0:getResPath()
+	if cname == "GuiSpine" or cname == "LightSpine" then
+		return Checker_Hero.Type.Spine, obj, obj:getResPath()
+	elseif cname == "GuiLive2d" or cname == "LightLive2d" then
+		return Checker_Hero.Type.Live2d, obj, obj:getResPath()
 	end
 end
 
-local function var_0_10(arg_6_0)
-	local var_6_0 = arg_6_0._curModel
+local function _getInfoFromObj_ModelAgent(modelAgent)
+	local obj = modelAgent._curModel
 
-	if not var_6_0 then
+	if not obj then
 		return
 	end
 
-	return var_0_9(var_6_0)
+	return _getInfoFromObj_SpineOrL2dObj(obj)
 end
 
-local function var_0_11(arg_7_0)
-	if not arg_7_0 then
+local function _getInfoFromObj(obj)
+	if not obj then
 		return
 	end
 
-	if arg_7_0.class.__cname ~= "GuiModelAgent" and false then
+	local cname = obj.class.__cname
+
+	if cname ~= "GuiModelAgent" and false then
 		-- block empty
 	end
 
-	do return var_0_10(arg_7_0) end
+	do return _getInfoFromObj_ModelAgent(obj) end
 
 	if false then
-		return var_0_9(arg_7_0)
+		return _getInfoFromObj_SpineOrL2dObj(obj)
 	end
 end
 
-function var_0_0.ctor(arg_8_0, arg_8_1)
-	Checker_Base.ctor(arg_8_0)
-	arg_8_0:reset(arg_8_1)
+function Checker_Hero:ctor(heroId)
+	Checker_Base.ctor(self)
+	self:reset(heroId)
 end
 
-function var_0_0.reset(arg_9_0, arg_9_1)
-	arg_9_0._heroId = arg_9_1
-	arg_9_0._heroCO = HeroConfig.instance:getHeroCO(arg_9_1)
-	arg_9_0._resPath = ""
-	arg_9_0._skinId = false
+function Checker_Hero:reset(heroId)
+	self._heroId = heroId
+	self._heroCO = HeroConfig.instance:getHeroCO(heroId)
+	self._resPath = ""
+	self._skinId = false
 end
 
-function var_0_0._logError(arg_10_0, arg_10_1)
-	arg_10_1 = arg_10_1 or ""
+function Checker_Hero:_logError(preStr)
+	preStr = preStr or ""
 
-	return string.format("%s%s(%s)", arg_10_1, arg_10_0:heroName(), tostring(arg_10_0:heroId()))
+	return string.format("%s%s(%s)", preStr, self:heroName(), tostring(self:heroId()))
 end
 
-function var_0_0.exec(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_2 then
-		arg_11_0:reset(arg_11_2)
+function Checker_Hero:exec(obj, heroId)
+	if heroId then
+		self:reset(heroId)
 	end
 
-	local var_11_0, var_11_1, var_11_2 = var_0_11(arg_11_1)
+	local type, inst, resPath = _getInfoFromObj(obj)
 
-	arg_11_0._resPath = var_11_2
+	self._resPath = resPath
 
-	if not var_11_0 or not var_11_1 then
-		arg_11_0:_logError("[_getInfoFromObj]: ")
+	if not type or not inst then
+		self:_logError("[_getInfoFromObj]: ")
 
 		return
 	end
 
-	if var_11_0 == var_0_0.Type.Spine then
-		arg_11_0:_onExec_Spine(var_11_1)
-	elseif var_11_0 == var_0_0.Type.Live2d then
-		arg_11_0:_onExec_Live2d(var_11_1)
+	if type == Checker_Hero.Type.Spine then
+		self:_onExec_Spine(inst)
+	elseif type == Checker_Hero.Type.Live2d then
+		self:_onExec_Live2d(inst)
 	else
-		assert(false, "unsupported Checker_Hero.Type!! type=" .. tostring(var_11_0))
+		assert(false, "unsupported Checker_Hero.Type!! type=" .. tostring(type))
 	end
 end
 
-function var_0_0._onExec_Spine(arg_12_0, arg_12_1)
+function Checker_Hero:_onExec_Spine(inst)
 	assert(false, "please override this function!")
 end
 
-function var_0_0._onExec_Live2d(arg_13_0, arg_13_1)
+function Checker_Hero:_onExec_Live2d(inst)
 	assert(false, "please override this function!")
 end
 
-function var_0_0.heroId(arg_14_0)
-	return arg_14_0._heroId
+function Checker_Hero:heroId()
+	return self._heroId
 end
 
-function var_0_0.heroCO(arg_15_0)
-	return arg_15_0._heroCO
+function Checker_Hero:heroCO()
+	return self._heroCO
 end
 
-function var_0_0.heroName(arg_16_0)
-	return arg_16_0._heroCO.name
+function Checker_Hero:heroName()
+	return self._heroCO.name
 end
 
-function var_0_0.resPath(arg_17_0)
-	return arg_17_0._resPath
+function Checker_Hero:resPath()
+	return self._resPath
 end
 
-function var_0_0.skinId(arg_18_0)
-	assert(not string.nilorempty(arg_18_0._resPath), "please call exec first!!")
+function Checker_Hero:skinId()
+	assert(not string.nilorempty(self._resPath), "please call exec first!!")
 
-	if not arg_18_0._skinId then
-		arg_18_0._skinId = var_0_2[arg_18_0._resPath] or var_0_7(arg_18_0._resPath)
+	if not self._skinId then
+		self._skinId = s_skinResPath2SkinId[self._resPath] or _resPathToSkinId(self._resPath)
 	end
 
-	return arg_18_0._skinId
+	return self._skinId
 end
 
-function var_0_0.characterVoiceCO(arg_19_0)
-	return var_0_5(arg_19_0._heroId)
+function Checker_Hero:characterVoiceCO()
+	return _characterVoiceCO(self._heroId)
 end
 
-function var_0_0.characterSkinCO(arg_20_0)
-	local var_20_0 = arg_20_0:skinId()
+function Checker_Hero:characterSkinCO()
+	local skinId = self:skinId()
 
-	return var_0_6[arg_20_0._heroId][var_20_0]
+	return _characterSkinCO[self._heroId][skinId]
 end
 
-function var_0_0.skincharacterVoiceCOList(arg_21_0)
-	local var_21_0 = arg_21_0:skinId()
+function Checker_Hero:skincharacterVoiceCOList()
+	local skinId = self:skinId()
 
-	return arg_21_0:_skincharacterVoiceCOList(var_21_0)
+	return self:_skincharacterVoiceCOList(skinId)
 end
 
-function var_0_0.heroMO(arg_22_0)
-	return HeroModel.instance:getByHeroId(arg_22_0._heroId)
+function Checker_Hero:heroMO()
+	return HeroModel.instance:getByHeroId(self._heroId)
 end
 
-function var_0_0.heroMOSkinId(arg_23_0)
-	local var_23_0 = arg_23_0:heroMO()
+function Checker_Hero:heroMOSkinId()
+	local MO = self:heroMO()
 
-	if var_23_0 then
-		return var_23_0.skin
-	end
-end
-
-function var_0_0.heroMOSkinCO(arg_24_0)
-	local var_24_0 = arg_24_0:heroMOSkinId()
-
-	if var_24_0 then
-		return var_0_6[arg_24_0._heroId][var_24_0]
+	if MO then
+		return MO.skin
 	end
 end
 
-function var_0_0.heroMOSkincharacterVoiceCOList(arg_25_0)
-	return arg_25_0:_skincharacterVoiceCOList(arg_25_0:heroMOSkinId())
+function Checker_Hero:heroMOSkinCO()
+	local skinId = self:heroMOSkinId()
+
+	if skinId then
+		return _characterSkinCO[self._heroId][skinId]
+	end
 end
 
-function var_0_0._skincharacterVoiceCOList(arg_26_0, arg_26_1)
-	local var_26_0 = {}
+function Checker_Hero:heroMOSkincharacterVoiceCOList()
+	return self:_skincharacterVoiceCOList(self:heroMOSkinId())
+end
 
-	if not arg_26_1 then
-		return var_26_0
+function Checker_Hero:_skincharacterVoiceCOList(skinId)
+	local list = {}
+
+	if not skinId then
+		return list
 	end
 
-	local var_26_1 = arg_26_0:characterVoiceCO()
+	local CO = self:characterVoiceCO()
 
-	for iter_26_0, iter_26_1 in pairs(var_26_1) do
-		if var_0_8(iter_26_1, arg_26_1) then
-			table.insert(var_26_0, iter_26_1)
+	for audioId, v in pairs(CO) do
+		if _isValidSkinVoiceCO(v, skinId) then
+			table.insert(list, v)
 		end
 	end
 
-	return var_26_0
+	return list
 end
 
-return var_0_0
+return Checker_Hero

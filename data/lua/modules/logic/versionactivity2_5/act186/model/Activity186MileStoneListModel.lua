@@ -1,76 +1,78 @@
-﻿module("modules.logic.versionactivity2_5.act186.model.Activity186MileStoneListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/model/Activity186MileStoneListModel.lua
 
-local var_0_0 = class("Activity186MileStoneListModel", MixScrollModel)
+module("modules.logic.versionactivity2_5.act186.model.Activity186MileStoneListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.actMo = arg_1_1
+local Activity186MileStoneListModel = class("Activity186MileStoneListModel", MixScrollModel)
+
+function Activity186MileStoneListModel:init(actMo)
+	self.actMo = actMo
 end
 
-function var_0_0.refresh(arg_2_0)
-	local var_2_0 = Activity186Config.instance:getMileStoneList(arg_2_0.actMo.id)
-	local var_2_1 = {}
+function Activity186MileStoneListModel:refresh()
+	local list = Activity186Config.instance:getMileStoneList(self.actMo.id)
+	local dataList = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_2 = {
-			id = iter_2_1.rewardId,
-			rewardId = iter_2_1.rewardId,
-			activityId = iter_2_1.activityId,
-			isLoopBonus = iter_2_1.isLoopBonus,
-			bonus = iter_2_1.bonus,
-			isSpBonus = iter_2_1.isSpBonus
-		}
+	for i, v in ipairs(list) do
+		local mo = {}
 
-		table.insert(var_2_1, var_2_2)
+		mo.id = v.rewardId
+		mo.rewardId = v.rewardId
+		mo.activityId = v.activityId
+		mo.isLoopBonus = v.isLoopBonus
+		mo.bonus = v.bonus
+		mo.isSpBonus = v.isSpBonus
+
+		table.insert(dataList, mo)
 	end
 
-	arg_2_0:setList(var_2_1)
+	self:setList(dataList)
 end
 
-function var_0_0.caleProgressIndex(arg_3_0)
-	local var_3_0 = Activity186Config.instance:getMileStoneList(arg_3_0.actMo.id)
-	local var_3_1 = 0
-	local var_3_2 = Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId)
-	local var_3_3 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_3_2)
-	local var_3_4 = 0
+function Activity186MileStoneListModel:caleProgressIndex()
+	local list = Activity186Config.instance:getMileStoneList(self.actMo.id)
+	local index = 0
+	local currencyId = Activity186Config.instance:getConstNum(Activity186Enum.ConstId.CurrencyId)
+	local hasCurrencyNum = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, currencyId)
+	local lastCoinNum = 0
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		local var_3_5 = iter_3_1.coinNum
+	for i, v in ipairs(list) do
+		local coinNum = v.coinNum
 
-		if var_3_3 < var_3_5 then
-			var_3_1 = iter_3_0 + (var_3_3 - var_3_4) / (var_3_5 - var_3_4) - 1
+		if hasCurrencyNum < coinNum then
+			index = i + (hasCurrencyNum - lastCoinNum) / (coinNum - lastCoinNum) - 1
 
-			return var_3_1
+			return index
 		end
 
-		var_3_4 = var_3_5
+		lastCoinNum = coinNum
 	end
 
-	local var_3_6 = #var_3_0
-	local var_3_7
+	local listLen = #list
 
-	var_3_7 = var_3_0[var_3_6 - 1] and var_3_0[var_3_6 - 1].coinNum or 0
+	lastCoinNum = list[listLen - 1] and list[listLen - 1].coinNum or 0
 
-	local var_3_8 = var_3_0[var_3_6]
-	local var_3_9 = arg_3_0.actMo.getMilestoneProgress
-	local var_3_10 = var_3_8.loopBonusIntervalNum or 1
-	local var_3_11 = var_3_8.coinNum
+	local loopConfig = list[listLen]
+	local progress = self.actMo.getMilestoneProgress
+	local loopNum = loopConfig.loopBonusIntervalNum or 1
+	local coinNum = loopConfig.coinNum
 
-	if var_3_9 < var_3_11 then
-		var_3_1 = var_3_6
+	if progress < coinNum then
+		index = listLen
 	else
-		local var_3_12 = (var_3_3 - var_3_11) / var_3_10
-		local var_3_13 = math.floor(var_3_12)
+		local canGetTimesValue = (hasCurrencyNum - coinNum) / loopNum
+		local canGetTimes = math.floor(canGetTimesValue)
+		local getTimes = math.floor((progress - coinNum) / loopNum)
 
-		if var_3_13 > math.floor((var_3_9 - var_3_11) / var_3_10) then
-			var_3_1 = var_3_6
+		if getTimes < canGetTimes then
+			index = listLen
 		else
-			var_3_1 = var_3_6 - 1 + var_3_12 - var_3_13
+			index = listLen - 1 + canGetTimesValue - canGetTimes
 		end
 	end
 
-	return var_3_1
+	return index
 end
 
-var_0_0.instance = var_0_0.New()
+Activity186MileStoneListModel.instance = Activity186MileStoneListModel.New()
 
-return var_0_0
+return Activity186MileStoneListModel

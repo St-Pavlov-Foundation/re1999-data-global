@@ -1,27 +1,29 @@
-﻿module("modules.logic.explore.controller.steps.ExploreBonusSceneClientStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreBonusSceneClientStep.lua
 
-local var_0_0 = class("ExploreBonusSceneClientStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreBonusSceneClientStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseViewFinish, arg_1_0)
+local ExploreBonusSceneClientStep = class("ExploreBonusSceneClientStep", ExploreStepBase)
 
-	local var_1_0 = ExploreModel.instance:getMapId()
-	local var_1_1 = ExploreConfig.instance:getMapIdConfig(var_1_0)
+function ExploreBonusSceneClientStep:onStart()
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+
+	local mapId = ExploreModel.instance:getMapId()
+	local mapCo = ExploreConfig.instance:getMapIdConfig(mapId)
 
 	ViewMgr.instance:openView(ViewName.ExploreBonusSceneRecordView, {
-		chapterId = var_1_1.chapterId
+		chapterId = mapCo.chapterId
 	})
 end
 
-function var_0_0._onCloseViewFinish(arg_2_0, arg_2_1)
-	if ViewName.ExploreBonusSceneRecordView == arg_2_1 then
-		arg_2_0:onDone()
+function ExploreBonusSceneClientStep:_onCloseViewFinish(viewName)
+	if ViewName.ExploreBonusSceneRecordView == viewName then
+		self:onDone()
 	end
 end
 
-function var_0_0.onDestory(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
-	var_0_0.super.onDestory(arg_3_0)
+function ExploreBonusSceneClientStep:onDestory()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	ExploreBonusSceneClientStep.super.onDestory(self)
 end
 
-return var_0_0
+return ExploreBonusSceneClientStep

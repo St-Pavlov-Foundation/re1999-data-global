@@ -1,194 +1,199 @@
-﻿module("modules.logic.fight.view.FightSkillStrengthenView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSkillStrengthenView.lua
 
-local var_0_0 = class("FightSkillStrengthenView", BaseViewExtended)
+module("modules.logic.fight.view.FightSkillStrengthenView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnObj = gohelper.findChild(arg_1_0.viewGO, "#btn_Strenthen")
-	arg_1_0._btnConfirm = gohelper.getClickWithDefaultAudio(arg_1_0._btnObj)
-	arg_1_0._scrollViewObj = gohelper.findChild(arg_1_0.viewGO, "#scroll_handcards")
-	arg_1_0._cardRoot = gohelper.findChild(arg_1_0.viewGO, "#scroll_handcards/Viewport/handcards")
-	arg_1_0._cardItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_handcards/Viewport/handcards/#go_item")
-	arg_1_0._nameText = gohelper.findChildText(arg_1_0.viewGO, "CheckPoint/txt_CheckPointName")
-	arg_1_0._desText = gohelper.findChildText(arg_1_0.viewGO, "CheckPoint/Scroll View/Viewport/#txt_Descr")
+local FightSkillStrengthenView = class("FightSkillStrengthenView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightSkillStrengthenView:onInitView()
+	self._btnObj = gohelper.findChild(self.viewGO, "#btn_Strenthen")
+	self._btnConfirm = gohelper.getClickWithDefaultAudio(self._btnObj)
+	self._scrollViewObj = gohelper.findChild(self.viewGO, "#scroll_handcards")
+	self._cardRoot = gohelper.findChild(self.viewGO, "#scroll_handcards/Viewport/handcards")
+	self._cardItem = gohelper.findChild(self.viewGO, "#scroll_handcards/Viewport/handcards/#go_item")
+	self._nameText = gohelper.findChildText(self.viewGO, "CheckPoint/txt_CheckPointName")
+	self._desText = gohelper.findChildText(self.viewGO, "CheckPoint/Scroll View/Viewport/#txt_Descr")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnConfirm, arg_2_0._onBtnConfirm, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.StartPlayClothSkill, arg_2_0._onStartPlayClothSkill, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, arg_2_0._onRespUseClothSkillFail, arg_2_0)
+function FightSkillStrengthenView:addEvents()
+	self:addClickCb(self._btnConfirm, self._onBtnConfirm, self)
+	FightController.instance:registerCallback(FightEvent.StartPlayClothSkill, self._onStartPlayClothSkill, self)
+	FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._onRespUseClothSkillFail, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.StartPlayClothSkill, arg_3_0._onStartPlayClothSkill, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, arg_3_0._onRespUseClothSkillFail, arg_3_0)
+function FightSkillStrengthenView:removeEvents()
+	FightController.instance:unregisterCallback(FightEvent.StartPlayClothSkill, self._onStartPlayClothSkill, self)
+	FightController.instance:unregisterCallback(FightEvent.RespUseClothSkillFail, self._onRespUseClothSkillFail, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function FightSkillStrengthenView:_editableInitView()
 	return
 end
 
-function var_0_0._onStartPlayClothSkill(arg_5_0)
-	arg_5_0:closeThis()
+function FightSkillStrengthenView:_onStartPlayClothSkill()
+	self:closeThis()
 end
 
-function var_0_0._onRespUseClothSkillFail(arg_6_0)
-	arg_6_0:closeThis()
+function FightSkillStrengthenView:_onRespUseClothSkillFail()
+	self:closeThis()
 end
 
-function var_0_0._onBtnConfirm(arg_7_0)
-	if arg_7_0._confirmed then
+function FightSkillStrengthenView:_onBtnConfirm()
+	if self._confirmed then
 		return
 	end
 
-	arg_7_0._confirmed = true
+	self._confirmed = true
 
-	local var_7_0 = arg_7_0._optionIdList[arg_7_0._curSelectIndex]
+	local optionId = self._optionIdList[self._curSelectIndex]
 
-	FightRpc.instance:sendUseClothSkillRequest(arg_7_0._upgradeId, arg_7_0._entityId, var_7_0, FightEnum.ClothSkillType.HeroUpgrade)
+	FightRpc.instance:sendUseClothSkillRequest(self._upgradeId, self._entityId, optionId, FightEnum.ClothSkillType.HeroUpgrade)
 end
 
-function var_0_0.sort(arg_8_0, arg_8_1)
-	return arg_8_0 < arg_8_1
+function FightSkillStrengthenView.sort(item1, item2)
+	return item1 < item2
 end
 
-function var_0_0._onBtnEsc(arg_9_0)
+function FightSkillStrengthenView:_onBtnEsc()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	NavigateMgr.instance:addEscape(arg_10_0.viewContainer.viewName, arg_10_0._onBtnEsc, arg_10_0)
+function FightSkillStrengthenView:onOpen()
+	NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onBtnEsc, self)
 
-	local var_10_0 = table.remove(arg_10_0.viewParam, 1)
+	local data = table.remove(self.viewParam, 1)
 
-	if var_10_0 then
-		arg_10_0._upgradeId = var_10_0.id
-		arg_10_0._entityId = var_10_0.entityId
-		arg_10_0._optionIdList = var_10_0.optionIds
+	if data then
+		self._upgradeId = data.id
+		self._entityId = data.entityId
+		self._optionIdList = data.optionIds
 
-		arg_10_0:_refreshUI()
+		self:_refreshUI()
 	else
-		arg_10_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	local var_11_0 = "ui/viewres/fight/fightcarditem.prefab"
+function FightSkillStrengthenView:_refreshUI()
+	local cardPath = "ui/viewres/fight/fightcarditem.prefab"
 
-	arg_11_0:com_loadAsset(var_11_0, arg_11_0._onLoadFinish)
+	self:com_loadAsset(cardPath, self._onLoadFinish)
 end
 
-function var_0_0._onLoadFinish(arg_12_0, arg_12_1)
-	arg_12_0._cardWidth = 180
-	arg_12_0._halfCardWidth = arg_12_0._cardWidth / 2
-	arg_12_0._cardDistance = arg_12_0._cardWidth + 40
-	arg_12_0._scrollWidth = recthelper.getWidth(arg_12_0._scrollViewObj.transform)
-	arg_12_0._halfScrollWidth = arg_12_0._scrollWidth / 2
+function FightSkillStrengthenView:_onLoadFinish(loader)
+	self._cardWidth = 180
+	self._halfCardWidth = self._cardWidth / 2
+	self._cardDistance = self._cardWidth + 40
+	self._scrollWidth = recthelper.getWidth(self._scrollViewObj.transform)
+	self._halfScrollWidth = self._scrollWidth / 2
 
-	local var_12_0 = arg_12_1:GetResource()
+	local tarPrefab = loader:GetResource()
 
-	gohelper.clone(var_12_0, gohelper.findChild(arg_12_0._cardItem, "#go_carditem"), "card")
+	gohelper.clone(tarPrefab, gohelper.findChild(self._cardItem, "#go_carditem"), "card")
 
-	if #arg_12_0._optionIdList > 5 then
-		arg_12_0._posX = 120
+	if #self._optionIdList > 5 then
+		self._posX = 120
 	else
-		arg_12_0._posX = -arg_12_0._halfScrollWidth - (#arg_12_0._optionIdList - 1) * arg_12_0._cardDistance / 2
+		self._posX = -self._halfScrollWidth - (#self._optionIdList - 1) * self._cardDistance / 2
 	end
 
-	arg_12_0._cardObjList = arg_12_0:getUserDataTb_()
-	arg_12_0._skillList = {}
+	self._cardObjList = self:getUserDataTb_()
+	self._skillList = {}
 
-	arg_12_0:com_createObjList(arg_12_0._onItemShow, arg_12_0._optionIdList, arg_12_0._cardRoot, arg_12_0._cardItem)
-	recthelper.setWidth(arg_12_0._cardRoot.transform, -arg_12_0._posX - arg_12_0._halfCardWidth + arg_12_0._cardDistance)
-	arg_12_0:_onCardClick(1)
+	self:com_createObjList(self._onItemShow, self._optionIdList, self._cardRoot, self._cardItem)
+	recthelper.setWidth(self._cardRoot.transform, -self._posX - self._halfCardWidth + self._cardDistance)
+	self:_onCardClick(1)
 end
 
-function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = lua_hero_upgrade_options.configDict[arg_13_2].showSkillId
+function FightSkillStrengthenView:_onItemShow(obj, data, index)
+	local config = lua_hero_upgrade_options.configDict[data]
+	local skillId = config.showSkillId
 
-	arg_13_0._skillList[arg_13_3] = var_13_0
+	self._skillList[index] = skillId
 
-	if not var_13_0 then
-		gohelper.setActive(arg_13_1, false)
+	if not skillId then
+		gohelper.setActive(obj, false)
 
 		return
 	end
 
-	local var_13_1 = arg_13_1.transform
+	local transform = obj.transform
 
-	var_13_1.anchorMin = Vector2.New(1, 0.5)
-	var_13_1.anchorMax = Vector2.New(1, 0.5)
+	transform.anchorMin = Vector2.New(1, 0.5)
+	transform.anchorMax = Vector2.New(1, 0.5)
 
-	recthelper.setAnchorX(var_13_1, arg_13_0._posX)
+	recthelper.setAnchorX(transform, self._posX)
 
-	arg_13_0._posX = arg_13_0._posX + arg_13_0._cardDistance
+	self._posX = self._posX + self._cardDistance
 
-	local var_13_2 = gohelper.findChild(arg_13_1, "#go_carditem/card")
+	local cardObj = gohelper.findChild(obj, "#go_carditem/card")
+	local class = MonoHelper.addNoUpdateLuaComOnceToGo(cardObj, FightViewCardItem)
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(var_13_2, FightViewCardItem):updateItem(arg_13_0._entityId, var_13_0)
+	class:updateItem(self._entityId, skillId)
 
-	local var_13_3 = gohelper.getClickWithDefaultAudio(arg_13_1)
+	local click = gohelper.getClickWithDefaultAudio(obj)
 
-	arg_13_0:addClickCb(var_13_3, arg_13_0._onCardClick, arg_13_0, arg_13_3)
-	table.insert(arg_13_0._cardObjList, arg_13_1)
+	self:addClickCb(click, self._onCardClick, self, index)
+	table.insert(self._cardObjList, obj)
 end
 
-function var_0_0._onCardClick(arg_14_0, arg_14_1)
-	if arg_14_0._curSelectIndex == arg_14_1 then
+function FightSkillStrengthenView:_onCardClick(index)
+	if self._curSelectIndex == index then
 		return
 	end
 
-	arg_14_0._curSelectIndex = arg_14_1
+	self._curSelectIndex = index
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._cardObjList) do
-		local var_14_0 = gohelper.findChild(iter_14_1, "#go_Frame")
+	for i, v in ipairs(self._cardObjList) do
+		local frame = gohelper.findChild(v, "#go_Frame")
 
-		gohelper.setActive(var_14_0, iter_14_0 == arg_14_0._curSelectIndex)
+		gohelper.setActive(frame, i == self._curSelectIndex)
 	end
 
-	arg_14_0:_showSkillDes()
+	self:_showSkillDes()
 
-	local var_14_1 = arg_14_0._cardObjList[arg_14_1].transform
-	local var_14_2 = recthelper.rectToRelativeAnchorPos(var_14_1.position, arg_14_0._scrollViewObj.transform).x
-	local var_14_3 = var_14_2 - arg_14_0._halfCardWidth
-	local var_14_4 = var_14_2 + arg_14_0._halfCardWidth
+	local cardObj = self._cardObjList[index]
+	local cardTransform = cardObj.transform
+	local relativePosX = recthelper.rectToRelativeAnchorPos(cardTransform.position, self._scrollViewObj.transform).x
+	local minX = relativePosX - self._halfCardWidth
+	local maxX = relativePosX + self._halfCardWidth
 
-	if var_14_3 < -arg_14_0._halfScrollWidth then
-		local var_14_5 = var_14_3 + arg_14_0._halfScrollWidth
+	if minX < -self._halfScrollWidth then
+		local offset = minX + self._halfScrollWidth
 
-		recthelper.setAnchorX(arg_14_0._cardRoot.transform, recthelper.getAnchorX(arg_14_0._cardRoot.transform) - var_14_5 + 20)
+		recthelper.setAnchorX(self._cardRoot.transform, recthelper.getAnchorX(self._cardRoot.transform) - offset + 20)
 	end
 
-	if var_14_4 > arg_14_0._halfScrollWidth then
-		local var_14_6 = var_14_4 - arg_14_0._halfScrollWidth
+	if maxX > self._halfScrollWidth then
+		local offset = maxX - self._halfScrollWidth
 
-		recthelper.setAnchorX(arg_14_0._cardRoot.transform, recthelper.getAnchorX(arg_14_0._cardRoot.transform) - var_14_6 - 20)
+		recthelper.setAnchorX(self._cardRoot.transform, recthelper.getAnchorX(self._cardRoot.transform) - offset - 20)
 	end
 end
 
-function var_0_0._showSkillDes(arg_15_0)
-	local var_15_0 = lua_hero_upgrade.configDict[arg_15_0._upgradeId]
-	local var_15_1 = arg_15_0._optionIdList[arg_15_0._curSelectIndex]
-	local var_15_2 = lua_hero_upgrade_options.configDict[var_15_1]
+function FightSkillStrengthenView:_showSkillDes()
+	local hero_upgradeConfig = lua_hero_upgrade.configDict[self._upgradeId]
+	local optionId = self._optionIdList[self._curSelectIndex]
+	local config = lua_hero_upgrade_options.configDict[optionId]
 
-	arg_15_0._nameText.text = var_15_2.title
+	self._nameText.text = config.title
 
-	local var_15_3, var_15_4 = SkillConfig.instance:getExSkillDesc(var_15_2, var_15_0.heroId)
-	local var_15_5 = string.gsub(var_15_3, "▩(%d)%%s", var_15_4)
-	local var_15_6 = HeroSkillModel.instance:formatDescWithColor(var_15_5)
+	local desc, name = SkillConfig.instance:getExSkillDesc(config, hero_upgradeConfig.heroId)
 
-	arg_15_0._desText.text = var_15_6
+	desc = string.gsub(desc, "▩(%d)%%s", name)
+	desc = HeroSkillModel.instance:formatDescWithColor(desc)
+	self._desText.text = desc
 end
 
-function var_0_0.onClose(arg_16_0)
+function FightSkillStrengthenView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function FightSkillStrengthenView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightSkillStrengthenView

@@ -1,96 +1,98 @@
-﻿module("modules.logic.versionactivity3_1.dungeon.view.map.VersionActivity3_1DungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/dungeon/view/map/VersionActivity3_1DungeonMapView.lua
 
-local var_0_0 = class("VersionActivity3_1DungeonMapView", VersionActivityFixedDungeonMapView)
+module("modules.logic.versionactivity3_1.dungeon.view.map.VersionActivity3_1DungeonMapView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local VersionActivity3_1DungeonMapView = class("VersionActivity3_1DungeonMapView", VersionActivityFixedDungeonMapView)
 
-	arg_1_0._goswitch = gohelper.findChild(arg_1_0.viewGO, "#go_switch")
+function VersionActivity3_1DungeonMapView:_editableInitView()
+	VersionActivity3_1DungeonMapView.super._editableInitView(self)
+
+	self._goswitch = gohelper.findChild(self.viewGO, "#go_switch")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_2_0.onActivityDungeonMoChange, arg_2_0)
-	arg_2_0:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivity3_1DungeonEvent.V3a1SceneAnimFinish, arg_2_0._V3a1SceneAnimFinish, arg_2_0)
+function VersionActivity3_1DungeonMapView:addEvents()
+	VersionActivity3_1DungeonMapView.super.addEvents(self)
+	self:addEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, self.onActivityDungeonMoChange, self)
+	self:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivity3_1DungeonEvent.V3a1SceneAnimFinish, self._V3a1SceneAnimFinish, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, arg_3_0.onActivityDungeonMoChange, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivity3_1DungeonEvent.V3a1SceneAnimFinish, arg_3_0._V3a1SceneAnimFinish, arg_3_0)
+function VersionActivity3_1DungeonMapView:removeEvents()
+	VersionActivity3_1DungeonMapView.super.removeEvents(self)
+	self:removeEventCb(VersionActivityDungeonBaseController.instance, VersionActivityDungeonEvent.OnActivityDungeonMoChange, self.onActivityDungeonMoChange, self)
+	self:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivity3_1DungeonEvent.V3a1SceneAnimFinish, self._V3a1SceneAnimFinish, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	var_0_0.super.onOpen(arg_4_0)
+function VersionActivity3_1DungeonMapView:onOpen()
+	VersionActivity3_1DungeonMapView.super.onOpen(self)
 
-	arg_4_0._lastEpisodeId = arg_4_0.activityDungeonMo.episodeId
+	self._lastEpisodeId = self.activityDungeonMo.episodeId
 end
 
-function var_0_0.onModeChange(arg_5_0)
-	arg_5_0._lastEpisodeId = arg_5_0.activityDungeonMo.episodeId
+function VersionActivity3_1DungeonMapView:onModeChange()
+	self._lastEpisodeId = self.activityDungeonMo.episodeId
 
-	var_0_0.super.onModeChange(arg_5_0)
+	VersionActivity3_1DungeonMapView.super.onModeChange(self)
 end
 
-function var_0_0.onActivityDungeonMoChange(arg_6_0)
-	arg_6_0._sceneAnimName = nil
+function VersionActivity3_1DungeonMapView:onActivityDungeonMoChange()
+	self._sceneAnimName = nil
 
-	if arg_6_0._lastEpisodeId and arg_6_0.activityDungeonMo.episodeId ~= arg_6_0._lastEpisodeId then
-		local var_6_0 = arg_6_0.activityDungeonMo.episodeId
+	if self._lastEpisodeId and self.activityDungeonMo.episodeId ~= self._lastEpisodeId then
+		local episodeId = self.activityDungeonMo.episodeId
 
-		if var_6_0 > arg_6_0._lastEpisodeId then
-			arg_6_0._sceneAnimName = VersionActivity3_1DungeonEnum.LevelAnim.left_close
-		elseif var_6_0 < arg_6_0._lastEpisodeId then
-			arg_6_0._sceneAnimName = VersionActivity3_1DungeonEnum.LevelAnim.right_close
+		if episodeId > self._lastEpisodeId then
+			self._sceneAnimName = VersionActivity3_1DungeonEnum.LevelAnim.left_close
+		elseif episodeId < self._lastEpisodeId then
+			self._sceneAnimName = VersionActivity3_1DungeonEnum.LevelAnim.right_close
 		end
 	end
 
-	if not string.nilorempty(arg_6_0._sceneAnimName) then
-		arg_6_0:_playSceneAnim(arg_6_0._sceneAnimName)
+	if not string.nilorempty(self._sceneAnimName) then
+		self:_playSceneAnim(self._sceneAnimName)
 	end
 
-	arg_6_0._lastEpisodeId = arg_6_0.activityDungeonMo.episodeId
+	self._lastEpisodeId = self.activityDungeonMo.episodeId
 end
 
-function var_0_0._V3a1SceneAnimFinish(arg_7_0)
-	local var_7_0
+function VersionActivity3_1DungeonMapView:_V3a1SceneAnimFinish()
+	local sceneName
 
-	if not string.nilorempty(arg_7_0._sceneAnimName) then
-		if arg_7_0._sceneAnimName == VersionActivity3_1DungeonEnum.LevelAnim.right_close then
-			var_7_0 = VersionActivity3_1DungeonEnum.LevelAnim.right_open
-		elseif arg_7_0._sceneAnimName == VersionActivity3_1DungeonEnum.LevelAnim.left_close then
-			var_7_0 = VersionActivity3_1DungeonEnum.LevelAnim.left_open
+	if not string.nilorempty(self._sceneAnimName) then
+		if self._sceneAnimName == VersionActivity3_1DungeonEnum.LevelAnim.right_close then
+			sceneName = VersionActivity3_1DungeonEnum.LevelAnim.right_open
+		elseif self._sceneAnimName == VersionActivity3_1DungeonEnum.LevelAnim.left_close then
+			sceneName = VersionActivity3_1DungeonEnum.LevelAnim.left_open
 		end
 	end
 
-	if not string.nilorempty(var_7_0) then
-		arg_7_0:_playSceneAnim(var_7_0, arg_7_0._hideSceneAnim)
+	if not string.nilorempty(sceneName) then
+		self:_playSceneAnim(sceneName, self._hideSceneAnim)
 	end
 
-	arg_7_0._sceneAnimName = nil
+	self._sceneAnimName = nil
 end
 
-function var_0_0._playLoopAnim(arg_8_0)
-	arg_8_0:_playSceneAnim(VersionActivity3_1DungeonEnum.LevelAnim.loop)
+function VersionActivity3_1DungeonMapView:_playLoopAnim()
+	self:_playSceneAnim(VersionActivity3_1DungeonEnum.LevelAnim.loop)
 end
 
-function var_0_0._hideSceneAnim(arg_9_0)
-	gohelper.setActive(arg_9_0._goswitch, false)
+function VersionActivity3_1DungeonMapView:_hideSceneAnim()
+	gohelper.setActive(self._goswitch, false)
 end
 
-function var_0_0._playSceneAnim(arg_10_0, arg_10_1, arg_10_2)
-	if string.nilorempty(arg_10_1) or not arg_10_0._goswitch then
+function VersionActivity3_1DungeonMapView:_playSceneAnim(animName, callback)
+	if string.nilorempty(animName) or not self._goswitch then
 		return
 	end
 
-	arg_10_0._sceneAnim = SLFramework.AnimatorPlayer.Get(arg_10_0._goswitch.gameObject)
+	self._sceneAnim = SLFramework.AnimatorPlayer.Get(self._goswitch.gameObject)
 
-	if not arg_10_0._sceneAnim then
+	if not self._sceneAnim then
 		return
 	end
 
-	gohelper.setActive(arg_10_0._goswitch, true)
-	arg_10_0._sceneAnim:Play(arg_10_1, arg_10_2, arg_10_0)
+	gohelper.setActive(self._goswitch, true)
+	self._sceneAnim:Play(animName, callback, self)
 end
 
-return var_0_0
+return VersionActivity3_1DungeonMapView

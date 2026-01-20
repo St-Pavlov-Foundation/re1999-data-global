@@ -1,50 +1,52 @@
-﻿module("modules.logic.fight.entity.comp.FightHeroCustomComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightHeroCustomComp.lua
 
-local var_0_0 = class("FightHeroCustomComp", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightHeroCustomComp", package.seeall)
 
-var_0_0.HeroId2CustomComp = {
+local FightHeroCustomComp = class("FightHeroCustomComp", LuaCompBase)
+
+FightHeroCustomComp.HeroId2CustomComp = {
 	[3113] = FightHeroALFComp
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+function FightHeroCustomComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
+function FightHeroCustomComp:init(go)
+	self.go = go
 
-	local var_2_0 = arg_2_0.entity:getMO()
-	local var_2_1 = var_0_0.HeroId2CustomComp[var_2_0.modelId]
+	local entityMo = self.entity:getMO()
+	local compCls = FightHeroCustomComp.HeroId2CustomComp[entityMo.modelId]
 
-	if var_2_1 then
-		arg_2_0.customComp = var_2_1.New(arg_2_0.entity)
+	if compCls then
+		self.customComp = compCls.New(self.entity)
 
-		arg_2_0.customComp:init(arg_2_1)
+		self.customComp:init(go)
 	end
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	if arg_3_0.customComp then
-		arg_3_0.customComp:addEventListeners()
+function FightHeroCustomComp:addEventListeners()
+	if self.customComp then
+		self.customComp:addEventListeners()
 	end
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	if arg_4_0.customComp then
-		arg_4_0.customComp:removeEventListeners()
+function FightHeroCustomComp:removeEventListeners()
+	if self.customComp then
+		self.customComp:removeEventListeners()
 	end
 end
 
-function var_0_0.getCustomComp(arg_5_0)
-	return arg_5_0.customComp
+function FightHeroCustomComp:getCustomComp()
+	return self.customComp
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	if arg_6_0.customComp then
-		arg_6_0.customComp:onDestroy()
+function FightHeroCustomComp:onDestroy()
+	if self.customComp then
+		self.customComp:onDestroy()
 
-		arg_6_0.customComp = nil
+		self.customComp = nil
 	end
 end
 
-return var_0_0
+return FightHeroCustomComp

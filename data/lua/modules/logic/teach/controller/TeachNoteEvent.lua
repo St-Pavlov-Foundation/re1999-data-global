@@ -1,11 +1,13 @@
-﻿module("modules.logic.teach.controller.TeachNoteEvent", package.seeall)
+﻿-- chunkname: @modules/logic/teach/controller/TeachNoteEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.teach.controller.TeachNoteEvent", package.seeall)
 
-var_0_0.ClickTopicItem = 1001
-var_0_0.GetServerTopicInfo = 2001
-var_0_0.GetServerTopicReward = 2002
-var_0_0.GetServerTeachNoteFinalReward = 2003
-var_0_0.GetServerSetOpenSuccess = 2004
+local TeachNoteEvent = _M
 
-return var_0_0
+TeachNoteEvent.ClickTopicItem = 1001
+TeachNoteEvent.GetServerTopicInfo = 2001
+TeachNoteEvent.GetServerTopicReward = 2002
+TeachNoteEvent.GetServerTeachNoteFinalReward = 2003
+TeachNoteEvent.GetServerSetOpenSuccess = 2004
+
+return TeachNoteEvent

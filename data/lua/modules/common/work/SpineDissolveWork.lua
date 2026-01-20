@@ -1,7 +1,9 @@
-﻿module("modules.common.work.SpineDissolveWork", package.seeall)
+﻿-- chunkname: @modules/common/work/SpineDissolveWork.lua
 
-local var_0_0 = class("SpineDissolveWork", BaseWork)
-local var_0_1 = {
+module("modules.common.work.SpineDissolveWork", package.seeall)
+
+local SpineDissolveWork = class("SpineDissolveWork", BaseWork)
+local AnimatorPaths = {
 	[FightEnum.DissolveType.Player] = {
 		duration = 1.67,
 		path = FightPreloadOthersWork.die_player
@@ -20,150 +22,150 @@ local var_0_1 = {
 	}
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0.context = arg_1_1
+function SpineDissolveWork:onStart(context)
+	self.context = context
 
-	local var_1_0 = lua_skin_spine_action.configDict[arg_1_0.context.dissolveEntity:getMO().skin]
-	local var_1_1 = var_1_0 and var_1_0.die and var_1_0.die.dieAnim
+	local skil_spine_action_config = lua_skin_spine_action.configDict[self.context.dissolveEntity:getMO().skin]
+	local dead_ani = skil_spine_action_config and skil_spine_action_config.die and skil_spine_action_config.die.dieAnim
 
-	if string.nilorempty(var_1_1) then
-		arg_1_0:_playDissolve()
+	if string.nilorempty(dead_ani) then
+		self:_playDissolve()
 	else
-		arg_1_0._ani_path = var_1_1
-		arg_1_0._animationLoader = MultiAbLoader.New()
+		self._ani_path = dead_ani
+		self._animationLoader = MultiAbLoader.New()
 
-		arg_1_0._animationLoader:addPath(FightHelper.getEntityAniPath(var_1_1))
-		arg_1_0._animationLoader:startLoad(arg_1_0._onAnimationLoaded, arg_1_0)
+		self._animationLoader:addPath(FightHelper.getEntityAniPath(dead_ani))
+		self._animationLoader:startLoad(self._onAnimationLoaded, self)
 	end
 end
 
-function var_0_0._onAnimationLoaded(arg_2_0)
-	local var_2_0 = arg_2_0._animationLoader:getFirstAssetItem():GetResource(ResUrl.getEntityAnim(arg_2_0._ani_path))
+function SpineDissolveWork:_onAnimationLoaded()
+	local animInst = self._animationLoader:getFirstAssetItem():GetResource(ResUrl.getEntityAnim(self._ani_path))
 
-	var_2_0.legacy = true
-	arg_2_0._animStateName = var_2_0.name
-	arg_2_0._animCompList = {}
+	animInst.legacy = true
+	self._animStateName = animInst.name
+	self._animCompList = {}
 
-	local var_2_1 = arg_2_0.context.dissolveEntity
-	local var_2_2 = gohelper.onceAddComponent(var_2_1.spine:getSpineGO(), typeof(UnityEngine.Animation))
+	local entity = self.context.dissolveEntity
+	local animComp = gohelper.onceAddComponent(entity.spine:getSpineGO(), typeof(UnityEngine.Animation))
 
-	table.insert(arg_2_0._animCompList, var_2_2)
+	table.insert(self._animCompList, animComp)
 
-	var_2_2.enabled = true
-	var_2_2.clip = var_2_0
+	animComp.enabled = true
+	animComp.clip = animInst
 
-	var_2_2:AddClip(var_2_0, arg_2_0._animStateName)
+	animComp:AddClip(animInst, self._animStateName)
 
-	local var_2_3 = var_2_2.this:get(arg_2_0._animStateName)
+	local state = animComp.this:get(self._animStateName)
 
-	if var_2_3 then
-		var_2_3.speed = FightModel.instance:getSpeed()
+	if state then
+		state.speed = FightModel.instance:getSpeed()
 	end
 
-	var_2_2:Play()
-	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, arg_2_0._onUpdateSpeed, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._afterPlayDissolve, arg_2_0, var_2_0.length / FightModel.instance:getSpeed())
+	animComp:Play()
+	FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
+	TaskDispatcher.runDelay(self._afterPlayDissolve, self, animInst.length / FightModel.instance:getSpeed())
 end
 
-function var_0_0._onUpdateSpeed(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._animCompList) do
-		local var_3_0 = iter_3_1.this:get(arg_3_0._animStateName)
+function SpineDissolveWork:_onUpdateSpeed()
+	for _, animComp in ipairs(self._animCompList) do
+		local state = animComp.this:get(self._animStateName)
 
-		if var_3_0 then
-			var_3_0.speed = FightModel.instance:getSpeed()
+		if state then
+			state.speed = FightModel.instance:getSpeed()
 		end
 	end
 end
 
-function var_0_0._clearAnim(arg_4_0)
-	if arg_4_0._animCompList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._animCompList) do
-			if not gohelper.isNil(iter_4_1) then
-				if iter_4_1:GetClip(arg_4_0._animStateName) then
-					iter_4_1:RemoveClip(arg_4_0._animStateName)
+function SpineDissolveWork:_clearAnim()
+	if self._animCompList then
+		for _, animComp in ipairs(self._animCompList) do
+			if not gohelper.isNil(animComp) then
+				if animComp:GetClip(self._animStateName) then
+					animComp:RemoveClip(self._animStateName)
 				end
 
-				if iter_4_1.clip and iter_4_1.clip.name == arg_4_0._animStateName then
-					iter_4_1.clip = nil
+				if animComp.clip and animComp.clip.name == self._animStateName then
+					animComp.clip = nil
 				end
 
-				iter_4_1.enabled = false
+				animComp.enabled = false
 			end
 		end
 
-		arg_4_0._animCompList = nil
+		self._animCompList = nil
 	end
 end
 
-function var_0_0._playDissolve(arg_5_0)
-	local var_5_0 = var_0_1[arg_5_0.context.dissolveType]
-	local var_5_1 = var_5_0 and var_5_0.path
+function SpineDissolveWork:_playDissolve()
+	local animatorParam = AnimatorPaths[self.context.dissolveType]
+	local animatorPath = animatorParam and animatorParam.path
 
-	if var_5_1 then
-		local var_5_2 = FightPreloadController.instance:getFightAssetItem(var_5_1)
+	if animatorPath then
+		local assetItem = FightPreloadController.instance:getFightAssetItem(animatorPath)
 
-		if var_5_2 then
-			arg_5_0:_reallyPlayDissolve(var_5_2)
+		if assetItem then
+			self:_reallyPlayDissolve(assetItem)
 		else
-			arg_5_0._animatorLoader = MultiAbLoader.New()
+			self._animatorLoader = MultiAbLoader.New()
 
-			arg_5_0._animatorLoader:addPath(var_5_1)
-			arg_5_0._animatorLoader:startLoad(arg_5_0._onAnimatorLoaded, arg_5_0)
+			self._animatorLoader:addPath(animatorPath)
+			self._animatorLoader:startLoad(self._onAnimatorLoaded, self)
 		end
 	else
-		logError(arg_5_0.context.dissolveEntity:getMO():getEntityName() .. "没有配置死亡消融动画 type = " .. (arg_5_0.context.dissolveType or "nil"))
+		logError(self.context.dissolveEntity:getMO():getEntityName() .. "没有配置死亡消融动画 type = " .. (self.context.dissolveType or "nil"))
 	end
 end
 
-function var_0_0._onAnimatorLoaded(arg_6_0)
-	local var_6_0 = arg_6_0._animatorLoader:getFirstAssetItem()
+function SpineDissolveWork:_onAnimatorLoaded()
+	local assetItem = self._animatorLoader:getFirstAssetItem()
 
-	arg_6_0:_reallyPlayDissolve(var_6_0)
+	self:_reallyPlayDissolve(assetItem)
 end
 
-function var_0_0._reallyPlayDissolve(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.context.dissolveEntity and arg_7_0.context.dissolveEntity.spine and arg_7_0.context.dissolveEntity.spine:getSpineGO()
+function SpineDissolveWork:_reallyPlayDissolve(assetItem)
+	local spineObj = self.context.dissolveEntity and self.context.dissolveEntity.spine and self.context.dissolveEntity.spine:getSpineGO()
 
-	if not var_7_0 then
-		arg_7_0:_afterPlayDissolve()
+	if not spineObj then
+		self:_afterPlayDissolve()
 
 		return
 	end
 
-	local var_7_1 = arg_7_1:GetResource()
-	local var_7_2 = gohelper.onceAddComponent(var_7_0, typeof(UnityEngine.Animator))
+	local animatorInst = assetItem:GetResource()
+	local animatorComp = gohelper.onceAddComponent(spineObj, typeof(UnityEngine.Animator))
 
-	var_7_2.enabled = true
-	var_7_2.runtimeAnimatorController = var_7_1
-	var_7_2.speed = FightModel.instance:getSpeed()
+	animatorComp.enabled = true
+	animatorComp.runtimeAnimatorController = animatorInst
+	animatorComp.speed = FightModel.instance:getSpeed()
 
-	local var_7_3 = var_0_1[arg_7_0.context.dissolveType]
-	local var_7_4 = var_7_3 and var_7_3.duration or 1.67
+	local animatorParam = AnimatorPaths[self.context.dissolveType]
+	local animationLength = animatorParam and animatorParam.duration or 1.67
 
-	TaskDispatcher.runDelay(arg_7_0._afterPlayDissolve, arg_7_0, var_7_4 / FightModel.instance:getSpeed())
+	TaskDispatcher.runDelay(self._afterPlayDissolve, self, animationLength / FightModel.instance:getSpeed())
 end
 
-function var_0_0._afterPlayDissolve(arg_8_0)
-	arg_8_0:_clearAnim()
-	arg_8_0:onDone(true)
+function SpineDissolveWork:_afterPlayDissolve()
+	self:_clearAnim()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_9_0)
-	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_9_0._onUpdateSpeed, arg_9_0)
-	arg_9_0:_clearAnim()
-	TaskDispatcher.cancelTask(arg_9_0._afterPlayDissolve, arg_9_0)
+function SpineDissolveWork:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
+	self:_clearAnim()
+	TaskDispatcher.cancelTask(self._afterPlayDissolve, self)
 
-	if arg_9_0._animationLoader then
-		arg_9_0._animationLoader:dispose()
+	if self._animationLoader then
+		self._animationLoader:dispose()
 
-		arg_9_0._animationLoader = nil
+		self._animationLoader = nil
 	end
 
-	if arg_9_0._animatorLoader then
-		arg_9_0._animatorLoader:dispose()
+	if self._animatorLoader then
+		self._animatorLoader:dispose()
 
-		arg_9_0._animatorLoader = nil
+		self._animatorLoader = nil
 	end
 end
 
-return var_0_0
+return SpineDissolveWork

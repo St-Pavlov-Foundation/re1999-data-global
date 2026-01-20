@@ -1,54 +1,58 @@
-﻿module("modules.logic.character.model.extra.CharacterWeaponShowMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/extra/CharacterWeaponShowMO.lua
 
-local var_0_0 = class("CharacterWeaponShowMO")
+module("modules.logic.character.model.extra.CharacterWeaponShowMO", package.seeall)
 
-function var_0_0.initMo(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.heroId = arg_1_1
-	arg_1_0.weaponId = arg_1_2.weaponId
-	arg_1_0.type = arg_1_2.type
-	arg_1_0.co = arg_1_2
+local CharacterWeaponShowMO = class("CharacterWeaponShowMO")
 
-	if arg_1_0:isEquip() then
-		arg_1_0:cancelNew()
+function CharacterWeaponShowMO:initMo(heroId, co)
+	self.heroId = heroId
+	self.weaponId = co.weaponId
+	self.type = co.type
+	self.co = co
+
+	if self:isEquip() then
+		self:cancelNew()
 	end
 end
 
-function var_0_0.setStatus(arg_2_0, arg_2_1)
-	arg_2_0.status = arg_2_1
+function CharacterWeaponShowMO:setStatus(status)
+	self.status = status
 end
 
-function var_0_0.isEquip(arg_3_0)
-	return arg_3_0.status == CharacterExtraEnum.WeaponStatus.Equip
+function CharacterWeaponShowMO:isEquip()
+	return self.status == CharacterExtraEnum.WeaponStatus.Equip
 end
 
-function var_0_0.isLock(arg_4_0)
-	return arg_4_0.status == CharacterExtraEnum.WeaponStatus.Lock
+function CharacterWeaponShowMO:isLock()
+	return self.status == CharacterExtraEnum.WeaponStatus.Lock
 end
 
-function var_0_0.isNormal(arg_5_0)
-	return arg_5_0.status == CharacterExtraEnum.WeaponStatus.Normal
+function CharacterWeaponShowMO:isNormal()
+	return self.status == CharacterExtraEnum.WeaponStatus.Normal
 end
 
-function var_0_0.isNew(arg_6_0)
-	local var_6_0 = arg_6_0:_getReddotKey()
+function CharacterWeaponShowMO:isNew()
+	local key = self:_getReddotKey()
 
-	arg_6_0._isNew = arg_6_0:isNormal() and GameUtil.playerPrefsGetNumberByUserId(var_6_0, 0) == 0
+	self._isNew = self:isNormal() and GameUtil.playerPrefsGetNumberByUserId(key, 0) == 0
 
-	return arg_6_0._isNew
+	return self._isNew
 end
 
-function var_0_0.cancelNew(arg_7_0)
-	if arg_7_0._isNew then
-		local var_7_0 = arg_7_0:_getReddotKey()
+function CharacterWeaponShowMO:cancelNew()
+	if self._isNew then
+		local key = self:_getReddotKey()
 
-		GameUtil.playerPrefsSetNumberByUserId(var_7_0, 1)
+		GameUtil.playerPrefsSetNumberByUserId(key, 1)
 
-		arg_7_0._isNew = false
+		self._isNew = false
 	end
 end
 
-function var_0_0._getReddotKey(arg_8_0)
-	return (string.format("%s_%s_%s", CharacterExtraEnum.WeaponReddot, arg_8_0.heroId, arg_8_0.weaponId))
+function CharacterWeaponShowMO:_getReddotKey()
+	local key = string.format("%s_%s_%s", CharacterExtraEnum.WeaponReddot, self.heroId, self.weaponId)
+
+	return key
 end
 
-return var_0_0
+return CharacterWeaponShowMO

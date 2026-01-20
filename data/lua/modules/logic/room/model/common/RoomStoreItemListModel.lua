@@ -1,114 +1,116 @@
-﻿module("modules.logic.room.model.common.RoomStoreItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomStoreItemListModel.lua
 
-local var_0_0 = class("RoomStoreItemListModel", ListScrollModel)
+module("modules.logic.room.model.common.RoomStoreItemListModel", package.seeall)
 
-function var_0_0.setStoreGoodsMO(arg_1_0, arg_1_1)
-	arg_1_0.storeGoodsMO = arg_1_1
+local RoomStoreItemListModel = class("RoomStoreItemListModel", ListScrollModel)
 
-	local var_1_0 = arg_1_1.config
-	local var_1_1, var_1_2 = arg_1_1:getAllCostInfo()
-	local var_1_3 = {
-		var_1_1,
-		var_1_2
+function RoomStoreItemListModel:setStoreGoodsMO(_storeGoodsMO)
+	self.storeGoodsMO = _storeGoodsMO
+
+	local config = _storeGoodsMO.config
+	local cost1, cost2 = _storeGoodsMO:getAllCostInfo()
+	local costInfos = {
+		cost1,
+		cost2
 	}
 
-	arg_1_0._costsId = 1
+	self._costsId = 1
 
-	local var_1_4 = GameUtil.splitString2(var_1_0.product, true)
-	local var_1_5 = string.splitToNumber(var_1_0.reduction, "#")
-	local var_1_6 = {}
-	local var_1_7 = {}
+	local num2List = GameUtil.splitString2(config.product, true)
+	local reductions = string.splitToNumber(config.reduction, "#")
+	local molist = {}
+	local reductionsInfo = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_5) do
-		local var_1_8 = StoreConfig.instance:getGoodsConfig(iter_1_1)
-		local var_1_9 = GameUtil.splitString2(var_1_8.cost, true)[1]
-		local var_1_10 = GameUtil.splitString2(var_1_8.cost2, true)[1]
-		local var_1_11 = GameUtil.splitString2(var_1_8.product, true)[1]
-		local var_1_12 = var_1_11[1]
-		local var_1_13 = var_1_11[2]
+	for i, goodsId in ipairs(reductions) do
+		local goodsConfig = StoreConfig.instance:getGoodsConfig(goodsId)
+		local goodsCosts1 = GameUtil.splitString2(goodsConfig.cost, true)[1]
+		local goodsCosts2 = GameUtil.splitString2(goodsConfig.cost2, true)[1]
+		local product = GameUtil.splitString2(goodsConfig.product, true)[1]
+		local pMaterialType = product[1]
+		local pMaterialId = product[2]
 
-		var_1_7[var_1_12] = var_1_7[var_1_12] or {}
-		var_1_7[var_1_12][var_1_13] = {
-			var_1_9[3],
-			var_1_10[3]
+		reductionsInfo[pMaterialType] = reductionsInfo[pMaterialType] or {}
+		reductionsInfo[pMaterialType][pMaterialId] = {
+			goodsCosts1[3],
+			goodsCosts2[3]
 		}
 	end
 
-	for iter_1_2 = 1, #var_1_4 do
-		local var_1_14 = var_1_4[iter_1_2]
-		local var_1_15 = RoomStoreItemMO.New()
-		local var_1_16 = {}
+	for i = 1, #num2List do
+		local items = num2List[i]
+		local mo = RoomStoreItemMO.New()
+		local costs = {}
 
-		var_1_15:init(var_1_14[2], var_1_14[1], var_1_14[3], arg_1_0._costId, arg_1_1)
+		mo:init(items[2], items[1], items[3], self._costId, _storeGoodsMO)
 
-		for iter_1_3, iter_1_4 in ipairs(var_1_3) do
-			if iter_1_4 then
-				local var_1_17 = iter_1_4[1]
-				local var_1_18 = var_1_17[3]
+		for costId, costInfo in ipairs(costInfos) do
+			if costInfo then
+				local costParam = costInfo[1]
+				local reduction = costParam[3]
 
-				if var_1_7[var_1_14[1]] and var_1_7[var_1_14[1]][var_1_14[2]] then
-					var_1_18 = var_1_7[var_1_14[1]][var_1_14[2]][iter_1_3]
+				if reductionsInfo[items[1]] and reductionsInfo[items[1]][items[2]] then
+					reduction = reductionsInfo[items[1]][items[2]][costId]
 				end
 
-				var_1_15:addCost(iter_1_3, var_1_17[2], var_1_17[1], var_1_18)
+				mo:addCost(costId, costParam[2], costParam[1], reduction)
 			end
 		end
 
-		table.insert(var_1_6, var_1_15)
+		table.insert(molist, mo)
 	end
 
-	arg_1_0:setList(var_1_6)
-	arg_1_0:onModelUpdate()
+	self:setList(molist)
+	self:onModelUpdate()
 end
 
-function var_0_0.getCostId(arg_2_0)
-	return arg_2_0._costsId or 1
+function RoomStoreItemListModel:getCostId()
+	return self._costsId or 1
 end
 
-function var_0_0.setCostId(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 or arg_3_1 == 2 then
-		arg_3_0._costsId = arg_3_1
+function RoomStoreItemListModel:setCostId(costId)
+	if costId == 1 or costId == 2 then
+		self._costsId = costId
 
-		arg_3_0:onModelUpdate()
+		self:onModelUpdate()
 	end
 end
 
-function var_0_0.getTotalPriceByCostId(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getList()
+function RoomStoreItemListModel:getTotalPriceByCostId(costId)
+	local list = self:getList()
 
-	arg_4_1 = arg_4_1 or arg_4_0._costsId
+	costId = costId or self._costsId
 
-	local var_4_1 = 0
+	local totalPrice = 0
 
-	for iter_4_0 = 1, #var_4_0 do
-		var_4_1 = var_4_1 + var_4_0[iter_4_0]:getTotalPriceByCostId(arg_4_1)
+	for i = 1, #list do
+		totalPrice = totalPrice + list[i]:getTotalPriceByCostId(costId)
 	end
 
-	return var_4_1
+	return totalPrice
 end
 
-function var_0_0.getRoomStoreItemMOHasTheme(arg_5_0)
-	local var_5_0 = arg_5_0:getList()
+function RoomStoreItemListModel:getRoomStoreItemMOHasTheme()
+	local list = self:getList()
 
-	for iter_5_0 = 1, #var_5_0 do
-		local var_5_1 = var_5_0[iter_5_0]
+	for i = 1, #list do
+		local mo = list[i]
 
-		if var_5_1.themeId then
-			return var_5_1
+		if mo.themeId then
+			return mo
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.setIsSelectCurrency(arg_6_0, arg_6_1)
-	arg_6_0.isSelectCurrency = arg_6_1
+function RoomStoreItemListModel:setIsSelectCurrency(state)
+	self.isSelectCurrency = state
 end
 
-function var_0_0.getIsSelectCurrency(arg_7_0)
-	return arg_7_0.isSelectCurrency
+function RoomStoreItemListModel:getIsSelectCurrency()
+	return self.isSelectCurrency
 end
 
-var_0_0.instance = var_0_0.New()
+RoomStoreItemListModel.instance = RoomStoreItemListModel.New()
 
-return var_0_0
+return RoomStoreItemListModel

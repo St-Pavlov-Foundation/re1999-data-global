@@ -1,13 +1,15 @@
-﻿module("modules.logic.dungeon.view.DungeonStoryEntranceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonStoryEntranceViewContainer.lua
 
-local var_0_0 = class("DungeonStoryEntranceViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonStoryEntranceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonStoryEntranceViewContainer = class("DungeonStoryEntranceViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonStoryEntranceView.New())
+function DungeonStoryEntranceViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonStoryEntranceView.New())
+
+	return views
 end
 
-return var_0_0
+return DungeonStoryEntranceViewContainer

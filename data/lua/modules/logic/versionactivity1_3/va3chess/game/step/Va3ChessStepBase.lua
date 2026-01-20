@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/step/Va3ChessStepBase.lua
 
-local var_0_0 = class("Va3ChessStepBase")
+module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local Va3ChessStepBase = class("Va3ChessStepBase")
+
+function Va3ChessStepBase:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.start(arg_2_0)
+function Va3ChessStepBase:start()
 	return
 end
 
-function var_0_0.finish(arg_3_0)
-	local var_3_0 = Va3ChessGameController.instance.event
+function Va3ChessStepBase:finish()
+	local evtMgr = Va3ChessGameController.instance.event
 
-	if var_3_0 then
-		var_3_0:nextStep()
+	if evtMgr then
+		evtMgr:nextStep()
 	end
 end
 
-function var_0_0.dispose(arg_4_0)
-	arg_4_0.originData = nil
+function Va3ChessStepBase:dispose()
+	self.originData = nil
 end
 
-return var_0_0
+return Va3ChessStepBase

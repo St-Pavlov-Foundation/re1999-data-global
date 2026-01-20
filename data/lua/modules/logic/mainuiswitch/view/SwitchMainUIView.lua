@@ -1,13 +1,15 @@
-﻿module("modules.logic.mainuiswitch.view.SwitchMainUIView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/SwitchMainUIView.lua
 
-local var_0_0 = class("SwitchMainUIView", MainUIPartView)
+module("modules.logic.mainuiswitch.view.SwitchMainUIView", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	arg_1_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchMainUI, arg_1_0.refreshMainUI, arg_1_0)
+local SwitchMainUIView = class("SwitchMainUIView", MainUIPartView)
+
+function SwitchMainUIView:addEvents()
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchMainUI, self.refreshMainUI, self)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	arg_2_0:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchMainUI, arg_2_0.refreshMainUI, arg_2_0)
+function SwitchMainUIView:removeEvents()
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchMainUI, self.refreshMainUI, self)
 end
 
-return var_0_0
+return SwitchMainUIView

@@ -1,23 +1,27 @@
-﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9FightRuleTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_9/Season123_1_9FightRuleTipViewContainer.lua
 
-local var_0_0 = class("Season123_1_9FightRuleTipViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view1_9.Season123_1_9FightRuleTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local Season123_1_9FightRuleTipViewContainer = class("Season123_1_9FightRuleTipViewContainer", BaseViewContainer)
+
+function Season123_1_9FightRuleTipViewContainer:buildViews()
+	local views = {
 		TabViewGroup.New(1, "root/contain"),
 		Season123_1_9FightRuleTipView.New()
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function Season123_1_9FightRuleTipViewContainer:buildTabViews(tabContainerId)
 	return {
 		Season123_1_9FightRuleView.New(),
 		Season123_1_9FightCardView.New()
 	}
 end
 
-function var_0_0.switchTab(arg_3_0, arg_3_1)
-	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_3_1)
+function Season123_1_9FightRuleTipViewContainer:switchTab(tabId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 1, tabId)
 end
 
-return var_0_0
+return Season123_1_9FightRuleTipViewContainer

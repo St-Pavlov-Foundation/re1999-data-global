@@ -1,14 +1,16 @@
-﻿module("modules.logic.room.utils.RoomTransportHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomTransportHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.RoomTransportHelper", package.seeall)
 
-var_0_0._pathBuidingTypeList = nil
-var_0_0._pathBuidingTypesDict = nil
-var_0_0._stieBuidingTypeList = nil
+local RoomTransportHelper = {}
 
-function var_0_0._initPathParam()
-	if not var_0_0._pathBuidingTypeList then
-		local var_1_0 = {
+RoomTransportHelper._pathBuidingTypeList = nil
+RoomTransportHelper._pathBuidingTypesDict = nil
+RoomTransportHelper._stieBuidingTypeList = nil
+
+function RoomTransportHelper._initPathParam()
+	if not RoomTransportHelper._pathBuidingTypeList then
+		local typesList = {
 			{
 				RoomBuildingEnum.BuildingType.Collect,
 				RoomBuildingEnum.BuildingType.Process
@@ -23,178 +25,177 @@ function var_0_0._initPathParam()
 			}
 		}
 
-		var_0_0._pathBuidingTypeList = var_1_0
-		var_0_0._pathBuidingTypesDict = {}
-		var_0_0._stieBuidingTypeList = {}
+		RoomTransportHelper._pathBuidingTypeList = typesList
+		RoomTransportHelper._pathBuidingTypesDict = {}
+		RoomTransportHelper._stieBuidingTypeList = {}
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-			local var_1_1 = {}
-			local var_1_2 = iter_1_1[1]
+		for _, types in ipairs(typesList) do
+			local temps = {}
+			local buildingType = types[1]
 
-			tabletool.addValues(var_1_1, iter_1_1)
+			tabletool.addValues(temps, types)
 
-			var_0_0._pathBuidingTypesDict[var_1_2] = var_1_1
+			RoomTransportHelper._pathBuidingTypesDict[buildingType] = temps
 
-			table.insert(var_0_0._stieBuidingTypeList, var_1_2)
+			table.insert(RoomTransportHelper._stieBuidingTypeList, buildingType)
 		end
 	end
 end
 
-function var_0_0.getPathBuildingTypesList()
-	var_0_0._initPathParam()
+function RoomTransportHelper.getPathBuildingTypesList()
+	RoomTransportHelper._initPathParam()
 
-	return var_0_0._pathBuidingTypeList
+	return RoomTransportHelper._pathBuidingTypeList
 end
 
-function var_0_0.getSiteBuildingTypeList()
-	var_0_0._initPathParam()
+function RoomTransportHelper.getSiteBuildingTypeList()
+	RoomTransportHelper._initPathParam()
 
-	return var_0_0._stieBuidingTypeList
+	return RoomTransportHelper._stieBuidingTypeList
 end
 
-function var_0_0.getPathBuildingTypes(arg_4_0)
-	var_0_0._initPathParam()
+function RoomTransportHelper.getPathBuildingTypes(buildingType)
+	RoomTransportHelper._initPathParam()
 
-	return var_0_0._pathBuidingTypesDict[arg_4_0]
+	return RoomTransportHelper._pathBuidingTypesDict[buildingType]
 end
 
-function var_0_0.getVehicleCfgByBuildingId(arg_5_0, arg_5_1)
-	local var_5_0 = RoomConfig.instance:getBuildingConfig(arg_5_0)
+function RoomTransportHelper.getVehicleCfgByBuildingId(buildingId, buildingSkinId)
+	local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
 
-	if not var_5_0 then
+	if not buildingCfg then
 		return
 	end
 
-	local var_5_1 = RoomConfig.instance:getBuildingSkinConfig(arg_5_1)
-	local var_5_2 = var_5_1 and var_5_1.vehicleId or var_5_0.vehicleId
-	local var_5_3 = RoomConfig.instance:getVehicleConfig(var_5_2)
+	local skinCfg = RoomConfig.instance:getBuildingSkinConfig(buildingSkinId)
+	local vehicleId = skinCfg and skinCfg.vehicleId or buildingCfg.vehicleId
+	local vehicleCfg = RoomConfig.instance:getVehicleConfig(vehicleId)
 
-	if not var_5_3 and var_5_0.buildingType == RoomBuildingEnum.BuildingType.Transport then
-		logError(string.format("运输建筑【%s %s】找不到交通工具配置[%s]", var_5_0.name, var_5_0.id, var_5_2))
+	if not vehicleCfg and buildingCfg.buildingType == RoomBuildingEnum.BuildingType.Transport then
+		logError(string.format("运输建筑【%s %s】找不到交通工具配置[%s]", buildingCfg.name, buildingCfg.id, vehicleId))
 	end
 
-	return var_5_3
+	return vehicleCfg
 end
 
-function var_0_0.getSiteFromToByType(arg_6_0)
-	local var_6_0 = var_0_0.getPathBuildingTypes(arg_6_0)
+function RoomTransportHelper.getSiteFromToByType(buildingType)
+	local types = RoomTransportHelper.getPathBuildingTypes(buildingType)
 
-	if var_6_0 then
-		return var_6_0[1], var_6_0[2]
+	if types then
+		return types[1], types[2]
 	end
 end
 
-function var_0_0.getSiltParamBy2PathMO(arg_7_0, arg_7_1)
-	local var_7_0
-	local var_7_1
-	local var_7_2 = arg_7_0:getFirstHexPoint()
-	local var_7_3 = arg_7_0:getLastHexPoint()
-	local var_7_4 = arg_7_1:getFirstHexPoint()
-	local var_7_5 = arg_7_1:getLastHexPoint()
+function RoomTransportHelper.getSiltParamBy2PathMO(pathMO, bPathMO)
+	local hexPoint, stieType
+	local aFirstHexPoint = pathMO:getFirstHexPoint()
+	local aLastHexPoint = pathMO:getLastHexPoint()
+	local bFirstHexPoint = bPathMO:getFirstHexPoint()
+	local bLastHexPoint = bPathMO:getLastHexPoint()
 
-	if var_7_2 == var_7_4 or var_7_2 == var_7_5 then
-		var_7_0 = var_7_2
-	elseif var_7_3 == var_7_4 or var_7_3 == var_7_5 then
-		var_7_0 = var_7_3
+	if aFirstHexPoint == bFirstHexPoint or aFirstHexPoint == bLastHexPoint then
+		hexPoint = aFirstHexPoint
+	elseif aLastHexPoint == bFirstHexPoint or aLastHexPoint == bLastHexPoint then
+		hexPoint = aLastHexPoint
 	end
 
-	if arg_7_0.fromType == arg_7_1.fromType or arg_7_0.fromType == arg_7_1.toType then
-		var_7_1 = arg_7_0.fromType
-	elseif arg_7_0.toType == arg_7_1.fromType or arg_7_0.toType == arg_7_1.toType then
-		var_7_1 = arg_7_0.toType
+	if pathMO.fromType == bPathMO.fromType or pathMO.fromType == bPathMO.toType then
+		stieType = pathMO.fromType
+	elseif pathMO.toType == bPathMO.fromType or pathMO.toType == bPathMO.toType then
+		stieType = pathMO.toType
 	end
 
-	local var_7_6 = RoomMapBuildingAreaModel.instance:getAreaMOByBType(var_7_1)
+	local buildingAreaMO = RoomMapBuildingAreaModel.instance:getAreaMOByBType(stieType)
 
-	if var_7_0 ~= nil and var_7_6 and var_7_6:isInRangesByHexPoint(var_7_0) then
-		return var_7_1, var_7_0
+	if hexPoint ~= nil and buildingAreaMO and buildingAreaMO:isInRangesByHexPoint(hexPoint) then
+		return stieType, hexPoint
 	end
 
 	return nil, nil
 end
 
-function var_0_0.fromTo2SiteType(arg_8_0, arg_8_1)
-	local var_8_0 = var_0_0.getSiteBuildingTypeList()
+function RoomTransportHelper.fromTo2SiteType(fromType, toType)
+	local typesList = RoomTransportHelper.getSiteBuildingTypeList()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1, var_8_2 = var_0_0.getSiteFromToByType(iter_8_1)
+	for i, siteType in ipairs(typesList) do
+		local fType, tType = RoomTransportHelper.getSiteFromToByType(siteType)
 
-		if var_8_1 == arg_8_0 and var_8_2 == arg_8_1 or var_8_2 == arg_8_0 and var_8_1 == arg_8_1 then
-			return iter_8_1
+		if fType == fromType and tType == toType or tType == fromType and fType == toType then
+			return siteType
 		end
 	end
 end
 
-function var_0_0.canPathByHexPoint(arg_9_0, arg_9_1)
-	local var_9_0 = RoomMapBlockModel.instance:getBlockMO(arg_9_0.hexX, arg_9_0.hexY)
+function RoomTransportHelper.canPathByHexPoint(hexPoint, isRemoveBuilding)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.hexX, hexPoint.hexY)
 
-	return var_0_0.canPathByBlockMO(var_9_0, arg_9_1)
+	return RoomTransportHelper.canPathByBlockMO(blockMO, isRemoveBuilding)
 end
 
-function var_0_0.canPathByhexXY(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = RoomMapBlockModel.instance:getBlockMO(arg_10_0, arg_10_1)
+function RoomTransportHelper.canPathByhexXY(hexX, hexY, isRemoveBuilding)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexX, hexY)
 
-	return var_0_0.canPathByBlockMO(var_10_0, arg_10_2)
+	return RoomTransportHelper.canPathByBlockMO(blockMO, isRemoveBuilding)
 end
 
-function var_0_0.canSiteByHexPoint(arg_11_0, arg_11_1)
-	if not arg_11_0 then
+function RoomTransportHelper.canSiteByHexPoint(hexPoint, buildingType)
+	if not hexPoint then
 		return false
 	end
 
-	local var_11_0 = RoomMapBuildingAreaModel.instance:getAreaMOByBType(arg_11_1)
+	local buildingAreaMO = RoomMapBuildingAreaModel.instance:getAreaMOByBType(buildingType)
 
-	if var_11_0 and var_11_0:isInRangesByHexPoint(arg_11_0) then
-		local var_11_1 = RoomMapTransportPathModel.instance
-		local var_11_2 = var_0_0.getSiteBuildingTypeList()
-		local var_11_3 = false
+	if buildingAreaMO and buildingAreaMO:isInRangesByHexPoint(hexPoint) then
+		local tRoomMapTransportPathModel = RoomMapTransportPathModel.instance
+		local siteTypeList = RoomTransportHelper.getSiteBuildingTypeList()
+		local flag = false
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-			local var_11_4 = var_11_1:getSiteHexPointByType(iter_11_1)
+		for _, bType in ipairs(siteTypeList) do
+			local siteHexPoint = tRoomMapTransportPathModel:getSiteHexPointByType(bType)
 
-			if arg_11_1 == iter_11_1 then
-				var_11_3 = true
-			elseif var_11_4 and HexPoint.Distance(var_11_4, arg_11_0) < 2 then
+			if buildingType == bType then
+				flag = true
+			elseif siteHexPoint and HexPoint.Distance(siteHexPoint, hexPoint) < 2 then
 				return false
 			end
 		end
 
-		return var_11_3
+		return flag
 	end
 
 	return false
 end
 
-function var_0_0.canPathByBlockMO(arg_12_0, arg_12_1)
-	if not arg_12_0 or not arg_12_0:isInMapBlock() then
+function RoomTransportHelper.canPathByBlockMO(blockMO, isRemoveBuilding)
+	if not blockMO or not blockMO:isInMapBlock() then
 		return false
 	end
 
-	if arg_12_0.packageId == RoomBlockPackageEnum.ID.RoleBirthday then
+	if blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday then
 		return false
 	end
 
-	local var_12_0 = arg_12_0.hexPoint
+	local hexPoint = blockMO.hexPoint
 
-	if RoomBuildingHelper.isInInitBlock(var_12_0) then
+	if RoomBuildingHelper.isInInitBlock(hexPoint) then
 		return false
 	end
 
-	local var_12_1 = RoomMapBuildingModel.instance:getBuildingParam(var_12_0.x, var_12_0.y)
+	local buildingParam = RoomMapBuildingModel.instance:getBuildingParam(hexPoint.x, hexPoint.y)
 
-	if var_12_1 then
-		if arg_12_1 == nil then
-			arg_12_1 = RoomMapTransportPathModel.instance:getIsRemoveBuilding()
+	if buildingParam then
+		if isRemoveBuilding == nil then
+			isRemoveBuilding = RoomMapTransportPathModel.instance:getIsRemoveBuilding()
 		end
 
-		local var_12_2 = RoomMapBuildingModel.instance:getBuildingMOById(var_12_1.buildingUid)
-		local var_12_3 = var_12_2 and var_12_2.config
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingParam.buildingUid)
+		local buildingCfg = buildingMO and buildingMO.config
 
-		if var_12_3 and not RoomBuildingEnum.CanDateleBuildingType[var_12_3.buildingType] then
+		if buildingCfg and not RoomBuildingEnum.CanDateleBuildingType[buildingCfg.buildingType] then
 			return false
 		end
 
-		if arg_12_1 ~= true then
+		if isRemoveBuilding ~= true then
 			return false
 		end
 	end
@@ -202,142 +203,144 @@ function var_0_0.canPathByBlockMO(arg_12_0, arg_12_1)
 	return true
 end
 
-function var_0_0.initTransportPathModel(arg_13_0, arg_13_1)
-	local var_13_0 = {}
+function RoomTransportHelper.initTransportPathModel(model, roadInfos)
+	local moList = {}
 
-	if arg_13_1 then
-		for iter_13_0 = 1, #arg_13_1 do
-			local var_13_1 = arg_13_1[iter_13_0]
-			local var_13_2 = arg_13_0:getById(var_13_1.id) or RoomTransportPathMO.New()
+	if roadInfos then
+		for i = 1, #roadInfos do
+			local roadInfo = roadInfos[i]
+			local pathMO = model:getById(roadInfo.id)
 
-			var_13_2:setId(var_13_1.id)
-			var_13_2:setServerRoadInfo(var_13_1)
-			table.insert(var_13_0, var_13_2)
+			pathMO = pathMO or RoomTransportPathMO.New()
+
+			pathMO:setId(roadInfo.id)
+			pathMO:setServerRoadInfo(roadInfo)
+			table.insert(moList, pathMO)
 		end
 	end
 
-	arg_13_0:setList(var_13_0)
+	model:setList(moList)
 end
 
-function var_0_0.serverRoadInfo2Info(arg_14_0)
-	local var_14_0 = {}
-	local var_14_1 = {}
-	local var_14_2 = arg_14_0.buildingDefineId or arg_14_0.buildingId or 0
-	local var_14_3 = arg_14_0.skinId or arg_14_0.buildingSkinId
+function RoomTransportHelper.serverRoadInfo2Info(roadInfo)
+	local info = {}
+	local hexPointList = {}
+	local buildingId = roadInfo.buildingDefineId or roadInfo.buildingId or 0
+	local buildingSkinId = roadInfo.skinId or roadInfo.buildingSkinId
 
-	var_14_0.fromType = arg_14_0.fromType or 0
-	var_14_0.toType = arg_14_0.toType or 0
-	var_14_0.critterUid = arg_14_0.critterUid or 0
-	var_14_0.buildingUid = arg_14_0.buildingUid or 0
-	var_14_0.blockCleanType = arg_14_0.blockCleanType or 0
-	var_14_0.buildingId = var_14_2
-	var_14_0.buildingSkinId = var_14_3
-	var_14_0.hexPointList = var_14_1
-	var_14_0.id = arg_14_0.id
+	info.fromType = roadInfo.fromType or 0
+	info.toType = roadInfo.toType or 0
+	info.critterUid = roadInfo.critterUid or 0
+	info.buildingUid = roadInfo.buildingUid or 0
+	info.blockCleanType = roadInfo.blockCleanType or 0
+	info.buildingId = buildingId
+	info.buildingSkinId = buildingSkinId
+	info.hexPointList = hexPointList
+	info.id = roadInfo.id
 
-	local var_14_4 = RoomMapHexPointModel.instance
+	local tRoomMapHexPointModel = RoomMapHexPointModel.instance
 
-	if arg_14_0.roadPoints then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_0.roadPoints) do
-			table.insert(var_14_1, var_14_4:getHexPoint(iter_14_1.x, iter_14_1.y))
+	if roadInfo.roadPoints then
+		for i, roadPoint in ipairs(roadInfo.roadPoints) do
+			table.insert(hexPointList, tRoomMapHexPointModel:getHexPoint(roadPoint.x, roadPoint.y))
 		end
 	end
 
-	return var_14_0
+	return info
 end
 
-function var_0_0.findInfoInListByType(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0 or #arg_15_0 < 1 then
+function RoomTransportHelper.findInfoInListByType(infoList, aType, bType)
+	if not infoList or #infoList < 1 then
 		return nil
 	end
 
-	for iter_15_0 = 1, #arg_15_0 do
-		local var_15_0 = arg_15_0[iter_15_0]
+	for index = 1, #infoList do
+		local info = infoList[index]
 
-		if var_15_0.fromType == arg_15_1 and var_15_0.toType == arg_15_2 or var_15_0.fromType == arg_15_2 and var_15_0.toType == arg_15_1 then
-			return var_15_0, iter_15_0
+		if info.fromType == aType and info.toType == bType or info.fromType == bType and info.toType == aType then
+			return info, index
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getBuildingTypeListByHexPoint(arg_16_0, arg_16_1)
-	local var_16_0 = {}
-	local var_16_1 = arg_16_1 and #arg_16_1 > 0
-	local var_16_2 = RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(arg_16_0)
+function RoomTransportHelper.getBuildingTypeListByHexPoint(hexPoint, typeList)
+	local types = {}
+	local isCheckType = typeList and #typeList > 0
+	local siteType = RoomMapTransportPathModel.instance:getSiteTypeByHexPoint(hexPoint)
 
-	if var_16_2 and var_16_2 ~= 0 then
-		if not var_16_1 or tabletool.indexOf(arg_16_1, var_16_2) then
-			table.insert(var_16_0, var_16_2)
+	if siteType and siteType ~= 0 then
+		if not isCheckType or tabletool.indexOf(typeList, siteType) then
+			table.insert(types, siteType)
 		end
 
-		return var_16_0
+		return types
 	end
 
-	local var_16_3 = RoomMapBuildingAreaModel.instance:getList()
+	local buildingAreaMOList = RoomMapBuildingAreaModel.instance:getList()
 
-	for iter_16_0 = 1, #var_16_3 do
-		local var_16_4 = var_16_3[iter_16_0]
-		local var_16_5 = var_16_4.buildingType
+	for i = 1, #buildingAreaMOList do
+		local buildingAreaMO = buildingAreaMOList[i]
+		local buildingType = buildingAreaMO.buildingType
 
-		if (not var_16_1 or tabletool.indexOf(arg_16_1, var_16_5)) and var_16_4:isInRangesByHexPoint(arg_16_0) then
-			table.insert(var_16_0, var_16_5)
-		end
-	end
-
-	for iter_16_1 = #var_16_0, 1, -1 do
-		local var_16_6 = RoomMapTransportPathModel.instance:getSiteHexPointByType(var_16_0[iter_16_1])
-
-		if var_16_6 and var_16_6 ~= arg_16_0 then
-			table.remove(var_16_0, iter_16_1)
+		if (not isCheckType or tabletool.indexOf(typeList, buildingType)) and buildingAreaMO:isInRangesByHexPoint(hexPoint) then
+			table.insert(types, buildingType)
 		end
 	end
 
-	return var_16_0
+	for i = #types, 1, -1 do
+		local siteHexPoint = RoomMapTransportPathModel.instance:getSiteHexPointByType(types[i])
+
+		if siteHexPoint and siteHexPoint ~= hexPoint then
+			table.remove(types, i)
+		end
+	end
+
+	return types
 end
 
-function var_0_0.getBuildingTypeByHexPoint(arg_17_0, arg_17_1)
-	local var_17_0 = var_0_0.getBuildingAreaByHexPoint(arg_17_0, arg_17_1)
+function RoomTransportHelper.getBuildingTypeByHexPoint(hexPoint, typeList)
+	local areaMO = RoomTransportHelper.getBuildingAreaByHexPoint(hexPoint, typeList)
 
-	return var_17_0 and var_17_0.buildingType or 0
+	return areaMO and areaMO.buildingType or 0
 end
 
-function var_0_0.getBuildingAreaByHexPoint(arg_18_0, arg_18_1)
-	local var_18_0 = RoomMapBuildingAreaModel.instance:getList()
-	local var_18_1 = arg_18_1 and #arg_18_1 > 0
+function RoomTransportHelper.getBuildingAreaByHexPoint(hexPoint, typeList)
+	local buildingAreaMOList = RoomMapBuildingAreaModel.instance:getList()
+	local isCheckType = typeList and #typeList > 0
 
-	for iter_18_0 = 1, #var_18_0 do
-		local var_18_2 = var_18_0[iter_18_0]
+	for i = 1, #buildingAreaMOList do
+		local buildingAreaMO = buildingAreaMOList[i]
 
-		if (not var_18_1 or tabletool.indexOf(arg_18_1, var_18_2.buildingType)) and var_18_2:isInRangesByHexPoint(arg_18_0) then
-			return var_18_2
-		end
-	end
-end
-
-function var_0_0.getBuildingAreaByHexXY(arg_19_0, arg_19_1)
-	local var_19_0 = RoomMapBuildingAreaModel.instance:getList()
-
-	for iter_19_0 = 1, #var_19_0 do
-		local var_19_1 = var_19_0[iter_19_0]
-
-		if var_19_1:isInRangesByHexXY(arg_19_0, arg_19_1) then
-			return var_19_1
+		if (not isCheckType or tabletool.indexOf(typeList, buildingAreaMO.buildingType)) and buildingAreaMO:isInRangesByHexPoint(hexPoint) then
+			return buildingAreaMO
 		end
 	end
 end
 
-function var_0_0.checkBuildingInLoad(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = RoomMapModel.instance:getBuildingPointList(arg_20_0, arg_20_2)
+function RoomTransportHelper.getBuildingAreaByHexXY(hexX, hexY)
+	local buildingAreaMOList = RoomMapBuildingAreaModel.instance:getList()
 
-	if var_20_0 then
-		local var_20_1
+	for i = 1, #buildingAreaMOList do
+		local buildingAreaMO = buildingAreaMOList[i]
 
-		for iter_20_0 = 1, #var_20_0 do
-			local var_20_2 = var_20_0[iter_20_0]
+		if buildingAreaMO:isInRangesByHexXY(hexX, hexY) then
+			return buildingAreaMO
+		end
+	end
+end
 
-			if var_0_0.checkInLoadHexXY(var_20_2.x + arg_20_1.x, var_20_2.y + arg_20_1.y) then
+function RoomTransportHelper.checkBuildingInLoad(buildingId, hexPoint, rotate)
+	local points = RoomMapModel.instance:getBuildingPointList(buildingId, rotate)
+
+	if points then
+		local point
+
+		for i = 1, #points do
+			point = points[i]
+
+			if RoomTransportHelper.checkInLoadHexXY(point.x + hexPoint.x, point.y + hexPoint.y) then
 				return true
 			end
 		end
@@ -346,11 +349,11 @@ function var_0_0.checkBuildingInLoad(arg_20_0, arg_20_1, arg_20_2)
 	return false
 end
 
-function var_0_0.checkInLoadHexXY(arg_21_0, arg_21_1)
-	local var_21_0 = RoomTransportPathModel.instance:getTransportPathMOList()
+function RoomTransportHelper.checkInLoadHexXY(x, y)
+	local pathMOList = RoomTransportPathModel.instance:getTransportPathMOList()
 
-	for iter_21_0 = 1, #var_21_0 do
-		if var_21_0[iter_21_0]:checkHexXY(arg_21_0, arg_21_1) then
+	for pidx = 1, #pathMOList do
+		if pathMOList[pidx]:checkHexXY(x, y) then
 			return true
 		end
 	end
@@ -358,18 +361,18 @@ function var_0_0.checkInLoadHexXY(arg_21_0, arg_21_1)
 	return false
 end
 
-function var_0_0.saveQuickLink(arg_22_0, arg_22_1)
-	if arg_22_0 then
-		RoomHelper.setNumberByKey(PlayerPrefsKey.RoomTransportPathQuickLinkKey .. arg_22_0, arg_22_1 and 1 or 0)
+function RoomTransportHelper.saveQuickLink(siteType, isQuickLink)
+	if siteType then
+		RoomHelper.setNumberByKey(PlayerPrefsKey.RoomTransportPathQuickLinkKey .. siteType, isQuickLink and 1 or 0)
 	end
 end
 
-function var_0_0.getIsQuickLink(arg_23_0)
-	if arg_23_0 and RoomHelper.getNumberByKey(PlayerPrefsKey.RoomTransportPathQuickLinkKey .. arg_23_0) == 1 then
+function RoomTransportHelper.getIsQuickLink(siteType)
+	if siteType and RoomHelper.getNumberByKey(PlayerPrefsKey.RoomTransportPathQuickLinkKey .. siteType) == 1 then
 		return true
 	end
 
 	return false
 end
 
-return var_0_0
+return RoomTransportHelper

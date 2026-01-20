@@ -1,0 +1,26 @@
+[
+  {
+    "id": "C",
+    "rare": "rouge2_levelrare_4",
+    "bgIcon": "rouge2_level_4_3",
+    "icon": "rouge2_level_4_2"
+  },
+  {
+    "id": "B",
+    "rare": "rouge2_levelrare_3",
+    "bgIcon": "rouge2_level_3_3",
+    "icon": "rouge2_level_3_2"
+  },
+  {
+    "id": "A",
+    "rare": "rouge2_levelrare_2",
+    "bgIcon": "rouge2_level_2_3",
+    "icon": "rouge2_level_2_2"
+  },
+  {
+    "id": "S",
+    "rare": "rouge2_levelrare_1",
+    "bgIcon": "rouge2_level_1_3",
+    "icon": "rouge2_level_1_2"
+  }
+]

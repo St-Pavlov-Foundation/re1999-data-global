@@ -1,42 +1,44 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventRefreshRenderOrder", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventRefreshRenderOrder.lua
 
-local var_0_0 = class("FightTLEventRefreshRenderOrder", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventRefreshRenderOrder", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = FightHelper.getEntity(arg_1_1.fromId)
-	local var_1_1 = FightHelper.getSideEntitys(var_1_0:getSide(), true)
-	local var_1_2 = FightHelper.getDefenders(arg_1_1, true)
+local FightTLEventRefreshRenderOrder = class("FightTLEventRefreshRenderOrder", FightTimelineTrackItem)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		FightRenderOrderMgr.instance:cancelOrder(iter_1_1.id)
+function FightTLEventRefreshRenderOrder:onTrackStart(fightStepData, duration, paramsArr)
+	local attacker = FightHelper.getEntity(fightStepData.fromId)
+	local sideEntitys = FightHelper.getSideEntitys(attacker:getSide(), true)
+	local defenders = FightHelper.getDefenders(fightStepData, true)
+
+	for _, entity in ipairs(sideEntitys) do
+		FightRenderOrderMgr.instance:cancelOrder(entity.id)
 	end
 
-	local var_1_3 = tonumber(arg_1_3[1])
+	local renderType = tonumber(paramsArr[1])
 
-	FightRenderOrderMgr.instance:setSortType(var_1_3)
+	FightRenderOrderMgr.instance:setSortType(renderType)
 
-	if var_1_3 == FightEnum.RenderOrderType.ZPos then
-		arg_1_0._keepOrderPriorityDict = {}
-		arg_1_0._keepOrderPriorityDict[var_1_0.id] = 0
+	if renderType == FightEnum.RenderOrderType.ZPos then
+		self._keepOrderPriorityDict = {}
+		self._keepOrderPriorityDict[attacker.id] = 0
 
-		for iter_1_2, iter_1_3 in ipairs(var_1_2) do
-			arg_1_0._keepOrderPriorityDict[iter_1_3.id] = 1
+		for i, defender in ipairs(defenders) do
+			self._keepOrderPriorityDict[defender.id] = 1
 		end
 
-		local var_1_4 = tonumber(arg_1_3[2]) or 0.33
+		local refreshInterval = tonumber(paramsArr[2]) or 0.33
 
-		TaskDispatcher.runRepeat(arg_1_0._refreshOrder, arg_1_0, var_1_4)
+		TaskDispatcher.runRepeat(self._refreshOrder, self, refreshInterval)
 	end
 end
 
-function var_0_0._refreshOrder(arg_2_0)
-	FightRenderOrderMgr.instance:refreshRenderOrder(arg_2_0._keepOrderPriorityDict)
+function FightTLEventRefreshRenderOrder:_refreshOrder()
+	FightRenderOrderMgr.instance:refreshRenderOrder(self._keepOrderPriorityDict)
 end
 
-function var_0_0.onDestructor(arg_3_0)
-	arg_3_0._keepOrderPriorityDict = nil
+function FightTLEventRefreshRenderOrder:onDestructor()
+	self._keepOrderPriorityDict = nil
 
-	TaskDispatcher.cancelTask(arg_3_0._refreshOrder, arg_3_0)
+	TaskDispatcher.cancelTask(self._refreshOrder, self)
 end
 
-return var_0_0
+return FightTLEventRefreshRenderOrder

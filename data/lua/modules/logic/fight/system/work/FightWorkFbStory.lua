@@ -1,109 +1,115 @@
-﻿module("modules.logic.fight.system.work.FightWorkFbStory", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFbStory.lua
 
-local var_0_0 = class("FightWorkFbStory", BaseWork)
+module("modules.logic.fight.system.work.FightWorkFbStory", package.seeall)
 
-var_0_0.Type_EnterWave = 1
-var_0_0.Type_BeforePlaySkill = 2
-var_0_0.Type_AfterPlaySkill = 3
-var_0_0.Type_ChangeRound = 4
+local FightWorkFbStory = class("FightWorkFbStory", BaseWork)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.conditionType = arg_1_1
-	arg_1_0.exParam = arg_1_2
+FightWorkFbStory.Type_EnterWave = 1
+FightWorkFbStory.Type_BeforePlaySkill = 2
+FightWorkFbStory.Type_AfterPlaySkill = 3
+FightWorkFbStory.Type_ChangeRound = 4
 
-	local var_1_0 = FightModel.instance:getFightParam()
+function FightWorkFbStory:ctor(conditionType, exParam)
+	self.conditionType = conditionType
+	self.exParam = exParam
 
-	arg_1_0.episodeId = var_1_0 and var_1_0.episodeId
+	local fightParam = FightModel.instance:getFightParam()
 
-	local var_1_1 = arg_1_0.episodeId and DungeonConfig.instance:getEpisodeCO(arg_1_0.episodeId)
-	local var_1_2 = var_1_1 and string.split(var_1_1.story, "#")
+	self.episodeId = fightParam and fightParam.episodeId
 
-	arg_1_0.configCondType = var_1_2 and tonumber(var_1_2[1])
-	arg_1_0.configCondParam = var_1_2 and var_1_2[2]
-	arg_1_0.configCondStoryId = var_1_2 and tonumber(var_1_2[3])
+	local episodeCO = self.episodeId and DungeonConfig.instance:getEpisodeCO(self.episodeId)
+	local sp = episodeCO and string.split(episodeCO.story, "#")
+
+	self.configCondType = sp and tonumber(sp[1])
+	self.configCondParam = sp and sp[2]
+	self.configCondStoryId = sp and tonumber(sp[3])
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0.configCondType or arg_2_0.conditionType ~= arg_2_0.configCondType then
-		arg_2_0:onDone(true)
+function FightWorkFbStory:onStart()
+	if not self.configCondType or self.conditionType ~= self.configCondType then
+		self:onDone(true)
 
 		return
 	end
 
-	if arg_2_0.configCondType == 1 then
-		if FightModel.instance:getCurWaveId() ~= tonumber(arg_2_0.configCondParam) then
-			arg_2_0:onDone(true)
+	if self.configCondType == 1 then
+		local curWaveId = FightModel.instance:getCurWaveId()
+
+		if curWaveId ~= tonumber(self.configCondParam) then
+			self:onDone(true)
 
 			return
 		end
 
-		arg_2_0:_checkPlayStory()
-	elseif arg_2_0.configCondType == 2 or arg_2_0.configCondType == 3 then
-		local var_2_0 = tonumber(arg_2_0.configCondParam)
+		self:_checkPlayStory()
+	elseif self.configCondType == 2 or self.configCondType == 3 then
+		local skillId = tonumber(self.configCondParam)
 
-		if not var_2_0 or not arg_2_0.exParam or arg_2_0.exParam ~= var_2_0 then
-			arg_2_0:onDone(true)
-
-			return
-		end
-
-		arg_2_0:_checkPlayStory()
-	elseif arg_2_0.configCondType == 4 then
-		if FightModel.instance:getCurRoundId() ~= tonumber(arg_2_0.configCondParam) then
-			arg_2_0:onDone(true)
+		if not skillId or not self.exParam or self.exParam ~= skillId then
+			self:onDone(true)
 
 			return
 		end
 
-		arg_2_0.replayBgm = true
+		self:_checkPlayStory()
+	elseif self.configCondType == 4 then
+		local curRound = FightModel.instance:getCurRoundId()
 
-		arg_2_0:_checkPlayStory()
+		if curRound ~= tonumber(self.configCondParam) then
+			self:onDone(true)
+
+			return
+		end
+
+		self.replayBgm = true
+
+		self:_checkPlayStory()
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._checkPlayStory(arg_3_0)
-	if StoryModel.instance:isStoryFinished(arg_3_0.configCondStoryId) then
-		arg_3_0:onDone(true)
+function FightWorkFbStory:_checkPlayStory()
+	if StoryModel.instance:isStoryFinished(self.configCondStoryId) then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_3_0:_setAllEntitysVisible(false)
+	self:_setAllEntitysVisible(false)
 
-	local var_3_0 = {}
+	local param = {}
 
-	var_3_0.mark = true
-	var_3_0.episodeId = arg_3_0.episodeId
+	param.mark = true
+	param.episodeId = self.episodeId
 
-	StoryController.instance:playStory(arg_3_0.configCondStoryId, var_3_0, arg_3_0._afterPlayStory, arg_3_0)
+	StoryController.instance:playStory(self.configCondStoryId, param, self._afterPlayStory, self)
 end
 
-function var_0_0._afterPlayStory(arg_4_0)
-	arg_4_0:_setAllEntitysVisible(true)
+function FightWorkFbStory:_afterPlayStory()
+	self:_setAllEntitysVisible(true)
 
-	if arg_4_0.replayBgm then
+	if self.replayBgm then
 		FightController.instance:dispatchEvent(FightEvent.ReplayBgmAfterAVG)
 	end
 
-	arg_4_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._setAllEntitysVisible(arg_5_0, arg_5_1)
-	local var_5_0 = FightHelper.getAllEntitys()
+function FightWorkFbStory:_setAllEntitysVisible(active)
+	local all = FightHelper.getAllEntitys()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		iter_5_1:setActive(arg_5_1)
+	for _, entity in ipairs(all) do
+		entity:setActive(active)
 	end
 end
 
-function var_0_0.checkHasFbStory()
-	local var_6_0 = FightModel.instance:getFightParam()
-	local var_6_1 = var_6_0 and var_6_0.episodeId
-	local var_6_2 = var_6_1 and DungeonConfig.instance:getEpisodeCO(var_6_1)
+function FightWorkFbStory.checkHasFbStory()
+	local fightParam = FightModel.instance:getFightParam()
+	local episodeId = fightParam and fightParam.episodeId
+	local episodeCO = episodeId and DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	return var_6_2 and not string.nilorempty(var_6_2.story)
+	return episodeCO and not string.nilorempty(episodeCO.story)
 end
 
-return var_0_0
+return FightWorkFbStory

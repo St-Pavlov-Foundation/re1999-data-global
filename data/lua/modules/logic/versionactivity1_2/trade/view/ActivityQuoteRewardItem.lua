@@ -1,43 +1,45 @@
-﻿module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/view/ActivityQuoteRewardItem.lua
 
-local var_0_0 = class("ActivityQuoteRewardItem", UserDataDispose)
+module("modules.logic.versionactivity1_2.trade.view.ActivityQuoteRewardItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ActivityQuoteRewardItem = class("ActivityQuoteRewardItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.imageIcon = gohelper.findChildSingleImage(arg_1_0.go, "simage_icon")
-	arg_1_0.imageRare = gohelper.findChildImage(arg_1_0.go, "image_rarebg")
-	arg_1_0.textCount = gohelper.findChildText(arg_1_0.go, "txt_count")
+function ActivityQuoteRewardItem:ctor(go)
+	self:__onInit()
+
+	self.go = go
+	self.imageIcon = gohelper.findChildSingleImage(self.go, "simage_icon")
+	self.imageRare = gohelper.findChildImage(self.go, "image_rarebg")
+	self.textCount = gohelper.findChildText(self.go, "txt_count")
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.data = arg_2_1
+function ActivityQuoteRewardItem:setData(data)
+	self.data = data
 
-	if not arg_2_1 then
-		gohelper.setActive(arg_2_0.go, false)
+	if not data then
+		gohelper.setActive(self.go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_2_0.go, true)
+	gohelper.setActive(self.go, true)
 
-	if arg_2_1.progress >= arg_2_1.maxProgress then
-		arg_2_0.textCount.text = string.format("%s/%s", arg_2_1.progress, arg_2_1.maxProgress)
+	if data.progress >= data.maxProgress then
+		self.textCount.text = string.format("%s/%s", data.progress, data.maxProgress)
 	else
-		arg_2_0.textCount.text = string.format("<color=#ff8949>%s</color>/%s", arg_2_1.progress, arg_2_1.maxProgress)
+		self.textCount.text = string.format("<color=#ff8949>%s</color>/%s", data.progress, data.maxProgress)
 	end
 
-	local var_2_0, var_2_1 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, tonumber(arg_2_1.listenerParam))
-	local var_2_2 = var_2_0.rare and var_2_0.rare or 5
+	local itemCfg, iconPath = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, tonumber(data.listenerParam))
+	local rare = itemCfg.rare and itemCfg.rare or 5
 
-	UISpriteSetMgr.instance:setVersionActivityTrade_1_2Sprite(arg_2_0.imageRare, "bg_wupindi_" .. tostring(var_2_2))
-	arg_2_0.imageIcon:LoadImage(var_2_1)
+	UISpriteSetMgr.instance:setVersionActivityTrade_1_2Sprite(self.imageRare, "bg_wupindi_" .. tostring(rare))
+	self.imageIcon:LoadImage(iconPath)
 end
 
-function var_0_0.destory(arg_3_0)
-	arg_3_0.imageIcon:UnLoadImage()
-	arg_3_0:__onDispose()
+function ActivityQuoteRewardItem:destory()
+	self.imageIcon:UnLoadImage()
+	self:__onDispose()
 end
 
-return var_0_0
+return ActivityQuoteRewardItem

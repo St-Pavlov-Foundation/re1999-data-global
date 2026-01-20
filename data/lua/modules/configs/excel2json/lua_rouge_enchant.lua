@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_rouge_enchant", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_enchant.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_enchant", package.seeall)
+
+local lua_rouge_enchant = {}
+local fields = {
 	id = 1,
 	name = 2,
 	enchantState = 4,
 	baseId = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_enchant.onLoad(json)
+	lua_rouge_enchant.configList, lua_rouge_enchant.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_enchant

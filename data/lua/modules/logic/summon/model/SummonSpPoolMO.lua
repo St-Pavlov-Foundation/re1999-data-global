@@ -1,55 +1,57 @@
-﻿module("modules.logic.summon.model.SummonSpPoolMO", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonSpPoolMO.lua
 
-local var_0_0 = pureTable("SummonSpPoolMO", SummonCustomPickMO)
+module("modules.logic.summon.model.SummonSpPoolMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.type = 0
-	arg_1_0.openTime = 0
+local SummonSpPoolMO = pureTable("SummonSpPoolMO", SummonCustomPickMO)
 
-	SummonCustomPickMO.ctor(arg_1_0)
+function SummonSpPoolMO:ctor()
+	self.type = 0
+	self.openTime = 0
+
+	SummonCustomPickMO.ctor(self)
 end
 
-function var_0_0.isValid(arg_2_0)
-	return arg_2_0.type ~= 0
+function SummonSpPoolMO:isValid()
+	return self.type ~= 0
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	SummonCustomPickMO.update(arg_3_0, arg_3_1)
+function SummonSpPoolMO:update(info)
+	SummonCustomPickMO.update(self, info)
 
-	arg_3_0.type = arg_3_1.type
-	arg_3_0.openTime = tonumber(arg_3_1.openTime) or 0
+	self.type = info.type
+	self.openTime = tonumber(info.openTime) or 0
 end
 
-function var_0_0.isOpening(arg_4_0)
-	if not arg_4_0:isValid() then
+function SummonSpPoolMO:isOpening()
+	if not self:isValid() then
 		return nil
 	end
 
-	local var_4_0 = ServerTime.now()
+	local now = ServerTime.now()
 
-	return var_4_0 >= arg_4_0:onlineTs() and var_4_0 <= arg_4_0:offlineTs()
+	return now >= self:onlineTs() and now <= self:offlineTs()
 end
 
-function var_0_0.onlineTs(arg_5_0)
-	return arg_5_0.openTime / 1000
+function SummonSpPoolMO:onlineTs()
+	return self.openTime / 1000
 end
 
-function var_0_0.offlineTs(arg_6_0)
-	if arg_6_0:onlineTs() <= 0 then
+function SummonSpPoolMO:offlineTs()
+	if self:onlineTs() <= 0 then
 		return 0
 	end
 
-	local var_6_0 = SummonConfig.instance:getDurationByPoolType(arg_6_0.type)
+	local duration = SummonConfig.instance:getDurationByPoolType(self.type)
 
-	if var_6_0 <= 0 then
+	if duration <= 0 then
 		return 0
 	end
 
-	return arg_6_0:onlineTs() + var_6_0
+	return self:onlineTs() + duration
 end
 
-function var_0_0.onOffTimestamp(arg_7_0)
-	return arg_7_0:onlineTs(), arg_7_0:offlineTs()
+function SummonSpPoolMO:onOffTimestamp()
+	return self:onlineTs(), self:offlineTs()
 end
 
-return var_0_0
+return SummonSpPoolMO

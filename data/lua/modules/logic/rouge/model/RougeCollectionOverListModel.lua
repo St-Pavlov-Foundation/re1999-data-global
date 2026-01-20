@@ -1,56 +1,58 @@
-﻿module("modules.logic.rouge.model.RougeCollectionOverListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeCollectionOverListModel.lua
 
-local var_0_0 = class("RougeCollectionOverListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeCollectionOverListModel", package.seeall)
 
-function var_0_0.onInitData(arg_1_0)
-	arg_1_0:onCollectionDataUpdate()
+local RougeCollectionOverListModel = class("RougeCollectionOverListModel", ListScrollModel)
+
+function RougeCollectionOverListModel:onInitData()
+	self:onCollectionDataUpdate()
 end
 
-function var_0_0.onCollectionDataUpdate(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = RougeCollectionModel.instance:getSlotAreaCollection()
+function RougeCollectionOverListModel:onCollectionDataUpdate()
+	local showCollectionList = {}
+	local collectionMap = {}
+	local slotAreaCollections = RougeCollectionModel.instance:getSlotAreaCollection()
 
-	if var_2_2 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-			if not var_2_1[iter_2_1.id] then
-				var_2_1[iter_2_1.id] = true
+	if slotAreaCollections then
+		for _, collection in ipairs(slotAreaCollections) do
+			if not collectionMap[collection.id] then
+				collectionMap[collection.id] = true
 
-				table.insert(var_2_0, iter_2_1)
+				table.insert(showCollectionList, collection)
 			end
 		end
 	end
 
-	table.sort(var_2_0, arg_2_0.sortFunc)
-	arg_2_0:setList(var_2_0)
+	table.sort(showCollectionList, self.sortFunc)
+	self:setList(showCollectionList)
 end
 
-function var_0_0.sortFunc(arg_3_0, arg_3_1)
-	local var_3_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_0.cfgId)
-	local var_3_1 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_1.cfgId)
-	local var_3_2 = var_3_0 and var_3_0.showRare or 0
-	local var_3_3 = var_3_1 and var_3_1.showRare or 0
+function RougeCollectionOverListModel.sortFunc(a, b)
+	local aCfg = RougeCollectionConfig.instance:getCollectionCfg(a.cfgId)
+	local bCfg = RougeCollectionConfig.instance:getCollectionCfg(b.cfgId)
+	local aShowRare = aCfg and aCfg.showRare or 0
+	local bShowRare = bCfg and bCfg.showRare or 0
 
-	if var_3_2 ~= var_3_3 then
-		return var_3_3 < var_3_2
+	if aShowRare ~= bShowRare then
+		return bShowRare < aShowRare
 	end
 
-	local var_3_4 = RougeCollectionConfig.instance:getOriginEditorParam(arg_3_0.cfgId, RougeEnum.CollectionEditorParamType.Shape)
-	local var_3_5 = RougeCollectionConfig.instance:getOriginEditorParam(arg_3_1.cfgId, RougeEnum.CollectionEditorParamType.Shape)
-	local var_3_6 = var_3_4 and #var_3_4 or 0
-	local var_3_7 = var_3_5 and #var_3_5 or 0
+	local aShapeArea = RougeCollectionConfig.instance:getOriginEditorParam(a.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local bShapeArea = RougeCollectionConfig.instance:getOriginEditorParam(b.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local aShapeAreaSize = aShapeArea and #aShapeArea or 0
+	local bShapeAreaSize = bShapeArea and #bShapeArea or 0
 
-	if var_3_6 ~= var_3_7 then
-		return var_3_7 < var_3_6
+	if aShapeAreaSize ~= bShapeAreaSize then
+		return bShapeAreaSize < aShapeAreaSize
 	end
 
-	return arg_3_0.id < arg_3_1.id
+	return a.id < b.id
 end
 
-function var_0_0.isBagEmpty(arg_4_0)
-	return arg_4_0:getCount() <= 0
+function RougeCollectionOverListModel:isBagEmpty()
+	return self:getCount() <= 0
 end
 
-var_0_0.instance = var_0_0.New()
+RougeCollectionOverListModel.instance = RougeCollectionOverListModel.New()
 
-return var_0_0
+return RougeCollectionOverListModel

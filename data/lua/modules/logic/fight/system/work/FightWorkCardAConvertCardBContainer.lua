@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardAConvertCardBContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardAConvertCardBContainer.lua
 
-local var_0_0 = class("FightWorkCardAConvertCardBContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkCardAConvertCardBContainer", package.seeall)
+
+local FightWorkCardAConvertCardBContainer = class("FightWorkCardAConvertCardBContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.POWERCHANGE] = true,
 	[FightEnum.EffectType.CHANGEHERO] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
+function FightWorkCardAConvertCardBContainer:onStart()
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkCardAConvertCardBContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkCardAConvertCardBContainer

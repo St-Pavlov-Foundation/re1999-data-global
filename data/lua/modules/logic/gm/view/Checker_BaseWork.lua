@@ -1,56 +1,58 @@
-﻿module("modules.logic.gm.view.Checker_BaseWork", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/Checker_BaseWork.lua
 
-local var_0_0 = class("Checker_BaseWork", BaseWork)
+module("modules.logic.gm.view.Checker_BaseWork", package.seeall)
 
-function var_0_0.endBlock(arg_1_0, arg_1_1)
-	if not arg_1_0:isBlock() then
+local Checker_BaseWork = class("Checker_BaseWork", BaseWork)
+
+function Checker_BaseWork:endBlock(blockKey)
+	if not self:isBlock() then
 		return
 	end
 
-	UIBlockMgr.instance:endBlock(arg_1_1)
+	UIBlockMgr.instance:endBlock(blockKey)
 end
 
-function var_0_0.startBlock(arg_2_0, arg_2_1)
-	if arg_2_0:isBlock() then
+function Checker_BaseWork:startBlock(blockKey)
+	if self:isBlock() then
 		return
 	end
 
-	UIBlockMgr.instance:startBlock(arg_2_1)
+	UIBlockMgr.instance:startBlock(blockKey)
 end
 
-function var_0_0.isBlock(arg_3_0)
+function Checker_BaseWork:isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function var_0_0.readAllText(arg_4_0, arg_4_1)
-	local var_4_0 = io.open(arg_4_1, "r")
+function Checker_BaseWork:readAllText(filename)
+	local fh = io.open(filename, "r")
 
-	if not var_4_0 then
-		logError("[readAllText] file open failed: " .. arg_4_1)
+	if not fh then
+		logError("[readAllText] file open failed: " .. filename)
 
 		return false
 	end
 
-	local var_4_1 = var_4_0:read("*a")
+	local res = fh:read("*a")
 
-	var_4_0:close()
+	fh:close()
 
-	return true, var_4_1
+	return true, res
 end
 
-function var_0_0.writeAllText(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = io.open(arg_5_1, "w+")
+function Checker_BaseWork:writeAllText(filename, str)
+	local fh = io.open(filename, "w+")
 
-	if not var_5_0 then
-		logError("[writeAllText] file open failed: " .. arg_5_1)
+	if not fh then
+		logError("[writeAllText] file open failed: " .. filename)
 
 		return false
 	end
 
-	var_5_0:write(arg_5_2)
-	var_5_0:close()
+	fh:write(str)
+	fh:close()
 
 	return true
 end
 
-return var_0_0
+return Checker_BaseWork

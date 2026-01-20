@@ -1,373 +1,375 @@
-﻿module("modules.logic.season.view3_0.Season3_0RetailView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view3_0/Season3_0RetailView.lua
 
-local var_0_0 = class("Season3_0RetailView", BaseView)
+module("modules.logic.season.view3_0.Season3_0RetailView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnsummon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_summon/#btn_summon")
-	arg_1_0._txtpropnum = gohelper.findChildText(arg_1_0.viewGO, "right/#go_summon/#go_currency/#txt_propnum")
-	arg_1_0._imagecurrencyicon = gohelper.findChildImage(arg_1_0.viewGO, "right/#go_summon/#go_currency/#image_currencyicon")
-	arg_1_0._btncurrencyicon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_summon/#go_currency/#image_currencyicon")
-	arg_1_0._btnruledetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_ruledetail")
-	arg_1_0._goruletipdetail = gohelper.findChild(arg_1_0.viewGO, "right/#go_ruletipdetail")
-	arg_1_0._btncloseruletip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_ruletipdetail/#btn_closeruletip")
-	arg_1_0._goruletips = gohelper.findChild(arg_1_0.viewGO, "right/#go_ruletips")
-	arg_1_0._txtruletips = gohelper.findChildText(arg_1_0.viewGO, "right/#go_ruletips/#txt_ruletips")
-	arg_1_0._gomaxrarecard = gohelper.findChild(arg_1_0.viewGO, "right/#go_ruletips/#txt_ruletips/#go_maxrarecard")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._txttitletips = gohelper.findChildText(arg_1_0.viewGO, "title/tips/tips")
-	arg_1_0._txtsummon1 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_summon/#txt_summon1")
-	arg_1_0._txtsummon2 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_summon/circle/#txt_summon2")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "title/progress")
-	arg_1_0._animationEvent = arg_1_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+local Season3_0RetailView = class("Season3_0RetailView", BaseView)
 
-	MainCameraMgr.instance:addView(ViewName.Season3_0RetailView, arg_1_0.autoInitRetailViewCamera, nil, arg_1_0)
+function Season3_0RetailView:onInitView()
+	self._btnsummon = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_summon/#btn_summon")
+	self._txtpropnum = gohelper.findChildText(self.viewGO, "right/#go_summon/#go_currency/#txt_propnum")
+	self._imagecurrencyicon = gohelper.findChildImage(self.viewGO, "right/#go_summon/#go_currency/#image_currencyicon")
+	self._btncurrencyicon = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_summon/#go_currency/#image_currencyicon")
+	self._btnruledetail = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_ruledetail")
+	self._goruletipdetail = gohelper.findChild(self.viewGO, "right/#go_ruletipdetail")
+	self._btncloseruletip = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_ruletipdetail/#btn_closeruletip")
+	self._goruletips = gohelper.findChild(self.viewGO, "right/#go_ruletips")
+	self._txtruletips = gohelper.findChildText(self.viewGO, "right/#go_ruletips/#txt_ruletips")
+	self._gomaxrarecard = gohelper.findChild(self.viewGO, "right/#go_ruletips/#txt_ruletips/#go_maxrarecard")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._txttitletips = gohelper.findChildText(self.viewGO, "title/tips/tips")
+	self._txtsummon1 = gohelper.findChildText(self.viewGO, "right/#go_summon/#txt_summon1")
+	self._txtsummon2 = gohelper.findChildText(self.viewGO, "right/#go_summon/circle/#txt_summon2")
+	self._goprogress = gohelper.findChild(self.viewGO, "title/progress")
+	self._animationEvent = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	MainCameraMgr.instance:addView(ViewName.Season3_0RetailView, self.autoInitRetailViewCamera, nil, self)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncurrencyicon:AddClickListener(arg_2_0._btncurrencyiconOnClick, arg_2_0)
-	arg_2_0._btnsummon:AddClickListener(arg_2_0._btnsummonOnClick, arg_2_0)
-	arg_2_0._btnruledetail:AddClickListener(arg_2_0._btnruledetailOnClick, arg_2_0)
-	arg_2_0._btncloseruletip:AddClickListener(arg_2_0._btncloseruletipOnClick, arg_2_0)
-	arg_2_0._animationEvent:AddEventListener("switch", arg_2_0.onSwitchCard, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onChangeRetail, arg_2_0)
+function Season3_0RetailView:addEvents()
+	self._btncurrencyicon:AddClickListener(self._btncurrencyiconOnClick, self)
+	self._btnsummon:AddClickListener(self._btnsummonOnClick, self)
+	self._btnruledetail:AddClickListener(self._btnruledetailOnClick, self)
+	self._btncloseruletip:AddClickListener(self._btncloseruletipOnClick, self)
+	self._animationEvent:AddEventListener("switch", self.onSwitchCard, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onChangeRetail, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncurrencyicon:RemoveClickListener()
-	arg_3_0._btnsummon:RemoveClickListener()
-	arg_3_0._btnruledetail:RemoveClickListener()
-	arg_3_0._btncloseruletip:RemoveClickListener()
-	arg_3_0._animationEvent:RemoveEventListener("switch")
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onChangeRetail, arg_3_0)
+function Season3_0RetailView:removeEvents()
+	self._btncurrencyicon:RemoveClickListener()
+	self._btnsummon:RemoveClickListener()
+	self._btnruledetail:RemoveClickListener()
+	self._btncloseruletip:RemoveClickListener()
+	self._animationEvent:RemoveEventListener("switch")
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onChangeRetail, self)
 end
 
-function var_0_0._btnruledetailOnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._goruletipdetail, true)
+function Season3_0RetailView:_btnruledetailOnClick()
+	gohelper.setActive(self._goruletipdetail, true)
 end
 
-function var_0_0._btncloseruletipOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._goruletipdetail, false)
+function Season3_0RetailView:_btncloseruletipOnClick()
+	gohelper.setActive(self._goruletipdetail, false)
 end
 
-function var_0_0._btncurrencyiconOnClick(arg_6_0)
-	local var_6_0 = Activity104Model.instance:getCurSeasonId()
-	local var_6_1 = SeasonConfig.instance:getRetailTicket(var_6_0)
+function Season3_0RetailView:_btncurrencyiconOnClick()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local id = SeasonConfig.instance:getRetailTicket(actId)
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, var_6_1)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, id)
 end
 
-function var_0_0._enterLevelInfoView(arg_7_0, arg_7_1)
-	local var_7_0 = Activity104Model.instance:getAct104Retails()
+function Season3_0RetailView:_enterLevelInfoView(index)
+	local retails = Activity104Model.instance:getAct104Retails()
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if iter_7_1.position == arg_7_1 then
-			local var_7_1 = {
-				retail = iter_7_1
-			}
+	for _, v in pairs(retails) do
+		if v.position == index then
+			local data = {}
 
-			Activity104Controller.instance:openSeasonRetailLevelInfoView(var_7_1)
+			data.retail = v
+
+			Activity104Controller.instance:openSeasonRetailLevelInfoView(data)
 
 			return
 		end
 	end
 end
 
-function var_0_0._btnsummonOnClick(arg_8_0)
-	if arg_8_0._waitRefreshingRetailReply then
+function Season3_0RetailView:_btnsummonOnClick()
+	if self._waitRefreshingRetailReply then
 		return
 	end
 
-	if arg_8_0._hasEnoughTicket then
-		local function var_8_0(arg_9_0)
-			local var_9_0 = Activity104Model.instance:getCurSeasonId()
+	if self._hasEnoughTicket then
+		local function requestRefreshRetail(self)
+			local actId = Activity104Model.instance:getCurSeasonId()
 
-			Activity104Rpc.instance:sendRefreshRetailRequest(var_9_0)
+			Activity104Rpc.instance:sendRefreshRetailRequest(actId)
 
-			arg_9_0._waitRefreshingRetailReply = false
+			self._waitRefreshingRetailReply = false
 		end
 
-		local var_8_1 = Activity104Model.instance:getAct104Retails()
+		local retails = Activity104Model.instance:getAct104Retails()
 
-		if tabletool.len(var_8_1) == 0 then
-			var_8_0(arg_8_0)
+		if tabletool.len(retails) == 0 then
+			requestRefreshRetail(self)
 		else
-			GameFacade.showMessageBox(MessageBoxIdDefine.SeasonRetailTicketLimited, MsgBoxEnum.BoxType.Yes_No, var_8_0, nil, nil, arg_8_0)
+			GameFacade.showMessageBox(MessageBoxIdDefine.SeasonRetailTicketLimited, MsgBoxEnum.BoxType.Yes_No, requestRefreshRetail, nil, nil, self)
 		end
 	else
 		GameFacade.showToast(ToastEnum.SeasonReadCountLimitedAndWait)
 	end
 end
 
-function var_0_0._editableInitView(arg_10_0)
+function Season3_0RetailView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function Season3_0RetailView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	if arg_12_0.viewParam then
+function Season3_0RetailView:onOpen()
+	if self.viewParam then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_smalluncharted_return)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_smalluncharted_open)
 	end
 
-	arg_12_0._waitRefreshingRetailReply = false
+	self._waitRefreshingRetailReply = false
 
-	arg_12_0:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_12_0._onRefreshRetailSuccess, arg_12_0)
-	arg_12_0:_refreshLevel()
-	arg_12_0:_refreshTitle()
-	arg_12_0:_refreshConstTips()
+	self:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, self._onRefreshRetailSuccess, self)
+	self:_refreshLevel()
+	self:_refreshTitle()
+	self:_refreshConstTips()
 end
 
-function var_0_0._refreshConstTips(arg_13_0)
-	local var_13_0, var_13_1, var_13_2 = Activity104Model.instance:caleRetailEquipRareWeight()
+function Season3_0RetailView:_refreshConstTips()
+	local weight, maxRare, equipId = Activity104Model.instance:caleRetailEquipRareWeight()
 
-	if var_13_2 == 0 then
-		gohelper.setActive(arg_13_0._goruletips, false)
+	if equipId == 0 then
+		gohelper.setActive(self._goruletips, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0._goruletips, true)
+	gohelper.setActive(self._goruletips, true)
 
-	if not arg_13_0._rareCard then
-		arg_13_0._rareCard = Season3_0CelebrityCardItem.New()
+	if not self._rareCard then
+		self._rareCard = Season3_0CelebrityCardItem.New()
 
-		arg_13_0._rareCard:init(arg_13_0._gomaxrarecard)
+		self._rareCard:init(self._gomaxrarecard)
 	end
 
-	arg_13_0._rareCard:reset(var_13_2)
+	self._rareCard:reset(equipId)
 
-	local var_13_3 = math.floor(var_13_0 * 100)
-	local var_13_4 = {
-		luaLang("seasonretailview_rare_" .. var_13_1),
-		var_13_3
+	local weightPercent = math.floor(weight * 100)
+	local tag = {
+		luaLang("seasonretailview_rare_" .. maxRare),
+		weightPercent
 	}
 
-	arg_13_0._txtruletips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("seasonretailview_rule1"), var_13_4)
+	self._txtruletips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("seasonretailview_rule1"), tag)
 end
 
-function var_0_0._onRefreshRetailSuccess(arg_14_0)
-	arg_14_0._waitRefreshingRetailReply = false
+function Season3_0RetailView:_onRefreshRetailSuccess()
+	self._waitRefreshingRetailReply = false
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_smalluncharted_refresh)
-	arg_14_0.viewContainer:playAnim(UIAnimationName.Switch, 0, 0)
+	self.viewContainer:playAnim(UIAnimationName.Switch, 0, 0)
 end
 
-function var_0_0.onSwitchCard(arg_15_0)
-	arg_15_0:_refreshLevel()
-	arg_15_0:_refreshTitle()
+function Season3_0RetailView:onSwitchCard()
+	self:_refreshLevel()
+	self:_refreshTitle()
 end
 
-function var_0_0._refreshTitle(arg_16_0)
-	local var_16_0 = Activity104Model.instance:getCurSeasonId()
-	local var_16_1 = SeasonConfig.instance:getRetailTicket(var_16_0)
-	local var_16_2 = CurrencyConfig.instance:getCurrencyCo(var_16_1).icon
+function Season3_0RetailView:_refreshTitle()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local id = SeasonConfig.instance:getRetailTicket(actId)
+	local currencyname = CurrencyConfig.instance:getCurrencyCo(id).icon
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imagecurrencyicon, var_16_2 .. "_1", true)
-	arg_16_0:_setStages()
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagecurrencyicon, currencyname .. "_1", true)
+	self:_setStages()
 end
 
-function var_0_0._setStages(arg_17_0)
-	local var_17_0 = Activity104Model.instance:getAct104CurStage()
-	local var_17_1 = Activity104Model.instance:getMaxStage()
+function Season3_0RetailView:_setStages()
+	local stage = Activity104Model.instance:getAct104CurStage()
+	local maxStage = Activity104Model.instance:getMaxStage()
 
-	if not arg_17_0.starComp then
-		arg_17_0.starComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_17_0._goprogress, SeasonStarProgressComp)
+	if not self.starComp then
+		self.starComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._goprogress, SeasonStarProgressComp)
 	end
 
-	arg_17_0.starComp:refreshStar("#go_progress", var_17_0, var_17_1)
+	self.starComp:refreshStar("#go_progress", stage, maxStage)
 end
 
-function var_0_0._refreshLevel(arg_18_0)
-	arg_18_0:_refreshTicket()
-	arg_18_0:_showEntrance()
+function Season3_0RetailView:_refreshLevel()
+	self:_refreshTicket()
+	self:_showEntrance()
 end
 
-function var_0_0._refreshTicket(arg_19_0)
-	local var_19_0 = Activity104Model.instance:getCurSeasonId()
-	local var_19_1 = SeasonConfig.instance:getRetailTicket(var_19_0)
-	local var_19_2 = CurrencyConfig.instance:getCurrencyCo(var_19_1).recoverLimit
-	local var_19_3 = CurrencyModel.instance:getCurrency(var_19_1).quantity
+function Season3_0RetailView:_refreshTicket()
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local id = SeasonConfig.instance:getRetailTicket(actId)
+	local needTicket = CurrencyConfig.instance:getCurrencyCo(id).recoverLimit
+	local hasTicket = CurrencyModel.instance:getCurrency(id).quantity
 
-	arg_19_0._hasEnoughTicket = var_19_3 >= 1
+	self._hasEnoughTicket = hasTicket >= 1
 
-	local var_19_4 = var_19_3 == 0 and "<color=#CF4543>" .. var_19_3 .. "</color>/" .. var_19_2 or var_19_3 .. "/" .. var_19_2
+	local hasTxt = hasTicket == 0 and "<color=#CF4543>" .. hasTicket .. "</color>/" .. needTicket or hasTicket .. "/" .. needTicket
 
-	arg_19_0._txtpropnum.text = var_19_4
+	self._txtpropnum.text = hasTxt
 end
 
-function var_0_0._onChangeRetail(arg_20_0, arg_20_1)
-	local var_20_0 = Activity104Model.instance:getCurSeasonId()
-	local var_20_1 = SeasonConfig.instance:getRetailTicket(var_20_0)
+function Season3_0RetailView:_onChangeRetail(changeIds)
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local id = SeasonConfig.instance:getRetailTicket(actId)
 
-	if not var_20_1 or not arg_20_1[var_20_1] then
+	if not id or not changeIds[id] then
 		return
 	end
 
-	arg_20_0:_refreshTicket()
+	self:_refreshTicket()
 end
 
-local var_0_1 = {
+local commonRewardParams = {
 	targetFlagUIPosX = -25.9,
 	targetFlagUIScale = 2.3,
 	targetFlagUIPosY = 19.5,
 	showNewFlag2 = false
 }
 
-function var_0_0._showEntrance(arg_21_0)
-	arg_21_0:_initRetailItemList()
+function Season3_0RetailView:_showEntrance()
+	self:_initRetailItemList()
 
-	local var_21_0 = Activity104Model.instance:getAct104Retails()
-	local var_21_1 = #var_21_0
+	local retails = Activity104Model.instance:getAct104Retails()
+	local retailCount = #retails
 
-	for iter_21_0, iter_21_1 in pairs(var_21_0) do
-		arg_21_0:_refreshRetailEpisode(iter_21_1)
+	for _, v in pairs(retails) do
+		self:_refreshRetailEpisode(v)
 	end
 
-	if var_21_1 == 0 then
-		arg_21_0._txttitletips.text = luaLang("seasonretailview_unrefreshlevel")
-		arg_21_0._txtsummon1.text = luaLang("p_seasonretailview_search")
-		arg_21_0._txtsummon2.text = luaLang("p_seasonretailview_search")
+	if retailCount == 0 then
+		self._txttitletips.text = luaLang("seasonretailview_unrefreshlevel")
+		self._txtsummon1.text = luaLang("p_seasonretailview_search")
+		self._txtsummon2.text = luaLang("p_seasonretailview_search")
 	else
-		arg_21_0._txttitletips.text = luaLang("p_seasonretailview_tips")
-		arg_21_0._txtsummon1.text = luaLang("p_seasonsecretlandview_btnsummon")
-		arg_21_0._txtsummon2.text = luaLang("p_seasonsecretlandview_btnsummon")
+		self._txttitletips.text = luaLang("p_seasonretailview_tips")
+		self._txtsummon1.text = luaLang("p_seasonsecretlandview_btnsummon")
+		self._txtsummon2.text = luaLang("p_seasonsecretlandview_btnsummon")
 	end
 end
 
-function var_0_0._initRetailItemList(arg_22_0)
-	if not arg_22_0._retailItemList then
-		arg_22_0._retailItemList = {}
+function Season3_0RetailView:_initRetailItemList()
+	if not self._retailItemList then
+		self._retailItemList = {}
 
-		for iter_22_0 = 1, 6 do
-			arg_22_0._retailItemList[iter_22_0] = arg_22_0:_createRetailItem(iter_22_0)
+		for i = 1, 6 do
+			self._retailItemList[i] = self:_createRetailItem(i)
 		end
 	end
 
-	for iter_22_1, iter_22_2 in ipairs(arg_22_0._retailItemList) do
-		gohelper.setActive(iter_22_2.go, false)
+	for i, v in ipairs(self._retailItemList) do
+		gohelper.setActive(v.go, false)
 	end
 end
 
-function var_0_0._createRetailItem(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0:getUserDataTb_()
+function Season3_0RetailView:_createRetailItem(index)
+	local item = self:getUserDataTb_()
 
-	var_23_0.index = arg_23_1
-	var_23_0.go = gohelper.findChild(arg_23_0.viewGO, string.format("#go_entrance%s", arg_23_1))
-	var_23_0.goitem = gohelper.findChild(var_23_0.go, string.format("#go_item%s", arg_23_1))
-	var_23_0.txtlevelnum = gohelper.findChildText(var_23_0.goitem, string.format("mask/#txt_levelnum%s", arg_23_1))
-	var_23_0.btngo = gohelper.findChildButtonWithAudio(var_23_0.goitem, string.format("#btn_go%s", arg_23_1))
-	var_23_0.gorewards = gohelper.findChild(var_23_0.goitem, string.format("#go_rewards%s", arg_23_1))
-	var_23_0.cardRoot = gohelper.findChild(var_23_0.gorewards, string.format("rewardlist/#scroll_celebritycard%s/scrollcontent_seasoncelebritycarditem", arg_23_1))
-	var_23_0.gotag = gohelper.findChild(var_23_0.goitem, string.format("#go_tag%s", arg_23_1))
-	var_23_0.gonormaltips = gohelper.findChild(var_23_0.goitem, string.format("#go_normaltips%s", arg_23_1))
-	var_23_0.gospecialtips = gohelper.findChild(var_23_0.goitem, string.format("#go_specialtips%s", arg_23_1))
-	var_23_0.txtspecialtips = gohelper.findChildText(var_23_0.gospecialtips, "bg/tips")
+	item.index = index
+	item.go = gohelper.findChild(self.viewGO, string.format("#go_entrance%s", index))
+	item.goitem = gohelper.findChild(item.go, string.format("#go_item%s", index))
+	item.txtlevelnum = gohelper.findChildText(item.goitem, string.format("mask/#txt_levelnum%s", index))
+	item.btngo = gohelper.findChildButtonWithAudio(item.goitem, string.format("#btn_go%s", index))
+	item.gorewards = gohelper.findChild(item.goitem, string.format("#go_rewards%s", index))
+	item.cardRoot = gohelper.findChild(item.gorewards, string.format("rewardlist/#scroll_celebritycard%s/scrollcontent_seasoncelebritycarditem", index))
+	item.gotag = gohelper.findChild(item.goitem, string.format("#go_tag%s", index))
+	item.gonormaltips = gohelper.findChild(item.goitem, string.format("#go_normaltips%s", index))
+	item.gospecialtips = gohelper.findChild(item.goitem, string.format("#go_specialtips%s", index))
+	item.txtspecialtips = gohelper.findChildText(item.gospecialtips, "bg/tips")
 
-	var_23_0.btngo:AddClickListener(arg_23_0._enterLevelInfoView, arg_23_0, arg_23_1)
+	item.btngo:AddClickListener(self._enterLevelInfoView, self, index)
 
-	return var_23_0
+	return item
 end
 
-function var_0_0._refreshRetailEpisode(arg_24_0, arg_24_1)
-	if not arg_24_1 then
+function Season3_0RetailView:_refreshRetailEpisode(retailInfo)
+	if not retailInfo then
 		return
 	end
 
-	local var_24_0 = arg_24_1.position
-	local var_24_1 = arg_24_0._retailItemList[var_24_0]
+	local position = retailInfo.position
+	local item = self._retailItemList[position]
 
-	if not var_24_1 then
-		logError(string.format("no find retail episode position, episodeId:%s  position:%s", arg_24_1.id, var_24_0))
+	if not item then
+		logError(string.format("no find retail episode position, episodeId:%s  position:%s", retailInfo.id, position))
 
 		return
 	end
 
-	gohelper.setActive(var_24_1.go, true)
+	gohelper.setActive(item.go, true)
 
-	local var_24_2 = Activity104Model.instance:getCurSeasonId()
-	local var_24_3 = SeasonConfig.instance:getSeasonRetailEpisodeCo(var_24_2, arg_24_1.id)
-	local var_24_4 = arg_24_1.advancedId
-	local var_24_5 = arg_24_1.advancedRare
+	local actId = Activity104Model.instance:getCurSeasonId()
+	local episodeCo = SeasonConfig.instance:getSeasonRetailEpisodeCo(actId, retailInfo.id)
+	local advancedId = retailInfo.advancedId
+	local advancedRare = retailInfo.advancedRare
 
-	var_24_1.txtlevelnum.text = var_24_3 and var_24_3.desc or ""
+	item.txtlevelnum.text = episodeCo and episodeCo.desc or ""
 
-	gohelper.setActive(var_24_1.gonormaltips, var_24_4 ~= 0 and var_24_5 == 1)
-	gohelper.setActive(var_24_1.gospecialtips, var_24_4 ~= 0 and var_24_5 == 2)
+	gohelper.setActive(item.gonormaltips, advancedId ~= 0 and advancedRare == 1)
+	gohelper.setActive(item.gospecialtips, advancedId ~= 0 and advancedRare == 2)
 
-	if var_24_4 ~= 0 and var_24_5 == 2 then
-		local var_24_6 = ""
+	if advancedId ~= 0 and advancedRare == 2 then
+		local name = ""
 
-		for iter_24_0, iter_24_1 in pairs(arg_24_1.showActivity104EquipIds) do
-			local var_24_7 = SeasonConfig.instance:getSeasonEquipCo(iter_24_1)
+		for _, equipId in pairs(retailInfo.showActivity104EquipIds) do
+			local co = SeasonConfig.instance:getSeasonEquipCo(equipId)
 
-			if var_24_7.isOptional == 1 then
-				var_24_6 = var_24_7.name
+			if co.isOptional == 1 then
+				name = co.name
 
 				break
 			end
 		end
 
-		var_24_1.txtspecialtips.text = formatLuaLang("season_retail_specialtips", var_24_6)
+		item.txtspecialtips.text = formatLuaLang("season_retail_specialtips", name)
 	end
 
-	if not var_24_1.cardItems then
-		var_24_1.cardItems = {}
+	if not item.cardItems then
+		item.cardItems = {}
 	end
 
-	for iter_24_2 = 1, 3 do
-		local var_24_8 = var_24_1.cardItems[iter_24_2]
-		local var_24_9 = arg_24_1.showActivity104EquipIds[iter_24_2]
+	for i = 1, 3 do
+		local cardItem = item.cardItems[i]
+		local equipId = retailInfo.showActivity104EquipIds[i]
 
-		if var_24_9 and var_24_9 ~= 0 then
-			local var_24_10 = Activity104Model.instance:isNew104Equip(var_24_9)
+		if equipId and equipId ~= 0 then
+			local isNew = Activity104Model.instance:isNew104Equip(equipId)
 
-			if not var_24_8 then
-				var_24_8 = Season3_0CelebrityCardItem.New()
-				var_0_1.showNewFlag2 = var_24_10
+			if not cardItem then
+				cardItem = Season3_0CelebrityCardItem.New()
+				commonRewardParams.showNewFlag2 = isNew
 
-				var_24_8:init(var_24_1.cardRoot, var_24_9, var_0_1)
-				var_24_8:showTag(true)
+				cardItem:init(item.cardRoot, equipId, commonRewardParams)
+				cardItem:showTag(true)
 
-				var_24_1.cardItems[iter_24_2] = var_24_8
+				item.cardItems[i] = cardItem
 			else
-				var_24_8:reset(var_24_9)
-				var_24_8:showNewFlag2(var_24_10)
+				cardItem:reset(equipId)
+				cardItem:showNewFlag2(isNew)
 			end
-		elseif var_24_8 then
-			var_24_8:setVisible(false)
+		elseif cardItem then
+			cardItem:setVisible(false)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_25_0)
+function Season3_0RetailView:onClose()
 	Activity104Controller.instance:dispatchEvent(Activity104Event.ChangeCameraSize, false)
-	arg_25_0:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_25_0._onRefreshRetailSuccess, arg_25_0)
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, self._onRefreshRetailSuccess, self)
 end
 
-function var_0_0.autoInitRetailViewCamera(arg_26_0)
+function Season3_0RetailView:autoInitRetailViewCamera()
 	Activity104Controller.instance:dispatchEvent(Activity104Event.ChangeCameraSize, true)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	if arg_27_0._retailItemList then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0._retailItemList) do
-			iter_27_1.btngo:RemoveClickListener()
+function Season3_0RetailView:onDestroyView()
+	if self._retailItemList then
+		for _, v in pairs(self._retailItemList) do
+			v.btngo:RemoveClickListener()
 
-			if iter_27_1.cardItems then
-				for iter_27_2, iter_27_3 in pairs(iter_27_1.cardItems) do
-					iter_27_3:destroy()
+			if v.cardItems then
+				for _, cardItem in pairs(v.cardItems) do
+					cardItem:destroy()
 				end
 			end
 		end
 	end
 end
 
-return var_0_0
+return Season3_0RetailView

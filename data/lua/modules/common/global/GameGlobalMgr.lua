@@ -1,27 +1,29 @@
-﻿module("modules.common.global.GameGlobalMgr", package.seeall)
+﻿-- chunkname: @modules/common/global/GameGlobalMgr.lua
 
-local var_0_0 = class("GameGlobalMgr")
+module("modules.common.global.GameGlobalMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	LuaEventSystem.addEventMechanism(arg_1_0)
+local GameGlobalMgr = class("GameGlobalMgr")
+
+function GameGlobalMgr:ctor()
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.initLangFont(arg_2_0)
-	if arg_2_0._langFont == nil then
-		arg_2_0._langFont = GameLangFont.New()
+function GameGlobalMgr:initLangFont()
+	if self._langFont == nil then
+		self._langFont = GameLangFont.New()
 	end
 end
 
-function var_0_0.init(arg_3_0)
-	arg_3_0._screenState = GameScreenState.New()
-	arg_3_0._loadingState = GameLoadingState.New()
-	arg_3_0._fullViewState = GameFullViewState.New()
-	arg_3_0._msgTooOfterCheck = GameMsgTooOftenCheck.New()
-	arg_3_0._msgLockState = GameMsgLockState.New()
-	arg_3_0._screenBrightness = GameScreenBrightness.New()
-	arg_3_0._screenTouch = GameScreenTouch.New()
+function GameGlobalMgr:init()
+	self._screenState = GameScreenState.New()
+	self._loadingState = GameLoadingState.New()
+	self._fullViewState = GameFullViewState.New()
+	self._msgTooOfterCheck = GameMsgTooOftenCheck.New()
+	self._msgLockState = GameMsgLockState.New()
+	self._screenBrightness = GameScreenBrightness.New()
+	self._screenTouch = GameScreenTouch.New()
 
-	arg_3_0:initLangFont()
+	self:initLangFont()
 	GoHelperExtend.activateExtend()
 	StringExtend.activateExtend()
 	LuaMixScrollViewExtended.activateExtend()
@@ -35,34 +37,34 @@ function var_0_0.init(arg_3_0)
 	end
 end
 
-function var_0_0.getScreenState(arg_4_0)
-	return arg_4_0._screenState
+function GameGlobalMgr:getScreenState()
+	return self._screenState
 end
 
-function var_0_0.getFullViewState(arg_5_0)
-	return arg_5_0._fullViewState
+function GameGlobalMgr:getFullViewState()
+	return self._fullViewState
 end
 
-function var_0_0.getLoadingState(arg_6_0)
-	return arg_6_0._loadingState
+function GameGlobalMgr:getLoadingState()
+	return self._loadingState
 end
 
-function var_0_0.getLangFont(arg_7_0)
-	return arg_7_0._langFont
+function GameGlobalMgr:getLangFont()
+	return self._langFont
 end
 
-function var_0_0.getMsgLockState(arg_8_0)
-	return arg_8_0._msgLockState
+function GameGlobalMgr:getMsgLockState()
+	return self._msgLockState
 end
 
-function var_0_0.playTouchEffect(arg_9_0, arg_9_1)
-	arg_9_0._screenTouch:playTouchEffect(arg_9_1)
+function GameGlobalMgr:playTouchEffect(pos)
+	self._screenTouch:playTouchEffect(pos)
 end
 
-function var_0_0.refreshTouchEffectSkin(arg_10_0)
-	arg_10_0._screenTouch:refreshEffect()
+function GameGlobalMgr:refreshTouchEffectSkin()
+	self._screenTouch:refreshEffect()
 end
 
-var_0_0.instance = var_0_0.New()
+GameGlobalMgr.instance = GameGlobalMgr.New()
 
-return var_0_0
+return GameGlobalMgr

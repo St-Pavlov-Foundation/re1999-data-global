@@ -1,56 +1,58 @@
-﻿module("modules.logic.survival.view.handbook.tab.SurvivalHandbookAmplifierTab", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/handbook/tab/SurvivalHandbookAmplifierTab.lua
 
-local var_0_0 = class("SurvivalHandbookAmplifierTab", LuaCompBase)
+module("modules.logic.survival.view.handbook.tab.SurvivalHandbookAmplifierTab", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_1)
-	arg_1_0.image_Line = gohelper.findChild(arg_1_1, "image_Line")
-	arg_1_0.txt_Common = gohelper.findChildTextMesh(arg_1_1, "txt_Common")
-	arg_1_0.image_Icon = gohelper.findChildImage(arg_1_1, "txt_Common/image_Icon")
-	arg_1_0.go_Selected = gohelper.findChild(arg_1_1, "#go_Selected")
-	arg_1_0.select_txt_Common = gohelper.findChildTextMesh(arg_1_0.go_Selected, "txt_Common")
-	arg_1_0.select_image_Icon = gohelper.findChildImage(arg_1_0.go_Selected, "txt_Common/image_Icon")
-	arg_1_0.go_Selected = gohelper.findChild(arg_1_1, "#go_Selected")
-	arg_1_0.go_redDot = gohelper.findChild(arg_1_1, "#go_redDot")
+local SurvivalHandbookAmplifierTab = class("SurvivalHandbookAmplifierTab", LuaCompBase)
 
-	arg_1_0:setSelect(false)
+function SurvivalHandbookAmplifierTab:init(go)
+	self.go = go
+	self.btnClick = gohelper.findButtonWithAudio(go)
+	self.image_Line = gohelper.findChild(go, "image_Line")
+	self.txt_Common = gohelper.findChildTextMesh(go, "txt_Common")
+	self.image_Icon = gohelper.findChildImage(go, "txt_Common/image_Icon")
+	self.go_Selected = gohelper.findChild(go, "#go_Selected")
+	self.select_txt_Common = gohelper.findChildTextMesh(self.go_Selected, "txt_Common")
+	self.select_image_Icon = gohelper.findChildImage(self.go_Selected, "txt_Common/image_Icon")
+	self.go_Selected = gohelper.findChild(go, "#go_Selected")
+	self.go_redDot = gohelper.findChild(go, "#go_redDot")
+
+	self:setSelect(false)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClickBtnClick, arg_2_0)
+function SurvivalHandbookAmplifierTab:addEventListeners()
+	self:addClickCb(self.btnClick, self.onClickBtnClick, self)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1)
-	arg_3_0.index = arg_3_1.index
-	arg_3_0.handbookType = arg_3_1.handbookType
-	arg_3_0.subType = arg_3_1.subType
-	arg_3_0.onClickTabCallBack = arg_3_1.onClickTabCallBack
-	arg_3_0.onClickTabContext = arg_3_1.onClickTabContext
-	arg_3_0.isLast = arg_3_1.isLast
+function SurvivalHandbookAmplifierTab:setData(data)
+	self.index = data.index
+	self.handbookType = data.handbookType
+	self.subType = data.subType
+	self.onClickTabCallBack = data.onClickTabCallBack
+	self.onClickTabContext = data.onClickTabContext
+	self.isLast = data.isLast
 
-	RedDotController.instance:addRedDot(arg_3_0.go_redDot, RedDotEnum.DotNode.SurvivalHandbookAmplifier, arg_3_0.subType)
-	gohelper.setActive(arg_3_0.image_Line, not arg_3_0.isLast)
+	RedDotController.instance:addRedDot(self.go_redDot, RedDotEnum.DotNode.SurvivalHandbookAmplifier, self.subType)
+	gohelper.setActive(self.image_Line, not self.isLast)
 
-	arg_3_0.txt_Common.text = SurvivalHandbookModel.instance:getTabTitleBySubType(arg_3_0.handbookType, arg_3_0.subType)
-	arg_3_0.select_txt_Common.text = SurvivalHandbookModel.instance:getTabTitleBySubType(arg_3_0.handbookType, arg_3_0.subType)
+	self.txt_Common.text = SurvivalHandbookModel.instance:getTabTitleBySubType(self.handbookType, self.subType)
+	self.select_txt_Common.text = SurvivalHandbookModel.instance:getTabTitleBySubType(self.handbookType, self.subType)
 
-	local var_3_0 = SurvivalHandbookModel.instance:getTabImageBySubType(arg_3_0.handbookType, arg_3_0.subType)
+	local path = SurvivalHandbookModel.instance:getTabImageBySubType(self.handbookType, self.subType)
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_3_0.image_Icon, var_3_0)
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_3_0.select_image_Icon, var_3_0)
+	UISpriteSetMgr.instance:setSurvivalSprite(self.image_Icon, path)
+	UISpriteSetMgr.instance:setSurvivalSprite(self.select_image_Icon, path)
 end
 
-function var_0_0.onClickBtnClick(arg_4_0)
-	if arg_4_0.onClickTabCallBack then
-		arg_4_0.onClickTabCallBack(arg_4_0.onClickTabContext, arg_4_0)
+function SurvivalHandbookAmplifierTab:onClickBtnClick()
+	if self.onClickTabCallBack then
+		self.onClickTabCallBack(self.onClickTabContext, self)
 	end
 end
 
-function var_0_0.setSelect(arg_5_0, arg_5_1)
-	arg_5_0.isSelect = arg_5_1
+function SurvivalHandbookAmplifierTab:setSelect(value)
+	self.isSelect = value
 
-	gohelper.setActive(arg_5_0.go_Selected, arg_5_0.isSelect)
+	gohelper.setActive(self.go_Selected, self.isSelect)
 end
 
-return var_0_0
+return SurvivalHandbookAmplifierTab

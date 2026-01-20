@@ -1,114 +1,120 @@
-﻿module("modules.logic.fight.system.work.FightWorkExPointChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkExPointChange.lua
 
-local var_0_0 = class("FightWorkExPointChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkExPointChange", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
-	arg_1_0._oldValue = arg_1_0._entityMO and arg_1_0._entityMO.exPoint
+local FightWorkExPointChange = class("FightWorkExPointChange", FightEffectBase)
+
+function FightWorkExPointChange:beforePlayEffectData()
+	self._entityId = self.actEffectData.targetId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
+	self._oldValue = self._entityMO and self._entityMO.exPoint
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._entityMO then
-		arg_2_0:onDone(true)
+function FightWorkExPointChange:onStart()
+	if not self._entityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_2_0._newValue = arg_2_0._entityMO and arg_2_0._entityMO.exPoint
+	self._newValue = self._entityMO and self._entityMO.exPoint
 
-	if arg_2_0._oldValue ~= arg_2_0._newValue then
-		FightController.instance:dispatchEvent(FightEvent.OnExPointChange, arg_2_0._entityId, arg_2_0._oldValue, arg_2_0._newValue)
+	if self._oldValue ~= self._newValue then
+		FightController.instance:dispatchEvent(FightEvent.OnExPointChange, self._entityId, self._oldValue, self._newValue)
 
-		if FightModel.instance:getVersion() < 1 and arg_2_0._newValue < arg_2_0._oldValue then
+		local version = FightModel.instance:getVersion()
+
+		if version < 1 and self._newValue < self._oldValue then
 			if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Enter) then
-				arg_2_0:onDone(true)
+				self:onDone(true)
 
 				return
 			end
 
-			local var_2_0 = arg_2_0:_calcRemoveCard()
+			local removeIndexes = self:_calcRemoveCard()
 
-			if var_2_0 then
-				arg_2_0:_removeCard(var_2_0)
+			if removeIndexes then
+				self:_removeCard(removeIndexes)
 
 				return
 			end
 		end
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._removeCard(arg_3_0, arg_3_1)
-	arg_3_0._needRemoveCard = true
-	arg_3_0._revertVisible = true
+function FightWorkExPointChange:_removeCard(removeIndexes)
+	self._needRemoveCard = true
+	self._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	local var_3_0 = FightDataHelper.handCardMgr.handCard
-	local var_3_1 = #var_3_0
+	local cards = FightDataHelper.handCardMgr.handCard
+	local oldCount = #cards
 
-	table.sort(arg_3_1, FightWorkCardRemove2.sort)
+	table.sort(removeIndexes, FightWorkCardRemove2.sort)
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		table.remove(var_3_0, iter_3_1)
+	for i, v in ipairs(removeIndexes) do
+		table.remove(cards, v)
 	end
 
-	local var_3_2 = 0.033
-	local var_3_3 = 1.2 + var_3_2 * 7 + 3 * var_3_2 * (var_3_1 - #arg_3_1)
+	local dt = 0.033
+	local delayTime = 1.2 + dt * 7 + 3 * dt * (oldCount - #removeIndexes)
 
-	if FightCardDataHelper.canCombineCardListForPerformance(var_3_0) then
-		arg_3_0:com_registTimer(arg_3_0._delayDone, 10)
-		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_3_0._onCombineDone, arg_3_0)
-		FightController.instance:dispatchEvent(FightEvent.CardRemove, arg_3_1, var_3_3, true)
+	if FightCardDataHelper.canCombineCardListForPerformance(cards) then
+		self:com_registTimer(self._delayDone, 10)
+		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, self._onCombineDone, self)
+		FightController.instance:dispatchEvent(FightEvent.CardRemove, removeIndexes, delayTime, true)
 	else
-		arg_3_0:com_registTimer(arg_3_0._delayAfterPerformance, var_3_3 / FightModel.instance:getUISpeed())
-		FightController.instance:dispatchEvent(FightEvent.CardRemove, arg_3_1)
+		self:com_registTimer(self._delayAfterPerformance, delayTime / FightModel.instance:getUISpeed())
+		FightController.instance:dispatchEvent(FightEvent.CardRemove, removeIndexes)
 	end
 end
 
-function var_0_0._onCombineDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkExPointChange:_onCombineDone()
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_5_0)
+function FightWorkExPointChange:_delayDone()
 	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-	arg_5_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayAfterPerformance(arg_6_0)
-	arg_6_0:onDone(true)
+function FightWorkExPointChange:_delayAfterPerformance()
+	self:onDone(true)
 end
 
-function var_0_0._calcRemoveCard(arg_7_0)
-	local var_7_0 = FightDataHelper.handCardMgr.handCard
-	local var_7_1
+function FightWorkExPointChange:_calcRemoveCard()
+	local cards = FightDataHelper.handCardMgr.handCard
+	local dissolveCardIndexs
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_2 = FightDataHelper.entityMgr:getById(iter_7_1.uid)
+	for i, cardInfoMO in ipairs(cards) do
+		local entityMO = FightDataHelper.entityMgr:getById(cardInfoMO.uid)
 
-		if var_7_2 then
-			local var_7_3 = var_7_2:getExPoint()
-			local var_7_4 = var_7_2 and var_7_2:getUniqueSkillPoint() or 5
+		if entityMO then
+			local exPoint = entityMO:getExPoint()
+			local maxExPoint = entityMO and entityMO:getUniqueSkillPoint() or 5
+			local isBigSkill = FightCardDataHelper.isBigSkill(cardInfoMO.skillId)
+			local isBigSkillInvalid = isBigSkill and exPoint < maxExPoint
 
-			if FightCardDataHelper.isBigSkill(iter_7_1.skillId) and var_7_3 < var_7_4 then
-				var_7_1 = var_7_1 or {}
+			if isBigSkillInvalid then
+				dissolveCardIndexs = dissolveCardIndexs or {}
 
-				table.insert(var_7_1, iter_7_0)
+				table.insert(dissolveCardIndexs, i)
 			end
 		end
 	end
 
-	return var_7_1
+	return dissolveCardIndexs
 end
 
-function var_0_0.clearWork(arg_8_0)
-	if arg_8_0._needRemoveCard and arg_8_0._revertVisible then
+function FightWorkExPointChange:clearWork()
+	if self._needRemoveCard and self._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_8_0._onCombineDone, arg_8_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onCombineDone, self)
 end
 
-return var_0_0
+return FightWorkExPointChange

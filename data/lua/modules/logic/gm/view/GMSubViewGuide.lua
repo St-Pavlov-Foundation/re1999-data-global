@@ -1,120 +1,124 @@
-﻿module("modules.logic.gm.view.GMSubViewGuide", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMSubViewGuide.lua
 
-local var_0_0 = class("GMSubViewGuide", GMSubViewBase)
+module("modules.logic.gm.view.GMSubViewGuide", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.tabName = "指引"
+local GMSubViewGuide = class("GMSubViewGuide", GMSubViewBase)
+
+function GMSubViewGuide:ctor()
+	self.tabName = "指引"
 end
 
-function var_0_0.initViewContent(arg_2_0)
-	if arg_2_0._inited then
+function GMSubViewGuide:initViewContent()
+	if self._inited then
 		return
 	end
 
-	GMSubViewBase.initViewContent(arg_2_0)
-	arg_2_0:addTitleSplitLine("指引调试")
-	arg_2_0:addLabel("L1", "指引：")
+	GMSubViewBase.initViewContent(self)
+	self:addTitleSplitLine("指引调试")
+	self:addLabel("L1", "指引：")
 
-	arg_2_0._inpGuide = arg_2_0:addInputText("L1", "", "[guide[#step]]")
+	self._inpGuide = self:addInputText("L1", "", "[guide[#step]]")
 
-	arg_2_0:addButton("L1", "开始", arg_2_0._onClickGuideStart, arg_2_0)
-	arg_2_0:addButton("L1", "完成", arg_2_0._onClickGuideFinish, arg_2_0)
-	arg_2_0:addButton("L1", "重置", arg_2_0._onClickGuideReset, arg_2_0)
-	arg_2_0:addButton("L2", "指引状态", arg_2_0._onClickGuideStatus, arg_2_0)
-	arg_2_0:addButton("L2", "指引屏蔽", arg_2_0._onClickGuideForbid, arg_2_0)
-	arg_2_0:addButton("L2", "引导图预览", arg_2_0._onClickHelpViewBrowse, arg_2_0)
-	arg_2_0:addButton("L2", "清空战斗指引记录", arg_2_0._clearFightGuide, arg_2_0)
-	arg_2_0:addTitleSplitLine("指引编辑")
-	arg_2_0:addButton("L3", "打开指引编辑器", arg_2_0._onClickGuideEditor, arg_2_0)
-	arg_2_0:addWikiButton("L3", "http://doc.sl.com/pages/viewpage.action?pageId=31851464")
-	arg_2_0._inpGuide:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewGuide, ""))
+	self:addButton("L1", "开始", self._onClickGuideStart, self)
+	self:addButton("L1", "完成", self._onClickGuideFinish, self)
+	self:addButton("L1", "重置", self._onClickGuideReset, self)
+	self:addButton("L2", "指引状态", self._onClickGuideStatus, self)
+	self:addButton("L2", "指引屏蔽", self._onClickGuideForbid, self)
+	self:addButton("L2", "引导图预览", self._onClickHelpViewBrowse, self)
+	self:addButton("L2", "清空战斗指引记录", self._clearFightGuide, self)
+	self:addTitleSplitLine("指引编辑")
+	self:addButton("L3", "打开指引编辑器", self._onClickGuideEditor, self)
+	self:addWikiButton("L3", "http://doc.sl.com/pages/viewpage.action?pageId=31851464")
+	self._inpGuide:SetText(PlayerPrefsHelper.getString(PlayerPrefsKey.GMToolViewGuide, ""))
 end
 
-function var_0_0._clearFightGuide(arg_3_0)
+function GMSubViewGuide:_clearFightGuide()
 	PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, "")
 	ToastController.instance:showToastWithString("清空成功，重启生效")
 end
 
-function var_0_0._onClickGuideStatus(arg_4_0)
-	arg_4_0:closeThis()
+function GMSubViewGuide:_onClickGuideStatus()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMGuideStatusView)
 end
 
-function var_0_0._onClickGuideForbid(arg_5_0)
-	local var_5_0 = GuideController.instance:isForbidGuides()
+function GMSubViewGuide:_onClickGuideForbid()
+	local isForbid = GuideController.instance:isForbidGuides()
 
-	GuideController.instance:forbidGuides(not var_5_0)
+	GuideController.instance:forbidGuides(not isForbid)
 end
 
-function var_0_0._onClickGuideStart(arg_6_0)
-	arg_6_0:closeThis()
+function GMSubViewGuide:_onClickGuideStart()
+	self:closeThis()
 
-	local var_6_0 = arg_6_0._inpGuide:GetText()
+	local text = self._inpGuide:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, var_6_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, text)
 
-	local var_6_1 = string.splitToNumber(var_6_0, "#")
-	local var_6_2 = tonumber(var_6_1[1])
-	local var_6_3 = tonumber(var_6_1[2]) or 0
+	local paramList = string.splitToNumber(text, "#")
+	local guideId = tonumber(paramList[1])
+	local guideStep = tonumber(paramList[2]) or 0
 
-	print(string.format("input guideId:%s,guideStep:%s", var_6_2, var_6_3))
+	print(string.format("input guideId:%s,guideStep:%s", guideId, guideStep))
 
-	local var_6_4 = GuideModel.instance:getById(var_6_2)
+	local guideMO = GuideModel.instance:getById(guideId)
 
-	GuideModel.instance:gmStartGuide(var_6_2, var_6_3)
+	GuideModel.instance:gmStartGuide(guideId, guideStep)
 
-	if var_6_4 then
-		GuideStepController.instance:clearFlow(var_6_2)
+	if guideMO then
+		GuideStepController.instance:clearFlow(guideId)
 
-		var_6_4.isJumpPass = false
+		guideMO.isJumpPass = false
 
-		GMRpc.instance:sendGMRequest("delete guide " .. var_6_2)
+		GMRpc.instance:sendGMRequest("delete guide " .. guideId)
 
-		;({}).guideInfos = {
-			{
-				guideId = var_6_2,
-				stepId = var_6_3
+		local t = {
+			guideInfos = {
+				{
+					guideId = guideId,
+					stepId = guideStep
+				}
 			}
 		}
 
-		GuideRpc.instance:sendFinishGuideRequest(var_6_2, var_6_3)
-		logNormal(string.format("<color=#FFA500>set guideId:%s,guideStep:%s</color>", var_6_2, var_6_3))
-	elseif var_6_2 then
-		GuideController.instance:startGudie(var_6_2)
-		logNormal("<color=#FFA500>start guide " .. var_6_2 .. "</color>")
+		GuideRpc.instance:sendFinishGuideRequest(guideId, guideStep)
+		logNormal(string.format("<color=#FFA500>set guideId:%s,guideStep:%s</color>", guideId, guideStep))
+	elseif guideId then
+		GuideController.instance:startGudie(guideId)
+		logNormal("<color=#FFA500>start guide " .. guideId .. "</color>")
 	end
 end
 
-function var_0_0._onClickGuideFinish(arg_7_0)
-	local var_7_0 = arg_7_0._inpGuide:GetText()
+function GMSubViewGuide:_onClickGuideFinish()
+	local inputStr = self._inpGuide:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, var_7_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, inputStr)
 
-	if not string.nilorempty(var_7_0) then
-		local var_7_1 = tonumber(var_7_0)
+	if not string.nilorempty(inputStr) then
+		local guideId = tonumber(inputStr)
 
-		if var_7_1 then
-			local var_7_2 = GuideModel.instance:getById(var_7_1)
+		if guideId then
+			local guideMO = GuideModel.instance:getById(guideId)
 
-			arg_7_0:closeThis()
-			logNormal("GM one key finish guide " .. var_7_1)
+			self:closeThis()
+			logNormal("GM one key finish guide " .. guideId)
 
-			local var_7_3 = GuideConfig.instance:getStepList(var_7_1)
+			local stepList = GuideConfig.instance:getStepList(guideId)
 
-			for iter_7_0 = #var_7_3, 1, -1 do
-				local var_7_4 = var_7_3[iter_7_0]
+			for j = #stepList, 1, -1 do
+				local stepCO = stepList[j]
 
-				if var_7_4.keyStep == 1 then
-					GuideRpc.instance:sendFinishGuideRequest(var_7_1, var_7_4.stepId)
+				if stepCO.keyStep == 1 then
+					GuideRpc.instance:sendFinishGuideRequest(guideId, stepCO.stepId)
 
 					break
 				end
 			end
 		else
-			local var_7_5 = string.split(var_7_0, "#")
+			local guideStep = string.split(inputStr, "#")
 
-			logNormal("GM one key finish guide " .. var_7_0)
-			GuideRpc.instance:sendFinishGuideRequest(tonumber(var_7_5[1]), tonumber(var_7_5[2]))
+			logNormal("GM one key finish guide " .. inputStr)
+			GuideRpc.instance:sendFinishGuideRequest(tonumber(guideStep[1]), tonumber(guideStep[2]))
 		end
 	else
 		logNormal("GM one key finish guides")
@@ -123,79 +127,79 @@ function var_0_0._onClickGuideFinish(arg_7_0)
 	end
 end
 
-function var_0_0._onClickGuideReset(arg_8_0)
-	local var_8_0 = arg_8_0._inpGuide:GetText()
+function GMSubViewGuide:_onClickGuideReset()
+	local text = self._inpGuide:GetText()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, var_8_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewGuide, text)
 
-	local var_8_1 = string.splitToNumber(var_8_0, "#")
-	local var_8_2 = tonumber(var_8_1[1])
-	local var_8_3 = GuideConfig.instance:getGuideCO(var_8_2)
+	local paramList = string.splitToNumber(text, "#")
+	local guideId = tonumber(paramList[1])
+	local guideCfg = GuideConfig.instance:getGuideCO(guideId)
 
-	if var_8_3 then
-		print(string.format("reset guideId:%s", var_8_2))
-		GuideStepController.instance:clearFlow(var_8_2)
-		GMRpc.instance:sendGMRequest("delete guide " .. var_8_2)
+	if guideCfg then
+		print(string.format("reset guideId:%s", guideId))
+		GuideStepController.instance:clearFlow(guideId)
+		GMRpc.instance:sendGMRequest("delete guide " .. guideId)
 
-		local var_8_4 = string.split(var_8_3.trigger, "#")
-		local var_8_5 = var_8_4[1]
+		local temp = string.split(guideCfg.trigger, "#")
+		local type = temp[1]
 
-		arg_8_0:_resetEpisode(var_8_4[1], var_8_4[2])
+		self:_resetEpisode(temp[1], temp[2])
 
-		local var_8_6 = GameUtil.splitString2(var_8_3.invalid, false, "|", "#")
+		local invalidList = GameUtil.splitString2(guideCfg.invalid, false, "|", "#")
 
-		if not var_8_6 then
+		if not invalidList then
 			return
 		end
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_6) do
+		for _, one in ipairs(invalidList) do
 			-- block empty
 		end
 	end
 end
 
-function var_0_0._resetEpisode(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == "EpisodeFinish" or arg_9_1 == "EnterEpisode" then
-		arg_9_0:_doResetEpisode(tonumber(arg_9_2))
+function GMSubViewGuide:_resetEpisode(type, episodeId)
+	if type == "EpisodeFinish" or type == "EnterEpisode" then
+		self:_doResetEpisode(tonumber(episodeId))
 
 		return
 	end
 
-	local var_9_0 = lua_open.configDict[tonumber(arg_9_2)]
+	local openConfig = lua_open.configDict[tonumber(episodeId)]
 
-	if var_9_0 then
-		arg_9_0:_doResetEpisode(var_9_0.episodeId)
+	if openConfig then
+		self:_doResetEpisode(openConfig.episodeId)
 	end
 end
 
-function var_0_0._doResetEpisode(arg_10_0, arg_10_1)
-	local var_10_0 = lua_episode.configDict[arg_10_1]
+function GMSubViewGuide:_doResetEpisode(episodeId)
+	local episodeCfg = lua_episode.configDict[episodeId]
 
-	if not var_10_0 then
+	if not episodeCfg then
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(string.format("set dungeon %s 0", arg_10_1))
+	GMRpc.instance:sendGMRequest(string.format("set dungeon %s 0", episodeId))
 
-	if var_10_0.beforeStory > 0 then
-		print(arg_10_1 .. " delete beforeStory")
-		GMRpc.instance:sendGMRequest(string.format("delete story %s", var_10_0.beforeStory))
+	if episodeCfg.beforeStory > 0 then
+		print(episodeId .. " delete beforeStory")
+		GMRpc.instance:sendGMRequest(string.format("delete story %s", episodeCfg.beforeStory))
 	end
 
-	if var_10_0.afterStory > 0 then
-		print(arg_10_1 .. " delete afterStory")
-		GMRpc.instance:sendGMRequest(string.format("delete story %s", var_10_0.afterStory))
+	if episodeCfg.afterStory > 0 then
+		print(episodeId .. " delete afterStory")
+		GMRpc.instance:sendGMRequest(string.format("delete story %s", episodeCfg.afterStory))
 	end
 end
 
-function var_0_0._onClickGuideEditor(arg_11_0)
-	arg_11_0:closeThis()
+function GMSubViewGuide:_onClickGuideEditor()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GuideStepEditor)
 end
 
-function var_0_0._onClickHelpViewBrowse(arg_12_0)
-	arg_12_0:closeThis()
+function GMSubViewGuide:_onClickHelpViewBrowse()
+	self:closeThis()
 	ViewMgr.instance:openView(ViewName.GMHelpViewBrowseView)
 end
 
-return var_0_0
+return GMSubViewGuide

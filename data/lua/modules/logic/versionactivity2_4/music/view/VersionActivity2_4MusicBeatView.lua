@@ -1,283 +1,285 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicBeatView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicBeatView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotopleftbtn = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleftbtn")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "root/scoregroup/#txt_score")
-	arg_1_0._txtmaxscore = gohelper.findChildText(arg_1_0.viewGO, "root/scoregroup/#txt_maxscore")
-	arg_1_0._gocombo = gohelper.findChild(arg_1_0.viewGO, "root/#go_combo")
-	arg_1_0._gostate1 = gohelper.findChild(arg_1_0.viewGO, "root/#go_combo/#go_state1")
-	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.viewGO, "root/#go_combo/#go_state1/#txt_num1")
-	arg_1_0._gostate2 = gohelper.findChild(arg_1_0.viewGO, "root/#go_combo/#go_state2")
-	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.viewGO, "root/#go_combo/#go_state2/#txt_num2")
-	arg_1_0._gostate3 = gohelper.findChild(arg_1_0.viewGO, "root/#go_combo/#go_state3")
-	arg_1_0._txtnum3 = gohelper.findChildText(arg_1_0.viewGO, "root/#go_combo/#go_state3/#txt_num3")
-	arg_1_0._btnstop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_stop")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_skip")
-	arg_1_0._btnaccompany = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_accompany")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/timebg/#txt_time")
-	arg_1_0._gomissclick = gohelper.findChild(arg_1_0.viewGO, "root/#go_missclick")
-	arg_1_0._gobeatgrid = gohelper.findChild(arg_1_0.viewGO, "root/#go_beatgrid")
-	arg_1_0._gobeatitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_beatgrid/#go_beatitem")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_start")
-	arg_1_0._gocountdown = gohelper.findChild(arg_1_0.viewGO, "root/#go_countdown")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "root/#go_countdown/#txt_num")
-	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
+local VersionActivity2_4MusicBeatView = class("VersionActivity2_4MusicBeatView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicBeatView:onInitView()
+	self._gotopleftbtn = gohelper.findChild(self.viewGO, "root/#go_topleftbtn")
+	self._txtscore = gohelper.findChildText(self.viewGO, "root/scoregroup/#txt_score")
+	self._txtmaxscore = gohelper.findChildText(self.viewGO, "root/scoregroup/#txt_maxscore")
+	self._gocombo = gohelper.findChild(self.viewGO, "root/#go_combo")
+	self._gostate1 = gohelper.findChild(self.viewGO, "root/#go_combo/#go_state1")
+	self._txtnum1 = gohelper.findChildText(self.viewGO, "root/#go_combo/#go_state1/#txt_num1")
+	self._gostate2 = gohelper.findChild(self.viewGO, "root/#go_combo/#go_state2")
+	self._txtnum2 = gohelper.findChildText(self.viewGO, "root/#go_combo/#go_state2/#txt_num2")
+	self._gostate3 = gohelper.findChild(self.viewGO, "root/#go_combo/#go_state3")
+	self._txtnum3 = gohelper.findChildText(self.viewGO, "root/#go_combo/#go_state3/#txt_num3")
+	self._btnstop = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#btn_stop")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#btn_skip")
+	self._btnaccompany = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#btn_accompany")
+	self._txttime = gohelper.findChildText(self.viewGO, "root/timebg/#txt_time")
+	self._gomissclick = gohelper.findChild(self.viewGO, "root/#go_missclick")
+	self._gobeatgrid = gohelper.findChild(self.viewGO, "root/#go_beatgrid")
+	self._gobeatitem = gohelper.findChild(self.viewGO, "root/#go_beatgrid/#go_beatitem")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_start")
+	self._gocountdown = gohelper.findChild(self.viewGO, "root/#go_countdown")
+	self._txtnum = gohelper.findChildText(self.viewGO, "root/#go_countdown/#txt_num")
+	self._goblock = gohelper.findChild(self.viewGO, "#go_block")
+	self._goleft = gohelper.findChild(self.viewGO, "#go_left")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstop:AddClickListener(arg_2_0._btnstopOnClick, arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
-	arg_2_0._btnaccompany:AddClickListener(arg_2_0._btnaccompanyOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+function VersionActivity2_4MusicBeatView:addEvents()
+	self._btnstop:AddClickListener(self._btnstopOnClick, self)
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
+	self._btnaccompany:AddClickListener(self._btnaccompanyOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstop:RemoveClickListener()
-	arg_3_0._btnskip:RemoveClickListener()
-	arg_3_0._btnaccompany:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
+function VersionActivity2_4MusicBeatView:removeEvents()
+	self._btnstop:RemoveClickListener()
+	self._btnskip:RemoveClickListener()
+	self._btnaccompany:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
 end
 
-function var_0_0._btnstopOnClick(arg_4_0)
+function VersionActivity2_4MusicBeatView:_btnstopOnClick()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicBeatResultView({
 		isPause = true
 	})
 end
 
-function var_0_0._btnskipOnClick(arg_5_0)
+function VersionActivity2_4MusicBeatView:_btnskipOnClick()
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.Skip)
-	StoryController.instance:playStory(arg_5_0._episodeConfig.storyAfter, nil, arg_5_0.closeThis, arg_5_0)
+	StoryController.instance:playStory(self._episodeConfig.storyAfter, nil, self.closeThis, self)
 end
 
-function var_0_0._btnaccompanyOnClick(arg_6_0)
+function VersionActivity2_4MusicBeatView:_btnaccompanyOnClick()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicFreeAccompanyView()
 end
 
-function var_0_0._btnstartOnClick(arg_7_0)
-	arg_7_0:_startCountDown(arg_7_0._startGame)
+function VersionActivity2_4MusicBeatView:_btnstartOnClick()
+	self:_startCountDown(self._startGame)
 end
 
-function var_0_0._startCountDown(arg_8_0, arg_8_1)
-	arg_8_0._countDownCallback = arg_8_1
+function VersionActivity2_4MusicBeatView:_startCountDown(callback)
+	self._countDownCallback = callback
 
-	arg_8_0:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.CountDown)
+	self:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.CountDown)
 
-	arg_8_0._countDownNum = 3
+	self._countDownNum = 3
 
-	TaskDispatcher.cancelTask(arg_8_0._countDownHandler, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0._countDownHandler, arg_8_0, 1)
-	arg_8_0:_countDownHandler()
+	TaskDispatcher.cancelTask(self._countDownHandler, self)
+	TaskDispatcher.runRepeat(self._countDownHandler, self, 1)
+	self:_countDownHandler()
 
-	arg_8_0._countDownId = AudioMgr.instance:trigger(AudioEnum.Bakaluoer.play_ui_diqiu_count_down)
+	self._countDownId = AudioMgr.instance:trigger(AudioEnum.Bakaluoer.play_ui_diqiu_count_down)
 end
 
-function var_0_0._countDownHandler(arg_9_0)
-	if arg_9_0._countDownNum == 0 then
-		arg_9_0._countDownId = nil
+function VersionActivity2_4MusicBeatView:_countDownHandler()
+	if self._countDownNum == 0 then
+		self._countDownId = nil
 
-		TaskDispatcher.cancelTask(arg_9_0._countDownHandler, arg_9_0)
-		arg_9_0._countDownCallback(arg_9_0)
+		TaskDispatcher.cancelTask(self._countDownHandler, self)
+		self._countDownCallback(self)
 
 		return
 	end
 
-	arg_9_0._txtnum.text = tostring(arg_9_0._countDownNum)
-	arg_9_0._countDownNum = arg_9_0._countDownNum - 1
+	self._txtnum.text = tostring(self._countDownNum)
+	self._countDownNum = self._countDownNum - 1
 end
 
-function var_0_0._startGame(arg_10_0)
-	arg_10_0:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.Playing)
+function VersionActivity2_4MusicBeatView:_startGame()
+	self:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.Playing)
 
-	arg_10_0._startTime = Time.time
-	arg_10_0._progressTime = 0
+	self._startTime = Time.time
+	self._progressTime = 0
 
-	arg_10_0._noteView:startGame()
-	VersionActivity2_4MusicController.instance:playBgm(arg_10_0._audio)
-	TaskDispatcher.cancelTask(arg_10_0._updateFrame, arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._updateFrame, arg_10_0, 0)
+	self._noteView:startGame()
+	VersionActivity2_4MusicController.instance:playBgm(self._audio)
+	TaskDispatcher.cancelTask(self._updateFrame, self)
+	TaskDispatcher.runRepeat(self._updateFrame, self, 0)
 end
 
-function var_0_0._endGame(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0._updateFrame, arg_11_0)
-	arg_11_0:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.End)
-	arg_11_0._noteView:endGame()
+function VersionActivity2_4MusicBeatView:_endGame()
+	TaskDispatcher.cancelTask(self._updateFrame, self)
+	self:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.End)
+	self._noteView:endGame()
 	VersionActivity2_4MusicController.instance:stopBgm()
 end
 
-function var_0_0._pauseGame(arg_12_0)
-	arg_12_0._progressTime = arg_12_0._progressTime + Time.time - arg_12_0._startTime
+function VersionActivity2_4MusicBeatView:_pauseGame()
+	self._progressTime = self._progressTime + Time.time - self._startTime
 
-	TaskDispatcher.cancelTask(arg_12_0._updateFrame, arg_12_0)
+	TaskDispatcher.cancelTask(self._updateFrame, self)
 	VersionActivity2_4MusicController.instance:pauseBgm()
-	arg_12_0._noteView:refreshNoteGroupStatus(true)
+	self._noteView:refreshNoteGroupStatus(true)
 end
 
-function var_0_0._continueGame(arg_13_0)
-	arg_13_0._startTime = Time.time
+function VersionActivity2_4MusicBeatView:_continueGame()
+	self._startTime = Time.time
 
-	TaskDispatcher.runRepeat(arg_13_0._updateFrame, arg_13_0, 0)
+	TaskDispatcher.runRepeat(self._updateFrame, self, 0)
 	VersionActivity2_4MusicController.instance:resumeBgm()
-	arg_13_0._noteView:refreshNoteGroupStatus(false)
+	self._noteView:refreshNoteGroupStatus(false)
 end
 
-function var_0_0._updateFrame(arg_14_0)
-	local var_14_0 = arg_14_0._progressTime + (Time.time - arg_14_0._startTime)
+function VersionActivity2_4MusicBeatView:_updateFrame()
+	local progressTime = self._progressTime + (Time.time - self._startTime)
 
-	arg_14_0:_updateTime(var_14_0)
-	arg_14_0._noteView:updateNoteGroup(var_14_0)
+	self:_updateTime(progressTime)
+	self._noteView:updateNoteGroup(progressTime)
 
-	if var_14_0 >= arg_14_0._totalTime then
-		arg_14_0._noteView:openResult()
-		arg_14_0:_endGame()
+	if progressTime >= self._totalTime then
+		self._noteView:openResult()
+		self:_endGame()
 
 		return
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.W) then
-		arg_14_0._noteView:openResult(true)
-		arg_14_0:_endGame()
+		self._noteView:openResult(true)
+		self:_endGame()
 	end
 end
 
-function var_0_0._editableInitView(arg_15_0)
+function VersionActivity2_4MusicBeatView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
+function VersionActivity2_4MusicBeatView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0._episodeId = arg_17_0.viewParam
+function VersionActivity2_4MusicBeatView:onOpen()
+	self._episodeId = self.viewParam
 
-	VersionActivity2_4MusicBeatModel.instance:onStart(arg_17_0._episodeId)
-	VersionActivity2_4MusicController.instance:onEnterBeatView(arg_17_0._episodeId)
+	VersionActivity2_4MusicBeatModel.instance:onStart(self._episodeId)
+	VersionActivity2_4MusicController.instance:onEnterBeatView(self._episodeId)
 
-	arg_17_0._noteView = arg_17_0.viewContainer:getNoteView()
-	arg_17_0._episodeConfig = Activity179Config.instance:getEpisodeConfig(arg_17_0._episodeId)
+	self._noteView = self.viewContainer:getNoteView()
+	self._episodeConfig = Activity179Config.instance:getEpisodeConfig(self._episodeId)
 
-	local var_17_0 = arg_17_0._episodeConfig.beatId
+	local beatId = self._episodeConfig.beatId
 
-	arg_17_0._beatConfig = Activity179Config.instance:getBeatConfig(var_17_0)
-	arg_17_0._txtmaxscore.text = "/" .. arg_17_0._beatConfig.targetId
-	arg_17_0._audio = arg_17_0._beatConfig.resouce
-	arg_17_0._totalTime = arg_17_0._beatConfig.time
-	arg_17_0._progressTime = 0
+	self._beatConfig = Activity179Config.instance:getBeatConfig(beatId)
+	self._txtmaxscore.text = "/" .. self._beatConfig.targetId
+	self._audio = self._beatConfig.resouce
+	self._totalTime = self._beatConfig.time
+	self._progressTime = 0
 
-	arg_17_0:_updateTime(0)
-	arg_17_0:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.None)
-	arg_17_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_17_0._onOpenView, arg_17_0)
-	arg_17_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_17_0._onCloseViewFinish, arg_17_0)
-	arg_17_0:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.BeatModeEnd, arg_17_0._onBeatModeEnd, arg_17_0)
+	self:_updateTime(0)
+	self:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.None)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(VersionActivity2_4MusicController.instance, VersionActivity2_4MusicEvent.BeatModeEnd, self._onBeatModeEnd, self)
 end
 
-function var_0_0._onBeatModeEnd(arg_18_0)
-	arg_18_0:_endGame()
+function VersionActivity2_4MusicBeatView:_onBeatModeEnd()
+	self:_endGame()
 end
 
-function var_0_0._onOpenView(arg_19_0, arg_19_1)
-	if ViewHelper.instance:checkViewOnTheTop(arg_19_0.viewName) then
+function VersionActivity2_4MusicBeatView:_onOpenView(viewName)
+	if ViewHelper.instance:checkViewOnTheTop(self.viewName) then
 		return
 	end
 
-	if arg_19_0._status == VersionActivity2_4MusicEnum.BeatStatus.Playing then
-		arg_19_0:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.Pause)
-		arg_19_0:_pauseGame()
+	if self._status == VersionActivity2_4MusicEnum.BeatStatus.Playing then
+		self:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.Pause)
+		self:_pauseGame()
 
 		return
 	end
 
-	if arg_19_0._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown then
-		TaskDispatcher.cancelTask(arg_19_0._countDownHandler, arg_19_0)
+	if self._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown then
+		TaskDispatcher.cancelTask(self._countDownHandler, self)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_20_0, arg_20_1)
-	if not ViewHelper.instance:checkViewOnTheTop(arg_20_0.viewName) then
+function VersionActivity2_4MusicBeatView:_onCloseViewFinish(viewName)
+	if not ViewHelper.instance:checkViewOnTheTop(self.viewName) then
 		return
 	end
 
-	if arg_20_0._status == VersionActivity2_4MusicEnum.BeatStatus.End then
-		arg_20_0:_updateTime(0)
-		arg_20_0:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.None)
-		arg_20_0._noteView:initNoneStatus()
+	if self._status == VersionActivity2_4MusicEnum.BeatStatus.End then
+		self:_updateTime(0)
+		self:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.None)
+		self._noteView:initNoneStatus()
 	end
 
-	if arg_20_0._status == VersionActivity2_4MusicEnum.BeatStatus.Pause then
-		arg_20_0:_startCountDown(function()
-			arg_20_0:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.Playing)
-			arg_20_0:_continueGame()
+	if self._status == VersionActivity2_4MusicEnum.BeatStatus.Pause then
+		self:_startCountDown(function()
+			self:_updateStatus(VersionActivity2_4MusicEnum.BeatStatus.Playing)
+			self:_continueGame()
 		end)
 
 		return
 	end
 
-	if arg_20_0._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown then
-		TaskDispatcher.runRepeat(arg_20_0._countDownHandler, arg_20_0, 1)
+	if self._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown then
+		TaskDispatcher.runRepeat(self._countDownHandler, self, 1)
 	end
 end
 
-function var_0_0.isCountDown(arg_22_0)
-	return arg_22_0._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown
+function VersionActivity2_4MusicBeatView:isCountDown()
+	return self._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown
 end
 
-function var_0_0.isPlaying(arg_23_0)
-	return arg_23_0._status ~= VersionActivity2_4MusicEnum.BeatStatus.None
+function VersionActivity2_4MusicBeatView:isPlaying()
+	return self._status ~= VersionActivity2_4MusicEnum.BeatStatus.None
 end
 
-function var_0_0._updateStatus(arg_24_0, arg_24_1)
-	arg_24_0._status = arg_24_1
+function VersionActivity2_4MusicBeatView:_updateStatus(status)
+	self._status = status
 
-	arg_24_0:_updateBtnStatus()
+	self:_updateBtnStatus()
 end
 
-function var_0_0._updateBtnStatus(arg_25_0)
-	arg_25_0._hasFinished = Activity179Model.instance:episodeIsFinished(arg_25_0._episodeId)
+function VersionActivity2_4MusicBeatView:_updateBtnStatus()
+	self._hasFinished = Activity179Model.instance:episodeIsFinished(self._episodeId)
 
-	local var_25_0 = arg_25_0._status == VersionActivity2_4MusicEnum.BeatStatus.None
-	local var_25_1 = arg_25_0._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown
-	local var_25_2 = arg_25_0._status == VersionActivity2_4MusicEnum.BeatStatus.Playing
-	local var_25_3 = arg_25_0._status == VersionActivity2_4MusicEnum.BeatStatus.End
+	local isNoneState = self._status == VersionActivity2_4MusicEnum.BeatStatus.None
+	local isCountDownState = self._status == VersionActivity2_4MusicEnum.BeatStatus.CountDown
+	local isPlayingState = self._status == VersionActivity2_4MusicEnum.BeatStatus.Playing
+	local isEndState = self._status == VersionActivity2_4MusicEnum.BeatStatus.End
 
-	gohelper.setActive(arg_25_0._btnstart, var_25_0)
-	gohelper.setActive(arg_25_0._btnaccompany, var_25_0 or var_25_2 or var_25_3)
-	gohelper.setActive(arg_25_0._btnskip, var_25_0 and arg_25_0._hasFinished)
-	gohelper.setActive(arg_25_0._btnstop, var_25_2 or var_25_3)
-	gohelper.setActive(arg_25_0._gocountdown, var_25_1)
-	gohelper.setActive(arg_25_0._goblock, var_25_1)
+	gohelper.setActive(self._btnstart, isNoneState)
+	gohelper.setActive(self._btnaccompany, isNoneState or isPlayingState or isEndState)
+	gohelper.setActive(self._btnskip, isNoneState and self._hasFinished)
+	gohelper.setActive(self._btnstop, isPlayingState or isEndState)
+	gohelper.setActive(self._gocountdown, isCountDownState)
+	gohelper.setActive(self._goblock, isCountDownState)
 end
 
-function var_0_0._updateTime(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0._totalTime - arg_26_1
+function VersionActivity2_4MusicBeatView:_updateTime(progressTime)
+	local deltaTime = self._totalTime - progressTime
 
-	if var_26_0 < 0 then
-		var_26_0 = 0
+	if deltaTime < 0 then
+		deltaTime = 0
 	end
 
-	arg_26_0._txttime.text = TimeUtil.second2TimeString(var_26_0)
+	self._txttime.text = TimeUtil.second2TimeString(deltaTime)
 end
 
-function var_0_0.onClose(arg_27_0)
-	arg_27_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_27_0._onOpenView)
-	arg_27_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_27_0._onCloseViewFinish)
+function VersionActivity2_4MusicBeatView:onClose()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish)
 
-	if arg_27_0._countDownId then
-		AudioMgr.instance:stopPlayingID(arg_27_0._countDownId)
+	if self._countDownId then
+		AudioMgr.instance:stopPlayingID(self._countDownId)
 
-		arg_27_0._countDownId = nil
+		self._countDownId = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._countDownHandler, arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._updateFrame, arg_28_0)
+function VersionActivity2_4MusicBeatView:onDestroyView()
+	TaskDispatcher.cancelTask(self._countDownHandler, self)
+	TaskDispatcher.cancelTask(self._updateFrame, self)
 end
 
-return var_0_0
+return VersionActivity2_4MusicBeatView

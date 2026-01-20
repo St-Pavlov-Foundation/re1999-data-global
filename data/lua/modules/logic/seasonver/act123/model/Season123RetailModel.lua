@@ -1,106 +1,108 @@
-﻿module("modules.logic.seasonver.act123.model.Season123RetailModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123RetailModel.lua
 
-local var_0_0 = class("Season123RetailModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123RetailModel", package.seeall)
 
-function var_0_0.release(arg_1_0)
-	arg_1_0.lastSendEpisodeCfg = nil
-	arg_1_0.rewardIconCfgs = nil
+local Season123RetailModel = class("Season123RetailModel", BaseModel)
+
+function Season123RetailModel:release()
+	self.lastSendEpisodeCfg = nil
+	self.rewardIconCfgs = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.activityId = arg_2_1
+function Season123RetailModel:init(actId)
+	self.activityId = actId
 
-	arg_2_0:initDatas()
-	arg_2_0:initRewards()
+	self:initDatas()
+	self:initRewards()
 end
 
-function var_0_0.initDatas(arg_3_0)
-	local var_3_0 = Season123Model.instance:getActInfo(arg_3_0.activityId)
+function Season123RetailModel:initDatas()
+	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
 
-	if not var_3_0 then
+	if not seasonMO then
 		return
 	end
 
-	arg_3_0.retailId = var_3_0.retailId
+	self.retailId = seasonMO.retailId
 
-	if not arg_3_0.retailId then
+	if not self.retailId then
 		return
 	end
 
-	arg_3_0.retailCO = Season123Config.instance:getRetailCO(arg_3_0.activityId, arg_3_0.retailId)
+	self.retailCO = Season123Config.instance:getRetailCO(self.activityId, self.retailId)
 
-	if not arg_3_0.retailCO then
+	if not self.retailCO then
 		return
 	end
 
-	arg_3_0.episodeCO = DungeonConfig.instance:getEpisodeCO(arg_3_0.retailCO.episodeId)
+	self.episodeCO = DungeonConfig.instance:getEpisodeCO(self.retailCO.episodeId)
 end
 
-function var_0_0.initRewards(arg_4_0)
-	arg_4_0.rewardIcons = {}
-	arg_4_0.rewardIconCfgs = {}
+function Season123RetailModel:initRewards()
+	self.rewardIcons = {}
+	self.rewardIconCfgs = {}
 
-	if not arg_4_0.retailCO then
+	if not self.retailCO then
 		return
 	end
 
-	local var_4_0 = GameUtil.splitString2(arg_4_0.retailCO.bonus, true, "|", "#")
+	local bonusList = GameUtil.splitString2(self.retailCO.bonus, true, "|", "#")
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_1 = iter_4_1[1]
-		local var_4_2 = iter_4_1[2]
-		local var_4_3, var_4_4 = ItemModel.instance:getItemConfigAndIcon(var_4_1, var_4_2)
+	for i, bonusKV in ipairs(bonusList) do
+		local bonusType = bonusKV[1]
+		local bonusId = bonusKV[2]
+		local itemCO, iconStr = ItemModel.instance:getItemConfigAndIcon(bonusType, bonusId)
 
-		table.insert(arg_4_0.rewardIconCfgs, iter_4_1)
-		table.insert(arg_4_0.rewardIcons, var_4_4)
+		table.insert(self.rewardIconCfgs, bonusKV)
+		table.insert(self.rewardIcons, iconStr)
 	end
 end
 
-function var_0_0.getRecommentLevel(arg_5_0)
-	if not arg_5_0.episodeCO then
+function Season123RetailModel:getRecommentLevel()
+	if not self.episodeCO then
 		return nil
 	end
 
-	local var_5_0 = arg_5_0.episodeCO.id
-	local var_5_1 = DungeonConfig.instance:getEpisodeCO(var_5_0)
-	local var_5_2 = FightHelper.getBattleRecommendLevel(var_5_1.battleId)
+	local episodeId = self.episodeCO.id
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local recommendLevel = FightHelper.getBattleRecommendLevel(episodeConfig.battleId)
 
-	if var_5_2 >= 0 then
-		return var_5_2
+	if recommendLevel >= 0 then
+		return recommendLevel
 	else
 		return nil
 	end
 end
 
-function var_0_0.getEpisodeId(arg_6_0)
-	if not arg_6_0.episodeCO then
+function Season123RetailModel:getEpisodeId()
+	if not self.episodeCO then
 		return nil
 	end
 
-	return arg_6_0.episodeCO.id
+	return self.episodeCO.id
 end
 
-function var_0_0.getRewards(arg_7_0)
-	local var_7_0 = {}
+function Season123RetailModel:getRewards()
+	local rsList = {}
 
-	if not arg_7_0.episodeCO then
-		return var_7_0
+	if not self.episodeCO then
+		return rsList
 	end
 end
 
-function var_0_0.getUTTUTicketNum(arg_8_0)
-	local var_8_0 = arg_8_0.activityId
-	local var_8_1 = Season123Config.instance:getEquipItemCoin(var_8_0, Activity123Enum.Const.UttuTicketsCoin)
+function Season123RetailModel:getUTTUTicketNum()
+	local actId = self.activityId
+	local ticketId = Season123Config.instance:getEquipItemCoin(actId, Activity123Enum.Const.UttuTicketsCoin)
 
-	if var_8_1 then
-		local var_8_2 = CurrencyModel.instance:getCurrency(var_8_1)
+	if ticketId then
+		local currencyMO = CurrencyModel.instance:getCurrency(ticketId)
 
-		return var_8_2 and var_8_2.quantity or 0
+		return currencyMO and currencyMO.quantity or 0
 	end
 
 	return 0
 end
 
-var_0_0.instance = var_0_0.New()
+Season123RetailModel.instance = Season123RetailModel.New()
 
-return var_0_0
+return Season123RetailModel

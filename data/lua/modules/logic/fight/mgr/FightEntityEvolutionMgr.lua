@@ -1,162 +1,165 @@
-﻿module("modules.logic.fight.mgr.FightEntityEvolutionMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightEntityEvolutionMgr.lua
 
-local var_0_0 = class("FightEntityEvolutionMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightEntityEvolutionMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0._entityDic = {}
-	arg_1_0._entityVisible = {}
-	arg_1_0._skinId2Entity = {}
-	arg_1_0._skinIds = {}
-	arg_1_0._delayReleaseEntity = {}
-	arg_1_0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+local FightEntityEvolutionMgr = class("FightEntityEvolutionMgr", FightBaseClass)
 
-	arg_1_0:com_registMsg(FightMsgId.SetBossEvolution, arg_1_0._onSetBossEvolution)
-	arg_1_0:com_registMsg(FightMsgId.PlayTimelineSkill, arg_1_0._onPlayTimelineSkill)
-	arg_1_0:com_registMsg(FightMsgId.PlayTimelineSkillFinish, arg_1_0._onPlayTimelineSkillFinish)
-	arg_1_0:com_registMsg(FightMsgId.CameraFocusChanged, arg_1_0._onCameraFocusChanged)
-	arg_1_0:com_registMsg(FightMsgId.ReleaseAllEntrustedEntity, arg_1_0._onReleaseAllEntrustedEntity)
-	arg_1_0:com_registMsg(FightMsgId.SpineLoadFinish, arg_1_0._onSpineLoadFinish)
-	arg_1_0:com_registMsg(FightMsgId.IsEvolutionSkin, arg_1_0._onIsEvolutionSkin)
-	arg_1_0:com_registFightEvent(FightEvent.BeforeDestroyEntity, arg_1_0._onBeforeDestroyEntity)
+function FightEntityEvolutionMgr:onConstructor()
+	self._entityDic = {}
+	self._entityVisible = {}
+	self._skinId2Entity = {}
+	self._skinIds = {}
+	self._delayReleaseEntity = {}
+	self._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+
+	self:com_registMsg(FightMsgId.SetBossEvolution, self._onSetBossEvolution)
+	self:com_registMsg(FightMsgId.PlayTimelineSkill, self._onPlayTimelineSkill)
+	self:com_registMsg(FightMsgId.PlayTimelineSkillFinish, self._onPlayTimelineSkillFinish)
+	self:com_registMsg(FightMsgId.CameraFocusChanged, self._onCameraFocusChanged)
+	self:com_registMsg(FightMsgId.ReleaseAllEntrustedEntity, self._onReleaseAllEntrustedEntity)
+	self:com_registMsg(FightMsgId.SpineLoadFinish, self._onSpineLoadFinish)
+	self:com_registMsg(FightMsgId.IsEvolutionSkin, self._onIsEvolutionSkin)
+	self:com_registFightEvent(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity)
 end
 
-function var_0_0._onBeforeDestroyEntity(arg_2_0, arg_2_1)
-	if arg_2_0._entityDic[arg_2_1.id] == arg_2_1 then
-		arg_2_0:_releaseEntity(arg_2_1)
+function FightEntityEvolutionMgr:_onBeforeDestroyEntity(entity)
+	if self._entityDic[entity.id] == entity then
+		self:_releaseEntity(entity)
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._delayReleaseEntity) do
-			if iter_2_1.entity == arg_2_1 then
-				arg_2_0._entityVisible[arg_2_1.id] = 0
+		for i, tab in ipairs(self._delayReleaseEntity) do
+			if tab.entity == entity then
+				self._entityVisible[entity.id] = 0
 			end
 		end
 	end
 end
 
-function var_0_0._onIsEvolutionSkin(arg_3_0, arg_3_1)
-	FightMsgMgr.replyMsg(FightMsgId.IsEvolutionSkin, arg_3_0._skinIds[arg_3_1])
+function FightEntityEvolutionMgr:_onIsEvolutionSkin(skinId)
+	FightMsgMgr.replyMsg(FightMsgId.IsEvolutionSkin, self._skinIds[skinId])
 end
 
-function var_0_0._onSetBossEvolution(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_1.id
+function FightEntityEvolutionMgr:_onSetBossEvolution(tempEntity, skinId)
+	local entityId = tempEntity.id
 
-	if arg_4_0._entityDic[var_4_0] and arg_4_1 ~= arg_4_0._entityDic[var_4_0] then
-		arg_4_0:_releaseEntity(arg_4_0._entityDic[var_4_0])
+	if self._entityDic[entityId] and tempEntity ~= self._entityDic[entityId] then
+		self:_releaseEntity(self._entityDic[entityId])
 	end
 
-	arg_4_0._entityDic[var_4_0] = arg_4_1
-	arg_4_0._entityVisible[var_4_0] = 0
+	self._entityDic[entityId] = tempEntity
+	self._entityVisible[entityId] = 0
 
-	arg_4_1.spine:play(arg_4_1.spine._curAnimState, true)
+	tempEntity.spine:play(tempEntity.spine._curAnimState, true)
 
-	arg_4_0._skinId2Entity[arg_4_2] = arg_4_0._skinId2Entity[arg_4_2] or {}
+	self._skinId2Entity[skinId] = self._skinId2Entity[skinId] or {}
 
-	table.insert(arg_4_0._skinId2Entity[arg_4_2], arg_4_1)
+	table.insert(self._skinId2Entity[skinId], tempEntity)
 
-	arg_4_0._skinIds[arg_4_2] = true
+	self._skinIds[skinId] = true
 end
 
-function var_0_0._onSpineLoadFinish(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.unitSpawn
-	local var_5_1 = var_5_0 and var_5_0:getMO()
+function FightEntityEvolutionMgr:_onSpineLoadFinish(spine)
+	local entity = spine.unitSpawn
+	local entityMO = entity and entity:getMO()
 
-	if var_5_1 and arg_5_0._skinId2Entity[var_5_1.skin] then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0._skinId2Entity[var_5_1.skin]) do
-			local var_5_2 = iter_5_1.spine
-			local var_5_3 = var_5_2 and var_5_2._skeletonAnim and var_5_2._skeletonAnim.state:GetCurrent(0)
+	if entityMO and self._skinId2Entity[entityMO.skin] then
+		for i, v in ipairs(self._skinId2Entity[entityMO.skin]) do
+			local mainSpine = v.spine
+			local curTrack = mainSpine and mainSpine._skeletonAnim and mainSpine._skeletonAnim.state:GetCurrent(0)
 
-			if var_5_3 and arg_5_1._skeletonAnim then
-				arg_5_1._skeletonAnim:Jump2Time(var_5_3.TrackTime)
+			if curTrack and spine._skeletonAnim then
+				spine._skeletonAnim:Jump2Time(curTrack.TrackTime)
 			end
 
-			local var_5_4 = {
-				entity = iter_5_1
-			}
-			local var_5_5 = arg_5_1:getSpineGO()
+			local tab = {}
 
-			var_5_4.spineGO = var_5_5
+			tab.entity = v
 
-			transformhelper.setLocalPos(var_5_5.transform, -10000, 0, 0)
-			table.insert(arg_5_0._delayReleaseEntity, var_5_4)
+			local spineGO = spine:getSpineGO()
+
+			tab.spineGO = spineGO
+
+			transformhelper.setLocalPos(spineGO.transform, -10000, 0, 0)
+			table.insert(self._delayReleaseEntity, tab)
 		end
 
-		arg_5_0:com_registTimer(arg_5_0._delayRelease, 0.01)
+		self:com_registTimer(self._delayRelease, 0.01)
 
-		arg_5_0._skinId2Entity[var_5_1.skin] = nil
+		self._skinId2Entity[entityMO.skin] = nil
 	end
 end
 
-function var_0_0._delayRelease(arg_6_0)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._delayReleaseEntity) do
-		arg_6_0:_releaseEntity(iter_6_1.entity)
+function FightEntityEvolutionMgr:_delayRelease()
+	for i, v in ipairs(self._delayReleaseEntity) do
+		self:_releaseEntity(v.entity)
 
-		if not gohelper.isNil(iter_6_1.spineGO) then
-			transformhelper.setLocalPos(iter_6_1.spineGO.transform, 0, 0, 0)
+		if not gohelper.isNil(v.spineGO) then
+			transformhelper.setLocalPos(v.spineGO.transform, 0, 0, 0)
 		end
 	end
 
-	arg_6_0._delayReleaseEntity = {}
+	self._delayReleaseEntity = {}
 end
 
-function var_0_0._onPlayTimelineSkill(arg_7_0)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._entityDic) do
-		if not iter_7_1.IS_REMOVED then
-			arg_7_0._entityVisible[iter_7_1.id] = (arg_7_0._entityVisible[iter_7_1.id] or 0) + 1
+function FightEntityEvolutionMgr:_onPlayTimelineSkill()
+	for k, v in pairs(self._entityDic) do
+		if not v.IS_REMOVED then
+			self._entityVisible[v.id] = (self._entityVisible[v.id] or 0) + 1
 
-			iter_7_1:setAlpha(0, 0.2)
+			v:setAlpha(0, 0.2)
 		end
 	end
 end
 
-function var_0_0._onPlayTimelineSkillFinish(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._entityDic) do
-		if arg_8_0._entityVisible[iter_8_1.id] then
-			arg_8_0._entityVisible[iter_8_1.id] = arg_8_0._entityVisible[iter_8_1.id] - 1
+function FightEntityEvolutionMgr:_onPlayTimelineSkillFinish()
+	for k, v in pairs(self._entityDic) do
+		if self._entityVisible[v.id] then
+			self._entityVisible[v.id] = self._entityVisible[v.id] - 1
 
-			if arg_8_0._entityVisible[iter_8_1.id] < 0 then
-				arg_8_0._entityVisible[iter_8_1.id] = 0
+			if self._entityVisible[v.id] < 0 then
+				self._entityVisible[v.id] = 0
 			end
 		end
 
-		if arg_8_0._entityVisible[iter_8_1.id] == 0 then
-			iter_8_1:setAlpha(1, 0.2)
-			arg_8_0._entityMgr:adjustSpineLookRotation(iter_8_1)
+		if self._entityVisible[v.id] == 0 then
+			v:setAlpha(1, 0.2)
+			self._entityMgr:adjustSpineLookRotation(v)
 		end
 	end
 end
 
-function var_0_0._onCameraFocusChanged(arg_9_0, arg_9_1)
-	if arg_9_1 then
-		arg_9_0:_onPlayTimelineSkill()
+function FightEntityEvolutionMgr:_onCameraFocusChanged(state)
+	if state then
+		self:_onPlayTimelineSkill()
 	else
-		arg_9_0:_onPlayTimelineSkillFinish()
+		self:_onPlayTimelineSkillFinish()
 	end
 end
 
-function var_0_0._releaseEntity(arg_10_0, arg_10_1)
-	if arg_10_0._entityDic[arg_10_1.id] then
-		arg_10_0._entityMgr:destroyUnit(arg_10_1)
+function FightEntityEvolutionMgr:_releaseEntity(entity)
+	if self._entityDic[entity.id] then
+		self._entityMgr:destroyUnit(entity)
 
-		arg_10_0._entityDic[arg_10_1.id] = nil
-		arg_10_0._entityVisible[arg_10_1.id] = nil
+		self._entityDic[entity.id] = nil
+		self._entityVisible[entity.id] = nil
 	end
 end
 
-function var_0_0._releaseAllEntity(arg_11_0)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._entityDic) do
-		arg_11_0:_releaseEntity(iter_11_1)
+function FightEntityEvolutionMgr:_releaseAllEntity()
+	for k, entity in pairs(self._entityDic) do
+		self:_releaseEntity(entity)
 	end
 
-	arg_11_0._skinId2Entity = {}
-	arg_11_0._skinIds = {}
-	arg_11_0._delayReleaseEntity = {}
+	self._skinId2Entity = {}
+	self._skinIds = {}
+	self._delayReleaseEntity = {}
 end
 
-function var_0_0._onReleaseAllEntrustedEntity(arg_12_0)
-	arg_12_0:_releaseAllEntity()
+function FightEntityEvolutionMgr:_onReleaseAllEntrustedEntity()
+	self:_releaseAllEntity()
 end
 
-function var_0_0.onDestructor(arg_13_0)
-	arg_13_0:_releaseAllEntity()
+function FightEntityEvolutionMgr:onDestructor()
+	self:_releaseAllEntity()
 end
 
-return var_0_0
+return FightEntityEvolutionMgr

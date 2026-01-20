@@ -1,30 +1,32 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightSkillPlayFinish", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightSkillPlayFinish.lua
 
-local var_0_0 = class("WaitGuideActionFightSkillPlayFinish", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightSkillPlayFinish", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
+local WaitGuideActionFightSkillPlayFinish = class("WaitGuideActionFightSkillPlayFinish", BaseGuideAction)
 
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+function WaitGuideActionFightSkillPlayFinish:onStart(context)
+	WaitGuideActionFightSkillPlayFinish.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 
-	arg_1_0._attackId = var_1_0[1]
-	arg_1_0._skillId = var_1_0[2]
+	local temp = string.splitToNumber(self.actionParam, "#")
+
+	self._attackId = temp[1]
+	self._skillId = temp[2]
 end
 
-function var_0_0._onSkillPlayFinish(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_1:getMO().modelId
-	local var_2_1 = not arg_2_0._attackId or arg_2_0._attackId == var_2_0
-	local var_2_2 = not arg_2_0._skillId or arg_2_0._skillId == arg_2_2
+function WaitGuideActionFightSkillPlayFinish:_onSkillPlayFinish(attacker, skillId)
+	local attackId = attacker:getMO().modelId
+	local checkAttackId = not self._attackId or self._attackId == attackId
+	local checkSkillId = not self._skillId or self._skillId == skillId
 
-	if var_2_1 and var_2_2 then
-		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
-		arg_2_0:onDone(true)
+	if checkAttackId and checkSkillId then
+		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
+function WaitGuideActionFightSkillPlayFinish:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 end
 
-return var_0_0
+return WaitGuideActionFightSkillPlayFinish

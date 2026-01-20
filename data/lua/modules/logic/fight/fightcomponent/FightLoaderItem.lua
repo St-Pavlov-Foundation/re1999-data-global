@@ -1,47 +1,49 @@
-﻿module("modules.logic.fight.fightcomponent.FightLoaderItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightLoaderItem.lua
 
-local var_0_0 = class("FightLoaderItem", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightLoaderItem", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.url = arg_1_1
-	arg_1_0.callback = arg_1_2
-	arg_1_0.handle = arg_1_3
-	arg_1_0.param = arg_1_4
+local FightLoaderItem = class("FightLoaderItem", FightBaseClass)
+
+function FightLoaderItem:onConstructor(url, callback, handle, param)
+	self.url = url
+	self.callback = callback
+	self.handle = handle
+	self.param = param
 end
 
-function var_0_0.startLoad(arg_2_0)
-	loadAbAsset(arg_2_0.url, false, arg_2_0.onLoadCallback, arg_2_0)
+function FightLoaderItem:startLoad()
+	loadAbAsset(self.url, false, self.onLoadCallback, self)
 end
 
-function var_0_0.onLoadCallback(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.assetItem
+function FightLoaderItem:onLoadCallback(assetItem)
+	local oldAsstet = self.assetItem
 
-	arg_3_0.assetItem = arg_3_1
+	self.assetItem = assetItem
 
-	local var_3_1 = arg_3_1.ResPath
-	local var_3_2 = arg_3_1.IsLoadSuccess
+	local url = assetItem.ResPath
+	local success = assetItem.IsLoadSuccess
 
-	arg_3_1:Retain()
+	assetItem:Retain()
 
-	if var_3_0 then
-		var_3_0:Release()
+	if oldAsstet then
+		oldAsstet:Release()
 	end
 
-	if not var_3_2 then
-		logError("资源加载失败,URL:" .. var_3_1)
+	if not success then
+		logError("资源加载失败,URL:" .. url)
 	end
 
-	if not arg_3_0.handle.IS_DISPOSED and arg_3_0.callback then
-		arg_3_0.callback(arg_3_0.handle, var_3_2, arg_3_1, arg_3_0.param)
-	end
-end
-
-function var_0_0.onDestructor(arg_4_0)
-	removeAssetLoadCb(arg_4_0.url, arg_4_0.onLoadCallback, arg_4_0)
-
-	if arg_4_0.assetItem then
-		arg_4_0.assetItem:Release()
+	if not self.handle.IS_DISPOSED and self.callback then
+		self.callback(self.handle, success, assetItem, self.param)
 	end
 end
 
-return var_0_0
+function FightLoaderItem:onDestructor()
+	removeAssetLoadCb(self.url, self.onLoadCallback, self)
+
+	if self.assetItem then
+		self.assetItem:Release()
+	end
+end
+
+return FightLoaderItem

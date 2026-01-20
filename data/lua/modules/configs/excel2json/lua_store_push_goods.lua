@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_store_push_goods", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_store_push_goods.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_store_push_goods", package.seeall)
+
+local lua_store_push_goods = {}
+local fields = {
 	gapHours = 5,
 	desc = 7,
 	levelLimits = 9,
@@ -12,15 +14,15 @@ local var_0_1 = {
 	goodpushsId = 1,
 	containedgoodsId = 8
 }
-local var_0_2 = {
+local primaryKey = {
 	"goodpushsId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_store_push_goods.onLoad(json)
+	lua_store_push_goods.configList, lua_store_push_goods.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_store_push_goods

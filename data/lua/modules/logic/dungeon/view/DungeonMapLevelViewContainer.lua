@@ -1,52 +1,55 @@
-﻿module("modules.logic.dungeon.view.DungeonMapLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMapLevelViewContainer.lua
 
-local var_0_0 = class("DungeonMapLevelViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonMapLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonMapLevelViewContainer = class("DungeonMapLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonMapLevelView.New())
-	table.insert(var_1_0, DungeonMapLevelRewardView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "anim/#go_righttop"))
-	table.insert(var_1_0, TabViewGroup.New(2, "anim/top_left"))
+function DungeonMapLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonMapLevelView.New())
+	table.insert(views, DungeonMapLevelRewardView.New())
+	table.insert(views, TabViewGroup.New(1, "anim/#go_righttop"))
+	table.insert(views, TabViewGroup.New(2, "anim/top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = CurrencyEnum.CurrencyType
-		local var_2_1 = {
-			var_2_0.Power
+function DungeonMapLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local currencyType = CurrencyEnum.CurrencyType
+		local currencyParam = {
+			currencyType.Power
 		}
 
 		return {
-			CurrencyView.New(var_2_1)
+			CurrencyView.New(currencyParam)
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_2 = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+	elseif tabContainerId == 2 then
+		local chapterType = DungeonModel.instance.curChapterType
+		local showHelp = chapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
 
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
-			var_2_2
+			showHelp
 		}, HelpEnum.HelpId.Dungeon)
 
-		arg_2_0._navigateButtonView:setOverrideClose(arg_2_0._overrideClose, arg_2_0)
-		arg_2_0._navigateButtonView:setAnimEnabled(false)
+		self._navigateButtonView:setOverrideClose(self._overrideClose, self)
+		self._navigateButtonView:setAnimEnabled(false)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0._navigateButtonView:resetOnCloseViewAudio(0)
+function DungeonMapLevelViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(0)
 	DungeonModel.instance:setLastSelectMode(nil, nil)
 end
 
-function var_0_0._overrideClose(arg_4_0)
+function DungeonMapLevelViewContainer:_overrideClose()
 	if ViewMgr.instance:isOpen(ViewName.DungeonView) or ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchMainView) or ViewMgr.instance:isOpen(ViewName.CommandStationEnterView) then
 		ViewMgr.instance:closeView(ViewName.DungeonMapView, false, true)
 		ViewMgr.instance:closeView(ViewName.DungeonMapLevelView, false, true)
@@ -61,16 +64,17 @@ function var_0_0._overrideClose(arg_4_0)
 	end)
 end
 
-function var_0_0.refreshHelp(arg_6_0)
-	if arg_6_0._navigateButtonView then
-		local var_6_0 = DungeonModel.instance.curChapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
+function DungeonMapLevelViewContainer:refreshHelp()
+	if self._navigateButtonView then
+		local chapterType = DungeonModel.instance.curChapterType
+		local showHelp = chapterType == DungeonEnum.ChapterType.Normal and HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Dungeon)
 
-		arg_6_0._navigateButtonView:setParam({
+		self._navigateButtonView:setParam({
 			true,
 			true,
-			var_6_0
+			showHelp
 		})
 	end
 end
 
-return var_0_0
+return DungeonMapLevelViewContainer

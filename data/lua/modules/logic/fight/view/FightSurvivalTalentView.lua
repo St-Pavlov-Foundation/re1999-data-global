@@ -1,237 +1,250 @@
-﻿module("modules.logic.fight.view.FightSurvivalTalentView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSurvivalTalentView.lua
 
-local var_0_0 = class("FightSurvivalTalentView", FightBaseView)
+module("modules.logic.fight.view.FightSurvivalTalentView", package.seeall)
 
-var_0_0.Status = {
+local FightSurvivalTalentView = class("FightSurvivalTalentView", FightBaseView)
+
+FightSurvivalTalentView.Status = {
 	CanUse = 2,
 	CantUse = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.iconImage = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#skill/#image_skill")
-	arg_1_0.txtSkillName = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_skill")
-	arg_1_0.goVxNormal = gohelper.findChild(arg_1_0.viewGO, "root/#skill/#normal")
-	arg_1_0.goVxActive = gohelper.findChild(arg_1_0.viewGO, "root/#skill/#active")
-	arg_1_0.goVxGray = gohelper.findChild(arg_1_0.viewGO, "root/#skill/#gray")
+function FightSurvivalTalentView:onInitView()
+	self.iconImage = gohelper.findChildSingleImage(self.viewGO, "root/#skill/#image_skill")
+	self.txtSkillName = gohelper.findChildText(self.viewGO, "root/#txt_skill")
+	self.goVxNormal = gohelper.findChild(self.viewGO, "root/#skill/#normal")
+	self.goVxActive = gohelper.findChild(self.viewGO, "root/#skill/#active")
+	self.goVxGray = gohelper.findChild(self.viewGO, "root/#skill/#gray")
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "root/#btn_click")
+	local goClick = gohelper.findChild(self.viewGO, "root/#btn_click")
 
-	arg_1_0.longPress = SLFramework.UGUI.UILongPressListener.Get(var_1_0)
+	self.longPress = SLFramework.UGUI.UILongPressListener.Get(goClick)
 
-	arg_1_0.longPress:SetLongPressTime({
+	self.longPress:SetLongPressTime({
 		0.5,
 		99999
 	})
-	gohelper.setActive(arg_1_0.goVxNormal, false)
-	gohelper.setActive(arg_1_0.goVxActive, false)
-	gohelper.setActive(arg_1_0.goVxGray, false)
+	gohelper.setActive(self.goVxNormal, false)
+	gohelper.setActive(self.goVxActive, false)
+	gohelper.setActive(self.goVxGray, false)
 
-	arg_1_0.status2Vx = {
-		[var_0_0.Status.CantUse] = arg_1_0.goVxGray,
-		[var_0_0.Status.CanUse] = arg_1_0.goVxActive
+	self.status2Vx = {
+		[FightSurvivalTalentView.Status.CantUse] = self.goVxGray,
+		[FightSurvivalTalentView.Status.CanUse] = self.goVxActive
 	}
 
-	arg_1_0:initData()
+	self:initData()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0.longPress:AddClickListener(arg_2_0.onClickTalent, arg_2_0)
-	arg_2_0.longPress:AddLongPressListener(arg_2_0.onLongPressTalent, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_2_0.onPowerChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.CancelOperation, arg_2_0.onCancelOperation, arg_2_0)
+function FightSurvivalTalentView:addEvents()
+	self.longPress:AddClickListener(self.onClickTalent, self)
+	self.longPress:AddLongPressListener(self.onLongPressTalent, self)
+	self:addEventCb(FightController.instance, FightEvent.PowerChange, self.onPowerChange, self)
+	self:addEventCb(FightController.instance, FightEvent.CancelOperation, self.onCancelOperation, self)
 end
 
-function var_0_0.onCancelOperation(arg_3_0)
-	arg_3_0:refreshVX()
+function FightSurvivalTalentView:onCancelOperation()
+	self:refreshVX()
 end
 
-function var_0_0.onPowerChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	if arg_4_1 ~= arg_4_0.entityId then
+function FightSurvivalTalentView:onPowerChange(entityId, powerId, oldValue, newValue)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	if arg_4_2 ~= FightEnum.PowerType.PlayerFinisherSkill then
+	if powerId ~= FightEnum.PowerType.PlayerFinisherSkill then
 		return
 	end
 
-	arg_4_0:refreshVX()
+	self:refreshVX()
 end
 
-function var_0_0.onClickTalent(arg_5_0)
-	if not arg_5_0.skillCo then
+function FightSurvivalTalentView:onClickTalent()
+	if not self.skillCo then
 		return
 	end
 
-	if FightDataMgr.instance.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
+	local curStage = FightDataMgr.instance.stageMgr:getCurStage()
+
+	if curStage ~= FightStageMgr.StageType.Operate then
 		return
 	end
 
-	local var_5_0 = FightDataHelper.operationDataMgr.survivalTalentSkillUsedCount or 0
+	local usedCount = FightDataHelper.operationDataMgr.survivalTalentSkillUsedCount or 0
 
-	if var_5_0 > FightDataHelper.fieldMgr.playerFinisherInfo.roundUseLimit then
+	if usedCount > FightDataHelper.fieldMgr.playerFinisherInfo.roundUseLimit then
 		return
 	end
 
-	local var_5_1 = FightDataHelper.entityMgr:getById(arg_5_0.entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(self.entityId)
 
-	if not var_5_1 then
+	if not entityMO then
 		return
 	end
 
-	local var_5_2 = var_5_1:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill)
+	local powerInfo = entityMO:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill)
 
-	if not var_5_2 then
+	if not powerInfo then
 		return
 	end
 
-	local var_5_3 = FightDataHelper.fieldMgr.playerFinisherInfo
+	local info = FightDataHelper.fieldMgr.playerFinisherInfo
+	local skillData = info and info.skills[1]
 
-	if not (var_5_3 and var_5_3.skills[1]) then
+	if not skillData then
 		return
 	end
 
-	if var_5_2.num - var_5_0 * arg_5_0.needPower < arg_5_0.needPower then
+	local curPower = powerInfo.num - usedCount * self.needPower
+
+	if curPower < self.needPower then
 		return
 	end
 
-	if arg_5_0.skillCo and FightEnum.ShowLogicTargetView[arg_5_0.skillCo.logicTarget] and arg_5_0.skillCo.targetLimit == FightEnum.TargetLimit.MySide then
-		local var_5_4 = FightDataHelper.entityMgr:getMyNormalList()
+	if self.skillCo and FightEnum.ShowLogicTargetView[self.skillCo.logicTarget] and self.skillCo.targetLimit == FightEnum.TargetLimit.MySide then
+		local mySideList = FightDataHelper.entityMgr:getMyNormalList()
+		local len = #mySideList
 
-		if #var_5_4 <= 0 then
+		if len <= 0 then
 			return
 		end
 
-		if #var_5_4 > 1 then
+		if #mySideList > 1 then
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
-				skillId = arg_5_0.skillId,
-				callback = arg_5_0._playSkill,
-				callbackObj = arg_5_0
+				skillId = self.skillId,
+				callback = self._playSkill,
+				callbackObj = self
 			})
 		else
-			arg_5_0:_playSkill(var_5_4[1].id)
+			self:_playSkill(mySideList[1].id)
 		end
 	else
-		arg_5_0:_playSkill(FightDataHelper.operationDataMgr.curSelectEntityId)
+		self:_playSkill(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 
-function var_0_0._playSkill(arg_6_0, arg_6_1)
+function FightSurvivalTalentView:_playSkill(targetId)
 	FightDataHelper.operationDataMgr:addSurvivalTalentSkillUsedCount(1)
 
-	local var_6_0 = FightDataHelper.operationDataMgr:newOperation()
+	local op = FightDataHelper.operationDataMgr:newOperation()
 
-	var_6_0:playPlayerFinisherSkill(arg_6_0.skillId, arg_6_1)
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_6_0)
+	op:playPlayerFinisherSkill(self.skillId, targetId)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, op)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_6_0)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, var_6_0)
-	arg_6_0:refreshVX()
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, op)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, op)
+	self:refreshVX()
 end
 
-function var_0_0.onLongPressTalent(arg_7_0)
-	if FightDataMgr.instance.stageMgr:getCurStage() ~= FightStageMgr.StageType.Operate then
+function FightSurvivalTalentView:onLongPressTalent()
+	local curStage = FightDataMgr.instance.stageMgr:getCurStage()
+
+	if curStage ~= FightStageMgr.StageType.Operate then
 		return
 	end
 
-	if not arg_7_0.skillCo then
+	if not self.skillCo then
 		return
 	end
 
-	arg_7_0.tempInfo = arg_7_0.tempInfo or {}
+	self.tempInfo = self.tempInfo or {}
 
-	tabletool.clear(arg_7_0.tempInfo)
+	tabletool.clear(self.tempInfo)
 
-	arg_7_0.tempSkillIdList = arg_7_0.tempSkillIdList or {}
-	arg_7_0.tempSkillIdList[1] = arg_7_0.skillId
-	arg_7_0.tempInfo.super = arg_7_0.skillCo.isBigSkill == 1
-	arg_7_0.tempInfo.skillIdList = arg_7_0.tempSkillIdList
-	arg_7_0.tempInfo.skillIndex = 1
-	arg_7_0.tempInfo.userSkillId = arg_7_0.skillId
-	arg_7_0.tempInfo.monsterName = ""
+	self.tempSkillIdList = self.tempSkillIdList or {}
+	self.tempSkillIdList[1] = self.skillId
+	self.tempInfo.super = self.skillCo.isBigSkill == 1
+	self.tempInfo.skillIdList = self.tempSkillIdList
+	self.tempInfo.skillIndex = 1
+	self.tempInfo.userSkillId = self.skillId
+	self.tempInfo.monsterName = ""
 
-	if arg_7_0.tempInfo.super then
-		ViewMgr.instance:openView(ViewName.TowerSkillTipView, arg_7_0.tempInfo)
+	if self.tempInfo.super then
+		ViewMgr.instance:openView(ViewName.TowerSkillTipView, self.tempInfo)
 	else
-		ViewMgr.instance:openView(ViewName.SkillTipView, arg_7_0.tempInfo)
+		ViewMgr.instance:openView(ViewName.SkillTipView, self.tempInfo)
 	end
 end
 
-function var_0_0.onOpen(arg_8_0)
-	if not arg_8_0.skillCo then
+function FightSurvivalTalentView:onOpen()
+	if not self.skillCo then
 		return
 	end
 
-	arg_8_0.txtSkillName.text = arg_8_0.skillCo and arg_8_0.skillCo.name or ""
+	self.txtSkillName.text = self.skillCo and self.skillCo.name or ""
 
-	arg_8_0:refreshVX()
+	self:refreshVX()
 end
 
-function var_0_0.refreshVX(arg_9_0)
-	local var_9_0 = arg_9_0:getStatus()
+function FightSurvivalTalentView:refreshVX()
+	local curStatus = self:getStatus()
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.status2Vx) do
-		gohelper.setActive(iter_9_1, iter_9_0 == var_9_0)
+	for key, vx in ipairs(self.status2Vx) do
+		gohelper.setActive(vx, key == curStatus)
 	end
 end
 
-function var_0_0.getStatus(arg_10_0)
-	local var_10_0 = FightDataHelper.operationDataMgr.survivalTalentSkillUsedCount or 0
-	local var_10_1 = FightDataHelper.entityMgr:getById(arg_10_0.entityId)
+function FightSurvivalTalentView:getStatus()
+	local usedCount = FightDataHelper.operationDataMgr.survivalTalentSkillUsedCount or 0
+	local entityMO = FightDataHelper.entityMgr:getById(self.entityId)
 
-	if not var_10_1 then
-		return var_0_0.Status.CantUse
+	if not entityMO then
+		return FightSurvivalTalentView.Status.CantUse
 	end
 
-	local var_10_2 = var_10_1:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill)
+	local powerInfo = entityMO:getPowerInfo(FightEnum.PowerType.PlayerFinisherSkill)
 
-	if not var_10_2 then
-		return var_0_0.Status.CantUse
+	if not powerInfo then
+		return FightSurvivalTalentView.Status.CantUse
 	end
 
-	local var_10_3 = FightDataHelper.fieldMgr.playerFinisherInfo
+	local info = FightDataHelper.fieldMgr.playerFinisherInfo
+	local skillData = info and info.skills[1]
 
-	if not (var_10_3 and var_10_3.skills[1]) then
-		return var_0_0.Status.CantUse
+	if not skillData then
+		return FightSurvivalTalentView.Status.CantUse
 	end
 
-	if var_10_2.num - var_10_0 * arg_10_0.needPower < arg_10_0.needPower then
-		return var_0_0.Status.CantUse
+	local curPower = powerInfo.num - usedCount * self.needPower
+
+	if curPower < self.needPower then
+		return FightSurvivalTalentView.Status.CantUse
 	end
 
-	return var_0_0.Status.CanUse
+	return FightSurvivalTalentView.Status.CanUse
 end
 
-function var_0_0.initData(arg_11_0)
-	arg_11_0.entityId = FightEntityScene.MySideId
+function FightSurvivalTalentView:initData()
+	self.entityId = FightEntityScene.MySideId
 
-	local var_11_0 = FightDataHelper.fieldMgr.customData and FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Survival]
+	local customData = FightDataHelper.fieldMgr.customData and FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Survival]
 
-	if not var_11_0 then
+	if not customData then
 		return
 	end
 
-	arg_11_0.talentGroupId = var_11_0.talentGroupId
+	self.talentGroupId = customData.talentGroupId
 
-	local var_11_1 = FightDataHelper.fieldMgr.playerFinisherInfo
-	local var_11_2 = var_11_1 and var_11_1.skills[1]
+	local info = FightDataHelper.fieldMgr.playerFinisherInfo
+	local skillData = info and info.skills[1]
 
-	arg_11_0.useLimit = var_11_1 and var_11_1.roundUseLimit or 0
-	arg_11_0.skillId = var_11_2 and var_11_2.skillId
-	arg_11_0.needPower = var_11_2 and var_11_2.needPower or 0
-	arg_11_0.skillCo = arg_11_0.skillId and lua_skill.configDict[arg_11_0.skillId]
+	self.useLimit = info and info.roundUseLimit or 0
+	self.skillId = skillData and skillData.skillId
+	self.needPower = skillData and skillData.needPower or 0
+	self.skillCo = self.skillId and lua_skill.configDict[self.skillId]
 
-	arg_11_0:updateTalentIcon()
+	self:updateTalentIcon()
 end
 
-function var_0_0.updateTalentIcon(arg_12_0)
+function FightSurvivalTalentView:updateTalentIcon()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0.longPress:RemoveClickListener()
-	arg_13_0.longPress:RemoveLongPressListener()
+function FightSurvivalTalentView:onDestroyView()
+	self.longPress:RemoveClickListener()
+	self.longPress:RemoveLongPressListener()
 
-	arg_13_0.longPress = nil
+	self.longPress = nil
 end
 
-return var_0_0
+return FightSurvivalTalentView

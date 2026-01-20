@@ -1,81 +1,87 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterPlayerMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterPlayerMo.lua
 
-local var_0_0 = pureTable("SurvivalShelterPlayerMo")
+module("modules.logic.survival.model.shelter.SurvivalShelterPlayerMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.shelterMapId = arg_1_1
+local SurvivalShelterPlayerMo = pureTable("SurvivalShelterPlayerMo")
 
-	if arg_1_2 then
-		arg_1_0:deleteLocalData()
+function SurvivalShelterPlayerMo:init(shelterMapId, isNewWeek)
+	self.shelterMapId = shelterMapId
+
+	if isNewWeek then
+		self:deleteLocalData()
 	end
 
-	local var_1_0 = arg_1_0:getLocalkKey()
-	local var_1_1 = PlayerPrefsHelper.getString(var_1_0)
+	local key = self:getLocalkKey()
+	local localPos = PlayerPrefsHelper.getString(key)
 
-	if string.nilorempty(var_1_1) then
-		var_1_1 = SurvivalConfig.instance:getShelterPlayerInitPos(arg_1_1)
+	if string.nilorempty(localPos) then
+		localPos = SurvivalConfig.instance:getShelterPlayerInitPos(shelterMapId)
 
-		local var_1_2 = string.splitToNumber(var_1_1, "#")
+		local posList = string.splitToNumber(localPos, "#")
 
-		arg_1_0:setPos(var_1_2[1], var_1_2[2], var_1_2[3])
+		self:setPos(posList[1], posList[2], posList[3])
 
-		arg_1_0.dir = SurvivalEnum.Dir.Right
+		self.dir = SurvivalEnum.Dir.Right
 	else
-		local var_1_3 = string.splitToNumber(var_1_1, "#")
+		local posList = string.splitToNumber(localPos, "#")
 
-		arg_1_0.dir = var_1_3[4] or SurvivalEnum.Dir.Right
+		self.dir = posList[4] or SurvivalEnum.Dir.Right
 
-		arg_1_0:setPos(var_1_3[1], var_1_3[2], var_1_3[3])
+		self:setPos(posList[1], posList[2], posList[3])
 	end
 end
 
-function var_0_0.setPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:getPos():set(arg_2_1, arg_2_2, arg_2_3)
+function SurvivalShelterPlayerMo:setPos(q, r, s)
+	local pos = self:getPos()
+
+	pos:set(q, r, s)
 end
 
-function var_0_0.getPos(arg_3_0)
-	if arg_3_0.pos == nil then
-		arg_3_0.pos = SurvivalHexNode.New()
+function SurvivalShelterPlayerMo:getPos()
+	if self.pos == nil then
+		self.pos = SurvivalHexNode.New()
 	end
 
-	return arg_3_0.pos
+	return self.pos
 end
 
-function var_0_0.setPosAndDir(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_2 and arg_4_0.dir ~= arg_4_2
-	local var_4_1 = arg_4_1 and arg_4_0.pos ~= arg_4_1
+function SurvivalShelterPlayerMo:setPosAndDir(pos, dir)
+	local dirChange = dir and self.dir ~= dir
+	local posChange = pos and self.pos ~= pos
 
-	if var_4_1 then
-		arg_4_0:setPos(arg_4_1.q, arg_4_1.r, arg_4_1.s)
+	if posChange then
+		self:setPos(pos.q, pos.r, pos.s)
 	end
 
-	if var_4_0 then
-		arg_4_0.dir = arg_4_2
+	if dirChange then
+		self.dir = dir
 	end
 
-	if var_4_1 or var_4_0 then
-		arg_4_0:savePosAndDir()
+	if posChange or dirChange then
+		self:savePosAndDir()
 	end
 
-	if var_4_1 then
+	if posChange then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapPlayerPosChange)
 	end
 end
 
-function var_0_0.savePosAndDir(arg_5_0)
-	local var_5_0 = arg_5_0:getLocalkKey()
+function SurvivalShelterPlayerMo:savePosAndDir()
+	local key = self:getLocalkKey()
 
-	PlayerPrefsHelper.setString(var_5_0, string.format("%s#%s#%s#%s", arg_5_0.pos.q, arg_5_0.pos.r, arg_5_0.pos.s, arg_5_0.dir))
+	PlayerPrefsHelper.setString(key, string.format("%s#%s#%s#%s", self.pos.q, self.pos.r, self.pos.s, self.dir))
 end
 
-function var_0_0.getLocalkKey(arg_6_0)
-	return (string.format("%s_survival_shelter_playerpos_%s", PlayerModel.instance:getPlayinfo().userId, arg_6_0.shelterMapId))
+function SurvivalShelterPlayerMo:getLocalkKey()
+	local key = string.format("%s_survival_shelter_playerpos_%s", PlayerModel.instance:getPlayinfo().userId, self.shelterMapId)
+
+	return key
 end
 
-function var_0_0.deleteLocalData(arg_7_0)
-	local var_7_0 = arg_7_0:getLocalkKey()
+function SurvivalShelterPlayerMo:deleteLocalData()
+	local key = self:getLocalkKey()
 
-	PlayerPrefsHelper.deleteKey(var_7_0)
+	PlayerPrefsHelper.deleteKey(key)
 end
 
-return var_0_0
+return SurvivalShelterPlayerMo

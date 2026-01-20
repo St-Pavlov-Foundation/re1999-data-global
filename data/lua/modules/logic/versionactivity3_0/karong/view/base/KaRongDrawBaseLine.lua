@@ -1,60 +1,62 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.base.KaRongDrawBaseLine", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/base/KaRongDrawBaseLine.lua
 
-local var_0_0 = class("KaRongDrawBaseLine", UserDataDispose)
+module("modules.logic.versionactivity3_0.karong.view.base.KaRongDrawBaseLine", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local KaRongDrawBaseLine = class("KaRongDrawBaseLine", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
+function KaRongDrawBaseLine:ctor(go)
+	self:__onInit()
+
+	self.go = go
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	arg_2_0.x1, arg_2_0.y1, arg_2_0.x2, arg_2_0.y2 = arg_2_1, arg_2_2, arg_2_3, arg_2_4
+function KaRongDrawBaseLine:onInit(x1, y1, x2, y2)
+	self.x1, self.y1, self.x2, self.y2 = x1, y1, x2, y2
 
-	local var_2_0 = KaRongDrawHelper.getFromToDir(arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local dir = KaRongDrawHelper.getFromToDir(x1, y1, x2, y2)
 
-	arg_2_0:setDir(var_2_0)
+	self:setDir(dir)
 end
 
-function var_0_0.onCrossFull(arg_3_0, arg_3_1)
-	arg_3_0:setDir(arg_3_1)
-	arg_3_0:setProgress(1)
+function KaRongDrawBaseLine:onCrossFull(dir)
+	self:setDir(dir)
+	self:setProgress(1)
 end
 
-function var_0_0.onCrossHalf(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:setDir(arg_4_1)
-	arg_4_0:setProgress(arg_4_2)
+function KaRongDrawBaseLine:onCrossHalf(dir, progress)
+	self:setDir(dir)
+	self:setProgress(progress)
 end
 
-function var_0_0.onAlert(arg_5_0, arg_5_1)
+function KaRongDrawBaseLine:onAlert(alertType)
 	return
 end
 
-function var_0_0.setProgress(arg_6_0, arg_6_1)
-	arg_6_0.progress = arg_6_1 or 0
+function KaRongDrawBaseLine:setProgress(progress)
+	self.progress = progress or 0
 end
 
-function var_0_0.getProgress(arg_7_0)
-	return arg_7_0.progress or 0
+function KaRongDrawBaseLine:getProgress()
+	return self.progress or 0
 end
 
-function var_0_0.setDir(arg_8_0, arg_8_1)
-	arg_8_0.dir = arg_8_1
+function KaRongDrawBaseLine:setDir(dir)
+	self.dir = dir
 end
 
-function var_0_0.getDir(arg_9_0)
-	return arg_9_0.dir
+function KaRongDrawBaseLine:getDir()
+	return self.dir
 end
 
-function var_0_0.clear(arg_10_0)
-	arg_10_0:setProgress(0)
+function KaRongDrawBaseLine:clear()
+	self:setProgress(0)
 
-	arg_10_0.dir = nil
+	self.dir = nil
 end
 
-function var_0_0.destroy(arg_11_0)
-	gohelper.destroy(arg_11_0.go)
-	arg_11_0:__onDispose()
+function KaRongDrawBaseLine:destroy()
+	gohelper.destroy(self.go)
+	self:__onDispose()
 end
 
-return var_0_0
+return KaRongDrawBaseLine

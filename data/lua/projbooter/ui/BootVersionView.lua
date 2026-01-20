@@ -1,39 +1,41 @@
-﻿module("projbooter.ui.BootVersionView", package.seeall)
+﻿-- chunkname: @projbooter/ui/BootVersionView.lua
 
-local var_0_0 = class("BootVersionView")
+module("projbooter.ui.BootVersionView", package.seeall)
 
-function var_0_0.show(arg_1_0)
-	if not arg_1_0._go then
-		arg_1_0._go = BootResMgr.instance:getVersionViewGo()
-		arg_1_0._rootTr = arg_1_0._go.transform
-		arg_1_0._txtVersion = arg_1_0._rootTr:Find("#txt_version"):GetComponent(typeof(UnityEngine.UI.Text))
+local BootVersionView = class("BootVersionView")
+
+function BootVersionView:show()
+	if not self._go then
+		self._go = BootResMgr.instance:getVersionViewGo()
+		self._rootTr = self._go.transform
+		self._txtVersion = self._rootTr:Find("#txt_version"):GetComponent(typeof(UnityEngine.UI.Text))
 	end
 
-	if arg_1_0._go then
-		arg_1_0._go:SetActive(true)
+	if self._go then
+		self._go:SetActive(true)
 
-		local var_1_0 = UnityEngine.Application.version
-		local var_1_1 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
-		local var_1_2 = BootNativeUtil.getAppVersion()
+		local versionName = UnityEngine.Application.version
+		local resourceName = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
+		local buildId = BootNativeUtil.getAppVersion()
 
-		arg_1_0._txtVersion.text = string.format("V%s-%s-%s", var_1_0, var_1_1, tostring(var_1_2))
-	end
-end
-
-function var_0_0.hide(arg_2_0)
-	if arg_2_0._go then
-		arg_2_0._go:SetActive(false)
+		self._txtVersion.text = string.format("V%s-%s-%s", versionName, resourceName, tostring(buildId))
 	end
 end
 
-function var_0_0.dispose(arg_3_0)
-	arg_3_0:hide()
-
-	arg_3_0._go = nil
-	arg_3_0._rootTr = nil
-	arg_3_0._txtVersion = nil
+function BootVersionView:hide()
+	if self._go then
+		self._go:SetActive(false)
+	end
 end
 
-var_0_0.instance = var_0_0.New()
+function BootVersionView:dispose()
+	self:hide()
 
-return var_0_0
+	self._go = nil
+	self._rootTr = nil
+	self._txtVersion = nil
+end
+
+BootVersionView.instance = BootVersionView.New()
+
+return BootVersionView

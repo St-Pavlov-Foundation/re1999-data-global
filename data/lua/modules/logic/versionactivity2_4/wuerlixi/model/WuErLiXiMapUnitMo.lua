@@ -1,255 +1,257 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapUnitMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/model/WuErLiXiMapUnitMo.lua
 
-local var_0_0 = pureTable("WuErLiXiMapUnitMo")
+module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapUnitMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.x = 0
-	arg_1_0.y = 0
-	arg_1_0.unitType = 0
-	arg_1_0.dir = 0
-	arg_1_0.isActive = false
+local WuErLiXiMapUnitMo = pureTable("WuErLiXiMapUnitMo")
+
+function WuErLiXiMapUnitMo:ctor()
+	self.id = 0
+	self.x = 0
+	self.y = 0
+	self.unitType = 0
+	self.dir = 0
+	self.isActive = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1[1]
-	arg_2_0.x = arg_2_1[2]
-	arg_2_0.y = arg_2_1[3]
-	arg_2_0.unitType = arg_2_1[4]
-	arg_2_0.dir = arg_2_1[5]
-	arg_2_0.outDir = arg_2_0.dir
-	arg_2_0.isActive = arg_2_0.unitType == WuErLiXiEnum.UnitType.SignalStart or arg_2_0.unitType == WuErLiXiEnum.UnitType.KeyStart
+function WuErLiXiMapUnitMo:init(unit)
+	self.id = unit[1]
+	self.x = unit[2]
+	self.y = unit[3]
+	self.unitType = unit[4]
+	self.dir = unit[5]
+	self.outDir = self.dir
+	self.isActive = self.unitType == WuErLiXiEnum.UnitType.SignalStart or self.unitType == WuErLiXiEnum.UnitType.KeyStart
 end
 
-function var_0_0.initByActUnitMo(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0.id = arg_3_1.id
-	arg_3_0.x = arg_3_2
-	arg_3_0.y = arg_3_3
-	arg_3_0.unitType = arg_3_1.type
-	arg_3_0.dir = arg_3_1.dir
-	arg_3_0.outDir = arg_3_0.dir
-	arg_3_0.isActive = arg_3_0.unitType == WuErLiXiEnum.UnitType.SignalStart or arg_3_0.unitType == WuErLiXiEnum.UnitType.KeyStart
+function WuErLiXiMapUnitMo:initByActUnitMo(actUnitMo, x, y)
+	self.id = actUnitMo.id
+	self.x = x
+	self.y = y
+	self.unitType = actUnitMo.type
+	self.dir = actUnitMo.dir
+	self.outDir = self.dir
+	self.isActive = self.unitType == WuErLiXiEnum.UnitType.SignalStart or self.unitType == WuErLiXiEnum.UnitType.KeyStart
 end
 
-function var_0_0.initByUnitMo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0.id = arg_4_1.id
-	arg_4_0.x = arg_4_2
-	arg_4_0.y = arg_4_3
-	arg_4_0.unitType = arg_4_1.unitType
-	arg_4_0.dir = arg_4_1.dir
-	arg_4_0.outDir = arg_4_1.outDir
-	arg_4_0.isActive = arg_4_0.unitType == WuErLiXiEnum.UnitType.SignalStart or arg_4_0.unitType == WuErLiXiEnum.UnitType.KeyStart
+function WuErLiXiMapUnitMo:initByUnitMo(unitMo, x, y)
+	self.id = unitMo.id
+	self.x = x
+	self.y = y
+	self.unitType = unitMo.unitType
+	self.dir = unitMo.dir
+	self.outDir = unitMo.outDir
+	self.isActive = self.unitType == WuErLiXiEnum.UnitType.SignalStart or self.unitType == WuErLiXiEnum.UnitType.KeyStart
 end
 
-function var_0_0.getId(arg_5_0)
-	return arg_5_0.id
+function WuErLiXiMapUnitMo:getId()
+	return self.id
 end
 
-function var_0_0.isUnitActive(arg_6_0, arg_6_1)
-	if arg_6_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
-		arg_6_0.isActive = true
-	elseif arg_6_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
-		arg_6_0.isActive = true
+function WuErLiXiMapUnitMo:isUnitActive(rayDir)
+	if self.unitType == WuErLiXiEnum.UnitType.SignalStart then
+		self.isActive = true
+	elseif self.unitType == WuErLiXiEnum.UnitType.KeyStart then
+		self.isActive = true
 	end
 
-	if arg_6_1 and arg_6_0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		return arg_6_1 == WuErLiXiHelper.getOppositeDir(arg_6_0.dir) or arg_6_1 == WuErLiXiHelper.getNextDir(arg_6_0.dir)
+	if rayDir and self.unitType == WuErLiXiEnum.UnitType.Reflection then
+		return rayDir == WuErLiXiHelper.getOppositeDir(self.dir) or rayDir == WuErLiXiHelper.getNextDir(self.dir)
 	end
 
-	if arg_6_1 and arg_6_0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		return arg_6_1 == arg_6_0.dir
+	if rayDir and self.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		return rayDir == self.dir
 	end
 
-	return arg_6_0.isActive
+	return self.isActive
 end
 
-function var_0_0.couldSetRay(arg_7_0, arg_7_1)
-	if arg_7_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
+function WuErLiXiMapUnitMo:couldSetRay(rayType)
+	if self.unitType == WuErLiXiEnum.UnitType.SignalStart then
 		return false
-	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
+	elseif self.unitType == WuErLiXiEnum.UnitType.KeyStart then
 		return false
-	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.Obstacle then
+	elseif self.unitType == WuErLiXiEnum.UnitType.Obstacle then
 		return false
-	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.Key then
-		return arg_7_1 == WuErLiXiEnum.RayType.SwitchSignal
-	elseif arg_7_0.unitType == WuErLiXiEnum.UnitType.Switch then
-		return arg_7_0.isActive
+	elseif self.unitType == WuErLiXiEnum.UnitType.Key then
+		return rayType == WuErLiXiEnum.RayType.SwitchSignal
+	elseif self.unitType == WuErLiXiEnum.UnitType.Switch then
+		return self.isActive
 	end
 
 	return true
 end
 
-function var_0_0.setUnitActive(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if not arg_8_1 then
-		arg_8_0.isActive = false
+function WuErLiXiMapUnitMo:setUnitActive(active, signalType, inDir)
+	if not active then
+		self.isActive = false
 
 		return
 	end
 
-	if arg_8_0.unitType == WuErLiXiEnum.UnitType.SignalEnd then
-		arg_8_0.isActive = arg_8_2 == WuErLiXiEnum.RayType.NormalSignal
-	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		if not arg_8_3 then
-			arg_8_0.isActive = false
+	if self.unitType == WuErLiXiEnum.UnitType.SignalEnd then
+		self.isActive = signalType == WuErLiXiEnum.RayType.NormalSignal
+	elseif self.unitType == WuErLiXiEnum.UnitType.Reflection then
+		if not inDir then
+			self.isActive = false
 
 			return
 		end
 
-		arg_8_0.isActive = arg_8_3 == WuErLiXiHelper.getOppositeDir(arg_8_0.dir) or arg_8_3 == WuErLiXiHelper.getNextDir(arg_8_0.dir)
+		self.isActive = inDir == WuErLiXiHelper.getOppositeDir(self.dir) or inDir == WuErLiXiHelper.getNextDir(self.dir)
 
-		if arg_8_3 == WuErLiXiHelper.getNextDir(arg_8_0.dir) then
-			arg_8_0.outDir = arg_8_0.dir
-		elseif arg_8_3 == WuErLiXiHelper.getOppositeDir(arg_8_0.dir) then
-			arg_8_0.outDir = WuErLiXiHelper.getNextDir(arg_8_3)
+		if inDir == WuErLiXiHelper.getNextDir(self.dir) then
+			self.outDir = self.dir
+		elseif inDir == WuErLiXiHelper.getOppositeDir(self.dir) then
+			self.outDir = WuErLiXiHelper.getNextDir(inDir)
 		else
-			arg_8_0.outDir = nil
+			self.outDir = nil
 		end
-	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		arg_8_0.outDir = arg_8_3 == arg_8_0.dir and arg_8_0.dir or nil
-		arg_8_0.isActive = arg_8_3 == arg_8_0.dir
-	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.Key then
-		arg_8_0.isActive = arg_8_2 == WuErLiXiEnum.RayType.SwitchSignal
-	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.Switch then
-		arg_8_0.isActive = true
-	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
-		arg_8_0.isActive = true
-	elseif arg_8_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
-		arg_8_0.isActive = true
+	elseif self.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		self.outDir = inDir == self.dir and self.dir or nil
+		self.isActive = inDir == self.dir
+	elseif self.unitType == WuErLiXiEnum.UnitType.Key then
+		self.isActive = signalType == WuErLiXiEnum.RayType.SwitchSignal
+	elseif self.unitType == WuErLiXiEnum.UnitType.Switch then
+		self.isActive = true
+	elseif self.unitType == WuErLiXiEnum.UnitType.SignalStart then
+		self.isActive = true
+	elseif self.unitType == WuErLiXiEnum.UnitType.KeyStart then
+		self.isActive = true
 	else
-		arg_8_0.isActive = false
+		self.isActive = false
 	end
 end
 
-function var_0_0.setDir(arg_9_0, arg_9_1)
-	arg_9_0.dir = arg_9_1
+function WuErLiXiMapUnitMo:setDir(dir)
+	self.dir = dir
 
-	if not arg_9_0.isActive then
-		arg_9_0.ourDir = nil
+	if not self.isActive then
+		self.ourDir = nil
 
 		return
 	end
 
-	arg_9_0.outDir = arg_9_0.dir
+	self.outDir = self.dir
 end
 
-function var_0_0.setUnitOutDirByRayDir(arg_10_0, arg_10_1)
-	if not arg_10_0.isActive then
-		arg_10_0.outDir = nil
+function WuErLiXiMapUnitMo:setUnitOutDirByRayDir(rayDir)
+	if not self.isActive then
+		self.outDir = nil
 
 		return
 	end
 
-	if arg_10_0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		if arg_10_1 == WuErLiXiHelper.getNextDir(arg_10_0.dir) then
-			arg_10_0.outDir = arg_10_0.dir
-		elseif arg_10_1 == WuErLiXiHelper.getOppositeDir(arg_10_0.dir) then
-			arg_10_0.outDir = WuErLiXiHelper.getNextDir(arg_10_1)
+	if self.unitType == WuErLiXiEnum.UnitType.Reflection then
+		if rayDir == WuErLiXiHelper.getNextDir(self.dir) then
+			self.outDir = self.dir
+		elseif rayDir == WuErLiXiHelper.getOppositeDir(self.dir) then
+			self.outDir = WuErLiXiHelper.getNextDir(rayDir)
 		else
-			arg_10_0.outDir = nil
+			self.outDir = nil
 		end
 
 		return
 	end
 
-	arg_10_0.outDir = arg_10_0.isActive and arg_10_0.dir or nil
+	self.outDir = self.isActive and self.dir or nil
 end
 
-function var_0_0.getUnitSignalOutDir(arg_11_0)
-	if not arg_11_0.isActive then
+function WuErLiXiMapUnitMo:getUnitSignalOutDir()
+	if not self.isActive then
 		return
 	end
 
-	return arg_11_0.outDir
+	return self.outDir
 end
 
-function var_0_0.getUnitDir(arg_12_0)
-	return arg_12_0.dir
+function WuErLiXiMapUnitMo:getUnitDir()
+	return self.dir
 end
 
-function var_0_0.isIgnoreSignal(arg_13_0)
-	if arg_13_0.isActive and arg_13_0.unitType == WuErLiXiEnum.UnitType.Switch then
+function WuErLiXiMapUnitMo:isIgnoreSignal()
+	if self.isActive and self.unitType == WuErLiXiEnum.UnitType.Switch then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getUnitSignals(arg_14_0, arg_14_1)
-	if not arg_14_0.isActive then
+function WuErLiXiMapUnitMo:getUnitSignals(inDir)
+	if not self.isActive then
 		return {}
 	end
 
-	local var_14_0 = {}
+	local signals = {}
 
-	if arg_14_0.unitType == WuErLiXiEnum.UnitType.SignalStart then
-		table.insert(var_14_0, {
-			arg_14_0.x,
-			arg_14_0.y
+	if self.unitType == WuErLiXiEnum.UnitType.SignalStart then
+		table.insert(signals, {
+			self.x,
+			self.y
 		})
-	elseif arg_14_0.unitType == WuErLiXiEnum.UnitType.KeyStart then
-		table.insert(var_14_0, {
-			arg_14_0.x,
-			arg_14_0.y
+	elseif self.unitType == WuErLiXiEnum.UnitType.KeyStart then
+		table.insert(signals, {
+			self.x,
+			self.y
 		})
-	elseif arg_14_0.unitType == WuErLiXiEnum.UnitType.Reflection then
-		if arg_14_1 then
-			if arg_14_1 == WuErLiXiHelper.getNextDir(arg_14_0.dir) or arg_14_1 == WuErLiXiHelper.getOppositeDir(arg_14_0.dir) then
-				table.insert(var_14_0, {
-					arg_14_0.x,
-					arg_14_0.y
+	elseif self.unitType == WuErLiXiEnum.UnitType.Reflection then
+		if inDir then
+			if inDir == WuErLiXiHelper.getNextDir(self.dir) or inDir == WuErLiXiHelper.getOppositeDir(self.dir) then
+				table.insert(signals, {
+					self.x,
+					self.y
 				})
 			end
-		elseif arg_14_0.outDir then
-			table.insert(var_14_0, {
-				arg_14_0.x,
-				arg_14_0.y
+		elseif self.outDir then
+			table.insert(signals, {
+				self.x,
+				self.y
 			})
 		end
-	elseif arg_14_0.unitType == WuErLiXiEnum.UnitType.SignalMulti then
-		if arg_14_1 then
-			if arg_14_1 == arg_14_0.dir then
-				if arg_14_0.dir == WuErLiXiEnum.Dir.Up or arg_14_0.dir == WuErLiXiEnum.Dir.Down then
-					table.insert(var_14_0, {
-						arg_14_0.x - 1,
-						arg_14_0.y
+	elseif self.unitType == WuErLiXiEnum.UnitType.SignalMulti then
+		if inDir then
+			if inDir == self.dir then
+				if self.dir == WuErLiXiEnum.Dir.Up or self.dir == WuErLiXiEnum.Dir.Down then
+					table.insert(signals, {
+						self.x - 1,
+						self.y
 					})
-					table.insert(var_14_0, {
-						arg_14_0.x + 1,
-						arg_14_0.y
+					table.insert(signals, {
+						self.x + 1,
+						self.y
 					})
 				else
-					table.insert(var_14_0, {
-						arg_14_0.x,
-						arg_14_0.y - 1
+					table.insert(signals, {
+						self.x,
+						self.y - 1
 					})
-					table.insert(var_14_0, {
-						arg_14_0.x,
-						arg_14_0.y + 1
+					table.insert(signals, {
+						self.x,
+						self.y + 1
 					})
 				end
 			end
-		elseif arg_14_0.dir == WuErLiXiEnum.Dir.Up or arg_14_0.dir == WuErLiXiEnum.Dir.Down then
-			table.insert(var_14_0, {
-				arg_14_0.x - 1,
-				arg_14_0.y
+		elseif self.dir == WuErLiXiEnum.Dir.Up or self.dir == WuErLiXiEnum.Dir.Down then
+			table.insert(signals, {
+				self.x - 1,
+				self.y
 			})
-			table.insert(var_14_0, {
-				arg_14_0.x + 1,
-				arg_14_0.y
+			table.insert(signals, {
+				self.x + 1,
+				self.y
 			})
 		else
-			table.insert(var_14_0, {
-				arg_14_0.x,
-				arg_14_0.y - 1
+			table.insert(signals, {
+				self.x,
+				self.y - 1
 			})
-			table.insert(var_14_0, {
-				arg_14_0.x,
-				arg_14_0.y + 1
+			table.insert(signals, {
+				self.x,
+				self.y + 1
 			})
 		end
 	end
 
-	return var_14_0
+	return signals
 end
 
-return var_0_0
+return WuErLiXiMapUnitMo

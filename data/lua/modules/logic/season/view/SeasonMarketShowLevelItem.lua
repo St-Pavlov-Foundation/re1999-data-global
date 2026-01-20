@@ -1,48 +1,50 @@
-﻿module("modules.logic.season.view.SeasonMarketShowLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonMarketShowLevelItem.lua
 
-local var_0_0 = class("SeasonMarketShowLevelItem", LuaCompBase)
+module("modules.logic.season.view.SeasonMarketShowLevelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.go = arg_1_1
-	arg_1_0.index = arg_1_2
-	arg_1_0.targetIndex = arg_1_3
-	arg_1_0.maxIndex = arg_1_4
-	arg_1_0._goline = gohelper.findChild(arg_1_1, "#go_line")
-	arg_1_0._goselected = gohelper.findChild(arg_1_1, "#go_selected")
-	arg_1_0._txtselectindex = gohelper.findChildText(arg_1_1, "#go_selected/#txt_selectindex")
-	arg_1_0._gopass = gohelper.findChild(arg_1_1, "#go_pass")
-	arg_1_0._animatorPass = arg_1_0._gopass:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtpassindex = gohelper.findChildText(arg_1_1, "#go_pass/#txt_passindex")
-	arg_1_0._gounpass = gohelper.findChild(arg_1_1, "#go_unpass")
-	arg_1_0._txtunpassindex = gohelper.findChildText(arg_1_1, "#go_unpass/#txt_unpassindex")
-	arg_1_0.point = gohelper.findChild(arg_1_1, "#go_unpass/point")
+local SeasonMarketShowLevelItem = class("SeasonMarketShowLevelItem", LuaCompBase)
 
-	gohelper.setActive(arg_1_0.go, true)
-	gohelper.setActive(arg_1_0._goline, false)
-	gohelper.setActive(arg_1_0._gopass, false)
-	gohelper.setActive(arg_1_0._gounpass, false)
-	gohelper.setActive(arg_1_0._goselected, false)
+function SeasonMarketShowLevelItem:init(go, index, targetIndex, maxIndex)
+	self.go = go
+	self.index = index
+	self.targetIndex = targetIndex
+	self.maxIndex = maxIndex
+	self._goline = gohelper.findChild(go, "#go_line")
+	self._goselected = gohelper.findChild(go, "#go_selected")
+	self._txtselectindex = gohelper.findChildText(go, "#go_selected/#txt_selectindex")
+	self._gopass = gohelper.findChild(go, "#go_pass")
+	self._animatorPass = self._gopass:GetComponent(typeof(UnityEngine.Animator))
+	self._txtpassindex = gohelper.findChildText(go, "#go_pass/#txt_passindex")
+	self._gounpass = gohelper.findChild(go, "#go_unpass")
+	self._txtunpassindex = gohelper.findChildText(go, "#go_unpass/#txt_unpassindex")
+	self.point = gohelper.findChild(go, "#go_unpass/point")
+
+	gohelper.setActive(self.go, true)
+	gohelper.setActive(self._goline, false)
+	gohelper.setActive(self._gopass, false)
+	gohelper.setActive(self._gounpass, false)
+	gohelper.setActive(self._goselected, false)
 end
 
-function var_0_0.show(arg_2_0)
-	gohelper.setActive(arg_2_0._goline, arg_2_0.index < arg_2_0.maxIndex)
-	gohelper.setActive(arg_2_0._gopass, arg_2_0.targetIndex > arg_2_0.index)
-	gohelper.setActive(arg_2_0._gounpass, arg_2_0.targetIndex < arg_2_0.index)
-	gohelper.setActive(arg_2_0._goselected, arg_2_0.targetIndex == arg_2_0.index)
+function SeasonMarketShowLevelItem:show()
+	gohelper.setActive(self._goline, self.index < self.maxIndex)
+	gohelper.setActive(self._gopass, self.targetIndex > self.index)
+	gohelper.setActive(self._gounpass, self.targetIndex < self.index)
+	gohelper.setActive(self._goselected, self.targetIndex == self.index)
 
-	arg_2_0._txtselectindex.text = string.format("%02d", arg_2_0.index)
-	arg_2_0._txtpassindex.text = string.format("%02d", arg_2_0.index)
-	arg_2_0._txtunpassindex.text = string.format("%02d", arg_2_0.index)
+	self._txtselectindex.text = string.format("%02d", self.index)
+	self._txtpassindex.text = string.format("%02d", self.index)
+	self._txtunpassindex.text = string.format("%02d", self.index)
 
-	if arg_2_0.index + 1 == arg_2_0.targetIndex or arg_2_0.targetIndex == arg_2_0.index then
-		arg_2_0._animatorPass:Play(UIAnimationName.Open, 0, 0)
+	if self.index + 1 == self.targetIndex or self.targetIndex == self.index then
+		self._animatorPass:Play(UIAnimationName.Open, 0, 0)
 	else
-		arg_2_0._animatorPass:Play(UIAnimationName.Idle, 0, 0)
+		self._animatorPass:Play(UIAnimationName.Idle, 0, 0)
 	end
 end
 
-function var_0_0.destroy(arg_3_0)
+function SeasonMarketShowLevelItem:destroy()
 	return
 end
 
-return var_0_0
+return SeasonMarketShowLevelItem

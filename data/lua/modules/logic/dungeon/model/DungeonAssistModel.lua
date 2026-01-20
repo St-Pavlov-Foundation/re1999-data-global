@@ -1,78 +1,81 @@
-﻿module("modules.logic.dungeon.model.DungeonAssistModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonAssistModel.lua
 
-local var_0_0 = class("DungeonAssistModel", BaseModel)
+module("modules.logic.dungeon.model.DungeonAssistModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local DungeonAssistModel = class("DungeonAssistModel", BaseModel)
+
+function DungeonAssistModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
+function DungeonAssistModel:reInit()
 	return
 end
 
-function var_0_0.getAssistList(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = {}
+function DungeonAssistModel:getAssistList(assistType, career)
+	local result = {}
 
-	if not arg_3_1 or not arg_3_0._assistTypeDict then
-		return var_3_0
+	if not assistType or not self._assistTypeDict then
+		return result
 	end
 
-	local var_3_1 = arg_3_0._assistTypeDict[arg_3_1] or {}
+	local careerDict = self._assistTypeDict[assistType] or {}
 
-	if arg_3_2 then
-		var_3_0 = var_3_1[arg_3_2] or {}
+	if career then
+		result = careerDict[career] or {}
 	else
-		for iter_3_0, iter_3_1 in pairs(var_3_1) do
-			tabletool.addValues(var_3_0, iter_3_1)
+		for _, assistHeroList in pairs(careerDict) do
+			tabletool.addValues(result, assistHeroList)
 		end
 	end
 
-	return var_3_0
+	return result
 end
 
-function var_0_0.setAssistHeroCareersByServerData(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_1 or not arg_4_2 then
+function DungeonAssistModel:setAssistHeroCareersByServerData(serverAssistType, serverAssistHeroCareers)
+	if not serverAssistType or not serverAssistHeroCareers then
 		return
 	end
 
-	if not arg_4_0._assistTypeDict then
-		arg_4_0._assistTypeDict = {}
+	if not self._assistTypeDict then
+		self._assistTypeDict = {}
 	end
 
-	local var_4_0 = {}
+	local newCareerDict = {}
 
-	arg_4_0._assistTypeDict[arg_4_1] = var_4_0
+	self._assistTypeDict[serverAssistType] = newCareerDict
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_2) do
-		local var_4_1 = iter_4_1.career
-		local var_4_2 = {}
+	for _, careerHeroData in ipairs(serverAssistHeroCareers) do
+		local career = careerHeroData.career
+		local assistHeroList = {}
 
-		var_4_0[var_4_1] = var_4_2
+		newCareerDict[career] = assistHeroList
 
-		local var_4_3 = {}
+		local alreadySet = {}
 
-		for iter_4_2, iter_4_3 in ipairs(iter_4_1.assistHeroInfos) do
-			local var_4_4 = iter_4_3.heroUid
+		for _, heroInfo in ipairs(careerHeroData.assistHeroInfos) do
+			local heroUid = heroInfo.heroUid
 
-			if not var_4_3[var_4_4] then
-				local var_4_5 = DungeonAssistHeroMO.New()
+			if not alreadySet[heroUid] then
+				local assistHeroMO = DungeonAssistHeroMO.New()
+				local result = assistHeroMO:init(serverAssistType, heroInfo)
 
-				if var_4_5:init(arg_4_1, iter_4_3) then
-					var_4_2[#var_4_2 + 1] = var_4_5
+				if result then
+					assistHeroList[#assistHeroList + 1] = assistHeroMO
 				end
 
-				var_4_3[var_4_4] = true
+				alreadySet[heroUid] = true
 			end
 		end
 	end
 end
 
-function var_0_0.clear(arg_5_0)
-	arg_5_0._assistTypeDict = {}
+function DungeonAssistModel:clear()
+	self._assistTypeDict = {}
 
-	var_0_0.super.clear(arg_5_0)
+	DungeonAssistModel.super.clear(self)
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonAssistModel.instance = DungeonAssistModel.New()
 
-return var_0_0
+return DungeonAssistModel

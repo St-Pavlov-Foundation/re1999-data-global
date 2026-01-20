@@ -1,291 +1,293 @@
-﻿module("modules.logic.gm.view.eliminate.GMSubViewEliminate", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/eliminate/GMSubViewEliminate.lua
 
-local var_0_0 = class("GMSubViewEliminate", GMSubViewBase)
+module("modules.logic.gm.view.eliminate.GMSubViewEliminate", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.tabName = "三消"
+local GMSubViewEliminate = class("GMSubViewEliminate", GMSubViewBase)
+
+function GMSubViewEliminate:ctor()
+	self.tabName = "三消"
 end
 
-function var_0_0.addLineIndex(arg_2_0)
-	arg_2_0.lineIndex = arg_2_0.lineIndex + 1
+function GMSubViewEliminate:addLineIndex()
+	self.lineIndex = self.lineIndex + 1
 end
 
-function var_0_0.getLineGroup(arg_3_0)
-	return "L" .. arg_3_0.lineIndex
+function GMSubViewEliminate:getLineGroup()
+	return "L" .. self.lineIndex
 end
 
-function var_0_0.initViewContent(arg_4_0)
-	if arg_4_0._inited then
+function GMSubViewEliminate:initViewContent()
+	if self._inited then
 		return
 	end
 
-	GMSubViewBase.initViewContent(arg_4_0)
+	GMSubViewBase.initViewContent(self)
 
-	arg_4_0.lineIndex = 1
+	self.lineIndex = 1
 
-	arg_4_0:addTitleSplitLine("冷周六玩法")
-	arg_4_0:addLineIndex()
+	self:addTitleSplitLine("冷周六玩法")
+	self:addLineIndex()
 
-	arg_4_0._textLevel = arg_4_0:addInputText(arg_4_0:getLineGroup(), "1270209")
+	self._textLevel = self:addInputText(self:getLineGroup(), "1270209")
 
-	arg_4_0:addLineIndex()
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "进入玩法", arg_4_0.enterGame, arg_4_0)
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "打乱棋盘", arg_4_0.randomCell, arg_4_0)
-	arg_4_0:addLineIndex()
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "随机石化", arg_4_0.petrifyEliminationBlock, arg_4_0)
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "随机冰冻", arg_4_0.freezeEliminationBlock, arg_4_0)
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "随机致盲", arg_4_0.contaminate, arg_4_0)
-	arg_4_0:addLineIndex()
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "进入玩法", self.enterGame, self)
+	self:addButton(self:getLineGroup(), "打乱棋盘", self.randomCell, self)
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "随机石化", self.petrifyEliminationBlock, self)
+	self:addButton(self:getLineGroup(), "随机冰冻", self.freezeEliminationBlock, self)
+	self:addButton(self:getLineGroup(), "随机致盲", self.contaminate, self)
+	self:addLineIndex()
 
-	arg_4_0._textBuff = arg_4_0:addInputText(arg_4_0:getLineGroup(), "1,1")
+	self._textBuff = self:addInputText(self:getLineGroup(), "1,1")
 
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "指定冰冻", arg_4_0.addBuff, arg_4_0)
-	arg_4_0:addLineIndex()
+	self:addButton(self:getLineGroup(), "指定冰冻", self.addBuff, self)
+	self:addLineIndex()
 
-	arg_4_0._textChangeIndex = arg_4_0:addInputText(arg_4_0:getLineGroup(), "1,1")
-	arg_4_0._typeDropDown = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "棋子类型：", EliminateEnum_2_7.AllChessType, arg_4_0._onLangDropChange, arg_4_0)
+	self._textChangeIndex = self:addInputText(self:getLineGroup(), "1,1")
+	self._typeDropDown = self:addDropDown(self:getLineGroup(), "棋子类型：", EliminateEnum_2_7.AllChessType, self._onLangDropChange, self)
 
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "修改棋子类型", arg_4_0.changeChessType, arg_4_0)
-	arg_4_0:addLineIndex()
+	self:addButton(self:getLineGroup(), "修改棋子类型", self.changeChessType, self)
+	self:addLineIndex()
 
-	arg_4_0._textChangeStrongIndex = arg_4_0:addInputText(arg_4_0:getLineGroup(), "1,1")
+	self._textChangeStrongIndex = self:addInputText(self:getLineGroup(), "1,1")
 
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "强化棋子", arg_4_0.changeToStrong, arg_4_0)
-	arg_4_0:addLineIndex()
+	self:addButton(self:getLineGroup(), "强化棋子", self.changeToStrong, self)
+	self:addLineIndex()
 
-	arg_4_0._textChangeDieSpeed = arg_4_0:addInputText(arg_4_0:getLineGroup(), "0.3")
+	self._textChangeDieSpeed = self:addInputText(self:getLineGroup(), "0.3")
 
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "修改棋子死亡步骤时间", arg_4_0.changeDieSpeed, arg_4_0)
-	arg_4_0:addLineIndex()
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "测试随机棋子【100】", arg_4_0.testRound, arg_4_0)
-	arg_4_0:addLineIndex()
-	arg_4_0:addButton(arg_4_0:getLineGroup(), "完成玛丽安娜玩法", arg_4_0.finishMaLiAnNa, arg_4_0)
+	self:addButton(self:getLineGroup(), "修改棋子死亡步骤时间", self.changeDieSpeed, self)
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "测试随机棋子【100】", self.testRound, self)
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "完成玛丽安娜玩法", self.finishMaLiAnNa, self)
 end
 
-function var_0_0.initEliminate(arg_5_0)
-	local var_5_0 = {
-		{
-			1,
-			3,
-			2,
-			5,
-			4,
-			1
-		},
-		{
-			2,
-			4,
-			5,
-			3,
-			1,
-			2
-		},
-		{
-			3,
-			1,
-			4,
-			2,
-			5,
-			3
-		},
-		{
-			4,
-			2,
-			5,
-			1,
-			3,
-			4
-		},
-		{
-			5,
-			3,
-			1,
-			4,
-			2,
-			5
-		},
-		{
-			1,
-			4,
-			2,
-			5,
-			3,
-			1
-		}
+function GMSubViewEliminate:initEliminate()
+	local data = {}
+
+	data[1] = {
+		1,
+		3,
+		2,
+		5,
+		4,
+		1
+	}
+	data[2] = {
+		2,
+		4,
+		5,
+		3,
+		1,
+		2
+	}
+	data[3] = {
+		3,
+		1,
+		4,
+		2,
+		5,
+		3
+	}
+	data[4] = {
+		4,
+		2,
+		5,
+		1,
+		3,
+		4
+	}
+	data[5] = {
+		5,
+		3,
+		1,
+		4,
+		2,
+		5
+	}
+	data[6] = {
+		1,
+		4,
+		2,
+		5,
+		3,
+		1
 	}
 
-	LocalEliminateChessModel.instance:initByData(var_5_0)
+	LocalEliminateChessModel.instance:initByData(data)
 end
 
-function var_0_0.eliminateEx(arg_6_0)
-	local var_6_0 = arg_6_0._textEx:GetText()
-	local var_6_1 = string.split(var_6_0, ",")
+function GMSubViewEliminate:eliminateEx()
+	local str = self._textEx:GetText()
+	local arr = string.split(str, ",")
 
-	if #var_6_1 ~= 4 then
+	if #arr ~= 4 then
 		return
 	end
 
-	local var_6_2 = tonumber(var_6_1[1])
-	local var_6_3 = tonumber(var_6_1[2])
-	local var_6_4 = tonumber(var_6_1[3])
-	local var_6_5 = tonumber(var_6_1[4])
+	local x1 = tonumber(arr[1])
+	local y1 = tonumber(arr[2])
+	local x2 = tonumber(arr[3])
+	local y2 = tonumber(arr[4])
 
-	LocalEliminateChessModel.instance:exchangeCell(var_6_2, var_6_3, var_6_4, var_6_5)
+	LocalEliminateChessModel.instance:exchangeCell(x1, y1, x2, y2)
 end
 
-function var_0_0.addBuff(arg_7_0)
-	local var_7_0 = arg_7_0._textBuff:GetText()
-	local var_7_1 = string.split(var_7_0, ",")
+function GMSubViewEliminate:addBuff()
+	local str = self._textBuff:GetText()
+	local arr = string.split(str, ",")
 
-	if #var_7_1 ~= 2 then
+	if #arr ~= 2 then
 		return
 	end
 
-	local var_7_2 = tonumber(var_7_1[1])
-	local var_7_3 = tonumber(var_7_1[2])
+	local x = tonumber(arr[1])
+	local y = tonumber(arr[2])
 
-	LocalEliminateChessModel.instance:changeCellState(var_7_2, var_7_3, EliminateEnum.ChessState.Frost)
+	LocalEliminateChessModel.instance:changeCellState(x, y, EliminateEnum.ChessState.Frost)
 
-	local var_7_4 = {
-		x = var_7_2,
-		y = var_7_3
+	local data = {
+		x = x,
+		y = y
 	}
-	local var_7_5 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChangeState, var_7_4)
+	local updateStateWork = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ChangeState, data)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_7_5)
+	LengZhou6EliminateController.instance:buildSeqFlow(updateStateWork)
 
-	local var_7_6 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateCheckAndRefresh)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateCheckAndRefresh)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_7_6)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 	LengZhou6EliminateController.instance:setFlowEndState(true)
 end
 
-function var_0_0.enterGame(arg_8_0)
+function GMSubViewEliminate:enterGame()
 	LengZhou6Enum.enterGM = true
 	LengZhou6Model.instance._activityId = 12702
 
-	local var_8_0 = tonumber(arg_8_0._textLevel:GetText())
+	local episodeId = tonumber(self._textLevel:GetText())
 
-	LengZhou6Model.instance:setCurEpisodeId(var_8_0)
-	LengZhou6Controller.instance:_enterGame(var_8_0)
+	LengZhou6Model.instance:setCurEpisodeId(episodeId)
+	LengZhou6Controller.instance:_enterGame(episodeId)
 end
 
-function var_0_0.randomCell(arg_9_0)
-	local var_9_0 = LocalEliminateChessModel.instance:randomCell()
+function GMSubViewEliminate:randomCell()
+	local randomList = LocalEliminateChessModel.instance:randomCell()
 
-	LengZhou6EliminateController.instance:updateAllItemPos(var_9_0)
+	LengZhou6EliminateController.instance:updateAllItemPos(randomList)
 end
 
-function var_0_0.eliminateCross(arg_10_0)
+function GMSubViewEliminate:eliminateCross()
 	LocalEliminateChessModel.instance:eliminateCross(4, 4)
 
-	local var_10_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_10_0)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0.eliminateRange(arg_11_0)
+function GMSubViewEliminate:eliminateRange()
 	LocalEliminateChessModel.instance:eliminateRange(3, 4, 3)
 
-	local var_11_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_11_0)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0.petrifyEliminationBlock(arg_12_0)
+function GMSubViewEliminate:petrifyEliminationBlock()
 	LengZhou6EffectUtils.instance._petrifyEliminationBlock({
 		"PetrifyEliminationBlock",
 		2
 	})
 
-	local var_12_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateCheckAndRefresh)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateCheckAndRefresh)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_12_0)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0.freezeEliminationBlock(arg_13_0)
+function GMSubViewEliminate:freezeEliminationBlock()
 	LengZhou6EffectUtils.instance._freezeEliminationBlock({
 		"FreezeEliminationBlock",
 		2
 	})
 
-	local var_13_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateCheckAndRefresh)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EliminateCheckAndRefresh)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_13_0)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0.contaminate(arg_14_0)
+function GMSubViewEliminate:contaminate()
 	LengZhou6EffectUtils.instance._contaminate({
 		"Contaminate",
 		2
 	})
 
-	local var_14_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.CheckEliminate, false)
 
-	LengZhou6EliminateController.instance:buildSeqFlow(var_14_0)
+	LengZhou6EliminateController.instance:buildSeqFlow(step)
 end
 
-function var_0_0.generateUnsolvableBoard(arg_15_0)
+function GMSubViewEliminate:generateUnsolvableBoard()
 	LocalEliminateChessUtils.instance.generateUnsolvableBoard(6, 6)
 end
 
-function var_0_0.testRound(arg_16_0)
+function GMSubViewEliminate:testRound()
 	LocalEliminateChessModel.instance:testRound()
 end
 
-function var_0_0._onLangDropChange(arg_17_0)
+function GMSubViewEliminate:_onLangDropChange()
 	return
 end
 
-function var_0_0.changeChessType(arg_18_0)
-	local var_18_0 = arg_18_0._textChangeIndex:GetText()
-	local var_18_1 = string.split(var_18_0, ",")
+function GMSubViewEliminate:changeChessType()
+	local str = self._textChangeIndex:GetText()
+	local arr = string.split(str, ",")
 
-	if #var_18_1 ~= 2 then
+	if #arr ~= 2 then
 		return
 	end
 
-	local var_18_2 = tonumber(var_18_1[1])
-	local var_18_3 = tonumber(var_18_1[2])
-	local var_18_4 = arg_18_0._typeDropDown:GetValue()
-	local var_18_5 = EliminateEnum_2_7.AllChessType[var_18_4 + 1]
+	local x = tonumber(arr[1])
+	local y = tonumber(arr[2])
+	local index = self._typeDropDown:GetValue()
+	local type = EliminateEnum_2_7.AllChessType[index + 1]
 
-	LengZhou6EliminateController.instance:changeCellType(var_18_2, var_18_3, var_18_5)
+	LengZhou6EliminateController.instance:changeCellType(x, y, type)
 end
 
-function var_0_0.changeToStrong(arg_19_0)
-	local var_19_0 = arg_19_0._textChangeStrongIndex:GetText()
-	local var_19_1 = string.split(var_19_0, ",")
+function GMSubViewEliminate:changeToStrong()
+	local str = self._textChangeStrongIndex:GetText()
+	local arr = string.split(str, ",")
 
-	if #var_19_1 ~= 2 then
+	if #arr ~= 2 then
 		return
 	end
 
-	local var_19_2 = tonumber(var_19_1[1])
-	local var_19_3 = tonumber(var_19_1[2])
+	local x = tonumber(arr[1])
+	local y = tonumber(arr[2])
 
-	LengZhou6EliminateController.instance:changeCellState(var_19_2, var_19_3, EliminateEnum.ChessState.SpecialSkill)
+	LengZhou6EliminateController.instance:changeCellState(x, y, EliminateEnum.ChessState.SpecialSkill)
 end
 
-function var_0_0.changeDieSpeed(arg_20_0)
-	local var_20_0 = arg_20_0._textChangeDieSpeed:GetText()
-	local var_20_1 = tonumber(var_20_0)
+function GMSubViewEliminate:changeDieSpeed()
+	local str = self._textChangeDieSpeed:GetText()
+	local value = tonumber(str)
 
-	EliminateEnum_2_7.DieStepTime = var_20_1
+	EliminateEnum_2_7.DieStepTime = value
 end
 
-function var_0_0.beginMaLiAnNa(arg_21_0)
-	local var_21_0 = arg_21_0._txtMaliAnNa:GetText()
+function GMSubViewEliminate:beginMaLiAnNa()
+	local str = self._txtMaliAnNa:GetText()
 
-	Activity201MaLiAnNaGameController.instance:enterGame(tonumber(var_21_0))
+	Activity201MaLiAnNaGameController.instance:enterGame(tonumber(str))
 end
 
-function var_0_0.stopMaLiAnNa(arg_22_0)
+function GMSubViewEliminate:stopMaLiAnNa()
 	Activity201MaLiAnNaGameController.instance:exitGame()
 end
 
-function var_0_0.finishMaLiAnNa(arg_23_0)
+function GMSubViewEliminate:finishMaLiAnNa()
 	Activity201MaLiAnNaGameController.instance:finishGame()
 end
 
-return var_0_0
+return GMSubViewEliminate

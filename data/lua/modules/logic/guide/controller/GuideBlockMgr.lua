@@ -1,62 +1,64 @@
-﻿module("modules.logic.guide.controller.GuideBlockMgr", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideBlockMgr.lua
 
-local var_0_0 = class("GuideBlockMgr")
+module("modules.logic.guide.controller.GuideBlockMgr", package.seeall)
 
-var_0_0.BlockTime = 0.5
+local GuideBlockMgr = class("GuideBlockMgr")
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._eventSystemGO = nil
-	arg_1_0._startBlockTime = nil
-	arg_1_0._blockTime = nil
-	arg_1_0._isBlock = false
+GuideBlockMgr.BlockTime = 0.5
+
+function GuideBlockMgr:ctor()
+	self._eventSystemGO = nil
+	self._startBlockTime = nil
+	self._blockTime = nil
+	self._isBlock = false
 end
 
-function var_0_0.startBlock(arg_2_0, arg_2_1)
-	if not arg_2_0._eventSystemGO then
-		arg_2_0._eventSystemGO = gohelper.find("EventSystem")
+function GuideBlockMgr:startBlock(blockTime)
+	if not self._eventSystemGO then
+		self._eventSystemGO = gohelper.find("EventSystem")
 
-		if not arg_2_0._eventSystemGO then
+		if not self._eventSystemGO then
 			logError("can't find EventSystem GO")
 		end
 
-		TaskDispatcher.runRepeat(arg_2_0._onTick, arg_2_0, 0.2)
+		TaskDispatcher.runRepeat(self._onTick, self, 0.2)
 	end
 
-	if not arg_2_0._startBlockTime then
-		arg_2_0._isBlock = true
+	if not self._startBlockTime then
+		self._isBlock = true
 
-		gohelper.setActive(arg_2_0._eventSystemGO, false)
+		gohelper.setActive(self._eventSystemGO, false)
 
 		ZProj.TouchEventMgr.Fobidden = true
 	end
 
-	arg_2_0._startBlockTime = Time.time
-	arg_2_0._blockTime = arg_2_1 or var_0_0.BlockTime
+	self._startBlockTime = Time.time
+	self._blockTime = blockTime or GuideBlockMgr.BlockTime
 end
 
-function var_0_0.removeBlock(arg_3_0)
-	arg_3_0:_removeBlock()
+function GuideBlockMgr:removeBlock()
+	self:_removeBlock()
 end
 
-function var_0_0._removeBlock(arg_4_0)
-	arg_4_0._startBlockTime = nil
-	arg_4_0._isBlock = false
+function GuideBlockMgr:_removeBlock()
+	self._startBlockTime = nil
+	self._isBlock = false
 
-	gohelper.setActive(arg_4_0._eventSystemGO, true)
+	gohelper.setActive(self._eventSystemGO, true)
 
 	ZProj.TouchEventMgr.Fobidden = false
 end
 
-function var_0_0.isBlock(arg_5_0)
-	return arg_5_0._isBlock
+function GuideBlockMgr:isBlock()
+	return self._isBlock
 end
 
-function var_0_0._onTick(arg_6_0)
-	if arg_6_0._startBlockTime and Time.time - arg_6_0._startBlockTime >= arg_6_0._blockTime then
-		arg_6_0:_removeBlock()
+function GuideBlockMgr:_onTick()
+	if self._startBlockTime and Time.time - self._startBlockTime >= self._blockTime then
+		self:_removeBlock()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GuideBlockMgr.instance = GuideBlockMgr.New()
 
-return var_0_0
+return GuideBlockMgr

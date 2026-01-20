@@ -1,12 +1,14 @@
-﻿module("modules.logic.player.defines.PlayerEnum", package.seeall)
+﻿-- chunkname: @modules/logic/player/defines/PlayerEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.player.defines.PlayerEnum", package.seeall)
 
-var_0_0.SimpleProperty = {
+local PlayerEnum = _M
+
+PlayerEnum.SimpleProperty = {
 	BGMViewInfo = 12,
 	HeroGroupAct = 3,
 	SkinState = 11,
-	RoomFormulaShowTypeUnlockEffect = 7,
+	BLELastSelectedCrystal = 23,
 	MainThumbnailViewSwitch = 8,
 	FightUICardStyle = 19,
 	ChapterUnlockEffect = 5,
@@ -18,6 +20,7 @@ var_0_0.SimpleProperty = {
 	ClickUISkin = 22,
 	NuoDiKaNewSkill = 18,
 	FightTechnique = 4,
+	RoomFormulaShowTypeUnlockEffect = 7,
 	EquipPreferenceOpen = 9,
 	V2a7_BossRushCurrencyNum = 16,
 	MainHero = 2,
@@ -26,4 +29,4 @@ var_0_0.SimpleProperty = {
 	ShowHelpIds = 6
 }
 
-return var_0_0
+return PlayerEnum

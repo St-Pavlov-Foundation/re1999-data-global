@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity174_test_role", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity174_test_role.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity174_test_role", package.seeall)
+
+local lua_activity174_test_role = {}
+local fields = {
 	heroId = 7,
 	name = 8,
 	costCoin = 19,
@@ -22,15 +24,15 @@ local var_0_1 = {
 	id = 1,
 	replacePassiveSkill = 13
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity174_test_role.onLoad(json)
+	lua_activity174_test_role.configList, lua_activity174_test_role.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity174_test_role

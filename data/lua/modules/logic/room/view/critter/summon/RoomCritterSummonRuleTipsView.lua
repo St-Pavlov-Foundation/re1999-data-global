@@ -1,70 +1,72 @@
-﻿module("modules.logic.room.view.critter.summon.RoomCritterSummonRuleTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/summon/RoomCritterSummonRuleTipsView.lua
 
-local var_0_0 = class("RoomCritterSummonRuleTipsView", BaseView)
+module("modules.logic.room.view.critter.summon.RoomCritterSummonRuleTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
-	arg_1_0._scrollinfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_info")
-	arg_1_0._goinfoitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
-	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
+local RoomCritterSummonRuleTipsView = class("RoomCritterSummonRuleTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterSummonRuleTipsView:onInitView()
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1")
+	self._scrollinfo = gohelper.findChildScrollRect(self.viewGO, "#scroll_info")
+	self._goinfoitem = gohelper.findChild(self.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
+	self._btnclose2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
-	arg_2_0._btnclose2:AddClickListener(arg_2_0._btnclose2OnClick, arg_2_0)
+function RoomCritterSummonRuleTipsView:addEvents()
+	self._btnclose1:AddClickListener(self._btnclose1OnClick, self)
+	self._btnclose2:AddClickListener(self._btnclose2OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose1:RemoveClickListener()
-	arg_3_0._btnclose2:RemoveClickListener()
+function RoomCritterSummonRuleTipsView:removeEvents()
+	self._btnclose1:RemoveClickListener()
+	self._btnclose2:RemoveClickListener()
 end
 
-function var_0_0._btnclose1OnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomCritterSummonRuleTipsView:_btnclose1OnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnclose2OnClick(arg_5_0)
-	arg_5_0:closeThis()
+function RoomCritterSummonRuleTipsView:_btnclose2OnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._txttilte = gohelper.findChildText(arg_6_0.viewGO, "title/titlecn")
-	arg_6_0._txttilteEn = gohelper.findChildText(arg_6_0.viewGO, "title/titlecn/titleen")
+function RoomCritterSummonRuleTipsView:_editableInitView()
+	self._txttilte = gohelper.findChildText(self.viewGO, "title/titlecn")
+	self._txttilteEn = gohelper.findChildText(self.viewGO, "title/titlecn/titleen")
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function RoomCritterSummonRuleTipsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam.type
-	local var_8_1 = RoomSummonEnum.SummonMode[var_8_0].RuleTipDesc
-	local var_8_2 = luaLang(var_8_1.desc)
-	local var_8_3 = string.split(var_8_2, "|")
+function RoomCritterSummonRuleTipsView:onOpen()
+	local type = self.viewParam.type
+	local typedesc = RoomSummonEnum.SummonMode[type].RuleTipDesc
+	local langTxt = luaLang(typedesc.desc)
+	local strs = string.split(langTxt, "|")
 
-	for iter_8_0 = 1, #var_8_3, 2 do
-		local var_8_4 = gohelper.cloneInPlace(arg_8_0._goinfoitem, "infoitem")
+	for i = 1, #strs, 2 do
+		local item = gohelper.cloneInPlace(self._goinfoitem, "infoitem")
 
-		gohelper.setActive(var_8_4, true)
+		gohelper.setActive(item, true)
 
-		gohelper.findChildTextMesh(var_8_4, "txt_title").text = var_8_3[iter_8_0]
-		gohelper.findChildTextMesh(var_8_4, "txt_desc").text = var_8_3[iter_8_0 + 1]
+		gohelper.findChildTextMesh(item, "txt_title").text = strs[i]
+		gohelper.findChildTextMesh(item, "txt_desc").text = strs[i + 1]
 	end
 
-	arg_8_0._txttilte.text = luaLang(var_8_1.titlecn)
-	arg_8_0._txttilteEn.text = luaLang(var_8_1.titleen)
+	self._txttilte.text = luaLang(typedesc.titlecn)
+	self._txttilteEn.text = luaLang(typedesc.titleen)
 end
 
-function var_0_0.onClose(arg_9_0)
+function RoomCritterSummonRuleTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function RoomCritterSummonRuleTipsView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomCritterSummonRuleTipsView

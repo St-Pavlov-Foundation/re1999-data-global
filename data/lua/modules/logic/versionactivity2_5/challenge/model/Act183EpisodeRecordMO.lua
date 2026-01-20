@@ -1,89 +1,93 @@
-﻿module("modules.logic.versionactivity2_5.challenge.model.Act183EpisodeRecordMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/model/Act183EpisodeRecordMO.lua
 
-local var_0_0 = pureTable("Act183EpisodeRecordMO")
+module("modules.logic.versionactivity2_5.challenge.model.Act183EpisodeRecordMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._episodeId = arg_1_1.episodeId
-	arg_1_0._passOrder = arg_1_1.passOrder
-	arg_1_0._heroes = Act183Helper.rpcInfosToList(arg_1_1.heroes, Act183HeroMO)
-	arg_1_0._useBadgeNum = arg_1_1.useBadgeNum
-	arg_1_0._passConditions = {}
+local Act183EpisodeRecordMO = pureTable("Act183EpisodeRecordMO")
 
-	tabletool.addValues(arg_1_0._passConditions, arg_1_1.unlockConditions)
+function Act183EpisodeRecordMO:init(info)
+	self._episodeId = info.episodeId
+	self._passOrder = info.passOrder
+	self._heroes = Act183Helper.rpcInfosToList(info.heroes, Act183HeroMO)
+	self._useBadgeNum = info.useBadgeNum
+	self._passConditions = {}
 
-	arg_1_0._chooseConditions = {}
+	tabletool.addValues(self._passConditions, info.unlockConditions)
 
-	tabletool.addValues(arg_1_0._chooseConditions, arg_1_1.chooseConditions)
+	self._chooseConditions = {}
 
-	arg_1_0._repress = Act183RepressMO.New()
+	tabletool.addValues(self._chooseConditions, info.chooseConditions)
 
-	arg_1_0._repress:init(arg_1_1.repress)
+	self._repress = Act183RepressMO.New()
 
-	arg_1_0._config = Act183Config.instance:getEpisodeCo(arg_1_0._episodeId)
-	arg_1_0._params = arg_1_1.params
-	arg_1_0._star = arg_1_1.star
-	arg_1_0._simulate = arg_1_1.simulate
-	arg_1_0._round = arg_1_1.round
-	arg_1_0._totalStarCount = Act183Helper.calcEpisodeTotalConditionCount(arg_1_0._episodeId)
+	self._repress:init(info.repress)
+
+	self._config = Act183Config.instance:getEpisodeCo(self._episodeId)
+	self._params = info.params
+	self._star = info.star
+	self._simulate = info.simulate
+	self._round = info.round
+	self._totalStarCount = Act183Helper.calcEpisodeTotalConditionCount(self._episodeId)
 end
 
-function var_0_0.getConfig(arg_2_0)
-	return arg_2_0._config
+function Act183EpisodeRecordMO:getConfig()
+	return self._config
 end
 
-function var_0_0.getEpisodeId(arg_3_0)
-	return arg_3_0._episodeId
+function Act183EpisodeRecordMO:getEpisodeId()
+	return self._episodeId
 end
 
-function var_0_0.getPassOrder(arg_4_0)
-	return arg_4_0._passOrder
+function Act183EpisodeRecordMO:getPassOrder()
+	return self._passOrder
 end
 
-function var_0_0.getUseBadgeNum(arg_5_0)
-	return arg_5_0._useBadgeNum
+function Act183EpisodeRecordMO:getUseBadgeNum()
+	return self._useBadgeNum
 end
 
-function var_0_0.getHeroMos(arg_6_0)
-	return arg_6_0._heroes
+function Act183EpisodeRecordMO:getHeroMos()
+	return self._heroes
 end
 
-function var_0_0.getEpisodeType(arg_7_0)
-	return Act183Helper.getEpisodeType(arg_7_0._episodeId)
+function Act183EpisodeRecordMO:getEpisodeType()
+	return Act183Helper.getEpisodeType(self._episodeId)
 end
 
-function var_0_0.getGroupType(arg_8_0)
-	return arg_8_0._config and arg_8_0._config.type
+function Act183EpisodeRecordMO:getGroupType()
+	return self._config and self._config.type
 end
 
-function var_0_0.getConditionIds(arg_9_0)
-	if arg_9_0._config then
-		return string.splitToNumber(arg_9_0._config.condition, "#")
+function Act183EpisodeRecordMO:getConditionIds()
+	if self._config then
+		return string.splitToNumber(self._config.condition, "#")
 	end
 end
 
-function var_0_0.getPassConditions(arg_10_0)
-	return arg_10_0._passConditions
+function Act183EpisodeRecordMO:getPassConditions()
+	return self._passConditions
 end
 
-function var_0_0.getChooseConditions(arg_11_0)
-	return arg_11_0._chooseConditions
+function Act183EpisodeRecordMO:getChooseConditions()
+	return self._chooseConditions
 end
 
-function var_0_0.isConditionPass(arg_12_0, arg_12_1)
-	if arg_12_0._passConditions then
-		return tabletool.indexOf(arg_12_0._passConditions, arg_12_1) ~= nil
+function Act183EpisodeRecordMO:isConditionPass(conditionId)
+	if self._passConditions then
+		return tabletool.indexOf(self._passConditions, conditionId) ~= nil
 	end
 end
 
-function var_0_0.getAllConditions(arg_13_0)
-	return (string.splitToNumber(arg_13_0._config.condition, "#"))
+function Act183EpisodeRecordMO:getAllConditions()
+	local conditions = string.splitToNumber(self._config.condition, "#")
+
+	return conditions
 end
 
-function var_0_0.isAllConditionPass(arg_14_0)
-	local var_14_0 = arg_14_0:getAllConditions()
+function Act183EpisodeRecordMO:isAllConditionPass()
+	local conditions = self:getAllConditions()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		if not arg_14_0:isConditionPass(iter_14_1) then
+	for _, conditionId in ipairs(conditions) do
+		if not self:isConditionPass(conditionId) then
 			return false
 		end
 	end
@@ -91,28 +95,30 @@ function var_0_0.isAllConditionPass(arg_14_0)
 	return true
 end
 
-function var_0_0.getRuleStatus(arg_15_0, arg_15_1)
-	if arg_15_0._repress:getRuleIndex() == arg_15_1 then
+function Act183EpisodeRecordMO:getRuleStatus(ruleIndex)
+	local repressRuleIndex = self._repress:getRuleIndex()
+
+	if repressRuleIndex == ruleIndex then
 		return Act183Enum.RuleStatus.Repress
 	end
 
 	return Act183Enum.RuleStatus.Escape
 end
 
-function var_0_0.getFinishStarCount(arg_16_0)
-	return arg_16_0._star
+function Act183EpisodeRecordMO:getFinishStarCount()
+	return self._star
 end
 
-function var_0_0.getTotalStarCount(arg_17_0)
-	return arg_17_0._totalStarCount
+function Act183EpisodeRecordMO:getTotalStarCount()
+	return self._totalStarCount
 end
 
-function var_0_0.isSimulate(arg_18_0)
-	return arg_18_0._simulate
+function Act183EpisodeRecordMO:isSimulate()
+	return self._simulate
 end
 
-function var_0_0.getRound(arg_19_0)
-	return arg_19_0._round
+function Act183EpisodeRecordMO:getRound()
+	return self._round
 end
 
-return var_0_0
+return Act183EpisodeRecordMO

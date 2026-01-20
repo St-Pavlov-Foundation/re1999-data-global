@@ -1,12 +1,14 @@
-﻿module("modules.logic.season.view1_2.Season1_2MainScene", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_2/Season1_2MainScene.lua
 
-local var_0_0 = class("Season1_2MainScene", BaseView)
+module("modules.logic.season.view1_2.Season1_2MainScene", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
-	arg_1_0._gotoptipsbg = gohelper.findChild(arg_1_0.viewGO, "#go_main/#go_toptipsbg")
-	arg_1_0._focusSetting = {
+local Season1_2MainScene = class("Season1_2MainScene", BaseView)
+
+function Season1_2MainScene:onInitView()
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_arrow")
+	self._gotoptipsbg = gohelper.findChild(self.viewGO, "#go_main/#go_toptipsbg")
+	self._focusSetting = {
 		{
 			x = -4.56,
 			y = -1.32
@@ -32,7 +34,7 @@ function var_0_0.onInitView(arg_1_0)
 			y = -2.48
 		}
 	}
-	arg_1_0._stageSetting = {
+	self._stageSetting = {
 		{
 			1
 		},
@@ -63,609 +65,608 @@ function var_0_0.onInitView(arg_1_0)
 			6
 		}
 	}
-	arg_1_0._listenerViews = {
+	self._listenerViews = {
 		[ViewName.Season1_2MarketView] = 1,
 		[ViewName.Season1_2SpecialMarketView] = 1
 	}
-	arg_1_0.isFirst = true
+	self.isFirst = true
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season1_2MainScene:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season1_2MainScene:removeEvents()
 	return
 end
 
-var_0_0.SeasonCameraOrthographicSize = 3.85
-var_0_0.SeasonCameraLocalPos = Vector2(-0.65, -0.28)
-var_0_0.FocusCameraOrthographicSize = 2
-var_0_0.FocusTime = 0.45
-var_0_0.CancelFocusTime = 0.45
+Season1_2MainScene.SeasonCameraOrthographicSize = 3.85
+Season1_2MainScene.SeasonCameraLocalPos = Vector2(-0.65, -0.28)
+Season1_2MainScene.FocusCameraOrthographicSize = 2
+Season1_2MainScene.FocusTime = 0.45
+Season1_2MainScene.CancelFocusTime = 0.45
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._camera = CameraMgr.instance:getMainCamera()
+function Season1_2MainScene:_editableInitView()
+	self._camera = CameraMgr.instance:getMainCamera()
 
-	arg_4_0:_initSceneRootNode()
-	arg_4_0:_loadScene()
-	arg_4_0:_addEvents()
+	self:_initSceneRootNode()
+	self:_loadScene()
+	self:_addEvents()
 end
 
-function var_0_0._addEvents(arg_5_0)
-	arg_5_0:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_5_0._onRefreshRetail, arg_5_0)
-	arg_5_0:addEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, arg_5_0._onChangeCamera, arg_5_0)
-	arg_5_0:addEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, arg_5_0.focusRole, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_5_0._onOpenViewFinish, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_5_0._onCloseViewFinish, arg_5_0)
-	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_5_0._onOpenFullViewFinish, arg_5_0)
+function Season1_2MainScene:_addEvents()
+	self:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, self._onRefreshRetail, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, self._onChangeCamera, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, self.focusRole, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, self._onOpenFullViewFinish, self)
 end
 
-function var_0_0._removeEvents(arg_6_0)
-	arg_6_0:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_6_0._onRefreshRetail, arg_6_0)
-	arg_6_0:removeEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, arg_6_0._onChangeCamera, arg_6_0)
-	arg_6_0:removeEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, arg_6_0.focusRole, arg_6_0)
-	arg_6_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenViewFinish, arg_6_0)
-	arg_6_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0._onCloseViewFinish, arg_6_0)
-	arg_6_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_6_0._onOpenFullViewFinish, arg_6_0)
+function Season1_2MainScene:_removeEvents()
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, self._onRefreshRetail, self)
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, self._onChangeCamera, self)
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, self.focusRole, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenViewFinish, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, self._onOpenFullViewFinish, self)
 end
 
-function var_0_0.initCamera(arg_7_0, arg_7_1)
-	transformhelper.setLocalRotation(arg_7_0._camera.transform, 0, 0, 0)
+function Season1_2MainScene:initCamera(isRetail)
+	transformhelper.setLocalRotation(self._camera.transform, 0, 0, 0)
 
-	if not arg_7_0._tweenId then
-		arg_7_0._camera.orthographicSize = var_0_0.SeasonCameraOrthographicSize
-		arg_7_0._camera.orthographic = true
+	if not self._tweenId then
+		self._camera.orthographicSize = Season1_2MainScene.SeasonCameraOrthographicSize
+		self._camera.orthographic = true
 
-		transformhelper.setLocalPos(arg_7_0._camera.transform, var_0_0.SeasonCameraLocalPos.x, var_0_0.SeasonCameraLocalPos.y, 0)
+		transformhelper.setLocalPos(self._camera.transform, Season1_2MainScene.SeasonCameraLocalPos.x, Season1_2MainScene.SeasonCameraLocalPos.y, 0)
 	end
 
-	if arg_7_1 == nil then
-		arg_7_1 = false
+	if isRetail == nil then
+		isRetail = false
 	end
 
-	arg_7_0:_showScenes(arg_7_1)
+	self:_showScenes(isRetail)
 end
 
-function var_0_0.resetCamera(arg_8_0)
-	if not arg_8_0._initCamaraParam then
+function Season1_2MainScene:resetCamera()
+	if not self._initCamaraParam then
 		return
 	end
 
-	arg_8_0._initCamaraParam = nil
+	self._initCamaraParam = nil
 
-	arg_8_0:doAudio(false)
+	self:doAudio(false)
 end
 
-function var_0_0._onChangeCamera(arg_9_0, arg_9_1)
-	arg_9_0:initCamera(arg_9_1)
+function Season1_2MainScene:_onChangeCamera(isRetail)
+	self:initCamera(isRetail)
 end
 
-function var_0_0._showScenes(arg_10_0, arg_10_1)
-	if not arg_10_0._sceneGo then
+function Season1_2MainScene:_showScenes(isRetail)
+	if not self._sceneGo then
 		return
 	end
 
-	if arg_10_0._isShowRetail == arg_10_1 then
+	if self._isShowRetail == isRetail then
 		return
 	end
 
-	arg_10_0._isShowRetail = arg_10_1
+	self._isShowRetail = isRetail
 
-	local var_10_0
-	local var_10_1
+	local animationName, normalizedTime
 
-	if arg_10_0.isFirst then
-		var_10_0 = "open"
+	if self.isFirst then
+		animationName = "open"
 	end
 
-	if arg_10_0._isShowRetail then
-		var_10_0 = "go1"
+	if self._isShowRetail then
+		animationName = "go1"
 
-		if arg_10_0.isFirst then
-			var_10_1 = 1
+		if self.isFirst then
+			normalizedTime = 1
 		end
 
-		arg_10_0:_enterRetail()
+		self:_enterRetail()
 	else
-		if not arg_10_0.isFirst then
-			var_10_0 = "go2"
+		if not self.isFirst then
+			animationName = "go2"
 		end
 
-		arg_10_0:_enterMarket()
+		self:_enterMarket()
 	end
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._listenerViews) do
-		if ViewMgr.instance:isOpen(iter_10_0) then
-			var_10_1 = 1
+	for k, v in pairs(self._listenerViews) do
+		if ViewMgr.instance:isOpen(k) then
+			normalizedTime = 1
 
 			break
 		end
 	end
 
-	if arg_10_0._sceneAnim and var_10_0 then
-		if var_10_1 then
-			arg_10_0._sceneAnim:Play(var_10_0, 0, var_10_1)
+	if self._sceneAnim and animationName then
+		if normalizedTime then
+			self._sceneAnim:Play(animationName, 0, normalizedTime)
 		else
-			arg_10_0._sceneAnim:Play(var_10_0)
+			self._sceneAnim:Play(animationName)
 		end
 	end
 
-	arg_10_0:doAudio(true)
+	self:doAudio(true)
 
-	arg_10_0.isFirst = false
+	self.isFirst = false
 end
 
-function var_0_0._enterRetail(arg_11_0)
-	arg_11_0:_refreshRoles()
+function Season1_2MainScene:_enterRetail()
+	self:_refreshRoles()
 end
 
-function var_0_0._onRefreshRetail(arg_12_0)
-	arg_12_0:_refreshRoles(true)
+function Season1_2MainScene:_onRefreshRetail()
+	self:_refreshRoles(true)
 end
 
-function var_0_0._refreshRoles(arg_13_0, arg_13_1)
-	TaskDispatcher.cancelTask(arg_13_0._refreshRoles, arg_13_0)
+function Season1_2MainScene:_refreshRoles(isOpen)
+	TaskDispatcher.cancelTask(self._refreshRoles, self)
 
-	if not arg_13_0._isShowRetail then
-		gohelper.setActive(arg_13_0._goroles, false)
+	if not self._isShowRetail then
+		gohelper.setActive(self._goroles, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0._goroles, true)
+	gohelper.setActive(self._goroles, true)
 
-	local var_13_0 = Activity104Model.instance:getAct104Retails()
-	local var_13_1 = var_13_0 == nil or #var_13_0 == 0
-	local var_13_2 = Activity104Model.instance:getLastRetails()
+	local retails = Activity104Model.instance:getAct104Retails()
+	local noretail = retails == nil or #retails == 0
+	local lastRetails = Activity104Model.instance:getLastRetails()
 
-	if var_13_1 and var_13_2 then
-		arg_13_0:_battleSuccessRefreshRoles(var_13_2)
+	if noretail and lastRetails then
+		self:_battleSuccessRefreshRoles(lastRetails)
 
 		return
 	end
 
-	arg_13_0:_normalRefreshRoles(var_13_0, var_13_1, arg_13_1)
+	self:_normalRefreshRoles(retails, noretail, isOpen)
 end
 
-function var_0_0._battleSuccessRefreshRoles(arg_14_0, arg_14_1)
-	for iter_14_0 = 1, 6 do
-		gohelper.setActive(arg_14_0["_gorole" .. iter_14_0], false)
+function Season1_2MainScene:_battleSuccessRefreshRoles(retails)
+	for i = 1, 6 do
+		gohelper.setActive(self["_gorole" .. i], false)
 	end
 
-	for iter_14_1, iter_14_2 in pairs(arg_14_1) do
-		local var_14_0 = iter_14_2.position
+	for _, v in pairs(retails) do
+		local index = v.position
 
-		gohelper.setActive(arg_14_0["_gorole" .. var_14_0], true)
-		arg_14_0["_aniRole" .. var_14_0]:Play(UIAnimationName.Idle)
+		gohelper.setActive(self["_gorole" .. index], true)
+		self["_aniRole" .. index]:Play(UIAnimationName.Idle)
 	end
 
-	arg_14_0.delayRetails = arg_14_1
+	self.delayRetails = retails
 
-	TaskDispatcher.runDelay(arg_14_0._onDelayRefreshRoles, arg_14_0, 1)
+	TaskDispatcher.runDelay(self._onDelayRefreshRoles, self, 1)
 end
 
-function var_0_0._onDelayRefreshRoles(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.delayRetails) do
-		local var_15_0 = iter_15_1.position
+function Season1_2MainScene:_onDelayRefreshRoles()
+	for _, v in pairs(self.delayRetails) do
+		local index = v.position
 
-		gohelper.setActive(arg_15_0["_gorole" .. var_15_0], true)
-		arg_15_0["_aniRole" .. var_15_0]:Play(UIAnimationName.Close, 0, 0)
+		gohelper.setActive(self["_gorole" .. index], true)
+		self["_aniRole" .. index]:Play(UIAnimationName.Close, 0, 0)
 	end
 
-	TaskDispatcher.runDelay(arg_15_0._refreshRoles, arg_15_0, 0.33)
+	TaskDispatcher.runDelay(self._refreshRoles, self, 0.33)
 end
 
-function var_0_0._normalRefreshRoles(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = {}
+function Season1_2MainScene:_normalRefreshRoles(retails, noretail, isOpen)
+	local t = {}
 
-	for iter_16_0 = 1, 6 do
-		var_16_0[iter_16_0] = false
+	for i = 1, 6 do
+		t[i] = false
 	end
 
-	for iter_16_1, iter_16_2 in pairs(arg_16_1) do
-		local var_16_1 = iter_16_2.position
-		local var_16_2 = arg_16_0["_gorole" .. var_16_1]
-		local var_16_3 = arg_16_0["_aniRole" .. var_16_1]
+	for _, v in pairs(retails) do
+		local index = v.position
+		local gorole = self["_gorole" .. index]
+		local aniRole = self["_aniRole" .. index]
 
-		var_16_0[var_16_1] = nil
+		t[index] = nil
 
-		gohelper.setActive(var_16_2, true)
+		gohelper.setActive(gorole, true)
 
-		if var_16_3 then
-			if arg_16_3 then
-				var_16_3:Play(UIAnimationName.Open, 0, 0)
+		if aniRole then
+			if isOpen then
+				aniRole:Play(UIAnimationName.Open, 0, 0)
 			else
-				var_16_3:Play(UIAnimationName.Idle, 0, 0)
+				aniRole:Play(UIAnimationName.Idle, 0, 0)
 			end
 		end
 	end
 
-	for iter_16_3, iter_16_4 in pairs(var_16_0) do
-		local var_16_4 = arg_16_0["_gorole" .. iter_16_3]
+	for index, v in pairs(t) do
+		local gorole = self["_gorole" .. index]
 
-		if var_16_4 then
-			local var_16_5 = arg_16_0["_aniRole" .. iter_16_3]
+		if gorole then
+			local aniRole = self["_aniRole" .. index]
 
-			if arg_16_3 and var_16_4.activeInHierarchy then
-				if var_16_5 then
-					var_16_5:Play(UIAnimationName.Close, 0, 0)
+			if isOpen and gorole.activeInHierarchy then
+				if aniRole then
+					aniRole:Play(UIAnimationName.Close, 0, 0)
 				end
 			else
-				gohelper.setActive(var_16_4, false)
+				gohelper.setActive(gorole, false)
 			end
 		end
 	end
 
-	if arg_16_2 then
-		gohelper.setActive(arg_16_0._gospotlight, true)
+	if noretail then
+		gohelper.setActive(self._gospotlight, true)
 
-		if arg_16_0._animspotlight then
-			arg_16_0._animspotlight:Play(UIAnimationName.Open, 0, 0)
+		if self._animspotlight then
+			self._animspotlight:Play(UIAnimationName.Open, 0, 0)
 		end
 
 		return
 	end
 
-	if arg_16_3 and arg_16_0._gospotlight and arg_16_0._gospotlight.activeInHierarchy then
-		arg_16_0._animspotlight:Play(UIAnimationName.Close, 0, 0)
+	if isOpen and self._gospotlight and self._gospotlight.activeInHierarchy then
+		self._animspotlight:Play(UIAnimationName.Close, 0, 0)
 
 		return
 	end
 
-	gohelper.setActive(arg_16_0._gospotlight, false)
+	gohelper.setActive(self._gospotlight, false)
 end
 
-function var_0_0._enterMarket(arg_17_0)
-	gohelper.setActive(arg_17_0._gospotlight, false)
-	arg_17_0:_refreshRoles()
+function Season1_2MainScene:_enterMarket()
+	gohelper.setActive(self._gospotlight, false)
+	self:_refreshRoles()
 end
 
-function var_0_0._initSceneRootNode(arg_18_0)
-	local var_18_0 = arg_18_0._camera.transform.parent
-	local var_18_1 = CameraMgr.instance:getSceneRoot()
+function Season1_2MainScene:_initSceneRootNode()
+	local mainTrans = self._camera.transform.parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_18_0._sceneRoot = UnityEngine.GameObject.New("Season1_2MainScene")
+	self._sceneRoot = UnityEngine.GameObject.New("Season1_2MainScene")
 
-	local var_18_2, var_18_3, var_18_4 = transformhelper.getLocalPos(var_18_0)
+	local _, y, _ = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_18_0._sceneRoot.transform, 0, var_18_3, 0)
-	gohelper.addChild(var_18_1, arg_18_0._sceneRoot)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0._loadScene(arg_19_0)
-	arg_19_0._mapLoader = MultiAbLoader.New()
-	arg_19_0._scenePath = "scenes/m_s15_sj_yfyt_1_2/scene_prefab/m_s15_sj_yfyt_a.prefab"
+function Season1_2MainScene:_loadScene()
+	self._mapLoader = MultiAbLoader.New()
+	self._scenePath = "scenes/m_s15_sj_yfyt_1_2/scene_prefab/m_s15_sj_yfyt_a.prefab"
 
-	arg_19_0._mapLoader:addPath(arg_19_0._scenePath)
-	arg_19_0._mapLoader:startLoad(arg_19_0._loadSceneFinish, arg_19_0)
+	self._mapLoader:addPath(self._scenePath)
+	self._mapLoader:startLoad(self._loadSceneFinish, self)
 end
 
-function var_0_0._loadSceneFinish(arg_20_0)
-	local var_20_0 = arg_20_0._mapLoader:getAssetItem(arg_20_0._scenePath):GetResource(arg_20_0._scenePath)
+function Season1_2MainScene:_loadSceneFinish()
+	local mainPrefab = self._mapLoader:getAssetItem(self._scenePath):GetResource(self._scenePath)
 
-	arg_20_0._sceneGo = gohelper.clone(var_20_0, arg_20_0._sceneRoot)
-	arg_20_0._goroles = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/juese")
-	arg_20_0._gorole1 = gohelper.findChild(arg_20_0._goroles, "jiexika_a_1")
-	arg_20_0._gorole2 = gohelper.findChild(arg_20_0._goroles, "yaxian_a_2")
-	arg_20_0._gorole3 = gohelper.findChild(arg_20_0._goroles, "kongbutong_3")
-	arg_20_0._gorole4 = gohelper.findChild(arg_20_0._goroles, "jiexika_b_4")
-	arg_20_0._gorole5 = gohelper.findChild(arg_20_0._goroles, "jinmier_5")
-	arg_20_0._gorole6 = gohelper.findChild(arg_20_0._goroles, "yaxian_b_6")
+	self._sceneGo = gohelper.clone(mainPrefab, self._sceneRoot)
+	self._goroles = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/juese")
+	self._gorole1 = gohelper.findChild(self._goroles, "jiexika_a_1")
+	self._gorole2 = gohelper.findChild(self._goroles, "yaxian_a_2")
+	self._gorole3 = gohelper.findChild(self._goroles, "kongbutong_3")
+	self._gorole4 = gohelper.findChild(self._goroles, "jiexika_b_4")
+	self._gorole5 = gohelper.findChild(self._goroles, "jinmier_5")
+	self._gorole6 = gohelper.findChild(self._goroles, "yaxian_b_6")
 
-	for iter_20_0 = 1, 6 do
-		local var_20_1 = arg_20_0[string.format("_gorole%s", iter_20_0)]
+	for i = 1, 6 do
+		local gorole = self[string.format("_gorole%s", i)]
 
-		if var_20_1 then
-			arg_20_0[string.format("_aniRole%s", iter_20_0)] = var_20_1:GetComponent(typeof(UnityEngine.Animator))
+		if gorole then
+			self[string.format("_aniRole%s", i)] = gorole:GetComponent(typeof(UnityEngine.Animator))
 		end
 	end
 
-	arg_20_0._gosection1 = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/section01")
-	arg_20_0._gosection2 = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/section02")
-	arg_20_0._gosection3 = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/section03")
-	arg_20_0._gosection3part1 = gohelper.findChild(arg_20_0._gosection3, "m_s15_sj_yfyt_shu_a")
-	arg_20_0._gosection3part2 = gohelper.findChild(arg_20_0._gosection3, "m_s15_sj_yfyt_lzhizhu_b")
-	arg_20_0._gosection4 = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/section04")
-	arg_20_0._gosection5 = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/section05")
-	arg_20_0._gosection6 = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/section06")
-	arg_20_0._gospotlight = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse/scanlight")
+	self._gosection1 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/section01")
+	self._gosection2 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/section02")
+	self._gosection3 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/section03")
+	self._gosection3part1 = gohelper.findChild(self._gosection3, "m_s15_sj_yfyt_shu_a")
+	self._gosection3part2 = gohelper.findChild(self._gosection3, "m_s15_sj_yfyt_lzhizhu_b")
+	self._gosection4 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/section04")
+	self._gosection5 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/section05")
+	self._gosection6 = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/section06")
+	self._gospotlight = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse/scanlight")
 
-	if arg_20_0._gospotlight then
-		arg_20_0._animspotlight = arg_20_0._gospotlight:GetComponent(typeof(UnityEngine.Animator))
+	if self._gospotlight then
+		self._animspotlight = self._gospotlight:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_20_0._sceneAnim = arg_20_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
-	arg_20_0._goMask = gohelper.findChild(arg_20_0._sceneGo, "root/BackGround/#mask")
+	self._sceneAnim = self._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+	self._goMask = gohelper.findChild(self._sceneGo, "root/BackGround/#mask")
 
-	if arg_20_0._goMask then
-		arg_20_0._aniMask = arg_20_0._goMask:GetComponent(typeof(UnityEngine.Animator))
+	if self._goMask then
+		self._aniMask = self._goMask:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	gohelper.setActive(arg_20_0._goroles, false)
-	gohelper.setActive(arg_20_0._gospotlight, false)
-	arg_20_0:_refreshView()
-	arg_20_0:_initLevelupObjs()
-	MainCameraMgr.instance:addView(ViewName.Season1_2MainView, arg_20_0.autoInitMainViewCamera, arg_20_0.resetCamera, arg_20_0)
+	gohelper.setActive(self._goroles, false)
+	gohelper.setActive(self._gospotlight, false)
+	self:_refreshView()
+	self:_initLevelupObjs()
+	MainCameraMgr.instance:addView(ViewName.Season1_2MainView, self.autoInitMainViewCamera, self.resetCamera, self)
 end
 
-function var_0_0.autoInitMainViewCamera(arg_21_0)
-	arg_21_0:initCamera(false)
+function Season1_2MainScene:autoInitMainViewCamera()
+	self:initCamera(false)
 end
 
-function var_0_0._initLevelupObjs(arg_22_0)
-	arg_22_0._levelupObjs = {}
+function Season1_2MainScene:_initLevelupObjs()
+	self._levelupObjs = {}
 
-	local var_22_0 = {}
+	local nodePaths = {}
 
-	for iter_22_0 = 1, 6 do
-		local var_22_1 = arg_22_0:_getGoSection(iter_22_0)
+	for i = 1, 6 do
+		local gosection = self:_getGoSection(i)
 
-		if var_22_1 then
-			local var_22_2 = arg_22_0._levelupObjs[iter_22_0]
+		if gosection then
+			local list = self._levelupObjs[i]
 
-			if not var_22_2 then
-				var_22_2 = {}
-				arg_22_0._levelupObjs[iter_22_0] = var_22_2
+			if not list then
+				list = {}
+				self._levelupObjs[i] = list
 			end
 
-			local var_22_3 = gohelper.findChild(var_22_1, "leveup")
+			local obj = gohelper.findChild(gosection, "leveup")
 
-			if var_22_3 then
-				table.insert(var_22_2, var_22_3)
-				gohelper.setActive(var_22_3, false)
+			if obj then
+				table.insert(list, obj)
+				gohelper.setActive(obj, false)
 			end
 		end
 	end
 
-	if arg_22_0._waitShowLevelStage then
-		arg_22_0:showLevelObjs(arg_22_0._waitShowLevelStage)
+	if self._waitShowLevelStage then
+		self:showLevelObjs(self._waitShowLevelStage)
 
-		arg_22_0._waitShowLevelStage = nil
+		self._waitShowLevelStage = nil
 	else
-		arg_22_0:_hideLevelObjs(true)
+		self:_hideLevelObjs(true)
 	end
 end
 
-function var_0_0.showLevelObjs(arg_23_0, arg_23_1)
-	if not arg_23_0._levelupObjs then
-		arg_23_0._waitShowLevelStage = arg_23_1
+function Season1_2MainScene:showLevelObjs(stage)
+	if not self._levelupObjs then
+		self._waitShowLevelStage = stage
 
 		return
 	end
 
-	arg_23_0._sceneAnim:Play(UIAnimationName.Open, 0, 1)
+	self._sceneAnim:Play(UIAnimationName.Open, 0, 1)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_map_upgrade)
-	arg_23_0:_hideLevelObjs(true)
-	TaskDispatcher.runDelay(arg_23_0._hideLevelObjs, arg_23_0, 1.8)
+	self:_hideLevelObjs(true)
+	TaskDispatcher.runDelay(self._hideLevelObjs, self, 1.8)
 
-	local var_23_0 = arg_23_0:_getStageSetting(arg_23_1)
-	local var_23_1 = arg_23_0:_getStageSetting(arg_23_1 - 1)
-	local var_23_2 = {}
+	local curSetting = self:_getStageSetting(stage)
+	local lastSetting = self:_getStageSetting(stage - 1)
+	local dict = {}
 
-	if var_23_1 then
-		for iter_23_0, iter_23_1 in pairs(var_23_1) do
-			var_23_2[iter_23_1] = true
+	if lastSetting then
+		for _, v in pairs(lastSetting) do
+			dict[v] = true
 		end
 	end
 
-	if var_23_0 then
-		for iter_23_2, iter_23_3 in pairs(var_23_0) do
-			if not var_23_2[iter_23_3] then
-				local var_23_3 = arg_23_0._levelupObjs[iter_23_3]
+	if curSetting then
+		for _, v in pairs(curSetting) do
+			if not dict[v] then
+				local objs = self._levelupObjs[v]
 
-				if var_23_3 then
-					for iter_23_4, iter_23_5 in pairs(var_23_3) do
-						gohelper.setActive(iter_23_5, true)
+				if objs then
+					for _, obj in pairs(objs) do
+						gohelper.setActive(obj, true)
 					end
 				end
 			end
 		end
 	end
 
-	local var_23_4 = ViewMgr.instance:getContainer(ViewName.Season1_2MainView)
+	local container = ViewMgr.instance:getContainer(ViewName.Season1_2MainView)
 
-	if var_23_4 then
-		var_23_4:stopUI(false)
+	if container then
+		container:stopUI(false)
 	end
 end
 
-function var_0_0._hideLevelObjs(arg_24_0, arg_24_1)
-	TaskDispatcher.cancelTask(arg_24_0._hideLevelObjs, arg_24_0)
+function Season1_2MainScene:_hideLevelObjs(isDefault)
+	TaskDispatcher.cancelTask(self._hideLevelObjs, self)
 
-	if arg_24_0._levelupObjs then
-		for iter_24_0, iter_24_1 in pairs(arg_24_0._levelupObjs) do
-			for iter_24_2, iter_24_3 in pairs(iter_24_1) do
-				gohelper.setActive(iter_24_3, false)
+	if self._levelupObjs then
+		for _, objs in pairs(self._levelupObjs) do
+			for _, obj in pairs(objs) do
+				gohelper.setActive(obj, false)
 			end
 		end
 	end
 
-	if arg_24_1 then
+	if isDefault then
 		return
 	end
 
-	local var_24_0 = ViewMgr.instance:getContainer(ViewName.Season1_2MainView)
+	local container = ViewMgr.instance:getContainer(ViewName.Season1_2MainView)
 
-	if var_24_0 then
-		var_24_0:playUI(true)
+	if container then
+		container:playUI(true)
 	end
 end
 
-function var_0_0._showStage(arg_25_0)
-	local var_25_0 = Activity104Model.instance:getAct104CurStage()
-	local var_25_1 = arg_25_0:_getStageSetting(var_25_0)
+function Season1_2MainScene:_showStage()
+	local stageId = Activity104Model.instance:getAct104CurStage()
+	local setting = self:_getStageSetting(stageId)
 
-	gohelper.setActive(arg_25_0._gosection3part2, var_25_0 < 5)
+	gohelper.setActive(self._gosection3part2, stageId < 5)
 
-	for iter_25_0 = 1, 6 do
-		arg_25_0:_setGoSectionActive(iter_25_0, false)
+	for i = 1, 6 do
+		self:_setGoSectionActive(i, false)
 	end
 
-	if var_25_1 then
-		for iter_25_1, iter_25_2 in pairs(var_25_1) do
-			arg_25_0:_setGoSectionActive(iter_25_2, true)
+	if setting then
+		for k, v in pairs(setting) do
+			self:_setGoSectionActive(v, true)
 		end
 	end
 end
 
-function var_0_0._getStageSetting(arg_26_0, arg_26_1)
-	return arg_26_0._stageSetting[arg_26_1] or arg_26_0._stageSetting[6]
+function Season1_2MainScene:_getStageSetting(stageId)
+	return self._stageSetting[stageId] or self._stageSetting[6]
 end
 
-function var_0_0._setGoSectionActive(arg_27_0, arg_27_1, arg_27_2)
-	gohelper.setActive(arg_27_0:_getGoSection(arg_27_1), arg_27_2)
+function Season1_2MainScene:_setGoSectionActive(index, active)
+	gohelper.setActive(self:_getGoSection(index), active)
 end
 
-function var_0_0._getGoSection(arg_28_0, arg_28_1)
-	return arg_28_0["_gosection" .. arg_28_1]
+function Season1_2MainScene:_getGoSection(index)
+	return self["_gosection" .. index]
 end
 
-function var_0_0.onUpdateParam(arg_29_0)
-	arg_29_0:_refreshView()
+function Season1_2MainScene:onUpdateParam()
+	self:_refreshView()
 end
 
-function var_0_0.onOpen(arg_30_0)
+function Season1_2MainScene:onOpen()
 	return
 end
 
-function var_0_0._refreshView(arg_31_0)
-	arg_31_0:_showStage()
+function Season1_2MainScene:_refreshView()
+	self:_showStage()
 end
 
-function var_0_0.focusRole(arg_32_0, arg_32_1)
-	if not arg_32_1 then
-		arg_32_0:cancelFocus()
+function Season1_2MainScene:focusRole(index)
+	if not index then
+		self:cancelFocus()
 
 		return
 	end
 
-	arg_32_0:killFocusTween()
+	self:killFocusTween()
 
-	local var_32_0 = arg_32_0._focusSetting[arg_32_1]
+	local setting = self._focusSetting[index]
 
-	if not var_32_0 then
+	if not setting then
 		return
 	end
 
-	local var_32_1 = var_0_0.FocusTime
+	local time = Season1_2MainScene.FocusTime
 
-	arg_32_0._camera.orthographic = true
-	arg_32_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_32_0._camera.transform, var_32_0.x, var_32_0.y, 0, var_32_1, arg_32_0.onMoveCompleted, arg_32_0, nil, EaseType.OutCubic)
-	arg_32_0._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(var_0_0.SeasonCameraOrthographicSize, var_0_0.FocusCameraOrthographicSize, var_32_1, arg_32_0._onSizeUpdate, nil, arg_32_0, nil, EaseType.OutCubic)
+	self._camera.orthographic = true
+	self._tweenId = ZProj.TweenHelper.DOLocalMove(self._camera.transform, setting.x, setting.y, 0, time, self.onMoveCompleted, self, nil, EaseType.OutCubic)
+	self._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(Season1_2MainScene.SeasonCameraOrthographicSize, Season1_2MainScene.FocusCameraOrthographicSize, time, self._onSizeUpdate, nil, self, nil, EaseType.OutCubic)
 
-	if arg_32_0._aniMask then
-		arg_32_0._aniMask:Play(UIAnimationName.Close)
+	if self._aniMask then
+		self._aniMask:Play(UIAnimationName.Close)
 	end
 end
 
-function var_0_0.cancelFocus(arg_33_0)
-	arg_33_0:killFocusTween()
+function Season1_2MainScene:cancelFocus()
+	self:killFocusTween()
 
-	local var_33_0 = var_0_0.CancelFocusTime
+	local time = Season1_2MainScene.CancelFocusTime
 
-	arg_33_0._camera.orthographic = true
-	arg_33_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_33_0._camera.transform, var_0_0.SeasonCameraLocalPos.x, var_0_0.SeasonCameraLocalPos.y, 0, var_33_0, arg_33_0._onMoveCompleted, arg_33_0, nil, EaseType.OutCubic)
-	arg_33_0._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(var_0_0.FocusCameraOrthographicSize, var_0_0.SeasonCameraOrthographicSize, var_33_0, arg_33_0._onSizeUpdate, nil, arg_33_0, nil, EaseType.OutCubic)
+	self._camera.orthographic = true
+	self._tweenId = ZProj.TweenHelper.DOLocalMove(self._camera.transform, Season1_2MainScene.SeasonCameraLocalPos.x, Season1_2MainScene.SeasonCameraLocalPos.y, 0, time, self._onMoveCompleted, self, nil, EaseType.OutCubic)
+	self._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(Season1_2MainScene.FocusCameraOrthographicSize, Season1_2MainScene.SeasonCameraOrthographicSize, time, self._onSizeUpdate, nil, self, nil, EaseType.OutCubic)
 
-	if arg_33_0._aniMask then
-		arg_33_0._aniMask:Play(UIAnimationName.Open)
+	if self._aniMask then
+		self._aniMask:Play(UIAnimationName.Open)
 	end
 end
 
-function var_0_0._onMoveCompleted(arg_34_0)
-	arg_34_0:killFocusTween()
+function Season1_2MainScene:_onMoveCompleted()
+	self:killFocusTween()
 end
 
-function var_0_0._onSizeUpdate(arg_35_0, arg_35_1)
-	arg_35_0._camera.orthographicSize = arg_35_1
+function Season1_2MainScene:_onSizeUpdate(val)
+	self._camera.orthographicSize = val
 end
 
-function var_0_0._onOpenFullViewFinish(arg_36_0, arg_36_1)
-	if not arg_36_0._listenerFullViews then
-		arg_36_0._listenerFullViews = {
+function Season1_2MainScene:_onOpenFullViewFinish(viewName)
+	if not self._listenerFullViews then
+		self._listenerFullViews = {
 			[ViewName.Season1_2MainView] = 1,
 			[ViewName.Season1_2RetailView] = 1
 		}
 	end
 
-	if not arg_36_0._listenerFullViews[arg_36_1] then
-		arg_36_0:doAudio(false)
+	if not self._listenerFullViews[viewName] then
+		self:doAudio(false)
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_37_0, arg_37_1)
-	if not arg_37_0._listenerViews[arg_37_1] then
+function Season1_2MainScene:_onOpenViewFinish(viewName)
+	if not self._listenerViews[viewName] then
 		return
 	end
 
-	gohelper.setActive(arg_37_0._goMask, false)
+	gohelper.setActive(self._goMask, false)
 
-	if arg_37_0._aniMask then
-		arg_37_0._aniMask:Play(UIAnimationName.Close)
+	if self._aniMask then
+		self._aniMask:Play(UIAnimationName.Close)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_38_0, arg_38_1)
-	if not arg_38_0._listenerViews[arg_38_1] then
+function Season1_2MainScene:_onCloseViewFinish(viewName)
+	if not self._listenerViews[viewName] then
 		return
 	end
 
-	gohelper.setActive(arg_38_0._goMask, true)
+	gohelper.setActive(self._goMask, true)
 
-	if arg_38_0._aniMask then
-		arg_38_0._aniMask:Play(UIAnimationName.Idle)
+	if self._aniMask then
+		self._aniMask:Play(UIAnimationName.Idle)
 	end
 end
 
-function var_0_0.onClose(arg_39_0)
-	arg_39_0:_removeEvents()
+function Season1_2MainScene:onClose()
+	self:_removeEvents()
 end
 
-function var_0_0.killFocusTween(arg_40_0)
-	if arg_40_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_40_0._tweenId)
+function Season1_2MainScene:killFocusTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_40_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	if arg_40_0._tweenSizeId then
-		ZProj.TweenHelper.KillById(arg_40_0._tweenSizeId)
+	if self._tweenSizeId then
+		ZProj.TweenHelper.KillById(self._tweenSizeId)
 
-		arg_40_0._tweenSizeId = nil
+		self._tweenSizeId = nil
 	end
 end
 
-function var_0_0.doAudio(arg_41_0, arg_41_1)
-	if arg_41_0.isAudioPlay == arg_41_1 then
+function Season1_2MainScene:doAudio(play)
+	if self.isAudioPlay == play then
 		return
 	end
 
-	arg_41_0.isAudioPlay = arg_41_1
+	self.isAudioPlay = play
 
-	if arg_41_1 then
+	if play then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_activity_seasonmainamb_1_2)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_noise_allarea)
 	end
 end
 
-function var_0_0.onDestroyView(arg_42_0)
-	arg_42_0:killFocusTween()
-	TaskDispatcher.cancelTask(arg_42_0._refreshRoles, arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0._hideLevelObjs, arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0._onDelayRefreshRoles, arg_42_0)
-	gohelper.destroy(arg_42_0._sceneRoot)
+function Season1_2MainScene:onDestroyView()
+	self:killFocusTween()
+	TaskDispatcher.cancelTask(self._refreshRoles, self)
+	TaskDispatcher.cancelTask(self._hideLevelObjs, self)
+	TaskDispatcher.cancelTask(self._onDelayRefreshRoles, self)
+	gohelper.destroy(self._sceneRoot)
 
-	if arg_42_0._mapLoader then
-		arg_42_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 
-		arg_42_0._mapLoader = nil
+		self._mapLoader = nil
 	end
 end
 
-return var_0_0
+return Season1_2MainScene

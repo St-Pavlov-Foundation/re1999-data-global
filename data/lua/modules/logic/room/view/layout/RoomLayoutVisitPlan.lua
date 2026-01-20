@@ -1,92 +1,94 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutVisitPlan", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutVisitPlan.lua
 
-local var_0_0 = class("RoomLayoutVisitPlan", BaseView)
+module("modules.logic.room.view.layout.RoomLayoutVisitPlan", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goplayinfo = gohelper.findChild(arg_1_0.viewGO, "#go_playinfo")
-	arg_1_0._txtplanname = gohelper.findChildText(arg_1_0.viewGO, "#go_playinfo/#txt_planname")
-	arg_1_0._btnplaninfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_playinfo/#txt_planname/#btn_planinfo")
-	arg_1_0._txtplayername = gohelper.findChildText(arg_1_0.viewGO, "#go_playinfo/#txt_playername")
-	arg_1_0._txtplayerId = gohelper.findChildText(arg_1_0.viewGO, "#go_playinfo/#txt_playerId")
-	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "#go_playinfo/#go_playericon")
-	arg_1_0._goshareinfo = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo")
-	arg_1_0._txtsharecode = gohelper.findChildText(arg_1_0.viewGO, "#go_shareinfo/go_sharecode/#txt_sharecode")
-	arg_1_0._btncopysharecode = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_shareinfo/go_sharecode/#btn_copysharecode")
-	arg_1_0._goplaninfo = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo/#go_planinfo")
-	arg_1_0._txtplaninfodesc = gohelper.findChildText(arg_1_0.viewGO, "#go_shareinfo/#go_planinfo/#txt_planinfodesc")
-	arg_1_0._gocomparing = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo/#go_comparing")
-	arg_1_0._btncomparing = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_shareinfo/#go_comparing/txt_comparing/#btn_comparing")
-	arg_1_0._gocompare = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo/#go_compare")
-	arg_1_0._btncompare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_shareinfo/#go_compare/txt_compare/#btn_compare")
-	arg_1_0._btncopy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_copy")
-	arg_1_0._gocopylock = gohelper.findChild(arg_1_0.viewGO, "layout/#btn_copy/#go_copylock")
-	arg_1_0._gocopyunlock = gohelper.findChild(arg_1_0.viewGO, "layout/#btn_copy/#go_copyunlock")
-	arg_1_0._btnshare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_share")
-	arg_1_0._btnmoremask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_moremask")
-	arg_1_0._goinformexpand = gohelper.findChild(arg_1_0.viewGO, "#go_informexpand")
-	arg_1_0._btninform = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_informexpand/#btn_inform")
-	arg_1_0._btnmore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_more")
+local RoomLayoutVisitPlan = class("RoomLayoutVisitPlan", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomLayoutVisitPlan:onInitView()
+	self._goplayinfo = gohelper.findChild(self.viewGO, "#go_playinfo")
+	self._txtplanname = gohelper.findChildText(self.viewGO, "#go_playinfo/#txt_planname")
+	self._btnplaninfo = gohelper.findChildButtonWithAudio(self.viewGO, "#go_playinfo/#txt_planname/#btn_planinfo")
+	self._txtplayername = gohelper.findChildText(self.viewGO, "#go_playinfo/#txt_playername")
+	self._txtplayerId = gohelper.findChildText(self.viewGO, "#go_playinfo/#txt_playerId")
+	self._goplayericon = gohelper.findChild(self.viewGO, "#go_playinfo/#go_playericon")
+	self._goshareinfo = gohelper.findChild(self.viewGO, "#go_shareinfo")
+	self._txtsharecode = gohelper.findChildText(self.viewGO, "#go_shareinfo/go_sharecode/#txt_sharecode")
+	self._btncopysharecode = gohelper.findChildButtonWithAudio(self.viewGO, "#go_shareinfo/go_sharecode/#btn_copysharecode")
+	self._goplaninfo = gohelper.findChild(self.viewGO, "#go_shareinfo/#go_planinfo")
+	self._txtplaninfodesc = gohelper.findChildText(self.viewGO, "#go_shareinfo/#go_planinfo/#txt_planinfodesc")
+	self._gocomparing = gohelper.findChild(self.viewGO, "#go_shareinfo/#go_comparing")
+	self._btncomparing = gohelper.findChildButtonWithAudio(self.viewGO, "#go_shareinfo/#go_comparing/txt_comparing/#btn_comparing")
+	self._gocompare = gohelper.findChild(self.viewGO, "#go_shareinfo/#go_compare")
+	self._btncompare = gohelper.findChildButtonWithAudio(self.viewGO, "#go_shareinfo/#go_compare/txt_compare/#btn_compare")
+	self._btncopy = gohelper.findChildButtonWithAudio(self.viewGO, "layout/#btn_copy")
+	self._gocopylock = gohelper.findChild(self.viewGO, "layout/#btn_copy/#go_copylock")
+	self._gocopyunlock = gohelper.findChild(self.viewGO, "layout/#btn_copy/#go_copyunlock")
+	self._btnshare = gohelper.findChildButtonWithAudio(self.viewGO, "layout/#btn_share")
+	self._btnmoremask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_moremask")
+	self._goinformexpand = gohelper.findChild(self.viewGO, "#go_informexpand")
+	self._btninform = gohelper.findChildButtonWithAudio(self.viewGO, "#go_informexpand/#btn_inform")
+	self._btnmore = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_more")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnplaninfo:AddClickListener(arg_2_0._btnplaninfoOnClick, arg_2_0)
-	arg_2_0._btncopysharecode:AddClickListener(arg_2_0._btncopysharecodeOnClick, arg_2_0)
-	arg_2_0._btncomparing:AddClickListener(arg_2_0._btncomparingOnClick, arg_2_0)
-	arg_2_0._btncompare:AddClickListener(arg_2_0._btncompareOnClick, arg_2_0)
-	arg_2_0._btncopy:AddClickListener(arg_2_0._btncopyOnClick, arg_2_0)
-	arg_2_0._btnshare:AddClickListener(arg_2_0._btnshareOnClick, arg_2_0)
-	arg_2_0._btnmoremask:AddClickListener(arg_2_0._btnmoremaskOnClick, arg_2_0)
-	arg_2_0._btninform:AddClickListener(arg_2_0._btninformOnClick, arg_2_0)
-	arg_2_0._btnmore:AddClickListener(arg_2_0._btnmoreOnClick, arg_2_0)
+function RoomLayoutVisitPlan:addEvents()
+	self._btnplaninfo:AddClickListener(self._btnplaninfoOnClick, self)
+	self._btncopysharecode:AddClickListener(self._btncopysharecodeOnClick, self)
+	self._btncomparing:AddClickListener(self._btncomparingOnClick, self)
+	self._btncompare:AddClickListener(self._btncompareOnClick, self)
+	self._btncopy:AddClickListener(self._btncopyOnClick, self)
+	self._btnshare:AddClickListener(self._btnshareOnClick, self)
+	self._btnmoremask:AddClickListener(self._btnmoremaskOnClick, self)
+	self._btninform:AddClickListener(self._btninformOnClick, self)
+	self._btnmore:AddClickListener(self._btnmoreOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnplaninfo:RemoveClickListener()
-	arg_3_0._btncopysharecode:RemoveClickListener()
-	arg_3_0._btncomparing:RemoveClickListener()
-	arg_3_0._btncompare:RemoveClickListener()
-	arg_3_0._btncopy:RemoveClickListener()
-	arg_3_0._btnshare:RemoveClickListener()
-	arg_3_0._btnmoremask:RemoveClickListener()
-	arg_3_0._btninform:RemoveClickListener()
-	arg_3_0._btnmore:RemoveClickListener()
+function RoomLayoutVisitPlan:removeEvents()
+	self._btnplaninfo:RemoveClickListener()
+	self._btncopysharecode:RemoveClickListener()
+	self._btncomparing:RemoveClickListener()
+	self._btncompare:RemoveClickListener()
+	self._btncopy:RemoveClickListener()
+	self._btnshare:RemoveClickListener()
+	self._btnmoremask:RemoveClickListener()
+	self._btninform:RemoveClickListener()
+	self._btnmore:RemoveClickListener()
 end
 
-function var_0_0._btncomparingOnClick(arg_4_0)
-	arg_4_0:_compareRoom(false)
+function RoomLayoutVisitPlan:_btncomparingOnClick()
+	self:_compareRoom(false)
 end
 
-function var_0_0._btnmoremaskOnClick(arg_5_0)
-	arg_5_0:_showExpand(false)
+function RoomLayoutVisitPlan:_btnmoremaskOnClick()
+	self:_showExpand(false)
 end
 
-function var_0_0._btnmoreOnClick(arg_6_0)
-	arg_6_0:_showExpand(arg_6_0._isShowExpand ~= true)
+function RoomLayoutVisitPlan:_btnmoreOnClick()
+	self:_showExpand(self._isShowExpand ~= true)
 end
 
-function var_0_0._btncompareOnClick(arg_7_0)
-	arg_7_0:_compareRoom(true)
+function RoomLayoutVisitPlan:_btncompareOnClick()
+	self:_compareRoom(true)
 end
 
-function var_0_0._btninformOnClick(arg_8_0)
-	RoomInformController.instance:openShareTipView(arg_8_0._playerMO, arg_8_0._shareCode)
-	arg_8_0:_showExpand(false)
+function RoomLayoutVisitPlan:_btninformOnClick()
+	RoomInformController.instance:openShareTipView(self._playerMO, self._shareCode)
+	self:_showExpand(false)
 end
 
-function var_0_0._btnplaninfoOnClick(arg_9_0)
-	RoomLayoutController.instance:openCopyTips(arg_9_0._planInfo)
+function RoomLayoutVisitPlan:_btnplaninfoOnClick()
+	RoomLayoutController.instance:openCopyTips(self._planInfo)
 end
 
-function var_0_0._btncopysharecodeOnClick(arg_10_0)
-	RoomLayoutController.instance:copyShareCodeTxt(arg_10_0._shareCode)
+function RoomLayoutVisitPlan:_btncopysharecodeOnClick()
+	RoomLayoutController.instance:copyShareCodeTxt(self._shareCode)
 end
 
-function var_0_0._btncopyOnClick(arg_11_0)
-	if not arg_11_0._isShare then
+function RoomLayoutVisitPlan:_btncopyOnClick()
+	if not self._isShare then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanNotCanCopy)
 
 		return
@@ -99,232 +101,232 @@ function var_0_0._btncopyOnClick(arg_11_0)
 			return
 		end
 
-		RoomLayoutController.instance:openCopyView(arg_11_0._playerMO.name)
+		RoomLayoutController.instance:openCopyView(self._playerMO.name)
 	else
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanShareCodeNotOpen)
 	end
 end
 
-function var_0_0._btnshareOnClick(arg_12_0)
-	if arg_12_0._playerMO:isMyFriend() then
-		local var_12_0 = {
+function RoomLayoutVisitPlan:_btnshareOnClick()
+	if self._playerMO:isMyFriend() then
+		local viewParam = {
 			preSendInfo = {
-				recipientId = arg_12_0._playerMO.userId,
+				recipientId = self._playerMO.userId,
 				msgType = ChatEnum.MsgType.RoomSeekShare,
 				content = luaLang("room_chat_seek_share_content")
 			}
 		}
 
-		SocialModel.instance:setSelectFriend(arg_12_0._playerMO.userId)
-		SocialController.instance:openSocialView(var_12_0)
+		SocialModel.instance:setSelectFriend(self._playerMO.userId)
+		SocialController.instance:openSocialView(viewParam)
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanApplyFriend, MsgBoxEnum.BoxType.Yes_No, arg_12_0._sendAddFriend, nil, nil, arg_12_0, nil, nil, arg_12_0._playerMO.name)
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanApplyFriend, MsgBoxEnum.BoxType.Yes_No, self._sendAddFriend, nil, nil, self, nil, nil, self._playerMO.name)
 	end
 end
 
-function var_0_0._sendAddFriend(arg_13_0)
-	SocialController.instance:AddFriend(arg_13_0._playerMO.userId)
+function RoomLayoutVisitPlan:_sendAddFriend()
+	SocialController.instance:AddFriend(self._playerMO.userId)
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_14_0._goplayericon)
+function RoomLayoutVisitPlan:_editableInitView()
+	self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goplayericon)
 
-	arg_14_0._playericon:setEnableClick(false)
-	arg_14_0._playericon:setShowLevel(false)
-	arg_14_0:_showExpand(false)
+	self._playericon:setEnableClick(false)
+	self._playericon:setShowLevel(false)
+	self:_showExpand(false)
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function RoomLayoutVisitPlan:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:_refreshPlayerUI()
+function RoomLayoutVisitPlan:onOpen()
+	self:_refreshPlayerUI()
 end
 
-function var_0_0.onClose(arg_17_0)
+function RoomLayoutVisitPlan:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
+function RoomLayoutVisitPlan:onDestroyView()
 	return
 end
 
-function var_0_0._refreshData(arg_19_0)
-	arg_19_0._isShare = RoomController.instance:isVisitShareMode()
-	arg_19_0._curInfo = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
+function RoomLayoutVisitPlan:_refreshData()
+	self._isShare = RoomController.instance:isVisitShareMode()
+	self._curInfo = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
 
-	if not arg_19_0._curInfo then
+	if not self._curInfo then
 		return
 	end
 
-	arg_19_0._planInfo = RoomLayoutHelper.createInfoByObInfo(arg_19_0._curInfo)
-	arg_19_0._shareCode = nil
-	arg_19_0._planName = nil
-	arg_19_0._isCompareInfo = false
+	self._planInfo = RoomLayoutHelper.createInfoByObInfo(self._curInfo)
+	self._shareCode = nil
+	self._planName = nil
+	self._isCompareInfo = false
 
-	if not arg_19_0._playerMO then
-		arg_19_0._playerMO = SocialPlayerMO.New()
+	if not self._playerMO then
+		self._playerMO = SocialPlayerMO.New()
 	end
 
-	if arg_19_0._isShare then
-		local var_19_0 = arg_19_0._curInfo
-		local var_19_1 = arg_19_0:_createPlayerInfo(var_19_0.shareUserId, var_19_0.nickName, var_19_0.levle, var_19_0.portrait, var_19_0.time)
+	if self._isShare then
+		local shareInfo = self._curInfo
+		local info = self:_createPlayerInfo(shareInfo.shareUserId, shareInfo.nickName, shareInfo.levle, shareInfo.portrait, shareInfo.time)
 
-		arg_19_0._playerMO:init(var_19_1)
+		self._playerMO:init(info)
 
-		arg_19_0._shareCode = var_19_0.shareCode
-		arg_19_0._planName = var_19_0.roomPlanName
+		self._shareCode = shareInfo.shareCode
+		self._planName = shareInfo.roomPlanName
 
-		local var_19_2 = RoomModel.instance:getVisitParam()
+		local visitParam = RoomModel.instance:getVisitParam()
 
-		if RoomLayoutHelper.checkVisitParamCoppare(var_19_2) then
-			arg_19_0._isCompareInfo = true
+		if RoomLayoutHelper.checkVisitParamCoppare(visitParam) then
+			self._isCompareInfo = true
 		end
 
-		if string.nilorempty(arg_19_0._planName) then
-			arg_19_0._planName = formatLuaLang("room_layoutplan_default_name", "")
+		if string.nilorempty(self._planName) then
+			self._planName = formatLuaLang("room_layoutplan_default_name", "")
 		end
 	else
-		local var_19_3 = SocialModel.instance:getPlayerMO(arg_19_0._curInfo.targetUid) or arg_19_0:_createPlayerInfo(arg_19_0._curInfo.targetUid)
+		local info = SocialModel.instance:getPlayerMO(self._curInfo.targetUid) or self:_createPlayerInfo(self._curInfo.targetUid)
 
-		arg_19_0._playerMO:init(var_19_3)
-		arg_19_0:_checkPlayerInfo(arg_19_0._playerMO)
+		self._playerMO:init(info)
+		self:_checkPlayerInfo(self._playerMO)
 
-		arg_19_0._planName = formatLuaLang("room_layoutplan_look_details", arg_19_0._playerMO.name or "")
+		self._planName = formatLuaLang("room_layoutplan_look_details", self._playerMO.name or "")
 	end
 end
 
-function var_0_0._createPlayerInfo(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
-	local var_20_0 = {
-		userId = arg_20_1 or 0,
-		name = arg_20_2,
-		portrait = arg_20_4 or 0,
-		level = arg_20_3 or 1,
-		time = arg_20_5 or 0
+function RoomLayoutVisitPlan:_createPlayerInfo(userId, name, level, portrait, time)
+	local info = {
+		userId = userId or 0,
+		name = name,
+		portrait = portrait or 0,
+		level = level or 1,
+		time = time or 0
 	}
 
-	arg_20_0:_checkPlayerInfo(var_20_0)
+	self:_checkPlayerInfo(info)
 
-	return var_20_0
+	return info
 end
 
-function var_0_0._checkPlayerInfo(arg_21_0, arg_21_1)
-	if string.nilorempty(arg_21_1.name) then
-		arg_21_1.name = string.format("#%s", arg_21_1.userId)
+function RoomLayoutVisitPlan:_checkPlayerInfo(info)
+	if string.nilorempty(info.name) then
+		info.name = string.format("#%s", info.userId)
 	end
 end
 
-function var_0_0._refreshPlayerUI(arg_22_0)
-	arg_22_0:_refreshData()
+function RoomLayoutVisitPlan:_refreshPlayerUI()
+	self:_refreshData()
 
-	if not arg_22_0._curInfo then
+	if not self._curInfo then
 		return
 	end
 
-	gohelper.setActive(arg_22_0._goshareinfo, arg_22_0._isShare)
-	gohelper.setActive(arg_22_0._btnshare, not arg_22_0._isShare)
-	arg_22_0._playericon:onUpdateMO(arg_22_0._playerMO)
-	arg_22_0._playericon:setShowLevel(false)
+	gohelper.setActive(self._goshareinfo, self._isShare)
+	gohelper.setActive(self._btnshare, not self._isShare)
+	self._playericon:onUpdateMO(self._playerMO)
+	self._playericon:setShowLevel(false)
 
-	arg_22_0._txtplayername.text = arg_22_0._playerMO.name
-	arg_22_0._txtplayerId.text = string.format("ID:%s", arg_22_0._playerMO.userId)
-	arg_22_0._txtplanname.text = arg_22_0._planName
+	self._txtplayername.text = self._playerMO.name
+	self._txtplayerId.text = string.format("ID:%s", self._playerMO.userId)
+	self._txtplanname.text = self._planName
 
-	if arg_22_0._isShare then
-		arg_22_0._txtsharecode.text = arg_22_0._shareCode
-		arg_22_0._txtplaninfodesc.text = luaLang("room_layoutplan_share_notlack_desc")
+	if self._isShare then
+		self._txtsharecode.text = self._shareCode
+		self._txtplaninfodesc.text = luaLang("room_layoutplan_share_notlack_desc")
 
-		local var_22_0 = arg_22_0:_isHasAllBlockAndBuiling(arg_22_0._planInfo)
+		local isHasAll = self:_isHasAllBlockAndBuiling(self._planInfo)
 
-		gohelper.setActive(arg_22_0._goplaninfo, var_22_0)
-		gohelper.setActive(arg_22_0._gocomparing, not var_22_0 and arg_22_0._isCompareInfo)
-		gohelper.setActive(arg_22_0._gocompare, not var_22_0 and not arg_22_0._isCompareInfo)
+		gohelper.setActive(self._goplaninfo, isHasAll)
+		gohelper.setActive(self._gocomparing, not isHasAll and self._isCompareInfo)
+		gohelper.setActive(self._gocompare, not isHasAll and not self._isCompareInfo)
 	end
 
-	arg_22_0:_refreshLayoutPlan()
+	self:_refreshLayoutPlan()
 end
 
-function var_0_0._isHasAllBlockAndBuiling(arg_23_0, arg_23_1)
-	local var_23_0, var_23_1, var_23_2, var_23_3 = RoomLayoutHelper.comparePlanInfo(arg_23_1)
+function RoomLayoutVisitPlan:_isHasAllBlockAndBuiling(planInfo)
+	local packageNum, roleBirthdayNum, buildingNum, strList = RoomLayoutHelper.comparePlanInfo(planInfo)
 
-	if var_23_0 > 0 or var_23_1 > 0 or var_23_2 > 0 then
+	if packageNum > 0 or roleBirthdayNum > 0 or buildingNum > 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._getDesStr(arg_24_0, arg_24_1)
-	local var_24_0, var_24_1, var_24_2, var_24_3 = RoomLayoutHelper.comparePlanInfo(arg_24_1)
+function RoomLayoutVisitPlan:_getDesStr(planInfo)
+	local packageNum, roleBirthdayNum, buildingNum, strList = RoomLayoutHelper.comparePlanInfo(planInfo)
 
-	if var_24_0 > 0 or var_24_1 > 0 or var_24_2 > 0 then
-		local var_24_4 = {}
+	if packageNum > 0 or roleBirthdayNum > 0 or buildingNum > 0 then
+		local collStrList = {}
 
-		arg_24_0:_addCollStrList("room_layoutplan_blockpackage_lack", var_24_0, var_24_4)
-		arg_24_0:_addCollStrList("room_layoutplan_birthdayblock_lack", var_24_1, var_24_4)
-		arg_24_0:_addCollStrList("room_layoutplan_building_lack", var_24_2, var_24_4)
+		self:_addCollStrList("room_layoutplan_blockpackage_lack", packageNum, collStrList)
+		self:_addCollStrList("room_layoutplan_birthdayblock_lack", roleBirthdayNum, collStrList)
+		self:_addCollStrList("room_layoutplan_building_lack", buildingNum, collStrList)
 
-		local var_24_5 = luaLang("room_levelup_init_and1")
-		local var_24_6 = luaLang("room_levelup_init_and2")
-		local var_24_7 = RoomLayoutHelper.connStrList(var_24_4, var_24_5, var_24_6)
+		local connchar = luaLang("room_levelup_init_and1")
+		local lastConnchar = luaLang("room_levelup_init_and2")
+		local collectStr = RoomLayoutHelper.connStrList(collStrList, connchar, lastConnchar)
 
-		return string.format("<color=#AB1313>%s</color>", formatLuaLang("room_layoutplan_share_lack_desc", var_24_7))
+		return string.format("<color=#AB1313>%s</color>", formatLuaLang("room_layoutplan_share_lack_desc", collectStr))
 	end
 
 	return luaLang("room_layoutplan_share_notlack_desc")
 end
 
-function var_0_0._addCollStrList(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if arg_25_2 > 0 then
-		table.insert(arg_25_3, formatLuaLang(arg_25_1, arg_25_2))
+function RoomLayoutVisitPlan:_addCollStrList(langKey, needNum, collStrList)
+	if needNum > 0 then
+		table.insert(collStrList, formatLuaLang(langKey, needNum))
 	end
 end
 
-function var_0_0._refreshLayoutPlan(arg_26_0)
-	local var_26_0 = RoomLayoutController.instance:isOpen()
-	local var_26_1 = arg_26_0._isShare and var_26_0
+function RoomLayoutVisitPlan:_refreshLayoutPlan()
+	local isOpen = RoomLayoutController.instance:isOpen()
+	local isShowCopy = self._isShare and isOpen
 
-	gohelper.setActive(arg_26_0._gocopyunlock, var_26_1)
-	gohelper.setActive(arg_26_0._gocopylock, not var_26_1)
+	gohelper.setActive(self._gocopyunlock, isShowCopy)
+	gohelper.setActive(self._gocopylock, not isShowCopy)
 end
 
-function var_0_0._showExpand(arg_27_0, arg_27_1)
-	arg_27_0._isShowExpand = arg_27_1
+function RoomLayoutVisitPlan:_showExpand(isShow)
+	self._isShowExpand = isShow
 
-	gohelper.setActive(arg_27_0._goinformexpand, arg_27_1)
-	gohelper.setActive(arg_27_0._btnmoremask, arg_27_1)
+	gohelper.setActive(self._goinformexpand, isShow)
+	gohelper.setActive(self._btnmoremask, isShow)
 end
 
-function var_0_0._compareRoom(arg_28_0, arg_28_1)
-	arg_28_0._isCompareInfo = arg_28_1
+function RoomLayoutVisitPlan:_compareRoom(isCompareInfo)
+	self._isCompareInfo = isCompareInfo
 
-	local var_28_0 = GameSceneMgr.instance:getCurScene()
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if var_28_0 and var_28_0.camera then
-		local var_28_1 = RoomEnum.CameraState.Overlook
-		local var_28_2 = {
+	if scene and scene.camera then
+		local cameraState = RoomEnum.CameraState.Overlook
+		local cameraParam = {
 			focusY = 0,
 			focusX = 0,
 			rotate = 0,
-			zoom = var_28_0.camera:getZoomInitValue(var_28_1)
+			zoom = scene.camera:getZoomInitValue(cameraState)
 		}
 
-		var_28_0.camera:switchCameraState(var_28_1, var_28_2, nil, arg_28_0._onSwitchCameraDone, arg_28_0)
+		scene.camera:switchCameraState(cameraState, cameraParam, nil, self._onSwitchCameraDone, self)
 	else
-		arg_28_0:_onSwitchCameraDone()
+		self:_onSwitchCameraDone()
 	end
 end
 
-function var_0_0._onSwitchCameraDone(arg_29_0)
-	local var_29_0 = {
-		userId = arg_29_0._playerMO.userId,
-		shareCode = arg_29_0._shareCode,
-		isCompareInfo = arg_29_0._isCompareInfo
+function RoomLayoutVisitPlan:_onSwitchCameraDone()
+	local param = {
+		userId = self._playerMO.userId,
+		shareCode = self._shareCode,
+		isCompareInfo = self._isCompareInfo
 	}
-	local var_29_1 = arg_29_0._curInfo
+	local obInfo = self._curInfo
 
-	RoomController.instance:enterRoom(RoomEnum.GameMode.VisitShare, nil, var_29_1, var_29_0, nil, nil, true)
+	RoomController.instance:enterRoom(RoomEnum.GameMode.VisitShare, nil, obInfo, param, nil, nil, true)
 end
 
-return var_0_0
+return RoomLayoutVisitPlan

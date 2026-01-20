@@ -1,23 +1,25 @@
-﻿module("modules.logic.endofdream.model.EndOfDreamModel", package.seeall)
+﻿-- chunkname: @modules/logic/endofdream/model/EndOfDreamModel.lua
 
-local var_0_0 = class("EndOfDreamModel", BaseModel)
+module("modules.logic.endofdream.model.EndOfDreamModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local EndOfDreamModel = class("EndOfDreamModel", BaseModel)
+
+function EndOfDreamModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function EndOfDreamModel:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear()
+function EndOfDreamModel:clear()
+	EndOfDreamModel.super.clear()
 end
 
-function var_0_0.isLevelUnlocked(arg_4_0, arg_4_1)
+function EndOfDreamModel:isLevelUnlocked(levelId)
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+EndOfDreamModel.instance = EndOfDreamModel.New()
 
-return var_0_0
+return EndOfDreamModel

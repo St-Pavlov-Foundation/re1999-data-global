@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType128", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartRequestType/FightRestartRequestType128.lua
 
-local var_0_0 = class("FightRestartRequestType128", FightRestartRequestType1)
+module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType128", package.seeall)
 
-function var_0_0.requestFight(arg_1_0)
-	arg_1_0._fight_work:onDone(true)
+local FightRestartRequestType128 = class("FightRestartRequestType128", FightRestartRequestType1)
+
+function FightRestartRequestType128:requestFight()
+	self._fight_work:onDone(true)
 	DungeonFightController.instance:restartStage()
 end
 
-return var_0_0
+return FightRestartRequestType128

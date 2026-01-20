@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_fishing_exchange", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_fishing_exchange.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_fishing_exchange", package.seeall)
+
+local lua_fishing_exchange = {}
+local fields = {
 	num = 3,
 	needCurrencyId = 2,
 	times = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"times"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_fishing_exchange.onLoad(json)
+	lua_fishing_exchange.configList, lua_fishing_exchange.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_fishing_exchange

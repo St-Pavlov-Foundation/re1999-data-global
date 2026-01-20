@@ -1,59 +1,62 @@
-﻿module("modules.logic.survival.view.shelter.ShelterCurrencyView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterCurrencyView.lua
 
-local var_0_0 = class("ShelterCurrencyView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterCurrencyView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goRoot = gohelper.findChild(arg_1_0.viewGO, arg_1_0.rootGOPath)
-	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.goRoot, "tag")
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_0.goRoot, "tag/#txt_tag")
+local ShelterCurrencyView = class("ShelterCurrencyView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ShelterCurrencyView:onInitView()
+	self.goRoot = gohelper.findChild(self.viewGO, self.rootGOPath)
+	self._gocurrency = gohelper.findChild(self.goRoot, "tag")
+	self._txtNum = gohelper.findChildTextMesh(self.goRoot, "tag/#txt_tag")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_2_0.onShelterBagUpdate, arg_2_0)
+function ShelterCurrencyView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_3_0.onShelterBagUpdate, arg_3_0)
+function ShelterCurrencyView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1, arg_4_2)
-	var_0_0.super.ctor(arg_4_0)
+function ShelterCurrencyView:ctor(param, path)
+	ShelterCurrencyView.super.ctor(self)
 
-	arg_4_0.param = arg_4_1
-	arg_4_0.rootGOPath = arg_4_2
+	self.param = param
+	self.rootGOPath = path
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function ShelterCurrencyView:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
+function ShelterCurrencyView:onDestroyView()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:onShelterBagUpdate()
+function ShelterCurrencyView:onOpen()
+	self:onShelterBagUpdate()
 end
 
-function var_0_0.onClose(arg_8_0)
+function ShelterCurrencyView:onClose()
 	return
 end
 
-function var_0_0.onShelterBagUpdate(arg_9_0)
-	if not arg_9_0.param then
-		gohelper.setActive(arg_9_0._gocontainer, false)
+function ShelterCurrencyView:onShelterBagUpdate()
+	if not self.param then
+		gohelper.setActive(self._gocontainer, false)
 
 		return
 	end
 
-	local var_9_0 = arg_9_0.param[1]
-	local var_9_1 = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(var_9_0)
+	local itemId = self.param[1]
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local itemCount = weekInfo:getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(itemId)
 
-	arg_9_0._txtNum.text = var_9_1
+	self._txtNum.text = itemCount
 end
 
-return var_0_0
+return ShelterCurrencyView

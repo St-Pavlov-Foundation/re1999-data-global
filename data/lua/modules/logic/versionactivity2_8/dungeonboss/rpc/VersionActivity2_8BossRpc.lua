@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.rpc.VersionActivity2_8BossRpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/rpc/VersionActivity2_8BossRpc.lua
 
-local var_0_0 = class("VersionActivity2_8BossRpc", BaseRpc)
+module("modules.logic.versionactivity2_8.dungeonboss.rpc.VersionActivity2_8BossRpc", package.seeall)
 
-function var_0_0.sendBossFightResetChapterRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = BossFightModule_pb.BossFightResetChapterRequest()
+local VersionActivity2_8BossRpc = class("VersionActivity2_8BossRpc", BaseRpc)
 
-	var_1_0.chapterId = arg_1_1
+function VersionActivity2_8BossRpc:sendBossFightResetChapterRequest(chapterId, callback, callbackObj)
+	local req = BossFightModule_pb.BossFightResetChapterRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.chapterId = chapterId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveBossFightResetChapterReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function VersionActivity2_8BossRpc:onReceiveBossFightResetChapterReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.chapterId
+	local chapterId = msg.chapterId
 
 	DungeonModel.instance:resetEpisodeInfoByChapterId(DungeonEnum.ChapterId.BossStory)
 	HeroGroupModel.instance:clearCustomHeroGroup(VersionActivity2_8BossEnum.HeroGroupId.First)
@@ -23,6 +25,6 @@ function var_0_0.onReceiveBossFightResetChapterReply(arg_2_0, arg_2_1, arg_2_2)
 	DungeonController.instance:dispatchEvent(DungeonEvent.BossStoryReset)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_8BossRpc.instance = VersionActivity2_8BossRpc.New()
 
-return var_0_0
+return VersionActivity2_8BossRpc

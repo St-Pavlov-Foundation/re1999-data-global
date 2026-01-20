@@ -1,366 +1,368 @@
-﻿module("modules.logic.room.entity.RoomBaseBlockEntity", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/RoomBaseBlockEntity.lua
 
-local var_0_0 = class("RoomBaseBlockEntity", RoomBaseEntity)
+module("modules.logic.room.entity.RoomBaseBlockEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RoomBaseBlockEntity = class("RoomBaseBlockEntity", RoomBaseEntity)
 
-	arg_1_0.id = arg_1_1
-	arg_1_0.entityId = arg_1_0.id
-	arg_1_0._pathfindingEnabled = false
+function RoomBaseBlockEntity:ctor(entityId)
+	RoomBaseBlockEntity.super.ctor(self)
+
+	self.id = entityId
+	self.entityId = self.id
+	self._pathfindingEnabled = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.goTrs = arg_2_1.transform
-	arg_2_0.containerGO = gohelper.create3d(arg_2_1, RoomEnum.EntityChildKey.ContainerGOKey)
-	arg_2_0.staticContainerGO = arg_2_0.containerGO
-	arg_2_0.containerGOTrs = arg_2_0.containerGO.transform
-	arg_2_0.staticContainerGOTrs = arg_2_0.staticContainerGO.transform
+function RoomBaseBlockEntity:init(go)
+	self.goTrs = go.transform
+	self.containerGO = gohelper.create3d(go, RoomEnum.EntityChildKey.ContainerGOKey)
+	self.staticContainerGO = self.containerGO
+	self.containerGOTrs = self.containerGO.transform
+	self.staticContainerGOTrs = self.staticContainerGO.transform
 
-	var_0_0.super.init(arg_2_0, arg_2_1)
+	RoomBaseBlockEntity.super.init(self, go)
 
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+	self._scene = GameSceneMgr.instance:getCurScene()
 
-	arg_2_0:refreshLand()
+	self:refreshLand()
 end
 
-function var_0_0.initComponents(arg_3_0)
-	arg_3_0:addComp("effect", RoomEffectComp)
-	arg_3_0:addComp("changeColorComp", RoomBlockChangeColorComp)
+function RoomBaseBlockEntity:initComponents()
+	self:addComp("effect", RoomEffectComp)
+	self:addComp("changeColorComp", RoomBlockChangeColorComp)
 end
 
-function var_0_0.removeParamsAndPlayAnimator(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_3 then
-		for iter_4_0 = 1, #arg_4_1 do
-			arg_4_0.effect:playEffectAnimator(arg_4_1[iter_4_0], arg_4_2)
+function RoomBaseBlockEntity:removeParamsAndPlayAnimator(keyList, animName, delayDestroy)
+	if delayDestroy then
+		for i = 1, #keyList do
+			self.effect:playEffectAnimator(keyList[i], animName)
 		end
 	end
 
-	arg_4_0.effect:removeParams(arg_4_1, arg_4_3)
+	self.effect:removeParams(keyList, delayDestroy)
 end
 
-function var_0_0.onStart(arg_5_0)
+function RoomBaseBlockEntity:onStart()
 	return
 end
 
-function var_0_0.refreshName(arg_6_0)
-	local var_6_0 = arg_6_0:getMO()
+function RoomBaseBlockEntity:refreshName()
+	local mo = self:getMO()
 
-	arg_6_0.go.name = RoomResHelper.getBlockName(var_6_0.hexPoint)
+	self.go.name = RoomResHelper.getBlockName(mo.hexPoint)
 
-	if arg_6_0.resourceui then
-		arg_6_0.resourceui:refreshName()
+	if self.resourceui then
+		self.resourceui:refreshName()
 	end
 end
 
-function var_0_0.refreshLand(arg_7_0)
-	local var_7_0 = arg_7_0:getMO()
-	local var_7_1 = var_7_0:getDefineId()
-	local var_7_2 = var_7_0:getDefineWaterType()
-	local var_7_3 = var_7_0:getDefineBlockType()
-	local var_7_4 = arg_7_0:checkBlockLandShow(var_7_0) ~= false
-	local var_7_5 = var_7_1 ~= arg_7_0._refreshLandLastDefineId or var_7_4 ~= arg_7_0._lastShowLand or var_7_3 ~= arg_7_0._lastBlockType
-	local var_7_6 = var_7_2 ~= arg_7_0._lastWaterType
+function RoomBaseBlockEntity:refreshLand()
+	local mo = self:getMO()
+	local defineId = mo:getDefineId()
+	local waterType = mo:getDefineWaterType()
+	local blockType = mo:getDefineBlockType()
+	local showLand = self:checkBlockLandShow(mo) ~= false
+	local isNewLand = defineId ~= self._refreshLandLastDefineId or showLand ~= self._lastShowLand or blockType ~= self._lastBlockType
+	local isNewRiver = waterType ~= self._lastWaterType
 
-	arg_7_0._refreshLandLastDefineId = var_7_1
-	arg_7_0._lastWaterType = var_7_2
-	arg_7_0._lastShowLand = var_7_4
-	arg_7_0._lastBlockType = var_7_3
+	self._refreshLandLastDefineId = defineId
+	self._lastWaterType = waterType
+	self._lastShowLand = showLand
+	self._lastBlockType = blockType
 
-	if var_7_5 then
-		local var_7_7
-		local var_7_8
+	if isNewLand then
+		local res, ab
 
-		if var_7_4 then
-			var_7_7 = RoomResHelper.getBlockPath(var_7_1)
-			var_7_8 = RoomResHelper.getBlockABPath(var_7_1)
+		if showLand then
+			res = RoomResHelper.getBlockPath(defineId)
+			ab = RoomResHelper.getBlockABPath(defineId)
 		end
 
-		arg_7_0:_refreshParams(RoomEnum.EffectKey.BlockLandKey, var_7_7, nil, "0", var_7_8)
+		self:_refreshParams(RoomEnum.EffectKey.BlockLandKey, res, nil, "0", ab)
 	end
 
-	if var_7_5 or var_7_6 then
-		arg_7_0:_refreshRiver(var_7_0)
+	if isNewLand or isNewRiver then
+		self:_refreshRiver(mo)
 	end
 
-	arg_7_0:_refreshFullRiver(var_7_0)
-	arg_7_0:_refreshWaterGradient(var_7_0)
-	arg_7_0:_refreshEffect()
-	arg_7_0.changeColorComp:refreshLand()
+	self:_refreshFullRiver(mo)
+	self:_refreshWaterGradient(mo)
+	self:_refreshEffect()
+	self.changeColorComp:refreshLand()
 end
 
-function var_0_0.checkBlockLandShow(arg_8_0, arg_8_1)
+function RoomBaseBlockEntity:checkBlockLandShow(pMO)
 	return true
 end
 
-function var_0_0._refreshWaterGradient(arg_9_0, arg_9_1)
-	if not arg_9_1 or not arg_9_1:hasRiver() then
+function RoomBaseBlockEntity:_refreshWaterGradient(mo)
+	if not mo or not mo:hasRiver() then
 		return
 	end
 
-	local var_9_0 = arg_9_0.effect:getGameObjectsByName(RoomEnum.EffectKey.BlockLandKey, RoomEnum.EntityChildKey.WaterGradientGOKey)
+	local golist = self.effect:getGameObjectsByName(RoomEnum.EffectKey.BlockLandKey, RoomEnum.EntityChildKey.WaterGradientGOKey)
 
-	if var_9_0 then
-		local var_9_1 = not arg_9_1:isInMapBlock() or arg_9_1:isWaterGradient()
+	if golist then
+		local notInMapBlock = not mo:isInMapBlock()
+		local isWaterGradient = notInMapBlock or mo:isWaterGradient()
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			gohelper.setActive(iter_9_1, var_9_1)
+		for _, tempGO in ipairs(golist) do
+			gohelper.setActive(tempGO, isWaterGradient)
 		end
 	end
 end
 
-function var_0_0.isHasWaterGradient(arg_10_0)
-	local var_10_0 = false
-	local var_10_1 = arg_10_0:getMO()
+function RoomBaseBlockEntity:isHasWaterGradient()
+	local result = false
+	local mo = self:getMO()
 
-	if var_10_1 and var_10_1:hasRiver() then
-		local var_10_2 = arg_10_0.effect:getGameObjectsByName(RoomEnum.EffectKey.BlockLandKey, RoomEnum.EntityChildKey.WaterGradientGOKey)
+	if mo and mo:hasRiver() then
+		local golist = self.effect:getGameObjectsByName(RoomEnum.EffectKey.BlockLandKey, RoomEnum.EntityChildKey.WaterGradientGOKey)
 
-		if var_10_2 then
-			var_10_0 = #var_10_2 > 0
+		if golist then
+			result = #golist > 0
 		end
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0._refreshRiver(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1 or arg_11_0:getMO()
-	local var_11_1
-	local var_11_2
-	local var_11_3
-	local var_11_4
-	local var_11_5 = 0
+function RoomBaseBlockEntity:_refreshRiver(pMO)
+	local mo = pMO or self:getMO()
+	local res, riverFloorRes, resAb, riverFloorResAb
+	local rotate = 0
 
-	if var_11_0:hasRiver() then
-		if not var_11_0:isFullWater() then
-			var_11_1, var_11_5, var_11_2, var_11_3, var_11_4 = RoomRiverBlockHelper.getRiverBlockTypeByMO(var_11_0)
+	if mo:hasRiver() then
+		if not mo:isFullWater() then
+			res, rotate, riverFloorRes, resAb, riverFloorResAb = RoomRiverBlockHelper.getRiverBlockTypeByMO(mo)
 		end
-	elseif var_11_0.blockId > 0 or arg_11_0.isWaterReform then
-		var_11_1, var_11_3 = arg_11_0:_getRiverEffectRes(var_11_0:getDefineBlockType(), arg_11_0:checkSideShow())
+	elseif mo.blockId > 0 or self.isWaterReform then
+		res, resAb = self:_getRiverEffectRes(mo:getDefineBlockType(), self:checkSideShow())
 	else
-		var_11_1, var_11_3 = RoomScenePreloader.InitLand, RoomScenePreloader.InitLand
+		res, resAb = RoomScenePreloader.InitLand, RoomScenePreloader.InitLand
 	end
 
-	arg_11_0:_refreshParams(RoomEnum.EffectKey.BlockRiverFloorKey, var_11_2, var_11_5, nil, var_11_4)
-	arg_11_0:_refreshParams(RoomEnum.EffectKey.BlockRiverKey, var_11_1, var_11_5, nil, var_11_3)
+	self:_refreshParams(RoomEnum.EffectKey.BlockRiverFloorKey, riverFloorRes, rotate, nil, riverFloorResAb)
+	self:_refreshParams(RoomEnum.EffectKey.BlockRiverKey, res, rotate, nil, resAb)
 end
 
-function var_0_0._refreshFullRiver(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1 or arg_12_0:getMO()
-	local var_12_1 = var_12_0:isFullWater()
+function RoomBaseBlockEntity:_refreshFullRiver(pMO)
+	local tempMO = pMO or self:getMO()
+	local isFullRiver = tempMO:isFullWater()
 
-	if not var_12_1 and not arg_12_0._isLastFullRiver then
+	if not isFullRiver and not self._isLastFullRiver then
 		return
 	end
 
-	arg_12_0._isLastFullRiver = var_12_1
+	self._isLastFullRiver = isFullRiver
 
-	local var_12_2 = var_12_0:isHalfLakeWater()
+	local isHalfLakeWater = tempMO:isHalfLakeWater()
 
-	for iter_12_0 = 1, 6 do
-		local var_12_3, var_12_4, var_12_5, var_12_6, var_12_7, var_12_8 = RoomBlockHelper.getResourcePath(var_12_0, iter_12_0)
-		local var_12_9 = iter_12_0 - 1
+	for i = 1, 6 do
+		local res, floorRes, floorBRes, resAb, floorResAb, floorBResAb = RoomBlockHelper.getResourcePath(tempMO, i)
+		local rotate = i - 1
 
-		arg_12_0:_refreshParams(RoomEnum.EffectKey.BlockKeys[iter_12_0], var_12_3, var_12_9, nil, var_12_6)
-		arg_12_0:_refreshParams(RoomEnum.EffectKey.BlockFloorKeys[iter_12_0], var_12_4, var_12_9, nil, var_12_7)
-		arg_12_0:_refreshParams(RoomEnum.EffectKey.BlockFloorBKeys[iter_12_0], var_12_5, var_12_9, nil, var_12_8)
+		self:_refreshParams(RoomEnum.EffectKey.BlockKeys[i], res, rotate, nil, resAb)
+		self:_refreshParams(RoomEnum.EffectKey.BlockFloorKeys[i], floorRes, rotate, nil, floorResAb)
+		self:_refreshParams(RoomEnum.EffectKey.BlockFloorBKeys[i], floorBRes, rotate, nil, floorBResAb)
 
-		local var_12_10
+		local halfLakeRes
 
-		if string.nilorempty(var_12_3) then
-			var_12_10, var_12_6 = RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, RoomRiverEnum.LakeBlockType[RoomRiverEnum.LakeOutLinkType.HalfLake], var_12_0:getDefineWaterType())
+		if string.nilorempty(res) then
+			halfLakeRes, resAb = RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, RoomRiverEnum.LakeBlockType[RoomRiverEnum.LakeOutLinkType.HalfLake], tempMO:getDefineWaterType())
 		end
 
-		arg_12_0:_refreshParams(RoomEnum.EffectKey.BlockHalfLakeKeys[iter_12_0], var_12_10, var_12_9, nil, var_12_6)
+		self:_refreshParams(RoomEnum.EffectKey.BlockHalfLakeKeys[i], halfLakeRes, rotate, nil, resAb)
 	end
 end
 
-function var_0_0._refreshParams(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
-	if string.nilorempty(arg_13_2) then
-		if arg_13_0.effect:isHasKey(arg_13_1) then
-			arg_13_0._riverBlockRemoveParams = arg_13_0._riverBlockRemoveParams or {}
+function RoomBaseBlockEntity:_refreshParams(keyName, res, rotate, deleteChildPath, ab)
+	if string.nilorempty(res) then
+		if self.effect:isHasKey(keyName) then
+			self._riverBlockRemoveParams = self._riverBlockRemoveParams or {}
 
-			table.insert(arg_13_0._riverBlockRemoveParams, arg_13_1)
+			table.insert(self._riverBlockRemoveParams, keyName)
 		end
-	elseif not arg_13_0.effect:isSameResByKey(arg_13_1, arg_13_2) then
-		arg_13_0._riverBlockAddParams = arg_13_0._riverBlockAddParams or {}
+	elseif not self.effect:isSameResByKey(keyName, res) then
+		self._riverBlockAddParams = self._riverBlockAddParams or {}
 
-		local var_13_0 = {
-			res = arg_13_2,
+		local blockParams = {
+			res = res,
 			layer = UnityLayer.SceneOpaque,
-			pathfinding = arg_13_0._pathfindingEnabled
+			pathfinding = self._pathfindingEnabled
 		}
 
-		if arg_13_3 then
-			var_13_0.localRotation = Vector3(0, 60 * arg_13_3, 0)
+		if rotate then
+			blockParams.localRotation = Vector3(0, 60 * rotate, 0)
 		end
 
-		if arg_13_4 then
-			var_13_0.deleteChildPath = arg_13_4
+		if deleteChildPath then
+			blockParams.deleteChildPath = deleteChildPath
 		end
 
-		if not string.nilorempty(arg_13_5) then
-			var_13_0.ab = arg_13_5
+		if not string.nilorempty(ab) then
+			blockParams.ab = ab
 		end
 
-		arg_13_0:onReviseResParams(var_13_0)
+		self:onReviseResParams(blockParams)
 
-		arg_13_0._riverBlockAddParams[arg_13_1] = var_13_0
+		self._riverBlockAddParams[keyName] = blockParams
 	end
 end
 
-function var_0_0._refreshEffect(arg_14_0)
-	if arg_14_0._riverBlockRemoveParams then
-		arg_14_0.effect:removeParams(arg_14_0._riverBlockRemoveParams)
+function RoomBaseBlockEntity:_refreshEffect()
+	if self._riverBlockRemoveParams then
+		self.effect:removeParams(self._riverBlockRemoveParams)
 
-		arg_14_0._riverBlockRemoveParams = nil
+		self._riverBlockRemoveParams = nil
 	end
 
-	if arg_14_0._riverBlockAddParams then
-		arg_14_0.effect:addParams(arg_14_0._riverBlockAddParams)
+	if self._riverBlockAddParams then
+		self.effect:addParams(self._riverBlockAddParams)
 
-		arg_14_0._riverBlockAddParams = nil
+		self._riverBlockAddParams = nil
 	end
 
-	arg_14_0.effect:refreshEffect()
+	self.effect:refreshEffect()
 end
 
-function var_0_0.onReviseResParams(arg_15_0, arg_15_1)
+function RoomBaseBlockEntity:onReviseResParams(tableParam)
 	return
 end
 
-function var_0_0.onEffectRebuild(arg_16_0)
+function RoomBaseBlockEntity:onEffectRebuild()
 	return
 end
 
-function var_0_0.refreshRotation(arg_17_0, arg_17_1)
-	arg_17_1 = false
+function RoomBaseBlockEntity:refreshRotation(tween)
+	tween = false
 
-	local var_17_0 = arg_17_0:getMO():getRotate()
+	local mo = self:getMO()
+	local blockRotate = mo:getRotate()
 
-	if arg_17_0._rotationTweenId then
-		ZProj.TweenHelper.KillById(arg_17_0._rotationTweenId)
+	if self._rotationTweenId then
+		ZProj.TweenHelper.KillById(self._rotationTweenId)
 	end
 
-	if arg_17_1 then
-		arg_17_0._rotationTweenId = ZProj.TweenHelper.DOLocalRotate(arg_17_0.containerGOTrs, 0, var_17_0 * 60, 0, 0.1, nil, arg_17_0, nil, EaseType.Linear)
+	if tween then
+		self._rotationTweenId = ZProj.TweenHelper.DOLocalRotate(self.containerGOTrs, 0, blockRotate * 60, 0, 0.1, nil, self, nil, EaseType.Linear)
 	else
-		transformhelper.setLocalRotation(arg_17_0.containerGOTrs, 0, var_17_0 * 60, 0)
+		transformhelper.setLocalRotation(self.containerGOTrs, 0, blockRotate * 60, 0)
 	end
 end
 
-function var_0_0.refreshBlock(arg_18_0)
-	arg_18_0:refreshLand()
-	arg_18_0.effect:refreshEffect()
+function RoomBaseBlockEntity:refreshBlock()
+	self:refreshLand()
+	self.effect:refreshEffect()
 end
 
-function var_0_0.refreshTempOccupy(arg_19_0)
+function RoomBaseBlockEntity:refreshTempOccupy()
 	return
 end
 
-function var_0_0.setLocalPos(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	transformhelper.setLocalPos(arg_20_0.goTrs, arg_20_1, arg_20_2, arg_20_3)
+function RoomBaseBlockEntity:setLocalPos(x, y, z)
+	transformhelper.setLocalPos(self.goTrs, x, y, z)
 end
 
-function var_0_0.beforeDestroy(arg_21_0)
-	arg_21_0:_returnAnimator()
+function RoomBaseBlockEntity:beforeDestroy()
+	self:_returnAnimator()
 
-	if arg_21_0._rotationTweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._rotationTweenId)
+	if self._rotationTweenId then
+		ZProj.TweenHelper.KillById(self._rotationTweenId)
 	end
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._compList) do
-		if iter_21_1.beforeDestroy then
-			iter_21_1:beforeDestroy()
+	for _, comp in ipairs(self._compList) do
+		if comp.beforeDestroy then
+			comp:beforeDestroy()
 		end
 	end
 end
 
-function var_0_0.setBatchEnabled(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.go:GetComponentsInChildren(typeof(UrpCustom.BatchRendererEntity), true)
+function RoomBaseBlockEntity:setBatchEnabled(isEnabled)
+	local batchRendererEntityList = self.go:GetComponentsInChildren(typeof(UrpCustom.BatchRendererEntity), true)
 
-	if var_22_0 then
-		local var_22_1 = {}
+	if batchRendererEntityList then
+		local list = {}
 
-		RoomHelper.cArrayToLuaTable(var_22_0, var_22_1)
+		RoomHelper.cArrayToLuaTable(batchRendererEntityList, list)
 
-		for iter_22_0 = 1, #var_22_1 do
-			var_22_1[iter_22_0].enabled = arg_22_1
+		for i = 1, #list do
+			local batchRendererEntity = list[i]
+
+			batchRendererEntity.enabled = isEnabled
 		end
 	end
 end
 
-function var_0_0.playAnim(arg_23_0, arg_23_1, arg_23_2)
-	if not arg_23_0._animator then
-		arg_23_0._animator = gohelper.onceAddComponent(arg_23_0.go, typeof(UnityEngine.Animator))
+function RoomBaseBlockEntity:playAnim(animRes, animName)
+	if not self._animator then
+		self._animator = gohelper.onceAddComponent(self.go, typeof(UnityEngine.Animator))
 	end
 
-	if not arg_23_0._animatorPlayer then
-		arg_23_0._animatorPlayer = gohelper.onceAddComponent(arg_23_0.go, typeof(SLFramework.AnimatorPlayer))
+	if not self._animatorPlayer then
+		self._animatorPlayer = gohelper.onceAddComponent(self.go, typeof(SLFramework.AnimatorPlayer))
 	end
 
-	local var_23_0 = arg_23_0._scene.preloader:getResource(arg_23_1)
+	local animController = self._scene.preloader:getResource(animRes)
 
-	arg_23_0._animator.runtimeAnimatorController = var_23_0
+	self._animator.runtimeAnimatorController = animController
 
-	arg_23_0._animatorPlayer:Play(arg_23_2, arg_23_0._returnAnimator, arg_23_0)
+	self._animatorPlayer:Play(animName, self._returnAnimator, self)
 end
 
-function var_0_0._returnAnimator(arg_24_0)
-	if arg_24_0._animatorPlayer then
-		gohelper.removeComponent(arg_24_0.go, typeof(SLFramework.AnimatorPlayer))
+function RoomBaseBlockEntity:_returnAnimator()
+	if self._animatorPlayer then
+		gohelper.removeComponent(self.go, typeof(SLFramework.AnimatorPlayer))
 
-		arg_24_0._animatorPlayer = nil
+		self._animatorPlayer = nil
 	end
 
-	if arg_24_0._animator then
-		gohelper.removeComponent(arg_24_0.go, typeof(UnityEngine.Animator))
+	if self._animator then
+		gohelper.removeComponent(self.go, typeof(UnityEngine.Animator))
 
-		arg_24_0._animator = nil
+		self._animator = nil
 	end
 end
 
-function var_0_0.checkSideShow(arg_25_0)
-	local var_25_0 = arg_25_0:getMO()
+function RoomBaseBlockEntity:checkSideShow()
+	local mo = self:getMO()
 
-	if not var_25_0 then
+	if not mo then
 		return false
 	end
 
-	local var_25_1 = false
+	local show = false
 
-	if var_25_0.blockState == RoomBlockEnum.BlockState.Map then
-		var_25_1 = true
+	if mo.blockState == RoomBlockEnum.BlockState.Map then
+		show = true
 
-		local var_25_2 = var_25_0.hexPoint
-		local var_25_3 = var_25_2:getNeighbors()
+		local hexPoint = mo.hexPoint
+		local neighbors = hexPoint:getNeighbors()
 
-		for iter_25_0 = 1, 6 do
-			local var_25_4 = HexPoint.directions[iter_25_0]
-			local var_25_5 = RoomMapBlockModel.instance:getBlockMO(var_25_4.x + var_25_2.x, var_25_4.y + var_25_2.y)
+		for i = 1, 6 do
+			local neighbor = HexPoint.directions[i]
+			local neighborMO = RoomMapBlockModel.instance:getBlockMO(neighbor.x + hexPoint.x, neighbor.y + hexPoint.y)
 
-			if not var_25_5 or var_25_5.blockState ~= RoomBlockEnum.BlockState.Map then
-				var_25_1 = false
+			if not neighborMO or neighborMO.blockState ~= RoomBlockEnum.BlockState.Map then
+				show = false
 
 				break
 			end
 		end
 	end
 
-	return var_25_1
+	return show
 end
 
-function var_0_0._getRiverEffectRes(arg_26_0, arg_26_1, arg_26_2)
-	return RoomResHelper.getBlockLandPath(arg_26_1, arg_26_2)
+function RoomBaseBlockEntity:_getRiverEffectRes(defineBlockType, isReplace)
+	return RoomResHelper.getBlockLandPath(defineBlockType, isReplace)
 end
 
-function var_0_0.getMO(arg_27_0)
+function RoomBaseBlockEntity:getMO()
 	return
 end
 
-function var_0_0.getMainEffectKey(arg_28_0)
+function RoomBaseBlockEntity:getMainEffectKey()
 	return RoomEnum.EffectKey.BlockLandKey
 end
 
-return var_0_0
+return RoomBaseBlockEntity

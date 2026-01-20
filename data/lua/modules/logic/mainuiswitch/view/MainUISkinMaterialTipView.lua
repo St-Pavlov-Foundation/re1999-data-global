@@ -1,9 +1,11 @@
-﻿module("modules.logic.mainuiswitch.view.MainUISkinMaterialTipView", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/MainUISkinMaterialTipView.lua
 
-local var_0_0 = class("MainUISkinMaterialTipView", MainSceneSkinMaterialTipView)
+module("modules.logic.mainuiswitch.view.MainUISkinMaterialTipView", package.seeall)
 
-function var_0_0.onClickModalMask(arg_1_0)
-	arg_1_0:closeThis()
+local MainUISkinMaterialTipView = class("MainUISkinMaterialTipView", MainSceneSkinMaterialTipView)
+
+function MainUISkinMaterialTipView:onClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return MainUISkinMaterialTipView

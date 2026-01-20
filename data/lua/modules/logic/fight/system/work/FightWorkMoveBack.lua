@@ -1,171 +1,188 @@
-﻿module("modules.logic.fight.system.work.FightWorkMoveBack", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkMoveBack.lua
 
-local var_0_0 = class("FightWorkMoveBack", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkMoveBack", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	if arg_1_1 then
-		arg_1_1.custom_ingoreParallelSkill = true
+local FightWorkMoveBack = class("FightWorkMoveBack", FightEffectBase)
+
+function FightWorkMoveBack:ctor(fightStepData, actEffectData)
+	if fightStepData then
+		fightStepData.custom_ingoreParallelSkill = true
 	end
 
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2)
+	FightWorkMoveBack.super.ctor(self, fightStepData, actEffectData)
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._performanceTime = 0.75 / FightModel.instance:getSpeed()
+function FightWorkMoveBack:onStart()
+	self._performanceTime = 0.75 / FightModel.instance:getSpeed()
 
-	arg_2_0:com_registTimer(arg_2_0._delayDone, 5)
+	self:com_registTimer(self._delayDone, 5)
 
-	arg_2_0._flow = FlowParallel.New()
-	arg_2_0._cacheEntityIds = {}
+	self._flow = FlowParallel.New()
+	self._cacheEntityIds = {}
 
-	local var_2_0 = arg_2_0.actEffectData.targetId
-	local var_2_1 = FightDataHelper.entityMgr:getById(var_2_0)
+	local tarEntityId = self.actEffectData.targetId
+	local tarEntityMO = FightDataHelper.entityMgr:getById(tarEntityId)
 
-	if var_2_1 then
-		local var_2_2 = FightHelper.getEntity(var_2_0)
+	if tarEntityMO then
+		local entity = FightHelper.getEntity(tarEntityId)
 
-		if var_2_2 then
-			local var_2_3 = var_2_1
+		if entity then
+			local entityMO = tarEntityMO
 
-			if var_2_2.mover then
+			if entity.mover then
 				AudioMgr.instance:trigger(410000089)
 
-				local var_2_4 = 0.5 / FightModel.instance:getSpeed()
-				local var_2_5, var_2_6, var_2_7, var_2_8 = FightHelper.getEntityStandPos(var_2_3)
-				local var_2_9 = FlowParallel.New()
+				local tarTime = 0.5 / FightModel.instance:getSpeed()
+				local endX, endY, endZ, targetScale = FightHelper.getEntityStandPos(entityMO)
+				local parallelFlow = FlowParallel.New()
 
-				var_2_9:addWork(FunctionWork.New(arg_2_0._playEffect, arg_2_0, var_2_2))
-				var_2_9:addWork(TweenWork.New({
+				parallelFlow:addWork(FunctionWork.New(self._playEffect, self, entity))
+				parallelFlow:addWork(TweenWork.New({
 					type = "DOScale",
-					tr = var_2_2.go.transform,
-					to = var_2_8,
-					t = var_2_4,
+					tr = entity.go.transform,
+					to = targetScale,
+					t = tarTime,
 					ease = EaseType.InOutQuad
 				}))
-				var_2_9:addWork(TweenWork.New({
+				parallelFlow:addWork(TweenWork.New({
 					from = 0,
 					type = "DOTweenFloat",
 					to = 1,
-					t = var_2_4,
-					frameCb = arg_2_0._onFloat,
-					cbObj = arg_2_0,
-					param = var_2_2,
+					t = tarTime,
+					frameCb = self._onFloat,
+					cbObj = self,
+					param = entity,
 					ease = EaseType.InOutQuad
 				}))
-				var_2_9:addWork(TweenWork.New({
+				parallelFlow:addWork(TweenWork.New({
 					type = "DOMove",
-					tr = var_2_2.go.transform,
-					tox = var_2_5,
-					toy = var_2_6,
-					toz = var_2_7,
-					t = var_2_4,
+					tr = entity.go.transform,
+					tox = endX,
+					toy = endY,
+					toz = endZ,
+					t = tarTime,
 					ease = EaseType.InOutQuad
 				}))
-				arg_2_0._flow:addWork(var_2_9)
-				table.insert(arg_2_0._cacheEntityIds, var_2_3.id)
+				self._flow:addWork(parallelFlow)
+				table.insert(self._cacheEntityIds, entityMO.id)
 			end
 		end
 	end
 
-	local var_2_10 = string.split(arg_2_0.actEffectData.reserveStr, "|")
+	local arr = string.split(self.actEffectData.reserveStr, "|")
 
-	if #var_2_10 > 0 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_10) do
-			local var_2_11 = string.split(iter_2_1, "#")[1]
-			local var_2_12 = FightDataHelper.entityMgr:getById(var_2_11)
+	if #arr > 0 then
+		for i, v in ipairs(arr) do
+			local arr1 = string.split(v, "#")
+			local entityId = arr1[1]
+			local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-			if var_2_12 then
-				local var_2_13 = FightHelper.getEntity(var_2_11)
+			if entityMO then
+				local entity = FightHelper.getEntity(entityId)
 
-				if var_2_13 then
-					local var_2_14 = FlowSequence.New()
+				if entity then
+					local flow = FlowSequence.New()
 
-					var_2_14:addWork(WorkWaitSeconds.New(0.15 / FightModel.instance:getSpeed()))
+					flow:addWork(WorkWaitSeconds.New(0.15 / FightModel.instance:getSpeed()))
 
-					local var_2_15 = FlowParallel.New()
-					local var_2_16, var_2_17, var_2_18, var_2_19 = FightHelper.getEntityStandPos(var_2_12)
-					local var_2_20 = 0.6 / FightModel.instance:getSpeed()
+					local parallelFlow = FlowParallel.New()
+					local endX, endY, endZ, targetScale = FightHelper.getEntityStandPos(entityMO)
+					local tarTime = 0.6 / FightModel.instance:getSpeed()
 
-					var_2_15:addWork(TweenWork.New({
+					parallelFlow:addWork(TweenWork.New({
 						type = "DOScale",
-						tr = var_2_13.go.transform,
-						to = var_2_19,
-						t = var_2_20,
+						tr = entity.go.transform,
+						to = targetScale,
+						t = tarTime,
 						ease = EaseType.InOutQuad
 					}))
-					var_2_15:addWork(TweenWork.New({
+					parallelFlow:addWork(TweenWork.New({
 						from = 0,
 						type = "DOTweenFloat",
 						to = 1,
-						t = var_2_20,
-						frameCb = arg_2_0._onFloat,
-						cbObj = arg_2_0,
-						param = var_2_13,
+						t = tarTime,
+						frameCb = self._onFloat,
+						cbObj = self,
+						param = entity,
 						ease = EaseType.InOutQuad
 					}))
-					var_2_15:addWork(TweenWork.New({
+					parallelFlow:addWork(TweenWork.New({
 						type = "DOMove",
-						tr = var_2_13.go.transform,
-						tox = var_2_16,
-						toy = var_2_17,
-						toz = var_2_18,
-						t = var_2_20,
+						tr = entity.go.transform,
+						tox = endX,
+						toy = endY,
+						toz = endZ,
+						t = tarTime,
 						ease = EaseType.InOutQuad
 					}))
-					var_2_14:addWork(var_2_15)
-					arg_2_0._flow:addWork(var_2_14)
-					table.insert(arg_2_0._cacheEntityIds, var_2_12.id)
+					flow:addWork(parallelFlow)
+					self._flow:addWork(flow)
+					table.insert(self._cacheEntityIds, entityMO.id)
 				end
 			end
 		end
 	end
 
-	arg_2_0._flow:registerDoneListener(arg_2_0._onFlowDone, arg_2_0)
-	arg_2_0._flow:start()
+	self._flow:registerDoneListener(self._onFlowDone, self)
+	self._flow:start()
 end
 
-function var_0_0._onFlowDone(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkMoveBack:_onFlowDone()
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkMoveBack:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0._playEffect(arg_5_0, arg_5_1)
-	if arg_5_1 and arg_5_1.effect then
-		local var_5_0 = arg_5_1.effect:addHangEffect("buff/buff_houtui_jiantou", "mountbody", nil, arg_5_0._performanceTime)
+function FightWorkMoveBack:_playEffect(entity)
+	if not entity then
+		return
+	end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(arg_5_1.id, var_5_0)
-		var_5_0:setLocalPos(0, 0, 0)
+	if not entity.effect then
+		return
+	end
 
-		local var_5_1 = arg_5_1.effect:addHangEffect("buff/buff_houtui_tuowei", "mountbody", nil, arg_5_0._performanceTime)
+	if FightDataHelper.fieldMgr:isRouge2() then
+		local entityMo = entity:getMO()
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(arg_5_1.id, var_5_1)
-		var_5_1:setLocalPos(0, 0, 0)
+		if entityMo.side == FightEnum.TeamType.EnemySide and not entityMo:hasBuffId(116320031) then
+			return
+		end
+	end
+
+	local effectWrap = entity.effect:addHangEffect("buff/buff_houtui_jiantou", "mountbody", nil, self._performanceTime)
+
+	FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
+	effectWrap:setLocalPos(0, 0, 0)
+
+	effectWrap = entity.effect:addHangEffect("buff/buff_houtui_tuowei", "mountbody", nil, self._performanceTime)
+
+	FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
+	effectWrap:setLocalPos(0, 0, 0)
+end
+
+function FightWorkMoveBack:_onFloat(num, entity)
+	if entity.go then
+		FightController.instance:dispatchEvent(FightEvent.UpdateUIFollower, entity.id)
 	end
 end
 
-function var_0_0._onFloat(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_2.go then
-		FightController.instance:dispatchEvent(FightEvent.UpdateUIFollower, arg_6_2.id)
-	end
-end
+function FightWorkMoveBack:clearWork()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onFlowDone, self)
+		self._flow:stop()
 
-function var_0_0.clearWork(arg_7_0)
-	if arg_7_0._flow then
-		arg_7_0._flow:unregisterDoneListener(arg_7_0._onFlowDone, arg_7_0)
-		arg_7_0._flow:stop()
-
-		arg_7_0._flow = nil
+		self._flow = nil
 	end
 
-	if arg_7_0._cacheEntityIds then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._cacheEntityIds) do
-			local var_7_0 = FightHelper.getEntity(iter_7_1)
+	if self._cacheEntityIds then
+		for i, v in ipairs(self._cacheEntityIds) do
+			local entity = FightHelper.getEntity(v)
 
-			if var_7_0 and var_7_0.effect then
-				var_7_0.effect:refreshAllEffectLabel1()
+			if entity and entity.effect then
+				entity.effect:refreshAllEffectLabel1()
 			end
 		end
 	end
@@ -173,4 +190,4 @@ function var_0_0.clearWork(arg_7_0)
 	FightRenderOrderMgr.instance:setSortType(FightEnum.RenderOrderType.StandPos)
 end
 
-return var_0_0
+return FightWorkMoveBack

@@ -1,14 +1,16 @@
-﻿module("modules.logic.seasonver.act123.model.Season123PickHeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123PickHeroMO.lua
 
-local var_0_0 = pureTable("Season123PickHeroMO")
+module("modules.logic.seasonver.act123.model.Season123PickHeroMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.id = arg_1_1
-	arg_1_0.uid = arg_1_1
-	arg_1_0.index = arg_1_4
-	arg_1_0.heroId = arg_1_2
-	arg_1_0.skin = arg_1_3
-	arg_1_0.isSelect = false
+local Season123PickHeroMO = pureTable("Season123PickHeroMO")
+
+function Season123PickHeroMO:init(heroUid, heroId, skinId, index)
+	self.id = heroUid
+	self.uid = heroUid
+	self.index = index
+	self.heroId = heroId
+	self.skin = skinId
+	self.isSelect = false
 end
 
-return var_0_0
+return Season123PickHeroMO

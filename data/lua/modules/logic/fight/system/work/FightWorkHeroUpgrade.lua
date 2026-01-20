@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkHeroUpgrade", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkHeroUpgrade.lua
 
-local var_0_0 = class("FightWorkHeroUpgrade", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkHeroUpgrade", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkHeroUpgrade = class("FightWorkHeroUpgrade", FightEffectBase)
+
+function FightWorkHeroUpgrade:onStart()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkHeroUpgrade:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkHeroUpgrade

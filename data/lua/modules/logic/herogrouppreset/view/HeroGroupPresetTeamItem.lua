@@ -1,471 +1,475 @@
-﻿module("modules.logic.herogrouppreset.view.HeroGroupPresetTeamItem", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/view/HeroGroupPresetTeamItem.lua
 
-local var_0_0 = class("HeroGroupPresetTeamItem", ListScrollCellExtend)
+module("modules.logic.herogrouppreset.view.HeroGroupPresetTeamItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "#go_info")
-	arg_1_0._btninfoclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/#btn_infoclick")
-	arg_1_0._goherogrouplist = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_herogrouplist")
-	arg_1_0._gobossitem = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_bossitem")
-	arg_1_0._btnclickboss = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/#go_bossitem/#btn_clickboss")
-	arg_1_0._gobossempty = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_bossitem/#go_bossempty")
-	arg_1_0._gobosscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_bossitem/#go_bosscontainer")
-	arg_1_0._simagebossicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/#go_bossitem/#go_bosscontainer/#simage_bossicon")
-	arg_1_0._imagebosscareer = gohelper.findChildImage(arg_1_0.viewGO, "#go_info/#go_bossitem/#go_bosscontainer/#image_bosscareer")
-	arg_1_0._simagecloth = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_info/#simage_cloth")
-	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/#btn_use")
-	arg_1_0._gousing = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_using")
-	arg_1_0._btnreplace = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/#btn_replace")
-	arg_1_0._goreplaced = gohelper.findChild(arg_1_0.viewGO, "#go_info/#go_replaced")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_info/#txt_num")
-	arg_1_0._btndelete = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/top/#btn_delete")
-	arg_1_0._btntop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/top/#btn_top")
-	arg_1_0._btnrename = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_info/top/#btn_rename")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_info/top/#btn_rename/#txt_name")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_add")
+local HeroGroupPresetTeamItem = class("HeroGroupPresetTeamItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupPresetTeamItem:onInitView()
+	self._goinfo = gohelper.findChild(self.viewGO, "#go_info")
+	self._btninfoclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/#btn_infoclick")
+	self._goherogrouplist = gohelper.findChild(self.viewGO, "#go_info/#go_herogrouplist")
+	self._gobossitem = gohelper.findChild(self.viewGO, "#go_info/#go_bossitem")
+	self._btnclickboss = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/#go_bossitem/#btn_clickboss")
+	self._gobossempty = gohelper.findChild(self.viewGO, "#go_info/#go_bossitem/#go_bossempty")
+	self._gobosscontainer = gohelper.findChild(self.viewGO, "#go_info/#go_bossitem/#go_bosscontainer")
+	self._simagebossicon = gohelper.findChildSingleImage(self.viewGO, "#go_info/#go_bossitem/#go_bosscontainer/#simage_bossicon")
+	self._imagebosscareer = gohelper.findChildImage(self.viewGO, "#go_info/#go_bossitem/#go_bosscontainer/#image_bosscareer")
+	self._simagecloth = gohelper.findChildSingleImage(self.viewGO, "#go_info/#simage_cloth")
+	self._btnuse = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/#btn_use")
+	self._gousing = gohelper.findChild(self.viewGO, "#go_info/#go_using")
+	self._btnreplace = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/#btn_replace")
+	self._goreplaced = gohelper.findChild(self.viewGO, "#go_info/#go_replaced")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_info/#txt_num")
+	self._btndelete = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/top/#btn_delete")
+	self._btntop = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/top/#btn_top")
+	self._btnrename = gohelper.findChildButtonWithAudio(self.viewGO, "#go_info/top/#btn_rename")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_info/top/#btn_rename/#txt_name")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_add")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btninfoclick:AddClickListener(arg_2_0._btninfoclickOnClick, arg_2_0)
-	arg_2_0._btnclickboss:AddClickListener(arg_2_0._btnclickbossOnClick, arg_2_0)
-	arg_2_0._btnuse:AddClickListener(arg_2_0._btnuseOnClick, arg_2_0)
-	arg_2_0._btnreplace:AddClickListener(arg_2_0._btnreplaceOnClick, arg_2_0)
-	arg_2_0._btndelete:AddClickListener(arg_2_0._btndeleteOnClick, arg_2_0)
-	arg_2_0._btntop:AddClickListener(arg_2_0._btntopOnClick, arg_2_0)
-	arg_2_0._btnrename:AddClickListener(arg_2_0._btnrenameOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+function HeroGroupPresetTeamItem:addEvents()
+	self._btninfoclick:AddClickListener(self._btninfoclickOnClick, self)
+	self._btnclickboss:AddClickListener(self._btnclickbossOnClick, self)
+	self._btnuse:AddClickListener(self._btnuseOnClick, self)
+	self._btnreplace:AddClickListener(self._btnreplaceOnClick, self)
+	self._btndelete:AddClickListener(self._btndeleteOnClick, self)
+	self._btntop:AddClickListener(self._btntopOnClick, self)
+	self._btnrename:AddClickListener(self._btnrenameOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btninfoclick:RemoveClickListener()
-	arg_3_0._btnclickboss:RemoveClickListener()
-	arg_3_0._btnuse:RemoveClickListener()
-	arg_3_0._btnreplace:RemoveClickListener()
-	arg_3_0._btndelete:RemoveClickListener()
-	arg_3_0._btntop:RemoveClickListener()
-	arg_3_0._btnrename:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
+function HeroGroupPresetTeamItem:removeEvents()
+	self._btninfoclick:RemoveClickListener()
+	self._btnclickboss:RemoveClickListener()
+	self._btnuse:RemoveClickListener()
+	self._btnreplace:RemoveClickListener()
+	self._btndelete:RemoveClickListener()
+	self._btntop:RemoveClickListener()
+	self._btnrename:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
 end
 
-function var_0_0._btnclickbossOnClick(arg_4_0)
+function HeroGroupPresetTeamItem:_btnclickbossOnClick()
 	if HeroGroupPresetController.instance:isFightScene() then
 		GameFacade.showToast(ToastEnum.HeroGroupPresetCannotEditTip)
 
 		return
 	end
 
-	TowerController.instance:openAssistBossView(arg_4_0._mo.assistBossId, true, TowerEnum.TowerType.Normal, TowerEnum.PermanentTowerId, {
+	TowerController.instance:openAssistBossView(self._mo.assistBossId, true, TowerEnum.TowerType.Normal, TowerEnum.PermanentTowerId, {
 		towerAssistBossItemCls = HeroGroupPresetTowerAssistBossItem,
-		heroGroupMO = arg_4_0._mo,
+		heroGroupMO = self._mo,
 		saveGroup = function()
-			HeroGroupPresetModel.instance:externalSaveCurGroupData(nil, nil, arg_4_0._mo, arg_4_0._groupId, arg_4_0._mo.id)
-			arg_4_0:_showBossInfo()
+			HeroGroupPresetModel.instance:externalSaveCurGroupData(nil, nil, self._mo, self._groupId, self._mo.id)
+			self:_showBossInfo()
 		end
 	})
 end
 
-function var_0_0._btnaddOnClick(arg_6_0)
-	local var_6_0 = HeroGroupPresetHeroGroupChangeController.instance:getEmptyHeroGroupId(arg_6_0._groupId)
+function HeroGroupPresetTeamItem:_btnaddOnClick()
+	local subId = HeroGroupPresetHeroGroupChangeController.instance:getEmptyHeroGroupId(self._groupId)
 
-	if not var_6_0 then
+	if not subId then
 		logError("HeroGroupPresetTeamItem addHeroGroup failed")
 
 		return
 	end
 
-	arg_6_0._newSubId = var_6_0
+	self._newSubId = subId
 
-	arg_6_0:_addNewHeroGroup(var_6_0)
+	self:_addNewHeroGroup(subId)
 end
 
-function var_0_0._addNewHeroGroup(arg_7_0, arg_7_1)
-	local var_7_0 = HeroGroupPresetHeroGroupNameController.instance:getName(arg_7_0._groupId, arg_7_1)
+function HeroGroupPresetTeamItem:_addNewHeroGroup(subId)
+	local name = HeroGroupPresetHeroGroupNameController.instance:getName(self._groupId, subId)
 
 	HeroGroupPresetController.instance:openHeroGroupPresetModifyNameView({
-		name = var_7_0,
-		groupId = arg_7_0._groupId,
-		subId = arg_7_1,
-		addCallback = arg_7_0._addNewHeroGroupNameCallback,
-		callbackObj = arg_7_0
+		name = name,
+		groupId = self._groupId,
+		subId = subId,
+		addCallback = self._addNewHeroGroupNameCallback,
+		callbackObj = self
 	})
 end
 
-function var_0_0._addNewHeroGroupNameCallback(arg_8_0, arg_8_1)
-	arg_8_0._newHeroGroupName = arg_8_1
-	arg_8_0._newHeroGroupMo = HeroGroupMO.New()
+function HeroGroupPresetTeamItem:_addNewHeroGroupNameCallback(name)
+	self._newHeroGroupName = name
+	self._newHeroGroupMo = HeroGroupMO.New()
 
-	arg_8_0:_addHeroGroupMo(arg_8_0._addCallback, arg_8_0, arg_8_0._newHeroGroupMo, arg_8_0._groupId, arg_8_0._newSubId)
+	self:_addHeroGroupMo(self._addCallback, self, self._newHeroGroupMo, self._groupId, self._newSubId)
 end
 
-function var_0_0._addHeroGroupMo(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
-	arg_9_3.groupId = arg_9_5
-	arg_9_3.id = arg_9_5
+function HeroGroupPresetTeamItem:_addHeroGroupMo(callback, callbackObj, heroGroupMO, groupId, subId)
+	heroGroupMO.groupId = subId
+	heroGroupMO.id = subId
 
-	local var_9_0 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
-	local var_9_1 = arg_9_3:getMainList()
-	local var_9_2 = arg_9_3:getSubList()
+	local req = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+	local mainList = heroGroupMO:getMainList()
+	local subList = heroGroupMO:getSubList()
 
-	FightParam.initFightGroup(var_9_0.fightGroup, arg_9_3.clothId, var_9_1, var_9_2)
+	FightParam.initFightGroup(req.fightGroup, heroGroupMO.clothId, mainList, subList)
 
-	local var_9_3 = arg_9_4
-	local var_9_4 = arg_9_5
+	local snapshotId = groupId
+	local snapshotSubId = subId
 
-	HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(var_9_3, var_9_4, var_9_0, arg_9_1, arg_9_2)
+	HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(snapshotId, snapshotSubId, req, callback, callbackObj)
 end
 
-function var_0_0._replaceHeroGroupMo(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._mo:replaceHeroList(arg_10_1)
+function HeroGroupPresetTeamItem:_replaceHeroGroupMo(heroList, callback, callbackObj)
+	self._mo:replaceHeroList(heroList)
 
-	local var_10_0 = arg_10_0._mo
-	local var_10_1 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+	local heroGroupMO = self._mo
+	local req = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
 
-	FightParam.initFightGroup(var_10_1.fightGroup, var_10_0.clothId, var_10_0:getMainList(), var_10_0:getSubList(), var_10_0:getAllHeroEquips(), var_10_0:getAllHeroActivity104Equips(), var_10_0:getAssistBossId())
+	FightParam.initFightGroup(req.fightGroup, heroGroupMO.clothId, heroGroupMO:getMainList(), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips(), heroGroupMO:getAssistBossId())
 
-	local var_10_2 = arg_10_0._groupId
-	local var_10_3 = arg_10_0._mo.id
+	local snapshotId = self._groupId
+	local snapshotSubId = self._mo.id
 
-	HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(var_10_2, var_10_3, var_10_1, arg_10_2, arg_10_3)
+	HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(snapshotId, snapshotSubId, req, callback, callbackObj)
 end
 
-function var_0_0._addCallback(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_2 ~= 0 then
+function HeroGroupPresetTeamItem:_addCallback(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	HeroGroupPresetHeroGroupChangeController.instance:addHeroGroup(arg_11_0._groupId, arg_11_0._newHeroGroupMo.id, arg_11_0._newHeroGroupMo)
-	HeroGroupPresetController.instance:addHeroGroupCopy(arg_11_0._groupId, arg_11_0._newHeroGroupMo.id, arg_11_0._newHeroGroupMo)
+	HeroGroupPresetHeroGroupChangeController.instance:addHeroGroup(self._groupId, self._newHeroGroupMo.id, self._newHeroGroupMo)
+	HeroGroupPresetController.instance:addHeroGroupCopy(self._groupId, self._newHeroGroupMo.id, self._newHeroGroupMo)
 	HeroGroupPresetItemListModel.instance:updateList()
-	HeroGroupRpc.instance:sendUpdateHeroGroupNameRequest(arg_11_0._groupId, arg_11_0._newSubId, arg_11_0._newHeroGroupName, HeroGroupPresetModifyNameView.UpdateHeroGroupNameRequest)
+	HeroGroupRpc.instance:sendUpdateHeroGroupNameRequest(self._groupId, self._newSubId, self._newHeroGroupName, HeroGroupPresetModifyNameView.UpdateHeroGroupNameRequest)
 
 	if HeroGroupPresetController.instance:isFightScene() then
-		arg_11_0:_useHeroGroup(arg_11_0._groupId, arg_11_0._newHeroGroupMo.id)
+		self:_useHeroGroup(self._groupId, self._newHeroGroupMo.id)
 
 		return
 	end
 
-	HeroGroupPresetItemListModel.instance:setNewHeroGroupInfo(arg_11_0._groupId, arg_11_0._newHeroGroupMo.id)
-	arg_11_0:_openHeroGroupPresetEditView(arg_11_0._newHeroGroupMo, arg_11_0._newHeroGroupMo.id, arg_11_0._newHeroGroupName, true)
+	HeroGroupPresetItemListModel.instance:setNewHeroGroupInfo(self._groupId, self._newHeroGroupMo.id)
+	self:_openHeroGroupPresetEditView(self._newHeroGroupMo, self._newHeroGroupMo.id, self._newHeroGroupName, true)
 end
 
-function var_0_0._btninfoclickOnClick(arg_12_0)
+function HeroGroupPresetTeamItem:_btninfoclickOnClick()
 	return
 end
 
-function var_0_0._openHeroGroupPresetEditView(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
+function HeroGroupPresetTeamItem:_openHeroGroupPresetEditView(herogroupMo, subId, heroGroupName, onlyQuickEdit, moIndex)
 	HeroGroupPresetSingleGroupModel.instance:setMaxHeroCount(HeroGroupPresetItemListModel.instance:getHeroNum())
-	HeroGroupPresetModel.instance:setHeroGroupSnapshotType(arg_13_0._groupId)
-	HeroGroupPresetModel.instance:setHeroGroupMo(arg_13_1)
-	HeroGroupPresetModel.instance:setCurGroupId(arg_13_2)
-	HeroGroupPresetItemListModel.instance:setHeroGroupSnapshotSubId(arg_13_2)
+	HeroGroupPresetModel.instance:setHeroGroupSnapshotType(self._groupId)
+	HeroGroupPresetModel.instance:setHeroGroupMo(herogroupMo)
+	HeroGroupPresetModel.instance:setCurGroupId(subId)
+	HeroGroupPresetItemListModel.instance:setHeroGroupSnapshotSubId(subId)
 
-	arg_13_5 = arg_13_5 or 1
+	moIndex = moIndex or 1
 
-	local var_13_0 = arg_13_1:getPosEquips(arg_13_5 - 1).equipUid
-	local var_13_1 = {
-		singleGroupMOId = arg_13_5,
-		originalHeroUid = HeroGroupPresetSingleGroupModel.instance:getHeroUid(arg_13_5),
-		equips = var_13_0,
-		onlyQuickEdit = arg_13_4,
-		heroGroupName = arg_13_3
-	}
+	local equips = herogroupMo:getPosEquips(moIndex - 1).equipUid
+	local param = {}
 
-	HeroGroupPresetController.instance:openHeroGroupPresetEditView(var_13_1)
+	param.singleGroupMOId = moIndex
+	param.originalHeroUid = HeroGroupPresetSingleGroupModel.instance:getHeroUid(moIndex)
+	param.equips = equips
+	param.onlyQuickEdit = onlyQuickEdit
+	param.heroGroupName = heroGroupName
+
+	HeroGroupPresetController.instance:openHeroGroupPresetEditView(param)
 end
 
-function var_0_0._btnreplaceOnClick(arg_14_0)
-	if not arg_14_0._view.viewParam then
+function HeroGroupPresetTeamItem:_btnreplaceOnClick()
+	if not self._view.viewParam then
 		return
 	end
 
-	local var_14_0 = arg_14_0._view.viewParam.replaceTeamList
+	local heroList = self._view.viewParam.replaceTeamList
 
-	if not var_14_0 then
+	if not heroList then
 		return
 	end
 
-	local var_14_1 = HeroGroupPresetItemListModel.instance:getReplaceTeamSubId(var_14_0)
+	local teamSubId = HeroGroupPresetItemListModel.instance:getReplaceTeamSubId(heroList)
 
-	if not var_14_1 or var_14_1 > 0 then
+	if not teamSubId or teamSubId > 0 then
 		return
 	end
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.CharacterRecommedGroupReplaceTip, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_14_0:_replaceHeroGroupMo(var_14_0, arg_14_0._replaceTeamCallback, arg_14_0)
-	end, nil, nil, arg_14_0)
+		self:_replaceHeroGroupMo(heroList, self._replaceTeamCallback, self)
+	end, nil, nil, self)
 end
 
-function var_0_0._btnrenameOnClick(arg_16_0)
+function HeroGroupPresetTeamItem:_btnrenameOnClick()
 	HeroGroupPresetController.instance:openHeroGroupPresetModifyNameView({
-		name = arg_16_0._name,
-		groupId = arg_16_0._groupId,
-		subId = arg_16_0._mo.id
+		name = self._name,
+		groupId = self._groupId,
+		subId = self._mo.id
 	})
 end
 
-function var_0_0._btnuseOnClick(arg_17_0)
-	arg_17_0:_useHeroGroup(arg_17_0._groupId, arg_17_0._mo.id)
+function HeroGroupPresetTeamItem:_btnuseOnClick()
+	self:_useHeroGroup(self._groupId, self._mo.id)
 end
 
-function var_0_0._useHeroGroup(arg_18_0, arg_18_1, arg_18_2)
+function HeroGroupPresetTeamItem:_useHeroGroup(groupId, subId)
 	HeroGroupPresetController.instance:revertCurHeroGroup()
 	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.UseHeroGroup, {
-		groupId = arg_18_1,
-		subId = arg_18_2
+		groupId = groupId,
+		subId = subId
 	})
-	ViewMgr.instance:closeView(arg_18_0._view.viewName, nil, true)
+	ViewMgr.instance:closeView(self._view.viewName, nil, true)
 end
 
-function var_0_0._btndeleteOnClick(arg_19_0)
+function HeroGroupPresetTeamItem:_btndeleteOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupDeleteTip, MsgBoxEnum.BoxType.Yes_No, function()
-		HeroGroupRpc.instance:sendDeleteHeroGroupRequest(arg_19_0._groupId, arg_19_0._mo.id)
+		HeroGroupRpc.instance:sendDeleteHeroGroupRequest(self._groupId, self._mo.id)
 	end)
 end
 
-function var_0_0._btntopOnClick(arg_21_0)
-	local var_21_0 = HeroGroupSnapshotModel.instance:getSortSubIds(arg_21_0._groupId)
+function HeroGroupPresetTeamItem:_btntopOnClick()
+	local sortList = HeroGroupSnapshotModel.instance:getSortSubIds(self._groupId)
 
-	tabletool.removeValue(var_21_0, arg_21_0._mo.id)
-	table.insert(var_21_0, 1, arg_21_0._mo.id)
-	HeroGroupRpc.instance:sendUpdateHeroGroupSortRequest(arg_21_0._groupId, var_21_0)
+	tabletool.removeValue(sortList, self._mo.id)
+	table.insert(sortList, 1, self._mo.id)
+	HeroGroupRpc.instance:sendUpdateHeroGroupSortRequest(self._groupId, sortList)
 end
 
-function var_0_0._editableInitView(arg_22_0)
-	arg_22_0._goclothbg = gohelper.findChild(arg_22_0.viewGO, "#go_info/clothbg")
-	arg_22_0._goline = gohelper.findChild(arg_22_0.viewGO, "#go_info/top/line")
+function HeroGroupPresetTeamItem:_editableInitView()
+	self._goclothbg = gohelper.findChild(self.viewGO, "#go_info/clothbg")
+	self._goline = gohelper.findChild(self.viewGO, "#go_info/top/line")
 
-	gohelper.setActive(arg_22_0._gousing, false)
+	gohelper.setActive(self._gousing, false)
 
-	arg_22_0._heroItemList = arg_22_0:getUserDataTb_()
+	self._heroItemList = self:getUserDataTb_()
 
-	gohelper.setActive(arg_22_0._goheroitem, false)
-	gohelper.setActive(arg_22_0._gobossitem, false)
-	gohelper.setActive(arg_22_0._simagecloth, false)
-	gohelper.setActive(arg_22_0._goclothbg, false)
+	gohelper.setActive(self._goheroitem, false)
+	gohelper.setActive(self._gobossitem, false)
+	gohelper.setActive(self._simagecloth, false)
+	gohelper.setActive(self._goclothbg, false)
 
-	arg_22_0._animator = arg_22_0.viewGO:GetComponent("Animator")
+	self._animator = self.viewGO:GetComponent("Animator")
 
-	function arg_22_0._getAnimator()
-		return arg_22_0._animator
+	function self._getAnimator()
+		return self._animator
 	end
 
-	arg_22_0.getAnimator = arg_22_0._getAnimator
+	self.getAnimator = self._getAnimator
 end
 
-function var_0_0._editableAddEvents(arg_24_0)
-	arg_24_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_24_0._modifyHeroGroup, arg_24_0)
-	arg_24_0:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UpdateGroupName, arg_24_0._onUpdateGroupName, arg_24_0)
-	arg_24_0:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.ClickHero, arg_24_0._onClickHero, arg_24_0)
-	arg_24_0:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.ClickEquip, arg_24_0._onClickEquip, arg_24_0)
-	arg_24_0:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.ChangeEquip, arg_24_0._onChangeEquip, arg_24_0)
-	arg_24_0:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UpdateHeroGroupSort, arg_24_0._onUpdateHeroGroupSort, arg_24_0)
-	arg_24_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_24_0._onCloseViewCallBack, arg_24_0)
+function HeroGroupPresetTeamItem:_editableAddEvents()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._modifyHeroGroup, self)
+	self:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UpdateGroupName, self._onUpdateGroupName, self)
+	self:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.ClickHero, self._onClickHero, self)
+	self:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.ClickEquip, self._onClickEquip, self)
+	self:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.ChangeEquip, self._onChangeEquip, self)
+	self:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UpdateHeroGroupSort, self._onUpdateHeroGroupSort, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewCallBack, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_25_0)
+function HeroGroupPresetTeamItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0._onCloseViewCallBack(arg_26_0, arg_26_1)
-	if arg_26_1 == ViewName.HeroGroupPresetEditView then
-		local var_26_0, var_26_1 = HeroGroupPresetItemListModel.instance:getNewHeroGroupInfo()
+function HeroGroupPresetTeamItem:_onCloseViewCallBack(viewName)
+	if viewName == ViewName.HeroGroupPresetEditView then
+		local heroGroupTpye, subId = HeroGroupPresetItemListModel.instance:getNewHeroGroupInfo()
 
-		if arg_26_0._groupId == var_26_0 and arg_26_0._mo.id == var_26_1 then
+		if self._groupId == heroGroupTpye and self._mo.id == subId then
 			HeroGroupPresetItemListModel.instance:setNewHeroGroupInfo()
-			arg_26_0._animator:Play("add", 0, 0)
+			self._animator:Play("add", 0, 0)
 		end
 	end
 end
 
-function var_0_0._onUpdateHeroGroupSort(arg_27_0)
-	arg_27_0:_showSetTopAnim()
+function HeroGroupPresetTeamItem:_onUpdateHeroGroupSort()
+	self:_showSetTopAnim()
 end
 
-function var_0_0._onChangeEquip(arg_28_0, arg_28_1, arg_28_2)
-	if arg_28_0._groupId == arg_28_1 and arg_28_0._mo and arg_28_0._mo.id == arg_28_2 then
-		arg_28_0:_refreshHeroItem()
+function HeroGroupPresetTeamItem:_onChangeEquip(presetGroupId, presetSubId)
+	if self._groupId == presetGroupId and self._mo and self._mo.id == presetSubId then
+		self:_refreshHeroItem()
 	end
 end
 
-function var_0_0._onClickHero(arg_29_0, arg_29_1, arg_29_2)
-	if arg_29_0._mo ~= arg_29_1 then
+function HeroGroupPresetTeamItem:_onClickHero(mo, index)
+	if self._mo ~= mo then
 		return
 	end
 
-	HeroGroupPresetItemListModel.instance:setEditHeroGroupSnapshotSubId(arg_29_0._mo.id)
-	arg_29_0:_openHeroGroupPresetEditView(arg_29_0._mo, arg_29_0._mo.id, arg_29_0._name, nil, arg_29_2)
+	HeroGroupPresetItemListModel.instance:setEditHeroGroupSnapshotSubId(self._mo.id)
+	self:_openHeroGroupPresetEditView(self._mo, self._mo.id, self._name, nil, index)
 end
 
-function var_0_0._onClickEquip(arg_30_0, arg_30_1, arg_30_2)
-	if arg_30_0._mo ~= arg_30_1 then
+function HeroGroupPresetTeamItem:_onClickEquip(mo, param)
+	if self._mo ~= mo then
 		return
 	end
 
-	arg_30_2.presetGroupId = arg_30_0._groupId
-	arg_30_2.presetSubId = arg_30_0._mo.id
-	arg_30_2.heroGroupMo = arg_30_0._mo
+	param.presetGroupId = self._groupId
+	param.presetSubId = self._mo.id
+	param.heroGroupMo = self._mo
 
-	EquipController.instance:openEquipInfoTeamView(arg_30_2)
+	EquipController.instance:openEquipInfoTeamView(param)
 end
 
-function var_0_0._modifyHeroGroup(arg_31_0)
-	if not arg_31_0._mo or arg_31_0._mo.id ~= HeroGroupPresetItemListModel.instance:getHeroGroupSnapshotSubId() then
+function HeroGroupPresetTeamItem:_modifyHeroGroup()
+	if not self._mo or self._mo.id ~= HeroGroupPresetItemListModel.instance:getHeroGroupSnapshotSubId() then
 		return
 	end
 
-	arg_31_0:_refreshHeroItem()
+	self:_refreshHeroItem()
 
-	if arg_31_0._mo and arg_31_0._mo.id == HeroGroupPresetItemListModel.instance:getEditHeroGroupSnapshotSubId() then
+	if self._mo and self._mo.id == HeroGroupPresetItemListModel.instance:getEditHeroGroupSnapshotSubId() then
 		HeroGroupPresetItemListModel.instance:setEditHeroGroupSnapshotSubId()
-		arg_31_0._animator:Play("refresh", 0, 0)
+		self._animator:Play("refresh", 0, 0)
 	end
 end
 
-function var_0_0._onUpdateGroupName(arg_32_0, arg_32_1)
-	if arg_32_0._mo and arg_32_0._mo.id == arg_32_1 then
-		arg_32_0:_updateName()
+function HeroGroupPresetTeamItem:_onUpdateGroupName(subId)
+	if self._mo and self._mo.id == subId then
+		self:_updateName()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_33_0, arg_33_1)
-	arg_33_0._groupId = HeroGroupPresetItemListModel.instance:getHeroGroupSnapshotType()
+function HeroGroupPresetTeamItem:onUpdateMO(mo)
+	self._groupId = HeroGroupPresetItemListModel.instance:getHeroGroupSnapshotType()
 
-	local var_33_0 = arg_33_1.__isAdd
+	local isAdd = mo.__isAdd
 
-	gohelper.setActive(arg_33_0._goinfo, not var_33_0)
-	gohelper.setActive(arg_33_0._btnadd, var_33_0)
+	gohelper.setActive(self._goinfo, not isAdd)
+	gohelper.setActive(self._btnadd, isAdd)
 
-	if var_33_0 then
+	if isAdd then
 		return
 	end
 
-	arg_33_0._mo = arg_33_1
-	arg_33_0._singleGroupModel = arg_33_0._singleGroupModel or HeroGroupPresetSingleGroupModel.New()
+	self._mo = mo
+	self._singleGroupModel = self._singleGroupModel or HeroGroupPresetSingleGroupModel.New()
 
-	if arg_33_0._heroNum ~= HeroGroupPresetItemListModel.instance:getHeroNum() then
-		arg_33_0._singleGroupModel:setMaxHeroCount(HeroGroupPresetItemListModel.instance:getHeroNum())
+	if self._heroNum ~= HeroGroupPresetItemListModel.instance:getHeroNum() then
+		self._singleGroupModel:setMaxHeroCount(HeroGroupPresetItemListModel.instance:getHeroNum())
 
-		arg_33_0._heroNum = HeroGroupPresetItemListModel.instance:getHeroNum()
+		self._heroNum = HeroGroupPresetItemListModel.instance:getHeroNum()
 	end
 
-	local var_33_1 = HeroGroupPresetItemListModel.instance:showDeleteBtn()
+	local showDeleteBtn = HeroGroupPresetItemListModel.instance:showDeleteBtn()
 
-	gohelper.setActive(arg_33_0._btndelete, var_33_1)
-	gohelper.setActive(arg_33_0._goline, var_33_1)
-	gohelper.setActive(arg_33_0._btntop, arg_33_0._index ~= 1)
-	arg_33_0:_refreshHeroItem()
-	arg_33_0:_updateName()
-	arg_33_0:_showFightInfo()
-	arg_33_0:_showBossInfo()
-	arg_33_0:_showReplace()
+	gohelper.setActive(self._btndelete, showDeleteBtn)
+	gohelper.setActive(self._goline, showDeleteBtn)
+	gohelper.setActive(self._btntop, self._index ~= 1)
+	self:_refreshHeroItem()
+	self:_updateName()
+	self:_showFightInfo()
+	self:_showBossInfo()
+	self:_showReplace()
 end
 
-function var_0_0._showSetTopAnim(arg_34_0)
-	arg_34_0.getAnimator = nil
+function HeroGroupPresetTeamItem:_showSetTopAnim()
+	self.getAnimator = nil
 
-	arg_34_0._animator:Play("open", 0, 0)
-	TaskDispatcher.cancelTask(arg_34_0._delayResetAnimator, arg_34_0)
-	TaskDispatcher.runDelay(arg_34_0._delayResetAnimator, arg_34_0, 0)
+	self._animator:Play("open", 0, 0)
+	TaskDispatcher.cancelTask(self._delayResetAnimator, self)
+	TaskDispatcher.runDelay(self._delayResetAnimator, self, 0)
 end
 
-function var_0_0._delayResetAnimator(arg_35_0)
-	arg_35_0.getAnimator = arg_35_0._getAnimator
+function HeroGroupPresetTeamItem:_delayResetAnimator()
+	self.getAnimator = self._getAnimator
 end
 
-function var_0_0._showBossInfo(arg_36_0)
-	local var_36_0 = HeroGroupPresetEnum.HeroGroupSnapshotTypeShowBoss[arg_36_0._groupId]
+function HeroGroupPresetTeamItem:_showBossInfo()
+	local showBoss = HeroGroupPresetEnum.HeroGroupSnapshotTypeShowBoss[self._groupId]
 
-	gohelper.setActive(arg_36_0._gobossitem, var_36_0)
+	gohelper.setActive(self._gobossitem, showBoss)
 
-	if not var_36_0 then
+	if not showBoss then
 		return
 	end
 
-	local var_36_1 = arg_36_0._mo.assistBossId
-	local var_36_2 = var_36_1 and TowerConfig.instance:getAssistBossConfig(var_36_1)
-	local var_36_3 = var_36_2 ~= nil
+	local assistBossId = self._mo.assistBossId
+	local bossConfig = assistBossId and TowerConfig.instance:getAssistBossConfig(assistBossId)
+	local showBossInfo = bossConfig ~= nil
 
-	gohelper.setActive(arg_36_0._gobossempty, not var_36_3)
-	gohelper.setActive(arg_36_0._gobosscontainer, var_36_3)
+	gohelper.setActive(self._gobossempty, not showBossInfo)
+	gohelper.setActive(self._gobosscontainer, showBossInfo)
 
-	if var_36_3 then
-		UISpriteSetMgr.instance:setCommonSprite(arg_36_0._imagebosscareer, string.format("lssx_%s", var_36_2.career))
+	if showBossInfo then
+		UISpriteSetMgr.instance:setCommonSprite(self._imagebosscareer, string.format("lssx_%s", bossConfig.career))
 
-		local var_36_4 = FightConfig.instance:getSkinCO(var_36_2.skinId)
+		local skinConfig = FightConfig.instance:getSkinCO(bossConfig.skinId)
 
-		arg_36_0._simagebossicon:LoadImage(ResUrl.monsterHeadIcon(var_36_4 and var_36_4.headIcon))
+		self._simagebossicon:LoadImage(ResUrl.monsterHeadIcon(skinConfig and skinConfig.headIcon))
 	end
 end
 
-function var_0_0._showFightInfo(arg_37_0)
-	if not HeroGroupPresetController.instance:isFightShowType() then
+function HeroGroupPresetTeamItem:_showFightInfo()
+	local isFightShowType = HeroGroupPresetController.instance:isFightShowType()
+
+	if not isFightShowType then
 		return
 	end
 
-	local var_37_0 = HeroGroupPresetController.instance:getSelectedSubId() == arg_37_0._mo.id
+	local isUse = HeroGroupPresetController.instance:getSelectedSubId() == self._mo.id
 
-	gohelper.setActive(arg_37_0._gousing, var_37_0)
-	gohelper.setActive(arg_37_0._btnuse, not var_37_0)
+	gohelper.setActive(self._gousing, isUse)
+	gohelper.setActive(self._btnuse, not isUse)
 
-	if var_37_0 then
-		gohelper.setActive(arg_37_0._btndelete, false)
+	if isUse then
+		gohelper.setActive(self._btndelete, false)
 	end
 end
 
-function var_0_0._updateName(arg_38_0)
-	arg_38_0._name = HeroGroupPresetHeroGroupNameController.instance:getName(arg_38_0._groupId, arg_38_0._mo.id)
-	arg_38_0._txtname.text = arg_38_0._name
+function HeroGroupPresetTeamItem:_updateName()
+	self._name = HeroGroupPresetHeroGroupNameController.instance:getName(self._groupId, self._mo.id)
+	self._txtname.text = self._name
 end
 
-function var_0_0._refreshHeroItem(arg_39_0)
+function HeroGroupPresetTeamItem:_refreshHeroItem()
 	if HeroGroupPresetController.instance:isFightScene() then
-		HeroGroupPresetHeroGroupChangeController.instance:handleHeroListData(arg_39_0._groupId, arg_39_0._mo)
+		HeroGroupPresetHeroGroupChangeController.instance:handleHeroListData(self._groupId, self._mo)
 	end
 
-	arg_39_0._singleGroupModel:setSingleGroup(arg_39_0._mo, HeroGroupPresetController.instance:isFightScene())
+	self._singleGroupModel:setSingleGroup(self._mo, HeroGroupPresetController.instance:isFightScene())
 
-	local var_39_0 = arg_39_0._mo.heroList
-	local var_39_1 = HeroGroupPresetItemListModel.instance:getHeroNum()
+	local heroList = self._mo.heroList
+	local num = HeroGroupPresetItemListModel.instance:getHeroNum()
 
-	for iter_39_0 = 1, var_39_1 do
-		local var_39_2 = var_39_0 and HeroModel.instance:getById(var_39_0[iter_39_0])
-		local var_39_3 = arg_39_0._heroItemList[iter_39_0]
+	for i = 1, num do
+		local heroData = heroList and HeroModel.instance:getById(heroList[i])
+		local heroItem = self._heroItemList[i]
 
-		if not var_39_3 then
-			local var_39_4 = arg_39_0._view.viewContainer:getSetting().otherRes[3]
-			local var_39_5 = arg_39_0._view:getResInst(var_39_4, arg_39_0._goherogrouplist)
+		if not heroItem then
+			local path = self._view.viewContainer:getSetting().otherRes[3]
+			local itemGo = self._view:getResInst(path, self._goherogrouplist)
 
-			var_39_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_39_5, HeroGroupPresetTeamHeroItem)
+			heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, HeroGroupPresetTeamHeroItem)
 
-			table.insert(arg_39_0._heroItemList, var_39_3)
+			table.insert(self._heroItemList, heroItem)
 		end
 
-		local var_39_6 = arg_39_0._singleGroupModel:getById(iter_39_0)
+		local singleGroupMo = self._singleGroupModel:getById(i)
 
-		var_39_3:onUpdateMO(var_39_6, var_39_2, arg_39_0._mo, iter_39_0)
+		heroItem:onUpdateMO(singleGroupMo, heroData, self._mo, i)
 	end
 end
 
-function var_0_0._showReplace(arg_40_0)
-	local var_40_0 = arg_40_0._view.viewParam and arg_40_0._view.viewParam.replaceTeamList
-	local var_40_1 = HeroGroupPresetItemListModel.instance:getReplaceTeamSubId(var_40_0)
+function HeroGroupPresetTeamItem:_showReplace()
+	local teamList = self._view.viewParam and self._view.viewParam.replaceTeamList
+	local teamSubId = HeroGroupPresetItemListModel.instance:getReplaceTeamSubId(teamList)
 
-	if not var_40_0 or not var_40_1 then
-		gohelper.setActive(arg_40_0._btnreplace.gameObject, false)
-		gohelper.setActive(arg_40_0._goreplaced.gameObject, false)
+	if not teamList or not teamSubId then
+		gohelper.setActive(self._btnreplace.gameObject, false)
+		gohelper.setActive(self._goreplaced.gameObject, false)
 
 		return
 	end
 
-	ZProj.UGUIHelper.SetGrayscale(arg_40_0._btnreplace.gameObject, var_40_1 > 0)
-	gohelper.setActive(arg_40_0._btnreplace.gameObject, var_40_1 ~= arg_40_0._mo.id)
-	gohelper.setActive(arg_40_0._goreplaced.gameObject, var_40_1 == arg_40_0._mo.id)
+	ZProj.UGUIHelper.SetGrayscale(self._btnreplace.gameObject, teamSubId > 0)
+	gohelper.setActive(self._btnreplace.gameObject, teamSubId ~= self._mo.id)
+	gohelper.setActive(self._goreplaced.gameObject, teamSubId == self._mo.id)
 end
 
-function var_0_0._replaceTeamCallback(arg_41_0)
+function HeroGroupPresetTeamItem:_replaceTeamCallback()
 	if HeroGroupPresetController.instance:isFightScene() then
 		HeroGroupPresetController.instance:updateFightHeroGroup()
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
@@ -477,15 +481,15 @@ function var_0_0._replaceTeamCallback(arg_41_0)
 	GameFacade.showToast(ToastEnum.CharacterRecommedGroupReplaceSuccess)
 end
 
-function var_0_0.onSelect(arg_42_0, arg_42_1)
+function HeroGroupPresetTeamItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_43_0)
-	TaskDispatcher.cancelTask(arg_43_0._delayResetAnimator, arg_43_0)
+function HeroGroupPresetTeamItem:onDestroyView()
+	TaskDispatcher.cancelTask(self._delayResetAnimator, self)
 
-	arg_43_0._getAnimator = nil
-	arg_43_0.getAnimator = nil
+	self._getAnimator = nil
+	self.getAnimator = nil
 end
 
-return var_0_0
+return HeroGroupPresetTeamItem

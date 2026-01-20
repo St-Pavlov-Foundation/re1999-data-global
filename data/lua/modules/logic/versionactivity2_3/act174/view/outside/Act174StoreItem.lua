@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.outside.Act174StoreItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/outside/Act174StoreItem.lua
 
-local var_0_0 = class("Act174StoreItem", UserDataDispose)
+module("modules.logic.versionactivity2_3.act174.view.outside.Act174StoreItem", package.seeall)
 
-local function var_0_1(arg_1_0, arg_1_1)
-	local var_1_0 = VersionActivity2_3Enum.ActivityId.Act174Store
-	local var_1_1 = arg_1_0.maxBuyCount ~= 0 and arg_1_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_0, arg_1_0.id) <= 0
-	local var_1_2 = arg_1_1.maxBuyCount ~= 0 and arg_1_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(var_1_0, arg_1_1.id) <= 0
+local Act174StoreItem = class("Act174StoreItem", UserDataDispose)
 
-	if var_1_1 ~= var_1_2 then
-		return var_1_2
+local function sortGoods(goodCo1, goodCo2)
+	local actId = VersionActivity2_3Enum.ActivityId.Act174Store
+	local goods1SellOut = goodCo1.maxBuyCount ~= 0 and goodCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodCo1.id) <= 0
+	local goods2SellOut = goodCo2.maxBuyCount ~= 0 and goodCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodCo2.id) <= 0
+
+	if goods1SellOut ~= goods2SellOut then
+		return goods2SellOut
 	end
 
-	return arg_1_0.id < arg_1_1.id
+	return goodCo1.id < goodCo2.id
 end
 
-function var_0_0.onInitView(arg_2_0, arg_2_1)
-	arg_2_0:__onInit()
+function Act174StoreItem:onInitView(go)
+	self:__onInit()
 
-	arg_2_0.go = arg_2_1
-	arg_2_0.goStoreGoodsItem = gohelper.findChild(arg_2_0.go, "#go_storegoodsitem")
+	self.go = go
+	self.goStoreGoodsItem = gohelper.findChild(self.go, "#go_storegoodsitem")
 
-	gohelper.setActive(arg_2_0.goStoreGoodsItem, false)
+	gohelper.setActive(self.goStoreGoodsItem, false)
 
-	arg_2_0.goodsItemList = arg_2_0:getUserDataTb_()
+	self.goodsItemList = self:getUserDataTb_()
 
-	arg_2_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_2_0.onBuyGoodsSuccess, arg_2_0)
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self.onBuyGoodsSuccess, self)
 end
 
-function var_0_0.onBuyGoodsSuccess(arg_3_0)
-	arg_3_0:sortGoodsCoList()
-	arg_3_0:refreshGoods()
+function Act174StoreItem:onBuyGoodsSuccess()
+	self:sortGoodsCoList()
+	self:refreshGoods()
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1, arg_4_2)
-	gohelper.setActive(arg_4_0.go, true)
+function Act174StoreItem:updateInfo(groupId, groupGoodsCoList)
+	gohelper.setActive(self.go, true)
 
-	arg_4_0.groupGoodsCoList = arg_4_2 or {}
-	arg_4_0.groupId = arg_4_1
+	self.groupGoodsCoList = groupGoodsCoList or {}
+	self.groupId = groupId
 
-	arg_4_0:sortGoodsCoList()
-	arg_4_0:refreshGoods()
+	self:sortGoodsCoList()
+	self:refreshGoods()
 end
 
-function var_0_0.sortGoodsCoList(arg_5_0)
-	table.sort(arg_5_0.groupGoodsCoList, var_0_1)
+function Act174StoreItem:sortGoodsCoList()
+	table.sort(self.groupGoodsCoList, sortGoods)
 end
 
-function var_0_0.refreshGoods(arg_6_0)
-	local var_6_0
+function Act174StoreItem:refreshGoods()
+	local goodsItem
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.groupGoodsCoList) do
-		local var_6_1 = arg_6_0.goodsItemList[iter_6_0]
+	for index, goodsCo in ipairs(self.groupGoodsCoList) do
+		goodsItem = self.goodsItemList[index]
 
-		if not var_6_1 then
-			local var_6_2 = gohelper.cloneInPlace(arg_6_0.goStoreGoodsItem)
+		if not goodsItem then
+			local goodsItemGO = gohelper.cloneInPlace(self.goStoreGoodsItem)
 
-			var_6_1 = Act174StoreGoodsItem.New()
+			goodsItem = Act174StoreGoodsItem.New()
 
-			var_6_1:onInitView(var_6_2)
-			table.insert(arg_6_0.goodsItemList, var_6_1)
+			goodsItem:onInitView(goodsItemGO)
+			table.insert(self.goodsItemList, goodsItem)
 		end
 
-		var_6_1:updateInfo(iter_6_1)
+		goodsItem:updateInfo(goodsCo)
 	end
 
-	for iter_6_2 = #arg_6_0.groupGoodsCoList + 1, #arg_6_0.goodsItemList do
-		arg_6_0.goodsItemList[iter_6_2]:hide()
+	for i = #self.groupGoodsCoList + 1, #self.goodsItemList do
+		self.goodsItemList[i]:hide()
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.goodsItemList) do
-		iter_7_1:onDestroy()
+function Act174StoreItem:onDestroy()
+	for _, goodsItem in ipairs(self.goodsItemList) do
+		goodsItem:onDestroy()
 	end
 
-	arg_7_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return Act174StoreItem

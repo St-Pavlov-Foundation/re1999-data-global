@@ -1,35 +1,37 @@
-﻿module("modules.logic.seasonver.act123.model.Season123AssistHeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123AssistHeroMO.lua
 
-local var_0_0 = pureTable("Season123AssistHeroMO")
+module("modules.logic.seasonver.act123.model.Season123AssistHeroMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.heroUid = tostring(arg_1_1.heroUid)
-	arg_1_0.userId = tostring(arg_1_1.userId)
-	arg_1_0.name = arg_1_1.name
-	arg_1_0.userLevel = arg_1_1.userLevel
-	arg_1_0.portrait = arg_1_1.portrait
-	arg_1_0.bg = arg_1_1.bg
-	arg_1_0.isFriend = arg_1_1.isFriend
-	arg_1_0.heroId = tonumber(arg_1_1.heroId)
-	arg_1_0.level = tonumber(arg_1_1.level)
-	arg_1_0.rank = arg_1_1.rank
-	arg_1_0.skin = arg_1_1.skin
-	arg_1_0.passiveSkillLevel = arg_1_1.passiveSkillLevel
-	arg_1_0.exSkillLevel = arg_1_1.exSkillLevel
-	arg_1_0.balanceLevel = arg_1_1.balanceLevel
-	arg_1_0.isOpenTalent = arg_1_1.isOpenTalent
-	arg_1_0.talent = arg_1_1.talent
-	arg_1_0.talentCubeInfos = HeroTalentCubeInfosMO.New()
+local Season123AssistHeroMO = pureTable("Season123AssistHeroMO")
 
-	arg_1_0.talentCubeInfos:init(arg_1_1.talentCubeInfos)
-	arg_1_0.talentCubeInfos:setOwnData(arg_1_0.heroId, arg_1_0.talent)
+function Season123AssistHeroMO:init(info, hpRate)
+	self.heroId = info.heroId
+	self.heroUid = tostring(info.heroUid)
+	self.userId = tostring(info.userId)
+	self.name = info.name
+	self.userLevel = info.userLevel
+	self.portrait = info.portrait
+	self.bg = info.bg
+	self.isFriend = info.isFriend
+	self.heroId = tonumber(info.heroId)
+	self.level = tonumber(info.level)
+	self.rank = info.rank
+	self.skin = info.skin
+	self.passiveSkillLevel = info.passiveSkillLevel
+	self.exSkillLevel = info.exSkillLevel
+	self.balanceLevel = info.balanceLevel
+	self.isOpenTalent = info.isOpenTalent
+	self.talent = info.talent
+	self.talentCubeInfos = HeroTalentCubeInfosMO.New()
 
-	arg_1_0.style = arg_1_1.style
-	arg_1_0.destinyRank = arg_1_1.destinyRank
-	arg_1_0.destinyLevel = arg_1_1.destinyLevel
-	arg_1_0.destinyStone = arg_1_1.destinyStone
-	arg_1_0.extraStr = arg_1_1.extraStr
+	self.talentCubeInfos:init(info.talentCubeInfos)
+	self.talentCubeInfos:setOwnData(self.heroId, self.talent)
+
+	self.style = info.style
+	self.destinyRank = info.destinyRank
+	self.destinyLevel = info.destinyLevel
+	self.destinyStone = info.destinyStone
+	self.extraStr = info.extraStr
 end
 
-return var_0_0
+return Season123AssistHeroMO

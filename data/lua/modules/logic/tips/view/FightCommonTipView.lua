@@ -1,89 +1,92 @@
-﻿module("modules.logic.tips.view.FightCommonTipView", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/FightCommonTipView.lua
 
-local var_0_0 = class("FightCommonTipView", BaseView)
+module("modules.logic.tips.view.FightCommonTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.viewRect = arg_1_0.viewGO:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0.viewWidth = recthelper.getWidth(arg_1_0.viewRect)
-	arg_1_0.viewHeight = recthelper.getHeight(arg_1_0.viewRect)
-	arg_1_0.rootRect = gohelper.findChildComponent(arg_1_0.viewGO, "layout", gohelper.Type_RectTransform)
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "layout/#txt_title")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "layout/#txt_desc")
+local FightCommonTipView = class("FightCommonTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightCommonTipView:onInitView()
+	self.viewRect = self.viewGO:GetComponent(gohelper.Type_RectTransform)
+	self.viewWidth = recthelper.getWidth(self.viewRect)
+	self.viewHeight = recthelper.getHeight(self.viewRect)
+	self.rootRect = gohelper.findChildComponent(self.viewGO, "layout", gohelper.Type_RectTransform)
+	self._txttitle = gohelper.findChildText(self.viewGO, "layout/#txt_title")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "layout/#txt_desc")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightCommonTipView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightCommonTipView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.click = gohelper.findChildClickWithDefaultAudio(arg_4_0.viewGO, "close_block")
+function FightCommonTipView:_editableInitView()
+	self.click = gohelper.findChildClickWithDefaultAudio(self.viewGO, "close_block")
 
-	arg_4_0.click:AddClickListener(arg_4_0.closeThis, arg_4_0)
+	self.click:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._txttitle.text = arg_5_0.viewParam.title
-	arg_5_0._txtdesc.text = arg_5_0.viewParam.desc
+function FightCommonTipView:onOpen()
+	self._txttitle.text = self.viewParam.title
+	self._txtdesc.text = self.viewParam.desc
 
-	local var_5_0 = recthelper.getWidth(arg_5_0.rootRect)
+	local srcWidth = recthelper.getWidth(self.rootRect)
 
-	arg_5_0.rootRect.pivot = arg_5_0.viewParam.pivot
-	arg_5_0.rootRect.offsetMin = arg_5_0.viewParam.offsetAnchor
-	arg_5_0.rootRect.offsetMax = arg_5_0.viewParam.offsetAnchor
-	arg_5_0.offsetPosX = arg_5_0.viewParam.offsetPosX
-	arg_5_0.offsetPosY = arg_5_0.viewParam.offsetPosY
+	self.rootRect.pivot = self.viewParam.pivot
+	self.rootRect.anchorMin = self.viewParam.anchorMinAndMax
+	self.rootRect.anchorMax = self.viewParam.anchorMinAndMax
+	self.offsetPosX = self.viewParam.offsetPosX
+	self.offsetPosY = self.viewParam.offsetPosY
 
-	recthelper.setWidth(arg_5_0.rootRect, var_5_0)
-	arg_5_0:setPos()
+	recthelper.setWidth(self.rootRect, srcWidth)
+	self:setPos()
 end
 
-function var_0_0.setPos(arg_6_0)
-	local var_6_0, var_6_1 = recthelper.screenPosToAnchorPos2(arg_6_0.viewParam.screenPos, arg_6_0.viewRect)
+function FightCommonTipView:setPos()
+	local anchorX, anchorY = recthelper.screenPosToAnchorPos2(self.viewParam.screenPos, self.viewRect)
+	local anchorMinAndMax = self.viewParam.anchorMinAndMax
 
-	if arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.TopLeft then
-		var_6_0 = var_6_0 + arg_6_0.viewWidth * 0.5
-		var_6_1 = var_6_1 - arg_6_0.viewHeight * 0.5
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.TopCenter then
-		var_6_1 = var_6_1 - arg_6_0.viewHeight * 0.5
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.TopRight then
-		var_6_0 = var_6_0 - arg_6_0.viewWidth * 0.5
-		var_6_1 = var_6_1 - arg_6_0.viewHeight * 0.5
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.CenterLeft then
-		var_6_0 = var_6_0 + arg_6_0.viewWidth * 0.5
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.Center then
+	if anchorMinAndMax == FightCommonTipController.Pivot.TopLeft then
+		anchorX = anchorX + self.viewWidth * 0.5
+		anchorY = anchorY - self.viewHeight * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.TopCenter then
+		anchorY = anchorY - self.viewHeight * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.TopRight then
+		anchorX = anchorX - self.viewWidth * 0.5
+		anchorY = anchorY - self.viewHeight * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.CenterLeft then
+		anchorX = anchorX + self.viewWidth * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.Center then
 		-- block empty
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.CenterRight then
-		var_6_0 = var_6_0 - arg_6_0.viewWidth * 0.5
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.BottomLeft then
-		var_6_0 = var_6_0 + arg_6_0.viewWidth * 0.5
-		var_6_1 = var_6_1 + arg_6_0.viewHeight * 0.5
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.BottomCenter then
-		var_6_1 = var_6_1 + arg_6_0.viewHeight * 0.5
-	elseif arg_6_0.viewParam.pivot == FightCommonTipController.Pivot.BottomRight then
-		var_6_0 = var_6_0 - arg_6_0.viewWidth * 0.5
-		var_6_1 = var_6_1 + arg_6_0.viewHeight * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.CenterRight then
+		anchorX = anchorX - self.viewWidth * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.BottomLeft then
+		anchorX = anchorX + self.viewWidth * 0.5
+		anchorY = anchorY + self.viewHeight * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.BottomCenter then
+		anchorY = anchorY + self.viewHeight * 0.5
+	elseif anchorMinAndMax == FightCommonTipController.Pivot.BottomRight then
+		anchorX = anchorX - self.viewWidth * 0.5
+		anchorY = anchorY + self.viewHeight * 0.5
 	end
 
-	local var_6_2 = var_6_0 + arg_6_0.offsetPosX
-	local var_6_3 = var_6_1 + arg_6_0.offsetPosY
+	anchorX = anchorX + self.offsetPosX
+	anchorY = anchorY + self.offsetPosY
 
-	recthelper.setAnchor(arg_6_0.rootRect, var_6_2, var_6_3)
+	recthelper.setAnchor(self.rootRect, anchorX, anchorY)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	if arg_7_0.click then
-		arg_7_0.click:RemoveClickListener()
+function FightCommonTipView:onDestroyView()
+	if self.click then
+		self.click:RemoveClickListener()
 
-		arg_7_0.click = nil
+		self.click = nil
 	end
 end
 
-return var_0_0
+return FightCommonTipView

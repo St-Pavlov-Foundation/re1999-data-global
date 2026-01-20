@@ -1,15 +1,19 @@
-﻿module("modules.logic.main.controller.work.Activity101SignSpRewardPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/Activity101SignSpRewardPatFaceWork.lua
 
-local var_0_0 = class("Activity101SignSpRewardPatFaceWork", Activity101SignPatFaceWork)
+module("modules.logic.main.controller.work.Activity101SignSpRewardPatFaceWork", package.seeall)
 
-function var_0_0.isType101RewardCouldGetAnyOne(arg_1_0)
-	if var_0_0.super.isType101RewardCouldGetAnyOne(arg_1_0) then
+local Activity101SignSpRewardPatFaceWork = class("Activity101SignSpRewardPatFaceWork", Activity101SignPatFaceWork)
+
+function Activity101SignSpRewardPatFaceWork:isType101RewardCouldGetAnyOne()
+	local ok = Activity101SignSpRewardPatFaceWork.super.isType101RewardCouldGetAnyOne(self)
+
+	if ok then
 		return true
 	end
 
-	local var_1_0 = arg_1_0:_actId()
+	local actId = self:_actId()
 
-	return ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(var_1_0)
+	return ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(actId)
 end
 
-return var_0_0
+return Activity101SignSpRewardPatFaceWork

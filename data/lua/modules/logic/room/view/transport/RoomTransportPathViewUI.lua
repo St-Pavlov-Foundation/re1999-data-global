@@ -1,198 +1,200 @@
-﻿module("modules.logic.room.view.transport.RoomTransportPathViewUI", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/transport/RoomTransportPathViewUI.lua
 
-local var_0_0 = class("RoomTransportPathViewUI", BaseView)
+module("modules.logic.room.view.transport.RoomTransportPathViewUI", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomTransportPathViewUI = class("RoomTransportPathViewUI", BaseView)
+
+function RoomTransportPathViewUI:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomTransportPathViewUI:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomTransportPathViewUI:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._gomapui = gohelper.findChild(arg_4_0.viewGO, "go_mapui")
-	arg_4_0._gomapuiitem = gohelper.findChild(arg_4_0.viewGO, "go_mapui/go_mapuiitem")
-	arg_4_0._gomapuiTrs = arg_4_0._gomapui.transform
-	arg_4_0._buildingTypeIconColor = {
+function RoomTransportPathViewUI:_editableInitView()
+	self._gomapui = gohelper.findChild(self.viewGO, "go_mapui")
+	self._gomapuiitem = gohelper.findChild(self.viewGO, "go_mapui/go_mapuiitem")
+	self._gomapuiTrs = self._gomapui.transform
+	self._buildingTypeIconColor = {
 		[RoomBuildingEnum.BuildingType.Collect] = "#91D7F1",
 		[RoomBuildingEnum.BuildingType.Process] = "#E2D487",
 		[RoomBuildingEnum.BuildingType.Manufacture] = "#99EAC8"
 	}
-	arg_4_0._uiitemTBList = {
-		arg_4_0:_createTB(arg_4_0._gomapuiitem)
+	self._uiitemTBList = {
+		self:_createTB(self._gomapuiitem)
 	}
 
-	gohelper.setActive(arg_4_0._gomapuiitem, false)
+	gohelper.setActive(self._gomapuiitem, false)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RoomTransportPathViewUI:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_6_0._cameraTransformUpdate, arg_6_0)
+function RoomTransportPathViewUI:onOpen()
+	self:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
 
-	if arg_6_0.viewContainer then
-		arg_6_0:addEventCb(arg_6_0.viewContainer, RoomEvent.TransportPathSelectLineItem, arg_6_0.startWaitRunDelayTask, arg_6_0)
+	if self.viewContainer then
+		self:addEventCb(self.viewContainer, RoomEvent.TransportPathSelectLineItem, self.startWaitRunDelayTask, self)
 	end
 
-	arg_6_0:startWaitRunDelayTask()
+	self:startWaitRunDelayTask()
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0.__hasWaitRunDelayTask_ = false
+function RoomTransportPathViewUI:onClose()
+	self.__hasWaitRunDelayTask_ = false
 
-	TaskDispatcher.cancelTask(arg_7_0.__onWaitRunDelayTask_, arg_7_0)
+	TaskDispatcher.cancelTask(self.__onWaitRunDelayTask_, self)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function RoomTransportPathViewUI:onDestroyView()
 	return
 end
 
-function var_0_0._cameraTransformUpdate(arg_9_0)
-	arg_9_0:_refreshItemUIPos()
+function RoomTransportPathViewUI:_cameraTransformUpdate()
+	self:_refreshItemUIPos()
 end
 
-function var_0_0.startWaitRunDelayTask(arg_10_0)
-	if not arg_10_0.__hasWaitRunDelayTask_ then
-		arg_10_0.__hasWaitRunDelayTask_ = true
+function RoomTransportPathViewUI:startWaitRunDelayTask()
+	if not self.__hasWaitRunDelayTask_ then
+		self.__hasWaitRunDelayTask_ = true
 
-		TaskDispatcher.runDelay(arg_10_0.__onWaitRunDelayTask_, arg_10_0, 0.001)
+		TaskDispatcher.runDelay(self.__onWaitRunDelayTask_, self, 0.001)
 	end
 end
 
-function var_0_0.__onWaitRunDelayTask_(arg_11_0)
-	arg_11_0.__hasWaitRunDelayTask_ = false
+function RoomTransportPathViewUI:__onWaitRunDelayTask_()
+	self.__hasWaitRunDelayTask_ = false
 
-	arg_11_0:_refreshItemList()
-	arg_11_0:_refreshItemUIPos()
+	self:_refreshItemList()
+	self:_refreshItemUIPos()
 end
 
-function var_0_0._createTB(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getUserDataTb_()
+function RoomTransportPathViewUI:_createTB(go)
+	local tb = self:getUserDataTb_()
 
-	var_12_0.go = arg_12_1
-	var_12_0.goTrs = arg_12_1.transform
-	var_12_0._imageicon = gohelper.findChildImage(arg_12_1, "image_icon")
+	tb.go = go
+	tb.goTrs = go.transform
+	tb._imageicon = gohelper.findChildImage(go, "image_icon")
 
-	return var_12_0
+	return tb
 end
 
-function var_0_0._refreshTB(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_1.buildingId ~= arg_13_2 then
-		local var_13_0 = RoomConfig.instance:getBuildingConfig(arg_13_2)
-		local var_13_1 = ManufactureConfig.instance:getManufactureBuildingIcon(arg_13_2)
+function RoomTransportPathViewUI:_refreshTB(tb, buildingId, hexPoint)
+	if tb.buildingId ~= buildingId then
+		local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
+		local iconName = ManufactureConfig.instance:getManufactureBuildingIcon(buildingId)
 
-		UISpriteSetMgr.instance:setRoomSprite(arg_13_1._imageicon, var_13_1)
+		UISpriteSetMgr.instance:setRoomSprite(tb._imageicon, iconName)
 
-		local var_13_2 = var_13_0 and arg_13_0._buildingTypeIconColor[var_13_0.buildingType] or "#FFFFFF"
+		local colorStr = buildingCfg and self._buildingTypeIconColor[buildingCfg.buildingType] or "#FFFFFF"
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_13_1._imageicon, var_13_2)
+		SLFramework.UGUI.GuiHelper.SetColor(tb._imageicon, colorStr)
 	end
 
-	if arg_13_1.hexPoint == nil or arg_13_1.hexPoint ~= arg_13_3 then
-		arg_13_1.hexPoint = arg_13_3
+	if tb.hexPoint == nil or tb.hexPoint ~= hexPoint then
+		tb.hexPoint = hexPoint
 
-		local var_13_3, var_13_4 = HexMath.hexXYToPosXY(arg_13_3.x, arg_13_3.y, RoomBlockEnum.BlockSize)
+		local px, pz = HexMath.hexXYToPosXY(hexPoint.x, hexPoint.y, RoomBlockEnum.BlockSize)
 
-		arg_13_1.worldPos = Vector3(var_13_3, 0, var_13_4)
+		tb.worldPos = Vector3(px, 0, pz)
 	end
 end
 
-function var_0_0._getBuildingMOList(arg_14_0)
-	local var_14_0 = RoomMapTransportPathModel.instance:getSelectBuildingType()
+function RoomTransportPathViewUI:_getBuildingMOList()
+	local buildingType = RoomMapTransportPathModel.instance:getSelectBuildingType()
 
-	if not var_14_0 then
+	if not buildingType then
 		return nil
 	end
 
-	local var_14_1, var_14_2 = RoomTransportHelper.getSiteFromToByType(var_14_0)
+	local fromType, toType = RoomTransportHelper.getSiteFromToByType(buildingType)
 
-	if var_14_1 == nil and var_14_2 == nil then
+	if fromType == nil and toType == nil then
 		return nil
 	end
 
-	local var_14_3 = {}
-	local var_14_4 = RoomMapBuildingModel.instance:getBuildingMOList()
+	local moList = {}
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_4) do
-		if iter_14_1:checkSameType(var_14_1) or iter_14_1:checkSameType(var_14_2) then
-			table.insert(var_14_3, iter_14_1)
+	for _, buildingMO in ipairs(buildingMOList) do
+		if buildingMO:checkSameType(fromType) or buildingMO:checkSameType(toType) then
+			table.insert(moList, buildingMO)
 		end
 	end
 
-	return var_14_3
+	return moList
 end
 
-function var_0_0._refreshItemList(arg_15_0)
-	local var_15_0 = arg_15_0:_getBuildingMOList()
-	local var_15_1 = 0
+function RoomTransportPathViewUI:_refreshItemList()
+	local buildingMOList = self:_getBuildingMOList()
+	local count = 0
 
-	if var_15_0 and #var_15_0 > 0 then
-		local var_15_2 = RoomMapHexPointModel.instance
-		local var_15_3 = RoomMapModel.instance
+	if buildingMOList and #buildingMOList > 0 then
+		local tRoomMapHexPointModel = RoomMapHexPointModel.instance
+		local tRoomMapModel = RoomMapModel.instance
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			local var_15_4 = iter_15_1.hexPoint
-			local var_15_5 = var_15_3:getBuildingPointList(iter_15_1.buildingId, iter_15_1.rotate)
+		for _, buildingMO in ipairs(buildingMOList) do
+			local hexPoint = buildingMO.hexPoint
+			local pointList = tRoomMapModel:getBuildingPointList(buildingMO.buildingId, buildingMO.rotate)
 
-			for iter_15_2, iter_15_3 in ipairs(var_15_5) do
-				var_15_1 = var_15_1 + 1
+			for __, point in ipairs(pointList) do
+				count = count + 1
 
-				local var_15_6 = arg_15_0._uiitemTBList[var_15_1]
+				local itemTb = self._uiitemTBList[count]
 
-				if not var_15_6 then
-					var_15_6 = arg_15_0:_createTB(gohelper.cloneInPlace(arg_15_0._gomapuiitem))
-					arg_15_0._uiitemTBList[var_15_1] = var_15_6
+				if not itemTb then
+					itemTb = self:_createTB(gohelper.cloneInPlace(self._gomapuiitem))
+					self._uiitemTBList[count] = itemTb
 				end
 
-				local var_15_7 = var_15_2:getHexPoint(iter_15_3.x + var_15_4.x, iter_15_3.y + var_15_4.y)
+				local hexPoint = tRoomMapHexPointModel:getHexPoint(point.x + hexPoint.x, point.y + hexPoint.y)
 
-				arg_15_0:_refreshTB(var_15_6, iter_15_1.buildingId, var_15_7)
+				self:_refreshTB(itemTb, buildingMO.buildingId, hexPoint)
 			end
 		end
 	end
 
-	for iter_15_4 = 1, #arg_15_0._uiitemTBList do
-		local var_15_8 = arg_15_0._uiitemTBList[iter_15_4]
-		local var_15_9 = iter_15_4 <= var_15_1
+	for i = 1, #self._uiitemTBList do
+		local itemTb = self._uiitemTBList[i]
+		local isActive = i <= count
 
-		if var_15_8.isActive ~= var_15_9 then
-			var_15_8.isActive = var_15_9
+		if itemTb.isActive ~= isActive then
+			itemTb.isActive = isActive
 
-			gohelper.setActive(var_15_8.go, var_15_9)
+			gohelper.setActive(itemTb.go, isActive)
 		end
 	end
 end
 
-function var_0_0._refreshItemUIPos(arg_16_0)
-	for iter_16_0 = 1, #arg_16_0._uiitemTBList do
-		local var_16_0 = arg_16_0._uiitemTBList[iter_16_0]
+function RoomTransportPathViewUI:_refreshItemUIPos()
+	for i = 1, #self._uiitemTBList do
+		local itemTb = self._uiitemTBList[i]
 
-		if var_16_0.isActive then
-			arg_16_0:_setUIPos(var_16_0.worldPos, var_16_0.goTrs, arg_16_0._gomapuiTrs, 0.12)
+		if itemTb.isActive then
+			self:_setUIPos(itemTb.worldPos, itemTb.goTrs, self._gomapuiTrs, 0.12)
 		end
 	end
 end
 
-function var_0_0._setUIPos(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = RoomBendingHelper.worldToBendingSimple(arg_17_1)
-	local var_17_1 = var_17_0.x
-	local var_17_2 = var_17_0.z
+function RoomTransportPathViewUI:_setUIPos(worldPos, targetUIGOTrs, parentUIGOTrs, offsetY)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
+	local bendingPosX = bendingPos.x
+	local bendingPosZ = bendingPos.z
 
-	arg_17_4 = arg_17_4 or 0.12
+	offsetY = offsetY or 0.12
 
-	local var_17_3 = Vector3(var_17_1, var_17_0.y + arg_17_4, var_17_2)
-	local var_17_4 = recthelper.worldPosToAnchorPos(var_17_3, arg_17_3)
+	local worldPos = Vector3(bendingPosX, bendingPos.y + offsetY, bendingPosZ)
+	local localPos = recthelper.worldPosToAnchorPos(worldPos, parentUIGOTrs)
 
-	recthelper.setAnchor(arg_17_2, var_17_4.x, var_17_4.y)
+	recthelper.setAnchor(targetUIGOTrs, localPos.x, localPos.y)
 end
 
-return var_0_0
+return RoomTransportPathViewUI

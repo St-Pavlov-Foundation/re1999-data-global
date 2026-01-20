@@ -1,115 +1,126 @@
-﻿module("modules.logic.room.controller.RoomSkinController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomSkinController.lua
 
-local var_0_0 = class("RoomSkinController", BaseController)
+module("modules.logic.room.controller.RoomSkinController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSkinController = class("RoomSkinController", BaseController)
+
+function RoomSkinController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function RoomSkinController:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function RoomSkinController:addConstEvents()
 	return
 end
 
-function var_0_0.clearPreviewRoomSkin(arg_4_0)
+function RoomSkinController:clearPreviewRoomSkin()
 	RoomSkinListModel.instance:setCurPreviewSkinId()
-	arg_4_0:dispatchEvent(RoomSkinEvent.ChangePreviewRoomSkin)
+	self:dispatchEvent(RoomSkinEvent.ChangePreviewRoomSkin)
 end
 
-function var_0_0.setRoomSkinListVisible(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1 ~= nil
-	local var_5_1 = RoomSkinListModel.instance:getSelectPartId()
-	local var_5_2 = RoomSkinModel.instance:getIsShowRoomSkinList() == var_5_0
-	local var_5_3 = arg_5_1 == var_5_1
+function RoomSkinController:setRoomSkinListVisible(selectPartId)
+	local isShow = selectPartId ~= nil
+	local curSelectPartId = RoomSkinListModel.instance:getSelectPartId()
+	local isShowSkinList = RoomSkinModel.instance:getIsShowRoomSkinList()
+	local isSameShowStatus = isShowSkinList == isShow
+	local isSamePart = selectPartId == curSelectPartId
 
-	if var_5_2 and var_5_3 then
+	if isSameShowStatus and isSamePart then
 		return
 	end
 
-	local var_5_4
+	local defaultSelectSkin
 
-	RoomSkinModel.instance:setIsShowRoomSkinList(var_5_0)
+	RoomSkinModel.instance:setIsShowRoomSkinList(isShow)
 
-	if var_5_0 then
-		RoomSkinListModel.instance:setRoomSkinList(arg_5_1)
+	if isShow then
+		RoomSkinListModel.instance:setRoomSkinList(selectPartId)
 
-		var_5_4 = RoomSkinModel.instance:getEquipRoomSkin(arg_5_1)
+		defaultSelectSkin = RoomSkinModel.instance:getEquipRoomSkin(selectPartId)
 	end
 
-	RoomSkinListModel.instance:setCurPreviewSkinId(var_5_4)
-	arg_5_0:setRoomSkinMark(var_5_4)
+	RoomSkinListModel.instance:setCurPreviewSkinId(defaultSelectSkin)
+	self:setRoomSkinMark(defaultSelectSkin)
 
-	local var_5_5 = not var_5_2
+	local playSwitchAnim = not isSameShowStatus
 
-	arg_5_0:dispatchEvent(RoomSkinEvent.SkinListViewShowChange, var_5_5)
+	self:dispatchEvent(RoomSkinEvent.SkinListViewShowChange, playSwitchAnim)
 end
 
-function var_0_0.selectPreviewRoomSkin(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function RoomSkinController:selectPreviewRoomSkin(skinId)
+	if not skinId then
 		return
 	end
 
-	local var_6_0 = RoomSkinListModel.instance:getCurPreviewSkinId()
+	local curPreviewSkinId = RoomSkinListModel.instance:getCurPreviewSkinId()
 
-	if var_6_0 and var_6_0 == arg_6_1 then
+	if curPreviewSkinId and curPreviewSkinId == skinId then
 		return
 	end
 
-	RoomSkinListModel.instance:setCurPreviewSkinId(arg_6_1)
-	arg_6_0:setRoomSkinMark(arg_6_1)
-	arg_6_0:dispatchEvent(RoomSkinEvent.ChangePreviewRoomSkin)
+	RoomSkinListModel.instance:setCurPreviewSkinId(skinId)
+	self:setRoomSkinMark(skinId)
+	self:dispatchEvent(RoomSkinEvent.ChangePreviewRoomSkin)
 end
 
-function var_0_0.setRoomSkinMark(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function RoomSkinController:setRoomSkinMark(skinId)
+	if not skinId then
 		return
 	end
 
-	if RoomSkinModel.instance:isNewRoomSkin(arg_7_1) then
-		RoomRpc.instance:sendReadRoomSkinRequest(arg_7_1)
-	end
-end
+	local isNew = RoomSkinModel.instance:isNewRoomSkin(skinId)
 
-function var_0_0.clearInitBuildingEntranceReddot(arg_8_0, arg_8_1)
-	arg_8_1 = arg_8_1 or 0
-
-	local var_8_0 = RoomInitBuildingEnum.InitBuildingSkinReddot[arg_8_1]
-
-	if not var_8_0 then
-		return
-	end
-
-	if RedDotModel.instance:isDotShow(var_8_0, 0) then
-		RedDotRpc.instance:sendShowRedDotRequest(var_8_0, false)
+	if isNew then
+		RoomRpc.instance:sendReadRoomSkinRequest(skinId)
 	end
 end
 
-function var_0_0.confirmEquipPreviewRoomSkin(arg_9_0)
-	local var_9_0 = RoomSkinListModel.instance:getSelectPartId()
-	local var_9_1 = RoomSkinListModel.instance:getCurPreviewSkinId()
+function RoomSkinController:clearInitBuildingEntranceReddot(partId)
+	partId = partId or 0
 
-	if not var_9_0 or not var_9_1 then
+	local newSkinReddot = RoomInitBuildingEnum.InitBuildingSkinReddot[partId]
+
+	if not newSkinReddot then
 		return
 	end
 
-	if not RoomSkinModel.instance:isUnlockRoomSkin(var_9_1) then
+	local isDotShow = RedDotModel.instance:isDotShow(newSkinReddot, 0)
+
+	if isDotShow then
+		RedDotRpc.instance:sendShowRedDotRequest(newSkinReddot, false)
+	end
+end
+
+function RoomSkinController:confirmEquipPreviewRoomSkin()
+	local selectPartId = RoomSkinListModel.instance:getSelectPartId()
+	local curPreviewSkinId = RoomSkinListModel.instance:getCurPreviewSkinId()
+
+	if not selectPartId or not curPreviewSkinId then
+		return
+	end
+
+	local isUnlock = RoomSkinModel.instance:isUnlockRoomSkin(curPreviewSkinId)
+
+	if not isUnlock then
 		GameFacade.showToast(ToastEnum.SeasonEquipUnlock)
 
 		return
 	end
 
-	if var_9_1 == RoomSkinModel.instance:getEquipRoomSkin(var_9_0) then
+	local equippedSkin = RoomSkinModel.instance:getEquipRoomSkin(selectPartId)
+
+	if curPreviewSkinId == equippedSkin then
 		GameFacade.showToast(ToastEnum.HasChangeRoomSink)
 
 		return
 	end
 
-	RoomRpc.instance:sendSetRoomSkinRequest(var_9_0, var_9_1)
+	RoomRpc.instance:sendSetRoomSkinRequest(selectPartId, curPreviewSkinId)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomSkinController.instance = RoomSkinController.New()
 
-return var_0_0
+return RoomSkinController

@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.common.RoomBlockPackageGetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomBlockPackageGetViewContainer.lua
 
-local var_0_0 = class("RoomBlockPackageGetViewContainer", BaseViewContainer)
+module("modules.logic.room.view.common.RoomBlockPackageGetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomBlockPackageGetViewContainer = class("RoomBlockPackageGetViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomBlockPackageGetView.New())
+function RoomBlockPackageGetViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomBlockPackageGetView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomBlockPackageGetViewContainer

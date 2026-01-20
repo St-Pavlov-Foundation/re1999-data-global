@@ -1,11 +1,13 @@
-﻿module("modules.logic.bossrush.view.v1a6.V1a6_BossRush_EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/V1a6_BossRush_EnterViewContainer.lua
 
-local var_0_0 = class("V1a6_BossRush_EnterViewContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.v1a6.V1a6_BossRush_EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_BossRush_EnterViewContainer = class("V1a6_BossRush_EnterViewContainer", BaseViewContainer)
+
+function V1a6_BossRush_EnterViewContainer:buildViews()
 	return {
 		V1a6_BossRush_EnterView.New()
 	}
 end
 
-return var_0_0
+return V1a6_BossRush_EnterViewContainer

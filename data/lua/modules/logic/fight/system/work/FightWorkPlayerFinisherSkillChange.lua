@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayerFinisherSkillChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayerFinisherSkillChange.lua
 
-local var_0_0 = class("FightWorkPlayerFinisherSkillChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkPlayerFinisherSkillChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendMsg(FightMsgId.RefreshPlayerFinisherSkill)
-	arg_1_0:onDone(true)
+local FightWorkPlayerFinisherSkillChange = class("FightWorkPlayerFinisherSkillChange", FightEffectBase)
+
+function FightWorkPlayerFinisherSkillChange:onStart()
+	self:com_sendMsg(FightMsgId.RefreshPlayerFinisherSkill)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkPlayerFinisherSkillChange

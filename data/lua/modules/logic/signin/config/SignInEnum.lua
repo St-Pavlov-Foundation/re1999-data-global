@@ -1,12 +1,14 @@
-﻿module("modules.logic.signin.config.SignInEnum", package.seeall)
+﻿-- chunkname: @modules/logic/signin/config/SignInEnum.lua
 
-local var_0_0 = _M
-local var_0_1 = "ui/viewres/signin/"
-local var_0_2 = "ui/viewres/lifecircle/"
+module("modules.logic.signin.config.SignInEnum", package.seeall)
 
-var_0_0.ResPath = {
-	lifecirclesignview = var_0_2 .. "lifecirclesignview.prefab",
-	lifecirclesignrewardsitem = var_0_2 .. "lifecirclesignrewardsitem.prefab"
+local SignInEnum = _M
+local kResPathRoot = "ui/viewres/signin/"
+local kResPathRoot_LifeCircle = "ui/viewres/lifecircle/"
+
+SignInEnum.ResPath = {
+	lifecirclesignview = kResPathRoot_LifeCircle .. "lifecirclesignview.prefab",
+	lifecirclesignrewardsitem = kResPathRoot_LifeCircle .. "lifecirclesignrewardsitem.prefab"
 }
 
-return var_0_0
+return SignInEnum

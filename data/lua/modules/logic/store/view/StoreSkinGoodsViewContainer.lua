@@ -1,32 +1,34 @@
-﻿module("modules.logic.store.view.StoreSkinGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinGoodsViewContainer.lua
 
-local var_0_0 = class("StoreSkinGoodsViewContainer", BaseViewContainer)
+module("modules.logic.store.view.StoreSkinGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoreSkinGoodsViewContainer = class("StoreSkinGoodsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
-	table.insert(var_1_0, StoreSkinGoodsView.New())
+function StoreSkinGoodsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_topright"))
+	table.insert(views, StoreSkinGoodsView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._currencyView = CurrencyView.New({})
+function StoreSkinGoodsViewContainer:buildTabViews(tabContainerId)
+	self._currencyView = CurrencyView.New({})
 
 	return {
-		arg_2_0._currencyView
+		self._currencyView
 	}
 end
 
-function var_0_0.setCurrencyType(arg_3_0, arg_3_1)
-	if arg_3_0._currencyView then
-		arg_3_0._currencyView:setCurrencyType(arg_3_1)
+function StoreSkinGoodsViewContainer:setCurrencyType(list)
+	if self._currencyView then
+		self._currencyView:setCurrencyType(list)
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function StoreSkinGoodsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return StoreSkinGoodsViewContainer

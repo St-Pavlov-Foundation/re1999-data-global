@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_5.act142.model.Activity142StoryListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/model/Activity142StoryListModel.lua
 
-local var_0_0 = class("Activity142StoryListModel", ListScrollModel)
+module("modules.logic.versionactivity1_5.act142.model.Activity142StoryListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = {}
-	local var_1_1 = Activity142Config.instance:getEpisodeStoryList(arg_1_1, arg_1_2)
+local Activity142StoryListModel = class("Activity142StoryListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = {
-			index = iter_1_0,
-			storyId = iter_1_1.id
+function Activity142StoryListModel:init(actId, episodeId)
+	local list = {}
+	local episodeStoryList = Activity142Config.instance:getEpisodeStoryList(actId, episodeId)
+
+	for index, storyCo in ipairs(episodeStoryList) do
+		local storyMo = {
+			index = index,
+			storyId = storyCo.id
 		}
 
-		table.insert(var_1_0, var_1_2)
+		table.insert(list, storyMo)
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity142StoryListModel.instance = Activity142StoryListModel.New()
 
-return var_0_0
+return Activity142StoryListModel

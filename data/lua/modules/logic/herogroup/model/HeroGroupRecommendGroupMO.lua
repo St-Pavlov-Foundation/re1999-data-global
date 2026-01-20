@@ -1,47 +1,49 @@
-﻿module("modules.logic.herogroup.model.HeroGroupRecommendGroupMO", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroGroupRecommendGroupMO.lua
 
-local var_0_0 = pureTable("HeroGroupRecommendGroupMO")
+module("modules.logic.herogroup.model.HeroGroupRecommendGroupMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	if not arg_1_1 or not arg_1_1.rate then
-		arg_1_0.isEmpty = true
+local HeroGroupRecommendGroupMO = pureTable("HeroGroupRecommendGroupMO")
+
+function HeroGroupRecommendGroupMO:init(info)
+	if not info or not info.rate then
+		self.isEmpty = true
 
 		return
 	end
 
-	arg_1_0.heroIdList = {}
-	arg_1_0.levels = {}
-	arg_1_0.heroDataList = {}
+	self.heroIdList = {}
+	self.levels = {}
+	self.heroDataList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.heroIds) do
-		if iter_1_1 > 0 then
-			local var_1_0 = {
-				heroId = iter_1_1,
-				level = arg_1_1.levels[iter_1_0]
-			}
+	for i, heroId in ipairs(info.heroIds) do
+		if heroId > 0 then
+			local heroData = {}
 
-			table.insert(arg_1_0.heroDataList, var_1_0)
+			heroData.heroId = heroId
+			heroData.level = info.levels[i]
+
+			table.insert(self.heroDataList, heroData)
 		end
 	end
 
-	arg_1_0.aidDict = {}
+	self.aidDict = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.subHeroIds) do
-		if iter_1_3 > 0 then
-			local var_1_1 = {
-				heroId = iter_1_3,
-				level = arg_1_1.levels[#arg_1_1.heroIds + iter_1_2]
-			}
+	for i, heroId in ipairs(info.subHeroIds) do
+		if heroId > 0 then
+			local heroData = {}
 
-			table.insert(arg_1_0.heroDataList, var_1_1)
+			heroData.heroId = heroId
+			heroData.level = info.levels[#info.heroIds + i]
 
-			arg_1_0.aidDict[iter_1_3] = true
+			table.insert(self.heroDataList, heroData)
+
+			self.aidDict[heroId] = true
 		end
 	end
 
-	arg_1_0.cloth = arg_1_1.cloth
-	arg_1_0.rate = arg_1_1.rate
-	arg_1_0.assistBossId = arg_1_1.assistBossId
+	self.cloth = info.cloth
+	self.rate = info.rate
+	self.assistBossId = info.assistBossId
 end
 
-return var_0_0
+return HeroGroupRecommendGroupMO

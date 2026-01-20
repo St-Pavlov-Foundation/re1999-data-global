@@ -1,270 +1,272 @@
-﻿module("modules.logic.seasonver.act123.view.Season123TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123TaskView.lua
 
-local var_0_0 = class("Season123TaskView", BaseView)
+module("modules.logic.seasonver.act123.view.Season123TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "top/#go_reward")
-	arg_1_0._gorewardunchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_reward/#go_rewardunchoose")
-	arg_1_0._gorewardchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_reward/#go_rewardchoose")
-	arg_1_0._gorewardreddot = gohelper.findChild(arg_1_0.viewGO, "top/#go_reward/#go_rewardreddot")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#go_reward/#btn_reward")
-	arg_1_0._gotask = gohelper.findChild(arg_1_0.viewGO, "top/#go_task")
-	arg_1_0._gotaskunchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_task/#go_taskunchoose")
-	arg_1_0._gotaskchoose = gohelper.findChild(arg_1_0.viewGO, "top/#go_task/#go_taskchoose")
-	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "top/#go_task/#go_taskreddot")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "top/#go_task/#btn_task")
-	arg_1_0._scrolltasklist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tasklist")
-	arg_1_0._scrollmaplist = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#go_maplist/#scroll_maplist")
-	arg_1_0._gomapcontent = gohelper.findChild(arg_1_0.viewGO, "left/#go_maplist/#scroll_maplist/Viewport/#go_mapContent")
-	arg_1_0._gomaplist = gohelper.findChild(arg_1_0.viewGO, "left/#go_maplist")
-	arg_1_0._btnarrowdown = gohelper.findChildButton(arg_1_0.viewGO, "left/#go_maplist/#btn_arrowDown")
-	arg_1_0._btnarrowtop = gohelper.findChildButton(arg_1_0.viewGO, "left/#go_maplist/#btn_arrowTop")
-	arg_1_0._goreddotdown = gohelper.findChild(arg_1_0.viewGO, "left/#go_maplist/#btn_arrowDown/#go_reddotDown")
-	arg_1_0._goreddottop = gohelper.findChild(arg_1_0.viewGO, "left/#go_maplist/#btn_arrowTop/#go_reddotTop")
-	arg_1_0._goscrollArea = gohelper.findChild(arg_1_0.viewGO, "left/#go_maplist/#go_scrollArea")
-	arg_1_0._goachievement = gohelper.findChild(arg_1_0.viewGO, "left/#go_achievement")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local Season123TaskView = class("Season123TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123TaskView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goreward = gohelper.findChild(self.viewGO, "top/#go_reward")
+	self._gorewardunchoose = gohelper.findChild(self.viewGO, "top/#go_reward/#go_rewardunchoose")
+	self._gorewardchoose = gohelper.findChild(self.viewGO, "top/#go_reward/#go_rewardchoose")
+	self._gorewardreddot = gohelper.findChild(self.viewGO, "top/#go_reward/#go_rewardreddot")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "top/#go_reward/#btn_reward")
+	self._gotask = gohelper.findChild(self.viewGO, "top/#go_task")
+	self._gotaskunchoose = gohelper.findChild(self.viewGO, "top/#go_task/#go_taskunchoose")
+	self._gotaskchoose = gohelper.findChild(self.viewGO, "top/#go_task/#go_taskchoose")
+	self._gotaskreddot = gohelper.findChild(self.viewGO, "top/#go_task/#go_taskreddot")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "top/#go_task/#btn_task")
+	self._scrolltasklist = gohelper.findChildScrollRect(self.viewGO, "#scroll_tasklist")
+	self._scrollmaplist = gohelper.findChildScrollRect(self.viewGO, "left/#go_maplist/#scroll_maplist")
+	self._gomapcontent = gohelper.findChild(self.viewGO, "left/#go_maplist/#scroll_maplist/Viewport/#go_mapContent")
+	self._gomaplist = gohelper.findChild(self.viewGO, "left/#go_maplist")
+	self._btnarrowdown = gohelper.findChildButton(self.viewGO, "left/#go_maplist/#btn_arrowDown")
+	self._btnarrowtop = gohelper.findChildButton(self.viewGO, "left/#go_maplist/#btn_arrowTop")
+	self._goreddotdown = gohelper.findChild(self.viewGO, "left/#go_maplist/#btn_arrowDown/#go_reddotDown")
+	self._goreddottop = gohelper.findChild(self.viewGO, "left/#go_maplist/#btn_arrowTop/#go_reddotTop")
+	self._goscrollArea = gohelper.findChild(self.viewGO, "left/#go_maplist/#go_scrollArea")
+	self._goachievement = gohelper.findChild(self.viewGO, "left/#go_achievement")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btnarrowdown:AddClickListener(arg_2_0._btnArrowDownOnClick, arg_2_0)
-	arg_2_0._btnarrowtop:AddClickListener(arg_2_0._btnArrowUpOnClick, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.OnTaskRewardGetFinish, arg_2_0._playGetRewardFinishAnim, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, arg_2_0.refreshRedDot, arg_2_0)
-	arg_2_0:addEventCb(Season123Controller.instance, Season123Event.clickTaskMapItem, arg_2_0.moveScrollPos, arg_2_0)
+function Season123TaskView:addEvents()
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnarrowdown:AddClickListener(self._btnArrowDownOnClick, self)
+	self._btnarrowtop:AddClickListener(self._btnArrowUpOnClick, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, self.refreshRedDot, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.clickTaskMapItem, self.moveScrollPos, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnarrowdown:RemoveClickListener()
-	arg_3_0._btnarrowtop:RemoveClickListener()
-	arg_3_0:removeEventCb(Season123Controller.instance, Season123Event.OnTaskRewardGetFinish, arg_3_0._playGetRewardFinishAnim, arg_3_0)
-	arg_3_0:removeEventCb(Season123Controller.instance, Season123Event.TaskUpdated, arg_3_0.refreshRedDot, arg_3_0)
-	arg_3_0:addEventCb(Season123Controller.instance, Season123Event.clickTaskMapItem, arg_3_0.moveScrollPos, arg_3_0)
+function Season123TaskView:removeEvents()
+	self._btnreward:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self._btnarrowdown:RemoveClickListener()
+	self._btnarrowtop:RemoveClickListener()
+	self:removeEventCb(Season123Controller.instance, Season123Event.OnTaskRewardGetFinish, self._playGetRewardFinishAnim, self)
+	self:removeEventCb(Season123Controller.instance, Season123Event.TaskUpdated, self.refreshRedDot, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.clickTaskMapItem, self.moveScrollPos, self)
 end
 
-var_0_0.TaskMaskTime = 0.65
-var_0_0.TaskGetAnimTime = 0.567
-var_0_0.StageMapItemCount = 6
-var_0_0.moveDistance = 50
+Season123TaskView.TaskMaskTime = 0.65
+Season123TaskView.TaskGetAnimTime = 0.567
+Season123TaskView.StageMapItemCount = 6
+Season123TaskView.moveDistance = 50
 
-function var_0_0._btnrewardOnClick(arg_4_0)
-	arg_4_0.curTaskType = Activity123Enum.TaskRewardViewType
+function Season123TaskView:_btnrewardOnClick()
+	self.curTaskType = Activity123Enum.TaskRewardViewType
 
-	arg_4_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._btntaskOnClick(arg_5_0)
-	arg_5_0.curTaskType = Activity123Enum.TaskNormalType
+function Season123TaskView:_btntaskOnClick()
+	self.curTaskType = Activity123Enum.TaskNormalType
 
-	arg_5_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._btnArrowDownOnClick(arg_6_0)
-	arg_6_0.curStage = Mathf.Min(arg_6_0.curStage + 1, var_0_0.StageMapItemCount)
-	Season123TaskModel.instance.curStage = arg_6_0.curStage
+function Season123TaskView:_btnArrowDownOnClick()
+	self.curStage = Mathf.Min(self.curStage + 1, Season123TaskView.StageMapItemCount)
+	Season123TaskModel.instance.curStage = self.curStage
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_feedback_open)
 end
 
-function var_0_0._btnArrowUpOnClick(arg_7_0)
-	arg_7_0.curStage = Mathf.Max(arg_7_0.curStage - 1, 1)
-	Season123TaskModel.instance.curStage = arg_7_0.curStage
+function Season123TaskView:_btnArrowUpOnClick()
+	self.curStage = Mathf.Max(self.curStage - 1, 1)
+	Season123TaskModel.instance.curStage = self.curStage
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.Season123.play_ui_feedback_open)
 end
 
-function var_0_0._onScrollDragBegin(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.scrollStartPos = arg_8_2.position
+function Season123TaskView:_onScrollDragBegin(param, eventData)
+	self.scrollStartPos = eventData.position
 end
 
-function var_0_0._onScrollDragEnd(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_2.position - arg_9_0.scrollStartPos
-	local var_9_1 = Mathf.Abs(var_9_0.y) - var_0_0.moveDistance >= 0
+function Season123TaskView:_onScrollDragEnd(param, eventData)
+	local moveOffset = eventData.position - self.scrollStartPos
+	local canMove = Mathf.Abs(moveOffset.y) - Season123TaskView.moveDistance >= 0
 
-	if var_9_0.y > 0 and var_9_1 then
-		arg_9_0:_btnArrowDownOnClick()
-	elseif var_9_0.y < 0 and var_9_1 then
-		arg_9_0:_btnArrowUpOnClick()
+	if moveOffset.y > 0 and canMove then
+		self:_btnArrowDownOnClick()
+	elseif moveOffset.y < 0 and canMove then
+		self:_btnArrowUpOnClick()
 	end
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(arg_10_0.viewContainer.scrollView)
+function Season123TaskView:_editableInitView()
+	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self.viewContainer.scrollView)
 
-	arg_10_0._taskAnimRemoveItem:setMoveInterval(0)
-	arg_10_0._taskAnimRemoveItem:setMoveAnimationTime(var_0_0.TaskMaskTime - var_0_0.TaskGetAnimTime)
+	self._taskAnimRemoveItem:setMoveInterval(0)
+	self._taskAnimRemoveItem:setMoveAnimationTime(Season123TaskView.TaskMaskTime - Season123TaskView.TaskGetAnimTime)
 
-	arg_10_0.stageMapItemTab = arg_10_0:getUserDataTb_()
-	arg_10_0.layoutGroup = arg_10_0._gomapcontent:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
-	arg_10_0.mapcontentRectTrans = arg_10_0._gomapcontent:GetComponent(gohelper.Type_RectTransform)
-	arg_10_0.mapScroll = SLFramework.UGUI.UIDragListener.Get(arg_10_0._goscrollArea)
+	self.stageMapItemTab = self:getUserDataTb_()
+	self.layoutGroup = self._gomapcontent:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	self.mapcontentRectTrans = self._gomapcontent:GetComponent(gohelper.Type_RectTransform)
+	self.mapScroll = SLFramework.UGUI.UIDragListener.Get(self._goscrollArea)
 
-	arg_10_0.mapScroll:AddDragBeginListener(arg_10_0._onScrollDragBegin, arg_10_0)
-	arg_10_0.mapScroll:AddDragEndListener(arg_10_0._onScrollDragEnd, arg_10_0)
+	self.mapScroll:AddDragBeginListener(self._onScrollDragBegin, self)
+	self.mapScroll:AddDragEndListener(self._onScrollDragEnd, self)
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0.actId = arg_11_0.viewParam.actId
-	arg_11_0.stageId = arg_11_0.viewParam.stage
+function Season123TaskView:onOpen()
+	self.actId = self.viewParam.actId
+	self.stageId = self.viewParam.stage
 
-	local var_11_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season123) or {}
+	local seasonTasks = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season123) or {}
 
-	Season123TaskModel.instance:setTaskInfoList(var_11_0)
+	Season123TaskModel.instance:setTaskInfoList(seasonTasks)
 	Season123TaskModel.instance:initStageAndTaskType()
 
-	Season123TaskModel.instance.curStage = arg_11_0.stageId ~= nil and arg_11_0.stageId or Season123TaskModel.instance.curStage
-	arg_11_0.curTaskType = arg_11_0.stageId ~= nil and Activity123Enum.TaskRewardViewType or arg_11_0.curTaskType
+	Season123TaskModel.instance.curStage = self.stageId ~= nil and self.stageId or Season123TaskModel.instance.curStage
+	self.curTaskType = self.stageId ~= nil and Activity123Enum.TaskRewardViewType or self.curTaskType
 
-	arg_11_0:createStageMapItem()
-	arg_11_0:refreshUI()
-	arg_11_0:refreshArrowRedDot()
+	self:createStageMapItem()
+	self:refreshUI()
+	self:refreshArrowRedDot()
 	UIBlockMgr.instance:startBlock("playEnterSeason123TaskViewAnim")
-	TaskDispatcher.runDelay(arg_11_0.endEnterAnimBlock, arg_11_0, 0.8)
+	TaskDispatcher.runDelay(self.endEnterAnimBlock, self, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	arg_12_0.curStage = Season123TaskModel.instance.curStage
+function Season123TaskView:refreshUI()
+	self.curStage = Season123TaskModel.instance.curStage
 
-	local var_12_0 = not arg_12_0.curTaskType and Season123TaskModel.instance.curTaskType or arg_12_0.curTaskType
+	local curTaskType = not self.curTaskType and Season123TaskModel.instance.curTaskType or self.curTaskType
 
-	Season123TaskModel.instance:refreshList(var_12_0)
+	Season123TaskModel.instance:refreshList(curTaskType)
 
-	arg_12_0._scrolltasklist.verticalNormalizedPosition = 1
+	self._scrolltasklist.verticalNormalizedPosition = 1
 
-	gohelper.setActive(arg_12_0._gorewardchoose, var_12_0 == Activity123Enum.TaskRewardViewType)
-	gohelper.setActive(arg_12_0._gorewardunchoose, var_12_0 == Activity123Enum.TaskNormalType)
-	gohelper.setActive(arg_12_0._gotaskchoose, var_12_0 == Activity123Enum.TaskNormalType)
-	gohelper.setActive(arg_12_0._gotaskunchoose, var_12_0 == Activity123Enum.TaskRewardViewType)
-	gohelper.setActive(arg_12_0._goachievement, var_12_0 == Activity123Enum.TaskNormalType)
-	gohelper.setActive(arg_12_0._scrollmaplist.gameObject, var_12_0 == Activity123Enum.TaskRewardViewType)
-	gohelper.setActive(arg_12_0._gomaplist, var_12_0 == Activity123Enum.TaskRewardViewType)
-	arg_12_0:refreshArrowUI()
-	arg_12_0:refreshRedDot()
-	arg_12_0:moveScrollPos()
+	gohelper.setActive(self._gorewardchoose, curTaskType == Activity123Enum.TaskRewardViewType)
+	gohelper.setActive(self._gorewardunchoose, curTaskType == Activity123Enum.TaskNormalType)
+	gohelper.setActive(self._gotaskchoose, curTaskType == Activity123Enum.TaskNormalType)
+	gohelper.setActive(self._gotaskunchoose, curTaskType == Activity123Enum.TaskRewardViewType)
+	gohelper.setActive(self._goachievement, curTaskType == Activity123Enum.TaskNormalType)
+	gohelper.setActive(self._scrollmaplist.gameObject, curTaskType == Activity123Enum.TaskRewardViewType)
+	gohelper.setActive(self._gomaplist, curTaskType == Activity123Enum.TaskRewardViewType)
+	self:refreshArrowUI()
+	self:refreshRedDot()
+	self:moveScrollPos()
 end
 
-function var_0_0.refreshRedDot(arg_13_0)
-	gohelper.setActive(arg_13_0._gorewardreddot, Season123TaskModel.instance.reddotShowMap[Activity123Enum.TaskRewardViewType])
-	gohelper.setActive(arg_13_0._gotaskreddot, Season123TaskModel.instance.reddotShowMap[Activity123Enum.TaskNormalType])
+function Season123TaskView:refreshRedDot()
+	gohelper.setActive(self._gorewardreddot, Season123TaskModel.instance.reddotShowMap[Activity123Enum.TaskRewardViewType])
+	gohelper.setActive(self._gotaskreddot, Season123TaskModel.instance.reddotShowMap[Activity123Enum.TaskNormalType])
 end
 
-function var_0_0.refreshArrowRedDot(arg_14_0)
-	local var_14_0 = Season123TaskModel.instance:getHaveRewardTaskIndexList()
-	local var_14_1 = Mathf.Max(arg_14_0.curStage - 1, 1)
-	local var_14_2 = Mathf.Min(arg_14_0.curStage + 1, var_0_0.StageMapItemCount)
-	local var_14_3 = false
-	local var_14_4 = false
+function Season123TaskView:refreshArrowRedDot()
+	local rewardStageIndexList = Season123TaskModel.instance:getHaveRewardTaskIndexList()
+	local topIndex = Mathf.Max(self.curStage - 1, 1)
+	local downIndex = Mathf.Min(self.curStage + 1, Season123TaskView.StageMapItemCount)
+	local needShowTopRedDot = false
+	local neesShowDownRedDot = false
 
-	for iter_14_0 = 1, #var_14_0 do
-		if var_14_1 - var_14_0[iter_14_0] >= 0 then
-			var_14_3 = true
+	for i = 1, #rewardStageIndexList do
+		if topIndex - rewardStageIndexList[i] >= 0 then
+			needShowTopRedDot = true
 
 			break
 		end
 	end
 
-	for iter_14_1 = 1, #var_14_0 do
-		if var_14_0[iter_14_1] - var_14_2 >= 0 then
-			var_14_4 = true
+	for i = 1, #rewardStageIndexList do
+		if rewardStageIndexList[i] - downIndex >= 0 then
+			neesShowDownRedDot = true
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_14_0._goreddotdown, var_14_2 - arg_14_0.curStage > 0 and var_14_4)
-	gohelper.setActive(arg_14_0._goreddottop, arg_14_0.curStage - var_14_1 > 0 and var_14_3)
+	gohelper.setActive(self._goreddotdown, downIndex - self.curStage > 0 and neesShowDownRedDot)
+	gohelper.setActive(self._goreddottop, self.curStage - topIndex > 0 and needShowTopRedDot)
 end
 
-function var_0_0.refreshArrowUI(arg_15_0)
-	gohelper.setActive(arg_15_0._btnarrowdown.gameObject, arg_15_0.curStage < var_0_0.StageMapItemCount)
-	gohelper.setActive(arg_15_0._btnarrowtop.gameObject, arg_15_0.curStage > 1)
-	arg_15_0:refreshArrowRedDot()
+function Season123TaskView:refreshArrowUI()
+	gohelper.setActive(self._btnarrowdown.gameObject, self.curStage < Season123TaskView.StageMapItemCount)
+	gohelper.setActive(self._btnarrowtop.gameObject, self.curStage > 1)
+	self:refreshArrowRedDot()
 end
 
-function var_0_0._playGetRewardFinishAnim(arg_16_0, arg_16_1)
-	if arg_16_1 then
-		arg_16_0.removeIndexTab = {
-			arg_16_1
+function Season123TaskView:_playGetRewardFinishAnim(index)
+	if index then
+		self.removeIndexTab = {
+			index
 		}
 	end
 
-	TaskDispatcher.runDelay(arg_16_0.delayPlayFinishAnim, arg_16_0, var_0_0.TaskGetAnimTime)
+	TaskDispatcher.runDelay(self.delayPlayFinishAnim, self, Season123TaskView.TaskGetAnimTime)
 end
 
-function var_0_0.delayPlayFinishAnim(arg_17_0)
-	arg_17_0._taskAnimRemoveItem:removeByIndexs(arg_17_0.removeIndexTab)
+function Season123TaskView:delayPlayFinishAnim()
+	self._taskAnimRemoveItem:removeByIndexs(self.removeIndexTab)
 end
 
-function var_0_0.endEnterAnimBlock(arg_18_0)
+function Season123TaskView:endEnterAnimBlock()
 	UIBlockMgr.instance:endBlock("playEnterSeason123TaskViewAnim")
 end
 
-function var_0_0.createStageMapItem(arg_19_0)
-	for iter_19_0 = 1, var_0_0.StageMapItemCount do
-		local var_19_0 = arg_19_0.stageMapItemTab[iter_19_0]
+function Season123TaskView:createStageMapItem()
+	for index = 1, Season123TaskView.StageMapItemCount do
+		local stageMapItem = self.stageMapItemTab[index]
 
-		if not var_19_0 then
-			var_19_0 = {
-				itemGO = gohelper.findChild(arg_19_0._gomapcontent, "go_item" .. iter_19_0)
+		if not stageMapItem then
+			stageMapItem = {
+				itemGO = gohelper.findChild(self._gomapcontent, "go_item" .. index)
 			}
-			var_19_0.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_19_0.itemGO, Season123TaskMapItem, {
-				stage = iter_19_0,
-				actId = arg_19_0.actId
+			stageMapItem.item = MonoHelper.addNoUpdateLuaComOnceToGo(stageMapItem.itemGO, Season123TaskMapItem, {
+				stage = index,
+				actId = self.actId
 			})
-			var_19_0.height = recthelper.getHeight(var_19_0.itemGO:GetComponent(gohelper.Type_RectTransform))
-			arg_19_0.stageMapItemTab[iter_19_0] = var_19_0
+			stageMapItem.height = recthelper.getHeight(stageMapItem.itemGO:GetComponent(gohelper.Type_RectTransform))
+			self.stageMapItemTab[index] = stageMapItem
 		end
 
-		gohelper.setActive(var_19_0.itemGO, true)
-		var_19_0.item:refreshUI()
+		gohelper.setActive(stageMapItem.itemGO, true)
+		stageMapItem.item:refreshUI()
 	end
 end
 
-function var_0_0.moveScrollPos(arg_20_0)
-	arg_20_0.curStage = Season123TaskModel.instance.curStage
+function Season123TaskView:moveScrollPos()
+	self.curStage = Season123TaskModel.instance.curStage
 
-	local var_20_0 = recthelper.getHeight(arg_20_0._scrollmaplist:GetComponent(gohelper.Type_RectTransform))
-	local var_20_1 = arg_20_0.layoutGroup.spacing
-	local var_20_2 = 0
+	local scrollHeight = recthelper.getHeight(self._scrollmaplist:GetComponent(gohelper.Type_RectTransform))
+	local space = self.layoutGroup.spacing
+	local frontItemHeight = 0
 
-	for iter_20_0 = 1, arg_20_0.curStage - 1 do
-		var_20_2 = var_20_2 + arg_20_0.stageMapItemTab[iter_20_0].height
+	for index = 1, self.curStage - 1 do
+		frontItemHeight = frontItemHeight + self.stageMapItemTab[index].height
 	end
 
-	local var_20_3 = -var_20_0 / 2 + (arg_20_0.curStage - 1) * var_20_1 + var_20_2 + arg_20_0.stageMapItemTab[arg_20_0.curStage].height / 2
+	local targetPos = -scrollHeight / 2 + (self.curStage - 1) * space + frontItemHeight + self.stageMapItemTab[self.curStage].height / 2
 
-	arg_20_0.scrollMoveTweenId = ZProj.TweenHelper.DOAnchorPosY(arg_20_0.mapcontentRectTrans, var_20_3, 0.5, arg_20_0.refreshArrowUI, arg_20_0)
+	self.scrollMoveTweenId = ZProj.TweenHelper.DOAnchorPosY(self.mapcontentRectTrans, targetPos, 0.5, self.refreshArrowUI, self)
 
-	for iter_20_1, iter_20_2 in ipairs(arg_20_0.stageMapItemTab) do
-		iter_20_2.item:setScale()
+	for index, stageMapItem in ipairs(self.stageMapItemTab) do
+		stageMapItem.item:setScale()
 	end
 end
 
-function var_0_0.onClose(arg_21_0)
+function Season123TaskView:onClose()
 	Season123TaskModel.instance:clear()
 	UIBlockMgr.instance:endBlock("playEnterSeason123TaskViewAnim")
-	TaskDispatcher.cancelTask(arg_21_0.endEnterAnimBlock, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0.delayPlayFinishAnim, arg_21_0)
-	arg_21_0.mapScroll:RemoveDragBeginListener()
-	arg_21_0.mapScroll:RemoveDragEndListener()
+	TaskDispatcher.cancelTask(self.endEnterAnimBlock, self)
+	TaskDispatcher.cancelTask(self.delayPlayFinishAnim, self)
+	self.mapScroll:RemoveDragBeginListener()
+	self.mapScroll:RemoveDragEndListener()
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	if arg_22_0.scrollMoveTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.scrollMoveTweenId)
+function Season123TaskView:onDestroyView()
+	if self.scrollMoveTweenId then
+		ZProj.TweenHelper.KillById(self.scrollMoveTweenId)
 	end
 end
 
-return var_0_0
+return Season123TaskView

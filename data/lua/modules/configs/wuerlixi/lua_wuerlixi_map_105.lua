@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/wuerlixi/lua_wuerlixi_map_105.lua
+
+return {
 	"105",
 	{
 		0,

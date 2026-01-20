@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionGetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionGetViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotCollectionGetViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionGetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotCollectionGetViewContainer = class("V1a6_CachotCollectionGetViewContainer", BaseViewContainer)
+
+function V1a6_CachotCollectionGetViewContainer:buildViews()
 	return {
 		V1a6_CachotCollectionGetView.New()
 	}
 end
 
-return var_0_0
+return V1a6_CachotCollectionGetViewContainer

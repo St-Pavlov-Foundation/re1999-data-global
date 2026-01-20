@@ -1,649 +1,666 @@
-﻿module("modules.logic.store.controller.StoreController", package.seeall)
+﻿-- chunkname: @modules/logic/store/controller/StoreController.lua
 
-local var_0_0 = class("StoreController", BaseController)
+module("modules.logic.store.controller.StoreController", package.seeall)
 
-function var_0_0.getRecommendStoreTime_overseas(arg_1_0, arg_1_1)
-	if not arg_1_1 then
+local StoreController = class("StoreController", BaseController)
+
+function StoreController:getRecommendStoreTime_overseas(config)
+	if not config then
 		return ""
 	end
 
-	local var_1_0 = string.nilorempty(arg_1_1.showOnlineTime) and arg_1_1.onlineTime or arg_1_1.showOnlineTime
-	local var_1_1 = string.nilorempty(arg_1_1.showOfflineTime) and arg_1_1.offlineTime or arg_1_1.showOfflineTime
-	local var_1_2 = TimeUtil.stringToTimestamp(var_1_0)
-	local var_1_3 = TimeUtil.stringToTimestamp(var_1_1)
-	local var_1_4 = os.date("*t", var_1_2)
-	local var_1_5 = os.date("*t", var_1_3)
-	local var_1_6 = string.format("%02d", var_1_4.month)
-	local var_1_7 = string.format("%02d", var_1_4.day)
-	local var_1_8 = string.format("%02d", var_1_5.month)
-	local var_1_9 = string.format("%02d", var_1_5.day)
+	local configStartTime = string.nilorempty(config.showOnlineTime) and config.onlineTime or config.showOnlineTime
+	local configEndTime = string.nilorempty(config.showOfflineTime) and config.offlineTime or config.showOfflineTime
+	local onlineTimeStamp = TimeUtil.stringToTimestamp(configStartTime)
+	local offlineTimeStamp = TimeUtil.stringToTimestamp(configEndTime)
+	local startDate = os.date("*t", onlineTimeStamp)
+	local endDate = os.date("*t", offlineTimeStamp)
+	local startMonth = string.format("%02d", startDate.month)
+	local startDay = string.format("%02d", startDate.day)
+	local endMonth = string.format("%02d", endDate.month)
+	local endDay = string.format("%02d", endDate.day)
 
 	return GameUtil.getSubPlaceholderLuaLang(luaLang("store_recommendTime_overseas"), {
-		var_1_6,
-		var_1_7,
-		var_1_8,
-		var_1_9
+		startMonth,
+		startDay,
+		endMonth,
+		endDay
 	})
 end
 
-function var_0_0.saveInt(arg_2_0, arg_2_1, arg_2_2)
-	GameUtil.playerPrefsSetNumberByUserId(arg_2_1, arg_2_2)
+function StoreController:saveInt(key, value)
+	GameUtil.playerPrefsSetNumberByUserId(key, value)
 end
 
-function var_0_0.getInt(arg_3_0, arg_3_1, arg_3_2)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_3_1, arg_3_2)
+function StoreController:getInt(key, defaultValue)
+	return GameUtil.playerPrefsGetNumberByUserId(key, defaultValue)
 end
 
-local var_0_1 = "EventPackage_WhispersOfTheSnow"
+local kOpenedEventPackageKey = "EventPackage_WhispersOfTheSnow"
 
-function var_0_0.setIsOpenedEventPackage(arg_4_0, arg_4_1)
-	arg_4_0:saveInt(var_0_1, arg_4_1 and 1 or 0)
+function StoreController:setIsOpenedEventPackage(isOpened)
+	self:saveInt(kOpenedEventPackageKey, isOpened and 1 or 0)
 end
 
-function var_0_0.getIsOpenedEventPackage(arg_5_0)
-	return arg_5_0:getInt(var_0_1, 0) ~= 0
+function StoreController:getIsOpenedEventPackage()
+	return self:getInt(kOpenedEventPackageKey, 0) ~= 0
 end
 
-function var_0_0.onInit(arg_6_0)
-	arg_6_0._lastViewStoreId = 0
-	arg_6_0._viewTime = nil
-	arg_6_0._tabTime = nil
-	arg_6_0._lastViewGoodsId = 0
-	arg_6_0._goodsTime = nil
+function StoreController:onInit()
+	self._lastViewStoreId = 0
+	self._viewTime = nil
+	self._tabTime = nil
+	self._lastViewGoodsId = 0
+	self._goodsTime = nil
 end
 
-function var_0_0.onInitFinish(arg_7_0)
-	arg_7_0._lastViewStoreId = 0
-	arg_7_0._viewTime = nil
-	arg_7_0._tabTime = nil
+function StoreController:onInitFinish()
+	self._lastViewStoreId = 0
+	self._viewTime = nil
+	self._tabTime = nil
 end
 
-function var_0_0.addConstEvents(arg_8_0)
+function StoreController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_9_0)
-	arg_9_0.enteredRecommendStoreIdList = nil
+function StoreController:reInit()
+	self.enteredRecommendStoreIdList = nil
 end
 
-function var_0_0.checkAndOpenStoreView(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = false
+function StoreController:checkAndOpenStoreView(jumpTab, jumpGoodsId, isFocus)
+	local isCanOpen = false
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Bank) then
-		arg_10_0:openStoreView(arg_10_1, arg_10_2)
+		self:openStoreView(jumpTab, jumpGoodsId, isFocus)
 
-		var_10_0 = true
+		isCanOpen = true
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Bank))
 	end
 
-	return var_10_0
+	return isCanOpen
 end
 
-function var_0_0.openStoreView(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = {
-		jumpTab = arg_11_1,
-		jumpGoodsId = arg_11_2,
-		isFocus = arg_11_3
-	}
+function StoreController:openStoreView(jumpTab, jumpGoodsId, isFocus)
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.StoreView, var_11_0)
+	param.jumpTab = jumpTab
+	param.jumpGoodsId = jumpGoodsId
+	param.isFocus = isFocus
+
+	ViewMgr.instance:openView(ViewName.StoreView, param)
 end
 
-function var_0_0.openNormalGoodsView(arg_12_0, arg_12_1)
-	if arg_12_1.belongStoreId == StoreEnum.StoreId.NewRoomStore or arg_12_1.belongStoreId == StoreEnum.StoreId.OldRoomStore then
-		if arg_12_0:isRoomBlockGift(arg_12_1) then
-			ViewMgr.instance:openView(ViewName.RoomBlockGiftStoreGoodsView, arg_12_1)
+function StoreController:openNormalGoodsView(normalGoodsMO)
+	if normalGoodsMO.belongStoreId == StoreEnum.StoreId.NewRoomStore or normalGoodsMO.belongStoreId == StoreEnum.StoreId.OldRoomStore then
+		if self:isRoomBlockGift(normalGoodsMO) then
+			ViewMgr.instance:openView(ViewName.RoomBlockGiftStoreGoodsView, normalGoodsMO)
 		else
-			RoomController.instance:openStoreGoodsTipView(arg_12_1)
+			RoomController.instance:openStoreGoodsTipView(normalGoodsMO)
 		end
 	else
-		ViewMgr.instance:openView(ViewName.NormalStoreGoodsView, arg_12_1)
+		ViewMgr.instance:openView(ViewName.NormalStoreGoodsView, normalGoodsMO)
 	end
 end
 
-function var_0_0.isRoomBlockGift(arg_13_0, arg_13_1)
-	if string.nilorempty(arg_13_1.config.product) then
+function StoreController:isRoomBlockGift(normalGoodsMO)
+	if string.nilorempty(normalGoodsMO.config.product) then
 		return
 	end
 
-	local var_13_0 = GameUtil.splitString2(arg_13_1.config.product, true)
-	local var_13_1 = var_13_0[1][1]
-	local var_13_2 = var_13_0[1][2]
-	local var_13_3 = ItemModel.instance:getItemConfig(var_13_1, var_13_2)
+	local productArr = GameUtil.splitString2(normalGoodsMO.config.product, true)
+	local itemType = productArr[1][1]
+	local itemId = productArr[1][2]
+	local config = ItemModel.instance:getItemConfig(itemType, itemId)
 
-	return var_13_3.subType == ItemEnum.SubType.RoomBlockGift or var_13_3.subType == ItemEnum.SubType.RoomBlockGiftNew
+	return config.subType == ItemEnum.SubType.RoomBlockGift or config.subType == ItemEnum.SubType.RoomBlockGiftNew
 end
 
-function var_0_0.openChargeGoodsView(arg_14_0, arg_14_1)
-	ViewMgr.instance:openView(ViewName.ChargeStoreGoodsView, arg_14_1)
+function StoreController:openChargeGoodsView(chargeGoodsMO)
+	ViewMgr.instance:openView(ViewName.ChargeStoreGoodsView, chargeGoodsMO)
 end
 
-function var_0_0.openPackageStoreGoodsView(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.config.type
-	local var_15_1 = arg_15_1.belongStoreId
+function StoreController:openPackageStoreGoodsView(packageGoodsMO)
+	local goodsType = packageGoodsMO.config.type
+	local belongStoreId = packageGoodsMO.belongStoreId
 
-	if var_15_0 == StoreEnum.StoreChargeType.Optional then
-		ViewMgr.instance:openView(ViewName.OptionalChargeView, arg_15_1)
-	elseif var_15_0 == StoreEnum.StoreChargeType.LinkGiftGoods then
-		ViewMgr.instance:openView(ViewName.StoreLinkGiftGoodsView, arg_15_1)
-	elseif var_15_0 == StoreEnum.StoreChargeType.NationalGift then
-		local var_15_2 = {
-			goodMo = arg_15_1
+	if goodsType == StoreEnum.StoreChargeType.Optional then
+		local optionalTypeView = {
+			[StoreEnum.chargeOptionalType.PosOption] = ViewName.OptionalChargeView,
+			[StoreEnum.chargeOptionalType.GroupOption] = ViewName.OptionalGroupChargeView
 		}
+		local chargeOptionCoList = StoreConfig.instance:getChargeOptionalGroup(packageGoodsMO.config.id)
+		local viewName = chargeOptionCoList and optionalTypeView[chargeOptionCoList[1].type]
 
-		NationalGiftController.instance:openNationalGiftBuyTipView(var_15_2)
-	elseif var_15_1 == StoreEnum.StoreId.Skin then
+		if not viewName then
+			logError("充值商品" .. packageGoodsMO.config.id .. "对应的自选礼包或类型配置错误")
+
+			return
+		end
+
+		ViewMgr.instance:openView(viewName, packageGoodsMO)
+	elseif goodsType == StoreEnum.StoreChargeType.LinkGiftGoods then
+		ViewMgr.instance:openView(ViewName.StoreLinkGiftGoodsView, packageGoodsMO)
+	elseif goodsType == StoreEnum.StoreChargeType.NationalGift then
+		local param = {}
+
+		param.goodMo = packageGoodsMO
+
+		NationalGiftController.instance:openNationalGiftBuyTipView(param)
+	elseif belongStoreId == StoreEnum.StoreId.Skin then
 		ViewMgr.instance:openView(ViewName.StoreSkinGoodsView2, {
 			index = 1,
-			goodsMO = arg_15_1
+			goodsMO = packageGoodsMO
 		})
 	else
-		ViewMgr.instance:openView(ViewName.PackageStoreGoodsView, arg_15_1)
+		ViewMgr.instance:openView(ViewName.PackageStoreGoodsView, packageGoodsMO)
 	end
 end
 
-function var_0_0.openDecorateStoreGoodsView(arg_16_0, arg_16_1)
-	local var_16_0 = string.splitToNumber(arg_16_1.config.product, "#")
+function StoreController:openDecorateStoreGoodsView(decorateGoodsMO)
+	local products = string.splitToNumber(decorateGoodsMO.config.product, "#")
+	local itemCo = ItemModel.instance:getItemConfig(products[1], products[2])
 
-	if ItemModel.instance:getItemConfig(var_16_0[1], var_16_0[2]).subType == ItemEnum.SubType.PlayerBg then
-		local var_16_1 = {
-			goodsMo = arg_16_1
+	if itemCo.subType == ItemEnum.SubType.PlayerBg then
+		local param = {
+			goodsMo = decorateGoodsMO
 		}
 
-		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsBuyView, var_16_1)
+		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsBuyView, param)
 	else
-		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, arg_16_1)
+		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, decorateGoodsMO)
 	end
 end
 
-function var_0_0.openSummonStoreGoodsView(arg_17_0, arg_17_1)
-	if arg_17_1.belongStoreId == StoreEnum.StoreId.RoomStore then
-		RoomController.instance:openStoreGoodsTipView(arg_17_1)
+function StoreController:openSummonStoreGoodsView(goodsMO)
+	if goodsMO.belongStoreId == StoreEnum.StoreId.RoomStore then
+		RoomController.instance:openStoreGoodsTipView(goodsMO)
 	else
-		ViewMgr.instance:openView(ViewName.SummonStoreGoodsView, arg_17_1)
+		ViewMgr.instance:openView(ViewName.SummonStoreGoodsView, goodsMO)
 	end
 end
 
-function var_0_0.buyGoods(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
-	StoreRpc.instance:sendBuyGoodsRequest(arg_18_1.belongStoreId, arg_18_1.goodsId, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
+function StoreController:buyGoods(storeGoodsMO, quantity, callback, callbackObj, selectCost)
+	StoreRpc.instance:sendBuyGoodsRequest(storeGoodsMO.belongStoreId, storeGoodsMO.goodsId, quantity, callback, callbackObj, selectCost)
 end
 
-function var_0_0.forceReadTab(arg_19_0, arg_19_1)
-	local var_19_0 = StoreModel.instance:jumpTabIdToStoreId(arg_19_1)
+function StoreController:forceReadTab(jumpTab)
+	local storeId = StoreModel.instance:jumpTabIdToStoreId(jumpTab)
 
-	arg_19_0:_readTab(var_19_0)
+	self:_readTab(storeId)
 end
 
-function var_0_0.readTab(arg_20_0, arg_20_1)
-	local var_20_0 = StoreModel.instance:jumpTabIdToStoreId(arg_20_1)
+function StoreController:readTab(jumpTab)
+	local storeId = StoreModel.instance:jumpTabIdToStoreId(jumpTab)
 
-	if var_20_0 == arg_20_0._lastViewStoreId then
+	if storeId == self._lastViewStoreId then
 		return
 	end
 
-	arg_20_0:_readTab(var_20_0)
+	self:_readTab(storeId)
 end
 
-function var_0_0._readTab(arg_21_0, arg_21_1)
-	if arg_21_1 == StoreEnum.StoreId.EventPackage and not arg_21_0:getIsOpenedEventPackage() then
-		arg_21_0:setIsOpenedEventPackage(true)
+function StoreController:_readTab(storeId)
+	if storeId == StoreEnum.StoreId.EventPackage and not self:getIsOpenedEventPackage() then
+		self:setIsOpenedEventPackage(true)
 		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
 			[RedDotEnum.DotNode.StoreBtn] = true
 		})
 	end
 
-	local var_21_0 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreGoodsRead)
+	local dotInfo = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreGoodsRead)
 
-	if var_21_0 then
-		local var_21_1 = var_21_0.infos
-		local var_21_2 = {}
+	if dotInfo then
+		local storedotinfos = dotInfo.infos
+		local goodsIds = {}
 
-		for iter_21_0, iter_21_1 in pairs(var_21_1) do
-			local var_21_3 = StoreModel.instance:getGoodsMO(iter_21_1.uid)
+		for _, v in pairs(storedotinfos) do
+			local goodsMo = StoreModel.instance:getGoodsMO(v.uid)
 
-			if var_21_3 and arg_21_1 == var_21_3.belongStoreId then
-				table.insert(var_21_2, iter_21_1.uid)
+			if goodsMo and storeId == goodsMo.belongStoreId then
+				table.insert(goodsIds, v.uid)
 			end
 		end
 
-		if #var_21_2 > 0 then
-			StoreRpc.instance:sendReadStoreNewRequest(var_21_2)
+		if #goodsIds > 0 then
+			StoreRpc.instance:sendReadStoreNewRequest(goodsIds)
 		end
 	end
 
-	local var_21_4 = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreChargeGoodsRead)
+	dotInfo = RedDotModel.instance:getRedDotInfo(RedDotEnum.DotNode.StoreChargeGoodsRead)
 
-	if var_21_4 then
-		local var_21_5 = var_21_4.infos
-		local var_21_6 = {}
+	if dotInfo then
+		local storedotinfos = dotInfo.infos
+		local goodsIds = {}
 
-		for iter_21_2, iter_21_3 in pairs(var_21_5) do
-			local var_21_7 = StoreModel.instance:getGoodsMO(iter_21_3.uid)
+		for _, v in pairs(storedotinfos) do
+			local goodsMo = StoreModel.instance:getGoodsMO(v.uid)
 
-			if var_21_7 and arg_21_1 == var_21_7.belongStoreId then
-				table.insert(var_21_6, iter_21_3.uid)
+			if goodsMo and storeId == goodsMo.belongStoreId then
+				table.insert(goodsIds, v.uid)
 			end
 		end
 
-		if #var_21_6 > 0 then
-			if not StoreConfig.instance:isPackageStore(arg_21_1) then
-				ChargeRpc.instance:sendReadChargeNewRequest(var_21_6)
+		if #goodsIds > 0 then
+			local isPackageStore = StoreConfig.instance:isPackageStore(storeId)
+
+			if not isPackageStore then
+				ChargeRpc.instance:sendReadChargeNewRequest(goodsIds)
 			else
-				local var_21_8 = {}
+				local ids = {}
 
-				for iter_21_4, iter_21_5 in pairs(var_21_6) do
-					local var_21_9 = StoreModel.instance:getGoodsMO(iter_21_5)
-					local var_21_10 = ServerTime.now()
+				for _, goodsId in pairs(goodsIds) do
+					local storePackageGoodsMO = StoreModel.instance:getGoodsMO(goodsId)
+					local serverTime = ServerTime.now()
+					local inTime = serverTime >= storePackageGoodsMO.newStartTime and serverTime <= storePackageGoodsMO.newEndTime
 
-					if not (var_21_10 >= var_21_9.newStartTime and var_21_10 <= var_21_9.newEndTime) then
-						table.insert(var_21_8, iter_21_5)
+					if not inTime then
+						table.insert(ids, goodsId)
 					end
 				end
 
-				ChargeRpc.instance:sendReadChargeNewRequest(var_21_8)
+				ChargeRpc.instance:sendReadChargeNewRequest(ids)
 			end
 		end
 	end
 end
 
-function var_0_0.statSwitchStore(arg_22_0, arg_22_1)
-	local var_22_0 = StoreModel.instance:jumpTabIdToStoreId(arg_22_1)
+function StoreController:statSwitchStore(jumpTab)
+	local storeId = StoreModel.instance:jumpTabIdToStoreId(jumpTab)
 
-	if var_22_0 == arg_22_0._lastViewStoreId then
+	if storeId == self._lastViewStoreId then
 		return
 	end
 
-	if not arg_22_0._viewTime then
+	if not self._viewTime then
 		StatController.instance:track(StatEnum.EventName.StoreEnter, {
-			[StatEnum.EventProperties.StoreId] = tostring(var_22_0)
+			[StatEnum.EventProperties.StoreId] = tostring(storeId)
 		})
 
-		arg_22_0._viewTime = ServerTime.now()
+		self._viewTime = ServerTime.now()
 	else
-		local var_22_1 = 0
+		local duration = 0
 
-		if arg_22_0._tabTime then
-			var_22_1 = ServerTime.now() - arg_22_0._tabTime
+		if self._tabTime then
+			duration = ServerTime.now() - self._tabTime
 		end
 
 		StatController.instance:track(StatEnum.EventName.SwitchStore, {
-			[StatEnum.EventProperties.BeforeStoreId] = tostring(arg_22_0._lastViewStoreId),
-			[StatEnum.EventProperties.AfterStoreId] = tostring(var_22_0),
-			[StatEnum.EventProperties.Time] = var_22_1
+			[StatEnum.EventProperties.BeforeStoreId] = tostring(self._lastViewStoreId),
+			[StatEnum.EventProperties.AfterStoreId] = tostring(storeId),
+			[StatEnum.EventProperties.Time] = duration
 		})
 	end
 
-	arg_22_0._tabTime = ServerTime.now()
-	arg_22_0._lastViewStoreId = var_22_0
+	self._tabTime = ServerTime.now()
+	self._lastViewStoreId = storeId
 end
 
-function var_0_0.statExitStore(arg_23_0)
-	local var_23_0 = 0
+function StoreController:statExitStore()
+	local duration = 0
 
-	if arg_23_0._viewTime then
-		var_23_0 = ServerTime.now() - arg_23_0._viewTime
+	if self._viewTime then
+		duration = ServerTime.now() - self._viewTime
 	end
 
 	StatController.instance:track(StatEnum.EventName.StoreExit, {
-		[StatEnum.EventProperties.StoreId] = tostring(arg_23_0._lastViewStoreId),
-		[StatEnum.EventProperties.Time] = var_23_0
+		[StatEnum.EventProperties.StoreId] = tostring(self._lastViewStoreId),
+		[StatEnum.EventProperties.Time] = duration
 	})
 
-	arg_23_0._lastViewStoreId = 0
-	arg_23_0._viewTime = nil
-	arg_23_0._tabTime = nil
+	self._lastViewStoreId = 0
+	self._viewTime = nil
+	self._tabTime = nil
 end
 
-function var_0_0.statOpenGoods(arg_24_0, arg_24_1, arg_24_2)
-	if not arg_24_2 then
+function StoreController:statOpenGoods(storeId, goodsConfig)
+	if not goodsConfig then
 		return
 	end
 
-	if ChargePushStatController.instance:statClick(arg_24_2.id) then
+	if ChargePushStatController.instance:statClick(goodsConfig.id) then
 		return
 	end
 
-	arg_24_0._lastViewGoodsId = arg_24_2.id
-	arg_24_0._goodsTime = ServerTime.now()
+	self._lastViewGoodsId = goodsConfig.id
+	self._goodsTime = ServerTime.now()
 
-	local var_24_0 = arg_24_2.product
-	local var_24_1 = string.split(var_24_0, "#")
-	local var_24_2 = tonumber(var_24_1[1])
-	local var_24_3 = tonumber(var_24_1[2])
-	local var_24_4 = tonumber(var_24_1[3])
-	local var_24_5 = ItemModel.instance:getItemConfig(var_24_2, var_24_3)
+	local product = goodsConfig.product
+	local productInfo = string.split(product, "#")
+	local itemType = tonumber(productInfo[1])
+	local itemId = tonumber(productInfo[2])
+	local itemQuantity = tonumber(productInfo[3])
+	local itemConfig = ItemModel.instance:getItemConfig(itemType, itemId)
 
 	StatController.instance:track(StatEnum.EventName.ClickGoods, {
-		[StatEnum.EventProperties.StoreId] = tostring(arg_24_1),
-		[StatEnum.EventProperties.GoodsId] = arg_24_2.id,
-		[StatEnum.EventProperties.MaterialName] = var_24_5 and var_24_5.name or "",
-		[StatEnum.EventProperties.MaterialNum] = var_24_4
+		[StatEnum.EventProperties.StoreId] = tostring(storeId),
+		[StatEnum.EventProperties.GoodsId] = goodsConfig.id,
+		[StatEnum.EventProperties.MaterialName] = itemConfig and itemConfig.name or "",
+		[StatEnum.EventProperties.MaterialNum] = itemQuantity
 	})
 end
 
-function var_0_0.statOpenChargeGoods(arg_25_0, arg_25_1, arg_25_2)
-	if not arg_25_2 then
+function StoreController:statOpenChargeGoods(storeId, goodsConfig)
+	if not goodsConfig then
 		return
 	end
 
-	if ChargePushStatController.instance:statClick(arg_25_2.id) then
+	if ChargePushStatController.instance:statClick(goodsConfig.id) then
 		return
 	end
 
-	arg_25_0._lastViewGoodsId = arg_25_2.id
-	arg_25_0._goodsTime = ServerTime.now()
+	self._lastViewGoodsId = goodsConfig.id
+	self._goodsTime = ServerTime.now()
 
 	StatController.instance:track(StatEnum.EventName.ClickGoods, {
-		[StatEnum.EventProperties.StoreId] = tostring(arg_25_1),
-		[StatEnum.EventProperties.GoodsId] = arg_25_2.id,
-		[StatEnum.EventProperties.MaterialName] = arg_25_2 and arg_25_2.name or "",
+		[StatEnum.EventProperties.StoreId] = tostring(storeId),
+		[StatEnum.EventProperties.GoodsId] = goodsConfig.id,
+		[StatEnum.EventProperties.MaterialName] = goodsConfig and goodsConfig.name or "",
 		[StatEnum.EventProperties.MaterialNum] = 1
 	})
 end
 
-function var_0_0.statCloseGoods(arg_26_0, arg_26_1)
-	if not arg_26_1 then
+function StoreController:statCloseGoods(goodsConfig)
+	if not goodsConfig then
 		return
 	end
 
-	if arg_26_0._lastViewGoodsId ~= arg_26_1.id then
+	if self._lastViewGoodsId ~= goodsConfig.id then
 		return
 	end
 
-	local var_26_0 = 0
+	local duration = 0
 
-	if arg_26_0._goodsTime then
-		local var_26_1 = ServerTime.now() - arg_26_0._goodsTime
+	if self._goodsTime then
+		duration = ServerTime.now() - self._goodsTime
 	end
 
-	arg_26_0._lastViewGoodsId = 0
+	self._lastViewGoodsId = 0
 end
 
-function var_0_0.recordExchangeSkinDiamond(arg_27_0, arg_27_1)
-	arg_27_0.exchangeDiamondQuantity = arg_27_1
+function StoreController:recordExchangeSkinDiamond(diamondQuantity)
+	self.exchangeDiamondQuantity = diamondQuantity
 end
 
-function var_0_0.statBuyGoods(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4, arg_28_5)
-	arg_28_5 = arg_28_5 or 1
+function StoreController:statBuyGoods(storeId, goodsId, buyCount, existBuyCount, selectCost)
+	selectCost = selectCost or 1
 
-	local var_28_0 = StoreConfig.instance:getGoodsConfig(arg_28_2)
-	local var_28_1 = var_28_0.product
-	local var_28_2
+	local goodsConfig = StoreConfig.instance:getGoodsConfig(goodsId)
+	local productItem = goodsConfig.product
+	local cost
 
-	if arg_28_1 == StoreEnum.StoreId.RoomStore then
-		local var_28_3 = arg_28_0.roomStoreCanBuyGoodsStr
-		local var_28_4 = arg_28_0:_itemsMultipleWithBuyCount(arg_28_0.recordCostItem, arg_28_3, arg_28_4)
-	elseif arg_28_1 == StoreEnum.StoreId.Skin and arg_28_0.exchangeDiamondQuantity and arg_28_0.exchangeDiamondQuantity > 0 then
-		local var_28_5 = string.splitToNumber(var_28_0.cost, "#")
-		local var_28_6 = var_28_5[1]
-		local var_28_7 = var_28_5[2]
-		local var_28_8 = var_28_5[3]
-		local var_28_9 = {
+	if storeId == StoreEnum.StoreId.RoomStore then
+		productItem = self.roomStoreCanBuyGoodsStr
+		cost = self:_itemsMultipleWithBuyCount(self.recordCostItem, buyCount, existBuyCount)
+	elseif storeId == StoreEnum.StoreId.Skin and self.exchangeDiamondQuantity and self.exchangeDiamondQuantity > 0 then
+		local arr = string.splitToNumber(goodsConfig.cost, "#")
+		local srcType, srcId, costTotalQuantity = arr[1], arr[2], arr[3]
+		local cost1 = {
 			type = MaterialEnum.MaterialType.Currency,
 			id = CurrencyEnum.CurrencyType.Diamond,
-			quantity = arg_28_0.exchangeDiamondQuantity
+			quantity = self.exchangeDiamondQuantity
 		}
-		local var_28_10 = {
-			type = var_28_6,
-			id = var_28_7,
-			quantity = var_28_8 - arg_28_0.exchangeDiamondQuantity
+		local cost2 = {
+			type = srcType,
+			id = srcId,
+			quantity = costTotalQuantity - self.exchangeDiamondQuantity
 		}
-		local var_28_11 = arg_28_0:_generateItemListJson({
-			var_28_9,
-			var_28_10
-		})
 
-		arg_28_0.exchangeDiamondQuantity = 0
+		cost = self:_generateItemListJson({
+			cost1,
+			cost2
+		})
+		self.exchangeDiamondQuantity = 0
 	else
-		local var_28_12 = arg_28_0:_itemsMultipleWithBuyCount(var_28_0.cost, arg_28_3, arg_28_4)
+		cost = self:_itemsMultipleWithBuyCount(goodsConfig.cost, buyCount, existBuyCount)
 	end
 end
 
-function var_0_0.statVersionActivityBuyGoods(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4)
+function StoreController:statVersionActivityBuyGoods(activityId, goodsId, buyCount, existBuyCount)
 	return
 end
 
-function var_0_0.recordRoomStoreCurrentCanBuyGoods(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	local var_30_0 = StoreConfig.instance:getGoodsConfig(arg_30_1)
+function StoreController:recordRoomStoreCurrentCanBuyGoods(goodsId, selectCost, costNum)
+	local goodsConfig = StoreConfig.instance:getGoodsConfig(goodsId)
 
-	if arg_30_2 == 1 then
-		arg_30_0.recordCostItem = var_30_0.cost
-	elseif arg_30_2 == 2 then
-		arg_30_0.recordCostItem = var_30_0.cost2
+	if selectCost == 1 then
+		self.recordCostItem = goodsConfig.cost
+	elseif selectCost == 2 then
+		self.recordCostItem = goodsConfig.cost2
 	else
-		arg_30_0.recordCostItem = var_30_0.cost
+		self.recordCostItem = goodsConfig.cost
 	end
 
-	arg_30_0.roomStoreCanBuyGoodsStr = var_30_0.product
+	self.roomStoreCanBuyGoodsStr = goodsConfig.product
 
-	local var_30_1 = string.split(var_30_0.product, "|")
+	local productList = string.split(goodsConfig.product, "|")
 
-	if #var_30_1 > 1 then
-		local var_30_2 = string.split(arg_30_0.recordCostItem, "#")
-		local var_30_3 = {}
+	if #productList > 1 then
+		local costTab = string.split(self.recordCostItem, "#")
+		local canBuyItemList = {}
 
-		var_30_2[3] = arg_30_3
+		costTab[3] = costNum
 
-		for iter_30_0, iter_30_1 in ipairs(var_30_1) do
-			local var_30_4 = string.splitToNumber(iter_30_1, "#")
-			local var_30_5 = ItemModel.instance:getItemQuantity(var_30_4[1], var_30_4[2])
-			local var_30_6 = ItemModel.instance:getItemConfig(var_30_4[1], var_30_4[2])
-			local var_30_7 = var_30_6 and var_30_6.numLimit or 1
+		for index, product in ipairs(productList) do
+			local productArr = string.splitToNumber(product, "#")
+			local hasQuantity = ItemModel.instance:getItemQuantity(productArr[1], productArr[2])
+			local itemConfig = ItemModel.instance:getItemConfig(productArr[1], productArr[2])
+			local numLimit = itemConfig and itemConfig.numLimit or 1
 
-			if var_30_7 == 0 or var_30_5 < var_30_7 then
-				table.insert(var_30_3, string.format("%s#%s#%s", var_30_4[1], var_30_4[2], var_30_7 - var_30_5))
+			if numLimit == 0 or hasQuantity < numLimit then
+				table.insert(canBuyItemList, string.format("%s#%s#%s", productArr[1], productArr[2], numLimit - hasQuantity))
 			end
 		end
 
-		arg_30_0.recordCostItem = table.concat(var_30_2, "#")
-		arg_30_0.roomStoreCanBuyGoodsStr = table.concat(var_30_3, "|")
+		self.recordCostItem = table.concat(costTab, "#")
+		self.roomStoreCanBuyGoodsStr = table.concat(canBuyItemList, "|")
 	end
 end
 
-function var_0_0._itemsMultiple(arg_31_0, arg_31_1, arg_31_2)
-	if string.nilorempty(arg_31_1) or arg_31_2 <= 0 then
+function StoreController:_itemsMultiple(item, buyCount)
+	if string.nilorempty(item) or buyCount <= 0 then
 		return {}
 	end
 
-	local var_31_0 = GameUtil.splitString2(arg_31_1, true)
-	local var_31_1 = {}
+	local items = GameUtil.splitString2(item, true)
+	local result = {}
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
-		local var_31_2 = {
-			type = iter_31_1[1],
-			id = iter_31_1[2],
-			quantity = iter_31_1[3] * arg_31_2
+	for i, itemParams in ipairs(items) do
+		local item = {
+			type = itemParams[1],
+			id = itemParams[2],
+			quantity = itemParams[3] * buyCount
 		}
 
-		table.insert(var_31_1, var_31_2)
+		table.insert(result, item)
 	end
 
-	return arg_31_0:_generateItemListJson(var_31_1)
+	return self:_generateItemListJson(result)
 end
 
-function var_0_0._itemsMultipleWithBuyCount(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	if string.nilorempty(arg_32_1) or arg_32_2 <= 0 then
+function StoreController:_itemsMultipleWithBuyCount(items, buyCount, existBuyCount)
+	if string.nilorempty(items) or buyCount <= 0 then
 		return {}
 	end
 
-	local var_32_0 = {}
-	local var_32_1 = string.split(arg_32_1, "|")
+	local result = {}
+	local costs = string.split(items, "|")
 
-	for iter_32_0 = arg_32_3 + 1, arg_32_3 + arg_32_2 do
-		local var_32_2 = var_32_1[iter_32_0] or var_32_1[#var_32_1]
-		local var_32_3 = string.splitToNumber(var_32_2, "#")
+	for index = existBuyCount + 1, existBuyCount + buyCount do
+		local costParam = costs[index] or costs[#costs]
+		local costInfo = string.splitToNumber(costParam, "#")
 
-		if iter_32_0 >= #var_32_1 then
-			table.insert(var_32_0, {
-				type = var_32_3[1],
-				id = var_32_3[2],
-				quantity = var_32_3[3] * (arg_32_3 + arg_32_2 - iter_32_0 + 1)
+		if index >= #costs then
+			table.insert(result, {
+				type = costInfo[1],
+				id = costInfo[2],
+				quantity = costInfo[3] * (existBuyCount + buyCount - index + 1)
 			})
 
 			break
 		else
-			table.insert(var_32_0, {
-				type = var_32_3[1],
-				id = var_32_3[2],
-				quantity = var_32_3[3]
+			table.insert(result, {
+				type = costInfo[1],
+				id = costInfo[2],
+				quantity = costInfo[3]
 			})
 		end
 	end
 
-	if #var_32_0 <= 0 then
+	if #result <= 0 then
 		return {}
 	end
 
-	local var_32_4 = {}
+	local merged = {}
 
-	for iter_32_1, iter_32_2 in ipairs(var_32_0) do
-		var_32_4[iter_32_2.type] = var_32_4[iter_32_2.type] or {}
-		var_32_4[iter_32_2.type][iter_32_2.id] = (var_32_4[iter_32_2.type][iter_32_2.id] or 0) + iter_32_2.quantity
+	for i, item in ipairs(result) do
+		merged[item.type] = merged[item.type] or {}
+		merged[item.type][item.id] = (merged[item.type][item.id] or 0) + item.quantity
 	end
 
-	local var_32_5 = {}
+	result = {}
 
-	for iter_32_3, iter_32_4 in pairs(var_32_4) do
-		for iter_32_5, iter_32_6 in pairs(iter_32_4) do
-			table.insert(var_32_5, {
-				type = iter_32_3,
-				id = iter_32_5,
-				quantity = iter_32_6
+	for type, dict in pairs(merged) do
+		for id, quantity in pairs(dict) do
+			table.insert(result, {
+				type = type,
+				id = id,
+				quantity = quantity
 			})
 		end
 	end
 
-	return arg_32_0:_generateItemListJson(var_32_5)
+	return self:_generateItemListJson(result)
 end
 
-function var_0_0._generateItemListJson(arg_33_0, arg_33_1)
-	if not arg_33_1 or #arg_33_1 <= 0 then
+function StoreController:_generateItemListJson(result)
+	if not result or #result <= 0 then
 		return {}
 	end
 
-	local var_33_0 = {}
+	local itemListJson = {}
 
-	for iter_33_0, iter_33_1 in ipairs(arg_33_1) do
-		local var_33_1 = ItemModel.instance:getItemConfig(iter_33_1.type, iter_33_1.id)
+	for i, item in ipairs(result) do
+		local config = ItemModel.instance:getItemConfig(item.type, item.id)
 
-		table.insert(var_33_0, {
-			materialname = var_33_1 and var_33_1.name or "",
-			materialtype = iter_33_1.type,
-			materialnum = iter_33_1.quantity
+		table.insert(itemListJson, {
+			materialname = config and config.name or "",
+			materialtype = item.type,
+			materialnum = item.quantity
 		})
 	end
 
-	return var_33_0
+	return itemListJson
 end
 
-function var_0_0.isNeedShowRedDotNewTag(arg_34_0, arg_34_1)
-	return arg_34_1 and arg_34_1.type == 0 and not string.nilorempty(arg_34_1.onlineTime)
+function StoreController:isNeedShowRedDotNewTag(recommendStoreConfig)
+	return recommendStoreConfig and recommendStoreConfig.type == 0 and not string.nilorempty(recommendStoreConfig.onlineTime)
 end
 
-function var_0_0.initEnteredRecommendStoreList(arg_35_0)
-	local var_35_0 = PlayerPrefsKey.EnteredRecommendStoreKey .. PlayerModel.instance:getMyUserId()
-	local var_35_1 = PlayerPrefsHelper.getString(var_35_0, "")
+function StoreController:initEnteredRecommendStoreList()
+	local key = PlayerPrefsKey.EnteredRecommendStoreKey .. PlayerModel.instance:getMyUserId()
+	local str = PlayerPrefsHelper.getString(key, "")
 
-	if string.nilorempty(var_35_1) then
-		arg_35_0.enteredRecommendStoreIdList = {}
+	if string.nilorempty(str) then
+		self.enteredRecommendStoreIdList = {}
 
 		return
 	end
 
-	arg_35_0.enteredRecommendStoreIdList = string.splitToNumber(var_35_1, ";")
+	self.enteredRecommendStoreIdList = string.splitToNumber(str, ";")
 end
 
-function var_0_0.enterRecommendStore(arg_36_0, arg_36_1)
-	if not arg_36_0.enteredRecommendStoreIdList then
-		arg_36_0:initEnteredRecommendStoreList()
+function StoreController:enterRecommendStore(storeId)
+	if not self.enteredRecommendStoreIdList then
+		self:initEnteredRecommendStoreList()
 	end
 
-	if tabletool.indexOf(arg_36_0.enteredRecommendStoreIdList, arg_36_1) then
+	if tabletool.indexOf(self.enteredRecommendStoreIdList, storeId) then
 		return
 	end
 
-	table.insert(arg_36_0.enteredRecommendStoreIdList, arg_36_1)
+	table.insert(self.enteredRecommendStoreIdList, storeId)
 	ActivityController.instance:dispatchEvent(ActivityEvent.ChangeActivityStage)
 
-	local var_36_0 = PlayerPrefsKey.EnteredRecommendStoreKey .. PlayerModel.instance:getMyUserId()
+	local key = PlayerPrefsKey.EnteredRecommendStoreKey .. PlayerModel.instance:getMyUserId()
 
-	PlayerPrefsHelper.setString(var_36_0, table.concat(arg_36_0.enteredRecommendStoreIdList, ";"))
+	PlayerPrefsHelper.setString(key, table.concat(self.enteredRecommendStoreIdList, ";"))
 end
 
-function var_0_0.isEnteredRecommendStore(arg_37_0, arg_37_1)
-	if not arg_37_0.enteredRecommendStoreIdList then
-		arg_37_0:initEnteredRecommendStoreList()
+function StoreController:isEnteredRecommendStore(storeId)
+	if not self.enteredRecommendStoreIdList then
+		self:initEnteredRecommendStoreList()
 	end
 
-	return tabletool.indexOf(arg_37_0.enteredRecommendStoreIdList, arg_37_1)
+	return tabletool.indexOf(self.enteredRecommendStoreIdList, storeId)
 end
 
-function var_0_0.getRecommendStoreTime(arg_38_0, arg_38_1)
-	do return arg_38_0:getRecommendStoreTime_overseas(arg_38_1) end
+function StoreController:getRecommendStoreTime(config)
+	do return self:getRecommendStoreTime_overseas(config) end
 
-	if not arg_38_1 then
+	if not config then
 		return
 	end
 
-	local var_38_0 = string.nilorempty(arg_38_1.showOnlineTime) and arg_38_1.onlineTime or arg_38_1.showOnlineTime
-	local var_38_1 = string.nilorempty(arg_38_1.showOfflineTime) and arg_38_1.offlineTime or arg_38_1.showOfflineTime
-	local var_38_2 = TimeUtil.stringToTimestamp(var_38_0)
-	local var_38_3 = TimeUtil.stringToTimestamp(var_38_1)
-	local var_38_4 = tonumber(os.date("%m", var_38_2))
-	local var_38_5 = tonumber(os.date("%d", var_38_2))
-	local var_38_6 = tonumber(os.date("%H", var_38_2))
-	local var_38_7 = string.format("%02d", tonumber(os.date("%M", var_38_2)))
-	local var_38_8 = tonumber(os.date("%m", var_38_3))
-	local var_38_9 = tonumber(os.date("%d", var_38_3))
-	local var_38_10 = tonumber(os.date("%H", var_38_3))
-	local var_38_11 = string.format("%02d", tonumber(os.date("%M", var_38_3)))
+	local configStartTime = string.nilorempty(config.showOnlineTime) and config.onlineTime or config.showOnlineTime
+	local configEndTime = string.nilorempty(config.showOfflineTime) and config.offlineTime or config.showOfflineTime
+	local onlineTimeStamp = TimeUtil.stringToTimestamp(configStartTime)
+	local offlineTimeStamp = TimeUtil.stringToTimestamp(configEndTime)
+	local startMonth = tonumber(os.date("%m", onlineTimeStamp))
+	local startDay = tonumber(os.date("%d", onlineTimeStamp))
+	local startHour = tonumber(os.date("%H", onlineTimeStamp))
+	local startMinute = string.format("%02d", tonumber(os.date("%M", onlineTimeStamp)))
+	local endMonth = tonumber(os.date("%m", offlineTimeStamp))
+	local endDay = tonumber(os.date("%d", offlineTimeStamp))
+	local endHour = tonumber(os.date("%H", offlineTimeStamp))
+	local endMinute = string.format("%02d", tonumber(os.date("%M", offlineTimeStamp)))
 
 	return GameUtil.getSubPlaceholderLuaLang(luaLang("store_recommendTime"), {
-		var_38_4,
-		var_38_5,
-		var_38_6,
-		var_38_7,
-		var_38_8,
-		var_38_9,
-		var_38_10,
-		var_38_11
+		startMonth,
+		startDay,
+		startHour,
+		startMinute,
+		endMonth,
+		endDay,
+		endHour,
+		endMinute
 	})
 end
 
-function var_0_0.onUseItemInStore(arg_39_0, arg_39_1)
-	if not arg_39_1 then
+function StoreController:onUseItemInStore(msg)
+	if not msg then
 		return
 	end
 
-	if arg_39_1.entry and arg_39_1.entry[1].materialId and (arg_39_1.entry[1].materialId == StoreEnum.NormalRoomTicket or arg_39_1.entry[1].materialId == StoreEnum.TopRoomTicket) and ViewMgr.instance:isOpen(ViewName.StoreView) then
-		var_0_0.instance:dispatchEvent(StoreEvent.GoodsModelChanged, tonumber(arg_39_1.targetId))
+	if msg.entry and msg.entry[1].materialId and (msg.entry[1].materialId == StoreEnum.NormalRoomTicket or msg.entry[1].materialId == StoreEnum.TopRoomTicket) and ViewMgr.instance:isOpen(ViewName.StoreView) then
+		StoreController.instance:dispatchEvent(StoreEvent.GoodsModelChanged, tonumber(msg.targetId))
 	end
 end
 
-function var_0_0.statOnClickPowerPotion(arg_40_0, arg_40_1)
+function StoreController:statOnClickPowerPotion(powerPotionName)
 	StatController.instance:track(StatEnum.EventName.ClickPowerPotion, {
-		[StatEnum.EventProperties.WindowName] = arg_40_1
+		[StatEnum.EventProperties.WindowName] = powerPotionName
 	})
 end
 
-function var_0_0.statOnClickPowerPotionJump(arg_41_0, arg_41_1, arg_41_2)
+function StoreController:statOnClickPowerPotionJump(powerPotionName, jumpName)
 	StatController.instance:track(StatEnum.EventName.ClickPowerPotionJump, {
-		[StatEnum.EventProperties.WindowName] = arg_41_1,
-		[StatEnum.EventProperties.JumpName] = arg_41_2
+		[StatEnum.EventProperties.WindowName] = powerPotionName,
+		[StatEnum.EventProperties.JumpName] = jumpName
 	})
 end
 
-function var_0_0.needHideHome(arg_42_0)
-	if arg_42_0._needHideBackHomeViews == nil then
-		arg_42_0._needHideBackHomeViews = {
+function StoreController:needHideHome()
+	if self._needHideBackHomeViews == nil then
+		self._needHideBackHomeViews = {
 			ViewName.SummonResultView,
 			ViewName.SummonADView
 		}
 	end
 
-	for iter_42_0 = 1, #arg_42_0._needHideBackHomeViews do
-		if ViewMgr.instance:isOpen(arg_42_0._needHideBackHomeViews[iter_42_0]) then
+	for i = 1, #self._needHideBackHomeViews do
+		if ViewMgr.instance:isOpen(self._needHideBackHomeViews[i]) then
 			return true
 		end
 	end
@@ -651,6 +668,6 @@ function var_0_0.needHideHome(arg_42_0)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+StoreController.instance = StoreController.New()
 
-return var_0_0
+return StoreController

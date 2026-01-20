@@ -1,17 +1,19 @@
-﻿module("modules.logic.room.view.building.RoomStrengthViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/building/RoomStrengthViewContainer.lua
 
-local var_0_0 = class("RoomStrengthViewContainer", BaseViewContainer)
+module("modules.logic.room.view.building.RoomStrengthViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomStrengthViewContainer = class("RoomStrengthViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomStrengthView.New())
+function RoomStrengthViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomStrengthView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function RoomStrengthViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomStrengthViewContainer

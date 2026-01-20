@@ -1,144 +1,147 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapEventView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapEventView.lua
 
-local var_0_0 = class("SurvivalMapEventView", BaseView)
+module("modules.logic.survival.view.map.SurvivalMapEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
-	arg_1_0._golist = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_list")
-	arg_1_0._eventItem = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_list/#go_item")
-	arg_1_0._txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "Panel/Title/#txt_Title")
-	arg_1_0._btnNpc = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Panel/Title/#txt_Title/#btn_npc")
-	arg_1_0._txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "Panel/#scroll/viewport/content/#txt_Descr")
-	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns")
-	arg_1_0._gobtnitem = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_btn")
-	arg_1_0._gopos1 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos2/#go_pos1")
-	arg_1_0._gopos2 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos2")
-	arg_1_0._gopos3 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos4/#go_pos3")
-	arg_1_0._gopos4 = gohelper.findChild(arg_1_0.viewGO, "Panel/Btns/#go_pos4")
-	arg_1_0._imageModel = gohelper.findChild(arg_1_0.viewGO, "Panel/Left/#image_model")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "Panel/#go_info")
-	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_clicknext")
-	arg_1_0._goitemRoot = gohelper.findChild(arg_1_0.viewGO, "Panel/#scroll/viewport/content/#scroll_Reward")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "Panel/#scroll/viewport/content/#scroll_Reward/Viewport/Content/#go_rewarditem")
+local SurvivalMapEventView = class("SurvivalMapEventView", BaseView)
+
+function SurvivalMapEventView:onInitView()
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
+	self._golist = gohelper.findChild(self.viewGO, "Panel/#go_list")
+	self._eventItem = gohelper.findChild(self.viewGO, "Panel/#go_list/#go_item")
+	self._txtTitle = gohelper.findChildTextMesh(self.viewGO, "Panel/Title/#txt_Title")
+	self._btnNpc = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Title/#txt_Title/#btn_npc")
+	self._txtDesc = gohelper.findChildTextMesh(self.viewGO, "Panel/#scroll/viewport/content/#txt_Descr")
+	self._gobtn = gohelper.findChild(self.viewGO, "Panel/Btns")
+	self._gobtnitem = gohelper.findChild(self.viewGO, "Panel/Btns/#go_btn")
+	self._gopos1 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos2/#go_pos1")
+	self._gopos2 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos2")
+	self._gopos3 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos4/#go_pos3")
+	self._gopos4 = gohelper.findChild(self.viewGO, "Panel/Btns/#go_pos4")
+	self._imageModel = gohelper.findChild(self.viewGO, "Panel/Left/#image_model")
+	self._goinfo = gohelper.findChild(self.viewGO, "Panel/#go_info")
+	self._click = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_clicknext")
+	self._goitemRoot = gohelper.findChild(self.viewGO, "Panel/#scroll/viewport/content/#scroll_Reward")
+	self._goitem = gohelper.findChild(self.viewGO, "Panel/#scroll/viewport/content/#scroll_Reward/Viewport/Content/#go_rewarditem")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0.nextStep, arg_2_0)
-	arg_2_0._btnNpc:AddClickListener(arg_2_0.showNpcInfo, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, arg_2_0._onUnitDel, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnEventViewSelectChange, arg_2_0.onEventSelectChange, arg_2_0)
+function SurvivalMapEventView:addEvents()
+	self._click:AddClickListener(self.nextStep, self)
+	self._btnNpc:AddClickListener(self.showNpcInfo, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnEventViewSelectChange, self.onEventSelectChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0._btnNpc:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, arg_3_0._onUnitDel, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEventViewSelectChange, arg_3_0.onEventSelectChange, arg_3_0)
+function SurvivalMapEventView:removeEvents()
+	self._click:RemoveClickListener()
+	self._btnNpc:RemoveClickListener()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEventViewSelectChange, self.onEventSelectChange, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	local var_4_0 = true
+function SurvivalMapEventView:onOpen()
+	local isFirst = true
 
-	if not arg_4_0._infoPanel then
-		local var_4_1 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
-		local var_4_2 = arg_4_0:getResInst(var_4_1, arg_4_0._goinfo)
+	if not self._infoPanel then
+		local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+		local infoGo = self:getResInst(infoViewRes, self._goinfo)
 
-		arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_2, SurvivalBagInfoPart)
+		self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-		arg_4_0._infoPanel:updateMo()
-		arg_4_0._infoPanel:setCloseShow(true)
-		gohelper.setActive(arg_4_0._goitemRoot, false)
-		gohelper.setActive(arg_4_0._gobtnitem, true)
+		self._infoPanel:updateMo()
+		self._infoPanel:setCloseShow(true)
+		gohelper.setActive(self._goitemRoot, false)
+		gohelper.setActive(self._gobtnitem, true)
 
-		arg_4_0._btns = {}
+		self._btns = {}
 
-		for iter_4_0 = 1, 4 do
-			local var_4_3 = gohelper.clone(arg_4_0._gobtnitem, arg_4_0["_gopos" .. iter_4_0])
+		for i = 1, 4 do
+			local go = gohelper.clone(self._gobtnitem, self["_gopos" .. i])
 
-			gohelper.setAsFirstSibling(var_4_3)
+			gohelper.setAsFirstSibling(go)
 
-			arg_4_0._btns[iter_4_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_3, SurvivalEventChoiceItem)
+			self._btns[i] = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalEventChoiceItem)
 		end
 
-		gohelper.setActive(arg_4_0._gobtnitem, false)
-		arg_4_0:initCamera()
+		gohelper.setActive(self._gobtnitem, false)
+		self:initCamera()
 	else
-		var_4_0 = false
+		isFirst = false
 	end
 
 	SurvivalMapHelper.instance:getSceneFogComp():setFogEnable(false)
-	arg_4_0:_refreshView()
+	self:_refreshView()
 
-	if var_4_0 and arg_4_0._panelUnitMo then
+	if isFirst and self._panelUnitMo then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_general_2)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	arg_5_0:_refreshView()
+function SurvivalMapEventView:onUpdateParam()
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_6_0)
-	if arg_6_0.viewParam.panel then
-		arg_6_0._curMo = nil
+function SurvivalMapEventView:_refreshView()
+	if self.viewParam.panel then
+		self._curMo = nil
 
-		gohelper.setActive(arg_6_0._golist, false)
-		arg_6_0:updateChoiceByServer()
+		gohelper.setActive(self._golist, false)
+		self:updateChoiceByServer()
 	else
-		gohelper.setActive(arg_6_0._golist, true)
-		gohelper.setActive(arg_6_0._click, false)
-		gohelper.setActive(arg_6_0._gobtn, true)
-		gohelper.setActive(arg_6_0._goitemRoot, false)
-		gohelper.CreateObjList(arg_6_0, arg_6_0._createEventItem, arg_6_0.viewParam.allUnitMo, nil, arg_6_0._eventItem, SurvivalEventViewItem)
-		arg_6_0:onEventSelectChange(1)
+		gohelper.setActive(self._golist, true)
+		gohelper.setActive(self._click, false)
+		gohelper.setActive(self._gobtn, true)
+		gohelper.setActive(self._goitemRoot, false)
+		gohelper.CreateObjList(self, self._createEventItem, self.viewParam.allUnitMo, nil, self._eventItem, SurvivalEventViewItem)
+		self:onEventSelectChange(1)
 	end
 end
 
-function var_0_0._createEventItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_1:initData(arg_7_2, arg_7_3)
+function SurvivalMapEventView:_createEventItem(obj, data, index)
+	obj:initData(data, index)
 end
 
-function var_0_0.onEventSelectChange(arg_8_0, arg_8_1)
-	if arg_8_0._curMo and arg_8_0._curMo ~= arg_8_0.viewParam.allUnitMo[arg_8_1] then
-		arg_8_0._curMo = arg_8_0.viewParam.allUnitMo[arg_8_1]
-		arg_8_0._anim.enabled = true
+function SurvivalMapEventView:onEventSelectChange(index)
+	if self._curMo and self._curMo ~= self.viewParam.allUnitMo[index] then
+		self._curMo = self.viewParam.allUnitMo[index]
+		self._anim.enabled = true
 
-		arg_8_0._anim:Play("switch", 0, 0)
+		self._anim:Play("switch", 0, 0)
 		UIBlockHelper.instance:startBlock("SurvivalMapEventView_onEventSelectChange", 0.167)
-		TaskDispatcher.runDelay(arg_8_0.refreshView, arg_8_0, 0.167)
+		TaskDispatcher.runDelay(self.refreshView, self, 0.167)
 	else
-		arg_8_0._curMo = arg_8_0.viewParam.allUnitMo[arg_8_1]
+		self._curMo = self.viewParam.allUnitMo[index]
 
-		arg_8_0:refreshView()
+		self:refreshView()
 	end
 end
 
-function var_0_0._onUnitDel(arg_9_0, arg_9_1)
-	local var_9_0
+function SurvivalMapEventView:_onUnitDel(unitMo)
+	local curUnitId
 
-	if arg_9_0.viewParam.panel then
-		var_9_0 = arg_9_0.viewParam.panel.unitId
+	if self.viewParam.panel then
+		curUnitId = self.viewParam.panel.unitId
 	else
-		var_9_0 = arg_9_0._curMo.id
+		curUnitId = self._curMo.id
 	end
 
-	if var_9_0 == arg_9_1.id then
-		arg_9_0:closeThis()
+	if curUnitId == unitMo.id then
+		self:closeThis()
 	end
 end
 
-function var_0_0.refreshView(arg_10_0)
-	if arg_10_0._curMo and arg_10_0._curMo.co then
-		arg_10_0:setUnitMo(arg_10_0._curMo)
+function SurvivalMapEventView:refreshView()
+	if self._curMo and self._curMo.co then
+		self:setUnitMo(self._curMo)
 
-		arg_10_0._txtTitle.text = arg_10_0._curMo.co.name
-		arg_10_0._txtDesc.text = arg_10_0._curMo.co.desc
+		self._txtTitle.text = self._curMo.co.name
+		self._txtDesc.text = self._curMo.co.desc
 
-		local var_10_0 = (arg_10_0["getChoiceData" .. SurvivalEnum.UnitTypeToName[arg_10_0._curMo.unitType]] or arg_10_0.getChoiceDataDefault)(arg_10_0)
+		local func = self["getChoiceData" .. SurvivalEnum.UnitTypeToName[self._curMo.unitType]] or self.getChoiceDataDefault
+		local datas = func(self)
 
-		arg_10_0:setBtnDatas(var_10_0)
+		self:setBtnDatas(datas)
 
-		if arg_10_0._curMo.unitType == SurvivalEnum.UnitType.Search then
+		if self._curMo.unitType == SurvivalEnum.UnitType.Search then
 			AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_sougua_1)
 		else
 			AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_general_2)
@@ -146,305 +149,304 @@ function var_0_0.refreshView(arg_10_0)
 	end
 end
 
-function var_0_0.getChoiceDataSearch(arg_11_0)
-	local var_11_0 = arg_11_0._curMo:isSearched()
-	local var_11_1 = arg_11_0:getChoiceDataDefault()
+function SurvivalMapEventView:getChoiceDataSearch()
+	local isSearched = self._curMo:isSearched()
+	local datas = self:getChoiceDataDefault()
 
-	if var_11_1[1] then
-		if var_11_0 then
-			var_11_1[1].conditionStr = nil
-			var_11_1[1].resultStr = nil
+	if datas[1] then
+		if isSearched then
+			datas[1].conditionStr = nil
+			datas[1].resultStr = nil
 		end
 
-		var_11_1[1].icon = SurvivalEnum.EventChoiceIcon.Search
+		datas[1].icon = SurvivalEnum.EventChoiceIcon.Search
 
-		var_11_1[1]:refreshData()
+		datas[1]:refreshData()
 	end
 
-	return var_11_1
+	return datas
 end
 
-function var_0_0.getChoiceDataDefault(arg_12_0)
-	local var_12_0 = {}
+function SurvivalMapEventView:getChoiceDataDefault()
+	local datas = {}
 
-	if not string.nilorempty(arg_12_0._curMo.co.choiceText) then
-		local var_12_1 = string.split(arg_12_0._curMo.co.choiceText, "#")
-		local var_12_2 = string.splitToNumber(arg_12_0._curMo.co.consume, "#") or {}
-		local var_12_3 = var_12_2[1] and var_12_2[1] > 0
-		local var_12_4
-		local var_12_5
+	if not string.nilorempty(self._curMo.co.choiceText) then
+		local desc = string.split(self._curMo.co.choiceText, "#")
+		local consume = string.splitToNumber(self._curMo.co.consume, "#") or {}
+		local isCostTime = consume[1] and consume[1] > 0
+		local conditionStr, resultStr
 
-		if var_12_3 then
-			var_12_5 = "CostGameTime|" .. var_12_2[1]
+		if isCostTime then
+			resultStr = "CostGameTime|" .. consume[1]
 		end
 
-		var_12_0[1] = SurvivalChoiceMo.Create({
-			callback = arg_12_0.onClickOption,
-			callobj = arg_12_0,
-			desc = var_12_1[1],
-			conditionStr = var_12_4,
-			resultStr = var_12_5
+		datas[1] = SurvivalChoiceMo.Create({
+			callback = self.onClickOption,
+			callobj = self,
+			desc = desc[1],
+			conditionStr = conditionStr,
+			resultStr = resultStr
 		})
-		var_12_0[2] = SurvivalChoiceMo.Create({
-			callback = arg_12_0.closeThis,
-			callobj = arg_12_0,
-			desc = var_12_1[2]
+		datas[2] = SurvivalChoiceMo.Create({
+			callback = self.closeThis,
+			callobj = self,
+			desc = desc[2]
 		})
 	end
 
-	return var_12_0
+	return datas
 end
 
-function var_0_0.setBtnDatas(arg_13_0, arg_13_1)
-	for iter_13_0 = 1, 4 do
-		arg_13_0._btns[iter_13_0]:updateData(arg_13_1[iter_13_0])
+function SurvivalMapEventView:setBtnDatas(datas)
+	for i = 1, 4 do
+		self._btns[i]:updateData(datas[i])
 	end
 end
 
-function var_0_0.onClickOption(arg_14_0)
-	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.TriggerEvent, tostring(arg_14_0._curMo.id))
-	SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", arg_14_0._curMo.id, 1, 0)
+function SurvivalMapEventView:onClickOption()
+	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.TriggerEvent, tostring(self._curMo.id))
+	SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", self._curMo.id, 1, 0)
 end
 
-function var_0_0.updateChoiceByServer(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0.viewParam.panel
-	local var_15_1 = SurvivalMapModel.instance:getSceneMo()
-	local var_15_2 = var_15_0.unitId
-	local var_15_3 = var_15_1.unitsById[var_15_2]
+function SurvivalMapEventView:updateChoiceByServer(isByClient)
+	local panel = self.viewParam.panel
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local unitId = panel.unitId
+	local unitMo = sceneMo.unitsById[unitId]
 
-	arg_15_0._panelUnitMo = var_15_3
+	self._panelUnitMo = unitMo
 
-	if not var_15_3 then
-		logError("元件数据不存在" .. tostring(var_15_2))
+	if not unitMo then
+		logError("元件数据不存在" .. tostring(unitId))
 
 		return
 	end
 
-	local var_15_4 = var_15_0.dialogueId
-	local var_15_5 = lua_survival_talk.configDict[var_15_4]
+	local dialogId = panel.dialogueId
+	local talkCo = lua_survival_talk.configDict[dialogId]
 
-	if not var_15_5 then
-		logError("对话不存在" .. tostring(var_15_4))
+	if not talkCo then
+		logError("对话不存在" .. tostring(dialogId))
 
 		return
 	end
 
-	arg_15_0:setUnitMo(var_15_3)
+	self:setUnitMo(unitMo)
 
-	arg_15_0._stepList = {}
-	arg_15_0._curDescIndex = 0
-	arg_15_0._curStepCo = nil
+	self._stepList = {}
+	self._curDescIndex = 0
+	self._curStepCo = nil
 
-	if arg_15_1 then
-		local var_15_6 = var_15_5[#var_15_5]
+	if isByClient then
+		local stepCo = talkCo[#talkCo]
 
-		table.insert(arg_15_0._stepList, {
-			descArr = GameUtil.getUCharArrWithoutRichTxt(var_15_6.content),
-			animType = var_15_6.animType
+		table.insert(self._stepList, {
+			descArr = GameUtil.getUCharArrWithoutRichTxt(stepCo.content),
+			animType = stepCo.animType
 		})
 	else
-		for iter_15_0, iter_15_1 in ipairs(var_15_5) do
-			table.insert(arg_15_0._stepList, {
-				descArr = GameUtil.getUCharArrWithoutRichTxt(iter_15_1.content),
-				animType = iter_15_1.animType
+		for _, stepCo in ipairs(talkCo) do
+			table.insert(self._stepList, {
+				descArr = GameUtil.getUCharArrWithoutRichTxt(stepCo.content),
+				animType = stepCo.animType
 			})
 		end
 	end
 
-	arg_15_0._txtTitle.text = var_15_3.co.name
-	arg_15_0._txtDesc.text = ""
+	self._txtTitle.text = unitMo.co.name
+	self._txtDesc.text = ""
 
-	local var_15_7 = {}
+	local datas = {}
 
-	for iter_15_2, iter_15_3 in ipairs(var_15_0.param) do
-		local var_15_8 = string.split(iter_15_3, "|") or {}
-		local var_15_9 = tonumber(var_15_8[1]) or 0
-		local var_15_10 = var_15_8[2] and table.concat(var_15_8, "|", 2) or ""
-		local var_15_11 = lua_survival_tree_desc.configDict[var_15_0.treeId][var_15_9]
-		local var_15_12 = var_15_11 and var_15_11.desc
+	for index, param in ipairs(panel.param) do
+		local arr = string.split(param, "|") or {}
+		local id = tonumber(arr[1]) or 0
+		local otherParam = arr[2] and table.concat(arr, "|", 2) or ""
+		local optionCo = lua_survival_tree_desc.configDict[panel.treeId][id]
+		local desc = optionCo and optionCo.desc
 
-		var_15_7[iter_15_2] = SurvivalChoiceMo.Create({
-			callback = arg_15_0.onClickServerChoice,
-			callobj = arg_15_0,
-			desc = var_15_12,
-			param = var_15_9,
-			icon = var_15_11.icon,
-			conditionStr = var_15_11.condition,
-			resultStr = var_15_11.result,
-			unitId = var_15_2,
-			treeId = var_15_0.treeId,
-			otherParam = var_15_10
+		datas[index] = SurvivalChoiceMo.Create({
+			callback = self.onClickServerChoice,
+			callobj = self,
+			desc = desc,
+			param = id,
+			icon = optionCo.icon,
+			conditionStr = optionCo.condition,
+			resultStr = optionCo.result,
+			unitId = unitId,
+			treeId = panel.treeId,
+			otherParam = otherParam
 		})
 
-		if var_15_7[iter_15_2].isShowBogusBtn then
-			var_15_7[iter_15_2].callback = arg_15_0.onClickBogusBtn
-			var_15_7[iter_15_2].exStr_bogus = var_15_7[iter_15_2].exStr
-			var_15_7[iter_15_2].isValid_bogus = var_15_7[iter_15_2].isValid
-			var_15_7[iter_15_2].exStr = nil
-			var_15_7[iter_15_2].isValid = true
-		elseif var_15_7[iter_15_2].exStepDesc then
-			local var_15_13 = arg_15_0._stepList[#arg_15_0._stepList]
+		if datas[index].isShowBogusBtn then
+			datas[index].callback = self.onClickBogusBtn
+			datas[index].exStr_bogus = datas[index].exStr
+			datas[index].isValid_bogus = datas[index].isValid
+			datas[index].exStr = nil
+			datas[index].isValid = true
+		elseif datas[index].exStepDesc then
+			local lastStep = self._stepList[#self._stepList]
 
-			if var_15_13 then
-				table.insert(var_15_13.descArr, "\n")
-				tabletool.addValues(var_15_13.descArr, GameUtil.getUCharArrWithoutRichTxt(var_15_7[iter_15_2].exStepDesc))
+			if lastStep then
+				table.insert(lastStep.descArr, "\n")
+				tabletool.addValues(lastStep.descArr, GameUtil.getUCharArrWithoutRichTxt(datas[index].exStepDesc))
 
-				var_15_13.items = var_15_7[iter_15_2].exShowItemMos
+				lastStep.items = datas[index].exShowItemMos
 			else
-				table.insert(arg_15_0._stepList, {
-					descArr = GameUtil.getUCharArrWithoutRichTxt(var_15_7[iter_15_2].exStepDesc),
-					items = var_15_7[iter_15_2].exShowItemMos
+				table.insert(self._stepList, {
+					descArr = GameUtil.getUCharArrWithoutRichTxt(datas[index].exStepDesc),
+					items = datas[index].exShowItemMos
 				})
 			end
 		end
 	end
 
-	gohelper.setActive(arg_15_0._gobtn, false)
-	arg_15_0:setBtnDatas(var_15_7)
-	arg_15_0:nextStep()
+	gohelper.setActive(self._gobtn, false)
+	self:setBtnDatas(datas)
+	self:nextStep()
 end
 
-function var_0_0.nextStep(arg_16_0)
-	if not arg_16_0._stepList then
+function SurvivalMapEventView:nextStep()
+	if not self._stepList then
 		return
 	end
 
-	if arg_16_0._curStepCo then
-		arg_16_0:finishStep()
+	if self._curStepCo then
+		self:finishStep()
 
 		return
 	end
 
-	gohelper.setActive(arg_16_0._click, true)
+	gohelper.setActive(self._click, true)
 
-	arg_16_0._curStepCo = table.remove(arg_16_0._stepList, 1)
+	self._curStepCo = table.remove(self._stepList, 1)
 
-	if arg_16_0._curStepCo then
-		gohelper.setActive(arg_16_0._goitemRoot, false)
+	if self._curStepCo then
+		gohelper.setActive(self._goitemRoot, false)
 
-		arg_16_0._curDescIndex = 0
+		self._curDescIndex = 0
 
-		TaskDispatcher.runRepeat(arg_16_0._autoShowDesc, arg_16_0, 0.02)
+		TaskDispatcher.runRepeat(self._autoShowDesc, self, 0.02)
 	else
-		gohelper.setActive(arg_16_0._click, false)
-		gohelper.setActive(arg_16_0._gobtn, true)
+		gohelper.setActive(self._click, false)
+		gohelper.setActive(self._gobtn, true)
 	end
 
-	local var_16_0 = arg_16_0._curStepCo and arg_16_0._curStepCo.animType or 0
+	local animType = self._curStepCo and self._curStepCo.animType or 0
 
-	if arg_16_0._modelComp then
-		arg_16_0._modelComp:playNextAnim(var_16_0)
+	if self._modelComp then
+		self._modelComp:playNextAnim(animType)
 	end
 end
 
-function var_0_0._autoShowDesc(arg_17_0)
-	if not arg_17_0._curStepCo then
+function SurvivalMapEventView:_autoShowDesc()
+	if not self._curStepCo then
 		return
 	end
 
-	arg_17_0._curDescIndex = arg_17_0._curDescIndex + 1
-	arg_17_0._txtDesc.text = table.concat(arg_17_0._curStepCo.descArr, "", 1, arg_17_0._curDescIndex)
+	self._curDescIndex = self._curDescIndex + 1
+	self._txtDesc.text = table.concat(self._curStepCo.descArr, "", 1, self._curDescIndex)
 
-	if arg_17_0._curDescIndex >= #arg_17_0._curStepCo.descArr then
-		arg_17_0:finishStep()
+	if self._curDescIndex >= #self._curStepCo.descArr then
+		self:finishStep()
 	end
 end
 
-function var_0_0.finishStep(arg_18_0)
-	arg_18_0._txtDesc.text = table.concat(arg_18_0._curStepCo.descArr, "")
+function SurvivalMapEventView:finishStep()
+	self._txtDesc.text = table.concat(self._curStepCo.descArr, "")
 
-	TaskDispatcher.cancelTask(arg_18_0._autoShowDesc, arg_18_0)
+	TaskDispatcher.cancelTask(self._autoShowDesc, self)
 
-	if not arg_18_0._stepList[1] then
-		gohelper.setActive(arg_18_0._click, false)
-		gohelper.setActive(arg_18_0._gobtn, true)
+	if not self._stepList[1] then
+		gohelper.setActive(self._click, false)
+		gohelper.setActive(self._gobtn, true)
 	end
 
-	if arg_18_0._curStepCo.items then
-		gohelper.setActive(arg_18_0._goitemRoot, true)
-		gohelper.CreateObjList(arg_18_0, arg_18_0._createItem, arg_18_0._curStepCo.items, nil, arg_18_0._goitem)
+	if self._curStepCo.items then
+		gohelper.setActive(self._goitemRoot, true)
+		gohelper.CreateObjList(self, self._createItem, self._curStepCo.items, nil, self._goitem)
 	else
-		gohelper.setActive(arg_18_0._goitemRoot, false)
+		gohelper.setActive(self._goitemRoot, false)
 	end
 
-	arg_18_0._curStepCo = nil
+	self._curStepCo = nil
 end
 
-function var_0_0._createItem(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = gohelper.findChild(arg_19_1, "go_icon/inst")
-	local var_19_1 = gohelper.findChildTextMesh(arg_19_1, "#txt_Num")
-	local var_19_2 = gohelper.findChild(arg_19_1, "#go_gray")
-	local var_19_3
+function SurvivalMapEventView:_createItem(obj, data, index)
+	local itemGo = gohelper.findChild(obj, "go_icon/inst")
+	local txtNum = gohelper.findChildTextMesh(obj, "#txt_Num")
+	local gogray = gohelper.findChild(obj, "#go_gray")
+	local bagItem
 
-	if not var_19_0 then
-		local var_19_4 = arg_19_0.viewContainer:getSetting().otherRes.itemRes
+	if not itemGo then
+		local itemRes = self.viewContainer:getSetting().otherRes.itemRes
 
-		var_19_0 = arg_19_0:getResInst(var_19_4, gohelper.findChild(arg_19_1, "go_icon"), "inst")
-		var_19_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_19_0, SurvivalBagItem)
+		itemGo = self:getResInst(itemRes, gohelper.findChild(obj, "go_icon"), "inst")
+		bagItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, SurvivalBagItem)
 	else
-		var_19_3 = MonoHelper.getLuaComFromGo(var_19_0, SurvivalBagItem)
+		bagItem = MonoHelper.getLuaComFromGo(itemGo, SurvivalBagItem)
 	end
 
-	var_19_3:updateMo(arg_19_2)
-	var_19_3:setShowNum(false)
-	var_19_3:setClickCallback(arg_19_0._onClickItem, arg_19_0)
+	bagItem:updateMo(data)
+	bagItem:setShowNum(false)
+	bagItem:setClickCallback(self._onClickItem, self)
 
-	local var_19_5 = SurvivalMapHelper.instance:getBagMo():getItemCountPlus(arg_19_2.id)
+	local count = SurvivalMapHelper.instance:getBagMo():getItemCountPlus(data.id)
 
-	gohelper.setActive(var_19_2, var_19_5 < arg_19_2.count)
+	gohelper.setActive(gogray, count < data.count)
 
-	local var_19_6 = arg_19_0:numberDisplay(var_19_5)
+	local countTxt = self:numberDisplay(count)
 
-	if var_19_5 >= arg_19_2.count then
-		var_19_1.text = var_19_6 .. "/" .. arg_19_2.count
+	if count >= data.count then
+		txtNum.text = countTxt .. "/" .. data.count
 	else
-		var_19_1.text = "<color=#D74242>" .. var_19_6 .. "</color>/" .. arg_19_2.count
+		txtNum.text = "<color=#D74242>" .. countTxt .. "</color>/" .. data.count
 	end
 end
 
-function var_0_0.numberDisplay(arg_20_0, arg_20_1)
-	local var_20_0 = tonumber(arg_20_1)
+function SurvivalMapEventView:numberDisplay(number)
+	local num = tonumber(number)
 
-	if var_20_0 >= 1000000 then
-		return math.floor(var_20_0 / 100000) / 10 .. "M"
-	elseif var_20_0 >= 1000 then
-		return math.floor(var_20_0 / 100) / 10 .. "K"
+	if num >= 1000000 then
+		return math.floor(num / 100000) / 10 .. "M"
+	elseif num >= 1000 then
+		return math.floor(num / 100) / 10 .. "K"
 	else
-		return var_20_0
+		return num
 	end
 end
 
-function var_0_0._onClickItem(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_1._mo:clone()
+function SurvivalMapEventView:_onClickItem(item)
+	local newMo = item._mo:clone()
 
-	var_21_0.count = 1
+	newMo.count = 1
 
-	arg_21_0._infoPanel:updateMo(var_21_0)
+	self._infoPanel:updateMo(newMo)
 end
 
-function var_0_0.showNpcInfo(arg_22_0)
-	arg_22_0._infoPanel:updateMo(arg_22_0._npcItemMo)
+function SurvivalMapEventView:showNpcInfo()
+	self._infoPanel:updateMo(self._npcItemMo)
 end
 
-function var_0_0.onClose(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._autoShowDesc, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.refreshView, arg_23_0)
+function SurvivalMapEventView:onClose()
+	TaskDispatcher.cancelTask(self._autoShowDesc, self)
+	TaskDispatcher.cancelTask(self.refreshView, self)
 end
 
-function var_0_0.onCloseFinish(arg_24_0)
+function SurvivalMapEventView:onCloseFinish()
 	SurvivalMapHelper.instance:getSceneFogComp():setFogEnable(true)
 end
 
-function var_0_0.onClickServerChoice(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_2 and arg_25_2.npcWorthCheck then
-		ViewMgr.instance:openView(ViewName.SurvivalCommitItemView, arg_25_2)
+function SurvivalMapEventView:onClickServerChoice(id, data)
+	if data and data.npcWorthCheck then
+		ViewMgr.instance:openView(ViewName.SurvivalCommitItemView, data)
 
 		return
 	end
 
-	if arg_25_2 and arg_25_2.openFogRange then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTreeOpenFog, arg_25_2)
-		arg_25_0:closeThis()
+	if data and data.openFogRange then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTreeOpenFog, data)
+		self:closeThis()
 
 		return
 	end
@@ -453,85 +455,85 @@ function var_0_0.onClickServerChoice(arg_25_0, arg_25_1, arg_25_2)
 		return
 	end
 
-	SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", arg_25_2.unitId, arg_25_1, arg_25_2.treeId)
-	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.SelectOption, tostring(arg_25_1))
+	SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", data.unitId, id, data.treeId)
+	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.SelectOption, tostring(id))
 end
 
-function var_0_0.onClickBogusBtn(arg_26_0, arg_26_1, arg_26_2)
-	arg_26_0._stepList = {}
-	arg_26_0._curDescIndex = 0
-	arg_26_0._curStepCo = nil
-	arg_26_0._txtDesc.text = ""
+function SurvivalMapEventView:onClickBogusBtn(id, data)
+	self._stepList = {}
+	self._curDescIndex = 0
+	self._curStepCo = nil
+	self._txtDesc.text = ""
 
-	local var_26_0 = {
-		arg_26_2
-	}
+	local datas = {}
 
-	if arg_26_2.exBogusData then
-		arg_26_2.exStr_bogus = arg_26_2.exBogusData.exStr
-		arg_26_2.isValid_bogus = arg_26_2.exBogusData.isValid
-		arg_26_2.exShowItemMos_bogus = arg_26_2.exBogusData.exShowItemMos
-		arg_26_2.exStepDesc_bogus = arg_26_2.exBogusData.exStepDesc
-		arg_26_2.exBogusData = nil
-		arg_26_2.useExBogusData = true
+	datas[1] = data
+
+	if data.exBogusData then
+		data.exStr_bogus = data.exBogusData.exStr
+		data.isValid_bogus = data.exBogusData.isValid
+		data.exShowItemMos_bogus = data.exBogusData.exShowItemMos
+		data.exStepDesc_bogus = data.exBogusData.exStepDesc
+		data.exBogusData = nil
+		data.useExBogusData = true
 	else
-		arg_26_2.exStr = arg_26_2.exStr_bogus
-		arg_26_2.isValid = arg_26_2.isValid_bogus
+		data.exStr = data.exStr_bogus
+		data.isValid = data.isValid_bogus
 
-		if arg_26_2.useExBogusData then
-			arg_26_2.exShowItemMos = arg_26_2.exShowItemMos_bogus
-			arg_26_2.exStepDesc = arg_26_2.exStepDesc_bogus
-			arg_26_2.useExBogusData = nil
+		if data.useExBogusData then
+			data.exShowItemMos = data.exShowItemMos_bogus
+			data.exStepDesc = data.exStepDesc_bogus
+			data.useExBogusData = nil
 		end
 
-		arg_26_2.callback = arg_26_0.onClickServerChoice
+		data.callback = self.onClickServerChoice
 	end
 
-	var_26_0[2] = SurvivalChoiceMo.Create({
+	datas[2] = SurvivalChoiceMo.Create({
 		param = true,
-		callback = arg_26_0.updateChoiceByServer,
-		callobj = arg_26_0,
+		callback = self.updateChoiceByServer,
+		callobj = self,
 		desc = luaLang("survival_eventview_leave"),
 		icon = SurvivalEnum.EventChoiceIcon.Return
 	})
 
-	table.insert(arg_26_0._stepList, {
-		descArr = GameUtil.getUCharArrWithoutRichTxt(arg_26_2.exStepDesc),
-		items = arg_26_2.exShowItemMos
+	table.insert(self._stepList, {
+		descArr = GameUtil.getUCharArrWithoutRichTxt(data.exStepDesc),
+		items = data.exShowItemMos
 	})
-	gohelper.setActive(arg_26_0._gobtn, false)
-	arg_26_0:setBtnDatas(var_26_0)
-	arg_26_0:nextStep()
+	gohelper.setActive(self._gobtn, false)
+	self:setBtnDatas(datas)
+	self:nextStep()
 end
 
-function var_0_0.initCamera(arg_27_0)
-	local var_27_0 = SurvivalMapModel.instance:getCurMapCo()
-	local var_27_1, var_27_2, var_27_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_27_0.exitPos.q, var_27_0.exitPos.r)
-	local var_27_4 = Vector3(var_27_1, -1000, var_27_3)
+function SurvivalMapEventView:initCamera()
+	local mapCo = SurvivalMapModel.instance:getCurMapCo()
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(mapCo.exitPos.q, mapCo.exitPos.r)
+	local customPos = Vector3(x, -1000, z)
 
-	arg_27_0._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._imageModel, Survival3DModelComp, {
-		customPos = var_27_4
+	self._modelComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._imageModel, Survival3DModelComp, {
+		customPos = customPos
 	})
 end
 
-function var_0_0.setUnitMo(arg_28_0, arg_28_1)
-	gohelper.setActive(arg_28_0._btnNpc, arg_28_1.unitType == SurvivalEnum.UnitType.NPC)
+function SurvivalMapEventView:setUnitMo(unitMo)
+	gohelper.setActive(self._btnNpc, unitMo.unitType == SurvivalEnum.UnitType.NPC)
 
-	if arg_28_1.unitType == SurvivalEnum.UnitType.NPC then
-		arg_28_0._npcItemMo = SurvivalBagItemMo.New()
+	if unitMo.unitType == SurvivalEnum.UnitType.NPC then
+		self._npcItemMo = SurvivalBagItemMo.New()
 
-		local var_28_0 = SurvivalConfig.instance.npcIdToItemCo[arg_28_1.cfgId]
+		local itemCo = SurvivalConfig.instance.npcIdToItemCo[unitMo.cfgId]
 
-		arg_28_0._npcItemMo:init({
+		self._npcItemMo:init({
 			count = 1,
-			id = var_28_0 and var_28_0.id or 0
+			id = itemCo and itemCo.id or 0
 		})
 	end
 
-	local var_28_1 = Survival3DModelMO.New()
+	local survival3DModelMO = Survival3DModelMO.New()
 
-	var_28_1:setDataByUnitMo(arg_28_1)
-	arg_28_0._modelComp:setSurvival3DModelMO(var_28_1)
+	survival3DModelMO:setDataByUnitMo(unitMo)
+	self._modelComp:setSurvival3DModelMO(survival3DModelMO)
 end
 
-return var_0_0
+return SurvivalMapEventView

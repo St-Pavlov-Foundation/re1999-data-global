@@ -1,32 +1,34 @@
-﻿module("modules.logic.teach.view.TeachNoteDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/teach/view/TeachNoteDetailViewContainer.lua
 
-local var_0_0 = class("TeachNoteDetailViewContainer", BaseViewContainer)
+module("modules.logic.teach.view.TeachNoteDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TeachNoteDetailViewContainer = class("TeachNoteDetailViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
-	table.insert(var_1_0, TeachNoteDetailView.New())
+function TeachNoteDetailViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, TeachNoteDetailView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+function TeachNoteDetailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Mission_close)
+function TeachNoteDetailViewContainer:onContainerOpenFinish()
+	self.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Mission_close)
 end
 
-return var_0_0
+return TeachNoteDetailViewContainer

@@ -1,88 +1,91 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.define.GaoSiNiaoEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/define/GaoSiNiaoEnum.lua
 
-local var_0_0 = _M
-local var_0_1 = Bitwise
+module("modules.logic.versionactivity3_1.gaosiniao.define.GaoSiNiaoEnum", package.seeall)
 
-var_0_0.Version = {
+local GaoSiNiaoEnum = _M
+local _B = Bitwise
+
+GaoSiNiaoEnum.Version = {
 	V1_0_0 = "1_0_0"
 }
 
-local var_0_2 = "ui/viewres/versionactivity_3_1/v3a1_gaosiniao/"
+local kResPathRoot = "ui/viewres/versionactivity_3_1/v3a1_gaosiniao/"
 
-var_0_0.ResPath = {
-	v3a1_gaosiniao_levelviewstageitem = var_0_2 .. "v3a1_gaosiniao_levelviewstageitem.prefab"
+GaoSiNiaoEnum.ResPath = {
+	v3a1_gaosiniao_levelviewstageitem = kResPathRoot .. "v3a1_gaosiniao_levelviewstageitem.prefab"
 }
-var_0_0.EpisodeType = {
+GaoSiNiaoEnum.EpisodeType = {
 	SP = 1,
 	Normal = 0
 }
-var_0_0.dX = {
+GaoSiNiaoEnum.dX = {
 	0,
 	1,
 	0,
 	-1
 }
-var_0_0.dY = {
+GaoSiNiaoEnum.dY = {
 	-1,
 	0,
 	1,
 	0
 }
 
-local var_0_3 = {
+local _ZM = {
 	None = 0,
-	North = var_0_1["<<"](1, 0),
-	East = var_0_1["<<"](1, 1),
-	South = var_0_1["<<"](1, 2),
-	West = var_0_1["<<"](1, 3)
+	North = _B["<<"](1, 0),
+	East = _B["<<"](1, 1),
+	South = _B["<<"](1, 2),
+	West = _B["<<"](1, 3)
 }
 
-var_0_3.NE = var_0_1["|"](var_0_3.North, var_0_3.East)
-var_0_3.NW = var_0_1["|"](var_0_3.North, var_0_3.West)
-var_0_3.SE = var_0_1["|"](var_0_3.South, var_0_3.East)
-var_0_3.SW = var_0_1["|"](var_0_3.South, var_0_3.West)
-var_0_3.NS = var_0_1["|"](var_0_3.North, var_0_3.South)
-var_0_3.EW = var_0_1["|"](var_0_3.East, var_0_3.West)
-var_0_3.NEW = var_0_1["|"](var_0_3.NE, var_0_3.West)
-var_0_3.NSW = var_0_1["|"](var_0_3.NS, var_0_3.West)
-var_0_3.SEW = var_0_1["|"](var_0_3.SE, var_0_3.West)
-var_0_3.NSE = var_0_1["|"](var_0_3.NS, var_0_3.East)
-var_0_3.All = var_0_1["|"](var_0_3.NS, var_0_3.EW)
-var_0_0.ZoneMask = var_0_3
+_ZM.NE = _B["|"](_ZM.North, _ZM.East)
+_ZM.NW = _B["|"](_ZM.North, _ZM.West)
+_ZM.SE = _B["|"](_ZM.South, _ZM.East)
+_ZM.SW = _B["|"](_ZM.South, _ZM.West)
+_ZM.NS = _B["|"](_ZM.North, _ZM.South)
+_ZM.EW = _B["|"](_ZM.East, _ZM.West)
+_ZM.NEW = _B["|"](_ZM.NE, _ZM.West)
+_ZM.NSW = _B["|"](_ZM.NS, _ZM.West)
+_ZM.SEW = _B["|"](_ZM.SE, _ZM.West)
+_ZM.NSE = _B["|"](_ZM.NS, _ZM.East)
+_ZM.All = _B["|"](_ZM.NS, _ZM.EW)
+GaoSiNiaoEnum.ZoneMask = _ZM
 
-function var_0_0.dirToStr(arg_1_0)
-	for iter_1_0, iter_1_1 in pairs(var_0_3) do
-		if arg_1_0 == iter_1_1 then
-			return iter_1_0
+function GaoSiNiaoEnum.dirToStr(eZoneMask)
+	for eName, eValue in pairs(_ZM) do
+		if eZoneMask == eValue then
+			return eName
 		end
 	end
 
 	return "Unknown"
 end
 
-local var_0_4 = 15
+local k0xF = 15
 
-function var_0_0.flipDir(arg_2_0)
-	local var_2_0 = var_0_1["&"](arg_2_0, var_0_3.North)
-	local var_2_1 = var_0_1["&"](arg_2_0, var_0_3.East)
-	local var_2_2 = var_0_1["&"](arg_2_0, var_0_3.South)
-	local var_2_3 = var_0_1["&"](arg_2_0, var_0_3.West)
-	local var_2_4 = var_0_1["|"](var_0_1["<<"](var_2_0, 2), var_0_1[">>"](var_2_2, 2))
-	local var_2_5 = var_0_1["|"](var_0_1["<<"](var_2_1, 2), var_0_1[">>"](var_2_3, 2))
-	local var_2_6 = var_0_1["|"](var_2_4, var_2_5)
-	local var_2_7 = var_0_1["&"](arg_2_0, var_0_1["~"](var_0_3.All))
-	local var_2_8 = var_0_1["|"](var_2_7, var_2_6)
+function GaoSiNiaoEnum.flipDir(eZoneMask)
+	local n = _B["&"](eZoneMask, _ZM.North)
+	local e = _B["&"](eZoneMask, _ZM.East)
+	local s = _B["&"](eZoneMask, _ZM.South)
+	local w = _B["&"](eZoneMask, _ZM.West)
+	local nsSwap = _B["|"](_B["<<"](n, 2), _B[">>"](s, 2))
+	local ewSwap = _B["|"](_B["<<"](e, 2), _B[">>"](w, 2))
+	local swapped = _B["|"](nsSwap, ewSwap)
+	local tmp = _B["&"](eZoneMask, _B["~"](_ZM.All))
 
-	return var_0_1["&"](var_2_8, var_0_4)
+	tmp = _B["|"](tmp, swapped)
+
+	return _B["&"](tmp, k0xF)
 end
 
-function var_0_0.bitPos2Dir(arg_3_0)
-	assert(arg_3_0 >= 0 and arg_3_0 <= 3)
+function GaoSiNiaoEnum.bitPos2Dir(bitPos)
+	assert(bitPos >= 0 and bitPos <= 3)
 
-	return var_0_1["<<"](1, arg_3_0)
+	return _B["<<"](1, bitPos)
 end
 
-var_0_0.GridType = {
+local _GT = {
 	Path = 5,
 	End = 3,
 	__End = 6,
@@ -92,7 +95,9 @@ var_0_0.GridType = {
 	Empty = 0
 }
 
-local var_0_5 = {
+GaoSiNiaoEnum.GridType = _GT
+
+local _PSI = {
 	Exit2_Straight = 2,
 	Exit3 = 3,
 	Exit4 = 4,
@@ -101,9 +106,9 @@ local var_0_5 = {
 	None = 0
 }
 
-var_0_0.PathSpriteId = var_0_5
+GaoSiNiaoEnum.PathSpriteId = _PSI
 
-local var_0_6 = {
+local _PT = {
 	RTB = 8,
 	LT = 1,
 	TB = 5,
@@ -119,91 +124,92 @@ local var_0_6 = {
 	None = 0
 }
 
-var_0_0.PathType = var_0_6
+GaoSiNiaoEnum.PathType = _PT
 
-local var_0_7 = {
-	[var_0_6.None] = {
+local _PI = {
+	[_PT.None] = {
 		zRot = 0,
-		outZM = var_0_3.None,
-		spriteId = var_0_5.None
+		outZM = _ZM.None,
+		spriteId = _PSI.None
 	},
-	[var_0_6.LT] = {
+	[_PT.LT] = {
 		zRot = -90,
-		outZM = var_0_3.NW,
-		spriteId = var_0_5.Exit2_Angle
+		outZM = _ZM.NW,
+		spriteId = _PSI.Exit2_Angle
 	},
-	[var_0_6.RT] = {
+	[_PT.RT] = {
 		zRot = 180,
-		outZM = var_0_3.NE,
-		spriteId = var_0_5.Exit2_Angle
+		outZM = _ZM.NE,
+		spriteId = _PSI.Exit2_Angle
 	},
-	[var_0_6.LB] = {
+	[_PT.LB] = {
 		zRot = 0,
-		outZM = var_0_3.SW,
-		spriteId = var_0_5.Exit2_Angle
+		outZM = _ZM.SW,
+		spriteId = _PSI.Exit2_Angle
 	},
-	[var_0_6.RB] = {
+	[_PT.RB] = {
 		zRot = 90,
-		outZM = var_0_3.SE,
-		spriteId = var_0_5.Exit2_Angle
+		outZM = _ZM.SE,
+		spriteId = _PSI.Exit2_Angle
 	},
-	[var_0_6.TB] = {
+	[_PT.TB] = {
 		zRot = 0,
-		outZM = var_0_3.NS,
-		spriteId = var_0_5.Exit2_Straight
+		outZM = _ZM.NS,
+		spriteId = _PSI.Exit2_Straight
 	},
-	[var_0_6.LR] = {
+	[_PT.LR] = {
 		zRot = 90,
-		outZM = var_0_3.EW,
-		spriteId = var_0_5.Exit2_Straight
-	},
-	[var_0_6.LTB] = {
-		zRot = -90,
-		outZM = var_0_3.NSW,
-		spriteId = var_0_5.Exit3
-	},
-	[var_0_6.RTB] = {
-		zRot = 90,
-		outZM = var_0_3.NSE,
-		spriteId = var_0_5.Exit3
-	},
-	[var_0_6.LRB] = {
-		zRot = 0,
-		outZM = var_0_3.SEW,
-		spriteId = var_0_5.Exit3
-	},
-	[var_0_6.LRT] = {
-		zRot = 180,
-		outZM = var_0_3.NEW,
-		spriteId = var_0_5.Exit3
-	},
-	[var_0_6.LRTB] = {
-		zRot = 0,
-		outZM = var_0_3.All,
-		spriteId = var_0_5.Exit4
+		outZM = _ZM.EW,
+		spriteId = _PSI.Exit2_Straight
 	}
 }
 
-for iter_0_0, iter_0_1 in pairs(var_0_7) do
-	iter_0_1.inZM = var_0_0.flipDir(iter_0_1.outZM)
+_PI[_PT.LTB] = {
+	zRot = -90,
+	outZM = _ZM.NSW,
+	spriteId = _PSI.Exit3
+}
+_PI[_PT.RTB] = {
+	zRot = 90,
+	outZM = _ZM.NSE,
+	spriteId = _PSI.Exit3
+}
+_PI[_PT.LRB] = {
+	zRot = 0,
+	outZM = _ZM.SEW,
+	spriteId = _PSI.Exit3
+}
+_PI[_PT.LRT] = {
+	zRot = 180,
+	outZM = _ZM.NEW,
+	spriteId = _PSI.Exit3
+}
+_PI[_PT.LRTB] = {
+	zRot = 0,
+	outZM = _ZM.All,
+	spriteId = _PSI.Exit4
+}
+
+for _, v in pairs(_PI) do
+	v.inZM = GaoSiNiaoEnum.flipDir(v.outZM)
 end
 
-var_0_0.PathInfo = var_0_7
-var_0_0.operation_type = {
+GaoSiNiaoEnum.PathInfo = _PI
+GaoSiNiaoEnum.operation_type = {
 	finish = "finish",
 	Unknown = "",
 	reset = "reset",
 	exit = "exit"
 }
 
-function var_0_0.unitTest()
-	local var_4_0 = var_0_0.flipDir
+function GaoSiNiaoEnum.unitTest()
+	local f = GaoSiNiaoEnum.flipDir
 
-	assert(var_4_0(var_0_3.None) == var_0_3.None)
-	assert(var_4_0(var_0_3.North) == var_0_3.South)
-	assert(var_4_0(var_0_3.NE) == var_0_3.SW)
-	assert(var_4_0(var_0_3.EW) == var_0_3.EW)
-	assert(var_4_0(var_0_1["|"](var_0_3.NE, var_0_3.South)) == var_0_1["|"](var_0_3.SW, var_0_3.North))
+	assert(f(_ZM.None) == _ZM.None)
+	assert(f(_ZM.North) == _ZM.South)
+	assert(f(_ZM.NE) == _ZM.SW)
+	assert(f(_ZM.EW) == _ZM.EW)
+	assert(f(_B["|"](_ZM.NE, _ZM.South)) == _B["|"](_ZM.SW, _ZM.North))
 end
 
-return var_0_0
+return GaoSiNiaoEnum

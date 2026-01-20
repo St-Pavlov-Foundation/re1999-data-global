@@ -1,32 +1,34 @@
-﻿module("modules.logic.room.model.map.RoomWeatherModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomWeatherModel.lua
 
-local var_0_0 = class("RoomWeatherModel", BaseModel)
+module("modules.logic.room.model.map.RoomWeatherModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomWeatherModel = class("RoomWeatherModel", BaseModel)
+
+function RoomWeatherModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomWeatherModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomWeatherModel:clear()
+	RoomWeatherModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
+function RoomWeatherModel:_clearData()
 	return
 end
 
-function var_0_0.setIsNight(arg_5_0, arg_5_1)
-	arg_5_0._isNight = arg_5_1 == true
+function RoomWeatherModel:setIsNight(isNight)
+	self._isNight = isNight == true
 end
 
-function var_0_0.getIsNight(arg_6_0)
-	return arg_6_0._isNight
+function RoomWeatherModel:getIsNight()
+	return self._isNight
 end
 
-var_0_0.instance = var_0_0.New()
+RoomWeatherModel.instance = RoomWeatherModel.New()
 
-return var_0_0
+return RoomWeatherModel

@@ -1,133 +1,138 @@
-﻿module("modules.logic.room.utils.RoomProductionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomProductionHelper.lua
 
-local var_0_0 = {
-	getCanGainLineIdList = function(arg_1_0)
-		local var_1_0 = {}
-		local var_1_1 = RoomConfig.instance:getProductionPartConfig(arg_1_0)
+module("modules.logic.room.utils.RoomProductionHelper", package.seeall)
 
-		if not var_1_1 then
-			return var_1_0
-		end
+local RoomProductionHelper = {}
 
-		local var_1_2 = var_1_1.productionLines
+function RoomProductionHelper.getCanGainLineIdList(partId)
+	local requestLineIdList = {}
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-			local var_1_3 = RoomProductionModel.instance:getLineMO(iter_1_1)
-
-			if var_1_3 and var_1_3:isCanGain() then
-				table.insert(var_1_0, iter_1_1)
-			end
-		end
-
-		return var_1_0
+	if not partConfig then
+		return requestLineIdList
 	end
-}
 
-function var_0_0.hasUnlockLine(arg_2_0, arg_2_1)
-	return var_0_0.getUnlockLineCount(arg_2_0, arg_2_1) > 0
-end
+	local lineIdList = partConfig.productionLines
 
-function var_0_0.getUnlockLineCount(arg_3_0, arg_3_1)
-	local var_3_0 = 0
+	for i, lineId in ipairs(lineIdList) do
+		local lineMO = RoomProductionModel.instance:getLineMO(lineId)
 
-	arg_3_1 = arg_3_1 or RoomModel.instance:getRoomLevel()
-
-	local var_3_1 = RoomConfig.instance:getProductionPartConfig(arg_3_0).productionLines
-
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		if var_0_0.isLineUnlock(iter_3_1, arg_3_1) then
-			var_3_0 = var_3_0 + 1
+		if lineMO and lineMO:isCanGain() then
+			table.insert(requestLineIdList, lineId)
 		end
 	end
 
-	return var_3_0
+	return requestLineIdList
 end
 
-function var_0_0.isLineUnlock(arg_4_0, arg_4_1)
-	local var_4_0 = RoomConfig.instance:getProductionLineConfig(arg_4_0)
-
-	return var_4_0 and arg_4_1 >= var_4_0.needRoomLevel
+function RoomProductionHelper.hasUnlockLine(partId, roomLevel)
+	return RoomProductionHelper.getUnlockLineCount(partId, roomLevel) > 0
 end
 
-function var_0_0.getFormulaMaxCount(arg_5_0)
-	local var_5_0 = RoomConfig.instance:getFormulaConfig(arg_5_0)
-	local var_5_1 = RoomBuildingEnum.MachineSlotMaxCount
+function RoomProductionHelper.getUnlockLineCount(partId, roomLevel)
+	local count = 0
 
-	if string.nilorempty(var_5_0.costMaterial) then
+	roomLevel = roomLevel or RoomModel.instance:getRoomLevel()
+
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
+	local lineIdList = partConfig.productionLines
+
+	for i, lineId in ipairs(lineIdList) do
+		if RoomProductionHelper.isLineUnlock(lineId, roomLevel) then
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
+function RoomProductionHelper.isLineUnlock(lineId, roomLevel)
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
+
+	return lineConfig and roomLevel >= lineConfig.needRoomLevel
+end
+
+function RoomProductionHelper.getFormulaMaxCount(formulaId)
+	local formulaConfig = RoomConfig.instance:getFormulaConfig(formulaId)
+	local maxCount = RoomBuildingEnum.MachineSlotMaxCount
+
+	if string.nilorempty(formulaConfig.costMaterial) then
 		return RoomBuildingEnum.MachineSlotMaxCount
 	end
 
-	local var_5_2 = var_0_0.getFormulaItemParamList(var_5_0.costMaterial)
-	local var_5_3 = var_0_0.getFormulaItemParamList(var_5_0.costScore)
-	local var_5_4 = {}
+	local itemParams = RoomProductionHelper.getFormulaItemParamList(formulaConfig.costMaterial)
+	local extraParams = RoomProductionHelper.getFormulaItemParamList(formulaConfig.costScore)
+	local mergedItemDict = {}
 
-	for iter_5_0 = 1, #var_5_2 do
-		local var_5_5 = var_5_2[iter_5_0]
+	for i = 1, #itemParams do
+		local item = itemParams[i]
 
-		var_5_4[var_5_5.type] = var_5_4[var_5_5.type] or {}
-		var_5_4[var_5_5.type][var_5_5.id] = (var_5_4[var_5_5.type][var_5_5.id] or 0) + var_5_5.quantity
+		mergedItemDict[item.type] = mergedItemDict[item.type] or {}
+		mergedItemDict[item.type][item.id] = (mergedItemDict[item.type][item.id] or 0) + item.quantity
 	end
 
-	for iter_5_1 = 1, #var_5_3 do
-		local var_5_6 = var_5_3[iter_5_1]
+	for i = 1, #extraParams do
+		local item = extraParams[i]
 
-		var_5_4[var_5_6.type] = var_5_4[var_5_6.type] or {}
-		var_5_4[var_5_6.type][var_5_6.id] = (var_5_4[var_5_6.type][var_5_6.id] or 0) + var_5_6.quantity
+		mergedItemDict[item.type] = mergedItemDict[item.type] or {}
+		mergedItemDict[item.type][item.id] = (mergedItemDict[item.type][item.id] or 0) + item.quantity
 	end
 
-	for iter_5_2, iter_5_3 in pairs(var_5_4) do
-		for iter_5_4, iter_5_5 in pairs(iter_5_3) do
-			local var_5_7 = ItemModel.instance:getItemQuantity(iter_5_2, iter_5_4)
+	for type, dict in pairs(mergedItemDict) do
+		for id, quantity in pairs(dict) do
+			local hasQuantity = ItemModel.instance:getItemQuantity(type, id)
 
-			if iter_5_5 ~= 0 then
-				local var_5_8 = math.floor(var_5_7 / iter_5_5)
+			if quantity ~= 0 then
+				local count = math.floor(hasQuantity / quantity)
 
-				if var_5_8 < var_5_1 then
-					var_5_1 = var_5_8
+				if count < maxCount then
+					maxCount = count
 				end
 			end
 		end
 	end
 
-	return var_5_1
+	return maxCount
 end
 
-function var_0_0.isChangeFormulaUnlock(arg_6_0, arg_6_1)
-	if not ItemModel.instance:getItemConfig(arg_6_0, arg_6_1) then
+function RoomProductionHelper.isChangeFormulaUnlock(itemType, itemId)
+	local itemConfig = ItemModel.instance:getItemConfig(itemType, itemId)
+
+	if not itemConfig then
 		return false
 	end
 
-	local var_6_0
+	local minNeedProductionLevel
 
-	for iter_6_0, iter_6_1 in ipairs(lua_formula.configList) do
-		if not string.nilorempty(iter_6_1.produce) then
-			local var_6_1 = var_0_0.getFormulaItemParamList(iter_6_1.produce)
+	for i, formulaConfig in ipairs(lua_formula.configList) do
+		if not string.nilorempty(formulaConfig.produce) then
+			local formulaItemParamList = RoomProductionHelper.getFormulaItemParamList(formulaConfig.produce)
 
-			for iter_6_2, iter_6_3 in ipairs(var_6_1) do
-				if iter_6_3.type == arg_6_0 and iter_6_3.id == arg_6_1 and (not var_6_0 or var_6_0 > iter_6_1.needProductionLevel) then
-					var_6_0 = iter_6_1.needProductionLevel
+			for j, formulaItemParam in ipairs(formulaItemParamList) do
+				if formulaItemParam.type == itemType and formulaItemParam.id == itemId and (not minNeedProductionLevel or minNeedProductionLevel > formulaConfig.needProductionLevel) then
+					minNeedProductionLevel = formulaConfig.needProductionLevel
 				end
 			end
 		end
 	end
 
-	local var_6_2 = 0
-	local var_6_3 = RoomProductionModel.instance:getList()
+	local maxLevel = 0
+	local lineMOList = RoomProductionModel.instance:getList()
 
-	if LuaUtil.tableNotEmpty(var_6_3) then
-		for iter_6_4, iter_6_5 in ipairs(var_6_3) do
-			if iter_6_5.config.logic == RoomProductLineEnum.ProductType.Change and var_6_2 < iter_6_5.level then
-				var_6_2 = iter_6_5.level
+	if LuaUtil.tableNotEmpty(lineMOList) then
+		for i, lineMO in ipairs(lineMOList) do
+			if lineMO.config.logic == RoomProductLineEnum.ProductType.Change and maxLevel < lineMO.level then
+				maxLevel = lineMO.level
 			end
 		end
 	end
 
-	if var_6_2 <= 0 then
+	if maxLevel <= 0 then
 		return false, RoomEnum.Toast.RoomProductionLevelLock
 	end
 
-	if var_6_2 < var_6_0 then
-		return false, RoomEnum.Toast.RoomNeedProductionLevel, var_6_0
+	if maxLevel < minNeedProductionLevel then
+		return false, RoomEnum.Toast.RoomNeedProductionLevel, minNeedProductionLevel
 	end
 
 	if RoomController.instance:isEditMode() and RoomController.instance:isRoomScene() then
@@ -137,102 +142,103 @@ function var_0_0.isChangeFormulaUnlock(arg_6_0, arg_6_1)
 	return true
 end
 
-function var_0_0.isFormulaShowTypeUnlock(arg_7_0)
-	local var_7_0
-	local var_7_1 = RoomFormulaModel.instance:getAllTopTreeLevelFormulaMoList()
+function RoomProductionHelper.isFormulaShowTypeUnlock(formulaShowType)
+	local minLevel
+	local allFormulaMOList = RoomFormulaModel.instance:getAllTopTreeLevelFormulaMoList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if iter_7_1.config.showType == arg_7_0 then
-			local var_7_2 = iter_7_1.config.needProductionLevel
+	for i, formulaMO in ipairs(allFormulaMOList) do
+		if formulaMO.config.showType == formulaShowType then
+			local needProductionLevel = formulaMO.config.needProductionLevel
 
-			if not var_7_0 or var_7_2 < var_7_0 then
-				var_7_0 = var_7_2
+			if not minLevel or needProductionLevel < minLevel then
+				minLevel = needProductionLevel
 			end
 		end
 	end
 
-	return var_7_0 or 0
+	return minLevel or 0
 end
 
-function var_0_0.isFormulaUnlock(arg_8_0, arg_8_1)
-	local var_8_0 = true
-	local var_8_1
-	local var_8_2
-	local var_8_3
-	local var_8_4 = RoomConfig.instance:getFormulaConfig(arg_8_0)
+function RoomProductionHelper.isFormulaUnlock(formulaId, level)
+	local unlock = true
+	local needRoomLevel, needProductionLevel, needEpisodeId
+	local formulaConfig = RoomConfig.instance:getFormulaConfig(formulaId)
 
-	if not var_8_4 then
+	if not formulaConfig then
 		return
 	end
 
-	if RoomModel.instance:getRoomLevel() < var_8_4.needRoomLevel then
-		var_8_0 = false
-		var_8_1 = var_8_4.needRoomLevel
+	local roomLevel = RoomModel.instance:getRoomLevel()
+
+	if roomLevel < formulaConfig.needRoomLevel then
+		unlock = false
+		needRoomLevel = formulaConfig.needRoomLevel
 	end
 
-	if arg_8_1 < var_8_4.needProductionLevel then
-		var_8_0 = false
-		var_8_2 = var_8_4.needProductionLevel
+	if level < formulaConfig.needProductionLevel then
+		unlock = false
+		needProductionLevel = formulaConfig.needProductionLevel
 	end
 
-	if var_8_4.needEpisodeId ~= 0 and not DungeonModel.instance:hasPassLevelAndStory(var_8_4.needEpisodeId) then
-		var_8_0 = false
-		var_8_3 = var_8_4.needEpisodeId
+	if formulaConfig.needEpisodeId ~= 0 and not DungeonModel.instance:hasPassLevelAndStory(formulaConfig.needEpisodeId) then
+		unlock = false
+		needEpisodeId = formulaConfig.needEpisodeId
 	end
 
-	return var_8_0, var_8_1, var_8_2, var_8_3
+	return unlock, needRoomLevel, needProductionLevel, needEpisodeId
 end
 
-function var_0_0.getFormulaCostTime(arg_9_0, arg_9_1)
-	local var_9_0 = RoomConfig.instance:getFormulaConfig(arg_9_0)
+function RoomProductionHelper.getFormulaCostTime(formulaId, lineMO)
+	local formulaConfig = RoomConfig.instance:getFormulaConfig(formulaId)
 
-	if not var_9_0 then
+	if not formulaConfig then
 		return 0
 	end
 
-	local var_9_1 = var_9_0.costTime
+	local costTime = formulaConfig.costTime
 
-	if not arg_9_1 then
-		return var_9_1
+	if not lineMO then
+		return costTime
 	end
 
-	local var_9_2 = 0
+	local totalDecRate = 0
 
-	if arg_9_1.levelCO then
-		local var_9_3 = GameUtil.splitString2(arg_9_1.levelCO.effect, true)
+	if lineMO.levelCO then
+		local arr = GameUtil.splitString2(lineMO.levelCO.effect, true)
 
-		if var_9_3 then
-			for iter_9_0, iter_9_1 in ipairs(var_9_3) do
-				if iter_9_1[1] == RoomBuildingEnum.EffectType.Time then
-					var_9_2 = var_9_2 + iter_9_1[2]
+		if arr then
+			for i, v in ipairs(arr) do
+				if v[1] == RoomBuildingEnum.EffectType.Time then
+					totalDecRate = totalDecRate + v[2]
 				end
 			end
 		end
 	end
 
-	local var_9_4 = math.max(0, 1000 - var_9_2)
+	local remainRate = math.max(0, 1000 - totalDecRate)
 
-	return math.floor(var_9_1 * var_9_4 / 1000)
+	return math.floor(costTime * remainRate / 1000)
 end
 
-function var_0_0.isPartWorking(arg_10_0)
-	local var_10_0 = RoomConfig.instance:getProductionPartConfig(arg_10_0)
+function RoomProductionHelper.isPartWorking(partId)
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
+	local productType = RoomProductionHelper.getPartType(partId)
 
-	if var_0_0.getPartType(arg_10_0) == RoomProductLineEnum.ProductType.Change then
+	if productType == RoomProductLineEnum.ProductType.Change then
 		return true
 	end
 
-	local var_10_1 = var_10_0.productionLines
+	local lineIdList = partConfig.productionLines
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+	for i, lineId in ipairs(lineIdList) do
 		if RoomController.instance:isDebugMode() then
 			return false
 		elseif RoomController.instance:isVisitMode() then
 			return false
 		else
-			local var_10_2 = RoomProductionModel.instance:getLineMO(iter_10_1)
+			local lineMO = RoomProductionModel.instance:getLineMO(lineId)
 
-			if var_10_2 and not var_10_2:isLock() and not var_10_2:isFull() and not var_10_2:isPause() then
+			if lineMO and not lineMO:isLock() and not lineMO:isFull() and not lineMO:isPause() then
 				return true
 			end
 		end
@@ -241,24 +247,27 @@ function var_0_0.isPartWorking(arg_10_0)
 	return false
 end
 
-function var_0_0.canLevelUp(arg_11_0)
-	if arg_11_0.level == arg_11_0.maxConfigLevel or arg_11_0:isLock() then
+function RoomProductionHelper.canLevelUp(mo)
+	if mo.level == mo.maxConfigLevel or mo:isLock() then
 		return false
 	end
 
-	if arg_11_0.level >= arg_11_0.maxLevel then
+	if mo.level >= mo.maxLevel then
 		return false
 	end
 
-	local var_11_0 = math.min(arg_11_0.maxConfigLevel, arg_11_0.level + 1)
-	local var_11_1 = RoomConfig.instance:getProductionLineLevelConfig(arg_11_0.config.levelGroup, var_11_0).cost
-	local var_11_2 = GameUtil.splitString2(var_11_1, true)
+	local tarLv = math.min(mo.maxConfigLevel, mo.level + 1)
+	local levelGroupConfig = RoomConfig.instance:getProductionLineLevelConfig(mo.config.levelGroup, tarLv)
+	local cost = levelGroupConfig.cost
+	local costParam = GameUtil.splitString2(cost, true)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-		local var_11_3 = iter_11_1[1]
-		local var_11_4 = iter_11_1[2]
+	for i, param in ipairs(costParam) do
+		local costType = param[1]
+		local costId = param[2]
+		local costCount = param[3]
+		local ownCount = ItemModel.instance:getItemQuantity(costType, costId)
 
-		if iter_11_1[3] > ItemModel.instance:getItemQuantity(var_11_3, var_11_4) then
+		if ownCount < costCount then
 			return false
 		end
 	end
@@ -266,1126 +275,1161 @@ function var_0_0.canLevelUp(arg_11_0)
 	return true
 end
 
-function var_0_0.getPartType(arg_12_0)
-	local var_12_0 = RoomConfig.instance:getProductionPartConfig(arg_12_0).productionLines[1]
-	local var_12_1 = RoomConfig.instance:getProductionLineConfig(var_12_0)
+function RoomProductionHelper.getPartType(partId)
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
+	local lineIdList = partConfig.productionLines
+	local lineId = lineIdList[1]
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
 
-	return var_12_1.logic, var_12_1.type
+	return lineConfig.logic, lineConfig.type
 end
 
-function var_0_0.getPartMaxLineLevel(arg_13_0)
-	local var_13_0 = RoomConfig.instance:getProductionPartConfig(arg_13_0)
-	local var_13_1 = 0
-	local var_13_2 = var_13_0.productionLines
+function RoomProductionHelper.getPartMaxLineLevel(partId)
+	local config = RoomConfig.instance:getProductionPartConfig(partId)
+	local lineLevel = 0
+	local lineIdList = config.productionLines
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-		local var_13_3 = RoomProductionModel.instance:getLineMO(iter_13_1)
-		local var_13_4 = var_13_3 and var_13_3.level or 0
+	for _, lineId in ipairs(lineIdList) do
+		local lineMO = RoomProductionModel.instance:getLineMO(lineId)
+		local level = lineMO and lineMO.level or 0
 
-		if var_13_1 < var_13_4 then
-			var_13_1 = var_13_4
+		if lineLevel < level then
+			lineLevel = level
 		end
 	end
 
-	return var_13_1
+	return lineLevel
 end
 
-function var_0_0.getChangePartLineMO(arg_14_0)
-	local var_14_0 = RoomConfig.instance:getProductionPartConfig(arg_14_0).productionLines
+function RoomProductionHelper.getChangePartLineMO(partId)
+	local config = RoomConfig.instance:getProductionPartConfig(partId)
+	local lineIdList = config.productionLines
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		return (RoomProductionModel.instance:getLineMO(iter_14_1))
+	for _, lineId in ipairs(lineIdList) do
+		local lineMO = RoomProductionModel.instance:getLineMO(lineId)
+
+		return lineMO
 	end
 end
 
-function var_0_0.getFormulaRewardInfo(arg_15_0)
-	local var_15_0 = RoomConfig.instance:getFormulaConfig(arg_15_0)
+function RoomProductionHelper.getFormulaRewardInfo(formulaId)
+	local formulaConfig = RoomConfig.instance:getFormulaConfig(formulaId)
 
-	if not var_15_0 then
+	if not formulaConfig then
 		return nil
 	end
 
-	local var_15_1 = var_0_0.getFormulaItemParamList(var_15_0.produce)[1]
+	local rewardList = RoomProductionHelper.getFormulaItemParamList(formulaConfig.produce)
+	local reward = rewardList[1]
 
-	if not var_15_1 then
+	if not reward then
 		return
 	end
 
-	var_15_1.quantity = ItemModel.instance:getItemQuantity(var_15_1.type, var_15_1.id)
+	local quantity = ItemModel.instance:getItemQuantity(reward.type, reward.id)
 
-	return var_15_1
+	reward.quantity = quantity
+
+	return reward
 end
 
-function var_0_0.getSkinLevel(arg_16_0, arg_16_1)
-	local var_16_0 = RoomConfig.instance:getProductionPartConfig(arg_16_0)
+function RoomProductionHelper.getSkinLevel(partId, level)
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
 
-	if not var_16_0 then
+	if not partConfig then
 		return 0
 	end
 
-	local var_16_1 = var_16_0.productionLines[1]
+	local lineIds = partConfig.productionLines
+	local lineId = lineIds[1]
 
-	if not var_16_1 then
+	if not lineId then
 		return 0
 	end
 
-	local var_16_2 = RoomConfig.instance:getProductionLineConfig(var_16_1)
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
 
-	if not var_16_2 then
+	if not lineConfig then
 		return 0
 	end
 
-	local var_16_3 = 0
-	local var_16_4
-	local var_16_5 = RoomConfig.instance:getProductionLineLevelConfigList(var_16_2.levelGroup)
+	local skinLevel = 0
+	local currentModulePart
+	local levelConfigList = RoomConfig.instance:getProductionLineLevelConfigList(lineConfig.levelGroup)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_5) do
-		if arg_16_1 < iter_16_1.id then
+	for i, levelConfig in ipairs(levelConfigList) do
+		if level < levelConfig.id then
 			break
 		end
 
-		if not string.nilorempty(iter_16_1.modulePart) and iter_16_1.modulePart ~= var_16_4 then
-			var_16_3 = var_16_3 + 1
-			var_16_4 = iter_16_1.modulePart
+		if not string.nilorempty(levelConfig.modulePart) and levelConfig.modulePart ~= currentModulePart then
+			skinLevel = skinLevel + 1
+			currentModulePart = levelConfig.modulePart
 		end
 	end
 
-	return var_16_3
+	return skinLevel
 end
 
-function var_0_0.getRoomLevelUpParams(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = {}
-	local var_17_1 = RoomConfig.instance:getRoomLevelConfig(arg_17_0)
-	local var_17_2 = RoomConfig.instance:getRoomLevelConfig(arg_17_1)
+function RoomProductionHelper.getRoomLevelUpParams(roomLevel, nextRoomLevel, isResult)
+	local params = {}
+	local roomLevelConfig = RoomConfig.instance:getRoomLevelConfig(roomLevel)
+	local nextRoomLevelConfig = RoomConfig.instance:getRoomLevelConfig(nextRoomLevel)
 
-	if not arg_17_2 then
-		table.insert(var_17_0, {
+	if not isResult then
+		table.insert(params, {
 			desc = luaLang("room_levelup_init_title"),
-			currentDesc = string.format("Lv.%d", arg_17_0),
-			nextDesc = string.format("Lv.%d", arg_17_1)
+			currentDesc = string.format("Lv.%d", roomLevel),
+			nextDesc = string.format("Lv.%d", nextRoomLevel)
 		})
 	end
 
-	local var_17_3 = {}
+	local nameList = {}
 
-	for iter_17_0, iter_17_1 in ipairs(lua_production_part.configList) do
-		local var_17_4 = iter_17_1.id
+	for i, partConfig in ipairs(lua_production_part.configList) do
+		local partId = partConfig.id
 
-		if var_0_0.hasUnlockLine(var_17_4, arg_17_1) and not var_0_0.hasUnlockLine(var_17_4, arg_17_0) then
-			table.insert(var_17_3, string.format(luaLang("room_levelup_init_name1"), iter_17_1.name))
+		if RoomProductionHelper.hasUnlockLine(partId, nextRoomLevel) and not RoomProductionHelper.hasUnlockLine(partId, roomLevel) then
+			table.insert(nameList, string.format(luaLang("room_levelup_init_name1"), partConfig.name))
 		end
 	end
 
-	if #var_17_3 > 0 then
-		local var_17_5 = var_0_0.combineNames(var_17_3, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
-		local var_17_6 = {}
+	if #nameList > 0 then
+		local names = RoomProductionHelper.combineNames(nameList, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
+		local param = {}
 
-		if arg_17_2 then
-			var_17_6.desc = string.format(luaLang("room_levelup_init_unlock"), var_17_5)
+		if isResult then
+			param.desc = string.format(luaLang("room_levelup_init_unlock"), names)
 		else
-			var_17_6.desc = string.format(luaLang("room_levelupresult_init_unlock"), var_17_5)
-			var_17_6.currentDesc = tostring(0)
-			var_17_6.nextDesc = tostring(1)
+			param.desc = string.format(luaLang("room_levelupresult_init_unlock"), names)
+			param.currentDesc = tostring(0)
+			param.nextDesc = tostring(1)
 		end
 
-		table.insert(var_17_0, var_17_6)
+		table.insert(params, param)
 	end
 
-	local var_17_7 = {}
-	local var_17_8 = {}
+	local countDict = {}
+	local maxLevelIndexList = {}
 
-	for iter_17_2, iter_17_3 in ipairs(lua_production_part.configList) do
-		local var_17_9 = iter_17_3.id
-		local var_17_10 = var_0_0.getUnlockLineCount(var_17_9, arg_17_0)
-		local var_17_11 = var_0_0.getUnlockLineCount(var_17_9, arg_17_1)
+	for i, partConfig in ipairs(lua_production_part.configList) do
+		local partId = partConfig.id
+		local curCount = RoomProductionHelper.getUnlockLineCount(partId, roomLevel)
+		local nextCount = RoomProductionHelper.getUnlockLineCount(partId, nextRoomLevel)
 
-		if var_17_10 < 1 then
-			var_17_10 = 1
+		if curCount < 1 then
+			curCount = 1
 		end
 
-		if var_17_10 < var_17_11 and var_17_10 > 0 then
-			var_17_7[var_17_10] = var_17_7[var_17_10] or {}
+		if curCount < nextCount and curCount > 0 then
+			countDict[curCount] = countDict[curCount] or {}
 
-			if not var_17_7[var_17_10][var_17_11] then
-				var_17_7[var_17_10][var_17_11] = {}
+			if not countDict[curCount][nextCount] then
+				countDict[curCount][nextCount] = {}
 
-				table.insert(var_17_8, {
-					curCount = var_17_10,
-					nextCount = var_17_11
+				table.insert(maxLevelIndexList, {
+					curCount = curCount,
+					nextCount = nextCount
 				})
 			end
 
-			table.insert(var_17_7[var_17_10][var_17_11], string.format(luaLang("room_levelup_init_name2"), iter_17_3.name))
+			table.insert(countDict[curCount][nextCount], string.format(luaLang("room_levelup_init_name2"), partConfig.name))
 		end
 	end
 
-	if #var_17_8 > 0 then
-		for iter_17_4, iter_17_5 in ipairs(var_17_8) do
-			local var_17_12 = iter_17_5.curCount
-			local var_17_13 = iter_17_5.nextCount
-			local var_17_14 = var_17_7[var_17_12][var_17_13]
-			local var_17_15 = var_0_0.combineNames(var_17_14, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
-			local var_17_16 = {}
+	if #maxLevelIndexList > 0 then
+		for i, indexParam in ipairs(maxLevelIndexList) do
+			local curCount = indexParam.curCount
+			local nextCount = indexParam.nextCount
+			local nameList = countDict[curCount][nextCount]
+			local names = RoomProductionHelper.combineNames(nameList, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
+			local param = {}
 
-			if arg_17_2 then
-				local var_17_17 = {}
+			if isResult then
+				local countList = {}
 
-				for iter_17_6 = var_17_12 + 1, var_17_13 do
-					table.insert(var_17_17, string.format(luaLang("room_levelupresult_init_count_number"), iter_17_6))
+				for j = curCount + 1, nextCount do
+					table.insert(countList, string.format(luaLang("room_levelupresult_init_count_number"), j))
 				end
 
-				local var_17_18 = var_0_0.combineNames(var_17_17, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
-				local var_17_19 = {
-					var_17_15,
-					var_17_18
+				local counts = RoomProductionHelper.combineNames(countList, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
+				local tag = {
+					names,
+					counts
 				}
 
-				var_17_16.desc = GameUtil.getSubPlaceholderLuaLang(luaLang("room_levelupresult_init_count"), var_17_19)
+				param.desc = GameUtil.getSubPlaceholderLuaLang(luaLang("room_levelupresult_init_count"), tag)
 			else
-				var_17_16.desc = string.format(luaLang("room_levelup_init_count"), var_17_15)
-				var_17_16.currentDesc = tostring(var_17_12)
-				var_17_16.nextDesc = tostring(var_17_13)
+				param.desc = string.format(luaLang("room_levelup_init_count"), names)
+				param.currentDesc = tostring(curCount)
+				param.nextDesc = tostring(nextCount)
 			end
 
-			table.insert(var_17_0, var_17_16)
+			table.insert(params, param)
 		end
 	end
 
-	local var_17_20 = {}
-	local var_17_21 = {}
-	local var_17_22 = {}
+	local maxLevelDict = {}
+	local maxLevelIndexList = {}
+	local maxLevelIndexNextList = {}
 
-	for iter_17_7, iter_17_8 in ipairs(lua_production_part.configList) do
-		local var_17_23 = iter_17_8.id
-		local var_17_24 = var_0_0.getLineMaxLevel(var_17_23, arg_17_0)
-		local var_17_25 = var_0_0.getLineMaxLevel(var_17_23, arg_17_1)
+	for i, partConfig in ipairs(lua_production_part.configList) do
+		local partId = partConfig.id
+		local curMaxLevel = RoomProductionHelper.getLineMaxLevel(partId, roomLevel)
+		local nextMaxLevel = RoomProductionHelper.getLineMaxLevel(partId, nextRoomLevel)
 
-		if var_17_25 > 0 and var_17_24 == 0 then
-			var_17_24 = 1
+		if nextMaxLevel > 0 and curMaxLevel == 0 then
+			curMaxLevel = 1
 		end
 
-		if var_17_24 < var_17_25 and var_17_24 > 0 then
-			if not var_17_20[var_17_25] then
-				var_17_20[var_17_25] = {}
+		if curMaxLevel < nextMaxLevel and curMaxLevel > 0 then
+			if not maxLevelDict[nextMaxLevel] then
+				maxLevelDict[nextMaxLevel] = {}
 
-				table.insert(var_17_22, var_17_25)
+				table.insert(maxLevelIndexNextList, nextMaxLevel)
 			end
 
-			if not var_17_20[var_17_25][var_17_24] then
-				var_17_20[var_17_25][var_17_24] = {}
+			if not maxLevelDict[nextMaxLevel][curMaxLevel] then
+				maxLevelDict[nextMaxLevel][curMaxLevel] = {}
 
-				table.insert(var_17_21, {
-					curMaxLevel = var_17_24,
-					nextMaxLevel = var_17_25
+				table.insert(maxLevelIndexList, {
+					curMaxLevel = curMaxLevel,
+					nextMaxLevel = nextMaxLevel
 				})
 			end
 
-			table.insert(var_17_20[var_17_25][var_17_24], string.format(luaLang("room_levelup_init_name2"), iter_17_8.name))
+			table.insert(maxLevelDict[nextMaxLevel][curMaxLevel], string.format(luaLang("room_levelup_init_name2"), partConfig.name))
 		end
 	end
 
-	if arg_17_2 then
-		if #var_17_22 > 0 then
-			for iter_17_9, iter_17_10 in ipairs(var_17_22) do
-				local var_17_26 = var_17_20[iter_17_10]
-				local var_17_27 = {}
+	if isResult then
+		if #maxLevelIndexNextList > 0 then
+			for i, nextMaxLevel in ipairs(maxLevelIndexNextList) do
+				local dict = maxLevelDict[nextMaxLevel]
+				local totalNameList = {}
 
-				for iter_17_11, iter_17_12 in pairs(var_17_26) do
-					tabletool.addValues(var_17_27, iter_17_12)
+				for curMaxLevel, nameList in pairs(dict) do
+					tabletool.addValues(totalNameList, nameList)
 				end
 
-				local var_17_28 = var_0_0.combineNames(var_17_27, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
-				local var_17_29 = {
-					var_17_28,
-					iter_17_10
+				local names = RoomProductionHelper.combineNames(totalNameList, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
+				local tag = {
+					names,
+					nextMaxLevel
 				}
-				local var_17_30 = {
-					desc = GameUtil.getSubPlaceholderLuaLang(luaLang("room_levelupresult_init_maxlevel"), var_17_29)
-				}
+				local param = {}
 
-				table.insert(var_17_0, var_17_30)
+				param.desc = GameUtil.getSubPlaceholderLuaLang(luaLang("room_levelupresult_init_maxlevel"), tag)
+
+				table.insert(params, param)
 			end
 		end
-	elseif #var_17_21 > 0 then
-		for iter_17_13, iter_17_14 in ipairs(var_17_21) do
-			local var_17_31 = iter_17_14.nextMaxLevel
-			local var_17_32 = iter_17_14.curMaxLevel
-			local var_17_33 = var_17_20[var_17_31][var_17_32]
-			local var_17_34 = var_0_0.combineNames(var_17_33, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
-			local var_17_35 = {
-				desc = string.format(luaLang("room_levelup_init_maxlevel"), var_17_34),
-				currentDesc = tostring(var_17_32),
-				nextDesc = tostring(var_17_31)
-			}
+	elseif #maxLevelIndexList > 0 then
+		for i, indexParam in ipairs(maxLevelIndexList) do
+			local nextMaxLevel = indexParam.nextMaxLevel
+			local curMaxLevel = indexParam.curMaxLevel
+			local nameList = maxLevelDict[nextMaxLevel][curMaxLevel]
+			local names = RoomProductionHelper.combineNames(nameList, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))
+			local param = {}
 
-			table.insert(var_17_0, var_17_35)
+			param.desc = string.format(luaLang("room_levelup_init_maxlevel"), names)
+			param.currentDesc = tostring(curMaxLevel)
+			param.nextDesc = tostring(nextMaxLevel)
+
+			table.insert(params, param)
 		end
 	end
 
-	local var_17_36 = RoomMapBlockModel.instance:getMaxBlockCount(arg_17_0)
-	local var_17_37 = RoomMapBlockModel.instance:getMaxBlockCount(arg_17_1)
+	local curBlockCount = RoomMapBlockModel.instance:getMaxBlockCount(roomLevel)
+	local nextBlockCount = RoomMapBlockModel.instance:getMaxBlockCount(nextRoomLevel)
 
-	if var_17_36 < var_17_37 then
-		local var_17_38 = {}
+	if curBlockCount < nextBlockCount then
+		local param = {}
 
-		if arg_17_2 then
-			var_17_38.desc = string.format(luaLang("room_levelupresult_init_block"), var_17_37 - var_17_36)
+		if isResult then
+			param.desc = string.format(luaLang("room_levelupresult_init_block"), nextBlockCount - curBlockCount)
 		else
-			var_17_38.desc = luaLang("room_levelup_init_block")
-			var_17_38.currentDesc = tostring(var_17_36)
-			var_17_38.nextDesc = tostring(var_17_37)
+			param.desc = luaLang("room_levelup_init_block")
+			param.currentDesc = tostring(curBlockCount)
+			param.nextDesc = tostring(nextBlockCount)
 		end
 
-		table.insert(var_17_0, var_17_38)
+		table.insert(params, param)
 	end
 
-	local var_17_39 = var_17_1.characterLimit
-	local var_17_40 = var_17_2.characterLimit
+	local curCharacterCount = roomLevelConfig.characterLimit
+	local nextCharacterCount = nextRoomLevelConfig.characterLimit
 
-	if var_17_39 < var_17_40 then
-		local var_17_41 = {}
+	if curCharacterCount < nextCharacterCount then
+		local param = {}
 
-		if arg_17_2 then
-			var_17_41.desc = string.format(luaLang("room_levelupresult_init_character"), var_17_40 - var_17_39)
+		if isResult then
+			param.desc = string.format(luaLang("room_levelupresult_init_character"), nextCharacterCount - curCharacterCount)
 		else
-			var_17_41.desc = luaLang("room_levelup_init_character")
-			var_17_41.currentDesc = tostring(var_17_39)
-			var_17_41.nextDesc = tostring(var_17_40)
+			param.desc = luaLang("room_levelup_init_character")
+			param.currentDesc = tostring(curCharacterCount)
+			param.nextDesc = tostring(nextCharacterCount)
 		end
 
-		table.insert(var_17_0, var_17_41)
+		table.insert(params, param)
 	end
 
-	if arg_17_2 and arg_17_1 and CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutPlanOpen) == arg_17_1 then
-		table.insert(var_17_0, {
+	if isResult and nextRoomLevel and CommonConfig.instance:getConstNum(ConstEnum.RoomLayoutPlanOpen) == nextRoomLevel then
+		table.insert(params, {
 			desc = luaLang("room_levelupresult_init_layoutplan_open")
 		})
 	end
 
-	return var_17_0
+	return params
 end
 
-function var_0_0.combineNames(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = ""
+function RoomProductionHelper.combineNames(nameList, and1, and2)
+	local names = ""
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0) do
-		if iter_18_0 > 1 then
-			if iter_18_0 == #arg_18_0 then
-				var_18_0 = var_18_0 .. arg_18_2
+	for i, name in ipairs(nameList) do
+		if i > 1 then
+			if i == #nameList then
+				names = names .. and2
 			else
-				var_18_0 = var_18_0 .. arg_18_1
+				names = names .. and1
 			end
 		end
 
-		var_18_0 = var_18_0 .. iter_18_1
+		names = names .. name
 	end
 
-	return var_18_0
+	return names
 end
 
-function var_0_0.getLineMaxLevel(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_1 or RoomModel.instance:getRoomLevel()
-	local var_19_1 = RoomConfig.instance:getProductionPartConfig(arg_19_0).productionLines[1]
-	local var_19_2 = RoomConfig.instance:getProductionLineConfig(var_19_1)
-	local var_19_3 = var_19_2 and RoomConfig.instance:getProductionLineLevelGroupIdConfig(var_19_2.levelGroup)
-	local var_19_4 = 0
+function RoomProductionHelper.getLineMaxLevel(partId, roomLevel)
+	local roomLevel = roomLevel or RoomModel.instance:getRoomLevel()
+	local partConfig = RoomConfig.instance:getProductionPartConfig(partId)
+	local lineIdList = partConfig.productionLines
+	local lineId = lineIdList[1]
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
+	local levelGroupConfigList = lineConfig and RoomConfig.instance:getProductionLineLevelGroupIdConfig(lineConfig.levelGroup)
+	local maxLevel = 0
 
-	if var_19_3 then
-		for iter_19_0, iter_19_1 in ipairs(var_19_3) do
-			if var_19_0 >= iter_19_1.needRoomLevel then
-				var_19_4 = math.max(iter_19_1.id, var_19_4)
+	if levelGroupConfigList then
+		for i, levelGroupConfig in ipairs(levelGroupConfigList) do
+			if roomLevel >= levelGroupConfig.needRoomLevel then
+				maxLevel = math.max(levelGroupConfig.id, maxLevel)
 			end
 		end
 	end
 
-	return var_19_4
+	return maxLevel
 end
 
-function var_0_0.getProductLineLevelUpParams(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = {}
-	local var_20_1 = RoomConfig.instance:getProductionLineConfig(arg_20_0)
+function RoomProductionHelper.getProductLineLevelUpParams(lineId, level, nextLevel, isResult)
+	local params = {}
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
 
-	if not arg_20_3 then
-		table.insert(var_20_0, {
+	if not isResult then
+		table.insert(params, {
 			desc = luaLang("roomproductlinelevelup_level"),
-			currentDesc = string.format("Lv.%d", arg_20_1),
-			nextDesc = string.format("Lv.%d", arg_20_2)
+			currentDesc = string.format("Lv.%d", level),
+			nextDesc = string.format("Lv.%d", nextLevel)
 		})
 	end
 
-	if var_20_1.logic == RoomProductLineEnum.ProductType.Change then
-		for iter_20_0 = 1, 4 do
-			local var_20_2 = 300 + iter_20_0
+	if lineConfig.logic == RoomProductLineEnum.ProductType.Change then
+		for i = 1, 4 do
+			local formulaType = 300 + i
+			local levelUpCount = RoomProductionHelper.getFormulaLevelUpCount(formulaType, nextLevel)
 
-			if var_0_0.getFormulaLevelUpCount(var_20_2, arg_20_2) == 1 then
-				local var_20_3 = {}
+			if levelUpCount == 1 then
+				local param = {}
 
-				if arg_20_3 then
-					var_20_3.desc = luaLang("room_levelupresult_line_change" .. iter_20_0)
+				if isResult then
+					param.desc = luaLang("room_levelupresult_line_change" .. i)
 				else
-					var_20_3.desc = luaLang("room_levelup_line_change" .. iter_20_0)
-					var_20_3.currentDesc = tostring("0")
-					var_20_3.nextDesc = tostring("1")
+					param.desc = luaLang("room_levelup_line_change" .. i)
+					param.currentDesc = tostring("0")
+					param.nextDesc = tostring("1")
 				end
 
-				table.insert(var_20_0, var_20_3)
+				table.insert(params, param)
 			end
 		end
 
-		for iter_20_1 = 1, 4 do
-			local var_20_4 = 300 + iter_20_1
-			local var_20_5 = var_0_0.getFormulaLevelUpCount(var_20_4, arg_20_2)
+		for i = 1, 4 do
+			local formulaType = 300 + i
+			local levelUpCount = RoomProductionHelper.getFormulaLevelUpCount(formulaType, nextLevel)
 
-			if var_20_5 > 1 then
-				local var_20_6 = {}
+			if levelUpCount > 1 then
+				local param = {}
 
-				if arg_20_3 then
-					if var_20_5 > 2 then
-						var_20_6.desc = string.format(luaLang("room_levelupresult_line_formula" .. iter_20_1), luaLang("room_levelup_line_formula_high"))
+				if isResult then
+					if levelUpCount > 2 then
+						param.desc = string.format(luaLang("room_levelupresult_line_formula" .. i), luaLang("room_levelup_line_formula_high"))
 					else
-						var_20_6.desc = string.format(luaLang("room_levelupresult_line_formula" .. iter_20_1), luaLang("room_levelup_line_formula_middle"))
+						param.desc = string.format(luaLang("room_levelupresult_line_formula" .. i), luaLang("room_levelup_line_formula_middle"))
 					end
 				else
-					var_20_6.desc = luaLang("room_levelup_line_formula" .. iter_20_1)
+					param.desc = luaLang("room_levelup_line_formula" .. i)
 
-					if var_20_5 > 2 then
-						var_20_6.currentDesc = luaLang("room_levelup_line_formula_middle")
-						var_20_6.nextDesc = luaLang("room_levelup_line_formula_high")
+					if levelUpCount > 2 then
+						param.currentDesc = luaLang("room_levelup_line_formula_middle")
+						param.nextDesc = luaLang("room_levelup_line_formula_high")
 					else
-						var_20_6.currentDesc = luaLang("room_levelup_line_formula_low")
-						var_20_6.nextDesc = luaLang("room_levelup_line_formula_middle")
+						param.currentDesc = luaLang("room_levelup_line_formula_low")
+						param.nextDesc = luaLang("room_levelup_line_formula_middle")
 					end
 				end
 
-				table.insert(var_20_0, var_20_6)
+				table.insert(params, param)
 			end
 		end
-	elseif var_20_1.logic == RoomProductLineEnum.ProductType.Product then
-		local var_20_7 = var_0_0.getProductLineReserve(arg_20_0, arg_20_1)
-		local var_20_8 = var_0_0.getProductLineReserve(arg_20_0, arg_20_2)
+	elseif lineConfig.logic == RoomProductLineEnum.ProductType.Product then
+		local curReserve = RoomProductionHelper.getProductLineReserve(lineId, level)
+		local nextReserve = RoomProductionHelper.getProductLineReserve(lineId, nextLevel)
 
-		if var_20_7 < var_20_8 then
-			local var_20_9 = {}
+		if curReserve < nextReserve then
+			local param = {}
 
-			if arg_20_3 then
-				var_20_9.desc = string.format(luaLang("room_levelupresult_line_reserve"), var_20_8)
+			if isResult then
+				param.desc = string.format(luaLang("room_levelupresult_line_reserve"), nextReserve)
 			else
-				var_20_9.desc = luaLang("room_levelup_line_reserve")
-				var_20_9.currentDesc = tostring(var_20_7)
-				var_20_9.nextDesc = tostring(var_20_8)
+				param.desc = luaLang("room_levelup_line_reserve")
+				param.currentDesc = tostring(curReserve)
+				param.nextDesc = tostring(nextReserve)
 			end
 
-			table.insert(var_20_0, var_20_9)
+			table.insert(params, param)
 		end
 
-		local var_20_10, var_20_11 = var_0_0.getProductLineCostTimeReduceRate(arg_20_0, arg_20_1)
-		local var_20_12, var_20_13 = var_0_0.getProductLineCostTimeReduceRate(arg_20_0, arg_20_2)
+		local curReduceRate, curReduceSec = RoomProductionHelper.getProductLineCostTimeReduceRate(lineId, level)
+		local nextReduceRate, nextReduceSec = RoomProductionHelper.getProductLineCostTimeReduceRate(lineId, nextLevel)
 
-		if var_20_10 < var_20_12 then
-			local var_20_14 = {}
+		if curReduceRate < nextReduceRate then
+			local param = {}
 
-			if arg_20_3 then
-				var_20_14.desc = string.format(luaLang("room_levelupresult_line_costtime"), math.floor(var_20_13 / 60))
+			if isResult then
+				param.desc = string.format(luaLang("room_levelupresult_line_costtime"), math.floor(nextReduceSec / 60))
 			else
-				var_20_14.desc = luaLang("room_levelup_line_costtime")
-				var_20_14.currentDesc = string.format("%d%%", math.floor((1 - var_20_10) * 100 + 0.5))
-				var_20_14.nextDesc = string.format("%d%%", math.floor((1 - var_20_12) * 100 + 0.5))
+				param.desc = luaLang("room_levelup_line_costtime")
+				param.currentDesc = string.format("%d%%", math.floor((1 - curReduceRate) * 100 + 0.5))
+				param.nextDesc = string.format("%d%%", math.floor((1 - nextReduceRate) * 100 + 0.5))
 			end
 
-			table.insert(var_20_0, var_20_14)
+			table.insert(params, param)
 		end
 
-		local var_20_15 = var_0_0.getProductLineProductionAddRate(arg_20_0, arg_20_1)
-		local var_20_16 = var_0_0.getProductLineProductionAddRate(arg_20_0, arg_20_2)
+		local curAddRate = RoomProductionHelper.getProductLineProductionAddRate(lineId, level)
+		local nextAddRate = RoomProductionHelper.getProductLineProductionAddRate(lineId, nextLevel)
 
-		if var_20_15 < var_20_16 then
-			local var_20_17 = {}
+		if curAddRate < nextAddRate then
+			local param = {}
 
-			if arg_20_3 then
-				var_20_17.desc = string.format(luaLang("room_levelupresult_line_product"), math.floor((var_20_16 - 1) * 100 + 0.5))
+			if isResult then
+				param.desc = string.format(luaLang("room_levelupresult_line_product"), math.floor((nextAddRate - 1) * 100 + 0.5))
 			else
-				var_20_17.desc = luaLang("room_levelup_line_product")
-				var_20_17.currentDesc = string.format("%d%%", math.floor(var_20_15 * 100 + 0.5))
-				var_20_17.nextDesc = string.format("%d%%", math.floor(var_20_16 * 100 + 0.5))
+				param.desc = luaLang("room_levelup_line_product")
+				param.currentDesc = string.format("%d%%", math.floor(curAddRate * 100 + 0.5))
+				param.nextDesc = string.format("%d%%", math.floor(nextAddRate * 100 + 0.5))
 			end
 
-			table.insert(var_20_0, var_20_17)
+			table.insert(params, param)
 		end
 	end
 
-	return var_20_0
+	return params
 end
 
-function var_0_0.getProductLineReserve(arg_21_0, arg_21_1)
-	local var_21_0 = RoomConfig.instance:getProductionLineConfig(arg_21_0)
-	local var_21_1 = var_21_0.reserve
+function RoomProductionHelper.getProductLineReserve(lineId, level)
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
+	local reserve = lineConfig.reserve
 
-	if var_21_0.levelGroup > 0 then
-		local var_21_2 = RoomConfig.instance:getProductionLineLevelConfig(var_21_0.levelGroup, arg_21_1)
-		local var_21_3 = GameUtil.splitString2(var_21_2.effect, true)
+	if lineConfig.levelGroup > 0 then
+		local levelGroupConfig = RoomConfig.instance:getProductionLineLevelConfig(lineConfig.levelGroup, level)
+		local arr = GameUtil.splitString2(levelGroupConfig.effect, true)
 
-		if var_21_3 then
-			for iter_21_0, iter_21_1 in ipairs(var_21_3) do
-				if iter_21_1[1] == RoomBuildingEnum.EffectType.Reserve then
-					var_21_1 = var_21_1 + iter_21_1[2]
+		if arr then
+			for i, v in ipairs(arr) do
+				if v[1] == RoomBuildingEnum.EffectType.Reserve then
+					reserve = reserve + v[2]
 				end
 			end
 		end
 	end
 
-	return var_21_1
+	return reserve
 end
 
-function var_0_0.getProductLineCostTimeReduceRate(arg_22_0, arg_22_1)
-	if arg_22_1 <= 1 then
+function RoomProductionHelper.getProductLineCostTimeReduceRate(lineId, level)
+	if level <= 1 then
 		return 0, 0
 	end
 
-	local var_22_0 = RoomConfig.instance:getProductionLineConfig(arg_22_0)
-	local var_22_1 = var_22_0.initFormula
-	local var_22_2 = RoomConfig.instance:getFormulaConfig(var_22_1)
-	local var_22_3 = var_22_1
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
+	local initFormulaId = lineConfig.initFormula
+	local initFormulaConfig = RoomConfig.instance:getFormulaConfig(initFormulaId)
+	local formulaId = initFormulaId
 
-	if var_22_0.levelGroup > 0 then
-		for iter_22_0 = arg_22_1, 1, -1 do
-			local var_22_4 = RoomConfig.instance:getProductionLineLevelConfig(var_22_0.levelGroup, arg_22_1)
+	if lineConfig.levelGroup > 0 then
+		for i = level, 1, -1 do
+			local levelGroupConfig = RoomConfig.instance:getProductionLineLevelConfig(lineConfig.levelGroup, level)
 
-			if not string.nilorempty(var_22_4.changeFormulaId) then
-				var_22_3 = tonumber(var_22_4.changeFormulaId)
+			if not string.nilorempty(levelGroupConfig.changeFormulaId) then
+				formulaId = tonumber(levelGroupConfig.changeFormulaId)
 
 				break
 			end
 		end
 	end
 
-	local var_22_5 = RoomConfig.instance:getFormulaConfig(var_22_3)
+	local formulaConfig = RoomConfig.instance:getFormulaConfig(formulaId)
 
-	if var_22_2.costTime <= 0 then
+	if initFormulaConfig.costTime <= 0 then
 		return 0, 0
 	end
 
-	return 1 - var_22_5.costTime / var_22_2.costTime, var_22_2.costTime - var_22_5.costTime
+	return 1 - formulaConfig.costTime / initFormulaConfig.costTime, initFormulaConfig.costTime - formulaConfig.costTime
 end
 
-function var_0_0.getProductLineProductionAddRate(arg_23_0, arg_23_1)
-	if arg_23_1 <= 1 then
+function RoomProductionHelper.getProductLineProductionAddRate(lineId, level)
+	if level <= 1 then
 		return 1
 	end
 
-	local var_23_0 = RoomConfig.instance:getProductionLineConfig(arg_23_0)
-	local var_23_1 = var_23_0.initFormula
-	local var_23_2 = RoomConfig.instance:getFormulaConfig(var_23_1)
-	local var_23_3 = var_23_1
+	local lineConfig = RoomConfig.instance:getProductionLineConfig(lineId)
+	local initFormulaId = lineConfig.initFormula
+	local initFormulaConfig = RoomConfig.instance:getFormulaConfig(initFormulaId)
+	local formulaId = initFormulaId
 
-	if var_23_0.levelGroup > 0 then
-		for iter_23_0 = arg_23_1, 1, -1 do
-			local var_23_4 = RoomConfig.instance:getProductionLineLevelConfig(var_23_0.levelGroup, arg_23_1)
+	if lineConfig.levelGroup > 0 then
+		for i = level, 1, -1 do
+			local levelGroupConfig = RoomConfig.instance:getProductionLineLevelConfig(lineConfig.levelGroup, level)
 
-			if not string.nilorempty(var_23_4.changeFormulaId) then
-				var_23_3 = tonumber(var_23_4.changeFormulaId)
+			if not string.nilorempty(levelGroupConfig.changeFormulaId) then
+				formulaId = tonumber(levelGroupConfig.changeFormulaId)
 
 				break
 			end
 		end
 	end
 
-	local var_23_5 = RoomConfig.instance:getFormulaConfig(var_23_3)
-	local var_23_6 = var_0_0.getFormulaItemParamList(var_23_5.produce)[1]
-	local var_23_7 = var_0_0.getFormulaItemParamList(var_23_2.produce)[1]
+	local formulaConfig = RoomConfig.instance:getFormulaConfig(formulaId)
+	local item = RoomProductionHelper.getFormulaItemParamList(formulaConfig.produce)[1]
+	local initItem = RoomProductionHelper.getFormulaItemParamList(initFormulaConfig.produce)[1]
 
-	if var_23_7.quantity <= 0 then
+	if initItem.quantity <= 0 then
 		return 1
 	end
 
-	return var_23_6.quantity / var_23_7.quantity
+	return item.quantity / initItem.quantity
 end
 
-function var_0_0.getFormulaLevelUpCount(arg_24_0, arg_24_1)
-	local var_24_0 = var_0_0._formulaLevelUpInfo
+function RoomProductionHelper.getFormulaLevelUpCount(formulaType, level)
+	local info = RoomProductionHelper._formulaLevelUpInfo
 
-	if not var_24_0 then
-		var_24_0 = {}
-		var_0_0._formulaLevelUpInfo = var_24_0
+	if not info then
+		info = {}
+		RoomProductionHelper._formulaLevelUpInfo = info
 
-		local var_24_1 = {}
+		local counterTemp = {}
 
-		for iter_24_0 = 0, 4 do
-			for iter_24_1, iter_24_2 in ipairs(lua_formula.configList) do
-				if iter_24_2.needProductionLevel == iter_24_0 then
-					local var_24_2 = iter_24_2.showType
+		for lv = 0, 4 do
+			for _, formulaConfig in ipairs(lua_formula.configList) do
+				if formulaConfig.needProductionLevel == lv then
+					local showType = formulaConfig.showType
 
-					if not var_24_0[var_24_2] then
-						var_24_0[var_24_2] = {}
+					if not info[showType] then
+						info[showType] = {}
 					end
 
-					if not var_24_0[var_24_2][iter_24_0] then
-						local var_24_3 = var_24_1[var_24_2]
-						local var_24_4 = var_24_3 and var_24_3 + 1 or 1
+					if not info[showType][lv] then
+						local prev = counterTemp[showType]
+						local now = prev and prev + 1 or 1
 
-						var_24_1[var_24_2] = var_24_4
-						var_24_0[var_24_2][iter_24_0] = var_24_4
+						counterTemp[showType] = now
+						info[showType][lv] = now
 					end
 				end
 			end
 		end
 	end
 
-	return var_24_0[arg_24_0] and var_24_0[arg_24_0][arg_24_1] or 0
+	return info[formulaType] and info[formulaType][level] or 0
 end
 
-function var_0_0.getPartIdByLineId(arg_25_0)
-	for iter_25_0, iter_25_1 in ipairs(lua_production_part.configList) do
-		local var_25_0 = iter_25_1.productionLines
+function RoomProductionHelper.getPartIdByLineId(lineId)
+	for _, partConfig in ipairs(lua_production_part.configList) do
+		local lineIdList = partConfig.productionLines
 
-		for iter_25_2, iter_25_3 in ipairs(var_25_0) do
-			if iter_25_3 == arg_25_0 then
-				return iter_25_1.id
+		for _, one in ipairs(lineIdList) do
+			if one == lineId then
+				return partConfig.id
 			end
 		end
 	end
 end
 
-function var_0_0.getFormulaItemParamList(arg_26_0)
-	local var_26_0 = {}
+function RoomProductionHelper.getFormulaItemParamList(param)
+	local itemList = {}
 
-	if string.nilorempty(arg_26_0) then
-		return var_26_0
+	if string.nilorempty(param) then
+		return itemList
 	end
 
-	local var_26_1 = GameUtil.splitString2(arg_26_0, true)
+	local itemParams = GameUtil.splitString2(param, true)
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_1) do
-		table.insert(var_26_0, {
-			type = iter_26_1[1],
-			id = iter_26_1[2],
-			quantity = iter_26_1[3]
+	for _, itemParam in ipairs(itemParams) do
+		table.insert(itemList, {
+			type = itemParam[1],
+			id = itemParam[2],
+			quantity = itemParam[3]
 		})
 	end
 
-	return var_26_0
+	return itemList
 end
 
-function var_0_0.getFormulaStrUID(arg_27_0, arg_27_1)
-	return string.format("%s#%s", arg_27_0, arg_27_1)
+function RoomProductionHelper.getFormulaStrUID(formulaId, treeLevel)
+	return string.format("%s#%s", formulaId, treeLevel)
 end
 
-function var_0_0.getFormulaConfig(arg_28_0)
-	local var_28_0 = RoomConfig.instance:getFormulaConfig(arg_28_0)
+function RoomProductionHelper.getFormulaConfig(formulaId)
+	local config = RoomConfig.instance:getFormulaConfig(formulaId)
 
-	if not var_28_0 then
-		logError("RoomProductionHelper:getFormulaConfig Error! config not found: " .. (arg_28_0 or nil))
+	if not config then
+		logError("RoomProductionHelper:getFormulaConfig Error! config not found: " .. (formulaId or nil))
 	end
 
-	return var_28_0
+	return config
 end
 
-function var_0_0.getCostCoinItemList(arg_29_0)
-	local var_29_0 = {}
-	local var_29_1 = var_0_0.getFormulaConfig(arg_29_0)
+function RoomProductionHelper.getCostCoinItemList(formulaId)
+	local result = {}
+	local config = RoomProductionHelper.getFormulaConfig(formulaId)
 
-	if var_29_1 then
-		if string.nilorempty(var_29_1.costScore) then
+	if config then
+		if string.nilorempty(config.costScore) then
 			logWarn("RoomProductionHelper.getCostCoinItemList Warn, formulaConfig.costScore is empty")
 		end
 
-		var_29_0 = var_0_0.getFormulaItemParamList(var_29_1.costScore)
+		result = RoomProductionHelper.getFormulaItemParamList(config.costScore)
 	end
 
-	return var_29_0
+	return result
 end
 
-function var_0_0.getCostMaterialItemList(arg_30_0)
-	local var_30_0 = {}
-	local var_30_1 = var_0_0.getFormulaConfig(arg_30_0)
+function RoomProductionHelper.getCostMaterialItemList(formulaId)
+	local result = {}
+	local config = RoomProductionHelper.getFormulaConfig(formulaId)
 
-	if var_30_1 then
-		local var_30_2 = var_30_1.costMaterial
+	if config then
+		local strCostMaterial = config.costMaterial
 
-		if not string.nilorempty(var_30_1.costMaterial) then
-			var_30_0 = var_0_0.getFormulaItemParamList(var_30_2)
+		if not string.nilorempty(config.costMaterial) then
+			result = RoomProductionHelper.getFormulaItemParamList(strCostMaterial)
 		end
 	end
 
-	return var_30_0
+	return result
 end
 
-function var_0_0.getCostMaterialFormulaList(arg_31_0)
-	local var_31_0 = {}
-	local var_31_1 = var_0_0.getCostMaterialItemList(arg_31_0)
+function RoomProductionHelper.getCostMaterialFormulaList(formulaId)
+	local result = {}
+	local costMaterialItemList = RoomProductionHelper.getCostMaterialItemList(formulaId)
 
-	for iter_31_0, iter_31_1 in ipairs(var_31_1) do
-		local var_31_2 = RoomConfig.instance:getItemFormulaId(iter_31_1.type, iter_31_1.id)
+	for _, costItemParam in ipairs(costMaterialItemList) do
+		local costItemFormulaId = RoomConfig.instance:getItemFormulaId(costItemParam.type, costItemParam.id)
 
-		table.insert(var_31_0, var_31_2)
+		table.insert(result, costItemFormulaId)
 	end
 
-	return var_31_0
+	return result
 end
 
-function var_0_0.getCostItemListWithFormulaId(arg_32_0, arg_32_1)
-	local var_32_0 = {}
-	local var_32_1 = var_0_0.getCostMaterialItemList(arg_32_0)
+function RoomProductionHelper.getCostItemListWithFormulaId(formulaId, isIncludeCoin)
+	local result = {}
+	local costItemList = RoomProductionHelper.getCostMaterialItemList(formulaId)
 
-	if arg_32_1 then
-		local var_32_2 = var_0_0.getCostCoinItemList(arg_32_0)
+	if isIncludeCoin then
+		local costCoinItemList = RoomProductionHelper.getCostCoinItemList(formulaId)
 
-		for iter_32_0, iter_32_1 in pairs(var_32_2) do
-			table.insert(var_32_1, iter_32_1)
+		for _, costCoinItem in pairs(costCoinItemList) do
+			table.insert(costItemList, costCoinItem)
 		end
 	end
 
-	for iter_32_2, iter_32_3 in ipairs(var_32_1) do
-		local var_32_3 = RoomConfig.instance:getItemFormulaId(iter_32_3.type, iter_32_3.id)
-		local var_32_4 = {
-			formulaId = var_32_3,
-			type = iter_32_3.type,
-			id = iter_32_3.id,
-			quantity = iter_32_3.quantity
+	for _, costItem in ipairs(costItemList) do
+		local costItemFormulaId = RoomConfig.instance:getItemFormulaId(costItem.type, costItem.id)
+		local costItemData = {
+			formulaId = costItemFormulaId,
+			type = costItem.type,
+			id = costItem.id,
+			quantity = costItem.quantity
 		}
 
-		table.insert(var_32_0, var_32_4)
+		table.insert(result, costItemData)
 	end
 
-	return var_32_0
+	return result
 end
 
-function var_0_0.isEnoughCoin(arg_33_0, arg_33_1)
-	local var_33_0 = true
+function RoomProductionHelper.isEnoughCoin(formulaId, count)
+	local result = true
 
-	if not arg_33_1 or arg_33_1 <= 0 then
-		arg_33_1 = 1
+	if not count or count <= 0 then
+		count = 1
 	end
 
-	local var_33_1 = var_0_0.getCostCoinItemList(arg_33_0)
+	local costCoinItemList = RoomProductionHelper.getCostCoinItemList(formulaId)
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_1) do
-		if (iter_33_1.quantity or 0) * arg_33_1 > ItemModel.instance:getItemQuantity(iter_33_1.type, iter_33_1.id) then
-			var_33_0 = false
+	for _, costCoinItem in ipairs(costCoinItemList) do
+		local costScore = (costCoinItem.quantity or 0) * count
+		local ownQuantity = ItemModel.instance:getItemQuantity(costCoinItem.type, costCoinItem.id)
+
+		if ownQuantity < costScore then
+			result = false
 
 			break
 		end
 	end
 
-	return var_33_0
+	return result
 end
 
-function var_0_0.isEnoughMaterial(arg_34_0, arg_34_1)
-	local var_34_0 = true
+function RoomProductionHelper.isEnoughMaterial(formulaId, count)
+	local result = true
 
-	if not arg_34_1 or arg_34_1 <= 0 then
-		arg_34_1 = 1
+	if not count or count <= 0 then
+		count = 1
 	end
 
-	local var_34_1 = var_0_0.getCostMaterialItemList(arg_34_0)
+	local costMaterialItemList = RoomProductionHelper.getCostMaterialItemList(formulaId)
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_1) do
-		if iter_34_1.quantity * arg_34_1 > ItemModel.instance:getItemQuantity(iter_34_1.type, iter_34_1.id) then
-			var_34_0 = false
+	for _, costMaterialItem in ipairs(costMaterialItemList) do
+		local costCount = costMaterialItem.quantity * count
+		local ownQuantity = ItemModel.instance:getItemQuantity(costMaterialItem.type, costMaterialItem.id)
+
+		if ownQuantity < costCount then
+			result = false
 
 			break
 		end
 	end
 
-	return var_34_0
+	return result
 end
 
-function var_0_0.getTopLevelFormulaStrId(arg_35_0)
-	local var_35_0, var_35_1 = var_0_0.changeStrUID2FormulaIdAndTreeLevel(arg_35_0)
+function RoomProductionHelper.getTopLevelFormulaStrId(formulaStrId)
+	local formulaId, treeLevel = RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(formulaStrId)
 
-	if var_35_0 and var_35_0 ~= 0 and var_35_1 then
-		if var_35_1 == RoomFormulaModel.DEFAULT_TREE_LEVEL then
-			return arg_35_0
+	if formulaId and formulaId ~= 0 and treeLevel then
+		if treeLevel == RoomFormulaModel.DEFAULT_TREE_LEVEL then
+			return formulaStrId
 		else
-			return (var_0_0.getFormulaStrUID(var_35_0, RoomFormulaModel.DEFAULT_TREE_LEVEL))
+			local strUID = RoomProductionHelper.getFormulaStrUID(formulaId, RoomFormulaModel.DEFAULT_TREE_LEVEL)
+
+			return strUID
 		end
 	end
 end
 
-function var_0_0.getFormulaProduceItem(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_1 or var_0_0.getFormulaConfig(arg_36_0)
+function RoomProductionHelper.getFormulaProduceItem(formulaId, argsConfig)
+	local config = argsConfig or RoomProductionHelper.getFormulaConfig(formulaId)
 
-	if var_36_0 then
-		local var_36_1 = var_0_0.getFormulaItemParamList(var_36_0.produce)
+	if config then
+		local produceItemParamList = RoomProductionHelper.getFormulaItemParamList(config.produce)
 
-		if var_36_1[1] then
-			return var_36_1[1]
+		if produceItemParamList[1] then
+			return produceItemParamList[1]
 		else
 			logError("RoomProductionHelper.getFormulaProduceItem error, can't find produce")
 		end
 	end
 end
 
-function var_0_0.getFormulaNeedQuantity(arg_37_0)
-	local var_37_0 = 0
-	local var_37_1 = RoomFormulaModel.instance:getFormulaMo(arg_37_0)
+function RoomProductionHelper.getFormulaNeedQuantity(formulaStrId)
+	local needQuantity = 0
+	local formulaMo = RoomFormulaModel.instance:getFormulaMo(formulaStrId)
 
-	if not var_37_1 then
-		return var_37_0
+	if not formulaMo then
+		return needQuantity
 	end
 
-	local var_37_2 = var_37_1:getFormulaId()
-	local var_37_3 = var_0_0.getFormulaProduceItem(var_37_2)
+	local formulaId = formulaMo:getFormulaId()
+	local produceItem = RoomProductionHelper.getFormulaProduceItem(formulaId)
 
-	if not var_37_3 then
-		return var_37_0
+	if not produceItem then
+		return needQuantity
 	end
 
-	if var_37_1:isTreeFormula() then
-		local var_37_4 = var_37_1:getParentStrId()
-		local var_37_5 = RoomFormulaModel.instance:getFormulaMo(var_37_4)
+	local isTreeFormula = formulaMo:isTreeFormula()
 
-		if var_37_5 then
-			local var_37_6 = 0
-			local var_37_7 = var_37_5:getFormulaId()
-			local var_37_8 = var_0_0.getCostMaterialItemList(var_37_7)
+	if isTreeFormula then
+		local parentStrId = formulaMo:getParentStrId()
+		local parentFormulaMo = RoomFormulaModel.instance:getFormulaMo(parentStrId)
 
-			for iter_37_0, iter_37_1 in ipairs(var_37_8) do
-				if iter_37_1.id == var_37_3.id then
-					var_37_6 = iter_37_1.quantity
+		if parentFormulaMo then
+			local oneParentCombineNeedQuantity = 0
+			local parentFormulaId = parentFormulaMo:getFormulaId()
+			local costMaterialItemList = RoomProductionHelper.getCostMaterialItemList(parentFormulaId)
+
+			for _, costMaterialItem in ipairs(costMaterialItemList) do
+				if costMaterialItem.id == produceItem.id then
+					oneParentCombineNeedQuantity = costMaterialItem.quantity
 
 					break
 				end
 			end
 
-			var_37_0 = var_37_5:getFormulaCombineCount() * var_37_6
+			local parentCombineCount = parentFormulaMo:getFormulaCombineCount()
+
+			needQuantity = parentCombineCount * oneParentCombineNeedQuantity
 		end
 	else
-		local var_37_9 = JumpModel.instance:getRecordFarmItem()
+		local recordFarmItem = JumpModel.instance:getRecordFarmItem()
 
-		if var_37_9 and var_37_9.quantity and var_37_9.id == var_37_3.id then
-			var_37_0 = var_37_9.quantity
+		if recordFarmItem and recordFarmItem.quantity and recordFarmItem.id == produceItem.id then
+			needQuantity = recordFarmItem.quantity
 		end
 	end
 
-	return var_37_0
+	return needQuantity
 end
 
-function var_0_0.getNeedFormulaShowTypeAndFormulaStrId(arg_38_0)
-	local var_38_0
-	local var_38_1
-	local var_38_2 = JumpModel.instance:getRecordFarmItem()
+function RoomProductionHelper.getNeedFormulaShowTypeAndFormulaStrId(lineMo)
+	local needShowType, needFormulaStrId
+	local recordFarmItem = JumpModel.instance:getRecordFarmItem()
 
-	if not var_38_2 or not var_38_2.type or not var_38_2.id then
-		return var_38_0, var_38_1
+	if not recordFarmItem or not recordFarmItem.type or not recordFarmItem.id then
+		return needShowType, needFormulaStrId
 	end
 
-	local var_38_3 = RoomConfig.instance:getItemFormulaId(var_38_2.type, var_38_2.id)
+	local recordFarmItemFormulaId = RoomConfig.instance:getItemFormulaId(recordFarmItem.type, recordFarmItem.id)
 
-	if not var_38_3 or var_38_3 == 0 then
-		return var_38_0, var_38_1
+	if not recordFarmItemFormulaId or recordFarmItemFormulaId == 0 then
+		return needShowType, needFormulaStrId
 	end
 
-	local var_38_4 = RoomConfig.instance:getFormulaConfig(var_38_3).showType
+	local formulaConfig = RoomConfig.instance:getFormulaConfig(recordFarmItemFormulaId)
+	local showType = formulaConfig.showType
 
-	if var_38_4 and var_38_4 ~= 0 then
-		local var_38_5 = var_0_0.isFormulaShowTypeUnlock(var_38_4)
+	if showType and showType ~= 0 then
+		local showTypeUnlockLevel = RoomProductionHelper.isFormulaShowTypeUnlock(showType)
 
-		if var_38_5 > arg_38_0.level then
-			GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, arg_38_0.config.name, var_38_5)
+		if showTypeUnlockLevel > lineMo.level then
+			GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, lineMo.config.name, showTypeUnlockLevel)
 		else
-			var_38_0 = var_38_4
+			needShowType = showType
 		end
 	end
 
-	if var_38_0 then
-		local var_38_6, var_38_7, var_38_8, var_38_9 = var_0_0.isFormulaUnlock(var_38_3, arg_38_0.level)
+	if needShowType then
+		local isUnlock, needRoomLevel, needProductionLevel, needEpisodeId = RoomProductionHelper.isFormulaUnlock(recordFarmItemFormulaId, lineMo.level)
 
-		if var_38_6 then
-			var_38_1 = var_0_0.getFormulaStrUID(var_38_3, RoomFormulaModel.DEFAULT_TREE_LEVEL)
-		elseif var_38_7 then
-			GameFacade.showToast(ToastEnum.ClickRoomFormulaEpisode, var_38_7)
-		elseif var_38_8 then
-			GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, arg_38_0.config.name, var_38_8)
-		elseif var_38_9 then
+		if isUnlock then
+			needFormulaStrId = RoomProductionHelper.getFormulaStrUID(recordFarmItemFormulaId, RoomFormulaModel.DEFAULT_TREE_LEVEL)
+		elseif needRoomLevel then
+			GameFacade.showToast(ToastEnum.ClickRoomFormulaEpisode, needRoomLevel)
+		elseif needProductionLevel then
+			GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, lineMo.config.name, needProductionLevel)
+		elseif needEpisodeId then
 			GameFacade.showToast(ToastEnum.ClickRoomFormula)
 		end
 	end
 
-	if not var_38_1 then
-		var_38_0 = nil
+	if not needFormulaStrId then
+		needShowType = nil
 	end
 
-	return var_38_0, var_38_1
+	return needShowType, needFormulaStrId
 end
 
-function var_0_0.getTotalCanCombineNum(arg_39_0)
-	local var_39_0 = 1
+function RoomProductionHelper.getTotalCanCombineNum(formulaId)
+	local right = 1
 
-	while var_0_0._canCombineQuantityTimeFormula(nil, arg_39_0, var_39_0) do
-		var_39_0 = var_39_0 * 2
+	while RoomProductionHelper._canCombineQuantityTimeFormula(nil, formulaId, right) do
+		right = right * 2
 	end
 
-	local var_39_1 = 0
+	local left = 0
 
-	while var_39_1 <= var_39_0 do
-		local var_39_2 = math.floor(var_39_1 + (var_39_0 - var_39_1) / 2)
-		local var_39_3 = var_0_0._canCombineQuantityTimeFormula(nil, arg_39_0, var_39_2)
-		local var_39_4 = var_0_0._canCombineQuantityTimeFormula(nil, arg_39_0, var_39_2 + 1)
+	while left <= right do
+		local mid = math.floor(left + (right - left) / 2)
+		local midCanCombine = RoomProductionHelper._canCombineQuantityTimeFormula(nil, formulaId, mid)
+		local addCanCombine = RoomProductionHelper._canCombineQuantityTimeFormula(nil, formulaId, mid + 1)
 
-		if var_39_3 and not var_39_4 then
-			return var_39_2
-		elseif var_39_3 then
-			var_39_1 = var_39_2 + 1
+		if midCanCombine and not addCanCombine then
+			return mid
+		elseif midCanCombine then
+			left = mid + 1
 		else
-			var_39_0 = var_39_2 - 1
+			right = mid - 1
 		end
 	end
 
-	logError("RoomProductionHelper.getTotalCanCombineNum verify error, result:" .. var_39_0 .. " formulaId:" .. arg_39_0)
+	logError("RoomProductionHelper.getTotalCanCombineNum verify error, result:" .. right .. " formulaId:" .. formulaId)
 
 	return 0
 end
 
-function var_0_0.getEasyCombineFormulaAndCostItemList(arg_40_0, arg_40_1, arg_40_2)
-	if not var_0_0.getFormulaProduceItem(arg_40_0) then
+function RoomProductionHelper.getEasyCombineFormulaAndCostItemList(formulaId, combineCount, occupyItemDic)
+	local produceItemParam = RoomProductionHelper.getFormulaProduceItem(formulaId)
+
+	if not produceItemParam then
 		return false
 	end
 
-	local var_40_0 = {
+	local resultTable = {
 		formulaIdList = {},
 		itemTypeDic = {}
 	}
-	local var_40_1 = var_0_0._canCombineQuantityTimeFormula(var_40_0, arg_40_0, arg_40_1, arg_40_2)
+	local result = RoomProductionHelper._canCombineQuantityTimeFormula(resultTable, formulaId, combineCount, occupyItemDic)
 
-	table.insert(var_40_0.formulaIdList, {
-		formulaId = arg_40_0,
-		count = arg_40_1
+	table.insert(resultTable.formulaIdList, {
+		formulaId = formulaId,
+		count = combineCount
 	})
 
-	return var_40_1, var_40_0
+	return result, resultTable
 end
 
-local function var_0_1(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
-	if not arg_41_0 then
+local function dicAddValueFunc(dic, type, id, value)
+	if not dic then
 		return
 	end
 
-	if not arg_41_0[arg_41_1] then
-		arg_41_0[arg_41_1] = {}
+	if not dic[type] then
+		dic[type] = {}
 	end
 
-	arg_41_0[arg_41_1][arg_41_2] = (arg_41_0[arg_41_1][arg_41_2] or 0) + (arg_41_3 or 0)
+	dic[type][id] = (dic[type][id] or 0) + (value or 0)
 end
 
-function var_0_0._canCombineQuantityTimeFormula(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	arg_42_3 = arg_42_3 or {}
+function RoomProductionHelper._canCombineQuantityTimeFormula(refTable, formulaId, combineCount, occupyItemDic)
+	occupyItemDic = occupyItemDic or {}
 
-	local var_42_0 = var_0_0.getCostItemListWithFormulaId(arg_42_1, true)
+	local costItemList = RoomProductionHelper.getCostItemListWithFormulaId(formulaId, true)
 
-	if #var_42_0 <= 0 then
+	if #costItemList <= 0 then
 		return false
 	end
 
-	local var_42_1
-	local var_42_2
+	local itemTypeDic, formulaIdList
 
-	if arg_42_0 then
-		var_42_1 = arg_42_0.itemTypeDic
-		var_42_2 = arg_42_0.formulaIdList
+	if refTable then
+		itemTypeDic = refTable.itemTypeDic
+		formulaIdList = refTable.formulaIdList
 	end
 
-	for iter_42_0, iter_42_1 in ipairs(var_42_0) do
-		local var_42_3 = iter_42_1.id
-		local var_42_4 = iter_42_1.type
+	for _, costItem in ipairs(costItemList) do
+		local costItemId = costItem.id
+		local costItemType = costItem.type
 
-		var_0_1(arg_42_3, var_42_4, var_42_3)
+		dicAddValueFunc(occupyItemDic, costItemType, costItemId)
 
-		local var_42_5 = ItemModel.instance:getItemQuantity(var_42_4, var_42_3) - arg_42_3[var_42_4][var_42_3]
+		local ownQuantity = ItemModel.instance:getItemQuantity(costItemType, costItemId)
+		local remainOwnQuantity = ownQuantity - occupyItemDic[costItemType][costItemId]
 
-		if var_42_5 < 0 then
-			logError("RoomProductionHelper._canCombineQuantityTimeFormula error, remainOwnQuantity is negative:" .. var_42_5)
+		if remainOwnQuantity < 0 then
+			logError("RoomProductionHelper._canCombineQuantityTimeFormula error, remainOwnQuantity is negative:" .. remainOwnQuantity)
 
-			var_42_5 = 0
+			remainOwnQuantity = 0
 		end
 
-		local var_42_6 = 0
-		local var_42_7 = iter_42_1.quantity * arg_42_2
-		local var_42_8 = var_42_5 - var_42_7
+		local useCount = 0
+		local totalNeedCostItemQuantity = costItem.quantity * combineCount
+		local leftCount = remainOwnQuantity - totalNeedCostItemQuantity
 
-		if var_42_8 < 0 then
-			local var_42_9 = iter_42_1.formulaId
+		if leftCount < 0 then
+			local costItemFormulaId = costItem.formulaId
 
-			if not var_42_9 or var_42_9 == 0 then
+			if not costItemFormulaId or costItemFormulaId == 0 then
 				return false
 			end
 
-			local var_42_10 = math.abs(var_42_8)
+			local costItemNeedCount = math.abs(leftCount)
+			local costItemCombineResult = RoomProductionHelper._canCombineQuantityTimeFormula(refTable, costItem.formulaId, costItemNeedCount, occupyItemDic)
 
-			if not var_0_0._canCombineQuantityTimeFormula(arg_42_0, iter_42_1.formulaId, var_42_10, arg_42_3) then
+			if not costItemCombineResult then
 				return false
 			end
 
-			if var_42_2 then
-				table.insert(var_42_2, {
-					formulaId = var_42_9,
-					count = var_42_10
+			if formulaIdList then
+				table.insert(formulaIdList, {
+					formulaId = costItemFormulaId,
+					count = costItemNeedCount
 				})
 			end
 
-			var_42_6 = var_42_5
+			useCount = remainOwnQuantity
 		else
-			var_42_6 = var_42_7
+			useCount = totalNeedCostItemQuantity
 		end
 
-		var_0_1(var_42_1, var_42_4, var_42_3, var_42_6)
-		var_0_1(arg_42_3, var_42_4, var_42_3, var_42_6)
+		dicAddValueFunc(itemTypeDic, costItemType, costItemId, useCount)
+		dicAddValueFunc(occupyItemDic, costItemType, costItemId, useCount)
 	end
 
 	return true
 end
 
-function var_0_0.canEasyCombineItems(arg_43_0, arg_43_1)
-	if not arg_43_0 then
+function RoomProductionHelper.canEasyCombineItems(itemDataList, occupyItemDic)
+	if not itemDataList then
 		return false
 	end
 
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room) then
+	local isOpenRoom = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room)
+
+	if not isOpenRoom then
 		return false
 	end
 
-	if not var_0_0.hasUnlockLine(RoomProductLineEnum.ProductItemType.Change) then
+	local isUnlockLine = RoomProductionHelper.hasUnlockLine(RoomProductLineEnum.ProductItemType.Change)
+
+	if not isUnlockLine then
 		return false
 	end
 
-	local var_43_0 = false
-	local var_43_1
-	local var_43_2 = {}
-	local var_43_3 = RoomProductionModel.instance:getLineMO(RoomProductLineEnum.Line.Spring).level
+	local result = false
+	local resultTable
+	local targetFormulaList = {}
+	local lineMO = RoomProductionModel.instance:getLineMO(RoomProductLineEnum.Line.Spring)
+	local lineLevel = lineMO.level
 
-	for iter_43_0, iter_43_1 in ipairs(arg_43_0) do
-		local var_43_4 = RoomConfig.instance:getItemFormulaId(iter_43_1.type, iter_43_1.id)
+	for _, itemData in ipairs(itemDataList) do
+		local formulaId = RoomConfig.instance:getItemFormulaId(itemData.type, itemData.id)
+		local isUnlock = RoomProductionHelper.isFormulaUnlock(formulaId, lineLevel)
 
-		if not var_0_0.isFormulaUnlock(var_43_4, var_43_3) then
-			return var_43_0
+		if not isUnlock then
+			return result
 		end
 
-		var_43_2[#var_43_2 + 1] = {
-			formulaId = var_43_4,
-			count = iter_43_1.quantity
+		targetFormulaList[#targetFormulaList + 1] = {
+			formulaId = formulaId,
+			count = itemData.quantity
 		}
 	end
 
-	local var_43_5, var_43_6 = var_0_0.getEasyCombineFormulaListAndCostItemList(var_43_2, arg_43_1)
-	local var_43_7 = var_43_6
+	result, resultTable = RoomProductionHelper.getEasyCombineFormulaListAndCostItemList(targetFormulaList, occupyItemDic)
 
-	return var_43_5, var_43_7
+	return result, resultTable
 end
 
-function var_0_0.getEasyCombineFormulaListAndCostItemList(arg_44_0, arg_44_1)
-	if not arg_44_0 or #arg_44_0 <= 0 then
+function RoomProductionHelper.getEasyCombineFormulaListAndCostItemList(targetFormulaList, occupyItemDic)
+	if not targetFormulaList or #targetFormulaList <= 0 then
 		return false
 	end
 
-	local var_44_0 = true
-	local var_44_1 = {}
-	local var_44_2 = {}
-	local var_44_3 = {}
+	local result = true
+	local formulaIdDic = {}
+	local formulaIndexDict = {}
+	local itemTypeDic = {}
 
-	arg_44_1 = arg_44_1 or {}
+	occupyItemDic = occupyItemDic or {}
 
-	for iter_44_0, iter_44_1 in ipairs(arg_44_0) do
-		local var_44_4 = iter_44_1.formulaId
-		local var_44_5 = iter_44_1.count
-		local var_44_6, var_44_7 = var_0_0.getEasyCombineFormulaAndCostItemList(var_44_4, var_44_5, arg_44_1)
+	for _, formulaData in ipairs(targetFormulaList) do
+		local formulaId = formulaData.formulaId
+		local combineCount = formulaData.count
+		local tmpResult, tmpResultTable = RoomProductionHelper.getEasyCombineFormulaAndCostItemList(formulaId, combineCount, occupyItemDic)
 
-		if not var_44_6 then
-			var_44_0 = false
+		if not tmpResult then
+			result = false
 
 			break
 		end
 
-		for iter_44_2, iter_44_3 in ipairs(var_44_7.formulaIdList) do
-			local var_44_8 = iter_44_3.formulaId
-			local var_44_9 = iter_44_3.count
+		for i, needFormula in ipairs(tmpResultTable.formulaIdList) do
+			local needChildFormulaId = needFormula.formulaId
+			local needChildFormulaCount = needFormula.count
 
-			var_44_1[var_44_8] = (var_44_1[var_44_8] or 0) + (var_44_9 or 0)
+			formulaIdDic[needChildFormulaId] = (formulaIdDic[needChildFormulaId] or 0) + (needChildFormulaCount or 0)
 
-			if not var_44_2[var_44_8] or iter_44_2 < var_44_2[var_44_8] then
-				var_44_2[var_44_8] = iter_44_2
+			if not formulaIndexDict[needChildFormulaId] or i < formulaIndexDict[needChildFormulaId] then
+				formulaIndexDict[needChildFormulaId] = i
 			end
 		end
 
-		for iter_44_4, iter_44_5 in pairs(var_44_7.itemTypeDic) do
-			for iter_44_6, iter_44_7 in pairs(iter_44_5) do
-				var_0_1(var_44_3, iter_44_4, iter_44_6, iter_44_7)
+		for costItemType, itemDict in pairs(tmpResultTable.itemTypeDic) do
+			for costItemId, useCount in pairs(itemDict) do
+				dicAddValueFunc(itemTypeDic, costItemType, costItemId, useCount)
 			end
 		end
 	end
 
-	local var_44_10
+	local resultTable
 
-	if var_44_0 then
-		local var_44_11 = {}
+	if result then
+		local formulaIdList = {}
 
-		for iter_44_8, iter_44_9 in pairs(var_44_1) do
-			var_44_11[#var_44_11 + 1] = {
-				formulaId = iter_44_8,
-				count = iter_44_9
+		for needFormulaId, needCount in pairs(formulaIdDic) do
+			formulaIdList[#formulaIdList + 1] = {
+				formulaId = needFormulaId,
+				count = needCount
 			}
 		end
 
-		table.sort(var_44_11, function(arg_45_0, arg_45_1)
-			local var_45_0 = RoomConfig.instance:getFormulaConfig(arg_45_0.formulaId)
-			local var_45_1 = RoomConfig.instance:getFormulaConfig(arg_45_1.formulaId)
-			local var_45_2 = var_45_0 and var_45_0.rare
-			local var_45_3 = var_45_1 and var_45_1.rare
+		table.sort(formulaIdList, function(a, b)
+			local aCfg = RoomConfig.instance:getFormulaConfig(a.formulaId)
+			local bCfg = RoomConfig.instance:getFormulaConfig(b.formulaId)
+			local aRare = aCfg and aCfg.rare
+			local bRare = bCfg and bCfg.rare
 
-			if var_45_2 ~= var_45_3 then
-				return var_45_2 < var_45_3
+			if aRare ~= bRare then
+				return aRare < bRare
 			end
 
-			return var_44_2[arg_45_0.formulaId] < var_44_2[arg_45_1.formulaId]
+			local aIndex = formulaIndexDict[a.formulaId]
+			local bIndex = formulaIndexDict[b.formulaId]
+
+			return aIndex < bIndex
 		end)
 
-		var_44_10 = {
-			formulaIdList = var_44_11,
-			itemTypeDic = var_44_3
+		resultTable = {
+			formulaIdList = formulaIdList,
+			itemTypeDic = itemTypeDic
 		}
 	end
 
-	return var_44_0, var_44_10
+	return result, resultTable
 end
 
-function var_0_0.changeStrUID2FormulaIdAndTreeLevel(arg_46_0)
-	local var_46_0 = 0
-	local var_46_1 = RoomFormulaModel.DEFAULT_TREE_LEVEL
+function RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel(strUID)
+	local formulaId = 0
+	local treeLevel = RoomFormulaModel.DEFAULT_TREE_LEVEL
 
-	if not arg_46_0 then
+	if not strUID then
 		logError("RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel error, strId nil")
 
-		return var_46_0, var_46_1
+		return formulaId, treeLevel
 	end
 
-	local var_46_2 = string.splitToNumber(arg_46_0, "#")
+	local formulaIdAndTreeLevel = string.splitToNumber(strUID, "#")
 
-	if not var_46_2[1] or not var_46_2[2] then
-		logError("RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel format error,id:" .. arg_46_0 .. " must be formulaId#treeLevel")
+	if not formulaIdAndTreeLevel[1] or not formulaIdAndTreeLevel[2] then
+		logError("RoomProductionHelper.changeStrUID2FormulaIdAndTreeLevel format error,id:" .. strUID .. " must be formulaId#treeLevel")
 
-		return var_46_0, var_46_1
+		return formulaId, treeLevel
 	end
 
-	local var_46_3 = var_46_2[1]
-	local var_46_4 = var_46_2[2]
+	formulaId = formulaIdAndTreeLevel[1]
+	treeLevel = formulaIdAndTreeLevel[2]
 
-	return var_46_3, var_46_4
+	return formulaId, treeLevel
 end
 
-function var_0_0.formatItemNum(arg_47_0)
-	return arg_47_0 > 99 and "99+" or tostring(arg_47_0)
+function RoomProductionHelper.formatItemNum(num)
+	return num > 99 and "99+" or tostring(num)
 end
 
-function var_0_0.openRoomFormulaMsgBoxView(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4, arg_48_5, arg_48_6)
-	local var_48_0 = {
-		costItemAndFormulaIdList = arg_48_0,
-		produceDataList = arg_48_1,
-		lineId = arg_48_2,
-		callback = arg_48_3,
-		callbackObj = arg_48_4,
-		combineCb = arg_48_5,
-		combineCbObj = arg_48_6
-	}
+function RoomProductionHelper.openRoomFormulaMsgBoxView(costItemAndFormulaIdList, produceDataList, lineId, cb, cbObj, combineCb, combineCbObj)
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.RoomFormulaMsgBoxView, var_48_0)
+	param.costItemAndFormulaIdList = costItemAndFormulaIdList
+	param.produceDataList = produceDataList
+	param.lineId = lineId
+	param.callback = cb
+	param.callbackObj = cbObj
+	param.combineCb = combineCb
+	param.combineCbObj = combineCbObj
+
+	ViewMgr.instance:openView(ViewName.RoomFormulaMsgBoxView, param)
 end
 
-return var_0_0
+return RoomProductionHelper

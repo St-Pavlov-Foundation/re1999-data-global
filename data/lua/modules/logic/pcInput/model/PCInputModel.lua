@@ -1,8 +1,10 @@
-﻿module("modules.logic.pcInput.model.PCInputModel", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/model/PCInputModel.lua
 
-local var_0_0 = class("PCInputModel", BaseModel)
+module("modules.logic.pcInput.model.PCInputModel", package.seeall)
 
-var_0_0.Activity = {
+local PCInputModel = class("PCInputModel", BaseModel)
+
+PCInputModel.Activity = {
 	CommonDialog = 11,
 	storyDialog = 10,
 	room = 4,
@@ -10,23 +12,23 @@ var_0_0.Activity = {
 	MainActivity = 1,
 	battle = 3
 }
-var_0_0.Configfield = {
+PCInputModel.Configfield = {
 	description = 3,
 	key = 4,
 	hud = 1,
 	editable = 5,
 	id = 2
 }
-var_0_0.blockField = {
+PCInputModel.blockField = {
 	mlstring = 2,
 	hud = 1,
 	blockkey = 3
 }
-var_0_0.ReplaceField = {
+PCInputModel.ReplaceField = {
 	replace = 2,
 	keyName = 1
 }
-var_0_0.MainActivityFun = {
+PCInputModel.MainActivityFun = {
 	curActivity = 10,
 	Room = 13,
 	hide = 9,
@@ -35,7 +37,7 @@ var_0_0.MainActivityFun = {
 	Enter = 12,
 	Summon = 15
 }
-var_0_0.RoomActivityFun = {
+PCInputModel.RoomActivityFun = {
 	buy = 9,
 	layout = 10,
 	hide = 6,
@@ -43,138 +45,143 @@ var_0_0.RoomActivityFun = {
 	guting = 7,
 	place = 11
 }
-var_0_0.battleActivityFun = {
+PCInputModel.battleActivityFun = {
 	skillUp = 21,
 	skillDown = 22,
 	showSkill = 20
 }
-var_0_0.thrityDoorFun = {
+PCInputModel.thrityDoorFun = {
 	map = 5,
 	Item1 = 7,
 	bag = 6
 }
 
-function var_0_0.onInit(arg_1_0)
+function PCInputModel:onInit()
 	return
 end
 
-function var_0_0.checkKeyBinding(arg_2_0)
-	if arg_2_0.keyBinding == nil then
-		arg_2_0.keyBinding = arg_2_0:load()
+function PCInputModel:checkKeyBinding()
+	if self.keyBinding == nil then
+		self.keyBinding = self:load()
 	end
 end
 
-function var_0_0.Save(arg_3_0, arg_3_1)
-	arg_3_0.keyBinding = arg_3_1
+function PCInputModel:Save(keymap)
+	self.keyBinding = keymap
 
-	local var_3_0 = cjson.encode(arg_3_0.keyBinding)
+	local keystr = cjson.encode(self.keyBinding)
 
-	PlayerPrefsHelper.setString("keyBinding", var_3_0)
+	PlayerPrefsHelper.setString("keyBinding", keystr)
 end
 
-function var_0_0.load(arg_4_0)
-	local var_4_0 = PlayerPrefsHelper.getString("keyBinding")
-	local var_4_1 = arg_4_0:loadFromConfig()
+function PCInputModel:load()
+	local keystr = PlayerPrefsHelper.getString("keyBinding")
+	local config = self:loadFromConfig()
 
-	if var_4_0 and var_4_0 ~= "null" then
-		local var_4_2 = cjson.decode(var_4_0)
+	if keystr and keystr ~= "null" then
+		local saveData = cjson.decode(keystr)
 
-		GameUtil.removeJsonNull(var_4_2)
+		GameUtil.removeJsonNull(saveData)
 
-		return arg_4_0:CheckConfigUpdate(var_4_2, var_4_1)
+		return self:CheckConfigUpdate(saveData, config)
 	end
 
-	return var_4_1
+	return config
 end
 
-function var_0_0.CheckConfigUpdate(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = LuaUtil.deepCopy(arg_5_2)
+function PCInputModel:CheckConfigUpdate(old, new)
+	local clone = LuaUtil.deepCopy(new)
 
-	for iter_5_0, iter_5_1 in pairs(var_5_0) do
-		for iter_5_2, iter_5_3 in pairs(iter_5_1) do
-			if arg_5_1[iter_5_3.hud] and arg_5_1[iter_5_3.hud][iter_5_3.id] then
-				getmetatable(iter_5_3).__newindex = nil
-				iter_5_3[var_0_0.Configfield.key] = arg_5_1[iter_5_3.hud][iter_5_3.id][var_0_0.Configfield.key]
+	for _, v in pairs(clone) do
+		for _, v1 in pairs(v) do
+			if old[v1.hud] and old[v1.hud][v1.id] then
+				local metatable = getmetatable(v1)
+
+				metatable.__newindex = nil
+				v1[PCInputModel.Configfield.key] = old[v1.hud][v1.id][PCInputModel.Configfield.key]
 			end
 		end
 	end
 
-	return var_5_0
+	return clone
 end
 
-function var_0_0.loadFromConfig(arg_6_0)
+function PCInputModel:loadFromConfig()
 	return pcInputConfig.instance:getKeyBinding()
 end
 
-function var_0_0.findActivityById(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in pairs(var_0_0.Activity) do
-		if iter_7_1 == arg_7_1 then
-			return iter_7_0
+function PCInputModel:findActivityById(activityId)
+	for k, v in pairs(PCInputModel.Activity) do
+		if v == activityId then
+			return k
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getActivityKeys(arg_8_0, arg_8_1)
-	arg_8_0:checkKeyBinding()
+function PCInputModel:getActivityKeys(activityid)
+	self:checkKeyBinding()
 
-	local var_8_0 = arg_8_0:findActivityById(arg_8_1)
+	local activity = self:findActivityById(activityid)
 
-	if not var_8_0 then
+	if not activity then
 		logError("activity not exist in PCInputModel.Activity")
 
 		return nil
 	end
 
-	local var_8_1 = arg_8_0.keyBinding[var_0_0.Activity[var_8_0]]
+	local keyIds = self.keyBinding[PCInputModel.Activity[activity]]
 
-	if not var_8_1 then
+	if not keyIds then
 		logError("activity not exist in keyBinding")
 
 		return nil
 	end
 
-	return var_8_1
+	return keyIds
 end
 
-function var_0_0.getkeyidBykeyName(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getkeyconfigBykeyName(arg_9_1, arg_9_2)
+function PCInputModel:getkeyidBykeyName(activityid, keyName)
+	local config = self:getkeyconfigBykeyName(activityid, keyName)
 
-	if var_9_0 then
-		return var_9_0[2]
+	if config then
+		return config[2]
 	end
 end
 
-function var_0_0.getkeyconfigBykeyName(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:getActivityKeys(arg_10_1)
+function PCInputModel:getkeyconfigBykeyName(activityid, keyName)
+	local keyids = self:getActivityKeys(activityid)
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		if iter_10_1[4] == arg_10_2 then
-			return iter_10_1
+	for k, v in pairs(keyids) do
+		if v[4] == keyName then
+			return v
 		end
 	end
 end
 
-function var_0_0.getThirdDoorMoveKey(arg_11_0)
-	local var_11_0 = arg_11_0:getActivityKeys(var_0_0.Activity.thrityDoor)
+function PCInputModel:getThirdDoorMoveKey()
+	local keyids = self:getActivityKeys(PCInputModel.Activity.thrityDoor)
 
-	return var_11_0[1][var_0_0.Configfield.key], var_11_0[2][var_0_0.Configfield.key], var_11_0[3][var_0_0.Configfield.key], var_11_0[4][var_0_0.Configfield.key]
+	return keyids[1][PCInputModel.Configfield.key], keyids[2][PCInputModel.Configfield.key], keyids[3][PCInputModel.Configfield.key], keyids[4][PCInputModel.Configfield.key]
 end
 
-function var_0_0.getKeyBinding(arg_12_0)
-	arg_12_0:checkKeyBinding()
+function PCInputModel:getKeyBinding()
+	self:checkKeyBinding()
 
-	return arg_12_0.keyBinding
+	return self.keyBinding
 end
 
-function var_0_0.checkKeyCanModify(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0.keyBinding[arg_13_1] then
-		local var_13_0 = pcInputConfig.instance:getKeyBlock()[arg_13_1]
+function PCInputModel:checkKeyCanModify(activityId, key)
+	local keys = self.keyBinding[activityId]
 
-		if var_13_0 then
-			for iter_13_0, iter_13_1 in pairs(var_13_0[var_0_0.blockField.blockkey]) do
-				if iter_13_1 == arg_13_2 then
+	if keys then
+		local keyBlock = pcInputConfig.instance:getKeyBlock()
+		local blockkeys = keyBlock[activityId]
+
+		if blockkeys then
+			for _, v in pairs(blockkeys[PCInputModel.blockField.blockkey]) do
+				if v == key then
 					return false
 				end
 			end
@@ -184,44 +191,44 @@ function var_0_0.checkKeyCanModify(arg_13_0, arg_13_1, arg_13_2)
 	return true
 end
 
-function var_0_0.getKey(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0:checkKeyBinding()
+function PCInputModel:getKey(activityId, keyid)
+	self:checkKeyBinding()
 
-	local var_14_0 = arg_14_0.keyBinding[arg_14_1]
+	local keys = self.keyBinding[activityId]
 
-	if var_14_0 then
-		local var_14_1 = var_14_0[arg_14_2]
+	if keys then
+		local key = keys[keyid]
 
-		if var_14_1 then
-			return var_14_1[var_0_0.Configfield.key]
+		if key then
+			return key[PCInputModel.Configfield.key]
 		end
 	end
 
 	return ""
 end
 
-function var_0_0.Reset(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:loadFromConfig()
+function PCInputModel:Reset(index)
+	local config = self:loadFromConfig()
 
-	arg_15_0.keyBinding[arg_15_1] = var_15_0[arg_15_1]
+	self.keyBinding[index] = config[index]
 
-	arg_15_0:Save(arg_15_0.keyBinding)
+	self:Save(self.keyBinding)
 end
 
-function var_0_0.ReplaceKeyName(arg_16_0, arg_16_1)
-	local var_16_0 = pcInputConfig.instance:getKeyNameReplace()
+function PCInputModel:ReplaceKeyName(keyName)
+	local keyNameReplace = pcInputConfig.instance:getKeyNameReplace()
 
-	if var_16_0 then
-		for iter_16_0, iter_16_1 in pairs(var_16_0) do
-			if iter_16_1[var_0_0.ReplaceField.keyName] == arg_16_1 then
-				return iter_16_1[var_0_0.ReplaceField.replace]
+	if keyNameReplace then
+		for _, v in pairs(keyNameReplace) do
+			if v[PCInputModel.ReplaceField.keyName] == keyName then
+				return v[PCInputModel.ReplaceField.replace]
 			end
 		end
 	end
 
-	return arg_16_1
+	return keyName
 end
 
-var_0_0.instance = var_0_0.New()
+PCInputModel.instance = PCInputModel.New()
 
-return var_0_0
+return PCInputModel

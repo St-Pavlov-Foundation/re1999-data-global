@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity3_1.nationalgift.define.NationalGiftEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/nationalgift/define/NationalGiftEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_1.nationalgift.define.NationalGiftEnum", package.seeall)
 
-var_0_0.Status = {
+local NationalGiftEnum = _M
+
+NationalGiftEnum.Status = {
 	HasGet = 2,
 	NoGet = 0,
 	CouldGet = 1
 }
 
-return var_0_0
+return NationalGiftEnum

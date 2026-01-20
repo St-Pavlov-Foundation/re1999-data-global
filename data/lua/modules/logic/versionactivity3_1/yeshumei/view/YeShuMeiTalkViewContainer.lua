@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiTalkViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/view/YeShuMeiTalkViewContainer.lua
 
-local var_0_0 = class("YeShuMeiTalkViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_1.yeshumei.view.YeShuMeiTalkViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local YeShuMeiTalkViewContainer = class("YeShuMeiTalkViewContainer", BaseViewContainer)
+
+function YeShuMeiTalkViewContainer:buildViews()
 	return {
 		YeShuMeiTalkView.New()
 	}
 end
 
-return var_0_0
+return YeShuMeiTalkViewContainer

@@ -1,233 +1,240 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryRewardView.lua
 
-local var_0_0 = class("RoleStoryRewardView", BaseView)
+module("modules.logic.dungeon.view.rolestory.RoleStoryRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtScore = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/title/scorebg/#txt_score")
-	arg_1_0._goMask = gohelper.findChild(arg_1_0.viewGO, "Left/progress")
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/progress/#scroll_view")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "Left/progress/#scroll_view/Viewport/Content")
-	arg_1_0._gonormalline = gohelper.findChild(arg_1_0.viewGO, "Left/progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
-	arg_1_0._rectnormalline = arg_1_0._gonormalline.transform
-	arg_1_0._gotarget = gohelper.findChild(arg_1_0.viewGO, "Left/rightbg")
-	arg_1_0._gotargetrewardpos = gohelper.findChild(arg_1_0.viewGO, "Left/rightbg/rightprogressbg/#go_progressitem")
-	arg_1_0._normalDelta = Vector2.New(-420, 600)
-	arg_1_0._fullDelta = Vector2.New(-200, 600)
-	arg_1_0.startSpace = 2
-	arg_1_0.cellWidth = 268
-	arg_1_0.space = 0
-	arg_1_0.targetId = false
+local RoleStoryRewardView = class("RoleStoryRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoleStoryRewardView:onInitView()
+	self._txtScore = gohelper.findChildTextMesh(self.viewGO, "Left/title/scorebg/#txt_score")
+	self._goMask = gohelper.findChild(self.viewGO, "Left/progress")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "Left/progress/#scroll_view")
+	self._gocontent = gohelper.findChild(self.viewGO, "Left/progress/#scroll_view/Viewport/Content")
+	self._gonormalline = gohelper.findChild(self.viewGO, "Left/progress/#scroll_view/Viewport/Content/#go_fillbg/#go_fill")
+	self._rectnormalline = self._gonormalline.transform
+	self._gotarget = gohelper.findChild(self.viewGO, "Left/rightbg")
+	self._gotargetrewardpos = gohelper.findChild(self.viewGO, "Left/rightbg/rightprogressbg/#go_progressitem")
+	self._normalDelta = Vector2.New(-420, 600)
+	self._fullDelta = Vector2.New(-200, 600)
+	self.startSpace = 2
+	self.cellWidth = 268
+	self.space = 0
+	self.targetId = false
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(RoleStoryController.instance, RoleStoryEvent.GetScoreBonus, arg_2_0._onGetScoreBonus, arg_2_0)
+function RoleStoryRewardView:addEvents()
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.GetScoreBonus, self._onGetScoreBonus, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(RoleStoryController.instance, RoleStoryEvent.GetScoreBonus, arg_3_0._onGetScoreBonus, arg_3_0)
+function RoleStoryRewardView:removeEvents()
+	self:removeEventCb(RoleStoryController.instance, RoleStoryEvent.GetScoreBonus, self._onGetScoreBonus, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._scrollreward:AddOnValueChanged(arg_4_0._onScrollChange, arg_4_0)
+function RoleStoryRewardView:_editableInitView()
+	self._scrollreward:AddOnValueChanged(self._onScrollChange, self)
 end
 
-function var_0_0._onScrollChange(arg_5_0, arg_5_1)
-	arg_5_0:refreshTarget()
+function RoleStoryRewardView:_onScrollChange(value)
+	self:refreshTarget()
 end
 
-function var_0_0._onGetScoreBonus(arg_6_0)
-	arg_6_0:refreshView()
+function RoleStoryRewardView:_onGetScoreBonus()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshView()
-	TaskDispatcher.runDelay(arg_7_0.checkGetReward, arg_7_0, 0.6)
+function RoleStoryRewardView:onOpen()
+	self:refreshView()
+	TaskDispatcher.runDelay(self.checkGetReward, self, 0.6)
 end
 
-function var_0_0.refreshView(arg_8_0)
-	arg_8_0:refreshReward()
-	arg_8_0:refreshProgress()
-	TaskDispatcher.cancelTask(arg_8_0.refreshTarget, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0.refreshTarget, arg_8_0, 0.02)
+function RoleStoryRewardView:refreshView()
+	self:refreshReward()
+	self:refreshProgress()
+	TaskDispatcher.cancelTask(self.refreshTarget, self)
+	TaskDispatcher.runDelay(self.refreshTarget, self, 0.02)
 end
 
-function var_0_0.refreshProgress(arg_9_0)
-	arg_9_0.storyId = RoleStoryModel.instance:getCurActStoryId()
-	arg_9_0.storyMo = RoleStoryModel.instance:getById(arg_9_0.storyId)
+function RoleStoryRewardView:refreshProgress()
+	self.storyId = RoleStoryModel.instance:getCurActStoryId()
+	self.storyMo = RoleStoryModel.instance:getById(self.storyId)
 
-	if not arg_9_0.storyMo then
+	if not self.storyMo then
 		return
 	end
 
-	local var_9_0 = arg_9_0.storyMo:getScore()
+	local score = self.storyMo:getScore()
 
-	arg_9_0._txtScore.text = var_9_0
+	self._txtScore.text = score
 
-	local var_9_1 = RoleStoryConfig.instance:getRewardList(arg_9_0.storyId) or {}
-	local var_9_2 = #var_9_1
+	local list = RoleStoryConfig.instance:getRewardList(self.storyId) or {}
+	local curIndex = #list
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		if var_9_0 < iter_9_1.score then
-			var_9_2 = iter_9_0 - 1
+	for i, v in ipairs(list) do
+		if score < v.score then
+			curIndex = i - 1
 
 			break
 		end
 	end
 
-	local var_9_3 = var_9_1[var_9_2] and var_9_1[var_9_2].score or 0
-	local var_9_4 = var_9_1[var_9_2 + 1] and var_9_1[var_9_2 + 1].score or var_9_3
-	local var_9_5 = 0
-	local var_9_6 = arg_9_0:getNodeWidth(var_9_2, var_9_5)
-	local var_9_7 = arg_9_0:getNodeWidth(var_9_2 + 1, var_9_5) - var_9_6
-	local var_9_8 = 0
+	local curScore = list[curIndex] and list[curIndex].score or 0
+	local nextScore = list[curIndex + 1] and list[curIndex + 1].score or curScore
+	local beginPos = 0
+	local nodeWidth = self:getNodeWidth(curIndex, beginPos)
+	local offsetWidth = self:getNodeWidth(curIndex + 1, beginPos) - nodeWidth
+	local perWidth = 0
 
-	if var_9_3 < var_9_4 then
-		var_9_8 = (var_9_0 - var_9_3) / (var_9_4 - var_9_3) * var_9_7
+	if curScore < nextScore then
+		perWidth = (score - curScore) / (nextScore - curScore) * offsetWidth
 	end
 
-	recthelper.setWidth(arg_9_0._rectnormalline, var_9_6 + var_9_8)
+	recthelper.setWidth(self._rectnormalline, nodeWidth + perWidth)
 
-	if not arg_9_0.isPlayMove then
-		arg_9_0.isPlayMove = true
+	if not self.isPlayMove then
+		self.isPlayMove = true
 
-		arg_9_0.viewContainer:getScrollView():moveToByCheckFunc(function(arg_10_0)
-			return arg_10_0.index == var_9_2
+		local scrollView = self.viewContainer:getScrollView()
+
+		scrollView:moveToByCheckFunc(function(mo)
+			return mo.index == curIndex
 		end)
 	end
 end
 
-function var_0_0.getNodeWidth(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_2 = arg_11_2 or 0
+function RoleStoryRewardView:getNodeWidth(index, beginPos)
+	beginPos = beginPos or 0
 
-	local var_11_0 = arg_11_2
+	local nodeWidth = beginPos
 
-	if arg_11_1 > 0 then
-		var_11_0 = (arg_11_1 - 1) * (arg_11_0.cellWidth + arg_11_0.space) + (arg_11_0.startSpace + arg_11_0.cellWidth * 0.5) + arg_11_2
+	if index > 0 then
+		nodeWidth = (index - 1) * (self.cellWidth + self.space) + (self.startSpace + self.cellWidth * 0.5) + beginPos
 	end
 
-	return var_11_0
+	return nodeWidth
 end
 
-function var_0_0.refreshReward(arg_12_0)
+function RoleStoryRewardView:refreshReward()
 	RoleStoryRewardListModel.instance:refreshList()
 end
 
-function var_0_0.refreshTarget(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.refreshTarget, arg_13_0)
+function RoleStoryRewardView:refreshTarget()
+	TaskDispatcher.cancelTask(self.refreshTarget, self)
 
-	local var_13_0 = arg_13_0:getTargetReward()
-	local var_13_1 = var_13_0 and var_13_0.config and var_13_0.config.id
+	local rewardData = self:getTargetReward()
+	local targetId = rewardData and rewardData.config and rewardData.config.id
 
-	if var_13_1 == arg_13_0.targetId then
+	if targetId == self.targetId then
 		return
 	end
 
-	arg_13_0.targetId = var_13_1
+	self.targetId = targetId
 
-	local var_13_2
+	local data
 
-	if var_13_1 then
-		if not arg_13_0.targetItem then
-			local var_13_3 = arg_13_0.viewContainer:getSetting().otherRes.itemRes
-			local var_13_4 = arg_13_0:getResInst(var_13_3, arg_13_0._gotargetrewardpos, "targetItem")
+	if targetId then
+		if not self.targetItem then
+			local path = self.viewContainer:getSetting().otherRes.itemRes
+			local child = self:getResInst(path, self._gotargetrewardpos, "targetItem")
 
-			arg_13_0.targetItem = MonoHelper.addLuaComOnceToGo(var_13_4, RoleStoryRewardItem)
+			self.targetItem = MonoHelper.addLuaComOnceToGo(child, RoleStoryRewardItem)
 		end
 
-		var_13_2 = {
-			config = var_13_0.config,
-			index = var_13_0.index
+		data = {
+			config = rewardData.config,
+			index = rewardData.index
 		}
-		var_13_2.isTarget = true
+		data.isTarget = true
 	end
 
-	if arg_13_0.targetItem then
-		arg_13_0.targetItem:refresh(var_13_2)
+	if self.targetItem then
+		self.targetItem:refresh(data)
 	end
 
-	if var_13_2 then
-		gohelper.setActive(arg_13_0._gotarget, true)
+	if data then
+		gohelper.setActive(self._gotarget, true)
 
-		arg_13_0._goMask.transform.sizeDelta = arg_13_0._normalDelta
+		self._goMask.transform.sizeDelta = self._normalDelta
 	else
-		gohelper.setActive(arg_13_0._gotarget, false)
+		gohelper.setActive(self._gotarget, false)
 
-		arg_13_0._goMask.transform.sizeDelta = arg_13_0._fullDelta
+		self._goMask.transform.sizeDelta = self._fullDelta
 	end
 end
 
-function var_0_0.getTargetReward(arg_14_0)
-	if not arg_14_0.importantRewards then
-		arg_14_0.importantRewards = {}
+function RoleStoryRewardView:getTargetReward()
+	if not self.importantRewards then
+		self.importantRewards = {}
 
-		local var_14_0 = RoleStoryConfig.instance:getRewardList(arg_14_0.storyId) or {}
+		local list = RoleStoryConfig.instance:getRewardList(self.storyId) or {}
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-			if iter_14_1.keyReward == 1 then
-				table.insert(arg_14_0.importantRewards, {
-					score = iter_14_1.score,
-					index = iter_14_0,
-					config = iter_14_1
+		for i, v in ipairs(list) do
+			if v.keyReward == 1 then
+				table.insert(self.importantRewards, {
+					score = v.score,
+					index = i,
+					config = v
 				})
 			end
 		end
 
-		table.sort(arg_14_0.importantRewards, SortUtil.keyLower("score"))
+		table.sort(self.importantRewards, SortUtil.keyLower("score"))
 	end
 
-	local var_14_1 = recthelper.getAnchorX(arg_14_0._gocontent.transform)
-	local var_14_2 = recthelper.getWidth(arg_14_0._scrollreward.transform)
-	local var_14_3 = {}
-	local var_14_4 = {}
+	local contentPosX = recthelper.getAnchorX(self._gocontent.transform)
+	local viewWidth = recthelper.getWidth(self._scrollreward.transform)
+	local targetCo = {}
+	local lastCo = {}
 
-	for iter_14_2, iter_14_3 in ipairs(arg_14_0.importantRewards) do
-		if RoleStoryModel.instance:getRewardState(iter_14_3.config.storyId, iter_14_3.config.id, iter_14_3.config.score) == 0 then
-			var_14_4 = iter_14_3
+	for i, v in ipairs(self.importantRewards) do
+		if RoleStoryModel.instance:getRewardState(v.config.storyId, v.config.id, v.config.score) == 0 then
+			lastCo = v
 
-			if var_14_2 < (iter_14_3.index - 1) * (arg_14_0.cellWidth + arg_14_0.space) + arg_14_0.startSpace + var_14_1 then
-				var_14_3 = iter_14_3
+			local pos = (v.index - 1) * (self.cellWidth + self.space) + self.startSpace
+			local posX = pos + contentPosX
+
+			if viewWidth < posX then
+				targetCo = v
 
 				break
 			end
 		end
 	end
 
-	if not var_14_3.config then
-		var_14_3 = var_14_4
+	if not targetCo.config then
+		targetCo = lastCo
 	end
 
-	return var_14_3
+	return targetCo
 end
 
-function var_0_0.checkGetReward(arg_15_0)
-	local var_15_0 = {}
-	local var_15_1 = RoleStoryConfig.instance:getRewardList(arg_15_0.storyId)
+function RoleStoryRewardView:checkGetReward()
+	local list = {}
+	local rewardList = RoleStoryConfig.instance:getRewardList(self.storyId)
 
-	if var_15_1 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-			if RoleStoryModel.instance:getRewardState(iter_15_1.storyId, iter_15_1.id, iter_15_1.score) == 1 then
-				table.insert(var_15_0, iter_15_1.id)
+	if rewardList then
+		for i, v in ipairs(rewardList) do
+			if RoleStoryModel.instance:getRewardState(v.storyId, v.id, v.score) == 1 then
+				table.insert(list, v.id)
 			end
 		end
 	end
 
-	if #var_15_0 > 0 then
-		HeroStoryRpc.instance:sendGetScoreBonusRequest(var_15_0)
+	if #list > 0 then
+		HeroStoryRpc.instance:sendGetScoreBonusRequest(list)
 	end
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0._scrollreward:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(arg_16_0.checkGetReward, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.refreshTarget, arg_16_0)
+function RoleStoryRewardView:onClose()
+	self._scrollreward:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(self.checkGetReward, self)
+	TaskDispatcher.cancelTask(self.refreshTarget, self)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function RoleStoryRewardView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoleStoryRewardView

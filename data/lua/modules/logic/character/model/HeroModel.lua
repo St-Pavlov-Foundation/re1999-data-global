@@ -1,366 +1,376 @@
-﻿module("modules.logic.character.model.HeroModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/HeroModel.lua
 
-local var_0_0 = class("HeroModel", BaseModel)
+module("modules.logic.character.model.HeroModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._heroId2MODict = {}
-	arg_1_0._skinIdDict = {}
-	arg_1_0._touchHeadNumber = 0
-	arg_1_0._hookGetHeroId = {}
-	arg_1_0._hookGetHeroUid = {}
+local HeroModel = class("HeroModel", BaseModel)
+
+function HeroModel:onInit()
+	self._heroId2MODict = {}
+	self._skinIdDict = {}
+	self._touchHeadNumber = 0
+	self._hookGetHeroId = {}
+	self._hookGetHeroUid = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._heroId2MODict = {}
-	arg_2_0._skinIdDict = {}
-	arg_2_0._touchHeadNumber = 0
-	arg_2_0._hookGetHeroId = {}
-	arg_2_0._hookGetHeroUid = {}
+function HeroModel:reInit()
+	self._heroId2MODict = {}
+	self._skinIdDict = {}
+	self._touchHeadNumber = 0
+	self._hookGetHeroId = {}
+	self._hookGetHeroUid = {}
 end
 
-function var_0_0.setTouchHeadNumber(arg_3_0, arg_3_1)
-	arg_3_0._touchHeadNumber = arg_3_1
+function HeroModel:setTouchHeadNumber(count)
+	self._touchHeadNumber = count
 end
 
-function var_0_0.getTouchHeadNumber(arg_4_0)
-	return arg_4_0._touchHeadNumber
+function HeroModel:getTouchHeadNumber()
+	return self._touchHeadNumber
 end
 
-function var_0_0.addGuideHero(arg_5_0, arg_5_1)
-	if arg_5_0._heroId2MODict[arg_5_1] then
+function HeroModel:addGuideHero(heroId)
+	if self._heroId2MODict[heroId] then
 		return
 	end
 
-	local var_5_0 = HeroConfig.instance:getHeroCO(arg_5_1)
-	local var_5_1 = HeroMo.New()
+	local config = HeroConfig.instance:getHeroCO(heroId)
+	local heroMo = HeroMo.New()
 
-	var_5_1:init({
-		heroId = arg_5_1,
-		skin = var_5_0.skinId
-	}, var_5_0)
+	heroMo:init({
+		heroId = heroId,
+		skin = config.skinId
+	}, config)
 
-	var_5_1.isGuideAdd = true
-	arg_5_0._heroId2MODict[arg_5_1] = var_5_1
+	heroMo.isGuideAdd = true
+	self._heroId2MODict[heroId] = heroMo
 end
 
-function var_0_0.removeGuideHero(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._heroId2MODict[arg_6_1]
+function HeroModel:removeGuideHero(heroId)
+	local heroMo = self._heroId2MODict[heroId]
 
-	if var_6_0 and var_6_0.isGuideAdd then
-		arg_6_0._heroId2MODict[arg_6_1] = nil
+	if heroMo and heroMo.isGuideAdd then
+		self._heroId2MODict[heroId] = nil
 	end
 end
 
-function var_0_0.onGetHeroList(arg_7_0, arg_7_1)
-	local var_7_0 = {}
+function HeroModel:onGetHeroList(serco)
+	local moList = {}
 
-	arg_7_0._heroId2MODict = {}
+	self._heroId2MODict = {}
 
-	if arg_7_1 then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-			local var_7_1 = HeroConfig.instance:getHeroCO(iter_7_1.heroId)
-			local var_7_2 = HeroMo.New()
+	if serco then
+		for _, v in ipairs(serco) do
+			local config = HeroConfig.instance:getHeroCO(v.heroId)
+			local heroMo = HeroMo.New()
 
-			var_7_2:init(iter_7_1, var_7_1)
-			table.insert(var_7_0, var_7_2)
+			heroMo:init(v, config)
+			table.insert(moList, heroMo)
 
-			arg_7_0._heroId2MODict[var_7_2.heroId] = var_7_2
+			self._heroId2MODict[heroMo.heroId] = heroMo
 		end
 	end
 
-	arg_7_0:setList(var_7_0)
+	self:setList(moList)
 end
 
-function var_0_0.onGetSkinList(arg_8_0, arg_8_1)
-	arg_8_0._skinIdDict = {}
+function HeroModel:onGetSkinList(allHeroSkin)
+	self._skinIdDict = {}
 
-	if arg_8_1 then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-			arg_8_0._skinIdDict[iter_8_1] = true
+	if allHeroSkin then
+		for _, v in ipairs(allHeroSkin) do
+			self._skinIdDict[v] = true
 		end
 	end
 end
 
-function var_0_0.onGainSkinList(arg_9_0, arg_9_1)
-	arg_9_0._skinIdDict[arg_9_1] = true
+function HeroModel:onGainSkinList(skinId)
+	self._skinIdDict[skinId] = true
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.GainSkin, arg_9_1)
+	CharacterController.instance:dispatchEvent(CharacterEvent.GainSkin, skinId)
 end
 
-function var_0_0.setHeroFavorState(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0:getByHeroId(arg_10_1).isFavor = arg_10_2
+function HeroModel:setHeroFavorState(heroId, isFavor)
+	local heroMo = self:getByHeroId(heroId)
+
+	heroMo.isFavor = isFavor
 end
 
-function var_0_0.setHeroLevel(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0:getByHeroId(arg_11_1).level = arg_11_2
+function HeroModel:setHeroLevel(heroId, lv)
+	local heroMO = self:getByHeroId(heroId)
+
+	heroMO.level = lv
 end
 
-function var_0_0.setHeroRank(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0:getByHeroId(arg_12_1).rank = arg_12_2
+function HeroModel:setHeroRank(heroId, rank)
+	local heroMO = self:getByHeroId(heroId)
+
+	heroMO.rank = rank
 end
 
-function var_0_0.onSetHeroChange(arg_13_0, arg_13_1)
-	if arg_13_1 then
-		local var_13_0
+function HeroModel:onSetHeroChange(serco)
+	if serco then
+		local moList
 
-		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-			local var_13_1 = arg_13_0:getById(iter_13_1.uid)
+		for _, v in ipairs(serco) do
+			local existMo = self:getById(v.uid)
 
-			if not var_13_1 then
-				local var_13_2 = HeroConfig.instance:getHeroCO(iter_13_1.heroId)
-				local var_13_3 = HeroMo.New()
+			if not existMo then
+				local config = HeroConfig.instance:getHeroCO(v.heroId)
+				local heroMo = HeroMo.New()
 
-				var_13_3:init(iter_13_1, var_13_2)
+				heroMo:init(v, config)
 
-				var_13_0 = var_13_0 or {}
+				moList = moList or {}
 
-				table.insert(var_13_0, var_13_3)
+				table.insert(moList, heroMo)
 
-				arg_13_0._heroId2MODict[var_13_3.heroId] = var_13_3
+				self._heroId2MODict[heroMo.heroId] = heroMo
 
-				if SDKMediaEventEnum.HeroGetEvent[iter_13_1.heroId] then
-					SDKDataTrackMgr.instance:trackMediaEvent(SDKMediaEventEnum.HeroGetEvent[iter_13_1.heroId])
+				if SDKMediaEventEnum.HeroGetEvent[v.heroId] then
+					SDKDataTrackMgr.instance:trackMediaEvent(SDKMediaEventEnum.HeroGetEvent[v.heroId])
 				end
 
-				if iter_13_1.heroId == 3023 then
+				if v.heroId == 3023 then
 					SDKChannelEventModel.instance:firstSummon()
 				end
 
-				if var_13_2.rare == CharacterEnum.MaxRare then
+				if config.rare == CharacterEnum.MaxRare then
 					SDKChannelEventModel.instance:getMaxRareHero()
 				end
 			else
-				var_13_1:update(iter_13_1)
+				existMo:update(v)
 			end
 		end
 
-		if var_13_0 then
-			arg_13_0:addList(var_13_0)
+		if moList then
+			self:addList(moList)
 		end
 	end
 end
 
-function var_0_0._sortSpecialTouch(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = {}
+function HeroModel:_sortSpecialTouch(voice, type)
+	local sortList = {}
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_1) do
-		if iter_14_1.type == arg_14_2 then
-			table.insert(var_14_0, iter_14_1)
+	for _, v in pairs(voice) do
+		if v.type == type then
+			table.insert(sortList, v)
 		end
 	end
 
-	if not arg_14_0._specialSortRule then
-		arg_14_0._specialSortRule = {
+	if not self._specialSortRule then
+		self._specialSortRule = {
 			2,
 			1,
 			3
 		}
 	end
 
-	table.sort(var_14_0, function(arg_15_0, arg_15_1)
-		return arg_14_0._specialSortRule[tonumber(arg_15_0.param)] > arg_14_0._specialSortRule[tonumber(arg_15_1.param)]
+	table.sort(sortList, function(a, b)
+		return self._specialSortRule[tonumber(a.param)] > self._specialSortRule[tonumber(b.param)]
 	end)
 
-	return var_14_0
+	return sortList
 end
 
-function var_0_0.getVoiceConfig(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
-	if not arg_16_0:getByHeroId(arg_16_1) then
-		print("======not hero:", arg_16_1)
+function HeroModel:getVoiceConfig(heroId, type, verifyCallback, targetSkinId)
+	local hero = self:getByHeroId(heroId)
+
+	if not hero then
+		print("======not hero:", heroId)
 
 		return
 	end
 
-	local var_16_0 = arg_16_0:getHeroAllVoice(arg_16_1, arg_16_4)
+	local voice = self:getHeroAllVoice(heroId, targetSkinId)
 
-	if not var_16_0 or not next(var_16_0) then
+	if not voice or not next(voice) then
 		return {}
 	end
 
-	if arg_16_2 == CharacterEnum.VoiceType.MainViewSpecialTouch then
-		var_16_0 = arg_16_0:_sortSpecialTouch(var_16_0, arg_16_2)
+	if type == CharacterEnum.VoiceType.MainViewSpecialTouch then
+		voice = self:_sortSpecialTouch(voice, type)
 	end
 
-	local var_16_1 = {}
+	local result = {}
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		if iter_16_1.type == arg_16_2 then
-			if not arg_16_3 then
-				table.insert(var_16_1, iter_16_1)
+	for _, v in pairs(voice) do
+		if v.type == type then
+			if not verifyCallback then
+				table.insert(result, v)
 			else
-				local var_16_2, var_16_3 = xpcall(arg_16_3, __G__TRACKBACK__, iter_16_1)
+				local status, callResult = xpcall(verifyCallback, __G__TRACKBACK__, v)
 
-				if var_16_2 and var_16_3 then
-					table.insert(var_16_1, iter_16_1)
+				if status and callResult then
+					table.insert(result, v)
 				end
 			end
 		end
 	end
 
-	return var_16_1
+	return result
 end
 
-function var_0_0.getHeroAllVoice(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = {}
-	local var_17_1 = CharacterDataConfig.instance:getCharacterVoicesCo(arg_17_1)
-	local var_17_2 = arg_17_0:getByHeroId(arg_17_1)
+function HeroModel:getHeroAllVoice(heroId, targetSkinId)
+	local voiceList = {}
+	local colist = CharacterDataConfig.instance:getCharacterVoicesCo(heroId)
+	local heroInfo = self:getByHeroId(heroId)
 
-	if not var_17_1 then
-		return var_17_0
+	if not colist then
+		return voiceList
 	end
 
-	for iter_17_0, iter_17_1 in pairs(var_17_1) do
-		if arg_17_0:_checkSkin(var_17_2, iter_17_1, arg_17_2) then
-			local var_17_3 = iter_17_1.audio
+	for _, config in pairs(colist) do
+		if self:_checkSkin(heroInfo, config, targetSkinId) then
+			local audio = config.audio
 
-			if iter_17_1.type == CharacterEnum.VoiceType.GetSkin and string.nilorempty(iter_17_1.unlockCondition) and not string.nilorempty(iter_17_1.param) then
-				local var_17_4 = tonumber(iter_17_1.param)
+			if config.type == CharacterEnum.VoiceType.GetSkin and string.nilorempty(config.unlockCondition) and not string.nilorempty(config.param) then
+				local skinId = tonumber(config.param)
 
-				if var_17_2 then
-					for iter_17_2, iter_17_3 in ipairs(var_17_2.skinInfoList) do
-						if iter_17_3.skin == var_17_4 then
-							var_17_0[var_17_3] = iter_17_1
+				if heroInfo then
+					for i, skinInfoMO in ipairs(heroInfo.skinInfoList) do
+						if skinInfoMO.skin == skinId then
+							voiceList[audio] = config
 
 							break
 						end
 					end
 				end
-			elseif iter_17_1.type == CharacterEnum.VoiceType.BreakThrough and string.nilorempty(iter_17_1.unlockCondition) then
-				if var_17_2 and var_17_2.rank >= 2 then
-					var_17_0[var_17_3] = iter_17_1
+			elseif config.type == CharacterEnum.VoiceType.BreakThrough and string.nilorempty(config.unlockCondition) then
+				if heroInfo and heroInfo.rank >= 2 then
+					voiceList[audio] = config
 				end
-			elseif arg_17_0:_cleckCondition(iter_17_1.unlockCondition, arg_17_1) then
-				var_17_0[var_17_3] = iter_17_1
+			elseif self:_cleckCondition(config.unlockCondition, heroId) then
+				voiceList[audio] = config
 			end
 		end
 	end
 
-	if var_17_2 then
-		local var_17_5 = var_17_2.voice
+	if heroInfo then
+		local voices = heroInfo.voice
 
-		for iter_17_4, iter_17_5 in pairs(var_17_5) do
-			if not var_17_0[iter_17_5] then
-				local var_17_6 = CharacterDataConfig.instance:getCharacterVoiceCO(arg_17_1, iter_17_5)
+		for _, v in pairs(voices) do
+			if not voiceList[v] then
+				local config = CharacterDataConfig.instance:getCharacterVoiceCO(heroId, v)
 
-				if arg_17_0:_checkSkin(var_17_2, var_17_6, arg_17_2) then
-					var_17_0[iter_17_5] = var_17_6
+				if self:_checkSkin(heroInfo, config, targetSkinId) then
+					voiceList[v] = config
 				end
 			end
 		end
 	end
 
-	return var_17_0
+	return voiceList
 end
 
-function var_0_0._checkSkin(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if not arg_18_2 then
+function HeroModel:_checkSkin(heroMo, config, targetSkinId)
+	if not config then
 		return false
 	end
 
-	if arg_18_1 and arg_18_2.stateCondition ~= 0 then
-		local var_18_0 = CharacterVoiceController.instance:getDefaultValue(arg_18_1.heroId)
-		local var_18_1 = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_18_1.heroId, var_18_0)
+	if heroMo and config.stateCondition ~= 0 then
+		local defaultValue = CharacterVoiceController.instance:getDefaultValue(heroMo.heroId)
+		local state = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, heroMo.heroId, defaultValue)
 
-		if arg_18_2.stateCondition ~= var_18_1 then
+		if config.stateCondition ~= state then
 			return false
 		end
 	end
 
-	if string.nilorempty(arg_18_2.skins) then
+	if string.nilorempty(config.skins) then
 		return true
 	end
 
-	return string.find(arg_18_2.skins, arg_18_3 or arg_18_1 and arg_18_1.skin)
+	return string.find(config.skins, targetSkinId or heroMo and heroMo.skin)
 end
 
-function var_0_0._cleckCondition(arg_19_0, arg_19_1, arg_19_2)
-	if string.nilorempty(arg_19_1) then
+function HeroModel:_cleckCondition(condition, heroId)
+	if string.nilorempty(condition) then
 		return true
 	end
 
-	local var_19_0 = arg_19_0:getByHeroId(arg_19_2)
-	local var_19_1 = var_19_0 and var_19_0.faith or 0
-	local var_19_2 = HeroConfig.instance:getFaithPercent(var_19_1)[1]
-	local var_19_3 = string.split(arg_19_1, "#")
+	local hero = self:getByHeroId(heroId)
+	local faith = hero and hero.faith or 0
+	local faithPercent = HeroConfig.instance:getFaithPercent(faith)[1]
+	local value = string.split(condition, "#")
 
-	if tonumber(var_19_3[1]) == 1 then
-		return tonumber(var_19_3[2]) <= var_19_2 * 100
+	if tonumber(value[1]) == 1 then
+		return tonumber(value[2]) <= faithPercent * 100
 	end
 
 	return true
 end
 
-function var_0_0.addHookGetHeroId(arg_20_0, arg_20_1)
-	arg_20_0._hookGetHeroId[arg_20_1] = arg_20_1
+function HeroModel:addHookGetHeroId(func)
+	self._hookGetHeroId[func] = func
 end
 
-function var_0_0.removeHookGetHeroId(arg_21_0, arg_21_1)
-	arg_21_0._hookGetHeroId[arg_21_1] = nil
+function HeroModel:removeHookGetHeroId(func)
+	self._hookGetHeroId[func] = nil
 end
 
-function var_0_0.addHookGetHeroUid(arg_22_0, arg_22_1)
-	arg_22_0._hookGetHeroUid[arg_22_1] = arg_22_1
+function HeroModel:addHookGetHeroUid(func)
+	self._hookGetHeroUid[func] = func
 end
 
-function var_0_0.removeHookGetHeroUid(arg_23_0, arg_23_1)
-	arg_23_0._hookGetHeroUid[arg_23_1] = nil
+function HeroModel:removeHookGetHeroUid(func)
+	self._hookGetHeroUid[func] = nil
 end
 
-function var_0_0.getById(arg_24_0, arg_24_1)
-	for iter_24_0, iter_24_1 in pairs(arg_24_0._hookGetHeroUid) do
-		local var_24_0 = iter_24_0(arg_24_1)
+function HeroModel:getById(id)
+	for k, v in pairs(self._hookGetHeroUid) do
+		local result = k(id)
 
-		if var_24_0 then
-			return var_24_0
+		if result then
+			return result
 		end
 	end
 
-	return var_0_0.super.getById(arg_24_0, arg_24_1)
+	return HeroModel.super.getById(self, id)
 end
 
-function var_0_0.getByHeroId(arg_25_0, arg_25_1)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._hookGetHeroId) do
-		local var_25_0 = iter_25_0(arg_25_1)
+function HeroModel:getByHeroId(heroId)
+	for k, v in pairs(self._hookGetHeroId) do
+		local result = k(heroId)
 
-		if var_25_0 then
-			return var_25_0
+		if result then
+			return result
 		end
 	end
 
-	return arg_25_0._heroId2MODict[arg_25_1]
+	return self._heroId2MODict[heroId]
 end
 
-function var_0_0.getAllHero(arg_26_0)
-	return arg_26_0._heroId2MODict
+function HeroModel:getAllHero()
+	return self._heroId2MODict
 end
 
-function var_0_0.getAllFavorHeros(arg_27_0)
-	local var_27_0 = {}
+function HeroModel:getAllFavorHeros()
+	local heros = {}
 
-	for iter_27_0, iter_27_1 in pairs(arg_27_0._heroId2MODict) do
-		if iter_27_1.isFavor then
-			table.insert(var_27_0, iter_27_1.heroId)
+	for _, v in pairs(self._heroId2MODict) do
+		if v.isFavor then
+			table.insert(heros, v.heroId)
 		end
 	end
 
-	return var_27_0
+	return heros
 end
 
-function var_0_0.checkHasSkin(arg_28_0, arg_28_1)
-	if arg_28_0._skinIdDict[arg_28_1] then
+function HeroModel:checkHasSkin(skinId)
+	if self._skinIdDict[skinId] then
 		return true
 	end
 
-	local var_28_0 = SkinConfig.instance:getSkinCo(arg_28_1)
-	local var_28_1 = var_28_0 and arg_28_0:getByHeroId(var_28_0.characterId)
+	local skinCo = SkinConfig.instance:getSkinCo(skinId)
+	local heroMO = skinCo and self:getByHeroId(skinCo.characterId)
 
-	if var_28_1 then
-		if var_28_1.config.skinId == arg_28_1 then
+	if heroMO then
+		if heroMO.config.skinId == skinId then
 			return true
 		end
 
-		for iter_28_0, iter_28_1 in ipairs(var_28_1.skinInfoList) do
-			if iter_28_1.skin == arg_28_1 then
+		for i, skin in ipairs(heroMO.skinInfoList) do
+			if skin.skin == skinId then
 				return true
 			end
 		end
@@ -369,37 +379,37 @@ function var_0_0.checkHasSkin(arg_28_0, arg_28_1)
 	return false
 end
 
-function var_0_0.getAllHeroGroup(arg_29_0)
-	local var_29_0 = {}
+function HeroModel:getAllHeroGroup()
+	local herogroup = {}
 
-	for iter_29_0, iter_29_1 in pairs(arg_29_0._heroId2MODict) do
-		local var_29_1 = string.byte(iter_29_1.config.initials)
+	for _, v in pairs(self._heroId2MODict) do
+		local num = string.byte(v.config.initials)
 
-		if var_29_0[var_29_1] == nil then
-			var_29_0[var_29_1] = {}
+		if herogroup[num] == nil then
+			herogroup[num] = {}
 		end
 
-		table.insert(var_29_0[var_29_1], iter_29_1.heroId)
-		table.sort(var_29_0[var_29_1], function(arg_30_0, arg_30_1)
-			local var_30_0 = arg_29_0:getByHeroId(arg_30_0).config.rare
-			local var_30_1 = arg_29_0:getByHeroId(arg_30_1).config.rare
+		table.insert(herogroup[num], v.heroId)
+		table.sort(herogroup[num], function(a, b)
+			local arare = self:getByHeroId(a).config.rare
+			local brare = self:getByHeroId(b).config.rare
 
-			if var_30_0 == var_30_1 then
-				return arg_30_0 < arg_30_1
+			if arare == brare then
+				return a < b
 			else
-				return var_30_1 < var_30_0
+				return brare < arare
 			end
 		end)
 	end
 
-	return var_29_0
+	return herogroup
 end
 
-function var_0_0.checkGetRewards(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_0._heroId2MODict[arg_31_1].itemUnlock
+function HeroModel:checkGetRewards(heroId, id)
+	local unlockItem = self._heroId2MODict[heroId].itemUnlock
 
-	for iter_31_0 = 1, #var_31_0 do
-		if var_31_0[iter_31_0] == arg_31_2 then
+	for i = 1, #unlockItem do
+		if unlockItem[i] == id then
 			return true
 		end
 	end
@@ -407,86 +417,89 @@ function var_0_0.checkGetRewards(arg_31_0, arg_31_1, arg_31_2)
 	return false
 end
 
-function var_0_0.getCurrentSkinConfig(arg_32_0, arg_32_1)
-	local var_32_0 = SkinConfig.instance:getSkinCo(arg_32_0:getCurrentSkinId(arg_32_1))
+function HeroModel:getCurrentSkinConfig(heroId)
+	local config = SkinConfig.instance:getSkinCo(self:getCurrentSkinId(heroId))
 
-	if var_32_0 then
-		return var_32_0
+	if config then
+		return config
 	else
-		logError("获取当前角色的皮肤配置失败， heroId : " .. tonumber(arg_32_1))
+		logError("获取当前角色的皮肤配置失败， heroId : " .. tonumber(heroId))
 	end
 end
 
-function var_0_0.getCurrentSkinId(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0._heroId2MODict[arg_33_1].skin
+function HeroModel:getCurrentSkinId(heroId)
+	local skinId = self._heroId2MODict[heroId].skin
 
-	if not var_33_0 then
-		logError("获取当前角色的皮肤Id失败， heroId : " .. tonumber(arg_33_1))
+	if not skinId then
+		logError("获取当前角色的皮肤Id失败， heroId : " .. tonumber(heroId))
 	end
 
-	return var_33_0
+	return skinId
 end
 
-function var_0_0.getHighestLevel(arg_34_0)
-	local var_34_0 = 0
+function HeroModel:getHighestLevel()
+	local highestLevel = 0
 
-	for iter_34_0, iter_34_1 in pairs(arg_34_0._heroId2MODict) do
-		if var_34_0 < iter_34_1.level then
-			var_34_0 = iter_34_1.level
+	for _, heroMO in pairs(self._heroId2MODict) do
+		if highestLevel < heroMO.level then
+			highestLevel = heroMO.level
 		end
 	end
 
-	return var_34_0
+	return highestLevel
 end
 
-function var_0_0.takeoffAllTalentCube(arg_35_0, arg_35_1)
-	local var_35_0 = arg_35_0:getByHeroId(arg_35_1)
+function HeroModel:takeoffAllTalentCube(heroId)
+	local hero = self:getByHeroId(heroId)
 
-	if not var_35_0 then
-		logError("找不到英雄!!!  id:", arg_35_1)
+	if not hero then
+		logError("找不到英雄!!!  id:", heroId)
 
 		return
 	end
 
-	var_35_0:clearCubeData()
+	hero:clearCubeData()
 end
 
-function var_0_0.getCurTemplateId(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0:getByHeroId(arg_36_1)
+function HeroModel:getCurTemplateId(heroId)
+	local heroMo = self:getByHeroId(heroId)
 
-	return var_36_0 and var_36_0.useTalentTemplateId or 1
+	return heroMo and heroMo.useTalentTemplateId or 1
 end
 
-function var_0_0.isMaxExSkill(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = false
-	local var_37_1 = var_0_0.instance:getByHeroId(arg_37_1)
+function HeroModel:isMaxExSkill(heroId, withArtificeCount)
+	local result = false
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	if not var_37_1 then
-		return var_37_0
+	if not heroMo then
+		return result
 	end
 
-	local var_37_2 = var_37_1.exSkillLevel
+	local exSkillLevel = heroMo.exSkillLevel
 
-	if arg_37_2 then
-		local var_37_3 = 0
-		local var_37_4 = var_37_1.config.duplicateItem
+	if withArtificeCount then
+		local artificeCount = 0
+		local duplicateItem = heroMo.config.duplicateItem
 
-		if not string.nilorempty(var_37_4) then
-			local var_37_5 = string.split(var_37_4, "|")[1]
+		if not string.nilorempty(duplicateItem) then
+			local items = string.split(duplicateItem, "|")
+			local item = items[1]
 
-			if var_37_5 then
-				local var_37_6 = string.splitToNumber(var_37_5, "#")
+			if item then
+				local itemParams = string.splitToNumber(item, "#")
 
-				var_37_3 = ItemModel.instance:getItemQuantity(var_37_6[1], var_37_6[2])
+				artificeCount = ItemModel.instance:getItemQuantity(itemParams[1], itemParams[2])
 			end
 		end
 
-		var_37_2 = var_37_2 + var_37_3
+		exSkillLevel = exSkillLevel + artificeCount
 	end
 
-	return var_37_2 >= CharacterEnum.MaxSkillExLevel
+	result = exSkillLevel >= CharacterEnum.MaxSkillExLevel
+
+	return result
 end
 
-var_0_0.instance = var_0_0.New()
+HeroModel.instance = HeroModel.New()
 
-return var_0_0
+return HeroModel

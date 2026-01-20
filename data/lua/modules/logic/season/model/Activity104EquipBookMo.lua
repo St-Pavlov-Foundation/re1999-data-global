@@ -1,17 +1,19 @@
-﻿local var_0_0 = pureTable("Activity104EquipBookMo")
+﻿-- chunkname: @modules/logic/season/model/Activity104EquipBookMo.lua
 
-function var_0_0.ctor(arg_1_0)
+local Activity104EquipBookMo = pureTable("Activity104EquipBookMo")
+
+function Activity104EquipBookMo:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
-	arg_2_0.count = 0
-	arg_2_0.isNew = false
+function Activity104EquipBookMo:init(itemId)
+	self.id = itemId
+	self.count = 0
+	self.isNew = false
 end
 
-function var_0_0.setIsNew(arg_3_0, arg_3_1)
-	arg_3_0.isNew = arg_3_1
+function Activity104EquipBookMo:setIsNew(isNew)
+	self.isNew = isNew
 end
 
-return var_0_0
+return Activity104EquipBookMo

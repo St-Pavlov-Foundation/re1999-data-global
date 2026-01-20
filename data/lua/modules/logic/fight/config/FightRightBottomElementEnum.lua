@@ -1,29 +1,35 @@
-﻿module("modules.logic.fight.config.FightRightBottomElementEnum", package.seeall)
+﻿-- chunkname: @modules/logic/fight/config/FightRightBottomElementEnum.lua
 
-local var_0_0 = _M
-local var_0_1 = 0
+module("modules.logic.fight.config.FightRightBottomElementEnum", package.seeall)
 
-local function var_0_2()
-	var_0_1 = var_0_1 + 1
+local FightRightBottomElementEnum = _M
+local EnumIndex = 0
 
-	return var_0_1
+local function GetEnum()
+	EnumIndex = EnumIndex + 1
+
+	return EnumIndex
 end
 
-var_0_0.Elements = {
-	ASFD = var_0_2(),
-	BloodPool = var_0_2()
+FightRightBottomElementEnum.Elements = {
+	ASFD = GetEnum(),
+	BloodPool = GetEnum(),
+	HeatScale = GetEnum()
 }
-var_0_0.Priority = {
-	var_0_0.Elements.BloodPool,
-	var_0_0.Elements.ASFD
+FightRightBottomElementEnum.Priority = {
+	FightRightBottomElementEnum.Elements.BloodPool,
+	FightRightBottomElementEnum.Elements.ASFD,
+	FightRightBottomElementEnum.Elements.HeatScale
 }
-var_0_0.ElementsSizeDict = {
-	[var_0_0.Elements.BloodPool] = Vector2(180, 170),
-	[var_0_0.Elements.ASFD] = Vector2(100, 170)
+FightRightBottomElementEnum.ElementsSizeDict = {
+	[FightRightBottomElementEnum.Elements.BloodPool] = Vector2(180, 170),
+	[FightRightBottomElementEnum.Elements.ASFD] = Vector2(100, 170),
+	[FightRightBottomElementEnum.Elements.HeatScale] = Vector2(180, 170)
 }
-var_0_0.ElementsNodeName = {
-	[var_0_0.Elements.BloodPool] = "bloodpool",
-	[var_0_0.Elements.ASFD] = "asfd"
+FightRightBottomElementEnum.ElementsNodeName = {
+	[FightRightBottomElementEnum.Elements.BloodPool] = "bloodpool",
+	[FightRightBottomElementEnum.Elements.ASFD] = "asfd",
+	[FightRightBottomElementEnum.Elements.HeatScale] = "burngem"
 }
 
-return var_0_0
+return FightRightBottomElementEnum

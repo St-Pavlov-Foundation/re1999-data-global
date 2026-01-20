@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWorkBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoWorkBase.lua
 
-local var_0_0 = class("GaoSiNiaoWorkBase", BaseWork)
-local var_0_1 = 3
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWorkBase", package.seeall)
 
-function var_0_0.startBlock(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = arg_1_1 or arg_1_0.class.__cname
+local GaoSiNiaoWorkBase = class("GaoSiNiaoWorkBase", BaseWork)
+local kTimeout = 3
 
-	UIBlockHelper.instance:startBlock(var_1_0, arg_1_2 or var_0_1)
+function GaoSiNiaoWorkBase:startBlock(optKey, optTimeout)
+	local blockKey = optKey or self.class.__cname
 
-	return var_1_0
+	UIBlockHelper.instance:startBlock(blockKey, optTimeout or kTimeout)
+
+	return blockKey
 end
 
-function var_0_0.endBlock(arg_2_0, arg_2_1)
-	UIBlockHelper.instance:endBlock(arg_2_1 or arg_2_0.class.__cname)
+function GaoSiNiaoWorkBase:endBlock(blockKey)
+	UIBlockHelper.instance:endBlock(blockKey or self.class.__cname)
 end
 
-function var_0_0.onSucc(arg_3_0)
-	arg_3_0:onDone(true)
+function GaoSiNiaoWorkBase:onSucc()
+	self:onDone(true)
 end
 
-function var_0_0.onFail(arg_4_0)
-	arg_4_0:onDone(false)
+function GaoSiNiaoWorkBase:onFail()
+	self:onDone(false)
 end
 
-function var_0_0.onStart(arg_5_0)
-	arg_5_0:onSucc()
+function GaoSiNiaoWorkBase:onStart()
+	self:onSucc()
 end
 
-function var_0_0.clearWork(arg_6_0)
-	arg_6_0:endBlock()
+function GaoSiNiaoWorkBase:clearWork()
+	self:endBlock()
 end
 
-return var_0_0
+return GaoSiNiaoWorkBase

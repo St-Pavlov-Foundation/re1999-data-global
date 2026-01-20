@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElements", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/element/FairyLandElements.lua
 
-local var_0_0 = class("FairyLandElements", BaseView)
+module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandElements", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goElements = gohelper.findChild(arg_1_0.viewGO, "main/#go_Root/#go_Elements")
-	arg_1_0.goPool = gohelper.findChild(arg_1_0.goElements, "pool")
-	arg_1_0.wordRes1 = gohelper.findChild(arg_1_0.goPool, "word1")
-	arg_1_0.wordRes2 = gohelper.findChild(arg_1_0.goPool, "word2")
-	arg_1_0.elementDict = {}
-	arg_1_0.textDict = {}
-	arg_1_0.elementTypeDict = {}
-	arg_1_0.templateObjDict = {}
-	arg_1_0.element2ObjName = {
+local FairyLandElements = class("FairyLandElements", BaseView)
+
+function FairyLandElements:onInitView()
+	self.goElements = gohelper.findChild(self.viewGO, "main/#go_Root/#go_Elements")
+	self.goPool = gohelper.findChild(self.goElements, "pool")
+	self.wordRes1 = gohelper.findChild(self.goPool, "word1")
+	self.wordRes2 = gohelper.findChild(self.goPool, "word2")
+	self.elementDict = {}
+	self.textDict = {}
+	self.elementTypeDict = {}
+	self.templateObjDict = {}
+	self.element2ObjName = {
 		[FairyLandEnum.ElementType.Circle] = "circle",
 		[FairyLandEnum.ElementType.Square] = "square",
 		[FairyLandEnum.ElementType.Triangle] = "triangle",
@@ -21,7 +23,7 @@ function var_0_0.onInitView(arg_1_0)
 		[FairyLandEnum.ElementType.Door] = "door",
 		[FairyLandEnum.ElementType.Text] = "text"
 	}
-	arg_1_0.element2Cls = {
+	self.element2Cls = {
 		[FairyLandEnum.ElementType.Circle] = FairyLandElementShape,
 		[FairyLandEnum.ElementType.Square] = FairyLandElementShape,
 		[FairyLandEnum.ElementType.Triangle] = FairyLandElementShape,
@@ -31,209 +33,216 @@ function var_0_0.onInitView(arg_1_0)
 		[FairyLandEnum.ElementType.Door] = FairyLandElementDoor
 	}
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0.element2ObjName) do
-		arg_1_0.templateObjDict[iter_1_0] = gohelper.findChild(arg_1_0.goPool, iter_1_1)
+	for k, v in pairs(self.element2ObjName) do
+		self.templateObjDict[k] = gohelper.findChild(self.goPool, v)
 	end
 
-	arg_1_0.characterId = 0
-	arg_1_0.characterType = 0
+	self.characterId = 0
+	self.characterType = 0
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.DialogFinish, arg_2_0.updateElements, arg_2_0)
-	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.UpdateInfo, arg_2_0.updateElements, arg_2_0)
-	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.ElementFinish, arg_2_0.onElementFinish, arg_2_0)
-	arg_2_0:addEventCb(FairyLandController.instance, FairyLandEvent.SceneLoadFinish, arg_2_0.initElements, arg_2_0)
+function FairyLandElements:addEvents()
+	self:addEventCb(FairyLandController.instance, FairyLandEvent.DialogFinish, self.updateElements, self)
+	self:addEventCb(FairyLandController.instance, FairyLandEvent.UpdateInfo, self.updateElements, self)
+	self:addEventCb(FairyLandController.instance, FairyLandEvent.ElementFinish, self.onElementFinish, self)
+	self:addEventCb(FairyLandController.instance, FairyLandEvent.SceneLoadFinish, self.initElements, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FairyLandElements:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
+function FairyLandElements:onOpen()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function FairyLandElements:onUpdateParam()
 	return
 end
 
-function var_0_0.initElements(arg_6_0)
-	arg_6_0:updateElements()
+function FairyLandElements:initElements()
+	self:updateElements()
 	FairyLandController.instance:dispatchEvent(FairyLandEvent.ElementLoadFinish)
 end
 
-function var_0_0.onElementFinish(arg_7_0)
-	arg_7_0:updateElements()
+function FairyLandElements:onElementFinish()
+	self:updateElements()
 end
 
-function var_0_0.updateElements(arg_8_0)
-	local var_8_0 = FairyLandConfig.instance:getElements()
-	local var_8_1 = 0
+function FairyLandElements:updateElements()
+	local elements = FairyLandConfig.instance:getElements()
+	local latestFinishElement = 0
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_2 = iter_8_1.id
+	for i, v in ipairs(elements) do
+		local elementId = v.id
+		local isFinish = FairyLandModel.instance:isFinishElement(elementId)
 
-		if FairyLandModel.instance:isFinishElement(var_8_2) then
-			if var_8_1 < var_8_2 then
-				var_8_1 = var_8_2
+		if isFinish then
+			if latestFinishElement < elementId then
+				latestFinishElement = elementId
 			end
 
-			arg_8_0:removeElement(var_8_2)
-		elseif arg_8_0.elementDict[var_8_2] then
-			arg_8_0:updateElement(var_8_2)
+			self:removeElement(elementId)
+		elseif self.elementDict[elementId] then
+			self:updateElement(elementId)
 		else
-			arg_8_0:createElement(var_8_2)
+			self:createElement(elementId)
 		end
 	end
 
-	if arg_8_0.elementDict[arg_8_0.characterId] then
-		arg_8_0:updateElement(arg_8_0.characterId)
+	if self.elementDict[self.characterId] then
+		self:updateElement(self.characterId)
 	else
-		arg_8_0:createCharacter()
+		self:createCharacter()
 	end
 
-	arg_8_0:refreshText()
+	self:refreshText()
 
-	local var_8_3 = FairyLandModel.instance:getLatestFinishedPuzzle()
+	local latestFinishedPuzzle = FairyLandModel.instance:getLatestFinishedPuzzle()
 
-	FairyLandController.instance:dispatchEvent(FairyLandEvent.GuideLatestElementFinish, var_8_1)
-	FairyLandController.instance:dispatchEvent(FairyLandEvent.GuideLatestPuzzleFinish, var_8_3)
+	FairyLandController.instance:dispatchEvent(FairyLandEvent.GuideLatestElementFinish, latestFinishElement)
+	FairyLandController.instance:dispatchEvent(FairyLandEvent.GuideLatestPuzzleFinish, latestFinishedPuzzle)
 end
 
-function var_0_0.createCharacter(arg_9_0)
-	local var_9_0 = FairyLandEnum.ConfigType2ElementType[arg_9_0.characterType]
-	local var_9_1 = arg_9_0.element2Cls[var_9_0]
-	local var_9_2 = {
-		pos = FairyLandModel.instance:getStairPos()
-	}
-	local var_9_3 = var_9_1.New(arg_9_0, var_9_2)
-	local var_9_4 = gohelper.clone(arg_9_0.templateObjDict[var_9_0], arg_9_0.goElements, tostring(arg_9_0.characterId))
+function FairyLandElements:createCharacter()
+	local elementType = FairyLandEnum.ConfigType2ElementType[self.characterType]
+	local cls = self.element2Cls[elementType]
+	local config = {}
 
-	gohelper.setActive(var_9_4, true)
-	var_9_3:init(var_9_4)
+	config.pos = FairyLandModel.instance:getStairPos()
 
-	arg_9_0.elementDict[arg_9_0.characterId] = var_9_3
+	local comp = cls.New(self, config)
+	local go = gohelper.clone(self.templateObjDict[elementType], self.goElements, tostring(self.characterId))
 
-	arg_9_0:addTypeDict(arg_9_0.characterType, arg_9_0.characterId)
+	gohelper.setActive(go, true)
+	comp:init(go)
+
+	self.elementDict[self.characterId] = comp
+
+	self:addTypeDict(self.characterType, self.characterId)
 end
 
-function var_0_0.createElement(arg_10_0, arg_10_1)
-	local var_10_0 = FairyLandConfig.instance:getElementConfig(arg_10_1)
+function FairyLandElements:createElement(id)
+	local config = FairyLandConfig.instance:getElementConfig(id)
 
-	if not var_10_0 then
+	if not config then
 		return
 	end
 
-	local var_10_1 = FairyLandEnum.ConfigType2ElementType[var_10_0.type]
-	local var_10_2 = arg_10_0.element2Cls[var_10_1].New(arg_10_0, var_10_0)
-	local var_10_3 = gohelper.clone(arg_10_0.templateObjDict[var_10_1], arg_10_0.goElements, tostring(arg_10_1))
+	local elementType = FairyLandEnum.ConfigType2ElementType[config.type]
+	local cls = self.element2Cls[elementType]
+	local comp = cls.New(self, config)
+	local go = gohelper.clone(self.templateObjDict[elementType], self.goElements, tostring(id))
 
-	gohelper.setActive(var_10_3, true)
-	var_10_2:init(var_10_3)
+	gohelper.setActive(go, true)
+	comp:init(go)
 
-	arg_10_0.elementDict[arg_10_1] = var_10_2
+	self.elementDict[id] = comp
 
-	arg_10_0:addTypeDict(var_10_0.type, arg_10_1)
+	self:addTypeDict(config.type, id)
 end
 
-function var_0_0.addTypeDict(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_0.elementTypeDict[arg_11_1] then
-		arg_11_0.elementTypeDict[arg_11_1] = {}
+function FairyLandElements:addTypeDict(type, id)
+	if not self.elementTypeDict[type] then
+		self.elementTypeDict[type] = {}
 	end
 
-	table.insert(arg_11_0.elementTypeDict[arg_11_1], arg_11_2)
+	table.insert(self.elementTypeDict[type], id)
 end
 
-function var_0_0.updateElement(arg_12_0, arg_12_1)
-	if not arg_12_0.elementDict[arg_12_1] then
+function FairyLandElements:updateElement(id)
+	if not self.elementDict[id] then
 		return
 	end
 
-	arg_12_0.elementDict[arg_12_1]:refresh()
+	self.elementDict[id]:refresh()
 end
 
-function var_0_0.removeElement(arg_13_0, arg_13_1)
-	if not arg_13_0.elementDict[arg_13_1] then
+function FairyLandElements:removeElement(id)
+	if not self.elementDict[id] then
 		return
 	end
 
-	arg_13_0.elementDict[arg_13_1]:finish()
+	self.elementDict[id]:finish()
 
-	arg_13_0.elementDict[arg_13_1] = nil
+	self.elementDict[id] = nil
 end
 
-function var_0_0.getElementByType(arg_14_0, arg_14_1)
-	arg_14_1 = arg_14_1 or arg_14_0.characterType
+function FairyLandElements:getElementByType(type)
+	type = type or self.characterType
 
-	local var_14_0 = arg_14_0.elementTypeDict[arg_14_1]
-	local var_14_1 = var_14_0 and var_14_0[#var_14_0]
+	local list = self.elementTypeDict[type]
+	local id = list and list[#list]
 
-	return var_14_1 and arg_14_0.elementDict[var_14_1]
+	return id and self.elementDict[id]
 end
 
-function var_0_0.refreshText(arg_15_0)
-	local var_15_0 = 10
-	local var_15_1 = FairyLandConfig.instance:getFairlyLandPuzzleConfig(var_15_0).storyTalkId
+function FairyLandElements:refreshText()
+	local puzzleId = 10
+	local puzzleConfig = FairyLandConfig.instance:getFairlyLandPuzzleConfig(puzzleId)
+	local dialogId = puzzleConfig.storyTalkId
+	local showText = FairyLandModel.instance:isFinishDialog(dialogId)
 
-	if FairyLandModel.instance:isFinishDialog(var_15_1) then
-		local var_15_2 = FairyLandModel.instance:getStairPos()
-		local var_15_3 = lua_fairyland_text.configList
-		local var_15_4 = 35
+	if showText then
+		local curPos = FairyLandModel.instance:getStairPos()
+		local textList = lua_fairyland_text.configList
+		local startPos = 35
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_3) do
-			if var_15_2 >= iter_15_1.node then
-				if not arg_15_0.textDict[iter_15_1.id] then
-					local var_15_5 = FairyLandText.New(arg_15_0, {
-						pos = var_15_4 + (iter_15_1.id - 1) * 1.8,
-						config = iter_15_1
+		for i, v in ipairs(textList) do
+			local show = curPos >= v.node
+
+			if show then
+				if not self.textDict[v.id] then
+					local comp = FairyLandText.New(self, {
+						pos = startPos + (v.id - 1) * 1.8,
+						config = v
 					})
-					local var_15_6 = gohelper.clone(arg_15_0.templateObjDict[FairyLandEnum.ElementType.Text], arg_15_0.goElements, string.format("text%s", tostring(iter_15_1.id)))
+					local go = gohelper.clone(self.templateObjDict[FairyLandEnum.ElementType.Text], self.goElements, string.format("text%s", tostring(v.id)))
 
-					gohelper.setActive(var_15_6, true)
-					var_15_5:init(var_15_6)
+					gohelper.setActive(go, true)
+					comp:init(go)
 
-					arg_15_0.textDict[iter_15_1.id] = var_15_5
+					self.textDict[v.id] = comp
 				end
 
-				arg_15_0.textDict[iter_15_1.id]:show()
-			elseif arg_15_0.textDict[iter_15_1.id] then
-				arg_15_0.textDict[iter_15_1.id]:hide()
+				self.textDict[v.id]:show()
+			elseif self.textDict[v.id] then
+				self.textDict[v.id]:hide()
 			end
 		end
 	else
-		for iter_15_2, iter_15_3 in pairs(arg_15_0.textDict) do
-			iter_15_3:hide()
+		for k, v in pairs(self.textDict) do
+			v:hide()
 		end
 	end
 end
 
-function var_0_0.characterMove(arg_16_0)
-	if arg_16_0.elementDict[arg_16_0.characterId] then
-		arg_16_0.elementDict[arg_16_0.characterId]:move()
+function FairyLandElements:characterMove()
+	if self.elementDict[self.characterId] then
+		self.elementDict[self.characterId]:move()
 	end
 end
 
-function var_0_0.isMoveing(arg_17_0)
-	if arg_17_0.elementDict[arg_17_0.characterId] then
-		return arg_17_0.elementDict[arg_17_0.characterId]:isMoveing()
+function FairyLandElements:isMoveing()
+	if self.elementDict[self.characterId] then
+		return self.elementDict[self.characterId]:isMoveing()
 	end
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	for iter_18_0, iter_18_1 in pairs(arg_18_0.elementDict) do
-		iter_18_1:onDestroy()
+function FairyLandElements:onDestroyView()
+	for k, v in pairs(self.elementDict) do
+		v:onDestroy()
 	end
 
-	for iter_18_2, iter_18_3 in pairs(arg_18_0.textDict) do
-		iter_18_3:onDestroy()
+	for k, v in pairs(self.textDict) do
+		v:onDestroy()
 	end
 
-	arg_18_0.elementDict = nil
+	self.elementDict = nil
 end
 
-return var_0_0
+return FairyLandElements

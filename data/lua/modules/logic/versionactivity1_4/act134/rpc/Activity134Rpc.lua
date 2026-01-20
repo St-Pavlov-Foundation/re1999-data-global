@@ -1,42 +1,44 @@
-﻿module("modules.logic.versionactivity1_4.act134.rpc.Activity134Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act134/rpc/Activity134Rpc.lua
 
-local var_0_0 = class("Activity134Rpc", BaseRpc)
+module("modules.logic.versionactivity1_4.act134.rpc.Activity134Rpc", package.seeall)
 
-function var_0_0.sendGet134InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity134Module_pb.Get134InfosRequest()
+local Activity134Rpc = class("Activity134Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity134Rpc:sendGet134InfosRequest(actId, callback, callbackObj)
+	local req = Activity134Module_pb.Get134InfosRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = actId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet134InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity134Rpc:onReceiveGet134InfosReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity134Model.instance:onInitMo(arg_2_2)
-	Activity134Controller.instance:dispatchEvent(Activity134Event.OnUpdateInfo, arg_2_2)
+	Activity134Model.instance:onInitMo(msg)
+	Activity134Controller.instance:dispatchEvent(Activity134Event.OnUpdateInfo, msg)
 end
 
-function var_0_0.sendGet134BonusRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = Activity134Module_pb.Act134BonusRequest()
+function Activity134Rpc:sendGet134BonusRequest(actId, bonusId)
+	local req = Activity134Module_pb.Act134BonusRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.id = arg_3_2
+	req.activityId = actId
+	req.id = bonusId
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct134BonusReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function Activity134Rpc:onReceiveAct134BonusReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Activity134Model.instance:onReceiveBonus(arg_4_2.id)
-	Activity134Controller.instance:dispatchEvent(Activity134Event.OnGetBonus, arg_4_2)
+	Activity134Model.instance:onReceiveBonus(msg.id)
+	Activity134Controller.instance:dispatchEvent(Activity134Event.OnGetBonus, msg)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity134Rpc.instance = Activity134Rpc.New()
 
-return var_0_0
+return Activity134Rpc

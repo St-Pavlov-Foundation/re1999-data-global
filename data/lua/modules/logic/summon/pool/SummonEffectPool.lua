@@ -1,146 +1,161 @@
-﻿module("modules.logic.summon.pool.SummonEffectPool", package.seeall)
+﻿-- chunkname: @modules/logic/summon/pool/SummonEffectPool.lua
 
-local var_0_0 = _M
-local var_0_1 = 1
-local var_0_2 = {}
-local var_0_3 = {}
-local var_0_4 = {}
-local var_0_5 = {}
-local var_0_6
-local var_0_7
+module("modules.logic.summon.pool.SummonEffectPool", package.seeall)
 
-function var_0_0.onEffectPreload(arg_1_0)
-	arg_1_0:Retain()
-	table.insert(var_0_2, arg_1_0)
+local SummonEffectPool = _M
+local _uniqueIdCounter = 1
+local _assetItemPoolList = {}
+local _path2AssetItemDict = {}
+local _path2WrapPoolDict = {}
+local _id2UsingWrapDict = {}
+local _poolContainerGO, _poolContainerTrs
 
-	var_0_3[arg_1_0.ResPath] = arg_1_0
+function SummonEffectPool.onEffectPreload(assetItem)
+	assetItem:Retain()
+	table.insert(_assetItemPoolList, assetItem)
 
-	var_0_0.returnEffect(var_0_0.getEffect(arg_1_0.ResPath))
+	_path2AssetItemDict[assetItem.ResPath] = assetItem
+
+	SummonEffectPool.returnEffect(SummonEffectPool.getEffect(assetItem.ResPath))
 end
 
-function var_0_0.dispose()
-	for iter_2_0, iter_2_1 in pairs(var_0_2) do
-		iter_2_1:Release()
+function SummonEffectPool.dispose()
+	for _, assetItem in pairs(_assetItemPoolList) do
+		assetItem:Release()
 	end
 
-	for iter_2_2, iter_2_3 in pairs(var_0_4) do
-		for iter_2_4, iter_2_5 in ipairs(iter_2_3) do
-			iter_2_5:markCanDestroy()
-			gohelper.destroy(iter_2_5.containerGO)
+	for _, wrapPool in pairs(_path2WrapPoolDict) do
+		for _, wrap in ipairs(wrapPool) do
+			wrap:markCanDestroy()
+			gohelper.destroy(wrap.containerGO)
 		end
 	end
 
-	for iter_2_6, iter_2_7 in pairs(var_0_5) do
-		iter_2_7:markCanDestroy()
-		gohelper.destroy(iter_2_7.containerGO)
+	for _, wrap in pairs(_id2UsingWrapDict) do
+		wrap:markCanDestroy()
+		gohelper.destroy(wrap.containerGO)
 	end
 
-	var_0_2 = {}
-	var_0_3 = {}
-	var_0_4 = {}
-	var_0_5 = {}
+	_assetItemPoolList = {}
+	_path2AssetItemDict = {}
+	_path2WrapPoolDict = {}
+	_id2UsingWrapDict = {}
 
-	gohelper.destroy(var_0_6)
+	gohelper.destroy(_poolContainerGO)
 
-	var_0_6 = nil
-	var_0_7 = nil
-	var_0_1 = 1
+	_poolContainerGO = nil
+	_poolContainerTrs = nil
+	_uniqueIdCounter = 1
 end
 
-function var_0_0.getEffect(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_3[arg_3_0]
-	local var_3_1 = var_0_0.getPoolContainerGO()
-	local var_3_2
+function SummonEffectPool.getEffect(path, hangPointGO)
+	logNormal("SummonEffectPool.getEffect path = " .. path)
 
-	if var_3_0 then
-		local var_3_3 = var_0_4[arg_3_0]
+	local assetItem = _path2AssetItemDict[path]
+	local poolContainer = SummonEffectPool.getPoolContainerGO()
+	local effectWrap
 
-		if var_3_3 and #var_3_3 > 0 then
-			local var_3_4 = #var_3_3
+	if assetItem then
+		local pool = _path2WrapPoolDict[path]
 
-			for iter_3_0, iter_3_1 in ipairs(var_3_3) do
-				if arg_3_1 == nil and iter_3_1.hangPointGO == var_3_1 or arg_3_1 ~= nil and iter_3_1.hangPointGO == arg_3_1 then
-					var_3_4 = iter_3_0
+		if pool and #pool > 0 then
+			local index = #pool
+
+			for i, wrap in ipairs(pool) do
+				if hangPointGO == nil and wrap.hangPointGO == poolContainer or hangPointGO ~= nil and wrap.hangPointGO == hangPointGO then
+					index = i
 
 					break
 				end
 			end
 
-			var_3_2 = table.remove(var_3_3, var_3_4)
+			effectWrap = table.remove(pool, index)
 		else
-			var_3_2 = var_0_0._createWrap(arg_3_0)
+			effectWrap = SummonEffectPool._createWrap(path)
 
-			var_0_0._instantiateEffectGO(var_3_0, var_3_2)
+			SummonEffectPool._instantiateEffectGO(assetItem, effectWrap)
 		end
 
-		var_3_2:setHangPointGO(arg_3_1 or var_3_1)
+		effectWrap:setHangPointGO(hangPointGO or poolContainer)
 	else
-		logError("Summon Effect need preload: " .. arg_3_0)
+		logError("Summon Effect need preload: " .. path)
 
 		return nil
 	end
 
-	var_0_5[var_3_2.uniqueId] = var_3_2
+	_id2UsingWrapDict[effectWrap.uniqueId] = effectWrap
 
-	var_3_2:setActive(true)
+	effectWrap:setActive(true)
 
-	return var_3_2
+	return effectWrap
 end
 
-function var_0_0.returnEffect(arg_4_0)
-	if gohelper.isNil(arg_4_0.containerGO) then
+function SummonEffectPool.returnEffect(effectWrap)
+	if gohelper.isNil(effectWrap.containerGO) then
 		return
 	end
 
-	arg_4_0:stop()
-	arg_4_0:unloadIcon()
-	arg_4_0:setActive(false)
+	effectWrap:stop()
+	effectWrap:unloadIcon()
+	effectWrap:setActive(false)
 
-	var_0_5[arg_4_0.uniqueId] = nil
+	_id2UsingWrapDict[effectWrap.uniqueId] = nil
 
-	local var_4_0 = var_0_4[arg_4_0.path]
+	local pool = _path2WrapPoolDict[effectWrap.path]
 
-	if not var_4_0 then
-		var_4_0 = {}
-		var_0_4[arg_4_0.path] = var_4_0
+	if not pool then
+		pool = {}
+		_path2WrapPoolDict[effectWrap.path] = pool
 	end
 
-	table.insert(var_4_0, arg_4_0)
+	table.insert(pool, effectWrap)
 end
 
-function var_0_0.returnEffectToPoolContainer(arg_5_0)
-	arg_5_0:setHangPointGO(var_0_0.getPoolContainerGO())
+function SummonEffectPool.returnEffectToPoolContainer(effectWrap)
+	effectWrap:setHangPointGO(SummonEffectPool.getPoolContainerGO())
 end
 
-function var_0_0.getPoolContainerGO()
-	if not var_0_6 then
-		local var_6_0 = VirtualSummonScene.instance:getRootGO()
+function SummonEffectPool.getPoolContainerGO()
+	if not _poolContainerGO then
+		local SummonSceneRoot = VirtualSummonScene.instance:getRootGO()
 
-		var_0_6 = gohelper.create3d(var_6_0, "EffectPool")
-		var_0_7 = var_0_6.transform
+		_poolContainerGO = gohelper.create3d(SummonSceneRoot, "EffectPool")
+		_poolContainerTrs = _poolContainerGO.transform
 	end
 
-	return var_0_6
+	return _poolContainerGO
 end
 
-function var_0_0._instantiateEffectGO(arg_7_0, arg_7_1)
-	local var_7_0 = gohelper.clone(arg_7_0:GetResource(), arg_7_1.containerGO)
+function SummonEffectPool._instantiateEffectGO(assetItem, effectWrap, path)
+	local effectGO
 
-	arg_7_1:setEffectGO(var_7_0)
+	if path then
+		effectGO = gohelper.clone(assetItem:GetResource(path), effectWrap.containerGO)
+	else
+		effectGO = gohelper.clone(assetItem:GetResource(), effectWrap.containerGO)
+	end
+
+	if effectGO == nil then
+		logError("Instantiate effect failed: " .. path)
+
+		return
+	end
+
+	effectWrap:setEffectGO(effectGO)
 end
 
-function var_0_0._createWrap(arg_8_0)
-	local var_8_0 = string.split(arg_8_0, "/")
-	local var_8_1 = var_8_0[#var_8_0]
-	local var_8_2 = gohelper.create3d(var_0_0.getPoolContainerGO(), var_8_1)
-	local var_8_3 = MonoHelper.addLuaComOnceToGo(var_8_2, SummonEffectWrap)
+function SummonEffectPool._createWrap(path)
+	local nameArr = string.split(path, "/")
+	local name = nameArr[#nameArr]
+	local go = gohelper.create3d(SummonEffectPool.getPoolContainerGO(), name)
+	local effectWrap = MonoHelper.addLuaComOnceToGo(go, SummonEffectWrap)
 
-	var_8_3:setUniqueId(var_0_1)
-	var_8_3:setPath(arg_8_0)
+	effectWrap:setUniqueId(_uniqueIdCounter)
+	effectWrap:setPath(path)
 
-	var_0_1 = var_0_1 + 1
+	_uniqueIdCounter = _uniqueIdCounter + 1
 
-	return var_8_3
+	return effectWrap
 end
 
-return var_0_0
+return SummonEffectPool

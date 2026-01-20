@@ -1,70 +1,73 @@
-﻿module("modules.logic.versionactivity1_3.chess.controller.Activity1_3ChessGameController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/controller/Activity1_3ChessGameController.lua
 
-local var_0_0 = class("Activity1_3ChessGameController", BaseController)
+module("modules.logic.versionactivity1_3.chess.controller.Activity1_3ChessGameController", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local Activity1_3ChessGameController = class("Activity1_3ChessGameController", BaseController)
+
+function Activity1_3ChessGameController:init()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity1_3ChessGameController:reInit()
 	return
 end
 
-function var_0_0.release(arg_3_0)
+function Activity1_3ChessGameController:release()
 	return
 end
 
-function var_0_0.getViewName(arg_4_0)
+function Activity1_3ChessGameController:getViewName()
 	return
 end
 
-function var_0_0.onInitServerMap(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.act122Sight or arg_5_1.activity122Sights
-	local var_5_1 = arg_5_1.act122Fire
+function Activity1_3ChessGameController:onInitServerMap(mapData)
+	local addSights = mapData.act122Sight or mapData.activity122Sights
+	local addFires = mapData.act122Fire
 
-	Activity122Model.instance:initSight(var_5_0)
-	Activity122Model.instance:initFire(var_5_1)
-	arg_5_0:dispatchEvent(Activity1_3ChessEvent.InitGameScene, arg_5_1)
+	Activity122Model.instance:initSight(addSights)
+	Activity122Model.instance:initFire(addFires)
+	self:dispatchEvent(Activity1_3ChessEvent.InitGameScene, mapData)
 end
 
-function var_0_0.onUpdateServerMap(arg_6_0, arg_6_1)
-	Activity122Model.instance:updateSight(arg_6_1.addSights)
-	Activity122Model.instance:updateFire(arg_6_1.addFires)
-	arg_6_0:dispatchEvent(Activity1_3ChessEvent.UpdateGameScene, arg_6_1)
+function Activity1_3ChessGameController:onUpdateServerMap(mapData)
+	Activity122Model.instance:updateSight(mapData.addSights)
+	Activity122Model.instance:updateFire(mapData.addFires)
+	self:dispatchEvent(Activity1_3ChessEvent.UpdateGameScene, mapData)
 end
 
-function var_0_0.onInitObjects(arg_7_0)
-	local var_7_0 = Va3ChessGameModel.instance:getActId()
-	local var_7_1 = Va3ChessGameModel.instance:getMapId()
-	local var_7_2 = Activity122Config.instance:getMapCo(var_7_0, var_7_1).decorateObjects
+function Activity1_3ChessGameController:onInitObjects()
+	local actId = Va3ChessGameModel.instance:getActId()
+	local mapId = Va3ChessGameModel.instance:getMapId()
+	local mapConfig = Activity122Config.instance:getMapCo(actId, mapId)
+	local decorateObjectStr = mapConfig.decorateObjects
 
-	if not var_7_2 or string.nilorempty(var_7_2) then
+	if not decorateObjectStr or string.nilorempty(decorateObjectStr) then
 		return
 	end
 
-	local var_7_3 = cjson.decode(var_7_2)
+	local decorateObjects = cjson.decode(decorateObjectStr)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_3) do
-		local var_7_4 = Va3ChessInteractObject.New()
+	for _, originData in ipairs(decorateObjects) do
+		local interactObj = Va3ChessInteractObject.New()
 
-		iter_7_1.actId = var_7_0
+		originData.actId = actId
 
-		var_7_4:init(iter_7_1)
-		var_7_4:setIgnoreSight(true)
+		interactObj:init(originData)
+		interactObj:setIgnoreSight(true)
 
-		if var_7_4.config ~= nil then
-			Va3ChessGameController.instance.interacts:add(var_7_4)
+		if interactObj.config ~= nil then
+			Va3ChessGameController.instance.interacts:add(interactObj)
 		end
 	end
 end
 
-function var_0_0.setSceneCamera(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		local var_8_0 = CameraMgr.instance:getMainCamera()
-		local var_8_1 = CameraMgr.instance:getUnitCamera()
+function Activity1_3ChessGameController:setSceneCamera(enterScene)
+	if enterScene then
+		local camera = CameraMgr.instance:getMainCamera()
+		local unitCamera = CameraMgr.instance:getUnitCamera()
 
-		var_8_1.orthographic = true
-		var_8_1.orthographicSize = var_8_0.orthographicSize
+		unitCamera.orthographic = true
+		unitCamera.orthographicSize = camera.orthographicSize
 
 		gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), true)
 		gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, true)
@@ -73,7 +76,9 @@ function var_0_0.setSceneCamera(arg_8_0, arg_8_1)
 		PostProcessingMgr.instance:setUnitPPValue("bloomActive", false)
 		PostProcessingMgr.instance:setUnitPPValue("dofFactor", 0)
 	else
-		CameraMgr.instance:getUnitCamera().orthographic = false
+		local unitCamera = CameraMgr.instance:getUnitCamera()
+
+		unitCamera.orthographic = false
 
 		gohelper.setActive(CameraMgr.instance:getUnitCameraGO(), false)
 		PostProcessingMgr.instance:setUnitActive(false)
@@ -82,8 +87,8 @@ function var_0_0.setSceneCamera(arg_8_0, arg_8_1)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity1_3ChessGameController.instance = Activity1_3ChessGameController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Activity1_3ChessGameController.instance)
 
-return var_0_0
+return Activity1_3ChessGameController

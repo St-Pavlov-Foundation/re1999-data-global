@@ -1,49 +1,51 @@
-﻿module("modules.logic.fight.system.work.FightWorkSeasonPopupAndStory", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSeasonPopupAndStory.lua
 
-local var_0_0 = class("FightWorkSeasonPopupAndStory", BaseWork)
+module("modules.logic.fight.system.work.FightWorkSeasonPopupAndStory", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+local FightWorkSeasonPopupAndStory = class("FightWorkSeasonPopupAndStory", BaseWork)
 
-	if var_1_0 and var_1_0.type == DungeonEnum.EpisodeType.Season then
+function FightWorkSeasonPopupAndStory:onStart()
+	local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if episode_config and episode_config.type == DungeonEnum.EpisodeType.Season then
 		if PopupController.instance:getPopupCount() > 0 then
-			ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+			ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 		else
-			arg_1_0:_checkStory()
+			self:_checkStory()
 		end
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_2_0)
+function FightWorkSeasonPopupAndStory:_onCloseViewFinish()
 	if PopupController.instance:getPopupCount() == 0 then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-		arg_2_0:_checkStory()
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:_checkStory()
 	end
 end
 
-function var_0_0._checkStory(arg_3_0)
-	local var_3_0 = FightModel.instance:getAfterStory()
+function FightWorkSeasonPopupAndStory:_checkStory()
+	local storyId = FightModel.instance:getAfterStory()
 
-	if var_3_0 > 0 and not StoryModel.instance:isStoryFinished(var_3_0) then
-		local var_3_1 = {}
+	if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+		local param = {}
 
-		var_3_1.mark = true
-		var_3_1.episodeId = DungeonModel.instance.curSendEpisodeId
+		param.mark = true
+		param.episodeId = DungeonModel.instance.curSendEpisodeId
 
-		StoryController.instance:playStory(var_3_0, var_3_1, arg_3_0._storyEnd, arg_3_0)
+		StoryController.instance:playStory(storyId, param, self._storyEnd, self)
 	else
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._storyEnd(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkSeasonPopupAndStory:_storyEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
+function FightWorkSeasonPopupAndStory:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return FightWorkSeasonPopupAndStory

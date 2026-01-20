@@ -1,32 +1,35 @@
-﻿module("modules.configs.excel2json.lua_store_entrance", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_store_entrance.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_store_entrance", package.seeall)
+
+local lua_store_entrance = {}
+local fields = {
 	name = 4,
 	prefab = 6,
 	nameEn = 5,
-	openId = 10,
+	toprecommend = 16,
 	activityId = 11,
 	openTime = 12,
 	belongFirstTab = 2,
 	belongSecondTab = 3,
 	storeId = 14,
 	openHideId = 15,
+	openId = 10,
 	endTime = 13,
 	id = 1,
 	icon = 7,
 	showCost = 9,
 	order = 8
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_store_entrance.onLoad(json)
+	lua_store_entrance.configList, lua_store_entrance.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_store_entrance

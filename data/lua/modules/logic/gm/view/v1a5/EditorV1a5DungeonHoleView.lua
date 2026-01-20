@@ -1,233 +1,240 @@
-﻿module("modules.logic.gm.view.v1a5.EditorV1a5DungeonHoleView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/v1a5/EditorV1a5DungeonHoleView.lua
 
-local var_0_0 = class("EditorV1a5DungeonHoleView", UserDataDispose)
-local var_0_1 = "ui/viewres/gm/v1a5holeedit.prefab"
+module("modules.logic.gm.view.v1a5.EditorV1a5DungeonHoleView", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local EditorV1a5DungeonHoleView = class("EditorV1a5DungeonHoleView", UserDataDispose)
+local prefabUrl = "ui/viewres/gm/v1a5holeedit.prefab"
 
-	var_1_0:__onInit()
-	var_1_0:init(arg_1_0)
+function EditorV1a5DungeonHoleView.start(viewContainer)
+	local view = EditorV1a5DungeonHoleView.New()
 
-	return var_1_0
+	view:__onInit()
+	view:init(viewContainer)
+
+	return view
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1._views[7]
+function EditorV1a5DungeonHoleView:init(viewContainer)
+	local holeView = viewContainer._views[7]
 
-	if var_2_0 and not var_2_0.delete then
-		var_2_0:onRecycleAllElement()
-		var_2_0:onClose()
-		var_2_0:onDestroyView()
-		var_2_0:__onDispose()
+	if holeView and not holeView.delete then
+		holeView:onRecycleAllElement()
+		holeView:onClose()
+		holeView:onDestroyView()
+		holeView:__onDispose()
 
-		var_2_0.delete = true
+		holeView.delete = true
 	end
 
-	arg_2_0.viewGO = arg_2_1.viewGO
-	arg_2_0.viewContainer = arg_2_1
-	arg_2_0.viewName = arg_2_1.viewName
-	arg_2_0._godispatcharea = gohelper.findChild(arg_2_0.viewGO, "#go_dispatcharea")
-	arg_2_0._goareaitem = gohelper.findChild(arg_2_0.viewGO, "#go_dispatcharea/#go_areaitem")
+	self.viewGO = viewContainer.viewGO
+	self.viewContainer = viewContainer
+	self.viewName = viewContainer.viewName
+	self._godispatcharea = gohelper.findChild(self.viewGO, "#go_dispatcharea")
+	self._goareaitem = gohelper.findChild(self.viewGO, "#go_dispatcharea/#go_areaitem")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_3_0)
-	gohelper.setActive(arg_3_0._godispatcharea, true)
-	gohelper.setActive(arg_3_0._goareaitem, false)
+function EditorV1a5DungeonHoleView:_editableInitView()
+	gohelper.setActive(self._godispatcharea, true)
+	gohelper.setActive(self._goareaitem, false)
 
-	arg_3_0.transform = arg_3_0._godispatcharea:GetComponent(gohelper.Type_RectTransform)
-	arg_3_0.areaItemList = {}
-	arg_3_0.shaderParamList = arg_3_0:getUserDataTb_()
-	arg_3_0.shaderParamValueList = {}
+	self.transform = self._godispatcharea:GetComponent(gohelper.Type_RectTransform)
+	self.areaItemList = {}
+	self.shaderParamList = self:getUserDataTb_()
+	self.shaderParamValueList = {}
 
-	for iter_3_0 = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
-		table.insert(arg_3_0.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. iter_3_0))
-		table.insert(arg_3_0.shaderParamValueList, Vector4.zero)
+	for i = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
+		table.insert(self.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. i))
+		table.insert(self.shaderParamValueList, Vector4.zero)
 	end
 
-	arg_3_0.sceneGo = arg_3_0.viewContainer.mapScene:getSceneGo()
-	arg_3_0.sceneTrans = arg_3_0.sceneGo.transform
+	self.sceneGo = self.viewContainer.mapScene:getSceneGo()
+	self.sceneTrans = self.sceneGo.transform
 
-	local var_3_0 = gohelper.findChild(arg_3_0.sceneGo, "Obj-Plant/FogOfWar/m_s14_hddt_mask")
+	local shaderGo = gohelper.findChild(self.sceneGo, "Obj-Plant/FogOfWar/m_s14_hddt_mask")
 
-	if not var_3_0 then
-		logError("not found shader mask go, " .. arg_3_0.sceneGo.name)
+	if not shaderGo then
+		logError("not found shader mask go, " .. self.sceneGo.name)
 
 		return
 	end
 
-	arg_3_0.shader = var_3_0:GetComponent(typeof(UnityEngine.MeshRenderer)).sharedMaterial
+	local meshRender = shaderGo:GetComponent(typeof(UnityEngine.MeshRenderer))
 
-	arg_3_0:hideAllHoles()
-	arg_3_0:changeTestPos(0, 0)
-	arg_3_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnMapPosChanged, arg_3_0.onMapPosChanged, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0.onCloseView, arg_3_0)
+	self.shader = meshRender.sharedMaterial
 
-	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.viewGO)
+	self:hideAllHoles()
+	self:changeTestPos(0, 0)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnMapPosChanged, self.onMapPosChanged, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 
-	arg_3_0.loader:startLoad(var_0_1, arg_3_0.onLoadFinish, arg_3_0)
+	self.loader = PrefabInstantiate.Create(self.viewGO)
+
+	self.loader:startLoad(prefabUrl, self.onLoadFinish, self)
 end
 
-function var_0_0.onLoadFinish(arg_4_0)
-	arg_4_0.itemList = {}
-	arg_4_0.go = arg_4_0.loader:getInstGO()
-	arg_4_0.keyList = {
+function EditorV1a5DungeonHoleView:onLoadFinish()
+	self.itemList = {}
+	self.go = self.loader:getInstGO()
+	self.keyList = {
 		"X",
 		"Y"
 	}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.keyList) do
-		arg_4_0:initItem(iter_4_1)
+	for _, key in ipairs(self.keyList) do
+		self:initItem(key)
 	end
 
-	arg_4_0.closeBtn = gohelper.findChildButtonWithAudio(arg_4_0.go, "closeBtn")
+	self.closeBtn = gohelper.findChildButtonWithAudio(self.go, "closeBtn")
 
-	arg_4_0.closeBtn:AddClickListener(arg_4_0.onClickCloseBtn, arg_4_0)
+	self.closeBtn:AddClickListener(self.onClickCloseBtn, self)
 end
 
-function var_0_0.hideAllHoles(arg_5_0)
-	for iter_5_0 = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
-		local var_5_0 = arg_5_0.shaderParamValueList[iter_5_0]
+function EditorV1a5DungeonHoleView:hideAllHoles()
+	for index = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
+		local value = self.shaderParamValueList[index]
 
-		var_5_0:Set(VersionActivity1_5DungeonEnum.OutSideAreaPos.X, VersionActivity1_5DungeonEnum.OutSideAreaPos.Y)
-		arg_5_0.shader:SetVector(arg_5_0.shaderParamList[iter_5_0], var_5_0)
+		value:Set(VersionActivity1_5DungeonEnum.OutSideAreaPos.X, VersionActivity1_5DungeonEnum.OutSideAreaPos.Y)
+		self.shader:SetVector(self.shaderParamList[index], value)
 	end
 end
 
-function var_0_0.changeTestPos(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.configPosX = arg_6_1
-	arg_6_0.configPosY = arg_6_2
+function EditorV1a5DungeonHoleView:changeTestPos(x, y)
+	self.configPosX = x
+	self.configPosY = y
 
-	arg_6_0:onMapPosChanged()
+	self:onMapPosChanged()
 end
 
-function var_0_0.onMapPosChanged(arg_7_0)
-	local var_7_0
-	local var_7_1
-	local var_7_2, var_7_3, var_7_4 = transformhelper.getPos(arg_7_0.sceneTrans)
-	local var_7_5 = arg_7_0.configPosX + var_7_2
-	local var_7_6 = arg_7_0.configPosY + var_7_3
-	local var_7_7 = arg_7_0.shaderParamValueList[1]
+function EditorV1a5DungeonHoleView:onMapPosChanged()
+	local worldX, worldY
+	local x, y, z = transformhelper.getPos(self.sceneTrans)
 
-	var_7_7:Set(var_7_5, var_7_6)
-	arg_7_0.shader:SetVector(arg_7_0.shaderParamList[1], var_7_7)
-	arg_7_0:refreshAreaItem(1)
+	worldX = self.configPosX + x
+	worldY = self.configPosY + y
+
+	local value = self.shaderParamValueList[1]
+
+	value:Set(worldX, worldY)
+	self.shader:SetVector(self.shaderParamList[1], value)
+	self:refreshAreaItem(1)
 end
 
-function var_0_0.refreshAreaItem(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.areaItemList[arg_8_1] or arg_8_0:createAreaItem()
+function EditorV1a5DungeonHoleView:refreshAreaItem(index)
+	local areaItem = self.areaItemList[index]
 
-	gohelper.setActive(var_8_0.go, true)
+	areaItem = areaItem or self:createAreaItem()
 
-	local var_8_1 = arg_8_0.shaderParamValueList[arg_8_1]
-	local var_8_2 = recthelper.worldPosToAnchorPos(var_8_1, arg_8_0.transform)
+	gohelper.setActive(areaItem.go, true)
 
-	recthelper.setAnchor(var_8_0.rectTr, var_8_2.x, var_8_2.y + VersionActivity1_5DungeonEnum.AreaItemOffsetY)
+	local worldPos = self.shaderParamValueList[index]
+	local anchor = recthelper.worldPosToAnchorPos(worldPos, self.transform)
+
+	recthelper.setAnchor(areaItem.rectTr, anchor.x, anchor.y + VersionActivity1_5DungeonEnum.AreaItemOffsetY)
 end
 
-function var_0_0.createAreaItem(arg_9_0)
-	local var_9_0 = arg_9_0:getUserDataTb_()
+function EditorV1a5DungeonHoleView:createAreaItem()
+	local areaItem = self:getUserDataTb_()
 
-	var_9_0.go = gohelper.cloneInPlace(arg_9_0._goareaitem)
-	var_9_0.rectTr = var_9_0.go:GetComponent(gohelper.Type_RectTransform)
+	areaItem.go = gohelper.cloneInPlace(self._goareaitem)
+	areaItem.rectTr = areaItem.go:GetComponent(gohelper.Type_RectTransform)
 
-	table.insert(arg_9_0.areaItemList, var_9_0)
+	table.insert(self.areaItemList, areaItem)
 
-	return var_9_0
+	return areaItem
 end
 
-function var_0_0.initItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getUserDataTb_()
+function EditorV1a5DungeonHoleView:initItem(key)
+	local item = self:getUserDataTb_()
 
-	var_10_0.go = gohelper.findChild(arg_10_0.go, "item" .. arg_10_1)
+	item.go = gohelper.findChild(self.go, "item" .. key)
 
-	if not var_10_0.go then
-		logError("not found item " .. tostring(arg_10_1))
+	if not item.go then
+		logError("not found item " .. tostring(key))
 
 		return
 	end
 
-	var_10_0.txtValue = gohelper.findChildText(var_10_0.go, "value")
-	var_10_0.reduceBtn = gohelper.findChildButtonWithAudio(var_10_0.go, "reducebtn")
-	var_10_0.addBtn = gohelper.findChildButtonWithAudio(var_10_0.go, "addbtn")
-	var_10_0.intervalInput = gohelper.findChildTextMeshInputField(var_10_0.go, "intervalInput")
+	item.txtValue = gohelper.findChildText(item.go, "value")
+	item.reduceBtn = gohelper.findChildButtonWithAudio(item.go, "reducebtn")
+	item.addBtn = gohelper.findChildButtonWithAudio(item.go, "addbtn")
+	item.intervalInput = gohelper.findChildTextMeshInputField(item.go, "intervalInput")
 
-	var_10_0.reduceBtn:AddClickListener(arg_10_0.onClickReduceBtn, arg_10_0, var_10_0)
-	var_10_0.addBtn:AddClickListener(arg_10_0.onClickAddBtn, arg_10_0, var_10_0)
+	item.reduceBtn:AddClickListener(self.onClickReduceBtn, self, item)
+	item.addBtn:AddClickListener(self.onClickAddBtn, self, item)
 
-	var_10_0.value = 0
-	var_10_0.txtValue.text = var_10_0.value
+	item.value = 0
+	item.txtValue.text = item.value
 
-	var_10_0.intervalInput:SetText(1)
-	table.insert(arg_10_0.itemList, var_10_0)
+	item.intervalInput:SetText(1)
+	table.insert(self.itemList, item)
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.onClickReduceBtn(arg_11_0, arg_11_1)
-	local var_11_0 = tonumber(arg_11_1.intervalInput:GetText())
+function EditorV1a5DungeonHoleView:onClickReduceBtn(item)
+	local interval = tonumber(item.intervalInput:GetText())
 
-	if not var_11_0 then
+	if not interval then
 		ToastController.instance:showToastWithString("间隔请输入数字")
 
 		return
 	end
 
-	arg_11_1.value = arg_11_1.value - var_11_0
-	arg_11_1.txtValue.text = arg_11_1.value
+	item.value = item.value - interval
+	item.txtValue.text = item.value
 
-	arg_11_0:setConfigPos()
+	self:setConfigPos()
 end
 
-function var_0_0.onClickAddBtn(arg_12_0, arg_12_1)
-	local var_12_0 = tonumber(arg_12_1.intervalInput:GetText())
+function EditorV1a5DungeonHoleView:onClickAddBtn(item)
+	local interval = tonumber(item.intervalInput:GetText())
 
-	if not var_12_0 then
+	if not interval then
 		ToastController.instance:showToastWithString("间隔请输入数字")
 
 		return
 	end
 
-	arg_12_1.value = arg_12_1.value + var_12_0
-	arg_12_1.txtValue.text = arg_12_1.value
+	item.value = item.value + interval
+	item.txtValue.text = item.value
 
-	arg_12_0:setConfigPos()
+	self:setConfigPos()
 end
 
-function var_0_0.setConfigPos(arg_13_0)
-	local var_13_0 = arg_13_0.itemList[1].value
-	local var_13_1 = arg_13_0.itemList[2].value
+function EditorV1a5DungeonHoleView:setConfigPos()
+	local x = self.itemList[1].value
+	local y = self.itemList[2].value
 
-	arg_13_0:changeTestPos(var_13_0, var_13_1)
+	self:changeTestPos(x, y)
 end
 
-function var_0_0.onClickCloseBtn(arg_14_0)
-	arg_14_0:close()
+function EditorV1a5DungeonHoleView:onClickCloseBtn()
+	self:close()
 end
 
-function var_0_0.onCloseView(arg_15_0, arg_15_1)
-	if arg_15_1 == ViewName.VersionActivity1_5DungeonMapView then
-		arg_15_0:close()
+function EditorV1a5DungeonHoleView:onCloseView(viewName)
+	if viewName == ViewName.VersionActivity1_5DungeonMapView then
+		self:close()
 	end
 end
 
-function var_0_0.close(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0.itemList) do
-		iter_16_1.reduceBtn:RemoveClickListener()
-		iter_16_1.addBtn:RemoveClickListener()
+function EditorV1a5DungeonHoleView:close()
+	for _, item in ipairs(self.itemList) do
+		item.reduceBtn:RemoveClickListener()
+		item.addBtn:RemoveClickListener()
 	end
 
-	for iter_16_2, iter_16_3 in ipairs(arg_16_0.areaItemList) do
-		gohelper.destroy(iter_16_3.go)
+	for _, areaItem in ipairs(self.areaItemList) do
+		gohelper.destroy(areaItem.go)
 	end
 
-	arg_16_0.closeBtn:RemoveClickListener()
-	gohelper.destroy(arg_16_0.go)
-	arg_16_0:__onDispose()
+	self.closeBtn:RemoveClickListener()
+	gohelper.destroy(self.go)
+	self:__onDispose()
 end
 
-return var_0_0
+return EditorV1a5DungeonHoleView

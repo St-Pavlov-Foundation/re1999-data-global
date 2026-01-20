@@ -1,9 +1,11 @@
-﻿module("modules.logic.chessgame.controller.ChessGameJumpHandler", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/controller/ChessGameJumpHandler.lua
 
-local var_0_0 = class("ChessGameJumpHandler")
+module("modules.logic.chessgame.controller.ChessGameJumpHandler", package.seeall)
 
-function var_0_0.defaultJump()
+local ChessGameJumpHandler = class("ChessGameJumpHandler")
+
+function ChessGameJumpHandler.defaultJump()
 	MainController.instance:enterMainScene()
 end
 
-return var_0_0
+return ChessGameJumpHandler

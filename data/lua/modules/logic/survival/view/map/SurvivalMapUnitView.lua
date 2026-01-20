@@ -1,214 +1,218 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapUnitView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapUnitView.lua
 
-local var_0_0 = class("SurvivalMapUnitView", BaseView)
+module("modules.logic.survival.view.map.SurvivalMapUnitView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._sceneroot = gohelper.findChild(arg_1_0.viewGO, "#go_sceneui")
-	arg_1_0._gobubble = gohelper.findChild(arg_1_0.viewGO, "#go_sceneicon/#go_item")
+local SurvivalMapUnitView = class("SurvivalMapUnitView", BaseView)
+
+function SurvivalMapUnitView:onInitView()
+	self._sceneroot = gohelper.findChild(self.viewGO, "#go_sceneui")
+	self._gobubble = gohelper.findChild(self.viewGO, "#go_sceneicon/#go_item")
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._allUI = {}
-	arg_2_0._allBubble = {}
-	arg_2_0._itemResPath = arg_2_0.viewContainer._viewSetting.otherRes.unititem
-	arg_2_0._allLayers = arg_2_0:getUserDataTb_()
+function SurvivalMapUnitView:onOpen()
+	self._allUI = {}
+	self._allBubble = {}
+	self._itemResPath = self.viewContainer._viewSetting.otherRes.unititem
+	self._allLayers = self:getUserDataTb_()
 
-	arg_2_0:initAllUnit()
+	self:initAllUnit()
 end
 
-function var_0_0.addEvents(arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, arg_3_0._onUnitDel, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitAdd, arg_3_0._onUnitAdd, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, arg_3_0._onUnitChange, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.UpdateUnitIsShow, arg_3_0._onUnitIsShowChange, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, arg_3_0._onFollowTaskUpdate, arg_3_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.ShowUnitBubble, arg_3_0._onShowUnitBubble, arg_3_0)
+function SurvivalMapUnitView:addEvents()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitAdd, self._onUnitAdd, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, self._onUnitChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.UpdateUnitIsShow, self._onUnitIsShowChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.ShowUnitBubble, self._onShowUnitBubble, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, arg_4_0._onUnitDel, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitAdd, arg_4_0._onUnitAdd, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, arg_4_0._onUnitChange, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.UpdateUnitIsShow, arg_4_0._onUnitIsShowChange, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, arg_4_0._onFollowTaskUpdate, arg_4_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.ShowUnitBubble, arg_4_0._onShowUnitBubble, arg_4_0)
+function SurvivalMapUnitView:removeEvents()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitAdd, self._onUnitAdd, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, self._onUnitChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.UpdateUnitIsShow, self._onUnitIsShowChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.ShowUnitBubble, self._onShowUnitBubble, self)
 end
 
-function var_0_0.initAllUnit(arg_5_0)
-	local var_5_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_5_1 = var_5_0.unitsById
+function SurvivalMapUnitView:initAllUnit()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local allUnitMos = sceneMo.unitsById
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		if iter_5_1.fall then
-			arg_5_0:_onShowUnitBubble(iter_5_1.id, 1, -1)
+	for id, unitMo in pairs(allUnitMos) do
+		if unitMo.fall then
+			self:_onShowUnitBubble(unitMo.id, 1, -1)
 		end
 
-		arg_5_0:addUnitUI(iter_5_0, iter_5_1)
+		self:addUnitUI(id, unitMo)
 	end
 
-	arg_5_0:addUnitUI(0, var_5_0.player, 99999)
-	arg_5_0:_onUnitIsShowChange(0)
+	self:addUnitUI(0, sceneMo.player, 99999)
+	self:_onUnitIsShowChange(0)
 end
 
-function var_0_0.addUnitUI(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalMapUnitView:addUnitUI(id, unitMo, layer)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if arg_6_1 ~= 0 and var_6_0:isNoShowIcon(arg_6_2) then
+	if id ~= 0 and sceneMo:isNoShowIcon(unitMo) then
 		return
 	end
 
-	if arg_6_0._allUI[arg_6_1] then
+	if self._allUI[id] then
 		return
 	end
 
-	if not arg_6_3 then
-		arg_6_3 = 0
+	if not layer then
+		layer = 0
 
-		if arg_6_2.co and arg_6_2.co.priority then
-			arg_6_3 = arg_6_2.co.priority
+		if unitMo.co and unitMo.co.priority then
+			layer = unitMo.co.priority
 		end
 	end
 
-	if not arg_6_0._allLayers[arg_6_3] then
-		arg_6_0._allLayers[arg_6_3] = gohelper.create2d(arg_6_0._sceneroot, "Layer" .. arg_6_3)
+	if not self._allLayers[layer] then
+		self._allLayers[layer] = gohelper.create2d(self._sceneroot, "Layer" .. layer)
 
-		local var_6_1 = 0
+		local index = 0
 
-		for iter_6_0 in pairs(arg_6_0._allLayers) do
-			if iter_6_0 < arg_6_3 then
-				var_6_1 = var_6_1 + 1
+		for val in pairs(self._allLayers) do
+			if val < layer then
+				index = index + 1
 			end
 		end
 
-		gohelper.setSibling(arg_6_0._allLayers[arg_6_3], var_6_1)
+		gohelper.setSibling(self._allLayers[layer], index)
 	end
 
-	local var_6_2 = string.format("%s_%s", SurvivalEnum.UnitTypeToName[arg_6_2.unitType], arg_6_2.id)
-	local var_6_3 = arg_6_0:getResInst(arg_6_0._itemResPath, arg_6_0._allLayers[arg_6_3], var_6_2)
-	local var_6_4 = arg_6_0:getUnitCls(arg_6_1, arg_6_2)
+	local name = string.format("%s_%s", SurvivalEnum.UnitTypeToName[unitMo.unitType], unitMo.id)
+	local go = self:getResInst(self._itemResPath, self._allLayers[layer], name)
+	local cls = self:getUnitCls(id, unitMo)
 
-	arg_6_0._allUI[arg_6_1] = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_3, var_6_4, arg_6_2)
+	self._allUI[id] = MonoHelper.addNoUpdateLuaComOnceToGo(go, cls, unitMo)
 
-	if arg_6_0._allBubble[arg_6_1] then
-		gohelper.setActive(var_6_3, false)
-	end
-end
-
-function var_0_0.getUnitCls(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = SurvivalUnitUIItem
-
-	if arg_7_1 == 0 then
-		var_7_0 = SurvivalPlayerUIItem
-	elseif arg_7_2.unitType == SurvivalEnum.UnitType.Battle then
-		var_7_0 = SurvivalFightUIItem
-	end
-
-	return var_7_0
-end
-
-function var_0_0._onUnitDel(arg_8_0, arg_8_1)
-	arg_8_0:removeUnitUI(arg_8_1.id)
-
-	if arg_8_0._allBubble[arg_8_1.id] then
-		arg_8_0:_onHideUnitBubble(arg_8_1.id)
+	if self._allBubble[id] then
+		gohelper.setActive(go, false)
 	end
 end
 
-function var_0_0._onUnitAdd(arg_9_0, arg_9_1)
-	arg_9_0:addUnitUI(arg_9_1.id, arg_9_1)
+function SurvivalMapUnitView:getUnitCls(id, unitMo)
+	local cls = SurvivalUnitUIItem
+
+	if id == 0 then
+		cls = SurvivalPlayerUIItem
+	elseif unitMo.unitType == SurvivalEnum.UnitType.Battle then
+		cls = SurvivalFightUIItem
+	end
+
+	return cls
 end
 
-function var_0_0._onUnitChange(arg_10_0, arg_10_1)
-	local var_10_0 = SurvivalMapModel.instance:getSceneMo().unitsById[arg_10_1]
+function SurvivalMapUnitView:_onUnitDel(unitMo)
+	self:removeUnitUI(unitMo.id)
 
-	if not var_10_0 then
+	if self._allBubble[unitMo.id] then
+		self:_onHideUnitBubble(unitMo.id)
+	end
+end
+
+function SurvivalMapUnitView:_onUnitAdd(unitMo)
+	self:addUnitUI(unitMo.id, unitMo)
+end
+
+function SurvivalMapUnitView:_onUnitChange(id)
+	local unitMo = SurvivalMapModel.instance:getSceneMo().unitsById[id]
+
+	if not unitMo then
 		return
 	end
 
-	if arg_10_0._allUI[arg_10_1] then
-		if arg_10_0:getUnitCls(arg_10_1, var_10_0) == arg_10_0._allUI[arg_10_1].class then
-			arg_10_0._allUI[arg_10_1]:refreshInfo()
+	if self._allUI[id] then
+		local cls = self:getUnitCls(id, unitMo)
+
+		if cls == self._allUI[id].class then
+			self._allUI[id]:refreshInfo()
 		else
-			arg_10_0:removeUnitUI(arg_10_1)
-			arg_10_0:addUnitUI(arg_10_1, var_10_0)
+			self:removeUnitUI(id)
+			self:addUnitUI(id, unitMo)
 		end
 	end
 
-	if var_10_0.fall then
-		arg_10_0:_onShowUnitBubble(arg_10_1, 1, -1)
+	if unitMo.fall then
+		self:_onShowUnitBubble(id, 1, -1)
 	else
-		arg_10_0:_onHideUnitBubble(arg_10_1)
+		self:_onHideUnitBubble(id)
 	end
 end
 
-function var_0_0.removeUnitUI(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0._allUI[arg_11_1] then
-		if arg_11_2 then
-			arg_11_0._allUI[arg_11_1]:playCloseAnim()
+function SurvivalMapUnitView:removeUnitUI(id, isPlayAnim)
+	if self._allUI[id] then
+		if isPlayAnim then
+			self._allUI[id]:playCloseAnim()
 		else
-			arg_11_0._allUI[arg_11_1]:dispose()
+			self._allUI[id]:dispose()
 		end
 
-		arg_11_0._allUI[arg_11_1] = nil
+		self._allUI[id] = nil
 	end
 end
 
-function var_0_0._onUnitIsShowChange(arg_12_0, arg_12_1)
-	if arg_12_1 == 0 and arg_12_0._allUI[arg_12_1] then
-		local var_12_0 = SurvivalMapHelper.instance:getEntity(arg_12_1)
+function SurvivalMapUnitView:_onUnitIsShowChange(id)
+	if id == 0 and self._allUI[id] then
+		local entity = SurvivalMapHelper.instance:getEntity(id)
 
-		if not var_12_0 then
+		if not entity then
 			return
 		end
 
-		arg_12_0._allUI[arg_12_1]:setIconEnable(not var_12_0.isShow)
+		self._allUI[id]:setIconEnable(not entity.isShow)
 	end
 end
 
-function var_0_0._onFollowTaskUpdate(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._allUI) do
-		iter_13_1:_onFollowTaskUpdate()
+function SurvivalMapUnitView:_onFollowTaskUpdate()
+	for id, ui in pairs(self._allUI) do
+		ui:_onFollowTaskUpdate()
 	end
 end
 
-function var_0_0._onShowUnitBubble(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = {
-		type = arg_14_2,
-		time = arg_14_3,
-		callback = arg_14_0._onHideUnitBubble,
-		callobj = arg_14_0,
-		unitId = arg_14_1
+function SurvivalMapUnitView:_onShowUnitBubble(unitId, type, time)
+	local params = {
+		type = type,
+		time = time,
+		callback = self._onHideUnitBubble,
+		callobj = self,
+		unitId = unitId
 	}
 
-	if arg_14_0._allBubble[arg_14_1] then
-		arg_14_0._allBubble[arg_14_1]:updateParam(var_14_0)
+	if self._allBubble[unitId] then
+		self._allBubble[unitId]:updateParam(params)
 	else
-		local var_14_1 = gohelper.cloneInPlace(arg_14_0._gobubble)
+		local go = gohelper.cloneInPlace(self._gobubble)
 
-		gohelper.setActive(var_14_1, true)
+		gohelper.setActive(go, true)
 
-		arg_14_0._allBubble[arg_14_1] = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_1, SurvivalUnitBubbleItem, var_14_0)
+		self._allBubble[unitId] = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalUnitBubbleItem, params)
 	end
 
-	if arg_14_0._allUI[arg_14_1] then
-		gohelper.setActive(arg_14_0._allUI[arg_14_1].go, false)
-	end
-end
-
-function var_0_0._onHideUnitBubble(arg_15_0, arg_15_1)
-	if arg_15_0._allBubble[arg_15_1] then
-		arg_15_0._allBubble[arg_15_1]:tryDestroy()
-
-		arg_15_0._allBubble[arg_15_1] = nil
-	end
-
-	if arg_15_0._allUI[arg_15_1] then
-		gohelper.setActive(arg_15_0._allUI[arg_15_1].go, true)
+	if self._allUI[unitId] then
+		gohelper.setActive(self._allUI[unitId].go, false)
 	end
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function SurvivalMapUnitView:_onHideUnitBubble(unitId)
+	if self._allBubble[unitId] then
+		self._allBubble[unitId]:tryDestroy()
+
+		self._allBubble[unitId] = nil
+	end
+
+	if self._allUI[unitId] then
+		gohelper.setActive(self._allUI[unitId].go, true)
+	end
+end
+
+function SurvivalMapUnitView:onDestroyView()
 	return
 end
 
-return var_0_0
+return SurvivalMapUnitView

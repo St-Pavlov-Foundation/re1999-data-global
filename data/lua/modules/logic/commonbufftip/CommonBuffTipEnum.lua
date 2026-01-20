@@ -1,17 +1,19 @@
-﻿module("modules.logic.commonbufftip.CommonBuffTipEnum", package.seeall)
+﻿-- chunkname: @modules/logic/commonbufftip/CommonBuffTipEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.commonbufftip.CommonBuffTipEnum", package.seeall)
 
-var_0_0.Pivot = {
+local CommonBuffTipEnum = _M
+
+CommonBuffTipEnum.Pivot = {
 	Left = Vector2(0, 1),
 	Right = Vector2(1, 1),
 	Down = Vector2(1, 0),
 	Center = Vector2(0.5, 0.5)
 }
-var_0_0.DefaultInterval = 50
-var_0_0.BottomMargin = 50
-var_0_0.TipWidth = 560
-var_0_0.Anchor = {
+CommonBuffTipEnum.DefaultInterval = 50
+CommonBuffTipEnum.BottomMargin = 50
+CommonBuffTipEnum.TipWidth = 560
+CommonBuffTipEnum.Anchor = {
 	[ViewName.SkillTipView] = Vector2(-303.39, 57.22754),
 	[ViewName.SkillTipView3] = Vector2(-303.39, 57.22754),
 	[ViewName.FightFocusView] = Vector2(-225.47, 117.6),
@@ -21,4 +23,4 @@ var_0_0.Anchor = {
 	[ViewName.TowerSkillTipView] = Vector2(874, 279)
 }
 
-return var_0_0
+return CommonBuffTipEnum

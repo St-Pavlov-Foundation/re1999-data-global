@@ -1,229 +1,233 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/view/JiaLaBoNaGameView.lua
 
-local var_0_0 = class("JiaLaBoNaGameView", BaseView)
+module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtRemainingTimesNum = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/RemainingTimes/txt_RemainingTimes/#txt_RemainingTimesNum")
-	arg_1_0._txtTargetDecr = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/TargetList/Target1/#txt_TargetDesc")
-	arg_1_0._txtTarget2Decr = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/TargetList/Target2/#txt_TargetDesc")
-	arg_1_0._txtStage = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Stage")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Title")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "Top/Tips/image_TipsBG/#txt_Tips")
-	arg_1_0._btnReadBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightTop/#btn_ReadBtn")
-	arg_1_0._btnResetBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightTop/#btn_ResetBtn")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
-	arg_1_0._goexcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
+local JiaLaBoNaGameView = class("JiaLaBoNaGameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function JiaLaBoNaGameView:onInitView()
+	self._txtRemainingTimesNum = gohelper.findChildText(self.viewGO, "LeftTop/RemainingTimes/txt_RemainingTimes/#txt_RemainingTimesNum")
+	self._txtTargetDecr = gohelper.findChildText(self.viewGO, "LeftTop/TargetList/Target1/#txt_TargetDesc")
+	self._txtTarget2Decr = gohelper.findChildText(self.viewGO, "LeftTop/TargetList/Target2/#txt_TargetDesc")
+	self._txtStage = gohelper.findChildText(self.viewGO, "Top/#txt_Stage")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Top/#txt_Title")
+	self._txtTips = gohelper.findChildText(self.viewGO, "Top/Tips/image_TipsBG/#txt_Tips")
+	self._btnReadBtn = gohelper.findChildButtonWithAudio(self.viewGO, "RightTop/#btn_ReadBtn")
+	self._btnResetBtn = gohelper.findChildButtonWithAudio(self.viewGO, "RightTop/#btn_ResetBtn")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+	self._goexcessive = gohelper.findChild(self.viewGO, "#go_excessive")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnResetBtn:AddClickListener(arg_2_0._btnResetBtnOnClick, arg_2_0)
-	arg_2_0._btnReadBtn:AddClickListener(arg_2_0._btnReadBtnOnClick, arg_2_0)
+function JiaLaBoNaGameView:addEvents()
+	self._btnResetBtn:AddClickListener(self._btnResetBtnOnClick, self)
+	self._btnReadBtn:AddClickListener(self._btnReadBtnOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnResetBtn:RemoveClickListener()
-	arg_3_0._btnReadBtn:RemoveClickListener()
+function JiaLaBoNaGameView:removeEvents()
+	self._btnResetBtn:RemoveClickListener()
+	self._btnReadBtn:RemoveClickListener()
 end
 
-function var_0_0._btnResetBtnOnClick(arg_4_0)
+function JiaLaBoNaGameView:_btnResetBtnOnClick()
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, arg_4_0._yesResetFunc)
+	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, self._yesResetFunc)
 end
 
-function var_0_0._btnReadBtnOnClick(arg_5_0)
+function JiaLaBoNaGameView:_btnReadBtnOnClick()
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
 	if Va3ChessGameModel.instance:getRound() > 1 then
-		if not arg_5_0._litterPointTime or arg_5_0._litterPointTime < Time.time then
-			arg_5_0._litterPointTime = Time.time + 0.3
+		if not self._litterPointTime or self._litterPointTime < Time.time then
+			self._litterPointTime = Time.time + 0.3
 
-			arg_5_0:_returnPointGame()
+			self:_returnPointGame()
 		end
 	else
 		GameFacade.showToast(ToastEnum.ActivityChessNotBack)
 	end
 end
 
-var_0_0.UI_RESTART_BLOCK_KEY = "JiaLaBoNaGameViewsGameMainDelayRestart"
+JiaLaBoNaGameView.UI_RESTART_BLOCK_KEY = "JiaLaBoNaGameViewsGameMainDelayRestart"
 
-function var_0_0._editableInitView(arg_6_0)
-	function arg_6_0._yesResetFunc()
+function JiaLaBoNaGameView:_editableInitView()
+	function self._yesResetFunc()
 		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameLoadingMapStateUpdate, Va3ChessEvent.LoadingMapState.Start, true)
-		TaskDispatcher.runDelay(arg_6_0.delayRestartGame, arg_6_0, JiaLaBoNaEnum.AnimatorTime.SwithSceneOpen)
+		TaskDispatcher.runDelay(self.delayRestartGame, self, JiaLaBoNaEnum.AnimatorTime.SwithSceneOpen)
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.GameReset)
 	end
 
-	arg_6_0._imgTarget1Icon = gohelper.findChildImage(arg_6_0.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon")
-	arg_6_0._imgTarget2Icon = gohelper.findChildImage(arg_6_0.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon")
-	arg_6_0._govxfinish = gohelper.findChild(arg_6_0.viewGO, "LeftTop/TargetList/Target1/vx_finish")
-	arg_6_0._govxglow = gohelper.findChild(arg_6_0.viewGO, "LeftTop/TargetList/Target2/vx_glow")
-	arg_6_0._goTips = gohelper.findChild(arg_6_0.viewGO, "Top/Tips")
-	arg_6_0._goresetgame = gohelper.findChild(arg_6_0.viewGO, "excessive")
+	self._imgTarget1Icon = gohelper.findChildImage(self.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon")
+	self._imgTarget2Icon = gohelper.findChildImage(self.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon")
+	self._govxfinish = gohelper.findChild(self.viewGO, "LeftTop/TargetList/Target1/vx_finish")
+	self._govxglow = gohelper.findChild(self.viewGO, "LeftTop/TargetList/Target2/vx_glow")
+	self._goTips = gohelper.findChild(self.viewGO, "Top/Tips")
+	self._goresetgame = gohelper.findChild(self.viewGO, "excessive")
 
-	gohelper.setActive(arg_6_0._goTips, false)
+	gohelper.setActive(self._goTips, false)
 
-	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, "#go_excessive/anim")
-	local var_6_1 = gohelper.findChild(arg_6_0.viewGO, "excessive/anim")
+	local goAnim = gohelper.findChild(self.viewGO, "#go_excessive/anim")
+	local goresetAnim = gohelper.findChild(self.viewGO, "excessive/anim")
 
-	arg_6_0._swicthSceneAnimator = var_6_0:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
-	arg_6_0._resetGameAnimator = var_6_1:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
-	arg_6_0._viewAnimator = arg_6_0.viewGO:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+	self._swicthSceneAnimator = goAnim:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+	self._resetGameAnimator = goresetAnim:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
+	self._viewAnimator = self.viewGO:GetComponent(JiaLaBoNaEnum.ComponentType.Animator)
 
-	gohelper.setActive(arg_6_0._goexcessive, false)
-	gohelper.setActive(arg_6_0._goresetgame, false)
+	gohelper.setActive(self._goexcessive, false)
+	gohelper.setActive(self._goresetgame, false)
 
-	arg_6_0._isLastSwitchStart = false
+	self._isLastSwitchStart = false
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, arg_8_0.onSetViewVictory, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, arg_8_0.onSetViewFail, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentRoundUpdate, arg_8_0.refreshRound, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, arg_8_0.onResultQuit, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, arg_8_0.refreshConditions, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, arg_8_0.refreshUI, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetCenterHintText, arg_8_0.setUICenterHintText, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.ResetGameByResultView, arg_8_0.handleResetByResult, arg_8_0)
-	arg_8_0:addEventCb(JiaLaBoNaController.instance, JiaLaBoNaEvent.Refresh120MapData, arg_8_0.refreshUI, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameLoadingMapStateUpdate, arg_8_0._onReadyGoNextMap, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, arg_8_0._onToastUpdate, arg_8_0)
-	arg_8_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EventBattleReturn, arg_8_0._onReturnChessFromBattleGroup, arg_8_0)
-	arg_8_0:refreshUI()
-	arg_8_0:_setOpenAnimSpeed(true)
-	TaskDispatcher.runDelay(arg_8_0._onResetOpenAnim, arg_8_0, 1)
+function JiaLaBoNaGameView:onOpen()
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, self.onSetViewVictory, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, self.onSetViewFail, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentRoundUpdate, self.refreshRound, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, self.onResultQuit, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, self.refreshConditions, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, self.refreshUI, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetCenterHintText, self.setUICenterHintText, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.ResetGameByResultView, self.handleResetByResult, self)
+	self:addEventCb(JiaLaBoNaController.instance, JiaLaBoNaEvent.Refresh120MapData, self.refreshUI, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameLoadingMapStateUpdate, self._onReadyGoNextMap, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, self._onToastUpdate, self)
+	self:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EventBattleReturn, self._onReturnChessFromBattleGroup, self)
+	self:refreshUI()
+	self:_setOpenAnimSpeed(true)
+	TaskDispatcher.runDelay(self._onResetOpenAnim, self, 1)
 	AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_level_title_appear)
 end
 
-function var_0_0.onClose(arg_9_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_RESTART_BLOCK_KEY)
-	TaskDispatcher.cancelTask(arg_9_0.delayRestartGame, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._returnPointGame, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._onHideToast, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._onDelayRefreshMainTask, arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._onResetOpenAnim, arg_9_0)
+function JiaLaBoNaGameView:onClose()
+	UIBlockMgr.instance:endBlock(JiaLaBoNaGameView.UI_RESTART_BLOCK_KEY)
+	TaskDispatcher.cancelTask(self.delayRestartGame, self)
+	TaskDispatcher.cancelTask(self._returnPointGame, self)
+	TaskDispatcher.cancelTask(self._onHideToast, self)
+	TaskDispatcher.cancelTask(self._onDelayRefreshMainTask, self)
+	TaskDispatcher.cancelTask(self._onResetOpenAnim, self)
 end
 
-function var_0_0._getEpisodeCfg(arg_10_0)
-	local var_10_0 = Va3ChessModel.instance:getActId()
-	local var_10_1 = Va3ChessModel.instance:getEpisodeId()
+function JiaLaBoNaGameView:_getEpisodeCfg()
+	local actId = Va3ChessModel.instance:getActId()
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
 
-	if arg_10_0._curEpisodeCfg and arg_10_0._curEpisodeCfg.activity == var_10_0 and arg_10_0._curEpisodeCfg.id == var_10_1 then
-		return arg_10_0._curEpisodeCfg
+	if self._curEpisodeCfg and self._curEpisodeCfg.activity == actId and self._curEpisodeCfg.id == episodeId then
+		return self._curEpisodeCfg
 	end
 
-	if var_10_0 ~= nil and var_10_1 ~= nil then
-		local var_10_2 = Va3ChessConfig.instance:getEpisodeCo(var_10_0, var_10_1)
+	if actId ~= nil and episodeId ~= nil then
+		local cfg = Va3ChessConfig.instance:getEpisodeCo(actId, episodeId)
 
-		arg_10_0._curEpisodeCfg = var_10_2
-		arg_10_0._curMainConditions = var_10_2 and GameUtil.splitString2(var_10_2.mainConfition, true, "|", "#")
-		arg_10_0._curConditionDesc = var_10_2 and string.split(var_10_2.mainConditionStr, "|")
-		arg_10_0._extStarConditions = var_10_2 and GameUtil.splitString2(var_10_2.extStarCondition, true, "|", "#")
+		self._curEpisodeCfg = cfg
+		self._curMainConditions = cfg and GameUtil.splitString2(cfg.mainConfition, true, "|", "#")
+		self._curConditionDesc = cfg and string.split(cfg.mainConditionStr, "|")
+		self._extStarConditions = cfg and GameUtil.splitString2(cfg.extStarCondition, true, "|", "#")
 
-		return arg_10_0._curEpisodeCfg
-	end
-end
-
-function var_0_0._onResetOpenAnim(arg_11_0)
-	if arg_11_0._needResetViewOpen then
-		arg_11_0:_setOpenAnimSpeed(false)
+		return self._curEpisodeCfg
 	end
 end
 
-function var_0_0._setOpenAnimSpeed(arg_12_0, arg_12_1)
-	arg_12_0._needResetViewOpen = arg_12_1
-	arg_12_0._viewAnimator.speed = arg_12_1 and 0 or 1
-
-	arg_12_0._viewAnimator:Play(UIAnimationName.Open, 0, 0)
-	arg_12_0._viewAnimator:Update(0)
+function JiaLaBoNaGameView:_onResetOpenAnim()
+	if self._needResetViewOpen then
+		self:_setOpenAnimSpeed(false)
+	end
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	local var_13_0 = arg_13_0:_getEpisodeCfg()
+function JiaLaBoNaGameView:_setOpenAnimSpeed(isStop)
+	self._needResetViewOpen = isStop
+	self._viewAnimator.speed = isStop and 0 or 1
 
-	if var_13_0 then
-		arg_13_0._txtStage.text = var_13_0.orderId
-		arg_13_0._txtTitle.text = var_13_0.name
+	self._viewAnimator:Play(UIAnimationName.Open, 0, 0)
+	self._viewAnimator:Update(0)
+end
+
+function JiaLaBoNaGameView:refreshUI()
+	local episodeCfg = self:_getEpisodeCfg()
+
+	if episodeCfg then
+		self._txtStage.text = episodeCfg.orderId
+		self._txtTitle.text = episodeCfg.name
 	end
 
-	arg_13_0:refreshConditions()
-	arg_13_0:refreshRound()
+	self:refreshConditions()
+	self:refreshRound()
 end
 
-function var_0_0.onSetViewVictory(arg_14_0)
+function JiaLaBoNaGameView:onSetViewVictory()
 	Stat1_3Controller.instance:jiaLaBoNaStatSuccess()
 
-	local var_14_0 = arg_14_0:_getEpisodeCfg()
+	local episodeCfg = self:_getEpisodeCfg()
 
-	arg_14_0:refreshConditions()
+	self:refreshConditions()
 
-	if var_14_0 then
-		if var_14_0.storyClear == 0 then
-			var_0_0.openWinResult()
+	if episodeCfg then
+		if episodeCfg.storyClear == 0 then
+			JiaLaBoNaGameView.openWinResult()
 
 			return
 		end
 
-		local var_14_1 = var_14_0.storyClear
+		local story = episodeCfg.storyClear
 
-		if var_14_0.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(var_14_1) then
-			local var_14_2 = {}
+		if episodeCfg.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(story) then
+			local param = {}
 
-			var_14_2.blur = true
-			var_14_2.mark = true
-			var_14_2.hideStartAndEndDark = true
-			var_14_2.isReplay = false
+			param.blur = true
+			param.mark = true
+			param.hideStartAndEndDark = true
+			param.isReplay = false
 
 			StoryController.instance:playStories({
-				var_14_1
-			}, var_14_2, var_0_0._onStroyClearFinish)
+				story
+			}, param, JiaLaBoNaGameView._onStroyClearFinish)
 		else
-			var_0_0.openWinResult()
+			JiaLaBoNaGameView.openWinResult()
 		end
 	end
 end
 
-var_0_0.OPEN_WIN_RESULT = "JiaLaBoNaGameView.JiaLaBoNaGameView.OPEN_WIN_RESULT"
+JiaLaBoNaGameView.OPEN_WIN_RESULT = "JiaLaBoNaGameView.JiaLaBoNaGameView.OPEN_WIN_RESULT"
 
-function var_0_0._onStroyClearFinish()
-	UIBlockMgr.instance:startBlock(var_0_0.STROY_CLEARR_FINISH)
-	TaskDispatcher.runDelay(var_0_0.openWinResult, nil, 1)
+function JiaLaBoNaGameView._onStroyClearFinish()
+	UIBlockMgr.instance:startBlock(JiaLaBoNaGameView.STROY_CLEARR_FINISH)
+	TaskDispatcher.runDelay(JiaLaBoNaGameView.openWinResult, nil, 1)
 end
 
-function var_0_0.openWinResult()
-	UIBlockMgr.instance:endBlock(var_0_0.STROY_CLEARR_FINISH)
+function JiaLaBoNaGameView.openWinResult()
+	UIBlockMgr.instance:endBlock(JiaLaBoNaGameView.STROY_CLEARR_FINISH)
 
-	local var_16_0 = Va3ChessModel.instance:getEpisodeId()
-	local var_16_1 = "OnChessWinPause" .. var_16_0
-	local var_16_2 = GuideEvent[var_16_1]
-	local var_16_3 = GuideEvent.OnChessWinContinue
-	local var_16_4 = var_0_0._openSuccessView
-	local var_16_5
+	local episodeId = Va3ChessModel.instance:getEpisodeId()
+	local v1 = "OnChessWinPause" .. episodeId
+	local v2 = GuideEvent[v1]
+	local v3 = GuideEvent.OnChessWinContinue
+	local v4 = JiaLaBoNaGameView._openSuccessView
+	local v5
 
-	GuideController.instance:GuideFlowPauseAndContinue(var_16_1, var_16_2, var_16_3, var_16_4, var_16_5)
+	GuideController.instance:GuideFlowPauseAndContinue(v1, v2, v3, v4, v5)
 end
 
-function var_0_0._openSuccessView()
+function JiaLaBoNaGameView._openSuccessView()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerArrive)
 	ViewMgr.instance:openView(ViewName.JiaLaBoNaGameResultView, {
 		result = true
 	})
 end
 
-function var_0_0.onSetViewFail(arg_18_0)
+function JiaLaBoNaGameView:onSetViewFail()
 	Stat1_3Controller.instance:jiaLaBoNaStatFail()
 
-	if Va3ChessGameModel.instance:getFailReason() == Va3ChessEnum.FailReason.MaxRound then
+	local failReason = Va3ChessGameModel.instance:getFailReason()
+
+	if failReason == Va3ChessEnum.FailReason.MaxRound then
 		Va3ChessGameModel.instance:setRound(Va3ChessGameModel.instance:getRound() + 1)
-		arg_18_0:refreshRound()
+		self:refreshRound()
 	end
 
 	ViewMgr.instance:openView(ViewName.JiaLaBoNaGameResultView, {
@@ -231,102 +235,102 @@ function var_0_0.onSetViewFail(arg_18_0)
 	})
 end
 
-function var_0_0.refreshRound(arg_19_0)
-	local var_19_0 = arg_19_0:_getEpisodeCfg()
+function JiaLaBoNaGameView:refreshRound()
+	local episodeCfg = self:_getEpisodeCfg()
 
-	if var_19_0 then
-		local var_19_1 = var_19_0.maxRound - Va3ChessGameModel.instance:getRound() + 1
+	if episodeCfg then
+		local round = episodeCfg.maxRound - Va3ChessGameModel.instance:getRound() + 1
 
-		arg_19_0._txtRemainingTimesNum.text = string.format("%s", math.max(var_19_1, 0))
+		self._txtRemainingTimesNum.text = string.format("%s", math.max(round, 0))
 	end
 end
 
-function var_0_0.onResultQuit(arg_20_0)
-	arg_20_0:closeThis()
+function JiaLaBoNaGameView:onResultQuit()
+	self:closeThis()
 end
 
-function var_0_0.delayRestartGame(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0.delayRestartGame, arg_21_0)
+function JiaLaBoNaGameView:delayRestartGame()
+	TaskDispatcher.cancelTask(self.delayRestartGame, self)
 	Stat1_3Controller.instance:jiaLaBoNaStatReset()
 	JiaLaBoNaController.instance:resetStartGame()
 end
 
-function var_0_0._returnPointGame(arg_22_0)
+function JiaLaBoNaGameView:_returnPointGame()
 	Stat1_3Controller.instance:jiaLaBoNaMarkUseRead()
 	JiaLaBoNaController.instance:returnPointGame()
 end
 
-function var_0_0.refreshConditions(arg_23_0)
-	local var_23_0 = arg_23_0:_getEpisodeCfg()
+function JiaLaBoNaGameView:refreshConditions()
+	local episodeCfg = self:_getEpisodeCfg()
 
-	if var_23_0 then
-		local var_23_1 = arg_23_0._curConditionDesc
-		local var_23_2 = #arg_23_0._curMainConditions
-		local var_23_3 = var_23_0.activityId
-		local var_23_4 = arg_23_0:_findFinishIndex(arg_23_0._curMainConditions, var_23_3)
+	if episodeCfg then
+		local conditionDesc = self._curConditionDesc
+		local taskLen = #self._curMainConditions
+		local actId = episodeCfg.activityId
+		local finishIndex = self:_findFinishIndex(self._curMainConditions, actId)
 
-		arg_23_0._curShowMainTaskDesStr = arg_23_0._curConditionDesc[var_23_4 + 1] or arg_23_0._curConditionDesc[var_23_4]
-		arg_23_0._curMainTaskFinishAll = var_23_2 <= var_23_4
+		self._curShowMainTaskDesStr = self._curConditionDesc[finishIndex + 1] or self._curConditionDesc[finishIndex]
+		self._curMainTaskFinishAll = taskLen <= finishIndex
 
-		local var_23_5 = arg_23_0:_checkTarget2Finish(arg_23_0._extStarConditions, var_23_3)
+		local target2Finish = self:_checkTarget2Finish(self._extStarConditions, actId)
 
-		arg_23_0._txtTarget2Decr.text = var_23_0.conditionStr
+		self._txtTarget2Decr.text = episodeCfg.conditionStr
 
-		if arg_23_0._lastTarget2Finish ~= var_23_5 then
-			arg_23_0._lastTarget2Finish = var_23_5
+		if self._lastTarget2Finish ~= target2Finish then
+			self._lastTarget2Finish = target2Finish
 
-			arg_23_0:_setColorByFinish(arg_23_0._imgTarget2Icon, var_23_5)
-			gohelper.setActive(arg_23_0._govxglow, false)
+			self:_setColorByFinish(self._imgTarget2Icon, target2Finish)
+			gohelper.setActive(self._govxglow, false)
 
-			if var_23_5 then
-				gohelper.setActive(arg_23_0._govxglow, true)
+			if target2Finish then
+				gohelper.setActive(self._govxglow, true)
 			end
 		end
 
-		if arg_23_0._lastFinishIndex ~= var_23_4 then
-			arg_23_0._lastFinishIndex = var_23_4
+		if self._lastFinishIndex ~= finishIndex then
+			self._lastFinishIndex = finishIndex
 
-			gohelper.setActive(arg_23_0._govxfinish, false)
+			gohelper.setActive(self._govxfinish, false)
 
-			if var_23_4 > 0 then
-				arg_23_0:_setColorByFinish(arg_23_0._imgTarget1Icon, var_23_4 > 0)
-				gohelper.setActive(arg_23_0._govxfinish, true)
-				TaskDispatcher.cancelTask(arg_23_0._onDelayRefreshMainTask, arg_23_0)
-				TaskDispatcher.runDelay(arg_23_0._onDelayRefreshMainTask, arg_23_0, 0.5)
+			if finishIndex > 0 then
+				self:_setColorByFinish(self._imgTarget1Icon, finishIndex > 0)
+				gohelper.setActive(self._govxfinish, true)
+				TaskDispatcher.cancelTask(self._onDelayRefreshMainTask, self)
+				TaskDispatcher.runDelay(self._onDelayRefreshMainTask, self, 0.5)
 				AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_target_flushed)
 			else
-				arg_23_0:_onDelayRefreshMainTask()
+				self:_onDelayRefreshMainTask()
 			end
 		end
 	end
 end
 
-function var_0_0._setColorByFinish(arg_24_0, arg_24_1, arg_24_2)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_24_1, arg_24_2 and "#AFD3FF" or "#808080")
+function JiaLaBoNaGameView:_setColorByFinish(graphic, isFinish)
+	SLFramework.UGUI.GuiHelper.SetColor(graphic, isFinish and "#AFD3FF" or "#808080")
 end
 
-function var_0_0._onDelayRefreshMainTask(arg_25_0)
-	arg_25_0._txtTargetDecr.text = arg_25_0._curShowMainTaskDesStr
+function JiaLaBoNaGameView:_onDelayRefreshMainTask()
+	self._txtTargetDecr.text = self._curShowMainTaskDesStr
 
-	arg_25_0:_setColorByFinish(arg_25_0._imgTarget1Icon, arg_25_0._curMainTaskFinishAll)
+	self:_setColorByFinish(self._imgTarget1Icon, self._curMainTaskFinishAll)
 end
 
-function var_0_0._findFinishIndex(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = #arg_26_1
+function JiaLaBoNaGameView:_findFinishIndex(params2, actId)
+	local taskLen = #params2
 
-	for iter_26_0 = 1, var_26_0 do
-		if not Va3ChessMapUtils.isClearConditionFinish(arg_26_1[iter_26_0], arg_26_2) then
-			return iter_26_0 - 1
+	for i = 1, taskLen do
+		if not Va3ChessMapUtils.isClearConditionFinish(params2[i], actId) then
+			return i - 1
 		end
 	end
 
-	return var_26_0
+	return taskLen
 end
 
-function var_0_0._checkTarget2Finish(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_1 then
-		for iter_27_0, iter_27_1 in ipairs(arg_27_1) do
-			if not Va3ChessMapUtils.isClearConditionFinish(iter_27_1, arg_27_2) then
+function JiaLaBoNaGameView:_checkTarget2Finish(params2, actId)
+	if params2 then
+		for i, params in ipairs(params2) do
+			if not Va3ChessMapUtils.isClearConditionFinish(params, actId) then
 				return false
 			end
 		end
@@ -335,94 +339,94 @@ function var_0_0._checkTarget2Finish(arg_27_0, arg_27_1, arg_27_2)
 	return true
 end
 
-function var_0_0.setUICenterHintText(arg_28_0)
+function JiaLaBoNaGameView:setUICenterHintText()
 	return
 end
 
-function var_0_0.handleResetByResult(arg_29_0)
+function JiaLaBoNaGameView:handleResetByResult()
 	return
 end
 
-function var_0_0._onReadyGoNextMap(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = arg_30_1 == Va3ChessEvent.LoadingMapState.Start
+function JiaLaBoNaGameView:_onReadyGoNextMap(state, isRestStart)
+	local isStar = state == Va3ChessEvent.LoadingMapState.Start
 
-	arg_30_0:switchScene(var_30_0, var_30_0 and arg_30_2)
+	self:switchScene(isStar, isStar and isRestStart)
 
-	if arg_30_1 == Va3ChessEvent.LoadingMapState.Finish then
-		arg_30_0:_onResetOpenAnim()
+	if state == Va3ChessEvent.LoadingMapState.Finish then
+		self:_onResetOpenAnim()
 	end
 end
 
-function var_0_0.switchScene(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_1 == true
+function JiaLaBoNaGameView:switchScene(isStart, isResetStart)
+	local tempStart = isStart == true
 
-	if arg_31_0._isLastSwitchStart == var_31_0 then
+	if self._isLastSwitchStart == tempStart then
 		return
 	end
 
-	if arg_31_0._curSwitchSceneGO == nil then
-		arg_31_0._curSwitchSceneGO = arg_31_2 and arg_31_0._goresetgame or arg_31_0._goexcessive
-		arg_31_0._curSwitchSceneAnim = arg_31_2 and arg_31_0._resetGameAnimator or arg_31_0._swicthSceneAnimator
+	if self._curSwitchSceneGO == nil then
+		self._curSwitchSceneGO = isResetStart and self._goresetgame or self._goexcessive
+		self._curSwitchSceneAnim = isResetStart and self._resetGameAnimator or self._swicthSceneAnimator
 	end
 
-	arg_31_0._isLastSwitchStart = var_31_0
+	self._isLastSwitchStart = tempStart
 
-	if var_31_0 then
-		UIBlockMgr.instance:startBlock(var_0_0.UI_RESTART_BLOCK_KEY)
-		gohelper.setActive(arg_31_0._curSwitchSceneGO, true)
+	if tempStart then
+		UIBlockMgr.instance:startBlock(JiaLaBoNaGameView.UI_RESTART_BLOCK_KEY)
+		gohelper.setActive(self._curSwitchSceneGO, true)
 	end
 
-	arg_31_0._curSwitchSceneAnim:Play(var_31_0 and "open" or "close")
-	TaskDispatcher.cancelTask(arg_31_0._onHideSwitchScene, arg_31_0)
-	TaskDispatcher.runDelay(arg_31_0._onHideSwitchScene, arg_31_0, 0.3)
+	self._curSwitchSceneAnim:Play(tempStart and "open" or "close")
+	TaskDispatcher.cancelTask(self._onHideSwitchScene, self)
+	TaskDispatcher.runDelay(self._onHideSwitchScene, self, 0.3)
 end
 
-function var_0_0._onHideSwitchScene(arg_32_0)
-	if arg_32_0._isLastSwitchStart then
-		arg_32_0._curSwitchSceneAnim:Play("loop")
+function JiaLaBoNaGameView:_onHideSwitchScene()
+	if self._isLastSwitchStart then
+		self._curSwitchSceneAnim:Play("loop")
 	else
-		UIBlockMgr.instance:endBlock(var_0_0.UI_RESTART_BLOCK_KEY)
+		UIBlockMgr.instance:endBlock(JiaLaBoNaGameView.UI_RESTART_BLOCK_KEY)
 
-		if arg_32_0._curSwitchSceneGO then
-			gohelper.setActive(arg_32_0._curSwitchSceneGO, false)
+		if self._curSwitchSceneGO then
+			gohelper.setActive(self._curSwitchSceneGO, false)
 
-			arg_32_0._curSwitchSceneGO = nil
-			arg_32_0._curSwitchSceneAnim = nil
+			self._curSwitchSceneGO = nil
+			self._curSwitchSceneAnim = nil
 		end
 	end
 end
 
-function var_0_0._onReturnChessFromBattleGroup(arg_33_0)
+function JiaLaBoNaGameView:_onReturnChessFromBattleGroup()
 	JiaLaBoNaController.instance:returnPointGame()
 end
 
-function var_0_0._onToastUpdate(arg_34_0, arg_34_1)
-	local var_34_0 = Va3ChessModel.instance:getActId()
+function JiaLaBoNaGameView:_onToastUpdate(toastId)
+	local actId = Va3ChessModel.instance:getActId()
 
-	if var_34_0 == Va3ChessEnum.ActivityId.Act120 then
-		local var_34_1 = Activity120Config.instance:getTipsCo(var_34_0, arg_34_1)
+	if actId == Va3ChessEnum.ActivityId.Act120 then
+		local co = Activity120Config.instance:getTipsCo(actId, toastId)
 
-		if not var_34_1 then
-			logError(string.format("export_伽菈波娜飘字 activityId:%s id:%s", var_34_0, arg_34_1))
+		if not co then
+			logError(string.format("export_伽菈波娜飘字 activityId:%s id:%s", actId, toastId))
 
 			return
 		end
 
-		if var_34_1.audioId and var_34_1.audioId ~= 0 then
-			AudioMgr.instance:trigger(var_34_1.audioId)
+		if co.audioId and co.audioId ~= 0 then
+			AudioMgr.instance:trigger(co.audioId)
 		end
 
-		TaskDispatcher.cancelTask(arg_34_0._onHideToast, arg_34_0)
-		TaskDispatcher.runDelay(arg_34_0._onHideToast, arg_34_0, 5)
+		TaskDispatcher.cancelTask(self._onHideToast, self)
+		TaskDispatcher.runDelay(self._onHideToast, self, 5)
 
-		arg_34_0._txtTips.text = var_34_1.tips
+		self._txtTips.text = co.tips
 
-		gohelper.setActive(arg_34_0._goTips, true)
+		gohelper.setActive(self._goTips, true)
 	end
 end
 
-function var_0_0._onHideToast(arg_35_0)
-	gohelper.setActive(arg_35_0._goTips, false)
+function JiaLaBoNaGameView:_onHideToast()
+	gohelper.setActive(self._goTips, false)
 end
 
-return var_0_0
+return JiaLaBoNaGameView

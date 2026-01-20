@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_5.act146.view.VersionActivity1_5WarmUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act146/view/VersionActivity1_5WarmUpViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_5WarmUpViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.act146.view.VersionActivity1_5WarmUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity1_5WarmUpViewContainer = class("VersionActivity1_5WarmUpViewContainer", BaseViewContainer)
+
+function VersionActivity1_5WarmUpViewContainer:buildViews()
 	return {
 		VersionActivity1_5WarmUpView.New(),
 		VersionActivity1_5WarmUpInteract.New()
 	}
 end
 
-return var_0_0
+return VersionActivity1_5WarmUpViewContainer

@@ -1,65 +1,67 @@
-﻿module("modules.logic.guide.controller.GuideAudioMgr", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideAudioMgr.lua
 
-local var_0_0 = class("GuideAudioMgr")
-local var_0_1 = 0.33
+module("modules.logic.guide.controller.GuideAudioMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local GuideAudioMgr = class("GuideAudioMgr")
+local LowVoiceValue = 0.33
+
+function GuideAudioMgr:ctor()
 	return
 end
 
-function var_0_0.playAudio(arg_2_0, arg_2_1)
-	if AudioEffectMgr.instance:isPlaying(arg_2_1) then
+function GuideAudioMgr:playAudio(audioId)
+	if AudioEffectMgr.instance:isPlaying(audioId) then
 		return
 	end
 
-	if arg_2_0._audioId then
-		arg_2_0:stopAudio(arg_2_0._audioId)
+	if self._audioId then
+		self:stopAudio(self._audioId)
 	end
 
-	local var_2_0 = AudioEffectMgr.instance:getPlayingItemDict()
+	local playingItemDict = AudioEffectMgr.instance:getPlayingItemDict()
 
-	arg_2_0._setBusVolumeDict = {}
+	self._setBusVolumeDict = {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0._setBusVolumeDict[iter_2_1] = true
+	for _, audioItem in pairs(playingItemDict) do
+		self._setBusVolumeDict[audioItem] = true
 
-		ZProj.AudioManager.Instance:SetGameObjectOutputBusVolume(iter_2_1._go, var_0_1)
+		ZProj.AudioManager.Instance:SetGameObjectOutputBusVolume(audioItem._go, LowVoiceValue)
 	end
 
-	arg_2_0._audioId = arg_2_1
+	self._audioId = audioId
 
-	AudioEffectMgr.instance:registerCallback(AudioEffectMgr.OnPlayAudio, arg_2_0._onPlayAudio, arg_2_0)
-	AudioEffectMgr.instance:playAudio(arg_2_0._audioId)
+	AudioEffectMgr.instance:registerCallback(AudioEffectMgr.OnPlayAudio, self._onPlayAudio, self)
+	AudioEffectMgr.instance:playAudio(self._audioId)
 end
 
-function var_0_0._onPlayAudio(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0._audioId and arg_3_0._setBusVolumeDict and arg_3_1 ~= arg_3_0._audioId then
-		arg_3_0._setBusVolumeDict[arg_3_2] = true
+function GuideAudioMgr:_onPlayAudio(audioId, audioItem)
+	if self._audioId and self._setBusVolumeDict and audioId ~= self._audioId then
+		self._setBusVolumeDict[audioItem] = true
 
-		ZProj.AudioManager.Instance:SetGameObjectOutputBusVolume(arg_3_2._go, var_0_1)
+		ZProj.AudioManager.Instance:SetGameObjectOutputBusVolume(audioItem._go, LowVoiceValue)
 	end
 end
 
-function var_0_0.stopAudio(arg_4_0)
-	AudioEffectMgr.instance:unregisterCallback(AudioEffectMgr.OnPlayAudio, arg_4_0._onPlayAudio, arg_4_0)
+function GuideAudioMgr:stopAudio()
+	AudioEffectMgr.instance:unregisterCallback(AudioEffectMgr.OnPlayAudio, self._onPlayAudio, self)
 
-	if arg_4_0._setBusVolumeDict then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0._setBusVolumeDict) do
-			if not gohelper.isNil(iter_4_0._go) then
-				ZProj.AudioManager.Instance:ResetListenersToDefault(iter_4_0._go)
+	if self._setBusVolumeDict then
+		for audioItem, _ in pairs(self._setBusVolumeDict) do
+			if not gohelper.isNil(audioItem._go) then
+				ZProj.AudioManager.Instance:ResetListenersToDefault(audioItem._go)
 			end
 		end
 
-		arg_4_0._setBusVolumeDict = nil
+		self._setBusVolumeDict = nil
 	end
 
-	if arg_4_0._audioId then
-		AudioEffectMgr.instance:stopAudio(arg_4_0._audioId)
+	if self._audioId then
+		AudioEffectMgr.instance:stopAudio(self._audioId)
 
-		arg_4_0._audioId = nil
+		self._audioId = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+GuideAudioMgr.instance = GuideAudioMgr.New()
 
-return var_0_0
+return GuideAudioMgr

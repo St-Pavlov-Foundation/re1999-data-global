@@ -1,79 +1,84 @@
-﻿module("modules.common.activity.EnterActivityViewOnExitFightSceneHelper", package.seeall)
+﻿-- chunkname: @modules/common/activity/EnterActivityViewOnExitFightSceneHelper.lua
 
-local var_0_0 = class("EnterActivityViewOnExitFightSceneHelper")
+module("modules.common.activity.EnterActivityViewOnExitFightSceneHelper", package.seeall)
 
-function var_0_0.checkCurrentIsActivityFight()
-	var_0_0.recordMO = FightModel.instance:getRecordMO()
+local EnterActivityViewOnExitFightSceneHelper = class("EnterActivityViewOnExitFightSceneHelper")
 
-	local var_1_0 = DungeonModel.instance.curSendChapterId
+function EnterActivityViewOnExitFightSceneHelper.checkCurrentIsActivityFight()
+	EnterActivityViewOnExitFightSceneHelper.recordMO = FightModel.instance:getRecordMO()
 
-	return var_0_0.checkIsActivityFight(var_1_0)
+	local chapterId = DungeonModel.instance.curSendChapterId
+
+	return EnterActivityViewOnExitFightSceneHelper.checkIsActivityFight(chapterId)
 end
 
-function var_0_0.checkIsActivityFight(arg_2_0)
-	local var_2_0 = DungeonConfig.instance:getChapterCO(arg_2_0)
-	local var_2_1 = var_2_0 and var_2_0.actId or 0
+function EnterActivityViewOnExitFightSceneHelper.checkIsActivityFight(chapterId)
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
+	local actId = chapterCo and chapterCo.actId or 0
 
-	return var_2_1 ~= 0 and var_0_0["enterActivity" .. var_2_1]
+	return actId ~= 0 and EnterActivityViewOnExitFightSceneHelper["enterActivity" .. actId]
 end
 
-function var_0_0.enterCurrentActivity(arg_3_0, arg_3_1)
-	local var_3_0 = DungeonModel.instance.curSendChapterId
-	local var_3_1 = DungeonConfig.instance:getChapterCO(var_3_0)
-	local var_3_2 = var_3_1 and var_3_1.actId or 0
+function EnterActivityViewOnExitFightSceneHelper.enterCurrentActivity(forceStarting, exitFightGroup)
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
+	local actId = chapterCo and chapterCo.actId or 0
 
-	var_0_0.enterActivity(var_3_2, arg_3_0, arg_3_1)
+	EnterActivityViewOnExitFightSceneHelper.enterActivity(actId, forceStarting, exitFightGroup)
 end
 
-function var_0_0.enterActivity(arg_4_0, arg_4_1, arg_4_2)
-	if ActivityHelper.getActivityStatus(arg_4_0) ~= ActivityEnum.ActivityStatus.Normal then
+function EnterActivityViewOnExitFightSceneHelper.enterActivity(actId, forceStarting, exitFightGroup)
+	local status = ActivityHelper.getActivityStatus(actId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		DungeonModel.instance.curSendEpisodeId = nil
 
-		MainController.instance:enterMainScene(arg_4_1)
+		MainController.instance:enterMainScene(forceStarting)
 
 		return
 	end
 
-	if arg_4_0 == 0 then
+	if actId == 0 then
 		return
 	end
 
-	local var_4_0 = var_0_0["enterActivity" .. arg_4_0]
+	local enterFunc = EnterActivityViewOnExitFightSceneHelper["enterActivity" .. actId]
 
-	if not arg_4_2 then
-		local var_4_1 = var_0_0["checkFightAfterStory" .. arg_4_0]
+	if not exitFightGroup then
+		local checkFunc = EnterActivityViewOnExitFightSceneHelper["checkFightAfterStory" .. actId]
 
-		if var_4_1 and var_4_1(var_4_0, arg_4_1, arg_4_2) then
+		if checkFunc and checkFunc(enterFunc, forceStarting, exitFightGroup) then
 			return
 		end
 	end
 
-	if var_4_0 then
-		var_4_0(arg_4_1, arg_4_2)
+	if enterFunc then
+		enterFunc(forceStarting, exitFightGroup)
 	end
 end
 
-function var_0_0.enterVersionActivityDungeonCommon(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = DungeonModel.instance.curSendChapterId
-	local var_5_1 = DungeonModel.instance.curSendEpisodeId
-	local var_5_2 = FightController.instance:isReplayMode(var_5_1)
-	local var_5_3 = DungeonConfig.instance:getEpisodeCO(var_5_1)
-	local var_5_4 = DungeonConfig.instance:getChapterCO(var_5_0).actId
-	local var_5_5 = ActivityHelper.getActivityStatus(var_5_4)
+function EnterActivityViewOnExitFightSceneHelper.enterVersionActivityDungeonCommon(callBack, forceStarting, exitFightGroup)
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local isReplay = FightController.instance:isReplayMode(episodeId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
+	local actId = chapterConfig.actId
+	local activityState = ActivityHelper.getActivityStatus(actId)
 
-	if ActivityEnum.ActivityStatus.Normal ~= var_5_5 then
-		MainController.instance:enterMainScene(arg_5_1)
+	if ActivityEnum.ActivityStatus.Normal ~= activityState then
+		MainController.instance:enterMainScene(forceStarting)
 
 		return
 	end
 
-	if not arg_5_2 and var_5_2 then
-		if var_0_0["enterFightAgain" .. var_5_4] then
-			if var_0_0["enterFightAgain" .. var_5_4]() then
+	if not exitFightGroup and isReplay then
+		if EnterActivityViewOnExitFightSceneHelper["enterFightAgain" .. actId] then
+			if EnterActivityViewOnExitFightSceneHelper["enterFightAgain" .. actId]() then
 				return
 			end
 		else
-			var_0_0.enterFightAgain()
+			EnterActivityViewOnExitFightSceneHelper.enterFightAgain()
 
 			return
 		end
@@ -83,30 +88,30 @@ function var_0_0.enterVersionActivityDungeonCommon(arg_5_0, arg_5_1, arg_5_2)
 	DungeonModel.instance.lastSendEpisodeId = DungeonModel.instance.curSendEpisodeId
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_5_1)
+	MainController.instance:enterMainScene(forceStarting)
 
-	local var_5_6 = {
-		episodeId = var_5_1,
-		episodeCo = var_5_3,
-		exitFightGroup = arg_5_2
+	local param = {
+		episodeId = episodeId,
+		episodeCo = episodeCo,
+		exitFightGroup = exitFightGroup
 	}
 
-	SceneHelper.instance:waitSceneDone(SceneType.Main, arg_5_0, var_0_0, var_5_6)
+	SceneHelper.instance:waitSceneDone(SceneType.Main, callBack, EnterActivityViewOnExitFightSceneHelper, param)
 end
 
-function var_0_0.enterFightAgain()
+function EnterActivityViewOnExitFightSceneHelper.enterFightAgain()
 	GameSceneMgr.instance:closeScene(nil, nil, nil, true)
 
-	local var_6_0 = DungeonModel.instance.curSendChapterId
-	local var_6_1 = DungeonModel.instance.curSendEpisodeId
+	local chapterId = DungeonModel.instance.curSendChapterId
+	local episodeId = DungeonModel.instance.curSendEpisodeId
 
-	DungeonFightController.instance:enterFight(var_6_0, var_6_1, DungeonModel.instance.curSelectTicketId)
+	DungeonFightController.instance:enterFight(chapterId, episodeId, DungeonModel.instance.curSelectTicketId)
 end
 
-function var_0_0.activeExtend()
+function EnterActivityViewOnExitFightSceneHelper.activeExtend()
 	ActivityHelper.activateClass("EnterActivityViewOnExitFightSceneHelper%d_%d", 1, 1)
 
-	local var_7_0 = _G.EnterActivityViewOnExitFightSceneHelper2_9
+	local _ = _G.EnterActivityViewOnExitFightSceneHelper2_9
 end
 
-return var_0_0
+return EnterActivityViewOnExitFightSceneHelper

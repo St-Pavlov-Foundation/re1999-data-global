@@ -1,456 +1,460 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotUpgradeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotUpgradeView.lua
 
-local var_0_0 = class("V1a6_CachotUpgradeView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotUpgradeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagelevelbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_levelbg")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "top/#simage_title")
-	arg_1_0._gohope = gohelper.findChild(arg_1_0.viewGO, "top/#go_hope")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "top/#go_hope/bg/#go_progress")
-	arg_1_0._txtnum1 = gohelper.findChildText(arg_1_0.viewGO, "top/#go_hope/#txt_num1")
-	arg_1_0._txtnum2 = gohelper.findChildText(arg_1_0.viewGO, "top/#go_hope/#txt_num2")
-	arg_1_0._goshop = gohelper.findChild(arg_1_0.viewGO, "top/#go_shop")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "top/#go_shop/#simage_icon")
-	arg_1_0._txtshopnum = gohelper.findChildText(arg_1_0.viewGO, "top/#go_shop/#txt_shopnum")
-	arg_1_0._gopresetcontent = gohelper.findChild(arg_1_0.viewGO, "scroll_view/Viewport/#go_presetcontent")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "right/#go_normal")
-	arg_1_0._txtorder = gohelper.findChildText(arg_1_0.viewGO, "right/#go_normal/#txt_order")
-	arg_1_0._goqualityeffect1 = gohelper.findChild(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#go_quality_effect1")
-	arg_1_0._imagequality1 = gohelper.findChildImage(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#image_quality1")
-	arg_1_0._goqualityeffect2 = gohelper.findChild(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#go_quality_effect2")
-	arg_1_0._imagequality2 = gohelper.findChildImage(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#image_quality2")
-	arg_1_0._txtlevel1 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#txt_level1")
-	arg_1_0._txtlevel2 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#txt_level2")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#btn_switch")
-	arg_1_0._btnswitch2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#btn_switch2")
-	arg_1_0._godetails = gohelper.findChild(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/#go_details")
-	arg_1_0._godetailitem = gohelper.findChild(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/#go_details/#go_detailitem")
-	arg_1_0._txtbreaklevel1 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/3/info/#txt_breaklevel1")
-	arg_1_0._txtbreaklevel2 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/3/info/#txt_breaklevel2")
-	arg_1_0._txttalentlevel1 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/4/info/#txt_talentlevel1")
-	arg_1_0._txttalentlevel2 = gohelper.findChildText(arg_1_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/4/info/#txt_talentlevel2")
-	arg_1_0._gofull = gohelper.findChild(arg_1_0.viewGO, "right/#go_full")
-	arg_1_0._goupgrade = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_upgrade")
-	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#go_upgrade/#btn_upgrade")
-	arg_1_0._txtupgrade = gohelper.findChildText(arg_1_0.viewGO, "bottom/#go_upgrade/#btn_upgrade/txt_upgrade")
-	arg_1_0._txtupgradecost = gohelper.findChildText(arg_1_0.viewGO, "bottom/#go_upgrade/#txt_upgradecost")
-	arg_1_0._gogiveup = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_giveup")
-	arg_1_0._btngiveup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#go_giveup/#btn_giveup")
-	arg_1_0._txtgiveupcost = gohelper.findChildText(arg_1_0.viewGO, "bottom/#go_giveup/#txt_giveupcost")
+local V1a6_CachotUpgradeView = class("V1a6_CachotUpgradeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotUpgradeView:onInitView()
+	self._simagelevelbg = gohelper.findChildSingleImage(self.viewGO, "#simage_levelbg")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "top/#simage_title")
+	self._gohope = gohelper.findChild(self.viewGO, "top/#go_hope")
+	self._goprogress = gohelper.findChild(self.viewGO, "top/#go_hope/bg/#go_progress")
+	self._txtnum1 = gohelper.findChildText(self.viewGO, "top/#go_hope/#txt_num1")
+	self._txtnum2 = gohelper.findChildText(self.viewGO, "top/#go_hope/#txt_num2")
+	self._goshop = gohelper.findChild(self.viewGO, "top/#go_shop")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "top/#go_shop/#simage_icon")
+	self._txtshopnum = gohelper.findChildText(self.viewGO, "top/#go_shop/#txt_shopnum")
+	self._gopresetcontent = gohelper.findChild(self.viewGO, "scroll_view/Viewport/#go_presetcontent")
+	self._gonormal = gohelper.findChild(self.viewGO, "right/#go_normal")
+	self._txtorder = gohelper.findChildText(self.viewGO, "right/#go_normal/#txt_order")
+	self._goqualityeffect1 = gohelper.findChild(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#go_quality_effect1")
+	self._imagequality1 = gohelper.findChildImage(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#image_quality1")
+	self._goqualityeffect2 = gohelper.findChild(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#go_quality_effect2")
+	self._imagequality2 = gohelper.findChildImage(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/1/#image_quality2")
+	self._txtlevel1 = gohelper.findChildText(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#txt_level1")
+	self._txtlevel2 = gohelper.findChildText(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#txt_level2")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#btn_switch")
+	self._btnswitch2 = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#btn_switch2")
+	self._godetails = gohelper.findChild(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/#go_details")
+	self._godetailitem = gohelper.findChild(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/#go_details/#go_detailitem")
+	self._txtbreaklevel1 = gohelper.findChildText(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/3/info/#txt_breaklevel1")
+	self._txtbreaklevel2 = gohelper.findChildText(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/3/info/#txt_breaklevel2")
+	self._txttalentlevel1 = gohelper.findChildText(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/4/info/#txt_talentlevel1")
+	self._txttalentlevel2 = gohelper.findChildText(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/4/info/#txt_talentlevel2")
+	self._gofull = gohelper.findChild(self.viewGO, "right/#go_full")
+	self._goupgrade = gohelper.findChild(self.viewGO, "bottom/#go_upgrade")
+	self._btnupgrade = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#go_upgrade/#btn_upgrade")
+	self._txtupgrade = gohelper.findChildText(self.viewGO, "bottom/#go_upgrade/#btn_upgrade/txt_upgrade")
+	self._txtupgradecost = gohelper.findChildText(self.viewGO, "bottom/#go_upgrade/#txt_upgradecost")
+	self._gogiveup = gohelper.findChild(self.viewGO, "bottom/#go_giveup")
+	self._btngiveup = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#go_giveup/#btn_giveup")
+	self._txtgiveupcost = gohelper.findChildText(self.viewGO, "bottom/#go_giveup/#txt_giveupcost")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
-	arg_2_0._btnswitch2:AddClickListener(arg_2_0._btnswitch2OnClick, arg_2_0)
-	arg_2_0._btnupgrade:AddClickListener(arg_2_0._btnupgradeOnClick, arg_2_0)
-	arg_2_0._btngiveup:AddClickListener(arg_2_0._btngiveupOnClick, arg_2_0)
+function V1a6_CachotUpgradeView:addEvents()
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
+	self._btnswitch2:AddClickListener(self._btnswitch2OnClick, self)
+	self._btnupgrade:AddClickListener(self._btnupgradeOnClick, self)
+	self._btngiveup:AddClickListener(self._btngiveupOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnswitch:RemoveClickListener()
-	arg_3_0._btnswitch2:RemoveClickListener()
-	arg_3_0._btnupgrade:RemoveClickListener()
-	arg_3_0._btngiveup:RemoveClickListener()
+function V1a6_CachotUpgradeView:removeEvents()
+	self._btnswitch:RemoveClickListener()
+	self._btnswitch2:RemoveClickListener()
+	self._btnupgrade:RemoveClickListener()
+	self._btngiveup:RemoveClickListener()
 end
 
-function var_0_0._btnswitchOnClick(arg_4_0)
-	arg_4_0._detailAnimator:Play("close", 0, 0)
-	arg_4_0:_showUpSwitch(false)
-	TaskDispatcher.cancelTask(arg_4_0._hideDetail, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0._hideDetail, arg_4_0, 0.16)
+function V1a6_CachotUpgradeView:_btnswitchOnClick()
+	self._detailAnimator:Play("close", 0, 0)
+	self:_showUpSwitch(false)
+	TaskDispatcher.cancelTask(self._hideDetail, self)
+	TaskDispatcher.runDelay(self._hideDetail, self, 0.16)
 end
 
-function var_0_0._hideDetail(arg_5_0)
-	gohelper.setActive(arg_5_0._godetails, false)
+function V1a6_CachotUpgradeView:_hideDetail()
+	gohelper.setActive(self._godetails, false)
 end
 
-function var_0_0._btngiveupOnClick(arg_6_0)
-	if not arg_6_0._anyCanUpgrade then
-		RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, arg_6_0.viewParam.eventId, arg_6_0.closeThis, arg_6_0)
+function V1a6_CachotUpgradeView:_btngiveupOnClick()
+	if not self._anyCanUpgrade then
+		RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, self.viewParam.eventId, self.closeThis, self)
 
 		return
 	end
 
-	local function var_6_0()
-		RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, arg_6_0.viewParam.eventId, arg_6_0.closeThis, arg_6_0)
+	local function yesFunc()
+		RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, self.viewParam.eventId, self.closeThis, self)
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6CachotMsgBox06, MsgBoxEnum.BoxType.Yes_No, var_6_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.V1a6CachotMsgBox06, MsgBoxEnum.BoxType.Yes_No, yesFunc)
 end
 
-function var_0_0._btnswitch2OnClick(arg_8_0)
-	gohelper.setActive(arg_8_0._godetails, true)
-	arg_8_0:_showUpSwitch(true)
-	arg_8_0._detailAnimator:Play("open", 0, 0)
-	TaskDispatcher.cancelTask(arg_8_0._hideDetail, arg_8_0)
+function V1a6_CachotUpgradeView:_btnswitch2OnClick()
+	gohelper.setActive(self._godetails, true)
+	self:_showUpSwitch(true)
+	self._detailAnimator:Play("open", 0, 0)
+	TaskDispatcher.cancelTask(self._hideDetail, self)
 end
 
-function var_0_0._showUpSwitch(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._btnswitch, arg_9_1)
-	gohelper.setActive(arg_9_0._btnswitch2, not arg_9_1)
+function V1a6_CachotUpgradeView:_showUpSwitch(value)
+	gohelper.setActive(self._btnswitch, value)
+	gohelper.setActive(self._btnswitch2, not value)
 end
 
-function var_0_0._btnupgradeOnClick(arg_10_0)
-	if not arg_10_0._nextConfig then
+function V1a6_CachotUpgradeView:_btnupgradeOnClick()
+	if not self._nextConfig then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast06)
 
 		return
 	end
 
-	if arg_10_0._nextConfig and arg_10_0._nextConfig.cost > arg_10_0._rogueInfo.currency then
+	if self._nextConfig and self._nextConfig.cost > self._rogueInfo.currency then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast05)
 
 		return
 	end
 
-	local var_10_0 = arg_10_0._selectedTeamItem:getSeatIndex()
+	local seatIndex = self._selectedTeamItem:getSeatIndex()
 
-	RogueRpc.instance:sendRogueEventSelectRequest(V1a6_CachotEnum.ActivityId, arg_10_0.viewParam.eventId, var_10_0, arg_10_0._onSelectEnd, arg_10_0)
+	RogueRpc.instance:sendRogueEventSelectRequest(V1a6_CachotEnum.ActivityId, self.viewParam.eventId, seatIndex, self._onSelectEnd, self)
 end
 
-function var_0_0._onSelectEnd(arg_11_0)
+function V1a6_CachotUpgradeView:_onSelectEnd()
 	V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.OnSeatUpgradeSuccess)
 end
 
-function var_0_0._initPresetItemList(arg_12_0)
-	if arg_12_0._presetItemList then
+function V1a6_CachotUpgradeView:_initPresetItemList()
+	if self._presetItemList then
 		return
 	end
 
-	arg_12_0._presetItemList = arg_12_0:getUserDataTb_()
+	self._presetItemList = self:getUserDataTb_()
 
-	local var_12_0 = arg_12_0.viewContainer:getSetting().otherRes[1]
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_12_0 = 1, V1a6_CachotEnum.HeroCountInGroup do
-		local var_12_1 = arg_12_0:getResInst(var_12_0, arg_12_0._gopresetcontent, "item" .. tostring(iter_12_0))
-		local var_12_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1, V1a6_CachotTeamItem)
+	for i = 1, V1a6_CachotEnum.HeroCountInGroup do
+		local childGO = self:getResInst(path, self._gopresetcontent, "item" .. tostring(i))
+		local presetItem = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V1a6_CachotTeamItem)
 
-		arg_12_0._presetItemList[iter_12_0] = var_12_2
+		self._presetItemList[i] = presetItem
 
-		var_12_2:setSelectEnable(true)
+		presetItem:setSelectEnable(true)
 	end
 end
 
-function var_0_0._updatePresetItemList(arg_13_0)
-	arg_13_0._anyCanUpgrade = false
+function V1a6_CachotUpgradeView:_updatePresetItemList()
+	self._anyCanUpgrade = false
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._presetItemList) do
-		local var_13_0 = V1a6_CachotHeroSingleGroupModel.instance:getById(iter_13_0)
-		local var_13_1 = V1a6_CachotTeamModel.instance:getSeatLevel(iter_13_0)
+	for i, item in ipairs(self._presetItemList) do
+		local mo = V1a6_CachotHeroSingleGroupModel.instance:getById(i)
+		local seatLevel = V1a6_CachotTeamModel.instance:getSeatLevel(i)
 
-		V1a6_CachotTeamModel.instance:setSeatInfo(iter_13_0, var_13_1, var_13_0)
-		iter_13_1:onUpdateMO(var_13_0)
+		V1a6_CachotTeamModel.instance:setSeatInfo(i, seatLevel, mo)
+		item:onUpdateMO(mo)
 
-		local var_13_2 = var_13_1 + 1
-		local var_13_3 = lua_rogue_field.configDict[var_13_2]
+		local nextLevel = seatLevel + 1
+		local nextSeatConfig = lua_rogue_field.configDict[nextLevel]
 
-		if var_13_3 then
-			if var_13_3.cost > arg_13_0._rogueInfo.currency then
-				iter_13_1:setCost(string.format("<color=#D97373>-%s</color>", var_13_3.cost))
+		if nextSeatConfig then
+			if nextSeatConfig.cost > self._rogueInfo.currency then
+				item:setCost(string.format("<color=#D97373>-%s</color>", nextSeatConfig.cost))
 			else
-				iter_13_1:setCost("-" .. var_13_3.cost)
+				item:setCost("-" .. nextSeatConfig.cost)
 
-				arg_13_0._anyCanUpgrade = true
+				self._anyCanUpgrade = true
 			end
 		else
-			iter_13_1:setCost()
+			item:setCost()
 		end
 	end
 end
 
-function var_0_0._selectItem(arg_14_0, arg_14_1, arg_14_2)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._presetItemList) do
-		local var_14_0 = arg_14_1 and iter_14_0 == arg_14_1
-		local var_14_1 = arg_14_2 and iter_14_1:getMo() == arg_14_2
-		local var_14_2 = var_14_0 or var_14_1
+function V1a6_CachotUpgradeView:_selectItem(index, mo)
+	for i, item in ipairs(self._presetItemList) do
+		local selectByIndex = index and i == index
+		local selectByMo = mo and item:getMo() == mo
+		local isSelected = selectByIndex or selectByMo
 
-		iter_14_1:setSelected(var_14_2)
+		item:setSelected(isSelected)
 
-		if var_14_2 then
-			arg_14_0._selectedIndex = iter_14_0
+		if isSelected then
+			self._selectedIndex = i
 
-			arg_14_0:_showSeatInfo(iter_14_1)
+			self:_showSeatInfo(item)
 		end
 	end
 end
 
-function var_0_0._setQuality(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	local var_15_0 = arg_15_0[arg_15_4]
+function V1a6_CachotUpgradeView:_setQuality(effectGo, img, level, effectListKey)
+	local list = self[effectListKey]
 
-	if not var_15_0 then
-		var_15_0 = arg_15_0:getUserDataTb_()
-		arg_15_0[arg_15_4] = var_15_0
+	if not list then
+		list = self:getUserDataTb_()
+		self[effectListKey] = list
 
-		local var_15_1 = arg_15_1.transform
-		local var_15_2 = var_15_1.childCount
+		local transform = effectGo.transform
+		local childCount = transform.childCount
 
-		for iter_15_0 = 1, var_15_2 do
-			local var_15_3 = var_15_1:GetChild(iter_15_0 - 1)
+		for i = 1, childCount do
+			local child = transform:GetChild(i - 1)
 
-			var_15_0[var_15_3.name] = var_15_3
+			list[child.name] = child
 
-			local var_15_4 = var_15_3:GetComponentsInChildren(gohelper.Type_Image, true)
+			local imgList = child:GetComponentsInChildren(gohelper.Type_Image, true)
 
-			for iter_15_1 = 0, var_15_4.Length - 1 do
-				var_15_4[iter_15_1].maskable = true
+			for j = 0, imgList.Length - 1 do
+				local img = imgList[j]
+
+				img.maskable = true
 			end
 		end
 	end
 
-	local var_15_5 = "effect_0" .. arg_15_3
+	local targetName = "effect_0" .. level
 
-	for iter_15_2, iter_15_3 in pairs(var_15_0) do
-		gohelper.setActive(iter_15_3, iter_15_2 == var_15_5)
+	for k, v in pairs(list) do
+		gohelper.setActive(v, k == targetName)
 	end
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_15_2, "v1a6_cachot_quality_0" .. arg_15_3)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(img, "v1a6_cachot_quality_0" .. level)
 end
 
-function var_0_0._showSeatInfo(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._gonormal, false)
-	gohelper.setActive(arg_16_0._gofull, false)
+function V1a6_CachotUpgradeView:_showSeatInfo(item)
+	gohelper.setActive(self._gonormal, false)
+	gohelper.setActive(self._gofull, false)
 
-	local var_16_0 = arg_16_1:getSeatIndex()
+	local seatIndex = item:getSeatIndex()
 
-	arg_16_0._selectedTeamItem = arg_16_1
-	arg_16_0._txtorder.text = formatLuaLang("cachot_seat_name", GameUtil.getRomanNums(var_16_0))
+	self._selectedTeamItem = item
+	self._txtorder.text = formatLuaLang("cachot_seat_name", GameUtil.getRomanNums(seatIndex))
 
-	local var_16_1 = V1a6_CachotTeamModel.instance:getSeatLevel(var_16_0)
-	local var_16_2 = var_16_1 + 1
-	local var_16_3 = lua_rogue_field.configDict[var_16_2]
+	local curLevel = V1a6_CachotTeamModel.instance:getSeatLevel(seatIndex)
+	local nextLevel = curLevel + 1
+	local nextConfig = lua_rogue_field.configDict[nextLevel]
 
-	arg_16_0._nextConfig = var_16_3
+	self._nextConfig = nextConfig
 
-	gohelper.setActive(arg_16_0._txtupgradecost, var_16_3)
-	ZProj.UGUIHelper.SetGrayscale(arg_16_0._btnupgrade.gameObject, var_16_3 == nil)
-	ZProj.UGUIHelper.SetGrayscale(arg_16_0._txtupgrade.gameObject, var_16_3 == nil)
+	gohelper.setActive(self._txtupgradecost, nextConfig)
+	ZProj.UGUIHelper.SetGrayscale(self._btnupgrade.gameObject, nextConfig == nil)
+	ZProj.UGUIHelper.SetGrayscale(self._txtupgrade.gameObject, nextConfig == nil)
 
-	if not var_16_3 then
-		gohelper.setActive(arg_16_0._gofull, true)
+	if not nextConfig then
+		gohelper.setActive(self._gofull, true)
 
 		return
 	end
 
-	gohelper.setActive(arg_16_0._gonormal, true)
+	gohelper.setActive(self._gonormal, true)
 
-	local var_16_4 = lua_rogue_field.configDict[var_16_1]
+	local curConfig = lua_rogue_field.configDict[curLevel]
 
-	arg_16_0:_setQuality(arg_16_0._goqualityeffect1, arg_16_0._imagequality1, var_16_1, "effectListKey1")
-	arg_16_0:_setQuality(arg_16_0._goqualityeffect2, arg_16_0._imagequality2, var_16_2, "effectListKey2")
+	self:_setQuality(self._goqualityeffect1, self._imagequality1, curLevel, "effectListKey1")
+	self:_setQuality(self._goqualityeffect2, self._imagequality2, nextLevel, "effectListKey2")
 
-	arg_16_0._txtbreaklevel1.text = "Lv." .. var_16_4.equipLevel
-	arg_16_0._txtbreaklevel2.text = "Lv." .. var_16_3.equipLevel
-	arg_16_0._txttalentlevel1.text = "Lv." .. var_16_4.talentLevel
-	arg_16_0._txttalentlevel2.text = "Lv." .. var_16_3.talentLevel
+	self._txtbreaklevel1.text = "Lv." .. curConfig.equipLevel
+	self._txtbreaklevel2.text = "Lv." .. nextConfig.equipLevel
+	self._txttalentlevel1.text = "Lv." .. curConfig.talentLevel
+	self._txttalentlevel2.text = "Lv." .. nextConfig.talentLevel
 
-	local var_16_5 = arg_16_1:getHeroMo()
-	local var_16_6 = 6
+	local heroMo = item:getHeroMo()
+	local starNum = 6
 
-	if var_16_5 then
-		var_16_6 = CharacterEnum.Star[var_16_5.config.rare]
+	if heroMo then
+		starNum = CharacterEnum.Star[heroMo.config.rare]
 	end
 
-	arg_16_0._roleStarNum.text = tostring(var_16_6)
+	self._roleStarNum.text = tostring(starNum)
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._roleStarList) do
-		gohelper.setActive(iter_16_1, iter_16_0 <= var_16_6)
+	for i, v in ipairs(self._roleStarList) do
+		gohelper.setActive(v, i <= starNum)
 	end
 
-	local var_16_7 = arg_16_0:_getLevelKey(var_16_6)
+	local roleKey = self:_getLevelKey(starNum)
 
-	arg_16_0:_showDetailLevel(var_16_4[var_16_7], arg_16_0._txtlevel1, arg_16_0._rankList1)
-	arg_16_0:_showDetailLevel(var_16_3[var_16_7], arg_16_0._txtlevel2, arg_16_0._rankList2)
+	self:_showDetailLevel(curConfig[roleKey], self._txtlevel1, self._rankList1)
+	self:_showDetailLevel(nextConfig[roleKey], self._txtlevel2, self._rankList2)
 
-	for iter_16_2, iter_16_3 in ipairs(arg_16_0._detailItemList) do
-		local var_16_8 = arg_16_0:_getLevelKey(iter_16_3.starNum)
+	for i, v in ipairs(self._detailItemList) do
+		local key = self:_getLevelKey(v.starNum)
 
-		arg_16_0:_updateDetailItem(iter_16_3, var_16_4, var_16_3, var_16_8)
+		self:_updateDetailItem(v, curConfig, nextConfig, key)
 	end
 
-	if var_16_3.cost > arg_16_0._rogueInfo.currency then
-		arg_16_0._txtupgradecost.text = string.format("<color=#D97373>-%s</color>", var_16_3.cost)
+	if nextConfig.cost > self._rogueInfo.currency then
+		self._txtupgradecost.text = string.format("<color=#D97373>-%s</color>", nextConfig.cost)
 	else
-		arg_16_0._txtupgradecost.text = string.format("<color=#E6E5E1>-%s</color>", var_16_3.cost)
+		self._txtupgradecost.text = string.format("<color=#E6E5E1>-%s</color>", nextConfig.cost)
 	end
 end
 
-function var_0_0._getLevelKey(arg_17_0, arg_17_1)
-	if arg_17_1 >= 5 then
-		return "level" .. arg_17_1
+function V1a6_CachotUpgradeView:_getLevelKey(starNum)
+	if starNum >= 5 then
+		return "level" .. starNum
 	else
 		return "level4"
 	end
 end
 
-function var_0_0._updateDetailItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	arg_18_0:_showDetailLevel(arg_18_2[arg_18_4], arg_18_1.lv1, arg_18_1._rankList1)
-	arg_18_0:_showDetailLevel(arg_18_3[arg_18_4], arg_18_1.lv2, arg_18_1._rankList2)
+function V1a6_CachotUpgradeView:_updateDetailItem(item, curConfig, nextConfig, key)
+	self:_showDetailLevel(curConfig[key], item.lv1, item._rankList1)
+	self:_showDetailLevel(nextConfig[key], item.lv2, item._rankList2)
 end
 
-function var_0_0._showDetailLevel(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0, var_19_1 = HeroConfig.instance:getShowLevel(arg_19_1)
+function V1a6_CachotUpgradeView:_showDetailLevel(level, txt, rankList)
+	local showLevel, rank = HeroConfig.instance:getShowLevel(level)
 
-	arg_19_2.text = "Lv." .. var_19_0
+	txt.text = "Lv." .. showLevel
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_3) do
-		local var_19_2 = iter_19_0 == var_19_1 - 1
+	for i, go in ipairs(rankList) do
+		local visible = i == rank - 1
 
-		gohelper.setActive(iter_19_1, var_19_2)
-	end
-end
-
-function var_0_0._editableInitView(arg_20_0)
-	arg_20_0:_initRoleLevelInfo()
-	arg_20_0:_initDetailItemList()
-	gohelper.setActive(arg_20_0._txtgiveupcost, false)
-
-	arg_20_0._animator = arg_20_0.viewGO:GetComponent("Animator")
-	arg_20_0._detailAnimator = arg_20_0._godetails:GetComponent("Animator")
-end
-
-function var_0_0._initRoleLevelInfo(arg_21_0)
-	arg_21_0._roleStarList = arg_21_0:getUserDataTb_()
-	arg_21_0._roleStarNum = gohelper.findChildText(arg_21_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/layout/#txt_num")
-
-	local var_21_0 = gohelper.findChild(arg_21_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/layout/rare")
-	local var_21_1 = 1
-
-	for iter_21_0 = 1, var_21_1 do
-		local var_21_2 = gohelper.findChild(var_21_0, "go_rare" .. iter_21_0)
-
-		arg_21_0._roleStarList[iter_21_0] = var_21_2
-	end
-
-	arg_21_0._rankList1 = arg_21_0:getUserDataTb_()
-	arg_21_0._rankList2 = arg_21_0:getUserDataTb_()
-
-	for iter_21_1 = 1, 3 do
-		local var_21_3 = gohelper.findChild(arg_21_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#txt_level1/rankobj/rank" .. iter_21_1)
-
-		table.insert(arg_21_0._rankList1, var_21_3)
-
-		local var_21_4 = gohelper.findChild(arg_21_0.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/rankobj/rank" .. iter_21_1)
-
-		table.insert(arg_21_0._rankList2, var_21_4)
+		gohelper.setActive(go, visible)
 	end
 end
 
-function var_0_0._initDetailItemList(arg_22_0)
-	arg_22_0._detailItemList = arg_22_0:getUserDataTb_()
+function V1a6_CachotUpgradeView:_editableInitView()
+	self:_initRoleLevelInfo()
+	self:_initDetailItemList()
+	gohelper.setActive(self._txtgiveupcost, false)
 
-	local var_22_0 = {}
-
-	for iter_22_0 = 6, 1, -1 do
-		table.insert(var_22_0, iter_22_0)
-	end
-
-	gohelper.CreateObjList(arg_22_0, arg_22_0._initDetailItem, var_22_0, arg_22_0._godetails, arg_22_0._godetailitem)
+	self._animator = self.viewGO:GetComponent("Animator")
+	self._detailAnimator = self._godetails:GetComponent("Animator")
 end
 
-function var_0_0._initDetailItem(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = arg_23_0:getUserDataTb_()
+function V1a6_CachotUpgradeView:_initRoleLevelInfo()
+	self._roleStarList = self:getUserDataTb_()
+	self._roleStarNum = gohelper.findChildText(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/layout/#txt_num")
 
-	var_23_0.starNum = arg_23_2
-	var_23_0.lv1 = gohelper.findChildText(arg_23_1, "txt_level1")
-	var_23_0.lv2 = gohelper.findChildText(arg_23_1, "txt_level2")
-	var_23_0.lvnum = gohelper.findChildText(arg_23_1, "#txt_num")
-	var_23_0.lvnum.text = tostring(arg_23_2)
-	var_23_0._rankList1 = arg_23_0:getUserDataTb_()
-	var_23_0._rankList2 = arg_23_0:getUserDataTb_()
+	local go = gohelper.findChild(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/layout/rare")
+	local starNum = 1
 
-	for iter_23_0 = 1, 3 do
-		local var_23_1 = gohelper.findChild(arg_23_1, "txt_level1/rankobj/rank" .. iter_23_0)
+	for i = 1, starNum do
+		local star = gohelper.findChild(go, "go_rare" .. i)
 
-		table.insert(var_23_0._rankList1, var_23_1)
-
-		local var_23_2 = gohelper.findChild(arg_23_1, "rankobj/rank" .. iter_23_0)
-
-		table.insert(var_23_0._rankList2, var_23_2)
+		self._roleStarList[i] = star
 	end
 
-	local var_23_3 = 1
+	self._rankList1 = self:getUserDataTb_()
+	self._rankList2 = self:getUserDataTb_()
 
-	for iter_23_1 = 1, var_23_3 do
-		local var_23_4 = gohelper.findChild(arg_23_1, "rare/go_rare" .. iter_23_1)
+	for i = 1, 3 do
+		local rank1 = gohelper.findChild(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/#txt_level1/rankobj/rank" .. i)
 
-		gohelper.setActive(var_23_4, iter_23_1 <= arg_23_2)
-	end
+		table.insert(self._rankList1, rank1)
 
-	gohelper.setActive(arg_23_1, true)
+		local rank2 = gohelper.findChild(self.viewGO, "right/#go_normal/scroll_view/Viewport/Content/2/info/rankobj/rank" .. i)
 
-	arg_23_0._detailItemList[arg_23_3] = var_23_0
-
-	if arg_23_3 == 6 then
-		gohelper.setActive(arg_23_1, false)
+		table.insert(self._rankList2, rank2)
 	end
 end
 
-function var_0_0.onOpen(arg_24_0)
-	arg_24_0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+function V1a6_CachotUpgradeView:_initDetailItemList()
+	self._detailItemList = self:getUserDataTb_()
+
+	local starList = {}
+
+	for i = 6, 1, -1 do
+		table.insert(starList, i)
+	end
+
+	gohelper.CreateObjList(self, self._initDetailItem, starList, self._godetails, self._godetailitem)
+end
+
+function V1a6_CachotUpgradeView:_initDetailItem(obj, data, index)
+	local item = self:getUserDataTb_()
+
+	item.starNum = data
+	item.lv1 = gohelper.findChildText(obj, "txt_level1")
+	item.lv2 = gohelper.findChildText(obj, "txt_level2")
+	item.lvnum = gohelper.findChildText(obj, "#txt_num")
+	item.lvnum.text = tostring(data)
+	item._rankList1 = self:getUserDataTb_()
+	item._rankList2 = self:getUserDataTb_()
+
+	for i = 1, 3 do
+		local rank1 = gohelper.findChild(obj, "txt_level1/rankobj/rank" .. i)
+
+		table.insert(item._rankList1, rank1)
+
+		local rank2 = gohelper.findChild(obj, "rankobj/rank" .. i)
+
+		table.insert(item._rankList2, rank2)
+	end
+
+	local starNum = 1
+
+	for i = 1, starNum do
+		local go = gohelper.findChild(obj, "rare/go_rare" .. i)
+
+		gohelper.setActive(go, i <= data)
+	end
+
+	gohelper.setActive(obj, true)
+
+	self._detailItemList[index] = item
+
+	if index == 6 then
+		gohelper.setActive(obj, false)
+	end
+end
+
+function V1a6_CachotUpgradeView:onOpen()
+	self._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
 	V1a6_CachotTeamModel.instance:clearSeatInfos()
-	arg_24_0:_initPresetItemList()
-	arg_24_0:_updatePresetItemList()
-	arg_24_0:_selectItem(1)
-	arg_24_0:_showUpSwitch(false)
-	arg_24_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnClickTeamItem, arg_24_0._onClickTeamItem, arg_24_0)
-	arg_24_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnSeatUpgradeSuccess, arg_24_0._onSeatUpgradeSuccess, arg_24_0)
-	arg_24_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_24_0._onCloseView, arg_24_0)
-	arg_24_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_24_0._onOpenView, arg_24_0)
+	self:_initPresetItemList()
+	self:_updatePresetItemList()
+	self:_selectItem(1)
+	self:_showUpSwitch(false)
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnClickTeamItem, self._onClickTeamItem, self)
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnSeatUpgradeSuccess, self._onSeatUpgradeSuccess, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0._onOpenView(arg_25_0, arg_25_1)
-	if arg_25_1 == ViewName.V1a6_CachotUpgradeResultView then
-		arg_25_0._animator.enabled = true
+function V1a6_CachotUpgradeView:_onOpenView(viewName)
+	if viewName == ViewName.V1a6_CachotUpgradeResultView then
+		self._animator.enabled = true
 
-		arg_25_0._animator:Play("close", 0, 0)
+		self._animator:Play("close", 0, 0)
 	end
 end
 
-function var_0_0._onCloseView(arg_26_0, arg_26_1)
-	if arg_26_1 == ViewName.V1a6_CachotUpgradeResultView then
-		arg_26_0._animator.enabled = true
+function V1a6_CachotUpgradeView:_onCloseView(viewName)
+	if viewName == ViewName.V1a6_CachotUpgradeResultView then
+		self._animator.enabled = true
 
-		arg_26_0._animator:Play("back", 0, 0)
-		arg_26_0:_updatePresetItemList()
-		arg_26_0:_selectItem(arg_26_0._selectedIndex)
+		self._animator:Play("back", 0, 0)
+		self:_updatePresetItemList()
+		self:_selectItem(self._selectedIndex)
 	end
 end
 
-function var_0_0._onSeatUpgradeSuccess(arg_27_0)
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0._presetItemList) do
-		local var_27_0 = V1a6_CachotHeroSingleGroupModel.instance:getById(iter_27_0)
-		local var_27_1 = V1a6_CachotTeamModel.instance:getSeatLevel(iter_27_0)
+function V1a6_CachotUpgradeView:_onSeatUpgradeSuccess()
+	for i, item in ipairs(self._presetItemList) do
+		local mo = V1a6_CachotHeroSingleGroupModel.instance:getById(i)
+		local seatLevel = V1a6_CachotTeamModel.instance:getSeatLevel(i)
 
-		V1a6_CachotTeamModel.instance:setSeatInfo(iter_27_0, var_27_1, var_27_0)
+		V1a6_CachotTeamModel.instance:setSeatInfo(i, seatLevel, mo)
 	end
 
 	V1a6_CachotController.instance:openV1a6_CachotUpgradeResultView({
-		teamItemMo = arg_27_0._selectedTeamItem:getMo(),
-		seatIndex = arg_27_0._selectedTeamItem:getSeatIndex()
+		teamItemMo = self._selectedTeamItem:getMo(),
+		seatIndex = self._selectedTeamItem:getSeatIndex()
 	})
 end
 
-function var_0_0._onClickTeamItem(arg_28_0, arg_28_1)
-	arg_28_0._animator.enabled = true
+function V1a6_CachotUpgradeView:_onClickTeamItem(mo)
+	self._animator.enabled = true
 
-	arg_28_0._animator:Play("switch", 0, 0)
-	arg_28_0:_showUpSwitch(false)
-	gohelper.setActive(arg_28_0._godetails, false)
-	TaskDispatcher.cancelTask(arg_28_0._hideDetail, arg_28_0)
-	arg_28_0:_selectItem(nil, arg_28_1)
+	self._animator:Play("switch", 0, 0)
+	self:_showUpSwitch(false)
+	gohelper.setActive(self._godetails, false)
+	TaskDispatcher.cancelTask(self._hideDetail, self)
+	self:_selectItem(nil, mo)
 end
 
-function var_0_0.onClose(arg_29_0)
-	TaskDispatcher.cancelTask(arg_29_0._hideDetail, arg_29_0)
+function V1a6_CachotUpgradeView:onClose()
+	TaskDispatcher.cancelTask(self._hideDetail, self)
 end
 
-function var_0_0.onDestroyView(arg_30_0)
+function V1a6_CachotUpgradeView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V1a6_CachotUpgradeView

@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity1_4.act135.model.Activity135Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act135/model/Activity135Model.lua
 
-local var_0_0 = class("Activity135Model", BaseModel)
+module("modules.logic.versionactivity1_4.act135.model.Activity135Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity135Model = class("Activity135Model", BaseModel)
+
+function Activity135Model:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity135Model:reInit()
 	return
 end
 
-function var_0_0.getActivityShowReward(arg_3_0, arg_3_1)
-	local var_3_0 = Activity135Config.instance:getEpisodeCos(arg_3_1)
+function Activity135Model:getActivityShowReward(episodeId)
+	local cos = Activity135Config.instance:getEpisodeCos(episodeId)
 
-	if not var_3_0 then
+	if not cos then
 		return
 	end
 
-	local var_3_1 = {}
-	local var_3_2 = {}
+	local rewards = {}
+	local actDict = {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		var_3_2[iter_3_1.activityId] = true
+	for k, v in pairs(cos) do
+		actDict[v.activityId] = true
 
-		if ActivityHelper.getActivityStatus(iter_3_1.activityId, true) == ActivityEnum.ActivityStatus.Normal then
-			local var_3_3 = DungeonConfig.instance:getBonusCO(iter_3_1.firstBounsId)
+		if ActivityHelper.getActivityStatus(v.activityId, true) == ActivityEnum.ActivityStatus.Normal then
+			local bonusConfig = DungeonConfig.instance:getBonusCO(v.firstBounsId)
 
-			if var_3_3 then
-				local var_3_4 = GameUtil.splitString2(var_3_3.fixBonus, true)
+			if bonusConfig then
+				local reward = GameUtil.splitString2(bonusConfig.fixBonus, true)
 
-				if var_3_4 then
-					for iter_3_2, iter_3_3 in ipairs(var_3_4) do
-						iter_3_3.activityId = iter_3_1.activityId
-						iter_3_3.isLimitFirstReward = true
+				if reward then
+					for _, r in ipairs(reward) do
+						r.activityId = v.activityId
+						r.isLimitFirstReward = true
 					end
 
-					tabletool.addValues(var_3_1, var_3_4)
+					tabletool.addValues(rewards, reward)
 				end
 			end
 		end
 	end
 
-	return var_3_1, var_3_2
+	return rewards, actDict
 end
 
-var_0_0.instance = var_0_0.New()
+Activity135Model.instance = Activity135Model.New()
 
-return var_0_0
+return Activity135Model

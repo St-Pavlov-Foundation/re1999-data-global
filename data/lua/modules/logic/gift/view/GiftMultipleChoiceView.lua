@@ -1,102 +1,104 @@
-﻿module("modules.logic.gift.view.GiftMultipleChoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/gift/view/GiftMultipleChoiceView.lua
 
-local var_0_0 = class("GiftMultipleChoiceView", BaseView)
+module("modules.logic.gift.view.GiftMultipleChoiceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_item")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_ok")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._txtquantity = gohelper.findChildText(arg_1_0.viewGO, "root/quantity/#txt_quantity")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg2")
+local GiftMultipleChoiceView = class("GiftMultipleChoiceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function GiftMultipleChoiceView:onInitView()
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "root/#scroll_item")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_ok")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._txtquantity = gohelper.findChildText(self.viewGO, "root/quantity/#txt_quantity")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_bg2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseClick, arg_2_0)
+function GiftMultipleChoiceView:addEvents()
+	self._btnok:AddClickListener(self._btnokOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnok:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function GiftMultipleChoiceView:removeEvents()
+	self._btnok:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnokOnClick(arg_4_0)
-	local var_4_0 = GiftModel.instance:getMultipleChoiceIndex()
+function GiftMultipleChoiceView:_btnokOnClick()
+	local index = GiftModel.instance:getMultipleChoiceIndex()
 
-	if var_4_0 == 0 then
+	if index == 0 then
 		GameFacade.showToast(ToastEnum.GiftMultipleChoice)
 	else
-		arg_4_0:closeThis()
+		self:closeThis()
 
-		local var_4_1 = {}
-		local var_4_2 = {
-			materialId = arg_4_0.viewParam.param.id,
-			quantity = arg_4_0.viewParam.quantity
-		}
+		local data = {}
+		local o = {}
 
-		table.insert(var_4_1, var_4_2)
-		ItemRpc.instance:sendUseItemRequest(var_4_1, var_4_0 - 1)
+		o.materialId = self.viewParam.param.id
+		o.quantity = self.viewParam.quantity
+
+		table.insert(data, o)
+		ItemRpc.instance:sendUseItemRequest(data, index - 1)
 	end
 end
 
-function var_0_0._btncloseClick(arg_5_0)
-	arg_5_0:closeThis()
+function GiftMultipleChoiceView:_btncloseClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._contentGrid = gohelper.findChild(arg_6_0.viewGO, "root/#scroll_item/itemcontent"):GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+function GiftMultipleChoiceView:_editableInitView()
+	self._contentGrid = gohelper.findChild(self.viewGO, "root/#scroll_item/itemcontent"):GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
 
-	arg_6_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_6_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:_setPropItems()
+function GiftMultipleChoiceView:onOpen()
+	self:_setPropItems()
 
-	arg_7_0._txtquantity.text = arg_7_0.viewParam.quantity
+	self._txtquantity.text = self.viewParam.quantity
 end
 
-function var_0_0.onClose(arg_8_0)
+function GiftMultipleChoiceView:onClose()
 	GiftModel.instance:reset()
 end
 
-function var_0_0.onClickModalMask(arg_9_0)
-	arg_9_0:closeThis()
+function GiftMultipleChoiceView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._setPropItems(arg_10_0)
-	local var_10_0 = {}
-	local var_10_1 = string.split(ItemModel.instance:getItemConfig(arg_10_0.viewParam.param.type, arg_10_0.viewParam.param.id).effect, "|")
+function GiftMultipleChoiceView:_setPropItems()
+	local co = {}
+	local gifts = string.split(ItemModel.instance:getItemConfig(self.viewParam.param.type, self.viewParam.param.id).effect, "|")
 
-	arg_10_0._contentGrid.enabled = #var_10_1 < 6
+	self._contentGrid.enabled = #gifts < 6
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-		local var_10_2 = MaterialDataMO.New()
-		local var_10_3 = string.split(iter_10_1, "#")
+	for k, v in ipairs(gifts) do
+		local o = MaterialDataMO.New()
+		local gift = string.split(v, "#")
 
-		var_10_2.index = iter_10_0
-		var_10_2.materilType = tonumber(var_10_3[1])
-		var_10_2.materilId = tonumber(var_10_3[2])
-		var_10_2.quantity = arg_10_0.viewParam.quantity * tonumber(var_10_3[3])
+		o.index = k
+		o.materilType = tonumber(gift[1])
+		o.materilId = tonumber(gift[2])
+		o.quantity = self.viewParam.quantity * tonumber(gift[3])
 
-		if GiftModel.instance:isGiftNeed(var_10_2.materilId) then
-			GiftModel.instance:setMultipleChoiceIndex(var_10_2.index)
+		if GiftModel.instance:isGiftNeed(o.materilId) then
+			GiftModel.instance:setMultipleChoiceIndex(o.index)
 		end
 
-		table.insert(var_10_0, var_10_2)
+		table.insert(co, o)
 	end
 
-	GiftMultipleChoiceListModel.instance:setPropList(var_10_0)
+	GiftMultipleChoiceListModel.instance:setPropList(co)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg1:UnLoadImage()
-	arg_11_0._simagebg2:UnLoadImage()
+function GiftMultipleChoiceView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 end
 
-return var_0_0
+return GiftMultipleChoiceView

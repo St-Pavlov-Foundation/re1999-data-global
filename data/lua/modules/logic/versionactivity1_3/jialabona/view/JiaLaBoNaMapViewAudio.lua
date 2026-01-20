@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewAudio", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/jialabona/view/JiaLaBoNaMapViewAudio.lua
 
-local var_0_0 = class("JiaLaBoNaMapViewAudio", BaseView)
+module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewAudio", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local JiaLaBoNaMapViewAudio = class("JiaLaBoNaMapViewAudio", BaseView)
+
+function JiaLaBoNaMapViewAudio:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
+function JiaLaBoNaMapViewAudio:_editableInitView()
 	return
 end
 
-function var_0_0._onCloseGameView(arg_3_0, arg_3_1)
-	if (arg_3_1 == ViewName.JiaLaBoNaGameView or arg_3_1 == ViewName.StoryFrontView) and arg_3_0:_isCanPlayAmbient() then
-		arg_3_0:playAmbientAudio()
+function JiaLaBoNaMapViewAudio:_onCloseGameView(viewName)
+	if (viewName == ViewName.JiaLaBoNaGameView or viewName == ViewName.StoryFrontView) and self:_isCanPlayAmbient() then
+		self:playAmbientAudio()
 	end
 end
 
-function var_0_0._isCanPlayAmbient(arg_4_0)
+function JiaLaBoNaMapViewAudio:_isCanPlayAmbient()
 	if ViewMgr.instance:isOpen(ViewName.JiaLaBoNaGameView) or ViewMgr.instance:isOpen(ViewName.StoryFrontView) then
 		return false
 	end
@@ -26,35 +28,35 @@ function var_0_0._isCanPlayAmbient(arg_4_0)
 	return true
 end
 
-function var_0_0._onOpenGameView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.JiaLaBoNaGameView or arg_5_1 == ViewName.StoryFrontView then
-		arg_5_0:closeAmbientSound()
+function JiaLaBoNaMapViewAudio:_onOpenGameView(viewName)
+	if viewName == ViewName.JiaLaBoNaGameView or viewName == ViewName.StoryFrontView then
+		self:closeAmbientSound()
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
+function JiaLaBoNaMapViewAudio:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_ui_molu_ilbn_open)
-	arg_6_0:playAmbientAudio()
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0._onCloseGameView, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenGameView, arg_6_0)
+	self:playAmbientAudio()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseGameView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenGameView, self)
 end
 
-function var_0_0.playAmbientAudio(arg_7_0)
-	arg_7_0:closeAmbientSound()
+function JiaLaBoNaMapViewAudio:playAmbientAudio()
+	self:closeAmbientSound()
 
-	arg_7_0._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_amb_activity_molu1_3_ganapona)
+	self._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Va3Aact120.play_amb_activity_molu1_3_ganapona)
 end
 
-function var_0_0.closeAmbientSound(arg_8_0)
-	if arg_8_0._ambientAudioId then
-		AudioMgr.instance:stopPlayingID(arg_8_0._ambientAudioId)
+function JiaLaBoNaMapViewAudio:closeAmbientSound()
+	if self._ambientAudioId then
+		AudioMgr.instance:stopPlayingID(self._ambientAudioId)
 
-		arg_8_0._ambientAudioId = nil
+		self._ambientAudioId = nil
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0:closeAmbientSound()
+function JiaLaBoNaMapViewAudio:onClose()
+	self:closeAmbientSound()
 end
 
-return var_0_0
+return JiaLaBoNaMapViewAudio

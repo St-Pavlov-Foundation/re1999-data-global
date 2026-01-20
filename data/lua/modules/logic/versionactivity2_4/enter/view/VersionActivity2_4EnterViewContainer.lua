@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_4.enter.view.VersionActivity2_4EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/enter/view/VersionActivity2_4EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_4EnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.enter.view.VersionActivity2_4EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity2_4EnterViewContainer = class("VersionActivity2_4EnterViewContainer", BaseViewContainer)
+
+function VersionActivity2_4EnterViewContainer:buildViews()
 	return {
 		VersionActivity2_4EnterView.New(),
 		VersionActivity2_4EnterBgmView.New(),
@@ -11,89 +13,89 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function VersionActivity2_4EnterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_0 = {}
+	elseif tabContainerId == 2 then
+		local multiView = {}
 
-		var_2_0[#var_2_0 + 1] = VersionActivity2_4DungeonEnterView.New()
-		var_2_0[#var_2_0 + 1] = V2a4_PinballEnterView.New()
-		var_2_0[#var_2_0 + 1] = VersionActivity2_4MusicEnterView.New()
-		var_2_0[#var_2_0 + 1] = VersionActivity2_4WuErLiXiEnterView.New()
-		var_2_0[#var_2_0 + 1] = ReactivityEnterview.New()
-		var_2_0[#var_2_0 + 1] = VersionActivity2_4RougeEnterView.New()
-		var_2_0[#var_2_0 + 1] = V2a4_Season166EnterView.New()
-		var_2_0[#var_2_0 + 1] = RoleStoryEnterView.New()
-		var_2_0[#var_2_0 + 1] = V1a6_BossRush_EnterView.New()
-		var_2_0[#var_2_0 + 1] = ActivityWeekWalkDeepShowView.New()
-		var_2_0[#var_2_0 + 1] = TowerMainEntryView.New()
+		multiView[#multiView + 1] = VersionActivity2_4DungeonEnterView.New()
+		multiView[#multiView + 1] = V2a4_PinballEnterView.New()
+		multiView[#multiView + 1] = VersionActivity2_4MusicEnterView.New()
+		multiView[#multiView + 1] = VersionActivity2_4WuErLiXiEnterView.New()
+		multiView[#multiView + 1] = ReactivityEnterview.New()
+		multiView[#multiView + 1] = VersionActivity2_4RougeEnterView.New()
+		multiView[#multiView + 1] = V2a4_Season166EnterView.New()
+		multiView[#multiView + 1] = RoleStoryEnterView.New()
+		multiView[#multiView + 1] = V1a6_BossRush_EnterView.New()
+		multiView[#multiView + 1] = ActivityWeekWalkDeepShowView.New()
+		multiView[#multiView + 1] = TowerMainEntryView.New()
 
-		return var_2_0
+		return multiView
 	end
 end
 
-function var_0_0.selectActTab(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.activityId = arg_3_2
+function VersionActivity2_4EnterViewContainer:selectActTab(jumpTabId, actId)
+	self.activityId = actId
 
-	if arg_3_0.activityId == VersionActivity2_4Enum.ActivityId.Dungeon then
+	if self.activityId == VersionActivity2_4Enum.ActivityId.Dungeon then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_4Dungeon.enterview_tab_switch)
 	end
 
-	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, jumpTabId)
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	if not arg_4_0.viewParam then
+function VersionActivity2_4EnterViewContainer:onContainerInit()
+	if not self.viewParam then
 		return
 	end
 
-	arg_4_0.isFirstPlaySubViewAnim = true
+	self.isFirstPlaySubViewAnim = true
 
-	local var_4_0 = arg_4_0.viewParam.activityIdList or {}
+	local activityIdList = self.viewParam.activityIdList or {}
 
-	ActivityStageHelper.recordActivityStage(var_4_0)
+	ActivityStageHelper.recordActivityStage(activityIdList)
 
-	arg_4_0.activityId = arg_4_0.viewParam.jumpActId
+	self.activityId = self.viewParam.jumpActId
 
-	local var_4_1 = arg_4_0.viewParam.activitySettingList or {}
-	local var_4_2 = VersionActivityEnterHelper.getTabIndex(var_4_1, arg_4_0.activityId)
-	local var_4_3 = var_4_1[var_4_2]
-	local var_4_4 = VersionActivityEnterHelper.getActId(var_4_3)
+	local activitySettingList = self.viewParam.activitySettingList or {}
+	local defaultIndex = VersionActivityEnterHelper.getTabIndex(activitySettingList, self.activityId)
+	local actSetting = activitySettingList[defaultIndex]
+	local actId = VersionActivityEnterHelper.getActId(actSetting)
 
-	if var_4_2 ~= 1 then
-		arg_4_0.viewParam.defaultTabIds = {}
-		arg_4_0.viewParam.defaultTabIds[2] = var_4_2
-	elseif not arg_4_0.viewParam.isDirectOpen and var_4_4 == VersionActivity2_4Enum.ActivityId.Dungeon then
+	if defaultIndex ~= 1 then
+		self.viewParam.defaultTabIds = {}
+		self.viewParam.defaultTabIds[2] = defaultIndex
+	elseif not self.viewParam.isDirectOpen and actId == VersionActivity2_4Enum.ActivityId.Dungeon then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_4Dungeon.play_ui_diqiu_open)
 	end
 
-	ActivityEnterMgr.instance:enterActivity(var_4_4)
+	ActivityEnterMgr.instance:enterActivity(actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		var_4_4
+		actId
 	})
 end
 
-function var_0_0.onContainerClose(arg_5_0)
-	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function VersionActivity2_4EnterViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-function var_0_0.getIsFirstPlaySubViewAnim(arg_6_0)
-	return arg_6_0.isFirstPlaySubViewAnim
+function VersionActivity2_4EnterViewContainer:getIsFirstPlaySubViewAnim()
+	return self.isFirstPlaySubViewAnim
 end
 
-function var_0_0.markPlayedSubViewAnim(arg_7_0)
-	arg_7_0.isFirstPlaySubViewAnim = false
+function VersionActivity2_4EnterViewContainer:markPlayedSubViewAnim()
+	self.isFirstPlaySubViewAnim = false
 end
 
-return var_0_0
+return VersionActivity2_4EnterViewContainer

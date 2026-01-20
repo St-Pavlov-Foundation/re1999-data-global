@@ -1,15 +1,17 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalUpdatePointsWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalUpdatePointsWork.lua
 
-local var_0_0 = class("SurvivalUpdatePointsWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalUpdatePointsWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	SurvivalMapModel.instance:addExploredPoint(arg_1_0._stepMo.hex)
+local SurvivalUpdatePointsWork = class("SurvivalUpdatePointsWork", SurvivalStepBaseWork)
+
+function SurvivalUpdatePointsWork:onStart(context)
+	SurvivalMapModel.instance:addExploredPoint(self._stepMo.hex)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapExploredPointUpdate)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.getRunOrder(arg_2_0, arg_2_1, arg_2_2)
+function SurvivalUpdatePointsWork:getRunOrder(params, flow)
 	return SurvivalEnum.StepRunOrder.Before
 end
 
-return var_0_0
+return SurvivalUpdatePointsWork

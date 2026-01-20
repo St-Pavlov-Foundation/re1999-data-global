@@ -1,135 +1,149 @@
-﻿module("modules.logic.herogrouppreset.controller.HeroGroupPresetHeroGroupChangeController", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/controller/HeroGroupPresetHeroGroupChangeController.lua
 
-local var_0_0 = class("HeroGroupPresetHeroGroupChangeController", BaseController)
+module("modules.logic.herogrouppreset.controller.HeroGroupPresetHeroGroupChangeController", package.seeall)
 
-function var_0_0.getHeroGroupList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local HeroGroupPresetHeroGroupChangeController = class("HeroGroupPresetHeroGroupChangeController", BaseController)
 
-	if arg_1_1 == HeroGroupPresetEnum.HeroGroupType.Common then
-		for iter_1_0 = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
-			local var_1_1 = HeroGroupModel.instance:getCommonGroupList(iter_1_0)
+function HeroGroupPresetHeroGroupChangeController:getHeroGroupList(heroGroupType)
+	local list = {}
 
-			if var_1_1 then
-				table.insert(var_1_0, var_1_1)
+	if heroGroupType == HeroGroupPresetEnum.HeroGroupType.Common then
+		for i = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
+			local group = HeroGroupModel.instance:getCommonGroupList(i)
+
+			if group then
+				table.insert(list, group)
 			end
 		end
 
-		return var_1_0
+		return list
 	end
 
-	local var_1_2 = HeroGroupPresetEnum.HeroGroupType2SnapshotType[arg_1_1]
+	local snapshotType = HeroGroupPresetEnum.HeroGroupType2SnapshotType[heroGroupType]
 
-	if var_1_2 then
-		for iter_1_1 = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
-			local var_1_3 = HeroGroupSnapshotModel.instance:getHeroGroupInfo(var_1_2, iter_1_1)
+	if snapshotType then
+		for i = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
+			local group = HeroGroupSnapshotModel.instance:getHeroGroupInfo(snapshotType, i)
 
-			if var_1_3 then
-				table.insert(var_1_0, var_1_3)
+			if group then
+				table.insert(list, group)
 			end
 		end
 
-		return var_1_0
+		return list
 	end
 
-	logError(string.format("HeroGroupPresetHeroGroupChangeController:getHeroGroupList heroGroupType:%s 没有可用的列表", arg_1_1))
+	logError(string.format("HeroGroupPresetHeroGroupChangeController:getHeroGroupList heroGroupType:%s 没有可用的列表", heroGroupType))
 
-	return var_1_0
+	return list
 end
 
-function var_0_0.removeHeroGroup(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == HeroGroupPresetEnum.HeroGroupType.Common then
-		HeroGroupModel.instance:removeCommonGroupList(arg_2_2)
+function HeroGroupPresetHeroGroupChangeController:removeHeroGroup(heroGroupType, subId)
+	if heroGroupType == HeroGroupPresetEnum.HeroGroupType.Common then
+		HeroGroupModel.instance:removeCommonGroupList(subId)
 
 		return
 	end
 
-	local var_2_0 = HeroGroupPresetEnum.HeroGroupType2SnapshotType[arg_2_1]
+	local snapshotType = HeroGroupPresetEnum.HeroGroupType2SnapshotType[heroGroupType]
 
-	if var_2_0 then
-		HeroGroupSnapshotModel.instance:removeHeroGroup(var_2_0, arg_2_2)
+	if snapshotType then
+		HeroGroupSnapshotModel.instance:removeHeroGroup(snapshotType, subId)
 	end
 end
 
-function var_0_0.updateHeroGroup(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_1 == ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit then
-		HeroGroupSnapshotModel.instance:updateHeroGroupInfo(arg_3_1, arg_3_2, arg_3_3)
+function HeroGroupPresetHeroGroupChangeController:updateHeroGroup(snapshotId, subId, groupInfo)
+	if snapshotId == ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit then
+		HeroGroupSnapshotModel.instance:updateHeroGroupInfo(snapshotId, subId, groupInfo)
 	end
 end
 
-function var_0_0.addHeroGroup(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 == HeroGroupPresetEnum.HeroGroupType.Common then
-		HeroGroupModel.instance:addCommonGroupList(arg_4_2, arg_4_3)
+function HeroGroupPresetHeroGroupChangeController:addHeroGroup(heroGroupType, subId, heroGroupMo)
+	if heroGroupType == HeroGroupPresetEnum.HeroGroupType.Common then
+		HeroGroupModel.instance:addCommonGroupList(subId, heroGroupMo)
 
 		return
 	end
 
-	local var_4_0 = HeroGroupPresetEnum.HeroGroupType2SnapshotType[arg_4_1]
+	local snapshotType = HeroGroupPresetEnum.HeroGroupType2SnapshotType[heroGroupType]
 
-	if var_4_0 then
-		HeroGroupSnapshotModel.instance:addHeroGroup(var_4_0, arg_4_2, arg_4_3)
+	if snapshotType then
+		HeroGroupSnapshotModel.instance:addHeroGroup(snapshotType, subId, heroGroupMo)
 	end
 end
 
-function var_0_0.getEmptyHeroGroupId(arg_5_0, arg_5_1)
-	if arg_5_1 == HeroGroupPresetEnum.HeroGroupType.Common then
-		for iter_5_0 = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
-			if not HeroGroupModel.instance:getCommonGroupList(iter_5_0) then
-				return iter_5_0
+function HeroGroupPresetHeroGroupChangeController:getEmptyHeroGroupId(heroGroupType)
+	if heroGroupType == HeroGroupPresetEnum.HeroGroupType.Common then
+		for i = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
+			local mo = HeroGroupModel.instance:getCommonGroupList(i)
+
+			if not mo then
+				return i
 			end
 		end
 	end
 
-	local var_5_0 = HeroGroupPresetEnum.HeroGroupType2SnapshotType[arg_5_1]
+	local snapshotType = HeroGroupPresetEnum.HeroGroupType2SnapshotType[heroGroupType]
 
-	if var_5_0 then
-		for iter_5_1 = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
-			if not HeroGroupSnapshotModel.instance:getHeroGroupInfo(var_5_0, iter_5_1) then
-				return iter_5_1
+	if snapshotType then
+		for i = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
+			local group = HeroGroupSnapshotModel.instance:getHeroGroupInfo(snapshotType, i)
+
+			if not group then
+				return i
 			end
 		end
 	end
 
-	logError(string.format("HeroGroupPresetHeroGroupChangeController:getEmptyHeroGroupId heroGroupType:%s 没有可用的索引", arg_5_1))
+	logError(string.format("HeroGroupPresetHeroGroupChangeController:getEmptyHeroGroupId heroGroupType:%s 没有可用的索引", heroGroupType))
 end
 
-function var_0_0.getValidHeroGroupId(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == HeroGroupPresetEnum.HeroGroupType.Common then
-		if HeroGroupModel.instance:getCommonGroupList(arg_6_2) then
-			return arg_6_2
+function HeroGroupPresetHeroGroupChangeController:getValidHeroGroupId(heroGroupType, index)
+	if heroGroupType == HeroGroupPresetEnum.HeroGroupType.Common then
+		local mo = HeroGroupModel.instance:getCommonGroupList(index)
+
+		if mo then
+			return index
 		end
 
-		for iter_6_0 = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
-			if HeroGroupModel.instance:getCommonGroupList(iter_6_0) then
-				return iter_6_0
+		for i = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
+			local mo = HeroGroupModel.instance:getCommonGroupList(i)
+
+			if mo then
+				return i
 			end
 		end
 	end
 
-	local var_6_0 = HeroGroupPresetEnum.HeroGroupType2SnapshotType[arg_6_1]
+	local snapshotType = HeroGroupPresetEnum.HeroGroupType2SnapshotType[heroGroupType]
 
-	if var_6_0 then
-		if HeroGroupSnapshotModel.instance:getHeroGroupInfo(var_6_0, arg_6_2) then
-			return arg_6_2
+	if snapshotType then
+		local group = HeroGroupSnapshotModel.instance:getHeroGroupInfo(snapshotType, index)
+
+		if group then
+			return index
 		end
 
-		for iter_6_1 = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
-			if HeroGroupSnapshotModel.instance:getHeroGroupInfo(var_6_0, iter_6_1) then
-				return iter_6_1
+		for i = HeroGroupPresetEnum.MinNum, HeroGroupPresetEnum.MaxNum do
+			local group = HeroGroupSnapshotModel.instance:getHeroGroupInfo(snapshotType, i)
+
+			if group then
+				return i
 			end
 		end
 	end
 
-	logError(string.format("HeroGroupPresetHeroGroupChangeController:getFirstHeroGroupId heroGroupType:%s 没有可用的索引", arg_6_1))
+	logError(string.format("HeroGroupPresetHeroGroupChangeController:getFirstHeroGroupId heroGroupType:%s 没有可用的索引", heroGroupType))
 
-	return arg_6_2
+	return index
 end
 
-function var_0_0.handleHeroListData(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 == HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit then
-		HeroGroupHandler.setTowerHeroListData(nil, arg_7_2)
+function HeroGroupPresetHeroGroupChangeController:handleHeroListData(heroGroupType, heroGroupMo)
+	if heroGroupType == HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit then
+		HeroGroupHandler.setTowerHeroListData(nil, heroGroupMo)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupPresetHeroGroupChangeController.instance = HeroGroupPresetHeroGroupChangeController.New()
 
-return var_0_0
+return HeroGroupPresetHeroGroupChangeController

@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.model.data.FightCardHeatInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightCardHeatInfoData.lua
 
-local var_0_0 = FightDataClass("FightCardHeatInfoData")
+module("modules.logic.fight.model.data.FightCardHeatInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.values = {}
+local FightCardHeatInfoData = FightDataClass("FightCardHeatInfoData")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.values) do
-		table.insert(arg_1_0.values, FightCardHeatValueData.New(iter_1_1))
+function FightCardHeatInfoData:onConstructor(proto)
+	self.values = {}
+
+	for i, v in ipairs(proto.values) do
+		table.insert(self.values, FightCardHeatValueData.New(v))
 	end
 end
 
-return var_0_0
+return FightCardHeatInfoData

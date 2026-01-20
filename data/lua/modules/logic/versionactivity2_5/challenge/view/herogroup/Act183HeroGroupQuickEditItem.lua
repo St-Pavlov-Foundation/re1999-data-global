@@ -1,150 +1,156 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.herogroup.Act183HeroGroupQuickEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/herogroup/Act183HeroGroupQuickEditItem.lua
 
-local var_0_0 = class("Act183HeroGroupQuickEditItem", Act183HeroGroupEditItem)
+module("modules.logic.versionactivity2_5.challenge.view.herogroup.Act183HeroGroupQuickEditItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183HeroGroupQuickEditItem = class("Act183HeroGroupQuickEditItem", Act183HeroGroupEditItem)
 
-	arg_1_0._goframe = gohelper.findChild(arg_1_1, "frame")
-	arg_1_0._goorder = gohelper.findChild(arg_1_1, "go_order")
-	arg_1_0._txtorder = gohelper.findChildText(arg_1_1, "go_order/txt_order")
-	arg_1_0._gorepress = gohelper.findChild(arg_1_1, "go_repress")
+function Act183HeroGroupQuickEditItem:init(go)
+	Act183HeroGroupQuickEditItem.super.init(self, go)
 
-	arg_1_0:enableDeselect(false)
-	arg_1_0._heroItem:setNewShow(false)
-	gohelper.setActive(arg_1_0._goorder, false)
-	gohelper.setActive(arg_1_0._goframe, false)
+	self._goframe = gohelper.findChild(go, "frame")
+	self._goorder = gohelper.findChild(go, "go_order")
+	self._txtorder = gohelper.findChildText(go, "go_order/txt_order")
+	self._gorepress = gohelper.findChild(go, "go_repress")
+
+	self:enableDeselect(false)
+	self._heroItem:setNewShow(false)
+	gohelper.setActive(self._goorder, false)
+	gohelper.setActive(self._goframe, false)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
+function Act183HeroGroupQuickEditItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_2_0._heroItem:onUpdateMO(arg_2_1)
-	arg_2_0._heroItem:setNewShow(false)
+	self._heroItem:onUpdateMO(mo)
+	self._heroItem:setNewShow(false)
 
-	if not arg_2_1:isTrial() then
-		local var_2_0 = HeroGroupBalanceHelper.getHeroBalanceLv(arg_2_1.heroId)
+	if not mo:isTrial() then
+		local lv = HeroGroupBalanceHelper.getHeroBalanceLv(mo.heroId)
 
-		if var_2_0 > arg_2_1.level then
-			arg_2_0._heroItem:setBalanceLv(var_2_0)
+		if lv > mo.level then
+			self._heroItem:setBalanceLv(lv)
 		end
 	end
 
-	arg_2_0:updateTrialTag()
-	arg_2_0:updateTrialRepeat()
-	arg_2_0._heroItem:setRepeatAnimFinish()
+	self:updateTrialTag()
+	self:updateTrialRepeat()
+	self._heroItem:setRepeatAnimFinish()
 
-	local var_2_1 = Act183HeroGroupQuickEditListModel.instance:getHeroTeamPos(arg_2_0._mo.uid)
+	local index = Act183HeroGroupQuickEditListModel.instance:getHeroTeamPos(self._mo.uid)
 
-	arg_2_0._team_pos_index = var_2_1
+	self._team_pos_index = index
 
-	if var_2_1 ~= 0 then
-		if not arg_2_0._open_ani_finish then
-			TaskDispatcher.runDelay(arg_2_0._show_goorderbg, arg_2_0, 0.3)
+	if index ~= 0 then
+		if not self._open_ani_finish then
+			TaskDispatcher.runDelay(self._show_goorderbg, self, 0.3)
 		else
-			arg_2_0:_show_goorderbg()
+			self:_show_goorderbg()
 		end
 	else
-		gohelper.setActive(arg_2_0._goorder, false)
-		gohelper.setActive(arg_2_0._goframe, false)
+		gohelper.setActive(self._goorder, false)
+		gohelper.setActive(self._goframe, false)
 	end
 
-	arg_2_0._open_ani_finish = true
+	self._open_ani_finish = true
 
-	local var_2_2 = HeroGroupModel.instance.episodeId
+	local episodeId = HeroGroupModel.instance.episodeId
 
-	arg_2_0._isRepress = Act183Model.instance:isHeroRepressInPreEpisode(var_2_2, arg_2_0._mo.heroId)
+	self._isRepress = Act183Model.instance:isHeroRepressInPreEpisode(episodeId, self._mo.heroId)
 
-	gohelper.setActive(arg_2_0._gorepress, arg_2_0._isRepress)
-	arg_2_0._heroItem._commonHeroCard:setGrayScale(arg_2_0._isRepress)
+	gohelper.setActive(self._gorepress, self._isRepress)
+	self._heroItem._commonHeroCard:setGrayScale(self._isRepress)
 end
 
-function var_0_0.updateTrialRepeat(arg_3_0, arg_3_1)
-	if arg_3_1 and (arg_3_1.heroId ~= arg_3_0._mo.heroId or arg_3_1 == arg_3_0._mo) then
+function Act183HeroGroupQuickEditItem:updateTrialRepeat(mo)
+	if mo and (mo.heroId ~= self._mo.heroId or mo == self._mo) then
 		return
 	end
 
-	local var_3_0 = Act183HeroGroupQuickEditListModel.instance:isRepeatHero(arg_3_0._mo.heroId, arg_3_0._mo.uid)
+	local isRepeat = Act183HeroGroupQuickEditListModel.instance:isRepeatHero(self._mo.heroId, self._mo.uid)
 
-	arg_3_0._heroItem:setTrialRepeat(var_3_0)
+	self._heroItem:setTrialRepeat(isRepeat)
 end
 
-function var_0_0._show_goorderbg(arg_4_0)
-	gohelper.setActive(arg_4_0._goorder, true)
-	gohelper.setActive(arg_4_0._goframe, true)
+function Act183HeroGroupQuickEditItem:_show_goorderbg()
+	gohelper.setActive(self._goorder, true)
+	gohelper.setActive(self._goframe, true)
 
-	arg_4_0._txtorder.text = arg_4_0._team_pos_index
+	self._txtorder.text = self._team_pos_index
 end
 
-function var_0_0._onItemClick(arg_5_0)
+function Act183HeroGroupQuickEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_5_0._heroItem:getIsRepeat() then
+	if self._heroItem:getIsRepeat() then
 		GameFacade.showToast(ToastEnum.TrialIsJoin)
 
 		return
 	end
 
-	if arg_5_0._isRepress then
+	if self._isRepress then
 		GameFacade.showToast(ToastEnum.Act183HeroRepress)
 
 		return
 	end
 
-	if arg_5_0._mo and arg_5_0._mo.isPosLock then
+	if self._mo and self._mo.isPosLock then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if arg_5_0._mo and HeroSingleGroupModel.instance:isAidConflict(arg_5_0._mo.heroId) then
+	if self._mo and HeroSingleGroupModel.instance:isAidConflict(self._mo.heroId) then
 		GameFacade.showToast(ToastEnum.HeroIsAidConflict)
 
 		return
 	end
 
-	if HeroGroupModel.instance:isRestrict(arg_5_0._mo.uid) then
-		local var_5_0 = HeroGroupModel.instance:getCurrentBattleConfig()
-		local var_5_1 = var_5_0 and var_5_0.restrictReason
+	if HeroGroupModel.instance:isRestrict(self._mo.uid) then
+		local battleCo = HeroGroupModel.instance:getCurrentBattleConfig()
+		local restrictReason = battleCo and battleCo.restrictReason
 
-		if not string.nilorempty(var_5_1) then
-			ToastController.instance:showToastWithString(var_5_1)
+		if not string.nilorempty(restrictReason) then
+			ToastController.instance:showToastWithString(restrictReason)
 		end
 
 		return
 	end
 
-	if arg_5_0._mo:isTrial() and not Act183HeroGroupQuickEditListModel.instance:inInTeam(arg_5_0._mo.uid) and Act183HeroGroupQuickEditListModel.instance:isTrialLimit() then
+	if self._mo:isTrial() and not Act183HeroGroupQuickEditListModel.instance:inInTeam(self._mo.uid) and Act183HeroGroupQuickEditListModel.instance:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return
 	end
 
-	if arg_5_0._mo and not arg_5_0._mo.isPosLock and not Act183HeroGroupQuickEditListModel.instance:selectHero(arg_5_0._mo.uid) then
-		return
+	if self._mo and not self._mo.isPosLock then
+		local result = Act183HeroGroupQuickEditListModel.instance:selectHero(self._mo.uid)
+
+		if not result then
+			return
+		end
 	end
 
-	if arg_5_0._isSelect and arg_5_0._enableDeselect and not arg_5_0._mo.isPosLock then
-		arg_5_0._view:selectCell(arg_5_0._index, false)
+	if self._isSelect and self._enableDeselect and not self._mo.isPosLock then
+		self._view:selectCell(self._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		arg_5_0._view:selectCell(arg_5_0._index, true)
+		self._view:selectCell(self._index, true)
 	end
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, arg_5_0._mo)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, self._mo)
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
-	arg_6_0._isSelect = arg_6_1
+function Act183HeroGroupQuickEditItem:onSelect(select)
+	self._isSelect = select
 
-	if arg_6_1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_6_0._mo)
+	if select then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, self._mo)
 	end
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._show_goorderbg, arg_7_0)
-	var_0_0.super.onDestroy(arg_7_0)
+function Act183HeroGroupQuickEditItem:onDestroy()
+	TaskDispatcher.cancelTask(self._show_goorderbg, self)
+	Act183HeroGroupQuickEditItem.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183HeroGroupQuickEditItem

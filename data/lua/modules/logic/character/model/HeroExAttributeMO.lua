@@ -1,14 +1,16 @@
-﻿module("modules.logic.character.model.HeroExAttributeMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/HeroExAttributeMO.lua
 
-local var_0_0 = pureTable("HeroExAttributeMO")
+module("modules.logic.character.model.HeroExAttributeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.cri = arg_1_1.cri
-	arg_1_0.recri = arg_1_1.recri
-	arg_1_0.criDmg = arg_1_1.criDmg
-	arg_1_0.criDef = arg_1_1.criDef
-	arg_1_0.addDmg = arg_1_1.addDmg
-	arg_1_0.dropDmg = arg_1_1.dropDmg
+local HeroExAttributeMO = pureTable("HeroExAttributeMO")
+
+function HeroExAttributeMO:init(info)
+	self.cri = info.cri
+	self.recri = info.recri
+	self.criDmg = info.criDmg
+	self.criDef = info.criDef
+	self.addDmg = info.addDmg
+	self.dropDmg = info.dropDmg
 end
 
-return var_0_0
+return HeroExAttributeMO

@@ -1,139 +1,141 @@
-﻿module("modules.logic.room.entity.comp.RoomBuildingSummonComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomBuildingSummonComp.lua
 
-local var_0_0 = class("RoomBuildingSummonComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomBuildingSummonComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
+local RoomBuildingSummonComp = class("RoomBuildingSummonComp", LuaCompBase)
+
+function RoomBuildingSummonComp:ctor(entity)
+	self.entity = entity
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
+function RoomBuildingSummonComp:init(go)
+	self.go = go
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummonAnim, arg_3_0._onStartSummonAnim, arg_3_0)
-	arg_3_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, arg_3_0._onDragEnd, arg_3_0)
-	arg_3_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, arg_3_0._onSummonSkip, arg_3_0)
-	arg_3_0:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, arg_3_0._onCloseGetCritter, arg_3_0)
+function RoomBuildingSummonComp:addEventListeners()
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummonAnim, self._onStartSummonAnim, self)
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, self._onDragEnd, self)
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, self._onSummonSkip, self)
+	self:addEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, self._onCloseGetCritter, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummonAnim, arg_4_0._onStartSummonAnim, arg_4_0)
-	arg_4_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, arg_4_0._onDragEnd, arg_4_0)
-	arg_4_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, arg_4_0._onSummonSkip, arg_4_0)
-	arg_4_0:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, arg_4_0._onCloseGetCritter, arg_4_0)
+function RoomBuildingSummonComp:removeEventListeners()
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onStartSummonAnim, self._onStartSummonAnim, self)
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onDragEnd, self._onDragEnd, self)
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onSummonSkip, self._onSummonSkip, self)
+	self:removeEventCb(CritterSummonController.instance, CritterSummonEvent.onCloseGetCritter, self._onCloseGetCritter, self)
 end
 
-function var_0_0.onStart(arg_5_0)
+function RoomBuildingSummonComp:onStart()
 	return
 end
 
-function var_0_0.getMO(arg_6_0)
-	return arg_6_0.entity:getMO()
+function RoomBuildingSummonComp:getMO()
+	return self.entity:getMO()
 end
 
-function var_0_0.getBuildingGOAnimatorPlayer(arg_7_0)
-	if not arg_7_0._buildingGOAnimatorPlayer then
-		arg_7_0._buildingGOAnimatorPlayer = SLFramework.AnimatorPlayer.Get(arg_7_0.entity:getBuildingGO())
+function RoomBuildingSummonComp:getBuildingGOAnimatorPlayer()
+	if not self._buildingGOAnimatorPlayer then
+		self._buildingGOAnimatorPlayer = SLFramework.AnimatorPlayer.Get(self.entity:getBuildingGO())
 	end
 
-	return arg_7_0._buildingGOAnimatorPlayer
+	return self._buildingGOAnimatorPlayer
 end
 
-function var_0_0.getBuildingGOAnimator(arg_8_0)
-	if not arg_8_0._buildingGOAnimator then
-		arg_8_0._buildingGOAnimator = arg_8_0.entity:getBuildingGO():GetComponent(typeof(UnityEngine.Animator))
+function RoomBuildingSummonComp:getBuildingGOAnimator()
+	if not self._buildingGOAnimator then
+		self._buildingGOAnimator = self.entity:getBuildingGO():GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	return arg_8_0._buildingGOAnimator
+	return self._buildingGOAnimator
 end
 
-function var_0_0._onStartSummonAnim(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1.mode
+function RoomBuildingSummonComp:_onStartSummonAnim(param)
+	local mode = param.mode
 
-	arg_9_0.mode = var_9_0
+	self.mode = mode
 
-	local var_9_1 = arg_9_0:getBuildingGOAnimatorPlayer()
-	local var_9_2 = RoomSummonEnum.SummonMode[var_9_0].EntityAnimKey
+	local animator = self:getBuildingGOAnimatorPlayer()
+	local animKeys = RoomSummonEnum.SummonMode[mode].EntityAnimKey
 
-	local function var_9_3()
+	local function canDrag()
 		CritterSummonController.instance:onCanDrag()
 	end
 
-	if var_9_2 and var_9_1 then
-		if var_9_0 == RoomSummonEnum.SummonType.Incubate then
+	if animKeys and animator then
+		if mode == RoomSummonEnum.SummonType.Incubate then
 			AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_niudan2)
 		end
 
-		var_9_1:Play(var_9_2.operatePre, var_9_3, arg_9_0)
+		animator:Play(animKeys.operatePre, canDrag, self)
 	else
-		var_9_3()
+		canDrag()
 	end
 end
 
-function var_0_0._onDragEnd(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getBuildingGOAnimatorPlayer()
-	local var_11_1 = RoomSummonEnum.SummonMode[arg_11_1].EntityAnimKey
+function RoomBuildingSummonComp:_onDragEnd(mode, rare)
+	local animator = self:getBuildingGOAnimatorPlayer()
+	local animKeys = RoomSummonEnum.SummonMode[mode].EntityAnimKey
 
-	local function var_11_2()
-		CritterSummonController.instance:onFinishSummonAnim(arg_11_1)
+	local function finishCB()
+		CritterSummonController.instance:onFinishSummonAnim(mode)
 	end
 
-	if var_11_1 and var_11_0 then
-		local function var_11_3()
-			if var_11_0 then
-				var_11_0:Play(var_11_1.rare[arg_11_2], var_11_2, arg_11_0)
+	if animKeys and animator then
+		local function rareAnim()
+			if animator then
+				animator:Play(animKeys.rare[rare], finishCB, self)
 			else
-				var_11_2()
+				finishCB()
 			end
 		end
 
-		var_11_0:Play(var_11_1.operateEnd, var_11_3, arg_11_0)
+		animator:Play(animKeys.operateEnd, rareAnim, self)
 	else
-		var_11_2()
+		finishCB()
 	end
 end
 
-function var_0_0._onSummonSkip(arg_14_0)
-	local var_14_0 = arg_14_0:getBuildingGOAnimator()
-	local var_14_1 = RoomSummonEnum.SummonMode[arg_14_0.mode].EntityAnimKey
+function RoomBuildingSummonComp:_onSummonSkip()
+	local animator = self:getBuildingGOAnimator()
+	local animKeys = RoomSummonEnum.SummonMode[self.mode].EntityAnimKey
 
-	var_14_0:Play(var_14_1.operateEnd, 0, 1)
+	animator:Play(animKeys.operateEnd, 0, 1)
 end
 
-function var_0_0._onCloseGetCritter(arg_15_0)
+function RoomBuildingSummonComp:_onCloseGetCritter()
 	if RoomSummonEnum.SummonType then
-		for iter_15_0, iter_15_1 in pairs(RoomSummonEnum.SummonType) do
-			if RoomSummonEnum.SummonMode[iter_15_1] then
-				arg_15_0:_activeEggRoot(iter_15_1, false)
+		for _, mode in pairs(RoomSummonEnum.SummonType) do
+			if RoomSummonEnum.SummonMode[mode] then
+				self:_activeEggRoot(mode, false)
 			end
 		end
 	end
 end
 
-function var_0_0._activeEggRoot(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0:_getEggRoot(arg_16_1)
+function RoomBuildingSummonComp:_activeEggRoot(mode, isActive)
+	local eggRoot = self:_getEggRoot(mode)
 
-	if var_16_0 then
-		gohelper.setActive(var_16_0, arg_16_2)
+	if eggRoot then
+		gohelper.setActive(eggRoot, isActive)
 	end
 end
 
-function var_0_0._getEggRoot(arg_17_0, arg_17_1)
-	local var_17_0 = RoomSummonEnum.SummonMode[arg_17_1].EggRoot
+function RoomBuildingSummonComp:_getEggRoot(mode)
+	local eggPath = RoomSummonEnum.SummonMode[mode].EggRoot
 
-	if not arg_17_0._eggRoot then
-		arg_17_0._eggRoot = arg_17_0:getUserDataTb_()
+	if not self._eggRoot then
+		self._eggRoot = self:getUserDataTb_()
 	end
 
-	if var_17_0 then
-		local var_17_1 = arg_17_0.entity:getBuildingGO()
+	if eggPath then
+		local go = self.entity:getBuildingGO()
 
-		arg_17_0._eggRoot[arg_17_1] = gohelper.findChild(var_17_1, var_17_0)
+		self._eggRoot[mode] = gohelper.findChild(go, eggPath)
 
-		return arg_17_0._eggRoot[arg_17_1]
+		return self._eggRoot[mode]
 	end
 end
 
-return var_0_0
+return RoomBuildingSummonComp

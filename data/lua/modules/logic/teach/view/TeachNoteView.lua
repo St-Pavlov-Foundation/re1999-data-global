@@ -1,825 +1,853 @@
-﻿module("modules.logic.teach.view.TeachNoteView", package.seeall)
+﻿-- chunkname: @modules/logic/teach/view/TeachNoteView.lua
 
-local var_0_0 = class("TeachNoteView", BaseView)
+module("modules.logic.teach.view.TeachNoteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagefyleft = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fy/#simage_fyleft")
-	arg_1_0._simagefyright = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fy/#simage_fyright")
-	arg_1_0._gotopic = gohelper.findChild(arg_1_0.viewGO, "#go_topic")
-	arg_1_0._gotopicitem = gohelper.findChild(arg_1_0.viewGO, "#go_topic/#go_topicitem")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "#go_reward")
-	arg_1_0._scrollrewarditem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_reward/#scroll_rewarditem")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_finish")
-	arg_1_0._simagerewardbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_reward/#go_finish/#simage_rewardbg1")
-	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_reward/#go_finish/#btn_getall")
-	arg_1_0._gorewarddetail = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail")
-	arg_1_0._btnrewarddetailclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#btn_rewarddetailclose")
-	arg_1_0._gocontentSize = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#go_contentSize")
-	arg_1_0._goitems = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#go_items")
-	arg_1_0._gorewarddetailItem = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#go_items/#go_rewarddetailItem")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#go_items/Viewport/Content/#go_rewardContent")
-	arg_1_0._goclickarea = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#go_items/Viewport/Content/#go_rewardContent/#go_clickarea")
-	arg_1_0._goitemex = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#go_itemex")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_rewarddetail/#go_itemex/#go_item")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reward")
-	arg_1_0._gorewardredpoint = gohelper.findChild(arg_1_0.viewGO, "#btn_reward/#go_rewardredpoint")
-	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "#go_level")
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_left")
-	arg_1_0._simagelefunlock = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#go_left/#simage_unlock")
-	arg_1_0._simagelefticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#go_left/#simage_lefticon")
-	arg_1_0._txtleftname = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_left/#txt_leftname")
-	arg_1_0._goleftpass = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_left/#txt_leftname/#go_leftpass")
-	arg_1_0._goleftpassdone = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_left/#txt_leftname/#go_leftpassdone")
-	arg_1_0._txtleftnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_left/#txt_leftnameen")
-	arg_1_0._imageleftindex = gohelper.findChildImage(arg_1_0.viewGO, "#go_level/#go_left/#image_leftindex")
-	arg_1_0._goleftnotetip = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_left/#go_leftnotetip")
-	arg_1_0._txtleftnotedesc = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_left/#go_leftnotetip/#txt_leftnotedesc")
-	arg_1_0._goleftdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_left/leftitemdescs/#go_leftdescitem")
-	arg_1_0._goleftunlock = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_left/#go_leftunlock")
-	arg_1_0._btnleftlearn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn")
-	arg_1_0._goleftlock = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_left/#go_leftlock")
-	arg_1_0._btnleftarrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_level/#go_left/#btn_leftarrow")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_right")
-	arg_1_0._simagerightunlock = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#go_right/#simage_unlock")
-	arg_1_0._simagerighticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#go_right/#simage_righticon")
-	arg_1_0._txtrightname = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_right/#txt_rightname")
-	arg_1_0._gorightpass = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_right/#txt_rightname/#go_leftpass")
-	arg_1_0._gorightpassdone = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_right/#txt_rightname/#go_leftpassdone")
-	arg_1_0._txtrightnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_right/#txt_rightnameen")
-	arg_1_0._imagerightindex = gohelper.findChildImage(arg_1_0.viewGO, "#go_level/#go_right/#image_rightindex")
-	arg_1_0._gorightnotetip = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_right/#go_rightnotetip")
-	arg_1_0._txtrightnotedesc = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_right/#go_rightnotetip/#txt_rightnotedesc")
-	arg_1_0._gorightdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_right/rightitemdescs/#go_rightdescitem")
-	arg_1_0._gorightunlock = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_right/#go_rightunlock")
-	arg_1_0._btnrightlearn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn")
-	arg_1_0._gorightlock = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_right/#go_rightlock")
-	arg_1_0._btnrightarrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_level/#go_right/#btn_rightarrow")
-	arg_1_0._goend = gohelper.findChild(arg_1_0.viewGO, "#go_level/#go_end")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._txtleftstartcn = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn/#txt_leftstartcn")
-	arg_1_0._txtleftstarten = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn/#txt_leftstarten")
-	arg_1_0._txtrightstartcn = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn/#txt_rightstartcn")
-	arg_1_0._txtrightstarten = gohelper.findChildText(arg_1_0.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn/#txt_rightstarten")
-	arg_1_0._simageleftlockmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#go_left/#go_leftlock/#simage_leftlockmask")
-	arg_1_0._simagerightlockmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_level/#go_right/#go_rightlock/#simage_rightlockmask")
-	arg_1_0._goreceivetip = gohelper.findChild(arg_1_0.viewGO, "#go_reward/#go_finish/#go_receivetip")
-	arg_1_0._btnreward1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_reward/#go_finish/#go_reward1/click")
-	arg_1_0._btnreward2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_reward/#go_finish/#go_reward2/click")
+local TeachNoteView = class("TeachNoteView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TeachNoteView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagefyleft = gohelper.findChildSingleImage(self.viewGO, "#simage_fy/#simage_fyleft")
+	self._simagefyright = gohelper.findChildSingleImage(self.viewGO, "#simage_fy/#simage_fyright")
+	self._gotopic = gohelper.findChild(self.viewGO, "#go_topic")
+	self._gotopicitem = gohelper.findChild(self.viewGO, "#go_topic/#go_topicitem")
+	self._goreward = gohelper.findChild(self.viewGO, "#go_reward")
+	self._scrollrewarditem = gohelper.findChildScrollRect(self.viewGO, "#go_reward/#scroll_rewarditem")
+	self._gofinish = gohelper.findChild(self.viewGO, "#go_reward/#go_finish")
+	self._simagerewardbg1 = gohelper.findChildSingleImage(self.viewGO, "#go_reward/#go_finish/#simage_rewardbg1")
+	self._btngetall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_reward/#go_finish/#btn_getall")
+	self._gorewarddetail = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail")
+	self._btnrewarddetailclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_reward/#go_rewarddetail/#btn_rewarddetailclose")
+	self._gocontentSize = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail/#go_contentSize")
+	self._goitems = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail/#go_items")
+	self._gorewarddetailItem = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail/#go_items/#go_rewarddetailItem")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail/#go_items/Viewport/Content/#go_rewardContent")
+	self._goclickarea = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail/#go_items/Viewport/Content/#go_rewardContent/#go_clickarea")
+	self._goitemex = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail/#go_itemex")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_reward/#go_rewarddetail/#go_itemex/#go_item")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reward")
+	self._gorewardredpoint = gohelper.findChild(self.viewGO, "#btn_reward/#go_rewardredpoint")
+	self._golevel = gohelper.findChild(self.viewGO, "#go_level")
+	self._goleft = gohelper.findChild(self.viewGO, "#go_level/#go_left")
+	self._simagelefunlock = gohelper.findChildSingleImage(self.viewGO, "#go_level/#go_left/#simage_unlock")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "#go_level/#go_left/#simage_lefticon")
+	self._txtleftname = gohelper.findChildText(self.viewGO, "#go_level/#go_left/#txt_leftname")
+	self._goleftpass = gohelper.findChild(self.viewGO, "#go_level/#go_left/#txt_leftname/#go_leftpass")
+	self._goleftpassdone = gohelper.findChild(self.viewGO, "#go_level/#go_left/#txt_leftname/#go_leftpassdone")
+	self._txtleftnameen = gohelper.findChildText(self.viewGO, "#go_level/#go_left/#txt_leftnameen")
+	self._imageleftindex = gohelper.findChildImage(self.viewGO, "#go_level/#go_left/#image_leftindex")
+	self._goleftnotetip = gohelper.findChild(self.viewGO, "#go_level/#go_left/#go_leftnotetip")
+	self._txtleftnotedesc = gohelper.findChildText(self.viewGO, "#go_level/#go_left/#go_leftnotetip/#txt_leftnotedesc")
+	self._goleftdescitem = gohelper.findChild(self.viewGO, "#go_level/#go_left/leftitemdescs/#go_leftdescitem")
+	self._goleftunlock = gohelper.findChild(self.viewGO, "#go_level/#go_left/#go_leftunlock")
+	self._btnleftlearn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn")
+	self._goleftlock = gohelper.findChild(self.viewGO, "#go_level/#go_left/#go_leftlock")
+	self._btnleftarrow = gohelper.findChildButtonWithAudio(self.viewGO, "#go_level/#go_left/#btn_leftarrow")
+	self._goright = gohelper.findChild(self.viewGO, "#go_level/#go_right")
+	self._simagerightunlock = gohelper.findChildSingleImage(self.viewGO, "#go_level/#go_right/#simage_unlock")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "#go_level/#go_right/#simage_righticon")
+	self._txtrightname = gohelper.findChildText(self.viewGO, "#go_level/#go_right/#txt_rightname")
+	self._gorightpass = gohelper.findChild(self.viewGO, "#go_level/#go_right/#txt_rightname/#go_leftpass")
+	self._gorightpassdone = gohelper.findChild(self.viewGO, "#go_level/#go_right/#txt_rightname/#go_leftpassdone")
+	self._txtrightnameen = gohelper.findChildText(self.viewGO, "#go_level/#go_right/#txt_rightnameen")
+	self._imagerightindex = gohelper.findChildImage(self.viewGO, "#go_level/#go_right/#image_rightindex")
+	self._gorightnotetip = gohelper.findChild(self.viewGO, "#go_level/#go_right/#go_rightnotetip")
+	self._txtrightnotedesc = gohelper.findChildText(self.viewGO, "#go_level/#go_right/#go_rightnotetip/#txt_rightnotedesc")
+	self._gorightdescitem = gohelper.findChild(self.viewGO, "#go_level/#go_right/rightitemdescs/#go_rightdescitem")
+	self._gorightunlock = gohelper.findChild(self.viewGO, "#go_level/#go_right/#go_rightunlock")
+	self._btnrightlearn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn")
+	self._gorightlock = gohelper.findChild(self.viewGO, "#go_level/#go_right/#go_rightlock")
+	self._btnrightarrow = gohelper.findChildButtonWithAudio(self.viewGO, "#go_level/#go_right/#btn_rightarrow")
+	self._goend = gohelper.findChild(self.viewGO, "#go_level/#go_end")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._txtleftstartcn = gohelper.findChildText(self.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn/#txt_leftstartcn")
+	self._txtleftstarten = gohelper.findChildText(self.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn/#txt_leftstarten")
+	self._txtrightstartcn = gohelper.findChildText(self.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn/#txt_rightstartcn")
+	self._txtrightstarten = gohelper.findChildText(self.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn/#txt_rightstarten")
+	self._simageleftlockmask = gohelper.findChildSingleImage(self.viewGO, "#go_level/#go_left/#go_leftlock/#simage_leftlockmask")
+	self._simagerightlockmask = gohelper.findChildSingleImage(self.viewGO, "#go_level/#go_right/#go_rightlock/#simage_rightlockmask")
+	self._goreceivetip = gohelper.findChild(self.viewGO, "#go_reward/#go_finish/#go_receivetip")
+	self._btnreward1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_reward/#go_finish/#go_reward1/click")
+	self._btnreward2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_reward/#go_finish/#go_reward2/click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
-	arg_2_0._btnrewarddetailclose:AddClickListener(arg_2_0._btnrewarddetailcloseOnClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnleftlearn:AddClickListener(arg_2_0._btnleftlearnOnClick, arg_2_0)
-	arg_2_0._btnleftarrow:AddClickListener(arg_2_0._btnleftarrowOnClick, arg_2_0)
-	arg_2_0._btnrightlearn:AddClickListener(arg_2_0._btnrightlearnOnClick, arg_2_0)
-	arg_2_0._btnrightarrow:AddClickListener(arg_2_0._btnrightarrowOnClick, arg_2_0)
-	arg_2_0._btnreward1:AddClickListener(arg_2_0._btnreward1OnClick, arg_2_0)
-	arg_2_0._btnreward2:AddClickListener(arg_2_0._btnreward2OnClick, arg_2_0)
+function TeachNoteView:addEvents()
+	self._btngetall:AddClickListener(self._btngetallOnClick, self)
+	self._btnrewarddetailclose:AddClickListener(self._btnrewarddetailcloseOnClick, self)
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnleftlearn:AddClickListener(self._btnleftlearnOnClick, self)
+	self._btnleftarrow:AddClickListener(self._btnleftarrowOnClick, self)
+	self._btnrightlearn:AddClickListener(self._btnrightlearnOnClick, self)
+	self._btnrightarrow:AddClickListener(self._btnrightarrowOnClick, self)
+	self._btnreward1:AddClickListener(self._btnreward1OnClick, self)
+	self._btnreward2:AddClickListener(self._btnreward2OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngetall:RemoveClickListener()
-	arg_3_0._btnrewarddetailclose:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnleftlearn:RemoveClickListener()
-	arg_3_0._btnleftarrow:RemoveClickListener()
-	arg_3_0._btnrightlearn:RemoveClickListener()
-	arg_3_0._btnrightarrow:RemoveClickListener()
-	arg_3_0._btnreward1:RemoveClickListener()
-	arg_3_0._btnreward2:RemoveClickListener()
+function TeachNoteView:removeEvents()
+	self._btngetall:RemoveClickListener()
+	self._btnrewarddetailclose:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
+	self._btnleftlearn:RemoveClickListener()
+	self._btnleftarrow:RemoveClickListener()
+	self._btnrightlearn:RemoveClickListener()
+	self._btnrightarrow:RemoveClickListener()
+	self._btnreward1:RemoveClickListener()
+	self._btnreward2:RemoveClickListener()
 end
 
-function var_0_0._btnleftarrowOnClick(arg_4_0)
-	arg_4_0:_changeRight()
+function TeachNoteView:_btnleftarrowOnClick()
+	self:_changeRight()
 end
 
-function var_0_0._btnrightarrowOnClick(arg_5_0)
-	arg_5_0:_changeLeft()
+function TeachNoteView:_btnrightarrowOnClick()
+	self:_changeLeft()
 end
 
-function var_0_0._btnreward1OnClick(arg_6_0)
+function TeachNoteView:_btnreward1OnClick()
 	MaterialTipController.instance:showMaterialInfo(7, 2)
 end
 
-function var_0_0._btnreward2OnClick(arg_7_0)
+function TeachNoteView:_btnreward2OnClick()
 	MaterialTipController.instance:showMaterialInfo(1, 133023)
 end
 
-function var_0_0._btngetallOnClick(arg_8_0)
+function TeachNoteView:_btngetallOnClick()
 	if not TeachNoteModel.instance:isTeachNoteFinalRewardCouldGet() then
-		gohelper.setActive(arg_8_0._gorewarddetail, true)
+		gohelper.setActive(self._gorewarddetail, true)
 	else
 		DungeonRpc.instance:sendInstructionDungeonFinalRewardRequest()
 	end
 end
 
-function var_0_0._btnrewarddetailcloseOnClick(arg_9_0)
-	gohelper.setActive(arg_9_0._gorewarddetail, false)
+function TeachNoteView:_btnrewarddetailcloseOnClick()
+	gohelper.setActive(self._gorewarddetail, false)
 end
 
-function var_0_0._btnrightlearnOnClick(arg_10_0)
-	local var_10_0 = TeachNoteModel.instance:getTeachNoticeTopicId()
-	local var_10_1 = TeachNoteModel.instance:getTopicLevelCos(var_10_0)[2 * arg_10_0._tag + 2]
+function TeachNoteView:_btnrightlearnOnClick()
+	local id = TeachNoteModel.instance:getTeachNoticeTopicId()
+	local cos = TeachNoteModel.instance:getTopicLevelCos(id)
+	local rightLevelCo = cos[2 * self._tag + 2]
 
-	if arg_10_0.viewParam.isJump then
-		TeachNoteModel.instance:setJumpEpisodeId(var_10_1.episodeId)
+	if self.viewParam.isJump then
+		TeachNoteModel.instance:setJumpEpisodeId(rightLevelCo.episodeId)
 
-		local var_10_2 = DungeonConfig.instance:getEpisodeCO(var_10_1.episodeId).chapterId
+		local chapterId = DungeonConfig.instance:getEpisodeCO(rightLevelCo.episodeId).chapterId
 
 		TeachNoteModel.instance:setTeachNoteEnterFight(true, false)
-		DungeonFightController.instance:enterFight(var_10_2, var_10_1.episodeId)
+		DungeonFightController.instance:enterFight(chapterId, rightLevelCo.episodeId)
 	else
-		DungeonModel.instance.curLookEpisodeId = var_10_1.episodeId
+		DungeonModel.instance.curLookEpisodeId = rightLevelCo.episodeId
 
-		local var_10_3 = TeachNoteModel.instance:isTeachNoteLevelPass(var_10_1.id)
+		local isFinished = TeachNoteModel.instance:isTeachNoteLevelPass(rightLevelCo.id)
 
-		TeachNoteModel.instance:setLevelEnterFightState(var_10_3)
+		TeachNoteModel.instance:setLevelEnterFightState(isFinished)
 
-		local var_10_4 = DungeonConfig.instance:getEpisodeCO(var_10_1.episodeId).chapterId
+		local chapterId = DungeonConfig.instance:getEpisodeCO(rightLevelCo.episodeId).chapterId
 
 		TeachNoteModel.instance:setTeachNoteEnterFight(true, false)
-		DungeonFightController.instance:enterFight(var_10_4, var_10_1.episodeId)
+		DungeonFightController.instance:enterFight(chapterId, rightLevelCo.episodeId)
 	end
 end
 
-function var_0_0._btnleftlearnOnClick(arg_11_0)
-	local var_11_0 = TeachNoteModel.instance:getTeachNoticeTopicId()
-	local var_11_1 = TeachNoteModel.instance:getTopicLevelCos(var_11_0)[2 * arg_11_0._tag + 1]
+function TeachNoteView:_btnleftlearnOnClick()
+	local id = TeachNoteModel.instance:getTeachNoticeTopicId()
+	local cos = TeachNoteModel.instance:getTopicLevelCos(id)
+	local leftLevelCo = cos[2 * self._tag + 1]
 
-	if arg_11_0.viewParam.isJump then
-		TeachNoteModel.instance:setJumpEpisodeId(var_11_1.episodeId)
+	if self.viewParam.isJump then
+		TeachNoteModel.instance:setJumpEpisodeId(leftLevelCo.episodeId)
 
-		local var_11_2 = DungeonConfig.instance:getEpisodeCO(var_11_1.episodeId).chapterId
+		local chapterId = DungeonConfig.instance:getEpisodeCO(leftLevelCo.episodeId).chapterId
 
 		TeachNoteModel.instance:setTeachNoteEnterFight(true, false)
-		DungeonFightController.instance:enterFight(var_11_2, var_11_1.episodeId)
+		DungeonFightController.instance:enterFight(chapterId, leftLevelCo.episodeId)
 	else
-		DungeonModel.instance.curLookEpisodeId = var_11_1.episodeId
+		DungeonModel.instance.curLookEpisodeId = leftLevelCo.episodeId
 
-		local var_11_3 = TeachNoteModel.instance:isTeachNoteLevelPass(var_11_1.id)
+		local isFinished = TeachNoteModel.instance:isTeachNoteLevelPass(leftLevelCo.id)
 
-		TeachNoteModel.instance:setLevelEnterFightState(var_11_3)
+		TeachNoteModel.instance:setLevelEnterFightState(isFinished)
 
-		local var_11_4 = DungeonConfig.instance:getEpisodeCO(var_11_1.episodeId).chapterId
+		local chapterId = DungeonConfig.instance:getEpisodeCO(leftLevelCo.episodeId).chapterId
 
 		TeachNoteModel.instance:setTeachNoteEnterFight(true, false)
-		DungeonFightController.instance:enterFight(var_11_4, var_11_1.episodeId)
+		DungeonFightController.instance:enterFight(chapterId, leftLevelCo.episodeId)
 	end
 end
 
-function var_0_0._btnrewardOnClick(arg_12_0)
-	if arg_12_0._showReward then
+function TeachNoteView:_btnrewardOnClick()
+	if self._showReward then
 		return
 	end
 
 	TeachNoteModel.instance:setTeachNoticeTopicId(0, 0)
 
-	arg_12_0._showReward = true
+	self._showReward = true
 
-	arg_12_0:_refreshItem()
+	self:_refreshItem()
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	arg_13_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_13_0._simagebg.gameObject)
-	arg_13_0._gorewardBeSelected = gohelper.findChild(arg_13_0.viewGO, "#btn_reward/beselected")
-	arg_13_0._gorewardUnselected = gohelper.findChild(arg_13_0.viewGO, "#btn_reward/unselected")
-	arg_13_0._imageleftlearn = gohelper.findChildImage(arg_13_0.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn")
-	arg_13_0._imagerightlearn = gohelper.findChildImage(arg_13_0.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn")
-	arg_13_0._leftlockCanvas = arg_13_0._goleftlock:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_13_0._rightlockCanvas = arg_13_0._gorightlock:GetComponent(typeof(UnityEngine.CanvasGroup))
+function TeachNoteView:_editableInitView()
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._simagebg.gameObject)
+	self._gorewardBeSelected = gohelper.findChild(self.viewGO, "#btn_reward/beselected")
+	self._gorewardUnselected = gohelper.findChild(self.viewGO, "#btn_reward/unselected")
+	self._imageleftlearn = gohelper.findChildImage(self.viewGO, "#go_level/#go_left/#go_leftunlock/#btn_leftlearn")
+	self._imagerightlearn = gohelper.findChildImage(self.viewGO, "#go_level/#go_right/#go_rightunlock/#btn_rightlearn")
+	self._leftlockCanvas = self._goleftlock:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._rightlockCanvas = self._gorightlock:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.addUIClickAudio(arg_13_0._btnreward.gameObject, AudioEnum.TeachNote.play_ui_activity_switch)
-	gohelper.addUIClickAudio(arg_13_0._btngetall.gameObject, AudioEnum.TeachNote.play_ui_activity_act)
-	gohelper.addUIClickAudio(arg_13_0._btnleftlearn.gameObject, AudioEnum.TeachNote.play_ui_activity_jump)
-	gohelper.addUIClickAudio(arg_13_0._btnrightlearn.gameObject, AudioEnum.TeachNote.play_ui_activity_jump)
-	gohelper.removeUIClickAudio(arg_13_0._btnleftarrow.gameObject)
-	gohelper.removeUIClickAudio(arg_13_0._btnrightarrow.gameObject)
-	arg_13_0._simagebg:LoadImage(ResUrl.getTeachNoteImage("full/bg_jiaoxuebiji_beijingtu.jpg"))
-	arg_13_0._simagerewardbg1:LoadImage(ResUrl.getTeachNoteImage("bg_jianglixuanchuan.png"))
-	arg_13_0._simagelefunlock:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_kongdi.png"))
-	arg_13_0._simagerightunlock:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_kongdi.png"))
-	arg_13_0._simageleftlockmask:LoadImage(ResUrl.getTeachNoteImage("btn_zhezhao_1.png"))
-	arg_13_0._simagerightlockmask:LoadImage(ResUrl.getTeachNoteImage("btn_zhezhao.png"))
+	gohelper.addUIClickAudio(self._btnreward.gameObject, AudioEnum.TeachNote.play_ui_activity_switch)
+	gohelper.addUIClickAudio(self._btngetall.gameObject, AudioEnum.TeachNote.play_ui_activity_act)
+	gohelper.addUIClickAudio(self._btnleftlearn.gameObject, AudioEnum.TeachNote.play_ui_activity_jump)
+	gohelper.addUIClickAudio(self._btnrightlearn.gameObject, AudioEnum.TeachNote.play_ui_activity_jump)
+	gohelper.removeUIClickAudio(self._btnleftarrow.gameObject)
+	gohelper.removeUIClickAudio(self._btnrightarrow.gameObject)
+	self._simagebg:LoadImage(ResUrl.getTeachNoteImage("full/bg_jiaoxuebiji_beijingtu.jpg"))
+	self._simagerewardbg1:LoadImage(ResUrl.getTeachNoteImage("bg_jianglixuanchuan.png"))
+	self._simagelefunlock:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_kongdi.png"))
+	self._simagerightunlock:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_kongdi.png"))
+	self._simageleftlockmask:LoadImage(ResUrl.getTeachNoteImage("btn_zhezhao_1.png"))
+	self._simagerightlockmask:LoadImage(ResUrl.getTeachNoteImage("btn_zhezhao.png"))
 
-	arg_13_0._viewAnim = arg_13_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_13_0._leftpassAni = arg_13_0._txtleftname.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_13_0._rightpassAni = arg_13_0._txtrightname.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_13_0._leftunlockAni = arg_13_0._goleft:GetComponent(typeof(UnityEngine.Animation))
-	arg_13_0._rightunlockAni = arg_13_0._goright:GetComponent(typeof(UnityEngine.Animation))
-	arg_13_0._meshswitch1fyleft = gohelper.findChildComponent(arg_13_0.viewGO, "#swich1/fayeleft", typeof(UIMesh))
-	arg_13_0._meshswitch1fyright = gohelper.findChildComponent(arg_13_0.viewGO, "#swich1/fayeright", typeof(UIMesh))
-	arg_13_0._meshswitch2fyleft = gohelper.findChildComponent(arg_13_0.viewGO, "#swich2/fayeleft", typeof(UIMesh))
-	arg_13_0._meshswitch2fyright = gohelper.findChildComponent(arg_13_0.viewGO, "#swich2/fayeright", typeof(UIMesh))
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._leftpassAni = self._txtleftname.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._rightpassAni = self._txtrightname.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._leftunlockAni = self._goleft:GetComponent(typeof(UnityEngine.Animation))
+	self._rightunlockAni = self._goright:GetComponent(typeof(UnityEngine.Animation))
+	self._meshswitch1fyleft = gohelper.findChildComponent(self.viewGO, "#swich1/fayeleft", typeof(UIMesh))
+	self._meshswitch1fyright = gohelper.findChildComponent(self.viewGO, "#swich1/fayeright", typeof(UIMesh))
+	self._meshswitch2fyleft = gohelper.findChildComponent(self.viewGO, "#swich2/fayeleft", typeof(UIMesh))
+	self._meshswitch2fyright = gohelper.findChildComponent(self.viewGO, "#swich2/fayeright", typeof(UIMesh))
 
-	if not arg_13_0._textureLoader then
-		arg_13_0._textureLoader = MultiAbLoader.New()
+	if not self._textureLoader then
+		self._textureLoader = MultiAbLoader.New()
 
-		arg_13_0._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_3.png"))
-		arg_13_0._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_4.png"))
-		arg_13_0._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png"))
-		arg_13_0._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2.png"))
-		arg_13_0._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
-		arg_13_0._textureLoader:startLoad(arg_13_0._textureBgLoaded, arg_13_0)
+		self._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_3.png"))
+		self._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_4.png"))
+		self._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png"))
+		self._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2.png"))
+		self._textureLoader:addPath(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
+		self._textureLoader:startLoad(self._textureBgLoaded, self)
 	end
 
-	arg_13_0._topicItems = {}
-	arg_13_0._rewardIcons = {}
-	arg_13_0._rewardItems = {}
-	arg_13_0._leftDescItems = {}
-	arg_13_0._rightDescItems = {}
-	arg_13_0._showFinished = false
+	self._topicItems = {}
+	self._rewardIcons = {}
+	self._rewardItems = {}
+	self._leftDescItems = {}
+	self._rightDescItems = {}
+	self._showFinished = false
 end
 
-function var_0_0._textureBgLoaded(arg_14_0)
-	arg_14_0._normalBgRight = arg_14_0._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png")):GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png"))
-	arg_14_0._idlebg = arg_14_0._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2.png")):GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2.png"))
-	arg_14_0._normalBgLeft = arg_14_0._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png")):GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
-	arg_14_0._challengeBgRight = arg_14_0._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_3.png")):GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_3.png"))
-	arg_14_0._challengeBgLeft = arg_14_0._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_4.png")):GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_4.png"))
+function TeachNoteView:_textureBgLoaded()
+	local nrasset = self._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png"))
+
+	self._normalBgRight = nrasset:GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png"))
+
+	local idlessset = self._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2.png"))
+
+	self._idlebg = idlessset:GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2.png"))
+
+	local nlasset = self._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
+
+	self._normalBgLeft = nlasset:GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
+
+	local crasset = self._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_3.png"))
+
+	self._challengeBgRight = crasset:GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_3.png"))
+
+	local classet = self._textureLoader:getAssetItem(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_4.png"))
+
+	self._challengeBgLeft = classet:GetResource(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_4.png"))
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function TeachNoteView:onUpdateParam()
 	return
 end
 
-function var_0_0._refreshFinishItem(arg_16_0)
-	arg_16_0._simagefyright:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png"))
+function TeachNoteView:_refreshFinishItem()
+	self._simagefyright:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_6.png"))
 
-	arg_16_0._meshswitch1fyright.texture = arg_16_0._normalBgRight
-	arg_16_0._meshswitch2fyright.texture = arg_16_0._normalBgRight
+	self._meshswitch1fyright.texture = self._normalBgRight
+	self._meshswitch2fyright.texture = self._normalBgRight
 
-	arg_16_0._simagefyleft:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
+	self._simagefyleft:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
 
-	arg_16_0._meshswitch1fyleft.texture = arg_16_0._normalBgLeft
-	arg_16_0._meshswitch2fyleft.texture = arg_16_0._normalBgLeft
+	self._meshswitch1fyleft.texture = self._normalBgLeft
+	self._meshswitch2fyleft.texture = self._normalBgLeft
 
-	gohelper.setActive(arg_16_0._gorewarddetail, false)
+	gohelper.setActive(self._gorewarddetail, false)
 
-	local var_16_0 = TeachNoteModel.instance:isTeachNoteFinalRewardCouldGet()
+	local couldGet = TeachNoteModel.instance:isTeachNoteFinalRewardCouldGet()
 
-	gohelper.setActive(arg_16_0._btngetall.gameObject, var_16_0)
-	gohelper.setActive(arg_16_0._goreceivetip, not var_16_0)
+	gohelper.setActive(self._btngetall.gameObject, couldGet)
+	gohelper.setActive(self._goreceivetip, not couldGet)
 
-	local var_16_1 = string.split(CommonConfig.instance:getConstStr(ConstEnum.TeachBounds), "|")
+	local rewardCos = string.split(CommonConfig.instance:getConstStr(ConstEnum.TeachBounds), "|")
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._rewardIcons) do
-		gohelper.setActive(iter_16_1.go, false)
+	for _, v in pairs(self._rewardIcons) do
+		gohelper.setActive(v.go, false)
 	end
 
-	for iter_16_2 = 1, #var_16_1 do
-		if not arg_16_0._rewardIcons[iter_16_2] then
-			local var_16_2 = {
-				go = gohelper.clone(arg_16_0._gorewarddetailItem, arg_16_0._gorewardContent, "item" .. iter_16_2)
-			}
-			local var_16_3 = gohelper.findChild(var_16_2.go, "icon")
+	for i = 1, #rewardCos do
+		local item = self._rewardIcons[i]
 
-			var_16_2.icon = IconMgr.instance:getCommonItemIcon(var_16_3)
+		if not item then
+			local o = {}
 
-			table.insert(arg_16_0._rewardIcons, var_16_2)
+			o.go = gohelper.clone(self._gorewarddetailItem, self._gorewardContent, "item" .. i)
+
+			local icon = gohelper.findChild(o.go, "icon")
+
+			o.icon = IconMgr.instance:getCommonItemIcon(icon)
+
+			table.insert(self._rewardIcons, o)
 		end
 
-		gohelper.setActive(arg_16_0._rewardIcons[iter_16_2].go, true)
+		gohelper.setActive(self._rewardIcons[i].go, true)
 
-		local var_16_4 = string.splitToNumber(var_16_1[iter_16_2], "#")
-		local var_16_5, var_16_6 = ItemModel.instance:getItemConfigAndIcon(var_16_4[1], var_16_4[2])
+		local splitCo = string.splitToNumber(rewardCos[i], "#")
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(splitCo[1], splitCo[2])
 
-		arg_16_0._rewardIcons[iter_16_2].icon:setMOValue(var_16_4[1], var_16_4[2], var_16_4[3], nil, true)
-		arg_16_0._rewardIcons[iter_16_2].icon:setScale(0.6)
-		arg_16_0._rewardIcons[iter_16_2].icon:isShowQuality(false)
-		arg_16_0._rewardIcons[iter_16_2].icon:isShowCount(false)
+		self._rewardIcons[i].icon:setMOValue(splitCo[1], splitCo[2], splitCo[3], nil, true)
+		self._rewardIcons[i].icon:setScale(0.6)
+		self._rewardIcons[i].icon:isShowQuality(false)
+		self._rewardIcons[i].icon:isShowCount(false)
 
-		gohelper.findChildText(arg_16_0._rewardIcons[iter_16_2].go, "name").text = var_16_5.name
-		gohelper.findChildText(arg_16_0._rewardIcons[iter_16_2].go, "name/quantity").text = luaLang("multiple") .. var_16_4[3]
+		gohelper.findChildText(self._rewardIcons[i].go, "name").text = config.name
+		gohelper.findChildText(self._rewardIcons[i].go, "name/quantity").text = luaLang("multiple") .. splitCo[3]
 	end
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0:addEventCb(TeachNoteController.instance, TeachNoteEvent.ClickTopicItem, arg_17_0._onTopicItemClicked, arg_17_0)
-	arg_17_0:addEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicInfo, arg_17_0._refreshItem, arg_17_0)
-	arg_17_0:addEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicReward, arg_17_0._refreshReward, arg_17_0)
-	arg_17_0:addEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTeachNoteFinalReward, arg_17_0.closeThis, arg_17_0)
-	arg_17_0:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, arg_17_0._onLoadingStartClose, arg_17_0)
+function TeachNoteView:onOpen()
+	self:addEventCb(TeachNoteController.instance, TeachNoteEvent.ClickTopicItem, self._onTopicItemClicked, self)
+	self:addEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicInfo, self._refreshItem, self)
+	self:addEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicReward, self._refreshReward, self)
+	self:addEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTeachNoteFinalReward, self.closeThis, self)
+	self:addEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, self._onLoadingStartClose, self)
 
 	if ViewMgr.instance:isOpen(ViewName.LoadingView) then
-		arg_17_0.viewContainer._viewSetting.anim = nil
+		self.viewContainer._viewSetting.anim = nil
 
-		gohelper.setActive(arg_17_0.viewGO, false)
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	arg_17_0:showViewIn()
+	self:showViewIn()
 end
 
-function var_0_0.endBlock(arg_18_0)
+function TeachNoteView:endBlock()
 	UIBlockMgr.instance:endBlock("teachnote")
 end
 
-function var_0_0.showViewIn(arg_19_0)
-	arg_19_0._drag:AddDragBeginListener(arg_19_0._onDragBegin, arg_19_0)
-	arg_19_0._drag:AddDragEndListener(arg_19_0._onDragEnd, arg_19_0)
+function TeachNoteView:showViewIn()
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_19_0._delayTime = 1.2
+	self._delayTime = 1.2
 
 	UIBlockMgr.instance:endAll()
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("teachnote")
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_mail_open)
 
-	arg_19_0._topicId, arg_19_0._tag = TeachNoteModel.instance:getTeachNoticeTopicId()
+	self._topicId, self._tag = TeachNoteModel.instance:getTeachNoticeTopicId()
 
-	if arg_19_0.viewParam.episodeId then
-		arg_19_0._showReward = false
+	if self.viewParam.episodeId then
+		self._showReward = false
 
-		local var_19_0 = TeachNoteModel.instance:getNewOpenTopicLevels(arg_19_0._topicId)
+		local newLvs = TeachNoteModel.instance:getNewOpenTopicLevels(self._topicId)
 
-		if #var_19_0 > 0 then
-			local var_19_1 = var_19_0[#var_19_0]
-			local var_19_2 = TeachNoteModel.instance:getTopicLevelCos(arg_19_0._topicId)
+		if #newLvs > 0 then
+			local id = newLvs[#newLvs]
+			local lvIds = TeachNoteModel.instance:getTopicLevelCos(self._topicId)
 
-			for iter_19_0, iter_19_1 in ipairs(var_19_2) do
-				if iter_19_1.id == var_19_1 then
-					arg_19_0._topicIndex = math.floor(0.5 * (iter_19_0 - 1))
+			for k, v in ipairs(lvIds) do
+				if v.id == id then
+					self._topicIndex = math.floor(0.5 * (k - 1))
 				end
 			end
 
-			TeachNoteModel.instance:setTeachNoticeTopicId(arg_19_0._topicId, arg_19_0._topicIndex)
+			TeachNoteModel.instance:setTeachNoticeTopicId(self._topicId, self._topicIndex)
 		else
-			local var_19_3 = TeachNoteModel.instance:getTopicLevelCos(arg_19_0._topicId)
+			local lvIds = TeachNoteModel.instance:getTopicLevelCos(self._topicId)
 
-			arg_19_0._topicIndex = 0
+			self._topicIndex = 0
 
-			for iter_19_2, iter_19_3 in ipairs(var_19_3) do
-				if iter_19_3.episodeId == arg_19_0.viewParam.episodeId then
-					arg_19_0._topicIndex = math.floor(0.5 * (iter_19_2 - 1))
+			for k, v in ipairs(lvIds) do
+				if v.episodeId == self.viewParam.episodeId then
+					self._topicIndex = math.floor(0.5 * (k - 1))
 				end
 			end
 
-			TeachNoteModel.instance:setTeachNoticeTopicId(arg_19_0._topicId, arg_19_0._topicIndex)
+			TeachNoteModel.instance:setTeachNoticeTopicId(self._topicId, self._topicIndex)
 		end
 
 		if not TeachNoteModel.instance:isFinishLevelEnterFight() then
-			local var_19_4 = TeachNoteModel.instance:getTopicLevelCos(arg_19_0._topicId)
-			local var_19_5 = true
+			local lvIds = TeachNoteModel.instance:getTopicLevelCos(self._topicId)
+			local allFinished = true
 
-			for iter_19_4, iter_19_5 in ipairs(var_19_4) do
-				if not DungeonModel.instance:hasPassLevel(iter_19_5.episodeId) then
-					var_19_5 = false
+			for _, v in ipairs(lvIds) do
+				if not DungeonModel.instance:hasPassLevel(v.episodeId) then
+					allFinished = false
 				end
 			end
 
-			if var_19_5 then
-				arg_19_0._showReward = true
+			if allFinished then
+				self._showReward = true
 
 				TeachNoteModel.instance:setTeachNoticeTopicId(0, 0)
 			end
 		end
 
-		if arg_19_0._topicId == 0 then
+		if self._topicId == 0 then
 			TeachNoteModel.instance:setTeachNoticeTopicId(1, 0)
 		end
 	else
-		arg_19_0._showReward = true
+		self._showReward = true
 
 		TeachNoteModel.instance:setTeachNoticeTopicId(0, 0)
 	end
 
-	arg_19_0:_refreshItem()
+	self:_refreshItem()
 end
 
-function var_0_0.onOpenFinish(arg_20_0)
+function TeachNoteView:onOpenFinish()
 	HelpController.instance:tryShowFirstHelp(HelpEnum.HelpId.TeachNote)
 end
 
-function var_0_0._onLoadingStartClose(arg_21_0)
-	gohelper.setActive(arg_21_0.viewGO, false)
-	TaskDispatcher.runDelay(arg_21_0._playBackTeachNote, arg_21_0, 0.6)
+function TeachNoteView:_onLoadingStartClose()
+	gohelper.setActive(self.viewGO, false)
+	TaskDispatcher.runDelay(self._playBackTeachNote, self, 0.6)
 end
 
-function var_0_0._playBackTeachNote(arg_22_0)
-	gohelper.setActive(arg_22_0.viewGO, true)
-	arg_22_0:showViewIn()
+function TeachNoteView:_playBackTeachNote()
+	gohelper.setActive(self.viewGO, true)
+	self:showViewIn()
 
-	arg_22_0._viewAnim.enabled = true
-	arg_22_0.viewContainer._viewSetting.anim = ViewAnim.Internal
+	self._viewAnim.enabled = true
+	self.viewContainer._viewSetting.anim = ViewAnim.Internal
 
-	arg_22_0._viewAnim:Play(UIAnimationName.Open, 0, 0)
+	self._viewAnim:Play(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0._onDragBegin(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_0._showReward then
+function TeachNoteView:_onDragBegin(param, pointerEventData)
+	if self._showReward then
 		return
 	end
 
-	arg_23_0._startPos = arg_23_2.position.x
+	self._startPos = pointerEventData.position.x
 end
 
-function var_0_0._onDragEnd(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._showReward then
+function TeachNoteView:_onDragEnd(param, pointerEventData)
+	if self._showReward then
 		return
 	end
 
-	local var_24_0 = arg_24_2.position.x
+	local endPos = pointerEventData.position.x
 
-	if var_24_0 > arg_24_0._startPos and var_24_0 - arg_24_0._startPos >= 100 then
-		arg_24_0:_changeRight()
-	elseif var_24_0 < arg_24_0._startPos and arg_24_0._startPos - var_24_0 >= 100 then
-		arg_24_0:_changeLeft()
+	if endPos > self._startPos and endPos - self._startPos >= 100 then
+		self:_changeRight()
+	elseif endPos < self._startPos and self._startPos - endPos >= 100 then
+		self:_changeLeft()
 	end
 end
 
-function var_0_0.onClose(arg_25_0)
-	arg_25_0._viewAnim.enabled = true
+function TeachNoteView:onClose()
+	self._viewAnim.enabled = true
 
-	arg_25_0._viewAnim:Play(UIAnimationName.Close, 0, 0)
-	arg_25_0._drag:RemoveDragBeginListener()
-	arg_25_0._drag:RemoveDragEndListener()
-	arg_25_0:removeEventCb(TeachNoteController.instance, TeachNoteEvent.ClickTopicItem, arg_25_0._onTopicItemClicked, arg_25_0)
-	arg_25_0:removeEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicInfo, arg_25_0._refreshItem, arg_25_0)
-	arg_25_0:removeEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicReward, arg_25_0._refreshReward, arg_25_0)
-	arg_25_0:removeEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTeachNoteFinalReward, arg_25_0.closeThis, arg_25_0)
-	arg_25_0:removeEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, arg_25_0._onLoadingStartClose, arg_25_0)
+	self._viewAnim:Play(UIAnimationName.Close, 0, 0)
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self:removeEventCb(TeachNoteController.instance, TeachNoteEvent.ClickTopicItem, self._onTopicItemClicked, self)
+	self:removeEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicInfo, self._refreshItem, self)
+	self:removeEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTopicReward, self._refreshReward, self)
+	self:removeEventCb(TeachNoteController.instance, TeachNoteEvent.GetServerTeachNoteFinalReward, self.closeThis, self)
+	self:removeEventCb(GameSceneMgr.instance, SceneEventName.DelayCloseLoading, self._onLoadingStartClose, self)
 end
 
-function var_0_0._onTopicItemClicked(arg_26_0, arg_26_1)
-	arg_26_0.viewParam.episodeId = nil
+function TeachNoteView:_onTopicItemClicked(id)
+	self.viewParam.episodeId = nil
 
 	TeachNoteModel.instance:setLevelEnterFightState(false)
 
-	arg_26_0._showReward = false
-	arg_26_0._delayTime = 0
-	arg_26_0._topicId = arg_26_1
+	self._showReward = false
+	self._delayTime = 0
+	self._topicId = id
 
-	local var_26_0 = TeachNoteModel.instance:getTopicLevelCos(arg_26_0._topicId)
-	local var_26_1 = math.floor(0.5 * (#var_26_0 - 1))
+	local lvCos = TeachNoteModel.instance:getTopicLevelCos(self._topicId)
+	local tag = math.floor(0.5 * (#lvCos - 1))
 
-	for iter_26_0 = #var_26_0, 1, -1 do
-		if not TeachNoteModel.instance:isTeachNoteLevelPass(var_26_0[iter_26_0].id) then
-			var_26_1 = math.floor(0.5 * (iter_26_0 - 1))
+	for i = #lvCos, 1, -1 do
+		if not TeachNoteModel.instance:isTeachNoteLevelPass(lvCos[i].id) then
+			tag = math.floor(0.5 * (i - 1))
 		end
 	end
 
-	TeachNoteModel.instance:setTeachNoticeTopicId(arg_26_0._topicId, var_26_1)
-	arg_26_0:_refreshItem()
+	TeachNoteModel.instance:setTeachNoticeTopicId(self._topicId, tag)
+	self:_refreshItem()
 end
 
-function var_0_0._refreshItem(arg_27_0)
-	if arg_27_0._showReward then
-		arg_27_0:_refreshReward()
+function TeachNoteView:_refreshItem()
+	if self._showReward then
+		self:_refreshReward()
 	else
-		arg_27_0:_refreshLevel()
+		self:_refreshLevel()
 	end
 
-	arg_27_0:_refreshTopic()
+	self:_refreshTopic()
 end
 
-function var_0_0._refreshTopicFinishState(arg_28_0, arg_28_1)
-	return TeachNoteModel.instance:getTeachNoteTopicLevelCount(arg_28_1) == TeachNoteModel.instance:getTeachNoteTopicFinishedLevelCount(arg_28_1)
+function TeachNoteView:_refreshTopicFinishState(id)
+	local total = TeachNoteModel.instance:getTeachNoteTopicLevelCount(id)
+	local finishCount = TeachNoteModel.instance:getTeachNoteTopicFinishedLevelCount(id)
+
+	return total == finishCount
 end
 
-function var_0_0._refreshTopic(arg_29_0)
-	if arg_29_0._topicItems then
-		for iter_29_0, iter_29_1 in pairs(arg_29_0._topicItems) do
-			iter_29_1:onDestroyView()
+function TeachNoteView:_refreshTopic()
+	if self._topicItems then
+		for _, v in pairs(self._topicItems) do
+			v:onDestroyView()
 		end
 	end
 
-	arg_29_0._topicItems = {}
+	self._topicItems = {}
 
-	local var_29_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+	local topicInfo = TeachNoteConfig.instance:getInstructionTopicCos()
 
-	for iter_29_2 = 1, #var_29_0 do
-		local var_29_1 = gohelper.cloneInPlace(arg_29_0._gotopicitem)
+	for i = 1, #topicInfo do
+		local child = gohelper.cloneInPlace(self._gotopicitem)
 
-		gohelper.setActive(var_29_1, true)
+		gohelper.setActive(child, true)
 
-		local var_29_2 = TeachNoteTopicListItem.New()
+		local item = TeachNoteTopicListItem.New()
 
-		var_29_2:init(var_29_1, var_29_0[iter_29_2].id, iter_29_2, arg_29_0._showReward, arg_29_0:_refreshTopicFinishState(var_29_0[iter_29_2].id))
-		table.insert(arg_29_0._topicItems, var_29_2)
+		item:init(child, topicInfo[i].id, i, self._showReward, self:_refreshTopicFinishState(topicInfo[i].id))
+		table.insert(self._topicItems, item)
 	end
 
-	gohelper.setActive(arg_29_0._gorewardredpoint, TeachNoteModel.instance:hasRewardCouldGet())
+	gohelper.setActive(self._gorewardredpoint, TeachNoteModel.instance:hasRewardCouldGet())
 end
 
-function var_0_0._onPlayLeftFinishedIn(arg_30_0)
+function TeachNoteView:_onPlayLeftFinishedIn()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_level_finish)
-	arg_30_0._leftpassAni:Play("in", 0, 0)
+	self._leftpassAni:Play("in", 0, 0)
 end
 
-function var_0_0._onPlayRightFinishedIn(arg_31_0)
+function TeachNoteView:_onPlayRightFinishedIn()
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_level_finish)
-	arg_31_0._rightpassAni:Play("in", 0, 0)
+	self._rightpassAni:Play("in", 0, 0)
 end
 
-function var_0_0._refreshLevel(arg_32_0)
-	gohelper.setActive(arg_32_0._golevel, true)
-	gohelper.setActive(arg_32_0._goreward, false)
-	gohelper.setActive(arg_32_0._gorewardBeSelected, false)
-	gohelper.setActive(arg_32_0._gorewardUnselected, true)
+function TeachNoteView:_refreshLevel()
+	gohelper.setActive(self._golevel, true)
+	gohelper.setActive(self._goreward, false)
+	gohelper.setActive(self._gorewardBeSelected, false)
+	gohelper.setActive(self._gorewardUnselected, true)
 
-	arg_32_0._topicId, arg_32_0._tag = TeachNoteModel.instance:getTeachNoticeTopicId()
+	self._topicId, self._tag = TeachNoteModel.instance:getTeachNoticeTopicId()
 
-	local var_32_0 = TeachNoteModel.instance:getTopicLevelCos(arg_32_0._topicId)
-	local var_32_1 = #var_32_0 > 2 and arg_32_0._tag >= math.ceil(0.5 * #var_32_0) - 1 or false
+	local cos = TeachNoteModel.instance:getTopicLevelCos(self._topicId)
+	local showLeftArrow = #cos > 2 and self._tag >= math.ceil(0.5 * #cos) - 1 or false
 
-	gohelper.setActive(arg_32_0._btnleftarrow.gameObject, var_32_1)
+	gohelper.setActive(self._btnleftarrow.gameObject, showLeftArrow)
 
-	local var_32_2 = #var_32_0 > 2 and arg_32_0._tag <= 0 or false
+	local showRightArrow = #cos > 2 and self._tag <= 0 or false
 
-	gohelper.setActive(arg_32_0._btnrightarrow.gameObject, var_32_2)
+	gohelper.setActive(self._btnrightarrow.gameObject, showRightArrow)
 
-	local var_32_3 = {
+	local learnbgs = {
 		"bg_jiaoxuebiji_anniudi",
 		"bg_jiaoxuebiji_anniudi_1"
 	}
-	local var_32_4 = {
+	local learnColors = {
 		"#F7F7F7",
 		"#45413E"
 	}
-	local var_32_5 = var_32_0[2 * arg_32_0._tag + 2]
-	local var_32_6 = var_32_0[2 * arg_32_0._tag + 1]
+	local rightLevelCo = cos[2 * self._tag + 2]
+	local leftLevelCo = cos[2 * self._tag + 1]
 
-	if var_32_5 then
-		gohelper.setActive(arg_32_0._goright, true)
-		gohelper.setActive(arg_32_0._goend, false)
+	if rightLevelCo then
+		gohelper.setActive(self._goright, true)
+		gohelper.setActive(self._goend, false)
 
-		local var_32_7 = TeachNoteModel.instance:isLevelUnlock(var_32_5.id)
-		local var_32_8 = var_32_7 and var_32_5.picRes .. ".png" or "bg_jiaoxuebiji_kongdi.png"
+		local isItemUnlock = TeachNoteModel.instance:isLevelUnlock(rightLevelCo.id)
+		local rightIconName = isItemUnlock and rightLevelCo.picRes .. ".png" or "bg_jiaoxuebiji_kongdi.png"
 
-		arg_32_0._simagerighticon:LoadImage(ResUrl.getTeachNoteImage(var_32_8))
+		self._simagerighticon:LoadImage(ResUrl.getTeachNoteImage(rightIconName))
 
-		local var_32_9 = DungeonConfig.instance:getEpisodeCO(var_32_5.episodeId).chapterId == 1107
-		local var_32_10 = var_32_9 and "bg_jiaoxuebiji_bijiben_3.png" or "bg_jiaoxuebiji_bijiben_2.png"
+		local isRightChallenge = DungeonConfig.instance:getEpisodeCO(rightLevelCo.episodeId).chapterId == 1107
+		local bgIcon = isRightChallenge and "bg_jiaoxuebiji_bijiben_3.png" or "bg_jiaoxuebiji_bijiben_2.png"
 
-		arg_32_0._simagefyright:LoadImage(ResUrl.getTeachNoteImage(var_32_10))
+		self._simagefyright:LoadImage(ResUrl.getTeachNoteImage(bgIcon))
 
-		local var_32_11 = var_32_9 and arg_32_0._challengeBgRight or arg_32_0._idlebg
+		local iconTexture = isRightChallenge and self._challengeBgRight or self._idlebg
 
-		arg_32_0._meshswitch1fyright.texture = var_32_11
-		arg_32_0._meshswitch2fyright.texture = var_32_11
+		self._meshswitch1fyright.texture = iconTexture
+		self._meshswitch2fyright.texture = iconTexture
 
-		gohelper.setActive(arg_32_0._gorightunlock, var_32_7)
-		gohelper.setActive(arg_32_0._gorightlock, not var_32_7)
-		gohelper.setActive(arg_32_0._gorightnotetip, var_32_7)
+		gohelper.setActive(self._gorightunlock, isItemUnlock)
+		gohelper.setActive(self._gorightlock, not isItemUnlock)
+		gohelper.setActive(self._gorightnotetip, isItemUnlock)
 
-		local var_32_12 = "bg_jiaoxuebiji_shuzi_" .. 2 * arg_32_0._tag + 2
+		local pageIndexIconName = "bg_jiaoxuebiji_shuzi_" .. 2 * self._tag + 2
 
-		UISpriteSetMgr.instance:setTeachNoteSprite(arg_32_0._imagerightindex, var_32_12)
+		UISpriteSetMgr.instance:setTeachNoteSprite(self._imagerightindex, pageIndexIconName)
 
-		local var_32_13 = TeachNoteConfig.instance:getInstructionLevelCO(var_32_5.id).episodeId
-		local var_32_14 = DungeonConfig.instance:getEpisodeCO(var_32_13)
+		local episodeId = TeachNoteConfig.instance:getInstructionLevelCO(rightLevelCo.id).episodeId
+		local rightepisodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		arg_32_0._txtrightname.text = var_32_14.name
-		arg_32_0._txtrightnameen.text = var_32_14.name_En
-		arg_32_0._txtrightnotedesc.text = var_32_5.instructionDesc
+		self._txtrightname.text = rightepisodeCo.name
+		self._txtrightnameen.text = rightepisodeCo.name_En
+		self._txtrightnotedesc.text = rightLevelCo.instructionDesc
 
-		local var_32_15 = arg_32_0:_isLevelNewFinished(var_32_5.id)
-		local var_32_16 = TeachNoteModel.instance:isTeachNoteLevelPass(var_32_5.id)
+		local isRightNewFinished = self:_isLevelNewFinished(rightLevelCo.id)
+		local rightpass = TeachNoteModel.instance:isTeachNoteLevelPass(rightLevelCo.id)
 
-		if var_32_16 then
-			arg_32_0._rightpassAni.enabled = true
+		if rightpass then
+			self._rightpassAni.enabled = true
 
-			if var_32_15 then
-				arg_32_0._rightunlockAni.enabled = false
+			if isRightNewFinished then
+				self._rightunlockAni.enabled = false
 
-				TaskDispatcher.cancelTask(arg_32_0._onPlayRightFinishedIn, arg_32_0)
-				TaskDispatcher.runDelay(arg_32_0._onPlayRightFinishedIn, arg_32_0, 0.5)
+				TaskDispatcher.cancelTask(self._onPlayRightFinishedIn, self)
+				TaskDispatcher.runDelay(self._onPlayRightFinishedIn, self, 0.5)
 			else
-				arg_32_0._rightpassAni:Play("done", 0, 0)
+				self._rightpassAni:Play("done", 0, 0)
 			end
 
-			local var_32_17 = {}
+			local openIds = {}
 
-			if var_32_13 > 0 and not TeachNoteModel.instance:isEpisodeOpen(var_32_13) then
-				table.insert(var_32_17, var_32_13)
+			if episodeId > 0 and not TeachNoteModel.instance:isEpisodeOpen(episodeId) then
+				table.insert(openIds, episodeId)
 			end
 
-			DungeonRpc.instance:sendInstructionDungeonOpenRequest(var_32_17)
+			DungeonRpc.instance:sendInstructionDungeonOpenRequest(openIds)
 
-			arg_32_0._txtrightstartcn.text = luaLang("teachnoteview_restart")
+			self._txtrightstartcn.text = luaLang("teachnoteview_restart")
 		else
-			arg_32_0._rightpassAni.enabled = false
+			self._rightpassAni.enabled = false
 
-			gohelper.setActive(arg_32_0._gorightpass, false)
-			gohelper.setActive(arg_32_0._gorightpassdone, false)
+			gohelper.setActive(self._gorightpass, false)
+			gohelper.setActive(self._gorightpassdone, false)
 
-			arg_32_0._rightlockCanvas.alpha = 1
-			arg_32_0._txtrightstartcn.text = luaLang("teachnoteview_start")
+			self._rightlockCanvas.alpha = 1
+			self._txtrightstartcn.text = luaLang("teachnoteview_start")
 		end
 
-		if TeachNoteModel.instance:isLevelNewUnlock(var_32_5.id) and not var_32_15 and not var_32_16 then
+		local isRightNewUnlock = TeachNoteModel.instance:isLevelNewUnlock(rightLevelCo.id)
+
+		if isRightNewUnlock and not isRightNewFinished and not rightpass then
 			AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_level_unlock)
 
-			local var_32_18 = {}
+			local openIds = {}
 
-			if var_32_13 > 0 and not TeachNoteModel.instance:isEpisodeOpen(var_32_13) then
-				table.insert(var_32_18, var_32_13)
+			if episodeId > 0 and not TeachNoteModel.instance:isEpisodeOpen(episodeId) then
+				table.insert(openIds, episodeId)
 			end
 
-			DungeonRpc.instance:sendInstructionDungeonOpenRequest(var_32_18)
+			DungeonRpc.instance:sendInstructionDungeonOpenRequest(openIds)
 
-			arg_32_0._delayTime = arg_32_0._delayTime + 1
-			arg_32_0._leftunlockAni.enabled = false
-			arg_32_0._rightunlockAni.enabled = true
+			self._delayTime = self._delayTime + 1
+			self._leftunlockAni.enabled = false
+			self._rightunlockAni.enabled = true
 
-			arg_32_0._rightunlockAni:Play()
+			self._rightunlockAni:Play()
 		end
 
-		local var_32_19 = var_32_16 and var_32_3[2] or var_32_3[1]
+		local rightLearnBg = rightpass and learnbgs[2] or learnbgs[1]
 
-		UISpriteSetMgr.instance:setTeachNoteSprite(arg_32_0._imagerightlearn, var_32_19)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_32_0._txtrightstartcn, var_32_16 and var_32_4[2] or var_32_4[1])
-		SLFramework.UGUI.GuiHelper.SetColor(arg_32_0._txtrightstarten, var_32_16 and var_32_4[2] or var_32_4[1])
-		ZProj.UGUIHelper.SetColorAlpha(arg_32_0._txtrightstarten, 0.5)
+		UISpriteSetMgr.instance:setTeachNoteSprite(self._imagerightlearn, rightLearnBg)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtrightstartcn, rightpass and learnColors[2] or learnColors[1])
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtrightstarten, rightpass and learnColors[2] or learnColors[1])
+		ZProj.UGUIHelper.SetColorAlpha(self._txtrightstarten, 0.5)
 
-		if arg_32_0._rightDescItems then
-			for iter_32_0, iter_32_1 in pairs(arg_32_0._rightDescItems) do
-				iter_32_1:onDestroyView()
+		if self._rightDescItems then
+			for _, v in pairs(self._rightDescItems) do
+				v:onDestroyView()
 			end
 		end
 
-		arg_32_0._rightDescItems = {}
+		self._rightDescItems = {}
 
-		local var_32_20 = string.split(TeachNoteConfig.instance:getInstructionLevelCO(var_32_5.id).desc, "#")
-		local var_32_21
+		local descCos = string.split(TeachNoteConfig.instance:getInstructionLevelCO(rightLevelCo.id).desc, "#")
+		local item
 
-		for iter_32_2 = 1, #var_32_20 do
-			local var_32_22 = gohelper.cloneInPlace(arg_32_0._gorightdescitem)
+		for i = 1, #descCos do
+			local child = gohelper.cloneInPlace(self._gorightdescitem)
 
-			gohelper.setActive(var_32_22, true)
+			gohelper.setActive(child, true)
 
-			local var_32_23 = TeachNoteDescItem.New()
+			item = TeachNoteDescItem.New()
 
-			var_32_23:init(var_32_22, iter_32_2, var_32_5.id)
-			table.insert(arg_32_0._rightDescItems, var_32_23)
+			item:init(child, i, rightLevelCo.id)
+			table.insert(self._rightDescItems, item)
 		end
 	else
-		local var_32_24 = DungeonConfig.instance:getEpisodeCO(var_32_6.episodeId).chapterId == 1107
-		local var_32_25 = var_32_24 and "bg_jiaoxuebiji_bijiben_3.png" or "bg_jiaoxuebiji_bijiben_2.png"
+		local isLeftChallenge = DungeonConfig.instance:getEpisodeCO(leftLevelCo.episodeId).chapterId == 1107
+		local bgIcon = isLeftChallenge and "bg_jiaoxuebiji_bijiben_3.png" or "bg_jiaoxuebiji_bijiben_2.png"
 
-		arg_32_0._simagefyright:LoadImage(ResUrl.getTeachNoteImage(var_32_25))
+		self._simagefyright:LoadImage(ResUrl.getTeachNoteImage(bgIcon))
 
-		local var_32_26 = var_32_24 and arg_32_0._challengeBgRight or arg_32_0._idlebg
+		local iconTexture = isLeftChallenge and self._challengeBgRight or self._idlebg
 
-		arg_32_0._meshswitch1fyright.texture = var_32_26
-		arg_32_0._meshswitch2fyright.texture = var_32_26
+		self._meshswitch1fyright.texture = iconTexture
+		self._meshswitch2fyright.texture = iconTexture
 
-		gohelper.setActive(arg_32_0._goright, false)
-		gohelper.setActive(arg_32_0._goend, true)
+		gohelper.setActive(self._goright, false)
+		gohelper.setActive(self._goend, true)
 	end
 
-	if var_32_6 then
-		gohelper.setActive(arg_32_0._goleft, true)
+	if leftLevelCo then
+		gohelper.setActive(self._goleft, true)
 
-		local var_32_27 = TeachNoteModel.instance:isLevelUnlock(var_32_6.id)
-		local var_32_28 = var_32_27 and var_32_6.picRes .. ".png" or "bg_jiaoxuebiji_kongdi.png"
+		local isItemUnlock = TeachNoteModel.instance:isLevelUnlock(leftLevelCo.id)
+		local leftIconName = isItemUnlock and leftLevelCo.picRes .. ".png" or "bg_jiaoxuebiji_kongdi.png"
 
-		arg_32_0._simagelefticon:LoadImage(ResUrl.getTeachNoteImage(var_32_28))
+		self._simagelefticon:LoadImage(ResUrl.getTeachNoteImage(leftIconName))
 
-		local var_32_29 = DungeonConfig.instance:getEpisodeCO(var_32_6.episodeId).chapterId == 1107
-		local var_32_30 = var_32_29 and "bg_jiaoxuebiji_bijiben_4.png" or "bg_jiaoxuebiji_bijiben_2_1.png"
+		local isLeftChallenge = DungeonConfig.instance:getEpisodeCO(leftLevelCo.episodeId).chapterId == 1107
+		local bgIcon = isLeftChallenge and "bg_jiaoxuebiji_bijiben_4.png" or "bg_jiaoxuebiji_bijiben_2_1.png"
 
-		arg_32_0._simagefyleft:LoadImage(ResUrl.getTeachNoteImage(var_32_30))
+		self._simagefyleft:LoadImage(ResUrl.getTeachNoteImage(bgIcon))
 
-		local var_32_31 = var_32_29 and arg_32_0._challengeBgLeft or arg_32_0._normalBgLeft
+		local iconTexture = isLeftChallenge and self._challengeBgLeft or self._normalBgLeft
 
-		arg_32_0._meshswitch1fyleft.texture = var_32_31
-		arg_32_0._meshswitch2fyleft.texture = var_32_31
+		self._meshswitch1fyleft.texture = iconTexture
+		self._meshswitch2fyleft.texture = iconTexture
 
-		gohelper.setActive(arg_32_0._goleftunlock, var_32_27)
-		gohelper.setActive(arg_32_0._goleftlock, not var_32_27)
-		gohelper.setActive(arg_32_0._goleftnotetip, var_32_27)
+		gohelper.setActive(self._goleftunlock, isItemUnlock)
+		gohelper.setActive(self._goleftlock, not isItemUnlock)
+		gohelper.setActive(self._goleftnotetip, isItemUnlock)
 
-		local var_32_32 = "bg_jiaoxuebiji_shuzi_" .. 2 * arg_32_0._tag + 1
+		local pageIndexIconName = "bg_jiaoxuebiji_shuzi_" .. 2 * self._tag + 1
 
-		UISpriteSetMgr.instance:setTeachNoteSprite(arg_32_0._imageleftindex, var_32_32)
+		UISpriteSetMgr.instance:setTeachNoteSprite(self._imageleftindex, pageIndexIconName)
 
-		local var_32_33 = TeachNoteConfig.instance:getInstructionLevelCO(var_32_6.id).episodeId
-		local var_32_34 = DungeonConfig.instance:getEpisodeCO(var_32_33)
+		local episodeId = TeachNoteConfig.instance:getInstructionLevelCO(leftLevelCo.id).episodeId
+		local leftepisodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		arg_32_0._txtleftname.text = var_32_34.name
-		arg_32_0._txtleftnameen.text = var_32_34.name_En
-		arg_32_0._txtleftnotedesc.text = var_32_6.instructionDesc
+		self._txtleftname.text = leftepisodeCo.name
+		self._txtleftnameen.text = leftepisodeCo.name_En
+		self._txtleftnotedesc.text = leftLevelCo.instructionDesc
 
-		local var_32_35 = arg_32_0:_isLevelNewFinished(var_32_6.id)
-		local var_32_36 = TeachNoteModel.instance:isTeachNoteLevelPass(var_32_6.id)
+		local isLeftNewFinished = self:_isLevelNewFinished(leftLevelCo.id)
+		local leftPass = TeachNoteModel.instance:isTeachNoteLevelPass(leftLevelCo.id)
 
-		if var_32_36 then
-			arg_32_0._leftpassAni.enabled = true
+		if leftPass then
+			self._leftpassAni.enabled = true
 
-			if var_32_35 then
-				TaskDispatcher.cancelTask(arg_32_0._onPlayLeftFinishedIn, arg_32_0)
-				TaskDispatcher.runDelay(arg_32_0._onPlayLeftFinishedIn, arg_32_0, 0.5)
+			if isLeftNewFinished then
+				TaskDispatcher.cancelTask(self._onPlayLeftFinishedIn, self)
+				TaskDispatcher.runDelay(self._onPlayLeftFinishedIn, self, 0.5)
 			else
-				arg_32_0._leftpassAni:Play("done", 0, 0)
+				self._leftpassAni:Play("done", 0, 0)
 			end
 
-			local var_32_37 = {}
+			local openIds = {}
 
-			if var_32_33 > 0 and not TeachNoteModel.instance:isEpisodeOpen(var_32_33) then
-				table.insert(var_32_37, var_32_33)
+			if episodeId > 0 and not TeachNoteModel.instance:isEpisodeOpen(episodeId) then
+				table.insert(openIds, episodeId)
 			end
 
-			DungeonRpc.instance:sendInstructionDungeonOpenRequest(var_32_37)
+			DungeonRpc.instance:sendInstructionDungeonOpenRequest(openIds)
 
-			arg_32_0._txtleftstartcn.text = luaLang("teachnoteview_restart")
+			self._txtleftstartcn.text = luaLang("teachnoteview_restart")
 		else
-			arg_32_0._leftpassAni.enabled = false
+			self._leftpassAni.enabled = false
 
-			gohelper.setActive(arg_32_0._goleftpass, false)
-			gohelper.setActive(arg_32_0._goleftpassdone, false)
+			gohelper.setActive(self._goleftpass, false)
+			gohelper.setActive(self._goleftpassdone, false)
 
-			arg_32_0._leftlockCanvas.alpha = 1
-			arg_32_0._txtleftstartcn.text = luaLang("teachnoteview_start")
+			self._leftlockCanvas.alpha = 1
+			self._txtleftstartcn.text = luaLang("teachnoteview_start")
 		end
 
-		if TeachNoteModel.instance:isLevelNewUnlock(var_32_6.id) and not var_32_35 and not arg_32_0._rightunlockAni.isPlaying and not var_32_36 then
+		local isLeftNewUnlock = TeachNoteModel.instance:isLevelNewUnlock(leftLevelCo.id)
+
+		if isLeftNewUnlock and not isLeftNewFinished and not self._rightunlockAni.isPlaying and not leftPass then
 			AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_level_unlock)
 
-			local var_32_38 = {}
+			local openIds = {}
 
-			if var_32_33 > 0 and not TeachNoteModel.instance:isEpisodeOpen(var_32_33) then
-				table.insert(var_32_38, var_32_33)
+			if episodeId > 0 and not TeachNoteModel.instance:isEpisodeOpen(episodeId) then
+				table.insert(openIds, episodeId)
 			end
 
-			arg_32_0._delayTime = arg_32_0._delayTime + 1
+			self._delayTime = self._delayTime + 1
 
-			DungeonRpc.instance:sendInstructionDungeonOpenRequest(var_32_38)
+			DungeonRpc.instance:sendInstructionDungeonOpenRequest(openIds)
 
-			arg_32_0._leftunlockAni.enabled = true
-			arg_32_0._rightunlockAni.enabled = false
+			self._leftunlockAni.enabled = true
+			self._rightunlockAni.enabled = false
 
-			arg_32_0._leftunlockAni:Play()
+			self._leftunlockAni:Play()
 		end
 
-		local var_32_39 = var_32_36 and var_32_3[2] or var_32_3[1]
+		local leftLearnBg = leftPass and learnbgs[2] or learnbgs[1]
 
-		UISpriteSetMgr.instance:setTeachNoteSprite(arg_32_0._imageleftlearn, var_32_39)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_32_0._txtleftstartcn, var_32_36 and var_32_4[2] or var_32_4[1])
-		SLFramework.UGUI.GuiHelper.SetColor(arg_32_0._txtleftstarten, var_32_36 and var_32_4[2] or var_32_4[1])
-		ZProj.UGUIHelper.SetColorAlpha(arg_32_0._txtleftstarten, 0.5)
+		UISpriteSetMgr.instance:setTeachNoteSprite(self._imageleftlearn, leftLearnBg)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtleftstartcn, leftPass and learnColors[2] or learnColors[1])
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtleftstarten, leftPass and learnColors[2] or learnColors[1])
+		ZProj.UGUIHelper.SetColorAlpha(self._txtleftstarten, 0.5)
 
-		if arg_32_0._leftDescItems then
-			for iter_32_3, iter_32_4 in pairs(arg_32_0._leftDescItems) do
-				iter_32_4:onDestroyView()
+		if self._leftDescItems then
+			for _, v in pairs(self._leftDescItems) do
+				v:onDestroyView()
 			end
 		end
 
-		arg_32_0._leftDescItems = {}
+		self._leftDescItems = {}
 
-		local var_32_40
-		local var_32_41 = string.split(TeachNoteConfig.instance:getInstructionLevelCO(var_32_6.id).desc, "#")
+		local item
+		local descCos = string.split(TeachNoteConfig.instance:getInstructionLevelCO(leftLevelCo.id).desc, "#")
 
-		for iter_32_5 = 1, #var_32_41 do
-			local var_32_42 = gohelper.cloneInPlace(arg_32_0._goleftdescitem)
+		for i = 1, #descCos do
+			local child = gohelper.cloneInPlace(self._goleftdescitem)
 
-			gohelper.setActive(var_32_42, true)
+			gohelper.setActive(child, true)
 
-			local var_32_43 = TeachNoteDescItem.New()
+			item = TeachNoteDescItem.New()
 
-			var_32_43:init(var_32_42, iter_32_5, var_32_6.id)
-			table.insert(arg_32_0._leftDescItems, var_32_43)
+			item:init(child, i, leftLevelCo.id)
+			table.insert(self._leftDescItems, item)
 		end
 	else
-		arg_32_0._simagefyleft:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
+		self._simagefyleft:LoadImage(ResUrl.getTeachNoteImage("bg_jiaoxuebiji_bijiben_2_1.png"))
 
-		arg_32_0._meshswitch1fyleft.texture = arg_32_0._normalBgLeft
-		arg_32_0._meshswitch2fyleft.texture = arg_32_0._normalBgLeft
+		self._meshswitch1fyleft.texture = self._normalBgLeft
+		self._meshswitch2fyleft.texture = self._normalBgLeft
 
-		gohelper.setActive(arg_32_0._goleft, false)
+		gohelper.setActive(self._goleft, false)
 	end
 
-	TaskDispatcher.cancelTask(arg_32_0.endBlock, arg_32_0)
-	TaskDispatcher.runDelay(arg_32_0.endBlock, arg_32_0, arg_32_0._delayTime)
+	TaskDispatcher.cancelTask(self.endBlock, self)
+	TaskDispatcher.runDelay(self.endBlock, self, self._delayTime)
 end
 
-function var_0_0._setLearnBtnColor(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_2 and "#45413E" or "#F7F7F7"
+function TeachNoteView:_setLearnBtnColor(graphic, isPass)
+	local graphicColor = isPass and "#45413E" or "#F7F7F7"
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_33_1, var_33_0)
+	SLFramework.UGUI.GuiHelper.SetColor(graphic, graphicColor)
 end
 
-function var_0_0._isLevelNewFinished(arg_34_0, arg_34_1)
+function TeachNoteView:_isLevelNewFinished(levelId)
 	if TeachNoteModel.instance:isFinishLevelEnterFight() then
 		return false
 	end
 
-	if not arg_34_0.viewParam.episodeId then
+	if not self.viewParam.episodeId then
 		return false
 	end
 
-	local var_34_0 = TeachNoteConfig.instance:getInstructionLevelCO(arg_34_1).episodeId
+	local episodeId = TeachNoteConfig.instance:getInstructionLevelCO(levelId).episodeId
 
-	if arg_34_0.viewParam.episodeId == var_34_0 and not TeachNoteModel.instance:isTeachNoteLevelPass(arg_34_1) and not arg_34_0._showFinished then
-		arg_34_0._showFinished = true
+	if self.viewParam.episodeId == episodeId and not TeachNoteModel.instance:isTeachNoteLevelPass(levelId) and not self._showFinished then
+		self._showFinished = true
 
 		return true
 	end
@@ -827,115 +855,115 @@ function var_0_0._isLevelNewFinished(arg_34_0, arg_34_1)
 	return false
 end
 
-function var_0_0._refreshReward(arg_35_0)
-	arg_35_0:endBlock()
-	gohelper.setActive(arg_35_0._golevel, false)
-	gohelper.setActive(arg_35_0._goreward, true)
-	gohelper.setActive(arg_35_0._gorewardBeSelected, true)
-	gohelper.setActive(arg_35_0._gorewardUnselected, false)
+function TeachNoteView:_refreshReward()
+	self:endBlock()
+	gohelper.setActive(self._golevel, false)
+	gohelper.setActive(self._goreward, true)
+	gohelper.setActive(self._gorewardBeSelected, true)
+	gohelper.setActive(self._gorewardUnselected, false)
 
-	local var_35_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+	local topicInfo = TeachNoteConfig.instance:getInstructionTopicCos()
 
-	TeachNoteRewardListModel.instance:setRewardList(var_35_0)
-	arg_35_0:_refreshFinishItem()
+	TeachNoteRewardListModel.instance:setRewardList(topicInfo)
+	self:_refreshFinishItem()
 end
 
-function var_0_0._changeLeft(arg_36_0)
-	arg_36_0._topicId, arg_36_0._tag = TeachNoteModel.instance:getTeachNoticeTopicId()
+function TeachNoteView:_changeLeft()
+	self._topicId, self._tag = TeachNoteModel.instance:getTeachNoticeTopicId()
 
-	local var_36_0 = TeachNoteModel.instance:getTopicLevelCos(arg_36_0._topicId)
+	local cos = TeachNoteModel.instance:getTopicLevelCos(self._topicId)
 
-	if arg_36_0._tag >= math.ceil(0.5 * #var_36_0) - 1 then
+	if self._tag >= math.ceil(0.5 * #cos) - 1 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_feedback_open)
 
-	arg_36_0._viewAnim.enabled = true
+	self._viewAnim.enabled = true
 
-	arg_36_0._viewAnim:Play("fanye02", 0, 0)
+	self._viewAnim:Play("fanye02", 0, 0)
 
-	arg_36_0._tag = arg_36_0._tag + 1
+	self._tag = self._tag + 1
 
-	TeachNoteModel.instance:setTeachNoticeTopicId(arg_36_0._topicId, arg_36_0._tag)
-	TaskDispatcher.cancelTask(arg_36_0._refreshLevel, arg_36_0)
-	TaskDispatcher.runDelay(arg_36_0._refreshLevel, arg_36_0, 0.3)
+	TeachNoteModel.instance:setTeachNoticeTopicId(self._topicId, self._tag)
+	TaskDispatcher.cancelTask(self._refreshLevel, self)
+	TaskDispatcher.runDelay(self._refreshLevel, self, 0.3)
 end
 
-function var_0_0._changeRight(arg_37_0)
-	if arg_37_0._tag < 1 then
+function TeachNoteView:_changeRight()
+	if self._tag < 1 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_feedback_open)
 
-	arg_37_0._viewAnim.enabled = true
+	self._viewAnim.enabled = true
 
-	arg_37_0._viewAnim:Play("fanye01", 0, 0)
+	self._viewAnim:Play("fanye01", 0, 0)
 
-	arg_37_0._tag = arg_37_0._tag - 1
+	self._tag = self._tag - 1
 
-	TeachNoteModel.instance:setTeachNoticeTopicId(arg_37_0._topicId, arg_37_0._tag)
-	TaskDispatcher.cancelTask(arg_37_0._refreshLevel, arg_37_0)
-	TaskDispatcher.runDelay(arg_37_0._refreshLevel, arg_37_0, 0.3)
+	TeachNoteModel.instance:setTeachNoticeTopicId(self._topicId, self._tag)
+	TaskDispatcher.cancelTask(self._refreshLevel, self)
+	TaskDispatcher.runDelay(self._refreshLevel, self, 0.3)
 end
 
-function var_0_0.onDestroyView(arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._onPlayLeftFinishedIn, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._onPlayRightFinishedIn, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._refreshLevel, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0.endBlock, arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._playBackTeachNote, arg_38_0)
+function TeachNoteView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onPlayLeftFinishedIn, self)
+	TaskDispatcher.cancelTask(self._onPlayRightFinishedIn, self)
+	TaskDispatcher.cancelTask(self._refreshLevel, self)
+	TaskDispatcher.cancelTask(self.endBlock, self)
+	TaskDispatcher.cancelTask(self._playBackTeachNote, self)
 
-	if arg_38_0._textureLoader then
-		arg_38_0._textureLoader:dispose()
+	if self._textureLoader then
+		self._textureLoader:dispose()
 
-		arg_38_0._textureLoader = nil
+		self._textureLoader = nil
 	end
 
-	arg_38_0._simagebg:UnLoadImage()
-	arg_38_0._simagefyright:UnLoadImage()
-	arg_38_0._simagefyleft:UnLoadImage()
-	arg_38_0._simagelefticon:UnLoadImage()
-	arg_38_0._simagerighticon:UnLoadImage()
-	arg_38_0._simagerewardbg1:UnLoadImage()
-	arg_38_0._simagelefunlock:UnLoadImage()
-	arg_38_0._simagerightunlock:UnLoadImage()
-	arg_38_0._simageleftlockmask:UnLoadImage()
-	arg_38_0._simagerightlockmask:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagefyright:UnLoadImage()
+	self._simagefyleft:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
+	self._simagerewardbg1:UnLoadImage()
+	self._simagelefunlock:UnLoadImage()
+	self._simagerightunlock:UnLoadImage()
+	self._simageleftlockmask:UnLoadImage()
+	self._simagerightlockmask:UnLoadImage()
 
-	if arg_38_0._topicItems then
-		for iter_38_0, iter_38_1 in pairs(arg_38_0._topicItems) do
-			iter_38_1:onDestroyView()
+	if self._topicItems then
+		for _, v in pairs(self._topicItems) do
+			v:onDestroyView()
 		end
 
-		arg_38_0._topicItems = nil
+		self._topicItems = nil
 	end
 
-	if arg_38_0._leftDescItems then
-		for iter_38_2, iter_38_3 in pairs(arg_38_0._leftDescItems) do
-			iter_38_3:onDestroyView()
+	if self._leftDescItems then
+		for _, v in pairs(self._leftDescItems) do
+			v:onDestroyView()
 		end
 
-		arg_38_0._leftDescItems = nil
+		self._leftDescItems = nil
 	end
 
-	if arg_38_0._rightDescItems then
-		for iter_38_4, iter_38_5 in pairs(arg_38_0._rightDescItems) do
-			iter_38_5:onDestroyView()
+	if self._rightDescItems then
+		for _, v in pairs(self._rightDescItems) do
+			v:onDestroyView()
 		end
 
-		arg_38_0._rightDescItems = nil
+		self._rightDescItems = nil
 	end
 
-	if arg_38_0._rewardIcons then
-		for iter_38_6, iter_38_7 in pairs(arg_38_0._rewardIcons) do
-			gohelper.destroy(iter_38_7.go)
-			iter_38_7.icon:onDestroy()
+	if self._rewardIcons then
+		for _, v in pairs(self._rewardIcons) do
+			gohelper.destroy(v.go)
+			v.icon:onDestroy()
 		end
 
-		arg_38_0._rewardIcons = nil
+		self._rewardIcons = nil
 	end
 end
 
-return var_0_0
+return TeachNoteView

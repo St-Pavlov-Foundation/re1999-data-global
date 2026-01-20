@@ -1,550 +1,549 @@
-﻿module("modules.logic.equip.controller.EquipHelper", package.seeall)
+﻿-- chunkname: @modules/logic/equip/controller/EquipHelper.lua
 
-local var_0_0 = {
-	sortType = {
-		sortLvDown = "sortLvDown",
-		sortQualityDown = "sortQualityDown",
-		sortQualityUp = "sortQualityUp",
-		sortLvUp = "sortLvUp"
-	},
-	equipSkillAddHighAttr = {
-		"cri",
-		"recri",
-		"criDmg",
-		"criDef",
-		"addDmg",
-		"dropDmg",
-		"revive",
-		"absorb",
-		"clutch",
-		"heal",
-		"defenseIgnore"
-	},
-	equipSkillAddHighAttrSortPriority = {
-		absorb = 5,
-		cri = 2,
-		defenseIgnore = 4,
-		dropDmg = 8,
-		revive = 9,
-		recri = 10,
-		addDmg = 1,
-		criDmg = 3,
-		heal = 7,
-		criDef = 11,
-		clutch = 6
-	},
-	CareerValue = {
-		All = "0",
-		Wisdom = "6",
-		Animal = "4",
-		Star = "2",
-		Rock = "1",
-		Spirit = "5",
-		Wood = "3",
-		SAW = "5_6"
-	},
-	EquipSkillColor = {
-		["0"] = "#FFFFFF",
-		["1"] = "#8C6838",
-		["5|6"] = "#765A79",
-		["2"] = "#4C7199",
-		["3"] = "#3F8C52",
-		["4"] = "#B35959"
-	}
+module("modules.logic.equip.controller.EquipHelper", package.seeall)
+
+local EquipHelper = {}
+
+EquipHelper.sortType = {
+	sortLvDown = "sortLvDown",
+	sortQualityDown = "sortQualityDown",
+	sortQualityUp = "sortQualityUp",
+	sortLvUp = "sortLvUp"
 }
+EquipHelper.equipSkillAddHighAttr = {
+	"cri",
+	"recri",
+	"criDmg",
+	"criDef",
+	"addDmg",
+	"dropDmg",
+	"revive",
+	"absorb",
+	"clutch",
+	"heal",
+	"defenseIgnore"
+}
+EquipHelper.equipSkillAddHighAttrSortPriority = {
+	absorb = 5,
+	cri = 2,
+	defenseIgnore = 4,
+	dropDmg = 8,
+	revive = 9,
+	recri = 10,
+	addDmg = 1,
+	criDmg = 3,
+	heal = 7,
+	criDef = 11,
+	clutch = 6
+}
+EquipHelper.CareerValue = {
+	All = "0",
+	Wisdom = "6",
+	Animal = "4",
+	Star = "2",
+	Rock = "1",
+	Spirit = "5",
+	Wood = "3",
+	SAW = "5_6"
+}
+EquipHelper.EquipSkillColor = {
+	["0"] = "#FFFFFF",
+	["1"] = "#8C6838",
+	["5|6"] = "#765A79",
+	["2"] = "#4C7199",
+	["3"] = "#3F8C52",
+	["4"] = "#B35959"
+}
+EquipHelper.DefaultEquipSkillColorIndex = "0"
 
-var_0_0.DefaultEquipSkillColorIndex = "0"
+function EquipHelper.getEquipSkillDes(id, refine_lv, common_color, refine_private_color)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(equip_config.skillType, refine_lv)
 
-function var_0_0.getEquipSkillDes(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = EquipConfig.instance:getEquipCo(arg_1_0)
-	local var_1_1 = EquipConfig.instance:getEquipSkillCfg(var_1_0.skillType, arg_1_1)
-
-	if not var_1_1 then
+	if not equip_skill_config then
 		return ""
 	end
 
-	local var_1_2 = var_0_0.getEquipSkillAdvanceAttrDes(arg_1_0, arg_1_1, arg_1_3)
-	local var_1_3 = var_0_0.calEquipSkillBaseDes(var_1_1.baseDesc)
+	local str = EquipHelper.getEquipSkillAdvanceAttrDes(id, refine_lv, refine_private_color)
+	local base_des = EquipHelper.calEquipSkillBaseDes(equip_skill_config.baseDesc)
 
-	if not string.nilorempty(var_1_2) and not string.nilorempty(var_1_3) then
-		var_1_3 = "，" .. var_1_3
+	if not string.nilorempty(str) and not string.nilorempty(base_des) then
+		base_des = "，" .. base_des
 	end
 
-	local var_1_4 = var_1_2 .. var_1_3
+	str = str .. base_des
 
-	if not string.nilorempty(var_1_1.spDesc) then
-		var_1_4 = var_1_4 .. "\n" .. var_0_0.getSpecialSkillDes(arg_1_0, arg_1_1)
+	if not string.nilorempty(equip_skill_config.spDesc) then
+		str = str .. "\n" .. EquipHelper.getSpecialSkillDes(id, refine_lv)
 	end
 
-	if arg_1_2 then
-		var_1_4 = HeroSkillModel.instance:skillDesToSpot(var_1_4, nil, nil, true)
+	if common_color then
+		str = HeroSkillModel.instance:skillDesToSpot(str, nil, nil, true)
 	end
 
-	return var_1_4
+	return str
 end
 
-function var_0_0.calEquipSkillBaseDes(arg_2_0, arg_2_1)
-	arg_2_1 = arg_2_1 or "#C66030"
-	arg_2_0 = string.gsub(arg_2_0, "%{", string.format("<color=%s>", arg_2_1))
-	arg_2_0 = string.gsub(arg_2_0, "%}", "</color>")
+function EquipHelper.calEquipSkillBaseDes(base_des, color)
+	color = color or "#C66030"
+	base_des = string.gsub(base_des, "%{", string.format("<color=%s>", color))
+	base_des = string.gsub(base_des, "%}", "</color>")
 
-	return arg_2_0
+	return base_des
 end
 
-function var_0_0.getEquipSkillAdvanceAttrDes(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = EquipConfig.instance:getEquipCo(arg_3_0)
-	local var_3_1 = EquipConfig.instance:getEquipSkillCfg(var_3_0.skillType, arg_3_1)
+function EquipHelper.getEquipSkillAdvanceAttrDes(id, refine_lv, refine_private_color)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(equip_config.skillType, refine_lv)
 
-	if not var_3_1 then
+	if not equip_skill_config then
 		return ""
 	end
 
-	local var_3_2 = ""
-	local var_3_3
+	local str = ""
+	local config
 
-	for iter_3_0, iter_3_1 in ipairs(var_0_0.equipSkillAddHighAttr) do
-		local var_3_4 = var_3_1[iter_3_1] or 0
+	for i, v in ipairs(EquipHelper.equipSkillAddHighAttr) do
+		local temp_num = equip_skill_config[v] or 0
 
-		if var_3_4 ~= 0 then
-			local var_3_5 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_3_1))
-
-			var_3_2 = var_3_2 .. var_3_5.name .. luaLang("equip_skill_upgrade") .. var_3_4 / 10 .. "%，"
+		if temp_num ~= 0 then
+			config = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(v))
+			str = str .. config.name .. luaLang("equip_skill_upgrade") .. temp_num / 10 .. "%，"
 		end
 	end
 
-	if not string.nilorempty(var_3_2) then
-		var_3_2 = luaLang("equip_refine_memory") .. var_3_2
-		var_3_2 = string.sub(var_3_2, 1, #var_3_2 - GameUtil.charsize(string.byte("，")))
+	if not string.nilorempty(str) then
+		str = luaLang("equip_refine_memory") .. str
+		str = string.sub(str, 1, #str - GameUtil.charsize(string.byte("，")))
 	end
 
-	if arg_3_2 then
-		var_3_2 = HeroSkillModel.instance:skillDesToSpot(var_3_2, nil, nil, true)
+	if refine_private_color then
+		str = HeroSkillModel.instance:skillDesToSpot(str, nil, nil, true)
 	end
 
-	return var_3_2
+	return str
 end
 
-function var_0_0.getEquipSkillAdvanceAttrDesTab(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = EquipConfig.instance:getEquipCo(arg_4_0)
-	local var_4_1 = EquipConfig.instance:getEquipSkillCfg(var_4_0.skillType, arg_4_1)
+function EquipHelper.getEquipSkillAdvanceAttrDesTab(id, refine_lv, percentColorParam)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(equip_config.skillType, refine_lv)
 
-	if not var_4_1 then
-		logError(string.format("not found equipSKill config, equipId : %s, equip SkillType : %s, refine level : %s", arg_4_0, var_4_0.skillType, arg_4_1))
+	if not equip_skill_config then
+		logError(string.format("not found equipSKill config, equipId : %s, equip SkillType : %s, refine level : %s", id, equip_config.skillType, refine_lv))
 
 		return nil
 	end
 
-	local var_4_2 = {}
-	local var_4_3
-	local var_4_4
-	local var_4_5
+	local descList = {}
+	local descItem, config, desc
 
-	for iter_4_0, iter_4_1 in ipairs(var_0_0.equipSkillAddHighAttr) do
-		local var_4_6 = var_4_1[iter_4_1] or 0
+	for i, v in ipairs(EquipHelper.equipSkillAddHighAttr) do
+		local temp_num = equip_skill_config[v] or 0
 
-		if var_4_6 ~= 0 then
-			local var_4_7 = {}
-			local var_4_8 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(iter_4_1)).name .. luaLang("equip_skill_upgrade") .. "<space=0.45em>" .. var_4_6 / 10 .. "%"
+		if temp_num ~= 0 then
+			descItem = {}
+			config = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(v))
+			desc = config.name .. luaLang("equip_skill_upgrade") .. "<space=0.45em>" .. temp_num / 10 .. "%"
 
-			if arg_4_2 then
-				var_4_8 = HeroSkillModel.instance:skillDesToSpot(var_4_8, arg_4_2, nil, true)
+			if percentColorParam then
+				desc = HeroSkillModel.instance:skillDesToSpot(desc, percentColorParam, nil, true)
 			end
 
-			var_4_7.desc = var_4_8
-			var_4_7.key = iter_4_1
-			var_4_7.value = var_4_6
+			descItem.desc = desc
+			descItem.key = v
+			descItem.value = temp_num
 
-			table.insert(var_4_2, var_4_7)
+			table.insert(descList, descItem)
 		end
 	end
 
-	table.sort(var_4_2, function(arg_5_0, arg_5_1)
-		if arg_5_0.value ~= arg_5_1.value then
-			return arg_5_0.value > arg_5_1.value
+	table.sort(descList, function(descItemA, descItemB)
+		if descItemA.value ~= descItemB.value then
+			return descItemA.value > descItemB.value
 		end
 
-		return var_0_0.equipSkillAddHighAttrSortPriority[arg_5_0.key] < var_0_0.equipSkillAddHighAttrSortPriority[arg_5_1.key]
+		return EquipHelper.equipSkillAddHighAttrSortPriority[descItemA.key] < EquipHelper.equipSkillAddHighAttrSortPriority[descItemB.key]
 	end)
 
-	local var_4_9 = {}
+	local descTable = {}
 
-	for iter_4_2 = 1, #var_4_2 do
-		table.insert(var_4_9, var_4_2[iter_4_2].desc)
+	for i = 1, #descList do
+		table.insert(descTable, descList[i].desc)
 	end
 
-	return var_4_9
+	return descTable
 end
 
-function var_0_0.getEquipSkillBaseDes(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = EquipConfig.instance:getEquipCo(arg_6_0)
-	local var_6_1 = EquipConfig.instance:getEquipSkillCfg(var_6_0.skillType, arg_6_1)
+function EquipHelper.getEquipSkillBaseDes(id, refine_lv, numColor)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(equip_config.skillType, refine_lv)
 
-	if not var_6_1 then
+	if not equip_skill_config then
 		return ""
 	end
 
-	local var_6_2 = {}
+	local result = {}
 
-	if not string.nilorempty(var_6_1.baseDesc) then
-		table.insert(var_6_2, var_0_0.calEquipSkillBaseDes(var_6_1.baseDesc, arg_6_2))
+	if not string.nilorempty(equip_skill_config.baseDesc) then
+		table.insert(result, EquipHelper.calEquipSkillBaseDes(equip_skill_config.baseDesc, numColor))
 	end
 
-	return var_6_2
+	return result
 end
 
-function var_0_0.getEquipSkillDescList(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = EquipConfig.instance:getEquipCo(arg_7_0)
-	local var_7_1 = EquipConfig.instance:getEquipSkillCfg(var_7_0.skillType, arg_7_1)
-	local var_7_2 = {}
+function EquipHelper.getEquipSkillDescList(id, refine_lv, numColor)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(equip_config.skillType, refine_lv)
+	local result = {}
 
-	if not var_7_1 then
+	if not equip_skill_config then
 		return {}
 	end
 
-	if not string.nilorempty(var_7_1.baseDesc) then
-		table.insert(var_7_2, var_0_0.calEquipSkillBaseDes(var_7_1.baseDesc, arg_7_2))
+	if not string.nilorempty(equip_skill_config.baseDesc) then
+		table.insert(result, EquipHelper.calEquipSkillBaseDes(equip_skill_config.baseDesc, numColor))
 	end
 
-	return var_7_2
+	return result
 end
 
-function var_0_0.getSpecialSkillDes(arg_8_0, arg_8_1)
-	local var_8_0 = EquipConfig.instance:getEquipCo(arg_8_0)
-	local var_8_1 = EquipConfig.instance:getEquipSkillCfg(var_8_0.skillType, arg_8_1)
+function EquipHelper.getSpecialSkillDes(id, refine_lv)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(equip_config.skillType, refine_lv)
 
-	if not var_8_1 or string.nilorempty(var_8_1.spDesc) then
+	if not equip_skill_config or string.nilorempty(equip_skill_config.spDesc) then
 		return ""
 	end
 
-	return string.format("<#4b93d6><u><link='%s'>[%s]:</link></u></color>", arg_8_0, var_8_0.feature) .. var_8_1.spDesc, var_8_0.feature, var_8_1.spDesc
+	return string.format("<#4b93d6><u><link='%s'>[%s]:</link></u></color>", id, equip_config.feature) .. equip_skill_config.spDesc, equip_config.feature, equip_skill_config.spDesc
 end
 
-function var_0_0.isRefineUniversalMaterials(arg_9_0)
-	return arg_9_0 == EquipConfig.instance:getEquipUniversalId()
+function EquipHelper.isRefineUniversalMaterials(id)
+	return id == EquipConfig.instance:getEquipUniversalId()
 end
 
-function var_0_0.isExpEquip(arg_10_0)
-	return arg_10_0 and arg_10_0.isExpEquip == 1
+function EquipHelper.isExpEquip(equipConfig)
+	return equipConfig and equipConfig.isExpEquip == 1
 end
 
-function var_0_0.isConsumableEquip(arg_11_0)
-	local var_11_0 = EquipConfig.instance:getEquipCo(arg_11_0)
+function EquipHelper.isConsumableEquip(id)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
 
-	return var_0_0.isRefineUniversalMaterials(arg_11_0) or var_0_0.isExpEquip(var_11_0)
+	return EquipHelper.isRefineUniversalMaterials(id) or EquipHelper.isExpEquip(equip_config)
 end
 
-function var_0_0.isSpRefineEquip(arg_12_0)
-	return arg_12_0 and arg_12_0.isSpRefine ~= 0
+function EquipHelper.isSpRefineEquip(equipConfig)
+	return equipConfig and equipConfig.isSpRefine ~= 0
 end
 
-function var_0_0.isNormalEquip(arg_13_0)
-	return arg_13_0 and not var_0_0.isExpEquip(arg_13_0) and not var_0_0.isRefineUniversalMaterials(arg_13_0.id) and not var_0_0.isSpRefineEquip(arg_13_0)
+function EquipHelper.isNormalEquip(equipConfig)
+	return equipConfig and not EquipHelper.isExpEquip(equipConfig) and not EquipHelper.isRefineUniversalMaterials(equipConfig.id) and not EquipHelper.isSpRefineEquip(equipConfig)
 end
 
-function var_0_0.sortLvUp(arg_14_0, arg_14_1)
-	if arg_14_0.level == arg_14_1.level then
-		if arg_14_0.config.rare == arg_14_1.config.rare then
-			return arg_14_0.id > arg_14_1.id
+function EquipHelper.sortLvUp(item1, item2)
+	if item1.level == item2.level then
+		if item1.config.rare == item2.config.rare then
+			return item1.id > item2.id
 		else
-			return arg_14_0.config.rare > arg_14_1.config.rare
+			return item1.config.rare > item2.config.rare
 		end
 	else
-		return arg_14_0.level > arg_14_1.level
+		return item1.level > item2.level
 	end
 end
 
-function var_0_0.sortLvDown(arg_15_0, arg_15_1)
-	if arg_15_0.level == arg_15_1.level then
-		if arg_15_0.config.rare == arg_15_1.config.rare then
-			return arg_15_0.id > arg_15_1.id
+function EquipHelper.sortLvDown(item1, item2)
+	if item1.level == item2.level then
+		if item1.config.rare == item2.config.rare then
+			return item1.id > item2.id
 		else
-			return arg_15_0.config.rare > arg_15_1.config.rare
+			return item1.config.rare > item2.config.rare
 		end
 	else
-		return arg_15_0.level < arg_15_1.level
+		return item1.level < item2.level
 	end
 end
 
-function var_0_0.sortQualityUp(arg_16_0, arg_16_1)
-	if arg_16_0.config.rare == arg_16_1.config.rare then
-		if arg_16_0.level == arg_16_1.level then
-			return arg_16_0.id > arg_16_1.id
+function EquipHelper.sortQualityUp(item1, item2)
+	if item1.config.rare == item2.config.rare then
+		if item1.level == item2.level then
+			return item1.id > item2.id
 		else
-			return arg_16_0.level > arg_16_1.level
+			return item1.level > item2.level
 		end
 	else
-		return arg_16_0.config.rare > arg_16_1.config.rare
+		return item1.config.rare > item2.config.rare
 	end
 end
 
-function var_0_0.sortQualityDown(arg_17_0, arg_17_1)
-	if arg_17_0.config.rare == arg_17_1.config.rare then
-		if arg_17_0.level == arg_17_1.level then
-			return arg_17_0.id > arg_17_1.id
+function EquipHelper.sortQualityDown(item1, item2)
+	if item1.config.rare == item2.config.rare then
+		if item1.level == item2.level then
+			return item1.id > item2.id
 		else
-			return arg_17_0.level > arg_17_1.level
+			return item1.level > item2.level
 		end
 	else
-		return arg_17_0.config.rare < arg_17_1.config.rare
+		return item1.config.rare < item2.config.rare
 	end
 end
 
-function var_0_0.typeSort(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0
-	local var_18_1 = true
+function EquipHelper.typeSort(config1, config2, descend)
+	local sortResult
+	local sorted = true
 
-	if var_0_0.isRefineUniversalMaterials(arg_18_0.id) ~= var_0_0.isRefineUniversalMaterials(arg_18_1.id) then
-		if var_0_0.isRefineUniversalMaterials(arg_18_0.id) then
-			var_18_0 = true
+	if EquipHelper.isRefineUniversalMaterials(config1.id) ~= EquipHelper.isRefineUniversalMaterials(config2.id) then
+		if EquipHelper.isRefineUniversalMaterials(config1.id) then
+			sortResult = true
 		else
-			var_18_0 = false
+			sortResult = false
 		end
-	elseif var_0_0.isSpRefineEquip(arg_18_0) ~= var_0_0.isSpRefineEquip(arg_18_1) then
-		if var_0_0.isSpRefineEquip(arg_18_0) then
-			var_18_0 = true
+	elseif EquipHelper.isSpRefineEquip(config1) ~= EquipHelper.isSpRefineEquip(config2) then
+		if EquipHelper.isSpRefineEquip(config1) then
+			sortResult = true
 		else
-			var_18_0 = false
+			sortResult = false
 		end
-	elseif var_0_0.isNormalEquip(arg_18_0) ~= var_0_0.isNormalEquip(arg_18_1) then
-		if var_0_0.isNormalEquip(arg_18_0) then
-			var_18_0 = true
+	elseif EquipHelper.isNormalEquip(config1) ~= EquipHelper.isNormalEquip(config2) then
+		if EquipHelper.isNormalEquip(config1) then
+			sortResult = true
 		else
-			var_18_0 = false
+			sortResult = false
 		end
 	else
-		var_18_1 = false
+		sorted = false
 	end
 
-	if arg_18_2 then
-		return not var_18_0, var_18_1
+	if descend then
+		return not sortResult, sorted
 	else
-		return var_18_0, var_18_1
+		return sortResult, sorted
 	end
 end
 
-function var_0_0.sortRefineList(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.config
-	local var_19_1 = arg_19_1.config
-	local var_19_2, var_19_3 = var_0_0.typeSort(var_19_0, var_19_1)
+function EquipHelper.sortRefineList(item1, item2)
+	local config1 = item1.config
+	local config2 = item2.config
+	local sortResult, sorted = EquipHelper.typeSort(config1, config2)
 
-	if var_19_3 then
-		return var_19_2
+	if sorted then
+		return sortResult
 	end
 
-	if arg_19_0.refineLv ~= arg_19_1.refineLv then
-		return arg_19_0.refineLv < arg_19_1.refineLv
+	if item1.refineLv ~= item2.refineLv then
+		return item1.refineLv < item2.refineLv
 	else
-		return arg_19_0.level < arg_19_1.level
+		return item1.level < item2.level
 	end
 
 	return false
 end
 
-function var_0_0.createMaxLevelEquipMo(arg_20_0, arg_20_1)
-	local var_20_0 = EquipConfig.instance:getEquipCo(arg_20_0)
-	local var_20_1 = var_0_0.isNormalEquip(var_20_0)
-	local var_20_2 = EquipMO.New()
+function EquipHelper.createMaxLevelEquipMo(equipId, id)
+	local equipCo = EquipConfig.instance:getEquipCo(equipId)
+	local isNormalEquip = EquipHelper.isNormalEquip(equipCo)
+	local equipMo = EquipMO.New()
 
-	var_20_2.config = var_20_0
-	var_20_2.equipId = var_20_0.id
+	equipMo.config = equipCo
+	equipMo.equipId = equipCo.id
 
-	if arg_20_1 then
-		var_20_2.id = arg_20_1
+	if id then
+		equipMo.id = id
 	end
 
-	if var_20_1 then
-		var_20_2.level = EquipConfig.instance:getMaxLevel(var_20_0)
-		var_20_2.refineLv = EquipConfig.instance:getEquipRefineLvMax()
-		var_20_2.breakLv = EquipConfig.instance:getEquipMaxBreakLv(var_20_0.rare)
+	if isNormalEquip then
+		equipMo.level = EquipConfig.instance:getMaxLevel(equipCo)
+		equipMo.refineLv = EquipConfig.instance:getEquipRefineLvMax()
+		equipMo.breakLv = EquipConfig.instance:getEquipMaxBreakLv(equipCo.rare)
 	else
-		var_20_2.level = 1
-		var_20_2.refineLv = 1
-		var_20_2.breakLv = 1
+		equipMo.level = 1
+		equipMo.refineLv = 1
+		equipMo.breakLv = 1
 	end
 
-	return var_20_2
+	return equipMo
 end
 
-function var_0_0.createMinLevelEquipMo(arg_21_0, arg_21_1)
-	local var_21_0 = EquipConfig.instance:getEquipCo(arg_21_0)
-	local var_21_1 = EquipMO.New()
+function EquipHelper.createMinLevelEquipMo(equipId, id)
+	local equipCo = EquipConfig.instance:getEquipCo(equipId)
+	local equipMo = EquipMO.New()
 
-	var_21_1.config = var_21_0
-	var_21_1.equipId = var_21_0.id
+	equipMo.config = equipCo
+	equipMo.equipId = equipCo.id
 
-	if arg_21_1 then
-		var_21_1.id = arg_21_1
+	if id then
+		equipMo.id = id
 	end
 
-	var_21_1.level = 1
-	var_21_1.refineLv = 1
-	var_21_1.breakLv = 0
+	equipMo.level = 1
+	equipMo.refineLv = 1
+	equipMo.breakLv = 0
 
-	return var_21_1
+	return equipMo
 end
 
-function var_0_0.sortByLevelFunc(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.config
-	local var_22_1 = arg_22_1.config
-	local var_22_2, var_22_3 = var_0_0.typeSort(var_22_0, var_22_1)
+function EquipHelper.sortByLevelFunc(a, b)
+	local config1 = a.config
+	local config2 = b.config
+	local sortResult, sorted = EquipHelper.typeSort(config1, config2)
 
-	if var_22_3 then
-		return var_22_2
+	if sorted then
+		return sortResult
 	end
 
-	if arg_22_0.level ~= arg_22_1.level then
+	if a.level ~= b.level then
 		if CharacterBackpackEquipListModel.instance._levelAscend then
-			return arg_22_0.level < arg_22_1.level
+			return a.level < b.level
 		else
-			return arg_22_0.level > arg_22_1.level
+			return a.level > b.level
 		end
-	elseif arg_22_0.config.rare ~= arg_22_1.config.rare then
-		return arg_22_0.config.rare > arg_22_1.config.rare
-	elseif arg_22_0.equipId ~= arg_22_1.equipId then
-		return arg_22_0.equipId > arg_22_1.equipId
-	elseif arg_22_0.config.rare == arg_22_1.config.rare then
-		if arg_22_0.refineLv ~= arg_22_1.refineLv then
-			return arg_22_0.refineLv > arg_22_1.refineLv
+	elseif a.config.rare ~= b.config.rare then
+		return a.config.rare > b.config.rare
+	elseif a.equipId ~= b.equipId then
+		return a.equipId > b.equipId
+	elseif a.config.rare == b.config.rare then
+		if a.refineLv ~= b.refineLv then
+			return a.refineLv > b.refineLv
 		else
-			return arg_22_0.uid < arg_22_1.uid
+			return a.uid < b.uid
 		end
 	else
-		return arg_22_0.uid < arg_22_1.uid
+		return a.uid < b.uid
 	end
 end
 
-function var_0_0.sortByLevelFuncChooseListModel(arg_23_0, arg_23_1)
-	if var_0_0.isNormalEquip(arg_23_0.config) ~= var_0_0.isNormalEquip(arg_23_1.config) then
-		if var_0_0.isNormalEquip(arg_23_0.config) then
+function EquipHelper.sortByLevelFuncChooseListModel(a, b)
+	if EquipHelper.isNormalEquip(a.config) ~= EquipHelper.isNormalEquip(b.config) then
+		if EquipHelper.isNormalEquip(a.config) then
 			return false
 		else
 			return true
 		end
-	elseif arg_23_0.level ~= arg_23_1.level then
+	elseif a.level ~= b.level then
 		if EquipChooseListModel.instance._levelAscend then
-			return arg_23_0.level < arg_23_1.level
+			return a.level < b.level
 		else
-			return arg_23_0.level > arg_23_1.level
+			return a.level > b.level
 		end
-	elseif arg_23_0.config.rare ~= arg_23_1.config.rare then
+	elseif a.config.rare ~= b.config.rare then
 		if EquipChooseListModel.instance._qualityAscend then
-			return arg_23_0.config.rare < arg_23_1.config.rare
+			return a.config.rare < b.config.rare
 		else
-			return arg_23_0.config.rare > arg_23_1.config.rare
+			return a.config.rare > b.config.rare
 		end
 
-		return arg_23_0.config.rare > arg_23_1.config.rare
-	elseif arg_23_0.equipId ~= arg_23_1.equipId then
-		return arg_23_0.equipId > arg_23_1.equipId
-	elseif arg_23_0.config.rare == arg_23_1.config.rare then
-		if arg_23_0.refineLv ~= arg_23_1.refineLv then
-			return arg_23_0.refineLv > arg_23_1.refineLv
+		return a.config.rare > b.config.rare
+	elseif a.equipId ~= b.equipId then
+		return a.equipId > b.equipId
+	elseif a.config.rare == b.config.rare then
+		if a.refineLv ~= b.refineLv then
+			return a.refineLv > b.refineLv
 		else
-			return arg_23_0.uid < arg_23_1.uid
+			return a.uid < b.uid
 		end
 	else
-		return arg_23_0.uid < arg_23_1.uid
+		return a.uid < b.uid
 	end
 end
 
-function var_0_0.sortByQualityFunc(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0.config
-	local var_24_1 = arg_24_1.config
-	local var_24_2, var_24_3 = var_0_0.typeSort(var_24_0, var_24_1)
+function EquipHelper.sortByQualityFunc(a, b)
+	local config1 = a.config
+	local config2 = b.config
+	local sortResult, sorted = EquipHelper.typeSort(config1, config2)
 
-	if var_24_3 then
-		return var_24_2
+	if sorted then
+		return sortResult
 	end
 
-	if arg_24_0.config.rare ~= arg_24_1.config.rare then
+	if a.config.rare ~= b.config.rare then
 		if CharacterBackpackEquipListModel.instance._qualityAscend then
-			return arg_24_0.config.rare < arg_24_1.config.rare
+			return a.config.rare < b.config.rare
 		else
-			return arg_24_0.config.rare > arg_24_1.config.rare
+			return a.config.rare > b.config.rare
 		end
-	elseif arg_24_0.level ~= arg_24_1.level then
-		return arg_24_0.level > arg_24_1.level
-	elseif arg_24_0.equipId ~= arg_24_1.equipId then
-		return arg_24_0.equipId > arg_24_1.equipId
-	elseif arg_24_0.level == arg_24_1.level then
-		return arg_24_0.uid < arg_24_1.uid
+	elseif a.level ~= b.level then
+		return a.level > b.level
+	elseif a.equipId ~= b.equipId then
+		return a.equipId > b.equipId
+	elseif a.level == b.level then
+		return a.uid < b.uid
 	else
-		return arg_24_0.uid < arg_24_1.uid
+		return a.uid < b.uid
 	end
 end
 
-function var_0_0.sortByQualityFuncChooseListModel(arg_25_0, arg_25_1)
-	if var_0_0.isNormalEquip(arg_25_0.config) ~= var_0_0.isNormalEquip(arg_25_1.config) then
-		if var_0_0.isNormalEquip(arg_25_0.config) then
+function EquipHelper.sortByQualityFuncChooseListModel(a, b)
+	if EquipHelper.isNormalEquip(a.config) ~= EquipHelper.isNormalEquip(b.config) then
+		if EquipHelper.isNormalEquip(a.config) then
 			return false
 		else
 			return true
 		end
-	elseif arg_25_0.config.rare ~= arg_25_1.config.rare then
+	elseif a.config.rare ~= b.config.rare then
 		if EquipChooseListModel.instance._qualityAscend then
-			return arg_25_0.config.rare < arg_25_1.config.rare
+			return a.config.rare < b.config.rare
 		else
-			return arg_25_0.config.rare > arg_25_1.config.rare
+			return a.config.rare > b.config.rare
 		end
-	elseif arg_25_0.level ~= arg_25_1.level then
+	elseif a.level ~= b.level then
 		if EquipChooseListModel.instance._levelAscend then
-			return arg_25_0.level < arg_25_1.level
+			return a.level < b.level
 		else
-			return arg_25_0.level > arg_25_1.level
+			return a.level > b.level
 		end
-	elseif arg_25_0.equipId ~= arg_25_1.equipId then
-		return arg_25_0.equipId > arg_25_1.equipId
-	elseif arg_25_0.level == arg_25_1.level then
-		return arg_25_0.uid < arg_25_1.uid
+	elseif a.equipId ~= b.equipId then
+		return a.equipId > b.equipId
+	elseif a.level == b.level then
+		return a.uid < b.uid
 	else
-		return arg_25_0.uid < arg_25_1.uid
+		return a.uid < b.uid
 	end
 end
 
-function var_0_0.sortByTimeFunc(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0.config
-	local var_26_1 = arg_26_1.config
-	local var_26_2, var_26_3 = var_0_0.typeSort(var_26_0, var_26_1)
+function EquipHelper.sortByTimeFunc(a, b)
+	local config1 = a.config
+	local config2 = b.config
+	local sortResult, sorted = EquipHelper.typeSort(config1, config2)
 
-	if var_26_3 then
-		return var_26_2
+	if sorted then
+		return sortResult
 	end
 
-	if arg_26_0.id ~= arg_26_1.id then
+	if a.id ~= b.id then
 		if CharacterBackpackEquipListModel.instance._timeAscend then
-			return arg_26_0.id < arg_26_1.id
+			return a.id < b.id
 		else
-			return arg_26_0.id > arg_26_1.id
+			return a.id > b.id
 		end
-	elseif arg_26_0.level ~= arg_26_1.level then
-		return arg_26_0.level > arg_26_1.level
+	elseif a.level ~= b.level then
+		return a.level > b.level
 	else
-		return arg_26_0.config.rare > arg_26_1.config.rare
+		return a.config.rare > b.config.rare
 	end
 end
 
-function var_0_0.detectEquipSkillSuited(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = HeroConfig.instance:getHeroCO(arg_27_0)
-	local var_27_1 = EquipConfig.instance:getEquipSkillCfg(arg_27_1, arg_27_2)
+function EquipHelper.detectEquipSkillSuited(hero_id, skill_type, refine_lv)
+	local hero_config = HeroConfig.instance:getHeroCO(hero_id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(skill_type, refine_lv)
 
-	if not var_27_0 then
+	if not hero_config then
 		return false
 	end
 
-	if not var_27_1 then
-		logError("装备技能表找不到id：", arg_27_1, "Lv:", arg_27_2)
+	if not equip_skill_config then
+		logError("装备技能表找不到id：", skill_type, "Lv:", refine_lv)
 
 		return
 	end
 
-	local var_27_2 = string.splitToNumber(var_27_1.career, "|") or {}
+	local career = string.splitToNumber(equip_skill_config.career, "|") or {}
 
-	if #var_27_2 == 0 then
+	if #career == 0 then
 		return true
 	end
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_2) do
-		if iter_27_1 == var_27_0.career then
+	for i, v in ipairs(career) do
+		if v == hero_config.career then
 			return true
 		end
 	end
@@ -552,22 +551,22 @@ function var_0_0.detectEquipSkillSuited(arg_27_0, arg_27_1, arg_27_2)
 	return false
 end
 
-function var_0_0.getEquipSkillCareer(arg_28_0, arg_28_1)
+function EquipHelper.getEquipSkillCareer(id, refine_lv)
 	return nil
 end
 
-function var_0_0.isEqualCareer(arg_29_0, arg_29_1)
-	if arg_29_1 == var_0_0.CareerValue.All then
+function EquipHelper.isEqualCareer(equipMo, career)
+	if career == EquipHelper.CareerValue.All then
 		return true
 	end
 
-	local var_29_0 = var_0_0.getEquipSkillCareer(arg_29_0.config.id, arg_29_0.refineLv)
-	local var_29_1 = string.splitToNumber(var_29_0, "|")
-	local var_29_2 = string.splitToNumber(arg_29_1, "_")
+	local careerStr = EquipHelper.getEquipSkillCareer(equipMo.config.id, equipMo.refineLv)
+	local careerList = string.splitToNumber(careerStr, "|")
+	local filterCareerList = string.splitToNumber(career, "_")
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_2) do
-		for iter_29_2, iter_29_3 in ipairs(var_29_1) do
-			if iter_29_3 == iter_29_1 then
+	for _, filterCareer in ipairs(filterCareerList) do
+		for _, car in ipairs(careerList) do
+			if car == filterCareer then
 				return true
 			end
 		end
@@ -576,18 +575,18 @@ function var_0_0.isEqualCareer(arg_29_0, arg_29_1)
 	return false
 end
 
-function var_0_0.isEqualCareerByCo(arg_30_0, arg_30_1)
-	if arg_30_1 == var_0_0.CareerValue.All then
+function EquipHelper.isEqualCareerByCo(equipCo, career)
+	if career == EquipHelper.CareerValue.All then
 		return true
 	end
 
-	local var_30_0 = var_0_0.getEquipSkillCareer(arg_30_0.id, 1)
-	local var_30_1 = string.splitToNumber(var_30_0, "|")
-	local var_30_2 = string.splitToNumber(arg_30_1, "_")
+	local careerStr = EquipHelper.getEquipSkillCareer(equipCo.id, 1)
+	local careerList = string.splitToNumber(careerStr, "|")
+	local filterCareerList = string.splitToNumber(career, "_")
 
-	for iter_30_0, iter_30_1 in ipairs(var_30_2) do
-		for iter_30_2, iter_30_3 in ipairs(var_30_1) do
-			if iter_30_3 == iter_30_1 then
+	for _, filterCareer in ipairs(filterCareerList) do
+		for _, car in ipairs(careerList) do
+			if car == filterCareer then
 				return true
 			end
 		end
@@ -596,130 +595,131 @@ function var_0_0.isEqualCareerByCo(arg_30_0, arg_30_1)
 	return false
 end
 
-function var_0_0.getSkillBaseDescAndIcon(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = var_0_0.getEquipSkillCareer(arg_31_0, arg_31_1)
-	local var_31_1 = var_0_0.getSkillBaseNameColor(var_31_0)
-	local var_31_2 = var_0_0.getSkillCarrerIconName(var_31_0)
+function EquipHelper.getSkillBaseDescAndIcon(id, refine_lv, numColor)
+	local equipCarrer = EquipHelper.getEquipSkillCareer(id, refine_lv)
+	local skillNameColor = EquipHelper.getSkillBaseNameColor(equipCarrer)
+	local carrerIconName = EquipHelper.getSkillCarrerIconName(equipCarrer)
+	local skillBaseDesList = EquipHelper.getEquipSkillBaseDes(id, refine_lv, numColor)
 
-	return var_0_0.getEquipSkillBaseDes(arg_31_0, arg_31_1, arg_31_2), var_31_2, var_31_1
+	return skillBaseDesList, carrerIconName, skillNameColor
 end
 
-function var_0_0.getSkillCarrerIconName(arg_32_0)
-	local var_32_0 = "bg_shuxing"
+function EquipHelper.getSkillCarrerIconName(equipCarrer)
+	local carrerIconName = "bg_shuxing"
 
-	if string.nilorempty(arg_32_0) then
-		var_32_0 = "bg_shuxing_0"
+	if string.nilorempty(equipCarrer) then
+		carrerIconName = "bg_shuxing_0"
 	else
-		local var_32_1 = string.splitToNumber(arg_32_0, "|")
+		local careers = string.splitToNumber(equipCarrer, "|")
 
-		for iter_32_0, iter_32_1 in ipairs(var_32_1) do
-			var_32_0 = var_32_0 .. "_" .. iter_32_1
+		for i, v in ipairs(careers) do
+			carrerIconName = carrerIconName .. "_" .. v
 		end
 	end
 
-	return var_32_0
+	return carrerIconName
 end
 
-function var_0_0.getSkillCarrerSpecialIconName(arg_33_0)
-	local var_33_0
+function EquipHelper.getSkillCarrerSpecialIconName(equipCarrer)
+	local carrerIconName
 
-	if string.nilorempty(arg_33_0) then
-		var_33_0 = "lssx_0"
+	if string.nilorempty(equipCarrer) then
+		carrerIconName = "lssx_0"
 	else
-		var_33_0 = "jinglian"
+		carrerIconName = "jinglian"
 
-		local var_33_1 = string.splitToNumber(arg_33_0, "|")
+		local careers = string.splitToNumber(equipCarrer, "|")
 
-		for iter_33_0, iter_33_1 in ipairs(var_33_1) do
-			var_33_0 = var_33_0 .. "_" .. iter_33_1
+		for i, v in ipairs(careers) do
+			carrerIconName = carrerIconName .. "_" .. v
 		end
 	end
 
-	return var_33_0
+	return carrerIconName
 end
 
-function var_0_0.getSkillCareerNewIconName(arg_34_0, arg_34_1)
-	if string.nilorempty(arg_34_0) then
-		arg_34_1 = arg_34_1 and arg_34_1 .. "_0" or "lssx_0"
+function EquipHelper.getSkillCareerNewIconName(career, careerIconName)
+	if string.nilorempty(career) then
+		careerIconName = careerIconName and careerIconName .. "_0" or "lssx_0"
 	else
-		arg_34_1 = arg_34_1 or "career"
+		careerIconName = careerIconName or "career"
 
-		local var_34_0 = string.splitToNumber(arg_34_0, "|")
+		local careers = string.splitToNumber(career, "|")
 
-		for iter_34_0, iter_34_1 in ipairs(var_34_0) do
-			arg_34_1 = arg_34_1 .. "_" .. iter_34_1
+		for i, v in ipairs(careers) do
+			careerIconName = careerIconName .. "_" .. v
 		end
 	end
 
-	return arg_34_1
+	return careerIconName
 end
 
-function var_0_0.loadEquipCareerNewIcon(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	local var_35_0 = var_0_0.getEquipSkillCareer(arg_35_0.id, arg_35_2 or 1)
-	local var_35_1 = var_0_0.isHasSkillBaseDesc(arg_35_0.id, arg_35_2 or 1)
+function EquipHelper.loadEquipCareerNewIcon(equipConfig, imageIcon, refineLv, careerIconName)
+	local equipCareer = EquipHelper.getEquipSkillCareer(equipConfig.id, refineLv or 1)
+	local isHasSkillBaseDesc = EquipHelper.isHasSkillBaseDesc(equipConfig.id, refineLv or 1)
 
-	if not string.nilorempty(var_35_0) and var_35_1 then
-		local var_35_2 = var_0_0.getSkillCareerNewIconName(var_35_0, arg_35_3)
+	if not string.nilorempty(equipCareer) and isHasSkillBaseDesc then
+		local skillCareerIconName = EquipHelper.getSkillCareerNewIconName(equipCareer, careerIconName)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_35_1, var_35_2)
-		gohelper.setActive(arg_35_1.gameObject, true)
+		UISpriteSetMgr.instance:setCommonSprite(imageIcon, skillCareerIconName)
+		gohelper.setActive(imageIcon.gameObject, true)
 	else
-		gohelper.setActive(arg_35_1.gameObject, false)
+		gohelper.setActive(imageIcon.gameObject, false)
 	end
 end
 
-function var_0_0.isHasSkillBaseDesc(arg_36_0, arg_36_1)
-	local var_36_0 = EquipConfig.instance:getEquipCo(arg_36_0)
-	local var_36_1 = EquipConfig.instance:getEquipSkillCfg(var_36_0.skillType, arg_36_1)
+function EquipHelper.isHasSkillBaseDesc(id, refine_lv)
+	local equip_config = EquipConfig.instance:getEquipCo(id)
+	local equip_skill_config = EquipConfig.instance:getEquipSkillCfg(equip_config.skillType, refine_lv)
 
-	if not var_36_1 or string.nilorempty(var_36_1.baseDesc) then
+	if not equip_skill_config or string.nilorempty(equip_skill_config.baseDesc) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getSkillBaseNameColor(arg_37_0)
-	return var_0_0.EquipSkillColor[var_0_0.DefaultEquipSkillColorIndex]
+function EquipHelper.getSkillBaseNameColor(carrer)
+	return EquipHelper.EquipSkillColor[EquipHelper.DefaultEquipSkillColorIndex]
 end
 
-function var_0_0.getDefaultColor()
-	return var_0_0.EquipSkillColor[var_0_0.DefaultEquipSkillColorIndex]
+function EquipHelper.getDefaultColor()
+	return EquipHelper.EquipSkillColor[EquipHelper.DefaultEquipSkillColorIndex]
 end
 
-function var_0_0.getEquipIconLoadPath(arg_39_0)
-	local var_39_0 = arg_39_0.isExpEquip
-	local var_39_1 = arg_39_0._config.icon
-	local var_39_2 = var_39_0 and ResUrl.getEquipIcon(string.format("%s_equip", var_39_1)) or ResUrl.getEquipIcon(var_39_1)
+function EquipHelper.getEquipIconLoadPath(commonequipicon)
+	local isExp = commonequipicon.isExpEquip
+	local icon = commonequipicon._config.icon
+	local targetPath = isExp and ResUrl.getEquipIcon(string.format("%s_equip", icon)) or ResUrl.getEquipIcon(icon)
 
-	arg_39_0._simageicon:LoadImage(var_39_2, arg_39_0._loadImageFinish, arg_39_0)
+	commonequipicon._simageicon:LoadImage(targetPath, commonequipicon._loadImageFinish, commonequipicon)
 end
 
-function var_0_0.getEquipDefaultIconLoadPath(arg_40_0)
-	local var_40_0 = arg_40_0._config.icon
-	local var_40_1 = ResUrl.getHeroDefaultEquipIcon(var_40_0)
+function EquipHelper.getEquipDefaultIconLoadPath(commonequipicon)
+	local icon = commonequipicon._config.icon
+	local targetPath = ResUrl.getHeroDefaultEquipIcon(icon)
 
-	arg_40_0._simageicon:LoadImage(var_40_1, var_0_0.getEquipDefaultIconLoadEnd, arg_40_0)
+	commonequipicon._simageicon:LoadImage(targetPath, EquipHelper.getEquipDefaultIconLoadEnd, commonequipicon)
 end
 
-function var_0_0.getEquipDefaultIconLoadEnd(arg_41_0)
-	arg_41_0._simageicon:GetComponent(gohelper.Type_Image):SetNativeSize()
-	arg_41_0:_loadImageFinish()
+function EquipHelper.getEquipDefaultIconLoadEnd(commonequipicon)
+	commonequipicon._simageicon:GetComponent(gohelper.Type_Image):SetNativeSize()
+	commonequipicon:_loadImageFinish()
 end
 
-function var_0_0.getAttrPercentValueStr(arg_42_0)
-	return GameUtil.noMoreThanOneDecimalPlace(arg_42_0 / 10) .. "%"
+function EquipHelper.getAttrPercentValueStr(value)
+	return GameUtil.noMoreThanOneDecimalPlace(value / 10) .. "%"
 end
 
-function var_0_0.getAttrBreakText(arg_43_0)
-	return HeroConfig.instance:getHeroAttributeCO(arg_43_0).name
+function EquipHelper.getAttrBreakText(attrId)
+	return HeroConfig.instance:getHeroAttributeCO(attrId).name
 end
 
-function var_0_0.getEquipSkillDesc(arg_44_0)
-	arg_44_0 = SkillHelper.addLink(arg_44_0)
-	arg_44_0 = SkillHelper.addBracketColor(arg_44_0)
+function EquipHelper.getEquipSkillDesc(desc)
+	desc = SkillHelper.addLink(desc)
+	desc = SkillHelper.addBracketColor(desc)
 
-	return arg_44_0
+	return desc
 end
 
-return var_0_0
+return EquipHelper

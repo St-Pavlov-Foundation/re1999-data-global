@@ -1,90 +1,92 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/ChargePushModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.ChargePushModule_pb", package.seeall)
 
-local var_0_1 = {
-	RECORDCHARGEPUSHREQUEST_MSG = var_0_0.Descriptor(),
-	RECORDCHARGEPUSHREQUESTIDFIELD = var_0_0.FieldDescriptor(),
-	GETCHARGEPUSHINFOREPLY_MSG = var_0_0.Descriptor(),
-	GETCHARGEPUSHPUSH_MSG = var_0_0.Descriptor(),
-	GETCHARGEPUSHPUSHPUSHIDFIELD = var_0_0.FieldDescriptor(),
-	GETCHARGEPUSHINFOREQUEST_MSG = var_0_0.Descriptor(),
-	RECORDCHARGEPUSHREPLY_MSG = var_0_0.Descriptor(),
-	RECORDCHARGEPUSHREPLYIDFIELD = var_0_0.FieldDescriptor()
-}
+local ChargePushModule_pb = {}
 
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.name = "id"
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.full_name = ".RecordChargePushRequest.id"
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.number = 1
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.index = 0
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.label = 1
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.has_default_value = false
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.default_value = 0
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.type = 5
-var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD.cpp_type = 1
-var_0_1.RECORDCHARGEPUSHREQUEST_MSG.name = "RecordChargePushRequest"
-var_0_1.RECORDCHARGEPUSHREQUEST_MSG.full_name = ".RecordChargePushRequest"
-var_0_1.RECORDCHARGEPUSHREQUEST_MSG.nested_types = {}
-var_0_1.RECORDCHARGEPUSHREQUEST_MSG.enum_types = {}
-var_0_1.RECORDCHARGEPUSHREQUEST_MSG.fields = {
-	var_0_1.RECORDCHARGEPUSHREQUESTIDFIELD
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG = protobuf.Descriptor()
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD = protobuf.FieldDescriptor()
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG = protobuf.Descriptor()
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG = protobuf.Descriptor()
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD = protobuf.FieldDescriptor()
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG = protobuf.Descriptor()
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG = protobuf.Descriptor()
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD = protobuf.FieldDescriptor()
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.name = "id"
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.full_name = ".RecordChargePushRequest.id"
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.number = 1
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.index = 0
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.label = 1
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.has_default_value = false
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.default_value = 0
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.type = 5
+ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD.cpp_type = 1
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG.name = "RecordChargePushRequest"
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG.full_name = ".RecordChargePushRequest"
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG.nested_types = {}
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG.enum_types = {}
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG.fields = {
+	ChargePushModule_pb.RECORDCHARGEPUSHREQUESTIDFIELD
 }
-var_0_1.RECORDCHARGEPUSHREQUEST_MSG.is_extendable = false
-var_0_1.RECORDCHARGEPUSHREQUEST_MSG.extensions = {}
-var_0_1.GETCHARGEPUSHINFOREPLY_MSG.name = "GetChargePushInfoReply"
-var_0_1.GETCHARGEPUSHINFOREPLY_MSG.full_name = ".GetChargePushInfoReply"
-var_0_1.GETCHARGEPUSHINFOREPLY_MSG.nested_types = {}
-var_0_1.GETCHARGEPUSHINFOREPLY_MSG.enum_types = {}
-var_0_1.GETCHARGEPUSHINFOREPLY_MSG.fields = {}
-var_0_1.GETCHARGEPUSHINFOREPLY_MSG.is_extendable = false
-var_0_1.GETCHARGEPUSHINFOREPLY_MSG.extensions = {}
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.name = "pushId"
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.full_name = ".GetChargePushPush.pushId"
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.number = 1
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.index = 0
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.label = 3
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.has_default_value = false
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.default_value = {}
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.type = 5
-var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD.cpp_type = 1
-var_0_1.GETCHARGEPUSHPUSH_MSG.name = "GetChargePushPush"
-var_0_1.GETCHARGEPUSHPUSH_MSG.full_name = ".GetChargePushPush"
-var_0_1.GETCHARGEPUSHPUSH_MSG.nested_types = {}
-var_0_1.GETCHARGEPUSHPUSH_MSG.enum_types = {}
-var_0_1.GETCHARGEPUSHPUSH_MSG.fields = {
-	var_0_1.GETCHARGEPUSHPUSHPUSHIDFIELD
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG.is_extendable = false
+ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG.extensions = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG.name = "GetChargePushInfoReply"
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG.full_name = ".GetChargePushInfoReply"
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG.nested_types = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG.enum_types = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG.fields = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG.is_extendable = false
+ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG.extensions = {}
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.name = "pushId"
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.full_name = ".GetChargePushPush.pushId"
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.number = 1
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.index = 0
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.label = 3
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.has_default_value = false
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.default_value = {}
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.type = 5
+ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD.cpp_type = 1
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG.name = "GetChargePushPush"
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG.full_name = ".GetChargePushPush"
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG.nested_types = {}
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG.enum_types = {}
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG.fields = {
+	ChargePushModule_pb.GETCHARGEPUSHPUSHPUSHIDFIELD
 }
-var_0_1.GETCHARGEPUSHPUSH_MSG.is_extendable = false
-var_0_1.GETCHARGEPUSHPUSH_MSG.extensions = {}
-var_0_1.GETCHARGEPUSHINFOREQUEST_MSG.name = "GetChargePushInfoRequest"
-var_0_1.GETCHARGEPUSHINFOREQUEST_MSG.full_name = ".GetChargePushInfoRequest"
-var_0_1.GETCHARGEPUSHINFOREQUEST_MSG.nested_types = {}
-var_0_1.GETCHARGEPUSHINFOREQUEST_MSG.enum_types = {}
-var_0_1.GETCHARGEPUSHINFOREQUEST_MSG.fields = {}
-var_0_1.GETCHARGEPUSHINFOREQUEST_MSG.is_extendable = false
-var_0_1.GETCHARGEPUSHINFOREQUEST_MSG.extensions = {}
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.name = "id"
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.full_name = ".RecordChargePushReply.id"
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.number = 1
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.index = 0
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.label = 1
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.has_default_value = false
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.default_value = 0
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.type = 5
-var_0_1.RECORDCHARGEPUSHREPLYIDFIELD.cpp_type = 1
-var_0_1.RECORDCHARGEPUSHREPLY_MSG.name = "RecordChargePushReply"
-var_0_1.RECORDCHARGEPUSHREPLY_MSG.full_name = ".RecordChargePushReply"
-var_0_1.RECORDCHARGEPUSHREPLY_MSG.nested_types = {}
-var_0_1.RECORDCHARGEPUSHREPLY_MSG.enum_types = {}
-var_0_1.RECORDCHARGEPUSHREPLY_MSG.fields = {
-	var_0_1.RECORDCHARGEPUSHREPLYIDFIELD
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG.is_extendable = false
+ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG.extensions = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG.name = "GetChargePushInfoRequest"
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG.full_name = ".GetChargePushInfoRequest"
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG.nested_types = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG.enum_types = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG.fields = {}
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG.is_extendable = false
+ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG.extensions = {}
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.name = "id"
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.full_name = ".RecordChargePushReply.id"
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.number = 1
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.index = 0
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.label = 1
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.has_default_value = false
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.default_value = 0
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.type = 5
+ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD.cpp_type = 1
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG.name = "RecordChargePushReply"
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG.full_name = ".RecordChargePushReply"
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG.nested_types = {}
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG.enum_types = {}
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG.fields = {
+	ChargePushModule_pb.RECORDCHARGEPUSHREPLYIDFIELD
 }
-var_0_1.RECORDCHARGEPUSHREPLY_MSG.is_extendable = false
-var_0_1.RECORDCHARGEPUSHREPLY_MSG.extensions = {}
-var_0_1.GetChargePushInfoReply = var_0_0.Message(var_0_1.GETCHARGEPUSHINFOREPLY_MSG)
-var_0_1.GetChargePushInfoRequest = var_0_0.Message(var_0_1.GETCHARGEPUSHINFOREQUEST_MSG)
-var_0_1.GetChargePushPush = var_0_0.Message(var_0_1.GETCHARGEPUSHPUSH_MSG)
-var_0_1.RecordChargePushReply = var_0_0.Message(var_0_1.RECORDCHARGEPUSHREPLY_MSG)
-var_0_1.RecordChargePushRequest = var_0_0.Message(var_0_1.RECORDCHARGEPUSHREQUEST_MSG)
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG.is_extendable = false
+ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG.extensions = {}
+ChargePushModule_pb.GetChargePushInfoReply = protobuf.Message(ChargePushModule_pb.GETCHARGEPUSHINFOREPLY_MSG)
+ChargePushModule_pb.GetChargePushInfoRequest = protobuf.Message(ChargePushModule_pb.GETCHARGEPUSHINFOREQUEST_MSG)
+ChargePushModule_pb.GetChargePushPush = protobuf.Message(ChargePushModule_pb.GETCHARGEPUSHPUSH_MSG)
+ChargePushModule_pb.RecordChargePushReply = protobuf.Message(ChargePushModule_pb.RECORDCHARGEPUSHREPLY_MSG)
+ChargePushModule_pb.RecordChargePushRequest = protobuf.Message(ChargePushModule_pb.RECORDCHARGEPUSHREQUEST_MSG)
 
-return var_0_1
+return ChargePushModule_pb

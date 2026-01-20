@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonLockBtnComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonLockBtnComp.lua
 
-local var_0_0 = class("Act183DungeonLockBtnComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonLockBtnComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonLockBtnComp = class("Act183DungeonLockBtnComp", Act183DungeonBaseComp)
+
+function Act183DungeonLockBtnComp:init(go)
+	Act183DungeonLockBtnComp.super.init(self, go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonLockBtnComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonLockBtnComp:removeEventListeners()
 	return
 end
 
-function var_0_0.checkIsVisible(arg_4_0)
-	return arg_4_0._status == Act183Enum.EpisodeStatus.Locked
+function Act183DungeonLockBtnComp:checkIsVisible()
+	return self._status == Act183Enum.EpisodeStatus.Locked
 end
 
-function var_0_0.show(arg_5_0)
-	var_0_0.super.show(arg_5_0)
+function Act183DungeonLockBtnComp:show()
+	Act183DungeonLockBtnComp.super.show(self)
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	var_0_0.super.onDestroy(arg_6_0)
+function Act183DungeonLockBtnComp:onDestroy()
+	Act183DungeonLockBtnComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonLockBtnComp

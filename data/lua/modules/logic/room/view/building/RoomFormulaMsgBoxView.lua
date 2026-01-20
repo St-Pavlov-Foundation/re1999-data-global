@@ -1,137 +1,141 @@
-﻿module("modules.logic.room.view.building.RoomFormulaMsgBoxView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/building/RoomFormulaMsgBoxView.lua
 
-local var_0_0 = class("RoomFormulaMsgBoxView", BaseView)
-local var_0_1 = -92.5
+module("modules.logic.room.view.building.RoomFormulaMsgBoxView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
-	arg_1_0._txtyes = gohelper.findChildText(arg_1_0.viewGO, "#btn_yes/yes")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
-	arg_1_0._goScrollView = gohelper.findChild(arg_1_0.viewGO, "Exchange/Left/ScrollView")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "Exchange/Left/ScrollView/Viewport/Content")
-	arg_1_0._contentGrid = arg_1_0._goContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
-	arg_1_0._goPropItem = gohelper.findChild(arg_1_0.viewGO, "Exchange/Left/ScrollView/Viewport/Content/#go_PropItem")
-	arg_1_0._gorightContent = gohelper.findChild(arg_1_0.viewGO, "Exchange/Right/ScrollView/Viewport/Content")
-	arg_1_0._gorightPropItem = gohelper.findChild(arg_1_0.viewGO, "Exchange/Right/ScrollView/Viewport/Content/#go_PropItem")
+local RoomFormulaMsgBoxView = class("RoomFormulaMsgBoxView", BaseView)
+local SCROLL_VIEW_CENTER_POS_Y = -92.5
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomFormulaMsgBoxView:onInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_yes")
+	self._txtyes = gohelper.findChildText(self.viewGO, "#btn_yes/yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_no")
+	self._goScrollView = gohelper.findChild(self.viewGO, "Exchange/Left/ScrollView")
+	self._goContent = gohelper.findChild(self.viewGO, "Exchange/Left/ScrollView/Viewport/Content")
+	self._contentGrid = self._goContent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	self._goPropItem = gohelper.findChild(self.viewGO, "Exchange/Left/ScrollView/Viewport/Content/#go_PropItem")
+	self._gorightContent = gohelper.findChild(self.viewGO, "Exchange/Right/ScrollView/Viewport/Content")
+	self._gorightPropItem = gohelper.findChild(self.viewGO, "Exchange/Right/ScrollView/Viewport/Content/#go_PropItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
+function RoomFormulaMsgBoxView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
+function RoomFormulaMsgBoxView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
 end
 
-function var_0_0._btnyesOnClick(arg_4_0)
-	if not arg_4_0.viewParam then
+function RoomFormulaMsgBoxView:_btnyesOnClick()
+	if not self.viewParam then
 		return
 	end
 
-	local var_4_0 = RoomProductionModel.instance:getLineMO(arg_4_0.viewParam.lineId)
-	local var_4_1 = arg_4_0.viewParam.callback
+	local lineMO = RoomProductionModel.instance:getLineMO(self.viewParam.lineId)
+	local callback = self.viewParam.callback
 
-	if var_4_1 then
-		var_4_1(arg_4_0.viewParam.callbackObj)
+	if callback then
+		callback(self.viewParam.callbackObj)
 	end
 
-	RoomRpc.instance:sendStartProductionLineRequest(var_4_0.id, arg_4_0.viewParam.costItemAndFormulaIdList.formulaIdList, arg_4_0.costItemList, arg_4_0.viewParam.combineCb, arg_4_0.viewParam.combineCbObj)
-	arg_4_0:closeThis()
+	RoomRpc.instance:sendStartProductionLineRequest(lineMO.id, self.viewParam.costItemAndFormulaIdList.formulaIdList, self.costItemList, self.viewParam.combineCb, self.viewParam.combineCbObj)
+	self:closeThis()
 end
 
-function var_0_0._btnnoOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function RoomFormulaMsgBoxView:_btnnoOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._originalScrollViewPosX, arg_6_0._originalScrollViewPosY, _ = transformhelper.getLocalPos(arg_6_0._goScrollView.transform)
+function RoomFormulaMsgBoxView:_editableInitView()
+	self._originalScrollViewPosX, self._originalScrollViewPosY, _ = transformhelper.getLocalPos(self._goScrollView.transform)
 
-	gohelper.setActive(arg_6_0._goPropItem, false)
+	gohelper.setActive(self._goPropItem, false)
 end
 
-function var_0_0.onOpen(arg_7_0)
+function RoomFormulaMsgBoxView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_upgrade)
-	arg_7_0:setMatItemList()
-	arg_7_0:setProduceItemList()
+	self:setMatItemList()
+	self:setProduceItemList()
 
-	local var_7_0 = arg_7_0.viewParam.combineCb and "roomformula_combine_and_up" or "confirm_text"
+	local yesStr = self.viewParam.combineCb and "roomformula_combine_and_up" or "confirm_text"
 
-	arg_7_0._txtyes.text = luaLang(var_7_0)
+	self._txtyes.text = luaLang(yesStr)
 end
 
-function var_0_0.setMatItemList(arg_8_0)
-	arg_8_0.costItemList = {}
-	arg_8_0._contentGrid.enabled = false
+function RoomFormulaMsgBoxView:setMatItemList()
+	self.costItemList = {}
+	self._contentGrid.enabled = false
 
-	local var_8_0 = arg_8_0.viewParam and arg_8_0.viewParam.costItemAndFormulaIdList.itemTypeDic
+	local typeDic = self.viewParam and self.viewParam.costItemAndFormulaIdList.itemTypeDic
 
-	if var_8_0 then
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			for iter_8_2, iter_8_3 in pairs(iter_8_1) do
-				if iter_8_3 > 0 then
-					local var_8_1 = {
-						type = iter_8_0,
-						id = iter_8_2,
-						quantity = iter_8_3
-					}
+	if typeDic then
+		for type, itemDic in pairs(typeDic) do
+			for itemId, quantity in pairs(itemDic) do
+				if quantity > 0 then
+					local item = {}
 
-					table.insert(arg_8_0.costItemList, var_8_1)
+					item.type = type
+					item.id = itemId
+					item.quantity = quantity
+
+					table.insert(self.costItemList, item)
 				end
 			end
 		end
 	end
 
-	RoomFormulaMsgBoxModel.instance:setCostItemList(arg_8_0.costItemList)
+	RoomFormulaMsgBoxModel.instance:setCostItemList(self.costItemList)
 
-	if #RoomFormulaMsgBoxModel.instance:getList() <= arg_8_0.viewContainer.lineCount then
-		transformhelper.setLocalPosXY(arg_8_0._goScrollView.transform, arg_8_0._originalScrollViewPosX, var_0_1)
+	local list = RoomFormulaMsgBoxModel.instance:getList()
 
-		arg_8_0._contentGrid.enabled = true
+	if #list <= self.viewContainer.lineCount then
+		transformhelper.setLocalPosXY(self._goScrollView.transform, self._originalScrollViewPosX, SCROLL_VIEW_CENTER_POS_Y)
+
+		self._contentGrid.enabled = true
 	else
-		arg_8_0._contentGrid.enabled = false
+		self._contentGrid.enabled = false
 
-		transformhelper.setLocalPosXY(arg_8_0._goScrollView.transform, arg_8_0._originalScrollViewPosX, arg_8_0._originalScrollViewPosY)
+		transformhelper.setLocalPosXY(self._goScrollView.transform, self._originalScrollViewPosX, self._originalScrollViewPosY)
 	end
 end
 
-function var_0_0.setProduceItemList(arg_9_0)
-	arg_9_0.produceItemList = {}
+function RoomFormulaMsgBoxView:setProduceItemList()
+	self.produceItemList = {}
 
-	local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.produceDataList or {}
+	local produceDataList = self.viewParam and self.viewParam.produceDataList or {}
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onCreateProduceItem, var_9_0, arg_9_0._gorightContent, arg_9_0._gorightPropItem, RoomFormulaMsgBoxItem)
+	gohelper.CreateObjList(self, self._onCreateProduceItem, produceDataList, self._gorightContent, self._gorightPropItem, RoomFormulaMsgBoxItem)
 
-	local var_9_1 = {}
+	local produceNameTable = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_2 = ItemModel.instance:getItemConfigAndIcon(iter_9_1.type, iter_9_1.id)
-		local var_9_3 = GameUtil.numberDisplay(iter_9_1.quantity)
-		local var_9_4 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("multiple_2"), var_9_2.name, var_9_3)
+	for _, produceData in ipairs(produceDataList) do
+		local config = ItemModel.instance:getItemConfigAndIcon(produceData.type, produceData.id)
+		local numDisplay = GameUtil.numberDisplay(produceData.quantity)
+		local name = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("multiple_2"), config.name, numDisplay)
 
-		var_9_1[#var_9_1 + 1] = var_9_4
+		produceNameTable[#produceNameTable + 1] = name
 	end
 
-	local var_9_5 = luaLang("comma_sep")
-	local var_9_6 = table.concat(var_9_1, var_9_5)
+	local strComma = luaLang("comma_sep")
+	local allNameWithNum = table.concat(produceNameTable, strComma)
 
-	arg_9_0._txtdesc.text = formatLuaLang("room_formula_easy_combine_msg_box_tip", var_9_6)
+	self._txtdesc.text = formatLuaLang("room_formula_easy_combine_msg_box_tip", allNameWithNum)
 end
 
-function var_0_0._onCreateProduceItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_1:onUpdateMO(arg_10_2)
+function RoomFormulaMsgBoxView:_onCreateProduceItem(obj, data, index)
+	obj:onUpdateMO(data)
 
-	arg_10_0.produceItemList[arg_10_3] = arg_10_1
+	self.produceItemList[index] = obj
 end
 
-function var_0_0.onClose(arg_11_0)
+function RoomFormulaMsgBoxView:onClose()
 	return
 end
 
-return var_0_0
+return RoomFormulaMsgBoxView

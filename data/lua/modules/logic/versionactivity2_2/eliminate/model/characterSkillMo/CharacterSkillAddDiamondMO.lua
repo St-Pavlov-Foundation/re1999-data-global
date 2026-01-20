@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillAddDiamondMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/characterSkillMo/CharacterSkillAddDiamondMO.lua
 
-local var_0_0 = class("CharacterSkillAddDiamondMO", CharacterSkillMOBase)
+module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillAddDiamondMO", package.seeall)
 
-function var_0_0.getEffectRound(arg_1_0)
+local CharacterSkillAddDiamondMO = class("CharacterSkillAddDiamondMO", CharacterSkillMOBase)
+
+function CharacterSkillAddDiamondMO:getEffectRound()
 	return EliminateEnum.RoundType.TeamChess
 end
 
-return var_0_0
+return CharacterSkillAddDiamondMO

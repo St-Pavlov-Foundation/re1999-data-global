@@ -1,53 +1,55 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawBlockObj", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/comp/KaRongDrawBlockObj.lua
 
-local var_0_0 = class("KaRongDrawBlockObj", KaRongDrawBaseObj)
+module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawBlockObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local KaRongDrawBlockObj = class("KaRongDrawBlockObj", KaRongDrawBaseObj)
 
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.go, "#btn_switch")
+function KaRongDrawBlockObj:ctor(go)
+	KaRongDrawBlockObj.super.ctor(self, go)
 
-	arg_1_0._btnswitch:AddClickListener(arg_1_0._btnswitchOnClick, arg_1_0)
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.go, "#btn_switch")
 
-	arg_1_0._anim = arg_1_1:GetComponent(gohelper.Type_Animator)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
 
-	arg_1_0:addEventCb(KaRongDrawController.instance, KaRongDrawEvent.UsingSkill, arg_1_0._onUsingSkill, arg_1_0)
+	self._anim = go:GetComponent(gohelper.Type_Animator)
+
+	self:addEventCb(KaRongDrawController.instance, KaRongDrawEvent.UsingSkill, self._onUsingSkill, self)
 end
 
-function var_0_0._onUsingSkill(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0._btnswitch, arg_2_1)
+function KaRongDrawBlockObj:_onUsingSkill(using)
+	gohelper.setActive(self._btnswitch, using)
 
-	local var_2_0 = arg_2_1 and "highlight" or "gray"
+	local animName = using and "highlight" or "gray"
 
-	arg_2_0._anim:Play(var_2_0, 0, 0)
+	self._anim:Play(animName, 0, 0)
 end
 
-function var_0_0.onInit(arg_3_0, arg_3_1)
-	var_0_0.super.onInit(arg_3_0, arg_3_1)
-	gohelper.setActive(arg_3_0._btnswitch.gameObject, false)
+function KaRongDrawBlockObj:onInit(mo)
+	KaRongDrawBlockObj.super.onInit(self, mo)
+	gohelper.setActive(self._btnswitch.gameObject, false)
 end
 
-function var_0_0._btnswitchOnClick(arg_4_0)
+function KaRongDrawBlockObj:_btnswitchOnClick()
 	AudioMgr.instance:trigger(AudioEnum3_0.ActKaRong.play_ui_lushang_barrier_dispel)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("KaRongDrawBlockObj")
-	arg_4_0._anim:Play("close", 0, 0)
-	TaskDispatcher.runDelay(arg_4_0._delayHide, arg_4_0, 1.67)
+	self._anim:Play("close", 0, 0)
+	TaskDispatcher.runDelay(self._delayHide, self, 1.67)
 end
 
-function var_0_0._delayHide(arg_5_0)
-	gohelper.setActive(arg_5_0.go, false)
-	KaRongDrawController.instance:useSkill(arg_5_0.mo)
+function KaRongDrawBlockObj:_delayHide()
+	gohelper.setActive(self.go, false)
+	KaRongDrawController.instance:useSkill(self.mo)
 	UIBlockMgr.instance:endBlock("KaRongDrawBlockObj")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.destroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._delayHide, arg_6_0)
+function KaRongDrawBlockObj:destroy()
+	TaskDispatcher.cancelTask(self._delayHide, self)
 	UIBlockMgr.instance:endBlock("KaRongDrawBlockObj")
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	arg_6_0._btnswitch:RemoveClickListener()
-	var_0_0.super.destroy(arg_6_0)
+	self._btnswitch:RemoveClickListener()
+	KaRongDrawBlockObj.super.destroy(self)
 end
 
-return var_0_0
+return KaRongDrawBlockObj

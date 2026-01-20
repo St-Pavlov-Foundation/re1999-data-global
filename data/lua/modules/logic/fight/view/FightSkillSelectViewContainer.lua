@@ -1,36 +1,38 @@
-﻿module("modules.logic.fight.view.FightSkillSelectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSkillSelectViewContainer.lua
 
-local var_0_0 = class("FightSkillSelectViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightSkillSelectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightSkillSelectViewContainer = class("FightSkillSelectViewContainer", BaseViewContainer)
+
+function FightSkillSelectViewContainer:buildViews()
 	return {
 		FightSkillSelectView.New(),
 		FightSkillSelectOutline.New()
 	}
 end
 
-function var_0_0.openFightFocusView(arg_2_0, arg_2_1)
-	local var_2_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+function FightSkillSelectViewContainer:openFightFocusView(entityId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Cachot then
-		local var_2_1 = V1a6_CachotHeroGroupController.instance
+	if episodeCo and episodeCo.type == DungeonEnum.EpisodeType.Cachot then
+		local controller = V1a6_CachotHeroGroupController.instance
 
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = V1a6_CachotHeroGroupModel.instance:getCurGroupMO(),
 			setEquipInfo = {
-				var_2_1.getFightFocusEquipInfo,
-				var_2_1
+				controller.getFightFocusEquipInfo,
+				controller
 			},
-			entityId = arg_2_1
+			entityId = entityId
 		})
 
 		return
 	end
 
-	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Rouge then
+	if episodeCo and episodeCo.type == DungeonEnum.EpisodeType.Rouge then
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = RougeHeroGroupModel.instance:getCurGroupMO(),
-			entityId = arg_2_1,
+			entityId = entityId,
 			balanceHelper = RougeHeroGroupBalanceHelper
 		})
 
@@ -38,8 +40,8 @@ function var_0_0.openFightFocusView(arg_2_0, arg_2_1)
 	end
 
 	ViewMgr.instance:openView(ViewName.FightFocusView, {
-		entityId = arg_2_1
+		entityId = entityId
 	})
 end
 
-return var_0_0
+return FightSkillSelectViewContainer

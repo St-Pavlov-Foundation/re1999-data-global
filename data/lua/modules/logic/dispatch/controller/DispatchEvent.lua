@@ -1,11 +1,13 @@
-﻿module("modules.logic.dispatch.controller.DispatchEvent", package.seeall)
+﻿-- chunkname: @modules/logic/dispatch/controller/DispatchEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.dispatch.controller.DispatchEvent", package.seeall)
 
-var_0_0.AddDispatchInfo = 1
-var_0_0.RemoveDispatchInfo = 2
-var_0_0.ChangeSelectedHero = 3
-var_0_0.OnDispatchFinish = 4
-var_0_0.ChangeDispatchHeroContainerEvent = 5
+local DispatchEvent = _M
 
-return var_0_0
+DispatchEvent.AddDispatchInfo = 1
+DispatchEvent.RemoveDispatchInfo = 2
+DispatchEvent.ChangeSelectedHero = 3
+DispatchEvent.OnDispatchFinish = 4
+DispatchEvent.ChangeDispatchHeroContainerEvent = 5
+
+return DispatchEvent

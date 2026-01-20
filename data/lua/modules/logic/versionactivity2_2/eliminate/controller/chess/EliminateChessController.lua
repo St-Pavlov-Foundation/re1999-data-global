@@ -1,453 +1,465 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.EliminateChessController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/EliminateChessController.lua
 
-local var_0_0 = class("EliminateChessController", BaseController)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.EliminateChessController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._seqStepFlow = nil
-	arg_1_0._flowFullEnd = false
-	arg_1_0._lastExchangePos = {}
+local EliminateChessController = class("EliminateChessController", BaseController)
+
+function EliminateChessController:onInit()
+	self._seqStepFlow = nil
+	self._flowFullEnd = false
+	self._lastExchangePos = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearFlow()
+function EliminateChessController:reInit()
+	self:clearFlow()
 
-	arg_2_0._lastExchangePos = {}
+	self._lastExchangePos = {}
 end
 
-function var_0_0.sendGetMatch3WarChessInfoRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	EliminateRpc.instance:sendGetMatch3WarChessInfoRequest(arg_3_1, arg_3_2, arg_3_3)
+function EliminateChessController:sendGetMatch3WarChessInfoRequest(type, callback, callbackobj)
+	EliminateRpc.instance:sendGetMatch3WarChessInfoRequest(type, callback, callbackobj)
 end
 
-function var_0_0.handleEliminateChessInfo(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function EliminateChessController:handleEliminateChessInfo(info)
+	if not info then
 		return
 	end
 
-	if arg_4_1.match3ChessBoard then
-		EliminateChessModel.instance:initChessInfo(arg_4_1.match3ChessBoard)
+	if info.match3ChessBoard then
+		EliminateChessModel.instance:initChessInfo(info.match3ChessBoard)
 	end
 
-	if arg_4_1.movePoint then
-		EliminateChessModel.instance:updateMovePoint(arg_4_1.movePoint)
+	if info.movePoint then
+		EliminateChessModel.instance:updateMovePoint(info.movePoint)
 	end
 end
 
-function var_0_0.handleMatch3Tips(arg_5_0, arg_5_1)
-	EliminateChessModel.instance:updateMatch3Tips(arg_5_1)
+function EliminateChessController:handleMatch3Tips(tips)
+	EliminateChessModel.instance:updateMatch3Tips(tips)
 
 	if EliminateChessModel.instance:getTipEliminateCount() == 0 then
 		EliminateRpc.instance:sendRefreshMatch3WarChessInfoRequest()
 	end
 end
 
-function var_0_0.handleMovePoint(arg_6_0, arg_6_1)
-	EliminateChessModel.instance:updateMovePoint(arg_6_1)
+function EliminateChessController:handleMovePoint(movePoint)
+	EliminateChessModel.instance:updateMovePoint(movePoint)
 end
 
-function var_0_0.handleTurnInfo(arg_7_0, arg_7_1, arg_7_2)
+function EliminateChessController:handleTurnInfo(turn, success)
 	EliminateChessModel.instance:clearCurPlayAudioCount()
 	EliminateChessModel.instance:clearTotalCount()
 
-	if not arg_7_2 and #arg_7_0._lastExchangePos > 0 then
-		local var_7_0, var_7_1, var_7_2, var_7_3 = arg_7_0:getRecordExchangePos()
+	if not success and #self._lastExchangePos > 0 then
+		local posX, posY, targetX, targetY = self:getRecordExchangePos()
 
-		arg_7_0:exchangeCellShow(var_7_0, var_7_1, var_7_2, var_7_3, EliminateEnum.AniTime.MoveRevert)
+		self:exchangeCellShow(posX, posY, targetX, targetY, EliminateEnum.AniTime.MoveRevert)
 	end
 
-	for iter_7_0 = 1, #arg_7_1 do
-		arg_7_0:cacheCurTurnInfo(arg_7_1[iter_7_0])
+	for i = 1, #turn do
+		self:cacheCurTurnInfo(turn[i])
 	end
 
-	local var_7_4 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.HandleData)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.HandleData)
+	local needStart = self:buildSeqFlow(step)
 
-	if arg_7_0:buildSeqFlow(var_7_4) then
-		arg_7_0:startSeqStepFlow()
+	if needStart then
+		self:startSeqStepFlow()
 	end
 
-	arg_7_0:clearRecord()
-	arg_7_0:setFlowEndState(true)
+	self:clearRecord()
+	self:setFlowEndState(true)
 end
 
-function var_0_0.cacheCurTurnInfo(arg_8_0, arg_8_1)
-	if arg_8_0._turnInfo == nil then
-		arg_8_0._turnInfo = {}
+function EliminateChessController:cacheCurTurnInfo(turn)
+	if self._turnInfo == nil then
+		self._turnInfo = {}
 	end
 
-	arg_8_0._turnInfo[#arg_8_0._turnInfo + 1] = arg_8_1
+	self._turnInfo[#self._turnInfo + 1] = turn
 end
 
-function var_0_0.getCurTurn(arg_9_0)
-	if arg_9_0._turnInfo == nil then
+function EliminateChessController:getCurTurn()
+	if self._turnInfo == nil then
 		return nil
 	end
 
-	return table.remove(arg_9_0._turnInfo, 1)
+	return table.remove(self._turnInfo, 1)
 end
 
-function var_0_0.handleEliminate(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function EliminateChessController:handleEliminate(eliminate)
+	if not eliminate then
 		return
 	end
 
-	local var_10_0 = FlowParallel.New()
+	local dieStepFlow = FlowParallel.New()
 
-	for iter_10_0 = 1, #arg_10_1 do
-		local var_10_1 = arg_10_1[iter_10_0].coordinate
-		local var_10_2 = arg_10_1[iter_10_0].extraData
-		local var_10_3 = arg_10_1[iter_10_0].type
-		local var_10_4 = arg_10_1[iter_10_0].source
-		local var_10_5 = {}
+	for i = 1, #eliminate do
+		local row = eliminate[i].coordinate
+		local extraData = eliminate[i].extraData
+		local type = eliminate[i].type
+		local source = eliminate[i].source
+		local resourceIds = {}
 
-		if not string.nilorempty(var_10_2) then
-			local var_10_6 = cjson.decode(var_10_2)
+		if not string.nilorempty(extraData) then
+			local data = cjson.decode(extraData)
 
-			if var_10_6 then
-				local var_10_7 = var_10_6.diamondChangeMap
+			if data then
+				local diamondChangeMap = data.diamondChangeMap
 
-				if var_10_7 then
-					for iter_10_1, iter_10_2 in pairs(var_10_7) do
-						table.insert(var_10_5, iter_10_1)
-						EliminateTeamChessModel.instance:updateResourceData(iter_10_1, tonumber(iter_10_2))
+				if diamondChangeMap then
+					for key, value in pairs(diamondChangeMap) do
+						table.insert(resourceIds, key)
+						EliminateTeamChessModel.instance:updateResourceData(key, tonumber(value))
 					end
 				end
 
-				local var_10_8 = var_10_6.changePower
+				local changePower = data.changePower
 
-				if var_10_8 then
-					EliminateTeamChessModel.instance:updateMainCharacterPower(EliminateTeamChessEnum.TeamChessTeamType.player, tonumber(var_10_8))
+				if changePower then
+					EliminateTeamChessModel.instance:updateMainCharacterPower(EliminateTeamChessEnum.TeamChessTeamType.player, tonumber(changePower))
 				end
 			end
 		end
 
-		local var_10_9 = #var_10_1
+		local eliminateCount = #row
 
-		EliminateChessModel.instance:addTotalEliminateCount(var_10_9)
+		EliminateChessModel.instance:addTotalEliminateCount(eliminateCount)
 
-		for iter_10_3 = 1, var_10_9 do
-			local var_10_10 = var_10_1[iter_10_3]
-			local var_10_11 = var_10_10.x + 1
-			local var_10_12 = var_10_10.y + 1
+		for j = 1, eliminateCount do
+			local chess = row[j]
+			local chessX = chess.x + 1
+			local chessY = chess.y + 1
+			local chessMo = EliminateChessModel.instance:getChessMo(chessX, chessY)
 
-			EliminateChessModel.instance:getChessMo(var_10_11, var_10_12):setStatus(EliminateEnum.ChessState.Die)
+			chessMo:setStatus(EliminateEnum.ChessState.Die)
 
-			local var_10_13 = {
-				x = var_10_11,
-				y = var_10_12,
-				resourceIds = var_10_5,
-				source = var_10_4
+			local data = {
+				x = chessX,
+				y = chessY,
+				resourceIds = resourceIds,
+				source = source
 			}
-			local var_10_14 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Die, var_10_13)
+			local dieWork = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Die, data)
 
-			var_10_0:addWork(var_10_14)
+			dieStepFlow:addWork(dieWork)
 		end
 	end
 
-	local var_10_15 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.PlayEffect)
+	local work = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.PlayEffect)
 
-	var_10_0:addWork(var_10_15)
+	dieStepFlow:addWork(work)
 
-	local var_10_16 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.PlayAudio)
+	local audioWork = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.PlayAudio)
 
-	var_10_0:addWork(var_10_16)
-	arg_10_0:buildSeqFlow(var_10_0)
+	dieStepFlow:addWork(audioWork)
+	self:buildSeqFlow(dieStepFlow)
 end
 
-function var_0_0.handleDrop(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_1 or not arg_11_2 then
+function EliminateChessController:handleDrop(tidyUp, fillChessBoard)
+	if not tidyUp or not fillChessBoard then
 		return
 	end
 
-	local var_11_0 = {}
-	local var_11_1 = FlowParallel.New()
+	local changeModel = {}
+	local dropStepFlow = FlowParallel.New()
 
-	if arg_11_1.col then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_1.col) do
-			local var_11_2 = iter_11_1.col + 1
+	if tidyUp.col then
+		for _, data in ipairs(tidyUp.col) do
+			local x = data.col + 1
 
-			for iter_11_2, iter_11_3 in ipairs(iter_11_1.oldX) do
-				local var_11_3 = iter_11_3 + 1
-				local var_11_4 = iter_11_1.newX[iter_11_2] + 1
-				local var_11_5 = EliminateChessModel.instance:getChessMo(var_11_2, var_11_3)
+			for index, oldValue in ipairs(data.oldX) do
+				local oldY = oldValue + 1
+				local newY = data.newX[index] + 1
+				local oldChessMo = EliminateChessModel.instance:getChessMo(x, oldY)
 
-				var_11_5:setStartXY(var_11_2, var_11_3)
-				var_11_5:setXY(var_11_2, var_11_4)
-				EliminateChessModel.instance:updateChessMo(var_11_2, var_11_4, var_11_5)
+				oldChessMo:setStartXY(x, oldY)
+				oldChessMo:setXY(x, newY)
+				EliminateChessModel.instance:updateChessMo(x, newY, oldChessMo)
 
-				local var_11_6 = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(var_11_5), var_11_5:getMoveTime(), EliminateEnum.AnimType.drop)
-				local var_11_7 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, var_11_6)
+				local moveData = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(oldChessMo), oldChessMo:getMoveTime(), EliminateEnum.AnimType.drop)
+				local moveStep = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, moveData)
 
-				var_11_1:addWork(var_11_7)
+				dropStepFlow:addWork(moveStep)
 
-				var_11_0[#var_11_0 + 1] = {
-					model = var_11_5,
-					viewItem = EliminateChessItemController.instance:getChessItemByModel(var_11_5)
+				changeModel[#changeModel + 1] = {
+					model = oldChessMo,
+					viewItem = EliminateChessItemController.instance:getChessItemByModel(oldChessMo)
 				}
 			end
 		end
 	end
 
-	if arg_11_1.row then
-		for iter_11_4, iter_11_5 in ipairs(arg_11_1.row) do
-			local var_11_8 = iter_11_5.row + 1
+	if tidyUp.row then
+		for _, data in ipairs(tidyUp.row) do
+			local y = data.row + 1
 
-			for iter_11_6, iter_11_7 in ipairs(iter_11_5.oldY) do
-				local var_11_9 = iter_11_7 + 1
-				local var_11_10 = iter_11_5.newY[iter_11_6] + 1
-				local var_11_11 = EliminateChessModel.instance:getChessMo(var_11_9, var_11_8)
+			for index, oldValue in ipairs(data.oldY) do
+				local oldX = oldValue + 1
+				local newX = data.newY[index] + 1
+				local oldChessMo = EliminateChessModel.instance:getChessMo(oldX, y)
 
-				var_11_11:setStartXY(var_11_9, var_11_8)
-				var_11_11:setXY(var_11_10, var_11_8)
-				EliminateChessModel.instance:updateChessMo(var_11_10, var_11_8, var_11_11)
+				oldChessMo:setStartXY(oldX, y)
+				oldChessMo:setXY(newX, y)
+				EliminateChessModel.instance:updateChessMo(newX, y, oldChessMo)
 
-				local var_11_12 = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(var_11_11), var_11_11:getMoveTime(), EliminateEnum.AnimType.drop)
-				local var_11_13 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, var_11_12)
+				local moveData = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(oldChessMo), oldChessMo:getMoveTime(), EliminateEnum.AnimType.drop)
+				local moveStep = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, moveData)
 
-				var_11_1:addWork(var_11_13)
+				dropStepFlow:addWork(moveStep)
 
-				var_11_0[#var_11_0 + 1] = {
-					model = var_11_11,
-					viewItem = EliminateChessItemController.instance:getChessItemByModel(var_11_11)
+				changeModel[#changeModel + 1] = {
+					model = oldChessMo,
+					viewItem = EliminateChessItemController.instance:getChessItemByModel(oldChessMo)
 				}
 			end
 		end
 	end
 
-	local var_11_14 = arg_11_2.chess
+	local chessList = fillChessBoard.chess
 
-	if var_11_14 then
-		local var_11_15, var_11_16 = EliminateChessModel.instance:getMaxRowAndCol()
+	if chessList then
+		local _, maxCol = EliminateChessModel.instance:getMaxRowAndCol()
 
-		for iter_11_8 = 1, #var_11_14 do
-			local var_11_17 = var_11_14[iter_11_8]
-			local var_11_18 = var_11_17.id
-			local var_11_19 = var_11_17.coordinate
-			local var_11_20 = var_11_19.x + 1
-			local var_11_21 = var_11_19.y + 1
-			local var_11_22 = EliminateChessMO.New()
+		for i = 1, #chessList do
+			local chess = chessList[i]
+			local chessId = chess.id
+			local coordinate = chess.coordinate
+			local chessX = coordinate.x + 1
+			local chessY = coordinate.y + 1
+			local chessMo = EliminateChessMO.New()
 
-			var_11_22:setXY(var_11_20, var_11_21)
-			var_11_22:setStartXY(var_11_20, var_11_16 + 1)
-			var_11_22:setChessId(var_11_18)
-			EliminateChessModel.instance:updateChessMo(var_11_20, var_11_21, var_11_22)
+			chessMo:setXY(chessX, chessY)
+			chessMo:setStartXY(chessX, maxCol + 1)
+			chessMo:setChessId(chessId)
+			EliminateChessModel.instance:updateChessMo(chessX, chessY, chessMo)
 
-			local var_11_23 = EliminateChessItemController.instance:createChess(var_11_20, var_11_21)
+			local chessItem = EliminateChessItemController.instance:createChess(chessX, chessY)
 
-			var_11_23:initData(var_11_22)
+			chessItem:initData(chessMo)
 
-			local var_11_24 = EliminateStepUtil.createOrGetMoveStepTable(var_11_23, var_11_22:getMoveTime(), EliminateEnum.AnimType.drop)
-			local var_11_25 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, var_11_24)
+			local data = EliminateStepUtil.createOrGetMoveStepTable(chessItem, chessMo:getMoveTime(), EliminateEnum.AnimType.drop)
+			local moveStep = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, data)
 
-			var_11_1:addWork(var_11_25)
+			dropStepFlow:addWork(moveStep)
 
-			var_11_0[#var_11_0 + 1] = {
-				model = var_11_22,
-				viewItem = var_11_23
+			changeModel[#changeModel + 1] = {
+				model = chessMo,
+				viewItem = chessItem
 			}
 		end
 	end
 
-	local var_11_26 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Arrange, var_11_0)
-	local var_11_27 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.HandleData)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Arrange, changeModel)
+	local handleDataStep = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.HandleData)
 
-	arg_11_0:buildSeqFlow(var_11_1)
-	arg_11_0:buildSeqFlow(var_11_26)
-	arg_11_0:buildSeqFlow(var_11_27)
+	self:buildSeqFlow(dropStepFlow)
+	self:buildSeqFlow(step)
+	self:buildSeqFlow(handleDataStep)
 
 	if canLogNormal then
 		-- block empty
 	end
 end
 
-function var_0_0.exchangeCell(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	local var_12_0 = math.abs(arg_12_1 - arg_12_3)
-	local var_12_1 = math.abs(arg_12_2 - arg_12_4)
+function EliminateChessController:exchangeCell(posX, posY, targetX, targetY)
+	local diff_x = math.abs(posX - targetX)
+	local diff_y = math.abs(posY - targetY)
 
-	if not (var_12_0 <= 1) or not (var_12_1 <= 1) or var_12_0 == var_12_1 then
+	if not (diff_x <= 1) or not (diff_y <= 1) or diff_x == diff_y then
 		return false
 	end
 
-	if arg_12_0._turnInfo ~= nil and #arg_12_0._turnInfo > 0 then
+	if self._turnInfo ~= nil and #self._turnInfo > 0 then
 		return true
 	end
 
-	arg_12_0:setFlowEndState(false)
-	arg_12_0:dispatchEvent(EliminateChessEvent.PerformBegin)
-	arg_12_0:recordExchangePos(arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	arg_12_0:exchangeCellShow(arg_12_1, arg_12_2, arg_12_3, arg_12_4, EliminateEnum.AniTime.Move)
-	EliminateRpc.instance:sendMatch3ChessBoardSwapRequest(arg_12_1, arg_12_2, arg_12_3, arg_12_4, nil, nil)
+	self:setFlowEndState(false)
+	self:dispatchEvent(EliminateChessEvent.PerformBegin)
+	self:recordExchangePos(posX, posY, targetX, targetY)
+	self:exchangeCellShow(posX, posY, targetX, targetY, EliminateEnum.AniTime.Move)
+	EliminateRpc.instance:sendMatch3ChessBoardSwapRequest(posX, posY, targetX, targetY, nil, nil)
 
 	return true
 end
 
-function var_0_0.recordExchangePos(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	if not arg_13_0._lastExchangePos then
-		arg_13_0._lastExchangePos = {}
+function EliminateChessController:recordExchangePos(posX, posY, targetX, targetY)
+	if not self._lastExchangePos then
+		self._lastExchangePos = {}
 	end
 
-	arg_13_0._lastExchangePos[#arg_13_0._lastExchangePos + 1] = arg_13_1
-	arg_13_0._lastExchangePos[#arg_13_0._lastExchangePos + 1] = arg_13_2
-	arg_13_0._lastExchangePos[#arg_13_0._lastExchangePos + 1] = arg_13_3
-	arg_13_0._lastExchangePos[#arg_13_0._lastExchangePos + 1] = arg_13_4
+	self._lastExchangePos[#self._lastExchangePos + 1] = posX
+	self._lastExchangePos[#self._lastExchangePos + 1] = posY
+	self._lastExchangePos[#self._lastExchangePos + 1] = targetX
+	self._lastExchangePos[#self._lastExchangePos + 1] = targetY
 end
 
-function var_0_0.getRecordExchangePos(arg_14_0)
-	return arg_14_0._lastExchangePos[1], arg_14_0._lastExchangePos[2], arg_14_0._lastExchangePos[3], arg_14_0._lastExchangePos[4]
+function EliminateChessController:getRecordExchangePos()
+	return self._lastExchangePos[1], self._lastExchangePos[2], self._lastExchangePos[3], self._lastExchangePos[4]
 end
 
-function var_0_0.clearRecord(arg_15_0)
-	tabletool.clear(arg_15_0._lastExchangePos)
+function EliminateChessController:clearRecord()
+	tabletool.clear(self._lastExchangePos)
 end
 
-function var_0_0.exchangeCellShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	local var_16_0 = {}
-	local var_16_1 = EliminateChessModel.instance:getChessMo(arg_16_1, arg_16_2)
+function EliminateChessController:exchangeCellShow(posX_1, posY_1, posX_2, posY_2, moveTime)
+	local changeModel = {}
+	local data = EliminateChessModel.instance:getChessMo(posX_1, posY_1)
 
-	var_16_1:setXY(arg_16_3, arg_16_4)
+	data:setXY(posX_2, posY_2)
 
-	local var_16_2 = EliminateChessModel.instance:getChessMo(arg_16_3, arg_16_4)
+	local data_2 = EliminateChessModel.instance:getChessMo(posX_2, posY_2)
 
-	var_16_2:setXY(arg_16_1, arg_16_2)
-	EliminateChessModel.instance:updateChessMo(arg_16_1, arg_16_2, var_16_2)
-	EliminateChessModel.instance:updateChessMo(arg_16_3, arg_16_4, var_16_1)
+	data_2:setXY(posX_1, posY_1)
+	EliminateChessModel.instance:updateChessMo(posX_1, posY_1, data_2)
+	EliminateChessModel.instance:updateChessMo(posX_2, posY_2, data)
 
-	local var_16_3 = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(var_16_1), arg_16_5, EliminateEnum.AnimType.move)
-	local var_16_4 = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(var_16_2), arg_16_5, EliminateEnum.AnimType.move)
-	local var_16_5 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, var_16_3)
-	local var_16_6 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, var_16_4)
-	local var_16_7 = arg_16_0:buildParallelFlow(var_16_5, var_16_6)
-	local var_16_8, var_16_9 = arg_16_0:buildSeqFlow(var_16_7)
+	local moveData = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(data), moveTime, EliminateEnum.AnimType.move)
+	local moveData_2 = EliminateStepUtil.createOrGetMoveStepTable(EliminateChessItemController.instance:getChessItemByModel(data_2), moveTime, EliminateEnum.AnimType.move)
+	local moveWork = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, moveData)
+	local moveWork_2 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, moveData_2)
+	local parallelStepFlow = self:buildParallelFlow(moveWork, moveWork_2)
+	local needStart, _ = self:buildSeqFlow(parallelStepFlow)
 
-	var_16_0[#var_16_0 + 1] = {
-		model = var_16_1,
-		viewItem = EliminateChessItemController.instance:getChessItemByModel(var_16_1)
+	changeModel[#changeModel + 1] = {
+		model = data,
+		viewItem = EliminateChessItemController.instance:getChessItemByModel(data)
 	}
-	var_16_0[#var_16_0 + 1] = {
-		model = var_16_2,
-		viewItem = EliminateChessItemController.instance:getChessItemByModel(var_16_2)
+	changeModel[#changeModel + 1] = {
+		model = data_2,
+		viewItem = EliminateChessItemController.instance:getChessItemByModel(data_2)
 	}
 
-	local var_16_10 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Arrange, var_16_0)
+	local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Arrange, changeModel)
 
-	arg_16_0:buildSeqFlow(var_16_10)
+	self:buildSeqFlow(step)
 
 	if canLogNormal then
-		local var_16_11 = EliminateChessDebugStep.New()
+		local debugStep = EliminateChessDebugStep.New()
 
-		arg_16_0:buildSeqFlow(var_16_11)
+		self:buildSeqFlow(debugStep)
 	end
 
-	if var_16_8 then
-		arg_16_0:startSeqStepFlow()
+	if needStart then
+		self:startSeqStepFlow()
 	end
 end
 
-function var_0_0.createInitMoveStepAndUpdatePos(arg_17_0)
+function EliminateChessController:createInitMoveStepAndUpdatePos()
 	EliminateChessModel.instance:createInitMoveState()
 
-	local var_17_0 = EliminateChessItemController.instance:getChess()
+	local allItem = EliminateChessItemController.instance:getChess()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		for iter_17_2, iter_17_3 in pairs(iter_17_1) do
-			iter_17_3:updatePos(iter_17_3)
+	for _, row in ipairs(allItem) do
+		for _, item in pairs(row) do
+			item:updatePos(item)
 		end
 	end
 end
 
-function var_0_0.createInitMoveStep(arg_18_0)
-	local var_18_0 = EliminateChessItemController.instance:getChess()
-	local var_18_1 = FlowParallel.New()
+function EliminateChessController:createInitMoveStep()
+	local allItem = EliminateChessItemController.instance:getChess()
+	local moveParallelFlow = FlowParallel.New()
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		for iter_18_2, iter_18_3 in pairs(iter_18_1) do
-			iter_18_3:updatePos(iter_18_3)
+	for i, row in ipairs(allItem) do
+		for j, item in pairs(row) do
+			item:updatePos(item)
 
-			local var_18_2 = EliminateStepUtil.createOrGetMoveStepTable(iter_18_3, iter_18_3:getData():getInitMoveTime(), EliminateEnum.AnimType.init)
-			local var_18_3 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, var_18_2)
+			local moveData = EliminateStepUtil.createOrGetMoveStepTable(item, item:getData():getInitMoveTime(), EliminateEnum.AnimType.init)
+			local moveStep = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.Move, moveData)
 
-			var_18_1:addWork(var_18_3)
+			moveParallelFlow:addWork(moveStep)
 		end
 	end
 
-	return arg_18_0:buildSeqFlow(var_18_1)
+	return self:buildSeqFlow(moveParallelFlow)
 end
 
-function var_0_0.buildSeqFlow(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._seqStepFlow == nil
+function EliminateChessController:buildSeqFlow(work)
+	local needStart = self._seqStepFlow == nil
 
-	arg_19_0._seqStepFlow = arg_19_0._seqStepFlow or FlowSequence.New()
+	self._seqStepFlow = self._seqStepFlow or FlowSequence.New()
 
-	if arg_19_1 then
-		arg_19_0._seqStepFlow:addWork(arg_19_1)
+	if work then
+		self._seqStepFlow:addWork(work)
 	end
 
-	return var_19_0, arg_19_0._seqStepFlow
+	return needStart, self._seqStepFlow
 end
 
-function var_0_0.buildParallelFlow(arg_20_0, ...)
-	local var_20_0 = FlowParallel.New()
-	local var_20_1 = ... ~= nil and select("#", ...) or 0
+function EliminateChessController:buildParallelFlow(...)
+	local parallelStepFlow = FlowParallel.New()
+	local args = ...
+	local len = args ~= nil and select("#", ...) or 0
 
-	if var_20_1 > 0 then
-		for iter_20_0 = 1, var_20_1 do
-			var_20_0:addWork(select(iter_20_0, ...))
+	if len > 0 then
+		for i = 1, len do
+			parallelStepFlow:addWork(select(i, ...))
 		end
 	end
 
-	return var_20_0
+	return parallelStepFlow
 end
 
-function var_0_0.getCurSeqStepFlow(arg_21_0)
-	return arg_21_0._seqStepFlow
+function EliminateChessController:getCurSeqStepFlow()
+	return self._seqStepFlow
 end
 
-function var_0_0.startSeqStepFlow(arg_22_0)
-	if arg_22_0._seqStepFlow then
-		arg_22_0._seqStepFlow:registerDoneListener(arg_22_0.seqFlowDone, arg_22_0)
-		arg_22_0._seqStepFlow:start()
+function EliminateChessController:startSeqStepFlow()
+	if self._seqStepFlow then
+		self._seqStepFlow:registerDoneListener(self.seqFlowDone, self)
+		self._seqStepFlow:start()
 	end
 end
 
-function var_0_0.checkPerformEndState(arg_23_0)
-	if arg_23_0._flowFullEnd and arg_23_0._seqStepFlow == nil then
-		arg_23_0:dispatchEvent(EliminateChessEvent.PerformEnd)
+function EliminateChessController:checkPerformEndState()
+	if self._flowFullEnd and self._seqStepFlow == nil then
+		self:dispatchEvent(EliminateChessEvent.PerformEnd)
 	end
 end
 
-function var_0_0.setFlowEndState(arg_24_0, arg_24_1)
-	arg_24_0._flowFullEnd = arg_24_1
+function EliminateChessController:setFlowEndState(state)
+	self._flowFullEnd = state
 
-	arg_24_0:checkPerformEndState()
+	self:checkPerformEndState()
 end
 
-function var_0_0.seqFlowDone(arg_25_0)
-	arg_25_0._seqStepFlow = nil
+function EliminateChessController:seqFlowDone()
+	self._seqStepFlow = nil
 
-	arg_25_0:checkPerformEndState()
+	self:checkPerformEndState()
 end
 
-function var_0_0.clearFlow(arg_26_0)
-	if arg_26_0._seqStepFlow then
-		arg_26_0._seqStepFlow:onDestroyInternal()
+function EliminateChessController:clearFlow()
+	if self._seqStepFlow then
+		self._seqStepFlow:onDestroyInternal()
 
-		arg_26_0._seqStepFlow = nil
+		self._seqStepFlow = nil
 	end
 end
 
-function var_0_0.checkAndSetNeedResetData(arg_27_0, arg_27_1)
-	EliminateChessModel.instance:setNeedResetData(arg_27_1)
+function EliminateChessController:checkAndSetNeedResetData(msg)
+	EliminateChessModel.instance:setNeedResetData(msg)
 
-	if (arg_27_0._turnInfo == nil or #arg_27_0._turnInfo == 0) and EliminateChessModel.instance:getNeedResetData() ~= nil then
-		local var_27_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.RefreshEliminate)
+	if self._turnInfo == nil or #self._turnInfo == 0 then
+		local cacheData = EliminateChessModel.instance:getNeedResetData()
 
-		if var_0_0.instance:buildSeqFlow(var_27_0) then
-			var_0_0.instance:startSeqStepFlow()
+		if cacheData ~= nil then
+			local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.RefreshEliminate)
+			local needStart = EliminateChessController.instance:buildSeqFlow(step)
+
+			if needStart then
+				EliminateChessController.instance:startSeqStepFlow()
+			end
 		end
 	end
 end
 
-function var_0_0.checkState(arg_28_0)
-	if EliminateChessModel.instance:getMovePoint() <= 0 then
-		local var_28_0 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EndShowView, {
+function EliminateChessController:checkState()
+	local movePoint = EliminateChessModel.instance:getMovePoint()
+
+	if movePoint <= 0 then
+		local step = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.EndShowView, {
 			time = EliminateEnum.ShowEndTime,
 			cb = function()
 				EliminateLevelController.instance:changeRoundToTeamChess()
@@ -455,10 +467,12 @@ function var_0_0.checkState(arg_28_0)
 			needShowEnd = EliminateLevelModel.instance:needPlayShowView()
 		})
 
-		var_0_0.instance:clearFlow()
+		EliminateChessController.instance:clearFlow()
 
-		if var_0_0.instance:buildSeqFlow(var_28_0) then
-			var_0_0.instance:startSeqStepFlow()
+		local needPlay = EliminateChessController.instance:buildSeqFlow(step)
+
+		if needPlay then
+			EliminateChessController.instance:startSeqStepFlow()
 		end
 
 		return true
@@ -467,40 +481,40 @@ function var_0_0.checkState(arg_28_0)
 	return false
 end
 
-function var_0_0.openNoticeView(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4, arg_30_5, arg_30_6, arg_30_7, arg_30_8)
-	local var_30_0 = ViewMgr.instance:getSetting(ViewName.EliminateNoticeView)
+function EliminateChessController:openNoticeView(isStart, isFinish, isTeamChess, isShowEvaluate, evaluateLevel, closeTime, closeCallback, closeCallbackTarget)
+	local viewSetting = ViewMgr.instance:getSetting(ViewName.EliminateNoticeView)
 
-	if var_30_0 then
-		var_30_0.bgBlur = (arg_30_4 or arg_30_2) and 0 or 1
+	if viewSetting then
+		viewSetting.bgBlur = (isShowEvaluate or isFinish) and 0 or 1
 	end
 
-	local var_30_1 = {
-		isStart = arg_30_1,
-		isFinish = arg_30_2,
-		isTeamChess = arg_30_3,
-		isShowEvaluate = arg_30_4,
-		evaluateLevel = arg_30_5,
-		closeTime = arg_30_6,
-		closeCallback = arg_30_7,
-		closeCallbackTarget = arg_30_8
+	local data = {
+		isStart = isStart,
+		isFinish = isFinish,
+		isTeamChess = isTeamChess,
+		isShowEvaluate = isShowEvaluate,
+		evaluateLevel = evaluateLevel,
+		closeTime = closeTime,
+		closeCallback = closeCallback,
+		closeCallbackTarget = closeCallbackTarget
 	}
 
-	ViewMgr.instance:openView(ViewName.EliminateNoticeView, var_30_1)
+	ViewMgr.instance:openView(ViewName.EliminateNoticeView, data)
 end
 
-function var_0_0.clear(arg_31_0)
-	arg_31_0:clearFlow()
+function EliminateChessController:clear()
+	self:clearFlow()
 
-	arg_31_0._flowFullEnd = false
+	self._flowFullEnd = false
 
 	EliminateStepUtil.releaseMoveStepTable()
 
-	arg_31_0._lastExchangePos = {}
+	self._lastExchangePos = {}
 
 	EliminateChessModel.instance:reInit()
 	EliminateChessItemController.instance:clear()
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateChessController.instance = EliminateChessController.New()
 
-return var_0_0
+return EliminateChessController

@@ -1,241 +1,244 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191EnemyInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191EnemyInfoView.lua
 
-local var_0_0 = class("Act191EnemyInfoView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191EnemyInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageLevel = gohelper.findChildImage(arg_1_0.viewGO, "left_container/Title/Title/#image_Level")
-	arg_1_0._scrollteam = gohelper.findChildScrollRect(arg_1_0.viewGO, "left_container/#scroll_team")
-	arg_1_0._goHeroItem = gohelper.findChild(arg_1_0.viewGO, "left_container/#scroll_team/viewport/content/#go_HeroItem")
-	arg_1_0._goMain = gohelper.findChild(arg_1_0.viewGO, "left_container/#scroll_team/viewport/content/#go_Main")
-	arg_1_0._goSub = gohelper.findChild(arg_1_0.viewGO, "left_container/#scroll_team/viewport/content/#go_Sub")
-	arg_1_0._goFetter = gohelper.findChild(arg_1_0.viewGO, "left_container/#scroll_team/viewport/content/#go_Fetter")
-	arg_1_0._goRightContainer = gohelper.findChild(arg_1_0.viewGO, "#go_RightContainer")
-	arg_1_0._imageRare = gohelper.findChildImage(arg_1_0.viewGO, "#go_RightContainer/go_SingleHero/character/#image_Rare")
-	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_RightContainer/go_SingleHero/character/#simage_Icon")
-	arg_1_0._imageCareer = gohelper.findChildImage(arg_1_0.viewGO, "#go_RightContainer/go_SingleHero/character/#image_Career")
-	arg_1_0._imageDmgtype = gohelper.findChildImage(arg_1_0.viewGO, "#go_RightContainer/go_SingleHero/#image_Dmgtype")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "#go_RightContainer/go_SingleHero/name/#txt_Name")
-	arg_1_0._goFetterIcon = gohelper.findChild(arg_1_0.viewGO, "#go_RightContainer/go_SingleHero/tag/#go_FetterIcon")
-	arg_1_0._goCEmpty1 = gohelper.findChild(arg_1_0.viewGO, "#go_RightContainer/Collection1/#go_CEmpty1")
-	arg_1_0._goCollection1 = gohelper.findChild(arg_1_0.viewGO, "#go_RightContainer/Collection1/#go_Collection1")
-	arg_1_0._imageCRare1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_RightContainer/Collection1/#go_Collection1/#image_CRare1")
-	arg_1_0._simageCIcon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_RightContainer/Collection1/#go_Collection1/#simage_CIcon1")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Act191EnemyInfoView = class("Act191EnemyInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191EnemyInfoView:onInitView()
+	self._imageLevel = gohelper.findChildImage(self.viewGO, "left_container/Title/Title/#image_Level")
+	self._scrollteam = gohelper.findChildScrollRect(self.viewGO, "left_container/#scroll_team")
+	self._goHeroItem = gohelper.findChild(self.viewGO, "left_container/#scroll_team/viewport/content/#go_HeroItem")
+	self._goMain = gohelper.findChild(self.viewGO, "left_container/#scroll_team/viewport/content/#go_Main")
+	self._goSub = gohelper.findChild(self.viewGO, "left_container/#scroll_team/viewport/content/#go_Sub")
+	self._goFetter = gohelper.findChild(self.viewGO, "left_container/#scroll_team/viewport/content/#go_Fetter")
+	self._goRightContainer = gohelper.findChild(self.viewGO, "#go_RightContainer")
+	self._imageRare = gohelper.findChildImage(self.viewGO, "#go_RightContainer/go_SingleHero/character/#image_Rare")
+	self._simageIcon = gohelper.findChildSingleImage(self.viewGO, "#go_RightContainer/go_SingleHero/character/#simage_Icon")
+	self._imageCareer = gohelper.findChildImage(self.viewGO, "#go_RightContainer/go_SingleHero/character/#image_Career")
+	self._imageDmgtype = gohelper.findChildImage(self.viewGO, "#go_RightContainer/go_SingleHero/#image_Dmgtype")
+	self._txtName = gohelper.findChildText(self.viewGO, "#go_RightContainer/go_SingleHero/name/#txt_Name")
+	self._goFetterIcon = gohelper.findChild(self.viewGO, "#go_RightContainer/go_SingleHero/tag/#go_FetterIcon")
+	self._goCEmpty1 = gohelper.findChild(self.viewGO, "#go_RightContainer/Collection1/#go_CEmpty1")
+	self._goCollection1 = gohelper.findChild(self.viewGO, "#go_RightContainer/Collection1/#go_Collection1")
+	self._imageCRare1 = gohelper.findChildImage(self.viewGO, "#go_RightContainer/Collection1/#go_Collection1/#image_CRare1")
+	self._simageCIcon1 = gohelper.findChildSingleImage(self.viewGO, "#go_RightContainer/Collection1/#go_Collection1/#simage_CIcon1")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Act191EnemyInfoView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Act191EnemyInfoView:removeEvents()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function Act191EnemyInfoView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	local var_5_0 = gohelper.findButtonWithAudio(arg_5_0._goCollection1)
+function Act191EnemyInfoView:_editableInitView()
+	local cBtn1 = gohelper.findButtonWithAudio(self._goCollection1)
 
-	arg_5_0:addClickCb(var_5_0, arg_5_0.onClickCollection, arg_5_0)
+	self:addClickCb(cBtn1, self.onClickCollection, self)
 
-	arg_5_0._fetterItemList = {}
-	arg_5_0.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._goRightContainer, Act191CharacterInfo)
-	arg_5_0._fetterIconItemList = {}
+	self._fetterItemList = {}
+	self.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goRightContainer, Act191CharacterInfo)
+	self._fetterIconItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function Act191EnemyInfoView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.nodeDetailMo = arg_7_0.viewParam
-	arg_7_0.matchMo = arg_7_0.nodeDetailMo.matchInfo
+function Act191EnemyInfoView:onOpen()
+	self.nodeDetailMo = self.viewParam
+	self.matchMo = self.nodeDetailMo.matchInfo
 
-	local var_7_0 = lua_activity191_match_rank.configDict[arg_7_0.matchMo.rank].fightLevel
+	local fightLvl = lua_activity191_match_rank.configDict[self.matchMo.rank].fightLevel
 
-	UISpriteSetMgr.instance:setAct174Sprite(arg_7_0._imageLevel, "act191_level_" .. string.lower(var_7_0))
+	UISpriteSetMgr.instance:setAct174Sprite(self._imageLevel, "act191_level_" .. string.lower(fightLvl))
 
-	arg_7_0.heroItemDic = {}
+	self.heroItemDic = {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.matchMo.heroMap) do
-		if not arg_7_0.selectMain then
-			arg_7_0.selectMain = iter_7_0
+	for index, info in pairs(self.matchMo.heroMap) do
+		if not self.selectMain then
+			self.selectMain = index
 		end
 
-		local var_7_1 = arg_7_0.matchMo:getRoleCo(iter_7_1.heroId)
-		local var_7_2 = gohelper.clone(arg_7_0._goHeroItem, arg_7_0._goMain)
-		local var_7_3 = arg_7_0:getResInst(Activity191Enum.PrefabPath.HeroHeadItem, var_7_2)
-		local var_7_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_3, Act191HeroHeadItem)
+		local roleCo = self.matchMo:getRoleCo(info.heroId)
+		local parent = gohelper.clone(self._goHeroItem, self._goMain)
+		local go = self:getResInst(Activity191Enum.PrefabPath.HeroHeadItem, parent)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act191HeroHeadItem)
 
-		var_7_4:setData(nil, var_7_1.id)
-		var_7_4:setOverrideClick(arg_7_0.onClickHero, arg_7_0, iter_7_0)
+		item:setData(nil, roleCo.id)
+		item:setOverrideClick(self.onClickHero, self, index)
 
-		arg_7_0.heroItemDic[iter_7_0] = var_7_4
+		self.heroItemDic[index] = item
 	end
 
-	arg_7_0.subHeroItemDic = {}
+	self.subHeroItemDic = {}
 
-	for iter_7_2, iter_7_3 in pairs(arg_7_0.matchMo.subHeroMap) do
-		local var_7_5 = arg_7_0.matchMo:getRoleCo(iter_7_3)
-		local var_7_6 = gohelper.clone(arg_7_0._goHeroItem, arg_7_0._goSub)
-		local var_7_7 = arg_7_0:getResInst(Activity191Enum.PrefabPath.HeroHeadItem, var_7_6)
-		local var_7_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_7, Act191HeroHeadItem)
+	for index, heroId in pairs(self.matchMo.subHeroMap) do
+		local roleCo = self.matchMo:getRoleCo(heroId)
+		local parent = gohelper.clone(self._goHeroItem, self._goSub)
+		local go = self:getResInst(Activity191Enum.PrefabPath.HeroHeadItem, parent)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act191HeroHeadItem)
 
-		var_7_8:setData(nil, var_7_5.id)
-		var_7_8:setOverrideClick(arg_7_0.onClickSubHero, arg_7_0, iter_7_2)
+		item:setData(nil, roleCo.id)
+		item:setOverrideClick(self.onClickSubHero, self, index)
 
-		arg_7_0.subHeroItemDic[iter_7_2] = var_7_8
+		self.subHeroItemDic[index] = item
 	end
 
-	gohelper.setActive(arg_7_0._goHeroItem, false)
-	arg_7_0:onClickHero(arg_7_0.selectMain, true)
-	arg_7_0:refreshFetter()
+	gohelper.setActive(self._goHeroItem, false)
+	self:onClickHero(self.selectMain, true)
+	self:refreshFetter()
 end
 
-function var_0_0.onClose(arg_8_0)
+function Act191EnemyInfoView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function Act191EnemyInfoView:onDestroyView()
 	return
 end
 
-function var_0_0.refreshCharacter(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.matchMo:getRoleCo(arg_10_1)
+function Act191EnemyInfoView:refreshCharacter(heroId)
+	local roleCo = self.matchMo:getRoleCo(heroId)
 
-	UISpriteSetMgr.instance:setAct174Sprite(arg_10_0._imageRare, "act174_rolebg_" .. var_10_0.quality)
-	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imageCareer, "lssx_" .. var_10_0.career)
+	UISpriteSetMgr.instance:setAct174Sprite(self._imageRare, "act174_rolebg_" .. roleCo.quality)
+	UISpriteSetMgr.instance:setCommonSprite(self._imageCareer, "lssx_" .. roleCo.career)
 
-	local var_10_1 = Activity191Helper.getHeadIconSmall(var_10_0)
+	local path = Activity191Helper.getHeadIconSmall(roleCo)
 
-	arg_10_0._simageIcon:LoadImage(var_10_1)
+	self._simageIcon:LoadImage(path)
 
-	arg_10_0._txtName.text = var_10_0.name
+	self._txtName.text = roleCo.name
 
-	arg_10_0.characterItem:setData(var_10_0)
+	self.characterItem:setData(roleCo)
 
-	local var_10_2 = string.split(var_10_0.tag, "#")
+	local tagList = string.split(roleCo.tag, "#")
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-		local var_10_3 = arg_10_0._fetterIconItemList[iter_10_0]
+	for k, tag in ipairs(tagList) do
+		local item = self._fetterIconItemList[k]
 
-		if not var_10_3 then
-			local var_10_4 = gohelper.cloneInPlace(arg_10_0._goFetterIcon)
+		if not item then
+			local go = gohelper.cloneInPlace(self._goFetterIcon)
 
-			var_10_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_4, Act191FetterIconItem)
-			arg_10_0._fetterIconItemList[iter_10_0] = var_10_3
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act191FetterIconItem)
+			self._fetterIconItemList[k] = item
 		end
 
-		var_10_3:setData(iter_10_1)
-		var_10_3:setEnemyView()
-		gohelper.setActive(arg_10_0._fetterIconItemList[iter_10_0].go, true)
+		item:setData(tag)
+		item:setEnemyView()
+		gohelper.setActive(self._fetterIconItemList[k].go, true)
 	end
 
-	for iter_10_2 = #var_10_2 + 1, #arg_10_0._fetterIconItemList do
-		gohelper.setActive(arg_10_0._fetterIconItemList[iter_10_2].go, false)
+	for i = #tagList + 1, #self._fetterIconItemList do
+		gohelper.setActive(self._fetterIconItemList[i].go, false)
 	end
 
-	gohelper.setActive(arg_10_0._goFetterIcon, false)
+	gohelper.setActive(self._goFetterIcon, false)
 end
 
-function var_0_0.refreshFetter(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._fetterItemList) do
-		gohelper.setActive(iter_11_1.go, false)
+function Act191EnemyInfoView:refreshFetter()
+	for _, item in ipairs(self._fetterItemList) do
+		gohelper.setActive(item.go, false)
 	end
 
-	local var_11_0 = arg_11_0.matchMo:getTeamFetterCntDic()
-	local var_11_1 = Activity191Helper.getActiveFetterInfoList(var_11_0)
+	local fetterCntDic = self.matchMo:getTeamFetterCntDic()
+	local fetterInfoList = Activity191Helper.getActiveFetterInfoList(fetterCntDic)
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_1) do
-		local var_11_2 = arg_11_0._fetterItemList[iter_11_2]
+	for k, info in ipairs(fetterInfoList) do
+		local item = self._fetterItemList[k]
 
-		if not var_11_2 then
-			local var_11_3 = arg_11_0:getResInst(Activity191Enum.PrefabPath.FetterItem, arg_11_0._goFetter)
+		if not item then
+			local go = self:getResInst(Activity191Enum.PrefabPath.FetterItem, self._goFetter)
 
-			var_11_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_3, Act191FetterItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act191FetterItem)
 
-			var_11_2:setEnemyView()
+			item:setEnemyView()
 
-			arg_11_0._fetterItemList[iter_11_2] = var_11_2
+			self._fetterItemList[k] = item
 		end
 
-		var_11_2:setData(iter_11_3.config, iter_11_3.count)
-		gohelper.setActive(var_11_2.go, true)
+		item:setData(info.config, info.count)
+		gohelper.setActive(item.go, true)
 	end
 end
 
-function var_0_0.onClickHero(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_2 and arg_12_0.selectMain == arg_12_1 then
+function Act191EnemyInfoView:onClickHero(index, noCheck)
+	if not noCheck and self.selectMain == index then
 		return
 	else
-		arg_12_0.selectMain = arg_12_1
-		arg_12_0.selectSub = 0
+		self.selectMain = index
+		self.selectSub = 0
 	end
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0.heroItemDic) do
-		iter_12_1:setActivation(iter_12_0 == arg_12_1)
+	for k, item in pairs(self.heroItemDic) do
+		item:setActivation(k == index)
 	end
 
-	for iter_12_2, iter_12_3 in pairs(arg_12_0.subHeroItemDic) do
-		iter_12_3:setActivation(false)
+	for _, item in pairs(self.subHeroItemDic) do
+		item:setActivation(false)
 	end
 
-	local var_12_0 = arg_12_0.matchMo.heroMap[arg_12_1]
+	local info = self.matchMo.heroMap[index]
 
-	arg_12_0:refreshCharacter(var_12_0.heroId)
+	self:refreshCharacter(info.heroId)
 
-	if var_12_0.itemUid1 ~= 0 then
-		local var_12_1 = arg_12_0.matchMo:getItemCo(var_12_0.itemUid1)
+	if info.itemUid1 ~= 0 then
+		local co = self.matchMo:getItemCo(info.itemUid1)
 
-		arg_12_0._simageCIcon1:LoadImage(ResUrl.getRougeSingleBgCollection(var_12_1.icon))
-		UISpriteSetMgr.instance:setAct174Sprite(arg_12_0._imageCRare1, "act174_propitembg_" .. var_12_1.rare)
+		self._simageCIcon1:LoadImage(ResUrl.getRougeSingleBgCollection(co.icon))
+		UISpriteSetMgr.instance:setAct174Sprite(self._imageCRare1, "act174_propitembg_" .. co.rare)
 	end
 
-	gohelper.setActive(arg_12_0._goCEmpty1, var_12_0.itemUid1 == 0)
-	gohelper.setActive(arg_12_0._goCollection1, var_12_0.itemUid1 ~= 0)
+	gohelper.setActive(self._goCEmpty1, info.itemUid1 == 0)
+	gohelper.setActive(self._goCollection1, info.itemUid1 ~= 0)
 end
 
-function var_0_0.onClickSubHero(arg_13_0, arg_13_1)
-	if arg_13_0.selectSub == arg_13_1 then
+function Act191EnemyInfoView:onClickSubHero(index)
+	if self.selectSub == index then
 		return
 	else
-		arg_13_0.selectSub = arg_13_1
-		arg_13_0.selectMain = 0
+		self.selectSub = index
+		self.selectMain = 0
 
-		for iter_13_0, iter_13_1 in pairs(arg_13_0.heroItemDic) do
-			iter_13_1:setActivation(false)
+		for _, item in pairs(self.heroItemDic) do
+			item:setActivation(false)
 		end
 
-		for iter_13_2, iter_13_3 in pairs(arg_13_0.subHeroItemDic) do
-			iter_13_3:setActivation(iter_13_2 == arg_13_1)
+		for k, item in pairs(self.subHeroItemDic) do
+			item:setActivation(k == index)
 		end
 	end
 
-	local var_13_0 = arg_13_0.matchMo.subHeroMap[arg_13_1]
+	local heroId = self.matchMo.subHeroMap[index]
 
-	arg_13_0:refreshCharacter(var_13_0)
-	gohelper.setActive(arg_13_0._goCEmpty1, true)
-	gohelper.setActive(arg_13_0._goCollection1, false)
+	self:refreshCharacter(heroId)
+	gohelper.setActive(self._goCEmpty1, true)
+	gohelper.setActive(self._goCollection1, false)
 end
 
-function var_0_0.onClickCollection(arg_14_0)
-	if arg_14_0.selectMain then
-		local var_14_0 = arg_14_0.matchMo.heroMap[arg_14_0.selectMain].itemUid1
+function Act191EnemyInfoView:onClickCollection()
+	if self.selectMain then
+		local info = self.matchMo.heroMap[self.selectMain]
+		local itemUid = info.itemUid1
 
-		if var_14_0 ~= 0 then
-			local var_14_1 = arg_14_0.matchMo:getItemCo(var_14_0)
+		if itemUid ~= 0 then
+			local itemCo = self.matchMo:getItemCo(itemUid)
 
 			Activity191Controller.instance:openCollectionTipView({
-				itemId = var_14_1.id
+				itemId = itemCo.id
 			})
 		end
 	end
 end
 
-return var_0_0
+return Act191EnemyInfoView

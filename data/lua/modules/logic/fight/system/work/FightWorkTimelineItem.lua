@@ -1,141 +1,143 @@
-﻿module("modules.logic.fight.system.work.FightWorkTimelineItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkTimelineItem.lua
 
-local var_0_0 = class("FightWorkTimelineItem", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkTimelineItem", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.timelineName = arg_1_2
-	arg_1_0.fightStepData = arg_1_3
-	arg_1_0.skillId = arg_1_0.fightStepData.actId
+local FightWorkTimelineItem = class("FightWorkTimelineItem", FightWorkItem)
+
+function FightWorkTimelineItem:onConstructor(entity, timelineName, fightStepData)
+	self.entity = entity
+	self.timelineName = timelineName
+	self.fightStepData = fightStepData
+	self.skillId = self.fightStepData.actId
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = FightHelper.getRolesTimelinePath(arg_2_0.timelineName)
+function FightWorkTimelineItem:onStart()
+	local assetUrl = FightHelper.getRolesTimelinePath(self.timelineName)
 
-	arg_2_0.timelineUrl = ResUrl.getSkillTimeline(arg_2_0.timelineName)
+	self.timelineUrl = ResUrl.getSkillTimeline(self.timelineName)
 
-	arg_2_0:com_loadAsset(var_2_0, arg_2_0.onTimelineLoaded, arg_2_0)
-	arg_2_0:cancelFightWorkSafeTimer()
+	self:com_loadAsset(assetUrl, self.onTimelineLoaded, self)
+	self:cancelFightWorkSafeTimer()
 end
 
-function var_0_0.onTimelineLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if not arg_3_1 then
-		logError("timeline资源加载失败,路径:" .. arg_3_0.timelineUrl)
-		arg_3_0:onDone(true)
+function FightWorkTimelineItem:onTimelineLoaded(success, loader)
+	if not success then
+		logError("timeline资源加载失败,路径:" .. self.timelineUrl)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_3_0.assetLoader = arg_3_2
+	self.assetLoader = loader
 
-	FightHelper.logForPCSkillEditor("播放timeline:" .. arg_3_0.timelineName)
-	arg_3_0:startTimeline()
+	FightHelper.logForPCSkillEditor("播放timeline:" .. self.timelineName)
+	self:startTimeline()
 end
 
-function var_0_0.dealSpeed(arg_4_0)
-	FightHelper.setBossSkillSpeed(arg_4_0.entity.id)
-	FightHelper.setTimelineExclusiveSpeed(arg_4_0.timelineName)
+function FightWorkTimelineItem:dealSpeed()
+	FightHelper.setBossSkillSpeed(self.entity.id)
+	FightHelper.setTimelineExclusiveSpeed(self.timelineName)
 	FightModel.instance:updateRTPCSpeed()
 end
 
-function var_0_0.startTimeline(arg_5_0)
-	arg_5_0:dealSpeed()
+function FightWorkTimelineItem:startTimeline()
+	self:dealSpeed()
 
-	arg_5_0._startTime = Time.time
+	self._startTime = Time.time
 
-	arg_5_0:beforePlayTimeline()
+	self:beforePlayTimeline()
 
-	arg_5_0.timelineItem = arg_5_0:newClass(FightSkillTimelineItem, arg_5_0)
+	self.timelineItem = self:newClass(FightSkillTimelineItem, self)
 
-	arg_5_0.timelineItem:play()
-	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkill, arg_5_0.entity, arg_5_0.skillId, arg_5_0.fightStepData, arg_5_0.timelineName)
-	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayStart, arg_5_0.entity, arg_5_0.skillId, arg_5_0.fightStepData, arg_5_0.timelineName)
+	self.timelineItem:play()
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkill, self.entity, self.skillId, self.fightStepData, self.timelineName)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayStart, self.entity, self.skillId, self.fightStepData, self.timelineName)
 end
 
-function var_0_0.sameSkillPlaying(arg_6_0)
+function FightWorkTimelineItem:sameSkillPlaying()
 	return false
 end
 
-function var_0_0.setTimeScale(arg_7_0, arg_7_1)
-	if arg_7_0.timelineItem then
-		arg_7_0.timelineItem:setTimeScale(arg_7_1)
+function FightWorkTimelineItem:setTimeScale(scale)
+	if self.timelineItem then
+		self.timelineItem:setTimeScale(scale)
 	end
 end
 
-function var_0_0.getBinder(arg_8_0)
-	return arg_8_0.timelineItem and arg_8_0.timelineItem.binder
+function FightWorkTimelineItem:getBinder()
+	return self.timelineItem and self.timelineItem.binder
 end
 
-function var_0_0.skipSkill(arg_9_0)
-	if not arg_9_0.timelineItem then
+function FightWorkTimelineItem:skipSkill()
+	if not self.timelineItem then
 		return
 	end
 
-	arg_9_0.timelineItem:skipSkill()
-	arg_9_0.timelineItem:onTimelineEnd()
+	self.timelineItem:skipSkill()
+	self.timelineItem:onTimelineEnd()
 end
 
-function var_0_0.onTimelineFinish(arg_10_0)
-	local var_10_0 = false
+function FightWorkTimelineItem:onTimelineFinish()
+	local skipAfterTimeline = false
 
-	if arg_10_0.skipAfterTimelineFunc then
-		var_10_0 = true
+	if self.skipAfterTimelineFunc then
+		skipAfterTimeline = true
 	end
 
-	if not var_10_0 then
-		arg_10_0:afterPlayTimeline()
+	if not skipAfterTimeline then
+		self:afterPlayTimeline()
 	end
 
 	CameraMgr.instance:getCameraShake():StopShake()
 	FightHelper.cancelBossSkillSpeed()
 	FightHelper.cancelExclusiveSpeed()
 	FightModel.instance:updateRTPCSpeed()
-	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, arg_10_0.entity, arg_10_0.skillId, arg_10_0.fightStepData, arg_10_0._timelineName)
-	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, arg_10_0.entity, arg_10_0.skillId, arg_10_0.fightStepData, arg_10_0._timelineName)
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, self.entity, self.skillId, self.fightStepData, self._timelineName)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, self.entity, self.skillId, self.fightStepData, self._timelineName)
 
-	if not arg_10_0.IS_DISPOSED then
-		arg_10_0:onDone(true)
+	if not self.IS_DISPOSED then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.afterPlayTimeline(arg_11_0)
-	FightSkillMgr.instance:afterTimeline(arg_11_0.entity, arg_11_0.fightStepData)
+function FightWorkTimelineItem:afterPlayTimeline()
+	FightSkillMgr.instance:afterTimeline(self.entity, self.fightStepData)
 
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.AiJiAoQteIng) then
 		return
 	end
 
-	arg_11_0:_resetTargetHp()
+	self:_resetTargetHp()
 
-	if arg_11_0.timelineItem then
-		arg_11_0:_checkFloatTable(arg_11_0.timelineItem.timelineContext.floatNum, "伤害")
-		arg_11_0:_checkFloatTable(arg_11_0.timelineItem.timelineContext.healFloatNum, "回血")
+	if self.timelineItem then
+		self:_checkFloatTable(self.timelineItem.timelineContext.floatNum, "伤害")
+		self:_checkFloatTable(self.timelineItem.timelineContext.healFloatNum, "回血")
 	end
 
-	if arg_11_0.entity.buff then
-		arg_11_0.entity.buff:showBuffEffects("before_skill_timeline")
+	if self.entity.buff then
+		self.entity.buff:showBuffEffects("before_skill_timeline")
 	end
 
-	if arg_11_0.hide_defenders_buff_effect then
-		FightHelper.revertDefenderBuffEffect(arg_11_0.hide_defenders_buff_effect, "before_skill_timeline")
+	if self.hide_defenders_buff_effect then
+		FightHelper.revertDefenderBuffEffect(self.hide_defenders_buff_effect, "before_skill_timeline")
 
-		arg_11_0.hide_defenders_buff_effect = nil
+		self.hide_defenders_buff_effect = nil
 	end
 
 	if not FightSkillMgr.instance:isPlayingAnyTimeline() then
 		FightFloatMgr.instance:resetInterval()
-		arg_11_0:_cancelSideRenderOrder()
+		self:_cancelSideRenderOrder()
 		GameSceneMgr.instance:getCurScene().camera:enablePostProcessSmooth(false)
 
-		if arg_11_0.fightStepData.hasPlayTimelineCamera then
+		if self.fightStepData.hasPlayTimelineCamera then
 			GameSceneMgr.instance:getCurScene().camera:resetParam()
 		end
 
 		GameSceneMgr.instance:getCurScene().entityMgr.enableSpineRotate = true
 
-		local var_11_0 = arg_11_0.entity:getMO()
+		local entity_mo = self.entity:getMO()
 
-		if var_11_0 and var_11_0:isPassiveSkill(arg_11_0.skillId) then
+		if entity_mo and entity_mo:isPassiveSkill(self.skillId) then
 			-- block empty
 		else
 			GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
@@ -147,94 +149,94 @@ function var_0_0.afterPlayTimeline(arg_11_0)
 	end
 end
 
-function var_0_0.beforePlayTimeline(arg_12_0)
-	arg_12_0:setSideRenderOrder()
+function FightWorkTimelineItem:beforePlayTimeline()
+	self:setSideRenderOrder()
 
-	if arg_12_0.entity.buff then
-		arg_12_0.entity.buff:hideLoopEffects("before_skill_timeline")
+	if self.entity.buff then
+		self.entity.buff:hideLoopEffects("before_skill_timeline")
 	end
 
-	for iter_12_0, iter_12_1 in pairs(FightHelper.hideDefenderBuffEffect(arg_12_0.fightStepData, "before_skill_timeline")) do
-		arg_12_0.hide_defenders_buff_effect = arg_12_0.hide_defenders_buff_effect or {}
+	for i, entity_id in pairs(FightHelper.hideDefenderBuffEffect(self.fightStepData, "before_skill_timeline")) do
+		self.hide_defenders_buff_effect = self.hide_defenders_buff_effect or {}
 
-		table.insert(arg_12_0.hide_defenders_buff_effect, iter_12_1)
+		table.insert(self.hide_defenders_buff_effect, entity_id)
 	end
 
 	if not FightSkillMgr.instance:isPlayingAnyTimeline() then
-		if not arg_12_0.entity.skill:sameSkillPlaying() then
+		if not self.entity.skill:sameSkillPlaying() then
 			FightFloatMgr.instance:removeInterval()
 		end
 
-		local var_12_0 = arg_12_0.entity:getMO()
+		local entity_mo = self.entity:getMO()
 
-		if var_12_0 and var_12_0:isPassiveSkill(arg_12_0.skillId) then
+		if entity_mo and entity_mo:isPassiveSkill(self.skillId) then
 			-- block empty
 		else
-			local var_12_1 = true
+			local hide = true
 
-			if lua_fight_ignore_hide_front_effect.configDict[arg_12_0.timelineName] then
-				var_12_1 = false
+			if lua_fight_ignore_hide_front_effect.configDict[self.timelineName] then
+				hide = false
 			end
 
-			if var_12_1 then
+			if hide then
 				GameSceneMgr.instance:getCurScene().level:setFrontVisible(false)
 			end
 		end
 	end
 
-	FightSkillMgr.instance:beforeTimeline(arg_12_0.entity, arg_12_0.fightStepData)
+	FightSkillMgr.instance:beforeTimeline(self.entity, self.fightStepData)
 end
 
-function var_0_0.setSideRenderOrder(arg_13_0)
-	local var_13_0 = FightHelper.getSideEntitys(arg_13_0.entity:getSide(), true)
-	local var_13_1 = FightModel.instance:getFightParam().battleId
+function FightWorkTimelineItem:setSideRenderOrder()
+	local sideEntitys = FightHelper.getSideEntitys(self.entity:getSide(), true)
+	local battleId = FightModel.instance:getFightParam().battleId
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_2
-		local var_13_3 = FightEnum.AtkRenderOrderIgnore[var_13_1]
+	for i, entity in ipairs(sideEntitys) do
+		local ignore
+		local ignoreBattle = FightEnum.AtkRenderOrderIgnore[battleId]
 
-		if var_13_3 then
-			local var_13_4 = var_13_3[iter_13_1:getSide()]
+		if ignoreBattle then
+			local ignoreSide = ignoreBattle[entity:getSide()]
 
-			if var_13_4 and tabletool.indexOf(var_13_4, iter_13_1:getMO().position) then
-				var_13_2 = true
+			if ignoreSide and tabletool.indexOf(ignoreSide, entity:getMO().position) then
+				ignore = true
 			end
 		end
 
-		if not var_13_2 then
-			var_13_0[iter_13_0] = iter_13_1.id
+		if not ignore then
+			sideEntitys[i] = entity.id
 		end
 	end
 
-	local var_13_5 = FightRenderOrderMgr.sortOrder(FightEnum.RenderOrderType.StandPos, var_13_0)
+	local entityId2SortId = FightRenderOrderMgr.sortOrder(FightEnum.RenderOrderType.StandPos, sideEntitys)
 
-	for iter_13_2, iter_13_3 in pairs(var_13_5) do
-		FightRenderOrderMgr.instance:setOrder(iter_13_2, FightEnum.TopOrderFactor + iter_13_3 - 1)
+	for entityId, sortId in pairs(entityId2SortId) do
+		FightRenderOrderMgr.instance:setOrder(entityId, FightEnum.TopOrderFactor + sortId - 1)
 	end
 end
 
-function var_0_0._cancelSideRenderOrder(arg_14_0)
-	local var_14_0 = FightHelper.getAllEntitys(arg_14_0.entity:getSide())
+function FightWorkTimelineItem:_cancelSideRenderOrder()
+	local allEntitys = FightHelper.getAllEntitys(self.entity:getSide())
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		FightRenderOrderMgr.instance:cancelOrder(iter_14_1.id)
+	for _, entity in ipairs(allEntitys) do
+		FightRenderOrderMgr.instance:cancelOrder(entity.id)
 	end
 
 	FightRenderOrderMgr.instance:setSortType(FightEnum.RenderOrderType.StandPos)
 end
 
-function var_0_0._resetTargetHp(arg_15_0)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.fightStepData.actEffect) do
-		local var_15_0 = FightHelper.getEntity(iter_15_1.targetId)
+function FightWorkTimelineItem:_resetTargetHp()
+	for _, actEffectData in ipairs(self.fightStepData.actEffect) do
+		local oneDefender = FightHelper.getEntity(actEffectData.targetId)
 
-		if var_15_0 and var_15_0.nameUI then
-			var_15_0.nameUI:resetHp()
+		if oneDefender and oneDefender.nameUI then
+			oneDefender.nameUI:resetHp()
 		end
 	end
 end
 
-function var_0_0._checkFloatTable(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_1 then
+function FightWorkTimelineItem:_checkFloatTable(floatTable, tag)
+	if not floatTable then
 		return
 	end
 
@@ -250,10 +252,10 @@ function var_0_0._checkFloatTable(arg_16_0, arg_16_1, arg_16_2)
 		return
 	end
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_1) do
-		for iter_16_2, iter_16_3 in pairs(iter_16_1) do
-			if math.abs(iter_16_3.ratio - 1) > 0.0001 then
-				logError("技能" .. arg_16_2 .. "系数之和为" .. iter_16_3.ratio .. " " .. arg_16_0.timelineName)
+	for _, numTable in pairs(floatTable) do
+		for actEffectDataId, typeTb in pairs(numTable) do
+			if math.abs(typeTb.ratio - 1) > 0.0001 then
+				logError("技能" .. tag .. "系数之和为" .. typeTb.ratio .. " " .. self.timelineName)
 			end
 
 			return
@@ -261,8 +263,8 @@ function var_0_0._checkFloatTable(arg_16_0, arg_16_1, arg_16_2)
 	end
 end
 
-function var_0_0.clearWork(arg_17_0)
+function FightWorkTimelineItem:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkTimelineItem

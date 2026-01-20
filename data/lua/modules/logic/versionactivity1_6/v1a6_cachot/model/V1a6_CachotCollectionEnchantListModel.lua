@@ -1,107 +1,110 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionEnchantListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotCollectionEnchantListModel.lua
 
-local var_0_0 = class("V1a6_CachotCollectionEnchantListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionEnchantListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._enchantList = nil
-	arg_1_0._curSelectEnchantId = nil
-	arg_1_0._enchantIndexMap = nil
+local V1a6_CachotCollectionEnchantListModel = class("V1a6_CachotCollectionEnchantListModel", ListScrollModel)
+
+function V1a6_CachotCollectionEnchantListModel:onInit()
+	self._enchantList = nil
+	self._curSelectEnchantId = nil
+	self._enchantIndexMap = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
-	arg_2_0:clear()
+function V1a6_CachotCollectionEnchantListModel:reInit()
+	self:onInit()
+	self:clear()
 end
 
-function var_0_0.onInitData(arg_3_0, arg_3_1)
-	arg_3_0._enchantList = arg_3_0:buildEnchantDataTab(arg_3_1)
+function V1a6_CachotCollectionEnchantListModel:onInitData(isExcuteEnchantSort)
+	self._enchantList = self:buildEnchantDataTab(isExcuteEnchantSort)
 
-	arg_3_0:setList(arg_3_0._enchantList)
+	self:setList(self._enchantList)
 end
 
-function var_0_0.buildEnchantDataTab(arg_4_0, arg_4_1)
-	local var_4_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_4_1 = var_4_0 and var_4_0.enchants
-	local var_4_2 = {}
-	local var_4_3 = var_4_1 and #var_4_1 or 0
-	local var_4_4 = arg_4_0:getList()
+function V1a6_CachotCollectionEnchantListModel:buildEnchantDataTab(isExcuteEnchantSort)
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local enchants = rogueInfo and rogueInfo.enchants
+	local enchantList = {}
+	local enchantCount = enchants and #enchants or 0
+	local originEnchantList = self:getList()
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_4) do
-		local var_4_5 = arg_4_0:getEnchantIndexById(iter_4_1.id) or iter_4_0
-		local var_4_6 = var_4_1 and var_4_1[var_4_5]
+	for index, originEnchantMO in ipairs(originEnchantList) do
+		local targetIndex = self:getEnchantIndexById(originEnchantMO.id) or index
+		local enchantMO = enchants and enchants[targetIndex]
 
-		table.insert(var_4_2, var_4_6)
+		table.insert(enchantList, enchantMO)
 	end
 
-	for iter_4_2 = #var_4_4 + 1, var_4_3 do
-		table.insert(var_4_2, var_4_1[iter_4_2])
+	for index = #originEnchantList + 1, enchantCount do
+		table.insert(enchantList, enchants[index])
 	end
 
-	if arg_4_1 then
-		table.sort(var_4_2, arg_4_0.sortFunc)
+	if isExcuteEnchantSort then
+		table.sort(enchantList, self.sortFunc)
 	end
 
-	return var_4_2
+	return enchantList
 end
 
-function var_0_0.getEnchantIndexById(arg_5_0, arg_5_1)
-	if not arg_5_0._enchantIndexMap then
-		arg_5_0._enchantIndexMap = {}
+function V1a6_CachotCollectionEnchantListModel:getEnchantIndexById(enchantId)
+	if not self._enchantIndexMap then
+		self._enchantIndexMap = {}
 
-		local var_5_0 = V1a6_CachotModel.instance:getRogueInfo()
-		local var_5_1 = var_5_0 and var_5_0.enchants
+		local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+		local enchants = rogueInfo and rogueInfo.enchants
 
-		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-			arg_5_0._enchantIndexMap[iter_5_1.id] = iter_5_0
+		for index, v in ipairs(enchants) do
+			self._enchantIndexMap[v.id] = index
 		end
 	end
 
-	return arg_5_0._enchantIndexMap and arg_5_0._enchantIndexMap[arg_5_1]
+	return self._enchantIndexMap and self._enchantIndexMap[enchantId]
 end
 
-function var_0_0.sortFunc(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:isEnchant()
+function V1a6_CachotCollectionEnchantListModel.sortFunc(a, b)
+	local aIsEnchant = a:isEnchant()
+	local bIsEnchant = b:isEnchant()
 
-	if var_6_0 ~= arg_6_1:isEnchant() then
-		return not var_6_0
+	if aIsEnchant ~= bIsEnchant then
+		return not aIsEnchant
 	end
 
-	return arg_6_0.id > arg_6_1.id
+	return a.id > b.id
 end
 
-function var_0_0.isEnchantEmpty(arg_7_0)
-	return arg_7_0:getCount() <= 0
+function V1a6_CachotCollectionEnchantListModel:isEnchantEmpty()
+	return self:getCount() <= 0
 end
 
-function var_0_0.selectCell(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._curSelectEnchantId
+function V1a6_CachotCollectionEnchantListModel:selectCell(enchantId, isSelect)
+	local lastSelectCollectionId = self._curSelectEnchantId
 
-	if arg_8_1 and arg_8_1 > 0 and arg_8_2 then
-		arg_8_0:selectCellInternal(arg_8_1, arg_8_2)
+	if enchantId and enchantId > 0 and isSelect then
+		self:selectCellInternal(enchantId, isSelect)
 	else
-		arg_8_0:selectCellInternal(var_8_0, false)
+		self:selectCellInternal(lastSelectCollectionId, false)
 	end
 end
 
-function var_0_0.selectCellInternal(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getById(arg_9_1)
-	local var_9_1
+function V1a6_CachotCollectionEnchantListModel:selectCellInternal(enchantId, isSelect)
+	local collectionMO = self:getById(enchantId)
+	local curSelectEnchantId
 
-	if var_9_0 then
-		local var_9_2 = arg_9_0:getIndex(var_9_0)
+	if collectionMO then
+		local selectIndex = self:getIndex(collectionMO)
 
-		var_0_0.super.selectCell(arg_9_0, var_9_2, arg_9_2)
+		V1a6_CachotCollectionEnchantListModel.super.selectCell(self, selectIndex, isSelect)
 
-		var_9_1 = arg_9_2 and var_9_0.id
+		curSelectEnchantId = isSelect and collectionMO.id
 	end
 
-	arg_9_0._curSelectEnchantId = var_9_1
+	self._curSelectEnchantId = curSelectEnchantId
 end
 
-function var_0_0.getCurSelectEnchantId(arg_10_0)
-	return arg_10_0._curSelectEnchantId
+function V1a6_CachotCollectionEnchantListModel:getCurSelectEnchantId()
+	return self._curSelectEnchantId
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotCollectionEnchantListModel.instance = V1a6_CachotCollectionEnchantListModel.New()
 
-return var_0_0
+return V1a6_CachotCollectionEnchantListModel

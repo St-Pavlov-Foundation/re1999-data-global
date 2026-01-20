@@ -1,107 +1,109 @@
-﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/lanshoupa/view/LanShouPaEnterView.lua
 
-local var_0_0 = class("LanShouPaEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Descr")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
-	arg_1_0._btnTrial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/image_TryBtn")
+local LanShouPaEnterView = class("LanShouPaEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LanShouPaEnterView:onInitView()
+	self._txtLimitTime = gohelper.findChildTextMesh(self.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_Descr")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._gored = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#go_reddot")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Try/image_TryBtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._enterGame, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._clickLock, arg_2_0)
-	arg_2_0._btnTrial:AddClickListener(arg_2_0._clickTrial, arg_2_0)
+function LanShouPaEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._enterGame, self)
+	self._btnLocked:AddClickListener(self._clickLock, self)
+	self._btnTrial:AddClickListener(self._clickTrial, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
-	arg_3_0._btnTrial:RemoveClickListener()
+function LanShouPaEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_1Enum.ActivityId.LanShouPa)
-	arg_4_0._txtDescr.text = arg_4_0.actCo.actDesc
+function LanShouPaEnterView:_editableInitView()
+	self.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_1Enum.ActivityId.LanShouPa)
+	self._txtDescr.text = self.actCo.actDesc
 
-	RedDotController.instance:addRedDot(arg_4_0._gored, RedDotEnum.DotNode.V2a1LanShouPaTaskRed, VersionActivity2_1Enum.ActivityId.LanShouPa)
+	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a1LanShouPaTaskRed, VersionActivity2_1Enum.ActivityId.LanShouPa)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	var_0_0.super.onOpen(arg_5_0)
-	arg_5_0:_refreshTime()
+function LanShouPaEnterView:onOpen()
+	LanShouPaEnterView.super.onOpen(self)
+	self:_refreshTime()
 end
 
-function var_0_0.onClose(arg_6_0)
-	var_0_0.super.onClose(arg_6_0)
+function LanShouPaEnterView:onClose()
+	LanShouPaEnterView.super.onClose(self)
 end
 
-function var_0_0._enterGame(arg_7_0)
-	Activity164Rpc.instance:sendGetActInfoRequest(VersionActivity2_1Enum.ActivityId.LanShouPa, arg_7_0._onRecvMsg, arg_7_0)
+function LanShouPaEnterView:_enterGame()
+	Activity164Rpc.instance:sendGetActInfoRequest(VersionActivity2_1Enum.ActivityId.LanShouPa, self._onRecvMsg, self)
 end
 
-function var_0_0._onRecvMsg(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 == 0 then
+function LanShouPaEnterView:_onRecvMsg(cmd, resultCode, msg)
+	if resultCode == 0 then
 		ViewMgr.instance:openView(ViewName.LanShouPaMapView)
 	end
 end
 
-function var_0_0._clickLock(arg_9_0)
-	local var_9_0, var_9_1 = OpenHelper.getToastIdAndParam(arg_9_0.actCo.openId)
+function LanShouPaEnterView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
 
-	if var_9_0 and var_9_0 ~= 0 then
-		GameFacade.showToastWithTableParam(var_9_0, var_9_1)
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 	end
 end
 
-function var_0_0._clickTrial(arg_10_0)
+function LanShouPaEnterView:_clickTrial()
 	if ActivityHelper.getActivityStatus(VersionActivity2_1Enum.ActivityId.LanShouPa) == ActivityEnum.ActivityStatus.Normal then
-		local var_10_0 = arg_10_0.actCo.tryoutEpisode
+		local episodeId = self.actCo.tryoutEpisode
 
-		if var_10_0 <= 0 then
+		if episodeId <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		local var_10_1 = DungeonConfig.instance:getEpisodeCO(var_10_0)
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		DungeonFightController.instance:enterFight(var_10_1.chapterId, var_10_0)
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 	else
-		arg_10_0:_clickLock()
+		self:_clickLock()
 	end
 end
 
-function var_0_0.everySecondCall(arg_11_0)
-	arg_11_0:_refreshTime()
+function LanShouPaEnterView:everySecondCall()
+	self:_refreshTime()
 end
 
-function var_0_0._refreshTime(arg_12_0)
-	local var_12_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_1Enum.ActivityId.LanShouPa]
+function LanShouPaEnterView:_refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity2_1Enum.ActivityId.LanShouPa]
 
-	if var_12_0 then
-		local var_12_1 = var_12_0:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_12_0._txtLimitTime.gameObject, var_12_1 > 0)
+		gohelper.setActive(self._txtLimitTime.gameObject, offsetSecond > 0)
 
-		if var_12_1 > 0 then
-			local var_12_2 = TimeUtil.SecondToActivityTimeFormat(var_12_1)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_12_0._txtLimitTime.text = var_12_2
+			self._txtLimitTime.text = dateStr
 		end
 
-		local var_12_3 = ActivityHelper.getActivityStatus(VersionActivity2_1Enum.ActivityId.LanShouPa) ~= ActivityEnum.ActivityStatus.Normal
+		local isLock = ActivityHelper.getActivityStatus(VersionActivity2_1Enum.ActivityId.LanShouPa) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(arg_12_0._btnEnter, not var_12_3)
-		gohelper.setActive(arg_12_0._btnLocked, var_12_3)
+		gohelper.setActive(self._btnEnter, not isLock)
+		gohelper.setActive(self._btnLocked, isLock)
 	end
 end
 
-return var_0_0
+return LanShouPaEnterView

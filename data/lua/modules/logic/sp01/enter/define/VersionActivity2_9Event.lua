@@ -1,21 +1,23 @@
-﻿module("modules.logic.sp01.enter.define.VersionActivity2_9Event", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/enter/define/VersionActivity2_9Event.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getEventId
+module("modules.logic.sp01.enter.define.VersionActivity2_9Event", package.seeall)
 
-var_0_0.UnlockNextHalf = var_0_1()
-var_0_0.SwitchGroup = var_0_1()
-var_0_0.OnSelectEpisodeItem = var_0_1()
-var_0_0.OnScrollEpisodeList = var_0_1()
-var_0_0.OnUpdateEpisodeNodePos = var_0_1()
-var_0_0.FocusEpisodeNode = var_0_1()
-var_0_0.OnOneWorkLoadDone = var_0_1()
-var_0_0.OnAllWorkLoadDone = var_0_1()
-var_0_0.OnEpisodeListVisible = var_0_1()
-var_0_0.OnTweenEpisodeListVisible = var_0_1()
-var_0_0.OnEpisodeListVisibleDone = var_0_1()
-var_0_0.OnNewElementsFocusDone = var_0_1()
-var_0_0.StopBgm = var_0_1()
-var_0_0.ManualSwitchBgm = var_0_1()
+local VersionActivity2_9Event = _M
+local _getId = GameUtil.getEventId
 
-return var_0_0
+VersionActivity2_9Event.UnlockNextHalf = _getId()
+VersionActivity2_9Event.SwitchGroup = _getId()
+VersionActivity2_9Event.OnSelectEpisodeItem = _getId()
+VersionActivity2_9Event.OnScrollEpisodeList = _getId()
+VersionActivity2_9Event.OnUpdateEpisodeNodePos = _getId()
+VersionActivity2_9Event.FocusEpisodeNode = _getId()
+VersionActivity2_9Event.OnOneWorkLoadDone = _getId()
+VersionActivity2_9Event.OnAllWorkLoadDone = _getId()
+VersionActivity2_9Event.OnEpisodeListVisible = _getId()
+VersionActivity2_9Event.OnTweenEpisodeListVisible = _getId()
+VersionActivity2_9Event.OnEpisodeListVisibleDone = _getId()
+VersionActivity2_9Event.OnNewElementsFocusDone = _getId()
+VersionActivity2_9Event.StopBgm = _getId()
+VersionActivity2_9Event.ManualSwitchBgm = _getId()
+
+return VersionActivity2_9Event

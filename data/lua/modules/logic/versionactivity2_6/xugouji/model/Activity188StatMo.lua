@@ -1,73 +1,75 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.model.Activity188StatMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/model/Activity188StatMo.lua
 
-local var_0_0 = pureTable("Activity188StatMo")
+module("modules.logic.versionactivity2_6.xugouji.model.Activity188StatMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.beginTime = Time.realtimeSinceStartup
+local Activity188StatMo = pureTable("Activity188StatMo")
+
+function Activity188StatMo:ctor()
+	self.beginTime = Time.realtimeSinceStartup
 end
 
-function var_0_0.reset(arg_2_0)
-	arg_2_0.beginTime = Time.realtimeSinceStartup
-	arg_2_0._actId, arg_2_0._gameId, arg_2_0.episdoeId, arg_2_0.result = nil
-	arg_2_0._roundNum, arg_2_0._playerHp, arg_2_0._enemyHp, arg_2_0._playerPair, arg_2_0._enemyPair = nil
+function Activity188StatMo:reset()
+	self.beginTime = Time.realtimeSinceStartup
+	self._actId, self._gameId, self.episdoeId, self.result = nil
+	self._roundNum, self._playerHp, self._enemyHp, self._playerPair, self._enemyPair = nil
 end
 
-function var_0_0.setBaseData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._actId = arg_3_1 and arg_3_1 or arg_3_0._actId
-	arg_3_0._gameId = arg_3_3 and arg_3_3 or arg_3_0._gameId
-	arg_3_0.episdoeId = arg_3_2 and arg_3_2 or arg_3_0.episdoeId
+function Activity188StatMo:setBaseData(actId, episdoeId, gameId)
+	self._actId = actId and actId or self._actId
+	self._gameId = gameId and gameId or self._gameId
+	self.episdoeId = episdoeId and episdoeId or self.episdoeId
 end
 
-function var_0_0.setGameData(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
-	arg_4_0.result = arg_4_1 and arg_4_1 or arg_4_0.result
-	arg_4_0._roundNum = arg_4_2 and arg_4_2 or arg_4_0._roundNum
-	arg_4_0._playerHp = arg_4_3 and arg_4_3 or arg_4_0._playerHp
-	arg_4_0._enemyHp = arg_4_4 and arg_4_4 or arg_4_0._enemyHp
-	arg_4_0._playerPair = arg_4_5 and arg_4_5 or arg_4_0._playerPair
-	arg_4_0._enemyPair = arg_4_6 and arg_4_6 or arg_4_0._enemyPair
+function Activity188StatMo:setGameData(result, roundNum, playerHp, enemyHp, playerPair, enemyPair)
+	self.result = result and result or self.result
+	self._roundNum = roundNum and roundNum or self._roundNum
+	self._playerHp = playerHp and playerHp or self._playerHp
+	self._enemyHp = enemyHp and enemyHp or self._enemyHp
+	self._playerPair = playerPair and playerPair or self._playerPair
+	self._enemyPair = enemyPair and enemyPair or self._enemyPair
 end
 
-function var_0_0.sendDungeonFinishStatData(arg_5_0)
+function Activity188StatMo:sendDungeonFinishStatData()
 	StatController.instance:track(StatEnum.EventName.Act188DungeonFinish, {
-		[StatEnum.EventProperties.ActivityId] = tostring(arg_5_0._actId),
-		[StatEnum.EventProperties.EpisodeId] = tostring(arg_5_0.episdoeId),
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_5_0.beginTime
+		[StatEnum.EventProperties.ActivityId] = tostring(self._actId),
+		[StatEnum.EventProperties.EpisodeId] = tostring(self.episdoeId),
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - self.beginTime
 	})
 end
 
-function var_0_0.sendGameFinishStatData(arg_6_0)
-	local var_6_0 = {
-		[StatEnum.EventProperties.RoundNum] = arg_6_0._roundNum,
-		[StatEnum.EventProperties.Act188GamePlayerHp] = arg_6_0._playerHp,
-		[StatEnum.EventProperties.Act188GameEnemyHp] = arg_6_0._enemyHp,
-		[StatEnum.EventProperties.Act188GamePlayerPair] = arg_6_0._playerPair,
-		[StatEnum.EventProperties.Act188GameEnemyPair] = arg_6_0._enemyPair
+function Activity188StatMo:sendGameFinishStatData()
+	local gameObj = {
+		[StatEnum.EventProperties.RoundNum] = self._roundNum,
+		[StatEnum.EventProperties.Act188GamePlayerHp] = self._playerHp,
+		[StatEnum.EventProperties.Act188GameEnemyHp] = self._enemyHp,
+		[StatEnum.EventProperties.Act188GamePlayerPair] = self._playerPair,
+		[StatEnum.EventProperties.Act188GameEnemyPair] = self._enemyPair
 	}
 
 	StatController.instance:track(StatEnum.EventName.Act188MapFinish, {
-		[StatEnum.EventProperties.ActivityId] = tostring(arg_6_0._actId),
-		[StatEnum.EventProperties.MapId] = tostring(arg_6_0._gameId),
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_6_0.beginTime,
-		[StatEnum.EventProperties.Result] = arg_6_0.result == 1 and "success" or "fail",
-		[StatEnum.EventProperties.Act188GameObj] = var_6_0
+		[StatEnum.EventProperties.ActivityId] = tostring(self._actId),
+		[StatEnum.EventProperties.MapId] = tostring(self._gameId),
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - self.beginTime,
+		[StatEnum.EventProperties.Result] = self.result == 1 and "success" or "fail",
+		[StatEnum.EventProperties.Act188GameObj] = gameObj
 	})
 end
 
-function var_0_0.sendGameGiveUpStatData(arg_7_0)
-	local var_7_0 = {
-		[StatEnum.EventProperties.RoundNum] = arg_7_0._roundNum,
-		[StatEnum.EventProperties.Act188GamePlayerHp] = arg_7_0._playerHp,
-		[StatEnum.EventProperties.Act188GameEnemyHp] = arg_7_0._enemyHp,
-		[StatEnum.EventProperties.Act188GamePlayerPair] = arg_7_0._playerPair,
-		[StatEnum.EventProperties.Act188GameEnemyPair] = arg_7_0._enemyPair
+function Activity188StatMo:sendGameGiveUpStatData()
+	local gameObj = {
+		[StatEnum.EventProperties.RoundNum] = self._roundNum,
+		[StatEnum.EventProperties.Act188GamePlayerHp] = self._playerHp,
+		[StatEnum.EventProperties.Act188GameEnemyHp] = self._enemyHp,
+		[StatEnum.EventProperties.Act188GamePlayerPair] = self._playerPair,
+		[StatEnum.EventProperties.Act188GameEnemyPair] = self._enemyPair
 	}
 
 	StatController.instance:track(StatEnum.EventName.Act188MapGiveUp, {
-		[StatEnum.EventProperties.ActivityId] = tostring(arg_7_0._actId),
-		[StatEnum.EventProperties.MapId] = tostring(arg_7_0._gameId),
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_7_0.beginTime,
-		[StatEnum.EventProperties.Act188GameObj] = var_7_0
+		[StatEnum.EventProperties.ActivityId] = tostring(self._actId),
+		[StatEnum.EventProperties.MapId] = tostring(self._gameId),
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - self.beginTime,
+		[StatEnum.EventProperties.Act188GameObj] = gameObj
 	})
 end
 
-return var_0_0
+return Activity188StatMo

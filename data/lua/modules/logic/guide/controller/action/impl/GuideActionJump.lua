@@ -1,14 +1,16 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionJump", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionJump.lua
 
-local var_0_0 = class("GuideActionJump", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionJump", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionJump = class("GuideActionJump", BaseGuideAction)
 
-	local var_1_0 = arg_1_0.actionParam
+function GuideActionJump:onStart(context)
+	GuideActionJump.super.onStart(self, context)
 
-	JumpController.instance:jumpByParam(var_1_0)
-	arg_1_0:onDone(true)
+	local jumpParam = self.actionParam
+
+	JumpController.instance:jumpByParam(jumpParam)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionJump

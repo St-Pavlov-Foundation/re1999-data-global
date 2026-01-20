@@ -1,211 +1,217 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicBeatItem.lua
 
-local var_0_0 = class("VersionActivity2_4MusicBeatItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._godynamics = gohelper.findChild(arg_1_0.viewGO, "root/#go_dynamics")
-	arg_1_0._gostate1 = gohelper.findChild(arg_1_0.viewGO, "root/stateroot/#go_state1")
-	arg_1_0._gostate2 = gohelper.findChild(arg_1_0.viewGO, "root/stateroot/#go_state2")
-	arg_1_0._gostate3 = gohelper.findChild(arg_1_0.viewGO, "root/stateroot/#go_state3")
-	arg_1_0._gostate4 = gohelper.findChild(arg_1_0.viewGO, "root/stateroot/#go_state4")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "root/#go_click")
+local VersionActivity2_4MusicBeatItem = class("VersionActivity2_4MusicBeatItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicBeatItem:onInitView()
+	self._godynamics = gohelper.findChild(self.viewGO, "root/#go_dynamics")
+	self._gostate1 = gohelper.findChild(self.viewGO, "root/stateroot/#go_state1")
+	self._gostate2 = gohelper.findChild(self.viewGO, "root/stateroot/#go_state2")
+	self._gostate3 = gohelper.findChild(self.viewGO, "root/stateroot/#go_state3")
+	self._gostate4 = gohelper.findChild(self.viewGO, "root/stateroot/#go_state4")
+	self._goclick = gohelper.findChild(self.viewGO, "root/#go_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_4MusicBeatItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_4MusicBeatItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._hideTime = VersionActivity2_4MusicBeatModel.instance:getHideTime()
-	arg_4_0._scoreTimeList = VersionActivity2_4MusicBeatModel.instance:getScoreTimeList()
-	arg_4_0._showTime = VersionActivity2_4MusicBeatModel.instance:getShowTime()
-	arg_4_0._rootAnimator = arg_4_0.viewGO:GetComponent("Animator")
-	arg_4_0._touchComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goclick, VersionActivity2_4MusicTouchComp, {
-		callback = arg_4_0._onClickDown,
-		callbackTarget = arg_4_0
+function VersionActivity2_4MusicBeatItem:_editableInitView()
+	self._hideTime = VersionActivity2_4MusicBeatModel.instance:getHideTime()
+	self._scoreTimeList = VersionActivity2_4MusicBeatModel.instance:getScoreTimeList()
+	self._showTime = VersionActivity2_4MusicBeatModel.instance:getShowTime()
+	self._rootAnimator = self.viewGO:GetComponent("Animator")
+	self._touchComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._goclick, VersionActivity2_4MusicTouchComp, {
+		callback = self._onClickDown,
+		callbackTarget = self
 	})
 end
 
-function var_0_0._onClickDown(arg_5_0)
-	arg_5_0._clickDown = true
+function VersionActivity2_4MusicBeatItem:_onClickDown()
+	self._clickDown = true
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function VersionActivity2_4MusicBeatItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function VersionActivity2_4MusicBeatItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	gohelper.setActive(arg_8_0.viewGO, true)
-	gohelper.setActive(arg_8_0._gostate1, false)
-	gohelper.setActive(arg_8_0._gostate2, false)
-	gohelper.setActive(arg_8_0._gostate3, false)
-	gohelper.setActive(arg_8_0._gostate4, false)
-	transformhelper.setLocalScale(arg_8_0._godynamics.transform, 1, 1, 1)
+function VersionActivity2_4MusicBeatItem:onUpdateMO(mo, parentGo, progressTime)
+	gohelper.setActive(self.viewGO, true)
+	gohelper.setActive(self._gostate1, false)
+	gohelper.setActive(self._gostate2, false)
+	gohelper.setActive(self._gostate3, false)
+	gohelper.setActive(self._gostate4, false)
+	transformhelper.setLocalScale(self._godynamics.transform, 1, 1, 1)
 
-	arg_8_0._config = arg_8_1
-	arg_8_0._progressTime = arg_8_3
-	arg_8_0.viewGO.name = tostring(arg_8_0._config.musicId)
-	arg_8_0._clickDown = false
-	arg_8_0._grade = nil
-	arg_8_0._submitted = false
+	self._config = mo
+	self._progressTime = progressTime
+	self.viewGO.name = tostring(self._config.musicId)
+	self._clickDown = false
+	self._grade = nil
+	self._submitted = false
 
-	local var_8_0 = Activity179Model.instance:getCalibration()
+	local calibrationTime = Activity179Model.instance:getCalibration()
 
-	arg_8_0._calibrationTime = arg_8_0._config.time - var_8_0
-	arg_8_0._endTime = arg_8_0._calibrationTime + arg_8_0._hideTime
-	arg_8_0._isTimeoutMiss = false
-	arg_8_0._isPlayAudio = false
-	arg_8_0._rootAnimator.speed = 1
+	self._calibrationTime = self._config.time - calibrationTime
+	self._endTime = self._calibrationTime + self._hideTime
+	self._isTimeoutMiss = false
+	self._isPlayAudio = false
+	self._rootAnimator.speed = 1
 
-	arg_8_0._touchComp:setTouchEnabled(true)
+	self._touchComp:setTouchEnabled(true)
 
-	if arg_8_2 then
-		gohelper.addChild(arg_8_2, arg_8_0.viewGO)
+	if parentGo then
+		gohelper.addChild(parentGo, self.viewGO)
 	else
-		logError("VersionActivity2_4MusicBeatItem parentGo is nil musicId:", tostring(arg_8_0._config.musicId))
+		logError("VersionActivity2_4MusicBeatItem parentGo is nil musicId:", tostring(self._config.musicId))
 	end
 end
 
-function var_0_0.pause(arg_9_0)
-	arg_9_0._rootAnimator.speed = 0
+function VersionActivity2_4MusicBeatItem:pause()
+	self._rootAnimator.speed = 0
 end
 
-function var_0_0.resume(arg_10_0)
-	arg_10_0._rootAnimator.speed = 1
+function VersionActivity2_4MusicBeatItem:resume()
+	self._rootAnimator.speed = 1
 end
 
-function var_0_0.disappear(arg_11_0, arg_11_1)
-	if arg_11_1 >= arg_11_0._endTime then
+function VersionActivity2_4MusicBeatItem:disappear(progressTime)
+	if progressTime >= self._endTime then
 		return true
 	end
 end
 
-function var_0_0.timeout(arg_12_0, arg_12_1)
-	if arg_12_1 >= arg_12_0._endTime then
+function VersionActivity2_4MusicBeatItem:timeout(progressTime)
+	if progressTime >= self._endTime then
 		return true
 	end
 end
 
-function var_0_0.setTimeoutMiss(arg_13_0)
-	if arg_13_0._grade then
+function VersionActivity2_4MusicBeatItem:setTimeoutMiss()
+	if self._grade then
 		return
 	end
 
-	arg_13_0:_setGrade(VersionActivity2_4MusicEnum.BeatGrade.Miss)
+	self:_setGrade(VersionActivity2_4MusicEnum.BeatGrade.Miss)
 
-	arg_13_0._endTime = arg_13_0._endTime + 0.5
-	arg_13_0._isTimeoutMiss = true
+	self._endTime = self._endTime + 0.5
+	self._isTimeoutMiss = true
 end
 
-function var_0_0.setMiss(arg_14_0)
-	if arg_14_0._grade then
+function VersionActivity2_4MusicBeatItem:setMiss()
+	if self._grade then
 		return
 	end
 
-	arg_14_0:_setGrade(VersionActivity2_4MusicEnum.BeatGrade.Miss)
+	self:_setGrade(VersionActivity2_4MusicEnum.BeatGrade.Miss)
 end
 
-function var_0_0.updateFrame(arg_15_0, arg_15_1)
-	arg_15_0:_checkGrade(arg_15_1)
-	arg_15_0:_playAnim(arg_15_1)
+function VersionActivity2_4MusicBeatItem:updateFrame(progressTime)
+	self:_checkGrade(progressTime)
+	self:_playAnim(progressTime)
 end
 
-function var_0_0._playAnim(arg_16_0, arg_16_1)
-	if arg_16_0._isTimeoutMiss then
-		local var_16_0 = 0
+function VersionActivity2_4MusicBeatItem:_playAnim(progressTime)
+	if self._isTimeoutMiss then
+		local scale = 0
 
-		transformhelper.setLocalScale(arg_16_0._godynamics.transform, var_16_0, var_16_0, 1)
+		transformhelper.setLocalScale(self._godynamics.transform, scale, scale, 1)
 
 		return
 	end
 
-	if arg_16_0._isPlayAudio == false and arg_16_1 >= arg_16_0._calibrationTime then
-		arg_16_0._isPlayAudio = true
+	if self._isPlayAudio == false and progressTime >= self._calibrationTime then
+		self._isPlayAudio = true
 	end
 
-	local var_16_1 = arg_16_0._calibrationTime
-	local var_16_2 = arg_16_0._calibrationTime + arg_16_0._showTime
-	local var_16_3 = arg_16_0._endTime
-	local var_16_4 = arg_16_1 <= var_16_1
-	local var_16_5 = var_16_4 and var_16_2 or var_16_1
-	local var_16_6 = var_16_4 and var_16_1 or var_16_3
-	local var_16_7 = (arg_16_1 - var_16_5) / (var_16_6 - var_16_5)
-	local var_16_8 = var_16_4 and 1 or 0.35
-	local var_16_9 = var_16_8 - (var_16_8 - (var_16_4 and 0.35 or 0)) * var_16_7
+	local perfectTime = self._calibrationTime
+	local showTime = self._calibrationTime + self._showTime
+	local hideTime = self._endTime
+	local beforePerfectTime = progressTime <= perfectTime
+	local startTime = beforePerfectTime and showTime or perfectTime
+	local endTime = beforePerfectTime and perfectTime or hideTime
+	local deltaTime = progressTime - startTime
+	local duration = endTime - startTime
+	local percent = deltaTime / duration
+	local startScale = beforePerfectTime and 1 or 0.35
+	local endScale = beforePerfectTime and 0.35 or 0
+	local deltaScale = startScale - endScale
+	local scale = startScale - deltaScale * percent
 
-	transformhelper.setLocalScale(arg_16_0._godynamics.transform, var_16_9, var_16_9, 1)
+	transformhelper.setLocalScale(self._godynamics.transform, scale, scale, 1)
 end
 
-function var_0_0._checkGrade(arg_17_0, arg_17_1)
-	if not arg_17_0._clickDown then
+function VersionActivity2_4MusicBeatItem:_checkGrade(progressTime)
+	if not self._clickDown then
 		return
 	end
 
-	arg_17_0._clickDown = false
+	self._clickDown = false
 
-	if not arg_17_0._grade then
-		arg_17_0:_setGrade(arg_17_0:_getGrade(arg_17_1))
+	if not self._grade then
+		self:_setGrade(self:_getGrade(progressTime))
 
-		if arg_17_0._grade then
+		if self._grade then
 			AudioMgr.instance:trigger(AudioEnum.Bakaluoer.play_ui_diqiu_perfect)
 		end
 	end
 end
 
-function var_0_0._setGrade(arg_18_0, arg_18_1)
-	if arg_18_0._submitted then
+function VersionActivity2_4MusicBeatItem:_setGrade(grade)
+	if self._submitted then
 		return
 	end
 
-	arg_18_0._grade = arg_18_1
+	self._grade = grade
 
-	gohelper.setActive(arg_18_0["_gostate" .. arg_18_0._grade], true)
-	arg_18_0._touchComp:setTouchEnabled(false)
+	gohelper.setActive(self["_gostate" .. self._grade], true)
+	self._touchComp:setTouchEnabled(false)
 end
 
-function var_0_0.setSubmit(arg_19_0)
-	arg_19_0._submitted = true
+function VersionActivity2_4MusicBeatItem:setSubmit()
+	self._submitted = true
 end
 
-function var_0_0.isSubmitted(arg_20_0)
-	return arg_20_0._submitted
+function VersionActivity2_4MusicBeatItem:isSubmitted()
+	return self._submitted
 end
 
-function var_0_0.getGrade(arg_21_0)
-	return arg_21_0._grade
+function VersionActivity2_4MusicBeatItem:getGrade()
+	return self._grade
 end
 
-function var_0_0._getGrade(arg_22_0, arg_22_1)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._scoreTimeList) do
-		local var_22_0 = arg_22_0._calibrationTime + iter_22_1[1]
-		local var_22_1 = arg_22_0._calibrationTime + iter_22_1[2]
+function VersionActivity2_4MusicBeatItem:_getGrade(progressTime)
+	for i, v in ipairs(self._scoreTimeList) do
+		local startTime = self._calibrationTime + v[1]
+		local endTime = self._calibrationTime + v[2]
 
-		if var_22_0 <= arg_22_1 and arg_22_1 <= var_22_1 then
-			return iter_22_0
+		if startTime <= progressTime and progressTime <= endTime then
+			return i
 		end
 	end
 
 	return VersionActivity2_4MusicEnum.BeatGrade.Cool
 end
 
-function var_0_0.hide(arg_23_0)
-	gohelper.setActive(arg_23_0.viewGO, false)
+function VersionActivity2_4MusicBeatItem:hide()
+	gohelper.setActive(self.viewGO, false)
 end
 
-function var_0_0.onDestroyView(arg_24_0)
+function VersionActivity2_4MusicBeatItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicBeatItem

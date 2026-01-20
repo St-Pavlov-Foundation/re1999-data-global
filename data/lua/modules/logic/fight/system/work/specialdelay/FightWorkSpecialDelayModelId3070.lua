@@ -1,61 +1,64 @@
-﻿module("modules.logic.fight.system.work.specialdelay.FightWorkSpecialDelayModelId3070", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/specialdelay/FightWorkSpecialDelayModelId3070.lua
 
-local var_0_0 = class("FightWorkSpecialDelayModelId3070", UserDataDispose)
+module("modules.logic.fight.system.work.specialdelay.FightWorkSpecialDelayModelId3070", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local FightWorkSpecialDelayModelId3070 = class("FightWorkSpecialDelayModelId3070", UserDataDispose)
 
-	arg_1_0._parentClass = arg_1_1
-	arg_1_0.fightStepData = arg_1_2
+function FightWorkSpecialDelayModelId3070:ctor(parentClass, fightStepData)
+	self:__onInit()
 
-	arg_1_0:onStart()
+	self._parentClass = parentClass
+	self.fightStepData = fightStepData
+
+	self:onStart()
 end
 
-local var_0_1 = 0.4
-local var_0_2 = 0.45
+local delayTime = 0.4
+local delayTime1 = 0.45
 
-function var_0_0.onStart(arg_2_0)
-	if arg_2_0.fightStepData.actType == FightEnum.ActType.SKILL then
-		local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
+function FightWorkSpecialDelayModelId3070:onStart()
+	if self.fightStepData.actType == FightEnum.ActType.SKILL then
+		local entity = FightHelper.getEntity(self.fightStepData.fromId)
+		local entityMO = entity and entity:getMO()
 
-		if var_2_0 and var_2_0:getMO() then
-			local var_2_1 = 0
-			local var_2_2
+		if entityMO then
+			local counter = 0
+			local maxNum
 
-			for iter_2_0, iter_2_1 in ipairs(arg_2_0.fightStepData.actEffect) do
-				if iter_2_1.effectType == FightEnum.EffectType.BUFFADD and iter_2_1.buff then
-					local var_2_3 = lua_skill_buff.configDict[iter_2_1.buff.buffId]
+			for i, v in ipairs(self.fightStepData.actEffect) do
+				if v.effectType == FightEnum.EffectType.BUFFADD and v.buff then
+					local buffConfig = lua_skill_buff.configDict[v.buff.buffId]
 
-					if var_2_3 and FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[var_2_3.typeId] then
-						var_2_1 = var_2_1 + 1
+					if buffConfig and FightEntitySpecialEffect3070_Ball.buffTypeId2EffectPath[buffConfig.typeId] then
+						counter = counter + 1
 
-						local var_2_4 = lua_skill_bufftype.configDict[var_2_3.typeId]
+						local buffTypeConfig = lua_skill_bufftype.configDict[buffConfig.typeId]
 
-						var_2_2 = var_2_2 or tonumber(string.split(var_2_4.includeTypes, "#")[2])
+						maxNum = maxNum or tonumber(string.split(buffTypeConfig.includeTypes, "#")[2])
 					end
 				end
 			end
 
-			if var_2_1 > 0 then
-				local var_2_5 = math.min(var_2_1, var_2_2)
+			if counter > 0 then
+				local num = math.min(counter, maxNum)
 
-				TaskDispatcher.runDelay(arg_2_0._delay, arg_2_0, var_0_2 + var_0_1 * var_2_5 / FightModel.instance:getSpeed())
+				TaskDispatcher.runDelay(self._delay, self, delayTime1 + delayTime * num / FightModel.instance:getSpeed())
 
 				return
 			end
 		end
 	end
 
-	arg_2_0:_delay()
+	self:_delay()
 end
 
-function var_0_0._delay(arg_3_0)
-	arg_3_0._parentClass:_delayDone()
+function FightWorkSpecialDelayModelId3070:_delay()
+	self._parentClass:_delayDone()
 end
 
-function var_0_0.releaseSelf(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delay, arg_4_0)
-	arg_4_0:__onDispose()
+function FightWorkSpecialDelayModelId3070:releaseSelf()
+	TaskDispatcher.cancelTask(self._delay, self)
+	self:__onDispose()
 end
 
-return var_0_0
+return FightWorkSpecialDelayModelId3070

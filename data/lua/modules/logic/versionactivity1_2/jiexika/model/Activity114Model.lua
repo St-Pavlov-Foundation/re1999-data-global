@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/model/Activity114Model.lua
 
-local var_0_0 = class("Activity114Model", BaseModel)
-local var_0_1 = {
+module("modules.logic.versionactivity1_2.jiexika.model.Activity114Model", package.seeall)
+
+local Activity114Model = class("Activity114Model", BaseModel)
+local eventToFlow = {
 	[Activity114Enum.EventType.Edu] = Activity114EduFlow,
 	[Activity114Enum.EventType.Rest] = Activity114RestFlow,
 	[Activity114Enum.EventType.Meet] = Activity114MeetingFlow,
@@ -9,101 +11,101 @@ local var_0_1 = {
 	[Activity114Enum.EventType.KeyDay] = Activity114KeyDayFlow
 }
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.eduSelectAttr = nil
-	arg_1_0.id = 0
-	arg_1_0._isEnd = true
-	arg_1_0.serverData = nil
-	arg_1_0.unLockMeetingDict = {}
-	arg_1_0.unLockTravelDict = {}
-	arg_1_0.attrDict = {}
-	arg_1_0.featuresDict = {}
-	arg_1_0.unLockEventDict = {}
-	arg_1_0.unLockPhotoDict = {}
-	arg_1_0.changeEventList = {}
-	arg_1_0.newPhotos = {}
-	arg_1_0.newUnLockTravel = {}
-	arg_1_0.newUnLockMeeting = {}
-	arg_1_0.newUnLockFeature = {}
-	arg_1_0.attrChangeDict = nil
-	arg_1_0.waitStoryFinish = false
-	arg_1_0.preServerData = nil
-	arg_1_0._nextWeekInfo = nil
-	arg_1_0._flow = nil
-	arg_1_0._storyFlow = nil
-	arg_1_0.attrAddPermillage = {}
+function Activity114Model:onInit()
+	self.eduSelectAttr = nil
+	self.id = 0
+	self._isEnd = true
+	self.serverData = nil
+	self.unLockMeetingDict = {}
+	self.unLockTravelDict = {}
+	self.attrDict = {}
+	self.featuresDict = {}
+	self.unLockEventDict = {}
+	self.unLockPhotoDict = {}
+	self.changeEventList = {}
+	self.newPhotos = {}
+	self.newUnLockTravel = {}
+	self.newUnLockMeeting = {}
+	self.newUnLockFeature = {}
+	self.attrChangeDict = nil
+	self.waitStoryFinish = false
+	self.preServerData = nil
+	self._nextWeekInfo = nil
+	self._flow = nil
+	self._storyFlow = nil
+	self.attrAddPermillage = {}
 
-	for iter_1_0 = 1, Activity114Enum.Attr.End - 1 do
-		arg_1_0.attrAddPermillage[iter_1_0] = 0
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		self.attrAddPermillage[i] = 0
 	end
 
-	arg_1_0.attentionAddPermillage = 0
-	arg_1_0.saveUnLockData = nil
-	arg_1_0.saveUnLockUserData = nil
-	arg_1_0.preEventType = nil
-	arg_1_0.preResult = nil
-	arg_1_0._statData = nil
-	arg_1_0.playedEduSuccessStory = nil
+	self.attentionAddPermillage = 0
+	self.saveUnLockData = nil
+	self.saveUnLockUserData = nil
+	self.preEventType = nil
+	self.preResult = nil
+	self._statData = nil
+	self.playedEduSuccessStory = nil
 end
 
-function var_0_0.clearFlow(arg_2_0)
-	if arg_2_0._flow then
-		arg_2_0._flow:onDestroyInternal()
+function Activity114Model:clearFlow()
+	if self._flow then
+		self._flow:onDestroyInternal()
 	end
 
-	if arg_2_0._storyFlow then
-		arg_2_0._storyFlow:onDestroyInternal()
+	if self._storyFlow then
+		self._storyFlow:onDestroyInternal()
 	end
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:onInit()
+function Activity114Model:reInit()
+	self:onInit()
 end
 
-function var_0_0.beginStoryFlow(arg_4_0)
-	if arg_4_0._storyFlow then
+function Activity114Model:beginStoryFlow()
+	if self._storyFlow then
 		return
 	end
 
-	arg_4_0._storyFlow = Activity114RoundBeginFlow.New()
+	self._storyFlow = Activity114RoundBeginFlow.New()
 
-	arg_4_0._storyFlow:registerDoneListener(arg_4_0.onStoryFlowDone, arg_4_0)
+	self._storyFlow:registerDoneListener(self.onStoryFlowDone, self)
 
-	if not arg_4_0._storyFlow:beginFlow() then
-		arg_4_0._storyFlow = nil
+	if not self._storyFlow:beginFlow() then
+		self._storyFlow = nil
 	end
 end
 
-function var_0_0.onStoryFlowDone(arg_5_0, arg_5_1)
-	arg_5_0._storyFlow = nil
+function Activity114Model:onStoryFlowDone(isDone)
+	self._storyFlow = nil
 
-	if arg_5_1 then
+	if isDone then
 		Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessEnd)
 	end
 end
 
-function var_0_0.have114StoryFlow(arg_6_0)
-	return arg_6_0._storyFlow and true or false
+function Activity114Model:have114StoryFlow()
+	return self._storyFlow and true or false
 end
 
-function var_0_0.beginEvent(arg_7_0, arg_7_1)
-	if arg_7_0._flow then
-		arg_7_0._flow:onDestroy()
+function Activity114Model:beginEvent(context)
+	if self._flow then
+		self._flow:onDestroy()
 	end
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		ViewMgr.instance:openView(ViewName.Activity114EmptyView, nil, true)
 	end
 
-	arg_7_0._flow = var_0_1[arg_7_1.type].New()
+	self._flow = eventToFlow[context.type].New()
 
-	arg_7_0._flow:registerDoneListener(arg_7_0.onFlowDone, arg_7_0)
-	arg_7_0._flow:initParams(arg_7_1)
+	self._flow:registerDoneListener(self.onFlowDone, self)
+	self._flow:initParams(context)
 	Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessStart)
 end
 
-function var_0_0.buildFlowAndSkipWork(arg_8_0, arg_8_1)
-	if arg_8_0._flow then
+function Activity114Model:buildFlowAndSkipWork(context)
+	if self._flow then
 		return
 	end
 
@@ -111,271 +113,275 @@ function var_0_0.buildFlowAndSkipWork(arg_8_0, arg_8_1)
 		ViewMgr.instance:openView(ViewName.Activity114EmptyView, nil, true)
 	end
 
-	arg_8_0._flow = var_0_1[arg_8_1.type].New()
+	self._flow = eventToFlow[context.type].New()
 
-	arg_8_0._flow:registerDoneListener(arg_8_0.onFlowDone, arg_8_0)
-	arg_8_0._flow:initParams(arg_8_1, true)
+	self._flow:registerDoneListener(self.onFlowDone, self)
+	self._flow:initParams(context, true)
 end
 
-function var_0_0.setEventParams(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._flow then
+function Activity114Model:setEventParams(key, value)
+	if not self._flow then
 		return
 	end
 
-	arg_9_0._flow:getContext()[arg_9_1] = arg_9_2
+	local context = self._flow:getContext()
+
+	context[key] = value
 end
 
-function var_0_0.getEventParams(arg_10_0, arg_10_1)
-	if not arg_10_0._flow then
+function Activity114Model:getEventParams(key)
+	if not self._flow then
 		return
 	end
 
-	return arg_10_0._flow:getContext()[arg_10_1]
+	local context = self._flow:getContext()
+
+	return context[key]
 end
 
-function var_0_0.canFinishStory(arg_11_0)
-	if not arg_11_0._flow then
+function Activity114Model:canFinishStory()
+	if not self._flow then
 		return true
 	end
 
-	return arg_11_0._flow:canFinishStory()
+	return self._flow:canFinishStory()
 end
 
-function var_0_0.onFlowDone(arg_12_0)
-	if not arg_12_0._flow then
+function Activity114Model:onFlowDone()
+	if not self._flow then
 		return
 	end
 
 	ViewMgr.instance:closeView(ViewName.Activity114EmptyView, true, true)
-	arg_12_0._flow:unregisterDoneListener(arg_12_0.onFlowDone, arg_12_0)
+	self._flow:unregisterDoneListener(self.onFlowDone, self)
 
-	arg_12_0._flow = nil
+	self._flow = nil
 
-	if arg_12_0.newPhotos[1] then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_12_0._onCloseViewFinish, arg_12_0)
+	if self.newPhotos[1] then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 		ViewMgr.instance:openView(ViewName.Activity114GetPhotoView)
 	else
-		arg_12_0:_checkHaveNextWeekInfo()
+		self:_checkHaveNextWeekInfo()
 		Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessEnd)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1)
-	if arg_13_1 == ViewName.Activity114GetPhotoView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_13_0._onCloseViewFinish, arg_13_0)
-		arg_13_0:_checkHaveNextWeekInfo()
+function Activity114Model:_onCloseViewFinish(viewName)
+	if viewName == ViewName.Activity114GetPhotoView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:_checkHaveNextWeekInfo()
 		Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessEnd)
 	end
 end
 
-function var_0_0._checkHaveNextWeekInfo(arg_14_0)
-	if not arg_14_0._nextWeekInfo then
+function Activity114Model:_checkHaveNextWeekInfo()
+	if not self._nextWeekInfo then
 		return
 	end
 
-	arg_14_0:onGetInfo(arg_14_0.id, arg_14_0._nextWeekInfo)
+	self:onGetInfo(self.id, self._nextWeekInfo)
 
-	for iter_14_0 in pairs(arg_14_0.changeEventList) do
-		Activity114Controller.instance:dispatchEvent(iter_14_0)
+	for eventId in pairs(self.changeEventList) do
+		Activity114Controller.instance:dispatchEvent(eventId)
 	end
 
-	arg_14_0.changeEventList = {}
-	arg_14_0._nextWeekInfo = nil
+	self.changeEventList = {}
+	self._nextWeekInfo = nil
 end
 
-function var_0_0.onGetInfo(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0.serverData and arg_15_0.serverData.week ~= arg_15_2.week and arg_15_0._flow then
-		arg_15_0._nextWeekInfo = arg_15_2
+function Activity114Model:onGetInfo(id, info)
+	if self.serverData and self.serverData.week ~= info.week and self._flow then
+		self._nextWeekInfo = info
 
 		return
 	end
 
-	local var_15_0 = false
+	local isWeekChange = false
 
-	if not arg_15_0.serverData then
-		arg_15_0.changeEventList[Activity114Event.OnAttentionUpdate] = true
-		arg_15_0.changeEventList[Activity114Event.OnCGUpdate] = true
-		arg_15_0.changeEventList[Activity114Event.OnAttrUpdate] = true
-		arg_15_0.changeEventList[Activity114Event.OnRoundUpdate] = true
-		arg_15_0.changeEventList[Activity114Event.OnNewFeature] = true
+	if not self.serverData then
+		self.changeEventList[Activity114Event.OnAttentionUpdate] = true
+		self.changeEventList[Activity114Event.OnCGUpdate] = true
+		self.changeEventList[Activity114Event.OnAttrUpdate] = true
+		self.changeEventList[Activity114Event.OnRoundUpdate] = true
+		self.changeEventList[Activity114Event.OnNewFeature] = true
 	else
-		if arg_15_2.week ~= arg_15_0.serverData.week then
-			arg_15_0.playedEduSuccessStory = nil
+		if info.week ~= self.serverData.week then
+			self.playedEduSuccessStory = nil
 
-			arg_15_0:endStat(true)
+			self:endStat(true)
 
-			var_15_0 = true
+			isWeekChange = true
 		end
 
-		if arg_15_2.day ~= arg_15_0.serverData.day or arg_15_2.round ~= arg_15_0.serverData.round or arg_15_2.week ~= arg_15_0.serverData.week then
-			arg_15_0.changeEventList[Activity114Event.OnRoundUpdate] = true
+		if info.day ~= self.serverData.day or info.round ~= self.serverData.round or info.week ~= self.serverData.week then
+			self.changeEventList[Activity114Event.OnRoundUpdate] = true
 		end
 
-		if #arg_15_2.photos ~= #arg_15_0.serverData.photos then
-			for iter_15_0 = 1, #arg_15_2.photos do
-				if not arg_15_0.unLockPhotoDict[arg_15_2.photos[iter_15_0]] then
-					table.insert(arg_15_0.newPhotos, arg_15_2.photos[iter_15_0])
+		if #info.photos ~= #self.serverData.photos then
+			for i = 1, #info.photos do
+				if not self.unLockPhotoDict[info.photos[i]] then
+					table.insert(self.newPhotos, info.photos[i])
 				end
 			end
 
-			arg_15_0.changeEventList[Activity114Event.OnCGUpdate] = true
+			self.changeEventList[Activity114Event.OnCGUpdate] = true
 		end
 
-		local var_15_1, var_15_2 = Activity114Config.instance:getUnlockIds(arg_15_1)
+		local meetingIds, travelIds = Activity114Config.instance:getUnlockIds(id)
 
-		if #arg_15_2.meetings ~= #arg_15_0.serverData.meetings then
-			for iter_15_1 = 1, #arg_15_2.meetings do
-				local var_15_3 = arg_15_2.meetings[iter_15_1].meetingId
+		if #info.meetings ~= #self.serverData.meetings then
+			for i = 1, #info.meetings do
+				local meetingId = info.meetings[i].meetingId
 
-				if var_15_1[var_15_3] and not arg_15_0.unLockMeetingDict[var_15_3] then
-					table.insert(arg_15_0.newUnLockMeeting, var_15_3)
-				end
-			end
-		end
-
-		if #arg_15_2.travels ~= #arg_15_0.serverData.travels then
-			for iter_15_2 = 1, #arg_15_2.travels do
-				local var_15_4 = arg_15_2.travels[iter_15_2].travelId
-
-				if not arg_15_0.unLockTravelDict[var_15_4] and var_15_2[var_15_4] then
-					table.insert(arg_15_0.newUnLockTravel, var_15_4)
+				if meetingIds[meetingId] and not self.unLockMeetingDict[meetingId] then
+					table.insert(self.newUnLockMeeting, meetingId)
 				end
 			end
 		end
 
-		if #arg_15_2.features ~= #arg_15_0.serverData.features then
-			arg_15_0.changeEventList[Activity114Event.OnNewFeature] = true
+		if #info.travels ~= #self.serverData.travels then
+			for i = 1, #info.travels do
+				local travelId = info.travels[i].travelId
 
-			for iter_15_3 = 1, #arg_15_2.features do
-				local var_15_5 = arg_15_2.features[iter_15_3]
-
-				if not arg_15_0.featuresDict[var_15_5] then
-					table.insert(arg_15_0.newUnLockFeature, var_15_5)
+				if not self.unLockTravelDict[travelId] and travelIds[travelId] then
+					table.insert(self.newUnLockTravel, travelId)
 				end
 			end
 		end
 
-		if arg_15_2.attention ~= arg_15_0.serverData.attention then
-			arg_15_0.changeEventList[Activity114Event.OnAttentionUpdate] = true
+		if #info.features ~= #self.serverData.features then
+			self.changeEventList[Activity114Event.OnNewFeature] = true
+
+			for i = 1, #info.features do
+				local feature = info.features[i]
+
+				if not self.featuresDict[feature] then
+					table.insert(self.newUnLockFeature, feature)
+				end
+			end
 		end
 
-		for iter_15_4 = 1, Activity114Enum.Attr.End - 1 do
-			if arg_15_2.attrs[iter_15_4].value ~= arg_15_0.serverData.attrs[iter_15_4].value then
-				arg_15_0.changeEventList[Activity114Event.OnAttrUpdate] = true
+		if info.attention ~= self.serverData.attention then
+			self.changeEventList[Activity114Event.OnAttentionUpdate] = true
+		end
+
+		for i = 1, Activity114Enum.Attr.End - 1 do
+			if info.attrs[i].value ~= self.serverData.attrs[i].value then
+				self.changeEventList[Activity114Event.OnAttrUpdate] = true
 
 				break
 			end
 		end
 	end
 
-	arg_15_0.id = arg_15_1
-	arg_15_0.serverData = arg_15_2
-	arg_15_0._isEnd = false
+	self.id = id
+	self.serverData = info
+	self._isEnd = false
 
-	arg_15_0:onMeetingChange(arg_15_2.meetings)
-	arg_15_0:onTravelChange(arg_15_2.travels)
-	arg_15_0:onAttrChange(arg_15_2.attrs)
-	arg_15_0:onFeatureChange(arg_15_2.features)
-	arg_15_0:onUnLockEventChange(arg_15_2.unlockEventIds)
-	arg_15_0:onUnLockPhotoChange(arg_15_2.photos)
+	self:onMeetingChange(info.meetings)
+	self:onTravelChange(info.travels)
+	self:onAttrChange(info.attrs)
+	self:onFeatureChange(info.features)
+	self:onUnLockEventChange(info.unlockEventIds)
+	self:onUnLockPhotoChange(info.photos)
 
-	if isDebugBuild and not arg_15_0._flow then
+	if isDebugBuild and not self._flow then
 		TaskDispatcher.runDelay(function()
-			if not arg_15_0._flow then
-				for iter_16_0 in pairs(arg_15_0.changeEventList) do
-					Activity114Controller.instance:dispatchEvent(iter_16_0)
+			if not self._flow then
+				for eventId in pairs(self.changeEventList) do
+					Activity114Controller.instance:dispatchEvent(eventId)
 				end
 
-				arg_15_0.changeEventList = {}
+				self.changeEventList = {}
 			end
 		end, nil, 0)
 	end
 
-	if var_15_0 then
-		arg_15_0:beginStat()
+	if isWeekChange then
+		self:beginStat()
 	end
 end
 
-function var_0_0.onAttrChange(arg_17_0, arg_17_1)
-	arg_17_0.attrDict = {}
+function Activity114Model:onAttrChange(attrList)
+	self.attrDict = {}
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		arg_17_0.attrDict[iter_17_1.attrId] = iter_17_1.value
+	for _, v in ipairs(attrList) do
+		self.attrDict[v.attrId] = v.value
 	end
 
-	for iter_17_2 = 1, Activity114Enum.Attr.End - 1 do
-		arg_17_0.attrDict[iter_17_2] = arg_17_0.attrDict[iter_17_2] or 0
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		self.attrDict[i] = self.attrDict[i] or 0
 	end
 end
 
-function var_0_0.onFeatureChange(arg_18_0, arg_18_1)
-	local var_18_0 = {}
-	local var_18_1 = 0
+function Activity114Model:onFeatureChange(features)
+	local attrAdd = {}
+	local attentionAdd = 0
 
-	arg_18_0.featuresDict = {}
+	self.featuresDict = {}
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		arg_18_0.featuresDict[iter_18_1] = true
+	for _, v in ipairs(features) do
+		self.featuresDict[v] = true
 
-		local var_18_2 = Activity114Config.instance:getFeatureCo(arg_18_0.id, iter_18_1)
+		local featureCo = Activity114Config.instance:getFeatureCo(self.id, v)
 
-		if var_18_2 then
-			if var_18_2.restEfficiency > 0 then
-				var_18_1 = var_18_1 + var_18_2.restEfficiency / 1000
+		if featureCo then
+			if featureCo.restEfficiency > 0 then
+				attentionAdd = attentionAdd + featureCo.restEfficiency / 1000
 			end
 
-			if not string.nilorempty(var_18_2.courseEfficiency) then
-				local var_18_3 = GameUtil.splitString2(var_18_2.courseEfficiency, true, "|", "#")
+			if not string.nilorempty(featureCo.courseEfficiency) then
+				local dayList = GameUtil.splitString2(featureCo.courseEfficiency, true, "|", "#")
 
-				for iter_18_2, iter_18_3 in ipairs(var_18_3) do
-					var_18_0[iter_18_3[1]] = (var_18_0[iter_18_3[1]] or 0) + iter_18_3[2] / 1000
+				for _, data in ipairs(dayList) do
+					attrAdd[data[1]] = (attrAdd[data[1]] or 0) + data[2] / 1000
 				end
 			end
 		end
 	end
 
-	for iter_18_4, iter_18_5 in pairs(arg_18_0.attrAddPermillage) do
-		arg_18_0.attrAddPermillage[iter_18_4] = var_18_0[iter_18_4] or 0
+	for k, v in pairs(self.attrAddPermillage) do
+		self.attrAddPermillage[k] = attrAdd[k] or 0
 	end
 
-	arg_18_0.attentionAddPermillage = var_18_1
+	self.attentionAddPermillage = attentionAdd
 end
 
-function var_0_0.onUnLockEventChange(arg_19_0, arg_19_1)
-	arg_19_0.unLockEventDict = {}
+function Activity114Model:onUnLockEventChange(eventList)
+	self.unLockEventDict = {}
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
-		arg_19_0.unLockEventDict[iter_19_1] = true
-	end
-end
-
-function var_0_0.onUnLockPhotoChange(arg_20_0, arg_20_1)
-	arg_20_0.unLockPhotoDict = {}
-
-	for iter_20_0, iter_20_1 in ipairs(arg_20_1) do
-		arg_20_0.unLockPhotoDict[iter_20_1] = true
+	for _, v in ipairs(eventList) do
+		self.unLockEventDict[v] = true
 	end
 end
 
-function var_0_0.onMeetingChange(arg_21_0, arg_21_1)
-	arg_21_0.unLockMeetingDict = {}
+function Activity114Model:onUnLockPhotoChange(photos)
+	self.unLockPhotoDict = {}
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
-		arg_21_0.unLockMeetingDict[iter_21_1.meetingId] = iter_21_1
+	for _, v in ipairs(photos) do
+		self.unLockPhotoDict[v] = true
 	end
 end
 
-function var_0_0.onTravelChange(arg_22_0, arg_22_1)
-	arg_22_0.unLockTravelDict = {}
+function Activity114Model:onMeetingChange(meetingList)
+	self.unLockMeetingDict = {}
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
-		arg_22_0.unLockTravelDict[iter_22_1.travelId] = iter_22_1
+	for _, v in ipairs(meetingList) do
+		self.unLockMeetingDict[v.meetingId] = v
 	end
 end
 
-function var_0_0.haveUnLockMeeting(arg_23_0)
-	for iter_23_0, iter_23_1 in pairs(arg_23_0.unLockMeetingDict) do
-		if not arg_23_0:getIsPlayUnLock(Activity114Enum.EventType.Meet, iter_23_1.meetingId) then
+function Activity114Model:onTravelChange(travelList)
+	self.unLockTravelDict = {}
+
+	for _, v in ipairs(travelList) do
+		self.unLockTravelDict[v.travelId] = v
+	end
+end
+
+function Activity114Model:haveUnLockMeeting()
+	for _, v in pairs(self.unLockMeetingDict) do
+		if not self:getIsPlayUnLock(Activity114Enum.EventType.Meet, v.meetingId) then
 			return true
 		end
 	end
@@ -383,9 +389,9 @@ function var_0_0.haveUnLockMeeting(arg_23_0)
 	return false
 end
 
-function var_0_0.haveUnLockTravel(arg_24_0)
-	for iter_24_0, iter_24_1 in pairs(arg_24_0.unLockTravelDict) do
-		if not arg_24_0:getIsPlayUnLock(Activity114Enum.EventType.Travel, iter_24_1.travelId) then
+function Activity114Model:haveUnLockTravel()
+	for _, v in pairs(self.unLockTravelDict) do
+		if not self:getIsPlayUnLock(Activity114Enum.EventType.Travel, v.travelId) then
 			return true
 		end
 	end
@@ -393,129 +399,129 @@ function var_0_0.haveUnLockTravel(arg_24_0)
 	return false
 end
 
-function var_0_0.getIsPlayUnLock(arg_25_0, arg_25_1, arg_25_2)
-	if not arg_25_0.saveUnLockData then
-		local var_25_0 = tostring(PlayerModel.instance:getMyUserId())
-		local var_25_1 = PlayerPrefsHelper.getString(PlayerPrefsKey.JieXiKaUnLock, "")
+function Activity114Model:getIsPlayUnLock(type, id)
+	if not self.saveUnLockData then
+		local playerId = tostring(PlayerModel.instance:getMyUserId())
+		local str = PlayerPrefsHelper.getString(PlayerPrefsKey.JieXiKaUnLock, "")
 
-		if not string.nilorempty(var_25_1) then
-			arg_25_0.saveUnLockData = cjson.decode(var_25_1)
-			arg_25_0.saveUnLockUserData = arg_25_0.saveUnLockData[var_25_0]
+		if not string.nilorempty(str) then
+			self.saveUnLockData = cjson.decode(str)
+			self.saveUnLockUserData = self.saveUnLockData[playerId]
 
-			if arg_25_0.saveUnLockData.activityId ~= arg_25_0.id then
-				arg_25_0.saveUnLockData = nil
-				arg_25_0.saveUnLockUserData = nil
+			if self.saveUnLockData.activityId ~= self.id then
+				self.saveUnLockData = nil
+				self.saveUnLockUserData = nil
 			end
 		end
 
-		if not arg_25_0.saveUnLockData then
-			arg_25_0.saveUnLockData = {}
-			arg_25_0.saveUnLockData.activityId = arg_25_0.id
+		if not self.saveUnLockData then
+			self.saveUnLockData = {}
+			self.saveUnLockData.activityId = self.id
 		end
 
-		if not arg_25_0.saveUnLockUserData then
-			arg_25_0.saveUnLockUserData = {}
-			arg_25_0.saveUnLockData[var_25_0] = arg_25_0.saveUnLockUserData
+		if not self.saveUnLockUserData then
+			self.saveUnLockUserData = {}
+			self.saveUnLockData[playerId] = self.saveUnLockUserData
 		end
 	end
 
-	if not arg_25_0.saveUnLockUserData[arg_25_1] or arg_25_0.saveUnLockUserData[arg_25_1] == cjson.null then
+	if not self.saveUnLockUserData[type] or self.saveUnLockUserData[type] == cjson.null then
 		return false
 	end
 
-	return arg_25_0.saveUnLockUserData[arg_25_1][arg_25_2] == 1
+	return self.saveUnLockUserData[type][id] == 1
 end
 
-function var_0_0.setIsPlayUnLock(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_0:getIsPlayUnLock(arg_26_1, arg_26_2) then
+function Activity114Model:setIsPlayUnLock(type, id)
+	if self:getIsPlayUnLock(type, id) then
 		return
 	end
 
-	if not arg_26_0.saveUnLockUserData[arg_26_1] or arg_26_0.saveUnLockUserData[arg_26_1] == cjson.null then
-		arg_26_0.saveUnLockUserData[arg_26_1] = {}
+	if not self.saveUnLockUserData[type] or self.saveUnLockUserData[type] == cjson.null then
+		self.saveUnLockUserData[type] = {}
 	end
 
-	arg_26_0.saveUnLockUserData[arg_26_1][arg_26_2] = 1
+	self.saveUnLockUserData[type][id] = 1
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.JieXiKaUnLock, cjson.encode(arg_26_0.saveUnLockData))
+	PlayerPrefsHelper.setString(PlayerPrefsKey.JieXiKaUnLock, cjson.encode(self.saveUnLockData))
 	Activity114Controller.instance:dispatchEvent(Activity114Event.UnLockRedDotUpdate)
 end
 
-function var_0_0.setEnd(arg_27_0)
-	arg_27_0._isEnd = true
+function Activity114Model:setEnd()
+	self._isEnd = true
 
-	if arg_27_0._flow then
-		arg_27_0._flow:destroy()
+	if self._flow then
+		self._flow:destroy()
 
-		arg_27_0._flow = nil
+		self._flow = nil
 	end
 
-	if arg_27_0._storyFlow then
-		arg_27_0._storyFlow:destroy()
+	if self._storyFlow then
+		self._storyFlow:destroy()
 
-		arg_27_0._storyFlow = nil
+		self._storyFlow = nil
 	end
 end
 
-function var_0_0.isEnd(arg_28_0)
-	return arg_28_0._isEnd
+function Activity114Model:isEnd()
+	return self._isEnd
 end
 
-function var_0_0.beginStat(arg_29_0)
-	arg_29_0._statData = {}
-	arg_29_0._statData.time = ServerTime.now()
-	arg_29_0._statData.beginRound = Activity114Config.instance:getRoundCount(arg_29_0.id, arg_29_0.serverData.day, arg_29_0.serverData.round)
+function Activity114Model:beginStat()
+	self._statData = {}
+	self._statData.time = ServerTime.now()
+	self._statData.beginRound = Activity114Config.instance:getRoundCount(self.id, self.serverData.day, self.serverData.round)
 end
 
-function var_0_0.setResetRound(arg_30_0)
-	if not arg_30_0._statData then
+function Activity114Model:setResetRound()
+	if not self._statData then
 		return
 	end
 
-	arg_30_0._statData.resetRound = Activity114Config.instance:getRoundCount(arg_30_0.id, arg_30_0.serverData.day, arg_30_0.serverData.round)
+	self._statData.resetRound = Activity114Config.instance:getRoundCount(self.id, self.serverData.day, self.serverData.round)
 end
 
-function var_0_0.endStat(arg_31_0, arg_31_1, arg_31_2)
-	if not arg_31_0._statData then
+function Activity114Model:endStat(isWeekEnd, isReset)
+	if not self._statData then
 		return
 	end
 
-	local var_31_0 = "中断"
+	local result = "中断"
 
-	if arg_31_1 then
-		local var_31_1, var_31_2, var_31_3, var_31_4 = Activity114Helper.getWeekEndScore()
+	if isWeekEnd then
+		local _, _, _, totalScore = Activity114Helper.getWeekEndScore()
 
-		var_31_0 = var_31_4 >= Activity114Config.instance:getConstValue(arg_31_0.id, Activity114Enum.ConstId.ScoreA) and "A" or var_31_4 >= Activity114Config.instance:getConstValue(arg_31_0.id, Activity114Enum.ConstId.ScoreB) and "B" or var_31_4 >= Activity114Config.instance:getConstValue(arg_31_0.id, Activity114Enum.ConstId.ScoreC) and "C" or "E"
+		result = totalScore >= Activity114Config.instance:getConstValue(self.id, Activity114Enum.ConstId.ScoreA) and "A" or totalScore >= Activity114Config.instance:getConstValue(self.id, Activity114Enum.ConstId.ScoreB) and "B" or totalScore >= Activity114Config.instance:getConstValue(self.id, Activity114Enum.ConstId.ScoreC) and "C" or "E"
 	end
 
-	if arg_31_2 then
-		var_31_0 = "重置"
+	if isReset then
+		result = "重置"
 	end
 
-	local var_31_5 = {}
+	local allPhotos = {}
 
-	for iter_31_0 = 1, #arg_31_0.serverData.photos do
-		var_31_5[iter_31_0] = arg_31_0.serverData.photos[iter_31_0]
+	for i = 1, #self.serverData.photos do
+		allPhotos[i] = self.serverData.photos[i]
 	end
 
-	local var_31_6 = Activity114Config.instance:getRoundCount(arg_31_0.id, arg_31_0.serverData.day, arg_31_0.serverData.round)
-	local var_31_7 = math.max(0, var_31_6 - arg_31_0._statData.beginRound)
+	local nowRound = Activity114Config.instance:getRoundCount(self.id, self.serverData.day, self.serverData.round)
+	local increment = math.max(0, nowRound - self._statData.beginRound)
 
-	if arg_31_2 then
-		var_31_7 = 0
-		var_31_6 = arg_31_0._statData.resetRound or var_31_6
+	if isReset then
+		increment = 0
+		nowRound = self._statData.resetRound or nowRound
 	end
 
 	StatController.instance:track(StatEnum.EventName.Act114Exit, {
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_31_0._statData.time,
-		[StatEnum.EventProperties.Act114Week] = arg_31_0.serverData.week,
-		[StatEnum.EventProperties.RoundNum] = var_31_6,
-		[StatEnum.EventProperties.IncrementRoundNum] = var_31_7,
-		[StatEnum.EventProperties.Act114AllPhoto] = var_31_5,
-		[StatEnum.EventProperties.Result] = var_31_0
+		[StatEnum.EventProperties.UseTime] = ServerTime.now() - self._statData.time,
+		[StatEnum.EventProperties.Act114Week] = self.serverData.week,
+		[StatEnum.EventProperties.RoundNum] = nowRound,
+		[StatEnum.EventProperties.IncrementRoundNum] = increment,
+		[StatEnum.EventProperties.Act114AllPhoto] = allPhotos,
+		[StatEnum.EventProperties.Result] = result
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+Activity114Model.instance = Activity114Model.New()
 
-return var_0_0
+return Activity114Model

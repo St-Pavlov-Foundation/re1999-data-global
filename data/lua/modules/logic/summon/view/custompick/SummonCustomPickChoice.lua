@@ -1,72 +1,74 @@
-﻿module("modules.logic.summon.view.custompick.SummonCustomPickChoice", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/custompick/SummonCustomPickChoice.lua
 
-local var_0_0 = class("SummonCustomPickChoice", BaseView)
+module("modules.logic.summon.view.custompick.SummonCustomPickChoice", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Tips2/#txt_num")
+local SummonCustomPickChoice = class("SummonCustomPickChoice", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonCustomPickChoice:onInitView()
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._txtnum = gohelper.findChildText(self.viewGO, "Tips2/#txt_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+function SummonCustomPickChoice:addEvents()
+	self._btnok:AddClickListener(self._btnokOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnok:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
+function SummonCustomPickChoice:removeEvents()
+	self._btnok:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function SummonCustomPickChoice:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function SummonCustomPickChoice:onDestroyView()
 	SummonCustomPickChoiceController.instance:onCloseView()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function SummonCustomPickChoice:onOpen()
 	logNormal("SummonCustomPickChoice onOpen")
-	arg_6_0:addEventCb(SummonController.instance, SummonEvent.onCustomPicked, arg_6_0.handleCusomPickCompleted, arg_6_0)
-	arg_6_0:addEventCb(SummonCustomPickChoiceController.instance, SummonEvent.onCustomPickListChanged, arg_6_0.refreshUI, arg_6_0)
-	SummonCustomPickChoiceController.instance:onOpenView(arg_6_0.viewParam.poolId)
+	self:addEventCb(SummonController.instance, SummonEvent.onCustomPicked, self.handleCusomPickCompleted, self)
+	self:addEventCb(SummonCustomPickChoiceController.instance, SummonEvent.onCustomPickListChanged, self.refreshUI, self)
+	SummonCustomPickChoiceController.instance:onOpenView(self.viewParam.poolId)
 end
 
-function var_0_0.onClose(arg_7_0)
+function SummonCustomPickChoice:onClose()
 	return
 end
 
-function var_0_0._btnokOnClick(arg_8_0)
+function SummonCustomPickChoice:_btnokOnClick()
 	SummonCustomPickChoiceController.instance:trySendChoice()
 end
 
-function var_0_0._btncancelOnClick(arg_9_0)
-	arg_9_0:closeThis()
+function SummonCustomPickChoice:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnbgOnClick(arg_10_0)
-	arg_10_0:closeThis()
+function SummonCustomPickChoice:_btnbgOnClick()
+	self:closeThis()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = SummonCustomPickChoiceListModel.instance:getSelectCount()
-	local var_11_1 = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
+function SummonCustomPickChoice:refreshUI()
+	local selectCount = SummonCustomPickChoiceListModel.instance:getSelectCount()
+	local maxCount = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
 
-	arg_11_0._txtnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
-		var_11_0,
-		var_11_1
+	self._txtnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_custompick_selectnum"), {
+		selectCount,
+		maxCount
 	})
 
-	ZProj.UGUIHelper.SetGrayscale(arg_11_0._btnok.gameObject, var_11_0 ~= var_11_1)
+	ZProj.UGUIHelper.SetGrayscale(self._btnok.gameObject, selectCount ~= maxCount)
 end
 
-function var_0_0.handleCusomPickCompleted(arg_12_0)
-	arg_12_0:closeThis()
+function SummonCustomPickChoice:handleCusomPickCompleted()
+	self:closeThis()
 end
 
-return var_0_0
+return SummonCustomPickChoice

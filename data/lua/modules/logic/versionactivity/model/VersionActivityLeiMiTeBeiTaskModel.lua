@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity.model.VersionActivityLeiMiTeBeiTaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/model/VersionActivityLeiMiTeBeiTaskModel.lua
 
-local var_0_0 = class("VersionActivityLeiMiTeBeiTaskModel", BaseModel)
+module("modules.logic.versionactivity.model.VersionActivityLeiMiTeBeiTaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.infosDic = {}
+local VersionActivityLeiMiTeBeiTaskModel = class("VersionActivityLeiMiTeBeiTaskModel", BaseModel)
+
+function VersionActivityLeiMiTeBeiTaskModel:onInit()
+	self.infosDic = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function VersionActivityLeiMiTeBeiTaskModel:reInit()
+	self:onInit()
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivityLeiMiTeBeiTaskModel.instance = VersionActivityLeiMiTeBeiTaskModel.New()
 
-return var_0_0
+return VersionActivityLeiMiTeBeiTaskModel

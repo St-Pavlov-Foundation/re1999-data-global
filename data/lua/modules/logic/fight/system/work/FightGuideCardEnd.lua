@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightGuideCardEnd", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightGuideCardEnd.lua
 
-local var_0_0 = class("FightGuideCardEnd", BaseWork)
+module("modules.logic.fight.system.work.FightGuideCardEnd", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightGuideCardEnd = class("FightGuideCardEnd", BaseWork)
+
+function FightGuideCardEnd:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	FightController.instance:GuideFlowPauseAndContinue("OnGuideCardEndPause", FightEvent.OnGuideCardEndPause, FightEvent.OnGuideCardEndContinue, arg_2_0._done, arg_2_0)
+function FightGuideCardEnd:onStart(context)
+	FightController.instance:GuideFlowPauseAndContinue("OnGuideCardEndPause", FightEvent.OnGuideCardEndPause, FightEvent.OnGuideCardEndContinue, self._done, self)
 end
 
-function var_0_0._done(arg_3_0)
-	arg_3_0:onDone(true)
+function FightGuideCardEnd:_done()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightGuideCardEnd

@@ -1,139 +1,145 @@
-﻿module("modules.logic.room.entity.comp.RoomCritterFollowerComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomCritterFollowerComp.lua
 
-local var_0_0 = class("RoomCritterFollowerComp", RoomBaseFollowerComp)
+module("modules.logic.room.entity.comp.RoomCritterFollowerComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RoomCritterFollowerComp = class("RoomCritterFollowerComp", RoomBaseFollowerComp)
 
-	arg_1_0._followDis = 0.15
+function RoomCritterFollowerComp:ctor(entity)
+	RoomCritterFollowerComp.super.ctor(self, entity)
+
+	self._followDis = 0.15
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_1)
-	arg_2_0:delaySetFollow(0.5)
+function RoomCritterFollowerComp:init(go)
+	RoomCritterFollowerComp.super.init(go)
+	self:delaySetFollow(0.5)
 end
 
-function var_0_0.addPathPos(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:getFollowPathData()
+function RoomCritterFollowerComp:addPathPos(pos)
+	local pathData = self:getFollowPathData()
 
-	if var_3_0:getPosCount() == 1 then
-		local var_3_1 = Vector3.Distance(var_3_0:getFirstPos(), arg_3_1)
+	if pathData:getPosCount() == 1 then
+		local dis = Vector3.Distance(pathData:getFirstPos(), pos)
+		local followDis = self._followDis or 0.1
 
-		if (arg_3_0._followDis or 0.1) > var_3_1 + var_3_0:getPathDistance() then
+		if followDis > dis + pathData:getPathDistance() then
 			return
 		end
 	end
 
-	var_0_0.super.addPathPos(arg_3_0, arg_3_1)
+	RoomCritterFollowerComp.super.addPathPos(self, pos)
 end
 
-function var_0_0.onMoveByPathData(arg_4_0, arg_4_1)
-	if arg_4_1:getPosCount() < 1 then
+function RoomCritterFollowerComp:onMoveByPathData(pathData)
+	if pathData:getPosCount() < 1 then
 		return
 	end
 
-	local var_4_0 = arg_4_1:getPathDistance()
-	local var_4_1 = arg_4_0._followDis
+	local pathDis = pathData:getPathDistance()
+	local followDis = self._followDis
 
-	if var_4_1 < var_4_0 then
-		local var_4_2 = arg_4_1:getPosByDistance(var_4_1)
+	if followDis < pathDis then
+		local targetPos = pathData:getPosByDistance(followDis)
 
-		arg_4_0.entity:setLocalPos(var_4_2.x, var_4_2.y, var_4_2.z)
-	elseif var_4_0 < var_4_1 then
+		self.entity:setLocalPos(targetPos.x, targetPos.y, targetPos.z)
+	elseif pathDis < followDis then
 		-- block empty
 	end
 
-	local var_4_3 = arg_4_0.entity.critterspine
+	local critterspine = self.entity.critterspine
 
-	if var_4_3 then
-		local var_4_4 = arg_4_0:_findCharacterEntity()
+	if critterspine then
+		local characterEntity = self:_findCharacterEntity()
 
-		if var_4_4 and var_4_4.characterspine then
-			var_4_3:setLookDir(var_4_4.characterspine:getLookDir())
+		if characterEntity and characterEntity.characterspine then
+			critterspine:setLookDir(characterEntity.characterspine:getLookDir())
 		end
 	end
 end
 
-function var_0_0.onStopMove(arg_5_0)
-	arg_5_0:_playAnimState(RoomCharacterEnum.CharacterMoveState.Idle, true)
+function RoomCritterFollowerComp:onStopMove()
+	self:_playAnimState(RoomCharacterEnum.CharacterMoveState.Idle, true)
 
-	local var_5_0, var_5_1, var_5_2 = transformhelper.getPos(arg_5_0.entity.goTrs)
-	local var_5_3 = arg_5_0:getFollowPathData()
+	local ex, ey, ez = transformhelper.getPos(self.entity.goTrs)
+	local pathData = self:getFollowPathData()
 
-	var_5_3:clear()
-	var_5_3:addPathPos(Vector3(var_5_0, var_5_1, var_5_2))
+	pathData:clear()
+	pathData:addPathPos(Vector3(ex, ey, ez))
 end
 
-function var_0_0.onStartMove(arg_6_0)
-	arg_6_0:_playAnimState(RoomCharacterEnum.CharacterMoveState.Move, true)
+function RoomCritterFollowerComp:onStartMove()
+	self:_playAnimState(RoomCharacterEnum.CharacterMoveState.Move, true)
 end
 
-function var_0_0._playAnimState(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0.entity.critterspine
+function RoomCritterFollowerComp:_playAnimState(moveState, isLoop)
+	local critterspine = self.entity.critterspine
 
-	if var_7_0 then
-		var_7_0:changeMoveState(arg_7_1)
-		var_7_0:play(RoomCharacterHelper.getAnimStateName(arg_7_1, arg_7_0.entity.id), arg_7_2, true)
+	if critterspine then
+		critterspine:changeMoveState(moveState)
+		critterspine:play(RoomCharacterHelper.getAnimStateName(moveState, self.entity.id), isLoop, true)
 	end
 end
 
-function var_0_0._findCharacterEntity(arg_8_0)
-	local var_8_0 = arg_8_0.entity:getMO()
+function RoomCritterFollowerComp:_findCharacterEntity()
+	local critterMO = self.entity:getMO()
 
-	if not var_8_0 then
+	if not critterMO then
 		return
 	end
 
-	local var_8_1 = RoomCharacterModel.instance:getCharacterMOById(var_8_0.heroId)
-	local var_8_2 = GameSceneMgr.instance:getCurScene()
+	local characterMO = RoomCharacterModel.instance:getCharacterMOById(critterMO.heroId)
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if var_8_2 and var_8_1 then
-		return (var_8_2.charactermgr:getCharacterEntity(var_8_1.id, SceneTag.RoomCharacter))
+	if scene and characterMO then
+		local characterEntity = scene.charactermgr:getCharacterEntity(characterMO.id, SceneTag.RoomCharacter)
+
+		return characterEntity
 	end
 end
 
-function var_0_0.delaySetFollow(arg_9_0, arg_9_1)
-	TaskDispatcher.cancelTask(arg_9_0._delaySetFollow, arg_9_0)
-	TaskDispatcher.runDelay(arg_9_0._delaySetFollow, arg_9_0, arg_9_1 or 0.5)
+function RoomCritterFollowerComp:delaySetFollow(delay)
+	TaskDispatcher.cancelTask(self._delaySetFollow, self)
+	TaskDispatcher.runDelay(self._delaySetFollow, self, delay or 0.5)
 end
 
-function var_0_0._delaySetFollow(arg_10_0)
-	local var_10_0 = RoomCameraController.instance:getRoomScene()
+function RoomCritterFollowerComp:_delaySetFollow()
+	local roomScene = RoomCameraController.instance:getRoomScene()
+	local roomCritterMO = self.entity:getMO()
 
-	if not arg_10_0.entity:getMO() or not var_10_0 then
+	if not roomCritterMO or not roomScene then
 		return
 	end
 
-	local var_10_1 = arg_10_0:_findCharacterEntity()
+	local characterEntity = self:_findCharacterEntity()
 
-	if var_10_1 then
-		arg_10_0:followCharacter(var_10_1)
+	if characterEntity then
+		self:followCharacter(characterEntity)
 
 		return
 	end
 end
 
-function var_0_0.followCharacter(arg_11_0, arg_11_1)
-	arg_11_0:setFollowPath(arg_11_1.followPathComp)
+function RoomCritterFollowerComp:followCharacter(characterEntity)
+	self:setFollowPath(characterEntity.followPathComp)
 
-	local var_11_0 = arg_11_0:getFollowPathData()
+	local pathData = self:getFollowPathData()
 
-	if var_11_0:getPosCount() <= 1 then
-		local var_11_1, var_11_2, var_11_3 = transformhelper.getPos(arg_11_0.entity.goTrs)
+	if pathData:getPosCount() <= 1 then
+		local ex, ey, ez = transformhelper.getPos(self.entity.goTrs)
 
-		var_11_0:addPathPos(Vector3(var_11_1, var_11_2, var_11_3))
+		pathData:addPathPos(Vector3(ex, ey, ez))
 
-		local var_11_4, var_11_5, var_11_6 = transformhelper.getPos(arg_11_1.goTrs)
+		local px, py, pz = transformhelper.getPos(characterEntity.goTrs)
 
-		var_11_0:addPathPos(Vector3(var_11_4, var_11_5, var_11_6))
+		pathData:addPathPos(Vector3(px, py, pz))
 	end
 
-	arg_11_0:onMoveByPathData(var_11_0)
+	self:onMoveByPathData(pathData)
 end
 
-function var_0_0.beforeDestroy(arg_12_0)
-	var_0_0.super.beforeDestroy(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._delaySetFollow, arg_12_0)
+function RoomCritterFollowerComp:beforeDestroy()
+	RoomCritterFollowerComp.super.beforeDestroy(self)
+	TaskDispatcher.cancelTask(self._delaySetFollow, self)
 end
 
-return var_0_0
+return RoomCritterFollowerComp

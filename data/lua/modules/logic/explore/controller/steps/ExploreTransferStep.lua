@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.controller.steps.ExploreTransferStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreTransferStep.lua
 
-local var_0_0 = class("ExploreTransferStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreTransferStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ExploreMapModel.instance:updatHeroPos(arg_1_0._data.x, arg_1_0._data.y, 0)
-	ExploreHeroTeleportFlow.instance:begin(arg_1_0._data)
-	arg_1_0:onDone()
+local ExploreTransferStep = class("ExploreTransferStep", ExploreStepBase)
+
+function ExploreTransferStep:onStart()
+	ExploreMapModel.instance:updatHeroPos(self._data.x, self._data.y, 0)
+	ExploreHeroTeleportFlow.instance:begin(self._data)
+	self:onDone()
 end
 
-return var_0_0
+return ExploreTransferStep

@@ -1,57 +1,59 @@
-﻿module("modules.common.global.screen.GameMsgTooOftenCheck", package.seeall)
+﻿-- chunkname: @modules/common/global/screen/GameMsgTooOftenCheck.lua
 
-local var_0_0 = class("GameMsgTooOftenCheck", BasePreSender)
-local var_0_1 = 1
-local var_0_2 = 90
-local var_0_3 = 3
-local var_0_4 = {}
+module("modules.common.global.screen.GameMsgTooOftenCheck", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._sendProtoTime = {}
-	arg_1_0._sendProtoList = {}
-	arg_1_0._toSendProtoTime = {}
-	arg_1_0._toSendProtoList = {}
+local GameMsgTooOftenCheck = class("GameMsgTooOftenCheck", BasePreSender)
+local StatDuration = 1
+local TooOftenThreshold = 90
+local TooOftenSameThreshold = 3
+local IgnoreCmds = {}
 
-	arg_1_0:addConstEvents()
+function GameMsgTooOftenCheck:ctor()
+	self._sendProtoTime = {}
+	self._sendProtoList = {}
+	self._toSendProtoTime = {}
+	self._toSendProtoList = {}
+
+	self:addConstEvents()
 end
 
-function var_0_0.addConstEvents(arg_2_0)
+function GameMsgTooOftenCheck:addConstEvents()
 	if isDebugBuild then
-		LuaSocketMgr.instance:registerPreSender(arg_2_0)
+		LuaSocketMgr.instance:registerPreSender(self)
 	end
 end
 
-function var_0_0.blockSendProto(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_2 then
+function GameMsgTooOftenCheck:blockSendProto(cmd, proto, socketId)
+	if not proto then
 		return
 	end
 
-	if var_0_4[arg_3_1] then
+	if IgnoreCmds[cmd] then
 		return
 	end
 
-	arg_3_0:_removeOutdatedProto(arg_3_0._sendProtoTime, arg_3_0._sendProtoList)
-	arg_3_0:_removeOutdatedProto(arg_3_0._toSendProtoTime, arg_3_0._toSendProtoList)
+	self:_removeOutdatedProto(self._sendProtoTime, self._sendProtoList)
+	self:_removeOutdatedProto(self._toSendProtoTime, self._toSendProtoList)
 
-	local var_3_0 = Time.realtimeSinceStartup
+	local now = Time.realtimeSinceStartup
 
-	table.insert(arg_3_0._toSendProtoTime, var_3_0)
-	table.insert(arg_3_0._toSendProtoList, arg_3_2)
+	table.insert(self._toSendProtoTime, now)
+	table.insert(self._toSendProtoList, proto)
 
-	local var_3_1 = 0
-	local var_3_2
+	local sameProtoCount = 0
+	local protoStr
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._toSendProtoList) do
-		if arg_3_2.__cname == iter_3_1.__cname then
-			var_3_2 = var_3_2 or tostring(arg_3_2)
+	for _, protoToSend in ipairs(self._toSendProtoList) do
+		if proto.__cname == protoToSend.__cname then
+			protoStr = protoStr or tostring(proto)
 
-			if var_3_2 == tostring(iter_3_1) then
-				var_3_1 = var_3_1 + 1
+			if protoStr == tostring(protoToSend) then
+				sameProtoCount = sameProtoCount + 1
 
-				if var_3_1 > var_0_3 then
-					local var_3_3 = arg_3_2.__cname .. "{\n" .. var_3_2 .. "}"
+				if sameProtoCount > TooOftenSameThreshold then
+					local msg = proto.__cname .. "{\n" .. protoStr .. "}"
 
-					logError(string.format("发完全相同的包过于频繁，%d秒%d个\n%s", var_0_1, var_3_1, var_3_3))
+					logError(string.format("发完全相同的包过于频繁，%d秒%d个\n%s", StatDuration, sameProtoCount, msg))
 
 					break
 				end
@@ -59,30 +61,32 @@ function var_0_0.blockSendProto(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 		end
 	end
 
-	if #arg_3_0._sendProtoList > var_0_2 then
-		local var_3_4 = arg_3_2.__cname .. "{\n" .. var_3_2 .. "}"
+	if #self._sendProtoList > TooOftenThreshold then
+		local msg = proto.__cname .. "{\n" .. protoStr .. "}"
 
-		logError(string.format("发包过于频繁，%d秒%d个，请求已被拦截\n%s", var_0_1, #arg_3_0._toSendProtoList, var_3_4))
+		logError(string.format("发包过于频繁，%d秒%d个，请求已被拦截\n%s", StatDuration, #self._toSendProtoList, msg))
 
 		return true
 	end
 
-	table.insert(arg_3_0._sendProtoTime, var_3_0)
-	table.insert(arg_3_0._sendProtoList, arg_3_2)
+	table.insert(self._sendProtoTime, now)
+	table.insert(self._sendProtoList, proto)
 end
 
-function var_0_0._removeOutdatedProto(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = #arg_4_1
-	local var_4_1 = Time.realtimeSinceStartup
+function GameMsgTooOftenCheck:_removeOutdatedProto(timeList, protoList)
+	local protoCount = #timeList
+	local now = Time.realtimeSinceStartup
 
-	for iter_4_0 = 1, var_4_0 do
-		if var_4_1 - arg_4_1[1] >= var_0_1 then
-			table.remove(arg_4_1, 1)
-			table.remove(arg_4_2, 1)
+	for i = 1, protoCount do
+		local sendTime = timeList[1]
+
+		if now - sendTime >= StatDuration then
+			table.remove(timeList, 1)
+			table.remove(protoList, 1)
 		else
 			break
 		end
 	end
 end
 
-return var_0_0
+return GameMsgTooOftenCheck

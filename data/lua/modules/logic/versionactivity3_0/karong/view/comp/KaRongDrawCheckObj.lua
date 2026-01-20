@@ -1,44 +1,46 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawCheckObj", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/comp/KaRongDrawCheckObj.lua
 
-local var_0_0 = class("KaRongDrawCheckObj", KaRongDrawBaseObj)
+module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawCheckObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local KaRongDrawCheckObj = class("KaRongDrawCheckObj", KaRongDrawBaseObj)
 
-	arg_1_0._gochecked = gohelper.findChild(arg_1_0.go, "#go_checked")
-	arg_1_0._goflag = gohelper.findChild(arg_1_0.go, "#go_flag")
+function KaRongDrawCheckObj:ctor(go)
+	KaRongDrawCheckObj.super.ctor(self, go)
+
+	self._gochecked = gohelper.findChild(self.go, "#go_checked")
+	self._goflag = gohelper.findChild(self.go, "#go_flag")
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1)
-	var_0_0.super.onInit(arg_2_0, arg_2_1)
-	arg_2_0:setCheckIconVisible(false)
-	gohelper.setActive(arg_2_0._goflag, arg_2_1.objType == KaRongDrawEnum.MazeObjType.End)
+function KaRongDrawCheckObj:onInit(mo)
+	KaRongDrawCheckObj.super.onInit(self, mo)
+	self:setCheckIconVisible(false)
+	gohelper.setActive(self._goflag, mo.objType == KaRongDrawEnum.MazeObjType.End)
 end
 
-function var_0_0.onEnter(arg_3_0)
-	var_0_0.super.onEnter(arg_3_0)
-	arg_3_0:setCheckIconVisible(true)
+function KaRongDrawCheckObj:onEnter()
+	KaRongDrawCheckObj.super.onEnter(self)
+	self:setCheckIconVisible(true)
 end
 
-function var_0_0.onExit(arg_4_0)
-	var_0_0.super.onExit(arg_4_0)
-	arg_4_0:setCheckIconVisible(false)
+function KaRongDrawCheckObj:onExit()
+	KaRongDrawCheckObj.super.onExit(self)
+	self:setCheckIconVisible(false)
 end
 
-function var_0_0.setCheckIconVisible(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._gochecked, arg_5_1)
+function KaRongDrawCheckObj:setCheckIconVisible(isVisible)
+	gohelper.setActive(self._gochecked, isVisible)
 end
 
-function var_0_0._setIcon(arg_6_0)
-	local var_6_0 = arg_6_0:_getIconUrl()
+function KaRongDrawCheckObj:_setIcon()
+	local iconUrl = self:_getIconUrl()
 
-	if not string.nilorempty(var_6_0) then
-		if arg_6_0.mo.objType == KaRongDrawEnum.MazeObjType.CheckPoint and not arg_6_0.isEnter then
-			var_6_0 = var_6_0 .. "_gray"
+	if not string.nilorempty(iconUrl) then
+		if self.mo.objType == KaRongDrawEnum.MazeObjType.CheckPoint and not self.isEnter then
+			iconUrl = iconUrl .. "_gray"
 		end
 
-		UISpriteSetMgr.instance:setV3a0KaRongSprite(arg_6_0._image, var_6_0, true)
+		UISpriteSetMgr.instance:setV3a0KaRongSprite(self._image, iconUrl, true)
 	end
 end
 
-return var_0_0
+return KaRongDrawCheckObj

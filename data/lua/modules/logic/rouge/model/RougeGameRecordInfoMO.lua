@@ -1,125 +1,127 @@
-﻿module("modules.logic.rouge.model.RougeGameRecordInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeGameRecordInfoMO.lua
 
-local var_0_0 = pureTable("RougeGameRecordInfoMO")
+module("modules.logic.rouge.model.RougeGameRecordInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.maxDifficulty = arg_1_1.maxDifficulty
-	arg_1_0.passEndIdMap = arg_1_0:_listToMap(arg_1_1.passEndId)
-	arg_1_0.passLayerIdMap = arg_1_0:_listToMap(arg_1_1.passLayerId)
-	arg_1_0.passEventIdMap = arg_1_0:_listToMap(arg_1_1.passEventId)
-	arg_1_0.passEndIdMap = arg_1_0:_listToMap(arg_1_1.passEndId)
-	arg_1_0.passEntrustMap = arg_1_0:_listToMap(arg_1_1.passEntrustId)
-	arg_1_0.lastGameTime = math.ceil((tonumber(arg_1_1.lastGameTime) or 0) / 1000)
-	arg_1_0.passCollections = arg_1_0:_listToMap(arg_1_1.passCollections)
-	arg_1_0.unlockStoryIds = arg_1_0:_listToMap(arg_1_1.unlockStoryIds)
+local RougeGameRecordInfoMO = pureTable("RougeGameRecordInfoMO")
 
-	arg_1_0:_updateVersionIds(arg_1_1.dlcVersionIds)
+function RougeGameRecordInfoMO:init(info)
+	self.maxDifficulty = info.maxDifficulty
+	self.passEndIdMap = self:_listToMap(info.passEndId)
+	self.passLayerIdMap = self:_listToMap(info.passLayerId)
+	self.passEventIdMap = self:_listToMap(info.passEventId)
+	self.passEndIdMap = self:_listToMap(info.passEndId)
+	self.passEntrustMap = self:_listToMap(info.passEntrustId)
+	self.lastGameTime = math.ceil((tonumber(info.lastGameTime) or 0) / 1000)
+	self.passCollections = self:_listToMap(info.passCollections)
+	self.unlockStoryIds = self:_listToMap(info.unlockStoryIds)
 
-	arg_1_0.unlockSkillMap = GameUtil.rpcInfosToMap(arg_1_1.unlockSkills, RougeUnlockSkillMO, "type")
+	self:_updateVersionIds(info.dlcVersionIds)
+
+	self.unlockSkillMap = GameUtil.rpcInfosToMap(info.unlockSkills, RougeUnlockSkillMO, "type")
 end
 
-function var_0_0._listToMap(arg_2_0, arg_2_1)
-	if not arg_2_1 then
+function RougeGameRecordInfoMO:_listToMap(list)
+	if not list then
 		return {}
 	end
 
-	local var_2_0 = {}
+	local map = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		var_2_0[iter_2_1] = iter_2_1
+	for _, v in ipairs(list) do
+		map[v] = v
 	end
 
-	return var_2_0
+	return map
 end
 
-function var_0_0.collectionIsPass(arg_3_0, arg_3_1)
-	return arg_3_0.passCollections[arg_3_1]
+function RougeGameRecordInfoMO:collectionIsPass(id)
+	return self.passCollections[id]
 end
 
-function var_0_0.storyIsPass(arg_4_0, arg_4_1)
-	return arg_4_0.unlockStoryIds[arg_4_1]
+function RougeGameRecordInfoMO:storyIsPass(id)
+	return self.unlockStoryIds[id]
 end
 
-function var_0_0.passedLayerId(arg_5_0, arg_5_1)
-	return arg_5_0.passLayerIdMap and arg_5_0.passLayerIdMap[arg_5_1]
+function RougeGameRecordInfoMO:passedLayerId(layerId)
+	return self.passLayerIdMap and self.passLayerIdMap[layerId]
 end
 
-function var_0_0.passedEventId(arg_6_0, arg_6_1)
-	return arg_6_0.passEventIdMap and arg_6_0.passEventIdMap[arg_6_1]
+function RougeGameRecordInfoMO:passedEventId(eventId)
+	return self.passEventIdMap and self.passEventIdMap[eventId]
 end
 
-function var_0_0.passAnyOneEnd(arg_7_0)
-	return tabletool.len(arg_7_0.passEndIdMap) > 0
+function RougeGameRecordInfoMO:passAnyOneEnd()
+	return tabletool.len(self.passEndIdMap) > 0
 end
 
-function var_0_0.passEndId(arg_8_0, arg_8_1)
-	return arg_8_0.passEndIdMap and arg_8_0.passEndIdMap[arg_8_1]
+function RougeGameRecordInfoMO:passEndId(endId)
+	return self.passEndIdMap and self.passEndIdMap[endId]
 end
 
-function var_0_0.passEntrustId(arg_9_0, arg_9_1)
-	return arg_9_0.passEntrustMap and arg_9_0.passEntrustMap[arg_9_1]
+function RougeGameRecordInfoMO:passEntrustId(entrustId)
+	return self.passEntrustMap and self.passEntrustMap[entrustId]
 end
 
-function var_0_0.passLayerId(arg_10_0, arg_10_1)
-	return arg_10_0.passLayerIdMap and arg_10_0.passLayerIdMap[arg_10_1]
+function RougeGameRecordInfoMO:passLayerId(layerId)
+	return self.passLayerIdMap and self.passLayerIdMap[layerId]
 end
 
-function var_0_0.lastGameEndTimestamp(arg_11_0)
-	return arg_11_0.lastGameTime
+function RougeGameRecordInfoMO:lastGameEndTimestamp()
+	return self.lastGameTime
 end
 
-function var_0_0.isSelectDLC(arg_12_0, arg_12_1)
-	return arg_12_0.versionIdMap and arg_12_0.versionIdMap[arg_12_1] ~= nil
+function RougeGameRecordInfoMO:isSelectDLC(dlcVersionId)
+	return self.versionIdMap and self.versionIdMap[dlcVersionId] ~= nil
 end
 
-function var_0_0._updateVersionIds(arg_13_0, arg_13_1)
-	arg_13_0.versionIds = {}
-	arg_13_0.versionIdMap = {}
+function RougeGameRecordInfoMO:_updateVersionIds(versionIds)
+	self.versionIds = {}
+	self.versionIdMap = {}
 
-	if arg_13_1 then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-			table.insert(arg_13_0.versionIds, iter_13_1)
+	if versionIds then
+		for _, versionId in ipairs(versionIds) do
+			table.insert(self.versionIds, versionId)
 
-			arg_13_0.versionIdMap[iter_13_1] = iter_13_1
+			self.versionIdMap[versionId] = versionId
 		end
 	end
 end
 
-function var_0_0.getVersionIds(arg_14_0)
-	local var_14_0 = {}
+function RougeGameRecordInfoMO:getVersionIds()
+	local versions = {}
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.versionIds) do
-		table.insert(var_14_0, iter_14_1)
+	for _, version in ipairs(self.versionIds) do
+		table.insert(versions, version)
 	end
 
-	return var_14_0
+	return versions
 end
 
-function var_0_0.isSkillUnlock(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0.unlockSkillMap and arg_15_0.unlockSkillMap[arg_15_1]
+function RougeGameRecordInfoMO:isSkillUnlock(skillType, skillId)
+	local unlockSkillMo = self.unlockSkillMap and self.unlockSkillMap[skillType]
 
-	return var_15_0 and var_15_0:isSkillUnlock(arg_15_2)
+	return unlockSkillMo and unlockSkillMo:isSkillUnlock(skillId)
 end
 
-function var_0_0.updateSkillUnlockInfo(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_1 and arg_16_2 then
+function RougeGameRecordInfoMO:updateSkillUnlockInfo(skillType, skillId)
+	if not skillType and skillId then
 		return
 	end
 
-	local var_16_0 = arg_16_0.unlockSkillMap and arg_16_0.unlockSkillMap[arg_16_1]
+	local unlockSkillMo = self.unlockSkillMap and self.unlockSkillMap[skillType]
 
-	if not var_16_0 then
-		var_16_0 = RougeUnlockSkillMO.New()
+	if not unlockSkillMo then
+		unlockSkillMo = RougeUnlockSkillMO.New()
 
-		var_16_0:init({
-			type = arg_16_1,
+		unlockSkillMo:init({
+			type = skillType,
 			ids = {}
 		})
 
-		arg_16_0.unlockSkillMap[arg_16_1] = var_16_0
+		self.unlockSkillMap[skillType] = unlockSkillMo
 	end
 
-	var_16_0:onNewSkillUnlock(arg_16_2)
+	unlockSkillMo:onNewSkillUnlock(skillId)
 end
 
-return var_0_0
+return RougeGameRecordInfoMO

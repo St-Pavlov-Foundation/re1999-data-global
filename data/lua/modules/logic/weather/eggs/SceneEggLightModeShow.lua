@@ -1,21 +1,23 @@
-﻿module("modules.logic.weather.eggs.SceneEggLightModeShow", package.seeall)
+﻿-- chunkname: @modules/logic/weather/eggs/SceneEggLightModeShow.lua
 
-local var_0_0 = class("SceneEggLightModeShow", SceneBaseEgg)
+module("modules.logic.weather.eggs.SceneEggLightModeShow", package.seeall)
 
-function var_0_0._onInit(arg_1_0)
-	arg_1_0._lightMode = tonumber(arg_1_0._eggConfig.actionParams)
+local SceneEggLightModeShow = class("SceneEggLightModeShow", SceneBaseEgg)
 
-	arg_1_0:setGoListVisible(false)
+function SceneEggLightModeShow:_onInit()
+	self._lightMode = tonumber(self._eggConfig.actionParams)
+
+	self:setGoListVisible(false)
 end
 
-function var_0_0._onReportChange(arg_2_0, arg_2_1)
-	if not arg_2_1 then
-		arg_2_0:setGoListVisible(false)
+function SceneEggLightModeShow:_onReportChange(report)
+	if not report then
+		self:setGoListVisible(false)
 
 		return
 	end
 
-	arg_2_0:setGoListVisible(arg_2_0._lightMode == arg_2_1.lightMode)
+	self:setGoListVisible(self._lightMode == report.lightMode)
 end
 
-return var_0_0
+return SceneEggLightModeShow

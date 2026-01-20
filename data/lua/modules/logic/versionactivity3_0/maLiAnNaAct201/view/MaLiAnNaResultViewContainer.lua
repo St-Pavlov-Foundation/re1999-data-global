@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/MaLiAnNaResultViewContainer.lua
 
-local var_0_0 = class("MaLiAnNaResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.MaLiAnNaResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local MaLiAnNaResultViewContainer = class("MaLiAnNaResultViewContainer", BaseViewContainer)
+
+function MaLiAnNaResultViewContainer:buildViews()
 	return {
 		MaLiAnNaResultView.New()
 	}
 end
 
-return var_0_0
+return MaLiAnNaResultViewContainer

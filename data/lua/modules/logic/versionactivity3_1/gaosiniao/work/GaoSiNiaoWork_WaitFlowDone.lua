@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_WaitFlowDone", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/GaoSiNiaoWork_WaitFlowDone.lua
 
-local var_0_0 = class("GaoSiNiaoWork_WaitFlowDone", GaoSiNiaoWorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.GaoSiNiaoWork_WaitFlowDone", package.seeall)
 
-function var_0_0.s_create(arg_1_0, ...)
-	local var_1_0 = var_0_0.New()
+local GaoSiNiaoWork_WaitFlowDone = class("GaoSiNiaoWork_WaitFlowDone", GaoSiNiaoWorkBase)
+
+function GaoSiNiaoWork_WaitFlowDone.s_create(flowObj, ...)
+	local res = GaoSiNiaoWork_WaitFlowDone.New()
 
 	if isDebugBuild then
-		assert(isTypeOf(arg_1_0, GaoSiNiaoFlowSequence_Base), debug.traceback())
+		assert(isTypeOf(flowObj, GaoSiNiaoFlowSequence_Base), debug.traceback())
 	end
 
-	var_1_0._flowObj = arg_1_0
-	var_1_0._startParams = {
+	res._flowObj = flowObj
+	res._startParams = {
 		...
 	}
 
-	return var_1_0
+	return res
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._flowObj then
+function GaoSiNiaoWork_WaitFlowDone:onStart()
+	if not self._flowObj then
 		logWarn("flowObj is invalid")
-		arg_2_0:onSucc()
+		self:onSucc()
 
 		return
 	end
 
-	arg_2_0._flowObj:reset()
-	arg_2_0._flowObj:registerDoneListener(arg_2_0.onSucc, arg_2_0)
-	arg_2_0._flowObj:start(unpack(arg_2_0._startParams))
+	self._flowObj:reset()
+	self._flowObj:registerDoneListener(self.onSucc, self)
+	self._flowObj:start(unpack(self._startParams))
 end
 
-function var_0_0.clearWork(arg_3_0)
-	GameUtil.onDestroyViewMember(arg_3_0, "_flowObj")
-	var_0_0.super.clearWork(arg_3_0)
+function GaoSiNiaoWork_WaitFlowDone:clearWork()
+	GameUtil.onDestroyViewMember(self, "_flowObj")
+	GaoSiNiaoWork_WaitFlowDone.super.clearWork(self)
 end
 
-return var_0_0
+return GaoSiNiaoWork_WaitFlowDone

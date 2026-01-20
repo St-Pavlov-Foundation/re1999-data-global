@@ -1,106 +1,108 @@
-﻿module("modules.logic.chessgame.game.step.ChessStepMove", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/step/ChessStepMove.lua
 
-local var_0_0 = class("ChessStepMove", BaseWork)
+module("modules.logic.chessgame.game.step.ChessStepMove", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
+local ChessStepMove = class("ChessStepMove", BaseWork)
+
+function ChessStepMove:init(stepData)
+	self.originData = stepData
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.originData.id
-	local var_2_1 = arg_2_0.originData.x
-	local var_2_2 = arg_2_0.originData.y
-	local var_2_3 = arg_2_0.originData.direction
+function ChessStepMove:onStart(catchObj)
+	local objId = self.originData.id
+	local tarX = self.originData.x
+	local tarY = self.originData.y
+	local dir = self.originData.direction
 
-	arg_2_0._catchObj = arg_2_1
+	self._catchObj = catchObj
 
-	local var_2_4 = ChessGameController.instance.interactsMgr
+	local interactsMgr = ChessGameController.instance.interactsMgr
 
-	if var_2_4 then
-		local var_2_5 = var_2_4:get(var_2_0)
+	if interactsMgr then
+		local interactObj = interactsMgr:get(objId)
 
-		if not var_2_5 then
-			arg_2_0:onDone(true)
+		if not interactObj then
+			self:onDone(true)
 
 			return
 		end
 
-		arg_2_0:updatePosInfo(var_2_5, var_2_1, var_2_2)
-		arg_2_0:startMove(var_2_5, var_2_1, var_2_2)
+		self:updatePosInfo(interactObj, tarX, tarY)
+		self:startMove(interactObj, tarX, tarY)
 
-		if var_2_3 ~= nil then
-			var_2_5:getHandler():faceTo(var_2_3)
+		if dir ~= nil then
+			interactObj:getHandler():faceTo(dir)
 		end
 	end
 end
 
-function var_0_0.updatePosInfo(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_1 and arg_3_1:getHandler() then
-		arg_3_1:getHandler():updatePos(arg_3_2, arg_3_3)
+function ChessStepMove:updatePosInfo(interactObj, x, y)
+	if interactObj and interactObj:getHandler() then
+		interactObj:getHandler():updatePos(x, y)
 	else
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.startMove(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 and arg_4_1:getHandler() then
-		local var_4_0 = arg_4_1.config.interactType
+function ChessStepMove:startMove(interactObj, x, y)
+	if interactObj and interactObj:getHandler() then
+		local interactType = interactObj.config.interactType
 
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_1ChessGame.play_ui_molu_jlbn_move)
 
-		if var_4_0 == ChessGameEnum.InteractType.Role then
-			if arg_4_0._catchObj then
-				local var_4_1, var_4_2 = arg_4_0._catchObj.mo:getXY()
-				local var_4_3 = (arg_4_2 + var_4_1) / 2
-				local var_4_4 = (arg_4_3 + var_4_2) / 2
+		if interactType == ChessGameEnum.InteractType.Role then
+			if self._catchObj then
+				local posX, posY = self._catchObj.mo:getXY()
+				local targetX, targetY = (x + posX) / 2, (y + posY) / 2
 
-				arg_4_1:getHandler():moveTo(var_4_3, var_4_4, arg_4_0.onMainPlayerMoveEnd, arg_4_0)
+				interactObj:getHandler():moveTo(targetX, targetY, self.onMainPlayerMoveEnd, self)
 			else
-				arg_4_1:getHandler():moveTo(arg_4_2, arg_4_3, arg_4_0.onMainPlayerMoveEnd, arg_4_0)
+				interactObj:getHandler():moveTo(x, y, self.onMainPlayerMoveEnd, self)
 			end
 		else
-			arg_4_1:getHandler():moveTo(arg_4_2, arg_4_3, arg_4_0.onOtherObjMoveEnd, arg_4_0)
+			interactObj:getHandler():moveTo(x, y, self.onOtherObjMoveEnd, self)
 		end
 	else
-		arg_4_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.onMainPlayerMoveEnd(arg_5_0)
-	arg_5_0:onObjMoveEnd()
-	arg_5_0:onDone(true)
+function ChessStepMove:onMainPlayerMoveEnd()
+	self:onObjMoveEnd()
+	self:onDone(true)
 end
 
-function var_0_0.onOtherObjMoveEnd(arg_6_0)
-	local var_6_0 = arg_6_0.originData.id
-	local var_6_1 = arg_6_0.originData.x
-	local var_6_2 = arg_6_0.originData.y
+function ChessStepMove:onOtherObjMoveEnd()
+	local objId = self.originData.id
+	local tarX = self.originData.x
+	local tarY = self.originData.y
 
-	ChessGameController.instance:dispatchEvent(ChessGameEvent.ObjMoveEnd, var_6_0, var_6_1, var_6_2)
-	arg_6_0:onDone(true)
+	ChessGameController.instance:dispatchEvent(ChessGameEvent.ObjMoveEnd, objId, tarX, tarY)
+	self:onDone(true)
 end
 
-function var_0_0.onObjMoveEnd(arg_7_0)
-	local var_7_0 = arg_7_0.originData.id
-	local var_7_1 = arg_7_0.originData.x
-	local var_7_2 = arg_7_0.originData.y
+function ChessStepMove:onObjMoveEnd()
+	local objId = self.originData.id
+	local tarX = self.originData.x
+	local tarY = self.originData.y
 
-	ChessGameController.instance:dispatchEvent(ChessGameEvent.ObjMoveEnd, var_7_0, var_7_1, var_7_2)
+	ChessGameController.instance:dispatchEvent(ChessGameEvent.ObjMoveEnd, objId, tarX, tarY)
 end
 
-var_0_0.lastEnemyMoveTime = {}
-var_0_0.minSkipAudioTime = 0.01
+ChessStepMove.lastEnemyMoveTime = {}
+ChessStepMove.minSkipAudioTime = 0.01
 
-function var_0_0.playEnemyMoveAudio(arg_8_0, arg_8_1)
-	if arg_8_1 and arg_8_1 ~= 0 then
-		local var_8_0 = Time.realtimeSinceStartup
+function ChessStepMove:playEnemyMoveAudio(audioId)
+	if audioId and audioId ~= 0 then
+		local curTime = Time.realtimeSinceStartup
+		local lastMoveTime = ChessStepMove.lastEnemyMoveTime[audioId] or -1
 
-		if var_8_0 >= (var_0_0.lastEnemyMoveTime[arg_8_1] or -1) then
-			var_0_0.lastEnemyMoveTime[arg_8_1] = var_8_0 + var_0_0.minSkipAudioTime
+		if lastMoveTime <= curTime then
+			ChessStepMove.lastEnemyMoveTime[audioId] = curTime + ChessStepMove.minSkipAudioTime
 
-			AudioMgr.instance:trigger(arg_8_1)
+			AudioMgr.instance:trigger(audioId)
 		end
 	end
 end
 
-return var_0_0
+return ChessStepMove

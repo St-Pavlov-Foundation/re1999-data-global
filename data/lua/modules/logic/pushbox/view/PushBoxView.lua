@@ -1,110 +1,112 @@
-﻿module("modules.logic.pushbox.view.PushBoxView", package.seeall)
+﻿-- chunkname: @modules/logic/pushbox/view/PushBoxView.lua
 
-local var_0_0 = class("PushBoxView", BaseView)
+module("modules.logic.pushbox.view.PushBoxView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._btnup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_up")
-	arg_1_0._btndown = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_down")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_left")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_right")
-	arg_1_0._btnrevertoperation = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_revert_operation")
-	arg_1_0._btnrevertgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_revert_game")
-	arg_1_0._btntaskreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task_reward")
+local PushBoxView = class("PushBoxView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PushBoxView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnup = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_up")
+	self._btndown = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_down")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_left")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_right")
+	self._btnrevertoperation = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_revert_operation")
+	self._btnrevertgame = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_revert_game")
+	self._btntaskreward = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task_reward")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnup:AddClickListener(arg_2_0._btnupOnClick, arg_2_0)
-	arg_2_0._btndown:AddClickListener(arg_2_0._btndownOnClick, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0._btnrevertoperation:AddClickListener(arg_2_0._btnrevertoperationOnClick, arg_2_0)
-	arg_2_0._btnrevertgame:AddClickListener(arg_2_0._btnrevertgameOnClick, arg_2_0)
-	arg_2_0._btntaskreward:AddClickListener(arg_2_0._btntaskrewardOnClick, arg_2_0)
+function PushBoxView:addEvents()
+	self._btnup:AddClickListener(self._btnupOnClick, self)
+	self._btndown:AddClickListener(self._btndownOnClick, self)
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self._btnrevertoperation:AddClickListener(self._btnrevertoperationOnClick, self)
+	self._btnrevertgame:AddClickListener(self._btnrevertgameOnClick, self)
+	self._btntaskreward:AddClickListener(self._btntaskrewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnup:RemoveClickListener()
-	arg_3_0._btndown:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnrevertoperation:RemoveClickListener()
-	arg_3_0._btnrevertgame:RemoveClickListener()
-	arg_3_0._btntaskreward:RemoveClickListener()
+function PushBoxView:removeEvents()
+	self._btnup:RemoveClickListener()
+	self._btndown:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._btnrevertoperation:RemoveClickListener()
+	self._btnrevertgame:RemoveClickListener()
+	self._btntaskreward:RemoveClickListener()
 end
 
-function var_0_0._btnrevertoperationOnClick(arg_4_0)
-	arg_4_0._game_mgr:revertStep()
+function PushBoxView:_btnrevertoperationOnClick()
+	self._game_mgr:revertStep()
 end
 
-function var_0_0._btnrevertgameOnClick(arg_5_0)
-	arg_5_0._game_mgr:revertGame()
+function PushBoxView:_btnrevertgameOnClick()
+	self._game_mgr:revertGame()
 end
 
-function var_0_0._btntaskrewardOnClick(arg_6_0)
+function PushBoxView:_btntaskrewardOnClick()
 	PushBoxRpc.instance:sendReceiveTaskRewardRequest(nil, 1)
 end
 
-function var_0_0._btnupOnClick(arg_7_0)
-	arg_7_0:_walk(PushBoxGameMgr.Direction.Up)
+function PushBoxView:_btnupOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Up)
 end
 
-function var_0_0._btndownOnClick(arg_8_0)
-	arg_8_0:_walk(PushBoxGameMgr.Direction.Down)
+function PushBoxView:_btndownOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Down)
 end
 
-function var_0_0._btnleftOnClick(arg_9_0)
-	arg_9_0:_walk(PushBoxGameMgr.Direction.Left)
+function PushBoxView:_btnleftOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Left)
 end
 
-function var_0_0._btnrightOnClick(arg_10_0)
-	arg_10_0:_walk(PushBoxGameMgr.Direction.Right)
+function PushBoxView:_btnrightOnClick()
+	self:_walk(PushBoxGameMgr.Direction.Right)
 end
 
-function var_0_0._editableInitView(arg_11_0)
+function PushBoxView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function PushBoxView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0.viewContainer._navigateButtonView:setOverrideClose(arg_13_0._onNavigateCloseCallback, arg_13_0)
+function PushBoxView:onOpen()
+	self.viewContainer._navigateButtonView:setOverrideClose(self._onNavigateCloseCallback, self)
 
-	arg_13_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
 
-	arg_13_0._game_mgr:startGame(1)
+	self._game_mgr:startGame(1)
 end
 
-function var_0_0._onNavigateCloseCallback(arg_14_0)
-	arg_14_0.viewContainer._navigateButtonView:setOverrideClose(nil, nil)
-	arg_14_0:closeThis()
+function PushBoxView:_onNavigateCloseCallback()
+	self.viewContainer._navigateButtonView:setOverrideClose(nil, nil)
+	self:closeThis()
 	MainController.instance:enterMainScene()
 end
 
-function var_0_0._walk(arg_15_0, arg_15_1)
-	if not arg_15_0._last_time then
-		arg_15_0._last_time = Time.time
-	elseif Time.time - arg_15_0._last_time < 0.2 then
+function PushBoxView:_walk(direction)
+	if not self._last_time then
+		self._last_time = Time.time
+	elseif Time.time - self._last_time < 0.2 then
 		return
 	end
 
-	arg_15_0._last_time = Time.time
+	self._last_time = Time.time
 
-	arg_15_0._game_mgr:_onMove(arg_15_1)
+	self._game_mgr:_onMove(direction)
 end
 
-function var_0_0.onClose(arg_16_0)
+function PushBoxView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function PushBoxView:onDestroyView()
 	return
 end
 
-return var_0_0
+return PushBoxView

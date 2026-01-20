@@ -1,295 +1,302 @@
-﻿module("modules.logic.survival.view.reputation.SurvivalReputationBuildItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/reputation/SurvivalReputationBuildItem.lua
 
-local var_0_0 = class("SurvivalReputationBuildItem", LuaCompBase)
+module("modules.logic.survival.view.reputation.SurvivalReputationBuildItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SurvivalReputationBuildItem = class("SurvivalReputationBuildItem", LuaCompBase)
+
+function SurvivalReputationBuildItem:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0._txtcamp = gohelper.findChildText(arg_2_0.viewGO, "go_card/#txt_camp")
-	arg_2_0._simagebuilding = gohelper.findChildSingleImage(arg_2_0.viewGO, "go_card/#simage_building")
-	arg_2_0._txtname = gohelper.findChildText(arg_2_0.viewGO, "go_card/#txt_name")
-	arg_2_0._imagecamp = gohelper.findChildImage(arg_2_0.viewGO, "go_card/#image_camp")
-	arg_2_0._imagelevelbg = gohelper.findChildImage(arg_2_0.viewGO, "go_card/#image_levelbg")
-	arg_2_0._txtlevel = gohelper.findChildText(arg_2_0.viewGO, "go_card/#image_levelbg/#txt_level")
-	arg_2_0._imageprogresspre = gohelper.findChildImage(arg_2_0.viewGO, "go_card/score/progress/#image_progress_pre")
-	arg_2_0._imageprogress = gohelper.findChildImage(arg_2_0.viewGO, "go_card/score/progress/#image_progress")
-	arg_2_0._txtcurrent = gohelper.findChildText(arg_2_0.viewGO, "go_card/score/#txt_current")
-	arg_2_0._txtcurrentloop = gohelper.findChildText(arg_2_0.viewGO, "go_card/score/#txt_current_loop")
-	arg_2_0._txttotal = gohelper.findChildText(arg_2_0.viewGO, "go_card/score/#txt_total")
-	arg_2_0._golevelUp = gohelper.findChild(arg_2_0.viewGO, "go_card/#go_levelUp")
-	arg_2_0._goselect = gohelper.findChild(arg_2_0.viewGO, "#go_select")
-	arg_2_0._btnclick = gohelper.findChildButtonWithAudio(arg_2_0.viewGO, "#btn_click")
+function SurvivalReputationBuildItem:init(viewGO)
+	self.viewGO = viewGO
+	self._txtcamp = gohelper.findChildText(self.viewGO, "go_card/#txt_camp")
+	self._simagebuilding = gohelper.findChildSingleImage(self.viewGO, "go_card/#simage_building")
+	self._txtname = gohelper.findChildText(self.viewGO, "go_card/#txt_name")
+	self._imagecamp = gohelper.findChildImage(self.viewGO, "go_card/#image_camp")
+	self._imagelevelbg = gohelper.findChildImage(self.viewGO, "go_card/#image_levelbg")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "go_card/#image_levelbg/#txt_level")
+	self._imageprogresspre = gohelper.findChildImage(self.viewGO, "go_card/score/progress/#image_progress_pre")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "go_card/score/progress/#image_progress")
+	self._txtcurrent = gohelper.findChildText(self.viewGO, "go_card/score/#txt_current")
+	self._txtcurrentloop = gohelper.findChildText(self.viewGO, "go_card/score/#txt_current_loop")
+	self._txttotal = gohelper.findChildText(self.viewGO, "go_card/score/#txt_total")
+	self._golevelUp = gohelper.findChild(self.viewGO, "go_card/#go_levelUp")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
 end
 
-function var_0_0.onStart(arg_3_0)
+function SurvivalReputationBuildItem:onStart()
 	return
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0:addClickCb(arg_4_0._btnclick, arg_4_0.onClickBtnClick, arg_4_0)
+function SurvivalReputationBuildItem:addEventListeners()
+	self:addClickCb(self._btnclick, self.onClickBtnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
+function SurvivalReputationBuildItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onDestroy(arg_6_0)
+function SurvivalReputationBuildItem:onDestroy()
 	return
 end
 
-function var_0_0.setData(arg_7_0, arg_7_1)
-	arg_7_0.score = arg_7_1.score
-	arg_7_0.mo = arg_7_1.mo
-	arg_7_0.index = arg_7_1.index
-	arg_7_0.onAnimalPlayCallBack = arg_7_1.onAnimalPlayCallBack
+function SurvivalReputationBuildItem:setData(data)
+	self.score = data.score
+	self.mo = data.mo
+	self.index = data.index
+	self.onAnimalPlayCallBack = data.onAnimalPlayCallBack
 
-	if arg_7_1 == nil then
-		gohelper.setActive(arg_7_0.viewGO, false)
+	if data == nil then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	arg_7_0.buildingCfgId = arg_7_0.mo.buildingId
-	arg_7_0.buildCfg = SurvivalConfig.instance:getBuildingConfig(arg_7_0.buildingCfgId, arg_7_0.mo.level)
-	arg_7_0.onClickCallBack = arg_7_1.onClickCallBack
-	arg_7_0.onClickContext = arg_7_1.onClickContext
-	arg_7_0.reputationProp = arg_7_0.mo.survivalReputationPropMo.prop
+	self.buildingCfgId = self.mo.buildingId
+	self.buildCfg = SurvivalConfig.instance:getBuildingConfig(self.buildingCfgId, self.mo.level)
+	self.onClickCallBack = data.onClickCallBack
+	self.onClickContext = data.onClickContext
+	self.reputationProp = self.mo.survivalReputationPropMo.prop
 
-	arg_7_0:refreshReputationData()
-	arg_7_0:refreshNotAnimUI()
-	arg_7_0:refreshTextScore()
-	arg_7_0:refreshProgress()
-	arg_7_0:refreshProgressPre()
-	arg_7_0:refreshUpgrade()
+	self:refreshReputationData()
+	self:refreshNotAnimUI()
+	self:refreshTextScore()
+	self:refreshProgress()
+	self:refreshProgressPre()
+	self:refreshUpgrade()
 end
 
-function var_0_0.refreshReputationData(arg_8_0)
-	arg_8_0.survivalReputationPropMo = SurvivalReputationPropMo.New()
+function SurvivalReputationBuildItem:refreshReputationData()
+	self.survivalReputationPropMo = SurvivalReputationPropMo.New()
 
-	arg_8_0.survivalReputationPropMo:setData(arg_8_0.reputationProp)
+	self.survivalReputationPropMo:setData(self.reputationProp)
 
-	arg_8_0.reputationId = arg_8_0.reputationProp.reputationId
-	arg_8_0.reputationCfg = SurvivalConfig.instance:getReputationCfgById(arg_8_0.reputationId, arg_8_0.reputationProp.reputationLevel)
-	arg_8_0.reputationType = arg_8_0.reputationCfg.type
-	arg_8_0.isMaxLevel = arg_8_0.survivalReputationPropMo:isMaxLevel()
+	self.reputationId = self.reputationProp.reputationId
+	self.reputationCfg = SurvivalConfig.instance:getReputationCfgById(self.reputationId, self.reputationProp.reputationLevel)
+	self.reputationType = self.reputationCfg.type
+	self.isMaxLevel = self.survivalReputationPropMo:isMaxLevel()
 end
 
-function var_0_0.onClickBtnClick(arg_9_0)
-	if arg_9_0.onClickCallBack then
-		arg_9_0.onClickCallBack(arg_9_0.onClickContext, arg_9_0)
+function SurvivalReputationBuildItem:onClickBtnClick()
+	if self.onClickCallBack then
+		self.onClickCallBack(self.onClickContext, self)
 	end
 end
 
-function var_0_0.setSelect(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goselect, arg_10_1)
+function SurvivalReputationBuildItem:setSelect(value)
+	gohelper.setActive(self._goselect, value)
 
-	arg_10_0.isSelect = arg_10_1
+	self.isSelect = value
 
-	arg_10_0:refreshProgress()
-	arg_10_0:refreshProgressPre()
-	arg_10_0:refreshTextScore()
+	self:refreshProgress()
+	self:refreshProgressPre()
+	self:refreshTextScore()
 end
 
-function var_0_0.refreshNotAnimUI(arg_11_0)
-	arg_11_0._txtcamp.text = arg_11_0.reputationCfg.name
+function SurvivalReputationBuildItem:refreshNotAnimUI()
+	self._txtcamp.text = self.reputationCfg.name
 
-	arg_11_0._simagebuilding:LoadImage(arg_11_0.buildCfg.icon)
+	self._simagebuilding:LoadImage(self.buildCfg.icon)
 
-	arg_11_0._txtname.text = arg_11_0.buildCfg.name
+	self._txtname.text = self.buildCfg.name
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_11_0._imagecamp, arg_11_0.reputationCfg.icon)
+	UISpriteSetMgr.instance:setSurvivalSprite(self._imagecamp, self.reputationCfg.icon)
 
-	arg_11_0.reputationLevel = arg_11_0.reputationProp.reputationLevel
-	arg_11_0._txtlevel.text = "Lv." .. arg_11_0.reputationLevel
-	arg_11_0.curReputation = arg_11_0.reputationProp.reputationExp
+	self.reputationLevel = self.reputationProp.reputationLevel
+	self._txtlevel.text = "Lv." .. self.reputationLevel
+	self.curReputation = self.reputationProp.reputationExp
 
-	local var_11_0 = arg_11_0.survivalReputationPropMo:getLevelBkg()
+	local leveBg = self.survivalReputationPropMo:getLevelBkg()
 
-	UISpriteSetMgr.instance:setSurvivalSprite2(arg_11_0._imagelevelbg, var_11_0)
+	UISpriteSetMgr.instance:setSurvivalSprite2(self._imagelevelbg, leveBg)
 
-	local var_11_1 = arg_11_0.survivalReputationPropMo:getLevelProgressBkg(true)
+	leveBg = self.survivalReputationPropMo:getLevelProgressBkg(true)
 
-	UISpriteSetMgr.instance:setSurvivalSprite2(arg_11_0._imageprogresspre, var_11_1)
+	UISpriteSetMgr.instance:setSurvivalSprite2(self._imageprogresspre, leveBg)
 
-	local var_11_2 = arg_11_0.survivalReputationPropMo:getLevelProgressBkg()
+	leveBg = self.survivalReputationPropMo:getLevelProgressBkg()
 
-	UISpriteSetMgr.instance:setSurvivalSprite2(arg_11_0._imageprogress, var_11_2)
+	UISpriteSetMgr.instance:setSurvivalSprite2(self._imageprogress, leveBg)
 
-	if arg_11_0.isMaxLevel then
-		arg_11_0._txttotal.text = "--"
+	if self.isMaxLevel then
+		self._txttotal.text = "--"
 	else
-		local var_11_3 = SurvivalConfig.instance:getReputationCost(arg_11_0.reputationId, arg_11_0.reputationLevel)
+		local reputationCost = SurvivalConfig.instance:getReputationCost(self.reputationId, self.reputationLevel)
 
-		arg_11_0._txttotal.text = var_11_3
+		self._txttotal.text = reputationCost
 	end
 end
 
-function var_0_0.refreshUpgrade(arg_12_0)
-	if arg_12_0.isMaxLevel then
-		gohelper.setActive(arg_12_0._golevelUp, false)
+function SurvivalReputationBuildItem:refreshUpgrade()
+	if self.isMaxLevel then
+		gohelper.setActive(self._golevelUp, false)
 	else
-		local var_12_0 = SurvivalConfig.instance:getReputationCost(arg_12_0.reputationId, arg_12_0.reputationLevel)
+		local reputationCost = SurvivalConfig.instance:getReputationCost(self.reputationId, self.reputationLevel)
 
-		gohelper.setActive(arg_12_0._golevelUp, var_12_0 <= arg_12_0.score + arg_12_0.curReputation)
+		gohelper.setActive(self._golevelUp, reputationCost <= self.score + self.curReputation)
 	end
 end
 
-function var_0_0.refreshProgress(arg_13_0)
-	if arg_13_0.isMaxLevel then
-		arg_13_0._imageprogress.fillAmount = 0
+function SurvivalReputationBuildItem:refreshProgress()
+	if self.isMaxLevel then
+		self._imageprogress.fillAmount = 0
 	else
-		local var_13_0 = SurvivalConfig.instance:getReputationCost(arg_13_0.reputationId, arg_13_0.reputationLevel)
+		local reputationCost = SurvivalConfig.instance:getReputationCost(self.reputationId, self.reputationLevel)
 
-		arg_13_0._imageprogress.fillAmount = arg_13_0.curReputation / var_13_0
+		self._imageprogress.fillAmount = self.curReputation / reputationCost
 	end
 end
 
-function var_0_0.refreshProgressPre(arg_14_0)
-	local var_14_0
+function SurvivalReputationBuildItem:refreshProgressPre()
+	local per
 
-	if arg_14_0.isSelect and not arg_14_0.isMaxLevel then
-		local var_14_1 = SurvivalConfig.instance:getReputationCost(arg_14_0.reputationId, arg_14_0.reputationLevel)
-		local var_14_2 = (arg_14_0.score + arg_14_0.curReputation) / var_14_1
+	if self.isSelect and not self.isMaxLevel then
+		local reputationCost = SurvivalConfig.instance:getReputationCost(self.reputationId, self.reputationLevel)
 
-		arg_14_0._imageprogresspre.fillAmount = var_14_2
+		per = (self.score + self.curReputation) / reputationCost
+		self._imageprogresspre.fillAmount = per
 
-		gohelper.setActive(arg_14_0._imageprogresspre, true)
+		gohelper.setActive(self._imageprogresspre, true)
 	else
-		gohelper.setActive(arg_14_0._imageprogresspre, false)
+		gohelper.setActive(self._imageprogresspre, false)
 	end
 end
 
-function var_0_0.refreshTextScore(arg_15_0)
-	if arg_15_0.isMaxLevel then
-		arg_15_0._txtcurrent.text = "--"
+function SurvivalReputationBuildItem:refreshTextScore()
+	if self.isMaxLevel then
+		self._txtcurrent.text = "--"
 
-		gohelper.setActive(arg_15_0._txtcurrentloop, false)
-	elseif arg_15_0.isSelect then
-		arg_15_0._txtcurrent.text = string.format("%s", arg_15_0.curReputation)
-		arg_15_0._txtcurrentloop.text = string.format("(+%s)", arg_15_0.score)
+		gohelper.setActive(self._txtcurrentloop, false)
+	elseif self.isSelect then
+		self._txtcurrent.text = string.format("%s", self.curReputation)
+		self._txtcurrentloop.text = string.format("(+%s)", self.score)
 
-		gohelper.setActive(arg_15_0._txtcurrentloop, true)
+		gohelper.setActive(self._txtcurrentloop, true)
 	else
-		arg_15_0._txtcurrent.text = arg_15_0.curReputation
+		self._txtcurrent.text = self.curReputation
 
-		gohelper.setActive(arg_15_0._txtcurrentloop, false)
+		gohelper.setActive(self._txtcurrentloop, false)
 	end
 end
 
-function var_0_0.playUpAnim(arg_16_0, arg_16_1)
-	local var_16_0, var_16_1 = SurvivalConfig.instance:getReputationCost(arg_16_0.reputationId, arg_16_0.reputationLevel), arg_16_0.curReputation
+function SurvivalReputationBuildItem:playUpAnim(survivalBuilding)
+	local reputationCost = SurvivalConfig.instance:getReputationCost(self.reputationId, self.reputationLevel)
+	local oldReputation = self.curReputation
+	local oldTotalReputation = reputationCost
 
-	arg_16_0.oldPer = var_16_1 / var_16_0
+	self.oldPer = oldReputation / oldTotalReputation
 
-	local var_16_2 = (var_16_1 + arg_16_0.score) / var_16_0
+	local oldUpgradePer = (oldReputation + self.score) / oldTotalReputation
 
-	arg_16_0.isUpgrade = var_16_2 >= 1
-	arg_16_0.reputationProp = arg_16_1.reputationProp
+	self.isUpgrade = oldUpgradePer >= 1
+	self.reputationProp = survivalBuilding.reputationProp
 
-	arg_16_0:refreshReputationData()
+	self:refreshReputationData()
 
-	local var_16_3 = math.min(var_16_2, 1)
-	local var_16_4 = 1.5
+	local firstPer = math.min(oldUpgradePer, 1)
+	local totalTimeS = 1.5
 
-	arg_16_0.firstMovePer = var_16_3 - arg_16_0.oldPer
+	self.firstMovePer = firstPer - self.oldPer
 
-	local var_16_5 = var_16_1 + arg_16_0.score
-	local var_16_6 = arg_16_0.reputationProp.reputationLevel
+	local toNum = oldReputation + self.score
+	local curReputationLevel = self.reputationProp.reputationLevel
 
-	arg_16_0.secondMovePer = 0
+	self.secondMovePer = 0
 
-	if arg_16_0.isUpgrade then
-		if arg_16_0.isMaxLevel then
-			arg_16_0.secondMovePer = 0
+	if self.isUpgrade then
+		if self.isMaxLevel then
+			self.secondMovePer = 0
 		else
-			arg_16_0.secondMovePer = arg_16_0.reputationProp.reputationExp / SurvivalConfig.instance:getReputationCost(arg_16_0.reputationId, var_16_6)
+			local curReputation = self.reputationProp.reputationExp
+			local curTotalReputation = SurvivalConfig.instance:getReputationCost(self.reputationId, curReputationLevel)
+
+			self.secondMovePer = curReputation / curTotalReputation
 		end
 	end
 
-	local var_16_7 = FlowSequence.New()
+	local flow = FlowSequence.New()
 
-	var_16_7:addWork(TweenWork.New({
+	flow:addWork(TweenWork.New({
 		from = 0,
 		type = "DOTweenFloat",
-		to = arg_16_0.firstMovePer + arg_16_0.secondMovePer,
-		t = var_16_4,
-		frameCb = arg_16_0._onProgressFloat,
-		cbObj = arg_16_0,
+		to = self.firstMovePer + self.secondMovePer,
+		t = totalTimeS,
+		frameCb = self._onProgressFloat,
+		cbObj = self,
 		ease = EaseType.OutQuart
 	}))
-	gohelper.setActive(arg_16_0._imageprogresspre, true)
+	gohelper.setActive(self._imageprogresspre, true)
 
-	arg_16_0._imageprogresspre.fillAmount = var_16_3
+	self._imageprogresspre.fillAmount = firstPer
 
-	if arg_16_0.isUpgrade then
-		var_16_7:addWork(AnimatorWork.New({
+	if self.isUpgrade then
+		flow:addWork(AnimatorWork.New({
 			animName = "lvup",
-			go = arg_16_0.viewGO
+			go = self.viewGO
 		}))
 	end
 
-	local var_16_8 = FlowParallel.New()
+	local parallelWork = FlowParallel.New()
 
-	var_16_8:addWork(AnimatorWork.New({
+	parallelWork:addWork(AnimatorWork.New({
 		animName = "scoreup",
-		go = arg_16_0.viewGO
+		go = self.viewGO
 	}))
-	var_16_8:addWork(TweenWork.New({
+	parallelWork:addWork(TweenWork.New({
 		type = "DOTweenFloat",
-		from = var_16_1,
-		to = var_16_5,
-		t = var_16_4,
-		frameCb = arg_16_0._onFloat,
-		cbObj = arg_16_0,
+		from = oldReputation,
+		to = toNum,
+		t = totalTimeS,
+		frameCb = self._onFloat,
+		cbObj = self,
 		ease = EaseType.OutQuart
 	}))
-	var_16_8:addWork(var_16_7)
+	parallelWork:addWork(flow)
 
-	return var_16_8
+	return parallelWork
 end
 
-function var_0_0._onProgressFloat(arg_17_0, arg_17_1)
-	if arg_17_1 <= arg_17_0.firstMovePer then
-		arg_17_0.progresMoveStage = 1
-		arg_17_0._imageprogress.fillAmount = arg_17_0.oldPer + arg_17_1
+function SurvivalReputationBuildItem:_onProgressFloat(num)
+	if num <= self.firstMovePer then
+		self.progresMoveStage = 1
+		self._imageprogress.fillAmount = self.oldPer + num
 	end
 
-	if arg_17_1 >= arg_17_0.firstMovePer and arg_17_0.isUpgrade and arg_17_0.progresMoveStage == 1 then
-		arg_17_0.progresMoveStage = 2
+	if num >= self.firstMovePer and self.isUpgrade and self.progresMoveStage == 1 then
+		self.progresMoveStage = 2
 
-		arg_17_0:_refreshUIState({
-			per = arg_17_0.secondMovePer
+		self:_refreshUIState({
+			per = self.secondMovePer
 		})
 	end
 
-	if arg_17_1 > arg_17_0.firstMovePer and arg_17_0.isUpgrade then
-		arg_17_0._imageprogress.fillAmount = arg_17_1 - arg_17_0.firstMovePer
+	if num > self.firstMovePer and self.isUpgrade then
+		self._imageprogress.fillAmount = num - self.firstMovePer
 	end
 end
 
-function var_0_0._onFloat(arg_18_0, arg_18_1)
-	arg_18_0._txtcurrent.text = string.format("%s", math.floor(arg_18_1))
+function SurvivalReputationBuildItem:_onFloat(num)
+	self._txtcurrent.text = string.format("%s", math.floor(num))
 end
 
-function var_0_0._refreshUIState2(arg_19_0)
-	arg_19_0:refreshNotAnimUI()
+function SurvivalReputationBuildItem:_refreshUIState2()
+	self:refreshNotAnimUI()
 end
 
-function var_0_0._refreshUIState(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_1.per
+function SurvivalReputationBuildItem:_refreshUIState(param)
+	local per = param.per
 
-	arg_20_0:refreshNotAnimUI()
-	gohelper.setActive(arg_20_0._imageprogresspre, true)
+	self:refreshNotAnimUI()
+	gohelper.setActive(self._imageprogresspre, true)
 
-	arg_20_0._imageprogresspre.fillAmount = var_20_0
-	arg_20_0._imageprogress.fillAmount = 0
+	self._imageprogresspre.fillAmount = per
+	self._imageprogress.fillAmount = 0
 
-	gohelper.setActive(arg_20_0._golevelUp, false)
+	gohelper.setActive(self._golevelUp, false)
 end
 
-return var_0_0
+return SurvivalReputationBuildItem

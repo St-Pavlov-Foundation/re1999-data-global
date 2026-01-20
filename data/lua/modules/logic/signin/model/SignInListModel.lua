@@ -1,19 +1,21 @@
-﻿module("modules.logic.signin.model.SignInListModel", package.seeall)
+﻿-- chunkname: @modules/logic/signin/model/SignInListModel.lua
 
-local var_0_0 = class("SignInListModel", ListScrollModel)
+module("modules.logic.signin.model.SignInListModel", package.seeall)
 
-function var_0_0.setPropList(arg_1_0, arg_1_1)
-	arg_1_0._moList = arg_1_1 and arg_1_1 or {}
+local SignInListModel = class("SignInListModel", ListScrollModel)
 
-	arg_1_0:setList(arg_1_0._moList)
+function SignInListModel:setPropList(Infos)
+	self._moList = Infos and Infos or {}
+
+	self:setList(self._moList)
 end
 
-function var_0_0.clearPropList(arg_2_0)
-	arg_2_0._moList = nil
+function SignInListModel:clearPropList()
+	self._moList = nil
 
-	arg_2_0:clear()
+	self:clear()
 end
 
-var_0_0.instance = var_0_0.New()
+SignInListModel.instance = SignInListModel.New()
 
-return var_0_0
+return SignInListModel

@@ -1,13 +1,15 @@
-﻿module("modules.logic.player.view.PlayerClothGuideViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerClothGuideViewContainer.lua
 
-local var_0_0 = class("PlayerClothGuideViewContainer", BaseViewContainer)
+module("modules.logic.player.view.PlayerClothGuideViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerClothGuideViewContainer = class("PlayerClothGuideViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PlayerClothGuideView.New())
+function PlayerClothGuideViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, PlayerClothGuideView.New())
+
+	return views
 end
 
-return var_0_0
+return PlayerClothGuideViewContainer

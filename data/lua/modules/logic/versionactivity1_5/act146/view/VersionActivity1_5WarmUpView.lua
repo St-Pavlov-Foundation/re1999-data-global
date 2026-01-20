@@ -1,510 +1,515 @@
-﻿module("modules.logic.versionactivity1_5.act146.view.VersionActivity1_5WarmUpView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act146/view/VersionActivity1_5WarmUpView.lua
 
-local var_0_0 = class("VersionActivity1_5WarmUpView", BaseView)
+module("modules.logic.versionactivity1_5.act146.view.VersionActivity1_5WarmUpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/LimitTime/#txt_LimitTime")
-	arg_1_0._scrollTaskTabList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList")
-	arg_1_0._goradiotaskitem = gohelper.findChild(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
-	arg_1_0._scrollTaskDesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
-	arg_1_0._txtTaskContent = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
-	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward")
-	arg_1_0._goWrongChannel = gohelper.findChild(arg_1_0.viewGO, "Right/TaskPanel/#go_WrongChannel")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
-	arg_1_0._godragarea = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_dragarea")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "Right/TaskPanel/#go_Title")
-	arg_1_0._txtTaskTitle = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/#go_Title/#txt_TaskTitle")
-	arg_1_0._btngetreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/RawardPanel/#btn_getreward")
-	arg_1_0._imagePhoto2 = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail2/#image_Photo2")
-	arg_1_0._goguide1 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_guide1")
-	arg_1_0._goguide2 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_guide2")
-	arg_1_0._gomail1 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_mail1")
-	arg_1_0._imageTipsBG1 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_mail1/#image_TipsBG1")
-	arg_1_0._gomail2 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_mail2")
-	arg_1_0._imageTipsBG2 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_mail2/#image_TipsBG2")
-	arg_1_0._imagePhoto = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail1/image_Envelop/#image_Photo")
-	arg_1_0._imagePhotoMask1 = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask1")
-	arg_1_0._imagePhotoMask2 = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask2")
-	arg_1_0._imagePhotoMask3 = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask3")
+local VersionActivity1_5WarmUpView = class("VersionActivity1_5WarmUpView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_5WarmUpView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Right/LimitTime/#txt_LimitTime")
+	self._scrollTaskTabList = gohelper.findChildScrollRect(self.viewGO, "Right/TaskTab/#scroll_TaskTabList")
+	self._goradiotaskitem = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
+	self._scrollTaskDesc = gohelper.findChildScrollRect(self.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
+	self._txtTaskContent = gohelper.findChildText(self.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
+	self._scrollReward = gohelper.findChildScrollRect(self.viewGO, "Right/RawardPanel/#scroll_Reward")
+	self._goWrongChannel = gohelper.findChild(self.viewGO, "Right/TaskPanel/#go_WrongChannel")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
+	self._godragarea = gohelper.findChild(self.viewGO, "Middle/#go_dragarea")
+	self._goTitle = gohelper.findChild(self.viewGO, "Right/TaskPanel/#go_Title")
+	self._txtTaskTitle = gohelper.findChildText(self.viewGO, "Right/TaskPanel/#go_Title/#txt_TaskTitle")
+	self._btngetreward = gohelper.findChildButtonWithAudio(self.viewGO, "Right/RawardPanel/#btn_getreward")
+	self._imagePhoto2 = gohelper.findChildImage(self.viewGO, "Middle/#go_mail2/#image_Photo2")
+	self._goguide1 = gohelper.findChild(self.viewGO, "Middle/#go_guide1")
+	self._goguide2 = gohelper.findChild(self.viewGO, "Middle/#go_guide2")
+	self._gomail1 = gohelper.findChild(self.viewGO, "Middle/#go_mail1")
+	self._imageTipsBG1 = gohelper.findChild(self.viewGO, "Middle/#go_mail1/#image_TipsBG1")
+	self._gomail2 = gohelper.findChild(self.viewGO, "Middle/#go_mail2")
+	self._imageTipsBG2 = gohelper.findChild(self.viewGO, "Middle/#go_mail2/#image_TipsBG2")
+	self._imagePhoto = gohelper.findChildImage(self.viewGO, "Middle/#go_mail1/image_Envelop/#image_Photo")
+	self._imagePhotoMask1 = gohelper.findChildImage(self.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask1")
+	self._imagePhotoMask2 = gohelper.findChildImage(self.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask2")
+	self._imagePhotoMask3 = gohelper.findChildImage(self.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(Activity146Controller.instance, Activity146Event.OnEpisodeFinished, arg_2_0._onEpisodeFinished, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
-	arg_2_0._btngetreward:AddClickListener(arg_2_0._btngetrewardOnClick, arg_2_0)
+function VersionActivity1_5WarmUpView:addEvents()
+	self:addEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, self.refreshUI, self)
+	self:addEventCb(Activity146Controller.instance, Activity146Event.OnEpisodeFinished, self._onEpisodeFinished, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self._btngetreward:AddClickListener(self._btngetrewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(Activity146Controller.instance, Activity146Event.OnEpisodeFinished, arg_3_0._onEpisodeFinished, arg_3_0)
-	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
-	arg_3_0._btngetreward:RemoveClickListener()
+function VersionActivity1_5WarmUpView:removeEvents()
+	self:removeEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, self.refreshUI, self)
+	self:removeEventCb(Activity146Controller.instance, Activity146Event.OnEpisodeFinished, self._onEpisodeFinished, self)
+	self:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self._btngetreward:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._episodeItemTab = arg_4_0:getUserDataTb_()
-	arg_4_0._rewardItemTab = arg_4_0:getUserDataTb_()
-	arg_4_0._goRewardContent = gohelper.findChild(arg_4_0.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content")
-	arg_4_0._goTaskContent = gohelper.findChild(arg_4_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content")
-	arg_4_0._dragAreaCanvasGroup = gohelper.onceAddComponent(arg_4_0._godragarea, typeof(UnityEngine.CanvasGroup))
-	arg_4_0._viewGOCanvasGroup = gohelper.onceAddComponent(arg_4_0.viewGO, typeof(UnityEngine.CanvasGroup))
+function VersionActivity1_5WarmUpView:_editableInitView()
+	self._episodeItemTab = self:getUserDataTb_()
+	self._rewardItemTab = self:getUserDataTb_()
+	self._goRewardContent = gohelper.findChild(self.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content")
+	self._goTaskContent = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content")
+	self._dragAreaCanvasGroup = gohelper.onceAddComponent(self._godragarea, typeof(UnityEngine.CanvasGroup))
+	self._viewGOCanvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
 
-	local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "Middle")
+	local goMiddle = gohelper.findChild(self.viewGO, "Middle")
 
-	arg_4_0._middleAnim = gohelper.onceAddComponent(var_4_0, typeof(UnityEngine.Animator))
-	arg_4_0._tipsBG1Anim = gohelper.onceAddComponent(arg_4_0._imageTipsBG1, typeof(UnityEngine.Animator))
-	arg_4_0._tipsBG2Anim = gohelper.onceAddComponent(arg_4_0._imageTipsBG2, typeof(UnityEngine.Animator))
-	arg_4_0._viewGOAnim = gohelper.onceAddComponent(arg_4_0.viewGO, typeof(UnityEngine.Animator))
+	self._middleAnim = gohelper.onceAddComponent(goMiddle, typeof(UnityEngine.Animator))
+	self._tipsBG1Anim = gohelper.onceAddComponent(self._imageTipsBG1, typeof(UnityEngine.Animator))
+	self._tipsBG2Anim = gohelper.onceAddComponent(self._imageTipsBG2, typeof(UnityEngine.Animator))
+	self._viewGOAnim = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_4_0._gomail1, false)
-	gohelper.setActive(arg_4_0._gomail2, false)
+	gohelper.setActive(self._gomail1, false)
+	gohelper.setActive(self._gomail2, false)
 
-	arg_4_0._txtWrongChannel = gohelper.findChildText(arg_4_0._goWrongChannel, "txt_WrongChannel")
-	arg_4_0._episodeCanGetInfoDict = {}
+	self._txtWrongChannel = gohelper.findChildText(self._goWrongChannel, "txt_WrongChannel")
+	self._episodeCanGetInfoDict = {}
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivity1_5WarmUpView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.parent
+function VersionActivity1_5WarmUpView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_6_0, arg_6_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 
-	arg_6_0._actId = arg_6_0.viewParam.actId
+	self._actId = self.viewParam.actId
 
-	Activity146Controller.instance:getAct146InfoFromServer(arg_6_0._actId)
+	Activity146Controller.instance:getAct146InfoFromServer(self._actId)
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	arg_7_0:_showDeadline()
-	arg_7_0:_initEpisodeList()
-	arg_7_0:_realRefreshEpisodeUI()
-	arg_7_0:_refreshGuide()
-	arg_7_0:_initRewards()
+function VersionActivity1_5WarmUpView:refreshUI()
+	self:_showDeadline()
+	self:_initEpisodeList()
+	self:_realRefreshEpisodeUI()
+	self:_refreshGuide()
+	self:_initRewards()
 	Activity146Controller.instance:markHasEnterEpisode()
 end
 
-function var_0_0._showDeadline(arg_8_0)
-	arg_8_0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(arg_8_0._onRefreshDeadline, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0._onRefreshDeadline, arg_8_0, 60)
+function VersionActivity1_5WarmUpView:_showDeadline()
+	self:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 60)
 end
 
-function var_0_0._onRefreshDeadline(arg_9_0)
-	local var_9_0, var_9_1, var_9_2 = ActivityModel.instance:getRemainTime(arg_9_0._actId)
+function VersionActivity1_5WarmUpView:_onRefreshDeadline()
+	local day, hour, minute = ActivityModel.instance:getRemainTime(self._actId)
 
-	arg_9_0._txtLimitTime.text = string.format(luaLang("verionactivity1_3radioview_remaintime"), var_9_0, var_9_1)
+	self._txtLimitTime.text = string.format(luaLang("verionactivity1_3radioview_remaintime"), day, hour)
 
-	if var_9_0 <= 0 and var_9_1 <= 0 and var_9_2 <= 0 then
-		TaskDispatcher.cancelTask(arg_9_0._onRefreshDeadline, arg_9_0)
+	if day <= 0 and hour <= 0 and minute <= 0 then
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 	end
 end
 
-var_0_0.DelaySwitchPhotoTime = 0.3
+VersionActivity1_5WarmUpView.DelaySwitchPhotoTime = 0.3
 
-function var_0_0._fakeRefreshEpisodeUI(arg_10_0, arg_10_1, arg_10_2)
-	gohelper.setActive(arg_10_0._goWrongChannel, not arg_10_2)
-	gohelper.setActive(arg_10_0._godragarea, not arg_10_2)
-	gohelper.setActive(arg_10_0._goTitle, arg_10_2)
-	gohelper.setActive(arg_10_0._scrollTaskDesc.gameObject, arg_10_2)
+function VersionActivity1_5WarmUpView:_fakeRefreshEpisodeUI(episodeId, isFinished)
+	gohelper.setActive(self._goWrongChannel, not isFinished)
+	gohelper.setActive(self._godragarea, not isFinished)
+	gohelper.setActive(self._goTitle, isFinished)
+	gohelper.setActive(self._scrollTaskDesc.gameObject, isFinished)
 
-	arg_10_0._dragAreaCanvasGroup.alpha = arg_10_2 and 0 or 1
-	arg_10_0._txtTaskContent.text = tostring(Activity146Config.instance:getEpisodeDesc(arg_10_0._actId, arg_10_1))
+	self._dragAreaCanvasGroup.alpha = isFinished and 0 or 1
+	self._txtTaskContent.text = tostring(Activity146Config.instance:getEpisodeDesc(self._actId, episodeId))
 
-	local var_10_0 = arg_10_0._isNeedDelaySwitchPhoto and var_0_0.DelaySwitchPhotoTime or 0
+	local delaySwitchTime = self._isNeedDelaySwitchPhoto and VersionActivity1_5WarmUpView.DelaySwitchPhotoTime or 0
 
-	arg_10_0._fakeEpisodeId = arg_10_1
-	arg_10_0._fakeEpisodeState = arg_10_2
+	self._fakeEpisodeId = episodeId
+	self._fakeEpisodeState = isFinished
 
-	TaskDispatcher.cancelTask(arg_10_0._delaySwitchPhoto, arg_10_0)
-	TaskDispatcher.runDelay(arg_10_0._delaySwitchPhoto, arg_10_0, var_10_0)
+	TaskDispatcher.cancelTask(self._delaySwitchPhoto, self)
+	TaskDispatcher.runDelay(self._delaySwitchPhoto, self, delaySwitchTime)
 
-	arg_10_0._isNeedDelaySwitchPhoto = false
+	self._isNeedDelaySwitchPhoto = false
 
-	local var_10_1 = arg_10_1 > 1 and "p_v1a5_warmup_txt_WrongChannel" or "p_v1a5_warmup_txt_tip2"
+	local _txtWC = episodeId > 1 and "p_v1a5_warmup_txt_WrongChannel" or "p_v1a5_warmup_txt_tip2"
 
-	arg_10_0._txtWrongChannel.text = luaLang(var_10_1)
+	self._txtWrongChannel.text = luaLang(_txtWC)
 end
 
-function var_0_0._delaySwitchPhoto(arg_11_0)
-	local var_11_0 = arg_11_0._fakeEpisodeId
-	local var_11_1 = arg_11_0._fakeEpisodeState
+function VersionActivity1_5WarmUpView:_delaySwitchPhoto()
+	local episodeId = self._fakeEpisodeId
+	local isFinished = self._fakeEpisodeState
 
-	UISpriteSetMgr.instance:setV1a5WarmUpSprite(arg_11_0._imagePhoto2, "v1a5_warmup_photo" .. var_11_0)
-	UISpriteSetMgr.instance:setV1a5WarmUpSprite(arg_11_0._imagePhoto, "v1a5_warmup_photo" .. var_11_0)
-	gohelper.setActive(arg_11_0._imagePhotoMask1.gameObject, not var_11_1)
-	gohelper.setActive(arg_11_0._imagePhotoMask2.gameObject, not var_11_1)
-	gohelper.setActive(arg_11_0._imagePhotoMask3.gameObject, not var_11_1)
-	gohelper.setActive(arg_11_0._gomail1, var_11_0 == 1)
-	gohelper.setActive(arg_11_0._gomail2, var_11_0 ~= 1)
+	UISpriteSetMgr.instance:setV1a5WarmUpSprite(self._imagePhoto2, "v1a5_warmup_photo" .. episodeId)
+	UISpriteSetMgr.instance:setV1a5WarmUpSprite(self._imagePhoto, "v1a5_warmup_photo" .. episodeId)
+	gohelper.setActive(self._imagePhotoMask1.gameObject, not isFinished)
+	gohelper.setActive(self._imagePhotoMask2.gameObject, not isFinished)
+	gohelper.setActive(self._imagePhotoMask3.gameObject, not isFinished)
+	gohelper.setActive(self._gomail1, episodeId == 1)
+	gohelper.setActive(self._gomail2, episodeId ~= 1)
 
-	local var_11_2 = var_11_0 == 1 and var_11_1
-	local var_11_3 = var_11_0 == 1 and Activity146Model.instance:isEpisodeFinished(var_11_0)
+	local isEpisode_1_Finish = episodeId == 1 and isFinished
+	local isEpisode_1_RealFinish = episodeId == 1 and Activity146Model.instance:isEpisodeFinished(episodeId)
+	local stateInfo = self._middleAnim:GetCurrentAnimatorStateInfo(0)
+	local isUnNeedSwitchMiddleAnim = stateInfo:IsName("open") and isEpisode_1_Finish
 
-	if not (arg_11_0._middleAnim:GetCurrentAnimatorStateInfo(0):IsName("open") and var_11_2) then
-		if var_11_2 then
-			local var_11_4 = var_11_3 and 1 or 0
+	if not isUnNeedSwitchMiddleAnim then
+		if isEpisode_1_Finish then
+			local normalizedTime = isEpisode_1_RealFinish and 1 or 0
 
-			arg_11_0._middleAnim:Play("open", 0, var_11_4)
+			self._middleAnim:Play("open", 0, normalizedTime)
 		else
-			arg_11_0._middleAnim:Play("idle", 0, 0)
+			self._middleAnim:Play("idle", 0, 0)
 		end
 	end
 
-	local var_11_5 = var_11_1 and "close" or "open"
+	local tipsAnimName = isFinished and "close" or "open"
 
-	arg_11_0._tipsBG1Anim:Play(var_11_5, 0, 0)
-	arg_11_0._tipsBG2Anim:Play(var_11_5, 0, 0)
+	self._tipsBG1Anim:Play(tipsAnimName, 0, 0)
+	self._tipsBG2Anim:Play(tipsAnimName, 0, 0)
 end
 
-function var_0_0._realRefreshEpisodeUI(arg_12_0)
-	local var_12_0 = Activity146Model.instance:getCurSelectedEpisode()
-	local var_12_1 = Activity146Model.instance:isEpisodeFinished(var_12_0)
+function VersionActivity1_5WarmUpView:_realRefreshEpisodeUI()
+	local curSelectedEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
+	local isFinished = Activity146Model.instance:isEpisodeFinished(curSelectedEpisodeId)
 
-	arg_12_0:_fakeRefreshEpisodeUI(var_12_0, var_12_1)
+	self:_fakeRefreshEpisodeUI(curSelectedEpisodeId, isFinished)
 
-	arg_12_0._txtTaskTitle.text = tostring(Activity146Config.instance:getEpisodeTitle(arg_12_0._actId, var_12_0))
+	self._txtTaskTitle.text = tostring(Activity146Config.instance:getEpisodeTitle(self._actId, curSelectedEpisodeId))
 
-	gohelper.setActive(arg_12_0._imageTipsBG1, not var_12_1)
-	gohelper.setActive(arg_12_0._imageTipsBG2, not var_12_1)
+	gohelper.setActive(self._imageTipsBG1, not isFinished)
+	gohelper.setActive(self._imageTipsBG2, not isFinished)
 end
 
-function var_0_0._refreshGuide(arg_13_0)
-	local var_13_0 = Activity146Model.instance:getCurSelectedEpisode()
-	local var_13_1 = Activity146Model.instance:isEpisodeFinished(var_13_0)
-	local var_13_2 = Activity146Model.instance:isEpisodeFirstEnter(var_13_0)
+function VersionActivity1_5WarmUpView:_refreshGuide()
+	local curEpisode = Activity146Model.instance:getCurSelectedEpisode()
+	local isFinished = Activity146Model.instance:isEpisodeFinished(curEpisode)
+	local isFirstEnter = Activity146Model.instance:isEpisodeFirstEnter(curEpisode)
 
-	gohelper.setActive(arg_13_0._goguide1, var_13_0 == 1 and not var_13_1 and var_13_2)
-	gohelper.setActive(arg_13_0._goguide2, var_13_0 == 2 and not var_13_1 and var_13_2)
+	gohelper.setActive(self._goguide1, curEpisode == 1 and not isFinished and isFirstEnter)
+	gohelper.setActive(self._goguide2, curEpisode == 2 and not isFinished and isFirstEnter)
 end
 
-local var_0_1 = 6
+local episodeTxtPlayDuration = 6
 
-function var_0_0._onEpisodeFinished(arg_14_0)
-	local var_14_0 = Activity146Model.instance:getCurSelectedEpisode()
+function VersionActivity1_5WarmUpView:_onEpisodeFinished()
+	local curSelectedEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
 
-	arg_14_0:_fakeRefreshEpisodeUI(var_14_0, true)
+	self:_fakeRefreshEpisodeUI(curSelectedEpisodeId, true)
 
-	arg_14_0._viewGOCanvasGroup.blocksRaycasts = false
+	self._viewGOCanvasGroup.blocksRaycasts = false
 
-	arg_14_0:_overrideViewCloseCheckFunc()
+	self:_overrideViewCloseCheckFunc()
 	ActivityController.instance:dispatchEvent(ActivityEvent.SetBannerViewCategoryListInteract, false)
 
-	local var_14_1 = tostring(Activity146Config.instance:getEpisodeDesc(arg_14_0._actId, var_14_0))
+	local fmTxt = tostring(Activity146Config.instance:getEpisodeDesc(self._actId, curSelectedEpisodeId))
 
-	arg_14_0:_playEpisodeDesc("", var_14_1, var_0_1, arg_14_0._onPlayEpisodeDescFinished, arg_14_0)
+	self:_playEpisodeDesc("", fmTxt, episodeTxtPlayDuration, self._onPlayEpisodeDescFinished, self)
 
-	if var_14_0 == 1 then
+	if curSelectedEpisodeId == 1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_opening)
 	end
 end
 
-function var_0_0._playEpisodeDesc(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	if arg_15_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_15_0._tweenId)
+function VersionActivity1_5WarmUpView:_playEpisodeDesc(hasPlayTxt, wholeTxt, duration, playFinishCallBack, playFinishCallBackObj)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_15_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_15_0._onPlayEpisodeDescUpdate, arg_15_0)
+	TaskDispatcher.cancelTask(self._onPlayEpisodeDescUpdate, self)
 
-	local var_15_0 = GameUtil.utf8len(arg_15_2)
-	local var_15_1 = GameUtil.utf8len(arg_15_1)
-	local var_15_2 = arg_15_3 * (1 - (var_15_0 > 0 and var_15_1 / var_15_0 or 0))
+	local wholeTxtLengthen = GameUtil.utf8len(wholeTxt)
+	local hasPlayTxtLengthen = GameUtil.utf8len(hasPlayTxt)
+	local progress = wholeTxtLengthen > 0 and hasPlayTxtLengthen / wholeTxtLengthen or 0
+	local remainDuration = duration * (1 - progress)
 
-	arg_15_0._txtTaskContent.text = arg_15_1
-	arg_15_0._tweenId = ZProj.TweenHelper.DOText(arg_15_0._txtTaskContent, arg_15_2, var_15_2, arg_15_4, arg_15_5)
+	self._txtTaskContent.text = hasPlayTxt
+	self._tweenId = ZProj.TweenHelper.DOText(self._txtTaskContent, wholeTxt, remainDuration, playFinishCallBack, playFinishCallBackObj)
 
-	TaskDispatcher.runRepeat(arg_15_0._onPlayEpisodeDescUpdate, arg_15_0, 0)
+	TaskDispatcher.runRepeat(self._onPlayEpisodeDescUpdate, self, 0)
 
-	arg_15_0._isPlayingEpisodeDesc = true
+	self._isPlayingEpisodeDesc = true
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_loop)
 end
 
-function var_0_0._onPlayEpisodeDescUpdate(arg_16_0)
-	arg_16_0._scrollTaskDesc.verticalNormalizedPosition = 0
+function VersionActivity1_5WarmUpView:_onPlayEpisodeDescUpdate()
+	self._scrollTaskDesc.verticalNormalizedPosition = 0
 end
 
-function var_0_0._onPlayEpisodeDescFinished(arg_17_0)
-	arg_17_0._viewGOCanvasGroup.blocksRaycasts = true
+function VersionActivity1_5WarmUpView:_onPlayEpisodeDescFinished()
+	self._viewGOCanvasGroup.blocksRaycasts = true
 
-	gohelper.setActive(arg_17_0._btngetreward.gameObject, true)
+	gohelper.setActive(self._btngetreward.gameObject, true)
 
-	arg_17_0._isPlayingEpisodeDesc = false
+	self._isPlayingEpisodeDesc = false
 
-	arg_17_0:_revertViewCloseCheckFunc()
+	self:_revertViewCloseCheckFunc()
 	ActivityController.instance:dispatchEvent(ActivityEvent.SetBannerViewCategoryListInteract, true)
-	Activity146Controller.instance:onFinishActEpisode(arg_17_0._actId)
+	Activity146Controller.instance:onFinishActEpisode(self._actId)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
 
-	arg_17_0._scrollTaskDesc.verticalNormalizedPosition = 0
+	self._scrollTaskDesc.verticalNormalizedPosition = 0
 
-	TaskDispatcher.cancelTask(arg_17_0._onPlayEpisodeDescUpdate, arg_17_0)
+	TaskDispatcher.cancelTask(self._onPlayEpisodeDescUpdate, self)
 end
 
-function var_0_0._initEpisodeList(arg_18_0)
-	local var_18_0 = Activity146Config.instance:getAllEpisodeConfigs(arg_18_0._actId)
-	local var_18_1 = Activity146Model.instance:getCurSelectedEpisode()
-	local var_18_2 = {}
+function VersionActivity1_5WarmUpView:_initEpisodeList()
+	local allEpisodeList = Activity146Config.instance:getAllEpisodeConfigs(self._actId)
+	local curSelectEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
+	local useMap = {}
 
-	if var_18_0 then
-		for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-			local var_18_3 = arg_18_0:_getOrCreateEpisodeItem(iter_18_1.id)
+	if allEpisodeList then
+		for index, episodeCfg in ipairs(allEpisodeList) do
+			local episodeItem = self:_getOrCreateEpisodeItem(episodeCfg.id)
 
-			gohelper.setActive(var_18_3.episodeItemGo, iter_18_1 ~= nil)
+			gohelper.setActive(episodeItem.episodeItemGo, episodeCfg ~= nil)
 
-			if iter_18_1 then
-				var_18_3.txtDateUnSelected.text = string.format("Day.%s", iter_18_0)
-				var_18_3.txtDateSelected.text = string.format("Day.%s", iter_18_0)
+			if episodeCfg then
+				episodeItem.txtDateUnSelected.text = string.format("Day.%s", index)
+				episodeItem.txtDateSelected.text = string.format("Day.%s", index)
 
-				local var_18_4 = Activity146Model.instance:isEpisodeUnLock(iter_18_1.id)
-				local var_18_5 = iter_18_1.id == var_18_1
-				local var_18_6 = var_18_4 and "#acacac" or "#8C8783"
+				local isEpisodeUnLock = Activity146Model.instance:isEpisodeUnLock(episodeCfg.id)
+				local isSelected = episodeCfg.id == curSelectEpisodeId
+				local txtColor = isEpisodeUnLock and "#acacac" or "#8C8783"
 
-				var_18_3.txtDateUnSelected.color = GameUtil.parseColor(var_18_6)
+				episodeItem.txtDateUnSelected.color = GameUtil.parseColor(txtColor)
 
-				gohelper.setActive(var_18_3.goDateSelected, var_18_5)
-				gohelper.setActive(var_18_3.txtDateUnSelected.gameObject, not var_18_5)
-				gohelper.setActive(var_18_3.goLocked, not var_18_4)
+				gohelper.setActive(episodeItem.goDateSelected, isSelected)
+				gohelper.setActive(episodeItem.txtDateUnSelected.gameObject, not isSelected)
+				gohelper.setActive(episodeItem.goLocked, not isEpisodeUnLock)
 			end
 
-			var_18_2[var_18_3] = true
+			useMap[episodeItem] = true
 		end
 	end
 
-	arg_18_0:_recycleUnUsefulEpisodeItem(var_18_2)
-	ZProj.UGUIHelper.RebuildLayout(arg_18_0._goTaskContent.transform)
+	self:_recycleUnUsefulEpisodeItem(useMap)
+	ZProj.UGUIHelper.RebuildLayout(self._goTaskContent.transform)
 
-	arg_18_0._scrollTaskTabList.horizontalNormalizedPosition = Mathf.Lerp(0, 1, (var_18_1 - 1) / (#var_18_0 - 1))
+	self._scrollTaskTabList.horizontalNormalizedPosition = Mathf.Lerp(0, 1, (curSelectEpisodeId - 1) / (#allEpisodeList - 1))
 end
 
-function var_0_0._getOrCreateEpisodeItem(arg_19_0, arg_19_1)
-	arg_19_0._episodeItemTab = arg_19_0._episodeItemTab or {}
+function VersionActivity1_5WarmUpView:_getOrCreateEpisodeItem(episodeId)
+	self._episodeItemTab = self._episodeItemTab or {}
 
-	local var_19_0 = arg_19_0._episodeItemTab[arg_19_1]
+	local episodeItem = self._episodeItemTab[episodeId]
 
-	if not var_19_0 then
-		local var_19_1 = gohelper.cloneInPlace(arg_19_0._goradiotaskitem, "taskItem" .. arg_19_1)
-		local var_19_2 = gohelper.findChildText(var_19_1, "txt_DateUnSelected")
-		local var_19_3 = gohelper.findChild(var_19_1, "image_Selected")
-		local var_19_4 = gohelper.findChildText(var_19_1, "image_Selected/txt_DateSelected")
-		local var_19_5 = gohelper.findChild(var_19_1, "image_Selected/Wave_effect2")
-		local var_19_6 = gohelper.findChildImage(var_19_1, "image_Selected/image_wave")
-		local var_19_7 = gohelper.findChild(var_19_1, "image_Locked")
-		local var_19_8 = gohelper.findChildButtonWithAudio(var_19_1, "btn_click")
+	if not episodeItem then
+		local episodeItemGo = gohelper.cloneInPlace(self._goradiotaskitem, "taskItem" .. episodeId)
+		local txtDateUnSelected = gohelper.findChildText(episodeItemGo, "txt_DateUnSelected")
+		local goDateSelected = gohelper.findChild(episodeItemGo, "image_Selected")
+		local txtDateSelected = gohelper.findChildText(episodeItemGo, "image_Selected/txt_DateSelected")
+		local finishEffectGo = gohelper.findChild(episodeItemGo, "image_Selected/Wave_effect2")
+		local imagewave = gohelper.findChildImage(episodeItemGo, "image_Selected/image_wave")
+		local goDateLocked = gohelper.findChild(episodeItemGo, "image_Locked")
+		local click = gohelper.findChildButtonWithAudio(episodeItemGo, "btn_click")
 
-		var_19_8:AddClickListener(arg_19_0._taskItemOnClick, arg_19_0, arg_19_1)
+		click:AddClickListener(self._taskItemOnClick, self, episodeId)
 
-		var_19_0 = {
-			episodeItemGo = var_19_1,
-			goDateSelected = var_19_3,
-			txtDateSelected = var_19_4,
-			imagewave = var_19_6,
-			finishEffectGo = var_19_5,
-			goLocked = var_19_7,
-			txtDateUnSelected = var_19_2,
-			click = var_19_8
+		episodeItem = {
+			episodeItemGo = episodeItemGo,
+			goDateSelected = goDateSelected,
+			txtDateSelected = txtDateSelected,
+			imagewave = imagewave,
+			finishEffectGo = finishEffectGo,
+			goLocked = goDateLocked,
+			txtDateUnSelected = txtDateUnSelected,
+			click = click
 		}
-		arg_19_0._episodeItemTab[arg_19_1] = var_19_0
+		self._episodeItemTab[episodeId] = episodeItem
 	end
 
-	return var_19_0
+	return episodeItem
 end
 
-function var_0_0._taskItemOnClick(arg_20_0, arg_20_1)
-	local var_20_0 = Activity146Model.instance:getCurSelectedEpisode()
-	local var_20_1 = Activity146Model.instance:isEpisodeUnLock(arg_20_1)
+function VersionActivity1_5WarmUpView:_taskItemOnClick(episodeId)
+	local curSelectedEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
+	local isTargetSelectEpisodeUnLock = Activity146Model.instance:isEpisodeUnLock(episodeId)
 
-	if var_20_0 ~= arg_20_1 and var_20_1 then
-		arg_20_0._viewGOAnim:Play("switch", 0, 0)
+	if curSelectedEpisodeId ~= episodeId and isTargetSelectEpisodeUnLock then
+		self._viewGOAnim:Play("switch", 0, 0)
 
-		arg_20_0._isNeedDelaySwitchPhoto = true
+		self._isNeedDelaySwitchPhoto = true
 	end
 
-	Activity146Controller.instance:setCurSelectedEpisode(arg_20_1)
+	Activity146Controller.instance:setCurSelectedEpisode(episodeId)
 
-	local var_20_2 = Activity146Model.instance:getCurSelectedEpisode()
-	local var_20_3 = Activity146Model.instance:isEpisodeFinished(var_20_2)
+	local nextSelectedEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
+	local isFinished = Activity146Model.instance:isEpisodeFinished(nextSelectedEpisodeId)
 
-	gohelper.setActive(arg_20_0._imageTipsBG1.gameObject, not var_20_3)
-	gohelper.setActive(arg_20_0._imageTipsBG2.gameObject, not var_20_3)
+	gohelper.setActive(self._imageTipsBG1.gameObject, not isFinished)
+	gohelper.setActive(self._imageTipsBG2.gameObject, not isFinished)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_day_tap)
 end
 
-function var_0_0._recycleUnUsefulEpisodeItem(arg_21_0, arg_21_1)
-	if arg_21_1 then
-		for iter_21_0, iter_21_1 in pairs(arg_21_0._episodeItemTab) do
-			if not arg_21_1[iter_21_1] then
-				gohelper.setActive(iter_21_1.episodeItemGo, false)
+function VersionActivity1_5WarmUpView:_recycleUnUsefulEpisodeItem(useMap)
+	if useMap then
+		for _, v in pairs(self._episodeItemTab) do
+			if not useMap[v] then
+				gohelper.setActive(v.episodeItemGo, false)
 			end
 		end
 	end
 end
 
-function var_0_0._initRewards(arg_22_0)
-	local var_22_0 = Activity146Model.instance:getCurSelectedEpisode()
-	local var_22_1 = Activity146Config.instance:getEpisodeRewardConfig(arg_22_0._actId, var_22_0)
-	local var_22_2 = Activity146Model.instance:isEpisodeFinishedButUnReceive(var_22_0)
-	local var_22_3 = Activity146Model.instance:isEpisodeHasReceivedReward(var_22_0)
-	local var_22_4 = {}
+function VersionActivity1_5WarmUpView:_initRewards()
+	local curSelectedEpisode = Activity146Model.instance:getCurSelectedEpisode()
+	local rewards = Activity146Config.instance:getEpisodeRewardConfig(self._actId, curSelectedEpisode)
+	local isFinishedButUnReceive = Activity146Model.instance:isEpisodeFinishedButUnReceive(curSelectedEpisode)
+	local hasReceivedReward = Activity146Model.instance:isEpisodeHasReceivedReward(curSelectedEpisode)
+	local useMap = {}
 
-	if var_22_1 then
-		for iter_22_0, iter_22_1 in ipairs(var_22_1) do
-			local var_22_5 = arg_22_0._rewardItemTab[iter_22_0]
+	if rewards then
+		for k, v in ipairs(rewards) do
+			local rewardItem = self._rewardItemTab[k]
 
-			if not var_22_5 then
-				var_22_5 = {
-					go = gohelper.cloneInPlace(arg_22_0._gorewarditem, "rewarditem" .. iter_22_0)
+			if not rewardItem then
+				rewardItem = {
+					go = gohelper.cloneInPlace(self._gorewarditem, "rewarditem" .. k)
 				}
 
-				local var_22_6 = gohelper.findChild(var_22_5.go, "go_icon")
+				local iconRoot = gohelper.findChild(rewardItem.go, "go_icon")
 
-				var_22_5.icon = IconMgr.instance:getCommonPropItemIcon(var_22_6)
-				var_22_5.goreceive = gohelper.findChild(var_22_5.go, "go_receive")
-				var_22_5.gocanget = gohelper.findChild(var_22_5.go, "go_canget")
-				var_22_5.hasgetAnim = gohelper.findChild(var_22_5.go, "go_receive/go_hasget"):GetComponent(typeof(UnityEngine.Animator))
-				arg_22_0._rewardItemTab[iter_22_0] = var_22_5
+				rewardItem.icon = IconMgr.instance:getCommonPropItemIcon(iconRoot)
+				rewardItem.goreceive = gohelper.findChild(rewardItem.go, "go_receive")
+				rewardItem.gocanget = gohelper.findChild(rewardItem.go, "go_canget")
+				rewardItem.hasgetAnim = gohelper.findChild(rewardItem.go, "go_receive/go_hasget"):GetComponent(typeof(UnityEngine.Animator))
+				self._rewardItemTab[k] = rewardItem
 			end
 
-			gohelper.setActive(var_22_5.go, true)
-			gohelper.setActive(var_22_5.goreceive, var_22_3)
-			gohelper.setActive(var_22_5.gocanget, var_22_2)
+			gohelper.setActive(rewardItem.go, true)
+			gohelper.setActive(rewardItem.goreceive, hasReceivedReward)
+			gohelper.setActive(rewardItem.gocanget, isFinishedButUnReceive)
 
-			local var_22_7 = string.splitToNumber(iter_22_1, "#")
+			local itemCo = string.splitToNumber(v, "#")
 
-			var_22_5.icon:setMOValue(var_22_7[1], var_22_7[2], var_22_7[3])
-			var_22_5.icon:setCountFontSize(42)
-			var_22_5.icon:setScale(0.5)
+			rewardItem.icon:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+			rewardItem.icon:setCountFontSize(42)
+			rewardItem.icon:setScale(0.5)
 
-			var_22_4[var_22_5] = true
+			useMap[rewardItem] = true
 		end
 	end
 
-	local var_22_8 = arg_22_0._episodeCanGetInfoDict[var_22_0]
+	local episodeCanGetTempInfo = self._episodeCanGetInfoDict[curSelectedEpisode]
 
-	arg_22_0._episodeCanGetInfoDict[var_22_0] = var_22_2
+	self._episodeCanGetInfoDict[curSelectedEpisode] = isFinishedButUnReceive
 
-	if var_22_8 == false and var_22_2 == true then
+	if episodeCanGetTempInfo == false and isFinishedButUnReceive == true then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_read_over)
 	end
 
-	gohelper.setActive(arg_22_0._btngetreward.gameObject, var_22_2)
+	gohelper.setActive(self._btngetreward.gameObject, isFinishedButUnReceive)
 
-	for iter_22_2, iter_22_3 in pairs(arg_22_0._rewardItemTab) do
-		if not var_22_4[iter_22_3] then
-			gohelper.setActive(iter_22_3.go, false)
+	for _, v in pairs(self._rewardItemTab) do
+		if not useMap[v] then
+			gohelper.setActive(v.go, false)
 		end
 	end
 end
 
-function var_0_0._btngetrewardOnClick(arg_23_0)
-	Activity146Controller.instance:tryReceiveEpisodeRewards(arg_23_0._actId)
+function VersionActivity1_5WarmUpView:_btngetrewardOnClick()
+	Activity146Controller.instance:tryReceiveEpisodeRewards(self._actId)
 end
 
-function var_0_0._onDailyRefresh(arg_24_0)
-	if arg_24_0._actId then
-		Activity146Controller.instance:getAct146InfoFromServer(arg_24_0._actId)
+function VersionActivity1_5WarmUpView:_onDailyRefresh()
+	if self._actId then
+		Activity146Controller.instance:getAct146InfoFromServer(self._actId)
 	end
 end
 
-function var_0_0._overrideViewCloseCheckFunc(arg_25_0)
-	local var_25_0 = ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView)
+function VersionActivity1_5WarmUpView:_overrideViewCloseCheckFunc()
+	local beginnerViewContainer = ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView)
 
-	if var_25_0 then
-		local var_25_1 = var_25_0.navigationView
+	if beginnerViewContainer then
+		local navigationView = beginnerViewContainer.navigationView
 
-		if var_25_1 then
-			arg_25_0._originCloseCheckFunc = var_25_1._closeCheckFunc
-			arg_25_0._originCloseCheckObj = var_25_1._closeCheckObj
-			arg_25_0._originHomeCheckFunc = var_25_1._homeCheckFunc
-			arg_25_0._originHomeCheckObj = var_25_1._homeCheckObj
+		if navigationView then
+			self._originCloseCheckFunc = navigationView._closeCheckFunc
+			self._originCloseCheckObj = navigationView._closeCheckObj
+			self._originHomeCheckFunc = navigationView._homeCheckFunc
+			self._originHomeCheckObj = navigationView._homeCheckObj
 
-			var_25_1:setCloseCheck(arg_25_0._onCloseCheckFunc, arg_25_0)
-			var_25_1:setHomeCheck(arg_25_0._onCloseCheckFunc, arg_25_0)
+			navigationView:setCloseCheck(self._onCloseCheckFunc, self)
+			navigationView:setHomeCheck(self._onCloseCheckFunc, self)
 		end
 	end
 end
 
-function var_0_0._revertViewCloseCheckFunc(arg_26_0)
-	local var_26_0 = ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView)
+function VersionActivity1_5WarmUpView:_revertViewCloseCheckFunc()
+	local beginnerViewContainer = ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView)
 
-	if var_26_0 then
-		local var_26_1 = var_26_0.navigationView
+	if beginnerViewContainer then
+		local navigationView = beginnerViewContainer.navigationView
 
-		if var_26_1 then
-			var_26_1:setCloseCheck(arg_26_0._originCloseCheckFunc, arg_26_0._originCloseCheckObj)
-			var_26_1:setHomeCheck(arg_26_0._originHomeCheckFunc, arg_26_0._originHomeCheckObj)
+		if navigationView then
+			navigationView:setCloseCheck(self._originCloseCheckFunc, self._originCloseCheckObj)
+			navigationView:setHomeCheck(self._originHomeCheckFunc, self._originHomeCheckObj)
 		end
 	end
 
-	arg_26_0._originCloseCheckFunc = nil
-	arg_26_0._originCloseCheckObj = nil
-	arg_26_0._originHomeCheckFunc = nil
-	arg_26_0._originHomeCheckObj = nil
+	self._originCloseCheckFunc = nil
+	self._originCloseCheckObj = nil
+	self._originHomeCheckFunc = nil
+	self._originHomeCheckObj = nil
 end
 
-function var_0_0._onCloseCheckFunc(arg_27_0)
-	if arg_27_0._isPlayingEpisodeDesc then
-		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5_WarmUpPlayingQuitCheck, MsgBoxEnum.BoxType.Yes_No, arg_27_0._messageBoxYesFunc, arg_27_0._messageBoxNoFunc, nil, arg_27_0, arg_27_0)
+function VersionActivity1_5WarmUpView:_onCloseCheckFunc()
+	if self._isPlayingEpisodeDesc then
+		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5_WarmUpPlayingQuitCheck, MsgBoxEnum.BoxType.Yes_No, self._messageBoxYesFunc, self._messageBoxNoFunc, nil, self, self)
 
-		if arg_27_0._tweenId then
-			ZProj.TweenHelper.KillById(arg_27_0._tweenId)
+		if self._tweenId then
+			ZProj.TweenHelper.KillById(self._tweenId)
 
-			arg_27_0._tweenId = nil
+			self._tweenId = nil
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_27_0._onPlayEpisodeDescUpdate, arg_27_0)
+	TaskDispatcher.cancelTask(self._onPlayEpisodeDescUpdate, self)
 
-	return not arg_27_0._isPlayingEpisodeDesc
+	return not self._isPlayingEpisodeDesc
 end
 
-function var_0_0._messageBoxYesFunc(arg_28_0)
+function VersionActivity1_5WarmUpView:_messageBoxYesFunc()
 	ViewMgr.instance:closeView(ViewName.ActivityBeginnerView)
 end
 
-function var_0_0._messageBoxNoFunc(arg_29_0)
-	local var_29_0 = Activity146Model.instance:getCurSelectedEpisode()
-	local var_29_1 = tostring(Activity146Config.instance:getEpisodeDesc(arg_29_0._actId, var_29_0))
-	local var_29_2 = arg_29_0._txtTaskContent.text
+function VersionActivity1_5WarmUpView:_messageBoxNoFunc()
+	local curSelectedEpisodeId = Activity146Model.instance:getCurSelectedEpisode()
+	local wholeTxt = tostring(Activity146Config.instance:getEpisodeDesc(self._actId, curSelectedEpisodeId))
+	local startTxt = self._txtTaskContent.text
 
-	arg_29_0:_playEpisodeDesc(var_29_2, var_29_1, var_0_1, arg_29_0._onPlayEpisodeDescFinished, arg_29_0)
+	self:_playEpisodeDesc(startTxt, wholeTxt, episodeTxtPlayDuration, self._onPlayEpisodeDescFinished, self)
 end
 
-function var_0_0.onClose(arg_30_0)
-	arg_30_0:_revertViewCloseCheckFunc()
+function VersionActivity1_5WarmUpView:onClose()
+	self:_revertViewCloseCheckFunc()
 	Activity146Controller.instance:onCloseView()
 	ActivityController.instance:dispatchEvent(ActivityEvent.SetBannerViewCategoryListInteract, true)
 end
 
-function var_0_0.onDestroyView(arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0._onRefreshDeadline, arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0._delaySwitchPhoto, arg_31_0)
+function VersionActivity1_5WarmUpView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	TaskDispatcher.cancelTask(self._delaySwitchPhoto, self)
 
-	if arg_31_0._episodeItemTab then
-		for iter_31_0, iter_31_1 in pairs(arg_31_0._episodeItemTab) do
-			iter_31_1.click:RemoveClickListener()
+	if self._episodeItemTab then
+		for _, v in pairs(self._episodeItemTab) do
+			v.click:RemoveClickListener()
 		end
 	end
 
-	if arg_31_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_31_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_31_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_31_0._onPlayEpisodeDescUpdate, arg_31_0)
+	TaskDispatcher.cancelTask(self._onPlayEpisodeDescUpdate, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
 end
 
-return var_0_0
+return VersionActivity1_5WarmUpView

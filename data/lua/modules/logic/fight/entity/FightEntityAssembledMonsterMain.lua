@@ -1,134 +1,136 @@
-﻿module("modules.logic.fight.entity.FightEntityAssembledMonsterMain", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityAssembledMonsterMain.lua
 
-local var_0_0 = class("FightEntityAssembledMonsterMain", FightEntityMonster)
+module("modules.logic.fight.entity.FightEntityAssembledMonsterMain", package.seeall)
 
-function var_0_0.getHangPoint(arg_1_0, arg_1_1, arg_1_2)
-	if not arg_1_2 and not string.nilorempty(arg_1_1) and ModuleEnum.SpineHangPointRoot ~= arg_1_1 then
-		arg_1_1 = string.format("%s_part_%d", arg_1_1, arg_1_0:getPartIndex())
+local FightEntityAssembledMonsterMain = class("FightEntityAssembledMonsterMain", FightEntityMonster)
+
+function FightEntityAssembledMonsterMain:getHangPoint(hangPointName, noProcess)
+	if not noProcess and not string.nilorempty(hangPointName) and ModuleEnum.SpineHangPointRoot ~= hangPointName then
+		hangPointName = string.format("%s_part_%d", hangPointName, self:getPartIndex())
 	end
 
-	return var_0_0.super.getHangPoint(arg_1_0, arg_1_1)
+	return FightEntityAssembledMonsterMain.super.getHangPoint(self, hangPointName)
 end
 
-function var_0_0.getBuffAnim(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = {}
-	local var_2_2 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+function FightEntityAssembledMonsterMain:getBuffAnim()
+	local buffList = {}
+	local AniDic = {}
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-		if (isTypeOf(iter_2_1, var_0_0) or isTypeOf(iter_2_1, FightEntityAssembledMonsterSub)) and iter_2_1.buff then
-			local var_2_3, var_2_4 = iter_2_1.buff:getBuffAnim()
+	for i, v in ipairs(entityList) do
+		if (isTypeOf(v, FightEntityAssembledMonsterMain) or isTypeOf(v, FightEntityAssembledMonsterSub)) and v.buff then
+			local buffAnim, buffMO = v.buff:getBuffAnim()
 
-			if var_2_3 then
-				table.insert(var_2_0, var_2_4)
+			if buffAnim then
+				table.insert(buffList, buffMO)
 
-				var_2_1[var_2_4.uid] = var_2_3
+				AniDic[buffMO.uid] = buffAnim
 			end
 		end
 	end
 
-	if #var_2_0 > 0 then
-		table.sort(var_2_0, FightBuffComp.buffCompareFuncAni)
+	if #buffList > 0 then
+		table.sort(buffList, FightBuffComp.buffCompareFuncAni)
 
-		return var_2_1[var_2_0[1].uid]
+		return AniDic[buffList[1].uid]
 	end
 end
 
-function var_0_0.getDefaultMatName(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = {}
-	local var_3_2 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+function FightEntityAssembledMonsterMain:getDefaultMatName()
+	local buffList = {}
+	local matDic = {}
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_2) do
-		if (isTypeOf(iter_3_1, var_0_0) or isTypeOf(iter_3_1, FightEntityAssembledMonsterSub)) and iter_3_1.buff then
-			local var_3_3, var_3_4 = iter_3_1.buff:getBuffMatName()
+	for i, v in ipairs(entityList) do
+		if (isTypeOf(v, FightEntityAssembledMonsterMain) or isTypeOf(v, FightEntityAssembledMonsterSub)) and v.buff then
+			local buffMat, buffMO = v.buff:getBuffMatName()
 
-			if var_3_3 then
-				table.insert(var_3_0, var_3_4)
+			if buffMat then
+				table.insert(buffList, buffMO)
 
-				var_3_1[var_3_4.uid] = var_3_3
+				matDic[buffMO.uid] = buffMat
 			end
 		end
 	end
 
-	if #var_3_0 > 0 then
-		table.sort(var_3_0, FightBuffComp.buffCompareFuncMat)
+	if #buffList > 0 then
+		table.sort(buffList, FightBuffComp.buffCompareFuncMat)
 
-		return var_3_1[var_3_0[1].uid]
+		return matDic[buffList[1].uid]
 	end
 end
 
-function var_0_0.setAlpha(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:setAlphaData(arg_4_0.id, arg_4_1, arg_4_2)
+function FightEntityAssembledMonsterMain:setAlpha(alpha, duration)
+	self:setAlphaData(self.id, alpha, duration)
 end
 
-function var_0_0.setAlphaData(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._alphaDic = arg_5_0._alphaDic or {}
-	arg_5_0._alphaDic[arg_5_1] = arg_5_2
+function FightEntityAssembledMonsterMain:setAlphaData(entityId, alpha, duration)
+	self._alphaDic = self._alphaDic or {}
+	self._alphaDic[entityId] = alpha
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._alphaDic) do
-		if iter_5_1 ~= arg_5_2 then
-			var_0_0.super.setAlpha(arg_5_0, 1, 0)
+	for k, v in pairs(self._alphaDic) do
+		if v ~= alpha then
+			FightEntityAssembledMonsterMain.super.setAlpha(self, 1, 0)
 
-			local var_5_0 = FightHelper.getEntity(iter_5_0)
+			local tarEntity = FightHelper.getEntity(k)
 
-			if var_5_0 ~= arg_5_0 then
-				var_5_0.super.setAlpha(var_5_0, 1, 0)
+			if tarEntity ~= self then
+				tarEntity.super.setAlpha(tarEntity, 1, 0)
 			end
 
 			return
 		end
 	end
 
-	var_0_0.super.setAlpha(arg_5_0, arg_5_2, arg_5_3)
+	FightEntityAssembledMonsterMain.super.setAlpha(self, alpha, duration)
 
-	for iter_5_2, iter_5_3 in pairs(arg_5_0._alphaDic) do
-		local var_5_1 = FightHelper.getEntity(iter_5_2)
+	for k, v in pairs(self._alphaDic) do
+		local tarEntity = FightHelper.getEntity(k)
 
-		if var_5_1 ~= arg_5_0 then
-			var_5_1.super.setAlpha(var_5_1, arg_5_2, arg_5_3)
+		if tarEntity ~= self then
+			tarEntity.super.setAlpha(tarEntity, alpha, duration)
 		end
 	end
 end
 
-function var_0_0.initComponents(arg_6_0)
-	var_0_0.super.initComponents(arg_6_0)
+function FightEntityAssembledMonsterMain:initComponents()
+	FightEntityAssembledMonsterMain.super.initComponents(self)
 end
 
-function var_0_0.getSpineClass(arg_7_0)
+function FightEntityAssembledMonsterMain:getSpineClass()
 	return FightAssembledMonsterSpine
 end
 
-function var_0_0.getPartIndex(arg_8_0)
-	local var_8_0 = arg_8_0:getMO()
+function FightEntityAssembledMonsterMain:getPartIndex()
+	local entityMO = self:getMO()
 
-	if var_8_0 then
-		return lua_fight_assembled_monster.configDict[var_8_0.skin].part
+	if entityMO then
+		return lua_fight_assembled_monster.configDict[entityMO.skin].part
 	end
 end
 
-function var_0_0.killAllSubMonster(arg_9_0)
-	local var_9_0 = GameSceneMgr.instance:getCurScene().entityMgr
-	local var_9_1 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+function FightEntityAssembledMonsterMain:killAllSubMonster()
+	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		if FightHelper.isAssembledMonster(iter_9_1) and iter_9_1 ~= arg_9_0 then
-			var_9_0:removeUnit(iter_9_1:getTag(), iter_9_1.id)
+	for i, v in ipairs(entityList) do
+		if FightHelper.isAssembledMonster(v) and v ~= self then
+			entityMgr:removeUnit(v:getTag(), v.id)
 
-			local var_9_2 = FightDataHelper.entityMgr:getById(iter_9_1.id)
+			local entityMO = FightDataHelper.entityMgr:getById(v.id)
 
-			var_9_2:setDead()
-			FightDataHelper.entityMgr:addDeadUid(var_9_2.id)
+			entityMO:setDead()
+			FightDataHelper.entityMgr:addDeadUid(entityMO.id)
 
-			if arg_9_0._alphaDic then
-				arg_9_0._alphaDic[iter_9_1.id] = nil
+			if self._alphaDic then
+				self._alphaDic[v.id] = nil
 			end
 		end
 	end
 end
 
-function var_0_0.beforeDestroy(arg_10_0)
-	var_0_0.super.beforeDestroy(arg_10_0)
+function FightEntityAssembledMonsterMain:beforeDestroy()
+	FightEntityAssembledMonsterMain.super.beforeDestroy(self)
 end
 
-return var_0_0
+return FightEntityAssembledMonsterMain

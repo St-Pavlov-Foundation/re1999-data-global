@@ -1,763 +1,770 @@
-﻿module("modules.logic.fight.controller.FightASFDMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightASFDMgr.lua
 
-local var_0_0 = class("FightASFDMgr", FightUserDataBaseClass)
+module("modules.logic.fight.controller.FightASFDMgr", package.seeall)
 
-var_0_0.LoadingStatus = {
+local FightASFDMgr = class("FightASFDMgr", FightUserDataBaseClass)
+
+FightASFDMgr.LoadingStatus = {
 	NotLoad = 1,
 	Loaded = 3,
 	Loading = 2
 }
 
-function var_0_0.init(arg_1_0)
-	var_0_0.super.init(arg_1_0)
+function FightASFDMgr:init()
+	FightASFDMgr.super.init(self)
 
-	arg_1_0.fightStepDataArrivedCount = {}
-	arg_1_0.effectWrap2EntityIdDict = {}
-	arg_1_0.sideEmitterWrap = nil
-	arg_1_0.missileWrapList = {}
-	arg_1_0.missileMoverList = {}
-	arg_1_0.explosionWrapList = {}
-	arg_1_0.playHitAnimEntityIdDict = {}
-	arg_1_0.startAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
-	arg_1_0.endAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
+	self.fightStepDataArrivedCount = {}
+	self.effectWrap2EntityIdDict = {}
+	self.sideEmitterWrap = nil
+	self.missileWrapList = {}
+	self.missileMoverList = {}
+	self.explosionWrapList = {}
+	self.playHitAnimEntityIdDict = {}
+	self.startAnimLoadingStatus = FightASFDMgr.LoadingStatus.NotLoad
+	self.endAnimLoadingStatus = FightASFDMgr.LoadingStatus.NotLoad
 
-	arg_1_0:addEventCb(FightController.instance, FightEvent.AddUseCard, arg_1_0.onAddUseCard, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, arg_1_0.onMySideRoundEnd, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.BeforePlayUniqueSkill, arg_1_0.onBeforePlayUniqueSkill, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.AfterPlayUniqueSkill, arg_1_0.onAfterPlayUniqueSkill, arg_1_0)
+	self:addEventCb(FightController.instance, FightEvent.AddUseCard, self.onAddUseCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, self.onMySideRoundEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforePlayUniqueSkill, self.onBeforePlayUniqueSkill, self)
+	self:addEventCb(FightController.instance, FightEvent.AfterPlayUniqueSkill, self.onAfterPlayUniqueSkill, self)
 end
 
-function var_0_0.playAudio(arg_2_0, arg_2_1)
-	if not arg_2_1 then
+function FightASFDMgr:playAudio(audioId)
+	if not audioId then
 		return
 	end
 
-	if arg_2_1 ~= 0 then
-		AudioMgr.instance:trigger(arg_2_1)
+	if audioId ~= 0 then
+		AudioMgr.instance:trigger(audioId)
 	end
 end
 
-function var_0_0.onBeforePlayUniqueSkill(arg_3_0)
-	if arg_3_0.bornEffectWrap then
-		arg_3_0.bornEffectWrap:setActive(false)
+function FightASFDMgr:onBeforePlayUniqueSkill()
+	if self.bornEffectWrap then
+		self.bornEffectWrap:setActive(false)
 	end
 end
 
-function var_0_0.onAfterPlayUniqueSkill(arg_4_0)
-	if arg_4_0.bornEffectWrap then
-		arg_4_0.bornEffectWrap:setActive(true)
+function FightASFDMgr:onAfterPlayUniqueSkill()
+	if self.bornEffectWrap then
+		self.bornEffectWrap:setActive(true)
 	end
 end
 
-function var_0_0.getASFDEntityMo(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function FightASFDMgr:getASFDEntityMo(cardIndexList)
+	if not cardIndexList then
 		return
 	end
 
-	local var_5_0 = FightPlayCardModel.instance:getUsedCards()
+	local cardInfoMoList = FightPlayCardModel.instance:getUsedCards()
 
-	if not var_5_0 then
+	if not cardInfoMoList then
 		return
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_1 = var_5_0[iter_5_1]
+	for _, cardIndex in ipairs(cardIndexList) do
+		local cardInfoMo = cardInfoMoList[cardIndex]
 
-		if var_5_1 then
-			local var_5_2 = var_5_1.uid
-			local var_5_3 = FightDataHelper.entityMgr:getById(var_5_2)
+		if cardInfoMo then
+			local entityId = cardInfoMo.uid
+			local entityMo = FightDataHelper.entityMgr:getById(entityId)
 
-			if var_5_3 and var_5_3:isASFDEmitter() then
-				return var_5_3
+			if entityMo and entityMo:isASFDEmitter() then
+				return entityMo
 			end
 		end
 	end
 end
 
-function var_0_0.onAddUseCard(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getASFDEntityMo(arg_6_1)
+function FightASFDMgr:onAddUseCard(cardIndexList)
+	local entityMo = self:getASFDEntityMo(cardIndexList)
 
-	if not var_6_0 then
+	if not entityMo then
 		return
 	end
 
-	local var_6_1 = var_6_0.id
-	local var_6_2 = FightHelper.getEntity(var_6_1)
+	local entityId = entityMo.id
+	local entity = FightHelper.getEntity(entityId)
 
-	if not var_6_2 then
-		logError("没有找到发射奥术飞弹的实体" .. tostring(var_6_1))
+	if not entity then
+		logError("没有找到发射奥术飞弹的实体" .. tostring(entityId))
 
 		return
 	end
 
-	local var_6_3 = FightASFDHelper.getBornCo(var_6_1)
-	local var_6_4 = FightASFDConfig.instance:getASFDCoRes(var_6_3)
+	local bornCo = FightASFDHelper.getBornCo(entityId)
+	local bornRes = FightASFDConfig.instance:getASFDCoRes(bornCo)
 
-	arg_6_0.curBornCo = var_6_3
-	arg_6_0.bornEntity = var_6_2
-	arg_6_0.bornEffectWrap = var_6_2.effect:addGlobalEffect(var_6_4)
+	self.curBornCo = bornCo
+	self.bornEntity = entity
+	self.bornEffectWrap = entity.effect:addGlobalEffect(bornRes)
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_6_1, arg_6_0.bornEffectWrap, FightRenderOrderMgr.MaxOrder)
-	arg_6_0.bornEffectWrap:setLocalPos(FightASFDHelper.getEmitterPos(var_6_0.side, var_6_3.sceneEmitterId))
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(entityId, self.bornEffectWrap, FightRenderOrderMgr.MaxOrder)
+	self.bornEffectWrap:setLocalPos(FightASFDHelper.getEmitterPos(entityMo.side, bornCo.sceneEmitterId))
 
-	local var_6_5 = var_6_3.scale
+	local scale = bornCo.scale
 
-	if var_6_5 == 0 then
-		var_6_5 = 1
+	if scale == 0 then
+		scale = 1
 	end
 
-	arg_6_0.bornEffectWrap:setEffectScale(var_6_5)
-	arg_6_0:playAudio(var_6_3.audio)
+	self.bornEffectWrap:setEffectScale(scale)
+	self:playAudio(bornCo.audio)
 
-	arg_6_0.effectWrap2EntityIdDict[arg_6_0.bornEffectWrap] = var_6_1
+	self.effectWrap2EntityIdDict[self.bornEffectWrap] = entityId
 end
 
-function var_0_0.onMySideRoundEnd(arg_7_0)
-	arg_7_0:clearBornEffect()
+function FightASFDMgr:onMySideRoundEnd()
+	self:clearBornEffect()
 end
 
-function var_0_0.createEmitterWrap(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function FightASFDMgr:createEmitterWrap(fightStepData)
+	if not fightStepData then
 		return
 	end
 
-	local var_8_0 = arg_8_1.fromId
-	local var_8_1 = FightDataHelper.entityMgr:getById(var_8_0)
+	local entityId = fightStepData.fromId
+	local entityMo = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_8_1 then
+	if not entityMo then
 		logError("没有找到发射奥术飞弹的实体 mo")
 
 		return
 	end
 
-	if arg_8_0.sideEmitterWrap then
+	if self.sideEmitterWrap then
 		return
 	end
 
-	local var_8_2 = FightHelper.getEntity(var_8_0)
+	local entity = FightHelper.getEntity(entityId)
 
-	if not var_8_2 then
+	if not entity then
 		logError("没有找到发射奥术飞弹的实体")
 
 		return
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.ASFD_OnStart, var_8_2, FightASFDConfig.instance.skillId, arg_8_1)
-	arg_8_0:clearBornEffect(true)
+	FightController.instance:dispatchEvent(FightEvent.ASFD_OnStart, entity, FightASFDConfig.instance.skillId, fightStepData)
+	self:clearBornEffect(true)
 
-	local var_8_3 = FightASFDHelper.getEmitterCo(var_8_0)
-	local var_8_4 = FightASFDConfig.instance:getASFDCoRes(var_8_3)
-	local var_8_5 = var_8_2.effect:addGlobalEffect(var_8_4)
+	local emitterCo = FightASFDHelper.getEmitterCo(entityId)
+	local emitterRes = FightASFDConfig.instance:getASFDCoRes(emitterCo)
+	local emitterWrap = entity.effect:addGlobalEffect(emitterRes)
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_8_0, var_8_5, FightRenderOrderMgr.MaxOrder)
-	var_8_5:setLocalPos(FightASFDHelper.getEmitterPos(var_8_1.side, var_8_3.sceneEmitterId))
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(entityId, emitterWrap, FightRenderOrderMgr.MaxOrder)
+	emitterWrap:setLocalPos(FightASFDHelper.getEmitterPos(entityMo.side, emitterCo.sceneEmitterId))
 
-	local var_8_6 = var_8_3.scale
+	local scale = emitterCo.scale
 
-	if var_8_6 == 0 then
-		var_8_6 = 1
+	if scale == 0 then
+		scale = 1
 	end
 
-	var_8_5:setEffectScale(var_8_6)
-	arg_8_0:playAudio(var_8_3.audio)
+	emitterWrap:setEffectScale(scale)
+	self:playAudio(emitterCo.audio)
 
-	arg_8_0.sideEmitterWrap = var_8_5
-	arg_8_0.effectWrap2EntityIdDict[var_8_5] = var_8_0
+	self.sideEmitterWrap = emitterWrap
+	self.effectWrap2EntityIdDict[emitterWrap] = entityId
 
-	arg_8_0:preloadEmitterRemoveRes(var_8_3)
-	arg_8_0:playStartASFDAnim()
+	self:preloadEmitterRemoveRes(emitterCo)
+	self:playStartASFDAnim()
 
-	return var_8_5
+	return emitterWrap
 end
 
-function var_0_0.preloadEmitterRemoveRes(arg_9_0, arg_9_1)
-	local var_9_0 = FightASFDHelper.getASFDEmitterRemoveRes(arg_9_1)
-	local var_9_1 = FightHelper.getEffectUrlWithLod(var_9_0)
+function FightASFDMgr:preloadEmitterRemoveRes(emitterCo)
+	local res = FightASFDHelper.getASFDEmitterRemoveRes(emitterCo)
+	local fullPath = FightHelper.getEffectUrlWithLod(res)
 
-	loadAbAsset(var_9_1, true)
+	loadAbAsset(fullPath, true)
 end
 
-function var_0_0.emitMissile(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_1 then
-		return arg_10_0:emitterFail(arg_10_1)
+function FightASFDMgr:emitMissile(fightStepData, asfdContext)
+	if not fightStepData then
+		return self:emitterFail(fightStepData)
 	end
 
-	arg_10_0.curStepData = arg_10_1
-	arg_10_0.fightStepDataArrivedCount[arg_10_1] = {
+	self.curStepData = fightStepData
+	self.fightStepDataArrivedCount[fightStepData] = {
 		0,
 		0
 	}
 
-	local var_10_0 = true
+	local emitterSuccess = true
 
-	if arg_10_2 and arg_10_2.splitNum > 0 then
-		var_10_0 = arg_10_0:emitterFissionMissile(arg_10_1, arg_10_2)
+	if asfdContext and asfdContext.splitNum > 0 then
+		emitterSuccess = self:emitterFissionMissile(fightStepData, asfdContext)
 	else
-		var_10_0 = arg_10_0:emitterNormalMissile(arg_10_1, arg_10_2)
+		emitterSuccess = self:emitterNormalMissile(fightStepData, asfdContext)
 	end
 
-	if not var_10_0 then
-		return arg_10_0:emitterFail(arg_10_1)
+	if not emitterSuccess then
+		return self:emitterFail(fightStepData)
 	end
 end
 
-function var_0_0.emitterNormalMissile(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_1 then
+function FightASFDMgr:emitterNormalMissile(fightStepData, asfdContext)
+	if not fightStepData then
 		return
 	end
 
-	local var_11_0 = FightASFDHelper.getMissileTargetId(arg_11_1)
+	local toId = FightASFDHelper.getMissileTargetId(fightStepData)
+	local wrap = self:_emitterOneMissile(fightStepData, toId, asfdContext)
 
-	if arg_11_0:_emitterOneMissile(arg_11_1, var_11_0, arg_11_2) then
-		arg_11_0.fightStepDataArrivedCount[arg_11_1][1] = arg_11_0.fightStepDataArrivedCount[arg_11_1][1] + 1
+	if wrap then
+		self.fightStepDataArrivedCount[fightStepData][1] = self.fightStepDataArrivedCount[fightStepData][1] + 1
 
 		return true
 	end
 end
 
-function var_0_0.emitterFissionMissile(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_1 then
+function FightASFDMgr:emitterFissionMissile(fightStepData, asfdContext)
+	if not fightStepData then
 		return
 	end
 
-	arg_12_0.targetDict = arg_12_0.targetDict or {}
+	self.targetDict = self.targetDict or {}
 
-	tabletool.clear(arg_12_0.targetDict)
+	tabletool.clear(self.targetDict)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1.actEffect) do
-		if FightASFDHelper.isDamageEffect(iter_12_1.effectType) then
-			arg_12_0.targetDict[iter_12_1.targetId] = true
+	for _, actEffectData in ipairs(fightStepData.actEffect) do
+		if FightASFDHelper.isDamageEffect(actEffectData.effectType) then
+			self.targetDict[actEffectData.targetId] = true
 		end
 	end
 
-	local var_12_0 = true
+	local emitterFail = true
 
-	for iter_12_2, iter_12_3 in pairs(arg_12_0.targetDict) do
-		local var_12_1 = arg_12_0:_emitterOneMissile(arg_12_1, iter_12_2, arg_12_2)
+	for toId, _ in pairs(self.targetDict) do
+		local effectWrap = self:_emitterOneMissile(fightStepData, toId, asfdContext)
 
-		if var_12_1 then
-			var_12_0 = false
-			arg_12_0.fightStepDataArrivedCount[arg_12_1][1] = arg_12_0.fightStepDataArrivedCount[arg_12_1][1] + 1
+		if effectWrap then
+			emitterFail = false
+			self.fightStepDataArrivedCount[fightStepData][1] = self.fightStepDataArrivedCount[fightStepData][1] + 1
 
-			var_12_1:setEffectScale(FightASFDConfig.instance.fissionScale)
+			effectWrap:setEffectScale(FightASFDConfig.instance.fissionScale)
 		end
 	end
 
-	tabletool.clear(arg_12_0.targetDict)
+	tabletool.clear(self.targetDict)
 
-	return not var_12_0
+	return not emitterFail
 end
 
-function var_0_0._emitterOneMissile(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_1.fromId
-	local var_13_1 = FightHelper.getEntity(var_13_0)
+function FightASFDMgr:_emitterOneMissile(fightStepData, toId, asfdContext)
+	local entityId = fightStepData.fromId
+	local entity = FightHelper.getEntity(entityId)
 
-	if not var_13_1 then
-		logError("没有找到发射奥术飞弹的实体, entityId : " .. tostring(var_13_0))
-
-		return
-	end
-
-	if not FightHelper.getEntity(arg_13_2) then
-		logError("没有找到奥术飞弹 命中实体, toId : " .. tostring(arg_13_2))
+	if not entity then
+		logError("没有找到发射奥术飞弹的实体, entityId : " .. tostring(entityId))
 
 		return
 	end
 
-	local var_13_2 = FightASFDHelper.getMissileCo(var_13_0)
-	local var_13_3 = FightASFDConfig.instance:getASFDCoRes(var_13_2)
-	local var_13_4 = var_13_1.effect:addGlobalEffect(var_13_3)
+	local toEntity = FightHelper.getEntity(toId)
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_13_0, var_13_4, FightRenderOrderMgr.MaxOrder)
+	if not toEntity then
+		logError("没有找到奥术飞弹 命中实体, toId : " .. tostring(toId))
 
-	local var_13_5 = FightASFDFlyPathHelper.getMissileMover(var_13_1, var_13_2, var_13_4, arg_13_2, arg_13_3, arg_13_0.onArrived, arg_13_0)
-
-	var_13_5.missileWrap = var_13_4
-	var_13_5.fightStepData = arg_13_1
-	var_13_5.toId = arg_13_2
-	var_13_5.asfdContext = arg_13_3
-	var_13_5.missileRes = var_13_3
-
-	local var_13_6 = var_13_2.scale
-
-	if var_13_6 == 0 then
-		var_13_6 = 1
+		return
 	end
 
-	var_13_4:setEffectScale(var_13_6)
-	arg_13_0:playAudio(var_13_2.audio)
-	table.insert(arg_13_0.missileMoverList, var_13_5)
-	table.insert(arg_13_0.missileWrapList, var_13_4)
+	local missileCo = FightASFDHelper.getMissileCo(entityId)
+	local missileRes = FightASFDConfig.instance:getASFDCoRes(missileCo)
+	local missileWrap = entity.effect:addGlobalEffect(missileRes)
 
-	arg_13_0.effectWrap2EntityIdDict[var_13_4] = var_13_0
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(entityId, missileWrap, FightRenderOrderMgr.MaxOrder)
 
-	return var_13_4
+	local mover = FightASFDFlyPathHelper.getMissileMover(entity, missileCo, missileWrap, toId, asfdContext, self.onArrived, self)
+
+	mover.missileWrap = missileWrap
+	mover.fightStepData = fightStepData
+	mover.toId = toId
+	mover.asfdContext = asfdContext
+	mover.missileRes = missileRes
+
+	local scale = missileCo.scale
+
+	if scale == 0 then
+		scale = 1
+	end
+
+	missileWrap:setEffectScale(scale)
+	self:playAudio(missileCo.audio)
+	table.insert(self.missileMoverList, mover)
+	table.insert(self.missileWrapList, missileWrap)
+
+	self.effectWrap2EntityIdDict[missileWrap] = entityId
+
+	return missileWrap
 end
 
-function var_0_0.pullOut(arg_14_0, arg_14_1)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.alfResidualEffectList) do
-		local var_14_0 = iter_14_1[1]
-		local var_14_1 = iter_14_1[2]
-		local var_14_2 = iter_14_1[3]
-		local var_14_3 = FightHelper.getEntity(var_14_2)
+function FightASFDMgr:pullOut(fightStepData)
+	for _, residualEffect in ipairs(self.alfResidualEffectList) do
+		local effectWrap = residualEffect[1]
+		local missileRes = residualEffect[2]
+		local entityId = residualEffect[3]
+		local entity = FightHelper.getEntity(entityId)
 
-		if var_14_3 then
-			var_14_3.effect:removeEffect(var_14_0)
+		if entity then
+			entity.effect:removeEffect(effectWrap)
 		end
 
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(var_14_2, var_14_0)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(entityId, effectWrap)
 
-		if var_14_3 then
-			local var_14_4 = lua_fight_sp_effect_alf.configDict[var_14_1]
+		if entity then
+			local alfCo = lua_fight_sp_effect_alf.configDict[missileRes]
 
-			if var_14_4 then
-				local var_14_5 = var_14_3.effect:addHangEffect(var_14_4.pullOutRes, ModuleEnum.SpineHangPoint.mountbody, nil, 1)
+			if alfCo then
+				local residualWrap = entity.effect:addHangEffect(alfCo.pullOutRes, ModuleEnum.SpineHangPoint.mountbody, nil, 1)
 
-				var_14_5:setLocalPos(0, 0, 0)
-				FightRenderOrderMgr.instance:addEffectWrapByOrder(var_14_2, var_14_5, FightRenderOrderMgr.MaxOrder)
-				arg_14_0:playAudio(var_14_4.audioId)
+				residualWrap:setLocalPos(0, 0, 0)
+				FightRenderOrderMgr.instance:addEffectWrapByOrder(entityId, residualWrap, FightRenderOrderMgr.MaxOrder)
+				self:playAudio(alfCo.audioId)
 			end
 		end
 	end
 
-	tabletool.clear(arg_14_0.alfResidualEffectList)
+	tabletool.clear(self.alfResidualEffectList)
 end
 
-function var_0_0.emitterFail(arg_15_0, arg_15_1)
-	return arg_15_0:onASFDArrived(arg_15_1)
+function FightASFDMgr:emitterFail(fightStepData)
+	return self:onASFDArrived(fightStepData)
 end
 
-function var_0_0.onArrived(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.fightStepData
-	local var_16_1 = arg_16_1.asfdContext
-	local var_16_2 = arg_16_1.missileRes
-	local var_16_3 = arg_16_0.fightStepDataArrivedCount[var_16_0] or {
+function FightASFDMgr:onArrived(mover)
+	local fightStepData = mover.fightStepData
+	local context = mover.asfdContext
+	local missileRes = mover.missileRes
+	local arriveArray = self.fightStepDataArrivedCount[fightStepData] or {
 		1,
 		0
 	}
 
-	var_16_3[2] = var_16_3[2] + 1
+	arriveArray[2] = arriveArray[2] + 1
 
-	arg_16_0:tryAddALFResidualEffectData(var_16_2, arg_16_1)
-	arg_16_0:createExplosionEffect(var_16_0, arg_16_1.toId, var_16_1)
-	arg_16_0:playHitAction(arg_16_1.toId)
-	arg_16_0:floatDamage(arg_16_1.fightStepData, arg_16_1.toId)
-	arg_16_0:clearMover(arg_16_1)
+	self:tryAddALFResidualEffectData(missileRes, mover)
+	self:createExplosionEffect(fightStepData, mover.toId, context)
+	self:playHitAction(mover.toId)
+	self:floatDamage(mover.fightStepData, mover.toId)
+	self:clearMover(mover)
 
-	if var_16_3[2] >= var_16_3[1] then
-		arg_16_0.fightStepDataArrivedCount[var_16_0] = nil
+	if arriveArray[2] >= arriveArray[1] then
+		self.fightStepDataArrivedCount[fightStepData] = nil
 
-		return arg_16_0:onASFDArrived(var_16_0)
+		return self:onASFDArrived(fightStepData)
 	end
 end
 
-function var_0_0.tryAddALFResidualEffectData(arg_17_0, arg_17_1, arg_17_2)
-	if not lua_fight_sp_effect_alf.configDict[arg_17_1] then
+function FightASFDMgr:tryAddALFResidualEffectData(missileRes, mover)
+	local alfCo = lua_fight_sp_effect_alf.configDict[missileRes]
+
+	if not alfCo then
 		return
 	end
 
-	local var_17_0 = {
-		missileRes = arg_17_1,
-		entityId = arg_17_2.toId,
-		startPos = arg_17_2:getLastStartPos(),
-		endPos = arg_17_2:getLastEndPos()
+	local data = {
+		missileRes = missileRes,
+		entityId = mover.toId,
+		startPos = mover:getLastStartPos(),
+		endPos = mover:getLastEndPos()
 	}
 
-	FightDataHelper.ASFDDataMgr:addEntityResidualData(arg_17_2.toId, var_17_0)
+	FightDataHelper.ASFDDataMgr:addEntityResidualData(mover.toId, data)
 end
 
-function var_0_0.onASFDArrived(arg_18_0, arg_18_1)
-	return FightController.instance:dispatchEvent(FightEvent.ASFD_OnASFDArrivedDone, arg_18_1)
+function FightASFDMgr:onASFDArrived(fightStepData)
+	return FightController.instance:dispatchEvent(FightEvent.ASFD_OnASFDArrivedDone, fightStepData)
 end
 
-function var_0_0.createExplosionEffect(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = FightHelper.getEntity(arg_19_2)
+function FightASFDMgr:createExplosionEffect(fightStepData, toEntityId, context)
+	local toEntity = FightHelper.getEntity(toEntityId)
 
-	if not var_19_0 then
+	if not toEntity then
 		return
 	end
 
-	local var_19_1 = FightASFDHelper.getExplosionCo(arg_19_1 and arg_19_1.fromId)
-	local var_19_2 = FightASFDConfig.instance.explosionDuration / FightModel.instance:getSpeed()
-	local var_19_3 = FightASFDConfig.instance:getASFDCoRes(var_19_1)
-	local var_19_4 = var_19_0.effect:addHangEffect(var_19_3, ModuleEnum.SpineHangPoint.mountbody, nil, var_19_2)
+	local explosionCo = FightASFDHelper.getExplosionCo(fightStepData and fightStepData.fromId)
+	local explosionDuration = FightASFDConfig.instance.explosionDuration / FightModel.instance:getSpeed()
+	local res = FightASFDConfig.instance:getASFDCoRes(explosionCo)
+	local wrap = toEntity.effect:addHangEffect(res, ModuleEnum.SpineHangPoint.mountbody, nil, explosionDuration)
 
-	var_19_4:setLocalPos(0, 0, 0)
+	wrap:setLocalPos(0, 0, 0)
 
-	local var_19_5 = FightASFDHelper.getASFDExplosionScale(arg_19_1, var_19_1, arg_19_2)
+	local scale = FightASFDHelper.getASFDExplosionScale(fightStepData, explosionCo, toEntityId)
 
-	var_19_4:setEffectScale(var_19_5)
-	arg_19_0:playAudio(var_19_1.audio)
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(arg_19_2, var_19_4, FightRenderOrderMgr.MaxOrder)
+	wrap:setEffectScale(scale)
+	self:playAudio(explosionCo.audio)
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(toEntityId, wrap, FightRenderOrderMgr.MaxOrder)
 
-	arg_19_0.effectWrap2EntityIdDict[var_19_4] = arg_19_2
+	self.effectWrap2EntityIdDict[wrap] = toEntityId
 
-	table.insert(arg_19_0.explosionWrapList, var_19_4)
-	TaskDispatcher.cancelTask(arg_19_0.onExplosionEffectDone, arg_19_0)
-	TaskDispatcher.runDelay(arg_19_0.onExplosionEffectDone, arg_19_0, var_19_2)
+	table.insert(self.explosionWrapList, wrap)
+	TaskDispatcher.cancelTask(self.onExplosionEffectDone, self)
+	TaskDispatcher.runDelay(self.onExplosionEffectDone, self, explosionDuration)
 end
 
-function var_0_0.onExplosionEffectDone(arg_20_0)
+function FightASFDMgr:onExplosionEffectDone()
 	FightController.instance:dispatchEvent(FightEvent.ASFD_OnASFDExplosionDone)
 end
 
-function var_0_0.playHitAction(arg_21_0, arg_21_1)
-	local var_21_0 = FightHelper.getEntity(arg_21_1)
+function FightASFDMgr:playHitAction(toEntityId)
+	local toEntity = FightHelper.getEntity(toEntityId)
 
-	if not var_21_0 then
+	if not toEntity then
 		return
 	end
 
-	local var_21_1 = FightHelper.processEntityActionName(var_21_0, "hit")
+	local actionName = FightHelper.processEntityActionName(toEntity, "hit")
 
-	var_21_0.spine:play(var_21_1, false, true, true)
-	var_21_0.spine:removeAnimEventCallback(arg_21_0._onAnimEvent, arg_21_0)
-	var_21_0.spine:addAnimEventCallback(arg_21_0._onAnimEvent, arg_21_0, {
-		var_21_0,
-		var_21_1
+	toEntity.spine:play(actionName, false, true, true)
+	toEntity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+	toEntity.spine:addAnimEventCallback(self._onAnimEvent, self, {
+		toEntity,
+		actionName
 	})
 
-	arg_21_0.playHitAnimEntityIdDict[arg_21_1] = true
+	self.playHitAnimEntityIdDict[toEntityId] = true
 end
 
-function var_0_0._onAnimEvent(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	local var_22_0 = arg_22_4[1]
-	local var_22_1 = arg_22_4[2]
+function FightASFDMgr:_onAnimEvent(actionName, eventName, eventArgs, param)
+	local entity = param[1]
+	local action = param[2]
 
-	if arg_22_2 == SpineAnimEvent.ActionComplete and arg_22_1 == var_22_1 then
-		var_22_0.spine:removeAnimEventCallback(arg_22_0._onAnimEvent, arg_22_0)
-		var_22_0:resetAnimState()
+	if eventName == SpineAnimEvent.ActionComplete and actionName == action then
+		entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		entity:resetAnimState()
 	end
 end
 
-function var_0_0.floatDamage(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = FightWorkFlowSequence.New(arg_23_1)
+function FightASFDMgr:floatDamage(fightStepData, toEntityId)
+	local flow = FightWorkFlowSequence.New(fightStepData)
 
-	arg_23_0:addDamageWork(var_23_0, arg_23_1, arg_23_2)
+	self:addDamageWork(flow, fightStepData, toEntityId)
 
-	local var_23_1 = FightStepEffectWork.New()
+	local stepWork = FightStepEffectWork.New()
 
-	var_23_1:setFlow(var_23_0)
-	var_23_1:onStartInternal()
+	stepWork:setFlow(flow)
+	stepWork:onStartInternal()
 end
 
-function var_0_0.addDamageWork(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_2 and arg_24_2.actEffect
+function FightASFDMgr:addDamageWork(flow, fightStepData, entityId)
+	local effectList = fightStepData and fightStepData.actEffect
 
-	if not var_24_0 then
+	if not effectList then
 		return
 	end
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-		local var_24_1 = iter_24_1.effectType
+	for _, actEffectData in ipairs(effectList) do
+		local effectType = actEffectData.effectType
 
-		if FightASFDHelper.isDamageEffect(var_24_1) and iter_24_1.targetId == arg_24_3 then
-			local var_24_2 = FightStepBuilder.ActEffectWorkCls[var_24_1]
+		if FightASFDHelper.isDamageEffect(effectType) and actEffectData.targetId == entityId then
+			local class = FightStepBuilder.ActEffectWorkCls[effectType]
 
-			if var_24_2 then
-				arg_24_1:registWork(var_24_2, arg_24_2, iter_24_1)
+			if class then
+				flow:registWork(class, fightStepData, actEffectData)
 			end
-		elseif var_24_1 == FightEnum.EffectType.FIGHTSTEP then
-			arg_24_0:addDamageWork(arg_24_1, iter_24_1.fightStep, arg_24_3)
+		elseif effectType == FightEnum.EffectType.FIGHTSTEP then
+			self:addDamageWork(flow, actEffectData.fightStep, entityId)
 		end
 	end
 end
 
-function var_0_0.onContinueASFDFlowDone(arg_25_0)
-	arg_25_0.curStepData = nil
+function FightASFDMgr:onContinueASFDFlowDone()
+	self.curStepData = nil
 
-	TaskDispatcher.cancelTask(arg_25_0.onExplosionEffectDone, arg_25_0)
+	TaskDispatcher.cancelTask(self.onExplosionEffectDone, self)
 end
 
-function var_0_0.onASFDFlowDone(arg_26_0, arg_26_1)
-	arg_26_0.curStepData = nil
+function FightASFDMgr:onASFDFlowDone(fightStepData)
+	self.curStepData = nil
 
-	arg_26_0:clearBornEffect(true)
-	arg_26_0:clearEmitterEffect(arg_26_1)
-	arg_26_0:clearMissileEffect()
-	arg_26_0:clearExplosionEffect()
-	tabletool.clear(arg_26_0.effectWrap2EntityIdDict)
-	TaskDispatcher.cancelTask(arg_26_0.onExplosionEffectDone, arg_26_0)
-	arg_26_0:resetSpineAnim()
-	tabletool.clear(arg_26_0.fightStepDataArrivedCount)
+	self:clearBornEffect(true)
+	self:clearEmitterEffect(fightStepData)
+	self:clearMissileEffect()
+	self:clearExplosionEffect()
+	tabletool.clear(self.effectWrap2EntityIdDict)
+	TaskDispatcher.cancelTask(self.onExplosionEffectDone, self)
+	self:resetSpineAnim()
+	tabletool.clear(self.fightStepDataArrivedCount)
 end
 
-function var_0_0.clearBornEffect(arg_27_0, arg_27_1)
-	if not arg_27_0.bornEffectWrap then
+function FightASFDMgr:clearBornEffect(isImmediate)
+	if not self.bornEffectWrap then
 		return
 	end
 
-	arg_27_0:removeEffect(arg_27_0.bornEffectWrap)
+	self:removeEffect(self.bornEffectWrap)
 
-	arg_27_0.bornEffectWrap = nil
+	self.bornEffectWrap = nil
 
-	if not arg_27_1 then
-		arg_27_0:createBornRemoveEffect()
+	if not isImmediate then
+		self:createBornRemoveEffect()
 	end
 
-	arg_27_0.curBornCo = nil
-	arg_27_0.bornEntity = nil
+	self.curBornCo = nil
+	self.bornEntity = nil
 end
 
-function var_0_0.createBornRemoveEffect(arg_28_0)
-	if arg_28_0.curBornCo and arg_28_0.bornEntity then
-		local var_28_0 = FightASFDHelper.getASFDBornRemoveRes(arg_28_0.curBornCo)
-		local var_28_1 = arg_28_0.bornEntity.effect:addGlobalEffect(var_28_0, nil, 1)
+function FightASFDMgr:createBornRemoveEffect()
+	if self.curBornCo and self.bornEntity then
+		local bornRemoveRes = FightASFDHelper.getASFDBornRemoveRes(self.curBornCo)
+		local bornRemoveEffectWrap = self.bornEntity.effect:addGlobalEffect(bornRemoveRes, nil, 1)
 
-		FightRenderOrderMgr.instance:addEffectWrapByOrder(arg_28_0.bornEntity.id, var_28_1, FightRenderOrderMgr.MaxOrder)
+		FightRenderOrderMgr.instance:addEffectWrapByOrder(self.bornEntity.id, bornRemoveEffectWrap, FightRenderOrderMgr.MaxOrder)
 
-		local var_28_2 = arg_28_0.bornEntity:getMO()
+		local entityMo = self.bornEntity:getMO()
 
-		var_28_1:setLocalPos(FightASFDHelper.getEmitterPos(var_28_2.side, arg_28_0.curBornCo.sceneEmitterId))
+		bornRemoveEffectWrap:setLocalPos(FightASFDHelper.getEmitterPos(entityMo.side, self.curBornCo.sceneEmitterId))
 
-		local var_28_3 = arg_28_0.curBornCo.scale
+		local scale = self.curBornCo.scale
 
-		if var_28_3 == 0 then
-			var_28_3 = 1
+		if scale == 0 then
+			scale = 1
 		end
 
-		var_28_1:setEffectScale(var_28_3)
+		bornRemoveEffectWrap:setEffectScale(scale)
 	end
 end
 
-function var_0_0.clearEmitterEffect(arg_29_0, arg_29_1)
-	if not arg_29_0.sideEmitterWrap then
+function FightASFDMgr:clearEmitterEffect(fightStepData)
+	if not self.sideEmitterWrap then
 		return
 	end
 
-	arg_29_0:removeEffect(arg_29_0.sideEmitterWrap)
-	arg_29_0:createRemoveEmitterEffect(arg_29_1)
-	arg_29_0:playEndASFDAnim()
+	self:removeEffect(self.sideEmitterWrap)
+	self:createRemoveEmitterEffect(fightStepData)
+	self:playEndASFDAnim()
 
-	arg_29_0.sideEmitterWrap = nil
+	self.sideEmitterWrap = nil
 end
 
-function var_0_0.createRemoveEmitterEffect(arg_30_0, arg_30_1)
-	if not arg_30_1 then
+function FightASFDMgr:createRemoveEmitterEffect(fightStepData)
+	if not fightStepData then
 		return
 	end
 
-	local var_30_0 = arg_30_1.fromId
-	local var_30_1 = FightDataHelper.entityMgr:getById(var_30_0)
+	local entityId = fightStepData.fromId
+	local entityMo = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_30_1 then
+	if not entityMo then
 		return
 	end
 
-	local var_30_2 = FightHelper.getEntity(var_30_0)
+	local entity = FightHelper.getEntity(entityId)
 
-	if not var_30_2 then
+	if not entity then
 		return
 	end
 
-	local var_30_3 = FightASFDHelper.getEmitterCo(var_30_0)
-	local var_30_4 = FightASFDHelper.getASFDEmitterRemoveRes(var_30_3)
-	local var_30_5 = var_30_2.effect:addGlobalEffect(var_30_4, nil, 1)
+	local emitterCo = FightASFDHelper.getEmitterCo(entityId)
+	local emitterRes = FightASFDHelper.getASFDEmitterRemoveRes(emitterCo)
+	local emitterRemoveWrap = entity.effect:addGlobalEffect(emitterRes, nil, 1)
 
-	FightRenderOrderMgr.instance:addEffectWrapByOrder(var_30_0, var_30_5, FightRenderOrderMgr.MaxOrder)
-	var_30_5:setLocalPos(FightASFDHelper.getEmitterPos(var_30_1.side, var_30_3.sceneEmitterId))
+	FightRenderOrderMgr.instance:addEffectWrapByOrder(entityId, emitterRemoveWrap, FightRenderOrderMgr.MaxOrder)
+	emitterRemoveWrap:setLocalPos(FightASFDHelper.getEmitterPos(entityMo.side, emitterCo.sceneEmitterId))
 
-	local var_30_6 = var_30_3.scale
+	local scale = emitterCo.scale
 
-	if var_30_6 == 0 then
-		var_30_6 = 1
+	if scale == 0 then
+		scale = 1
 	end
 
-	var_30_5:setEffectScale(var_30_6)
+	emitterRemoveWrap:setEffectScale(scale)
 end
 
-function var_0_0.clearMissileEffect(arg_31_0)
-	if arg_31_0.missileWrapList then
-		for iter_31_0, iter_31_1 in ipairs(arg_31_0.missileWrapList) do
-			arg_31_0:removeEffect(iter_31_1)
+function FightASFDMgr:clearMissileEffect()
+	if self.missileWrapList then
+		for _, wrap in ipairs(self.missileWrapList) do
+			self:removeEffect(wrap)
 		end
 
-		tabletool.clear(arg_31_0.missileWrapList)
+		tabletool.clear(self.missileWrapList)
 	end
 
-	if arg_31_0.missileMoverList then
-		for iter_31_2, iter_31_3 in ipairs(arg_31_0.missileMoverList) do
-			arg_31_0:clearMover(iter_31_3)
+	if self.missileMoverList then
+		for _, mover in ipairs(self.missileMoverList) do
+			self:clearMover(mover)
 		end
 
-		tabletool.clear(arg_31_0.missileMoverList)
+		tabletool.clear(self.missileMoverList)
 	end
 end
 
-function var_0_0.clearMover(arg_32_0, arg_32_1)
-	if not arg_32_1 then
+function FightASFDMgr:clearMover(mover)
+	if not mover then
 		return
 	end
 
-	arg_32_1:unregisterCallback(UnitMoveEvent.Arrive, arg_32_0.onArrived, arg_32_0)
+	mover:unregisterCallback(UnitMoveEvent.Arrive, self.onArrived, self)
 
-	arg_32_1.missileWrap = nil
-	arg_32_1.fightStepData = nil
-	arg_32_1.toId = nil
-	arg_32_1.asfdContext = nil
-	arg_32_1.missileRes = nil
+	mover.missileWrap = nil
+	mover.fightStepData = nil
+	mover.toId = nil
+	mover.asfdContext = nil
+	mover.missileRes = nil
 end
 
-function var_0_0.clearExplosionEffect(arg_33_0)
-	if not arg_33_0.explosionWrapList then
+function FightASFDMgr:clearExplosionEffect()
+	if not self.explosionWrapList then
 		return
 	end
 
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0.explosionWrapList) do
-		arg_33_0:removeEffect(iter_33_1)
+	for _, wrap in ipairs(self.explosionWrapList) do
+		self:removeEffect(wrap)
 	end
 
-	tabletool.clear(arg_33_0.explosionWrapList)
+	tabletool.clear(self.explosionWrapList)
 end
 
-function var_0_0.removeEffect(arg_34_0, arg_34_1)
-	if not arg_34_1 then
+function FightASFDMgr:removeEffect(effectWrap)
+	if not effectWrap then
 		return
 	end
 
-	local var_34_0 = arg_34_0.effectWrap2EntityIdDict[arg_34_1]
-	local var_34_1 = FightHelper.getEntity(var_34_0)
+	local entityId = self.effectWrap2EntityIdDict[effectWrap]
+	local entity = FightHelper.getEntity(entityId)
 
-	if var_34_1 then
-		var_34_1.effect:removeEffect(arg_34_1)
+	if entity then
+		entity.effect:removeEffect(effectWrap)
 	end
 
-	FightRenderOrderMgr.instance:onRemoveEffectWrap(var_34_0, arg_34_1)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(entityId, effectWrap)
 end
 
-function var_0_0.resetSpineAnim(arg_35_0)
-	if not arg_35_0.playHitAnimEntityIdDict then
+function FightASFDMgr:resetSpineAnim()
+	if not self.playHitAnimEntityIdDict then
 		return
 	end
 
-	for iter_35_0, iter_35_1 in pairs(arg_35_0.playHitAnimEntityIdDict) do
-		local var_35_0 = FightHelper.getEntity(iter_35_0)
+	for entityId, _ in pairs(self.playHitAnimEntityIdDict) do
+		local entity = FightHelper.getEntity(entityId)
 
-		if var_35_0 then
-			var_35_0.spine:removeAnimEventCallback(arg_35_0._onAnimEvent, arg_35_0)
-			var_35_0:resetAnimState()
+		if entity then
+			entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+			entity:resetAnimState()
 		end
 	end
 
-	tabletool.clear(arg_35_0.playHitAnimEntityIdDict)
+	tabletool.clear(self.playHitAnimEntityIdDict)
 end
 
-function var_0_0.playStartASFDAnim(arg_36_0)
-	if arg_36_0.startAnimLoadingStatus == var_0_0.LoadingStatus.NotLoad then
-		loadAbAsset(FightASFDConfig.instance.startAnimAbUrl, false, arg_36_0.loadStartAnimCallback, arg_36_0)
+function FightASFDMgr:playStartASFDAnim()
+	if self.startAnimLoadingStatus == FightASFDMgr.LoadingStatus.NotLoad then
+		loadAbAsset(FightASFDConfig.instance.startAnimAbUrl, false, self.loadStartAnimCallback, self)
 
-		arg_36_0.startAnimLoadingStatus = var_0_0.LoadingStatus.Loading
+		self.startAnimLoadingStatus = FightASFDMgr.LoadingStatus.Loading
 
 		return
 	end
 
-	if arg_36_0.startAnimLoadingStatus == var_0_0.LoadingStatus.Loading then
+	if self.startAnimLoadingStatus == FightASFDMgr.LoadingStatus.Loading then
 		return
 	end
 
-	local var_36_0 = CameraMgr.instance:getCameraRootAnimator()
+	local cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
 
-	if var_36_0 then
-		var_36_0.enabled = true
-		var_36_0.runtimeAnimatorController = arg_36_0.startAnimController
+	if cameraAnimator then
+		cameraAnimator.enabled = true
+		cameraAnimator.runtimeAnimatorController = self.startAnimController
 
-		var_36_0:Play("v2a4_asfd_start", 0, 0)
+		cameraAnimator:Play("v2a4_asfd_start", 0, 0)
 	end
 end
 
-function var_0_0.loadStartAnimCallback(arg_37_0, arg_37_1)
-	if not arg_37_1.IsLoadSuccess then
-		arg_37_0.startAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
-
-		return
-	end
-
-	arg_37_0.startAnimLoadingStatus = var_0_0.LoadingStatus.Loaded
-
-	local var_37_0 = arg_37_0.startAssetItem
-
-	arg_37_0.startAssetItem = arg_37_1
-
-	arg_37_1:Retain()
-
-	if var_37_0 then
-		var_37_0:Release()
-	end
-
-	arg_37_0.startAnimController = arg_37_1:GetResource(FightASFDConfig.instance.startAnim)
-
-	return arg_37_0:playStartASFDAnim()
-end
-
-function var_0_0.playEndASFDAnim(arg_38_0)
-	if arg_38_0.endAnimLoadingStatus == var_0_0.LoadingStatus.NotLoad then
-		loadAbAsset(FightASFDConfig.instance.endAnimAbUrl, false, arg_38_0.loadEndAnimCallback, arg_38_0)
-
-		arg_38_0.endAnimLoadingStatus = var_0_0.LoadingStatus.Loading
+function FightASFDMgr:loadStartAnimCallback(assetItem)
+	if not assetItem.IsLoadSuccess then
+		self.startAnimLoadingStatus = FightASFDMgr.LoadingStatus.NotLoad
 
 		return
 	end
 
-	if arg_38_0.endAnimLoadingStatus == var_0_0.LoadingStatus.Loading then
+	self.startAnimLoadingStatus = FightASFDMgr.LoadingStatus.Loaded
+
+	local oldAsstet = self.startAssetItem
+
+	self.startAssetItem = assetItem
+
+	assetItem:Retain()
+
+	if oldAsstet then
+		oldAsstet:Release()
+	end
+
+	self.startAnimController = assetItem:GetResource(FightASFDConfig.instance.startAnim)
+
+	return self:playStartASFDAnim()
+end
+
+function FightASFDMgr:playEndASFDAnim()
+	if self.endAnimLoadingStatus == FightASFDMgr.LoadingStatus.NotLoad then
+		loadAbAsset(FightASFDConfig.instance.endAnimAbUrl, false, self.loadEndAnimCallback, self)
+
+		self.endAnimLoadingStatus = FightASFDMgr.LoadingStatus.Loading
+
 		return
 	end
 
-	local var_38_0 = CameraMgr.instance:getCameraRootAnimator()
+	if self.endAnimLoadingStatus == FightASFDMgr.LoadingStatus.Loading then
+		return
+	end
 
-	if var_38_0 then
-		var_38_0.enabled = true
-		var_38_0.runtimeAnimatorController = arg_38_0.endAnimController
+	local cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
 
-		var_38_0:Play("v2a4_asfd_end", 0, 0)
+	if cameraAnimator then
+		cameraAnimator.enabled = true
+		cameraAnimator.runtimeAnimatorController = self.endAnimController
+
+		cameraAnimator:Play("v2a4_asfd_end", 0, 0)
 	end
 end
 
-function var_0_0.loadEndAnimCallback(arg_39_0, arg_39_1)
-	if not arg_39_1.IsLoadSuccess then
-		arg_39_0.endAnimLoadingStatus = var_0_0.LoadingStatus.NotLoad
+function FightASFDMgr:loadEndAnimCallback(assetItem)
+	if not assetItem.IsLoadSuccess then
+		self.endAnimLoadingStatus = FightASFDMgr.LoadingStatus.NotLoad
 
 		return
 	end
 
-	arg_39_0.endAnimLoadingStatus = var_0_0.LoadingStatus.Loaded
+	self.endAnimLoadingStatus = FightASFDMgr.LoadingStatus.Loaded
 
-	local var_39_0 = arg_39_0.endAssetItem
+	local oldAsstet = self.endAssetItem
 
-	arg_39_0.endAssetItem = arg_39_1
+	self.endAssetItem = assetItem
 
-	arg_39_1:Retain()
+	assetItem:Retain()
 
-	if var_39_0 then
-		var_39_0:Release()
+	if oldAsstet then
+		oldAsstet:Release()
 	end
 
-	arg_39_0.endAnimController = arg_39_1:GetResource(FightASFDConfig.instance.endAnim)
+	self.endAnimController = assetItem:GetResource(FightASFDConfig.instance.endAnim)
 
-	return arg_39_0:playEndASFDAnim()
+	return self:playEndASFDAnim()
 end
 
-function var_0_0.removeLoader(arg_40_0)
-	removeAssetLoadCb(FightASFDConfig.instance.startAnimAbUrl, arg_40_0.loadStartAnimCallback, arg_40_0)
+function FightASFDMgr:removeLoader()
+	removeAssetLoadCb(FightASFDConfig.instance.startAnimAbUrl, self.loadStartAnimCallback, self)
 
-	if arg_40_0.startAssetItem then
-		arg_40_0.startAssetItem:Release()
+	if self.startAssetItem then
+		self.startAssetItem:Release()
 
-		arg_40_0.startAssetItem = nil
+		self.startAssetItem = nil
 	end
 
-	removeAssetLoadCb(FightASFDConfig.instance.endAnimAbUrl, arg_40_0.loadEndAnimCallback, arg_40_0)
+	removeAssetLoadCb(FightASFDConfig.instance.endAnimAbUrl, self.loadEndAnimCallback, self)
 
-	if arg_40_0.endAssetItem then
-		arg_40_0.endAssetItem:Release()
+	if self.endAssetItem then
+		self.endAssetItem:Release()
 
-		arg_40_0.endAssetItem = nil
+		self.endAssetItem = nil
 	end
 end
 
-function var_0_0.dispose(arg_41_0)
-	arg_41_0:onASFDFlowDone()
-	arg_41_0:removeLoader()
-	var_0_0.super.dispose(arg_41_0)
+function FightASFDMgr:dispose()
+	self:onASFDFlowDone()
+	self:removeLoader()
+	FightASFDMgr.super.dispose(self)
 end
 
-return var_0_0
+return FightASFDMgr

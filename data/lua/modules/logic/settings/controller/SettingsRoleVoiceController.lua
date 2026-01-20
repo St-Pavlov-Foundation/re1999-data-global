@@ -1,36 +1,38 @@
-﻿module("modules.logic.settings.controller.SettingsRoleVoiceController", package.seeall)
+﻿-- chunkname: @modules/logic/settings/controller/SettingsRoleVoiceController.lua
 
-local var_0_0 = class("SettingsRoleVoiceController", BaseController)
+module("modules.logic.settings.controller.SettingsRoleVoiceController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SettingsRoleVoiceController = class("SettingsRoleVoiceController", BaseController)
+
+function SettingsRoleVoiceController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function SettingsRoleVoiceController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function SettingsRoleVoiceController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function SettingsRoleVoiceController:reInit()
 	return
 end
 
-function var_0_0.openSettingRoleVoiceView(arg_5_0)
+function SettingsRoleVoiceController:openSettingRoleVoiceView()
 	ViewMgr.instance:openView(ViewName.SettingsRoleVoiceView)
 end
 
-function var_0_0.setCharVoiceLangPrefValue(arg_6_0, arg_6_1, arg_6_2)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		SettingsRoleVoiceModel.instance:setCharVoiceLangPrefValue(arg_6_2, iter_6_1.heroId)
+function SettingsRoleVoiceController:setCharVoiceLangPrefValue(charMoList, langValue)
+	for _, charMo in ipairs(charMoList) do
+		SettingsRoleVoiceModel.instance:setCharVoiceLangPrefValue(langValue, charMo.heroId)
 	end
 
 	GameFacade.showToast(ToastEnum.SettingCharVoiceLang)
-	arg_6_0:dispatchEvent(SettingsEvent.OnCharVoiceTypeChanged, arg_6_1)
+	self:dispatchEvent(SettingsEvent.OnCharVoiceTypeChanged, charMoList)
 end
 
-var_0_0.instance = var_0_0.New()
+SettingsRoleVoiceController.instance = SettingsRoleVoiceController.New()
 
-return var_0_0
+return SettingsRoleVoiceController

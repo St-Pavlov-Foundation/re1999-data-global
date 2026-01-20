@@ -1,70 +1,74 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightRoundXFail", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightRoundXFail.lua
 
-local var_0_0 = class("WaitGuideActionFightRoundXFail", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightRoundXFail", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionFightRoundXFail = class("WaitGuideActionFightRoundXFail", BaseGuideAction)
 
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+function WaitGuideActionFightRoundXFail:onStart(context)
+	WaitGuideActionFightRoundXFail.super.onStart(self, context)
 
-	arg_1_0._waveRoundDict = nil
+	local temp = string.splitToNumber(self.actionParam, "#")
 
-	if #var_1_0 > 2 then
-		for iter_1_0 = 1, #var_1_0, 2 do
-			if var_1_0[iter_1_0 + 1] then
-				local var_1_1 = var_1_0[iter_1_0] .. "#" .. var_1_0[iter_1_0 + 1]
+	self._waveRoundDict = nil
 
-				arg_1_0._waveRoundDict = arg_1_0._waveRoundDict or {}
-				arg_1_0._waveRoundDict[var_1_1] = true
+	if #temp > 2 then
+		for i = 1, #temp, 2 do
+			if temp[i + 1] then
+				local waveRound = temp[i] .. "#" .. temp[i + 1]
+
+				self._waveRoundDict = self._waveRoundDict or {}
+				self._waveRoundDict[waveRound] = true
 			else
-				logError(string.format("guide_%d_%d 等待战斗第m波次第n回合失败 配置错误 参数数量应为1或者偶数", arg_1_0.guideId, arg_1_0.stepId))
+				logError(string.format("guide_%d_%d 等待战斗第m波次第n回合失败 配置错误 参数数量应为1或者偶数", self.guideId, self.stepId))
 			end
 		end
-	elseif #var_1_0 == 2 then
-		local var_1_2 = var_1_0[1] .. "#" .. var_1_0[2]
+	elseif #temp == 2 then
+		local waveRound = temp[1] .. "#" .. temp[2]
 
-		arg_1_0._waveRoundDict = arg_1_0._waveRoundDict or {}
-		arg_1_0._waveRoundDict[var_1_2] = true
-	elseif #var_1_0 == 1 then
-		local var_1_3 = 1 .. "#" .. var_1_0[1]
+		self._waveRoundDict = self._waveRoundDict or {}
+		self._waveRoundDict[waveRound] = true
+	elseif #temp == 1 then
+		local waveRound = 1 .. "#" .. temp[1]
 
-		arg_1_0._waveRoundDict = arg_1_0._waveRoundDict or {}
-		arg_1_0._waveRoundDict[var_1_3] = true
+		self._waveRoundDict = self._waveRoundDict or {}
+		self._waveRoundDict[waveRound] = true
 	end
 
-	arg_1_0._roundIdInWave = 0
+	self._roundIdInWave = 0
 
-	FightController.instance:registerCallback(FightEvent.OnBeginWave, arg_1_0._onBeginWave, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.RespBeginRound, arg_1_0._onBeginRound, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0._onStageChange, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnBeginWave, self._onBeginWave, self)
+	FightController.instance:registerCallback(FightEvent.RespBeginRound, self._onBeginRound, self)
+	FightController.instance:registerCallback(FightEvent.StageChanged, self._onStageChange, self)
 end
 
-function var_0_0._onBeginWave(arg_2_0)
-	arg_2_0._roundIdInWave = 0
+function WaitGuideActionFightRoundXFail:_onBeginWave()
+	self._roundIdInWave = 0
 end
 
-function var_0_0._onBeginRound(arg_3_0)
-	arg_3_0._roundIdInWave = arg_3_0._roundIdInWave + 1
+function WaitGuideActionFightRoundXFail:_onBeginRound()
+	self._roundIdInWave = self._roundIdInWave + 1
 end
 
-function var_0_0._onStageChange(arg_4_0)
+function WaitGuideActionFightRoundXFail:_onStageChange()
 	if FightDataHelper.stateMgr.isFinish then
-		local var_4_0 = FightModel.instance:getRecordMO()
+		local fightRecordMO = FightModel.instance:getRecordMO()
+		local fail = fightRecordMO and fightRecordMO.fightResult == FightEnum.FightResult.Fail
 
-		if var_4_0 and var_4_0.fightResult == FightEnum.FightResult.Fail then
-			local var_4_1 = FightModel.instance:getCurWaveId() .. "#" .. arg_4_0._roundIdInWave
+		if fail then
+			local waveId = FightModel.instance:getCurWaveId()
+			local key = waveId .. "#" .. self._roundIdInWave
 
-			if not arg_4_0._waveRoundDict or arg_4_0._waveRoundDict[var_4_1] then
-				arg_4_0:onDone(true)
+			if not self._waveRoundDict or self._waveRoundDict[key] then
+				self:onDone(true)
 			end
 		end
 	end
 end
 
-function var_0_0.clearWork(arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, arg_5_0._onBeginWave, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.RespBeginRound, arg_5_0._onBeginRound, arg_5_0)
-	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_5_0._onStageChange, arg_5_0)
+function WaitGuideActionFightRoundXFail:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, self._onBeginWave, self)
+	FightController.instance:unregisterCallback(FightEvent.RespBeginRound, self._onBeginRound, self)
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, self._onStageChange, self)
 end
 
-return var_0_0
+return WaitGuideActionFightRoundXFail

@@ -1,66 +1,68 @@
-﻿module("modules.logic.rouge.view.comp.RougeRoleSkillTipsComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/comp/RougeRoleSkillTipsComp.lua
 
-local var_0_0 = class("RougeRoleSkillTipsComp", LuaCompBase)
+module("modules.logic.rouge.view.comp.RougeRoleSkillTipsComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._skillicon1 = arg_1_0:_addSkillItem(gohelper.findChild(arg_1_0._go, "skillicon1"), arg_1_0._onSkill1Click, arg_1_0)
-	arg_1_0._skillicon2 = arg_1_0:_addSkillItem(gohelper.findChild(arg_1_0._go, "skillicon2"), arg_1_0._onSkill2Click, arg_1_0)
-	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_0._go, "block")
+local RougeRoleSkillTipsComp = class("RougeRoleSkillTipsComp", LuaCompBase)
 
-	arg_1_0._click:AddClickListener(arg_1_0._onClick, arg_1_0)
+function RougeRoleSkillTipsComp:init(go)
+	self._go = go
+	self._skillicon1 = self:_addSkillItem(gohelper.findChild(self._go, "skillicon1"), self._onSkill1Click, self)
+	self._skillicon2 = self:_addSkillItem(gohelper.findChild(self._go, "skillicon2"), self._onSkill2Click, self)
+	self._click = gohelper.findChildButtonWithAudio(self._go, "block")
+
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.setClickCallback(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._callback = arg_2_1
-	arg_2_0._target = arg_2_2
+function RougeRoleSkillTipsComp:setClickCallback(callback, target)
+	self._callback = callback
+	self._target = target
 end
 
-function var_0_0._onClick(arg_3_0)
-	if arg_3_0._callback then
-		arg_3_0._callback(arg_3_0._target)
+function RougeRoleSkillTipsComp:_onClick()
+	if self._callback then
+		self._callback(self._target)
 	end
 end
 
-function var_0_0._onSkill1Click(arg_4_0)
-	arg_4_0._displaySkillItemComp:refresh(arg_4_0._skillicon1:getSkillCO())
-	arg_4_0:_setSkillIconSelected(true)
+function RougeRoleSkillTipsComp:_onSkill1Click()
+	self._displaySkillItemComp:refresh(self._skillicon1:getSkillCO())
+	self:_setSkillIconSelected(true)
 	RougeHeroGroupModel.instance:rougeSaveCurGroup()
 end
 
-function var_0_0._onSkill2Click(arg_5_0)
-	arg_5_0._displaySkillItemComp:refresh(arg_5_0._skillicon2:getSkillCO())
-	arg_5_0:_setSkillIconSelected(false)
+function RougeRoleSkillTipsComp:_onSkill2Click()
+	self._displaySkillItemComp:refresh(self._skillicon2:getSkillCO())
+	self:_setSkillIconSelected(false)
 	RougeHeroGroupModel.instance:rougeSaveCurGroup()
 end
 
-function var_0_0._setSkillIconSelected(arg_6_0, arg_6_1)
-	arg_6_0._skillicon1:setSelected(arg_6_1)
-	arg_6_0._skillicon2:setSelected(not arg_6_1)
+function RougeRoleSkillTipsComp:_setSkillIconSelected(value)
+	self._skillicon1:setSelected(value)
+	self._skillicon2:setSelected(not value)
 end
 
-function var_0_0._addSkillItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_1, RougeRoleSkillItemComp)
+function RougeRoleSkillTipsComp:_addSkillItem(go, callback, target)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, RougeRoleSkillItemComp)
 
-	var_7_0:setClickCallback(arg_7_2, arg_7_3)
+	comp:setClickCallback(callback, target)
 
-	return var_7_0
+	return comp
 end
 
-function var_0_0.refresh(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._displaySkillItemComp = arg_8_2
+function RougeRoleSkillTipsComp:refresh(skillList, displaySkillItemComp)
+	self._displaySkillItemComp = displaySkillItemComp
 
-	local var_8_0 = arg_8_2:getSkillCO()
+	local selectedSkillCO = displaySkillItemComp:getSkillCO()
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_1) do
-		local var_8_1 = lua_skill.configDict[iter_8_1]
+	for i, skillId in pairs(skillList) do
+		local skillCO = lua_skill.configDict[skillId]
 
-		if var_8_1 then
-			local var_8_2 = arg_8_0["_skillicon" .. iter_8_0]
+		if skillCO then
+			local comp = self["_skillicon" .. i]
 
-			if var_8_2 then
-				var_8_2:refresh(var_8_1)
-				var_8_2:setSelected(var_8_0 == var_8_1)
+			if comp then
+				comp:refresh(skillCO)
+				comp:setSelected(selectedSkillCO == skillCO)
 			else
 				break
 			end
@@ -68,8 +70,8 @@ function var_0_0.refresh(arg_8_0, arg_8_1, arg_8_2)
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0._click:RemoveClickListener()
+function RougeRoleSkillTipsComp:onDestroy()
+	self._click:RemoveClickListener()
 end
 
-return var_0_0
+return RougeRoleSkillTipsComp

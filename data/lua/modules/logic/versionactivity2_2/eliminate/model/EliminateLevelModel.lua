@@ -1,251 +1,264 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.EliminateLevelModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/EliminateLevelModel.lua
 
-local var_0_0 = class("EliminateLevelModel", BaseModel)
+module("modules.logic.versionactivity2_2.eliminate.model.EliminateLevelModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local EliminateLevelModel = class("EliminateLevelModel", BaseModel)
+
+function EliminateLevelModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function EliminateLevelModel:reInit()
 	return
 end
 
-function var_0_0.initLevel(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._levelId = arg_3_1
-	arg_3_0._warChessCharacterId = arg_3_2
-	arg_3_0._pieceIds = arg_3_3
-	arg_3_0.curRoundType = EliminateEnum.RoundType.TeamChess
+function EliminateLevelModel:initLevel(levelId, warChessCharacterId, pieceIds)
+	self._levelId = levelId
+	self._warChessCharacterId = warChessCharacterId
+	self._pieceIds = pieceIds
+	self.curRoundType = EliminateEnum.RoundType.TeamChess
 
-	local var_3_0 = EliminateConfig.instance:getEliminateEpisodeConfig(arg_3_0._levelId)
+	local episodeConfig = EliminateConfig.instance:getEliminateEpisodeConfig(self._levelId)
 
-	EliminateTeamChessModel.instance:initTeamChess(var_3_0.warChessId)
+	EliminateTeamChessModel.instance:initTeamChess(episodeConfig.warChessId)
 
-	arg_3_0.beginTime = Time.realtimeSinceStartup
+	self.beginTime = Time.realtimeSinceStartup
 end
 
-function var_0_0.getCurLevelPieceIds(arg_4_0)
-	return arg_4_0._pieceIds
+function EliminateLevelModel:getCurLevelPieceIds()
+	return self._pieceIds
 end
 
-function var_0_0.setCurRoundType(arg_5_0, arg_5_1)
-	arg_5_0.curRoundType = arg_5_1
+function EliminateLevelModel:setCurRoundType(type)
+	self.curRoundType = type
 end
 
-function var_0_0.getWarChessCharacterId(arg_6_0)
-	return arg_6_0._warChessCharacterId
+function EliminateLevelModel:getWarChessCharacterId()
+	return self._warChessCharacterId
 end
 
-function var_0_0.setNeedChangeTeamToEliminate(arg_7_0, arg_7_1)
-	arg_7_0._needChangeTeamToEliminate = arg_7_1
+function EliminateLevelModel:setNeedChangeTeamToEliminate(state)
+	self._needChangeTeamToEliminate = state
 end
 
-function var_0_0.getLevelId(arg_8_0)
-	return arg_8_0._levelId
+function EliminateLevelModel:getLevelId()
+	return self._levelId
 end
 
-function var_0_0.getCurLevelConfig(arg_9_0)
-	return EliminateConfig.instance:getEliminateEpisodeConfig(arg_9_0._levelId)
+function EliminateLevelModel:getCurLevelConfig()
+	return EliminateConfig.instance:getEliminateEpisodeConfig(self._levelId)
 end
 
-function var_0_0.getCurRoundType(arg_10_0)
-	return arg_10_0.curRoundType
+function EliminateLevelModel:getCurRoundType()
+	return self.curRoundType
 end
 
-function var_0_0.getRoundNumber(arg_11_0)
-	local var_11_0 = EliminateTeamChessModel.instance:getServerTeamChessWar()
+function EliminateLevelModel:getRoundNumber()
+	local chessWar = EliminateTeamChessModel.instance:getServerTeamChessWar()
 
-	return var_11_0 and var_11_0.round or 1
+	return chessWar and chessWar.round or 1
 end
 
-function var_0_0.needPlayShowView(arg_12_0)
-	return arg_12_0:getRoundNumber() < 2
+function EliminateLevelModel:needPlayShowView()
+	return self:getRoundNumber() < 2
 end
 
-function var_0_0.getNeedChangeTeamToEliminate(arg_13_0)
-	return arg_13_0._needChangeTeamToEliminate
+function EliminateLevelModel:getNeedChangeTeamToEliminate()
+	return self._needChangeTeamToEliminate
 end
 
-function var_0_0.clear(arg_14_0)
-	arg_14_0.curRoundType = nil
-	arg_14_0._needChangeTeamToEliminate = nil
-	arg_14_0.curRoundNumber = 1
-	arg_14_0._useSkillCount = 0
-	arg_14_0._star = 0
+function EliminateLevelModel:clear()
+	self.curRoundType = nil
+	self._needChangeTeamToEliminate = nil
+	self.curRoundNumber = 1
+	self._useSkillCount = 0
+	self._star = 0
 end
 
-function var_0_0.mainCharacterSkillIsUnLock(arg_15_0)
-	local var_15_0 = EliminateConfig.instance:getUnLockMainCharacterSkillConst()
+function EliminateLevelModel:mainCharacterSkillIsUnLock()
+	local constValue = EliminateConfig.instance:getUnLockMainCharacterSkillConst()
 
-	if var_15_0 then
-		return (EliminateOutsideModel.instance:hasPassedEpisode(var_15_0))
+	if constValue then
+		local isPassed = EliminateOutsideModel.instance:hasPassedEpisode(constValue)
+
+		return isPassed
 	end
 
 	return false
 end
 
-function var_0_0.sellChessIsUnLock(arg_16_0)
-	local var_16_0 = EliminateConfig.instance:getUnLockChessSellConst()
+function EliminateLevelModel:sellChessIsUnLock()
+	local constValue = EliminateConfig.instance:getUnLockChessSellConst()
 
-	if var_16_0 then
-		return (EliminateOutsideModel.instance:hasPassedEpisode(var_16_0))
+	if constValue then
+		local isPassed = EliminateOutsideModel.instance:hasPassedEpisode(constValue)
+
+		return isPassed
 	end
 
 	return false
 end
 
-function var_0_0.selectSoliderIsUnLock(arg_17_0)
-	local var_17_0 = EliminateConfig.instance:getUnLockSelectSoliderConst()
-	local var_17_1 = tonumber(var_17_0)
+function EliminateLevelModel:selectSoliderIsUnLock()
+	local constValue = EliminateConfig.instance:getUnLockSelectSoliderConst()
 
-	if var_17_1 then
-		return (EliminateOutsideModel.instance:hasPassedEpisode(var_17_1))
+	constValue = tonumber(constValue)
+
+	if constValue then
+		local isPassed = EliminateOutsideModel.instance:hasPassedEpisode(constValue)
+
+		return isPassed
 	end
 
 	return false
 end
 
-function var_0_0.canReleaseSkill(arg_18_0)
-	local var_18_0 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+function EliminateLevelModel:canReleaseSkill()
+	local myInfo = EliminateTeamChessModel.instance:getCurTeamMyInfo()
 
-	if var_18_0 == nil then
+	if myInfo == nil then
 		return false
 	end
 
-	local var_18_1 = EliminateConfig.instance:getTeamChessCharacterConfig(var_18_0.id)
-	local var_18_2 = EliminateConfig.instance:getMainCharacterSkillConfig(var_18_1.activeSkillIds)
+	local characterConfig = EliminateConfig.instance:getTeamChessCharacterConfig(myInfo.id)
+	local character_skill = EliminateConfig.instance:getMainCharacterSkillConfig(characterConfig.activeSkillIds)
 
-	if not var_18_2 or string.nilorempty(var_18_2.effect) then
+	if not character_skill or string.nilorempty(character_skill.effect) then
 		return false
 	end
 
-	return var_18_0.power >= var_18_2.cost
+	return myInfo.power >= character_skill.cost
 end
 
-function var_0_0.setIsWatchTeamChess(arg_19_0, arg_19_1)
-	arg_19_0._isWatchTeamChess = arg_19_1
+function EliminateLevelModel:setIsWatchTeamChess(state)
+	self._isWatchTeamChess = state
 end
 
-function var_0_0.getIsWatchTeamChess(arg_20_0)
-	if arg_20_0._isWatchTeamChess == nil then
+function EliminateLevelModel:getIsWatchTeamChess()
+	if self._isWatchTeamChess == nil then
 		-- block empty
 	end
 
-	return arg_20_0._isWatchTeamChess
+	return self._isWatchTeamChess
 end
 
-function var_0_0.formatString(arg_21_0, arg_21_1)
-	return (arg_21_0:gsub("<(.-):(.-)>", function(arg_22_0, arg_22_1)
-		local var_22_0 = arg_21_1 and arg_21_1[arg_22_1] or EliminateTeamChessEnum.PreBattleFormatType[arg_22_1]
+function EliminateLevelModel.formatString(str, formatType)
+	local formattedStr = str:gsub("<(.-):(.-)>", function(tag, value)
+		local data = formatType and formatType[value] or EliminateTeamChessEnum.PreBattleFormatType[value]
 
-		return var_22_0 and string.format(var_22_0, arg_22_0) or arg_22_0
-	end))
+		return data and string.format(data, tag) or tag
+	end)
+
+	return formattedStr
 end
 
-function var_0_0.getAllStrongHoldId(arg_23_0)
-	local var_23_0 = {}
-	local var_23_1 = EliminateTeamChessModel.instance:getStrongholds()
+function EliminateLevelModel:getAllStrongHoldId()
+	local ids = {}
+	local strongholdList = EliminateTeamChessModel.instance:getStrongholds()
 
-	for iter_23_0 = 1, #var_23_1 do
-		local var_23_2 = var_23_1[iter_23_0]
+	for i = 1, #strongholdList do
+		local stronghold = strongholdList[i]
 
-		table.insert(var_23_0, var_23_2.id)
+		table.insert(ids, stronghold.id)
 	end
 
-	return var_23_0
+	return ids
 end
 
-function var_0_0.getAllPieceName(arg_24_0)
-	local var_24_0 = {}
+function EliminateLevelModel:getAllPieceName()
+	local name = {}
 
-	for iter_24_0 = 1, #arg_24_0._pieceIds do
-		local var_24_1 = EliminateConfig.instance:getSoldierChessConfig(arg_24_0._pieceIds[iter_24_0])
+	for i = 1, #self._pieceIds do
+		local pieceConfig = EliminateConfig.instance:getSoldierChessConfig(self._pieceIds[i])
 
-		table.insert(var_24_0, var_24_1.name)
+		table.insert(name, pieceConfig.name)
 	end
 
-	return var_24_0
+	return name
 end
 
-function var_0_0.setStar(arg_25_0, arg_25_1)
-	arg_25_0._star = arg_25_1
+function EliminateLevelModel:setStar(star)
+	self._star = star
 end
 
-function var_0_0.getStar(arg_26_0)
-	return arg_26_0._star or 0
+function EliminateLevelModel:getStar()
+	return self._star or 0
 end
 
-function var_0_0.resourceIdToDict(arg_27_0, arg_27_1)
-	local var_27_0 = {}
+function EliminateLevelModel:resourceIdToDict(diamonds)
+	local resourceList = {}
 
-	for iter_27_0, iter_27_1 in pairs(arg_27_1) do
-		local var_27_1 = {
-			resources_colour = iter_27_0,
-			resources_num = iter_27_1
+	for resourceId, num in pairs(diamonds) do
+		local data = {
+			resources_colour = resourceId,
+			resources_num = num
 		}
 
-		table.insert(var_27_0, var_27_1)
+		table.insert(resourceList, data)
 	end
 
-	return var_27_0
+	return resourceList
 end
 
-function var_0_0.addMainUseSkillNum(arg_28_0)
-	arg_28_0._useSkillCount = (arg_28_0._useSkillCount or 0) + 1
+function EliminateLevelModel:addMainUseSkillNum()
+	local count = self._useSkillCount or 0
+
+	self._useSkillCount = count + 1
 end
 
-function var_0_0.getMainUseSkillNum(arg_29_0)
-	return arg_29_0._useSkillCount or 0
+function EliminateLevelModel:getMainUseSkillNum()
+	return self._useSkillCount or 0
 end
 
-function var_0_0.sendStatData(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0:getAllStrongHoldId()
-	local var_30_1 = EliminateConfig.instance:getTeamChessCharacterConfig(arg_30_0._warChessCharacterId)
-	local var_30_2 = EliminateConfig.instance:getMainCharacterSkillConfig(var_30_1.activeSkillIds)
-	local var_30_3 = arg_30_0:getAllPieceName()
-	local var_30_4 = arg_30_0:getStar()
-	local var_30_5 = EliminateTeamChessModel.instance:getCurTeamMyInfo()
-	local var_30_6 = EliminateTeamChessModel.instance:getCurTeamEnemyInfo()
-	local var_30_7 = 0
-	local var_30_8 = 0
-	local var_30_9 = 0
-	local var_30_10 = 0
+function EliminateLevelModel:sendStatData(result)
+	local strongHolds = self:getAllStrongHoldId()
+	local mainCharacterConfig = EliminateConfig.instance:getTeamChessCharacterConfig(self._warChessCharacterId)
+	local characterSkillConfig = EliminateConfig.instance:getMainCharacterSkillConfig(mainCharacterConfig.activeSkillIds)
+	local allPieceName = self:getAllPieceName()
+	local star = self:getStar()
+	local playerInfo = EliminateTeamChessModel.instance:getCurTeamMyInfo()
+	local enemyInfo = EliminateTeamChessModel.instance:getCurTeamEnemyInfo()
+	local playerHp = 0
+	local enemyHp = 0
+	local playerHarmed = 0
+	local playerInjured = 0
 
-	if var_30_5 ~= nil then
-		var_30_7 = var_30_5.hp
-		var_30_10 = var_30_5.hpInjury
+	if playerInfo ~= nil then
+		playerHp = playerInfo.hp
+		playerInjured = playerInfo.hpInjury
 	end
 
-	if var_30_6 ~= nil then
-		var_30_8 = var_30_6.hp
-		var_30_9 = var_30_6.hpInjury
+	if enemyInfo ~= nil then
+		enemyHp = enemyInfo.hp
+		playerHarmed = enemyInfo.hpInjury
 	end
 
-	local var_30_11 = arg_30_0:resourceIdToDict(var_30_5.addDiamonds)
-	local var_30_12 = arg_30_0:resourceIdToDict(var_30_5.removeDiamonds)
-	local var_30_13 = arg_30_0:resourceIdToDict(var_30_5.diamonds)
-	local var_30_14 = arg_30_0:getMainUseSkillNum()
+	local addList = self:resourceIdToDict(playerInfo.addDiamonds)
+	local removeList = self:resourceIdToDict(playerInfo.removeDiamonds)
+	local haveList = self:resourceIdToDict(playerInfo.diamonds)
+	local useSkillNum = self:getMainUseSkillNum()
 
 	StatController.instance:track(StatEnum.EventName.TeamchessSettlement, {
-		[StatEnum.EventProperties.EpisodeId] = tostring(arg_30_0._levelId),
-		[StatEnum.EventProperties.StrongholdId] = var_30_0,
-		[StatEnum.EventProperties.MainFighter] = var_30_1.name,
-		[StatEnum.EventProperties.MainFighterSkill] = var_30_2.name,
-		[StatEnum.EventProperties.InitialChess] = var_30_3,
-		[StatEnum.EventProperties.Result] = arg_30_1,
-		[StatEnum.EventProperties.Star] = var_30_4,
-		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - arg_30_0.beginTime,
-		[StatEnum.EventProperties.TotalRound] = arg_30_0:getRoundNumber(),
-		[StatEnum.EventProperties.OurRemainingHP] = var_30_7,
-		[StatEnum.EventProperties.EnemyRemainingHP] = var_30_8,
-		[StatEnum.EventProperties.SettlementHarm] = var_30_9,
-		[StatEnum.EventProperties.SettlementInjury] = var_30_10,
-		[StatEnum.EventProperties.GainResources] = var_30_11,
-		[StatEnum.EventProperties.ConsumeResources] = var_30_12,
-		[StatEnum.EventProperties.ResidueResources] = var_30_13,
-		[StatEnum.EventProperties.MainFighterSkillNum] = var_30_14
+		[StatEnum.EventProperties.EpisodeId] = tostring(self._levelId),
+		[StatEnum.EventProperties.StrongholdId] = strongHolds,
+		[StatEnum.EventProperties.MainFighter] = mainCharacterConfig.name,
+		[StatEnum.EventProperties.MainFighterSkill] = characterSkillConfig.name,
+		[StatEnum.EventProperties.InitialChess] = allPieceName,
+		[StatEnum.EventProperties.Result] = result,
+		[StatEnum.EventProperties.Star] = star,
+		[StatEnum.EventProperties.UseTime] = Time.realtimeSinceStartup - self.beginTime,
+		[StatEnum.EventProperties.TotalRound] = self:getRoundNumber(),
+		[StatEnum.EventProperties.OurRemainingHP] = playerHp,
+		[StatEnum.EventProperties.EnemyRemainingHP] = enemyHp,
+		[StatEnum.EventProperties.SettlementHarm] = playerHarmed,
+		[StatEnum.EventProperties.SettlementInjury] = playerInjured,
+		[StatEnum.EventProperties.GainResources] = addList,
+		[StatEnum.EventProperties.ConsumeResources] = removeList,
+		[StatEnum.EventProperties.ResidueResources] = haveList,
+		[StatEnum.EventProperties.MainFighterSkillNum] = useSkillNum
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+EliminateLevelModel.instance = EliminateLevelModel.New()
 
-return var_0_0
+return EliminateLevelModel

@@ -1,73 +1,75 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapGMPosView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapGMPosView.lua
 
-local var_0_0 = class("SurvivalMapGMPosView", BaseView)
+module("modules.logic.survival.view.map.SurvivalMapGMPosView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gogm = gohelper.findChild(arg_1_0.viewGO, "#go_gmpos")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_gmpos/#go_item")
+local SurvivalMapGMPosView = class("SurvivalMapGMPosView", BaseView)
+
+function SurvivalMapGMPosView:onInitView()
+	self._gogm = gohelper.findChild(self.viewGO, "#go_gmpos")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_gmpos/#go_item")
 end
 
-function var_0_0.onOpen(arg_2_0)
+function SurvivalMapGMPosView:onOpen()
 	if not isDebugBuild then
 		return
 	end
 
-	arg_2_0._cloneItems = arg_2_0:getUserDataTb_()
+	self._cloneItems = self:getUserDataTb_()
 
-	TaskDispatcher.runRepeat(arg_2_0._checkInput, arg_2_0, 0, -1)
+	TaskDispatcher.runRepeat(self._checkInput, self, 0, -1)
 end
 
-function var_0_0._checkInput(arg_3_0)
-	local var_3_0 = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftAlt) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
+function SurvivalMapGMPosView:_checkInput()
+	local isActive = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftAlt) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
 
-	gohelper.setActive(arg_3_0._gogm, var_3_0)
+	gohelper.setActive(self._gogm, isActive)
 
-	if var_3_0 then
-		local var_3_1 = SurvivalMapModel.instance:getSceneMo()
-		local var_3_2 = UnityEngine.Screen.width
-		local var_3_3 = UnityEngine.Screen.height
-		local var_3_4 = Vector3(var_3_2 / 2, var_3_3 / 2, 0)
-		local var_3_5 = SurvivalHelper.instance:getScene3DPos(var_3_4)
-		local var_3_6 = SurvivalHexNode.New(SurvivalHelper.instance:worldPointToHex(var_3_5.x, var_3_5.y, var_3_5.z))
+	if isActive then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local screenWidth = UnityEngine.Screen.width
+		local screenHeight = UnityEngine.Screen.height
+		local v3 = Vector3(screenWidth / 2, screenHeight / 2, 0)
+		local screenCenterPos = SurvivalHelper.instance:getScene3DPos(v3)
+		local hex = SurvivalHexNode.New(SurvivalHelper.instance:worldPointToHex(screenCenterPos.x, screenCenterPos.y, screenCenterPos.z))
 
-		for iter_3_0, iter_3_1 in ipairs(SurvivalHelper.instance:getAllPointsByDis(var_3_6, 10)) do
-			if not arg_3_0._cloneItems[iter_3_0] then
-				local var_3_7 = gohelper.cloneInPlace(arg_3_0._goitem)
+		for k, v in ipairs(SurvivalHelper.instance:getAllPointsByDis(hex, 10)) do
+			if not self._cloneItems[k] then
+				local go = gohelper.cloneInPlace(self._goitem)
 
-				gohelper.setActive(var_3_7, true)
+				gohelper.setActive(go, true)
 
-				arg_3_0._cloneItems[iter_3_0] = gohelper.findChildTextMesh(var_3_7, "")
+				self._cloneItems[k] = gohelper.findChildTextMesh(go, "")
 			end
 
-			local var_3_8, var_3_9, var_3_10 = SurvivalHelper.instance:hexPointToWorldPoint(iter_3_1.q, iter_3_1.r)
-			local var_3_11, var_3_12 = recthelper.worldPosToAnchorPosXYZ(var_3_8, var_3_9, var_3_10, arg_3_0._gogm.transform)
+			local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(v.q, v.r)
+			local anchorX, anchorY = recthelper.worldPosToAnchorPosXYZ(x, y, z, self._gogm.transform)
 
-			recthelper.setAnchor(arg_3_0._cloneItems[iter_3_0].transform, var_3_11, var_3_12)
+			recthelper.setAnchor(self._cloneItems[k].transform, anchorX, anchorY)
 
-			local var_3_13 = var_3_1:getListByPos(iter_3_1)
-			local var_3_14 = ""
+			local list = sceneMo:getListByPos(v)
+			local unitIds = ""
 
-			if var_3_13 and var_3_13[1] then
-				var_3_14 = "\nid:"
+			if list and list[1] then
+				unitIds = "\nid:"
 
-				for iter_3_2 = 1, #var_3_13 do
-					if iter_3_2 > 1 then
-						var_3_14 = var_3_14 .. "、"
+				for i = 1, #list do
+					if i > 1 then
+						unitIds = unitIds .. "、"
 					end
 
-					local var_3_15 = var_3_13[iter_3_2]
+					local unitMo = list[i]
 
-					var_3_14 = var_3_14 .. var_3_15.id
+					unitIds = unitIds .. unitMo.id
 				end
 			end
 
-			arg_3_0._cloneItems[iter_3_0].text = string.format("[%d,%d]%s", iter_3_1.q, iter_3_1.r, var_3_14)
+			self._cloneItems[k].text = string.format("[%d,%d]%s", v.q, v.r, unitIds)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._checkInput, arg_4_0)
+function SurvivalMapGMPosView:onClose()
+	TaskDispatcher.cancelTask(self._checkInput, self)
 end
 
-return var_0_0
+return SurvivalMapGMPosView

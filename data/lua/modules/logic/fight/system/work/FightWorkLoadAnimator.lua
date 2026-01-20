@@ -1,29 +1,33 @@
-﻿module("modules.logic.fight.system.work.FightWorkLoadAnimator", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkLoadAnimator.lua
 
-local var_0_0 = class("FightWorkLoadAnimator", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkLoadAnimator", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.url = arg_1_1
-	arg_1_0.obj = arg_1_2
-	arg_1_0.SAFETIME = 5
+local FightWorkLoadAnimator = class("FightWorkLoadAnimator", FightWorkItem)
+
+function FightWorkLoadAnimator:onConstructor(url, obj)
+	self.url = url
+	self.obj = obj
+	self.SAFETIME = 5
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:com_loadAsset(arg_2_0.url, arg_2_0.onLoaded)
+function FightWorkLoadAnimator:onStart()
+	FightGameMgr.loaderMgr.loader:loadAsset(self.url, self.onLoaded, self)
 end
 
-function var_0_0.onLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if not arg_3_1 then
-		return arg_3_0:onDone(true)
+function FightWorkLoadAnimator:onLoaded(success, loader)
+	if not success then
+		return self:onDone(true)
 	end
 
-	arg_3_0:com_registTimer(arg_3_0.delaySetAnimator, 0.01, arg_3_2)
+	self:com_registTimer(self.delaySetAnimator, 0.01, loader)
 end
 
-function var_0_0.delaySetAnimator(arg_4_0, arg_4_1)
-	gohelper.onceAddComponent(arg_4_0.obj, typeof(UnityEngine.Animator)).runtimeAnimatorController = arg_4_1:GetResource()
+function FightWorkLoadAnimator:delaySetAnimator(loader)
+	local animator = gohelper.onceAddComponent(self.obj, typeof(UnityEngine.Animator))
 
-	arg_4_0:onDone(true)
+	animator.runtimeAnimatorController = loader:GetResource()
+
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkLoadAnimator

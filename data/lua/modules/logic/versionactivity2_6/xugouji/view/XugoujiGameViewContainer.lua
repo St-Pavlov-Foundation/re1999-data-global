@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.view.XugoujiGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/view/XugoujiGameViewContainer.lua
 
-local var_0_0 = class("XugoujiGameViewContainer", BaseViewContainer)
-local var_0_1 = 0.35
+module("modules.logic.versionactivity2_6.xugouji.view.XugoujiGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local XugoujiGameViewContainer = class("XugoujiGameViewContainer", BaseViewContainer)
+local closeAniDuration = 0.35
+
+function XugoujiGameViewContainer:buildViews()
 	return {
 		XugoujiGameView.New(),
 		XugoujiGamePlayerInfoView.New(),
@@ -12,80 +14,84 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function XugoujiGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		var_2_0:setOverrideClose(arg_2_0._overrideCloseAction, arg_2_0)
-		var_2_0:setOverrideHome(arg_2_0._overrideClickHome, arg_2_0)
+		navView:setOverrideClose(self._overrideCloseAction, self)
+		navView:setOverrideHome(self._overrideClickHome, self)
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0._overrideCloseAction(arg_3_0)
-	if Activity188Model.instance:isGameGuideMode() then
+function XugoujiGameViewContainer:_overrideCloseAction()
+	local isDoingXugoujiGuide = Activity188Model.instance:isGameGuideMode()
+
+	if isDoingXugoujiGuide then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_3_0._playAniAndClose, nil, nil, arg_3_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, self._playAniAndClose, nil, nil, self)
 end
 
-function var_0_0._overrideClickHome(arg_4_0)
-	if Activity188Model.instance:isGameGuideMode() then
+function XugoujiGameViewContainer:_overrideClickHome()
+	local isDoingXugoujiGuide = Activity188Model.instance:isGameGuideMode()
+
+	if isDoingXugoujiGuide then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, arg_4_0._playAniAndGoHome, nil, nil, arg_4_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, self._playAniAndGoHome, nil, nil, self)
 end
 
-function var_0_0._playAniAndClose(arg_5_0)
-	if arg_5_0._isClosing then
+function XugoujiGameViewContainer:_playAniAndClose()
+	if self._isClosing then
 		return
 	end
 
-	if not arg_5_0._anim then
-		arg_5_0._anim = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	if not self._anim then
+		self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	arg_5_0._anim:Play("out", 0, 0)
+	self._anim:Play("out", 0, 0)
 	XugoujiController.instance:manualExitGame()
 
-	arg_5_0._isClosing = true
+	self._isClosing = true
 
-	TaskDispatcher.runDelay(arg_5_0._closeAction, arg_5_0, var_0_1)
+	TaskDispatcher.runDelay(self._closeAction, self, closeAniDuration)
 end
 
-function var_0_0._closeAction(arg_6_0)
+function XugoujiGameViewContainer:_closeAction()
 	XugoujiController.instance:manualExitGame()
 	XugoujiController.instance:sendExitGameStat()
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._playAniAndGoHome(arg_7_0)
+function XugoujiGameViewContainer:_playAniAndGoHome()
 	XugoujiController.instance:manualExitGame()
 	XugoujiController.instance:sendExitGameStat()
 	NavigateButtonsView.homeClick()
 end
 
-function var_0_0.defaultOverrideCloseCheck(arg_8_0, arg_8_1, arg_8_2)
-	local function var_8_0()
-		arg_8_1(arg_8_2)
+function XugoujiGameViewContainer:defaultOverrideCloseCheck(reallyClose, reallyCloseObj)
+	local function yesFunc()
+		reallyClose(reallyCloseObj)
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, var_8_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.QuitPushBoxEpisode, MsgBoxEnum.BoxType.Yes_No, yesFunc)
 
 	return false
 end
 
-function var_0_0.setVisibleInternal(arg_10_0, arg_10_1)
-	var_0_0.super.setVisibleInternal(arg_10_0, arg_10_1)
+function XugoujiGameViewContainer:setVisibleInternal(isVisible)
+	XugoujiGameViewContainer.super.setVisibleInternal(self, isVisible)
 end
 
-return var_0_0
+return XugoujiGameViewContainer

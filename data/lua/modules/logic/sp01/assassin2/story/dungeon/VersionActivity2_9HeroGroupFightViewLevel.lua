@@ -1,82 +1,84 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9HeroGroupFightViewLevel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9HeroGroupFightViewLevel.lua
 
-local var_0_0 = class("VersionActivity2_9HeroGroupFightViewLevel", HeroGroupFightViewLevel)
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9HeroGroupFightViewLevel", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local VersionActivity2_9HeroGroupFightViewLevel = class("VersionActivity2_9HeroGroupFightViewLevel", HeroGroupFightViewLevel)
 
-	arg_1_0._gostarcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer")
+function VersionActivity2_9HeroGroupFightViewLevel:onInitView()
+	VersionActivity2_9HeroGroupFightViewLevel.super.onInitView(self)
 
-	gohelper.setActive(arg_1_0._gostarcontainer, false)
+	self._gostarcontainer = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer")
 
-	arg_1_0._conditionItemTab = arg_1_0:getUserDataTb_()
+	gohelper.setActive(self._gostarcontainer, false)
+
+	self._conditionItemTab = self:getUserDataTb_()
 end
 
-function var_0_0._refreshTarget(arg_2_0)
-	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_0._episodeId)
-	local var_2_1 = DungeonConfig.instance:getChapterCO(var_2_0.chapterId)
+function VersionActivity2_9HeroGroupFightViewLevel:_refreshTarget()
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	gohelper.setActive(arg_2_0._gotargetlist, true)
+	gohelper.setActive(self._gotargetlist, true)
 
-	local var_2_2 = var_2_1.type == DungeonEnum.ChapterType.Hard
+	local isHardMode = chapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	gohelper.setActive(arg_2_0._gohardEffect, var_2_2)
-	gohelper.setActive(arg_2_0._gobalanceEffect, HeroGroupBalanceHelper.getIsBalanceMode())
+	gohelper.setActive(self._gohardEffect, isHardMode)
+	gohelper.setActive(self._gobalanceEffect, HeroGroupBalanceHelper.getIsBalanceMode())
 
-	arg_2_0._isHardMode = var_2_2
+	self._isHardMode = isHardMode
 
-	local var_2_3 = {}
-	local var_2_4 = DungeonConfig.instance:getEpisodeWinConditionTextList(arg_2_0._episodeId)
-	local var_2_5 = DungeonConfig.instance:getEpisodeAdvancedConditionText(arg_2_0._episodeId)
-	local var_2_6 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(arg_2_0._episodeId)
+	local allConditionList = {}
+	local firstPassConditions = DungeonConfig.instance:getEpisodeWinConditionTextList(self._episodeId)
+	local advancePassCondition1 = DungeonConfig.instance:getEpisodeAdvancedConditionText(self._episodeId)
+	local advancePassCondition2 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(self._episodeId)
 
-	tabletool.addValues(var_2_3, var_2_4)
-	table.insert(var_2_3, var_2_5)
-	table.insert(var_2_3, var_2_6)
+	tabletool.addValues(allConditionList, firstPassConditions)
+	table.insert(allConditionList, advancePassCondition1)
+	table.insert(allConditionList, advancePassCondition2)
 
-	local var_2_7 = var_2_4 and #var_2_4 or 0
+	local maxFirstConditionIndex = firstPassConditions and #firstPassConditions or 0
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_3) do
-		if not string.nilorempty(iter_2_1) then
-			local var_2_8 = arg_2_0:_getOrCreateConditionItem(iter_2_0)
+	for index, conditionDesc in ipairs(allConditionList) do
+		if not string.nilorempty(conditionDesc) then
+			local conditionItem = self:_getOrCreateConditionItem(index)
 
-			var_2_8.txtcondition.text = iter_2_1
+			conditionItem.txtcondition.text = conditionDesc
 
-			local var_2_9 = iter_2_0 <= var_2_7 and DungeonEnum.StarType.Normal or DungeonEnum.StarType.Advanced
+			local starType = index <= maxFirstConditionIndex and DungeonEnum.StarType.Normal or DungeonEnum.StarType.Advanced
 
-			VersionActivity2_9DungeonHelper.setEpisodeTargetProgress(arg_2_0._episodeId, var_2_9, var_2_8.txtprogress)
-			VersionActivity2_9DungeonHelper.setEpisodeProgressIcon(arg_2_0._episodeId, var_2_8.imageprogress)
-			gohelper.setActive(var_2_8.go, true)
+			VersionActivity2_9DungeonHelper.setEpisodeTargetProgress(self._episodeId, starType, conditionItem.txtprogress)
+			VersionActivity2_9DungeonHelper.setEpisodeProgressIcon(self._episodeId, conditionItem.imageprogress)
+			gohelper.setActive(conditionItem.go, true)
 		end
 	end
 
-	local var_2_10 = var_2_3 and #var_2_3 or 0
-	local var_2_11 = arg_2_0._conditionItemTab and #arg_2_0._conditionItemTab or 0
+	local allConditionNum = allConditionList and #allConditionList or 0
+	local conditionItemNum = self._conditionItemTab and #self._conditionItemTab or 0
 
-	for iter_2_2 = var_2_10 + 1, var_2_11 do
-		gohelper.setActive(arg_2_0._conditionItemTab[iter_2_2].go, false)
+	for i = allConditionNum + 1, conditionItemNum do
+		gohelper.setActive(self._conditionItemTab[i].go, false)
 	end
 
-	gohelper.setActive(arg_2_0._gonormalcondition, false)
+	gohelper.setActive(self._gonormalcondition, false)
 
-	local var_2_12 = var_2_10 <= 1
+	local isOnlyShowOneTarget = allConditionNum <= 1
 
-	gohelper.setActive(arg_2_0._goplace, var_2_12)
+	gohelper.setActive(self._goplace, isOnlyShowOneTarget)
 end
 
-function var_0_0._getOrCreateConditionItem(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._conditionItemTab[arg_3_1]
+function VersionActivity2_9HeroGroupFightViewLevel:_getOrCreateConditionItem(index)
+	local conditionItem = self._conditionItemTab[index]
 
-	if not var_3_0 then
-		var_3_0 = arg_3_0:getUserDataTb_()
-		var_3_0.go = gohelper.cloneInPlace(arg_3_0._gonormalcondition, "condition_" .. arg_3_1)
-		var_3_0.txtcondition = gohelper.findChildText(var_3_0.go, "#txt_normalcondition")
-		var_3_0.txtprogress = gohelper.findChildText(var_3_0.go, "star/condition")
-		var_3_0.imageprogress = gohelper.findChildImage(var_3_0.go, "star")
-		arg_3_0._conditionItemTab[arg_3_1] = var_3_0
+	if not conditionItem then
+		conditionItem = self:getUserDataTb_()
+		conditionItem.go = gohelper.cloneInPlace(self._gonormalcondition, "condition_" .. index)
+		conditionItem.txtcondition = gohelper.findChildText(conditionItem.go, "#txt_normalcondition")
+		conditionItem.txtprogress = gohelper.findChildText(conditionItem.go, "star/condition")
+		conditionItem.imageprogress = gohelper.findChildImage(conditionItem.go, "star")
+		self._conditionItemTab[index] = conditionItem
 	end
 
-	return var_3_0
+	return conditionItem
 end
 
-return var_0_0
+return VersionActivity2_9HeroGroupFightViewLevel

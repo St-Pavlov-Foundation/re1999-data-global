@@ -1,39 +1,41 @@
-﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVer123", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/variant/SummonCharacterProbUpVer123.lua
 
-local var_0_0 = class("SummonCharacterProbUpVer123", SummonMainCharacterProbUp)
+module("modules.logic.summon.view.variant.SummonCharacterProbUpVer123", package.seeall)
 
-var_0_0.SIMAGE_COUNT = 3
-var_0_0.preloadList = {
+local SummonCharacterProbUpVer123 = class("SummonCharacterProbUpVer123", SummonMainCharacterProbUp)
+
+SummonCharacterProbUpVer123.SIMAGE_COUNT = 3
+SummonCharacterProbUpVer123.preloadList = {
 	ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/full/img_bg")
 }
 
-function var_0_0._editableInitView(arg_1_0)
-	for iter_1_0 = 1, var_0_0.SIMAGE_COUNT do
-		arg_1_0["_simagead" .. iter_1_0] = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_ad" .. iter_1_0)
+function SummonCharacterProbUpVer123:_editableInitView()
+	for i = 1, SummonCharacterProbUpVer123.SIMAGE_COUNT do
+		self["_simagead" .. i] = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_ad" .. i)
 	end
 
-	var_0_0.super._editableInitView(arg_1_0)
+	SummonCharacterProbUpVer123.super._editableInitView(self)
 end
 
-function var_0_0.refreshSingleImage(arg_2_0)
-	arg_2_0._simagebg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/full/img_bg"))
-	arg_2_0._simagead1:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/img_chara_yl"))
-	arg_2_0._simagead2:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/img_wx_fgr"))
-	arg_2_0._simagead3:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/img_wx_pma"))
-	arg_2_0._simagefrontbg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/mask"))
-	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+function SummonCharacterProbUpVer123:refreshSingleImage()
+	self._simagebg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/full/img_bg"))
+	self._simagead1:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/img_chara_yl"))
+	self._simagead2:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/img_wx_fgr"))
+	self._simagead3:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/img_wx_pma"))
+	self._simagefrontbg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_2/yuanlv/mask"))
+	self._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 end
 
-function var_0_0.unloadSingleImage(arg_3_0)
-	for iter_3_0 = 1, var_0_0.SIMAGE_COUNT do
-		arg_3_0["_simagead" .. iter_3_0]:UnLoadImage()
+function SummonCharacterProbUpVer123:unloadSingleImage()
+	for i = 1, SummonCharacterProbUpVer123.SIMAGE_COUNT do
+		self["_simagead" .. i]:UnLoadImage()
 	end
 
-	arg_3_0._simagebg:UnLoadImage()
-	arg_3_0._simagefrontbg:UnLoadImage()
-	arg_3_0._simageline:UnLoadImage()
-	arg_3_0._simagecurrency1:UnLoadImage()
-	arg_3_0._simagecurrency10:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simagefrontbg:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagecurrency1:UnLoadImage()
+	self._simagecurrency10:UnLoadImage()
 end
 
-return var_0_0
+return SummonCharacterProbUpVer123

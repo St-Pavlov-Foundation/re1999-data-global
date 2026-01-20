@@ -1,90 +1,94 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandGyroRotationComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/comp/FairyLandGyroRotationComp.lua
 
-local var_0_0 = class("FairyLandGyroRotationComp")
-local var_0_1 = UnityEngine.Input
-local var_0_2 = UnityEngine.Time
+module("modules.logic.versionactivity1_9.fairyland.view.comp.FairyLandGyroRotationComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.autorotateToLandscapeLeft = UnityEngine.Screen.autorotateToLandscapeLeft
-	arg_1_0.autorotateToLandscapeRight = UnityEngine.Screen.autorotateToLandscapeRight
+local FairyLandGyroRotationComp = class("FairyLandGyroRotationComp")
+local Input = UnityEngine.Input
+local Time = UnityEngine.Time
+
+function FairyLandGyroRotationComp:init(param)
+	self.autorotateToLandscapeLeft = UnityEngine.Screen.autorotateToLandscapeLeft
+	self.autorotateToLandscapeRight = UnityEngine.Screen.autorotateToLandscapeRight
 	UnityEngine.Screen.autorotateToLandscapeLeft = false
 	UnityEngine.Screen.autorotateToLandscapeRight = false
-	arg_1_0.rotateCallback = arg_1_1.callback
-	arg_1_0.rotateCallbackObj = arg_1_1.callbackObj
-	arg_1_0.isMobilePlayer = GameUtil.isMobilePlayerAndNotEmulator()
-	arg_1_0._aniGoList = {}
+	self.rotateCallback = param.callback
+	self.rotateCallbackObj = param.callbackObj
+	self.isMobilePlayer = GameUtil.isMobilePlayerAndNotEmulator()
+	self._aniGoList = {}
 
-	local var_1_0 = {}
+	local rotateParam = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.goList) do
-		table.insert(arg_1_0._aniGoList, {
-			go = iter_1_1,
-			transform = iter_1_1.transform
+	for i, v in ipairs(param.goList) do
+		table.insert(self._aniGoList, {
+			go = v,
+			transform = v.transform
 		})
 	end
 
-	if not arg_1_0._isRunning then
-		arg_1_0._isRunning = true
+	if not self._isRunning then
+		self._isRunning = true
 
-		TaskDispatcher.runRepeat(arg_1_0._tick, arg_1_0, 0)
+		TaskDispatcher.runRepeat(self._tick, self, 0)
 	end
 
-	if arg_1_0.isMobilePlayer then
-		arg_1_0.gyro = UnityEngine.Input.gyro
-		arg_1_0.gyroEnabled = arg_1_0.gyro.enabled
-		arg_1_0.gyro.enabled = true
+	if self.isMobilePlayer then
+		self.gyro = UnityEngine.Input.gyro
+		self.gyroEnabled = self.gyro.enabled
+		self.gyro.enabled = true
 	end
 
-	arg_1_0.tempQuaternion = Quaternion.New()
-	arg_1_0.tempQuaternion2 = Quaternion.Euler(90, 0, 0)
+	self.tempQuaternion = Quaternion.New()
+	self.tempQuaternion2 = Quaternion.Euler(90, 0, 0)
 end
 
-function var_0_0.checkInDrag(arg_2_0)
-	return arg_2_0.rotateCallbackObj.inDrag
+function FairyLandGyroRotationComp:checkInDrag()
+	return self.rotateCallbackObj.inDrag
 end
 
-function var_0_0._tick(arg_3_0)
-	if arg_3_0.isMobilePlayer and not arg_3_0:checkInDrag() then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._aniGoList) do
-			local var_3_0 = arg_3_0:convertRotation(arg_3_0.gyro.attitude):ToEulerAngles().z
+function FairyLandGyroRotationComp:_tick()
+	if self.isMobilePlayer and not self:checkInDrag() then
+		for i, v in ipairs(self._aniGoList) do
+			local q = self:convertRotation(self.gyro.attitude)
+			local angles = q:ToEulerAngles()
+			local angle = angles.z
 
-			transformhelper.setLocalRotationLerp(iter_3_1.transform, 0, 0, var_3_0, var_0_2.deltaTime * 2)
+			transformhelper.setLocalRotationLerp(v.transform, 0, 0, angle, Time.deltaTime * 2)
 		end
 	end
 
-	arg_3_0:checkFinish()
+	self:checkFinish()
 end
 
-function var_0_0.convertRotation(arg_4_0, arg_4_1)
-	arg_4_0.tempQuaternion:Set(-arg_4_1.x, -arg_4_1.y, arg_4_1.z, arg_4_1.w)
+function FairyLandGyroRotationComp:convertRotation(q)
+	self.tempQuaternion:Set(-q.x, -q.y, q.z, q.w)
 
-	return arg_4_0.tempQuaternion2 * arg_4_0.tempQuaternion
+	return self.tempQuaternion2 * self.tempQuaternion
 end
 
-function var_0_0.checkFinish(arg_5_0)
-	if arg_5_0.rotateCallback then
-		arg_5_0.rotateCallback(arg_5_0.rotateCallbackObj)
-	end
-end
-
-function var_0_0.closeGyro(arg_6_0)
-	if arg_6_0._isRunning then
-		arg_6_0._isRunning = false
-
-		TaskDispatcher.cancelTask(arg_6_0._tick, arg_6_0)
-	end
-
-	if arg_6_0.autorotateToLandscapeLeft ~= nil then
-		UnityEngine.Screen.autorotateToLandscapeLeft = arg_6_0.autorotateToLandscapeLeft
-	end
-
-	if arg_6_0.autorotateToLandscapeRight ~= nil then
-		UnityEngine.Screen.autorotateToLandscapeRight = arg_6_0.autorotateToLandscapeRight
-	end
-
-	if arg_6_0.gyro then
-		arg_6_0.gyro.enabled = arg_6_0.gyroEnabled
+function FairyLandGyroRotationComp:checkFinish()
+	if self.rotateCallback then
+		self.rotateCallback(self.rotateCallbackObj)
 	end
 end
 
-return var_0_0
+function FairyLandGyroRotationComp:closeGyro()
+	if self._isRunning then
+		self._isRunning = false
+
+		TaskDispatcher.cancelTask(self._tick, self)
+	end
+
+	if self.autorotateToLandscapeLeft ~= nil then
+		UnityEngine.Screen.autorotateToLandscapeLeft = self.autorotateToLandscapeLeft
+	end
+
+	if self.autorotateToLandscapeRight ~= nil then
+		UnityEngine.Screen.autorotateToLandscapeRight = self.autorotateToLandscapeRight
+	end
+
+	if self.gyro then
+		self.gyro.enabled = self.gyroEnabled
+	end
+end
+
+return FairyLandGyroRotationComp

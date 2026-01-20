@@ -1,53 +1,56 @@
-﻿module("modules.logic.scene.shelter.comp.SurvivalShelterSceneViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/comp/SurvivalShelterSceneViewComp.lua
 
-local var_0_0 = class("SurvivalShelterSceneViewComp", BaseSceneComp)
+module("modules.logic.scene.shelter.comp.SurvivalShelterSceneViewComp", package.seeall)
 
-function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._beginDt = ServerTime.now()
+local SurvivalShelterSceneViewComp = class("SurvivalShelterSceneViewComp", BaseSceneComp)
 
-	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalShelterSceneViewComp:onScenePrepared(sceneId, levelId)
+	self._beginDt = ServerTime.now()
 
-	if var_1_0:getBag(SurvivalEnum.ItemSource.Shelter):haveReputationItem() and not var_1_0:isAllReputationShopMaxLevel() then
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local have = weekInfo:getBag(SurvivalEnum.ItemSource.Shelter):haveReputationItem()
+
+	if have and not weekInfo:isAllReputationShopMaxLevel() then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalReputationSelectView)
 	end
 
-	local var_1_1 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
 
-	SurvivalMapHelper.instance:tryShowServerPanel(var_1_1.panel)
+	SurvivalMapHelper.instance:tryShowServerPanel(weekMo.panel)
 
 	if SurvivalShelterModel.instance:getNeedShowBossInvade() then
 		SurvivalShelterModel.instance:setNeedShowBossInvade()
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalBossInvadeView)
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._delayProcessGuideEvent, arg_1_0, 0.3)
+	TaskDispatcher.runDelay(self._delayProcessGuideEvent, self, 0.3)
 end
 
-function var_0_0._delayProcessGuideEvent(arg_2_0)
-	local var_2_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalShelterSceneViewComp:_delayProcessGuideEvent()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
 
-	if var_2_0.day > 1 then
+	if weekMo.day > 1 then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideWaitWeekDay)
 	end
 
-	if var_2_0.difficulty == 3 or var_2_0.difficulty == 4 then
+	if weekMo.difficulty == 3 or weekMo.difficulty == 4 then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideShelterHard)
 	end
 end
 
-function var_0_0.onSceneClose(arg_3_0, arg_3_1, arg_3_2)
+function SurvivalShelterSceneViewComp:onSceneClose(sceneId, levelId)
 	ViewMgr.instance:closeView(ViewName.SurvivalMainView)
 	ViewMgr.instance:closeAllPopupViews()
-	TaskDispatcher.cancelTask(arg_3_0._delayProcessGuideEvent, arg_3_0)
+	TaskDispatcher.cancelTask(self._delayProcessGuideEvent, self)
 
-	local var_3_0 = SurvivalModel.instance:getOutSideInfo()
-	local var_3_1 = "settle"
+	local outSideMo = SurvivalModel.instance:getOutSideInfo()
+	local type = "settle"
 
-	if var_3_0 and var_3_0.inWeek then
-		var_3_1 = "topleft"
+	if outSideMo and outSideMo.inWeek then
+		type = "topleft"
 	end
 
-	SurvivalStatHelper.instance:statWeekClose(ServerTime.now() - arg_3_0._beginDt, var_3_1)
+	SurvivalStatHelper.instance:statWeekClose(ServerTime.now() - self._beginDt, type)
 end
 
-return var_0_0
+return SurvivalShelterSceneViewComp

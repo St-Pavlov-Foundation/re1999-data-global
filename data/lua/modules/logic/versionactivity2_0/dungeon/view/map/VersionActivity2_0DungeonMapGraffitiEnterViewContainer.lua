@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.view.map.VersionActivity2_0DungeonMapGraffitiEnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/view/map/VersionActivity2_0DungeonMapGraffitiEnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_0DungeonMapGraffitiEnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_0.dungeon.view.map.VersionActivity2_0DungeonMapGraffitiEnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_0DungeonMapGraffitiEnterViewContainer = class("VersionActivity2_0DungeonMapGraffitiEnterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_0DungeonMapGraffitiEnterView.New())
+function VersionActivity2_0DungeonMapGraffitiEnterViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_0DungeonMapGraffitiEnterView.New())
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_0DungeonMapGraffitiEnterViewContainer

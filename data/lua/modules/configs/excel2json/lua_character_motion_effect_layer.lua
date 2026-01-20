@@ -1,18 +1,20 @@
-﻿module("modules.configs.excel2json.lua_character_motion_effect_layer", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_character_motion_effect_layer.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_character_motion_effect_layer", package.seeall)
+
+local lua_character_motion_effect_layer = {}
+local fields = {
 	node1Layer = 3,
 	node1 = 2,
 	heroResName = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"heroResName"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_character_motion_effect_layer.onLoad(json)
+	lua_character_motion_effect_layer.configList, lua_character_motion_effect_layer.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_character_motion_effect_layer

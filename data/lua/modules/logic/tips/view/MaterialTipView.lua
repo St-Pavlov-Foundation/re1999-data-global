@@ -1,163 +1,165 @@
-﻿module("modules.logic.tips.view.MaterialTipView", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/MaterialTipView.lua
 
-local var_0_0 = class("MaterialTipView", BaseView)
+module("modules.logic.tips.view.MaterialTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = GMController.instance:getGMNode("materialtipview", arg_1_0.viewGO)
+local MaterialTipView = class("MaterialTipView", BaseView)
 
-	if var_1_0 then
-		arg_1_0._gogm = gohelper.findChild(var_1_0, "#go_gm")
-		arg_1_0._txtmattip = gohelper.findChildText(var_1_0, "#go_gm/bg/#txt_mattip")
-		arg_1_0._btnone = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_one")
-		arg_1_0._btnten = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_ten")
-		arg_1_0._btnhundred = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_hundred")
-		arg_1_0._btnthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_thousand")
-		arg_1_0._btntenthousand = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenthousand")
-		arg_1_0._btntenmillion = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_tenmillion")
-		arg_1_0._btninput = gohelper.findChildButtonWithAudio(var_1_0, "#go_gm/#btn_input")
+function MaterialTipView:onInitView()
+	local guideGMNode = GMController.instance:getGMNode("materialtipview", self.viewGO)
+
+	if guideGMNode then
+		self._gogm = gohelper.findChild(guideGMNode, "#go_gm")
+		self._txtmattip = gohelper.findChildText(guideGMNode, "#go_gm/bg/#txt_mattip")
+		self._btnone = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_one")
+		self._btnten = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_ten")
+		self._btnhundred = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_hundred")
+		self._btnthousand = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_thousand")
+		self._btntenthousand = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_tenthousand")
+		self._btntenmillion = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_tenmillion")
+		self._btninput = gohelper.findChildButtonWithAudio(guideGMNode, "#go_gm/#btn_input")
 	end
 
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._simagepropicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "iconbg/#simage_propicon")
-	arg_1_0._goequipicon = gohelper.findChild(arg_1_0.viewGO, "iconbg/#go_equipicon")
-	arg_1_0._simageequipicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "iconbg/#go_equipicon/#simage_equipicon")
-	arg_1_0._gohadnumber = gohelper.findChild(arg_1_0.viewGO, "iconbg/#go_hadnumber")
-	arg_1_0._txthadnumber = gohelper.findChildText(arg_1_0.viewGO, "iconbg/#go_hadnumber/#txt_hadnumber")
-	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "iconbg/#btn_detail")
-	arg_1_0._btnplayerbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "iconbg/#btn_playerbg")
-	arg_1_0._txtpropname = gohelper.findChildText(arg_1_0.viewGO, "#txt_propname")
-	arg_1_0._txtproptip = gohelper.findChildText(arg_1_0.viewGO, "#go_expiretime/#txt_proptip")
-	arg_1_0._txtexpire = gohelper.findChildText(arg_1_0.viewGO, "#go_expiretime/#txt_expire")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_desc")
-	arg_1_0._gojumptxt = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/#go_jumptxt")
-	arg_1_0._gojumpItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/#go_jumpItem")
-	arg_1_0._gosource = gohelper.findChild(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_source")
-	arg_1_0._txtsource = gohelper.findChildText(arg_1_0.viewGO, "#scroll_desc/viewport/content/#go_source/#txt_source")
-	arg_1_0._gouse = gohelper.findChild(arg_1_0.viewGO, "#go_use")
-	arg_1_0._gouseDetail = gohelper.findChild(arg_1_0.viewGO, "#go_use/#go_usedetail")
-	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_use/#go_usedetail/valuebg/#input_value")
-	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_use/#go_usedetail/#btn_min")
-	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_use/#go_usedetail/#btn_sub")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_use/#go_usedetail/#btn_add")
-	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_use/#go_usedetail/#btn_max")
-	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_use/#btn_use")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btn_close")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg2")
-	arg_1_0._goinclude = gohelper.findChild(arg_1_0.viewGO, "#go_include")
-	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "iconbg/#go_playericon")
-	arg_1_0._simageheadicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "iconbg/#go_playericon/#simage_headicon")
-	arg_1_0._goupgrade = gohelper.findChild(arg_1_0.viewGO, "iconbg/#go_upgrade")
-	arg_1_0._goframe = gohelper.findChild(arg_1_0.viewGO, "iconbg/#go_playericon/#go_frame")
-	arg_1_0._goframenode = gohelper.findChild(arg_1_0.viewGO, "iconbg/#go_playericon/#go_framenode")
-	arg_1_0._goSummonsimulationtips = gohelper.findChild(arg_1_0.viewGO, "#go_summonpicktips")
-	arg_1_0._btnsummonsimulation = gohelper.findChildButton(arg_1_0.viewGO, "#btn_summonSiumlationTips")
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._simagepropicon = gohelper.findChildSingleImage(self.viewGO, "iconbg/#simage_propicon")
+	self._goequipicon = gohelper.findChild(self.viewGO, "iconbg/#go_equipicon")
+	self._simageequipicon = gohelper.findChildSingleImage(self.viewGO, "iconbg/#go_equipicon/#simage_equipicon")
+	self._gohadnumber = gohelper.findChild(self.viewGO, "iconbg/#go_hadnumber")
+	self._txthadnumber = gohelper.findChildText(self.viewGO, "iconbg/#go_hadnumber/#txt_hadnumber")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "iconbg/#btn_detail")
+	self._btnplayerbg = gohelper.findChildButtonWithAudio(self.viewGO, "iconbg/#btn_playerbg")
+	self._txtpropname = gohelper.findChildText(self.viewGO, "#txt_propname")
+	self._txtproptip = gohelper.findChildText(self.viewGO, "#go_expiretime/#txt_proptip")
+	self._txtexpire = gohelper.findChildText(self.viewGO, "#go_expiretime/#txt_expire")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_desc")
+	self._gojumptxt = gohelper.findChild(self.viewGO, "#scroll_desc/#go_jumptxt")
+	self._gojumpItem = gohelper.findChild(self.viewGO, "#scroll_desc/#go_jumpItem")
+	self._gosource = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content/#go_source")
+	self._txtsource = gohelper.findChildText(self.viewGO, "#scroll_desc/viewport/content/#go_source/#txt_source")
+	self._gouse = gohelper.findChild(self.viewGO, "#go_use")
+	self._gouseDetail = gohelper.findChild(self.viewGO, "#go_use/#go_usedetail")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.viewGO, "#go_use/#go_usedetail/valuebg/#input_value")
+	self._btnmin = gohelper.findChildButtonWithAudio(self.viewGO, "#go_use/#go_usedetail/#btn_min")
+	self._btnsub = gohelper.findChildButtonWithAudio(self.viewGO, "#go_use/#go_usedetail/#btn_sub")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_use/#go_usedetail/#btn_add")
+	self._btnmax = gohelper.findChildButtonWithAudio(self.viewGO, "#go_use/#go_usedetail/#btn_max")
+	self._btnuse = gohelper.findChildButtonWithAudio(self.viewGO, "#go_use/#btn_use")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "bg/#btn_close")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
+	self._goinclude = gohelper.findChild(self.viewGO, "#go_include")
+	self._goplayericon = gohelper.findChild(self.viewGO, "iconbg/#go_playericon")
+	self._simageheadicon = gohelper.findChildSingleImage(self.viewGO, "iconbg/#go_playericon/#simage_headicon")
+	self._goupgrade = gohelper.findChild(self.viewGO, "iconbg/#go_upgrade")
+	self._goframe = gohelper.findChild(self.viewGO, "iconbg/#go_playericon/#go_frame")
+	self._goframenode = gohelper.findChild(self.viewGO, "iconbg/#go_playericon/#go_framenode")
+	self._goSummonsimulationtips = gohelper.findChild(self.viewGO, "#go_summonpicktips")
+	self._btnsummonsimulation = gohelper.findChildButton(self.viewGO, "#btn_summonSiumlationTips")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 
-	arg_1_0._loader = MultiAbLoader.New()
+	self._loader = MultiAbLoader.New()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	if arg_2_0._btnone then
-		arg_2_0._btnone:AddClickListener(arg_2_0._btnoneOnClick, arg_2_0)
+function MaterialTipView:addEvents()
+	if self._btnone then
+		self._btnone:AddClickListener(self._btnoneOnClick, self)
 	end
 
-	if arg_2_0._btnten then
-		arg_2_0._btnten:AddClickListener(arg_2_0._btntenOnClick, arg_2_0)
+	if self._btnten then
+		self._btnten:AddClickListener(self._btntenOnClick, self)
 	end
 
-	if arg_2_0._btnhundred then
-		arg_2_0._btnhundred:AddClickListener(arg_2_0._btnhundredOnClick, arg_2_0)
+	if self._btnhundred then
+		self._btnhundred:AddClickListener(self._btnhundredOnClick, self)
 	end
 
-	if arg_2_0._btnthousand then
-		arg_2_0._btnthousand:AddClickListener(arg_2_0._btnthousandOnClick, arg_2_0)
+	if self._btnthousand then
+		self._btnthousand:AddClickListener(self._btnthousandOnClick, self)
 	end
 
-	if arg_2_0._btntenthousand then
-		arg_2_0._btntenthousand:AddClickListener(arg_2_0._btntenthousandOnClick, arg_2_0)
+	if self._btntenthousand then
+		self._btntenthousand:AddClickListener(self._btntenthousandOnClick, self)
 	end
 
-	if arg_2_0._btntenmillion then
-		arg_2_0._btntenmillion:AddClickListener(arg_2_0._btntenmillionOnClick, arg_2_0)
+	if self._btntenmillion then
+		self._btntenmillion:AddClickListener(self._btntenmillionOnClick, self)
 	end
 
-	if arg_2_0._btninput then
-		arg_2_0._btninput:AddClickListener(arg_2_0._btninputOnClick, arg_2_0)
+	if self._btninput then
+		self._btninput:AddClickListener(self._btninputOnClick, self)
 	end
 
-	if arg_2_0._btnplayerbg then
-		arg_2_0._btnplayerbg:AddClickListener(arg_2_0._btnplayerbgOnClick, arg_2_0)
+	if self._btnplayerbg then
+		self._btnplayerbg:AddClickListener(self._btnplayerbgOnClick, self)
 	end
 
-	if arg_2_0._btnsummonsimulation then
-		arg_2_0._btnsummonsimulation:AddClickListener(arg_2_0._btnsummonsimulationOnClick, arg_2_0)
+	if self._btnsummonsimulation then
+		self._btnsummonsimulation:AddClickListener(self._btnsummonsimulationOnClick, self)
 	end
 
-	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
-	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
-	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
-	arg_2_0._btnuse:AddClickListener(arg_2_0._btnuseOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._inputvalue:AddOnEndEdit(arg_2_0._onEndEdit, arg_2_0)
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnmin:AddClickListener(self._btnminOnClick, self)
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnmax:AddClickListener(self._btnmaxOnClick, self)
+	self._btnuse:AddClickListener(self._btnuseOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._inputvalue:AddOnEndEdit(self._onEndEdit, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0._btnone then
-		arg_3_0._btnone:RemoveClickListener()
+function MaterialTipView:removeEvents()
+	if self._btnone then
+		self._btnone:RemoveClickListener()
 	end
 
-	if arg_3_0._btnten then
-		arg_3_0._btnten:RemoveClickListener()
+	if self._btnten then
+		self._btnten:RemoveClickListener()
 	end
 
-	if arg_3_0._btnhundred then
-		arg_3_0._btnhundred:RemoveClickListener()
+	if self._btnhundred then
+		self._btnhundred:RemoveClickListener()
 	end
 
-	if arg_3_0._btnthousand then
-		arg_3_0._btnthousand:RemoveClickListener()
+	if self._btnthousand then
+		self._btnthousand:RemoveClickListener()
 	end
 
-	if arg_3_0._btntenthousand then
-		arg_3_0._btntenthousand:RemoveClickListener()
+	if self._btntenthousand then
+		self._btntenthousand:RemoveClickListener()
 	end
 
-	if arg_3_0._btntenmillion then
-		arg_3_0._btntenmillion:RemoveClickListener()
+	if self._btntenmillion then
+		self._btntenmillion:RemoveClickListener()
 	end
 
-	if arg_3_0._btninput then
-		arg_3_0._btninput:RemoveClickListener()
+	if self._btninput then
+		self._btninput:RemoveClickListener()
 	end
 
-	if arg_3_0._btnplayerbg then
-		arg_3_0._btnplayerbg:RemoveClickListener()
+	if self._btnplayerbg then
+		self._btnplayerbg:RemoveClickListener()
 	end
 
-	if arg_3_0._btnsummonsimulation then
-		arg_3_0._btnsummonsimulation:RemoveClickListener()
+	if self._btnsummonsimulation then
+		self._btnsummonsimulation:RemoveClickListener()
 	end
 
-	arg_3_0._btndetail:RemoveClickListener()
-	arg_3_0._btnmin:RemoveClickListener()
-	arg_3_0._btnsub:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnmax:RemoveClickListener()
-	arg_3_0._btnuse:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._inputvalue:RemoveOnEndEdit()
+	self._btndetail:RemoveClickListener()
+	self._btnmin:RemoveClickListener()
+	self._btnsub:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
+	self._btnmax:RemoveClickListener()
+	self._btnuse:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._inputvalue:RemoveOnEndEdit()
 end
 
-local var_0_1 = math.floor
-local var_0_2 = string.format
-local var_0_3 = table.insert
-local var_0_4 = {
+local math_floor = math.floor
+local sf = string.format
+local ti = table.insert
+local FakeIconTab = {
 	[MaterialEnum.MaterialType.Item] = {
 		[BpEnum.ScoreItemId] = true,
 		[MaterialEnum.PowerMakerItemId] = true
@@ -168,56 +170,56 @@ local var_0_4 = {
 	}
 }
 
-function var_0_0._btndetailOnClick(arg_4_0)
-	if not arg_4_0._canJump then
+function MaterialTipView:_btndetailOnClick()
+	if not self._canJump then
 		GameFacade.showToast(ToastEnum.MaterialTipJump)
 
 		return
 	end
 
-	JumpController.instance:jumpByParamWithCondition(var_0_2("51#%d", arg_4_0.viewParam.id), arg_4_0._onJumpFinish, arg_4_0)
+	JumpController.instance:jumpByParamWithCondition(sf("51#%d", self.viewParam.id), self._onJumpFinish, self)
 end
 
-function var_0_0._btnplayerbgOnClick(arg_5_0)
+function MaterialTipView:_btnplayerbgOnClick()
 	ViewMgr.instance:openView(ViewName.PlayerChangeBgView, {
-		itemMo = arg_5_0.viewParam
+		itemMo = self.viewParam
 	})
 end
 
-function var_0_0._btnsummonsimulationOnClick(arg_6_0)
-	if not arg_6_0._config then
+function MaterialTipView:_btnsummonsimulationOnClick()
+	if not self._config then
 		return
 	end
 
-	if arg_6_0:_isPackageSkin() then
-		HelpController.instance:openBpRuleTipsView(luaLang("ruledetail"), "Rule Details", arg_6_0:_getPackageSkinDesc())
-	elseif arg_6_0._config.activityId then
-		SummonSimulationPickController.instance:openSummonTips(arg_6_0._config.activityId)
+	if self:_isPackageSkin() then
+		HelpController.instance:openBpRuleTipsView(luaLang("ruledetail"), "Rule Details", self:_getPackageSkinDesc())
+	elseif self._config.activityId then
+		SummonSimulationPickController.instance:openSummonTips(self._config.activityId)
 	end
 end
 
-function var_0_0._onEndEdit(arg_7_0, arg_7_1)
-	arg_7_0._valueChanged = false
-	arg_7_0._value = tonumber(arg_7_1)
+function MaterialTipView:_onEndEdit(inputStr)
+	self._valueChanged = false
+	self._value = tonumber(inputStr)
 
-	if arg_7_0._value > arg_7_0:_getMaxValue() then
-		arg_7_0._value = arg_7_0:_getMaxValue()
+	if self._value > self:_getMaxValue() then
+		self._value = self:_getMaxValue()
 
-		arg_7_0._inputvalue:SetText(tostring(arg_7_0._value))
+		self._inputvalue:SetText(tostring(self._value))
 
-		arg_7_0._valueChanged = true
+		self._valueChanged = true
 
 		GameFacade.showToast(ToastEnum.MaterialTipBtnSub)
 
 		return
 	end
 
-	if arg_7_0._value < 1 then
-		arg_7_0._value = 1
+	if self._value < 1 then
+		self._value = 1
 
-		arg_7_0._inputvalue:SetText(tostring(arg_7_0._value))
+		self._inputvalue:SetText(tostring(self._value))
 
-		arg_7_0._valueChanged = true
+		self._valueChanged = true
 
 		GameFacade.showToast(ToastEnum.MaterialTipBtnSub)
 
@@ -225,587 +227,613 @@ function var_0_0._onEndEdit(arg_7_0, arg_7_1)
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function MaterialTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btninputOnClick(arg_9_0)
-	local var_9_0 = CommonInputMO.New()
+function MaterialTipView:_btninputOnClick()
+	local inputMo = CommonInputMO.New()
 
-	var_9_0.title = "请输入增加道具数量！"
-	var_9_0.defaultInput = "Enter Item Num"
+	inputMo.title = "请输入增加道具数量！"
+	inputMo.defaultInput = "Enter Item Num"
 
-	function var_9_0.sureCallback(arg_10_0)
+	function inputMo.sureCallback(inputStr)
 		GameFacade.closeInputBox()
 
-		local var_10_0 = tonumber(arg_10_0)
+		local inputNum = tonumber(inputStr)
 
-		if var_10_0 and var_10_0 > 0 then
-			arg_9_0:sendGMRequest(var_10_0)
+		if inputNum and inputNum > 0 then
+			self:sendGMRequest(inputNum)
 		end
 	end
 
-	GameFacade.openInputBox(var_9_0)
+	GameFacade.openInputBox(inputMo)
 end
 
-function var_0_0._btntenmillionOnClick(arg_11_0)
-	arg_11_0:sendGMRequest(10000000)
+function MaterialTipView:_btntenmillionOnClick()
+	self:sendGMRequest(10000000)
 end
 
-function var_0_0._btnoneOnClick(arg_12_0)
-	arg_12_0:sendGMRequest(1)
+function MaterialTipView:_btnoneOnClick()
+	self:sendGMRequest(1)
 end
 
-function var_0_0._btntenOnClick(arg_13_0)
-	arg_13_0:sendGMRequest(10)
+function MaterialTipView:_btntenOnClick()
+	self:sendGMRequest(10)
 end
 
-function var_0_0._btnhundredOnClick(arg_14_0)
-	arg_14_0:sendGMRequest(100)
+function MaterialTipView:_btnhundredOnClick()
+	self:sendGMRequest(100)
 end
 
-function var_0_0._btnthousandOnClick(arg_15_0)
-	arg_15_0:sendGMRequest(1000)
+function MaterialTipView:_btnthousandOnClick()
+	self:sendGMRequest(1000)
 end
 
-function var_0_0._btntenthousandOnClick(arg_16_0)
-	arg_16_0:sendGMRequest(10000)
+function MaterialTipView:_btntenthousandOnClick()
+	self:sendGMRequest(10000)
 end
 
-function var_0_0.sendGMRequest(arg_17_0, arg_17_1)
-	GameFacade.showToast(ToastEnum.GMTool5, arg_17_0.viewParam.id)
+function MaterialTipView:sendGMRequest(val)
+	GameFacade.showToast(ToastEnum.GMTool5, self.viewParam.id)
 
-	if arg_17_0.viewParam.type == MaterialEnum.MaterialType.Item and arg_17_0.viewParam.id == 510001 then
-		GMRpc.instance:sendGMRequest(var_0_2("add heroStoryTicket %d", arg_17_1))
+	if self.viewParam.type == MaterialEnum.MaterialType.Item and self.viewParam.id == 510001 then
+		GMRpc.instance:sendGMRequest(sf("add heroStoryTicket %d", val))
 	else
-		GMRpc.instance:sendGMRequest(var_0_2("add material %d#%d#%d", arg_17_0.viewParam.type, arg_17_0.viewParam.id, arg_17_1))
+		GMRpc.instance:sendGMRequest(sf("add material %d#%d#%d", self.viewParam.type, self.viewParam.id, val))
 	end
 end
 
-function var_0_0._editableInitView(arg_18_0)
-	if arg_18_0._gogm then
-		gohelper.setActive(arg_18_0._gogm, GMController.instance:isOpenGM())
+function MaterialTipView:_editableInitView()
+	if self._gogm then
+		gohelper.setActive(self._gogm, GMController.instance:isOpenGM())
 	end
 
-	arg_18_0._txtdesc = SLFramework.GameObjectHelper.FindChildComponent(arg_18_0.viewGO, "#scroll_desc/viewport/content/desc", typeof(TMPro.TextMeshProUGUI))
-	arg_18_0._txtusedesc = SLFramework.GameObjectHelper.FindChildComponent(arg_18_0.viewGO, "#scroll_desc/viewport/content/usedesc", typeof(TMPro.TextMeshProUGUI))
+	self._txtdesc = SLFramework.GameObjectHelper.FindChildComponent(self.viewGO, "#scroll_desc/viewport/content/desc", typeof(TMPro.TextMeshProUGUI))
+	self._txtusedesc = SLFramework.GameObjectHelper.FindChildComponent(self.viewGO, "#scroll_desc/viewport/content/usedesc", typeof(TMPro.TextMeshProUGUI))
 
-	gohelper.setActive(arg_18_0._gojumpItem, false)
-	gohelper.setActive(arg_18_0._gojumptxt, false)
+	gohelper.setActive(self._gojumpItem, false)
+	gohelper.setActive(self._gojumptxt, false)
 
-	arg_18_0.jumpItemGos = {}
-	arg_18_0._boxItemGos = {}
-	arg_18_0._iconItemList = {}
-	arg_18_0._value = 1
-	arg_18_0._goincludeScroll = gohelper.findChild(arg_18_0._goinclude, "#scroll_product")
-	arg_18_0._goincludeContent = gohelper.findChild(arg_18_0._goinclude, "#scroll_product/viewport/content")
-	arg_18_0._contentHorizontal = arg_18_0._goincludeContent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	self.jumpItemGos = {}
+	self._boxItemGos = {}
+	self._iconItemList = {}
+	self._value = 1
+	self._goincludeScroll = gohelper.findChild(self._goinclude, "#scroll_product")
+	self._goincludeContent = gohelper.findChild(self._goinclude, "#scroll_product/viewport/content")
+	self._contentHorizontal = self._goincludeContent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
 
-	arg_18_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_18_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	arg_18_0._txtsource.text = luaLang("materialview_source")
-	arg_18_0._txtSummonsimulationtips = gohelper.findChildText(arg_18_0._goSummonsimulationtips, "txt_tips")
+	self._txtsource.text = luaLang("materialview_source")
+	self._txtSummonsimulationtips = gohelper.findChildText(self._goSummonsimulationtips, "txt_tips")
 end
 
-function var_0_0._cloneJumpItem(arg_19_0)
-	local var_19_0 = gohelper.findChild(arg_19_0.viewGO, "#scroll_desc/viewport/content")
+function MaterialTipView:_cloneJumpItem()
+	local jumpParentGo = gohelper.findChild(self.viewGO, "#scroll_desc/viewport/content")
 
-	arg_19_0._scrolldesc.verticalNormalizedPosition = 1
+	self._scrolldesc.verticalNormalizedPosition = 1
 
-	local var_19_1 = {}
-	local var_19_2 = ViewMgr.instance:isOpen(ViewName.GiftMultipleChoiceView)
-	local var_19_3 = ItemModel.instance:getOptionalGiftBySubTypeAndRare(arg_19_0._config.subType, arg_19_0._config.rare, arg_19_0._config.id)
+	local boxTables = {}
+	local choiceViewHasOpen = ViewMgr.instance:isOpen(ViewName.GiftMultipleChoiceView)
+	local optionalGiftOpen = ItemModel.instance:getOptionalGiftBySubTypeAndRare(self._config.subType, self._config.rare, self._config.id)
 
-	if var_19_3 then
-		for iter_19_0, iter_19_1 in pairs(var_19_3) do
-			local var_19_4 = {}
+	if optionalGiftOpen then
+		for _, boxData in pairs(optionalGiftOpen) do
+			local boxTable = {}
 
-			var_19_4.sourceId = 1
-			var_19_4.sourceParam = iter_19_1.id
+			boxTable.sourceId = 1
+			boxTable.sourceParam = boxData.id
 
-			table.insert(var_19_1, var_19_4)
+			table.insert(boxTables, boxTable)
 		end
 	end
 
-	if not string.nilorempty(arg_19_0._config.boxOpen) and not var_19_2 then
-		local var_19_5 = string.split(arg_19_0._config.boxOpen, "|")
+	if not string.nilorempty(self._config.boxOpen) and not choiceViewHasOpen then
+		local boxs = string.split(self._config.boxOpen, "|")
 
-		for iter_19_2, iter_19_3 in ipairs(var_19_5) do
-			local var_19_6 = string.splitToNumber(iter_19_3, "#")
-			local var_19_7 = {
-				sourceId = var_19_6[1],
-				sourceParam = var_19_6[2]
-			}
+		for i, box in ipairs(boxs) do
+			local boxParam = string.splitToNumber(box, "#")
+			local boxTable = {}
 
-			table.insert(var_19_1, var_19_7)
+			boxTable.sourceId = boxParam[1]
+			boxTable.sourceParam = boxParam[2]
+
+			table.insert(boxTables, boxTable)
 		end
 	end
 
-	if var_19_1 then
-		for iter_19_4, iter_19_5 in ipairs(var_19_1) do
-			if ItemModel.instance:getItemCount(iter_19_5.sourceParam) > 0 then
-				if not arg_19_0._boxItemGos[iter_19_4] then
-					local var_19_8 = gohelper.clone(arg_19_0._gojumpItem, var_19_0, "boxitem" .. iter_19_4)
-					local var_19_9 = arg_19_0:getUserDataTb_()
+	if boxTables then
+		for i, boxTable in ipairs(boxTables) do
+			local sourceQuantity = ItemModel.instance:getItemCount(boxTable.sourceParam)
 
-					var_19_9.go = var_19_8
-					var_19_9.layout = gohelper.findChild(var_19_8, "layout"):GetComponent(typeof(ZProj.LimitedScrollRect))
-					var_19_9.originText = gohelper.findChildText(var_19_8, "layout/Viewport/Content/originText")
-					var_19_9.indexText = gohelper.findChildText(var_19_8, "indexText")
-					var_19_9.jumpBtn = gohelper.findChildButtonWithAudio(var_19_8, "jump/jumpBtn")
-					var_19_9.hasjump = gohelper.findChild(var_19_8, "jump")
-					var_19_9.jumpText = gohelper.findChildText(var_19_8, "jump/jumpBtn/jumpText")
-					var_19_9.jumpHardTagGO = gohelper.findChild(var_19_8, "layout/Viewport/Content/hardtag")
-					var_19_9.jumpBgGO = gohelper.findChild(var_19_8, "jump/bg")
-					var_19_9.probalityBg = gohelper.findChild(var_19_8, "layout/Viewport/Content/bg")
-					var_19_9.txtProbality = gohelper.findChildText(var_19_8, "layout/Viewport/Content/bg/probality")
+			if sourceQuantity > 0 then
+				if not self._boxItemGos[i] then
+					local itemGo = gohelper.clone(self._gojumpItem, jumpParentGo, "boxitem" .. i)
+					local itemTempTab = self:getUserDataTb_()
 
-					local var_19_10 = var_19_1.episodeId and var_19_1.probability and MaterialEnum.JumpProbabilityDisplay[var_19_1.probability]
+					itemTempTab.go = itemGo
+					itemTempTab.layout = gohelper.findChild(itemGo, "layout"):GetComponent(typeof(ZProj.LimitedScrollRect))
+					itemTempTab.originText = gohelper.findChildText(itemGo, "layout/Viewport/Content/originText")
+					itemTempTab.indexText = gohelper.findChildText(itemGo, "indexText")
+					itemTempTab.jumpBtn = gohelper.findChildButtonWithAudio(itemGo, "jump/jumpBtn")
+					itemTempTab.hasjump = gohelper.findChild(itemGo, "jump")
+					itemTempTab.jumpText = gohelper.findChildText(itemGo, "jump/jumpBtn/jumpText")
+					itemTempTab.jumpHardTagGO = gohelper.findChild(itemGo, "layout/Viewport/Content/hardtag")
+					itemTempTab.jumpBgGO = gohelper.findChild(itemGo, "jump/bg")
+					itemTempTab.probalityBg = gohelper.findChild(itemGo, "layout/Viewport/Content/bg")
+					itemTempTab.txtProbality = gohelper.findChildText(itemGo, "layout/Viewport/Content/bg/probality")
 
-					var_19_9.txtProbality.text = var_19_10 and string.format("%s", luaLang(MaterialEnum.JumpProbabilityDisplay[var_19_1.probability])) or ""
+					local showProbality = boxTables.episodeId and boxTables.probability and MaterialEnum.JumpProbabilityDisplay[boxTables.probability]
 
-					gohelper.setActive(var_19_9.probalityBg, var_19_10 and true or false)
-					gohelper.setActive(var_19_9.jumpHardTagGO, false)
+					itemTempTab.txtProbality.text = showProbality and string.format("%s", luaLang(MaterialEnum.JumpProbabilityDisplay[boxTables.probability])) or ""
 
-					local var_19_11 = ItemConfig.instance:getItemCo(tonumber(iter_19_5.sourceParam)).name
+					gohelper.setActive(itemTempTab.probalityBg, showProbality and true or false)
+					gohelper.setActive(itemTempTab.jumpHardTagGO, false)
 
-					var_19_9.jumpText.text = luaLang("MaterialTipView_jumpText_unlock")
-					var_19_9.originText.text = var_0_2("<color=#3f485f><size=32>%s</size></color>", var_0_2(luaLang("material_storage"), var_19_11))
-					var_19_9.indexText.text = ""
+					local itemName = ItemConfig.instance:getItemCo(tonumber(boxTable.sourceParam)).name
 
-					table.insert(arg_19_0._boxItemGos, var_19_9)
+					itemTempTab.jumpText.text = luaLang("MaterialTipView_jumpText_unlock")
+					itemTempTab.originText.text = sf("<color=#3f485f><size=32>%s</size></color>", sf(luaLang("material_storage"), itemName))
+					itemTempTab.indexText.text = ""
 
-					var_19_9.layout.parentGameObject = arg_19_0._scrolldesc.gameObject
+					table.insert(self._boxItemGos, itemTempTab)
 
-					var_19_9.jumpBtn:AddClickListener(function(arg_20_0)
-						local var_20_0 = ItemModel.instance:getItemCount(arg_19_0._config.id)
-						local var_20_1 = ItemModel.instance:getItemCount(iter_19_5.sourceParam)
+					itemTempTab.layout.parentGameObject = self._scrolldesc.gameObject
+
+					itemTempTab.jumpBtn:AddClickListener(function(itemTempTab)
+						local quantity = ItemModel.instance:getItemCount(self._config.id)
+						local sourceQuantity = ItemModel.instance:getItemCount(boxTable.sourceParam)
 
 						GiftModel.instance:reset()
 
-						if arg_19_0.viewParam.needQuantity then
-							if var_20_0 > arg_19_0.viewParam.needQuantity or not arg_19_0.viewParam.isConsume then
-								arg_19_0._value = 1
+						if self.viewParam.needQuantity then
+							if quantity > self.viewParam.needQuantity or not self.viewParam.isConsume then
+								self._value = 1
 							else
-								if var_20_1 > arg_19_0.viewParam.needQuantity - var_20_0 then
-									arg_19_0._value = arg_19_0.viewParam.needQuantity - var_20_0 == 0 and 1 or arg_19_0.viewParam.needQuantity - var_20_0
+								if sourceQuantity > self.viewParam.needQuantity - quantity then
+									self._value = self.viewParam.needQuantity - quantity == 0 and 1 or self.viewParam.needQuantity - quantity
 								else
-									arg_19_0._value = var_20_1
+									self._value = sourceQuantity
 								end
 
-								if var_20_0 < arg_19_0.viewParam.needQuantity then
-									GiftModel.instance:setNeedGift(arg_19_0.viewParam.id)
+								if quantity < self.viewParam.needQuantity then
+									GiftModel.instance:setNeedGift(self.viewParam.id)
 								end
 							end
 						else
-							arg_19_0._value = 1
+							self._value = 1
 						end
 
-						MaterialTipController.instance:showMaterialInfo(iter_19_5.sourceId, iter_19_5.sourceParam, true)
-					end, var_19_9)
+						MaterialTipController.instance:showMaterialInfo(boxTable.sourceId, boxTable.sourceParam, true)
+					end, itemTempTab)
 				end
 
-				gohelper.setActive(arg_19_0._boxItemGos[iter_19_4].go, true)
-			elseif arg_19_0._boxItemGos[iter_19_4] then
-				gohelper.setActive(arg_19_0._boxItemGos[iter_19_4].go, false)
+				gohelper.setActive(self._boxItemGos[i].go, true)
+			elseif self._boxItemGos[i] then
+				gohelper.setActive(self._boxItemGos[i].go, false)
 			end
 		end
 	end
 
-	local var_19_12 = arg_19_0._config.sources
-	local var_19_13 = {}
+	local sourcesConfig = self._config.sources
+	local sourceTables = {}
 
-	if not string.nilorempty(var_19_12) then
-		local var_19_14 = string.split(var_19_12, "|")
+	if not string.nilorempty(sourcesConfig) then
+		local sources = string.split(sourcesConfig, "|")
 
-		for iter_19_6, iter_19_7 in ipairs(var_19_14) do
-			local var_19_15 = string.splitToNumber(iter_19_7, "#")
-			local var_19_16 = {
-				sourceId = var_19_15[1],
-				probability = var_19_15[2]
-			}
+		for i, source in ipairs(sources) do
+			local sourceParam = string.splitToNumber(source, "#")
+			local sourceTable = {}
 
-			var_19_16.episodeId = JumpConfig.instance:getJumpEpisodeId(var_19_16.sourceId)
+			sourceTable.sourceId = sourceParam[1]
+			sourceTable.probability = sourceParam[2]
+			sourceTable.episodeId = JumpConfig.instance:getJumpEpisodeId(sourceTable.sourceId)
 
-			if JumpConfig.instance:isOpenJumpId(var_19_16.sourceId) and (var_19_16.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(var_19_16.episodeId)) then
-				table.insert(var_19_13, var_19_16)
+			local isOpen = JumpConfig.instance:isOpenJumpId(sourceTable.sourceId)
+
+			if isOpen and (sourceTable.probability ~= MaterialEnum.JumpProbability.Normal or not DungeonModel.instance:hasPassLevel(sourceTable.episodeId)) then
+				table.insert(sourceTables, sourceTable)
 			end
 		end
 	end
 
-	local var_19_17 = DungeonConfig.instance:getMaterialSource(arg_19_0.viewParam.type, arg_19_0.viewParam.id)
+	local sourceExList = DungeonConfig.instance:getMaterialSource(self.viewParam.type, self.viewParam.id)
 
-	if var_19_17 then
-		for iter_19_8, iter_19_9 in ipairs(var_19_17) do
-			local var_19_18 = {}
+	if sourceExList then
+		for _, v in ipairs(sourceExList) do
+			local sourceTable = {}
 
-			var_19_18.sourceId = -1
-			var_19_18.probability = iter_19_9.probability
-			var_19_18.episodeId = iter_19_9.episodeId
-			var_19_18.jumpParam = var_0_2("4#%s", iter_19_9.episodeId)
+			sourceTable.sourceId = -1
+			sourceTable.probability = v.probability
+			sourceTable.episodeId = v.episodeId
+			sourceTable.jumpParam = sf("4#%s", v.episodeId)
 
-			local var_19_19 = false
-			local var_19_20 = iter_19_9.episodeId and DungeonConfig.instance:getEpisodeCO(iter_19_9.episodeId)
+			local isOpen = false
+			local episodeConfig = v.episodeId and DungeonConfig.instance:getEpisodeCO(v.episodeId)
 
-			if var_19_20 then
-				var_19_19 = ResSplitConfig.instance:isSaveChapter(var_19_20.chapterId)
+			if episodeConfig then
+				isOpen = ResSplitConfig.instance:isSaveChapter(episodeConfig.chapterId)
 			end
 
-			var_19_18.isOpen = var_19_19
+			sourceTable.isOpen = isOpen
 
-			table.insert(var_19_13, var_19_18)
+			table.insert(sourceTables, sourceTable)
 		end
 	end
 
-	for iter_19_10 = 1, #var_19_13 do
-		local var_19_21 = arg_19_0.jumpItemGos[iter_19_10]
+	for i = 1, #sourceTables do
+		local jumpItemTempTab = self.jumpItemGos[i]
 
-		if not var_19_21 then
-			local var_19_22 = gohelper.clone(arg_19_0._gojumpItem, var_19_0, "item" .. iter_19_10)
+		if not jumpItemTempTab then
+			local jumpItemGo = gohelper.clone(self._gojumpItem, jumpParentGo, "item" .. i)
 
-			var_19_21 = arg_19_0:getUserDataTb_()
-			var_19_21.go = var_19_22
-			var_19_21.layout = gohelper.findChild(var_19_22, "layout"):GetComponent(typeof(ZProj.LimitedScrollRect))
-			var_19_21.originText = gohelper.findChildText(var_19_22, "layout/Viewport/Content/originText")
-			var_19_21.indexText = gohelper.findChildText(var_19_22, "indexText")
-			var_19_21.jumpBtn = gohelper.findChildButtonWithAudio(var_19_22, "jump/jumpBtn")
-			var_19_21.hasjump = gohelper.findChild(var_19_22, "jump")
-			var_19_21.jumpText = gohelper.findChildText(var_19_22, "jump/jumpBtn/jumpText")
-			var_19_21.jumpHardTagGO = gohelper.findChild(var_19_22, "layout/Viewport/Content/hardtag")
-			var_19_21.jumpBgGO = gohelper.findChild(var_19_22, "jump/bg")
-			var_19_21.probalityBg = gohelper.findChild(var_19_22, "layout/Viewport/Content/bg")
-			var_19_21.txtProbality = gohelper.findChildText(var_19_22, "layout/Viewport/Content/bg/probality")
+			jumpItemTempTab = self:getUserDataTb_()
+			jumpItemTempTab.go = jumpItemGo
+			jumpItemTempTab.layout = gohelper.findChild(jumpItemGo, "layout"):GetComponent(typeof(ZProj.LimitedScrollRect))
+			jumpItemTempTab.originText = gohelper.findChildText(jumpItemGo, "layout/Viewport/Content/originText")
+			jumpItemTempTab.indexText = gohelper.findChildText(jumpItemGo, "indexText")
+			jumpItemTempTab.jumpBtn = gohelper.findChildButtonWithAudio(jumpItemGo, "jump/jumpBtn")
+			jumpItemTempTab.hasjump = gohelper.findChild(jumpItemGo, "jump")
+			jumpItemTempTab.jumpText = gohelper.findChildText(jumpItemGo, "jump/jumpBtn/jumpText")
+			jumpItemTempTab.jumpHardTagGO = gohelper.findChild(jumpItemGo, "layout/Viewport/Content/hardtag")
+			jumpItemTempTab.jumpBgGO = gohelper.findChild(jumpItemGo, "jump/bg")
+			jumpItemTempTab.probalityBg = gohelper.findChild(jumpItemGo, "layout/Viewport/Content/bg")
+			jumpItemTempTab.txtProbality = gohelper.findChildText(jumpItemGo, "layout/Viewport/Content/bg/probality")
 
-			table.insert(arg_19_0.jumpItemGos, var_19_21)
+			table.insert(self.jumpItemGos, jumpItemTempTab)
 
-			var_19_21.layout.parentGameObject = arg_19_0._scrolldesc.gameObject
+			jumpItemTempTab.layout.parentGameObject = self._scrolldesc.gameObject
 
-			var_19_21.jumpBtn:AddClickListener(function(arg_21_0)
-				if arg_21_0.cantJumpTips then
-					GameFacade.showToastWithTableParam(arg_21_0.cantJumpTips, arg_21_0.cantJumpParam)
-				elseif arg_21_0.canJump then
+			jumpItemTempTab.jumpBtn:AddClickListener(function(jumpItemTempTab)
+				if jumpItemTempTab.cantJumpTips then
+					GameFacade.showToastWithTableParam(jumpItemTempTab.cantJumpTips, jumpItemTempTab.cantJumpParam)
+				elseif jumpItemTempTab.canJump then
 					if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.ForceJumpToMainView) then
 						NavigateButtonsView.homeClick()
 
 						return
 					end
 
-					if arg_21_0.jumpParam then
+					if jumpItemTempTab.jumpParam then
 						ViewMgr.instance:closeView(ViewName.RoomInitBuildingView)
-						JumpController.instance:jumpTo(arg_21_0.jumpParam, arg_19_0._onJumpFinish, arg_19_0, arg_19_0.viewParam.recordFarmItem)
+						JumpController.instance:jumpTo(jumpItemTempTab.jumpParam, self._onJumpFinish, self, self.viewParam.recordFarmItem)
 					else
-						JumpController.instance:dispatchEvent(JumpEvent.JumpBtnClick, arg_21_0.jumpId)
-						GameFacade.jump(arg_21_0.jumpId, arg_19_0._onJumpFinish, arg_19_0, arg_19_0.viewParam.recordFarmItem)
-						arg_19_0:statJump(arg_21_0.jumpId)
+						JumpController.instance:dispatchEvent(JumpEvent.JumpBtnClick, jumpItemTempTab.jumpId)
+						GameFacade.jump(jumpItemTempTab.jumpId, self._onJumpFinish, self, self.viewParam.recordFarmItem)
+						self:statJump(jumpItemTempTab.jumpId)
 					end
 				else
 					GameFacade.showToast(ToastEnum.MaterialTipJump)
 				end
-			end, var_19_21)
+			end, jumpItemTempTab)
 		end
 
-		local var_19_23 = var_19_13[iter_19_10]
+		local sourceTable = sourceTables[i]
 
-		var_19_21.canJump = arg_19_0._canJump
-		var_19_21.jumpId = var_19_23.sourceId
-		var_19_21.jumpParam = var_19_23.jumpParam
+		jumpItemTempTab.canJump = self._canJump
+		jumpItemTempTab.jumpId = sourceTable.sourceId
+		jumpItemTempTab.jumpParam = sourceTable.jumpParam
 
-		local var_19_24 = var_19_23.sourceId ~= -1 and JumpConfig.instance:getJumpConfig(var_19_23.sourceId)
-		local var_19_25 = ""
-		local var_19_26 = ""
+		local jumpConfig = sourceTable.sourceId ~= -1 and JumpConfig.instance:getJumpConfig(sourceTable.sourceId)
+		local name = ""
+		local index = ""
 
-		if var_19_23.sourceId == -1 then
-			var_19_25, var_19_26 = JumpConfig.instance:getEpisodeNameAndIndex(var_19_23.episodeId)
-		elseif string.nilorempty(var_19_24.param) then
-			var_19_25 = var_19_24.name
+		if sourceTable.sourceId == -1 then
+			name, index = JumpConfig.instance:getEpisodeNameAndIndex(sourceTable.episodeId)
+		elseif string.nilorempty(jumpConfig.param) then
+			name = jumpConfig.name
 		else
-			var_19_25, var_19_26 = JumpConfig.instance:getJumpName(var_19_23.sourceId)
+			name, index = JumpConfig.instance:getJumpName(sourceTable.sourceId)
 		end
 
-		var_19_21.originText.text = var_19_25 or ""
-		var_19_21.indexText.text = var_19_26 or ""
+		jumpItemTempTab.originText.text = name or ""
+		jumpItemTempTab.indexText.text = index or ""
 
-		local var_19_27 = var_19_23.episodeId and var_19_23.probability and MaterialEnum.JumpProbabilityDisplay[var_19_23.probability]
+		local showProbality = sourceTable.episodeId and sourceTable.probability and MaterialEnum.JumpProbabilityDisplay[sourceTable.probability]
 
-		var_19_21.txtProbality.text = var_19_27 and var_0_2("%s", luaLang(MaterialEnum.JumpProbabilityDisplay[var_19_23.probability])) or ""
-		var_19_21.jumpText.text = luaLang("p_materialtip_jump")
+		jumpItemTempTab.txtProbality.text = showProbality and sf("%s", luaLang(MaterialEnum.JumpProbabilityDisplay[sourceTable.probability])) or ""
+		jumpItemTempTab.jumpText.text = luaLang("p_materialtip_jump")
 
-		gohelper.setActive(var_19_21.probalityBg, var_19_27 and true or false)
+		gohelper.setActive(jumpItemTempTab.probalityBg, showProbality and true or false)
 
-		local var_19_28 = var_19_24 and var_19_24.param or var_19_23.jumpParam
-		local var_19_29
+		local jumpParam = jumpConfig and jumpConfig.param or sourceTable.jumpParam
+		local open
 
-		if var_19_23.sourceId == -1 then
-			var_19_29 = var_19_23.isOpen
-		elseif var_19_23.sourceId == JumpEnum.BPChargeView then
-			var_19_29 = not BpModel.instance:isEnd() and JumpController.instance:isJumpOpen(var_19_23.sourceId)
+		if sourceTable.sourceId == -1 then
+			open = sourceTable.isOpen
+		elseif sourceTable.sourceId == JumpEnum.BPChargeView then
+			open = not BpModel.instance:isEnd() and JumpController.instance:isJumpOpen(sourceTable.sourceId)
 		else
-			var_19_29 = JumpController.instance:isJumpOpen(var_19_23.sourceId)
+			open = JumpController.instance:isJumpOpen(sourceTable.sourceId)
 		end
 
-		local var_19_30
-		local var_19_31
+		local cantJumpTips, toastParamList
 
-		if not var_19_29 and var_19_23.sourceId ~= -1 then
-			var_19_30, var_19_31 = OpenHelper.getToastIdAndParam(var_19_24.openId)
+		if not open and sourceTable.sourceId ~= -1 then
+			cantJumpTips, toastParamList = OpenHelper.getToastIdAndParam(jumpConfig.openId)
 		else
-			var_19_30, var_19_31 = JumpController.instance:cantJump(var_19_28)
+			cantJumpTips, toastParamList = JumpController.instance:cantJump(jumpParam)
 		end
 
-		local var_19_32 = string.split(var_19_28, "#")
+		local jumps = string.split(jumpParam, "#")
+		local jumpView = tonumber(jumps[1])
 
-		if tonumber(var_19_32[1]) == JumpEnum.JumpView.RoomProductLineView and not var_19_30 then
-			local var_19_33
-			local var_19_34
-			local var_19_35
-			local var_19_36, var_19_37, var_19_38 = RoomProductionHelper.isChangeFormulaUnlock(arg_19_0.viewParam.type, arg_19_0.viewParam.id)
-			local var_19_39 = var_19_38
-			local var_19_40 = var_19_37
+		if jumpView == JumpEnum.JumpView.RoomProductLineView and not cantJumpTips then
+			local isUnLock, unLockParam, unlockTips
 
-			if not var_19_36 then
-				var_19_30 = var_19_40
-				var_19_31 = var_19_39 and {
-					var_19_39
+			isUnLock, unlockTips, unLockParam = RoomProductionHelper.isChangeFormulaUnlock(self.viewParam.type, self.viewParam.id)
+
+			if not isUnLock then
+				cantJumpTips = unlockTips
+				toastParamList = unLockParam and {
+					unLockParam
 				} or nil
 			end
 		end
 
-		local var_19_41 = var_19_23.sourceId ~= -1 and JumpController.instance:isOnlyShowJump(var_19_23.sourceId)
+		local isOnlyShowJump = sourceTable.sourceId ~= -1 and JumpController.instance:isOnlyShowJump(sourceTable.sourceId)
 
-		gohelper.setActive(var_19_21.hasjump, not var_19_41)
-		ZProj.UGUIHelper.SetGrayscale(var_19_21.jumpText.gameObject, var_19_30 ~= nil)
-		ZProj.UGUIHelper.SetGrayscale(var_19_21.jumpBgGO, var_19_30 ~= nil)
+		gohelper.setActive(jumpItemTempTab.hasjump, not isOnlyShowJump)
+		ZProj.UGUIHelper.SetGrayscale(jumpItemTempTab.jumpText.gameObject, cantJumpTips ~= nil)
+		ZProj.UGUIHelper.SetGrayscale(jumpItemTempTab.jumpBgGO, cantJumpTips ~= nil)
 
-		var_19_21.cantJumpTips = var_19_30
-		var_19_21.cantJumpParam = var_19_31
+		jumpItemTempTab.cantJumpTips = cantJumpTips
+		jumpItemTempTab.cantJumpParam = toastParamList
 
-		gohelper.setActive(var_19_21.jumpHardTagGO, JumpConfig.instance:isJumpHardDungeon(var_19_23.episodeId))
-		gohelper.setActive(var_19_21.go, true)
+		gohelper.setActive(jumpItemTempTab.jumpHardTagGO, JumpConfig.instance:isJumpHardDungeon(sourceTable.episodeId))
+		gohelper.setActive(jumpItemTempTab.go, true)
 	end
 
-	gohelper.setActive(arg_19_0._gosource, #var_19_13 > 0 or #var_19_1 > 0)
+	gohelper.setActive(self._gosource, #sourceTables > 0 or #boxTables > 0)
 
-	for iter_19_11 = #var_19_1 + 1, #arg_19_0._boxItemGos do
-		gohelper.setActive(arg_19_0._boxItemGos[iter_19_11].go, false)
+	for i = #boxTables + 1, #self._boxItemGos do
+		gohelper.setActive(self._boxItemGos[i].go, false)
 	end
 
-	for iter_19_12 = #var_19_13 + 1, #arg_19_0.jumpItemGos do
-		gohelper.setActive(arg_19_0.jumpItemGos[iter_19_12].go, false)
+	for i = #sourceTables + 1, #self.jumpItemGos do
+		gohelper.setActive(self.jumpItemGos[i].go, false)
 	end
 end
 
-function var_0_0._setJumpMaxIndexWidth(arg_22_0, arg_22_1)
-	local var_22_0 = 0
+function MaterialTipView:_setJumpMaxIndexWidth(count)
+	local maxIndexWidth = 0
 
-	for iter_22_0 = 1, arg_22_1 do
-		local var_22_1 = arg_22_0.jumpItemGos[iter_22_0]
+	for i = 1, count do
+		local jumpItemTempTab = self.jumpItemGos[i]
 
-		if var_22_1 then
-			local var_22_2 = var_22_1.indexText.preferredWidth
+		if jumpItemTempTab then
+			local indexWidth = jumpItemTempTab.indexText.preferredWidth
 
-			if var_22_0 < var_22_2 then
-				var_22_0 = var_22_2
+			if maxIndexWidth < indexWidth then
+				maxIndexWidth = indexWidth
 			end
 		end
 	end
 
-	for iter_22_1 = 1, arg_22_1 do
-		local var_22_3 = arg_22_0.jumpItemGos[iter_22_1]
+	for i = 1, count do
+		local jumpItemTempTab = self.jumpItemGos[i]
 
-		if var_22_3 then
-			local var_22_4 = var_22_3.indexText.text
+		if jumpItemTempTab then
+			local index = jumpItemTempTab.indexText.text
 
-			recthelper.setAnchorX(var_22_3.originText.transform, var_22_0 > 0 and var_22_0 + 15 or -4)
+			recthelper.setAnchorX(jumpItemTempTab.originText.transform, maxIndexWidth > 0 and maxIndexWidth + 15 or -4)
 		end
 	end
 end
 
-function var_0_0._onJumpFinish(arg_23_0)
+function MaterialTipView:_onJumpFinish()
 	ViewMgr.instance:closeView(ViewName.MaterialPackageTipView)
-	arg_23_0:closeThis()
+	self:closeThis()
 
-	if arg_23_0.viewParam.jumpFinishCallback then
-		arg_23_0.viewParam.jumpFinishCallback(arg_23_0.viewParam.jumpFinishCallbackObj, arg_23_0.viewParam.jumpFinishCallbackParam)
+	if self.viewParam.jumpFinishCallback then
+		self.viewParam.jumpFinishCallback(self.viewParam.jumpFinishCallbackObj, self.viewParam.jumpFinishCallbackParam)
 	end
 end
 
-function var_0_0._btnuseOnClick(arg_24_0)
-	if arg_24_0._valueChanged then
-		arg_24_0._valueChanged = false
+function MaterialTipView:_btnuseOnClick()
+	if self._valueChanged then
+		self._valueChanged = false
 
 		return
 	end
 
-	arg_24_0._value = tonumber(arg_24_0._inputvalue:GetText())
+	self._value = tonumber(self._inputvalue:GetText())
 
-	if arg_24_0._value > arg_24_0:_getMaxValue() then
-		arg_24_0._value = arg_24_0:_getMaxValue()
+	if self._value > self:_getMaxValue() then
+		self._value = self:_getMaxValue()
 
-		arg_24_0._inputvalue:SetText(tostring(arg_24_0._value))
+		self._inputvalue:SetText(tostring(self._value))
 		GameFacade.showToast(ToastEnum.MaterialTipBtnSub)
 
 		return
 	end
 
-	if arg_24_0._value < 1 then
-		arg_24_0._value = 1
+	if self._value < 1 then
+		self._value = 1
 
-		arg_24_0._inputvalue:SetText(tostring(arg_24_0._value))
+		self._inputvalue:SetText(tostring(self._value))
 		GameFacade.showToast(ToastEnum.MaterialTipBtnSub)
 
 		return
 	end
 
-	local var_24_0 = arg_24_0._config.id
-	local var_24_1 = arg_24_0._value
+	local materialId = self._config.id
+	local quantity = self._value
 
-	if arg_24_0.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
+	if self.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
 		CurrencyController.instance:openPowerView()
 
 		return
-	elseif arg_24_0.viewParam.type == MaterialEnum.MaterialType.NewInsight then
-		arg_24_0:closeThis()
-		GiftController.instance:openGiftInsightHeroChoiceView(arg_24_0.viewParam)
+	elseif self.viewParam.type == MaterialEnum.MaterialType.TalentItem then
+		local param = {}
+
+		param.itemId = self.viewParam.id
+		param.itemUid = self.viewParam.uid
+
+		ItemTalentController.instance:openTalentChooseView(param)
+		self:closeThis()
+
+		return
+	elseif self.viewParam.type == MaterialEnum.MaterialType.NewInsight then
+		self:closeThis()
+		GiftController.instance:openGiftInsightHeroChoiceView(self.viewParam)
 
 		return
 	end
 
-	if arg_24_0:_isSummonSkin() then
-		MaterialTipController.instance:_openView_LifeCirclePickChoice(arg_24_0._config, var_24_1)
-	elseif arg_24_0:_isPackageSkin() then
+	if self:_isSummonSkin() then
+		MaterialTipController.instance:_openView_LifeCirclePickChoice(self._config, quantity)
+	elseif self:_isPackageSkin() then
 		CharacterModel.instance:setGainHeroViewShowState(false)
 		CharacterModel.instance:setGainHeroViewNewShowState(false)
-		ItemRpc.instance:simpleSendUseItemRequest(var_24_0, var_24_1)
-	elseif arg_24_0._config.subType == ItemEnum.SubType.SpecifiedGift then
-		local var_24_2 = {
-			param = arg_24_0.viewParam,
-			quantity = var_24_1,
-			subType = arg_24_0._config.subType
-		}
+		ItemRpc.instance:simpleSendUseItemRequest(materialId, quantity)
+	elseif self._config.subType == ItemEnum.SubType.SpecifiedGift then
+		local o = {}
 
-		GiftController.instance:openGiftMultipleChoiceView(var_24_2)
-	elseif arg_24_0._config.subType == ItemEnum.SubType.OptionalGift then
-		local var_24_3 = {
-			param = arg_24_0.viewParam,
-			quantity = var_24_1,
-			subType = arg_24_0._config.subType
-		}
+		o.param = self.viewParam
+		o.quantity = quantity
+		o.subType = self._config.subType
 
-		GiftController.instance:openOptionalGiftMultipleChoiceView(var_24_3)
-	elseif arg_24_0._config.subType == ItemEnum.SubType.OptionalHeroGift then
-		if string.nilorempty(arg_24_0._config.effect) then
+		GiftController.instance:openGiftMultipleChoiceView(o)
+	elseif self._config.subType == ItemEnum.SubType.OptionalGift then
+		local o = {}
+
+		o.param = self.viewParam
+		o.quantity = quantity
+		o.subType = self._config.subType
+
+		GiftController.instance:openOptionalGiftMultipleChoiceView(o)
+	elseif self._config.subType == ItemEnum.SubType.OptionalHeroGift then
+		if string.nilorempty(self._config.effect) then
 			return
 		end
 
-		local var_24_4 = string.splitToNumber(arg_24_0._config.effect, "#")
-		local var_24_5 = CustomPickChoiceEnum.style.OptionalHeroGift
-		local var_24_6 = {
-			id = arg_24_0._config.id,
-			quantity = var_24_1,
-			styleId = var_24_5
+		local effectArr = string.splitToNumber(self._config.effect, "#")
+		local styleId = CustomPickChoiceEnum.style.OptionalHeroGift
+		local viewParam = {
+			id = self._config.id,
+			quantity = quantity,
+			styleId = styleId
 		}
 
-		if arg_24_0._config.id == ItemEnum.NewbiePackGiftId then
-			CustomPickChoiceController.instance:openNewBiePickChoiceView(var_24_4, MaterialTipController.onUseOptionalHeroGift, MaterialTipController, var_24_6)
+		if self._config.id == ItemEnum.NewbiePackGiftId then
+			CustomPickChoiceController.instance:openNewBiePickChoiceView(effectArr, MaterialTipController.onUseOptionalHeroGift, MaterialTipController, viewParam)
 		else
-			CustomPickChoiceController.instance:openCustomPickChoiceView(var_24_4, MaterialTipController.onUseOptionalHeroGift, MaterialTipController, var_24_6)
+			CustomPickChoiceController.instance:openCustomPickChoiceView(effectArr, MaterialTipController.onUseOptionalHeroGift, MaterialTipController, viewParam)
 		end
-	elseif arg_24_0._config.subType == ItemEnum.SubType.SkinTicket then
+	elseif self._config.subType == ItemEnum.SubType.SkinTicket then
 		StoreController.instance:openStoreView(500)
-	elseif arg_24_0._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
+	elseif self._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
 		StoreController.instance:openStoreView(801)
-	elseif arg_24_0._config.subType == ItemEnum.SubType.RoomTicket then
-		GameFacade.showMessageBox(MessageBoxIdDefine.GoToUseRoomTicket, MsgBoxEnum.BoxType.Yes_No, arg_24_0._useRoomTicket, nil, nil, arg_24_0, nil, nil)
-	elseif arg_24_0._config.subType == ItemEnum.SubType.SummonSimulationPick then
-		local var_24_7 = arg_24_0._config.activityId
+	elseif self._config.subType == ItemEnum.SubType.RoomTicket then
+		GameFacade.showMessageBox(MessageBoxIdDefine.GoToUseRoomTicket, MsgBoxEnum.BoxType.Yes_No, self._useRoomTicket, nil, nil, self, nil, nil)
+	elseif self._config.subType == ItemEnum.SubType.SummonSimulationPick then
+		local activityId = self._config.activityId
 
-		arg_24_0:_tryUseSummonSimulation(var_24_7)
+		self:_tryUseSummonSimulation(activityId)
 
 		return
-	elseif arg_24_0._config.subType == ItemEnum.SubType.SelfSelectSix then
-		if string.nilorempty(arg_24_0._config.effect) then
+	elseif self._config.subType == ItemEnum.SubType.SelfSelectSix then
+		if string.nilorempty(self._config.effect) then
 			return
 		end
 
-		local var_24_8 = string.split(arg_24_0._config.effect, "|")
-		local var_24_9 = {
+		local effectArr = string.split(self._config.effect, "|")
+		local viewParam = {
 			quantity = 1,
-			id = arg_24_0._config.id
+			id = self._config.id
 		}
 
-		V2a7_SelfSelectSix_PickChoiceController.instance:openCustomPickChoiceView(var_24_8, MaterialTipController.onUseSelfSelectSixHeroGift, MaterialTipController, var_24_9)
-	elseif arg_24_0._config.subType == ItemEnum.SubType.DestinyStoneUp then
+		V2a7_SelfSelectSix_PickChoiceController.instance:openCustomPickChoiceView(effectArr, MaterialTipController.onUseSelfSelectSixHeroGift, MaterialTipController, viewParam)
+	elseif self._config.subType == ItemEnum.SubType.DestinyStoneUp then
 		if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DestinyStone) then
-			local var_24_10 = lua_open.configDict[OpenEnum.UnlockFunc.DestinyStone].episodeId
+			local openEpisodeId = lua_open.configDict[OpenEnum.UnlockFunc.DestinyStone].episodeId
 
-			if not DungeonModel.instance:hasPassLevel(var_24_10) then
-				local var_24_11 = DungeonConfig.instance:getEpisodeDisplay(var_24_10)
+			if not DungeonModel.instance:hasPassLevel(openEpisodeId) then
+				local episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(openEpisodeId)
 
-				GameFacade.showToast(ToastEnum.DungeonMapLevel, var_24_11)
+				GameFacade.showToast(ToastEnum.DungeonMapLevel, episodeDisplay)
 			end
 
 			return
 		end
 
-		local var_24_12 = arg_24_0._config.effect
-		local var_24_13
+		local effect = self._config.effect
+		local ignoreIds
 
-		if not string.nilorempty(var_24_12) then
-			local var_24_14 = GameUtil.splitString2(var_24_12, true)
+		if not string.nilorempty(effect) then
+			local _split = GameUtil.splitString2(effect, true)
 
-			if var_24_14[2] then
-				var_24_13 = var_24_14[2]
+			if _split[2] then
+				ignoreIds = _split[2]
 			end
 		end
 
-		local var_24_15 = HeroModel.instance:getAllHero()
-		local var_24_16 = {}
+		local heroList = HeroModel.instance:getAllHero()
+		local list = {}
 
-		for iter_24_0, iter_24_1 in pairs(var_24_15) do
-			if iter_24_1 and arg_24_0:checkHeroOpenDestinyStone(iter_24_1) and not iter_24_1.destinyStoneMo:checkAllUnlock() and not arg_24_0:checkIgnoreAllDestinyStone(iter_24_1.destinyStoneMo, var_24_13) then
-				table.insert(var_24_16, iter_24_1)
+		for _, heroMo in pairs(heroList) do
+			if heroMo and self:checkHeroOpenDestinyStone(heroMo) and not heroMo.destinyStoneMo:checkAllUnlock() and not self:checkIgnoreAllDestinyStone(heroMo.destinyStoneMo, ignoreIds) then
+				table.insert(list, heroMo)
 			end
 		end
 
-		if #var_24_16 > 0 then
-			local var_24_17 = {
-				materialId = var_24_0,
-				ignoreIds = var_24_13
+		if #list > 0 then
+			local param = {
+				materialId = materialId,
+				ignoreIds = ignoreIds
 			}
 
-			ViewMgr.instance:openView(ViewName.DestinyStoneGiftPickChoiceView, var_24_17)
+			ViewMgr.instance:openView(ViewName.DestinyStoneGiftPickChoiceView, param)
 		else
 			GameFacade.showToast(ToastEnum.NoHeroCanDestinyUp)
 		end
-	elseif arg_24_0:_isRoomBlockGift() then
-		local function var_24_18()
-			RoomBlockGiftController.instance:openBlockView(arg_24_0._config.rare, var_24_0, arg_24_0.closeThis, arg_24_0)
+	elseif self:_isRoomBlockGift() then
+		local function cb()
+			RoomBlockGiftController.instance:openBlockView(self._config.rare, materialId, self.closeThis, self)
 		end
 
-		RoomRpc.instance:sendGetRoomInfoRequest(var_24_18, arg_24_0)
+		RoomRpc.instance:sendGetRoomInfoRequest(cb, self)
 
 		return
-	elseif arg_24_0._config.subType == ItemEnum.SubType.RoomBlockColorGift then
-		if RoomWaterReformModel.instance:isUnlockAllBlockColor() then
+	elseif self._config.subType == ItemEnum.SubType.RoomBlockColorGift then
+		local result = RoomWaterReformModel.instance:isUnlockAllBlockColor()
+
+		if result then
 			GameFacade.showToast(ToastEnum.HaveUnlockedAllBlockColor)
 
 			return
 		else
-			ItemRpc.instance:simpleSendUseItemRequest(var_24_0, var_24_1)
+			ItemRpc.instance:simpleSendUseItemRequest(materialId, quantity)
 		end
+	elseif self._config.subType == ItemEnum.SubType.EquipSelectGift then
+		if string.nilorempty(self._config.effect) then
+			return
+		end
+
+		local effectArr = string.split(self._config.effect, "|")
+		local viewParam = {
+			quantity = 1,
+			id = self._config.id
+		}
+
+		TurnbackPickEquipController.instance:openTurnbackPickEquipView(effectArr, MaterialTipController.onUseOptionalTurnbackEquipGift, MaterialTipController, viewParam)
+	elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
+		CharacterController.instance:useSkinGiftItem(self._config.id)
 	else
-		ItemRpc.instance:simpleSendUseItemRequest(var_24_0, var_24_1)
+		ItemRpc.instance:simpleSendUseItemRequest(materialId, quantity)
 	end
 
-	arg_24_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.checkIgnoreAllDestinyStone(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_1:getStoneMoList()
+function MaterialTipView:checkIgnoreAllDestinyStone(destinyStoneMo, ignoreIds)
+	local stoneMoList = destinyStoneMo:getStoneMoList()
 
-	for iter_26_0, iter_26_1 in pairs(var_26_0) do
-		if not LuaUtil.tableContains(arg_26_2, iter_26_1.stoneId) then
+	for _, stoneMo in pairs(stoneMoList) do
+		if not LuaUtil.tableContains(ignoreIds, stoneMo.stoneId) then
 			return false
 		end
 	end
@@ -813,642 +841,757 @@ function var_0_0.checkIgnoreAllDestinyStone(arg_26_0, arg_26_1, arg_26_2)
 	return true
 end
 
-function var_0_0.checkHeroOpenDestinyStone(arg_27_0, arg_27_1)
-	if not arg_27_1:isHasDestinySystem() then
+function MaterialTipView:checkHeroOpenDestinyStone(heroMo)
+	if not heroMo:isHasDestinySystem() then
 		return false
 	end
 
-	local var_27_0 = arg_27_1.config.rare or 5
-	local var_27_1 = CharacterDestinyEnum.DestinyStoneOpenLevelConstId[var_27_0]
-	local var_27_2 = CommonConfig.instance:getConstStr(var_27_1)
+	local rare = heroMo.config.rare or 5
+	local constId = CharacterDestinyEnum.DestinyStoneOpenLevelConstId[rare]
+	local openLevel = CommonConfig.instance:getConstStr(constId)
 
-	if arg_27_1.level >= tonumber(var_27_2) then
+	if heroMo.level >= tonumber(openLevel) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._useRoomTicket(arg_28_0)
-	GameFacade.jump(JumpEnum.JumpId.RoomStore, arg_28_0._onJumpFinish, arg_28_0)
+function MaterialTipView:_useRoomTicket()
+	GameFacade.jump(JumpEnum.JumpId.RoomStore, self._onJumpFinish, self)
 end
 
-function var_0_0._tryUseSummonSimulation(arg_29_0, arg_29_1)
-	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onGetSummonInfo, arg_29_0._realUseSummonSimulation, arg_29_0)
-	SummonSimulationPickController.instance:getActivityInfo(arg_29_1)
+function MaterialTipView:_tryUseSummonSimulation(activityId)
+	SummonSimulationPickController.instance:registerCallback(SummonSimulationEvent.onGetSummonInfo, self._realUseSummonSimulation, self)
+	SummonSimulationPickController.instance:getActivityInfo(activityId)
 end
 
-function var_0_0._realUseSummonSimulation(arg_30_0, arg_30_1)
-	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onGetSummonInfo, arg_30_0._realUseSummonSimulation, arg_30_0)
-	SummonSimulationPickController.instance:trySummonSimulation(arg_30_1)
-	arg_30_0:closeThis()
+function MaterialTipView:_realUseSummonSimulation(activityId)
+	SummonSimulationPickController.instance:unregisterCallback(SummonSimulationEvent.onGetSummonInfo, self._realUseSummonSimulation, self)
+	SummonSimulationPickController.instance:trySummonSimulation(activityId)
+	self:closeThis()
 end
 
-function var_0_0._btnaddOnClick(arg_31_0)
-	if arg_31_0._valueChanged then
-		arg_31_0._valueChanged = false
+function MaterialTipView:_btnaddOnClick()
+	if self._valueChanged then
+		self._valueChanged = false
 
 		return
 	end
 
-	arg_31_0._value = tonumber(arg_31_0._inputvalue:GetText())
+	self._value = tonumber(self._inputvalue:GetText())
 
-	if arg_31_0._value >= arg_31_0:_getMaxValue() then
-		arg_31_0._value = arg_31_0:_getMaxValue()
+	if self._value >= self:_getMaxValue() then
+		self._value = self:_getMaxValue()
 
-		arg_31_0._inputvalue:SetText(tostring(arg_31_0._value))
+		self._inputvalue:SetText(tostring(self._value))
 		GameFacade.showToast(ToastEnum.MaterialTipBtnSub)
 
 		return
 	end
 
-	arg_31_0._value = arg_31_0._value + 1
+	self._value = self._value + 1
 
-	arg_31_0:_refreshValue()
+	self:_refreshValue()
 end
 
-function var_0_0._btnsubOnClick(arg_32_0)
-	if arg_32_0._valueChanged then
-		arg_32_0._valueChanged = false
+function MaterialTipView:_btnsubOnClick()
+	if self._valueChanged then
+		self._valueChanged = false
 
 		return
 	end
 
-	arg_32_0._value = tonumber(arg_32_0._inputvalue:GetText())
+	self._value = tonumber(self._inputvalue:GetText())
 
-	if arg_32_0._value <= 1 then
-		arg_32_0._value = 1
+	if self._value <= 1 then
+		self._value = 1
 
-		arg_32_0._inputvalue:SetText(tostring(arg_32_0._value))
+		self._inputvalue:SetText(tostring(self._value))
 		GameFacade.showToast(ToastEnum.MaterialTipBtnSub)
 
 		return
 	end
 
-	arg_32_0._value = arg_32_0._value - 1
+	self._value = self._value - 1
 
-	arg_32_0:_refreshValue()
+	self:_refreshValue()
 end
 
-function var_0_0._btnmaxOnClick(arg_33_0)
-	arg_33_0._value = arg_33_0:_getMaxValue()
+function MaterialTipView:_btnmaxOnClick()
+	self._value = self:_getMaxValue()
 
-	arg_33_0:_refreshValue()
+	self:_refreshValue()
 end
 
-function var_0_0._btnminOnClick(arg_34_0)
-	arg_34_0._value = 1
+function MaterialTipView:_btnminOnClick()
+	self._value = 1
 
-	arg_34_0:_refreshValue()
+	self:_refreshValue()
 end
 
-function var_0_0.onDestroyView(arg_35_0)
+function MaterialTipView:onDestroyView()
 	return
 end
 
-function var_0_0._refreshValue(arg_36_0)
-	arg_36_0._inputvalue:SetText(tostring(arg_36_0._value))
+function MaterialTipView:_refreshValue()
+	self._inputvalue:SetText(tostring(self._value))
 end
 
-function var_0_0._getMaxValue(arg_37_0)
-	if arg_37_0._config.isStackable == 1 then
-		local var_37_0 = ItemModel.instance:getItemCount(arg_37_0._config.id)
-		local var_37_1 = ItemConfig.instance:getItemUseCo(arg_37_0._config.subType)
+function MaterialTipView:_getMaxValue()
+	if self._config.isStackable == 1 then
+		local quantity = ItemModel.instance:getItemCount(self._config.id)
+		local useCo = ItemConfig.instance:getItemUseCo(self._config.subType)
 
-		if var_37_1.useType == 2 then
+		if useCo.useType == 2 then
 			return 1
-		elseif var_37_1.useType == 6 then
-			return var_37_0 > var_37_1.use_max and var_37_1.use_max or var_37_0
+		elseif useCo.useType == 6 then
+			return quantity > useCo.use_max and useCo.use_max or quantity
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.onOpen(arg_38_0)
-	arg_38_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_38_0._refreshItemQuantity, arg_38_0)
-	arg_38_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_38_0._refreshItemQuantity, arg_38_0)
-	arg_38_0:addGmBtnAudio()
-	arg_38_0:_refreshUI()
+function MaterialTipView:onOpen()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshItemQuantity, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshItemQuantity, self)
+	self:addGmBtnAudio()
+	self:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Tipsopen)
 end
 
-function var_0_0.onUpdateParam(arg_39_0)
-	arg_39_0:_refreshUI()
+function MaterialTipView:onUpdateParam()
+	self:_refreshUI()
 end
 
-function var_0_0.addGmBtnAudio(arg_40_0)
-	if arg_40_0._btnone then
-		gohelper.addUIClickAudio(arg_40_0._btnone.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+function MaterialTipView:addGmBtnAudio()
+	if self._btnone then
+		gohelper.addUIClickAudio(self._btnone.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
 	end
 
-	if arg_40_0._btnten then
-		gohelper.addUIClickAudio(arg_40_0._btnten.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	if self._btnten then
+		gohelper.addUIClickAudio(self._btnten.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
 	end
 
-	if arg_40_0._btnhundred then
-		gohelper.addUIClickAudio(arg_40_0._btnhundred.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	if self._btnhundred then
+		gohelper.addUIClickAudio(self._btnhundred.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
 	end
 
-	if arg_40_0._btnthousand then
-		gohelper.addUIClickAudio(arg_40_0._btnthousand.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	if self._btnthousand then
+		gohelper.addUIClickAudio(self._btnthousand.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
 	end
 
-	if arg_40_0._btntenthousand then
-		gohelper.addUIClickAudio(arg_40_0._btntenthousand.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	if self._btntenthousand then
+		gohelper.addUIClickAudio(self._btntenthousand.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
 	end
 
-	if arg_40_0._btntenmillion then
-		gohelper.addUIClickAudio(arg_40_0._btntenmillion.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	if self._btntenmillion then
+		gohelper.addUIClickAudio(self._btntenmillion.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
 	end
 
-	if arg_40_0._btninput then
-		gohelper.addUIClickAudio(arg_40_0._btninput.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	if self._btninput then
+		gohelper.addUIClickAudio(self._btninput.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
 	end
 end
 
-function var_0_0._refreshUI(arg_41_0)
-	arg_41_0._canJump = arg_41_0.viewParam.canJump
+function MaterialTipView:_refreshUI()
+	self._canJump = self.viewParam.canJump
 
-	if arg_41_0._txtmattip then
-		arg_41_0._txtmattip.text = tostring(arg_41_0.viewParam.type) .. "#" .. tostring(arg_41_0.viewParam.id)
+	if self._txtmattip then
+		self._txtmattip.text = tostring(self.viewParam.type) .. "#" .. tostring(self.viewParam.id)
 	end
 
-	arg_41_0._config, arg_41_0._icon = ItemModel.instance:getItemConfigAndIcon(arg_41_0.viewParam.type, arg_41_0.viewParam.id)
+	self._config, self._icon = ItemModel.instance:getItemConfigAndIcon(self.viewParam.type, self.viewParam.id)
 
-	if arg_41_0.viewParam.type == MaterialEnum.MaterialType.Equip then
-		arg_41_0._icon = ResUrl.getEquipIcon(arg_41_0._config.icon)
-	elseif arg_41_0._config.subType == ItemEnum.SubType.Portrait then
-		arg_41_0._icon = ResUrl.getPlayerHeadIcon(arg_41_0._config.icon)
+	if self.viewParam.type == MaterialEnum.MaterialType.Equip then
+		self._icon = ResUrl.getEquipIcon(self._config.icon)
+	elseif self._config.subType == ItemEnum.SubType.Portrait then
+		self._icon = ResUrl.getPlayerHeadIcon(self._config.icon)
 	end
 
-	gohelper.setActive(arg_41_0._simagepropicon.gameObject, false)
+	gohelper.setActive(self._simagepropicon.gameObject, false)
 
-	local var_41_0 = arg_41_0:_isUseBtnShow()
+	local _isUseBtnShow = self:_isUseBtnShow()
 
-	if var_41_0 then
-		gohelper.setActive(arg_41_0._gouse, true)
+	if _isUseBtnShow then
+		gohelper.setActive(self._gouse, true)
 
-		local var_41_1 = true
+		local showDetail = true
 
-		if arg_41_0.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
-			var_41_1 = false
-		elseif arg_41_0._config.subType == ItemEnum.SubType.RoomTicket then
-			var_41_1 = false
-		elseif arg_41_0._config.subType == ItemEnum.SubType.SkinTicket then
-			var_41_1 = false
-		elseif arg_41_0._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
-			var_41_1 = false
-		elseif arg_41_0.viewParam.type == MaterialEnum.MaterialType.NewInsight then
-			var_41_1 = false
-		elseif arg_41_0._config.subType == ItemEnum.SubType.SelfSelectSix then
-			var_41_1 = false
+		if self.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
+			showDetail = false
+		elseif self.viewParam.type == MaterialEnum.MaterialType.TalentItem then
+			showDetail = false
+		elseif self._config.subType == ItemEnum.SubType.RoomTicket then
+			showDetail = false
+		elseif self._config.subType == ItemEnum.SubType.SkinTicket then
+			showDetail = false
+		elseif self._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
+			showDetail = false
+		elseif self.viewParam.type == MaterialEnum.MaterialType.NewInsight then
+			showDetail = false
+		elseif self._config.subType == ItemEnum.SubType.SelfSelectSix then
+			showDetail = false
 
-			recthelper.setAnchorY(arg_41_0._btnuse.transform, -190)
-		elseif arg_41_0:_isRoomBlockGift() then
-			var_41_1 = false
+			recthelper.setAnchorY(self._btnuse.transform, -190)
+		elseif self._config.subType == ItemEnum.SubType.EquipSelectGift then
+			showDetail = false
 
-			recthelper.setAnchorY(arg_41_0._btnuse.transform, -190)
-			recthelper.setAnchorY(arg_41_0._goincludeScroll.transform, 45)
+			recthelper.setAnchorY(self._btnuse.transform, -190)
+		elseif self:_isRoomBlockGift() then
+			showDetail = false
+
+			recthelper.setAnchorY(self._btnuse.transform, -190)
+			recthelper.setAnchorY(self._goincludeScroll.transform, 45)
+		elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
+			showDetail = false
 		end
 
-		gohelper.setActive(arg_41_0._gouseDetail, var_41_1)
+		gohelper.setActive(self._gouseDetail, showDetail)
 	else
-		gohelper.setActive(arg_41_0._gouse, false)
+		gohelper.setActive(self._gouse, false)
 	end
 
-	if arg_41_0._config.subType ~= ItemEnum.SubType.Portrait then
-		arg_41_0._simageequipicon:LoadImage(arg_41_0._icon)
+	if self._config.subType ~= ItemEnum.SubType.Portrait then
+		self._simageequipicon:LoadImage(self._icon)
 	end
 
-	arg_41_0._txtproptip.text = ""
-	arg_41_0._txtexpire.text = ""
-	arg_41_0._txtpropname.text = arg_41_0._config.name
+	self._txtproptip.text = ""
+	self._txtexpire.text = ""
+	self._txtpropname.text = self._config.name
 
-	TaskDispatcher.cancelTask(arg_41_0._onRefreshPowerPotionDeadline, arg_41_0)
-	TaskDispatcher.cancelTask(arg_41_0._onRefreshItemDeadline, arg_41_0)
+	TaskDispatcher.cancelTask(self._onRefreshPowerPotionDeadline, self)
+	TaskDispatcher.cancelTask(self._onRefreshItemDeadline, self)
+	TaskDispatcher.cancelTask(self._onRefreshTalentItemDeadline, self)
 
-	local var_41_2 = arg_41_0._config.subType == ItemEnum.SubType.Portrait
+	local isPortrait = self._config.subType == ItemEnum.SubType.Portrait
 
-	gohelper.setActive(arg_41_0._goequipicon, false)
+	gohelper.setActive(self._goequipicon, false)
 
-	if arg_41_0.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
-		arg_41_0:_onRefreshPowerPotionDeadline()
-		gohelper.setActive(arg_41_0._simagepropicon.gameObject, true)
-		arg_41_0._simagepropicon:LoadImage(arg_41_0._icon)
-		TaskDispatcher.runRepeat(arg_41_0._onRefreshPowerPotionDeadline, arg_41_0, 1)
-	elseif arg_41_0.viewParam.type == MaterialEnum.MaterialType.NewInsight then
-		arg_41_0:_onRefreshNewInsightDeadline()
-		gohelper.setActive(arg_41_0._simagepropicon.gameObject, true)
-		arg_41_0._simagepropicon:LoadImage(arg_41_0._icon)
-		TaskDispatcher.runRepeat(arg_41_0._onRefreshNewInsightDeadline, arg_41_0, 1)
-	elseif arg_41_0.viewParam.type == MaterialEnum.MaterialType.Equip then
-		gohelper.setActive(arg_41_0._goequipicon, true)
+	if self.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
+		self:_onRefreshPowerPotionDeadline()
+		gohelper.setActive(self._simagepropicon.gameObject, true)
+		self._simagepropicon:LoadImage(self._icon)
+		TaskDispatcher.runRepeat(self._onRefreshPowerPotionDeadline, self, 1)
+	elseif self.viewParam.type == MaterialEnum.MaterialType.TalentItem then
+		self:_onRefreshTalentItemDeadline()
+		gohelper.setActive(self._simagepropicon.gameObject, true)
+		self._simagepropicon:LoadImage(self._icon)
+		TaskDispatcher.runRepeat(self._onRefreshTalentItemDeadline, self, 1)
+	elseif self.viewParam.type == MaterialEnum.MaterialType.NewInsight then
+		self:_onRefreshNewInsightDeadline()
+		gohelper.setActive(self._simagepropicon.gameObject, true)
+		self._simagepropicon:LoadImage(self._icon)
+		TaskDispatcher.runRepeat(self._onRefreshNewInsightDeadline, self, 1)
+	elseif self.viewParam.type == MaterialEnum.MaterialType.SpecialExpiredItem then
+		self:_onRefreshSpecialExpiredItemDeadline()
+		gohelper.setActive(self._simagepropicon.gameObject, true)
+		self._simagepropicon:LoadImage(self._icon)
+		TaskDispatcher.runRepeat(self._onRefreshSpecialExpiredItemDeadline, self, 1)
+	elseif self.viewParam.type == MaterialEnum.MaterialType.Equip then
+		gohelper.setActive(self._goequipicon, true)
 	else
-		arg_41_0:_onRefreshItemDeadline()
+		self:_onRefreshItemDeadline()
 
-		if var_41_2 then
-			if not arg_41_0._liveHeadIcon then
-				arg_41_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_41_0._simageheadicon)
+		if isPortrait then
+			if not self._liveHeadIcon then
+				local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simageheadicon)
+
+				self._liveHeadIcon = commonLiveIcon
 			end
 
-			arg_41_0._liveHeadIcon:setLiveHead(arg_41_0._config.id, true)
+			self._liveHeadIcon:setLiveHead(self._config.id, true)
 		else
-			if arg_41_0._liveHeadIcon then
-				arg_41_0._liveHeadIcon:setVisible(false)
+			if self._liveHeadIcon then
+				self._liveHeadIcon:setVisible(false)
 			end
 
-			arg_41_0._simagepropicon:LoadImage(arg_41_0._icon, arg_41_0._setIconNativeSize, arg_41_0)
+			self._simagepropicon:LoadImage(self._icon, self._setIconNativeSize, self)
 		end
 
-		gohelper.setActive(arg_41_0._simagepropicon.gameObject, not var_41_2)
-		TaskDispatcher.runRepeat(arg_41_0._onRefreshItemDeadline, arg_41_0, 1)
+		gohelper.setActive(self._simagepropicon.gameObject, not isPortrait)
+		TaskDispatcher.runRepeat(self._onRefreshItemDeadline, self, 1)
 	end
 
-	arg_41_0._txtdesc.text = ServerTime.ReplaceUTCStr(arg_41_0._config.desc)
-	arg_41_0._txtusedesc.text = ServerTime.ReplaceUTCStr(arg_41_0._config.useDesc)
+	self._txtdesc.text = ServerTime.ReplaceUTCStr(self._config.desc)
+	self._txtusedesc.text = ServerTime.ReplaceUTCStr(self._config.useDesc)
 
-	arg_41_0:_refreshItemQuantity()
-	arg_41_0:_refreshItemQuantityVisible()
-	gohelper.setActive(arg_41_0._btndetail.gameObject, arg_41_0.viewParam.type == MaterialEnum.MaterialType.Equip)
-	gohelper.setActive(arg_41_0._btnplayerbg, false)
-	gohelper.setActive(arg_41_0._goplayericon, arg_41_0._config.subType == ItemEnum.SubType.Portrait)
+	self:_refreshItemQuantity()
+	self:_refreshItemQuantityVisible()
+	gohelper.setActive(self._btndetail.gameObject, self.viewParam.type == MaterialEnum.MaterialType.Equip)
+	gohelper.setActive(self._btnplayerbg, false)
+	gohelper.setActive(self._goplayericon, self._config.subType == ItemEnum.SubType.Portrait)
 
-	local var_41_3 = arg_41_0._config.subType == ItemEnum.SubType.SummonSimulationPick
-	local var_41_4 = var_41_3 or arg_41_0:_isPackageSkin()
+	local isSummonSimulation = self._config.subType == ItemEnum.SubType.SummonSimulationPick
+	local isShowLefTopBtnTips = isSummonSimulation or self:_isPackageSkin()
 
-	gohelper.setActive(arg_41_0._goSummonsimulationtips, var_41_4)
-	gohelper.setActive(arg_41_0._btnsummonsimulation, var_41_4)
+	gohelper.setActive(self._goSummonsimulationtips, isShowLefTopBtnTips)
+	gohelper.setActive(self._btnsummonsimulation, isShowLefTopBtnTips)
 
-	local var_41_5 = arg_41_0.viewParam.type == MaterialEnum.MaterialType.Exp
+	local isExp = self.viewParam.type == MaterialEnum.MaterialType.Exp
 
-	gohelper.setActive(arg_41_0._gohadnumber, not var_41_5 and arg_41_0._config.subType ~= ItemEnum.SubType.Portrait and not arg_41_0:_checkIsFakeIcon())
-	gohelper.setActive(arg_41_0._goupgrade, arg_41_0._config.subType == ItemEnum.SubType.Portrait and not string.nilorempty(arg_41_0._config.effect))
+	gohelper.setActive(self._gohadnumber, not isExp and self._config.subType ~= ItemEnum.SubType.Portrait and not self:_checkIsFakeIcon())
+	gohelper.setActive(self._goupgrade, self._config.subType == ItemEnum.SubType.Portrait and not string.nilorempty(self._config.effect))
 
-	local var_41_6 = string.split(arg_41_0._config.effect, "#")
+	local effectArr = string.split(self._config.effect, "#")
 
-	if arg_41_0._config.subType == ItemEnum.SubType.Portrait then
-		if #var_41_6 > 1 then
-			if arg_41_0._config.id == tonumber(var_41_6[#var_41_6]) then
-				gohelper.setActive(arg_41_0._goupgrade, false)
-				gohelper.setActive(arg_41_0._goframe, false)
-				gohelper.setActive(arg_41_0._goframenode, true)
+	if self._config.subType == ItemEnum.SubType.Portrait then
+		if #effectArr > 1 then
+			if self._config.id == tonumber(effectArr[#effectArr]) then
+				gohelper.setActive(self._goupgrade, false)
+				gohelper.setActive(self._goframe, false)
+				gohelper.setActive(self._goframenode, true)
 
-				local var_41_7 = "ui/viewres/common/effect/frame.prefab"
+				local framePath = "ui/viewres/common/effect/frame.prefab"
 
-				arg_41_0._loader:addPath(var_41_7)
-				arg_41_0._loader:startLoad(arg_41_0._onLoadCallback, arg_41_0)
+				self._loader:addPath(framePath)
+				self._loader:startLoad(self._onLoadCallback, self)
 			end
 		else
-			gohelper.setActive(arg_41_0._goframe, true)
-			gohelper.setActive(arg_41_0._goframenode, false)
+			gohelper.setActive(self._goframe, true)
+			gohelper.setActive(self._goframenode, false)
 		end
 	end
 
-	arg_41_0:_refreshValue()
-	arg_41_0:_refreshInclude()
+	self:_refreshValue()
+	self:_refreshInclude()
 
-	if var_41_0 then
-		gohelper.setActive(arg_41_0._gosource, false)
+	if _isUseBtnShow then
+		gohelper.setActive(self._gosource, false)
 
-		for iter_41_0, iter_41_1 in ipairs(arg_41_0._boxItemGos or {}) do
-			if iter_41_1 then
-				gohelper.setActive(iter_41_1.go, false)
+		for _, item in ipairs(self._boxItemGos or {}) do
+			if item then
+				gohelper.setActive(item.go, false)
 			end
 		end
 
-		for iter_41_2, iter_41_3 in ipairs(arg_41_0.jumpItemGos or {}) do
-			if iter_41_3 then
-				gohelper.setActive(iter_41_3.go, false)
+		for _, item in ipairs(self.jumpItemGos or {}) do
+			if item then
+				gohelper.setActive(item.go, false)
 			end
 		end
 	else
-		arg_41_0:_cloneJumpItem()
+		self:_cloneJumpItem()
 	end
 
-	if var_41_0 then
-		recthelper.setHeight(arg_41_0._scrolldesc.transform, 180)
-	elseif arg_41_0._goinclude.activeInHierarchy then
-		recthelper.setHeight(arg_41_0._scrolldesc.transform, 162)
+	if _isUseBtnShow then
+		recthelper.setHeight(self._scrolldesc.transform, 180)
+	elseif self._goinclude.activeInHierarchy then
+		recthelper.setHeight(self._scrolldesc.transform, 162)
 	else
-		recthelper.setHeight(arg_41_0._scrolldesc.transform, 415)
+		recthelper.setHeight(self._scrolldesc.transform, 415)
 	end
 
-	if var_41_4 then
-		if var_41_3 then
-			arg_41_0._txtSummonsimulationtips.text = luaLang("p_normalstoregoodsview_txt_summonpicktips")
+	if isShowLefTopBtnTips then
+		if isSummonSimulation then
+			self._txtSummonsimulationtips.text = luaLang("p_normalstoregoodsview_txt_summonpicktips")
 		end
 
-		if arg_41_0:_isPackageSkin() then
-			arg_41_0._txtSummonsimulationtips.text = luaLang("ruledetail")
+		if self:_isPackageSkin() then
+			self._txtSummonsimulationtips.text = luaLang("ruledetail")
 		end
 	end
 end
 
-function var_0_0._checkIsFakeIcon(arg_42_0)
-	if not var_0_4[arg_42_0.viewParam.type] then
+function MaterialTipView:_checkIsFakeIcon()
+	if not FakeIconTab[self.viewParam.type] then
 		return false
 	end
 
-	return var_0_4[arg_42_0.viewParam.type][arg_42_0.viewParam.id] or false
+	return FakeIconTab[self.viewParam.type][self.viewParam.id] or false
 end
 
-function var_0_0._onRefreshPowerPotionDeadline(arg_43_0)
-	local var_43_0 = ItemPowerModel.instance:getPowerItemDeadline(arg_43_0.viewParam.uid)
+function MaterialTipView:_onRefreshPowerPotionDeadline()
+	local ts = ItemPowerModel.instance:getPowerItemDeadline(self.viewParam.uid)
 
-	if arg_43_0._config.expireType ~= 0 and arg_43_0.viewParam.uid then
-		if var_43_0 <= ServerTime.now() then
-			arg_43_0._txtproptip.text = ""
-			arg_43_0._txtexpire.text = luaLang("hasExpire")
+	if self._config.expireType ~= 0 and self.viewParam.uid then
+		local hasExpire = ts <= ServerTime.now()
+
+		if hasExpire then
+			self._txtproptip.text = ""
+			self._txtexpire.text = luaLang("hasExpire")
 		else
-			local var_43_1 = math.floor(var_43_0 - ServerTime.now())
+			local offsetSecond = math.floor(ts - ServerTime.now())
 
-			arg_43_0._txtproptip.text = arg_43_0:getRemainTimeStr(var_43_1)
+			self._txtproptip.text = self:getRemainTimeStr(offsetSecond)
 		end
 	else
-		arg_43_0._txtproptip.text = ""
-		arg_43_0._txtexpire.text = ""
+		self._txtproptip.text = ""
+		self._txtexpire.text = ""
 
-		TaskDispatcher.cancelTask(arg_43_0._onRefreshPowerPotionDeadline, arg_43_0)
+		TaskDispatcher.cancelTask(self._onRefreshPowerPotionDeadline, self)
 	end
 end
 
-function var_0_0._onRefreshNewInsightDeadline(arg_44_0)
-	local var_44_0 = ItemInsightModel.instance:getInsightItemDeadline(arg_44_0.viewParam.uid)
+function MaterialTipView:_onRefreshTalentItemDeadline()
+	local ts = ItemTalentModel.instance:getTalentItemDeadline(self.viewParam.uid)
 
-	if arg_44_0._config.expireHours == ItemEnum.NoExpiredNum then
-		arg_44_0._txtproptip.text = ""
-		arg_44_0._txtexpire.text = ""
-	elseif arg_44_0._config.expireType ~= 0 and arg_44_0.viewParam.uid then
-		if var_44_0 <= ServerTime.now() then
-			arg_44_0._txtproptip.text = ""
-			arg_44_0._txtexpire.text = luaLang("hasExpire")
+	if self.viewParam.uid then
+		local hasExpire = ts <= ServerTime.now()
+
+		if hasExpire then
+			self._txtproptip.text = ""
+			self._txtexpire.text = luaLang("hasExpire")
 		else
-			local var_44_1 = math.floor(var_44_0 - ServerTime.now())
+			local offsetSecond = math.floor(ts - ServerTime.now())
 
-			arg_44_0._txtproptip.text = arg_44_0:getRemainTimeStr(var_44_1)
+			self._txtproptip.text = self:getRemainTimeStr(offsetSecond)
 		end
 	else
-		local var_44_2 = ItemConfig.instance:getInsightItemCo(arg_44_0.viewParam.id).expireHours
+		self._txtproptip.text = ""
+		self._txtexpire.text = ""
 
-		arg_44_0._txtproptip.text = arg_44_0:getInsightItemRemainTimeStr(var_44_2)
-		arg_44_0._txtexpire.text = ""
-
-		TaskDispatcher.cancelTask(arg_44_0._onRefreshNewInsightDeadline, arg_44_0)
+		TaskDispatcher.cancelTask(self._onRefreshTalentItemDeadline, self)
 	end
 end
 
-function var_0_0.getRemainTimeStr(arg_45_0, arg_45_1)
-	local var_45_0 = TimeUtil.getFormatTime(arg_45_1)
+function MaterialTipView:_onRefreshNewInsightDeadline()
+	local ts = ItemInsightModel.instance:getInsightItemDeadline(self.viewParam.uid)
 
-	return var_45_0 and var_0_2(luaLang("remain"), " " .. var_45_0) or ""
-end
+	if self._config.expireHours == ItemEnum.NoExpiredNum then
+		self._txtproptip.text = ""
+		self._txtexpire.text = ""
+	elseif self._config.expireType ~= 0 and self.viewParam.uid then
+		local hasExpire = ts <= ServerTime.now()
 
-function var_0_0.getInsightItemRemainTimeStr(arg_46_0, arg_46_1)
-	local var_46_0 = TimeUtil.secondToRoughTime2(arg_46_1 * 3600, false)
-
-	return var_46_0 and GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("newinsight_item_detail_remain_time"), var_46_0) or ""
-end
-
-function var_0_0._onRefreshItemDeadline(arg_47_0)
-	if arg_47_0._config.isShow == 1 and arg_47_0._config.isTimeShow == 1 and arg_47_0._config.expireTime and arg_47_0._config.expireTime ~= "" then
-		local var_47_0 = TimeUtil.stringToTimestamp(arg_47_0._config.expireTime)
-
-		if var_47_0 <= ServerTime.now() then
-			arg_47_0._txtproptip.text = ""
-			arg_47_0._txtexpire.text = luaLang("hasExpire")
+		if hasExpire then
+			self._txtproptip.text = ""
+			self._txtexpire.text = luaLang("hasExpire")
 		else
-			local var_47_1 = math.floor(var_47_0 - ServerTime.now())
+			local offsetSecond = math.floor(ts - ServerTime.now())
 
-			arg_47_0._txtproptip.text = arg_47_0:getRemainTimeStr(var_47_1)
+			self._txtproptip.text = self:getRemainTimeStr(offsetSecond)
 		end
 	else
-		arg_47_0._txtproptip.text = ""
-		arg_47_0._txtexpire.text = ""
+		local itemCfg = ItemConfig.instance:getInsightItemCo(self.viewParam.id)
+		local expireTime = itemCfg.expireHours
 
-		TaskDispatcher.cancelTask(arg_47_0._onRefreshItemDeadline, arg_47_0)
+		self._txtproptip.text = self:getInsightItemRemainTimeStr(expireTime)
+		self._txtexpire.text = ""
+
+		TaskDispatcher.cancelTask(self._onRefreshNewInsightDeadline, self)
 	end
 end
 
-function var_0_0._onLoadCallback(arg_48_0)
-	local var_48_0 = arg_48_0._loader:getFirstAssetItem():GetResource()
+function MaterialTipView:_onRefreshSpecialExpiredItemDeadline()
+	local ts = CurrencyController.instance:getExpireItemDeadLineTime()
 
-	gohelper.clone(var_48_0, arg_48_0._goframenode, "frame")
+	if ts then
+		local hasExpire = ts <= ServerTime.now()
+
+		if hasExpire then
+			self._txtproptip.text = ""
+			self._txtexpire.text = luaLang("hasExpire")
+		else
+			local offsetSecond = math.floor(ts - ServerTime.now())
+
+			self._txtproptip.text = self:getRemainTimeStr(offsetSecond)
+		end
+	else
+		self._txtproptip.text = ""
+		self._txtexpire.text = ""
+
+		TaskDispatcher.cancelTask(self._onRefreshSpecialExpiredItemDeadline, self)
+	end
 end
 
-function var_0_0._refreshItemQuantity(arg_49_0)
-	if arg_49_0.viewParam.type == MaterialEnum.MaterialType.PowerPotion and arg_49_0.viewParam.id == MaterialEnum.PowerId.OverflowPowerId then
-		local var_49_0 = ItemPowerModel.instance:getPowerMakerInfo()
-		local var_49_1 = var_49_0 and var_49_0.itemTotalCount or ItemPowerModel.instance:getPowerCount(arg_49_0.viewParam.id)
+function MaterialTipView:getRemainTimeStr(ts)
+	local date = TimeUtil.getFormatTime(ts)
 
-		arg_49_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_49_1)
+	return date and sf(luaLang("remain"), " " .. date) or ""
+end
+
+function MaterialTipView:getInsightItemRemainTimeStr(hour)
+	local timeStr = TimeUtil.secondToRoughTime2(hour * 3600, false)
+
+	return timeStr and GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("newinsight_item_detail_remain_time"), timeStr) or ""
+end
+
+function MaterialTipView:_onRefreshItemDeadline()
+	if self._config.isShow == 1 and self._config.isTimeShow == 1 and self._config.expireTime and self._config.expireTime ~= "" then
+		local ts = TimeUtil.stringToTimestamp(self._config.expireTime)
+		local serverTsInLocal = ServerTime.now()
+		local hasExpire = ts <= serverTsInLocal
+
+		if hasExpire then
+			self._txtproptip.text = ""
+			self._txtexpire.text = luaLang("hasExpire")
+		else
+			local offsetSecond = math.floor(ts - ServerTime.now())
+
+			self._txtproptip.text = self:getRemainTimeStr(offsetSecond)
+		end
+	else
+		self._txtproptip.text = ""
+		self._txtexpire.text = ""
+
+		TaskDispatcher.cancelTask(self._onRefreshItemDeadline, self)
+	end
+end
+
+function MaterialTipView:_onLoadCallback()
+	local framePrefab = self._loader:getFirstAssetItem():GetResource()
+
+	gohelper.clone(framePrefab, self._goframenode, "frame")
+end
+
+function MaterialTipView:_refreshItemQuantity()
+	if self.viewParam.type == MaterialEnum.MaterialType.PowerPotion and self.viewParam.id == MaterialEnum.PowerId.OverflowPowerId then
+		local ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
+		local count = ofMakerInfo and ofMakerInfo.itemTotalCount or ItemPowerModel.instance:getPowerCount(self.viewParam.id)
+
+		self._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", count)
 
 		return
 	end
 
-	local var_49_2 = tostring(GameUtil.numberDisplay(ItemModel.instance:getItemQuantity(arg_49_0.viewParam.type, arg_49_0.viewParam.id, arg_49_0.viewParam.uid, arg_49_0.viewParam.fakeQuantity)) or 0)
+	local numStr = tostring(GameUtil.numberDisplay(ItemModel.instance:getItemQuantity(self.viewParam.type, self.viewParam.id, self.viewParam.uid, self.viewParam.fakeQuantity)) or 0)
 
-	arg_49_0._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", var_49_2)
+	self._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", numStr)
 end
 
-function var_0_0._refreshItemQuantityVisible(arg_50_0)
-	local var_50_0 = arg_50_0.viewParam.id ~= BpEnum.ScoreItemId
-	local var_50_1 = arg_50_0.viewParam.type == MaterialEnum.MaterialType.Exp
+function MaterialTipView:_refreshItemQuantityVisible()
+	local isShow = self.viewParam.id ~= BpEnum.ScoreItemId
+	local isExp = self.viewParam.type == MaterialEnum.MaterialType.Exp
 
-	gohelper.setActive(arg_50_0._gohadnumber, var_50_0 and not var_50_1)
-	gohelper.setActive(arg_50_0._txthadnumber, var_50_0)
+	gohelper.setActive(self._gohadnumber, isShow and not isExp)
+	gohelper.setActive(self._txthadnumber, isShow)
 end
 
-function var_0_0._setIconNativeSize(arg_51_0)
-	arg_51_0._simagepropicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+function MaterialTipView:_setIconNativeSize()
+	self._simagepropicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
 end
 
-function var_0_0._refreshInclude(arg_52_0)
+function MaterialTipView:_refreshInclude()
 	MaterialTipListModel.instance:clear()
 
-	local var_52_0 = MaterialEnum.SubTypePackages[arg_52_0._config.subType] == true
+	local showInclude = MaterialEnum.SubTypePackages[self._config.subType] == true
 
-	var_52_0 = var_52_0 or arg_52_0:_isPackageSkin()
-	var_52_0 = var_52_0 and arg_52_0.viewParam.inpack ~= true
+	showInclude = showInclude or self:_isPackageSkin()
+	showInclude = showInclude and self.viewParam.inpack ~= true
 
-	if arg_52_0:_isRoomBlockGift() then
-		var_52_0 = true
+	if MaterialEnum.SubTypeInPack[self._config.subType] then
+		showInclude = true
 	end
 
-	gohelper.setActive(arg_52_0._goinclude, var_52_0)
+	gohelper.setActive(self._goinclude, showInclude)
 
-	local var_52_1 = 0
-	local var_52_2
+	local count = 0
+	local includetype
 
-	if var_52_0 then
-		local var_52_3
+	if showInclude then
+		local includeItems
 
-		if arg_52_0:_isPackageSkin() then
-			var_52_3 = arg_52_0:_getPackageSkinIncludeItems()
-		elseif arg_52_0._config.subType == ItemEnum.SubType.OptionalGift then
-			var_52_3 = GiftMultipleChoiceListModel.instance:getOptionalGiftInfo(arg_52_0._config.id)
-		elseif arg_52_0._config.subType == ItemEnum.SubType.OptionalHeroGift then
-			var_52_3 = {}
+		if self:_isPackageSkin() then
+			includeItems = self:_getPackageSkinIncludeItems()
+		elseif self._config.subType == ItemEnum.SubType.OptionalGift then
+			includeItems = GiftMultipleChoiceListModel.instance:getOptionalGiftInfo(self._config.id)
+		elseif self._config.subType == ItemEnum.SubType.OptionalHeroGift then
+			includeItems = {}
 
-			local var_52_4 = string.splitToNumber(arg_52_0._config.effect, "#")
+			local heroIds = string.splitToNumber(self._config.effect, "#")
 
-			for iter_52_0, iter_52_1 in ipairs(var_52_4) do
-				var_52_3[iter_52_0] = {
+			for i, id in ipairs(heroIds) do
+				local material = {
 					4,
-					iter_52_1,
+					id,
 					1
 				}
+
+				includeItems[i] = material
 			end
-		elseif arg_52_0._config.subType == ItemEnum.SubType.SelfSelectSix then
-			local var_52_5 = string.split(arg_52_0._config.effect, "|")
+		elseif self._config.subType == ItemEnum.SubType.SelfSelectSix then
+			local effectArr = string.split(self._config.effect, "|")
 
-			var_52_3 = {}
+			includeItems = {}
 
-			for iter_52_2, iter_52_3 in ipairs(var_52_5) do
-				local var_52_6 = string.split(iter_52_3, ":")
-				local var_52_7 = {}
+			for _, value in ipairs(effectArr) do
+				local temp = string.split(value, ":")
+				local heroIdList = {}
 
-				if var_52_6[2] and #var_52_6[2] > 0 then
-					local var_52_8 = string.splitToNumber(var_52_6[2], ",")
+				if temp[2] and #temp[2] > 0 then
+					heroIdList = string.splitToNumber(temp[2], ",")
 
-					if #var_52_8 > 0 then
-						for iter_52_4, iter_52_5 in ipairs(var_52_8) do
-							local var_52_9 = {
-								MaterialEnum.MaterialType.Hero,
-								iter_52_5
-							}
+					if #heroIdList > 0 then
+						for _, heroId in ipairs(heroIdList) do
+							local co = {}
 
-							var_52_9[3] = 1
+							co[1] = MaterialEnum.MaterialType.Hero
+							co[2] = heroId
+							co[3] = 1
 
-							table.insert(var_52_3, var_52_9)
+							table.insert(includeItems, co)
 						end
 					end
 				end
 			end
-		elseif arg_52_0:_isRoomBlockGift() then
-			arg_52_0._contentHorizontal.enabled = false
+		elseif self:_isRoomBlockGift() then
+			self._contentHorizontal.enabled = false
 
-			if not arg_52_0._content then
-				arg_52_0._content = arg_52_0._goincludeContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+			if not self._content then
+				self._content = self._goincludeContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
 			end
 
-			arg_52_0._content.enabled = false
-			var_52_3 = RoomBlockBuildingGiftModel.instance:getGiftBlockMos(arg_52_0._config.id)
+			self._content.enabled = false
+			includeItems = RoomBlockBuildingGiftModel.instance:getGiftBlockMos(self._config.id)
 
-			MaterialTipListModel.instance:setData(var_52_3)
+			MaterialTipListModel.instance:setData(includeItems)
 
 			return
 		else
-			var_52_3 = GameUtil.splitString2(arg_52_0._config.effect, true)
+			includeItems = GameUtil.splitString2(self._config.effect, true)
 		end
 
-		var_52_1 = #var_52_3
+		count = #includeItems
 
-		for iter_52_6, iter_52_7 in ipairs(var_52_3) do
-			local var_52_10 = arg_52_0._iconItemList[iter_52_6]
+		if self:checkOnlyShowEquip() then
+			local list = {}
 
-			if var_52_10 == nil then
-				local var_52_11 = iter_52_7[1]
-				local var_52_12 = iter_52_7[2]
-				local var_52_13 = iter_52_7[3]
-
-				var_52_2 = var_52_11
-
-				if var_52_11 == MaterialEnum.MaterialType.Equip then
-					var_52_10 = IconMgr.instance:getCommonEquipIcon(arg_52_0._goincludeContent)
-
-					var_52_10:setMOValue(var_52_11, var_52_12, var_52_13, nil, true)
-					var_52_10:hideLv(true)
-
-					local function var_52_14()
-						MaterialTipController.instance:showMaterialInfo(var_52_11, var_52_12)
-					end
-
-					var_52_10:customClick(var_52_14)
-				elseif var_52_11 == MaterialEnum.MaterialType.Hero then
-					var_52_10 = IconMgr.instance:getCommonItemIcon(arg_52_0._goincludeContent)
-
-					var_52_10:setMOValue(var_52_11, var_52_12, var_52_13, nil, true)
-					var_52_10:isShowCount(false)
-				elseif var_52_11 == MaterialEnum.MaterialType.HeroSkin then
-					var_52_10 = IconMgr.instance:getCommonItemIcon(arg_52_0._goincludeContent)
-
-					var_52_10:setMOValue(var_52_11, var_52_12, var_52_13, nil, true)
-					var_52_10:isShowCount(false)
-				else
-					var_52_10 = IconMgr.instance:getCommonItemIcon(arg_52_0._goincludeContent)
-
-					var_52_10:setMOValue(var_52_11, var_52_12, var_52_13, nil, true)
-					var_52_10:isShowCount(true)
+			for index, itemco in ipairs(includeItems) do
+				if itemco[1] == MaterialEnum.MaterialType.Equip then
+					table.insert(list, itemco)
 				end
-
-				table.insert(arg_52_0._iconItemList, var_52_10)
 			end
 
-			var_52_10:setCountFontSize(37.142857142857146)
-			gohelper.setActive(var_52_10.go, true)
+			includeItems = list
+		end
+
+		for i, itemco in ipairs(includeItems) do
+			local itemIcon = self._iconItemList[i]
+
+			if itemIcon == nil then
+				local type = itemco[1]
+				local id = itemco[2]
+				local num = itemco[3]
+
+				includetype = type
+
+				if type == MaterialEnum.MaterialType.Equip then
+					itemIcon = IconMgr.instance:getCommonEquipIcon(self._goincludeContent)
+
+					itemIcon:setMOValue(type, id, num, nil, true)
+					itemIcon:hideLv(true)
+
+					local function callback()
+						MaterialTipController.instance:showMaterialInfo(type, id)
+					end
+
+					itemIcon:customClick(callback)
+				elseif type == MaterialEnum.MaterialType.Hero then
+					itemIcon = IconMgr.instance:getCommonItemIcon(self._goincludeContent)
+
+					itemIcon:setMOValue(type, id, num, nil, true)
+					itemIcon:isShowCount(false)
+				elseif type == MaterialEnum.MaterialType.HeroSkin then
+					itemIcon = IconMgr.instance:getCommonItemIcon(self._goincludeContent)
+
+					itemIcon:setMOValue(type, id, num, nil, true)
+					itemIcon:isShowCount(false)
+				else
+					itemIcon = IconMgr.instance:getCommonItemIcon(self._goincludeContent)
+
+					itemIcon:setMOValue(type, id, num, nil, true)
+					itemIcon:isShowCount(true)
+				end
+
+				table.insert(self._iconItemList, itemIcon)
+			end
+
+			itemIcon:setCountFontSize(37.142857142857146)
+			gohelper.setActive(itemIcon.go, true)
 		end
 	end
 
-	if var_52_2 == MaterialEnum.MaterialType.Equip then
-		arg_52_0._contentHorizontal.spacing = 6.62
-		arg_52_0._contentHorizontal.padding.left = -2
-		arg_52_0._contentHorizontal.padding.top = 10
+	if includetype == MaterialEnum.MaterialType.Equip then
+		self._contentHorizontal.spacing = 6.62
+		self._contentHorizontal.padding.left = -2
+		self._contentHorizontal.padding.top = 10
 	end
 
-	for iter_52_8 = var_52_1 + 1, #arg_52_0._iconItemList do
-		gohelper.setActive(arg_52_0._iconItemList[iter_52_8].go, false)
+	for i = count + 1, #self._iconItemList do
+		gohelper.setActive(self._iconItemList[i].go, false)
 	end
 end
 
-function var_0_0._isUseBtnShow(arg_54_0)
-	local var_54_0 = ItemConfig.instance:getItemUseCo(arg_54_0._config.subType)
-	local var_54_1 = arg_54_0.viewParam.inpack and var_54_0 and var_54_0.useType ~= 1
-
-	if arg_54_0.viewParam.type == MaterialEnum.MaterialType.PowerPotion and arg_54_0.viewParam.inpack and arg_54_0:_isFromBackpackView() then
+function MaterialTipView:checkOnlyShowEquip()
+	if self._config.subType == ItemEnum.SubType.EquipSelectGift then
 		return true
 	end
 
-	if arg_54_0.viewParam.type == MaterialEnum.MaterialType.NewInsight and arg_54_0.viewParam.inpack and arg_54_0:_isFromBackpackView() then
-		return true
-	end
-
-	if arg_54_0._config.subType == ItemEnum.SubType.RoomTicket then
-		if ViewMgr.instance:isOpen(ViewName.StoreView) then
-			return false
-		end
-
-		return var_54_1
-	end
-
-	if arg_54_0._config.subType == ItemEnum.SubType.SkinTicket then
-		if ViewMgr.instance:isOpen(ViewName.StoreView) then
-			return false
-		end
-
-		return ItemModel.instance:getItemQuantity(arg_54_0.viewParam.type, arg_54_0.viewParam.id, arg_54_0.viewParam.uid, arg_54_0.viewParam.fakeQuantity) > 0
-	end
-
-	if arg_54_0._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
-		if ViewMgr.instance:isOpen(ViewName.StoreView) then
-			return false
-		end
-
-		return ItemModel.instance:getItemQuantity(arg_54_0.viewParam.type, arg_54_0.viewParam.id, arg_54_0.viewParam.uid, arg_54_0.viewParam.fakeQuantity) > 0
-	end
-
-	if arg_54_0:_isRoomBlockGift() then
-		return arg_54_0.viewParam.inpack
-	end
-
-	return var_54_1
+	return false
 end
 
-function var_0_0._isFromBackpackView(arg_55_0)
-	local var_55_0 = ViewMgr.instance:getOpenViewNameList()
+function MaterialTipView:checkIncludeEquip(includeItems)
+	for i, itemco in ipairs(includeItems) do
+		if itemco then
+			local type = itemco[1]
 
-	for iter_55_0, iter_55_1 in pairs(var_55_0) do
-		if iter_55_1 == ViewName.BackpackView then
+			if type == MaterialEnum.MaterialType.Equip then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function MaterialTipView:_isUseBtnShow()
+	local useCo = ItemConfig.instance:getItemUseCo(self._config.subType)
+	local defaultResult = self.viewParam.inpack and useCo and useCo.useType ~= 1
+
+	if self.viewParam.type == MaterialEnum.MaterialType.PowerPotion and self.viewParam.inpack and self:_isFromBackpackView() then
+		return true
+	end
+
+	if self.viewParam.type == MaterialEnum.MaterialType.TalentItem and self.viewParam.inpack and self:_isFromBackpackView() then
+		return true
+	end
+
+	if self.viewParam.type == MaterialEnum.MaterialType.NewInsight and self.viewParam.inpack and self:_isFromBackpackView() then
+		return true
+	end
+
+	if self._config.subType == ItemEnum.SubType.RoomTicket then
+		if ViewMgr.instance:isOpen(ViewName.StoreView) then
+			return false
+		end
+
+		return defaultResult
+	end
+
+	if self._config.subType == ItemEnum.SubType.SkinTicket then
+		if ViewMgr.instance:isOpen(ViewName.StoreView) then
+			return false
+		end
+
+		local itemQuantity = ItemModel.instance:getItemQuantity(self.viewParam.type, self.viewParam.id, self.viewParam.uid, self.viewParam.fakeQuantity)
+
+		return itemQuantity > 0
+	end
+
+	if self._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
+		if ViewMgr.instance:isOpen(ViewName.StoreView) then
+			return false
+		end
+
+		local itemQuantity = ItemModel.instance:getItemQuantity(self.viewParam.type, self.viewParam.id, self.viewParam.uid, self.viewParam.fakeQuantity)
+
+		return itemQuantity > 0
+	end
+
+	if self:_isRoomBlockGift() then
+		return self.viewParam.inpack
+	end
+
+	return defaultResult
+end
+
+function MaterialTipView:_isFromBackpackView()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
+
+	for k, v in pairs(openViewNameList) do
+		if v == ViewName.BackpackView then
 			return true
 		end
 	end
@@ -1456,110 +1599,111 @@ function var_0_0._isFromBackpackView(arg_55_0)
 	return false
 end
 
-function var_0_0.statJump(arg_56_0, arg_56_1)
-	local var_56_0 = arg_56_0.viewParam.id == MaterialEnum.PowerId.SmallPower_Expire
-	local var_56_1 = arg_56_0.viewParam.id == MaterialEnum.PowerId.BigPower_Expire
+function MaterialTipView:statJump(jumpId)
+	local isSmallPower = self.viewParam.id == MaterialEnum.PowerId.SmallPower_Expire
+	local isBigPower = self.viewParam.id == MaterialEnum.PowerId.BigPower_Expire
 
-	if var_56_0 or var_56_1 then
-		local var_56_2
+	if isSmallPower or isBigPower then
+		local jumpconfig
 
-		if arg_56_1 then
-			var_56_2 = JumpConfig.instance:getJumpConfig(arg_56_1)
+		if jumpId then
+			jumpconfig = JumpConfig.instance:getJumpConfig(jumpId)
 		end
 
-		if var_56_0 then
-			StoreController.instance:statOnClickPowerPotionJump(StatEnum.PowerType.Small, var_56_2.name)
-		elseif var_56_1 then
-			StoreController.instance:statOnClickPowerPotionJump(StatEnum.PowerType.Big, var_56_2.name)
+		if isSmallPower then
+			StoreController.instance:statOnClickPowerPotionJump(StatEnum.PowerType.Small, jumpconfig.name)
+		elseif isBigPower then
+			StoreController.instance:statOnClickPowerPotionJump(StatEnum.PowerType.Big, jumpconfig.name)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._onRefreshPowerPotionDeadline, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._onRefreshNewInsightDeadline, arg_57_0)
-	TaskDispatcher.cancelTask(arg_57_0._onRefreshItemDeadline, arg_57_0)
+function MaterialTipView:onClose()
+	TaskDispatcher.cancelTask(self._onRefreshPowerPotionDeadline, self)
+	TaskDispatcher.cancelTask(self._onRefreshTalentItemDeadline, self)
+	TaskDispatcher.cancelTask(self._onRefreshNewInsightDeadline, self)
+	TaskDispatcher.cancelTask(self._onRefreshSpecialExpiredItemDeadline, self)
+	TaskDispatcher.cancelTask(self._onRefreshItemDeadline, self)
 
-	arg_57_0.viewContainer._isCloseImmediate = true
+	self.viewContainer._isCloseImmediate = true
 
-	for iter_57_0 = 1, #arg_57_0.jumpItemGos do
-		arg_57_0.jumpItemGos[iter_57_0].jumpBtn:RemoveClickListener()
+	for i = 1, #self.jumpItemGos do
+		self.jumpItemGos[i].jumpBtn:RemoveClickListener()
 	end
 
-	for iter_57_1 = 1, #arg_57_0._boxItemGos do
-		arg_57_0._boxItemGos[iter_57_1].jumpBtn:RemoveClickListener()
+	for i = 1, #self._boxItemGos do
+		self._boxItemGos[i].jumpBtn:RemoveClickListener()
 	end
 
-	if arg_57_0._loader then
-		arg_57_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_57_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_57_0._simagepropicon:UnLoadImage()
-	arg_57_0._simageheadicon:UnLoadImage()
-	arg_57_0._simageequipicon:UnLoadImage()
-	arg_57_0._simagebg1:UnLoadImage()
-	arg_57_0._simagebg2:UnLoadImage()
+	self._simagepropicon:UnLoadImage()
+	self._simageheadicon:UnLoadImage()
+	self._simageequipicon:UnLoadImage()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 end
 
-function var_0_0._isPackageSkin(arg_58_0)
-	return arg_58_0._config.clienttag == ItemEnum.Tag.PackageSkin
+function MaterialTipView:_isPackageSkin()
+	return self._config.clienttag == ItemEnum.Tag.PackageSkin
 end
 
-function var_0_0._getPackageSkinDesc(arg_59_0)
-	local var_59_0 = ItemConfig.instance:getRewardGroupRateInfoList(arg_59_0._config.effect)
-	local var_59_1 = {}
+function MaterialTipView:_getPackageSkinDesc()
+	local rateInfoList = ItemConfig.instance:getRewardGroupRateInfoList(self._config.effect)
+	local skinsS = {}
 
-	for iter_59_0, iter_59_1 in ipairs(var_59_0) do
-		local var_59_2 = iter_59_1.rate * 100
-		local var_59_3 = var_0_1(var_59_2)
-		local var_59_4 = var_59_2 - var_59_3
+	for _, info in ipairs(rateInfoList) do
+		local rate = info.rate * 100
+		local intNum = math_floor(rate)
+		local decimalNum = rate - intNum
 
-		if var_59_4 ~= 0 then
-			local var_59_5 = var_0_1(var_59_4 * 1000 / 100)
-
-			var_59_2 = var_0_2("%s.%s", var_59_3, var_59_5)
+		if decimalNum ~= 0 then
+			decimalNum = math_floor(decimalNum * 1000 / 100)
+			rate = sf("%s.%s", intNum, decimalNum)
 		end
 
-		local var_59_6 = iter_59_1.materialId
-		local var_59_7 = lua_skin.configDict[var_59_6]
-		local var_59_8 = var_59_7.characterId
-		local var_59_9 = lua_character.configDict[var_59_8]
-		local var_59_10 = {
-			var_59_9.name,
-			var_59_7.characterSkin,
-			var_59_2
+		local skinId = info.materialId
+		local skinCO = lua_skin.configDict[skinId]
+		local characterId = skinCO.characterId
+		local characterCO = lua_character.configDict[characterId]
+		local fillParams = {
+			characterCO.name,
+			skinCO.characterSkin,
+			rate
 		}
-		local var_59_11 = GameUtil.getSubPlaceholderLuaLang(luaLang("material_packageskin_rate_desc"), var_59_10)
+		local desc = GameUtil.getSubPlaceholderLuaLang(luaLang("material_packageskin_rate_desc"), fillParams)
 
-		var_0_3(var_59_1, var_59_11)
+		ti(skinsS, desc)
 	end
 
-	return formatLuaLang("MaterialTipViewPackageSkinDescFmt", table.concat(var_59_1, "\n"))
+	return formatLuaLang("MaterialTipViewPackageSkinDescFmt", table.concat(skinsS, "\n"))
 end
 
-function var_0_0._getPackageSkinIncludeItems(arg_60_0)
-	local var_60_0 = ItemConfig.instance:getRewardGroupRateInfoList(arg_60_0._config.effect)
-	local var_60_1 = {}
+function MaterialTipView:_getPackageSkinIncludeItems()
+	local rateInfoList = ItemConfig.instance:getRewardGroupRateInfoList(self._config.effect)
+	local list = {}
 
-	for iter_60_0, iter_60_1 in ipairs(var_60_0) do
-		var_0_3(var_60_1, {
-			iter_60_1.materialType,
-			iter_60_1.materialId,
+	for _, info in ipairs(rateInfoList) do
+		ti(list, {
+			info.materialType,
+			info.materialId,
 			[3] = 1
 		})
 	end
 
-	return var_60_1
+	return list
 end
 
-function var_0_0._isSummonSkin(arg_61_0)
-	return arg_61_0._config.clienttag == ItemEnum.Tag.SummonSkin
+function MaterialTipView:_isSummonSkin()
+	return self._config.clienttag == ItemEnum.Tag.SummonSkin
 end
 
-function var_0_0._isRoomBlockGift(arg_62_0)
-	return arg_62_0._config.subType == ItemEnum.SubType.RoomBlockGiftNew or arg_62_0._config.subType == ItemEnum.SubType.RoomBlockGift
+function MaterialTipView:_isRoomBlockGift()
+	return self._config.subType == ItemEnum.SubType.RoomBlockGiftNew or self._config.subType == ItemEnum.SubType.RoomBlockGift
 end
 
-return var_0_0
+return MaterialTipView

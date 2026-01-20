@@ -1,203 +1,206 @@
-﻿module("modules.logic.rouge.view.RougeCollectionSizeBagItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionSizeBagItem.lua
 
-local var_0_0 = class("RougeCollectionSizeBagItem", RougeCollectionBaseSlotItem)
+module("modules.logic.rouge.view.RougeCollectionSizeBagItem", package.seeall)
 
-function var_0_0.onInit(arg_1_0, arg_1_1)
-	var_0_0.super.onInit(arg_1_0, arg_1_1)
+local RougeCollectionSizeBagItem = class("RougeCollectionSizeBagItem", RougeCollectionBaseSlotItem)
 
-	arg_1_0._gomodelcontainer = gohelper.findChild(arg_1_0.viewGO, "go_center/go_modelcontainer")
-	arg_1_0._gocell = gohelper.findChild(arg_1_0.viewGO, "go_center/go_modelcontainer/go_cell")
+function RougeCollectionSizeBagItem:onInit(go)
+	RougeCollectionSizeBagItem.super.onInit(self, go)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._gomodelcontainer = gohelper.findChild(self.viewGO, "go_center/go_modelcontainer")
+	self._gocell = gohelper.findChild(self.viewGO, "go_center/go_modelcontainer/go_cell")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	var_0_0.super._editableInitView(arg_2_0)
-	arg_2_0:addClickListener()
-	arg_2_0:addDragListeners()
+function RougeCollectionSizeBagItem:_editableInitView()
+	RougeCollectionSizeBagItem.super._editableInitView(self)
+	self:addClickListener()
+	self:addDragListeners()
 
-	arg_2_0._edgeTab = arg_2_0:getUserDataTb_()
+	self._edgeTab = self:getUserDataTb_()
 
-	arg_2_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.SelectCollection, arg_2_0._selectCollection, arg_2_0)
+	self:addEventCb(RougeCollectionChessController.instance, RougeEvent.SelectCollection, self._selectCollection, self)
 end
 
-function var_0_0.addClickListener(arg_3_0)
-	arg_3_0._btnclick = gohelper.getClick(arg_3_0.viewGO)
+function RougeCollectionSizeBagItem:addClickListener()
+	self._btnclick = gohelper.getClick(self.viewGO)
 
-	arg_3_0._btnclick:AddClickListener(arg_3_0._btnclickOnClick, arg_3_0)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.addDragListeners(arg_4_0)
-	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0.viewGO)
+function RougeCollectionSizeBagItem:addDragListeners()
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self.viewGO)
 
-	arg_4_0._drag:AddDragBeginListener(arg_4_0._onDragBegin, arg_4_0)
-	arg_4_0._drag:AddDragListener(arg_4_0._onDrag, arg_4_0)
-	arg_4_0._drag:AddDragEndListener(arg_4_0._onDragEnd, arg_4_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragListener(self._onDrag, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 end
 
-function var_0_0.releaseAllListeners(arg_5_0)
-	if arg_5_0._drag then
-		arg_5_0._drag:RemoveDragBeginListener()
-		arg_5_0._drag:RemoveDragEndListener()
-		arg_5_0._drag:RemoveDragListener()
+function RougeCollectionSizeBagItem:releaseAllListeners()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
+		self._drag:RemoveDragListener()
 
-		arg_5_0._drag = nil
+		self._drag = nil
 	end
 
-	arg_5_0._btnclick:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_6_0)
-	if not arg_6_0._mo then
+function RougeCollectionSizeBagItem:_btnclickOnClick()
+	if not self._mo then
 		return
 	end
 
-	local var_6_0 = {
+	local params = {
 		useCloseBtn = false,
-		collectionId = arg_6_0._mo.id,
+		collectionId = self._mo.id,
 		viewPosition = RougeEnum.CollectionTipPos.Bag,
 		source = RougeEnum.OpenCollectionTipSource.BagArea
 	}
 
-	RougeController.instance:openRougeCollectionTipView(var_6_0)
-	RougeCollectionChessController.instance:selectCollection(arg_6_0._mo.id)
+	RougeController.instance:openRougeCollectionTipView(params)
+	RougeCollectionChessController.instance:selectCollection(self._mo.id)
 end
 
-function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = RougeCollectionHelper.isCanDragCollection()
+function RougeCollectionSizeBagItem:_onDragBegin(param, pointerEventData)
+	local canDrag = RougeCollectionHelper.isCanDragCollection()
 
-	arg_7_0._isDraging = var_7_0
+	self._isDraging = canDrag
 
-	if not var_7_0 then
+	if not canDrag then
 		return
 	end
 
-	arg_7_0:setCanvasGroupVisible(false)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnBeginDragCollection, arg_7_0._mo, arg_7_2)
+	self:setCanvasGroupVisible(false)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnBeginDragCollection, self._mo, pointerEventData)
 end
 
-function var_0_0._onDrag(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._isDraging then
+function RougeCollectionSizeBagItem:_onDrag(param, pointerEventData)
+	if not self._isDraging then
 		return
 	end
 
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnDragCollection, arg_8_2)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnDragCollection, pointerEventData)
 end
 
-function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._isDraging then
+function RougeCollectionSizeBagItem:_onDragEnd(param, pointerEventData)
+	if not self._isDraging then
 		return
 	end
 
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnEndDragCollection, arg_9_2)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnEndDragCollection, pointerEventData)
 
-	arg_9_0._isDraging = false
+	self._isDraging = false
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	var_0_0.super.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0:setShapeCellsVisible(true)
+function RougeCollectionSizeBagItem:onUpdateMO(mo)
+	RougeCollectionSizeBagItem.super.onUpdateMO(self, mo)
+	self:setShapeCellsVisible(true)
 end
 
-function var_0_0.onUpdateRotateAngle(arg_11_0)
-	var_0_0.super.onUpdateRotateAngle(arg_11_0)
-	arg_11_0:refreshShapeGrids()
+function RougeCollectionSizeBagItem:onUpdateRotateAngle()
+	RougeCollectionSizeBagItem.super.onUpdateRotateAngle(self)
+	self:refreshShapeGrids()
 end
 
-function var_0_0.refreshShapeGrids(arg_12_0)
-	local var_12_0 = arg_12_0._mo:getRotation()
-	local var_12_1 = RougeCollectionConfig.instance:getRotateEditorParam(arg_12_0._mo.cfgId, var_12_0, RougeEnum.CollectionEditorParamType.Shape) or {}
+function RougeCollectionSizeBagItem:refreshShapeGrids()
+	local rotation = self._mo:getRotation()
+	local shapeCfg = RougeCollectionConfig.instance:getRotateEditorParam(self._mo.cfgId, rotation, RougeEnum.CollectionEditorParamType.Shape) or {}
 
-	gohelper.CreateObjList(arg_12_0, arg_12_0.refreshSlotCell, var_12_1, arg_12_0._gomodelcontainer, arg_12_0._gocell)
+	gohelper.CreateObjList(self, self.refreshSlotCell, shapeCfg, self._gomodelcontainer, self._gocell)
 end
 
-function var_0_0.refreshSlotCell(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_0:setCellAnchor(arg_13_1, arg_13_2)
-	arg_13_0:setCellIconImage(arg_13_1)
-	arg_13_0:checkAndPlaceAroundLine(arg_13_1, arg_13_2)
+function RougeCollectionSizeBagItem:refreshSlotCell(obj, cellPos, index)
+	self:setCellAnchor(obj, cellPos)
+	self:setCellIconImage(obj)
+	self:checkAndPlaceAroundLine(obj, cellPos)
 end
 
-function var_0_0.checkAndPlaceAroundLine(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(arg_14_0._mo.cfgId, arg_14_0._mo:getRotation())
-	local var_14_1 = RougeCollectionHelper.getSlotCellInsideLine(var_14_0, arg_14_2)
-	local var_14_2 = gohelper.findChild(arg_14_1, "go_edge")
-	local var_14_3 = gohelper.findChild(arg_14_1, "go_edge/go_left")
-	local var_14_4 = gohelper.findChild(arg_14_1, "go_edge/go_right")
-	local var_14_5 = gohelper.findChild(arg_14_1, "go_edge/go_bottom")
-	local var_14_6 = gohelper.findChild(arg_14_1, "go_edge/go_top")
+function RougeCollectionSizeBagItem:checkAndPlaceAroundLine(obj, cellPos)
+	local shapeMap = RougeCollectionConfig.instance:getOrBuildCollectionShapeMap(self._mo.cfgId, self._mo:getRotation())
+	local insideLines = RougeCollectionHelper.getSlotCellInsideLine(shapeMap, cellPos)
+	local goedge = gohelper.findChild(obj, "go_edge")
+	local goleft = gohelper.findChild(obj, "go_edge/go_left")
+	local goright = gohelper.findChild(obj, "go_edge/go_right")
+	local gobottom = gohelper.findChild(obj, "go_edge/go_bottom")
+	local gotop = gohelper.findChild(obj, "go_edge/go_top")
 
-	gohelper.setActive(var_14_3, true)
-	gohelper.setActive(var_14_4, true)
-	gohelper.setActive(var_14_5, true)
-	gohelper.setActive(var_14_6, true)
+	gohelper.setActive(goleft, true)
+	gohelper.setActive(goright, true)
+	gohelper.setActive(gobottom, true)
+	gohelper.setActive(gotop, true)
 
-	if var_14_1 then
-		for iter_14_0, iter_14_1 in pairs(var_14_1) do
-			if iter_14_1 == RougeEnum.SlotCellDirection.Left then
-				gohelper.setActive(var_14_3, false)
-			elseif iter_14_1 == RougeEnum.SlotCellDirection.Right then
-				gohelper.setActive(var_14_4, false)
-			elseif iter_14_1 == RougeEnum.SlotCellDirection.Bottom then
-				gohelper.setActive(var_14_5, false)
-			elseif iter_14_1 == RougeEnum.SlotCellDirection.Top then
-				gohelper.setActive(var_14_6, false)
+	if insideLines then
+		for _, aroundLine in pairs(insideLines) do
+			if aroundLine == RougeEnum.SlotCellDirection.Left then
+				gohelper.setActive(goleft, false)
+			elseif aroundLine == RougeEnum.SlotCellDirection.Right then
+				gohelper.setActive(goright, false)
+			elseif aroundLine == RougeEnum.SlotCellDirection.Bottom then
+				gohelper.setActive(gobottom, false)
+			elseif aroundLine == RougeEnum.SlotCellDirection.Top then
+				gohelper.setActive(gotop, false)
 			end
 		end
 	end
 
-	if not arg_14_0._edgeTab[var_14_2] then
-		arg_14_0._edgeTab[var_14_2] = true
+	if not self._edgeTab[goedge] then
+		self._edgeTab[goedge] = true
 	end
 end
 
-function var_0_0.setCellAnchor(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0._mo:getRotation()
-	local var_15_1 = arg_15_2 - RougeCollectionHelper.getCollectionTopLeftPos(arg_15_0._mo.cfgId, var_15_0)
-	local var_15_2 = var_15_1.x * arg_15_0._perCellWidth
-	local var_15_3 = var_15_1.y * arg_15_0._perCellHeight
+function RougeCollectionSizeBagItem:setCellAnchor(obj, cellPos)
+	local rotation = self._mo:getRotation()
+	local leftTopPos = RougeCollectionHelper.getCollectionTopLeftPos(self._mo.cfgId, rotation)
+	local offset = cellPos - leftTopPos
+	local anchorPosX = offset.x * self._perCellWidth
+	local anchorPosY = offset.y * self._perCellHeight
 
-	recthelper.setAnchor(arg_15_1.transform, var_15_2, var_15_3)
+	recthelper.setAnchor(obj.transform, anchorPosX, anchorPosY)
 end
 
-function var_0_0.setCellIconImage(arg_16_0, arg_16_1)
-	local var_16_0 = gohelper.findChildImage(arg_16_1, "icon")
-	local var_16_1 = arg_16_0._collectionCfg and arg_16_0._collectionCfg.showRare
+function RougeCollectionSizeBagItem:setCellIconImage(obj)
+	local cellImg = gohelper.findChildImage(obj, "icon")
+	local showRare = self._collectionCfg and self._collectionCfg.showRare
 
-	UISpriteSetMgr.instance:setRougeSprite(var_16_0, "rouge_collection_grid_big_" .. tostring(var_16_1))
-	recthelper.setSize(arg_16_1.transform, arg_16_0._perCellWidth, arg_16_0._perCellHeight)
+	UISpriteSetMgr.instance:setRougeSprite(cellImg, "rouge_collection_grid_big_" .. tostring(showRare))
+	recthelper.setSize(obj.transform, self._perCellWidth, self._perCellHeight)
 end
 
-function var_0_0._selectCollection(arg_17_0)
-	local var_17_0 = arg_17_0._mo and arg_17_0._mo.id
-	local var_17_1 = RougeCollectionBagListModel.instance:isCollectionSelect(var_17_0)
+function RougeCollectionSizeBagItem:_selectCollection()
+	local collectionId = self._mo and self._mo.id
+	local isSelect = RougeCollectionBagListModel.instance:isCollectionSelect(collectionId)
 
-	arg_17_0:setSelectFrameVisible(var_17_1)
+	self:setSelectFrameVisible(isSelect)
 end
 
-function var_0_0.setSelectFrameVisible(arg_18_0, arg_18_1)
-	if arg_18_0._edgeTab then
-		for iter_18_0, iter_18_1 in pairs(arg_18_0._edgeTab) do
-			gohelper.setActive(iter_18_0, arg_18_1)
+function RougeCollectionSizeBagItem:setSelectFrameVisible(isVisible)
+	if self._edgeTab then
+		for edgeParentGO, _ in pairs(self._edgeTab) do
+			gohelper.setActive(edgeParentGO, isVisible)
 		end
 	end
 end
 
-function var_0_0.reset(arg_19_0)
-	var_0_0.super.reset(arg_19_0)
-	arg_19_0:setSelectFrameVisible(false)
+function RougeCollectionSizeBagItem:reset()
+	RougeCollectionSizeBagItem.super.reset(self)
+	self:setSelectFrameVisible(false)
 
-	arg_19_0._isDraging = false
+	self._isDraging = false
 end
 
-function var_0_0.setShapeCellsVisible(arg_20_0, arg_20_1)
-	gohelper.setActive(arg_20_0._gomodelcontainer, arg_20_1)
+function RougeCollectionSizeBagItem:setShapeCellsVisible(isVisible)
+	gohelper.setActive(self._gomodelcontainer, isVisible)
 end
 
-function var_0_0.destroy(arg_21_0)
-	arg_21_0:releaseAllListeners()
-	var_0_0.super.destroy(arg_21_0)
+function RougeCollectionSizeBagItem:destroy()
+	self:releaseAllListeners()
+	RougeCollectionSizeBagItem.super.destroy(self)
 end
 
-return var_0_0
+return RougeCollectionSizeBagItem

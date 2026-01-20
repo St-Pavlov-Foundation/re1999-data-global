@@ -1,111 +1,113 @@
-﻿module("modules.logic.versionactivity2_4.newinsight.view.ActivityInsightShowView_2_4", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/newinsight/view/ActivityInsightShowView_2_4.lua
 
-local var_0_0 = class("ActivityInsightShowView_2_4", BaseView)
+module("modules.logic.versionactivity2_4.newinsight.view.ActivityInsightShowView_2_4", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagelogo = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_logo")
-	arg_1_0._simagelogo2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_logo2")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "timebg/#txt_remainTime")
-	arg_1_0._gotaskitem1 = gohelper.findChild(arg_1_0.viewGO, "#go_taskitem1")
-	arg_1_0._gotaskitem2 = gohelper.findChild(arg_1_0.viewGO, "#go_taskitem2")
-	arg_1_0._gotaskitem3 = gohelper.findChild(arg_1_0.viewGO, "#go_taskitem3")
+local ActivityInsightShowView_2_4 = class("ActivityInsightShowView_2_4", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityInsightShowView_2_4:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagelogo = gohelper.findChildSingleImage(self.viewGO, "#simage_logo")
+	self._simagelogo2 = gohelper.findChildSingleImage(self.viewGO, "#simage_logo2")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "timebg/#txt_remainTime")
+	self._gotaskitem1 = gohelper.findChild(self.viewGO, "#go_taskitem1")
+	self._gotaskitem2 = gohelper.findChild(self.viewGO, "#go_taskitem2")
+	self._gotaskitem3 = gohelper.findChild(self.viewGO, "#go_taskitem3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityInsightShowView_2_4:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityInsightShowView_2_4:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._taskItems = {}
+function ActivityInsightShowView_2_4:_editableInitView()
+	self._taskItems = {}
 
-	for iter_4_0 = 1, 3 do
-		local var_4_0 = ActivityInsightShowTaskItem_2_4.New()
+	for i = 1, 3 do
+		local item = ActivityInsightShowTaskItem_2_4.New()
 
-		var_4_0:init(arg_4_0["_gotaskitem" .. iter_4_0], iter_4_0)
+		item:init(self["_gotaskitem" .. i], i)
 
-		arg_4_0._taskItems[iter_4_0] = var_4_0
+		self._taskItems[i] = item
 	end
 
-	arg_4_0:_addEvents()
+	self:_addEvents()
 end
 
-function var_0_0._addEvents(arg_5_0)
-	arg_5_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_5_0._refreshTask, arg_5_0)
-	arg_5_0:addEventCb(ActivityController.instance, ActivityEvent.Act172TaskUpdate, arg_5_0._refreshTask, arg_5_0)
+function ActivityInsightShowView_2_4:_addEvents()
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshTask, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.Act172TaskUpdate, self._refreshTask, self)
 end
 
-function var_0_0._removeEvents(arg_6_0)
-	arg_6_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0._refreshTask, arg_6_0)
-	arg_6_0:removeEventCb(ActivityController.instance, ActivityEvent.Act172TaskUpdate, arg_6_0._refreshTask, arg_6_0)
+function ActivityInsightShowView_2_4:_removeEvents()
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshTask, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.Act172TaskUpdate, self._refreshTask, self)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function ActivityInsightShowView_2_4:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam.parent
+function ActivityInsightShowView_2_4:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_8_0, arg_8_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 
-	arg_8_0._actId = arg_8_0.viewParam.actId
-	arg_8_0._config = ActivityConfig.instance:getActivityCo(arg_8_0._actId)
-	arg_8_0._txtdesc.text = arg_8_0._config.actDesc
+	self._actId = self.viewParam.actId
+	self._config = ActivityConfig.instance:getActivityCo(self._actId)
+	self._txtdesc.text = self._config.actDesc
 
-	arg_8_0:_refreshRemainTime()
-	TaskDispatcher.runRepeat(arg_8_0._refreshRemainTime, arg_8_0, TimeUtil.OneMinuteSecond)
+	self:_refreshRemainTime()
+	TaskDispatcher.runRepeat(self._refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity172
-	}, arg_8_0._getInfoSuccess, arg_8_0)
+	}, self._getInfoSuccess, self)
 end
 
-function var_0_0._refreshRemainTime(arg_9_0)
-	local var_9_0 = ActivityModel.instance:getActMO(arg_9_0._actId)
+function ActivityInsightShowView_2_4:_refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActMO(self._actId)
 
-	arg_9_0._txtremainTime.text = string.format(luaLang("remain"), var_9_0:getRemainTimeStr2ByEndTime())
+	self._txtremainTime.text = string.format(luaLang("remain"), actInfoMo:getRemainTimeStr2ByEndTime())
 end
 
-function var_0_0._getInfoSuccess(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._taskItems) do
-		local var_10_0 = 100 * arg_10_0._actId + iter_10_0
+function ActivityInsightShowView_2_4:_getInfoSuccess()
+	for k, v in ipairs(self._taskItems) do
+		local taskId = 100 * self._actId + k
 
-		iter_10_1:setTask(var_10_0)
+		v:setTask(taskId)
 	end
 
-	arg_10_0:_refreshTask()
+	self:_refreshTask()
 end
 
-function var_0_0._refreshTask(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._taskItems) do
-		iter_11_1:refresh()
+function ActivityInsightShowView_2_4:_refreshTask()
+	for _, v in ipairs(self._taskItems) do
+		v:refresh()
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function ActivityInsightShowView_2_4:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0:_removeEvents()
-	TaskDispatcher.cancelTask(arg_13_0._refreshRemainTime, arg_13_0)
+function ActivityInsightShowView_2_4:onDestroyView()
+	self:_removeEvents()
+	TaskDispatcher.cancelTask(self._refreshRemainTime, self)
 
-	if arg_13_0._taskItems then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._taskItems) do
-			iter_13_1:destroy()
+	if self._taskItems then
+		for _, v in pairs(self._taskItems) do
+			v:destroy()
 		end
 
-		arg_13_0._taskItems = nil
+		self._taskItems = nil
 	end
 end
 
-return var_0_0
+return ActivityInsightShowView_2_4

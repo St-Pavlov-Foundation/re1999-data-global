@@ -1,32 +1,34 @@
-﻿module("modules.logic.battlepass.model.BpBonusMO", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/model/BpBonusMO.lua
 
-local var_0_0 = pureTable("BpBonusMO")
+module("modules.logic.battlepass.model.BpBonusMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.level
-	arg_1_0.level = arg_1_1.level
-	arg_1_0.hasGetfreeBonus = arg_1_1.hasGetfreeBonus
-	arg_1_0.hasGetPayBonus = arg_1_1.hasGetPayBonus
-	arg_1_0.hasGetSpfreeBonus = arg_1_1.hasGetSpfreeBonus
-	arg_1_0.hasGetSpPayBonus = arg_1_1.hasGetSpPayBonus
+local BpBonusMO = pureTable("BpBonusMO")
+
+function BpBonusMO:init(info)
+	self.id = info.level
+	self.level = info.level
+	self.hasGetfreeBonus = info.hasGetfreeBonus
+	self.hasGetPayBonus = info.hasGetPayBonus
+	self.hasGetSpfreeBonus = info.hasGetSpfreeBonus
+	self.hasGetSpPayBonus = info.hasGetSpPayBonus
 end
 
-function var_0_0.updateServerInfo(arg_2_0, arg_2_1)
-	if arg_2_1:HasField("hasGetfreeBonus") then
-		arg_2_0.hasGetfreeBonus = arg_2_1.hasGetfreeBonus
+function BpBonusMO:updateServerInfo(info)
+	if info:HasField("hasGetfreeBonus") then
+		self.hasGetfreeBonus = info.hasGetfreeBonus
 	end
 
-	if arg_2_1:HasField("hasGetPayBonus") then
-		arg_2_0.hasGetPayBonus = arg_2_1.hasGetPayBonus
+	if info:HasField("hasGetPayBonus") then
+		self.hasGetPayBonus = info.hasGetPayBonus
 	end
 
-	if arg_2_1:HasField("hasGetSpfreeBonus") then
-		arg_2_0.hasGetSpfreeBonus = arg_2_1.hasGetSpfreeBonus
+	if info:HasField("hasGetSpfreeBonus") then
+		self.hasGetSpfreeBonus = info.hasGetSpfreeBonus
 	end
 
-	if arg_2_1:HasField("hasGetSpPayBonus") then
-		arg_2_0.hasGetSpPayBonus = arg_2_1.hasGetSpPayBonus
+	if info:HasField("hasGetSpPayBonus") then
+		self.hasGetSpPayBonus = info.hasGetSpPayBonus
 	end
 end
 
-return var_0_0
+return BpBonusMO

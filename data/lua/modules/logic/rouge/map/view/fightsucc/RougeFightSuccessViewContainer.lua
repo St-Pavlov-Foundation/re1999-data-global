@@ -1,13 +1,15 @@
-﻿module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/fightsucc/RougeFightSuccessViewContainer.lua
 
-local var_0_0 = class("RougeFightSuccessViewContainer", BaseViewContainer)
+module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeFightSuccessViewContainer = class("RougeFightSuccessViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeFightSuccessView.New())
+function RougeFightSuccessViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeFightSuccessView.New())
+
+	return views
 end
 
-return var_0_0
+return RougeFightSuccessViewContainer

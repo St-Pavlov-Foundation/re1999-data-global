@@ -1,697 +1,752 @@
-﻿module("modules.logic.character.view.CharacterTalentView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentView.lua
 
-local var_0_0 = class("CharacterTalentView", BaseView)
+module("modules.logic.character.view.CharacterTalentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_bg")
-	arg_1_0._simagelefticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_lefticon")
-	arg_1_0._simagerighticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_righticon")
-	arg_1_0._simagerighticon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_righticon2")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_mask")
-	arg_1_0._simageglowleftdown = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/glow_leftdown")
-	arg_1_0._simageglowrighttop = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/glow_righttop")
-	arg_1_0._simagegglowrighdown = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/glow_righdown")
-	arg_1_0._simageglowmiddle = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/glow_middle")
-	arg_1_0._simageglow = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/bg_04/glow")
-	arg_1_0._simageglow2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/icon04/glow")
-	arg_1_0._simagecurve1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/bg_04/bg04/curve01")
-	arg_1_0._simagecurve2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/bg_04/bg04/curve02")
-	arg_1_0._simagecurve3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/bg_04/bg04/curve03")
-	arg_1_0._simagequxian3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/bg_04/quxian/quxian3")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/bg_02/image")
-	arg_1_0._golinemax = gohelper.findChild(arg_1_0.viewGO, "commen/rentouxiang/ani/bg_02/#linemax")
-	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/bg01/simage_line")
-	arg_1_0._simagezhigantu = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/rentouxiang/ani/zhigantu")
-	arg_1_0._gotouPos = gohelper.findChild(arg_1_0.viewGO, "commen/rentouxiang/ani/tou")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._btnchessboard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_chessboard")
-	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "#btn_chessboard/#go_meshContainer")
-	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "#btn_chessboard/#go_meshContainer/#go_meshItem")
-	arg_1_0._gochessContainer = gohelper.findChild(arg_1_0.viewGO, "#btn_chessboard/#go_chessContainer")
-	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "#btn_chessboard/#go_chessContainer/#go_chessitem")
-	arg_1_0._goattrContent = gohelper.findChild(arg_1_0.viewGO, "attribute/#go_attrContent")
-	arg_1_0._goattrEmpty = gohelper.findChild(arg_1_0.viewGO, "attribute/#go_attrEmpty")
-	arg_1_0._goattrItem = gohelper.findChild(arg_1_0.viewGO, "attribute/#go_attrContent/#go_attrItem")
-	arg_1_0._btninsight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_insight")
-	arg_1_0._txttalentcn = gohelper.findChildText(arg_1_0.viewGO, "#btn_insight/txt")
-	arg_1_0._txtinsightLv = gohelper.findChildText(arg_1_0.viewGO, "#btn_insight/#txt_insightLv")
-	arg_1_0._gotalentreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_insight/#go_talentreddot")
-	arg_1_0._goEsonan = gohelper.findChild(arg_1_0.viewGO, "commen/rentouxiang/ani/icon02/esonan")
-	arg_1_0._goEsoning = gohelper.findChild(arg_1_0.viewGO, "commen/rentouxiang/ani/icon02/easoning")
-	arg_1_0._btnstyle = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_style")
-	arg_1_0._gostylechange = gohelper.findChild(arg_1_0.viewGO, "#btn_chessboard/#go_stylechange")
-	arg_1_0._txtstyle = gohelper.findChildText(arg_1_0.viewGO, "#btn_chessboard/#go_stylechange/#txt_label")
-	arg_1_0._styleslot = gohelper.findChildImage(arg_1_0.viewGO, "#btn_chessboard/#go_stylechange/slot")
-	arg_1_0._styleicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_chessboard/#go_stylechange/slot/icon")
-	arg_1_0._styleglow = gohelper.findChildImage(arg_1_0.viewGO, "#btn_chessboard/#go_stylechange/slot/glow")
-	arg_1_0._styleupdate = gohelper.findChild(arg_1_0.viewGO, "#btn_chessboard/#go_stylechange/update")
-	arg_1_0._dropresonategroup = gohelper.findChildDropdown(arg_1_0.viewGO, "#btn_chessboard/#drop_resonategroup")
-	arg_1_0._txtgroupname = gohelper.findChildText(arg_1_0.viewGO, "#btn_chessboard/#drop_resonategroup/txt_groupname")
-	arg_1_0._btnchangetemplatename = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#btn_chessboard/#drop_resonategroup/#btn_changetemplatename")
-	arg_1_0._dropClick = gohelper.getClick(arg_1_0._dropresonategroup.gameObject)
-	arg_1_0._goStyleRed = gohelper.findChild(arg_1_0.viewGO, "#btn_style/#go_talentreddot")
-	arg_1_0._txtTitleStyle = gohelper.findChildText(arg_1_0.viewGO, "#btn_style/txt_style")
+local CharacterTalentView = class("CharacterTalentView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterTalentView:_onDropShow()
+	self._needRefreshDropDownList = true
+
+	self:_delaySelectOption()
+end
+
+function CharacterTalentView:_onDropHide()
+	return
+end
+
+local CS_TMP_Text_T = typeof(TMPro.TMP_Text)
+
+function CharacterTalentView:_delaySelectOption()
+	if not self._needRefreshDropDownList then
+		return
+	end
+
+	self._needRefreshDropDownList = false
+
+	self:_destroy_frameTimer()
+
+	self._frameTimer = FrameTimerController.instance:register(function()
+		if not gohelper.isNil(self._dropresonategroupGo) then
+			local textCmps = self._dropresonategroupGo:GetComponentsInChildren(CS_TMP_Text_T, true)
+			local iter = textCmps:GetEnumerator()
+
+			while iter:MoveNext() do
+				local t = iter.Current
+
+				t:SetAllDirty()
+			end
+
+			textCmps = nil
+		end
+	end, nil, 6, 2)
+
+	self._frameTimer:Start()
+end
+
+function CharacterTalentView:_destroy_frameTimer()
+	FrameTimerController.onDestroyViewMember(self, "_frameTimer")
+end
+
+function CharacterTalentView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_bg")
+	self._simagelefticon = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_lefticon")
+	self._simagerighticon = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_righticon")
+	self._simagerighticon2 = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_righticon2")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_mask")
+	self._simageglowleftdown = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/glow_leftdown")
+	self._simageglowrighttop = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/glow_righttop")
+	self._simagegglowrighdown = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/glow_righdown")
+	self._simageglowmiddle = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/glow_middle")
+	self._simageglow = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/bg_04/glow")
+	self._simageglow2 = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/icon04/glow")
+	self._simagecurve1 = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/bg_04/bg04/curve01")
+	self._simagecurve2 = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/bg_04/bg04/curve02")
+	self._simagecurve3 = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/bg_04/bg04/curve03")
+	self._simagequxian3 = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/bg_04/quxian/quxian3")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/bg_02/image")
+	self._golinemax = gohelper.findChild(self.viewGO, "commen/rentouxiang/ani/bg_02/#linemax")
+	self._simageline = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/bg01/simage_line")
+	self._simagezhigantu = gohelper.findChildSingleImage(self.viewGO, "commen/rentouxiang/ani/zhigantu")
+	self._gotouPos = gohelper.findChild(self.viewGO, "commen/rentouxiang/ani/tou")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnchessboard = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_chessboard")
+	self._gomeshContainer = gohelper.findChild(self.viewGO, "#btn_chessboard/#go_meshContainer")
+	self._gomeshItem = gohelper.findChild(self.viewGO, "#btn_chessboard/#go_meshContainer/#go_meshItem")
+	self._gochessContainer = gohelper.findChild(self.viewGO, "#btn_chessboard/#go_chessContainer")
+	self._gochessitem = gohelper.findChild(self.viewGO, "#btn_chessboard/#go_chessContainer/#go_chessitem")
+	self._goattrContent = gohelper.findChild(self.viewGO, "attribute/#go_attrContent")
+	self._goattrEmpty = gohelper.findChild(self.viewGO, "attribute/#go_attrEmpty")
+	self._goattrItem = gohelper.findChild(self.viewGO, "attribute/#go_attrContent/#go_attrItem")
+	self._btninsight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_insight")
+	self._txttalentcn = gohelper.findChildText(self.viewGO, "#btn_insight/txt")
+	self._txtinsightLv = gohelper.findChildText(self.viewGO, "#btn_insight/#txt_insightLv")
+	self._gotalentreddot = gohelper.findChild(self.viewGO, "#btn_insight/#go_talentreddot")
+	self._goEsonan = gohelper.findChild(self.viewGO, "commen/rentouxiang/ani/icon02/esonan")
+	self._goEsoning = gohelper.findChild(self.viewGO, "commen/rentouxiang/ani/icon02/easoning")
+	self._btnstyle = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_style")
+	self._gostylechange = gohelper.findChild(self.viewGO, "#btn_chessboard/#go_stylechange")
+	self._txtstyle = gohelper.findChildText(self.viewGO, "#btn_chessboard/#go_stylechange/#txt_label")
+	self._styleslot = gohelper.findChildImage(self.viewGO, "#btn_chessboard/#go_stylechange/slot")
+	self._styleicon = gohelper.findChildImage(self.viewGO, "#btn_chessboard/#go_stylechange/slot/icon")
+	self._styleglow = gohelper.findChildImage(self.viewGO, "#btn_chessboard/#go_stylechange/slot/glow")
+	self._styleupdate = gohelper.findChild(self.viewGO, "#btn_chessboard/#go_stylechange/update")
+	self._dropresonategroup = gohelper.findChildDropdown(self.viewGO, "#btn_chessboard/#drop_resonategroup")
+	self._txtgroupname = gohelper.findChildText(self.viewGO, "#btn_chessboard/#drop_resonategroup/txt_groupname")
+	self._btnchangetemplatename = gohelper.findChildClickWithAudio(self.viewGO, "#btn_chessboard/#drop_resonategroup/#btn_changetemplatename")
+	self._dropClick = gohelper.getClick(self._dropresonategroup.gameObject)
+	self._goStyleRed = gohelper.findChild(self.viewGO, "#btn_style/#go_talentreddot")
+	self._txtTitleStyle = gohelper.findChildText(self.viewGO, "#btn_style/txt_style")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnchessboard:AddClickListener(arg_2_0._btnchessboardOnClick, arg_2_0)
-	arg_2_0._btninsight:AddClickListener(arg_2_0._btninsightOnClick, arg_2_0)
-	arg_2_0._btnstyle:AddClickListener(arg_2_0._btnstyleOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.RefreshCubeList, arg_2_0._refreshUI, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_2_0._refreshUI, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.playTalentViewBackAni, arg_2_0._onplayBackAni, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_2_0._onUseTalentStyleReply, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.RenameTalentTemplateReply, arg_2_0._onRenameTalentTemplateReply, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, arg_2_0._onUseTalentTemplateReply, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, arg_2_0._refreshTalentStyleRed, arg_2_0)
-	arg_2_0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_2_0._onUseShareCode, arg_2_0)
-	arg_2_0._dropresonategroup:AddOnValueChanged(arg_2_0._opDropdownChange, arg_2_0)
-	arg_2_0._btnchangetemplatename:AddClickListener(arg_2_0._onBtnChangeTemplateName, arg_2_0)
+function CharacterTalentView:addEvents()
+	self._btnchessboard:AddClickListener(self._btnchessboardOnClick, self)
+	self._btninsight:AddClickListener(self._btninsightOnClick, self)
+	self._btnstyle:AddClickListener(self._btnstyleOnClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.RefreshCubeList, self._refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.playTalentViewBackAni, self._onplayBackAni, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, self._onUseTalentStyleReply, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.RenameTalentTemplateReply, self._onRenameTalentTemplateReply, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, self._onUseTalentTemplateReply, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, self._refreshTalentStyleRed, self)
+	self:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, self._onUseShareCode, self)
+	self._dropresonategroup:AddOnValueChanged(self._opDropdownChange, self)
+	self._btnchangetemplatename:AddClickListener(self._onBtnChangeTemplateName, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnchessboard:RemoveClickListener()
-	arg_3_0._btninsight:RemoveClickListener()
-	arg_3_0._btnstyle:RemoveClickListener()
-	arg_3_0._dropresonategroup:RemoveOnValueChanged()
-	arg_3_0._btnchangetemplatename:RemoveClickListener()
+function CharacterTalentView:removeEvents()
+	self._btnchessboard:RemoveClickListener()
+	self._btninsight:RemoveClickListener()
+	self._btnstyle:RemoveClickListener()
+	self._dropresonategroup:RemoveOnValueChanged()
+	self._btnchangetemplatename:RemoveClickListener()
 end
 
-function var_0_0._btnchessboardOnClick(arg_4_0)
-	if arg_4_0.rentou_ani then
-		arg_4_0.rentou_ani.enabled = true
+function CharacterTalentView:_btnchessboardOnClick()
+	if self.rentou_ani then
+		self.rentou_ani.enabled = true
 
-		gohelper.setActive(arg_4_0.rentou_ani.gameObject, true)
-		arg_4_0.rentou_ani:Play("1_3", 0, 0)
+		gohelper.setActive(self.rentou_ani.gameObject, true)
+		self.rentou_ani:Play("1_3", 0, 0)
 	end
 
-	arg_4_0._rentou_in_ani.enabled = false
+	self._rentou_in_ani.enabled = false
 
-	gohelper.setActive(arg_4_0._rentou_in_ani.gameObject, false)
-	arg_4_0:_hideTalentStyle()
-	arg_4_0.view_ani:Play("charactertalentup_out")
-	arg_4_0.bg_ani:Play("ani_1_3")
-	arg_4_0.chess_ani:Play("chessboard_click")
-	CharacterController.instance:openCharacterTalentChessView(arg_4_0.hero_id)
+	gohelper.setActive(self._rentou_in_ani.gameObject, false)
+	self:_hideTalentStyle()
+	self.view_ani:Play("charactertalentup_out")
+	self.bg_ani:Play("ani_1_3")
+	self.chess_ani:Play("chessboard_click")
+	CharacterController.instance:openCharacterTalentChessView(self.hero_id)
 end
 
-function var_0_0._btninsightOnClick(arg_5_0)
-	if arg_5_0.rentou_ani then
-		arg_5_0.rentou_ani.enabled = true
+function CharacterTalentView:_btninsightOnClick()
+	if self.rentou_ani then
+		self.rentou_ani.enabled = true
 
-		gohelper.setActive(arg_5_0.rentou_ani.gameObject, true)
-		arg_5_0.rentou_ani:Play("1_2", 0, 0)
+		gohelper.setActive(self.rentou_ani.gameObject, true)
+		self.rentou_ani:Play("1_2", 0, 0)
 	end
 
-	arg_5_0._rentou_in_ani.enabled = false
+	self._rentou_in_ani.enabled = false
 
-	gohelper.setActive(arg_5_0._rentou_in_ani.gameObject, false)
-	arg_5_0:_hideTalentStyle()
-	arg_5_0.view_ani:Play("charactertalentup_out")
-	arg_5_0.bg_ani:Play("ani_1_2")
-	arg_5_0.chess_ani:Play("chessboard_out")
+	gohelper.setActive(self._rentou_in_ani.gameObject, false)
+	self:_hideTalentStyle()
+	self.view_ani:Play("charactertalentup_out")
+	self.bg_ani:Play("ani_1_2")
+	self.chess_ani:Play("chessboard_out")
 
-	if not ViewMgr.instance:isOpen(ViewName.CharacterTalentLevelUpView) or not arg_5_0.viewParam.isBack then
-		arg_5_0.hero_id = arg_5_0.hero_id or arg_5_0.viewParam.heroid
-		arg_5_0.hero_mo_data = arg_5_0.hero_mo_data or HeroModel.instance:getByHeroId(arg_5_0.hero_id)
+	if not ViewMgr.instance:isOpen(ViewName.CharacterTalentLevelUpView) or not self.viewParam.isBack then
+		self.hero_id = self.hero_id or self.viewParam.heroid
+		self.hero_mo_data = self.hero_mo_data or HeroModel.instance:getByHeroId(self.hero_id)
 
 		CharacterController.instance:openCharacterTalentLevelUpView({
-			arg_5_0.hero_id
+			self.hero_id
 		})
 	end
 end
 
-function var_0_0._openCharacterTalentLevelUpView(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._openCharacterTalentLevelUpView, arg_6_0)
+function CharacterTalentView:_openCharacterTalentLevelUpView()
+	TaskDispatcher.cancelTask(self._openCharacterTalentLevelUpView, self)
 	CharacterController.instance:openCharacterTalentLevelUpView({
-		arg_6_0.hero_id
+		self.hero_id
 	})
 end
 
-function var_0_0._btnstyleOnClick(arg_7_0)
+function CharacterTalentView:_btnstyleOnClick()
 	CharacterController.instance:openCharacterTalentStyleView({
-		hero_id = arg_7_0.hero_id
+		hero_id = self.hero_id
 	})
 end
 
-function var_0_0._onUseTalentStyleReply(arg_8_0)
-	arg_8_0:_refreshUI()
-	arg_8_0:_initTemplateList()
-	arg_8_0:_refreshStyleTag()
-	arg_8_0:_refreshMainStyleCubeItem()
-	TaskDispatcher.cancelTask(arg_8_0._hideStyleUpdateAnim, arg_8_0)
-	gohelper.setActive(arg_8_0._styleupdate, true)
-	TaskDispatcher.runDelay(arg_8_0._hideStyleUpdateAnim, arg_8_0, 0.6)
+function CharacterTalentView:_onUseTalentStyleReply()
+	self:_refreshUI()
+	self:_initTemplateList()
+	self:_refreshStyleTag()
+	self:_refreshMainStyleCubeItem()
+	TaskDispatcher.cancelTask(self._hideStyleUpdateAnim, self)
+	gohelper.setActive(self._styleupdate, true)
+	TaskDispatcher.runDelay(self._hideStyleUpdateAnim, self, 0.6)
 end
 
-function var_0_0._hideStyleUpdateAnim(arg_9_0)
-	gohelper.setActive(arg_9_0._styleupdate, false)
+function CharacterTalentView:_hideStyleUpdateAnim()
+	gohelper.setActive(self._styleupdate, false)
 end
 
-function var_0_0._onplayBackAni(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if not arg_10_2 then
-		arg_10_0.view_ani:Play("charactertalentup_in")
-		arg_10_0.chess_ani:Play("chessboard_in")
+function CharacterTalentView:_onplayBackAni(name, not_play_in, bg_ani_name, isReturnView)
+	if not not_play_in then
+		self.view_ani:Play("charactertalentup_in")
+		self.chess_ani:Play("chessboard_in")
 	end
 
-	if arg_10_3 then
-		arg_10_0.bg_ani:Play(arg_10_3)
+	if bg_ani_name then
+		self.bg_ani:Play(bg_ani_name)
 	end
 
-	if arg_10_3 == "ani_3_1" then
-		arg_10_0.chess_ani:Play("chessboard_back")
+	if bg_ani_name == "ani_3_1" then
+		self.chess_ani:Play("chessboard_back")
 	end
 
-	arg_10_0._rentou_in_ani.enabled = false
+	self._rentou_in_ani.enabled = false
 
-	if arg_10_0.rentou_ani then
-		arg_10_0.rentou_ani.enabled = true
+	if self.rentou_ani then
+		self.rentou_ani.enabled = true
 
-		gohelper.setActive(arg_10_0.rentou_ani.gameObject, true)
-		arg_10_0.rentou_ani:Play(arg_10_1, 0, 0)
+		gohelper.setActive(self.rentou_ani.gameObject, true)
+		self.rentou_ani:Play(name, 0, 0)
 	end
 
-	gohelper.setActive(arg_10_0._rentou_in_ani.gameObject, false)
+	gohelper.setActive(self._rentou_in_ani.gameObject, false)
 
-	if not arg_10_2 then
-		arg_10_0:_showTalentStyle()
+	if not not_play_in then
+		self:_showTalentStyle()
 	end
 
 	CharacterController.instance:dispatchEvent(CharacterEvent.CharacterTalentViewAnimFinished)
 
-	if arg_10_4 then
-		CharacterController.instance:dispatchEvent(CharacterEvent.onReturnTalentView, arg_10_0.hero_id)
+	if isReturnView then
+		CharacterController.instance:dispatchEvent(CharacterEvent.onReturnTalentView, self.hero_id)
 	end
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
-	arg_11_0._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	arg_11_0._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
-	arg_11_0._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
-	arg_11_0._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
-	arg_11_0._simageglowleftdown:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_left"))
-	arg_11_0._simageglowrighttop:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_righttop"))
-	arg_11_0._simagegglowrighdown:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_rightdown"))
-	arg_11_0._simageglowmiddle:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_middle"))
-	arg_11_0._simageglow:LoadImage(ResUrl.getCharacterTalentUpTexture("shinne"))
-	arg_11_0._simageglow2:LoadImage(ResUrl.getCharacterTalentUpTexture("shinne"))
-	arg_11_0._simagecurve1:LoadImage(ResUrl.getCharacterTalentUpTexture("curve02"))
-	arg_11_0._simagecurve2:LoadImage(ResUrl.getCharacterTalentUpTexture("curve03"))
-	arg_11_0._simagecurve3:LoadImage(ResUrl.getCharacterTalentUpTexture("curve04"))
-	arg_11_0._simagequxian3:LoadImage(ResUrl.getCharacterTalentUpTexture("quxian3"))
-	arg_11_0._simagebg2:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_top"))
-	arg_11_0._simageline:LoadImage(ResUrl.getCharacterTalentUpIcon("line001"))
-	arg_11_0._simagezhigantu:LoadImage(ResUrl.getCharacterTalentUpTexture("zhigan"))
+function CharacterTalentView:_editableInitView()
+	self._dropresonategroupGo = self._dropresonategroup.gameObject
+	self._dropExtend = DropDownExtend.Get(self._dropresonategroupGo)
 
-	arg_11_0.view_ani = gohelper.findChildComponent(arg_11_0.viewGO, "", typeof(UnityEngine.Animator))
-	arg_11_0.bg_ani = gohelper.findChildComponent(arg_11_0.viewGO, "commen/rentouxiang/ani", typeof(UnityEngine.Animator))
-	arg_11_0.chess_ani = gohelper.findChildComponent(arg_11_0.viewGO, "#btn_chessboard", typeof(UnityEngine.Animator))
-	arg_11_0._rentou_in_ani = gohelper.findChildComponent(arg_11_0.viewGO, "commen/rentouxiang/ani/tou/tou_in", typeof(UnityEngine.Animator))
+	self._dropExtend:init(self._onDropShow, self._onDropHide, self)
+	self._simagebg:LoadImage(ResUrl.getCommonIcon("full/bg_fmand2"))
+	self._simagelefticon:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	self._simagerighticon:LoadImage(ResUrl.getCommonIcon("bg_rightdown"))
+	self._simagerighticon2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+	self._simagemask:LoadImage(ResUrl.getCommonIcon("full/bg_noise2"))
+	self._simageglowleftdown:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_left"))
+	self._simageglowrighttop:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_righttop"))
+	self._simagegglowrighdown:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_rightdown"))
+	self._simageglowmiddle:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_middle"))
+	self._simageglow:LoadImage(ResUrl.getCharacterTalentUpTexture("shinne"))
+	self._simageglow2:LoadImage(ResUrl.getCharacterTalentUpTexture("shinne"))
+	self._simagecurve1:LoadImage(ResUrl.getCharacterTalentUpTexture("curve02"))
+	self._simagecurve2:LoadImage(ResUrl.getCharacterTalentUpTexture("curve03"))
+	self._simagecurve3:LoadImage(ResUrl.getCharacterTalentUpTexture("curve04"))
+	self._simagequxian3:LoadImage(ResUrl.getCharacterTalentUpTexture("quxian3"))
+	self._simagebg2:LoadImage(ResUrl.getCharacterTalentUpTexture("glow_top"))
+	self._simageline:LoadImage(ResUrl.getCharacterTalentUpIcon("line001"))
+	self._simagezhigantu:LoadImage(ResUrl.getCharacterTalentUpTexture("zhigan"))
+
+	self.view_ani = gohelper.findChildComponent(self.viewGO, "", typeof(UnityEngine.Animator))
+	self.bg_ani = gohelper.findChildComponent(self.viewGO, "commen/rentouxiang/ani", typeof(UnityEngine.Animator))
+	self.chess_ani = gohelper.findChildComponent(self.viewGO, "#btn_chessboard", typeof(UnityEngine.Animator))
+	self._rentou_in_ani = gohelper.findChildComponent(self.viewGO, "commen/rentouxiang/ani/tou/tou_in", typeof(UnityEngine.Animator))
 
 	AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_open)
-	gohelper.addUIClickAudio(arg_11_0._btnchessboard.gameObject, AudioEnum.Talent.play_ui_resonate_property_open)
-	gohelper.addUIClickAudio(arg_11_0._btninsight.gameObject, AudioEnum.UI.play_ui_admission_open)
+	gohelper.addUIClickAudio(self._btnchessboard.gameObject, AudioEnum.Talent.play_ui_resonate_property_open)
+	gohelper.addUIClickAudio(self._btninsight.gameObject, AudioEnum.UI.play_ui_admission_open)
 
-	arg_11_0._animStylebtn = arg_11_0._btnstyle.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._animStylebtn = self._btnstyle.gameObject:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function CharacterTalentView:onUpdateParam()
 	return
 end
 
-function var_0_0._playAni(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._ani:StartPlayback()
+function CharacterTalentView:_playAni(name, forward)
+	self._ani:StartPlayback()
 
-	arg_13_0._ani.speed = arg_13_2 and 1 or -1
+	self._ani.speed = forward and 1 or -1
 
-	arg_13_0._ani:Play(arg_13_1)
+	self._ani:Play(name)
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0._tou_url = "ui/viewres/character/charactertalentup/tou.prefab"
-	arg_14_0._tou_loader = MultiAbLoader.New()
+function CharacterTalentView:onOpen()
+	self._tou_url = "ui/viewres/character/charactertalentup/tou.prefab"
+	self._tou_loader = MultiAbLoader.New()
 
-	arg_14_0._tou_loader:addPath(arg_14_0._tou_url)
-	arg_14_0._tou_loader:startLoad(arg_14_0._addTouPrefab, arg_14_0)
-	arg_14_0:_refreshUI()
-	CharacterController.instance:statTalentStart(arg_14_0.hero_id)
+	self._tou_loader:addPath(self._tou_url)
+	self._tou_loader:startLoad(self._addTouPrefab, self)
+	self:_refreshUI()
+	CharacterController.instance:statTalentStart(self.hero_id)
 	CharacterController.instance:dispatchEvent(CharacterEvent.CharacterTalentViewAnimFinished)
-	arg_14_0:_hideStyleUpdateAnim()
-	arg_14_0:_showTalentStyle()
+	self:_hideStyleUpdateAnim()
+	self:_showTalentStyle()
 end
 
-function var_0_0._refreshUI(arg_15_0)
-	arg_15_0.cell_length = 56.2
-	arg_15_0.hero_id = arg_15_0.viewParam.heroid
-	arg_15_0.hero_mo_data = HeroModel.instance:getByHeroId(arg_15_0.hero_id)
-	arg_15_0._mainCubeId = arg_15_0.hero_mo_data.talentCubeInfos.own_main_cube_id
+function CharacterTalentView:_refreshUI()
+	self.cell_length = 56.2
+	self.hero_id = self.viewParam.heroid
+	self.hero_mo_data = HeroModel.instance:getByHeroId(self.hero_id)
+	self._mainCubeId = self.hero_mo_data.talentCubeInfos.own_main_cube_id
 
-	gohelper.setActive(arg_15_0._gotalentreddot, CharacterModel.instance:heroTalentRedPoint(arg_15_0.hero_id))
+	gohelper.setActive(self._gotalentreddot, CharacterModel.instance:heroTalentRedPoint(self.hero_id))
 
-	local var_15_0 = arg_15_0.hero_mo_data:getTalentGain()
-	local var_15_1 = {}
+	local gain_tab = self.hero_mo_data:getTalentGain()
+	local gain_list = {}
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		table.insert(var_15_1, iter_15_1)
+	for k, v in pairs(gain_tab) do
+		table.insert(gain_list, v)
 	end
 
-	table.sort(var_15_1, function(arg_16_0, arg_16_1)
-		return HeroConfig.instance:getIDByAttrType(arg_16_0.key) < HeroConfig.instance:getIDByAttrType(arg_16_1.key)
+	table.sort(gain_list, function(item1, item2)
+		return HeroConfig.instance:getIDByAttrType(item1.key) < HeroConfig.instance:getIDByAttrType(item2.key)
 	end)
-	gohelper.setActive(arg_15_0._goattrEmpty, not (GameUtil.getTabLen(var_15_1) > 0))
-	gohelper.setActive(arg_15_0._goattrContent, GameUtil.getTabLen(var_15_1) > 0)
-	gohelper.CreateObjList(arg_15_0, arg_15_0._onItemShow, var_15_1, arg_15_0._goattrContent, arg_15_0._goattrItem)
-	arg_15_0:_setChessboardData()
+	gohelper.setActive(self._goattrEmpty, not (GameUtil.getTabLen(gain_list) > 0))
+	gohelper.setActive(self._goattrContent, GameUtil.getTabLen(gain_list) > 0)
+	gohelper.CreateObjList(self, self._onItemShow, gain_list, self._goattrContent, self._goattrItem)
+	self:_setChessboardData()
 
-	local var_15_2 = HeroResonanceConfig.instance:getTalentConfig(arg_15_0.hero_id, arg_15_0.hero_mo_data.talent + 1) == nil
+	local isMAXLv = HeroResonanceConfig.instance:getTalentConfig(self.hero_id, self.hero_mo_data.talent + 1) == nil
 
-	arg_15_0._txtinsightLv.text = not var_15_2 and arg_15_0.hero_mo_data.talent or luaLang("character_max_overseas")
-	arg_15_0._txttalentcn.text = luaLang("talent_charactertalent_txt" .. arg_15_0.hero_mo_data:getTalentTxtByHeroType())
+	self._txtinsightLv.text = not isMAXLv and self.hero_mo_data.talent or luaLang("character_max_overseas")
+	self._txttalentcn.text = luaLang("talent_charactertalent_txt" .. self.hero_mo_data:getTalentTxtByHeroType())
 
-	gohelper.setActive(arg_15_0._goEsonan, arg_15_0.hero_mo_data.config.heroType ~= CharacterEnum.HumanHeroType)
-	gohelper.setActive(arg_15_0._goEsoning, arg_15_0.hero_mo_data.config.heroType == CharacterEnum.HumanHeroType)
-	gohelper.setActive(arg_15_0._golinemax, var_15_2)
+	gohelper.setActive(self._goEsonan, self.hero_mo_data.config.heroType ~= CharacterEnum.HumanHeroType)
+	gohelper.setActive(self._goEsoning, self.hero_mo_data.config.heroType == CharacterEnum.HumanHeroType)
+	gohelper.setActive(self._golinemax, isMAXLv)
 
-	local var_15_3 = luaLang("talent_style_title_cn_" .. arg_15_0.hero_mo_data:getTalentTxtByHeroType())
+	local titleStr = luaLang("talent_style_title_cn_" .. self.hero_mo_data:getTalentTxtByHeroType())
 
-	arg_15_0._txtTitleStyle.text = var_15_3
+	self._txtTitleStyle.text = titleStr
 
-	arg_15_0:_initTemplateList()
-	arg_15_0:_refreshTalentStyleRed()
+	self:_initTemplateList()
+	self:_refreshTalentStyleRed()
 end
 
-function var_0_0._addTouPrefab(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1:getAssetItem(arg_17_0._tou_url)
+function CharacterTalentView:_addTouPrefab(prefabLoader)
+	local assetItem = prefabLoader:getAssetItem(self._tou_url)
 
-	if var_17_0 then
-		local var_17_1 = var_17_0:GetResource(arg_17_0._tou_url)
-		local var_17_2 = gohelper.clone(var_17_1, arg_17_0._gotouPos, "tou")
+	if assetItem then
+		local obj = assetItem:GetResource(self._tou_url)
+		local preb = gohelper.clone(obj, self._gotouPos, "tou")
 
-		if var_17_2 then
-			gohelper.setActive(var_17_2, false)
+		if preb then
+			gohelper.setActive(preb, false)
 
-			arg_17_0.rentou_ani = var_17_2:GetComponent(typeof(UnityEngine.Animator))
+			self.rentou_ani = preb:GetComponent(typeof(UnityEngine.Animator))
 		end
 
-		if arg_17_0.viewParam.isBack and not ViewMgr.instance:isOpen(ViewName.CharacterTalentStyleView) then
-			arg_17_0:_btninsightOnClick()
+		if self.viewParam.isBack and not ViewMgr.instance:isOpen(ViewName.CharacterTalentStyleView) then
+			self:_btninsightOnClick()
 		end
 	end
 end
 
-function var_0_0._onItemShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_1.transform
-	local var_18_1 = var_18_0:Find("icon"):GetComponent(gohelper.Type_Image)
-	local var_18_2 = var_18_0:Find("name"):GetComponent(gohelper.Type_TextMesh)
-	local var_18_3 = var_18_0:Find("value"):GetComponent(gohelper.Type_TextMesh)
-	local var_18_4 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(arg_18_2.key))
+function CharacterTalentView:_onItemShow(obj, data, index)
+	local transform = obj.transform
+	local image = transform:Find("icon"):GetComponent(gohelper.Type_Image)
+	local label = transform:Find("name"):GetComponent(gohelper.Type_TextMesh)
+	local value = transform:Find("value"):GetComponent(gohelper.Type_TextMesh)
+	local config = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(data.key))
 
-	if var_18_4.type ~= 1 then
-		arg_18_2.value = tonumber(string.format("%.3f", arg_18_2.value / 10)) .. "%"
+	if config.type ~= 1 then
+		data.value = tonumber(string.format("%.3f", data.value / 10)) .. "%"
 	else
-		arg_18_2.value = math.floor(arg_18_2.value)
+		data.value = math.floor(data.value)
 	end
 
-	var_18_3.text = arg_18_2.value
-	var_18_2.text = var_18_4.name
+	value.text = data.value
+	label.text = config.name
 
-	UISpriteSetMgr.instance:setCommonSprite(var_18_1, "icon_att_" .. var_18_4.id, true)
+	UISpriteSetMgr.instance:setCommonSprite(image, "icon_att_" .. config.id, true)
 end
 
-function var_0_0.getRabbetCell(arg_19_0)
-	return arg_19_0._rabbet_cell
+function CharacterTalentView:getRabbetCell()
+	return self._rabbet_cell
 end
 
-function var_0_0._setChessboardData(arg_20_0)
-	local var_20_0 = string.splitToNumber(HeroResonanceConfig.instance:getTalentAllShape(arg_20_0.hero_mo_data.heroId, arg_20_0.hero_mo_data.talent), ",")
+function CharacterTalentView:_setChessboardData()
+	local x_y = string.splitToNumber(HeroResonanceConfig.instance:getTalentAllShape(self.hero_mo_data.heroId, self.hero_mo_data.talent), ",")
 
-	if arg_20_0.last_talent_level ~= arg_20_0.hero_mo_data.talent then
-		arg_20_0:_releaseCellList()
+	if self.last_talent_level ~= self.hero_mo_data.talent then
+		self:_releaseCellList()
 
-		arg_20_0._rabbet_cell = {}
-		arg_20_0._rabbet_cell_list = {}
+		self._rabbet_cell = {}
+		self._rabbet_cell_list = {}
 
-		local var_20_1 = 0
+		local create_count = 0
 
-		for iter_20_0 = 0, var_20_0[2] - 1 do
-			arg_20_0._rabbet_cell[iter_20_0] = {}
+		for y = 0, x_y[2] - 1 do
+			self._rabbet_cell[y] = {}
 
-			for iter_20_1 = 0, var_20_0[1] - 1 do
-				local var_20_2
+			for x = 0, x_y[1] - 1 do
+				local game_obj
 
-				if var_20_1 < arg_20_0._gomeshContainer.transform.childCount then
-					var_20_2 = arg_20_0._gomeshContainer.transform:GetChild(var_20_1)
+				if create_count < self._gomeshContainer.transform.childCount then
+					game_obj = self._gomeshContainer.transform:GetChild(create_count)
 				else
-					var_20_2 = gohelper.clone(arg_20_0._gomeshItem, arg_20_0._gomeshContainer)
+					game_obj = gohelper.clone(self._gomeshItem, self._gomeshContainer)
 				end
 
-				local var_20_3 = iter_20_1 - (var_20_0[1] - 1) / 2
-				local var_20_4 = (var_20_0[2] - 1) / 2 - iter_20_0
+				local offset_x = x - (x_y[1] - 1) / 2
+				local offset_y = (x_y[2] - 1) / 2 - y
 
-				recthelper.setAnchor(var_20_2.transform, var_20_3 * arg_20_0.cell_length, var_20_4 * arg_20_0.cell_length)
+				recthelper.setAnchor(game_obj.transform, offset_x * self.cell_length, offset_y * self.cell_length)
 
-				arg_20_0._rabbet_cell[iter_20_0][iter_20_1] = ResonanceCellItem.New(var_20_2.gameObject, iter_20_1, iter_20_0, arg_20_0)
+				self._rabbet_cell[y][x] = ResonanceCellItem.New(game_obj.gameObject, x, y, self)
 
-				table.insert(arg_20_0._rabbet_cell_list, arg_20_0._rabbet_cell[iter_20_0][iter_20_1])
+				table.insert(self._rabbet_cell_list, self._rabbet_cell[y][x])
 
-				var_20_1 = var_20_1 + 1
+				create_count = create_count + 1
 			end
 		end
 	end
 
-	arg_20_0.last_talent_level = arg_20_0.hero_mo_data.talent
-	arg_20_0.cube_data = arg_20_0.hero_mo_data.talentCubeInfos.data_list
+	self.last_talent_level = self.hero_mo_data.talent
+	self.cube_data = self.hero_mo_data.talentCubeInfos.data_list
 
-	for iter_20_2, iter_20_3 in ipairs(arg_20_0._rabbet_cell_list) do
-		iter_20_3.is_filled = false
+	for i, v in ipairs(self._rabbet_cell_list) do
+		v.is_filled = false
 	end
 
-	gohelper.CreateObjList(arg_20_0, arg_20_0._onCubeItemShow, arg_20_0.cube_data, arg_20_0._gochessContainer, arg_20_0._gochessitem)
+	gohelper.CreateObjList(self, self._onCubeItemShow, self.cube_data, self._gochessContainer, self._gochessitem)
 
-	for iter_20_4, iter_20_5 in ipairs(arg_20_0._rabbet_cell_list) do
-		iter_20_5:SetNormal()
+	for i, v in ipairs(self._rabbet_cell_list) do
+		v:SetNormal()
 	end
 end
 
-function var_0_0._onCubeItemShow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = arg_21_1.transform
-	local var_21_1 = var_21_0:GetComponent(gohelper.Type_Image)
-	local var_21_2 = gohelper.findChildImage(arg_21_1, "icon")
-	local var_21_3 = gohelper.findChildImage(arg_21_1, "glow")
-	local var_21_4 = gohelper.findChildImage(arg_21_1, "cell")
-	local var_21_5 = HeroResonanceConfig.instance:getCubeMatrix(arg_21_2.cubeId)
-	local var_21_6 = arg_21_0:_rotationMatrix(var_21_5, arg_21_2.direction)
+function CharacterTalentView:_onCubeItemShow(obj, data, index)
+	local transform = obj.transform
+	local image = transform:GetComponent(gohelper.Type_Image)
+	local icon = gohelper.findChildImage(obj, "icon")
+	local glow_icon = gohelper.findChildImage(obj, "glow")
+	local cell_icon = gohelper.findChildImage(obj, "cell")
+	local origin_mat = HeroResonanceConfig.instance:getCubeMatrix(data.cubeId)
+	local mat = self:_rotationMatrix(origin_mat, data.direction)
 
-	UISpriteSetMgr.instance:setCharacterTalentSprite(var_21_1, "ky_" .. HeroResonanceConfig.instance:getCubeConfig(arg_21_2.cubeId).icon, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(var_21_2, HeroResonanceConfig.instance:getCubeConfig(arg_21_2.cubeId).icon, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(var_21_3, "glow_" .. HeroResonanceConfig.instance:getCubeConfig(arg_21_2.cubeId).icon, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(image, "ky_" .. HeroResonanceConfig.instance:getCubeConfig(data.cubeId).icon, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(icon, HeroResonanceConfig.instance:getCubeConfig(data.cubeId).icon, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(glow_icon, "glow_" .. HeroResonanceConfig.instance:getCubeConfig(data.cubeId).icon, true)
 
-	local var_21_7 = arg_21_0._rabbet_cell[arg_21_2.posY][arg_21_2.posX].transform.anchoredPosition.x
-	local var_21_8 = arg_21_0._rabbet_cell[arg_21_2.posY][arg_21_2.posX].transform.anchoredPosition.y
+	local pos_x = self._rabbet_cell[data.posY][data.posX].transform.anchoredPosition.x
+	local pos_y = self._rabbet_cell[data.posY][data.posX].transform.anchoredPosition.y
 
-	transformhelper.setLocalRotation(var_21_0, 0, 0, -arg_21_2.direction * 90)
+	transformhelper.setLocalRotation(transform, 0, 0, -data.direction * 90)
 
-	local var_21_9 = arg_21_0.cell_length * GameUtil.getTabLen(var_21_5[0])
-	local var_21_10 = arg_21_0.cell_length * GameUtil.getTabLen(var_21_5)
-	local var_21_11 = arg_21_2.direction % 2 == 0
-	local var_21_12 = var_21_7 + (var_21_11 and var_21_9 or var_21_10) / 2
-	local var_21_13 = var_21_8 + -(var_21_11 and var_21_10 or var_21_9) / 2
-	local var_21_14 = var_21_12 - arg_21_0.cell_length / 2
-	local var_21_15 = var_21_13 + arg_21_0.cell_length / 2
+	local temp_width = self.cell_length * GameUtil.getTabLen(origin_mat[0])
+	local temp_height = self.cell_length * GameUtil.getTabLen(origin_mat)
+	local not_rotational = data.direction % 2 == 0
 
-	recthelper.setAnchor(var_21_0, var_21_14, var_21_15)
+	pos_x = pos_x + (not_rotational and temp_width or temp_height) / 2
+	pos_y = pos_y + -(not_rotational and temp_height or temp_width) / 2
+	pos_x = pos_x - self.cell_length / 2
+	pos_y = pos_y + self.cell_length / 2
 
-	local var_21_16 = {}
-	local var_21_17 = GameUtil.getTabLen(var_21_6) - 1
-	local var_21_18 = GameUtil.getTabLen(var_21_6[0]) - 1
+	recthelper.setAnchor(transform, pos_x, pos_y)
 
-	for iter_21_0 = 0, var_21_17 do
-		for iter_21_1 = 0, var_21_18 do
-			if var_21_6[iter_21_0][iter_21_1] == 1 then
-				table.insert(var_21_16, {
-					arg_21_2.posX + iter_21_1,
-					arg_21_2.posY + iter_21_0
+	local rightful_list = {}
+	local y = GameUtil.getTabLen(mat) - 1
+	local x = GameUtil.getTabLen(mat[0]) - 1
+
+	for i = 0, y do
+		for j = 0, x do
+			if mat[i][j] == 1 then
+				table.insert(rightful_list, {
+					data.posX + j,
+					data.posY + i
 				})
 			end
 		end
 	end
 
-	for iter_21_2, iter_21_3 in ipairs(var_21_16) do
-		arg_21_0._rabbet_cell[iter_21_3[2]][iter_21_3[1]].is_filled = true
+	for i, v in ipairs(rightful_list) do
+		self._rabbet_cell[v[2]][v[1]].is_filled = true
 
-		arg_21_0._rabbet_cell[iter_21_3[2]][iter_21_3[1]]:setCellData(arg_21_2)
+		self._rabbet_cell[v[2]][v[1]]:setCellData(data)
 	end
 
-	if arg_21_0._mainCubeId == arg_21_2.cubeId then
-		arg_21_0._mainCubeItem = {
-			bg = var_21_1,
-			icon = var_21_2,
-			glow_icon = var_21_3,
-			cell_icon = var_21_4,
-			anim = var_21_4
+	if self._mainCubeId == data.cubeId then
+		self._mainCubeItem = {
+			bg = image,
+			icon = icon,
+			glow_icon = glow_icon,
+			cell_icon = cell_icon,
+			anim = cell_icon
 		}
 
-		arg_21_0:_refreshMainStyleCubeItem()
+		self:_refreshMainStyleCubeItem()
 	else
-		gohelper.setActive(var_21_4.gameObject, false)
+		gohelper.setActive(cell_icon.gameObject, false)
 	end
 end
 
-function var_0_0._refreshMainStyleCubeItem(arg_22_0)
-	local var_22_0 = HeroResonanceConfig.instance:getCubeConfig(arg_22_0._mainCubeId).icon
-	local var_22_1 = "ky_" .. var_22_0
-	local var_22_2 = var_22_0
-	local var_22_3 = "glow_" .. var_22_0
-	local var_22_4 = string.split(var_22_0, "_")
-	local var_22_5 = "gz_" .. var_22_4[#var_22_4]
-	local var_22_6 = arg_22_0.hero_mo_data:getHeroUseStyleCubeId()
-	local var_22_7 = HeroResonanceConfig.instance:getCubeConfig(var_22_6)
-	local var_22_8 = var_22_6 == arg_22_0._mainCubeId
+function CharacterTalentView:_refreshMainStyleCubeItem()
+	local mainIcon = HeroResonanceConfig.instance:getCubeConfig(self._mainCubeId).icon
+	local iconbg = "ky_" .. mainIcon
+	local iconmk = mainIcon
+	local glowIcon = "glow_" .. mainIcon
+	local temp_attr = string.split(mainIcon, "_")
+	local cell_bg = "gz_" .. temp_attr[#temp_attr]
+	local cubeId = self.hero_mo_data:getHeroUseStyleCubeId()
+	local co = HeroResonanceConfig.instance:getCubeConfig(cubeId)
+	local isOrignStyle = cubeId == self._mainCubeId
 
-	if not var_22_8 and var_22_7 then
-		local var_22_9 = var_22_7.icon
+	if not isOrignStyle and co then
+		local icon = co.icon
 
-		if not string.nilorempty(var_22_9) then
-			var_22_1 = "ky_" .. var_22_9
-			var_22_2 = "mk_" .. var_22_9
-			var_22_3 = var_22_2
+		if not string.nilorempty(icon) then
+			iconbg = "ky_" .. icon
+			iconmk = "mk_" .. icon
+			glowIcon = iconmk
 		end
 	end
 
-	if arg_22_0._mainCubeItem then
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_22_0._mainCubeItem.bg, var_22_1, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_22_0._mainCubeItem.icon, var_22_2, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_22_0._mainCubeItem.glow_icon, var_22_3, true)
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_22_0._mainCubeItem.cell_icon, var_22_5, true)
-		gohelper.setActive(arg_22_0._mainCubeItem.cell_icon.gameObject, not var_22_8)
+	if self._mainCubeItem then
+		UISpriteSetMgr.instance:setCharacterTalentSprite(self._mainCubeItem.bg, iconbg, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(self._mainCubeItem.icon, iconmk, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(self._mainCubeItem.glow_icon, glowIcon, true)
+		UISpriteSetMgr.instance:setCharacterTalentSprite(self._mainCubeItem.cell_icon, cell_bg, true)
+		gohelper.setActive(self._mainCubeItem.cell_icon.gameObject, not isOrignStyle)
 	end
 end
 
-function var_0_0.playChessIconOutAni(arg_23_0)
-	if arg_23_0.cube_data then
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0.cube_data) do
-			arg_23_0._gochessContainer.transform:GetChild(iter_23_0 - 1):GetComponent(typeof(UnityEngine.Animator)):Play("chessitem_out")
+function CharacterTalentView:playChessIconOutAni()
+	if self.cube_data then
+		for i, v in ipairs(self.cube_data) do
+			local ani = self._gochessContainer.transform:GetChild(i - 1):GetComponent(typeof(UnityEngine.Animator))
+
+			ani:Play("chessitem_out")
 		end
 	end
 end
 
-function var_0_0._rotationMatrix(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_1
+function CharacterTalentView:_rotationMatrix(mat, rotation_count)
+	local temp_mat = mat
 
-	while arg_24_2 > 0 do
-		var_24_0 = {}
+	while rotation_count > 0 do
+		temp_mat = {}
 
-		local var_24_1 = GameUtil.getTabLen(arg_24_1)
-		local var_24_2 = GameUtil.getTabLen(arg_24_1[0])
+		local m = GameUtil.getTabLen(mat)
+		local n = GameUtil.getTabLen(mat[0])
 
-		for iter_24_0 = 0, var_24_2 - 1 do
-			var_24_0[iter_24_0] = {}
+		for i = 0, n - 1 do
+			temp_mat[i] = {}
 
-			for iter_24_1 = 0, var_24_1 - 1 do
-				var_24_0[iter_24_0][iter_24_1] = arg_24_1[var_24_1 - iter_24_1 - 1][iter_24_0]
+			for j = 0, m - 1 do
+				temp_mat[i][j] = mat[m - j - 1][i]
 			end
 		end
 
-		arg_24_2 = arg_24_2 - 1
+		rotation_count = rotation_count - 1
 
-		if arg_24_2 > 0 then
-			arg_24_1 = var_24_0
+		if rotation_count > 0 then
+			mat = temp_mat
 		end
 	end
 
-	return var_24_0
+	return temp_mat
 end
 
-function var_0_0._releaseCellList(arg_25_0)
-	if arg_25_0._rabbet_cell_list then
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0._rabbet_cell_list) do
-			iter_25_1:releaseSelf()
+function CharacterTalentView:_releaseCellList()
+	if self._rabbet_cell_list then
+		for i, v in ipairs(self._rabbet_cell_list) do
+			v:releaseSelf()
 		end
 
-		arg_25_0._rabbet_cell_list = nil
+		self._rabbet_cell_list = nil
 	end
 end
 
-function var_0_0._showTalentStyle(arg_26_0)
-	local var_26_0 = TalentStyleModel.instance:isUnlockStyleSystem(arg_26_0.hero_mo_data.talent)
+function CharacterTalentView:_showTalentStyle()
+	local _isUnlockStyle = TalentStyleModel.instance:isUnlockStyleSystem(self.hero_mo_data.talent)
 
-	TalentStyleModel.instance:refreshUnlockInfo(arg_26_0.hero_id)
+	TalentStyleModel.instance:refreshUnlockInfo(self.hero_id)
 
-	if var_26_0 then
-		arg_26_0:_refreshStyleTag()
+	if _isUnlockStyle then
+		self:_refreshStyleTag()
 	end
 
-	gohelper.setActive(arg_26_0._gostylechange.gameObject, var_26_0)
-	gohelper.setActive(arg_26_0._btnstyle.gameObject, var_26_0)
+	gohelper.setActive(self._gostylechange.gameObject, _isUnlockStyle)
+	gohelper.setActive(self._btnstyle.gameObject, _isUnlockStyle)
 
-	if var_26_0 then
-		if arg_26_0.hero_mo_data.isShowTalentStyleRed and TalentStyleModel.instance:isPlayStyleEnterBtnAnim(arg_26_0.hero_id) then
-			arg_26_0._animStylebtn:Play("unlock", 0, 0)
-			TalentStyleModel.instance:setPlayStyleEnterBtnAnim(arg_26_0.hero_id)
+	if _isUnlockStyle then
+		if self.hero_mo_data.isShowTalentStyleRed and TalentStyleModel.instance:isPlayStyleEnterBtnAnim(self.hero_id) then
+			self._animStylebtn:Play("unlock", 0, 0)
+			TalentStyleModel.instance:setPlayStyleEnterBtnAnim(self.hero_id)
 		else
-			arg_26_0._animStylebtn:Play("open", 0, 0)
+			self._animStylebtn:Play("open", 0, 0)
 		end
 	end
 end
 
-function var_0_0._hideTalentStyle(arg_27_0)
+function CharacterTalentView:_hideTalentStyle()
 	return
 end
 
-function var_0_0._refreshStyleTag(arg_28_0)
-	local var_28_0 = arg_28_0.hero_mo_data:getHeroUseCubeStyleId(arg_28_0.hero_id)
-	local var_28_1 = TalentStyleModel.instance:getTalentStyle(arg_28_0._mainCubeId, var_28_0)
-	local var_28_2, var_28_3 = var_28_1:getStyleTag()
-	local var_28_4, var_28_5 = var_28_1:getStyleTagIcon()
+function CharacterTalentView:_refreshStyleTag()
+	local style = self.hero_mo_data:getHeroUseCubeStyleId(self.hero_id)
+	local mo = TalentStyleModel.instance:getTalentStyle(self._mainCubeId, style)
+	local name, tag = mo:getStyleTag()
+	local growTagIcon, nomalTagIcon = mo:getStyleTagIcon()
 
-	arg_28_0._txtstyle.text = var_28_2
+	self._txtstyle.text = name
 
-	UISpriteSetMgr.instance:setCharacterTalentSprite(arg_28_0._styleslot, var_28_5, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(arg_28_0._styleicon, var_28_4, true)
-	UISpriteSetMgr.instance:setCharacterTalentSprite(arg_28_0._styleglow, var_28_4, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(self._styleslot, nomalTagIcon, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(self._styleicon, growTagIcon, true)
+	UISpriteSetMgr.instance:setCharacterTalentSprite(self._styleglow, growTagIcon, true)
 end
 
-function var_0_0._initTemplateList(arg_29_0)
-	table.sort(arg_29_0.hero_mo_data.talentTemplates, CharacterTalentChessView.sortTemplate)
+function CharacterTalentView:_initTemplateList()
+	table.sort(self.hero_mo_data.talentTemplates, CharacterTalentChessView.sortTemplate)
 
-	local var_29_0 = luaLang("talent_charactertalentchess_template" .. arg_29_0.hero_mo_data:getTalentTxtByHeroType())
-	local var_29_1 = {}
-	local var_29_2 = TalentStyleModel.instance:isUnlockStyleSystem(arg_29_0.hero_mo_data.talent)
+	local tempateStr = luaLang("talent_charactertalentchess_template" .. self.hero_mo_data:getTalentTxtByHeroType())
+	local nameList = {}
+	local _isUnlockStyle = TalentStyleModel.instance:isUnlockStyleSystem(self.hero_mo_data.talent)
 
-	for iter_29_0, iter_29_1 in ipairs(arg_29_0.hero_mo_data.talentTemplates) do
-		local var_29_3 = string.nilorempty(iter_29_1.name) and var_29_0 .. iter_29_0 or iter_29_1.name
+	for i, v in ipairs(self.hero_mo_data.talentTemplates) do
+		local name = string.nilorempty(v.name) and tempateStr .. i or v.name
 
-		if var_29_2 then
-			local var_29_4 = TalentStyleModel.instance:getTalentStyle(arg_29_0._mainCubeId, iter_29_1.style)
-			local var_29_5 = var_29_4 and var_29_4._styleCo and var_29_4._styleCo.tagicon
+		if _isUnlockStyle then
+			local mo = TalentStyleModel.instance:getTalentStyle(self._mainCubeId, v.style)
+			local iconIndex = mo and mo._styleCo and mo._styleCo.tagicon
 
-			if not string.nilorempty(var_29_5) then
-				local var_29_6 = tonumber(var_29_5) - 1
+			if not string.nilorempty(iconIndex) then
+				local index = tonumber(iconIndex) - 1
 
-				var_29_3 = string.format("<sprite=%s>", var_29_6) .. var_29_3
+				name = string.format("<sprite=%s>", index) .. name
 			end
 		end
 
-		table.insert(var_29_1, var_29_3)
+		table.insert(nameList, name)
 
-		if iter_29_1.id == arg_29_0.hero_mo_data.useTalentTemplateId then
-			arg_29_0._curSelectTemplateIndex = iter_29_0
-			arg_29_0._txtgroupname.text = var_29_3
+		if v.id == self.hero_mo_data.useTalentTemplateId then
+			self._curSelectTemplateIndex = i
+			self._txtgroupname.text = name
 		end
 	end
 
-	arg_29_0._dropresonategroup:ClearOptions()
-	arg_29_0._dropresonategroup:AddOptions(var_29_1)
-	arg_29_0._dropresonategroup:SetValue(arg_29_0._curSelectTemplateIndex - 1)
+	self._dropresonategroup:ClearOptions()
+	self._dropresonategroup:AddOptions(nameList)
+	self._dropresonategroup:SetValue(self._curSelectTemplateIndex - 1)
 
-	arg_29_0._templateInitDone = true
+	self._templateInitDone = true
 end
 
-function var_0_0._onBtnChangeTemplateName(arg_30_0)
+function CharacterTalentView:_onBtnChangeTemplateName()
 	ViewMgr.instance:openView(ViewName.CharacterTalentModifyNameView, {
-		arg_30_0.hero_mo_data.heroId,
-		arg_30_0.hero_mo_data.talentTemplates[arg_30_0._curSelectTemplateIndex].id
+		self.hero_mo_data.heroId,
+		self.hero_mo_data.talentTemplates[self._curSelectTemplateIndex].id
 	})
 end
 
-function var_0_0.sortTemplate(arg_31_0, arg_31_1)
-	return arg_31_0.id < arg_31_1.id
+function CharacterTalentView.sortTemplate(item1, item2)
+	return item1.id < item2.id
 end
 
-function var_0_0._opDropdownChange(arg_32_0, arg_32_1)
-	arg_32_1 = arg_32_1 or 0
+function CharacterTalentView:_opDropdownChange(idx)
+	idx = idx or 0
 
-	local var_32_0 = arg_32_1 + 1
+	local index = idx + 1
 
-	if arg_32_0._curSelectTemplateIndex ~= var_32_0 then
-		arg_32_0._curSelectTemplateIndex = var_32_0
+	if self._curSelectTemplateIndex ~= index then
+		self._curSelectTemplateIndex = index
 
-		HeroRpc.instance:UseTalentTemplateRequest(arg_32_0.hero_mo_data.heroId, arg_32_0.hero_mo_data.talentTemplates[var_32_0].id)
+		HeroRpc.instance:UseTalentTemplateRequest(self.hero_mo_data.heroId, self.hero_mo_data.talentTemplates[index].id)
 	end
 end
 
-function var_0_0._onDropClick(arg_33_0)
+function CharacterTalentView:_onDropClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
 end
 
-function var_0_0._onRenameTalentTemplateReply(arg_34_0)
-	arg_34_0:_initTemplateList()
+function CharacterTalentView:_onRenameTalentTemplateReply()
+	self:_initTemplateList()
 end
 
-function var_0_0._onUseTalentTemplateReply(arg_35_0)
-	arg_35_0:_showTemplateName()
-	arg_35_0:_refreshStyleTag()
-	arg_35_0:_refreshMainStyleCubeItem()
-	TaskDispatcher.cancelTask(arg_35_0._hideStyleUpdateAnim, arg_35_0)
-	gohelper.setActive(arg_35_0._styleupdate, true)
-	TaskDispatcher.runDelay(arg_35_0._hideStyleUpdateAnim, arg_35_0, 0.6)
+function CharacterTalentView:_onUseTalentTemplateReply()
+	self:_showTemplateName()
+	self:_refreshStyleTag()
+	self:_refreshMainStyleCubeItem()
+	TaskDispatcher.cancelTask(self._hideStyleUpdateAnim, self)
+	gohelper.setActive(self._styleupdate, true)
+	TaskDispatcher.runDelay(self._hideStyleUpdateAnim, self, 0.6)
 	GameFacade.showToast(ToastEnum.ChangeTalentTemplate)
 end
 
-function var_0_0._showTemplateName(arg_36_0)
-	for iter_36_0, iter_36_1 in ipairs(arg_36_0.hero_mo_data.talentTemplates) do
-		if iter_36_1.id == arg_36_0.hero_mo_data.useTalentTemplateId then
-			local var_36_0 = luaLang("talent_charactertalentchess_template" .. arg_36_0.hero_mo_data:getTalentTxtByHeroType())
-			local var_36_1 = string.nilorempty(iter_36_1.name) and var_36_0 .. arg_36_0._curSelectTemplateIndex or iter_36_1.name
-			local var_36_2 = TalentStyleModel.instance:getTalentStyle(arg_36_0._mainCubeId, iter_36_1.style)
-			local var_36_3 = var_36_2 and var_36_2._styleCo and var_36_2._styleCo.tagicon
+function CharacterTalentView:_showTemplateName()
+	for i, v in ipairs(self.hero_mo_data.talentTemplates) do
+		if v.id == self.hero_mo_data.useTalentTemplateId then
+			local tempateStr = luaLang("talent_charactertalentchess_template" .. self.hero_mo_data:getTalentTxtByHeroType())
+			local name = string.nilorempty(v.name) and tempateStr .. self._curSelectTemplateIndex or v.name
+			local mo = TalentStyleModel.instance:getTalentStyle(self._mainCubeId, v.style)
+			local iconIndex = mo and mo._styleCo and mo._styleCo.tagicon
 
-			if not string.nilorempty(var_36_3) then
-				local var_36_4 = tonumber(var_36_3) - 1
+			if not string.nilorempty(iconIndex) then
+				local index = tonumber(iconIndex) - 1
 
-				var_36_1 = string.format("<sprite=%s>", var_36_4) .. var_36_1
+				name = string.format("<sprite=%s>", index) .. name
 			end
 
-			arg_36_0._txtgroupname.text = var_36_1
+			self._txtgroupname.text = name
 		end
 	end
 end
 
-function var_0_0._refreshTalentStyleRed(arg_37_0)
-	local var_37_0 = arg_37_0.hero_mo_data.isShowTalentStyleRed
+function CharacterTalentView:_refreshTalentStyleRed()
+	local isTalentStyleNew = self.hero_mo_data.isShowTalentStyleRed
 
-	gohelper.setActive(arg_37_0._goStyleRed, var_37_0)
+	gohelper.setActive(self._goStyleRed, isTalentStyleNew)
 end
 
-function var_0_0._onUseShareCode(arg_38_0, arg_38_1)
-	arg_38_0:_refreshUI()
+function CharacterTalentView:_onUseShareCode(msg)
+	self:_refreshUI()
 end
 
-function var_0_0.onClose(arg_39_0)
-	if arg_39_0._tou_loader then
-		arg_39_0._tou_loader:dispose()
+function CharacterTalentView:onClose()
+	self:_destroy_frameTimer()
+
+	if self._tou_loader then
+		self._tou_loader:dispose()
 	end
 
-	arg_39_0:_releaseCellList()
-	TaskDispatcher.cancelTask(arg_39_0._openCharacterTalentLevelUpView, arg_39_0)
-	CharacterController.instance:statTalentEnd(arg_39_0.hero_id)
-	TaskDispatcher.cancelTask(arg_39_0._hideStyleUpdateAnim, arg_39_0)
+	self:_releaseCellList()
+	TaskDispatcher.cancelTask(self._openCharacterTalentLevelUpView, self)
+	CharacterController.instance:statTalentEnd(self.hero_id)
+	TaskDispatcher.cancelTask(self._hideStyleUpdateAnim, self)
 end
 
-function var_0_0.onDestroyView(arg_40_0)
-	arg_40_0._simagebg:UnLoadImage()
-	arg_40_0._simagelefticon:UnLoadImage()
-	arg_40_0._simagerighticon:UnLoadImage()
-	arg_40_0._simagerighticon2:UnLoadImage()
-	arg_40_0._simagemask:UnLoadImage()
-	arg_40_0._simageglowleftdown:UnLoadImage()
-	arg_40_0._simageglowrighttop:UnLoadImage()
-	arg_40_0._simagegglowrighdown:UnLoadImage()
-	arg_40_0._simageglowmiddle:UnLoadImage()
-	arg_40_0._simageglow:UnLoadImage()
-	arg_40_0._simageglow2:UnLoadImage()
-	arg_40_0._simagecurve1:UnLoadImage()
-	arg_40_0._simagecurve2:UnLoadImage()
-	arg_40_0._simagecurve3:UnLoadImage()
-	arg_40_0._simagequxian3:UnLoadImage()
-	arg_40_0._simagebg2:UnLoadImage()
-	arg_40_0._simageline:UnLoadImage()
-	arg_40_0._simagezhigantu:UnLoadImage()
+function CharacterTalentView:onDestroyView()
+	self:_destroy_frameTimer()
+	self._simagebg:UnLoadImage()
+	self._simagelefticon:UnLoadImage()
+	self._simagerighticon:UnLoadImage()
+	self._simagerighticon2:UnLoadImage()
+	self._simagemask:UnLoadImage()
+	self._simageglowleftdown:UnLoadImage()
+	self._simageglowrighttop:UnLoadImage()
+	self._simagegglowrighdown:UnLoadImage()
+	self._simageglowmiddle:UnLoadImage()
+	self._simageglow:UnLoadImage()
+	self._simageglow2:UnLoadImage()
+	self._simagecurve1:UnLoadImage()
+	self._simagecurve2:UnLoadImage()
+	self._simagecurve3:UnLoadImage()
+	self._simagequxian3:UnLoadImage()
+	self._simagebg2:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagezhigantu:UnLoadImage()
 end
 
-return var_0_0
+return CharacterTalentView

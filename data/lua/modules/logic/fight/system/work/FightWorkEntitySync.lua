@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.system.work.FightWorkEntitySync", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEntitySync.lua
 
-local var_0_0 = class("FightWorkEntitySync", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEntitySync", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.entity
+local FightWorkEntitySync = class("FightWorkEntitySync", FightEffectBase)
 
-	if var_1_0 then
-		arg_1_0:com_sendFightEvent(FightEvent.EntitySync, var_1_0.id)
+function FightWorkEntitySync:onStart()
+	local entity = self.actEffectData.entity
+
+	if entity then
+		self:com_sendFightEvent(FightEvent.EntitySync, entity.id)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkEntitySync:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEntitySync

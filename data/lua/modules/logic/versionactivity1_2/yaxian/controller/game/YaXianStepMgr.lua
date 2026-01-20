@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianStepMgr", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/YaXianStepMgr.lua
 
-local var_0_0 = class("YaXianStepMgr")
+module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianStepMgr", package.seeall)
 
-var_0_0.StepClzMap = {
+local YaXianStepMgr = class("YaXianStepMgr")
+
+YaXianStepMgr.StepClzMap = {
 	[YaXianGameEnum.GameStepType.GameFinish] = YaXianStepGameFinish,
 	[YaXianGameEnum.GameStepType.Move] = YaXianStepMove,
 	[YaXianGameEnum.GameStepType.NextRound] = YaXianStepNextRound,
@@ -14,172 +16,171 @@ var_0_0.StepClzMap = {
 	[YaXianGameEnum.GameStepType.UpdateObjectData] = YaXianStepUpdateObjectData
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._stepList = nil
-	arg_1_0._stepPool = nil
-	arg_1_0._curStep = nil
+function YaXianStepMgr:ctor()
+	self._stepList = nil
+	self._stepPool = nil
+	self._curStep = nil
 end
 
-function var_0_0.insertStepList(arg_2_0, arg_2_1)
-	arg_2_0:beforeBuildStep(arg_2_1)
+function YaXianStepMgr:insertStepList(serverData)
+	self:beforeBuildStep(serverData)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.stepDataList) do
-		arg_2_0:insertStep(iter_2_1, iter_2_0)
+	for index, data in ipairs(self.stepDataList) do
+		self:insertStep(data, index)
 	end
 end
 
-function var_0_0.beforeBuildStep(arg_3_0, arg_3_1)
-	arg_3_0.stepDataList = {}
+function YaXianStepMgr:beforeBuildStep(serverData)
+	self.stepDataList = {}
 
-	local var_3_0
-	local var_3_1
+	local stepData, preStepData
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_2 = cjson.decode(iter_3_1.param)
+	for _, jsonData in ipairs(serverData) do
+		stepData = cjson.decode(jsonData.param)
 
-		if var_3_2.stepType ~= YaXianGameEnum.GameStepType.Move then
-			if var_3_1 then
-				table.insert(arg_3_0.stepDataList, var_3_1)
+		if stepData.stepType ~= YaXianGameEnum.GameStepType.Move then
+			if preStepData then
+				table.insert(self.stepDataList, preStepData)
 
-				var_3_1 = nil
+				preStepData = nil
 			end
 
-			table.insert(arg_3_0.stepDataList, var_3_2)
+			table.insert(self.stepDataList, stepData)
 		else
-			if var_3_1 and var_3_1.id ~= var_3_2.id then
-				table.insert(arg_3_0.stepDataList, var_3_1)
+			if preStepData and preStepData.id ~= stepData.id then
+				table.insert(self.stepDataList, preStepData)
 			end
 
-			var_3_1 = var_3_2
+			preStepData = stepData
 		end
 	end
 
-	local var_3_3 = {}
-	local var_3_4 = {}
+	local deleteInteractIndexList = {}
+	local moveStepIndexList = {}
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_0.stepDataList) do
-		if iter_3_3.stepType == YaXianGameEnum.GameStepType.DeleteObject and iter_3_3.reason == YaXianGameEnum.DeleteInteractReason.AssassinateKill then
-			table.insert(var_3_3, iter_3_2)
+	for index, data in ipairs(self.stepDataList) do
+		if data.stepType == YaXianGameEnum.GameStepType.DeleteObject and data.reason == YaXianGameEnum.DeleteInteractReason.AssassinateKill then
+			table.insert(deleteInteractIndexList, index)
 		end
 
-		if iter_3_3.stepType == YaXianGameEnum.GameStepType.Move then
-			table.insert(var_3_4, iter_3_2)
+		if data.stepType == YaXianGameEnum.GameStepType.Move then
+			table.insert(moveStepIndexList, index)
 		end
 	end
 
-	for iter_3_4, iter_3_5 in ipairs(var_3_3) do
-		local var_3_5
+	for _, deleteIndex in ipairs(deleteInteractIndexList) do
+		local preMoveIndex
 
-		for iter_3_6 = #var_3_4, 1, -1 do
-			if iter_3_5 > var_3_4[iter_3_6] then
-				var_3_5 = var_3_4[iter_3_6]
+		for index = #moveStepIndexList, 1, -1 do
+			if deleteIndex > moveStepIndexList[index] then
+				preMoveIndex = moveStepIndexList[index]
 
 				break
 			end
 		end
 
-		local var_3_6 = arg_3_0:getStepData(var_3_5)
+		preStepData = self:getStepData(preMoveIndex)
 
-		if var_3_6 then
-			var_3_6.assassinateSourceStep = true
-			var_3_6.deleteStepIndex = iter_3_5
+		if preStepData then
+			preStepData.assassinateSourceStep = true
+			preStepData.deleteStepIndex = deleteIndex
 		else
-			logError("not found step data, index : " .. iter_3_5)
+			logError("not found step data, index : " .. deleteIndex)
 		end
 	end
 end
 
-function var_0_0.getStepData(arg_4_0, arg_4_1)
-	return arg_4_0.stepDataList and arg_4_0.stepDataList[arg_4_1]
+function YaXianStepMgr:getStepData(index)
+	return self.stepDataList and self.stepDataList[index]
 end
 
-function var_0_0.insertStep(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:buildStep(arg_5_1, arg_5_2)
+function YaXianStepMgr:insertStep(serverData, index)
+	local step = self:buildStep(serverData, index)
 
-	if var_5_0 then
-		arg_5_0._stepList = arg_5_0._stepList or {}
+	if step then
+		self._stepList = self._stepList or {}
 
-		table.insert(arg_5_0._stepList, var_5_0)
+		table.insert(self._stepList, step)
 	end
 
-	if arg_5_0._curStep == nil then
-		arg_5_0:nextStep()
+	if self._curStep == nil then
+		self:nextStep()
 	end
 end
 
-function var_0_0.buildStep(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0
-	local var_6_1 = arg_6_0._stepPool and arg_6_0._stepPool[arg_6_1.stepType]
+function YaXianStepMgr:buildStep(data, index)
+	local stepObj
+	local typePool = self._stepPool and self._stepPool[data.stepType]
 
-	if var_6_1 and #var_6_1 > 0 then
-		var_6_0 = var_6_1[#var_6_1]
-		var_6_1[#var_6_1] = nil
+	if typePool and #typePool > 0 then
+		stepObj = typePool[#typePool]
+		typePool[#typePool] = nil
 	else
-		var_6_0 = var_0_0.StepClzMap[arg_6_1.stepType].New()
+		stepObj = YaXianStepMgr.StepClzMap[data.stepType].New()
 	end
 
-	var_6_0:init(arg_6_1, arg_6_2)
+	stepObj:init(data, index)
 
-	return var_6_0
+	return stepObj
 end
 
-function var_0_0.nextStep(arg_7_0)
-	if arg_7_0._curStep then
-		arg_7_0:putPool(arg_7_0._curStep)
+function YaXianStepMgr:nextStep()
+	if self._curStep then
+		self:putPool(self._curStep)
 
-		arg_7_0._curStep = nil
+		self._curStep = nil
 	end
 
-	if arg_7_0._stepList and #arg_7_0._stepList > 0 then
-		arg_7_0._curStep = arg_7_0._stepList[1]
+	if self._stepList and #self._stepList > 0 then
+		self._curStep = self._stepList[1]
 
-		table.remove(arg_7_0._stepList, 1)
-		arg_7_0._curStep:start()
+		table.remove(self._stepList, 1)
+		self._curStep:start()
 	end
 end
 
-function var_0_0.putPool(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function YaXianStepMgr:putPool(step)
+	if not step then
 		return
 	end
 
-	arg_8_1:dispose()
+	step:dispose()
 
-	arg_8_0._stepPool = arg_8_0._stepPool or {}
+	self._stepPool = self._stepPool or {}
 
-	local var_8_0 = arg_8_0._stepPool[arg_8_1.stepType] or {}
+	local typePool = self._stepPool[step.stepType] or {}
 
-	table.insert(var_8_0, arg_8_1)
+	table.insert(typePool, step)
 
-	arg_8_0._stepPool[arg_8_1.stepType] = var_8_0
+	self._stepPool[step.stepType] = typePool
 end
 
-function var_0_0.disposeAllStep(arg_9_0)
-	if arg_9_0._curStep then
-		arg_9_0:putPool(arg_9_0._curStep)
+function YaXianStepMgr:disposeAllStep()
+	if self._curStep then
+		self:putPool(self._curStep)
 
-		arg_9_0._curStep = nil
+		self._curStep = nil
 	end
 
-	if arg_9_0._stepList then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._stepList) do
-			arg_9_0:putPool(iter_9_1)
+	if self._stepList then
+		for _, step in pairs(self._stepList) do
+			self:putPool(step)
 		end
 
-		arg_9_0._stepList = nil
+		self._stepList = nil
 	end
 end
 
-function var_0_0.removeAll(arg_10_0)
-	arg_10_0:disposeAllStep()
+function YaXianStepMgr:removeAll()
+	self:disposeAllStep()
 end
 
-function var_0_0.dispose(arg_11_0)
-	arg_11_0._stepPool = nil
+function YaXianStepMgr:dispose()
+	self._stepPool = nil
 end
 
-function var_0_0.log(arg_12_0, arg_12_1)
-	logError(string.format("data : %s, index : %s", cjson.encode(arg_12_1.originData), arg_12_1.index))
+function YaXianStepMgr:log(stepIns)
+	logError(string.format("data : %s, index : %s", cjson.encode(stepIns.originData), stepIns.index))
 end
 
-return var_0_0
+return YaXianStepMgr

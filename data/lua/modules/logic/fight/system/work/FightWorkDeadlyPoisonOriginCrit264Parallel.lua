@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkDeadlyPoisonOriginCrit264Parallel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDeadlyPoisonOriginCrit264Parallel.lua
 
-local var_0_0 = class("FightWorkDeadlyPoisonOriginCrit264Parallel", FightWorkDeadlyPoisonOriginDamage263Parallel)
+module("modules.logic.fight.system.work.FightWorkDeadlyPoisonOriginCrit264Parallel", package.seeall)
 
-function var_0_0.getEffectType(arg_1_0)
+local FightWorkDeadlyPoisonOriginCrit264Parallel = class("FightWorkDeadlyPoisonOriginCrit264Parallel", FightWorkDeadlyPoisonOriginDamage263Parallel)
+
+function FightWorkDeadlyPoisonOriginCrit264Parallel:getEffectType()
 	return FightEnum.EffectType.DEADLYPOISONORIGINCRIT
 end
 
-function var_0_0.getFloatType(arg_2_0)
+function FightWorkDeadlyPoisonOriginCrit264Parallel:getFloatType()
 	return FightEnum.FloatType.crit_damage_origin
 end
 
-return var_0_0
+return FightWorkDeadlyPoisonOriginCrit264Parallel

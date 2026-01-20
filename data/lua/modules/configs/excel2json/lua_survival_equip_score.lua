@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_survival_equip_score", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_survival_equip_score.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_survival_equip_score", package.seeall)
+
+local lua_survival_equip_score = {}
+local fields = {
 	level = 3,
 	worldlevel = 1,
 	type = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"worldlevel",
 	"type"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_survival_equip_score.onLoad(json)
+	lua_survival_equip_score.configList, lua_survival_equip_score.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_survival_equip_score

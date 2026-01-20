@@ -1,105 +1,107 @@
-﻿module("modules.logic.versionactivity1_4.act129.view.Activity129HeroView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/view/Activity129HeroView.lua
 
-local var_0_0 = class("Activity129HeroView", BaseView)
+module("modules.logic.versionactivity1_4.act129.view.Activity129HeroView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goRole = gohelper.findChild(arg_1_0.viewGO, "#goRole")
-	arg_1_0._golightspinecontrol = gohelper.findChild(arg_1_0._goRole, "#go_lightspinecontrol")
-	arg_1_0._gospinescale = gohelper.findChild(arg_1_0._goRole, "#go_spine_scale")
-	arg_1_0._golightspine = gohelper.findChild(arg_1_0._goRole, "#go_spine_scale/lightspine/#go_lightspine")
-	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_Dialouge")
-	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_Dialouge/#txt_DialougeEn")
-	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "bottom")
-	arg_1_0.clickcd = 5
+local Activity129HeroView = class("Activity129HeroView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity129HeroView:onInitView()
+	self._goRole = gohelper.findChild(self.viewGO, "#goRole")
+	self._golightspinecontrol = gohelper.findChild(self._goRole, "#go_lightspinecontrol")
+	self._gospinescale = gohelper.findChild(self._goRole, "#go_spine_scale")
+	self._golightspine = gohelper.findChild(self._goRole, "#go_spine_scale/lightspine/#go_lightspine")
+	self._txtanacn = gohelper.findChildText(self.viewGO, "bottom/#txt_Dialouge")
+	self._txtanaen = gohelper.findChildText(self.viewGO, "bottom/#txt_Dialouge/#txt_DialougeEn")
+	self._gocontentbg = gohelper.findChild(self.viewGO, "bottom")
+	self.clickcd = 5
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_2_0.onEnterPool, arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnClickEmptyPool, arg_2_0.onClickEmptyPool, arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, arg_2_0.onLotterySuccess, arg_2_0)
+function Activity129HeroView:addEvents()
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, self.onEnterPool, self)
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnClickEmptyPool, self.onClickEmptyPool, self)
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, self.onLotterySuccess, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_3_0.onEnterPool, arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnClickEmptyPool, arg_3_0.onClickEmptyPool, arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, arg_3_0.onLotterySuccess, arg_3_0)
+function Activity129HeroView:removeEvents()
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, self.onEnterPool, self)
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnClickEmptyPool, self.onClickEmptyPool, self)
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnShowReward, self.onLotterySuccess, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_updateHero(306601)
+function Activity129HeroView:onOpen()
+	self:_updateHero(306601)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._click = SLFramework.UGUI.UIClickListener.Get(arg_5_0._golightspinecontrol)
+function Activity129HeroView:_editableInitView()
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._golightspinecontrol)
 
-	arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0._updateHero(arg_6_0, arg_6_1)
-	arg_6_0._skinId = arg_6_1
+function Activity129HeroView:_updateHero(skinId)
+	self._skinId = skinId
 
-	local var_6_0 = HeroConfig.instance:getHeroCO(arg_6_0._heroId)
-	local var_6_1 = SkinConfig.instance:getSkinCo(arg_6_0._skinId)
+	local heroConfig = HeroConfig.instance:getHeroCO(self._heroId)
+	local skinCo = SkinConfig.instance:getSkinCo(self._skinId)
 
-	arg_6_0._heroId = var_6_1.characterId
-	arg_6_0._heroSkinConfig = var_6_1
+	self._heroId = skinCo.characterId
+	self._heroSkinConfig = skinCo
 
-	if not arg_6_0._uiSpine then
-		arg_6_0._uiSpine = GuiModelAgent.Create(arg_6_0._golightspine, true)
+	if not self._uiSpine then
+		self._uiSpine = GuiModelAgent.Create(self._golightspine, true)
 	end
 
-	arg_6_0._uiSpine:setResPath(var_6_1, arg_6_0._onLightSpineLoaded, arg_6_0)
+	self._uiSpine:setResPath(skinCo, self._onLightSpineLoaded, self)
 end
 
-function var_0_0._onLightSpineLoaded(arg_7_0)
-	arg_7_0._uiSpine:setModelVisible(true)
+function Activity129HeroView:_onLightSpineLoaded()
+	self._uiSpine:setModelVisible(true)
 
-	arg_7_0._l2d = arg_7_0._uiSpine:_getLive2d()
+	self._l2d = self._uiSpine:_getLive2d()
 
-	local var_7_0 = var_0_0.getShopVoice(Activity129Enum.VoiceType.EnterShop, arg_7_0._heroId, arg_7_0._skinId)
+	local voice = Activity129HeroView.getShopVoice(Activity129Enum.VoiceType.EnterShop, self._heroId, self._skinId)
 
-	arg_7_0:playVoice(var_7_0)
-	arg_7_0._l2d:setActionEventCb(arg_7_0._onAnimEnd, arg_7_0)
+	self:playVoice(voice)
+	self._l2d:setActionEventCb(self._onAnimEnd, self)
 end
 
-function var_0_0._onAnimEnd(arg_8_0)
+function Activity129HeroView:_onAnimEnd()
 	return
 end
 
-function var_0_0.isPlayingVoice(arg_9_0)
-	if not arg_9_0._uiSpine then
+function Activity129HeroView:isPlayingVoice()
+	if not self._uiSpine then
 		return false
 	end
 
-	return arg_9_0._uiSpine:isPlayingVoice()
+	return self._uiSpine:isPlayingVoice()
 end
 
-function var_0_0._onClick(arg_10_0)
-	if not arg_10_0._interactionStartTime or Time.time - arg_10_0._interactionStartTime > arg_10_0.clickcd then
-		arg_10_0._interactionStartTime = Time.time
+function Activity129HeroView:_onClick()
+	if not self._interactionStartTime or Time.time - self._interactionStartTime > self.clickcd then
+		self._interactionStartTime = Time.time
 
-		local var_10_0 = var_0_0.getShopVoice(Activity129Enum.VoiceType.ClickHero, arg_10_0._heroId, arg_10_0._skinId)
+		local voice = Activity129HeroView.getShopVoice(Activity129Enum.VoiceType.ClickHero, self._heroId, self._skinId)
 
-		arg_10_0:playVoice(var_10_0)
+		self:playVoice(voice)
 	end
 end
 
-function var_0_0.onEnterPool(arg_11_0)
-	local var_11_0 = Activity129Model.instance:getSelectPoolId()
+function Activity129HeroView:onEnterPool()
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-	if not var_11_0 then
+	if not selectPoolId then
 		return
 	end
 
-	local function var_11_1(arg_12_0)
-		local var_12_0 = string.splitToNumber(arg_12_0.param, "#")
+	local function checkFunc(config)
+		local list = string.splitToNumber(config.param, "#")
 
-		for iter_12_0, iter_12_1 in pairs(var_12_0) do
-			if iter_12_1 == var_11_0 then
+		for k, v in pairs(list) do
+			if v == selectPoolId then
 				return true
 			end
 		end
@@ -107,55 +109,58 @@ function var_0_0.onEnterPool(arg_11_0)
 		return false
 	end
 
-	local var_11_2 = var_0_0.getShopVoice(Activity129Enum.VoiceType.ClickPool, arg_11_0._heroId, arg_11_0._skinId, var_11_1)
+	local voice = Activity129HeroView.getShopVoice(Activity129Enum.VoiceType.ClickPool, self._heroId, self._skinId, checkFunc)
 
-	arg_11_0:playVoice(var_11_2)
+	self:playVoice(voice)
 end
 
-function var_0_0.onClickEmptyPool(arg_13_0)
-	local var_13_0 = var_0_0.getShopVoice(Activity129Enum.VoiceType.ClickEmptyPool, arg_13_0._heroId, arg_13_0._skinId)
+function Activity129HeroView:onClickEmptyPool()
+	local voice = Activity129HeroView.getShopVoice(Activity129Enum.VoiceType.ClickEmptyPool, self._heroId, self._skinId)
 
-	arg_13_0:playVoice(var_13_0)
+	self:playVoice(voice)
 end
 
-function var_0_0.onLotterySuccess(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function Activity129HeroView:onLotterySuccess(list)
+	if not list then
 		return
 	end
 
-	local var_14_0 = {}
-	local var_14_1 = {}
+	local goodsDict = {}
+	local rareDict = {}
 
-	for iter_14_0 = 1, #arg_14_1 do
-		local var_14_2 = arg_14_1[iter_14_0]
+	for i = 1, #list do
+		local reward = list[i]
 
-		if not var_14_0[var_14_2[1]] then
-			var_14_0[var_14_2[1]] = {}
+		if not goodsDict[reward[1]] then
+			goodsDict[reward[1]] = {}
 		end
 
-		var_14_0[var_14_2[1]][var_14_2[2]] = true
-		var_14_1[ItemModel.instance:getItemConfigAndIcon(var_14_2[1], var_14_2[2]).rare] = true
+		goodsDict[reward[1]][reward[2]] = true
+
+		local co = ItemModel.instance:getItemConfigAndIcon(reward[1], reward[2])
+
+		rareDict[co.rare] = true
 	end
 
-	local function var_14_3(arg_15_0)
-		if arg_15_0.type ~= Activity129Enum.VoiceType.DrawGoosById then
+	local function checkFunc1(config)
+		if config.type ~= Activity129Enum.VoiceType.DrawGoosById then
 			return true
 		end
 
-		local var_15_0 = string.splitToNumber(arg_15_0.param, "#")
+		local param = string.splitToNumber(config.param, "#")
 
-		return var_14_0[var_15_0[1]] and var_14_0[var_15_0[1]][var_15_0[2]] and true or false
+		return goodsDict[param[1]] and goodsDict[param[1]][param[2]] and true or false
 	end
 
-	local function var_14_4(arg_16_0)
-		if arg_16_0.type ~= Activity129Enum.VoiceType.DrawGoodsByRare then
+	local function checkFunc2(config)
+		if config.type ~= Activity129Enum.VoiceType.DrawGoodsByRare then
 			return true
 		end
 
-		local var_16_0 = string.splitToNumber(arg_16_0.param, "#")
+		local list = string.splitToNumber(config.param, "#")
 
-		for iter_16_0, iter_16_1 in pairs(var_16_0) do
-			if var_14_1[iter_16_1] then
+		for k, v in pairs(list) do
+			if rareDict[v] then
 				return true
 			end
 		end
@@ -163,101 +168,102 @@ function var_0_0.onLotterySuccess(arg_14_0, arg_14_1)
 		return false
 	end
 
-	local var_14_5 = var_0_0.getShopVoices({
+	local voices = Activity129HeroView.getShopVoices({
 		Activity129Enum.VoiceType.DrawGoosById,
 		Activity129Enum.VoiceType.DrawGoodsByRare
-	}, arg_14_0._heroId, arg_14_0._skinId, {
-		var_14_3,
-		var_14_4
+	}, self._heroId, self._skinId, {
+		checkFunc1,
+		checkFunc2
 	})
-	local var_14_6 = {}
+	local orderList = {}
 
-	if var_14_5 then
-		for iter_14_1, iter_14_2 in ipairs(var_14_5) do
-			local var_14_7 = 4
+	if voices then
+		for i, v in ipairs(voices) do
+			local order = 4
 
-			if iter_14_2.type == Activity129Enum.VoiceType.DrawGoosById then
-				local var_14_8 = string.splitToNumber(iter_14_2.param, "#")
+			if v.type == Activity129Enum.VoiceType.DrawGoosById then
+				local param = string.splitToNumber(v.param, "#")
+				local itemCo = ItemModel.instance:getItemConfig(param[1], param[2])
 
-				if ItemModel.instance:getItemConfig(var_14_8[1], var_14_8[2]).rare > 3 then
-					var_14_7 = 1
+				if itemCo.rare > 3 then
+					order = 1
 				else
-					var_14_7 = 3
+					order = 3
 				end
-			elseif iter_14_2.type == Activity129Enum.VoiceType.DrawGoodsByRare then
-				local var_14_9 = string.splitToNumber(iter_14_2.param, "#")
-				local var_14_10
+			elseif v.type == Activity129Enum.VoiceType.DrawGoodsByRare then
+				local param = string.splitToNumber(v.param, "#")
+				local maxRare
 
-				for iter_14_3, iter_14_4 in ipairs(var_14_9) do
-					if not var_14_10 or var_14_10 < iter_14_4 then
-						var_14_10 = iter_14_4
+				for _, rare in ipairs(param) do
+					if not maxRare or maxRare < rare then
+						maxRare = rare
 					end
 				end
 
-				var_14_7 = var_14_10 > 3 and 2 or 4
+				order = maxRare > 3 and 2 or 4
 			end
 
-			table.insert(var_14_6, {
-				order = var_14_7,
-				voice = iter_14_2
+			table.insert(orderList, {
+				order = order,
+				voice = v
 			})
 		end
 	end
 
-	local var_14_11
+	local voice
 
-	if #var_14_6 > 1 then
-		table.sort(var_14_6, SortUtil.keyLower("order"))
+	if #orderList > 1 then
+		table.sort(orderList, SortUtil.keyLower("order"))
 	end
 
-	local var_14_12 = var_14_6[1]
+	voice = orderList[1]
 
-	if var_14_12 then
-		local var_14_13 = {}
+	if voice then
+		local sameOrderList = {}
 
-		for iter_14_5, iter_14_6 in ipairs(var_14_6) do
-			if iter_14_6.order == var_14_12.order then
-				table.insert(var_14_13, iter_14_6)
+		for i, v in ipairs(orderList) do
+			if v.order == voice.order then
+				table.insert(sameOrderList, v)
 			end
 		end
 
-		var_14_12 = var_0_0.getHeightWeight(var_14_13)
+		voice = Activity129HeroView.getHeightWeight(sameOrderList)
 	end
 
-	if var_14_12 then
-		arg_14_0:playVoice(var_14_12.voice)
+	if voice then
+		self:playVoice(voice.voice)
 	end
 end
 
-function var_0_0.playVoice(arg_17_0, arg_17_1)
-	if not arg_17_0._uiSpine then
+function Activity129HeroView:playVoice(config)
+	if not self._uiSpine then
 		return
 	end
 
-	if not arg_17_1 then
+	if not config then
 		return
 	end
 
-	arg_17_0:stopVoice()
-	arg_17_0._uiSpine:playVoice(arg_17_1, nil, arg_17_0._txtanacn, arg_17_0._txtanaen, arg_17_0._gocontentbg)
+	self:stopVoice()
+	self._uiSpine:playVoice(config, nil, self._txtanacn, self._txtanaen, self._gocontentbg)
 end
 
-function var_0_0.getShopVoice(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = WeatherModel.instance:getNowDate()
+function Activity129HeroView.getShopVoice(type, heroId, skinId, checkFun, sortFun)
+	local nowDate = WeatherModel.instance:getNowDate()
 
-	var_18_0.hour = 0
-	var_18_0.min = 0
-	var_18_0.sec = 0
+	nowDate.hour = 0
+	nowDate.min = 0
+	nowDate.sec = 0
 
-	local var_18_1 = os.time(var_18_0)
-	local var_18_2 = os.time()
+	local zeroTime = os.time(nowDate)
+	local nowTime = os.time()
 
-	local function var_18_3(arg_19_0)
-		local var_19_0 = GameUtil.splitString2(arg_19_0.time, false, "|", "#")
+	local function verifyCallback(config)
+		local timeList = GameUtil.splitString2(config.time, false, "|", "#")
 
-		if var_19_0 and #var_19_0 > 0 then
-			for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-				if var_0_0._checkTime(iter_19_1, var_18_1, var_18_2) then
+		if timeList and #timeList > 0 then
+			for i, param in ipairs(timeList) do
+				if Activity129HeroView._checkTime(param, zeroTime, nowTime) then
 					return true
 				end
 			end
@@ -268,47 +274,49 @@ function var_0_0.getShopVoice(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
 		return true
 	end
 
-	local var_18_4 = Activity129Model.instance:getShopVoiceConfig(arg_18_1, arg_18_0, var_18_3, arg_18_2)
+	local voices = Activity129Model.instance:getShopVoiceConfig(heroId, type, verifyCallback, skinId)
 
-	if arg_18_3 then
-		local var_18_5 = {}
+	if checkFun then
+		local list = {}
 
-		if var_18_4 then
-			for iter_18_0, iter_18_1 in ipairs(var_18_4) do
-				if arg_18_3(iter_18_1) then
-					table.insert(var_18_5, iter_18_1)
+		if voices then
+			for i, v in ipairs(voices) do
+				if checkFun(v) then
+					table.insert(list, v)
 				end
 			end
 		end
 
-		var_18_4 = var_18_5
+		voices = list
 	end
 
-	if arg_18_4 then
-		table.sort(var_18_4, arg_18_4)
+	if sortFun then
+		table.sort(voices, sortFun)
 
-		return var_18_4[1]
+		return voices[1]
 	end
 
-	return (var_0_0.getHeightWeight(var_18_4))
+	local config = Activity129HeroView.getHeightWeight(voices)
+
+	return config
 end
 
-function var_0_0.getShopVoices(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = WeatherModel.instance:getNowDate()
+function Activity129HeroView.getShopVoices(types, heroId, skinId, checkFuncs)
+	local nowDate = WeatherModel.instance:getNowDate()
 
-	var_20_0.hour = 0
-	var_20_0.min = 0
-	var_20_0.sec = 0
+	nowDate.hour = 0
+	nowDate.min = 0
+	nowDate.sec = 0
 
-	local var_20_1 = os.time(var_20_0)
-	local var_20_2 = os.time()
+	local zeroTime = os.time(nowDate)
+	local nowTime = os.time()
 
-	local function var_20_3(arg_21_0)
-		local var_21_0 = GameUtil.splitString2(arg_21_0.time, false, "|", "#")
+	local function verifyCallback(config)
+		local timeList = GameUtil.splitString2(config.time, false, "|", "#")
 
-		if var_21_0 and #var_21_0 > 0 then
-			for iter_21_0, iter_21_1 in ipairs(var_21_0) do
-				if var_0_0._checkTime(iter_21_1, var_20_1, var_20_2) then
+		if timeList and #timeList > 0 then
+			for i, param in ipairs(timeList) do
+				if Activity129HeroView._checkTime(param, zeroTime, nowTime) then
 					return true
 				end
 			end
@@ -319,97 +327,99 @@ function var_0_0.getShopVoices(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
 		return true
 	end
 
-	local var_20_4 = {}
+	local list = {}
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0) do
-		local var_20_5 = Activity129Model.instance:getShopVoiceConfig(arg_20_1, iter_20_1, var_20_3, arg_20_2)
+	for _, v in ipairs(types) do
+		local voices = Activity129Model.instance:getShopVoiceConfig(heroId, v, verifyCallback, skinId)
 
-		if var_20_5 then
-			local var_20_6 = {}
+		if voices then
+			local t = {}
 
-			for iter_20_2, iter_20_3 in ipairs(var_20_5) do
-				local var_20_7 = true
+			for _, voice in ipairs(voices) do
+				local canCheck = true
 
-				if arg_20_3 then
-					for iter_20_4, iter_20_5 in ipairs(arg_20_3) do
-						if not iter_20_5(iter_20_3) then
-							var_20_7 = false
+				if checkFuncs then
+					for _, checkFunc in ipairs(checkFuncs) do
+						if not checkFunc(voice) then
+							canCheck = false
 
 							break
 						end
 					end
 				end
 
-				if var_20_7 then
-					table.insert(var_20_6, iter_20_3)
+				if canCheck then
+					table.insert(t, voice)
 				end
 			end
 
-			tabletool.addValues(var_20_4, var_20_6)
+			tabletool.addValues(list, t)
 		end
 	end
 
-	return var_20_4
+	return list
 end
 
-function var_0_0.getHeightWeight(arg_22_0)
-	return arg_22_0[math.random(1, #arg_22_0)]
+function Activity129HeroView.getHeightWeight(configs)
+	local index = math.random(1, #configs)
+
+	return configs[index]
 end
 
-function var_0_0._checkTime(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = string.splitToNumber(arg_23_0[1], ":")
+function Activity129HeroView._checkTime(param, zeroTime, nowTime)
+	local timeParam1 = string.splitToNumber(param[1], ":")
 
-	if #var_23_0 == 5 then
-		local var_23_1 = string.splitToNumber(arg_23_0[2], ":")
-		local var_23_2, var_23_3, var_23_4, var_23_5, var_23_6 = unpack(var_23_0)
-		local var_23_7, var_23_8, var_23_9, var_23_10, var_23_11 = unpack(var_23_1)
-		local var_23_12 = os.time({
-			year = var_23_2,
-			month = var_23_3,
-			day = var_23_4,
-			hour = var_23_5,
-			min = var_23_6
+	if #timeParam1 == 5 then
+		local timeParam2 = string.splitToNumber(param[2], ":")
+		local y1, m1, d1, h1, min1 = unpack(timeParam1)
+		local y2, m2, d2, h2, min2 = unpack(timeParam2)
+		local startTime = os.time({
+			year = y1,
+			month = m1,
+			day = d1,
+			hour = h1,
+			min = min1
 		})
-		local var_23_13 = os.time({
-			year = var_23_7,
-			month = var_23_8,
-			day = var_23_9,
-			hour = var_23_10,
-			min = var_23_11
+		local endTime = os.time({
+			year = y2,
+			month = m2,
+			day = d2,
+			hour = h2,
+			min = min2
 		})
 
-		return var_23_12 <= arg_23_2 and arg_23_2 <= var_23_13
+		return startTime <= nowTime and nowTime <= endTime
 	else
-		local var_23_14 = tonumber(var_23_0[1])
-		local var_23_15 = tonumber(var_23_0[2])
-		local var_23_16 = tonumber(arg_23_0[2])
+		local h = tonumber(timeParam1[1])
+		local m = tonumber(timeParam1[2])
+		local duration = tonumber(param[2])
 
-		if not var_23_14 or not var_23_15 or not var_23_16 then
+		if not h or not m or not duration then
 			return false
 		end
 
-		local var_23_17 = arg_23_1 + (var_23_14 * 60 + var_23_15) * 60
-		local var_23_18 = var_23_17 + var_23_16 * 3600
+		local startTime = zeroTime + (h * 60 + m) * 60
+		local endTime = startTime + duration * 3600
 
-		return var_23_17 <= arg_23_2 and arg_23_2 <= var_23_18
+		return startTime <= nowTime and nowTime <= endTime
 	end
 end
 
-function var_0_0.onClose(arg_24_0)
-	arg_24_0._click:RemoveClickListener()
-	arg_24_0:stopVoice()
+function Activity129HeroView:onClose()
+	self._click:RemoveClickListener()
+	self:stopVoice()
 end
 
-function var_0_0.stopVoice(arg_25_0)
+function Activity129HeroView:stopVoice()
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_system_voc)
 
-	if arg_25_0._uiSpine then
-		arg_25_0._uiSpine:stopVoice()
+	if self._uiSpine then
+		self._uiSpine:stopVoice()
 	end
 end
 
-function var_0_0.onDestroyView(arg_26_0)
+function Activity129HeroView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity129HeroView

@@ -1,387 +1,395 @@
-﻿module("modules.logic.gm.view.profiler.LuaProfilerController", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/profiler/LuaProfilerController.lua
 
-local var_0_0 = class("LuaProfilerController")
-local var_0_1 = {
+module("modules.logic.gm.view.profiler.LuaProfilerController", package.seeall)
+
+local LuaProfilerController = class("LuaProfilerController")
+local RunState = {
 	Ready = 0,
 	Running = 1
 }
-local var_0_2 = {
+local memoryFuncCollectIgnoreFile = {
 	"LuaProfilerController",
 	"GM"
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._funMemoryState = var_0_1.Ready
-	arg_1_0._luaMemoryState = var_0_1.Ready
+function LuaProfilerController:ctor()
+	self._funMemoryState = RunState.Ready
+	self._luaMemoryState = RunState.Ready
 end
 
-local var_0_3 = 0
-local var_0_4 = {}
-local var_0_5 = 0
-local var_0_6 = 0
+local maxMemory = 0
+local memoryList = {}
+local luaFunMemoryCalBeginTime = 0
+local luaMemoryCalBeginTime = 0
 
-function var_0_0.luaFunMemoryCalBegin(arg_2_0)
-	if arg_2_0._funMemoryState ~= var_0_1.Ready then
+function LuaProfilerController:luaFunMemoryCalBegin()
+	if self._funMemoryState ~= RunState.Ready then
 		return
 	end
 
-	arg_2_0._funMemoryState = var_0_1.Running
-	var_0_5 = os.time()
+	self._funMemoryState = RunState.Running
+	luaFunMemoryCalBeginTime = os.time()
 
-	var_0_0.SC_StartRecordAlloc(false)
+	LuaProfilerController.SC_StartRecordAlloc(false)
 end
 
-function var_0_0.luaFunMemoryCalEnd(arg_3_0)
-	if arg_3_0._funMemoryState ~= var_0_1.Running then
+function LuaProfilerController:luaFunMemoryCalEnd()
+	if self._funMemoryState ~= RunState.Running then
 		return
 	end
 
-	local var_3_0 = var_0_0.getFileName("luaFunMemory")
+	local fileName = LuaProfilerController.getFileName("luaFunMemory")
 
-	var_0_0.SC_StopRecordAllocAndDumpStat(var_3_0)
+	LuaProfilerController.SC_StopRecordAllocAndDumpStat(fileName)
 
-	arg_3_0._funMemoryState = var_0_1.Ready
+	self._funMemoryState = RunState.Ready
 end
 
-function var_0_0.luaMemoryCalBegin(arg_4_0)
-	if arg_4_0._luaMemoryState ~= var_0_1.Ready then
+function LuaProfilerController:luaMemoryCalBegin()
+	if self._luaMemoryState ~= RunState.Ready then
 		return
 	end
 
-	arg_4_0._luaMemoryState = var_0_1.Running
-	var_0_6 = os.time()
+	self._luaMemoryState = RunState.Running
+	luaMemoryCalBeginTime = os.time()
 
-	TaskDispatcher.runRepeat(arg_4_0._calLuaMemory, arg_4_0, 1)
+	TaskDispatcher.runRepeat(self._calLuaMemory, self, 1)
 end
 
-function var_0_0.luaMemoryCalEnd(arg_5_0)
-	if arg_5_0._luaMemoryState ~= var_0_1.Running then
+function LuaProfilerController:luaMemoryCalEnd()
+	if self._luaMemoryState ~= RunState.Running then
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_5_0._calLuaMemory, arg_5_0)
+	TaskDispatcher.cancelTask(self._calLuaMemory, self)
 
-	local var_5_0 = os.time() - var_0_6
-	local var_5_1 = (("" .. "Lua内存统计时间：" .. var_5_0 .. "s\n") .. "----------------------\n") .. "占用最大内存：" .. var_0_3 .. "\n"
+	local time = os.time() - luaMemoryCalBeginTime
+	local str = ""
 
-	if #var_0_4 > 0 then
-		for iter_5_0, iter_5_1 in ipairs(var_0_4) do
-			iter_5_1.memory = iter_5_1.memory / 1024
+	str = str .. "Lua内存统计时间：" .. time .. "s\n"
+	str = str .. "----------------------\n"
+	str = str .. "占用最大内存：" .. maxMemory .. "\n"
+
+	if #memoryList > 0 then
+		for _, value in ipairs(memoryList) do
+			value.memory = value.memory / 1024
 		end
 
-		local var_5_2, var_5_3 = arg_5_0:getMemoryPeakValue(var_0_4)
+		local maxValues, minValues = self:getMemoryPeakValue(memoryList)
 
-		if #var_5_2 > 0 and #var_5_3 > 0 and #var_5_2 >= #var_5_3 then
-			var_5_1 = var_5_1 .. "Lua GC消耗：\n"
+		if #maxValues > 0 and #minValues > 0 and #maxValues >= #minValues then
+			str = str .. "Lua GC消耗：\n"
 
-			for iter_5_2 = 1, #var_5_2 do
-				if var_5_3[iter_5_2] then
-					var_5_1 = var_5_1 .. "GC 耗时：" .. var_5_3[iter_5_2].time - var_5_2[iter_5_2].time .. "s, 释放内存：" .. var_5_2[iter_5_2].memory .. "-->" .. var_5_3[iter_5_2].memory .. "MB\n"
+			for i = 1, #maxValues do
+				if minValues[i] then
+					str = str .. "GC 耗时：" .. minValues[i].time - maxValues[i].time .. "s, 释放内存：" .. maxValues[i].memory .. "-->" .. minValues[i].memory .. "MB\n"
 				end
 			end
 		end
 
-		var_5_1 = var_5_1 .. "Lua内存占用统计：\n"
+		str = str .. "Lua内存占用统计：\n"
 
-		for iter_5_3, iter_5_4 in ipairs(var_0_4) do
-			var_5_1 = var_5_1 .. iter_5_4.time .. " : " .. iter_5_4.memory .. "MB\n"
+		for _, value in ipairs(memoryList) do
+			str = str .. value.time .. " : " .. value.memory .. "MB\n"
 		end
 	end
 
-	SLFramework.FileHelper.WriteTextToPath(var_0_0.getFileName("luaMemory"), var_5_1)
+	SLFramework.FileHelper.WriteTextToPath(LuaProfilerController.getFileName("luaMemory"), str)
 
-	var_0_4 = {}
-	var_0_3 = 0
-	arg_5_0._luaMemoryState = var_0_1.Ready
+	memoryList = {}
+	maxMemory = 0
+	self._luaMemoryState = RunState.Ready
 end
 
-function var_0_0.getFileName(arg_6_0)
-	local var_6_0 = os.time()
-	local var_6_1 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/luaMemoryTest/" .. arg_6_0 .. var_6_0
+function LuaProfilerController.getFileName(typeString)
+	local time = os.time()
+	local filePath = SLFramework.FrameworkSettings.PersistentResRootDir .. "/luaMemoryTest/" .. typeString .. time
 
-	if arg_6_0 == "luaMemory" then
-		var_6_1 = var_6_1 .. ".log"
+	if typeString == "luaMemory" then
+		filePath = filePath .. ".log"
 	else
-		var_6_1 = var_6_1 .. ".csv"
+		filePath = filePath .. ".csv"
 	end
 
-	print("filePath:" .. var_6_1)
+	print("filePath:" .. filePath)
 
-	return var_6_1
+	return filePath
 end
 
-function var_0_0._calLuaMemory(arg_7_0)
-	local var_7_0 = collectgarbage("count")
+function LuaProfilerController:_calLuaMemory()
+	local curMemory = collectgarbage("count")
 
-	var_0_4[#var_0_4 + 1] = {
+	memoryList[#memoryList + 1] = {
 		time = os.time(),
-		memory = var_7_0
+		memory = curMemory
 	}
 
-	if var_7_0 > var_0_3 then
-		var_0_3 = var_7_0
+	if curMemory > maxMemory then
+		maxMemory = curMemory
 	end
 end
 
-local function var_0_7(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_2
-	local var_8_1
+local function findMaxValueInNestedTable(tbl, key, compareValue)
+	local max_value = compareValue
+	local maxTable
 
-	for iter_8_0 = 1, #arg_8_0 do
-		local var_8_2 = arg_8_0[iter_8_0]
+	for i = 1, #tbl do
+		local value = tbl[i]
 
-		if var_8_2[arg_8_1] and var_8_0 < var_8_2[arg_8_1] then
-			var_8_0 = var_8_2[arg_8_1]
-			var_8_1 = var_8_2
+		if value[key] and max_value < value[key] then
+			max_value = value[key]
+			maxTable = value
 		end
 
-		if var_8_1 ~= nil and var_8_0 > var_8_2[arg_8_1] then
-			return iter_8_0, var_8_1
-		end
-	end
-
-	return #arg_8_0, var_8_1
-end
-
-local function var_0_8(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_2
-	local var_9_1
-
-	for iter_9_0 = 1, #arg_9_0 do
-		local var_9_2 = arg_9_0[iter_9_0]
-
-		if var_9_2[arg_9_1] and var_9_0 > var_9_2[arg_9_1] then
-			var_9_0 = var_9_2[arg_9_1]
-			var_9_1 = var_9_2
-		end
-
-		if var_9_1 ~= nil and var_9_0 < var_9_2[arg_9_1] then
-			return iter_9_0, var_9_1
+		if maxTable ~= nil and max_value > value[key] then
+			return i, maxTable
 		end
 	end
 
-	return #arg_9_0, var_9_1
+	return #tbl, maxTable
 end
 
-local function var_0_9(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = {}
+local function findMinValueInNestedTable(tbl, key, compareValue)
+	local min_value = compareValue
+	local minTable
 
-	arg_10_1 = arg_10_1 <= 1 and 1 or arg_10_1
+	for i = 1, #tbl do
+		local value = tbl[i]
 
-	for iter_10_0 = arg_10_1, arg_10_2 do
-		var_10_0[#var_10_0 + 1] = arg_10_0[iter_10_0]
+		if value[key] and min_value > value[key] then
+			min_value = value[key]
+			minTable = value
+		end
+
+		if minTable ~= nil and min_value < value[key] then
+			return i, minTable
+		end
 	end
 
-	return var_10_0
+	return #tbl, minTable
 end
 
-function var_0_0.getMemoryPeakValue(arg_11_0, arg_11_1)
-	local var_11_0 = true
-	local var_11_1 = {}
-	local var_11_2 = {}
-	local var_11_3 = 1
+local function getSubTable(tbl, startindex, endindex)
+	local subTable = {}
 
-	while var_11_3 < #arg_11_1 do
-		if var_11_0 then
-			local var_11_4 = #var_11_2 > 0 and var_11_2[#var_11_2].memory or 0
-			local var_11_5, var_11_6 = var_0_7(var_0_9(arg_11_1, var_11_3, #arg_11_1), "memory", var_11_4)
+	startindex = startindex <= 1 and 1 or startindex
 
-			var_11_3 = var_11_5 + var_11_3 - 1
-			var_11_0 = false
+	for i = startindex, endindex do
+		subTable[#subTable + 1] = tbl[i]
+	end
 
-			if var_11_6 then
-				var_11_1[#var_11_1 + 1] = var_11_6
+	return subTable
+end
+
+function LuaProfilerController:getMemoryPeakValue(memoryList)
+	local needFindMax = true
+	local maxValues = {}
+	local minValues = {}
+	local i = 1
+
+	while i < #memoryList do
+		if needFindMax then
+			local compareValue = #minValues > 0 and minValues[#minValues].memory or 0
+			local index, value = findMaxValueInNestedTable(getSubTable(memoryList, i, #memoryList), "memory", compareValue)
+
+			index = index + i - 1
+			i = index
+			needFindMax = false
+
+			if value then
+				maxValues[#maxValues + 1] = value
 			end
 		else
-			local var_11_7 = #var_11_1 > 0 and var_11_1[#var_11_1].memory or 0
-			local var_11_8, var_11_9 = var_0_8(var_0_9(arg_11_1, var_11_3, #arg_11_1), "memory", var_11_7)
+			local compareValue = #maxValues > 0 and maxValues[#maxValues].memory or 0
+			local index, value = findMinValueInNestedTable(getSubTable(memoryList, i, #memoryList), "memory", compareValue)
 
-			var_11_3 = var_11_8 + var_11_3 - 1
-			var_11_0 = true
+			index = index + i - 1
+			i = index
+			needFindMax = true
 
-			if var_11_9 then
-				var_11_2[#var_11_2 + 1] = var_11_9
+			if value then
+				minValues[#minValues + 1] = value
 			end
 		end
 	end
 
-	return var_11_1, var_11_2
+	return maxValues, minValues
 end
 
-local var_0_10 = {}
-local var_0_11 = 0
-local var_0_12 = true
+local memStat = {}
+local currentMem = 0
+local statLine = true
 
-local function var_0_13(arg_12_0, arg_12_1)
-	local var_12_0 = collectgarbage("count") - var_0_11
+local function RecordAlloc(event, lineNo)
+	local memInc = collectgarbage("count") - currentMem
 
-	if var_12_0 <= 1e-06 then
-		var_0_11 = collectgarbage("count")
+	if memInc <= 1e-06 then
+		currentMem = collectgarbage("count")
 
 		return
 	end
 
-	local var_12_1 = debug.getinfo(2, "S").source
+	local s = debug.getinfo(2, "S").source
 
-	for iter_12_0 = 1, #var_0_2 do
-		if string.find(var_12_1, var_0_2[iter_12_0]) then
-			var_0_11 = collectgarbage("count")
+	for i = 1, #memoryFuncCollectIgnoreFile do
+		if string.find(s, memoryFuncCollectIgnoreFile[i]) then
+			currentMem = collectgarbage("count")
 
 			return
 		end
 	end
 
-	if var_0_12 then
-		var_12_1 = string.format("%s__%d", var_12_1, arg_12_1 - 1)
+	if statLine then
+		s = string.format("%s__%d", s, lineNo - 1)
 	end
 
-	local var_12_2 = var_0_10[var_12_1]
+	local item = memStat[s]
 
-	if not var_12_2 then
-		var_0_10[var_12_1] = {
-			var_12_1,
+	if not item then
+		memStat[s] = {
+			s,
 			1,
-			var_12_0
+			memInc
 		}
 	else
-		var_12_2[2] = var_12_2[2] + 1
-		var_12_2[3] = var_12_2[3] + var_12_0
+		item[2] = item[2] + 1
+		item[3] = item[3] + memInc
 	end
 
-	var_0_11 = collectgarbage("count")
+	currentMem = collectgarbage("count")
 end
 
-function var_0_0.SC_StartRecordAlloc(arg_13_0)
+function LuaProfilerController.SC_StartRecordAlloc(igoreLine)
 	if debug.gethook() then
-		var_0_0.SC_StopRecordAllocAndDumpStat()
+		LuaProfilerController.SC_StopRecordAllocAndDumpStat()
 
 		return
 	end
 
-	var_0_10 = {}
-	var_0_11 = collectgarbage("count")
-	var_0_12 = not arg_13_0
+	memStat = {}
+	currentMem = collectgarbage("count")
+	statLine = not igoreLine
 
-	debug.sethook(var_0_13, "l")
+	debug.sethook(RecordAlloc, "l")
 end
 
-function var_0_0.SC_StopRecordAllocAndDumpStat(arg_14_0)
+function LuaProfilerController.SC_StopRecordAllocAndDumpStat(filename)
 	debug.sethook()
 
-	if not var_0_10 then
+	if not memStat then
 		return
 	end
 
-	local var_14_0 = {}
+	local sorted = {}
 
-	for iter_14_0, iter_14_1 in pairs(var_0_10) do
-		table.insert(var_14_0, iter_14_1)
+	for k, v in pairs(memStat) do
+		table.insert(sorted, v)
 	end
 
-	table.sort(var_14_0, function(arg_15_0, arg_15_1)
-		return arg_15_0[3] > arg_15_1[3]
+	table.sort(sorted, function(a, b)
+		return a[3] > b[3]
 	end)
 
-	arg_14_0 = arg_14_0 or "memAlloc.csv"
+	filename = filename or "memAlloc.csv"
 
-	local var_14_1 = io.open(arg_14_0, "w")
+	local file = io.open(filename, "w")
 
-	if not var_14_1 then
-		logError("can't open file:", arg_14_0)
+	if not file then
+		logError("can't open file:", filename)
 
 		return
 	end
 
-	local var_14_2 = os.time() - var_0_5
+	local totalTime = os.time() - luaFunMemoryCalBeginTime
 
-	var_14_1:write("collectTotalTime:" .. var_14_2 .. " s \n")
-	var_14_1:write("fileLine, count, mem K, avg K\n")
+	file:write("collectTotalTime:" .. totalTime .. " s \n")
+	file:write("fileLine, count, mem K, avg K\n")
 
-	for iter_14_2, iter_14_3 in ipairs(var_14_0) do
-		var_14_1:write(string.format("%s, %d, %f, %f\n", iter_14_3[1], iter_14_3[2], iter_14_3[3], iter_14_3[3] / iter_14_3[2]))
+	for _, v in ipairs(sorted) do
+		file:write(string.format("%s, %d, %f, %f\n", v[1], v[2], v[3], v[3] / v[2]))
 	end
 
-	var_14_1:close()
+	file:close()
 
-	var_0_10 = nil
+	memStat = nil
 end
 
-local var_0_14 = {}
-local var_0_15 = false
-local var_0_16 = 0
+local eventInfos = {}
+local isCollecting = false
+local beginCollectTime = 0
 
-function var_0_0.collectEventIsOpen(arg_16_0)
-	return var_0_15
+function LuaProfilerController:collectEventIsOpen()
+	return isCollecting
 end
 
-function var_0_0.collectEventParams(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if not var_0_15 then
+function LuaProfilerController:collectEventParams(eventName, params, cbObjName)
+	if not isCollecting then
 		return
 	end
 
-	if not var_0_14 then
-		var_0_14 = {}
+	if not eventInfos then
+		eventInfos = {}
 	end
 
-	local var_17_0 = {}
+	local paramTypes = {}
 
-	if arg_17_2 then
-		for iter_17_0 = 1, #arg_17_2 do
-			table.insert(var_17_0, type(arg_17_2[iter_17_0]))
+	if params then
+		for i = 1, #params do
+			table.insert(paramTypes, type(params[i]))
 		end
 	end
 
-	local var_17_1 = arg_17_2 and #arg_17_2 or 0
-	local var_17_2 = arg_17_1 .. var_17_1
+	local paramsCount = params and #params or 0
+	local key = eventName .. paramsCount
 
-	if not var_0_14[var_17_2] then
-		var_0_14[var_17_2] = {
+	if not eventInfos[key] then
+		eventInfos[key] = {
 			dispatchCount = 0,
-			cbObjName = arg_17_3,
-			eventName = arg_17_1,
-			paramsCount = var_17_1,
-			paramTypes = var_17_0
+			cbObjName = cbObjName,
+			eventName = eventName,
+			paramsCount = paramsCount,
+			paramTypes = paramTypes
 		}
 	end
 
-	var_0_14[var_17_2].dispatchCount = var_0_14[var_17_2].dispatchCount + 1
+	eventInfos[key].dispatchCount = eventInfos[key].dispatchCount + 1
 end
 
-function var_0_0.collectEventParamsState(arg_18_0)
-	var_0_15 = not var_0_15
+function LuaProfilerController:collectEventParamsState()
+	isCollecting = not isCollecting
 
-	if not var_0_15 then
-		arg_18_0:dumpEventInfos()
+	if not isCollecting then
+		self:dumpEventInfos()
 
-		var_0_14 = {}
+		eventInfos = {}
 	else
-		var_0_16 = os.time()
+		beginCollectTime = os.time()
 	end
 end
 
-function var_0_0.dumpEventInfos(arg_19_0)
-	local var_19_0 = arg_19_0.getFileName("eventInfos")
-	local var_19_1 = io.open(var_19_0, "w")
+function LuaProfilerController:dumpEventInfos()
+	local filename = self.getFileName("eventInfos")
+	local file = io.open(filename, "w")
 
-	if not var_19_1 then
-		logError("can't open file:", var_19_0)
+	if not file then
+		logError("can't open file:", filename)
 
 		return
 	end
 
-	table.sort(var_0_14, function(arg_20_0, arg_20_1)
-		return arg_20_0.dispatchCount > arg_20_1.dispatchCount
+	table.sort(eventInfos, function(a, b)
+		return a.dispatchCount > b.dispatchCount
 	end)
-	var_19_1:write("collectTotalTime:" .. os.time() - var_0_16 .. " s \n")
-	var_19_1:write("cbObjName, eventName, paramsCount, paramTypes, dispatchCount\n")
+	file:write("collectTotalTime:" .. os.time() - beginCollectTime .. " s \n")
+	file:write("cbObjName, eventName, paramsCount, paramTypes, dispatchCount\n")
 
-	for iter_19_0, iter_19_1 in pairs(var_0_14) do
-		var_19_1:write(string.format("%s, %s, %d, %s, %d\n", iter_19_1.cbObjName, iter_19_1.eventName, iter_19_1.paramsCount, table.concat(iter_19_1.paramTypes, "|"), iter_19_1.dispatchCount))
+	for _, v in pairs(eventInfos) do
+		file:write(string.format("%s, %s, %d, %s, %d\n", v.cbObjName, v.eventName, v.paramsCount, table.concat(v.paramTypes, "|"), v.dispatchCount))
 	end
 
-	var_19_1:close()
+	file:close()
 end
 
-var_0_0.instance = var_0_0.New()
+LuaProfilerController.instance = LuaProfilerController.New()
 
-return var_0_0
+return LuaProfilerController

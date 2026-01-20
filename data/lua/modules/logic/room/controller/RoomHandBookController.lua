@@ -1,7 +1,9 @@
-﻿module("modules.logic.room.controller.RoomHandBookController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomHandBookController.lua
 
-local var_0_0 = class("RoomHandBookController", BaseController)
+module("modules.logic.room.controller.RoomHandBookController", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local RoomHandBookController = class("RoomHandBookController", BaseController)
 
-return var_0_0
+RoomHandBookController.instance = RoomHandBookController.New()
+
+return RoomHandBookController

@@ -1,13 +1,15 @@
-﻿module("modules.logic.summonsimulationpick.view.SummonSimulationPickViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summonsimulationpick/view/SummonSimulationPickViewContainer.lua
 
-local var_0_0 = class("SummonSimulationPickViewContainer", BaseViewContainer)
+module("modules.logic.summonsimulationpick.view.SummonSimulationPickViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SummonSimulationPickViewContainer = class("SummonSimulationPickViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SummonSimulationPickView.New())
+function SummonSimulationPickViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SummonSimulationPickView.New())
+
+	return views
 end
 
-return var_0_0
+return SummonSimulationPickViewContainer

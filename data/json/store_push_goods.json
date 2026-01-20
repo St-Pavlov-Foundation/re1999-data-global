@@ -5,9 +5,9 @@
     "listenerParam": "1,7",
     "typeId": 1,
     "gapHours": 1008,
-    "className": 1,
+    "className": 3,
     "desc": "language_10097051",
-    "containedgoodsId": "",
+    "containedgoodsId": "610001#832004",
     "levelLimits": ""
   },
   {
@@ -16,9 +16,9 @@
     "listenerParam": "0,7",
     "typeId": 1,
     "gapHours": 1008,
-    "className": 1,
+    "className": 3,
     "desc": "language_10097052",
-    "containedgoodsId": "",
+    "containedgoodsId": "610001#832004",
     "levelLimits": ""
   },
   {
@@ -27,9 +27,9 @@
     "listenerParam": "8,42",
     "typeId": 1,
     "gapHours": 1008,
-    "className": 1,
+    "className": 3,
     "desc": "language_10097052",
-    "containedgoodsId": "",
+    "containedgoodsId": "610001#832004",
     "levelLimits": ""
   },
   {

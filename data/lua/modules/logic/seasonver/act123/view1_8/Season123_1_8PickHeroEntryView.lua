@@ -1,194 +1,196 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroEntryView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8PickHeroEntryView.lua
 
-local var_0_0 = class("Season123_1_8PickHeroEntryView", BaseView)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8PickHeroEntryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_list/#go_item")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_start/#btn_start")
-	arg_1_0._btndisstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_start/#btn_disstart")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnmaincard1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_supercard1/#btn_supercardclick")
-	arg_1_0._btnmaincard2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_supercard2/#btn_supercardclick")
-	arg_1_0._btndetails = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_details")
-	arg_1_0._gorecomment = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend")
-	arg_1_0._gorecommentnone = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend/txt_recommend/txt_none")
-	arg_1_0._gorecommentexist = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend/txt_recommend/recommends")
-	arg_1_0._gocareeritem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_recommend/txt_recommend/recommends/career")
+local Season123_1_8PickHeroEntryView = class("Season123_1_8PickHeroEntryView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_1_8PickHeroEntryView:onInitView()
+	self._goitem = gohelper.findChild(self.viewGO, "Right/#go_list/#go_item")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_start/#btn_start")
+	self._btndisstart = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_start/#btn_disstart")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnmaincard1 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_supercard1/#btn_supercardclick")
+	self._btnmaincard2 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_supercard2/#btn_supercardclick")
+	self._btndetails = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_details")
+	self._gorecomment = gohelper.findChild(self.viewGO, "Right/#go_recommend")
+	self._gorecommentnone = gohelper.findChild(self.viewGO, "Right/#go_recommend/txt_recommend/txt_none")
+	self._gorecommentexist = gohelper.findChild(self.viewGO, "Right/#go_recommend/txt_recommend/recommends")
+	self._gocareeritem = gohelper.findChild(self.viewGO, "Right/#go_recommend/txt_recommend/recommends/career")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btndisstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnmaincard1:AddClickListener(arg_2_0._btnmaincardOnClick, arg_2_0, 1)
-	arg_2_0._btnmaincard2:AddClickListener(arg_2_0._btnmaincardOnClick, arg_2_0, 2)
-	arg_2_0._btndetails:AddClickListener(arg_2_0._btndetailsOnClick, arg_2_0)
+function Season123_1_8PickHeroEntryView:addEvents()
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btndisstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnmaincard1:AddClickListener(self._btnmaincardOnClick, self, 1)
+	self._btnmaincard2:AddClickListener(self._btnmaincardOnClick, self, 2)
+	self._btndetails:AddClickListener(self._btndetailsOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btndisstart:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnmaincard1:RemoveClickListener()
-	arg_3_0._btnmaincard2:RemoveClickListener()
-	arg_3_0._btndetails:RemoveClickListener()
+function Season123_1_8PickHeroEntryView:removeEvents()
+	self._btnstart:RemoveClickListener()
+	self._btndisstart:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnmaincard1:RemoveClickListener()
+	self._btnmaincard2:RemoveClickListener()
+	self._btndetails:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._heroItems = {}
-	arg_4_0._careerItems = {}
+function Season123_1_8PickHeroEntryView:_editableInitView()
+	self._heroItems = {}
+	self._careerItems = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._heroItems then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._heroItems) do
-			iter_5_1.component:dispose()
+function Season123_1_8PickHeroEntryView:onDestroyView()
+	if self._heroItems then
+		for index, item in pairs(self._heroItems) do
+			item.component:dispose()
 		end
 
-		arg_5_0._heroItems = nil
+		self._heroItems = nil
 	end
 
 	Season123PickHeroEntryController.instance:onCloseView()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.PickEntryRefresh, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.EnterStageSuccess, arg_6_0.handleEnterStageSuccess, arg_6_0)
-	Season123PickHeroEntryController.instance:onOpenView(arg_6_0.viewParam.actId, arg_6_0.viewParam.stage)
+function Season123_1_8PickHeroEntryView:onOpen()
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self.refreshUI, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.PickEntryRefresh, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.EnterStageSuccess, self.handleEnterStageSuccess, self)
+	Season123PickHeroEntryController.instance:onOpenView(self.viewParam.actId, self.viewParam.stage)
 
-	local var_6_0 = ActivityModel.instance:getActMO(arg_6_0.viewParam.actId)
+	local actMO = ActivityModel.instance:getActMO(self.viewParam.actId)
 
-	if not var_6_0 or not var_6_0:isOpen() or var_6_0:isExpired() then
+	if not actMO or not actMO:isOpen() or actMO:isExpired() then
 		return
 	end
 
-	arg_6_0:refreshUI()
-	gohelper.setActive(arg_6_0._goitem, false)
+	self:refreshUI()
+	gohelper.setActive(self._goitem, false)
 end
 
-function var_0_0.onClose(arg_7_0)
+function Season123_1_8PickHeroEntryView:onClose()
 	return
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:refreshItems()
-	arg_8_0:refreshButton()
-	arg_8_0:refreshRecommendCareer()
+function Season123_1_8PickHeroEntryView:refreshUI()
+	self:refreshItems()
+	self:refreshButton()
+	self:refreshRecommendCareer()
 end
 
-function var_0_0.refreshButton(arg_9_0)
-	local var_9_0 = Season123PickHeroEntryModel.instance:getSelectCount()
-	local var_9_1 = Season123PickHeroEntryModel.instance:getLimitCount()
-	local var_9_2 = var_9_0 > 0
+function Season123_1_8PickHeroEntryView:refreshButton()
+	local count = Season123PickHeroEntryModel.instance:getSelectCount()
+	local limitCount = Season123PickHeroEntryModel.instance:getLimitCount()
+	local canStart = count > 0
 
-	gohelper.setActive(arg_9_0._btndisstart, not var_9_2)
-	gohelper.setActive(arg_9_0._btnstart, var_9_2)
+	gohelper.setActive(self._btndisstart, not canStart)
+	gohelper.setActive(self._btnstart, canStart)
 end
 
-function var_0_0.refreshItems(arg_10_0)
-	local var_10_0 = Season123PickHeroEntryModel.instance:getCutHeroList()
+function Season123_1_8PickHeroEntryView:refreshItems()
+	local cutHeroList = Season123PickHeroEntryModel.instance:getCutHeroList()
 
-	for iter_10_0 = 1, Activity123Enum.PickHeroCount do
-		local var_10_1 = arg_10_0:getOrCreateItem(iter_10_0)
+	for index = 1, Activity123Enum.PickHeroCount do
+		local item = self:getOrCreateItem(index)
 
-		var_10_1.component:refreshUI()
+		item.component:refreshUI()
 
-		local var_10_2 = var_10_0 and LuaUtil.tableContains(var_10_0, iter_10_0)
+		local isCutHero = cutHeroList and LuaUtil.tableContains(cutHeroList, index)
 
-		var_10_1.component:cutHeroAnim(var_10_2)
+		item.component:cutHeroAnim(isCutHero)
 	end
 
 	Season123PickHeroEntryModel.instance:refeshLastHeroList()
 end
 
-function var_0_0.getOrCreateItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._heroItems[arg_11_1]
+function Season123_1_8PickHeroEntryView:getOrCreateItem(index)
+	local item = self._heroItems[index]
 
-	if not var_11_0 then
-		var_11_0 = arg_11_0:getUserDataTb_()
-		var_11_0.go = gohelper.cloneInPlace(arg_11_0._goitem, "item_" .. tostring(arg_11_1))
-		var_11_0.component = Season123_1_8PickHeroEntryItem.New()
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._goitem, "item_" .. tostring(index))
+		item.component = Season123_1_8PickHeroEntryItem.New()
 
-		var_11_0.component:init(var_11_0.go)
-		var_11_0.component:initData(arg_11_1)
-		gohelper.setActive(var_11_0.go, true)
+		item.component:init(item.go)
+		item.component:initData(index)
+		gohelper.setActive(item.go, true)
 
-		arg_11_0._heroItems[arg_11_1] = var_11_0
+		self._heroItems[index] = item
 	end
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.refreshRecommendCareer(arg_12_0)
-	local var_12_0 = Season123Config.instance:getRecommendCareers(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage)
+function Season123_1_8PickHeroEntryView:refreshRecommendCareer()
+	local careers = Season123Config.instance:getRecommendCareers(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage)
 
-	if var_12_0 and #var_12_0 > 0 then
-		gohelper.setActive(arg_12_0._gorecommentnone, false)
-		gohelper.setActive(arg_12_0._gorecommentexist, true)
+	if careers and #careers > 0 then
+		gohelper.setActive(self._gorecommentnone, false)
+		gohelper.setActive(self._gorecommentexist, true)
 
-		for iter_12_0 = 1, #var_12_0 do
-			local var_12_1 = arg_12_0:getOrCreateCareer(iter_12_0)
+		for index = 1, #careers do
+			local item = self:getOrCreateCareer(index)
 
-			gohelper.setActive(var_12_1.go, true)
-			UISpriteSetMgr.instance:setHeroGroupSprite(var_12_1.imageicon, "career_" .. tostring(var_12_0[iter_12_0]))
+			gohelper.setActive(item.go, true)
+			UISpriteSetMgr.instance:setHeroGroupSprite(item.imageicon, "career_" .. tostring(careers[index]))
 		end
 
-		for iter_12_1 = #var_12_0 + 1, #var_12_0 do
-			local var_12_2 = arg_12_0._careerItems[iter_12_1]
+		for i = #careers + 1, #careers do
+			local item = self._careerItems[i]
 
-			if var_12_2 then
-				gohelper.setActive(var_12_2.go, false)
+			if item then
+				gohelper.setActive(item.go, false)
 			end
 		end
 	else
-		gohelper.setActive(arg_12_0._gorecommentnone, true)
-		gohelper.setActive(arg_12_0._gorecommentexist, false)
+		gohelper.setActive(self._gorecommentnone, true)
+		gohelper.setActive(self._gorecommentexist, false)
 	end
 end
 
-function var_0_0.getOrCreateCareer(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._careerItems[arg_13_1]
+function Season123_1_8PickHeroEntryView:getOrCreateCareer(index)
+	local item = self._careerItems[index]
 
-	if not var_13_0 then
-		var_13_0 = arg_13_0:getUserDataTb_()
-		var_13_0.go = gohelper.cloneInPlace(arg_13_0._gocareeritem, "career_" .. tostring(arg_13_1))
-		var_13_0.imageicon = gohelper.findChildImage(var_13_0.go, "")
-		arg_13_0._careerItems[arg_13_1] = var_13_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._gocareeritem, "career_" .. tostring(index))
+		item.imageicon = gohelper.findChildImage(item.go, "")
+		self._careerItems[index] = item
 	end
 
-	return var_13_0
+	return item
 end
 
-function var_0_0._btnstartOnClick(arg_14_0)
+function Season123_1_8PickHeroEntryView:_btnstartOnClick()
 	Season123PickHeroEntryController.instance:sendEnterStage()
 end
 
-function var_0_0._btncloseOnClick(arg_15_0)
-	arg_15_0:closeThis()
+function Season123_1_8PickHeroEntryView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btndetailsOnClick(arg_16_0)
+function Season123_1_8PickHeroEntryView:_btndetailsOnClick()
 	EnemyInfoController.instance:openSeason123EnemyInfoView(Season123PickHeroEntryModel.instance.activityId, Season123PickHeroEntryModel.instance.stage, 1)
 end
 
-function var_0_0.handleEnterStageSuccess(arg_17_0)
-	local var_17_0 = arg_17_0.viewParam.finishCall
-	local var_17_1 = arg_17_0.viewParam.finishCallObj
+function Season123_1_8PickHeroEntryView:handleEnterStageSuccess()
+	local finishCall = self.viewParam.finishCall
+	local finishCallObj = self.viewParam.finishCallObj
 
-	arg_17_0:closeThis()
+	self:closeThis()
 
-	if var_17_0 then
-		var_17_0(var_17_1)
+	if finishCall then
+		finishCall(finishCallObj)
 	end
 end
 
-return var_0_0
+return Season123_1_8PickHeroEntryView

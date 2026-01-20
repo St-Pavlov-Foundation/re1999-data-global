@@ -1,395 +1,398 @@
-﻿module("modules.logic.enemyinfo.view.EnemyInfoLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/view/EnemyInfoLeftView.lua
 
-local var_0_0 = class("EnemyInfoLeftView", BaseView)
+module("modules.logic.enemyinfo.view.EnemyInfoLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorulecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_rule_container")
-	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_rule_container/#go_ruleitem")
-	arg_1_0._goline1 = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_line1")
-	arg_1_0._scrollenemy = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_left_container/#scroll_enemy")
-	arg_1_0._gopoolcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container")
-	arg_1_0._goenemygrouppool = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool")
-	arg_1_0._goenemygroupitem = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool/#go_enemygroupitem")
-	arg_1_0._goenemyitempool = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool")
-	arg_1_0._goenemyitem = gohelper.findChild(arg_1_0.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool/#go_enemyitem")
+local EnemyInfoLeftView = class("EnemyInfoLeftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EnemyInfoLeftView:onInitView()
+	self._gorulecontainer = gohelper.findChild(self.viewGO, "#go_left_container/#go_rule_container")
+	self._goruleitem = gohelper.findChild(self.viewGO, "#go_left_container/#go_rule_container/#go_ruleitem")
+	self._goline1 = gohelper.findChild(self.viewGO, "#go_left_container/#go_line1")
+	self._scrollenemy = gohelper.findChildScrollRect(self.viewGO, "#go_left_container/#scroll_enemy")
+	self._gopoolcontainer = gohelper.findChild(self.viewGO, "#go_left_container/#go_pool_container")
+	self._goenemygrouppool = gohelper.findChild(self.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool")
+	self._goenemygroupitem = gohelper.findChild(self.viewGO, "#go_left_container/#go_pool_container/#go_enemygroup_pool/#go_enemygroupitem")
+	self._goenemyitempool = gohelper.findChild(self.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool")
+	self._goenemyitem = gohelper.findChild(self.viewGO, "#go_left_container/#go_pool_container/#go_enemyitem_pool/#go_enemyitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EnemyInfoLeftView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EnemyInfoLeftView:removeEvents()
 	return
 end
 
-function var_0_0.onClickRule(arg_4_0)
-	local var_4_0 = math.floor(arg_4_0.layoutMo.scrollEnemyWidth / EnemyInfoEnum.RuleItemWeight)
-	local var_4_1 = var_4_0
+function EnemyInfoLeftView:onClickRule()
+	local lineShowRuleCount = math.floor(self.layoutMo.scrollEnemyWidth / EnemyInfoEnum.RuleItemWeight)
+	local rightRuleIndex = lineShowRuleCount
 
-	if var_4_0 > #arg_4_0.ruleItemList then
-		var_4_1 = #arg_4_0.ruleItemList
+	if lineShowRuleCount > #self.ruleItemList then
+		rightRuleIndex = #self.ruleItemList
 	end
 
-	local var_4_2 = arg_4_0.ruleItemList[var_4_1].go:GetComponent(gohelper.Type_Transform)
-	local var_4_3, var_4_4 = recthelper.worldPosToAnchorPos2(var_4_2.position, arg_4_0.ruleTipContainerRectTr)
+	local rightRuleItem = self.ruleItemList[rightRuleIndex]
+	local tr = rightRuleItem.go:GetComponent(gohelper.Type_Transform)
+	local anchorX, _ = recthelper.worldPosToAnchorPos2(tr.position, self.ruleTipContainerRectTr)
 
 	ViewMgr.instance:openView(ViewName.HeroGroupFightRuleDescView, {
-		ruleList = arg_4_0._ruleList
+		ruleList = self._ruleList
 	})
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._goruleitem, false)
-	gohelper.setActive(arg_5_0._goenemygroupitem, false)
-	gohelper.setActive(arg_5_0._goenemyitem, false)
-	gohelper.setActive(arg_5_0._gopoolcontainer, false)
+function EnemyInfoLeftView:_editableInitView()
+	gohelper.setActive(self._goruleitem, false)
+	gohelper.setActive(self._goenemygroupitem, false)
+	gohelper.setActive(self._goenemyitem, false)
+	gohelper.setActive(self._gopoolcontainer, false)
 
-	arg_5_0.ruleTipContainerRectTr = gohelper.findChildComponent(arg_5_0.viewGO, "#go_tip_container", gohelper.Type_RectTransform)
-	arg_5_0.ruleTipRectTr = gohelper.findChildComponent(arg_5_0.viewGO, "#go_tip_container/#go_ruletip", gohelper.Type_RectTransform)
-	arg_5_0.trScrollContent = gohelper.findChildComponent(arg_5_0._scrollenemy.gameObject, "viewport/content", gohelper.Type_Transform)
-	arg_5_0.enemyGroupPoolTr = arg_5_0._goenemygrouppool:GetComponent(gohelper.Type_Transform)
-	arg_5_0.enemyItemPoolTr = arg_5_0._goenemyitempool:GetComponent(gohelper.Type_Transform)
-	arg_5_0.ruleClick = gohelper.getClickWithDefaultAudio(arg_5_0._gorulecontainer, arg_5_0)
+	self.ruleTipContainerRectTr = gohelper.findChildComponent(self.viewGO, "#go_tip_container", gohelper.Type_RectTransform)
+	self.ruleTipRectTr = gohelper.findChildComponent(self.viewGO, "#go_tip_container/#go_ruletip", gohelper.Type_RectTransform)
+	self.trScrollContent = gohelper.findChildComponent(self._scrollenemy.gameObject, "viewport/content", gohelper.Type_Transform)
+	self.enemyGroupPoolTr = self._goenemygrouppool:GetComponent(gohelper.Type_Transform)
+	self.enemyItemPoolTr = self._goenemyitempool:GetComponent(gohelper.Type_Transform)
+	self.ruleClick = gohelper.getClickWithDefaultAudio(self._gorulecontainer, self)
 
-	arg_5_0.ruleClick:AddClickListener(arg_5_0.onClickRule, arg_5_0)
+	self.ruleClick:AddClickListener(self.onClickRule, self)
 
-	arg_5_0.ruleLineCount = 0
-	arg_5_0.ruleItemPool = {}
-	arg_5_0.ruleItemList = {}
-	arg_5_0.ruleTipItemPool = {}
-	arg_5_0.ruleTipItemList = {}
-	arg_5_0.enemyGroupPool = {}
-	arg_5_0.enemyGroupList = {}
-	arg_5_0.enemyItemList = {}
-	arg_5_0.enemyItemPool = {
+	self.ruleLineCount = 0
+	self.ruleItemPool = {}
+	self.ruleItemList = {}
+	self.ruleTipItemPool = {}
+	self.ruleTipItemList = {}
+	self.enemyGroupPool = {}
+	self.enemyGroupList = {}
+	self.enemyItemList = {}
+	self.enemyItemPool = {
 		[0] = {}
 	}
 
-	for iter_5_0, iter_5_1 in pairs(IconMaterialMgr.instance.variantIdToMaterialPath) do
-		arg_5_0.enemyItemPool[iter_5_0] = {}
+	for key, _ in pairs(IconMaterialMgr.instance.variantIdToMaterialPath) do
+		self.enemyItemPool[key] = {}
 	end
 
-	arg_5_0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.SelectMonsterChange, arg_5_0.onSelectMonsterChange, arg_5_0)
-	arg_5_0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.UpdateBattleInfo, arg_5_0.onUpdateBattleInfo, arg_5_0)
+	self:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.SelectMonsterChange, self.onSelectMonsterChange, self)
+	self:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.UpdateBattleInfo, self.onUpdateBattleInfo, self)
 end
 
-function var_0_0.onSelectMonsterChange(arg_6_0, arg_6_1)
-	arg_6_0.selectEnemyIndex = arg_6_1.enemyIndex
+function EnemyInfoLeftView:onSelectMonsterChange(eventData)
+	self.selectEnemyIndex = eventData.enemyIndex
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.enemyItemList) do
-		gohelper.setActive(iter_6_1.selectframe, arg_6_0.selectEnemyIndex == iter_6_0)
+	for index, enemyItem in ipairs(self.enemyItemList) do
+		gohelper.setActive(enemyItem.selectframe, self.selectEnemyIndex == index)
 	end
 end
 
-function var_0_0.onUpdateBattleInfo(arg_7_0, arg_7_1)
-	if arg_7_0.battleId == arg_7_1 then
+function EnemyInfoLeftView:onUpdateBattleInfo(battleId)
+	if self.battleId == battleId then
 		return
 	end
 
-	arg_7_0.battleId = arg_7_1
-	arg_7_0.battleCo = lua_battle.configDict[arg_7_0.battleId]
+	self.battleId = battleId
+	self.battleCo = lua_battle.configDict[self.battleId]
 
-	arg_7_0:refreshUI()
-	arg_7_0:selectFirstMonster()
+	self:refreshUI()
+	self:selectFirstMonster()
 end
 
-function var_0_0.selectFirstMonster(arg_8_0)
-	local var_8_0 = arg_8_0.enemyItemList[1]
+function EnemyInfoLeftView:selectFirstMonster()
+	local firstItem = self.enemyItemList[1]
 
-	arg_8_0.eventData = arg_8_0.eventData or {}
-	arg_8_0.eventData.monsterId = var_8_0.monsterId
-	arg_8_0.eventData.isBoss = var_8_0.isBoss
-	arg_8_0.eventData.enemyIndex = 1
+	self.eventData = self.eventData or {}
+	self.eventData.monsterId = firstItem.monsterId
+	self.eventData.isBoss = firstItem.isBoss
+	self.eventData.enemyIndex = 1
 
-	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, arg_8_0.eventData)
+	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, self.eventData)
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0:refreshRule()
-	arg_9_0:refreshScrollEnemy()
+function EnemyInfoLeftView:refreshUI()
+	self:refreshRule()
+	self:refreshScrollEnemy()
 end
 
-function var_0_0.refreshRule(arg_10_0)
-	arg_10_0:recycleAllRuleItem()
-	arg_10_0:recycleAllRuleTipItem()
+function EnemyInfoLeftView:refreshRule()
+	self:recycleAllRuleItem()
+	self:recycleAllRuleTipItem()
 
-	local var_10_0 = arg_10_0.battleCo.additionRule
+	local additionRule = self.battleCo.additionRule
 
-	if string.nilorempty(var_10_0) then
-		gohelper.setActive(arg_10_0._goline1, false)
-		gohelper.setActive(arg_10_0._gorulecontainer, false)
+	if string.nilorempty(additionRule) then
+		gohelper.setActive(self._goline1, false)
+		gohelper.setActive(self._gorulecontainer, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0._gorulecontainer, true)
+	gohelper.setActive(self._gorulecontainer, true)
 
-	local var_10_1 = GameUtil.splitString2(var_10_0, true, "|", "#")
+	local ruleList = GameUtil.splitString2(additionRule, true, "|", "#")
 
-	arg_10_0._ruleList = var_10_1
+	self._ruleList = ruleList
 
-	arg_10_0:filterRule(var_10_1)
+	self:filterRule(ruleList)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-		local var_10_2 = iter_10_1[1]
-		local var_10_3 = iter_10_1[2]
-		local var_10_4 = lua_rule.configDict[var_10_3]
+	for _, v in ipairs(ruleList) do
+		local targetId = v[1]
+		local ruleId = v[2]
+		local ruleCo = lua_rule.configDict[ruleId]
 
-		if var_10_4 then
-			arg_10_0:addRuleItem(var_10_4, var_10_2)
+		if ruleCo then
+			self:addRuleItem(ruleCo, targetId)
 		end
 	end
 
-	gohelper.setActive(arg_10_0._goline1, #var_10_1 > 0)
+	gohelper.setActive(self._goline1, #ruleList > 0)
 
-	local var_10_5 = arg_10_0.ruleTipItemList[#arg_10_0.ruleTipItemList]
+	local lastRuleTipItem = self.ruleTipItemList[#self.ruleTipItemList]
 
-	if var_10_5 then
-		gohelper.setActive(var_10_5.goLine, false)
+	if lastRuleTipItem then
+		gohelper.setActive(lastRuleTipItem.goLine, false)
 	end
 end
 
-function var_0_0.filterRule(arg_11_0, arg_11_1)
-	if arg_11_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Season123 then
-		local var_11_0 = Season123Config.instance:getSeasonConstStr(arg_11_0.viewParam.activityId, Activity123Enum.Const.HideRule)
-		local var_11_1 = string.splitToNumber(var_11_0, "#")
+function EnemyInfoLeftView:filterRule(ruleList)
+	if self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Season123 then
+		local rule = Season123Config.instance:getSeasonConstStr(self.viewParam.activityId, Activity123Enum.Const.HideRule)
+		local hideRuleList = string.splitToNumber(rule, "#")
 
-		for iter_11_0 = #arg_11_1, 1, -1 do
-			if tabletool.indexOf(var_11_1, arg_11_1[iter_11_0][2]) then
-				table.remove(arg_11_1, iter_11_0)
+		for i = #ruleList, 1, -1 do
+			if tabletool.indexOf(hideRuleList, ruleList[i][2]) then
+				table.remove(ruleList, i)
 			end
 		end
 	end
 end
 
-function var_0_0.refreshScrollEnemy(arg_12_0)
-	local var_12_0 = arg_12_0.battleCo.monsterGroupIds
+function EnemyInfoLeftView:refreshScrollEnemy()
+	local groupIds = self.battleCo.monsterGroupIds
 
-	if string.nilorempty(var_12_0) then
+	if string.nilorempty(groupIds) then
 		return
 	end
 
-	arg_12_0:recycleAllEnemyGroupList()
-	arg_12_0:recycleAllEnemyItemList()
+	self:recycleAllEnemyGroupList()
+	self:recycleAllEnemyItemList()
 
-	if arg_12_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.TowerDeep then
-		arg_12_0:addTowerDeepGroupItem()
+	if self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.TowerDeep then
+		self:addTowerDeepGroupItem()
 
 		return
 	end
 
-	local var_12_1 = string.splitToNumber(var_12_0, "#")
+	local groupIdList = string.splitToNumber(groupIds, "#")
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		arg_12_0:addGroupItem(iter_12_1, iter_12_0)
+	for index, groupId in ipairs(groupIdList) do
+		self:addGroupItem(groupId, index)
 	end
 end
 
-function var_0_0.recycleAllRuleItem(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.ruleItemList) do
-		gohelper.setActive(iter_13_1.go, false)
-		table.insert(arg_13_0.ruleItemPool, iter_13_1)
+function EnemyInfoLeftView:recycleAllRuleItem()
+	for _, ruleItem in ipairs(self.ruleItemList) do
+		gohelper.setActive(ruleItem.go, false)
+		table.insert(self.ruleItemPool, ruleItem)
 	end
 
-	tabletool.clear(arg_13_0.ruleItemList)
+	tabletool.clear(self.ruleItemList)
 end
 
-function var_0_0.recycleAllRuleTipItem(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.ruleTipItemList) do
-		gohelper.setActive(iter_14_1.go, false)
-		table.insert(arg_14_0.ruleTipItemPool, iter_14_1)
+function EnemyInfoLeftView:recycleAllRuleTipItem()
+	for _, ruleTipItem in ipairs(self.ruleTipItemList) do
+		gohelper.setActive(ruleTipItem.go, false)
+		table.insert(self.ruleTipItemPool, ruleTipItem)
 	end
 
-	tabletool.clear(arg_14_0.ruleTipItemList)
+	tabletool.clear(self.ruleTipItemList)
 end
 
-function var_0_0.addRuleItem(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_1 then
+function EnemyInfoLeftView:addRuleItem(ruleCo, targetId)
+	if not ruleCo then
 		logError("rule co nil")
 
 		return
 	end
 
-	local var_15_0 = arg_15_0:getRuleItem()
+	local ruleItem = self:getRuleItem()
 
-	UISpriteSetMgr.instance:setCommonSprite(var_15_0.tagIcon, "wz_" .. arg_15_2)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_15_0.ruleIcon, arg_15_1.icon)
+	UISpriteSetMgr.instance:setCommonSprite(ruleItem.tagIcon, "wz_" .. targetId)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(ruleItem.ruleIcon, ruleCo.icon)
 end
 
-function var_0_0.getRuleItem(arg_16_0)
-	if #arg_16_0.ruleItemPool > 0 then
-		local var_16_0 = table.remove(arg_16_0.ruleItemPool)
+function EnemyInfoLeftView:getRuleItem()
+	if #self.ruleItemPool > 0 then
+		local ruleItem = table.remove(self.ruleItemPool)
 
-		table.insert(arg_16_0.ruleItemList, var_16_0)
-		gohelper.setActive(var_16_0.go, true)
-		gohelper.setAsLastSibling(var_16_0.go)
+		table.insert(self.ruleItemList, ruleItem)
+		gohelper.setActive(ruleItem.go, true)
+		gohelper.setAsLastSibling(ruleItem.go)
 
-		return var_16_0
+		return ruleItem
 	end
 
-	local var_16_1 = arg_16_0:getUserDataTb_()
+	local ruleItem = self:getUserDataTb_()
 
-	var_16_1.go = gohelper.cloneInPlace(arg_16_0._goruleitem)
-	var_16_1.ruleIcon = gohelper.findChildImage(var_16_1.go, "#image_ruleicon")
-	var_16_1.tagIcon = gohelper.findChildImage(var_16_1.go, "#image_ruleicon/#image_tagicon")
+	ruleItem.go = gohelper.cloneInPlace(self._goruleitem)
+	ruleItem.ruleIcon = gohelper.findChildImage(ruleItem.go, "#image_ruleicon")
+	ruleItem.tagIcon = gohelper.findChildImage(ruleItem.go, "#image_ruleicon/#image_tagicon")
 
-	gohelper.setActive(var_16_1.go, true)
-	table.insert(arg_16_0.ruleItemList, var_16_1)
+	gohelper.setActive(ruleItem.go, true)
+	table.insert(self.ruleItemList, ruleItem)
 
-	return var_16_1
+	return ruleItem
 end
 
-function var_0_0.recycleAllEnemyGroupList(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.enemyGroupList) do
-		gohelper.setActive(iter_17_1.go, false)
-		iter_17_1.tr:SetParent(arg_17_0.enemyGroupPoolTr)
-		table.insert(arg_17_0.enemyGroupPool, iter_17_1)
+function EnemyInfoLeftView:recycleAllEnemyGroupList()
+	for _, enemyGroupItem in ipairs(self.enemyGroupList) do
+		gohelper.setActive(enemyGroupItem.go, false)
+		enemyGroupItem.tr:SetParent(self.enemyGroupPoolTr)
+		table.insert(self.enemyGroupPool, enemyGroupItem)
 	end
 
-	tabletool.clear(arg_17_0.enemyGroupList)
+	tabletool.clear(self.enemyGroupList)
 end
 
-function var_0_0.recycleAllEnemyItemList(arg_18_0)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.enemyItemList) do
-		gohelper.setActive(iter_18_1.go, false)
-		iter_18_1.tr:SetParent(arg_18_0.enemyItemPoolTr)
+function EnemyInfoLeftView:recycleAllEnemyItemList()
+	for _, enemyItem in ipairs(self.enemyItemList) do
+		gohelper.setActive(enemyItem.go, false)
+		enemyItem.tr:SetParent(self.enemyItemPoolTr)
 
-		iter_18_1.monsterId = nil
+		enemyItem.monsterId = nil
 
-		table.insert(arg_18_0.enemyItemPool[iter_18_1.variantId], iter_18_1)
+		table.insert(self.enemyItemPool[enemyItem.variantId], enemyItem)
 	end
 
-	tabletool.clear(arg_18_0.enemyItemList)
+	tabletool.clear(self.enemyItemList)
 end
 
-function var_0_0.getEnemyGroupItem(arg_19_0)
-	if #arg_19_0.enemyGroupPool > 0 then
-		local var_19_0 = table.remove(arg_19_0.enemyGroupPool)
+function EnemyInfoLeftView:getEnemyGroupItem()
+	if #self.enemyGroupPool > 0 then
+		local enemyGroupItem = table.remove(self.enemyGroupPool)
 
-		table.insert(arg_19_0.enemyGroupList, var_19_0)
-		recthelper.setWidth(var_19_0.tr, arg_19_0.layoutMo.scrollEnemyWidth)
-		recthelper.setWidth(var_19_0.trContent, arg_19_0.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
-		gohelper.setActive(var_19_0.go, true)
-		gohelper.setAsLastSibling(var_19_0.go)
+		table.insert(self.enemyGroupList, enemyGroupItem)
+		recthelper.setWidth(enemyGroupItem.tr, self.layoutMo.scrollEnemyWidth)
+		recthelper.setWidth(enemyGroupItem.trContent, self.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
+		gohelper.setActive(enemyGroupItem.go, true)
+		gohelper.setAsLastSibling(enemyGroupItem.go)
 
-		return var_19_0
+		return enemyGroupItem
 	end
 
-	local var_19_1 = arg_19_0:getUserDataTb_()
+	local enemyGroupItem = self:getUserDataTb_()
 
-	var_19_1.go = gohelper.cloneInPlace(arg_19_0._goenemygroupitem)
-	var_19_1.tr = var_19_1.go:GetComponent(gohelper.Type_Transform)
-	var_19_1.txtTitleNum = gohelper.findChildText(var_19_1.go, "title/#txt_titlenum")
-	var_19_1.trContent = gohelper.findChildComponent(var_19_1.go, "content", gohelper.Type_RectTransform)
+	enemyGroupItem.go = gohelper.cloneInPlace(self._goenemygroupitem)
+	enemyGroupItem.tr = enemyGroupItem.go:GetComponent(gohelper.Type_Transform)
+	enemyGroupItem.txtTitleNum = gohelper.findChildText(enemyGroupItem.go, "title/#txt_titlenum")
+	enemyGroupItem.trContent = gohelper.findChildComponent(enemyGroupItem.go, "content", gohelper.Type_RectTransform)
 
-	recthelper.setWidth(var_19_1.tr, arg_19_0.layoutMo.scrollEnemyWidth)
-	recthelper.setWidth(var_19_1.trContent, arg_19_0.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
-	gohelper.setActive(var_19_1.go, true)
-	table.insert(arg_19_0.enemyGroupList, var_19_1)
+	recthelper.setWidth(enemyGroupItem.tr, self.layoutMo.scrollEnemyWidth)
+	recthelper.setWidth(enemyGroupItem.trContent, self.layoutMo.scrollEnemyWidth - EnemyInfoEnum.EnemyGroupLeftMargin)
+	gohelper.setActive(enemyGroupItem.go, true)
+	table.insert(self.enemyGroupList, enemyGroupItem)
 
-	return var_19_1
+	return enemyGroupItem
 end
 
-function var_0_0.getEnemyItem(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0.enemyItemPool[arg_20_1]
+function EnemyInfoLeftView:getEnemyItem(variantId)
+	local pool = self.enemyItemPool[variantId]
 
-	if not var_20_0 then
-		logError("not variantId : " .. tostring(arg_20_1) .. " pool")
+	if not pool then
+		logError("not variantId : " .. tostring(variantId) .. " pool")
 
 		return nil
 	end
 
-	if #var_20_0 > 0 then
-		local var_20_1 = table.remove(var_20_0)
+	if #pool > 0 then
+		local enemyItem = table.remove(pool)
 
-		table.insert(arg_20_0.enemyItemList, var_20_1)
-		gohelper.setActive(var_20_1.go, true)
-		gohelper.setAsLastSibling(var_20_1.go)
+		table.insert(self.enemyItemList, enemyItem)
+		gohelper.setActive(enemyItem.go, true)
+		gohelper.setAsLastSibling(enemyItem.go)
 
-		return var_20_1
+		return enemyItem
 	end
 
-	local var_20_2 = arg_20_0:getUserDataTb_()
+	local enemyItem = self:getUserDataTb_()
 
-	var_20_2.go = gohelper.cloneInPlace(arg_20_0._goenemyitem)
-	var_20_2.tr = var_20_2.go:GetComponent(gohelper.Type_Transform)
-	var_20_2.icon = gohelper.findChildImage(var_20_2.go, "icon")
-	var_20_2.career = gohelper.findChildImage(var_20_2.go, "career")
-	var_20_2.selectframe = gohelper.findChild(var_20_2.go, "selectframe")
-	var_20_2.bosstag = gohelper.findChild(var_20_2.go, "bosstag")
+	enemyItem.go = gohelper.cloneInPlace(self._goenemyitem)
+	enemyItem.tr = enemyItem.go:GetComponent(gohelper.Type_Transform)
+	enemyItem.icon = gohelper.findChildImage(enemyItem.go, "icon")
+	enemyItem.career = gohelper.findChildImage(enemyItem.go, "career")
+	enemyItem.selectframe = gohelper.findChild(enemyItem.go, "selectframe")
+	enemyItem.bosstag = gohelper.findChild(enemyItem.go, "bosstag")
 
-	gohelper.setActive(var_20_2.selectframe, false)
+	gohelper.setActive(enemyItem.selectframe, false)
 
-	var_20_2.btn = gohelper.findChildButtonWithAudio(var_20_2.go, "btn_click", AudioEnum.UI.Play_UI_Tags)
+	enemyItem.btn = gohelper.findChildButtonWithAudio(enemyItem.go, "btn_click", AudioEnum.UI.Play_UI_Tags)
 
-	var_20_2.btn:AddClickListener(arg_20_0.onClickEnemyItem, arg_20_0, var_20_2)
+	enemyItem.btn:AddClickListener(self.onClickEnemyItem, self, enemyItem)
 
-	var_20_2.variantId = arg_20_1
+	enemyItem.variantId = variantId
 
-	if arg_20_1 ~= 0 then
-		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(arg_20_1), var_20_2.icon)
+	if variantId ~= 0 then
+		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(variantId), enemyItem.icon)
 	end
 
-	gohelper.setActive(var_20_2.go, true)
-	table.insert(arg_20_0.enemyItemList, var_20_2)
+	gohelper.setActive(enemyItem.go, true)
+	table.insert(self.enemyItemList, enemyItem)
 
-	return var_20_2
+	return enemyItem
 end
 
-function var_0_0.addGroupItem(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = lua_monster_group.configDict[arg_21_1]
-	local var_21_1 = arg_21_0.tempMonsterIdList or {}
-	local var_21_2 = string.splitToNumber(var_21_0.bossId, "#")
+function EnemyInfoLeftView:addGroupItem(groupId, index)
+	local monsterGroupConfig = lua_monster_group.configDict[groupId]
+	local monsterIdList = self.tempMonsterIdList or {}
+	local bossIdList = string.splitToNumber(monsterGroupConfig.bossId, "#")
 
-	tabletool.clear(var_21_1)
+	tabletool.clear(monsterIdList)
 
-	if not string.nilorempty(var_21_0.monster) then
-		tabletool.addValues(var_21_1, string.splitToNumber(var_21_0.monster, "#"))
+	if not string.nilorempty(monsterGroupConfig.monster) then
+		tabletool.addValues(monsterIdList, string.splitToNumber(monsterGroupConfig.monster, "#"))
 	end
 
-	if not string.nilorempty(var_21_0.spMonster) then
-		tabletool.addValues(var_21_1, string.splitToNumber(var_21_0.spMonster, "#"))
+	if not string.nilorempty(monsterGroupConfig.spMonster) then
+		tabletool.addValues(monsterIdList, string.splitToNumber(monsterGroupConfig.spMonster, "#"))
 	end
 
-	if #var_21_1 <= 0 then
+	if #monsterIdList <= 0 then
 		return
 	end
 
-	local var_21_3 = arg_21_0:getEnemyGroupItem()
+	local enemyGroupItem = self:getEnemyGroupItem()
 
-	var_21_3.tr:SetParent(arg_21_0.trScrollContent)
+	enemyGroupItem.tr:SetParent(self.trScrollContent)
 
-	var_21_3.txtTitleNum.text = arg_21_2
+	enemyGroupItem.txtTitleNum.text = index
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_1) do
-		arg_21_0:addMonsterItem(iter_21_1, var_21_3.trContent, var_21_2)
+	for _, monsterId in ipairs(monsterIdList) do
+		self:addMonsterItem(monsterId, enemyGroupItem.trContent, bossIdList)
 	end
 end
 
-function var_0_0.addMonsterItem(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = lua_monster.configDict[arg_22_1]
-	local var_22_1 = arg_22_0:getEnemyItem(var_22_0.heartVariantId)
+function EnemyInfoLeftView:addMonsterItem(monsterId, parent, bossIdList)
+	local monsterConfig = lua_monster.configDict[monsterId]
+	local enemyItem = self:getEnemyItem(monsterConfig.heartVariantId)
 
-	var_22_1.tr:SetParent(arg_22_2)
+	enemyItem.tr:SetParent(parent)
 
-	var_22_1.monsterId = arg_22_1
-	var_22_1.isBoss = arg_22_0:checkIsBoss(arg_22_3, arg_22_1)
-	var_22_1.enemyIndex = #arg_22_0.enemyItemList
+	enemyItem.monsterId = monsterId
+	enemyItem.isBoss = self:checkIsBoss(bossIdList, monsterId)
+	enemyItem.enemyIndex = #self.enemyItemList
 
-	local var_22_2 = FightConfig.instance:getSkinCO(var_22_0.skinId)
+	local skinConfig = FightConfig.instance:getSkinCO(monsterConfig.skinId)
 
-	gohelper.getSingleImage(var_22_1.icon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_22_2.headIcon))
-	UISpriteSetMgr.instance:setEnemyInfoSprite(var_22_1.career, "sxy_" .. var_22_0.career)
-	gohelper.setActive(var_22_1.bosstag, var_22_1.isBoss)
+	gohelper.getSingleImage(enemyItem.icon.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setEnemyInfoSprite(enemyItem.career, "sxy_" .. monsterConfig.career)
+	gohelper.setActive(enemyItem.bosstag, enemyItem.isBoss)
 end
 
-function var_0_0.checkIsBoss(arg_23_0, arg_23_1, arg_23_2)
-	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
-		if arg_23_2 == iter_23_1 then
+function EnemyInfoLeftView:checkIsBoss(bossIdList, monsterId)
+	for _, v in ipairs(bossIdList) do
+		if monsterId == v then
 			return true
 		end
 	end
@@ -397,45 +400,45 @@ function var_0_0.checkIsBoss(arg_23_0, arg_23_1, arg_23_2)
 	return false
 end
 
-function var_0_0.onClickEnemyItem(arg_24_0, arg_24_1)
-	arg_24_0.eventData = arg_24_0.eventData or {}
-	arg_24_0.eventData.monsterId = arg_24_1.monsterId
-	arg_24_0.eventData.isBoss = arg_24_1.isBoss
-	arg_24_0.eventData.enemyIndex = arg_24_1.enemyIndex
+function EnemyInfoLeftView:onClickEnemyItem(enemyItem)
+	self.eventData = self.eventData or {}
+	self.eventData.monsterId = enemyItem.monsterId
+	self.eventData.isBoss = enemyItem.isBoss
+	self.eventData.enemyIndex = enemyItem.enemyIndex
 
-	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, arg_24_0.eventData)
+	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.SelectMonsterChange, self.eventData)
 end
 
-function var_0_0.addTowerDeepGroupItem(arg_25_0)
-	local var_25_0 = arg_25_0:getEnemyGroupItem()
+function EnemyInfoLeftView:addTowerDeepGroupItem()
+	local enemyGroupItem = self:getEnemyGroupItem()
 
-	var_25_0.tr:SetParent(arg_25_0.trScrollContent)
+	enemyGroupItem.tr:SetParent(self.trScrollContent)
 
-	var_25_0.txtTitleNum.text = 1
+	enemyGroupItem.txtTitleNum.text = 1
 
-	local var_25_1 = TowerPermanentDeepModel.instance:getCurDeepMonsterId()
+	local monsterId = TowerPermanentDeepModel.instance:getCurDeepMonsterId()
 
-	arg_25_0:addMonsterItem(var_25_1, var_25_0.trContent, {
-		var_25_1
+	self:addMonsterItem(monsterId, enemyGroupItem.trContent, {
+		monsterId
 	})
 end
 
-function var_0_0.onClose(arg_26_0)
+function EnemyInfoLeftView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	arg_27_0.ruleClick:RemoveClickListener()
+function EnemyInfoLeftView:onDestroyView()
+	self.ruleClick:RemoveClickListener()
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0.enemyItemList) do
-		iter_27_1.btn:RemoveClickListener()
+	for _, enemyItem in ipairs(self.enemyItemList) do
+		enemyItem.btn:RemoveClickListener()
 	end
 
-	for iter_27_2, iter_27_3 in pairs(arg_27_0.enemyItemPool) do
-		for iter_27_4, iter_27_5 in ipairs(iter_27_3) do
-			iter_27_5.btn:RemoveClickListener()
+	for _, pool in pairs(self.enemyItemPool) do
+		for _, enemyItem in ipairs(pool) do
+			enemyItem.btn:RemoveClickListener()
 		end
 	end
 end
 
-return var_0_0
+return EnemyInfoLeftView

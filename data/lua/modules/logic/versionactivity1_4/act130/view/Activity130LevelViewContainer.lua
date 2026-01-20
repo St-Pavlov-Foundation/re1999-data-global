@@ -1,54 +1,56 @@
-﻿module("modules.logic.versionactivity1_4.act130.view.Activity130LevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/view/Activity130LevelViewContainer.lua
 
-local var_0_0 = class("Activity130LevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act130.view.Activity130LevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity130LevelViewContainer = class("Activity130LevelViewContainer", BaseViewContainer)
 
-	arg_1_0._mapViewScene = Activity130LevelScene.New()
-	arg_1_0._levelView = Activity130LevelView.New()
-	arg_1_0._sceneChangeView = Activity130DungeonChange.New()
+function Activity130LevelViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._mapViewScene)
-	table.insert(var_1_0, arg_1_0._levelView)
-	table.insert(var_1_0, arg_1_0._sceneChangeView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	self._mapViewScene = Activity130LevelScene.New()
+	self._levelView = Activity130LevelView.New()
+	self._sceneChangeView = Activity130DungeonChange.New()
 
-	return var_1_0
+	table.insert(views, self._mapViewScene)
+	table.insert(views, self._levelView)
+	table.insert(views, self._sceneChangeView)
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Activity130LevelViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
-		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
+function Activity130LevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_3_0._navigateButtonsView:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
+		self._navigateButtonsView:setOverrideClose(self._overrideCloseFunc, self)
 
 		return {
-			arg_3_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0._overrideCloseFunc(arg_4_0)
-	arg_4_0._levelView._viewAnimator:Play(UIAnimationName.Close, 0, 0)
-	TaskDispatcher.runDelay(arg_4_0._doClose, arg_4_0, 0.333)
+function Activity130LevelViewContainer:_overrideCloseFunc()
+	self._levelView._viewAnimator:Play(UIAnimationName.Close, 0, 0)
+	TaskDispatcher.runDelay(self._doClose, self, 0.333)
 end
 
-function var_0_0._doClose(arg_5_0)
-	arg_5_0:closeThis()
+function Activity130LevelViewContainer:_doClose()
+	self:closeThis()
 end
 
-function var_0_0.changeLvScene(arg_6_0, arg_6_1)
-	arg_6_0._mapViewScene:changeLvScene(arg_6_1)
+function Activity130LevelViewContainer:changeLvScene(type)
+	self._mapViewScene:changeLvScene(type)
 end
 
-return var_0_0
+return Activity130LevelViewContainer

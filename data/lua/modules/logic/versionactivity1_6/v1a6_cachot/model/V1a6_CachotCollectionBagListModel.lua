@@ -1,133 +1,135 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionBagListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotCollectionBagListModel.lua
 
-local var_0_0 = class("V1a6_CachotCollectionBagListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionBagListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._filterCollectionList = nil
+local V1a6_CachotCollectionBagListModel = class("V1a6_CachotCollectionBagListModel", ListScrollModel)
+
+function V1a6_CachotCollectionBagListModel:onInit()
+	self._filterCollectionList = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function V1a6_CachotCollectionBagListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.onInitData(arg_3_0)
-	arg_3_0:onCollectionDataUpdate()
+function V1a6_CachotCollectionBagListModel:onInitData()
+	self:onCollectionDataUpdate()
 end
 
-function var_0_0.onCollectionDataUpdate(arg_4_0)
-	local var_4_0 = V1a6_CachotModel.instance:getRogueInfo()
-	local var_4_1 = var_4_0 and var_4_0.collections
+function V1a6_CachotCollectionBagListModel:onCollectionDataUpdate()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local collectionList = rogueInfo and rogueInfo.collections
 
-	arg_4_0._filterCollectionList = {}
+	self._filterCollectionList = {}
 
-	if var_4_1 then
-		for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-			table.insert(arg_4_0._filterCollectionList, iter_4_1)
+	if collectionList then
+		for _, collectionMO in ipairs(collectionList) do
+			table.insert(self._filterCollectionList, collectionMO)
 		end
 	end
 
-	table.sort(arg_4_0._filterCollectionList, arg_4_0.sortFunc)
+	table.sort(self._filterCollectionList, self.sortFunc)
 
-	local var_4_2 = arg_4_0:insertFakeData()
+	local showCollectionList = self:insertFakeData()
 
-	arg_4_0:setList(var_4_2)
+	self:setList(showCollectionList)
 end
 
-function var_0_0.insertFakeData(arg_5_0)
-	local var_5_0 = 0
+function V1a6_CachotCollectionBagListModel:insertFakeData()
+	local collectionEndIndex = 0
 
-	arg_5_0._unEnchantCollectionLineNum = 0
-	arg_5_0._enchantCollectionCount = 0
+	self._unEnchantCollectionLineNum = 0
+	self._enchantCollectionCount = 0
 
-	local var_5_1 = {}
+	local showCollectionList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._filterCollectionList) do
-		local var_5_2 = iter_5_1 and iter_5_1.cfgId
-		local var_5_3 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_5_2)
+	for _, collectionMO in ipairs(self._filterCollectionList) do
+		local collectionCfgId = collectionMO and collectionMO.cfgId
+		local collectionCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(collectionCfgId)
 
-		if var_5_3 and var_5_3.type ~= V1a6_CachotEnum.CollectionType.Enchant then
-			var_5_0 = var_5_0 + 1
+		if collectionCfg and collectionCfg.type ~= V1a6_CachotEnum.CollectionType.Enchant then
+			collectionEndIndex = collectionEndIndex + 1
 		else
-			arg_5_0._enchantCollectionCount = arg_5_0._enchantCollectionCount + 1
+			self._enchantCollectionCount = self._enchantCollectionCount + 1
 		end
 
-		table.insert(var_5_1, iter_5_1)
+		table.insert(showCollectionList, collectionMO)
 	end
 
-	local var_5_4 = ViewMgr.instance:getContainer(ViewName.V1a6_CachotCollectionBagView)
-	local var_5_5 = var_5_4 and var_5_4:getScrollParam()
-	local var_5_6 = var_5_5 and var_5_5.lineCount or 1
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.V1a6_CachotCollectionBagView)
+	local viewParam = viewContainer and viewContainer:getScrollParam()
+	local lineCount = viewParam and viewParam.lineCount or 1
 
-	arg_5_0._unEnchantCollectionLineNum = math.ceil(var_5_0 / var_5_6)
+	self._unEnchantCollectionLineNum = math.ceil(collectionEndIndex / lineCount)
 
-	local var_5_7 = arg_5_0._unEnchantCollectionLineNum * var_5_6 - var_5_0
+	local needInsertFakeDataNum = self._unEnchantCollectionLineNum * lineCount - collectionEndIndex
 
-	for iter_5_2 = 1, var_5_7 do
-		local var_5_8 = {
+	for i = 1, needInsertFakeDataNum do
+		local fakeData = {
 			isFake = true,
-			id = -iter_5_2
+			id = -i
 		}
-		local var_5_9 = var_5_0 + iter_5_2
+		local insertIndex = collectionEndIndex + i
 
-		table.insert(var_5_1, var_5_9, var_5_8)
+		table.insert(showCollectionList, insertIndex, fakeData)
 	end
 
-	return var_5_1
+	return showCollectionList
 end
 
-function var_0_0.sortFunc(arg_6_0, arg_6_1)
-	local var_6_0 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_6_0.cfgId)
-	local var_6_1 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(arg_6_1.cfgId)
+function V1a6_CachotCollectionBagListModel.sortFunc(a, b)
+	local aCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(a.cfgId)
+	local bCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(b.cfgId)
 
-	if var_6_0 and var_6_1 and var_6_0.type ~= var_6_1.type then
-		return var_6_0.type < var_6_1.type
+	if aCfg and bCfg and aCfg.type ~= bCfg.type then
+		return aCfg.type < bCfg.type
 	end
 
-	return arg_6_0.id > arg_6_1.id
+	return a.id > b.id
 end
 
-function var_0_0.isBagEmpty(arg_7_0)
-	return arg_7_0:getCount() <= 0
+function V1a6_CachotCollectionBagListModel:isBagEmpty()
+	return self:getCount() <= 0
 end
 
-function var_0_0.moveCollectionWithHole2Top(arg_8_0)
-	local var_8_0 = false
-	local var_8_1 = arg_8_0:getFirstCollectionWithHole()
+function V1a6_CachotCollectionBagListModel:moveCollectionWithHole2Top()
+	local isMoveSucc = false
+	local fitCollectionMO = self:getFirstCollectionWithHole()
 
-	if var_8_1 then
-		arg_8_0:remove(var_8_1)
-		arg_8_0:addAtFirst(var_8_1)
+	if fitCollectionMO then
+		self:remove(fitCollectionMO)
+		self:addAtFirst(fitCollectionMO)
 
-		var_8_0 = true
+		isMoveSucc = true
 	else
 		logError("cannot find first collection with hole")
 	end
 
-	return var_8_0
+	return isMoveSucc
 end
 
-function var_0_0.getFirstCollectionWithHole(arg_9_0)
-	local var_9_0 = arg_9_0:getList()
+function V1a6_CachotCollectionBagListModel:getFirstCollectionWithHole()
+	local collectionList = self:getList()
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			local var_9_1 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(iter_9_1.cfgId)
+	if collectionList then
+		for _, collectionMO in ipairs(collectionList) do
+			local collectionCfg = V1a6_CachotCollectionConfig.instance:getCollectionConfig(collectionMO.cfgId)
 
-			if var_9_1 and var_9_1.type ~= V1a6_CachotEnum.CollectionType.Enchant and var_9_1.holeNum > 0 then
-				return iter_9_1
+			if collectionCfg and collectionCfg.type ~= V1a6_CachotEnum.CollectionType.Enchant and collectionCfg.holeNum > 0 then
+				return collectionMO
 			end
 		end
 	end
 end
 
-function var_0_0.getUnEnchantCollectionLineNum(arg_10_0)
-	return arg_10_0._unEnchantCollectionLineNum or 0
+function V1a6_CachotCollectionBagListModel:getUnEnchantCollectionLineNum()
+	return self._unEnchantCollectionLineNum or 0
 end
 
-function var_0_0.getEnchantCollectionNum(arg_11_0)
-	return arg_11_0._enchantCollectionCount or 0
+function V1a6_CachotCollectionBagListModel:getEnchantCollectionNum()
+	return self._enchantCollectionCount or 0
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotCollectionBagListModel.instance = V1a6_CachotCollectionBagListModel.New()
 
-return var_0_0
+return V1a6_CachotCollectionBagListModel

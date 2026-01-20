@@ -1,68 +1,70 @@
-﻿module("modules.logic.versionactivity2_7.dungeon.controller.VersionActivity2_7DungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/dungeon/controller/VersionActivity2_7DungeonController.lua
 
-local var_0_0 = class("VersionActivity2_7DungeonController", VersionActivityFixedDungeonController)
+module("modules.logic.versionactivity2_7.dungeon.controller.VersionActivity2_7DungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._isShowLoading = false
-	arg_1_0._sceneGo = nil
+local VersionActivity2_7DungeonController = class("VersionActivity2_7DungeonController", VersionActivityFixedDungeonController)
+
+function VersionActivity2_7DungeonController:onInit()
+	self._isShowLoading = false
+	self._sceneGo = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._isShowLoading = false
-	arg_2_0._sceneGo = nil
+function VersionActivity2_7DungeonController:reInit()
+	self._isShowLoading = false
+	self._sceneGo = nil
 end
 
-function var_0_0.openVersionActivityDungeonMapView(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	var_0_0.super.openVersionActivityDungeonMapView(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+function VersionActivity2_7DungeonController:openVersionActivityDungeonMapView(chapterId, episodeId, callback, callbackObj)
+	VersionActivity2_7DungeonController.super.openVersionActivityDungeonMapView(self, chapterId, episodeId, callback, callbackObj)
 
-	if arg_3_0:_isSpaceScene(arg_3_2) and not arg_3_0._sceneGo then
-		arg_3_0:showLoading()
+	if self:_isSpaceScene(episodeId) and not self._sceneGo then
+		self:showLoading()
 	end
 end
 
-function var_0_0._isSpaceScene(arg_4_0, arg_4_1)
-	local var_4_0 = VersionActivity2_7DungeonEnum.SpaceSceneEpisodeIndexs
+function VersionActivity2_7DungeonController:_isSpaceScene(episodeId)
+	local cutSceneEpisodeIndex = VersionActivity2_7DungeonEnum.SpaceSceneEpisodeIndexs
 
-	arg_4_1 = arg_4_1 or VersionActivityFixedDungeonModel.instance:getInitEpisodeId()
+	episodeId = episodeId or VersionActivityFixedDungeonModel.instance:getInitEpisodeId()
 
-	local var_4_1 = DungeonConfig.instance:getEpisodeLevelIndexByEpisodeId(arg_4_1)
+	local index = DungeonConfig.instance:getEpisodeLevelIndexByEpisodeId(episodeId)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		if var_4_1 == iter_4_1 then
+	for _, _index in ipairs(cutSceneEpisodeIndex) do
+		if index == _index then
 			return true
 		end
 	end
 end
 
-function var_0_0.loadingFinish(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0:_isSpaceScene(arg_5_1) or arg_5_0._isShowLoading then
-		arg_5_0:hideLoading()
+function VersionActivity2_7DungeonController:loadingFinish(episodeId, sceneGo)
+	if self:_isSpaceScene(episodeId) or self._isShowLoading then
+		self:hideLoading()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_loading_scene)
 
-	arg_5_0._sceneGo = arg_5_2
+	self._sceneGo = sceneGo
 end
 
-function var_0_0.showLoading(arg_6_0)
+function VersionActivity2_7DungeonController:showLoading()
 	ViewMgr.instance:openView(ViewName.V2a7LoadingSpaceView, nil, true)
 
-	arg_6_0._isShowLoading = true
+	self._isShowLoading = true
 end
 
-function var_0_0.hideLoading(arg_7_0)
+function VersionActivity2_7DungeonController:hideLoading()
 	if ViewMgr.instance:isOpen(ViewName.V2a7LoadingSpaceView) then
 		ViewMgr.instance:closeView(ViewName.V2a7LoadingSpaceView)
 	end
 
-	arg_7_0._isShowLoading = false
+	self._isShowLoading = false
 end
 
-function var_0_0.resetLoading(arg_8_0)
-	arg_8_0._isShowLoading = false
-	arg_8_0._sceneGo = nil
+function VersionActivity2_7DungeonController:resetLoading()
+	self._isShowLoading = false
+	self._sceneGo = nil
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_7DungeonController.instance = VersionActivity2_7DungeonController.New()
 
-return var_0_0
+return VersionActivity2_7DungeonController

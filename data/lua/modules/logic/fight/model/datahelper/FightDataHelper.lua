@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.model.datahelper.FightDataHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/datahelper/FightDataHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.fight.model.datahelper.FightDataHelper", package.seeall)
 
-function var_0_0.defineMgrRef()
-	local var_1_0 = FightDataMgr.instance.mgrList
+local FightDataHelper = {}
 
-	for iter_1_0, iter_1_1 in pairs(FightDataMgr.instance) do
-		for iter_1_2, iter_1_3 in ipairs(var_1_0) do
-			if iter_1_3 == iter_1_1 then
-				var_0_0[iter_1_0] = iter_1_3
+function FightDataHelper.defineMgrRef()
+	local mgrList = FightDataMgr.instance.mgrList
+
+	for k, v in pairs(FightDataMgr.instance) do
+		for index, mgr in ipairs(mgrList) do
+			if mgr == v then
+				FightDataHelper[k] = mgr
 
 				break
 			end
@@ -16,65 +18,77 @@ function var_0_0.defineMgrRef()
 	end
 end
 
-function var_0_0.initDataMgr()
-	var_0_0.lastFightResult = nil
+function FightDataHelper.initDataMgr()
+	FightDataHelper.lastFightResult = nil
 
 	FightLocalDataMgr.instance:initDataMgr()
 	FightDataMgr.instance:initDataMgr()
-	var_0_0.defineMgrRef()
+	FightDataHelper.defineMgrRef()
 	FightMsgMgr.sendMsg(FightMsgId.AfterInitDataMgrRef)
 end
 
-function var_0_0.initFightData(arg_3_0)
-	var_0_0.version = FightModel.GMForceVersion or arg_3_0.version or 0
-	FightModel.instance._version = var_0_0.version
+function FightDataHelper.initFightData(fightData)
+	FightDataHelper.version = FightModel.GMForceVersion or fightData.version or 0
+	FightModel.instance._version = FightDataHelper.version
 
-	FightLocalDataMgr.instance:updateFightData(arg_3_0)
-	FightDataMgr.instance:updateFightData(arg_3_0)
-	var_0_0.stateMgr:initReplayState()
-	var_0_0.stateMgr:initAutoState()
+	FightLocalDataMgr.instance:updateFightData(fightData)
+	FightDataMgr.instance:updateFightData(fightData)
+	FightDataHelper.stateMgr:initReplayState()
+	FightDataHelper.stateMgr:initAutoState()
 
 	if isDebugBuild then
-		FightLocalDataMgr.instance.roundMgr.enterData = arg_3_0
-		FightDataMgr.instance.roundMgr.enterData = arg_3_0
+		FightLocalDataMgr.instance.roundMgr.enterData = fightData
+		FightDataMgr.instance.roundMgr.enterData = fightData
 	end
 end
 
-function var_0_0.playEffectData(arg_4_0)
-	if arg_4_0:isDone() then
+function FightDataHelper.playEffectData(actEffectData)
+	if actEffectData:isDone() then
 		return
 	end
 
-	var_0_0.calMgr:playActEffectData(arg_4_0)
+	FightDataHelper.calMgr:playActEffectData(actEffectData)
 end
 
-function var_0_0.cacheFightWavePush(arg_5_0)
-	FightLocalDataMgr.instance.cacheFightMgr:cacheFightWavePush(arg_5_0)
-	FightDataMgr.instance.cacheFightMgr:cacheFightWavePush(arg_5_0)
+function FightDataHelper.cacheFightWavePush(fightData)
+	local mgr = FightLocalDataMgr.instance.cacheFightMgr
+
+	mgr:cacheFightWavePush(fightData)
+
+	mgr = FightDataMgr.instance.cacheFightMgr
+
+	mgr:cacheFightWavePush(fightData)
 end
 
-function var_0_0.setRoundDataByProto(arg_6_0)
-	local var_6_0 = FightRoundData.New(arg_6_0)
+function FightDataHelper.setRoundDataByProto(proto)
+	local fightRoundData = FightRoundData.New(proto)
 
 	if isDebugBuild then
-		local var_6_1 = FightDataUtil.coverData(var_6_0)
+		local originRoundData = FightDataUtil.coverData(fightRoundData)
 
-		FightLocalDataMgr.instance.roundMgr:setOriginRoundData(var_6_1)
-		FightDataMgr.instance.roundMgr:setOriginRoundData(var_6_1)
-		FightDataMgr.instance.protoCacheMgr:addRoundProto(arg_6_0)
+		FightLocalDataMgr.instance.roundMgr:setOriginRoundData(originRoundData)
+		FightDataMgr.instance.roundMgr:setOriginRoundData(originRoundData)
+		FightDataMgr.instance.protoCacheMgr:addRoundProto(proto)
 	end
 
-	FightLocalDataMgr.instance.roundMgr:setRoundData(var_6_0)
-	FightDataMgr.instance.roundMgr:setRoundData(var_6_0)
+	FightLocalDataMgr.instance.roundMgr:setRoundData(fightRoundData)
+	FightDataMgr.instance.roundMgr:setRoundData(fightRoundData)
 end
 
-function var_0_0.getBloodPool(arg_7_0)
-	local var_7_0 = var_0_0.teamDataMgr
-	local var_7_1 = var_7_0 and var_7_0[arg_7_0]
+function FightDataHelper.getBloodPool(teamType)
+	local teamDataMgr = FightDataHelper.teamDataMgr
+	local teamData = teamDataMgr and teamDataMgr[teamType]
 
-	return var_7_1 and var_7_1.bloodPool
+	return teamData and teamData.bloodPool
 end
 
-var_0_0.initDataMgr()
+function FightDataHelper.getHeatScale(teamType)
+	local teamDataMgr = FightDataHelper.teamDataMgr
+	local teamData = teamDataMgr and teamDataMgr[teamType]
 
-return var_0_0
+	return teamData and teamData.heatScale
+end
+
+FightDataHelper.initDataMgr()
+
+return FightDataHelper

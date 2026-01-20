@@ -1,29 +1,32 @@
-﻿module("modules.logic.fight.system.work.FightWorkPlayAroundDownRank", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkPlayAroundDownRank.lua
 
-local var_0_0 = class("FightWorkPlayAroundDownRank", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkPlayAroundDownRank", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
-		arg_1_0:onDone(true)
+local FightWorkPlayAroundDownRank = class("FightWorkPlayAroundDownRank", FightEffectBase)
+
+function FightWorkPlayAroundDownRank:onStart()
+	if not FightCardDataHelper.cardChangeIsMySide(self.actEffectData) then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0.actEffectData.effectNum
-	local var_1_1 = FightPlayCardModel.instance:getUsedCards()[var_1_0]
+	local index = self.actEffectData.effectNum
+	local usedCards = FightPlayCardModel.instance:getUsedCards()
+	local usedCard = usedCards[index]
 
-	if var_1_1 then
-		local var_1_2 = var_1_1.skillId
+	if usedCard then
+		local oldSkillId = usedCard.skillId
 
-		FightDataUtil.coverData(arg_1_0.actEffectData.cardInfo, var_1_1)
-		arg_1_0:com_sendFightEvent(FightEvent.PlayCardAroundDownRank, var_1_0, var_1_2)
+		FightDataUtil.coverData(self.actEffectData.cardInfo, usedCard)
+		self:com_sendFightEvent(FightEvent.PlayCardAroundDownRank, index, oldSkillId)
 	end
 
-	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+	self:com_registTimer(self._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkPlayAroundDownRank:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkPlayAroundDownRank

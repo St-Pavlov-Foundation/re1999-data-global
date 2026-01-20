@@ -1,52 +1,54 @@
-﻿module("modules.spine.SpineFpsMgr", package.seeall)
+﻿-- chunkname: @modules/spine/SpineFpsMgr.lua
 
-local var_0_0 = class("SpineFpsMgr")
-local var_0_1 = 30
+module("modules.spine.SpineFpsMgr", package.seeall)
 
-var_0_0.FightScene = "FightScene"
-var_0_0.Story = "Story"
-var_0_0.Module = {
-	[var_0_0.FightScene] = 60,
-	[var_0_0.Story] = 60
+local SpineFpsMgr = class("SpineFpsMgr")
+local DefaultFps = 30
+
+SpineFpsMgr.FightScene = "FightScene"
+SpineFpsMgr.Story = "Story"
+SpineFpsMgr.Module = {
+	[SpineFpsMgr.FightScene] = 60,
+	[SpineFpsMgr.Story] = 60
 }
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._moduleKey2FpsDict = {}
+function SpineFpsMgr:ctor()
+	self._moduleKey2FpsDict = {}
 end
 
-function var_0_0.set(arg_2_0, arg_2_1)
-	local var_2_0 = var_0_0.Module[arg_2_1]
+function SpineFpsMgr:set(moduleKey)
+	local fps = SpineFpsMgr.Module[moduleKey]
 
-	if var_2_0 then
-		arg_2_0._moduleKey2FpsDict[arg_2_1] = var_2_0
+	if fps then
+		self._moduleKey2FpsDict[moduleKey] = fps
 
-		arg_2_0:_updateFps()
+		self:_updateFps()
 	else
-		logError("key not in SpineFpsMgr.Module: " .. arg_2_1)
+		logError("key not in SpineFpsMgr.Module: " .. moduleKey)
 	end
 end
 
-function var_0_0.remove(arg_3_0, arg_3_1)
-	if arg_3_0._moduleKey2FpsDict[arg_3_1] then
-		arg_3_0._moduleKey2FpsDict[arg_3_1] = nil
+function SpineFpsMgr:remove(moduleKey)
+	if self._moduleKey2FpsDict[moduleKey] then
+		self._moduleKey2FpsDict[moduleKey] = nil
 
-		arg_3_0:_updateFps()
+		self:_updateFps()
 	end
 end
 
-function var_0_0._updateFps(arg_4_0)
-	local var_4_0 = var_0_1
+function SpineFpsMgr:_updateFps()
+	local targetFps = DefaultFps
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._moduleKey2FpsDict) do
-		if var_4_0 < iter_4_1 then
-			var_4_0 = iter_4_1
+	for _, fps in pairs(self._moduleKey2FpsDict) do
+		if targetFps < fps then
+			targetFps = fps
 		end
 	end
 
-	Spine.Unity.SkeletonAnimation.SetTargetFps(var_4_0)
-	Spine.Unity.SkeletonGraphic.SetTargetFps(var_4_0)
+	Spine.Unity.SkeletonAnimation.SetTargetFps(targetFps)
+	Spine.Unity.SkeletonGraphic.SetTargetFps(targetFps)
 end
 
-var_0_0.instance = var_0_0.New()
+SpineFpsMgr.instance = SpineFpsMgr.New()
 
-return var_0_0
+return SpineFpsMgr

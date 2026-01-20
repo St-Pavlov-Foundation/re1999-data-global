@@ -1,54 +1,60 @@
-﻿module("modules.logic.tower.model.TowerSubEpisodeMo", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerSubEpisodeMo.lua
 
-local var_0_0 = pureTable("TowerSubEpisodeMo")
+module("modules.logic.tower.model.TowerSubEpisodeMo", package.seeall)
 
-function var_0_0.updateInfo(arg_1_0, arg_1_1)
-	arg_1_0.episodeId = arg_1_1.episodeId
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.heros = arg_1_1.heros
-	arg_1_0.assistBossId = arg_1_1.assistBossId
-	arg_1_0.heroIds = {}
-	arg_1_0.equipUids = {}
-	arg_1_0.trialHeroIds = {}
+local TowerSubEpisodeMo = pureTable("TowerSubEpisodeMo")
 
-	if arg_1_0.heros then
-		for iter_1_0 = 1, #arg_1_0.heros do
-			local var_1_0 = arg_1_0.heros[iter_1_0]
+function TowerSubEpisodeMo:updateInfo(info)
+	self.episodeId = info.episodeId
+	self.status = info.status
+	self.heros = info.heros
+	self.assistBossId = info.assistBossId
+	self.heroIds = {}
+	self.equipUids = {}
+	self.trialHeroIds = {}
 
-			arg_1_0.heroIds[iter_1_0] = var_1_0 and var_1_0.heroId or 0
-			arg_1_0.trialHeroIds[iter_1_0] = var_1_0 and var_1_0.trialId or 0
+	if self.heros then
+		for i = 1, #self.heros do
+			local hero = self.heros[i]
 
-			if var_1_0 and var_1_0.equipUid and #var_1_0.equipUid > 0 then
-				arg_1_0.equipUids[iter_1_0] = {}
+			self.heroIds[i] = hero and hero.heroId or 0
+			self.trialHeroIds[i] = hero and hero.trialId or 0
 
-				for iter_1_1 = 1, #var_1_0.equipUid do
-					table.insert(arg_1_0.equipUids[iter_1_0], var_1_0.equipUid[iter_1_1])
+			if hero and hero.equipUid and #hero.equipUid > 0 then
+				self.equipUids[i] = {}
+
+				for j = 1, #hero.equipUid do
+					table.insert(self.equipUids[i], hero.equipUid[j])
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getHeros(arg_2_0, arg_2_1)
-	if arg_2_0.status == 1 and arg_2_0.heroIds then
-		for iter_2_0 = 1, #arg_2_0.heroIds do
-			arg_2_1[arg_2_0.heroIds[iter_2_0]] = 1
+function TowerSubEpisodeMo:getHeros(dict)
+	if self.status == 1 and self.heroIds then
+		for i = 1, #self.heroIds do
+			local heroId = self.heroIds[i]
+
+			dict[heroId] = 1
 		end
 	end
 end
 
-function var_0_0.getAssistBossId(arg_3_0, arg_3_1)
-	if arg_3_0.status == 1 and arg_3_0.assistBossId then
-		arg_3_1[arg_3_0.assistBossId] = 1
+function TowerSubEpisodeMo:getAssistBossId(dict)
+	if self.status == 1 and self.assistBossId then
+		dict[self.assistBossId] = 1
 	end
 end
 
-function var_0_0.getTrialHeros(arg_4_0, arg_4_1)
-	if arg_4_0.status == 1 and arg_4_0.trialHeroIds then
-		for iter_4_0 = 1, #arg_4_0.trialHeroIds do
-			arg_4_1[arg_4_0.trialHeroIds[iter_4_0]] = 1
+function TowerSubEpisodeMo:getTrialHeros(dict)
+	if self.status == 1 and self.trialHeroIds then
+		for i = 1, #self.trialHeroIds do
+			local trialHeroId = self.trialHeroIds[i]
+
+			dict[trialHeroId] = 1
 		end
 	end
 end
 
-return var_0_0
+return TowerSubEpisodeMo

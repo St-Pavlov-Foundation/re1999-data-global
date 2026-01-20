@@ -1,108 +1,110 @@
-﻿module("modules.logic.activity.view.LinkageActivity_Page2", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_Page2.lua
 
-local var_0_0 = class("LinkageActivity_Page2", LinkageActivity_PageBase)
+module("modules.logic.activity.view.LinkageActivity_Page2", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
+local LinkageActivity_Page2 = class("LinkageActivity_Page2", LinkageActivity_PageBase)
 
-	arg_1_0._rewardItemList = {}
-	arg_1_0._videoItemList = {}
-	arg_1_0._curVideoIndex = false
+function LinkageActivity_Page2:ctor(...)
+	LinkageActivity_Page2.super.ctor(self, ...)
+
+	self._rewardItemList = {}
+	self._videoItemList = {}
+	self._curVideoIndex = false
 end
 
-function var_0_0.onDestroyView(arg_2_0)
-	arg_2_0._curVideoIndex = false
+function LinkageActivity_Page2:onDestroyView()
+	self._curVideoIndex = false
 
-	GameUtil.onDestroyViewMemberList(arg_2_0, "_rewardItemList")
-	GameUtil.onDestroyViewMemberList(arg_2_0, "_videoItemList")
-	var_0_0.super.onDestroyView(arg_2_0)
+	GameUtil.onDestroyViewMemberList(self, "_rewardItemList")
+	GameUtil.onDestroyViewMemberList(self, "_videoItemList")
+	LinkageActivity_Page2.super.onDestroyView(self)
 end
 
-function var_0_0.addReward(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_3.New({
-		parent = arg_3_0,
-		baseViewContainer = arg_3_0:baseViewContainer()
+function LinkageActivity_Page2:addReward(index, go, clsDefine)
+	local item = clsDefine.New({
+		parent = self,
+		baseViewContainer = self:baseViewContainer()
 	})
 
-	var_3_0:setIndex(arg_3_1)
-	var_3_0:init(arg_3_2)
-	table.insert(arg_3_0._rewardItemList, var_3_0)
+	item:setIndex(index)
+	item:init(go)
+	table.insert(self._rewardItemList, item)
 
-	return var_3_0
+	return item
 end
 
-function var_0_0.addVideo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_3.New({
-		parent = arg_4_0,
-		baseViewContainer = arg_4_0:baseViewContainer()
+function LinkageActivity_Page2:addVideo(index, go, clsDefine)
+	local item = clsDefine.New({
+		parent = self,
+		baseViewContainer = self:baseViewContainer()
 	})
 
-	var_4_0:setIndex(arg_4_1)
-	var_4_0:init(arg_4_2)
-	table.insert(arg_4_0._videoItemList, var_4_0)
+	item:setIndex(index)
+	item:init(go)
+	table.insert(self._videoItemList, item)
 
-	return var_4_0
+	return item
 end
 
-function var_0_0.curVideoIndex(arg_5_0)
-	return arg_5_0._curVideoIndex
+function LinkageActivity_Page2:curVideoIndex()
+	return self._curVideoIndex
 end
 
-function var_0_0.getReward(arg_6_0, arg_6_1)
-	return arg_6_0._rewardItemList[arg_6_1]
+function LinkageActivity_Page2:getReward(index)
+	return self._rewardItemList[index]
 end
 
-function var_0_0.getVideo(arg_7_0, arg_7_1)
-	return arg_7_0._videoItemList[arg_7_1]
+function LinkageActivity_Page2:getVideo(index)
+	return self._videoItemList[index]
 end
 
-function var_0_0.selectedVideo(arg_8_0, arg_8_1)
-	if arg_8_0._curVideoIndex == arg_8_1 then
+function LinkageActivity_Page2:selectedVideo(index)
+	if self._curVideoIndex == index then
 		return
 	end
 
-	local var_8_0 = arg_8_0._curVideoIndex == false
-	local var_8_1 = arg_8_0._curVideoIndex
+	local isFirst = self._curVideoIndex == false
+	local lastIndex = self._curVideoIndex
 
-	arg_8_0._curVideoIndex = arg_8_1
+	self._curVideoIndex = index
 
-	arg_8_0:onSelectedVideo(arg_8_1, var_8_1, var_8_0)
+	self:onSelectedVideo(index, lastIndex, isFirst)
 end
 
-function var_0_0.onUpdateMO(arg_9_0)
-	arg_9_0:_onUpdateMO_rewardList()
-	arg_9_0:_onUpdateMO_videoList()
+function LinkageActivity_Page2:onUpdateMO()
+	self:_onUpdateMO_rewardList()
+	self:_onUpdateMO_videoList()
 end
 
-function var_0_0._onUpdateMO_rewardList(arg_10_0)
-	local var_10_0 = arg_10_0:getTempDataList()
+function LinkageActivity_Page2:_onUpdateMO_rewardList()
+	local dataList = self:getTempDataList()
 
-	if var_10_0 then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._rewardItemList) do
-			iter_10_1:onUpdateMO(var_10_0[iter_10_0])
+	if dataList then
+		for i, item in ipairs(self._rewardItemList) do
+			item:onUpdateMO(dataList[i])
 		end
 	end
 end
 
-function var_0_0._onUpdateMO_videoList(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._videoItemList) do
-		local var_11_0 = arg_11_0:getLinkageActivityCO_res_video(iter_11_0)
-		local var_11_1 = {
-			videoName = var_11_0
+function LinkageActivity_Page2:_onUpdateMO_videoList()
+	for i, item in ipairs(self._videoItemList) do
+		local videoName = self:getLinkageActivityCO_res_video(i)
+		local data = {
+			videoName = videoName
 		}
 
-		iter_11_1:onUpdateMO(var_11_1)
+		item:onUpdateMO(data)
 	end
 end
 
-function var_0_0.onSelectedVideo(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+function LinkageActivity_Page2:onSelectedVideo(index, lastIndex, isFirst)
 	assert(false, "please override this function")
 end
 
-function var_0_0.onPostSelectedPage(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0 == arg_13_1 then
-		arg_13_0:_onUpdateMO_videoList()
+function LinkageActivity_Page2:onPostSelectedPage(curPage, lastPage)
+	if self == curPage then
+		self:_onUpdateMO_videoList()
 	end
 end
 
-return var_0_0
+return LinkageActivity_Page2

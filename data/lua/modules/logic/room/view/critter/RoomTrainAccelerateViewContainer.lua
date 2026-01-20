@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.critter.RoomTrainAccelerateViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/critter/RoomTrainAccelerateViewContainer.lua
 
-local var_0_0 = class("RoomTrainAccelerateViewContainer", BaseViewContainer)
+module("modules.logic.room.view.critter.RoomTrainAccelerateViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomTrainAccelerateViewContainer = class("RoomTrainAccelerateViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomTrainAccelerateView.New())
+function RoomTrainAccelerateViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomTrainAccelerateView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomTrainAccelerateViewContainer

@@ -1,113 +1,119 @@
-﻿module("modules.logic.versionactivity1_4.act136.view.Activity136View", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/view/Activity136View.lua
 
-local var_0_0 = class("Activity136View", BaseView)
+module("modules.logic.versionactivity1_4.act136.view.Activity136View", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "timebg/#txt_remainTime")
-	arg_1_0._goUninvite = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite")
-	arg_1_0._btnInvite = gohelper.findChildButton(arg_1_0.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
-	arg_1_0._goInvited = gohelper.findChild(arg_1_0.viewGO, "#go_inviteContent/#go_invited")
+local Activity136View = class("Activity136View", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity136View:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "timebg/#txt_remainTime")
+	self._goUninvite = gohelper.findChild(self.viewGO, "#go_inviteContent/#go_uninvite")
+	self._btnInvite = gohelper.findChildButton(self.viewGO, "#go_inviteContent/#go_uninvite/#btn_invite")
+	self._goInvited = gohelper.findChild(self.viewGO, "#go_inviteContent/#go_invited")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnInvite:AddClickListener(arg_2_0._btnInviteOnClick, arg_2_0)
-	Activity136Controller.instance:registerCallback(Activity136Event.ActivityDataUpdate, arg_2_0.refresh, arg_2_0)
+function Activity136View:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnInvite:AddClickListener(self._btnInviteOnClick, self)
+	Activity136Controller.instance:registerCallback(Activity136Event.ActivityDataUpdate, self.refresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnInvite:RemoveClickListener()
-	Activity136Controller.instance:unregisterCallback(Activity136Event.ActivityDataUpdate, arg_3_0.refresh, arg_3_0)
+function Activity136View:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnInvite:RemoveClickListener()
+	Activity136Controller.instance:unregisterCallback(Activity136Event.ActivityDataUpdate, self.refresh, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity136View:_editableInitView()
 	return
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function Activity136View:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnInviteOnClick(arg_6_0)
+function Activity136View:_btnInviteOnClick()
 	Activity136Controller.instance:openActivity136ChoiceView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refresh()
-	TaskDispatcher.cancelTask(arg_7_0.refreshRemainTime, arg_7_0)
-	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, TimeUtil.OneMinuteSecond)
+function Activity136View:onOpen()
+	self:refresh()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0.refresh(arg_8_0)
-	arg_8_0:refreshStatus()
-	arg_8_0:refreshRemainTime()
+function Activity136View:refresh()
+	self:refreshStatus()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshStatus(arg_9_0)
-	local var_9_0 = Activity136Model.instance:hasReceivedCharacter()
+function Activity136View:refreshStatus()
+	local hasReceive = Activity136Model.instance:hasReceivedCharacter()
 
-	gohelper.setActive(arg_9_0._goInvited, var_9_0)
-	gohelper.setActive(arg_9_0._goUninvite, not var_9_0)
+	gohelper.setActive(self._goInvited, hasReceive)
+	gohelper.setActive(self._goUninvite, not hasReceive)
 end
 
-function var_0_0.refreshRemainTime(arg_10_0)
-	local var_10_0 = Activity136Model.instance:getCurActivity136Id()
-	local var_10_1 = ActivityModel.instance:getActMO(var_10_0)
-	local var_10_2, var_10_3 = arg_10_0:_getRemainTimeStr(var_10_1)
+function Activity136View:refreshRemainTime()
+	local actId = Activity136Controller.instance:actId()
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
+	local timeStr, isEnd = self:_getRemainTimeStr(actInfoMo)
 
-	arg_10_0._txtremainTime.text = string.format(luaLang("remain"), var_10_2)
+	self._txtremainTime.text = string.format(luaLang("remain"), timeStr)
 
-	if var_10_3 then
-		TaskDispatcher.cancelTask(arg_10_0.refreshRemainTime, arg_10_0)
+	if isEnd then
+		TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
-	if arg_11_0.viewParam and arg_11_0.viewParam.callback then
-		arg_11_0.viewParam.callback(arg_11_0.viewParam.callbackObj)
+function Activity136View:onClose()
+	if self.viewParam and self.viewParam.callback then
+		self.viewParam.callback(self.viewParam.callbackObj)
 	end
 
-	TaskDispatcher.cancelTask(arg_11_0.refreshRemainTime, arg_11_0)
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0._getRemainTimeStr(arg_12_0, arg_12_1)
-	local var_12_0
+function Activity136View:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+end
 
-	if arg_12_1 then
-		var_12_0 = arg_12_1:getRealEndTimeStamp() - ServerTime.now()
+function Activity136View:_getRemainTimeStr(actInfoMo)
+	local offsetSecond
+
+	if actInfoMo then
+		offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 	end
 
-	if not var_12_0 or var_12_0 <= 0 then
+	if not offsetSecond or offsetSecond <= 0 then
 		return luaLang("turnback_end"), true
 	end
 
-	local var_12_1, var_12_2, var_12_3, var_12_4 = TimeUtil.secondsToDDHHMMSS(var_12_0)
+	local day, hour, min, _ = TimeUtil.secondsToDDHHMMSS(offsetSecond)
 
-	if var_12_1 > 0 then
-		local var_12_5 = luaLang("time_day")
+	if day > 0 then
+		local time_day = luaLang("time_day")
 
 		if LangSettings.instance:isEn() then
-			var_12_5 = var_12_5 .. " "
+			time_day = time_day .. " "
 		end
 
-		return (var_12_1 .. var_12_5) .. var_12_2 .. luaLang("time_hour2")
+		return (day .. time_day) .. hour .. luaLang("time_hour2")
 	end
 
-	if var_12_2 > 0 then
-		return var_12_2 .. luaLang("time_hour2")
+	if hour > 0 then
+		return hour .. luaLang("time_hour2")
 	end
 
-	if var_12_3 <= 0 then
-		var_12_3 = "<1"
+	if min <= 0 then
+		min = "<1"
 	end
 
-	return var_12_3 .. luaLang("time_minute2")
+	return min .. luaLang("time_minute2")
 end
 
-return var_0_0
+return Activity136View

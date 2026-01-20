@@ -1,98 +1,101 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyResultMo", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyResultMo.lua
 
-local var_0_0 = pureTable("OdysseyResultMo")
+module("modules.logic.sp01.odyssey.model.OdysseyResultMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._iswin = arg_1_1.result == OdysseyEnum.Result.Win
-	arg_1_0._rewardList = arg_1_1.reward and arg_1_1.reward.rewards
-	arg_1_0._element = arg_1_1.element
-	arg_1_0._elementId = arg_1_1.element.id
-	arg_1_0._resultconfig = OdysseyConfig.instance:getElementFightConfig(arg_1_0._elementId)
-	arg_1_0._fighttype = arg_1_0._resultconfig.type
-	arg_1_0._isMyth = arg_1_0._resultconfig.type == OdysseyEnum.FightType.Myth
-	arg_1_0._isConquer = arg_1_0._resultconfig.type == OdysseyEnum.FightType.Conquer
+local OdysseyResultMo = pureTable("OdysseyResultMo")
 
-	if arg_1_0._isMyth and arg_1_0._element and arg_1_0._element.mythicEle then
-		local var_1_0 = arg_1_0._element.mythicEle
+function OdysseyResultMo:init(info)
+	self._iswin = info.result == OdysseyEnum.Result.Win
+	self._rewardList = info.reward and info.reward.rewards
+	self._element = info.element
+	self._elementId = info.element.id
+	self._resultconfig = OdysseyConfig.instance:getElementFightConfig(self._elementId)
+	self._fighttype = self._resultconfig.type
+	self._isMyth = self._resultconfig.type == OdysseyEnum.FightType.Myth
+	self._isConquer = self._resultconfig.type == OdysseyEnum.FightType.Conquer
 
-		arg_1_0._fightRecord = var_1_0.evaluation
-		arg_1_0._fightFinishedTaskIds = var_1_0.finishedTaskIds
+	if self._isMyth and self._element and self._element.mythicEle then
+		local info = self._element.mythicEle
+
+		self._fightRecord = info.evaluation
+		self._fightFinishedTaskIds = info.finishedTaskIds
 	end
 
-	if arg_1_0._isConquer and arg_1_0._element and arg_1_0._element.conquestEle then
-		arg_1_0._conquestEle = arg_1_0._element.conquestEle
+	if self._isConquer and self._element and self._element.conquestEle then
+		self._conquestEle = self._element.conquestEle
 	end
 end
 
-function var_0_0.getConquestEle(arg_2_0)
-	return arg_2_0._conquestEle
+function OdysseyResultMo:getConquestEle()
+	return self._conquestEle
 end
 
-function var_0_0.getElementId(arg_3_0)
-	return arg_3_0._elementId
+function OdysseyResultMo:getElementId()
+	return self._elementId
 end
 
-function var_0_0.checkFightTypeIsMyth(arg_4_0)
-	return arg_4_0._isMyth
+function OdysseyResultMo:checkFightTypeIsMyth()
+	return self._isMyth
 end
 
-function var_0_0.checkFightTypeIsConquer(arg_5_0)
-	return arg_5_0._isConquer
+function OdysseyResultMo:checkFightTypeIsConquer()
+	return self._isConquer
 end
 
-function var_0_0.getFightRecord(arg_6_0)
-	return arg_6_0._fightRecord
+function OdysseyResultMo:getFightRecord()
+	return self._fightRecord
 end
 
-function var_0_0.getFightFinishedTaskIdList(arg_7_0)
-	return arg_7_0._fightFinishedTaskIds
+function OdysseyResultMo:getFightFinishedTaskIdList()
+	return self._fightFinishedTaskIds
 end
 
-function var_0_0.canShowMythSuccess(arg_8_0)
-	return arg_8_0._fightFinishedTaskIds and #arg_8_0._fightFinishedTaskIds > 0
+function OdysseyResultMo:canShowMythSuccess()
+	return self._fightFinishedTaskIds and #self._fightFinishedTaskIds > 0
 end
 
-function var_0_0.getRewardList(arg_9_0)
-	local var_9_0 = {}
+function OdysseyResultMo:getRewardList()
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._rewardList) do
-		local var_9_1 = iter_9_1.itemReward
-		local var_9_2 = iter_9_1.expReward
-		local var_9_3 = iter_9_1.talentReward
+	for index, reward in ipairs(self._rewardList) do
+		local itemReward = reward.itemReward
+		local expReward = reward.expReward
+		local talentReward = reward.talentReward
 
-		if var_9_1 and var_9_1.count > 0 then
-			local var_9_4 = {
-				rewardType = OdysseyEnum.ResultRewardType.Item
-			}
-			local var_9_5 = OdysseyConfig.instance:getItemConfig(var_9_1.itemId)
+		if itemReward and itemReward.count > 0 then
+			local mo = {}
 
-			var_9_4.itemType = var_9_5.type
-			var_9_4.itemId = var_9_5.id
-			var_9_4.count = var_9_1.count
+			mo.rewardType = OdysseyEnum.ResultRewardType.Item
 
-			table.insert(var_9_0, var_9_4)
+			local itemco = OdysseyConfig.instance:getItemConfig(itemReward.itemId)
+
+			mo.itemType = itemco.type
+			mo.itemId = itemco.id
+			mo.count = itemReward.count
+
+			table.insert(list, mo)
 		end
 
-		if var_9_2 and var_9_2.exp > 0 then
-			local var_9_6 = {
-				rewardType = OdysseyEnum.ResultRewardType.Exp,
-				count = var_9_2.exp
-			}
+		if expReward and expReward.exp > 0 then
+			local mo = {}
 
-			table.insert(var_9_0, var_9_6)
+			mo.rewardType = OdysseyEnum.ResultRewardType.Exp
+			mo.count = expReward.exp
+
+			table.insert(list, mo)
 		end
 
-		if var_9_3 and var_9_3.point > 0 then
-			local var_9_7 = {
-				rewardType = OdysseyEnum.ResultRewardType.Talent,
-				count = var_9_3.point
-			}
+		if talentReward and talentReward.point > 0 then
+			local mo = {}
 
-			table.insert(var_9_0, var_9_7)
+			mo.rewardType = OdysseyEnum.ResultRewardType.Talent
+			mo.count = talentReward.point
+
+			table.insert(list, mo)
 		end
 	end
 
-	return var_9_0
+	return list
 end
 
-return var_0_0
+return OdysseyResultMo

@@ -1,146 +1,148 @@
-﻿module("modules.logic.season.view1_4.Season1_4EquipSelfChoiceView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_4/Season1_4EquipSelfChoiceView.lua
 
-local var_0_0 = class("Season1_4EquipSelfChoiceView", BaseView)
+module("modules.logic.season.view1_4.Season1_4EquipSelfChoiceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg2")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/mask/#scroll_item")
-	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "root/mask/#scroll_item/viewport/itemcontent/#go_carditem")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_ok")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0.goempty = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_empty")
-	arg_1_0.gocardinfo = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_cardinfo")
-	arg_1_0.txtcardname = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/#go_cardinfo/#txt_curcardname")
-	arg_1_0.godescitem = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_cardinfo/#scroll_info/Viewport/Content/#go_descitem")
+local Season1_4EquipSelfChoiceView = class("Season1_4EquipSelfChoiceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season1_4EquipSelfChoiceView:onInitView()
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "root/bg/#simage_bg2")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "root/mask/#scroll_item")
+	self._gocarditem = gohelper.findChild(self.viewGO, "root/mask/#scroll_item/viewport/itemcontent/#go_carditem")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_ok")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self.goempty = gohelper.findChild(self.viewGO, "root/right/#go_empty")
+	self.gocardinfo = gohelper.findChild(self.viewGO, "root/right/#go_cardinfo")
+	self.txtcardname = gohelper.findChildTextMesh(self.viewGO, "root/right/#go_cardinfo/#txt_curcardname")
+	self.godescitem = gohelper.findChild(self.viewGO, "root/right/#go_cardinfo/#scroll_info/Viewport/Content/#go_descitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity104Controller.instance, Activity104Event.SelectSelfChoiceCard, arg_2_0.selectSelfChoiceCard, arg_2_0)
+function Season1_4EquipSelfChoiceView:addEvents()
+	self._btnclose1:AddClickListener(self._btnclose1OnClick, self)
+	self._btnok:AddClickListener(self._btnokOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.SelectSelfChoiceCard, self.selectSelfChoiceCard, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose1:RemoveClickListener()
-	arg_3_0._btnok:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity104Controller.instance, Activity104Event.SelectSelfChoiceCard, arg_3_0.selectSelfChoiceCard, arg_3_0)
+function Season1_4EquipSelfChoiceView:removeEvents()
+	self._btnclose1:RemoveClickListener()
+	self._btnok:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.SelectSelfChoiceCard, self.selectSelfChoiceCard, self)
 end
 
-function var_0_0._btnclose1OnClick(arg_4_0)
+function Season1_4EquipSelfChoiceView:_btnclose1OnClick()
 	return
 end
 
-function var_0_0._btnokOnClick(arg_5_0)
-	Activity104EquipSelfChoiceController.instance:sendSelectCard(arg_5_0.handleSendChoice, arg_5_0)
+function Season1_4EquipSelfChoiceView:_btnokOnClick()
+	Activity104EquipSelfChoiceController.instance:sendSelectCard(self.handleSendChoice, self)
 end
 
-function var_0_0._btncloseOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function Season1_4EquipSelfChoiceView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
-	arg_7_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
+function Season1_4EquipSelfChoiceView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_leftdown"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_rightup"))
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._simagebg1:UnLoadImage()
-	arg_8_0._simagebg2:UnLoadImage()
+function Season1_4EquipSelfChoiceView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 	Activity104EquipSelfChoiceController.instance:onCloseView()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam.actId
-	local var_9_1 = arg_9_0.viewParam.costItemUid
+function Season1_4EquipSelfChoiceView:onOpen()
+	local actId = self.viewParam.actId
+	local costItemUid = self.viewParam.costItemUid
 
-	if not Activity104EquipSelfChoiceController:checkOpenParam(var_9_0, var_9_1) then
-		arg_9_0:delayClose()
+	if not Activity104EquipSelfChoiceController:checkOpenParam(actId, costItemUid) then
+		self:delayClose()
 
 		return
 	end
 
-	arg_9_0:selectSelfChoiceCard()
-	Activity104EquipSelfChoiceController.instance:onOpenView(var_9_0, var_9_1)
+	self:selectSelfChoiceCard()
+	Activity104EquipSelfChoiceController.instance:onOpenView(actId, costItemUid)
 end
 
-function var_0_0.selectSelfChoiceCard(arg_10_0, arg_10_1)
-	local var_10_0 = SeasonConfig.instance:getSeasonEquipCo(arg_10_1)
+function Season1_4EquipSelfChoiceView:selectSelfChoiceCard(itemId)
+	local itemCo = SeasonConfig.instance:getSeasonEquipCo(itemId)
 
-	if not var_10_0 then
-		gohelper.setActive(arg_10_0.goempty, true)
-		gohelper.setActive(arg_10_0.gocardinfo, false)
+	if not itemCo then
+		gohelper.setActive(self.goempty, true)
+		gohelper.setActive(self.gocardinfo, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0.goempty, false)
-	gohelper.setActive(arg_10_0.gocardinfo, true)
+	gohelper.setActive(self.goempty, false)
+	gohelper.setActive(self.gocardinfo, true)
 
-	arg_10_0.txtcardname.text = var_10_0.name
+	self.txtcardname.text = itemCo.name
 
-	local var_10_1 = SeasonEquipMetaUtils.getSkillEffectStrList(var_10_0)
-	local var_10_2 = SeasonEquipMetaUtils.getCareerColorBrightBg(arg_10_1)
+	local skillList = SeasonEquipMetaUtils.getSkillEffectStrList(itemCo)
+	local colorStr = SeasonEquipMetaUtils.getCareerColorBrightBg(itemId)
 
-	if not arg_10_0._skillItems then
-		arg_10_0._skillItems = {}
+	if not self._skillItems then
+		self._skillItems = {}
 	end
 
-	for iter_10_0 = 1, math.max(#arg_10_0._skillItems, #var_10_1) do
-		local var_10_3 = arg_10_0:getOrCreateSkillText(iter_10_0)
+	for i = 1, math.max(#self._skillItems, #skillList) do
+		local item = self:getOrCreateSkillText(i)
 
-		if var_10_1[iter_10_0] then
-			gohelper.setActive(var_10_3.go, true)
+		if skillList[i] then
+			gohelper.setActive(item.go, true)
 
-			var_10_3.txtDesc.text = var_10_1[iter_10_0]
+			item.txtDesc.text = skillList[i]
 
-			SLFramework.UGUI.GuiHelper.SetColor(var_10_3.txtDesc, var_10_2)
-			SLFramework.UGUI.GuiHelper.SetColor(var_10_3.imagePoint, var_10_2)
+			SLFramework.UGUI.GuiHelper.SetColor(item.txtDesc, colorStr)
+			SLFramework.UGUI.GuiHelper.SetColor(item.imagePoint, colorStr)
 		else
-			gohelper.setActive(var_10_3.go, false)
+			gohelper.setActive(item.go, false)
 		end
 	end
 end
 
-function var_0_0.getOrCreateSkillText(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._skillItems[arg_11_1]
+function Season1_4EquipSelfChoiceView:getOrCreateSkillText(index)
+	local item = self._skillItems[index]
 
-	if not var_11_0 then
-		var_11_0 = arg_11_0:getUserDataTb_()
-		var_11_0.go = gohelper.cloneInPlace(arg_11_0.godescitem, "desc" .. tostring(arg_11_1))
-		var_11_0.txtDesc = gohelper.findChildText(var_11_0.go, "txt_desc")
-		var_11_0.imagePoint = gohelper.findChildImage(var_11_0.go, "dot")
-		arg_11_0._skillItems[arg_11_1] = var_11_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self.godescitem, "desc" .. tostring(index))
+		item.txtDesc = gohelper.findChildText(item.go, "txt_desc")
+		item.imagePoint = gohelper.findChildImage(item.go, "dot")
+		self._skillItems[index] = item
 	end
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.closeThis, arg_12_0)
+function Season1_4EquipSelfChoiceView:onClose()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-function var_0_0.delayClose(arg_13_0)
-	TaskDispatcher.runDelay(arg_13_0.closeThis, arg_13_0, 0.001)
+function Season1_4EquipSelfChoiceView:delayClose()
+	TaskDispatcher.runDelay(self.closeThis, self, 0.001)
 end
 
-function var_0_0.handleSendChoice(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_2 ~= 0 then
+function Season1_4EquipSelfChoiceView:handleSendChoice(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_14_0:closeThis()
+	self:closeThis()
 
-	if arg_14_0.viewParam.successCall then
-		arg_14_0.viewParam.successCall(arg_14_0.viewParam.successCallObj)
+	if self.viewParam.successCall then
+		self.viewParam.successCall(self.viewParam.successCallObj)
 	end
 end
 
-return var_0_0
+return Season1_4EquipSelfChoiceView

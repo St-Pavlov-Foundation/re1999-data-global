@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.define.FairyLandEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/define/FairyLandEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_9.fairyland.define.FairyLandEnum", package.seeall)
 
-var_0_0.ElementId = 100701
-var_0_0.StartCameraPosX = 228
-var_0_0.StartCameraPosY = 199
-var_0_0.ElementType = {
+local FairyLandEnum = _M
+
+FairyLandEnum.ElementId = 100701
+FairyLandEnum.StartCameraPosX = 228
+FairyLandEnum.StartCameraPosY = 199
+FairyLandEnum.ElementType = {
 	Text = 999,
 	NPC = 6,
 	Character = 1,
@@ -15,33 +17,33 @@ var_0_0.ElementType = {
 	Circle = 2,
 	Square = 3
 }
-var_0_0.ConfigType2ElementType = {
-	[0] = var_0_0.ElementType.Character,
-	var_0_0.ElementType.Circle,
-	var_0_0.ElementType.NPC,
-	var_0_0.ElementType.Square,
-	var_0_0.ElementType.NPC,
-	var_0_0.ElementType.Triangle,
-	var_0_0.ElementType.NPC,
-	var_0_0.ElementType.Rectangle,
-	var_0_0.ElementType.NPC,
-	var_0_0.ElementType.Door
+FairyLandEnum.ConfigType2ElementType = {
+	[0] = FairyLandEnum.ElementType.Character,
+	FairyLandEnum.ElementType.Circle,
+	FairyLandEnum.ElementType.NPC,
+	FairyLandEnum.ElementType.Square,
+	FairyLandEnum.ElementType.NPC,
+	FairyLandEnum.ElementType.Triangle,
+	FairyLandEnum.ElementType.NPC,
+	FairyLandEnum.ElementType.Rectangle,
+	FairyLandEnum.ElementType.NPC,
+	FairyLandEnum.ElementType.Door
 }
-var_0_0.ShapeState = {
+FairyLandEnum.ShapeState = {
 	Hide = 4,
 	LockClick = 3,
 	CanClick = 1,
 	NextCanClick = 2
 }
-var_0_0.DialogType = {
+FairyLandEnum.DialogType = {
 	Bubble = 1,
 	Option = 2
 }
-var_0_0.Puzzle2ShapeType = {
+FairyLandEnum.Puzzle2ShapeType = {
 	1,
 	2,
 	3,
 	[10] = 4
 }
 
-return var_0_0
+return FairyLandEnum

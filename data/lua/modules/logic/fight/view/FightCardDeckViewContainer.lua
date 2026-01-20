@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.view.FightCardDeckViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCardDeckViewContainer.lua
 
-local var_0_0 = class("FightCardDeckViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightCardDeckViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightCardDeckViewContainer = class("FightCardDeckViewContainer", BaseViewContainer)
+
+function FightCardDeckViewContainer:buildViews()
 	return {
 		FightCardDeckView.New()
 	}
 end
 
-return var_0_0
+return FightCardDeckViewContainer

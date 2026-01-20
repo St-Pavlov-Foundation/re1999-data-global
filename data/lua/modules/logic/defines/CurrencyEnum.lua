@@ -1,8 +1,10 @@
-﻿module("modules.logic.defines.CurrencyEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/CurrencyEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.CurrencyEnum", package.seeall)
 
-var_0_0.CurrencyType = {
+local CurrencyEnum = _M
+
+CurrencyEnum.CurrencyType = {
 	V1a8Dungeon = 1804,
 	SkinCard = 12,
 	V1a7Dungeon = 1701,
@@ -50,6 +52,8 @@ var_0_0.CurrencyType = {
 	V1a6CachotCurrency = 1604,
 	V1a6Dungeon = 1605,
 	OrangeSoul = 11,
+	V3a2Dungeon = 3203,
+	V3a2Rouge = 3201,
 	Act145 = 1515,
 	Planet = 1301,
 	LeiMiTeBei = 111,
@@ -58,20 +62,20 @@ var_0_0.CurrencyType = {
 	V2a3Dungeon = 2301,
 	RoleStory = 24
 }
-var_0_0.SubType = {
+CurrencyEnum.SubType = {
 	RoomFishingResourceItem = 3101
 }
-var_0_0.AllCurrency = {
-	var_0_0.CurrencyType.Diamond,
-	var_0_0.CurrencyType.FreeDiamondCoupon,
-	var_0_0.CurrencyType.Gold,
-	var_0_0.CurrencyType.Power,
-	var_0_0.CurrencyType.HeroExperience,
-	var_0_0.CurrencyType.Competition,
-	var_0_0.CurrencyType.BlueSoul,
-	var_0_0.CurrencyType.OrangeSoul
+CurrencyEnum.AllCurrency = {
+	CurrencyEnum.CurrencyType.Diamond,
+	CurrencyEnum.CurrencyType.FreeDiamondCoupon,
+	CurrencyEnum.CurrencyType.Gold,
+	CurrencyEnum.CurrencyType.Power,
+	CurrencyEnum.CurrencyType.HeroExperience,
+	CurrencyEnum.CurrencyType.Competition,
+	CurrencyEnum.CurrencyType.BlueSoul,
+	CurrencyEnum.CurrencyType.OrangeSoul
 }
-var_0_0.PayDiamondExchangeSource = {
+CurrencyEnum.PayDiamondExchangeSource = {
 	Store = 4,
 	HUD = 1,
 	SkinStore = 5,
@@ -79,4 +83,4 @@ var_0_0.PayDiamondExchangeSource = {
 	Power = 2
 }
 
-return var_0_0
+return CurrencyEnum

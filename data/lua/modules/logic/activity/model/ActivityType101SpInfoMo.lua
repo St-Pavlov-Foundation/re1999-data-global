@@ -1,38 +1,40 @@
-﻿module("modules.logic.activity.model.ActivityType101SpInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityType101SpInfoMo.lua
 
-local var_0_0 = pureTable("ActivityType101SpInfoMo")
-local var_0_1 = 0
-local var_0_2 = 1
-local var_0_3 = 2
+module("modules.logic.activity.model.ActivityType101SpInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.state = var_0_1
+local ActivityType101SpInfoMo = pureTable("ActivityType101SpInfoMo")
+local kState_None = 0
+local kState_Available = 1
+local kState_Received = 2
+
+function ActivityType101SpInfoMo:ctor()
+	self.id = 0
+	self.state = kState_None
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.state = arg_2_1.state
+function ActivityType101SpInfoMo:init(act101SpInfo)
+	self.id = act101SpInfo.id
+	self.state = act101SpInfo.state
 end
 
-function var_0_0.isNotCompleted(arg_3_0)
-	return arg_3_0.state == var_0_1
+function ActivityType101SpInfoMo:isNotCompleted()
+	return self.state == kState_None
 end
 
-function var_0_0.isAvailable(arg_4_0)
-	return arg_4_0.state == var_0_2
+function ActivityType101SpInfoMo:isAvailable()
+	return self.state == kState_Available
 end
 
-function var_0_0.isReceived(arg_5_0)
-	return arg_5_0.state == var_0_3
+function ActivityType101SpInfoMo:isReceived()
+	return self.state == kState_Received
 end
 
-function var_0_0.isNone(arg_6_0)
-	return arg_6_0.state == var_0_1
+function ActivityType101SpInfoMo:isNone()
+	return self.state == kState_None
 end
 
-function var_0_0.setState_Received(arg_7_0)
-	arg_7_0.state = var_0_3
+function ActivityType101SpInfoMo:setState_Received()
+	self.state = kState_Received
 end
 
-return var_0_0
+return ActivityType101SpInfoMo

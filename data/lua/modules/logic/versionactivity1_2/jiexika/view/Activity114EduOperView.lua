@@ -1,106 +1,108 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114EduOperView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114EduOperView.lua
 
-local var_0_0 = class("Activity114EduOperView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114EduOperView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._path = arg_1_1
+local Activity114EduOperView = class("Activity114EduOperView", BaseView)
+
+function Activity114EduOperView:ctor(path)
+	self._path = path
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.go = gohelper.findChild(arg_2_0.viewGO, arg_2_0._path)
-	arg_2_0._btnclose = gohelper.findChildButtonWithAudio(arg_2_0.go, "#btn_close")
-	arg_2_0._btneduoper = gohelper.findChildButtonWithAudio(arg_2_0.go, "title/#btn_eduoper")
+function Activity114EduOperView:onInitView()
+	self.go = gohelper.findChild(self.viewGO, self._path)
+	self._btnclose = gohelper.findChildButtonWithAudio(self.go, "#btn_close")
+	self._btneduoper = gohelper.findChildButtonWithAudio(self.go, "title/#btn_eduoper")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnclose:AddClickListener(arg_3_0._hideGo, arg_3_0)
-	arg_3_0._btneduoper:AddClickListener(arg_3_0.onLearn, arg_3_0)
-	arg_3_0.viewContainer:registerCallback(Activity114Event.ShowHideEduOper, arg_3_0.changeGoShow, arg_3_0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnRoundUpdate, arg_3_0.updateLock, arg_3_0)
-	Activity114Controller.instance:registerCallback(Activity114Event.OnAttentionUpdate, arg_3_0.updateFailRate, arg_3_0)
+function Activity114EduOperView:addEvents()
+	self._btnclose:AddClickListener(self._hideGo, self)
+	self._btneduoper:AddClickListener(self.onLearn, self)
+	self.viewContainer:registerCallback(Activity114Event.ShowHideEduOper, self.changeGoShow, self)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnRoundUpdate, self.updateLock, self)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnAttentionUpdate, self.updateFailRate, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnclose:RemoveClickListener()
-	arg_4_0._btneduoper:RemoveClickListener()
-	arg_4_0.viewContainer:unregisterCallback(Activity114Event.ShowHideEduOper, arg_4_0.changeGoShow, arg_4_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnRoundUpdate, arg_4_0.updateLock, arg_4_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnAttentionUpdate, arg_4_0.updateFailRate, arg_4_0)
+function Activity114EduOperView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btneduoper:RemoveClickListener()
+	self.viewContainer:unregisterCallback(Activity114Event.ShowHideEduOper, self.changeGoShow, self)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnRoundUpdate, self.updateLock, self)
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnAttentionUpdate, self.updateFailRate, self)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function Activity114EduOperView:_editableInitView()
 	Activity114Model.instance.eduSelectAttr = nil
-	arg_5_0.attrTb = {}
+	self.attrTb = {}
 
-	for iter_5_0 = 1, Activity114Enum.Attr.End - 1 do
-		local var_5_0 = arg_5_0:getUserDataTb_()
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		local attrCom = self:getUserDataTb_()
 
-		var_5_0.btn = gohelper.findChildButtonWithAudio(arg_5_0.go, "#btn_attr" .. iter_5_0)
-		var_5_0.normal = gohelper.findChild(arg_5_0.go, "#btn_attr" .. iter_5_0 .. "/normal")
-		var_5_0.select = gohelper.findChild(arg_5_0.go, "#btn_attr" .. iter_5_0 .. "/select")
-		var_5_0.txtFailRate = gohelper.findChildTextMesh(arg_5_0.go, "#btn_attr" .. iter_5_0 .. "/select/#txt_failRate")
+		attrCom.btn = gohelper.findChildButtonWithAudio(self.go, "#btn_attr" .. i)
+		attrCom.normal = gohelper.findChild(self.go, "#btn_attr" .. i .. "/normal")
+		attrCom.select = gohelper.findChild(self.go, "#btn_attr" .. i .. "/select")
+		attrCom.txtFailRate = gohelper.findChildTextMesh(self.go, "#btn_attr" .. i .. "/select/#txt_failRate")
 
-		arg_5_0:addClickCb(var_5_0.btn, arg_5_0.selectLearnAttr, arg_5_0, iter_5_0)
+		self:addClickCb(attrCom.btn, self.selectLearnAttr, self, i)
 
-		arg_5_0.attrTb[iter_5_0] = var_5_0
+		self.attrTb[i] = attrCom
 	end
 
-	arg_5_0:updateFailRate()
-	arg_5_0:_hideGo()
+	self:updateFailRate()
+	self:_hideGo()
 end
 
-function var_0_0.changeGoShow(arg_6_0, arg_6_1)
-	if arg_6_0.go.activeSelf == arg_6_1 then
+function Activity114EduOperView:changeGoShow(isShow)
+	if self.go.activeSelf == isShow then
 		return
 	end
 
-	if arg_6_1 then
-		gohelper.setActive(arg_6_0.go, true)
+	if isShow then
+		gohelper.setActive(self.go, true)
 
-		local var_6_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.JieXiKaLastEduSelect, 0)
+		local lastSelectNum = PlayerPrefsHelper.getNumber(PlayerPrefsKey.JieXiKaLastEduSelect, 0)
 
-		arg_6_0:selectLearnAttr(var_6_0 > 0 and var_6_0 or nil, true)
+		self:selectLearnAttr(lastSelectNum > 0 and lastSelectNum or nil, true)
 	end
 end
 
-function var_0_0.updateFailRate(arg_7_0)
-	for iter_7_0 = 1, Activity114Enum.Attr.End - 1 do
-		local var_7_0 = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, iter_7_0)
-		local var_7_1 = 0
+function Activity114EduOperView:updateFailRate()
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		local eventCo = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, i)
+		local subAttention = 0
 
-		if var_7_0 and var_7_0.successVerify[Activity114Enum.AddAttrType.Attention] then
-			var_7_1 = var_7_0.successVerify[Activity114Enum.AddAttrType.Attention]
+		if eventCo and eventCo.successVerify[Activity114Enum.AddAttrType.Attention] then
+			subAttention = eventCo.successVerify[Activity114Enum.AddAttrType.Attention]
 		end
 
-		local var_7_2 = Activity114Config.instance:getEduSuccessRate(Activity114Model.instance.id, iter_7_0, Activity114Model.instance.serverData.attention + var_7_1)
+		local rate = Activity114Config.instance:getEduSuccessRate(Activity114Model.instance.id, i, Activity114Model.instance.serverData.attention + subAttention)
 
-		arg_7_0.attrTb[iter_7_0].txtFailRate.text = formatLuaLang("versionactivity_1_2_114success_rate", var_7_2)
+		self.attrTb[i].txtFailRate.text = formatLuaLang("versionactivity_1_2_114success_rate", rate)
 	end
 end
 
-function var_0_0.selectLearnAttr(arg_8_0, arg_8_1, arg_8_2)
-	if Activity114Model.instance.eduSelectAttr ~= arg_8_1 then
-		if not arg_8_2 then
+function Activity114EduOperView:selectLearnAttr(attrType, isFirst)
+	if Activity114Model.instance.eduSelectAttr ~= attrType then
+		if not isFirst then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_subject_choose)
 		end
 
-		Activity114Model.instance.eduSelectAttr = arg_8_1
+		Activity114Model.instance.eduSelectAttr = attrType
 
-		PlayerPrefsHelper.setNumber(PlayerPrefsKey.JieXiKaLastEduSelect, arg_8_1)
-		arg_8_0.viewContainer:dispatchEvent(Activity114Event.EduSelectAttrChange)
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.JieXiKaLastEduSelect, attrType)
+		self.viewContainer:dispatchEvent(Activity114Event.EduSelectAttrChange)
 	end
 
-	for iter_8_0 = 1, Activity114Enum.Attr.End - 1 do
-		gohelper.setActive(arg_8_0.attrTb[iter_8_0].select, iter_8_0 == arg_8_1)
-		gohelper.setActive(arg_8_0.attrTb[iter_8_0].normal, iter_8_0 ~= arg_8_1)
+	for i = 1, Activity114Enum.Attr.End - 1 do
+		gohelper.setActive(self.attrTb[i].select, i == attrType)
+		gohelper.setActive(self.attrTb[i].normal, i ~= attrType)
 	end
 end
 
-function var_0_0.onLearn(arg_9_0)
+function Activity114EduOperView:onLearn()
 	if Activity114Model.instance:isEnd() then
 		Activity114Controller.instance:alertActivityEndMsgBox()
 
@@ -113,57 +115,57 @@ function var_0_0.onLearn(arg_9_0)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Copies)
 
-	local var_9_0 = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, Activity114Model.instance.eduSelectAttr)
-	local var_9_1 = {
+	local eventCo = Activity114Config.instance:getEduEventCo(Activity114Model.instance.id, Activity114Model.instance.eduSelectAttr)
+	local context = {
 		type = Activity114Enum.EventType.Edu,
-		eventId = var_9_0.config.id
+		eventId = eventCo.config.id
 	}
 
-	Activity114Model.instance:beginEvent(var_9_1)
-	arg_9_0:_hideGo()
+	Activity114Model.instance:beginEvent(context)
+	self:_hideGo()
 end
 
-function var_0_0.updateLock(arg_10_0)
-	if not arg_10_0.go.activeSelf then
+function Activity114EduOperView:updateLock()
+	if not self.go.activeSelf then
 		return
 	end
 
-	local var_10_0 = Activity114Model.instance.serverData.week
-	local var_10_1 = Activity114Model.instance.serverData.day
-	local var_10_2 = Activity114Model.instance.serverData.round
-	local var_10_3 = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, var_10_1, var_10_2)
+	local week = Activity114Model.instance.serverData.week
+	local nowDay = Activity114Model.instance.serverData.day
+	local nowRound = Activity114Model.instance.serverData.round
+	local roundCo = Activity114Config.instance:getRoundCo(Activity114Model.instance.id, nowDay, nowRound)
 
-	if not var_10_3["banButton" .. var_10_0] then
+	if not roundCo["banButton" .. week] then
 		return
 	end
 
-	local var_10_4 = string.splitToNumber(var_10_3["banButton" .. var_10_0], "#")
+	local banTypes = string.splitToNumber(roundCo["banButton" .. week], "#")
 
-	for iter_10_0, iter_10_1 in pairs(var_10_4) do
-		if iter_10_1 == Activity114Enum.EventType.Edu then
-			arg_10_0:_hideGo()
+	for _, v in pairs(banTypes) do
+		if v == Activity114Enum.EventType.Edu then
+			self:_hideGo()
 
 			return
 		end
 	end
 end
 
-function var_0_0._hideGo(arg_11_0)
+function Activity114EduOperView:_hideGo()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feedback_close)
-	gohelper.setActive(arg_11_0.go, false)
-	arg_11_0.viewContainer:dispatchEvent(Activity114Event.ShowHideEduOper, false)
+	gohelper.setActive(self.go, false)
+	self.viewContainer:dispatchEvent(Activity114Event.ShowHideEduOper, false)
 
 	if Activity114Model.instance.eduSelectAttr then
 		Activity114Model.instance.eduSelectAttr = nil
 
-		arg_11_0.viewContainer:dispatchEvent(Activity114Event.EduSelectAttrChange)
+		self.viewContainer:dispatchEvent(Activity114Event.EduSelectAttrChange)
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
+function Activity114EduOperView:onClose()
 	Activity114Model.instance.eduSelectAttr = nil
 
-	arg_12_0.viewContainer:dispatchEvent(Activity114Event.EduSelectAttrChange)
+	self.viewContainer:dispatchEvent(Activity114Event.EduSelectAttrChange)
 end
 
-return var_0_0
+return Activity114EduOperView

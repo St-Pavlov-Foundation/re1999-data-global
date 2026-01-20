@@ -1,76 +1,78 @@
-﻿module("modules.logic.room.model.map.RoomShowBlockListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomShowBlockListModel.lua
 
-local var_0_0 = class("RoomShowBlockListModel", ListScrollModel)
+module("modules.logic.room.model.map.RoomShowBlockListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomShowBlockListModel = class("RoomShowBlockListModel", ListScrollModel)
+
+function RoomShowBlockListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomShowBlockListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomShowBlockListModel:clear()
+	RoomShowBlockListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0:clearMapData()
+function RoomShowBlockListModel:_clearData()
+	self:clearMapData()
 
-	arg_4_0._curPreviewIndex = 0
+	self._curPreviewIndex = 0
 end
 
-function var_0_0.clearMapData(arg_5_0)
-	var_0_0.super.clear(arg_5_0)
+function RoomShowBlockListModel:clearMapData()
+	RoomShowBlockListModel.super.clear(self)
 
-	arg_5_0._selectBlockId = nil
-	arg_5_0._packageId = nil
-	arg_5_0._selectIndex = 1
+	self._selectBlockId = nil
+	self._packageId = nil
+	self._selectIndex = 1
 end
 
-function var_0_0.addScrollView(arg_6_0, arg_6_1)
-	var_0_0.super.addScrollView(arg_6_0, arg_6_1)
+function RoomShowBlockListModel:addScrollView(scrollView)
+	RoomShowBlockListModel.super.addScrollView(self, scrollView)
 end
 
-function var_0_0.setShowBlockList(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1
-	local var_7_2 = RoomInventoryBlockModel.instance:getSelectInventoryBlockId()
-	local var_7_3 = arg_7_0:_getPackageMOList()
+function RoomShowBlockListModel:setShowBlockList()
+	local moList = {}
+	local selectBlockId
+	local sblockId = RoomInventoryBlockModel.instance:getSelectInventoryBlockId()
+	local packageMOList = self:_getPackageMOList()
 
-	for iter_7_0 = 1, #var_7_3 do
-		local var_7_4 = var_7_3[iter_7_0]
+	for i = 1, #packageMOList do
+		local packageMO = packageMOList[i]
 
-		if arg_7_0._isSelectPackage or arg_7_0:_checkTheme(var_7_4.id) then
-			local var_7_5 = var_7_4:getUnUseBlockMOList()
+		if self._isSelectPackage or self:_checkTheme(packageMO.id) then
+			local unUseMOList = packageMO:getUnUseBlockMOList()
 
-			for iter_7_1, iter_7_2 in ipairs(var_7_5) do
-				if arg_7_0:_checkBlockMO(iter_7_2) then
-					if var_7_2 == iter_7_2.id then
-						var_7_1 = var_7_2
+			for _, blockMO in ipairs(unUseMOList) do
+				if self:_checkBlockMO(blockMO) then
+					if sblockId == blockMO.id then
+						selectBlockId = sblockId
 					end
 
-					table.insert(var_7_0, iter_7_2)
+					table.insert(moList, blockMO)
 				end
 			end
 		end
 	end
 
-	table.sort(var_7_0, arg_7_0._sortFunction)
+	table.sort(moList, self._sortFunction)
 
-	if var_7_1 == nil then
-		var_7_1 = arg_7_0:_findSelectId(var_7_0)
+	if selectBlockId == nil then
+		selectBlockId = self:_findSelectId(moList)
 	end
 
-	arg_7_0:setList(var_7_0)
-	arg_7_0:setSelect(var_7_1)
+	self:setList(moList)
+	self:setSelect(selectBlockId)
 
-	arg_7_0._curPreviewIndex = 0
+	self._curPreviewIndex = 0
 end
 
-function var_0_0._getPackageMOList(arg_8_0)
-	if arg_8_0._isSelectPackage then
+function RoomShowBlockListModel:_getPackageMOList()
+	if self._isSelectPackage then
 		return {
 			RoomInventoryBlockModel.instance:getCurPackageMO()
 		}
@@ -79,108 +81,108 @@ function var_0_0._getPackageMOList(arg_8_0)
 	return RoomInventoryBlockModel.instance:getInventoryBlockPackageMOList()
 end
 
-function var_0_0._findSelectId(arg_9_0, arg_9_1)
-	if not arg_9_1 or #arg_9_1 < 1 then
+function RoomShowBlockListModel:_findSelectId(blockMOList)
+	if not blockMOList or #blockMOList < 1 then
 		return nil
 	end
 
-	local var_9_0 = arg_9_0._selectIndex and arg_9_1[arg_9_0._selectIndex] or arg_9_1[#arg_9_1]
+	local blockMO = self._selectIndex and blockMOList[self._selectIndex] or blockMOList[#blockMOList]
 
-	return var_9_0 and var_9_0.id or nil
+	return blockMO and blockMO.id or nil
 end
 
-function var_0_0._sortFunction(arg_10_0, arg_10_1)
-	local var_10_0 = var_0_0._getBirthdayBlockIndex(arg_10_0)
-	local var_10_1 = var_0_0._getBirthdayBlockIndex(arg_10_1)
+function RoomShowBlockListModel._sortFunction(a, b)
+	local aBirIndex = RoomShowBlockListModel._getBirthdayBlockIndex(a)
+	local bBirIndex = RoomShowBlockListModel._getBirthdayBlockIndex(b)
 
-	if var_10_0 ~= var_10_1 then
-		return var_10_0 < var_10_1
+	if aBirIndex ~= bBirIndex then
+		return aBirIndex < bBirIndex
 	end
 
-	local var_10_2 = RoomInventoryBlockModel.instance:getBlockSortIndex(arg_10_0.packageId, arg_10_0.id)
-	local var_10_3 = RoomInventoryBlockModel.instance:getBlockSortIndex(arg_10_1.packageId, arg_10_1.id)
+	local aIndex = RoomInventoryBlockModel.instance:getBlockSortIndex(a.packageId, a.id)
+	local bIndex = RoomInventoryBlockModel.instance:getBlockSortIndex(b.packageId, b.id)
 
-	if var_10_2 ~= var_10_3 then
-		return var_10_2 < var_10_3
+	if aIndex ~= bIndex then
+		return aIndex < bIndex
 	end
 
-	if arg_10_0.packageId ~= arg_10_1.packageId then
-		return arg_10_0.packageId > arg_10_1.packageId
+	if a.packageId ~= b.packageId then
+		return a.packageId > b.packageId
 	end
 
-	if arg_10_0.packageOrder ~= arg_10_1.packageOrder then
-		return arg_10_0.packageOrder < arg_10_1.packageOrder
+	if a.packageOrder ~= b.packageOrder then
+		return a.packageOrder < b.packageOrder
 	end
 end
 
-function var_0_0._getBirthdayBlockIndex(arg_11_0)
-	local var_11_0 = RoomConfig.instance:getSpecialBlockConfig(arg_11_0.id)
+function RoomShowBlockListModel._getBirthdayBlockIndex(a)
+	local aBlockCfg = RoomConfig.instance:getSpecialBlockConfig(a.id)
 
-	if var_11_0 and RoomCharacterModel.instance:isOnBirthday(var_11_0.heroId) then
+	if aBlockCfg and RoomCharacterModel.instance:isOnBirthday(aBlockCfg.heroId) then
 		return 1
 	end
 
 	return 9999
 end
 
-function var_0_0.clearSelect(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._scrollViews) do
-		iter_12_1:setSelect(nil)
+function RoomShowBlockListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_12_0._selectBlockId = nil
+	self._selectBlockId = nil
 end
 
-function var_0_0._refreshSelect(arg_13_0)
-	local var_13_0
-	local var_13_1 = arg_13_0:getList()
+function RoomShowBlockListModel:_refreshSelect()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		if iter_13_1.id == arg_13_0._selectBlockId then
-			arg_13_0._selectIndex = iter_13_0
-			var_13_0 = iter_13_1
+	for i, mo in ipairs(moList) do
+		if mo.id == self._selectBlockId then
+			self._selectIndex = i
+			selectMO = mo
 
 			break
 		end
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(arg_13_0._scrollViews) do
-		iter_13_3:setSelect(var_13_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_14_0, arg_14_1)
-	arg_14_0._selectBlockId = arg_14_1
+function RoomShowBlockListModel:setSelect(blockId)
+	self._selectBlockId = blockId
 
-	RoomInventoryBlockModel.instance:setSelectInventoryBlockId(arg_14_1)
-	arg_14_0:_refreshSelect()
+	RoomInventoryBlockModel.instance:setSelectInventoryBlockId(blockId)
+	self:_refreshSelect()
 end
 
-function var_0_0.initShowBlock(arg_15_0)
-	arg_15_0._packageId = nil
-	arg_15_0._selectIndex = 1
+function RoomShowBlockListModel:initShowBlock()
+	self._packageId = nil
+	self._selectIndex = 1
 
-	arg_15_0:setShowBlockList()
+	self:setShowBlockList()
 end
 
-function var_0_0._checkBlockMO(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1:getBlockDefineCfg()
+function RoomShowBlockListModel:_checkBlockMO(blockMO)
+	local blockDefineConfig = blockMO:getBlockDefineCfg()
 
-	if not var_16_0 then
+	if not blockDefineConfig then
 		return false
 	end
 
-	if not arg_16_0:_isEmptyList(arg_16_0._filterExcludeList) then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._filterExcludeList) do
-			if var_16_0.resIdCountDict[iter_16_1] then
+	if not self:_isEmptyList(self._filterExcludeList) then
+		for _, resId in ipairs(self._filterExcludeList) do
+			if blockDefineConfig.resIdCountDict[resId] then
 				return false
 			end
 		end
 	end
 
-	if not arg_16_0:_isEmptyList(arg_16_0._filterIncludeList) then
-		for iter_16_2, iter_16_3 in ipairs(arg_16_0._filterIncludeList) do
-			if var_16_0.resIdCountDict[iter_16_3] then
+	if not self:_isEmptyList(self._filterIncludeList) then
+		for _, resId in ipairs(self._filterIncludeList) do
+			if blockDefineConfig.resIdCountDict[resId] then
 				return true
 			end
 		end
@@ -191,13 +193,13 @@ function var_0_0._checkBlockMO(arg_16_0, arg_16_1)
 	return false
 end
 
-function var_0_0._checkTheme(arg_17_0, arg_17_1)
-	local var_17_0 = RoomThemeFilterListModel.instance
+function RoomShowBlockListModel:_checkTheme(packageId)
+	local tRoomThemeFilterListModel = RoomThemeFilterListModel.instance
 
-	if not var_17_0:getIsAll() and var_17_0:getSelectCount() > 0 then
-		local var_17_1 = RoomConfig.instance:getThemeIdByItem(arg_17_1, MaterialEnum.MaterialType.BlockPackage)
+	if not tRoomThemeFilterListModel:getIsAll() and tRoomThemeFilterListModel:getSelectCount() > 0 then
+		local themeId = RoomConfig.instance:getThemeIdByItem(packageId, MaterialEnum.MaterialType.BlockPackage)
 
-		if not var_17_0:isSelectById(var_17_1) then
+		if not tRoomThemeFilterListModel:isSelectById(themeId) then
 			return false
 		end
 	end
@@ -205,100 +207,101 @@ function var_0_0._checkTheme(arg_17_0, arg_17_1)
 	return true
 end
 
-function var_0_0.setIsPackage(arg_18_0, arg_18_1)
-	arg_18_0._isSelectPackage = arg_18_1 == true
+function RoomShowBlockListModel:setIsPackage(isPackage)
+	self._isSelectPackage = isPackage == true
 end
 
-function var_0_0.getIsPackage(arg_19_0)
-	return arg_19_0._isSelectPackage
+function RoomShowBlockListModel:getIsPackage()
+	return self._isSelectPackage
 end
 
-local var_0_1 = 1
-local var_0_2 = 20
-local var_0_3 = 100
+local DEFAULT_START_INDEX = 1
+local MIN_PREVIEW_COUNT = 20
+local MAX_PREVIEW_COUNT = 100
 
-function var_0_0.getPreviewBlockIdList(arg_20_0, arg_20_1)
-	arg_20_1 = arg_20_1 or var_0_1
+function RoomShowBlockListModel:getPreviewBlockIdList(startIndex)
+	startIndex = startIndex or DEFAULT_START_INDEX
 
-	local var_20_0 = {}
-	local var_20_1 = arg_20_0:getList()
-	local var_20_2 = #var_20_1
-	local var_20_3 = var_20_2 <= arg_20_0._curPreviewIndex
-	local var_20_4 = arg_20_1 <= var_20_2
-	local var_20_5 = arg_20_0._curPreviewIndex - arg_20_1 <= var_0_2
+	local resultList = {}
+	local list = self:getList()
+	local listCount = #list
+	local isPreviewAll = listCount <= self._curPreviewIndex
+	local isStartIndexValid = startIndex <= listCount
+	local remainPreviewCount = self._curPreviewIndex - startIndex
+	local isMinPreviewCount = remainPreviewCount <= MIN_PREVIEW_COUNT
 
-	if not var_20_3 and var_20_4 and var_20_5 then
-		local var_20_6 = arg_20_1 + var_0_3 - 1
-		local var_20_7
+	if not isPreviewAll and isStartIndexValid and isMinPreviewCount then
+		local endIndex = startIndex + MAX_PREVIEW_COUNT - 1
+		local previewIndex
 
-		for iter_20_0 = arg_20_1, var_20_6 do
-			local var_20_8 = var_20_1[iter_20_0]
+		for i = startIndex, endIndex do
+			local blockMO = list[i]
 
-			if not var_20_8 then
+			if not blockMO then
 				break
 			end
 
-			var_20_0[#var_20_0 + 1] = var_20_8.id
-			var_20_7 = iter_20_0
+			resultList[#resultList + 1] = blockMO.id
+			previewIndex = i
 		end
 
-		if var_20_7 then
-			arg_20_0._curPreviewIndex = var_20_7
+		if previewIndex then
+			self._curPreviewIndex = previewIndex
 		end
 	end
 
-	return var_20_0
+	return resultList
 end
 
-function var_0_0.setFilterResType(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0._filterIncludeList = {}
-	arg_21_0._filterExcludeList = {}
+function RoomShowBlockListModel:setFilterResType(includeList, excludeList)
+	self._filterIncludeList = {}
+	self._filterExcludeList = {}
 
-	arg_21_0:_setList(arg_21_0._filterIncludeList, arg_21_1)
-	arg_21_0:_setList(arg_21_0._filterExcludeList, arg_21_2)
+	self:_setList(self._filterIncludeList, includeList)
+	self:_setList(self._filterExcludeList, excludeList)
 end
 
-function var_0_0.isFilterType(arg_22_0, arg_22_1, arg_22_2)
-	if arg_22_0:_isSameValue(arg_22_0._filterIncludeList, arg_22_1) and arg_22_0:_isSameValue(arg_22_0._filterExcludeList, arg_22_2) then
+function RoomShowBlockListModel:isFilterType(includeList, excludeList)
+	if self:_isSameValue(self._filterIncludeList, includeList) and self:_isSameValue(self._filterExcludeList, excludeList) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isFilterTypeEmpty(arg_23_0)
-	return arg_23_0:_isEmptyList(arg_23_0._filterTypeList)
+function RoomShowBlockListModel:isFilterTypeEmpty()
+	return self:_isEmptyList(self._filterTypeList)
 end
 
-function var_0_0._setList(arg_24_0, arg_24_1, arg_24_2)
-	tabletool.addValues(arg_24_1, arg_24_2)
+function RoomShowBlockListModel:_setList(targetArray, addArray)
+	tabletool.addValues(targetArray, addArray)
 end
 
-function var_0_0._isListValue(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_2 and tabletool.indexOf(arg_25_1, arg_25_2) then
+function RoomShowBlockListModel:_isListValue(targetArray, value)
+	if value and tabletool.indexOf(targetArray, value) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._isSameValue(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_0:_isEmptyList(arg_26_1) and arg_26_0:_isEmptyList(arg_26_2) then
+function RoomShowBlockListModel:_isSameValue(targetArray, array)
+	if self:_isEmptyList(targetArray) and self:_isEmptyList(array) then
 		return true
 	end
 
-	if #arg_26_1 ~= #arg_26_2 then
+	if #targetArray ~= #array then
 		return false
 	end
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_2) do
-		if not tabletool.indexOf(arg_26_1, iter_26_1) then
+	for _, value in ipairs(array) do
+		if not tabletool.indexOf(targetArray, value) then
 			return false
 		end
 	end
 
-	for iter_26_2, iter_26_3 in ipairs(arg_26_1) do
-		if not tabletool.indexOf(arg_26_2, iter_26_3) then
+	for _, value in ipairs(targetArray) do
+		if not tabletool.indexOf(array, value) then
 			return false
 		end
 	end
@@ -306,10 +309,10 @@ function var_0_0._isSameValue(arg_26_0, arg_26_1, arg_26_2)
 	return true
 end
 
-function var_0_0._isEmptyList(arg_27_0, arg_27_1)
-	return arg_27_1 == nil or #arg_27_1 < 1
+function RoomShowBlockListModel:_isEmptyList(targetArray)
+	return targetArray == nil or #targetArray < 1
 end
 
-var_0_0.instance = var_0_0.New()
+RoomShowBlockListModel.instance = RoomShowBlockListModel.New()
 
-return var_0_0
+return RoomShowBlockListModel

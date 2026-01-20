@@ -1,45 +1,47 @@
-﻿module("modules.logic.survival.view.shelter.ShelterRestManagerViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterRestManagerViewContainer.lua
 
-local var_0_0 = class("ShelterRestManagerViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.ShelterRestManagerViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local ShelterRestManagerViewContainer = class("ShelterRestManagerViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "Panel/Right/#go_Rest/Scroll View"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes.itemRes
-	var_1_1.cellClass = ShelterRestHeroItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 240
-	var_1_1.cellHeight = 600
-	var_1_1.cellSpaceH = 30
-	var_1_1.startSpace = 10
-	arg_1_0.scrollView = LuaListScrollViewWithAnimator.New(SurvivalShelterRestListModel.instance, var_1_1)
+function ShelterRestManagerViewContainer:buildViews()
+	local views = {}
+	local scrollParam1 = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0.scrollView)
-	table.insert(var_1_0, ShelterRestManagerView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
-	table.insert(var_1_0, ShelterCurrencyView.New({
+	scrollParam1.scrollGOPath = "Panel/Right/#go_Rest/Scroll View"
+	scrollParam1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam1.prefabUrl = self._viewSetting.otherRes.itemRes
+	scrollParam1.cellClass = ShelterRestHeroItem
+	scrollParam1.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam1.lineCount = 1
+	scrollParam1.cellWidth = 240
+	scrollParam1.cellHeight = 600
+	scrollParam1.cellSpaceH = 30
+	scrollParam1.startSpace = 10
+	self.scrollView = LuaListScrollViewWithAnimator.New(SurvivalShelterRestListModel.instance, scrollParam1)
+
+	table.insert(views, self.scrollView)
+	table.insert(views, ShelterRestManagerView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+	table.insert(views, ShelterCurrencyView.New({
 		SurvivalEnum.CurrencyType.Build
 	}, "Panel/#go_topright"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function ShelterRestManagerViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-return var_0_0
+return ShelterRestManagerViewContainer

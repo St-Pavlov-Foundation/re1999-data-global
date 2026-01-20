@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/act168/lua_act168_map_1002.lua
+
+return {
 	{
 		0,
 		{

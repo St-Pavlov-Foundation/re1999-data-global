@@ -1,12 +1,14 @@
-﻿module("modules.logic.survival.model.map.SurvivalShrinkInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalShrinkInfoMo.lua
 
-local var_0_0 = pureTable("SurvivalShrinkInfoMo")
+module("modules.logic.survival.model.map.SurvivalShrinkInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.round = arg_1_1.round
-	arg_1_0.startTime = arg_1_1.startTime
-	arg_1_0.endTime = arg_1_1.endTime
-	arg_1_0.finalCircle = arg_1_1.finalCircle
+local SurvivalShrinkInfoMo = pureTable("SurvivalShrinkInfoMo")
+
+function SurvivalShrinkInfoMo:init(data)
+	self.round = data.round
+	self.startTime = data.startTime
+	self.endTime = data.endTime
+	self.finalCircle = data.finalCircle
 end
 
-return var_0_0
+return SurvivalShrinkInfoMo

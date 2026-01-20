@@ -1,42 +1,44 @@
-﻿module("modules.logic.sp01.assassinChase.view.AssassinChaseGameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassinChase/view/AssassinChaseGameViewContainer.lua
 
-local var_0_0 = class("AssassinChaseGameViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassinChase.view.AssassinChaseGameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AssassinChaseGameViewContainer = class("AssassinChaseGameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, AssassinChaseGameView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function AssassinChaseGameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, AssassinChaseGameView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function AssassinChaseGameViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideClose, arg_2_0)
+		self.navigateView:setOverrideClose(self.overrideClose, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.overrideClose(arg_3_0)
-	local var_3_0 = arg_3_0._views[1]
+function AssassinChaseGameViewContainer:overrideClose()
+	local view = self._views[1]
 
-	if var_3_0.state == AssassinChaseEnum.ViewState.Select and var_3_0.infoMo:isSelect() then
-		var_3_0:refreshUI()
+	if view.state == AssassinChaseEnum.ViewState.Select and view.infoMo:isSelect() then
+		view:refreshUI()
 
 		return
 	end
 
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return AssassinChaseGameViewContainer

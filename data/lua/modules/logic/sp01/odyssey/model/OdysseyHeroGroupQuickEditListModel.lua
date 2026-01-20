@@ -1,110 +1,120 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyHeroGroupQuickEditListModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyHeroGroupQuickEditListModel.lua
 
-local var_0_0 = class("OdysseyHeroGroupQuickEditListModel", HeroGroupQuickEditListModel)
+module("modules.logic.sp01.odyssey.model.OdysseyHeroGroupQuickEditListModel", package.seeall)
 
-function var_0_0.copyQuickEditCardList(arg_1_0)
-	local var_1_0
+local OdysseyHeroGroupQuickEditListModel = class("OdysseyHeroGroupQuickEditListModel", HeroGroupQuickEditListModel)
+
+function OdysseyHeroGroupQuickEditListModel:copyQuickEditCardList()
+	local moList
 
 	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
-		var_1_0 = {}
+		moList = {}
 	else
-		var_1_0 = CharacterBackpackCardListModel.instance:getCharacterCardList()
+		moList = CharacterBackpackCardListModel.instance:getCharacterCardList()
 	end
 
-	local var_1_1 = {}
-	local var_1_2 = {}
+	local newMOList = {}
+	local repeatHero = {}
 
-	arg_1_0._inTeamHeroUidMap = {}
-	arg_1_0._inTeamHeroUidList = {}
-	arg_1_0._originalHeroUidList = {}
-	arg_1_0._selectUid = nil
+	self._inTeamHeroUidMap = {}
+	self._inTeamHeroUidList = {}
+	self._originalHeroUidList = {}
+	self._selectUid = nil
 
-	local var_1_3 = HeroSingleGroupModel.instance:getList()
+	local alreadyList = HeroSingleGroupModel.instance:getList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-		local var_1_4 = OdysseyHeroGroupModel.instance:isPositionOpen(iter_1_0)
-		local var_1_5 = iter_1_1.heroUid
+	for pos, heroSingleGroupMO in ipairs(alreadyList) do
+		local posOpen = OdysseyHeroGroupModel.instance:isPositionOpen(pos)
+		local heroUid = heroSingleGroupMO.heroUid
 
-		if tonumber(var_1_5) > 0 and not var_1_2[var_1_5] then
-			table.insert(var_1_1, HeroModel.instance:getById(var_1_5))
+		if tonumber(heroUid) > 0 and not repeatHero[heroUid] then
+			table.insert(newMOList, HeroModel.instance:getById(heroUid))
 
-			if var_1_4 then
-				arg_1_0._inTeamHeroUidMap[var_1_5] = 1
+			if posOpen then
+				self._inTeamHeroUidMap[heroUid] = 1
 			end
 
-			var_1_2[var_1_5] = true
-		elseif HeroSingleGroupModel.instance:getByIndex(iter_1_0).trial then
-			table.insert(var_1_1, HeroGroupTrialModel.instance:getById(var_1_5))
+			repeatHero[heroUid] = true
+		else
+			local singleGroupMo = HeroSingleGroupModel.instance:getByIndex(pos)
 
-			if var_1_4 then
-				arg_1_0._inTeamHeroUidMap[var_1_5] = 1
-			end
+			if singleGroupMo.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroUid))
 
-			var_1_2[var_1_5] = true
-		end
-
-		if var_1_4 then
-			table.insert(arg_1_0._inTeamHeroUidList, var_1_5)
-			table.insert(arg_1_0._originalHeroUidList, var_1_5)
-		end
-	end
-
-	local var_1_6 = HeroGroupTrialModel.instance:getFilterList()
-
-	for iter_1_2, iter_1_3 in ipairs(var_1_6) do
-		if not var_1_2[iter_1_3.uid] then
-			table.insert(var_1_1, iter_1_3)
-		end
-	end
-
-	local var_1_7 = arg_1_0.isTowerBattle
-	local var_1_8 = arg_1_0.isWeekWalk_2
-	local var_1_9 = {}
-
-	if var_1_7 then
-		for iter_1_4 = #var_1_1, 1, -1 do
-			if TowerModel.instance:isHeroBan(var_1_1[iter_1_4].heroId) then
-				table.insert(var_1_9, var_1_1[iter_1_4])
-				table.remove(var_1_1, iter_1_4)
-			end
-		end
-	end
-
-	for iter_1_5, iter_1_6 in ipairs(var_1_0) do
-		if not var_1_2[iter_1_6.uid] then
-			var_1_2[iter_1_6.uid] = true
-
-			if arg_1_0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(iter_1_6.heroId) > 0 then
-					table.insert(var_1_9, iter_1_6)
-				else
-					table.insert(var_1_1, iter_1_6)
+				if posOpen then
+					self._inTeamHeroUidMap[heroUid] = 1
 				end
-			elseif var_1_8 then
-				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_1_6.heroId) > 0 then
-					table.insert(var_1_9, iter_1_6)
+
+				repeatHero[heroUid] = true
+			end
+		end
+
+		if posOpen then
+			table.insert(self._inTeamHeroUidList, heroUid)
+			table.insert(self._originalHeroUidList, heroUid)
+		end
+	end
+
+	local trialList = HeroGroupTrialModel.instance:getFilterList()
+
+	for i, heroMo in ipairs(trialList) do
+		if not repeatHero[heroMo.uid] then
+			table.insert(newMOList, heroMo)
+		end
+	end
+
+	local isTowerBattle = self.isTowerBattle
+	local isWeekWalk_2 = self.isWeekWalk_2
+	local deathList = {}
+
+	if isTowerBattle then
+		for i = #newMOList, 1, -1 do
+			if TowerModel.instance:isHeroBan(newMOList[i].heroId) then
+				table.insert(deathList, newMOList[i])
+				table.remove(newMOList, i)
+			end
+		end
+	end
+
+	for i, mo in ipairs(moList) do
+		if not repeatHero[mo.uid] then
+			repeatHero[mo.uid] = true
+
+			if self.adventure then
+				local cd = WeekWalkModel.instance:getCurMapHeroCd(mo.heroId)
+
+				if cd > 0 then
+					table.insert(deathList, mo)
 				else
-					table.insert(var_1_1, iter_1_6)
+					table.insert(newMOList, mo)
 				end
-			elseif var_1_7 then
-				if TowerModel.instance:isHeroBan(iter_1_6.heroId) then
-					table.insert(var_1_9, iter_1_6)
+			elseif isWeekWalk_2 then
+				local cd = WeekWalk_2Model.instance:getCurMapHeroCd(mo.heroId)
+
+				if cd > 0 then
+					table.insert(deathList, mo)
 				else
-					table.insert(var_1_1, iter_1_6)
+					table.insert(newMOList, mo)
+				end
+			elseif isTowerBattle then
+				if TowerModel.instance:isHeroBan(mo.heroId) then
+					table.insert(deathList, mo)
+				else
+					table.insert(newMOList, mo)
 				end
 			else
-				table.insert(var_1_1, iter_1_6)
+				table.insert(newMOList, mo)
 			end
 		end
 	end
 
-	if arg_1_0.adventure or var_1_7 or var_1_8 then
-		tabletool.addValues(var_1_1, var_1_9)
+	if self.adventure or isTowerBattle or isWeekWalk_2 then
+		tabletool.addValues(newMOList, deathList)
 	end
 
-	arg_1_0:setList(var_1_1)
+	self:setList(newMOList)
 end
 
-local var_0_1 = var_0_0.New()
+local instance = OdysseyHeroGroupQuickEditListModel.New()
 
-return var_0_0
+return OdysseyHeroGroupQuickEditListModel

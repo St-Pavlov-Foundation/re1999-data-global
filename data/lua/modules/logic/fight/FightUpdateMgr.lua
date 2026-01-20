@@ -1,67 +1,69 @@
-﻿module("modules.logic.fight.FightUpdateMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightUpdateMgr.lua
 
-local var_0_0 = class("FightUpdateMgr")
-local var_0_1 = FightUpdateItem
-local var_0_2 = Time
-local var_0_3 = {}
-local var_0_4 = 0
-local var_0_5 = 0
-local var_0_6 = 10
+module("modules.logic.fight.FightUpdateMgr", package.seeall)
 
-function var_0_0.registUpdate(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = var_0_1.New(arg_1_0, arg_1_1, arg_1_2)
+local FightUpdateMgr = class("FightUpdateMgr")
+local FightUpdateItem = FightUpdateItem
+local Time = Time
+local updateItems = {}
+local listCount = 0
+local updateTime = 0
+local clearTime = 10
 
-	var_0_4 = var_0_4 + 1
-	var_0_3[var_0_4] = var_1_0
+function FightUpdateMgr.registUpdate(func, handle, param)
+	local item = FightUpdateItem.New(func, handle, param)
 
-	return var_1_0
+	listCount = listCount + 1
+	updateItems[listCount] = item
+
+	return item
 end
 
-function var_0_0.cancelUpdate(arg_2_0)
-	if not arg_2_0 then
+function FightUpdateMgr.cancelUpdate(item)
+	if not item then
 		return
 	end
 
-	arg_2_0.isDone = true
+	item.isDone = true
 end
 
-function var_0_0.update()
-	if var_0_4 == 0 then
+function FightUpdateMgr.update()
+	if listCount == 0 then
 		return
 	end
 
-	local var_3_0 = var_0_2.deltaTime
+	local delta = Time.deltaTime
 
-	for iter_3_0 = 1, var_0_4 do
-		var_0_3[iter_3_0]:update(var_3_0)
+	for i = 1, listCount do
+		updateItems[i]:update(delta)
 	end
 
-	var_0_5 = var_0_5 + var_3_0
+	updateTime = updateTime + delta
 
-	if var_0_5 > var_0_6 then
-		var_0_5 = 0
+	if updateTime > clearTime then
+		updateTime = 0
 
-		local var_3_1 = 1
+		local j = 1
 
-		for iter_3_1 = 1, var_0_4 do
-			local var_3_2 = var_0_3[iter_3_1]
+		for i = 1, listCount do
+			local item = updateItems[i]
 
-			if not var_3_2.isDone then
-				if iter_3_1 ~= var_3_1 then
-					var_0_3[var_3_1] = var_3_2
-					var_0_3[iter_3_1] = nil
+			if not item.isDone then
+				if i ~= j then
+					updateItems[j] = item
+					updateItems[i] = nil
 				end
 
-				var_3_1 = var_3_1 + 1
+				j = j + 1
 			else
-				var_0_3[iter_3_1] = nil
+				updateItems[i] = nil
 			end
 		end
 
-		var_0_4 = var_3_1 - 1
+		listCount = j - 1
 	end
 end
 
-UpdateBeat:Add(var_0_0.update, var_0_0)
+UpdateBeat:Add(FightUpdateMgr.update, FightUpdateMgr)
 
-return var_0_0
+return FightUpdateMgr

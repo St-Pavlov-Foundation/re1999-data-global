@@ -1,13 +1,15 @@
-﻿module("modules.logic.act189.config.Activity189Enum", package.seeall)
+﻿-- chunkname: @modules/logic/act189/config/Activity189Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.act189.config.Activity189Enum", package.seeall)
 
-var_0_0.TaskTag = {
+local Activity189Enum = _M
+
+Activity189Enum.TaskTag = {
 	jump = 1
 }
-var_0_0.Style = {
+Activity189Enum.Style = {
 	_28 = 2,
 	_35 = 1
 }
 
-return var_0_0
+return Activity189Enum

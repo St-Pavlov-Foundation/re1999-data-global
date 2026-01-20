@@ -1,89 +1,91 @@
-﻿module("modules.logic.ressplit.model.VersionResSplitData", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/model/VersionResSplitData.lua
 
-local var_0_0 = class("VersionResSplitData")
+module("modules.logic.ressplit.model.VersionResSplitData", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._id = arg_1_1
-	arg_1_0._allResDict = {}
-	arg_1_0._resType2PathsDict = {}
+local VersionResSplitData = class("VersionResSplitData")
+
+function VersionResSplitData:init(versionResSplitId)
+	self._id = versionResSplitId
+	self._allResDict = {}
+	self._resType2PathsDict = {}
 end
 
-function var_0_0.addResSplitInfo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if not arg_2_3 then
+function VersionResSplitData:addResSplitInfo(splitType, resType, path)
+	if not path then
 		return
 	end
 
-	arg_2_0._allResDict[arg_2_1] = arg_2_0._allResDict[arg_2_1] or {}
-	arg_2_0._resType2PathsDict[arg_2_2] = arg_2_0._resType2PathsDict[arg_2_2] or {}
+	self._allResDict[splitType] = self._allResDict[splitType] or {}
+	self._resType2PathsDict[resType] = self._resType2PathsDict[resType] or {}
 
-	if not arg_2_0._allResDict[arg_2_1][arg_2_3] then
-		arg_2_0._resType2PathsDict[arg_2_2][arg_2_3] = true
-		arg_2_0._allResDict[arg_2_1][arg_2_3] = true
+	if not self._allResDict[splitType][path] then
+		self._resType2PathsDict[resType][path] = true
+		self._allResDict[splitType][path] = true
 	end
 end
 
-function var_0_0.checkResSplitInfo(arg_3_0, arg_3_1, arg_3_2)
-	return arg_3_0._allResDict[arg_3_1] and arg_3_0._allResDict[arg_3_1][arg_3_2]
+function VersionResSplitData:checkResSplitInfo(splitType, path)
+	return self._allResDict[splitType] and self._allResDict[splitType][path]
 end
 
-function var_0_0.checkResTypeSplitInfo(arg_4_0, arg_4_1, arg_4_2)
-	return arg_4_0._resType2PathsDict[arg_4_1] and arg_4_0._resType2PathsDict[arg_4_1][arg_4_2]
+function VersionResSplitData:checkResTypeSplitInfo(resType, path)
+	return self._resType2PathsDict[resType] and self._resType2PathsDict[resType][path]
 end
 
-function var_0_0.deleteResSplitInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_1 and arg_5_0._allResDict[arg_5_1] and arg_5_0._allResDict[arg_5_1][arg_5_3] then
-		arg_5_0._allResDict[arg_5_1][arg_5_3] = false
+function VersionResSplitData:deleteResSplitInfo(splitType, resType, path)
+	if splitType and self._allResDict[splitType] and self._allResDict[splitType][path] then
+		self._allResDict[splitType][path] = false
 	end
 
-	if arg_5_2 and arg_5_0._resType2PathsDict[arg_5_2] and arg_5_0._resType2PathsDict[arg_5_2][arg_5_3] then
-		arg_5_0._resType2PathsDict[arg_5_2][arg_5_3] = false
+	if resType and self._resType2PathsDict[resType] and self._resType2PathsDict[resType][path] then
+		self._resType2PathsDict[resType][path] = false
 	end
 end
 
-function var_0_0.getAllResDict(arg_6_0)
-	return arg_6_0._allResDict
+function VersionResSplitData:getAllResDict()
+	return self._allResDict
 end
 
-function var_0_0.getAllResTypeDict(arg_7_0)
-	return arg_7_0._resType2PathsDict
+function VersionResSplitData:getAllResTypeDict()
+	return self._resType2PathsDict
 end
 
-function var_0_0.getResSplitMap(arg_8_0)
-	local var_8_0 = {}
+function VersionResSplitData:getResSplitMap()
+	local splitMap = {}
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._allResDict) do
-		var_8_0[iter_8_0] = var_8_0[iter_8_0] or {}
+	for splitType, splitTypeDict in pairs(self._allResDict) do
+		splitMap[splitType] = splitMap[splitType] or {}
 
-		for iter_8_2, iter_8_3 in pairs(iter_8_1) do
-			if iter_8_3 then
-				local var_8_1 = var_8_0[iter_8_0]
+		for path, value in pairs(splitTypeDict) do
+			if value then
+				local splitTypeList = splitMap[splitType]
 
-				var_8_1[#var_8_1 + 1] = iter_8_2
+				splitTypeList[#splitTypeList + 1] = path
 			end
 		end
 	end
 
-	return var_8_0
+	return splitMap
 end
 
-function var_0_0.getResTypeSplitMap(arg_9_0)
-	local var_9_0 = {}
+function VersionResSplitData:getResTypeSplitMap()
+	local resType2PathsDict = {}
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._resType2PathsDict) do
-		var_9_0[iter_9_0] = var_9_0[iter_9_0] or {}
+	for resType, resPathDict in pairs(self._resType2PathsDict) do
+		resType2PathsDict[resType] = resType2PathsDict[resType] or {}
 
-		for iter_9_2, iter_9_3 in pairs(iter_9_1) do
-			if iter_9_3 then
-				local var_9_1 = var_9_0[iter_9_0]
+		for path, value in pairs(resPathDict) do
+			if value then
+				local resPathList = resType2PathsDict[resType]
 
-				var_9_1[#var_9_1 + 1] = iter_9_2
+				resPathList[#resPathList + 1] = path
 			end
 		end
 	end
 
-	return var_9_0
+	return resType2PathsDict
 end
 
-var_0_0.instance = var_0_0.New()
+VersionResSplitData.instance = VersionResSplitData.New()
 
-return var_0_0
+return VersionResSplitData

@@ -1,73 +1,78 @@
-﻿module("modules.logic.roomfishing.model.FishingModel", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/model/FishingModel.lua
 
-local var_0_0 = class("FishingModel", BaseModel)
+module("modules.logic.roomfishing.model.FishingModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
+local FishingModel = class("FishingModel", BaseModel)
+
+function FishingModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function FishingModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0.myselfPoolInfo = nil
-	arg_3_0.otherPoolInfo = nil
+function FishingModel:clearData()
+	self.myselfPoolInfo = nil
+	self.otherPoolInfo = nil
 end
 
-function var_0_0.updateMyselfPoolInfo(arg_4_0, arg_4_1)
-	if not arg_4_0.myselfPoolInfo then
-		arg_4_0.myselfPoolInfo = FishingPoolInfoMO.New()
+function FishingModel:updateMyselfPoolInfo(fishingPoolInfo)
+	if not self.myselfPoolInfo then
+		self.myselfPoolInfo = FishingPoolInfoMO.New()
 	end
 
-	local var_4_0 = PlayerModel.instance:getMyUserId()
+	local myUserId = PlayerModel.instance:getMyUserId()
 
-	arg_4_0.myselfPoolInfo:init(var_4_0, arg_4_1)
-	arg_4_0:setHasExchangedTimes(arg_4_1.changeCount)
-	arg_4_0:setHasGotShareRewardTimes(arg_4_1.todayAcceptShareCount)
+	self.myselfPoolInfo:init(myUserId, fishingPoolInfo)
+	self:setHasExchangedTimes(fishingPoolInfo.changeCount)
+	self:setHasGotShareRewardTimes(fishingPoolInfo.todayAcceptShareCount)
 	FishingFriendListModel.instance:setFriendList()
 end
 
-function var_0_0.setHasExchangedTimes(arg_5_0, arg_5_1)
-	arg_5_0._hasExchangedTimes = arg_5_1 or 0
+function FishingModel:setHasExchangedTimes(times)
+	self._hasExchangedTimes = times or 0
 end
 
-function var_0_0.setHasGotShareRewardTimes(arg_6_0, arg_6_1)
-	arg_6_0._hasGotShareRewardTimes = arg_6_1 or 0
+function FishingModel:setHasGotShareRewardTimes(times)
+	self._hasGotShareRewardTimes = times or 0
 end
 
-function var_0_0.updateMyProgressInfo(arg_7_0, arg_7_1)
-	if arg_7_0.myselfPoolInfo then
-		arg_7_0.myselfPoolInfo:updateFishingProgressInfo(arg_7_1)
+function FishingModel:updateMyProgressInfo(progressInfo)
+	if self.myselfPoolInfo then
+		self.myselfPoolInfo:updateFishingProgressInfo(progressInfo)
 		FishingFriendListModel.instance:setFriendList()
 	end
 end
 
-function var_0_0.updateOtherPoolInfo(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if not arg_8_0.otherPoolInfo then
-		arg_8_0.otherPoolInfo = FishingPoolInfoMO.New()
+function FishingModel:updateOtherPoolInfo(userId, fishingPoolInfo, friendInfo)
+	if not self.otherPoolInfo then
+		self.otherPoolInfo = FishingPoolInfoMO.New()
 	end
 
-	arg_8_0.otherPoolInfo:init(arg_8_1, arg_8_2)
-	arg_8_0.otherPoolInfo:setFriendInfo(arg_8_3)
+	self.otherPoolInfo:init(userId, fishingPoolInfo)
+	self.otherPoolInfo:setFriendInfo(friendInfo)
 end
 
-function var_0_0.isUnlockRoomFishing(arg_9_0, arg_9_1)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoomFishing) then
-		if arg_9_1 then
+function FishingModel:isUnlockRoomFishing(isToast)
+	local isOpen = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoomFishing)
+
+	if not isOpen then
+		if isToast then
 			GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.RoomFishing))
 		end
 
 		return false
 	end
 
-	local var_9_0 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishingActId, true)
-	local var_9_1, var_9_2, var_9_3 = ActivityHelper.getActivityStatusAndToast(var_9_0)
+	local fishingActId = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishingActId, true)
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(fishingActId)
+	local isActOpen = status == ActivityEnum.ActivityStatus.Normal
 
-	if not (var_9_1 == ActivityEnum.ActivityStatus.Normal) then
-		if var_9_2 and arg_9_1 then
-			GameFacade.showToastWithTableParam(var_9_2, var_9_3)
+	if not isActOpen then
+		if toastId and isToast then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 
 		return false
@@ -76,360 +81,387 @@ function var_0_0.isUnlockRoomFishing(arg_9_0, arg_9_1)
 	return true
 end
 
-function var_0_0.getIsShowingMySelf(arg_10_0)
-	return (RoomController.instance:isFishingMode())
+function FishingModel:getIsShowingMySelf()
+	local isMyselfFishing = RoomController.instance:isFishingMode()
+
+	return isMyselfFishing
 end
 
-function var_0_0.isInFishing(arg_11_0)
-	local var_11_0 = arg_11_0:getIsShowingMySelf()
-	local var_11_1 = RoomController.instance:isFishingVisitMode()
+function FishingModel:isInFishing()
+	local isShowMyself = self:getIsShowingMySelf()
+	local isFishingVisit = RoomController.instance:isFishingVisitMode()
 
-	return var_11_0 or var_11_1
+	return isShowMyself or isFishingVisit
 end
 
-function var_0_0.isEnoughToFish(arg_12_0, arg_12_1)
-	local var_12_0 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.OneFishCost, true, "#")
+function FishingModel:isEnoughToFish(times)
+	local costData = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.OneFishCost, true, "#")
+	local needCost = times * costData[2]
+	local hasQuantity = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, costData[1])
 
-	return arg_12_1 * var_12_0[2] <= ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_12_0[1])
+	return needCost <= hasQuantity
 end
 
-function var_0_0.getCurFishingPoolInfo(arg_13_0)
-	local var_13_0
+function FishingModel:getCurFishingPoolInfo()
+	local fishingPoolMO
+	local isInFishing = self:isInFishing()
 
-	if arg_13_0:isInFishing() then
-		if arg_13_0:getIsShowingMySelf() then
-			var_13_0 = arg_13_0.myselfPoolInfo
+	if isInFishing then
+		local isShowMyself = self:getIsShowingMySelf()
+
+		if isShowMyself then
+			fishingPoolMO = self.myselfPoolInfo
 		else
-			var_13_0 = arg_13_0.otherPoolInfo
+			fishingPoolMO = self.otherPoolInfo
 		end
 	end
 
-	return var_13_0
+	return fishingPoolMO
 end
 
-function var_0_0.getCurFishingPoolId(arg_14_0)
-	local var_14_0 = arg_14_0:getCurFishingPoolInfo()
+function FishingModel:getCurFishingPoolId()
+	local fishingPoolMO = self:getCurFishingPoolInfo()
 
-	return var_14_0 and var_14_0:getPoolId()
+	return fishingPoolMO and fishingPoolMO:getPoolId()
 end
 
-function var_0_0.getCurShowingUserId(arg_15_0)
-	local var_15_0 = arg_15_0:getCurFishingPoolInfo()
+function FishingModel:getCurShowingUserId()
+	local fishingPoolMO = self:getCurFishingPoolInfo()
 
-	return var_15_0 and var_15_0:getUserId()
+	return fishingPoolMO and fishingPoolMO:getUserId()
 end
 
-function var_0_0.getCurFishingPoolUserInfo(arg_16_0)
-	local var_16_0 = arg_16_0:getCurFishingPoolInfo()
+function FishingModel:getCurFishingPoolUserInfo()
+	local fishingPoolMO = self:getCurFishingPoolInfo()
 
-	if var_16_0 then
-		return var_16_0:getOwnerInfo()
+	if fishingPoolMO then
+		return fishingPoolMO:getOwnerInfo()
 	end
 end
 
-function var_0_0.getCurFishingPoolItem(arg_17_0)
-	local var_17_0 = arg_17_0:getCurFishingPoolId()
+function FishingModel:getCurFishingPoolItem()
+	local poolId = self:getCurFishingPoolId()
+	local poolItemData = FishingConfig.instance:getFishingPoolItem(poolId)
 
-	return (FishingConfig.instance:getFishingPoolItem(var_17_0))
+	return poolItemData
 end
 
-function var_0_0.getCurFishingPoolRefreshTime(arg_18_0)
-	local var_18_0 = 0
-	local var_18_1 = false
+function FishingModel:getCurFishingPoolRefreshTime()
+	local remainSecond = 0
+	local needRefresh = false
+	local isUnlock = self:isUnlockRoomFishing()
 
-	if not arg_18_0:isUnlockRoomFishing() then
-		return var_18_0, var_18_1
+	if not isUnlock then
+		return remainSecond, needRefresh
 	end
 
-	local var_18_2 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishingActId, true)
-	local var_18_3 = ActivityModel.instance:getActStartTime(var_18_2) / 1000
-	local var_18_4 = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.PoolRefreshInterval, true) * TimeUtil.OneDaySecond
-	local var_18_5 = ServerTime.now() - var_18_3
-	local var_18_6 = var_18_5 % var_18_4
-	local var_18_7 = math.max(0, var_18_4 - var_18_6)
-	local var_18_8 = arg_18_0:getCurFishingPoolInfo()
+	local fishingActId = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.FishingActId, true)
+	local startTime = ActivityModel.instance:getActStartTime(fishingActId) / 1000
+	local intervalTime = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.PoolRefreshInterval, true) * TimeUtil.OneDaySecond
+	local nowTime = ServerTime.now()
+	local offsetTime = nowTime - startTime
+	local passTime = offsetTime % intervalTime
 
-	if var_18_8 then
-		local var_18_9 = math.floor(var_18_5 / var_18_4)
-		local var_18_10 = var_18_8:getLastRefreshTime()
+	remainSecond = math.max(0, intervalTime - passTime)
 
-		var_18_1 = math.floor((var_18_10 - var_18_3) / var_18_4) ~= var_18_9
+	local fishingPoolMO = self:getCurFishingPoolInfo()
+
+	if fishingPoolMO then
+		local index = math.floor(offsetTime / intervalTime)
+		local lastRefreshTime = fishingPoolMO:getLastRefreshTime()
+		local lastRefreshIndex = math.floor((lastRefreshTime - startTime) / intervalTime)
+
+		needRefresh = lastRefreshIndex ~= index
 	end
 
-	return var_18_7, var_18_1
+	return remainSecond, needRefresh
 end
 
-function var_0_0.getRemainFishingTime(arg_19_0, arg_19_1)
-	local var_19_0 = 0
-	local var_19_1 = arg_19_0.myselfPoolInfo and arg_19_0.myselfPoolInfo:getMyProgressInfo(arg_19_1)
-	local var_19_2 = var_19_1 and var_19_1.startTime
-	local var_19_3 = var_19_1 and var_19_1.finishTime
+function FishingModel:getRemainFishingTime(fishingPoolUserId)
+	local remainSecond = 0
+	local progressInfo = self.myselfPoolInfo and self.myselfPoolInfo:getMyProgressInfo(fishingPoolUserId)
+	local startTime = progressInfo and progressInfo.startTime
+	local endTime = progressInfo and progressInfo.finishTime
 
-	if var_19_2 and var_19_3 and var_19_2 > 0 and var_19_3 > 0 and var_19_2 < var_19_3 then
-		local var_19_4 = ServerTime.now()
+	if startTime and endTime and startTime > 0 and endTime > 0 and startTime < endTime then
+		local nowTime = ServerTime.now()
 
-		var_19_0 = math.max(var_19_0, var_19_3 - var_19_4)
+		remainSecond = math.max(remainSecond, endTime - nowTime)
 	end
 
-	return var_19_0
+	return remainSecond
 end
 
-local var_0_1 = 1
+local MY_BOAT_INDEX = 1
 
-function var_0_0.getFriendBoatInfoList(arg_20_0)
-	local var_20_0 = arg_20_0:getCurFishingPoolInfo()
-	local var_20_1 = var_20_0 and var_20_0:getBoatInfoList() or {}
+function FishingModel:getFriendBoatInfoList()
+	local fishingPoolMO = self:getCurFishingPoolInfo()
+	local boatList = fishingPoolMO and fishingPoolMO:getBoatInfoList() or {}
+	local isShowMyself = self:getIsShowingMySelf()
 
-	if not arg_20_0:getIsShowingMySelf() then
-		local var_20_2 = false
-		local var_20_3 = PlayerModel.instance:getMyUserId()
+	if not isShowMyself then
+		local myBoatIndex = false
+		local myUserId = PlayerModel.instance:getMyUserId()
 
-		for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-			if iter_20_1.userId == var_20_3 then
-				var_20_2 = iter_20_0
+		for i, boatInfo in ipairs(boatList) do
+			if boatInfo.userId == myUserId then
+				myBoatIndex = i
 
 				break
 			end
 		end
 
-		if var_20_2 then
-			if var_20_2 ~= var_0_1 then
-				local var_20_4 = table.remove(var_20_1, var_20_2)
+		if myBoatIndex then
+			if myBoatIndex ~= MY_BOAT_INDEX then
+				local myBoatInfo = table.remove(boatList, myBoatIndex)
 
-				table.insert(var_20_1, var_0_1, var_20_4)
+				table.insert(boatList, MY_BOAT_INDEX, myBoatInfo)
 			end
 		else
-			local var_20_5 = var_20_0 and var_20_0:getUserId()
-			local var_20_6 = SocialModel.instance:isMyFriendByUserId(var_20_5)
+			local curUserId = fishingPoolMO and fishingPoolMO:getUserId()
+			local isFriend = SocialModel.instance:isMyFriendByUserId(curUserId)
 
-			table.insert(var_20_1, var_0_1, {
-				isFriend = var_20_6,
-				userId = var_20_3
+			table.insert(boatList, MY_BOAT_INDEX, {
+				isFriend = isFriend,
+				userId = myUserId
 			})
 		end
 	end
 
-	return var_20_1
+	return boatList
 end
 
-function var_0_0.getFishingFriendInfo(arg_21_0, arg_21_1)
-	if arg_21_1 == arg_21_0:getCurShowingUserId() then
-		local var_21_0, var_21_1, var_21_2 = arg_21_0:getCurFishingPoolUserInfo()
+function FishingModel:getFishingFriendInfo(userId)
+	local curPoolUserId = self:getCurShowingUserId()
 
-		return var_21_1, var_21_2
+	if userId == curPoolUserId then
+		local _, name, portrait = self:getCurFishingPoolUserInfo()
+
+		return name, portrait
 	else
-		local var_21_3 = arg_21_0:getCurFishingPoolInfo()
+		local fishingPoolMO = self:getCurFishingPoolInfo()
 
-		if var_21_3 then
-			return var_21_3:getBoatUserInfo(arg_21_1)
+		if fishingPoolMO then
+			return fishingPoolMO:getBoatUserInfo(userId)
 		end
 	end
 end
 
-function var_0_0.getIsFishingInUserPool(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.myselfPoolInfo and arg_22_0.myselfPoolInfo:getMyProgressInfo(arg_22_1)
-	local var_22_1 = var_22_0 and var_22_0.startTime
-	local var_22_2 = var_22_0 and var_22_0.finishTime
-	local var_22_3 = false
+function FishingModel:getIsFishingInUserPool(fishingPoolUserId)
+	local progressInfo = self.myselfPoolInfo and self.myselfPoolInfo:getMyProgressInfo(fishingPoolUserId)
+	local startTime = progressInfo and progressInfo.startTime
+	local endTime = progressInfo and progressInfo.finishTime
+	local result = false
 
-	if var_22_1 and var_22_2 and var_22_1 > 0 and var_22_2 > 0 and var_22_1 < var_22_2 then
-		var_22_3 = true
+	if startTime and endTime and startTime > 0 and endTime > 0 and startTime < endTime then
+		result = true
 	end
 
-	return var_22_3
+	return result
 end
 
-function var_0_0.getFishingTimes(arg_23_0, arg_23_1)
-	local var_23_0 = 0
-	local var_23_1 = arg_23_0.myselfPoolInfo and arg_23_0.myselfPoolInfo:getMyProgressInfo(arg_23_1)
+function FishingModel:getFishingTimes(fishingPoolUserId)
+	local result = 0
+	local progressInfo = self.myselfPoolInfo and self.myselfPoolInfo:getMyProgressInfo(fishingPoolUserId)
 
-	var_23_0 = var_23_1 and var_23_1.fishTimes or var_23_0
+	result = progressInfo and progressInfo.fishTimes or result
 
-	return var_23_0
+	return result
 end
 
-function var_0_0.getMyFishingProgress(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0.myselfPoolInfo and arg_24_0.myselfPoolInfo:getMyProgressInfo(arg_24_1)
-	local var_24_1 = var_24_0 and var_24_0.startTime
-	local var_24_2 = var_24_0 and var_24_0.finishTime
+function FishingModel:getMyFishingProgress(fishingPoolUserId)
+	local progressInfo = self.myselfPoolInfo and self.myselfPoolInfo:getMyProgressInfo(fishingPoolUserId)
+	local startTime = progressInfo and progressInfo.startTime
+	local endTime = progressInfo and progressInfo.finishTime
+	local result = FishingHelper.getFishingProgress(startTime, endTime)
 
-	return (FishingHelper.getFishingProgress(var_24_1, var_24_2))
+	return result
 end
 
-function var_0_0.isCanGetMyFishingBonusInUser(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0.myselfPoolInfo and arg_25_0.myselfPoolInfo:getMyProgressInfo(arg_25_1)
-	local var_25_1 = var_25_0 and var_25_0.startTime
-	local var_25_2 = var_25_0 and var_25_0.finishTime
+function FishingModel:isCanGetMyFishingBonusInUser(fishingPoolUserId)
+	local progressInfo = self.myselfPoolInfo and self.myselfPoolInfo:getMyProgressInfo(fishingPoolUserId)
+	local startTime = progressInfo and progressInfo.startTime
+	local endTime = progressInfo and progressInfo.finishTime
+	local result = FishingHelper.isFishingFinished(startTime, endTime)
 
-	return (FishingHelper.isFishingFinished(var_25_1, var_25_2))
+	return result
 end
 
-function var_0_0.isCanGetMyFishingBonus(arg_26_0)
-	local var_26_0 = arg_26_0.myselfPoolInfo and arg_26_0.myselfPoolInfo:getMyProgressInfoDict()
+function FishingModel:isCanGetMyFishingBonus()
+	local progressInfoDict = self.myselfPoolInfo and self.myselfPoolInfo:getMyProgressInfoDict()
 
-	if var_26_0 then
-		for iter_26_0, iter_26_1 in pairs(var_26_0) do
-			if arg_26_0:isCanGetMyFishingBonusInUser(iter_26_0) then
+	if progressInfoDict then
+		for userId, _ in pairs(progressInfoDict) do
+			local isCanGet = self:isCanGetMyFishingBonusInUser(userId)
+
+			if isCanGet then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isCanGetOtherFishingBonus(arg_27_0)
-	if arg_27_0:getHasGotShareRewardTimes() >= FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxCanGetShareRewardTimes, true, "") then
+function FishingModel:isCanGetOtherFishingBonus()
+	local hasGotTimes = self:getHasGotShareRewardTimes()
+	local maxCanGetTimes = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.MaxCanGetShareRewardTimes, true, "")
+
+	if maxCanGetTimes <= hasGotTimes then
 		return false
 	end
 
-	local var_27_0 = 0
-	local var_27_1 = arg_27_0.myselfPoolInfo and arg_27_0.myselfPoolInfo:getOtherProgressInfoDict()
+	local curFinishedCount = 0
+	local otherProgressInfoDict = self.myselfPoolInfo and self.myselfPoolInfo:getOtherProgressInfoDict()
 
-	if var_27_1 then
-		for iter_27_0, iter_27_1 in pairs(var_27_1) do
-			local var_27_2 = iter_27_1 and iter_27_1.startTime
-			local var_27_3 = iter_27_1 and iter_27_1.finishTime
+	if otherProgressInfoDict then
+		for _, progressInfo in pairs(otherProgressInfoDict) do
+			local startTime = progressInfo and progressInfo.startTime
+			local endTime = progressInfo and progressInfo.finishTime
+			local isFinished = FishingHelper.isFishingFinished(startTime, endTime)
 
-			if FishingHelper.isFishingFinished(var_27_2, var_27_3) then
-				var_27_0 = var_27_0 + 1
+			if isFinished then
+				curFinishedCount = curFinishedCount + 1
 			end
 		end
 	end
 
-	return var_27_0 >= FishingConfig.instance:getFishingConst(FishingEnum.ConstId.GetFriendBonusMinCount, true)
+	local minFriendBonusCount = FishingConfig.instance:getFishingConst(FishingEnum.ConstId.GetFriendBonusMinCount, true)
+
+	return minFriendBonusCount <= curFinishedCount
 end
 
-function var_0_0.getMyFishingCount(arg_28_0)
-	local var_28_0 = 0
+function FishingModel:getMyFishingCount()
+	local result = 0
 
-	if arg_28_0.myselfPoolInfo then
-		var_28_0 = arg_28_0.myselfPoolInfo:getFishingCount()
+	if self.myselfPoolInfo then
+		result = self.myselfPoolInfo:getFishingCount()
 	end
 
-	return var_28_0
+	return result
 end
 
-function var_0_0.getMyFishingFriendList(arg_29_0)
-	local var_29_0 = {}
-	local var_29_1 = arg_29_0.myselfPoolInfo and arg_29_0.myselfPoolInfo:getMyProgressInfoDict()
+function FishingModel:getMyFishingFriendList()
+	local result = {}
+	local progressInfoDict = self.myselfPoolInfo and self.myselfPoolInfo:getMyProgressInfoDict()
 
-	if var_29_1 then
-		local var_29_2 = PlayerModel.instance:getMyUserId()
+	if progressInfoDict then
+		local myUserId = PlayerModel.instance:getMyUserId()
 
-		for iter_29_0, iter_29_1 in pairs(var_29_1) do
-			if iter_29_0 ~= var_29_2 then
-				local var_29_3 = FishingFriendInfoMO.New()
-				local var_29_4 = SocialModel.instance:isMyFriendByUserId(iter_29_0)
+		for userId, progressInfo in pairs(progressInfoDict) do
+			if userId ~= myUserId then
+				local info = FishingFriendInfoMO.New()
+				local isFriend = SocialModel.instance:isMyFriendByUserId(userId)
 
-				var_29_3:init({
-					type = var_29_4 and FishingEnum.OtherPlayerBoatType.Friend or FishingEnum.OtherPlayerBoatType.Stranger,
-					userId = iter_29_0,
-					name = iter_29_1.name,
-					portrait = iter_29_1.portrait,
-					poolId = iter_29_1.poolId
+				info:init({
+					type = isFriend and FishingEnum.OtherPlayerBoatType.Friend or FishingEnum.OtherPlayerBoatType.Stranger,
+					userId = userId,
+					name = progressInfo.name,
+					portrait = progressInfo.portrait,
+					poolId = progressInfo.poolId
 				})
 
-				var_29_0[#var_29_0 + 1] = var_29_3
+				result[#result + 1] = info
 			end
 		end
 	end
 
-	return var_29_0
+	return result
 end
 
-local function var_0_2(arg_30_0, arg_30_1)
-	if not arg_30_0 or not arg_30_1 then
+local function _sortResourceItem(aPropItem, bPropItem)
+	if not aPropItem or not bPropItem then
 		return false
 	end
 
-	local var_30_0 = arg_30_0.id
-	local var_30_1 = arg_30_1.id
-	local var_30_2 = arg_30_0.rare
-	local var_30_3 = arg_30_1.rare
+	local aId = aPropItem.id
+	local bId = bPropItem.id
+	local aRare = aPropItem.rare
+	local bRare = bPropItem.rare
 
-	if var_30_2 ~= var_30_3 then
-		return var_30_3 < var_30_2
+	if aRare ~= bRare then
+		return bRare < aRare
 	end
 
-	return var_30_1 < var_30_0
+	return bId < aId
 end
 
-function var_0_0.getBackpackItemList(arg_31_0)
-	local var_31_0 = {}
-	local var_31_1 = CurrencyModel.instance:getCurrencyList() or {}
+function FishingModel:getBackpackItemList()
+	local list = {}
+	local currencyList = CurrencyModel.instance:getCurrencyList() or {}
 
-	for iter_31_0, iter_31_1 in pairs(var_31_1) do
-		local var_31_2 = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Currency, iter_31_1.currencyId)
+	for _, currencyMO in pairs(currencyList) do
+		local itemConfig = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Currency, currencyMO.currencyId)
+		local subType = itemConfig and itemConfig.subType
 
-		if (var_31_2 and var_31_2.subType) == CurrencyEnum.SubType.RoomFishingResourceItem and iter_31_1.quantity > 0 then
-			table.insert(var_31_0, {
-				id = iter_31_1.currencyId,
+		if subType == CurrencyEnum.SubType.RoomFishingResourceItem and currencyMO.quantity > 0 then
+			table.insert(list, {
+				id = currencyMO.currencyId,
 				type = MaterialEnum.MaterialType.Currency,
-				quantity = iter_31_1.quantity,
-				rare = var_31_2.rare
+				quantity = currencyMO.quantity,
+				rare = itemConfig.rare
 			})
 		end
 	end
 
-	table.sort(var_31_0, var_0_2)
+	table.sort(list, _sortResourceItem)
 
-	return var_31_0
+	return list
 end
 
-function var_0_0.getFishingItemList(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	local var_32_0 = {}
+function FishingModel:getFishingItemList(poolIdList, fishingTimesDict, isShare)
+	local list = {}
 
-	if not arg_32_1 then
-		return var_32_0
+	if not poolIdList then
+		return list
 	end
 
-	local var_32_1 = {}
+	local itemDict = {}
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_1) do
-		local var_32_2
+	for _, poolId in ipairs(poolIdList) do
+		local itemInfo
 
-		if arg_32_3 then
-			var_32_2 = FishingConfig.instance:getFishingShareItem(iter_32_1)
+		if isShare then
+			itemInfo = FishingConfig.instance:getFishingShareItem(poolId)
 		else
-			var_32_2 = FishingConfig.instance:getFishingPoolItem(iter_32_1)
+			itemInfo = FishingConfig.instance:getFishingPoolItem(poolId)
 		end
 
-		if var_32_2 then
-			local var_32_3 = var_32_2[2]
+		if itemInfo then
+			local id = itemInfo[2]
 
-			if not var_32_1[var_32_3] then
-				local var_32_4 = ItemModel.instance:getItemConfig(var_32_2[1], var_32_2[2])
+			if not itemDict[id] then
+				local itemConfig = ItemModel.instance:getItemConfig(itemInfo[1], itemInfo[2])
 
-				var_32_1[var_32_3] = {
+				itemDict[id] = {
 					quantity = 0,
-					type = var_32_2[1],
-					id = var_32_3,
-					rare = var_32_4.rare
+					type = itemInfo[1],
+					id = id,
+					rare = itemConfig.rare
 				}
 			end
 
-			local var_32_5 = arg_32_2[iter_32_1] or 0
+			local fishingTimes = fishingTimesDict[poolId] or 0
 
-			var_32_1[var_32_3].quantity = var_32_1[var_32_3].quantity + var_32_2[3] * var_32_5
+			itemDict[id].quantity = itemDict[id].quantity + itemInfo[3] * fishingTimes
 		end
 	end
 
-	for iter_32_2, iter_32_3 in pairs(var_32_1) do
-		var_32_0[#var_32_0 + 1] = iter_32_3
+	for _, itemData in pairs(itemDict) do
+		list[#list + 1] = itemData
 	end
 
-	table.sort(var_32_0, var_0_2)
+	table.sort(list, _sortResourceItem)
 
-	return var_32_0
+	return list
 end
 
-function var_0_0.getHasExchangedTimes(arg_33_0)
-	return arg_33_0._hasExchangedTimes or 0
+function FishingModel:getHasExchangedTimes()
+	return self._hasExchangedTimes or 0
 end
 
-function var_0_0.getHasGotShareRewardTimes(arg_34_0)
-	return arg_34_0._hasGotShareRewardTimes or 0
+function FishingModel:getHasGotShareRewardTimes()
+	return self._hasGotShareRewardTimes or 0
 end
 
-var_0_0.instance = var_0_0.New()
+FishingModel.instance = FishingModel.New()
 
-return var_0_0
+return FishingModel

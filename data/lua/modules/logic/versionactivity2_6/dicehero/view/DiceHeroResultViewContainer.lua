@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroResultViewContainer.lua
 
-local var_0_0 = class("DiceHeroResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DiceHeroResultViewContainer = class("DiceHeroResultViewContainer", BaseViewContainer)
+
+function DiceHeroResultViewContainer:buildViews()
 	return {
 		DiceHeroResultView.New()
 	}
 end
 
-return var_0_0
+return DiceHeroResultViewContainer

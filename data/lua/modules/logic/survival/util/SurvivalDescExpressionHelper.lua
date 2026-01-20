@@ -1,106 +1,108 @@
-﻿module("modules.logic.survival.util.SurvivalDescExpressionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalDescExpressionHelper.lua
 
-local var_0_0 = class("SurvivalDescExpressionHelper")
-local var_0_1
+module("modules.logic.survival.util.SurvivalDescExpressionHelper", package.seeall)
 
-local function var_0_2(arg_1_0)
-	var_0_1 = arg_1_0
+local SurvivalDescExpressionHelper = class("SurvivalDescExpressionHelper")
+local haveCheckVal
+
+local function checkFunc(val)
+	haveCheckVal = val
 
 	return ""
 end
 
-local function var_0_3(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_0 then
-		return arg_2_1 or ""
+local function conditionFunc(cond, val1, val2)
+	if cond then
+		return val1 or ""
 	else
-		return arg_2_2 or ""
+		return val2 or ""
 	end
 end
 
-local var_0_4 = {
+local funcEnvTb = {
 	hasAttrVal = false,
 	min = math.min,
 	max = math.max,
 	floor = math.floor,
 	ceil = math.ceil,
 	abs = math.abs,
-	check = var_0_2,
-	condition = var_0_3
+	check = checkFunc,
+	condition = conditionFunc
 }
 
-setmetatable(var_0_4, {
-	__index = function(arg_3_0, arg_3_1)
-		arg_3_1 = string.lower(arg_3_1)
+setmetatable(funcEnvTb, {
+	__index = function(t, k)
+		k = string.lower(k)
 
-		if rawget(arg_3_0, arg_3_1) then
-			return rawget(arg_3_0, arg_3_1)
+		if rawget(t, k) then
+			return rawget(t, k)
 		end
 
-		local var_3_0 = 0
-		local var_3_1
+		local matchIndex = 0
 
-		arg_3_1, var_3_1 = string.gsub(arg_3_1, "out_", "")
+		k, matchIndex = string.gsub(k, "out_", "")
 
-		local var_3_2 = SurvivalConfig.instance.attrNameToId[arg_3_1]
+		local id = SurvivalConfig.instance.attrNameToId[k]
 
-		if not var_3_2 then
-			logError("属性Key不存在" .. tostring(arg_3_1))
+		if not id then
+			logError("属性Key不存在" .. tostring(k))
 
 			return 0
 		end
 
-		local var_3_3 = (var_3_1 > 0 and arg_3_0.attrMapTotal or arg_3_0.attrMap)[var_3_2] or 0
+		local map = matchIndex > 0 and t.attrMapTotal or t.attrMap
+		local val = map[id] or 0
 
-		if var_3_3 then
-			var_0_4.hasAttrVal = true
+		if val then
+			funcEnvTb.hasAttrVal = true
 		end
 
-		return var_3_3
+		return val
 	end
 })
 
-function var_0_0.parstDesc(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if string.nilorempty(arg_4_1) then
-		return arg_4_1
+function SurvivalDescExpressionHelper:parstDesc(desc, attrMap, attrMapTotal)
+	if string.nilorempty(desc) then
+		return desc
 	end
 
-	var_0_1 = true
-	var_0_4.attrMap = arg_4_2 or {}
-	var_0_4.attrMapTotal = arg_4_3 or {}
-	var_0_4.hasAttrVal = false
+	haveCheckVal = true
+	funcEnvTb.attrMap = attrMap or {}
+	funcEnvTb.attrMapTotal = attrMapTotal or {}
+	funcEnvTb.hasAttrVal = false
 
-	local var_4_0 = string.gsub(arg_4_1, "%b{}", var_0_0._passExpressionStr)
+	local result = string.gsub(desc, "%b{}", SurvivalDescExpressionHelper._passExpressionStr)
 
-	var_0_4.attrMap = nil
-	var_0_4.attrMapTotal = nil
+	funcEnvTb.attrMap = nil
+	funcEnvTb.attrMapTotal = nil
 
-	return var_4_0, var_0_1
+	return result, haveCheckVal
 end
 
-function var_0_0._passExpressionStr(arg_5_0)
-	arg_5_0 = string.sub(arg_5_0, 2, #arg_5_0 - 1)
+function SurvivalDescExpressionHelper._passExpressionStr(experison)
+	experison = string.sub(experison, 2, #experison - 1)
 
-	local var_5_0 = loadstring(string.format("return %s, hasAttrVal", arg_5_0))
+	local func = loadstring(string.format("return %s, hasAttrVal", experison))
 
-	if not var_5_0 then
-		logError("解析表达式失败" .. arg_5_0)
+	if not func then
+		logError("解析表达式失败" .. experison)
 
-		return arg_5_0
+		return experison
 	end
 
-	setfenv(var_5_0, var_0_4)
+	setfenv(func, funcEnvTb)
 
-	local var_5_1, var_5_2, var_5_3 = pcall(var_5_0)
+	local result, resultString, hasAttrVal = pcall(func)
 
-	if var_5_1 then
-		return var_5_2
+	if result then
+		return resultString
 	else
-		logError("执行表达式错误" .. arg_5_0)
+		logError("执行表达式错误" .. experison)
 
-		return arg_5_0
+		return experison
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalDescExpressionHelper.instance = SurvivalDescExpressionHelper.New()
 
-return var_0_0
+return SurvivalDescExpressionHelper

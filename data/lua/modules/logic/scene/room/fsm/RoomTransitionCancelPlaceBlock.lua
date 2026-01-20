@@ -1,71 +1,73 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionCancelPlaceBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionCancelPlaceBlock.lua
 
-local var_0_0 = class("RoomTransitionCancelPlaceBlock", JompFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionCancelPlaceBlock", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomTransitionCancelPlaceBlock = class("RoomTransitionCancelPlaceBlock", JompFSMBaseTransition)
+
+function RoomTransitionCancelPlaceBlock:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionCancelPlaceBlock:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionCancelPlaceBlock:onStart(param)
+	self._param = param
 
-	local var_3_0 = RoomMapBlockModel.instance:getTempBlockMO()
+	local tempBlockMO = RoomMapBlockModel.instance:getTempBlockMO()
 
-	if not var_3_0 then
-		arg_3_0:onDone()
+	if not tempBlockMO then
+		self:onDone()
 
 		return
 	end
 
-	local var_3_1 = var_3_0.hexPoint
+	local hexPoint = tempBlockMO.hexPoint
 
 	RoomMapBlockModel.instance:removeTempBlockMO()
 	RoomResourceModel.instance:clearLightResourcePoint()
-	RoomMapBlockModel.instance:refreshNearRiver(var_3_1, 1)
+	RoomMapBlockModel.instance:refreshNearRiver(hexPoint, 1)
 
-	if var_3_0 then
-		local var_3_2 = arg_3_0._scene.mapmgr
-		local var_3_3 = var_3_2:getBlockEntity(var_3_0.id, SceneTag.RoomMapBlock)
+	if tempBlockMO then
+		local tempMapMgr = self._scene.mapmgr
+		local tempEntity = tempMapMgr:getBlockEntity(tempBlockMO.id, SceneTag.RoomMapBlock)
 
-		if var_3_3 then
-			var_3_3:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_donw")
-			var_3_2:removeUnitData(SceneTag.RoomMapBlock, var_3_0.id)
-			var_3_3:removeEvent()
+		if tempEntity then
+			tempEntity:playAnim(RoomScenePreloader.ResAnim.ContainerPlay, "container_donw")
+			tempMapMgr:removeUnitData(SceneTag.RoomMapBlock, tempBlockMO.id)
+			tempEntity:removeEvent()
 			TaskDispatcher.runDelay(function()
-				var_3_2:destroyUnit(var_3_3)
-			end, arg_3_0, 0.3333333333333333)
+				tempMapMgr:destroyUnit(tempEntity)
+			end, self, 0.3333333333333333)
 		end
 	end
 
-	local var_3_4 = RoomMapBlockModel.instance:getBlockMO(var_3_1.x, var_3_1.y)
+	local emptyMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	arg_3_0._scene.mapmgr:spawnMapBlock(var_3_4)
-	RoomBlockController.instance:refreshNearLand(var_3_1, true)
+	self._scene.mapmgr:spawnMapBlock(emptyMO)
+	RoomBlockController.instance:refreshNearLand(hexPoint, true)
 	RoomBlockController.instance:refreshResourceLight()
 	RoomMapController.instance:dispatchEvent(RoomEvent.ClientCancelBlock)
 
-	local var_3_5 = RoomMapModel.instance:getCameraParam()
-	local var_3_6 = arg_3_0._scene.camera:getCameraParam()
-	local var_3_7 = {}
+	local savedCameraParam = RoomMapModel.instance:getCameraParam()
+	local currentCameraParam = self._scene.camera:getCameraParam()
+	local cameraParam = {}
 
-	if var_3_7 then
-		arg_3_0._scene.camera:tweenCamera(var_3_7, nil, arg_3_0.onDone, arg_3_0)
+	if cameraParam then
+		self._scene.camera:tweenCamera(cameraParam, nil, self.onDone, self)
 		RoomMapModel.instance:clearCameraParam()
 	else
-		arg_3_0:onDone()
+		self:onDone()
 	end
 end
 
-function var_0_0.stop(arg_5_0)
+function RoomTransitionCancelPlaceBlock:stop()
 	return
 end
 
-function var_0_0.clear(arg_6_0)
+function RoomTransitionCancelPlaceBlock:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionCancelPlaceBlock

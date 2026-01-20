@@ -1,254 +1,273 @@
-﻿module("modules.common.time.ServerTime", package.seeall)
+﻿-- chunkname: @modules/common/time/ServerTime.lua
 
-local var_0_0 = _M
-local var_0_1 = 0
-local var_0_2 = 0
-local var_0_3 = 0
-local var_0_4 = os.time()
-local var_0_5 = 0
+module("modules.common.time.ServerTime", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	var_0_1 = arg_1_0 or var_0_0.getInitServerUtcOffset()
-	var_0_2 = os.difftime(os.time(), os.time(os.date("!*t", os.time())))
-	var_0_3 = var_0_1 - var_0_2
+local ServerTime = _M
+local _serverUtcOffset = 0
+local _clientUtcOffset = 0
+local _clientToServerOffset = 0
+local _serverTimeStamp = os.time()
+local _syncClientLocalStamp = 0
+
+function ServerTime.init(serverUtcOffset)
+	_serverUtcOffset = serverUtcOffset or ServerTime.getInitServerUtcOffset()
+	_clientUtcOffset = os.difftime(os.time(), os.time(os.date("!*t", os.time())))
+	_clientToServerOffset = _serverUtcOffset - _clientUtcOffset
 end
 
-function var_0_0.getInitServerUtcOffset()
-	local var_2_0 = GameConfig:GetCurRegionType()
+function ServerTime.getInitServerUtcOffset()
+	local regoin = GameConfig:GetCurRegionType()
 
-	if RegionEnum and RegionEnum.utcOffset[var_2_0] then
-		return RegionEnum.utcOffset[var_2_0]
+	if RegionEnum and RegionEnum.utcOffset[regoin] then
+		return RegionEnum.utcOffset[regoin]
 	else
 		return ModuleEnum.ServerUtcOffset
 	end
 end
 
-function var_0_0.clientToServerOffset()
-	return var_0_3
+function ServerTime.clientToServerOffset()
+	return _clientToServerOffset
 end
 
-function var_0_0.update(arg_4_0)
-	var_0_4 = arg_4_0
-	var_0_5 = Time.realtimeSinceStartup
+function ServerTime.update(serverTimeStamp)
+	_serverTimeStamp = serverTimeStamp
+	_syncClientLocalStamp = Time.realtimeSinceStartup
 end
 
-function var_0_0.now()
-	local var_5_0 = Time.realtimeSinceStartup - var_0_5
+function ServerTime.now()
+	local elapsed = Time.realtimeSinceStartup - _syncClientLocalStamp
 
-	return var_0_4 + math.floor(var_5_0)
+	return _serverTimeStamp + math.floor(elapsed)
 end
 
-function var_0_0.nowInLocal()
-	return var_0_0.now() + var_0_3 + var_0_0.getDstOffset()
+function ServerTime.nowInLocal()
+	return ServerTime.now() + _clientToServerOffset + ServerTime.getDstOffset()
 end
 
-function var_0_0.timeInLocal(arg_7_0)
-	return arg_7_0 + var_0_3 + var_0_0.getDstOffset()
+function ServerTime.timeInLocal(timestamp)
+	return timestamp + _clientToServerOffset + ServerTime.getDstOffset()
 end
 
-function var_0_0.nowDate()
-	return (os.date("*t", var_0_0.now()))
+function ServerTime.nowDate()
+	local dt = os.date("*t", ServerTime.now())
+
+	return dt
 end
 
-function var_0_0.nowDateInLocal()
-	return (os.date("*t", var_0_0.nowInLocal()))
+function ServerTime.nowDateInLocal()
+	local dt = os.date("*t", ServerTime.nowInLocal())
+
+	return dt
 end
 
-function var_0_0.weekDayInServerLocal()
-	local var_10_0 = os.date("*t", var_0_0.nowInLocal() - 18000)
+function ServerTime.weekDayInServerLocal()
+	local nowDate = os.date("*t", ServerTime.nowInLocal() - 18000)
 
-	return TimeUtil.convertWday(var_10_0.wday)
+	return TimeUtil.convertWday(nowDate.wday)
 end
 
-function var_0_0.timeDateInLocal(arg_11_0)
-	local var_11_0 = var_0_0.timeInLocal(arg_11_0)
+function ServerTime.timeDateInLocal(timestamp)
+	local serverTimeStamp = ServerTime.timeInLocal(timestamp)
+	local dt = os.date("*t", serverTimeStamp)
 
-	return (os.date("*t", var_11_0))
+	return dt
 end
 
-function var_0_0.formatNow(arg_12_0)
-	return os.date(arg_12_0, var_0_0.now())
+function ServerTime.formatNow(fmt)
+	return os.date(fmt, ServerTime.now())
 end
 
-function var_0_0.serverUtcOffset()
-	return var_0_1
+function ServerTime.serverUtcOffset()
+	return _serverUtcOffset
 end
 
-function var_0_0.formatNowInLocal(arg_14_0)
-	local var_14_0 = var_0_0.nowInLocal()
+function ServerTime.formatNowInLocal(fmt)
+	local stamp = ServerTime.nowInLocal()
 
-	return os.date(arg_14_0, var_14_0)
+	return os.date(fmt, stamp)
 end
 
-function var_0_0.formatTimeInLocal(arg_15_0, arg_15_1)
-	local var_15_0 = var_0_0.timeInLocal(arg_15_0)
+function ServerTime.formatTimeInLocal(timestamp, fmt)
+	local stamp = ServerTime.timeInLocal(timestamp)
 
-	return os.date(arg_15_1, var_15_0)
+	return os.date(fmt, stamp)
 end
 
-function var_0_0.getDstOffset()
-	return os.date("*t", os.time()).isdst and -3600 or 0
+function ServerTime.getDstOffset()
+	local nowDate = os.date("*t", os.time())
+
+	return nowDate.isdst and -3600 or 0
 end
 
-function var_0_0.timestampToString(arg_17_0)
-	return (os.date("%Y-%m-%d %H:%M:%S", arg_17_0 + var_0_3 + var_0_0.getDstOffset()))
+function ServerTime.timestampToString(time)
+	local timeTxt = os.date("%Y-%m-%d %H:%M:%S", time + _clientToServerOffset + ServerTime.getDstOffset())
+
+	return timeTxt
 end
 
-function var_0_0.ReplaceUTCStr(arg_18_0)
-	if arg_18_0 then
-		return string.gsub(arg_18_0, "UTC%+8", var_0_0.GetUTCOffsetStr())
+function ServerTime.ReplaceUTCStr(str)
+	if str then
+		return string.gsub(str, "UTC%+8", ServerTime.GetUTCOffsetStr())
 	else
 		return ""
 	end
 end
 
-function var_0_0.getServerTimeToday(arg_19_0)
-	local var_19_0 = var_0_0.nowInLocal()
+function ServerTime.getServerTimeToday(isNeedDailyFreshOffset)
+	local serverTimeStamp = ServerTime.nowInLocal()
 
-	if arg_19_0 then
-		var_19_0 = var_19_0 - TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
+	if isNeedDailyFreshOffset then
+		serverTimeStamp = serverTimeStamp - TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
 	end
 
-	return tonumber(os.date("%d", var_19_0))
+	return tonumber(os.date("%d", serverTimeStamp))
 end
 
-function var_0_0.getToadyEndTimeStamp(arg_20_0)
-	local var_20_0 = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
-	local var_20_1 = var_0_0.nowInLocal()
+function ServerTime.getToadyEndTimeStamp(isNeedDailyFreshOffset)
+	local dailyRefreshTimeOffset = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
+	local serverTimeStamp = ServerTime.nowInLocal()
 
-	if arg_20_0 then
-		var_20_1 = var_20_1 - var_20_0
+	if isNeedDailyFreshOffset then
+		serverTimeStamp = serverTimeStamp - dailyRefreshTimeOffset
 	end
 
-	local var_20_2 = os.date("*t", var_20_1)
-	local var_20_3 = os.time({
+	local dt = os.date("*t", serverTimeStamp)
+	local timeStamp = os.time({
 		hour = 23,
 		min = 59,
 		sec = 59,
-		year = var_20_2.year,
-		month = var_20_2.month,
-		day = var_20_2.day
+		year = dt.year,
+		month = dt.month,
+		day = dt.day
 	})
 
-	if arg_20_0 then
-		var_20_3 = var_20_3 + var_20_0
+	if isNeedDailyFreshOffset then
+		timeStamp = timeStamp + dailyRefreshTimeOffset
 	end
 
-	return var_20_3 + 1
+	return timeStamp + 1
 end
 
-function var_0_0.getWeekEndTimeStamp(arg_21_0)
-	local var_21_0 = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
-	local var_21_1 = var_0_0.nowDateInLocal()
-	local var_21_2 = TimeUtil.getTodayWeedDay(var_21_1)
-	local var_21_3 = true
+function ServerTime.getWeekEndTimeStamp(isNeedDailyFreshOffset)
+	local dailyRefreshTimeOffset = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
+	local dt = ServerTime.nowDateInLocal()
+	local weekDay = TimeUtil.getTodayWeedDay(dt)
+	local isNextMonday = true
 
-	if var_21_2 == 1 and arg_21_0 and var_21_0 > var_21_1.hour * 3600 + var_21_1.min * 60 + var_21_1.sec then
-		var_21_3 = false
+	if weekDay == 1 and isNeedDailyFreshOffset then
+		local expiredSeconds = dt.hour * 3600 + dt.min * 60 + dt.sec
+
+		if expiredSeconds < dailyRefreshTimeOffset then
+			isNextMonday = false
+		end
 	end
 
-	local var_21_4
+	local dtTable
 
-	if not var_21_3 then
-		var_21_4 = {
+	if not isNextMonday then
+		dtTable = {
 			hour = 0,
 			min = 0,
 			sec = 0,
-			year = var_21_1.year,
-			month = var_21_1.month,
-			day = var_21_1.day
+			year = dt.year,
+			month = dt.month,
+			day = dt.day
 		}
 	else
-		local var_21_5 = 7 - var_21_2
-		local var_21_6 = var_21_1.day + var_21_5 + 1
-		local var_21_7 = var_21_1.month
-		local var_21_8 = var_21_1.year
+		local remainDay = 7 - weekDay
+		local day = dt.day + remainDay + 1
+		local month = dt.month
+		local year = dt.year
 
-		if var_21_7 == 2 then
-			local var_21_9 = var_21_1.year % 400 == 0 or var_21_1.year % 4 == 0 and var_21_8 % 100 ~= 0
+		if month == 2 then
+			local isRunYear = dt.year % 400 == 0 or dt.year % 4 == 0 and year % 100 ~= 0
 
-			if var_21_6 > 29 and var_21_9 then
-				var_21_7 = var_21_7 + 1
-				var_21_6 = var_21_6 - 29
-			elseif var_21_6 > 28 then
-				var_21_7 = var_21_7 + 1
-				var_21_6 = var_21_6 - 28
+			if day > 29 and isRunYear then
+				month = month + 1
+				day = day - 29
+			elseif day > 28 then
+				month = month + 1
+				day = day - 28
 			end
-		elseif var_21_7 == 4 or var_21_7 == 6 or var_21_7 == 9 or var_21_7 == 11 then
-			if var_21_6 > 30 then
-				var_21_7 = var_21_7 + 1
-				var_21_6 = var_21_6 - 30
+		elseif month == 4 or month == 6 or month == 9 or month == 11 then
+			if day > 30 then
+				month = month + 1
+				day = day - 30
 			end
-		elseif var_21_6 > 31 then
-			var_21_7 = var_21_7 + 1
-			var_21_6 = var_21_6 - 31
+		elseif day > 31 then
+			month = month + 1
+			day = day - 31
 		end
 
-		if var_21_7 > 12 then
-			var_21_8 = var_21_8 + 1
-			var_21_7 = var_21_7 - 12
+		if month > 12 then
+			year = year + 1
+			month = month - 12
 		end
 
-		var_21_4 = {
+		dtTable = {
 			hour = 0,
 			min = 0,
 			sec = 0,
-			year = var_21_8,
-			month = var_21_7,
-			day = var_21_6
+			year = year,
+			month = month,
+			day = day
 		}
 	end
 
-	local var_21_10 = os.time(var_21_4)
+	local serverTsInLocal = os.time(dtTable)
 
-	if arg_21_0 then
-		var_21_10 = var_21_10 + var_21_0
+	if isNeedDailyFreshOffset then
+		serverTsInLocal = serverTsInLocal + dailyRefreshTimeOffset
 	end
 
-	return var_0_0.clientTs2ServerTs(var_21_10)
+	return ServerTime.clientTs2ServerTs(serverTsInLocal)
 end
 
-function var_0_0.getMonthEndTimeStamp(arg_22_0)
-	local var_22_0 = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
-	local var_22_1 = var_0_0.nowDateInLocal()
-	local var_22_2 = true
+function ServerTime.getMonthEndTimeStamp(isNeedDailyFreshOffset)
+	local dailyRefreshTimeOffset = TimeDispatcher.DailyRefreshTime * TimeUtil.OneHourSecond
+	local dt = ServerTime.nowDateInLocal()
+	local isNeedAddMonth = true
 
-	if var_22_1.day == 1 and arg_22_0 and var_22_0 > var_22_1.hour * 3600 + var_22_1.min * 60 + var_22_1.sec then
-		var_22_2 = false
-	end
+	if dt.day == 1 and isNeedDailyFreshOffset then
+		local expiredSeconds = dt.hour * 3600 + dt.min * 60 + dt.sec
 
-	if var_22_2 then
-		if var_22_1.month == 12 then
-			var_22_1.year = var_22_1.year + 1
-			var_22_1.month = 1
-		else
-			var_22_1.month = var_22_1.month + 1
+		if expiredSeconds < dailyRefreshTimeOffset then
+			isNeedAddMonth = false
 		end
 	end
 
-	local var_22_3 = {
+	if isNeedAddMonth then
+		if dt.month == 12 then
+			dt.year = dt.year + 1
+			dt.month = 1
+		else
+			dt.month = dt.month + 1
+		end
+	end
+
+	local dtTable = {
 		hour = 0,
 		min = 0,
 		sec = 0,
 		day = 1,
-		year = var_22_1.year,
-		month = var_22_1.month
+		year = dt.year,
+		month = dt.month
 	}
-	local var_22_4 = os.time(var_22_3)
+	local serverTsInLocal = os.time(dtTable)
 
-	if arg_22_0 then
-		var_22_4 = var_22_4 + var_22_0
+	if isNeedDailyFreshOffset then
+		serverTsInLocal = serverTsInLocal + dailyRefreshTimeOffset
 	end
 
-	return var_0_0.clientTs2ServerTs(var_22_4)
+	return ServerTime.clientTs2ServerTs(serverTsInLocal)
 end
 
-function var_0_0.clientTs2ServerTs(arg_23_0)
-	return arg_23_0 - var_0_0.clientToServerOffset() - var_0_0.getDstOffset()
+function ServerTime.clientTs2ServerTs(clientTs)
+	return clientTs - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
 end
 
-function var_0_0.GetUTCOffsetStr()
-	return string.format("UTC%+d", var_0_1 / 3600)
+function ServerTime.GetUTCOffsetStr()
+	return string.format("UTC%+d", _serverUtcOffset / 3600)
 end
 
-return var_0_0
+return ServerTime

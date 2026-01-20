@@ -1,23 +1,25 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalFollowTaskUpdateWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalFollowTaskUpdateWork.lua
 
-local var_0_0 = class("SurvivalFollowTaskUpdateWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalFollowTaskUpdateWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_1_1
+local SurvivalFollowTaskUpdateWork = class("SurvivalFollowTaskUpdateWork", SurvivalStepBaseWork)
 
-	if arg_1_0._stepMo.followTask.moduleId == SurvivalEnum.TaskModule.MapMainTarget then
-		var_1_1 = var_1_0.mainTask
-	elseif arg_1_0._stepMo.followTask.moduleId == SurvivalEnum.TaskModule.NormalTask then
-		var_1_1 = var_1_0.followTask
+function SurvivalFollowTaskUpdateWork:onStart(context)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local followTask
+
+	if self._stepMo.followTask.moduleId == SurvivalEnum.TaskModule.MapMainTarget then
+		followTask = sceneMo.mainTask
+	elseif self._stepMo.followTask.moduleId == SurvivalEnum.TaskModule.NormalTask then
+		followTask = sceneMo.followTask
 	end
 
-	if var_1_1 then
-		var_1_1:init(arg_1_0._stepMo.followTask)
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnFollowTaskUpdate, var_1_1)
+	if followTask then
+		followTask:init(self._stepMo.followTask)
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnFollowTaskUpdate, followTask)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalFollowTaskUpdateWork

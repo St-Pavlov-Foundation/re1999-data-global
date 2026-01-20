@@ -1,65 +1,67 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchTalkTween", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchTalkTween.lua
 
-local var_0_0 = class("RoleStoryDispatchTalkTween", UserDataDispose)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchTalkTween", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:__onInit()
+local RoleStoryDispatchTalkTween = class("RoleStoryDispatchTalkTween", UserDataDispose)
+
+function RoleStoryDispatchTalkTween:ctor()
+	self:__onInit()
 end
 
-function var_0_0.playTalkTween(arg_2_0, arg_2_1)
-	arg_2_0:clearTween()
+function RoleStoryDispatchTalkTween:playTalkTween(list)
+	self:clearTween()
 
-	arg_2_0.talkList = arg_2_1
+	self.talkList = list
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.talkList) do
-		iter_2_1:clearText()
+	for i, v in ipairs(self.talkList) do
+		v:clearText()
 	end
 
-	arg_2_0.playIndex = 0
+	self.playIndex = 0
 
-	arg_2_0:playNext()
+	self:playNext()
 
-	arg_2_0.playingId = AudioMgr.instance:trigger(AudioEnum.UI.play_activitystorysfx_shiji_type)
+	self.playingId = AudioMgr.instance:trigger(AudioEnum.UI.play_activitystorysfx_shiji_type)
 end
 
-function var_0_0.playNext(arg_3_0)
-	local var_3_0 = arg_3_0.playIndex + 1
-	local var_3_1 = arg_3_0.talkList[var_3_0]
+function RoleStoryDispatchTalkTween:playNext()
+	local nextIndex = self.playIndex + 1
+	local item = self.talkList[nextIndex]
 
-	if var_3_1 then
-		arg_3_0.playIndex = var_3_0
+	if item then
+		self.playIndex = nextIndex
 
-		var_3_1:startTween(arg_3_0.playNext, arg_3_0)
+		item:startTween(self.playNext, self)
 	else
-		arg_3_0:finishTween()
+		self:finishTween()
 	end
 end
 
-function var_0_0.finishTween(arg_4_0)
-	arg_4_0:stopAudio()
+function RoleStoryDispatchTalkTween:finishTween()
+	self:stopAudio()
 end
 
-function var_0_0.clearTween(arg_5_0)
-	if arg_5_0.talkList then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0.talkList) do
-			iter_5_1:killTween()
+function RoleStoryDispatchTalkTween:clearTween()
+	if self.talkList then
+		for i, v in ipairs(self.talkList) do
+			v:killTween()
 		end
 	end
 
-	arg_5_0:stopAudio()
+	self:stopAudio()
 end
 
-function var_0_0.stopAudio(arg_6_0)
-	if arg_6_0.playingId and arg_6_0.playingId > 0 then
-		AudioMgr.instance:stopPlayingID(arg_6_0.playingId)
+function RoleStoryDispatchTalkTween:stopAudio()
+	if self.playingId and self.playingId > 0 then
+		AudioMgr.instance:stopPlayingID(self.playingId)
 
-		arg_6_0.playingId = nil
+		self.playingId = nil
 	end
 end
 
-function var_0_0.destroy(arg_7_0)
-	arg_7_0:clearTween()
-	arg_7_0:__onDispose()
+function RoleStoryDispatchTalkTween:destroy()
+	self:clearTween()
+	self:__onDispose()
 end
 
-return var_0_0
+return RoleStoryDispatchTalkTween

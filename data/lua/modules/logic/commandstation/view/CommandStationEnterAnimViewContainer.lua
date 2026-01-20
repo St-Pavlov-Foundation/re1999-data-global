@@ -1,63 +1,65 @@
-﻿module("modules.logic.commandstation.view.CommandStationEnterAnimViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationEnterAnimViewContainer.lua
 
-local var_0_0 = class("CommandStationEnterAnimViewContainer", BaseViewContainer)
+module("modules.logic.commandstation.view.CommandStationEnterAnimViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CommandStationEnterAnimViewContainer = class("CommandStationEnterAnimViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CommandStationEnterAnimView.New())
+function CommandStationEnterAnimViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CommandStationEnterAnimView.New())
+
+	return views
 end
 
-function var_0_0.playOpenTransition(arg_2_0, arg_2_1)
-	arg_2_0:_cancelBlock()
-	arg_2_0:_stopOpenCloseAnim()
+function CommandStationEnterAnimViewContainer:playOpenTransition(paramTable)
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
 
-	if not arg_2_0._viewSetting.anim or arg_2_0._viewSetting.anim ~= ViewAnim.Default then
-		if not string.nilorempty(arg_2_0._viewSetting.anim) then
-			arg_2_0:_setAnimatorRes()
+	if not self._viewSetting.anim or self._viewSetting.anim ~= ViewAnim.Default then
+		if not string.nilorempty(self._viewSetting.anim) then
+			self:_setAnimatorRes()
 
-			if not arg_2_1 or not arg_2_1.noBlock then
-				arg_2_0:startViewOpenBlock()
+			if not paramTable or not paramTable.noBlock then
+				self:startViewOpenBlock()
 			end
 
-			local var_2_0 = arg_2_0.viewGO:GetComponent("Animator")
+			local animatorPlayer = self.viewGO:GetComponent("Animator")
 
-			if not gohelper.isNil(var_2_0) then
-				local var_2_1 = arg_2_1 and arg_2_1.anim or "open"
+			if not gohelper.isNil(animatorPlayer) then
+				local animName = paramTable and paramTable.anim or "open"
 
-				var_2_0:Play(var_2_1, 0, 0)
+				animatorPlayer:Play(animName, 0, 0)
 			end
 
-			local var_2_2 = 1.033
+			local duration = 1.033
 
-			TaskDispatcher.runDelay(arg_2_0.onPlayOpenTransitionFinish, arg_2_0, var_2_2)
+			TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, duration)
 		else
-			arg_2_0:onPlayOpenTransitionFinish()
+			self:onPlayOpenTransitionFinish()
 		end
 
 		return
 	end
 
-	if not arg_2_0._canvasGroup then
-		arg_2_0:onPlayOpenTransitionFinish()
+	if not self._canvasGroup then
+		self:onPlayOpenTransitionFinish()
 
 		return
 	end
 
-	if not arg_2_1 or not arg_2_1.noBlock then
-		arg_2_0:startViewOpenBlock()
+	if not paramTable or not paramTable.noBlock then
+		self:startViewOpenBlock()
 	end
 
-	arg_2_0:_animSetAlpha(0.01, true)
+	self:_animSetAlpha(0.01, true)
 
-	local var_2_3 = arg_2_0._viewSetting.customAnimFadeTime and arg_2_0._viewSetting.customAnimFadeTime[1] or BaseViewContainer.openViewTime
-	local var_2_4 = BaseViewContainer.openViewEase
+	local openViewTime = self._viewSetting.customAnimFadeTime and self._viewSetting.customAnimFadeTime[1] or BaseViewContainer.openViewTime
+	local openViewEase = BaseViewContainer.openViewEase
 
-	arg_2_0._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(0.01, 1, var_2_3, arg_2_0._onOpenTweenFrameCallback, arg_2_0._onOpenTweenFinishCallback, arg_2_0, nil, var_2_4)
+	self._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(0.01, 1, openViewTime, self._onOpenTweenFrameCallback, self._onOpenTweenFinishCallback, self, nil, openViewEase)
 
-	TaskDispatcher.runDelay(arg_2_0.onPlayOpenTransitionFinish, arg_2_0, 2)
+	TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, 2)
 end
 
-return var_0_0
+return CommandStationEnterAnimViewContainer

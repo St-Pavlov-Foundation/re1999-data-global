@@ -1,101 +1,105 @@
-﻿module("modules.logic.commandstation.view.CommandStationDispatchEventProcessHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationDispatchEventProcessHeroItem.lua
 
-local var_0_0 = class("CommandStationDispatchEventProcessHeroItem", ListScrollCellExtend)
+module("modules.logic.commandstation.view.CommandStationDispatchEventProcessHeroItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "#image_career")
-	arg_1_0._godispatched = gohelper.findChild(arg_1_0.viewGO, "#go_dispatched")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "#go_selected/#txt_index")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_selected/#go_click")
-	arg_1_0._goupicon = gohelper.findChild(arg_1_0.viewGO, "#go_upicon")
+local CommandStationDispatchEventProcessHeroItem = class("CommandStationDispatchEventProcessHeroItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationDispatchEventProcessHeroItem:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "#go_bg")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._imagecareer = gohelper.findChildImage(self.viewGO, "#image_career")
+	self._godispatched = gohelper.findChild(self.viewGO, "#go_dispatched")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._txtindex = gohelper.findChildText(self.viewGO, "#go_selected/#txt_index")
+	self._goclick = gohelper.findChild(self.viewGO, "#go_selected/#go_click")
+	self._goupicon = gohelper.findChild(self.viewGO, "#go_upicon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CommandStationDispatchEventProcessHeroItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CommandStationDispatchEventProcessHeroItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function CommandStationDispatchEventProcessHeroItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	arg_5_0._clickListener = SLFramework.UGUI.UIClickListener.Get(arg_5_0._gobg)
+function CommandStationDispatchEventProcessHeroItem:_editableAddEvents()
+	self._clickListener = SLFramework.UGUI.UIClickListener.Get(self._gobg)
 
-	arg_5_0._clickListener:AddClickListener(arg_5_0._onClickHandler, arg_5_0)
+	self._clickListener:AddClickListener(self._onClickHandler, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	if arg_6_0._clickListener then
-		arg_6_0._clickListener:RemoveClickListener()
+function CommandStationDispatchEventProcessHeroItem:_editableRemoveEvents()
+	if self._clickListener then
+		self._clickListener:RemoveClickListener()
 	end
 end
 
-function var_0_0._onClickHandler(arg_7_0)
+function CommandStationDispatchEventProcessHeroItem:_onClickHandler()
 	AudioMgr.instance:trigger(AudioEnum3_0.CommandStationMap.play_ui_common_click2)
 
-	if arg_7_0._isUsed then
+	if self._isUsed then
 		return
 	end
 
-	if CommandStationHeroListModel.instance:getHeroSelectedIndex(arg_7_0._mo) then
-		CommandStationHeroListModel.instance:cancelSelectedHero(arg_7_0._mo)
-		arg_7_0:_updateSelectedInfo()
+	local selectedIndex = CommandStationHeroListModel.instance:getHeroSelectedIndex(self._mo)
+
+	if selectedIndex then
+		CommandStationHeroListModel.instance:cancelSelectedHero(self._mo)
+		self:_updateSelectedInfo()
 
 		return
 	end
 
-	local var_7_0 = CommandStationHeroListModel.instance:getEmptyIndex()
+	local index = CommandStationHeroListModel.instance:getEmptyIndex()
 
-	if var_7_0 then
-		CommandStationHeroListModel.instance:setSelectedHero(var_7_0, arg_7_0._mo)
-		arg_7_0:_updateSelectedInfo()
+	if index then
+		CommandStationHeroListModel.instance:setSelectedHero(index, self._mo)
+		self:_updateSelectedInfo()
 	end
 end
 
-function var_0_0._updateSelectedInfo(arg_8_0)
-	local var_8_0 = CommandStationHeroListModel.instance:getHeroSelectedIndex(arg_8_0._mo)
+function CommandStationDispatchEventProcessHeroItem:_updateSelectedInfo()
+	local selectedIndex = CommandStationHeroListModel.instance:getHeroSelectedIndex(self._mo)
 
-	gohelper.setActive(arg_8_0._goselected, var_8_0 ~= nil)
+	gohelper.setActive(self._goselected, selectedIndex ~= nil)
 
-	if var_8_0 then
-		arg_8_0._txtindex.text = var_8_0
+	if selectedIndex then
+		self._txtindex.text = selectedIndex
 	end
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._mo = arg_9_1
+function CommandStationDispatchEventProcessHeroItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_9_0 = arg_9_0._mo.config
-	local var_9_1 = var_9_0.skinId
-	local var_9_2 = SkinConfig.instance:getSkinCo(var_9_1)
+	local heroConfig = self._mo.config
+	local skinId = heroConfig.skinId
+	local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
-	arg_9_0._simageicon:LoadImage(ResUrl.getHeadIconSmall(var_9_2.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_9_0._imagecareer, "lssx_" .. var_9_0.career)
-	gohelper.setActive(arg_9_0._goupicon, CommandStationHeroListModel.instance:heroIsSpecial(arg_9_0._mo.heroId))
+	self._simageicon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. heroConfig.career)
+	gohelper.setActive(self._goupicon, CommandStationHeroListModel.instance:heroIsSpecial(self._mo.heroId))
 
-	arg_9_0._isUsed = CommandStationHeroListModel.instance:heroIsUsed(arg_9_0._mo.heroId)
+	self._isUsed = CommandStationHeroListModel.instance:heroIsUsed(self._mo.heroId)
 
-	gohelper.setActive(arg_9_0._godispatched, arg_9_0._isUsed)
-	arg_9_0:_updateSelectedInfo()
+	gohelper.setActive(self._godispatched, self._isUsed)
+	self:_updateSelectedInfo()
 end
 
-function var_0_0.onSelect(arg_10_0, arg_10_1)
+function CommandStationDispatchEventProcessHeroItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function CommandStationDispatchEventProcessHeroItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return CommandStationDispatchEventProcessHeroItem

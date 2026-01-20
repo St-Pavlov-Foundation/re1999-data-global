@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_task_hide_achievement", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_task_hide_achievement.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_task_hide_achievement", package.seeall)
+
+local lua_task_hide_achievement = {}
+local fields = {
 	name = 4,
 	isOnline = 2,
 	openLimit = 9,
@@ -17,17 +19,17 @@ local var_0_1 = {
 	maxProgress = 12,
 	bonus = 14
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 2,
 	minType = 1,
 	desc = 3
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_task_hide_achievement.onLoad(json)
+	lua_task_hide_achievement.configList, lua_task_hide_achievement.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_task_hide_achievement

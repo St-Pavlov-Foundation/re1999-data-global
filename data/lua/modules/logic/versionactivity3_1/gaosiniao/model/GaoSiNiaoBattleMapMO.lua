@@ -1,411 +1,413 @@
-﻿local var_0_0 = table.insert
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/model/GaoSiNiaoBattleMapMO.lua
+
+local ti = table.insert
 
 module("modules.logic.versionactivity3_1.gaosiniao.model.GaoSiNiaoBattleMapMO", package.seeall)
 
-local var_0_1 = class("GaoSiNiaoBattleMapMO")
+local GaoSiNiaoBattleMapMO = class("GaoSiNiaoBattleMapMO")
 
-local function var_0_2(arg_1_0, arg_1_1)
-	if arg_1_1 ~= arg_1_0._p[arg_1_1] then
-		arg_1_0._p[arg_1_1] = var_0_2(arg_1_0, arg_1_0._p[arg_1_1])
+local function _find(self, x)
+	if x ~= self._p[x] then
+		self._p[x] = _find(self, self._p[x])
 	end
 
-	return arg_1_0._p[arg_1_1]
+	return self._p[x]
 end
 
-local function var_0_3(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._p[var_0_2(arg_2_0, arg_2_2)] = var_0_2(arg_2_0, arg_2_1)
+local function _merge(self, x, y)
+	self._p[_find(self, y)] = _find(self, x)
 end
 
-local function var_0_4(arg_3_0, arg_3_1, arg_3_2)
-	return var_0_2(arg_3_0, arg_3_1) == var_0_2(arg_3_0, arg_3_2)
+local function _isConned(self, x, y)
+	return _find(self, x) == _find(self, y)
 end
 
-local function var_0_5(arg_4_0, arg_4_1)
-	arg_4_0._p[arg_4_1] = arg_4_1
+local function _single(self, x)
+	self._p[x] = x
 end
 
-local function var_0_6()
+local function _configInst()
 	return GaoSiNiaoController.instance:config()
 end
 
-function var_0_1._dragContext(arg_6_0)
+function GaoSiNiaoBattleMapMO:_dragContext()
 	return GaoSiNiaoBattleModel.instance:dragContext()
 end
 
-function var_0_1.isPlacedBagItem(arg_7_0, arg_7_1)
-	return arg_7_0:_dragContext():isPlacedBagItem(arg_7_1)
+function GaoSiNiaoBattleMapMO:isPlacedBagItem(gridItem)
+	return self:_dragContext():isPlacedBagItem(gridItem)
 end
 
-function var_0_1.getPlacedBagItem(arg_8_0, arg_8_1)
-	return arg_8_0:_dragContext():getPlacedBagItem(arg_8_1)
+function GaoSiNiaoBattleMapMO:getPlacedBagItem(gridItem)
+	return self:_dragContext():getPlacedBagItem(gridItem)
 end
 
-function var_0_1.ctor(arg_9_0)
-	arg_9_0._gridList = {}
-	arg_9_0._pt2BagDict = {}
-	arg_9_0._p = {}
-	arg_9_0._startGridList = {}
-	arg_9_0._endGridList = {}
-	arg_9_0._portalGridList = {}
-	arg_9_0._whoActivedPortalGrid = false
-	arg_9_0.__last_whoActivedPortalGrid = false
+function GaoSiNiaoBattleMapMO:ctor()
+	self._gridList = {}
+	self._pt2BagDict = {}
+	self._p = {}
+	self._startGridList = {}
+	self._endGridList = {}
+	self._portalGridList = {}
+	self._whoActivedPortalGrid = false
+	self.__last_whoActivedPortalGrid = false
 end
 
-function var_0_1.default_ctor(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = var_0_1.New()
+function GaoSiNiaoBattleMapMO.default_ctor(Self, memberName, eVersion)
+	local mapMO = GaoSiNiaoBattleMapMO.New()
 
-	var_10_0.__info = GaoSiNiaoMapInfo.New(arg_10_2 or GaoSiNiaoEnum.Version.V1_0_0)
-	arg_10_0[arg_10_1] = var_10_0
+	mapMO.__info = GaoSiNiaoMapInfo.New(eVersion or GaoSiNiaoEnum.Version.V1_0_0)
+	Self[memberName] = mapMO
 end
 
-function var_0_1.createMapByEpisodeId(arg_11_0, arg_11_1)
-	local var_11_0 = var_0_6():getEpisodeCO(arg_11_1)
+function GaoSiNiaoBattleMapMO:createMapByEpisodeId(episodeId)
+	local episodeCO = _configInst():getEpisodeCO(episodeId)
 
-	arg_11_0:createMapById(var_11_0.gameId)
+	self:createMapById(episodeCO.gameId)
 end
 
-function var_0_1.createMapById(arg_12_0, arg_12_1)
-	arg_12_1 = arg_12_1 or 0
+function GaoSiNiaoBattleMapMO:createMapById(mapId)
+	mapId = mapId or 0
 
-	local var_12_0 = arg_12_0.__info:reset(arg_12_1)
+	local mapCO = self.__info:reset(mapId)
 
-	arg_12_0:_createMap(var_12_0)
+	self:_createMap(mapCO)
 end
 
-function var_0_1._createMap(arg_13_0, arg_13_1)
-	arg_13_0:_createGrids(arg_13_1)
-	arg_13_0:_createBags(arg_13_1)
+function GaoSiNiaoBattleMapMO:_createMap(mapCO)
+	self:_createGrids(mapCO)
+	self:_createBags(mapCO)
 end
 
-function var_0_1._createGrids(arg_14_0, arg_14_1)
-	arg_14_0._gridList = {}
-	arg_14_0._startGridList = {}
-	arg_14_0._endGridList = {}
-	arg_14_0._portalGridList = {}
-	arg_14_0._p = {}
-	arg_14_0._whoActivedPortalGrid = false
-	arg_14_0.__last_whoActivedPortalGrid = false
+function GaoSiNiaoBattleMapMO:_createGrids(mapCO)
+	self._gridList = {}
+	self._startGridList = {}
+	self._endGridList = {}
+	self._portalGridList = {}
+	self._p = {}
+	self._whoActivedPortalGrid = false
+	self.__last_whoActivedPortalGrid = false
 
-	if not arg_14_1.gridList then
+	if not mapCO.gridList then
 		return
 	end
 
-	var_0_1.s_foreachGrid(arg_14_1.width, arg_14_1.height, function(arg_15_0, arg_15_1, arg_15_2)
-		local var_15_0 = arg_14_1.gridList[arg_15_0]
-		local var_15_1 = {
-			arg_15_1,
-			arg_15_2
+	GaoSiNiaoBattleMapMO.s_foreachGrid(mapCO.width, mapCO.height, function(i, x, y)
+		local gridInfo = mapCO.gridList[i]
+		local index = {
+			x,
+			y
 		}
-		local var_15_2 = GaoSiNiaoMapGrid.New(arg_14_0, var_15_1, var_15_0)
+		local item = GaoSiNiaoMapGrid.New(self, index, gridInfo)
 
-		var_15_2:setId(arg_15_0)
+		item:setId(i)
 
-		arg_14_0._gridList[arg_15_0] = var_15_2
-		arg_14_0._p[arg_15_0] = arg_15_0
+		self._gridList[i] = item
+		self._p[i] = i
 
-		if var_15_2:isStart() then
-			var_0_0(arg_14_0._startGridList, var_15_2)
-		elseif var_15_2:isEnd() then
-			var_0_0(arg_14_0._endGridList, var_15_2)
-		elseif var_15_2:isPortal() then
-			var_0_0(arg_14_0._portalGridList, var_15_2)
+		if item:isStart() then
+			ti(self._startGridList, item)
+		elseif item:isEnd() then
+			ti(self._endGridList, item)
+		elseif item:isPortal() then
+			ti(self._portalGridList, item)
 		end
 	end)
-	arg_14_0:foreachGrid(function(arg_16_0)
-		arg_16_0:setDistanceToStartByStartGrid(arg_14_0._startGridList[1])
+	self:foreachGrid(function(gridItem)
+		gridItem:setDistanceToStartByStartGrid(self._startGridList[1])
 	end)
-	arg_14_0:tryMergeAll()
+	self:tryMergeAll()
 end
 
-function var_0_1._createBags(arg_17_0, arg_17_1)
-	arg_17_0._pt2BagDict = {}
+function GaoSiNiaoBattleMapMO:_createBags(mapCO)
+	self._pt2BagDict = {}
 
-	if not arg_17_1.bagList then
+	if not mapCO.bagList then
 		return
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1.bagList) do
-		local var_17_0 = iter_17_1.ptype
-		local var_17_1 = iter_17_1.count
+	for _, bagInfo in ipairs(mapCO.bagList) do
+		local ptype = bagInfo.ptype
+		local count = bagInfo.count
 
-		if not arg_17_0._pt2BagDict[var_17_0] then
-			arg_17_0._pt2BagDict[var_17_0] = GaoSiNiaoMapBag.New(arg_17_0, var_17_0, var_17_1)
+		if not self._pt2BagDict[ptype] then
+			self._pt2BagDict[ptype] = GaoSiNiaoMapBag.New(self, ptype, count)
 		else
-			arg_17_0._pt2BagDict[var_17_0]:addCnt(var_17_1)
+			self._pt2BagDict[ptype]:addCnt(count)
 		end
 	end
 end
 
-function var_0_1.tryMergeAll(arg_18_0, arg_18_1)
-	arg_18_0._tmpPortalConnedInfoList = {}
+function GaoSiNiaoBattleMapMO:tryMergeAll(dirtyGridItemList)
+	self._tmpPortalConnedInfoList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._startGridList) do
-		arg_18_0:_refreshUnionFind_Impl(iter_18_1)
+	for _, gridItem in ipairs(self._startGridList) do
+		self:_refreshUnionFind_Impl(gridItem)
 	end
 
-	arg_18_1 = arg_18_1 or arg_18_0:gridDataList()
+	dirtyGridItemList = dirtyGridItemList or self:gridDataList()
 
-	arg_18_0:_tryMergeAll_AppendPortal(arg_18_1)
-	table.sort(arg_18_1, function(arg_19_0, arg_19_1)
-		local var_19_0 = arg_19_0:isPortal() and 1 or 0
-		local var_19_1 = arg_19_1:isPortal() and 1 or 0
+	self:_tryMergeAll_AppendPortal(dirtyGridItemList)
+	table.sort(dirtyGridItemList, function(a, b)
+		local a_isPortal = a:isPortal() and 1 or 0
+		local b_isPortal = b:isPortal() and 1 or 0
 
-		if var_19_0 ~= var_19_1 then
-			return var_19_0 < var_19_1
+		if a_isPortal ~= b_isPortal then
+			return a_isPortal < b_isPortal
 		end
 
-		local var_19_2 = arg_19_0:distanceToStart()
-		local var_19_3 = arg_19_1:distanceToStart()
+		local a_dist = a:distanceToStart()
+		local b_dist = b:distanceToStart()
 
-		if var_19_2 ~= var_19_3 then
-			return var_19_2 < var_19_3
+		if a_dist ~= b_dist then
+			return a_dist < b_dist
 		end
 
-		return arg_19_0:id() < arg_19_1:id()
+		return a:id() < b:id()
 	end)
 
-	local var_18_0 = {}
+	local set = {}
 
-	for iter_18_2, iter_18_3 in ipairs(arg_18_1) do
-		if not var_18_0[iter_18_3] then
-			var_18_0[iter_18_3] = true
+	for _, gridItem in ipairs(dirtyGridItemList) do
+		if not set[gridItem] then
+			set[gridItem] = true
 
-			arg_18_0:_refreshUnionFind_Impl(iter_18_3)
+			self:_refreshUnionFind_Impl(gridItem)
 		end
 	end
 
-	arg_18_0:_onPostTryMergeAll()
+	self:_onPostTryMergeAll()
 end
 
-function var_0_1._tryMergeAll_AppendPortal(arg_20_0, arg_20_1)
-	if arg_20_0:isActivedPortal() then
+function GaoSiNiaoBattleMapMO:_tryMergeAll_AppendPortal(dirtyGridItemList)
+	if self:isActivedPortal() then
 		return
 	end
 
-	local var_20_0 = arg_20_0.__last_whoActivedPortalGrid
+	local whoActivedPortalGrid = self.__last_whoActivedPortalGrid
 
-	arg_20_0.__last_whoActivedPortalGrid = false
+	self.__last_whoActivedPortalGrid = false
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._portalGridList) do
-		if not iter_20_1:isRoot() then
-			var_0_5(arg_20_0, iter_20_1:id())
+	for _, gridPortalItem in ipairs(self._portalGridList) do
+		if not gridPortalItem:isRoot() then
+			_single(self, gridPortalItem:id())
 		end
 
-		if arg_20_0:isConnedStart(iter_20_1) then
-			if var_20_0 and arg_20_0:isConned(iter_20_1, var_20_0) then
-				local var_20_1 = var_20_0:getRelativeZoneMask(iter_20_1)
+		if self:isConnedStart(gridPortalItem) then
+			if whoActivedPortalGrid and self:isConned(gridPortalItem, whoActivedPortalGrid) then
+				local relativeZoneMask = whoActivedPortalGrid:getRelativeZoneMask(gridPortalItem)
 
-				if var_20_1 ~= GaoSiNiaoEnum.ZoneMask.None then
-					var_0_0(arg_20_0._tmpPortalConnedInfoList, {
-						owner = var_20_0,
-						portalGrid = iter_20_1,
-						relativeZoneMask = var_20_1
+				if relativeZoneMask ~= GaoSiNiaoEnum.ZoneMask.None then
+					ti(self._tmpPortalConnedInfoList, {
+						owner = whoActivedPortalGrid,
+						portalGrid = gridPortalItem,
+						relativeZoneMask = relativeZoneMask
 					})
 
-					var_20_0 = false
+					whoActivedPortalGrid = false
 				end
 			end
 
-			local var_20_2 = iter_20_1:getNeighborGridList()
+			local neighborGridList = gridPortalItem:getNeighborGridList()
 
-			for iter_20_2 = 1, 4 do
-				local var_20_3 = var_20_2[iter_20_2]
-				local var_20_4 = GaoSiNiaoEnum.bitPos2Dir(iter_20_2 - 1)
+			for i = 1, 4 do
+				local neighborGridItem = neighborGridList[i]
+				local relativeZoneMask = GaoSiNiaoEnum.bitPos2Dir(i - 1)
 
-				if var_20_3 and arg_20_0:isConned(iter_20_1, var_20_3) then
-					var_0_0(arg_20_0._tmpPortalConnedInfoList, {
-						owner = var_20_3,
-						portalGrid = iter_20_1,
-						relativeZoneMask = GaoSiNiaoEnum.flipDir(var_20_4)
+				if neighborGridItem and self:isConned(gridPortalItem, neighborGridItem) then
+					ti(self._tmpPortalConnedInfoList, {
+						owner = neighborGridItem,
+						portalGrid = gridPortalItem,
+						relativeZoneMask = GaoSiNiaoEnum.flipDir(relativeZoneMask)
 					})
 				end
 			end
 		end
 
-		var_0_0(arg_20_1, iter_20_1)
+		ti(dirtyGridItemList, gridPortalItem)
 	end
 end
 
-function var_0_1._onPostTryMergeAll(arg_21_0)
-	if next(arg_21_0._tmpPortalConnedInfoList) then
-		if not arg_21_0:isActivedPortal() then
-			for iter_21_0, iter_21_1 in ipairs(arg_21_0._tmpPortalConnedInfoList) do
-				if arg_21_0:isConnedStart(iter_21_1.owner) then
-					arg_21_0:onActivePortals(iter_21_1.owner, iter_21_1.portalGrid, iter_21_1.relativeZoneMask)
+function GaoSiNiaoBattleMapMO:_onPostTryMergeAll()
+	if next(self._tmpPortalConnedInfoList) then
+		if not self:isActivedPortal() then
+			for _, v in ipairs(self._tmpPortalConnedInfoList) do
+				if self:isConnedStart(v.owner) then
+					self:onActivePortals(v.owner, v.portalGrid, v.relativeZoneMask)
 
 					break
 				end
 			end
 		end
 
-		arg_21_0._tmpPortalConnedInfoList = nil
+		self._tmpPortalConnedInfoList = nil
 	end
 
-	if arg_21_0:isActivedPortal() then
-		for iter_21_2, iter_21_3 in ipairs(arg_21_0._portalGridList) do
-			arg_21_0:_refreshUnionFind_Impl(iter_21_3, true)
+	if self:isActivedPortal() then
+		for _, gridPortalItem in ipairs(self._portalGridList) do
+			self:_refreshUnionFind_Impl(gridPortalItem, true)
 		end
 	end
 end
 
-function var_0_1._mergeNeighborIfNotConned_Impl(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	if not arg_22_2 then
+function GaoSiNiaoBattleMapMO:_mergeNeighborIfNotConned_Impl(gridItem, neighborGridItem, relativeZoneMask, noSave)
+	if not neighborGridItem then
 		return
 	end
 
-	if arg_22_0:isConned(arg_22_1, arg_22_2) then
+	if self:isConned(gridItem, neighborGridItem) then
 		return
 	end
 
-	if not arg_22_1:_internal_tryConnNeighbor(arg_22_2, arg_22_3) then
+	if not gridItem:_internal_tryConnNeighbor(neighborGridItem, relativeZoneMask) then
 		return
 	end
 
-	if not arg_22_0:isActivedPortal() and (arg_22_1:isPortal() or arg_22_2:isPortal()) then
-		arg_22_0:_mergeNeighborPortalIfNotConned_Impl(arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	if not self:isActivedPortal() and (gridItem:isPortal() or neighborGridItem:isPortal()) then
+		self:_mergeNeighborPortalIfNotConned_Impl(gridItem, neighborGridItem, relativeZoneMask, noSave)
 	else
-		arg_22_0:merge(arg_22_1, arg_22_2)
+		self:merge(gridItem, neighborGridItem)
 	end
 end
 
-function var_0_1._mergeNeighborPortalIfNotConned_Impl(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	if arg_23_0:isActivedPortal() then
+function GaoSiNiaoBattleMapMO:_mergeNeighborPortalIfNotConned_Impl(gridItem, neighborGridItem, relativeZoneMask, noSave)
+	if self:isActivedPortal() then
 		return
 	end
 
-	if arg_23_2:isPortal() then
-		arg_23_0:_savePortalConnIfNotConned(arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	elseif arg_23_1:isPortal() then
-		arg_23_0:_savePortalConnIfNotConned(arg_23_2, arg_23_1, GaoSiNiaoEnum.flipDir(arg_23_3), arg_23_4)
+	if neighborGridItem:isPortal() then
+		self:_savePortalConnIfNotConned(gridItem, neighborGridItem, relativeZoneMask, noSave)
+	elseif gridItem:isPortal() then
+		self:_savePortalConnIfNotConned(neighborGridItem, gridItem, GaoSiNiaoEnum.flipDir(relativeZoneMask), noSave)
 	end
 end
 
-function var_0_1._savePortalConnIfNotConned(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	if arg_24_0:isConnedStart(arg_24_1) then
-		arg_24_0:onActivePortals(arg_24_1, arg_24_2, arg_24_3)
-	elseif not arg_24_4 then
-		var_0_0(arg_24_0._tmpPortalConnedInfoList, {
-			owner = arg_24_1,
-			portalGrid = arg_24_2,
-			relativeZoneMask = arg_24_3
+function GaoSiNiaoBattleMapMO:_savePortalConnIfNotConned(ownerGridItem, neighborPortalGridItem, relativeZoneMask, noSave)
+	if self:isConnedStart(ownerGridItem) then
+		self:onActivePortals(ownerGridItem, neighborPortalGridItem, relativeZoneMask)
+	elseif not noSave then
+		ti(self._tmpPortalConnedInfoList, {
+			owner = ownerGridItem,
+			portalGrid = neighborPortalGridItem,
+			relativeZoneMask = relativeZoneMask
 		})
 	end
 end
 
-function var_0_1.whoActivedPortalGrid(arg_25_0)
-	return arg_25_0._whoActivedPortalGrid
+function GaoSiNiaoBattleMapMO:whoActivedPortalGrid()
+	return self._whoActivedPortalGrid
 end
 
-function var_0_1.isActivedPortal(arg_26_0)
-	return arg_26_0._whoActivedPortalGrid and true or false
+function GaoSiNiaoBattleMapMO:isActivedPortal()
+	return self._whoActivedPortalGrid and true or false
 end
 
-function var_0_1.onActivePortals(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	assert(arg_27_2:isPortal())
+function GaoSiNiaoBattleMapMO:onActivePortals(reqGrid, respPortalGrid, relativeZoneMask)
+	assert(respPortalGrid:isPortal())
 
-	arg_27_0._whoActivedPortalGrid = arg_27_1
+	self._whoActivedPortalGrid = reqGrid
 
-	arg_27_0:merge(arg_27_1, arg_27_2)
-	arg_27_2:set_forceInZoneMask(arg_27_3)
-	arg_27_2:set_forceOutZoneMask(GaoSiNiaoEnum.ZoneMask.None)
+	self:merge(reqGrid, respPortalGrid)
+	respPortalGrid:set_forceInZoneMask(relativeZoneMask)
+	respPortalGrid:set_forceOutZoneMask(GaoSiNiaoEnum.ZoneMask.None)
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0._portalGridList) do
-		if iter_27_1 ~= arg_27_2 then
-			iter_27_1:set_forceInZoneMask(GaoSiNiaoEnum.flipDir(arg_27_3))
-			iter_27_1:set_forceOutZoneMask(arg_27_3)
-			arg_27_0:merge(arg_27_1, iter_27_1)
+	for _, anotherPortalGridItem in ipairs(self._portalGridList) do
+		if anotherPortalGridItem ~= respPortalGrid then
+			anotherPortalGridItem:set_forceInZoneMask(GaoSiNiaoEnum.flipDir(relativeZoneMask))
+			anotherPortalGridItem:set_forceOutZoneMask(relativeZoneMask)
+			self:merge(reqGrid, anotherPortalGridItem)
 
 			break
 		end
 	end
 end
 
-function var_0_1.onDisactivePortals(arg_28_0)
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._portalGridList) do
-		iter_28_1:set_forceInZoneMask(false)
-		iter_28_1:set_forceOutZoneMask(false)
+function GaoSiNiaoBattleMapMO:onDisactivePortals()
+	for _, gridItem in ipairs(self._portalGridList) do
+		gridItem:set_forceInZoneMask(false)
+		gridItem:set_forceOutZoneMask(false)
 	end
 
-	if arg_28_0.__last_whoActivedPortalGrid == false then
-		arg_28_0.__last_whoActivedPortalGrid = arg_28_0._whoActivedPortalGrid
+	if self.__last_whoActivedPortalGrid == false then
+		self.__last_whoActivedPortalGrid = self._whoActivedPortalGrid
 	end
 
-	arg_28_0._whoActivedPortalGrid = false
+	self._whoActivedPortalGrid = false
 end
 
-function var_0_1._refreshUnionFind_Impl(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = arg_29_1:getNeighborGridList()
+function GaoSiNiaoBattleMapMO:_refreshUnionFind_Impl(gridItem, noSave)
+	local neighborGridList = gridItem:getNeighborGridList()
 
-	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-		local var_29_1 = GaoSiNiaoEnum.bitPos2Dir(iter_29_0 - 1)
+	for i, neighborGridItem in ipairs(neighborGridList) do
+		local relativeZoneMask = GaoSiNiaoEnum.bitPos2Dir(i - 1)
 
-		arg_29_0:_mergeNeighborIfNotConned_Impl(arg_29_1, iter_29_1, var_29_1, arg_29_2)
+		self:_mergeNeighborIfNotConned_Impl(gridItem, neighborGridItem, relativeZoneMask, noSave)
 	end
 end
 
-function var_0_1.bagList(arg_30_0)
-	local var_30_0 = {}
+function GaoSiNiaoBattleMapMO:bagList()
+	local list = {}
 
-	for iter_30_0, iter_30_1 in pairs(arg_30_0._pt2BagDict or {}) do
-		var_0_0(var_30_0, iter_30_1)
+	for _, bagItem in pairs(self._pt2BagDict or {}) do
+		ti(list, bagItem)
 	end
 
-	table.sort(var_30_0, function(arg_31_0, arg_31_1)
-		return arg_31_0.type < arg_31_1.type
+	table.sort(list, function(a, b)
+		return a.type < b.type
 	end)
 
-	return var_30_0
+	return list
 end
 
-function var_0_1.gridDataList(arg_32_0)
-	local var_32_0 = {}
+function GaoSiNiaoBattleMapMO:gridDataList()
+	local list = {}
 
-	arg_32_0:foreachGrid(function(arg_33_0)
-		var_0_0(var_32_0, arg_33_0)
+	self:foreachGrid(function(gridItem)
+		ti(list, gridItem)
 	end)
 
-	return var_32_0
+	return list
 end
 
-function var_0_1.mapId(arg_34_0)
-	return arg_34_0.__info.mapId
+function GaoSiNiaoBattleMapMO:mapId()
+	return self.__info.mapId
 end
 
-function var_0_1.mapSize(arg_35_0)
-	return arg_35_0.__info:mapSize()
+function GaoSiNiaoBattleMapMO:mapSize()
+	return self.__info:mapSize()
 end
 
-function var_0_1.rowCol(arg_36_0)
-	local var_36_0, var_36_1 = arg_36_0:mapSize()
+function GaoSiNiaoBattleMapMO:rowCol()
+	local col, row = self:mapSize()
 
-	return var_36_1, var_36_0
+	return row, col
 end
 
-function var_0_1.getGrid(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0, var_37_1 = arg_37_0:mapSize()
+function GaoSiNiaoBattleMapMO:getGrid(x, y)
+	local w, h = self:mapSize()
 
-	if arg_37_1 < 0 or arg_37_2 < 0 or var_37_0 <= arg_37_1 or var_37_1 <= arg_37_2 then
+	if x < 0 or y < 0 or w <= x or h <= y then
 		return nil
 	end
 
-	return arg_37_0._gridList[arg_37_2 * var_37_0 + arg_37_1]
+	return self._gridList[y * w + x]
 end
 
-function var_0_1.foreachGrid(arg_38_0, arg_38_1)
-	local var_38_0, var_38_1 = arg_38_0:mapSize()
+function GaoSiNiaoBattleMapMO:foreachGrid(handler)
+	local w, h = self:mapSize()
 
-	var_0_1.s_foreachGrid(var_38_0, var_38_1, function(arg_39_0, arg_39_1, arg_39_2)
-		arg_38_1(arg_38_0._gridList[arg_39_0], arg_39_0, arg_39_1, arg_39_2)
+	GaoSiNiaoBattleMapMO.s_foreachGrid(w, h, function(i, x, y)
+		handler(self._gridList[i], i, x, y)
 	end)
 end
 
-function var_0_1.isConnedStart(arg_40_0, arg_40_1)
-	if #arg_40_0._startGridList == 0 then
+function GaoSiNiaoBattleMapMO:isConnedStart(gridItem)
+	if #self._startGridList == 0 then
 		return false
 	end
 
-	for iter_40_0, iter_40_1 in ipairs(arg_40_0._startGridList) do
-		if arg_40_0:isConned(arg_40_1, iter_40_1) then
+	for _, startGridItem in ipairs(self._startGridList) do
+		if self:isConned(gridItem, startGridItem) then
 			return true
 		end
 	end
@@ -413,51 +415,51 @@ function var_0_1.isConnedStart(arg_40_0, arg_40_1)
 	return false
 end
 
-function var_0_1.isCompleted(arg_41_0)
-	local var_41_0 = #arg_41_0._endGridList
+function GaoSiNiaoBattleMapMO:isCompleted()
+	local needConnCnt = #self._endGridList
 
-	if var_41_0 == 0 then
+	if needConnCnt == 0 then
 		logError("Invalid Map")
 
 		return false
 	end
 
-	for iter_41_0, iter_41_1 in ipairs(arg_41_0._endGridList) do
-		if arg_41_0:isConnedStart(iter_41_1) then
-			var_41_0 = var_41_0 - 1
+	for _, endGridItem in ipairs(self._endGridList) do
+		if self:isConnedStart(endGridItem) then
+			needConnCnt = needConnCnt - 1
 		end
 	end
 
-	return var_41_0 == 0
+	return needConnCnt == 0
 end
 
-function var_0_1.merge(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = arg_42_1:id()
-	local var_42_1 = arg_42_2:id()
+function GaoSiNiaoBattleMapMO:merge(gridItemA, gridItemB)
+	local x = gridItemA:id()
+	local y = gridItemB:id()
 
-	if arg_42_0:rootIsStart(arg_42_2) then
-		var_0_3(arg_42_0, var_42_1, var_42_0)
-	elseif arg_42_0:rootIsEnd(arg_42_1) then
-		var_0_3(arg_42_0, var_42_1, var_42_0)
+	if self:rootIsStart(gridItemB) then
+		_merge(self, y, x)
+	elseif self:rootIsEnd(gridItemA) then
+		_merge(self, y, x)
 	else
-		var_0_3(arg_42_0, var_42_0, var_42_1)
+		_merge(self, x, y)
 	end
 end
 
-function var_0_1.isConned(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0 = arg_43_1:id()
-	local var_43_1 = arg_43_2:id()
+function GaoSiNiaoBattleMapMO:isConned(gridItemA, gridItemB)
+	local x = gridItemA:id()
+	local y = gridItemB:id()
 
-	return var_0_4(arg_43_0, var_43_0, var_43_1)
+	return _isConned(self, x, y)
 end
 
-function var_0_1.rootId(arg_44_0, arg_44_1)
-	return var_0_2(arg_44_0, arg_44_1:id())
+function GaoSiNiaoBattleMapMO:rootId(gridItem)
+	return _find(self, gridItem:id())
 end
 
-function var_0_1.rootIsStart(arg_45_0, arg_45_1)
-	for iter_45_0, iter_45_1 in ipairs(arg_45_0._startGridList) do
-		if arg_45_0:rootId(arg_45_1) == iter_45_1:id() then
+function GaoSiNiaoBattleMapMO:rootIsStart(gridItem)
+	for _, startGridItem in ipairs(self._startGridList) do
+		if self:rootId(gridItem) == startGridItem:id() then
 			return true
 		end
 	end
@@ -465,9 +467,9 @@ function var_0_1.rootIsStart(arg_45_0, arg_45_1)
 	return false
 end
 
-function var_0_1.rootIsEnd(arg_46_0, arg_46_1)
-	for iter_46_0, iter_46_1 in ipairs(arg_46_0._endGridList) do
-		if arg_46_0:rootId(arg_46_1) == iter_46_1:id() then
+function GaoSiNiaoBattleMapMO:rootIsEnd(gridItem)
+	for _, endGridItem in ipairs(self._endGridList) do
+		if self:rootId(gridItem) == endGridItem:id() then
 			return true
 		end
 	end
@@ -475,135 +477,137 @@ function var_0_1.rootIsEnd(arg_46_0, arg_46_1)
 	return false
 end
 
-function var_0_1.single(arg_47_0, arg_47_1, arg_47_2)
-	if type(arg_47_1) ~= "table" then
+function GaoSiNiaoBattleMapMO:single(gridItemListToSingle, isKeepDirty)
+	if type(gridItemListToSingle) ~= "table" then
 		return {}
 	end
 
-	if #arg_47_1 == 0 then
+	if #gridItemListToSingle == 0 then
 		return {}
 	end
 
-	local var_47_0 = 1
-	local var_47_1 = 0
-	local var_47_2 = {}
+	local hh = 1
+	local tt = 0
+	local q = {}
 
-	local function var_47_3()
-		local var_48_0 = var_47_2[var_47_0]
+	local function _pop()
+		local res = q[hh]
 
-		var_47_0 = var_47_0 + 1
+		hh = hh + 1
 
-		return var_48_0
+		return res
 	end
 
-	local function var_47_4(arg_49_0)
-		var_47_1 = var_47_1 + 1
-		var_47_2[var_47_1] = arg_49_0
+	local function _append(obj)
+		tt = tt + 1
+		q[tt] = obj
 	end
 
-	local var_47_5 = {}
-	local var_47_6 = false
-	local var_47_7 = {}
+	local idToSingleSet = {}
+	local isStartIdNeedToSingle = false
+	local tmpAppendedSet = {}
 
-	for iter_47_0, iter_47_1 in ipairs(arg_47_1) do
-		local var_47_8 = iter_47_1:id()
-		local var_47_9 = arg_47_0:rootId(iter_47_1)
+	for _, gridItemToSingle in ipairs(gridItemListToSingle) do
+		local idToSingle = gridItemToSingle:id()
+		local rootIdToSingle = self:rootId(gridItemToSingle)
 
-		var_47_5[var_47_9] = true
-		var_47_5[var_47_8] = true
+		idToSingleSet[rootIdToSingle] = true
+		idToSingleSet[idToSingle] = true
 
-		if arg_47_0:isConnedStart(iter_47_1) then
-			var_47_6 = true
+		if self:isConnedStart(gridItemToSingle) then
+			isStartIdNeedToSingle = true
 		end
 
-		var_47_4(iter_47_1)
+		_append(gridItemToSingle)
 
-		var_47_7[var_47_9] = true
-		var_47_7[iter_47_1:id()] = true
+		tmpAppendedSet[rootIdToSingle] = true
+		tmpAppendedSet[gridItemToSingle:id()] = true
 	end
 
-	arg_47_0:foreachGrid(function(arg_50_0)
-		if not var_47_7[arg_50_0:id()] and var_47_5[arg_47_0:rootId(arg_50_0)] then
-			var_47_4(arg_50_0)
+	self:foreachGrid(function(gridItem)
+		if not tmpAppendedSet[gridItem:id()] and idToSingleSet[self:rootId(gridItem)] then
+			_append(gridItem)
 
-			var_47_7[arg_50_0:id()] = true
+			tmpAppendedSet[gridItem:id()] = true
 		end
 	end)
 
-	local var_47_10 = {}
+	local set = {}
 
-	for iter_47_2, iter_47_3 in ipairs(arg_47_0._startGridList) do
-		var_47_10[iter_47_3] = true
+	for _, startGridItem in ipairs(self._startGridList) do
+		set[startGridItem] = true
 
-		if var_47_6 then
-			var_47_5[arg_47_0:rootId(iter_47_3)] = true
+		if isStartIdNeedToSingle then
+			local idToSingle = self:rootId(startGridItem)
 
-			var_0_5(arg_47_0, iter_47_3:id())
+			idToSingleSet[idToSingle] = true
+
+			_single(self, startGridItem:id())
 		end
 	end
 
-	if arg_47_0:isActivedPortal() then
-		arg_47_0:onDisactivePortals()
+	if self:isActivedPortal() then
+		self:onDisactivePortals()
 
-		for iter_47_4, iter_47_5 in ipairs(arg_47_0._portalGridList) do
-			if not var_47_7[iter_47_5:id()] then
-				var_47_4(iter_47_5)
+		for _, gridPortalItem in ipairs(self._portalGridList) do
+			if not tmpAppendedSet[gridPortalItem:id()] then
+				_append(gridPortalItem)
 
-				var_47_7[iter_47_5:id()] = true
+				tmpAppendedSet[gridPortalItem:id()] = true
 			end
 		end
 	end
 
-	local var_47_11 = {}
+	local dirtyGridItemList = {}
 
-	while var_47_0 <= var_47_1 do
-		local var_47_12 = var_47_3()
+	while hh <= tt do
+		local gridItem = _pop()
 
-		var_47_10[var_47_12] = true
+		set[gridItem] = true
 
-		for iter_47_6 = 1, 4 do
-			local var_47_13 = var_47_12:x() + GaoSiNiaoEnum.dX[iter_47_6]
-			local var_47_14 = var_47_12:y() + GaoSiNiaoEnum.dY[iter_47_6]
-			local var_47_15 = arg_47_0:getGrid(var_47_13, var_47_14)
+		for i = 1, 4 do
+			local x = gridItem:x() + GaoSiNiaoEnum.dX[i]
+			local y = gridItem:y() + GaoSiNiaoEnum.dY[i]
+			local neighborGridItem = self:getGrid(x, y)
 
-			if var_47_15 and not var_47_10[var_47_15] and var_47_5[arg_47_0:rootId(var_47_15)] then
-				var_47_4(var_47_15)
+			if neighborGridItem and not set[neighborGridItem] and idToSingleSet[self:rootId(neighborGridItem)] then
+				_append(neighborGridItem)
 			end
 		end
 
-		var_0_5(arg_47_0, var_47_12:id())
-		var_0_0(var_47_11, var_47_12)
+		_single(self, gridItem:id())
+		ti(dirtyGridItemList, gridItem)
 	end
 
-	if not arg_47_2 then
-		arg_47_0:tryMergeAll(var_47_11)
+	if not isKeepDirty then
+		self:tryMergeAll(dirtyGridItemList)
 	end
 
-	return var_47_11
+	return dirtyGridItemList
 end
 
-function var_0_1.s_foreachGrid(arg_51_0, arg_51_1, arg_51_2)
-	assert(type(arg_51_2) == "function")
+function GaoSiNiaoBattleMapMO.s_foreachGrid(w, h, handler)
+	assert(type(handler) == "function")
 
-	if arg_51_0 <= 0 or arg_51_1 <= 0 then
+	if w <= 0 or h <= 0 then
 		return
 	end
 
-	local var_51_0 = 0
-	local var_51_1 = 0
+	local y = 0
+	local i = 0
 
-	while var_51_0 < arg_51_1 do
-		local var_51_2 = 0
+	while y < h do
+		local x = 0
 
-		while var_51_2 < arg_51_0 do
-			arg_51_2(var_51_1, var_51_2, var_51_0)
+		while x < w do
+			handler(i, x, y)
 
-			var_51_1 = var_51_1 + 1
-			var_51_2 = var_51_2 + 1
+			i = i + 1
+			x = x + 1
 		end
 
-		var_51_0 = var_51_0 + 1
+		y = y + 1
 	end
 end
 
-return var_0_1
+return GaoSiNiaoBattleMapMO

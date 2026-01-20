@@ -1,20 +1,22 @@
-﻿module("modules.logic.balanceumbrella.controller.BalanceUmbrellaController", package.seeall)
+﻿-- chunkname: @modules/logic/balanceumbrella/controller/BalanceUmbrellaController.lua
 
-local var_0_0 = class("BalanceUmbrellaController", BaseController)
+module("modules.logic.balanceumbrella.controller.BalanceUmbrellaController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_1_0._onLoginEnd, arg_1_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, arg_1_0._onUpdateDungeonInfo, arg_1_0)
+local BalanceUmbrellaController = class("BalanceUmbrellaController", BaseController)
+
+function BalanceUmbrellaController:addConstEvents()
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onLoginEnd, self)
+	DungeonController.instance:registerCallback(DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
 end
 
-function var_0_0._onLoginEnd(arg_2_0)
+function BalanceUmbrellaController:_onLoginEnd()
 	BalanceUmbrellaModel.instance:refreshUnlock(true)
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_3_0)
+function BalanceUmbrellaController:_onUpdateDungeonInfo()
 	BalanceUmbrellaModel.instance:refreshUnlock()
 end
 
-var_0_0.instance = var_0_0.New()
+BalanceUmbrellaController.instance = BalanceUmbrellaController.New()
 
-return var_0_0
+return BalanceUmbrellaController

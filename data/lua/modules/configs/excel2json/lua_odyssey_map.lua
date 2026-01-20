@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_odyssey_map", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_odyssey_map.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_odyssey_map", package.seeall)
+
+local lua_odyssey_map = {}
+local fields = {
 	unlockCondition = 2,
 	res = 3,
 	mapName = 5,
@@ -10,16 +12,16 @@ local var_0_1 = {
 	initPos = 4,
 	unlockDesc = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	unlockDesc = 2,
 	mapName = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_odyssey_map.onLoad(json)
+	lua_odyssey_map.configList, lua_odyssey_map.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_odyssey_map

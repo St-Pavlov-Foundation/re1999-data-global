@@ -1,64 +1,66 @@
-﻿module("modules.logic.activity.controller.ActivityEnterMgr", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/ActivityEnterMgr.lua
 
-local var_0_0 = class("ActivityEnterMgr", BaseController)
+module("modules.logic.activity.controller.ActivityEnterMgr", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:loadEnteredActivityDict()
+local ActivityEnterMgr = class("ActivityEnterMgr", BaseController)
+
+function ActivityEnterMgr:init()
+	self:loadEnteredActivityDict()
 end
 
-function var_0_0.enterActivityByList(arg_2_0, arg_2_1)
-	local var_2_0 = false
+function ActivityEnterMgr:enterActivityByList(actList)
+	local hasChange = false
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		if not arg_2_0:isEnteredActivity(iter_2_1) then
-			var_2_0 = true
+	for _, actId in ipairs(actList) do
+		if not self:isEnteredActivity(actId) then
+			hasChange = true
 
-			table.insert(arg_2_0.enteredActList, arg_2_0:getActId(iter_2_1))
+			table.insert(self.enteredActList, self:getActId(actId))
 		end
 	end
 
-	if var_2_0 then
-		PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(arg_2_0.enteredActList, ";"))
+	if hasChange then
+		PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(self.enteredActList, ";"))
 		RedDotController.instance:dispatchEvent(RedDotEvent.UpdateActTag)
 	end
 end
 
-function var_0_0.enterActivity(arg_3_0, arg_3_1)
-	if arg_3_0:isEnteredActivity(arg_3_1) then
+function ActivityEnterMgr:enterActivity(actId)
+	if self:isEnteredActivity(actId) then
 		return
 	end
 
-	table.insert(arg_3_0.enteredActList, arg_3_0:getActId(arg_3_1))
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(arg_3_0.enteredActList, ";"))
+	table.insert(self.enteredActList, self:getActId(actId))
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), table.concat(self.enteredActList, ";"))
 	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateActTag)
 end
 
-function var_0_0.loadEnteredActivityDict(arg_4_0)
-	arg_4_0.enteredActList = {}
+function ActivityEnterMgr:loadEnteredActivityDict()
+	self.enteredActList = {}
 
-	local var_4_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), "")
+	local enteredActStr = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.EnteredActKey), "")
 
-	if string.nilorempty(var_4_0) then
+	if string.nilorempty(enteredActStr) then
 		return
 	end
 
-	arg_4_0.enteredActList = string.splitToNumber(var_4_0, ";")
+	self.enteredActList = string.splitToNumber(enteredActStr, ";")
 end
 
-function var_0_0.isEnteredActivity(arg_5_0, arg_5_1)
-	return tabletool.indexOf(arg_5_0.enteredActList, arg_5_0:getActId(arg_5_1))
+function ActivityEnterMgr:isEnteredActivity(actId)
+	return tabletool.indexOf(self.enteredActList, self:getActId(actId))
 end
 
-function var_0_0.getActId(arg_6_0, arg_6_1)
-	local var_6_0 = ActivityConfig.instance:getActivityCo(arg_6_1)
+function ActivityEnterMgr:getActId(actId)
+	local actCo = ActivityConfig.instance:getActivityCo(actId)
 
-	if var_6_0 and var_6_0.isRetroAcitivity == 1 then
-		arg_6_1 = -arg_6_1
+	if actCo and actCo.isRetroAcitivity == 1 then
+		actId = -actId
 	end
 
-	return arg_6_1
+	return actId
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityEnterMgr.instance = ActivityEnterMgr.New()
 
-return var_0_0
+return ActivityEnterMgr

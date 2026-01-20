@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity1_3.astrology.controller.VersionActivity1_3AstrologyEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/astrology/controller/VersionActivity1_3AstrologyEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_3.astrology.controller.VersionActivity1_3AstrologyEvent", package.seeall)
 
-var_0_0.selectPlanetItem = 1
-var_0_0.adjustPreviewAngle = 2
-var_0_0.guideOnAstrologyBtnShow = 99
+local VersionActivity1_3AstrologyEvent = _M
 
-return var_0_0
+VersionActivity1_3AstrologyEvent.selectPlanetItem = 1
+VersionActivity1_3AstrologyEvent.adjustPreviewAngle = 2
+VersionActivity1_3AstrologyEvent.guideOnAstrologyBtnShow = 99
+
+return VersionActivity1_3AstrologyEvent

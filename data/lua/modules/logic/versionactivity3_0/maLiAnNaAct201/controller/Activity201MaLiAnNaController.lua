@@ -1,144 +1,151 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.controller.Activity201MaLiAnNaController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/controller/Activity201MaLiAnNaController.lua
 
-local var_0_0 = class("Activity201MaLiAnNaController", BaseController)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.controller.Activity201MaLiAnNaController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._isPlayBurn = false
+local Activity201MaLiAnNaController = class("Activity201MaLiAnNaController", BaseController)
+
+function Activity201MaLiAnNaController:onInit()
+	self._isPlayBurn = false
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity201MaLiAnNaController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function Activity201MaLiAnNaController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0:onInit()
+function Activity201MaLiAnNaController:reInit()
+	self:onInit()
 end
 
-function var_0_0._onGameFinished(arg_5_0, arg_5_1, arg_5_2)
-	if not Activity201MaLiAnNaModel.instance:isEpisodePass(arg_5_2) then
-		if Activity201MaLiAnNaModel.instance:checkEpisodeIsGame(arg_5_2) and not Activity201MaLiAnNaModel.instance:checkEpisodeFinishGame(arg_5_2) then
-			Activity203Rpc.instance:sendAct203SaveEpisodeProgressRequest(arg_5_1, arg_5_2)
+function Activity201MaLiAnNaController:_onGameFinished(actId, episodeId)
+	if not Activity201MaLiAnNaModel.instance:isEpisodePass(episodeId) then
+		if Activity201MaLiAnNaModel.instance:checkEpisodeIsGame(episodeId) and not Activity201MaLiAnNaModel.instance:checkEpisodeFinishGame(episodeId) then
+			Activity203Rpc.instance:sendAct203SaveEpisodeProgressRequest(actId, episodeId)
 		end
 
-		local var_5_0 = Activity201MaLiAnNaConfig.instance:getStoryClear(arg_5_1, arg_5_2)
+		local storyClear = Activity201MaLiAnNaConfig.instance:getStoryClear(actId, episodeId)
 
-		function arg_5_0._sendCallBack()
-			Activity201MaLiAnNaModel.instance:setNewFinishEpisode(arg_5_2)
-			arg_5_0:openResultView({
+		function self._sendCallBack()
+			Activity201MaLiAnNaModel.instance:setNewFinishEpisode(episodeId)
+			self:openResultView({
 				isWin = true,
-				episodeId = arg_5_2
+				episodeId = episodeId
 			})
 		end
 
-		function arg_5_0._afterFinishStory()
-			Activity203Rpc.instance:sendGetAct203FinishEpisodeRequest(arg_5_1, arg_5_2, arg_5_0._sendCallBack, arg_5_0)
+		function self._afterFinishStory()
+			Activity203Rpc.instance:sendGetAct203FinishEpisodeRequest(actId, episodeId, self._sendCallBack, self)
 		end
 
-		if var_5_0 and var_5_0 ~= 0 then
-			var_0_0.instance:stopBurnAudio()
-			StoryController.instance:playStory(var_5_0, nil, arg_5_0._afterFinishStory, arg_5_0, {
+		if storyClear and storyClear ~= 0 then
+			Activity201MaLiAnNaController.instance:stopBurnAudio()
+			StoryController.instance:playStory(storyClear, nil, self._afterFinishStory, self, {
 				isWin = true,
-				episodeId = arg_5_2
+				episodeId = episodeId
 			})
 		else
-			arg_5_0:_afterFinishStory()
+			self:_afterFinishStory()
 		end
 	else
-		arg_5_0:_playStoryClear(arg_5_2)
+		self:_playStoryClear(episodeId)
 	end
 end
 
-function var_0_0.onFinishEpisode(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 ~= 0 then
+function Activity201MaLiAnNaController:onFinishEpisode(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_3.activityId
-	local var_8_1 = arg_8_3.episodeId
+	local actId = msg.activityId
+	local episodeId = msg.episodeId
 
-	Activity201MaLiAnNaModel.instance:setNewFinishEpisode(var_8_1)
-	arg_8_0:_playStoryClear(var_8_1)
+	Activity201MaLiAnNaModel.instance:setNewFinishEpisode(episodeId)
+	self:_playStoryClear(episodeId)
 end
 
-function var_0_0._playStoryClear(arg_9_0, arg_9_1)
-	if not Activity201MaLiAnNaModel.instance:isEpisodePass(arg_9_1) then
+function Activity201MaLiAnNaController:_playStoryClear(episodeId)
+	local isPass = Activity201MaLiAnNaModel.instance:isEpisodePass(episodeId)
+
+	if not isPass then
 		return
 	end
 
-	local var_9_0 = VersionActivity3_0Enum.ActivityId.MaLiAnNa
-	local var_9_1 = Activity201MaLiAnNaConfig.instance:getStoryClear(var_9_0, arg_9_1)
+	local actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+	local storyClear = Activity201MaLiAnNaConfig.instance:getStoryClear(actId, episodeId)
 
-	if var_9_1 and var_9_1 ~= 0 then
-		var_0_0.instance:stopBurnAudio()
-		StoryController.instance:playStory(var_9_1, nil, arg_9_0.openResultView, arg_9_0, {
+	if storyClear and storyClear ~= 0 then
+		Activity201MaLiAnNaController.instance:stopBurnAudio()
+		StoryController.instance:playStory(storyClear, nil, self.openResultView, self, {
 			isWin = true,
-			episodeId = arg_9_1
+			episodeId = episodeId
 		})
 	else
-		arg_9_0:openResultView({
+		self:openResultView({
 			isWin = true,
-			episodeId = arg_9_1
+			episodeId = episodeId
 		})
 	end
 end
 
-function var_0_0.openResultView(arg_10_0, arg_10_1)
-	var_0_0.instance:startBurnAudio()
+function Activity201MaLiAnNaController:openResultView(param)
+	Activity201MaLiAnNaController.instance:startBurnAudio()
 
-	local var_10_0 = VersionActivity3_0Enum.ActivityId.MaLiAnNa
-	local var_10_1 = arg_10_1 and arg_10_1.episodeId
+	local actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+	local episodeId = param and param.episodeId
 
-	if not var_10_0 or not var_10_1 then
+	if not actId or not episodeId then
 		return
 	end
 
-	if not (Activity201MaLiAnNaConfig.instance:getEpisodeCo(var_10_0, var_10_1).gameId ~= 0) then
-		arg_10_0:dispatchEvent(Activity201MaLiAnNaEvent.OnBackToLevel)
-		arg_10_0:dispatchEvent(Activity201MaLiAnNaEvent.EpisodeFinished)
+	local config = Activity201MaLiAnNaConfig.instance:getEpisodeCo(actId, episodeId)
+	local hasGame = config.gameId ~= 0
+
+	if not hasGame then
+		self:dispatchEvent(Activity201MaLiAnNaEvent.OnBackToLevel)
+		self:dispatchEvent(Activity201MaLiAnNaEvent.EpisodeFinished)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.MaLiAnNaResultView, {
-		episodeId = var_10_1,
-		isWin = arg_10_1.isWin
+		episodeId = episodeId,
+		isWin = param.isWin
 	})
 end
 
-function var_0_0.enterLevelView(arg_11_0)
-	Activity203Rpc.instance:sendGetAct203InfoRequest(VersionActivity3_0Enum.ActivityId.MaLiAnNa, arg_11_0._onRecInfo, arg_11_0)
+function Activity201MaLiAnNaController:enterLevelView()
+	Activity203Rpc.instance:sendGetAct203InfoRequest(VersionActivity3_0Enum.ActivityId.MaLiAnNa, self._onRecInfo, self)
 end
 
-function var_0_0._onRecInfo(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_2 == 0 and arg_12_3.activityId == VersionActivity3_0Enum.ActivityId.MaLiAnNa then
-		Activity201MaLiAnNaModel.instance:initInfos(arg_12_3.episodes)
+function Activity201MaLiAnNaController:_onRecInfo(cmd, resultCode, msg)
+	if resultCode == 0 and msg.activityId == VersionActivity3_0Enum.ActivityId.MaLiAnNa then
+		Activity201MaLiAnNaModel.instance:initInfos(msg.episodes)
 		ViewMgr.instance:openView(ViewName.Activity201MaLiAnNaGameMainView)
 		ViewMgr.instance:openView(ViewName.Activity201MaLiAnNaLevelView)
 	end
 end
 
-function var_0_0.startBurnAudio(arg_13_0)
-	if arg_13_0._isPlayBurn then
+function Activity201MaLiAnNaController:startBurnAudio()
+	if self._isPlayBurn then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum3_0.MaLiAnNa.play_ui_lushang_burn_loop)
 
-	arg_13_0._isPlayBurn = true
+	self._isPlayBurn = true
 end
 
-function var_0_0.stopBurnAudio(arg_14_0)
-	if arg_14_0._isPlayBurn then
+function Activity201MaLiAnNaController:stopBurnAudio()
+	if self._isPlayBurn then
 		AudioMgr.instance:trigger(AudioEnum3_0.MaLiAnNa.stop_ui_lushang_burn_loop)
 
-		arg_14_0._isPlayBurn = false
+		self._isPlayBurn = false
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity201MaLiAnNaController.instance = Activity201MaLiAnNaController.New()
 
-return var_0_0
+return Activity201MaLiAnNaController

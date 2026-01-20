@@ -1,166 +1,171 @@
-﻿module("modules.logic.versionactivity2_7.act191.controller.Activity191Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/controller/Activity191Controller.lua
 
-local var_0_0 = class("Activity191Controller", BaseController)
+module("modules.logic.versionactivity2_7.act191.controller.Activity191Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity191Controller = class("Activity191Controller", BaseController)
+
+function Activity191Controller:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity191Controller:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function Activity191Controller:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function Activity191Controller:reInit()
 	return
 end
 
-function var_0_0.enterActivity(arg_5_0, arg_5_1)
-	Activity191Rpc.instance:sendGetAct191InfoRequest(arg_5_1, arg_5_0.enterReply, arg_5_0)
+function Activity191Controller:enterActivity(actId)
+	Activity191Rpc.instance:sendGetAct191InfoRequest(actId, self.enterReply, self)
 end
 
-function var_0_0.enterReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_2 == 0 then
-		arg_6_0:openMainView()
+function Activity191Controller:enterReply(_, resultCode)
+	if resultCode == 0 then
+		self:openMainView()
 	end
 end
 
-function var_0_0.openMainView(arg_7_0, arg_7_1)
-	ViewMgr.instance:openView(ViewName.Act191MainView, arg_7_1)
+function Activity191Controller:openMainView(param)
+	ViewMgr.instance:openView(ViewName.Act191MainView, param)
 end
 
-function var_0_0.openFetterTipView(arg_8_0, arg_8_1)
-	ViewMgr.instance:openView(ViewName.Act191FetterTipView, arg_8_1)
+function Activity191Controller:openFetterTipView(param)
+	ViewMgr.instance:openView(ViewName.Act191FetterTipView, param)
 end
 
-function var_0_0.openStoreView(arg_9_0, arg_9_1)
-	if not VersionActivityEnterHelper.checkCanOpen(arg_9_1) then
+function Activity191Controller:openStoreView(actId)
+	if not VersionActivityEnterHelper.checkCanOpen(actId) then
 		return
 	end
 
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_9_1, arg_9_0._openStoreViewAfterRpc, arg_9_0)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, self._openStoreViewAfterRpc, self)
 end
 
-function var_0_0.openResultPanel(arg_10_0, arg_10_1)
-	ViewMgr.instance:openView(ViewName.Act191FightSuccView, arg_10_1)
+function Activity191Controller:openResultPanel(isWin)
+	ViewMgr.instance:openView(ViewName.Act191FightSuccView, isWin)
 end
 
-function var_0_0.openSettlementView(arg_11_0)
+function Activity191Controller:openSettlementView()
 	ViewMgr.instance:openView(ViewName.Act191SettlementView)
 end
 
-function var_0_0.openHeroTipView(arg_12_0, arg_12_1)
-	ViewMgr.instance:openView(ViewName.Act191HeroTipView, arg_12_1)
+function Activity191Controller:openHeroTipView(param)
+	ViewMgr.instance:openView(ViewName.Act191HeroTipView, param)
 end
 
-function var_0_0.openCollectionTipView(arg_13_0, arg_13_1)
-	ViewMgr.instance:openView(ViewName.Act191CollectionTipView, arg_13_1)
+function Activity191Controller:openCollectionTipView(param)
+	ViewMgr.instance:openView(ViewName.Act191CollectionTipView, param)
 end
 
-function var_0_0.openEnhanceTipView(arg_14_0, arg_14_1)
-	ViewMgr.instance:openView(ViewName.Act191EnhanceTipView, arg_14_1)
+function Activity191Controller:openEnhanceTipView(param)
+	ViewMgr.instance:openView(ViewName.Act191EnhanceTipView, param)
 end
 
-function var_0_0.openItemView(arg_15_0, arg_15_1)
-	ViewMgr.instance:openView(ViewName.Act191ItemView, arg_15_1)
+function Activity191Controller:openItemView(itemCo)
+	ViewMgr.instance:openView(ViewName.Act191ItemView, itemCo)
 end
 
-function var_0_0._openStoreViewAfterRpc(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_2 == 0 then
+function Activity191Controller:_openStoreViewAfterRpc(_, resultCode)
+	if resultCode == 0 then
 		ViewMgr.instance:openView(ViewName.Act191StoreView)
 	end
 end
 
-function var_0_0.nextStep(arg_17_0)
-	local var_17_0 = Activity191Model.instance:getCurActId()
-	local var_17_1 = Activity191Model.instance:getActInfo():getGameInfo()
+function Activity191Controller:nextStep()
+	local actId = Activity191Model.instance:getCurActId()
+	local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 
-	if var_17_1.state == Activity191Enum.GameState.None then
+	if gameInfo.state == Activity191Enum.GameState.None then
 		logError("游戏数据异常,GameInfo的State为None")
-	elseif var_17_1.state == Activity191Enum.GameState.Normal then
-		if var_17_1.curStage == 0 and var_17_1.curNode == 0 then
+	elseif gameInfo.state == Activity191Enum.GameState.Normal then
+		if gameInfo.curStage == 0 and gameInfo.curNode == 0 then
 			ViewMgr.instance:openView(ViewName.Act191InitBuildView)
 		else
-			local var_17_2 = Activity191Helper.matchKeyInArray(var_17_1.nodeInfo, var_17_1.curNode, "nodeId")
+			local nodeInfo = Activity191Helper.matchKeyInArray(gameInfo.nodeInfo, gameInfo.curNode, "nodeId")
 
-			if string.nilorempty(var_17_2.nodeStr) then
+			if string.nilorempty(nodeInfo.nodeStr) then
 				ViewMgr.instance:openView(ViewName.Act191StageView)
 
-				if var_17_1.nodeChange then
+				if gameInfo.nodeChange then
 					ViewMgr.instance:openView(ViewName.Act191SwitchView)
 				end
 			else
-				local var_17_3 = Act191NodeDetailMO.New()
+				local mo = Act191NodeDetailMO.New()
 
-				var_17_3:init(var_17_2.nodeStr)
+				mo:init(nodeInfo.nodeStr)
 
-				if Activity191Helper.isShopNode(var_17_3.type) then
+				if Activity191Helper.isShopNode(mo.type) then
 					ViewMgr.instance:openView(ViewName.Act191ShopView)
-				elseif var_17_3.type == Activity191Enum.NodeType.Enhance then
-					ViewMgr.instance:openView(ViewName.Act191EnhancePickView, var_17_3)
-				elseif var_17_3.type == Activity191Enum.NodeType.RewardEvent then
-					ViewMgr.instance:openView(ViewName.Act191AdventureView, var_17_3)
-				elseif var_17_3.type == Activity191Enum.NodeType.BattleEvent then
-					ViewMgr.instance:openView(ViewName.Act191AdventureView, var_17_3)
-				elseif Activity191Helper.isPveBattle(var_17_3.type) then
-					arg_17_0:enterFightScene(var_17_3)
-				elseif Activity191Helper.isPvpBattle(var_17_3.type) then
-					arg_17_0:enterFightScene(var_17_3)
-				elseif var_17_3.type == Activity191Enum.NodeType.ReplaceEvent or var_17_3.type == Activity191Enum.NodeType.UpgradeEvent then
+				elseif mo.type == Activity191Enum.NodeType.Enhance then
+					ViewMgr.instance:openView(ViewName.Act191EnhancePickView, mo)
+				elseif mo.type == Activity191Enum.NodeType.RewardEvent then
+					ViewMgr.instance:openView(ViewName.Act191AdventureView, mo)
+				elseif mo.type == Activity191Enum.NodeType.BattleEvent then
+					ViewMgr.instance:openView(ViewName.Act191AdventureView, mo)
+				elseif Activity191Helper.isPveBattle(mo.type) then
+					self:enterFightScene(mo)
+				elseif Activity191Helper.isPvpBattle(mo.type) then
+					self:enterFightScene(mo)
+				elseif mo.type == Activity191Enum.NodeType.ReplaceEvent or mo.type == Activity191Enum.NodeType.UpgradeEvent then
 					ViewMgr.instance:openView(ViewName.Act191CollectionChangeView)
 				end
 			end
 		end
-	elseif var_17_1.state == Activity191Enum.GameState.End then
-		Activity191Rpc.instance:sendEndAct191GameRequest(var_17_0)
+	elseif gameInfo.state == Activity191Enum.GameState.End then
+		Activity191Rpc.instance:sendEndAct191GameRequest(actId)
 	end
 end
 
-function var_0_0.enterFightScene(arg_18_0, arg_18_1)
-	local var_18_0
+function Activity191Controller:enterFightScene(mo)
+	local episodeId
 
-	if Activity191Helper.isPveBattle(arg_18_1.type) or arg_18_1.type == Activity191Enum.NodeType.BattleEvent then
-		local var_18_1 = arg_18_1.fightEventId
+	if Activity191Helper.isPveBattle(mo.type) or mo.type == Activity191Enum.NodeType.BattleEvent then
+		local eventId = mo.fightEventId
 
-		var_18_0 = lua_activity191_fight_event.configDict[var_18_1].episodeId
-	elseif Activity191Helper.isPvpBattle(arg_18_1.type) then
-		var_18_0 = tonumber(lua_activity191_const.configDict[Activity191Enum.ConstKey.PvpBattleEpisodeId].value)
+		episodeId = lua_activity191_fight_event.configDict[eventId].episodeId
+	elseif Activity191Helper.isPvpBattle(mo.type) then
+		episodeId = tonumber(lua_activity191_const.configDict[Activity191Enum.ConstKey.PvpBattleEpisodeId].value)
 	end
 
-	local var_18_2 = DungeonConfig.instance:getEpisodeCO(var_18_0)
-	local var_18_3 = var_18_2.chapterId
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterId = episodeCo.chapterId
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_18_3, var_18_0)
-	FightController.instance:setFightParamByEpisodeAndBattle(var_18_0, var_18_2.battleId):setPreload()
+	DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
+
+	local fightParam = FightController.instance:setFightParamByEpisodeAndBattle(episodeId, episodeCo.battleId)
+
+	fightParam:setPreload()
 	FightController.instance:enterFightScene()
 end
 
-function var_0_0.checkOpenGetView(arg_19_0)
-	local var_19_0 = Activity191Model.instance:getActInfo()
-	local var_19_1 = false
+function Activity191Controller:checkOpenGetView()
+	local actInfo = Activity191Model.instance:getActInfo()
+	local hasGet = false
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0.triggerEffectPushList) do
-		if not string.nilorempty(iter_19_1.param) then
-			var_19_1 = true
+	for _, v in ipairs(actInfo.triggerEffectPushList) do
+		if not string.nilorempty(v.param) then
+			hasGet = true
 
 			break
 		end
 	end
 
-	if var_19_1 then
+	if hasGet then
 		ViewMgr.instance:openView(ViewName.Act191GetView)
 
 		return true
 	end
 
-	var_19_0:clearTriggerEffectPush()
+	actInfo:clearTriggerEffectPush()
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+Activity191Controller.instance = Activity191Controller.New()
 
-return var_0_0
+return Activity191Controller

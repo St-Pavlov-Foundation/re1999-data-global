@@ -1,419 +1,422 @@
-﻿module("modules.logic.versionactivity1_3.act125.controller.Activity125Testing", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act125/controller/Activity125Testing.lua
 
-local var_0_0 = _G.class("TestingBase")
-local var_0_1 = TaskEnum.TaskType.Activity125
+module("modules.logic.versionactivity1_3.act125.controller.Activity125Testing", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._pb = Activity125Module_pb
-	arg_1_0._cCfg = Activity125Config
-	arg_1_0._cTaskCfg = TaskConfig
-	arg_1_0._pbTask = TaskModule_pb
+local TestingBase = _G.class("TestingBase")
+local KTaskType = TaskEnum.TaskType.Activity125
+
+function TestingBase:ctor()
+	self._pb = Activity125Module_pb
+	self._cCfg = Activity125Config
+	self._cTaskCfg = TaskConfig
+	self._pbTask = TaskModule_pb
 end
 
-function var_0_0.build_test(arg_2_0)
+function TestingBase:build_test()
 	return
 end
 
-function var_0_0.link(arg_3_0, arg_3_1)
-	arg_3_0._obj = arg_3_1
+function TestingBase:link(obj)
+	self._obj = obj
 end
 
-local var_0_2 = 0
-local var_0_3 = 1
-local var_0_4 = "myserver error"
-local var_0_5 = "returnCode: -2"
-local var_0_6 = _G.class("STesting", var_0_0)
+local STATE_NONE = 0
+local STATE_COMPLETED = 1
+local kErrMsgServer = "myserver error"
+local kErrMsgClient = "returnCode: -2"
+local STesting = _G.class("STesting", TestingBase)
 
-function var_0_6.ctor(arg_4_0)
-	var_0_0.ctor(arg_4_0)
+function STesting:ctor()
+	TestingBase.ctor(self)
 
-	arg_4_0._actId2InfoDict = {}
-	arg_4_0._taskInfoDict = {}
-	arg_4_0._taskActivityInfoDict = {}
+	self._actId2InfoDict = {}
+	self._taskInfoDict = {}
+	self._taskActivityInfoDict = {}
 end
 
-function var_0_6._make_Act125Episode(arg_5_0, arg_5_1, arg_5_2)
+function STesting:_make_Act125Episode(id, state)
 	return {
-		id = arg_5_1,
-		state = arg_5_2 or math.random(0, 99999) % 2 == 0 and var_0_3 or var_0_2
+		id = id,
+		state = state or math.random(0, 99999) % 2 == 0 and STATE_COMPLETED or STATE_NONE
 	}
 end
 
-function var_0_6._make_Info(arg_6_0, arg_6_1)
-	assert(arg_6_1, var_0_4)
+function STesting:_make_Info(activityId)
+	assert(activityId, kErrMsgServer)
 
-	local var_6_0 = arg_6_0._cCfg.instance
-	local var_6_1 = assert(var_6_0:getAct125Config(arg_6_1), var_0_4 .. arg_6_1)
-	local var_6_2 = {}
+	local cfgObj = self._cCfg.instance
+	local act125Config = assert(cfgObj:getAct125Config(activityId), kErrMsgServer .. activityId)
+	local act125Episodes = {}
 
-	for iter_6_0, iter_6_1 in pairs(var_6_1) do
-		local var_6_3 = iter_6_1.id
+	for _, v in pairs(act125Config) do
+		local id = v.id
 
-		var_6_2[var_6_3] = arg_6_0:_make_Act125Episode(var_6_3, var_0_2)
+		act125Episodes[id] = self:_make_Act125Episode(id, STATE_NONE)
 	end
 
-	local var_6_4 = {
-		activityId = arg_6_1,
-		act125Episodes = var_6_2
+	local res = {
+		activityId = activityId,
+		act125Episodes = act125Episodes
 	}
-	local var_6_5 = 0
+	local test_CompleteCount = 0
 
-	for iter_6_2 = 1, var_6_5 do
-		var_6_2[iter_6_2].state = var_0_3
+	for i = 1, test_CompleteCount do
+		act125Episodes[i].state = STATE_COMPLETED
 	end
 
-	return var_6_4
+	return res
 end
 
-function var_0_6.handleGetInfos(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_1.activityId
+function STesting:handleGetInfos(req, reply)
+	local activityId = req.activityId
+	local info = self:_getInfo(activityId)
 
-	if not arg_7_0:_getInfo(var_7_0) then
-		local var_7_1 = arg_7_0:_make_Info(var_7_0)
-
-		arg_7_0._actId2InfoDict[var_7_0] = var_7_1
+	if not info then
+		info = self:_make_Info(activityId)
+		self._actId2InfoDict[activityId] = info
 	end
 
-	rawset(arg_7_2, "activityId", var_7_0)
-	rawset(arg_7_2, "act125Episodes", arg_7_0:_getEpisodeList(var_7_0))
+	rawset(reply, "activityId", activityId)
+	rawset(reply, "act125Episodes", self:_getEpisodeList(activityId))
 end
 
-function var_0_6.handleFinishAct125Episode(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_1.activityId
-	local var_8_1 = arg_8_1.episodeId
-	local var_8_2 = arg_8_1.targetFrequency
-	local var_8_3 = arg_8_0._cCfg.instance
-	local var_8_4 = var_8_3:getAct125Config(var_8_0)
-	local var_8_5 = assert(arg_8_0:_getInfo(var_8_0), var_0_4)
-	local var_8_6 = var_8_3:getEpisodeConfig(var_8_0, var_8_1)
-	local var_8_7 = {}
+function STesting:handleFinishAct125Episode(req, reply)
+	local activityId = req.activityId
+	local episodeId = req.episodeId
+	local targetFrequency = req.targetFrequency
+	local cfgObj = self._cCfg.instance
+	local act125Config = cfgObj:getAct125Config(activityId)
+	local info = assert(self:_getInfo(activityId), kErrMsgServer)
+	local episodeConfig = cfgObj:getEpisodeConfig(activityId, episodeId)
+	local updateAct125Episodes = {}
 
-	if var_8_2 >= var_8_6.targetFrequency then
-		local var_8_8 = arg_8_0:_retainEpisodeNewState(var_8_0, var_8_1, var_0_3)
+	if targetFrequency >= episodeConfig.targetFrequency then
+		local episodeInfo = self:_retainEpisodeNewState(activityId, episodeId, STATE_COMPLETED)
 
-		table.insert(var_8_7, var_8_8)
+		table.insert(updateAct125Episodes, episodeInfo)
 	end
 
-	rawset(arg_8_2, "activityId", var_8_0)
-	rawset(arg_8_2, "episodeId", var_8_1)
-	rawset(arg_8_2, "updateAct125Episodes", var_8_7)
+	rawset(reply, "activityId", activityId)
+	rawset(reply, "episodeId", episodeId)
+	rawset(reply, "updateAct125Episodes", updateAct125Episodes)
 end
 
-function var_0_6._make_taskInfos(arg_9_0, arg_9_1)
-	local var_9_0 = {}
+function STesting:_make_taskInfos(typeId)
+	local dict = {}
 
-	if arg_9_1 == var_0_1 then
-		for iter_9_0, iter_9_1 in ipairs(lua_activity125_task.configList) do
-			local var_9_1 = iter_9_1.id
-			local var_9_2 = iter_9_1.activityId
+	if typeId == KTaskType then
+		for _, CO in ipairs(lua_activity125_task.configList) do
+			local taskId = CO.id
+			local activityId = CO.activityId
 
-			var_9_0[var_9_2] = var_9_0[var_9_2] or {}
+			dict[activityId] = dict[activityId] or {}
 
-			if iter_9_1.isOnline then
-				var_9_0[var_9_2][var_9_1] = arg_9_0:_make_TaskInfo(var_9_1, arg_9_1)
+			if CO.isOnline then
+				dict[activityId][taskId] = self:_make_TaskInfo(taskId, typeId)
 			end
 		end
 	else
-		assert(false, "please init task type: " .. arg_9_1)
+		assert(false, "please init task type: " .. typeId)
 	end
 
-	return var_9_0
+	return dict
 end
 
-function var_0_6._make_TaskActivityInfo(arg_10_0, arg_10_1)
+function STesting:_make_TaskActivityInfo(typeId)
 	return {
 		defineId = 0,
 		expiryTime = 0,
 		value = 0,
 		gainValue = 0,
-		typeId = arg_10_1
+		typeId = typeId
 	}
 end
 
-function var_0_6.handleGetTaskInfoReply(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_1.typeIds
-	local var_11_1 = {}
-	local var_11_2 = {}
+function STesting:handleGetTaskInfoReply(req, reply)
+	local typeIds = req.typeIds
+	local taskInfo = {}
+	local activityInfo = {}
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if not arg_11_0._taskInfoDict[iter_11_1] then
-			arg_11_0._taskInfoDict[iter_11_1] = arg_11_0:_make_taskInfos(iter_11_1)
+	for _, typeId in ipairs(typeIds) do
+		if not self._taskInfoDict[typeId] then
+			self._taskInfoDict[typeId] = self:_make_taskInfos(typeId)
 		end
 
-		if not arg_11_0._taskActivityInfoDict[iter_11_1] then
-			arg_11_0._taskActivityInfoDict[iter_11_1] = arg_11_0:_make_TaskActivityInfo(iter_11_1)
+		if not self._taskActivityInfoDict[typeId] then
+			self._taskActivityInfoDict[typeId] = self:_make_TaskActivityInfo(typeId)
 		end
 
-		for iter_11_2, iter_11_3 in pairs(arg_11_0._taskInfoDict[iter_11_1]) do
-			if iter_11_2 == 12436 then
-				for iter_11_4, iter_11_5 in pairs(iter_11_3) do
-					table.insert(var_11_1, iter_11_5)
+		for actId, actTable in pairs(self._taskInfoDict[typeId]) do
+			if actId == 12436 then
+				for taskId, info in pairs(actTable) do
+					table.insert(taskInfo, info)
 				end
 			end
 		end
 
-		table.insert(var_11_2, arg_11_0._taskActivityInfoDict[iter_11_1])
+		table.insert(activityInfo, self._taskActivityInfoDict[typeId])
 	end
 
-	rawset(arg_11_2, "taskInfo", var_11_1)
-	rawset(arg_11_2, "activityInfo", var_11_2)
-	rawset(arg_11_2, "typeIds", var_11_0)
+	rawset(reply, "taskInfo", taskInfo)
+	rawset(reply, "activityInfo", activityInfo)
+	rawset(reply, "typeIds", typeIds)
 end
 
-function var_0_6._getInfo(arg_12_0, arg_12_1)
-	return arg_12_0._actId2InfoDict[arg_12_1]
+function STesting:_getInfo(activityId)
+	return self._actId2InfoDict[activityId]
 end
 
-function var_0_6._getEpisodeList(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:_getInfo(arg_13_1)
-	local var_13_1 = {}
+function STesting:_getEpisodeList(activityId)
+	local info = self:_getInfo(activityId)
+	local list = {}
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0.act125Episodes) do
-		table.insert(var_13_1, iter_13_1)
+	for _, v in pairs(info.act125Episodes) do
+		table.insert(list, v)
 	end
 
-	table.sort(var_13_1, function(arg_14_0, arg_14_1)
-		return arg_14_0.id < arg_14_1.id
+	table.sort(list, function(a, b)
+		return a.id < b.id
 	end)
 
-	return var_13_1
+	return list
 end
 
-function var_0_6._retainEpisodeNewState(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	assert(arg_15_1, var_0_4)
-	assert(arg_15_2, var_0_4)
-	assert(arg_15_3, var_0_4)
+function STesting:_retainEpisodeNewState(activityId, episodeId, newSTATE_XXXXXX)
+	assert(activityId, kErrMsgServer)
+	assert(episodeId, kErrMsgServer)
+	assert(newSTATE_XXXXXX, kErrMsgServer)
 
-	local var_15_0 = assert(arg_15_0:_getInfo(arg_15_1), var_0_4).act125Episodes[arg_15_2]
+	local info = assert(self:_getInfo(activityId), kErrMsgServer)
+	local episodeInfo = info.act125Episodes[episodeId]
 
-	if not var_15_0 then
-		logError(var_0_5)
+	if not episodeInfo then
+		logError(kErrMsgClient)
 
 		return
 	end
 
-	var_15_0.state = arg_15_3
+	episodeInfo.state = newSTATE_XXXXXX
 
-	return var_15_0
+	return episodeInfo
 end
 
-function var_0_6._make_TaskInfo(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = TaskModel.instance:getTaskConfig(arg_16_2, arg_16_1)
+function STesting:_make_TaskInfo(taskId, taskType)
+	local taskCO = TaskModel.instance:getTaskConfig(taskType, taskId)
 
-	assert(var_16_0, var_0_4)
+	assert(taskCO, kErrMsgServer)
 
-	local var_16_1 = var_16_0.maxProgress
-	local var_16_2 = {
+	local maxProgress = taskCO.maxProgress
+	local res = {
 		hasFinished = false,
 		expiryTime = 0,
 		finishCount = 0,
-		id = arg_16_1,
-		type = arg_16_2,
-		progress = math.random(0, var_16_1)
+		id = taskId,
+		type = taskType,
+		progress = math.random(0, maxProgress)
 	}
 
-	var_16_2.hasFinished = var_16_2.progress == var_16_1
+	res.hasFinished = res.progress == maxProgress
 
-	return var_16_2
+	return res
 end
 
-local var_0_7 = 0
-local var_0_8 = _G.class("CTesting", var_0_0)
+local kResultCode = 0
+local CTesting = _G.class("CTesting", TestingBase)
 
-function var_0_8.ctor(arg_17_0)
-	var_0_0.ctor(arg_17_0)
+function CTesting:ctor()
+	TestingBase.ctor(self)
 
-	arg_17_0._cRpc = Activity125Rpc
-	arg_17_0._cCtrl = Activity125Controller
-	arg_17_0._cModel = Activity125Model
-	arg_17_0._cActivity125ViewBaseContainer = Activity125ViewBaseContainer
-	arg_17_0._cTaskRpc = TaskRpc
-	arg_17_0._cTaskModel = TaskModel
-	arg_17_0._cTaskController = TaskController
+	self._cRpc = Activity125Rpc
+	self._cCtrl = Activity125Controller
+	self._cModel = Activity125Model
+	self._cActivity125ViewBaseContainer = Activity125ViewBaseContainer
+	self._cTaskRpc = TaskRpc
+	self._cTaskModel = TaskModel
+	self._cTaskController = TaskController
 end
 
-function var_0_8.build_test(arg_18_0)
-	arg_18_0:build_test__Act125()
-	arg_18_0:build_test__Task()
-	arg_18_0:build_test__Player()
+function CTesting:build_test()
+	self:build_test__Act125()
+	self:build_test__Task()
+	self:build_test__Player()
 end
 
-function var_0_8.build_test__Player(arg_19_0)
+function CTesting:build_test__Player()
 	function PlayerModel.forceSetSimpleProperty()
 		return
 	end
 end
 
-function var_0_8.build_test__Act125(arg_21_0)
-	local var_21_0 = arg_21_0._cCfg.instance
-	local var_21_1 = arg_21_0._cRpc.instance
-	local var_21_2 = arg_21_0._cCtrl.instance
-	local var_21_3 = arg_21_0._cModel.instance
-	local var_21_4 = arg_21_0._pb
+function CTesting:build_test__Act125()
+	local cfgObj = self._cCfg.instance
+	local rpcObj = self._cRpc.instance
+	local ctrlObj = self._cCtrl.instance
+	local modelObj = self._cModel.instance
+	local pb = self._pb
 
-	function arg_21_0._cRpc.sendGetAct125InfosRequest(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-		local var_22_0 = var_21_4.GetAct125InfosRequest()
+	function self._cRpc.sendGetAct125InfosRequest(thisObj, activityId, cb, cbObj)
+		local req = pb.GetAct125InfosRequest()
 
-		var_22_0.activityId = arg_22_1
+		req.activityId = activityId
 
-		local var_22_1 = var_21_4.GetAct125InfosReply()
+		local reply = pb.GetAct125InfosReply()
 
-		arg_21_0._obj:handleGetInfos(var_22_0, var_22_1)
-		var_21_1:onReceiveGetAct125InfosReply(var_0_7, var_22_1)
+		self._obj:handleGetInfos(req, reply)
+		rpcObj:onReceiveGetAct125InfosReply(kResultCode, reply)
 
-		local var_22_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_22_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_22_2 then
-			if arg_22_3 then
-				arg_22_2(arg_22_3, var_22_2, var_0_7)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, kResultCode)
 			else
-				arg_22_2(var_22_2, var_0_7)
+				cb(cmd, kResultCode)
 			end
 		end
 	end
 
-	function arg_21_0._cRpc.sendFinishAct125EpisodeRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
-		local var_23_0 = var_21_4.FinishAct125EpisodeRequest()
+	function self._cRpc.sendFinishAct125EpisodeRequest(thisObj, activityId, episodeId, targetFrequency, cb, cbObj)
+		local req = pb.FinishAct125EpisodeRequest()
 
-		var_23_0.activityId = arg_23_1
-		var_23_0.episodeId = arg_23_2
-		var_23_0.targetFrequency = arg_23_3
+		req.activityId = activityId
+		req.episodeId = episodeId
+		req.targetFrequency = targetFrequency
 
-		local var_23_1 = var_21_4.FinishAct125EpisodeReply()
+		local reply = pb.FinishAct125EpisodeReply()
 
-		arg_21_0._obj:handleFinishAct125Episode(var_23_0, var_23_1)
-		var_21_1:onReceiveFinishAct125EpisodeReply(var_0_7, var_23_1)
+		self._obj:handleFinishAct125Episode(req, reply)
+		rpcObj:onReceiveFinishAct125EpisodeReply(kResultCode, reply)
 
-		local var_23_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_23_0.__cname)
+		local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-		if arg_23_4 then
-			if arg_23_5 then
-				arg_23_4(arg_23_5, var_23_2, var_0_7)
+		if cb then
+			if cbObj then
+				cb(cbObj, cmd, kResultCode)
 			else
-				arg_23_4(var_23_2, var_0_7)
+				cb(cmd, kResultCode)
 			end
 		end
 	end
 
-	local var_21_5 = Activity125MO
-	local var_21_6 = true
-	local var_21_7 = true
-	local var_21_8 = true
+	local cMO = Activity125MO
+	local isTestAnim = true
+	local isTestDays = true
+	local isSavePlayerPrefs = true
 
-	if var_21_6 and var_21_5 then
-		local var_21_9 = {}
+	if isTestAnim and cMO then
+		local _dict = {}
 
-		function var_21_5.setLocalIsPlay(arg_24_0, arg_24_1)
-			var_21_9[arg_24_0.id] = var_21_9[arg_24_0.id] or {}
-			var_21_9[arg_24_0.id][arg_24_1] = true
+		function cMO.setLocalIsPlay(thisObj, episodeId)
+			_dict[thisObj.id] = _dict[thisObj.id] or {}
+			_dict[thisObj.id][episodeId] = true
 		end
 
-		function var_21_5.checkLocalIsPlay(arg_25_0, arg_25_1)
-			var_21_9[arg_25_0.id] = var_21_9[arg_25_0.id] or {}
+		function cMO.checkLocalIsPlay(thisObj, episodeId)
+			_dict[thisObj.id] = _dict[thisObj.id] or {}
 
-			return var_21_9[arg_25_0.id][arg_25_1]
-		end
-	end
-
-	if not var_21_8 then
-		function arg_21_0._cActivity125ViewBaseContainer.saveInt(arg_26_0, arg_26_1, arg_26_2)
-			logError("[Activity125Testing] saveInt: key=" .. arg_26_1 .. " value=" .. tostring(arg_26_2))
+			return _dict[thisObj.id][episodeId]
 		end
 	end
 
-	if var_21_7 and var_21_5 then
-		function var_21_5.isEpisodeDayOpen(arg_27_0, arg_27_1)
+	if not isSavePlayerPrefs then
+		function self._cActivity125ViewBaseContainer.saveInt(thisObj, key, value)
+			logError("[Activity125Testing] saveInt: key=" .. key .. " value=" .. tostring(value))
+		end
+	end
+
+	if isTestDays and cMO then
+		function cMO.isEpisodeDayOpen(thisObj, episodeId)
 			return true
 		end
 
-		function var_21_5.isEpisodeReallyOpen(arg_28_0, arg_28_1)
+		function cMO.isEpisodeReallyOpen(thisObj, episodeId)
 			return true
 		end
 
-		function var_21_5.isEpisodeUnLock(arg_29_0, arg_29_1)
+		function cMO.isEpisodeUnLock(thisObj, episodeId)
 			return true
 		end
 	end
 end
 
-function var_0_8.build_test__Task(arg_30_0)
-	local var_30_0 = arg_30_0._cTaskCfg.instance
-	local var_30_1 = arg_30_0._cTaskRpc.instance
-	local var_30_2 = arg_30_0._cTaskController.instance
-	local var_30_3 = arg_30_0._cTaskModel.instance
-	local var_30_4 = arg_30_0._pbTask
+function CTesting:build_test__Task()
+	local cfgObj = self._cTaskCfg.instance
+	local rpcObj = self._cTaskRpc.instance
+	local ctrlObj = self._cTaskController.instance
+	local modelObj = self._cTaskModel.instance
+	local pb = self._pbTask
 
-	function arg_30_0._cTaskRpc.sendGetTaskInfoRequest(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-		local var_31_0 = var_30_4.GetTaskInfoRequest()
+	function self._cTaskRpc.sendGetTaskInfoRequest(thisObj, typeIds, callback, callbackObj)
+		local req = pb.GetTaskInfoRequest()
 
-		for iter_31_0, iter_31_1 in pairs(arg_31_1) do
-			table.insert(var_31_0.typeIds, iter_31_1)
+		for _, v in pairs(typeIds) do
+			table.insert(req.typeIds, v)
 		end
 
-		if #arg_31_1 == 1 and arg_31_1[1] == var_0_1 then
-			local var_31_1 = var_30_4.GetTaskInfoReply()
+		if #typeIds == 1 and typeIds[1] == KTaskType then
+			local reply = pb.GetTaskInfoReply()
 
-			arg_30_0._obj:handleGetTaskInfoReply(var_31_0, var_31_1)
-			var_30_1:onReceiveGetTaskInfoReply(var_0_7, var_31_1)
+			self._obj:handleGetTaskInfoReply(req, reply)
+			rpcObj:onReceiveGetTaskInfoReply(kResultCode, reply)
 
-			local var_31_2 = LuaSocketMgr.instance:getCmdByPbStructName(var_31_0.__cname)
+			local cmd = LuaSocketMgr.instance:getCmdByPbStructName(req.__cname)
 
-			if arg_31_2 then
-				if arg_31_3 then
-					arg_31_2(arg_31_3, var_31_2, var_0_7)
+			if callback then
+				if callbackObj then
+					callback(callbackObj, cmd, kResultCode)
 				else
-					arg_31_2(var_31_2, var_0_7)
+					callback(cmd, kResultCode)
 				end
 			end
 		else
-			return arg_31_0:sendMsg(var_31_0, arg_31_2, arg_31_3)
+			return thisObj:sendMsg(req, callback, callbackObj)
 		end
 	end
 end
 
-local var_0_9 = _G.class("Activity125Testing")
+local Activity125Testing = _G.class("Activity125Testing")
 
-function var_0_9.ctor(arg_32_0)
-	arg_32_0._client = var_0_8.New()
-	arg_32_0._sever = var_0_6.New()
+function Activity125Testing:ctor()
+	self._client = CTesting.New()
+	self._sever = STesting.New()
 
-	arg_32_0._sever:link(arg_32_0._client)
-	arg_32_0._client:link(arg_32_0._sever)
+	self._sever:link(self._client)
+	self._client:link(self._sever)
 end
 
-function var_0_9._test(arg_33_0)
-	arg_33_0._client:build_test()
-	arg_33_0._sever:build_test()
+function Activity125Testing:_test()
+	self._client:build_test()
+	self._sever:build_test()
 end
 
-function var_0_9._offline_test(arg_34_0)
-	local var_34_0 = lua_activity125.configList or {}
-	local var_34_1 = var_34_0[#var_34_0]
+function Activity125Testing:_offline_test()
+	local COList = lua_activity125.configList or {}
+	local recentCO = COList[#COList]
 
-	for iter_34_0 = #var_34_0, math.max(1, #var_34_0 - 5), -1 do
-		local var_34_2 = var_34_0[iter_34_0]
-		local var_34_3 = var_34_2.activityId
+	for i = #COList, math.max(1, #COList - 5), -1 do
+		local CO = COList[i]
+		local activityId = CO.activityId
 
-		if lua_activity125_link.configDict[var_34_3] then
-			var_34_1 = var_34_2
+		if lua_activity125_link.configDict[activityId] then
+			recentCO = CO
 
 			break
 		end
 	end
 
-	local var_34_4 = var_34_1 and var_34_1.activityId or nil
+	local myActId = recentCO and recentCO.activityId or nil
 
-	logError(var_34_4)
+	logError(myActId)
 
-	if not var_34_4 then
+	if not myActId then
 		logError("Activity125Testing offline test error: can not found actid")
 
 		return
 	end
 
-	local var_34_5 = os.time() * 1000
-	local var_34_6 = var_34_5 + 259200
-	local var_34_7 = {
+	local myStartTime = os.time() * 1000
+	local myEndTime = myStartTime + 259200
+	local myActivityInfo = {
 		activityInfos = {
 			{
 				currentStage = 0,
@@ -421,20 +424,20 @@ function var_0_9._offline_test(arg_34_0)
 				online = true,
 				isReceiveAllBonus = false,
 				isNewStage = false,
-				id = var_34_4,
-				startTime = var_34_5,
-				endTime = var_34_6
+				id = myActId,
+				startTime = myStartTime,
+				endTime = myEndTime
 			}
 		}
 	}
 
-	ActivityModel.instance:setActivityInfo(var_34_7)
-	var_0_9.instance:_test()
-	Activity125Model.instance:setSelectEpisodeId(var_34_4, 1)
-	ActivityModel.instance:setTargetActivityCategoryId(var_34_4)
+	ActivityModel.instance:setActivityInfo(myActivityInfo)
+	Activity125Testing.instance:_test()
+	Activity125Model.instance:setSelectEpisodeId(myActId, 1)
+	ActivityModel.instance:setTargetActivityCategoryId(myActId)
 	ViewMgr.instance:openView(ViewName.ActivityBeginnerView)
 end
 
-var_0_9.instance = var_0_9.New()
+Activity125Testing.instance = Activity125Testing.New()
 
-return var_0_9
+return Activity125Testing

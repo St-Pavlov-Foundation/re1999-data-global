@@ -1,46 +1,48 @@
-﻿module("modules.logic.gm.view.GMVideoListItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMVideoListItem.lua
 
-local var_0_0 = class("GMVideoListItem", ListScrollCell)
-local var_0_1 = Color.New(1, 0.8, 0.8, 1)
-local var_0_2 = Color.white
-local var_0_3
+module("modules.logic.gm.view.GMVideoListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_1, "btn")
+local GMVideoListItem = class("GMVideoListItem", ListScrollCell)
+local SelectColor = Color.New(1, 0.8, 0.8, 1)
+local NotSelectColor = Color.white
+local PrevSelectVideo
 
-	arg_1_0._btn:AddClickListener(arg_1_0._onClickItem, arg_1_0)
-	recthelper.setWidth(arg_1_1.transform, 500)
-	recthelper.setWidth(arg_1_0._btn.transform, 500)
+function GMVideoListItem:init(go)
+	self._btn = gohelper.findChildButtonWithAudio(go, "btn")
 
-	arg_1_0._imgBtn = gohelper.findChildImage(arg_1_1, "btn")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "btn/Text")
-	arg_1_0._txtName.alignment = TMPro.TextAlignmentOptions.MidlineLeft
+	self._btn:AddClickListener(self._onClickItem, self)
+	recthelper.setWidth(go.transform, 500)
+	recthelper.setWidth(self._btn.transform, 500)
+
+	self._imgBtn = gohelper.findChildImage(go, "btn")
+	self._txtName = gohelper.findChildText(go, "btn/Text")
+	self._txtName.alignment = TMPro.TextAlignmentOptions.MidlineLeft
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
-	arg_2_0._txtName.text = arg_2_0._mo.id .. ": " .. arg_2_0._mo.video
+function GMVideoListItem:onUpdateMO(mo)
+	self._mo = mo
+	self._txtName.text = self._mo.id .. ": " .. self._mo.video
 
-	arg_2_0:onSelect(arg_2_0._mo.video == var_0_3)
+	self:onSelect(self._mo.video == PrevSelectVideo)
 end
 
-function var_0_0._onClickItem(arg_3_0)
-	var_0_3 = arg_3_0._mo.video
+function GMVideoListItem:_onClickItem()
+	PrevSelectVideo = self._mo.video
 
-	arg_3_0._view:setSelect(arg_3_0._mo)
-	ViewMgr.instance:openView(ViewName.GMVideoPlayView, arg_3_0._mo.video)
+	self._view:setSelect(self._mo)
+	ViewMgr.instance:openView(ViewName.GMVideoPlayView, self._mo.video)
 end
 
-function var_0_0.onSelect(arg_4_0, arg_4_1)
-	arg_4_0._imgBtn.color = arg_4_1 and var_0_1 or var_0_2
+function GMVideoListItem:onSelect(isSelect)
+	self._imgBtn.color = isSelect and SelectColor or NotSelectColor
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0._btn then
-		arg_5_0._btn:RemoveClickListener()
+function GMVideoListItem:onDestroy()
+	if self._btn then
+		self._btn:RemoveClickListener()
 
-		arg_5_0._btn = nil
+		self._btn = nil
 	end
 end
 
-return var_0_0
+return GMVideoListItem

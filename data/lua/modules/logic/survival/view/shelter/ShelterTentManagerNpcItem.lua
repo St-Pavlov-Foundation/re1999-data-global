@@ -1,84 +1,86 @@
-﻿module("modules.logic.survival.view.shelter.ShelterTentManagerNpcItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterTentManagerNpcItem.lua
 
-local var_0_0 = class("ShelterTentManagerNpcItem", ListScrollCellExtend)
+module("modules.logic.survival.view.shelter.ShelterTentManagerNpcItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.imgQuality = gohelper.findChildImage(arg_1_0.viewGO, "#image_quality")
-	arg_1_0.imageNpc = gohelper.findChildSingleImage(arg_1_0.viewGO, "#image_Chess")
-	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_PartnerName")
-	arg_1_0.goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Selected")
-	arg_1_0.goTips = gohelper.findChild(arg_1_0.viewGO, "#go_Tips")
-	arg_1_0.txtBuildName = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_Tips/#txt_TentName")
-	arg_1_0.btn = gohelper.findButtonWithAudio(arg_1_0.viewGO)
+local ShelterTentManagerNpcItem = class("ShelterTentManagerNpcItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ShelterTentManagerNpcItem:onInitView()
+	self.imgQuality = gohelper.findChildImage(self.viewGO, "#image_quality")
+	self.imageNpc = gohelper.findChildSingleImage(self.viewGO, "#image_Chess")
+	self.txtName = gohelper.findChildTextMesh(self.viewGO, "#txt_PartnerName")
+	self.goSelected = gohelper.findChild(self.viewGO, "#go_Selected")
+	self.goTips = gohelper.findChild(self.viewGO, "#go_Tips")
+	self.txtBuildName = gohelper.findChildTextMesh(self.viewGO, "#go_Tips/#txt_TentName")
+	self.btn = gohelper.findButtonWithAudio(self.viewGO)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btn, arg_2_0.onClickNpcItem, arg_2_0)
+function ShelterTentManagerNpcItem:addEvents()
+	self:addClickCb(self.btn, self.onClickNpcItem, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btn)
+function ShelterTentManagerNpcItem:removeEvents()
+	self:removeClickCb(self.btn)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ShelterTentManagerNpcItem:_editableInitView()
 	return
 end
 
-function var_0_0.onClickNpcItem(arg_5_0)
-	if not arg_5_0.mo then
+function ShelterTentManagerNpcItem:onClickNpcItem()
+	if not self.mo then
 		return
 	end
 
 	if SurvivalShelterTentListModel.instance:isQuickSelect() then
-		SurvivalShelterTentListModel.instance:quickSelectNpc(arg_5_0.mo.id)
+		SurvivalShelterTentListModel.instance:quickSelectNpc(self.mo.id)
 	else
-		SurvivalShelterTentListModel.instance:setSelectNpc(arg_5_0.mo.id)
-		arg_5_0._view.viewContainer:refreshManagerSelectPanel()
+		SurvivalShelterTentListModel.instance:setSelectNpc(self.mo.id)
+		self._view.viewContainer:refreshManagerSelectPanel()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0.mo = arg_6_1
+function ShelterTentManagerNpcItem:onUpdateMO(mo)
+	self.mo = mo
 
-	if not arg_6_1 then
+	if not mo then
 		return
 	end
 
-	arg_6_0:refreshItem(arg_6_1)
+	self:refreshItem(mo)
 end
 
-function var_0_0.refreshItem(arg_7_0, arg_7_1)
-	local var_7_0 = SurvivalShelterTentListModel.instance:getSelectNpc()
+function ShelterTentManagerNpcItem:refreshItem(data)
+	local selectNpcId = SurvivalShelterTentListModel.instance:getSelectNpc()
 
-	gohelper.setActive(arg_7_0.goSelected, var_7_0 == arg_7_1.id)
+	gohelper.setActive(self.goSelected, selectNpcId == data.id)
 
-	local var_7_1 = SurvivalShelterModel.instance:getWeekInfo()
-	local var_7_2 = var_7_1:getNpcPostion(arg_7_1.id)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingId = weekInfo:getNpcPostion(data.id)
 
-	if var_7_2 then
-		local var_7_3 = var_7_1:getBuildingInfo(var_7_2)
+	if buildingId then
+		local buildingInfo = weekInfo:getBuildingInfo(buildingId)
 
-		gohelper.setActive(arg_7_0.goTips, true)
+		gohelper.setActive(self.goTips, true)
 
-		local var_7_4 = SurvivalConfig.instance:getBuildingConfig(var_7_3.buildingId, var_7_3.level)
+		local buildingConfig = SurvivalConfig.instance:getBuildingConfig(buildingInfo.buildingId, buildingInfo.level)
 
-		arg_7_0.txtBuildName.text = var_7_4.name
+		self.txtBuildName.text = buildingConfig.name
 	else
-		gohelper.setActive(arg_7_0.goTips, false)
+		gohelper.setActive(self.goTips, false)
 	end
 
-	arg_7_0.txtName.text = arg_7_1.co.name
+	self.txtName.text = data.co.name
 
-	SurvivalUnitIconHelper.instance:setNpcIcon(arg_7_0.imageNpc, arg_7_1.co.headIcon)
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_7_0.imgQuality, string.format("survival_bag_itemquality2_%s", arg_7_1.co.rare))
+	SurvivalUnitIconHelper.instance:setNpcIcon(self.imageNpc, data.co.headIcon)
+	UISpriteSetMgr.instance:setSurvivalSprite(self.imgQuality, string.format("survival_bag_itemquality2_%s", data.co.rare))
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function ShelterTentManagerNpcItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return ShelterTentManagerNpcItem

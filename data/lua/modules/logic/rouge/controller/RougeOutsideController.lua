@@ -1,150 +1,158 @@
-﻿module("modules.logic.rouge.controller.RougeOutsideController", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/controller/RougeOutsideController.lua
 
-local var_0_0 = class("RougeOutsideController", BaseController)
+module("modules.logic.rouge.controller.RougeOutsideController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._model = RougeOutsideModel.instance
+local RougeOutsideController = class("RougeOutsideController", BaseController)
+
+function RougeOutsideController:onInit()
+	self._model = RougeOutsideModel.instance
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_2_0._onGetOpenInfoSuccess, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_2_0._updateRelateDotInfo, arg_2_0)
+function RougeOutsideController:addConstEvents()
+	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, self._onGetOpenInfoSuccess, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._updateRelateDotInfo, self)
 end
 
-function var_0_0.reInit(arg_3_0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_3_0._updateRelateDotInfo, arg_3_0)
+function RougeOutsideController:reInit()
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._updateRelateDotInfo, self)
 end
 
-function var_0_0._onGetOpenInfoSuccess(arg_4_0)
-	local var_4_0 = arg_4_0._model:config():openUnlockId()
+function RougeOutsideController:_onGetOpenInfoSuccess()
+	local CO = self._model:config()
+	local openUnlockId = CO:openUnlockId()
 
-	if OpenModel.instance:isFunctionUnlock(var_4_0) then
+	if OpenModel.instance:isFunctionUnlock(openUnlockId) then
 		return
 	end
 
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_4_0._onNewFuncUnlock, arg_4_0)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self._onNewFuncUnlock, self)
 end
 
-function var_0_0._updateRelateDotInfo(arg_5_0, arg_5_1)
-	if not arg_5_0:isOpen() or not arg_5_1 or not arg_5_1[RedDotEnum.DotNode.RougeDLCNew] then
+function RougeOutsideController:_updateRelateDotInfo(dict)
+	if not self:isOpen() or not dict or not dict[RedDotEnum.DotNode.RougeDLCNew] then
 		return
 	end
 
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_5_0._updateRelateDotInfo, arg_5_0)
-	arg_5_0:initDLCReddotInfo()
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._updateRelateDotInfo, self)
+	self:initDLCReddotInfo()
 end
 
-function var_0_0._onDailyRefresh(arg_6_0)
-	if not arg_6_0:isOpen() then
+function RougeOutsideController:_onDailyRefresh()
+	if not self:isOpen() then
 		return
 	end
 
-	arg_6_0:sendRpcToGetOutsideInfo()
+	self:sendRpcToGetOutsideInfo()
 end
 
-function var_0_0.sendRpcToGetOutsideInfo(arg_7_0)
-	local var_7_0 = arg_7_0._model:season()
+function RougeOutsideController:sendRpcToGetOutsideInfo()
+	local season = self._model:season()
 
-	RougeOutsideRpc.instance:sendGetRougeOutSideInfoRequest(var_7_0)
+	RougeOutsideRpc.instance:sendGetRougeOutSideInfoRequest(season)
 end
 
-function var_0_0.checkOutSideStageInfo(arg_8_0)
+function RougeOutsideController:checkOutSideStageInfo()
 	return
 end
 
-function var_0_0._onNewFuncUnlock(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._model:config():openUnlockId()
-	local var_9_1 = false
+function RougeOutsideController:_onNewFuncUnlock(newIds)
+	local CO = self._model:config()
+	local openUnlockId = CO:openUnlockId()
+	local ok = false
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		if iter_9_1 == var_9_0 then
-			var_9_1 = true
+	for _, id in ipairs(newIds) do
+		if id == openUnlockId then
+			ok = true
 
 			break
 		end
 	end
 
-	if not var_9_1 then
+	if not ok then
 		return
 	end
 
-	arg_9_0._model:setIsNewUnlockDifficulty(1, true)
-	arg_9_0:sendRpcToGetOutsideInfo()
-	arg_9_0:initDLCReddotInfo()
+	self._model:setIsNewUnlockDifficulty(1, true)
+	self:sendRpcToGetOutsideInfo()
+	self:initDLCReddotInfo()
 end
 
-function var_0_0.isOpen(arg_10_0)
-	return arg_10_0._model:isUnlock()
+function RougeOutsideController:isOpen()
+	return self._model:isUnlock()
 end
 
-function var_0_0.initDLCReddotInfo(arg_11_0)
-	local var_11_0 = arg_11_0:_createDLCReddotInfo(RougeDLCEnum.DLCEnum.DLC_103)
-	local var_11_1 = arg_11_0:_createDLCEntryReddotInfo({
-		var_11_0
+function RougeOutsideController:initDLCReddotInfo()
+	local reddotInfo_103 = self:_createDLCReddotInfo(RougeDLCEnum.DLCEnum.DLC_103)
+	local reddotInfo_entry = self:_createDLCEntryReddotInfo({
+		reddotInfo_103
 	})
-	local var_11_2 = {
-		var_11_0,
-		var_11_1
+	local reddotInfoList = {
+		reddotInfo_103,
+		reddotInfo_entry
 	}
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_11_2, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(reddotInfoList, true)
 end
 
-function var_0_0._createDLCReddotInfo(arg_12_0, arg_12_1)
-	if not arg_12_1 or arg_12_1 == 0 then
+function RougeOutsideController:_createDLCReddotInfo(dlcId)
+	if not dlcId or dlcId == 0 then
 		return
 	end
 
-	local var_12_0 = arg_12_0:checkIsDLCNotRead(arg_12_1) and 1 or 0
+	local notRead = self:checkIsDLCNotRead(dlcId)
+	local reddotVal = notRead and 1 or 0
 
 	return {
 		id = RedDotEnum.DotNode.RougeDLCNew,
-		uid = arg_12_1,
-		value = var_12_0
+		uid = dlcId,
+		value = reddotVal
 	}
 end
 
-function var_0_0.checkIsDLCNotRead(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:_generateNewReadDLCInLocalKey(arg_13_1)
+function RougeOutsideController:checkIsDLCNotRead(dlcId)
+	local key = self:_generateNewReadDLCInLocalKey(dlcId)
+	local notReadDLC = string.nilorempty(PlayerPrefsHelper.getString(key, ""))
 
-	return (string.nilorempty(PlayerPrefsHelper.getString(var_13_0, "")))
+	return notReadDLC
 end
 
-function var_0_0._createDLCEntryReddotInfo(arg_14_0, arg_14_1)
-	local var_14_0 = {
+function RougeOutsideController:_createDLCEntryReddotInfo(dlcReddotInfos)
+	local reddotInfo_entry = {
 		uid = 0,
 		value = 0,
 		id = RedDotEnum.DotNode.RougeDLCNew
 	}
 
-	if arg_14_1 then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-			if iter_14_1.value and iter_14_1.value > 0 then
-				var_14_0.value = 1
+	if dlcReddotInfos then
+		for _, reddotInfo in ipairs(dlcReddotInfos) do
+			if reddotInfo.value and reddotInfo.value > 0 then
+				reddotInfo_entry.value = 1
 
 				break
 			end
 		end
 	end
 
-	return var_14_0
+	return reddotInfo_entry
 end
 
-function var_0_0.saveNewReadDLCInLocal(arg_15_0, arg_15_1)
-	if not arg_15_1 or arg_15_1 == 0 then
+function RougeOutsideController:saveNewReadDLCInLocal(dlcId)
+	if not dlcId or dlcId == 0 then
 		return
 	end
 
-	local var_15_0 = arg_15_0:_generateNewReadDLCInLocalKey(arg_15_1)
+	local key = self:_generateNewReadDLCInLocalKey(dlcId)
 
-	PlayerPrefsHelper.setString(var_15_0, "true")
+	PlayerPrefsHelper.setString(key, "true")
 end
 
-function var_0_0._generateNewReadDLCInLocalKey(arg_16_0, arg_16_1)
-	return (string.format("%s#%s#%s", PlayerPrefsKey.RougeHasReadDLCId, PlayerModel.instance:getMyUserId(), arg_16_1))
+function RougeOutsideController:_generateNewReadDLCInLocalKey(dlcId)
+	local key = string.format("%s#%s#%s", PlayerPrefsKey.RougeHasReadDLCId, PlayerModel.instance:getMyUserId(), dlcId)
+
+	return key
 end
 
-var_0_0.instance = var_0_0.New()
+RougeOutsideController.instance = RougeOutsideController.New()
 
-return var_0_0
+return RougeOutsideController

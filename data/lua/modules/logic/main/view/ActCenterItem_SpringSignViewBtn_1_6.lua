@@ -1,9 +1,11 @@
-﻿module("modules.logic.main.view.ActCenterItem_SpringSignViewBtn_1_6", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/ActCenterItem_SpringSignViewBtn_1_6.lua
 
-local var_0_0 = class("ActCenterItem_SpringSignViewBtn_1_6", Activity101SignViewBtnBase)
+module("modules.logic.main.view.ActCenterItem_SpringSignViewBtn_1_6", package.seeall)
 
-function var_0_0.onRefresh(arg_1_0)
-	arg_1_0:_setMainSprite("v1a6_act_icon2")
+local ActCenterItem_SpringSignViewBtn_1_6 = class("ActCenterItem_SpringSignViewBtn_1_6", Activity101SignViewBtnBase)
+
+function ActCenterItem_SpringSignViewBtn_1_6:onRefresh()
+	self:_setMainSprite("v1a6_act_icon2")
 end
 
-return var_0_0
+return ActCenterItem_SpringSignViewBtn_1_6

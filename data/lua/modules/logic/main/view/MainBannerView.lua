@@ -1,161 +1,164 @@
-﻿module("modules.logic.main.view.MainBannerView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainBannerView.lua
 
-local var_0_0 = class("MainBannerView", BaseView)
+module("modules.logic.main.view.MainBannerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._clickbag = arg_1_0:getUserDataTb_()
-	arg_1_0._iconbag = arg_1_0:getUserDataTb_()
-	arg_1_0._bgbag = arg_1_0:getUserDataTb_()
-	arg_1_0._banners = {}
-	arg_1_0._willDisapearBanner = 0
+local MainBannerView = class("MainBannerView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MainBannerView:onInitView()
+	self._clickbag = self:getUserDataTb_()
+	self._iconbag = self:getUserDataTb_()
+	self._bgbag = self:getUserDataTb_()
+	self._banners = {}
+	self._willDisapearBanner = 0
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MainBannerView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:_clearAllClick()
+function MainBannerView:removeEvents()
+	self:_clearAllClick()
 end
 
-function var_0_0._bannerOnClick(arg_4_0, arg_4_1)
-	local var_4_0 = MainBannerConfig.instance:getbannerCO(tonumber(arg_4_1))
+function MainBannerView:_bannerOnClick(id)
+	local co = MainBannerConfig.instance:getbannerCO(tonumber(id))
+	local VanishingRules = string.split(co.vanishingRule, "#")
 
-	if string.split(var_4_0.vanishingRule, "#")[1] == "2" then
-		MainBannerModel.instance:addNotShowid(arg_4_1)
-		arg_4_0:_refreshBanner()
+	if VanishingRules[1] == "2" then
+		MainBannerModel.instance:addNotShowid(id)
+		self:_refreshBanner()
 	end
 
-	if var_4_0.jumpId ~= 0 then
-		GameFacade.jump(var_4_0.jumpId)
+	if co.jumpId ~= 0 then
+		GameFacade.jump(co.jumpId)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function MainBannerView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function MainBannerView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_7_0._onCloseFullView, arg_7_0)
-	arg_7_0:_refreshBanner()
+function MainBannerView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
+	self:_refreshBanner()
 end
 
-function var_0_0._setBanner(arg_8_0, arg_8_1)
-	local var_8_0 = MainBannerConfig.instance:getBannersCo()
-	local var_8_1 = MainBannerConfig.instance:getNowBanner(arg_8_1)
+function MainBannerView:_setBanner(time)
+	local bannerco = MainBannerConfig.instance:getBannersCo()
+	local banners = MainBannerConfig.instance:getNowBanner(time)
 
-	for iter_8_0 = 1, 3 do
-		arg_8_0:_clearClick(iter_8_0)
+	for i = 1, 3 do
+		self:_clearClick(i)
 
-		local var_8_2 = gohelper.findChild(arg_8_0.viewGO, "left/#go_banners/banner" .. iter_8_0)
+		local clickgo = gohelper.findChild(self.viewGO, "left/#go_banners/banner" .. i)
 
-		gohelper.setActive(var_8_2, false)
+		gohelper.setActive(clickgo, false)
 	end
 
-	arg_8_0._banners = {}
+	self._banners = {}
 
-	for iter_8_1, iter_8_2 in pairs(var_8_1) do
-		if iter_8_2 ~= nil then
-			local var_8_3 = gohelper.findChild(arg_8_0.viewGO, "left/#go_banners/banner" .. iter_8_1)
+	for k, v in pairs(banners) do
+		if v ~= nil then
+			local clickgo = gohelper.findChild(self.viewGO, "left/#go_banners/banner" .. k)
 
-			gohelper.setActive(var_8_3, true)
+			gohelper.setActive(clickgo, true)
 
-			local var_8_4 = SLFramework.UGUI.UIClickListener.Get(var_8_3)
-			local var_8_5 = gohelper.findChildSingleImage(var_8_3, "bannericon")
+			local click = SLFramework.UGUI.UIClickListener.Get(clickgo)
+			local icon = gohelper.findChildSingleImage(clickgo, "bannericon")
 
-			var_8_5:LoadImage(ResUrl.getBannerIcon(var_8_0[iter_8_2].icon))
-			table.insert(arg_8_0._iconbag, var_8_5)
+			icon:LoadImage(ResUrl.getBannerIcon(bannerco[v].icon))
+			table.insert(self._iconbag, icon)
 
-			local var_8_6 = {
-				var_8_4,
-				iter_8_2
+			local info = {
+				click,
+				v
 			}
 
-			table.insert(arg_8_0._clickbag, var_8_6)
-			table.insert(arg_8_0._banners, var_8_0[iter_8_2].id)
+			table.insert(self._clickbag, info)
+			table.insert(self._banners, bannerco[v].id)
 		end
 	end
 
-	for iter_8_3, iter_8_4 in pairs(arg_8_0._clickbag) do
-		iter_8_4[1]:AddClickListener(arg_8_0._bannerOnClick, arg_8_0, iter_8_4[2])
+	for k, v in pairs(self._clickbag) do
+		v[1]:AddClickListener(self._bannerOnClick, self, v[2])
 	end
 end
 
-function var_0_0._setTimer(arg_9_0, arg_9_1)
-	TaskDispatcher.cancelTask(arg_9_0._refreshBanner, arg_9_0)
+function MainBannerView:_setTimer(time)
+	TaskDispatcher.cancelTask(self._refreshBanner, self)
 
-	local var_9_0 = MainBannerConfig.instance:getNearTime(arg_9_1, arg_9_0._banners)
+	local disapear = MainBannerConfig.instance:getNearTime(time, self._banners)
 
-	if var_9_0 ~= nil then
-		TaskDispatcher.runDelay(arg_9_0._refreshBanner, arg_9_0, var_9_0.time - arg_9_1 + 3)
+	if disapear ~= nil then
+		TaskDispatcher.runDelay(self._refreshBanner, self, disapear.time - time + 3)
 
-		arg_9_0._willDisapearBanner = var_9_0.id
+		self._willDisapearBanner = disapear.id
 	end
 end
 
-function var_0_0._disapearBanner(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._banners) do
-		if iter_10_1 == arg_10_0._willDisapearBanner then
-			arg_10_0:_clearClick(iter_10_0)
+function MainBannerView:_disapearBanner()
+	for k, v in pairs(self._banners) do
+		if v == self._willDisapearBanner then
+			self:_clearClick(k)
 
-			local var_10_0 = gohelper.findChild(arg_10_0.viewGO, "left/banners/banner" .. iter_10_0)
+			local clickgo = gohelper.findChild(self.viewGO, "left/banners/banner" .. k)
 
-			gohelper.setActive(var_10_0, false)
+			gohelper.setActive(clickgo, false)
 		end
 	end
 
-	arg_10_0:_setTimer(ServerTime.now())
+	self:_setTimer(ServerTime.now())
 end
 
-function var_0_0._refreshBanner(arg_11_0)
-	local var_11_0 = ServerTime.now()
+function MainBannerView:_refreshBanner()
+	local time = ServerTime.now()
 
-	arg_11_0:_setBanner(var_11_0)
-	arg_11_0:_setTimer(var_11_0)
+	self:_setBanner(time)
+	self:_setTimer(time)
 end
 
-function var_0_0._clearClick(arg_12_0, arg_12_1)
-	if arg_12_0._clickbag and arg_12_0._clickbag[arg_12_1] then
-		arg_12_0._clickbag[arg_12_1][1]:RemoveClickListener()
+function MainBannerView:_clearClick(index)
+	if self._clickbag and self._clickbag[index] then
+		self._clickbag[index][1]:RemoveClickListener()
 	end
 end
 
-function var_0_0._clearAllClick(arg_13_0)
-	if arg_13_0._clickbag then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._clickbag) do
-			iter_13_1[1]:RemoveClickListener()
+function MainBannerView:_clearAllClick()
+	if self._clickbag then
+		for _, v in pairs(self._clickbag) do
+			v[1]:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0._onCloseFullView(arg_14_0, arg_14_1)
+function MainBannerView:_onCloseFullView(viewName)
 	if not ViewMgr.instance:hasOpenFullView() then
-		arg_14_0:_refreshBanner()
+		self:_refreshBanner()
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
-	arg_15_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_15_0._onCloseFullView, arg_15_0)
+function MainBannerView:onClose()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._refreshBanner, arg_16_0)
+function MainBannerView:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshBanner, self)
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._iconbag) do
-		iter_16_1:UnLoadImage()
+	for _, v in pairs(self._iconbag) do
+		v:UnLoadImage()
 	end
 
-	for iter_16_2, iter_16_3 in pairs(arg_16_0._bgbag) do
-		iter_16_3:UnLoadImage()
+	for _, v in pairs(self._bgbag) do
+		v:UnLoadImage()
 	end
 end
 
-return var_0_0
+return MainBannerView

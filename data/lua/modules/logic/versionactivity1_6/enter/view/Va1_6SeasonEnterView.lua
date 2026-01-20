@@ -1,185 +1,187 @@
-﻿module("modules.logic.versionactivity1_6.enter.view.Va1_6SeasonEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/enter/view/Va1_6SeasonEnterView.lua
 
-local var_0_0 = class("Va1_6SeasonEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity1_6.enter.view.Va1_6SeasonEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goStore = gohelper.findChild(arg_1_0.viewGO, "Right/Store")
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Store/#btn_Store")
-	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/Store/#btn_Store/#txt_Num")
-	arg_1_0._txtstoretime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/Store/#go_taglimit/#txt_limit")
-	arg_1_0._txttime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/LimitTime/#txt_LimitTime")
-	arg_1_0._btnEnterNormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Normal")
-	arg_1_0._btnEnterClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Close")
-	arg_1_0._btnEnterUnOpen = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_UnOpen")
-	arg_1_0._txtunlocktips = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_UnOpen/#txt_Tips")
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/txtDescr")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Normal/#image_reddot")
-	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	arg_1_0.rewardItems = {}
+local Va1_6SeasonEnterView = class("Va1_6SeasonEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Va1_6SeasonEnterView:onInitView()
+	self._goStore = gohelper.findChild(self.viewGO, "Right/Store")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Store/#btn_Store")
+	self._txtNum = gohelper.findChildTextMesh(self.viewGO, "Right/Store/#btn_Store/#txt_Num")
+	self._txtstoretime = gohelper.findChildTextMesh(self.viewGO, "Right/Store/#go_taglimit/#txt_limit")
+	self._txttime = gohelper.findChildTextMesh(self.viewGO, "Right/LimitTime/#txt_LimitTime")
+	self._btnEnterNormal = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Normal")
+	self._btnEnterClose = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Close")
+	self._btnEnterUnOpen = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_UnOpen")
+	self._txtunlocktips = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_UnOpen/#txt_Tips")
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "Right/txtDescr")
+	self._goreddot = gohelper.findChild(self.viewGO, "Right/#btn_Normal/#image_reddot")
+	self._gorewardcontent = gohelper.findChild(self.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	self.rewardItems = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._onClickStoreBtn, arg_2_0)
-	arg_2_0._btnEnterNormal:AddClickListener(arg_2_0._onClickMainActivity, arg_2_0)
-	arg_2_0._btnEnterClose:AddClickListener(arg_2_0._onClickMainActivity, arg_2_0)
-	arg_2_0._btnEnterUnOpen:AddClickListener(arg_2_0._onClickMainActivity, arg_2_0)
+function Va1_6SeasonEnterView:addEvents()
+	self._btnstore:AddClickListener(self._onClickStoreBtn, self)
+	self._btnEnterNormal:AddClickListener(self._onClickMainActivity, self)
+	self._btnEnterClose:AddClickListener(self._onClickMainActivity, self)
+	self._btnEnterUnOpen:AddClickListener(self._onClickMainActivity, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstore:RemoveClickListener()
-	arg_3_0._btnEnterNormal:RemoveClickListener()
-	arg_3_0._btnEnterClose:RemoveClickListener()
-	arg_3_0._btnEnterUnOpen:RemoveClickListener()
+function Va1_6SeasonEnterView:removeEvents()
+	self._btnstore:RemoveClickListener()
+	self._btnEnterNormal:RemoveClickListener()
+	self._btnEnterClose:RemoveClickListener()
+	self._btnEnterUnOpen:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actId = Activity104Model.instance:getCurSeasonId()
+function Va1_6SeasonEnterView:_editableInitView()
+	self.actId = Activity104Model.instance:getCurSeasonId()
 
-	local var_4_0 = ActivityConfig.instance:getActivityCo(arg_4_0.actId)
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	RedDotController.instance:addRedDot(arg_4_0._goreddot, var_4_0.redDotId)
-	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0.refreshUI, arg_4_0)
-	arg_4_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0.refreshCurrency, arg_4_0)
+	RedDotController.instance:addRedDot(self._goreddot, actCo.redDotId)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.refreshUI, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	var_0_0.super.onOpen(arg_5_0)
-	arg_5_0:refreshUI()
-	arg_5_0:refreshRemainTime()
+function Va1_6SeasonEnterView:onOpen()
+	Va1_6SeasonEnterView.super.onOpen(self)
+	self:refreshUI()
+	self:refreshRemainTime()
 end
 
-function var_0_0.onClose(arg_6_0)
-	var_0_0.super.onClose(arg_6_0)
+function Va1_6SeasonEnterView:onClose()
+	Va1_6SeasonEnterView.super.onClose(self)
 end
 
-function var_0_0._onRefreshRedDot(arg_7_0)
+function Va1_6SeasonEnterView:_onRefreshRedDot()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function Va1_6SeasonEnterView:onUpdateParam()
 	return
 end
 
-function var_0_0.refreshEnterBtn(arg_9_0)
-	local var_9_0, var_9_1, var_9_2 = ActivityHelper.getActivityStatusAndToast(arg_9_0.actId)
+function Va1_6SeasonEnterView:refreshEnterBtn()
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(self.actId)
 
-	gohelper.setActive(arg_9_0._btnEnterNormal, var_9_0 == ActivityEnum.ActivityStatus.Normal)
-	gohelper.setActive(arg_9_0._btnEnterClose, var_9_0 ~= ActivityEnum.ActivityStatus.Normal and var_9_0 ~= ActivityEnum.ActivityStatus.NotUnlock)
-	gohelper.setActive(arg_9_0._btnEnterUnOpen, var_9_0 == ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnEnterNormal, status == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._btnEnterClose, status ~= ActivityEnum.ActivityStatus.Normal and status ~= ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(self._btnEnterUnOpen, status == ActivityEnum.ActivityStatus.NotUnlock)
 
-	if var_9_0 == ActivityEnum.ActivityStatus.NotUnlock then
-		arg_9_0._txtunlocktips.text = ToastController.instance:getToastMsgWithTableParam(var_9_1, var_9_2)
+	if status == ActivityEnum.ActivityStatus.NotUnlock then
+		self._txtunlocktips.text = ToastController.instance:getToastMsgWithTableParam(toastId, toastParamList)
 	end
 
-	local var_9_3 = ActivityHelper.getActivityStatus(VersionActivity1_6Enum.ActivityId.SeasonStore)
+	local storeStatus = ActivityHelper.getActivityStatus(VersionActivity1_6Enum.ActivityId.SeasonStore)
 
-	gohelper.setActive(arg_9_0._goStore, var_9_3 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self._goStore, storeStatus == ActivityEnum.ActivityStatus.Normal)
 end
 
-function var_0_0.refreshCurrency(arg_10_0)
-	local var_10_0 = Activity104Enum.StoreUTTU[arg_10_0.actId]
-	local var_10_1 = CurrencyModel.instance:getCurrency(var_10_0)
-	local var_10_2 = var_10_1 and var_10_1.quantity or 0
+function Va1_6SeasonEnterView:refreshCurrency()
+	local currencyId = Activity104Enum.StoreUTTU[self.actId]
+	local currencyMO = CurrencyModel.instance:getCurrency(currencyId)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_10_0._txtNum.text = GameUtil.numberDisplay(var_10_2)
+	self._txtNum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = ActivityConfig.instance:getActivityCo(arg_11_0.actId)
+function Va1_6SeasonEnterView:refreshUI()
+	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	arg_11_0._txtdesc.text = var_11_0.actDesc
+	self._txtdesc.text = actCo.actDesc
 
-	local var_11_1 = GameUtil.splitString2(var_11_0.activityBonus, true) or {}
+	local rewards = GameUtil.splitString2(actCo.activityBonus, true) or {}
 
-	for iter_11_0 = 1, math.max(#var_11_1, #arg_11_0.rewardItems) do
-		local var_11_2 = arg_11_0.rewardItems[iter_11_0]
-		local var_11_3 = var_11_1[iter_11_0]
+	for i = 1, math.max(#rewards, #self.rewardItems) do
+		local item = self.rewardItems[i]
+		local data = rewards[i]
 
-		if not var_11_2 then
-			var_11_2 = IconMgr.instance:getCommonItemIcon(arg_11_0._gorewardcontent)
-			arg_11_0.rewardItems[iter_11_0] = var_11_2
+		if not item then
+			item = IconMgr.instance:getCommonItemIcon(self._gorewardcontent)
+			self.rewardItems[i] = item
 		end
 
-		if var_11_3 then
-			gohelper.setActive(var_11_2.go, true)
-			var_11_2:setMOValue(var_11_3[1], var_11_3[2], var_11_3[3] or 1, nil, true)
-			var_11_2:hideEquipLvAndCount()
-			var_11_2:isShowCount(false)
+		if data then
+			gohelper.setActive(item.go, true)
+			item:setMOValue(data[1], data[2], data[3] or 1, nil, true)
+			item:hideEquipLvAndCount()
+			item:isShowCount(false)
 		else
-			gohelper.setActive(var_11_2.go, false)
+			gohelper.setActive(item.go, false)
 		end
 	end
 
-	arg_11_0:refreshEnterBtn()
-	arg_11_0:refreshCurrency()
+	self:refreshEnterBtn()
+	self:refreshCurrency()
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	if arg_12_0.rewardItems then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0.rewardItems) do
-			iter_12_1:onDestroy()
+function Va1_6SeasonEnterView:onDestroyView()
+	if self.rewardItems then
+		for k, v in pairs(self.rewardItems) do
+			v:onDestroy()
 		end
 
-		arg_12_0.rewardItems = nil
+		self.rewardItems = nil
 	end
 end
 
-function var_0_0.everySecondCall(arg_13_0)
-	arg_13_0:refreshRemainTime()
+function Va1_6SeasonEnterView:everySecondCall()
+	self:refreshRemainTime()
 end
 
-function var_0_0._onClickMainActivity(arg_14_0)
+function Va1_6SeasonEnterView:_onClickMainActivity()
 	Activity104Controller.instance:openSeasonMainView()
 end
 
-function var_0_0._onClickStoreBtn(arg_15_0)
+function Va1_6SeasonEnterView:_onClickStoreBtn()
 	Activity104Controller.instance:openSeasonStoreView()
 end
 
-function var_0_0.refreshRemainTime(arg_16_0)
-	arg_16_0:refreshMainTime()
-	arg_16_0:refreshStoreTime()
+function Va1_6SeasonEnterView:refreshRemainTime()
+	self:refreshMainTime()
+	self:refreshStoreTime()
 end
 
-function var_0_0.refreshMainTime(arg_17_0)
-	local var_17_0 = ActivityModel.instance:getActMO(arg_17_0.actId)
+function Va1_6SeasonEnterView:refreshMainTime()
+	local actInfoMo = ActivityModel.instance:getActMO(self.actId)
 
-	if not var_17_0 then
-		arg_17_0._txttime.text = ""
+	if not actInfoMo then
+		self._txttime.text = ""
 
 		return
 	end
 
-	local var_17_1 = var_17_0:getRealEndTimeStamp() - ServerTime.now()
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_17_1 > 0 then
-		local var_17_2 = TimeUtil.SecondToActivityTimeFormat(var_17_1)
+	if offsetSecond > 0 then
+		local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-		arg_17_0._txttime.text = var_17_2
+		self._txttime.text = dateStr
 	else
-		arg_17_0._txttime.text = luaLang("ended")
+		self._txttime.text = luaLang("ended")
 	end
 end
 
-function var_0_0.refreshStoreTime(arg_18_0)
-	local var_18_0 = Activity104Enum.SeasonStore[arg_18_0.actId]
-	local var_18_1 = ActivityModel.instance:getActMO(var_18_0)
+function Va1_6SeasonEnterView:refreshStoreTime()
+	local actId = Activity104Enum.SeasonStore[self.actId]
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
 
-	if not var_18_1 then
+	if not actInfoMo then
 		return
 	end
 
-	local var_18_2 = ActivityHelper.getActivityStatusAndToast(var_18_0)
+	local status = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_18_2 ~= ActivityEnum.ActivityStatus.Normal and var_18_2 ~= ActivityEnum.ActivityStatus.NotUnlock then
-		arg_18_0._txtstoretime.text = luaLang("turnback_end")
+	if status ~= ActivityEnum.ActivityStatus.Normal and status ~= ActivityEnum.ActivityStatus.NotUnlock then
+		self._txtstoretime.text = luaLang("turnback_end")
 	else
-		arg_18_0._txtstoretime.text = var_18_1:getRemainTimeStr2ByEndTime(true)
+		self._txtstoretime.text = actInfoMo:getRemainTimeStr2ByEndTime(true)
 	end
 end
 
-return var_0_0
+return Va1_6SeasonEnterView

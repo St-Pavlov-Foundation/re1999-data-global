@@ -1,49 +1,53 @@
-﻿module("modules.logic.fight.system.work.FightWorkFocusSubEntity", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFocusSubEntity.lua
 
-local var_0_0 = class("FightWorkFocusSubEntity", BaseWork)
+module("modules.logic.fight.system.work.FightWorkFocusSubEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._entityMO = arg_1_1
-	arg_1_0._entityId = arg_1_0._entityMO.id .. "focusSub"
+local FightWorkFocusSubEntity = class("FightWorkFocusSubEntity", BaseWork)
+
+function FightWorkFocusSubEntity:ctor(entityMO)
+	self._entityMO = entityMO
+	self._entityId = self._entityMO.id .. "focusSub"
 end
 
-function var_0_0.onStart(arg_2_0)
-	if FightDataHelper.entityMgr:isSub(arg_2_0._entityMO.id) then
-		local var_2_0 = arg_2_0.context.subEntityList
+function FightWorkFocusSubEntity:onStart()
+	local isSub = FightDataHelper.entityMgr:isSub(self._entityMO.id)
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-			if iter_2_1.id == arg_2_0._entityId then
-				arg_2_0:onDone(true)
+	if isSub then
+		local subEntityList = self.context.subEntityList
+
+		for i, v in ipairs(subEntityList) do
+			if v.id == self._entityId then
+				self:onDone(true)
 
 				return
 			end
 		end
 
-		local var_2_1 = GameSceneMgr.instance:getCurScene().entityMgr
-		local var_2_2 = arg_2_0._entityMO and arg_2_0._entityMO:getSpineSkinCO()
+		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local skinConfig = self._entityMO and self._entityMO:getSpineSkinCO()
 
-		if not var_2_2 then
-			arg_2_0:onDone(true)
+		if not skinConfig then
+			self:onDone(true)
 
 			return
 		end
 
-		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_2_0._onSpineLoaded, arg_2_0)
-		var_2_1:buildTempSpineByName(nil, arg_2_0._entityId, arg_2_0._entityMO.side, nil, var_2_2)
+		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+		entityMgr:buildTempSpineByName(nil, self._entityId, self._entityMO.side, nil, skinConfig)
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onSpineLoaded(arg_3_0, arg_3_1)
-	if arg_3_0._entityId == arg_3_1.unitSpawn.id then
-		table.insert(arg_3_0.context.subEntityList, arg_3_1.unitSpawn)
-		arg_3_0:onDone(true)
+function FightWorkFocusSubEntity:_onSpineLoaded(unitSpine)
+	if self._entityId == unitSpine.unitSpawn.id then
+		table.insert(self.context.subEntityList, unitSpine.unitSpawn)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_4_0._onSpineLoaded, arg_4_0)
+function FightWorkFocusSubEntity:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
 end
 
-return var_0_0
+return FightWorkFocusSubEntity

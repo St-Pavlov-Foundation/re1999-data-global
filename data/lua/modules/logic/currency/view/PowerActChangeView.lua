@@ -1,228 +1,234 @@
-﻿module("modules.logic.currency.view.PowerActChangeView", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/PowerActChangeView.lua
 
-local var_0_0 = class("PowerActChangeView", BaseView)
+module("modules.logic.currency.view.PowerActChangeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_rightbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_leftbg")
-	arg_1_0._txtleftproductname = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_leftproductname")
-	arg_1_0._simageleftproduct = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/leftproduct_icon")
-	arg_1_0._txtrightproductname = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_rightproductname")
-	arg_1_0._gobuy = gohelper.findChild(arg_1_0.viewGO, "#go_buy")
-	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_buy/valuebg/#input_value")
-	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_min")
-	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_sub")
-	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_add")
-	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_max")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_buy")
-	arg_1_0._imagecosticon = gohelper.findChildImage(arg_1_0.viewGO, "#go_buy/cost/#simage_costicon")
-	arg_1_0._txtoriginalCost = gohelper.findChildText(arg_1_0.viewGO, "#go_buy/cost/#txt_originalCost")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local PowerActChangeView = class("PowerActChangeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PowerActChangeView:onInitView()
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "decorate/#simage_rightbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "decorate/#simage_leftbg")
+	self._txtleftproductname = gohelper.findChildText(self.viewGO, "left/#txt_leftproductname")
+	self._simageleftproduct = gohelper.findChildSingleImage(self.viewGO, "left/leftproduct_icon")
+	self._txtrightproductname = gohelper.findChildText(self.viewGO, "right/#txt_rightproductname")
+	self._gobuy = gohelper.findChild(self.viewGO, "#go_buy")
+	self._inputvalue = gohelper.findChildTextMeshInputField(self.viewGO, "#go_buy/valuebg/#input_value")
+	self._btnmin = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_min")
+	self._btnsub = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_sub")
+	self._btnadd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_add")
+	self._btnmax = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_max")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "#go_buy/#btn_buy")
+	self._imagecosticon = gohelper.findChildImage(self.viewGO, "#go_buy/cost/#simage_costicon")
+	self._txtoriginalCost = gohelper.findChildText(self.viewGO, "#go_buy/cost/#txt_originalCost")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
-	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
-	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
-	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function PowerActChangeView:addEvents()
+	self._btnmin:AddClickListener(self._btnminOnClick, self)
+	self._btnsub:AddClickListener(self._btnsubOnClick, self)
+	self._btnadd:AddClickListener(self._btnaddOnClick, self)
+	self._btnmax:AddClickListener(self._btnmaxOnClick, self)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnmin:RemoveClickListener()
-	arg_3_0._btnsub:RemoveClickListener()
-	arg_3_0._btnadd:RemoveClickListener()
-	arg_3_0._btnmax:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function PowerActChangeView:removeEvents()
+	self._btnmin:RemoveClickListener()
+	self._btnsub:RemoveClickListener()
+	self._btnadd:RemoveClickListener()
+	self._btnmax:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnminOnClick(arg_4_0)
-	arg_4_0:changeUseCount(1)
+function PowerActChangeView:_btnminOnClick()
+	self:changeUseCount(1)
 end
 
-function var_0_0._btnsubOnClick(arg_5_0)
-	if arg_5_0.buyCount < 2 then
+function PowerActChangeView:_btnsubOnClick()
+	if self.buyCount < 2 then
 		return
 	end
 
-	arg_5_0:changeUseCount(arg_5_0.buyCount - 1)
+	self:changeUseCount(self.buyCount - 1)
 end
 
-function var_0_0._btnaddOnClick(arg_6_0)
-	if arg_6_0.buyCount >= arg_6_0.maxBuyCount then
+function PowerActChangeView:_btnaddOnClick()
+	if self.buyCount >= self.maxBuyCount then
 		return
 	end
 
-	arg_6_0:changeUseCount(arg_6_0.buyCount + 1)
+	self:changeUseCount(self.buyCount + 1)
 end
 
-function var_0_0._btnmaxOnClick(arg_7_0)
-	arg_7_0:changeUseCount(arg_7_0.maxBuyCount)
+function PowerActChangeView:_btnmaxOnClick()
+	self:changeUseCount(self.maxBuyCount)
 end
 
-function var_0_0._btnbuyOnClick(arg_8_0)
-	local var_8_0 = ItemPowerModel.instance:getUsePower(arg_8_0._powerId, arg_8_0.buyCount)
+function PowerActChangeView:_btnbuyOnClick()
+	local list = ItemPowerModel.instance:getUsePower(self._powerId, self.buyCount)
 
-	ItemRpc.instance:sendUsePowerItemListRequest(var_8_0)
+	ItemRpc.instance:sendUsePowerItemListRequest(list)
 	BackpackController.instance:dispatchEvent(BackpackEvent.BeforeUsePowerPotionList)
 
-	if arg_8_0._powerId == MaterialEnum.PowerId.OverflowPowerId then
+	if self._powerId == MaterialEnum.PowerId.OverflowPowerId then
 		ItemRpc.instance:sendGetPowerMakerInfoRequest()
 	end
 end
 
-function var_0_0.changeUseCount(arg_9_0, arg_9_1)
-	arg_9_0._inputvalue:SetText(arg_9_1)
+function PowerActChangeView:changeUseCount(count)
+	self._inputvalue:SetText(count)
 
-	if arg_9_1 == arg_9_0.buyCount then
+	if count == self.buyCount then
 		return
 	end
 
-	arg_9_0.buyCount = arg_9_1
+	self.buyCount = count
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._btncloseOnClick(arg_10_0)
-	arg_10_0:closeThis()
+function PowerActChangeView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickBg(arg_11_0)
-	arg_11_0:closeThis()
+function PowerActChangeView:onClickBg()
+	self:closeThis()
 end
 
-function var_0_0.onCountValueChange(arg_12_0, arg_12_1)
-	local var_12_0 = tonumber(arg_12_1)
+function PowerActChangeView:onCountValueChange(value)
+	local count = tonumber(value)
 
-	if not var_12_0 then
+	if not count then
 		return
 	end
 
-	if var_12_0 < 1 then
-		var_12_0 = 1
+	if count < 1 then
+		count = 1
 	end
 
-	if var_12_0 > arg_12_0.maxBuyCount then
-		var_12_0 = arg_12_0.maxBuyCount
+	if count > self.maxBuyCount then
+		count = self.maxBuyCount
 	end
 
-	arg_12_0:changeUseCount(var_12_0)
+	self:changeUseCount(count)
 end
 
-function var_0_0._editableInitView(arg_13_0)
-	arg_13_0.bgClick = gohelper.findChildClickWithDefaultAudio(arg_13_0.viewGO, "Mask")
+function PowerActChangeView:_editableInitView()
+	self.bgClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "Mask")
 
-	arg_13_0.bgClick:AddClickListener(arg_13_0.onClickBg, arg_13_0)
-	arg_13_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_13_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_13_0._inputvalue:AddOnValueChanged(arg_13_0.onCountValueChange, arg_13_0)
-	arg_13_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_13_0.onCurrencyChange, arg_13_0)
-	arg_13_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_13_0.onRefreshActivity, arg_13_0)
-	arg_13_0:addEventCb(BackpackController.instance, BackpackEvent.UsePowerPotionListFinish, arg_13_0._onUsePowerPotionListFinish, arg_13_0)
-	NavigateMgr.instance:addEscape(arg_13_0.viewName, arg_13_0.closeThis, arg_13_0)
+	self.bgClick:AddClickListener(self.onClickBg, self)
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._inputvalue:AddOnValueChanged(self.onCountValueChange, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onCurrencyChange, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UsePowerPotionListFinish, self._onUsePowerPotionListFinish, self)
+	NavigateMgr.instance:addEscape(self.viewName, self.closeThis, self)
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0._powerId = arg_14_0.viewParam and arg_14_0.viewParam.PowerId or MaterialEnum.PowerId.ActPowerId
-	arg_14_0.actPowerConfig = ItemConfig.instance:getPowerItemCo(arg_14_0._powerId)
-	arg_14_0.powerConfig = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
-	arg_14_0.currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Power)
-	arg_14_0.oneActPowerEffect = arg_14_0.actPowerConfig.effect
+function PowerActChangeView:onOpen()
+	self._powerId = self.viewParam and self.viewParam.PowerId or MaterialEnum.PowerId.ActPowerId
+	self.actPowerConfig = ItemConfig.instance:getPowerItemCo(self._powerId)
+	self.powerConfig = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power)
+	self.currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Power)
+	self.oneActPowerEffect = self.actPowerConfig.effect
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_14_0._imagecosticon, arg_14_0._powerId .. "_1")
-	arg_14_0._simageleftproduct:LoadImage(ResUrl.getPropItemIcon(arg_14_0.actPowerConfig.icon))
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagecosticon, self._powerId .. "_1")
+	self._simageleftproduct:LoadImage(ResUrl.getPropItemIcon(self.actPowerConfig.icon))
 
-	arg_14_0.buyCount = 1
+	self.buyCount = 1
 
-	arg_14_0:updateMaxBuyCount()
-	arg_14_0._inputvalue:SetText(arg_14_0.buyCount)
-	arg_14_0:refreshUI()
+	self:updateMaxBuyCount()
+	self._inputvalue:SetText(self.buyCount)
+	self:refreshUI()
 end
 
-function var_0_0.updateMaxBuyCount(arg_15_0)
-	local var_15_0 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power).maxLimit - arg_15_0.currencyMO.quantity
-	local var_15_1 = math.floor(var_15_0 / arg_15_0.oneActPowerEffect)
+function PowerActChangeView:updateMaxBuyCount()
+	local maxPower = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Power).maxLimit
+	local currentPower = self.currencyMO.quantity
+	local offsetPower = maxPower - currentPower
+	local maxUseCount = math.floor(offsetPower / self.oneActPowerEffect)
 
-	arg_15_0.maxBuyCount = math.min(var_15_1, ItemPowerModel.instance:getPowerCount(arg_15_0._powerId))
+	self.maxBuyCount = math.min(maxUseCount, ItemPowerModel.instance:getPowerCount(self._powerId))
 end
 
-function var_0_0.refreshUI(arg_16_0)
-	arg_16_0:refreshLeftItem()
-	arg_16_0:refreshRightItem()
-	arg_16_0:showOriginalCostTxt(arg_16_0.buyCount, arg_16_0.maxBuyCount)
+function PowerActChangeView:refreshUI()
+	self:refreshLeftItem()
+	self:refreshRightItem()
+	self:showOriginalCostTxt(self.buyCount, self.maxBuyCount)
 end
 
-function var_0_0.refreshLeftItem(arg_17_0)
-	arg_17_0._txtleftproductname.text = GameUtil.getSubPlaceholderLuaLang(luaLang("poweractchangeview_productNameFormat"), {
-		arg_17_0.actPowerConfig.name,
-		arg_17_0.buyCount
+function PowerActChangeView:refreshLeftItem()
+	self._txtleftproductname.text = GameUtil.getSubPlaceholderLuaLang(luaLang("poweractchangeview_productNameFormat"), {
+		self.actPowerConfig.name,
+		self.buyCount
 	})
 end
 
-function var_0_0.refreshRightItem(arg_18_0)
-	arg_18_0._txtrightproductname.text = GameUtil.getSubPlaceholderLuaLang(luaLang("poweractchangeview_productNameFormat"), {
-		arg_18_0.powerConfig.name,
-		arg_18_0.buyCount * arg_18_0.oneActPowerEffect
+function PowerActChangeView:refreshRightItem()
+	self._txtrightproductname.text = GameUtil.getSubPlaceholderLuaLang(luaLang("poweractchangeview_productNameFormat"), {
+		self.powerConfig.name,
+		self.buyCount * self.oneActPowerEffect
 	})
 end
 
-function var_0_0.onCurrencyChange(arg_19_0, arg_19_1)
-	if arg_19_1 and not arg_19_1[CurrencyEnum.CurrencyType.Power] then
+function PowerActChangeView:onCurrencyChange(changeIds)
+	if changeIds and not changeIds[CurrencyEnum.CurrencyType.Power] then
 		return
 	end
 
-	arg_19_0:updateMaxBuyCount()
-	arg_19_0:showOriginalCostTxt(arg_19_0.buyCount, arg_19_0.maxBuyCount)
+	self:updateMaxBuyCount()
+	self:showOriginalCostTxt(self.buyCount, self.maxBuyCount)
 
-	if arg_19_0.buyCount > arg_19_0.maxBuyCount then
-		arg_19_0:changeUseCount(arg_19_0.maxBuyCount)
+	if self.buyCount > self.maxBuyCount then
+		self:changeUseCount(self.maxBuyCount)
 	end
 end
 
-function var_0_0.showOriginalCostTxt(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._txtoriginalCost.text = string.format("<color=#ab4211>%s</color><color=#494440>/%s</color>", arg_20_1, arg_20_2)
+function PowerActChangeView:showOriginalCostTxt(buyCount, maxBuyCount)
+	self._txtoriginalCost.text = string.format("<color=#ab4211>%s</color><color=#494440>/%s</color>", buyCount, maxBuyCount)
 end
 
-function var_0_0.onRefreshActivity(arg_21_0, arg_21_1)
-	if arg_21_1 ~= MaterialEnum.ActPowerBindActId then
+function PowerActChangeView:onRefreshActivity(actId)
+	if actId ~= MaterialEnum.ActPowerBindActId then
 		return
 	end
 
-	local var_21_0 = ActivityHelper.getActivityStatus(arg_21_1)
-	local var_21_1 = ItemPowerModel.instance:getPowerCount(arg_21_0._powerId)
+	local activityStatus = ActivityHelper.getActivityStatus(actId)
+	local count = ItemPowerModel.instance:getPowerCount(self._powerId)
 
-	if var_21_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_21_1 < 1 then
-			arg_21_0:closeThis()
+	if activityStatus ~= ActivityEnum.ActivityStatus.Normal then
+		if count < 1 then
+			self:closeThis()
 
 			return
 		end
 
-		if ItemPowerModel.instance:getPowerMinExpireTimeOffset(arg_21_0._powerId) <= 0 then
-			arg_21_0:closeThis()
+		local limitSec = ItemPowerModel.instance:getPowerMinExpireTimeOffset(self._powerId)
+
+		if limitSec <= 0 then
+			self:closeThis()
 		end
 	end
 end
 
-function var_0_0._onUsePowerPotionListFinish(arg_22_0)
-	arg_22_0:closeThis()
+function PowerActChangeView:_onUsePowerPotionListFinish()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_23_0)
-	arg_23_0.bgClick:RemoveClickListener()
+function PowerActChangeView:onClose()
+	self.bgClick:RemoveClickListener()
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	arg_24_0._simagerightbg:UnLoadImage()
-	arg_24_0._simageleftbg:UnLoadImage()
-	arg_24_0._simageleftproduct:UnLoadImage()
-	arg_24_0._inputvalue:RemoveOnValueChanged()
+function PowerActChangeView:onDestroyView()
+	self._simagerightbg:UnLoadImage()
+	self._simageleftbg:UnLoadImage()
+	self._simageleftproduct:UnLoadImage()
+	self._inputvalue:RemoveOnValueChanged()
 end
 
-return var_0_0
+return PowerActChangeView

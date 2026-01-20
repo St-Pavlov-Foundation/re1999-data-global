@@ -1,295 +1,305 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.entity.MaLiAnNaSoliderEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/entity/MaLiAnNaSoliderEntity.lua
 
-local var_0_0 = class("MaLiAnNaSoliderEntity", LuaCompBase)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.entity.MaLiAnNaSoliderEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local MaLiAnNaSoliderEntity = class("MaLiAnNaSoliderEntity", LuaCompBase)
+
+function MaLiAnNaSoliderEntity:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._tr = arg_2_1.transform
+function MaLiAnNaSoliderEntity:init(go)
+	self._go = go
+	self._tr = go.transform
 end
 
-function var_0_0.getGo(arg_3_0)
-	return arg_3_0._go
+function MaLiAnNaSoliderEntity:getGo()
+	return self._go
 end
 
-function var_0_0.initSoliderInfo(arg_4_0, arg_4_1)
-	arg_4_0._soliderMo = arg_4_1
+function MaLiAnNaSoliderEntity:initSoliderInfo(soliderMo)
+	self._soliderMo = soliderMo
 
-	if arg_4_0._soliderMo == nil or arg_4_0._go == nil then
+	if self._soliderMo == nil or self._go == nil then
 		logError("_go or soliderMo is nil")
 
 		return
 	end
 
-	arg_4_0._go.name = string.format("solider_%s", arg_4_0._soliderMo:getId())
+	self._go.name = string.format("solider_%s", self._soliderMo:getId())
 
-	arg_4_0:_updateLocalPos()
-	arg_4_0:showModel()
-	arg_4_0:setVisible(true, true)
+	self:_updateLocalPos()
+	self:showModel()
+	self:setVisible(true, true)
 end
 
-function var_0_0.getSoliderMo(arg_5_0)
-	return arg_5_0._soliderMo
+function MaLiAnNaSoliderEntity:getSoliderMo()
+	return self._soliderMo
 end
 
-function var_0_0.onUpdate(arg_6_0)
+function MaLiAnNaSoliderEntity:onUpdate()
 	if Activity201MaLiAnNaGameController.instance:getPause() then
 		return false
 	end
 
-	if arg_6_0._soliderMo == nil and not arg_6_0._isVisible then
+	if self._soliderMo == nil and not self._isVisible then
 		return false
 	end
 
-	arg_6_0:_updateLocalPos()
-	arg_6_0:_updateModelDirByMoveDir()
+	self:_updateLocalPos()
+	self:_updateModelDirByMoveDir()
 
 	return true
 end
 
-function var_0_0._updateModelDirByMoveDir(arg_7_0)
-	if arg_7_0._soliderMo == nil or arg_7_0.goSpineTr == nil then
+function MaLiAnNaSoliderEntity:_updateModelDirByMoveDir()
+	if self._soliderMo == nil or self.goSpineTr == nil then
 		return false
 	end
 
-	local var_7_0, var_7_1 = arg_7_0._soliderMo:getMoveDir()
-	local var_7_2 = var_7_0 > 0 and -1 or 1
+	local moveDirX, _ = self._soliderMo:getMoveDir()
+	local x = moveDirX > 0 and -1 or 1
 
-	if arg_7_0._lastScaleX == nil or arg_7_0._lastScaleX ~= var_7_2 then
-		local var_7_3, var_7_4, var_7_5 = transformhelper.getLocalScale(arg_7_0.goSpineTr)
+	if self._lastScaleX == nil or self._lastScaleX ~= x then
+		local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(self.goSpineTr)
 
-		transformhelper.setLocalScale(arg_7_0.goSpineTr, math.abs(var_7_3) * var_7_2, var_7_4, var_7_5)
+		transformhelper.setLocalScale(self.goSpineTr, math.abs(scaleX) * x, scaleY, scaleZ)
 
-		arg_7_0._lastScaleX = var_7_2
+		self._lastScaleX = x
 
 		return true
 	end
 end
 
-function var_0_0._updateLocalPos(arg_8_0)
-	if arg_8_0._soliderMo == nil or arg_8_0._tr == nil then
+function MaLiAnNaSoliderEntity:_updateLocalPos()
+	if self._soliderMo == nil or self._tr == nil then
 		return
 	end
 
-	local var_8_0, var_8_1 = arg_8_0._soliderMo:getLocalPos()
+	local x, y = self._soliderMo:getLocalPos()
 
-	transformhelper.setLocalPosXY(arg_8_0._tr, var_8_0, var_8_1)
+	transformhelper.setLocalPosXY(self._tr, x, y)
 end
 
-function var_0_0.setVisible(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._isVisible == arg_9_1 and not arg_9_2 then
+function MaLiAnNaSoliderEntity:setVisible(isVisible, force)
+	if self._isVisible == isVisible and not force then
 		return false
 	end
 
-	if gohelper.isNil(arg_9_0._go) then
+	if gohelper.isNil(self._go) then
 		return false
 	end
 
-	arg_9_0._isVisible = arg_9_1
+	self._isVisible = isVisible
 
-	gohelper.setActive(arg_9_0._go, arg_9_0._isVisible)
+	gohelper.setActive(self._go, self._isVisible)
 
 	return true
 end
 
-function var_0_0.setHide(arg_10_0, arg_10_1)
-	if arg_10_0._isHideMode == arg_10_1 then
+function MaLiAnNaSoliderEntity:setHide(isHide)
+	if self._isHideMode == isHide then
 		return false
 	end
 
-	if gohelper.isNil(arg_10_0.goSpine) then
+	if gohelper.isNil(self.goSpine) then
 		return false
 	end
 
-	arg_10_0._isHideMode = arg_10_1
+	self._isHideMode = isHide
 
-	gohelper.setActive(arg_10_0.goSpine, arg_10_0._isHideMode)
+	gohelper.setActive(self.goSpine, self._isHideMode)
 
 	return true
 end
 
-function var_0_0.isVisible(arg_11_0)
-	return arg_11_0._isVisible
+function MaLiAnNaSoliderEntity:isVisible()
+	return self._isVisible
 end
 
-function var_0_0.clear(arg_12_0)
-	arg_12_0._soliderMo = nil
+function MaLiAnNaSoliderEntity:clear()
+	self._soliderMo = nil
 
-	arg_12_0:setVisible(false, true)
+	self:setVisible(false, true)
 end
 
-function var_0_0.onTriggerEnter(arg_13_0, arg_13_1)
-	if arg_13_0._soliderMo == nil then
+function MaLiAnNaSoliderEntity:onTriggerEnter(other)
+	if self._soliderMo == nil then
 		return
 	end
 
-	local var_13_0 = arg_13_1.gameObject
-	local var_13_1 = MonoHelper.getLuaComFromGo(var_13_0, var_0_0)
+	local otherObj = other.gameObject
+	local otherComp = MonoHelper.getLuaComFromGo(otherObj, MaLiAnNaSoliderEntity)
 
-	if var_13_1 ~= nil then
-		local var_13_2 = var_13_1:getSoliderMo()
+	if otherComp ~= nil then
+		local otherSoliderMo = otherComp:getSoliderMo()
+		local otherCamp = otherSoliderMo:getCamp()
+		local myCamp = self._soliderMo:getCamp()
 
-		if var_13_2:getCamp() ~= arg_13_0._soliderMo:getCamp() then
-			Activity201MaLiAnNaGameController.instance:soliderBattle(arg_13_0._soliderMo, var_13_2)
+		if otherCamp ~= myCamp then
+			Activity201MaLiAnNaGameController.instance:soliderBattle(self._soliderMo, otherSoliderMo)
 		else
-			local var_13_3 = var_13_2:getCurState()
+			local otherState = otherSoliderMo:getCurState()
+			local myState = self._soliderMo:getCurState()
 
-			if arg_13_0._soliderMo:getCurState() == Activity201MaLiAnNaEnum.SoliderState.Moving and (var_13_3 == Activity201MaLiAnNaEnum.SoliderState.Attack or var_13_3 == Activity201MaLiAnNaEnum.SoliderState.StopMove) then
-				var_13_2:setRecordSolider(arg_13_0._soliderMo)
-				var_13_2:changeRecordSoliderState(true)
+			if myState == Activity201MaLiAnNaEnum.SoliderState.Moving and (otherState == Activity201MaLiAnNaEnum.SoliderState.Attack or otherState == Activity201MaLiAnNaEnum.SoliderState.StopMove) then
+				otherSoliderMo:setRecordSolider(self._soliderMo)
+				otherSoliderMo:changeRecordSoliderState(true)
 			end
 
-			if var_13_3 == Activity201MaLiAnNaEnum.SoliderState.Moving then
-				var_13_2:changeRecordSoliderState(false)
+			if otherState == Activity201MaLiAnNaEnum.SoliderState.Moving then
+				otherSoliderMo:changeRecordSoliderState(false)
 			end
 		end
 	end
 end
 
-function var_0_0.onTriggerExit(arg_14_0, arg_14_1)
-	if arg_14_0._soliderMo == nil then
+function MaLiAnNaSoliderEntity:onTriggerExit(other)
+	if self._soliderMo == nil then
 		return
 	end
 
-	local var_14_0 = arg_14_1.gameObject
-	local var_14_1 = MonoHelper.getLuaComFromGo(var_14_0, var_0_0)
+	local otherObj = other.gameObject
+	local otherComp = MonoHelper.getLuaComFromGo(otherObj, MaLiAnNaSoliderEntity)
 
-	if var_14_1 ~= nil then
-		local var_14_2 = var_14_1:getSoliderMo()
+	if otherComp ~= nil then
+		local otherSoliderMo = otherComp:getSoliderMo()
+		local otherCamp = otherSoliderMo:getCamp()
+		local myCamp = self._soliderMo:getCamp()
 
-		if var_14_2:getCamp() ~= arg_14_0._soliderMo:getCamp() then
-			Activity201MaLiAnNaGameController.instance:soliderBattle(arg_14_0._soliderMo, var_14_2)
+		if otherCamp ~= myCamp then
+			Activity201MaLiAnNaGameController.instance:soliderBattle(self._soliderMo, otherSoliderMo)
 		else
-			local var_14_3 = var_14_2:getCurState()
+			local otherState = otherSoliderMo:getCurState()
+			local myState = self._soliderMo:getCurState()
 
-			if arg_14_0._soliderMo:getCurState() == Activity201MaLiAnNaEnum.SoliderState.Moving and (var_14_3 == Activity201MaLiAnNaEnum.SoliderState.Attack or var_14_3 == Activity201MaLiAnNaEnum.SoliderState.StopMove) then
-				var_14_2:setRecordSolider(arg_14_0._soliderMo)
-				var_14_2:changeRecordSoliderState(true)
+			if myState == Activity201MaLiAnNaEnum.SoliderState.Moving and (otherState == Activity201MaLiAnNaEnum.SoliderState.Attack or otherState == Activity201MaLiAnNaEnum.SoliderState.StopMove) then
+				otherSoliderMo:setRecordSolider(self._soliderMo)
+				otherSoliderMo:changeRecordSoliderState(true)
 			end
 
-			if var_14_3 == Activity201MaLiAnNaEnum.SoliderState.Moving then
-				var_14_2:changeRecordSoliderState(false)
+			if otherState == Activity201MaLiAnNaEnum.SoliderState.Moving then
+				otherSoliderMo:changeRecordSoliderState(false)
 			end
 		end
 	end
 end
 
-function var_0_0.getResPath(arg_15_0)
-	return arg_15_0._soliderMo:getConfig().resource
+function MaLiAnNaSoliderEntity:getResPath()
+	local config = self._soliderMo:getConfig()
+
+	return config.resource
 end
 
-function var_0_0.showModel(arg_16_0)
-	if not gohelper.isNil(arg_16_0.goSpine) then
+function MaLiAnNaSoliderEntity:showModel()
+	if not gohelper.isNil(self.goSpine) then
 		return
 	end
 
-	if arg_16_0._loader then
+	if self._loader then
 		return
 	end
 
-	arg_16_0._loader = PrefabInstantiate.Create(arg_16_0._go)
+	self._loader = PrefabInstantiate.Create(self._go)
 
-	local var_16_0 = arg_16_0:getResPath()
+	local path = self:getResPath()
 
-	if string.nilorempty(var_16_0) then
+	if string.nilorempty(path) then
 		return
 	end
 
-	arg_16_0._loader:startLoad(var_16_0, arg_16_0._onResLoadEnd, arg_16_0)
+	self._loader:startLoad(path, self._onResLoadEnd, self)
 end
 
-function var_0_0._onResLoadEnd(arg_17_0)
-	local var_17_0 = arg_17_0._loader:getInstGO()
-	local var_17_1 = var_17_0.transform
+function MaLiAnNaSoliderEntity:_onResLoadEnd()
+	local go = self._loader:getInstGO()
+	local trans = go.transform
 
-	arg_17_0.goSpine = var_17_0
-	arg_17_0.goSpineTr = var_17_0.transform
-	arg_17_0._skeletonAnim = arg_17_0.goSpine:GetComponent(gohelper.Type_Spine_SkeletonGraphic)
+	self.goSpine = go
+	self.goSpineTr = go.transform
+	self._skeletonAnim = self.goSpine:GetComponent(gohelper.Type_Spine_SkeletonGraphic)
 
-	local var_17_2 = arg_17_0:getScale()
+	local scale = self:getScale()
 
-	transformhelper.setLocalScale(var_17_1, var_17_2, var_17_2, var_17_2)
-	gohelper.addChild(arg_17_0._tr.gameObject, arg_17_0.goSpine)
+	transformhelper.setLocalScale(trans, scale, scale, scale)
+	gohelper.addChild(self._tr.gameObject, self.goSpine)
 
-	local var_17_3, var_17_4, var_17_5 = arg_17_0:getSpineLocalPos()
+	local x, y, z = self:getSpineLocalPos()
 
-	transformhelper.setLocalPos(var_17_1, var_17_3, var_17_4, var_17_5)
-	transformhelper.setLocalRotation(var_17_1, 0, 0, 0)
-	arg_17_0:setVisible(true)
+	transformhelper.setLocalPos(trans, x, y, z)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	self:setVisible(true)
 
-	local var_17_6 = arg_17_0:getAnimName()
+	local name = self:getAnimName()
 
-	if not string.nilorempty(var_17_6) then
-		arg_17_0:play(var_17_6)
+	if not string.nilorempty(name) then
+		self:play(name)
 	end
 end
 
-function var_0_0.getAnimName(arg_18_0)
-	if arg_18_0._soliderMo == nil then
+function MaLiAnNaSoliderEntity:getAnimName()
+	if self._soliderMo == nil then
 		return nil
 	end
 
-	local var_18_0 = arg_18_0._soliderMo:getConfig()
+	local config = self._soliderMo:getConfig()
 
-	return var_18_0 and var_18_0.animation or nil
+	return config and config.animation or nil
 end
 
-function var_0_0.play(arg_19_0, arg_19_1)
-	if arg_19_0._skeletonAnim == nil then
+function MaLiAnNaSoliderEntity:play(animState)
+	if self._skeletonAnim == nil then
 		return
 	end
 
-	arg_19_0._skeletonAnim.raycastTarget = false
+	self._skeletonAnim.raycastTarget = false
 
-	if arg_19_0._skeletonAnim:HasAnimation(arg_19_1) then
-		arg_19_0._skeletonAnim:PlayAnim(arg_19_1, true, true)
+	if self._skeletonAnim:HasAnimation(animState) then
+		self._skeletonAnim:PlayAnim(animState, true, true)
 	else
-		local var_19_0 = gohelper.isNil(arg_19_0.goSpine) and "nil" or arg_19_0.goSpine.name
+		local spineName = gohelper.isNil(self.goSpine) and "nil" or self.goSpine.name
 
-		logError(string.format("animName:%s  goName:%s  Animation Name not exist ", arg_19_1, var_19_0))
+		logError(string.format("animName:%s  goName:%s  Animation Name not exist ", animState, spineName))
 	end
 
-	if not arg_19_0._soliderMo:isHero() then
-		arg_19_0._skeletonAnim.freeze = true
+	if not self._soliderMo:isHero() then
+		self._skeletonAnim.freeze = true
 	end
 end
 
-function var_0_0.getSpineLocalPos(arg_20_0)
+function MaLiAnNaSoliderEntity:getSpineLocalPos()
 	return 0, 2.5, 0
 end
 
-function var_0_0.getScale(arg_21_0)
-	if arg_21_0._soliderMo then
-		local var_21_0 = arg_21_0._soliderMo:getConfig()
+function MaLiAnNaSoliderEntity:getScale()
+	if self._soliderMo then
+		local config = self._soliderMo:getConfig()
 
-		if var_21_0 and var_21_0.scale then
-			return var_21_0.scale
+		if config and config.scale then
+			return config.scale
 		end
 	end
 
 	return Activity201MaLiAnNaEnum.MaLiAnNaSoliderEntityDefaultScale
 end
 
-function var_0_0.onDestroy(arg_22_0)
-	arg_22_0:clear()
+function MaLiAnNaSoliderEntity:onDestroy()
+	self:clear()
 
-	if arg_22_0._loader ~= nil then
-		arg_22_0._loader:onDestroy()
+	if self._loader ~= nil then
+		self._loader:onDestroy()
 
-		arg_22_0._loader = nil
+		self._loader = nil
 	end
 
-	arg_22_0.goSpine = nil
-	arg_22_0.goSpineTr = nil
+	self.goSpine = nil
+	self.goSpineTr = nil
 
-	if arg_22_0._go then
-		gohelper.destroy(arg_22_0._go)
+	if self._go then
+		gohelper.destroy(self._go)
 
-		arg_22_0._go = nil
+		self._go = nil
 	end
 end
 
-return var_0_0
+return MaLiAnNaSoliderEntity

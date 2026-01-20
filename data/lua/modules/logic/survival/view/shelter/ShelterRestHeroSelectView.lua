@@ -1,79 +1,81 @@
-﻿module("modules.logic.survival.view.shelter.ShelterRestHeroSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterRestHeroSelectView.lua
 
-local var_0_0 = class("ShelterRestHeroSelectView", SurvivalInitHeroSelectView)
+module("modules.logic.survival.view.shelter.ShelterRestHeroSelectView", package.seeall)
 
-function var_0_0.getGroupModel(arg_1_0)
-	if not arg_1_0.notIsFirst then
-		arg_1_0.notIsFirst = true
+local ShelterRestHeroSelectView = class("ShelterRestHeroSelectView", SurvivalInitHeroSelectView)
 
-		ShelterRestGroupModel.instance:initViewParam(arg_1_0.viewParam)
+function ShelterRestHeroSelectView:getGroupModel()
+	if not self.notIsFirst then
+		self.notIsFirst = true
+
+		ShelterRestGroupModel.instance:initViewParam(self.viewParam)
 	end
 
 	return ShelterRestGroupModel.instance
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._groupModel = arg_2_0:getGroupModel()
-	arg_2_0._isShowQuickEdit = true
-	arg_2_0._scrollcard.verticalNormalizedPosition = 1
-	arg_2_0._scrollquickedit.verticalNormalizedPosition = 1
+function ShelterRestHeroSelectView:onOpen()
+	self._groupModel = self:getGroupModel()
+	self._isShowQuickEdit = true
+	self._scrollcard.verticalNormalizedPosition = 1
+	self._scrollquickedit.verticalNormalizedPosition = 1
 
-	for iter_2_0 = 1, 2 do
-		arg_2_0._selectDmgs[iter_2_0] = false
+	for i = 1, 2 do
+		self._selectDmgs[i] = false
 	end
 
-	for iter_2_1 = 1, 6 do
-		arg_2_0._selectAttrs[iter_2_1] = false
+	for i = 1, 6 do
+		self._selectAttrs[i] = false
 	end
 
-	for iter_2_2 = 1, 6 do
-		arg_2_0._selectLocations[iter_2_2] = false
+	for i = 1, 6 do
+		self._selectLocations[i] = false
 	end
 
-	arg_2_0._heroMO = arg_2_0._groupModel:getList()[arg_2_0._groupModel.defaultIndex]
+	self._heroMO = self._groupModel:getList()[self._groupModel.defaultIndex]
 
-	arg_2_0:_refreshEditMode()
-	arg_2_0:_refreshBtnIcon()
-	arg_2_0:_refreshCharacterInfo()
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_2_0._updateHeroList, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_2_0._updateHeroList, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_2_0._updateHeroList, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_2_0._onHeroItemClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_2_0._refreshCharacterInfo, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_2_0._refreshCharacterInfo, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_2_0._refreshCharacterInfo, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_2_0._refreshCharacterInfo, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_2_0._refreshCharacterInfo, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_2_0._onAttributeChanged, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_2_0._showCharacterRankUpView, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_2_0._markFavorSuccess, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_2_0._refreshCharacterInfo, arg_2_0)
-	arg_2_0:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, arg_2_0._onAudioTrigger, arg_2_0)
-	gohelper.addUIClickAudio(arg_2_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_2_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_2_0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_2_0._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_2_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_2_0._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
+	self:_refreshEditMode()
+	self:_refreshBtnIcon()
+	self:_refreshCharacterInfo()
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, self._onHeroItemClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._refreshCharacterInfo, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, self._onAttributeChanged, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, self._showCharacterRankUpView, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, self._markFavorSuccess, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._refreshCharacterInfo, self)
+	self:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
+	gohelper.addUIClickAudio(self._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	_, arg_2_0._initScrollContentPosY = transformhelper.getLocalPos(arg_2_0._goScrollContent.transform)
+	_, self._initScrollContentPosY = transformhelper.getLocalPos(self._goScrollContent.transform)
 end
 
-function var_0_0.onClose(arg_3_0)
-	var_0_0.super.onClose(arg_3_0)
+function ShelterRestHeroSelectView:onClose()
+	ShelterRestHeroSelectView.super.onClose(self)
 
-	arg_3_0.notIsFirst = nil
+	self.notIsFirst = nil
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	if not arg_4_0._isShowQuickEdit then
-		arg_4_0._groupModel:trySetHeroMo(arg_4_0._heroMO)
+function ShelterRestHeroSelectView:_btnconfirmOnClick()
+	if not self._isShowQuickEdit then
+		self._groupModel:trySetHeroMo(self._heroMO)
 	end
 
-	arg_4_0._groupModel:saveHeroGroup()
-	arg_4_0:closeThis()
+	self._groupModel:saveHeroGroup()
+	self:closeThis()
 end
 
-return var_0_0
+return ShelterRestHeroSelectView

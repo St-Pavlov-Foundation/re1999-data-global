@@ -1,34 +1,38 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionPlayStoryStep", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionPlayStoryStep.lua
 
-local var_0_0 = class("WaitGuideActionPlayStoryStep", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionPlayStoryStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	StoryController.instance:registerCallback(StoryEvent.RefreshStep, arg_1_0._onStep, arg_1_0)
+local WaitGuideActionPlayStoryStep = class("WaitGuideActionPlayStoryStep", BaseGuideAction)
 
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
+function WaitGuideActionPlayStoryStep:onStart(context)
+	WaitGuideActionPlayStoryStep.super.onStart(self, context)
+	StoryController.instance:registerCallback(StoryEvent.RefreshStep, self._onStep, self)
 
-	if #var_1_0 == 2 then
-		arg_1_0.storyId = var_1_0[1]
-		arg_1_0.stepId = var_1_0[2]
+	local _param = string.splitToNumber(self.actionParam, "#")
+
+	if #_param == 2 then
+		self.storyId = _param[1]
+		self.stepId = _param[2]
 	end
 end
 
-function var_0_0._onStep(arg_2_0, arg_2_1)
-	if arg_2_0.storyId and arg_2_0.stepId and arg_2_0.storyId == arg_2_1.storyId and arg_2_0.stepId == arg_2_1.stepId then
-		StoryController.instance:unregisterCallback(StoryEvent.RefreshStep, arg_2_0._onStep, arg_2_0)
+function WaitGuideActionPlayStoryStep:_onStep(param)
+	if self.storyId and self.stepId and self.storyId == param.storyId and self.stepId == param.stepId then
+		StoryController.instance:unregisterCallback(StoryEvent.RefreshStep, self._onStep, self)
 
-		if StoryModel.instance:isStoryAuto() then
+		local auto = StoryModel.instance:isStoryAuto()
+
+		if auto then
 			StoryModel.instance:setStoryAuto(false)
 			StoryController.instance:dispatchEvent(StoryEvent.Auto)
 		end
 
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	StoryController.instance:unregisterCallback(StoryEvent.RefreshStep, arg_3_0._onStep, arg_3_0)
+function WaitGuideActionPlayStoryStep:clearWork()
+	StoryController.instance:unregisterCallback(StoryEvent.RefreshStep, self._onStep, self)
 end
 
-return var_0_0
+return WaitGuideActionPlayStoryStep

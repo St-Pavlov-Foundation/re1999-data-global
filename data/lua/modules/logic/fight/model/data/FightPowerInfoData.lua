@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.model.data.FightPowerInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightPowerInfoData.lua
 
-local var_0_0 = FightDataClass("FightPowerInfoData")
+module("modules.logic.fight.model.data.FightPowerInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.powerId = arg_1_1.powerId
-	arg_1_0.num = arg_1_1.num
-	arg_1_0.max = arg_1_1.max
+local FightPowerInfoData = FightDataClass("FightPowerInfoData")
+
+function FightPowerInfoData:onConstructor(proto)
+	self.powerId = proto.powerId
+	self.num = proto.num
+	self.max = proto.max
 end
 
-return var_0_0
+return FightPowerInfoData

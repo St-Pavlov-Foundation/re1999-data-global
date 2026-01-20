@@ -1,28 +1,30 @@
-﻿module("modules.logic.rouge.view.RougeFactionIllustrationViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFactionIllustrationViewContainer.lua
 
-local var_0_0 = class("RougeFactionIllustrationViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeFactionIllustrationViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeFactionIllustrationViewContainer = class("RougeFactionIllustrationViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeFactionIllustrationView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+function RougeFactionIllustrationViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeFactionIllustrationView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeFactionIllustrationViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return RougeFactionIllustrationViewContainer

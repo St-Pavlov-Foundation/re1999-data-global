@@ -1,42 +1,44 @@
-﻿module("modules.logic.fight.entity.comp.FightBossHpKillLineComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightBossHpKillLineComp.lua
 
-local var_0_0 = class("FightBossHpKillLineComp", FightHpKillLineComp)
+module("modules.logic.fight.entity.comp.FightBossHpKillLineComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local FightBossHpKillLineComp = class("FightBossHpKillLineComp", FightHpKillLineComp)
 
-	arg_1_0.loadStatus = FightHpKillLineComp.LoadStatus.NotLoaded
-	arg_1_0.containerGo = arg_1_1
-	arg_1_0.containerWidth = recthelper.getWidth(arg_1_0.containerGo:GetComponent(gohelper.Type_RectTransform))
+function FightBossHpKillLineComp:init(containerGo)
+	self:__onInit()
 
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_1_0.onBuffUpdate, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.UpdateBuffActInfo, arg_1_0.onUpdateBuffActInfo, arg_1_0)
+	self.loadStatus = FightHpKillLineComp.LoadStatus.NotLoaded
+	self.containerGo = containerGo
+	self.containerWidth = recthelper.getWidth(self.containerGo:GetComponent(gohelper.Type_RectTransform))
+
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.UpdateBuffActInfo, self.onUpdateBuffActInfo, self)
 end
 
-function var_0_0.refreshByEntityMo(arg_2_0, arg_2_1)
-	if not arg_2_1 then
-		arg_2_0.entityMo = nil
-		arg_2_0.entityId = nil
+function FightBossHpKillLineComp:refreshByEntityMo(entityMo)
+	if not entityMo then
+		self.entityMo = nil
+		self.entityId = nil
 
-		arg_2_0:updateKillLine()
-
-		return
-	end
-
-	arg_2_0.entityMo = arg_2_1
-	arg_2_0.entityId = arg_2_1.id
-
-	if arg_2_0.loadStatus == FightHpKillLineComp.LoadStatus.Loaded then
-		arg_2_0:updateKillLine()
+		self:updateKillLine()
 
 		return
 	end
 
-	if arg_2_0.loadStatus == FightHpKillLineComp.LoadStatus.NotLoaded then
-		arg_2_0:loadRes()
+	self.entityMo = entityMo
+	self.entityId = entityMo.id
+
+	if self.loadStatus == FightHpKillLineComp.LoadStatus.Loaded then
+		self:updateKillLine()
+
+		return
+	end
+
+	if self.loadStatus == FightHpKillLineComp.LoadStatus.NotLoaded then
+		self:loadRes()
 
 		return
 	end
 end
 
-return var_0_0
+return FightBossHpKillLineComp

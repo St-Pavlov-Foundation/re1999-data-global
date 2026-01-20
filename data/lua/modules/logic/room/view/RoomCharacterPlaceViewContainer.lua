@@ -1,93 +1,100 @@
-﻿module("modules.logic.room.view.RoomCharacterPlaceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomCharacterPlaceViewContainer.lua
 
-local var_0_0 = class("RoomCharacterPlaceViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomCharacterPlaceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCharacterPlaceViewContainer = class("RoomCharacterPlaceViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCharacterPlaceView.New())
-	table.insert(var_1_0, RoomViewTopRight.New("#go_topright", arg_1_0._viewSetting.otherRes[2], {
+function RoomCharacterPlaceViewContainer:buildViews()
+	local views = {}
+
+	table.insert(views, RoomCharacterPlaceView.New())
+	table.insert(views, RoomViewTopRight.New("#go_topright", self._viewSetting.otherRes[2], {
 		{
 			classDefine = RoomViewTopRightCharacterItem
 		}
 	}))
-	arg_1_0:_buildCharacterPlaceListView1(var_1_0)
-	arg_1_0:_buildCharacterPlaceListView2(var_1_0)
+	self:_buildCharacterPlaceListView1(views)
+	self:_buildCharacterPlaceListView2(views)
 
-	return var_1_0
+	return views
 end
 
-function var_0_0._buildCharacterPlaceListView1(arg_2_0, arg_2_1)
-	local var_2_0 = ListScrollParam.New()
+function RoomCharacterPlaceViewContainer:_buildCharacterPlaceListView1(views)
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "#go_roleview1/rolescroll"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-	var_2_0.cellClass = RoomCharacterPlaceItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirH
-	var_2_0.cellWidth = 200
+	scrollParam.scrollGOPath = "#go_roleview1/rolescroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = RoomCharacterPlaceItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.cellWidth = 200
 
-	local var_2_1 = arg_2_0:_getUIScreenWidth() - 44.22 - 39.48 - 20
+	local screenWidth = self:_getUIScreenWidth()
+	local scrollWidth = screenWidth - 44.22 - 39.48 - 20
 
-	var_2_0.lineCount = 1
-	var_2_0.cellHeight = 225
-	var_2_0.cellSpaceH = arg_2_0:_getCellSpace(var_2_1, var_2_0.lineCount, var_2_0.cellWidth)
-	var_2_0.cellSpaceV = 0
-	var_2_0.startSpace = 10
-	arg_2_0._characterPlaceScrollView1 = LuaListScrollView.New(RoomCharacterPlaceListModel.instance, var_2_0)
+	scrollParam.lineCount = 1
+	scrollParam.cellHeight = 225
+	scrollParam.cellSpaceH = self:_getCellSpace(scrollWidth, scrollParam.lineCount, scrollParam.cellWidth)
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 10
+	self._characterPlaceScrollView1 = LuaListScrollView.New(RoomCharacterPlaceListModel.instance, scrollParam)
 
-	table.insert(arg_2_1, arg_2_0._characterPlaceScrollView1)
+	table.insert(views, self._characterPlaceScrollView1)
 end
 
-function var_0_0._buildCharacterPlaceListView2(arg_3_0, arg_3_1)
-	local var_3_0 = ListScrollParam.New()
+function RoomCharacterPlaceViewContainer:_buildCharacterPlaceListView2(views)
+	local scrollParam = ListScrollParam.New()
 
-	var_3_0.scrollGOPath = "#go_roleview2/rolescroll"
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
-	var_3_0.cellClass = RoomCharacterPlaceItem
-	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.cellWidth = 200
+	scrollParam.scrollGOPath = "#go_roleview2/rolescroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = RoomCharacterPlaceItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.cellWidth = 200
 
-	local var_3_1 = arg_3_0:_getUIScreenWidth() - 44.22 - 39.48 - 20
+	local screenWidth = self:_getUIScreenWidth()
+	local scrollWidth = screenWidth - 44.22 - 39.48 - 20
 
-	var_3_0.lineCount = arg_3_0:_getLineCount(var_3_1, var_3_0.cellWidth)
-	var_3_0.cellHeight = 205
-	var_3_0.cellSpaceH = arg_3_0:_getCellSpace(var_3_1, var_3_0.lineCount, var_3_0.cellWidth)
-	var_3_0.cellSpaceV = 4.6
-	var_3_0.startSpace = 10
-	arg_3_0._characterPlaceScrollView2 = LuaListScrollView.New(RoomCharacterPlaceListModel.instance, var_3_0)
+	scrollParam.lineCount = self:_getLineCount(scrollWidth, scrollParam.cellWidth)
+	scrollParam.cellHeight = 205
+	scrollParam.cellSpaceH = self:_getCellSpace(scrollWidth, scrollParam.lineCount, scrollParam.cellWidth)
+	scrollParam.cellSpaceV = 4.6
+	scrollParam.startSpace = 10
+	self._characterPlaceScrollView2 = LuaListScrollView.New(RoomCharacterPlaceListModel.instance, scrollParam)
 
-	table.insert(arg_3_1, arg_3_0._characterPlaceScrollView2)
+	table.insert(views, self._characterPlaceScrollView2)
 end
 
-function var_0_0._getLineCount(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = math.floor(arg_4_1 / arg_4_2)
+function RoomCharacterPlaceViewContainer:_getLineCount(scrollWidth, cellWidth)
+	local lineCount = math.floor(scrollWidth / cellWidth)
 
-	return (math.max(var_4_0, 1))
+	lineCount = math.max(lineCount, 1)
+
+	return lineCount
 end
 
-function var_0_0._getCellSpace(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = 7
+function RoomCharacterPlaceViewContainer:_getCellSpace(scrollWidth, lineCount, cellWidth)
+	local cellSpaceH = 7
 
-	if arg_5_2 > 1 then
-		var_5_0 = (arg_5_1 - arg_5_3 * arg_5_2 + 48) / arg_5_2
-		var_5_0 = math.max(0, var_5_0)
+	if lineCount > 1 then
+		cellSpaceH = (scrollWidth - cellWidth * lineCount + 48) / lineCount
+		cellSpaceH = math.max(0, cellSpaceH)
 	end
 
-	return var_5_0
+	return cellSpaceH
 end
 
-function var_0_0._getUIScreenWidth(arg_6_0)
-	local var_6_0 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
+function RoomCharacterPlaceViewContainer:_getUIScreenWidth()
+	local go = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP")
 
-	if var_6_0 then
-		return recthelper.getWidth(var_6_0.transform)
+	if go then
+		return recthelper.getWidth(go.transform)
 	end
 
-	local var_6_1 = 1080 / UnityEngine.Screen.height
+	local scale = 1080 / UnityEngine.Screen.height
+	local screenWidth = math.floor(UnityEngine.Screen.width * scale + 0.5)
 
-	return (math.floor(UnityEngine.Screen.width * var_6_1 + 0.5))
+	return screenWidth
 end
 
-return var_0_0
+return RoomCharacterPlaceViewContainer

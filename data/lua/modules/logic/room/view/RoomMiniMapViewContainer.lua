@@ -1,32 +1,34 @@
-﻿module("modules.logic.room.view.RoomMiniMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomMiniMapViewContainer.lua
 
-local var_0_0 = class("RoomMiniMapViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomMiniMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomMiniMapViewContainer = class("RoomMiniMapViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_navigatebuttonscontainer"))
-	table.insert(var_1_0, RoomMiniMapView.New())
+function RoomMiniMapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "#go_navigatebuttonscontainer"))
+	table.insert(views, RoomMiniMapView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+function RoomMiniMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.play_ui_checkpoint_story_close)
+function RoomMiniMapViewContainer:onContainerOpenFinish()
+	self.navigationView:resetCloseBtnAudioId(AudioEnum.UI.play_ui_checkpoint_story_close)
 end
 
-return var_0_0
+return RoomMiniMapViewContainer

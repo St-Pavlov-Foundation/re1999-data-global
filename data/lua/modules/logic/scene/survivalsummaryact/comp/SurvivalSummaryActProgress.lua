@@ -1,108 +1,110 @@
-﻿module("modules.logic.scene.survivalsummaryact.comp.SurvivalSummaryActProgress", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survivalsummaryact/comp/SurvivalSummaryActProgress.lua
 
-local var_0_0 = class("SurvivalSummaryActProgress", BaseSceneComp)
+module("modules.logic.scene.survivalsummaryact.comp.SurvivalSummaryActProgress", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SurvivalSummaryActProgress = class("SurvivalSummaryActProgress", BaseSceneComp)
+
+function SurvivalSummaryActProgress:ctor()
 	return
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalSummaryActProgress:onSceneStart(sceneId, levelId)
+	self.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	local var_2_0 = arg_2_0.weekInfo.shelterMapId
+	local shelterMapId = self.weekInfo.shelterMapId
 
-	arg_2_0.unitComp = SurvivalMapHelper.instance:getScene().unit
-	arg_2_0.mapCo = lua_survival_shelter.configDict[var_2_0]
-	arg_2_0.npcDataList = {}
+	self.unitComp = SurvivalMapHelper.instance:getScene().unit
+	self.mapCo = lua_survival_shelter.configDict[shelterMapId]
+	self.npcDataList = {}
 
-	local var_2_1 = SurvivalMapModel.instance.resultData:getFirstNpcMos()
+	local npcList = SurvivalMapModel.instance.resultData:getFirstNpcMos()
 
-	arg_2_0.buildReputationInfoDic = {}
-	arg_2_0.buildReputationInfos = {}
+	self.buildReputationInfoDic = {}
+	self.buildReputationInfos = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-		local var_2_2 = SurvivalConfig.instance:getNpcRenown(iter_2_1.id)
+	for k, v in ipairs(npcList) do
+		local renown = SurvivalConfig.instance:getNpcRenown(v.id)
 
-		if var_2_2 then
-			local var_2_3 = {
-				id = iter_2_1.id,
-				resource = iter_2_1.co.resource,
-				config = iter_2_1.co
+		if renown then
+			local data = {
+				id = v.id,
+				resource = v.co.resource,
+				config = v.co
 			}
 
-			table.insert(arg_2_0.npcDataList, var_2_3)
+			table.insert(self.npcDataList, data)
 
-			local var_2_4 = var_2_2[1]
-			local var_2_5 = SurvivalConfig.instance:getNpcReputationValue(iter_2_1.id)
+			local reputationId = renown[1]
+			local reputationAdd = SurvivalConfig.instance:getNpcReputationValue(v.id)
 
-			if arg_2_0.buildReputationInfoDic[var_2_4] == nil then
-				local var_2_6 = {
+			if self.buildReputationInfoDic[reputationId] == nil then
+				local info = {
 					value = 0,
-					reputationId = var_2_4,
+					reputationId = reputationId,
 					npcs = {}
 				}
 
-				arg_2_0.buildReputationInfoDic[var_2_4] = var_2_6
+				self.buildReputationInfoDic[reputationId] = info
 
-				table.insert(arg_2_0.buildReputationInfos, var_2_6)
+				table.insert(self.buildReputationInfos, info)
 			end
 
-			table.insert(arg_2_0.buildReputationInfoDic[var_2_4].npcs, var_2_3)
+			table.insert(self.buildReputationInfoDic[reputationId].npcs, data)
 
-			arg_2_0.buildReputationInfoDic[var_2_4].value = arg_2_0.buildReputationInfoDic[var_2_4].value + var_2_5
+			self.buildReputationInfoDic[reputationId].value = self.buildReputationInfoDic[reputationId].value + reputationAdd
 		end
 	end
 
-	table.sort(arg_2_0.buildReputationInfos, arg_2_0.reputationSortFunc)
+	table.sort(self.buildReputationInfos, self.reputationSortFunc)
 
-	for iter_2_2, iter_2_3 in ipairs(arg_2_0.buildReputationInfos) do
-		local var_2_7 = iter_2_3.reputationId
-		local var_2_8 = arg_2_0.weekInfo:getBuildingMoByReputationId(var_2_7)
-		local var_2_9 = var_2_8.survivalReputationPropMo.prop.reputationLevel
-		local var_2_10 = var_2_8.survivalReputationPropMo.prop.reputationExp
+	for i, info in ipairs(self.buildReputationInfos) do
+		local reputationId = info.reputationId
+		local buildMo = self.weekInfo:getBuildingMoByReputationId(reputationId)
+		local level = buildMo.survivalReputationPropMo.prop.reputationLevel
+		local reputationExp = buildMo.survivalReputationPropMo.prop.reputationExp
 
-		if var_2_9 > 0 and var_2_10 < iter_2_3.value then
-			for iter_2_4, iter_2_5 in ipairs(iter_2_3.npcs) do
-				iter_2_5.upInfo = {
-					lastLevel = var_2_9 - 1,
-					cuLevel = var_2_9
+		if level > 0 and reputationExp < info.value then
+			for idx, data in ipairs(info.npcs) do
+				data.upInfo = {
+					lastLevel = level - 1,
+					cuLevel = level
 				}
 			end
 		end
 	end
 end
 
-function var_0_0.reputationSortFunc(arg_3_0, arg_3_1)
-	return arg_3_0.reputationId < arg_3_1.reputationId
+function SurvivalSummaryActProgress.reputationSortFunc(a, b)
+	return a.reputationId < b.reputationId
 end
 
-function var_0_0.onScenePrepared(arg_4_0)
-	arg_4_0.sceneGo = GameSceneMgr.instance:getCurScene().level:getSceneGo()
-	arg_4_0.npcRoot = gohelper.create3d(arg_4_0.sceneGo, "NpcRoot")
+function SurvivalSummaryActProgress:onScenePrepared()
+	self.sceneGo = GameSceneMgr.instance:getCurScene().level:getSceneGo()
+	self.npcRoot = gohelper.create3d(self.sceneGo, "NpcRoot")
 
-	local var_4_0 = string.splitToNumber(arg_4_0.mapCo.orderPosition, ",")
-	local var_4_1 = SurvivalHexNode.New(var_4_0[1], var_4_0[2])
+	local playerPos = string.splitToNumber(self.mapCo.orderPosition, ",")
+	local pos = SurvivalHexNode.New(playerPos[1], playerPos[2])
 
-	arg_4_0.playerEntity = SurvivalSummaryActPlayerEntity.Create(var_4_1, arg_4_0.mapCo.toward, arg_4_0.sceneGo)
-	arg_4_0.npcList = {}
+	self.playerEntity = SurvivalSummaryActPlayerEntity.Create(pos, self.mapCo.toward, self.sceneGo)
+	self.npcList = {}
 
-	local var_4_2 = GameUtil.splitString2(arg_4_0.mapCo.npcPosition, true, "#", ",")
+	local npcPosList = GameUtil.splitString2(self.mapCo.npcPosition, true, "#", ",")
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.npcDataList) do
-		local var_4_3 = var_4_2[iter_4_0]
+	for i, v in ipairs(self.npcDataList) do
+		local pos = npcPosList[i]
 
-		if var_4_3 then
-			local var_4_4 = SurvivalSummaryActNpcEntity.Create(arg_4_0.npcDataList[iter_4_0].resource, arg_4_0.npcRoot, SurvivalHexNode.New(var_4_3[1], var_4_3[2]))
+		if pos then
+			local npc = SurvivalSummaryActNpcEntity.Create(self.npcDataList[i].resource, self.npcRoot, SurvivalHexNode.New(pos[1], pos[2]))
 
-			table.insert(arg_4_0.npcList, var_4_4)
+			table.insert(self.npcList, npc)
 		else
 			logError("npc很多，配置位置不够")
 		end
 	end
 end
 
-function var_0_0.onSceneClose(arg_5_0, ...)
+function SurvivalSummaryActProgress:onSceneClose(...)
 	return
 end
 
-return var_0_0
+return SurvivalSummaryActProgress

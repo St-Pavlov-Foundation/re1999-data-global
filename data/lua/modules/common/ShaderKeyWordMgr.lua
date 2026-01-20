@@ -1,84 +1,86 @@
-﻿module("modules.common.ShaderKeyWordMgr", package.seeall)
+﻿-- chunkname: @modules/common/ShaderKeyWordMgr.lua
 
-local var_0_0 = class("ShaderKeyWordMgr")
+module("modules.common.ShaderKeyWordMgr", package.seeall)
 
-var_0_0.CLIPALPHA = "_CLIPALPHA_ON"
+local ShaderKeyWordMgr = class("ShaderKeyWordMgr")
 
-function var_0_0.init()
-	if not var_0_0.enableKeyWordDict then
-		var_0_0.enableKeyWordDict = {}
-		var_0_0.disableList = {}
-		var_0_0.updateHandle = UpdateBeat:CreateListener(var_0_0._onFrame)
+ShaderKeyWordMgr.CLIPALPHA = "_CLIPALPHA_ON"
 
-		UpdateBeat:AddListener(var_0_0.updateHandle)
+function ShaderKeyWordMgr.init()
+	if not ShaderKeyWordMgr.enableKeyWordDict then
+		ShaderKeyWordMgr.enableKeyWordDict = {}
+		ShaderKeyWordMgr.disableList = {}
+		ShaderKeyWordMgr.updateHandle = UpdateBeat:CreateListener(ShaderKeyWordMgr._onFrame)
+
+		UpdateBeat:AddListener(ShaderKeyWordMgr.updateHandle)
 	end
 end
 
-function var_0_0._onFrame()
-	local var_2_0 = var_0_0.enableKeyWordDict
-	local var_2_1 = var_0_0.disableList
+function ShaderKeyWordMgr._onFrame()
+	local keyWordDict = ShaderKeyWordMgr.enableKeyWordDict
+	local disableList = ShaderKeyWordMgr.disableList
 
-	tabletool.clear(var_2_1)
+	tabletool.clear(disableList)
 
-	local var_2_2 = Time.time
+	local currentTime = Time.time
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		if iter_2_1 < var_2_2 then
-			table.insert(var_2_1, iter_2_0)
+	for keyWord, time in pairs(keyWordDict) do
+		if time < currentTime then
+			table.insert(disableList, keyWord)
 		end
 	end
 
-	for iter_2_2, iter_2_3 in ipairs(var_2_1) do
-		var_0_0.disableKeyWord(iter_2_3)
+	for _, keyWord in ipairs(disableList) do
+		ShaderKeyWordMgr.disableKeyWord(keyWord)
 	end
 end
 
-function var_0_0.enableKeyWordAutoDisable(arg_3_0, arg_3_1)
-	arg_3_1 = arg_3_1 or 0
+function ShaderKeyWordMgr.enableKeyWordAutoDisable(keyWord, delay)
+	delay = delay or 0
 
-	if arg_3_1 < 0 then
+	if delay < 0 then
 		return
 	end
 
-	if not arg_3_0 then
+	if not keyWord then
 		return
 	end
 
-	var_0_0.init()
+	ShaderKeyWordMgr.init()
 
-	local var_3_0 = var_0_0.enableKeyWordDict
-	local var_3_1 = Time.time + arg_3_1
+	local keyWordDict = ShaderKeyWordMgr.enableKeyWordDict
+	local disableTime = Time.time + delay
 
-	if not var_3_0[arg_3_0] then
-		var_3_0[arg_3_0] = var_3_1
+	if not keyWordDict[keyWord] then
+		keyWordDict[keyWord] = disableTime
 
-		UnityEngine.Shader.EnableKeyword(arg_3_0)
-	elseif var_3_1 > var_3_0[arg_3_0] then
-		var_3_0[arg_3_0] = var_3_1
+		UnityEngine.Shader.EnableKeyword(keyWord)
+	elseif disableTime > keyWordDict[keyWord] then
+		keyWordDict[keyWord] = disableTime
 	end
 end
 
-function var_0_0.enableKeyWorkNotDisable(arg_4_0)
-	UnityEngine.Shader.EnableKeyword(arg_4_0)
+function ShaderKeyWordMgr.enableKeyWorkNotDisable(keyWord)
+	UnityEngine.Shader.EnableKeyword(keyWord)
 
-	var_0_0.enableKeyWordDict[arg_4_0] = nil
+	ShaderKeyWordMgr.enableKeyWordDict[keyWord] = nil
 end
 
-function var_0_0.disableKeyWord(arg_5_0)
-	if var_0_0.enableKeyWordDict then
-		var_0_0.enableKeyWordDict[arg_5_0] = nil
+function ShaderKeyWordMgr.disableKeyWord(keyWord)
+	if ShaderKeyWordMgr.enableKeyWordDict then
+		ShaderKeyWordMgr.enableKeyWordDict[keyWord] = nil
 	end
 
-	UnityEngine.Shader.DisableKeyword(arg_5_0)
+	UnityEngine.Shader.DisableKeyword(keyWord)
 end
 
-function var_0_0.clear()
-	var_0_0.enableKeyWordDict = nil
-	var_0_0.disableList = nil
+function ShaderKeyWordMgr.clear()
+	ShaderKeyWordMgr.enableKeyWordDict = nil
+	ShaderKeyWordMgr.disableList = nil
 
-	if var_0_0.updateHandle then
-		UpdateBeat:RemoveListener(var_0_0.updateHandle)
+	if ShaderKeyWordMgr.updateHandle then
+		UpdateBeat:RemoveListener(ShaderKeyWordMgr.updateHandle)
 	end
 end
 
-return var_0_0
+return ShaderKeyWordMgr

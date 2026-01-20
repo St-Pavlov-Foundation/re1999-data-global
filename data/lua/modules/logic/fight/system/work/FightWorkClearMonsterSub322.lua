@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.system.work.FightWorkClearMonsterSub322", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkClearMonsterSub322.lua
 
-local var_0_0 = class("FightWorkClearMonsterSub322", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkClearMonsterSub322", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendFightEvent(FightEvent.ClearMonsterSub)
-	arg_1_0:onDone(true)
+local FightWorkClearMonsterSub322 = class("FightWorkClearMonsterSub322", FightEffectBase)
+
+function FightWorkClearMonsterSub322:onStart()
+	self:com_sendFightEvent(FightEvent.ClearMonsterSub)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkClearMonsterSub322:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkClearMonsterSub322

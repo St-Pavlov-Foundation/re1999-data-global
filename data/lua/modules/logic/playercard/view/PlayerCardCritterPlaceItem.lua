@@ -1,83 +1,84 @@
-﻿module("modules.logic.playercard.view.PlayerCardCritterPlaceItem", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardCritterPlaceItem.lua
 
-local var_0_0 = class("PlayerCardCritterPlaceItem", ListScrollCellExtend)
+module("modules.logic.playercard.view.PlayerCardCritterPlaceItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_click")
-	arg_1_0._uiclick = gohelper.getClickWithDefaultAudio(arg_1_0._goclick)
+local PlayerCardCritterPlaceItem = class("PlayerCardCritterPlaceItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PlayerCardCritterPlaceItem:onInitView()
+	self._goicon = gohelper.findChild(self.viewGO, "#go_icon")
+	self._goclick = gohelper.findChild(self.viewGO, "#go_click")
+	self._uiclick = gohelper.getClickWithDefaultAudio(self._goclick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._uiclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._uiclick:AddClickDownListener(arg_2_0._btnclickOnClickDown, arg_2_0)
+function PlayerCardCritterPlaceItem:addEvents()
+	self._uiclick:AddClickListener(self._btnclickOnClick, self)
+	self._uiclick:AddClickDownListener(self._btnclickOnClickDown, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._uiclick:RemoveClickListener()
-	arg_3_0._uiclick:RemoveClickDownListener()
+function PlayerCardCritterPlaceItem:removeEvents()
+	self._uiclick:RemoveClickListener()
+	self._uiclick:RemoveClickDownListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	local var_4_0, var_4_1 = arg_4_0:getCritterId()
+function PlayerCardCritterPlaceItem:_btnclickOnClick()
+	local critterUid, critterId = self:getCritterId()
 
-	arg_4_0.filterMO = CritterFilterModel.instance:generateFilterMO(ViewName.PlayerCardCritterPlaceView)
+	self.filterMO = CritterFilterModel.instance:generateFilterMO(ViewName.PlayerCardCritterPlaceView)
 
-	PlayerCardModel.instance:setSelectCritterUid(var_4_0)
-	PlayerCardRpc.instance:sendSetPlayerCardCritterRequest(var_4_0)
+	PlayerCardModel.instance:setSelectCritterUid(critterUid)
+	PlayerCardRpc.instance:sendSetPlayerCardCritterRequest(critterUid)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function PlayerCardCritterPlaceItem:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function PlayerCardCritterPlaceItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_6_0:setCritter()
+	self:setCritter()
 end
 
-function var_0_0.setCritter(arg_7_0)
-	local var_7_0, var_7_1 = arg_7_0:getCritterId()
+function PlayerCardCritterPlaceItem:setCritter()
+	local critterUid, critterId = self:getCritterId()
 
-	if not arg_7_0.critterIcon then
-		arg_7_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_7_0._goicon)
+	if not self.critterIcon then
+		self.critterIcon = IconMgr.instance:getCommonCritterIcon(self._goicon)
 
-		arg_7_0.critterIcon:setSelectUIVisible(true)
+		self.critterIcon:setSelectUIVisible(true)
 	end
 
-	arg_7_0.critterIcon:setMOValue(var_7_0, var_7_1)
-	arg_7_0.critterIcon:showSpeical()
-	arg_7_0.critterIcon:setMaturityIconShow(true)
-	arg_7_0:_refreshSelect()
+	self.critterIcon:setMOValue(critterUid, critterId)
+	self.critterIcon:showSpeical()
+	self.critterIcon:setMaturityIconShow(true)
+	self:_refreshSelect()
 end
 
-function var_0_0._refreshSelect(arg_8_0)
-	local var_8_0, var_8_1 = arg_8_0:getCritterId()
+function PlayerCardCritterPlaceItem:_refreshSelect()
+	local critterUid, critterId = self:getCritterId()
 
-	arg_8_0._isSelect = tonumber(var_8_0) == PlayerCardModel.instance:getSelectCritterUid()
+	self._isSelect = tonumber(critterUid) == PlayerCardModel.instance:getSelectCritterUid()
 
-	arg_8_0.critterIcon:onSelect(arg_8_0._isSelect)
+	self.critterIcon:onSelect(self._isSelect)
 end
 
-function var_0_0.getCritterId(arg_9_0)
-	local var_9_0
-	local var_9_1
+function PlayerCardCritterPlaceItem:getCritterId()
+	local critterUid, critterId
 
-	if arg_9_0._mo then
-		var_9_0 = arg_9_0._mo:getId()
-		var_9_1 = arg_9_0._mo:getDefineId()
+	if self._mo then
+		critterUid = self._mo:getId()
+		critterId = self._mo:getDefineId()
 	end
 
-	return var_9_0, var_9_1
+	return critterUid, critterId
 end
 
-function var_0_0.onDestroy(arg_10_0)
+function PlayerCardCritterPlaceItem:onDestroy()
 	return
 end
 
-return var_0_0
+return PlayerCardCritterPlaceItem

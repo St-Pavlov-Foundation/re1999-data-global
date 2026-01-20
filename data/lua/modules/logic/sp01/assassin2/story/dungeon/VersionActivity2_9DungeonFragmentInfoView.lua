@@ -1,48 +1,50 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonFragmentInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9DungeonFragmentInfoView.lua
 
-local var_0_0 = class("VersionActivity2_9DungeonFragmentInfoView", BaseView)
-local var_0_1 = -40
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9DungeonFragmentInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._go1 = gohelper.findChild(arg_1_0.viewGO, "#go_1")
-	arg_1_0._txttitlecn = gohelper.findChildText(arg_1_0.viewGO, "#go_1/#txt_titlecn")
-	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_1/#scroll_content")
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#go_1/#scroll_content/Viewport/Content/#txt_content")
-	arg_1_0._gochatarea = gohelper.findChild(arg_1_0.viewGO, "#go_1/#scroll_content/Viewport/Content/#go_chatarea")
-	arg_1_0._layoutchatarea = arg_1_0._gochatarea:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
-	arg_1_0._gochatitem = gohelper.findChild(arg_1_0.viewGO, "#go_1/#scroll_content/Viewport/Content/#go_chatarea/#go_chatitem")
-	arg_1_0._gobottommask = gohelper.findChild(arg_1_0.viewGO, "#go_1/#scroll_content/#go_bottommask")
-	arg_1_0._simagefragmenticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_1/#simage_fragmenticon")
-	arg_1_0._go3 = gohelper.findChild(arg_1_0.viewGO, "#go_3")
-	arg_1_0._txttitle3 = gohelper.findChildText(arg_1_0.viewGO, "#go_3/#txt_title3")
-	arg_1_0._scrollcontent3 = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_3/#scroll_content3")
-	arg_1_0._txtinfo3 = gohelper.findChildText(arg_1_0.viewGO, "#go_3/#scroll_content3/Viewport/Content/#txt_info3")
-	arg_1_0._go4 = gohelper.findChild(arg_1_0.viewGO, "#go_4")
-	arg_1_0._txttitle4 = gohelper.findChildText(arg_1_0.viewGO, "#go_4/#txt_title4")
-	arg_1_0._scrollcontent4 = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_4/#scroll_content4")
-	arg_1_0._txtinfo4 = gohelper.findChildText(arg_1_0.viewGO, "#go_4/#scroll_content4/Viewport/Content/#txt_info4")
-	arg_1_0._go5 = gohelper.findChild(arg_1_0.viewGO, "#go_5")
-	arg_1_0._txttitle5 = gohelper.findChildText(arg_1_0.viewGO, "#go_5/#txt_titlecn")
-	arg_1_0._scrollcontent5 = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_5/#scroll_content")
-	arg_1_0._txtinfo5 = gohelper.findChildText(arg_1_0.viewGO, "#go_5/#scroll_content/Viewport/Content/#txt_content")
+local VersionActivity2_9DungeonFragmentInfoView = class("VersionActivity2_9DungeonFragmentInfoView", BaseView)
+local CHAT_NO_AUDIO_OFFSET = -40
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_9DungeonFragmentInfoView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._go1 = gohelper.findChild(self.viewGO, "#go_1")
+	self._txttitlecn = gohelper.findChildText(self.viewGO, "#go_1/#txt_titlecn")
+	self._scrollcontent = gohelper.findChildScrollRect(self.viewGO, "#go_1/#scroll_content")
+	self._txtcontent = gohelper.findChildText(self.viewGO, "#go_1/#scroll_content/Viewport/Content/#txt_content")
+	self._gochatarea = gohelper.findChild(self.viewGO, "#go_1/#scroll_content/Viewport/Content/#go_chatarea")
+	self._layoutchatarea = self._gochatarea:GetComponent(typeof(UnityEngine.UI.VerticalLayoutGroup))
+	self._gochatitem = gohelper.findChild(self.viewGO, "#go_1/#scroll_content/Viewport/Content/#go_chatarea/#go_chatitem")
+	self._gobottommask = gohelper.findChild(self.viewGO, "#go_1/#scroll_content/#go_bottommask")
+	self._simagefragmenticon = gohelper.findChildSingleImage(self.viewGO, "#go_1/#simage_fragmenticon")
+	self._go3 = gohelper.findChild(self.viewGO, "#go_3")
+	self._txttitle3 = gohelper.findChildText(self.viewGO, "#go_3/#txt_title3")
+	self._scrollcontent3 = gohelper.findChildScrollRect(self.viewGO, "#go_3/#scroll_content3")
+	self._txtinfo3 = gohelper.findChildText(self.viewGO, "#go_3/#scroll_content3/Viewport/Content/#txt_info3")
+	self._go4 = gohelper.findChild(self.viewGO, "#go_4")
+	self._txttitle4 = gohelper.findChildText(self.viewGO, "#go_4/#txt_title4")
+	self._scrollcontent4 = gohelper.findChildScrollRect(self.viewGO, "#go_4/#scroll_content4")
+	self._txtinfo4 = gohelper.findChildText(self.viewGO, "#go_4/#scroll_content4/Viewport/Content/#txt_info4")
+	self._go5 = gohelper.findChild(self.viewGO, "#go_5")
+	self._txttitle5 = gohelper.findChildText(self.viewGO, "#go_5/#txt_titlecn")
+	self._scrollcontent5 = gohelper.findChildScrollRect(self.viewGO, "#go_5/#scroll_content")
+	self._txtinfo5 = gohelper.findChildText(self.viewGO, "#go_5/#scroll_content/Viewport/Content/#txt_content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._scrollcontent:AddOnValueChanged(arg_2_0._onValueChnaged, arg_2_0)
+function VersionActivity2_9DungeonFragmentInfoView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._scrollcontent:AddOnValueChanged(self._onValueChnaged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._scrollcontent:RemoveOnValueChanged()
+function VersionActivity2_9DungeonFragmentInfoView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._scrollcontent:RemoveOnValueChanged()
 end
 
-var_0_0.FragmentInfoTypeMap = {
+VersionActivity2_9DungeonFragmentInfoView.FragmentInfoTypeMap = {
 	1,
 	1,
 	3,
@@ -50,186 +52,187 @@ var_0_0.FragmentInfoTypeMap = {
 	5
 }
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity2_9DungeonFragmentInfoView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._pauseColor = GameUtil.parseColor("#3D3939")
-	arg_5_0._playColor = GameUtil.parseColor("#946747")
+function VersionActivity2_9DungeonFragmentInfoView:_editableInitView()
+	self._pauseColor = GameUtil.parseColor("#3D3939")
+	self._playColor = GameUtil.parseColor("#946747")
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function VersionActivity2_9DungeonFragmentInfoView:onUpdateParam()
 	return
 end
 
-function var_0_0._showDialog(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	local var_7_0 = gohelper.cloneInPlace(arg_7_0._gochatitem)
+function VersionActivity2_9DungeonFragmentInfoView:_showDialog(type, text, speaker, audioId)
+	local item = gohelper.cloneInPlace(self._gochatitem)
 
-	gohelper.setActive(var_7_0, true)
+	gohelper.setActive(item, true)
 
-	local var_7_1 = gohelper.findChildText(var_7_0, "name")
+	local nameText = gohelper.findChildText(item, "name")
+	local hasSpeaker = not string.nilorempty(speaker)
 
-	var_7_1.text = not string.nilorempty(arg_7_3) and arg_7_3 .. ":" or ""
+	nameText.text = hasSpeaker and speaker .. ":" or ""
 
-	if not arg_7_3 then
-		local var_7_2 = gohelper.findChild(var_7_0, "usericon")
+	if not speaker then
+		local iconGo = gohelper.findChild(item, "usericon")
 
-		gohelper.setActive(var_7_2, true)
+		gohelper.setActive(iconGo, true)
 	end
 
-	local var_7_3 = gohelper.findChildText(var_7_0, "info")
+	local infoText = gohelper.findChildText(item, "info")
 
-	var_7_3.text = arg_7_2
+	infoText.text = text
 
-	local var_7_4 = gohelper.findChildButtonWithAudio(var_7_0, "play")
-	local var_7_5 = gohelper.findChildButtonWithAudio(var_7_0, "pause")
+	local playBtn = gohelper.findChildButtonWithAudio(item, "play")
+	local pauseBtn = gohelper.findChildButtonWithAudio(item, "pause")
 
-	if var_7_4 and arg_7_4 and arg_7_4 > 0 then
-		gohelper.setActive(var_7_4.gameObject, true)
-		arg_7_0:_initBtn(var_7_4, var_7_5, arg_7_4, var_7_1, var_7_3)
+	if playBtn and audioId and audioId > 0 then
+		gohelper.setActive(playBtn.gameObject, true)
+		self:_initBtn(playBtn, pauseBtn, audioId, nameText, infoText)
 	end
 end
 
-function var_0_0._initBtn(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
-	table.insert(arg_8_0._btnList, {
-		arg_8_1,
-		arg_8_2,
-		arg_8_3,
-		arg_8_4,
-		arg_8_5
+function VersionActivity2_9DungeonFragmentInfoView:_initBtn(playBtn, pauseBtn, audioId, nameText, infoText)
+	table.insert(self._btnList, {
+		playBtn,
+		pauseBtn,
+		audioId,
+		nameText,
+		infoText
 	})
-	arg_8_1:AddClickListener(arg_8_0._onPlay, arg_8_0, arg_8_3)
-	arg_8_2:AddClickListener(arg_8_0._onPause, arg_8_0, arg_8_3)
+	playBtn:AddClickListener(self._onPlay, self, audioId)
+	pauseBtn:AddClickListener(self._onPause, self, audioId)
 end
 
-function var_0_0._onPlay(arg_9_0, arg_9_1)
-	arg_9_0:_stopAudio()
+function VersionActivity2_9DungeonFragmentInfoView:_onPlay(audioId)
+	self:_stopAudio()
 
-	arg_9_0._audioId = arg_9_1
+	self._audioId = audioId
 
-	if not arg_9_0._audioParam then
-		arg_9_0._audioParam = AudioParam.New()
+	if not self._audioParam then
+		self._audioParam = AudioParam.New()
 	end
 
-	arg_9_0._audioParam.callback = arg_9_0._onAudioStop
-	arg_9_0._audioParam.callbackTarget = arg_9_0
+	self._audioParam.callback = self._onAudioStop
+	self._audioParam.callbackTarget = self
 
-	AudioEffectMgr.instance:playAudio(arg_9_0._audioId, arg_9_0._audioParam)
-	arg_9_0:_refreshBtnStatus(arg_9_1, true)
+	AudioEffectMgr.instance:playAudio(self._audioId, self._audioParam)
+	self:_refreshBtnStatus(audioId, true)
 end
 
-function var_0_0._onPause(arg_10_0, arg_10_1)
-	arg_10_0:_stopAudio()
-	arg_10_0:_refreshBtnStatus(arg_10_1, false)
+function VersionActivity2_9DungeonFragmentInfoView:_onPause(audioId)
+	self:_stopAudio()
+	self:_refreshBtnStatus(audioId, false)
 end
 
-function var_0_0._onAudioStop(arg_11_0, arg_11_1)
-	arg_11_0._audioId = nil
+function VersionActivity2_9DungeonFragmentInfoView:_onAudioStop(audioId)
+	self._audioId = nil
 
-	arg_11_0:_refreshBtnStatus(arg_11_1, false)
+	self:_refreshBtnStatus(audioId, false)
 end
 
-function var_0_0._refreshBtnStatus(arg_12_0, arg_12_1, arg_12_2)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._btnList) do
-		local var_12_0 = iter_12_1[1]
-		local var_12_1 = iter_12_1[2]
-		local var_12_2 = iter_12_1[3]
-		local var_12_3 = iter_12_1[4]
-		local var_12_4 = iter_12_1[5]
+function VersionActivity2_9DungeonFragmentInfoView:_refreshBtnStatus(audioId, isPlay)
+	for i, v in ipairs(self._btnList) do
+		local playBtn = v[1]
+		local pauseBtn = v[2]
+		local audio = v[3]
+		local nameText = v[4]
+		local infoText = v[5]
 
-		if arg_12_1 == var_12_2 then
-			gohelper.setActive(var_12_0.gameObject, not arg_12_2)
-			gohelper.setActive(var_12_1.gameObject, arg_12_2)
+		if audioId == audio then
+			gohelper.setActive(playBtn.gameObject, not isPlay)
+			gohelper.setActive(pauseBtn.gameObject, isPlay)
 
-			var_12_3.color = arg_12_2 and arg_12_0._playColor or arg_12_0._pauseColor
-			var_12_4.color = arg_12_2 and arg_12_0._playColor or arg_12_0._pauseColor
+			nameText.color = isPlay and self._playColor or self._pauseColor
+			infoText.color = isPlay and self._playColor or self._pauseColor
 		else
-			gohelper.setActive(var_12_0.gameObject, true)
-			gohelper.setActive(var_12_1.gameObject, false)
+			gohelper.setActive(playBtn.gameObject, true)
+			gohelper.setActive(pauseBtn.gameObject, false)
 
-			var_12_3.color = arg_12_0._pauseColor
-			var_12_4.color = arg_12_0._pauseColor
+			nameText.color = self._pauseColor
+			infoText.color = self._pauseColor
 		end
 	end
 end
 
-function var_0_0._stopAudio(arg_13_0)
-	if arg_13_0._audioId then
-		AudioEffectMgr.instance:stopAudio(arg_13_0._audioId)
+function VersionActivity2_9DungeonFragmentInfoView:_stopAudio()
+	if self._audioId then
+		AudioEffectMgr.instance:stopAudio(self._audioId)
 
-		arg_13_0._audioId = nil
+		self._audioId = nil
 	end
 end
 
-function var_0_0._generateDialogByHandbook(arg_14_0)
-	local var_14_0 = HandbookConfig.instance:getDialogByFragment(arg_14_0._fragmentId)
-	local var_14_1 = lua_chapter_map_element_dialog.configDict[var_14_0]
-	local var_14_2 = {}
+function VersionActivity2_9DungeonFragmentInfoView:_generateDialogByHandbook()
+	local dialogId = HandbookConfig.instance:getDialogByFragment(self._fragmentId)
+	local stepConfigDict = lua_chapter_map_element_dialog.configDict[dialogId]
+	local configList = {}
 
-	for iter_14_0, iter_14_1 in pairs(var_14_1) do
-		table.insert(var_14_2, iter_14_1)
+	for stepId, config in pairs(stepConfigDict) do
+		table.insert(configList, config)
 	end
 
-	table.sort(var_14_2, function(arg_15_0, arg_15_1)
-		return arg_15_0.stepId < arg_15_1.stepId
+	table.sort(configList, function(x, y)
+		return x.stepId < y.stepId
 	end)
 
-	local var_14_3 = {}
+	local dialogIdDict = {}
 
-	for iter_14_2, iter_14_3 in ipairs(arg_14_0._dialogIdList) do
-		var_14_3[tonumber(iter_14_3)] = true
+	for i, dialogId in ipairs(self._dialogIdList) do
+		dialogIdDict[tonumber(dialogId)] = true
 	end
 
-	local var_14_4 = {}
-	local var_14_5 = 1
+	local resultList = {}
+	local stepId = 1
 
-	while var_14_5 <= #var_14_2 do
-		var_14_5 = arg_14_0:_getSelectorResult(var_14_5, var_14_2, var_14_4, var_14_3, true)
-		var_14_5 = var_14_5 + 1
+	while stepId <= #configList do
+		stepId = self:_getSelectorResult(stepId, configList, resultList, dialogIdDict, true)
+		stepId = stepId + 1
 	end
 
-	local var_14_6 = true
+	local isNoSpeakAudio = true
 
-	for iter_14_4, iter_14_5 in ipairs(var_14_4) do
-		arg_14_0:_showDialog(nil, iter_14_5.text, iter_14_5.speaker, iter_14_5.audio)
+	for _, param in ipairs(resultList) do
+		self:_showDialog(nil, param.text, param.speaker, param.audio)
 
-		if iter_14_5.audio and iter_14_5.audio > 0 then
-			var_14_6 = false
+		if param.audio and param.audio > 0 then
+			isNoSpeakAudio = false
 		end
 	end
 
-	local var_14_7 = 0
+	local offset = 0
 
-	if var_14_6 then
-		var_14_7 = var_0_1
+	if isNoSpeakAudio then
+		offset = CHAT_NO_AUDIO_OFFSET
 	end
 
-	arg_14_0._layoutchatarea.padding.left = var_14_7
+	self._layoutchatarea.padding.left = offset
 end
 
-function var_0_0._getSelectorResult(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	while arg_16_1 <= #arg_16_2 do
-		local var_16_0 = arg_16_2[arg_16_1]
+function VersionActivity2_9DungeonFragmentInfoView:_getSelectorResult(stepId, configList, resultList, dialogIdDict, mark)
+	while stepId <= #configList do
+		local config = configList[stepId]
 
-		if var_16_0.type == "dialog" and arg_16_5 then
-			table.insert(arg_16_3, {
-				text = var_16_0.content,
-				speaker = var_16_0.speaker,
-				audio = var_16_0.audio
+		if config.type == "dialog" and mark then
+			table.insert(resultList, {
+				text = config.content,
+				speaker = config.speaker,
+				audio = config.audio
 			})
-		elseif var_16_0.type == "selector" then
-			arg_16_1 = arg_16_0:_getSelectorResult(arg_16_1 + 1, arg_16_2, arg_16_3, arg_16_4, arg_16_4[tonumber(var_16_0.param)])
-		elseif var_16_0.type == "selectorend" then
-			return arg_16_1
-		elseif var_16_0.type == "options" then
-			local var_16_1 = string.splitToNumber(var_16_0.param, "#")
-			local var_16_2 = string.split(var_16_0.content, "#")
+		elseif config.type == "selector" then
+			stepId = self:_getSelectorResult(stepId + 1, configList, resultList, dialogIdDict, dialogIdDict[tonumber(config.param)])
+		elseif config.type == "selectorend" then
+			return stepId
+		elseif config.type == "options" then
+			local options = string.splitToNumber(config.param, "#")
+			local contents = string.split(config.content, "#")
 
-			for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-				if arg_16_4[iter_16_1] then
-					table.insert(arg_16_3, {
-						text = string.format("<color=#c95318>\"%s\"</color>", var_16_2[iter_16_0])
+			for i, id in ipairs(options) do
+				if dialogIdDict[id] then
+					table.insert(resultList, {
+						text = string.format("<color=#c95318>\"%s\"</color>", contents[i])
 					})
 
 					break
@@ -237,133 +240,133 @@ function var_0_0._getSelectorResult(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_
 			end
 		end
 
-		arg_16_1 = arg_16_1 + 1
+		stepId = stepId + 1
 	end
 
-	return arg_16_1
+	return stepId
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0._btnList = arg_17_0:getUserDataTb_()
-	arg_17_0._elementId = arg_17_0.viewParam.elementId
-	arg_17_0._fragmentId = arg_17_0.viewParam.fragmentId
-	arg_17_0._dialogIdList = arg_17_0.viewParam.dialogIdList
-	arg_17_0._isFromHandbook = arg_17_0.viewParam.isFromHandbook
-	arg_17_0._notShowToast = arg_17_0.viewParam.notShowToast
+function VersionActivity2_9DungeonFragmentInfoView:onOpen()
+	self._btnList = self:getUserDataTb_()
+	self._elementId = self.viewParam.elementId
+	self._fragmentId = self.viewParam.fragmentId
+	self._dialogIdList = self.viewParam.dialogIdList
+	self._isFromHandbook = self.viewParam.isFromHandbook
+	self._notShowToast = self.viewParam.notShowToast
 
-	local var_17_0 = lua_chapter_map_fragment.configDict[arg_17_0._fragmentId]
+	local config = lua_chapter_map_fragment.configDict[self._fragmentId]
 
-	for iter_17_0 = 1, 5 do
-		local var_17_1 = var_0_0.FragmentInfoTypeMap[iter_17_0] or 1
+	for i = 1, 5 do
+		local fragmentType = VersionActivity2_9DungeonFragmentInfoView.FragmentInfoTypeMap[i] or 1
 
-		gohelper.setActive(arg_17_0["_go" .. var_17_1], var_17_1 == (var_0_0.FragmentInfoTypeMap[var_17_0.type] or 1))
+		gohelper.setActive(self["_go" .. fragmentType], fragmentType == (VersionActivity2_9DungeonFragmentInfoView.FragmentInfoTypeMap[config.type] or 1))
 	end
 
-	local var_17_2 = var_0_0.FragmentInfoTypeMap[var_17_0.type] and var_17_0.type or 1
-	local var_17_3 = var_0_0["fragmentInfoShowHandleFunc" .. var_17_2]
+	local configType = VersionActivity2_9DungeonFragmentInfoView.FragmentInfoTypeMap[config.type] and config.type or 1
+	local handleFunc = VersionActivity2_9DungeonFragmentInfoView["fragmentInfoShowHandleFunc" .. configType]
 
-	if var_17_3 then
-		var_17_3(arg_17_0, var_17_0)
+	if handleFunc then
+		handleFunc(self, config)
 	end
 
-	if not DungeonEnum.NotPopFragmentToastDict[arg_17_0._fragmentId] and not arg_17_0._isFromHandbook and not arg_17_0._notShowToast then
-		local var_17_4 = var_17_0.toastId
+	if not DungeonEnum.NotPopFragmentToastDict[self._fragmentId] and not self._isFromHandbook and not self._notShowToast then
+		local toastId = config.toastId
 
-		if var_17_4 and var_17_4 ~= 0 then
-			GameFacade.showToast(var_17_4)
+		if toastId and toastId ~= 0 then
+			GameFacade.showToast(toastId)
 		else
-			GameFacade.showToast(ToastEnum.DungeonFragmentInfo, var_17_0.title)
+			GameFacade.showToast(ToastEnum.DungeonFragmentInfo, config.title)
 		end
 	end
 
-	if not string.nilorempty(var_17_0.res) then
-		arg_17_0._simagefragmenticon:LoadImage(ResUrl.getDungeonFragmentIcon(var_17_0.res))
+	if not string.nilorempty(config.res) then
+		self._simagefragmenticon:LoadImage(ResUrl.getDungeonFragmentIcon(config.res))
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_9.Dungeon.play_ui_unlockFragment)
 end
 
-function var_0_0._onValueChnaged(arg_18_0, arg_18_1)
-	gohelper.setActive(arg_18_0._gobottommask, gohelper.getRemindFourNumberFloat(arg_18_0._scrollcontent.verticalNormalizedPosition) > 0)
+function VersionActivity2_9DungeonFragmentInfoView:_onValueChnaged(value)
+	gohelper.setActive(self._gobottommask, gohelper.getRemindFourNumberFloat(self._scrollcontent.verticalNormalizedPosition) > 0)
 end
 
-function var_0_0.onClose(arg_19_0)
-	arg_19_0:_stopAudio()
+function VersionActivity2_9DungeonFragmentInfoView:onClose()
+	self:_stopAudio()
 
-	if arg_19_0._elementId then
-		DungeonController.instance:dispatchEvent(DungeonEvent.onGuideCloseFragmentInfoView, arg_19_0._elementId)
+	if self._elementId then
+		DungeonController.instance:dispatchEvent(DungeonEvent.onGuideCloseFragmentInfoView, self._elementId)
 	end
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0._simagefragmenticon:UnLoadImage()
+function VersionActivity2_9DungeonFragmentInfoView:onDestroyView()
+	self._simagefragmenticon:UnLoadImage()
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._btnList) do
-		iter_20_1[1]:RemoveClickListener()
-		iter_20_1[2]:RemoveClickListener()
+	for i, v in ipairs(self._btnList) do
+		v[1]:RemoveClickListener()
+		v[2]:RemoveClickListener()
 	end
 end
 
-function var_0_0.fragmentInfoShowHandleFunc1(arg_21_0, arg_21_1)
-	arg_21_0._txtcontent.text = arg_21_1.content
-	arg_21_0._txttitlecn.text = arg_21_1.title
+function VersionActivity2_9DungeonFragmentInfoView:fragmentInfoShowHandleFunc1(config)
+	self._txtcontent.text = config.content
+	self._txttitlecn.text = config.title
 
-	gohelper.setActive(arg_21_0._txtcontent.gameObject, true)
+	gohelper.setActive(self._txtcontent.gameObject, true)
 end
 
-function var_0_0.fragmentInfoShowHandleFunc2(arg_22_0, arg_22_1)
-	arg_22_0._txttitlecn.text = arg_22_1.title
-	arg_22_0._txtcontent.text = arg_22_1.content
+function VersionActivity2_9DungeonFragmentInfoView:fragmentInfoShowHandleFunc2(config)
+	self._txttitlecn.text = config.title
+	self._txtcontent.text = config.content
 
-	gohelper.setActive(arg_22_0._txtcontent.gameObject, true)
-	gohelper.setActive(arg_22_0._gochatarea, true)
+	gohelper.setActive(self._txtcontent.gameObject, true)
+	gohelper.setActive(self._gochatarea, true)
 
-	if arg_22_0._isFromHandbook and arg_22_0._dialogIdList then
-		arg_22_0:_generateDialogByHandbook()
+	if self._isFromHandbook and self._dialogIdList then
+		self:_generateDialogByHandbook()
 	else
-		local var_22_0 = true
-		local var_22_1 = DungeonMapModel.instance:getDialog()
+		local isNoSpeakAudio = true
+		local dialogList = DungeonMapModel.instance:getDialog()
 
-		for iter_22_0, iter_22_1 in ipairs(var_22_1) do
-			arg_22_0:_showDialog(iter_22_1[1], iter_22_1[2], iter_22_1[3], iter_22_1[4])
+		for i, v in ipairs(dialogList) do
+			self:_showDialog(v[1], v[2], v[3], v[4])
 
-			if iter_22_1[4] and iter_22_1[4] > 0 then
-				var_22_0 = false
+			if v[4] and v[4] > 0 then
+				isNoSpeakAudio = false
 			end
 		end
 
-		local var_22_2 = 0
+		local offset = 0
 
-		if var_22_0 then
-			var_22_2 = var_0_1
+		if isNoSpeakAudio then
+			offset = CHAT_NO_AUDIO_OFFSET
 		end
 
-		arg_22_0._layoutchatarea.padding.left = var_22_2
+		self._layoutchatarea.padding.left = offset
 
 		DungeonMapModel.instance:clearDialog()
 		DungeonMapModel.instance:clearDialogId()
 	end
 end
 
-function var_0_0.fragmentInfoShowHandleFunc3(arg_23_0, arg_23_1)
-	arg_23_0._txtinfo3.text = arg_23_1.content
-	arg_23_0._txttitle3.text = arg_23_1.title
+function VersionActivity2_9DungeonFragmentInfoView:fragmentInfoShowHandleFunc3(config)
+	self._txtinfo3.text = config.content
+	self._txttitle3.text = config.title
 
-	gohelper.setActive(arg_23_0._txtinfo3.gameObject, true)
+	gohelper.setActive(self._txtinfo3.gameObject, true)
 end
 
-function var_0_0.fragmentInfoShowHandleFunc4(arg_24_0, arg_24_1)
-	arg_24_0._txtinfo4.text = arg_24_1.content
-	arg_24_0._txttitle4.text = arg_24_1.title
+function VersionActivity2_9DungeonFragmentInfoView:fragmentInfoShowHandleFunc4(config)
+	self._txtinfo4.text = config.content
+	self._txttitle4.text = config.title
 
-	gohelper.setActive(arg_24_0._txtinfo4.gameObject, true)
+	gohelper.setActive(self._txtinfo4.gameObject, true)
 end
 
-function var_0_0.fragmentInfoShowHandleFunc5(arg_25_0, arg_25_1)
-	arg_25_0._txtinfo5.text = arg_25_1.content
-	arg_25_0._txttitle5.text = arg_25_1.title
+function VersionActivity2_9DungeonFragmentInfoView:fragmentInfoShowHandleFunc5(config)
+	self._txtinfo5.text = config.content
+	self._txttitle5.text = config.title
 
-	gohelper.setActive(arg_25_0._txtinfo5.gameObject, true)
+	gohelper.setActive(self._txtinfo5.gameObject, true)
 end
 
-return var_0_0
+return VersionActivity2_9DungeonFragmentInfoView

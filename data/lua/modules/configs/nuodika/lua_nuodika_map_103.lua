@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/nuodika/lua_nuodika_map_103.lua
+
+return {
 	"103",
 	5,
 	5,

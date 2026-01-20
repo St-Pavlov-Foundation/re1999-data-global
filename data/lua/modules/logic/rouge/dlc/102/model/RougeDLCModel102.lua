@@ -1,32 +1,40 @@
-﻿module("modules.logic.rouge.dlc.102.model.RougeDLCModel102", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/102/model/RougeDLCModel102.lua
 
-local var_0_0 = class("RougeDLCModel102", BaseModel)
+module("modules.logic.rouge.dlc.102.model.RougeDLCModel102", package.seeall)
 
-function var_0_0.clear(arg_1_0)
+local RougeDLCModel102 = class("RougeDLCModel102", BaseModel)
+
+function RougeDLCModel102:clear()
 	return
 end
 
-function var_0_0.getCanLevelUpSpCollectionsInSlotArea(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = RougeCollectionModel.instance:getSlotAreaCollection()
+function RougeDLCModel102:getCanLevelUpSpCollectionsInSlotArea()
+	local levelupCollections = {}
+	local allCollections = RougeCollectionModel.instance:getSlotAreaCollection()
 
-	if var_2_1 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-			if arg_2_0:_checkIsSpCollection(iter_2_1) and not arg_2_0:_checkIsCollectionMaxLevelUp(iter_2_1) then
-				table.insert(var_2_0, iter_2_1)
+	if allCollections then
+		for _, collectionMo in ipairs(allCollections) do
+			local isSp = self:_checkIsSpCollection(collectionMo)
+
+			if isSp then
+				local isMaxLevelUp = self:_checkIsCollectionMaxLevelUp(collectionMo)
+
+				if not isMaxLevelUp then
+					table.insert(levelupCollections, collectionMo)
+				end
 			end
 		end
 	end
 
-	return var_2_0
+	return levelupCollections
 end
 
-function var_0_0._checkIsCollectionMaxLevelUp(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1:getAttrValueMap()
+function RougeDLCModel102:_checkIsCollectionMaxLevelUp(collectionMo)
+	local attrMap = collectionMo:getAttrValueMap()
 
-	if var_3_0 then
-		for iter_3_0, iter_3_1 in pairs(var_3_0) do
-			if iter_3_0 == RougeEnum.MaxLevelSpAttrId then
+	if attrMap then
+		for attrId, _ in pairs(attrMap) do
+			if attrId == RougeEnum.MaxLevelSpAttrId then
 				return true
 			end
 		end
@@ -35,10 +43,10 @@ function var_0_0._checkIsCollectionMaxLevelUp(arg_3_0, arg_3_1)
 	return false
 end
 
-function var_0_0._checkIsCollectionAllEffectActive(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in pairs(arg_4_1) do
-		for iter_4_2, iter_4_3 in pairs(iter_4_1) do
-			if not iter_4_3.isActive then
+function RougeDLCModel102:_checkIsCollectionAllEffectActive(descInfoMap)
+	for _, descInfos in pairs(descInfoMap) do
+		for _, descInfo in pairs(descInfos) do
+			if not descInfo.isActive then
 				return false
 			end
 		end
@@ -47,72 +55,83 @@ function var_0_0._checkIsCollectionAllEffectActive(arg_4_0, arg_4_1)
 	return true
 end
 
-function var_0_0._checkIsSpCollection(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		local var_5_0 = arg_5_1:getCollectionCfgId()
-		local var_5_1 = RougeCollectionConfig.instance:getCollectionCfg(var_5_0)
+function RougeDLCModel102:_checkIsSpCollection(collectionMo)
+	if collectionMo then
+		local collectionCfgId = collectionMo:getCollectionCfgId()
+		local collectionCo = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
 
-		return var_5_1 and var_5_1.type == RougeEnum.CollectionType.Special
+		return collectionCo and collectionCo.type == RougeEnum.CollectionType.Special
 	end
 end
 
-function var_0_0.getAllSpCollectionsInSlotArea(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = RougeCollectionModel.instance:getSlotAreaCollection()
+function RougeDLCModel102:getAllSpCollectionsInSlotArea()
+	local spCollections = {}
+	local allCollections = RougeCollectionModel.instance:getSlotAreaCollection()
 
-	if var_6_1 then
-		for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-			if arg_6_0:_checkIsSpCollection(iter_6_1) then
-				table.insert(var_6_0, iter_6_1)
+	if allCollections then
+		for _, collectionMo in ipairs(allCollections) do
+			local isSp = self:_checkIsSpCollection(collectionMo)
+
+			if isSp then
+				table.insert(spCollections, collectionMo)
 			end
 		end
 	end
 
-	return var_6_0
+	return spCollections
 end
 
-function var_0_0.getAllSpCollections(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1 = RougeCollectionModel.instance:getAllCollections()
+function RougeDLCModel102:getAllSpCollections()
+	local spCollections = {}
+	local allCollections = RougeCollectionModel.instance:getAllCollections()
 
-	if var_7_1 then
-		for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-			if arg_7_0:_checkIsSpCollection(iter_7_1) then
-				table.insert(var_7_0, iter_7_1)
+	if allCollections then
+		for _, collectionMo in ipairs(allCollections) do
+			local isSp = self:_checkIsSpCollection(collectionMo)
+
+			if isSp then
+				table.insert(spCollections, collectionMo)
 			end
 		end
 	end
 
-	return var_7_0
+	return spCollections
 end
 
-function var_0_0.getAllSpCollectionCount(arg_8_0)
-	local var_8_0 = arg_8_0:getAllSpCollections()
+function RougeDLCModel102:getAllSpCollectionCount()
+	local spCollections = self:getAllSpCollections()
 
-	return var_8_0 and #var_8_0 or 0
+	return spCollections and #spCollections or 0
 end
 
-function var_0_0.getAllCanLevelUpSpCollection(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = RougeCollectionModel.instance:getAllCollections()
+function RougeDLCModel102:getAllCanLevelUpSpCollection()
+	local levelupCollections = {}
+	local allCollections = RougeCollectionModel.instance:getAllCollections()
 
-	if var_9_1 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-			if arg_9_0:_checkIsSpCollection(iter_9_1) and not arg_9_0:_checkIsCollectionMaxLevelUp(iter_9_1) then
-				table.insert(var_9_0, iter_9_1)
+	if allCollections then
+		for _, collectionMo in ipairs(allCollections) do
+			local isSp = self:_checkIsSpCollection(collectionMo)
+
+			if isSp then
+				local isMaxLevelUp = self:_checkIsCollectionMaxLevelUp(collectionMo)
+
+				if not isMaxLevelUp then
+					table.insert(levelupCollections, collectionMo)
+				end
 			end
 		end
 	end
 
-	return var_9_0
+	return levelupCollections
 end
 
-function var_0_0.getAllCanLevelUpSpCollectionCount(arg_10_0)
-	local var_10_0 = arg_10_0:getAllCanLevelUpSpCollection()
+function RougeDLCModel102:getAllCanLevelUpSpCollectionCount()
+	local levelupCollections = self:getAllCanLevelUpSpCollection()
+	local levelupCollectionCount = levelupCollections and #levelupCollections or 0
 
-	return var_10_0 and #var_10_0 or 0
+	return levelupCollectionCount
 end
 
-var_0_0.instance = var_0_0.New()
+RougeDLCModel102.instance = RougeDLCModel102.New()
 
-return var_0_0
+return RougeDLCModel102

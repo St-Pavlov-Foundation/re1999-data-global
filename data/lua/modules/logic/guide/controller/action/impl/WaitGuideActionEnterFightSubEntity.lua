@@ -1,27 +1,31 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterFightSubEntity", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionEnterFightSubEntity.lua
 
-local var_0_0 = class("WaitGuideActionEnterFightSubEntity", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterFightSubEntity", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, arg_1_0._onRoundStart, arg_1_0, LuaEventSystem.High)
+local WaitGuideActionEnterFightSubEntity = class("WaitGuideActionEnterFightSubEntity", BaseGuideAction)
+
+function WaitGuideActionEnterFightSubEntity:onStart(context)
+	WaitGuideActionEnterFightSubEntity.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, self._onRoundStart, self, LuaEventSystem.High)
 end
 
-function var_0_0._onRoundStart(arg_2_0)
+function WaitGuideActionEnterFightSubEntity:_onRoundStart()
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DistributeCard) or FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		local var_2_0 = FightDataHelper.entityMgr:getMyNormalList()
+		local mySideList = FightDataHelper.entityMgr:getMyNormalList()
 
-		if not var_2_0 or #var_2_0 < 3 then
+		if not mySideList or #mySideList < 3 then
 			return
 		end
 
-		local var_2_1 = FightDataHelper.entityMgr:getMySubList()
+		local mySideSub = FightDataHelper.entityMgr:getMySubList()
 
-		if not var_2_1 or #var_2_1 == 0 then
+		if not mySideSub or #mySideSub == 0 then
 			return
 		end
 
-		if GuideModel.instance:getDoingGuideId() then
+		local doingGuideId = GuideModel.instance:getDoingGuideId()
+
+		if doingGuideId then
 			return
 		end
 
@@ -33,13 +37,13 @@ function var_0_0._onRoundStart(arg_2_0)
 			return
 		end
 
-		arg_2_0:clearWork()
-		arg_2_0:onDone(true)
+		self:clearWork()
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, arg_3_0._onRoundStart, arg_3_0)
+function WaitGuideActionEnterFightSubEntity:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, self._onRoundStart, self)
 end
 
-return var_0_0
+return WaitGuideActionEnterFightSubEntity

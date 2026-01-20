@@ -1,34 +1,36 @@
-﻿module("modules.logic.season.view1_3.Season1_3MarketViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_3/Season1_3MarketViewContainer.lua
 
-local var_0_0 = class("Season1_3MarketViewContainer", BaseViewContainer)
+module("modules.logic.season.view1_3.Season1_3MarketViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season1_3MarketViewContainer = class("Season1_3MarketViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season1_3MarketView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_info/#go_btns"))
+function Season1_3MarketViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season1_3MarketView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_info/#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Season1_3MarketViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		false
-	}, 100, arg_2_0._closeCallback, arg_2_0._homeCallback, nil, arg_2_0)
+	}, 100, self._closeCallback, self._homeCallback, nil, self)
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0._closeCallback(arg_3_0)
-	arg_3_0:closeThis()
+function Season1_3MarketViewContainer:_closeCallback()
+	self:closeThis()
 end
 
-function var_0_0._homeCallback(arg_4_0)
-	arg_4_0:closeThis()
+function Season1_3MarketViewContainer:_homeCallback()
+	self:closeThis()
 end
 
-return var_0_0
+return Season1_3MarketViewContainer

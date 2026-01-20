@@ -1,330 +1,342 @@
-﻿module("modules.logic.fightuiswitch.view.FightUISwitchEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/FightUISwitchEffectComp.lua
 
-local var_0_0 = class("FightUISwitchEffectComp", LuaCompBase)
+module("modules.logic.fightuiswitch.view.FightUISwitchEffectComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrolleffect = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_effect")
-	arg_1_0._goeffectItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_effect/Viewport/Content/#go_effectItem")
+local FightUISwitchEffectComp = class("FightUISwitchEffectComp", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightUISwitchEffectComp:onInitView()
+	self._scrolleffect = gohelper.findChildScrollRect(self.viewGO, "#scroll_effect")
+	self._goeffectItem = gohelper.findChild(self.viewGO, "#scroll_effect/Viewport/Content/#go_effectItem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	gohelper.setActive(arg_2_0._goeffectItem, false)
+function FightUISwitchEffectComp:_editableInitView()
+	gohelper.setActive(self._goeffectItem, false)
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.viewGO = arg_3_1
-	arg_3_0._showResObjTb = nil
-	arg_3_0._sceneParent = nil
+function FightUISwitchEffectComp:init(go)
+	self.viewGO = go
+	self._showResObjTb = nil
+	self._sceneParent = nil
 
-	arg_3_0:onInitView()
+	self:onInitView()
 
-	arg_3_0._effectItems = arg_3_0:getUserDataTb_()
-	arg_3_0._showResObjTb = arg_3_0:getUserDataTb_()
+	self._effectItems = self:getUserDataTb_()
+	self._showResObjTb = self:getUserDataTb_()
 
-	arg_3_0:addEvent()
+	self:addEvent()
 end
 
-function var_0_0.addEvent(arg_4_0)
-	FightUISwitchController.instance:registerCallback(FightUISwitchEvent.LoadFinish, arg_4_0._loadFinish, arg_4_0)
+function FightUISwitchEffectComp:addEvent()
+	FightUISwitchController.instance:registerCallback(FightUISwitchEvent.LoadFinish, self._loadFinish, self)
 end
 
-function var_0_0.removeEvent(arg_5_0)
-	FightUISwitchController.instance:unregisterCallback(FightUISwitchEvent.LoadFinish, arg_5_0._loadFinish, arg_5_0)
+function FightUISwitchEffectComp:removeEvent()
+	FightUISwitchController.instance:unregisterCallback(FightUISwitchEvent.LoadFinish, self._loadFinish, self)
 end
 
-function var_0_0._loadFinish(arg_6_0, arg_6_1)
-	if arg_6_0._viewName ~= arg_6_1 then
+function FightUISwitchEffectComp:_loadFinish(viewName)
+	if self._viewName ~= viewName then
 		return
 	end
 
-	local var_6_0 = arg_6_0:_getSceneRes()
-	local var_6_1 = FightUISwitchController.instance:getRes(var_6_0)
+	local res = self:_getSceneRes()
+	local prefab = FightUISwitchController.instance:getRes(res)
 
-	if var_6_1 and arg_6_0._sceneParent then
-		local var_6_2 = arg_6_0._showResObjTb[var_6_0]
-		local var_6_3
+	if prefab and self._sceneParent then
+		local objTb = self._showResObjTb[res]
+		local resObj
 
-		if not var_6_2 or not var_6_2.resObj then
-			var_6_2 = arg_6_0:getUserDataTb_()
-			var_6_2.resObj = gohelper.clone(var_6_1, arg_6_0._sceneParent)
+		if not objTb or not objTb.resObj then
+			objTb = self:getUserDataTb_()
+			objTb.resObj = gohelper.clone(prefab, self._sceneParent)
 
-			recthelper.setAnchor(var_6_2.resObj.transform, 0, 0)
-			gohelper.setActive(var_6_2.resObj, true)
+			recthelper.setAnchor(objTb.resObj.transform, 0, 0)
+			gohelper.setActive(objTb.resObj, true)
 
-			arg_6_0._showResObjTb[var_6_0] = var_6_2
+			self._showResObjTb[res] = objTb
 		end
 
-		local var_6_4 = var_6_2.resObj
+		resObj = objTb.resObj
 
-		if var_6_2 and not var_6_2.effectSceneTb then
-			var_6_2.effectSceneTb = arg_6_0:getUserDataTb_()
+		if objTb and not objTb.effectSceneTb then
+			objTb.effectSceneTb = self:getUserDataTb_()
 
-			for iter_6_0, iter_6_1 in ipairs(arg_6_0._effectMoList) do
-				if not string.nilorempty(iter_6_1.co.res) then
-					local var_6_5 = gohelper.findChild(var_6_4.gameObject, iter_6_1.co.res)
+			for i, mo in ipairs(self._effectMoList) do
+				if not string.nilorempty(mo.co.res) then
+					local effectRoot = gohelper.findChild(resObj.gameObject, mo.co.res)
 
-					if not arg_6_0._effectSceneTb then
-						arg_6_0._effectSceneTb = arg_6_0:getUserDataTb_()
+					if not self._effectSceneTb then
+						self._effectSceneTb = self:getUserDataTb_()
 					end
 
-					local var_6_6 = arg_6_0._effectSceneTb[var_6_0] or arg_6_0:getUserDataTb_()
+					local tb = self._effectSceneTb[res]
 
-					if not var_6_6[iter_6_1.co.res] then
-						var_6_6[iter_6_1.co.res] = arg_6_0:getUserDataTb_()
-						var_6_6[iter_6_1.co.res].root = var_6_5
-						var_6_6[iter_6_1.co.res].anim = var_6_5:GetComponent(typeof(UnityEngine.Animator))
-						arg_6_0._effectSceneTb[var_6_0] = var_6_6
+					tb = tb or self:getUserDataTb_()
+
+					if not tb[mo.co.res] then
+						tb[mo.co.res] = self:getUserDataTb_()
+						tb[mo.co.res].root = effectRoot
+						tb[mo.co.res].anim = effectRoot:GetComponent(typeof(UnityEngine.Animator))
+						self._effectSceneTb[res] = tb
 					end
 				end
 			end
 		end
 
-		for iter_6_2, iter_6_3 in pairs(arg_6_0._showResObjTb) do
-			gohelper.setActive(iter_6_3.resObj, iter_6_2 == var_6_0)
+		for _res, objTb in pairs(self._showResObjTb) do
+			gohelper.setActive(objTb.resObj, _res == res)
 		end
 
-		arg_6_0:_runRepeatEffectAnim()
+		self:_runRepeatEffectAnim()
 	end
 end
 
-function var_0_0.setViewAnim(arg_7_0, arg_7_1)
-	arg_7_0._viewAnimator = arg_7_1
+function FightUISwitchEffectComp:setViewAnim(anim)
+	self._viewAnimator = anim
 end
 
-function var_0_0.refreshEffect(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0._sceneParent = arg_8_1
-	arg_8_2 = arg_8_2 or FightUISwitchModel.instance:getCurStyleMo()
-	arg_8_0._mo = arg_8_2
-	arg_8_0._viewName = arg_8_3
-	arg_8_0._effectMoList = arg_8_2:getAllEffectMos()
+function FightUISwitchEffectComp:refreshEffect(parent, mo, viewName)
+	self._sceneParent = parent
+	mo = mo or FightUISwitchModel.instance:getCurStyleMo()
+	self._mo = mo
+	self._viewName = viewName
+	self._effectMoList = mo:getAllEffectMos()
 
-	arg_8_0:clearEffectAnim()
-	arg_8_0:_loadScene()
+	self:clearEffectAnim()
+	self:_loadScene()
 
-	if arg_8_0._effectMoList then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._effectMoList) do
-			local var_8_0 = arg_8_0:_getEffectItem(iter_8_0)
+	if self._effectMoList then
+		for i, mo in ipairs(self._effectMoList) do
+			local item = self:_getEffectItem(i)
 
-			var_8_0:onUpdateMO(iter_8_1, iter_8_0)
-			var_8_0:addBtnListeners(arg_8_0._clickEffectBtn, arg_8_0)
-			var_8_0:setTxt(iter_8_1:getName())
+			item:onUpdateMO(mo, i)
+			item:addBtnListeners(self._clickEffectBtn, self)
+			item:setTxt(mo:getName())
 		end
 
-		for iter_8_2 = 1, #arg_8_0._effectItems do
-			arg_8_0._effectItems[iter_8_2]:setActive(iter_8_2 <= #arg_8_0._effectMoList)
+		for i = 1, #self._effectItems do
+			local item = self._effectItems[i]
+
+			item:setActive(i <= #self._effectMoList)
 		end
 	end
 
-	arg_8_0:_showCurEffect(1)
+	self:_showCurEffect(1)
 end
 
-function var_0_0._getEffectItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._effectItems[arg_9_1]
+function FightUISwitchEffectComp:_getEffectItem(index)
+	local item = self._effectItems[index]
 
-	if not var_9_0 then
-		local var_9_1 = gohelper.cloneInPlace(arg_9_0._goeffectItem, "effect_" .. arg_9_1)
+	if not item then
+		local childGO = gohelper.cloneInPlace(self._goeffectItem, "effect_" .. index)
 
-		var_9_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, MainSwitchClassifyItem)
-		arg_9_0._effectItems[arg_9_1] = var_9_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, MainSwitchClassifyItem)
+		self._effectItems[index] = item
 	end
 
-	return var_9_0
+	return item
 end
 
-function var_0_0._loadScene(arg_10_0)
-	if not arg_10_0._sceneParent or not arg_10_0._mo then
+function FightUISwitchEffectComp:_loadScene()
+	if not self._sceneParent or not self._mo then
 		return
 	end
 
-	FightUISwitchController.instance:loadRes(arg_10_0._mo.id, arg_10_0._viewName)
+	FightUISwitchController.instance:loadRes(self._mo.id, self._viewName)
 end
 
-function var_0_0._getSceneRes(arg_11_0)
-	return (FightUISwitchModel.instance:getSceneRes(arg_11_0._mo:getConfig(), arg_11_0._viewName))
+function FightUISwitchEffectComp:_getSceneRes()
+	local showres = FightUISwitchModel.instance:getSceneRes(self._mo:getConfig(), self._viewName)
+
+	return showres
 end
 
-function var_0_0._refreshEffectSceneRoot(arg_12_0)
-	local var_12_0 = arg_12_0._showEffectMo.co.res
-	local var_12_1 = arg_12_0:_getSceneRes()
+function FightUISwitchEffectComp:_refreshEffectSceneRoot()
+	local res = self._showEffectMo.co.res
+	local sceneRes = self:_getSceneRes()
 
-	if arg_12_0._effectSceneTb and arg_12_0._effectSceneTb[var_12_1] then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0._effectSceneTb[var_12_1]) do
-			if iter_12_1.root then
-				gohelper.setActive(iter_12_1.root, iter_12_0 == var_12_0)
+	if self._effectSceneTb and self._effectSceneTb[sceneRes] then
+		for _res, tb in pairs(self._effectSceneTb[sceneRes]) do
+			if tb.root then
+				gohelper.setActive(tb.root, _res == res)
 			end
 		end
 	end
 end
 
-function var_0_0._runRepeatEffectAnim(arg_13_0)
-	arg_13_0._showEffectIndex = 0
+function FightUISwitchEffectComp:_runRepeatEffectAnim()
+	self._showEffectIndex = 0
 
-	arg_13_0:_playEffectAnim()
+	self:_playEffectAnim()
 end
 
-function var_0_0._playEffectAnim(arg_14_0)
-	local var_14_0 = arg_14_0._showEffectIndex + 1
+function FightUISwitchEffectComp:_playEffectAnim()
+	local index = self._showEffectIndex + 1
 
-	if var_14_0 > #arg_14_0._effectMoList then
-		var_14_0 = 1
+	if index > #self._effectMoList then
+		index = 1
 	end
 
-	local var_14_1 = var_14_0 or arg_14_0._showEffectIndex
+	local index = index or self._showEffectIndex
 
-	arg_14_0:_showCurEffect(var_14_1)
+	self:_showCurEffect(index)
 
-	local var_14_2 = arg_14_0:_getEffectDelayTime()
+	local delayTime = self:_getEffectDelayTime()
 
-	TaskDispatcher.runDelay(arg_14_0._showNextEffect, arg_14_0, var_14_2)
+	TaskDispatcher.runDelay(self._showNextEffect, self, delayTime)
 end
 
-function var_0_0._showNextEffect(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._playEffectAnim, arg_15_0)
+function FightUISwitchEffectComp:_showNextEffect()
+	TaskDispatcher.cancelTask(self._playEffectAnim, self)
 
-	if arg_15_0._viewAnimator then
-		arg_15_0._viewAnimator:Play(FightUISwitchEnum.AnimKey.Switch, 0, 0)
-		TaskDispatcher.runDelay(arg_15_0._playEffectAnim, arg_15_0, FightUISwitchEnum.SwitchAnimDelayTime)
+	if self._viewAnimator then
+		self._viewAnimator:Play(FightUISwitchEnum.AnimKey.Switch, 0, 0)
+		TaskDispatcher.runDelay(self._playEffectAnim, self, FightUISwitchEnum.SwitchAnimDelayTime)
 	else
-		arg_15_0:_playEffectAnim()
+		self:_playEffectAnim()
 	end
 end
 
-function var_0_0._getCurShowEffectSceneRootTb(arg_16_0)
-	local var_16_0 = arg_16_0:_getSceneRes()
-	local var_16_1 = arg_16_0._showEffectMo.co.res
+function FightUISwitchEffectComp:_getCurShowEffectSceneRootTb()
+	local sceneRes = self:_getSceneRes()
+	local res = self._showEffectMo.co.res
 
-	if arg_16_0._effectSceneTb and arg_16_0._effectSceneTb[var_16_0] then
-		return arg_16_0._effectSceneTb[var_16_0][var_16_1]
+	if self._effectSceneTb and self._effectSceneTb[sceneRes] then
+		local tb = self._effectSceneTb[sceneRes][res]
+
+		return tb
 	end
 end
 
-function var_0_0._showCurEffect(arg_17_0, arg_17_1)
-	local var_17_0 = #arg_17_0._effectMoList
+function FightUISwitchEffectComp:_showCurEffect(index)
+	local moLength = #self._effectMoList
 
-	if not arg_17_0._effectMoList or var_17_0 < arg_17_1 then
+	if not self._effectMoList or moLength < index then
 		return
 	end
 
-	arg_17_0._showEffectIndex = arg_17_1
-	arg_17_0._showEffectMo = arg_17_0._effectMoList[arg_17_1]
+	self._showEffectIndex = index
+	self._showEffectMo = self._effectMoList[index]
 
-	if not arg_17_0._showEffectMo then
+	if not self._showEffectMo then
 		return
 	end
 
-	if arg_17_0._effectItems then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._effectItems) do
-			iter_17_1:onSelectByIndex(arg_17_1)
+	if self._effectItems then
+		for i, item in ipairs(self._effectItems) do
+			item:onSelectByIndex(index)
 		end
 	end
 
-	arg_17_0:_refreshEffectSceneRoot()
+	self:_refreshEffectSceneRoot()
 
-	local var_17_1
-	local var_17_2 = arg_17_1 < 3 and 0 or arg_17_1 > var_17_0 - 3 and 1 or math.floor(arg_17_1 / var_17_0)
+	local progress
 
-	arg_17_0._scrolleffect.horizontalNormalizedPosition = var_17_2
+	progress = index < 3 and 0 or index > moLength - 3 and 1 or math.floor(index / moLength)
+	self._scrolleffect.horizontalNormalizedPosition = progress
 end
 
-function var_0_0.clearEffectAnim(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._showNextEffect, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._playEffectAnim, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._repeatShowEffectAnim, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._repeatShowEffectAnimCB, arg_18_0)
+function FightUISwitchEffectComp:clearEffectAnim()
+	TaskDispatcher.cancelTask(self._showNextEffect, self)
+	TaskDispatcher.cancelTask(self._playEffectAnim, self)
+	TaskDispatcher.cancelTask(self._repeatShowEffectAnim, self)
+	TaskDispatcher.cancelTask(self._repeatShowEffectAnimCB, self)
 end
 
-function var_0_0._clickEffectBtn(arg_19_0, arg_19_1)
-	arg_19_0:clearEffectAnim()
+function FightUISwitchEffectComp:_clickEffectBtn(index)
+	self:clearEffectAnim()
 
-	if arg_19_0._showEffectIndex == arg_19_1 then
+	if self._showEffectIndex == index then
 		return
 	end
 
-	arg_19_0._showEffectIndex = arg_19_1
-	arg_19_0._repeatEffectTime = arg_19_0:_getEffectDelayTime()
+	self._showEffectIndex = index
+	self._repeatEffectTime = self:_getEffectDelayTime()
 
-	TaskDispatcher.cancelTask(arg_19_0._repeatShowEffectAnim, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._repeatShowEffectAnimCB, arg_19_0)
+	TaskDispatcher.cancelTask(self._repeatShowEffectAnim, self)
+	TaskDispatcher.cancelTask(self._repeatShowEffectAnimCB, self)
 
-	if arg_19_0._viewAnimator then
-		arg_19_0._viewAnimator:Play(FightUISwitchEnum.AnimKey.Switch, 0, 0)
-		TaskDispatcher.runDelay(arg_19_0._repeatShowEffectAnim, arg_19_0, FightUISwitchEnum.SwitchAnimDelayTime)
+	if self._viewAnimator then
+		self._viewAnimator:Play(FightUISwitchEnum.AnimKey.Switch, 0, 0)
+		TaskDispatcher.runDelay(self._repeatShowEffectAnim, self, FightUISwitchEnum.SwitchAnimDelayTime)
 	else
-		arg_19_0:_repeatShowEffectAnim()
+		self:_repeatShowEffectAnim()
 	end
 end
 
-function var_0_0._getEffectDelayTime(arg_20_0)
-	local var_20_0 = FightUISwitchEnum.SwitchAnimTime
-	local var_20_1 = arg_20_0:_getCurShowEffectSceneRootTb()
+function FightUISwitchEffectComp:_getEffectDelayTime()
+	local time = FightUISwitchEnum.SwitchAnimTime
+	local tb = self:_getCurShowEffectSceneRootTb()
 
-	if var_20_1 then
-		if not var_20_1.delayLength then
-			local var_20_2 = var_20_1.anim:GetCurrentAnimatorStateInfo(0).length
+	if tb then
+		if not tb.delayLength then
+			local stateInfo = tb.anim:GetCurrentAnimatorStateInfo(0)
+			local time = stateInfo.length
 
-			var_20_1.delayLength = math.max(var_20_2, FightUISwitchEnum.SwitchAnimTime)
+			tb.delayLength = math.max(time, FightUISwitchEnum.SwitchAnimTime)
 		end
 
-		var_20_0 = var_20_1.delayLength
+		time = tb.delayLength
 	end
 
-	return var_20_0
+	return time
 end
 
-function var_0_0._repeatShowEffectAnim(arg_21_0)
-	arg_21_0:_showCurEffect(arg_21_0._showEffectIndex)
-	TaskDispatcher.runRepeat(arg_21_0._repeatShowEffectAnimCB, arg_21_0, arg_21_0._repeatEffectTime)
+function FightUISwitchEffectComp:_repeatShowEffectAnim()
+	self:_showCurEffect(self._showEffectIndex)
+	TaskDispatcher.runRepeat(self._repeatShowEffectAnimCB, self, self._repeatEffectTime)
 end
 
-function var_0_0._repeatShowEffectAnimCB(arg_22_0)
-	local var_22_0 = arg_22_0:_getCurShowEffectSceneRootTb()
+function FightUISwitchEffectComp:_repeatShowEffectAnimCB()
+	local tb = self:_getCurShowEffectSceneRootTb()
 
-	if var_22_0 and var_22_0.anim then
-		local var_22_1 = arg_22_0:_getAnimStateName(var_22_0)
+	if tb and tb.anim then
+		local stateName = self:_getAnimStateName(tb)
 
-		if not string.nilorempty(var_22_1) then
-			var_22_0.anim:Play(var_22_1, 0, 0)
+		if not string.nilorempty(stateName) then
+			tb.anim:Play(stateName, 0, 0)
 		else
-			gohelper.setActive(var_22_0.anim.gameObject, false)
-			gohelper.setActive(var_22_0.anim.gameObject, true)
+			gohelper.setActive(tb.anim.gameObject, false)
+			gohelper.setActive(tb.anim.gameObject, true)
 		end
 	end
 end
 
-function var_0_0._getAnimStateName(arg_23_0, arg_23_1)
-	if not arg_23_1 or not arg_23_1.anim then
+function FightUISwitchEffectComp:_getAnimStateName(tb)
+	if not tb or not tb.anim then
 		return
 	end
 
-	if arg_23_1.stateName then
-		return arg_23_1.stateName
+	if tb.stateName then
+		return tb.stateName
 	end
 
-	local var_23_0 = arg_23_1.anim.runtimeAnimatorController.animationClips[0].name
+	local clipName = tb.anim.runtimeAnimatorController.animationClips[0].name
+	local stateInfo = tb.anim:GetCurrentAnimatorStateInfo(0)
 
-	if arg_23_1.anim:GetCurrentAnimatorStateInfo(0).shortNameHash == UnityEngine.Animator.StringToHash(var_23_0) then
-		arg_23_1.stateName = var_23_0
+	if stateInfo.shortNameHash == UnityEngine.Animator.StringToHash(clipName) then
+		tb.stateName = clipName
 
-		return var_23_0
+		return clipName
 	end
 end
 
-function var_0_0.onClose(arg_24_0)
-	arg_24_0:clearEffectAnim()
+function FightUISwitchEffectComp:onClose()
+	self:clearEffectAnim()
 
-	arg_24_0._effectSceneRoot = nil
+	self._effectSceneRoot = nil
 
-	arg_24_0:removeEvent()
+	self:removeEvent()
 end
 
-function var_0_0.onDestroy(arg_25_0)
-	arg_25_0:clearEffectAnim()
+function FightUISwitchEffectComp:onDestroy()
+	self:clearEffectAnim()
 
-	arg_25_0._effectSceneRoot = nil
+	self._effectSceneRoot = nil
 end
 
-return var_0_0
+return FightUISwitchEffectComp

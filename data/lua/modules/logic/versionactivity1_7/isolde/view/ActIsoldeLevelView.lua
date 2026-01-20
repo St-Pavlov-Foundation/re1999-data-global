@@ -1,339 +1,352 @@
-﻿module("modules.logic.versionactivity1_7.isolde.view.ActIsoldeLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/isolde/view/ActIsoldeLevelView.lua
 
-local var_0_0 = class("ActIsoldeLevelView", BaseView)
+module("modules.logic.versionactivity1_7.isolde.view.ActIsoldeLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._gostoryPath = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath")
-	arg_1_0._gostoryScroll = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll")
-	arg_1_0._gostoryStages = gohelper.findChild(arg_1_0.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
-	arg_1_0._gofightPath = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath")
-	arg_1_0._gofightScroll = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll")
-	arg_1_0._gofightStages = gohelper.findChild(arg_1_0.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
-	arg_1_0._goTitle = gohelper.findChild(arg_1_0.viewGO, "#go_Title")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_Title/#simage_title")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_Title/#go_time")
-	arg_1_0._txtlimittime = gohelper.findChildText(arg_1_0.viewGO, "#go_Title/#go_time/#txt_limittime")
-	arg_1_0._btnPlayBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Title/#btn_PlayBtn")
-	arg_1_0._btnStory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Story")
-	arg_1_0._goStoryN = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_UnSelected")
-	arg_1_0._goStoryS = gohelper.findChild(arg_1_0._btnStory.gameObject, "go_Selected")
-	arg_1_0._btnFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Fight")
-	arg_1_0._goFightN = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_UnSelected")
-	arg_1_0._goFightS = gohelper.findChild(arg_1_0._btnFight.gameObject, "go_Selected")
-	arg_1_0._btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Task")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0._animEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_1_0._animPath = gohelper.findChild(arg_1_0._gostoryScroll, "path/path_2"):GetComponent(gohelper.Type_Animator)
-	arg_1_0._animTask = gohelper.findChild(arg_1_0.viewGO, "#btn_Task/ani"):GetComponent(gohelper.Type_Animator)
-	arg_1_0._scrollStory = gohelper.findChildScrollRect(arg_1_0._gostoryPath, "")
+local ActIsoldeLevelView = class("ActIsoldeLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActIsoldeLevelView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._gostoryPath = gohelper.findChild(self.viewGO, "#go_storyPath")
+	self._gostoryScroll = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll")
+	self._gostoryStages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
+	self._gofightPath = gohelper.findChild(self.viewGO, "#go_fightPath")
+	self._gofightScroll = gohelper.findChild(self.viewGO, "#go_fightPath/#go_fightScroll")
+	self._gofightStages = gohelper.findChild(self.viewGO, "#go_fightPath/#go_fightScroll/#go_fightStages")
+	self._goTitle = gohelper.findChild(self.viewGO, "#go_Title")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_Title/#simage_title")
+	self._gotime = gohelper.findChild(self.viewGO, "#go_Title/#go_time")
+	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
+	self._btnPlayBtn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Title/#btn_PlayBtn")
+	self._btnStory = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Story")
+	self._goStoryN = gohelper.findChild(self._btnStory.gameObject, "go_UnSelected")
+	self._goStoryS = gohelper.findChild(self._btnStory.gameObject, "go_Selected")
+	self._btnFight = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Fight")
+	self._goFightN = gohelper.findChild(self._btnFight.gameObject, "go_UnSelected")
+	self._goFightS = gohelper.findChild(self._btnFight.gameObject, "go_Selected")
+	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+
+	local goPath = gohelper.findChild(self._gostoryScroll, "path/path_2")
+
+	self._animPath = goPath:GetComponent(gohelper.Type_Animator)
+
+	local goTaskAnim = gohelper.findChild(self.viewGO, "#btn_Task/ani")
+
+	self._animTask = goTaskAnim:GetComponent(gohelper.Type_Animator)
+	self._scrollStory = gohelper.findChildScrollRect(self._gostoryPath, "")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnPlayBtn:AddClickListener(arg_2_0._btnPlayBtnOnClick, arg_2_0)
-	arg_2_0._btnStory:AddClickListener(arg_2_0._btnStoryOnClick, arg_2_0)
-	arg_2_0._btnFight:AddClickListener(arg_2_0._btnFightOnClick, arg_2_0)
-	arg_2_0._btnTask:AddClickListener(arg_2_0._btnTaskOnClick, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActIsoldeEnum.AnimEvt.OnStoryOpenEnd, arg_2_0._onStoryOpenEnd, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActIsoldeEnum.AnimEvt.OnFightOpenEnd, arg_2_0._onFightOpenEnd, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(ActIsoldeEnum.AnimEvt.OnGoStoryEnd, arg_2_0._onGoStoryEnd, arg_2_0)
+function ActIsoldeLevelView:addEvents()
+	self._btnPlayBtn:AddClickListener(self._btnPlayBtnOnClick, self)
+	self._btnStory:AddClickListener(self._btnStoryOnClick, self)
+	self._btnFight:AddClickListener(self._btnFightOnClick, self)
+	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
+	self._animEvent:AddEventListener(ActIsoldeEnum.AnimEvt.OnStoryOpenEnd, self._onStoryOpenEnd, self)
+	self._animEvent:AddEventListener(ActIsoldeEnum.AnimEvt.OnFightOpenEnd, self._onFightOpenEnd, self)
+	self._animEvent:AddEventListener(ActIsoldeEnum.AnimEvt.OnGoStoryEnd, self._onGoStoryEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnPlayBtn:RemoveClickListener()
-	arg_3_0._btnStory:RemoveClickListener()
-	arg_3_0._btnFight:RemoveClickListener()
-	arg_3_0._btnTask:RemoveClickListener()
+function ActIsoldeLevelView:removeEvents()
+	self._btnPlayBtn:RemoveClickListener()
+	self._btnStory:RemoveClickListener()
+	self._btnFight:RemoveClickListener()
+	self._btnTask:RemoveClickListener()
 end
 
-function var_0_0._btnPlayBtnOnClick(arg_4_0)
-	if arg_4_0.actConfig.storyId > 0 then
-		StoryController.instance:playStory(arg_4_0.actConfig.storyId)
+function ActIsoldeLevelView:_btnPlayBtnOnClick()
+	if self.actConfig.storyId > 0 then
+		StoryController.instance:playStory(self.actConfig.storyId)
 	end
 end
 
-function var_0_0._btnStoryOnClick(arg_5_0, arg_5_1)
-	if arg_5_0._gostoryPath.activeInHierarchy then
+function ActIsoldeLevelView:_btnStoryOnClick(isOpen)
+	if self._gostoryPath.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_5_0._goStoryN, false)
-	gohelper.setActive(arg_5_0._goStoryS, true)
-	gohelper.setActive(arg_5_0._goFightN, true)
-	gohelper.setActive(arg_5_0._goFightS, false)
-	gohelper.setActive(arg_5_0._btnPlayBtn, arg_5_0.actConfig.storyId > 0)
+	gohelper.setActive(self._goStoryN, false)
+	gohelper.setActive(self._goStoryS, true)
+	gohelper.setActive(self._goFightN, true)
+	gohelper.setActive(self._goFightS, false)
+	gohelper.setActive(self._btnPlayBtn, self.actConfig.storyId > 0)
 
-	if arg_5_1 then
-		arg_5_0._anim:Play("openstory", 0, 0)
+	if isOpen then
+		self._anim:Play("openstory", 0, 0)
 	else
-		arg_5_0._anim:Play("gostory", 0, 0)
+		self._anim:Play("gostory", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_switch)
 	end
 end
 
-function var_0_0._btnFightOnClick(arg_6_0, arg_6_1)
-	if arg_6_0._gofightPath.activeInHierarchy then
+function ActIsoldeLevelView:_btnFightOnClick(isOpen)
+	if self._gofightPath.activeInHierarchy then
 		return
 	end
 
-	gohelper.setActive(arg_6_0._goStoryN, true)
-	gohelper.setActive(arg_6_0._goStoryS, false)
-	gohelper.setActive(arg_6_0._goFightN, false)
-	gohelper.setActive(arg_6_0._goFightS, true)
-	gohelper.setActive(arg_6_0._btnPlayBtn, false)
+	gohelper.setActive(self._goStoryN, true)
+	gohelper.setActive(self._goStoryS, false)
+	gohelper.setActive(self._goFightN, false)
+	gohelper.setActive(self._goFightS, true)
+	gohelper.setActive(self._btnPlayBtn, false)
 
-	if arg_6_1 then
-		arg_6_0._anim:Play("openfight", 0, 0)
+	if isOpen then
+		self._anim:Play("openfight", 0, 0)
 	else
-		arg_6_0._anim:Play("gofight", 0, 0)
+		self._anim:Play("gofight", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_switch)
 	end
 end
 
-function var_0_0._btnTaskOnClick(arg_7_0)
+function ActIsoldeLevelView:_btnTaskOnClick()
 	ViewMgr.instance:openView(ViewName.ActIsoldeTaskView)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.actId = VersionActivity1_7Enum.ActivityId.Isolde
-	arg_8_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_8_0._gostoryPath)
+function ActIsoldeLevelView:_editableInitView()
+	self.actId = VersionActivity1_7Enum.ActivityId.Isolde
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._gostoryPath)
 
-	arg_8_0._drag:AddDragBeginListener(arg_8_0._onDragBegin, arg_8_0)
-	arg_8_0._drag:AddDragEndListener(arg_8_0._onDragEnd, arg_8_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_8_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_8_0._gostoryPath)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._gostoryPath)
 
-	arg_8_0._touch:AddClickDownListener(arg_8_0._onClickDown, arg_8_0)
+	self._touch:AddClickDownListener(self._onClickDown, self)
 
-	arg_8_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_8_0._gostoryPath, DungeonMapEpisodeAudio, arg_8_0._scrollStory)
-	arg_8_0.actConfig = ActivityConfig.instance:getActivityCo(arg_8_0.actId)
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._gostoryPath, DungeonMapEpisodeAudio, self._scrollStory)
+	self.actConfig = ActivityConfig.instance:getActivityCo(self.actId)
 
-	local var_8_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local rightOffsetX = -300
 
-	arg_8_0._offsetX = (var_8_0 - -300) / 2
-	arg_8_0.minContentAnchorX = -4660 + var_8_0
+	self._offsetX = (width - rightOffsetX) / 2
+	self.minContentAnchorX = -4660 + width
 
 	ActIsoldeModel.instance:initData()
-	arg_8_0:_initStageItems()
-	gohelper.setActive(arg_8_0._btnPlayBtn, arg_8_0.actConfig.storyId > 0)
-	gohelper.setActive(arg_8_0._gotime, false)
+	self:_initStageItems()
+	gohelper.setActive(self._btnPlayBtn, self.actConfig.storyId > 0)
+	gohelper.setActive(self._gotime, false)
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(ActIsoldeController.instance, ActIsoldeEvent.StoryItemClick, arg_9_0.OnStoryItemClick, arg_9_0)
-	arg_9_0:addEventCb(ActIsoldeController.instance, ActIsoldeEvent.FightItemClick, arg_9_0.OnFightItemClick, arg_9_0)
-	arg_9_0:addEventCb(ActIsoldeController.instance, ActIsoldeEvent.TabSwitch, arg_9_0.OnTabSwitch, arg_9_0)
-	arg_9_0:addEventCb(StoryController.instance, StoryEvent.Finish, arg_9_0.OnStoryFinish, arg_9_0)
-	arg_9_0:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, arg_9_0.OnEndDungeonPush, arg_9_0)
-	arg_9_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_9_0.OnDotChange, arg_9_0)
+function ActIsoldeLevelView:onOpen()
+	self:addEventCb(ActIsoldeController.instance, ActIsoldeEvent.StoryItemClick, self.OnStoryItemClick, self)
+	self:addEventCb(ActIsoldeController.instance, ActIsoldeEvent.FightItemClick, self.OnFightItemClick, self)
+	self:addEventCb(ActIsoldeController.instance, ActIsoldeEvent.TabSwitch, self.OnTabSwitch, self)
+	self:addEventCb(StoryController.instance, StoryEvent.Finish, self.OnStoryFinish, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnEndDungeonPush, self.OnEndDungeonPush, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, self.OnDotChange, self)
 
-	local var_9_0 = gohelper.findChild(arg_9_0._btnTask.gameObject, "#go_reddot")
+	local goreddot = gohelper.findChild(self._btnTask.gameObject, "#go_reddot")
 
-	RedDotController.instance:addRedDot(var_9_0, RedDotEnum.DotNode.PermanentRoleActivityTask, arg_9_0.actId)
-	arg_9_0:OnDotChange()
-	arg_9_0:_showLeftTime()
-	TaskDispatcher.runRepeat(arg_9_0._showLeftTime, arg_9_0, 1)
+	RedDotController.instance:addRedDot(goreddot, RedDotEnum.DotNode.PermanentRoleActivityTask, self.actId)
+	self:OnDotChange()
+	self:_showLeftTime()
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
 
-	if arg_9_0.viewParam and arg_9_0.viewParam.needShowFight then
-		local var_9_1 = ActIsoldeModel.instance:getEnterFightIndex()
+	if self.viewParam and self.viewParam.needShowFight then
+		local fightIndex = ActIsoldeModel.instance:getEnterFightIndex()
 
-		if var_9_1 then
-			arg_9_0.latestfightItem = var_9_1
+		if fightIndex then
+			self.latestfightItem = fightIndex
 
-			for iter_9_0, iter_9_1 in ipairs(arg_9_0.fightItemList) do
-				iter_9_1:refreshSelect(var_9_1)
+			for _, fightItem in ipairs(self.fightItemList) do
+				fightItem:refreshSelect(fightIndex)
 			end
 		end
 
-		arg_9_0:_btnFightOnClick(true)
-		arg_9_0:_lockScreen(true)
-		TaskDispatcher.runDelay(arg_9_0._delayOpenFight, arg_9_0, 0.3)
+		self:_btnFightOnClick(true)
+		self:_lockScreen(true)
+		TaskDispatcher.runDelay(self._delayOpenFight, self, 0.3)
 	else
-		arg_9_0:_btnStoryOnClick(true)
+		self:_btnStoryOnClick(true)
 
-		if ActIsoldeModel.instance:getFirstEnter() then
+		local firstEnter = ActIsoldeModel.instance:getFirstEnter()
+
+		if firstEnter then
 			ActIsoldeModel.instance:clearFirstEnter()
-			arg_9_0:_lockScreen(true)
-			arg_9_0.storyItemList[1]:lockStatus()
-			TaskDispatcher.runDelay(arg_9_0._playFirstUnlock, arg_9_0, 0.8)
+			self:_lockScreen(true)
+			self.storyItemList[1]:lockStatus()
+			TaskDispatcher.runDelay(self._playFirstUnlock, self, 0.8)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._showLeftTime, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayOpenFight, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._playFirstUnlock, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayOpenStory, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._unlockStoryEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._finishStoryEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._playPathAnim, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._unlockFightEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._unlockStory, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._starShowEnd, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._playStoryFinishAnim, arg_10_0)
-	arg_10_0:_lockScreen(false)
+function ActIsoldeLevelView:onClose()
+	TaskDispatcher.cancelTask(self._showLeftTime, self)
+	TaskDispatcher.cancelTask(self._delayOpenFight, self)
+	TaskDispatcher.cancelTask(self._playFirstUnlock, self)
+	TaskDispatcher.cancelTask(self._delayOpenStory, self)
+	TaskDispatcher.cancelTask(self._unlockStoryEnd, self)
+	TaskDispatcher.cancelTask(self._finishStoryEnd, self)
+	TaskDispatcher.cancelTask(self._playPathAnim, self)
+	TaskDispatcher.cancelTask(self._unlockFightEnd, self)
+	TaskDispatcher.cancelTask(self._unlockStory, self)
+	TaskDispatcher.cancelTask(self._starShowEnd, self)
+	TaskDispatcher.cancelTask(self._playStoryFinishAnim, self)
+	self:_lockScreen(false)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0.storyItemList = nil
-	arg_11_0.fightItemList = nil
+function ActIsoldeLevelView:onDestroyView()
+	self.storyItemList = nil
+	self.fightItemList = nil
 
-	if arg_11_0._drag then
-		arg_11_0._drag:RemoveDragBeginListener()
-		arg_11_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_11_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_11_0._touch then
-		arg_11_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_11_0._touch = nil
+		self._touch = nil
 	end
 end
 
-function var_0_0.OnStoryItemClick(arg_12_0, arg_12_1)
-	arg_12_0:_focusStoryItem(arg_12_1, true)
+function ActIsoldeLevelView:OnStoryItemClick(index)
+	self:_focusStoryItem(index, true)
 end
 
-function var_0_0.OnFightItemClick(arg_13_0, arg_13_1)
-	if arg_13_0.latestfightItem == arg_13_1 then
+function ActIsoldeLevelView:OnFightItemClick(_index)
+	if self.latestfightItem == _index then
 		return
 	end
 
-	arg_13_0.latestfightItem = arg_13_1
+	self.latestfightItem = _index
 
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.fight_switch)
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.fightItemList) do
-		iter_13_1:refreshSelect(arg_13_1)
+	for _, fightItem in ipairs(self.fightItemList) do
+		fightItem:refreshSelect(_index)
 	end
 end
 
-function var_0_0.OnTabSwitch(arg_14_0, arg_14_1)
-	if arg_14_1 then
-		arg_14_0:_btnFightOnClick()
+function ActIsoldeLevelView:OnTabSwitch(needShowFight)
+	if needShowFight then
+		self:_btnFightOnClick()
 	else
-		arg_14_0:_btnStoryOnClick()
+		self:_btnStoryOnClick()
 	end
 end
 
-function var_0_0.OnStoryFinish(arg_15_0)
-	TaskDispatcher.runDelay(arg_15_0._delayOpenStory, arg_15_0, 0.4)
+function ActIsoldeLevelView:OnStoryFinish()
+	TaskDispatcher.runDelay(self._delayOpenStory, self, 0.4)
 end
 
-function var_0_0.OnEndDungeonPush(arg_16_0)
+function ActIsoldeLevelView:OnEndDungeonPush()
 	ActIsoldeModel.instance:updateData()
-	TaskDispatcher.runDelay(arg_16_0._playStoryFinishAnim, arg_16_0, 0.73)
+	TaskDispatcher.runDelay(self._playStoryFinishAnim, self, 0.73)
 end
 
-function var_0_0.OnDotChange(arg_17_0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PermanentRoleActivityTask, arg_17_0.actId) then
-		arg_17_0._animTask:Play("loop")
+function ActIsoldeLevelView:OnDotChange()
+	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PermanentRoleActivityTask, self.actId)
+
+	if isDotShow then
+		self._animTask:Play("loop")
 	else
-		arg_17_0._animTask:Play("idle")
+		self._animTask:Play("idle")
 	end
 end
 
-function var_0_0._onStoryOpenEnd(arg_18_0)
-	arg_18_0:_initPathStatus()
+function ActIsoldeLevelView:_onStoryOpenEnd()
+	self:_initPathStatus()
 end
 
-function var_0_0._onFightOpenEnd(arg_19_0)
-	arg_19_0:_playFightFinishAnim()
+function ActIsoldeLevelView:_onFightOpenEnd()
+	self:_playFightFinishAnim()
 end
 
-function var_0_0._onGoStoryEnd(arg_20_0)
-	arg_20_0:_initPathStatus()
+function ActIsoldeLevelView:_onGoStoryEnd()
+	self:_initPathStatus()
 end
 
-function var_0_0._onDragBegin(arg_21_0)
-	arg_21_0._audioScroll:onDragBegin()
+function ActIsoldeLevelView:_onDragBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_22_0)
-	arg_22_0._audioScroll:onDragEnd()
+function ActIsoldeLevelView:_onDragEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDown(arg_23_0)
-	arg_23_0._audioScroll:onClickDown()
+function ActIsoldeLevelView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-function var_0_0._initStageItems(arg_24_0)
-	local var_24_0
-	local var_24_1
-	local var_24_2 = arg_24_0.viewContainer:getSetting().otherRes[1]
+function ActIsoldeLevelView:_initStageItems()
+	local levelCount, path
 
-	arg_24_0.storyItemList = {}
+	path = self.viewContainer:getSetting().otherRes[1]
+	self.storyItemList = {}
 
-	local var_24_3 = RoleActivityConfig.instance:getStoryLevelList(arg_24_0.actId)
-	local var_24_4 = #var_24_3
+	local storyConfigList = RoleActivityConfig.instance:getStoryLevelList(self.actId)
 
-	for iter_24_0 = 1, var_24_4 do
-		local var_24_5 = gohelper.findChild(arg_24_0._gostoryStages, "stage" .. iter_24_0)
-		local var_24_6 = arg_24_0:getResInst(var_24_2, var_24_5)
-		local var_24_7 = MonoHelper.addNoUpdateLuaComOnceToGo(var_24_6, IsoldeStoryItem, arg_24_0)
+	levelCount = #storyConfigList
 
-		arg_24_0.storyItemList[iter_24_0] = var_24_7
+	for i = 1, levelCount do
+		local stageGo = gohelper.findChild(self._gostoryStages, "stage" .. i)
+		local cloneGo = self:getResInst(path, stageGo)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, IsoldeStoryItem, self)
 
-		arg_24_0.storyItemList[iter_24_0]:setParam(var_24_3[iter_24_0], iter_24_0)
+		self.storyItemList[i] = stageItem
 
-		if arg_24_0.storyItemList[iter_24_0]:isUnlock() then
-			arg_24_0.latestStoryItem = iter_24_0
+		self.storyItemList[i]:setParam(storyConfigList[i], i)
+
+		if self.storyItemList[i]:isUnlock() then
+			self.latestStoryItem = i
 		end
 	end
 
-	arg_24_0:_focusStoryItem(arg_24_0.latestStoryItem)
+	self:_focusStoryItem(self.latestStoryItem)
 
-	local var_24_8 = arg_24_0.viewContainer:getSetting().otherRes[2]
+	path = self.viewContainer:getSetting().otherRes[2]
+	self.fightItemList = {}
 
-	arg_24_0.fightItemList = {}
+	local fightConfigList = RoleActivityConfig.instance:getBattleLevelList(self.actId)
 
-	local var_24_9 = RoleActivityConfig.instance:getBattleLevelList(arg_24_0.actId)
-	local var_24_10 = #var_24_9 / 2
+	levelCount = #fightConfigList / 2
 
-	for iter_24_1 = 1, var_24_10 do
-		local var_24_11 = gohelper.findChild(arg_24_0._gofightStages, "stage" .. iter_24_1)
-		local var_24_12 = arg_24_0:getResInst(var_24_8, var_24_11)
-		local var_24_13 = MonoHelper.addNoUpdateLuaComOnceToGo(var_24_12, IsoldeFightItem, arg_24_0)
+	for i = 1, levelCount do
+		local stageGo = gohelper.findChild(self._gofightStages, "stage" .. i)
+		local cloneGo = self:getResInst(path, stageGo)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, IsoldeFightItem, self)
 
-		arg_24_0.fightItemList[iter_24_1] = var_24_13
+		self.fightItemList[i] = stageItem
 
-		arg_24_0.fightItemList[iter_24_1]:setParam(var_24_9[2 * iter_24_1 - 1], iter_24_1)
+		self.fightItemList[i]:setParam(fightConfigList[2 * i - 1], i)
 
-		if arg_24_0.fightItemList[iter_24_1]:isUnlock() then
-			arg_24_0.latestfightItem = iter_24_1
+		if self.fightItemList[i]:isUnlock() then
+			self.latestfightItem = i
 		end
 	end
 
-	arg_24_0.fightItemList[arg_24_0.latestfightItem]:refreshSelect()
+	self.fightItemList[self.latestfightItem]:refreshSelect()
 end
 
-function var_0_0._playFirstUnlock(arg_25_0)
-	arg_25_0.finishStoryIndex = 0
+function ActIsoldeLevelView:_playFirstUnlock()
+	self.finishStoryIndex = 0
 
-	arg_25_0.storyItemList[1]:playUnlock()
-	TaskDispatcher.runDelay(arg_25_0._unlockStoryEnd, arg_25_0, 0.83)
+	self.storyItemList[1]:playUnlock()
+	TaskDispatcher.runDelay(self._unlockStoryEnd, self, 0.83)
 end
 
-function var_0_0._playStoryFinishAnim(arg_26_0)
-	local var_26_0 = ActIsoldeModel.instance:getNewFinishStoryLvl()
+function ActIsoldeLevelView:_playStoryFinishAnim()
+	local newFinishStoryLvlId = ActIsoldeModel.instance:getNewFinishStoryLvl()
 
-	if var_26_0 then
-		for iter_26_0, iter_26_1 in ipairs(arg_26_0.storyItemList) do
-			if iter_26_1.id == var_26_0 then
-				arg_26_0:_lockScreen(true)
+	if newFinishStoryLvlId then
+		for k, storyItem in ipairs(self.storyItemList) do
+			if storyItem.id == newFinishStoryLvlId then
+				self:_lockScreen(true)
 
-				arg_26_0.finishStoryIndex = iter_26_0
+				self.finishStoryIndex = k
 
-				iter_26_1:playFinish()
-				TaskDispatcher.runDelay(arg_26_0._finishStoryEnd, arg_26_0, 1.5)
+				storyItem:playFinish()
+				TaskDispatcher.runDelay(self._finishStoryEnd, self, 1.5)
 
 				break
 			end
@@ -343,63 +356,63 @@ function var_0_0._playStoryFinishAnim(arg_26_0)
 	end
 end
 
-function var_0_0._finishStoryEnd(arg_27_0)
-	arg_27_0.storyItemList[arg_27_0.finishStoryIndex]:refreshStatus()
-	arg_27_0.storyItemList[arg_27_0.finishStoryIndex]:playStarAnim()
+function ActIsoldeLevelView:_finishStoryEnd()
+	self.storyItemList[self.finishStoryIndex]:refreshStatus()
+	self.storyItemList[self.finishStoryIndex]:playStarAnim()
 
-	if arg_27_0.finishStoryIndex == #arg_27_0.storyItemList then
-		arg_27_0.latestStoryItem = arg_27_0.finishStoryIndex
-		arg_27_0.finishStoryIndex = nil
+	if self.finishStoryIndex == #self.storyItemList then
+		self.latestStoryItem = self.finishStoryIndex
+		self.finishStoryIndex = nil
 
-		arg_27_0:_lockScreen(false)
+		self:_lockScreen(false)
 	else
-		arg_27_0.latestStoryItem = arg_27_0.finishStoryIndex + 1
+		self.latestStoryItem = self.finishStoryIndex + 1
 
-		TaskDispatcher.runDelay(arg_27_0._playPathAnim, arg_27_0, 0.67)
+		TaskDispatcher.runDelay(self._playPathAnim, self, 0.67)
 	end
 end
 
-function var_0_0._playPathAnim(arg_28_0)
-	local var_28_0 = "go" .. arg_28_0.finishStoryIndex
+function ActIsoldeLevelView:_playPathAnim()
+	local animName = "go" .. self.finishStoryIndex
 
-	arg_28_0._animPath.speed = 1
+	self._animPath.speed = 1
 
-	arg_28_0._animPath:Play(var_28_0)
-	TaskDispatcher.runDelay(arg_28_0._unlockStory, arg_28_0, 0.5)
+	self._animPath:Play(animName)
+	TaskDispatcher.runDelay(self._unlockStory, self, 0.5)
 end
 
-function var_0_0._unlockStory(arg_29_0)
-	arg_29_0.storyItemList[arg_29_0.finishStoryIndex + 1]:playUnlock()
-	TaskDispatcher.runDelay(arg_29_0._unlockStoryEnd, arg_29_0, 1.7)
+function ActIsoldeLevelView:_unlockStory()
+	self.storyItemList[self.finishStoryIndex + 1]:playUnlock()
+	TaskDispatcher.runDelay(self._unlockStoryEnd, self, 1.7)
 end
 
-function var_0_0._unlockStoryEnd(arg_30_0)
-	arg_30_0.storyItemList[arg_30_0.finishStoryIndex + 1]:refreshStatus()
+function ActIsoldeLevelView:_unlockStoryEnd()
+	self.storyItemList[self.finishStoryIndex + 1]:refreshStatus()
 
-	arg_30_0.finishStoryIndex = nil
+	self.finishStoryIndex = nil
 
-	arg_30_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._playFightFinishAnim(arg_31_0)
+function ActIsoldeLevelView:_playFightFinishAnim()
 	ActIsoldeModel.instance:updateData()
 
-	local var_31_0 = ActIsoldeModel.instance:getNewFinishFightLvl()
+	local newFinishFightLvlId = ActIsoldeModel.instance:getNewFinishFightLvl()
 
-	if var_31_0 then
-		for iter_31_0, iter_31_1 in ipairs(arg_31_0.fightItemList) do
-			if iter_31_1.id == var_31_0 then
-				arg_31_0.finishFightIndex = iter_31_0
+	if newFinishFightLvlId then
+		for k, fightItem in ipairs(self.fightItemList) do
+			if fightItem.id == newFinishFightLvlId then
+				self.finishFightIndex = k
 
-				iter_31_1:refreshStar()
-				iter_31_1:playStarAnim(true)
-				TaskDispatcher.runDelay(arg_31_0._starShowEnd, arg_31_0, 0.67)
+				fightItem:refreshStar()
+				fightItem:playStarAnim(true)
+				TaskDispatcher.runDelay(self._starShowEnd, self, 0.67)
 
 				break
-			elseif iter_31_1.hardConfig.id == var_31_0 then
-				iter_31_1:refreshStar()
-				iter_31_1:playStarAnim()
-				arg_31_0:_lockScreen(false)
+			elseif fightItem.hardConfig.id == newFinishFightLvlId then
+				fightItem:refreshStar()
+				fightItem:playStarAnim()
+				self:_lockScreen(false)
 
 				break
 			end
@@ -410,75 +423,75 @@ function var_0_0._playFightFinishAnim(arg_31_0)
 		return
 	end
 
-	arg_31_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._starShowEnd(arg_32_0)
-	arg_32_0.fightItemList[arg_32_0.finishFightIndex]:playHardUnlock()
-	TaskDispatcher.runDelay(arg_32_0._unlockFightEnd, arg_32_0, 1.7)
+function ActIsoldeLevelView:_starShowEnd()
+	self.fightItemList[self.finishFightIndex]:playHardUnlock()
+	TaskDispatcher.runDelay(self._unlockFightEnd, self, 1.7)
 
-	if arg_32_0.fightItemList[arg_32_0.finishFightIndex + 1] then
-		arg_32_0.fightItemList[arg_32_0.finishFightIndex + 1]:playUnlock()
+	if self.fightItemList[self.finishFightIndex + 1] then
+		self.fightItemList[self.finishFightIndex + 1]:playUnlock()
 	end
 end
 
-function var_0_0._unlockFightEnd(arg_33_0)
-	arg_33_0.fightItemList[arg_33_0.finishFightIndex]:refreshStatus()
+function ActIsoldeLevelView:_unlockFightEnd()
+	self.fightItemList[self.finishFightIndex]:refreshStatus()
 
-	if arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1] then
-		arg_33_0.fightItemList[arg_33_0.finishFightIndex + 1]:refreshStatus()
+	if self.fightItemList[self.finishFightIndex + 1] then
+		self.fightItemList[self.finishFightIndex + 1]:refreshStatus()
 	end
 
-	arg_33_0.finishFightIndex = nil
+	self.finishFightIndex = nil
 
-	arg_33_0:_lockScreen(false)
+	self:_lockScreen(false)
 end
 
-function var_0_0._delayOpenStory(arg_34_0)
-	arg_34_0._anim:Play("openstory", 0, 0)
+function ActIsoldeLevelView:_delayOpenStory()
+	self._anim:Play("openstory", 0, 0)
 end
 
-function var_0_0._delayOpenFight(arg_35_0)
-	arg_35_0._anim:Play("openfight", 0, 0)
+function ActIsoldeLevelView:_delayOpenFight()
+	self._anim:Play("openfight", 0, 0)
 end
 
-function var_0_0._showLeftTime(arg_36_0)
-	arg_36_0._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(arg_36_0.actId)
+function ActIsoldeLevelView:_showLeftTime()
+	self._txtlimittime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 
-function var_0_0._initPathStatus(arg_37_0)
-	if arg_37_0.latestStoryItem > 1 then
-		arg_37_0._animPath:Play("go" .. arg_37_0.latestStoryItem - 1, 0, 1)
+function ActIsoldeLevelView:_initPathStatus()
+	if self.latestStoryItem > 1 then
+		self._animPath:Play("go" .. self.latestStoryItem - 1, 0, 1)
 	else
-		arg_37_0._animPath.speed = 0
+		self._animPath.speed = 0
 
-		arg_37_0._animPath:Play("go1", 0, 0)
+		self._animPath:Play("go1", 0, 0)
 	end
 end
 
-function var_0_0._focusStoryItem(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = recthelper.getAnchorX(arg_38_0.storyItemList[arg_38_1].transform.parent)
-	local var_38_1 = arg_38_0._offsetX - var_38_0
+function ActIsoldeLevelView:_focusStoryItem(index, needPlay)
+	local contentAnchorX = recthelper.getAnchorX(self.storyItemList[index].transform.parent)
+	local offsetX = self._offsetX - contentAnchorX
 
-	if var_38_1 > 0 then
-		var_38_1 = 0
-	elseif var_38_1 < arg_38_0.minContentAnchorX then
-		var_38_1 = arg_38_0.minContentAnchorX
+	if offsetX > 0 then
+		offsetX = 0
+	elseif offsetX < self.minContentAnchorX then
+		offsetX = self.minContentAnchorX
 	end
 
-	if arg_38_2 then
-		ZProj.TweenHelper.DOAnchorPosX(arg_38_0._gostoryScroll.transform, var_38_1, 0.26, arg_38_0._onFocusEnd, arg_38_0, arg_38_1)
+	if needPlay then
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26, self._onFocusEnd, self, index)
 	else
-		ZProj.TweenHelper.DOAnchorPosX(arg_38_0._gostoryScroll.transform, var_38_1, 0.26)
+		ZProj.TweenHelper.DOAnchorPosX(self._gostoryScroll.transform, offsetX, 0.26)
 	end
 end
 
-function var_0_0._onFocusEnd(arg_39_0, arg_39_1)
-	arg_39_0.storyItemList[arg_39_1]:playStory()
+function ActIsoldeLevelView:_onFocusEnd(index)
+	self.storyItemList[index]:playStory()
 end
 
-function var_0_0._lockScreen(arg_40_0, arg_40_1)
-	if arg_40_1 then
+function ActIsoldeLevelView:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("IsoldeLock")
 	else
@@ -487,4 +500,4 @@ function var_0_0._lockScreen(arg_40_0, arg_40_1)
 	end
 end
 
-return var_0_0
+return ActIsoldeLevelView

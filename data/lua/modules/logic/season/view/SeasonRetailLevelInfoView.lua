@@ -1,191 +1,193 @@
-﻿module("modules.logic.season.view.SeasonRetailLevelInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonRetailLevelInfoView.lua
 
-local var_0_0 = class("SeasonRetailLevelInfoView", BaseView)
+module("modules.logic.season.view.SeasonRetailLevelInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageuppermask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_uppermask")
-	arg_1_0._simagedecorate = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decorate")
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
-	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
-	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "bottom")
-	arg_1_0._gonormalcondition = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_conditions/#go_normalcondition")
-	arg_1_0._txtnormalrule = gohelper.findChildText(arg_1_0.viewGO, "bottom/#go_conditions/#go_normalcondition/#txt_normalrule")
-	arg_1_0._gospecialcondition = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_conditions/#go_specialcondition")
-	arg_1_0._txtspecialrule = gohelper.findChildText(arg_1_0.viewGO, "bottom/#go_conditions/#go_specialcondition/#txt_specialrule")
-	arg_1_0._txtlevelname = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_levelname")
-	arg_1_0._txtenemylevelnum = gohelper.findChildText(arg_1_0.viewGO, "bottom/txt_enemylevel/#txt_enemylevelnum")
-	arg_1_0._scrollcelebritycard = gohelper.findChildScrollRect(arg_1_0.viewGO, "bottom/rewards/rewardlist/#scroll_celebritycard")
-	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "bottom/rewards/rewardlist/#scroll_celebritycard/scrollcontent_seasoncelebritycarditem")
-	arg_1_0._txtdecr = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_decr")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_close")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_start")
-	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "bottom/#go_tag")
-	arg_1_0._txttagdesc = gohelper.findChildText(arg_1_0.viewGO, "bottom/#go_tag/descbg/#txt_tagdesc")
-	arg_1_0._gostageitem = gohelper.findChild(arg_1_0.viewGO, "bottom/stages/#go_stageitem")
+local SeasonRetailLevelInfoView = class("SeasonRetailLevelInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SeasonRetailLevelInfoView:onInitView()
+	self._simageuppermask = gohelper.findChildSingleImage(self.viewGO, "#simage_uppermask")
+	self._simagedecorate = gohelper.findChildSingleImage(self.viewGO, "#simage_decorate")
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1")
+	self._btnclose2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close2")
+	self._gobottom = gohelper.findChild(self.viewGO, "bottom")
+	self._gonormalcondition = gohelper.findChild(self.viewGO, "bottom/#go_conditions/#go_normalcondition")
+	self._txtnormalrule = gohelper.findChildText(self.viewGO, "bottom/#go_conditions/#go_normalcondition/#txt_normalrule")
+	self._gospecialcondition = gohelper.findChild(self.viewGO, "bottom/#go_conditions/#go_specialcondition")
+	self._txtspecialrule = gohelper.findChildText(self.viewGO, "bottom/#go_conditions/#go_specialcondition/#txt_specialrule")
+	self._txtlevelname = gohelper.findChildText(self.viewGO, "bottom/#txt_levelname")
+	self._txtenemylevelnum = gohelper.findChildText(self.viewGO, "bottom/txt_enemylevel/#txt_enemylevelnum")
+	self._scrollcelebritycard = gohelper.findChildScrollRect(self.viewGO, "bottom/rewards/rewardlist/#scroll_celebritycard")
+	self._gocarditem = gohelper.findChild(self.viewGO, "bottom/rewards/rewardlist/#scroll_celebritycard/scrollcontent_seasoncelebritycarditem")
+	self._txtdecr = gohelper.findChildText(self.viewGO, "bottom/#txt_decr")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_close")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_start")
+	self._gotag = gohelper.findChild(self.viewGO, "bottom/#go_tag")
+	self._txttagdesc = gohelper.findChildText(self.viewGO, "bottom/#go_tag/descbg/#txt_tagdesc")
+	self._gostageitem = gohelper.findChild(self.viewGO, "bottom/stages/#go_stageitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
-	arg_2_0._btnclose2:AddClickListener(arg_2_0._btnclose2OnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, arg_2_0._onBattleReply, arg_2_0)
+function SeasonRetailLevelInfoView:addEvents()
+	self._btnclose1:AddClickListener(self._btnclose1OnClick, self)
+	self._btnclose2:AddClickListener(self._btnclose2OnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self:addEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, self._onBattleReply, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose1:RemoveClickListener()
-	arg_3_0._btnclose2:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, arg_3_0._onBattleReply, arg_3_0)
+function SeasonRetailLevelInfoView:removeEvents()
+	self._btnclose1:RemoveClickListener()
+	self._btnclose2:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnstart:RemoveClickListener()
+	self:removeEventCb(Activity104Controller.instance, Activity104Event.StartAct104BattleReply, self._onBattleReply, self)
 end
 
-function var_0_0._onBattleReply(arg_4_0, arg_4_1)
-	Activity104Model.instance:onStartAct104BattleReply(arg_4_1)
+function SeasonRetailLevelInfoView:_onBattleReply(msg)
+	Activity104Model.instance:onStartAct104BattleReply(msg)
 end
 
-function var_0_0._btnclose1OnClick(arg_5_0)
-	arg_5_0:closeThis()
+function SeasonRetailLevelInfoView:_btnclose1OnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnclose2OnClick(arg_6_0)
-	arg_6_0:closeThis()
+function SeasonRetailLevelInfoView:_btnclose2OnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function SeasonRetailLevelInfoView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnstartOnClick(arg_8_0)
-	local var_8_0 = ActivityEnum.Activity.Season
+function SeasonRetailLevelInfoView:_btnstartOnClick()
+	local actId = ActivityEnum.Activity.Season
 
-	Activity104Rpc.instance:sendBeforeStartAct104BattleRequest(var_8_0, 0, arg_8_0.viewParam.episodeId)
+	Activity104Rpc.instance:sendBeforeStartAct104BattleRequest(actId, 0, self.viewParam.episodeId)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._simageuppermask:LoadImage(ResUrl.getSeasonIcon("full/seasonsecretlandentrance_mask.png"))
-	arg_9_0._simagedecorate:LoadImage(ResUrl.getSeasonIcon("particle.png"))
+function SeasonRetailLevelInfoView:_editableInitView()
+	self._simageuppermask:LoadImage(ResUrl.getSeasonIcon("full/seasonsecretlandentrance_mask.png"))
+	self._simagedecorate:LoadImage(ResUrl.getSeasonIcon("particle.png"))
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function SeasonRetailLevelInfoView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._cardItems = {}
+function SeasonRetailLevelInfoView:onOpen()
+	self._cardItems = {}
 
-	arg_11_0:_setInfo()
+	self:_setInfo()
 end
 
-local var_0_1 = {
+local commonRewardParams = {
 	targetFlagUIPosX = -32.7,
 	targetFlagUIScale = 2.3,
 	targetFlagUIPosY = 28.3
 }
 
-function var_0_0._setInfo(arg_12_0)
-	Activity104Controller.instance:dispatchEvent(Activity104Event.SelectRetail, arg_12_0.viewParam.retail.position)
+function SeasonRetailLevelInfoView:_setInfo()
+	Activity104Controller.instance:dispatchEvent(Activity104Event.SelectRetail, self.viewParam.retail.position)
 
-	local var_12_0 = math.min(Activity104Model.instance:getAct104CurStage(), 6)
+	local showStage = math.min(Activity104Model.instance:getAct104CurStage(), 6)
 
-	arg_12_0._txtlevelname.text = SeasonConfig.instance:getSeasonTagDesc(Activity104Model.instance:getCurSeasonId(), arg_12_0.viewParam.retail.tag).name .. " " .. GameUtil.getRomanNums(var_12_0)
+	self._txtlevelname.text = SeasonConfig.instance:getSeasonTagDesc(Activity104Model.instance:getCurSeasonId(), self.viewParam.retail.tag).name .. " " .. GameUtil.getRomanNums(showStage)
 
-	local var_12_1 = Activity104Model.instance:getRetailStage()
-	local var_12_2 = ActivityEnum.Activity.Season
+	local stage = Activity104Model.instance:getRetailStage()
+	local actId = ActivityEnum.Activity.Season
 
-	arg_12_0._txtenemylevelnum.text = HeroConfig.instance:getCommonLevelDisplay(SeasonConfig.instance:getSeasonRetailCo(var_12_2, var_12_1).level)
+	self._txtenemylevelnum.text = HeroConfig.instance:getCommonLevelDisplay(SeasonConfig.instance:getSeasonRetailCo(actId, stage).level)
 
-	local var_12_3 = Activity104Model.instance:getRetailEpisodeTag(arg_12_0.viewParam.retail.id)
+	local tag = Activity104Model.instance:getRetailEpisodeTag(self.viewParam.retail.id)
 
-	gohelper.setActive(arg_12_0._gotag, not string.nilorempty(var_12_3))
+	gohelper.setActive(self._gotag, not string.nilorempty(tag))
 
-	arg_12_0._txttagdesc.text = tostring(var_12_3)
+	self._txttagdesc.text = tostring(tag)
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._cardItems) do
-		gohelper.setActive(iter_12_1.go, false)
+	for _, v in pairs(self._cardItems) do
+		gohelper.setActive(v.go, false)
 	end
 
-	for iter_12_2 = 1, #arg_12_0.viewParam.retail.showActivity104EquipIds do
-		local var_12_4 = arg_12_0.viewParam.retail.showActivity104EquipIds[iter_12_2]
+	for i = 1, #self.viewParam.retail.showActivity104EquipIds do
+		local equipId = self.viewParam.retail.showActivity104EquipIds[i]
 
-		if not arg_12_0._cardItems[iter_12_2] then
-			arg_12_0._cardItems[iter_12_2] = SeasonCelebrityCardItem.New()
+		if not self._cardItems[i] then
+			self._cardItems[i] = SeasonCelebrityCardItem.New()
 
-			arg_12_0._cardItems[iter_12_2]:init(arg_12_0._gocarditem, var_12_4, var_0_1)
+			self._cardItems[i]:init(self._gocarditem, equipId, commonRewardParams)
 		else
-			gohelper.setActive(arg_12_0._cardItems[iter_12_2].go, true)
-			arg_12_0._cardItems[iter_12_2]:reset(var_12_4)
+			gohelper.setActive(self._cardItems[i].go, true)
+			self._cardItems[i]:reset(equipId)
 		end
 
-		arg_12_0._cardItems[iter_12_2]:showTag(true)
-		arg_12_0._cardItems[iter_12_2]:showProbability(true)
+		self._cardItems[i]:showTag(true)
+		self._cardItems[i]:showProbability(true)
 	end
 
-	gohelper.setActive(arg_12_0._gonormalcondition, arg_12_0.viewParam.retail.advancedId ~= 0 and arg_12_0.viewParam.retail.advancedRare == 1)
-	gohelper.setActive(arg_12_0._gospecialcondition, arg_12_0.viewParam.retail.advancedId ~= 0 and arg_12_0.viewParam.retail.advancedRare == 2)
+	gohelper.setActive(self._gonormalcondition, self.viewParam.retail.advancedId ~= 0 and self.viewParam.retail.advancedRare == 1)
+	gohelper.setActive(self._gospecialcondition, self.viewParam.retail.advancedId ~= 0 and self.viewParam.retail.advancedRare == 2)
 
-	if arg_12_0.viewParam.retail.advancedId ~= 0 then
-		local var_12_5 = lua_condition.configDict[arg_12_0.viewParam.retail.advancedId].desc
+	if self.viewParam.retail.advancedId ~= 0 then
+		local name = lua_condition.configDict[self.viewParam.retail.advancedId].desc
 
-		if arg_12_0.viewParam.retail.advancedRare == 1 then
-			arg_12_0._txtnormalrule.text = var_12_5
-		elseif arg_12_0.viewParam.retail.advancedRare == 2 then
-			arg_12_0._txtspecialrule.text = var_12_5
+		if self.viewParam.retail.advancedRare == 1 then
+			self._txtnormalrule.text = name
+		elseif self.viewParam.retail.advancedRare == 2 then
+			self._txtspecialrule.text = name
 		end
 	end
 
-	arg_12_0:_refreshStateUI()
+	self:_refreshStateUI()
 end
 
-var_0_0.MaxStageCount = 7
+SeasonRetailLevelInfoView.MaxStageCount = 7
 
-function var_0_0._refreshStateUI(arg_13_0)
-	arg_13_0._stageItemsTab = arg_13_0._stageItemsTab or arg_13_0:getUserDataTb_()
+function SeasonRetailLevelInfoView:_refreshStateUI()
+	self._stageItemsTab = self._stageItemsTab or self:getUserDataTb_()
 
-	local var_13_0 = Activity104Model.instance:getAct104CurStage()
+	local stage = Activity104Model.instance:getAct104CurStage()
 
-	for iter_13_0 = 1, var_0_0.MaxStageCount do
-		local var_13_1 = arg_13_0._stageItemsTab[iter_13_0]
+	for i = 1, SeasonRetailLevelInfoView.MaxStageCount do
+		local stageItem = self._stageItemsTab[i]
 
-		if not var_13_1 then
-			var_13_1 = gohelper.cloneInPlace(arg_13_0._gostageitem, "stageitem_" .. iter_13_0)
+		if not stageItem then
+			stageItem = gohelper.cloneInPlace(self._gostageitem, "stageitem_" .. i)
 
-			table.insert(arg_13_0._stageItemsTab, iter_13_0, var_13_1)
+			table.insert(self._stageItemsTab, i, stageItem)
 		end
 
-		gohelper.setActive(var_13_1, iter_13_0 <= 6 or iter_13_0 <= var_13_0)
+		gohelper.setActive(stageItem, i <= 6 or i <= stage)
 
-		local var_13_2 = gohelper.findChildImage(var_13_1, "dark")
-		local var_13_3 = gohelper.findChildImage(var_13_1, "light")
+		local dark = gohelper.findChildImage(stageItem, "dark")
+		local light = gohelper.findChildImage(stageItem, "light")
 
-		gohelper.setActive(var_13_3.gameObject, iter_13_0 <= var_13_0)
-		gohelper.setActive(var_13_2.gameObject, var_13_0 < iter_13_0)
+		gohelper.setActive(light.gameObject, i <= stage)
+		gohelper.setActive(dark.gameObject, stage < i)
 
-		local var_13_4 = iter_13_0 == 7 and "#B83838" or "#FFFFFF"
+		local color = i == 7 and "#B83838" or "#FFFFFF"
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_13_3, var_13_4)
+		SLFramework.UGUI.GuiHelper.SetColor(light, color)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function SeasonRetailLevelInfoView:onClose()
 	Activity104Controller.instance:dispatchEvent(Activity104Event.SelectRetail)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	if arg_15_0._cardItems then
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._cardItems) do
-			iter_15_1:destroy()
+function SeasonRetailLevelInfoView:onDestroyView()
+	if self._cardItems then
+		for _, v in pairs(self._cardItems) do
+			v:destroy()
 		end
 
-		arg_15_0._cardItems = nil
+		self._cardItems = nil
 	end
 
-	arg_15_0._simageuppermask:UnLoadImage()
-	arg_15_0._simagedecorate:UnLoadImage()
+	self._simageuppermask:UnLoadImage()
+	self._simagedecorate:UnLoadImage()
 end
 
-return var_0_0
+return SeasonRetailLevelInfoView

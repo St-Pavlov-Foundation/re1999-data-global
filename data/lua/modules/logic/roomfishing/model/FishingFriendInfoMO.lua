@@ -1,13 +1,15 @@
-﻿module("modules.logic.roomfishing.model.FishingFriendInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/model/FishingFriendInfoMO.lua
 
-local var_0_0 = pureTable("FishingFriendInfoMO")
+module("modules.logic.roomfishing.model.FishingFriendInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.type = arg_1_1.type
-	arg_1_0.userId = arg_1_1.userId
-	arg_1_0.name = arg_1_1.name
-	arg_1_0.portrait = arg_1_1.portrait
-	arg_1_0.poolId = arg_1_1.poolId
+local FishingFriendInfoMO = pureTable("FishingFriendInfoMO")
+
+function FishingFriendInfoMO:init(info)
+	self.type = info.type
+	self.userId = info.userId
+	self.name = info.name
+	self.portrait = info.portrait
+	self.poolId = info.poolId
 end
 
-return var_0_0
+return FishingFriendInfoMO

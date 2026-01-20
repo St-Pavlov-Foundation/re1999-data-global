@@ -1,28 +1,30 @@
-﻿module("modules.logic.scene.survivalsummaryact.SurvivalSummaryAct", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survivalsummaryact/SurvivalSummaryAct.lua
 
-local var_0_0 = class("SurvivalSummaryAct", BaseScene)
+module("modules.logic.scene.survivalsummaryact.SurvivalSummaryAct", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("camera", SurvivalSceneCameraComp)
-	arg_1_0:_addComp("director", SurvivalSummaryActDirector)
-	arg_1_0:_addComp("block", SurvivalSummaryActBlock)
-	arg_1_0:_addComp("level", SurvivalShelterSceneLevel)
-	arg_1_0:_addComp("preloader", SurvivalSummaryActPreloader)
-	arg_1_0:_addComp("graphics", SurvivalShelterSceneGraphicsComp)
-	arg_1_0:_addComp("volume", SurvivalScenePPVolume)
-	arg_1_0:_addComp("fog", SurvivalShelterSceneFogComp)
-	arg_1_0:_addComp("ambient", SurvivalShelterSceneAmbientComp)
-	arg_1_0:_addComp("actProgress", SurvivalSummaryActProgress)
+local SurvivalSummaryAct = class("SurvivalSummaryAct", BaseScene)
+
+function SurvivalSummaryAct:_createAllComps()
+	self:_addComp("camera", SurvivalSceneCameraComp)
+	self:_addComp("director", SurvivalSummaryActDirector)
+	self:_addComp("block", SurvivalSummaryActBlock)
+	self:_addComp("level", SurvivalShelterSceneLevel)
+	self:_addComp("preloader", SurvivalSummaryActPreloader)
+	self:_addComp("graphics", SurvivalShelterSceneGraphicsComp)
+	self:_addComp("volume", SurvivalScenePPVolume)
+	self:_addComp("fog", SurvivalShelterSceneFogComp)
+	self:_addComp("ambient", SurvivalShelterSceneAmbientComp)
+	self:_addComp("actProgress", SurvivalSummaryActProgress)
 end
 
-function var_0_0.onClose(arg_2_0)
-	local var_2_0 = GameSceneMgr.instance:getNextSceneType()
+function SurvivalSummaryAct:onClose()
+	local nextSceneType = GameSceneMgr.instance:getNextSceneType()
 
-	if var_2_0 ~= SceneType.Survival and var_2_0 ~= SceneType.SurvivalShelter and var_2_0 ~= SceneType.SurvivalSummaryAct then
+	if nextSceneType ~= SceneType.Survival and nextSceneType ~= SceneType.SurvivalShelter and nextSceneType ~= SceneType.SurvivalSummaryAct then
 		SurvivalMapHelper.instance:clear()
 	end
 
-	var_0_0.super.onClose(arg_2_0)
+	SurvivalSummaryAct.super.onClose(self)
 end
 
-return var_0_0
+return SurvivalSummaryAct

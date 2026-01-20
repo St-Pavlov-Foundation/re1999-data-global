@@ -1,45 +1,51 @@
-﻿module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act147/controller/FurnaceTreasureController.lua
 
-local var_0_0 = class("FurnaceTreasureController", BaseController)
+module("modules.logic.versionactivity1_6.act147.controller.FurnaceTreasureController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FurnaceTreasureController = class("FurnaceTreasureController", BaseController)
+
+function FurnaceTreasureController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.refreshActivityInfo, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.refreshActivityInfo, arg_2_0)
+function FurnaceTreasureController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.refreshActivityInfo, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.refreshActivityInfo, self)
 end
 
-function var_0_0.reInit(arg_3_0)
+function FurnaceTreasureController:reInit()
 	return
 end
 
-function var_0_0.refreshActivityInfo(arg_4_0, arg_4_1)
-	local var_4_0 = FurnaceTreasureModel.instance:getActId()
-	local var_4_1 = not string.nilorempty(arg_4_1) and arg_4_1 ~= 0
+function FurnaceTreasureController:refreshActivityInfo(argsActId)
+	local actId = FurnaceTreasureModel.instance:getActId()
+	local hasArgsActId = not string.nilorempty(argsActId) and argsActId ~= 0
 
-	if var_4_1 and arg_4_1 ~= var_4_0 then
+	if hasArgsActId and argsActId ~= actId then
 		return
 	end
 
-	if FurnaceTreasureModel.instance:isActivityOpen() then
-		FurnaceTreasureRpc.instance:sendGetAct147InfosRequest(var_4_0)
-	elseif var_4_1 then
+	local isOpen = FurnaceTreasureModel.instance:isActivityOpen()
+
+	if isOpen then
+		FurnaceTreasureRpc.instance:sendGetAct147InfosRequest(actId)
+	elseif hasArgsActId then
 		FurnaceTreasureModel.instance:resetData(true)
 	end
 end
 
-function var_0_0.BuyFurnaceTreasureGoods(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = false
+function FurnaceTreasureController:BuyFurnaceTreasureGoods(storeId, goodsId, cb, cbObj)
+	local isCanBuy = false
 
-	if arg_5_1 and arg_5_2 then
-		var_5_0 = FurnaceTreasureModel.instance:getGoodsRemainCount(arg_5_1, arg_5_2) >= FurnaceTreasureEnum.DEFAULT_BUY_COUNT
+	if storeId and goodsId then
+		local goodsRemainBuyCount = FurnaceTreasureModel.instance:getGoodsRemainCount(storeId, goodsId)
+
+		isCanBuy = goodsRemainBuyCount >= FurnaceTreasureEnum.DEFAULT_BUY_COUNT
 	end
 
-	if not var_5_0 then
-		if arg_5_3 then
-			arg_5_3(arg_5_4)
+	if not isCanBuy then
+		if cb then
+			cb(cbObj)
 		end
 
 		GameFacade.showToast(ToastEnum.CurrencyChanged)
@@ -47,11 +53,11 @@ function var_0_0.BuyFurnaceTreasureGoods(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg
 		return
 	end
 
-	local var_5_1 = FurnaceTreasureModel.instance:getActId()
+	local actId = FurnaceTreasureModel.instance:getActId()
 
-	FurnaceTreasureRpc.instance:sendBuyAct147GoodsRequest(var_5_1, arg_5_1, arg_5_2, FurnaceTreasureEnum.DEFAULT_BUY_COUNT, arg_5_3, arg_5_4)
+	FurnaceTreasureRpc.instance:sendBuyAct147GoodsRequest(actId, storeId, goodsId, FurnaceTreasureEnum.DEFAULT_BUY_COUNT, cb, cbObj)
 end
 
-var_0_0.instance = var_0_0.New()
+FurnaceTreasureController.instance = FurnaceTreasureController.New()
 
-return var_0_0
+return FurnaceTreasureController

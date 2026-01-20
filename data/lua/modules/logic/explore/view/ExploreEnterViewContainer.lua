@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreEnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreEnterViewContainer.lua
 
-local var_0_0 = class("ExploreEnterViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreEnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreEnterViewContainer = class("ExploreEnterViewContainer", BaseViewContainer)
+
+function ExploreEnterViewContainer:buildViews()
 	return {
 		ExploreEnterView.New()
 	}
 end
 
-return var_0_0
+return ExploreEnterViewContainer

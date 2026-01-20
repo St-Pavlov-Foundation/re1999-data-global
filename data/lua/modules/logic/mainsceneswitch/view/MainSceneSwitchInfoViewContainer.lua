@@ -1,28 +1,30 @@
-﻿module("modules.logic.mainsceneswitch.view.MainSceneSwitchInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/view/MainSceneSwitchInfoViewContainer.lua
 
-local var_0_0 = class("MainSceneSwitchInfoViewContainer", BaseViewContainer)
+module("modules.logic.mainsceneswitch.view.MainSceneSwitchInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MainSceneSwitchInfoViewContainer = class("MainSceneSwitchInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MainSceneSwitchInfoDisplayView.New())
-	table.insert(var_1_0, MainSceneSwitchInfoView.New())
+function MainSceneSwitchInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MainSceneSwitchInfoDisplayView.New())
+	table.insert(views, MainSceneSwitchInfoView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function MainSceneSwitchInfoViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return MainSceneSwitchInfoViewContainer

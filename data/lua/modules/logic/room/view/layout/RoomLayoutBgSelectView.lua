@@ -1,73 +1,75 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutBgSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutBgSelectView.lua
 
-local var_0_0 = class("RoomLayoutBgSelectView", BaseView)
+module("modules.logic.room.view.layout.RoomLayoutBgSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_content/Bg/#txt_title")
-	arg_1_0._scrollCoverItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_content/#scroll_CoverItemList")
-	arg_1_0._gocoveritem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_coveritem")
-	arg_1_0._simagecover = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_content/#go_coveritem/bg/#simage_cover")
-	arg_1_0._txtcovername = gohelper.findChildText(arg_1_0.viewGO, "#go_content/#go_coveritem/bg/covernamebg/#txt_covername")
+local RoomLayoutBgSelectView = class("RoomLayoutBgSelectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomLayoutBgSelectView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_content/Bg/#txt_title")
+	self._scrollCoverItemList = gohelper.findChildScrollRect(self.viewGO, "#go_content/#scroll_CoverItemList")
+	self._gocoveritem = gohelper.findChild(self.viewGO, "#go_content/#go_coveritem")
+	self._simagecover = gohelper.findChildSingleImage(self.viewGO, "#go_content/#go_coveritem/bg/#simage_cover")
+	self._txtcovername = gohelper.findChildText(self.viewGO, "#go_content/#go_coveritem/bg/covernamebg/#txt_covername")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RoomLayoutBgSelectView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RoomLayoutBgSelectView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RoomLayoutBgSelectView:_btncloseOnClick()
+	self:closeThis()
 
-	local var_4_0 = RoomLayoutBgResListModel.instance:getSelectMO()
-	local var_4_1 = RoomLayoutListModel.instance:getSelectMO()
+	local bgResMO = RoomLayoutBgResListModel.instance:getSelectMO()
+	local layoutMO = RoomLayoutListModel.instance:getSelectMO()
 
-	if var_4_0 and var_4_1 and var_4_0.id ~= var_4_1:getCoverId() then
-		RoomRpc.instance:sendSetRoomPlanCoverRequest(var_4_1.id, var_4_0.id)
+	if bgResMO and layoutMO and bgResMO.id ~= layoutMO:getCoverId() then
+		RoomRpc.instance:sendSetRoomPlanCoverRequest(layoutMO.id, bgResMO.id)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._viewGOTrs = arg_5_0.viewGO.transform
-	arg_5_0._gocontentTrs = arg_5_0._gocontent.transform
+function RoomLayoutBgSelectView:_editableInitView()
+	self._viewGOTrs = self.viewGO.transform
+	self._gocontentTrs = self._gocontent.transform
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function RoomLayoutBgSelectView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = RoomLayoutListModel.instance:getSelectMO()
+function RoomLayoutBgSelectView:onOpen()
+	local selectMO = RoomLayoutListModel.instance:getSelectMO()
 
-	arg_7_0._txttitle.text = var_7_0 and var_7_0.name or ""
+	self._txttitle.text = selectMO and selectMO.name or ""
 
-	local var_7_1 = RoomLayoutListModel.instance:getSelectMO()
+	local layoutMO = RoomLayoutListModel.instance:getSelectMO()
 
-	RoomLayoutBgResListModel.instance:setSelect(var_7_1 and var_7_1:getCoverId())
+	RoomLayoutBgResListModel.instance:setSelect(layoutMO and layoutMO:getCoverId())
 
-	if arg_7_0.viewParam and arg_7_0.viewParam.uiWorldPos then
-		arg_7_0:layoutAnchor(arg_7_0.viewParam.uiWorldPos, arg_7_0.viewParam.offsetWidth, arg_7_0.viewParam.offsetHeight)
+	if self.viewParam and self.viewParam.uiWorldPos then
+		self:layoutAnchor(self.viewParam.uiWorldPos, self.viewParam.offsetWidth, self.viewParam.offsetHeight)
 	end
 end
 
-function var_0_0.layoutAnchor(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	RoomLayoutHelper.tipLayoutAnchor(arg_8_0._gocontentTrs, arg_8_0._viewGOTrs, arg_8_1, arg_8_2, arg_8_3)
+function RoomLayoutBgSelectView:layoutAnchor(uiWorldPos, offWidth, offHeight)
+	RoomLayoutHelper.tipLayoutAnchor(self._gocontentTrs, self._viewGOTrs, uiWorldPos, offWidth, offHeight)
 end
 
-function var_0_0.onClose(arg_9_0)
+function RoomLayoutBgSelectView:onClose()
 	RoomLayoutController.instance:dispatchEvent(RoomEvent.UICancelLayoutPlanItemTab)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function RoomLayoutBgSelectView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomLayoutBgSelectView

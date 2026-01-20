@@ -1,30 +1,34 @@
-﻿module("modules.logic.survival.view.map.SurvivalLogView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalLogView.lua
 
-local var_0_0 = class("SurvivalLogView", BaseView)
+module("modules.logic.survival.view.map.SurvivalLogView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._item = gohelper.findChild(arg_1_0.viewGO, "root/#go_info/scroll_log/Viewport/Content/#txt_logitem")
-	arg_1_0._btncose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local SurvivalLogView = class("SurvivalLogView", BaseView)
+
+function SurvivalLogView:onInitView()
+	self._item = gohelper.findChild(self.viewGO, "root/#go_info/scroll_log/Viewport/Content/#txt_logitem")
+	self._btncose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function SurvivalLogView:addEvents()
+	self._btncose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncose:RemoveClickListener()
+function SurvivalLogView:removeEvents()
+	self._btncose:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	gohelper.CreateObjList(arg_4_0, arg_4_0._createLogItem, arg_4_0.viewParam, nil, arg_4_0._item)
+function SurvivalLogView:onOpen()
+	gohelper.CreateObjList(self, self._createLogItem, self.viewParam, nil, self._item)
 end
 
-function var_0_0._createLogItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	gohelper.findChildTextMesh(arg_5_1, "").text = arg_5_2:getLogStr()
+function SurvivalLogView:_createLogItem(obj, data, index)
+	local txt = gohelper.findChildTextMesh(obj, "")
+
+	txt.text = data:getLogStr()
 end
 
-function var_0_0.onClickModalMask(arg_6_0)
-	arg_6_0:closeThis()
+function SurvivalLogView:onClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return SurvivalLogView

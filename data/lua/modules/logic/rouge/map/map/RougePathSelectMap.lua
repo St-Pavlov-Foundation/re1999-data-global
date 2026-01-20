@@ -1,81 +1,83 @@
-﻿module("modules.logic.rouge.map.map.RougePathSelectMap", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/map/RougePathSelectMap.lua
 
-local var_0_0 = class("RougePathSelectMap", RougeBaseMap)
+module("modules.logic.rouge.map.map.RougePathSelectMap", package.seeall)
 
-function var_0_0.initMap(arg_1_0)
-	var_0_0.super.initMap(arg_1_0)
+local RougePathSelectMap = class("RougePathSelectMap", RougeBaseMap)
 
-	local var_1_0 = RougeMapConfig.instance:getPathSelectInitCameraSize()
+function RougePathSelectMap:initMap()
+	RougePathSelectMap.super.initMap(self)
 
-	RougeMapModel.instance:setCameraSize(var_1_0)
+	local cameraSize = RougeMapConfig.instance:getPathSelectInitCameraSize()
 
-	local var_1_1 = RougeMapModel.instance:getMapSize()
+	RougeMapModel.instance:setCameraSize(cameraSize)
 
-	transformhelper.setLocalPos(arg_1_0.mapTransform, -var_1_1.x / 2, var_1_1.y / 2, RougeMapEnum.OffsetZ.Map)
+	local mapSize = RougeMapModel.instance:getMapSize()
+
+	transformhelper.setLocalPos(self.mapTransform, -mapSize.x / 2, mapSize.y / 2, RougeMapEnum.OffsetZ.Map)
 end
 
-function var_0_0.createMap(arg_2_0)
-	arg_2_0.actorComp = nil
+function RougePathSelectMap:createMap()
+	self.actorComp = nil
 
-	var_0_0.super.createMap(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0.focusToTarget, arg_2_0, RougeMapEnum.PathSelectMapWaitTime)
+	RougePathSelectMap.super.createMap(self)
+	TaskDispatcher.runDelay(self.focusToTarget, self, RougeMapEnum.PathSelectMapWaitTime)
 
-	arg_2_0.openViewDone = ViewMgr.instance:isOpen(ViewName.RougeMapView)
+	self.openViewDone = ViewMgr.instance:isOpen(ViewName.RougeMapView)
 
 	if not ViewMgr.instance:isOpen(ViewName.RougeMapView) then
-		arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
+		self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
 	end
 end
 
-function var_0_0.onOpenView(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.RougeMapView then
-		arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0.onOpenView, arg_3_0)
+function RougePathSelectMap:onOpenView(viewName)
+	if viewName == ViewName.RougeMapView then
+		self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
 
-		arg_3_0.openViewDone = true
+		self.openViewDone = true
 
-		arg_3_0:_focusToTarget()
+		self:_focusToTarget()
 	end
 end
 
-function var_0_0.focusToTarget(arg_4_0)
-	arg_4_0.delayDone = true
+function RougePathSelectMap:focusToTarget()
+	self.delayDone = true
 
-	arg_4_0:_focusToTarget()
+	self:_focusToTarget()
 end
 
-function var_0_0._focusToTarget(arg_5_0)
-	if not arg_5_0.delayDone or not arg_5_0.openViewDone then
+function RougePathSelectMap:_focusToTarget()
+	if not self.delayDone or not self.openViewDone then
 		return
 	end
 
-	arg_5_0:clearTween()
+	self:clearTween()
 
-	local var_5_0 = RougeMapModel.instance:getPathSelectCo()
-	local var_5_1 = string.splitToNumber(var_5_0.focusMapPos, "#")
+	local pathSelectCo = RougeMapModel.instance:getPathSelectCo()
+	local focusPos = string.splitToNumber(pathSelectCo.focusMapPos, "#")
 
-	arg_5_0.movingTweenId = ZProj.TweenHelper.DOLocalMove(arg_5_0.mapTransform, var_5_1[1], var_5_1[2], RougeMapEnum.OffsetZ.Map, RougeMapEnum.RevertDuration, arg_5_0.onMovingDone, arg_5_0)
+	self.movingTweenId = ZProj.TweenHelper.DOLocalMove(self.mapTransform, focusPos[1], focusPos[2], RougeMapEnum.OffsetZ.Map, RougeMapEnum.RevertDuration, self.onMovingDone, self)
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onPathSelectMapFocus, var_5_0.focusCameraSize)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onPathSelectMapFocus, pathSelectCo.focusCameraSize)
 end
 
-function var_0_0.onMovingDone(arg_6_0)
-	arg_6_0.movingTweenId = nil
+function RougePathSelectMap:onMovingDone()
+	self.movingTweenId = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onPathSelectMapFocusDone)
 end
 
-function var_0_0.clearTween(arg_7_0)
-	if arg_7_0.movingTweenId then
-		ZProj.TweenHelper.KillById(arg_7_0.movingTweenId)
+function RougePathSelectMap:clearTween()
+	if self.movingTweenId then
+		ZProj.TweenHelper.KillById(self.movingTweenId)
 	end
 
-	arg_7_0.movingTweenId = nil
+	self.movingTweenId = nil
 end
 
-function var_0_0.destroy(arg_8_0)
-	arg_8_0:clearTween()
-	TaskDispatcher.cancelTask(arg_8_0.focusToTarget, arg_8_0)
-	var_0_0.super.destroy(arg_8_0)
+function RougePathSelectMap:destroy()
+	self:clearTween()
+	TaskDispatcher.cancelTask(self.focusToTarget, self)
+	RougePathSelectMap.super.destroy(self)
 end
 
-return var_0_0
+return RougePathSelectMap

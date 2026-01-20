@@ -1,32 +1,34 @@
-﻿module("modules.logic.equip.view.EquipCareerListView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipCareerListView.lua
 
-local var_0_0 = class("EquipCareerListView", UserDataDispose)
+module("modules.logic.equip.view.EquipCareerListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:__onInit()
+local EquipCareerListView = class("EquipCareerListView", UserDataDispose)
 
-	arg_1_0.careerGoDrop = arg_1_1
-	arg_1_0.careerDropClick = gohelper.findChildClick(arg_1_0.careerGoDrop, "clickArea")
-	arg_1_0.careerGoTemplateContainer = gohelper.findChild(arg_1_0.careerGoDrop, "Template")
-	arg_1_0.careerGoItem = gohelper.findChild(arg_1_0.careerGoDrop, "Template/Viewport/Content/Item")
-	arg_1_0.txtLabel = gohelper.findChildText(arg_1_0.careerGoDrop, "Label")
-	arg_1_0.iconLabel = gohelper.findChildImage(arg_1_0.careerGoDrop, "Icon")
+function EquipCareerListView:onInitView(careerDropGo, itemCallback, itemCallbackObj)
+	self:__onInit()
 
-	gohelper.setActive(arg_1_0.careerGoItem, false)
-	arg_1_0.careerDropClick:AddClickListener(arg_1_0.onCareerDropClick, arg_1_0)
+	self.careerGoDrop = careerDropGo
+	self.careerDropClick = gohelper.findChildClick(self.careerGoDrop, "clickArea")
+	self.careerGoTemplateContainer = gohelper.findChild(self.careerGoDrop, "Template")
+	self.careerGoItem = gohelper.findChild(self.careerGoDrop, "Template/Viewport/Content/Item")
+	self.txtLabel = gohelper.findChildText(self.careerGoDrop, "Label")
+	self.iconLabel = gohelper.findChildImage(self.careerGoDrop, "Icon")
 
-	arg_1_0.showingTemplateContainer = false
-	arg_1_0.careerItemList = {}
-	arg_1_0.itemCallback = arg_1_2
-	arg_1_0.itemCallbackObj = arg_1_3
-	arg_1_0.rectList = {}
+	gohelper.setActive(self.careerGoItem, false)
+	self.careerDropClick:AddClickListener(self.onCareerDropClick, self)
 
-	arg_1_0:initMoData()
-	arg_1_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_1_0._onTouch, arg_1_0)
+	self.showingTemplateContainer = false
+	self.careerItemList = {}
+	self.itemCallback = itemCallback
+	self.itemCallbackObj = itemCallbackObj
+	self.rectList = {}
+
+	self:initMoData()
+	self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
 end
 
-function var_0_0.initMoData(arg_2_0)
-	arg_2_0.careerValueList = {
+function EquipCareerListView:initMoData()
+	self.careerValueList = {
 		EquipHelper.CareerValue.All,
 		EquipHelper.CareerValue.Rock,
 		EquipHelper.CareerValue.Star,
@@ -34,175 +36,173 @@ function var_0_0.initMoData(arg_2_0)
 		EquipHelper.CareerValue.Animal,
 		EquipHelper.CareerValue.SAW
 	}
-	arg_2_0.careerMoList = {}
-	arg_2_0.careerMoDict = {}
+	self.careerMoList = {}
+	self.careerMoDict = {}
 
-	local var_2_0 = {
-		txt = luaLang("common_all")
-	}
+	local careerMo = {}
 
-	var_2_0.iconName = nil
-	var_2_0.career = arg_2_0.careerValueList[1]
-	arg_2_0.careerMoDict[arg_2_0.careerValueList[1]] = var_2_0
+	careerMo.txt = luaLang("common_all")
+	careerMo.iconName = nil
+	careerMo.career = self.careerValueList[1]
+	self.careerMoDict[self.careerValueList[1]] = careerMo
 
-	table.insert(arg_2_0.careerMoList, var_2_0)
+	table.insert(self.careerMoList, careerMo)
 
-	for iter_2_0 = 2, 6 do
-		local var_2_1 = {}
+	for i = 2, 6 do
+		careerMo = {}
+		careerMo.txt = nil
+		careerMo.iconName = "career_" .. self.careerValueList[i]
+		careerMo.career = self.careerValueList[i]
+		self.careerMoDict[self.careerValueList[i]] = careerMo
 
-		var_2_1.txt = nil
-		var_2_1.iconName = "career_" .. arg_2_0.careerValueList[iter_2_0]
-		var_2_1.career = arg_2_0.careerValueList[iter_2_0]
-		arg_2_0.careerMoDict[arg_2_0.careerValueList[iter_2_0]] = var_2_1
-
-		table.insert(arg_2_0.careerMoList, var_2_1)
+		table.insert(self.careerMoList, careerMo)
 	end
 end
 
-function var_0_0.onCareerDropClick(arg_3_0)
-	arg_3_0.showingTemplateContainer = not arg_3_0.showingTemplateContainer
+function EquipCareerListView:onCareerDropClick()
+	self.showingTemplateContainer = not self.showingTemplateContainer
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_admission_open)
-	gohelper.setActive(arg_3_0.careerGoTemplateContainer, arg_3_0.showingTemplateContainer)
-	gohelper.setAsLastSibling(arg_3_0.careerGoTemplateContainer)
+	gohelper.setActive(self.careerGoTemplateContainer, self.showingTemplateContainer)
+	gohelper.setAsLastSibling(self.careerGoTemplateContainer)
 end
 
-function var_0_0.onCareerItemClick(arg_4_0, arg_4_1)
-	arg_4_0:setSelectCareer(arg_4_1.career)
-	arg_4_0:refreshCareerLabel()
-	arg_4_0:refreshCareerSelect()
+function EquipCareerListView:onCareerItemClick(careerMo)
+	self:setSelectCareer(careerMo.career)
+	self:refreshCareerLabel()
+	self:refreshCareerSelect()
 
-	arg_4_0.showingTemplateContainer = false
+	self.showingTemplateContainer = false
 
-	gohelper.setActive(arg_4_0.careerGoTemplateContainer, false)
+	gohelper.setActive(self.careerGoTemplateContainer, false)
 
-	if arg_4_0.itemCallback then
-		if arg_4_0.itemCallbackObj then
-			arg_4_0.itemCallback(arg_4_0.itemCallbackObj, arg_4_1)
+	if self.itemCallback then
+		if self.itemCallbackObj then
+			self.itemCallback(self.itemCallbackObj, careerMo)
 		else
-			arg_4_0.itemCallback(arg_4_1)
+			self.itemCallback(careerMo)
 		end
 	end
 end
 
-function var_0_0.initTouchRectList(arg_5_0)
-	table.insert(arg_5_0.rectList, arg_5_0:getRectTransformTouchRect(arg_5_0.careerDropClick.transform))
-	table.insert(arg_5_0.rectList, arg_5_0:getRectTransformTouchRect(arg_5_0.careerGoTemplateContainer.transform))
+function EquipCareerListView:initTouchRectList()
+	table.insert(self.rectList, self:getRectTransformTouchRect(self.careerDropClick.transform))
+	table.insert(self.rectList, self:getRectTransformTouchRect(self.careerGoTemplateContainer.transform))
 end
 
-function var_0_0.getRectTransformTouchRect(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1:GetWorldCorners()
-	local var_6_1 = CameraMgr.instance:getUICamera()
-	local var_6_2 = var_6_1:WorldToScreenPoint(var_6_0[0])
-	local var_6_3 = var_6_1:WorldToScreenPoint(var_6_0[1])
-	local var_6_4 = var_6_1:WorldToScreenPoint(var_6_0[2])
-	local var_6_5 = var_6_1:WorldToScreenPoint(var_6_0[3])
+function EquipCareerListView:getRectTransformTouchRect(rectTr)
+	local worldCorners = rectTr:GetWorldCorners()
+	local camera = CameraMgr.instance:getUICamera()
+	local LT = camera:WorldToScreenPoint(worldCorners[0])
+	local RT = camera:WorldToScreenPoint(worldCorners[1])
+	local RB = camera:WorldToScreenPoint(worldCorners[2])
+	local LB = camera:WorldToScreenPoint(worldCorners[3])
 
 	return {
-		var_6_2,
-		var_6_3,
-		var_6_4,
-		var_6_5
+		LT,
+		RT,
+		RB,
+		LB
 	}
 end
 
-function var_0_0._onTouch(arg_7_0)
-	if not next(arg_7_0.rectList) then
+function EquipCareerListView:_onTouch()
+	if not next(self.rectList) then
 		logWarn("touch area not init")
 
 		return
 	end
 
-	local var_7_0 = GamepadController.instance:getMousePosition()
+	local touchPos = GamepadController.instance:getMousePosition()
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.rectList) do
-		if GameUtil.checkPointInRectangle(var_7_0, iter_7_1[1], iter_7_1[2], iter_7_1[3], iter_7_1[4]) then
+	for _, rect in ipairs(self.rectList) do
+		if GameUtil.checkPointInRectangle(touchPos, rect[1], rect[2], rect[3], rect[4]) then
 			return
 		end
 	end
 
-	arg_7_0.showingTemplateContainer = false
+	self.showingTemplateContainer = false
 
-	gohelper.setActive(arg_7_0.careerGoTemplateContainer, false)
+	gohelper.setActive(self.careerGoTemplateContainer, false)
 end
 
-function var_0_0.getCareerMoList(arg_8_0)
-	return arg_8_0.careerMoList
+function EquipCareerListView:getCareerMoList()
+	return self.careerMoList
 end
 
-function var_0_0.setSelectCareer(arg_9_0, arg_9_1)
-	arg_9_0.selectCareer = arg_9_1
+function EquipCareerListView:setSelectCareer(career)
+	self.selectCareer = career
 end
 
-function var_0_0.getSelectCareer(arg_10_0)
-	return arg_10_0.selectCareer or EquipHelper.CareerValue.All
+function EquipCareerListView:getSelectCareer()
+	return self.selectCareer or EquipHelper.CareerValue.All
 end
 
-function var_0_0.getSelectCareerMo(arg_11_0)
-	return arg_11_0.careerMoDict[arg_11_0:getSelectCareer()]
+function EquipCareerListView:getSelectCareerMo()
+	return self.careerMoDict[self:getSelectCareer()]
 end
 
-function var_0_0.refreshCareerSelect(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.careerItemList) do
-		iter_12_1:refreshSelect(arg_12_0:getSelectCareer())
+function EquipCareerListView:refreshCareerSelect()
+	for _, item in ipairs(self.careerItemList) do
+		item:refreshSelect(self:getSelectCareer())
 	end
 end
 
-function var_0_0.refreshCareerLabel(arg_13_0)
-	local var_13_0 = arg_13_0:getSelectCareerMo()
+function EquipCareerListView:refreshCareerLabel()
+	local careerMo = self:getSelectCareerMo()
 
-	if not var_13_0 then
+	if not careerMo then
 		logError("not set selected career, please check code!")
 
 		return
 	end
 
-	if var_13_0.txt then
-		arg_13_0.txtLabel.text = var_13_0.txt
+	if careerMo.txt then
+		self.txtLabel.text = careerMo.txt
 
-		gohelper.setActive(arg_13_0.txtLabel.gameObject, true)
+		gohelper.setActive(self.txtLabel.gameObject, true)
 	else
-		gohelper.setActive(arg_13_0.txtLabel.gameObject, false)
+		gohelper.setActive(self.txtLabel.gameObject, false)
 	end
 
-	if var_13_0.iconName then
-		UISpriteSetMgr.instance:setCommonSprite(arg_13_0.iconLabel, var_13_0.iconName)
-		gohelper.setActive(arg_13_0.iconLabel.gameObject, true)
+	if careerMo.iconName then
+		UISpriteSetMgr.instance:setCommonSprite(self.iconLabel, careerMo.iconName)
+		gohelper.setActive(self.iconLabel.gameObject, true)
 	else
-		gohelper.setActive(arg_13_0.iconLabel.gameObject, false)
+		gohelper.setActive(self.iconLabel.gameObject, false)
 	end
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:setSelectCareer(EquipHelper.CareerValue.All)
+function EquipCareerListView:onOpen()
+	self:setSelectCareer(EquipHelper.CareerValue.All)
 
-	local var_14_0
+	local careerItem
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.careerMoList) do
-		local var_14_1 = EquipCareerItem.New()
+	for _, careerMo in ipairs(self.careerMoList) do
+		careerItem = EquipCareerItem.New()
 
-		var_14_1:onInitView(gohelper.cloneInPlace(arg_14_0.careerGoItem, "career_" .. iter_14_1.career), arg_14_0.onCareerItemClick, arg_14_0)
-		var_14_1:onUpdateMO(iter_14_1)
-		table.insert(arg_14_0.careerItemList, var_14_1)
+		careerItem:onInitView(gohelper.cloneInPlace(self.careerGoItem, "career_" .. careerMo.career), self.onCareerItemClick, self)
+		careerItem:onUpdateMO(careerMo)
+		table.insert(self.careerItemList, careerItem)
 	end
 
-	arg_14_0:initTouchRectList()
-	arg_14_0:refreshCareerSelect()
-	arg_14_0:refreshCareerLabel()
+	self:initTouchRectList()
+	self:refreshCareerSelect()
+	self:refreshCareerLabel()
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0.careerDropClick:RemoveClickListener()
+function EquipCareerListView:onDestroyView()
+	self.careerDropClick:RemoveClickListener()
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.careerItemList) do
-		iter_15_1:onDestroyView()
+	for _, item in ipairs(self.careerItemList) do
+		item:onDestroyView()
 	end
 
-	arg_15_0.careerItemList = nil
-	arg_15_0.careerMoList = nil
-	arg_15_0.careerMoDict = nil
+	self.careerItemList = nil
+	self.careerMoList = nil
+	self.careerMoDict = nil
 
-	arg_15_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return EquipCareerListView

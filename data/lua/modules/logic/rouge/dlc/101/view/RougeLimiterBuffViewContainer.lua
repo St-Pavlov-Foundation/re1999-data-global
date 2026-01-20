@@ -1,30 +1,32 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterBuffViewContainer.lua
 
-local var_0_0 = class("RougeLimiterBuffViewContainer", BaseViewContainer)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterBuffViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local RougeLimiterBuffViewContainer = class("RougeLimiterBuffViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#go_choosebuff/SmallBuffView"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes.BuffItem
-	var_1_0.cellClass = RougeLimiterBuffListItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 3
-	var_1_0.cellWidth = 160
-	var_1_0.cellHeight = 160
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 0
-	var_1_0.startSpace = 0
-	var_1_0.endSpace = 0
+function RougeLimiterBuffViewContainer:buildViews()
+	local buffScrollParam = ListScrollParam.New()
 
-	local var_1_1 = {}
+	buffScrollParam.scrollGOPath = "#go_choosebuff/SmallBuffView"
+	buffScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	buffScrollParam.prefabUrl = self._viewSetting.otherRes.BuffItem
+	buffScrollParam.cellClass = RougeLimiterBuffListItem
+	buffScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	buffScrollParam.lineCount = 3
+	buffScrollParam.cellWidth = 160
+	buffScrollParam.cellHeight = 160
+	buffScrollParam.cellSpaceH = 0
+	buffScrollParam.cellSpaceV = 0
+	buffScrollParam.startSpace = 0
+	buffScrollParam.endSpace = 0
 
-	table.insert(var_1_1, RougeLimiterBuffView.New())
-	table.insert(var_1_1, RougeLimiterViewEmblemComp.New("#go_RightTop"))
-	table.insert(var_1_1, LuaListScrollView.New(RougeLimiterBuffListModel.instance, var_1_0))
+	local views = {}
 
-	return var_1_1
+	table.insert(views, RougeLimiterBuffView.New())
+	table.insert(views, RougeLimiterViewEmblemComp.New("#go_RightTop"))
+	table.insert(views, LuaListScrollView.New(RougeLimiterBuffListModel.instance, buffScrollParam))
+
+	return views
 end
 
-return var_0_0
+return RougeLimiterBuffViewContainer

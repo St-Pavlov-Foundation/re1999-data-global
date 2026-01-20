@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity1_3.act126.controller.Activity126Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act126/controller/Activity126Controller.lua
 
-local var_0_0 = class("Activity126Controller", BaseController)
+module("modules.logic.versionactivity1_3.act126.controller.Activity126Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity126Controller = class("Activity126Controller", BaseController)
+
+function Activity126Controller:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity126Controller:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.dailyRefresh, arg_3_0, LuaEventSystem.Low)
+function Activity126Controller:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self, LuaEventSystem.Low)
 end
 
-function var_0_0.dailyRefresh(arg_4_0)
+function Activity126Controller:dailyRefresh()
 	if not Activity126Model.instance.isInit then
 		return
 	end
@@ -26,8 +28,8 @@ function var_0_0.dailyRefresh(arg_4_0)
 	Activity126Rpc.instance:sendGet126InfosRequest(VersionActivity1_3Enum.ActivityId.Act310)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity126Controller.instance = Activity126Controller.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Activity126Controller.instance)
 
-return var_0_0
+return Activity126Controller

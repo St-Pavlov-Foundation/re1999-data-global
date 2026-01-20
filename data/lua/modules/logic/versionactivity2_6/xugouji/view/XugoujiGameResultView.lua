@@ -1,159 +1,165 @@
-﻿module("modules.logic.versionactivity2_6.xugouji.view.XugoujiGameResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/xugouji/view/XugoujiGameResultView.lua
 
-local var_0_0 = class("XugoujiGameResultView", BaseView)
-local var_0_1 = VersionActivity2_6Enum.ActivityId.Xugouji
+module("modules.logic.versionactivity2_6.xugouji.view.XugoujiGameResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_successClick")
-	arg_1_0._btnExit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_quitgame")
-	arg_1_0._btnRestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_restart")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._goBtns = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
-	arg_1_0._goTargetRoot = gohelper.findChild(arg_1_0.viewGO, "targets")
-	arg_1_0._goTargetItem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem")
-	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "content/Layout/#go_Tips")
-	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "Tips/#txt_Tips")
-	arg_1_0._scrollItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_List/Viewport/Content/#go_Item")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_List/Viewport/Content")
+local XugoujiGameResultView = class("XugoujiGameResultView", BaseView)
+local actId = VersionActivity2_6Enum.ActivityId.Xugouji
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function XugoujiGameResultView:onInitView()
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg1")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_successClick")
+	self._btnExit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_quitgame")
+	self._btnRestart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_restart")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._goBtns = gohelper.findChild(self.viewGO, "#go_btn")
+	self._goTargetRoot = gohelper.findChild(self.viewGO, "targets")
+	self._goTargetItem = gohelper.findChild(self.viewGO, "targets/#go_targetitem")
+	self._goTips = gohelper.findChild(self.viewGO, "content/Layout/#go_Tips")
+	self._txtTips = gohelper.findChildText(self.viewGO, "Tips/#txt_Tips")
+	self._scrollItem = gohelper.findChild(self.viewGO, "#scroll_List/Viewport/Content/#go_Item")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "#scroll_List/Viewport/Content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnExit:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnRestart:AddClickListener(arg_2_0._btnRestartOnClick, arg_2_0)
+function XugoujiGameResultView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnExit:AddClickListener(self._btncloseOnClick, self)
+	self._btnRestart:AddClickListener(self._btnRestartOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnExit:RemoveClickListener()
-	arg_3_0._btnRestart:RemoveClickListener()
+function XugoujiGameResultView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnExit:RemoveClickListener()
+	self._btnRestart:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	if arg_4_0:isLockOp() then
+function XugoujiGameResultView:_btncloseOnClick()
+	if self:isLockOp() then
 		return
 	end
 
 	XugoujiController.instance:gameResultOver()
 end
 
-function var_0_0._btnRestartOnClick(arg_5_0)
-	if arg_5_0:isLockOp() then
+function XugoujiGameResultView:_btnRestartOnClick()
+	if self:isLockOp() then
 		return
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 	XugoujiController.instance:restartEpisode()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function XugoujiGameResultView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function XugoujiGameResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._animator = arg_8_0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
+function XugoujiGameResultView:onOpen()
+	self._animator = self.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
 
-	arg_8_0:addEventCb(XugoujiController.instance, XugoujiEvent.ExitGame, arg_8_0.onExitGame, arg_8_0)
+	self:addEventCb(XugoujiController.instance, XugoujiEvent.ExitGame, self.onExitGame, self)
 
-	if arg_8_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_8_0.viewContainer.viewName, arg_8_0._btncloseOnClick, arg_8_0)
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._btncloseOnClick, self)
 	end
 
-	arg_8_0:_setLockOpTime(1)
-	arg_8_0:refreshUI()
+	self:_setLockOpTime(1)
+	self:refreshUI()
 end
 
-function var_0_0.onExitGame(arg_9_0)
-	XugoujiController.instance:getStatMo():sendDungeonFinishStatData()
-	arg_9_0:closeThis()
+function XugoujiGameResultView:onExitGame()
+	local act188StatMo = XugoujiController.instance:getStatMo()
+
+	act188StatMo:sendDungeonFinishStatData()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_10_0)
+function XugoujiGameResultView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function XugoujiGameResultView:onDestroyView()
 	return
 end
 
-function var_0_0.playViewAnimator(arg_12_0, arg_12_1)
-	if arg_12_0._animator then
-		arg_12_0._animator.enabled = true
+function XugoujiGameResultView:playViewAnimator(animName)
+	if self._animator then
+		self._animator.enabled = true
 
-		arg_12_0._animator:Play(arg_12_1, 0, 0)
+		self._animator:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	local var_13_0 = Activity188Model.instance:getCurEpisodeId()
-	local var_13_1 = arg_13_0.viewParam.reason
+function XugoujiGameResultView:refreshUI()
+	local curEpisodeId = Activity188Model.instance:getCurEpisodeId()
+	local resultreason = self.viewParam.reason
 
-	arg_13_0._star = arg_13_0.viewParam.star
+	self._star = self.viewParam.star
 
-	local var_13_2 = var_13_1 == XugoujiEnum.ResultEnum.Completed
-	local var_13_3 = var_13_1 == XugoujiEnum.ResultEnum.PowerUseup
-	local var_13_4 = var_13_1 == XugoujiEnum.ResultEnum.Quit
-	local var_13_5 = var_13_3 or var_13_4
+	local completed = resultreason == XugoujiEnum.ResultEnum.Completed
+	local powerUsedUp = resultreason == XugoujiEnum.ResultEnum.PowerUseup
+	local quit = resultreason == XugoujiEnum.ResultEnum.Quit
+	local isFail = powerUsedUp or quit
 
-	gohelper.setActive(arg_13_0._gosuccess, var_13_2)
-	gohelper.setActive(arg_13_0._gofail, var_13_5)
-	gohelper.setActive(arg_13_0._goBtns, var_13_5)
-	gohelper.setActive(arg_13_0._btnclose.gameObject, var_13_2)
-	AudioMgr.instance:trigger(var_13_5 and AudioEnum.VersionActivity2_2Lopera.play_ui_pkls_challenge_fail or AudioEnum.VersionActivity2_2Lopera.play_ui_pkls_endpoint_arriva)
-	arg_13_0:_createTargetList()
+	gohelper.setActive(self._gosuccess, completed)
+	gohelper.setActive(self._gofail, isFail)
+	gohelper.setActive(self._goBtns, isFail)
+	gohelper.setActive(self._btnclose.gameObject, completed)
+	AudioMgr.instance:trigger(isFail and AudioEnum.VersionActivity2_2Lopera.play_ui_pkls_challenge_fail or AudioEnum.VersionActivity2_2Lopera.play_ui_pkls_endpoint_arriva)
+	self:_createTargetList()
 end
 
-function var_0_0._createTargetList(arg_14_0)
-	arg_14_0._targetDataList = {}
+function XugoujiGameResultView:_createTargetList()
+	self._targetDataList = {}
 
-	local var_14_0 = Activity188Model.instance:getCurGameId()
-	local var_14_1 = Activity188Config.instance:getGameCfg(var_0_1, var_14_0)
-	local var_14_2 = string.split(var_14_1.passRound, "#")
+	local curGameId = Activity188Model.instance:getCurGameId()
+	local gameCfg = Activity188Config.instance:getGameCfg(actId, curGameId)
+	local targetParams = string.split(gameCfg.passRound, "#")
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_2) do
-		local var_14_3 = iter_14_1
+	for _, targetParam in ipairs(targetParams) do
+		local targetRound = targetParam
 
-		table.insert(arg_14_0._targetDataList, var_14_3)
+		table.insert(self._targetDataList, targetRound)
 	end
 
-	gohelper.CreateObjList(arg_14_0, arg_14_0._createTargetItem, arg_14_0._targetDataList, arg_14_0._goTargetRoot, arg_14_0._goTargetItem)
+	gohelper.CreateObjList(self, self._createTargetItem, self._targetDataList, self._goTargetRoot, self._goTargetItem)
 end
 
-function var_0_0._createTargetItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("xugouji_round_target"), arg_15_2)
+function XugoujiGameResultView:_createTargetItem(itemGo, targetRound, index)
+	local msg = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("xugouji_round_target"), targetRound)
 
-	gohelper.setActive(arg_15_1, true)
+	gohelper.setActive(itemGo, true)
 
-	gohelper.findChildText(arg_15_1, "#txt_taskdesc").text = var_15_0
+	local textComp = gohelper.findChildText(itemGo, "#txt_taskdesc")
 
-	local var_15_1 = gohelper.findChild(arg_15_1, "result/#go_finish")
-	local var_15_2 = gohelper.findChild(arg_15_1, "result/#go_unfinish")
+	textComp.text = msg
 
-	gohelper.setActive(var_15_1, arg_15_3 <= arg_15_0._star)
-	gohelper.setActive(var_15_2, arg_15_3 > arg_15_0._star)
+	local gofinish = gohelper.findChild(itemGo, "result/#go_finish")
+	local goUnfinish = gohelper.findChild(itemGo, "result/#go_unfinish")
+
+	gohelper.setActive(gofinish, index <= self._star)
+	gohelper.setActive(goUnfinish, index > self._star)
 end
 
-function var_0_0._setLockOpTime(arg_16_0, arg_16_1)
-	arg_16_0._lockTime = Time.time + arg_16_1
+function XugoujiGameResultView:_setLockOpTime(lockTime)
+	self._lockTime = Time.time + lockTime
 end
 
-function var_0_0.isLockOp(arg_17_0)
-	if arg_17_0._lockTime and Time.time < arg_17_0._lockTime then
+function XugoujiGameResultView:isLockOp()
+	if self._lockTime and Time.time < self._lockTime then
 		return true
 	end
 
 	return false
 end
 
-return var_0_0
+return XugoujiGameResultView

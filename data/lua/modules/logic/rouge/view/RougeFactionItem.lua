@@ -1,161 +1,167 @@
-﻿module("modules.logic.rouge.view.RougeFactionItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFactionItem.lua
 
-local var_0_0 = class("RougeFactionItem", RougeSimpleItemBase)
-local var_0_1 = SLFramework.AnimatorPlayer
+module("modules.logic.rouge.view.RougeFactionItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	RougeSimpleItemBase.ctor(arg_1_0, arg_1_1)
+local RougeFactionItem = class("RougeFactionItem", RougeSimpleItemBase)
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
-	arg_1_0._staticData.parentScrollViewGo = arg_1_1.baseViewContainer:getScrollViewGo()
-	arg_1_0._staticData.startViewAllInfo = RougeController.instance:getStartViewAllInfo()
-	arg_1_0._selected = RougeFactionItemSelected.New(arg_1_0)
-	arg_1_0._unSelected = RougeFactionItemUnselected.New(arg_1_0)
-	arg_1_0._locked = RougeFactionItemLocked.New(arg_1_0)
+function RougeFactionItem:ctor(ctorParam)
+	RougeSimpleItemBase.ctor(self, ctorParam)
+
+	self._staticData.parentScrollViewGo = ctorParam.baseViewContainer:getScrollViewGo()
+	self._staticData.startViewAllInfo = RougeController.instance:getStartViewAllInfo()
+	self._selected = RougeFactionItemSelected.New(self)
+	self._unSelected = RougeFactionItemUnselected.New(self)
+	self._locked = RougeFactionItemLocked.New(self)
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	RougeSimpleItemBase._editableInitView(arg_2_0)
+function RougeFactionItem:_editableInitView()
+	RougeSimpleItemBase._editableInitView(self)
 
-	arg_2_0._animatorPlayer = var_0_1.Get(arg_2_0.viewGO)
-	arg_2_0._animSelf = arg_2_0._animatorPlayer.animator
+	self._animatorPlayer = csAnimatorPlayer.Get(self.viewGO)
+	self._animSelf = self._animatorPlayer.animator
 
-	arg_2_0._selected:init(gohelper.findChild(arg_2_0.viewGO, "Select"))
-	arg_2_0._unSelected:init(gohelper.findChild(arg_2_0.viewGO, "Unselect"))
-	arg_2_0._locked:init(gohelper.findChild(arg_2_0.viewGO, "Locked"))
-	arg_2_0._selected:setActive(false)
-	arg_2_0._unSelected:setActive(false)
-	arg_2_0._locked:setActive(false)
+	self._selected:init(gohelper.findChild(self.viewGO, "Select"))
+	self._unSelected:init(gohelper.findChild(self.viewGO, "Unselect"))
+	self._locked:init(gohelper.findChild(self.viewGO, "Locked"))
+	self._selected:setActive(false)
+	self._unSelected:setActive(false)
+	self._locked:setActive(false)
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	RougeSimpleItemBase.onDestroyView(arg_3_0)
-	GameUtil.onDestroyViewMember(arg_3_0, "_selected")
-	GameUtil.onDestroyViewMember(arg_3_0, "_unSelected")
-	GameUtil.onDestroyViewMember(arg_3_0, "_locked")
+function RougeFactionItem:onDestroyView()
+	RougeSimpleItemBase.onDestroyView(self)
+	GameUtil.onDestroyViewMember(self, "_selected")
+	GameUtil.onDestroyViewMember(self, "_unSelected")
+	GameUtil.onDestroyViewMember(self, "_locked")
 end
 
-function var_0_0.setSelected(arg_4_0, arg_4_1)
-	if not arg_4_0:isUnLocked() then
+function RougeFactionItem:setSelected(isSelect)
+	if not self:isUnLocked() then
 		return
 	end
 
-	RougeSimpleItemBase.setSelected(arg_4_0, arg_4_1)
+	RougeSimpleItemBase.setSelected(self, isSelect)
 end
 
-function var_0_0.onSelect(arg_5_0, arg_5_1)
-	arg_5_0._staticData.isSelected = arg_5_1
+function RougeFactionItem:onSelect(isSelected)
+	self._staticData.isSelected = isSelected
 
-	arg_5_0._selected:setActive(arg_5_1)
-	arg_5_0._unSelected:setActive(not arg_5_1)
+	self._selected:setActive(isSelected)
+	self._unSelected:setActive(not isSelected)
 end
 
-function var_0_0.setData(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
-	arg_6_0._isUnLocked = arg_6_1.isUnLocked
+function RougeFactionItem:setData(mo)
+	self._mo = mo
+	self._isUnLocked = mo.isUnLocked
 
-	arg_6_0._selected:setData(arg_6_1)
-	arg_6_0._unSelected:setData(arg_6_1)
-	arg_6_0._locked:setData(arg_6_1)
+	self._selected:setData(mo)
+	self._unSelected:setData(mo)
+	self._locked:setData(mo)
 
-	local var_6_0 = arg_6_0:isSelected()
+	local isSelected = self:isSelected()
 
-	if arg_6_0:isUnLocked() then
-		arg_6_0._selected:setActive(var_6_0)
-		arg_6_0._unSelected:setActive(not var_6_0)
-		arg_6_0._locked:setActive(false)
+	if self:isUnLocked() then
+		self._selected:setActive(isSelected)
+		self._unSelected:setActive(not isSelected)
+		self._locked:setActive(false)
 	else
-		arg_6_0._locked:setActive(true)
+		self._locked:setActive(true)
 	end
 end
 
-function var_0_0.isUnLocked(arg_7_0)
-	return arg_7_0._mo.isUnLocked
+function RougeFactionItem:isUnLocked()
+	return self._mo.isUnLocked
 end
 
-function var_0_0.style(arg_8_0)
-	return arg_8_0._mo.styleCO.id
+function RougeFactionItem:style()
+	local CO = self._mo.styleCO
+
+	return CO.id
 end
 
-function var_0_0.difficulty(arg_9_0)
-	return arg_9_0:parent():_difficulty()
+function RougeFactionItem:difficulty()
+	local p = self:parent()
+
+	return p:_difficulty()
 end
 
-function var_0_0.setIsLocked(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._locked:setActive(arg_10_1)
+function RougeFactionItem:setIsLocked(isLock, ignorePlayIdleAnim)
+	self._locked:setActive(isLock)
 
-	if not arg_10_2 then
-		arg_10_0:playIdle()
-		arg_10_0:onSelect(arg_10_0._staticData.isSelected)
+	if not ignorePlayIdleAnim then
+		self:playIdle()
+		self:onSelect(self._staticData.isSelected)
 	end
 end
 
-function var_0_0.playOpen(arg_11_0, arg_11_1)
-	if arg_11_1 == true then
-		arg_11_0._isNewUnlockAnim = true
+function RougeFactionItem:playOpen(isNewUnlock)
+	if isNewUnlock == true then
+		self._isNewUnlockAnim = true
 
-		arg_11_0:setIsLocked(true, true)
+		self:setIsLocked(true, true)
 	end
 
-	arg_11_0:_playAnim(UIAnimationName.Open, arg_11_0._onOpenEnd, arg_11_0)
+	self:_playAnim(UIAnimationName.Open, self._onOpenEnd, self)
 end
 
-function var_0_0.playIdle(arg_12_0)
-	arg_12_0._animSelf.enabled = true
+function RougeFactionItem:playIdle()
+	self._animSelf.enabled = true
 
-	arg_12_0._animSelf:Play(UIAnimationName.Open, 0, 1)
+	self._animSelf:Play(UIAnimationName.Open, 0, 1)
 end
 
-function var_0_0.playClose(arg_13_0)
-	arg_13_0:_playAnim(UIAnimationName.Close, arg_13_0._onCloseEnd, arg_13_0)
+function RougeFactionItem:playClose()
+	self:_playAnim(UIAnimationName.Close, self._onCloseEnd, self)
 end
 
-function var_0_0.setOnOpenEndCb(arg_14_0, arg_14_1)
-	arg_14_0._onOpenEndCb = arg_14_1
+function RougeFactionItem:setOnOpenEndCb(cb)
+	self._onOpenEndCb = cb
 end
 
-function var_0_0._onOpenEnd(arg_15_0)
-	if arg_15_0._onOpenEndCb then
-		arg_15_0._onOpenEndCb()
+function RougeFactionItem:_onOpenEnd()
+	if self._onOpenEndCb then
+		self._onOpenEndCb()
 
-		arg_15_0._onOpenEndCb = nil
+		self._onOpenEndCb = nil
 	end
 
-	if arg_15_0._isNewUnlockAnim then
-		arg_15_0:_playAnim(UIAnimationName.Unlock, arg_15_0._onUnlockEnd, arg_15_0)
+	if self._isNewUnlockAnim then
+		self:_playAnim(UIAnimationName.Unlock, self._onUnlockEnd, self)
 
-		arg_15_0._isNewUnlockAnim = nil
-	end
-end
-
-function var_0_0.setOnCloseEndCb(arg_16_0, arg_16_1)
-	arg_16_0._onCloseEndCb = arg_16_1
-end
-
-function var_0_0._onCloseEnd(arg_17_0)
-	if arg_17_0._onCloseEndCb then
-		arg_17_0._onCloseEndCb()
-
-		arg_17_0._onCloseEndCb = nil
+		self._isNewUnlockAnim = nil
 	end
 end
 
-function var_0_0.setOnUnlockEndCb(arg_18_0, arg_18_1)
-	arg_18_0._onUnlockEndCb = arg_18_1
+function RougeFactionItem:setOnCloseEndCb(cb)
+	self._onCloseEndCb = cb
 end
 
-function var_0_0._onUnlockEnd(arg_19_0)
-	if arg_19_0._onUnlockEndCb then
-		arg_19_0._onUnlockEndCb()
+function RougeFactionItem:_onCloseEnd()
+	if self._onCloseEndCb then
+		self._onCloseEndCb()
 
-		arg_19_0._onUnlockEndCb = nil
+		self._onCloseEndCb = nil
+	end
+end
+
+function RougeFactionItem:setOnUnlockEndCb(cb)
+	self._onUnlockEndCb = cb
+end
+
+function RougeFactionItem:_onUnlockEnd()
+	if self._onUnlockEndCb then
+		self._onUnlockEndCb()
+
+		self._onUnlockEndCb = nil
 	end
 
-	arg_19_0:setIsLocked(false)
-	arg_19_0:onSelect(arg_19_0._staticData.isSelected)
+	self:setIsLocked(false)
+	self:onSelect(self._staticData.isSelected)
 end
 
-function var_0_0._playAnim(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	arg_20_0._animatorPlayer:Play(arg_20_1, arg_20_2, arg_20_3)
+function RougeFactionItem:_playAnim(name, cb, cbObj)
+	self._animatorPlayer:Play(name, cb, cbObj)
 end
 
-return var_0_0
+return RougeFactionItem

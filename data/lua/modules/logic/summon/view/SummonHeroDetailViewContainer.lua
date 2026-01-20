@@ -1,32 +1,34 @@
-﻿module("modules.logic.summon.view.SummonHeroDetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonHeroDetailViewContainer.lua
 
-local var_0_0 = class("SummonHeroDetailViewContainer", BaseViewContainer)
+module("modules.logic.summon.view.SummonHeroDetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SummonHeroDetailViewContainer = class("SummonHeroDetailViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SummonHeroDetailView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+function SummonHeroDetailViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SummonHeroDetailView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = true
+function SummonHeroDetailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local showHome = true
 
-		if arg_2_0.viewParam and arg_2_0.viewParam.showHome ~= nil then
-			var_2_0 = arg_2_0.viewParam.showHome
+		if self.viewParam and self.viewParam.showHome ~= nil then
+			showHome = self.viewParam.showHome
 		end
 
 		return {
 			NavigateButtonsView.New({
 				true,
-				var_2_0,
+				showHome,
 				false
 			})
 		}
 	end
 end
 
-return var_0_0
+return SummonHeroDetailViewContainer

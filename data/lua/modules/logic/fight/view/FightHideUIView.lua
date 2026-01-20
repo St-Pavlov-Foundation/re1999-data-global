@@ -1,28 +1,30 @@
-﻿module("modules.logic.fight.view.FightHideUIView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightHideUIView.lua
 
-local var_0_0 = class("FightHideUIView", BaseView)
+module("modules.logic.fight.view.FightHideUIView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnsGo = gohelper.findChild(arg_1_0.viewGO, "root/btns")
-	arg_1_0._imgRoundGo = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/imgRound")
+local FightHideUIView = class("FightHideUIView", BaseView)
+
+function FightHideUIView:onInitView()
+	self._btnsGo = gohelper.findChild(self.viewGO, "root/btns")
+	self._imgRoundGo = gohelper.findChild(self.viewGO, "root/topLeftContent/imgRound")
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightHideUIView:addEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_3_0._checkHideUI, arg_3_0)
-	arg_3_0:_checkHideUI()
+function FightHideUIView:onOpen()
+	self:addEventCb(FightController.instance, FightEvent.GMHideFightView, self._checkHideUI, self)
+	self:_checkHideUI()
 end
 
-function var_0_0._checkHideUI(arg_4_0)
-	gohelper.setActive(arg_4_0._btnsGo, GMFightShowState.topRightPause)
-	gohelper.setActive(arg_4_0._imgRoundGo, GMFightShowState.topRightRound)
+function FightHideUIView:_checkHideUI()
+	gohelper.setActive(self._btnsGo, GMFightShowState.topRightPause)
+	gohelper.setActive(self._imgRoundGo, GMFightShowState.topRightRound)
 end
 
-function var_0_0.onClose(arg_5_0)
-	arg_5_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_5_0._checkHideUI, arg_5_0)
+function FightHideUIView:onClose()
+	self:removeEventCb(FightController.instance, FightEvent.GMHideFightView, self._checkHideUI, self)
 end
 
-return var_0_0
+return FightHideUIView

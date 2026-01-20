@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.system.work.FightWorkAct174UseCard", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAct174UseCard.lua
 
-local var_0_0 = class("FightWorkAct174UseCard", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkAct174UseCard", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.skipAutoPlayData = true
+local FightWorkAct174UseCard = class("FightWorkAct174UseCard", FightEffectBase)
+
+function FightWorkAct174UseCard:onConstructor()
+	self.skipAutoPlayData = true
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0.actEffectData.effectNum
+function FightWorkAct174UseCard:onStart()
+	local useIndex = self.actEffectData.effectNum
 
-	arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, 5)
-	arg_2_0:com_registFightEvent(FightEvent.PlayCardOver, arg_2_0._onPlayCardOver)
+	self:com_registTimer(self._delayAfterPerformance, 5)
+	self:com_registFightEvent(FightEvent.PlayCardOver, self._onPlayCardOver)
 	FightViewPartVisible.set(false, true, true, false, false)
-	arg_2_0:com_sendFightEvent(FightEvent.PlayHandCard, var_2_0)
+	self:com_sendFightEvent(FightEvent.PlayHandCard, useIndex)
 end
 
-function var_0_0._onPlayCardOver(arg_3_0)
-	arg_3_0:com_sendFightEvent(FightEvent.RefreshHandCard)
-	arg_3_0:onDone(true)
+function FightWorkAct174UseCard:_onPlayCardOver()
+	self:com_sendFightEvent(FightEvent.RefreshHandCard)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkAct174UseCard

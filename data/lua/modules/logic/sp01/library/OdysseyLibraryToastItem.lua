@@ -1,21 +1,23 @@
-﻿module("modules.logic.sp01.library.OdysseyLibraryToastItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/OdysseyLibraryToastItem.lua
 
-local var_0_0 = class("OdysseyLibraryToastItem", AssassinLibraryToastItem)
+module("modules.logic.sp01.library.OdysseyLibraryToastItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local OdysseyLibraryToastItem = class("OdysseyLibraryToastItem", AssassinLibraryToastItem)
+
+function OdysseyLibraryToastItem:init(go)
+	OdysseyLibraryToastItem.super.init(self, go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function OdysseyLibraryToastItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function OdysseyLibraryToastItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
+function OdysseyLibraryToastItem:_btnclickOnClick()
 	return
 end
 
-return var_0_0
+return OdysseyLibraryToastItem

@@ -1,20 +1,24 @@
-﻿module("modules.logic.versionactivity1_8.warmup.view.VersionActivity1_8WarmUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/warmup/view/VersionActivity1_8WarmUpViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_8WarmUpViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_8.warmup.view.VersionActivity1_8WarmUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local VersionActivity1_8WarmUpViewContainer = class("VersionActivity1_8WarmUpViewContainer", BaseViewContainer)
+
+function VersionActivity1_8WarmUpViewContainer:buildViews()
+	local views = {
 		VersionActivity1_8WarmUpView.New(),
 		Act1_8WarmUpLeftView.New()
 	}
+
+	return views
 end
 
-function var_0_0.isPlayingDesc(arg_2_0)
-	return arg_2_0._isPlayingDesc
+function VersionActivity1_8WarmUpViewContainer:isPlayingDesc()
+	return self._isPlayingDesc
 end
 
-function var_0_0.setIsPlayingDesc(arg_3_0, arg_3_1)
-	arg_3_0._isPlayingDesc = arg_3_1
+function VersionActivity1_8WarmUpViewContainer:setIsPlayingDesc(isPlaying)
+	self._isPlayingDesc = isPlaying
 end
 
-return var_0_0
+return VersionActivity1_8WarmUpViewContainer

@@ -1,189 +1,191 @@
-﻿module("modules.logic.activity.view.warmup.ActivityWarmUpTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/warmup/ActivityWarmUpTaskItem.lua
 
-local var_0_0 = class("ActivityWarmUpTaskItem", LuaCompBase)
+module("modules.logic.activity.view.warmup.ActivityWarmUpTaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#txt_taskdes")
-	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "#txt_progress")
-	arg_1_0._txtmaxprogress = gohelper.findChildText(arg_1_0.viewGO, "#txt_maxprogress")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "scroll_reward/Viewport/#go_rewards/#go_rewarditem")
-	arg_1_0._goget = gohelper.findChild(arg_1_0.viewGO, "#go_get")
-	arg_1_0._gonotget = gohelper.findChild(arg_1_0.viewGO, "#go_notget")
-	arg_1_0._goblackmask = gohelper.findChild(arg_1_0.viewGO, "#go_blackmask")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_notget/#btn_notfinishbg")
-	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_notget/#btn_finishbg")
+local ActivityWarmUpTaskItem = class("ActivityWarmUpTaskItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityWarmUpTaskItem:onInitView()
+	self._txttaskdes = gohelper.findChildText(self.viewGO, "#txt_taskdes")
+	self._txtprogress = gohelper.findChildText(self.viewGO, "#txt_progress")
+	self._txtmaxprogress = gohelper.findChildText(self.viewGO, "#txt_maxprogress")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "scroll_reward/Viewport/#go_rewards/#go_rewarditem")
+	self._goget = gohelper.findChild(self.viewGO, "#go_get")
+	self._gonotget = gohelper.findChild(self.viewGO, "#go_notget")
+	self._goblackmask = gohelper.findChild(self.viewGO, "#go_blackmask")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_notget/#btn_notfinishbg")
+	self._btnfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_notget/#btn_finishbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
-	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
+function ActivityWarmUpTaskItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:RemoveClickListener()
-	arg_3_0._btnfinishbg:RemoveClickListener()
+function ActivityWarmUpTaskItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
 end
 
-function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._index = arg_4_1
-	arg_4_0.viewGO = arg_4_2
+function ActivityWarmUpTaskItem:initData(index, go)
+	self._index = index
+	self.viewGO = go
 
-	arg_4_0:onInitView()
-	arg_4_0:addEvents()
-	gohelper.setActive(arg_4_0.viewGO, false)
-	arg_4_0._animSelf:Play(UIAnimationName.Open, 0, 0)
+	self:onInitView()
+	self:addEvents()
+	gohelper.setActive(self.viewGO, false)
+	self._animSelf:Play(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
-	TaskDispatcher.cancelTask(arg_5_0.onFinishAnimCompleted, arg_5_0)
-	arg_5_0:removeEvents()
-	arg_5_0:onDestroyView()
+function ActivityWarmUpTaskItem:onDestroy()
+	UIBlockMgr.instance:endBlock(ActivityWarmUpTaskItem.BLOCK_KEY)
+	TaskDispatcher.cancelTask(self.onFinishAnimCompleted, self)
+	self:removeEvents()
+	self:onDestroyView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._click = gohelper.getClickWithAudio(arg_6_0.viewGO)
-	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function ActivityWarmUpTaskItem:_editableInitView()
+	self._click = gohelper.getClickWithAudio(self.viewGO)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_6_0._simagebg:LoadImage(ResUrl.getActivityWarmUpBg("bg_rwdi"))
+	self._simagebg:LoadImage(ResUrl.getActivityWarmUpBg("bg_rwdi"))
 
-	arg_6_0._animSelf = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._animSelf.enabled = true
-	arg_6_0._iconList = {}
+	self._animSelf = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._animSelf.enabled = true
+	self._iconList = {}
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	arg_7_0._simagebg:UnLoadImage()
+function ActivityWarmUpTaskItem:onDestroyView()
+	self._simagebg:UnLoadImage()
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._iconList) do
-		gohelper.setActive(iter_7_1.go, true)
-		gohelper.destroy(iter_7_1.go)
+	for _, v in pairs(self._iconList) do
+		gohelper.setActive(v.go, true)
+		gohelper.destroy(v.go)
 	end
 
-	arg_7_0._iconList = nil
+	self._iconList = nil
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
+function ActivityWarmUpTaskItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_8_0:refreshInfo()
-	arg_8_0:refreshAllRewardIcons()
+	self:refreshInfo()
+	self:refreshAllRewardIcons()
 end
 
-function var_0_0.refreshInfo(arg_9_0)
-	local var_9_0 = arg_9_0._mo.config
-	local var_9_1 = arg_9_0._mo.taskMO
+function ActivityWarmUpTaskItem:refreshInfo()
+	local cfg = self._mo.config
+	local taskMO = self._mo.taskMO
 
-	arg_9_0._txttaskdes.text = var_9_0.desc
-	arg_9_0._txtprogress.text = tostring(arg_9_0._mo:getProgress())
-	arg_9_0._txtmaxprogress.text = tostring(var_9_0.maxProgress)
+	self._txttaskdes.text = cfg.desc
+	self._txtprogress.text = tostring(self._mo:getProgress())
+	self._txtmaxprogress.text = tostring(cfg.maxProgress)
 
-	if arg_9_0._mo:isLock() then
-		gohelper.setActive(arg_9_0._goblackmask, true)
-		gohelper.setActive(arg_9_0._goget, false)
-		gohelper.setActive(arg_9_0._gonotget, true)
-		gohelper.setActive(arg_9_0._btnnotfinishbg.gameObject, true)
-		gohelper.setActive(arg_9_0._btnfinishbg.gameObject, false)
+	if self._mo:isLock() then
+		gohelper.setActive(self._goblackmask, true)
+		gohelper.setActive(self._goget, false)
+		gohelper.setActive(self._gonotget, true)
+		gohelper.setActive(self._btnnotfinishbg.gameObject, true)
+		gohelper.setActive(self._btnfinishbg.gameObject, false)
 	else
-		arg_9_0:refreshButtonRunning()
+		self:refreshButtonRunning()
 	end
 end
 
-function var_0_0.refreshButtonRunning(arg_10_0)
-	if arg_10_0._mo:alreadyGotReward() then
-		arg_10_0:refreshWhenFinished()
+function ActivityWarmUpTaskItem:refreshButtonRunning()
+	if self._mo:alreadyGotReward() then
+		self:refreshWhenFinished()
 	else
-		gohelper.setActive(arg_10_0._goblackmask, false)
+		gohelper.setActive(self._goblackmask, false)
 
-		if arg_10_0._mo:isFinished() then
-			gohelper.setActive(arg_10_0._goget, false)
-			gohelper.setActive(arg_10_0._gonotget, true)
-			gohelper.setActive(arg_10_0._btnnotfinishbg.gameObject, false)
-			gohelper.setActive(arg_10_0._btnfinishbg.gameObject, true)
+		if self._mo:isFinished() then
+			gohelper.setActive(self._goget, false)
+			gohelper.setActive(self._gonotget, true)
+			gohelper.setActive(self._btnnotfinishbg.gameObject, false)
+			gohelper.setActive(self._btnfinishbg.gameObject, true)
 		else
-			gohelper.setActive(arg_10_0._goget, false)
-			gohelper.setActive(arg_10_0._gonotget, true)
-			gohelper.setActive(arg_10_0._btnnotfinishbg.gameObject, true)
-			gohelper.setActive(arg_10_0._btnfinishbg.gameObject, false)
+			gohelper.setActive(self._goget, false)
+			gohelper.setActive(self._gonotget, true)
+			gohelper.setActive(self._btnnotfinishbg.gameObject, true)
+			gohelper.setActive(self._btnfinishbg.gameObject, false)
 		end
 	end
 end
 
-function var_0_0.refreshWhenFinished(arg_11_0)
-	gohelper.setActive(arg_11_0._goblackmask, true)
-	gohelper.setActive(arg_11_0._goget, true)
-	gohelper.setActive(arg_11_0._gonotget, false)
+function ActivityWarmUpTaskItem:refreshWhenFinished()
+	gohelper.setActive(self._goblackmask, true)
+	gohelper.setActive(self._goget, true)
+	gohelper.setActive(self._gonotget, false)
 end
 
-function var_0_0.refreshAllRewardIcons(arg_12_0)
-	arg_12_0:hideAllRewardIcon()
+function ActivityWarmUpTaskItem:refreshAllRewardIcons()
+	self:hideAllRewardIcon()
 
-	local var_12_0 = string.split(arg_12_0._mo.config.bonus, "|")
+	local bonusList = string.split(self._mo.config.bonus, "|")
 
-	for iter_12_0 = 1, #var_12_0 do
-		local var_12_1 = arg_12_0:getOrCreateIcon(iter_12_0)
+	for i = 1, #bonusList do
+		local item = self:getOrCreateIcon(i)
 
-		gohelper.setActive(var_12_1.go, true)
+		gohelper.setActive(item.go, true)
 
-		local var_12_2 = string.splitToNumber(var_12_0[iter_12_0], "#")
+		local bonusArr = string.splitToNumber(bonusList[i], "#")
 
-		var_12_1.itemIcon:setMOValue(var_12_2[1], var_12_2[2], var_12_2[3], nil, true)
-		var_12_1.itemIcon:isShowCount(var_12_2[1] ~= MaterialEnum.MaterialType.Hero)
-		var_12_1.itemIcon:setCountFontSize(40)
-		var_12_1.itemIcon:showStackableNum2()
-		var_12_1.itemIcon:setHideLvAndBreakFlag(true)
-		var_12_1.itemIcon:hideEquipLvAndBreak(true)
+		item.itemIcon:setMOValue(bonusArr[1], bonusArr[2], bonusArr[3], nil, true)
+		item.itemIcon:isShowCount(bonusArr[1] ~= MaterialEnum.MaterialType.Hero)
+		item.itemIcon:setCountFontSize(40)
+		item.itemIcon:showStackableNum2()
+		item.itemIcon:setHideLvAndBreakFlag(true)
+		item.itemIcon:hideEquipLvAndBreak(true)
 	end
 end
 
-function var_0_0.getOrCreateIcon(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._iconList[arg_13_1]
+function ActivityWarmUpTaskItem:getOrCreateIcon(index)
+	local item = self._iconList[index]
 
-	if not var_13_0 then
-		var_13_0 = arg_13_0:getUserDataTb_()
-		var_13_0.go = gohelper.cloneInPlace(arg_13_0._gorewarditem)
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._gorewarditem)
 
-		gohelper.setActive(var_13_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_13_0.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_13_0.go)
-		arg_13_0._iconList[arg_13_1] = var_13_0
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.go)
+		self._iconList[index] = item
 	end
 
-	return var_13_0
+	return item
 end
 
-function var_0_0.hideAllRewardIcon(arg_14_0)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._iconList) do
-		gohelper.setActive(iter_14_1.go, false)
+function ActivityWarmUpTaskItem:hideAllRewardIcon()
+	for _, iconItem in pairs(self._iconList) do
+		gohelper.setActive(iconItem.go, false)
 	end
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_15_0)
-	local var_15_0 = arg_15_0._mo.config.openDay
+function ActivityWarmUpTaskItem:_btnnotfinishbgOnClick()
+	local day = self._mo.config.openDay
 
-	ActivityWarmUpController.instance:switchTab(var_15_0)
+	ActivityWarmUpController.instance:switchTab(day)
 	ActivityWarmUpTaskController.instance:dispatchEvent(ActivityWarmUpEvent.TaskListNeedClose)
 end
 
-var_0_0.BLOCK_KEY = "ActivityWarmUpTaskItemBlock"
+ActivityWarmUpTaskItem.BLOCK_KEY = "ActivityWarmUpTaskItemBlock"
 
-function var_0_0._btnfinishbgOnClick(arg_16_0)
-	arg_16_0:refreshWhenFinished()
-	arg_16_0._animSelf:Play("finish", 0, 0)
-	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_KEY)
-	TaskDispatcher.runDelay(arg_16_0.onFinishAnimCompleted, arg_16_0, 0.4)
+function ActivityWarmUpTaskItem:_btnfinishbgOnClick()
+	self:refreshWhenFinished()
+	self._animSelf:Play("finish", 0, 0)
+	UIBlockMgr.instance:startBlock(ActivityWarmUpTaskItem.BLOCK_KEY)
+	TaskDispatcher.runDelay(self.onFinishAnimCompleted, self, 0.4)
 end
 
-function var_0_0.onFinishAnimCompleted(arg_17_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
+function ActivityWarmUpTaskItem:onFinishAnimCompleted()
+	UIBlockMgr.instance:endBlock(ActivityWarmUpTaskItem.BLOCK_KEY)
 	AudioMgr.instance:trigger(AudioEnum.UI.Task_UI_TaskItem_moveTop)
-	gohelper.setActive(arg_17_0._goclick, true)
-	TaskRpc.instance:sendFinishTaskRequest(arg_17_0._mo.id)
+	gohelper.setActive(self._goclick, true)
+	TaskRpc.instance:sendFinishTaskRequest(self._mo.id)
 end
 
-return var_0_0
+return ActivityWarmUpTaskItem

@@ -1,17 +1,19 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionEnableClick", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionEnableClick.lua
 
-local var_0_0 = class("GuideActionEnableClick", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionEnableClick", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local GuideActionEnableClick = class("GuideActionEnableClick", BaseGuideAction)
 
-	arg_1_0._isEnable = arg_1_3 == "1"
+function GuideActionEnableClick:ctor(guideId, stepId, actionParam)
+	GuideActionEnableClick.super.ctor(self, guideId, stepId, actionParam)
+
+	self._isEnable = actionParam == "1"
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
-	GuideViewMgr.instance:enableClick(arg_2_0._isEnable)
-	arg_2_0:onDone(true)
+function GuideActionEnableClick:onStart(context)
+	GuideActionEnableClick.super.onStart(self, context)
+	GuideViewMgr.instance:enableClick(self._isEnable)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionEnableClick

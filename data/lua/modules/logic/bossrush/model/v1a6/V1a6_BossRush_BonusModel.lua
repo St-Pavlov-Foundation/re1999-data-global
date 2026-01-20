@@ -1,164 +1,168 @@
-﻿module("modules.logic.bossrush.model.v1a6.V1a6_BossRush_BonusModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/v1a6/V1a6_BossRush_BonusModel.lua
 
-local var_0_0 = class("V1a6_BossRush_BonusModel", BaseModel)
+module("modules.logic.bossrush.model.v1a6.V1a6_BossRush_BonusModel", package.seeall)
 
-function var_0_0.selecAchievementTab(arg_1_0, arg_1_1)
-	V1a4_BossRush_ScoreTaskAchievementListModel.instance:setAchievementMoList(arg_1_1)
+local V1a6_BossRush_BonusModel = class("V1a6_BossRush_BonusModel", BaseModel)
+
+function V1a6_BossRush_BonusModel:selecAchievementTab(stage)
+	V1a4_BossRush_ScoreTaskAchievementListModel.instance:setAchievementMoList(stage)
 end
 
-function var_0_0.selectScheduleTab(arg_2_0, arg_2_1)
-	V1a4_BossRush_ScheduleViewListModel.instance:setScheduleMoList(arg_2_1)
+function V1a6_BossRush_BonusModel:selectScheduleTab(stage)
+	V1a4_BossRush_ScheduleViewListModel.instance:setScheduleMoList(stage)
 end
 
-function var_0_0.selectSpecialScheduleTab(arg_3_0, arg_3_1)
-	V2a1_BossRush_SpecialScheduleViewListModel.instance:setMoList(arg_3_1)
+function V1a6_BossRush_BonusModel:selectSpecialScheduleTab(stage)
+	V2a1_BossRush_SpecialScheduleViewListModel.instance:setMoList(stage)
 end
 
-function var_0_0.getScheduleRewardData(arg_4_0, arg_4_1)
-	local var_4_0 = BossRushModel.instance:getScheduleViewRewardList(arg_4_1)
+function V1a6_BossRush_BonusModel:getScheduleRewardData(stage)
+	local dataList = BossRushModel.instance:getScheduleViewRewardList(stage)
 
-	if var_4_0 then
-		local var_4_1 = #var_4_0
-		local var_4_2 = BossRushModel.instance:getLastPointInfo(arg_4_1)
-		local var_4_3 = var_4_2 and var_4_2.cur or 0
-		local var_4_4 = {
-			dataCount = var_4_1,
-			curNum = var_4_3
+	if dataList then
+		local dataCount = #dataList
+		local info = BossRushModel.instance:getLastPointInfo(stage)
+		local cur = info and info.cur or 0
+		local data = {
+			dataCount = dataCount,
+			curNum = cur
 		}
 
-		if var_4_3 == 0 then
-			var_4_4.lastIndex = 0
-			var_4_4.nextIndex = 1
-		elseif var_4_3 >= var_4_2.max then
-			var_4_4.lastIndex = var_4_1
-			var_4_4.nextIndex = var_4_1
+		if cur == 0 then
+			data.lastIndex = 0
+			data.nextIndex = 1
+		elseif cur >= info.max then
+			data.lastIndex = dataCount
+			data.nextIndex = dataCount
 		else
-			for iter_4_0, iter_4_1 in pairs(var_4_0) do
-				local var_4_5 = iter_4_1.stageRewardCO.rewardPointNum
+			for i, v in pairs(dataList) do
+				local num = v.stageRewardCO.rewardPointNum
 
-				if var_4_3 <= var_4_5 then
-					var_4_4.lastIndex = var_4_3 == var_4_5 and iter_4_0 or iter_4_0 - 1
-					var_4_4.nextIndex = iter_4_0
+				if cur <= num then
+					data.lastIndex = cur == num and i or i - 1
+					data.nextIndex = i
 
 					break
 				end
 			end
 		end
 
-		var_4_4.lastIndex = var_4_4.lastIndex or 0
-		var_4_4.nextIndex = var_4_4.nextIndex or 1
-		var_4_4.lastNum = var_4_0[var_4_4.lastIndex] and var_4_0[var_4_4.lastIndex].stageRewardCO.rewardPointNum or 0
-		var_4_4.nextNum = var_4_0[var_4_4.nextIndex] and var_4_0[var_4_4.nextIndex].stageRewardCO.rewardPointNum or 0
+		data.lastIndex = data.lastIndex or 0
+		data.nextIndex = data.nextIndex or 1
+		data.lastNum = dataList[data.lastIndex] and dataList[data.lastIndex].stageRewardCO.rewardPointNum or 0
+		data.nextNum = dataList[data.nextIndex] and dataList[data.nextIndex].stageRewardCO.rewardPointNum or 0
 
-		return var_4_4
+		return data
 	end
 end
 
-function var_0_0.getScheduleProgressWidth(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = arg_5_0:getScheduleRewardData(arg_5_1)
-	local var_5_1
-	local var_5_2
+function V1a6_BossRush_BonusModel:getScheduleProgressWidth(stage, spacing, offset)
+	local data = self:getScheduleRewardData(stage)
+	local grayWidth, gotWidth
 
-	if var_5_0 then
-		var_5_1 = (var_5_0.dataCount - 1) * arg_5_2 + arg_5_3
+	if data then
+		local dataCount = data.dataCount
 
-		if var_5_0.lastIndex and var_5_0.nextIndex then
-			if var_5_0.lastIndex == var_5_0.nextIndex then
-				var_5_2 = var_5_0.lastIndex > 1 and (var_5_0.lastIndex - 1) * arg_5_2 + arg_5_3 or arg_5_3
+		grayWidth = (dataCount - 1) * spacing + offset
+
+		if data.lastIndex and data.nextIndex then
+			if data.lastIndex == data.nextIndex then
+				gotWidth = data.lastIndex > 1 and (data.lastIndex - 1) * spacing + offset or offset
 			else
-				local var_5_3 = (var_5_0.curNum - var_5_0.lastNum) / (var_5_0.nextNum - var_5_0.lastNum)
+				local extra = (data.curNum - data.lastNum) / (data.nextNum - data.lastNum)
 
-				var_5_2 = var_5_0.lastIndex > 0 and (var_5_0.lastIndex - 1 + var_5_3) * arg_5_2 + arg_5_3 or var_5_3 * arg_5_3
+				gotWidth = data.lastIndex > 0 and (data.lastIndex - 1 + extra) * spacing + offset or extra * offset
 			end
 		end
 	end
 
-	return var_5_1, var_5_2
+	return grayWidth, gotWidth
 end
 
-function var_0_0.getLayer4RewardData(arg_6_0, arg_6_1)
-	local var_6_0 = BossRushModel.instance:getSpecialScheduleViewRewardList(arg_6_1)
+function V1a6_BossRush_BonusModel:getLayer4RewardData(stage)
+	local dataList = BossRushModel.instance:getSpecialScheduleViewRewardList(stage)
 
-	if var_6_0 then
-		local var_6_1 = #var_6_0
-		local var_6_2 = BossRushModel.instance:getLayer4CurScore(arg_6_1)
-		local var_6_3 = BossRushModel.instance:getLayer4MaxRewardScore(arg_6_1)
-		local var_6_4 = {
-			dataCount = var_6_1,
-			curNum = var_6_2
+	if dataList then
+		local dataCount = #dataList
+		local cur = BossRushModel.instance:getLayer4CurScore(stage)
+		local max = BossRushModel.instance:getLayer4MaxRewardScore(stage)
+		local data = {
+			dataCount = dataCount,
+			curNum = cur
 		}
 
-		if var_6_2 == 0 then
-			var_6_4.lastIndex = 0
-			var_6_4.nextIndex = 1
-		elseif var_6_3 <= var_6_2 then
-			var_6_4.lastIndex = var_6_1
-			var_6_4.nextIndex = var_6_1
+		if cur == 0 then
+			data.lastIndex = 0
+			data.nextIndex = 1
+		elseif max <= cur then
+			data.lastIndex = dataCount
+			data.nextIndex = dataCount
 		else
-			for iter_6_0, iter_6_1 in pairs(var_6_0) do
-				local var_6_5 = iter_6_1.config.maxProgress
+			for i, v in pairs(dataList) do
+				local num = v.config.maxProgress
 
-				if var_6_2 <= var_6_5 then
-					var_6_4.lastIndex = var_6_2 == var_6_5 and iter_6_0 or iter_6_0 - 1
-					var_6_4.nextIndex = iter_6_0
+				if cur <= num then
+					data.lastIndex = cur == num and i or i - 1
+					data.nextIndex = i
 
 					break
 				end
 			end
 		end
 
-		var_6_4.lastIndex = var_6_4.lastIndex or 0
-		var_6_4.nextIndex = var_6_4.nextIndex or 1
-		var_6_4.lastNum = var_6_0[var_6_4.lastIndex] and var_6_0[var_6_4.lastIndex].config.maxProgress or 0
-		var_6_4.nextNum = var_6_0[var_6_4.nextIndex] and var_6_0[var_6_4.nextIndex].config.maxProgress or 0
+		data.lastIndex = data.lastIndex or 0
+		data.nextIndex = data.nextIndex or 1
+		data.lastNum = dataList[data.lastIndex] and dataList[data.lastIndex].config.maxProgress or 0
+		data.nextNum = dataList[data.nextIndex] and dataList[data.nextIndex].config.maxProgress or 0
 
-		return var_6_4
+		return data
 	end
 end
 
-function var_0_0.getLayer4ProgressWidth(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_0:getLayer4RewardData(arg_7_1)
-	local var_7_1
-	local var_7_2
+function V1a6_BossRush_BonusModel:getLayer4ProgressWidth(stage, spacing, offset)
+	local data = self:getLayer4RewardData(stage)
+	local grayWidth, gotWidth
 
-	if var_7_0 then
-		var_7_1 = (var_7_0.dataCount - 1) * arg_7_2 + arg_7_3
+	if data then
+		local dataCount = data.dataCount
 
-		if var_7_0.lastIndex and var_7_0.nextIndex then
-			if var_7_0.lastIndex == var_7_0.nextIndex then
-				var_7_2 = var_7_0.lastIndex > 1 and (var_7_0.lastIndex - 1) * arg_7_2 + arg_7_3 or arg_7_3
+		grayWidth = (dataCount - 1) * spacing + offset
+
+		if data.lastIndex and data.nextIndex then
+			if data.lastIndex == data.nextIndex then
+				gotWidth = data.lastIndex > 1 and (data.lastIndex - 1) * spacing + offset or offset
 			else
-				local var_7_3 = (var_7_0.curNum - var_7_0.lastNum) / (var_7_0.nextNum - var_7_0.lastNum)
+				local extra = (data.curNum - data.lastNum) / (data.nextNum - data.lastNum)
 
-				var_7_2 = var_7_0.lastIndex > 0 and (var_7_0.lastIndex - 1 + var_7_3) * arg_7_2 + arg_7_3 or var_7_3 * arg_7_3
+				gotWidth = data.lastIndex > 0 and (data.lastIndex - 1 + extra) * spacing + offset or extra * offset
 			end
 		end
 	end
 
-	return var_7_1, var_7_2
+	return grayWidth, gotWidth
 end
 
-function var_0_0.getBonusViewPath(arg_8_0)
-	local var_8_0 = {}
-	local var_8_1 = BossRushModel.instance:getActivityBonus()
+function V1a6_BossRush_BonusModel:getBonusViewPath()
+	local viewPath = {}
+	local bonusTab = BossRushModel.instance:getActivityBonus()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		table.insert(var_8_0, {
-			iter_8_1.ViewPath
+	for _, tab in ipairs(bonusTab) do
+		table.insert(viewPath, {
+			tab.ViewPath
 		})
 	end
 
-	return var_8_0
+	return viewPath
 end
 
-function var_0_0.getTab(arg_9_0)
-	return arg_9_0._selectTab or BossRushEnum.BonusViewTab.AchievementTab
+function V1a6_BossRush_BonusModel:getTab()
+	return self._selectTab or BossRushEnum.BonusViewTab.AchievementTab
 end
 
-function var_0_0.setTab(arg_10_0, arg_10_1)
-	arg_10_0._selectTab = arg_10_1
+function V1a6_BossRush_BonusModel:setTab(tab)
+	self._selectTab = tab
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_BossRush_BonusModel.instance = V1a6_BossRush_BonusModel.New()
 
-return var_0_0
+return V1a6_BossRush_BonusModel

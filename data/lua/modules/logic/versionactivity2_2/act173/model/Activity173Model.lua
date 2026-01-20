@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_2.act173.model.Activity173Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act173/model/Activity173Model.lua
 
-local var_0_0 = class("Activity173Model", BaseModel)
+module("modules.logic.versionactivity2_2.act173.model.Activity173Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity173Model = class("Activity173Model", BaseModel)
+
+function Activity173Model:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity173Model:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity173Model.instance = Activity173Model.New()
 
-return var_0_0
+return Activity173Model

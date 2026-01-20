@@ -1,46 +1,48 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomInitBuildingLvUp", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomInitBuildingLvUp.lua
 
-local var_0_0 = class("WaitGuideActionRoomInitBuildingLvUp", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomInitBuildingLvUp", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionRoomInitBuildingLvUp = class("WaitGuideActionRoomInitBuildingLvUp", BaseGuideAction)
 
-	arg_1_0._targetLevel = tonumber(arg_1_0.actionParam) or 3
+function WaitGuideActionRoomInitBuildingLvUp:onStart(context)
+	WaitGuideActionRoomInitBuildingLvUp.super.onStart(self, context)
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenViewFinish, arg_1_0)
-	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, arg_1_0._onUpdateRoomLevel, arg_1_0, LuaEventSystem.Low)
+	self._targetLevel = tonumber(self.actionParam) or 3
+
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, self._onUpdateRoomLevel, self, LuaEventSystem.Low)
 end
 
-function var_0_0._onOpenViewFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.RoomInitBuildingView and arg_2_0:_isSatisfy() then
-		arg_2_0:onDone(true)
+function WaitGuideActionRoomInitBuildingLvUp:_onOpenViewFinish(viewName)
+	if viewName == ViewName.RoomInitBuildingView and self:_isSatisfy() then
+		self:onDone(true)
 	end
 end
 
-function var_0_0._isSatisfy(arg_3_0)
-	return ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView) and RoomMapModel.instance:getRoomLevel() >= arg_3_0._targetLevel
+function WaitGuideActionRoomInitBuildingLvUp:_isSatisfy()
+	return ViewMgr.instance:isOpen(ViewName.RoomInitBuildingView) and RoomMapModel.instance:getRoomLevel() >= self._targetLevel
 end
 
-function var_0_0._onUpdateRoomLevel(arg_4_0)
-	if arg_4_0:_isSatisfy() then
-		arg_4_0:_checkTaskFinish()
+function WaitGuideActionRoomInitBuildingLvUp:_onUpdateRoomLevel()
+	if self:_isSatisfy() then
+		self:_checkTaskFinish()
 	end
 end
 
-function var_0_0._checkTaskFinish(arg_5_0)
-	local var_5_0, var_5_1 = RoomSceneTaskController.instance:isFirstTaskFinished()
+function WaitGuideActionRoomInitBuildingLvUp:_checkTaskFinish()
+	local hasFinish, taskIds = RoomSceneTaskController.instance:isFirstTaskFinished()
 
-	if var_5_0 then
-		TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, arg_5_0._checkTaskFinish, arg_5_0, LuaEventSystem.Low)
+	if hasFinish then
+		TaskController.instance:registerCallback(TaskEvent.SuccessGetBonus, self._checkTaskFinish, self, LuaEventSystem.Low)
 	else
-		arg_5_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_6_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, arg_6_0._onUpdateRoomLevel, arg_6_0)
-	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, arg_6_0._checkTaskFinish, arg_6_0)
+function WaitGuideActionRoomInitBuildingLvUp:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, self._onUpdateRoomLevel, self)
+	TaskController.instance:unregisterCallback(TaskEvent.SuccessGetBonus, self._checkTaskFinish, self)
 end
 
-return var_0_0
+return WaitGuideActionRoomInitBuildingLvUp

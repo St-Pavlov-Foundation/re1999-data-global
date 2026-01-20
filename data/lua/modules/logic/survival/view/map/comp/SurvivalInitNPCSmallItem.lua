@@ -1,105 +1,109 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalInitNPCSmallItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalInitNPCSmallItem.lua
 
-local var_0_0 = class("SurvivalInitNPCSmallItem", LuaCompBase)
+module("modules.logic.survival.view.map.comp.SurvivalInitNPCSmallItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goHaveNpc = gohelper.findChild(arg_1_1, "#go_HaveHero")
-	arg_1_0._goLock = gohelper.findChild(arg_1_1, "#go_Locked")
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_1, "#go_Empty")
-	arg_1_0._goEmpty2 = gohelper.findChild(arg_1_1, "#go_Empty2")
-	arg_1_0._goEmptyAdd = gohelper.findChild(arg_1_1, "#go_Empty/image_Add")
-	arg_1_0._clickThis = gohelper.getClick(arg_1_1)
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0._goHaveNpc, "#txt_PartnerName")
-	arg_1_0._imagechess = gohelper.findChildSingleImage(arg_1_0._goHaveNpc, "#image_Chess")
+local SurvivalInitNPCSmallItem = class("SurvivalInitNPCSmallItem", LuaCompBase)
+
+function SurvivalInitNPCSmallItem:init(go)
+	self.go = go
+	self._goHaveNpc = gohelper.findChild(go, "#go_HaveHero")
+	self._goLock = gohelper.findChild(go, "#go_Locked")
+	self._goEmpty = gohelper.findChild(go, "#go_Empty")
+	self._goEmpty2 = gohelper.findChild(go, "#go_Empty2")
+	self._goEmptyAdd = gohelper.findChild(go, "#go_Empty/image_Add")
+	self._clickThis = gohelper.getClick(go)
+	self._txtname = gohelper.findChildTextMesh(self._goHaveNpc, "#txt_PartnerName")
+	self._imagechess = gohelper.findChildSingleImage(self._goHaveNpc, "#image_Chess")
 end
 
-function var_0_0.setIndex(arg_2_0, arg_2_1)
-	arg_2_0._index = arg_2_1
+function SurvivalInitNPCSmallItem:setIndex(index)
+	self._index = index
 end
 
-function var_0_0.setParentView(arg_3_0, arg_3_1)
-	arg_3_0._teamView = arg_3_1
+function SurvivalInitNPCSmallItem:setParentView(view)
+	self._teamView = view
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0._clickThis:AddClickListener(arg_4_0._onClickThis, arg_4_0)
+function SurvivalInitNPCSmallItem:addEventListeners()
+	self._clickThis:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	arg_5_0._clickThis:RemoveClickListener()
+function SurvivalInitNPCSmallItem:removeEventListeners()
+	self._clickThis:RemoveClickListener()
 end
 
-function var_0_0.getNpcMo(arg_6_0)
-	return arg_6_0._npcMo
+function SurvivalInitNPCSmallItem:getNpcMo()
+	return self._npcMo
 end
 
-function var_0_0.setNoShowAdd(arg_7_0)
-	arg_7_0._noShowAdd = true
+function SurvivalInitNPCSmallItem:setNoShowAdd()
+	self._noShowAdd = true
 end
 
-function var_0_0.setIsLock(arg_8_0, arg_8_1)
-	arg_8_0._isLock = arg_8_1
+function SurvivalInitNPCSmallItem:setIsLock(value)
+	self._isLock = value
 
-	if arg_8_1 then
-		gohelper.setActive(arg_8_0._goLock, true)
-		gohelper.setActive(arg_8_0._goHaveNpc, false)
-		gohelper.setActive(arg_8_0._goEmpty, false)
+	if value then
+		gohelper.setActive(self._goLock, true)
+		gohelper.setActive(self._goHaveNpc, false)
+		gohelper.setActive(self._goEmpty, false)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0.go, true)
+function SurvivalInitNPCSmallItem:onUpdateMO(mo)
+	gohelper.setActive(self.go, true)
 
-	arg_9_0._npcMo = arg_9_1
+	self._npcMo = mo
 
-	local var_9_0 = arg_9_0._npcMo ~= nil
+	local hasNpc = self._npcMo ~= nil
 
-	gohelper.setActive(arg_9_0._goEmpty, not var_9_0)
-	gohelper.setActive(arg_9_0._goEmptyAdd, not var_9_0 and not arg_9_0._noShowAdd)
-	gohelper.setActive(arg_9_0._goEmpty2, not var_9_0 and arg_9_0._noShowAdd and not arg_9_0._isLock)
-	gohelper.setActive(arg_9_0._goHaveNpc, var_9_0)
+	gohelper.setActive(self._goEmpty, not hasNpc)
+	gohelper.setActive(self._goEmptyAdd, not hasNpc and not self._noShowAdd)
+	gohelper.setActive(self._goEmpty2, not hasNpc and self._noShowAdd and not self._isLock)
+	gohelper.setActive(self._goHaveNpc, hasNpc)
 
-	if var_9_0 then
-		local var_9_1 = arg_9_1.co
+	if hasNpc then
+		local npcCo = mo.co
 
-		if not var_9_1 then
+		if not npcCo then
 			return
 		end
 
-		arg_9_0._txtname.text = var_9_1.name
+		self._txtname.text = npcCo.name
 
-		SurvivalUnitIconHelper.instance:setNpcIcon(arg_9_0._imagechess, var_9_1.headIcon)
+		SurvivalUnitIconHelper.instance:setNpcIcon(self._imagechess, npcCo.headIcon)
 	end
 end
 
-function var_0_0.showSelectEffect(arg_10_0)
+function SurvivalInitNPCSmallItem:showSelectEffect()
 	return
 end
 
-function var_0_0._onClickThis(arg_11_0)
-	if arg_11_0._isLock then
+function SurvivalInitNPCSmallItem:_onClickThis()
+	if self._isLock then
 		return
 	end
 
-	if SurvivalShelterModel.instance:getWeekInfo().inSurvival then
-		if arg_11_0._npcMo then
-			SurvivalController.instance:dispatchEvent(SurvivalEvent.OnClickTeamNpc, arg_11_0._npcMo)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	if weekInfo.inSurvival then
+		if self._npcMo then
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.OnClickTeamNpc, self._npcMo)
 		end
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
-	ViewMgr.instance:openView(ViewName.SurvivalNPCSelectView, arg_11_0._npcMo)
+	ViewMgr.instance:openView(ViewName.SurvivalNPCSelectView, self._npcMo)
 end
 
-function var_0_0.hide(arg_12_0)
-	gohelper.setActive(arg_12_0.go, false)
+function SurvivalInitNPCSmallItem:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	arg_13_0._teamView = nil
+function SurvivalInitNPCSmallItem:onDestroy()
+	self._teamView = nil
 end
 
-return var_0_0
+return SurvivalInitNPCSmallItem

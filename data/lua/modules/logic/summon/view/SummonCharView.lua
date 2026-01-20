@@ -1,51 +1,53 @@
-﻿module("modules.logic.summon.view.SummonCharView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonCharView.lua
 
-local var_0_0 = class("SummonCharView", BaseView)
+module("modules.logic.summon.view.SummonCharView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goresult = gohelper.findChild(arg_1_0.viewGO, "#go_result")
-	arg_1_0._goresultitem = gohelper.findChild(arg_1_0.viewGO, "#go_result/resultcontent/#go_resultitem")
-	arg_1_0._btnreturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_return")
-	arg_1_0._btnopenall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_openall")
-	arg_1_0._godrag = gohelper.findChild(arg_1_0.viewGO, "#go_drag")
-	arg_1_0._goguide = gohelper.findChild(arg_1_0.viewGO, "#go_drag/#go_guide")
+local SummonCharView = class("SummonCharView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonCharView:onInitView()
+	self._goresult = gohelper.findChild(self.viewGO, "#go_result")
+	self._goresultitem = gohelper.findChild(self.viewGO, "#go_result/resultcontent/#go_resultitem")
+	self._btnreturn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#btn_return")
+	self._btnopenall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#btn_openall")
+	self._godrag = gohelper.findChild(self.viewGO, "#go_drag")
+	self._goguide = gohelper.findChild(self.viewGO, "#go_drag/#go_guide")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreturn:AddClickListener(arg_2_0._btnreturnOnClick, arg_2_0)
-	arg_2_0._btnopenall:AddClickListener(arg_2_0._btnopenallOnClick, arg_2_0)
+function SummonCharView:addEvents()
+	self._btnreturn:AddClickListener(self._btnreturnOnClick, self)
+	self._btnopenall:AddClickListener(self._btnopenallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreturn:RemoveClickListener()
-	arg_3_0._btnopenall:RemoveClickListener()
+function SummonCharView:removeEvents()
+	self._btnreturn:RemoveClickListener()
+	self._btnopenall:RemoveClickListener()
 end
 
-function var_0_0._btnreturnOnClick(arg_4_0)
-	arg_4_0:_summonEnd()
+function SummonCharView:_btnreturnOnClick()
+	self:_summonEnd()
 end
 
-function var_0_0.handleSkip(arg_5_0)
+function SummonCharView:handleSkip()
 	logNormal("SummonCharView handleSkip")
 
-	if not arg_5_0._isDrawing or not arg_5_0.summonResult then
+	if not self._isDrawing or not self.summonResult then
 		return
 	end
 
-	arg_5_0:_hideGuide()
+	self:_hideGuide()
 
-	if arg_5_0:checkInitDrawComp() then
-		arg_5_0._drawComp:skip()
+	if self:checkInitDrawComp() then
+		self._drawComp:skip()
 	end
 
-	local var_5_0 = {}
+	local mvSkinIds = {}
 
-	if arg_5_0.summonResultCount == 10 then
-		var_5_0 = SummonController.instance:getLimitedHeroSkinIdsByPopupParam()
+	if self.summonResultCount == 10 then
+		mvSkinIds = SummonController.instance:getLimitedHeroSkinIdsByPopupParam()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
@@ -56,260 +58,260 @@ function var_0_0.handleSkip(arg_5_0)
 		return
 	end
 
-	local var_5_1 = SummonController.instance:getLastPoolId()
+	local poolId = SummonController.instance:getLastPoolId()
 
-	if arg_5_0.summonResultCount == 1 then
-		local var_5_2, var_5_3 = SummonModel.instance:openSummonResult(1)
+	if self.summonResultCount == 1 then
+		local summonResultMO, duplicateCount = SummonModel.instance:openSummonResult(1)
 
-		if var_5_2 then
-			if var_5_2.heroId and var_5_2.heroId ~= 0 then
-				SummonLuckyBagController.instance:skipOpenGetChar(var_5_2.heroId, var_5_3, var_5_1)
+		if summonResultMO then
+			if summonResultMO.heroId and summonResultMO.heroId ~= 0 then
+				SummonLuckyBagController.instance:skipOpenGetChar(summonResultMO.heroId, duplicateCount, poolId)
 				SummonController.instance:nextSummonPopupParam()
-			elseif var_5_2:isLuckyBag() then
-				if not var_5_1 then
+			elseif summonResultMO:isLuckyBag() then
+				if not poolId then
 					return
 				end
 
-				SummonLuckyBagController.instance:skipOpenGetLuckyBag(var_5_2.luckyBagId, var_5_1)
+				SummonLuckyBagController.instance:skipOpenGetLuckyBag(summonResultMO.luckyBagId, poolId)
 			end
 		end
-	elseif arg_5_0.summonResultCount > 1 then
-		for iter_5_0 = 1, 10 do
-			SummonModel.instance:openSummonResult(iter_5_0)
+	elseif self.summonResultCount > 1 then
+		for i = 1, 10 do
+			SummonModel.instance:openSummonResult(i)
 		end
 
-		if not var_5_1 then
+		if not poolId then
 			return
 		end
 
-		local var_5_4 = SummonConfig.instance:getSummonPool(var_5_1)
+		local poolCo = SummonConfig.instance:getSummonPool(poolId)
 
-		if not var_5_4 then
+		if not poolCo then
 			return
 		end
 
-		for iter_5_1, iter_5_2 in pairs(var_5_0) do
+		for _, value in pairs(mvSkinIds) do
 			SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, ViewName.LimitedRoleView, {
-				limitedCO = lua_character_limited.configDict[iter_5_2],
+				limitedCO = lua_character_limited.configDict[value],
 				stopBgm = AudioBgmEnum.Layer.Summon
 			})
 		end
 
-		local var_5_5 = SummonController.instance:getResultViewName()
+		local currentResultViewName = SummonController.instance:getResultViewName()
 
-		SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, var_5_5, {
-			summonResultList = arg_5_0.summonResult,
-			curPool = var_5_4
+		SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, currentResultViewName, {
+			summonResultList = self.summonResult,
+			curPool = poolCo
 		})
 		SummonController.instance:nextSummonPopupParam()
 	end
 end
 
-function var_0_0._btnopenallOnClick(arg_6_0)
-	arg_6_0._isOpeningAll = true
+function SummonCharView:_btnopenallOnClick()
+	self._isOpeningAll = true
 
-	for iter_6_0 = 1, 10 do
-		arg_6_0:openSummonResult(iter_6_0, true)
+	for i = 1, 10 do
+		self:openSummonResult(i, true)
 	end
 
 	SummonController.instance:nextSummonPopupParam()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0:checkInitDrawComp()
+function SummonCharView:_editableInitView()
+	self:checkInitDrawComp()
 
-	arg_7_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_7_0._godrag)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._godrag)
 
-	arg_7_0._drag:AddDragListener(arg_7_0.onDrag, arg_7_0)
-	arg_7_0._drag:AddDragBeginListener(arg_7_0.onDragBegin, arg_7_0)
-	arg_7_0._drag:AddDragEndListener(arg_7_0.onDragEnd, arg_7_0)
+	self._drag:AddDragListener(self.onDrag, self)
+	self._drag:AddDragBeginListener(self.onDragBegin, self)
+	self._drag:AddDragEndListener(self.onDragEnd, self)
 
-	arg_7_0._dragClickListener = SLFramework.UGUI.UIClickListener.Get(arg_7_0._godrag)
+	self._dragClickListener = SLFramework.UGUI.UIClickListener.Get(self._godrag)
 
-	arg_7_0._dragClickListener:AddClickDownListener(arg_7_0.onDragClickDown, arg_7_0)
-	arg_7_0._dragClickListener:AddClickUpListener(arg_7_0.onDragClickUp, arg_7_0)
-	gohelper.setActive(arg_7_0._goresultitem, false)
+	self._dragClickListener:AddClickDownListener(self.onDragClickDown, self)
+	self._dragClickListener:AddClickUpListener(self.onDragClickUp, self)
+	gohelper.setActive(self._goresultitem, false)
 
-	arg_7_0._resultitems = {}
-	arg_7_0._summonUIEffects = arg_7_0:getUserDataTb_()
+	self._resultitems = {}
+	self._summonUIEffects = self:getUserDataTb_()
 
-	arg_7_0:_initTrackDragPos()
+	self:_initTrackDragPos()
 end
 
-function var_0_0._initSummonView(arg_8_0)
-	gohelper.setActive(arg_8_0._goresult, false)
-	gohelper.setActive(arg_8_0._godrag, false)
+function SummonCharView:_initSummonView()
+	gohelper.setActive(self._goresult, false)
+	gohelper.setActive(self._godrag, false)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:_initSummonView()
+function SummonCharView:onUpdateParam()
+	self:_initSummonView()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_10_0.startDraw, arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimShowGuide, arg_10_0._showGuide, arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, arg_10_0.handleAnimStartDraw, arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonDraw, arg_10_0.onDragComplete, arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, arg_10_0.handleSummonAnimRareEffect, arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_10_0.onSummonAnimEnd, arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonResultClose, arg_10_0._summonEnd, arg_10_0)
-	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_10_0._onCloseView, arg_10_0)
-	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_10_0._onOpenView, arg_10_0)
-	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_10_0.handleSkip, arg_10_0)
-	arg_10_0:_initSummonView()
+function SummonCharView:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.startDraw, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimShowGuide, self._showGuide, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, self.handleAnimStartDraw, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonDraw, self.onDragComplete, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, self.handleSummonAnimRareEffect, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, self.onSummonAnimEnd, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonResultClose, self._summonEnd, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, self.handleSkip, self)
+	self:_initSummonView()
 end
 
-function var_0_0.onClose(arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_11_0.startDraw, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimShowGuide, arg_11_0._showGuide, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonDraw, arg_11_0.onDragComplete, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, arg_11_0.handleAnimStartDraw, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, arg_11_0.handleSummonAnimRareEffect, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_11_0.onSummonAnimEnd, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonResultClose, arg_11_0._summonEnd, arg_11_0)
-	arg_11_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_11_0._onCloseView, arg_11_0)
-	arg_11_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_11_0._onOpenView, arg_11_0)
-	arg_11_0:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_11_0.handleSkip, arg_11_0)
+function SummonCharView:onClose()
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.startDraw, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimShowGuide, self._showGuide, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonDraw, self.onDragComplete, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnterDraw, self.handleAnimStartDraw, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, self.handleSummonAnimRareEffect, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, self.onSummonAnimEnd, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonResultClose, self._summonEnd, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, self.handleSkip, self)
 	SummonModel.instance:setIsDrawing(false)
 end
 
-function var_0_0.onDragClickDown(arg_12_0)
-	arg_12_0._lastDragAngle = nil
-	arg_12_0._lastDragTime = nil
+function SummonCharView:onDragClickDown()
+	self._lastDragAngle = nil
+	self._lastDragTime = nil
 
-	if arg_12_0:checkInitDrawComp() then
-		arg_12_0._drawComp:startTurn()
+	if self:checkInitDrawComp() then
+		self._drawComp:startTurn()
 	end
 
-	arg_12_0:_markTrackDragPos(true)
+	self:_markTrackDragPos(true)
 end
 
-function var_0_0.onDragClickUp(arg_13_0)
-	if arg_13_0:checkInitDrawComp() then
-		arg_13_0._drawComp:endTurn()
+function SummonCharView:onDragClickUp()
+	if self:checkInitDrawComp() then
+		self._drawComp:endTurn()
 	end
 
-	arg_13_0:_updateDragArea()
+	self:_updateDragArea()
 end
 
-function var_0_0.onDragBegin(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._lastDragAngle = nil
-	arg_14_0._lastDragTime = nil
+function SummonCharView:onDragBegin(param, eventData)
+	self._lastDragAngle = nil
+	self._lastDragTime = nil
 
-	if arg_14_0:checkInitDrawComp() then
-		arg_14_0._drawComp:startTurn()
+	if self:checkInitDrawComp() then
+		self._drawComp:startTurn()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_begin)
 end
 
-function var_0_0.onDragEnd(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0:checkInitDrawComp() then
-		arg_15_0._drawComp:endTurn()
+function SummonCharView:onDragEnd(param, eventData)
+	if self:checkInitDrawComp() then
+		self._drawComp:endTurn()
 	end
 
-	arg_15_0:_updateDragArea()
+	self:_updateDragArea()
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_waterwheelstop)
 end
 
-var_0_0.TouchCenter = 0.1
-var_0_0.TouchOuter = 3
+SummonCharView.TouchCenter = 0.1
+SummonCharView.TouchOuter = 3
 
-function var_0_0.onDrag(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_0._dragAreaInitialized or not arg_16_0:checkInitDrawComp() then
+function SummonCharView:onDrag(param, eventData)
+	if not self._dragAreaInitialized or not self:checkInitDrawComp() then
 		return
 	end
 
-	local var_16_0 = recthelper.screenPosToAnchorPos(arg_16_2.position, arg_16_0._godrag.transform)
-	local var_16_1 = var_16_0.x
-	local var_16_2 = var_16_0.y
-	local var_16_3 = arg_16_0._dragWidth
-	local var_16_4 = arg_16_0._dragHeight
-	local var_16_5 = var_0_0.TouchCenter
-	local var_16_6 = var_0_0.TouchOuter
+	local localPosition = recthelper.screenPosToAnchorPos(eventData.position, self._godrag.transform)
+	local x = localPosition.x
+	local y = localPosition.y
+	local width = self._dragWidth
+	local height = self._dragHeight
+	local center = SummonCharView.TouchCenter
+	local outer = SummonCharView.TouchOuter
 
-	if var_16_1 * var_16_1 + var_16_2 * var_16_2 < (var_16_3 + var_16_4) * (var_16_3 + var_16_4) / 16 * var_16_5 * var_16_5 then
-		arg_16_0._lastDragAngle = nil
-
-		return
-	end
-
-	if var_16_1 * var_16_1 + var_16_2 * var_16_2 > (var_16_3 + var_16_4) * (var_16_3 + var_16_4) / 16 * var_16_6 * var_16_6 then
-		arg_16_0._lastDragAngle = nil
+	if x * x + y * y < (width + height) * (width + height) / 16 * center * center then
+		self._lastDragAngle = nil
 
 		return
 	end
 
-	local var_16_7 = 0
-	local var_16_8 = 1e-06
+	if x * x + y * y > (width + height) * (width + height) / 16 * outer * outer then
+		self._lastDragAngle = nil
 
-	if math.abs(var_16_1) < var_16_3 * var_16_8 then
-		var_16_7 = var_16_2 > 0 and 90 or 270
-	elseif math.abs(var_16_2) < var_16_4 * var_16_8 then
-		var_16_7 = var_16_1 > 0 and 0 or 180
+		return
+	end
+
+	local angle = 0
+	local minus = 1e-06
+
+	if math.abs(x) < width * minus then
+		angle = y > 0 and 90 or 270
+	elseif math.abs(y) < height * minus then
+		angle = x > 0 and 0 or 180
 	else
-		var_16_7 = math.deg(math.atan(var_16_2 / var_16_1)) + (var_16_1 * var_16_2 > 0 and 0 or 180) + (var_16_2 > 0 and 0 or 180)
+		angle = math.deg(math.atan(y / x)) + (x * y > 0 and 0 or 180) + (y > 0 and 0 or 180)
 	end
 
-	local var_16_9 = Time.unscaledTime
+	local currentTime = Time.unscaledTime
 
-	if arg_16_0._lastDragAngle and arg_16_0._lastDragTime then
-		local var_16_10 = var_16_7 - arg_16_0._lastDragAngle
+	if self._lastDragAngle and self._lastDragTime then
+		local deltaAngle = angle - self._lastDragAngle
 
-		if arg_16_0._lastDragAngle > 270 and var_16_7 < 90 then
-			var_16_10 = 360 - arg_16_0._lastDragAngle + var_16_7
+		if self._lastDragAngle > 270 and angle < 90 then
+			deltaAngle = 360 - self._lastDragAngle + angle
 		end
 
-		if arg_16_0._lastDragAngle < 90 and var_16_7 > 270 then
-			var_16_10 = -360 - arg_16_0._lastDragAngle + var_16_7
+		if self._lastDragAngle < 90 and angle > 270 then
+			deltaAngle = -360 - self._lastDragAngle + angle
 		end
 
-		arg_16_0._drawComp:updateAngle(var_16_10)
+		self._drawComp:updateAngle(deltaAngle)
 	end
 
-	arg_16_0._lastDragAngle = var_16_7
-	arg_16_0._lastDragTime = var_16_9
+	self._lastDragAngle = angle
+	self._lastDragTime = currentTime
 
-	arg_16_0:_hideGuide()
-	TaskDispatcher.runDelay(arg_16_0._showGuide, arg_16_0, 3)
-	arg_16_0:_updateDragArea()
+	self:_hideGuide()
+	TaskDispatcher.runDelay(self._showGuide, self, 3)
+	self:_updateDragArea()
 end
 
-function var_0_0.onDragComplete(arg_17_0)
+function SummonCharView:onDragComplete()
 	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.SummonTurn)
-	arg_17_0:_summonStart()
-	arg_17_0:_hideGuide()
-	arg_17_0:_markTrackDragPos(false, true)
+	self:_summonStart()
+	self:_hideGuide()
+	self:_markTrackDragPos(false, true)
 end
 
-function var_0_0._showGuide(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._showGuide, arg_18_0)
-	gohelper.setActive(arg_18_0._goguide, true)
+function SummonCharView:_showGuide()
+	TaskDispatcher.cancelTask(self._showGuide, self)
+	gohelper.setActive(self._goguide, true)
 end
 
-function var_0_0._hideGuide(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._showGuide, arg_19_0)
-	gohelper.setActive(arg_19_0._goguide, false)
+function SummonCharView:_hideGuide()
+	TaskDispatcher.cancelTask(self._showGuide, self)
+	gohelper.setActive(self._goguide, false)
 end
 
-function var_0_0.startDraw(arg_20_0)
-	if not arg_20_0:checkInitDrawComp() then
-		arg_20_0:handleSkip()
+function SummonCharView:startDraw()
+	if not self:checkInitDrawComp() then
+		self:handleSkip()
 
 		return
 	end
 
 	SummonController.instance:clearSummonPopupList()
 
-	arg_20_0._isOpeningAll = false
+	self._isOpeningAll = false
 
 	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.Summon), AudioMgr.instance:getIdFromString(AudioEnum.SwitchState.SummonAward))
 
-	arg_20_0.resultViewIsClose = false
-	arg_20_0.summonResult = SummonModel.instance:getSummonResult(true)
-	arg_20_0.summonResultCount = tabletool.len(arg_20_0.summonResult)
+	self.resultViewIsClose = false
+	self.summonResult = SummonModel.instance:getSummonResult(true)
+	self.summonResultCount = tabletool.len(self.summonResult)
 
-	if arg_20_0.summonResultCount then
+	if self.summonResultCount then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_callfor_ten)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_callfor_once)
@@ -317,82 +319,84 @@ function var_0_0.startDraw(arg_20_0)
 
 	AudioMgr.instance:trigger(AudioEnum.Summon.Trigger_Music)
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_inscription_amb)
-	gohelper.setActive(arg_20_0._goresult, false)
+	gohelper.setActive(self._goresult, false)
 	SummonController.instance:resetAnim()
-	arg_20_0:recycleEffect()
+	self:recycleEffect()
 
-	if arg_20_0.summonResult and arg_20_0.summonResultCount > 0 then
-		arg_20_0._isDrawing = true
+	if self.summonResult and self.summonResultCount > 0 then
+		self._isDrawing = true
 
 		SummonModel.instance:setIsDrawing(true)
 
-		local var_20_0 = SummonModel.getBestRare(arg_20_0.summonResult)
+		local bestRare = SummonModel.getBestRare(self.summonResult)
 
-		arg_20_0._drawComp:resetDraw(var_20_0, arg_20_0.summonResultCount > 1)
+		self._drawComp:resetDraw(bestRare, self.summonResultCount > 1)
 
 		if not SummonController.instance:getIsGuideAnim() and not SummonController.instance:isInSummonGuide() then
 			SummonController.instance:startPlayAnim()
 		else
-			arg_20_0:handleAnimStartDraw()
+			self:handleAnimStartDraw()
 		end
 	end
 end
 
-function var_0_0.checkInitDrawComp(arg_21_0)
-	if arg_21_0._drawComp == nil then
-		arg_21_0._drawComp = VirtualSummonScene.instance:getSummonScene().director:getDrawComp(SummonEnum.ResultType.Char)
+function SummonCharView:checkInitDrawComp()
+	if self._drawComp == nil then
+		local summonScene = VirtualSummonScene.instance:getSummonScene()
+
+		self._drawComp = summonScene.director:getDrawComp(SummonEnum.ResultType.Char)
 	end
 
-	return arg_21_0._drawComp ~= nil
+	return self._drawComp ~= nil
 end
 
-function var_0_0.handleAnimStartDraw(arg_22_0)
-	gohelper.setActive(arg_22_0._godrag.gameObject, true)
+function SummonCharView:handleAnimStartDraw()
+	gohelper.setActive(self._godrag.gameObject, true)
 	SummonController.instance:forbidAnim()
 
-	local var_22_0 = SummonModel.getBestRare(arg_22_0.summonResult)
+	local bestRare = SummonModel.getBestRare(self.summonResult)
 
-	arg_22_0:_initDragArea(var_22_0)
-	arg_22_0:_showGuide()
+	self:_initDragArea(bestRare)
+	self:_showGuide()
 end
 
-function var_0_0._initDragArea(arg_23_0, arg_23_1)
-	arg_23_0:_updateDragArea()
+function SummonCharView:_initDragArea(rare)
+	self:_updateDragArea()
 
-	arg_23_0._dragAreaInitialized = true
+	self._dragAreaInitialized = true
 end
 
-function var_0_0._updateDragArea(arg_24_0)
-	local var_24_0 = 220
-	local var_24_1 = 400
-	local var_24_2 = SummonController.instance:getSceneNode("anim/StandStill/Obj-Plant/s06_Obj_d/top_left")
-	local var_24_3 = SummonController.instance:getSceneNode("anim/StandStill/Obj-Plant/s06_Obj_d/bottom_right")
-	local var_24_4 = recthelper.worldPosToAnchorPos(var_24_2.transform.position, arg_24_0.viewGO.transform)
-	local var_24_5 = recthelper.worldPosToAnchorPos(var_24_3.transform.position, arg_24_0.viewGO.transform)
+function SummonCharView:_updateDragArea()
+	local expandWidth = 220
+	local expandHeight = 400
+	local wheelTopLeft = SummonController.instance:getSceneNode("anim/StandStill/Obj-Plant/s06_Obj_d/top_left")
+	local wheelBottomRight = SummonController.instance:getSceneNode("anim/StandStill/Obj-Plant/s06_Obj_d/bottom_right")
+	local topLeftPos = recthelper.worldPosToAnchorPos(wheelTopLeft.transform.position, self.viewGO.transform)
+	local BottomRightPos = recthelper.worldPosToAnchorPos(wheelBottomRight.transform.position, self.viewGO.transform)
 
-	arg_24_0._dragPosX = (var_24_4.x + var_24_5.x) / 2
-	arg_24_0._dragPosY = (var_24_4.y + var_24_5.y) / 2
+	self._dragPosX = (topLeftPos.x + BottomRightPos.x) / 2
+	self._dragPosY = (topLeftPos.y + BottomRightPos.y) / 2
 
-	recthelper.setAnchor(arg_24_0._godrag.transform, arg_24_0._dragPosX, arg_24_0._dragPosY)
+	recthelper.setAnchor(self._godrag.transform, self._dragPosX, self._dragPosY)
 
-	arg_24_0._dragHeight = math.abs(var_24_4.y - var_24_5.y) + var_24_1
+	self._dragHeight = math.abs(topLeftPos.y - BottomRightPos.y) + expandHeight
 
-	recthelper.setHeight(arg_24_0._godrag.transform, arg_24_0._dragHeight)
+	recthelper.setHeight(self._godrag.transform, self._dragHeight)
 
-	arg_24_0._dragWidth = math.abs(var_24_5.x - var_24_4.x) + var_24_0
+	self._dragWidth = math.abs(BottomRightPos.x - topLeftPos.x) + expandWidth
 
-	recthelper.setWidth(arg_24_0._godrag.transform, arg_24_0._dragWidth)
+	recthelper.setWidth(self._godrag.transform, self._dragWidth)
 
-	arg_24_0._dragHeight = math.abs(var_24_4.y - var_24_5.y)
-	arg_24_0._dragWidth = math.abs(var_24_5.x - var_24_4.x)
+	self._dragHeight = math.abs(topLeftPos.y - BottomRightPos.y)
+	self._dragWidth = math.abs(BottomRightPos.x - topLeftPos.x)
 end
 
-function var_0_0._summonStart(arg_25_0)
-	gohelper.setActive(arg_25_0._godrag.gameObject, false)
+function SummonCharView:_summonStart()
+	gohelper.setActive(self._godrag.gameObject, false)
 
-	local var_25_0 = SummonModel.getBestRare(arg_25_0.summonResult)
+	local bestRare = SummonModel.getBestRare(self.summonResult)
 
-	if arg_25_0.summonResultCount > 1 then
+	if self.summonResultCount > 1 then
 		SummonController.instance:drawAnim()
 		AudioMgr.instance:trigger(AudioEnum.Summon.Play_Summon_TenTimes)
 	else
@@ -400,361 +404,365 @@ function var_0_0._summonStart(arg_25_0)
 		AudioMgr.instance:trigger(AudioEnum.Summon.Play_Summon_Once)
 	end
 
-	local var_25_1 = AudioEnum.SummonSwitchState[var_25_0 - 1]
+	local rareBoomAudio = AudioEnum.SummonSwitchState[bestRare - 1]
 
-	if not string.nilorempty(var_25_1) then
-		AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.SummonResult), AudioMgr.instance:getIdFromString(var_25_1))
+	if not string.nilorempty(rareBoomAudio) then
+		AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.SummonResult), AudioMgr.instance:getIdFromString(rareBoomAudio))
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_chestsopen)
-	arg_25_0:_boomAttachEffect()
+	self:_boomAttachEffect()
 end
 
-function var_0_0._boomAttachEffect(arg_26_0)
-	if not arg_26_0:checkInitDrawComp() then
-		arg_26_0:handleSkip()
+function SummonCharView:_boomAttachEffect()
+	if not self:checkInitDrawComp() then
+		self:handleSkip()
 	end
 
-	local var_26_0 = SummonModel.getBestRare(arg_26_0.summonResult)
-	local var_26_1 = SummonEnum.SummonQualityDefine[var_26_0]
+	local bestRare = SummonModel.getBestRare(self.summonResult)
+	local rareKey = SummonEnum.SummonQualityDefine[bestRare]
 
-	if string.nilorempty(var_26_1) then
+	if string.nilorempty(rareKey) then
 		return
 	end
 
-	local var_26_2 = string.format("Scene%sBoom", var_26_1)
-	local var_26_3 = SummonEnum.SummonPreloadPath[var_26_2]
+	local keyName = string.format("Scene%sBoom", rareKey)
+	local attachUrl = SummonEnum.SummonPreloadPath[keyName]
 
-	if var_26_3 then
-		local var_26_4 = arg_26_0._drawComp:getStepEffectContainer()
+	if attachUrl then
+		local boomRootGO = self._drawComp:getStepEffectContainer()
 
-		arg_26_0._sceneBoomEffectWrap = SummonEffectPool.getEffect(var_26_3, var_26_4)
+		self._sceneBoomEffectWrap = SummonEffectPool.getEffect(attachUrl, boomRootGO)
 
-		if arg_26_0._sceneBoomEffectWrap then
-			arg_26_0._sceneBoomEffectWrap:play()
+		if self._sceneBoomEffectWrap then
+			self._sceneBoomEffectWrap:play()
 
 			return
 		end
 	end
 end
 
-function var_0_0.handleSummonAnimRareEffect(arg_27_0)
-	local var_27_0 = {}
+function SummonCharView:handleSummonAnimRareEffect()
+	local uiNodes = {}
 
-	if arg_27_0.summonResultCount > 1 then
-		var_27_0 = SummonController.instance:getUINodes()
+	if self.summonResultCount > 1 then
+		uiNodes = SummonController.instance:getUINodes()
 	else
-		var_27_0 = SummonController.instance:getOnlyUINode()
+		uiNodes = SummonController.instance:getOnlyUINode()
 	end
 
-	local var_27_1 = false
+	local hasLuckyBag = false
 
-	for iter_27_0, iter_27_1 in pairs(arg_27_0.summonResult) do
-		if iter_27_1:isLuckyBag() then
-			arg_27_0:createResultLuckyBagEffect(iter_27_1, var_27_0, iter_27_0)
+	for i, result in pairs(self.summonResult) do
+		if result:isLuckyBag() then
+			self:createResultLuckyBagEffect(result, uiNodes, i)
 
-			var_27_1 = true
+			hasLuckyBag = true
 		else
-			arg_27_0:createResultCharRareEffect(iter_27_1, var_27_0, iter_27_0)
+			self:createResultCharRareEffect(result, uiNodes, i)
 		end
 	end
 
-	if var_27_1 then
+	if hasLuckyBag then
 		AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_wulu_lucky_bag_prize)
 	end
 end
 
-function var_0_0.createResultCharRareEffect(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	local var_28_0 = HeroConfig.instance:getHeroCO(arg_28_1.heroId)
-	local var_28_1 = ""
-	local var_28_2 = ""
+function SummonCharView:createResultCharRareEffect(result, uiNodes, i)
+	local heroConfig = HeroConfig.instance:getHeroCO(result.heroId)
+	local effectUrl = ""
+	local animationName = ""
 
-	if var_28_0.rare <= 2 then
-		var_28_1 = SummonEnum.SummonPreloadPath.UIN
-	elseif var_28_0.rare == 3 then
-		var_28_1 = SummonEnum.SummonPreloadPath.UIR
-	elseif var_28_0.rare == 4 then
-		var_28_1 = SummonEnum.SummonPreloadPath.UISR
+	if heroConfig.rare <= 2 then
+		effectUrl = SummonEnum.SummonPreloadPath.UIN
+	elseif heroConfig.rare == 3 then
+		effectUrl = SummonEnum.SummonPreloadPath.UIR
+	elseif heroConfig.rare == 4 then
+		effectUrl = SummonEnum.SummonPreloadPath.UISR
 	else
-		var_28_1 = SummonEnum.SummonPreloadPath.UISSR
+		effectUrl = SummonEnum.SummonPreloadPath.UISSR
 	end
 
-	local var_28_3 = SummonEnum.AnimationName[var_28_1]
-	local var_28_4 = SummonEffectPool.getEffect(var_28_1, arg_28_2[arg_28_3])
+	animationName = SummonEnum.AnimationName[effectUrl]
 
-	var_28_4:setAnimationName(var_28_3)
-	var_28_4:play()
-	table.insert(arg_28_0._summonUIEffects, var_28_4)
+	local effectWrap = SummonEffectPool.getEffect(effectUrl, uiNodes[i])
+
+	effectWrap:setAnimationName(animationName)
+	effectWrap:play()
+	table.insert(self._summonUIEffects, effectWrap)
 end
 
-function var_0_0.createResultLuckyBagEffect(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	local var_29_0 = SummonEnum.SummonLuckyBagPreloadPath.UILuckyBag
-	local var_29_1 = ""
-	local var_29_2 = arg_29_1.luckyBagId
-	local var_29_3 = SummonController.instance:getLastPoolId()
+function SummonCharView:createResultLuckyBagEffect(result, uiNodes, i)
+	local effectUrl = SummonEnum.SummonLuckyBagPreloadPath.UILuckyBag
+	local animationName = ""
+	local luckyBagId = result.luckyBagId
+	local poolId = SummonController.instance:getLastPoolId()
 
-	if not var_29_3 then
+	if not poolId then
 		return
 	end
 
-	local var_29_4 = SummonConfig.instance:getLuckyBag(var_29_3, var_29_2)
+	local luckyBagCo = SummonConfig.instance:getLuckyBag(poolId, luckyBagId)
 
-	if not var_29_4 then
+	if not luckyBagCo then
 		return
 	end
 
-	local var_29_5 = SummonEnum.AnimationName[var_29_0]
-	local var_29_6 = SummonEffectPool.getEffect(var_29_0, arg_29_2[arg_29_3])
+	animationName = SummonEnum.AnimationName[effectUrl]
 
-	var_29_6:loadHeadTex(ResUrl.getSummonSceneTexture(var_29_4.sceneIcon))
-	var_29_6:setAnimationName(var_29_5)
-	var_29_6:play()
-	table.insert(arg_29_0._summonUIEffects, var_29_6)
+	local effectWrap = SummonEffectPool.getEffect(effectUrl, uiNodes[i])
+
+	effectWrap:loadHeadTex(ResUrl.getSummonSceneTexture(luckyBagCo.sceneIcon))
+	effectWrap:setAnimationName(animationName)
+	effectWrap:play()
+	table.insert(self._summonUIEffects, effectWrap)
 end
 
-function var_0_0.onSummonAnimEnd(arg_30_0)
-	gohelper.setActive(arg_30_0._goresult, true)
-	gohelper.setActive(arg_30_0._btnreturn.gameObject, false)
-	gohelper.setActive(arg_30_0._btnopenall.gameObject, arg_30_0.summonResultCount > 1)
-	arg_30_0:initSummonResult()
+function SummonCharView:onSummonAnimEnd()
+	gohelper.setActive(self._goresult, true)
+	gohelper.setActive(self._btnreturn.gameObject, false)
+	gohelper.setActive(self._btnopenall.gameObject, self.summonResultCount > 1)
+	self:initSummonResult()
 end
 
-function var_0_0.initSummonResult(arg_31_0)
-	arg_31_0._waitEffectList = {}
-	arg_31_0._waitNormalEffectList = {}
-	arg_31_0._luckyBagIdList = {}
+function SummonCharView:initSummonResult()
+	self._waitEffectList = {}
+	self._waitNormalEffectList = {}
+	self._luckyBagIdList = {}
 
-	local var_31_0 = {}
+	local uiNodes = {}
 
-	if arg_31_0.summonResultCount > 1 then
-		var_31_0 = SummonController.instance:getUINodes()
+	if self.summonResultCount > 1 then
+		uiNodes = SummonController.instance:getUINodes()
 	else
-		var_31_0 = SummonController.instance:getOnlyUINode()
+		uiNodes = SummonController.instance:getOnlyUINode()
 	end
 
-	local var_31_1 = {}
+	local alreadyVisitSet = {}
 
-	for iter_31_0, iter_31_1 in pairs(arg_31_0.summonResult) do
-		local var_31_2 = arg_31_0._resultitems[iter_31_0]
+	for i, result in pairs(self.summonResult) do
+		local resultitem = self._resultitems[i]
 
-		if not var_31_2 then
-			var_31_2 = arg_31_0:getUserDataTb_()
-			var_31_2.go = gohelper.cloneInPlace(arg_31_0._goresultitem, "item" .. iter_31_0)
-			var_31_2.index = iter_31_0
-			var_31_2.btnopen = gohelper.findChildButtonWithAudio(var_31_2.go, "btn_open")
+		if not resultitem then
+			resultitem = self:getUserDataTb_()
+			resultitem.go = gohelper.cloneInPlace(self._goresultitem, "item" .. i)
+			resultitem.index = i
+			resultitem.btnopen = gohelper.findChildButtonWithAudio(resultitem.go, "btn_open")
 
-			var_31_2.btnopen:AddClickListener(function(arg_32_0)
-				arg_31_0:openSummonResult(arg_32_0.index)
+			resultitem.btnopen:AddClickListener(function(resultitem)
+				self:openSummonResult(resultitem.index)
 				SummonController.instance:nextSummonPopupParam()
-			end, var_31_2)
+			end, resultitem)
 
-			arg_31_0._resultitems[iter_31_0] = var_31_2
+			self._resultitems[i] = resultitem
 		end
 
-		local var_31_3 = var_31_0[iter_31_0]
+		local uiNode = uiNodes[i]
 
-		if var_31_3 then
-			local var_31_4 = gohelper.findChild(var_31_3, "btn/btnTopLeft")
-			local var_31_5 = gohelper.findChild(var_31_3, "btn/btnBottomRight")
-			local var_31_6 = recthelper.worldPosToAnchorPos(var_31_4.transform.position, arg_31_0.viewGO.transform)
-			local var_31_7 = recthelper.worldPosToAnchorPos(var_31_5.transform.position, arg_31_0.viewGO.transform)
+		if uiNode then
+			local btnTopLeft = gohelper.findChild(uiNode, "btn/btnTopLeft")
+			local btnBottomRight = gohelper.findChild(uiNode, "btn/btnBottomRight")
+			local topLeftPos = recthelper.worldPosToAnchorPos(btnTopLeft.transform.position, self.viewGO.transform)
+			local BottomRightPos = recthelper.worldPosToAnchorPos(btnBottomRight.transform.position, self.viewGO.transform)
 
-			recthelper.setAnchor(var_31_2.go.transform, (var_31_6.x + var_31_7.x) / 2, (var_31_6.y + var_31_7.y) / 2)
-			recthelper.setHeight(var_31_2.go.transform, math.abs(var_31_6.y - var_31_7.y))
-			recthelper.setWidth(var_31_2.go.transform, math.abs(var_31_7.x - var_31_6.x))
+			recthelper.setAnchor(resultitem.go.transform, (topLeftPos.x + BottomRightPos.x) / 2, (topLeftPos.y + BottomRightPos.y) / 2)
+			recthelper.setHeight(resultitem.go.transform, math.abs(topLeftPos.y - BottomRightPos.y))
+			recthelper.setWidth(resultitem.go.transform, math.abs(BottomRightPos.x - topLeftPos.x))
 		end
 
-		gohelper.setActive(var_31_2.btnopen.gameObject, true)
-		gohelper.setActive(var_31_2.go, true)
+		gohelper.setActive(resultitem.btnopen.gameObject, true)
+		gohelper.setActive(resultitem.go, true)
 
-		var_31_1[iter_31_0] = true
+		alreadyVisitSet[i] = true
 	end
 
-	for iter_31_2, iter_31_3 in pairs(arg_31_0._resultitems) do
-		if not var_31_1[iter_31_2] then
-			gohelper.setActive(iter_31_3.go, false)
+	for i, rsItem in pairs(self._resultitems) do
+		if not alreadyVisitSet[i] then
+			gohelper.setActive(rsItem.go, false)
 		end
 	end
 end
 
-function var_0_0.openSummonResult(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0, var_33_1 = SummonModel.instance:openSummonResult(arg_33_1)
-	local var_33_2 = SummonModel.instance:getSummonResult(false)
-	local var_33_3 = #var_33_2 > 1
+function SummonCharView:openSummonResult(index, openall)
+	local summonResultMO, duplicateCount = SummonModel.instance:openSummonResult(index)
+	local summonResult = SummonModel.instance:getSummonResult(false)
+	local isSummonTen = #summonResult > 1
 
-	if var_33_0 then
-		local var_33_4 = var_33_0.heroId
-		local var_33_5
+	if summonResultMO then
+		local heroId = summonResultMO.heroId
+		local heroConfig
 
-		if var_33_4 ~= nil and var_33_4 ~= 0 then
-			var_33_5 = HeroConfig.instance:getHeroCO(var_33_4)
+		if heroId ~= nil and heroId ~= 0 then
+			heroConfig = HeroConfig.instance:getHeroCO(heroId)
 		end
 
-		if not arg_33_2 and var_33_4 ~= 0 then
-			logNormal(string.format("获得角色:%s", var_33_5.name))
+		if not openall and heroId ~= 0 then
+			logNormal(string.format("获得角色:%s", heroConfig.name))
 		end
 
-		if arg_33_0._resultitems[arg_33_1] then
-			gohelper.setActive(arg_33_0._resultitems[arg_33_1].btnopen.gameObject, false)
+		if self._resultitems[index] then
+			gohelper.setActive(self._resultitems[index].btnopen.gameObject, false)
 		end
 
-		if not var_33_3 or not arg_33_2 or var_33_1 <= 0 or var_33_5 and var_33_5.rare >= 5 then
-			if not var_33_0:isLuckyBag() then
-				table.insert(arg_33_0._waitEffectList, {
-					index = arg_33_1,
-					heroId = var_33_4,
-					luckyBagId = var_33_0.luckyBagId
+		if not isSummonTen or not openall or duplicateCount <= 0 or heroConfig and heroConfig.rare >= 5 then
+			if not summonResultMO:isLuckyBag() then
+				table.insert(self._waitEffectList, {
+					index = index,
+					heroId = heroId,
+					luckyBagId = summonResultMO.luckyBagId
 				})
-				arg_33_0:insertSingleCharPopup(var_33_4, var_33_1, var_33_3)
+				self:insertSingleCharPopup(heroId, duplicateCount, isSummonTen)
 			else
-				local var_33_6 = {
-					var_33_0.luckyBagId
+				local allLuckyBagIdList = {
+					summonResultMO.luckyBagId
 				}
 
-				arg_33_0:insertLuckyBagPopup(var_33_6)
+				self:insertLuckyBagPopup(allLuckyBagIdList)
 			end
-		elseif not arg_33_2 then
-			arg_33_0._summonUIEffects[arg_33_1]:loadHeroIcon(var_33_4)
+		elseif not openall then
+			local uiEffect = self._summonUIEffects[index]
+
+			uiEffect:loadHeroIcon(heroId)
 		else
-			table.insert(arg_33_0._waitNormalEffectList, {
-				index = arg_33_1,
-				heroId = var_33_4,
-				luckyBagId = var_33_0.luckyBagId
+			table.insert(self._waitNormalEffectList, {
+				index = index,
+				heroId = heroId,
+				luckyBagId = summonResultMO.luckyBagId
 			})
 		end
 
 		if SummonModel.instance:isAllOpened() then
-			gohelper.setActive(arg_33_0._btnopenall.gameObject, false)
+			gohelper.setActive(self._btnopenall.gameObject, false)
 
-			if not var_33_3 then
-				gohelper.setActive(arg_33_0._btnreturn.gameObject, true)
+			if not isSummonTen then
+				gohelper.setActive(self._btnreturn.gameObject, true)
 			else
-				local var_33_7 = SummonController.instance:getLastPoolId()
+				local poolId = SummonController.instance:getLastPoolId()
 
-				if not var_33_7 then
+				if not poolId then
 					return
 				end
 
-				local var_33_8 = SummonConfig.instance:getSummonPool(var_33_7)
+				local poolCo = SummonConfig.instance:getSummonPool(poolId)
 
-				if not var_33_8 then
+				if not poolCo then
 					return
 				end
 
-				local var_33_9 = SummonController.instance:getResultViewName()
+				local currentResultViewName = SummonController.instance:getResultViewName()
 
-				SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, var_33_9, {
-					summonResultList = var_33_2,
-					curPool = var_33_8
+				SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, currentResultViewName, {
+					summonResultList = summonResult,
+					curPool = poolCo
 				})
 			end
 		end
 	end
 end
 
-function var_0_0.insertSingleCharPopup(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	local var_34_0 = SummonController.instance:getLastPoolId()
+function SummonCharView:insertSingleCharPopup(heroId, duplicateCount, isSummonTen)
+	local poolId = SummonController.instance:getLastPoolId()
 
-	if not var_34_0 then
+	if not poolId then
 		return
 	end
 
-	local var_34_1 = SummonConfig.instance:getSummonPool(var_34_0)
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
 
-	if not var_34_1 then
+	if not poolCo then
 		return
 	end
 
-	local var_34_2
+	local ticketId
 
-	if var_34_1.ticketId ~= 0 then
-		var_34_2 = var_34_1.ticketId
+	if poolCo.ticketId ~= 0 then
+		ticketId = poolCo.ticketId
 	end
 
-	local var_34_3 = {
+	local popupParam = {
 		isSummon = true,
-		heroId = arg_34_1,
-		duplicateCount = arg_34_2,
-		isSummonTen = arg_34_3,
-		summonTicketId = var_34_2
+		heroId = heroId,
+		duplicateCount = duplicateCount,
+		isSummonTen = isSummonTen,
+		summonTicketId = ticketId
 	}
-	local var_34_4 = SummonController.instance:getMvSkinIdByHeroId(arg_34_1)
+	local mvSkinId = SummonController.instance:getMvSkinIdByHeroId(heroId)
 
-	if var_34_4 then
-		var_34_3.skipVideo = true
-		var_34_3.mvSkinId = var_34_4
+	if mvSkinId then
+		popupParam.skipVideo = true
+		popupParam.mvSkinId = mvSkinId
 	end
 
-	SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, var_34_3)
+	SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, popupParam)
 end
 
-function var_0_0.insertLuckyBagPopup(arg_35_0, arg_35_1)
-	local var_35_0 = SummonController.instance:getLastPoolId()
+function SummonCharView:insertLuckyBagPopup(luckyBagIdList)
+	local poolId = SummonController.instance:getLastPoolId()
 
-	if not var_35_0 then
+	if not poolId then
 		return
 	end
 
-	local var_35_1 = {
-		luckyBagIdList = arg_35_1,
-		poolId = var_35_0
+	local popupParam = {
+		luckyBagIdList = luckyBagIdList,
+		poolId = poolId
 	}
 
-	SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.GainCharacterView, ViewName.SummonGetLuckyBag, var_35_1)
+	SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.GainCharacterView, ViewName.SummonGetLuckyBag, popupParam)
 end
 
-function var_0_0._refreshIcons(arg_36_0)
-	if (not arg_36_0._waitEffectList or #arg_36_0._waitEffectList <= 1) and arg_36_0._waitNormalEffectList and #arg_36_0._waitNormalEffectList > 0 then
-		for iter_36_0, iter_36_1 in ipairs(arg_36_0._waitNormalEffectList) do
-			local var_36_0 = iter_36_1.index
-			local var_36_1 = iter_36_1.heroId
-			local var_36_2 = arg_36_0._summonUIEffects[var_36_0]
+function SummonCharView:_refreshIcons()
+	if (not self._waitEffectList or #self._waitEffectList <= 1) and self._waitNormalEffectList and #self._waitNormalEffectList > 0 then
+		for _, normalEffectParam in ipairs(self._waitNormalEffectList) do
+			local index = normalEffectParam.index
+			local heroId = normalEffectParam.heroId
+			local uiEffect = self._summonUIEffects[index]
 
-			if var_36_2 and var_36_1 ~= 0 then
-				var_36_2:loadHeroIcon(var_36_1)
+			if uiEffect and heroId ~= 0 then
+				uiEffect:loadHeroIcon(heroId)
 			end
 		end
 	end
 
-	if not arg_36_0._waitEffectList or #arg_36_0._waitEffectList <= 0 then
+	if not self._waitEffectList or #self._waitEffectList <= 0 then
 		return
 	end
 
-	local var_36_3 = arg_36_0._waitEffectList[1]
+	local param = self._waitEffectList[1]
 
-	table.remove(arg_36_0._waitEffectList, 1)
+	table.remove(self._waitEffectList, 1)
 
-	local var_36_4 = var_36_3.index
-	local var_36_5 = var_36_3.heroId
-	local var_36_6 = arg_36_0._summonUIEffects[var_36_4]
+	local index = param.index
+	local heroId = param.heroId
+	local uiEffect = self._summonUIEffects[index]
 
-	if not var_36_6 or var_36_5 == 0 then
+	if not uiEffect or heroId == 0 then
 		return
 	end
 
-	var_36_6:loadHeroIcon(var_36_5)
+	uiEffect:loadHeroIcon(heroId)
 end
 
-function var_0_0._summonEnd(arg_37_0)
-	if not arg_37_0._isDrawing then
+function SummonCharView:_summonEnd()
+	if not self._isDrawing then
 		return
 	end
 
-	arg_37_0._isDrawing = false
+	self._isDrawing = false
 
 	SummonModel.instance:setIsDrawing(false)
 	SummonController.instance:clearSummonPopupList()
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
 	AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString(AudioEnum.SwitchGroup.Summon), AudioMgr.instance:getIdFromString(AudioEnum.SwitchState.SummonNormal))
 	AudioMgr.instance:trigger(AudioEnum.Summon.Trigger_Music)
-	gohelper.setActive(arg_37_0._gosummon, true)
-	gohelper.setActive(arg_37_0._goresult, false)
-	arg_37_0:recycleEffect()
+	gohelper.setActive(self._gosummon, true)
+	gohelper.setActive(self._goresult, false)
+	self:recycleEffect()
 
-	if arg_37_0._sceneBoomEffectWrap then
-		SummonEffectPool.returnEffect(arg_37_0._sceneBoomEffectWrap)
+	if self._sceneBoomEffectWrap then
+		SummonEffectPool.returnEffect(self._sceneBoomEffectWrap)
 
-		arg_37_0._sceneBoomEffectWrap = nil
+		self._sceneBoomEffectWrap = nil
 	end
 
 	SummonController.instance:resetAnim()
@@ -765,111 +773,114 @@ function var_0_0._summonEnd(arg_37_0)
 
 	SummonMainModel.instance:updateLastPoolId()
 
-	local var_37_0 = {
-		jumpPoolId = SummonController.instance:getLastPoolId()
-	}
-	local var_37_1 = SummonController.instance:getSummonEndOpenCallBack()
+	local param = {}
 
-	if var_37_1 then
-		var_37_1:invoke()
+	param.jumpPoolId = SummonController.instance:getLastPoolId()
+
+	local summonEndCallback = SummonController.instance:getSummonEndOpenCallBack()
+
+	if summonEndCallback then
+		summonEndCallback:invoke()
 		SummonController.instance:setSummonEndOpenCallBack(nil, nil)
 	else
-		SummonMainController.instance:openSummonView(var_37_0)
+		SummonMainController.instance:openSummonView(param)
 	end
 
-	arg_37_0:_gc()
+	self:_gc()
 
-	arg_37_0.summonResult = {}
-	arg_37_0.summonResultCount = 0
+	self.summonResult = {}
+	self.summonResultCount = 0
 end
 
-function var_0_0._onCloseView(arg_38_0, arg_38_1)
-	if arg_38_1 == ViewName.SummonResultView or arg_38_1 == ViewName.SummonSimulationResultView then
-		arg_38_0.resultViewIsClose = true
+function SummonCharView:_onCloseView(viewName)
+	if viewName == ViewName.SummonResultView or viewName == ViewName.SummonSimulationResultView then
+		self.resultViewIsClose = true
 	end
 
-	if arg_38_1 == ViewName.CharacterGetView or arg_38_1 == ViewName.SummonGetLuckyBag or arg_38_1 == ViewName.LimitedRoleView then
-		arg_38_0:_refreshIcons()
+	if viewName == ViewName.CharacterGetView or viewName == ViewName.SummonGetLuckyBag or viewName == ViewName.LimitedRoleView then
+		self:_refreshIcons()
 
-		if arg_38_0.summonResult then
-			if arg_38_0.summonResultCount == 1 and arg_38_1 ~= ViewName.LimitedRoleView then
-				arg_38_0:_summonEnd()
+		if self.summonResult then
+			if self.summonResultCount == 1 and viewName ~= ViewName.LimitedRoleView then
+				self:_summonEnd()
 			else
 				SummonController.instance:nextSummonPopupParam()
 			end
 		end
-	elseif arg_38_1 == ViewName.CommonPropView and arg_38_0.summonResult and arg_38_0.summonResultCount > 1 and arg_38_0.resultViewIsClose then
-		arg_38_0:_summonEnd()
+	elseif viewName == ViewName.CommonPropView and self.summonResult and self.summonResultCount > 1 and self.resultViewIsClose then
+		self:_summonEnd()
 	end
 end
 
-function var_0_0._onOpenView(arg_39_0, arg_39_1)
-	if arg_39_1 == SummonController.instance:getResultViewName() then
-		arg_39_0:_refreshIcons()
+function SummonCharView:_onOpenView(viewName)
+	local currentResultViewName = SummonController.instance:getResultViewName()
+
+	if viewName == currentResultViewName then
+		self:_refreshIcons()
 	end
 end
 
-function var_0_0.recycleEffect(arg_40_0)
-	if arg_40_0._summonUIEffects then
-		for iter_40_0 = 1, #arg_40_0._summonUIEffects do
-			local var_40_0 = arg_40_0._summonUIEffects[iter_40_0]
+function SummonCharView:recycleEffect()
+	if self._summonUIEffects then
+		for i = 1, #self._summonUIEffects do
+			local effectWrap = self._summonUIEffects[i]
 
-			SummonEffectPool.returnEffect(var_40_0)
+			SummonEffectPool.returnEffect(effectWrap)
 
-			arg_40_0._summonUIEffects[iter_40_0] = nil
+			self._summonUIEffects[i] = nil
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_41_0)
-	for iter_41_0, iter_41_1 in pairs(arg_41_0._resultitems) do
-		iter_41_1.btnopen:RemoveClickListener()
+function SummonCharView:onDestroyView()
+	for i, resultitem in pairs(self._resultitems) do
+		resultitem.btnopen:RemoveClickListener()
 	end
 
-	arg_41_0._drag:RemoveDragListener()
-	arg_41_0._drag:RemoveDragBeginListener()
-	arg_41_0._drag:RemoveDragEndListener()
-	arg_41_0._dragClickListener:RemoveClickDownListener()
-	arg_41_0._dragClickListener:RemoveClickUpListener()
+	self._drag:RemoveDragListener()
+	self._drag:RemoveDragBeginListener()
+	self._drag:RemoveDragEndListener()
+	self._dragClickListener:RemoveClickDownListener()
+	self._dragClickListener:RemoveClickUpListener()
 end
 
-function var_0_0._gc(arg_42_0)
-	arg_42_0._summonCount = (arg_42_0._summonCount or 0) + (arg_42_0.summonResult and arg_42_0.summonResultCount)
+function SummonCharView:_gc()
+	self._summonCount = (self._summonCount or 0) + (self.summonResult and self.summonResultCount)
 
-	if arg_42_0._summonCount > 1 then
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_42_0)
+	if self._summonCount > 1 then
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, self)
 
-		arg_42_0._summonCount = 0
+		self._summonCount = 0
 	end
 end
 
-function var_0_0._initTrackDragPos(arg_43_0)
-	local var_43_0, var_43_1 = recthelper.getAnchor(arg_43_0._godrag.transform)
+function SummonCharView:_initTrackDragPos()
+	local dragPosX, dragPosY = recthelper.getAnchor(self._godrag.transform)
 
-	arg_43_0._sdkTrackDragPosInfo = {
+	self._sdkTrackDragPosInfo = {
 		st = {
-			x = var_43_0,
-			y = var_43_1
+			x = dragPosX,
+			y = dragPosY
 		},
 		ed = {
-			x = var_43_0,
-			y = var_43_1
+			x = dragPosX,
+			y = dragPosY
 		}
 	}
 end
 
-function var_0_0._markTrackDragPos(arg_44_0, arg_44_1, arg_44_2)
-	if arg_44_1 then
-		arg_44_0._sdkTrackDragPosInfo.st.x = arg_44_0._dragPosX
-		arg_44_0._sdkTrackDragPosInfo.st.y = arg_44_0._dragPosY
+function SummonCharView:_markTrackDragPos(isDragStart, isSubmit)
+	if isDragStart then
+		self._sdkTrackDragPosInfo.st.x = self._dragPosX
+		self._sdkTrackDragPosInfo.st.y = self._dragPosY
 	else
-		arg_44_0._sdkTrackDragPosInfo.ed.x = arg_44_0._dragPosX
-		arg_44_0._sdkTrackDragPosInfo.ed.y = arg_44_0._dragPosY
+		self._sdkTrackDragPosInfo.ed.x = self._dragPosX
+		self._sdkTrackDragPosInfo.ed.y = self._dragPosY
 	end
 
-	if arg_44_2 then
-		SummonController.instance:trackSummonClientEvent(false, arg_44_0._sdkTrackDragPosInfo)
+	if isSubmit then
+		SummonController.instance:trackSummonClientEvent(false, self._sdkTrackDragPosInfo)
 	end
 end
 
-return var_0_0
+return SummonCharView

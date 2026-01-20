@@ -1,29 +1,31 @@
-﻿module("modules.logic.act201.controller.Activity201Controller", package.seeall)
+﻿-- chunkname: @modules/logic/act201/controller/Activity201Controller.lua
 
-local var_0_0 = class("Activity201Controller", BaseController)
+module("modules.logic.act201.controller.Activity201Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Activity201Controller = class("Activity201Controller", BaseController)
+
+function Activity201Controller:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity201Controller:reInit()
 	return
 end
 
-function var_0_0.getInvitationInfo(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	Activity201Rpc.instance:sendGet201InfoRequest(arg_3_1, arg_3_2, arg_3_3)
+function Activity201Controller:getInvitationInfo(activityId, callBack, callBackObj)
+	Activity201Rpc.instance:sendGet201InfoRequest(activityId, callBack, callBackObj)
 end
 
-function var_0_0.openMainView(arg_4_0, arg_4_1)
-	arg_4_0:getInvitationInfo(arg_4_1, arg_4_0._openMainView, arg_4_0)
+function Activity201Controller:openMainView(activityId)
+	self:getInvitationInfo(activityId, self._openMainView, self)
 end
 
-function var_0_0._openMainView(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
-		ViewMgr.instance:openView(ViewName.TurnBackFullView, arg_5_2.activityId, true)
+function Activity201Controller:_openMainView(resultCode, msg)
+	if resultCode == 0 then
+		ViewMgr.instance:openView(ViewName.TurnBackFullView, msg.activityId, true)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity201Controller.instance = Activity201Controller.New()
 
-return var_0_0
+return Activity201Controller

@@ -1,214 +1,227 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchStoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchStoryItem.lua
 
-local var_0_0 = class("RoleStoryDispatchStoryItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchStoryItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.txtOrder = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_order")
-	arg_1_0.txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_title")
-	arg_1_0.txtContent = gohelper.findChildTextMesh(arg_1_0.viewGO, "#scroll_Desc/Viewport/#txt_DecContent")
-	arg_1_0.scrollDesc = gohelper.findChild(arg_1_0.viewGO, "#scroll_Desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
-	arg_1_0.finishAnim = gohelper.findChildComponent(arg_1_0.goFinish, "icon/go_hasget", typeof(UnityEngine.Animator))
-	arg_1_0.goDispatching = gohelper.findChild(arg_1_0.viewGO, "#go_dispatching")
-	arg_1_0.txtDispatchTime = gohelper.findChildTextMesh(arg_1_0.goDispatching, "#txt_time")
-	arg_1_0.goGoto = gohelper.findChild(arg_1_0.viewGO, "#go_goto")
-	arg_1_0.btnGoto = gohelper.findChildButtonWithAudio(arg_1_0.goGoto, "#btn_goto")
-	arg_1_0.goCanget = gohelper.findChild(arg_1_0.viewGO, "#go_canget")
-	arg_1_0.btnCanget = gohelper.findChildButtonWithAudio(arg_1_0.goCanget, "#btn_canget")
-	arg_1_0.rewardAnim = gohelper.findChildComponent(arg_1_0.goCanget, "#btn_canget/ani", typeof(UnityEngine.Animator))
-	arg_1_0.goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_locked")
-	arg_1_0.lockedAnim = gohelper.findChildComponent(arg_1_0.viewGO, "#go_locked", typeof(UnityEngine.Animator))
-	arg_1_0.txtLockedOrder = gohelper.findChildTextMesh(arg_1_0.goLocked, "#txt_order")
-	arg_1_0.txtLocked = gohelper.findChildTextMesh(arg_1_0.goLocked, "#txt_locked")
-	arg_1_0.btnClick = gohelper.getClickWithAudio(arg_1_0.viewGO)
+local RoleStoryDispatchStoryItem = class("RoleStoryDispatchStoryItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoleStoryDispatchStoryItem:onInitView()
+	self.txtOrder = gohelper.findChildTextMesh(self.viewGO, "#txt_order")
+	self.txtTitle = gohelper.findChildTextMesh(self.viewGO, "#txt_title")
+	self.txtContent = gohelper.findChildTextMesh(self.viewGO, "#scroll_Desc/Viewport/#txt_DecContent")
+	self.scrollDesc = gohelper.findChild(self.viewGO, "#scroll_Desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self.goFinish = gohelper.findChild(self.viewGO, "#go_finish")
+	self.finishAnim = gohelper.findChildComponent(self.goFinish, "icon/go_hasget", typeof(UnityEngine.Animator))
+	self.goDispatching = gohelper.findChild(self.viewGO, "#go_dispatching")
+	self.txtDispatchTime = gohelper.findChildTextMesh(self.goDispatching, "#txt_time")
+	self.goGoto = gohelper.findChild(self.viewGO, "#go_goto")
+	self.btnGoto = gohelper.findChildButtonWithAudio(self.goGoto, "#btn_goto")
+	self.goCanget = gohelper.findChild(self.viewGO, "#go_canget")
+	self.btnCanget = gohelper.findChildButtonWithAudio(self.goCanget, "#btn_canget")
+	self.rewardAnim = gohelper.findChildComponent(self.goCanget, "#btn_canget/ani", typeof(UnityEngine.Animator))
+	self.goLocked = gohelper.findChild(self.viewGO, "#go_locked")
+	self.lockedAnim = gohelper.findChildComponent(self.viewGO, "#go_locked", typeof(UnityEngine.Animator))
+	self.txtLockedOrder = gohelper.findChildTextMesh(self.goLocked, "#txt_order")
+	self.txtLocked = gohelper.findChildTextMesh(self.goLocked, "#txt_locked")
+	self.btnClick = gohelper.getClickWithAudio(self.viewGO)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnGoto, arg_2_0.onClickBtnGoto, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnCanget, arg_2_0.onClickBtnCanget, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClickBtnClick, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseView, arg_2_0)
+function RoleStoryDispatchStoryItem:addEvents()
+	self:addClickCb(self.btnGoto, self.onClickBtnGoto, self)
+	self:addClickCb(self.btnCanget, self.onClickBtnCanget, self)
+	self:addClickCb(self.btnClick, self.onClickBtnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoleStoryDispatchStoryItem:removeEvents()
 	return
 end
 
-function var_0_0.refreshItem(arg_4_0)
-	if not arg_4_0.data then
-		arg_4_0:clear()
-		gohelper.setActive(arg_4_0.viewGO, false)
+function RoleStoryDispatchStoryItem:refreshItem()
+	if not self.data then
+		self:clear()
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	arg_4_0.txtOrder.text = string.format("%02d", arg_4_0.index)
-	arg_4_0.txtLockedOrder.text = string.format("%02d", arg_4_0.index)
-	arg_4_0.txtTitle.text = formatLuaLang("rolestorydispatchtitle_1", GameUtil.getNum2Chinese(arg_4_0.index))
-	arg_4_0.txtContent.text = arg_4_0.data.desc
+	self.txtOrder.text = string.format("%02d", self.index)
+	self.txtLockedOrder.text = string.format("%02d", self.index)
+	self.txtTitle.text = formatLuaLang("rolestorydispatchtitle_1", GameUtil.getNum2Chinese(self.index))
+	self.txtContent.text = self.data.desc
 
-	arg_4_0:refreshState()
+	self:refreshState()
 
 	if not ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchTipsView) then
-		arg_4_0:playFinishAnim()
+		self:playFinishAnim()
 	end
 
-	arg_4_0.notFirstUpdate = true
+	self.notFirstUpdate = true
 end
 
-function var_0_0.refreshState(arg_5_0)
-	local var_5_0 = RoleStoryModel.instance:getById(arg_5_0.data.heroStoryId):getDispatchState(arg_5_0.data.id)
+function RoleStoryDispatchStoryItem:refreshState()
+	local storyMo = RoleStoryModel.instance:getById(self.data.heroStoryId)
+	local state = storyMo:getDispatchState(self.data.id)
 
-	gohelper.setActive(arg_5_0.goFinish, var_5_0 == RoleStoryEnum.DispatchState.Finish)
-	gohelper.setActive(arg_5_0.goDispatching, var_5_0 == RoleStoryEnum.DispatchState.Dispatching)
-	gohelper.setActive(arg_5_0.goGoto, var_5_0 == RoleStoryEnum.DispatchState.Normal)
-	gohelper.setActive(arg_5_0.goCanget, var_5_0 == RoleStoryEnum.DispatchState.Canget)
-	gohelper.setActive(arg_5_0.goLocked, var_5_0 == RoleStoryEnum.DispatchState.Locked)
+	gohelper.setActive(self.goFinish, state == RoleStoryEnum.DispatchState.Finish)
+	gohelper.setActive(self.goDispatching, state == RoleStoryEnum.DispatchState.Dispatching)
+	gohelper.setActive(self.goGoto, state == RoleStoryEnum.DispatchState.Normal)
+	gohelper.setActive(self.goCanget, state == RoleStoryEnum.DispatchState.Canget)
+	gohelper.setActive(self.goLocked, state == RoleStoryEnum.DispatchState.Locked)
 
-	if var_5_0 == RoleStoryEnum.DispatchState.Locked then
-		local var_5_1 = arg_5_0.data.unlockEpisodeId
-		local var_5_2 = DungeonConfig.instance:getEpisodeCO(var_5_1)
-		local var_5_3 = string.format("%s %s", DungeonConfig.instance:getEpisodeDisplay(var_5_1), var_5_2.name)
+	if state == RoleStoryEnum.DispatchState.Locked then
+		local unlockEpisodeId = self.data.unlockEpisodeId
+		local episodeConfig = DungeonConfig.instance:getEpisodeCO(unlockEpisodeId)
+		local dungeonName = string.format("%s %s", DungeonConfig.instance:getEpisodeDisplay(unlockEpisodeId), episodeConfig.name)
 
-		arg_5_0.txtLocked.text = formatLuaLang("room_formula_lock_episode", var_5_3)
+		self.txtLocked.text = formatLuaLang("room_formula_lock_episode", dungeonName)
 	end
 
-	arg_5_0:refreshDispatchTime(var_5_0)
+	self:refreshDispatchTime(state)
 
-	if var_5_0 == RoleStoryEnum.DispatchState.Canget then
-		arg_5_0.rewardAnim:Play("loop")
+	if state == RoleStoryEnum.DispatchState.Canget then
+		self.rewardAnim:Play("loop")
 	end
 
-	arg_5_0:checkPlayAnim()
+	self:checkPlayAnim()
 end
 
-function var_0_0._onCloseView(arg_6_0, arg_6_1)
-	if arg_6_1 == ViewName.RoleStoryDispatchTipsView then
-		arg_6_0:checkPlayAnim()
+function RoleStoryDispatchStoryItem:_onCloseView(viewName)
+	if viewName == ViewName.RoleStoryDispatchTipsView then
+		self:checkPlayAnim()
 	end
 end
 
-function var_0_0.checkPlayAnim(arg_7_0)
+function RoleStoryDispatchStoryItem:checkPlayAnim()
 	if not ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchTipsView) then
-		local var_7_0 = RoleStoryModel.instance:getById(arg_7_0.data.heroStoryId):getDispatchMo(arg_7_0.data.id)
+		local storyMo = RoleStoryModel.instance:getById(self.data.heroStoryId)
+		local dispatchMo = storyMo:getDispatchMo(self.data.id)
+		local state = dispatchMo:getDispatchState()
 
-		if var_7_0:getDispatchState() == RoleStoryEnum.DispatchState.Finish then
-			arg_7_0:playFinishAnim()
+		if state == RoleStoryEnum.DispatchState.Finish then
+			self:playFinishAnim()
 		end
 
-		if var_7_0:canPlayRefreshAnim() then
-			var_7_0:setRefreshAnimFlag()
-			gohelper.setActive(arg_7_0.goGoto, false)
-			gohelper.setActive(arg_7_0.goLocked, true)
-			TaskDispatcher.cancelTask(arg_7_0.playUnlockAnim, arg_7_0)
+		if dispatchMo:canPlayRefreshAnim() then
+			dispatchMo:setRefreshAnimFlag()
+			gohelper.setActive(self.goGoto, false)
+			gohelper.setActive(self.goLocked, true)
+			TaskDispatcher.cancelTask(self.playUnlockAnim, self)
 
-			if not arg_7_0.notFirstUpdate then
-				TaskDispatcher.runDelay(arg_7_0.playUnlockAnim, arg_7_0, 1)
+			if not self.notFirstUpdate then
+				TaskDispatcher.runDelay(self.playUnlockAnim, self, 1)
 			else
-				arg_7_0:playUnlockAnim()
+				self:playUnlockAnim()
 			end
 		end
 	end
 end
 
-function var_0_0.playUnlockAnim(arg_8_0)
-	arg_8_0.lockedAnim:Play("unlock")
+function RoleStoryDispatchStoryItem:playUnlockAnim()
+	self.lockedAnim:Play("unlock")
 	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.StoryDispatchUnlock)
-	TaskDispatcher.runDelay(arg_8_0.refreshItem, arg_8_0, 1.5)
+	TaskDispatcher.runDelay(self.refreshItem, self, 1.5)
 end
 
-function var_0_0.playFinishAnim(arg_9_0)
-	local var_9_0 = RoleStoryModel.instance:getById(arg_9_0.data.heroStoryId):getDispatchMo(arg_9_0.data.id)
+function RoleStoryDispatchStoryItem:playFinishAnim()
+	local storyMo = RoleStoryModel.instance:getById(self.data.heroStoryId)
+	local dispatchMo = storyMo:getDispatchMo(self.data.id)
+	local state = dispatchMo:getDispatchState()
 
-	if var_9_0:getDispatchState() == RoleStoryEnum.DispatchState.Finish then
-		if var_9_0:checkFinishAnimIsPlayed() then
-			arg_9_0.finishAnim:Play("go_hasget_idle")
+	if state == RoleStoryEnum.DispatchState.Finish then
+		if dispatchMo:checkFinishAnimIsPlayed() then
+			self.finishAnim:Play("go_hasget_idle")
 		else
-			var_9_0:setFinishAnimFlag()
-			arg_9_0.finishAnim:Play("go_hasget_in")
+			dispatchMo:setFinishAnimFlag()
+			self.finishAnim:Play("go_hasget_in")
 		end
 	end
 end
 
-function var_0_0.refreshDispatchTime(arg_10_0, arg_10_1)
-	TaskDispatcher.cancelTask(arg_10_0.updateDispatchTime, arg_10_0)
+function RoleStoryDispatchStoryItem:refreshDispatchTime(state)
+	TaskDispatcher.cancelTask(self.updateDispatchTime, self)
 
-	if arg_10_1 ~= RoleStoryEnum.DispatchState.Dispatching then
+	if state ~= RoleStoryEnum.DispatchState.Dispatching then
 		return
 	end
 
-	arg_10_0.dispatchEndTime = RoleStoryModel.instance:getById(arg_10_0.data.heroStoryId):getDispatchMo(arg_10_0.data.id).endTime
+	local storyMo = RoleStoryModel.instance:getById(self.data.heroStoryId)
+	local dispatchMo = storyMo:getDispatchMo(self.data.id)
 
-	arg_10_0:updateDispatchTime()
-	TaskDispatcher.runRepeat(arg_10_0.updateDispatchTime, arg_10_0, 1)
+	self.dispatchEndTime = dispatchMo.endTime
+
+	self:updateDispatchTime()
+	TaskDispatcher.runRepeat(self.updateDispatchTime, self, 1)
 end
 
-function var_0_0.updateDispatchTime(arg_11_0)
-	local var_11_0 = arg_11_0.dispatchEndTime * 0.001 - ServerTime.now()
+function RoleStoryDispatchStoryItem:updateDispatchTime()
+	local leftTime = self.dispatchEndTime * 0.001 - ServerTime.now()
 
-	if var_11_0 < 0 then
-		arg_11_0:refreshItem()
+	if leftTime < 0 then
+		self:refreshItem()
 
 		return
 	end
 
-	arg_11_0.txtDispatchTime.text = TimeUtil.second2TimeString(var_11_0, true)
+	self.txtDispatchTime.text = TimeUtil.second2TimeString(leftTime, true)
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0.data = arg_12_1
-	arg_12_0.index = arg_12_2
+function RoleStoryDispatchStoryItem:onUpdateMO(data, index)
+	self.data = data
+	self.index = index
 
-	arg_12_0:refreshItem()
+	self:refreshItem()
 end
 
-function var_0_0.onClickBtnGoto(arg_13_0)
-	arg_13_0:openTipsView()
+function RoleStoryDispatchStoryItem:onClickBtnGoto()
+	self:openTipsView()
 end
 
-function var_0_0.onClickBtnCanget(arg_14_0)
-	arg_14_0:openTipsView()
+function RoleStoryDispatchStoryItem:onClickBtnCanget()
+	self:openTipsView()
 end
 
-function var_0_0.onClickBtnClick(arg_15_0)
-	arg_15_0:openTipsView()
+function RoleStoryDispatchStoryItem:onClickBtnClick()
+	self:openTipsView()
 end
 
-function var_0_0.openTipsView(arg_16_0)
-	if not arg_16_0.data then
+function RoleStoryDispatchStoryItem:openTipsView()
+	if not self.data then
 		return
 	end
 
-	if RoleStoryModel.instance:getById(arg_16_0.data.heroStoryId):getDispatchState(arg_16_0.data.id) == RoleStoryEnum.DispatchState.Locked then
+	local storyMo = RoleStoryModel.instance:getById(self.data.heroStoryId)
+	local state = storyMo:getDispatchState(self.data.id)
+
+	if state == RoleStoryEnum.DispatchState.Locked then
 		GameFacade.showToast(ToastEnum.RoleStoryDispatchLockTips)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.RoleStoryDispatchTipsView, {
-		dispatchId = arg_16_0.data.id,
-		storyId = arg_16_0.data.heroStoryId
+		dispatchId = self.data.id,
+		storyId = self.data.heroStoryId
 	})
 end
 
-function var_0_0._editableInitView(arg_17_0)
+function RoleStoryDispatchStoryItem:_editableInitView()
 	return
 end
 
-function var_0_0.clear(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.playUnlockAnim, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.updateDispatchTime, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.refreshItem, arg_18_0)
+function RoleStoryDispatchStoryItem:clear()
+	TaskDispatcher.cancelTask(self.playUnlockAnim, self)
+	TaskDispatcher.cancelTask(self.updateDispatchTime, self)
+	TaskDispatcher.cancelTask(self.refreshItem, self)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0:clear()
+function RoleStoryDispatchStoryItem:onDestroyView()
+	self:clear()
 end
 
-return var_0_0
+return RoleStoryDispatchStoryItem

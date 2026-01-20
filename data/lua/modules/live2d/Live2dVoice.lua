@@ -1,110 +1,112 @@
-﻿module("modules.live2d.Live2dVoice", package.seeall)
+﻿-- chunkname: @modules/live2d/Live2dVoice.lua
 
-local var_0_0 = class("Live2dVoice", SpineVoice)
+module("modules.live2d.Live2dVoice", package.seeall)
 
-function var_0_0._init(arg_1_0)
-	arg_1_0._normalVoiceMouth = arg_1_0:_addComponent(Live2dVoiceMouth, true)
-	arg_1_0._spineVoiceMouth = arg_1_0._normalVoiceMouth
-	arg_1_0._voiceFace = arg_1_0:_addComponent(Live2dVoiceFace, true)
+local Live2dVoice = class("Live2dVoice", SpineVoice)
+
+function Live2dVoice:_init()
+	self._normalVoiceMouth = self:_addComponent(Live2dVoiceMouth, true)
+	self._spineVoiceMouth = self._normalVoiceMouth
+	self._voiceFace = self:_addComponent(Live2dVoiceFace, true)
 end
 
-function var_0_0.getMouth(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getVoiceLang()
+function Live2dVoice:getMouth(voiceCo)
+	local shortcut = self:getVoiceLang()
 
-	if var_2_0 == "zh" then
-		return arg_2_1.mouth
+	if shortcut == "zh" then
+		return voiceCo.mouth
 	else
-		return arg_2_1[var_2_0 .. "mouth"] or arg_2_1.mouth
+		return voiceCo[shortcut .. "mouth"] or voiceCo.mouth
 	end
 end
 
-function var_0_0._initSpineVoiceMouth(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0:getMouth(arg_3_1)
+function Live2dVoice:_initSpineVoiceMouth(voiceConfig, spine)
+	local mouth = self:getMouth(voiceConfig)
 
-	arg_3_0._useAutoMouth = string.find(var_3_0, Live2dVoiceMouthAuto.AutoActionName)
+	self._useAutoMouth = string.find(mouth, Live2dVoiceMouthAuto.AutoActionName)
 
-	local var_3_1 = arg_3_0._spineVoiceMouth
+	local prevMouth = self._spineVoiceMouth
 
-	if arg_3_0._useAutoMouth then
-		arg_3_0._autoVoiceMouth = arg_3_0._autoVoiceMouth or Live2dVoiceMouthAuto.New()
-		arg_3_0._spineVoiceMouth = arg_3_0._autoVoiceMouth
+	if self._useAutoMouth then
+		self._autoVoiceMouth = self._autoVoiceMouth or Live2dVoiceMouthAuto.New()
+		self._spineVoiceMouth = self._autoVoiceMouth
 	else
-		arg_3_0._spineVoiceMouth = arg_3_0._normalVoiceMouth
+		self._spineVoiceMouth = self._normalVoiceMouth
 	end
 
-	if var_3_1 and var_3_1 ~= arg_3_0._spineVoiceMouth then
-		var_3_1:suspend()
+	if prevMouth and prevMouth ~= self._spineVoiceMouth then
+		prevMouth:suspend()
 
-		if arg_3_0:getInStory() and var_3_1 == arg_3_0._autoVoiceMouth then
-			local var_3_2 = arg_3_0._autoVoiceMouth:getMouth(arg_3_1)
+		if self:getInStory() and prevMouth == self._autoVoiceMouth then
+			local mouth = self._autoVoiceMouth:getMouth(voiceConfig)
 
-			if string.nilorempty(var_3_2) then
-				var_3_1:_setBiZui()
+			if string.nilorempty(mouth) then
+				prevMouth:_setBiZui()
 			end
 		end
 	end
 
-	arg_3_0._spineVoiceMouth:init(arg_3_0, arg_3_1, arg_3_2)
+	self._spineVoiceMouth:init(self, voiceConfig, spine)
 end
 
-function var_0_0.onSpineVoiceAudioStop(arg_4_0)
-	arg_4_0._spineVoiceText:onVoiceStop()
+function Live2dVoice:onSpineVoiceAudioStop()
+	self._spineVoiceText:onVoiceStop()
 
-	if arg_4_0._useAutoMouth then
-		arg_4_0._spineVoiceMouth:onVoiceStop()
+	if self._useAutoMouth then
+		self._spineVoiceMouth:onVoiceStop()
 	end
 
-	arg_4_0:_doCallback()
+	self:_doCallback()
 end
 
-function var_0_0.playVoice(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
-	arg_5_0._spine = arg_5_1
+function Live2dVoice:playVoice(spine, voiceConfig, callback, txtContent, txtEnContent, bgGo)
+	self._spine = spine
 
-	arg_5_1:setParameterStoreEnabled(true)
+	spine:setParameterStoreEnabled(true)
 
-	if arg_5_0:getInStory() then
-		arg_5_0._spine:setAlwaysFade(true)
+	if self:getInStory() then
+		self._spine:setAlwaysFade(true)
 	end
 
-	var_0_0.super.playVoice(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
+	Live2dVoice.super.playVoice(self, spine, voiceConfig, callback, txtContent, txtEnContent, bgGo)
 end
 
-function var_0_0._onComponentStop(arg_6_0, arg_6_1)
-	if arg_6_1 == arg_6_0._spineVoiceBody and arg_6_0._spine and arg_6_0:getInStory() then
-		arg_6_0._spine:setAlwaysFade(false)
+function Live2dVoice:_onComponentStop(component)
+	if component == self._spineVoiceBody and self._spine and self:getInStory() then
+		self._spine:setAlwaysFade(false)
 	end
 
-	var_0_0.super._onComponentStop(arg_6_0, arg_6_1)
+	Live2dVoice.super._onComponentStop(self, component)
 end
 
-function var_0_0.playing(arg_7_0)
-	if arg_7_0._spineVoiceMouth._setComponentStop then
-		return var_0_0.super.playing(arg_7_0)
+function Live2dVoice:playing()
+	if self._spineVoiceMouth._setComponentStop then
+		return Live2dVoice.super.playing(self)
 	end
 
-	if arg_7_0._useAutoMouth then
-		return not (arg_7_0._stopVoiceCount >= arg_7_0._componentStopVoiceCount - 1)
+	if self._useAutoMouth then
+		return not (self._stopVoiceCount >= self._componentStopVoiceCount - 1)
 	end
 
-	return not (arg_7_0._stopVoiceCount >= arg_7_0._componentStopVoiceCount - 1) or not arg_7_0._spineVoiceMouth._playLastOne
+	return not (self._stopVoiceCount >= self._componentStopVoiceCount - 1) or not self._spineVoiceMouth._playLastOne
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	if arg_8_0._normalVoiceMouth then
-		arg_8_0._normalVoiceMouth:onDestroy()
+function Live2dVoice:onDestroy()
+	if self._normalVoiceMouth then
+		self._normalVoiceMouth:onDestroy()
 
-		arg_8_0._normalVoiceMouth = nil
+		self._normalVoiceMouth = nil
 	end
 
-	if arg_8_0._autoVoiceMouth then
-		arg_8_0._autoVoiceMouth:onDestroy()
+	if self._autoVoiceMouth then
+		self._autoVoiceMouth:onDestroy()
 
-		arg_8_0._autoVoiceMouth = nil
+		self._autoVoiceMouth = nil
 	end
 
-	arg_8_0._spineVoiceMouth = nil
+	self._spineVoiceMouth = nil
 
-	var_0_0.super.onDestroy(arg_8_0)
+	Live2dVoice.super.onDestroy(self)
 end
 
-return var_0_0
+return Live2dVoice

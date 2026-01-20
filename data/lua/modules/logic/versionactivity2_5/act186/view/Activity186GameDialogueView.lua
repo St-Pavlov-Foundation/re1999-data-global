@@ -1,240 +1,245 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameDialogueView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186GameDialogueView.lua
 
-local var_0_0 = class("Activity186GameDialogueView", BaseView)
+module("modules.logic.versionactivity2_5.act186.view.Activity186GameDialogueView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goRight = gohelper.findChild(arg_1_0.viewGO, "root/right")
-	arg_1_0.rightAnim = arg_1_0.goRight:GetComponent(gohelper.Type_Animator)
-	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/desc")
-	arg_1_0.txtContent = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#goRole/bottom/#txt_Dialouge")
-	arg_1_0.options = {}
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/#btn_close")
-	arg_1_0.goOptions = gohelper.findChild(arg_1_0.viewGO, "root/right/options")
-	arg_1_0.goRewards = gohelper.findChild(arg_1_0.viewGO, "root/right/rewards")
-	arg_1_0.goReward1 = gohelper.findChild(arg_1_0.viewGO, "root/right/rewards/reward1")
-	arg_1_0.txtRewardNum1 = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/rewards/reward1/#txt_num")
-	arg_1_0.goReward2 = gohelper.findChild(arg_1_0.viewGO, "root/right/rewards/reward2")
-	arg_1_0.simageReward2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/rewards/reward2/icon")
-	arg_1_0.txtRewardNum2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/right/rewards/reward2/#txt_num")
+local Activity186GameDialogueView = class("Activity186GameDialogueView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity186GameDialogueView:onInitView()
+	self.goRight = gohelper.findChild(self.viewGO, "root/right")
+	self.rightAnim = self.goRight:GetComponent(gohelper.Type_Animator)
+	self.txtDesc = gohelper.findChildTextMesh(self.viewGO, "root/right/desc")
+	self.txtContent = gohelper.findChildTextMesh(self.viewGO, "root/#goRole/bottom/#txt_Dialouge")
+	self.options = {}
+	self.btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "root/right/#btn_close")
+	self.goOptions = gohelper.findChild(self.viewGO, "root/right/options")
+	self.goRewards = gohelper.findChild(self.viewGO, "root/right/rewards")
+	self.goReward1 = gohelper.findChild(self.viewGO, "root/right/rewards/reward1")
+	self.txtRewardNum1 = gohelper.findChildTextMesh(self.viewGO, "root/right/rewards/reward1/#txt_num")
+	self.goReward2 = gohelper.findChild(self.viewGO, "root/right/rewards/reward2")
+	self.simageReward2 = gohelper.findChildSingleImage(self.viewGO, "root/right/rewards/reward2/icon")
+	self.txtRewardNum2 = gohelper.findChildTextMesh(self.viewGO, "root/right/rewards/reward2/#txt_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickBtnClose, arg_2_0)
-	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.FinishGame, arg_2_0.onFinishGame, arg_2_0)
+function Activity186GameDialogueView:addEvents()
+	self:addClickCb(self.btnClose, self.onClickBtnClose, self)
+	self:addEventCb(Activity186Controller.instance, Activity186Event.FinishGame, self.onFinishGame, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity186GameDialogueView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity186GameDialogueView:_editableInitView()
 	return
 end
 
-function var_0_0.onClickBtnClose(arg_5_0)
-	arg_5_0:closeThis()
+function Activity186GameDialogueView:onClickBtnClose()
+	self:closeThis()
 end
 
-function var_0_0.onClickOption(arg_6_0, arg_6_1)
-	if arg_6_0.gameStatus ~= Activity186Enum.GameStatus.Playing then
+function Activity186GameDialogueView:onClickOption(index)
+	if self.gameStatus ~= Activity186Enum.GameStatus.Playing then
 		return
 	end
 
-	if arg_6_0._selectIndex ~= arg_6_1 then
-		arg_6_0._selectIndex = arg_6_1
+	if self._selectIndex ~= index then
+		self._selectIndex = index
 
-		arg_6_0:updateSelect()
+		self:updateSelect()
 	end
 
-	if not arg_6_0.questionConfig then
+	if not self.questionConfig then
 		return
 	end
 
-	local var_6_0 = arg_6_0.questionConfig["rewardId" .. arg_6_1]
+	local rewardId = self.questionConfig["rewardId" .. index]
 
-	if var_6_0 == 0 then
+	if rewardId == 0 then
 		return
 	end
 
-	arg_6_0.txtDesc.text = arg_6_0.questionConfig["feedback" .. arg_6_1]
-	arg_6_0.txtContent.text = arg_6_0.questionConfig.hanzhangline4
+	self.txtDesc.text = self.questionConfig["feedback" .. index]
+	self.txtContent.text = self.questionConfig.hanzhangline4
 
-	arg_6_0:showResult(var_6_0)
-	Activity186Rpc.instance:sendFinishAct186ATypeGameRequest(arg_6_0.actId, arg_6_0.gameId, var_6_0)
+	self:showResult(rewardId)
+	Activity186Rpc.instance:sendFinishAct186ATypeGameRequest(self.actId, self.gameId, rewardId)
 end
 
-function var_0_0.onFinishGame(arg_7_0)
-	arg_7_0:checkGameNotOnline()
+function Activity186GameDialogueView:onFinishGame()
+	self:checkGameNotOnline()
 end
 
-function var_0_0.checkGameNotOnline(arg_8_0)
-	local var_8_0 = Activity186Model.instance:getById(arg_8_0.actId)
+function Activity186GameDialogueView:checkGameNotOnline()
+	local mo = Activity186Model.instance:getById(self.actId)
 
-	if not var_8_0 then
+	if not mo then
 		return
 	end
 
-	if not var_8_0:getGameInfo(arg_8_0.gameId) then
+	local gameInfo = mo:getGameInfo(self.gameId)
+
+	if not gameInfo then
 		return
 	end
 
-	if not var_8_0:isGameOnline(arg_8_0.gameId) then
-		arg_8_0:closeThis()
+	if not mo:isGameOnline(self.gameId) then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
-	arg_9_0:refreshParam()
-	arg_9_0:refreshView()
+function Activity186GameDialogueView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:refreshParam()
-	arg_10_0:refreshView()
+function Activity186GameDialogueView:onOpen()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_11_0)
-	arg_11_0.actId = arg_11_0.viewParam.activityId
-	arg_11_0.gameId = arg_11_0.viewParam.gameId
-	arg_11_0.gameStatus = arg_11_0.viewParam.gameStatus
+function Activity186GameDialogueView:refreshParam()
+	self.actId = self.viewParam.activityId
+	self.gameId = self.viewParam.gameId
+	self.gameStatus = self.viewParam.gameStatus
 end
 
-function var_0_0.refreshView(arg_12_0)
-	if arg_12_0.gameStatus == Activity186Enum.GameStatus.Playing then
-		arg_12_0:_showDeadline()
-		arg_12_0.rightAnim:Play("open")
+function Activity186GameDialogueView:refreshView()
+	if self.gameStatus == Activity186Enum.GameStatus.Playing then
+		self:_showDeadline()
+		self.rightAnim:Play("open")
 
-		local var_12_0 = Activity186Model.instance:getById(arg_12_0.actId):getQuestionConfig(arg_12_0.gameId)
+		local mo = Activity186Model.instance:getById(self.actId)
+		local questionConfig = mo:getQuestionConfig(self.gameId)
 
-		arg_12_0.questionConfig = var_12_0
-		arg_12_0.txtDesc.text = var_12_0.question
+		self.questionConfig = questionConfig
+		self.txtDesc.text = questionConfig.question
 
 		AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_mln_unlock)
-		arg_12_0:updateOptions(var_12_0)
+		self:updateOptions(questionConfig)
 	end
 end
 
-function var_0_0.updateOptions(arg_13_0, arg_13_1)
-	for iter_13_0 = 1, 3 do
-		arg_13_0:updateOption(iter_13_0, arg_13_1)
+function Activity186GameDialogueView:updateOptions(config)
+	for i = 1, 3 do
+		self:updateOption(i, config)
 	end
 
-	arg_13_0:updateSelect()
+	self:updateSelect()
 end
 
-function var_0_0.updateSelect(arg_14_0)
-	for iter_14_0 = 1, 3 do
-		local var_14_0 = arg_14_0:getOrCreateOption(iter_14_0)
+function Activity186GameDialogueView:updateSelect()
+	for i = 1, 3 do
+		local item = self:getOrCreateOption(i)
 
-		gohelper.setActive(var_14_0.goNormal, arg_14_0._selectIndex ~= iter_14_0)
-		gohelper.setActive(var_14_0.goSelect, arg_14_0._selectIndex == iter_14_0)
+		gohelper.setActive(item.goNormal, self._selectIndex ~= i)
+		gohelper.setActive(item.goSelect, self._selectIndex == i)
 	end
 end
 
-function var_0_0.updateOption(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getOrCreateOption(arg_15_1)
-	local var_15_1 = arg_15_2["answer" .. arg_15_1]
+function Activity186GameDialogueView:updateOption(index, config)
+	local item = self:getOrCreateOption(index)
+	local answer = config["answer" .. index]
 
-	if string.nilorempty(var_15_1) then
-		gohelper.setActive(var_15_0.go, false)
+	if string.nilorempty(answer) then
+		gohelper.setActive(item.go, false)
 
 		return
 	end
 
-	gohelper.setActive(var_15_0.go, true)
+	gohelper.setActive(item.go, true)
 
-	var_15_0.txtNormal.text = var_15_1
-	var_15_0.txtSelect.text = var_15_1
+	item.txtNormal.text = answer
+	item.txtSelect.text = answer
 end
 
-function var_0_0.getOrCreateOption(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.options[arg_16_1]
+function Activity186GameDialogueView:getOrCreateOption(index)
+	local item = self.options[index]
 
-	if not var_16_0 then
-		var_16_0 = arg_16_0:getUserDataTb_()
-		var_16_0.go = gohelper.findChild(arg_16_0.viewGO, "root/right/options/item" .. arg_16_1)
-		var_16_0.goNormal = gohelper.findChild(var_16_0.go, "normal")
-		var_16_0.goSelect = gohelper.findChild(var_16_0.go, "select")
-		var_16_0.txtNormal = gohelper.findChildTextMesh(var_16_0.goNormal, "#txt_dec")
-		var_16_0.txtSelect = gohelper.findChildTextMesh(var_16_0.goSelect, "#txt_dec")
-		var_16_0.btn = gohelper.findButtonWithAudio(var_16_0.go)
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.findChild(self.viewGO, "root/right/options/item" .. index)
+		item.goNormal = gohelper.findChild(item.go, "normal")
+		item.goSelect = gohelper.findChild(item.go, "select")
+		item.txtNormal = gohelper.findChildTextMesh(item.goNormal, "#txt_dec")
+		item.txtSelect = gohelper.findChildTextMesh(item.goSelect, "#txt_dec")
+		item.btn = gohelper.findButtonWithAudio(item.go)
 
-		var_16_0.btn:AddClickListener(arg_16_0.onClickOption, arg_16_0, arg_16_1)
+		item.btn:AddClickListener(self.onClickOption, self, index)
 
-		arg_16_0.options[arg_16_1] = var_16_0
+		self.options[index] = item
 	end
 
-	return var_16_0
+	return item
 end
 
-function var_0_0.showResult(arg_17_0, arg_17_1)
-	arg_17_0.gameStatus = Activity186Enum.GameStatus.Result
+function Activity186GameDialogueView:showResult(rewardId)
+	self.gameStatus = Activity186Enum.GameStatus.Result
 
-	arg_17_0.rightAnim:Play("finish")
+	self.rightAnim:Play("finish")
 
-	local var_17_0 = Activity186Config.instance:getGameRewardConfig(1, arg_17_1)
+	local rewardConfig = Activity186Config.instance:getGameRewardConfig(1, rewardId)
 
-	arg_17_0:refreshReward(var_17_0.bonus)
+	self:refreshReward(rewardConfig.bonus)
 end
 
-function var_0_0.refreshReward(arg_18_0, arg_18_1)
-	local var_18_0 = GameUtil.splitString2(arg_18_1, true)
-	local var_18_1 = {}
+function Activity186GameDialogueView:refreshReward(bonus)
+	local list = GameUtil.splitString2(bonus, true)
+	local reward = {}
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		if iter_18_1[1] ~= 26 then
-			table.insert(var_18_1, iter_18_1)
+	for i, v in ipairs(list) do
+		if v[1] ~= 26 then
+			table.insert(reward, v)
 		end
 	end
 
-	local var_18_2 = var_18_1[1]
-	local var_18_3 = var_18_1[2]
+	local reward1 = reward[1]
+	local reward2 = reward[2]
 
-	if var_18_2 then
-		arg_18_0.txtRewardNum1.text = string.format("×%s", var_18_2[3])
+	if reward1 then
+		self.txtRewardNum1.text = string.format("×%s", reward1[3])
 
-		gohelper.setActive(arg_18_0.goReward1, true)
+		gohelper.setActive(self.goReward1, true)
 	else
-		gohelper.setActive(arg_18_0.goReward1, false)
+		gohelper.setActive(self.goReward1, false)
 	end
 
-	if var_18_3 then
-		gohelper.setActive(arg_18_0.goReward2, true)
+	if reward2 then
+		gohelper.setActive(self.goReward2, true)
 
-		local var_18_4, var_18_5 = ItemModel.instance:getItemConfigAndIcon(var_18_3[1], var_18_3[2], true)
+		local _, icon = ItemModel.instance:getItemConfigAndIcon(reward2[1], reward2[2], true)
 
-		arg_18_0.simageReward2:LoadImage(var_18_5)
+		self.simageReward2:LoadImage(icon)
 
-		arg_18_0.txtRewardNum2.text = string.format("×%s", var_18_3[3])
+		self.txtRewardNum2.text = string.format("×%s", reward2[3])
 	else
-		gohelper.setActive(arg_18_0.goReward2, false)
+		gohelper.setActive(self.goReward2, false)
 	end
 end
 
-function var_0_0._showDeadline(arg_19_0)
-	arg_19_0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(arg_19_0._onRefreshDeadline, arg_19_0)
-	TaskDispatcher.runRepeat(arg_19_0._onRefreshDeadline, arg_19_0, 1)
+function Activity186GameDialogueView:_showDeadline()
+	self:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
 end
 
-function var_0_0._onRefreshDeadline(arg_20_0)
-	arg_20_0:checkGameNotOnline()
+function Activity186GameDialogueView:_onRefreshDeadline()
+	self:checkGameNotOnline()
 end
 
-function var_0_0.onClose(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._onRefreshDeadline, arg_21_0)
+function Activity186GameDialogueView:onClose()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._onRefreshDeadline, arg_22_0)
+function Activity186GameDialogueView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.options) do
-		iter_22_1.btn:RemoveClickListener()
+	for i, v in ipairs(self.options) do
+		v.btn:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return Activity186GameDialogueView

@@ -1,11 +1,13 @@
-﻿module("modules.logic.character.view.CharacterGuideTalentViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterGuideTalentViewContainer.lua
 
-local var_0_0 = class("CharacterGuideTalentViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterGuideTalentViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CharacterGuideTalentViewContainer = class("CharacterGuideTalentViewContainer", BaseViewContainer)
+
+function CharacterGuideTalentViewContainer:buildViews()
 	return {
 		CharacterGuideTalentView.New()
 	}
 end
 
-return var_0_0
+return CharacterGuideTalentViewContainer

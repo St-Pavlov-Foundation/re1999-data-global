@@ -1,79 +1,83 @@
-﻿module("modules.logic.versionactivity2_8.activity2nd.controller.Activity2ndController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/activity2nd/controller/Activity2ndController.lua
 
-local var_0_0 = class("Activity2ndController", BaseController)
+module("modules.logic.versionactivity2_8.activity2nd.controller.Activity2ndController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity2ndController = class("Activity2ndController", BaseController)
+
+function Activity2ndController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity2ndController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function Activity2ndController:addConstEvents()
 	return
 end
 
-function var_0_0.enterActivity2ndMainView(arg_4_0)
+function Activity2ndController:enterActivity2ndMainView()
 	if ActivityHelper.isOpen(ActivityEnum.Activity.V2a8_PVPopupReward) then
 		Activity101Rpc.instance:sendGet101InfosRequest(ActivityEnum.Activity.V2a8_PVPopupReward)
 	end
 
-	Activity196Rpc.instance:sendGet196InfoRequest(Activity196Enum.ActId, arg_4_0._openMainView, arg_4_0)
+	Activity196Rpc.instance:sendGet196InfoRequest(Activity196Enum.ActId, self._openMainView, self)
 end
 
-function var_0_0._openMainView(arg_5_0)
-	local var_5_0 = {
+function Activity2ndController:_openMainView()
+	local param = {
 		actId = Activity196Enum.ActId
 	}
 
-	ViewMgr.instance:openView(ViewName.Activity2ndCollectionPageView, var_5_0)
+	ViewMgr.instance:openView(ViewName.Activity2ndCollectionPageView, param)
 end
 
-function var_0_0.trySendText(arg_6_0, arg_6_1)
-	local var_6_0 = Activity2ndConfig.instance:getStrList()
-	local var_6_1 = 0
+function Activity2ndController:trySendText(str)
+	local strList = Activity2ndConfig.instance:getStrList()
+	local id = 0
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		if string.upper(iter_6_1.code) == arg_6_1 then
-			var_6_1 = iter_6_1.id
+	for _, codeCo in ipairs(strList) do
+		if string.upper(codeCo.code) == str then
+			id = codeCo.id
 
 			break
 		end
 	end
 
-	if var_6_1 ~= 0 then
-		if not Activity196Model.instance:checkRewardReceied(var_6_1) then
-			Activity196Rpc.instance:sendAct196GainRequest(Activity196Enum.ActId, var_6_1)
+	if id ~= 0 then
+		local hasReceied = Activity196Model.instance:checkRewardReceied(id)
 
-			local var_6_2 = 0
+		if not hasReceied then
+			Activity196Rpc.instance:sendAct196GainRequest(Activity196Enum.ActId, id)
+
+			id = 0
 		else
-			arg_6_0:dispatchEvent(Activity2ndEvent.InputErrorOrHasReward, luaLang(Activity2ndEnum.ShowTipsType.HasGetReward))
+			self:dispatchEvent(Activity2ndEvent.InputErrorOrHasReward, luaLang(Activity2ndEnum.ShowTipsType.HasGetReward))
 		end
 	else
-		arg_6_0:dispatchEvent(Activity2ndEvent.InputErrorOrHasReward, luaLang(Activity2ndEnum.ShowTipsType.Error))
+		self:dispatchEvent(Activity2ndEvent.InputErrorOrHasReward, luaLang(Activity2ndEnum.ShowTipsType.Error))
 	end
 end
 
-function var_0_0.statButtonClick(arg_7_0, arg_7_1)
+function Activity2ndController:statButtonClick(actId)
 	StatController.instance:track(StatEnum.EventName.Activity2ndPageButtonClick, {
-		[StatEnum.EventProperties.ButtonName] = Activity2ndEnum.StatButtonName[arg_7_1]
+		[StatEnum.EventProperties.ButtonName] = Activity2ndEnum.StatButtonName[actId]
 	})
 end
 
-function var_0_0.statTakePhotos(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_2 and StatEnum.Result.Success or StatEnum.Result.Fail
+function Activity2ndController:statTakePhotos(id, result)
+	local result = result and StatEnum.Result.Success or StatEnum.Result.Fail
 
 	StatController.instance:track(StatEnum.EventName.Activity2ndTakePhotoGame, {
-		[StatEnum.EventProperties.EpisodeId] = tostring(arg_8_1),
-		[StatEnum.EventProperties.Result] = var_8_0
+		[StatEnum.EventProperties.EpisodeId] = tostring(id),
+		[StatEnum.EventProperties.Result] = result
 	})
 end
 
-function var_0_0.reInit(arg_9_0)
+function Activity2ndController:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity2ndController.instance = Activity2ndController.New()
 
-return var_0_0
+return Activity2ndController

@@ -1,52 +1,90 @@
-﻿module("modules.logic.achievement.controller.AchievementLevelController", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/controller/AchievementLevelController.lua
 
-local var_0_0 = class("AchievementLevelController", BaseController)
+module("modules.logic.achievement.controller.AchievementLevelController", package.seeall)
 
-function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2)
-	AchievementLevelModel.instance:initData(arg_1_1, arg_1_2)
-	var_0_0.instance:cleanAchievementIsNew(arg_1_1)
+local AchievementLevelController = class("AchievementLevelController", BaseController)
+
+function AchievementLevelController:onOpenView(achievementId, achievementIds)
+	AchievementLevelModel.instance:initData(achievementId, achievementIds)
+	AchievementLevelController.instance:cleanAchievementIsNew(achievementId)
 end
 
-function var_0_0.onCloseView(arg_2_0)
+function AchievementLevelController:onCloseView()
 	return
 end
 
-function var_0_0.selectTask(arg_3_0, arg_3_1)
-	AchievementLevelModel.instance:setSelectTask(arg_3_1)
-	arg_3_0:dispatchEvent(AchievementEvent.LevelViewUpdated)
+function AchievementLevelController:selectTask(taskId)
+	AchievementLevelModel.instance:setSelectTask(taskId)
+	self:dispatchEvent(AchievementEvent.LevelViewUpdated)
 end
 
-function var_0_0.scrollTask(arg_4_0, arg_4_1)
-	if AchievementLevelModel.instance:scrollTask(arg_4_1) then
-		local var_4_0 = AchievementLevelModel.instance:getAchievement()
+function AchievementLevelController:scrollTask(isNext)
+	if AchievementLevelModel.instance:scrollTask(isNext) then
+		local achievementId = AchievementLevelModel.instance:getAchievement()
 
-		arg_4_0:cleanAchievementIsNew(var_4_0)
-		arg_4_0:dispatchEvent(AchievementEvent.LevelViewUpdated)
+		self:cleanAchievementIsNew(achievementId)
+		self:dispatchEvent(AchievementEvent.LevelViewUpdated)
 	end
 end
 
-function var_0_0.cleanAchievementIsNew(arg_5_0, arg_5_1)
-	local var_5_0 = AchievementModel.instance:getAchievementTaskCoList(arg_5_1)
+function AchievementLevelController:cleanAchievementIsNew(achievementId)
+	local taskCoList = AchievementModel.instance:getAchievementTaskCoList(achievementId)
 
-	if var_5_0 then
-		local var_5_1 = {}
+	if taskCoList then
+		local taskIds = {}
 
-		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-			local var_5_2 = AchievementModel.instance:getById(iter_5_1.id)
+		for i, taskCo in ipairs(taskCoList) do
+			local taskMo = AchievementModel.instance:getById(taskCo.id)
 
-			if var_5_2 and var_5_2.isNew then
-				table.insert(var_5_1, iter_5_1.id)
+			if taskMo and taskMo.isNew then
+				table.insert(taskIds, taskCo.id)
 			end
 		end
 
-		if #var_5_1 > 0 then
-			AchievementRpc.instance:sendReadNewAchievementRequest(var_5_1)
+		if #taskIds > 0 then
+			AchievementRpc.instance:sendReadNewAchievementRequest(taskIds)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function AchievementLevelController:cleanNotShowTaskIsNew()
+	if not self._hasCleanNotShowTaskIsNewTask then
+		self._hasCleanNotShowTaskIsNewTask = true
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+		TaskDispatcher.runDelay(self._onRunCleanNotShowTaskIsNew, self, 0.5)
+	end
+end
 
-return var_0_0
+function AchievementLevelController:_onRunCleanNotShowTaskIsNew()
+	self._hasCleanNotShowTaskIsNewTask = false
+
+	local taskMOList = AchievementModel.instance:getList()
+	local taskIds
+	local tAchievementConfig = AchievementConfig.instance
+
+	for i, taskMO in ipairs(taskMOList) do
+		if taskMO and taskMO.isNew then
+			local taskCfg = tAchievementConfig:getTask(taskMO.id)
+
+			if taskCfg then
+				local acCfg = tAchievementConfig:getAchievement(taskCfg.achievementId)
+
+				if acCfg and AchievementEnum.HideType[acCfg.category] then
+					taskIds = taskIds or {}
+
+					table.insert(taskIds, taskMO.id)
+				end
+			end
+		end
+	end
+
+	if taskIds and #taskIds > 0 then
+		AchievementRpc.instance:sendReadNewAchievementRequest(taskIds)
+	end
+end
+
+AchievementLevelController.instance = AchievementLevelController.New()
+
+LuaEventSystem.addEventMechanism(AchievementLevelController.instance)
+
+return AchievementLevelController

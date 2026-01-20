@@ -1,42 +1,46 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRushMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRushMainViewContainer.lua
 
-local var_0_0 = class("V1a4_BossRushMainViewContainer", BaseViewContainer)
+module("modules.logic.bossrush.view.V1a4_BossRushMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = HelpShowView.New()
+local V1a4_BossRushMainViewContainer = class("V1a4_BossRushMainViewContainer", BaseViewContainer)
 
-	var_1_0:setHelpId(HelpEnum.HelpId.BossRushViewHelp)
-	var_1_0:setDelayTime(0.5)
+function V1a4_BossRushMainViewContainer:buildViews()
+	local helpShowView = HelpShowView.New()
 
-	local var_1_1 = BossRushModel.instance:getActivityMainView()
-	local var_1_2 = (var_1_1 and var_1_1.MainViewClass or V1a4_BossRushMainView).New()
+	helpShowView:setHelpId(HelpEnum.HelpId.BossRushViewHelp)
+	helpShowView:setDelayTime(0.5)
 
-	return {
-		var_1_2,
+	local activityMainView = BossRushModel.instance:getActivityMainView()
+	local mainViewClass = activityMainView and activityMainView.MainViewClass or V1a4_BossRushMainView
+	local mainView = mainViewClass.New()
+	local views = {
+		mainView,
 		TabViewGroup.New(1, "top_left"),
-		var_1_0
+		helpShowView
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function V1a4_BossRushMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
-		}, HelpEnum.HelpId.BossRushViewHelp, arg_2_0._closeCallback, nil, nil, arg_2_0)
+		}, HelpEnum.HelpId.BossRushViewHelp, self._closeCallback, nil, nil, self)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function V1a4_BossRushMainViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_7Enum.ActivityId.BossRush)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_7Enum.ActivityId.BossRush
 	})
 end
 
-return var_0_0
+return V1a4_BossRushMainViewContainer

@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity144_buff", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity144_buff.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity144_buff", package.seeall)
+
+local lua_activity144_buff = {}
+local fields = {
 	effectParam = 5,
 	effectType = 4,
 	buffId = 2,
@@ -10,16 +12,16 @@ local var_0_1 = {
 	reduction = 7,
 	activityId = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"buffId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	effectDesc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity144_buff.onLoad(json)
+	lua_activity144_buff.configList, lua_activity144_buff.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity144_buff

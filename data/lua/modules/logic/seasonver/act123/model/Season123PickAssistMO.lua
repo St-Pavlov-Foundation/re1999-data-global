@@ -1,38 +1,45 @@
-﻿module("modules.logic.seasonver.act123.model.Season123PickAssistMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123PickAssistMO.lua
 
-local var_0_0 = pureTable("Season123PickAssistMO")
+module("modules.logic.seasonver.act123.model.Season123PickAssistMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.heroUid
-	arg_1_0.assistMO = Season123AssistHeroMO.New()
+local Season123PickAssistMO = pureTable("Season123PickAssistMO")
 
-	arg_1_0.assistMO:init(arg_1_1)
+function Season123PickAssistMO:init(info)
+	self.id = info.heroUid
+	self.assistMO = Season123AssistHeroMO.New()
 
-	arg_1_0.heroMO = Season123HeroUtils.createHeroMOByAssistMO(arg_1_0.assistMO, true)
+	self.assistMO:init(info)
+
+	self.heroMO = Season123HeroUtils.createHeroMOByAssistMO(self.assistMO, true)
 end
 
-function var_0_0.getId(arg_2_0)
-	return arg_2_0.id
+function Season123PickAssistMO:getId()
+	return self.id
 end
 
-function var_0_0.isSameHero(arg_3_0, arg_3_1)
-	local var_3_0 = false
+function Season123PickAssistMO:isSameHero(targetPickAssistMO)
+	local result = false
 
-	if arg_3_1 then
-		var_3_0 = arg_3_0:getId() == arg_3_1:getId()
+	if targetPickAssistMO then
+		local curHeroUid = self:getId()
+		local targetHeroUid = targetPickAssistMO:getId()
+
+		result = curHeroUid == targetHeroUid
 	end
 
-	return var_3_0
+	return result
 end
 
-function var_0_0.getPlayerInfo(arg_4_0)
-	return {
-		userId = arg_4_0.assistMO.userId,
-		name = arg_4_0.assistMO.name,
-		level = arg_4_0.assistMO.userLevel,
-		portrait = arg_4_0.assistMO.portrait,
-		bg = arg_4_0.assistMO.bg
+function Season123PickAssistMO:getPlayerInfo()
+	local info = {
+		userId = self.assistMO.userId,
+		name = self.assistMO.name,
+		level = self.assistMO.userLevel,
+		portrait = self.assistMO.portrait,
+		bg = self.assistMO.bg
 	}
+
+	return info
 end
 
-return var_0_0
+return Season123PickAssistMO

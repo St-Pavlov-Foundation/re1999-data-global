@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_dungeon_jump", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_dungeon_jump.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_dungeon_jump", package.seeall)
+
+local lua_dungeon_jump = {}
+local fields = {
 	isflag = 7,
 	celltype = 4,
 	coord = 3,
@@ -10,14 +12,14 @@ local var_0_1 = {
 	cellId = 2,
 	evenid = 5
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"cellId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_dungeon_jump.onLoad(json)
+	lua_dungeon_jump.configList, lua_dungeon_jump.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_dungeon_jump

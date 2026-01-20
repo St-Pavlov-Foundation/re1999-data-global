@@ -1,366 +1,378 @@
-﻿module("modules.logic.seasonver.act123.model.Season123EquipItemListModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EquipItemListModel.lua
 
-local var_0_0 = class("Season123EquipItemListModel", ListScrollModel)
+module("modules.logic.seasonver.act123.model.Season123EquipItemListModel", package.seeall)
 
-var_0_0.MainCharPos = 4
-var_0_0.TotalEquipPos = 5
-var_0_0.MaxPos = 1
-var_0_0.HeroMaxPos = 2
-var_0_0.EmptyUid = "0"
-var_0_0.ColumnCount = 6
-var_0_0.AnimRowCount = 4
-var_0_0.OpenAnimTime = 0.06
-var_0_0.OpenAnimStartTime = 0.05
+local Season123EquipItemListModel = class("Season123EquipItemListModel", ListScrollModel)
 
-function var_0_0.clear(arg_1_0)
-	var_0_0.super.clear(arg_1_0)
+Season123EquipItemListModel.MainCharPos = 4
+Season123EquipItemListModel.TotalEquipPos = 5
+Season123EquipItemListModel.MaxPos = 1
+Season123EquipItemListModel.HeroMaxPos = 2
+Season123EquipItemListModel.EmptyUid = "0"
+Season123EquipItemListModel.ColumnCount = 6
+Season123EquipItemListModel.AnimRowCount = 4
+Season123EquipItemListModel.OpenAnimTime = 0.06
+Season123EquipItemListModel.OpenAnimStartTime = 0.05
 
-	arg_1_0.activityId = nil
-	arg_1_0.curPos = nil
-	arg_1_0.equipUid2Pos = nil
-	arg_1_0.equipUid2Group = nil
-	arg_1_0.equipUid2Slot = nil
-	arg_1_0.curEquipMap = nil
-	arg_1_0.curSelectSlot = nil
-	arg_1_0._itemMap = nil
-	arg_1_0.recordNew = nil
-	arg_1_0._itemStartAnimTime = nil
-	arg_1_0._deckUidMap = nil
-	arg_1_0._itemIdDeckCountMap = nil
-	arg_1_0.tagModel = nil
-	arg_1_0.curUnlockIndexSet = nil
+function Season123EquipItemListModel:clear()
+	Season123EquipItemListModel.super.clear(self)
+
+	self.activityId = nil
+	self.curPos = nil
+	self.equipUid2Pos = nil
+	self.equipUid2Group = nil
+	self.equipUid2Slot = nil
+	self.curEquipMap = nil
+	self.curSelectSlot = nil
+	self._itemMap = nil
+	self.recordNew = nil
+	self._itemStartAnimTime = nil
+	self._deckUidMap = nil
+	self._itemIdDeckCountMap = nil
+	self.tagModel = nil
+	self.curUnlockIndexSet = nil
 end
 
-function var_0_0.initDatas(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
+function Season123EquipItemListModel:initDatas(activityId, groupIndex, stage, layer, posIndex, slotIndex)
 	logNormal("Season123EquipItemListModel initDatas")
-	arg_2_0:clear()
+	self:clear()
 
-	arg_2_0.activityId = arg_2_1
-	arg_2_0.curPos = arg_2_5
-	arg_2_0.groupIndex = arg_2_2
-	arg_2_0.stage = arg_2_3
-	arg_2_0.layer = arg_2_4
-	arg_2_0.equipUid2Pos = {}
-	arg_2_0.equipUid2Slot = {}
+	self.activityId = activityId
+	self.curPos = posIndex
+	self.groupIndex = groupIndex
+	self.stage = stage
+	self.layer = layer
+	self.equipUid2Pos = {}
+	self.equipUid2Slot = {}
 
-	local var_2_0 = arg_2_0:getEquipMaxCount(arg_2_0.curPos)
+	local posMaxCount = self:getEquipMaxCount(self.curPos)
 
-	arg_2_0.curEquipMap = {}
+	self.curEquipMap = {}
 
-	for iter_2_0 = 1, var_2_0 do
-		arg_2_0.curEquipMap[iter_2_0] = var_0_0.EmptyUid
+	for i = 1, posMaxCount do
+		self.curEquipMap[i] = Season123EquipItemListModel.EmptyUid
 	end
 
-	arg_2_0.curSelectSlot = arg_2_6 or 1
-	arg_2_0.equipUid2Group = {}
+	self.curSelectSlot = slotIndex or 1
+	self.equipUid2Group = {}
 
-	arg_2_0:initUnlockIndex()
-	arg_2_0:initSubModel()
-	arg_2_0:initItemMap()
-	arg_2_0:initPlayerPrefs()
-	arg_2_0:initPosData()
-	arg_2_0:initList()
+	self:initUnlockIndex()
+	self:initSubModel()
+	self:initItemMap()
+	self:initPlayerPrefs()
+	self:initPosData()
+	self:initList()
 end
 
-function var_0_0.initUnlockIndex(arg_3_0)
-	arg_3_0.curUnlockIndexSet = Season123HeroGroupUtils.getUnlockSlotSet(arg_3_0.activityId)
+function Season123EquipItemListModel:initUnlockIndex()
+	self.curUnlockIndexSet = Season123HeroGroupUtils.getUnlockSlotSet(self.activityId)
 end
 
-function var_0_0.initSubModel(arg_4_0)
-	arg_4_0.tagModel = Season123EquipTagModel.New()
+function Season123EquipItemListModel:initSubModel()
+	self.tagModel = Season123EquipTagModel.New()
 
-	arg_4_0.tagModel:init(arg_4_0.activityId)
+	self.tagModel:init(self.activityId)
 end
 
-function var_0_0.initItemMap(arg_5_0)
-	arg_5_0._itemMap = Season123Model.instance:getAllItemMo(arg_5_0.activityId) or {}
+function Season123EquipItemListModel:initItemMap()
+	self._itemMap = Season123Model.instance:getAllItemMo(self.activityId) or {}
 end
 
-function var_0_0.initPlayerPrefs(arg_6_0)
-	arg_6_0.recordNew = Season123EquipLocalRecord.New()
+function Season123EquipItemListModel:initPlayerPrefs()
+	self.recordNew = Season123EquipLocalRecord.New()
 
-	arg_6_0.recordNew:init(arg_6_0.activityId, Activity123Enum.PlayerPrefsKeyItemUid)
+	self.recordNew:init(self.activityId, Activity123Enum.PlayerPrefsKeyItemUid)
 end
 
-function var_0_0.initPosData(arg_7_0)
-	local var_7_0 = arg_7_0:getGroupMO()
+function Season123EquipItemListModel:initPosData()
+	local groupMO = self:getGroupMO()
 
-	if not var_7_0 then
+	if not groupMO then
 		return
 	end
 
-	local var_7_1 = var_7_0.activity104Equips
+	local equipInfos = groupMO.activity104Equips
 
-	for iter_7_0, iter_7_1 in pairs(var_7_1) do
-		local var_7_2 = arg_7_0:getEquipMaxCount(iter_7_0)
+	for pos, equipGroupMO in pairs(equipInfos) do
+		local posMaxCount = self:getEquipMaxCount(pos)
 
-		for iter_7_2 = 1, var_7_2 do
-			local var_7_3 = iter_7_1.equipUid[iter_7_2]
+		for i = 1, posMaxCount do
+			local equipUid = equipGroupMO.equipUid[i]
 
-			if arg_7_0._itemMap[var_7_3] then
-				arg_7_0:setCardPosData(var_7_3, iter_7_0, iter_7_2)
+			if self._itemMap[equipUid] then
+				self:setCardPosData(equipUid, pos, i)
 			end
 		end
 	end
 end
 
-function var_0_0.setCardPosData(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_0.equipUid2Pos[arg_8_1] = arg_8_2
-	arg_8_0.equipUid2Slot[arg_8_1] = arg_8_3
+function Season123EquipItemListModel:setCardPosData(equipUid, pos, slot)
+	self.equipUid2Pos[equipUid] = pos
+	self.equipUid2Slot[equipUid] = slot
 
-	if arg_8_2 == arg_8_0.curPos then
-		arg_8_0.curEquipMap[arg_8_3] = arg_8_1
+	if pos == self.curPos then
+		self.curEquipMap[slot] = equipUid
 	end
 end
 
-function var_0_0.initList(arg_9_0)
-	local var_9_0 = {}
+function Season123EquipItemListModel:initList()
+	local list = {}
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._itemMap) do
-		arg_9_0:setListData(iter_9_1.itemId, iter_9_0, iter_9_1, var_9_0)
+	for itemUid, itemMO in pairs(self._itemMap) do
+		self:setListData(itemMO.itemId, itemUid, itemMO, list)
 	end
 
-	table.sort(var_9_0, var_0_0.sortItemMOList)
+	table.sort(list, Season123EquipItemListModel.sortItemMOList)
 
-	arg_9_0._originList = var_9_0
+	self._originList = list
 
-	arg_9_0:refreshMergeList()
+	self:refreshMergeList()
 end
 
-function var_0_0.setListData(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	if not Season123Config.instance:getEquipIsOptional(arg_10_1) then
-		local var_10_0 = Season123Config.instance:getSeasonEquipCo(arg_10_1)
+function Season123EquipItemListModel:setListData(itemId, itemUid, itemMO, list)
+	if not Season123Config.instance:getEquipIsOptional(itemId) then
+		local itemCO = Season123Config.instance:getSeasonEquipCo(itemId)
 
-		if var_10_0 and arg_10_0:isCardFitRole(var_10_0) and arg_10_0:isCardCanShowByTag(arg_10_2, var_10_0.tag) then
-			arg_10_0.equipUid2Group[arg_10_2] = var_10_0.group
+		if itemCO and self:isCardFitRole(itemCO) and self:isCardCanShowByTag(itemUid, itemCO.tag) then
+			self.equipUid2Group[itemUid] = itemCO.group
 
-			if not arg_10_3 then
-				arg_10_3 = Season123ItemMO.New()
+			if not itemMO then
+				itemMO = Season123ItemMO.New()
 
-				arg_10_3:init({
+				itemMO:init({
 					quantity = 1,
-					itemId = arg_10_1,
-					uid = arg_10_2
+					itemId = itemId,
+					uid = itemUid
 				})
 			end
 
-			local var_10_1 = Season123EquipListMo.New()
+			local mo = Season123EquipListMo.New()
 
-			var_10_1:init(arg_10_3)
-			table.insert(arg_10_4, var_10_1)
+			mo:init(itemMO)
+			table.insert(list, mo)
 		end
 	end
 end
 
-function var_0_0.getTrialEquipUID(...)
-	local var_11_0 = {
+function Season123EquipItemListModel.getTrialEquipUID(...)
+	local t = {
 		...
 	}
 
-	return table.concat(var_11_0, "#")
+	return table.concat(t, "#")
 end
 
-function var_0_0.isTrialEquip(arg_12_0)
-	return tonumber(arg_12_0) == nil
+function Season123EquipItemListModel.isTrialEquip(equipUid)
+	return tonumber(equipUid) == nil
 end
 
-function var_0_0.curSelectIsTrialEquip(arg_13_0)
-	local var_13_0 = arg_13_0.curEquipMap[arg_13_0.curSelectSlot]
+function Season123EquipItemListModel:curSelectIsTrialEquip()
+	local itemUid = self.curEquipMap[self.curSelectSlot]
 
-	return var_13_0 and var_0_0.isTrialEquip(var_13_0)
+	return itemUid and Season123EquipItemListModel.isTrialEquip(itemUid)
 end
 
-function var_0_0.curMapIsTrialEquipMap(arg_14_0)
-	if arg_14_0.curPos == var_0_0.MainCharPos then
-		local var_14_0 = HeroGroupModel.instance.battleConfig
+function Season123EquipItemListModel:curMapIsTrialEquipMap()
+	if self.curPos == Season123EquipItemListModel.MainCharPos then
+		local battleCO = HeroGroupModel.instance.battleConfig
 
-		return var_14_0 and var_14_0.trialMainAct104EuqipId > 0
+		return battleCO and battleCO.trialMainAct104EuqipId > 0
 	end
 
-	local var_14_1 = arg_14_0:getGroupMO()
+	local groupMO = self:getGroupMO()
 
-	if not var_14_1 then
+	if not groupMO then
 		return
 	end
 
-	local var_14_2 = var_14_1.trialDict
-	local var_14_3 = arg_14_0.curPos + 1
-	local var_14_4 = var_14_2 and var_14_2[var_14_3]
+	local trialDict = groupMO.trialDict
+	local index = self.curPos + 1
+	local trialData = trialDict and trialDict[index]
 
-	if var_14_4 then
-		local var_14_5 = arg_14_0:getEquipMaxCount(var_14_3)
+	if trialData then
+		local posMaxCount = self:getEquipMaxCount(index)
 
-		for iter_14_0 = 1, var_14_5 do
-			local var_14_6 = HeroConfig.instance:getTrial104Equip(iter_14_0, var_14_4[1], var_14_4[2])
+		for slot = 1, posMaxCount do
+			local trialEquipId = HeroConfig.instance:getTrial104Equip(slot, trialData[1], trialData[2])
 
-			if var_14_6 and var_14_6 > 0 then
+			if trialEquipId and trialEquipId > 0 then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isCardFitRole(arg_15_0, arg_15_1)
-	if arg_15_0.curPos == var_0_0.MainCharPos then
-		return Season123EquipMetaUtils.isMainRoleCard(arg_15_1)
+function Season123EquipItemListModel:isCardFitRole(itemCO)
+	if self.curPos == Season123EquipItemListModel.MainCharPos then
+		return Season123EquipMetaUtils.isMainRoleCard(itemCO)
 	else
-		return not Season123EquipMetaUtils.isMainRoleCard(arg_15_1)
+		return not Season123EquipMetaUtils.isMainRoleCard(itemCO)
 	end
 end
 
-function var_0_0.isCardCanShowByTag(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_0.tagModel then
-		return arg_16_0.tagModel:isCardNeedShow(arg_16_2)
+function Season123EquipItemListModel:isCardCanShowByTag(itemUid, itemTags)
+	if self.tagModel then
+		return self.tagModel:isCardNeedShow(itemTags)
 	end
 
 	return true
 end
 
-function var_0_0.refreshMergeList(arg_17_0)
-	local var_17_0 = {}
-	local var_17_1 = {}
-	local var_17_2 = {}
-	local var_17_3 = {}
+function Season123EquipItemListModel:refreshMergeList()
+	local list = {}
+	local curSelectIdMap = {}
+	local itemIdCountMap = {}
+	local deckIdMap = {}
 
-	for iter_17_0, iter_17_1 in pairs(arg_17_0.curEquipMap) do
-		if iter_17_1 ~= var_0_0.EmptyUid then
-			var_17_1[iter_17_1] = true
+	for k, v in pairs(self.curEquipMap) do
+		if v ~= Season123EquipItemListModel.EmptyUid then
+			curSelectIdMap[v] = true
 		end
 	end
 
-	for iter_17_2 = 1, #arg_17_0._originList do
-		local var_17_4 = arg_17_0._originList[iter_17_2].id
-		local var_17_5 = arg_17_0._originList[iter_17_2].itemId
+	for i = 1, #self._originList do
+		local itemUid = self._originList[i].id
+		local itemId = self._originList[i].itemId
 
-		if var_17_1[var_17_4] or arg_17_0.equipUid2Pos[var_17_4] then
-			table.insert(var_17_0, arg_17_0._originList[iter_17_2])
+		if curSelectIdMap[itemUid] or self.equipUid2Pos[itemUid] then
+			table.insert(list, self._originList[i])
 		else
-			local var_17_6 = var_17_2[var_17_5]
+			local curCount = itemIdCountMap[itemId]
 
-			if var_17_6 == nil then
-				table.insert(var_17_0, arg_17_0._originList[iter_17_2])
+			if curCount == nil then
+				table.insert(list, self._originList[i])
 
-				var_17_2[var_17_5] = 1
-				var_17_3[var_17_4] = var_17_5
+				itemIdCountMap[itemId] = 1
+				deckIdMap[itemUid] = itemId
 			else
-				var_17_2[var_17_5] = var_17_6 + 1
+				itemIdCountMap[itemId] = curCount + 1
 			end
 		end
 	end
 
-	arg_17_0._deckUidMap = var_17_3
-	arg_17_0._itemIdDeckCountMap = var_17_2
+	self._deckUidMap = deckIdMap
+	self._itemIdDeckCountMap = itemIdCountMap
 
-	arg_17_0:setList(var_17_0)
+	self:setList(list)
 end
 
-function var_0_0.changeSelectSlot(arg_18_0, arg_18_1)
-	if arg_18_1 <= arg_18_0:getEquipMaxCount(arg_18_0.curPos) and arg_18_1 > 0 then
-		arg_18_0.curSelectSlot = arg_18_1
+function Season123EquipItemListModel:changeSelectSlot(slotIndex)
+	local posMaxCount = self:getEquipMaxCount(self.curPos)
+
+	if slotIndex <= posMaxCount and slotIndex > 0 then
+		self.curSelectSlot = slotIndex
 	end
 end
 
-function var_0_0.getEquipMO(arg_19_0, arg_19_1)
-	return arg_19_0._itemMap[arg_19_1]
+function Season123EquipItemListModel:getEquipMO(itemUid)
+	return self._itemMap[itemUid]
 end
 
-function var_0_0.equipShowItem(arg_20_0, arg_20_1)
-	arg_20_0.curEquipMap[arg_20_0.curSelectSlot] = arg_20_1
+function Season123EquipItemListModel:equipShowItem(itemUid)
+	self.curEquipMap[self.curSelectSlot] = itemUid
 end
 
-function var_0_0.equipItem(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0.curEquipMap[arg_21_2] = arg_21_1
-	arg_21_0.equipUid2Pos[arg_21_1] = arg_21_0.curPos
-	arg_21_0.equipUid2Slot[arg_21_1] = arg_21_2
+function Season123EquipItemListModel:equipItem(itemUid, slot)
+	self.curEquipMap[slot] = itemUid
+	self.equipUid2Pos[itemUid] = self.curPos
+	self.equipUid2Slot[itemUid] = slot
 end
 
-function var_0_0.unloadShowSlot(arg_22_0, arg_22_1)
-	arg_22_0.curEquipMap[arg_22_1] = var_0_0.EmptyUid
+function Season123EquipItemListModel:unloadShowSlot(slot)
+	self.curEquipMap[slot] = Season123EquipItemListModel.EmptyUid
 end
 
-function var_0_0.unloadItem(arg_23_0, arg_23_1)
-	arg_23_0.equipUid2Pos[arg_23_1] = nil
-	arg_23_0.equipUid2Slot[arg_23_1] = nil
+function Season123EquipItemListModel:unloadItem(itemUid)
+	self.equipUid2Pos[itemUid] = nil
+	self.equipUid2Slot[itemUid] = nil
 
-	local var_23_0 = arg_23_0:getEquipMaxCount(arg_23_0.curPos)
+	local posMaxCount = self:getEquipMaxCount(self.curPos)
 
-	for iter_23_0 = 1, var_23_0 do
-		if arg_23_0.curEquipMap[iter_23_0] == arg_23_1 then
-			arg_23_0.curEquipMap[iter_23_0] = var_0_0.EmptyUid
+	for i = 1, posMaxCount do
+		if self.curEquipMap[i] == itemUid then
+			self.curEquipMap[i] = Season123EquipItemListModel.EmptyUid
 		end
 	end
 end
 
-function var_0_0.unloadItemByPos(arg_24_0, arg_24_1, arg_24_2)
-	for iter_24_0, iter_24_1 in pairs(arg_24_0.equipUid2Pos) do
-		if iter_24_1 == arg_24_1 and arg_24_0.equipUid2Slot[iter_24_0] == arg_24_2 then
-			arg_24_0:unloadItem(iter_24_0)
+function Season123EquipItemListModel:unloadItemByPos(targetPos, targetSlot)
+	for itemUid, oldPos in pairs(self.equipUid2Pos) do
+		if oldPos == targetPos then
+			local slot = self.equipUid2Slot[itemUid]
 
-			return
+			if slot == targetSlot then
+				self:unloadItem(itemUid)
+
+				return
+			end
 		end
 	end
 end
 
-function var_0_0.getItemUidByPos(arg_25_0, arg_25_1, arg_25_2)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0.equipUid2Pos) do
-		if iter_25_1 == arg_25_1 and arg_25_0.equipUid2Slot[iter_25_0] == arg_25_2 then
-			return iter_25_0
+function Season123EquipItemListModel:getItemUidByPos(targetPos, targetSlot)
+	for itemUid, oldPos in pairs(self.equipUid2Pos) do
+		if oldPos == targetPos then
+			local slot = self.equipUid2Slot[itemUid]
+
+			if slot == targetSlot then
+				return itemUid
+			end
 		end
 	end
 
-	return var_0_0.EmptyUid
+	return Season123EquipItemListModel.EmptyUid
 end
 
-function var_0_0.getItemEquipedPos(arg_26_0, arg_26_1)
-	return arg_26_0.equipUid2Pos[arg_26_1], arg_26_0.equipUid2Slot[arg_26_1]
+function Season123EquipItemListModel:getItemEquipedPos(itemUid)
+	return self.equipUid2Pos[itemUid], self.equipUid2Slot[itemUid]
 end
 
-function var_0_0.getCurItemEquip(arg_27_0)
-	local var_27_0 = arg_27_0:getGroupMO()
+function Season123EquipItemListModel:getCurItemEquip()
+	local groupMO = self:getGroupMO()
 
-	if not var_27_0 then
+	if not groupMO then
 		return nil
 	end
 
-	local var_27_1 = var_27_0.activity104Equips
+	local equipInfos = groupMO.activity104Equips
 
-	for iter_27_0, iter_27_1 in pairs(var_27_1) do
-		if iter_27_1.index == arg_27_0.curPos then
-			return iter_27_1
+	for _, v in pairs(equipInfos) do
+		if v.index == self.curPos then
+			return v
 		end
 	end
 end
 
-function var_0_0.getEquipMaxCount(arg_28_0, arg_28_1)
-	return arg_28_1 == var_0_0.MainCharPos and var_0_0.HeroMaxPos or var_0_0.MaxPos
+function Season123EquipItemListModel:getEquipMaxCount(pos)
+	return pos == Season123EquipItemListModel.MainCharPos and Season123EquipItemListModel.HeroMaxPos or Season123EquipItemListModel.MaxPos
 end
 
-function var_0_0.getPosHeroUid(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = arg_29_0:getGroupMO(arg_29_2)
+function Season123EquipItemListModel:getPosHeroUid(targetPos, groupIndex)
+	local groupMO = self:getGroupMO(groupIndex)
 
-	if not var_29_0 then
+	if not groupMO then
 		return nil
 	end
 
-	return var_29_0:getHeroByIndex(arg_29_1 + 1)
+	return groupMO:getHeroByIndex(targetPos + 1)
 end
 
-function var_0_0.slotIsLock(arg_30_0, arg_30_1)
-	return not arg_30_0:isEquipCardPosUnlock(arg_30_1, arg_30_0.curPos)
+function Season123EquipItemListModel:slotIsLock(slotIndex)
+	return not self:isEquipCardPosUnlock(slotIndex, self.curPos)
 end
 
-function var_0_0.disableBecauseCareerNotFit(arg_31_0, arg_31_1)
-	return arg_31_0:isEquipCareerNoFit(arg_31_1, arg_31_0.curPos, arg_31_0:getGroupMO())
+function Season123EquipItemListModel:disableBecauseCareerNotFit(itemId)
+	return self:isEquipCareerNoFit(itemId, self.curPos, self:getGroupMO())
 end
 
-function var_0_0.disableBecauseSameCard(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_0.equipUid2Group[arg_32_1]
+function Season123EquipItemListModel:disableBecauseSameCard(itemUid)
+	local groupId = self.equipUid2Group[itemUid]
 
-	if var_32_0 then
-		for iter_32_0, iter_32_1 in pairs(arg_32_0.curEquipMap) do
-			local var_32_1 = arg_32_0.equipUid2Group[iter_32_1]
+	if groupId then
+		for slot, equipedUid in pairs(self.curEquipMap) do
+			local equipedGroup = self.equipUid2Group[equipedUid]
 
-			if var_32_1 and iter_32_0 ~= arg_32_0.curSelectSlot and var_32_1 == var_32_0 then
+			if equipedGroup and slot ~= self.curSelectSlot and equipedGroup == groupId then
 				return true
 			end
 		end
@@ -369,84 +381,86 @@ function var_0_0.disableBecauseSameCard(arg_32_0, arg_32_1)
 	return false
 end
 
-function var_0_0.disableBecauseRole(arg_33_0, arg_33_1)
-	local var_33_0 = Season123Config.instance:getSeasonEquipCo(arg_33_1)
+function Season123EquipItemListModel:disableBecauseRole(itemId)
+	local itemCo = Season123Config.instance:getSeasonEquipCo(itemId)
 
-	if not var_33_0 then
+	if not itemCo then
 		return false
 	end
 
-	local var_33_1 = Season123EquipMetaUtils.isMainRoleCard(var_33_0)
+	local isMainRoleCard = Season123EquipMetaUtils.isMainRoleCard(itemCo)
 
-	if arg_33_0.curPos == var_0_0.MainCharPos then
-		if var_33_1 then
+	if self.curPos == Season123EquipItemListModel.MainCharPos then
+		if isMainRoleCard then
 			return false
 		end
-	elseif not var_33_1 then
+	elseif not isMainRoleCard then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.disableBecausePos(arg_34_0, arg_34_1)
-	if not Season123Config.instance:getSeasonEquipCo(arg_34_1) then
+function Season123EquipItemListModel:disableBecausePos(itemId)
+	local itemCo = Season123Config.instance:getSeasonEquipCo(itemId)
+
+	if not itemCo then
 		return false
 	end
 
-	local var_34_0, var_34_1 = Season123Config.instance:getCardLimitPosDict(arg_34_1)
+	local posDict, posStr = Season123Config.instance:getCardLimitPosDict(itemId)
 
-	if var_34_0 == nil or var_34_0[arg_34_0.curPos + 1] then
+	if posDict == nil or posDict[self.curPos + 1] then
 		return false
 	end
 
-	return true, var_34_1
+	return true, posStr
 end
 
-function var_0_0.isEquipCareerNoFit(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	if arg_35_2 == var_0_0.MainCharPos or not arg_35_3 then
+function Season123EquipItemListModel:isEquipCareerNoFit(itemId, pos, heroGroupMO)
+	if pos == Season123EquipItemListModel.MainCharPos or not heroGroupMO then
 		return false
 	end
 
-	local var_35_0 = Season123Config.instance:getSeasonEquipCo(arg_35_1)
+	local itemCO = Season123Config.instance:getSeasonEquipCo(itemId)
 
-	if not var_35_0 then
+	if not itemCO then
 		return false
 	end
 
-	local var_35_1 = arg_35_3:getHeroByIndex(arg_35_2 + 1)
-	local var_35_2
+	local heroUid = heroGroupMO:getHeroByIndex(pos + 1)
+	local heroMO
 
-	if not string.nilorempty(var_35_1) then
-		var_35_2 = HeroModel.instance:getById(var_35_1)
+	if not string.nilorempty(heroUid) then
+		heroMO = HeroModel.instance:getById(heroUid)
 	end
 
-	if not var_35_2 then
+	if not heroMO then
 		return false
 	end
 
-	local var_35_3 = var_35_2.config.career
+	local targetCareer = heroMO.config.career
 
-	if not string.nilorempty(var_35_0.career) then
-		if CharacterEnum.CareerType.Ling == var_35_3 or CharacterEnum.CareerType.Zhi == var_35_3 then
-			return var_35_0.career ~= Activity123Enum.CareerType.Ling_Or_Zhi
+	if not string.nilorempty(itemCO.career) then
+		if CharacterEnum.CareerType.Ling == targetCareer or CharacterEnum.CareerType.Zhi == targetCareer then
+			return itemCO.career ~= Activity123Enum.CareerType.Ling_Or_Zhi
 		else
-			return tonumber(var_35_0.career) ~= var_35_3
+			return tonumber(itemCO.career) ~= targetCareer
 		end
 	end
 
 	return false
 end
 
-function var_0_0.isItemUidInShowSlot(arg_36_0, arg_36_1)
-	return arg_36_0.curEquipMap[arg_36_0.curSelectSlot] == arg_36_1
+function Season123EquipItemListModel:isItemUidInShowSlot(itemUid)
+	return self.curEquipMap[self.curSelectSlot] == itemUid
 end
 
-function var_0_0.isAllSlotEmpty(arg_37_0)
-	local var_37_0 = arg_37_0:getEquipMaxCount(arg_37_0.curPos)
+function Season123EquipItemListModel:isAllSlotEmpty()
+	local equipCount = self:getEquipMaxCount(self.curPos)
 
-	for iter_37_0 = 1, var_37_0 do
-		if arg_37_0.curEquipMap[iter_37_0] ~= var_0_0.EmptyUid then
+	for slot = 1, equipCount do
+		if self.curEquipMap[slot] ~= Season123EquipItemListModel.EmptyUid then
 			return false
 		end
 	end
@@ -454,196 +468,200 @@ function var_0_0.isAllSlotEmpty(arg_37_0)
 	return true
 end
 
-function var_0_0.sortItemMOList(arg_38_0, arg_38_1)
-	local var_38_0 = Season123Config.instance:getSeasonEquipCo(arg_38_0.itemId)
-	local var_38_1 = Season123Config.instance:getSeasonEquipCo(arg_38_1.itemId)
+function Season123EquipItemListModel.sortItemMOList(a, b)
+	local cfgA = Season123Config.instance:getSeasonEquipCo(a.itemId)
+	local cfgB = Season123Config.instance:getSeasonEquipCo(b.itemId)
 
-	if var_38_0 ~= nil and var_38_1 ~= nil then
-		local var_38_2 = var_0_0.instance:disableBecauseRole(arg_38_0.itemId)
-		local var_38_3 = var_0_0.instance:disableBecauseRole(arg_38_1.itemId)
+	if cfgA ~= nil and cfgB ~= nil then
+		local rareFitA = Season123EquipItemListModel.instance:disableBecauseRole(a.itemId)
+		local rareFitB = Season123EquipItemListModel.instance:disableBecauseRole(b.itemId)
 
-		if var_38_3 ~= var_38_2 then
-			return var_38_3
+		if rareFitB ~= rareFitA then
+			return rareFitB
 		end
 
-		if var_38_0.rare ~= var_38_1.rare then
-			return var_38_0.rare > var_38_1.rare
+		if cfgA.rare ~= cfgB.rare then
+			return cfgA.rare > cfgB.rare
 		else
-			return var_38_0.equipId > var_38_1.equipId
+			return cfgA.equipId > cfgB.equipId
 		end
 	else
-		return arg_38_0.id < arg_38_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0.getGroupMO(arg_39_0, arg_39_1)
-	return Season123Model.instance:getSnapshotHeroGroup(arg_39_1)
+function Season123EquipItemListModel:getGroupMO(groupIndex)
+	return Season123Model.instance:getSnapshotHeroGroup(groupIndex)
 end
 
-function var_0_0.flushSlot(arg_40_0, arg_40_1)
-	local var_40_0 = arg_40_0.curEquipMap[arg_40_1]
+function Season123EquipItemListModel:flushSlot(slot)
+	local itemUid = self.curEquipMap[slot]
 
-	arg_40_0:unloadItemByPos(arg_40_0.curPos, arg_40_1)
+	self:unloadItemByPos(self.curPos, slot)
 
-	if var_40_0 ~= var_0_0.EmptyUid then
-		arg_40_0:unloadTeamLimitCard(var_40_0)
-		arg_40_0:unloadItem(var_40_0)
-		arg_40_0:equipItem(var_40_0, arg_40_1)
+	if itemUid ~= Season123EquipItemListModel.EmptyUid then
+		self:unloadTeamLimitCard(itemUid)
+		self:unloadItem(itemUid)
+		self:equipItem(itemUid, slot)
 	end
 end
 
-function var_0_0.unloadTeamLimitCard(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_0:getById(arg_41_1)
+function Season123EquipItemListModel:unloadTeamLimitCard(targetItemUid)
+	local targetItemMO = self:getById(targetItemUid)
 
-	if not var_41_0 then
+	if not targetItemMO then
 		return
 	end
 
-	local var_41_1 = arg_41_0:getList()
-	local var_41_2 = Season123Config.instance:getSeasonEquipCo(var_41_0.itemId)
-	local var_41_3 = false
+	local list = self:getList()
+	local targetItemCO = Season123Config.instance:getSeasonEquipCo(targetItemMO.itemId)
+	local isDirty = false
 
-	if var_41_2 and var_41_2.teamLimit == 0 then
+	if targetItemCO and targetItemCO.teamLimit == 0 then
 		return false
 	end
 
-	for iter_41_0, iter_41_1 in pairs(arg_41_0.equipUid2Pos) do
-		if iter_41_0 ~= arg_41_1 and arg_41_0._itemMap[iter_41_0] then
-			local var_41_4 = Season123Config.instance:getSeasonEquipCo(arg_41_0._itemMap[iter_41_0].itemId)
+	for uid, _ in pairs(self.equipUid2Pos) do
+		if uid ~= targetItemUid and self._itemMap[uid] then
+			local tmpItemCO = Season123Config.instance:getSeasonEquipCo(self._itemMap[uid].itemId)
 
-			if var_41_4 and var_41_4.teamLimit ~= 0 and var_41_4.teamLimit == var_41_2.teamLimit then
-				arg_41_0:unloadItem(iter_41_0)
+			if tmpItemCO and tmpItemCO.teamLimit ~= 0 and tmpItemCO.teamLimit == targetItemCO.teamLimit then
+				self:unloadItem(uid)
 
-				var_41_3 = true
+				isDirty = true
 			end
 		end
 	end
 
-	return var_41_3
+	return isDirty
 end
 
-function var_0_0.resumeSlotData(arg_42_0)
-	local var_42_0 = arg_42_0:getEquipMaxCount(arg_42_0.curPos)
+function Season123EquipItemListModel:resumeSlotData()
+	local slotMaxCount = self:getEquipMaxCount(self.curPos)
 
-	for iter_42_0 = 1, var_42_0 do
-		local var_42_1 = arg_42_0:getItemUidByPos(arg_42_0.curPos, iter_42_0)
+	for slotIndex = 1, slotMaxCount do
+		local itemUid = self:getItemUidByPos(self.curPos, slotIndex)
 
-		arg_42_0.curEquipMap[iter_42_0] = var_42_1
+		self.curEquipMap[slotIndex] = itemUid
 	end
 end
 
-function var_0_0.flushGroup(arg_43_0)
-	return (arg_43_0:packUpdateEquips())
+function Season123EquipItemListModel:flushGroup()
+	local equipInfos = self:packUpdateEquips()
+
+	return equipInfos
 end
 
-function var_0_0.packUpdateEquips(arg_44_0)
-	local var_44_0 = {}
+function Season123EquipItemListModel:packUpdateEquips()
+	local equipInfos = {}
 
-	for iter_44_0 = 1, var_0_0.TotalEquipPos do
-		local var_44_1 = arg_44_0:getPosHeroUid(iter_44_0 - 1) or var_0_0.EmptyUid
-		local var_44_2 = {
-			index = iter_44_0 - 1,
-			heroUid = var_44_1,
+	for pos = 1, Season123EquipItemListModel.TotalEquipPos do
+		local heroUid = self:getPosHeroUid(pos - 1) or Season123EquipItemListModel.EmptyUid
+		local info = {
+			index = pos - 1,
+			heroUid = heroUid,
 			equipUid = {}
 		}
-		local var_44_3 = arg_44_0:getEquipMaxCount(iter_44_0 - 1)
+		local slotMaxCount = self:getEquipMaxCount(pos - 1)
 
-		for iter_44_1 = 1, var_44_3 do
-			var_44_2.equipUid[iter_44_1] = var_0_0.EmptyUid
+		for slot = 1, slotMaxCount do
+			info.equipUid[slot] = Season123EquipItemListModel.EmptyUid
 		end
 
-		var_44_0[iter_44_0] = var_44_2
+		equipInfos[pos] = info
 	end
 
-	for iter_44_2, iter_44_3 in pairs(arg_44_0.equipUid2Pos) do
-		if not var_0_0.isTrialEquip(iter_44_2) then
-			local var_44_4 = arg_44_0.equipUid2Slot[iter_44_2]
+	for itemUid, pos in pairs(self.equipUid2Pos) do
+		if not Season123EquipItemListModel.isTrialEquip(itemUid) then
+			local slot = self.equipUid2Slot[itemUid]
 
-			if var_44_4 then
-				var_44_0[iter_44_3 + 1].equipUid[var_44_4] = iter_44_2
+			if slot then
+				equipInfos[pos + 1].equipUid[slot] = itemUid
 			end
 		end
 	end
 
-	return var_44_0
+	return equipInfos
 end
 
-function var_0_0.checkResetCurSelected(arg_45_0)
-	local var_45_0 = arg_45_0:getEquipMaxCount(arg_45_0.curPos)
+function Season123EquipItemListModel:checkResetCurSelected()
+	local posMaxCount = self:getEquipMaxCount(self.curPos)
 
-	for iter_45_0 = 1, var_45_0 do
-		if arg_45_0.curEquipMap[iter_45_0] ~= var_0_0.EmptyUid and not arg_45_0._itemMap[arg_45_0.curEquipMap[iter_45_0]] then
-			arg_45_0.curEquipMap[iter_45_0] = var_0_0.EmptyUid
+	for i = 1, posMaxCount do
+		if self.curEquipMap[i] ~= Season123EquipItemListModel.EmptyUid and not self._itemMap[self.curEquipMap[i]] then
+			self.curEquipMap[i] = Season123EquipItemListModel.EmptyUid
 		end
 	end
 end
 
-function var_0_0.getShowUnlockSlotCount(arg_46_0)
-	local var_46_0 = 0
+function Season123EquipItemListModel:getShowUnlockSlotCount()
+	local slotCount = 0
 
-	for iter_46_0 = 0, var_0_0.TotalEquipPos - 1 do
-		for iter_46_1 = arg_46_0:getEquipMaxCount(iter_46_0), 1, -1 do
-			if arg_46_0:isEquipCardPosUnlock(iter_46_1, iter_46_0) then
-				var_46_0 = math.max(var_46_0, iter_46_1)
+	for pos = 0, Season123EquipItemListModel.TotalEquipPos - 1 do
+		local maxSlot = self:getEquipMaxCount(pos)
+
+		for slot = maxSlot, 1, -1 do
+			if self:isEquipCardPosUnlock(slot, pos) then
+				slotCount = math.max(slotCount, slot)
 			end
 		end
 	end
 
-	return var_46_0
+	return slotCount
 end
 
-function var_0_0.getNeedShowDeckCount(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_0._deckUidMap[arg_47_1]
+function Season123EquipItemListModel:getNeedShowDeckCount(itemUid)
+	local itemId = self._deckUidMap[itemUid]
 
-	if var_47_0 == nil then
+	if itemId == nil then
 		return false
 	end
 
-	local var_47_1 = arg_47_0._itemIdDeckCountMap[var_47_0]
+	local count = self._itemIdDeckCountMap[itemId]
 
-	return var_47_1 > 1, var_47_1
+	return count > 1, count
 end
 
-function var_0_0.getDelayPlayTime(arg_48_0, arg_48_1)
-	if arg_48_1 == nil then
+function Season123EquipItemListModel:getDelayPlayTime(mo)
+	if mo == nil then
 		return -1
 	end
 
-	local var_48_0 = arg_48_0.curPos == var_0_0.MainCharPos and SeasonEquipHeroViewContainer.ColumnCount or var_0_0.ColumnCount
-	local var_48_1 = Time.time
+	local columnCount = self.curPos == Season123EquipItemListModel.MainCharPos and SeasonEquipHeroViewContainer.ColumnCount or Season123EquipItemListModel.ColumnCount
+	local curTime = Time.time
 
-	if arg_48_0._itemStartAnimTime == nil then
-		arg_48_0._itemStartAnimTime = var_48_1 + var_0_0.OpenAnimStartTime
+	if self._itemStartAnimTime == nil then
+		self._itemStartAnimTime = curTime + Season123EquipItemListModel.OpenAnimStartTime
 	end
 
-	local var_48_2 = arg_48_0:getIndex(arg_48_1)
+	local index = self:getIndex(mo)
 
-	if not var_48_2 or var_48_2 > var_0_0.AnimRowCount * var_48_0 then
+	if not index or index > Season123EquipItemListModel.AnimRowCount * columnCount then
 		return -1
 	end
 
-	local var_48_3 = math.floor((var_48_2 - 1) / var_48_0) * var_0_0.OpenAnimTime + var_0_0.OpenAnimStartTime
-	local var_48_4 = var_48_1 - arg_48_0._itemStartAnimTime
+	local delayTime = math.floor((index - 1) / columnCount) * Season123EquipItemListModel.OpenAnimTime + Season123EquipItemListModel.OpenAnimStartTime
+	local passTime = curTime - self._itemStartAnimTime
 
-	if var_48_3 < var_48_4 then
+	if delayTime < passTime then
 		return -1
 	else
-		return var_48_3 - var_48_4
+		return delayTime - passTime
 	end
 end
 
-function var_0_0.flushRecord(arg_49_0)
-	if arg_49_0.recordNew then
-		arg_49_0.recordNew:recordAllItem()
+function Season123EquipItemListModel:flushRecord()
+	if self.recordNew then
+		self.recordNew:recordAllItem()
 	end
 end
 
-function var_0_0.isEquipCardPosUnlock(arg_50_0, arg_50_1, arg_50_2)
-	local var_50_0 = Season123Model.instance:getUnlockCardIndex(arg_50_2, arg_50_1)
+function Season123EquipItemListModel:isEquipCardPosUnlock(slot, pos)
+	local posIndex = Season123Model.instance:getUnlockCardIndex(pos, slot)
 
-	return arg_50_0.curUnlockIndexSet[var_50_0] == true
+	return self.curUnlockIndexSet[posIndex] == true
 end
 
-var_0_0.instance = var_0_0.New()
+Season123EquipItemListModel.instance = Season123EquipItemListModel.New()
 
-return var_0_0
+return Season123EquipItemListModel

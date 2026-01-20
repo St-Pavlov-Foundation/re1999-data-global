@@ -1,126 +1,138 @@
-﻿module("modules.logic.achievement.controller.AchievementController", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/controller/AchievementController.lua
 
-local var_0_0 = class("AchievementController", BaseController)
+module("modules.logic.achievement.controller.AchievementController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local AchievementController = class("AchievementController", BaseController)
+
+function AchievementController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function AchievementController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function AchievementController:addConstEvents()
+	self:registerCallback(AchievementEvent.UpdateAchievements, self._onUpdateAchievementsHandle, self)
+end
+
+function AchievementController:reInit()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function AchievementController:onUpdateAchievements()
 	return
 end
 
-function var_0_0.onUpdateAchievements(arg_5_0)
-	return
-end
+function AchievementController:getMaxLevelFinishTask(achievementId)
+	local level = AchievementModel.instance:getAchievementLevel(achievementId)
+	local taskCO
 
-function var_0_0.getMaxLevelFinishTask(arg_6_0, arg_6_1)
-	local var_6_0 = AchievementModel.instance:getAchievementLevel(arg_6_1)
-	local var_6_1
-
-	if var_6_0 > 0 then
-		var_6_1 = AchievementConfig.instance:getTaskByAchievementLevel(arg_6_1, var_6_0)
+	if level > 0 then
+		taskCO = AchievementConfig.instance:getTaskByAchievementLevel(achievementId, level)
 	else
-		var_6_1 = AchievementConfig.instance:getAchievementFirstTask(arg_6_1)
+		taskCO = AchievementConfig.instance:getAchievementFirstTask(achievementId)
 	end
 
-	return var_6_1
+	return taskCO
 end
 
-function var_0_0.openAchievementMainView(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	local var_7_0 = {
-		categoryType = arg_7_1,
-		viewType = arg_7_2,
-		sortType = arg_7_3,
-		filterType = arg_7_4
+function AchievementController:openAchievementMainView(categoryType, viewType, sortType, filterType, isImmediate)
+	local params = {
+		categoryType = categoryType,
+		viewType = viewType,
+		sortType = sortType,
+		filterType = filterType
 	}
 
-	ViewMgr.instance:openView(ViewName.AchievementMainView, var_7_0, arg_7_5)
+	ViewMgr.instance:openView(ViewName.AchievementMainView, params, isImmediate)
 end
 
-function var_0_0.openAchievementMainViewAndFocus(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	local var_8_0
+function AchievementController:openAchievementMainViewAndFocus(achievmentType, focusDataId, isOpenLevelView, isImmediate)
+	local categoryType
 
-	if arg_8_1 == AchievementEnum.AchievementType.Single then
-		local var_8_1 = AchievementConfig.instance:getAchievement(arg_8_2)
+	if achievmentType == AchievementEnum.AchievementType.Single then
+		local achievementCfg = AchievementConfig.instance:getAchievement(focusDataId)
 
-		var_8_0 = var_8_1 and var_8_1.category
-	elseif arg_8_1 == AchievementEnum.AchievementType.Group then
-		local var_8_2 = AchievementConfig.instance:getGroup(arg_8_2)
+		categoryType = achievementCfg and achievementCfg.category
+	elseif achievmentType == AchievementEnum.AchievementType.Group then
+		local groupCfg = AchievementConfig.instance:getGroup(focusDataId)
 
-		var_8_0 = var_8_2 and var_8_2.category
+		categoryType = groupCfg and groupCfg.category
 	end
 
-	local var_8_3 = {
-		categoryType = var_8_0,
-		achievementType = arg_8_1,
-		focusDataId = arg_8_2,
+	local params = {
+		categoryType = categoryType,
+		achievementType = achievmentType,
+		focusDataId = focusDataId,
 		filterType = AchievementEnum.SearchFilterType.All,
-		isOpenLevelView = arg_8_3
+		isOpenLevelView = isOpenLevelView
 	}
 
-	ViewMgr.instance:openView(ViewName.AchievementMainView, var_8_3, arg_8_4)
+	ViewMgr.instance:openView(ViewName.AchievementMainView, params, isImmediate)
 end
 
-function var_0_0.openAchievementLevelView(arg_9_0, arg_9_1)
-	if not AchievementConfig.instance:getAchievement(arg_9_1) then
+function AchievementController:openAchievementLevelView(achievementId)
+	local achievementCfg = AchievementConfig.instance:getAchievement(achievementId)
+
+	if not achievementCfg then
 		return
 	end
 
-	if AchievementMainCommonModel.instance:checkIsNamePlate() then
-		local var_9_0 = {
-			achievementId = arg_9_1,
-			achievementIds = AchievementMainListModel.instance:getCurrentAchievementIds()
-		}
+	local isNamePlate = AchievementMainCommonModel.instance:checkIsNamePlate()
 
-		ViewMgr.instance:openView(ViewName.AchievementNamePlateLevelView, var_9_0)
+	if isNamePlate then
+		local viewParam = {}
+
+		viewParam.achievementId = achievementId
+		viewParam.achievementIds = AchievementMainListModel.instance:getCurrentAchievementIds()
+
+		ViewMgr.instance:openView(ViewName.AchievementNamePlateLevelView, viewParam)
 	else
-		local var_9_1 = AchievementMainTileModel.instance:getCurrentAchievementIds()
-		local var_9_2 = {
-			achievementId = arg_9_1,
-			achievementIds = var_9_1
+		local achievementIds = AchievementMainTileModel.instance:getCurrentAchievementIds()
+		local params = {
+			achievementId = achievementId,
+			achievementIds = achievementIds
 		}
 
-		ViewMgr.instance:openView(ViewName.AchievementLevelView, var_9_2)
+		ViewMgr.instance:openView(ViewName.AchievementLevelView, params)
 	end
 end
 
-function var_0_0.openAchievementGroupPreView(arg_10_0, arg_10_1, arg_10_2)
+function AchievementController:openAchievementGroupPreView(groupId, groupPreViewUrl)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Achievement))
 
 		return
 	end
 
-	local var_10_0 = ViewMgr.instance:getSetting(ViewName.AchievementGroupPreView)
+	local viewSetting = ViewMgr.instance:getSetting(ViewName.AchievementGroupPreView)
 
-	if not var_10_0 then
+	if not viewSetting then
 		logError("cannot find AchievementGroupPreView Setting, please check module_views.AchievementGroupPreView")
 
 		return
 	end
 
-	if not AchievementConfig.instance:getGroup(arg_10_1) or string.nilorempty(arg_10_2) then
-		logError(string.format("AchievementConfig Error, groupId = %s, groupPreViewUrl = %s", arg_10_1, arg_10_2))
+	local groupCfg = AchievementConfig.instance:getGroup(groupId)
+
+	if not groupCfg or string.nilorempty(groupPreViewUrl) then
+		logError(string.format("AchievementConfig Error, groupId = %s, groupPreViewUrl = %s", groupId, groupPreViewUrl))
 
 		return
 	end
 
-	var_10_0.mainRes = string.format("%s/%s.prefab", AchievementEnum.AchievementPreViewPrefabPath, arg_10_2)
+	viewSetting.mainRes = string.format("%s/%s.prefab", AchievementEnum.AchievementPreViewPrefabPath, groupPreViewUrl)
 
 	ViewMgr.instance:openView(ViewName.AchievementGroupPreView, {
-		groupId = arg_10_1
+		groupId = groupId
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+function AchievementController:_onUpdateAchievementsHandle()
+	AchievementLevelController.instance:cleanNotShowTaskIsNew()
+end
 
-return var_0_0
+AchievementController.instance = AchievementController.New()
+
+return AchievementController

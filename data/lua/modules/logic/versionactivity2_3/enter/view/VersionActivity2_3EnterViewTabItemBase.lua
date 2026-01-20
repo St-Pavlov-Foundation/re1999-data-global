@@ -1,150 +1,159 @@
-﻿module("modules.logic.versionactivity2_3.enter.view.VersionActivity2_3EnterViewTabItemBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/enter/view/VersionActivity2_3EnterViewTabItemBase.lua
 
-local var_0_0 = class("VersionActivity2_3EnterViewTabItemBase", VersionActivityEnterViewBaseTabItem)
+module("modules.logic.versionactivity2_3.enter.view.VersionActivity2_3EnterViewTabItemBase", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0.goSelected = gohelper.findChild(arg_1_0.go, "#go_select")
-	arg_1_0.imageSelectTabIcon = gohelper.findChildImage(arg_1_0.go, "#go_select/#image_tabicon")
-	arg_1_0.goUnselected = gohelper.findChild(arg_1_0.go, "#go_unselect")
-	arg_1_0.imageUnSelectTabIcon = gohelper.findChildImage(arg_1_0.go, "#go_unselect/#image_tabicon")
+local VersionActivity2_3EnterViewTabItemBase = class("VersionActivity2_3EnterViewTabItemBase", VersionActivityEnterViewBaseTabItem)
 
-	local var_1_0 = arg_1_0:_getTagPath()
+function VersionActivity2_3EnterViewTabItemBase:_editableInitView()
+	self.goSelected = gohelper.findChild(self.go, "#go_select")
+	self.imageSelectTabIcon = gohelper.findChildImage(self.go, "#go_select/#image_tabicon")
+	self.goUnselected = gohelper.findChild(self.go, "#go_unselect")
+	self.imageUnSelectTabIcon = gohelper.findChildImage(self.go, "#go_unselect/#image_tabicon")
 
-	arg_1_0.goTag = gohelper.findChild(arg_1_0.go, var_1_0)
-	arg_1_0.goTagNewAct = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_newact")
-	arg_1_0.goTagNewLevel = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_newlevel")
-	arg_1_0.goTagTime = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_time")
-	arg_1_0.goTagLock = gohelper.findChild(arg_1_0.go, var_1_0 .. "/#go_lock")
-	arg_1_0.txtTime = gohelper.findChildText(arg_1_0.goTagTime, "bg/#txt_time")
-	arg_1_0.txtLock = gohelper.findChildText(arg_1_0.goTagLock, "bg/#txt_lock")
-	arg_1_0.goRedDot = gohelper.findChild(arg_1_0.go, "#go_reddot")
-	arg_1_0.animator = arg_1_0.go:GetComponent(gohelper.Type_Animator)
+	local tagPath = self:_getTagPath()
 
-	if not arg_1_0.goTag or not arg_1_0.goTagNewAct or not arg_1_0.goTagNewLevel or not arg_1_0.goTagTime or not arg_1_0.goTagLock then
-		logError("error node:", tostring(arg_1_0.goTag), tostring(arg_1_0.goTagNewAct), tostring(arg_1_0.goTagNewLevel), tostring(arg_1_0.goTagTime), tostring(arg_1_0.goTagLock))
+	self.goTag = gohelper.findChild(self.go, tagPath)
+	self.goTagNewAct = gohelper.findChild(self.go, tagPath .. "/#go_newact")
+	self.goTagNewLevel = gohelper.findChild(self.go, tagPath .. "/#go_newlevel")
+	self.goTagTime = gohelper.findChild(self.go, tagPath .. "/#go_time")
+	self.goTagLock = gohelper.findChild(self.go, tagPath .. "/#go_lock")
+	self.txtTime = gohelper.findChildText(self.goTagTime, "bg/#txt_time")
+	self.txtLock = gohelper.findChildText(self.goTagLock, "bg/#txt_lock")
+	self.goRedDot = gohelper.findChild(self.go, "#go_reddot")
+	self.animator = self.go:GetComponent(gohelper.Type_Animator)
+
+	if not self.goTag or not self.goTagNewAct or not self.goTagNewLevel or not self.goTagTime or not self.goTagLock then
+		logError("error node:", tostring(self.goTag), tostring(self.goTagNewAct), tostring(self.goTagNewLevel), tostring(self.goTagTime), tostring(self.goTagLock))
 	end
 
-	if not arg_1_0.txtTime or not arg_1_0.txtLock then
-		logError("error node txt:", tostring(arg_1_0.txtTime), tostring(arg_1_0.txtLock))
+	if not self.txtTime or not self.txtLock then
+		logError("error node txt:", tostring(self.txtTime), tostring(self.txtLock))
 	end
 end
 
-function var_0_0._getTagPath(arg_2_0)
+function VersionActivity2_3EnterViewTabItemBase:_getTagPath()
 	return "#txt_name/#go_tag"
 end
 
-function var_0_0.afterSetData(arg_3_0)
-	if arg_3_0.actId then
-		arg_3_0.activityCo = ActivityConfig.instance:getActivityCo(arg_3_0.actId)
+function VersionActivity2_3EnterViewTabItemBase:afterSetData()
+	if self.actId then
+		self.activityCo = ActivityConfig.instance:getActivityCo(self.actId)
 	end
 
-	if not arg_3_0.activityCo then
-		gohelper.setActive(arg_3_0.go, false)
-		logError("VersionActivity2_3EnterViewTabItemBase.afterSetData error, no act config, actId:%s", arg_3_0.actId)
+	if not self.activityCo then
+		gohelper.setActive(self.go, false)
+		logError("VersionActivity2_3EnterViewTabItemBase.afterSetData error, no act config, actId:%s", self.actId)
 
 		return
 	end
 
-	local var_3_0 = string.split(arg_3_0.activityCo.tabBgPath, "#")
-	local var_3_1 = var_3_0[1]
+	local iconCoArr = string.split(self.activityCo.tabBgPath, "#")
+	local selectBg = iconCoArr[1]
 
-	if not string.nilorempty(var_3_1) then
-		UISpriteSetMgr.instance:setV2a3MainActivitySprite(arg_3_0.imageSelectTabIcon, var_3_1)
+	if not string.nilorempty(selectBg) then
+		UISpriteSetMgr.instance:setV2a3MainActivitySprite(self.imageSelectTabIcon, selectBg)
 	end
 
-	local var_3_2 = var_3_0[2]
+	local unselectBg = iconCoArr[2]
 
-	if not string.nilorempty(var_3_2) then
-		UISpriteSetMgr.instance:setV2a3MainActivitySprite(arg_3_0.imageUnSelectTabIcon, var_3_2)
+	if not string.nilorempty(unselectBg) then
+		UISpriteSetMgr.instance:setV2a3MainActivitySprite(self.imageUnSelectTabIcon, unselectBg)
 	end
 
-	arg_3_0.redDotIcon = RedDotController.instance:addRedDot(arg_3_0.goRedDot, arg_3_0.activityCo.redDotId, arg_3_0.redDotUid)
+	self.redDotIcon = RedDotController.instance:addRedDot(self.goRedDot, self.activityCo.redDotId, self.redDotUid)
 end
 
-function var_0_0.childRefreshSelect(arg_4_0)
-	gohelper.setActive(arg_4_0.goSelected, arg_4_0.isSelect)
-	gohelper.setActive(arg_4_0.goUnselected, not arg_4_0.isSelect)
+function VersionActivity2_3EnterViewTabItemBase:childRefreshSelect()
+	gohelper.setActive(self.goSelected, self.isSelect)
+	gohelper.setActive(self.goUnselected, not self.isSelect)
 end
 
-function var_0_0.childRefreshUI(arg_5_0)
-	local var_5_0 = ActivityHelper.getActivityStatus(arg_5_0.actId)
+function VersionActivity2_3EnterViewTabItemBase:childRefreshUI()
+	local status = ActivityHelper.getActivityStatus(self.actId)
 
-	gohelper.setActive(arg_5_0.goRedDot, var_5_0 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(self.goRedDot, status == ActivityEnum.ActivityStatus.Normal)
 end
 
-function var_0_0.refreshTag(arg_6_0)
-	arg_6_0:clearTag()
+function VersionActivity2_3EnterViewTabItemBase:refreshTag()
+	self:clearTag()
 
-	if not arg_6_0.actId then
+	if not self.actId then
 		return
 	end
 
-	local var_6_0 = ActivityHelper.getActivityStatus(arg_6_0.actId)
+	local status = ActivityHelper.getActivityStatus(self.actId)
 
-	if var_6_0 == ActivityEnum.ActivityStatus.Normal then
-		arg_6_0:refreshNormalTag()
-	elseif var_6_0 == ActivityEnum.ActivityStatus.NotUnlock then
-		arg_6_0:refreshNotUnlockTag()
+	if status == ActivityEnum.ActivityStatus.Normal then
+		self:refreshNormalTag()
+	elseif status == ActivityEnum.ActivityStatus.NotUnlock then
+		self:refreshNotUnlockTag()
 	else
-		arg_6_0:refreshLockTag()
+		self:refreshLockTag()
 	end
 end
 
-function var_0_0.clearTag(arg_7_0)
-	gohelper.setActive(arg_7_0.goTagNewAct, false)
-	gohelper.setActive(arg_7_0.goTagNewLevel, false)
-	gohelper.setActive(arg_7_0.goTagTime, false)
-	gohelper.setActive(arg_7_0.goTagLock, false)
+function VersionActivity2_3EnterViewTabItemBase:clearTag()
+	gohelper.setActive(self.goTagNewAct, false)
+	gohelper.setActive(self.goTagNewLevel, false)
+	gohelper.setActive(self.goTagTime, false)
+	gohelper.setActive(self.goTagLock, false)
 end
 
-function var_0_0.refreshNormalTag(arg_8_0)
-	if not ActivityEnterMgr.instance:isEnteredActivity(arg_8_0.actId) then
-		gohelper.setActive(arg_8_0.goTagNewAct, true)
+function VersionActivity2_3EnterViewTabItemBase:refreshNormalTag()
+	if not ActivityEnterMgr.instance:isEnteredActivity(self.actId) then
+		gohelper.setActive(self.goTagNewAct, true)
 
 		return
 	end
 
-	local var_8_0 = ActivityModel.instance:getActivityInfo()[arg_8_0.actId]
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
 
-	if var_8_0 and var_8_0:isNewStageOpen() then
-		gohelper.setActive(arg_8_0.goTagNewLevel, true)
+	if actInfoMo and actInfoMo:isNewStageOpen() then
+		gohelper.setActive(self.goTagNewLevel, true)
 
 		return
 	end
 
-	if VersionActivity2_3EnterHelper.GetIsShowTabRemainTime(arg_8_0.actId) and var_8_0 then
-		if var_8_0:getRealEndTimeStamp() - ServerTime.now() > VersionActivity2_3Enum.MaxShowTimeOffset then
+	local isShowRemainTime = VersionActivity2_3EnterHelper.GetIsShowTabRemainTime(self.actId)
+
+	if isShowRemainTime and actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+
+		if offsetSecond > VersionActivity2_3Enum.MaxShowTimeOffset then
 			return
 		end
 
-		gohelper.setActive(arg_8_0.goTagTime, true)
+		gohelper.setActive(self.goTagTime, true)
 
-		arg_8_0.txtTime.text = var_8_0:getRemainTimeStr2ByEndTime()
+		self.txtTime.text = actInfoMo:getRemainTimeStr2ByEndTime()
 	end
 end
 
-function var_0_0.refreshNotUnlockTag(arg_9_0)
-	gohelper.setActive(arg_9_0.goTagLock, false)
+function VersionActivity2_3EnterViewTabItemBase:refreshNotUnlockTag()
+	gohelper.setActive(self.goTagLock, false)
 
-	if not ActivityEnterMgr.instance:isEnteredActivity(arg_9_0.actId) then
-		gohelper.setActive(arg_9_0.goTagNewAct, true)
+	if not ActivityEnterMgr.instance:isEnteredActivity(self.actId) then
+		gohelper.setActive(self.goTagNewAct, true)
 	end
 end
 
-function var_0_0.refreshLockTag(arg_10_0)
-	gohelper.setActive(arg_10_0.goTagLock, true)
+function VersionActivity2_3EnterViewTabItemBase:refreshLockTag()
+	gohelper.setActive(self.goTagLock, true)
 
-	if ActivityHelper.getActivityStatus(arg_10_0.actId) == ActivityEnum.ActivityStatus.NotOpen then
-		local var_10_0 = ActivityModel.instance:getActivityInfo()[arg_10_0.actId]:getRemainTimeStr2ByOpenTime()
+	local status = ActivityHelper.getActivityStatus(self.actId)
 
-		arg_10_0.txtLock.text = var_10_0
+	if status == ActivityEnum.ActivityStatus.NotOpen then
+		local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
+		local remainTime = actInfoMo:getRemainTimeStr2ByOpenTime()
+
+		self.txtLock.text = remainTime
 	else
-		gohelper.setActive(arg_10_0.goTagLock, false)
+		gohelper.setActive(self.goTagLock, false)
 	end
 end
 
-function var_0_0.isShowRedDot(arg_11_0)
-	return arg_11_0.redDotIcon and arg_11_0.redDotIcon.show
+function VersionActivity2_3EnterViewTabItemBase:isShowRedDot()
+	return self.redDotIcon and self.redDotIcon.show
 end
 
-return var_0_0
+return VersionActivity2_3EnterViewTabItemBase

@@ -1,29 +1,31 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventHideScene", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventHideScene.lua
 
-local var_0_0 = class("FightTLEventHideScene", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventHideScene", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.noRevert = arg_1_3[1] == "1"
+local FightTLEventHideScene = class("FightTLEventHideScene", FightTimelineTrackItem)
 
-	local var_1_0 = GameSceneMgr.instance:getCurScene().level
+function FightTLEventHideScene:onTrackStart(fightStepData, duration, paramsArr)
+	self.noRevert = paramsArr[1] == "1"
 
-	if var_1_0 then
-		local var_1_1 = var_1_0:getSceneGo()
+	local sceneLevelComp = GameSceneMgr.instance:getCurScene().level
 
-		arg_1_0.sceneGO = var_1_1
+	if sceneLevelComp then
+		local sceneGO = sceneLevelComp:getSceneGo()
 
-		gohelper.setActive(var_1_1, false)
+		self.sceneGO = sceneGO
+
+		gohelper.setActive(sceneGO, false)
 	end
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
-	if not arg_2_0.noRevert then
-		gohelper.setActive(arg_2_0.sceneGO, true)
+function FightTLEventHideScene:onTrackEnd()
+	if not self.noRevert then
+		gohelper.setActive(self.sceneGO, true)
 	end
 end
 
-function var_0_0.onDestructor(arg_3_0)
-	arg_3_0:onTrackEnd()
+function FightTLEventHideScene:onDestructor()
+	self:onTrackEnd()
 end
 
-return var_0_0
+return FightTLEventHideScene

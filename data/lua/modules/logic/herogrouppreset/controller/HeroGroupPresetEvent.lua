@@ -1,13 +1,15 @@
-﻿module("modules.logic.herogrouppreset.controller.HeroGroupPresetEvent", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/controller/HeroGroupPresetEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.herogrouppreset.controller.HeroGroupPresetEvent", package.seeall)
 
-var_0_0.UpdateGroupName = var_0_1()
-var_0_0.UseHeroGroup = var_0_1()
-var_0_0.ClickHero = var_0_1()
-var_0_0.ClickEquip = var_0_1()
-var_0_0.ChangeEquip = var_0_1()
-var_0_0.UpdateHeroGroupSort = var_0_1()
+local HeroGroupPresetEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+HeroGroupPresetEvent.UpdateGroupName = _get()
+HeroGroupPresetEvent.UseHeroGroup = _get()
+HeroGroupPresetEvent.ClickHero = _get()
+HeroGroupPresetEvent.ClickEquip = _get()
+HeroGroupPresetEvent.ChangeEquip = _get()
+HeroGroupPresetEvent.UpdateHeroGroupSort = _get()
+
+return HeroGroupPresetEvent

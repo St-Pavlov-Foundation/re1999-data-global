@@ -1,78 +1,79 @@
-﻿module("modules.logic.login.work.WebLoginWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/work/WebLoginWork.lua
 
-local var_0_0 = class("WebLoginWork", BaseWork)
+module("modules.logic.login.work.WebLoginWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = LoginController.instance:get_httpWebLoginUrl(arg_1_0.context.useBackupUrl)
-	local var_1_1 = {}
+local WebLoginWork = class("WebLoginWork", BaseWork)
 
-	table.insert(var_1_1, string.format("slSessionId=%s", LoginModel.instance.channelSessionId))
-	table.insert(var_1_1, string.format("clientVersion=%s", "0.0.0"))
-	table.insert(var_1_1, string.format("sysType=%s", BootNativeUtil.isAndroid() and "1" or "0"))
-	table.insert(var_1_1, string.format("accountId=%s", LoginModel.instance.channelUserId))
-	table.insert(var_1_1, string.format("channelId=%s", LoginModel.instance.channelId))
-	table.insert(var_1_1, string.format("subChannelId=%s", SDKMgr.instance:getSubChannelId()))
+function WebLoginWork:onStart(context)
+	local url = LoginController.instance:get_httpWebLoginUrl(self.context.useBackupUrl)
+	local data = {}
 
-	local var_1_2 = var_1_0 .. "?" .. table.concat(var_1_1, "&")
+	table.insert(data, string.format("slSessionId=%s", LoginModel.instance.channelSessionId))
+	table.insert(data, string.format("clientVersion=%s", "0.0.0"))
+	table.insert(data, string.format("sysType=%s", BootNativeUtil.isAndroid() and "1" or "0"))
+	table.insert(data, string.format("accountId=%s", LoginModel.instance.channelUserId))
+	table.insert(data, string.format("channelId=%s", LoginModel.instance.channelId))
+	table.insert(data, string.format("subChannelId=%s", SDKMgr.instance:getSubChannelId()))
 
-	arg_1_0._url = var_1_2
-	arg_1_0._httpWebLoginRequestId = SLFramework.SLWebRequest.Instance:Get(var_1_2, arg_1_0._onHttpWebLoginUrlResponse, arg_1_0)
+	url = url .. "?" .. table.concat(data, "&")
+	self._url = url
+	self._httpWebLoginRequestId = SLFramework.SLWebRequestClient.Instance:Get(url, self._onHttpWebLoginUrlResponse, self)
 
-	logNormal(var_1_2)
+	logNormal(url)
 end
 
-function var_0_0._onHttpWebLoginUrlResponse(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._httpWebLoginRequestId = nil
+function WebLoginWork:_onHttpWebLoginUrlResponse(isSuccess, msg)
+	self._httpWebLoginRequestId = nil
 
-	local var_2_0 = arg_2_0._url
+	local url = self._url
 
-	if arg_2_1 and arg_2_2 and arg_2_2 ~= "" then
-		local var_2_1 = cjson.decode(arg_2_2)
+	if isSuccess and msg and msg ~= "" then
+		local data = cjson.decode(msg)
 
-		if var_2_1 and var_2_1.resultCode and var_2_1.resultCode == 0 then
-			LoginModel.instance.userName = var_2_1.userName
-			LoginModel.instance.sessionId = var_2_1.sessionId
+		if data and data.resultCode and data.resultCode == 0 then
+			LoginModel.instance.userName = data.userName
+			LoginModel.instance.sessionId = data.sessionId
 
-			local var_2_2 = var_2_1.zoneInfo
+			local zone = data.zoneInfo
 
-			if var_2_2 then
-				arg_2_0.context.serverMO = {
-					id = var_2_2.id,
-					name = var_2_2.name,
-					prefix = var_2_2.prefix,
-					state = var_2_2.state
+			if zone then
+				self.context.serverMO = {
+					id = zone.id,
+					name = zone.name,
+					prefix = zone.prefix,
+					state = zone.state
 				}
 			else
 				logNormal("没有服务器，zone不存在")
 			end
 
-			arg_2_0.context.webLoginSuccess = true
+			self.context.webLoginSuccess = true
 
-			arg_2_0:onDone(true)
+			self:onDone(true)
 
 			if string.nilorempty(LoginModel.instance.userName) or string.nilorempty(LoginModel.instance.sessionId) then
-				logError(string.format("WebLoginWork response error userName:%s, sessionId:%s msg:%s url:%s", var_2_1.userName, var_2_1.sessionId, arg_2_2, var_2_0))
+				logError(string.format("WebLoginWork response error userName:%s, sessionId:%s msg:%s url:%s", data.userName, data.sessionId, msg, url))
 			end
 		else
-			arg_2_0.context.resultCode = var_2_1 and var_2_1.resultCode
+			self.context.resultCode = data and data.resultCode
 
-			logNormal(string.format("http web login 出错了 resultCode = %d", var_2_1.resultCode or "nil"))
-			arg_2_0:onDone(false)
+			logNormal(string.format("http web login 出错了 resultCode = %d", data.resultCode or "nil"))
+			self:onDone(false)
 		end
 	else
 		logNormal("http web 登录失败")
-		arg_2_0:onDone(false)
+		self:onDone(false)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	arg_3_0._url = nil
+function WebLoginWork:clearWork()
+	self._url = nil
 
-	if arg_3_0._httpWebLoginRequestId then
-		SLFramework.SLWebRequest.Instance:Stop(arg_3_0._httpWebLoginRequestId)
+	if self._httpWebLoginRequestId then
+		SLFramework.SLWebRequestClient.Instance:Stop(self._httpWebLoginRequestId)
 
-		arg_3_0._httpWebLoginRequestId = nil
+		self._httpWebLoginRequestId = nil
 	end
 end
 
-return var_0_0
+return WebLoginWork

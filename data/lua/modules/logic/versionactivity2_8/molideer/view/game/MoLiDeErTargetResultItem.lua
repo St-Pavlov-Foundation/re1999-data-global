@@ -1,79 +1,80 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErTargetResultItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErTargetResultItem.lua
 
-local var_0_0 = class("MoLiDeErTargetResultItem", LuaCompBase)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErTargetResultItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._txtTarget = gohelper.findChildText(arg_1_0.viewGO, "#txt_Target")
-	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "#txt_Target/#img_Icon")
-	arg_1_0._goIconFx = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/#img_Icon/#Star_ani")
-	arg_1_0._goTitleFx = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/#saoguang")
-	arg_1_0._goIconFx = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/#img_Icon/#Star_ani")
-	arg_1_0._goTitleFx = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/#saoguang")
-	arg_1_0._goTitleFailFx = gohelper.findChild(arg_1_0.viewGO, "#txt_Target/#go_TargetFinished")
+local MoLiDeErTargetResultItem = class("MoLiDeErTargetResultItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErTargetResultItem:init(go)
+	self.viewGO = go
+	self._txtTarget = gohelper.findChildText(self.viewGO, "#txt_Target")
+	self._imageIcon = gohelper.findChildImage(self.viewGO, "#txt_Target/#img_Icon")
+	self._goIconFx = gohelper.findChild(self.viewGO, "#txt_Target/#img_Icon/#Star_ani")
+	self._goTitleFx = gohelper.findChild(self.viewGO, "#txt_Target/#saoguang")
+	self._goIconFx = gohelper.findChild(self.viewGO, "#txt_Target/#img_Icon/#Star_ani")
+	self._goTitleFx = gohelper.findChild(self.viewGO, "#txt_Target/#saoguang")
+	self._goTitleFailFx = gohelper.findChild(self.viewGO, "#txt_Target/#go_TargetFinished")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function MoLiDeErTargetResultItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function MoLiDeErTargetResultItem:removeEventListeners()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function MoLiDeErTargetResultItem:_editableInitView()
 	return
 end
 
-function var_0_0.refreshUI(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	local var_5_0 = string.splitToNumber(arg_5_2, "#")
-	local var_5_1 = var_5_0[1]
-	local var_5_2 = arg_5_4:getTargetProgress(arg_5_3)
-	local var_5_3
-	local var_5_4
+function MoLiDeErTargetResultItem:refreshUI(desc, param, targetId, gameInfoMo, showAnim)
+	local data = string.splitToNumber(param, "#")
+	local type = data[1]
+	local curProgress = gameInfoMo:getTargetProgress(targetId)
+	local realDesc, realRound
 
-	if var_5_1 == MoLiDeErEnum.TargetType.RoundFinishAll or var_5_1 == MoLiDeErEnum.TargetType.RoundFinishAny then
-		var_5_4 = MoLiDeErHelper.getRealRound(var_5_0[2], arg_5_3 == MoLiDeErEnum.TargetId.Main)
-		var_5_3 = GameUtil.getSubPlaceholderLuaLang(arg_5_1, {
-			var_5_4
+	if type == MoLiDeErEnum.TargetType.RoundFinishAll or type == MoLiDeErEnum.TargetType.RoundFinishAny then
+		realRound = MoLiDeErHelper.getRealRound(data[2], targetId == MoLiDeErEnum.TargetId.Main)
+		realDesc = GameUtil.getSubPlaceholderLuaLang(desc, {
+			realRound
 		})
 	else
-		var_5_3 = arg_5_1
+		realDesc = desc
 	end
 
-	arg_5_0._txtTarget.text = MoLiDeErHelper.getTargetTitleByProgress(var_5_2, var_5_3)
+	self._txtTarget.text = MoLiDeErHelper.getTargetTitleByProgress(curProgress, realDesc)
 
-	arg_5_0:refreshState(arg_5_3, arg_5_4, var_5_4, arg_5_5)
+	self:refreshState(targetId, gameInfoMo, realRound, showAnim)
 end
 
-function var_0_0.refreshState(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = arg_6_2:getTargetProgress(arg_6_1)
-	local var_6_1 = MoLiDeErHelper.getTargetState(var_6_0)
+function MoLiDeErTargetResultItem:refreshState(targetId, gameInfoMo, realRound, showAnim)
+	local curProgress = gameInfoMo:getTargetProgress(targetId)
+	local progressState = MoLiDeErHelper.getTargetState(curProgress)
 
-	UISpriteSetMgr.instance:setMoLiDeErSprite(arg_6_0._imageIcon, string.format("v2a8_molideer_game_targeticon_0%s_%s", arg_6_1, var_6_1))
+	UISpriteSetMgr.instance:setMoLiDeErSprite(self._imageIcon, string.format("v2a8_molideer_game_targeticon_0%s_%s", targetId, progressState))
 
-	local var_6_2 = var_6_1 == MoLiDeErEnum.ProgressChangeType.Success
+	local isSuccess = progressState == MoLiDeErEnum.ProgressChangeType.Success
 
-	gohelper.setActive(arg_6_0._goTitleFx, arg_6_4 and var_6_2)
-	gohelper.setActive(arg_6_0._goIconFx, arg_6_4 and var_6_2)
+	gohelper.setActive(self._goTitleFx, showAnim and isSuccess)
+	gohelper.setActive(self._goIconFx, showAnim and isSuccess)
 
-	if var_6_2 and arg_6_4 then
+	if isSuccess and showAnim then
 		AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_gudu_input_right)
 	end
 
-	gohelper.setActive(arg_6_0._goTitleFailFx, arg_6_4 and not var_6_2)
+	gohelper.setActive(self._goTitleFailFx, showAnim and not isSuccess)
 end
 
-function var_0_0.setActive(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0.viewGO, arg_7_1)
+function MoLiDeErTargetResultItem:setActive(active)
+	gohelper.setActive(self.viewGO, active)
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function MoLiDeErTargetResultItem:onDestroy()
 	return
 end
 
-return var_0_0
+return MoLiDeErTargetResultItem

@@ -1,169 +1,171 @@
-﻿module("modules.logic.room.view.RoomViewSceneTask", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewSceneTask.lua
 
-local var_0_0 = class("RoomViewSceneTask", BaseView)
+module("modules.logic.room.view.RoomViewSceneTask", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/go_taskpanel/go_detail/go_taskContent")
-	arg_1_0._gopanel = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/go_taskpanel")
-	arg_1_0._btnexpand = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/go_taskpanel/btn_expand")
-	arg_1_0._btnfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_normalroot/go_taskpanel/btn_fold")
-	arg_1_0._gosimple = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/go_taskpanel/go_simple")
-	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "go_normalroot/go_taskpanel/go_detail")
+local RoomViewSceneTask = class("RoomViewSceneTask", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomViewSceneTask:onInitView()
+	self._gocontainer = gohelper.findChild(self.viewGO, "go_normalroot/go_taskpanel/go_detail/go_taskContent")
+	self._gopanel = gohelper.findChild(self.viewGO, "go_normalroot/go_taskpanel")
+	self._btnexpand = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_taskpanel/btn_expand")
+	self._btnfold = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/go_taskpanel/btn_fold")
+	self._gosimple = gohelper.findChild(self.viewGO, "go_normalroot/go_taskpanel/go_simple")
+	self._godetail = gohelper.findChild(self.viewGO, "go_normalroot/go_taskpanel/go_detail")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnexpand:AddClickListener(arg_2_0.onClickExpand, arg_2_0)
-	arg_2_0._btnfold:AddClickListener(arg_2_0.onClickExpand, arg_2_0)
+function RoomViewSceneTask:addEvents()
+	self._btnexpand:AddClickListener(self.onClickExpand, self)
+	self._btnfold:AddClickListener(self.onClickExpand, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnexpand:RemoveClickListener()
-	arg_3_0._btnfold:RemoveClickListener()
+function RoomViewSceneTask:removeEvents()
+	self._btnexpand:RemoveClickListener()
+	self._btnfold:RemoveClickListener()
 end
 
-var_0_0.AutoHideTime = 3
-var_0_0.DelayHideToShowTime = 1.5
+RoomViewSceneTask.AutoHideTime = 3
+RoomViewSceneTask.DelayHideToShowTime = 1.5
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._animatorpanel = arg_4_0._gopanel:GetComponent(typeof(UnityEngine.Animator))
-	arg_4_0._rectpanel = arg_4_0._gopanel.transform
-	arg_4_0._taskItems = {}
-	arg_4_0._needPlayAnimShow = false
-	arg_4_0._isBreakAutoHide = false
-	arg_4_0._isForceHideArrow = false
-	arg_4_0._firstEnterRefresh = true
+function RoomViewSceneTask:_editableInitView()
+	self._animatorpanel = self._gopanel:GetComponent(typeof(UnityEngine.Animator))
+	self._rectpanel = self._gopanel.transform
+	self._taskItems = {}
+	self._needPlayAnimShow = false
+	self._isBreakAutoHide = false
+	self._isForceHideArrow = false
+	self._firstEnterRefresh = true
 
-	gohelper.setActive(arg_4_0._gocontainer, true)
-	gohelper.setActive(arg_4_0._godetail, true)
-	gohelper.setActive(arg_4_0._btnfold, false)
+	gohelper.setActive(self._gocontainer, true)
+	gohelper.setActive(self._godetail, true)
+	gohelper.setActive(self._btnfold, false)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._taskItems then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._taskItems) do
-			iter_5_1.btnnormal:RemoveClickListener()
-			gohelper.setActive(iter_5_1.gotask, true)
+function RoomViewSceneTask:onDestroyView()
+	if self._taskItems then
+		for _, itemObj in pairs(self._taskItems) do
+			itemObj.btnnormal:RemoveClickListener()
+			gohelper.setActive(itemObj.gotask, true)
 		end
 
-		arg_5_0._taskItems = nil
+		self._taskItems = nil
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskUpdate, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskCanFinish, arg_6_0.playCanGetRewardVfx, arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.ClientPlaceBlock, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBlock, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.TransportPathViewShowChanged, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.GuideShowSceneTask, arg_6_0._guideShowSceneTask, arg_6_0)
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0.handleOpenView, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0.handleCloseView, arg_6_0)
-	arg_6_0:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskShowHideAnim, arg_6_0.handleTaskHideAnim, arg_6_0)
+function RoomViewSceneTask:onOpen()
+	self:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskUpdate, self.refreshUI, self)
+	self:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskCanFinish, self.playCanGetRewardVfx, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientPlaceBlock, self.refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBlock, self.refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, self.refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, self.refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.TransportPathViewShowChanged, self.refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.GuideShowSceneTask, self._guideShowSceneTask, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.BackBlockShowChanged, self.refreshUI, self)
+	self:addEventCb(RoomWaterReformController.instance, RoomEvent.WaterReformShowChanged, self.refreshUI, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.handleOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.handleCloseView, self)
+	self:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskShowHideAnim, self.handleTaskHideAnim, self)
 
-	arg_6_0._taskAnimIds = {}
-	arg_6_0._taskAnimIdMap = {}
+	self._taskAnimIds = {}
+	self._taskAnimIdMap = {}
 
 	RoomSceneTaskController.instance:init()
 	RoomSceneTaskController.instance:setTaskCheckFinishFlag(true)
 
-	arg_6_0._isExpand = true
+	self._isExpand = true
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:disposeAllAnim()
+function RoomViewSceneTask:onClose()
+	self:disposeAllAnim()
 
-	if arg_7_0:isAnimPlaying() then
+	if self:isAnimPlaying() then
 		UIBlockMgrExtend.setNeedCircleMv(true)
 		UIBlockMgr.instance:endBlock(UIBlockKey.RoomTaskFinish)
 	end
 
 	RoomSceneTaskController.instance:release()
-	TaskDispatcher.cancelTask(arg_7_0.onDelayObAutoHide, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.startPlayTaskFinish, arg_7_0)
+	TaskDispatcher.cancelTask(self.onDelayObAutoHide, self)
+	TaskDispatcher.cancelTask(self.startPlayTaskFinish, self)
 end
 
-function var_0_0.enterObAutoHide(arg_8_0)
-	arg_8_0:_stopAutoHideTask()
+function RoomViewSceneTask:enterObAutoHide()
+	self:_stopAutoHideTask()
 
 	if RoomController.instance:isObMode() then
-		arg_8_0._isBreakAutoHide = false
-		arg_8_0._isHasAutoHideTaskRun = true
+		self._isBreakAutoHide = false
+		self._isHasAutoHideTaskRun = true
 
-		TaskDispatcher.runDelay(arg_8_0.onDelayObAutoHide, arg_8_0, var_0_0.AutoHideTime)
+		TaskDispatcher.runDelay(self.onDelayObAutoHide, self, RoomViewSceneTask.AutoHideTime)
 	end
 end
 
-function var_0_0._stopAutoHideTask(arg_9_0)
-	if arg_9_0._isHasAutoHideTaskRun then
-		TaskDispatcher.cancelTask(arg_9_0.onDelayObAutoHide, arg_9_0)
+function RoomViewSceneTask:_stopAutoHideTask()
+	if self._isHasAutoHideTaskRun then
+		TaskDispatcher.cancelTask(self.onDelayObAutoHide, self)
 
-		arg_9_0._isHasAutoHideTaskRun = false
+		self._isHasAutoHideTaskRun = false
 	end
 end
 
-function var_0_0.onDelayObAutoHide(arg_10_0)
-	arg_10_0:_stopAutoHideTask()
+function RoomViewSceneTask:onDelayObAutoHide()
+	self:_stopAutoHideTask()
 
-	if not arg_10_0._isBreakAutoHide then
-		arg_10_0:_showHidAnim(true)
+	if not self._isBreakAutoHide then
+		self:_showHidAnim(true)
 
-		arg_10_0._isBreakAutoHide = false
+		self._isBreakAutoHide = false
 	end
 end
 
-function var_0_0._showHidAnim(arg_11_0, arg_11_1)
-	if arg_11_1 then
-		arg_11_0._isBreakAutoHide = true
+function RoomViewSceneTask:_showHidAnim(isHide)
+	if isHide then
+		self._isBreakAutoHide = true
 
-		arg_11_0:_stopAutoHideTask()
+		self:_stopAutoHideTask()
 	end
 
-	local var_11_0 = arg_11_1 == true
+	local tempHide = isHide == true
 
-	if arg_11_0._lastAnimHide ~= var_11_0 then
-		local var_11_1 = var_11_0 and "close" or UIAnimationName.Open
+	if self._lastAnimHide ~= tempHide then
+		local animName = tempHide and "close" or UIAnimationName.Open
 
-		arg_11_0._lastAnimHide = var_11_0
+		self._lastAnimHide = tempHide
 
-		arg_11_0._animatorpanel:Play(var_11_1)
+		self._animatorpanel:Play(animName)
 	end
 
-	arg_11_0._isExpand = not arg_11_1
+	self._isExpand = not isHide
 
-	arg_11_0:refreshExpand()
+	self:refreshExpand()
 end
 
-function var_0_0._guideShowSceneTask(arg_12_0)
-	arg_12_0._isExpand = true
+function RoomViewSceneTask:_guideShowSceneTask()
+	self._isExpand = true
 
-	arg_12_0:refreshExpand()
+	self:refreshExpand()
 end
 
-function var_0_0.onClickExpand(arg_13_0)
-	arg_13_0:_showHidAnim(arg_13_0._isExpand)
-	arg_13_0:enterObAutoHide()
+function RoomViewSceneTask:onClickExpand()
+	self:_showHidAnim(self._isExpand)
+	self:enterObAutoHide()
 end
 
-function var_0_0.onClickNormalOpen(arg_14_0)
-	local var_14_0 = arg_14_0.self
-	local var_14_1 = arg_14_0.index
+function RoomViewSceneTask.onClickNormalOpen(param)
+	local self = param.self
+	local taskOrderIndex = param.index
 
-	if var_14_0:isAnimPlaying() then
+	if self:isAnimPlaying() then
 		return
 	end
 
-	if not var_14_0._isExpand then
-		var_14_0:onClickExpand()
+	if not self._isExpand then
+		self:onClickExpand()
 
 		return
 	end
@@ -173,162 +175,162 @@ function var_0_0.onClickNormalOpen(arg_14_0)
 	end
 end
 
-function var_0_0.refreshUI(arg_15_0)
-	if arg_15_0:isAnimPlaying() then
+function RoomViewSceneTask:refreshUI()
+	if self:isAnimPlaying() then
 		return
 	end
 
-	local var_15_0 = RoomTaskModel.instance:getShowList()
-	local var_15_1 = #var_15_0 > 0
+	local list = RoomTaskModel.instance:getShowList()
+	local showTask = #list > 0
 
-	if #var_15_0 > 0 then
-		if arg_15_0._firstEnterRefresh then
-			arg_15_0._firstEnterRefresh = false
+	if #list > 0 then
+		if self._firstEnterRefresh then
+			self._firstEnterRefresh = false
 
-			arg_15_0:enterObAutoHide()
+			self:enterObAutoHide()
 		end
 
-		arg_15_0:refreshExpand()
-		arg_15_0:refreshItems()
+		self:refreshExpand()
+		self:refreshItems()
 	end
 
-	local var_15_2 = RoomWaterReformModel.instance:isWaterReform()
-	local var_15_3 = RoomMapBlockModel.instance:isBackMore()
+	local isWaterReform = RoomWaterReformModel.instance:isWaterReform()
+	local isBackMore = RoomMapBlockModel.instance:isBackMore()
 
-	if RoomController.instance:isEditMode() and (var_15_3 or var_15_2 or ViewMgr.instance:isOpen(ViewName.RoomTransportPathView)) then
-		var_15_1 = false
+	if RoomController.instance:isEditMode() and (isBackMore or isWaterReform or ViewMgr.instance:isOpen(ViewName.RoomTransportPathView)) then
+		showTask = false
 	end
 
-	gohelper.setActive(arg_15_0._gopanel, var_15_1)
+	gohelper.setActive(self._gopanel, showTask)
 end
 
-function var_0_0.refreshExpand(arg_16_0)
-	if arg_16_0._isForceHideArrow then
-		gohelper.setActive(arg_16_0._btnexpand, false)
+function RoomViewSceneTask:refreshExpand()
+	if self._isForceHideArrow then
+		gohelper.setActive(self._btnexpand, false)
 	else
-		gohelper.setActive(arg_16_0._btnexpand, not arg_16_0._isExpand)
+		gohelper.setActive(self._btnexpand, not self._isExpand)
 	end
 end
 
-function var_0_0.refreshItems(arg_17_0)
-	local var_17_0 = RoomTaskModel.instance:getShowList()
-	local var_17_1 = 1
-	local var_17_2 = arg_17_0:getOrCreateItem(var_17_1)
-	local var_17_3 = RoomTaskModel.instance:tryGetTaskMO(var_17_0[1].id)
+function RoomViewSceneTask:refreshItems()
+	local list = RoomTaskModel.instance:getShowList()
+	local index = 1
+	local item = self:getOrCreateItem(index)
+	local mo = RoomTaskModel.instance:tryGetTaskMO(list[1].id)
 
-	arg_17_0:refreshItemWithTask(var_17_2, var_17_3, var_17_0[1])
+	self:refreshItemWithTask(item, mo, list[1])
 end
 
-function var_0_0.refreshItemWithTask(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_0._needPlayAnimShow then
-		arg_18_1.animator:Play(RoomSceneTaskEnum.AnimName.Show, 0, 0)
+function RoomViewSceneTask:refreshItemWithTask(itemObj, taskMO, taskCO)
+	if self._needPlayAnimShow then
+		itemObj.animator:Play(RoomSceneTaskEnum.AnimName.Show, 0, 0)
 
-		arg_18_0._needPlayAnimShow = false
+		self._needPlayAnimShow = false
 	end
 
-	gohelper.setActive(arg_18_1.go, true)
-	gohelper.setActive(arg_18_1.gotask, true)
+	gohelper.setActive(itemObj.go, true)
+	gohelper.setActive(itemObj.gotask, true)
 
-	if arg_18_2 then
-		local var_18_0, var_18_1 = RoomSceneTaskController.getProgressStatus(arg_18_2)
+	if taskMO then
+		local hasFinished, progress = RoomSceneTaskController.getProgressStatus(taskMO)
 
-		if var_18_0 then
-			arg_18_1.txtdesc.text = string.format("%s(%s/%s)", arg_18_3.desc, var_18_1, arg_18_3.maxProgress)
+		if hasFinished then
+			itemObj.txtdesc.text = string.format("%s(%s/%s)", taskCO.desc, progress, taskCO.maxProgress)
 		else
-			arg_18_1.txtdesc.text = string.format("%s(<color=#ba6662>%s</color>/%s)", arg_18_3.desc, var_18_1, arg_18_3.maxProgress)
+			itemObj.txtdesc.text = string.format("%s(<color=#ba6662>%s</color>/%s)", taskCO.desc, progress, taskCO.maxProgress)
 		end
 
-		gohelper.setActive(arg_18_1.gohasreward, var_18_0)
+		gohelper.setActive(itemObj.gohasreward, hasFinished)
 	else
-		logNormal("No taskMO with taskID : " .. tostring(arg_18_3.id))
+		logNormal("No taskMO with taskID : " .. tostring(taskCO.id))
 
-		arg_18_1.txtdesc.text = arg_18_3.desc
+		itemObj.txtdesc.text = taskCO.desc
 
-		gohelper.setActive(arg_18_1.gohasreward, false)
+		gohelper.setActive(itemObj.gohasreward, false)
 	end
 
-	if not string.nilorempty(arg_18_3.bonus) then
-		local var_18_2 = string.split(arg_18_3.bonus, "|")
+	if not string.nilorempty(taskCO.bonus) then
+		local bonusArr = string.split(taskCO.bonus, "|")
 
-		if #var_18_2 > 0 then
-			local var_18_3 = string.splitToNumber(var_18_2[1], "#")
+		if #bonusArr > 0 then
+			bonusArr = string.splitToNumber(bonusArr[1], "#")
 
-			arg_18_1.iconComp:setMOValue(var_18_3[1], var_18_3[2], var_18_3[3])
-			arg_18_1.iconComp:isShowEquipAndItemCount(false)
-			gohelper.setActive(arg_18_1.countbg, true)
-			gohelper.setAsLastSibling(arg_18_1.countbg)
+			itemObj.iconComp:setMOValue(bonusArr[1], bonusArr[2], bonusArr[3])
+			itemObj.iconComp:isShowEquipAndItemCount(false)
+			gohelper.setActive(itemObj.countbg, true)
+			gohelper.setAsLastSibling(itemObj.countbg)
 
-			arg_18_1.count.text = tostring(GameUtil.numberDisplay(var_18_3[3]))
+			itemObj.count.text = tostring(GameUtil.numberDisplay(bonusArr[3]))
 		end
 	end
 end
 
-function var_0_0.playCanGetRewardVfx(arg_19_0, arg_19_1)
-	arg_19_0._isBreakAutoHide = true
+function RoomViewSceneTask:playCanGetRewardVfx(taskIds)
+	self._isBreakAutoHide = true
 
 	if RoomMapModel.instance:isRoomLeveling() or ViewMgr.instance:isOpen(ViewName.RoomLevelUpTipsView) then
 		return
 	end
 
 	logNormal("notify playCanGetRewardVfx")
-	arg_19_0:appendToAnimPipeline(arg_19_1)
+	self:appendToAnimPipeline(taskIds)
 end
 
-function var_0_0.appendToAnimPipeline(arg_20_0, arg_20_1)
-	local var_20_0 = #arg_20_0._taskAnimIds
-	local var_20_1 = var_20_0
-	local var_20_2 = {}
+function RoomViewSceneTask:appendToAnimPipeline(taskIds)
+	local originCount = #self._taskAnimIds
+	local count = originCount
+	local taskIdSet = {}
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_1) do
-		var_20_2[iter_20_1] = true
+	for _, taskId in pairs(taskIds) do
+		taskIdSet[taskId] = true
 
-		if not arg_20_0._taskAnimIdMap[iter_20_1] then
-			local var_20_3 = RoomTaskModel.instance:tryGetTaskMO(iter_20_1)
+		if not self._taskAnimIdMap[taskId] then
+			local mo = RoomTaskModel.instance:tryGetTaskMO(taskId)
 
-			if var_20_3 then
-				local var_20_4 = var_20_1 == 0
-				local var_20_5 = {
-					self = arg_20_0,
-					taskCo = var_20_3.config,
-					taskMo = var_20_3,
-					isFirst = var_20_4
+			if mo then
+				local isFirst = count == 0
+				local param = {
+					self = self,
+					taskCo = mo.config,
+					taskMo = mo,
+					isFirst = isFirst
 				}
 
-				table.insert(arg_20_0._taskAnimIds, var_20_5)
+				table.insert(self._taskAnimIds, param)
 
-				arg_20_0._taskAnimIdMap[iter_20_1] = var_20_5
-				var_20_1 = var_20_1 + 1
+				self._taskAnimIdMap[taskId] = param
+				count = count + 1
 			end
 		end
 	end
 
-	for iter_20_2, iter_20_3 in pairs(arg_20_0._taskAnimIdMap) do
-		if not var_20_2[iter_20_2] and #arg_20_0._taskAnimIds > 0 and arg_20_0._taskAnimIds[1].taskCo.id ~= iter_20_2 then
-			arg_20_0:removeAnimParam(iter_20_2, true)
+	for includeId, _ in pairs(self._taskAnimIdMap) do
+		if not taskIdSet[includeId] and #self._taskAnimIds > 0 and self._taskAnimIds[1].taskCo.id ~= includeId then
+			self:removeAnimParam(includeId, true)
 		end
 	end
 
-	if var_20_0 == 0 and var_20_1 ~= 0 then
-		arg_20_0._isAnimPlaying = true
+	if originCount == 0 and count ~= 0 then
+		self._isAnimPlaying = true
 
 		UIBlockMgr.instance:endAll()
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock(UIBlockKey.RoomTaskFinish)
-		arg_20_0:_stopAutoHideTask()
-		arg_20_0:checkIfNodeHidePlay()
+		self:_stopAutoHideTask()
+		self:checkIfNodeHidePlay()
 	end
 end
 
-function var_0_0.removeAnimParam(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_0._taskAnimIdMap[arg_21_1] then
-		if arg_21_2 then
-			arg_21_0._taskAnimIdMap[arg_21_1] = nil
+function RoomViewSceneTask:removeAnimParam(taskId, includeMap)
+	if self._taskAnimIdMap[taskId] then
+		if includeMap then
+			self._taskAnimIdMap[taskId] = nil
 		end
 
-		for iter_21_0, iter_21_1 in ipairs(arg_21_0._taskAnimIds) do
-			if iter_21_1.taskCo.id == arg_21_1 then
-				logNormal("delete taskId in array = " .. tostring(arg_21_1))
-				table.remove(arg_21_0._taskAnimIds, iter_21_0)
+		for i, param in ipairs(self._taskAnimIds) do
+			if param.taskCo.id == taskId then
+				logNormal("delete taskId in array = " .. tostring(taskId))
+				table.remove(self._taskAnimIds, i)
 
 				break
 			end
@@ -336,146 +338,147 @@ function var_0_0.removeAnimParam(arg_21_0, arg_21_1, arg_21_2)
 	end
 end
 
-function var_0_0.checkIfNodeHidePlay(arg_22_0)
-	if arg_22_0._lastAnimHide then
-		arg_22_0._isBreakAutoHide = true
+function RoomViewSceneTask:checkIfNodeHidePlay()
+	if self._lastAnimHide then
+		self._isBreakAutoHide = true
 
-		arg_22_0:_showHidAnim(false)
-		TaskDispatcher.runDelay(arg_22_0.startPlayTaskFinish, arg_22_0, var_0_0.DelayHideToShowTime)
+		self:_showHidAnim(false)
+		TaskDispatcher.runDelay(self.startPlayTaskFinish, self, RoomViewSceneTask.DelayHideToShowTime)
 	else
-		arg_22_0:startPlayTaskFinish()
+		self:startPlayTaskFinish()
 	end
 end
 
-function var_0_0.startPlayTaskFinish(arg_23_0)
-	local var_23_0 = arg_23_0._taskAnimIds[1]
-	local var_23_1 = arg_23_0:getOrCreateItem(1)
-	local var_23_2 = var_23_0.isFirst
+function RoomViewSceneTask:startPlayTaskFinish()
+	local param = self._taskAnimIds[1]
+	local itemObj = self:getOrCreateItem(1)
+	local isFirst = param.isFirst
 
-	arg_23_0:disposeAllAnim()
-	arg_23_0:refreshItemWithTask(var_23_1, var_23_0.taskMo, var_23_0.taskCo)
+	self:disposeAllAnim()
+	self:refreshItemWithTask(itemObj, param.taskMo, param.taskCo)
 
-	if not var_23_2 then
-		var_23_1.animator:Play(RoomSceneTaskEnum.AnimName.Show, 0, 0)
-		var_23_1.animatorEvent:AddEventListener(RoomSceneTaskEnum.AnimEventName.ShowFinish, var_0_0.onAnimShowFinished, var_23_0)
+	if not isFirst then
+		itemObj.animator:Play(RoomSceneTaskEnum.AnimName.Show, 0, 0)
+		itemObj.animatorEvent:AddEventListener(RoomSceneTaskEnum.AnimEventName.ShowFinish, RoomViewSceneTask.onAnimShowFinished, param)
 	else
-		var_23_1.animator:Play(RoomSceneTaskEnum.AnimName.Play, 0, 0)
+		itemObj.animator:Play(RoomSceneTaskEnum.AnimName.Play, 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mission_complete)
-		var_23_1.animatorEvent:AddEventListener(RoomSceneTaskEnum.AnimEventName.PlayFinish, var_0_0.onAnimPlayFinished, var_23_0)
+		itemObj.animatorEvent:AddEventListener(RoomSceneTaskEnum.AnimEventName.PlayFinish, RoomViewSceneTask.onAnimPlayFinished, param)
 	end
 end
 
-function var_0_0.onAnimShowFinished(arg_24_0)
-	local var_24_0 = arg_24_0.self:getOrCreateItem(1)
+function RoomViewSceneTask.onAnimShowFinished(param)
+	local self = param.self
+	local itemObj = self:getOrCreateItem(1)
 
-	var_24_0.animatorEvent:AddEventListener(RoomSceneTaskEnum.AnimEventName.PlayFinish, var_0_0.onAnimPlayFinished, arg_24_0)
+	itemObj.animatorEvent:AddEventListener(RoomSceneTaskEnum.AnimEventName.PlayFinish, RoomViewSceneTask.onAnimPlayFinished, param)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mission_complete)
-	var_24_0.animator:Play(RoomSceneTaskEnum.AnimName.Play, 0, 0)
+	itemObj.animator:Play(RoomSceneTaskEnum.AnimName.Play, 0, 0)
 end
 
-function var_0_0.onAnimPlayFinished(arg_25_0)
-	local var_25_0 = arg_25_0.self
-	local var_25_1 = arg_25_0.taskCo.id
+function RoomViewSceneTask.onAnimPlayFinished(param)
+	local self = param.self
+	local taskId = param.taskCo.id
 
-	var_25_0:removeAnimParam(var_25_1)
-	var_25_0:disposeAllAnim()
+	self:removeAnimParam(taskId)
+	self:disposeAllAnim()
 
-	if #var_25_0._taskAnimIds > 0 then
-		var_25_0:startPlayTaskFinish()
+	if #self._taskAnimIds > 0 then
+		self:startPlayTaskFinish()
 	else
-		for iter_25_0, iter_25_1 in pairs(var_25_0._taskAnimIdMap) do
-			var_25_0._taskAnimIdMap[iter_25_0] = nil
+		for k, _ in pairs(self._taskAnimIdMap) do
+			self._taskAnimIdMap[k] = nil
 		end
 
-		var_25_0._needPlayAnimShow = true
+		self._needPlayAnimShow = true
 
-		local var_25_2, var_25_3 = RoomSceneTaskController.instance:isFirstTaskFinished()
+		local hasFinish, taskIds = RoomSceneTaskController.instance:isFirstTaskFinished()
 
-		if var_25_2 then
+		if hasFinish then
 			RoomSceneTaskController.instance:setTaskCheckFinishFlag(false)
-			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Room, nil, var_25_3, var_25_0.onSendAllTaskCompleted, var_25_0)
+			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Room, nil, taskIds, self.onSendAllTaskCompleted, self)
 		end
 
 		UIBlockMgrExtend.setNeedCircleMv(true)
 		UIBlockMgr.instance:endBlock(UIBlockKey.RoomTaskFinish)
 
-		var_25_0._isAnimPlaying = false
+		self._isAnimPlaying = false
 
-		var_25_0:enterObAutoHide()
-		var_25_0:refreshUI()
+		self:enterObAutoHide()
+		self:refreshUI()
 	end
 end
 
-function var_0_0.disposeAllAnim(arg_26_0)
-	local var_26_0 = arg_26_0:getOrCreateItem(1)
+function RoomViewSceneTask:disposeAllAnim()
+	local itemObj = self:getOrCreateItem(1)
 
-	if not gohelper.isNil(var_26_0.animatorEvent) then
-		for iter_26_0, iter_26_1 in pairs(RoomSceneTaskEnum.AnimEventName) do
-			var_26_0.animatorEvent:RemoveEventListener(iter_26_1)
+	if not gohelper.isNil(itemObj.animatorEvent) then
+		for _, eventName in pairs(RoomSceneTaskEnum.AnimEventName) do
+			itemObj.animatorEvent:RemoveEventListener(eventName)
 		end
 	end
 end
 
-function var_0_0.isAnimPlaying(arg_27_0)
-	return arg_27_0._isAnimPlaying == true
+function RoomViewSceneTask:isAnimPlaying()
+	return self._isAnimPlaying == true
 end
 
-function var_0_0.onSendAllTaskCompleted(arg_28_0, arg_28_1, arg_28_2)
+function RoomViewSceneTask:onSendAllTaskCompleted(cmd, resultCode)
 	RoomSceneTaskController.instance:setTaskCheckFinishFlag(true)
 end
 
-function var_0_0.handleOpenView(arg_29_0, arg_29_1)
-	if arg_29_1 == ViewName.CommonPropView or arg_29_1 == ViewName.RoomLevelUpTipsView then
+function RoomViewSceneTask:handleOpenView(viewName)
+	if viewName == ViewName.CommonPropView or viewName == ViewName.RoomLevelUpTipsView then
 		RoomSceneTaskController.instance:setTaskCheckFinishFlag(false)
-	elseif arg_29_1 == ViewName.RoomCharacterPlaceView then
-		arg_29_0:_showHidAnim(true)
+	elseif viewName == ViewName.RoomCharacterPlaceView then
+		self:_showHidAnim(true)
 	end
 end
 
-function var_0_0.handleCloseView(arg_30_0, arg_30_1)
-	if arg_30_1 == ViewName.CommonPropView or arg_30_1 == ViewName.RoomLevelUpTipsView then
+function RoomViewSceneTask:handleCloseView(viewName)
+	if viewName == ViewName.CommonPropView or viewName == ViewName.RoomLevelUpTipsView then
 		RoomSceneTaskController.instance:setTaskCheckFinishFlag(true)
 		RoomSceneTaskController.instance:checkTaskFinished()
 	end
 end
 
-function var_0_0.getOrCreateItem(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_0._taskItems[arg_31_1]
+function RoomViewSceneTask:getOrCreateItem(index)
+	local item = self._taskItems[index]
 
-	if not var_31_0 then
-		var_31_0 = arg_31_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_31_1 = arg_31_0.viewContainer:getSetting().otherRes[4]
-		local var_31_2 = arg_31_0:getResInst(var_31_1, arg_31_0._gocontainer, "task_item")
+		local path = self.viewContainer:getSetting().otherRes[4]
+		local itemGo = self:getResInst(path, self._gocontainer, "task_item")
 
-		var_31_2.name = "task_item" .. arg_31_1
-		var_31_0.go = var_31_2
-		var_31_0.txtdesc = gohelper.findChildText(var_31_2, "go_task/txt_taskitemdesc")
-		var_31_0.gotask = gohelper.findChild(var_31_2, "go_task")
-		var_31_0.goicon = gohelper.findChild(var_31_2, "go_task/go_icon")
-		var_31_0.gohasreward = gohelper.findChild(var_31_2, "go_task/go_hasreward")
-		var_31_0.countbg = gohelper.findChild(var_31_2, "go_task/go_icon/countbg")
-		var_31_0.count = gohelper.findChildText(var_31_2, "go_task/go_icon/countbg/count")
-		var_31_0.btnnormal = gohelper.findChildButtonWithAudio(var_31_2, "btn_normalclick")
+		itemGo.name = "task_item" .. index
+		item.go = itemGo
+		item.txtdesc = gohelper.findChildText(itemGo, "go_task/txt_taskitemdesc")
+		item.gotask = gohelper.findChild(itemGo, "go_task")
+		item.goicon = gohelper.findChild(itemGo, "go_task/go_icon")
+		item.gohasreward = gohelper.findChild(itemGo, "go_task/go_hasreward")
+		item.countbg = gohelper.findChild(itemGo, "go_task/go_icon/countbg")
+		item.count = gohelper.findChildText(itemGo, "go_task/go_icon/countbg/count")
+		item.btnnormal = gohelper.findChildButtonWithAudio(itemGo, "btn_normalclick")
 
-		var_31_0.btnnormal:AddClickListener(arg_31_0.onClickNormalOpen, {
-			self = arg_31_0,
-			index = arg_31_1
+		item.btnnormal:AddClickListener(self.onClickNormalOpen, {
+			self = self,
+			index = index
 		})
 
-		var_31_0.iconComp = IconMgr.instance:getCommonPropItemIcon(var_31_0.goicon)
-		var_31_0.animator = var_31_2:GetComponent(typeof(UnityEngine.Animator))
-		var_31_0.animatorEvent = var_31_2:GetComponent(typeof(ZProj.AnimationEventWrap))
-		arg_31_0._taskItems[arg_31_1] = var_31_0
+		item.iconComp = IconMgr.instance:getCommonPropItemIcon(item.goicon)
+		item.animator = itemGo:GetComponent(typeof(UnityEngine.Animator))
+		item.animatorEvent = itemGo:GetComponent(typeof(ZProj.AnimationEventWrap))
+		self._taskItems[index] = item
 	end
 
-	return var_31_0
+	return item
 end
 
-function var_0_0.handleTaskHideAnim(arg_32_0, arg_32_1)
-	arg_32_0._isForceHideArrow = arg_32_1
+function RoomViewSceneTask:handleTaskHideAnim(isHide)
+	self._isForceHideArrow = isHide
 
-	arg_32_0:_showHidAnim(true)
+	self:_showHidAnim(true)
 end
 
-return var_0_0
+return RoomViewSceneTask

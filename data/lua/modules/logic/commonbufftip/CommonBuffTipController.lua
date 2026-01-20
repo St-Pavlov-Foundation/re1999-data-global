@@ -1,94 +1,99 @@
-﻿module("modules.logic.commonbufftip.CommonBuffTipController", package.seeall)
+﻿-- chunkname: @modules/logic/commonbufftip/CommonBuffTipController.lua
 
-local var_0_0 = class("CommonBuffTipController")
+module("modules.logic.commonbufftip.CommonBuffTipController", package.seeall)
 
-function var_0_0.initViewParam(arg_1_0)
-	arg_1_0.viewParam = arg_1_0.viewParam or {}
+local CommonBuffTipController = class("CommonBuffTipController")
 
-	tabletool.clear(arg_1_0.viewParam)
+function CommonBuffTipController:initViewParam()
+	self.viewParam = self.viewParam or {}
+
+	tabletool.clear(self.viewParam)
 end
 
-function var_0_0.openCommonTipView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:initViewParam()
+function CommonBuffTipController:openCommonTipView(effectId, clickPosition, monsterName)
+	self:initViewParam()
 
-	arg_2_0.viewParam.effectId = arg_2_1
-	arg_2_0.viewParam.clickPosition = arg_2_2
-	arg_2_0.viewParam.monsterName = arg_2_3
+	self.viewParam.effectId = effectId
+	self.viewParam.clickPosition = clickPosition
+	self.viewParam.monsterName = monsterName
 
-	ViewMgr.instance:openView(ViewName.CommonBuffTipView, arg_2_0.viewParam)
+	ViewMgr.instance:openView(ViewName.CommonBuffTipView, self.viewParam)
 end
 
-function var_0_0.openCommonTipViewWithCustomPos(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_0:initViewParam()
+function CommonBuffTipController:openCommonTipViewWithCustomPos(effectId, anchorPos, pivot, monsterName, defaultVNP)
+	self:initViewParam()
 
-	arg_3_0.viewParam.effectId = arg_3_1
-	arg_3_0.viewParam.scrollAnchorPos = arg_3_2
-	arg_3_0.viewParam.pivot = arg_3_3 or CommonBuffTipEnum.Pivot.Left
-	arg_3_0.viewParam.monsterName = arg_3_4
+	self.viewParam.effectId = effectId
+	self.viewParam.scrollAnchorPos = anchorPos
+	self.viewParam.pivot = pivot or CommonBuffTipEnum.Pivot.Left
+	self.viewParam.monsterName = monsterName
+	self.viewParam.defaultVNP = defaultVNP or 0
 
-	ViewMgr.instance:openView(ViewName.CommonBuffTipView, arg_3_0.viewParam)
+	ViewMgr.instance:openView(ViewName.CommonBuffTipView, self.viewParam)
 end
 
-function var_0_0.openCommonTipViewWithCustomPosCallback(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0:initViewParam()
+function CommonBuffTipController:openCommonTipViewWithCustomPosCallback(effectId, setScrollPosCallback, setScrollPosCallbackObj, monsterName, defaultVNP)
+	self:initViewParam()
 
-	arg_4_0.viewParam.effectId = arg_4_1
-	arg_4_0.viewParam.setScrollPosCallback = arg_4_2
-	arg_4_0.viewParam.setScrollPosCallbackObj = arg_4_3
-	arg_4_0.viewParam.monsterName = arg_4_4
+	self.viewParam.effectId = effectId
+	self.viewParam.setScrollPosCallback = setScrollPosCallback
+	self.viewParam.setScrollPosCallbackObj = setScrollPosCallbackObj
+	self.viewParam.monsterName = monsterName
+	self.viewParam.defaultVNP = defaultVNP or 0
 
-	ViewMgr.instance:openView(ViewName.CommonBuffTipView, arg_4_0.viewParam)
+	ViewMgr.instance:openView(ViewName.CommonBuffTipView, self.viewParam)
 end
 
-function var_0_0.getBuffTagName(arg_5_0, arg_5_1)
-	local var_5_0 = string.match(arg_5_1, "<id:(%d+)>")
-	local var_5_1 = tonumber(var_5_0)
+function CommonBuffTipController:getBuffTagName(buffName)
+	local buffId = string.match(buffName, "<id:(%d+)>")
 
-	if var_5_1 then
-		return arg_5_0:getBuffTagNameByBuffId(var_5_1, arg_5_1)
+	buffId = tonumber(buffId)
+
+	if buffId then
+		return self:getBuffTagNameByBuffId(buffId, buffName)
 	end
 
-	return arg_5_0:getBuffTagNameByBuffName(arg_5_1)
+	return self:getBuffTagNameByBuffName(buffName)
 end
 
-function var_0_0.getBuffTagNameByBuffId(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_1 and lua_skill_buff.configDict[arg_6_1]
-	local var_6_1 = SkillHelper.removeRichTag(arg_6_2)
+function CommonBuffTipController:getBuffTagNameByBuffId(buffId, buffName)
+	local buffCo = buffId and lua_skill_buff.configDict[buffId]
+	local plainBuffName = SkillHelper.removeRichTag(buffName)
 
-	if var_6_0 and var_6_0.name == var_6_1 then
-		return arg_6_0:getBuffTagNameByTypeId(var_6_0.typeId)
+	if buffCo and buffCo.name == plainBuffName then
+		return self:getBuffTagNameByTypeId(buffCo.typeId)
 	end
 
-	return arg_6_0:getBuffTagNameByBuffName(arg_6_2)
+	return self:getBuffTagNameByBuffName(buffName)
 end
 
-function var_0_0.getBuffTagNameByBuffName(arg_7_0, arg_7_1)
-	arg_7_1 = SkillHelper.removeRichTag(arg_7_1)
+function CommonBuffTipController:getBuffTagNameByBuffName(buffName)
+	buffName = SkillHelper.removeRichTag(buffName)
 
-	if string.nilorempty(arg_7_1) then
+	if string.nilorempty(buffName) then
 		return ""
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(lua_skill_buff.configList) do
-		if iter_7_1.name == arg_7_1 then
-			return arg_7_0:getBuffTagNameByTypeId(iter_7_1.typeId)
+	for _, buffCo in ipairs(lua_skill_buff.configList) do
+		if buffCo.name == buffName then
+			return self:getBuffTagNameByTypeId(buffCo.typeId)
 		end
 	end
 
 	return ""
 end
 
-function var_0_0.getBuffTagNameByTypeId(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 and lua_skill_bufftype.configDict[arg_8_1]
-	local var_8_1 = var_8_0 and lua_skill_buff_desc.configDict[var_8_0.type]
+function CommonBuffTipController:getBuffTagNameByTypeId(typeId)
+	local buffTypeCo = typeId and lua_skill_bufftype.configDict[typeId]
+	local buffTagCO = buffTypeCo and lua_skill_buff_desc.configDict[buffTypeCo.type]
 
-	if var_8_1 and var_8_1.id ~= 9 then
-		return var_8_1.name
+	if buffTagCO and buffTagCO.id ~= 9 then
+		return buffTagCO.name
 	end
 
 	return ""
 end
 
-var_0_0.instance = var_0_0.New()
+CommonBuffTipController.instance = CommonBuffTipController.New()
 
-return var_0_0
+return CommonBuffTipController

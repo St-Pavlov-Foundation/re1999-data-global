@@ -1,80 +1,82 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchRightHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchRightHeroItem.lua
 
-local var_0_0 = class("RoleStoryDispatchRightHeroItem", ListScrollCellExtend)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchRightHeroItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goAdd = gohelper.findChild(arg_1_0.viewGO, "add")
-	arg_1_0.goHero = gohelper.findChild(arg_1_0.viewGO, "#go_hero")
-	arg_1_0.simageHeroIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_hero/#simage_heroicon")
-	arg_1_0.imageCareer = gohelper.findChildImage(arg_1_0.viewGO, "#go_hero/#image_career")
-	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_0.viewGO)
+local RoleStoryDispatchRightHeroItem = class("RoleStoryDispatchRightHeroItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoleStoryDispatchRightHeroItem:onInitView()
+	self.goAdd = gohelper.findChild(self.viewGO, "add")
+	self.goHero = gohelper.findChild(self.viewGO, "#go_hero")
+	self.simageHeroIcon = gohelper.findChildSingleImage(self.viewGO, "#go_hero/#simage_heroicon")
+	self.imageCareer = gohelper.findChildImage(self.viewGO, "#go_hero/#image_career")
+	self.btnClick = gohelper.findButtonWithAudio(self.viewGO)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClickBtnClick, arg_2_0)
+function RoleStoryDispatchRightHeroItem:addEvents()
+	self:addClickCb(self.btnClick, self.onClickBtnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoleStoryDispatchRightHeroItem:removeEvents()
 	return
 end
 
-function var_0_0.refreshItem(arg_4_0)
-	if arg_4_0.index > arg_4_0.maxCount then
-		gohelper.setActive(arg_4_0.viewGO, false)
+function RoleStoryDispatchRightHeroItem:refreshItem()
+	if self.index > self.maxCount then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0.viewGO, true)
-	gohelper.setActive(arg_4_0.goAdd, not arg_4_0.data)
+	gohelper.setActive(self.viewGO, true)
+	gohelper.setActive(self.goAdd, not self.data)
 
-	if not arg_4_0.data then
-		arg_4_0:clear()
-		gohelper.setActive(arg_4_0.goHero, false)
+	if not self.data then
+		self:clear()
+		gohelper.setActive(self.goHero, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_4_0.goHero, true)
+	gohelper.setActive(self.goHero, true)
 
-	local var_4_0 = arg_4_0.data.config
+	local config = self.data.config
 
-	arg_4_0.simageHeroIcon:LoadImage(ResUrl.getRoomHeadIcon(var_4_0.id .. "01"))
-	UISpriteSetMgr.instance:setCommonSprite(arg_4_0.imageCareer, "lssx_" .. var_4_0.career)
+	self.simageHeroIcon:LoadImage(ResUrl.getRoomHeadIcon(config.id .. "01"))
+	UISpriteSetMgr.instance:setCommonSprite(self.imageCareer, "lssx_" .. config.career)
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.data = arg_5_1
-	arg_5_0.index = arg_5_2
-	arg_5_0.maxCount = arg_5_3
+function RoleStoryDispatchRightHeroItem:onUpdateMO(data, index, maxCount)
+	self.data = data
+	self.index = index
+	self.maxCount = maxCount
 
-	arg_5_0:refreshItem()
+	self:refreshItem()
 end
 
-function var_0_0.onClickBtnClick(arg_6_0)
-	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickRightHero, arg_6_0.data)
+function RoleStoryDispatchRightHeroItem:onClickBtnClick()
+	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ClickRightHero, self.data)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function RoleStoryDispatchRightHeroItem:_editableInitView()
 	return
 end
 
-function var_0_0.clear(arg_8_0)
+function RoleStoryDispatchRightHeroItem:clear()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0:clear()
+function RoleStoryDispatchRightHeroItem:onDestroyView()
+	self:clear()
 
-	if arg_9_0.simageHeroIcon then
-		arg_9_0.simageHeroIcon:UnLoadImage()
+	if self.simageHeroIcon then
+		self.simageHeroIcon:UnLoadImage()
 
-		arg_9_0.simageHeroIcon = nil
+		self.simageHeroIcon = nil
 	end
 end
 
-return var_0_0
+return RoleStoryDispatchRightHeroItem

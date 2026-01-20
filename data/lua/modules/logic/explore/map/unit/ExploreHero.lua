@@ -1,66 +1,68 @@
-﻿module("modules.logic.explore.map.unit.ExploreHero", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreHero.lua
 
-local var_0_0 = class("ExploreHero", Explore3DRoleBase)
+module("modules.logic.explore.map.unit.ExploreHero", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._hangPoints = {}
-	arg_1_0._baton = UnityEngine.GameObject.New("baton")
+local ExploreHero = class("ExploreHero", Explore3DRoleBase)
 
-	gohelper.setActive(arg_1_0._baton, false)
+function ExploreHero:onInit()
+	self._hangPoints = {}
+	self._baton = UnityEngine.GameObject.New("baton")
 
-	arg_1_0._batonLoader = PrefabInstantiate.Create(arg_1_0._baton)
+	gohelper.setActive(self._baton, false)
 
-	arg_1_0._batonLoader:startLoad("explore/roles/prefabs/zhihuibang.prefab", arg_1_0._onBatonLoadEnd, arg_1_0)
-	var_0_0.super.onInit(arg_1_0)
+	self._batonLoader = PrefabInstantiate.Create(self._baton)
+
+	self._batonLoader:startLoad("explore/roles/prefabs/zhihuibang.prefab", self._onBatonLoadEnd, self)
+	ExploreHero.super.onInit(self)
 end
 
-function var_0_0._onBatonLoadEnd(arg_2_0)
-	local var_2_0 = arg_2_0._batonLoader:getInstGO()
+function ExploreHero:_onBatonLoadEnd()
+	local go = self._batonLoader:getInstGO()
 
-	arg_2_0._batonEffectLoader = PrefabInstantiate.Create(var_2_0.transform:Find("zhihuibang/Point001").gameObject)
+	self._batonEffectLoader = PrefabInstantiate.Create(go.transform:Find("zhihuibang/Point001").gameObject)
 
-	arg_2_0._batonEffectLoader:startLoad(ResUrl.getExploreEffectPath("open_chest"))
+	self._batonEffectLoader:startLoad(ResUrl.getExploreEffectPath("open_chest"))
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	if arg_3_0._batonLoader then
-		arg_3_0._batonLoader:dispose()
+function ExploreHero:onDestroy()
+	if self._batonLoader then
+		self._batonLoader:dispose()
 
-		arg_3_0._batonLoader = nil
+		self._batonLoader = nil
 	end
 
-	if arg_3_0._batonEffectLoader then
-		arg_3_0._batonEffectLoader:dispose()
+	if self._batonEffectLoader then
+		self._batonEffectLoader:dispose()
 
-		arg_3_0._batonEffectLoader = nil
+		self._batonEffectLoader = nil
 	end
 
-	gohelper.destroy(arg_3_0._baton)
+	gohelper.destroy(self._baton)
 
-	arg_3_0._hangPoints = nil
+	self._hangPoints = nil
 
-	var_0_0.super.onDestroy(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._onFrame, arg_3_0)
+	ExploreHero.super.onDestroy(self)
+	TaskDispatcher.cancelTask(self._onFrame, self)
 end
 
-function var_0_0.setHeroStatus(arg_4_0, arg_4_1, ...)
-	local var_4_0 = ExploreAnimEnum.UseBatonAnim[arg_4_1]
-	local var_4_1 = arg_4_0._hangPoints[var_4_0]
+function ExploreHero:setHeroStatus(status, ...)
+	local hangType = ExploreAnimEnum.UseBatonAnim[status]
+	local trans = self._hangPoints[hangType]
 
-	if var_4_1 then
-		arg_4_0._baton.transform:SetParent(var_4_1, false)
-		gohelper.setActive(arg_4_0._baton, true)
+	if trans then
+		self._baton.transform:SetParent(trans, false)
+		gohelper.setActive(self._baton, true)
 	else
-		gohelper.setActive(arg_4_0._baton, false)
+		gohelper.setActive(self._baton, false)
 	end
 
-	var_0_0.super.setHeroStatus(arg_4_0, arg_4_1, ...)
-	ExploreController.instance:dispatchEvent(ExploreEvent.HeroStatuStart, arg_4_1)
+	ExploreHero.super.setHeroStatus(self, status, ...)
+	ExploreController.instance:dispatchEvent(ExploreEvent.HeroStatuStart, status)
 end
 
-function var_0_0.delaySetNormalStatus(arg_5_0, ...)
-	ExploreController.instance:dispatchEvent(ExploreEvent.HeroStatuEnd, arg_5_0._curStatus)
-	gohelper.setActive(arg_5_0._baton, false)
+function ExploreHero:delaySetNormalStatus(...)
+	ExploreController.instance:dispatchEvent(ExploreEvent.HeroStatuEnd, self._curStatus)
+	gohelper.setActive(self._baton, false)
 
 	if not ExploreModel.instance.isRoleInitDone then
 		ExploreModel.instance.isRoleInitDone = true
@@ -68,59 +70,59 @@ function var_0_0.delaySetNormalStatus(arg_5_0, ...)
 		ExploreController.instance:dispatchEvent(ExploreEvent.HeroResInitDone)
 	end
 
-	var_0_0.super.delaySetNormalStatus(arg_5_0, ...)
+	ExploreHero.super.delaySetNormalStatus(self, ...)
 end
 
-function var_0_0.setResPath(arg_6_0, arg_6_1)
-	if arg_6_1 and arg_6_0._resPath ~= arg_6_1 then
-		arg_6_0._resPath = arg_6_1
-		arg_6_0._assetId = ResMgr.getAbAsset(arg_6_0._resPath, arg_6_0._onResLoaded, arg_6_0, arg_6_0._assetId)
-	elseif arg_6_1 and arg_6_0._resPath == arg_6_1 and arg_6_0._displayGo == nil then
-		arg_6_0._assetId = ResMgr.getAbAsset(arg_6_0._resPath, arg_6_0._onResLoaded, arg_6_0, arg_6_0._assetId)
+function ExploreHero:setResPath(url)
+	if url and self._resPath ~= url then
+		self._resPath = url
+		self._assetId = ResMgr.getAbAsset(self._resPath, self._onResLoaded, self, self._assetId)
+	elseif url and self._resPath == url and self._displayGo == nil then
+		self._assetId = ResMgr.getAbAsset(self._resPath, self._onResLoaded, self, self._assetId)
 	else
-		arg_6_0:onResLoaded()
+		self:onResLoaded()
 	end
 end
 
-function var_0_0.onResLoaded(arg_7_0)
-	arg_7_0._hangPoints = {}
+function ExploreHero:onResLoaded()
+	self._hangPoints = {}
 
-	for iter_7_0, iter_7_1 in pairs(ExploreAnimEnum.RoleHangPointPath) do
-		arg_7_0._hangPoints[iter_7_0] = arg_7_0._displayTr:Find(iter_7_1)
+	for k, v in pairs(ExploreAnimEnum.RoleHangPointPath) do
+		self._hangPoints[k] = self._displayTr:Find(v)
 	end
 
 	if ExploreModel.instance.isFirstEnterMap == ExploreEnum.EnterMode.First then
-		arg_7_0:setActive(false)
+		self:setActive(false)
 	else
-		arg_7_0.dir = ExploreMapModel.instance:getHeroDir()
+		self.dir = ExploreMapModel.instance:getHeroDir()
 
-		arg_7_0:setRotate(0, arg_7_0.dir, 0)
+		self:setRotate(0, self.dir, 0)
 	end
 
-	local var_7_0 = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_7_0.nodePos))
+	local node = ExploreMapModel.instance:getNode(ExploreHelper.getKey(self.nodePos))
 
-	if var_7_0 and arg_7_0.position.y ~= var_7_0.height then
-		arg_7_0.position.y = var_7_0.height
+	if node and self.position.y ~= node.height then
+		self.position.y = node.height
 
-		transformhelper.setPos(arg_7_0.trans, arg_7_0.position.x, var_7_0.height, arg_7_0.position.z)
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterPosChange, arg_7_0.position)
+		transformhelper.setPos(self.trans, self.position.x, node.height, self.position.z)
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterPosChange, self.position)
 	end
 
-	if arg_7_0._waitAssetLoaded then
-		arg_7_0._waitAssetLoaded = nil
+	if self._waitAssetLoaded then
+		self._waitAssetLoaded = nil
 
-		arg_7_0:onRoleFirstEnter()
+		self:onRoleFirstEnter()
 	end
 end
 
-function var_0_0.onRoleFirstEnter(arg_8_0)
-	if not arg_8_0._displayTr then
-		arg_8_0._waitAssetLoaded = true
+function ExploreHero:onRoleFirstEnter()
+	if not self._displayTr then
+		self._waitAssetLoaded = true
 
 		return
 	end
 
-	arg_8_0:setActive(true)
+	self:setActive(true)
 
 	if ExploreModel.instance:hasUseItemOrUnit() then
 		ExploreModel.instance.isRoleInitDone = true
@@ -130,22 +132,22 @@ function var_0_0.onRoleFirstEnter(arg_8_0)
 		return
 	end
 
-	arg_8_0.dir = ExploreMapModel.instance:getHeroDir()
+	self.dir = ExploreMapModel.instance:getHeroDir()
 
-	arg_8_0:setRotate(0, arg_8_0.dir, 0)
+	self:setRotate(0, self.dir, 0)
 
-	local var_8_0 = false
-	local var_8_1 = ExploreController.instance:getMap():getUnitByPos(arg_8_0.nodePos)
+	local haveSpike = false
+	local units = ExploreController.instance:getMap():getUnitByPos(self.nodePos)
 
-	for iter_8_0, iter_8_1 in pairs(var_8_1) do
-		if iter_8_1:getUnitType() == ExploreEnum.ItemType.Spike then
-			var_8_0 = true
+	for _, unit in pairs(units) do
+		if unit:getUnitType() == ExploreEnum.ItemType.Spike then
+			haveSpike = true
 
 			break
 		end
 	end
 
-	if var_8_0 then
+	if haveSpike then
 		return
 	end
 
@@ -158,147 +160,147 @@ function var_0_0.onRoleFirstEnter(arg_8_0)
 		return
 	end
 
-	arg_8_0:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Entry, true, true)
+	self:setHeroStatus(ExploreAnimEnum.RoleAnimStatus.Entry, true, true)
 	ExploreController.instance:dispatchEvent(ExploreEvent.HeroFirstAnimEnd)
 end
 
-function var_0_0.onUpdateExploreInfo(arg_9_0)
-	arg_9_0.go:SetActive(true)
+function ExploreHero:onUpdateExploreInfo()
+	self.go:SetActive(true)
 
-	local var_9_0, var_9_1 = ExploreMapModel.instance:getHeroPos()
+	local posx, posy = ExploreMapModel.instance:getHeroPos()
 
-	arg_9_0:setTilemapPos(Vector2(var_9_0, var_9_1))
+	self:setTilemapPos(Vector2(posx, posy))
 end
 
-function var_0_0.setMap(arg_10_0, arg_10_1)
-	arg_10_0._exploreMap = arg_10_1
+function ExploreHero:setMap(exploreMap)
+	self._exploreMap = exploreMap
 end
 
-function var_0_0.getHangTrans(arg_11_0, arg_11_1)
-	return arg_11_0._hangPoints[arg_11_1]
+function ExploreHero:getHangTrans(type)
+	return self._hangPoints[type]
 end
 
-function var_0_0.onStartMove(arg_12_0, arg_12_1, arg_12_2)
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterStartMove, arg_12_0.nodePos, arg_12_0._nextNodePos)
+function ExploreHero:onStartMove(preNode, nowNode)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterStartMove, self.nodePos, self._nextNodePos)
 end
 
-function var_0_0.setPos(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	var_0_0.super.setPos(arg_13_0, arg_13_1, true)
+function ExploreHero:setPos(pos, notDispatchEvent, isUseModelPos)
+	ExploreHero.super.setPos(self, pos, true)
 
-	local var_13_0 = arg_13_0:getPos()
+	local pos = self:getPos()
 
-	if ExploreController.instance:getMap():getNowStatus() == ExploreEnum.MapStatus.MoveUnit or arg_13_3 then
-		var_13_0 = arg_13_0._displayTr.position
+	if ExploreController.instance:getMap():getNowStatus() == ExploreEnum.MapStatus.MoveUnit or isUseModelPos then
+		pos = self._displayTr.position
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterPosChange, var_13_0)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterPosChange, pos)
 end
 
-function var_0_0.moveTo(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+function ExploreHero:moveTo(pos, callback, callbackObj)
 	if ExploreModel.instance:isHeroInControl() then
-		if ExploreHelper.isPosEqual(arg_14_0.nodePos, arg_14_1) then
+		if ExploreHelper.isPosEqual(self.nodePos, pos) then
 			ExploreController.instance:dispatchEvent(ExploreEvent.OnClickHero)
 		end
 
-		var_0_0.super.moveTo(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+		ExploreHero.super.moveTo(self, pos, callback, callbackObj)
 	end
 end
 
-function var_0_0.moveToTar(arg_15_0, arg_15_1)
+function ExploreHero:moveToTar(unitMO)
 	if ExploreModel.instance:isHeroInControl() then
-		local var_15_0 = arg_15_1:getTriggerPos()
+		local pos = unitMO:getTriggerPos()
 
-		arg_15_0._tarUnitMO = arg_15_1
+		self._tarUnitMO = unitMO
 
-		arg_15_0:_startMove(var_15_0)
+		self:_startMove(pos)
 	end
 end
 
-function var_0_0.clearTarget(arg_16_0)
-	arg_16_0._tarUnitMO = nil
+function ExploreHero:clearTarget()
+	self._tarUnitMO = nil
 end
 
-function var_0_0.onEndMove(arg_17_0)
-	var_0_0.super.onEndMove(arg_17_0)
+function ExploreHero:onEndMove()
+	ExploreHero.super.onEndMove(self)
 
-	if not arg_17_0._tarUnitMO or ExploreHelper.getDistance(arg_17_0._tarUnitMO.nodePos, arg_17_0.nodePos) > 1 then
+	if not self._tarUnitMO or ExploreHelper.getDistance(self._tarUnitMO.nodePos, self.nodePos) > 1 then
 		-- block empty
-	elseif arg_17_0._tarUnitMO.enterTriggerType == false and arg_17_0._tarUnitMO.triggerByClick ~= false and arg_17_0._tarUnitMO:canTrigger(arg_17_0.nodePos) then
-		local var_17_0 = ExploreModel.instance:getUseItemUid()
-		local var_17_1 = ExploreBackpackModel.instance:getById(var_17_0)
+	elseif self._tarUnitMO.enterTriggerType == false and self._tarUnitMO.triggerByClick ~= false and self._tarUnitMO:canTrigger(self.nodePos) then
+		local useItemUid = ExploreModel.instance:getUseItemUid()
+		local itemMo = ExploreBackpackModel.instance:getById(useItemUid)
 
-		if var_17_1 and var_17_1.itemEffect == ExploreEnum.ItemEffect.Active and arg_17_0._tarUnitMO.type ~= ExploreEnum.ItemType.Rune then
+		if itemMo and itemMo.itemEffect == ExploreEnum.ItemEffect.Active and self._tarUnitMO.type ~= ExploreEnum.ItemType.Rune then
 			ToastController.instance:showToast(ExploreConstValue.Toast.CantTrigger)
 		else
-			ExploreController.instance:dispatchEvent(ExploreEvent.TryTriggerUnit, arg_17_0._tarUnitMO.id)
+			ExploreController.instance:dispatchEvent(ExploreEvent.TryTriggerUnit, self._tarUnitMO.id)
 		end
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnHeroMoveEnd, arg_17_0.nodePos)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnHeroMoveEnd, self.nodePos)
 
-	arg_17_0._tarUnitMO = nil
+	self._tarUnitMO = nil
 end
 
-function var_0_0.setTilemapPos(arg_18_0, arg_18_1)
-	arg_18_0:setPosByNode(arg_18_1)
-	arg_18_0:sendMoveRequest(arg_18_0.nodePos)
+function ExploreHero:setTilemapPos(pos)
+	self:setPosByNode(pos)
+	self:sendMoveRequest(self.nodePos)
 end
 
-function var_0_0.sendMoveRequest(arg_19_0, arg_19_1)
+function ExploreHero:sendMoveRequest(pos)
 	return
 end
 
-function var_0_0.onMoveTick(arg_20_0)
-	arg_20_0:_moving()
+function ExploreHero:onMoveTick()
+	self:_moving()
 end
 
-function var_0_0.updateSceneY(arg_21_0, arg_21_1)
-	var_0_0.super.updateSceneY(arg_21_0, arg_21_1)
+function ExploreHero:updateSceneY(y)
+	ExploreHero.super.updateSceneY(self, y)
 
-	local var_21_0 = arg_21_0:getPos()
+	local pos = self:getPos()
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterPosChange, var_21_0)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterPosChange, pos)
 end
 
-function var_0_0._checkAndPutoffPot(arg_22_0)
-	local var_22_0 = ExploreModel.instance:getCarryUnit()
+function ExploreHero:_checkAndPutoffPot()
+	local carryUnit = ExploreModel.instance:getCarryUnit()
 
-	if var_22_0 then
-		local var_22_1 = arg_22_0.nodePos
-		local var_22_2 = ExploreHelper.dirToXY(arg_22_0.dir)
-		local var_22_3 = {
-			x = var_22_1.x - var_22_2.x,
-			y = var_22_1.y - var_22_2.y
+	if carryUnit then
+		local nodePos = self.nodePos
+		local dirXY = ExploreHelper.dirToXY(self.dir)
+		local backPos = {
+			x = nodePos.x - dirXY.x,
+			y = nodePos.y - dirXY.y
 		}
-		local var_22_4 = ExploreHelper.getKey(var_22_3)
-		local var_22_5 = ExploreMapModel.instance:getNode(var_22_4)
+		local nodeKey = ExploreHelper.getKey(backPos)
+		local node = ExploreMapModel.instance:getNode(nodeKey)
 
-		if not var_22_5 or not var_22_5:isWalkable(nil, true) then
+		if not node or not node:isWalkable(nil, true) then
 			ToastController.instance:showToast(ExploreConstValue.Toast.ExploreCantPlacePot)
 
 			return
 		end
 
-		local var_22_6 = true
-		local var_22_7 = ExploreController.instance:getMap():getUnitByPos(var_22_1)
+		local canPlace = true
+		local units = ExploreController.instance:getMap():getUnitByPos(nodePos)
 
-		for iter_22_0, iter_22_1 in pairs(var_22_7) do
-			if iter_22_1:isEnter() and not iter_22_1.mo.canUseItem then
-				var_22_6 = false
+		for _, unit in pairs(units) do
+			if unit:isEnter() and not unit.mo.canUseItem then
+				canPlace = false
 
 				break
 			end
 		end
 
-		if not var_22_6 then
+		if not canPlace then
 			ToastController.instance:showToast(ExploreConstValue.Toast.ExploreCantPlacePot)
 
 			return
 		end
 
-		local var_22_8 = var_22_3.x .. "#" .. var_22_3.y
+		local params = backPos.x .. "#" .. backPos.y
 
-		ExploreRpc.instance:sendExploreInteractRequest(var_22_0.id, 0, var_22_8)
+		ExploreRpc.instance:sendExploreInteractRequest(carryUnit.id, 0, params)
 
 		return true
 	end
@@ -306,241 +308,241 @@ function var_0_0._checkAndPutoffPot(arg_22_0)
 	return false
 end
 
-function var_0_0._startMove(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	arg_23_0._gotoCallback = arg_23_2
-	arg_23_0._gotoCallbackObj = arg_23_3
-	arg_23_0._endPos = arg_23_1
+function ExploreHero:_startMove(pos, callback, callbackObj)
+	self._gotoCallback = callback
+	self._gotoCallbackObj = callbackObj
+	self._endPos = pos
 
-	local var_23_0 = arg_23_0.nodePos
+	local beginPos = self.nodePos
 
-	if not var_23_0 or ExploreHelper.isPosEqual(var_23_0, arg_23_0._endPos) and not arg_23_0._isMoving then
-		if arg_23_0:_checkAndPutoffPot() then
+	if not beginPos or ExploreHelper.isPosEqual(beginPos, self._endPos) and not self._isMoving then
+		if self:_checkAndPutoffPot() then
 			return
 		end
 
-		arg_23_0:_onEndMoveCallback()
+		self:_onEndMoveCallback()
 
 		return
 	end
 
-	if isDebugBuild and not arg_23_0:isMoving() and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
-		local var_23_1 = ExploreMapModel.instance:getNode(ExploreHelper.getKey(arg_23_1))
+	if isDebugBuild and not self:isMoving() and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
+		local node = ExploreMapModel.instance:getNode(ExploreHelper.getKey(pos))
 
-		if var_23_1 and var_23_1:isWalkable() then
-			arg_23_0:_onEndMoveCallback()
-			GMRpc.instance:sendGMRequest("set explore pos " .. ExploreModel.instance:getMapId() .. "#" .. arg_23_1.x .. "#" .. arg_23_1.y)
-			arg_23_0:setPosByNode(arg_23_1)
-			ExploreMapModel.instance:updatHeroPos(arg_23_1.x, arg_23_1.y, 0)
+		if node and node:isWalkable() then
+			self:_onEndMoveCallback()
+			GMRpc.instance:sendGMRequest("set explore pos " .. ExploreModel.instance:getMapId() .. "#" .. pos.x .. "#" .. pos.y)
+			self:setPosByNode(pos)
+			ExploreMapModel.instance:updatHeroPos(pos.x, pos.y, 0)
 			ExploreModel.instance:setHeroControl(true)
 
 			return
 		end
 	end
 
-	if arg_23_0.nodePos and arg_23_1 then
-		local var_23_2 = ExploreHelper.getKey(arg_23_0.nodePos)
-		local var_23_3 = ExploreMapModel.instance:getNode(var_23_2)
-		local var_23_4 = ExploreHelper.getKey(arg_23_1)
-		local var_23_5 = ExploreMapModel.instance:getNode(var_23_4)
+	if self.nodePos and pos then
+		local nodeKey1 = ExploreHelper.getKey(self.nodePos)
+		local node1 = ExploreMapModel.instance:getNode(nodeKey1)
+		local nodeKey2 = ExploreHelper.getKey(pos)
+		local node2 = ExploreMapModel.instance:getNode(nodeKey2)
 
-		if not var_23_3 or not var_23_5 or var_23_3.height ~= var_23_5.height then
+		if not node1 or not node2 or node1.height ~= node2.height then
 			return
 		end
 	end
 
-	arg_23_0._pathArray = arg_23_0._exploreMap:startFindPath(var_23_0, arg_23_0._endPos, arg_23_0._nextNodePos)
+	self._pathArray = self._exploreMap:startFindPath(beginPos, self._endPos, self._nextNodePos)
 
-	local var_23_6 = #arg_23_0._pathArray
+	local pathLen = #self._pathArray
 
-	if var_23_6 == 0 then
-		if not arg_23_0:isMoving() then
-			arg_23_0:_onEndMoveCallback()
-		elseif arg_23_0._runStartTime <= arg_23_0._runTotalTime / 2 then
-			arg_23_0:onCheckDir(arg_23_0._nextNodePos, arg_23_0.nodePos)
+	if pathLen == 0 then
+		if not self:isMoving() then
+			self:_onEndMoveCallback()
+		elseif self._runStartTime <= self._runTotalTime / 2 then
+			self:onCheckDir(self._nextNodePos, self.nodePos)
 
-			arg_23_0._nextWorldPos, arg_23_0._oldWorldPos = arg_23_0._oldWorldPos, arg_23_0._nextWorldPos
-			arg_23_0._runStartTime = arg_23_0._runTotalTime - arg_23_0._runStartTime
-			arg_23_0._nextNodePos = arg_23_0.nodePos
+			self._nextWorldPos, self._oldWorldPos = self._oldWorldPos, self._nextWorldPos
+			self._runStartTime = self._runTotalTime - self._runStartTime
+			self._nextNodePos = self.nodePos
 		else
-			arg_23_0:stopMoving()
+			self:stopMoving()
 		end
 
 		return
 	end
 
-	local var_23_7 = arg_23_0._pathArray[1]
-	local var_23_8 = true
+	local lastPos = self._pathArray[1]
+	local wayImpassable = true
 
-	if arg_23_0._tarUnitMO then
-		var_23_8 = ExploreHelper.getDistance(arg_23_0._tarUnitMO.nodePos, var_23_7) <= 1
+	if self._tarUnitMO then
+		wayImpassable = ExploreHelper.getDistance(self._tarUnitMO.nodePos, lastPos) <= 1
 	else
-		var_23_8 = arg_23_0._endPos.x == var_23_7.x and arg_23_0._endPos.y == var_23_7.y
+		wayImpassable = self._endPos.x == lastPos.x and self._endPos.y == lastPos.y
 	end
 
-	if var_23_8 == false then
-		arg_23_0:stopMoving()
+	if wayImpassable == false then
+		self:stopMoving()
 
 		return
 	end
 
-	arg_23_0._walkDistance = var_23_6
+	self._walkDistance = pathLen
 
-	arg_23_0:_startMove2()
-	arg_23_0:onStartMove()
+	self:_startMove2()
+	self:onStartMove()
 end
 
-function var_0_0.onNodeChange(arg_24_0, arg_24_1, arg_24_2)
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterNodeChange, arg_24_2, arg_24_1, arg_24_0._nextNodePos)
+function ExploreHero:onNodeChange(preNode, nowNode)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnCharacterNodeChange, nowNode, preNode, self._nextNodePos)
 
-	if arg_24_0:isMoving() then
-		arg_24_0:checkMoveAudio()
+	if self:isMoving() then
+		self:checkMoveAudio()
 	end
 end
 
-function var_0_0.checkMoveAudio(arg_25_0)
-	if not arg_25_0.nodePos then
+function ExploreHero:checkMoveAudio()
+	if not self.nodePos then
 		return
 	end
 
-	local var_25_0 = ExploreHelper.getKey(arg_25_0.nodePos)
-	local var_25_1 = ExploreMapModel.instance:getNode(var_25_0)
-	local var_25_2 = ExploreEnum.WalkAudioType.Normal
+	local key = ExploreHelper.getKey(self.nodePos)
+	local node = ExploreMapModel.instance:getNode(key)
+	local audioType = ExploreEnum.WalkAudioType.Normal
 
-	if var_25_1.nodeType == ExploreEnum.NodeType.Ice then
-		var_25_2 = ExploreEnum.WalkAudioType.Ice
+	if node.nodeType == ExploreEnum.NodeType.Ice then
+		audioType = ExploreEnum.WalkAudioType.Ice
 	end
 
-	if arg_25_0._playAudioType ~= var_25_2 then
-		arg_25_0:stopMoveAudio()
+	if self._playAudioType ~= audioType then
+		self:stopMoveAudio()
 
-		arg_25_0._playAudioType = var_25_2
+		self._playAudioType = audioType
 
-		if arg_25_0._playAudioType == ExploreEnum.WalkAudioType.Ice then
+		if self._playAudioType == ExploreEnum.WalkAudioType.Ice then
 			AudioMgr.instance:trigger(AudioEnum.Explore.HeroGlide)
 		end
 
-		if arg_25_0._playAudioType == ExploreEnum.WalkAudioType.Normal then
+		if self._playAudioType == ExploreEnum.WalkAudioType.Normal then
 			AudioMgr.instance:trigger(AudioEnum.Explore.HeroWalk)
 		end
 	end
 end
 
-function var_0_0.stopMoveAudio(arg_26_0)
-	if arg_26_0._playAudioType == ExploreEnum.WalkAudioType.Ice then
+function ExploreHero:stopMoveAudio()
+	if self._playAudioType == ExploreEnum.WalkAudioType.Ice then
 		AudioMgr.instance:trigger(AudioEnum.Explore.HeroGlideStop)
 	end
 
-	if arg_26_0._playAudioType == ExploreEnum.WalkAudioType.Normal then
+	if self._playAudioType == ExploreEnum.WalkAudioType.Normal then
 		AudioMgr.instance:trigger(AudioEnum.Explore.HeroWalkStop)
 	end
 end
 
-function var_0_0.setMoveState(arg_27_0, arg_27_1)
-	var_0_0.super.setMoveState(arg_27_0, arg_27_1)
+function ExploreHero:setMoveState(state)
+	ExploreHero.super.setMoveState(self, state)
 
-	if arg_27_1 == ExploreAnimEnum.RoleMoveState.Move then
-		arg_27_0:checkMoveAudio()
+	if state == ExploreAnimEnum.RoleMoveState.Move then
+		self:checkMoveAudio()
 	else
-		arg_27_0:stopMoveAudio()
+		self:stopMoveAudio()
 
-		arg_27_0._playAudioType = ExploreEnum.WalkAudioType.None
+		self._playAudioType = ExploreEnum.WalkAudioType.None
 	end
 end
 
-function var_0_0._startMove2(arg_28_0)
-	if arg_28_0._nextWorldPos then
-		local var_28_0 = arg_28_0:getPos()
-		local var_28_1 = ExploreHelper.tileToPos(arg_28_0._pathArray[#arg_28_0._pathArray])
+function ExploreHero:_startMove2()
+	if self._nextWorldPos then
+		local nowPos = self:getPos()
+		local toPos = ExploreHelper.tileToPos(self._pathArray[#self._pathArray])
 
-		var_28_1.y = var_28_0.y
+		toPos.y = nowPos.y
 
-		local var_28_2 = var_28_1 - var_28_0
+		local newDir = toPos - nowPos
 
-		var_28_2.y = 0
+		newDir.y = 0
 
-		local var_28_3 = var_28_2:Normalize()
-		local var_28_4 = arg_28_0._nextWorldPos - var_28_0
+		local normal1 = newDir:Normalize()
+		local oldDir = self._nextWorldPos - nowPos
 
-		var_28_4.y = 0
+		oldDir.y = 0
 
-		local var_28_5 = var_28_4:Normalize()
+		local normal2 = oldDir:Normalize()
 
-		if Mathf.Approximately(var_28_3.x, var_28_5.x) and Mathf.Approximately(var_28_3.z, var_28_5.z) or arg_28_0._runStartTime > arg_28_0._runTotalTime / 2 then
+		if Mathf.Approximately(normal1.x, normal2.x) and Mathf.Approximately(normal1.z, normal2.z) or self._runStartTime > self._runTotalTime / 2 then
 			-- block empty
 		else
-			arg_28_0:onCheckDir(arg_28_0._nextNodePos, arg_28_0.nodePos)
+			self:onCheckDir(self._nextNodePos, self.nodePos)
 
-			arg_28_0._nextWorldPos, arg_28_0._oldWorldPos = arg_28_0._oldWorldPos, arg_28_0._nextWorldPos
-			arg_28_0._runStartTime = arg_28_0._runTotalTime - arg_28_0._runStartTime
-			arg_28_0._nextNodePos = arg_28_0.nodePos
+			self._nextWorldPos, self._oldWorldPos = self._oldWorldPos, self._nextWorldPos
+			self._runStartTime = self._runTotalTime - self._runStartTime
+			self._nextNodePos = self.nodePos
 		end
 	end
 
-	arg_28_0._isMoving = true
+	self._isMoving = true
 
-	TaskDispatcher.runRepeat(arg_28_0.onMoveTick, arg_28_0, 0)
-	arg_28_0:onMoveTick()
+	TaskDispatcher.runRepeat(self.onMoveTick, self, 0)
+	self:onMoveTick()
 end
 
-function var_0_0._onFrame(arg_29_0)
+function ExploreHero:_onFrame()
 	do return end
 
-	local var_29_0 = ExploreController.instance:getMap()
+	local map = ExploreController.instance:getMap()
 
-	if not var_29_0 then
+	if not map then
 		return
 	end
 
-	if var_29_0:getNowStatus() ~= ExploreEnum.MapStatus.Normal then
+	if map:getNowStatus() ~= ExploreEnum.MapStatus.Normal then
 		return
 	end
 
-	if arg_29_0:isMoving() then
+	if self:isMoving() then
 		return
 	end
 
-	local var_29_1 = PCInputController.instance
-	local var_29_2, var_29_3, var_29_4, var_29_5 = var_29_1:getThirdMoveKey()
+	local inputController = PCInputController.instance
+	local up, left, down, right = inputController:getThirdMoveKey()
 
-	if var_29_1:getKeyPress(var_29_2) then
-		local var_29_6 = arg_29_0:RealMoveDir(0)
+	if inputController:getKeyPress(up) then
+		local xy = self:RealMoveDir(0)
 
-		if var_29_6 == nil then
+		if xy == nil then
 			return
 		end
 
-		arg_29_0:moveTo(Vector2(arg_29_0.nodePos.x + var_29_6.x, arg_29_0.nodePos.y + var_29_6.y))
-	elseif var_29_1:getKeyPress(var_29_4) then
-		local var_29_7 = arg_29_0:RealMoveDir(180)
+		self:moveTo(Vector2(self.nodePos.x + xy.x, self.nodePos.y + xy.y))
+	elseif inputController:getKeyPress(down) then
+		local xy = self:RealMoveDir(180)
 
-		if var_29_7 == nil then
+		if xy == nil then
 			return
 		end
 
-		arg_29_0:moveTo(Vector2(arg_29_0.nodePos.x + var_29_7.x, arg_29_0.nodePos.y + var_29_7.y))
-	elseif var_29_1:getKeyPress(var_29_3) then
-		local var_29_8 = arg_29_0:RealMoveDir(270)
+		self:moveTo(Vector2(self.nodePos.x + xy.x, self.nodePos.y + xy.y))
+	elseif inputController:getKeyPress(left) then
+		local xy = self:RealMoveDir(270)
 
-		if var_29_8 == nil then
+		if xy == nil then
 			return
 		end
 
-		arg_29_0:moveTo(Vector2(arg_29_0.nodePos.x + var_29_8.x, arg_29_0.nodePos.y + var_29_8.y))
-	elseif var_29_1:getKeyPress(var_29_5) then
-		local var_29_9 = arg_29_0:RealMoveDir(90)
+		self:moveTo(Vector2(self.nodePos.x + xy.x, self.nodePos.y + xy.y))
+	elseif inputController:getKeyPress(right) then
+		local xy = self:RealMoveDir(90)
 
-		if var_29_9 == nil then
+		if xy == nil then
 			return
 		end
 
-		arg_29_0:moveTo(Vector2(arg_29_0.nodePos.x + var_29_9.x, arg_29_0.nodePos.y + var_29_9.y))
+		self:moveTo(Vector2(self.nodePos.x + xy.x, self.nodePos.y + xy.y))
 	end
 end
 
-function var_0_0.RealMoveDir(arg_30_0, arg_30_1)
-	local var_30_0 = ExploreMapModel.instance.nowMapRotate
+function ExploreHero:RealMoveDir(dir)
+	local mapRatation = ExploreMapModel.instance.nowMapRotate
 
-	return ExploreHelper.dirToXY(arg_30_1 + var_30_0)
+	return ExploreHelper.dirToXY(dir + mapRatation)
 end
 
-return var_0_0
+return ExploreHero

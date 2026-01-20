@@ -1,68 +1,72 @@
-﻿module("modules.logic.mainuiswitch.model.MainUISwitchModel", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/model/MainUISwitchModel.lua
 
-local var_0_0 = class("MainUISwitchModel", BaseModel)
+module("modules.logic.mainuiswitch.model.MainUISwitchModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local MainUISwitchModel = class("MainUISwitchModel", BaseModel)
+
+function MainUISwitchModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curUseUI = nil
+function MainUISwitchModel:reInit()
+	self._curUseUI = nil
 end
 
-function var_0_0.initMainUI(arg_3_0)
-	local var_3_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainUISkin)
-	local var_3_1 = tonumber(var_3_0) or 0
-	local var_3_2 = MainUISwitchConfig.instance:getUISwitchCoByItemId(var_3_1)
+function MainUISwitchModel:initMainUI()
+	local value = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.MainUISkin)
+	local itemId = tonumber(value) or 0
+	local co = MainUISwitchConfig.instance:getUISwitchCoByItemId(itemId)
 
-	arg_3_0._curUseUI = var_3_2 and var_3_2.id or arg_3_0:_getUseUIDefaultId()
+	self._curUseUI = co and co.id or self:_getUseUIDefaultId()
 end
 
-function var_0_0.setCurUseUI(arg_4_0, arg_4_1)
-	arg_4_0._curUseUI = arg_4_1
+function MainUISwitchModel:setCurUseUI(id)
+	self._curUseUI = id
 end
 
-function var_0_0.getCurUseUI(arg_5_0)
-	return arg_5_0._curUseUI or arg_5_0:_getUseUIDefaultId()
+function MainUISwitchModel:getCurUseUI()
+	return self._curUseUI or self:_getUseUIDefaultId()
 end
 
-function var_0_0._getUseUIDefaultId(arg_6_0)
-	for iter_6_0, iter_6_1 in ipairs(lua_scene_ui.configList) do
-		if iter_6_1.defaultUnlock == 1 then
-			return iter_6_1.id
+function MainUISwitchModel:_getUseUIDefaultId()
+	for _, co in ipairs(lua_scene_ui.configList) do
+		if co.defaultUnlock == 1 then
+			return co.id
 		end
 	end
 end
 
-function var_0_0.getUIStatus(arg_7_0)
-	local var_7_0 = lua_scene_ui.configDict[arg_7_0]
+function MainUISwitchModel.getUIStatus(id)
+	local config = lua_scene_ui.configDict[id]
 
-	if not var_7_0 then
+	if not config then
 		return MainSceneSwitchEnum.SceneStutas.Lock
 	end
 
-	if var_7_0.defaultUnlock == 1 then
+	if config.defaultUnlock == 1 then
 		return MainSceneSwitchEnum.SceneStutas.Unlock
 	end
 
-	if ItemModel.instance:getItemCount(var_7_0.itemId) > 0 then
+	local num = ItemModel.instance:getItemCount(config.itemId)
+
+	if num > 0 then
 		return MainSceneSwitchEnum.SceneStutas.Unlock
 	end
 
-	if var_0_0.canJump(var_7_0.itemId) then
+	if MainUISwitchModel.canJump(config.itemId) then
 		return MainSceneSwitchEnum.SceneStutas.LockCanGet
 	end
 
 	return MainSceneSwitchEnum.SceneStutas.Lock
 end
 
-function var_0_0.canJump(arg_8_0)
-	local var_8_0 = MainUISwitchConfig.instance:getItemSource(arg_8_0)
+function MainUISwitchModel.canJump(itemId)
+	local sourceTables = MainUISwitchConfig.instance:getItemSource(itemId)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1, var_8_2 = MainSceneSwitchModel._getCantJump(iter_8_1)
+	for i, sourceTable in ipairs(sourceTables) do
+		local cantJumpTips, toastParamList = MainSceneSwitchModel._getCantJump(sourceTable)
 
-		if not var_8_1 then
+		if not cantJumpTips then
 			return true
 		end
 	end
@@ -70,6 +74,6 @@ function var_0_0.canJump(arg_8_0)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+MainUISwitchModel.instance = MainUISwitchModel.New()
 
-return var_0_0
+return MainUISwitchModel

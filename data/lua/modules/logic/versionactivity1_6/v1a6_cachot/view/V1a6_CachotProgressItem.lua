@@ -1,254 +1,260 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotProgressItem.lua
 
-local var_0_0 = class("V1a6_CachotProgressItem", MixScrollCell)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotProgressItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._gounlock = gohelper.findChild(arg_1_1, "#go_unlock")
-	arg_1_0._golock = gohelper.findChild(arg_1_1, "#go_lock")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_1, "#go_unlock/scorebg/#txt_score")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_1, "#go_unlock/#go_item/#go_rewarditem")
-	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_1, "#go_unlock/#image_point")
-	arg_1_0._txtlocktip = gohelper.findChildText(arg_1_1, "#go_lock/#txt_locktip")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_1, "#go_unlock/#txt_index")
-	arg_1_0._gospecial = gohelper.findChild(arg_1_1, "#go_unlock/#go_special")
+local V1a6_CachotProgressItem = class("V1a6_CachotProgressItem", MixScrollCell)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotProgressItem:init(go)
+	self._gounlock = gohelper.findChild(go, "#go_unlock")
+	self._golock = gohelper.findChild(go, "#go_lock")
+	self._txtscore = gohelper.findChildText(go, "#go_unlock/scorebg/#txt_score")
+	self._gorewarditem = gohelper.findChild(go, "#go_unlock/#go_item/#go_rewarditem")
+	self._imagepoint = gohelper.findChildImage(go, "#go_unlock/#image_point")
+	self._txtlocktip = gohelper.findChildText(go, "#go_lock/#txt_locktip")
+	self._txtindex = gohelper.findChildText(go, "#go_unlock/#txt_index")
+	self._gospecial = gohelper.findChild(go, "#go_unlock/#go_special")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function V1a6_CachotProgressItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function V1a6_CachotProgressItem:removeEventListeners()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function V1a6_CachotProgressItem:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0:releaseRewardIconTab()
-	TaskDispatcher.cancelTask(arg_5_0.refreshUnLockNextStageTimeUI, arg_5_0)
+function V1a6_CachotProgressItem:onDestroy()
+	self:releaseRewardIconTab()
+	TaskDispatcher.cancelTask(self.refreshUnLockNextStageTimeUI, self)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0._mo = arg_6_1
+function V1a6_CachotProgressItem:onUpdateMO(mo, mixType, param)
+	self._mo = mo
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	gohelper.setActive(arg_7_0._golock, arg_7_0._mo.isLocked)
-	gohelper.setActive(arg_7_0._gounlock, not arg_7_0._mo.isLocked)
-	TaskDispatcher.cancelTask(arg_7_0.refreshUnLockNextStageTimeUI, arg_7_0)
+function V1a6_CachotProgressItem:refreshUI()
+	gohelper.setActive(self._golock, self._mo.isLocked)
+	gohelper.setActive(self._gounlock, not self._mo.isLocked)
+	TaskDispatcher.cancelTask(self.refreshUnLockNextStageTimeUI, self)
 
-	if arg_7_0._mo.isLocked then
-		arg_7_0:onItemLocked()
+	if self._mo.isLocked then
+		self:onItemLocked()
 
 		return
 	end
 
-	local var_7_0 = V1a6_CachotScoreConfig.instance:getStagePartConfig(arg_7_0._mo.id)
+	local scoreConfig = V1a6_CachotScoreConfig.instance:getStagePartConfig(self._mo.id)
 
-	if var_7_0 then
-		local var_7_1 = V1a6_CachotProgressListModel.instance:getRewardState(arg_7_0._mo.id)
+	if scoreConfig then
+		local rewardState = V1a6_CachotProgressListModel.instance:getRewardState(self._mo.id)
 
-		arg_7_0:refreshNormalUI(var_7_0)
-		arg_7_0:refreshStateUI(var_7_0, var_7_1)
-		arg_7_0:refreshRewardItems(var_7_0.reward, var_7_1)
+		self:refreshNormalUI(scoreConfig)
+		self:refreshStateUI(scoreConfig, rewardState)
+		self:refreshRewardItems(scoreConfig.reward, rewardState)
 	end
 end
 
-function var_0_0.refreshNormalUI(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 and arg_8_1.special == 1
+function V1a6_CachotProgressItem:refreshNormalUI(scoreConfig)
+	local isSpecial = scoreConfig and scoreConfig.special == 1
 
-	gohelper.setActive(arg_8_0._gospecial, var_8_0)
+	gohelper.setActive(self._gospecial, isSpecial)
 end
 
-function var_0_0.onItemLocked(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.refreshUnLockNextStageTimeUI, arg_9_0)
-	TaskDispatcher.runRepeat(arg_9_0.refreshUnLockNextStageTimeUI, arg_9_0, TimeUtil.OneMinuteSecond)
-	arg_9_0:refreshUnLockNextStageTimeUI()
+function V1a6_CachotProgressItem:onItemLocked()
+	TaskDispatcher.cancelTask(self.refreshUnLockNextStageTimeUI, self)
+	TaskDispatcher.runRepeat(self.refreshUnLockNextStageTimeUI, self, TimeUtil.OneMinuteSecond)
+	self:refreshUnLockNextStageTimeUI()
 end
 
-function var_0_0.refreshUnLockNextStageTimeUI(arg_10_0)
-	local var_10_0 = V1a6_CachotProgressListModel.instance:getUnLockNextStageRemainTime()
+function V1a6_CachotProgressItem:refreshUnLockNextStageTimeUI()
+	local unLockNextStageRemainTime = V1a6_CachotProgressListModel.instance:getUnLockNextStageRemainTime()
 
-	if var_10_0 and var_10_0 > 0 then
-		local var_10_1, var_10_2 = TimeUtil.secondsToDDHHMMSS(var_10_0)
+	if unLockNextStageRemainTime and unLockNextStageRemainTime > 0 then
+		local remainDay, remainHour = TimeUtil.secondsToDDHHMMSS(unLockNextStageRemainTime)
 
-		if var_10_1 > 0 then
-			arg_10_0._txtlocktip.text = formatLuaLang("v1a6_cachotprogressview_unlocktips_days", var_10_1)
+		if remainDay > 0 then
+			self._txtlocktip.text = formatLuaLang("v1a6_cachotprogressview_unlocktips_days", remainDay)
 		else
-			arg_10_0._txtlocktip.text = formatLuaLang("v1a6_cachotprogressview_unlocktips_hours", var_10_2)
+			self._txtlocktip.text = formatLuaLang("v1a6_cachotprogressview_unlocktips_hours", remainHour)
 		end
 	else
-		TaskDispatcher.cancelTask(arg_10_0.refreshUnLockNextStageTimeUI, arg_10_0)
+		TaskDispatcher.cancelTask(self.refreshUnLockNextStageTimeUI, self)
 	end
 end
 
-local var_0_1 = "#DB7D29"
-local var_0_2 = "#FFFFFF"
-local var_0_3 = 0.3
-local var_0_4 = 0.3
-local var_0_5 = "#DB7D29"
-local var_0_6 = "#8E8E8E"
+local finishIndexTxtColor = "#DB7D29"
+local unfinishIndexTxtColor = "#FFFFFF"
+local unfinishIndexTxtColorAlpha = 0.3
+local finishIndexTxtColorAlpha = 0.3
+local finishScroreTxtColor = "#DB7D29"
+local unfinishScoreTxtColor = "#8E8E8E"
 
-function var_0_0.refreshStateUI(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = "v1a6_cachot_icon_pointdark"
-	local var_11_1 = var_0_2
-	local var_11_2 = var_0_3
-	local var_11_3 = var_0_6
-	local var_11_4 = arg_11_1 and arg_11_1.special == 1
+function V1a6_CachotProgressItem:refreshStateUI(scoreConfig, rewardState)
+	local pointIconName = "v1a6_cachot_icon_pointdark"
+	local indexTxtColor = unfinishIndexTxtColor
+	local indexTxtAlpha = unfinishIndexTxtColorAlpha
+	local scoreTxtColor = unfinishScoreTxtColor
+	local isSpecial = scoreConfig and scoreConfig.special == 1
 
-	if arg_11_2 == V1a6_CachotEnum.MilestonesState.UnFinish then
-		var_11_0 = var_11_4 and "v1a6_cachot_icon_pointdark2" or "v1a6_cachot_icon_pointdark"
+	if rewardState == V1a6_CachotEnum.MilestonesState.UnFinish then
+		pointIconName = isSpecial and "v1a6_cachot_icon_pointdark2" or "v1a6_cachot_icon_pointdark"
 	else
-		var_11_0 = var_11_4 and "v1a6_cachot_icon_pointlight2" or "v1a6_cachot_icon_pointlight"
-		var_11_1 = var_0_1
-		var_11_2 = var_0_4
-		var_11_3 = var_0_5
+		pointIconName = isSpecial and "v1a6_cachot_icon_pointlight2" or "v1a6_cachot_icon_pointlight"
+		indexTxtColor = finishIndexTxtColor
+		indexTxtAlpha = finishIndexTxtColorAlpha
+		scoreTxtColor = finishScroreTxtColor
 	end
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_11_0._imagepoint, var_11_0)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(self._imagepoint, pointIconName)
 
-	arg_11_0._txtscore.text = string.format("<%s>%s</color>", var_11_3, arg_11_1.score)
-	arg_11_0._txtindex.text = arg_11_0._index
+	self._txtscore.text = string.format("<%s>%s</color>", scoreTxtColor, scoreConfig.score)
+	self._txtindex.text = self._index
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._txtindex, var_11_1)
-	ZProj.UGUIHelper.SetColorAlpha(arg_11_0._txtindex, var_11_2)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtindex, indexTxtColor)
+	ZProj.UGUIHelper.SetColorAlpha(self._txtindex, indexTxtAlpha)
 end
 
-local var_0_7 = 0.5
-local var_0_8 = 1
-local var_0_9 = 0.5
-local var_0_10 = 1
-local var_0_11 = 0.5
-local var_0_12 = 1
+local HasReceiveRewardBgAlpha = 0.5
+local UnReceiveRewardBgAlpha = 1
+local HasReceiveRewardIconAlpha = 0.5
+local UnReceiveRewardIconAlpha = 1
+local HasReceiveHeadFrameAlpha = 0.5
+local UnReceiveHeadFrameAlpha = 1
 
-function var_0_0.refreshRewardItems(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = {}
+function V1a6_CachotProgressItem:refreshRewardItems(rewardConfig, rewardState)
+	local useMap = {}
 
-	local function var_12_1(arg_13_0)
-		local var_13_0 = arg_13_0.simageicon.gameObject:GetComponent(typeof(UnityEngine.UI.Image))
+	local function iconLoadCB(item)
+		local imageComp = item.simageicon.gameObject:GetComponent(typeof(UnityEngine.UI.Image))
 
-		var_13_0:SetNativeSize()
-		ZProj.UGUIHelper.SetColorAlpha(var_13_0, arg_12_2 == V1a6_CachotEnum.MilestonesState.HasReceived and var_0_9 or var_0_10)
+		imageComp:SetNativeSize()
+		ZProj.UGUIHelper.SetColorAlpha(imageComp, rewardState == V1a6_CachotEnum.MilestonesState.HasReceived and HasReceiveRewardIconAlpha or UnReceiveRewardIconAlpha)
 	end
 
-	if arg_12_1 then
-		local var_12_2 = string.split(arg_12_1, "|")
+	if rewardConfig then
+		local rewardStrList = string.split(rewardConfig, "|")
 
-		for iter_12_0 = 1, #var_12_2 do
-			local var_12_3 = string.splitToNumber(var_12_2[iter_12_0], "#")
-			local var_12_4 = arg_12_0:getOrCreateRewardItem(iter_12_0)
+		for i = 1, #rewardStrList do
+			local rewardInfo = string.splitToNumber(rewardStrList[i], "#")
+			local item = self:getOrCreateRewardItem(i)
 
-			arg_12_0:refreshSingleRewardItem(var_12_4, var_12_3, arg_12_2, var_12_1)
+			self:refreshSingleRewardItem(item, rewardInfo, rewardState, iconLoadCB)
 
-			var_12_0[var_12_4] = true
+			useMap[item] = true
 		end
 	end
 
-	arg_12_0:recycleUnUseRewardItem(var_12_0)
+	self:recycleUnUseRewardItem(useMap)
 end
 
-function var_0_0.getOrCreateRewardItem(arg_14_0, arg_14_1)
-	arg_14_0._rewardItemTab = arg_14_0._rewardItemTab or {}
+function V1a6_CachotProgressItem:getOrCreateRewardItem(index)
+	self._rewardItemTab = self._rewardItemTab or {}
 
-	local var_14_0 = arg_14_0._rewardItemTab[arg_14_1]
+	local rewardItem = self._rewardItemTab[index]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-		var_14_0.go = gohelper.cloneInPlace(arg_14_0._gorewarditem, "reward_" .. arg_14_1)
-		var_14_0.imagebg = gohelper.findChildImage(var_14_0.go, "bg")
-		var_14_0.simageicon = gohelper.findChildSingleImage(var_14_0.go, "simage_reward")
-		var_14_0.goheadframe = gohelper.findChild(var_14_0.go, "go_headframe")
-		var_14_0.frameCanvasGroup = gohelper.onceAddComponent(var_14_0.goheadframe, typeof(UnityEngine.CanvasGroup))
-		var_14_0.gocanget = gohelper.findChild(var_14_0.go, "go_canget")
-		var_14_0.gohasget = gohelper.findChild(var_14_0.go, "go_hasget")
-		var_14_0.txtrewardcount = gohelper.findChildText(var_14_0.go, "txt_rewardcount")
-		var_14_0.btnclick = gohelper.findChildButtonWithAudio(var_14_0.go, "btn_click")
-		arg_14_0._rewardItemTab[arg_14_1] = var_14_0
+	if not rewardItem then
+		rewardItem = self:getUserDataTb_()
+		rewardItem.go = gohelper.cloneInPlace(self._gorewarditem, "reward_" .. index)
+		rewardItem.imagebg = gohelper.findChildImage(rewardItem.go, "bg")
+		rewardItem.simageicon = gohelper.findChildSingleImage(rewardItem.go, "simage_reward")
+		rewardItem.goheadframe = gohelper.findChild(rewardItem.go, "go_headframe")
+		rewardItem.frameCanvasGroup = gohelper.onceAddComponent(rewardItem.goheadframe, typeof(UnityEngine.CanvasGroup))
+		rewardItem.gocanget = gohelper.findChild(rewardItem.go, "go_canget")
+		rewardItem.gohasget = gohelper.findChild(rewardItem.go, "go_hasget")
+		rewardItem.txtrewardcount = gohelper.findChildText(rewardItem.go, "txt_rewardcount")
+		rewardItem.btnclick = gohelper.findChildButtonWithAudio(rewardItem.go, "btn_click")
+		self._rewardItemTab[index] = rewardItem
 	end
 
-	return var_14_0
+	return rewardItem
 end
 
-function var_0_0.refreshSingleRewardItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	local var_15_0 = arg_15_2 and arg_15_2[1]
-	local var_15_1 = arg_15_2 and arg_15_2[2]
-	local var_15_2 = arg_15_2 and arg_15_2[3]
-	local var_15_3, var_15_4 = ItemModel.instance:getItemConfigAndIcon(var_15_0, var_15_1)
+function V1a6_CachotProgressItem:refreshSingleRewardItem(item, rewardInfo, rewardState, iconLoadCB)
+	local materialType = rewardInfo and rewardInfo[1]
+	local materialId = rewardInfo and rewardInfo[2]
+	local materialCount = rewardInfo and rewardInfo[3]
+	local itemCfg, iconPath = ItemModel.instance:getItemConfigAndIcon(materialType, materialId)
 
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_15_1.imagebg, "v1a6_cachot_img_quality_" .. var_15_3.rare)
-	ZProj.UGUIHelper.SetColorAlpha(arg_15_1.imagebg, arg_15_3 == V1a6_CachotEnum.MilestonesState.HasReceived and var_0_7 or var_0_8)
-	gohelper.setActive(arg_15_1.goheadframe, false)
-	gohelper.setActive(arg_15_1.txtrewardcount, true)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(item.imagebg, "v1a6_cachot_img_quality_" .. itemCfg.rare)
+	ZProj.UGUIHelper.SetColorAlpha(item.imagebg, rewardState == V1a6_CachotEnum.MilestonesState.HasReceived and HasReceiveRewardBgAlpha or UnReceiveRewardBgAlpha)
+	gohelper.setActive(item.goheadframe, false)
+	gohelper.setActive(item.txtrewardcount, true)
 
-	if var_15_0 == MaterialEnum.MaterialType.Equip then
-		arg_15_1.simageicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(var_15_3.icon), arg_15_4, arg_15_1)
-	elseif var_15_3.subType == ItemEnum.SubType.Portrait then
-		local var_15_5 = arg_15_3 == V1a6_CachotEnum.MilestonesState.HasReceived and var_0_11 or var_0_12
+	if materialType == MaterialEnum.MaterialType.Equip then
+		item.simageicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(itemCfg.icon), iconLoadCB, item)
+	elseif itemCfg.subType == ItemEnum.SubType.Portrait then
+		local headAlpha = rewardState == V1a6_CachotEnum.MilestonesState.HasReceived and HasReceiveHeadFrameAlpha or UnReceiveHeadFrameAlpha
 
-		if not arg_15_0._liveHeadIcon then
-			arg_15_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_15_1.simageicon)
+		if not self._liveHeadIcon then
+			local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(item.simageicon)
+
+			self._liveHeadIcon = commonLiveIcon
 		end
 
-		arg_15_0._liveHeadIcon:setLiveHead(tonumber(var_15_3.icon), true, nil, function(arg_16_0, arg_16_1)
-			arg_16_1:setAlpha(var_15_5)
-		end, arg_15_0)
-		gohelper.setActive(arg_15_1.goheadframe, true)
-		gohelper.setActive(arg_15_1.txtrewardcount, false)
+		self._liveHeadIcon:setLiveHead(tonumber(itemCfg.icon), true, nil, function(self, liveIcon)
+			liveIcon:setAlpha(headAlpha)
+		end, self)
+		gohelper.setActive(item.goheadframe, true)
+		gohelper.setActive(item.txtrewardcount, false)
 
-		arg_15_1.frameCanvasGroup.alpha = var_15_5
+		item.frameCanvasGroup.alpha = headAlpha
 	else
-		arg_15_1.simageicon:LoadImage(var_15_4, arg_15_4, arg_15_1)
+		item.simageicon:LoadImage(iconPath, iconLoadCB, item)
 	end
 
-	arg_15_1.txtrewardcount.text = formatLuaLang("cachotprogressview_rewardcount", var_15_2)
+	item.txtrewardcount.text = formatLuaLang("cachotprogressview_rewardcount", materialCount)
 
-	gohelper.setActive(arg_15_1.gohasget, arg_15_3 == V1a6_CachotEnum.MilestonesState.HasReceived)
-	gohelper.setActive(arg_15_1.gocanget, arg_15_3 == V1a6_CachotEnum.MilestonesState.CanReceive)
-	gohelper.setActive(arg_15_1.go, true)
-	arg_15_1.btnclick:RemoveClickListener()
-	arg_15_1.btnclick:AddClickListener(arg_15_0.onClickRewardItem, arg_15_0, arg_15_2)
+	gohelper.setActive(item.gohasget, rewardState == V1a6_CachotEnum.MilestonesState.HasReceived)
+	gohelper.setActive(item.gocanget, rewardState == V1a6_CachotEnum.MilestonesState.CanReceive)
+	gohelper.setActive(item.go, true)
+	item.btnclick:RemoveClickListener()
+	item.btnclick:AddClickListener(self.onClickRewardItem, self, rewardInfo)
 end
 
-function var_0_0.onClickRewardItem(arg_17_0, arg_17_1)
-	if V1a6_CachotProgressListModel.instance:getRewardState(arg_17_0._mo.id) == V1a6_CachotEnum.MilestonesState.CanReceive then
-		local var_17_0 = V1a6_CachotProgressListModel.instance:getCanReceivePartIdList()
+function V1a6_CachotProgressItem:onClickRewardItem(itemCfg)
+	local state = V1a6_CachotProgressListModel.instance:getRewardState(self._mo.id)
 
-		RogueRpc.instance:sendGetRogueScoreRewardRequest(V1a6_CachotEnum.ActivityId, var_17_0)
-	elseif arg_17_1 then
-		MaterialTipController.instance:showMaterialInfo(arg_17_1[1], arg_17_1[2])
+	if state == V1a6_CachotEnum.MilestonesState.CanReceive then
+		local canReceiveRewardList = V1a6_CachotProgressListModel.instance:getCanReceivePartIdList()
+
+		RogueRpc.instance:sendGetRogueScoreRewardRequest(V1a6_CachotEnum.ActivityId, canReceiveRewardList)
+	elseif itemCfg then
+		MaterialTipController.instance:showMaterialInfo(itemCfg[1], itemCfg[2])
 	end
 end
 
-function var_0_0.recycleUnUseRewardItem(arg_18_0, arg_18_1)
-	if arg_18_1 and arg_18_0._rewardItemTab then
-		for iter_18_0, iter_18_1 in pairs(arg_18_0._rewardItemTab) do
-			if not arg_18_1[iter_18_1] then
-				gohelper.setActive(iter_18_1.go, false)
+function V1a6_CachotProgressItem:recycleUnUseRewardItem(useMap)
+	if useMap and self._rewardItemTab then
+		for _, v in pairs(self._rewardItemTab) do
+			if not useMap[v] then
+				gohelper.setActive(v.go, false)
 			end
 		end
 	end
 end
 
-function var_0_0.releaseRewardIconTab(arg_19_0)
-	if arg_19_0._rewardItemTab then
-		for iter_19_0, iter_19_1 in pairs(arg_19_0._rewardItemTab) do
-			if iter_19_1.btnclick then
-				iter_19_1.btnclick:RemoveClickListener()
+function V1a6_CachotProgressItem:releaseRewardIconTab()
+	if self._rewardItemTab then
+		for k, v in pairs(self._rewardItemTab) do
+			if v.btnclick then
+				v.btnclick:RemoveClickListener()
 			end
 
-			if iter_19_1.simageicon then
-				iter_19_1.simageicon:UnLoadImage()
+			if v.simageicon then
+				v.simageicon:UnLoadImage()
 			end
 		end
 	end
 end
 
-return var_0_0
+return V1a6_CachotProgressItem

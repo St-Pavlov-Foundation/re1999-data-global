@@ -1,0 +1,211 @@
+[
+  {
+    "id": 1000,
+    "type": 1,
+    "rare": 1,
+    "name": "language_10102740",
+    "icon": "rouge2_alchemy_1_2",
+    "details": "language_10102741",
+    "formula": "101#102#103#104#105#106#107#108",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1001,
+    "type": 1,
+    "rare": 1,
+    "name": "language_10102742",
+    "icon": "rouge2_alchemy_1_3",
+    "details": "language_10102729",
+    "formula": "103",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1002,
+    "type": 1,
+    "rare": 3,
+    "name": "language_10102743",
+    "icon": "rouge2_alchemy_1_4",
+    "details": "language_10102735",
+    "formula": "106",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1003,
+    "type": 1,
+    "rare": 2,
+    "name": "language_10102744",
+    "icon": "rouge2_alchemy_1_10",
+    "details": "language_10102727",
+    "formula": "102",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1004,
+    "type": 1,
+    "rare": 3,
+    "name": "language_10102745",
+    "icon": "rouge2_alchemy_1_6",
+    "details": "language_10102737",
+    "formula": "107",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1005,
+    "type": 1,
+    "rare": 2,
+    "name": "language_10102746",
+    "icon": "rouge2_alchemy_1_7",
+    "details": "language_10102733",
+    "formula": "105",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1006,
+    "type": 1,
+    "rare": 3,
+    "name": "language_10102747",
+    "icon": "rouge2_alchemy_1_8",
+    "details": "language_10102739",
+    "formula": "106",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1007,
+    "type": 1,
+    "rare": 2,
+    "name": "language_10102748",
+    "icon": "rouge2_alchemy_1_9",
+    "details": "language_10102725",
+    "formula": "108",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1008,
+    "type": 1,
+    "rare": 1,
+    "name": "language_10102749",
+    "icon": "rouge2_alchemy_1_5",
+    "details": "language_10102731",
+    "formula": "104",
+    "effects": "",
+    "numMax": 5
+  },
+  {
+    "id": 1101,
+    "type": 2,
+    "rare": 2,
+    "name": "language_10102750",
+    "icon": "rouge2_alchemy_2_1",
+    "details": "language_10102751",
+    "formula": "",
+    "effects": "190901#100",
+    "numMax": 5
+  },
+  {
+    "id": 1102,
+    "type": 2,
+    "rare": 2,
+    "name": "language_10102752",
+    "icon": "rouge2_alchemy_2_2",
+    "details": "language_10102753",
+    "formula": "",
+    "effects": "190902#100",
+    "numMax": 5
+  },
+  {
+    "id": 1103,
+    "type": 2,
+    "rare": 2,
+    "name": "language_10102754",
+    "icon": "rouge2_alchemy_2_7",
+    "details": "language_10102755",
+    "formula": "",
+    "effects": "190903#100",
+    "numMax": 5
+  },
+  {
+    "id": 1104,
+    "type": 2,
+    "rare": 1,
+    "name": "language_10102756",
+    "icon": "rouge2_alchemy_2_4",
+    "details": "language_10102757",
+    "formula": "",
+    "effects": "190904#100",
+    "numMax": 5
+  },
+  {
+    "id": 1105,
+    "type": 2,
+    "rare": 1,
+    "name": "language_10102758",
+    "icon": "rouge2_alchemy_2_5",
+    "details": "language_10102759",
+    "formula": "",
+    "effects": "190905#100",
+    "numMax": 5
+  },
+  {
+    "id": 1106,
+    "type": 2,
+    "rare": 2,
+    "name": "language_10102760",
+    "icon": "rouge2_alchemy_2_6",
+    "details": "language_10102761",
+    "formula": "",
+    "effects": "190906#100",
+    "numMax": 5
+  },
+  {
+    "id": 1107,
+    "type": 2,
+    "rare": 3,
+    "name": "language_10102762",
+    "icon": "rouge2_alchemy_2_3",
+    "details": "language_10102763",
+    "formula": "",
+    "effects": "190907#100",
+    "numMax": 5
+  },
+  {
+    "id": 1108,
+    "type": 2,
+    "rare": 1,
+    "name": "language_10102764",
+    "icon": "rouge2_alchemy_2_8",
+    "details": "language_10102765",
+    "formula": "",
+    "effects": "190908#100",
+    "numMax": 5
+  },
+  {
+    "id": 1109,
+    "type": 2,
+    "rare": 3,
+    "name": "language_10102766",
+    "icon": "rouge2_alchemy_2_9",
+    "details": "language_10102767",
+    "formula": "",
+    "effects": "190909#100",
+    "numMax": 5
+  },
+  {
+    "id": 1110,
+    "type": 2,
+    "rare": 1,
+    "name": "language_10102768",
+    "icon": "rouge2_alchemy_2_10",
+    "details": "language_10102769",
+    "formula": "",
+    "effects": "190910#100",
+    "numMax": 5
+  }
+]

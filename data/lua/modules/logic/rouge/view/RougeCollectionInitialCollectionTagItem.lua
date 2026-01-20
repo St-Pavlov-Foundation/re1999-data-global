@@ -1,44 +1,48 @@
-﻿module("modules.logic.rouge.view.RougeCollectionInitialCollectionTagItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionInitialCollectionTagItem.lua
 
-local var_0_0 = class("RougeCollectionInitialCollectionTagItem", RougeSimpleItemBase)
+module("modules.logic.rouge.view.RougeCollectionInitialCollectionTagItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+local RougeCollectionInitialCollectionTagItem = class("RougeCollectionInitialCollectionTagItem", RougeSimpleItemBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionInitialCollectionTagItem:onInitView()
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function RougeCollectionInitialCollectionTagItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RougeCollectionInitialCollectionTagItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1)
-	RougeSimpleItemBase.ctor(arg_4_0, arg_4_1)
+function RougeCollectionInitialCollectionTagItem:ctor(ctorParam)
+	RougeSimpleItemBase.ctor(self, ctorParam)
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
-	arg_5_0:parent():setActiveTips(true)
+function RougeCollectionInitialCollectionTagItem:_btnclickOnClick()
+	local p = self:parent()
+
+	p:setActiveTips(true)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	RougeSimpleItemBase._editableInitView(arg_6_0)
+function RougeCollectionInitialCollectionTagItem:_editableInitView()
+	RougeSimpleItemBase._editableInitView(self)
 
-	arg_6_0._imageTagFrame = gohelper.findChildImage(arg_6_0.viewGO, "image_tagframe")
-	arg_6_0._imageTagIcon = gohelper.findChildImage(arg_6_0.viewGO, "image_tagicon")
+	self._imageTagFrame = gohelper.findChildImage(self.viewGO, "image_tagframe")
+	self._imageTagIcon = gohelper.findChildImage(self.viewGO, "image_tagicon")
 
-	UISpriteSetMgr.instance:setRougeSprite(arg_6_0._imageTagFrame, "rouge_collection_tagframe_1")
+	UISpriteSetMgr.instance:setRougeSprite(self._imageTagFrame, "rouge_collection_tagframe_1")
 end
 
-function var_0_0.setData(arg_7_0, arg_7_1)
-	local var_7_0 = lua_rouge_tag.configDict[arg_7_1]
+function RougeCollectionInitialCollectionTagItem:setData(tagId)
+	local rougeTagCO = lua_rouge_tag.configDict[tagId]
 
-	UISpriteSetMgr.instance:setRougeSprite(arg_7_0._imageTagIcon, var_7_0.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(self._imageTagIcon, rougeTagCO.iconUrl)
 end
 
-return var_0_0
+return RougeCollectionInitialCollectionTagItem

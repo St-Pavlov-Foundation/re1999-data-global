@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity3_1.nationalgift.controller.NationalGiftEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/nationalgift/controller/NationalGiftEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_1.nationalgift.controller.NationalGiftEvent", package.seeall)
 
-var_0_0.onAct212InfoGet = GameUtil.getUniqueTb()
-var_0_0.onAct212InfoUpdate = GameUtil.getUniqueTb()
-var_0_0.OnAct212BonusUpdate = GameUtil.getUniqueTb()
+local NationalGiftEvent = _M
 
-return var_0_0
+NationalGiftEvent.onAct212InfoGet = GameUtil.getUniqueTb()
+NationalGiftEvent.onAct212InfoUpdate = GameUtil.getUniqueTb()
+NationalGiftEvent.OnAct212BonusUpdate = GameUtil.getUniqueTb()
+
+return NationalGiftEvent

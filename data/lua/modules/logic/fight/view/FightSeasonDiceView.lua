@@ -1,156 +1,159 @@
-﻿module("modules.logic.fight.view.FightSeasonDiceView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSeasonDiceView.lua
 
-local var_0_0 = class("FightSeasonDiceView", BaseView)
-local var_0_1 = 3.27
-local var_0_2 = 1.66
+module("modules.logic.fight.view.FightSeasonDiceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._godicemovie = gohelper.findChild(arg_1_0.viewGO, "root/#go_dicemovie")
-	arg_1_0._imagewave = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_dicemovie/center/tv/#image_wave")
-	arg_1_0._txtvalue = gohelper.findChildText(arg_1_0.viewGO, "root/#go_dicemovie/center/tv/#txt_value")
-	arg_1_0._txtvalueef = gohelper.findChildText(arg_1_0.viewGO, "root/#go_dicemovie/center/tv/#txt_value_ef")
-	arg_1_0._godiceresult = gohelper.findChild(arg_1_0.viewGO, "root/#go_diceresult")
-	arg_1_0._gofriend = gohelper.findChild(arg_1_0.viewGO, "root/#go_diceresult/#go_friend")
-	arg_1_0._txtresultvalue = gohelper.findChildText(arg_1_0.viewGO, "root/#go_diceresult/#go_friend/tv/#txt_resultvalue")
-	arg_1_0._txtresultvalueef = gohelper.findChildText(arg_1_0.viewGO, "root/#go_diceresult/#go_friend/tv/#txt_resultvalueef")
-	arg_1_0._txteffectdesc = gohelper.findChildText(arg_1_0.viewGO, "root/#go_diceresult/#go_friend/effect/layout/#txt_effectdesc")
-	arg_1_0._ani = gohelper.onceAddComponent(arg_1_0.viewGO, typeof(UnityEngine.Animator))
+local FightSeasonDiceView = class("FightSeasonDiceView", BaseView)
+local FirstInterval = 3.27
+local NotFirstInterval = 1.66
+
+function FightSeasonDiceView:onInitView()
+	self._godicemovie = gohelper.findChild(self.viewGO, "root/#go_dicemovie")
+	self._imagewave = gohelper.findChildImage(self.viewGO, "root/#go_dicemovie/center/tv/#image_wave")
+	self._txtvalue = gohelper.findChildText(self.viewGO, "root/#go_dicemovie/center/tv/#txt_value")
+	self._txtvalueef = gohelper.findChildText(self.viewGO, "root/#go_dicemovie/center/tv/#txt_value_ef")
+	self._godiceresult = gohelper.findChild(self.viewGO, "root/#go_diceresult")
+	self._gofriend = gohelper.findChild(self.viewGO, "root/#go_diceresult/#go_friend")
+	self._txtresultvalue = gohelper.findChildText(self.viewGO, "root/#go_diceresult/#go_friend/tv/#txt_resultvalue")
+	self._txtresultvalueef = gohelper.findChildText(self.viewGO, "root/#go_diceresult/#go_friend/tv/#txt_resultvalueef")
+	self._txteffectdesc = gohelper.findChildText(self.viewGO, "root/#go_diceresult/#go_friend/effect/layout/#txt_effectdesc")
+	self._ani = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PushEndFight, arg_2_0._onEndFight, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.SetIsShowUI, arg_2_0._setIsShowUI, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_2_0._onRoundSequenceStart, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function FightSeasonDiceView:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.PushEndFight, self._onEndFight, self)
+	self:addEventCb(FightController.instance, FightEvent.SetIsShowUI, self._setIsShowUI, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, self._onRoundSequenceStart, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.PushEndFight, arg_3_0._onEndFight, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.SetIsShowUI, arg_3_0._setIsShowUI, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_3_0._onRoundSequenceStart, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function FightSeasonDiceView:removeEvents()
+	self:removeEventCb(FightController.instance, FightEvent.PushEndFight, self._onEndFight, self)
+	self:removeEventCb(FightController.instance, FightEvent.SetIsShowUI, self._setIsShowUI, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, self._onRoundSequenceStart, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.FightFocusView then
-		gohelper.setActiveCanvasGroup(arg_4_0._godicemovie, false)
-		gohelper.setActiveCanvasGroup(arg_4_0._godiceresult, false)
+function FightSeasonDiceView:_onOpenView(viewName)
+	if viewName == ViewName.FightFocusView then
+		gohelper.setActiveCanvasGroup(self._godicemovie, false)
+		gohelper.setActiveCanvasGroup(self._godiceresult, false)
 	end
 end
 
-function var_0_0._onCloseView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.FightFocusView then
-		gohelper.setActiveCanvasGroup(arg_5_0._godicemovie, true)
-		gohelper.setActiveCanvasGroup(arg_5_0._godiceresult, true)
+function FightSeasonDiceView:_onCloseView(viewName)
+	if viewName == ViewName.FightFocusView then
+		gohelper.setActiveCanvasGroup(self._godicemovie, true)
+		gohelper.setActiveCanvasGroup(self._godiceresult, true)
 	end
 end
 
-function var_0_0._onRoundSequenceStart(arg_6_0)
-	gohelper.setActive(arg_6_0._godicemovie, false)
-	gohelper.setActive(arg_6_0._godiceresult, false)
+function FightSeasonDiceView:_onRoundSequenceStart()
+	gohelper.setActive(self._godicemovie, false)
+	gohelper.setActive(self._godiceresult, false)
 end
 
-function var_0_0._setIsShowUI(arg_7_0, arg_7_1)
-	if not arg_7_0._canvasGroup then
-		arg_7_0._canvasGroup = gohelper.onceAddComponent(arg_7_0.viewGO, typeof(UnityEngine.CanvasGroup))
+function FightSeasonDiceView:_setIsShowUI(isVisible)
+	if not self._canvasGroup then
+		self._canvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
 	end
 
-	gohelper.setActiveCanvasGroup(arg_7_0._canvasGroup, arg_7_1)
+	gohelper.setActiveCanvasGroup(self._canvasGroup, isVisible)
 end
 
-function var_0_0._onEndFight(arg_8_0)
-	arg_8_0:closeThis()
+function FightSeasonDiceView:_onEndFight()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:_setDiceInfo()
-	arg_9_0:_checkPlayDice()
+function FightSeasonDiceView:onOpen()
+	self:_setDiceInfo()
+	self:_checkPlayDice()
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	arg_10_0:_setDiceInfo()
-	arg_10_0:_checkPlayDice()
+function FightSeasonDiceView:onUpdateParam()
+	self:_setDiceInfo()
+	self:_checkPlayDice()
 end
 
-function var_0_0._setDiceInfo(arg_11_0)
-	local var_11_0 = 0
-	local var_11_1 = ""
+function FightSeasonDiceView:_setDiceInfo()
+	local friendDiceNum = 0
+	local friendDiceDesc = ""
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.viewParam) do
-		local var_11_2 = iter_11_1[1]
-		local var_11_3 = iter_11_1[2]
-		local var_11_4 = var_11_3.effectNum % 10
-		local var_11_5 = lua_skill.configDict[var_11_3.effectNum]
+	for _, tb in ipairs(self.viewParam) do
+		local fightStepData = tb[1]
+		local actEffectData = tb[2]
+		local diceNum = actEffectData.effectNum % 10
+		local skillCO = lua_skill.configDict[actEffectData.effectNum]
 
-		if var_11_2.fromId == FightEntityScene.MySideId then
-			var_11_0 = var_11_4
-			var_11_1 = var_11_5 and var_11_5.desc
+		if fightStepData.fromId == FightEntityScene.MySideId then
+			friendDiceNum = diceNum
+			friendDiceDesc = skillCO and skillCO.desc
 		end
 	end
 
-	gohelper.setActive(arg_11_0._godicemovie, var_11_0 > 0)
-	gohelper.setActive(arg_11_0._godiceresult, var_11_0 > 0)
+	gohelper.setActive(self._godicemovie, friendDiceNum > 0)
+	gohelper.setActive(self._godiceresult, friendDiceNum > 0)
 
-	arg_11_0._txtvalue.text = var_11_0
-	arg_11_0._txtvalueef.text = var_11_0
-	arg_11_0._txtresultvalue.text = var_11_0
-	arg_11_0._txtresultvalueef.text = var_11_0
-	arg_11_0._txteffectdesc.text = var_11_1
-	arg_11_0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._txteffectdesc.gameObject, FixTmpBreakLine)
+	self._txtvalue.text = friendDiceNum
+	self._txtvalueef.text = friendDiceNum
+	self._txtresultvalue.text = friendDiceNum
+	self._txtresultvalueef.text = friendDiceNum
+	self._txteffectdesc.text = friendDiceDesc
+	self._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self._txteffectdesc.gameObject, FixTmpBreakLine)
 
-	arg_11_0._fixTmpBreakLine:refreshTmpContent(arg_11_0._txteffectdesc)
+	self._fixTmpBreakLine:refreshTmpContent(self._txteffectdesc)
 end
 
-function var_0_0._checkPlayDice(arg_12_0)
-	local var_12_0 = FightModel.instance:getUISpeed()
+function FightSeasonDiceView:_checkPlayDice()
+	local fightUISpeed = FightModel.instance:getUISpeed()
+	local isFirstRound = not FightModel.instance:isStartFinish()
 
-	if not FightModel.instance:isStartFinish() then
-		gohelper.setActive(arg_12_0._godicemovie, true)
-		gohelper.setActive(arg_12_0._godiceresult, true)
-		arg_12_0._ani:Play("open", 0, 0)
+	if isFirstRound then
+		gohelper.setActive(self._godicemovie, true)
+		gohelper.setActive(self._godiceresult, true)
+		self._ani:Play("open", 0, 0)
 
-		arg_12_0._ani.speed = var_12_0
+		self._ani.speed = fightUISpeed
 
-		TaskDispatcher.runDelay(arg_12_0._delayFirstRoundDone, arg_12_0, var_0_1 / var_12_0)
+		TaskDispatcher.runDelay(self._delayFirstRoundDone, self, FirstInterval / fightUISpeed)
 		AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_luckydice01)
 	else
-		gohelper.setActive(arg_12_0._godicemovie, false)
-		gohelper.setActive(arg_12_0._godiceresult, true)
-		arg_12_0._ani:Play("result", 0, 0)
+		gohelper.setActive(self._godicemovie, false)
+		gohelper.setActive(self._godiceresult, true)
+		self._ani:Play("result", 0, 0)
 
-		arg_12_0._ani.speed = var_12_0
+		self._ani.speed = fightUISpeed
 
-		TaskDispatcher.runDelay(arg_12_0._delayNotFirstRoundDone, arg_12_0, var_0_2 / var_12_0)
-		gohelper.setActiveCanvasGroup(arg_12_0._godiceresult, false)
-		TaskDispatcher.runDelay(arg_12_0._nextFrameShow, arg_12_0, 0.01)
+		TaskDispatcher.runDelay(self._delayNotFirstRoundDone, self, NotFirstInterval / fightUISpeed)
+		gohelper.setActiveCanvasGroup(self._godiceresult, false)
+		TaskDispatcher.runDelay(self._nextFrameShow, self, 0.01)
 		AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_luckydice02)
 	end
 end
 
-function var_0_0._nextFrameShow(arg_13_0)
-	gohelper.setActiveCanvasGroup(arg_13_0._godiceresult, true)
+function FightSeasonDiceView:_nextFrameShow()
+	gohelper.setActiveCanvasGroup(self._godiceresult, true)
 end
 
-function var_0_0._delayFirstRoundDone(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._delayFirstRoundDone, arg_14_0)
+function FightSeasonDiceView:_delayFirstRoundDone()
+	TaskDispatcher.cancelTask(self._delayFirstRoundDone, self)
 	FightController.instance:dispatchEvent(FightEvent.OnDiceEnd)
 end
 
-function var_0_0._delayNotFirstRoundDone(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._delayNotFirstRoundDone, arg_15_0)
+function FightSeasonDiceView:_delayNotFirstRoundDone()
+	TaskDispatcher.cancelTask(self._delayNotFirstRoundDone, self)
 	FightController.instance:dispatchEvent(FightEvent.OnDiceEnd)
 end
 
-function var_0_0.onClose(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._delayFirstRoundDone, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._delayNotFirstRoundDone, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._nextFrameShow, arg_16_0)
+function FightSeasonDiceView:onClose()
+	TaskDispatcher.cancelTask(self._delayFirstRoundDone, self)
+	TaskDispatcher.cancelTask(self._delayNotFirstRoundDone, self)
+	TaskDispatcher.cancelTask(self._nextFrameShow, self)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function FightSeasonDiceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightSeasonDiceView

@@ -1,179 +1,180 @@
-﻿module("modules.logic.scene.cachot.entity.CachotEventItem", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/entity/CachotEventItem.lua
 
-local var_0_0 = class("CachotEventItem", LuaCompBase)
-local var_0_1 = "effects/prefabs_cachot/v1a6_huanghuijiaohu.prefab"
+module("modules.logic.scene.cachot.entity.CachotEventItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.go:GetComponent("Canvas").worldCamera = CameraMgr.instance:getMainCamera()
-	arg_1_0._click = ZProj.BoxColliderClickListener.Get(arg_1_1)
-	arg_1_0._bigIcon = gohelper.findChildSingleImage(arg_1_1, "event/#simage_event")
-	arg_1_0._smallIcon = gohelper.findChildImage(arg_1_1, "event/#simage_icon")
-	arg_1_0._txtName = gohelper.findChildTextMesh(arg_1_1, "event/#txt_name")
-	arg_1_0._gobattle = gohelper.findChild(arg_1_1, "tips/#go_battle")
-	arg_1_0._gocostheartnum = gohelper.findChild(arg_1_1, "tips/#go_normal")
-	arg_1_0._txtcostheartnum = gohelper.findChildTextMesh(arg_1_1, "tips/#go_normal/#txt_num")
-	arg_1_0._clickEffect = gohelper.findChild(arg_1_1, "event/#effect")
+local CachotEventItem = class("CachotEventItem", LuaCompBase)
+local ClickEffectPath = "effects/prefabs_cachot/v1a6_huanghuijiaohu.prefab"
 
-	if arg_1_0._clickEffect then
-		arg_1_0._clickEffectLoader = PrefabInstantiate.Create(arg_1_0._clickEffect)
+function CachotEventItem:init(go)
+	self.go = go
+	self.go:GetComponent("Canvas").worldCamera = CameraMgr.instance:getMainCamera()
+	self._click = ZProj.BoxColliderClickListener.Get(go)
+	self._bigIcon = gohelper.findChildSingleImage(go, "event/#simage_event")
+	self._smallIcon = gohelper.findChildImage(go, "event/#simage_icon")
+	self._txtName = gohelper.findChildTextMesh(go, "event/#txt_name")
+	self._gobattle = gohelper.findChild(go, "tips/#go_battle")
+	self._gocostheartnum = gohelper.findChild(go, "tips/#go_normal")
+	self._txtcostheartnum = gohelper.findChildTextMesh(go, "tips/#go_normal/#txt_num")
+	self._clickEffect = gohelper.findChild(go, "event/#effect")
 
-		arg_1_0._clickEffectLoader:startLoad(var_0_1, arg_1_0._onEffectLoaded, arg_1_0)
+	if self._clickEffect then
+		self._clickEffectLoader = PrefabInstantiate.Create(self._clickEffect)
+
+		self._clickEffectLoader:startLoad(ClickEffectPath, self._onEffectLoaded, self)
 	end
 
-	arg_1_0._goFrameNormal = gohelper.findChild(arg_1_1, "event/light/frame")
-	arg_1_0._goFrameElite = gohelper.findChild(arg_1_1, "event/light/frame_orange")
-	arg_1_0._goFrameBoss = gohelper.findChild(arg_1_1, "event/light/frame_red")
-	arg_1_0._anim = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._anim.keepAnimatorControllerStateOnDisable = true
+	self._goFrameNormal = gohelper.findChild(go, "event/light/frame")
+	self._goFrameElite = gohelper.findChild(go, "event/light/frame_orange")
+	self._goFrameBoss = gohelper.findChild(go, "event/light/frame_red")
+	self._anim = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._anim.keepAnimatorStateOnDisable = true
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._clickThis, arg_2_0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.NearEventMoChange, arg_2_0._onNearEventChange, arg_2_0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_2_0._playClickAnim, arg_2_0)
+function CachotEventItem:addEventListeners()
+	self._click:AddClickListener(self._clickThis, self)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.NearEventMoChange, self._onNearEventChange, self)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.BeginTriggerEvent, self._playClickAnim, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.NearEventMoChange, arg_3_0._onNearEventChange, arg_3_0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, arg_3_0._playClickAnim, arg_3_0)
+function CachotEventItem:removeEventListeners()
+	self._click:RemoveClickListener()
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.NearEventMoChange, self._onNearEventChange, self)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.BeginTriggerEvent, self._playClickAnim, self)
 end
 
-function var_0_0._onEffectLoaded(arg_4_0)
-	local var_4_0 = arg_4_0._clickEffectLoader:getInstGO()
+function CachotEventItem:_onEffectLoaded()
+	local go = self._clickEffectLoader:getInstGO()
 
-	gohelper.removeEffectNode(var_4_0)
+	gohelper.removeEffectNode(go)
 end
 
-function var_0_0.onStart(arg_5_0)
+function CachotEventItem:onStart()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_room_open)
 end
 
-function var_0_0.updateMo(arg_6_0, arg_6_1)
-	arg_6_0._anim:Play("open")
+function CachotEventItem:updateMo(mo)
+	self._anim:Play("open")
 
-	arg_6_0._mo = arg_6_1
-	arg_6_0.go.name = "event_" .. tostring(arg_6_1.eventId)
+	self._mo = mo
+	self.go.name = "event_" .. tostring(mo.eventId)
 
-	local var_6_0 = lua_rogue_event.configDict[arg_6_1.eventId]
+	local eventCo = lua_rogue_event.configDict[mo.eventId]
 
-	if not var_6_0 then
-		logError("没有肉鸽事件配置" .. tostring(arg_6_1.eventId))
+	if not eventCo then
+		logError("没有肉鸽事件配置" .. tostring(mo.eventId))
 
 		return
 	end
 
-	arg_6_0._bigIcon:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_img_event" .. var_6_0.icon))
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_6_0._smallIcon, "v1a6_cachot_room_eventicon" .. var_6_0.icon)
+	self._bigIcon:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_img_event" .. eventCo.icon))
+	UISpriteSetMgr.instance:setV1a6CachotSprite(self._smallIcon, "v1a6_cachot_room_eventicon" .. eventCo.icon)
 
-	local var_6_1 = var_6_0.title
-	local var_6_2 = GameUtil.utf8len(var_6_1)
-	local var_6_3
+	local name = eventCo.title
+	local len = GameUtil.utf8len(name)
+	local showName
 
-	if var_6_2 >= 2 then
-		local var_6_4 = GameUtil.utf8sub(var_6_1, 1, 1)
-		local var_6_5 = GameUtil.utf8sub(var_6_1, 2, var_6_2 - 1)
+	if len >= 2 then
+		local first = GameUtil.utf8sub(name, 1, 1)
+		local last = GameUtil.utf8sub(name, 2, len - 1)
 
-		var_6_3 = string.format("<size=44>%s</size>%s", var_6_4, var_6_5)
+		showName = string.format("<size=44>%s</size>%s", first, last)
 	else
-		var_6_3 = "<size=44>" .. var_6_1
+		showName = "<size=44>" .. name
 	end
 
-	local var_6_6 = V1a6_CachotModel.instance:getRogueInfo()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
 
-	arg_6_0._txtName.text = var_6_3
+	self._txtName.text = showName
 
-	local var_6_7 = V1a6_CachotEventConfig.instance:getEventHeartShow(arg_6_1.eventId, var_6_6 and var_6_6.difficulty or 1)
+	local showHeart = V1a6_CachotEventConfig.instance:getEventHeartShow(mo.eventId, rogueInfo and rogueInfo.difficulty or 1)
 
-	if var_6_7 then
-		gohelper.setActive(arg_6_0._gocostheartnum, true)
+	if showHeart then
+		gohelper.setActive(self._gocostheartnum, true)
 
-		arg_6_0._txtcostheartnum.text = var_6_7
+		self._txtcostheartnum.text = showHeart
 	else
-		gohelper.setActive(arg_6_0._gocostheartnum, false)
+		gohelper.setActive(self._gocostheartnum, false)
 	end
 
-	local var_6_8 = {}
-	local var_6_9 = V1a6_CachotEnum.BossType.Normal
+	local recommended = {}
+	local bossType = V1a6_CachotEnum.BossType.Normal
 
-	if var_6_0.type == V1a6_CachotEnum.EventType.Battle then
-		local var_6_10 = var_6_0.eventId
-		local var_6_11 = lua_rogue_event_fight.configDict[var_6_10]
+	if eventCo.type == V1a6_CachotEnum.EventType.Battle then
+		local eventId = eventCo.eventId
+		local fightCo = lua_rogue_event_fight.configDict[eventId]
 
-		if not var_6_11 then
-			logError("没有肉鸽战斗事件配置" .. tostring(var_6_10))
+		if not fightCo then
+			logError("没有肉鸽战斗事件配置" .. tostring(eventId))
 
 			return
 		end
 
-		var_6_9 = var_6_11 and var_6_11.type or var_6_9
+		bossType = fightCo and fightCo.type or bossType
 
-		local var_6_12 = DungeonConfig.instance:getEpisodeBattleId(var_6_11.episode)
-		local var_6_13 = lua_battle.configDict[var_6_12]
+		local battleId = DungeonConfig.instance:getEpisodeBattleId(fightCo.episode)
+		local battleConfig = lua_battle.configDict[battleId]
 
-		if var_6_13 and not string.nilorempty(var_6_13.monsterGroupIds) then
-			local var_6_14 = string.splitToNumber(var_6_13.monsterGroupIds, "#")
+		if battleConfig and not string.nilorempty(battleConfig.monsterGroupIds) then
+			local monsterGroupIds = string.splitToNumber(battleConfig.monsterGroupIds, "#")
 
-			for iter_6_0, iter_6_1 in ipairs(var_6_14) do
-				local var_6_15 = string.splitToNumber(lua_monster_group.configDict[iter_6_1].monster, "#")
+			for i, v in ipairs(monsterGroupIds) do
+				local ids = string.splitToNumber(lua_monster_group.configDict[v].monster, "#")
 
-				for iter_6_2, iter_6_3 in ipairs(var_6_15) do
-					local var_6_16 = lua_monster.configDict[iter_6_3].career
+				for index, id in ipairs(ids) do
+					local enemy_career = lua_monster.configDict[id].career
 
-					if not tabletool.indexOf(var_6_8, var_6_16) then
-						table.insert(var_6_8, var_6_16)
+					if not tabletool.indexOf(recommended, enemy_career) then
+						table.insert(recommended, enemy_career)
 					end
 				end
 			end
 		end
 	end
 
-	local var_6_17 = var_6_6 and var_6_6.room
-	local var_6_18
-	local var_6_19
+	local roomId = rogueInfo and rogueInfo.room
+	local index, count
 
-	if var_6_17 then
-		var_6_18, var_6_19 = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(var_6_17)
+	if roomId then
+		index, count = V1a6_CachotRoomConfig.instance:getRoomIndexAndTotal(roomId)
 	end
 
-	if var_6_18 == var_6_19 then
-		var_6_9 = V1a6_CachotEnum.BossType.Boss
+	if index == count then
+		bossType = V1a6_CachotEnum.BossType.Boss
 	end
 
-	gohelper.setActive(arg_6_0._goFrameNormal, var_6_9 == V1a6_CachotEnum.BossType.Normal)
-	gohelper.setActive(arg_6_0._goFrameElite, var_6_9 == V1a6_CachotEnum.BossType.Elite)
-	gohelper.setActive(arg_6_0._goFrameBoss, var_6_9 == V1a6_CachotEnum.BossType.Boss)
+	gohelper.setActive(self._goFrameNormal, bossType == V1a6_CachotEnum.BossType.Normal)
+	gohelper.setActive(self._goFrameElite, bossType == V1a6_CachotEnum.BossType.Elite)
+	gohelper.setActive(self._goFrameBoss, bossType == V1a6_CachotEnum.BossType.Boss)
 
-	if var_6_8[1] then
-		gohelper.setActive(arg_6_0._gobattle, true)
+	if recommended[1] then
+		gohelper.setActive(self._gobattle, true)
 
-		for iter_6_4 = 1, 6 do
-			local var_6_20 = gohelper.findChild(arg_6_0._gobattle, "icons/" .. iter_6_4)
-			local var_6_21 = gohelper.findChildImage(var_6_20, "icon")
+		for i = 1, 6 do
+			local go = gohelper.findChild(self._gobattle, "icons/" .. i)
+			local icon = gohelper.findChildImage(go, "icon")
 
-			if var_6_8[iter_6_4] then
-				gohelper.setActive(var_6_20, true)
-				UISpriteSetMgr.instance:setV1a6CachotSprite(var_6_21, "v1a6_cachot_fight_career" .. var_6_8[iter_6_4])
+			if recommended[i] then
+				gohelper.setActive(go, true)
+				UISpriteSetMgr.instance:setV1a6CachotSprite(icon, "v1a6_cachot_fight_career" .. recommended[i])
 			else
-				gohelper.setActive(var_6_20, false)
+				gohelper.setActive(go, false)
 			end
 		end
 	else
-		gohelper.setActive(arg_6_0._gobattle, false)
+		gohelper.setActive(self._gobattle, false)
 	end
 end
 
-function var_0_0._playClickAnim(arg_7_0)
-	if arg_7_0._isSelect then
+function CachotEventItem:_playClickAnim()
+	if self._isSelect then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_room_interaction)
-		arg_7_0._anim:Play("click")
+		self._anim:Play("click")
 	else
-		arg_7_0._anim:Play("close")
+		self._anim:Play("close")
 	end
 end
 
-function var_0_0._clickThis(arg_8_0)
+function CachotEventItem:_clickThis()
 	if V1a6_CachotRoomModel.instance:getIsMoving() then
 		return
 	end
@@ -186,48 +187,50 @@ function var_0_0._clickThis(arg_8_0)
 		return
 	end
 
-	if arg_8_0._isSelect then
+	if self._isSelect then
 		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.ClickNearEvent)
 	else
-		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerMoveTo, GameSceneMgr.instance:getCurScene().level:getEventTr(arg_8_0._mo.index))
+		V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.PlayerMoveTo, GameSceneMgr.instance:getCurScene().level:getEventTr(self._mo.index))
 	end
 end
 
-function var_0_0._onNearEventChange(arg_9_0)
-	if not arg_9_0.go or not arg_9_0.go.activeSelf then
+function CachotEventItem:_onNearEventChange()
+	if not self.go or not self.go.activeSelf then
 		return
 	end
 
-	if not arg_9_0._mo then
+	if not self._mo then
 		return
 	end
 
-	local var_9_0 = V1a6_CachotRoomModel.instance:getNearEventMo() == arg_9_0._mo
+	local nowNearMo = V1a6_CachotRoomModel.instance:getNearEventMo()
+	local isSelect = nowNearMo == self._mo
 
-	if arg_9_0._isSelect ~= var_9_0 then
-		local var_9_1 = arg_9_0._isSelect == nil
+	if self._isSelect ~= isSelect then
+		local isFirst = self._isSelect == nil
 
-		arg_9_0._isSelect = var_9_0
+		self._isSelect = isSelect
 
-		local var_9_2
-		local var_9_3 = var_9_0 and "select" or "unselect"
+		local animName
 
-		arg_9_0._anim:Play(var_9_3, 0, var_9_1 and 1 or 0)
+		animName = isSelect and "select" or "unselect"
 
-		if var_9_0 then
+		self._anim:Play(animName, 0, isFirst and 1 or 0)
+
+		if isSelect then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_room_lit)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0._clickEffectLoader then
-		arg_10_0._clickEffectLoader:dispose()
+function CachotEventItem:onDestroy()
+	if self._clickEffectLoader then
+		self._clickEffectLoader:dispose()
 
-		arg_10_0._clickEffectLoader = nil
+		self._clickEffectLoader = nil
 	end
 
-	arg_10_0._bigIcon:UnLoadImage()
+	self._bigIcon:UnLoadImage()
 end
 
-return var_0_0
+return CachotEventItem

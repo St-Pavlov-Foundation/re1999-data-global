@@ -1,8 +1,10 @@
-﻿module("modules.logic.equip.config.EquipConfig", package.seeall)
+﻿-- chunkname: @modules/logic/equip/config/EquipConfig.lua
 
-local var_0_0 = class("EquipConfig", BaseConfig)
+module("modules.logic.equip.config.EquipConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local EquipConfig = class("EquipConfig", BaseConfig)
+
+function EquipConfig:reqConfigNames()
 	return {
 		"equip",
 		"equip_strengthen",
@@ -16,12 +18,12 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function EquipConfig:onInit()
 	return
 end
 
-var_0_0.MaxLevel = 60
-var_0_0.EquipBreakAttrIdToFieldName = {
+EquipConfig.MaxLevel = 60
+EquipConfig.EquipBreakAttrIdToFieldName = {
 	[CharacterEnum.AttrId.Attack] = "attack",
 	[CharacterEnum.AttrId.Hp] = "hp",
 	[CharacterEnum.AttrId.Defense] = "def",
@@ -40,323 +42,323 @@ var_0_0.EquipBreakAttrIdToFieldName = {
 	[CharacterEnum.AttrId.Clutch] = "clutch"
 }
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "equip_const" then
-		arg_3_0._baseExpDic = {}
+function EquipConfig:onConfigLoaded(configName, configTable)
+	if configName == "equip_const" then
+		self._baseExpDic = {}
 
-		local var_3_0 = lua_equip_const.configDict[1].value
-		local var_3_1
-		local var_3_2
-		local var_3_3
+		local expList = lua_equip_const.configDict[1].value
+		local param, id, exp
 
-		for iter_3_0, iter_3_1 in ipairs(string.split(var_3_0, "|")) do
-			local var_3_4 = string.split(iter_3_1, "#")
-			local var_3_5 = var_3_4[1]
-			local var_3_6 = var_3_4[2]
-
-			arg_3_0._baseExpDic[tonumber(var_3_5)] = tonumber(var_3_6)
+		for i, v in ipairs(string.split(expList, "|")) do
+			param = string.split(v, "#")
+			id = param[1]
+			exp = param[2]
+			self._baseExpDic[tonumber(id)] = tonumber(exp)
 		end
 
-		local var_3_7 = lua_equip_const.configDict[2].value
+		expList = lua_equip_const.configDict[2].value
 
-		for iter_3_2, iter_3_3 in ipairs(string.split(var_3_7, "|")) do
-			local var_3_8 = string.split(iter_3_3, "#")
-			local var_3_9 = var_3_8[1]
-			local var_3_10 = var_3_8[2]
-
-			arg_3_0._baseExpDic[tonumber(var_3_9)] = tonumber(var_3_10)
+		for i, v in ipairs(string.split(expList, "|")) do
+			param = string.split(v, "#")
+			id = param[1]
+			exp = param[2]
+			self._baseExpDic[tonumber(id)] = tonumber(exp)
 		end
 
-		arg_3_0._expTransfer = {}
+		self._expTransfer = {}
 
-		local var_3_11 = string.split(lua_equip_const.configDict[3].value, "|")
-		local var_3_12
+		local transferStrList = string.split(lua_equip_const.configDict[3].value, "|")
+		local tempTransfer
 
-		for iter_3_4, iter_3_5 in ipairs(var_3_11) do
-			local var_3_13 = string.splitToNumber(iter_3_5, "#")
-
-			arg_3_0._expTransfer[var_3_13[1]] = var_3_13[2] / 100
+		for _, transferStr in ipairs(transferStrList) do
+			tempTransfer = string.splitToNumber(transferStr, "#")
+			self._expTransfer[tempTransfer[1]] = tempTransfer[2] / 100
 		end
 
-		arg_3_0._equipBackpackMaxCount = tonumber(lua_equip_const.configDict[13].value)
-		arg_3_0._equipNotShowRefineRare = tonumber(lua_equip_const.configDict[16].value)
+		self._equipBackpackMaxCount = tonumber(lua_equip_const.configDict[13].value)
+		self._equipNotShowRefineRare = tonumber(lua_equip_const.configDict[16].value)
 
-		local var_3_14 = string.splitToNumber(lua_equip_const.configDict[17].value, "#")
+		local array = string.splitToNumber(lua_equip_const.configDict[17].value, "#")
 
-		arg_3_0.equipDecomposeEquipId = var_3_14[2]
-		arg_3_0.equipDecomposeEquipUnitCount = var_3_14[3]
+		self.equipDecomposeEquipId = array[2]
+		self.equipDecomposeEquipUnitCount = array[3]
 	end
 
-	if arg_3_1 == "equip_break_cost" then
-		arg_3_0._equipBreakCostRareList = {}
-		arg_3_0._equipMaxBreakLv = {}
+	if configName == "equip_break_cost" then
+		self._equipBreakCostRareList = {}
+		self._equipMaxBreakLv = {}
 
-		for iter_3_6, iter_3_7 in ipairs(lua_equip_break_cost.configList) do
-			if not arg_3_0._equipBreakCostRareList[iter_3_7.rare] then
-				arg_3_0._equipBreakCostRareList[iter_3_7.rare] = {}
+		for _, breakCostCo in ipairs(lua_equip_break_cost.configList) do
+			if not self._equipBreakCostRareList[breakCostCo.rare] then
+				self._equipBreakCostRareList[breakCostCo.rare] = {}
 			end
 
-			table.insert(arg_3_0._equipBreakCostRareList[iter_3_7.rare], iter_3_7)
+			table.insert(self._equipBreakCostRareList[breakCostCo.rare], breakCostCo)
 
-			if not arg_3_0._equipMaxBreakLv[iter_3_7.rare] then
-				arg_3_0._equipMaxBreakLv[iter_3_7.rare] = 0
+			if not self._equipMaxBreakLv[breakCostCo.rare] then
+				self._equipMaxBreakLv[breakCostCo.rare] = 0
 			end
 
-			if iter_3_7.breakLevel > arg_3_0._equipMaxBreakLv[iter_3_7.rare] then
-				arg_3_0._equipMaxBreakLv[iter_3_7.rare] = iter_3_7.breakLevel
+			if breakCostCo.breakLevel > self._equipMaxBreakLv[breakCostCo.rare] then
+				self._equipMaxBreakLv[breakCostCo.rare] = breakCostCo.breakLevel
 			end
 		end
 
-		for iter_3_8, iter_3_9 in pairs(arg_3_0._equipBreakCostRareList) do
-			table.sort(iter_3_9, function(arg_4_0, arg_4_1)
-				return arg_4_0.breakLevel < arg_4_1.breakLevel
+		for rare, coList in pairs(self._equipBreakCostRareList) do
+			table.sort(coList, function(a, b)
+				return a.breakLevel < b.breakLevel
 			end)
 		end
 	end
 
-	if arg_3_1 == "equip_strengthen_cost" and not arg_3_0._strengthenCostQualityList then
-		arg_3_0._strengthenCostQualityList = {}
+	if configName == "equip_strengthen_cost" and not self._strengthenCostQualityList then
+		self._strengthenCostQualityList = {}
 
-		for iter_3_10, iter_3_11 in ipairs(lua_equip_strengthen_cost.configList) do
-			local var_3_15 = arg_3_0._strengthenCostQualityList[iter_3_11.rare] or {}
+		for i, v in ipairs(lua_equip_strengthen_cost.configList) do
+			local q = self._strengthenCostQualityList[v.rare] or {}
 
-			arg_3_0._strengthenCostQualityList[iter_3_11.rare] = var_3_15
+			self._strengthenCostQualityList[v.rare] = q
 
-			table.insert(var_3_15, iter_3_11)
+			table.insert(q, v)
 		end
 	end
 
-	if arg_3_1 == "equip_skill" then
-		arg_3_0._equipSkillList = {}
-		arg_3_0.equip_skill_dic = {}
+	if configName == "equip_skill" then
+		self._equipSkillList = {}
+		self.equip_skill_dic = {}
 
-		for iter_3_12, iter_3_13 in ipairs(lua_equip_skill.configList) do
-			arg_3_0._equipSkillList[iter_3_13.id] = arg_3_0._equipSkillList[iter_3_13.id] or {}
-			arg_3_0._equipSkillList[iter_3_13.id][iter_3_13.skillLv] = iter_3_13
-			arg_3_0.equip_skill_dic[iter_3_13.skill] = iter_3_13
-			arg_3_0.equip_skill_dic[iter_3_13.skill2] = iter_3_13
+		for i, v in ipairs(lua_equip_skill.configList) do
+			self._equipSkillList[v.id] = self._equipSkillList[v.id] or {}
+			self._equipSkillList[v.id][v.skillLv] = v
+			self.equip_skill_dic[v.skill] = v
+			self.equip_skill_dic[v.skill2] = v
 		end
 	end
 end
 
-function var_0_0.getOneLevelEquipProduceExp(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._baseExpDic[arg_5_1]
+function EquipConfig:getOneLevelEquipProduceExp(value)
+	local exp = self._baseExpDic[value]
 
-	if var_5_0 == nil then
-		logError("not found base equip exp : " + tostring(arg_5_1))
+	if exp == nil then
+		logError("not found base equip exp : " + tostring(value))
 
 		return 0
 	end
 
-	return var_5_0
+	return exp
 end
 
-function var_0_0.getCurrentBreakLevelMaxLevel(arg_6_0, arg_6_1)
-	return arg_6_0:_getBreakLevelMaxLevel(arg_6_1.config.rare, arg_6_1.breakLv)
+function EquipConfig:getCurrentBreakLevelMaxLevel(equipMo)
+	return self:_getBreakLevelMaxLevel(equipMo.config.rare, equipMo.breakLv)
 end
 
-function var_0_0.getNextBreakLevelMaxLevel(arg_7_0, arg_7_1)
-	return arg_7_0:_getBreakLevelMaxLevel(arg_7_1.config.rare, arg_7_1.breakLv + 1)
+function EquipConfig:getNextBreakLevelMaxLevel(equipMo)
+	return self:_getBreakLevelMaxLevel(equipMo.config.rare, equipMo.breakLv + 1)
 end
 
-function var_0_0._getBreakLevelMaxLevel(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._equipBreakCostRareList[arg_8_1]
+function EquipConfig:_getBreakLevelMaxLevel(rare, breakLevel)
+	local rareList = self._equipBreakCostRareList[rare]
 
-	if not var_8_0 then
-		logError(string.format("rare '%s' not config break cost", arg_8_1))
+	if not rareList then
+		logError(string.format("rare '%s' not config break cost", rare))
 
-		return var_0_0.MaxLevel
+		return EquipConfig.MaxLevel
 	end
 
-	for iter_8_0 = 1, #var_8_0 do
-		if var_8_0[iter_8_0].breakLevel == arg_8_2 then
-			return var_8_0[iter_8_0].level
+	for i = 1, #rareList do
+		if rareList[i].breakLevel == breakLevel then
+			return rareList[i].level
 		end
 	end
 
-	logWarn(string.format("rare '%s',breakLevel '%s' not config break cost", arg_8_1, arg_8_2))
+	logWarn(string.format("rare '%s',breakLevel '%s' not config break cost", rare, breakLevel))
 
-	return var_0_0.MaxLevel
+	return EquipConfig.MaxLevel
 end
 
-function var_0_0.getEquipRefineLvMax(arg_9_0)
-	arg_9_0.equip_refine_lv_max = arg_9_0.equip_refine_lv_max or tonumber(lua_equip_const.configDict[15].value)
+function EquipConfig:getEquipRefineLvMax()
+	self.equip_refine_lv_max = self.equip_refine_lv_max or tonumber(lua_equip_const.configDict[15].value)
 
-	return arg_9_0.equip_refine_lv_max
+	return self.equip_refine_lv_max
 end
 
-function var_0_0.getEquipUniversalId(arg_10_0)
-	arg_10_0.equip_universal_id = arg_10_0.equip_universal_id or tonumber(lua_equip_const.configDict[14].value)
+function EquipConfig:getEquipUniversalId()
+	self.equip_universal_id = self.equip_universal_id or tonumber(lua_equip_const.configDict[14].value)
 
-	return arg_10_0.equip_universal_id
+	return self.equip_universal_id
 end
 
-function var_0_0.getMaxLevel(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._equipBreakCostRareList[arg_11_1.rare]
+function EquipConfig:getMaxLevel(equipCo)
+	local rareList = self._equipBreakCostRareList[equipCo.rare]
 
-	if not var_11_0 then
-		logWarn(string.format("rare '%s' not config break cost", arg_11_1.rare))
+	if not rareList then
+		logWarn(string.format("rare '%s' not config break cost", equipCo.rare))
 
-		return var_0_0.MaxLevel
+		return EquipConfig.MaxLevel
 	end
 
-	return var_11_0[#var_11_0].level
+	return rareList[#rareList].level
 end
 
-function var_0_0.getEquipMaxBreakLv(arg_12_0, arg_12_1)
-	return arg_12_0._equipMaxBreakLv and arg_12_0._equipMaxBreakLv[arg_12_1]
+function EquipConfig:getEquipMaxBreakLv(rare)
+	return self._equipMaxBreakLv and self._equipMaxBreakLv[rare]
 end
 
-function var_0_0.getNextBreakLevelCostCo(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1.breakLv
-	local var_13_1 = arg_13_1.config.rare
-	local var_13_2 = arg_13_0._equipBreakCostRareList[var_13_1]
+function EquipConfig:getNextBreakLevelCostCo(equipMo)
+	local currentBreakLv = equipMo.breakLv
+	local rare = equipMo.config.rare
+	local rareList = self._equipBreakCostRareList[rare]
 
-	if not var_13_2 then
-		logError(string.format("rare '%s' not config break cost", arg_13_1.config.rare))
+	if not rareList then
+		logError(string.format("rare '%s' not config break cost", equipMo.config.rare))
 
 		return nil
 	end
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-		if var_13_0 < iter_13_1.breakLevel then
-			return iter_13_1
+	for _, breakCostCo in ipairs(rareList) do
+		if currentBreakLv < breakCostCo.breakLevel then
+			return breakCostCo
 		end
 	end
 
-	logWarn(string.format("rare '%s',breakLevel '%s'`s not have next breakLevel config", var_13_1, var_13_0))
+	logWarn(string.format("rare '%s',breakLevel '%s'`s not have next breakLevel config", rare, currentBreakLv))
 
-	return var_13_2[#var_13_2]
+	return rareList[#rareList]
 end
 
-function var_0_0.getIncrementalExp(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1.config
+function EquipConfig:getIncrementalExp(equipMO)
+	local config = equipMO.config
 
-	if var_14_0.isExpEquip == 1 then
-		return arg_14_0._baseExpDic[var_14_0.id]
+	if config.isExpEquip == 1 then
+		return self._baseExpDic[config.id]
 	end
 
-	if arg_14_1.level == 1 then
-		return arg_14_0._baseExpDic[var_14_0.rare]
+	if equipMO.level == 1 then
+		return self._baseExpDic[config.rare]
 	end
 
-	local var_14_1 = 0
-	local var_14_2 = 0
-	local var_14_3 = 2
-	local var_14_4
-	local var_14_5
+	local exp = 0
+	local tempExp = 0
+	local startLevel = 2
+	local currentBreakLvMaxLevel, currentBreakLvTransfer
 
-	for iter_14_0 = 0, arg_14_1.breakLv do
-		local var_14_6 = arg_14_0:_getBreakLevelMaxLevel(var_14_0.rare, iter_14_0)
-		local var_14_7 = arg_14_0._expTransfer[iter_14_0]
-		local var_14_8 = 0
+	for i = 0, equipMO.breakLv do
+		currentBreakLvMaxLevel = self:_getBreakLevelMaxLevel(config.rare, i)
+		currentBreakLvTransfer = self._expTransfer[i]
+		tempExp = 0
 
-		for iter_14_1 = var_14_3, var_14_6 do
-			if iter_14_1 > arg_14_1.level then
+		for level = startLevel, currentBreakLvMaxLevel do
+			if level > equipMO.level then
 				break
 			end
 
-			var_14_8 = var_14_8 + arg_14_0:getEquipStrengthenCostExp(var_14_0.rare, iter_14_1)
+			tempExp = tempExp + self:getEquipStrengthenCostExp(config.rare, level)
 		end
 
-		var_14_1 = var_14_1 + var_14_8 * var_14_7
-		var_14_3 = var_14_6 + 1
+		exp = exp + tempExp * currentBreakLvTransfer
+		startLevel = currentBreakLvMaxLevel + 1
 	end
 
-	if arg_14_0:_getBreakLevelMaxLevel(var_14_0.rare, arg_14_1.breakLv) > arg_14_1.level then
-		var_14_1 = var_14_1 + arg_14_1.exp * arg_14_0._expTransfer[arg_14_1.breakLv]
+	currentBreakLvMaxLevel = self:_getBreakLevelMaxLevel(config.rare, equipMO.breakLv)
+
+	if currentBreakLvMaxLevel > equipMO.level then
+		exp = exp + equipMO.exp * self._expTransfer[equipMO.breakLv]
 	else
-		var_14_1 = var_14_1 + arg_14_1.exp * (arg_14_0._expTransfer[arg_14_1.breakLv + 1] and arg_14_0._expTransfer[arg_14_1.breakLv + 1] or arg_14_0._expTransfer[arg_14_1.breakLv])
+		exp = exp + equipMO.exp * (self._expTransfer[equipMO.breakLv + 1] and self._expTransfer[equipMO.breakLv + 1] or self._expTransfer[equipMO.breakLv])
 	end
 
-	local var_14_9 = var_14_1 + arg_14_0._baseExpDic[var_14_0.rare]
+	exp = exp + self._baseExpDic[config.rare]
 
-	return math.floor(var_14_9)
+	return math.floor(exp)
 end
 
-function var_0_0.getEquipStrengthenCostExp(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 == 1 then
-		return arg_15_0._baseExpDic[arg_15_1]
+function EquipConfig:getEquipStrengthenCostExp(quality, lv)
+	if lv == 1 then
+		return self._baseExpDic[quality]
 	end
 
-	return lua_equip_strengthen_cost.configDict[arg_15_1][arg_15_2].exp
+	local temp = lua_equip_strengthen_cost.configDict[quality]
+
+	return temp[lv].exp
 end
 
-function var_0_0.getEquipStrengthenCostCo(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_2 = math.min(arg_16_2, var_0_0.MaxLevel)
+function EquipConfig:getEquipStrengthenCostCo(quality, lv)
+	lv = math.min(lv, EquipConfig.MaxLevel)
 
-	return lua_equip_strengthen_cost.configDict[arg_16_1][arg_16_2]
+	local temp = lua_equip_strengthen_cost.configDict[quality]
+
+	return temp[lv]
 end
 
-function var_0_0.getNeedExpToMaxLevel(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getCurrentBreakLevelMaxLevel(arg_17_1)
-	local var_17_1 = 0
-	local var_17_2 = arg_17_0._strengthenCostQualityList[arg_17_1.config.rare]
+function EquipConfig:getNeedExpToMaxLevel(equipMo)
+	local maxLevel = self:getCurrentBreakLevelMaxLevel(equipMo)
+	local needExp = 0
+	local strengthenDict = self._strengthenCostQualityList[equipMo.config.rare]
 
-	for iter_17_0 = arg_17_1.level + 1, var_17_0 do
-		var_17_1 = var_17_1 + var_17_2[iter_17_0].exp
+	for level = equipMo.level + 1, maxLevel do
+		needExp = needExp + strengthenDict[level].exp
 	end
 
-	return Mathf.Max(var_17_1 - arg_17_1.exp, 0)
+	return Mathf.Max(needExp - equipMo.exp, 0)
 end
 
-function var_0_0.getEquipBackpackMaxCount(arg_18_0)
-	return arg_18_0._equipBackpackMaxCount
+function EquipConfig:getEquipBackpackMaxCount()
+	return self._equipBackpackMaxCount
 end
 
-function var_0_0.getEquipCo(arg_19_0, arg_19_1)
-	return lua_equip.configDict[arg_19_1]
+function EquipConfig:getEquipCo(id)
+	return lua_equip.configDict[id]
 end
 
-function var_0_0.getEquipValueStr(arg_20_0, arg_20_1)
-	return arg_20_0:dirGetEquipValueStr(arg_20_1.showType, arg_20_1.value)
+function EquipConfig:getEquipValueStr(co)
+	return self:dirGetEquipValueStr(co.showType, co.value)
 end
 
-function var_0_0.dirGetEquipValueStr(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 == 0 then
-		return string.format("%s", arg_21_2)
+function EquipConfig:dirGetEquipValueStr(type, value)
+	if type == 0 then
+		return string.format("%s", value)
 	else
-		arg_21_2 = arg_21_2 * 0.1
+		value = value * 0.1
 
-		local var_21_0 = math.floor(arg_21_2)
+		local intValue = math.floor(value)
 
-		if var_21_0 == arg_21_2 then
-			arg_21_2 = var_21_0
+		if intValue == value then
+			value = intValue
 		end
 
-		return string.format("%s%%", arg_21_2)
+		return string.format("%s%%", value)
 	end
 end
 
-function var_0_0.getEquipSkillCfg(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0._equipSkillList[arg_22_1]
+function EquipConfig:getEquipSkillCfg(id, level)
+	local equipConfigList = self._equipSkillList[id]
 
-	if not var_22_0 then
-		logError("equip skill config not found config, id : " .. arg_22_1)
+	if not equipConfigList then
+		logError("equip skill config not found config, id : " .. id)
 
 		return nil
 	end
 
-	return var_22_0[arg_22_2]
+	return equipConfigList[level]
 end
 
-function var_0_0.getStrengthenToLvExpInfo(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	arg_23_4 = arg_23_3 + arg_23_4
+function EquipConfig:getStrengthenToLvExpInfo(quality, lv, baseExp, addExp)
+	addExp = baseExp + addExp
 
-	local var_23_0 = 0
-	local var_23_1 = arg_23_0._strengthenCostQualityList[arg_23_1]
+	local costExp = 0
+	local q = self._strengthenCostQualityList[quality]
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		if arg_23_2 < iter_23_1.level then
-			var_23_0 = iter_23_1.exp
+	for i, costCo in ipairs(q) do
+		if lv < costCo.level then
+			costExp = costCo.exp
 
-			if var_23_0 <= arg_23_4 then
-				if iter_23_0 == #var_23_1 then
-					arg_23_4 = var_23_0
+			if costExp <= addExp then
+				if i == #q then
+					addExp = costExp
 
 					break
 				else
-					arg_23_4 = arg_23_4 - var_23_0
+					addExp = addExp - costExp
 				end
 			else
 				break
@@ -364,29 +366,29 @@ function var_0_0.getStrengthenToLvExpInfo(arg_23_0, arg_23_1, arg_23_2, arg_23_3
 		end
 	end
 
-	return arg_23_4, var_23_0
+	return addExp, costExp
 end
 
-function var_0_0.getStrengthenToLvCost(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	local var_24_0 = 0
-	local var_24_1 = arg_24_0._strengthenCostQualityList[arg_24_1]
+function EquipConfig:getStrengthenToLvCost(quality, lv, baseExp, addExp)
+	local costValue = 0
+	local q = self._strengthenCostQualityList[quality]
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_1) do
-		if arg_24_2 < iter_24_1.level then
-			local var_24_2 = iter_24_1.exp
+	for i, costCo in ipairs(q) do
+		if lv < costCo.level then
+			local costExp = costCo.exp
 
-			if arg_24_3 > 0 then
-				var_24_2 = var_24_2 - arg_24_3
-				arg_24_3 = 0
+			if baseExp > 0 then
+				costExp = costExp - baseExp
+				baseExp = 0
 			end
 
-			if arg_24_4 > 0 then
-				if var_24_2 < arg_24_4 then
-					arg_24_4 = arg_24_4 - var_24_2
-					var_24_0 = var_24_0 + math.floor(var_24_2 * iter_24_1.scoreCost / 1000)
+			if addExp > 0 then
+				if costExp < addExp then
+					addExp = addExp - costExp
+					costValue = costValue + math.floor(costExp * costCo.scoreCost / 1000)
 				else
-					var_24_0 = var_24_0 + math.floor(arg_24_4 * iter_24_1.scoreCost / 1000)
-					arg_24_4 = 0
+					costValue = costValue + math.floor(addExp * costCo.scoreCost / 1000)
+					addExp = 0
 				end
 			else
 				break
@@ -394,319 +396,321 @@ function var_0_0.getStrengthenToLvCost(arg_24_0, arg_24_1, arg_24_2, arg_24_3, a
 		end
 	end
 
-	return var_24_0
+	return costValue
 end
 
-function var_0_0.getStrengthenToLvCostExp(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4, arg_25_5)
-	local var_25_0 = arg_25_0._strengthenCostQualityList[arg_25_1]
-	local var_25_1 = true
-	local var_25_2 = arg_25_0:_getBreakLevelMaxLevel(arg_25_1, arg_25_5)
+function EquipConfig:getStrengthenToLvCostExp(rare, currentLv, baseExp, addExp, breakLv)
+	local level2expCoDict = self._strengthenCostQualityList[rare]
+	local arrivedMax = true
+	local maxLv = self:_getBreakLevelMaxLevel(rare, breakLv)
 
-	if arg_25_2 == var_25_2 then
+	if currentLv == maxLv then
 		return {
 			0,
 			0
-		}, var_25_1
+		}, arrivedMax
 	end
 
-	local var_25_3 = arg_25_3 / var_25_0[arg_25_2 + 1].exp
-	local var_25_4 = 0
+	local nextLvCostCo = level2expCoDict[currentLv + 1]
+	local startValue = baseExp / nextLvCostCo.exp
+	local addValue = 0
 
-	arg_25_4 = arg_25_4 + arg_25_3
+	addExp = addExp + baseExp
 
-	for iter_25_0 = arg_25_2 + 1, var_25_2 do
-		local var_25_5 = var_25_0[iter_25_0].exp
+	for i = currentLv + 1, maxLv do
+		local costCo = level2expCoDict[i]
+		local costExp = costCo.exp
 
-		if var_25_5 <= arg_25_4 then
-			arg_25_4 = arg_25_4 - var_25_5
-			var_25_4 = var_25_4 + 1
+		if costExp <= addExp then
+			addExp = addExp - costExp
+			addValue = addValue + 1
 		else
-			var_25_4 = var_25_4 + arg_25_4 / var_25_5
-			var_25_1 = false
+			addValue = addValue + addExp / costExp
+			arrivedMax = false
 
 			break
 		end
 	end
 
 	return {
-		var_25_3,
-		var_25_4 - var_25_3
-	}, var_25_1
+		startValue,
+		addValue - startValue
+	}, arrivedMax
 end
 
-function var_0_0.getStrengthenToLv(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = arg_26_0._strengthenCostQualityList[arg_26_1]
-	local var_26_1 = 0
-	local var_26_2 = arg_26_2
+function EquipConfig:getStrengthenToLv(quality, lv, addExp)
+	local q = self._strengthenCostQualityList[quality]
+	local needExp = 0
+	local targetLevel = lv
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_0) do
-		if arg_26_2 < iter_26_1.level then
-			var_26_1 = var_26_1 + iter_26_1.exp
+	for i, v in ipairs(q) do
+		if lv < v.level then
+			needExp = needExp + v.exp
 
-			if var_26_1 <= arg_26_3 then
-				var_26_2 = iter_26_1.level
+			if needExp <= addExp then
+				targetLevel = v.level
 			else
 				break
 			end
 		end
 	end
 
-	return var_26_2
+	return targetLevel
 end
 
-function var_0_0.getEquipBreakCo(arg_27_0, arg_27_1, arg_27_2)
-	arg_27_2 = arg_27_2 or 0
+function EquipConfig:getEquipBreakCo(equipId, breakLv)
+	breakLv = breakLv or 0
 
-	local var_27_0 = lua_equip_break_attr.configDict[arg_27_1]
+	local equipBreakCoDict = lua_equip_break_attr.configDict[equipId]
 
-	if not var_27_0 then
+	if not equipBreakCoDict then
 		return nil
 	end
 
-	local var_27_1 = var_27_0[arg_27_2]
+	local breakAttrCo = equipBreakCoDict[breakLv]
 
-	if not var_27_1 then
+	if not breakAttrCo then
 		return nil
 	end
 
-	return var_27_1
+	return breakAttrCo
 end
 
-function var_0_0.getEquipCurrentBreakLvAttrEffect(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_0:getEquipBreakCo(arg_28_1.id, arg_28_2)
+function EquipConfig:getEquipCurrentBreakLvAttrEffect(equipConfig, breakLv)
+	local breakAttrCo = self:getEquipBreakCo(equipConfig.id, breakLv)
 
-	if not var_28_0 then
+	if not breakAttrCo then
 		return nil, 0
 	end
 
-	for iter_28_0, iter_28_1 in pairs(var_0_0.EquipBreakAttrIdToFieldName) do
-		if var_28_0[iter_28_1] ~= 0 then
-			return iter_28_0, var_28_0[iter_28_1]
+	for attrId, fieldName in pairs(EquipConfig.EquipBreakAttrIdToFieldName) do
+		if breakAttrCo[fieldName] ~= 0 then
+			return attrId, breakAttrCo[fieldName]
 		end
 	end
 
 	return nil, 0
 end
 
-function var_0_0.getEquipAddBaseAttr(arg_29_0, arg_29_1, arg_29_2)
-	arg_29_2 = arg_29_2 or arg_29_1.level
+function EquipConfig:getEquipAddBaseAttr(equipMO, level)
+	level = level or equipMO.level
 
-	local var_29_0 = arg_29_1.config
-	local var_29_1 = arg_29_0:calcStrengthenAttr(var_29_0, arg_29_2, "hp")
-	local var_29_2 = arg_29_0:calcStrengthenAttr(var_29_0, arg_29_2, "atk")
-	local var_29_3 = arg_29_0:calcStrengthenAttr(var_29_0, arg_29_2, "def")
-	local var_29_4 = arg_29_0:calcStrengthenAttr(var_29_0, arg_29_2, "mdef")
+	local equipCo = equipMO.config
+	local hp = self:calcStrengthenAttr(equipCo, level, "hp")
+	local atk = self:calcStrengthenAttr(equipCo, level, "atk")
+	local def = self:calcStrengthenAttr(equipCo, level, "def")
+	local mdef = self:calcStrengthenAttr(equipCo, level, "mdef")
 
-	return var_29_1, var_29_2, var_29_3, var_29_4
+	return hp, atk, def, mdef
 end
 
-function var_0_0.getEquipBreakAddAttrValueDict(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = {}
+function EquipConfig:getEquipBreakAddAttrValueDict(equipConfig, breakLv)
+	local upAddValues = {}
 
-	for iter_30_0, iter_30_1 in ipairs(CharacterEnum.BaseAttrIdList) do
-		var_30_0[iter_30_1] = 0
+	for _, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+		upAddValues[attrId] = 0
 	end
 
-	for iter_30_2, iter_30_3 in ipairs(CharacterEnum.UpAttrIdList) do
-		var_30_0[iter_30_3] = 0
+	for _, attrId in ipairs(CharacterEnum.UpAttrIdList) do
+		upAddValues[attrId] = 0
 	end
 
-	local var_30_1, var_30_2 = arg_30_0:getEquipCurrentBreakLvAttrEffect(arg_30_1, arg_30_2)
+	local attrId, value = self:getEquipCurrentBreakLvAttrEffect(equipConfig, breakLv)
 
-	if var_30_1 then
-		var_30_0[var_30_1] = var_30_0[var_30_1] + var_30_2
+	if attrId then
+		upAddValues[attrId] = upAddValues[attrId] + value
 	end
 
-	for iter_30_4, iter_30_5 in pairs(var_30_0) do
-		var_30_0[iter_30_4] = iter_30_5 / 10
+	for key, v in pairs(upAddValues) do
+		upAddValues[key] = v / 10
 	end
 
-	return var_30_0
+	return upAddValues
 end
 
-function var_0_0.getEquipStrengthenAttrMax0(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	local var_31_0, var_31_1, var_31_2, var_31_3, var_31_4 = arg_31_0:getEquipStrengthenAttr(arg_31_1, arg_31_2, arg_31_3, arg_31_4)
+function EquipConfig:getEquipStrengthenAttrMax0(equipMO, equipId, curLevel, breakLv)
+	local hp, atk, def, mdef, upAttrs = self:getEquipStrengthenAttr(equipMO, equipId, curLevel, breakLv)
 
-	if var_31_4 then
-		for iter_31_0, iter_31_1 in pairs(var_31_4) do
-			var_31_4[iter_31_0] = math.max(0, iter_31_1)
+	if upAttrs then
+		for k, v in pairs(upAttrs) do
+			upAttrs[k] = math.max(0, v)
 		end
 	end
 
-	return math.max(0, var_31_0), math.max(0, var_31_1), math.max(0, var_31_2), math.max(0, var_31_3), var_31_4
+	return math.max(0, hp), math.max(0, atk), math.max(0, def), math.max(0, mdef), upAttrs
 end
 
-function var_0_0.getEquipStrengthenAttr(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	local var_32_0 = arg_32_1 and arg_32_1.config or arg_32_0:getEquipCo(arg_32_2)
+function EquipConfig:getEquipStrengthenAttr(equipMO, equipId, curLevel)
+	local equipCo = equipMO and equipMO.config or self:getEquipCo(equipId)
 
-	arg_32_3 = arg_32_3 or arg_32_1 and arg_32_1.level or arg_32_0:getMaxLevel(arg_32_0:getEquipCo(arg_32_2))
+	curLevel = curLevel or equipMO and equipMO.level or self:getMaxLevel(self:getEquipCo(equipId))
 
-	local var_32_1 = arg_32_1 and arg_32_1.refineLv or 1
-	local var_32_2 = {}
+	local refine_lv = equipMO and equipMO.refineLv or 1
+	local upAttrs = {}
 
-	for iter_32_0, iter_32_1 in pairs(lua_character_attribute.configDict) do
-		if iter_32_1.type == 2 or iter_32_1.type == 3 then
-			var_32_2[iter_32_1.attrType] = arg_32_0:calcAdvanceAttrGain(var_32_0, var_32_1, iter_32_1.attrType)
+	for id, config in pairs(lua_character_attribute.configDict) do
+		if config.type == 2 or config.type == 3 then
+			upAttrs[config.attrType] = self:calcAdvanceAttrGain(equipCo, refine_lv, config.attrType)
 		end
 	end
 
-	local var_32_3 = arg_32_0:calcStrengthenAttr(var_32_0, arg_32_3, "hp")
-	local var_32_4 = arg_32_0:calcStrengthenAttr(var_32_0, arg_32_3, "atk")
-	local var_32_5 = arg_32_0:calcStrengthenAttr(var_32_0, arg_32_3, "def")
-	local var_32_6 = arg_32_0:calcStrengthenAttr(var_32_0, arg_32_3, "mdef")
+	local hp = self:calcStrengthenAttr(equipCo, curLevel, "hp")
+	local atk = self:calcStrengthenAttr(equipCo, curLevel, "atk")
+	local def = self:calcStrengthenAttr(equipCo, curLevel, "def")
+	local mdef = self:calcStrengthenAttr(equipCo, curLevel, "mdef")
 
-	return var_32_3, var_32_4, var_32_5, var_32_6, var_32_2
+	return hp, atk, def, mdef, upAttrs
 end
 
-function var_0_0.getMaxEquipNormalAttr(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_0:getEquipCo(arg_33_1)
-	local var_33_1, var_33_2 = arg_33_0:getEquipNormalAttr(arg_33_1, arg_33_0:getMaxLevel(var_33_0), arg_33_2)
+function EquipConfig:getMaxEquipNormalAttr(equipId, sortFunc)
+	local equip_config = self:getEquipCo(equipId)
+	local gain_tab, gain_list = self:getEquipNormalAttr(equipId, self:getMaxLevel(equip_config), sortFunc)
 
-	return var_33_1, var_33_2
+	return gain_tab, gain_list
 end
 
-function var_0_0.getEquipNormalAttr(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	local var_34_0 = arg_34_0:getEquipCo(arg_34_1)
-	local var_34_1 = {
+function EquipConfig:getEquipNormalAttr(equipId, level, sortFunc)
+	local equip_config = self:getEquipCo(equipId)
+	local attr_tab = {
 		"hp",
 		"atk",
 		"def",
 		"mdef"
 	}
-	local var_34_2 = {}
-	local var_34_3 = {}
+	local gain_tab = {}
+	local gain_list = {}
 
-	for iter_34_0, iter_34_1 in pairs(var_34_1) do
-		local var_34_4 = {
-			attrType = iter_34_1,
-			value = arg_34_0:calcStrengthenAttr(var_34_0, arg_34_2, iter_34_1)
-		}
+	for k, v in pairs(attr_tab) do
+		local tab = {}
 
-		var_34_2[iter_34_1] = var_34_4
+		tab.attrType = v
+		tab.value = self:calcStrengthenAttr(equip_config, level, v)
+		gain_tab[v] = tab
 
-		table.insert(var_34_3, var_34_4)
+		table.insert(gain_list, tab)
 	end
 
-	table.sort(var_34_3, arg_34_3 or HeroConfig.sortAttr)
+	table.sort(gain_list, sortFunc or HeroConfig.sortAttr)
 
-	return var_34_2, var_34_3
+	return gain_tab, gain_list
 end
 
-function var_0_0.getMaxEquipAdvanceAttr(arg_35_0, arg_35_1)
-	local var_35_0, var_35_1 = arg_35_0:getEquipAdvanceAttr(arg_35_1, arg_35_0:getEquipRefineLvMax())
+function EquipConfig:getMaxEquipAdvanceAttr(equipId)
+	local gain_tab, gain_list = self:getEquipAdvanceAttr(equipId, self:getEquipRefineLvMax())
 
-	return var_35_0, var_35_1
+	return gain_tab, gain_list
 end
 
-function var_0_0.getEquipAdvanceAttr(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = {}
-	local var_36_1 = {}
-	local var_36_2 = arg_36_0:getEquipCo(arg_36_1)
+function EquipConfig:getEquipAdvanceAttr(equipId, refine_lv)
+	local gain_tab = {}
+	local gain_list = {}
+	local equip_config = self:getEquipCo(equipId)
 
-	for iter_36_0, iter_36_1 in pairs(lua_character_attribute.configDict) do
-		if iter_36_1.type == 2 or iter_36_1.type == 3 then
-			local var_36_3 = {
-				attrType = iter_36_1.attrType,
-				value = arg_36_0:calcAdvanceAttrGain(var_36_2, arg_36_2, iter_36_1.attrType)
-			}
+	for id, config in pairs(lua_character_attribute.configDict) do
+		if config.type == 2 or config.type == 3 then
+			local tab = {}
 
-			var_36_0[iter_36_1.attrType] = var_36_3
+			tab.attrType = config.attrType
+			tab.value = self:calcAdvanceAttrGain(equip_config, refine_lv, config.attrType)
+			gain_tab[config.attrType] = tab
 
-			table.insert(var_36_1, var_36_3)
+			table.insert(gain_list, tab)
 		end
 	end
 
-	table.sort(var_36_1, HeroConfig.sortAttr)
+	table.sort(gain_list, HeroConfig.sortAttr)
 
-	return var_36_0, var_36_1
+	return gain_tab, gain_list
 end
 
-function var_0_0.calcAdvanceAttrGain(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	if arg_37_2 == 0 then
-		arg_37_2 = 1
+function EquipConfig:calcAdvanceAttrGain(equipCo, refine_lv, attr_type)
+	if refine_lv == 0 then
+		refine_lv = 1
 	end
 
-	local var_37_0 = arg_37_0:getEquipSkillCfg(arg_37_1.skillType, arg_37_2)
+	local equip_skill_config = self:getEquipSkillCfg(equipCo.skillType, refine_lv)
 
-	if not var_37_0 then
-		logError("装备技能表找不到id：", arg_37_1.skillType, "等级：", arg_37_2)
+	if not equip_skill_config then
+		logError("装备技能表找不到id：", equipCo.skillType, "等级：", refine_lv)
 	end
 
-	return var_37_0[arg_37_3] or 0
+	return equip_skill_config[attr_type] or 0
 end
 
-function var_0_0.calcStrengthenAttr(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	local var_38_0 = lua_equip_strengthen.configDict[arg_38_1.strengthType]
+function EquipConfig:calcStrengthenAttr(equipCo, curLevel, attrName)
+	local config = lua_equip_strengthen.configDict[equipCo.strengthType]
 
-	if not var_38_0 then
+	if not config then
 		return -1
 	end
 
-	local var_38_1 = var_38_0[arg_38_3]
+	local value = config[attrName]
 
-	if not var_38_1 then
+	if not value then
 		return -1
 	end
 
-	local var_38_2 = arg_38_0:getEquipStrengthenCostCo(arg_38_1.rare, arg_38_2)
+	local costCo = self:getEquipStrengthenCostCo(equipCo.rare, curLevel)
 
-	return math.floor(var_38_1 * var_38_2.attributeRate / 1000)
+	return math.floor(value * costCo.attributeRate / 1000)
 end
 
-function var_0_0.attrIdToName(arg_39_0, arg_39_1)
-	return lua_character_attribute.configDict[arg_39_1].attrType
+function EquipConfig:attrIdToName(attrId)
+	local config = lua_character_attribute.configDict[attrId]
+
+	return config.attrType
 end
 
-function var_0_0.getRareColor(arg_40_0, arg_40_1)
-	return ItemEnum.Color[arg_40_1]
+function EquipConfig:getRareColor(rare)
+	return ItemEnum.Color[rare]
 end
 
-function var_0_0.isEquipSkill(arg_41_0, arg_41_1)
-	return arg_41_0.equip_skill_dic[arg_41_1]
+function EquipConfig:isEquipSkill(skill)
+	return self.equip_skill_dic[skill]
 end
 
-var_0_0.FastAddMAXFilterRareId = 91
+EquipConfig.FastAddMAXFilterRareId = 91
 
-function var_0_0.getMaxFilterRare(arg_42_0)
-	if not arg_42_0.maxRare then
-		arg_42_0.maxRare = CommonConfig.instance:getConstNum(ConstEnum.FastAddMAXFilterRareId)
+function EquipConfig:getMaxFilterRare()
+	if not self.maxRare then
+		self.maxRare = CommonConfig.instance:getConstNum(ConstEnum.FastAddMAXFilterRareId)
 	end
 
-	return arg_42_0.maxRare
+	return self.maxRare
 end
 
-function var_0_0.getMinFilterRare(arg_43_0)
+function EquipConfig:getMinFilterRare()
 	return 2
 end
 
-function var_0_0.getNotShowRefineRare(arg_44_0)
-	return arg_44_0._equipNotShowRefineRare
+function EquipConfig:getNotShowRefineRare()
+	return self._equipNotShowRefineRare
 end
 
-function var_0_0.getTagList(arg_45_0, arg_45_1)
-	if not arg_45_1 then
+function EquipConfig:getTagList(equipConfig)
+	if not equipConfig then
 		return {}
 	end
 
-	if string.nilorempty(arg_45_1.tag) then
+	if string.nilorempty(equipConfig.tag) then
 		return {}
 	end
 
-	return string.splitToNumber(arg_45_1.tag, "#")
+	return string.splitToNumber(equipConfig.tag, "#")
 end
 
-function var_0_0.getTagName(arg_46_0, arg_46_1)
-	local var_46_0 = lua_equip_tag.configDict[arg_46_1]
+function EquipConfig:getTagName(tagId)
+	local tagCo = lua_equip_tag.configDict[tagId]
 
-	if not var_46_0 then
-		logError(string.format("not found tag id : %s config", arg_46_1))
+	if not tagCo then
+		logError(string.format("not found tag id : %s config", tagId))
 
 		return ""
 	end
 
-	return var_46_0.name
+	return tagCo.name
 end
 
-var_0_0.instance = var_0_0.New()
+EquipConfig.instance = EquipConfig.New()
 
-return var_0_0
+return EquipConfig

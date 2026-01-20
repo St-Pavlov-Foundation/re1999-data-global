@@ -1,17 +1,19 @@
-﻿module("modules.logic.survival.model.SurvivalShelterRewardListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/SurvivalShelterRewardListModel.lua
 
-local var_0_0 = class("SurvivalShelterRewardListModel", ListScrollModel)
+module("modules.logic.survival.model.SurvivalShelterRewardListModel", package.seeall)
 
-function var_0_0.refreshList(arg_1_0)
-	local var_1_0 = SurvivalConfig.instance:getRewardList() or {}
+local SurvivalShelterRewardListModel = class("SurvivalShelterRewardListModel", ListScrollModel)
 
-	if #var_1_0 > 1 then
-		table.sort(var_1_0, SortUtil.keyLower("score"))
+function SurvivalShelterRewardListModel:refreshList()
+	local list = SurvivalConfig.instance:getRewardList() or {}
+
+	if #list > 1 then
+		table.sort(list, SortUtil.keyLower("score"))
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterRewardListModel.instance = SurvivalShelterRewardListModel.New()
 
-return var_0_0
+return SurvivalShelterRewardListModel

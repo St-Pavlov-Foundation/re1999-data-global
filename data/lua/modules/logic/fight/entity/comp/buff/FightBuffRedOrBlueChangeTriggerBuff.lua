@@ -1,25 +1,27 @@
-﻿module("modules.logic.fight.entity.comp.buff.FightBuffRedOrBlueChangeTriggerBuff", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/buff/FightBuffRedOrBlueChangeTriggerBuff.lua
 
-local var_0_0 = class("FightBuffRedOrBlueChangeTriggerBuff")
+module("modules.logic.fight.entity.comp.buff.FightBuffRedOrBlueChangeTriggerBuff", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightBuffRedOrBlueChangeTriggerBuff = class("FightBuffRedOrBlueChangeTriggerBuff")
+
+function FightBuffRedOrBlueChangeTriggerBuff:ctor()
 	return
 end
 
-function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
-	FightDataHelper.LYDataMgr:setLYChangeTriggerBuff(arg_2_2)
+function FightBuffRedOrBlueChangeTriggerBuff:onBuffStart(entity, buffMo)
+	FightDataHelper.LYDataMgr:setLYChangeTriggerBuff(buffMo)
 end
 
-function var_0_0.clear(arg_3_0)
+function FightBuffRedOrBlueChangeTriggerBuff:clear()
 	FightDataHelper.LYDataMgr:setLYChangeTriggerBuff(nil)
 end
 
-function var_0_0.onBuffEnd(arg_4_0)
-	arg_4_0:clear()
+function FightBuffRedOrBlueChangeTriggerBuff:onBuffEnd()
+	self:clear()
 end
 
-function var_0_0.dispose(arg_5_0)
-	arg_5_0:clear()
+function FightBuffRedOrBlueChangeTriggerBuff:dispose()
+	self:clear()
 end
 
-return var_0_0
+return FightBuffRedOrBlueChangeTriggerBuff

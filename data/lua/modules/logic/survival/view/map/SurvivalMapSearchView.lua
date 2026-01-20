@@ -1,334 +1,336 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapSearchView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapSearchView.lua
 
-local var_0_0 = class("SurvivalMapSearchView", BaseView)
+module("modules.logic.survival.view.map.SurvivalMapSearchView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
-	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_getall")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._itemRoot = gohelper.findChild(arg_1_0.viewGO, "root/scroll_collection/Viewport/Content")
-	arg_1_0._btnbag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_bag")
-	arg_1_0._gobagfull = gohelper.findChild(arg_1_0.viewGO, "#btn_bag/#go_overweight")
-	arg_1_0._goinfoview = gohelper.findChild(arg_1_0.viewGO, "root/#go_infoview")
-	arg_1_0._goheavy = gohelper.findChild(arg_1_0.viewGO, "root/go_heavy")
-	arg_1_0._gosort = gohelper.findChild(arg_1_0.viewGO, "root/#go_sort")
+local SurvivalMapSearchView = class("SurvivalMapSearchView", BaseView)
+
+function SurvivalMapSearchView:onInitView()
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
+	self._btngetall = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_getall")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._itemRoot = gohelper.findChild(self.viewGO, "root/scroll_collection/Viewport/Content")
+	self._btnbag = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_bag")
+	self._gobagfull = gohelper.findChild(self.viewGO, "#btn_bag/#go_overweight")
+	self._goinfoview = gohelper.findChild(self.viewGO, "root/#go_infoview")
+	self._goheavy = gohelper.findChild(self.viewGO, "root/go_heavy")
+	self._gosort = gohelper.findChild(self.viewGO, "root/#go_sort")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngetall:AddClickListener(arg_2_0._onClickGetAll, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._closeEvent, arg_2_0)
-	arg_2_0._btnbag:AddClickListener(arg_2_0._onClickBag, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnSearchEventUpdate, arg_2_0._onUpdateMos, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, arg_2_0._refreshBagFull, arg_2_0)
+function SurvivalMapSearchView:addEvents()
+	self._btngetall:AddClickListener(self._onClickGetAll, self)
+	self._btnclose:AddClickListener(self._closeEvent, self)
+	self._btnbag:AddClickListener(self._onClickBag, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnSearchEventUpdate, self._onUpdateMos, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBagFull, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngetall:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnbag:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnSearchEventUpdate, arg_3_0._onUpdateMos, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, arg_3_0._refreshBagFull, arg_3_0)
+function SurvivalMapSearchView:removeEvents()
+	self._btngetall:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnbag:RemoveClickListener()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnSearchEventUpdate, self._onUpdateMos, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBagFull, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goheavy, SurvivalWeightPart)
+function SurvivalMapSearchView:onOpen()
+	MonoHelper.addNoUpdateLuaComOnceToGo(self._goheavy, SurvivalWeightPart)
 
-	local var_4_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._gosort, SurvivalSortAndFilterPart)
-	local var_4_1 = {
-		{
-			desc = luaLang("survival_sort_worth"),
-			type = SurvivalEnum.ItemSortType.Worth
-		},
-		{
-			desc = luaLang("survival_sort_mass"),
-			type = SurvivalEnum.ItemSortType.Mass
-		},
-		{
-			desc = luaLang("survival_sort_type"),
-			type = SurvivalEnum.ItemSortType.Type
-		}
+	local sortComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gosort, SurvivalSortAndFilterPart)
+	local sortOptions = {}
+
+	sortOptions[1] = {
+		desc = luaLang("survival_sort_worth"),
+		type = SurvivalEnum.ItemSortType.Worth
 	}
-	local var_4_2 = {
-		{
-			desc = luaLang("survival_filter_material"),
-			type = SurvivalEnum.ItemFilterType.Material
-		},
-		{
-			desc = luaLang("survival_filter_equip"),
-			type = SurvivalEnum.ItemFilterType.Equip
-		},
-		{
-			desc = luaLang("survival_filter_consume"),
-			type = SurvivalEnum.ItemFilterType.Consume
-		}
+	sortOptions[2] = {
+		desc = luaLang("survival_sort_mass"),
+		type = SurvivalEnum.ItemSortType.Mass
+	}
+	sortOptions[3] = {
+		desc = luaLang("survival_sort_type"),
+		type = SurvivalEnum.ItemSortType.Type
 	}
 
-	arg_4_0._curSort = var_4_1[1]
-	arg_4_0._isDec = true
-	arg_4_0._filterList = {}
+	local filterOptions = {}
 
-	var_4_0:setOptions(var_4_1, var_4_2, arg_4_0._curSort, arg_4_0._isDec)
-	var_4_0:setOptionChangeCallback(arg_4_0._onSortChange, arg_4_0)
+	filterOptions[1] = {
+		desc = luaLang("survival_filter_material"),
+		type = SurvivalEnum.ItemFilterType.Material
+	}
+	filterOptions[2] = {
+		desc = luaLang("survival_filter_equip"),
+		type = SurvivalEnum.ItemFilterType.Equip
+	}
+	filterOptions[3] = {
+		desc = luaLang("survival_filter_consume"),
+		type = SurvivalEnum.ItemFilterType.Consume
+	}
+	self._curSort = sortOptions[1]
+	self._isDec = true
+	self._filterList = {}
 
-	local var_4_3 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
-	local var_4_4 = arg_4_0:getResInst(var_4_3, arg_4_0._goinfoview)
+	sortComp:setOptions(sortOptions, filterOptions, self._curSort, self._isDec)
+	sortComp:setOptionChangeCallback(self._onSortChange, self)
 
-	arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_4, SurvivalBagInfoPart)
+	local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+	local infoGo = self:getResInst(infoViewRes, self._goinfoview)
 
-	arg_4_0._infoPanel:updateMo()
+	self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-	local var_4_5 = arg_4_0.viewContainer._viewSetting.otherRes.itemRes
+	self._infoPanel:updateMo()
 
-	arg_4_0._item = arg_4_0:getResInst(var_4_5, arg_4_0.viewGO)
+	local itemRes = self.viewContainer._viewSetting.otherRes.itemRes
 
-	gohelper.setActive(arg_4_0._item, false)
+	self._item = self:getResInst(itemRes, self.viewGO)
 
-	arg_4_0._allItemMos = arg_4_0.viewParam.preItems or arg_4_0.viewParam.itemMos
-	arg_4_0.isShowLoading = arg_4_0.viewParam.isFirst
+	gohelper.setActive(self._item, false)
 
-	arg_4_0:_onSortChange(arg_4_0._curSort, arg_4_0._isDec, arg_4_0._filterList)
-	arg_4_0:_refreshBagFull()
+	self._allItemMos = self.viewParam.preItems or self.viewParam.itemMos
+	self.isShowLoading = self.viewParam.isFirst
 
-	if not arg_4_0.isShowLoading then
+	self:_onSortChange(self._curSort, self._isDec, self._filterList)
+	self:_refreshBagFull()
+
+	if not self.isShowLoading then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_sougua_2)
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._allItems) do
-		if not iter_4_1._mo:isEmpty() then
-			iter_4_1:showLoading(true)
+	for _, item in ipairs(self._allItems) do
+		if not item._mo:isEmpty() then
+			item:showLoading(true)
 		end
 	end
 
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	TaskDispatcher.runDelay(arg_4_0._delayHideLoading, arg_4_0, 1)
+	TaskDispatcher.runDelay(self._delayHideLoading, self, 1)
 	UIBlockHelper.instance:startBlock("SurvivalMapSearchView_PlayLoading", 1)
 end
 
-function var_0_0._delayHideLoading(arg_5_0)
+function SurvivalMapSearchView:_delayHideLoading()
 	UIBlockMgrExtend.setNeedCircleMv(true)
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._allItems) do
-		iter_5_1:showLoading(false)
-		iter_5_1:setIsSelect(iter_5_1._mo.uid and iter_5_1._mo.uid == arg_5_0._curSelectUid)
+	for _, item in ipairs(self._allItems) do
+		item:showLoading(false)
+		item:setIsSelect(item._mo.uid and item._mo.uid == self._curSelectUid)
 	end
 
-	arg_5_0.isShowLoading = false
+	self.isShowLoading = false
 
-	if arg_5_0.viewParam.preItems then
+	if self.viewParam.preItems then
 		UIBlockHelper.instance:startBlock("SurvivalMapSearchView_changeItems", 1)
 
-		local var_5_0 = arg_5_0.viewParam.itemMos
+		local itemMos = self.viewParam.itemMos
 
-		for iter_5_2, iter_5_3 in pairs(arg_5_0._showList) do
-			if not iter_5_3:isEmpty() and var_5_0[iter_5_3.uid] and iter_5_3.id ~= var_5_0[iter_5_3.uid].id then
-				arg_5_0._items[iter_5_3.uid]:playComposeAnim()
+		for _, itemMo in pairs(self._showList) do
+			if not itemMo:isEmpty() and itemMos[itemMo.uid] and itemMo.id ~= itemMos[itemMo.uid].id then
+				self._items[itemMo.uid]:playComposeAnim()
 			end
 		end
 
-		TaskDispatcher.runDelay(arg_5_0._delayShowItemMos, arg_5_0, 1)
+		TaskDispatcher.runDelay(self._delayShowItemMos, self, 1)
 	else
-		arg_5_0:_refreshLeftPart()
+		self:_refreshLeftPart()
 	end
 end
 
-function var_0_0._delayShowItemMos(arg_6_0)
-	arg_6_0:_onUpdateMos(arg_6_0.viewParam.itemMos, true)
-	arg_6_0:_refreshLeftPart()
+function SurvivalMapSearchView:_delayShowItemMos()
+	self:_onUpdateMos(self.viewParam.itemMos, true)
+	self:_refreshLeftPart()
 end
 
-function var_0_0._onSortChange(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0._curSort = arg_7_1
-	arg_7_0._isDec = arg_7_2
-	arg_7_0._filterList = arg_7_3
+function SurvivalMapSearchView:_onSortChange(sortData, isDec, filterList)
+	self._curSort = sortData
+	self._isDec = isDec
+	self._filterList = filterList
 
-	local var_7_0 = {}
+	local showList = {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._allItemMos) do
-		if SurvivalBagSortHelper.filterItemMo(arg_7_3, iter_7_1) then
-			table.insert(var_7_0, iter_7_1)
+	for _, itemMo in pairs(self._allItemMos) do
+		if SurvivalBagSortHelper.filterItemMo(filterList, itemMo) then
+			table.insert(showList, itemMo)
 		end
 	end
 
-	SurvivalBagSortHelper.sortItems(var_7_0, arg_7_1.type, arg_7_2)
+	SurvivalBagSortHelper.sortItems(showList, sortData.type, isDec)
 
-	arg_7_0._showList = var_7_0
+	self._showList = showList
 
-	arg_7_0:_refreshBag()
+	self:_refreshBag()
 end
 
-function var_0_0._onUpdateMos(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = not arg_8_2 and not SurvivalMapModel.instance.isSearchRemove
-	local var_8_1 = false
+function SurvivalMapSearchView:_onUpdateMos(itemMos, isShowPreItemAnim)
+	local isSearch = not isShowPreItemAnim and not SurvivalMapModel.instance.isSearchRemove
+	local haveRemove = false
 
 	SurvivalMapModel.instance.isSearchRemove = false
-	arg_8_0._allItemMos = arg_8_1
+	self._allItemMos = itemMos
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._showList) do
-		if not iter_8_1:isEmpty() then
-			if arg_8_1[iter_8_1.uid] then
-				if iter_8_1.id ~= arg_8_1[iter_8_1.uid].id and iter_8_1.id > 0 and arg_8_1[iter_8_1.uid].id > 0 then
-					iter_8_1:init(arg_8_1[iter_8_1.uid])
-				elseif iter_8_1.count ~= arg_8_1[iter_8_1.uid].count then
-					iter_8_1:init(arg_8_1[iter_8_1.uid])
+	for _, itemMo in pairs(self._showList) do
+		if not itemMo:isEmpty() then
+			if itemMos[itemMo.uid] then
+				if itemMo.id ~= itemMos[itemMo.uid].id and itemMo.id > 0 and itemMos[itemMo.uid].id > 0 then
+					itemMo:init(itemMos[itemMo.uid])
+				elseif itemMo.count ~= itemMos[itemMo.uid].count then
+					itemMo:init(itemMos[itemMo.uid])
 
-					if var_8_0 then
-						arg_8_0._items[iter_8_1.uid]:playSearch()
+					if isSearch then
+						self._items[itemMo.uid]:playSearch()
 					end
 				end
 			else
-				if iter_8_1.uid == arg_8_0._curSelectUid then
-					arg_8_0._infoPanel:updateMo()
+				if itemMo.uid == self._curSelectUid then
+					self._infoPanel:updateMo()
 				end
 
-				if var_8_0 then
-					arg_8_0._items[iter_8_1.uid]:playSearch()
+				if isSearch then
+					self._items[itemMo.uid]:playSearch()
 				end
 
-				arg_8_0._items[iter_8_1.uid]:playCloseAnim()
-				iter_8_1:ctor()
+				self._items[itemMo.uid]:playCloseAnim()
+				itemMo:ctor()
 
-				var_8_1 = true
+				haveRemove = true
 			end
 		end
 	end
 
-	if var_8_0 or var_8_1 then
-		if var_8_0 then
+	if isSearch or haveRemove then
+		if isSearch then
 			AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_sougua_3)
-			arg_8_0._anim:Play("searching", 0, 0)
+			self._anim:Play("searching", 0, 0)
 		end
 
 		UIBlockHelper.instance:startBlock("SurvivalMapSearchView.searching", 0.167)
-		TaskDispatcher.runDelay(arg_8_0._onSearchAnim, arg_8_0, 0.167)
+		TaskDispatcher.runDelay(self._onSearchAnim, self, 0.167)
 	else
-		arg_8_0:_refreshBag()
+		self:_refreshBag()
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.SurvivalSearchAnimFinish)
 	end
 end
 
-function var_0_0._onSearchAnim(arg_9_0)
+function SurvivalMapSearchView:_onSearchAnim()
 	UIBlockHelper.instance:startBlock("SurvivalMapSearchView.searching", 0.5)
-	TaskDispatcher.runDelay(arg_9_0._delayRefreshBag, arg_9_0, 0.5)
+	TaskDispatcher.runDelay(self._delayRefreshBag, self, 0.5)
 end
 
-function var_0_0._delayRefreshBag(arg_10_0)
+function SurvivalMapSearchView:_delayRefreshBag()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.SurvivalSearchAnimFinish)
-	arg_10_0:_refreshBag()
+	self:_refreshBag()
 end
 
-function var_0_0._refreshBag(arg_11_0)
-	SurvivalHelper.instance:makeArrFull(arg_11_0._showList, SurvivalBagItemMo.Empty, 4, 3)
+function SurvivalMapSearchView:_refreshBag()
+	SurvivalHelper.instance:makeArrFull(self._showList, SurvivalBagItemMo.Empty, 4, 3)
 
-	arg_11_0._items = {}
-	arg_11_0._allItems = {}
+	self._items = {}
+	self._allItems = {}
 
-	gohelper.CreateObjList(arg_11_0, arg_11_0._createItem, arg_11_0._showList, arg_11_0._itemRoot, arg_11_0._item, SurvivalBagItem)
+	gohelper.CreateObjList(self, self._createItem, self._showList, self._itemRoot, self._item, SurvivalBagItem)
 
-	if arg_11_0._curSelectUid and (not arg_11_0._items[arg_11_0._curSelectUid] or arg_11_0._items[arg_11_0._curSelectUid] and arg_11_0._items[arg_11_0._curSelectUid]._mo:isEmpty()) then
-		arg_11_0._curSelectUid = nil
+	if self._curSelectUid and (not self._items[self._curSelectUid] or self._items[self._curSelectUid] and self._items[self._curSelectUid]._mo:isEmpty()) then
+		self._curSelectUid = nil
 	end
 
-	if not arg_11_0._curSelectUid then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0._showList) do
-			if not iter_11_1:isEmpty() then
-				arg_11_0._curSelectUid = iter_11_1.uid
+	if not self._curSelectUid then
+		for _, v in ipairs(self._showList) do
+			if not v:isEmpty() then
+				self._curSelectUid = v.uid
 
-				arg_11_0._items[arg_11_0._curSelectUid]:setIsSelect(true)
+				self._items[self._curSelectUid]:setIsSelect(true)
 
 				break
 			end
 		end
 	end
 
-	arg_11_0:_refreshLeftPart()
+	self:_refreshLeftPart()
 end
 
-function var_0_0._createItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not arg_12_2:isEmpty() then
-		arg_12_0._items[arg_12_2.uid] = arg_12_1
+function SurvivalMapSearchView:_createItem(obj, data, index)
+	if not data:isEmpty() then
+		self._items[data.uid] = obj
 	end
 
-	arg_12_0._allItems[arg_12_3] = arg_12_1
+	self._allItems[index] = obj
 
-	arg_12_1:updateMo(arg_12_2)
-	arg_12_1:setClickCallback(arg_12_0._onClickItem, arg_12_0)
-	arg_12_1:setIsSelect(arg_12_2.uid and arg_12_2.uid == arg_12_0._curSelectUid)
+	obj:updateMo(data)
+	obj:setClickCallback(self._onClickItem, self)
+	obj:setIsSelect(data.uid and data.uid == self._curSelectUid)
 end
 
-function var_0_0._onClickItem(arg_13_0, arg_13_1)
-	if arg_13_0._curSelectUid == arg_13_1._mo.uid then
+function SurvivalMapSearchView:_onClickItem(item)
+	if self._curSelectUid == item._mo.uid then
 		return
 	end
 
-	if arg_13_0._curSelectUid then
-		arg_13_0._items[arg_13_0._curSelectUid]:setIsSelect(false)
+	if self._curSelectUid then
+		self._items[self._curSelectUid]:setIsSelect(false)
 	end
 
-	arg_13_0._curSelectUid = arg_13_1._mo.uid
+	self._curSelectUid = item._mo.uid
 
-	arg_13_1:setIsSelect(true)
-	arg_13_0:_refreshLeftPart()
+	item:setIsSelect(true)
+	self:_refreshLeftPart()
 end
 
-function var_0_0._refreshLeftPart(arg_14_0)
-	if arg_14_0.isShowLoading then
+function SurvivalMapSearchView:_refreshLeftPart()
+	if self.isShowLoading then
 		return
 	end
 
-	if arg_14_0._curSelectUid then
+	if self._curSelectUid then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_details)
-		arg_14_0._infoPanel:updateMo(arg_14_0._items[arg_14_0._curSelectUid]._mo)
+		self._infoPanel:updateMo(self._items[self._curSelectUid]._mo)
 	else
-		arg_14_0._infoPanel:updateMo()
+		self._infoPanel:updateMo()
 	end
 end
 
-function var_0_0._onClickGetAll(arg_15_0)
+function SurvivalMapSearchView:_onClickGetAll()
 	SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.OperSearch, "1#-1")
 end
 
-function var_0_0._closeEvent(arg_16_0)
-	local var_16_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalMapSearchView:_closeEvent()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	if not var_16_0.panel then
-		arg_16_0:closeThis()
+	if not sceneMo.panel then
+		self:closeThis()
 
 		return
 	end
 
-	SurvivalWeekRpc.instance:sendSurvivalClosePanelRequest(var_16_0.panel.uid, arg_16_0._onRecvMsg, arg_16_0)
+	SurvivalWeekRpc.instance:sendSurvivalClosePanelRequest(sceneMo.panel.uid, self._onRecvMsg, self)
 end
 
-function var_0_0._onRecvMsg(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	if arg_17_2 == 0 then
-		local var_17_0 = SurvivalMapModel.instance:getSceneMo()
+function SurvivalMapSearchView:_onRecvMsg(cmd, resultCode, msg)
+	if resultCode == 0 then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-		if var_17_0.panel and var_17_0.panel.type == SurvivalEnum.PanelType.Search then
-			var_17_0.panel = nil
+		if sceneMo.panel and sceneMo.panel.type == SurvivalEnum.PanelType.Search then
+			sceneMo.panel = nil
 		end
 
-		arg_17_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._onClickBag(arg_18_0)
+function SurvivalMapSearchView:_onClickBag()
 	ViewMgr.instance:openView(ViewName.SurvivalMapBagView)
 end
 
-function var_0_0._refreshBagFull(arg_19_0)
-	local var_19_0 = SurvivalMapHelper.instance:getBagMo()
-	local var_19_1 = var_19_0.totalMass > var_19_0.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+function SurvivalMapSearchView:_refreshBagFull()
+	local bagMo = SurvivalMapHelper.instance:getBagMo()
+	local isFull = bagMo.totalMass > bagMo.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
 
-	gohelper.setActive(arg_19_0._gobagfull, var_19_1)
+	gohelper.setActive(self._gobagfull, isFull)
 end
 
-function var_0_0.onClose(arg_20_0)
+function SurvivalMapSearchView:onClose()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	TaskDispatcher.cancelTask(arg_20_0._onSearchAnim, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._delayRefreshBag, arg_20_0)
-	TaskDispatcher.cancelTask(arg_20_0._delayShowItemMos, arg_20_0)
+	TaskDispatcher.cancelTask(self._onSearchAnim, self)
+	TaskDispatcher.cancelTask(self._delayRefreshBag, self)
+	TaskDispatcher.cancelTask(self._delayShowItemMos, self)
 end
 
-return var_0_0
+return SurvivalMapSearchView

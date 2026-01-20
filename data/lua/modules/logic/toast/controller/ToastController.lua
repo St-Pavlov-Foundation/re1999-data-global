@@ -1,200 +1,203 @@
-﻿module("modules.logic.toast.controller.ToastController", package.seeall)
+﻿-- chunkname: @modules/logic/toast/controller/ToastController.lua
 
-local var_0_0 = class("ToastController", BaseController)
+module("modules.logic.toast.controller.ToastController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._msgList = {}
-	arg_1_0._notToastList = {}
+local ToastController = class("ToastController", BaseController)
+
+function ToastController:onInit()
+	self._msgList = {}
+	self._notToastList = {}
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function ToastController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function ToastController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
-	arg_4_0._msgList = {}
-	arg_4_0._notToastList = {}
+function ToastController:reInit()
+	self._msgList = {}
+	self._notToastList = {}
 end
 
-function var_0_0.showToastWithIcon(arg_5_0, arg_5_1, arg_5_2, ...)
-	arg_5_0._icon = arg_5_2
+function ToastController:showToastWithIcon(toastid, icon, ...)
+	self._icon = icon
 
-	arg_5_0:showToast(arg_5_1, ...)
+	self:showToast(toastid, ...)
 
-	arg_5_0._icon = nil
+	self._icon = nil
 end
 
-function var_0_0.showToastWithExternalCall(arg_6_0)
+function ToastController:showToastWithExternalCall()
 	return
 end
 
-function var_0_0._showToast(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_2 and ViewName.ToastTopView or ViewName.ToastView
+function ToastController:_showToast(msgObject, isTop)
+	local viewName = isTop and ViewName.ToastTopView or ViewName.ToastView
 
-	if not ViewMgr.instance:isOpen(var_7_0) then
-		ViewMgr.instance:openView(var_7_0, arg_7_1)
+	if not ViewMgr.instance:isOpen(viewName) then
+		ViewMgr.instance:openView(viewName, msgObject)
 
 		return
 	end
 
-	if ViewMgr.instance:isOpenFinish(var_7_0) then
-		arg_7_0:dispatchEvent(ToastEvent.ShowToast, arg_7_1)
+	if ViewMgr.instance:isOpenFinish(viewName) then
+		self:dispatchEvent(ToastEvent.ShowToast, msgObject)
 
 		return
 	end
 
-	table.insert(arg_7_0._msgList, arg_7_1)
+	table.insert(self._msgList, msgObject)
 end
 
-function var_0_0.showToast(arg_8_0, arg_8_1, ...)
-	local var_8_0 = arg_8_0:PackToastObj(arg_8_1, ...)
+function ToastController:showToast(toastid, ...)
+	local o = self:PackToastObj(toastid, ...)
 
-	if var_8_0 and (isDebugBuild or var_8_0.co.notShow == 0) then
-		arg_8_0:_showToast(var_8_0)
+	if o and (isDebugBuild or o.co.notShow == 0) then
+		self:_showToast(o)
 	end
 end
 
-function var_0_0.PackToastObj(arg_9_0, arg_9_1, ...)
-	local var_9_0 = arg_9_1 and ToastConfig.instance:getToastCO(arg_9_1)
+function ToastController:PackToastObj(toastid, ...)
+	local co = toastid and ToastConfig.instance:getToastCO(toastid)
 
-	if not var_9_0 then
-		logError(tostring(arg_9_1) .. " 配置提示语！！《P飘字表》- export_飘字表")
+	if not co then
+		logError(tostring(toastid) .. " 配置提示语！！《P飘字表》- export_飘字表")
 
 		return
 	end
 
-	local var_9_1 = {
+	local extra = {
 		...
 	}
-	local var_9_2 = false
+	local contain = false
 
-	if var_9_0.notMerge == 0 then
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._notToastList) do
-			local var_9_3 = false
+	if co.notMerge == 0 then
+		for _, v in pairs(self._notToastList) do
+			local sameExtra = false
 
-			if iter_9_1.extra and #var_9_1 == #iter_9_1.extra then
-				local var_9_4 = true
+			if v.extra and #extra == #v.extra then
+				local same = true
 
-				for iter_9_2 = 1, #var_9_1 do
-					if var_9_1[iter_9_2] ~= iter_9_1.extra[iter_9_2] then
-						var_9_4 = false
+				for i = 1, #extra do
+					if extra[i] ~= v.extra[i] then
+						same = false
 
 						break
 					end
 				end
 
-				var_9_3 = var_9_4
+				sameExtra = same
 			end
 
-			if iter_9_1.toastid == arg_9_1 and var_9_3 then
-				var_9_2 = true
+			if v.toastid == toastid and sameExtra then
+				contain = true
 
 				break
 			end
 		end
 	end
 
-	local var_9_5 = ""
+	local key = ""
 
-	if #var_9_1 > 0 then
-		for iter_9_3 = 1, #var_9_1 do
-			var_9_5 = var_9_5 .. tostring(var_9_1[iter_9_3])
+	if #extra > 0 then
+		for i = 1, #extra do
+			key = key .. tostring(extra[i])
 		end
 	end
 
-	local var_9_6 = tostring(arg_9_1) .. var_9_5
+	key = tostring(toastid) .. key
 
-	if not var_9_2 then
-		local var_9_7 = {
-			toastid = arg_9_1,
-			extra = var_9_1,
-			time = ServerTime.now()
-		}
+	if not contain then
+		local o = {}
 
-		arg_9_0._notToastList[var_9_6] = var_9_7
-	elseif not arg_9_0:isExpire(arg_9_0._notToastList[var_9_6].time) then
+		o.toastid = toastid
+		o.extra = extra
+		o.time = ServerTime.now()
+		self._notToastList[key] = o
+	elseif not self:isExpire(self._notToastList[key].time) then
 		return
 	else
-		arg_9_0._notToastList[var_9_6].time = ServerTime.now()
+		self._notToastList[key].time = ServerTime.now()
 	end
 
-	return {
-		co = var_9_0,
-		extra = var_9_1,
-		sicon = arg_9_0._icon
-	}
+	local o = {}
+
+	o.co = co
+	o.extra = extra
+	o.sicon = self._icon
+
+	return o
 end
 
-var_0_0.DefaultIconType = 11
+ToastController.DefaultIconType = 11
 
-function var_0_0.showToastWithString(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._notToastList[arg_10_1] and not arg_10_0:isExpire(arg_10_0._notToastList[arg_10_1].time) then
+function ToastController:showToastWithString(msg, isTop)
+	if self._notToastList[msg] and not self:isExpire(self._notToastList[msg].time) then
 		return
 	end
 
-	local var_10_0 = {
+	local notToastObject = {
 		time = ServerTime.now()
 	}
 
-	arg_10_0._notToastList[arg_10_1] = var_10_0
+	self._notToastList[msg] = notToastObject
 
-	local var_10_1 = {
+	local msgObject = {
 		co = {
-			tips = arg_10_1,
-			icon = var_0_0.DefaultIconType
+			tips = msg,
+			icon = ToastController.DefaultIconType
 		}
 	}
 
-	arg_10_0:_showToast(var_10_1, arg_10_2)
+	self:_showToast(msgObject, isTop)
 end
 
-function var_0_0.showToastWithCustomData(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, ...)
-	local var_11_0 = arg_11_0:PackToastObj(arg_11_1, ...)
+function ToastController:showToastWithCustomData(toastid, toastObjHandler, toastObjHandlerObj, toastObjHandlerParam, ...)
+	local toastObj = self:PackToastObj(toastid, ...)
 
-	if var_11_0 then
-		if arg_11_2 then
-			arg_11_2(arg_11_3, var_11_0, arg_11_4)
+	if toastObj then
+		if toastObjHandler then
+			toastObjHandler(toastObjHandlerObj, toastObj, toastObjHandlerParam)
 		end
 
-		arg_11_0:_showToast(var_11_0)
+		self:_showToast(toastObj)
 	end
 end
 
-function var_0_0.getToastMsg(arg_12_0, arg_12_1, ...)
-	local var_12_0 = arg_12_0:PackToastObj(arg_12_1, ...)
-	local var_12_1 = ""
+function ToastController:getToastMsg(toastid, ...)
+	local o = self:PackToastObj(toastid, ...)
+	local str = ""
 
-	if var_12_0 then
-		if var_12_0.extra and #var_12_0.extra > 0 then
-			var_12_1 = GameUtil.getSubPlaceholderLuaLang(var_12_0.co.tips, var_12_0.extra)
+	if o then
+		if o.extra and #o.extra > 0 then
+			str = GameUtil.getSubPlaceholderLuaLang(o.co.tips, o.extra)
 		else
-			var_12_1 = var_12_0.co.tips
+			str = o.co.tips
 		end
 	end
 
-	return var_12_1
+	return str
 end
 
-function var_0_0.getToastMsgWithTableParam(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_1 and ToastConfig.instance:getToastCO(arg_13_1)
+function ToastController:getToastMsgWithTableParam(toastId, paramList)
+	local toastCO = toastId and ToastConfig.instance:getToastCO(toastId)
 
-	if not var_13_0 then
-		logError("[ToastController] P飘字表.xlsx - export_飘字表 sheet error 不存在 toastId = " .. tostring(arg_13_1))
+	if not toastCO then
+		logError("[ToastController] P飘字表.xlsx - export_飘字表 sheet error 不存在 toastId = " .. tostring(toastId))
 
 		return ""
 	end
 
-	return arg_13_2 and #arg_13_2 > 0 and GameUtil.getSubPlaceholderLuaLang(var_13_0.tips, arg_13_2) or var_13_0.tips
+	return paramList and #paramList > 0 and GameUtil.getSubPlaceholderLuaLang(toastCO.tips, paramList) or toastCO.tips
 end
 
-function var_0_0.isExpire(arg_14_0, arg_14_1)
-	return ServerTime.now() - arg_14_1 >= 4
+function ToastController:isExpire(time)
+	return ServerTime.now() - time >= 4
 end
 
-var_0_0.instance = var_0_0.New()
+ToastController.instance = ToastController.New()
 
-return var_0_0
+return ToastController

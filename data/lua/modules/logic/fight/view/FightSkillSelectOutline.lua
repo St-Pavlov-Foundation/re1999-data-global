@@ -1,95 +1,98 @@
-﻿module("modules.logic.fight.view.FightSkillSelectOutline", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSkillSelectOutline.lua
 
-local var_0_0 = class("FightSkillSelectOutline", BaseView)
-local var_0_1 = "_OutlineWidth"
-local var_0_2 = "buff/buff_outline"
+module("modules.logic.fight.view.FightSkillSelectOutline", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local FightSkillSelectOutline = class("FightSkillSelectOutline", BaseView)
+local KeyWord = "_OutlineWidth"
+local BuffOutlinePath = "buff/buff_outline"
+
+function FightSkillSelectOutline:onInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0._effectWrapDict = {}
-	arg_2_0._matDict = arg_2_0:getUserDataTb_()
+function FightSkillSelectOutline:onOpen()
+	self._effectWrapDict = {}
+	self._matDict = self:getUserDataTb_()
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_3_0.onStageChange, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.AutoToSelectSkillTarget, arg_3_0._hideOutlineEffect, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_3_0._onSelectSkillTarget, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, arg_3_0._beforeEntityDestroy, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_3_0._onCameraFocusChanged, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_3_0._onSkillPlayStart, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0.onOpenView, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0.onCloseView, arg_3_0)
+function FightSkillSelectOutline:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.AutoToSelectSkillTarget, self._hideOutlineEffect, self)
+	self:addEventCb(FightController.instance, FightEvent.SelectSkillTarget, self._onSelectSkillTarget, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, self._beforeEntityDestroy, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.onStageChange, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.AutoToSelectSkillTarget, arg_4_0._hideOutlineEffect, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, arg_4_0._onSelectSkillTarget, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, arg_4_0._beforeEntityDestroy, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_4_0._onCameraFocusChanged, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_4_0._onSkillPlayStart, arg_4_0)
-	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0.onOpenView, arg_4_0)
-	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0.onCloseView, arg_4_0)
+function FightSkillSelectOutline:removeEvents()
+	self:removeEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
+	self:removeEventCb(FightController.instance, FightEvent.AutoToSelectSkillTarget, self._hideOutlineEffect, self)
+	self:removeEventCb(FightController.instance, FightEvent.SelectSkillTarget, self._onSelectSkillTarget, self)
+	self:removeEventCb(FightController.instance, FightEvent.BeforeEntityDestroy, self._beforeEntityDestroy, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function FightSkillSelectOutline:onDestroyView()
 	return
 end
 
-function var_0_0.onStageChange(arg_6_0, arg_6_1)
-	if arg_6_1 == FightStageMgr.StageType.Play then
-		arg_6_0:_hideOutlineEffect()
+function FightSkillSelectOutline:onStageChange(stageType)
+	if stageType == FightStageMgr.StageType.Play then
+		self:_hideOutlineEffect()
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_7_0)
-	arg_7_0:_hideOutlineEffect()
+function FightSkillSelectOutline:_onSkillPlayStart()
+	self:_hideOutlineEffect()
 end
 
-function var_0_0._onCameraFocusChanged(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		arg_8_0:_hideOutlineEffect()
+function FightSkillSelectOutline:_onCameraFocusChanged(isFocus)
+	if isFocus then
+		self:_hideOutlineEffect()
 	else
-		arg_8_0:_onSelectSkillTarget(FightDataHelper.operationDataMgr.curSelectEntityId)
+		self:_onSelectSkillTarget(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 
-function var_0_0.onOpenView(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.FightEnemyActionView then
-		arg_9_0:_hideOutlineEffect()
+function FightSkillSelectOutline:onOpenView(viewName)
+	if viewName == ViewName.FightEnemyActionView then
+		self:_hideOutlineEffect()
 	end
 end
 
-function var_0_0.onCloseView(arg_10_0, arg_10_1)
-	if arg_10_1 == ViewName.FightEnemyActionView then
-		arg_10_0:_onSelectSkillTarget(FightDataHelper.operationDataMgr.curSelectEntityId)
+function FightSkillSelectOutline:onCloseView(viewName)
+	if viewName == ViewName.FightEnemyActionView then
+		self:_onSelectSkillTarget(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 
-function var_0_0._beforeEntityDestroy(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1 and arg_11_1.id
+function FightSkillSelectOutline:_beforeEntityDestroy(entity)
+	local entityId = entity and entity.id
+	local effectWrap = entityId and self._effectWrapDict[entityId]
 
-	if var_11_0 and arg_11_0._effectWrapDict[var_11_0] then
-		arg_11_0._effectWrapDict[var_11_0] = nil
+	if effectWrap then
+		self._effectWrapDict[entityId] = nil
 	end
 end
 
-function var_0_0._hideOutlineEffect(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._effectWrapDict) do
-		if not gohelper.isNil(iter_12_1.containerGO) then
-			iter_12_1:setActive(false)
+function FightSkillSelectOutline:_hideOutlineEffect()
+	for oneEntityId, effectWrap in pairs(self._effectWrapDict) do
+		if not gohelper.isNil(effectWrap.containerGO) then
+			effectWrap:setActive(false)
 		else
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_12_0, iter_12_1)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(oneEntityId, effectWrap)
 
-			arg_12_0._effectWrapDict[iter_12_0] = nil
+			self._effectWrapDict[oneEntityId] = nil
 		end
 	end
 end
 
-function var_0_0._onSelectSkillTarget(arg_13_0, arg_13_1)
+function FightSkillSelectOutline:_onSelectSkillTarget(entityId)
 	if FightDataHelper.stateMgr:getIsAuto() then
 		return
 	end
@@ -98,60 +101,62 @@ function var_0_0._onSelectSkillTarget(arg_13_0, arg_13_1)
 		return
 	end
 
-	if not arg_13_0._effectWrapDict[arg_13_1] then
-		local var_13_0 = FightHelper.getEntity(arg_13_1)
+	local effectWrap = self._effectWrapDict[entityId]
 
-		if var_13_0 and var_13_0.effect then
-			local var_13_1 = var_13_0.effect:addHangEffect(var_0_2, ModuleEnum.SpineHangPointRoot, nil, nil, nil, true)
+	if not effectWrap then
+		local entity = FightHelper.getEntity(entityId)
 
-			var_13_1:setLocalPos(0, 0, 0)
+		if entity and entity.effect then
+			local effectWrap = entity.effect:addHangEffect(BuffOutlinePath, ModuleEnum.SpineHangPointRoot, nil, nil, nil, true)
 
-			if gohelper.isNil(var_13_1.effectGO) then
-				var_13_1:setCallback(function()
-					arg_13_0:_setOutlineWidth(arg_13_1)
+			effectWrap:setLocalPos(0, 0, 0)
+
+			if gohelper.isNil(effectWrap.effectGO) then
+				effectWrap:setCallback(function()
+					self:_setOutlineWidth(entityId)
 				end)
 			else
-				arg_13_0:_setOutlineWidth(arg_13_1)
+				self:_setOutlineWidth(entityId)
 			end
 
-			arg_13_0._effectWrapDict[arg_13_1] = var_13_1
+			self._effectWrapDict[entityId] = effectWrap
 
-			FightRenderOrderMgr.instance:onAddEffectWrap(arg_13_1, var_13_1)
+			FightRenderOrderMgr.instance:onAddEffectWrap(entityId, effectWrap)
 		end
 	end
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._effectWrapDict) do
-		if not gohelper.isNil(iter_13_1.containerGO) then
-			iter_13_1:setActive(iter_13_0 == arg_13_1)
+	for oneEntityId, effectWrap in pairs(self._effectWrapDict) do
+		if not gohelper.isNil(effectWrap.containerGO) then
+			effectWrap:setActive(oneEntityId == entityId)
 
-			if iter_13_0 == arg_13_1 then
-				arg_13_0:_setOutlineWidth(iter_13_0)
+			if oneEntityId == entityId then
+				self:_setOutlineWidth(oneEntityId)
 			end
 		else
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_13_0, iter_13_1)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(oneEntityId, effectWrap)
 
-			arg_13_0._effectWrapDict[arg_13_1] = nil
+			self._effectWrapDict[entityId] = nil
 		end
 	end
 end
 
-function var_0_0._setOutlineWidth(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._matDict[arg_15_1]
+function FightSkillSelectOutline:_setOutlineWidth(entityId)
+	local mat = self._matDict[entityId]
 
-	if not var_15_0 then
-		local var_15_1 = arg_15_0._effectWrapDict[arg_15_1]
+	if not mat then
+		local effectWrap = self._effectWrapDict[entityId]
 
-		if var_15_1 and not gohelper.isNil(var_15_1.effectGO) then
-			local var_15_2 = gohelper.findChildComponent(var_15_1.effectGO, "diamond/root/diamond", typeof(UnityEngine.Renderer))
+		if effectWrap and not gohelper.isNil(effectWrap.effectGO) then
+			local renderer = gohelper.findChildComponent(effectWrap.effectGO, "diamond/root/diamond", typeof(UnityEngine.Renderer))
 
-			if var_15_2 then
-				var_15_0 = var_15_2.material
+			if renderer then
+				mat = renderer.material
 
-				if var_15_0 then
-					arg_15_0._matDict[arg_15_1] = var_15_0
+				if mat then
+					self._matDict[entityId] = mat
 
-					if not arg_15_0._defaultOutlineWidth then
-						arg_15_0._defaultOutlineWidth = var_15_0:GetFloat(var_0_1)
+					if not self._defaultOutlineWidth then
+						self._defaultOutlineWidth = mat:GetFloat(KeyWord)
 					end
 				else
 					logError("outline material not found")
@@ -162,17 +167,17 @@ function var_0_0._setOutlineWidth(arg_15_0, arg_15_1)
 		end
 	end
 
-	if var_15_0 then
-		local var_15_3 = FightDataHelper.entityMgr:getById(arg_15_1)
-		local var_15_4 = var_15_3 and var_15_3.skin and lua_monster_skin.configDict[var_15_3.skin]
-		local var_15_5 = var_15_4 and var_15_4.outlineWidth
+	if mat then
+		local entityMO = FightDataHelper.entityMgr:getById(entityId)
+		local skinCO = entityMO and entityMO.skin and lua_monster_skin.configDict[entityMO.skin]
+		local value = skinCO and skinCO.outlineWidth
 
-		if var_15_5 and var_15_5 > 0 then
-			var_15_0:SetFloat(var_0_1, var_15_5)
+		if value and value > 0 then
+			mat:SetFloat(KeyWord, value)
 		else
-			var_15_0:SetFloat(var_0_1, arg_15_0._defaultOutlineWidth)
+			mat:SetFloat(KeyWord, self._defaultOutlineWidth)
 		end
 	end
 end
 
-return var_0_0
+return FightSkillSelectOutline

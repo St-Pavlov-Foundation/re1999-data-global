@@ -1,581 +1,601 @@
-﻿module("modules.logic.fight.entity.BaseFightEntity", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/BaseFightEntity.lua
 
-local var_0_0 = class("BaseFightEntity", BaseUnitSpawn)
+module("modules.logic.fight.entity.BaseFightEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
-	arg_1_0._isActive = true
-	arg_1_0.isDead = false
-	arg_1_0.deadBySkillId = nil
-	arg_1_0.needLookCamera = true
-	arg_1_0.createStage = FightEnum.EntityCreateStage.None
+local BaseFightEntity = class("BaseFightEntity", BaseUnitSpawn)
+
+function BaseFightEntity:ctor(entityId)
+	self.id = entityId
+	self._isActive = true
+	self.isDead = false
+	self.deadBySkillId = nil
+	self.needLookCamera = true
+	self.createStage = FightEnum.EntityCreateStage.None
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
-	arg_2_0:initHangPointDict()
-	FightRenderOrderMgr.instance:register(arg_2_0.id)
+function BaseFightEntity:init(go)
+	BaseFightEntity.super.init(self, go)
+	self:initHangPointDict()
+	FightRenderOrderMgr.instance:register(self.id)
 end
 
-function var_0_0.initHangPointDict(arg_3_0)
-	arg_3_0._hangPointDict = arg_3_0:getUserDataTb_()
+function BaseFightEntity:initHangPointDict()
+	self._hangPointDict = self:getUserDataTb_()
 end
 
-function var_0_0.setCreateStage(arg_4_0, arg_4_1)
-	arg_4_0.createStage = arg_4_1
+function BaseFightEntity:setCreateStage(stage)
+	self.createStage = stage
 end
 
-function var_0_0.getCreateStage(arg_5_0)
-	return arg_5_0.createStage
+function BaseFightEntity:getCreateStage()
+	return self.createStage
 end
 
-function var_0_0.initComponents(arg_6_0)
-	arg_6_0:addComp("spine", arg_6_0:getSpineClass())
-	arg_6_0:addComp("spineRenderer", UnitSpineRenderer)
-	arg_6_0:addComp("mover", UnitMoverEase)
-	arg_6_0:addComp("parabolaMover", UnitMoverParabola)
-	arg_6_0:addComp("bezierMover", UnitMoverBezier)
-	arg_6_0:addComp("curveMover", UnitMoverCurve)
-	arg_6_0:addComp("moveHandler", UnitMoverHandler)
-	arg_6_0:addComp("skill", FightSkillComp)
-	arg_6_0:addComp("effect", FightEffectComp)
-	arg_6_0:addComp("buff", FightBuffComp)
-	arg_6_0:addComp("skinSpineAction", FightSkinSpineAction)
-	arg_6_0:addComp("skinSpineEffect", FightSkinSpineEffect)
-	arg_6_0:addComp("totalDamage", FightTotalDamageComp)
-	arg_6_0:addComp("uniqueEffect", FightUniqueEffectComp)
-	arg_6_0:addComp("skinCustomComp", FightSkinCustomComp)
+function BaseFightEntity:initComponents()
+	self:addComp("spine", self:getSpineClass())
+	self:addComp("spineRenderer", UnitSpineRenderer)
+	self:addComp("mover", UnitMoverEase)
+	self:addComp("parabolaMover", UnitMoverParabola)
+	self:addComp("bezierMover", UnitMoverBezier)
+	self:addComp("curveMover", UnitMoverCurve)
+	self:addComp("moveHandler", UnitMoverHandler)
+	self:addComp("skill", FightSkillComp)
+	self:addComp("effect", FightEffectComp)
+	self:addComp("buff", FightBuffComp)
+	self:addComp("skinSpineAction", FightSkinSpineAction)
+	self:addComp("skinSpineEffect", FightSkinSpineEffect)
+	self:addComp("totalDamage", FightTotalDamageComp)
+	self:addComp("uniqueEffect", FightUniqueEffectComp)
+	self:addComp("skinCustomComp", FightSkinCustomComp)
 
-	local var_6_0 = arg_6_0:getMO()
+	local mo = self:getMO()
 
 	if BossRushController.instance:isInBossRushInfiniteFight(true) then
-		arg_6_0:addComp("nameUI", BossRushFightNameUI)
-	elseif var_6_0:isAssistBoss() then
+		self:addComp("nameUI", BossRushFightNameUI)
+	elseif mo:isAssistBoss() then
 		-- block empty
-	elseif var_6_0:isAct191Boss() then
+	elseif mo:isAct191Boss() then
 		-- block empty
 	else
-		arg_6_0:addComp("nameUI", FightNameUI)
+		self:addComp("nameUI", FightNameUI)
 	end
 
-	arg_6_0:initCompDone()
+	self:initCompDone()
 end
 
-function var_0_0.addComp(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0.filterComp and arg_7_0.filterComp[arg_7_1] then
+function BaseFightEntity:addComp(compName, compClass)
+	if self.filterComp and self.filterComp[compName] then
 		return
 	end
 
-	var_0_0.super.addComp(arg_7_0, arg_7_1, arg_7_2)
+	BaseFightEntity.super.addComp(self, compName, compClass)
 end
 
-function var_0_0.getMO(arg_8_0)
-	local var_8_0 = FightDataHelper.entityMgr:getById(arg_8_0.id)
+function BaseFightEntity:getMO()
+	local entityMO = FightDataHelper.entityMgr:getById(self.id)
 
-	arg_8_0.entityMO = var_8_0 or arg_8_0.entityMO
+	self.entityMO = entityMO or self.entityMO
 
-	return var_8_0 or arg_8_0.entityMO
+	return entityMO or self.entityMO
 end
 
-function var_0_0.getSide(arg_9_0)
-	local var_9_0 = arg_9_0:getMO()
+function BaseFightEntity:getSide()
+	local mo = self:getMO()
 
-	if var_9_0 then
-		return var_9_0.side
+	if mo then
+		return mo.side
 	end
 
 	return FightEnum.EntitySide.BothSide
 end
 
-function var_0_0.isMySide(arg_10_0)
-	return arg_10_0:getSide() == FightEnum.EntitySide.MySide
+function BaseFightEntity:isMySide()
+	return self:getSide() == FightEnum.EntitySide.MySide
 end
 
-function var_0_0.isEnemySide(arg_11_0)
-	return arg_11_0:getSide() == FightEnum.EntitySide.EnemySide
+function BaseFightEntity:isEnemySide()
+	return self:getSide() == FightEnum.EntitySide.EnemySide
 end
 
-function var_0_0.isActive(arg_12_0)
-	return arg_12_0._isActive
+function BaseFightEntity:isActive()
+	return self._isActive
 end
 
-function var_0_0.setRenderOrder(arg_13_0, arg_13_1)
-	if arg_13_0.spine then
-		arg_13_0.spine:setRenderOrder(arg_13_1)
+function BaseFightEntity:setRenderOrder(order)
+	if self.spine then
+		self.spine:setRenderOrder(order)
 	end
 end
 
-function var_0_0.loadSpine(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_0.spine then
-		if arg_14_0.spine:getSpineGO() then
-			arg_14_0:initHangPointDict()
+function BaseFightEntity:loadSpine(callback, callbackObj, customUrl)
+	if self.spine then
+		if self.spine:getSpineGO() then
+			self:initHangPointDict()
 		end
 
-		arg_14_0._callback = arg_14_1
-		arg_14_0._callbackObj = arg_14_2
+		self._callback = callback
+		self._callbackObj = callbackObj
 
-		arg_14_0.spine:setResPath(arg_14_3 or arg_14_0:getSpineUrl(), arg_14_0._onSpineLoaded, arg_14_0)
+		self.spine:setResPath(customUrl or self:getSpineUrl(), self._onSpineLoaded, self)
 	end
 end
 
-function var_0_0.getSpineUrl(arg_15_0, arg_15_1)
-	local var_15_0 = ResUrl.getSpineFightPrefabBySkin(arg_15_1 or arg_15_0:getMO():getSpineSkinCO())
+function BaseFightEntity:getSpineUrl(skinConfig)
+	local spinePath = ResUrl.getSpineFightPrefabBySkin(skinConfig or self:getMO():getSpineSkinCO())
 
-	if FightHelper.XingTiSpineUrl2Special[var_15_0] and FightHelper.detectXingTiSpecialUrl(arg_15_0) then
-		var_15_0 = FightHelper.XingTiSpineUrl2Special[var_15_0]
+	if FightHelper.XingTiSpineUrl2Special[spinePath] and FightHelper.detectXingTiSpecialUrl(self) then
+		spinePath = FightHelper.XingTiSpineUrl2Special[spinePath]
 	end
 
-	return var_15_0
+	return spinePath
 end
 
-function var_0_0._onSpineLoaded(arg_16_0, arg_16_1)
-	if arg_16_0.spineRenderer then
-		arg_16_0.spineRenderer:setSpine(arg_16_1)
+function BaseFightEntity:_onSpineLoaded(spine)
+	if self.spineRenderer then
+		self.spineRenderer:setSpine(spine)
 	end
 
-	arg_16_0:registClasses()
+	self:registClasses()
 
-	if arg_16_0._callback then
-		if arg_16_0._callbackObj then
-			arg_16_0._callback(arg_16_0._callbackObj, arg_16_1, arg_16_0)
+	if self._callback then
+		if self._callbackObj then
+			self._callback(self._callbackObj, spine, self)
 		else
-			arg_16_0._callback(arg_16_1, arg_16_0)
+			self._callback(spine, self)
 		end
 	end
 
-	arg_16_0._callback = nil
-	arg_16_0._callbackObj = nil
+	self._callback = nil
+	self._callbackObj = nil
 
-	arg_16_0:setupLookAtCamera()
+	self:setupLookAtCamera()
 end
 
-function var_0_0.setupLookAtCamera(arg_17_0)
-	if arg_17_0.needLookCamera then
-		ZProj.TransformListener.Get(arg_17_0.go):AddPositionCallback(arg_17_0._onTransformChange, arg_17_0)
+function BaseFightEntity:setupLookAtCamera()
+	if self.needLookCamera then
+		local transformListener = ZProj.TransformListener.Get(self.go)
+
+		transformListener:AddPositionCallback(self._onTransformChange, self)
 	end
 end
 
-function var_0_0._onTransformChange(arg_18_0)
-	GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:adjustSpineLookRotation(arg_18_0)
+function BaseFightEntity:_onTransformChange()
+	local entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+
+	entityMgr:adjustSpineLookRotation(self)
 end
 
-function var_0_0.setActive(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_2 or arg_19_1 ~= arg_19_0._isActive then
-		arg_19_0._isActive = arg_19_1
+function BaseFightEntity:setActive(isActive, isForce)
+	if isForce or isActive ~= self._isActive then
+		self._isActive = isActive
 
-		gohelper.setActive(arg_19_0.go, arg_19_0._isActive)
+		gohelper.setActive(self.go, self._isActive)
 
-		local var_19_0 = arg_19_0:getCompList()
+		local compList = self:getCompList()
 
-		if var_19_0 then
-			for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-				if iter_19_1.setActive then
-					iter_19_1:setActive(arg_19_1)
+		if compList then
+			for _, comp in ipairs(compList) do
+				if comp.setActive then
+					comp:setActive(isActive)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.setVisibleByPos(arg_20_0, arg_20_1)
-	if not arg_20_0.go then
+function BaseFightEntity:setVisibleByPos(isVisible)
+	if not self.go then
 		logError("找不到entity实体GameObject~~~~~~~~~~~~~~~~~~~~~")
 
 		return
 	end
 
-	if arg_20_1 then
-		arg_20_0:resetStandPos()
+	if isVisible then
+		self:resetStandPos()
 	else
-		transformhelper.setLocalPos(arg_20_0.go.transform, 9999, 9999, 9999)
+		transformhelper.setLocalPos(self.go.transform, 9999, 9999, 9999)
 	end
 end
 
-function var_0_0.setAlpha(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0.marked_alpha = arg_21_1
+function BaseFightEntity:setAlpha(alpha, duration)
+	self.marked_alpha = alpha
 
-	if arg_21_0.spineRenderer then
-		arg_21_0.spineRenderer:setAlpha(arg_21_1, arg_21_2)
+	if self.spineRenderer then
+		self.spineRenderer:setAlpha(alpha, duration)
 	end
 
-	if arg_21_0.buff then
-		if arg_21_1 == 0 then
-			arg_21_0.buff:hideBuffEffects()
-		elseif arg_21_1 == 1 then
-			arg_21_0.buff:showBuffEffects()
+	if self.buff then
+		if alpha == 0 then
+			self.buff:hideBuffEffects()
+		elseif alpha == 1 then
+			self.buff:showBuffEffects()
 		end
 	end
 
-	if arg_21_0.skinSpineEffect then
-		if arg_21_1 == 0 then
-			arg_21_0.skinSpineEffect:hideEffects()
+	if self.skinSpineEffect then
+		if alpha == 0 then
+			self.skinSpineEffect:hideEffects()
 		else
-			arg_21_0.skinSpineEffect:showEffects()
+			self.skinSpineEffect:showEffects()
 		end
 	end
 
-	if arg_21_0.effect then
-		if arg_21_1 == 0 then
-			arg_21_0.effect:hideSpecialEffects()
+	if self.effect then
+		if alpha == 0 then
+			self.effect:hideSpecialEffects()
 		else
-			arg_21_0.effect:showSpecialEffects()
+			self.effect:showSpecialEffects()
 		end
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.SetEntityAlpha, arg_21_0.id, arg_21_1 ~= 0)
+	FightController.instance:dispatchEvent(FightEvent.SetEntityAlpha, self.id, alpha ~= 0)
 end
 
-function var_0_0.resetEntity(arg_22_0)
-	if gohelper.isNil(arg_22_0.go) then
+function BaseFightEntity:resetEntity()
+	if gohelper.isNil(self.go) then
 		return
 	end
 
-	local var_22_0 = arg_22_0:getMO()
+	local mo = self:getMO()
 
-	if var_22_0 then
-		if FightEntityDataHelper.isPlayerUid(var_22_0.id) then
-			return
-		end
-
-		if arg_22_0.skill and arg_22_0.skill:sameSkillPlaying() then
-			return
-		end
-
-		local var_22_1 = FightHelper.getEntitySpineLookDir(var_22_0)
-
-		if arg_22_0.spine then
-			arg_22_0.spine:changeLookDir(var_22_1)
-		end
-
-		arg_22_0:resetAnimState()
-		arg_22_0:resetSpineMat()
-		arg_22_0:resetStandPos()
-		arg_22_0:resetSpineRotate()
-
-		local var_22_2, var_22_3, var_22_4, var_22_5 = FightHelper.getEntityStandPos(var_22_0)
-
-		arg_22_0:setScale(var_22_5)
-	end
-end
-
-function var_0_0.resetAnimState(arg_23_0)
-	if arg_23_0.isDead then
+	if not mo then
 		return
 	end
 
-	local var_23_0 = arg_23_0:getDefaultAnim()
+	if mo:isRouge2Music() then
+		return
+	end
 
-	if not string.nilorempty(var_23_0) and arg_23_0.spine then
-		arg_23_0.spine:removeAnimEventCallback(arg_23_0._onChange2AnimEvent, arg_23_0)
+	if mo:isVorpalith() then
+		return
+	end
 
-		local var_23_1 = SpineAnimState.change2
+	if FightEntityDataHelper.isPlayerUid(mo.id) then
+		return
+	end
 
-		if var_23_0 == SpineAnimState.idle1 and arg_23_0.spine:getAnimState() == SpineAnimState.posture and arg_23_0.spine:hasAnimation(var_23_1) then
-			arg_23_0.spine:addAnimEventCallback(arg_23_0._onChange2AnimEvent, arg_23_0)
-			arg_23_0.spine:play(var_23_1, false, true)
-		elseif arg_23_0.spine:hasAnimation(var_23_0) then
-			arg_23_0.spine:play(var_23_0, true, false)
+	if self.skill and self.skill:sameSkillPlaying() then
+		return
+	end
+
+	local lookDir = FightHelper.getEntitySpineLookDir(mo)
+
+	if self.spine then
+		self.spine:changeLookDir(lookDir)
+	end
+
+	self:resetAnimState()
+	self:resetSpineMat()
+	self:resetStandPos()
+	self:resetSpineRotate()
+
+	local _, _, _, scale = FightHelper.getEntityStandPos(mo)
+
+	self:setScale(scale)
+end
+
+function BaseFightEntity:resetAnimState()
+	if self.isDead then
+		return
+	end
+
+	local animName = self:getDefaultAnim()
+
+	if not string.nilorempty(animName) and self.spine then
+		self.spine:removeAnimEventCallback(self._onChange2AnimEvent, self)
+
+		local change2 = SpineAnimState.change2
+
+		if animName == SpineAnimState.idle1 and self.spine:getAnimState() == SpineAnimState.posture and self.spine:hasAnimation(change2) then
+			self.spine:addAnimEventCallback(self._onChange2AnimEvent, self)
+			self.spine:play(change2, false, true)
+		elseif self.spine:hasAnimation(animName) then
+			self.spine:play(animName, true, false)
 		else
-			arg_23_0.spine:play(SpineAnimState.idle1, true, true)
+			self.spine:play(SpineAnimState.idle1, true, true)
 		end
 	end
 end
 
-function var_0_0._onChange2AnimEvent(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	if (arg_24_0.spine and arg_24_0.spine:getAnimState()) == arg_24_1 and arg_24_1 == SpineAnimState.change2 and arg_24_2 == SpineAnimEvent.ActionComplete then
-		arg_24_0.spine:removeAnimEventCallback(arg_24_0._onChange2AnimEvent, arg_24_0)
-		arg_24_0.spine:play(SpineAnimState.idle1, true, true)
+function BaseFightEntity:_onChange2AnimEvent(actionName, eventName, eventArgs)
+	local curAniName = self.spine and self.spine:getAnimState()
+
+	if curAniName == actionName and actionName == SpineAnimState.change2 and eventName == SpineAnimEvent.ActionComplete then
+		self.spine:removeAnimEventCallback(self._onChange2AnimEvent, self)
+		self.spine:play(SpineAnimState.idle1, true, true)
 	end
 end
 
-function var_0_0.resetStandPos(arg_25_0)
-	local var_25_0 = arg_25_0:getMO()
+function BaseFightEntity:resetStandPos()
+	local mo = self:getMO()
 
-	if var_25_0 and not gohelper.isNil(arg_25_0.go) then
-		transformhelper.setLocalPos(arg_25_0.go.transform, FightHelper.getEntityStandPos(var_25_0))
+	if mo and not gohelper.isNil(self.go) then
+		transformhelper.setLocalPos(self.go.transform, FightHelper.getEntityStandPos(mo))
 	end
 end
 
-function var_0_0.resetSpineRotate(arg_26_0)
-	local var_26_0 = arg_26_0.spine and arg_26_0.spine:getSpineTr()
+function BaseFightEntity:resetSpineRotate()
+	local spineTr = self.spine and self.spine:getSpineTr()
 
-	if not gohelper.isNil(var_26_0) then
-		transformhelper.setLocalRotation(var_26_0, 0, 0, 0)
+	if not gohelper.isNil(spineTr) then
+		transformhelper.setLocalRotation(spineTr, 0, 0, 0)
 	end
 end
 
-function var_0_0.resetSpineMat(arg_27_0)
-	if not arg_27_0.spine or not arg_27_0.spine:getSpineGO() then
+function BaseFightEntity:resetSpineMat()
+	if not self.spine or not self.spine:getSpineGO() then
 		return
 	end
 
-	local var_27_0 = arg_27_0:getDefaultMatName()
+	local matName = self:getDefaultMatName()
 
-	if var_27_0 then
-		if not string.nilorempty(var_27_0) and var_27_0 ~= arg_27_0._curMatName then
-			arg_27_0._curMatName = var_27_0
+	if matName then
+		if not string.nilorempty(matName) and matName ~= self._curMatName then
+			self._curMatName = matName
 
-			local var_27_1 = FightSpineMatPool.getMat(var_27_0)
+			local newMat = FightSpineMatPool.getMat(matName)
 
-			if var_27_1 then
-				var_27_1.name = var_27_0
+			if newMat then
+				newMat.name = matName
 
-				arg_27_0.spineRenderer:replaceSpineMat(var_27_1)
+				self.spineRenderer:replaceSpineMat(newMat)
 			end
 		end
 	else
-		arg_27_0._curMatName = nil
+		self._curMatName = nil
 
-		arg_27_0.spineRenderer:resetSpineMat()
+		self.spineRenderer:resetSpineMat()
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, arg_27_0.id, arg_27_0.spineRenderer:getReplaceMat())
+	FightController.instance:dispatchEvent(FightEvent.OnSpineMaterialChange, self.id, self.spineRenderer:getReplaceMat())
 end
 
-function var_0_0.getScale(arg_28_0)
-	local var_28_0, var_28_1, var_28_2 = transformhelper.getLocalScale(arg_28_0.go.transform)
+function BaseFightEntity:getScale()
+	local x, _, _ = transformhelper.getLocalScale(self.go.transform)
 
-	return var_28_0
+	return x
 end
 
-function var_0_0.setScale(arg_29_0, arg_29_1)
-	if gohelper.isNil(arg_29_0.go) then
+function BaseFightEntity:setScale(scale)
+	if gohelper.isNil(self.go) then
 		return
 	end
 
-	transformhelper.setLocalScale(arg_29_0.go.transform, arg_29_1, arg_29_1, arg_29_1)
+	transformhelper.setLocalScale(self.go.transform, scale, scale, scale)
 end
 
-function var_0_0.setSpeed(arg_30_0, arg_30_1)
-	if arg_30_0.spine then
-		arg_30_0.spine:setTimeScale(arg_30_1)
+function BaseFightEntity:setSpeed(speed)
+	if self.spine then
+		self.spine:setTimeScale(speed)
 	end
 
-	if arg_30_0.mover then
-		arg_30_0.mover:setTimeScale(arg_30_1)
+	if self.mover then
+		self.mover:setTimeScale(speed)
 	end
 
-	if arg_30_0.parabolaMover then
-		arg_30_0.parabolaMover:setTimeScale(arg_30_1)
+	if self.parabolaMover then
+		self.parabolaMover:setTimeScale(speed)
 	end
 
-	if arg_30_0.bezierMover then
-		arg_30_0.bezierMover:setTimeScale(arg_30_1)
+	if self.bezierMover then
+		self.bezierMover:setTimeScale(speed)
 	end
 
-	if arg_30_0.curveMover then
-		arg_30_0.curveMover:setTimeScale(arg_30_1)
+	if self.curveMover then
+		self.curveMover:setTimeScale(speed)
 	end
 
-	if arg_30_0.skill then
-		arg_30_0.skill:setTimeScale(arg_30_1)
+	if self.skill then
+		self.skill:setTimeScale(speed)
 	end
 
-	if arg_30_0.effect then
-		arg_30_0.effect:setTimeScale(arg_30_1)
+	if self.effect then
+		self.effect:setTimeScale(speed)
 	end
 end
 
-function var_0_0.getDefaultAnim(arg_31_0)
-	local var_31_0 = arg_31_0:getBuffAnim()
+function BaseFightEntity:getDefaultAnim()
+	local buffAnim = self:getBuffAnim()
 
-	if var_31_0 then
-		return var_31_0
+	if buffAnim then
+		return buffAnim
 	end
 
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play and FightPlayCardModel.instance:isPlayerHasSkillToPlay(arg_31_0.id) then
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play and FightPlayCardModel.instance:isPlayerHasSkillToPlay(self.id) then
 		return SpineAnimState.posture
 	end
 
 	return SpineAnimState.idle1
 end
 
-function var_0_0.getBuffAnim(arg_32_0)
-	if arg_32_0.buff then
-		local var_32_0 = arg_32_0.buff:getBuffAnim()
+function BaseFightEntity:getBuffAnim()
+	if self.buff then
+		local buffAnim = self.buff:getBuffAnim()
 
-		if var_32_0 then
-			return var_32_0
+		if buffAnim then
+			return buffAnim
 		end
 	end
 end
 
-function var_0_0.getDefaultMatName(arg_33_0)
-	if arg_33_0.buff then
-		return arg_33_0.buff:getBuffMatName()
+function BaseFightEntity:getDefaultMatName()
+	if self.buff then
+		return self.buff:getBuffMatName()
 	end
 end
 
-function var_0_0.playBeHitMatEffect(arg_34_0, arg_34_1)
-	if arg_34_0.spine then
-		local var_34_0 = arg_34_0.spineRenderer:getReplaceMat()
+function BaseFightEntity:playBeHitMatEffect(duration)
+	if self.spine then
+		local spineMat = self.spineRenderer:getReplaceMat()
 
-		if not gohelper.isNil(var_34_0) then
-			var_34_0:EnableKeyword("_BEHIT_ON")
-			TaskDispatcher.cancelTask(arg_34_0._delayDisableBeHit, arg_34_0)
+		if not gohelper.isNil(spineMat) then
+			spineMat:EnableKeyword("_BEHIT_ON")
+			TaskDispatcher.cancelTask(self._delayDisableBeHit, self)
 
-			if arg_34_1 > 0 then
-				arg_34_0._beHitMat = var_34_0
+			if duration > 0 then
+				self._beHitMat = spineMat
 
-				TaskDispatcher.runDelay(arg_34_0._delayDisableBeHit, arg_34_0, arg_34_1)
+				TaskDispatcher.runDelay(self._delayDisableBeHit, self, duration)
 			else
-				var_34_0:DisableKeyword("_BEHIT_ON")
+				spineMat:DisableKeyword("_BEHIT_ON")
 				logError("play be hit error, duration < 0")
 			end
 		end
 	end
 end
 
-function var_0_0._delayDisableBeHit(arg_35_0)
-	if not gohelper.isNil(arg_35_0._beHitMat) then
-		arg_35_0._beHitMat:DisableKeyword("_BEHIT_ON")
+function BaseFightEntity:_delayDisableBeHit()
+	if not gohelper.isNil(self._beHitMat) then
+		self._beHitMat:DisableKeyword("_BEHIT_ON")
 
-		arg_35_0._beHitMat = nil
+		self._beHitMat = nil
 	end
 end
 
-function var_0_0.beforeDestroy(arg_36_0)
-	if arg_36_0._hasDestroy then
+function BaseFightEntity:beforeDestroy()
+	if self._hasDestroy then
 		return
 	end
 
-	arg_36_0._hasDestroy = true
+	self._hasDestroy = true
 
-	arg_36_0:releaseClasses()
+	self:releaseClasses()
 
-	if arg_36_0.spine then
-		arg_36_0.spine:removeAnimEventCallback(arg_36_0._onChange2AnimEvent, arg_36_0)
+	if self.spine then
+		self.spine:removeAnimEventCallback(self._onChange2AnimEvent, self)
 	end
 
-	FightRenderOrderMgr.instance:unregister(arg_36_0.id)
-	TaskDispatcher.cancelTask(arg_36_0._delayDisableBeHit, arg_36_0)
+	FightRenderOrderMgr.instance:unregister(self.id)
+	TaskDispatcher.cancelTask(self._delayDisableBeHit, self)
 
-	local var_36_0 = arg_36_0:getCompList()
+	local compList = self:getCompList()
 
-	if var_36_0 then
-		for iter_36_0, iter_36_1 in ipairs(var_36_0) do
-			if iter_36_1.beforeDestroy then
-				iter_36_1:beforeDestroy()
+	if compList then
+		for _, comp in ipairs(compList) do
+			if comp.beforeDestroy then
+				comp:beforeDestroy()
 			end
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().bloom:removeEntity(arg_36_0)
+	FightGameMgr.bloomMgr:removeEntity(self)
 
-	if arg_36_0.go then
-		ZProj.TransformListener.Get(arg_36_0.go):RemovePositionCallback()
+	if self.go then
+		local transformListener = ZProj.TransformListener.Get(self.go)
+
+		transformListener:RemovePositionCallback()
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.BeforeEntityDestroy, arg_36_0)
+	FightController.instance:dispatchEvent(FightEvent.BeforeEntityDestroy, self)
 end
 
-function var_0_0.getHangPoint(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = arg_37_0._hangPointDict[arg_37_1]
+function BaseFightEntity:getHangPoint(hangPointName, noProcess)
+	local existHangPoint = self._hangPointDict[hangPointName]
 
-	if var_37_0 then
-		return var_37_0
+	if existHangPoint then
+		return existHangPoint
 	else
-		local var_37_1 = arg_37_0.spine and arg_37_0.spine:getSpineGO()
+		local spineGO = self.spine and self.spine:getSpineGO()
 
-		if not var_37_1 then
-			return arg_37_0.go
+		if not spineGO then
+			return self.go
 		end
 
-		local var_37_2 = arg_37_0.go
+		local hangPointGO = self.go
 
-		if not string.nilorempty(arg_37_1) then
-			local var_37_3
-			local var_37_4 = gohelper.findChild(var_37_1, ModuleEnum.SpineHangPointRoot)
+		if not string.nilorempty(hangPointName) then
+			local findHangPointGO
+			local hangPointRootGO = gohelper.findChild(spineGO, ModuleEnum.SpineHangPointRoot)
 
-			if arg_37_1 == ModuleEnum.SpineHangPointRoot then
-				var_37_3 = var_37_4
-			elseif string.find(arg_37_1, ModuleEnum.SpineHangPoint.BodyStatic) then
-				var_37_3 = gohelper.create3d(var_37_4, arg_37_1)
+			if hangPointName == ModuleEnum.SpineHangPointRoot then
+				findHangPointGO = hangPointRootGO
+			elseif string.find(hangPointName, ModuleEnum.SpineHangPoint.BodyStatic) then
+				findHangPointGO = gohelper.create3d(hangPointRootGO, hangPointName)
 
-				transformhelper.setLocalPos(var_37_3.transform, FightHelper.getEntityLocalCenterPos(arg_37_0))
-			elseif string.find(arg_37_1, ModuleEnum.SpineHangPoint.HeadStatic) then
-				var_37_3 = gohelper.create3d(var_37_4, arg_37_1)
+				transformhelper.setLocalPos(findHangPointGO.transform, FightHelper.getEntityLocalCenterPos(self))
+			elseif string.find(hangPointName, ModuleEnum.SpineHangPoint.HeadStatic) then
+				findHangPointGO = gohelper.create3d(hangPointRootGO, hangPointName)
 
-				transformhelper.setLocalPos(var_37_3.transform, FightHelper.getEntityLocalTopPos(arg_37_0))
+				transformhelper.setLocalPos(findHangPointGO.transform, FightHelper.getEntityLocalTopPos(self))
 			else
-				var_37_3 = gohelper.findChild(var_37_4, arg_37_1)
+				findHangPointGO = gohelper.findChild(hangPointRootGO, hangPointName)
 			end
 
-			if var_37_3 then
-				var_37_2 = var_37_3
+			if findHangPointGO then
+				hangPointGO = findHangPointGO
 			else
-				var_37_2 = var_37_4
+				hangPointGO = hangPointRootGO
 
-				local var_37_5 = string.find(var_37_1.name, "(Clone)", 1)
-				local var_37_6 = var_37_5 and string.sub(var_37_1.name, 1, var_37_5 - 2) or var_37_1.name
+				local begin = string.find(spineGO.name, "(Clone)", 1)
+				local spineName = begin and string.sub(spineGO.name, 1, begin - 2) or spineGO.name
 
 				if isDebugBuild then
-					logError(var_37_6 .. " 缺少挂点: " .. arg_37_1)
+					logError(spineName .. " 缺少挂点: " .. hangPointName)
 				end
 			end
 
-			arg_37_0._hangPointDict[arg_37_1] = var_37_2
+			self._hangPointDict[hangPointName] = hangPointGO
 		end
 
-		return var_37_2
+		return hangPointGO
 	end
 end
 
-function var_0_0.initCompDone(arg_38_0)
-	local var_38_0 = arg_38_0:getCompList()
+function BaseFightEntity:initCompDone()
+	local compList = self:getCompList()
 
-	if var_38_0 then
-		for iter_38_0, iter_38_1 in ipairs(var_38_0) do
-			if iter_38_1.onInitCompDone then
-				iter_38_1:onInitCompDone()
+	if compList then
+		for _, comp in ipairs(compList) do
+			if comp.onInitCompDone then
+				comp:onInitCompDone()
 			end
 		end
 	end
 end
 
-function var_0_0.getSpineClass(arg_39_0)
+function BaseFightEntity:getSpineClass()
 	return FightUnitSpine
 end
 
-function var_0_0.registClasses(arg_40_0)
-	local var_40_0 = arg_40_0:getMO()
+function BaseFightEntity:registClasses()
+	local entityMO = self:getMO()
 
-	if not var_40_0 then
+	if not entityMO then
 		return
 	end
 
-	if FightEntityDataHelper.isPlayerUid(var_40_0.id) then
+	if FightEntityDataHelper.isPlayerUid(entityMO.id) then
 		return
 	end
 
-	if arg_40_0._instantiateClass then
+	if self._instantiateClass then
 		return
 	end
 
-	arg_40_0._instantiateClass = {}
+	self._instantiateClass = {}
 
-	arg_40_0:newClass(FightEntitySummonedComp, arg_40_0)
-	arg_40_0:newClass(FightEntityBuffSpecialPrecessComp, arg_40_0)
+	self:newClass(FightEntitySummonedComp, self)
+	self:newClass(FightEntityBuffSpecialPrecessComp, self)
 end
 
-function var_0_0.newClass(arg_41_0, arg_41_1, ...)
-	local var_41_0 = arg_41_1.New(...)
+function BaseFightEntity:newClass(class, ...)
+	local obj = class.New(...)
 
-	table.insert(arg_41_0._instantiateClass, var_41_0)
+	table.insert(self._instantiateClass, obj)
 
-	return var_41_0
+	return obj
 end
 
-function var_0_0.releaseClasses(arg_42_0)
-	if arg_42_0._instantiateClass then
-		for iter_42_0, iter_42_1 in ipairs(arg_42_0._instantiateClass) do
-			if not iter_42_1.INVOKEDDISPOSE then
-				iter_42_1:disposeSelf()
+function BaseFightEntity:releaseClasses()
+	if self._instantiateClass then
+		for i, v in ipairs(self._instantiateClass) do
+			if not v.INVOKEDDISPOSE then
+				v:disposeSelf()
 			end
 		end
 	end
 
-	arg_42_0._instantiateClass = nil
+	self._instantiateClass = nil
 end
 
-return var_0_0
+return BaseFightEntity

@@ -1,125 +1,129 @@
-﻿module("modules.logic.act189.model.Activity189_TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/act189/model/Activity189_TaskListModel.lua
 
-local var_0_0 = class("Activity189_TaskListModel", ListScrollModel)
-local var_0_1 = table.sort
-local var_0_2 = table.insert
+module("modules.logic.act189.model.Activity189_TaskListModel", package.seeall)
 
-function var_0_0.setTaskList(arg_1_0, arg_1_1)
-	arg_1_0._taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, arg_1_1)
+local Activity189_TaskListModel = class("Activity189_TaskListModel", ListScrollModel)
+local ts = table.sort
+local ti = table.insert
 
-	local var_1_0 = {}
+function Activity189_TaskListModel:setTaskList(activityId)
+	self._taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity189, activityId)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._taskMoList) do
-		local var_1_1 = false
-		local var_1_2 = iter_1_1.config
-		local var_1_3 = var_1_2.openLimitActId
-		local var_1_4 = var_1_2.jumpId
-		local var_1_5 = JumpConfig.instance:getJumpConfig(var_1_4)
+	local isLimitDict = {}
 
-		if var_1_3 > 0 then
-			var_1_1 = ActivityHelper.getActivityStatusAndToast(var_1_3, true) ~= ActivityEnum.ActivityStatus.Normal
+	for _, v in ipairs(self._taskMoList) do
+		local isLimited = false
+		local CO = v.config
+		local openLimitActId = CO.openLimitActId
+		local jumpId = CO.jumpId
+		local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
+
+		if openLimitActId > 0 then
+			isLimited = ActivityHelper.getActivityStatusAndToast(openLimitActId, true) ~= ActivityEnum.ActivityStatus.Normal
 		end
 
-		if var_1_5 then
-			var_1_1 = var_1_1 or not JumpController.instance:canJumpNew(var_1_5.param)
+		if jumpConfig and not isLimited then
+			local canJump = JumpController.instance:canJumpNew(jumpConfig.param)
+
+			isLimited = not canJump
 		end
 
-		var_1_0[iter_1_1.id] = var_1_1
+		isLimitDict[v.id] = isLimited
 	end
 
-	var_0_1(arg_1_0._taskMoList, function(arg_2_0, arg_2_1)
-		local var_2_0 = arg_2_0.hasFinished and 1 or 0
-		local var_2_1 = arg_2_1.hasFinished and 1 or 0
+	ts(self._taskMoList, function(a, b)
+		local a_hasFinished = a.hasFinished and 1 or 0
+		local b_hasFinished = b.hasFinished and 1 or 0
 
-		if var_2_0 ~= var_2_1 then
-			return var_2_1 < var_2_0
+		if a_hasFinished ~= b_hasFinished then
+			return b_hasFinished < a_hasFinished
 		end
 
-		local var_2_2 = var_1_0[arg_2_0.id] and 1 or 0
-		local var_2_3 = var_1_0[arg_2_1.id] and 1 or 0
+		local a_isLimited = isLimitDict[a.id] and 1 or 0
+		local b_isLimited = isLimitDict[b.id] and 1 or 0
 
-		if var_2_2 ~= var_2_3 then
-			return var_2_2 < var_2_3
+		if a_isLimited ~= b_isLimited then
+			return a_isLimited < b_isLimited
 		end
 
-		local var_2_4 = arg_2_0:isClaimed() and 1 or 0
-		local var_2_5 = arg_2_1:isClaimed() and 1 or 0
+		local a_isClaimed = a:isClaimed() and 1 or 0
+		local b_isClaimed = b:isClaimed() and 1 or 0
 
-		if var_2_4 ~= var_2_5 then
-			return var_2_4 < var_2_5
+		if a_isClaimed ~= b_isClaimed then
+			return a_isClaimed < b_isClaimed
 		end
 
-		local var_2_6 = arg_2_0.config
-		local var_2_7 = arg_2_1.config
-		local var_2_8 = var_2_6.sorting
-		local var_2_9 = var_2_7.sorting
+		local a_CO = a.config
+		local b_CO = b.config
+		local a_sorting = a_CO.sorting
+		local b_sorting = b_CO.sorting
 
-		if var_2_8 ~= var_2_9 then
-			return var_2_8 < var_2_9
+		if a_sorting ~= b_sorting then
+			return a_sorting < b_sorting
 		end
 
-		return arg_2_0.id < arg_2_1.id
+		return a.id < b.id
 	end)
-	arg_1_0:setList(arg_1_0._taskMoList)
+	self:setList(self._taskMoList)
 end
 
-function var_0_0.refreshList(arg_3_0)
-	local var_3_0 = arg_3_0:getFinishTaskCount()
+function Activity189_TaskListModel:refreshList()
+	local finishTaskCount = self:getFinishTaskCount()
 
-	if false and var_3_0 > 1 then
-		local var_3_1 = tabletool.copy(arg_3_0._taskMoList)
+	if false and finishTaskCount > 1 then
+		local moList = tabletool.copy(self._taskMoList)
 
-		var_0_2(var_3_1, 1, {
+		ti(moList, 1, {
 			getAll = true
 		})
-		arg_3_0:setList(var_3_1)
+		self:setList(moList)
 	else
-		arg_3_0:setList(arg_3_0._taskMoList)
+		self:setList(self._taskMoList)
 	end
 end
 
-function var_0_0.getFinishTaskCount(arg_4_0)
-	local var_4_0 = 0
+function Activity189_TaskListModel:getFinishTaskCount()
+	local count = 0
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._taskMoList) do
-		if iter_4_1.hasFinished and iter_4_1.finishCount < iter_4_1:getMaxFinishCount() then
-			var_4_0 = var_4_0 + 1
+	for _, taskMo in ipairs(self._taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo:getMaxFinishCount() then
+			count = count + 1
 		end
 	end
 
-	return var_4_0
+	return count
 end
 
-function var_0_0.getFinishTaskActivityCount(arg_5_0)
-	local var_5_0 = 0
+function Activity189_TaskListModel:getFinishTaskActivityCount()
+	local count = 0
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._taskMoList) do
-		if iter_5_1.hasFinished and iter_5_1.finishCount < iter_5_1:getMaxFinishCount() then
-			var_5_0 = var_5_0 + iter_5_1.config.activity
+	for _, taskMo in ipairs(self._taskMoList) do
+		if taskMo.hasFinished and taskMo.finishCount < taskMo:getMaxFinishCount() then
+			count = count + taskMo.config.activity
 		end
 	end
 
-	return var_5_0
+	return count
 end
 
-function var_0_0.getGetRewardTaskCount(arg_6_0)
-	local var_6_0 = 0
+function Activity189_TaskListModel:getGetRewardTaskCount()
+	local count = 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._taskMoList) do
-		if iter_6_1:isClaimed() then
-			var_6_0 = var_6_0 + 1
+	for _, taskMo in ipairs(self._taskMoList) do
+		if taskMo:isClaimed() then
+			count = count + 1
 		end
 	end
 
-	return var_6_0
+	return count
 end
 
-function var_0_0.getTaskMoListByActivityId(arg_7_0, arg_7_1)
-	arg_7_0:setTaskList(arg_7_1)
+function Activity189_TaskListModel:getTaskMoListByActivityId(activityId)
+	self:setTaskList(activityId)
 
-	return arg_7_0._taskMoList
+	return self._taskMoList
 end
 
-var_0_0.instance = var_0_0.New()
+Activity189_TaskListModel.instance = Activity189_TaskListModel.New()
 
-return var_0_0
+return Activity189_TaskListModel

@@ -1,213 +1,217 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/view/SportsNewsTaskItem.lua
 
-local var_0_0 = class("SportsNewsTaskItem", LuaCompBase)
+module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.go, "#simage_normalbg")
-	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.go, "progress/#txt_num")
-	arg_1_0._txtmaxprogress = gohelper.findChildText(arg_1_0.go, "progress/#txt_num/#txt_total")
-	arg_1_0._scrolltaskdes = gohelper.findChildScrollRect(arg_1_0.go, "#scroll_taskdes")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.go, "#scroll_taskdes/Viewport/#txt_taskdes")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.go, "#scroll_rewards")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.go, "#scroll_rewards/Viewport/content/#go_rewards")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.go, "#btn_notfinishbg")
-	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.go, "#btn_finishbg")
-	arg_1_0._goallfinish = gohelper.findChild(arg_1_0.go, "#go_allfinish")
-	arg_1_0._anim = arg_1_0.go:GetComponent(gohelper.Type_Animator)
+local SportsNewsTaskItem = class("SportsNewsTaskItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SportsNewsTaskItem:onInitView()
+	self._simagenormalbg = gohelper.findChildSingleImage(self.go, "#simage_normalbg")
+	self._txtprogress = gohelper.findChildText(self.go, "progress/#txt_num")
+	self._txtmaxprogress = gohelper.findChildText(self.go, "progress/#txt_num/#txt_total")
+	self._scrolltaskdes = gohelper.findChildScrollRect(self.go, "#scroll_taskdes")
+	self._txttaskdes = gohelper.findChildText(self.go, "#scroll_taskdes/Viewport/#txt_taskdes")
+	self._scrollrewards = gohelper.findChildScrollRect(self.go, "#scroll_rewards")
+	self._gorewarditem = gohelper.findChild(self.go, "#scroll_rewards/Viewport/content/#go_rewards")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(self.go, "#btn_notfinishbg")
+	self._btnfinishbg = gohelper.findChildButtonWithAudio(self.go, "#btn_finishbg")
+	self._goallfinish = gohelper.findChild(self.go, "#go_allfinish")
+	self._anim = self.go:GetComponent(gohelper.Type_Animator)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
-	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
+function SportsNewsTaskItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:RemoveClickListener()
-	arg_3_0._btnfinishbg:RemoveClickListener()
+function SportsNewsTaskItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
 end
 
-function var_0_0.initData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._index = arg_4_1
-	arg_4_0.go = arg_4_2
-	arg_4_0.view = arg_4_3
+function SportsNewsTaskItem:initData(index, go, view)
+	self._index = index
+	self.go = go
+	self.view = view
 
-	arg_4_0:onInitView()
-	arg_4_0:addEvents()
-	gohelper.setActive(arg_4_0.go, false)
+	self:onInitView()
+	self:addEvents()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
-	arg_5_0:removeEvents()
-	arg_5_0:onDestroyView()
+function SportsNewsTaskItem:onDestroy()
+	UIBlockMgr.instance:endBlock(SportsNewsTaskItem.BLOCK_KEY)
+	self:removeEvents()
+	self:onDestroyView()
 end
 
-function var_0_0.onClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.onFinishAnimCompleted, arg_6_0)
+function SportsNewsTaskItem:onClose()
+	TaskDispatcher.cancelTask(self.onFinishAnimCompleted, self)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._click = gohelper.getClickWithAudio(arg_7_0.go)
-	arg_7_0._iconList = {}
+function SportsNewsTaskItem:_editableInitView()
+	self._click = gohelper.getClickWithAudio(self.go)
+	self._iconList = {}
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._iconList) do
-		gohelper.setActive(iter_8_1.go, true)
-		gohelper.destroy(iter_8_1.go)
+function SportsNewsTaskItem:onDestroyView()
+	for _, v in pairs(self._iconList) do
+		gohelper.setActive(v.go, true)
+		gohelper.destroy(v.go)
 	end
 
-	arg_8_0._iconList = nil
+	self._iconList = nil
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._mo = arg_9_1
+function SportsNewsTaskItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_9_0:_playAnim(UIAnimationName.Idle, 0, 0)
-	arg_9_0:refreshInfo()
-	arg_9_0:refreshAllRewardIcons()
+	self:_playAnim(UIAnimationName.Idle, 0, 0)
+	self:refreshInfo()
+	self:refreshAllRewardIcons()
 end
 
-function var_0_0.refreshInfo(arg_10_0)
-	local var_10_0 = arg_10_0._mo.config
-	local var_10_1 = arg_10_0._mo.taskMO
+function SportsNewsTaskItem:refreshInfo()
+	local cfg = self._mo.config
+	local taskMO = self._mo.taskMO
 
-	arg_10_0._txttaskdes.text = var_10_0.desc
-	arg_10_0._txtprogress.text = tostring(arg_10_0._mo:getProgress())
-	arg_10_0._txtmaxprogress.text = tostring(var_10_0.maxProgress)
+	self._txttaskdes.text = cfg.desc
+	self._txtprogress.text = tostring(self._mo:getProgress())
+	self._txtmaxprogress.text = tostring(cfg.maxProgress)
 
-	if arg_10_0._mo:isLock() then
-		gohelper.setActive(arg_10_0._btnnotfinishbg.gameObject, true)
-		gohelper.setActive(arg_10_0._btnfinishbg.gameObject, false)
-		gohelper.setActive(arg_10_0._goallfinish, false)
+	if self._mo:isLock() then
+		gohelper.setActive(self._btnnotfinishbg.gameObject, true)
+		gohelper.setActive(self._btnfinishbg.gameObject, false)
+		gohelper.setActive(self._goallfinish, false)
 	else
-		arg_10_0:refreshButtonRunning()
+		self:refreshButtonRunning()
 	end
 
-	arg_10_0._scrolltaskdes.horizontalNormalizedPosition = 0
+	self._scrolltaskdes.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.refreshButtonRunning(arg_11_0)
-	if arg_11_0._mo:alreadyGotReward() then
-		arg_11_0:refreshWhenFinished()
+function SportsNewsTaskItem:refreshButtonRunning()
+	if self._mo:alreadyGotReward() then
+		self:refreshWhenFinished()
 	else
-		local var_11_0 = arg_11_0._mo:isFinished()
+		local _isFinished = self._mo:isFinished()
 
-		gohelper.setActive(arg_11_0._btnnotfinishbg.gameObject, not var_11_0)
-		gohelper.setActive(arg_11_0._btnfinishbg.gameObject, var_11_0)
-		gohelper.setActive(arg_11_0._goallfinish, false)
+		gohelper.setActive(self._btnnotfinishbg.gameObject, not _isFinished)
+		gohelper.setActive(self._btnfinishbg.gameObject, _isFinished)
+		gohelper.setActive(self._goallfinish, false)
 	end
 end
 
-function var_0_0.refreshWhenFinished(arg_12_0)
-	gohelper.setActive(arg_12_0._btnnotfinishbg.gameObject, false)
-	gohelper.setActive(arg_12_0._btnfinishbg.gameObject, false)
-	gohelper.setActive(arg_12_0._goallfinish, true)
+function SportsNewsTaskItem:refreshWhenFinished()
+	gohelper.setActive(self._btnnotfinishbg.gameObject, false)
+	gohelper.setActive(self._btnfinishbg.gameObject, false)
+	gohelper.setActive(self._goallfinish, true)
 end
 
-function var_0_0.refreshAllRewardIcons(arg_13_0)
-	arg_13_0:hideAllRewardIcon()
+function SportsNewsTaskItem:refreshAllRewardIcons()
+	self:hideAllRewardIcon()
 
-	local var_13_0 = string.split(arg_13_0._mo.config.bonus, "|")
+	local bonusList = string.split(self._mo.config.bonus, "|")
 
-	for iter_13_0 = 1, #var_13_0 do
-		local var_13_1 = arg_13_0:getOrCreateIcon(iter_13_0)
+	for i = 1, #bonusList do
+		local item = self:getOrCreateIcon(i)
 
-		gohelper.setActive(var_13_1.go, true)
+		gohelper.setActive(item.go, true)
 
-		local var_13_2 = string.splitToNumber(var_13_0[iter_13_0], "#")
+		local bonusArr = string.splitToNumber(bonusList[i], "#")
 
-		var_13_1.itemIcon:setMOValue(var_13_2[1], var_13_2[2], var_13_2[3], nil, true)
-		var_13_1.itemIcon:isShowCount(var_13_2[1] ~= MaterialEnum.MaterialType.Hero)
-		var_13_1.itemIcon:setCountFontSize(40)
-		var_13_1.itemIcon:showStackableNum2()
-		var_13_1.itemIcon:setHideLvAndBreakFlag(true)
-		var_13_1.itemIcon:hideEquipLvAndBreak(true)
+		item.itemIcon:setMOValue(bonusArr[1], bonusArr[2], bonusArr[3], nil, true)
+		item.itemIcon:isShowCount(bonusArr[1] ~= MaterialEnum.MaterialType.Hero)
+		item.itemIcon:setCountFontSize(40)
+		item.itemIcon:showStackableNum2()
+		item.itemIcon:setHideLvAndBreakFlag(true)
+		item.itemIcon:hideEquipLvAndBreak(true)
 
-		if var_13_2[1] == 9 and var_13_1.itemIcon and var_13_1.itemIcon._equipIcon and var_13_1.itemIcon._equipIcon.viewGO then
-			local var_13_3 = gohelper.findChildImage(var_13_1.itemIcon._equipIcon.viewGO, "bg")
+		if bonusArr[1] == 9 and item.itemIcon and item.itemIcon._equipIcon and item.itemIcon._equipIcon.viewGO then
+			local bg = gohelper.findChildImage(item.itemIcon._equipIcon.viewGO, "bg")
 
-			if var_13_3 then
-				UISpriteSetMgr.instance:setCommonSprite(var_13_3, "bgequip3")
+			if bg then
+				UISpriteSetMgr.instance:setCommonSprite(bg, "bgequip3")
 			end
 		end
 	end
 
-	arg_13_0._scrollrewards.horizontalNormalizedPosition = 0
+	self._scrollrewards.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.getOrCreateIcon(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0._iconList[arg_14_1]
+function SportsNewsTaskItem:getOrCreateIcon(index)
+	local item = self._iconList[index]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:getUserDataTb_()
-		var_14_0.go = gohelper.cloneInPlace(arg_14_0._gorewarditem)
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._gorewarditem)
 
-		gohelper.setActive(var_14_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_14_0.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_14_0.go)
-		arg_14_0._iconList[arg_14_1] = var_14_0
+		item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.go)
+		self._iconList[index] = item
 	end
 
-	return var_14_0
+	return item
 end
 
-function var_0_0.hideAllRewardIcon(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._iconList) do
-		gohelper.setActive(iter_15_1.go, false)
+function SportsNewsTaskItem:hideAllRewardIcon()
+	for _, iconItem in pairs(self._iconList) do
+		gohelper.setActive(iconItem.go, false)
 	end
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_16_0)
-	local var_16_0 = ActivityWarmUpModel.instance:getOrderMo(arg_16_0._mo.config.orderid)
+function SportsNewsTaskItem:_btnnotfinishbgOnClick()
+	local order = ActivityWarmUpModel.instance:getOrderMo(self._mo.config.orderid)
 
-	if var_16_0 and var_16_0.cfg.jumpId ~= 0 then
-		SportsNewsController.instance:jumpToFinishTask(var_16_0, arg_16_0.jumpCallback, arg_16_0)
+	if order and order.cfg.jumpId ~= 0 then
+		SportsNewsController.instance:jumpToFinishTask(order, self.jumpCallback, self)
 	else
-		local var_16_1 = arg_16_0._mo.config.openDay
+		local day = self._mo.config.openDay
 
-		ActivityWarmUpController.instance:switchTab(var_16_1)
+		ActivityWarmUpController.instance:switchTab(day)
 		ActivityWarmUpTaskController.instance:dispatchEvent(ActivityWarmUpEvent.TaskListNeedClose)
 	end
 end
 
-function var_0_0.jumpCallback(arg_17_0)
+function SportsNewsTaskItem:jumpCallback()
 	return
 end
 
-var_0_0.BLOCK_KEY = "ActivityWarmUpTaskItemBlock"
+SportsNewsTaskItem.BLOCK_KEY = "ActivityWarmUpTaskItemBlock"
 
-function var_0_0._btnfinishbgOnClick(arg_18_0)
-	arg_18_0:refreshWhenFinished()
-	arg_18_0:_playAnim(UIAnimationName.Finish, 0, 0)
-	UIBlockMgr.instance:startBlock(var_0_0.BLOCK_KEY)
-	TaskDispatcher.runDelay(arg_18_0.onFinishAnimCompleted, arg_18_0, 0.4)
+function SportsNewsTaskItem:_btnfinishbgOnClick()
+	self:refreshWhenFinished()
+	self:_playAnim(UIAnimationName.Finish, 0, 0)
+	UIBlockMgr.instance:startBlock(SportsNewsTaskItem.BLOCK_KEY)
+	TaskDispatcher.runDelay(self.onFinishAnimCompleted, self, 0.4)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_task_slide)
 end
 
-function var_0_0.onFinishAnimCompleted(arg_19_0)
-	UIBlockMgr.instance:endBlock(var_0_0.BLOCK_KEY)
-	gohelper.setActive(arg_19_0._goclick, true)
-	TaskRpc.instance:sendFinishTaskRequest(arg_19_0._mo.id)
+function SportsNewsTaskItem:onFinishAnimCompleted()
+	UIBlockMgr.instance:endBlock(SportsNewsTaskItem.BLOCK_KEY)
+	gohelper.setActive(self._goclick, true)
+	TaskRpc.instance:sendFinishTaskRequest(self._mo.id)
 end
 
-function var_0_0.getOrderCo(arg_20_0, arg_20_1)
-	return (Activity106Config.instance:getActivityWarmUpOrderCo(VersionActivity1_5Enum.ActivityId.SportsNews, arg_20_1))
+function SportsNewsTaskItem:getOrderCo(id)
+	local co = Activity106Config.instance:getActivityWarmUpOrderCo(VersionActivity1_5Enum.ActivityId.SportsNews, id)
+
+	return co
 end
 
-function var_0_0._playOpenInner(arg_21_0)
-	gohelper.setActive(arg_21_0.go, true)
-	arg_21_0:_playAnim(UIAnimationName.Open, 0, 0)
+function SportsNewsTaskItem:_playOpenInner()
+	gohelper.setActive(self.go, true)
+	self:_playAnim(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0._playAnim(arg_22_0, arg_22_1, ...)
-	if arg_22_0._anim then
-		arg_22_0._anim:Play(arg_22_1, ...)
+function SportsNewsTaskItem:_playAnim(animName, ...)
+	if self._anim then
+		self._anim:Play(animName, ...)
 	end
 end
 
-return var_0_0
+return SportsNewsTaskItem

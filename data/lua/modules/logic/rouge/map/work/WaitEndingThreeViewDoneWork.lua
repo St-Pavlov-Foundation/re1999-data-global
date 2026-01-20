@@ -1,41 +1,44 @@
-﻿module("modules.logic.rouge.map.work.WaitEndingThreeViewDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/work/WaitEndingThreeViewDoneWork.lua
 
-local var_0_0 = class("WaitEndingThreeViewDoneWork", BaseWork)
+module("modules.logic.rouge.map.work.WaitEndingThreeViewDoneWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.endId = arg_1_1
+local WaitEndingThreeViewDoneWork = class("WaitEndingThreeViewDoneWork", BaseWork)
+
+function WaitEndingThreeViewDoneWork:ctor(endId)
+	self.endId = endId
 end
 
-function var_0_0.onStart(arg_2_0)
-	if arg_2_0.endId ~= RougeEnum.EndingThreeId then
-		arg_2_0:onDone(true)
+function WaitEndingThreeViewDoneWork:onStart()
+	if self.endId ~= RougeEnum.EndingThreeId then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_2_0 = RougeModel.instance:getRougeResult()
+	local resultInfo = RougeModel.instance:getRougeResult()
+	local isSucc = resultInfo and resultInfo:isSucceed()
 
-	if not (var_2_0 and var_2_0:isSucceed()) then
-		arg_2_0:onDone(true)
+	if not isSucc then
+		self:onDone(true)
 	end
 
-	arg_2_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	arg_2_0.flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.RougeEndingThreeView))
-	arg_2_0.flow:registerDoneListener(arg_2_0.onFlowDone, arg_2_0)
-	arg_2_0.flow:start()
+	self.flow:addWork(OpenViewAndWaitCloseWork.New(ViewName.RougeEndingThreeView))
+	self.flow:registerDoneListener(self.onFlowDone, self)
+	self.flow:start()
 end
 
-function var_0_0.onFlowDone(arg_3_0)
-	arg_3_0:onDone(true)
+function WaitEndingThreeViewDoneWork:onFlowDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0.flow then
-		arg_4_0.flow:onDestroy()
+function WaitEndingThreeViewDoneWork:clearWork()
+	if self.flow then
+		self.flow:onDestroy()
 
-		arg_4_0.flow = nil
+		self.flow = nil
 	end
 end
 
-return var_0_0
+return WaitEndingThreeViewDoneWork

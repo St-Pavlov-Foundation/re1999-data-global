@@ -1,213 +1,214 @@
-﻿module("modules.logic.seasonver.act166.view.Season166TalentInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166TalentInfoView.lua
 
-local var_0_0 = class("Season166TalentInfoView", BaseView)
+module("modules.logic.seasonver.act166.view.Season166TalentInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncloseView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeView")
-	arg_1_0._gotalent1 = gohelper.findChild(arg_1_0.viewGO, "talentIcon/#go_talentIcon1")
-	arg_1_0._gotalent2 = gohelper.findChild(arg_1_0.viewGO, "talentIcon/#go_talentIcon2")
-	arg_1_0._gotalent3 = gohelper.findChild(arg_1_0.viewGO, "talentIcon/#go_talentIcon3")
-	arg_1_0._goEquipSlot = gohelper.findChild(arg_1_0.viewGO, "#go_equipslot")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "info/#txt_title")
-	arg_1_0._txttitleen = gohelper.findChildText(arg_1_0.viewGO, "info/#txt_titleen")
-	arg_1_0._txtbasicSkill = gohelper.findChildText(arg_1_0.viewGO, "info/#txt_basicSkill")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local Season166TalentInfoView = class("Season166TalentInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season166TalentInfoView:onInitView()
+	self._btncloseView = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeView")
+	self._gotalent1 = gohelper.findChild(self.viewGO, "talentIcon/#go_talentIcon1")
+	self._gotalent2 = gohelper.findChild(self.viewGO, "talentIcon/#go_talentIcon2")
+	self._gotalent3 = gohelper.findChild(self.viewGO, "talentIcon/#go_talentIcon3")
+	self._goEquipSlot = gohelper.findChild(self.viewGO, "#go_equipslot")
+	self._txttitle = gohelper.findChildText(self.viewGO, "info/#txt_title")
+	self._txttitleen = gohelper.findChildText(self.viewGO, "info/#txt_titleen")
+	self._txtbasicSkill = gohelper.findChildText(self.viewGO, "info/#txt_basicSkill")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseView:AddClickListener(arg_2_0._btncloseViewOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function Season166TalentInfoView:addEvents()
+	self._btncloseView:AddClickListener(self._btncloseViewOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseView:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function Season166TalentInfoView:removeEvents()
+	self._btncloseView:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseViewOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season166TalentInfoView:_btncloseViewOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function Season166TalentInfoView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	SkillHelper.addHyperLinkClick(arg_6_0._txtbasicSkill, arg_6_0.clcikHyperLink, arg_6_0)
-	arg_6_0:initEquipSlot()
+function Season166TalentInfoView:_editableInitView()
+	SkillHelper.addHyperLinkClick(self._txtbasicSkill, self.clcikHyperLink, self)
+	self:initEquipSlot()
 end
 
-function var_0_0.initEquipSlot(arg_7_0)
-	arg_7_0.talentSlotTab = arg_7_0:getUserDataTb_()
+function Season166TalentInfoView:initEquipSlot()
+	self.talentSlotTab = self:getUserDataTb_()
 
-	for iter_7_0 = 1, 3 do
-		local var_7_0 = {
-			item = gohelper.findChild(arg_7_0._goEquipSlot, iter_7_0)
-		}
+	for i = 1, 3 do
+		local talentSlotItem = {}
 
-		var_7_0.light = gohelper.findChild(var_7_0.item, "light")
-		var_7_0.imageLight = gohelper.findChildImage(var_7_0.item, "light")
-		var_7_0.lineLight = gohelper.findChild(var_7_0.item, "line_light")
-		var_7_0.lineDark = gohelper.findChild(var_7_0.item, "line_dark")
-		var_7_0.effect1 = gohelper.findChild(var_7_0.item, "light/qi1")
-		var_7_0.effect2 = gohelper.findChild(var_7_0.item, "light/qi2")
-		var_7_0.effect3 = gohelper.findChild(var_7_0.item, "light/qi3")
-		arg_7_0.talentSlotTab[iter_7_0] = var_7_0
+		talentSlotItem.item = gohelper.findChild(self._goEquipSlot, i)
+		talentSlotItem.light = gohelper.findChild(talentSlotItem.item, "light")
+		talentSlotItem.imageLight = gohelper.findChildImage(talentSlotItem.item, "light")
+		talentSlotItem.lineLight = gohelper.findChild(talentSlotItem.item, "line_light")
+		talentSlotItem.lineDark = gohelper.findChild(talentSlotItem.item, "line_dark")
+		talentSlotItem.effect1 = gohelper.findChild(talentSlotItem.item, "light/qi1")
+		talentSlotItem.effect2 = gohelper.findChild(talentSlotItem.item, "light/qi2")
+		talentSlotItem.effect3 = gohelper.findChild(talentSlotItem.item, "light/qi3")
+		self.talentSlotTab[i] = talentSlotItem
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function Season166TalentInfoView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function Season166TalentInfoView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_hero_sign)
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	arg_10_0.actId = Season166Model.instance:getCurSeasonId()
+function Season166TalentInfoView:refreshUI()
+	self.actId = Season166Model.instance:getCurSeasonId()
 
-	if not arg_10_0.actId or arg_10_0.actId == 0 then
-		local var_10_0 = Season166Model.instance:getBattleContext()
+	if not self.actId or self.actId == 0 then
+		local battleContext = Season166Model.instance:getBattleContext()
 
-		arg_10_0.actId = var_10_0 and var_10_0.actId or 0
+		self.actId = battleContext and battleContext.actId or 0
 	end
 
-	arg_10_0.talentParam = Season166Model.instance:getFightTalentParam()
-	arg_10_0.talentId = arg_10_0.talentParam.talentId
-	arg_10_0.talentLevel = arg_10_0.talentParam.talentLevel
-	arg_10_0.talentConfig = lua_activity166_talent.configDict[arg_10_0.actId][arg_10_0.talentId]
-	arg_10_0.styleCfgDic = lua_activity166_talent_style.configDict[arg_10_0.talentId]
-	arg_10_0.maxSlot = lua_activity166_talent_style.configDict[arg_10_0.talentId][arg_10_0.talentLevel].slot
+	self.talentParam = Season166Model.instance:getFightTalentParam()
+	self.talentId = self.talentParam.talentId
+	self.talentLevel = self.talentParam.talentLevel
+	self.talentConfig = lua_activity166_talent.configDict[self.actId][self.talentId]
+	self.styleCfgDic = lua_activity166_talent_style.configDict[self.talentId]
+	self.maxSlot = lua_activity166_talent_style.configDict[self.talentId][self.talentLevel].slot
 
-	arg_10_0:refreshEquip()
-	arg_10_0:refreshTitle()
-	arg_10_0:initBasicSkill()
-	arg_10_0:refreshSkill()
+	self:refreshEquip()
+	self:refreshTitle()
+	self:initBasicSkill()
+	self:refreshSkill()
 end
 
-function var_0_0.refreshEquip(arg_11_0)
-	local var_11_0 = lua_activity166_talent.configDict[arg_11_0.actId][arg_11_0.talentId]
+function Season166TalentInfoView:refreshEquip()
+	local talentConfig = lua_activity166_talent.configDict[self.actId][self.talentId]
 
-	for iter_11_0 = 1, 3 do
-		gohelper.setActive(arg_11_0["_gotalent" .. iter_11_0], iter_11_0 == var_11_0.sortIndex)
+	for i = 1, 3 do
+		gohelper.setActive(self["_gotalent" .. i], i == talentConfig.sortIndex)
 	end
 
-	local var_11_1 = arg_11_0.maxSlot
-	local var_11_2 = #arg_11_0.talentParam.talentSkillIds
+	local talentSlotCount = self.maxSlot
+	local talentEuipCount = #self.talentParam.talentSkillIds
 
-	for iter_11_1, iter_11_2 in ipairs(arg_11_0.talentSlotTab) do
-		gohelper.setActive(iter_11_2.item, iter_11_1 <= var_11_1)
-		gohelper.setActive(iter_11_2.light, iter_11_1 <= var_11_2)
-		gohelper.setActive(iter_11_2.lineLight, iter_11_1 > 1 and iter_11_1 <= var_11_2)
-		gohelper.setActive(iter_11_2.lineDark, iter_11_1 > 1 and var_11_2 < iter_11_1)
-		UISpriteSetMgr.instance:setSeason166Sprite(iter_11_2.imageLight, "season166_talentree_pointl" .. tostring(var_11_0.sortIndex))
+	for index, talentSlotItem in ipairs(self.talentSlotTab) do
+		gohelper.setActive(talentSlotItem.item, index <= talentSlotCount)
+		gohelper.setActive(talentSlotItem.light, index <= talentEuipCount)
+		gohelper.setActive(talentSlotItem.lineLight, index > 1 and index <= talentEuipCount)
+		gohelper.setActive(talentSlotItem.lineDark, index > 1 and talentEuipCount < index)
+		UISpriteSetMgr.instance:setSeason166Sprite(talentSlotItem.imageLight, "season166_talentree_pointl" .. tostring(talentConfig.sortIndex))
 
-		for iter_11_3 = 1, 3 do
-			gohelper.setActive(iter_11_2["effect" .. iter_11_3], var_11_0.sortIndex == iter_11_3)
+		for i = 1, 3 do
+			gohelper.setActive(talentSlotItem["effect" .. i], talentConfig.sortIndex == i)
 		end
 	end
 end
 
-function var_0_0.refreshTitle(arg_12_0)
-	arg_12_0._txttitle.text = arg_12_0.talentConfig.name
-	arg_12_0._txttitleen.text = arg_12_0.talentConfig.nameEn
+function Season166TalentInfoView:refreshTitle()
+	self._txttitle.text = self.talentConfig.name
+	self._txttitleen.text = self.talentConfig.nameEn
 
-	local var_12_0 = arg_12_0.talentConfig.baseSkillIds
+	local baseSkillIdsStr = self.talentConfig.baseSkillIds
 
-	if string.nilorempty(var_12_0) then
-		var_12_0 = arg_12_0.talentConfig.baseSkillIds2
+	if string.nilorempty(baseSkillIdsStr) then
+		baseSkillIdsStr = self.talentConfig.baseSkillIds2
 	end
 
-	local var_12_1 = string.splitToNumber(var_12_0, "#")
-	local var_12_2 = lua_skill_effect.configDict[var_12_1[1]]
-	local var_12_3 = FightConfig.instance:getSkillEffectDesc("", var_12_2)
+	local basicSkillIds = string.splitToNumber(baseSkillIdsStr, "#")
+	local effectConfig = lua_skill_effect.configDict[basicSkillIds[1]]
+	local txt = FightConfig.instance:getSkillEffectDesc("", effectConfig)
 
-	arg_12_0._txtbasicSkill.text = SkillHelper.buildDesc(var_12_3)
+	self._txtbasicSkill.text = SkillHelper.buildDesc(txt)
 end
 
-function var_0_0.initBasicSkill(arg_13_0)
-	arg_13_0.selectSkillList = {}
+function Season166TalentInfoView:initBasicSkill()
+	self.selectSkillList = {}
 
-	for iter_13_0 = 1, 3 do
-		local var_13_0 = arg_13_0:getUserDataTb_()
+	for i = 1, 3 do
+		local selectItem = self:getUserDataTb_()
 
-		var_13_0.go = gohelper.findChild(arg_13_0.viewGO, "info/basicSkill/" .. iter_13_0)
-		var_13_0.goUnequip = gohelper.findChild(var_13_0.go, "unequip")
-		var_13_0.goWhiteBg = gohelper.findChild(var_13_0.go, "unequip/bg2")
-		var_13_0.goEquiped = gohelper.findChild(var_13_0.go, "equiped")
-		var_13_0.animEquip = var_13_0.goEquiped:GetComponent(gohelper.Type_Animation)
-		var_13_0.txtDesc = gohelper.findChildText(var_13_0.go, "equiped/txt_desc")
+		selectItem.go = gohelper.findChild(self.viewGO, "info/basicSkill/" .. i)
+		selectItem.goUnequip = gohelper.findChild(selectItem.go, "unequip")
+		selectItem.goWhiteBg = gohelper.findChild(selectItem.go, "unequip/bg2")
+		selectItem.goEquiped = gohelper.findChild(selectItem.go, "equiped")
+		selectItem.animEquip = selectItem.goEquiped:GetComponent(gohelper.Type_Animation)
+		selectItem.txtDesc = gohelper.findChildText(selectItem.go, "equiped/txt_desc")
 
-		SkillHelper.addHyperLinkClick(var_13_0.txtDesc, arg_13_0.clcikHyperLink, arg_13_0)
+		SkillHelper.addHyperLinkClick(selectItem.txtDesc, self.clcikHyperLink, self)
 
-		local var_13_1 = gohelper.findChildImage(var_13_0.go, "equiped/txt_desc/slot")
+		local imageSlot = gohelper.findChildImage(selectItem.go, "equiped/txt_desc/slot")
 
-		UISpriteSetMgr.instance:setSeason166Sprite(var_13_1, "season166_talentree_pointl" .. tostring(arg_13_0.talentConfig.sortIndex))
+		UISpriteSetMgr.instance:setSeason166Sprite(imageSlot, "season166_talentree_pointl" .. tostring(self.talentConfig.sortIndex))
 
-		local var_13_2 = gohelper.findChild(var_13_0.go, "equiped/txt_desc/slot/" .. arg_13_0.talentConfig.sortIndex)
+		local goParticle = gohelper.findChild(selectItem.go, "equiped/txt_desc/slot/" .. self.talentConfig.sortIndex)
 
-		gohelper.setActive(var_13_2, true)
+		gohelper.setActive(goParticle, true)
 
-		var_13_0.goLock = gohelper.findChild(var_13_0.go, "locked")
+		selectItem.goLock = gohelper.findChild(selectItem.go, "locked")
 
-		local var_13_3 = gohelper.findChildText(var_13_0.go, "locked/txt_desc")
-		local var_13_4 = arg_13_0.styleCfgDic[iter_13_0].needStar
-		local var_13_5 = Season166Config.instance:getBaseSpotByTalentId(arg_13_0.actId, arg_13_0.talentId)
+		local txtLock = gohelper.findChildText(selectItem.go, "locked/txt_desc")
+		local needStar = self.styleCfgDic[i].needStar
+		local baseConfig = Season166Config.instance:getBaseSpotByTalentId(self.actId, self.talentId)
 
-		var_13_3.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("season166_talent_selectlock"), var_13_4, var_13_5.name)
-		var_13_0.anim = var_13_0.go:GetComponent(gohelper.Type_Animator)
-		arg_13_0.selectSkillList[iter_13_0] = var_13_0
+		txtLock.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("season166_talent_selectlock"), needStar, baseConfig.name)
+		selectItem.anim = selectItem.go:GetComponent(gohelper.Type_Animator)
+		self.selectSkillList[i] = selectItem
 	end
 end
 
-function var_0_0.refreshSkill(arg_14_0)
-	local var_14_0 = arg_14_0.talentParam.talentSkillIds
-	local var_14_1 = #var_14_0 + 1
+function Season166TalentInfoView:refreshSkill()
+	local skillIds = self.talentParam.talentSkillIds
+	local selectIndex = #skillIds + 1
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.selectSkillList) do
-		if iter_14_0 == var_14_1 and var_14_1 <= arg_14_0.maxSlot then
-			gohelper.setActive(iter_14_1.goWhiteBg, true)
+	for i, selectItem in ipairs(self.selectSkillList) do
+		if i == selectIndex and selectIndex <= self.maxSlot then
+			gohelper.setActive(selectItem.goWhiteBg, true)
 		else
-			gohelper.setActive(iter_14_1.goWhiteBg, false)
+			gohelper.setActive(selectItem.goWhiteBg, false)
 		end
 
-		if iter_14_0 > arg_14_0.maxSlot then
-			gohelper.setActive(iter_14_1.goUnequip, false)
-			gohelper.setActive(iter_14_1.goEquiped, false)
-			gohelper.setActive(iter_14_1.goLock, true)
-		elseif iter_14_0 > #var_14_0 then
-			gohelper.setActive(iter_14_1.goUnequip, true)
-			gohelper.setActive(iter_14_1.goEquiped, false)
-			gohelper.setActive(iter_14_1.goLock, false)
+		if i > self.maxSlot then
+			gohelper.setActive(selectItem.goUnequip, false)
+			gohelper.setActive(selectItem.goEquiped, false)
+			gohelper.setActive(selectItem.goLock, true)
+		elseif i > #skillIds then
+			gohelper.setActive(selectItem.goUnequip, true)
+			gohelper.setActive(selectItem.goEquiped, false)
+			gohelper.setActive(selectItem.goLock, false)
 		else
-			local var_14_2 = lua_skill_effect.configDict[var_14_0[iter_14_0]]
-			local var_14_3 = FightConfig.instance:getSkillEffectDesc("", var_14_2)
+			local effectConfig = lua_skill_effect.configDict[skillIds[i]]
+			local txt = FightConfig.instance:getSkillEffectDesc("", effectConfig)
 
-			iter_14_1.txtDesc.text = SkillHelper.buildDesc(var_14_3)
+			selectItem.txtDesc.text = SkillHelper.buildDesc(txt)
 
-			gohelper.setActive(iter_14_1.goUnequip, false)
-			gohelper.setActive(iter_14_1.goEquiped, true)
-			gohelper.setActive(iter_14_1.goLock, false)
+			gohelper.setActive(selectItem.goUnequip, false)
+			gohelper.setActive(selectItem.goEquiped, true)
+			gohelper.setActive(selectItem.goLock, false)
 		end
 	end
 end
 
-function var_0_0.clcikHyperLink(arg_15_0, arg_15_1, arg_15_2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(arg_15_1, Vector2(-742, 178))
+function Season166TalentInfoView:clcikHyperLink(effectId, clickPosition)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(effectId, Vector2(-742, 178))
 end
 
-function var_0_0.onClose(arg_16_0)
+function Season166TalentInfoView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function Season166TalentInfoView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Season166TalentInfoView

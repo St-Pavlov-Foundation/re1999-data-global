@@ -1,45 +1,47 @@
-﻿module("modules.logic.weekwalk.controller.WeekWalkEvent", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/controller/WeekWalkEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.weekwalk.controller.WeekWalkEvent", package.seeall)
 
-var_0_0.TarotReply = 11
-var_0_0.WeekWalkRespawnReply = 12
-var_0_0.OnWeekwalkInfoUpdate = 13
-var_0_0.OnClickElement = 14
-var_0_0.OnGetBuffReward = 15
-var_0_0.OnDialogReply = 16
-var_0_0.OnClickTarot = 18
-var_0_0.OnConfirmBindingBuff = 19
-var_0_0.OnWeekwalkResetLayer = 20
-var_0_0.OnWeekwalkTaskUpdate = 21
-var_0_0.OnShowFinishAnimDone = 22
-var_0_0.OnScrollPage = 23
-var_0_0.OnChangeRightBtnVisible = 24
-var_0_0.OnChapterMapUpdate = 100
-var_0_0.OnChangeMap = 103
-var_0_0.OnGetPointReward = 104
-var_0_0.OnCheckVision = 105
-var_0_0.OnSetEpisodeListVisible = 107
-var_0_0.OnChangeFocusEpisodeItem = 108
-var_0_0.OnUpdateMapElementState = 109
-var_0_0.OnAddSmokeMask = 110
-var_0_0.OnRemoveSmokeMask = 111
-var_0_0.OnGetTaskReward = 112
-var_0_0.OnChangeLayerRewardMapId = 113
-var_0_0.OnSelectLevel = 201
-var_0_0.OnGetInfo = 202
-var_0_0.OnQuestionReply = 203
-var_0_0.OnSelectNotCdHeroReply = 204
-var_0_0.OnAllShallowLayerFinish = 205
-var_0_0.GuideClickElement = 301
-var_0_0.GuideShowResetBtn = 302
-var_0_0.GuideChangeToLayerPage3 = 303
-var_0_0.GuideChangeToLayerPage5 = 304
-var_0_0.GuideShowElement10112 = 305
-var_0_0.GuideMoveLayerPage = 306
-var_0_0.GuideFinishLayer = 307
-var_0_0.GuideOnLayerViewOpen = 308
-var_0_0.GuideDeepPageOpenShow = 309
-var_0_0.GuideShallowPageOpenShow = 310
+local WeekWalkEvent = _M
 
-return var_0_0
+WeekWalkEvent.TarotReply = 11
+WeekWalkEvent.WeekWalkRespawnReply = 12
+WeekWalkEvent.OnWeekwalkInfoUpdate = 13
+WeekWalkEvent.OnClickElement = 14
+WeekWalkEvent.OnGetBuffReward = 15
+WeekWalkEvent.OnDialogReply = 16
+WeekWalkEvent.OnClickTarot = 18
+WeekWalkEvent.OnConfirmBindingBuff = 19
+WeekWalkEvent.OnWeekwalkResetLayer = 20
+WeekWalkEvent.OnWeekwalkTaskUpdate = 21
+WeekWalkEvent.OnShowFinishAnimDone = 22
+WeekWalkEvent.OnScrollPage = 23
+WeekWalkEvent.OnChangeRightBtnVisible = 24
+WeekWalkEvent.OnChapterMapUpdate = 100
+WeekWalkEvent.OnChangeMap = 103
+WeekWalkEvent.OnGetPointReward = 104
+WeekWalkEvent.OnCheckVision = 105
+WeekWalkEvent.OnSetEpisodeListVisible = 107
+WeekWalkEvent.OnChangeFocusEpisodeItem = 108
+WeekWalkEvent.OnUpdateMapElementState = 109
+WeekWalkEvent.OnAddSmokeMask = 110
+WeekWalkEvent.OnRemoveSmokeMask = 111
+WeekWalkEvent.OnGetTaskReward = 112
+WeekWalkEvent.OnChangeLayerRewardMapId = 113
+WeekWalkEvent.OnSelectLevel = 201
+WeekWalkEvent.OnGetInfo = 202
+WeekWalkEvent.OnQuestionReply = 203
+WeekWalkEvent.OnSelectNotCdHeroReply = 204
+WeekWalkEvent.OnAllShallowLayerFinish = 205
+WeekWalkEvent.GuideClickElement = 301
+WeekWalkEvent.GuideShowResetBtn = 302
+WeekWalkEvent.GuideChangeToLayerPage3 = 303
+WeekWalkEvent.GuideChangeToLayerPage5 = 304
+WeekWalkEvent.GuideShowElement10112 = 305
+WeekWalkEvent.GuideMoveLayerPage = 306
+WeekWalkEvent.GuideFinishLayer = 307
+WeekWalkEvent.GuideOnLayerViewOpen = 308
+WeekWalkEvent.GuideDeepPageOpenShow = 309
+WeekWalkEvent.GuideShallowPageOpenShow = 310
+
+return WeekWalkEvent

@@ -1,17 +1,19 @@
-﻿module("modules.common.res.AssetInstanceComp", package.seeall)
+﻿-- chunkname: @modules/common/res/AssetInstanceComp.lua
 
-local var_0_0 = class("AssetInstanceComp", LuaCompBase)
+module("modules.common.res.AssetInstanceComp", package.seeall)
 
-function var_0_0.setAsset(arg_1_0, arg_1_1)
-	arg_1_0._assetMO = arg_1_1
+local AssetInstanceComp = class("AssetInstanceComp", LuaCompBase)
+
+function AssetInstanceComp:setAsset(assetMO)
+	self._assetMO = assetMO
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	if arg_2_0._assetMO then
-		arg_2_0._assetMO:release()
+function AssetInstanceComp:onDestroy()
+	if self._assetMO then
+		self._assetMO:release()
 	end
 
-	arg_2_0._assetMO = nil
+	self._assetMO = nil
 end
 
-return var_0_0
+return AssetInstanceComp

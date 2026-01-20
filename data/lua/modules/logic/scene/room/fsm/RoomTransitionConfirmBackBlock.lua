@@ -1,75 +1,80 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionConfirmBackBlock", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionConfirmBackBlock.lua
 
-local var_0_0 = class("RoomTransitionConfirmBackBlock", JompFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionConfirmBackBlock", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_1_0._opToDis = {
+local RoomTransitionConfirmBackBlock = class("RoomTransitionConfirmBackBlock", JompFSMBaseTransition)
+
+function RoomTransitionConfirmBackBlock:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._opToDis = {
 		[RoomBlockEnum.OpState.Normal] = RoomBlockEnum.OpState.Back,
 		[RoomBlockEnum.OpState.Back] = RoomBlockEnum.OpState.Normal
 	}
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionConfirmBackBlock:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionConfirmBackBlock:onStart(param)
+	self._param = param
 
-	local var_3_0 = arg_3_1.blockMOList
+	local blockMOList = param.blockMOList
 
-	for iter_3_0 = 1, #var_3_0 do
-		local var_3_1 = var_3_0[iter_3_0]
-		local var_3_2 = arg_3_0._scene.mapmgr:getBlockEntity(var_3_1.id, SceneTag.RoomMapBlock)
+	for i = 1, #blockMOList do
+		local blockMO = blockMOList[i]
+		local blockEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-		if var_3_2 then
-			arg_3_0._scene.mapmgr:destroyBlock(var_3_2)
+		if blockEntity then
+			self._scene.mapmgr:destroyBlock(blockEntity)
 
-			local var_3_3 = var_3_1.hexPoint
-			local var_3_4 = RoomMapBlockModel.instance:getBlockMO(var_3_3.x, var_3_3.y)
+			local hexPoint = blockMO.hexPoint
+			local emptyMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-			arg_3_0._scene.mapmgr:spawnMapBlock(var_3_4)
+			self._scene.mapmgr:spawnMapBlock(emptyMO)
 		end
 	end
 
-	arg_3_0:onDone()
-	arg_3_0._scene.inventorymgr:moveForward()
+	self:onDone()
+	self._scene.inventorymgr:moveForward()
 	RoomMapController.instance:dispatchEvent(RoomEvent.UpdateWater)
 	RoomMapController.instance:dispatchEvent(RoomEvent.UpdateInventoryCount)
 	RoomMapController.instance:dispatchEvent(RoomEvent.ConfirmBackBlock)
 
-	local var_3_5 = {}
-	local var_3_6 = {}
+	local nearMapEntityList = {}
+	local nearEmptyEntityList = {}
 
-	for iter_3_1 = 1, #var_3_0 do
-		local var_3_7 = var_3_0[iter_3_1].hexPoint
+	for i = 1, #blockMOList do
+		local blockMO = blockMOList[i]
+		local hexPoint = blockMO.hexPoint
 
-		arg_3_0:_addValues(var_3_5, RoomBlockHelper.getNearBlockEntity(false, var_3_7, 1, true))
-		arg_3_0:_addValues(var_3_6, RoomBlockHelper.getNearBlockEntity(true, var_3_7, 1, true))
-		RoomMapBlockModel.instance:refreshNearRiver(var_3_7, 1)
+		self:_addValues(nearMapEntityList, RoomBlockHelper.getNearBlockEntity(false, hexPoint, 1, true))
+		self:_addValues(nearEmptyEntityList, RoomBlockHelper.getNearBlockEntity(true, hexPoint, 1, true))
+		RoomMapBlockModel.instance:refreshNearRiver(hexPoint, 1)
 	end
 
-	RoomBlockHelper.refreshBlockEntity(var_3_5, "refreshBlock")
-	RoomBlockHelper.refreshBlockEntity(var_3_6, "refreshWaveEffect")
+	RoomBlockHelper.refreshBlockEntity(nearMapEntityList, "refreshBlock")
+	RoomBlockHelper.refreshBlockEntity(nearEmptyEntityList, "refreshWaveEffect")
 end
 
-function var_0_0._addValues(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 and arg_4_2 then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_2) do
-			if not tabletool.indexOf(arg_4_1, iter_4_1) then
-				table.insert(arg_4_1, iter_4_1)
+function RoomTransitionConfirmBackBlock:_addValues(targetArray, addArray)
+	if targetArray and addArray then
+		for _, value in ipairs(addArray) do
+			local index = tabletool.indexOf(targetArray, value)
+
+			if not index then
+				table.insert(targetArray, value)
 			end
 		end
 	end
 end
 
-function var_0_0.stop(arg_5_0)
+function RoomTransitionConfirmBackBlock:stop()
 	return
 end
 
-function var_0_0.clear(arg_6_0)
+function RoomTransitionConfirmBackBlock:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionConfirmBackBlock

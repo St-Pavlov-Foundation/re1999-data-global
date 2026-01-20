@@ -1,13 +1,15 @@
-﻿module("modules.logic.gift.view.GiftInsightHeroChoiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gift/view/GiftInsightHeroChoiceViewContainer.lua
 
-local var_0_0 = class("GiftInsightHeroChoiceViewContainer", BaseViewContainer)
+module("modules.logic.gift.view.GiftInsightHeroChoiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local GiftInsightHeroChoiceViewContainer = class("GiftInsightHeroChoiceViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, GiftInsightHeroChoiceView.New())
+function GiftInsightHeroChoiceViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, GiftInsightHeroChoiceView.New())
+
+	return views
 end
 
-return var_0_0
+return GiftInsightHeroChoiceViewContainer

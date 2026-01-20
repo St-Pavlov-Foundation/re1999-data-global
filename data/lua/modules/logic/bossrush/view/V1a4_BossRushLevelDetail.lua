@@ -1,497 +1,515 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRushLevelDetail", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRushLevelDetail.lua
 
-local var_0_0 = class("V1a4_BossRushLevelDetail", BaseView)
+module("modules.logic.bossrush.view.V1a4_BossRushLevelDetail", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefull = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_full")
-	arg_1_0._gospines = gohelper.findChild(arg_1_0.viewGO, "#go_spines")
-	arg_1_0._goLeftBGEndless = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBGEndless")
-	arg_1_0._goLeftBG = gohelper.findChild(arg_1_0.viewGO, "#go_LeftBG")
-	arg_1_0._goRightBGEndless = gohelper.findChild(arg_1_0.viewGO, "#go_RightBGEndless")
-	arg_1_0._goRightBGLayer4 = gohelper.findChild(arg_1_0.viewGO, "#go_RightBGLayer4")
-	arg_1_0._goRightBG = gohelper.findChild(arg_1_0.viewGO, "#go_RightBG")
-	arg_1_0._btnSimple = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Simple", AudioEnum.ui_activity.play_ui_activity_switch)
-	arg_1_0._btnHard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Hard", AudioEnum.ui_activity.play_ui_activity_switch)
-	arg_1_0._btnEndless = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Endless", AudioEnum.ui_activity.play_ui_activity_switch)
-	arg_1_0._btnLayer4 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_Layer4", AudioEnum.ui_activity.play_ui_activity_switch)
-	arg_1_0._btnbonus = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_bonus", AudioEnum.ui_task.play_ui_task_page)
-	arg_1_0._imageSliderFG = gohelper.findChildImage(arg_1_0.viewGO, "Left/#btn_bonus/image_SliderBG/#image_SliderFG")
-	arg_1_0._goAssessIcon = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_bonus/#go_AssessIcon")
-	arg_1_0._goRedPoint1 = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_bonus/#go_RedPoint1")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "DetailPanel/Title/#txt_Title")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "DetailPanel/Title/#txt_Title/#simage_Title")
-	arg_1_0._imageIssxIcon = gohelper.findChildImage(arg_1_0.viewGO, "DetailPanel/Title/#txt_Title/#image_IssxIcon")
-	arg_1_0._btnSearchIcon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "DetailPanel/Title/#txt_Title/#btn_SearchIcon")
-	arg_1_0._scrollDescr = gohelper.findChildScrollRect(arg_1_0.viewGO, "DetailPanel/#scroll_desc")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "DetailPanel/#scroll_desc/Viewport/#txt_Descr")
-	arg_1_0._txtScoreTotalNum = gohelper.findChildText(arg_1_0.viewGO, "DetailPanel/Attention/Score/#txt_ScoreTotalNum")
-	arg_1_0._txtLvNum = gohelper.findChildText(arg_1_0.viewGO, "DetailPanel/Attention/Lv/#txt_LvNum")
-	arg_1_0._btnGo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "DetailPanel/#btn_Go", AudioEnum.ui_action.play_ui_action_mainstart)
-	arg_1_0._txtDoubleTimes = gohelper.findChildText(arg_1_0.viewGO, "DetailPanel/#btn_Go/#txt_DoubleTimes")
-	arg_1_0._gonormalbtn = gohelper.findChildImage(arg_1_0.viewGO, "DetailPanel/#btn_Go/#img_normal")
-	arg_1_0._txtGoCn = gohelper.findChildText(arg_1_0.viewGO, "DetailPanel/#btn_Go/#img_normal/txt_Go")
-	arg_1_0._txtGoEn = gohelper.findChildText(arg_1_0.viewGO, "DetailPanel/#btn_Go/#img_normal/txt_GoEn")
-	arg_1_0._btnoffer = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "DetailPanel/#btn_Offer")
-	arg_1_0._vxreceive1 = gohelper.findChild(arg_1_0.viewGO, "Left/vx_receive")
-	arg_1_0._imageSliderFG2 = gohelper.findChildImage(arg_1_0.viewGO, "Left/#btn_bonus/image_SliderBG/#image_SliderFG/vx_receive_eff")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "mask")
-	arg_1_0._animEvent = arg_1_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+local V1a4_BossRushLevelDetail = class("V1a4_BossRushLevelDetail", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a4_BossRushLevelDetail:onInitView()
+	self._simagefull = gohelper.findChildSingleImage(self.viewGO, "#simage_full")
+	self._gospines = gohelper.findChild(self.viewGO, "#go_spines")
+	self._goLeftBGEndless = gohelper.findChild(self.viewGO, "#go_LeftBGEndless")
+	self._goLeftBG = gohelper.findChild(self.viewGO, "#go_LeftBG")
+	self._goRightBGEndless = gohelper.findChild(self.viewGO, "#go_RightBGEndless")
+	self._goRightBGLayer4 = gohelper.findChild(self.viewGO, "#go_RightBGLayer4")
+	self._goRightBG = gohelper.findChild(self.viewGO, "#go_RightBG")
+	self._btnSimple = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Simple", AudioEnum.ui_activity.play_ui_activity_switch)
+	self._btnHard = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Hard", AudioEnum.ui_activity.play_ui_activity_switch)
+	self._btnEndless = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Endless", AudioEnum.ui_activity.play_ui_activity_switch)
+	self._btnLayer4 = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Layer4", AudioEnum.ui_activity.play_ui_activity_switch)
+	self._btnbonus = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_bonus", AudioEnum.ui_task.play_ui_task_page)
+	self._imageSliderFG = gohelper.findChildImage(self.viewGO, "Left/#btn_bonus/image_SliderBG/#image_SliderFG")
+	self._goAssessIcon = gohelper.findChild(self.viewGO, "Left/#btn_bonus/#go_AssessIcon")
+	self._goRedPoint1 = gohelper.findChild(self.viewGO, "Left/#btn_bonus/#go_RedPoint1")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "DetailPanel/Title/#txt_Title")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "DetailPanel/Title/#txt_Title/#simage_Title")
+	self._imageIssxIcon = gohelper.findChildImage(self.viewGO, "DetailPanel/Title/#txt_Title/#image_IssxIcon")
+	self._btnSearchIcon = gohelper.findChildButtonWithAudio(self.viewGO, "DetailPanel/Title/#txt_Title/#btn_SearchIcon")
+	self._scrollDescr = gohelper.findChildScrollRect(self.viewGO, "DetailPanel/#scroll_desc")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "DetailPanel/#scroll_desc/Viewport/#txt_Descr")
+	self._txtScoreTotalNum = gohelper.findChildText(self.viewGO, "DetailPanel/Attention/Score/#txt_ScoreTotalNum")
+	self._txtLvNum = gohelper.findChildText(self.viewGO, "DetailPanel/Attention/Lv/#txt_LvNum")
+	self._btnGo = gohelper.findChildButtonWithAudio(self.viewGO, "DetailPanel/#btn_Go", AudioEnum.ui_action.play_ui_action_mainstart)
+	self._txtDoubleTimes = gohelper.findChildText(self.viewGO, "DetailPanel/#btn_Go/#txt_DoubleTimes")
+	self._gonormalbtn = gohelper.findChildImage(self.viewGO, "DetailPanel/#btn_Go/#img_normal")
+	self._txtGoCn = gohelper.findChildText(self.viewGO, "DetailPanel/#btn_Go/#img_normal/txt_Go")
+	self._txtGoEn = gohelper.findChildText(self.viewGO, "DetailPanel/#btn_Go/#img_normal/txt_GoEn")
+	self._btnoffer = gohelper.findChildButtonWithAudio(self.viewGO, "DetailPanel/#btn_Offer")
+	self._vxreceive1 = gohelper.findChild(self.viewGO, "Left/vx_receive")
+	self._imageSliderFG2 = gohelper.findChildImage(self.viewGO, "Left/#btn_bonus/image_SliderBG/#image_SliderFG/vx_receive_eff")
+	self._gomask = gohelper.findChild(self.viewGO, "mask")
+	self._animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnSimple:AddClickListener(arg_2_0._btnSimpleOnClick, arg_2_0)
-	arg_2_0._btnHard:AddClickListener(arg_2_0._btnHardOnClick, arg_2_0)
-	arg_2_0._btnEndless:AddClickListener(arg_2_0._btnEndlessOnClick, arg_2_0)
-	arg_2_0._btnLayer4:AddClickListener(arg_2_0._btnLayer4OnClick, arg_2_0)
-	arg_2_0._btnbonus:AddClickListener(arg_2_0._btnbonusOnClick, arg_2_0)
-	arg_2_0._btnSearchIcon:AddClickListener(arg_2_0._btnSearchIconOnClick, arg_2_0)
-	arg_2_0._btnGo:AddClickListener(arg_2_0._btnGoOnClick, arg_2_0)
-	arg_2_0._btnoffer:AddClickListener(arg_2_0._btnOfferOnClick, arg_2_0)
-	arg_2_0._animEvent:AddEventListener(BossRushEnum.AnimEvtAchievementItem.onBtnGoEnter, arg_2_0._onBtnGoEnter, arg_2_0)
+function V1a4_BossRushLevelDetail:addEvents()
+	self._btnSimple:AddClickListener(self._btnSimpleOnClick, self)
+	self._btnHard:AddClickListener(self._btnHardOnClick, self)
+	self._btnEndless:AddClickListener(self._btnEndlessOnClick, self)
+	self._btnLayer4:AddClickListener(self._btnLayer4OnClick, self)
+	self._btnbonus:AddClickListener(self._btnbonusOnClick, self)
+	self._btnSearchIcon:AddClickListener(self._btnSearchIconOnClick, self)
+	self._btnGo:AddClickListener(self._btnGoOnClick, self)
+	self._btnoffer:AddClickListener(self._btnOfferOnClick, self)
+	self._animEvent:AddEventListener(BossRushEnum.AnimEvtAchievementItem.onBtnGoEnter, self._onBtnGoEnter, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnSimple:RemoveClickListener()
-	arg_3_0._btnHard:RemoveClickListener()
-	arg_3_0._btnEndless:RemoveClickListener()
-	arg_3_0._btnLayer4:RemoveClickListener()
-	arg_3_0._btnbonus:RemoveClickListener()
-	arg_3_0._btnSearchIcon:RemoveClickListener()
-	arg_3_0._btnGo:RemoveClickListener()
-	arg_3_0._btnoffer:RemoveClickListener()
-	arg_3_0._animEvent:AddEventListener(BossRushEnum.AnimEvtAchievementItem.onBtnGoEnter, arg_3_0._onBtnGoEnter, arg_3_0)
+function V1a4_BossRushLevelDetail:removeEvents()
+	self._btnSimple:RemoveClickListener()
+	self._btnHard:RemoveClickListener()
+	self._btnEndless:RemoveClickListener()
+	self._btnLayer4:RemoveClickListener()
+	self._btnbonus:RemoveClickListener()
+	self._btnSearchIcon:RemoveClickListener()
+	self._btnGo:RemoveClickListener()
+	self._btnoffer:RemoveClickListener()
+	self._animEvent:AddEventListener(BossRushEnum.AnimEvtAchievementItem.onBtnGoEnter, self._onBtnGoEnter, self)
 end
 
-function var_0_0._btnbonusOnClick(arg_4_0)
-	BossRushController.instance:openBonusView(arg_4_0.viewParam)
+function V1a4_BossRushLevelDetail:_btnbonusOnClick()
+	BossRushController.instance:openBonusView(self.viewParam)
 end
 
-function var_0_0._btnOfferOnClick(arg_5_0)
+function V1a4_BossRushLevelDetail:_btnOfferOnClick()
 	BossRushController.instance:openBossRushOfferRoleView()
 end
 
-local var_0_1 = {
+local TabEnum = {
 	Layer4 = 4,
 	Simple = 1,
 	Endless = 3,
 	Hard = 2
 }
-local var_0_2 = BossRushEnum.AnimEvtLevelDetail
-local var_0_3 = RedDotEnum.DotNode
-local var_0_4 = BossRushEnum.AnimLevelDetailBtn
+local EAnimEvt = BossRushEnum.AnimEvtLevelDetail
+local EDotNode = RedDotEnum.DotNode
+local EAnimBtn = BossRushEnum.AnimLevelDetailBtn
 
-function var_0_0._btnSearchIconOnClick(arg_6_0)
-	local var_6_0, var_6_1 = arg_6_0:_getStageAndLayer()
-	local var_6_2 = BossRushConfig.instance:getActivityId()
+function V1a4_BossRushLevelDetail:_btnSearchIconOnClick()
+	local stage, layer = self:_getStageAndLayer()
+	local actId = BossRushConfig.instance:getActivityId()
 
-	EnemyInfoController.instance:openBossRushEnemyInfoView(var_6_2, var_6_0, var_6_1)
+	EnemyInfoController.instance:openBossRushEnemyInfoView(actId, stage, layer)
 end
 
-function var_0_0._btnSimpleOnClick(arg_7_0)
-	arg_7_0:_setSelect(var_0_1.Simple, true)
+function V1a4_BossRushLevelDetail:_btnSimpleOnClick()
+	self:_setSelect(TabEnum.Simple, true)
 end
 
-function var_0_0._btnHardOnClick(arg_8_0)
-	arg_8_0:_setSelect(var_0_1.Hard, true)
+function V1a4_BossRushLevelDetail:_btnHardOnClick()
+	self:_setSelect(TabEnum.Hard, true)
 end
 
-function var_0_0._btnEndlessOnClick(arg_9_0)
-	arg_9_0:_setSelect(var_0_1.Endless, true)
+function V1a4_BossRushLevelDetail:_btnEndlessOnClick()
+	self:_setSelect(TabEnum.Endless, true)
 end
 
-function var_0_0._btnLayer4OnClick(arg_10_0)
-	arg_10_0:_setSelect(var_0_1.Layer4, true)
+function V1a4_BossRushLevelDetail:_btnLayer4OnClick()
+	self:_setSelect(TabEnum.Layer4, true)
 end
 
-function var_0_0._btnScheduleOnClick(arg_11_0)
-	ViewMgr.instance:openView(ViewName.V1a4_BossRush_ScheduleView, arg_11_0.viewParam)
+function V1a4_BossRushLevelDetail:_btnScheduleOnClick()
+	ViewMgr.instance:openView(ViewName.V1a4_BossRush_ScheduleView, self.viewParam)
 end
 
-function var_0_0._btnScoreOnClick(arg_12_0)
-	ViewMgr.instance:openView(ViewName.V1a4_BossRush_ScoreTaskAchievement, arg_12_0.viewParam)
+function V1a4_BossRushLevelDetail:_btnScoreOnClick()
+	ViewMgr.instance:openView(ViewName.V1a4_BossRush_ScoreTaskAchievement, self.viewParam)
 end
 
-function var_0_0._btnGoOnClick(arg_13_0)
-	local var_13_0, var_13_1 = arg_13_0:_getStageAndLayer()
+function V1a4_BossRushLevelDetail:_btnGoOnClick()
+	local stage, layer = self:_getStageAndLayer()
 
-	BossRushController.instance:enterFightScene(var_13_0, var_13_1)
+	BossRushController.instance:enterFightScene(stage, layer)
 end
 
-function var_0_0._btnBonusOnClick(arg_14_0)
-	ViewMgr.instance:openView(ViewName.V1a6_BossRush_BonusView, arg_14_0.viewParam)
+function V1a4_BossRushLevelDetail:_btnBonusOnClick()
+	ViewMgr.instance:openView(ViewName.V1a6_BossRush_BonusView, self.viewParam)
 end
 
-function var_0_0._editableInitView(arg_15_0)
-	local var_15_0 = V1a4_BossRushLevelDetailItem
+function V1a4_BossRushLevelDetail:_editableInitView()
+	local itemClass = V1a4_BossRushLevelDetailItem
 
-	arg_15_0._tabList = {
-		MonoHelper.addNoUpdateLuaComOnceToGo(arg_15_0._btnSimple.gameObject, var_15_0),
-		MonoHelper.addNoUpdateLuaComOnceToGo(arg_15_0._btnHard.gameObject, var_15_0),
-		MonoHelper.addNoUpdateLuaComOnceToGo(arg_15_0._btnEndless.gameObject, var_15_0),
-		(MonoHelper.addNoUpdateLuaComOnceToGo(arg_15_0._btnLayer4.gameObject, var_15_0))
+	self._tabList = {
+		MonoHelper.addNoUpdateLuaComOnceToGo(self._btnSimple.gameObject, itemClass),
+		MonoHelper.addNoUpdateLuaComOnceToGo(self._btnHard.gameObject, itemClass),
+		MonoHelper.addNoUpdateLuaComOnceToGo(self._btnEndless.gameObject, itemClass),
+		(MonoHelper.addNoUpdateLuaComOnceToGo(self._btnLayer4.gameObject, itemClass))
 	}
 
-	arg_15_0:_initAssessIcon()
+	self:_initAssessIcon()
 
-	arg_15_0._animSelf = arg_15_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_15_0._animEvent = arg_15_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_15_0._animSelf.enabled = false
-	arg_15_0._txtDoubleTimes.text = ""
-	arg_15_0._txtTitle.text = ""
-	arg_15_0._txtLvNum.text = ""
+	self._animSelf = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+	self._animSelf.enabled = false
+	self._txtDoubleTimes.text = ""
+	self._txtTitle.text = ""
+	self._txtLvNum.text = ""
 
-	arg_15_0._animEvent:AddEventListener(var_0_2.onPlayCloseTransitionFinish, arg_15_0._onPlayCloseTransitionFinish, arg_15_0)
+	self._animEvent:AddEventListener(EAnimEvt.onPlayCloseTransitionFinish, self._onPlayCloseTransitionFinish, self)
 end
 
-function var_0_0._initAssessIcon(arg_16_0)
-	local var_16_0 = V1a4_BossRush_AssessIcon
-	local var_16_1 = arg_16_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_leveldetail_assessicon, arg_16_0._goAssessIcon, var_16_0.__cname)
+function V1a4_BossRushLevelDetail:_initAssessIcon()
+	local itemClass = V1a4_BossRush_AssessIcon
+	local go = self.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_leveldetail_assessicon, self._goAssessIcon, itemClass.__cname)
 
-	arg_16_0._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_1, var_16_0)
+	self._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 
-	arg_16_0._assessIcon:initData(arg_16_0, false)
+	self._assessIcon:initData(self, false)
 end
 
-function var_0_0.onUpdateParam(arg_17_0)
+function V1a4_BossRushLevelDetail:onUpdateParam()
 	return
 end
 
-function var_0_0._tryLayer2TabIndex(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._stageLayerInfos) do
-		if iter_18_1.layer == arg_18_1 then
-			local var_18_0 = arg_18_0:_getStage()
+function V1a4_BossRushLevelDetail:_tryLayer2TabIndex(layer)
+	for i, v in ipairs(self._stageLayerInfos) do
+		if v.layer == layer then
+			local stage = self:_getStage()
 
-			return BossRushModel.instance:isBossLayerOpen(var_18_0, arg_18_1) and iter_18_0 or 1
+			return BossRushModel.instance:isBossLayerOpen(stage, layer) and i or 1
 		end
 	end
 end
 
-function var_0_0._getTabUnlockStates(arg_19_0)
-	local var_19_0 = arg_19_0:_getStage()
-	local var_19_1 = {}
+function V1a4_BossRushLevelDetail:_getTabUnlockStates()
+	local stage = self:_getStage()
+	local res = {}
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._stageLayerInfos) do
-		local var_19_2 = iter_19_1.layer
+	for i, v in ipairs(self._stageLayerInfos) do
+		local layer = v.layer
+		local isUnlockNewLayer = v.isOpen and BossRushRedModel.instance:getIsNewUnlockStageLayer(stage, layer) or false
 
-		var_19_1[iter_19_0] = iter_19_1.isOpen and BossRushRedModel.instance:getIsNewUnlockStageLayer(var_19_0, var_19_2) or false
+		res[i] = isUnlockNewLayer
 	end
 
-	return var_19_1
+	return res
 end
 
-function var_0_0._tweenUnlockTabs(arg_20_0)
-	local var_20_0 = arg_20_0:_getStage()
-	local var_20_1 = arg_20_0:_getTabUnlockStates()
+function V1a4_BossRushLevelDetail:_tweenUnlockTabs()
+	local stage = self:_getStage()
+	local newUnlockStates = self:_getTabUnlockStates()
 
-	arg_20_0:_refreshTabs(var_20_1)
+	self:_refreshTabs(newUnlockStates)
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-		if iter_20_1 then
-			local var_20_2 = arg_20_0._tabList[iter_20_0]
-			local var_20_3 = arg_20_0._stageLayerInfos[iter_20_0].layer
+	for i, isNewUnlock in ipairs(newUnlockStates) do
+		if isNewUnlock then
+			local tabItem = self._tabList[i]
+			local info = self._stageLayerInfos[i]
+			local layer = info.layer
 
-			var_20_2:playUnlock()
-			BossRushRedModel.instance:setIsNewUnlockStageLayer(var_20_0, var_20_3, false)
+			tabItem:playUnlock()
+			BossRushRedModel.instance:setIsNewUnlockStageLayer(stage, layer, false)
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_21_0)
-	arg_21_0._selectedIndex = nil
+function V1a4_BossRushLevelDetail:onOpen()
+	self._selectedIndex = nil
 
-	local var_21_0 = arg_21_0.viewParam
-	local var_21_1 = var_21_0.stage
-	local var_21_2 = var_21_0.selectedIndex
-	local var_21_3 = BossRushModel.instance:getStagePointInfo(var_21_1)
+	local viewParam = self.viewParam
+	local stage = viewParam.stage
+	local selectedIndex = viewParam.selectedIndex
+	local pointsInfo = BossRushModel.instance:getStagePointInfo(stage)
 
-	arg_21_0._stageLayerInfos = BossRushModel.instance:getStageLayersInfo(var_21_1)
+	self._stageLayerInfos = BossRushModel.instance:getStageLayersInfo(stage)
 
-	if not var_21_2 then
-		var_21_2 = arg_21_0:_tryLayer2TabIndex(BossRushModel.instance:getLastMarkSelectedLayer(var_21_1))
-		var_21_0.selectedIndex = var_21_2
+	if not selectedIndex then
+		selectedIndex = self:_tryLayer2TabIndex(BossRushModel.instance:getLastMarkSelectedLayer(stage))
+		viewParam.selectedIndex = selectedIndex
 	end
 
-	arg_21_0:_tweenUnlockTabs()
-	arg_21_0:_setSelect(arg_21_0.viewParam.selectedIndex or var_0_1.Simple)
-	arg_21_0:_refreshMonster()
-	arg_21_0:_refreshRedDot()
+	self:_tweenUnlockTabs()
+	self:_setSelect(self.viewParam.selectedIndex or TabEnum.Simple)
+	self:_refreshMonster()
+	self:_refreshRedDot()
 
-	local var_21_4 = var_21_3.cur / var_21_3.max
+	local progress = pointsInfo.cur / pointsInfo.max
 
-	arg_21_0._imageSliderFG.fillAmount = var_21_4
-	arg_21_0._imageSliderFG2.fillAmount = var_21_4
-	arg_21_0._animSelf.enabled = true
+	self._imageSliderFG.fillAmount = progress
+	self._imageSliderFG2.fillAmount = progress
+	self._animSelf.enabled = true
 
-	if var_21_2 == var_0_1.Endless then
+	if selectedIndex == TabEnum.Endless then
 		AudioMgr.instance:trigger(AudioEnum.ui_activity.play_ui_pkls_challenge_fail_bossrush)
-		arg_21_0._animSelf:Play(BossRushEnum.AnimLevelDetail.EndlessEnter)
-	elseif var_21_2 == var_0_1.Hard then
-		arg_21_0._animSelf:Play(BossRushEnum.AnimLevelDetail.HardEnter)
-	elseif var_21_2 == var_0_1.Simple then
-		arg_21_0._animSelf:Play(BossRushEnum.AnimLevelDetail.NormalEnter)
-	elseif var_21_2 == var_0_1.Layer4 then
-		arg_21_0._animSelf:Play(BossRushEnum.AnimLevelDetail.Layer4)
+		self._animSelf:Play(BossRushEnum.AnimLevelDetail.EndlessEnter)
+	elseif selectedIndex == TabEnum.Hard then
+		self._animSelf:Play(BossRushEnum.AnimLevelDetail.HardEnter)
+	elseif selectedIndex == TabEnum.Simple then
+		self._animSelf:Play(BossRushEnum.AnimLevelDetail.NormalEnter)
+	elseif selectedIndex == TabEnum.Layer4 then
+		self._animSelf:Play(BossRushEnum.AnimLevelDetail.Layer4)
 	end
 
-	arg_21_0:_refreshGoBtn(var_21_2)
-	gohelper.setActive(arg_21_0._gomask, false)
-	arg_21_0:_checkOfferBtn()
+	self:_refreshGoBtn(selectedIndex)
+	gohelper.setActive(self._gomask, false)
+	self:_checkOfferBtn()
 end
 
-function var_0_0.onOpenFinish(arg_22_0)
+function V1a4_BossRushLevelDetail:onOpenFinish()
 	return
 end
 
-function var_0_0.playCloseTransition(arg_23_0)
-	arg_23_0._animSelf:Play(BossRushEnum.AnimLevelDetail.CloseView)
-	gohelper.setActive(arg_23_0._gomask, true)
+function V1a4_BossRushLevelDetail:playCloseTransition()
+	self._animSelf:Play(BossRushEnum.AnimLevelDetail.CloseView)
+	gohelper.setActive(self._gomask, true)
 end
 
-function var_0_0._onPlayCloseTransitionFinish(arg_24_0)
-	arg_24_0.viewContainer:onPlayCloseTransitionFinish()
+function V1a4_BossRushLevelDetail:_onPlayCloseTransitionFinish()
+	self.viewContainer:onPlayCloseTransitionFinish()
 end
 
-function var_0_0.onClose(arg_25_0)
-	local var_25_0 = arg_25_0.viewParam
+function V1a4_BossRushLevelDetail:onClose()
+	local viewParam = self.viewParam
 
-	if var_25_0 then
-		var_25_0.selectedIndex = nil
+	if viewParam then
+		viewParam.selectedIndex = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	arg_26_0._animEvent:RemoveEventListener(var_0_2.onPlayCloseTransitionFinish)
-	arg_26_0._simagefull:UnLoadImage()
-	GameUtil.onDestroyViewMemberList(arg_26_0, "_tabList")
-	GameUtil.onDestroyViewMemberList(arg_26_0, "_uiSpineList")
+function V1a4_BossRushLevelDetail:onDestroyView()
+	self._animEvent:RemoveEventListener(EAnimEvt.onPlayCloseTransitionFinish)
+	self._simagefull:UnLoadImage()
+	GameUtil.onDestroyViewMemberList(self, "_tabList")
+	GameUtil.onDestroyViewMemberList(self, "_uiSpineList")
 end
 
-function var_0_0._refreshContent(arg_27_0)
-	local var_27_0 = arg_27_0.viewParam
-	local var_27_1 = var_27_0.stage
-	local var_27_2 = var_27_0.stageCO
-	local var_27_3 = arg_27_0._selectedIndex
-	local var_27_4 = arg_27_0._stageLayerInfos[var_27_3].layerCO
-	local var_27_5 = var_27_4.layer
-	local var_27_6 = BossRushConfig.instance:getBattleMaxPoints(var_27_1, var_27_5)
-	local var_27_7 = BossRushConfig.instance:getIssxIconName(var_27_1, var_27_5)
-	local var_27_8 = BossRushModel.instance:getHighestPoint(var_27_1)
-	local var_27_9 = BossRushConfig.instance:isInfinite(var_27_1, var_27_5)
-	local var_27_10 = BossRushConfig.instance:getDungeonBattleId(var_27_1, var_27_5)
+function V1a4_BossRushLevelDetail:_refreshContent()
+	local viewParam = self.viewParam
+	local stage = viewParam.stage
+	local stageCO = viewParam.stageCO
+	local index = self._selectedIndex
+	local stageLayerInfo = self._stageLayerInfos[index]
+	local layerCO = stageLayerInfo.layerCO
+	local layer = layerCO.layer
+	local battleMaxPoints = BossRushConfig.instance:getBattleMaxPoints(stage, layer)
+	local issxIconName = BossRushConfig.instance:getIssxIconName(stage, layer)
+	local highestPoint = BossRushModel.instance:getHighestPoint(stage)
+	local isInfinite = BossRushConfig.instance:isInfinite(stage, layer)
+	local battleId = BossRushConfig.instance:getDungeonBattleId(stage, layer)
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_27_0._imageIssxIcon, var_27_7)
-	arg_27_0._simagefull:LoadImage(BossRushConfig.instance:getBossRushLevelDetailFullBgSimage(var_27_1))
+	UISpriteSetMgr.instance:setCommonSprite(self._imageIssxIcon, issxIconName)
+	self._simagefull:LoadImage(BossRushConfig.instance:getBossRushLevelDetailFullBgSimage(stage))
 
-	local var_27_11 = BossRushModel.instance:getLayer4HightScore(var_27_1) == var_27_8
+	local special = BossRushModel.instance:getLayer4HightScore(stage) == highestPoint
+	local type = special and BossRushEnum.AssessType.Layer4 or BossRushEnum.AssessType.Normal
 
-	arg_27_0._assessIcon:setData(var_27_1, var_27_8, var_27_11)
+	self._assessIcon:setData(stage, highestPoint, type)
 
-	local var_27_12 = BossRushConfig.instance:getAssessSpriteName(var_27_1, var_27_8, var_27_11)
-	local var_27_13 = string.nilorempty(var_27_12)
+	local spriteName = BossRushConfig.instance:getAssessSpriteName(stage, highestPoint, type)
+	local isEmpty = string.nilorempty(spriteName)
 
-	gohelper.setActive(arg_27_0._vxreceive1, not var_27_13)
+	gohelper.setActive(self._vxreceive1, not isEmpty)
 
-	arg_27_0._txtTitle.text = ""
+	self._txtTitle.text = ""
 
-	if arg_27_0._scrollDescr then
-		arg_27_0._scrollDescr.verticalNormalizedPosition = 1
+	if self._scrollDescr then
+		self._scrollDescr.verticalNormalizedPosition = 1
 	end
 
-	arg_27_0._txtDescr.text = var_27_4.desc
+	self._txtDescr.text = layerCO.desc
 
-	ZProj.UGUIHelper.RebuildLayout(arg_27_0._txtDescr.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._txtDescr.transform)
 
-	arg_27_0._txtLvNum.text = var_27_4.recommendLevelDesc
+	self._txtLvNum.text = layerCO.recommendLevelDesc
 
-	arg_27_0._simageTitle:LoadImage(BossRushConfig.instance:getResultViewNameSImage(var_27_1))
+	self._simageTitle:LoadImage(BossRushConfig.instance:getResultViewNameSImage(stage))
 
-	arg_27_0._txtScoreTotalNum.text = var_27_6 == 0 and luaLang("v1a4_bossrushleveldetail_txt_scoretotalnum") or var_27_6
+	self._txtScoreTotalNum.text = battleMaxPoints == 0 and luaLang("v1a4_bossrushleveldetail_txt_scoretotalnum") or battleMaxPoints
 
-	if var_27_9 then
-		local var_27_14 = BossRushModel.instance:getDoubleTimesInfo(var_27_1)
-		local var_27_15 = {
-			var_27_14.cur,
-			var_27_14.max
+	if isInfinite then
+		local info = BossRushModel.instance:getDoubleTimesInfo(stage)
+		local tag = {
+			info.cur,
+			info.max
 		}
 
-		arg_27_0._txtDoubleTimes.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_bossrushleveldetail_txt_doubletimes"), var_27_15)
+		self._txtDoubleTimes.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_bossrushleveldetail_txt_doubletimes"), tag)
 	else
-		arg_27_0._txtDoubleTimes.text = ""
+		self._txtDoubleTimes.text = ""
 	end
 
-	local var_27_16 = BossRushModel.instance:isSpecialLayer(var_27_5)
+	local isSpecialLayer = BossRushModel.instance:isSpecialLayer(layer)
 
-	gohelper.setActive(arg_27_0._goLeftBGEndless, not var_27_16 and var_27_9)
-	gohelper.setActive(arg_27_0._goLeftBG, not var_27_16 and not var_27_9)
-	gohelper.setActive(arg_27_0._goRightBGEndless, not var_27_16 and var_27_9)
-	gohelper.setActive(arg_27_0._goRightBG, not var_27_16 and not var_27_9)
-	gohelper.setActive(arg_27_0._goRightBGLayer4, var_27_16)
-	arg_27_0:_doUpdateSelectIcon(var_27_10)
+	gohelper.setActive(self._goLeftBGEndless, not isSpecialLayer and isInfinite)
+	gohelper.setActive(self._goLeftBG, not isSpecialLayer and not isInfinite)
+	gohelper.setActive(self._goRightBGEndless, not isSpecialLayer and isInfinite)
+	gohelper.setActive(self._goRightBG, not isSpecialLayer and not isInfinite)
+	gohelper.setActive(self._goRightBGLayer4, isSpecialLayer)
+	self:_doUpdateSelectIcon(battleId)
 end
 
-function var_0_0._refreshTabs(arg_28_0, arg_28_1)
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0._tabList) do
-		iter_28_1:setSelect(false)
+function V1a4_BossRushLevelDetail:_refreshTabs(newUnlockStates)
+	for i, v in ipairs(self._tabList) do
+		v:setSelect(false)
 
-		local var_28_0 = arg_28_0._stageLayerInfos[iter_28_0]
+		local stageLayerInfo = self._stageLayerInfos[i]
 
-		if var_28_0 then
-			iter_28_1:setData(iter_28_0, var_28_0)
+		if stageLayerInfo then
+			v:setData(i, stageLayerInfo)
 
-			if arg_28_1 and arg_28_1[iter_28_0] then
-				iter_28_1:setIsLocked(true)
+			if newUnlockStates then
+				local isNewUnlock = newUnlockStates[i]
+
+				if isNewUnlock then
+					v:setIsLocked(true)
+				end
 			end
 		else
-			gohelper.setActive(iter_28_1.go, false)
+			gohelper.setActive(v.go, false)
 		end
 	end
 end
 
-function var_0_0._setSelect(arg_29_0, arg_29_1, arg_29_2)
-	if arg_29_0._selectedIndex == arg_29_1 then
+function V1a4_BossRushLevelDetail:_setSelect(index, isPlayAnim)
+	if self._selectedIndex == index then
 		return
 	end
 
-	local var_29_0 = arg_29_0._selectedIndex
+	local lastIndex = self._selectedIndex
 
-	if not arg_29_0:_isOpen(arg_29_1) then
+	if not self:_isOpen(index) then
 		GameFacade.showToast(ToastEnum.V1a4_BossRushLayerLockTip)
 
 		return
 	end
 
-	if arg_29_2 then
-		if arg_29_1 == var_0_1.Endless then
+	if isPlayAnim then
+		if index == TabEnum.Endless then
 			AudioMgr.instance:trigger(AudioEnum.ui_activity.play_ui_pkls_challenge_fail_bossrush)
-			arg_29_0._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToEndless)
-		elseif arg_29_1 == var_0_1.Hard then
-			arg_29_0._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToHard)
-		elseif arg_29_1 == var_0_1.Simple then
-			arg_29_0._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToNormal)
-		elseif arg_29_1 == var_0_1.Layer4 then
-			arg_29_0._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToLayer4)
+			self._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToEndless)
+		elseif index == TabEnum.Hard then
+			self._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToHard)
+		elseif index == TabEnum.Simple then
+			self._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToNormal)
+		elseif index == TabEnum.Layer4 then
+			self._animSelf:Play(BossRushEnum.AnimLevelDetail.SwitchToLayer4)
 		end
 	end
 
-	if var_29_0 then
-		local var_29_1 = arg_29_0._tabList[var_29_0]
+	if lastIndex then
+		local lastTab = self._tabList[lastIndex]
 
-		var_29_1:setSelect(false)
-		var_29_1:playIdle()
+		lastTab:setSelect(false)
+		lastTab:playIdle()
 	end
 
-	local var_29_2 = arg_29_0._tabList[arg_29_1]
+	local curTab = self._tabList[index]
 
-	var_29_2:setSelect(true)
+	curTab:setSelect(true)
 
-	arg_29_0._selectedIndex = arg_29_1
+	self._selectedIndex = index
 
-	if arg_29_2 then
-		var_29_2:plaAnim(var_0_4.Select, 0, 0)
+	if isPlayAnim then
+		curTab:plaAnim(EAnimBtn.Select, 0, 0)
 	else
-		arg_29_0:_checkOfferBtn()
+		self:_checkOfferBtn()
 	end
 
-	arg_29_0:_refreshContent()
+	self:_refreshContent()
 
-	local var_29_3, var_29_4 = arg_29_0:_getStageAndLayer()
+	local stage, layer = self:_getStageAndLayer()
 
-	BossRushModel.instance:setLastMarkSelectedLayer(var_29_3, var_29_4)
+	BossRushModel.instance:setLastMarkSelectedLayer(stage, layer)
 end
 
-function var_0_0._refreshMonster(arg_30_0)
-	local var_30_0 = arg_30_0:_getStage()
-	local var_30_1 = BossRushConfig.instance:getMonsterSkinIdList(var_30_0)
-	local var_30_2 = BossRushConfig.instance:getMonsterSkinScaleList(var_30_0)
-	local var_30_3 = BossRushConfig.instance:getMonsterSkinOffsetXYs(var_30_0)
+function V1a4_BossRushLevelDetail:_refreshMonster()
+	local stage = self:_getStage()
+	local skinIdList = BossRushConfig.instance:getMonsterSkinIdList(stage)
+	local skinScaleList = BossRushConfig.instance:getMonsterSkinScaleList(stage)
+	local skinOffsetXYs = BossRushConfig.instance:getMonsterSkinOffsetXYs(stage)
 
-	arg_30_0:_initMonsterSpines(#var_30_1)
+	self:_initMonsterSpines(#skinIdList)
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0._uiSpineList) do
-		local var_30_4 = var_30_1[iter_30_0]
-		local var_30_5 = var_30_2[iter_30_0]
-		local var_30_6 = var_30_3[iter_30_0]
+	for i, item in ipairs(self._uiSpineList) do
+		local skinId = skinIdList[i]
+		local scale = skinScaleList[i]
+		local offsetXY = skinOffsetXYs[i]
 
-		iter_30_1:setData(var_30_4)
-		iter_30_1:setScale(var_30_5)
-		iter_30_1:setOffsetXY(var_30_6[1], var_30_6[2])
+		item:setData(skinId)
+		item:setScale(scale)
+		item:setOffsetXY(offsetXY[1], offsetXY[2])
 	end
 end
 
-function var_0_0._initMonsterSpines(arg_31_0, arg_31_1)
-	local var_31_0 = V1a4_BossRushLevelDetail_Spine
+function V1a4_BossRushLevelDetail:_initMonsterSpines(skinCount)
+	local itemClass = V1a4_BossRushLevelDetail_Spine
 
-	if not arg_31_0._uiSpineList or arg_31_1 > #arg_31_0._uiSpineList then
-		arg_31_0._uiSpineList = arg_31_0._uiSpineList or {}
+	if not self._uiSpineList or skinCount > #self._uiSpineList then
+		self._uiSpineList = self._uiSpineList or {}
 
-		for iter_31_0 = #arg_31_0._uiSpineList + 1, arg_31_1 do
-			local var_31_1 = arg_31_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrushleveldetail_spine, arg_31_0._gospines, var_31_0.__name)
+		local st = #self._uiSpineList + 1
 
-			arg_31_0._uiSpineList[iter_31_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_31_1, var_31_0)
+		for i = st, skinCount do
+			local go = self.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrushleveldetail_spine, self._gospines, itemClass.__name)
+
+			self._uiSpineList[i] = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 		end
 	end
 end
 
-function var_0_0._refreshRedDot(arg_32_0)
-	local var_32_0 = arg_32_0:_getStage()
-	local var_32_1
-	local var_32_2
-	local var_32_3 = var_0_3.BossRushBossReward
-	local var_32_4 = BossRushRedModel.instance:getUId(var_32_3, var_32_0)
+function V1a4_BossRushLevelDetail:_refreshRedDot()
+	local stage = self:_getStage()
+	local defineId, uid
 
-	RedDotController.instance:addRedDot(arg_32_0._goRedPoint1, var_32_3, var_32_4)
+	defineId = EDotNode.BossRushBossReward
+	uid = BossRushRedModel.instance:getUId(defineId, stage)
+
+	RedDotController.instance:addRedDot(self._goRedPoint1, defineId, uid)
 end
 
-function var_0_0._getStage(arg_33_0)
-	return arg_33_0.viewParam.stage
+function V1a4_BossRushLevelDetail:_getStage()
+	return self.viewParam.stage
 end
 
-function var_0_0._getLayer(arg_34_0)
-	local var_34_0 = arg_34_0._selectedIndex
+function V1a4_BossRushLevelDetail:_getLayer()
+	local index = self._selectedIndex
+	local stageLayerInfo = self._stageLayerInfos[index or 1]
+	local layerCO = stageLayerInfo.layerCO
 
-	return arg_34_0._stageLayerInfos[var_34_0 or 1].layerCO.layer
+	return layerCO.layer
 end
 
-function var_0_0._getStageAndLayer(arg_35_0)
-	return arg_35_0:_getStage(), arg_35_0:_getLayer()
+function V1a4_BossRushLevelDetail:_getStageAndLayer()
+	return self:_getStage(), self:_getLayer()
 end
 
-function var_0_0._isOpen(arg_36_0, arg_36_1)
-	return arg_36_0._stageLayerInfos[arg_36_1].isOpen
+function V1a4_BossRushLevelDetail:_isOpen(eTabEnum)
+	local stageLayerInfo = self._stageLayerInfos[eTabEnum]
+
+	return stageLayerInfo.isOpen
 end
 
-function var_0_0._doUpdateSelectIcon(arg_37_0, arg_37_1)
-	arg_37_0.viewContainer:getBossRushViewRule():refreshUI(arg_37_1)
+function V1a4_BossRushLevelDetail:_doUpdateSelectIcon(battleId)
+	local ruleView = self.viewContainer:getBossRushViewRule()
+
+	ruleView:refreshUI(battleId)
 end
 
-function var_0_0._refreshGoBtn(arg_38_0, arg_38_1)
-	local var_38_0 = BossRushEnum.LayerRes.EnterLevelBtn
-	local var_38_1 = var_38_0[arg_38_1] or var_38_0[1]
+function V1a4_BossRushLevelDetail:_refreshGoBtn(layer)
+	local res = BossRushEnum.LayerRes.EnterLevelBtn
+	local btnRes = res[layer] or res[1]
 
-	UISpriteSetMgr.instance:setV1a4BossRushSprite(arg_38_0._gonormalbtn, var_38_1)
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(self._gonormalbtn, btnRes)
 
-	local var_38_2 = BossRushEnum.LayerRes.EnterLevelBtnTxtColor
-	local var_38_3 = var_38_2[arg_38_1] or var_38_2[1]
-	local var_38_4 = GameUtil.parseColor(var_38_3)
+	local color = BossRushEnum.LayerRes.EnterLevelBtnTxtColor
+	local colorHex = color[layer] or color[1]
+	local txtColor = GameUtil.parseColor(colorHex)
 
-	arg_38_0._txtGoCn.color = var_38_4
-	arg_38_0._txtGoEn.color = Color(var_38_4.r, var_38_4.g, var_38_4.b, 0.5)
+	self._txtGoCn.color = txtColor
+	self._txtGoEn.color = Color(txtColor.r, txtColor.g, txtColor.b, 0.5)
 end
 
-function var_0_0._onBtnGoEnter(arg_39_0)
-	arg_39_0:_refreshGoBtn(arg_39_0._selectedIndex)
-	arg_39_0:_checkOfferBtn()
+function V1a4_BossRushLevelDetail:_onBtnGoEnter()
+	self:_refreshGoBtn(self._selectedIndex)
+	self:_checkOfferBtn()
 end
 
-function var_0_0._checkOfferBtn(arg_40_0)
-	local var_40_0, var_40_1 = arg_40_0:_getStageAndLayer()
-	local var_40_2 = BossRushModel.instance:isEnhanceRole(var_40_0, var_40_1)
+function V1a4_BossRushLevelDetail:_checkOfferBtn()
+	local stage, layer = self:_getStageAndLayer()
+	local isEnhanceRole = BossRushModel.instance:isEnhanceRole(stage, layer)
 
-	gohelper.setActive(arg_40_0._btnoffer.gameObject, var_40_2)
+	gohelper.setActive(self._btnoffer.gameObject, isEnhanceRole)
 end
 
-return var_0_0
+return V1a4_BossRushLevelDetail

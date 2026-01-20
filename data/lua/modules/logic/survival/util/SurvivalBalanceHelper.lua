@@ -1,139 +1,143 @@
-﻿module("modules.logic.survival.util.SurvivalBalanceHelper", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalBalanceHelper.lua
 
-local var_0_0 = class("SurvivalBalanceHelper")
+module("modules.logic.survival.util.SurvivalBalanceHelper", package.seeall)
 
-var_0_0.BalanceColor = "#bfdaff"
-var_0_0.BalanceIconColor = "#81abe5"
+local SurvivalBalanceHelper = class("SurvivalBalanceHelper")
 
-local var_0_1
-local var_0_2
+SurvivalBalanceHelper.BalanceColor = "#bfdaff"
+SurvivalBalanceHelper.BalanceIconColor = "#81abe5"
 
-function var_0_0.getBalanceLv()
-	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
+local heroMaxLv, heroTalentMaxLv
 
-	if not var_1_0 then
+function SurvivalBalanceHelper.getBalanceLv()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	if not weekInfo then
 		return
 	end
 
-	local var_1_1 = var_1_0:getAttr(SurvivalEnum.AttrType.BalanceRoleLv)
-	local var_1_2 = var_1_0:getAttr(SurvivalEnum.AttrType.BalanceResonanceLv)
-	local var_1_3 = var_1_0:getAttr(SurvivalEnum.AttrType.BalanceEquipLv)
+	local roleLv = weekInfo:getAttr(SurvivalEnum.AttrType.BalanceRoleLv)
+	local talentLv = weekInfo:getAttr(SurvivalEnum.AttrType.BalanceResonanceLv)
+	local equipLv = weekInfo:getAttr(SurvivalEnum.AttrType.BalanceEquipLv)
 
-	if var_0_1 == nil then
-		var_0_1 = #lua_character_cosume.configDict
+	if heroMaxLv == nil then
+		heroMaxLv = #lua_character_cosume.configDict
 	end
 
-	if var_0_2 == nil then
-		var_0_2 = 1
+	if heroTalentMaxLv == nil then
+		heroTalentMaxLv = 1
 
-		for iter_1_0, iter_1_1 in pairs(lua_character_talent.configList) do
-			if iter_1_1.talentId > var_0_2 then
-				var_0_2 = iter_1_1.talentId
+		for _, co in pairs(lua_character_talent.configList) do
+			if co.talentId > heroTalentMaxLv then
+				heroTalentMaxLv = co.talentId
 			end
 		end
 	end
 
-	local var_1_4 = Mathf.Clamp(var_1_1, 1, var_0_1)
-	local var_1_5 = Mathf.Clamp(var_1_2, 1, var_0_2)
-	local var_1_6 = Mathf.Clamp(var_1_3, 1, EquipConfig.MaxLevel)
+	roleLv = Mathf.Clamp(roleLv, 1, heroMaxLv)
+	talentLv = Mathf.Clamp(talentLv, 1, heroTalentMaxLv)
+	equipLv = Mathf.Clamp(equipLv, 1, EquipConfig.MaxLevel)
 
-	return var_1_4, var_1_5, var_1_6
+	return roleLv, talentLv, equipLv
 end
 
-function var_0_0.getHeroBalanceLv(arg_2_0)
-	local var_2_0 = var_0_0.getBalanceLv()
+function SurvivalBalanceHelper.getHeroBalanceLv(heroId)
+	local balanceLv = SurvivalBalanceHelper.getBalanceLv()
 
-	if not var_2_0 then
+	if not balanceLv then
 		return 0
 	end
 
-	local var_2_1 = 0
-	local var_2_2 = SkillConfig.instance:getherolevelsCO(arg_2_0)
+	local heroMaxLv = 0
+	local levelCos = SkillConfig.instance:getherolevelsCO(heroId)
 
-	for iter_2_0 in pairs(var_2_2) do
-		if var_2_1 < iter_2_0 then
-			var_2_1 = iter_2_0
+	for level in pairs(levelCos) do
+		if heroMaxLv < level then
+			heroMaxLv = level
 		end
 	end
 
-	return (math.min(var_2_1, var_2_0))
+	balanceLv = math.min(heroMaxLv, balanceLv)
+
+	return balanceLv
 end
 
-function var_0_0.getHeroBalanceInfo(arg_3_0, arg_3_1)
-	local var_3_0 = SurvivalShelterModel.instance:getWeekInfo()
+function SurvivalBalanceHelper.getHeroBalanceInfo(heroId, heroMo)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	arg_3_1 = arg_3_1 or HeroModel.instance:getByHeroId(arg_3_0)
+	heroMo = heroMo or HeroModel.instance:getByHeroId(heroId)
 
-	if not arg_3_1 and var_3_0.inSurvival then
-		local var_3_1 = SurvivalMapModel.instance:getSceneMo().teamInfo
+	if not heroMo and weekInfo.inSurvival then
+		local teamInfo = SurvivalMapModel.instance:getSceneMo().teamInfo
 
-		if var_3_1.assistMO and var_3_1.assistMO.heroId == arg_3_0 then
-			arg_3_1 = var_3_1.assistMO.heroMO
+		if teamInfo.assistMO and teamInfo.assistMO.heroId == heroId then
+			heroMo = teamInfo.assistMO.heroMO
 		end
 	end
 
-	if not arg_3_1 then
+	if not heroMo then
 		return
 	end
 
-	local var_3_2, var_3_3, var_3_4 = var_0_0.getBalanceLv()
+	local balanceLv, balanceTalent, equipLv = SurvivalBalanceHelper.getBalanceLv()
 
-	if not var_3_2 then
+	if not balanceLv then
 		return
 	end
 
-	local var_3_5 = 0
-	local var_3_6 = SkillConfig.instance:getherolevelsCO(arg_3_0)
+	local heroMaxLv = 0
+	local levelCos = SkillConfig.instance:getherolevelsCO(heroId)
 
-	for iter_3_0 in pairs(var_3_6) do
-		if var_3_5 < iter_3_0 then
-			var_3_5 = iter_3_0
+	for level in pairs(levelCos) do
+		if heroMaxLv < level then
+			heroMaxLv = level
 		end
 	end
 
-	local var_3_7 = math.min(var_3_5, var_3_2)
-	local var_3_8 = math.max(arg_3_1.level, var_3_7)
-	local var_3_9, var_3_10 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_3_0, var_3_8)
-	local var_3_11 = 1
+	balanceLv = math.min(heroMaxLv, balanceLv)
+	balanceLv = math.max(heroMo.level, balanceLv)
 
-	for iter_3_1 = var_3_3, 1, -1 do
-		local var_3_12 = lua_character_talent.configDict[arg_3_0][iter_3_1]
+	local passiveLevel, rank = SkillConfig.instance:getHeroExSkillLevelByLevel(heroId, balanceLv)
+	local fixTalent = 1
 
-		if var_3_12 and var_3_10 >= var_3_12.requirement then
-			var_3_11 = iter_3_1
+	for talent = balanceTalent, 1, -1 do
+		local talentCo = lua_character_talent.configDict[heroId][talent]
+
+		if talentCo and rank >= talentCo.requirement then
+			fixTalent = talent
 
 			break
 		end
 	end
 
-	local var_3_13 = arg_3_1.talentCubeInfos
+	local talentCubeInfos = heroMo.talentCubeInfos
 
-	if (var_3_11 > arg_3_1.talent or arg_3_1.rank < CharacterEnum.TalentRank) and var_3_10 >= CharacterEnum.TalentRank then
-		local var_3_14 = {}
-		local var_3_15 = lua_character_talent.configDict[arg_3_0][var_3_11]
-		local var_3_16 = var_3_15.talentMould
-		local var_3_17 = string.splitToNumber(var_3_15.exclusive, "#")[1]
-		local var_3_18 = lua_talent_scheme.configDict[var_3_11][var_3_16][var_3_17].talenScheme
-		local var_3_19 = GameUtil.splitString2(var_3_18, true, "#", ",")
+	if (fixTalent > heroMo.talent or heroMo.rank < CharacterEnum.TalentRank) and rank >= CharacterEnum.TalentRank then
+		local infos = {}
+		local talentCO = lua_character_talent.configDict[heroId][fixTalent]
+		local talentMould = talentCO.talentMould
+		local starMould = string.splitToNumber(talentCO.exclusive, "#")[1]
+		local talenScheme = lua_talent_scheme.configDict[fixTalent][talentMould][starMould].talenScheme
+		local dict = GameUtil.splitString2(talenScheme, true, "#", ",")
 
-		for iter_3_2, iter_3_3 in ipairs(var_3_19) do
-			local var_3_20 = HeroDef_pb.TalentCubeInfo()
+		for k, v in ipairs(dict) do
+			local cubeInfo = HeroDef_pb.TalentCubeInfo()
 
-			var_3_20.cubeId = iter_3_3[1]
-			var_3_20.direction = iter_3_3[2] or 0
-			var_3_20.posX = iter_3_3[3] or 0
-			var_3_20.posY = iter_3_3[4] or 0
+			cubeInfo.cubeId = v[1]
+			cubeInfo.direction = v[2] or 0
+			cubeInfo.posX = v[3] or 0
+			cubeInfo.posY = v[4] or 0
 
-			table.insert(var_3_14, var_3_20)
+			table.insert(infos, cubeInfo)
 		end
 
-		var_3_13 = HeroTalentCubeInfosMO.New()
+		talentCubeInfos = HeroTalentCubeInfosMO.New()
 
-		var_3_13:init(var_3_14)
-		var_3_13:setOwnData(arg_3_0, var_3_11)
+		talentCubeInfos:init(infos)
+		talentCubeInfos:setOwnData(heroId, fixTalent)
 	end
 
-	return var_3_8, var_3_10, var_3_11, var_3_13, var_3_4
+	return balanceLv, rank, fixTalent, talentCubeInfos, equipLv
 end
 
-return var_0_0
+return SurvivalBalanceHelper

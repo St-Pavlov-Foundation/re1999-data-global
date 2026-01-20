@@ -1,27 +1,29 @@
-﻿module("modules.logic.battlepass.flow.BpOpenAndWaitCloseWork", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/flow/BpOpenAndWaitCloseWork.lua
 
-local var_0_0 = class("BpOpenAndWaitCloseWork", BaseWork)
+module("modules.logic.battlepass.flow.BpOpenAndWaitCloseWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._viewName = arg_1_1
+local BpOpenAndWaitCloseWork = class("BpOpenAndWaitCloseWork", BaseWork)
+
+function BpOpenAndWaitCloseWork:ctor(viewName)
+	self._viewName = viewName
 end
 
-function var_0_0.onStart(arg_2_0)
+function BpOpenAndWaitCloseWork:onStart()
 	UIBlockMgr.instance:endBlock("BpChargeFlow")
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-	ViewMgr.instance:openView(arg_2_0._viewName)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:openView(self._viewName)
 end
 
-function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 == arg_3_0._viewName then
+function BpOpenAndWaitCloseWork:_onCloseViewFinish(viewName)
+	if viewName == self._viewName then
 		UIBlockMgr.instance:startBlock("BpChargeFlow")
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
-		arg_3_0:onDone(true)
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
+function BpOpenAndWaitCloseWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return BpOpenAndWaitCloseWork

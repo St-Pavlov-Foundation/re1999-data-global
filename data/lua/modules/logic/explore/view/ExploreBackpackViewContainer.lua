@@ -1,15 +1,17 @@
-﻿module("modules.logic.explore.view.ExploreBackpackViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBackpackViewContainer.lua
 
-local var_0_0 = class("ExploreBackpackViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreBackpackViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreBackpackViewContainer = class("ExploreBackpackViewContainer", BaseViewContainer)
+
+function ExploreBackpackViewContainer:buildViews()
 	return {
 		ExploreBackpackView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function ExploreBackpackViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return ExploreBackpackViewContainer

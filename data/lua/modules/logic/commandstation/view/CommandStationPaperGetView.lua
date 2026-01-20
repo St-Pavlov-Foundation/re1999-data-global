@@ -1,21 +1,23 @@
-﻿module("modules.logic.commandstation.view.CommandStationPaperGetView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationPaperGetView.lua
 
-local var_0_0 = class("CommandStationPaperGetView", BaseView)
+module("modules.logic.commandstation.view.CommandStationPaperGetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageDisk = gohelper.findChildSingleImage(arg_1_0.viewGO, "image_Disk")
-	arg_1_0._txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "#txt_Descr")
+local CommandStationPaperGetView = class("CommandStationPaperGetView", BaseView)
+
+function CommandStationPaperGetView:onInitView()
+	self._imageDisk = gohelper.findChildSingleImage(self.viewGO, "image_Disk")
+	self._txtDesc = gohelper.findChildTextMesh(self.viewGO, "#txt_Descr")
 end
 
-function var_0_0.onClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function CommandStationPaperGetView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_3_0)
+function CommandStationPaperGetView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum3_0.CommandStationPaper.play_ui_tangren_fei)
-	arg_3_0._imageDisk:LoadImage(ResUrl.getCommandStationPaperIcon(arg_3_0.viewParam.paperCo.diskIcon))
+	self._imageDisk:LoadImage(ResUrl.getCommandStationPaperIcon(self.viewParam.paperCo.diskIcon))
 
-	arg_3_0._txtDesc.text = arg_3_0.viewParam.paperCo.diskText
+	self._txtDesc.text = self.viewParam.paperCo.diskText
 end
 
-return var_0_0
+return CommandStationPaperGetView

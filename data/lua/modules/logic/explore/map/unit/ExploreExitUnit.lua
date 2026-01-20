@@ -1,13 +1,15 @@
-﻿module("modules.logic.explore.map.unit.ExploreExitUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreExitUnit.lua
 
-local var_0_0 = class("ExploreExitUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreExitUnit", package.seeall)
 
-function var_0_0.canTrigger(arg_1_0)
-	if not arg_1_0.mo:isInteractActiveState() then
+local ExploreExitUnit = class("ExploreExitUnit", ExploreBaseDisplayUnit)
+
+function ExploreExitUnit:canTrigger()
+	if not self.mo:isInteractActiveState() then
 		return false
 	end
 
-	return var_0_0.super.canTrigger(arg_1_0)
+	return ExploreExitUnit.super.canTrigger(self)
 end
 
-return var_0_0
+return ExploreExitUnit

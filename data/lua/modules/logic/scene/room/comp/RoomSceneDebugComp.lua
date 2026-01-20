@@ -1,199 +1,208 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneDebugComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneDebugComp.lua
 
-local var_0_0 = class("RoomSceneDebugComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneDebugComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneDebugComp = class("RoomSceneDebugComp", BaseSceneComp)
+
+function RoomSceneDebugComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneDebugComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
 	if RoomController.instance:isDebugMode() then
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugConfirmPlaceBlock, arg_2_0._debugConfirmPlaceBlock, arg_2_0)
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugRotateBlock, arg_2_0._debugRotateBlock, arg_2_0)
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugRootOutBlock, arg_2_0._debugRootOutBlock, arg_2_0)
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugReplaceBlock, arg_2_0._debugReplaceBlock, arg_2_0)
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugSetPackage, arg_2_0._debugSetPackage, arg_2_0)
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugPlaceBuilding, arg_2_0._debugPlaceBuilding, arg_2_0)
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugRotateBuilding, arg_2_0._debugRotateBuilding, arg_2_0)
-		RoomDebugController.instance:registerCallback(RoomEvent.DebugRootOutBuilding, arg_2_0._debugRootOutBuilding, arg_2_0)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugConfirmPlaceBlock, self._debugConfirmPlaceBlock, self)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugRotateBlock, self._debugRotateBlock, self)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugRootOutBlock, self._debugRootOutBlock, self)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugReplaceBlock, self._debugReplaceBlock, self)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugSetPackage, self._debugSetPackage, self)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugPlaceBuilding, self._debugPlaceBuilding, self)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugRotateBuilding, self._debugRotateBuilding, self)
+		RoomDebugController.instance:registerCallback(RoomEvent.DebugRootOutBuilding, self._debugRootOutBuilding, self)
 	end
 
 	if isDebugBuild then
-		TaskDispatcher.runRepeat(arg_2_0._onFrame, arg_2_0, 0.01)
+		TaskDispatcher.runRepeat(self._onFrame, self, 0.01)
 	end
 end
 
-function var_0_0._onFrame(arg_3_0)
-	if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S) then
-		local var_3_0 = RoomMapBlockModel.instance:getConfirmBlockCount()
+function RoomSceneDebugComp:_onFrame()
+	local leftShift = UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift)
 
-		logNormal(string.format("一共放置了%d个地块", var_3_0))
+	if leftShift and UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.S) then
+		local count = RoomMapBlockModel.instance:getConfirmBlockCount()
+
+		logNormal(string.format("一共放置了%d个地块", count))
 	end
 end
 
-function var_0_0._debugConfirmPlaceBlock(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_0._scene.mapmgr:getBlockEntity(arg_4_3 and arg_4_3.id, SceneTag.RoomEmptyBlock)
+function RoomSceneDebugComp:_debugConfirmPlaceBlock(hexPoint, blockMO, emptyMO)
+	local curEntity = self._scene.mapmgr:getBlockEntity(emptyMO and emptyMO.id, SceneTag.RoomEmptyBlock)
 
-	if var_4_0 then
-		arg_4_0._scene.mapmgr:destroyBlock(var_4_0)
+	if curEntity then
+		self._scene.mapmgr:destroyBlock(curEntity)
 	end
 
-	local var_4_1 = arg_4_0._scene.mapmgr:spawnMapBlock(arg_4_2)
-	local var_4_2 = RoomBlockHelper.getNearBlockEntity(false, arg_4_1, 1, true)
+	local entity = self._scene.mapmgr:spawnMapBlock(blockMO)
+	local nearMapEntityList = RoomBlockHelper.getNearBlockEntity(false, hexPoint, 1, true)
 
-	RoomBlockHelper.refreshBlockEntity(var_4_2, "refreshBlock")
+	RoomBlockHelper.refreshBlockEntity(nearMapEntityList, "refreshBlock")
 
-	local var_4_3 = RoomBlockHelper.getNearBlockEntity(true, arg_4_1, 1, true)
+	local nearEmptyEntityList = RoomBlockHelper.getNearBlockEntity(true, hexPoint, 1, true)
 
-	RoomBlockHelper.refreshBlockEntity(var_4_3, "refreshWaveEffect")
+	RoomBlockHelper.refreshBlockEntity(nearEmptyEntityList, "refreshWaveEffect")
 
-	local var_4_4 = arg_4_2.hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
+	local hexPoint = blockMO.hexPoint
+	local neighbors = hexPoint:getInRanges(RoomBlockEnum.EmptyBlockDistanceStyleCount, true)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_4) do
-		local var_4_5 = RoomMapBlockModel.instance:getBlockMO(iter_4_1.x, iter_4_1.y)
+	for i, neighbor in ipairs(neighbors) do
+		local neighborMO = RoomMapBlockModel.instance:getBlockMO(neighbor.x, neighbor.y)
 
-		if var_4_5 and var_4_5.blockState == RoomBlockEnum.BlockState.Water and not arg_4_0._scene.mapmgr:getBlockEntity(var_4_5.id, SceneTag.RoomEmptyBlock) then
-			local var_4_6 = arg_4_0._scene.mapmgr:spawnMapBlock(var_4_5)
+		if neighborMO and neighborMO.blockState == RoomBlockEnum.BlockState.Water then
+			local entity = self._scene.mapmgr:getBlockEntity(neighborMO.id, SceneTag.RoomEmptyBlock)
+
+			entity = entity or self._scene.mapmgr:spawnMapBlock(neighborMO)
 		end
 	end
 end
 
-function var_0_0._debugRotateBlock(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0._scene.mapmgr:getBlockEntity(arg_5_2.id, SceneTag.RoomMapBlock)
+function RoomSceneDebugComp:_debugRotateBlock(hexPoint, blockMO)
+	local mapEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-	if var_5_0 then
-		var_5_0:refreshRotation()
-		var_5_0:refreshBlock()
+	if mapEntity then
+		mapEntity:refreshRotation()
+		mapEntity:refreshBlock()
 	end
 
-	local var_5_1 = RoomBlockHelper.getNearBlockEntity(false, arg_5_1, 1, true)
+	local nearMapEntityList = RoomBlockHelper.getNearBlockEntity(false, hexPoint, 1, true)
 
-	RoomBlockHelper.refreshBlockEntity(var_5_1, "refreshBlock")
+	RoomBlockHelper.refreshBlockEntity(nearMapEntityList, "refreshBlock")
 end
 
-function var_0_0._debugRootOutBlock(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = arg_6_0._scene.mapmgr:getBlockEntity(arg_6_2.id, SceneTag.RoomMapBlock)
+function RoomSceneDebugComp:_debugRootOutBlock(hexPoint, blockMO, emptyMOList)
+	local mapEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-	if var_6_0 then
-		arg_6_0._scene.mapmgr:destroyBlock(var_6_0)
+	if mapEntity then
+		self._scene.mapmgr:destroyBlock(mapEntity)
 	end
 
-	local var_6_1 = RoomMapBlockModel.instance:getBlockMO(arg_6_1.x, arg_6_1.y)
+	local emptyMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_6_1 and var_6_1.blockState == RoomBlockEnum.BlockState.Water and not arg_6_0._scene.mapmgr:getBlockEntity(var_6_1.id, SceneTag.RoomEmptyBlock) then
-		local var_6_2 = arg_6_0._scene.mapmgr:spawnMapBlock(var_6_1)
+	if emptyMO and emptyMO.blockState == RoomBlockEnum.BlockState.Water then
+		local entity = self._scene.mapmgr:getBlockEntity(emptyMO.id, SceneTag.RoomEmptyBlock)
+
+		entity = entity or self._scene.mapmgr:spawnMapBlock(emptyMO)
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_3) do
-		local var_6_3 = arg_6_0._scene.mapmgr:getBlockEntity(iter_6_1.id, SceneTag.RoomEmptyBlock)
+	for _, one in ipairs(emptyMOList) do
+		local entity = self._scene.mapmgr:getBlockEntity(one.id, SceneTag.RoomEmptyBlock)
 
-		if var_6_3 then
-			arg_6_0._scene.mapmgr:destroyBlock(var_6_3)
+		if entity then
+			self._scene.mapmgr:destroyBlock(entity)
 		end
 	end
 
-	local var_6_4 = RoomBlockHelper.getNearBlockEntity(false, arg_6_1, 1, true)
+	local nearMapEntityList = RoomBlockHelper.getNearBlockEntity(false, hexPoint, 1, true)
 
-	RoomBlockHelper.refreshBlockEntity(var_6_4, "refreshBlock")
+	RoomBlockHelper.refreshBlockEntity(nearMapEntityList, "refreshBlock")
 
-	local var_6_5 = RoomBlockHelper.getNearBlockEntity(true, arg_6_1, 1, true)
+	local nearEmptyEntityList = RoomBlockHelper.getNearBlockEntity(true, hexPoint, 1, true)
 
-	RoomBlockHelper.refreshBlockEntity(var_6_5, "refreshWaveEffect")
+	RoomBlockHelper.refreshBlockEntity(nearEmptyEntityList, "refreshWaveEffect")
 end
 
-function var_0_0._debugReplaceBlock(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._scene.mapmgr:getBlockEntity(arg_7_2.id, SceneTag.RoomMapBlock)
+function RoomSceneDebugComp:_debugReplaceBlock(hexPoint, blockMO)
+	local mapEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-	if var_7_0 then
-		var_7_0:refreshBlock()
+	if mapEntity then
+		mapEntity:refreshBlock()
 	end
 
-	local var_7_1 = RoomBlockHelper.getNearBlockEntity(false, arg_7_1, 1, true)
+	local nearMapEntityList = RoomBlockHelper.getNearBlockEntity(false, hexPoint, 1, true)
 
-	RoomBlockHelper.refreshBlockEntity(var_7_1, "refreshBlock")
+	RoomBlockHelper.refreshBlockEntity(nearMapEntityList, "refreshBlock")
 end
 
-function var_0_0._debugSetPackage(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_2 then
+function RoomSceneDebugComp:_debugSetPackage(hexPoint, blockMO)
+	if not blockMO then
 		return
 	end
 
-	local var_8_0 = arg_8_0._scene.mapmgr:getBlockEntity(arg_8_2.id, SceneTag.RoomMapBlock)
+	local mapEntity = self._scene.mapmgr:getBlockEntity(blockMO.id, SceneTag.RoomMapBlock)
 
-	if var_8_0 then
-		var_8_0:refreshPackage()
+	if mapEntity then
+		mapEntity:refreshPackage()
 	end
 
 	RoomDebugPackageListModel.instance:setDebugPackageList()
 end
 
-function var_0_0._debugPlaceBuilding(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0._scene.buildingmgr:spawnMapBuilding(arg_9_2)
-	local var_9_1 = RoomBlockHelper.getNearBlockEntityByBuilding(false, arg_9_2.buildingId, arg_9_2.hexPoint, arg_9_2.rotate)
+function RoomSceneDebugComp:_debugPlaceBuilding(hexPoint, buildingMO)
+	local entity = self._scene.buildingmgr:spawnMapBuilding(buildingMO)
+	local nearBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(false, buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
 
-	RoomBlockHelper.refreshBlockResourceType(var_9_1)
-	RoomBlockHelper.refreshBlockEntity(var_9_1, "refreshBlock")
+	RoomBlockHelper.refreshBlockResourceType(nearBlockEntityList)
+	RoomBlockHelper.refreshBlockEntity(nearBlockEntityList, "refreshBlock")
 
-	local var_9_2 = RoomBlockHelper.getNearBlockEntityByBuilding(true, arg_9_2.buildingId, arg_9_2.hexPoint, arg_9_2.rotate)
+	local nearEmptyBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(true, buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
 
-	RoomBlockHelper.refreshBlockEntity(var_9_2, "refreshWaveEffect")
+	RoomBlockHelper.refreshBlockEntity(nearEmptyBlockEntityList, "refreshWaveEffect")
 end
 
-function var_0_0._debugRotateBuilding(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_0._scene.buildingmgr:getBuildingEntity(arg_10_2.id, SceneTag.RoomBuilding)
+function RoomSceneDebugComp:_debugRotateBuilding(hexPoint, buildingMO, previousRotate)
+	local entity = self._scene.buildingmgr:getBuildingEntity(buildingMO.id, SceneTag.RoomBuilding)
 
-	if var_10_0 then
-		var_10_0:refreshRotation()
+	if entity then
+		entity:refreshRotation()
 	end
 
-	local var_10_1 = RoomBlockHelper.getNearBlockEntityByBuilding(false, arg_10_2.buildingId, arg_10_2.hexPoint, arg_10_3)
+	local previousNearBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(false, buildingMO.buildingId, buildingMO.hexPoint, previousRotate)
 
-	RoomBlockHelper.refreshBlockResourceType(var_10_1)
-	RoomBlockHelper.refreshBlockEntity(var_10_1, "refreshBlock")
+	RoomBlockHelper.refreshBlockResourceType(previousNearBlockEntityList)
+	RoomBlockHelper.refreshBlockEntity(previousNearBlockEntityList, "refreshBlock")
 
-	local var_10_2 = RoomBlockHelper.getNearBlockEntityByBuilding(true, arg_10_2.buildingId, arg_10_2.hexPoint, arg_10_3)
+	local previousNearEmptyBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(true, buildingMO.buildingId, buildingMO.hexPoint, previousRotate)
 
-	RoomBlockHelper.refreshBlockEntity(var_10_2, "refreshWaveEffect")
+	RoomBlockHelper.refreshBlockEntity(previousNearEmptyBlockEntityList, "refreshWaveEffect")
 
-	local var_10_3 = RoomBlockHelper.getNearBlockEntityByBuilding(false, arg_10_2.buildingId, arg_10_2.hexPoint, arg_10_2.rotate)
+	local nearBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(false, buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
 
-	RoomBlockHelper.refreshBlockResourceType(var_10_3)
-	RoomBlockHelper.refreshBlockEntity(var_10_3, "refreshBlock")
+	RoomBlockHelper.refreshBlockResourceType(nearBlockEntityList)
+	RoomBlockHelper.refreshBlockEntity(nearBlockEntityList, "refreshBlock")
 
-	local var_10_4 = RoomBlockHelper.getNearBlockEntityByBuilding(true, arg_10_2.buildingId, arg_10_2.hexPoint, arg_10_2.rotate)
+	local nearEmptyBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(true, buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
 
-	RoomBlockHelper.refreshBlockEntity(var_10_4, "refreshWaveEffect")
+	RoomBlockHelper.refreshBlockEntity(nearEmptyBlockEntityList, "refreshWaveEffect")
 end
 
-function var_0_0._debugRootOutBuilding(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0._scene.buildingmgr:getBuildingEntity(arg_11_2.id, SceneTag.RoomBuilding)
+function RoomSceneDebugComp:_debugRootOutBuilding(hexPoint, buildingMO)
+	local entity = self._scene.buildingmgr:getBuildingEntity(buildingMO.id, SceneTag.RoomBuilding)
 
-	if var_11_0 then
-		arg_11_0._scene.buildingmgr:destroyBuilding(var_11_0)
+	if entity then
+		self._scene.buildingmgr:destroyBuilding(entity)
 	end
 
-	local var_11_1 = RoomBlockHelper.getNearBlockEntityByBuilding(false, arg_11_2.buildingId, arg_11_2.hexPoint, arg_11_2.rotate)
+	local nearBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(false, buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
 
-	RoomBlockHelper.refreshBlockResourceType(var_11_1)
-	RoomBlockHelper.refreshBlockEntity(var_11_1, "refreshBlock")
+	RoomBlockHelper.refreshBlockResourceType(nearBlockEntityList)
+	RoomBlockHelper.refreshBlockEntity(nearBlockEntityList, "refreshBlock")
 
-	local var_11_2 = RoomBlockHelper.getNearBlockEntityByBuilding(true, arg_11_2.buildingId, arg_11_2.hexPoint, arg_11_2.rotate)
+	local nearEmptyBlockEntityList = RoomBlockHelper.getNearBlockEntityByBuilding(true, buildingMO.buildingId, buildingMO.hexPoint, buildingMO.rotate)
 
-	RoomBlockHelper.refreshBlockEntity(var_11_2, "refreshWaveEffect")
+	RoomBlockHelper.refreshBlockEntity(nearEmptyBlockEntityList, "refreshWaveEffect")
 end
 
-function var_0_0.onSceneClose(arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugConfirmPlaceBlock, arg_12_0._debugConfirmPlaceBlock, arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRotateBlock, arg_12_0._debugRotateBlock, arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRootOutBlock, arg_12_0._debugRootOutBlock, arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugReplaceBlock, arg_12_0._debugReplaceBlock, arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugSetPackage, arg_12_0._debugSetPackage, arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPlaceBuilding, arg_12_0._debugPlaceBuilding, arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRotateBuilding, arg_12_0._debugRotateBuilding, arg_12_0)
-	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRootOutBuilding, arg_12_0._debugRootOutBuilding, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onFrame, arg_12_0)
+function RoomSceneDebugComp:onSceneClose()
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugConfirmPlaceBlock, self._debugConfirmPlaceBlock, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRotateBlock, self._debugRotateBlock, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRootOutBlock, self._debugRootOutBlock, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugReplaceBlock, self._debugReplaceBlock, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugSetPackage, self._debugSetPackage, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugPlaceBuilding, self._debugPlaceBuilding, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRotateBuilding, self._debugRotateBuilding, self)
+	RoomDebugController.instance:unregisterCallback(RoomEvent.DebugRootOutBuilding, self._debugRootOutBuilding, self)
+	TaskDispatcher.cancelTask(self._onFrame, self)
 end
 
-return var_0_0
+return RoomSceneDebugComp

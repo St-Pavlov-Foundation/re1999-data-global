@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_5.act187.define.Activity187Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act187/define/Activity187Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_5.act187.define.Activity187Enum", package.seeall)
 
-var_0_0.ConstId = {
+local Activity187Enum = _M
+
+Activity187Enum.ConstId = {
 	MaxLanternCount = 1
 }
-var_0_0.PaintStatus = {
+Activity187Enum.PaintStatus = {
 	Ready = 1,
 	Finish = 3,
 	Painting = 2
 }
-var_0_0.BlockKey = {
+Activity187Enum.BlockKey = {
 	GetPaintingReward = "v2a5_lantern_festival_get_painting_reward_block",
 	GetAccrueReward = "v2a5_lantern_festival_get_accrue_reward_block",
 	SwitchView = "v2a5_lantern_festival_switch_view"
 }
-var_0_0.EmptyLantern = "v2a5_lanternfestival_lantern1"
+Activity187Enum.EmptyLantern = "v2a5_lanternfestival_lantern1"
 
-return var_0_0
+return Activity187Enum

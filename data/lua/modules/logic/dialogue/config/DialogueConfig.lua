@@ -1,12 +1,14 @@
-﻿module("modules.logic.dialogue.config.DialogueConfig", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/config/DialogueConfig.lua
 
-local var_0_0 = class("DialogueConfig", BaseConfig)
+module("modules.logic.dialogue.config.DialogueConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local DialogueConfig = class("DialogueConfig", BaseConfig)
+
+function DialogueConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function DialogueConfig:reqConfigNames()
 	return {
 		"dialog_group",
 		"dialog",
@@ -15,72 +17,72 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "dialog" then
-		arg_3_0.dialogueDict = arg_3_2
-	elseif arg_3_1 == "dialog_step" then
-		arg_3_0:initDialogueStepList(arg_3_2.configList)
-	elseif arg_3_1 == "dialogue_chess_info" then
-		arg_3_0:initChessInfo(arg_3_2.configList)
+function DialogueConfig:onConfigLoaded(configName, configTable)
+	if configName == "dialog" then
+		self.dialogueDict = configTable
+	elseif configName == "dialog_step" then
+		self:initDialogueStepList(configTable.configList)
+	elseif configName == "dialogue_chess_info" then
+		self:initChessInfo(configTable.configList)
 	end
 end
 
-function var_0_0.initDialogueStepList(arg_4_0, arg_4_1)
-	arg_4_0.dialogueGroup2StepList = {}
+function DialogueConfig:initDialogueStepList(stepList)
+	self.dialogueGroup2StepList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		local var_4_0 = arg_4_0.dialogueGroup2StepList[iter_4_1.groupId]
+	for _, stepCo in ipairs(stepList) do
+		local tempStepList = self.dialogueGroup2StepList[stepCo.groupId]
 
-		if not var_4_0 then
-			var_4_0 = {}
-			arg_4_0.dialogueGroup2StepList[iter_4_1.groupId] = var_4_0
+		if not tempStepList then
+			tempStepList = {}
+			self.dialogueGroup2StepList[stepCo.groupId] = tempStepList
 		end
 
-		table.insert(var_4_0, iter_4_1)
+		table.insert(tempStepList, stepCo)
 	end
 
-	for iter_4_2, iter_4_3 in pairs(arg_4_0.dialogueGroup2StepList) do
-		table.sort(iter_4_3, var_0_0.sortStepFunc)
+	for _, tempStepList in pairs(self.dialogueGroup2StepList) do
+		table.sort(tempStepList, DialogueConfig.sortStepFunc)
 	end
 end
 
-function var_0_0.sortStepFunc(arg_5_0, arg_5_1)
-	return arg_5_0.id < arg_5_1.id
+function DialogueConfig.sortStepFunc(stepCo1, stepCo2)
+	return stepCo1.id < stepCo2.id
 end
 
-function var_0_0.initChessInfo(arg_6_0, arg_6_1)
-	arg_6_0.dialogueId2ChessCoList = {}
+function DialogueConfig:initChessInfo(chessCoList)
+	self.dialogueId2ChessCoList = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		local var_6_0 = arg_6_0.dialogueId2ChessCoList[iter_6_1.dialogueId]
+	for _, chessCo in ipairs(chessCoList) do
+		local chessList = self.dialogueId2ChessCoList[chessCo.dialogueId]
 
-		if not var_6_0 then
-			var_6_0 = {}
-			arg_6_0.dialogueId2ChessCoList[iter_6_1.dialogueId] = var_6_0
+		if not chessList then
+			chessList = {}
+			self.dialogueId2ChessCoList[chessCo.dialogueId] = chessList
 		end
 
-		table.insert(var_6_0, iter_6_1)
+		table.insert(chessList, chessCo)
 	end
 end
 
-function var_0_0.getDialogueCo(arg_7_0, arg_7_1)
-	return arg_7_0.dialogueDict.configDict[arg_7_1]
+function DialogueConfig:getDialogueCo(dialogueId)
+	return self.dialogueDict.configDict[dialogueId]
 end
 
-function var_0_0.getDialogueStepList(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.dialogueGroup2StepList[arg_8_1]
+function DialogueConfig:getDialogueStepList(groupId)
+	local stepList = self.dialogueGroup2StepList[groupId]
 
-	if not var_8_0 then
-		logError("not found group step , group id : " .. tostring(arg_8_1))
+	if not stepList then
+		logError("not found group step , group id : " .. tostring(groupId))
 	end
 
-	return var_8_0
+	return stepList
 end
 
-function var_0_0.getChessCoList(arg_9_0, arg_9_1)
-	return arg_9_0.dialogueId2ChessCoList[arg_9_1]
+function DialogueConfig:getChessCoList(dialogueId)
+	return self.dialogueId2ChessCoList[dialogueId]
 end
 
-var_0_0.instance = var_0_0.New()
+DialogueConfig.instance = DialogueConfig.New()
 
-return var_0_0
+return DialogueConfig

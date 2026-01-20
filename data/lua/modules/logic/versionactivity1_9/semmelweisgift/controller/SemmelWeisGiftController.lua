@@ -1,51 +1,58 @@
-﻿module("modules.logic.versionactivity1_9.semmelweisgift.controller.SemmelWeisGiftController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/semmelweisgift/controller/SemmelWeisGiftController.lua
 
-local var_0_0 = class("SemmelWeisGiftController", BaseController)
+module("modules.logic.versionactivity1_9.semmelweisgift.controller.SemmelWeisGiftController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_1_0._checkActivityInfo, arg_1_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_1_0._checkActivityInfo, arg_1_0)
+local SemmelWeisGiftController = class("SemmelWeisGiftController", BaseController)
+
+function SemmelWeisGiftController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._checkActivityInfo, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._checkActivityInfo, self)
 end
 
-function var_0_0._checkActivityInfo(arg_2_0)
-	arg_2_0:getSemmelWeisGiftActivityInfo()
+function SemmelWeisGiftController:_checkActivityInfo()
+	self:getSemmelWeisGiftActivityInfo()
 end
 
-function var_0_0.getSemmelWeisGiftActivityInfo(arg_3_0, arg_3_1, arg_3_2)
-	if not SemmelWeisGiftModel.instance:isSemmelWeisGiftOpen() then
+function SemmelWeisGiftController:getSemmelWeisGiftActivityInfo(cb, cbObj)
+	local isOpen = SemmelWeisGiftModel.instance:isSemmelWeisGiftOpen()
+
+	if not isOpen then
 		return
 	end
 
-	local var_3_0 = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
+	local actId = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
 
-	Activity101Rpc.instance:sendGet101InfosRequest(var_3_0, arg_3_1, arg_3_2)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, cb, cbObj)
 end
 
-function var_0_0.openSemmelWeisGiftView(arg_4_0)
-	arg_4_0:getSemmelWeisGiftActivityInfo(arg_4_0._realOpenSemmelWeisGiftView, arg_4_0)
+function SemmelWeisGiftController:openSemmelWeisGiftView()
+	self:getSemmelWeisGiftActivityInfo(self._realOpenSemmelWeisGiftView, self)
 end
 
-function var_0_0._realOpenSemmelWeisGiftView(arg_5_0)
+function SemmelWeisGiftController:_realOpenSemmelWeisGiftView()
 	ViewMgr.instance:openView(ViewName.SemmelWeisGiftView)
 end
 
-function var_0_0.receiveSemmelWeisGift(arg_6_0, arg_6_1, arg_6_2)
-	if not SemmelWeisGiftModel.instance:isSemmelWeisGiftOpen() then
+function SemmelWeisGiftController:receiveSemmelWeisGift(cb, cbObj)
+	local isOpen = SemmelWeisGiftModel.instance:isSemmelWeisGiftOpen()
+
+	if not isOpen then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	local var_6_0 = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
-	local var_6_1 = SemmelWeisGiftModel.REWARD_INDEX
+	local actId = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
+	local index = SemmelWeisGiftModel.REWARD_INDEX
+	local canReceive = ActivityType101Model.instance:isType101RewardCouldGet(actId, index)
 
-	if ActivityType101Model.instance:isType101RewardCouldGet(var_6_0, var_6_1) then
-		Activity101Rpc.instance:sendGet101BonusRequest(var_6_0, var_6_1, arg_6_1, arg_6_2)
+	if canReceive then
+		Activity101Rpc.instance:sendGet101BonusRequest(actId, index, cb, cbObj)
 	else
 		GameFacade.showToast(ToastEnum.ActivityRewardHasReceive)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SemmelWeisGiftController.instance = SemmelWeisGiftController.New()
 
-return var_0_0
+return SemmelWeisGiftController

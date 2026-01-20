@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkSimplePolarizationLevel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSimplePolarizationLevel.lua
 
-local var_0_0 = class("FightWorkSimplePolarizationLevel", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkSimplePolarizationLevel", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendMsg(FightMsgId.RefreshSimplePolarizationLevel)
-	arg_1_0:onDone(true)
+local FightWorkSimplePolarizationLevel = class("FightWorkSimplePolarizationLevel", FightEffectBase)
+
+function FightWorkSimplePolarizationLevel:onStart()
+	self:com_sendMsg(FightMsgId.RefreshSimplePolarizationLevel)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkSimplePolarizationLevel

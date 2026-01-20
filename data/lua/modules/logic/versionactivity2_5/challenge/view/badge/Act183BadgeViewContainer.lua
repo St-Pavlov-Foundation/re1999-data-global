@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.badge.Act183BadgeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/badge/Act183BadgeViewContainer.lua
 
-local var_0_0 = class("Act183BadgeViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.challenge.view.badge.Act183BadgeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act183BadgeViewContainer = class("Act183BadgeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(var_1_0, Act183BadgeView.New())
+function Act183BadgeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(views, Act183BadgeView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Act183BadgeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Act183BadgeViewContainer

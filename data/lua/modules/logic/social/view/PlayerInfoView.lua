@@ -1,260 +1,267 @@
-﻿module("modules.logic.social.view.PlayerInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/social/view/PlayerInfoView.lua
 
-local var_0_0 = class("PlayerInfoView", BaseView)
+module("modules.logic.social.view.PlayerInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._transScroll = gohelper.findChild(arg_1_0.viewGO, "Scroll_view").transform
-	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/playerinfo/#go_playericon")
-	arg_1_0._goimagebg = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/bg/normal2")
-	arg_1_0._goskinbg = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/bg/actskin")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "Scroll_view/Viewport/Content/playerinfo/#txt_name")
-	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "Scroll_view/Viewport/Content/playerinfo/level/#txt_level")
-	arg_1_0._gobuttonscontainer = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/buttonscontainer")
-	arg_1_0._btnplayerview = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_playerview")
-	arg_1_0._btnaddfriend = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_addfriend")
-	arg_1_0._btnremovefriend = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_removefriend")
-	arg_1_0._btnroom = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_room")
-	arg_1_0._btnaddblacklist = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_addblacklist")
-	arg_1_0._btnremoveblacklist = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_removeblacklist")
-	arg_1_0._btninformplayer = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_informplayer")
-	arg_1_0._btnremark = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_remark")
-	arg_1_0._btnplayercard = gohelper.findChildButtonWithAudio(arg_1_0._gobuttonscontainer, "#btn_personalcard")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._hasSkin = false
+local PlayerInfoView = class("PlayerInfoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PlayerInfoView:onInitView()
+	self._transScroll = gohelper.findChild(self.viewGO, "Scroll_view").transform
+	self._goplayericon = gohelper.findChild(self.viewGO, "Scroll_view/Viewport/Content/playerinfo/#go_playericon")
+	self._goimagebg = gohelper.findChild(self.viewGO, "Scroll_view/Viewport/Content/bg/normal2")
+	self._goskinbg = gohelper.findChild(self.viewGO, "Scroll_view/Viewport/Content/bg/actskin")
+	self._txtname = gohelper.findChildText(self.viewGO, "Scroll_view/Viewport/Content/playerinfo/#txt_name")
+	self._txtlevel = gohelper.findChildText(self.viewGO, "Scroll_view/Viewport/Content/playerinfo/level/#txt_level")
+	self._gobuttonscontainer = gohelper.findChild(self.viewGO, "Scroll_view/Viewport/Content/buttonscontainer")
+	self._btnplayerview = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_playerview")
+	self._btnaddfriend = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_addfriend")
+	self._btnremovefriend = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_removefriend")
+	self._btnroom = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_room")
+	self._btnaddblacklist = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_addblacklist")
+	self._btnremoveblacklist = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_removeblacklist")
+	self._btninformplayer = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_informplayer")
+	self._btnremark = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_remark")
+	self._btnplayercard = gohelper.findChildButtonWithAudio(self._gobuttonscontainer, "#btn_personalcard")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._hasSkin = false
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnplayerview:AddClickListener(arg_2_0._btnplayerviewOnClick, arg_2_0)
-	arg_2_0._btnaddfriend:AddClickListener(arg_2_0._btnaddfriendOnClick, arg_2_0)
-	arg_2_0._btnremovefriend:AddClickListener(arg_2_0._btnremovefriendOnClick, arg_2_0)
-	arg_2_0._btnroom:AddClickListener(arg_2_0._btnroomOnClick, arg_2_0)
-	arg_2_0._btnaddblacklist:AddClickListener(arg_2_0._btnaddblacklistOnClick, arg_2_0)
-	arg_2_0._btnremoveblacklist:AddClickListener(arg_2_0._btnremoveblacklistOnClick, arg_2_0)
-	arg_2_0._btninformplayer:AddClickListener(arg_2_0._btninformplayerOnClick, arg_2_0)
-	arg_2_0._btnremark:AddClickListener(arg_2_0._btnremarkOnClick, arg_2_0)
-	arg_2_0._btnplayercard:AddClickListener(arg_2_0._btnplayercardOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function PlayerInfoView:addEvents()
+	self._btnplayerview:AddClickListener(self._btnplayerviewOnClick, self)
+	self._btnaddfriend:AddClickListener(self._btnaddfriendOnClick, self)
+	self._btnremovefriend:AddClickListener(self._btnremovefriendOnClick, self)
+	self._btnroom:AddClickListener(self._btnroomOnClick, self)
+	self._btnaddblacklist:AddClickListener(self._btnaddblacklistOnClick, self)
+	self._btnremoveblacklist:AddClickListener(self._btnremoveblacklistOnClick, self)
+	self._btninformplayer:AddClickListener(self._btninformplayerOnClick, self)
+	self._btnremark:AddClickListener(self._btnremarkOnClick, self)
+	self._btnplayercard:AddClickListener(self._btnplayercardOnClick, self)
+	self._btnclose:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnplayerview:RemoveClickListener()
-	arg_3_0._btnaddfriend:RemoveClickListener()
-	arg_3_0._btnremovefriend:RemoveClickListener()
-	arg_3_0._btnroom:RemoveClickListener()
-	arg_3_0._btnaddblacklist:RemoveClickListener()
-	arg_3_0._btnremoveblacklist:RemoveClickListener()
-	arg_3_0._btninformplayer:RemoveClickListener()
-	arg_3_0._btnremark:RemoveClickListener()
-	arg_3_0._btnplayercard:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function PlayerInfoView:removeEvents()
+	self._btnplayerview:RemoveClickListener()
+	self._btnaddfriend:RemoveClickListener()
+	self._btnremovefriend:RemoveClickListener()
+	self._btnroom:RemoveClickListener()
+	self._btnaddblacklist:RemoveClickListener()
+	self._btnremoveblacklist:RemoveClickListener()
+	self._btninformplayer:RemoveClickListener()
+	self._btnremark:RemoveClickListener()
+	self._btnplayercard:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btnplayercardOnClick(arg_4_0)
-	if not arg_4_0._mo then
+function PlayerInfoView:_btnplayercardOnClick()
+	if not self._mo then
 		return
 	end
 
 	PlayerCardController.instance:openPlayerCardView({
-		userId = arg_4_0._mo.userId
+		userId = self._mo.userId
 	})
 end
 
-function var_0_0._btninformplayerOnClick(arg_5_0)
-	SocialController.instance:openInformPlayerTipView(arg_5_0._mo)
+function PlayerInfoView:_btninformplayerOnClick()
+	SocialController.instance:openInformPlayerTipView(self._mo)
 end
 
-function var_0_0._btnremarkOnClick(arg_6_0)
-	ViewMgr.instance:openView(ViewName.SocialRemarkTipView, arg_6_0._mo)
-	arg_6_0:closeThis()
+function PlayerInfoView:_btnremarkOnClick()
+	ViewMgr.instance:openView(ViewName.SocialRemarkTipView, self._mo)
+	self:closeThis()
 end
 
-function var_0_0._btnplayerviewOnClick(arg_7_0)
-	if PlayerModel.instance:getMyUserId() == arg_7_0._mo.userId then
-		local var_7_0 = PlayerModel.instance:getPlayinfo()
+function PlayerInfoView:_btnplayerviewOnClick()
+	local myUserId = PlayerModel.instance:getMyUserId()
+	local playerSelf = myUserId == self._mo.userId
 
-		arg_7_0:closeThis()
-		PlayerController.instance:openPlayerView(var_7_0, true)
+	if playerSelf then
+		local playerInfo = PlayerModel.instance:getPlayinfo()
+
+		self:closeThis()
+		PlayerController.instance:openPlayerView(playerInfo, true)
 	else
-		PlayerRpc.instance:sendGetOtherPlayerInfoRequest(arg_7_0._mo.userId, arg_7_0._getPlayerInfo, arg_7_0)
+		PlayerRpc.instance:sendGetOtherPlayerInfoRequest(self._mo.userId, self._getPlayerInfo, self)
 	end
 end
 
-function var_0_0._btnaddfriendOnClick(arg_8_0)
-	SocialController.instance:AddFriend(arg_8_0._mo.userId)
-	arg_8_0:closeThis()
+function PlayerInfoView:_btnaddfriendOnClick()
+	SocialController.instance:AddFriend(self._mo.userId)
+	self:closeThis()
 end
 
-function var_0_0._btnremovefriendOnClick(arg_9_0)
-	local var_9_0 = arg_9_0._mo.userId
+function PlayerInfoView:_btnremovefriendOnClick()
+	local userId = self._mo.userId
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.FriendRemoveTip, MsgBoxEnum.BoxType.Yes_No, function()
-		FriendRpc.instance:sendRemoveFriendRequest(var_9_0)
+		FriendRpc.instance:sendRemoveFriendRequest(userId)
 	end)
-	arg_9_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnroomOnClick(arg_11_0)
-	local var_11_0 = {
-		userId = arg_11_0._mo.userId
+function PlayerInfoView:_btnroomOnClick()
+	local visitParam = {
+		userId = self._mo.userId
 	}
 
-	RoomController.instance:enterRoom(RoomEnum.GameMode.Visit, nil, nil, var_11_0, nil, nil, true)
+	RoomController.instance:enterRoom(RoomEnum.GameMode.Visit, nil, nil, visitParam, nil, nil, true)
 end
 
-function var_0_0._btnaddblacklistOnClick(arg_12_0)
-	local var_12_0 = arg_12_0._mo.userId
+function PlayerInfoView:_btnaddblacklistOnClick()
+	local userId = self._mo.userId
 
 	GameFacade.showMessageBox(MessageBoxIdDefine.AddBlackTip, MsgBoxEnum.BoxType.Yes_No, function()
-		FriendRpc.instance:sendAddBlacklistRequest(var_12_0)
+		FriendRpc.instance:sendAddBlacklistRequest(userId)
 	end)
-	arg_12_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnremoveblacklistOnClick(arg_14_0)
-	FriendRpc.instance:sendRemoveBlacklistRequest(arg_14_0._mo.userId)
-	arg_14_0:closeThis()
+function PlayerInfoView:_btnremoveblacklistOnClick()
+	FriendRpc.instance:sendRemoveBlacklistRequest(self._mo.userId)
+	self:closeThis()
 end
 
-function var_0_0._getPlayerInfo(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if arg_15_2 == 0 and arg_15_3 and arg_15_3.playerInfo then
-		arg_15_0:closeThis()
-		PlayerController.instance:openPlayerView(arg_15_3.playerInfo, false, arg_15_3.heroCover)
+function PlayerInfoView:_getPlayerInfo(cmd, resultCode, msg)
+	if resultCode == 0 and msg and msg.playerInfo then
+		self:closeThis()
+		PlayerController.instance:openPlayerView(msg.playerInfo, false, msg.heroCover)
 	end
 end
 
-function var_0_0._editableInitView(arg_16_0)
-	arg_16_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_16_0._goplayericon)
+function PlayerInfoView:_editableInitView()
+	self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goplayericon)
 
-	arg_16_0._playericon:setEnableClick(false)
+	self._playericon:setEnableClick(false)
 
-	arg_16_0._parentWidth = recthelper.getWidth(arg_16_0.viewGO.transform.parent)
-	arg_16_0._parentHeight = recthelper.getHeight(arg_16_0.viewGO.transform.parent)
+	self._parentWidth = recthelper.getWidth(self.viewGO.transform.parent)
+	self._parentHeight = recthelper.getHeight(self.viewGO.transform.parent)
 end
 
-function var_0_0._refreshUI(arg_17_0)
-	if not arg_17_0._mo.bg or arg_17_0._mo.bg == 0 then
-		arg_17_0._hasSkin = false
+function PlayerInfoView:_refreshUI()
+	if not self._mo.bg or self._mo.bg == 0 then
+		self._hasSkin = false
 	else
-		arg_17_0._hasSkin = true
-		arg_17_0._skinPath = string.format("ui/viewres/social/playerinfoview_bg_%s.prefab", arg_17_0._mo.bg)
-		arg_17_0._loader = MultiAbLoader.New()
+		self._hasSkin = true
+		self._skinPath = string.format("ui/viewres/social/playerinfoview_bg_%s.prefab", self._mo.bg)
+		self._loader = MultiAbLoader.New()
 
-		arg_17_0._loader:addPath(arg_17_0._skinPath)
-		arg_17_0._loader:startLoad(arg_17_0._onLoadFinish, arg_17_0)
+		self._loader:addPath(self._skinPath)
+		self._loader:startLoad(self._onLoadFinish, self)
 	end
 
-	gohelper.setActive(arg_17_0._goimagebg, not arg_17_0._hasSkin)
-	gohelper.setActive(arg_17_0._goskinbg, arg_17_0._hasSkin)
-	arg_17_0._playericon:onUpdateMO(arg_17_0._mo)
-	arg_17_0._playericon:setShowLevel(false)
+	gohelper.setActive(self._goimagebg, not self._hasSkin)
+	gohelper.setActive(self._goskinbg, self._hasSkin)
+	self._playericon:onUpdateMO(self._mo)
+	self._playericon:setShowLevel(false)
 
-	local var_17_0 = arg_17_0._mo.name
+	local name = self._mo.name
 
-	if not string.nilorempty(arg_17_0._mo.desc) then
-		if arg_17_0._isSelectInFriend then
-			var_17_0 = "<color=#c66030>" .. var_17_0 .. "<color=#6d6c6b>(" .. arg_17_0._mo.desc .. ")"
+	if not string.nilorempty(self._mo.desc) then
+		if self._isSelectInFriend then
+			name = "<color=#c66030>" .. name .. "<color=#6d6c6b>(" .. self._mo.desc .. ")"
 		else
-			var_17_0 = var_17_0 .. "<color=#6d6c6b>(" .. arg_17_0._mo.desc .. ")"
+			name = name .. "<color=#6d6c6b>(" .. self._mo.desc .. ")"
 		end
-	elseif arg_17_0._isSelectInFriend then
-		var_17_0 = "<color=#c66030>" .. var_17_0
+	elseif self._isSelectInFriend then
+		name = "<color=#c66030>" .. name
 	end
 
-	arg_17_0._txtname.text = var_17_0
-	arg_17_0._txtlevel.text = arg_17_0._mo.level
+	self._txtname.text = name
+	self._txtlevel.text = self._mo.level
 
-	local var_17_1 = PlayerModel.instance:getMyUserId() == arg_17_0._mo.userId
-	local var_17_2 = SocialModel.instance:isMyFriendByUserId(arg_17_0._mo.userId)
-	local var_17_3 = SocialModel.instance:isMyBlackListByUserId(arg_17_0._mo.userId)
+	local myUserId = PlayerModel.instance:getMyUserId()
+	local isPlayerSelf = myUserId == self._mo.userId
+	local isFriend = SocialModel.instance:isMyFriendByUserId(self._mo.userId)
+	local isBlackList = SocialModel.instance:isMyBlackListByUserId(self._mo.userId)
 
-	gohelper.setActive(arg_17_0._btnaddfriend.gameObject, not var_17_2)
-	gohelper.setActive(arg_17_0._btnremovefriend.gameObject, var_17_2)
-	gohelper.setActive(arg_17_0._btnremark.gameObject, var_17_2)
-	gohelper.setActive(arg_17_0._btnaddblacklist.gameObject, not var_17_3 and not var_17_1)
-	gohelper.setActive(arg_17_0._btnremoveblacklist.gameObject, var_17_3 and not var_17_1)
-	gohelper.setActive(arg_17_0._btnroom.gameObject, true)
+	gohelper.setActive(self._btnaddfriend.gameObject, not isFriend)
+	gohelper.setActive(self._btnremovefriend.gameObject, isFriend)
+	gohelper.setActive(self._btnremark.gameObject, isFriend)
+	gohelper.setActive(self._btnaddblacklist.gameObject, not isBlackList and not isPlayerSelf)
+	gohelper.setActive(self._btnremoveblacklist.gameObject, isBlackList and not isPlayerSelf)
+	gohelper.setActive(self._btnroom.gameObject, true)
 end
 
-function var_0_0._onLoadFinish(arg_18_0)
-	local var_18_0 = arg_18_0._loader:getAssetItem(arg_18_0._skinPath):GetResource(arg_18_0._skinPath)
+function PlayerInfoView:_onLoadFinish()
+	local assetItem = self._loader:getAssetItem(self._skinPath)
+	local viewPrefab = assetItem:GetResource(self._skinPath)
 
-	arg_18_0._goskinEffect = gohelper.clone(var_18_0, arg_18_0._goskinbg)
+	self._goskinEffect = gohelper.clone(viewPrefab, self._goskinbg)
 end
 
-function var_0_0.onOpen(arg_19_0)
-	arg_19_0._mo = arg_19_0.viewParam.mo
-	arg_19_0._worldPos = arg_19_0.viewParam.worldPos
+function PlayerInfoView:onOpen()
+	self._mo = self.viewParam.mo
+	self._worldPos = self.viewParam.worldPos
 
-	if arg_19_0.viewParam.isSelectInFriend then
-		arg_19_0._isSelectInFriend = arg_19_0.viewParam.isSelectInFriend
+	if self.viewParam.isSelectInFriend then
+		self._isSelectInFriend = self.viewParam.isSelectInFriend
 	end
 
-	arg_19_0:_refreshUI()
-	arg_19_0:_refreshPos()
+	self:_refreshUI()
+	self:_refreshPos()
 end
 
-function var_0_0.onClose(arg_20_0)
+function PlayerInfoView:onClose()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_21_0)
-	arg_21_0._mo = arg_21_0.viewParam.mo
-	arg_21_0._worldPos = arg_21_0.viewParam.worldPos
+function PlayerInfoView:onUpdateParam()
+	self._mo = self.viewParam.mo
+	self._worldPos = self.viewParam.worldPos
 
-	if arg_21_0.viewParam.isSelectInFriend then
-		arg_21_0._isSelectInFriend = arg_21_0.viewParam.isSelectInFriend
+	if self.viewParam.isSelectInFriend then
+		self._isSelectInFriend = self.viewParam.isSelectInFriend
 	end
 
-	arg_21_0:_refreshUI()
-	arg_21_0:_refreshPos()
+	self:_refreshUI()
+	self:_refreshPos()
 end
 
-function var_0_0._refreshPos(arg_22_0)
-	arg_22_0._viewWidth = recthelper.getWidth(arg_22_0._transScroll)
-	arg_22_0._viewHeight = recthelper.getHeight(arg_22_0._transScroll)
+function PlayerInfoView:_refreshPos()
+	self._viewWidth = recthelper.getWidth(self._transScroll)
+	self._viewHeight = recthelper.getHeight(self._transScroll)
 
-	local var_22_0 = 326
-	local var_22_1 = arg_22_0._viewHeight / 2 - 140
-	local var_22_2 = recthelper.rectToRelativeAnchorPos(arg_22_0._worldPos, arg_22_0.viewGO.transform.parent)
+	local offsetX = 326
+	local offsetY = self._viewHeight / 2 - 140
+	local anchorPos = recthelper.rectToRelativeAnchorPos(self._worldPos, self.viewGO.transform.parent)
 
-	for iter_22_0 = -1, 1, 2 do
-		for iter_22_1 = -1, 1, 2 do
-			local var_22_3 = var_22_2.x + var_22_0 * iter_22_0
-			local var_22_4 = var_22_2.y + var_22_1 * iter_22_1
-			local var_22_5, var_22_6 = arg_22_0:_isOverScreen(var_22_3, var_22_4)
+	for i = -1, 1, 2 do
+		for j = -1, 1, 2 do
+			local anchorPosX = anchorPos.x + offsetX * i
+			local anchorPosY = anchorPos.y + offsetY * j
+			local isOver, isYOver = self:_isOverScreen(anchorPosX, anchorPosY)
 
-			if var_22_5 and var_22_6 then
-				var_22_5 = false
-				var_22_4 = arg_22_0._viewHeight / 2 - arg_22_0._parentHeight / 2 + 30
+			if isOver and isYOver then
+				isOver = false
+				anchorPosY = self._viewHeight / 2 - self._parentHeight / 2 + 30
 			end
 
-			if not var_22_5 then
-				recthelper.setAnchor(arg_22_0.viewGO.transform, var_22_3, var_22_4)
+			if not isOver then
+				recthelper.setAnchor(self.viewGO.transform, anchorPosX, anchorPosY)
 
 				return
 			end
 		end
 	end
 
-	recthelper.setAnchor(arg_22_0.viewGO.transform, 0, 0)
+	recthelper.setAnchor(self.viewGO.transform, 0, 0)
 end
 
-function var_0_0._isOverScreen(arg_23_0, arg_23_1, arg_23_2)
-	if math.abs(arg_23_1) * 2 >= arg_23_0._parentWidth - arg_23_0._viewWidth then
+function PlayerInfoView:_isOverScreen(anchorPosX, anchorPosY)
+	if math.abs(anchorPosX) * 2 >= self._parentWidth - self._viewWidth then
 		return true
-	elseif math.abs(arg_23_2) * 2 >= arg_23_0._parentHeight - arg_23_0._viewHeight then
+	elseif math.abs(anchorPosY) * 2 >= self._parentHeight - self._viewHeight then
 		return true, true
 	end
 
 	return false
 end
 
-function var_0_0.onDestroyView(arg_24_0)
+function PlayerInfoView:onDestroyView()
 	return
 end
 
-return var_0_0
+return PlayerInfoView

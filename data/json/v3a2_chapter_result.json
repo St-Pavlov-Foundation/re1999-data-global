@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "language_10104311",
+    "res": "v3a2_dungeonpanel_pic4",
+    "desc": "language_10104312",
+    "option": 1
+  },
+  {
+    "id": 2,
+    "title": "language_10104313",
+    "res": "v3a2_dungeonpanel_pic3",
+    "desc": "language_10104314",
+    "option": 2
+  },
+  {
+    "id": 3,
+    "title": "language_10104315",
+    "res": "v3a2_dungeonpanel_pic2",
+    "desc": "language_10104316",
+    "option": 3
+  },
+  {
+    "id": 4,
+    "title": "language_10104317",
+    "res": "v3a2_dungeonpanel_pic1",
+    "desc": "language_10104318",
+    "option": 4
+  }
+]

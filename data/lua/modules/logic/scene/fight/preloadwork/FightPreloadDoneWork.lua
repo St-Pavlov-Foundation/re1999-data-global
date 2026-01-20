@@ -1,10 +1,14 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadDoneWork.lua
 
-local var_0_0 = class("FightPreloadDoneWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadDoneWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	GameSceneMgr.instance:getScene(SceneType.Fight).preloader:dispatchEvent(FightSceneEvent.OnPreloadFinish)
-	arg_1_0:onDone(true)
+local FightPreloadDoneWork = class("FightPreloadDoneWork", BaseWork)
+
+function FightPreloadDoneWork:onStart(context)
+	local scene = GameSceneMgr.instance:getScene(SceneType.Fight)
+
+	scene.preloader:dispatchEvent(FightSceneEvent.OnPreloadFinish)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightPreloadDoneWork

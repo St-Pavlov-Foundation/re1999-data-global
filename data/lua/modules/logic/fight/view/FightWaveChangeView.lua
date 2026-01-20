@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.view.FightWaveChangeView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightWaveChangeView.lua
 
-local var_0_0 = class("FightWaveChangeView", BaseView)
+module("modules.logic.fight.view.FightWaveChangeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local FightWaveChangeView = class("FightWaveChangeView", BaseView)
+
+function FightWaveChangeView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightWaveChangeView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightWaveChangeView:removeEvents()
 	return
 end
 
-function var_0_0._btnskipOnClick(arg_4_0)
+function FightWaveChangeView:_btnskipOnClick()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
+function FightWaveChangeView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_6_0)
+function FightWaveChangeView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_7_0)
+function FightWaveChangeView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightWaveChangeView

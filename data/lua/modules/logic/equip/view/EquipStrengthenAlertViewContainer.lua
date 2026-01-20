@@ -1,11 +1,13 @@
-﻿module("modules.logic.equip.view.EquipStrengthenAlertViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipStrengthenAlertViewContainer.lua
 
-local var_0_0 = class("EquipStrengthenAlertViewContainer", BaseViewContainer)
+module("modules.logic.equip.view.EquipStrengthenAlertViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local EquipStrengthenAlertViewContainer = class("EquipStrengthenAlertViewContainer", BaseViewContainer)
+
+function EquipStrengthenAlertViewContainer:buildViews()
 	return {
 		EquipStrengthenAlertView.New()
 	}
 end
 
-return var_0_0
+return EquipStrengthenAlertViewContainer

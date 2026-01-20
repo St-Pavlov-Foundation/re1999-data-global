@@ -1,50 +1,54 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerEpisodeFinishAndInMainScene", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerEpisodeFinishAndInMainScene.lua
 
-local var_0_0 = class("GuideTriggerEpisodeFinishAndInMainScene", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerEpisodeFinishAndInMainScene", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, arg_1_0._checkStartGuide, arg_1_0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, arg_1_0._checkStartGuide, arg_1_0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_1_0._checkStartGuide, arg_1_0)
-	PatFaceController.instance:registerCallback(PatFaceEvent.FinishAllPatFace, arg_1_0._checkStartGuide, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenViewFinish, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+local GuideTriggerEpisodeFinishAndInMainScene = class("GuideTriggerEpisodeFinishAndInMainScene", BaseGuideTrigger)
+
+function GuideTriggerEpisodeFinishAndInMainScene:ctor(triggerKey)
+	GuideTriggerEpisodeFinishAndInMainScene.super.ctor(self, triggerKey)
+	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, self._checkStartGuide, self)
+	StoryController.instance:registerCallback(StoryEvent.Finish, self._checkStartGuide, self)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, self._checkStartGuide, self)
+	PatFaceController.instance:registerCallback(PatFaceEvent.FinishAllPatFace, self._checkStartGuide, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = tonumber(arg_2_2)
-	local var_2_1 = OpenConfig.instance:getOpenCo(var_2_0)
-	local var_2_2 = var_2_1 and var_2_1.episodeId or var_2_0
-	local var_2_3 = DungeonModel.instance:getEpisodeInfo(var_2_2)
-	local var_2_4 = DungeonConfig.instance:getEpisodeCO(var_2_2)
+function GuideTriggerEpisodeFinishAndInMainScene:assertGuideSatisfy(param, configParam)
+	local configId = tonumber(configParam)
+	local openCO = OpenConfig.instance:getOpenCo(configId)
+	local configEpisodeId = openCO and openCO.episodeId or configId
+	local episodeMO = DungeonModel.instance:getEpisodeInfo(configEpisodeId)
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(configEpisodeId)
 
-	if var_2_4 and var_2_3 and var_2_3.star > DungeonEnum.StarType.None then
-		if not (var_2_4.afterStory <= 0 or var_2_4.afterStory > 0 and StoryModel.instance:isStoryFinished(var_2_4.afterStory)) then
+	if episodeCO and episodeMO and episodeMO.star > DungeonEnum.StarType.None then
+		local hasFinishEpisode = episodeCO.afterStory <= 0 or episodeCO.afterStory > 0 and StoryModel.instance:isStoryFinished(episodeCO.afterStory)
+
+		if not hasFinishEpisode then
 			return false
 		end
 	else
 		return false
 	end
 
-	local var_2_5 = GameSceneMgr.instance:getCurSceneType() == SceneType.Main
-	local var_2_6 = GameSceneMgr.instance:isLoading()
-	local var_2_7 = GameSceneMgr.instance:isClosing()
-	local var_2_8 = PatFaceModel.instance:getIsPatting()
+	local inMainScene = GameSceneMgr.instance:getCurSceneType() == SceneType.Main
+	local isLoading = GameSceneMgr.instance:isLoading()
+	local isClosing = GameSceneMgr.instance:isClosing()
+	local isPatting = PatFaceModel.instance:getIsPatting()
 
-	if var_2_5 and not var_2_6 and not var_2_7 and not var_2_8 then
-		local var_2_9 = false
-		local var_2_10 = ViewMgr.instance:getOpenViewNameList()
+	if inMainScene and not isLoading and not isClosing and not isPatting then
+		local hasOpenAnyView = false
+		local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_10) do
-			if ViewMgr.instance:isModal(iter_2_1) or ViewMgr.instance:isFull(iter_2_1) then
-				var_2_9 = true
+		for _, viewName in ipairs(openViewNameList) do
+			if ViewMgr.instance:isModal(viewName) or ViewMgr.instance:isFull(viewName) then
+				hasOpenAnyView = true
 
 				break
 			end
 		end
 
-		if not var_2_9 then
+		if not hasOpenAnyView then
 			return true
 		end
 	end
@@ -52,18 +56,18 @@ function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
 	return false
 end
 
-function var_0_0._onOpenViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.MainView then
-		arg_3_0:checkStartGuide()
+function GuideTriggerEpisodeFinishAndInMainScene:_onOpenViewFinish(viewName)
+	if viewName == ViewName.MainView then
+		self:checkStartGuide()
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_4_0, arg_4_1)
-	arg_4_0:checkStartGuide()
+function GuideTriggerEpisodeFinishAndInMainScene:_onCloseViewFinish(viewName)
+	self:checkStartGuide()
 end
 
-function var_0_0._checkStartGuide(arg_5_0)
-	arg_5_0:checkStartGuide()
+function GuideTriggerEpisodeFinishAndInMainScene:_checkStartGuide()
+	self:checkStartGuide()
 end
 
-return var_0_0
+return GuideTriggerEpisodeFinishAndInMainScene

@@ -1,130 +1,145 @@
-﻿module("projbooter.ui.BootLoadingView", package.seeall)
+﻿-- chunkname: @projbooter/ui/BootLoadingView.lua
 
-local var_0_0 = class("BootLoadingView")
+module("projbooter.ui.BootLoadingView", package.seeall)
 
-var_0_0.AutoChangeBgTime = 10
-var_0_0.ClickChangeBgTime = 3
-var_0_0.SwitchAnimTime = 0.667
+local BootLoadingView = class("BootLoadingView")
 
-function var_0_0.init(arg_1_0)
-	arg_1_0._go = BootResMgr.instance:getLoadingViewGo()
-	arg_1_0._rootTr = arg_1_0._go.transform
-	arg_1_0._ani = arg_1_0._go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._progressBar = SLFramework.UGUI.SliderWrap.GetWithPath(arg_1_0._go, "progressBar")
+BootLoadingView.AutoChangeBgTime = 10
+BootLoadingView.ClickChangeBgTime = 3
+BootLoadingView.SwitchAnimTime = 0.667
 
-	arg_1_0:setPercent(0)
+function BootLoadingView:init()
+	self._go = BootResMgr.instance:getLoadingViewGo()
+	self._rootTr = self._go.transform
+	self._ani = self._go:GetComponent(typeof(UnityEngine.Animator))
+	self._progressBar = SLFramework.UGUI.SliderWrap.GetWithPath(self._go, "progressBar")
 
-	local var_1_0 = typeof(UnityEngine.UI.Text)
+	self:setPercent(0)
 
-	arg_1_0._txtPercent = arg_1_0._rootTr:Find("bottom_text/#txt_percent"):GetComponent(var_1_0)
-	arg_1_0._txtWarn = arg_1_0._rootTr:Find("bottom_text/#txt_actualnum"):GetComponent(var_1_0)
-	arg_1_0._bottomText = arg_1_0._rootTr:Find("bottom_text")
-	arg_1_0._goDescribe = arg_1_0._rootTr:Find("describe_text")
-	arg_1_0._aniTxt = arg_1_0._goDescribe:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._txtDescribe1 = arg_1_0._rootTr:Find("describe_text/#txt_describe1"):GetComponent(var_1_0)
-	arg_1_0._txtTitle1 = arg_1_0._rootTr:Find("describe_text/#txt_describe1/title/#txt_title"):GetComponent(var_1_0)
-	arg_1_0._txtTitleEn1 = arg_1_0._rootTr:Find("describe_text/#txt_describe1/title/#txt_title_en"):GetComponent(var_1_0)
-	arg_1_0._txtDescribe2 = arg_1_0._rootTr:Find("describe_text/#txt_describe2"):GetComponent(var_1_0)
-	arg_1_0._txtTitle2 = arg_1_0._rootTr:Find("describe_text/#txt_describe2/title/#txt_title"):GetComponent(var_1_0)
-	arg_1_0._txtTitleEn2 = arg_1_0._rootTr:Find("describe_text/#txt_describe2/title/#txt_title_en"):GetComponent(var_1_0)
-	arg_1_0._txtFix = arg_1_0._rootTr:Find("#btn_fix/txt_fix"):GetComponent(var_1_0)
-	arg_1_0._btnFix = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_1_0._go, "#btn_fix")
-	arg_1_0._goBg = UnityEngine.GameObject.Find("UIRoot/OriginBg")
-	arg_1_0._btnClickBg = SLFramework.UGUI.UIClickListener.Get(arg_1_0._goBg)
-	arg_1_0._clickBgEnable = false
+	local txtType = typeof(UnityEngine.UI.Text)
 
-	arg_1_0:_setLoadingItem()
-	arg_1_0._btnFix:AddClickListener(arg_1_0._onClickFix, arg_1_0)
-	arg_1_0._btnClickBg:AddClickListener(arg_1_0._onClickBg, arg_1_0)
-	arg_1_0._btnFix.gameObject:SetActive(false)
+	self._txtPercent = self._rootTr:Find("bottom_text/#txt_percent"):GetComponent(txtType)
+	self._txtWarn = self._rootTr:Find("bottom_text/#txt_actualnum"):GetComponent(txtType)
+	self._bottomText = self._rootTr:Find("bottom_text")
+	self._goDescribe = self._rootTr:Find("describe_text")
+	self._aniTxt = self._goDescribe:GetComponent(typeof(UnityEngine.Animator))
+	self._txtDescribe1 = self._rootTr:Find("describe_text/#txt_describe1"):GetComponent(txtType)
+	self._txtTitle1 = self._rootTr:Find("describe_text/#txt_describe1/title/#txt_title"):GetComponent(txtType)
+	self._txtTitleEn1 = self._rootTr:Find("describe_text/#txt_describe1/title/#txt_title_en"):GetComponent(txtType)
+	self._txtDescribe2 = self._rootTr:Find("describe_text/#txt_describe2"):GetComponent(txtType)
+	self._txtTitle2 = self._rootTr:Find("describe_text/#txt_describe2/title/#txt_title"):GetComponent(txtType)
+	self._txtTitleEn2 = self._rootTr:Find("describe_text/#txt_describe2/title/#txt_title_en"):GetComponent(txtType)
+	self._txtFix = self._rootTr:Find("#btn_fix/txt_fix"):GetComponent(txtType)
+	self._btnFix = SLFramework.UGUI.ButtonWrap.GetWithPath(self._go, "#btn_fix")
+	self._goBg = UnityEngine.GameObject.Find("UIRoot/OriginBg")
+	self._btnClickBg = SLFramework.UGUI.UIClickListener.Get(self._goBg)
+	self._clickBgEnable = false
 
-	arg_1_0._updateHandle = UpdateBeat:CreateListener(arg_1_0._onFrameUpdate, arg_1_0)
+	self:_setLoadingItem()
+	self._btnFix:AddClickListener(self._onClickFix, self)
+	self._btnClickBg:AddClickListener(self._onClickBg, self)
+	self._btnFix.gameObject:SetActive(false)
 
-	UpdateBeat:AddListener(arg_1_0._updateHandle)
+	self._updateHandle = UpdateBeat:CreateListener(self._onFrameUpdate, self)
 
-	arg_1_0.hasClickFix = nil
+	UpdateBeat:AddListener(self._updateHandle)
+
+	self.hasClickFix = nil
 end
 
-function var_0_0._onClickBg(arg_2_0)
-	if not arg_2_0._clickBgEnable then
+function BootLoadingView:_onClickBg()
+	if not self._clickBgEnable then
 		return
 	end
 
-	arg_2_0:_setLoadingItem()
+	self:_setLoadingItem()
 end
 
-function var_0_0._onClickFix(arg_3_0)
-	if BootMsgBox.instance:isShow() and BootMsgBox.instance.args and BootMsgBox.instance.args.leftCbObj == arg_3_0 then
+function BootLoadingView:_onClickFix()
+	if BootMsgBox.instance:isShow() and BootMsgBox.instance.args and BootMsgBox.instance.args.leftCbObj == self then
 		return
 	end
 
-	local var_3_0 = {
-		title = booterLang("fixed_content"),
-		content = booterLang("fixed_content_tips") or "",
-		leftMsg = booterLang("cancel")
-	}
+	local args = {}
 
-	var_3_0.leftMsgEn = "CANCEL"
+	args.title = booterLang("fixed_content")
+	args.content = booterLang("fixed_content_tips") or ""
+	args.leftMsg = booterLang("cancel")
+	args.leftMsgEn = "CANCEL"
 
 	if BootMsgBox.instance:isShow() then
-		local var_3_1 = BootMsgBox.instance.args
+		local preMsgBoxArgs = BootMsgBox.instance.args
 
-		if var_3_1 then
-			arg_3_0._preMsgBoxArgs = {}
+		if preMsgBoxArgs then
+			self._preMsgBoxArgs = {}
 
-			for iter_3_0, iter_3_1 in pairs(var_3_1) do
-				arg_3_0._preMsgBoxArgs[iter_3_0] = iter_3_1
+			for key, value in pairs(preMsgBoxArgs) do
+				self._preMsgBoxArgs[key] = value
 			end
 
-			var_3_0.leftCb = arg_3_0._cancelFixReturnPrevMsgBox
+			args.leftCb = self._cancelFixReturnPrevMsgBox
 		end
 	else
-		var_3_0.leftCb = nil
+		args.leftCb = nil
 	end
 
-	var_3_0.leftCbObj = arg_3_0
-	var_3_0.rightMsg = booterLang("sure")
-	var_3_0.rightMsgEn = "CONFIRM"
-	var_3_0.rightCb = arg_3_0.reallyFix
-	var_3_0.rightCbObj = arg_3_0
+	args.leftCbObj = self
+	args.rightMsg = booterLang("sure")
+	args.rightMsgEn = "CONFIRM"
+	args.rightCb = self.reallyFix
+	args.rightCbObj = self
 
-	if string.nilorempty(var_3_0.content) then
-		var_3_0.titleAnchorY = 10
+	if string.nilorempty(args.content) then
+		args.titleAnchorY = 10
 	end
 
-	BootMsgBox.instance:show(var_3_0)
+	BootMsgBox.instance:show(args)
 end
 
-function var_0_0._cancelFixReturnPrevMsgBox(arg_4_0)
-	if arg_4_0._preMsgBoxArgs then
-		local var_4_0 = arg_4_0._preMsgBoxArgs
+function BootLoadingView:_cancelFixReturnPrevMsgBox()
+	if self._preMsgBoxArgs then
+		local args = self._preMsgBoxArgs
 
-		arg_4_0._preMsgBoxArgs = nil
+		self._preMsgBoxArgs = nil
 
-		BootMsgBox.instance:show(var_4_0)
+		BootMsgBox.instance:show(args)
 	end
 end
 
-function var_0_0.reallyFix(arg_5_0)
-	arg_5_0.hasClickFix = true
+function BootLoadingView:reallyFix()
+	self.hasClickFix = true
 
-	arg_5_0._btnFix.gameObject:SetActive(false)
+	self._btnFix.gameObject:SetActive(false)
 	HotUpdateMgr.instance:stop()
 	HotUpdateVoiceMgr.instance:stop()
 	SLFramework.GameLuaEventDispatcher.Instance:ClearAllEvent()
+	require("tolua.reflection")
+	tolua.loadassembly("Assembly-CSharp")
+
+	local type = tolua.findtype("SLFramework.GameUpdate.MassHotUpdate")
+	local baseType = type.BaseType
+	local instance = tolua.getproperty(baseType, "Instance")
+	local method = tolua.gettypemethod(type, "_Stop", 36)
+
+	method:Call(instance:Get(nil, nil))
+
+	if not BootNativeUtil.isAndroid() then
+		SDKMgr.instance:stopAllDownload()
+	end
+
 	UnityEngine.PlayerPrefs.DeleteAll()
 	SLFramework.GameUpdate.HotUpdateInfoMgr.RemoveLocalVersionFile()
 	SLFramework.GameUpdate.OptionalUpdate.Instance:RemoveLocalVersionFile()
-	UpdateBeat:Add(arg_5_0._onFrame, arg_5_0)
+	UpdateBeat:Add(self._onFrame, self)
 
-	arg_5_0._startTime = Time.time
-	arg_5_0._hotupdateEvent = SLFramework.GameUpdate.HotUpdateEvent.Instance
-	arg_5_0._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate.Instance
+	self._startTime = Time.time
+	self._hotupdateEvent = SLFramework.GameUpdate.HotUpdateEvent.Instance
+	self._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate.Instance
 
-	arg_5_0:_logThreadState()
+	self:_logThreadState()
 end
 
-local var_0_1 = {
+local ThreadStateDescDict = {
 	[0] = "Running",
 	"StopRequested",
 	"SuspendRequested",
@@ -147,111 +162,113 @@ local var_0_1 = {
 	[64] = "Suspended",
 	[256] = "Aborted"
 }
-local var_0_2 = {
+local ThreadStopped = {
 	[8] = true,
 	[64] = true,
 	[16] = true,
 	[256] = true
 }
 
-function var_0_0._hasStop(arg_6_0, arg_6_1)
-	if arg_6_1 == -1 then
+function BootLoadingView:_hasStop(state)
+	if state == -1 then
 		return true
 	end
 
-	for iter_6_0, iter_6_1 in pairs(var_0_2) do
-		if bit.band(arg_6_1, iter_6_0) ~= 0 then
+	for mask, _ in pairs(ThreadStopped) do
+		if bit.band(state, mask) ~= 0 then
 			return true
 		end
 	end
 end
 
-function var_0_0._getThreadStateDesc(arg_7_0, arg_7_1)
-	if arg_7_1 == -1 then
+function BootLoadingView:_getThreadStateDesc(state)
+	if state == -1 then
 		return "null"
 	end
 
-	if arg_7_1 == 0 then
-		return var_0_1[arg_7_1]
+	if state == 0 then
+		return ThreadStateDescDict[state]
 	end
 
-	local var_7_0 = {}
+	local stateDescTb = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_0_1) do
-		if bit.band(arg_7_1, iter_7_0) ~= 0 then
-			table.insert(var_7_0, iter_7_1)
+	for mask, desc in pairs(ThreadStateDescDict) do
+		if bit.band(state, mask) ~= 0 then
+			table.insert(stateDescTb, desc)
 		end
 	end
 
-	return table.concat(var_7_0, "|")
+	return table.concat(stateDescTb, "|")
 end
 
-function var_0_0._onFrame(arg_8_0)
-	local var_8_0 = Time.time - arg_8_0._startTime
+function BootLoadingView:_onFrame()
+	local cost = Time.time - self._startTime
 
-	if arg_8_0._startTime and var_8_0 > 60 then
+	if self._startTime and cost > 60 then
 		logNormal("修复程序等待线程退出超时了")
-		UpdateBeat:Remove(arg_8_0._onFrame, arg_8_0)
-		arg_8_0:_deleteCache()
+		UpdateBeat:Remove(self._onFrame, self)
+		self:_deleteCache()
 
 		return
 	end
 
-	local var_8_1 = arg_8_0._hotupdateEvent.DownloadThreadState
-	local var_8_2 = arg_8_0._hotupdateEvent.UnzipThreadState
-	local var_8_3 = arg_8_0._optionalUpdate.DownloadThreadState
-	local var_8_4 = arg_8_0._optionalUpdate.UnzipThreadState
+	local state1 = self._hotupdateEvent.DownloadThreadState
+	local state2 = self._hotupdateEvent.UnzipThreadState
+	local state3 = self._optionalUpdate.DownloadThreadState
+	local state4 = self._optionalUpdate.UnzipThreadState
 
-	if arg_8_0:_hasStop(var_8_1) and arg_8_0:_hasStop(var_8_2) and arg_8_0:_hasStop(var_8_3) and arg_8_0:_hasStop(var_8_4) then
-		logNormal(string.format("修复程序等待线程退出完成，耗时%.2fs", var_8_0))
-		UpdateBeat:Remove(arg_8_0._onFrame, arg_8_0)
-		Timer.New(function()
-			arg_8_0:_deleteCache()
-		end, 0.5):Start()
+	if self:_hasStop(state1) and self:_hasStop(state2) and self:_hasStop(state3) and self:_hasStop(state4) then
+		logNormal(string.format("修复程序等待线程退出完成，耗时%.2fs", cost))
+		UpdateBeat:Remove(self._onFrame, self)
+
+		local timer = Timer.New(function()
+			self:_deleteCache()
+		end, 0.5)
+
+		timer:Start()
 	end
 
-	arg_8_0:_logThreadState()
+	self:_logThreadState()
 end
 
-function var_0_0._logThreadState(arg_10_0)
-	local var_10_0 = arg_10_0._hotupdateEvent.DownloadThreadState
-	local var_10_1 = arg_10_0._hotupdateEvent.UnzipThreadState
-	local var_10_2 = arg_10_0._optionalUpdate.DownloadThreadState
-	local var_10_3 = arg_10_0._optionalUpdate.UnzipThreadState
-	local var_10_4 = arg_10_0:_getThreadStateDesc(var_10_0)
-	local var_10_5 = arg_10_0:_getThreadStateDesc(var_10_1)
-	local var_10_6 = arg_10_0:_getThreadStateDesc(var_10_2)
-	local var_10_7 = arg_10_0:_getThreadStateDesc(var_10_3)
+function BootLoadingView:_logThreadState()
+	local state1 = self._hotupdateEvent.DownloadThreadState
+	local state2 = self._hotupdateEvent.UnzipThreadState
+	local state3 = self._optionalUpdate.DownloadThreadState
+	local state4 = self._optionalUpdate.UnzipThreadState
+	local desc1 = self:_getThreadStateDesc(state1)
+	local desc2 = self:_getThreadStateDesc(state2)
+	local desc3 = self:_getThreadStateDesc(state3)
+	local desc4 = self:_getThreadStateDesc(state4)
 
-	logNormal(string.format("修复程序线程状态 热更下载%d_%s 热更解压%d_%s 语音下载%d_%s 语音解压%d_%s", var_10_0, var_10_4, var_10_1, var_10_5, var_10_2, var_10_6, var_10_3, var_10_7))
+	logNormal(string.format("修复程序线程状态 热更下载%d_%s 热更解压%d_%s 语音下载%d_%s 语音解压%d_%s", state1, desc1, state2, desc2, state3, desc3, state4, desc4))
 end
 
-function var_0_0._deleteCache(arg_11_0)
-	arg_11_0:_deleteAllCache()
+function BootLoadingView:_deleteCache()
+	self:_deleteAllCache()
 
-	local var_11_0 = {
-		title = booterLang("fixed_res_finish")
-	}
+	local args = {}
 
-	var_11_0.content = ""
-	var_11_0.leftMsg = nil
-	var_11_0.leftCb = nil
-	var_11_0.leftCbObj = arg_11_0
-	var_11_0.rightMsg = booterLang("sure")
-	var_11_0.rightMsgEn = "CONFIRM"
-	var_11_0.rightCb = arg_11_0.quitGame
-	var_11_0.rightCbObj = arg_11_0
-	var_11_0.titleAnchorY = 10
+	args.title = booterLang("fixed_res_finish")
+	args.content = ""
+	args.leftMsg = nil
+	args.leftCb = nil
+	args.leftCbObj = self
+	args.rightMsg = booterLang("sure")
+	args.rightMsgEn = "CONFIRM"
+	args.rightCb = self.quitGame
+	args.rightCbObj = self
+	args.titleAnchorY = 10
 
-	BootMsgBox.instance:show(var_11_0)
+	BootMsgBox.instance:show(args)
 end
 
-function var_0_0.quitGame(arg_12_0)
-	arg_12_0:_deleteAllCache()
+function BootLoadingView:quitGame()
+	self:_deleteAllCache()
 	ProjBooter.instance:quitGame()
 end
 
-function var_0_0._deleteAllCache(arg_13_0)
+function BootLoadingView:_deleteAllCache()
 	SLFramework.GameUpdate.HotUpdateInfoMgr.RemoveLocalVersionFile()
 	SLFramework.GameUpdate.OptionalUpdate.Instance:RemoveLocalVersionFile()
 	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTmepDir1)
@@ -259,179 +276,179 @@ function var_0_0._deleteAllCache(arg_13_0)
 	ZProj.GameHelper.DeleteAllCache()
 
 	if BootNativeUtil.isWindows() then
-		local var_13_0 = UnityEngine.Application.persistentDataPath
-		local var_13_1 = System.Collections.Generic.List_string.New()
+		local persistentDataPath = UnityEngine.Application.persistentDataPath
+		local ignoreFiles = System.Collections.Generic.List_string.New()
 
-		var_13_1:Add(var_13_0 .. "/logicLog")
-		var_13_1:Add(var_13_0 .. "/Player.log")
-		SLFramework.FileHelper.ClearDirWithIgnore(var_13_0, nil, var_13_1)
+		ignoreFiles:Add(persistentDataPath .. "/logicLog")
+		ignoreFiles:Add(persistentDataPath .. "/Player.log")
+		SLFramework.FileHelper.ClearDirWithIgnore(persistentDataPath, nil, ignoreFiles)
 	end
 end
 
-function var_0_0._setLoadingItem(arg_14_0)
-	if not arg_14_0._goOriginBg then
-		arg_14_0._goOriginBg = BootResMgr.instance:getOriginBgGo()
+function BootLoadingView:_setLoadingItem()
+	if not self._goOriginBg then
+		self._goOriginBg = BootResMgr.instance:getOriginBgGo()
 
-		arg_14_0._goOriginBg:SetActive(true)
+		self._goOriginBg:SetActive(true)
 
-		arg_14_0._bgAnim = arg_14_0._goOriginBg:GetComponent(typeof(UnityEngine.Animator))
-		arg_14_0._imageBg1 = arg_14_0._goOriginBg.transform:Find("originbg1"):GetComponent(typeof(UnityEngine.UI.Image))
-		arg_14_0._imageBg2 = arg_14_0._goOriginBg.transform:Find("originbg2"):GetComponent(typeof(UnityEngine.UI.Image))
+		self._bgAnim = self._goOriginBg:GetComponent(typeof(UnityEngine.Animator))
+		self._imageBg1 = self._goOriginBg.transform:Find("originbg1"):GetComponent(typeof(UnityEngine.UI.Image))
+		self._imageBg2 = self._goOriginBg.transform:Find("originbg2"):GetComponent(typeof(UnityEngine.UI.Image))
 	end
 
-	arg_14_0._txtFix.text = booterLang("fixed")
-	arg_14_0._clickBgEnable = false
-	arg_14_0._setIndex = arg_14_0._setIndex and arg_14_0._setIndex + 1 or 1
-	arg_14_0._initTime = Time.time
+	self._txtFix.text = booterLang("fixed")
+	self._clickBgEnable = false
+	self._setIndex = self._setIndex and self._setIndex + 1 or 1
+	self._initTime = Time.time
 
-	BootResMgr.instance:getLoadingBg(arg_14_0._setIndex, arg_14_0._setSwitch, arg_14_0)
+	BootResMgr.instance:getLoadingBg(self._setIndex, self._setSwitch, self)
 end
 
-function var_0_0._setSwitch(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = GameConfig:GetCurLangShortcut()
+function BootLoadingView:_setSwitch(texture, bgCo)
+	local shortcut = GameConfig:GetCurLangShortcut()
 
-	if arg_15_0._imageBg2.sprite then
-		arg_15_0._txtDescribe1.gameObject:SetActive(true)
-		arg_15_0._imageBg1.gameObject:SetActive(true)
+	if self._imageBg2.sprite then
+		self._txtDescribe1.gameObject:SetActive(true)
+		self._imageBg1.gameObject:SetActive(true)
 
-		arg_15_0._imageBg1.sprite = arg_15_0._imageBg2.sprite
-		arg_15_0._txtDescribe1.text = arg_15_0._txtDescribe2.text
-		arg_15_0._txtTitle1.text = arg_15_0._txtTitle2.text
-		arg_15_0._txtTitleEn1.text = arg_15_0._txtTitleEn2.text
-		arg_15_0._hasSetDec1ForAnim = true
+		self._imageBg1.sprite = self._imageBg2.sprite
+		self._txtDescribe1.text = self._txtDescribe2.text
+		self._txtTitle1.text = self._txtTitle2.text
+		self._txtTitleEn1.text = self._txtTitleEn2.text
+		self._hasSetDec1ForAnim = true
 
-		if var_15_0 == "en" then
-			arg_15_0._txtTitleEn1.gameObject:SetActive(false)
+		if shortcut == "en" then
+			self._txtTitleEn1.gameObject:SetActive(false)
 		else
-			arg_15_0._txtTitleEn1.gameObject:SetActive(true)
+			self._txtTitleEn1.gameObject:SetActive(true)
 		end
 	else
-		arg_15_0:_hideDesc1()
+		self:_hideDesc1()
 	end
 
-	local var_15_1 = UnityEngine.Sprite.Create(arg_15_1, UnityEngine.Rect.New(0, 0, arg_15_1.width, arg_15_1.height), Vector2.zero)
+	local spr = UnityEngine.Sprite.Create(texture, UnityEngine.Rect.New(0, 0, texture.width, texture.height), Vector2.zero)
 
-	arg_15_0._imageBg2.sprite = var_15_1
+	self._imageBg2.sprite = spr
 
-	arg_15_0._aniTxt:Play("switch", 0, 0)
-	arg_15_0._bgAnim:Play("switch", 0, 0)
+	self._aniTxt:Play("switch", 0, 0)
+	self._bgAnim:Play("switch", 0, 0)
 
-	arg_15_0._txtDescribe2.text = arg_15_2[var_15_0 .. "Desc"]
-	arg_15_0._txtTitle2.text = arg_15_2[var_15_0 .. "Title"]
-	arg_15_0._txtTitleEn2.text = arg_15_2.titleen
+	self._txtDescribe2.text = bgCo[shortcut .. "Desc"]
+	self._txtTitle2.text = bgCo[shortcut .. "Title"]
+	self._txtTitleEn2.text = bgCo.titleen
 
-	if var_15_0 == "en" then
-		arg_15_0._txtTitleEn2.gameObject:SetActive(false)
+	if shortcut == "en" then
+		self._txtTitleEn2.gameObject:SetActive(false)
 	else
-		arg_15_0._txtTitleEn2.gameObject:SetActive(true)
+		self._txtTitleEn2.gameObject:SetActive(true)
 	end
 
-	arg_15_0._initTime = Time.time
+	self._initTime = Time.time
 end
 
-function var_0_0._onFrameUpdate(arg_16_0)
-	if not arg_16_0._initTime then
+function BootLoadingView:_onFrameUpdate()
+	if not self._initTime then
 		return
 	end
 
-	local var_16_0 = Time.time
+	local now = Time.time
 
-	if arg_16_0._hasSetDec1ForAnim and var_16_0 - arg_16_0._initTime > var_0_0.SwitchAnimTime then
-		arg_16_0._hasSetDec1ForAnim = nil
+	if self._hasSetDec1ForAnim and now - self._initTime > BootLoadingView.SwitchAnimTime then
+		self._hasSetDec1ForAnim = nil
 
-		arg_16_0:_hideDesc1()
+		self:_hideDesc1()
 	end
 
-	if var_16_0 - arg_16_0._initTime > var_0_0.ClickChangeBgTime then
-		arg_16_0:_onEnableClickBg()
+	if now - self._initTime > BootLoadingView.ClickChangeBgTime then
+		self:_onEnableClickBg()
 	end
 
-	if var_16_0 - arg_16_0._initTime > var_0_0.AutoChangeBgTime then
-		arg_16_0:_onAutoChangeBg()
-	end
-end
-
-function var_0_0._hideDesc1(arg_17_0)
-	arg_17_0._txtDescribe1.text = ""
-	arg_17_0._txtTitle1.text = ""
-	arg_17_0._txtTitleEn1.text = ""
-
-	arg_17_0._txtDescribe1.gameObject:SetActive(false)
-	arg_17_0._imageBg1.gameObject:SetActive(false)
-end
-
-function var_0_0._onEnableClickBg(arg_18_0)
-	if not arg_18_0._clickBgEnable then
-		arg_18_0._clickBgEnable = true
+	if now - self._initTime > BootLoadingView.AutoChangeBgTime then
+		self:_onAutoChangeBg()
 	end
 end
 
-function var_0_0._onAutoChangeBg(arg_19_0)
-	arg_19_0._initTime = Time.time
+function BootLoadingView:_hideDesc1()
+	self._txtDescribe1.text = ""
+	self._txtTitle1.text = ""
+	self._txtTitleEn1.text = ""
 
-	arg_19_0:_setLoadingItem()
+	self._txtDescribe1.gameObject:SetActive(false)
+	self._imageBg1.gameObject:SetActive(false)
 end
 
-function var_0_0.addEventListeners(arg_20_0)
+function BootLoadingView:_onEnableClickBg()
+	if not self._clickBgEnable then
+		self._clickBgEnable = true
+	end
+end
+
+function BootLoadingView:_onAutoChangeBg()
+	self._initTime = Time.time
+
+	self:_setLoadingItem()
+end
+
+function BootLoadingView:addEventListeners()
 	return
 end
 
-function var_0_0.show(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	arg_21_0:setPercent(arg_21_1)
-	arg_21_0:setProgressMsg(arg_21_2)
-	arg_21_0:setWarnningMsg(arg_21_3)
-	arg_21_0._go:SetActive(true)
+function BootLoadingView:show(percent, progressMsg, warnningMsg)
+	self:setPercent(percent)
+	self:setProgressMsg(progressMsg)
+	self:setWarnningMsg(warnningMsg)
+	self._go:SetActive(true)
 end
 
-function var_0_0.showMsg(arg_22_0, arg_22_1, arg_22_2)
-	arg_22_0:setProgressMsg(arg_22_1)
-	arg_22_0:setWarnningMsg(arg_22_2)
-	arg_22_0._go:SetActive(true)
+function BootLoadingView:showMsg(progressMsg, warnningMsg)
+	self:setProgressMsg(progressMsg)
+	self:setWarnningMsg(warnningMsg)
+	self._go:SetActive(true)
 end
 
-function var_0_0.showFixBtn(arg_23_0)
-	arg_23_0._btnFix.gameObject:SetActive(true)
+function BootLoadingView:showFixBtn()
+	self._btnFix.gameObject:SetActive(true)
 end
 
-function var_0_0.setPercent(arg_24_0, arg_24_1)
-	arg_24_0._progressBar:SetValue(arg_24_1)
+function BootLoadingView:setPercent(percent)
+	self._progressBar:SetValue(percent)
 end
 
-function var_0_0.setProgressMsg(arg_25_0, arg_25_1)
-	arg_25_0._txtPercent.text = arg_25_1 and arg_25_1 or ""
+function BootLoadingView:setProgressMsg(progressMsg)
+	self._txtPercent.text = progressMsg and progressMsg or ""
 end
 
-function var_0_0.setWarnningMsg(arg_26_0, arg_26_1)
-	arg_26_0._txtWarn.text = arg_26_1 and arg_26_1 or ""
+function BootLoadingView:setWarnningMsg(warnningMsg)
+	self._txtWarn.text = warnningMsg and warnningMsg or ""
 end
 
-function var_0_0.hide(arg_27_0)
-	arg_27_0._go:SetActive(false)
+function BootLoadingView:hide()
+	self._go:SetActive(false)
 end
 
-function var_0_0.playClose(arg_28_0)
-	if arg_28_0._ani then
-		arg_28_0._ani:Play("close")
+function BootLoadingView:playClose()
+	if self._ani then
+		self._ani:Play("close")
 	end
 end
 
-function var_0_0.dispose(arg_29_0)
-	arg_29_0._btnFix:RemoveClickListener()
-	arg_29_0._btnClickBg:RemoveClickListener()
+function BootLoadingView:dispose()
+	self._btnFix:RemoveClickListener()
+	self._btnClickBg:RemoveClickListener()
 
-	for iter_29_0, iter_29_1 in pairs(arg_29_0) do
-		if type(iter_29_1) == "userdata" then
-			rawset(arg_29_0, iter_29_0, nil)
+	for key, value in pairs(self) do
+		if type(value) == "userdata" then
+			rawset(self, key, nil)
 		end
 	end
 
-	if arg_29_0._updateHandle then
-		UpdateBeat:RemoveListener(arg_29_0._updateHandle)
+	if self._updateHandle then
+		UpdateBeat:RemoveListener(self._updateHandle)
 
-		arg_29_0._updateHandle = nil
+		self._updateHandle = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+BootLoadingView.instance = BootLoadingView.New()
 
-return var_0_0
+return BootLoadingView

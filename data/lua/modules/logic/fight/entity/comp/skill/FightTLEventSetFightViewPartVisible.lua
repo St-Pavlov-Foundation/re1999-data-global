@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetFightViewPartVisible", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventSetFightViewPartVisible.lua
 
-local var_0_0 = class("FightTLEventSetFightViewPartVisible", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventSetFightViewPartVisible", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = FightTLHelper.getBoolParam(arg_1_3[1])
+local FightTLEventSetFightViewPartVisible = class("FightTLEventSetFightViewPartVisible", FightTimelineTrackItem)
 
-	FightViewPartVisible.setWaitAreaActive(var_1_0)
+function FightTLEventSetFightViewPartVisible:onTrackStart(fightStepData, duration, paramsArr)
+	local showWaitArea = FightTLHelper.getBoolParam(paramsArr[1])
+
+	FightViewPartVisible.setWaitAreaActive(showWaitArea)
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventSetFightViewPartVisible:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventSetFightViewPartVisible:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventSetFightViewPartVisible

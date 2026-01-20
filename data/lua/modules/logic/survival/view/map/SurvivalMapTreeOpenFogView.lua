@@ -1,7 +1,9 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapTreeOpenFogView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapTreeOpenFogView.lua
 
-local var_0_0 = class("SurvivalMapTreeOpenFogView", BaseView)
-local var_0_1 = {
+module("modules.logic.survival.view.map.SurvivalMapTreeOpenFogView", package.seeall)
+
+local SurvivalMapTreeOpenFogView = class("SurvivalMapTreeOpenFogView", BaseView)
+local uinodes = {
 	"BottomRight",
 	"Left",
 	"Top",
@@ -9,98 +11,98 @@ local var_0_1 = {
 	"#go_lefttop"
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_usedTips")
-	arg_1_0._txtTips = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_usedTips/#txt_usedTips")
-	arg_1_0._allUIs = arg_1_0:getUserDataTb_()
+function SurvivalMapTreeOpenFogView:onInitView()
+	self._gotips = gohelper.findChild(self.viewGO, "#go_usedTips")
+	self._txtTips = gohelper.findChildTextMesh(self.viewGO, "#go_usedTips/#txt_usedTips")
+	self._allUIs = self:getUserDataTb_()
 
-	for iter_1_0, iter_1_1 in ipairs(var_0_1) do
-		arg_1_0._allUIs[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, iter_1_1)
+	for k, v in ipairs(uinodes) do
+		self._allUIs[k] = gohelper.findChild(self.viewGO, v)
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnTreeOpenFog, arg_2_0._onUseFog, arg_2_0)
-	arg_2_0.viewContainer:registerCallback(SurvivalEvent.OnClickSurvivalScene, arg_2_0._onSceneClick, arg_2_0)
+function SurvivalMapTreeOpenFogView:addEvents()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnTreeOpenFog, self._onUseFog, self)
+	self.viewContainer:registerCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnTreeOpenFog, arg_3_0._onUseFog, arg_3_0)
-	arg_3_0.viewContainer:unregisterCallback(SurvivalEvent.OnClickSurvivalScene, arg_3_0._onSceneClick, arg_3_0)
+function SurvivalMapTreeOpenFogView:removeEvents()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnTreeOpenFog, self._onUseFog, self)
+	self.viewContainer:unregisterCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	gohelper.setActive(arg_4_0._gotips, false)
+function SurvivalMapTreeOpenFogView:onOpen()
+	gohelper.setActive(self._gotips, false)
 end
 
-function var_0_0._onUseFog(arg_5_0, arg_5_1)
-	if not arg_5_1 then
+function SurvivalMapTreeOpenFogView:_onUseFog(choiceData)
+	if not choiceData then
 		return
 	end
 
-	arg_5_0._choiceData = arg_5_1
+	self._choiceData = choiceData
 
-	local var_5_0 = SurvivalMapModel.instance:getCurMapCo().walkables
-	local var_5_1 = SurvivalMapModel.instance:getSceneMo().player.pos
-	local var_5_2 = SurvivalHelper.instance:getAllPointsByDis(var_5_1, arg_5_1.openFogRange)
+	local walkable = SurvivalMapModel.instance:getCurMapCo().walkables
+	local playerPos = SurvivalMapModel.instance:getSceneMo().player.pos
+	local list = SurvivalHelper.instance:getAllPointsByDis(playerPos, choiceData.openFogRange)
 
-	for iter_5_0 = #var_5_2, 1, -1 do
-		if var_5_2[iter_5_0] == var_5_1 or not SurvivalHelper.instance:getValueFromDict(var_5_0, var_5_2[iter_5_0]) then
-			table.remove(var_5_2, iter_5_0)
+	for i = #list, 1, -1 do
+		if list[i] == playerPos or not SurvivalHelper.instance:getValueFromDict(walkable, list[i]) then
+			table.remove(list, i)
 		end
 	end
 
-	arg_5_0._allCanUsePoints = {}
+	self._allCanUsePoints = {}
 
-	for iter_5_1, iter_5_2 in ipairs(var_5_2) do
-		table.insert(arg_5_0._allCanUsePoints, iter_5_2:clone())
-		SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-2, iter_5_2.q, iter_5_2.r, 2)
+	for _, v in ipairs(list) do
+		table.insert(self._allCanUsePoints, v:clone())
+		SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-2, v.q, v.r, 2)
 	end
 
-	gohelper.setActive(arg_5_0._gotips, true)
+	gohelper.setActive(self._gotips, true)
 
-	for iter_5_3, iter_5_4 in ipairs(arg_5_0._allUIs) do
-		gohelper.setActive(iter_5_4, false)
+	for k, v in ipairs(self._allUIs) do
+		gohelper.setActive(v, false)
 	end
 
-	arg_5_0.viewContainer:setCloseFunc(arg_5_0.cancelOpenFog, arg_5_0)
+	self.viewContainer:setCloseFunc(self.cancelOpenFog, self)
 end
 
-function var_0_0._onSceneClick(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_0._choiceData then
+function SurvivalMapTreeOpenFogView:_onSceneClick(hexPos, data)
+	if not self._choiceData then
 		return
 	end
 
-	arg_6_2.use = true
+	data.use = true
 
-	if tabletool.indexOf(arg_6_0._allCanUsePoints, arg_6_1) then
-		SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", arg_6_0._choiceData.unitId, arg_6_0._choiceData.param, arg_6_0._choiceData.treeId)
-		SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.SelectOption, string.format("%d#%d#%d", arg_6_0._choiceData.param, arg_6_1.q, arg_6_1.r))
-		arg_6_0:clearData()
+	if tabletool.indexOf(self._allCanUsePoints, hexPos) then
+		SurvivalStatHelper.instance:statSurvivalMapUnit("SelectOption", self._choiceData.unitId, self._choiceData.param, self._choiceData.treeId)
+		SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.SelectOption, string.format("%d#%d#%d", self._choiceData.param, hexPos.q, hexPos.r))
+		self:clearData()
 	else
-		arg_6_0:cancelOpenFog()
+		self:cancelOpenFog()
 	end
 end
 
-function var_0_0.clearData(arg_7_0)
-	gohelper.setActive(arg_7_0._gotips, false)
+function SurvivalMapTreeOpenFogView:clearData()
+	gohelper.setActive(self._gotips, false)
 	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(-2)
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._allUIs) do
-		gohelper.setActive(iter_7_1, true)
+	for k, v in ipairs(self._allUIs) do
+		gohelper.setActive(v, true)
 	end
 
-	arg_7_0.viewContainer:setCloseFunc()
+	self.viewContainer:setCloseFunc()
 
-	arg_7_0._choiceData = nil
+	self._choiceData = nil
 end
 
-function var_0_0.cancelOpenFog(arg_8_0)
-	arg_8_0:clearData()
+function SurvivalMapTreeOpenFogView:cancelOpenFog()
+	self:clearData()
 
-	local var_8_0 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	SurvivalMapHelper.instance:tryShowServerPanel(var_8_0.panel)
+	SurvivalMapHelper.instance:tryShowServerPanel(sceneMo.panel)
 end
 
-return var_0_0
+return SurvivalMapTreeOpenFogView

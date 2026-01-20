@@ -1,8 +1,10 @@
-﻿module("modules.logic.summon.view.variant.SummonEquipProbUpVer112", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/variant/SummonEquipProbUpVer112.lua
 
-local var_0_0 = class("SummonEquipProbUpVer112", SummonMainEquipProbUp)
+module("modules.logic.summon.view.variant.SummonEquipProbUpVer112", package.seeall)
 
-var_0_0.preloadList = {
+local SummonEquipProbUpVer112 = class("SummonEquipProbUpVer112", SummonMainEquipProbUp)
+
+SummonEquipProbUpVer112.preloadList = {
 	ResUrl.getSummonCoverBg("equipversion_1_1/full/bg1"),
 	ResUrl.getSummonCoverBg("equipversion_1_1/img_equip4"),
 	ResUrl.getSummonCoverBg("equipversion_1_1/img_equip5"),
@@ -10,22 +12,22 @@ var_0_0.preloadList = {
 	ResUrl.getSummonCoverBg("hero/title_img_deco")
 }
 
-function var_0_0.refreshSingleImage(arg_1_0)
-	arg_1_0._simagebg:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/full/bg1"))
-	arg_1_0._simageequip1:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/img_equip4"))
-	arg_1_0._simageequip2:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/img_equip5"))
-	arg_1_0._simageequip3:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/img_equip6"))
-	arg_1_0._simageline:LoadImage(ResUrl.getSummonCoverBg("hero/title_img_deco"))
+function SummonEquipProbUpVer112:refreshSingleImage()
+	self._simagebg:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/full/bg1"))
+	self._simageequip1:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/img_equip4"))
+	self._simageequip2:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/img_equip5"))
+	self._simageequip3:LoadImage(ResUrl.getSummonCoverBg("equipversion_1_1/img_equip6"))
+	self._simageline:LoadImage(ResUrl.getSummonCoverBg("hero/title_img_deco"))
 end
 
-function var_0_0.unloadSingleImage(arg_2_0)
-	arg_2_0._simagebg:UnLoadImage()
-	arg_2_0._simageequip1:UnLoadImage()
-	arg_2_0._simageequip2:UnLoadImage()
-	arg_2_0._simageequip3:UnLoadImage()
-	arg_2_0._simageline:UnLoadImage()
-	arg_2_0._simagecurrency1:UnLoadImage()
-	arg_2_0._simagecurrency10:UnLoadImage()
+function SummonEquipProbUpVer112:unloadSingleImage()
+	self._simagebg:UnLoadImage()
+	self._simageequip1:UnLoadImage()
+	self._simageequip2:UnLoadImage()
+	self._simageequip3:UnLoadImage()
+	self._simageline:UnLoadImage()
+	self._simagecurrency1:UnLoadImage()
+	self._simagecurrency10:UnLoadImage()
 end
 
-return var_0_0
+return SummonEquipProbUpVer112

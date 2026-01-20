@@ -1,123 +1,125 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutCreateTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutCreateTipsView.lua
 
-local var_0_0 = class("RoomLayoutCreateTipsView", BaseView)
+module("modules.logic.room.view.layout.RoomLayoutCreateTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_tipbg")
-	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_select")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/#btn_select/txt_desc/#go_select")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_cancel")
-	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_sure")
+local RoomLayoutCreateTipsView = class("RoomLayoutCreateTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomLayoutCreateTipsView:onInitView()
+	self._simagetipbg = gohelper.findChildSingleImage(self.viewGO, "root/#simage_tipbg")
+	self._btnselect = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_select")
+	self._goselect = gohelper.findChild(self.viewGO, "root/#btn_select/txt_desc/#go_select")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#btn_cancel")
+	self._btnsure = gohelper.findChildButtonWithAudio(self.viewGO, "root/btn/#btn_sure")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
+function RoomLayoutCreateTipsView:addEvents()
+	self._btnselect:AddClickListener(self._btnselectOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnsure:AddClickListener(self._btnsureOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnselect:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnsure:RemoveClickListener()
+function RoomLayoutCreateTipsView:removeEvents()
+	self._btnselect:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnsure:RemoveClickListener()
 end
 
-function var_0_0._btnselectOnClick(arg_4_0)
-	arg_4_0:_setSelect(arg_4_0._isSelect == false)
+function RoomLayoutCreateTipsView:_btnselectOnClick()
+	self:_setSelect(self._isSelect == false)
 end
 
-function var_0_0._btncancelOnClick(arg_5_0)
-	arg_5_0:closeThis()
-	arg_5_0:_closeInvokeCallback()
+function RoomLayoutCreateTipsView:_btncancelOnClick()
+	self:closeThis()
+	self:_closeInvokeCallback()
 end
 
-function var_0_0._btnsureOnClick(arg_6_0)
-	arg_6_0:closeThis()
-	arg_6_0:_closeInvokeCallback(true)
+function RoomLayoutCreateTipsView:_btnsureOnClick()
+	self:closeThis()
+	self:_closeInvokeCallback(true)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._txtdesc = gohelper.findChildText(arg_7_0.viewGO, "root/txt_desc")
+function RoomLayoutCreateTipsView:_editableInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/txt_desc")
 
-	arg_7_0:_setSelect(true)
-	arg_7_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	self:_setSelect(true)
+	self._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
 
-	arg_7_0._txtdescTrs = arg_7_0._txtdesc.transform
-	arg_7_0._descX, arg_7_0._descY = transformhelper.getLocalPos(arg_7_0._txtdescTrs)
+	self._txtdescTrs = self._txtdesc.transform
+	self._descX, self._descY = transformhelper.getLocalPos(self._txtdescTrs)
 
-	local var_7_0, var_7_1 = transformhelper.getLocalPos(arg_7_0._simagetipbg.transform)
+	local bgX, bgY = transformhelper.getLocalPos(self._simagetipbg.transform)
 
-	arg_7_0._hidY = var_7_1
+	self._hidY = bgY
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0:_refreshInitUI()
+function RoomLayoutCreateTipsView:onUpdateParam()
+	self:_refreshInitUI()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	if arg_9_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_9_0.viewContainer.viewName, arg_9_0._onEscape, arg_9_0)
+function RoomLayoutCreateTipsView:onOpen()
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onEscape, self)
 	end
 
-	arg_9_0:_refreshInitUI()
+	self:_refreshInitUI()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_firmup_upgrade)
 end
 
-function var_0_0._onEscape(arg_10_0)
-	arg_10_0:_btncancelOnClick()
+function RoomLayoutCreateTipsView:_onEscape()
+	self:_btncancelOnClick()
 end
 
-function var_0_0.onClose(arg_11_0)
+function RoomLayoutCreateTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagetipbg:UnLoadImage()
+function RoomLayoutCreateTipsView:onDestroyView()
+	self._simagetipbg:UnLoadImage()
 end
 
-function var_0_0._refreshInitUI(arg_13_0)
-	if arg_13_0.viewParam then
-		if arg_13_0.viewParam.isSelect ~= nil then
-			arg_13_0:_setSelect(arg_13_0.viewParam.isSelect)
+function RoomLayoutCreateTipsView:_refreshInitUI()
+	if self.viewParam then
+		if self.viewParam.isSelect ~= nil then
+			self:_setSelect(self.viewParam.isSelect)
 		end
 
-		arg_13_0._txtdesc.text = arg_13_0.viewParam.titleStr or luaLang("p_roomlayoutcreatetipsview_tips1")
+		self._txtdesc.text = self.viewParam.titleStr or luaLang("p_roomlayoutcreatetipsview_tips1")
 
-		if arg_13_0.viewParam.isShowSetlect ~= nil then
-			arg_13_0:_setShowSelect(arg_13_0.viewParam.isShowSetlect)
+		if self.viewParam.isShowSetlect ~= nil then
+			self:_setShowSelect(self.viewParam.isShowSetlect)
 		end
 	end
 end
 
-function var_0_0._closeInvokeCallback(arg_14_0, arg_14_1)
-	if arg_14_1 then
-		if arg_14_0.viewParam.yesCallback then
-			local var_14_0 = arg_14_0._isSelect and true or false
+function RoomLayoutCreateTipsView:_closeInvokeCallback(isYes)
+	if isYes then
+		if self.viewParam.yesCallback then
+			local isSelect = self._isSelect and true or false
 
-			if arg_14_0.viewParam.callbockObj then
-				arg_14_0.viewParam.yesCallback(arg_14_0.viewParam.callbockObj, var_14_0)
+			if self.viewParam.callbockObj then
+				self.viewParam.yesCallback(self.viewParam.callbockObj, isSelect)
 			else
-				arg_14_0.viewParam.yesCallback(var_14_0)
+				self.viewParam.yesCallback(isSelect)
 			end
 		end
-	elseif arg_14_0.viewParam.noCallback then
-		arg_14_0.viewParam.noCallback(arg_14_0.viewParam.noCallbackObj)
+	elseif self.viewParam.noCallback then
+		self.viewParam.noCallback(self.viewParam.noCallbackObj)
 	end
 end
 
-function var_0_0._setSelect(arg_15_0, arg_15_1)
-	arg_15_0._isSelect = arg_15_1 and true or false
+function RoomLayoutCreateTipsView:_setSelect(isSelect)
+	self._isSelect = isSelect and true or false
 
-	gohelper.setActive(arg_15_0._goselect, arg_15_0._isSelect)
+	gohelper.setActive(self._goselect, self._isSelect)
 end
 
-function var_0_0._setShowSelect(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._btnselect, arg_16_1)
-	transformhelper.setLocalPosXY(arg_16_0._txtdescTrs, arg_16_0._descX, arg_16_1 and arg_16_0._descY or arg_16_0._hidY)
+function RoomLayoutCreateTipsView:_setShowSelect(isShow)
+	gohelper.setActive(self._btnselect, isShow)
+	transformhelper.setLocalPosXY(self._txtdescTrs, self._descX, isShow and self._descY or self._hidY)
 end
 
-return var_0_0
+return RoomLayoutCreateTipsView

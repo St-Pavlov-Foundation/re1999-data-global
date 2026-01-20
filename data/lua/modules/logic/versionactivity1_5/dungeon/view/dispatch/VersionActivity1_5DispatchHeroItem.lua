@@ -1,87 +1,91 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/dispatch/VersionActivity1_5DispatchHeroItem.lua
 
-local var_0_0 = class("VersionActivity1_5DispatchHeroItem", ListScrollCell)
+module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchHeroItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0._go, "#simage_icon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0._go, "#image_career")
-	arg_1_0._godispatched = gohelper.findChild(arg_1_0._go, "#go_dispatched")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0._go, "#go_selected")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0._go, "#go_selected/#txt_index")
+local VersionActivity1_5DispatchHeroItem = class("VersionActivity1_5DispatchHeroItem", ListScrollCell)
 
-	gohelper.setActive(arg_1_0._goselected, false)
+function VersionActivity1_5DispatchHeroItem:init(go)
+	self._go = go
+	self._simageicon = gohelper.findChildSingleImage(self._go, "#simage_icon")
+	self._imagecareer = gohelper.findChildImage(self._go, "#image_career")
+	self._godispatched = gohelper.findChild(self._go, "#go_dispatched")
+	self._goselected = gohelper.findChild(self._go, "#go_selected")
+	self._txtindex = gohelper.findChildText(self._go, "#go_selected/#txt_index")
 
-	arg_1_0.click = gohelper.getClick(arg_1_0._go)
-	arg_1_0.isSelected = false
-	arg_1_0.dispatched = false
+	gohelper.setActive(self._goselected, false)
+
+	self.click = gohelper.getClick(self._go)
+	self.isSelected = false
+	self.dispatched = false
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0.click:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, arg_2_0.updateSelect, arg_2_0)
+function VersionActivity1_5DispatchHeroItem:addEventListeners()
+	self.click:AddClickListener(self.onClickSelf, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, self.updateSelect, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0.click:RemoveClickListener()
-	arg_3_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, arg_3_0.updateSelect, arg_3_0)
+function VersionActivity1_5DispatchHeroItem:removeEventListeners()
+	self.click:RemoveClickListener()
+	self:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, self.updateSelect, self)
 end
 
-function var_0_0.updateSelect(arg_4_0)
-	local var_4_0 = VersionActivity1_5HeroListModel.instance:getSelectedIndex(arg_4_0.mo)
+function VersionActivity1_5DispatchHeroItem:updateSelect()
+	local index = VersionActivity1_5HeroListModel.instance:getSelectedIndex(self.mo)
 
-	arg_4_0.isSelected = var_4_0 ~= nil
+	self.isSelected = index ~= nil
 
-	gohelper.setActive(arg_4_0._goselected, arg_4_0.isSelected)
+	gohelper.setActive(self._goselected, self.isSelected)
 
-	if arg_4_0.isSelected then
-		arg_4_0._txtindex.text = var_4_0
+	if self.isSelected then
+		self._txtindex.text = index
 	end
 end
 
-function var_0_0.onClickSelf(arg_5_0)
+function VersionActivity1_5DispatchHeroItem:onClickSelf()
 	if not VersionActivity1_5HeroListModel.instance:canChangeHeroMo() then
 		return
 	end
 
-	if arg_5_0.mo:isDispatched() then
+	if self.mo:isDispatched() then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_carddisappear)
 
-	if arg_5_0.isSelected then
-		VersionActivity1_5HeroListModel.instance:deselectMo(arg_5_0.mo)
+	if self.isSelected then
+		VersionActivity1_5HeroListModel.instance:deselectMo(self.mo)
 
 		return
 	end
 
 	if VersionActivity1_5HeroListModel.instance:canAddMo() then
-		VersionActivity1_5HeroListModel.instance:selectMo(arg_5_0.mo)
+		VersionActivity1_5HeroListModel.instance:selectMo(self.mo)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0.mo = arg_6_1
-	arg_6_0.config = arg_6_1.config
+function VersionActivity1_5DispatchHeroItem:onUpdateMO(mo)
+	self.mo = mo
+	self.config = mo.config
 
-	arg_6_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(arg_6_0.config.id .. "01"))
-	UISpriteSetMgr.instance:setCommonSprite(arg_6_0._imagecareer, "lssx_" .. arg_6_0.config.career)
+	self._simageicon:LoadImage(ResUrl.getRoomHeadIcon(self.config.id .. "01"))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. self.config.career)
 
-	arg_6_0.dispatched = arg_6_0.mo:isDispatched()
+	self.dispatched = self.mo:isDispatched()
 
-	if arg_6_0.dispatched then
-		arg_6_0.isSelected = false
+	if self.dispatched then
+		self.isSelected = false
 	else
-		arg_6_0.isSelected = VersionActivity1_5HeroListModel.instance:getSelectedIndex(arg_6_0.mo) ~= nil
+		local index = VersionActivity1_5HeroListModel.instance:getSelectedIndex(self.mo)
+
+		self.isSelected = index ~= nil
 	end
 
-	gohelper.setActive(arg_6_0._godispatched, arg_6_0.dispatched)
-	arg_6_0:updateSelect()
+	gohelper.setActive(self._godispatched, self.dispatched)
+	self:updateSelect()
 end
 
-function var_0_0.onDestroy(arg_7_0)
-	arg_7_0._simageicon:UnLoadImage()
+function VersionActivity1_5DispatchHeroItem:onDestroy()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_5DispatchHeroItem

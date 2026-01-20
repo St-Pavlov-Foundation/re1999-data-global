@@ -1,447 +1,461 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureOverBuildingItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureOverBuildingItem.lua
 
-local var_0_0 = class("RoomManufactureOverBuildingItem", LuaCompBase)
+module("modules.logic.room.view.manufacture.RoomManufactureOverBuildingItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
+local RoomManufactureOverBuildingItem = class("RoomManufactureOverBuildingItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomManufactureOverBuildingItem:init(go)
+	self.go = go
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._gocritterInfo = gohelper.findChild(arg_2_0.go, "critterInfo")
-	arg_2_0._gocritterItem = gohelper.findChild(arg_2_0.go, "critterInfo/#go_critterInfoItem")
-	arg_2_0._txtbuilding = gohelper.findChildText(arg_2_0.go, "manufactureInfo/progress/#txt_building")
-	arg_2_0._imagebuildingicon = gohelper.findChildImage(arg_2_0.go, "manufactureInfo/progress/#txt_building/#image_buildingicon")
-	arg_2_0._btnaccelerate = gohelper.findChildButtonWithAudio(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_accelerate")
-	arg_2_0._btndetail = gohelper.findChildButtonWithAudio(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail")
-	arg_2_0._goaccelerate = arg_2_0._btnaccelerate.gameObject
-	arg_2_0._btnwrong = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong")
-	arg_2_0._gowrongselect = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_select")
-	arg_2_0._gowrongunselect = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_unselect")
-	arg_2_0._btngoto = gohelper.findChildClickWithAudio(arg_2_0.go, "manufactureInfo/progress/#btn_goto/clickarea")
-	arg_2_0._goscrollslot = gohelper.findChild(arg_2_0.go, "manufactureInfo/#scroll_slot")
-	arg_2_0._scrollSlot = arg_2_0._goscrollslot:GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_2_0._goslotItemContent = gohelper.findChild(arg_2_0.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent")
-	arg_2_0._transslotItemContent = arg_2_0._goslotItemContent.transform
-	arg_2_0._goslotItem = gohelper.findChild(arg_2_0.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent/#go_slotItem")
+function RoomManufactureOverBuildingItem:_editableInitView()
+	self._gocritterInfo = gohelper.findChild(self.go, "critterInfo")
+	self._gocritterItem = gohelper.findChild(self.go, "critterInfo/#go_critterInfoItem")
+	self._txtbuilding = gohelper.findChildText(self.go, "manufactureInfo/progress/#txt_building")
+	self._imagebuildingicon = gohelper.findChildImage(self.go, "manufactureInfo/progress/#txt_building/#image_buildingicon")
+	self._btnaccelerate = gohelper.findChildButtonWithAudio(self.go, "manufactureInfo/progress/#txt_building/layout/#btn_accelerate")
+	self._btndetail = gohelper.findChildButtonWithAudio(self.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail")
+	self._goaccelerate = self._btnaccelerate.gameObject
+	self._btnwrong = gohelper.findChildClickWithDefaultAudio(self.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong")
+	self._gowrongselect = gohelper.findChild(self.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_select")
+	self._gowrongunselect = gohelper.findChild(self.go, "manufactureInfo/progress/#txt_building/layout/#btn_wrong/#go_unselect")
+	self._btngoto = gohelper.findChildClickWithAudio(self.go, "manufactureInfo/progress/#btn_goto/clickarea")
+	self._goscrollslot = gohelper.findChild(self.go, "manufactureInfo/#scroll_slot")
+	self._scrollSlot = self._goscrollslot:GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._goslotItemContent = gohelper.findChild(self.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent")
+	self._transslotItemContent = self._goslotItemContent.transform
+	self._goslotItem = gohelper.findChild(self.go, "manufactureInfo/#scroll_slot/slotViewport/slotContent/#go_slotItem")
 
-	gohelper.setActive(arg_2_0._goslotItem, false)
+	gohelper.setActive(self._goslotItem, false)
 
-	arg_2_0._gounselectdetail = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/unselect")
-	arg_2_0._goselectdetail = gohelper.findChild(arg_2_0.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/select")
+	self._gounselectdetail = gohelper.findChild(self.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/unselect")
+	self._goselectdetail = gohelper.findChild(self.go, "manufactureInfo/progress/#txt_building/layout/#btn_detail/select")
 
-	arg_2_0:clearVar()
-	arg_2_0:_setDetailSelect(false)
+	self:clearVar()
+	self:_setDetailSelect(false)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnaccelerate:AddClickListener(arg_3_0._btnaccelerateOnClick, arg_3_0)
-	arg_3_0._btnwrong:AddClickListener(arg_3_0._btnwrongOnClick, arg_3_0)
-	arg_3_0._btngoto:AddClickListener(arg_3_0._btngotoOnClick, arg_3_0)
-	arg_3_0._btndetail:AddClickListener(arg_3_0._btndetailOnClick, arg_3_0)
-	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, arg_3_0._onCloseDetatilView, arg_3_0)
-	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, arg_3_0._onWrongViewChange, arg_3_0)
+function RoomManufactureOverBuildingItem:addEventListeners()
+	self._btnaccelerate:AddClickListener(self._btnaccelerateOnClick, self)
+	self._btnwrong:AddClickListener(self._btnwrongOnClick, self)
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	self._btndetail:AddClickListener(self._btndetailOnClick, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, self._onCloseDetatilView, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, self._onWrongViewChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnaccelerate:RemoveClickListener()
-	arg_4_0._btnwrong:RemoveClickListener()
-	arg_4_0._btngoto:RemoveClickListener()
-	arg_4_0._btndetail:RemoveClickListener()
-	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, arg_4_0._onCloseDetatilView, arg_4_0)
-	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, arg_4_0._onWrongViewChange, arg_4_0)
+function RoomManufactureOverBuildingItem:removeEventListeners()
+	self._btnaccelerate:RemoveClickListener()
+	self._btnwrong:RemoveClickListener()
+	self._btngoto:RemoveClickListener()
+	self._btndetail:RemoveClickListener()
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.OnCloseManufactureBuildingDetailView, self._onCloseDetatilView, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.OnWrongTipViewChange, self._onWrongViewChange, self)
 end
 
-function var_0_0._btnaccelerateOnClick(arg_5_0)
-	local var_5_0 = arg_5_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:_btnaccelerateOnClick()
+	local curBuildingUid = self:getViewBuilding()
 
-	ManufactureController.instance:openManufactureAccelerateView(var_5_0)
-	arg_5_0:closePopView()
+	ManufactureController.instance:openManufactureAccelerateView(curBuildingUid)
+	self:closePopView()
 end
 
-function var_0_0._btnwrongOnClick(arg_6_0)
-	local var_6_0 = arg_6_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:_btnwrongOnClick()
+	local curBuildingUid = self:getViewBuilding()
 
-	ManufactureController.instance:clickWrongBtn(var_6_0, true)
+	ManufactureController.instance:clickWrongBtn(curBuildingUid, true)
 end
 
-function var_0_0._btngotoOnClick(arg_7_0)
-	local var_7_0, var_7_1 = arg_7_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:_btngotoOnClick()
+	local _, curBuildingMO = self:getViewBuilding()
 
 	ViewMgr.instance:closeView(ViewName.RoomOverView, true)
 
-	if ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView) then
+	local isOpenCritterBuildingView = ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView)
+
+	if isOpenCritterBuildingView then
 		ManufactureController.instance:closeCritterBuildingView(true)
 	end
 
-	local var_7_2 = false
+	local notUpdateCameraRecord = false
 
-	if arg_7_0.parentView and arg_7_0.parentView.viewContainer.viewParam then
-		var_7_2 = arg_7_0.parentView.viewContainer.viewParam.openFromRest
+	if self.parentView and self.parentView.viewContainer.viewParam then
+		notUpdateCameraRecord = self.parentView.viewContainer.viewParam.openFromRest
 	end
 
-	ManufactureController.instance:openManufactureBuildingViewByBuilding(var_7_1, var_7_2)
+	ManufactureController.instance:openManufactureBuildingViewByBuilding(curBuildingMO, notUpdateCameraRecord)
 end
 
-function var_0_0._btndetailOnClick(arg_8_0)
-	local var_8_0 = arg_8_0:getViewBuilding()
-	local var_8_1 = ManufactureController.instance:openRoomManufactureBuildingDetailView(var_8_0, true)
+function RoomManufactureOverBuildingItem:_btndetailOnClick()
+	local buildingUid = self:getViewBuilding()
+	local isOpen = ManufactureController.instance:openRoomManufactureBuildingDetailView(buildingUid, true)
 
-	arg_8_0:_setDetailSelect(var_8_1)
+	self:_setDetailSelect(isOpen)
 end
 
-function var_0_0._onCloseDetatilView(arg_9_0)
-	arg_9_0:_setDetailSelect(false)
+function RoomManufactureOverBuildingItem:_onCloseDetatilView()
+	self:_setDetailSelect(false)
 end
 
-function var_0_0.onManufactureInfoUpdate(arg_10_0)
-	arg_10_0:refreshSelectedSlot()
-	arg_10_0:refreshSelectedCritterSlot()
-	arg_10_0:_setSlotItems()
-	arg_10_0:_setCritterItem()
-	arg_10_0:refresh()
+function RoomManufactureOverBuildingItem:onManufactureInfoUpdate()
+	self:refreshSelectedSlot()
+	self:refreshSelectedCritterSlot()
+	self:_setSlotItems()
+	self:_setCritterItem()
+	self:refresh()
 end
 
-function var_0_0.onManufactureBuildingInfoChange(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:onManufactureBuildingInfoChange(changeBuildingDict)
+	local curBuildingUid = self:getViewBuilding()
 
-	if arg_11_1 and not arg_11_1[var_11_0] then
+	if changeBuildingDict and not changeBuildingDict[curBuildingUid] then
 		return
 	end
 
-	arg_11_0:refreshSelectedSlot()
-	arg_11_0:refreshSelectedCritterSlot()
-	arg_11_0:_setSlotItems()
-	arg_11_0:_setCritterItem()
-	arg_11_0:refresh()
+	self:refreshSelectedSlot()
+	self:refreshSelectedCritterSlot()
+	self:_setSlotItems()
+	self:_setCritterItem()
+	self:refresh()
 end
 
-function var_0_0.onTradeLevelChange(arg_12_0)
-	arg_12_0:_setCritterItem()
+function RoomManufactureOverBuildingItem:onTradeLevelChange()
+	self:_setCritterItem()
 end
 
-function var_0_0.onChangeSelectedSlotItem(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._slotItemList) do
-		iter_13_1:onChangeSelectedSlotItem()
+function RoomManufactureOverBuildingItem:onChangeSelectedSlotItem()
+	for _, slotItem in ipairs(self._slotItemList) do
+		slotItem:onChangeSelectedSlotItem()
 	end
 end
 
-function var_0_0._setDetailSelect(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._goselectdetail, arg_14_1)
-	gohelper.setActive(arg_14_0._gounselectdetail, not arg_14_1)
+function RoomManufactureOverBuildingItem:_setDetailSelect(iselect)
+	gohelper.setActive(self._goselectdetail, iselect)
+	gohelper.setActive(self._gounselectdetail, not iselect)
 end
 
-function var_0_0._onWrongViewChange(arg_15_0, arg_15_1)
-	arg_15_0:refreshWrongBtnSelect(arg_15_1)
+function RoomManufactureOverBuildingItem:_onWrongViewChange(buildingUid)
+	self:refreshWrongBtnSelect(buildingUid)
 end
 
-function var_0_0.setData(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	arg_16_0.buildingMO = arg_16_1
-	arg_16_0.index = arg_16_2
-	arg_16_0.parentView = arg_16_3
-	arg_16_0._scrollSlot.parentGameObject = arg_16_3._goscrollbuilding
-	arg_16_0._curViewManufactureState = nil
+function RoomManufactureOverBuildingItem:setData(buildingMO, index, parentView)
+	self.buildingMO = buildingMO
+	self.index = index
+	self.parentView = parentView
+	self._scrollSlot.parentGameObject = parentView._goscrollbuilding
+	self._curViewManufactureState = nil
 
-	arg_16_0:_setSlotItems()
-	arg_16_0:_setCritterItem()
-	arg_16_0:refresh()
+	self:_setSlotItems()
+	self:_setCritterItem()
+	self:refresh()
 end
 
-function var_0_0._setSlotItems(arg_17_0)
-	local var_17_0, var_17_1 = arg_17_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:_setSlotItems()
+	local _, curBuildingMO = self:getViewBuilding()
 
-	if not var_17_1 then
-		arg_17_0:recycleAllSlotItem()
+	if not curBuildingMO then
+		self:recycleAllSlotItem()
 
 		return
 	end
 
-	local var_17_2 = var_17_1.buildingId
-	local var_17_3 = var_17_1:getAllUnlockedSlotIdList()
-	local var_17_4 = ManufactureConfig.instance:getBuildingTotalSlotCount(var_17_2)
+	local buildingId = curBuildingMO.buildingId
+	local unlockSlotList = curBuildingMO:getAllUnlockedSlotIdList()
+	local totalSlotCount = ManufactureConfig.instance:getBuildingTotalSlotCount(buildingId)
 
-	for iter_17_0 = 1, var_17_4 do
-		local var_17_5 = arg_17_0:getSlotItem(iter_17_0)
-		local var_17_6 = var_17_3[iter_17_0]
+	for i = 1, totalSlotCount do
+		local slotItem = self:getSlotItem(i)
+		local slotId = unlockSlotList[i]
 
-		var_17_5:setData(var_17_6, iter_17_0)
+		slotItem:setData(slotId, i)
 	end
 
-	local var_17_7 = #arg_17_0._slotItemList
+	local curSlotCount = #self._slotItemList
 
-	if var_17_4 < var_17_7 then
-		for iter_17_1 = var_17_4 + 1, var_17_7 do
-			local var_17_8 = arg_17_0._slotItemList[iter_17_1]
+	if totalSlotCount < curSlotCount then
+		for i = totalSlotCount + 1, curSlotCount do
+			local slotItem = self._slotItemList[i]
 
-			arg_17_0:recycleSlotItem(var_17_8)
+			self:recycleSlotItem(slotItem)
 		end
 	end
 
-	arg_17_0:_setSlotContentSize()
+	self:_setSlotContentSize()
 end
 
-function var_0_0._setSlotContentSize(arg_18_0)
-	local var_18_0 = #arg_18_0._slotItemList
-	local var_18_1 = (recthelper.getWidth(arg_18_0._goslotItem.transform) + RoomManufactureEnum.OverviewSlotItemSpace) * var_18_0 - RoomManufactureEnum.OverviewSlotItemSpace
+function RoomManufactureOverBuildingItem:_setSlotContentSize()
+	local slotItemCount = #self._slotItemList
+	local itemHeight = recthelper.getWidth(self._goslotItem.transform)
+	local totalSize = (itemHeight + RoomManufactureEnum.OverviewSlotItemSpace) * slotItemCount - RoomManufactureEnum.OverviewSlotItemSpace
 
-	recthelper.setWidth(arg_18_0._transslotItemContent, var_18_1)
+	recthelper.setWidth(self._transslotItemContent, totalSize)
 end
 
-function var_0_0._setCritterItem(arg_19_0)
-	local var_19_0, var_19_1 = arg_19_0:getViewBuilding()
-	local var_19_2 = 0
+function RoomManufactureOverBuildingItem:_setCritterItem()
+	local _, curBuildingMO = self:getViewBuilding()
+	local critterCount = 0
 
-	if var_19_1 then
-		var_19_2 = var_19_1:getCanPlaceCritterCount()
+	if curBuildingMO then
+		critterCount = curBuildingMO:getCanPlaceCritterCount()
 	end
 
-	local var_19_3 = arg_19_0._critterItemList and #arg_19_0._critterItemList
+	local oldCount = self._critterItemList and #self._critterItemList
 
-	if var_19_3 and var_19_2 < var_19_3 then
-		for iter_19_0 = var_19_2 + 1, var_19_3 do
-			arg_19_0._critterItemList[iter_19_0]:reset()
+	if oldCount and critterCount < oldCount then
+		for i = critterCount + 1, oldCount do
+			local oldCritterItem = self._critterItemList[i]
+
+			oldCritterItem:reset()
 		end
 	end
 
-	arg_19_0._critterItemList = {}
+	self._critterItemList = {}
 
-	local var_19_4 = {}
+	local critterSlotIdList = {}
 
-	for iter_19_1 = 1, var_19_2 do
-		var_19_4[iter_19_1] = iter_19_1 - 1
+	for i = 1, critterCount do
+		critterSlotIdList[i] = i - 1
 	end
 
-	gohelper.CreateObjList(arg_19_0, arg_19_0._onSetCritterItem, var_19_4, arg_19_0._gocritterInfo, arg_19_0._gocritterItem, RoomManufactureCritterInfo)
+	gohelper.CreateObjList(self, self._onSetCritterItem, critterSlotIdList, self._gocritterInfo, self._gocritterItem, RoomManufactureCritterInfo)
 end
 
-function var_0_0._onSetCritterItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	arg_20_0._critterItemList[arg_20_3] = arg_20_1
+function RoomManufactureOverBuildingItem:_onSetCritterItem(obj, data, index)
+	self._critterItemList[index] = obj
 
-	arg_20_1:setData(arg_20_2, arg_20_3, arg_20_0)
+	obj:setData(data, index, self)
 end
 
-function var_0_0.closePopView(arg_21_0)
+function RoomManufactureOverBuildingItem:closePopView()
 	ManufactureController.instance:clearSelectedSlotItem()
 	ManufactureController.instance:clearSelectCritterSlotItem()
 end
 
-function var_0_0.getSlotItem(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._slotItemList[arg_22_1]
+function RoomManufactureOverBuildingItem:getSlotItem(index)
+	local slotItem = self._slotItemList[index]
 
-	if not var_22_0 then
-		var_22_0 = arg_22_0:getSlotItemFromPool()
-		arg_22_0._slotItemList[arg_22_1] = var_22_0
+	if not slotItem then
+		slotItem = self:getSlotItemFromPool()
+		self._slotItemList[index] = slotItem
 	end
 
-	return var_22_0
+	return slotItem
 end
 
-function var_0_0.getSlotItemFromPool(arg_23_0)
-	if next(arg_23_0._slotItemPool) then
-		return (table.remove(arg_23_0._slotItemPool))
+function RoomManufactureOverBuildingItem:getSlotItemFromPool()
+	if next(self._slotItemPool) then
+		local slotItem = table.remove(self._slotItemPool)
+
+		return slotItem
 	else
-		return arg_23_0:createSlotItem()
+		return self:createSlotItem()
 	end
 end
 
-function var_0_0.createSlotItem(arg_24_0)
-	local var_24_0 = gohelper.clone(arg_24_0._goslotItem, arg_24_0._goslotItemContent)
+function RoomManufactureOverBuildingItem:createSlotItem()
+	local slotItemGo = gohelper.clone(self._goslotItem, self._goslotItemContent)
+	local slotItem = RoomManufactureOverSlotItem.New(slotItemGo, self)
 
-	return (RoomManufactureOverSlotItem.New(var_24_0, arg_24_0))
+	return slotItem
 end
 
-function var_0_0.recycleSlotItem(arg_25_0, arg_25_1)
-	arg_25_1:reset(true)
-	tabletool.removeValue(arg_25_0._slotItemList, arg_25_1)
-	table.insert(arg_25_0._slotItemPool, arg_25_1)
+function RoomManufactureOverBuildingItem:recycleSlotItem(slotItem)
+	slotItem:reset(true)
+	tabletool.removeValue(self._slotItemList, slotItem)
+	table.insert(self._slotItemPool, slotItem)
 end
 
-function var_0_0.recycleAllSlotItem(arg_26_0)
-	if arg_26_0._slotItemList then
-		for iter_26_0, iter_26_1 in ipairs(arg_26_0._slotItemList) do
-			iter_26_1:reset(true)
-			table.insert(arg_26_0._slotItemPool, iter_26_1)
+function RoomManufactureOverBuildingItem:recycleAllSlotItem()
+	if self._slotItemList then
+		for _, slotItem in ipairs(self._slotItemList) do
+			slotItem:reset(true)
+			table.insert(self._slotItemPool, slotItem)
 		end
 	end
 
-	arg_26_0._slotItemList = {}
+	self._slotItemList = {}
 end
 
-function var_0_0.refresh(arg_27_0)
-	arg_27_0:refreshTitle()
-	arg_27_0:refreshCritter()
-	arg_27_0:checkManufactureState()
-	arg_27_0:refreshSlotItems()
-	arg_27_0:refreshWrongBtnShow()
-	arg_27_0:refreshDetailBtn()
+function RoomManufactureOverBuildingItem:refresh()
+	self:refreshTitle()
+	self:refreshCritter()
+	self:checkManufactureState()
+	self:refreshSlotItems()
+	self:refreshWrongBtnShow()
+	self:refreshDetailBtn()
 end
 
-function var_0_0.refreshTitle(arg_28_0)
-	local var_28_0 = ""
-	local var_28_1 = 0
-	local var_28_2
-	local var_28_3, var_28_4 = arg_28_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:refreshTitle()
+	local name = ""
+	local level = 0
+	local buildingId
+	local _, curBuildingMO = self:getViewBuilding()
 
-	if var_28_4 then
-		var_28_0 = var_28_4.config.useDesc
-		var_28_1 = var_28_4.level
-		var_28_2 = var_28_4.buildingId
+	if curBuildingMO then
+		name = curBuildingMO.config.useDesc
+		level = curBuildingMO.level
+		buildingId = curBuildingMO.buildingId
 	end
 
-	local var_28_5 = ""
+	local levelStr = ""
+	local maxLevel = ManufactureConfig.instance:getBuildingMaxLevel(buildingId)
 
-	if var_28_1 >= ManufactureConfig.instance:getBuildingMaxLevel(var_28_2) then
-		var_28_5 = luaLang("lv_max")
+	if maxLevel <= level then
+		levelStr = luaLang("lv_max")
 	else
-		var_28_5 = formatLuaLang("v1a5_aizila_level", var_28_1)
+		levelStr = formatLuaLang("v1a5_aizila_level", level)
 	end
 
-	arg_28_0._txtbuilding.text = string.format("%s <color=#E19653>%s</color>", var_28_0, var_28_5)
+	self._txtbuilding.text = string.format("%s <color=#E19653>%s</color>", name, levelStr)
 
-	local var_28_6 = ManufactureConfig.instance:getManufactureBuildingIcon(var_28_4.buildingId)
+	local manuBuildingIcon = ManufactureConfig.instance:getManufactureBuildingIcon(curBuildingMO.buildingId)
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_28_0._imagebuildingicon, var_28_6)
+	UISpriteSetMgr.instance:setRoomSprite(self._imagebuildingicon, manuBuildingIcon)
 end
 
-function var_0_0.refreshCritter(arg_29_0)
+function RoomManufactureOverBuildingItem:refreshCritter()
 	return
 end
 
-function var_0_0.checkManufactureState(arg_30_0)
-	local var_30_0 = false
-	local var_30_1, var_30_2 = arg_30_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:checkManufactureState()
+	local newManufactureState = false
+	local _, curBuildingMO = self:getViewBuilding()
 
-	if var_30_2 then
-		var_30_0 = var_30_2:getManufactureState()
+	if curBuildingMO then
+		newManufactureState = curBuildingMO:getManufactureState()
 	end
 
-	if arg_30_0._curViewManufactureState == var_30_0 then
+	if self._curViewManufactureState == newManufactureState then
 		return
 	end
 
-	arg_30_0._curViewManufactureState = var_30_0
+	self._curViewManufactureState = newManufactureState
 
-	local var_30_3 = arg_30_0._curViewManufactureState == RoomManufactureEnum.ManufactureState.Running
+	local isRunning = self._curViewManufactureState == RoomManufactureEnum.ManufactureState.Running
 
-	gohelper.setActive(arg_30_0._goaccelerate, var_30_3)
+	gohelper.setActive(self._goaccelerate, isRunning)
 end
 
-function var_0_0.refreshSlotItems(arg_31_0)
-	for iter_31_0, iter_31_1 in ipairs(arg_31_0._slotItemList) do
-		iter_31_1:refresh()
+function RoomManufactureOverBuildingItem:refreshSlotItems()
+	for _, slotItem in ipairs(self._slotItemList) do
+		slotItem:refresh()
 	end
 end
 
-function var_0_0.refreshSelectedSlot(arg_32_0)
-	local var_32_0 = arg_32_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:refreshSelectedSlot()
+	local curBuildingUid = self:getViewBuilding()
+	local selectedBuildingUid = ManufactureModel.instance:getSelectedSlot()
 
-	if ManufactureModel.instance:getSelectedSlot() == var_32_0 then
-		ManufactureController.instance:refreshSelectedSlotId(var_32_0)
+	if selectedBuildingUid == curBuildingUid then
+		ManufactureController.instance:refreshSelectedSlotId(curBuildingUid)
 	end
 end
 
-function var_0_0.refreshSelectedCritterSlot(arg_33_0)
-	local var_33_0 = arg_33_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:refreshSelectedCritterSlot()
+	local curBuildingUid = self:getViewBuilding()
+	local selectedBuildingUid = ManufactureModel.instance:getSelectedCritterSlot()
 
-	if ManufactureModel.instance:getSelectedCritterSlot() == var_33_0 then
-		ManufactureController.instance:refreshSelectedCritterSlotId(var_33_0)
+	if selectedBuildingUid == curBuildingUid then
+		ManufactureController.instance:refreshSelectedCritterSlotId(curBuildingUid)
 	end
 end
 
-function var_0_0.refreshWrongBtnShow(arg_34_0)
-	local var_34_0 = arg_34_0:getViewBuilding()
-	local var_34_1 = ManufactureModel.instance:getManufactureWrongTipItemList(var_34_0)
+function RoomManufactureOverBuildingItem:refreshWrongBtnShow()
+	local curBuildingUid = self:getViewBuilding()
+	local tipItemList = ManufactureModel.instance:getManufactureWrongTipItemList(curBuildingUid)
 
-	arg_34_0:refreshWrongBtnSelect()
+	self:refreshWrongBtnSelect()
 
-	local var_34_2 = #var_34_1 > 0
+	local isShow = #tipItemList > 0
 
-	gohelper.setActive(arg_34_0._btnwrong, var_34_2)
+	gohelper.setActive(self._btnwrong, isShow)
 end
 
-function var_0_0.refreshWrongBtnSelect(arg_35_0, arg_35_1)
-	local var_35_0 = arg_35_0:getViewBuilding()
-	local var_35_1 = ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView) and arg_35_1 == var_35_0
+function RoomManufactureOverBuildingItem:refreshWrongBtnSelect(buildingUid)
+	local curBuildingUid = self:getViewBuilding()
+	local isOpen = ViewMgr.instance:isOpen(ViewName.RoomManufactureWrongTipView)
+	local isSelected = isOpen and buildingUid == curBuildingUid
 
-	gohelper.setActive(arg_35_0._gowrongselect, var_35_1)
-	gohelper.setActive(arg_35_0._gowrongunselect, not var_35_1)
+	gohelper.setActive(self._gowrongselect, isSelected)
+	gohelper.setActive(self._gowrongunselect, not isSelected)
 end
 
-function var_0_0.refreshDetailBtn(arg_36_0)
-	local var_36_0, var_36_1 = arg_36_0:getViewBuilding()
-	local var_36_2 = var_36_1:getSlot2CritterDict()
-	local var_36_3 = next(var_36_2)
+function RoomManufactureOverBuildingItem:refreshDetailBtn()
+	local _, curBuildingMO = self:getViewBuilding()
+	local critterDict = curBuildingMO:getSlot2CritterDict()
+	local hasCritter = next(critterDict)
 
-	gohelper.setActive(arg_36_0._btndetail, var_36_3)
+	gohelper.setActive(self._btndetail, hasCritter)
 end
 
-function var_0_0.everySecondCall(arg_37_0)
-	for iter_37_0, iter_37_1 in ipairs(arg_37_0._slotItemList) do
-		iter_37_1:everySecondCall()
+function RoomManufactureOverBuildingItem:everySecondCall()
+	for _, slotItem in ipairs(self._slotItemList) do
+		slotItem:everySecondCall()
 	end
 end
 
-function var_0_0.getViewBuilding(arg_38_0)
-	local var_38_0
+function RoomManufactureOverBuildingItem:getViewBuilding()
+	local viewBuildingUid
 
-	if arg_38_0.buildingMO then
-		var_38_0 = arg_38_0.buildingMO.uid
+	if self.buildingMO then
+		viewBuildingUid = self.buildingMO.uid
 	end
 
-	return var_38_0, arg_38_0.buildingMO
+	return viewBuildingUid, self.buildingMO
 end
 
-function var_0_0.getSlotItemContentTrans(arg_39_0)
-	return arg_39_0._transslotItemContent
+function RoomManufactureOverBuildingItem:getSlotItemContentTrans()
+	return self._transslotItemContent
 end
 
-function var_0_0.getIndex(arg_40_0)
-	return arg_40_0.index
+function RoomManufactureOverBuildingItem:getIndex()
+	return self.index
 end
 
-function var_0_0.isShowAddPop(arg_41_0)
-	return arg_41_0.parentView:isShowAddPop()
+function RoomManufactureOverBuildingItem:isShowAddPop()
+	return self.parentView:isShowAddPop()
 end
 
-function var_0_0.setViewBuildingUid(arg_42_0)
-	local var_42_0 = arg_42_0:getViewBuilding()
+function RoomManufactureOverBuildingItem:setViewBuildingUid()
+	local curBuildingUid = self:getViewBuilding()
 
-	arg_42_0.parentView:setViewBuildingUid(var_42_0)
+	self.parentView:setViewBuildingUid(curBuildingUid)
 end
 
-function var_0_0.clearVar(arg_43_0)
-	arg_43_0.index = nil
-	arg_43_0._curViewManufactureState = nil
+function RoomManufactureOverBuildingItem:clearVar()
+	self.index = nil
+	self._curViewManufactureState = nil
 
-	arg_43_0:clearSlotPool()
-	arg_43_0:clearSlotItemList()
+	self:clearSlotPool()
+	self:clearSlotItemList()
 end
 
-function var_0_0.clearSlotPool(arg_44_0)
-	if arg_44_0._slotItemPool then
-		for iter_44_0, iter_44_1 in ipairs(arg_44_0._slotItemPool) do
-			iter_44_1:destroy()
+function RoomManufactureOverBuildingItem:clearSlotPool()
+	if self._slotItemPool then
+		for _, slotItem in ipairs(self._slotItemPool) do
+			slotItem:destroy()
 		end
 	end
 
-	arg_44_0._slotItemPool = {}
+	self._slotItemPool = {}
 end
 
-function var_0_0.clearSlotItemList(arg_45_0)
-	if arg_45_0._slotItemList then
-		for iter_45_0, iter_45_1 in ipairs(arg_45_0._slotItemList) do
-			iter_45_1:destroy()
+function RoomManufactureOverBuildingItem:clearSlotItemList()
+	if self._slotItemList then
+		for _, slotItem in ipairs(self._slotItemList) do
+			slotItem:destroy()
 		end
 	end
 
-	arg_45_0._slotItemList = {}
+	self._slotItemList = {}
 end
 
-function var_0_0.onDestroy(arg_46_0)
-	arg_46_0:clearVar()
+function RoomManufactureOverBuildingItem:onDestroy()
+	self:clearVar()
 end
 
-return var_0_0
+return RoomManufactureOverBuildingItem

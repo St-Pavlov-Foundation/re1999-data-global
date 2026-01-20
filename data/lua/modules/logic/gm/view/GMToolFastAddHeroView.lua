@@ -1,375 +1,377 @@
-﻿module("modules.logic.gm.view.GMToolFastAddHeroView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMToolFastAddHeroView.lua
 
-local var_0_0 = class("GMToolFastAddHeroView", BaseView)
+module("modules.logic.gm.view.GMToolFastAddHeroView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goinputcontainer = gohelper.findChild(arg_1_0.viewGO, "container/#go_inputcontainer")
-	arg_1_0._goinptucontainer = gohelper.findChild(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer")
-	arg_1_0._goheroid = gohelper.findChild(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_heroid")
-	arg_1_0._inputheroid = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_heroid/#input_heroid")
-	arg_1_0._goherolv = gohelper.findChild(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_herolv")
-	arg_1_0._inputherolv = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_herolv/#input_herolv")
-	arg_1_0._goranklv = gohelper.findChild(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_ranklv")
-	arg_1_0._inputranklv = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_ranklv/#input_ranklv")
-	arg_1_0._gotalentlv = gohelper.findChild(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_talentlv")
-	arg_1_0._inputtalentlv = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_talentlv/#input_talentlv")
-	arg_1_0._goexskilllv = gohelper.findChild(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_exskilllv")
-	arg_1_0._inputexskilllv = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_exskilllv/#input_exskilllv")
-	arg_1_0._btnfastadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#go_inputcontainer/#btn_fastadd")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#go_inputcontainer/#btn_switch")
-	arg_1_0._goherolistcontainer = gohelper.findChild(arg_1_0.viewGO, "container/#go_herolistcontainer")
-	arg_1_0._inputfilter = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "container/#go_herolistcontainer/#input_filter")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem")
-	arg_1_0._txtheroname = gohelper.findChildText(arg_1_0.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_heroname")
-	arg_1_0._txtherolv = gohelper.findChildText(arg_1_0.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_herolv")
-	arg_1_0._txtranklv = gohelper.findChildText(arg_1_0.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_ranklv")
-	arg_1_0._txttalentlv = gohelper.findChildText(arg_1_0.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_talentlv")
-	arg_1_0._txtexskilllv = gohelper.findChildText(arg_1_0.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_exskilllv")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_close")
-	arg_1_0._goaddItem = gohelper.findChild(arg_1_0.viewGO, "container/#go_addItem")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "container/#go_addItem/scroll/#go_item")
+local GMToolFastAddHeroView = class("GMToolFastAddHeroView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function GMToolFastAddHeroView:onInitView()
+	self._goinputcontainer = gohelper.findChild(self.viewGO, "container/#go_inputcontainer")
+	self._goinptucontainer = gohelper.findChild(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer")
+	self._goheroid = gohelper.findChild(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_heroid")
+	self._inputheroid = gohelper.findChildTextMeshInputField(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_heroid/#input_heroid")
+	self._goherolv = gohelper.findChild(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_herolv")
+	self._inputherolv = gohelper.findChildTextMeshInputField(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_herolv/#input_herolv")
+	self._goranklv = gohelper.findChild(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_ranklv")
+	self._inputranklv = gohelper.findChildTextMeshInputField(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_ranklv/#input_ranklv")
+	self._gotalentlv = gohelper.findChild(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_talentlv")
+	self._inputtalentlv = gohelper.findChildTextMeshInputField(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_talentlv/#input_talentlv")
+	self._goexskilllv = gohelper.findChild(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_exskilllv")
+	self._inputexskilllv = gohelper.findChildTextMeshInputField(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_exskilllv/#input_exskilllv")
+	self._btnfastadd = gohelper.findChildButtonWithAudio(self.viewGO, "container/#go_inputcontainer/#btn_fastadd")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "container/#go_inputcontainer/#btn_switch")
+	self._goherolistcontainer = gohelper.findChild(self.viewGO, "container/#go_herolistcontainer")
+	self._inputfilter = gohelper.findChildTextMeshInputField(self.viewGO, "container/#go_herolistcontainer/#input_filter")
+	self._goheroitem = gohelper.findChild(self.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem")
+	self._txtheroname = gohelper.findChildText(self.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_heroname")
+	self._txtherolv = gohelper.findChildText(self.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_herolv")
+	self._txtranklv = gohelper.findChildText(self.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_ranklv")
+	self._txttalentlv = gohelper.findChildText(self.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_talentlv")
+	self._txtexskilllv = gohelper.findChildText(self.viewGO, "container/#go_herolistcontainer/scroll/Viewport/Content/#go_heroitem/#txt_exskilllv")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "container/#btn_close")
+	self._goaddItem = gohelper.findChild(self.viewGO, "container/#go_addItem")
+	self._goitem = gohelper.findChild(self.viewGO, "container/#go_addItem/scroll/#go_item")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfastadd:AddClickListener(arg_2_0._btnfastaddOnClick, arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function GMToolFastAddHeroView:addEvents()
+	self._btnfastadd:AddClickListener(self._btnfastaddOnClick, self)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfastadd:RemoveClickListener()
-	arg_3_0._btnswitch:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function GMToolFastAddHeroView:removeEvents()
+	self._btnfastadd:RemoveClickListener()
+	self._btnswitch:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function GMToolFastAddHeroView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnfastaddOnClick(arg_5_0)
-	if arg_5_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-		local var_5_0 = tonumber(arg_5_0._inputheroid:GetText())
+function GMToolFastAddHeroView:_btnfastaddOnClick()
+	if self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
+		local heroId = tonumber(self._inputheroid:GetText())
 
-		if not var_5_0 then
+		if not heroId then
 			return
 		end
 
-		local var_5_1 = tonumber(arg_5_0._inputherolv:GetText()) or 1
-		local var_5_2 = tonumber(arg_5_0._inputranklv:GetText()) or 1
-		local var_5_3 = tonumber(arg_5_0._inputtalentlv:GetText()) or 1
-		local var_5_4 = tonumber(arg_5_0._inputexskilllv:GetText()) or 1
+		local heroLv = tonumber(self._inputherolv:GetText()) or 1
+		local rankLv = tonumber(self._inputranklv:GetText()) or 1
+		local talentLv = tonumber(self._inputtalentlv:GetText()) or 1
+		local exskillLv = tonumber(self._inputexskilllv:GetText()) or 1
 
-		GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", var_5_1, var_5_2, var_5_3, var_5_4))
-		GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", var_5_0, var_5_1, var_5_2, var_5_3, var_5_4))
-	elseif arg_5_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
-		local var_5_5 = tonumber(arg_5_0._inputheroid:GetText())
+		GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", heroLv, rankLv, talentLv, exskillLv))
+		GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", heroId, heroLv, rankLv, talentLv, exskillLv))
+	elseif self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
+		local equipId = tonumber(self._inputheroid:GetText())
 
-		if not var_5_5 then
+		if not equipId then
 			return
 		end
 
-		local var_5_6 = tonumber(arg_5_0._inputherolv:GetText()) or 1
-		local var_5_7 = tonumber(arg_5_0._inputranklv:GetText()) or 0
+		local equipLv = tonumber(self._inputherolv:GetText()) or 1
+		local refineLv = tonumber(self._inputranklv:GetText()) or 0
 
-		GMRpc.instance:sendGMRequest(string.format("add equip %d#%d#%d", var_5_5, var_5_6, var_5_7))
+		GMRpc.instance:sendGMRequest(string.format("add equip %d#%d#%d", equipId, equipLv, refineLv))
 	end
 end
 
-function var_0_0._btnswitchOnClick(arg_6_0)
+function GMToolFastAddHeroView:_btnswitchOnClick()
 	GMFastAddHeroHadHeroItemModel.instance:changeShowType()
 
-	arg_6_0.showType = GMFastAddHeroHadHeroItemModel.instance:getShowType()
-	arg_6_0.filterText = ""
+	self.showType = GMFastAddHeroHadHeroItemModel.instance:getShowType()
+	self.filterText = ""
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._txtheroidlabel = gohelper.findChildText(arg_7_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_heroid/label")
-	arg_7_0._txtranklvlabel = gohelper.findChildText(arg_7_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_ranklv/label")
-	arg_7_0._txttalentlvlabel = gohelper.findChildText(arg_7_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_talentlv/label")
-	arg_7_0._txtexskilllvlabel = gohelper.findChildText(arg_7_0.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_exskilllv/label")
-	arg_7_0._txtnewlabel = gohelper.findChildText(arg_7_0.viewGO, "container/#go_inputcontainer/newlabelbutton/#txt_newlabel")
-	arg_7_0._txthadlabel = gohelper.findChildText(arg_7_0.viewGO, "container/#go_herolistcontainer/hadlabelbutton/#txt_hadlabel")
-	arg_7_0._txtplaceholder = gohelper.findChildText(arg_7_0.viewGO, "container/#go_herolistcontainer/#input_filter/textarea/Placeholder")
+function GMToolFastAddHeroView:_editableInitView()
+	self._txtheroidlabel = gohelper.findChildText(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_heroid/label")
+	self._txtranklvlabel = gohelper.findChildText(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_ranklv/label")
+	self._txttalentlvlabel = gohelper.findChildText(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_talentlv/label")
+	self._txtexskilllvlabel = gohelper.findChildText(self.viewGO, "container/#go_inputcontainer/#go_inptucontainer/#go_exskilllv/label")
+	self._txtnewlabel = gohelper.findChildText(self.viewGO, "container/#go_inputcontainer/newlabelbutton/#txt_newlabel")
+	self._txthadlabel = gohelper.findChildText(self.viewGO, "container/#go_herolistcontainer/hadlabelbutton/#txt_hadlabel")
+	self._txtplaceholder = gohelper.findChildText(self.viewGO, "container/#go_herolistcontainer/#input_filter/textarea/Placeholder")
 
-	gohelper.setActive(arg_7_0._goaddItem, false)
-	gohelper.setActive(arg_7_0._goitem, false)
-	gohelper.setActive(arg_7_0._goheroitem, false)
+	gohelper.setActive(self._goaddItem, false)
+	gohelper.setActive(self._goitem, false)
+	gohelper.setActive(self._goheroitem, false)
 
-	arg_7_0.heroIdClick = gohelper.getClick(arg_7_0._goheroid)
+	self.heroIdClick = gohelper.getClick(self._goheroid)
 
-	arg_7_0.heroIdClick:AddClickListener(arg_7_0.onClickHeroId, arg_7_0)
+	self.heroIdClick:AddClickListener(self.onClickHeroId, self)
 
-	arg_7_0.addItemClick = gohelper.getClick(arg_7_0._goaddItem)
+	self.addItemClick = gohelper.getClick(self._goaddItem)
 
-	arg_7_0.addItemClick:AddClickListener(arg_7_0.onClickAddItem, arg_7_0)
+	self.addItemClick:AddClickListener(self.onClickAddItem, self)
 
-	arg_7_0.inputHeroIdClick = gohelper.getClick(arg_7_0._inputheroid.gameObject)
+	self.inputHeroIdClick = gohelper.getClick(self._inputheroid.gameObject)
 
-	arg_7_0.inputHeroIdClick:AddClickListener(arg_7_0.onClickHeroId, arg_7_0)
-	arg_7_0._inputfilter:AddOnValueChanged(arg_7_0.inputFilterValueChange, arg_7_0)
+	self.inputHeroIdClick:AddClickListener(self.onClickHeroId, self)
+	self._inputfilter:AddOnValueChanged(self.inputFilterValueChange, self)
 
-	arg_7_0.filterText = ""
+	self.filterText = ""
 end
 
-function var_0_0.onClickHeroId(arg_8_0)
-	arg_8_0:showAddItemContainer()
+function GMToolFastAddHeroView:onClickHeroId()
+	self:showAddItemContainer()
 end
 
-function var_0_0.onClickAddItem(arg_9_0)
-	arg_9_0:hideAddItemContainer()
+function GMToolFastAddHeroView:onClickAddItem()
+	self:hideAddItemContainer()
 end
 
-function var_0_0.inputFilterValueChange(arg_10_0, arg_10_1)
-	if arg_10_0.filterText ~= arg_10_1 then
-		arg_10_0.filterText = arg_10_1
+function GMToolFastAddHeroView:inputFilterValueChange(text)
+	if self.filterText ~= text then
+		self.filterText = text
 
-		arg_10_0:refreshHaveHeroList()
+		self:refreshHaveHeroList()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function GMToolFastAddHeroView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	GMAddItemModel.instance:setFastAddHeroView(arg_12_0)
-	GMFastAddHeroHadHeroItemModel.instance:setFastAddHeroView(arg_12_0)
+function GMToolFastAddHeroView:onOpen()
+	GMAddItemModel.instance:setFastAddHeroView(self)
+	GMFastAddHeroHadHeroItemModel.instance:setFastAddHeroView(self)
 	GMFastAddHeroHadHeroItemModel.instance:setShowType(GMFastAddHeroHadHeroItemModel.ShowType.Hero)
 
-	arg_12_0.showType = GMFastAddHeroHadHeroItemModel.instance:getShowType()
+	self.showType = GMFastAddHeroHadHeroItemModel.instance:getShowType()
 
-	arg_12_0:refreshUI()
-	arg_12_0:resetInputText()
-	arg_12_0._inputfilter:SetText("")
-	arg_12_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_12_0.refreshHaveHeroList, arg_12_0)
-	arg_12_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_12_0.refreshHaveHeroList, arg_12_0)
+	self:refreshUI()
+	self:resetInputText()
+	self._inputfilter:SetText("")
+	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self.refreshHaveHeroList, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self.refreshHaveHeroList, self)
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0:refreshAddItemCoList()
-	arg_13_0:refreshHaveHeroList()
-	arg_13_0:refreshLabelUI()
+function GMToolFastAddHeroView:refreshUI()
+	self:refreshAddItemCoList()
+	self:refreshHaveHeroList()
+	self:refreshLabelUI()
 end
 
-function var_0_0.refreshLabelUI(arg_14_0)
-	if arg_14_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-		arg_14_0:showHeroLabelUI()
-	elseif arg_14_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
-		arg_14_0:showEquipLabelUI()
+function GMToolFastAddHeroView:refreshLabelUI()
+	if self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
+		self:showHeroLabelUI()
+	elseif self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
+		self:showEquipLabelUI()
 	else
-		arg_14_0:showHeroLabelUI()
+		self:showHeroLabelUI()
 	end
 end
 
-function var_0_0.showEquipLabelUI(arg_15_0)
-	arg_15_0._txtheroidlabel.text = "装备ID"
-	arg_15_0._txtranklvlabel.text = "精炼"
-	arg_15_0._txttalentlvlabel.text = ""
-	arg_15_0._txtexskilllvlabel.text = ""
+function GMToolFastAddHeroView:showEquipLabelUI()
+	self._txtheroidlabel.text = "装备ID"
+	self._txtranklvlabel.text = "精炼"
+	self._txttalentlvlabel.text = ""
+	self._txtexskilllvlabel.text = ""
 
-	gohelper.setActive(arg_15_0._inputexskilllv.gameObject, false)
-	gohelper.setActive(arg_15_0._inputtalentlv.gameObject, false)
+	gohelper.setActive(self._inputexskilllv.gameObject, false)
+	gohelper.setActive(self._inputtalentlv.gameObject, false)
 
-	arg_15_0._txtnewlabel.text = "新增装备"
-	arg_15_0._txthadlabel.text = "已有装备"
-	arg_15_0._txtplaceholder.text = "搜索装备..."
+	self._txtnewlabel.text = "新增装备"
+	self._txthadlabel.text = "已有装备"
+	self._txtplaceholder.text = "搜索装备..."
 end
 
-function var_0_0.showHeroLabelUI(arg_16_0)
-	arg_16_0._txtheroidlabel.text = "角色ID"
-	arg_16_0._txtranklvlabel.text = "洞悉"
-	arg_16_0._txttalentlvlabel.text = "共鸣"
-	arg_16_0._txtexskilllvlabel.text = "塑造"
+function GMToolFastAddHeroView:showHeroLabelUI()
+	self._txtheroidlabel.text = "角色ID"
+	self._txtranklvlabel.text = "洞悉"
+	self._txttalentlvlabel.text = "共鸣"
+	self._txtexskilllvlabel.text = "塑造"
 
-	gohelper.setActive(arg_16_0._inputexskilllv.gameObject, true)
-	gohelper.setActive(arg_16_0._inputtalentlv.gameObject, true)
+	gohelper.setActive(self._inputexskilllv.gameObject, true)
+	gohelper.setActive(self._inputtalentlv.gameObject, true)
 
-	arg_16_0._txtnewlabel.text = "新增英雄"
-	arg_16_0._txthadlabel.text = "已有英雄"
-	arg_16_0._txtplaceholder.text = "搜索英雄..."
+	self._txtnewlabel.text = "新增英雄"
+	self._txthadlabel.text = "已有英雄"
+	self._txtplaceholder.text = "搜索英雄..."
 end
 
-function var_0_0.onAddItemOnClick(arg_17_0, arg_17_1)
-	arg_17_0:hideAddItemContainer()
-	arg_17_0:resetInputText()
-	arg_17_0._inputheroid:SetText(arg_17_1.id)
+function GMToolFastAddHeroView:onAddItemOnClick(characterCo)
+	self:hideAddItemContainer()
+	self:resetInputText()
+	self._inputheroid:SetText(characterCo.id)
 
-	if arg_17_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-		arg_17_0:refreshCharacterCoShow(arg_17_1)
-	elseif arg_17_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
-		arg_17_0:refreshEquipCoShow(arg_17_1)
+	if self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
+		self:refreshCharacterCoShow(characterCo)
+	elseif self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
+		self:refreshEquipCoShow(characterCo)
 	else
-		arg_17_0:refreshCharacterCoShow(arg_17_1)
+		self:refreshCharacterCoShow(characterCo)
 	end
 end
 
-function var_0_0.refreshCharacterCoShow(arg_18_0, arg_18_1)
-	local var_18_0 = HeroModel.instance:getByHeroId(arg_18_1.id)
+function GMToolFastAddHeroView:refreshCharacterCoShow(characterCo)
+	local heroMo = HeroModel.instance:getByHeroId(characterCo.id)
 
-	if var_18_0 then
-		arg_18_0._inputherolv:SetText(var_18_0.level)
-		arg_18_0._inputranklv:SetText(var_18_0.rank)
-		arg_18_0._inputtalentlv:SetText(var_18_0.talent)
-		arg_18_0._inputexskilllv:SetText(var_18_0.exSkillLevel)
+	if heroMo then
+		self._inputherolv:SetText(heroMo.level)
+		self._inputranklv:SetText(heroMo.rank)
+		self._inputtalentlv:SetText(heroMo.talent)
+		self._inputexskilllv:SetText(heroMo.exSkillLevel)
 	end
 end
 
-function var_0_0.refreshEquipCoShow(arg_19_0, arg_19_1)
-	arg_19_0._inputherolv:SetText(1)
-	arg_19_0._inputranklv:SetText(1)
-	arg_19_0._inputtalentlv:SetText(1)
+function GMToolFastAddHeroView:refreshEquipCoShow(equipCo)
+	self._inputherolv:SetText(1)
+	self._inputranklv:SetText(1)
+	self._inputtalentlv:SetText(1)
 end
 
-function var_0_0.showAddItemContainer(arg_20_0)
-	gohelper.setActive(arg_20_0._goaddItem, true)
+function GMToolFastAddHeroView:showAddItemContainer()
+	gohelper.setActive(self._goaddItem, true)
 end
 
-function var_0_0.hideAddItemContainer(arg_21_0)
-	gohelper.setActive(arg_21_0._goaddItem, false)
+function GMToolFastAddHeroView:hideAddItemContainer()
+	gohelper.setActive(self._goaddItem, false)
 end
 
-function var_0_0.resetInputText(arg_22_0)
-	arg_22_0._inputheroid:SetText("")
-	arg_22_0._inputherolv:SetText("")
-	arg_22_0._inputranklv:SetText("")
-	arg_22_0._inputtalentlv:SetText("")
-	arg_22_0._inputexskilllv:SetText("")
+function GMToolFastAddHeroView:resetInputText()
+	self._inputheroid:SetText("")
+	self._inputherolv:SetText("")
+	self._inputranklv:SetText("")
+	self._inputtalentlv:SetText("")
+	self._inputexskilllv:SetText("")
 end
 
-function var_0_0.refreshAddItemCoList(arg_23_0)
-	local var_23_0 = {
+function GMToolFastAddHeroView:refreshAddItemCoList()
+	local coList = {
 		{
 			id = 0,
 			name = "All",
 			rare = 5
 		}
 	}
-	local var_23_1
+	local tempList
 
-	if arg_23_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-		var_23_1 = lua_character.configList
-	elseif arg_23_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
-		var_23_1 = lua_equip.configList
+	if self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
+		tempList = lua_character.configList
+	elseif self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
+		tempList = lua_equip.configList
 	else
-		var_23_1 = lua_character.configList
+		tempList = lua_character.configList
 	end
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		table.insert(var_23_0, iter_23_1)
+	for _, co in ipairs(tempList) do
+		table.insert(coList, co)
 	end
 
-	GMAddItemModel.instance:setList(var_23_0)
+	GMAddItemModel.instance:setList(coList)
 end
 
-function var_0_0.refreshHaveHeroList(arg_24_0)
-	local var_24_0
+function GMToolFastAddHeroView:refreshHaveHeroList()
+	local moList
 
-	if arg_24_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-		var_24_0 = arg_24_0:getHeroMoList()
-	elseif arg_24_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
-		var_24_0 = arg_24_0:getEquipMoList()
+	if self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
+		moList = self:getHeroMoList()
+	elseif self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
+		moList = self:getEquipMoList()
 	else
-		var_24_0 = {}
+		moList = {}
 	end
 
-	GMFastAddHeroHadHeroItemModel.instance:refreshList(var_24_0)
+	GMFastAddHeroHadHeroItemModel.instance:refreshList(moList)
 end
 
-function var_0_0.getHeroMoList(arg_25_0)
-	local var_25_0 = {}
+function GMToolFastAddHeroView:getHeroMoList()
+	local heroList = {}
 
-	if string.nilorempty(arg_25_0.filterText) then
-		var_25_0 = HeroModel.instance:getList()
+	if string.nilorempty(self.filterText) then
+		heroList = HeroModel.instance:getList()
 	else
-		for iter_25_0, iter_25_1 in ipairs(HeroModel.instance:getList()) do
-			if string.match(iter_25_1.config.name, arg_25_0.filterText) then
-				table.insert(var_25_0, iter_25_1)
+		for _, heroMo in ipairs(HeroModel.instance:getList()) do
+			if string.match(heroMo.config.name, self.filterText) then
+				table.insert(heroList, heroMo)
 			end
 		end
 	end
 
-	return var_25_0
+	return heroList
 end
 
-function var_0_0.getEquipMoList(arg_26_0)
-	local var_26_0 = {}
+function GMToolFastAddHeroView:getEquipMoList()
+	local equipList = {}
 
-	if string.nilorempty(arg_26_0.filterText) then
-		for iter_26_0, iter_26_1 in ipairs(EquipModel.instance:getEquips()) do
-			table.insert(var_26_0, iter_26_1)
+	if string.nilorempty(self.filterText) then
+		for _, equipMo in ipairs(EquipModel.instance:getEquips()) do
+			table.insert(equipList, equipMo)
 		end
 	else
-		for iter_26_2, iter_26_3 in ipairs(EquipModel.instance:getEquips()) do
-			if string.match(iter_26_3.config.name, arg_26_0.filterText) then
-				table.insert(var_26_0, iter_26_3)
+		for _, equipMo in ipairs(EquipModel.instance:getEquips()) do
+			if string.match(equipMo.config.name, self.filterText) then
+				table.insert(equipList, equipMo)
 			end
 		end
 	end
 
-	local var_26_1 = {}
+	local needDeleteEquipMo = {}
 
-	for iter_26_4, iter_26_5 in ipairs(var_26_0) do
-		if iter_26_5 == nil or iter_26_5.config == nil then
-			logError(string.format("equipId %s not config, uid is %s", iter_26_5.equipId, iter_26_5.id))
-			table.insert(var_26_1, iter_26_5)
+	for _, equipMo in ipairs(equipList) do
+		if equipMo == nil or equipMo.config == nil then
+			logError(string.format("equipId %s not config, uid is %s", equipMo.equipId, equipMo.id))
+			table.insert(needDeleteEquipMo, equipMo)
 		end
 	end
 
-	for iter_26_6, iter_26_7 in ipairs(var_26_1) do
-		local var_26_2 = tabletool.indexOf(var_26_0, iter_26_7)
+	for _, value in ipairs(needDeleteEquipMo) do
+		local index = tabletool.indexOf(equipList, value)
 
-		table.remove(var_26_0, var_26_2)
+		table.remove(equipList, index)
 	end
 
-	return var_26_0
+	return equipList
 end
 
-function var_0_0.changeSelectHeroItemMo(arg_27_0, arg_27_1)
-	if arg_27_1 then
-		arg_27_0._inputheroid:SetText(arg_27_1.config.id)
-		arg_27_0._inputherolv:SetText(arg_27_1.level)
+function GMToolFastAddHeroView:changeSelectHeroItemMo(mo)
+	if mo then
+		self._inputheroid:SetText(mo.config.id)
+		self._inputherolv:SetText(mo.level)
 
-		if arg_27_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
-			arg_27_0._inputranklv:SetText(arg_27_1.rank)
-			arg_27_0._inputtalentlv:SetText(arg_27_1.talent)
-			arg_27_0._inputexskilllv:SetText(arg_27_1.exSkillLevel)
-		elseif arg_27_0.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
-			arg_27_0._inputranklv:SetText(arg_27_1.refineLv)
-			arg_27_0._inputtalentlv:SetText(arg_27_1.breakLv)
+		if self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Hero then
+			self._inputranklv:SetText(mo.rank)
+			self._inputtalentlv:SetText(mo.talent)
+			self._inputexskilllv:SetText(mo.exSkillLevel)
+		elseif self.showType == GMFastAddHeroHadHeroItemModel.ShowType.Equip then
+			self._inputranklv:SetText(mo.refineLv)
+			self._inputtalentlv:SetText(mo.breakLv)
 		else
-			arg_27_0._inputranklv:SetText(arg_27_1.rank)
-			arg_27_0._inputtalentlv:SetText(arg_27_1.talent)
-			arg_27_0._inputexskilllv:SetText(arg_27_1.exSkillLevel)
+			self._inputranklv:SetText(mo.rank)
+			self._inputtalentlv:SetText(mo.talent)
+			self._inputexskilllv:SetText(mo.exSkillLevel)
 		end
 	else
-		arg_27_0._inputheroid:SetText("")
-		arg_27_0._inputherolv:SetText("")
-		arg_27_0._inputranklv:SetText("")
-		arg_27_0._inputtalentlv:SetText("")
-		arg_27_0._inputexskilllv:SetText("")
+		self._inputheroid:SetText("")
+		self._inputherolv:SetText("")
+		self._inputranklv:SetText("")
+		self._inputtalentlv:SetText("")
+		self._inputexskilllv:SetText("")
 	end
 end
 
-function var_0_0.onClose(arg_28_0)
-	arg_28_0.heroIdClick:RemoveClickListener()
-	arg_28_0.addItemClick:RemoveClickListener()
-	arg_28_0.inputHeroIdClick:RemoveClickListener()
-	arg_28_0._inputfilter:RemoveOnValueChanged()
+function GMToolFastAddHeroView:onClose()
+	self.heroIdClick:RemoveClickListener()
+	self.addItemClick:RemoveClickListener()
+	self.inputHeroIdClick:RemoveClickListener()
+	self._inputfilter:RemoveOnValueChanged()
 	GMAddItemModel.instance:setFastAddHeroView(nil)
 	GMFastAddHeroHadHeroItemModel.instance:setFastAddHeroView(nil)
-	arg_28_0:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_28_0.refreshHaveHeroList, arg_28_0)
-	arg_28_0:removeEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_28_0.refreshHaveHeroList, arg_28_0)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self.refreshHaveHeroList, self)
+	self:removeEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self.refreshHaveHeroList, self)
 	ViewMgr.instance:openView(ViewName.GMToolView)
 end
 
-function var_0_0.onDestroyView(arg_29_0)
+function GMToolFastAddHeroView:onDestroyView()
 	return
 end
 
-return var_0_0
+return GMToolFastAddHeroView

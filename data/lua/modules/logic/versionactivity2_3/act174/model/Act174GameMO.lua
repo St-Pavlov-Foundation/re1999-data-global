@@ -1,152 +1,157 @@
-﻿module("modules.logic.versionactivity2_3.act174.model.Act174GameMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/model/Act174GameMO.lua
 
-local var_0_0 = pureTable("Act174GameMO")
+module("modules.logic.versionactivity2_3.act174.model.Act174GameMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.hp = arg_1_1.hp
-	arg_1_0.coin = arg_1_1.coin
-	arg_1_0.gameCount = arg_1_1.gameCount
-	arg_1_0.winCount = arg_1_1.winCount
-	arg_1_0.score = arg_1_1.score
-	arg_1_0.state = arg_1_1.state
-	arg_1_0.forceBagInfo = arg_1_1.forceBagInfo
-	arg_1_0.shopInfo = arg_1_1.shopInfo
+local Act174GameMO = pureTable("Act174GameMO")
 
-	arg_1_0:updateTeamMo(arg_1_1.teamInfo)
-	arg_1_0:updateWareHouseMo(arg_1_1.warehouseInfo, arg_1_2)
+function Act174GameMO:init(info, filter)
+	self.hp = info.hp
+	self.coin = info.coin
+	self.gameCount = info.gameCount
+	self.winCount = info.winCount
+	self.score = info.score
+	self.state = info.state
+	self.forceBagInfo = info.forceBagInfo
+	self.shopInfo = info.shopInfo
 
-	arg_1_0.fightInfo = arg_1_1.fightInfo
-	arg_1_0.season = arg_1_1.season
-	arg_1_0.param = arg_1_1.param
+	self:updateTeamMo(info.teamInfo)
+	self:updateWareHouseMo(info.warehouseInfo, filter)
+
+	self.fightInfo = info.fightInfo
+	self.season = info.season
+	self.param = info.param
 end
 
-function var_0_0.updateShopInfo(arg_2_0, arg_2_1)
-	arg_2_0.shopInfo = arg_2_1
+function Act174GameMO:updateShopInfo(shopInfo)
+	self.shopInfo = shopInfo
 end
 
-function var_0_0.updateTeamMo(arg_3_0, arg_3_1)
-	arg_3_0.teamMoList = {}
+function Act174GameMO:updateTeamMo(teamInfos)
+	self.teamMoList = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_0 = Act174TeamMO.New()
+	for i, teamInfo in ipairs(teamInfos) do
+		local teamMo = Act174TeamMO.New()
 
-		var_3_0:init(iter_3_1)
+		teamMo:init(teamInfo)
 
-		arg_3_0.teamMoList[iter_3_0] = var_3_0
+		self.teamMoList[i] = teamMo
 	end
 end
 
-function var_0_0.updateWareHouseMo(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0.warehouseMo then
-		if arg_4_2 then
-			arg_4_0.warehouseMo:update(arg_4_1)
+function Act174GameMO:updateWareHouseMo(wareHouseInfo, filter)
+	if self.warehouseMo then
+		if filter then
+			self.warehouseMo:update(wareHouseInfo)
 		else
-			arg_4_0.warehouseMo:init(arg_4_1)
+			self.warehouseMo:init(wareHouseInfo)
 		end
 	else
-		arg_4_0.warehouseMo = Act174WareHouseMO.New()
+		self.warehouseMo = Act174WareHouseMO.New()
 
-		arg_4_0.warehouseMo:init(arg_4_1)
+		self.warehouseMo:init(wareHouseInfo)
 	end
 end
 
-function var_0_0.buyInShopReply(arg_5_0, arg_5_1)
-	arg_5_0.shopInfo = arg_5_1.shopInfo
+function Act174GameMO:buyInShopReply(info)
+	self.shopInfo = info.shopInfo
 
-	arg_5_0.warehouseMo:clearNewSign()
-	arg_5_0.warehouseMo:update(arg_5_1.warehouseInfo)
+	self.warehouseMo:clearNewSign()
+	self.warehouseMo:update(info.warehouseInfo)
 
-	arg_5_0.coin = arg_5_1.coin
+	self.coin = info.coin
 end
 
-function var_0_0.updateIsBet(arg_6_0, arg_6_1)
-	arg_6_0.fightInfo.betHp = arg_6_1
+function Act174GameMO:updateIsBet(isBet)
+	self.fightInfo.betHp = isBet
 end
 
-function var_0_0.isInGame(arg_7_0)
-	return arg_7_0.state ~= Activity174Enum.GameState.None
+function Act174GameMO:isInGame()
+	return self.state ~= Activity174Enum.GameState.None
 end
 
-function var_0_0.getForceBagsInfo(arg_8_0)
-	return arg_8_0.forceBagInfo
+function Act174GameMO:getForceBagsInfo()
+	return self.forceBagInfo
 end
 
-function var_0_0.getShopInfo(arg_9_0)
-	return arg_9_0.shopInfo
+function Act174GameMO:getShopInfo()
+	return self.shopInfo
 end
 
-function var_0_0.getTeamMoList(arg_10_0)
-	return arg_10_0.teamMoList
+function Act174GameMO:getTeamMoList()
+	return self.teamMoList
 end
 
-function var_0_0.getWarehouseInfo(arg_11_0)
-	return arg_11_0.warehouseMo
+function Act174GameMO:getWarehouseInfo()
+	return self.warehouseMo
 end
 
-function var_0_0.getFightInfo(arg_12_0)
-	return arg_12_0.fightInfo
+function Act174GameMO:getFightInfo()
+	return self.fightInfo
 end
 
-function var_0_0.setBattleHeroInTeam(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_3.heroId and not arg_13_3.itemId then
-		arg_13_0:delBattleHeroInTeam(arg_13_1, arg_13_2)
+function Act174GameMO:setBattleHeroInTeam(row, column, _battleHero)
+	if not _battleHero.heroId and not _battleHero.itemId then
+		self:delBattleHeroInTeam(row, column)
 
 		return
 	end
 
-	local var_13_0 = Activity174Helper.MatchKeyInArray(arg_13_0.teamMoList, arg_13_1, "index")
+	local teamInfo = Activity174Helper.MatchKeyInArray(self.teamMoList, row, "index")
 
-	if var_13_0 then
-		local var_13_1 = var_13_0.battleHeroInfo
-		local var_13_2 = Activity174Helper.MatchKeyInArray(var_13_1, arg_13_2, "index")
+	if teamInfo then
+		local battleHeros = teamInfo.battleHeroInfo
+		local hero = Activity174Helper.MatchKeyInArray(battleHeros, column, "index")
 
-		if var_13_2 then
-			var_13_2.index = arg_13_3.index
-			var_13_2.heroId = arg_13_3.heroId
-			var_13_2.itemId = arg_13_3.itemId
-			var_13_2.priorSkill = arg_13_3.priorSkill
+		if hero then
+			hero.index = _battleHero.index
+			hero.heroId = _battleHero.heroId
+			hero.itemId = _battleHero.itemId
+			hero.priorSkill = _battleHero.priorSkill
 		else
-			table.insert(var_13_1, arg_13_3)
+			table.insert(battleHeros, _battleHero)
 		end
 	else
-		local var_13_3 = {
-			index = arg_13_1,
+		teamInfo = {
+			index = row,
 			battleHeroInfo = {
-				arg_13_3
+				_battleHero
 			}
 		}
-		local var_13_4 = Act174TeamMO.New()
 
-		var_13_4:init(var_13_3)
-		table.insert(arg_13_0.teamMoList, var_13_4)
+		local teamMo = Act174TeamMO.New()
+
+		teamMo:init(teamInfo)
+		table.insert(self.teamMoList, teamMo)
 	end
 
 	Activity174Controller.instance:dispatchEvent(Activity174Event.ChangeLocalTeam)
 end
 
-function var_0_0.delBattleHeroInTeam(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = Activity174Helper.MatchKeyInArray(arg_14_0.teamMoList, arg_14_1, "index")
+function Act174GameMO:delBattleHeroInTeam(row, column)
+	local teamInfo = Activity174Helper.MatchKeyInArray(self.teamMoList, row, "index")
 
-	if var_14_0 then
-		local var_14_1 = var_14_0.battleHeroInfo
-		local var_14_2 = Activity174Helper.MatchKeyInArray(var_14_1, arg_14_2, "index")
+	if teamInfo then
+		local battleHeros = teamInfo.battleHeroInfo
+		local hero = Activity174Helper.MatchKeyInArray(battleHeros, column, "index")
 
-		if var_14_2 then
-			tabletool.removeValue(var_14_1, var_14_2)
+		if hero then
+			tabletool.removeValue(battleHeros, hero)
 		end
 	else
-		logError("teamInfo dont exist" .. arg_14_1)
+		logError("teamInfo dont exist" .. row)
 	end
 
 	Activity174Controller.instance:dispatchEvent(Activity174Event.ChangeLocalTeam)
 end
 
-function var_0_0.isHeroInTeam(arg_15_0, arg_15_1)
-	for iter_15_0 = 1, #arg_15_0.teamMoList do
-		local var_15_0 = arg_15_0.teamMoList[iter_15_0]
+function Act174GameMO:isHeroInTeam(heroId)
+	for i = 1, #self.teamMoList do
+		local teamInfo = self.teamMoList[i]
 
-		for iter_15_1 = 1, #var_15_0.battleHeroInfo do
-			if var_15_0.battleHeroInfo[iter_15_1].heroId == arg_15_1 then
+		for j = 1, #teamInfo.battleHeroInfo do
+			local battleHeroInfo = teamInfo.battleHeroInfo[j]
+
+			if battleHeroInfo.heroId == heroId then
 				return 1
 			end
 		end
@@ -155,53 +160,53 @@ function var_0_0.isHeroInTeam(arg_15_0, arg_15_1)
 	return 0
 end
 
-function var_0_0.getCollectionEquipCnt(arg_16_0, arg_16_1)
-	local var_16_0 = 0
+function Act174GameMO:getCollectionEquipCnt(collectId)
+	local count = 0
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0.teamMoList) do
-		for iter_16_2, iter_16_3 in ipairs(iter_16_1.battleHeroInfo) do
-			if iter_16_3.itemId == arg_16_1 then
-				var_16_0 = var_16_0 + 1
+	for _, teamMo in ipairs(self.teamMoList) do
+		for _, battleHeroMo in ipairs(teamMo.battleHeroInfo) do
+			if battleHeroMo.itemId == collectId then
+				count = count + 1
 			end
 		end
 	end
 
-	return var_16_0
+	return count
 end
 
-function var_0_0.exchangeTempCollection(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0.fightInfo.tempInfo
-	local var_17_1 = Activity174Helper.MatchKeyInArray(var_17_0, arg_17_1, "index")
-	local var_17_2 = Activity174Helper.MatchKeyInArray(var_17_0, arg_17_2, "index")
+function Act174GameMO:exchangeTempCollection(from, to)
+	local tempInfos = self.fightInfo.tempInfo
+	local tempInfoA = Activity174Helper.MatchKeyInArray(tempInfos, from, "index")
+	local tempInfoB = Activity174Helper.MatchKeyInArray(tempInfos, to, "index")
 
-	if var_17_1 and var_17_2 then
-		var_17_1.index = arg_17_2
-		var_17_2.index = arg_17_1
+	if tempInfoA and tempInfoB then
+		tempInfoA.index = to
+		tempInfoB.index = from
 	end
 end
 
-function var_0_0.getTempCollectionId(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_3 and arg_18_0.fightInfo.matchInfo.tempInfo or arg_18_0.fightInfo.tempInfo
-	local var_18_1 = Activity174Helper.MatchKeyInArray(var_18_0, arg_18_1, "index")
+function Act174GameMO:getTempCollectionId(row, column, isEnemy)
+	local tempInfos = isEnemy and self.fightInfo.matchInfo.tempInfo or self.fightInfo.tempInfo
+	local tempInfo = Activity174Helper.MatchKeyInArray(tempInfos, row, "index")
 
-	if var_18_1 then
-		return var_18_1.collectionId[arg_18_2]
+	if tempInfo then
+		return tempInfo.collectionId[column]
 	end
 
 	return 0
 end
 
-function var_0_0.getBetScore(arg_19_0)
-	local var_19_0 = 0
+function Act174GameMO:getBetScore()
+	local betScore = 0
 
-	if not string.nilorempty(arg_19_0.param) and string.find(arg_19_0.param, "betScore") then
-		local var_19_1 = string.split(arg_19_0.param, "#")
-		local var_19_2 = string.split(var_19_1[1], ":")
+	if not string.nilorempty(self.param) and string.find(self.param, "betScore") then
+		local params = string.split(self.param, "#")
+		local betParams = string.split(params[1], ":")
 
-		var_19_0 = tonumber(var_19_2[2])
+		betScore = tonumber(betParams[2])
 	end
 
-	return var_19_0
+	return betScore
 end
 
-return var_0_0
+return Act174GameMO

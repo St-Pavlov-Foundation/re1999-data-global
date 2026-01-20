@@ -1,88 +1,92 @@
-﻿module("modules.logic.player.view.IconListItem", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/IconListItem.lua
 
-local var_0_0 = class("IconListItem", ListScrollCellExtend)
+module("modules.logic.player.view.IconListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageheadIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_headIcon")
-	arg_1_0._goframenode = gohelper.findChild(arg_1_0.viewGO, "#simage_headIcon/#go_framenode")
-	arg_1_0._gochoosing = gohelper.findChild(arg_1_0.viewGO, "#go_choosing")
-	arg_1_0._goblackShadow = gohelper.findChild(arg_1_0.viewGO, "#go_blackShadow")
+local IconListItem = class("IconListItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function IconListItem:onInitView()
+	self._simageheadIcon = gohelper.findChildSingleImage(self.viewGO, "#simage_headIcon")
+	self._goframenode = gohelper.findChild(self.viewGO, "#simage_headIcon/#go_framenode")
+	self._gochoosing = gohelper.findChild(self.viewGO, "#go_choosing")
+	self._goblackShadow = gohelper.findChild(self.viewGO, "#go_blackShadow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._portraitclick:AddClickListener(arg_2_0._selectPortrait, arg_2_0)
-	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_2_0._onSelectPortrait, arg_2_0)
-	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_2_0._onSetPortrait, arg_2_0)
+function IconListItem:addEvents()
+	self._portraitclick:AddClickListener(self._selectPortrait, self)
+	self:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, self._onSelectPortrait, self)
+	self:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, self._onSetPortrait, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._portraitclick:RemoveClickListener()
-	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_3_0._onSelectPortrait, arg_3_0)
-	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_3_0._onSetPortrait, arg_3_0)
+function IconListItem:removeEvents()
+	self._portraitclick:RemoveClickListener()
+	self:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, self._onSelectPortrait, self)
+	self:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, self._onSetPortrait, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goportrait = gohelper.findChild(arg_4_0.viewGO, "#simage_headIcon")
-	arg_4_0._portraitclick = SLFramework.UGUI.UIClickListener.Get(arg_4_0._goportrait)
+function IconListItem:_editableInitView()
+	self._goportrait = gohelper.findChild(self.viewGO, "#simage_headIcon")
+	self._portraitclick = SLFramework.UGUI.UIClickListener.Get(self._goportrait)
 end
 
-function var_0_0._editableRemoveEvents(arg_5_0)
+function IconListItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0._selectPortrait(arg_6_0)
-	IconTipModel.instance:setSelectIcon(arg_6_0._usePortrait)
+function IconListItem:_selectPortrait()
+	IconTipModel.instance:setSelectIcon(self._usePortrait)
 end
 
-function var_0_0._onSelectPortrait(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._usePortrait == arg_7_1 or arg_7_0._mo.effectPortraitDic[arg_7_1]
+function IconListItem:_onSelectPortrait(id)
+	local isSelf = self._usePortrait == id or self._mo.effectPortraitDic[id]
 
-	gohelper.setActive(arg_7_0._gochoosing, var_7_0)
+	gohelper.setActive(self._gochoosing, isSelf)
 end
 
-function var_0_0._onSetPortrait(arg_8_0, arg_8_1)
-	if arg_8_0._mo.effectPortraitDic and arg_8_0._mo.effectPortraitDic[arg_8_1] then
-		arg_8_0:_refreshUI()
+function IconListItem:_onSetPortrait(id)
+	if self._mo.effectPortraitDic and self._mo.effectPortraitDic[id] then
+		self:_refreshUI()
 	end
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._mo = arg_9_1
+function IconListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_9_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_10_0)
-	local var_10_0 = arg_10_0._mo
+function IconListItem:_refreshUI()
+	local mo = self._mo
 
-	if not arg_10_0._liveHeadIcon then
-		arg_10_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_10_0._simageheadIcon)
+	if not self._liveHeadIcon then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simageheadIcon)
+
+		self._liveHeadIcon = commonLiveIcon
 	end
 
-	local var_10_1 = PlayerModel.instance:getPlayinfo().portrait
-	local var_10_2
+	local curPortrait = PlayerModel.instance:getPlayinfo().portrait
+	local usePortrait
 
-	if var_10_0.effectPortraitDic and var_10_0.effectPortraitDic[var_10_1] then
-		var_10_2 = var_10_1
+	if mo.effectPortraitDic and mo.effectPortraitDic[curPortrait] then
+		usePortrait = curPortrait
 	else
-		var_10_2 = var_10_0.id
+		usePortrait = mo.id
 	end
 
-	arg_10_0._usePortrait = var_10_2
+	self._usePortrait = usePortrait
 
-	arg_10_0._liveHeadIcon:setLiveHead(var_10_2)
+	self._liveHeadIcon:setLiveHead(usePortrait)
 
-	local var_10_3 = IconTipModel.instance:getSelectIcon()
+	local selectIcon = IconTipModel.instance:getSelectIcon()
 
-	gohelper.setActive(arg_10_0._gochoosing, var_10_2 == var_10_3)
+	gohelper.setActive(self._gochoosing, usePortrait == selectIcon)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simageheadIcon:UnLoadImage()
+function IconListItem:onDestroyView()
+	self._simageheadIcon:UnLoadImage()
 end
 
-return var_0_0
+return IconListItem

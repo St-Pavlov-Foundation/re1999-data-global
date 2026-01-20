@@ -1,80 +1,81 @@
-﻿module("modules.logic.handbook.model.HandbookCGTripleListModel", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/model/HandbookCGTripleListModel.lua
 
-local var_0_0 = class("HandbookCGTripleListModel", MixScrollModel)
+module("modules.logic.handbook.model.HandbookCGTripleListModel", package.seeall)
 
-function var_0_0.setCGList(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1.cgType
-	local var_1_1 = arg_1_1.cgList
-	local var_1_2 = {}
-	local var_1_3
-	local var_1_4
+local HandbookCGTripleListModel = class("HandbookCGTripleListModel", MixScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		if HandbookModel.instance:isCGUnlock(iter_1_1.id) then
-			local var_1_5 = iter_1_1.storyChapterId
+function HandbookCGTripleListModel:setCGList(list)
+	local cgType = list.cgType
+	local cgList = list.cgList
+	local moList = {}
+	local prevStoryChapterId, tripleList
 
-			var_1_4 = var_1_4 or {}
+	for i, config in ipairs(cgList) do
+		if HandbookModel.instance:isCGUnlock(config.id) then
+			local storyChapterId = config.storyChapterId
 
-			if not var_1_3 or var_1_3 ~= var_1_5 then
-				if #var_1_4 > 0 then
-					local var_1_6 = HandbookCGTripleMO.New()
+			tripleList = tripleList or {}
 
-					var_1_6:init({
-						cgList = var_1_4,
-						cgType = var_1_0
+			if not prevStoryChapterId or prevStoryChapterId ~= storyChapterId then
+				if #tripleList > 0 then
+					local handbookCGTripleMO = HandbookCGTripleMO.New()
+
+					handbookCGTripleMO:init({
+						cgList = tripleList,
+						cgType = cgType
 					})
-					table.insert(var_1_2, var_1_6)
+					table.insert(moList, handbookCGTripleMO)
 
-					var_1_4 = {}
+					tripleList = {}
 				end
 
-				local var_1_7 = HandbookCGTripleMO.New()
+				local handbookCGTripleMO = HandbookCGTripleMO.New()
 
-				var_1_7:init({
+				handbookCGTripleMO:init({
 					isTitle = true,
-					storyChapterId = var_1_5
+					storyChapterId = storyChapterId
 				})
-				table.insert(var_1_2, var_1_7)
+				table.insert(moList, handbookCGTripleMO)
 			end
 
-			if iter_1_1.preCgId == 0 then
-				table.insert(var_1_4, iter_1_1)
+			if config.preCgId == 0 then
+				table.insert(tripleList, config)
 			end
 
-			var_1_3 = var_1_5
+			prevStoryChapterId = storyChapterId
 		end
 
-		if var_1_4 and #var_1_4 >= 3 or iter_1_0 == #var_1_1 and var_1_4 and #var_1_4 > 0 then
-			local var_1_8 = HandbookCGTripleMO.New()
+		if tripleList and #tripleList >= 3 or i == #cgList and tripleList and #tripleList > 0 then
+			local handbookCGTripleMO = HandbookCGTripleMO.New()
 
-			var_1_8:init({
-				cgList = var_1_4,
-				cgType = var_1_0
+			handbookCGTripleMO:init({
+				cgList = tripleList,
+				cgType = cgType
 			})
-			table.insert(var_1_2, var_1_8)
+			table.insert(moList, handbookCGTripleMO)
 
-			var_1_4 = nil
+			tripleList = nil
 		end
 	end
 
-	arg_1_0:setList(var_1_2)
+	self:setList(moList)
 end
 
-function var_0_0.getInfoList(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function HandbookCGTripleListModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0:getList()) do
-		local var_2_1 = iter_2_1.isTitle
-		local var_2_2 = var_2_1 and 0 or 1
-		local var_2_3 = var_2_1 and 90 or 298
-		local var_2_4 = SLFramework.UGUI.MixCellInfo.New(var_2_2, var_2_3, nil)
+	for _, mo in ipairs(self:getList()) do
+		local isTitle = mo.isTitle
+		local type = isTitle and 0 or 1
+		local lineWidth = isTitle and 90 or 298
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(type, lineWidth, nil)
 
-		table.insert(var_2_0, var_2_4)
+		table.insert(mixCellInfos, mixCellInfo)
 	end
 
-	return var_2_0
+	return mixCellInfos
 end
 
-var_0_0.instance = var_0_0.New()
+HandbookCGTripleListModel.instance = HandbookCGTripleListModel.New()
 
-return var_0_0
+return HandbookCGTripleListModel

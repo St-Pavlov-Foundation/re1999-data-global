@@ -1,83 +1,85 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandChessSelf", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/element/FairyLandChessSelf.lua
 
-local var_0_0 = class("FairyLandChessSelf", FairyLandElementBase)
+module("modules.logic.versionactivity1_9.fairyland.view.element.FairyLandChessSelf", package.seeall)
 
-function var_0_0.getElementId(arg_1_0)
+local FairyLandChessSelf = class("FairyLandChessSelf", FairyLandElementBase)
+
+function FairyLandChessSelf:getElementId()
 	return 0
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0.rootGo = gohelper.findChild(arg_2_0._go, "root")
-	arg_2_0.imgChess = gohelper.findChildImage(arg_2_0.rootGo, "image_Chess")
-	arg_2_0.goChess = gohelper.findChild(arg_2_0.rootGo, "image_Chess")
-	arg_2_0.imgChessRoot = gohelper.findChild(arg_2_0.rootGo, "chessRoot")
-	arg_2_0.animationEvent = arg_2_0.rootGo:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_2_0.animator = arg_2_0.rootGo:GetComponent(typeof(UnityEngine.Animator))
+function FairyLandChessSelf:onInitView()
+	self.rootGo = gohelper.findChild(self._go, "root")
+	self.imgChess = gohelper.findChildImage(self.rootGo, "image_Chess")
+	self.goChess = gohelper.findChild(self.rootGo, "image_Chess")
+	self.imgChessRoot = gohelper.findChild(self.rootGo, "chessRoot")
+	self.animationEvent = self.rootGo:GetComponent(gohelper.Type_AnimationEventWrap)
+	self.animator = self.rootGo:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_2_0.animationEvent:AddEventListener("stair", arg_2_0._onStairCallback, arg_2_0)
-	arg_2_0.animationEvent:AddEventListener("finish", arg_2_0._onMoveFinishCallback, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
+	self.animationEvent:AddEventListener("stair", self._onStairCallback, self)
+	self.animationEvent:AddEventListener("finish", self._onMoveFinishCallback, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0._onStairCallback(arg_3_0)
+function FairyLandChessSelf:_onStairCallback()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_pkls_role_move)
 
-	arg_3_0._config.pos = arg_3_0._config.pos + 1
+	self._config.pos = self._config.pos + 1
 
-	FairyLandController.instance:dispatchEvent(FairyLandEvent.DoStairAnim, arg_3_0._config.pos)
+	FairyLandController.instance:dispatchEvent(FairyLandEvent.DoStairAnim, self._config.pos)
 end
 
-function var_0_0._onMoveFinishCallback(arg_4_0)
-	arg_4_0._config.pos = FairyLandModel.instance:getStairPos()
+function FairyLandChessSelf:_onMoveFinishCallback()
+	self._config.pos = FairyLandModel.instance:getStairPos()
 
-	arg_4_0:updatePos()
+	self:updatePos()
 
-	arg_4_0.animator.enabled = false
+	self.animator.enabled = false
 
-	recthelper.setAnchor(arg_4_0.goChess.transform, 0, -107)
+	recthelper.setAnchor(self.goChess.transform, 0, -107)
 
-	arg_4_0._moveing = false
+	self._moveing = false
 
 	if FairyLandModel.instance:isFinishFairyLand() then
 		StoryController.instance:playStory(100718, nil, FairyLandController.endFairyLandStory)
 	end
 end
 
-function var_0_0._onOpenView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.StoryFrontView and FairyLandModel.instance:isFinishFairyLand() then
+function FairyLandChessSelf:_onOpenView(viewName)
+	if viewName == ViewName.StoryFrontView and FairyLandModel.instance:isFinishFairyLand() then
 		ViewMgr.instance:closeView(ViewName.FairyLandView)
 	end
 end
 
-function var_0_0.move(arg_6_0)
-	arg_6_0.animator.enabled = true
+function FairyLandChessSelf:move()
+	self.animator.enabled = true
 
-	arg_6_0.animator:Play("click", 0, 0)
+	self.animator:Play("click", 0, 0)
 
-	arg_6_0._moveing = true
+	self._moveing = true
 end
 
-function var_0_0.isMoveing(arg_7_0)
-	return arg_7_0._moveing
+function FairyLandChessSelf:isMoveing()
+	return self._moveing
 end
 
-function var_0_0.onFinish(arg_8_0)
+function FairyLandChessSelf:onFinish()
 	return
 end
 
-function var_0_0.onDestroyElement(arg_9_0)
-	arg_9_0.animationEvent:RemoveEventListener("stair")
-	arg_9_0.animationEvent:RemoveEventListener("finish")
+function FairyLandChessSelf:onDestroyElement()
+	self.animationEvent:RemoveEventListener("stair")
+	self.animationEvent:RemoveEventListener("finish")
 end
 
-function var_0_0.getClickGO(arg_10_0)
-	return arg_10_0.goChess
+function FairyLandChessSelf:getClickGO()
+	return self.goChess
 end
 
-function var_0_0.playDialog(arg_11_0)
-	arg_11_0.animator.enabled = true
+function FairyLandChessSelf:playDialog()
+	self.animator.enabled = true
 
-	arg_11_0.animator:Play("jump", 0, 0)
+	self.animator:Play("jump", 0, 0)
 end
 
-return var_0_0
+return FairyLandChessSelf

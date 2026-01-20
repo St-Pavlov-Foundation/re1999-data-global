@@ -1,36 +1,40 @@
-﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.DungeonMapInteractive1_3Item", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/versionactivity1_3dungeon/view/DungeonMapInteractive1_3Item.lua
 
-local var_0_0 = class("DungeonMapInteractive1_3Item", BaseViewExtended)
+module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.DungeonMapInteractive1_3Item", package.seeall)
 
-function var_0_0._OnClickElement(arg_1_0, arg_1_1)
-	arg_1_0._config = arg_1_1._config
+local DungeonMapInteractive1_3Item = class("DungeonMapInteractive1_3Item", BaseViewExtended)
 
-	if arg_1_0._config.type == DungeonEnum.ElementType.DailyEpisode then
-		VersionActivity1_3DungeonController.instance.dailyFromEpisodeId = arg_1_0.viewContainer.versionActivityDungeonBaseMo.episodeId
+function DungeonMapInteractive1_3Item:_OnClickElement(mapElement)
+	self._config = mapElement._config
 
-		local var_1_0 = "ui/viewres/versionactivity_1_3/map/versionactivity_1_3_dungeonmapinteractiveitem16.prefab"
+	local tarType = self._config.type
 
-		if arg_1_0._itemView then
-			arg_1_0._itemView:DESTROYSELF()
+	if tarType == DungeonEnum.ElementType.DailyEpisode then
+		VersionActivity1_3DungeonController.instance.dailyFromEpisodeId = self.viewContainer.versionActivityDungeonBaseMo.episodeId
 
-			arg_1_0._itemView = nil
+		local url = "ui/viewres/versionactivity_1_3/map/versionactivity_1_3_dungeonmapinteractiveitem16.prefab"
+
+		if self._itemView then
+			self._itemView:DESTROYSELF()
+
+			self._itemView = nil
 
 			DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, false)
 		end
 
-		arg_1_0._itemView = arg_1_0:openSubView(VersionActivity_1_3_DungeonMapInteractiveItem16, var_1_0, arg_1_0.viewGO, arg_1_0._config)
+		self._itemView = self:openSubView(VersionActivity_1_3_DungeonMapInteractiveItem16, url, self.viewGO, self._config)
 	else
-		arg_1_0.viewContainer.mapScene:createInteractiveItem()
-		arg_1_0.viewContainer.mapScene._interactiveItem:_OnClickElement(arg_1_1)
+		self.viewContainer.mapScene:createInteractiveItem()
+		self.viewContainer.mapScene._interactiveItem:_OnClickElement(mapElement)
 	end
 end
 
-function var_0_0.destroySubView(arg_2_0, arg_2_1)
-	var_0_0.super.destroySubView(arg_2_0, arg_2_1)
+function DungeonMapInteractive1_3Item:destroySubView(handler)
+	DungeonMapInteractive1_3Item.super.destroySubView(self, handler)
 
-	arg_2_0._itemView = nil
+	self._itemView = nil
 
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true)
 end
 
-return var_0_0
+return DungeonMapInteractive1_3Item

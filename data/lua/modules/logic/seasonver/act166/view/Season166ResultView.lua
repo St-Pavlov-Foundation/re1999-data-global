@@ -1,251 +1,255 @@
-﻿module("modules.logic.seasonver.act166.view.Season166ResultView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166ResultView.lua
 
-local var_0_0 = class("Season166ResultView", BaseView)
+module("modules.logic.seasonver.act166.view.Season166ResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
-	arg_1_0._goBaseInfo = gohelper.findChild(arg_1_0.viewGO, "Left/#go_BaseInfo")
-	arg_1_0._simageBase = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#go_BaseInfo/#simage_Base")
-	arg_1_0._txtBase = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_BaseInfo/#txt_Base")
-	arg_1_0._imageStar1 = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_BaseInfo/Star/star1/#image_Star1")
-	arg_1_0._imageStar2 = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_BaseInfo/Star/star2/#image_Star2")
-	arg_1_0._imageStar3 = gohelper.findChildImage(arg_1_0.viewGO, "Left/#go_BaseInfo/Star/star3/#image_Star3")
-	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_BaseInfo/Score/#txt_Score")
-	arg_1_0._goNewRecord = gohelper.findChild(arg_1_0.viewGO, "Left/#go_BaseInfo/Score/#go_NewRecord")
-	arg_1_0._txtNewRecord = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_BaseInfo/Score/#go_NewRecord/#txt_NewRecord")
-	arg_1_0._goTrainInfo = gohelper.findChild(arg_1_0.viewGO, "Left/#go_TrainInfo")
-	arg_1_0._txtTrain = gohelper.findChildText(arg_1_0.viewGO, "Left/#go_TrainInfo/#txt_Train")
-	arg_1_0._goEpisode1 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_TrainInfo/Episode/Episode1/#go_Episode1")
-	arg_1_0._goEpisode2 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_TrainInfo/Episode/Episode2/#go_Episode2")
-	arg_1_0._goEpisode3 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_TrainInfo/Episode/Episode3/#go_Episode3")
-	arg_1_0._goEpisode4 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_TrainInfo/Episode/Episode4/#go_Episode4")
-	arg_1_0._goEpisode5 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_TrainInfo/Episode/Episode5/#go_Episode5")
-	arg_1_0._goEpisode6 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_TrainInfo/Episode/Episode6/#go_Episode6")
-	arg_1_0._simagePlayerHead = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/Player/PlayerHead/#simage_PlayerHead")
-	arg_1_0._txtPlayerName = gohelper.findChildText(arg_1_0.viewGO, "Left/Player/#txt_PlayerName")
-	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "Left/Player/#txt_Time")
-	arg_1_0._gostarList = gohelper.findChild(arg_1_0.viewGO, "Right/heroitem/heroitemani/hero/vertical/#go_starList")
-	arg_1_0._imagetalent = gohelper.findChildImage(arg_1_0.viewGO, "Right/TalentTree/#image_talent")
-	arg_1_0._gotalentReddot = gohelper.findChild(arg_1_0.viewGO, "Right/TalentTree/#go_talentReddot")
-	arg_1_0._goReward = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Reward")
-	arg_1_0._goRewardRoot = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Reward/#go_RewardRoot")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BtnGroup/#btn_close")
-	arg_1_0._btnRank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BtnGroup/#btn_Rank")
+local Season166ResultView = class("Season166ResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season166ResultView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "#simage_mask")
+	self._goBaseInfo = gohelper.findChild(self.viewGO, "Left/#go_BaseInfo")
+	self._simageBase = gohelper.findChildSingleImage(self.viewGO, "Left/#go_BaseInfo/#simage_Base")
+	self._txtBase = gohelper.findChildText(self.viewGO, "Left/#go_BaseInfo/#txt_Base")
+	self._imageStar1 = gohelper.findChildImage(self.viewGO, "Left/#go_BaseInfo/Star/star1/#image_Star1")
+	self._imageStar2 = gohelper.findChildImage(self.viewGO, "Left/#go_BaseInfo/Star/star2/#image_Star2")
+	self._imageStar3 = gohelper.findChildImage(self.viewGO, "Left/#go_BaseInfo/Star/star3/#image_Star3")
+	self._txtScore = gohelper.findChildText(self.viewGO, "Left/#go_BaseInfo/Score/#txt_Score")
+	self._goNewRecord = gohelper.findChild(self.viewGO, "Left/#go_BaseInfo/Score/#go_NewRecord")
+	self._txtNewRecord = gohelper.findChildText(self.viewGO, "Left/#go_BaseInfo/Score/#go_NewRecord/#txt_NewRecord")
+	self._goTrainInfo = gohelper.findChild(self.viewGO, "Left/#go_TrainInfo")
+	self._txtTrain = gohelper.findChildText(self.viewGO, "Left/#go_TrainInfo/#txt_Train")
+	self._goEpisode1 = gohelper.findChild(self.viewGO, "Left/#go_TrainInfo/Episode/Episode1/#go_Episode1")
+	self._goEpisode2 = gohelper.findChild(self.viewGO, "Left/#go_TrainInfo/Episode/Episode2/#go_Episode2")
+	self._goEpisode3 = gohelper.findChild(self.viewGO, "Left/#go_TrainInfo/Episode/Episode3/#go_Episode3")
+	self._goEpisode4 = gohelper.findChild(self.viewGO, "Left/#go_TrainInfo/Episode/Episode4/#go_Episode4")
+	self._goEpisode5 = gohelper.findChild(self.viewGO, "Left/#go_TrainInfo/Episode/Episode5/#go_Episode5")
+	self._goEpisode6 = gohelper.findChild(self.viewGO, "Left/#go_TrainInfo/Episode/Episode6/#go_Episode6")
+	self._simagePlayerHead = gohelper.findChildSingleImage(self.viewGO, "Left/Player/PlayerHead/#simage_PlayerHead")
+	self._txtPlayerName = gohelper.findChildText(self.viewGO, "Left/Player/#txt_PlayerName")
+	self._txtTime = gohelper.findChildText(self.viewGO, "Left/Player/#txt_Time")
+	self._gostarList = gohelper.findChild(self.viewGO, "Right/heroitem/heroitemani/hero/vertical/#go_starList")
+	self._imagetalent = gohelper.findChildImage(self.viewGO, "Right/TalentTree/#image_talent")
+	self._gotalentReddot = gohelper.findChild(self.viewGO, "Right/TalentTree/#go_talentReddot")
+	self._goReward = gohelper.findChild(self.viewGO, "Right/#go_Reward")
+	self._goRewardRoot = gohelper.findChild(self.viewGO, "Right/#go_Reward/#go_RewardRoot")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "BtnGroup/#btn_close")
+	self._btnRank = gohelper.findChildButtonWithAudio(self.viewGO, "BtnGroup/#btn_Rank")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnRank:AddClickListener(arg_2_0._btnRankOnClick, arg_2_0)
+function Season166ResultView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnRank:AddClickListener(self._btnRankOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnRank:RemoveClickListener()
+function Season166ResultView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnRank:RemoveClickListener()
 end
 
-local var_0_1 = "singlebg/seasonver/result/%s.png"
+local url = "singlebg/seasonver/result/%s.png"
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season166ResultView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnRankOnClick(arg_5_0)
+function Season166ResultView:_btnRankOnClick()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.heroItemList = {}
+function Season166ResultView:_editableInitView()
+	self.heroItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function Season166ResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.result = Season166Model.instance:getFightResult()
+function Season166ResultView:onOpen()
+	self.result = Season166Model.instance:getFightResult()
 
-	local var_8_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local episode_config = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-	arg_8_0:_initPlayerInfo()
-	arg_8_0:_initHeroGroup()
-	arg_8_0:_refreshReward()
-	arg_8_0:_initTalentInfo()
+	self:_initPlayerInfo()
+	self:_initHeroGroup()
+	self:_refreshReward()
+	self:_initTalentInfo()
 
-	if var_8_0.type == DungeonEnum.EpisodeType.Season166Base then
-		gohelper.setActive(arg_8_0._goTrainInfo, false)
-		arg_8_0:_refreshBaseInfo()
-		gohelper.setActive(arg_8_0._goBaseInfo, true)
+	if episode_config.type == DungeonEnum.EpisodeType.Season166Base then
+		gohelper.setActive(self._goTrainInfo, false)
+		self:_refreshBaseInfo()
+		gohelper.setActive(self._goBaseInfo, true)
 	else
-		gohelper.setActive(arg_8_0._goBaseInfo, false)
-		arg_8_0:_refreshTrainInfo()
-		gohelper.setActive(arg_8_0._goTrainInfo, true)
+		gohelper.setActive(self._goBaseInfo, false)
+		self:_refreshTrainInfo()
+		gohelper.setActive(self._goTrainInfo, true)
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function Season166ResultView:onClose()
 	Season166Model.instance:clearFightResult()
 	FightController.onResultViewClose()
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function Season166ResultView:onDestroyView()
 	return
 end
 
-function var_0_0._refreshBaseInfo(arg_11_0)
-	local var_11_0 = Season166Config.instance:getSeasonBaseSpotCo(arg_11_0.result.activityId, arg_11_0.result.id)
+function Season166ResultView:_refreshBaseInfo()
+	local baseCfg = Season166Config.instance:getSeasonBaseSpotCo(self.result.activityId, self.result.id)
 
-	arg_11_0._txtBase.text = GameUtil.setFirstStrSize(var_11_0.name, 81)
+	self._txtBase.text = GameUtil.setFirstStrSize(baseCfg.name, 81)
 
-	local var_11_1 = string.format(var_0_1, "season166_result_level" .. var_11_0.baseId)
+	local resPath = string.format(url, "season166_result_level" .. baseCfg.baseId)
 
-	arg_11_0._simageBase:LoadImage(var_11_1)
+	self._simageBase:LoadImage(resPath)
 
-	local var_11_2 = Season166BaseSpotModel.instance:getScoreLevelCfg(arg_11_0.result.activityId, arg_11_0.result.id, arg_11_0.result.totalScore)
-	local var_11_3 = var_11_2 and var_11_2.star or 0
+	local scoreLevelCfg = Season166BaseSpotModel.instance:getScoreLevelCfg(self.result.activityId, self.result.id, self.result.totalScore)
+	local starCnt = scoreLevelCfg and scoreLevelCfg.star or 0
 
-	for iter_11_0 = 1, 3 do
-		local var_11_4 = "_imageStar" .. iter_11_0
+	for i = 1, 3 do
+		local key = "_imageStar" .. i
 
-		gohelper.setActive(arg_11_0[var_11_4], iter_11_0 <= var_11_3)
+		gohelper.setActive(self[key], i <= starCnt)
 
-		if var_11_2 and var_11_2.level == 4 then
-			UISpriteSetMgr.instance:setSeason166Sprite(arg_11_0[var_11_4], "season166_result_bulb3")
+		if scoreLevelCfg and scoreLevelCfg.level == 4 then
+			UISpriteSetMgr.instance:setSeason166Sprite(self[key], "season166_result_bulb3")
 		end
 	end
 
-	gohelper.setActive(arg_11_0._goNewRecord, arg_11_0.result.isHighestScore)
+	gohelper.setActive(self._goNewRecord, self.result.isHighestScore)
 
-	arg_11_0._txtScore.text = arg_11_0.result.totalScore
+	self._txtScore.text = self.result.totalScore
 end
 
-function var_0_0._refreshTrainInfo(arg_12_0)
-	local var_12_0 = Season166Config.instance:getSeasonTrainCos(arg_12_0.result.activityId)
+function Season166ResultView:_refreshTrainInfo()
+	local trainCfgList = Season166Config.instance:getSeasonTrainCos(self.result.activityId)
 
-	for iter_12_0 = 1, 6 do
-		local var_12_1 = var_12_0[iter_12_0]
+	for i = 1, 6 do
+		local trainCfg = trainCfgList[i]
 
-		if var_12_1 then
-			local var_12_2
-			local var_12_3
+		if trainCfg then
+			local isPass
 
-			if var_12_1.trainId == arg_12_0.result.id then
-				arg_12_0._txtTrain.text = GameUtil.setFirstStrSize(var_12_1.name, 98)
-				var_12_3 = true
+			if trainCfg.trainId == self.result.id then
+				self._txtTrain.text = GameUtil.setFirstStrSize(trainCfg.name, 98)
+				isPass = true
 			else
-				var_12_3 = Season166Model.instance:isTrainPass(arg_12_0.result.activityId, var_12_1.trainId)
+				isPass = Season166Model.instance:isTrainPass(self.result.activityId, trainCfg.trainId)
 			end
 
-			gohelper.setActive(arg_12_0["_goEpisode" .. iter_12_0], var_12_3)
+			gohelper.setActive(self["_goEpisode" .. i], isPass)
 		end
 	end
 end
 
-function var_0_0._refreshReward(arg_13_0)
-	local var_13_0 = gohelper.findChild(arg_13_0.viewGO, "Right/#go_Reward/#go_RewardRoot/item")
-	local var_13_1 = FightResultModel.instance:getMaterialDataList()
+function Season166ResultView:_refreshReward()
+	local itemRoot = gohelper.findChild(self.viewGO, "Right/#go_Reward/#go_RewardRoot/item")
+	local dataList = FightResultModel.instance:getMaterialDataList()
 
-	if #var_13_1 > 0 then
-		for iter_13_0 = 1, #var_13_1 do
-			local var_13_2 = gohelper.clone(var_13_0, arg_13_0._goRewardRoot, "item" .. iter_13_0)
-			local var_13_3 = var_13_1[iter_13_0]
-			local var_13_4 = IconMgr.instance:getCommonItemIcon(var_13_2)
+	if #dataList > 0 then
+		for i = 1, #dataList do
+			local parent = gohelper.clone(itemRoot, self._goRewardRoot, "item" .. i)
+			local data = dataList[i]
+			local item = IconMgr.instance:getCommonItemIcon(parent)
 
-			var_13_4:setMOValue(var_13_3.materilType, var_13_3.materilId, var_13_3.quantity)
-			var_13_4:setScale(0.8)
-			recthelper.setAnchorY(var_13_4.tr, 10)
-			gohelper.setActive(var_13_2, true)
+			item:setMOValue(data.materilType, data.materilId, data.quantity)
+			item:setScale(0.8)
+			recthelper.setAnchorY(item.tr, 10)
+			gohelper.setActive(parent, true)
 		end
 
-		gohelper.setActive(arg_13_0._goReward, true)
+		gohelper.setActive(self._goReward, true)
 	else
-		gohelper.setActive(arg_13_0._goReward, false)
+		gohelper.setActive(self._goReward, false)
 	end
 end
 
-function var_0_0._initPlayerInfo(arg_14_0)
-	local var_14_0 = PlayerModel.instance:getPlayinfo()
-	local var_14_1 = var_14_0.portrait
+function Season166ResultView:_initPlayerInfo()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
+	local portrait = playerInfo.portrait
 
-	if not arg_14_0._liveHeadIcon then
-		arg_14_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_14_0._simagePlayerHead)
+	if not self._liveHeadIcon then
+		local commonLiveIcon = IconMgr.instance:getCommonLiveHeadIcon(self._simagePlayerHead)
+
+		self._liveHeadIcon = commonLiveIcon
 	end
 
-	arg_14_0._liveHeadIcon:setLiveHead(var_14_1)
+	self._liveHeadIcon:setLiveHead(portrait)
 
-	arg_14_0._txtTime.text = TimeUtil.getServerDateToString()
-	arg_14_0._txtPlayerName.text = var_14_0.name
+	self._txtTime.text = TimeUtil.getServerDateToString()
+	self._txtPlayerName.text = playerInfo.name
 end
 
-function var_0_0._initHeroGroup(arg_15_0)
+function Season166ResultView:_initHeroGroup()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 
-	local var_15_0 = gohelper.findChild(arg_15_0.viewGO, "Right/heroitem")
-	local var_15_1 = gohelper.findChild(arg_15_0.viewGO, "Right/Group1")
-	local var_15_2 = gohelper.findChild(arg_15_0.viewGO, "Right/Group2")
+	local heroItem = gohelper.findChild(self.viewGO, "Right/heroitem")
+	local group1 = gohelper.findChild(self.viewGO, "Right/Group1")
+	local group2 = gohelper.findChild(self.viewGO, "Right/Group2")
 
-	for iter_15_0 = 1, 8 do
-		local var_15_3 = iter_15_0 < 5 and var_15_1 or var_15_2
-		local var_15_4 = gohelper.clone(var_15_0, var_15_3)
+	for i = 1, 8 do
+		local parent = i < 5 and group1 or group2
+		local itemGo = gohelper.clone(heroItem, parent)
 
-		arg_15_0.heroItemList[iter_15_0] = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_4, Season166ResultHeroItem)
+		self.heroItemList[i] = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, Season166ResultHeroItem)
 
-		gohelper.setActive(var_15_4, true)
+		gohelper.setActive(itemGo, true)
 	end
 
-	arg_15_0:_refreshHeroGroup()
+	self:_refreshHeroGroup()
 end
 
-function var_0_0._refreshHeroGroup(arg_16_0)
-	local var_16_0, var_16_1 = FightModel.instance:getFightParam():getHeroEquipMoListWithTrial()
+function Season166ResultView:_refreshHeroGroup()
+	local fightParam = FightModel.instance:getFightParam()
+	local heroEquipList, subHeroEquipList = fightParam:getHeroEquipMoListWithTrial()
 
-	for iter_16_0 = 1, 4 do
-		local var_16_2 = arg_16_0.heroItemList[iter_16_0]
-		local var_16_3 = var_16_0[iter_16_0]
+	for i = 1, 4 do
+		local heroItem = self.heroItemList[i]
+		local mo = heroEquipList[i]
 
-		if var_16_3 then
-			var_16_2:setData(var_16_3.heroMo, var_16_3.equipMo)
+		if mo then
+			heroItem:setData(mo.heroMo, mo.equipMo)
 		end
 
-		local var_16_4 = arg_16_0.heroItemList[iter_16_0 + 4]
-		local var_16_5 = var_16_1[iter_16_0]
+		local subHeroItem = self.heroItemList[i + 4]
+		local subMo = subHeroEquipList[i]
 
-		if var_16_5 then
-			var_16_4:setData(var_16_5.heroMo, var_16_5.equipMo)
-		end
-	end
-end
-
-function var_0_0._initTalentInfo(arg_17_0)
-	local var_17_0 = Season166Model.instance:getBattleContext()
-
-	if var_17_0 then
-		local var_17_1 = Season166Model.instance:getCurSeasonId()
-		local var_17_2 = var_17_0.talentId
-		local var_17_3 = Season166Model.instance:getTalentInfo(var_17_1, var_17_2)
-		local var_17_4 = lua_activity166_talent.configDict[var_17_1][var_17_2]
-		local var_17_5 = lua_activity166_talent_style.configDict[var_17_2][var_17_3.level]
-		local var_17_6 = "season166_talentree_btn_talen" .. var_17_4.sortIndex
-
-		UISpriteSetMgr.instance:setSeason166Sprite(arg_17_0._imagetalent, var_17_6)
-
-		for iter_17_0 = 1, 3 do
-			local var_17_7 = gohelper.findChild(arg_17_0.viewGO, "Right/TalentTree/equipslot/" .. iter_17_0)
-			local var_17_8 = gohelper.findChildImage(arg_17_0.viewGO, "Right/TalentTree/equipslot/" .. iter_17_0 .. "/light")
-
-			UISpriteSetMgr.instance:setSeason166Sprite(var_17_8, "season166_talentree_pointl" .. tostring(var_17_4.sortIndex))
-			gohelper.setActive(var_17_7, iter_17_0 <= var_17_5.slot)
-			gohelper.setActive(var_17_8, iter_17_0 <= #var_17_3.skillIds)
-
-			local var_17_9 = gohelper.findChild(var_17_7, "light/" .. var_17_4.sortIndex)
-
-			gohelper.setActive(var_17_9, iter_17_0 <= #var_17_3.skillIds)
+		if subMo then
+			subHeroItem:setData(subMo.heroMo, subMo.equipMo)
 		end
 	end
 end
 
-return var_0_0
+function Season166ResultView:_initTalentInfo()
+	local context = Season166Model.instance:getBattleContext()
+
+	if context then
+		local actId = Season166Model.instance:getCurSeasonId()
+		local talentId = context.talentId
+		local talentInfo = Season166Model.instance:getTalentInfo(actId, talentId)
+		local talentCfg = lua_activity166_talent.configDict[actId][talentId]
+		local talentStyleCfg = lua_activity166_talent_style.configDict[talentId][talentInfo.level]
+		local name = "season166_talentree_btn_talen" .. talentCfg.sortIndex
+
+		UISpriteSetMgr.instance:setSeason166Sprite(self._imagetalent, name)
+
+		for i = 1, 3 do
+			local slot = gohelper.findChild(self.viewGO, "Right/TalentTree/equipslot/" .. i)
+			local imageSlot = gohelper.findChildImage(self.viewGO, "Right/TalentTree/equipslot/" .. i .. "/light")
+
+			UISpriteSetMgr.instance:setSeason166Sprite(imageSlot, "season166_talentree_pointl" .. tostring(talentCfg.sortIndex))
+			gohelper.setActive(slot, i <= talentStyleCfg.slot)
+			gohelper.setActive(imageSlot, i <= #talentInfo.skillIds)
+
+			local effectGo = gohelper.findChild(slot, "light/" .. talentCfg.sortIndex)
+
+			gohelper.setActive(effectGo, i <= #talentInfo.skillIds)
+		end
+	end
+end
+
+return Season166ResultView

@@ -1,89 +1,92 @@
-﻿module("modules.logic.summonsimulationpick.view.SummonSimulationPickItem", package.seeall)
+﻿-- chunkname: @modules/logic/summonsimulationpick/view/SummonSimulationPickItem.lua
 
-local var_0_0 = class("SummonSimulationPickItem", LuaCompBase)
+module("modules.logic.summonsimulationpick.view.SummonSimulationPickItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "heroicon/#image_icon")
+local SummonSimulationPickItem = class("SummonSimulationPickItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonSimulationPickItem:init(go)
+	self._go = go
+	self._imageicon = gohelper.findChildImage(go, "heroicon/#image_icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._heroItems = {}
-	arg_2_0._goheroItem = gohelper.findChild(arg_2_0._go, "#scroll_result/Viewport/content/#go_heroitem")
-	arg_2_0._root = gohelper.findChild(arg_2_0._go, "#scroll_result/Viewport/content")
+function SummonSimulationPickItem:_editableInitView()
+	self._heroItems = {}
+	self._goheroItem = gohelper.findChild(self._go, "#scroll_result/Viewport/content/#go_heroitem")
+	self._root = gohelper.findChild(self._go, "#scroll_result/Viewport/content")
 
-	gohelper.setActive(arg_2_0._goheroItem, false)
+	gohelper.setActive(self._goheroItem, false)
 end
 
-function var_0_0.refreshData(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.selectType = arg_3_2
+function SummonSimulationPickItem:refreshData(heroIds, selectType)
+	self.selectType = selectType
 
-	local var_3_0 = arg_3_0._heroItems
-	local var_3_1 = #var_3_0
-	local var_3_2 = arg_3_1 and #arg_3_1 or 0
+	local itemList = self._heroItems
+	local haveItemCount = #itemList
+	local needCount = heroIds and #heroIds or 0
 
-	for iter_3_0 = 1, var_3_2 do
-		local var_3_3
+	for i = 1, needCount do
+		local item
 
-		if var_3_1 < iter_3_0 then
-			local var_3_4 = arg_3_0:getItem()
+		if haveItemCount < i then
+			local instance = self:getItem()
 
-			var_3_3 = SummonSimulationPickListItem.New()
+			item = SummonSimulationPickListItem.New()
 
-			var_3_3:init(var_3_4)
-			table.insert(var_3_0, var_3_3)
+			item:init(instance)
+			table.insert(itemList, item)
 		else
-			var_3_3 = var_3_0[iter_3_0]
+			item = itemList[i]
 		end
 
-		gohelper.setActive(var_3_3.go, true)
+		gohelper.setActive(item.go, true)
 
-		local var_3_5 = arg_3_1[iter_3_0]
+		local heroId = heroIds[i]
 
-		var_3_3:setData(var_3_5, arg_3_0.selectType)
+		item:setData(heroId, self.selectType)
 	end
 
-	if var_3_2 < var_3_1 then
-		for iter_3_1 = var_3_2 + 1, var_3_1 do
-			local var_3_6 = var_3_0[iter_3_1]
+	if needCount < haveItemCount then
+		for i = needCount + 1, haveItemCount do
+			local item = itemList[i]
 
-			gohelper.setActive(var_3_6.go, false)
+			gohelper.setActive(item.go, false)
 		end
 	end
 end
 
-function var_0_0.getItem(arg_4_0)
-	local var_4_0 = arg_4_0._goheroItem
+function SummonSimulationPickItem:getItem()
+	local prefab = self._goheroItem
+	local instance = gohelper.clone(prefab, self._root)
 
-	return (gohelper.clone(var_4_0, arg_4_0._root))
+	return instance
 end
 
-function var_0_0.setActive(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._go, arg_5_1)
+function SummonSimulationPickItem:setActive(active)
+	gohelper.setActive(self._go, active)
 end
 
-function var_0_0.setParent(arg_6_0, arg_6_1)
-	arg_6_0._go.transform.parent = arg_6_1.transform
+function SummonSimulationPickItem:setParent(parentGo)
+	self._go.transform.parent = parentGo.transform
 
-	transformhelper.setLocalPosXY(arg_6_0._go.transform, 0, 0)
+	transformhelper.setLocalPosXY(self._go.transform, 0, 0)
 end
 
-function var_0_0.getTransform(arg_7_0)
-	return arg_7_0._go.transform
+function SummonSimulationPickItem:getTransform()
+	return self._go.transform
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._heroItems) do
-		iter_8_1:onDestroy()
+function SummonSimulationPickItem:onDestroy()
+	for _, item in ipairs(self._heroItems) do
+		item:onDestroy()
 	end
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function SummonSimulationPickItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return SummonSimulationPickItem

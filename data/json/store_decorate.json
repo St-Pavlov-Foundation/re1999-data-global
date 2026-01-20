@@ -19,7 +19,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 700002,
@@ -41,7 +42,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 700003,
@@ -63,7 +65,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 313402,
+    "tag2": 0
   },
   {
     "id": 700004,
@@ -85,7 +88,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 700005,
@@ -107,7 +111,8 @@
     "decorateskinOffset": "-27.1#-100.9#1.09",
     "decorateskinl2dOffset": "-32.6#55.5#0.89",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750001,
@@ -129,7 +134,8 @@
     "decorateskinOffset": "108.3#-165.0#1.09",
     "decorateskinl2dOffset": "0.3#36.3#1.11",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750002,
@@ -151,7 +157,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750003,
@@ -173,7 +180,8 @@
     "decorateskinOffset": "109.9#-92.1#1.23",
     "decorateskinl2dOffset": "21.1#22.6#0.86",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750005,
@@ -195,7 +203,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750006,
@@ -217,7 +226,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750007,
@@ -239,7 +249,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750008,
@@ -261,7 +272,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 700006,
@@ -283,7 +295,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 700007,
@@ -305,7 +318,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 311301
+    "showskinId": 313402,
+    "tag2": 0
   },
   {
     "id": 700008,
@@ -327,7 +341,8 @@
     "decorateskinOffset": "74.7#63.7#1.27",
     "decorateskinl2dOffset": "-146.6#-21.4#0.90",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750009,
@@ -349,7 +364,8 @@
     "decorateskinOffset": "503.0#-216.5#1.51",
     "decorateskinl2dOffset": "-32.6#-48.3#1.04",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750010,
@@ -371,7 +387,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 750011,
@@ -393,7 +410,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 770001,
@@ -415,7 +433,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 770002,
@@ -437,7 +456,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 311602
+    "showskinId": 313402,
+    "tag2": 0
   },
   {
     "id": 770003,
@@ -459,7 +479,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 770004,
@@ -481,7 +502,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 770005,
@@ -503,7 +525,8 @@
     "decorateskinOffset": "74.7#63.7#1.27",
     "decorateskinl2dOffset": "-146.6#-21.4#0.90",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 770007,
@@ -525,7 +548,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 770008,
@@ -547,7 +571,8 @@
     "decorateskinOffset": "18.1#-47.9#0.94",
     "decorateskinl2dOffset": "-32.6#-48.3#1.04",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 770012,
@@ -569,7 +594,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8012801,
@@ -591,7 +617,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8012802,
@@ -613,7 +640,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 312002
+    "showskinId": 312002,
+    "tag2": 0
   },
   {
     "id": 8012803,
@@ -635,7 +663,8 @@
     "decorateskinOffset": "-66.5#-97.9#1.09",
     "decorateskinl2dOffset": "47.4#-29.5#0.89",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022801,
@@ -657,7 +686,8 @@
     "decorateskinOffset": "-162.9#-74.9#1.09",
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022802,
@@ -679,7 +709,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022803,
@@ -701,7 +732,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022804,
@@ -723,7 +755,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8013001,
@@ -745,7 +778,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8013002,
@@ -767,7 +801,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 312802
+    "showskinId": 312802,
+    "tag2": 0
   },
   {
     "id": 8013003,
@@ -789,7 +824,8 @@
     "decorateskinOffset": "186.6#-100.9#1.09",
     "decorateskinl2dOffset": "66.5#-56.5#0.89",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8013004,
@@ -811,7 +847,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023001,
@@ -833,7 +870,8 @@
     "decorateskinOffset": "-14.9#-40.3#1.09",
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023002,
@@ -855,7 +893,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023003,
@@ -877,7 +916,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023004,
@@ -899,7 +939,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8012901,
@@ -921,7 +962,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8012902,
@@ -943,7 +985,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 312302
+    "showskinId": 312302,
+    "tag2": 0
   },
   {
     "id": 8012903,
@@ -965,7 +1008,8 @@
     "decorateskinOffset": "-26.1#-100.9#1.17",
     "decorateskinl2dOffset": "-58.9#-95.2#0.89",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8012904,
@@ -987,7 +1031,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022901,
@@ -1009,7 +1054,8 @@
     "decorateskinOffset": "50.1#-131.2#1.24",
     "decorateskinl2dOffset": "-63.9#-69.6#0.89",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022902,
@@ -1031,7 +1077,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022903,
@@ -1053,7 +1100,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022904,
@@ -1075,7 +1123,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8022905,
@@ -1097,7 +1146,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8013101,
@@ -1119,7 +1169,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8013102,
@@ -1141,7 +1192,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 312502
+    "showskinId": 312502,
+    "tag2": 0
   },
   {
     "id": 8013103,
@@ -1163,7 +1215,8 @@
     "decorateskinOffset": "-66.5#-97.9#1.09",
     "decorateskinl2dOffset": "-99.7#-2.3#0.88",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8013104,
@@ -1185,7 +1238,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023101,
@@ -1207,7 +1261,8 @@
     "decorateskinOffset": "-162.9#-74.9#1.09",
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023102,
@@ -1229,7 +1284,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023103,
@@ -1251,7 +1307,8 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
   },
   {
     "id": 8023104,
@@ -1273,6 +1330,191 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
-    "showskinId": 0
+    "showskinId": 0,
+    "tag2": 0
+  },
+  {
+    "id": 8032101,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 71,
+    "typeName": "language_10103709",
+    "rare": 5,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_sp_101",
+    "biglmg": "store_decorate_sp_103",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 1
+  },
+  {
+    "id": 803202,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_2401",
+    "biglmg": "store_decorate_type1_2402",
+    "buylmg": "store_decorate_type1_2403",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 100,
+    "originalCost2": 150,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0
+  },
+  {
+    "id": 803203,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 21,
+    "typeName": "language_10062528",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type4_801",
+    "biglmg": "",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 750,
+    "originalCost2": 1100,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 313402,
+    "tag2": 0
+  },
+  {
+    "id": 803205,
+    "storeld": 801,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_1101",
+    "biglmg": "store_decorate_type5_1102",
+    "buylmg": "store_decorate_type5_1103",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0
+  },
+  {
+    "id": 803206,
+    "storeld": 802,
+    "productType": 5,
+    "subType": 0,
+    "typeName": "language_10065898",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type2_1901",
+    "biglmg": "",
+    "buylmg": "store_decorate_type2_1903",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "-162.9#-74.9#1.09",
+    "decorateskinl2dOffset": "21.5#-50.8#0.86",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0
+  },
+  {
+    "id": 803207,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_2301",
+    "biglmg": "store_decorate_type1_2302",
+    "buylmg": "store_decorate_type1_2303",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0
+  },
+  {
+    "id": 803208,
+    "storeld": 802,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_1001",
+    "biglmg": "store_decorate_type5_1002",
+    "buylmg": "store_decorate_type5_1003",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0
+  },
+  {
+    "id": 803209,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 2,
+    "typeName": "language_10065900",
+    "rare": 3,
+    "maxbuycountType": 2,
+    "smalllmg": "store_decorate_type1_301",
+    "biglmg": "store_decorate_type1_302",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0
   }
 ]

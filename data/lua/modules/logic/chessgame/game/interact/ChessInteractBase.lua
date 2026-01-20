@@ -1,179 +1,181 @@
-﻿module("modules.logic.chessgame.game.interact.ChessInteractBase", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/interact/ChessInteractBase.lua
 
-local var_0_0 = class("ChessInteractBase")
+module("modules.logic.chessgame.game.interact.ChessInteractBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._target = arg_1_1
-	arg_1_0._isMoving = false
+local ChessInteractBase = class("ChessInteractBase")
+
+function ChessInteractBase:init(targetObj)
+	self._target = targetObj
+	self._isMoving = false
 end
 
-function var_0_0.onSelectCall(arg_2_0)
+function ChessInteractBase:onSelectCall()
 	return
 end
 
-function var_0_0.onCancelSelect(arg_3_0)
+function ChessInteractBase:onCancelSelect()
 	return
 end
 
-function var_0_0.onSelectPos(arg_4_0, arg_4_1, arg_4_2)
+function ChessInteractBase:onSelectPos(x, y)
 	return
 end
 
-function var_0_0.updatePos(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._srcX, arg_5_0._srcY = arg_5_0._target.mo.posX, arg_5_0._target.mo.posY
-	arg_5_0._target.mo.posX = arg_5_1
-	arg_5_0._target.mo.posY = arg_5_2
+function ChessInteractBase:updatePos(x, y)
+	self._srcX, self._srcY = self._target.mo.posX, self._target.mo.posY
+	self._target.mo.posX = x
+	self._target.mo.posY = y
 end
 
-function var_0_0.moveTo(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	if arg_6_0._target.avatar then
-		local var_6_0 = {
+function ChessInteractBase:moveTo(x, y, callback, callbackObj)
+	if self._target.avatar then
+		local pos = {
 			z = 0,
-			x = arg_6_1,
-			y = arg_6_2
+			x = x,
+			y = y
 		}
-		local var_6_1 = ChessGameHelper.nodePosToWorldPos(var_6_0)
-		local var_6_2 = arg_6_0._target.avatar
+		local v3 = ChessGameHelper.nodePosToWorldPos(pos)
+		local avatar = self._target.avatar
 
-		arg_6_0:killMoveTween()
+		self:killMoveTween()
 
-		arg_6_0._moveCallback = arg_6_3
-		arg_6_0._moveCallbackObj = arg_6_4
-		arg_6_0._isMoving = true
-		arg_6_0._tweenIdMoveScene = ZProj.TweenHelper.DOLocalMove(var_6_2.sceneTf, var_6_1.x, var_6_1.y, var_6_1.z, 0.225, arg_6_0.onMoveCompleted, arg_6_0, nil, EaseType.Linear)
+		self._moveCallback = callback
+		self._moveCallbackObj = callbackObj
+		self._isMoving = true
+		self._tweenIdMoveScene = ZProj.TweenHelper.DOLocalMove(avatar.sceneTf, v3.x, v3.y, v3.z, 0.225, self.onMoveCompleted, self, nil, EaseType.Linear)
 
-		arg_6_0:onMoveBegin()
+		self:onMoveBegin()
 
-		local var_6_3 = ChessGameHelper.ToDirection(arg_6_0._srcX or arg_6_0._target.mo.posX, arg_6_0._srcY or arg_6_0._target.mo.posY, arg_6_1, arg_6_2)
+		local dir = ChessGameHelper.ToDirection(self._srcX or self._target.mo.posX, self._srcY or self._target.mo.posY, x, y)
 
-		arg_6_0:faceTo(var_6_3)
-		arg_6_0:_setDirNodeShow(false)
-	elseif arg_6_3 then
-		arg_6_3(arg_6_4)
+		self:faceTo(dir)
+		self:_setDirNodeShow(false)
+	elseif callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.faceTo(arg_7_0, arg_7_1)
-	arg_7_0._curDir = arg_7_1
+function ChessInteractBase:faceTo(dir)
+	self._curDir = dir
 
-	if arg_7_0._target.avatar then
-		if not ChessInteractComp.DirectionSet[arg_7_0._curDir] then
+	if self._target.avatar then
+		if not ChessInteractComp.DirectionSet[self._curDir] then
 			return
 		end
 
-		for iter_7_0, iter_7_1 in ipairs(ChessInteractComp.DirectionList) do
-			local var_7_0 = arg_7_0._target.avatar["goFaceTo" .. iter_7_1]
+		for i, tmpDir in ipairs(ChessInteractComp.DirectionList) do
+			local child = self._target.avatar["goFaceTo" .. tmpDir]
 
-			if not gohelper.isNil(var_7_0) then
-				local var_7_1 = arg_7_1 == iter_7_1
+			if not gohelper.isNil(child) then
+				local show = dir == tmpDir
 
-				gohelper.setActive(var_7_0, var_7_1)
+				gohelper.setActive(child, show)
 			end
 
-			local var_7_2 = arg_7_0._target.avatar["goMovetoDir" .. iter_7_1]
+			local movetoDir = self._target.avatar["goMovetoDir" .. tmpDir]
 
-			if not gohelper.isNil(var_7_2) then
-				gohelper.setActive(var_7_2, arg_7_1 == iter_7_1)
+			if not gohelper.isNil(movetoDir) then
+				gohelper.setActive(movetoDir, dir == tmpDir)
 			end
 		end
 
-		if arg_7_0._target.mo then
-			arg_7_0._target.mo:setDirection(arg_7_1)
+		if self._target.mo then
+			self._target.mo:setDirection(dir)
 		end
 	end
 
-	if arg_7_0._target.chessEffectObj and arg_7_0._target.chessEffectObj.refreshEffectFaceTo then
-		arg_7_0._target.chessEffectObj:refreshEffectFaceTo()
+	if self._target.chessEffectObj and self._target.chessEffectObj.refreshEffectFaceTo then
+		self._target.chessEffectObj:refreshEffectFaceTo()
 	end
 end
 
-function var_0_0._setDirNodeShow(arg_8_0, arg_8_1)
-	if arg_8_0._target.avatar then
-		local var_8_0 = arg_8_0._target.avatar.goNextDirection
+function ChessInteractBase:_setDirNodeShow(isShow)
+	if self._target.avatar then
+		local goDirNode = self._target.avatar.goNextDirection
 
-		if not gohelper.isNil(var_8_0) then
-			gohelper.setActive(var_8_0, arg_8_1)
+		if not gohelper.isNil(goDirNode) then
+			gohelper.setActive(goDirNode, isShow)
 		end
 	end
 end
 
-function var_0_0.onMoveBegin(arg_9_0)
+function ChessInteractBase:onMoveBegin()
 	return
 end
 
-function var_0_0.onMoveCompleted(arg_10_0)
-	arg_10_0:_setDirNodeShow(true)
-	arg_10_0:refreshAlarmArea()
+function ChessInteractBase:onMoveCompleted()
+	self:_setDirNodeShow(true)
+	self:refreshAlarmArea()
 
-	if arg_10_0._moveCallback then
-		local var_10_0 = arg_10_0._moveCallback
-		local var_10_1 = arg_10_0._moveCallbackObj
+	if self._moveCallback then
+		local callback = self._moveCallback
+		local callbackObj = self._moveCallbackObj
 
-		arg_10_0._moveCallback = nil
-		arg_10_0._moveCallbackObj = nil
-		arg_10_0._isMoving = false
+		self._moveCallback = nil
+		self._moveCallbackObj = nil
+		self._isMoving = false
 
-		var_10_0(var_10_1)
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.onDrawAlert(arg_11_0, arg_11_1)
+function ChessInteractBase:onDrawAlert(map)
 	return
 end
 
-function var_0_0.setAlertActive(arg_12_0, arg_12_1)
+function ChessInteractBase:setAlertActive(isActive)
 	return
 end
 
-function var_0_0.refreshAlarmArea(arg_13_0)
+function ChessInteractBase:refreshAlarmArea()
 	return
 end
 
-function var_0_0.onAvatarLoaded(arg_14_0)
-	local var_14_0 = arg_14_0._curDir or arg_14_0._target.mo.direction or arg_14_0._target.mo:getConfig().dir
+function ChessInteractBase:onAvatarLoaded()
+	local defaultDir = self._curDir or self._target.mo.direction or self._target.mo:getConfig().dir
 
-	if var_14_0 ~= nil and var_14_0 ~= 0 then
-		arg_14_0:faceTo(var_14_0)
+	if defaultDir ~= nil and defaultDir ~= 0 then
+		self:faceTo(defaultDir)
 	end
 
-	local var_14_1 = arg_14_0._target.avatar.loader
+	local loader = self._target.avatar.loader
 
-	if not var_14_1 then
+	if not loader then
 		return
 	end
 
-	local var_14_2 = var_14_1:getInstGO()
+	local go = loader:getInstGO()
 
-	if not gohelper.isNil(var_14_2) then
-		arg_14_0._animSelf = var_14_2:GetComponent(typeof(UnityEngine.Animator))
+	if not gohelper.isNil(go) then
+		self._animSelf = go:GetComponent(typeof(UnityEngine.Animator))
 	end
 end
 
-function var_0_0.showDestoryAni(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_0._animSelf then
-		arg_15_0._animSelf:Update(0)
-		arg_15_0._animSelf:Play("close", 0, 0)
+function ChessInteractBase:showDestoryAni(callback, callbackObj)
+	if self._animSelf then
+		self._animSelf:Update(0)
+		self._animSelf:Play("close", 0, 0)
 
-		arg_15_0._closeAnimCallback = arg_15_1
-		arg_15_0._closeAnimCallbackObj = arg_15_2
+		self._closeAnimCallback = callback
+		self._closeAnimCallbackObj = callbackObj
 
-		TaskDispatcher.runDelay(arg_15_0._closeAnimCallback, arg_15_0._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
+		TaskDispatcher.runDelay(self._closeAnimCallback, self._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
 	else
-		arg_15_1(arg_15_2)
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.killMoveTween(arg_16_0)
-	if arg_16_0._tweenIdMoveScene then
-		ZProj.TweenHelper.KillById(arg_16_0._tweenIdMoveScene)
+function ChessInteractBase:killMoveTween()
+	if self._tweenIdMoveScene then
+		ZProj.TweenHelper.KillById(self._tweenIdMoveScene)
 
-		arg_16_0._tweenIdMoveScene = nil
+		self._tweenIdMoveScene = nil
 	end
 end
 
-function var_0_0.dispose(arg_17_0)
-	arg_17_0:killMoveTween()
-	TaskDispatcher.cancelTask(arg_17_0._closeAnimCallback, arg_17_0._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
+function ChessInteractBase:dispose()
+	self:killMoveTween()
+	TaskDispatcher.cancelTask(self._closeAnimCallback, self._closeAnimCallbackObj, ChessGameEnum.CloseAnimTime)
 end
 
-return var_0_0
+return ChessInteractBase

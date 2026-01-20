@@ -1,21 +1,23 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeResultReViewLimiterBuff", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeResultReViewLimiterBuff.lua
 
-local var_0_0 = class("RougeResultReViewLimiterBuff", RougeLimiterBuffEntry)
+module("modules.logic.rouge.dlc.101.view.RougeResultReViewLimiterBuff", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._totalRiskValue = arg_1_1
+local RougeResultReViewLimiterBuff = class("RougeResultReViewLimiterBuff", RougeLimiterBuffEntry)
+
+function RougeResultReViewLimiterBuff:ctor(totalRiskValue)
+	self._totalRiskValue = totalRiskValue
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function RougeResultReViewLimiterBuff:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function RougeResultReViewLimiterBuff:removeEventListeners()
 	return
 end
 
-function var_0_0.getTotalRiskValue(arg_4_0)
-	return arg_4_0._totalRiskValue
+function RougeResultReViewLimiterBuff:getTotalRiskValue()
+	return self._totalRiskValue
 end
 
-return var_0_0
+return RougeResultReViewLimiterBuff

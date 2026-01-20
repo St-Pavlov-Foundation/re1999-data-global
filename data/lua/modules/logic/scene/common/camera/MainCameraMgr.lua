@@ -1,131 +1,133 @@
-﻿module("modules.logic.scene.common.camera.MainCameraMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/common/camera/MainCameraMgr.lua
 
-local var_0_0 = class("MainCameraMgr")
+module("modules.logic.scene.common.camera.MainCameraMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._viewList = {}
+local MainCameraMgr = class("MainCameraMgr")
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0._onScreenResize, arg_1_0)
+function MainCameraMgr:ctor()
+	self._viewList = {}
+
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
 end
 
-function var_0_0._onOpenView(arg_2_0, arg_2_1)
-	arg_2_0:_checkCamera()
+function MainCameraMgr:_onOpenView(viewName)
+	self:_checkCamera()
 end
 
-function var_0_0._onCloseView(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._viewList[arg_3_1]
+function MainCameraMgr:_onCloseView(viewName)
+	local info = self._viewList[viewName]
 
-	if var_3_0 and var_3_0._resetCallbackOnCloseViewFinish then
+	if info and info._resetCallbackOnCloseViewFinish then
 		return
 	end
 
-	arg_3_0:_setCamera(arg_3_1, false)
+	self:_setCamera(viewName, false)
 
-	arg_3_0._viewList[arg_3_1] = nil
+	self._viewList[viewName] = nil
 
-	arg_3_0:_checkCamera()
+	self:_checkCamera()
 end
 
-function var_0_0._onCloseViewFinish(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._viewList[arg_4_1]
+function MainCameraMgr:_onCloseViewFinish(viewName)
+	local info = self._viewList[viewName]
 
-	if var_4_0 and var_4_0._resetCallbackOnCloseViewFinish ~= true then
+	if info and info._resetCallbackOnCloseViewFinish ~= true then
 		return
 	end
 
-	arg_4_0:_setCamera(arg_4_1, false)
+	self:_setCamera(viewName, false)
 
-	arg_4_0._viewList[arg_4_1] = nil
+	self._viewList[viewName] = nil
 
-	arg_4_0:_checkCamera()
+	self:_checkCamera()
 end
 
-function var_0_0._onScreenResize(arg_5_0)
-	arg_5_0:_checkCamera()
+function MainCameraMgr:_onScreenResize()
+	self:_checkCamera()
 end
 
-function var_0_0.setCloseViewFinishReset(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._viewList[arg_6_1]
+function MainCameraMgr:setCloseViewFinishReset(viewName)
+	local info = self._viewList[viewName]
 
-	if var_6_0 then
-		var_6_0._resetCallbackOnCloseViewFinish = true
+	if info then
+		info._resetCallbackOnCloseViewFinish = true
 	end
 end
 
-function var_0_0.addView(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	arg_7_0._viewList[arg_7_1] = {
-		setCallback = arg_7_2,
-		resetCallback = arg_7_3,
-		target = arg_7_4
+function MainCameraMgr:addView(viewName, setCallback, resetCallback, target)
+	self._viewList[viewName] = {
+		setCallback = setCallback,
+		resetCallback = resetCallback,
+		target = target
 	}
 
-	arg_7_0:_checkCamera()
+	self:_checkCamera()
 end
 
-function var_0_0._checkCamera(arg_8_0)
-	local var_8_0 = arg_8_0:_getTopViewCamera()
+function MainCameraMgr:_checkCamera()
+	local viewName = self:_getTopViewCamera()
 
-	if var_8_0 then
-		arg_8_0:_setCamera(var_8_0, true)
+	if viewName then
+		self:_setCamera(viewName, true)
 	end
 end
 
-function var_0_0._setCamera(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._isLock then
+function MainCameraMgr:_setCamera(viewName, isSet)
+	if self._isLock then
 		return
 	end
 
-	local var_9_0 = arg_9_0._viewList[arg_9_1]
+	local info = self._viewList[viewName]
 
-	if not var_9_0 then
+	if not info then
 		return
 	end
 
-	if arg_9_2 then
-		if var_9_0.setCallback then
-			var_9_0.setCallback(var_9_0.target)
+	if isSet then
+		if info.setCallback then
+			info.setCallback(info.target)
 		end
 	else
-		arg_9_0:_resetCamera()
+		self:_resetCamera()
 
-		if var_9_0.resetCallback then
-			var_9_0.resetCallback(var_9_0.target)
+		if info.resetCallback then
+			info.resetCallback(info.target)
 		end
 	end
 end
 
-function var_0_0._resetCamera(arg_10_0)
-	local var_10_0 = CameraMgr.instance:getMainCamera()
+function MainCameraMgr:_resetCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_10_0.orthographicSize = 5
-	var_10_0.orthographic = false
+	camera.orthographicSize = 5
+	camera.orthographic = false
 
-	transformhelper.setLocalPos(var_10_0.transform, 0, 0, 0)
+	transformhelper.setLocalPos(camera.transform, 0, 0, 0)
 end
 
-function var_0_0._getTopViewCamera(arg_11_0)
-	local var_11_0 = ViewMgr.instance:getOpenViewNameList()
+function MainCameraMgr:_getTopViewCamera()
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_11_0 = #var_11_0, 1, -1 do
-		local var_11_1 = var_11_0[iter_11_0]
+	for i = #openViewNameList, 1, -1 do
+		local oneViewName = openViewNameList[i]
 
-		if arg_11_0._viewList[var_11_1] then
-			return var_11_1
+		if self._viewList[oneViewName] then
+			return oneViewName
 		end
 	end
 end
 
-function var_0_0.setLock(arg_12_0, arg_12_1)
-	arg_12_0._isLock = arg_12_1
+function MainCameraMgr:setLock(value)
+	self._isLock = value
 
-	if not arg_12_1 then
-		arg_12_0:_checkCamera()
+	if not value then
+		self:_checkCamera()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+MainCameraMgr.instance = MainCameraMgr.New()
 
-return var_0_0
+return MainCameraMgr

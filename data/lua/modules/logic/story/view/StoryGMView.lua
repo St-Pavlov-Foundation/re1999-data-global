@@ -1,22 +1,24 @@
-﻿module("modules.logic.story.view.StoryGMView", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryGMView.lua
 
-local var_0_0 = class("StoryGMView", LuaCompBase)
+module("modules.logic.story.view.StoryGMView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._btnLog = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_storylog")
+local StoryGMView = class("StoryGMView", LuaCompBase)
 
-	arg_1_0._btnLog:AddClickListener(arg_1_0._btnLogClick, arg_1_0)
+function StoryGMView:ctor(go)
+	self._btnLog = gohelper.findChildButtonWithAudio(go, "#btn_storylog")
+
+	self._btnLog:AddClickListener(self._btnLogClick, self)
 end
 
-function var_0_0._btnLogClick(arg_2_0)
-	local var_2_0 = StoryController.instance._curStoryId
-	local var_2_1 = StoryController.instance._curStepId
+function StoryGMView:_btnLogClick()
+	local curStoryId = StoryController.instance._curStoryId
+	local curStepId = StoryController.instance._curStepId
 
-	logError(string.format("curStoryId : %s  curStepId : %s", var_2_0, var_2_1))
+	logError(string.format("curStoryId : %s  curStepId : %s", curStoryId, curStepId))
 end
 
-function var_0_0.destroy(arg_3_0)
-	arg_3_0._btnLog:RemoveClickListener()
+function StoryGMView:destroy()
+	self._btnLog:RemoveClickListener()
 end
 
-return var_0_0
+return StoryGMView

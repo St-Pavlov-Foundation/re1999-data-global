@@ -1,210 +1,235 @@
-﻿module("modules.logic.backpack.rpc.ItemRpc", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/rpc/ItemRpc.lua
 
-local var_0_0 = class("ItemRpc", BaseRpc)
+module("modules.logic.backpack.rpc.ItemRpc", package.seeall)
 
-function var_0_0.sendUseItemRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+local ItemRpc = class("ItemRpc", BaseRpc)
+
+function ItemRpc:sendUseItemRequest(co, id, callback, callbackObj)
 	logNormal("Send Use Item Request !")
 
-	local var_1_0 = ItemModule_pb.UseItemRequest()
+	local req = ItemModule_pb.UseItemRequest()
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
-		local var_1_1 = MaterialModule_pb.M2QEntry()
+	for _, v in ipairs(co) do
+		local entry = MaterialModule_pb.M2QEntry()
 
-		var_1_1.materialId = iter_1_1.materialId
-		var_1_1.quantity = iter_1_1.quantity
+		entry.materialId = v.materialId
+		entry.quantity = v.quantity
 
-		table.insert(var_1_0.entry, var_1_1)
+		table.insert(req.entry, entry)
 	end
 
-	var_1_0.targetId = arg_1_2
+	req.targetId = id
 
-	arg_1_0:sendMsg(var_1_0, arg_1_3, arg_1_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveUseItemReply(arg_2_0, arg_2_1, arg_2_2)
-	logNormal("Receive Use Item Reply Result Code : " .. arg_2_1)
-	StoreController.instance:onUseItemInStore(arg_2_2)
+function ItemRpc:onReceiveUseItemReply(resultCode, msg)
+	logNormal("Receive Use Item Reply Result Code : " .. resultCode)
+	StoreController.instance:onUseItemInStore(msg)
 end
 
-function var_0_0.onReceiveItemChangePush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == 0 then
-		ItemModel.instance:changeItemList(arg_3_2.items)
-		ItemPowerModel.instance:changePowerItemList(arg_3_2.powerItems)
-		ItemInsightModel.instance:changeInsightItemList(arg_3_2.insightItems)
+function ItemRpc:onReceiveItemChangePush(resultCode, msg)
+	if resultCode == 0 then
+		ItemModel.instance:changeItemList(msg.items)
+		ItemPowerModel.instance:changePowerItemList(msg.powerItems)
+		ItemInsightModel.instance:changeInsightItemList(msg.insightItems)
+		ItemTalentModel.instance:changeTalentItemList(msg.talentItems)
+		ItemExpireModel.instance:changeExpireItemList(msg.expireItems)
 		BackpackController.instance:dispatchEvent(BackpackEvent.UpdateItemList)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function var_0_0.sendGetItemListRequest(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = ItemModule_pb.GetItemListRequest()
+function ItemRpc:sendGetItemListRequest(callback, callbackObj)
+	local req = ItemModule_pb.GetItemListRequest()
 
-	return arg_4_0:sendMsg(var_4_0, arg_4_1, arg_4_2)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetItemListReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
-		ItemModel.instance:setItemList(arg_5_2.items)
+function ItemRpc:onReceiveGetItemListReply(resultCode, msg)
+	if resultCode == 0 then
+		ItemModel.instance:setItemList(msg.items)
 		ItemModel.instance:setOptionalGift()
-		ItemPowerModel.instance:setPowerItemList(arg_5_2.powerItems)
-		ItemInsightModel.instance:setInsightItemList(arg_5_2.insightItems)
+		ItemPowerModel.instance:setPowerItemList(msg.powerItems)
+		ItemInsightModel.instance:setInsightItemList(msg.insightItems)
+		ItemTalentModel.instance:setTalentItemList(msg.talentItems)
+		ItemExpireModel.instance:changeExpireItemList(msg.expireItems)
 		BackpackController.instance:dispatchEvent(BackpackEvent.UpdateItemList)
 	end
 end
 
-function var_0_0.sendUsePowerItemRequest(arg_6_0, arg_6_1)
-	local var_6_0 = ItemModule_pb.UsePowerItemRequest()
+function ItemRpc:sendUsePowerItemRequest(uid)
+	local req = ItemModule_pb.UsePowerItemRequest()
 
-	var_6_0.uid = arg_6_1
+	req.uid = uid
 
-	arg_6_0:sendMsg(var_6_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveUsePowerItemReply(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 ~= 0 then
+function ItemRpc:onReceiveUsePowerItemReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionFinish, arg_7_2.uid)
+	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionFinish, msg.uid)
 end
 
-function var_0_0.sendUsePowerItemListRequest(arg_8_0, arg_8_1)
-	local var_8_0 = ItemModule_pb.UsePowerItemListRequest()
+function ItemRpc:sendUsePowerItemListRequest(userItemList)
+	local req = ItemModule_pb.UsePowerItemListRequest()
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		local var_8_1 = ItemModule_pb.UsePowerItemInfo()
+	for _, userItem in ipairs(userItemList) do
+		local item = ItemModule_pb.UsePowerItemInfo()
 
-		var_8_1.uid = iter_8_1.uid
-		var_8_1.num = iter_8_1.num
+		item.uid = userItem.uid
+		item.num = userItem.num
 
-		table.insert(var_8_0.usePowerItemInfo, var_8_1)
+		table.insert(req.usePowerItemInfo, item)
 	end
 
-	arg_8_0:sendMsg(var_8_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveUsePowerItemListReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 ~= 0 then
+function ItemRpc:onReceiveUsePowerItemListReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionListFinish, arg_9_2.usePowerItemInfo)
+	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionListFinish, msg.usePowerItemInfo)
 end
 
-function var_0_0.sendAutoUseExpirePowerItemRequest(arg_10_0, arg_10_1)
-	if arg_10_0._autoUsePowerTime and ServerTime.now() - arg_10_0._autoUsePowerTime < 1 then
-		arg_10_0._autoUsePowerTime = ServerTime.now()
+function ItemRpc:sendAutoUseExpirePowerItemRequest(param)
+	if self._autoUsePowerTime and ServerTime.now() - self._autoUsePowerTime < 1 then
+		self._autoUsePowerTime = ServerTime.now()
 
 		return
 	end
 
-	arg_10_0._autoUsePowerTime = ServerTime.now()
+	self._autoUsePowerTime = ServerTime.now()
 
-	local var_10_0 = ItemModule_pb.AutoUseExpirePowerItemRequest()
+	local req = ItemModule_pb.AutoUseExpirePowerItemRequest()
 
-	return arg_10_0:sendMsg(var_10_0, arg_10_1)
+	return self:sendMsg(req, param)
 end
 
-function var_0_0.onReceiveAutoUseExpirePowerItemReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 ~= 0 then
+function ItemRpc:onReceiveAutoUseExpirePowerItemReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	if arg_11_2.used then
+	if msg.used then
 		GameFacade.showToast(ToastEnum.AutoUsseExpirePowerItem)
 	end
 end
 
-function var_0_0.sendMarkReadSubType21Request(arg_12_0, arg_12_1)
-	local var_12_0 = ItemModule_pb.MarkReadSubType21Request()
+function ItemRpc:sendMarkReadSubType21Request(itemId)
+	local req = ItemModule_pb.MarkReadSubType21Request()
 
-	var_12_0.itemId = arg_12_1
+	req.itemId = itemId
 
-	return arg_12_0:sendMsg(var_12_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveMarkReadSubType21Reply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 ~= 0 then
+function ItemRpc:onReceiveMarkReadSubType21Reply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-function var_0_0.sendUseInsightItemRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	local var_14_0 = ItemModule_pb.UseInsightItemRequest()
+function ItemRpc:sendUseInsightItemRequest(itemUid, heroId, callback, callbackObj)
+	local req = ItemModule_pb.UseInsightItemRequest()
 
-	arg_14_0._startRank = HeroModel.instance:getByHeroId(arg_14_2).rank
-	var_14_0.uid = arg_14_1
-	var_14_0.heroId = arg_14_2
+	self._startRank = HeroModel.instance:getByHeroId(heroId).rank
+	req.uid = itemUid
+	req.heroId = heroId
 
-	arg_14_0:sendMsg(var_14_0, arg_14_3, arg_14_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveUseInsightItemReply(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 ~= 0 then
+function ItemRpc:onReceiveUseInsightItemReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	BackpackController.instance:dispatchEvent(BackpackEvent.UseInsightItemFinished, arg_15_2.uid, arg_15_2.heroId)
+	BackpackController.instance:dispatchEvent(BackpackEvent.UseInsightItemFinished, msg.uid, msg.heroId)
 	CharacterController.instance:dispatchEvent(CharacterEvent.successHeroRankUp)
 	RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 
-	local var_15_0 = {
-		heroId = arg_15_2.heroId
-	}
+	local param = {}
 
-	var_15_0.newRank = HeroModel.instance:getByHeroId(var_15_0.heroId).rank
-	var_15_0.startRank = arg_15_0._startRank
-	var_15_0.isRank = true
+	param.heroId = msg.heroId
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, var_15_0)
+	local heroMO = HeroModel.instance:getByHeroId(param.heroId)
+
+	param.newRank = heroMO.rank
+	param.startRank = self._startRank
+	param.isRank = true
+
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, param)
 end
 
-function var_0_0.simpleSendUseItemRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	if not arg_16_2 or arg_16_2 <= 0 then
+function ItemRpc:simpleSendUseItemRequest(materialId, quantity, targetId, callback, callbackObj)
+	if not quantity or quantity <= 0 then
 		return
 	end
 
-	arg_16_0:sendUseItemRequest({
+	self:sendUseItemRequest({
 		{
-			materialId = arg_16_1,
-			quantity = arg_16_2
+			materialId = materialId,
+			quantity = quantity
 		}
-	}, arg_16_3 or 0, arg_16_4, arg_16_5)
+	}, targetId or 0, callback, callbackObj)
 end
 
-function var_0_0.sendGetPowerMakerInfoRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = ItemModule_pb.GetPowerMakerInfoRequest()
+function ItemRpc:sendGetPowerMakerInfoRequest(isAutoUse, isLogin, callback, callbackObj)
+	local req = ItemModule_pb.GetPowerMakerInfoRequest()
 
-	var_17_0.isAutoUse = arg_17_1 or false
-	var_17_0.isLogin = arg_17_2 or false
+	req.isAutoUse = isAutoUse or false
+	req.isLogin = isLogin or false
 
-	arg_17_0:sendMsg(var_17_0, arg_17_3, arg_17_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetPowerMakerInfoReply(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 ~= 0 then
+function ItemRpc:onReceiveGetPowerMakerInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	ItemPowerModel.instance:onGetPowerMakerInfo(arg_18_2)
+	ItemPowerModel.instance:onGetPowerMakerInfo(msg)
 	CurrencyController.instance:dispatchEvent(CurrencyEvent.RefreshPowerMakerInfo)
 end
 
-function var_0_0.autoUseExpirePowerItem(arg_19_0)
-	if arg_19_0.isAutoUseExpirePowerItem then
+function ItemRpc:autoUseExpirePowerItem()
+	if self.isAutoUseExpirePowerItem then
 		return
 	end
 
-	arg_19_0:sendGetPowerMakerInfoRequest(false, false, function()
-		var_0_0.instance:sendGetItemListRequest(function()
-			arg_19_0.isAutoUseExpirePowerItem = nil
+	self:sendGetPowerMakerInfoRequest(false, false, function()
+		ItemRpc.instance:sendGetItemListRequest(function()
+			self.isAutoUseExpirePowerItem = nil
 		end)
-		var_0_0.instance:sendAutoUseExpirePowerItemRequest()
+		ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
 	end)
 
-	arg_19_0.isAutoUseExpirePowerItem = true
+	self.isAutoUseExpirePowerItem = true
 end
 
-var_0_0.instance = var_0_0.New()
+function ItemRpc:sendUseTalentItemRequest(uid, heroUid, callback, callbackObj)
+	local req = ItemModule_pb.UseTalentItemRequest()
 
-return var_0_0
+	req.uid = uid
+	req.heroUid = heroUid
+
+	self:sendMsg(req, callback, callbackObj)
+end
+
+function ItemRpc:onReceiveUseTalentItemReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	ItemTalentController.instance:dispatchEvent(ItemTalentEvent.UseTalentItemSuccess, msg.uid, msg.heroUid)
+end
+
+ItemRpc.instance = ItemRpc.New()
+
+return ItemRpc

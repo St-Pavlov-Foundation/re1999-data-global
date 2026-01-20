@@ -1,21 +1,23 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessMoveStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessMoveStep.lua
 
-local var_0_0 = class("EliminateChessMoveStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessMoveStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data.chessItem
-	local var_1_1 = arg_1_0._data.time
-	local var_1_2 = arg_1_0._data.animType
+local EliminateChessMoveStep = class("EliminateChessMoveStep", EliminateChessStepBase)
 
-	if not var_1_1 or not var_1_0 then
+function EliminateChessMoveStep:onStart()
+	local chessItem = self._data.chessItem
+	local time = self._data.time
+	local animType = self._data.animType
+
+	if not time or not chessItem then
 		logError("步骤 Move 参数错误")
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	EliminateStepUtil.putMoveStepTable(arg_1_0._data)
-	var_1_0:toMove(var_1_1, var_1_2, arg_1_0._onDone, arg_1_0)
+	EliminateStepUtil.putMoveStepTable(self._data)
+	chessItem:toMove(time, animType, self._onDone, self)
 end
 
-return var_0_0
+return EliminateChessMoveStep

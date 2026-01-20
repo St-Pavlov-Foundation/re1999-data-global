@@ -1,332 +1,341 @@
-﻿module("modules.logic.achievement.config.AchievementConfig", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/config/AchievementConfig.lua
 
-local var_0_0 = class("AchievementConfig", BaseConfig)
+module("modules.logic.achievement.config.AchievementConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._achievementConfig = nil
-	arg_1_0._achievementGroupConfig = nil
-	arg_1_0._achievementTaskConfig = nil
+local AchievementConfig = class("AchievementConfig", BaseConfig)
+
+function AchievementConfig:ctor()
+	self._achievementConfig = nil
+	self._achievementGroupConfig = nil
+	self._achievementTaskConfig = nil
+	self._gameCenterConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function AchievementConfig:reqConfigNames()
 	return {
 		"achievement",
 		"achievement_group",
-		"achievement_task"
+		"achievement_task",
+		"achievement_gmcenter"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "achievement" then
-		arg_3_0:buildAchievementCfgs(arg_3_2)
-	elseif arg_3_1 == "achievement_group" then
-		arg_3_0._achievementGroupConfig = arg_3_2
-	elseif arg_3_1 == "achievement_task" then
-		arg_3_0._achievementTaskConfig = arg_3_2
+function AchievementConfig:onConfigLoaded(configName, configTable)
+	if configName == "achievement" then
+		self:buildAchievementCfgs(configTable)
+	elseif configName == "achievement_group" then
+		self._achievementGroupConfig = configTable
+	elseif configName == "achievement_task" then
+		self._achievementTaskConfig = configTable
 
-		arg_3_0:initAchievementTask()
+		self:initAchievementTask()
+	elseif configName == "achievement_gmcenter" then
+		self._gameCenterConfig = configTable
 	end
 end
 
-function var_0_0.buildAchievementCfgs(arg_4_0, arg_4_1)
-	arg_4_0._achievementConfig = arg_4_1
+function AchievementConfig:buildAchievementCfgs(configTable)
+	self._achievementConfig = configTable
 
-	arg_4_0:initAchievementStateDict()
+	self:initAchievementStateDict()
 end
 
-function var_0_0.initAchievementStateDict(arg_5_0)
-	arg_5_0._achievementState = {}
-	arg_5_0._waitOnlineList = {}
-	arg_5_0._waitOfflineList = {}
+function AchievementConfig:initAchievementStateDict()
+	self._achievementState = {}
+	self._waitOnlineList = {}
+	self._waitOfflineList = {}
 
-	for iter_5_0, iter_5_1 in pairs(AchievementEnum.AchievementState) do
-		arg_5_0._achievementState[iter_5_1] = {}
+	for _, achievementState in pairs(AchievementEnum.AchievementState) do
+		self._achievementState[achievementState] = {}
 	end
 end
 
-function var_0_0.initWaitAchievements(arg_6_0)
-	arg_6_0:initAchievementStateDict()
+function AchievementConfig:initWaitAchievements()
+	self:initAchievementStateDict()
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._achievementConfig.configList) do
-		local var_6_0, var_6_1, var_6_2 = arg_6_0:checkAchievementState(iter_6_1)
+	for _, config in ipairs(self._achievementConfig.configList) do
+		local achievementState, isReadyOnline, isReadyOffline = self:checkAchievementState(config)
 
-		table.insert(arg_6_0._achievementState[var_6_0], iter_6_1)
+		table.insert(self._achievementState[achievementState], config)
 
-		if var_6_1 then
-			table.insert(arg_6_0._waitOnlineList, iter_6_1)
+		if isReadyOnline then
+			table.insert(self._waitOnlineList, config)
 		end
 
-		if var_6_2 then
-			table.insert(arg_6_0._waitOfflineList, iter_6_1)
+		if isReadyOffline then
+			table.insert(self._waitOfflineList, config)
 		end
 	end
 end
 
-function var_0_0.checkAchievementState(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.startTime
-	local var_7_1 = arg_7_1.endTime
-	local var_7_2
-	local var_7_3
-	local var_7_4 = AchievementEnum.AchievementState.Online
+function AchievementConfig:checkAchievementState(achievementCfg)
+	local startTime = achievementCfg.startTime
+	local endTime = achievementCfg.endTime
+	local leftSec, rightSec
+	local achievementState = AchievementEnum.AchievementState.Online
 
-	if not string.nilorempty(var_7_0) then
-		var_7_2 = TimeUtil.stringToTimestamp(var_7_0) + ServerTime.clientToServerOffset()
-		var_7_2 = var_7_2 - ServerTime.now()
+	if not string.nilorempty(startTime) then
+		leftSec = TimeUtil.stringToTimestamp(startTime) + ServerTime.clientToServerOffset()
+		leftSec = leftSec - ServerTime.now()
 	end
 
-	if not string.nilorempty(var_7_1) then
-		var_7_3 = TimeUtil.stringToTimestamp(var_7_1) + ServerTime.clientToServerOffset()
-		var_7_3 = var_7_3 - ServerTime.now()
+	if not string.nilorempty(endTime) then
+		rightSec = TimeUtil.stringToTimestamp(endTime) + ServerTime.clientToServerOffset()
+		rightSec = rightSec - ServerTime.now()
 	end
 
-	if var_7_2 and var_7_3 and var_7_3 <= var_7_2 then
-		logError("成就下架时间不可早于或等于成就上架时间,成就id = " .. arg_7_1.id)
+	if leftSec and rightSec and rightSec <= leftSec then
+		logError("成就下架时间不可早于或等于成就上架时间,成就id = " .. achievementCfg.id)
 	end
 
-	local var_7_5 = var_7_2 and var_7_2 > 0
-	local var_7_6 = var_7_3 and var_7_3 > 0
+	local isReadyOnline = leftSec and leftSec > 0
+	local isReadyOffline = rightSec and rightSec > 0
 
-	if var_7_5 or var_7_3 and var_7_3 < 0 then
-		var_7_4 = AchievementEnum.AchievementState.Offline
+	if isReadyOnline or rightSec and rightSec < 0 then
+		achievementState = AchievementEnum.AchievementState.Offline
 	end
 
-	return var_7_4, var_7_5, var_7_6
+	return achievementState, isReadyOnline, isReadyOffline
 end
 
-function var_0_0.initAchievementTask(arg_8_0)
-	arg_8_0._taskFirstLevelDict = {}
+function AchievementConfig:initAchievementTask()
+	self._taskFirstLevelDict = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._achievementTaskConfig.configList) do
-		local var_8_0 = arg_8_0._taskFirstLevelDict[iter_8_1.achievementId] or iter_8_1
+	for i, taskCO in ipairs(self._achievementTaskConfig.configList) do
+		local targetCo = self._taskFirstLevelDict[taskCO.achievementId] or taskCO
 
-		if var_8_0 and var_8_0.level > iter_8_1.level then
-			var_8_0 = iter_8_1
+		if targetCo and targetCo.level > taskCO.level then
+			targetCo = taskCO
 		end
 
-		arg_8_0._taskFirstLevelDict[iter_8_1.achievementId] = var_8_0
+		self._taskFirstLevelDict[taskCO.achievementId] = targetCo
 	end
 end
 
-function var_0_0.getAchievement(arg_9_0, arg_9_1)
-	return arg_9_0._achievementConfig.configDict[arg_9_1]
+function AchievementConfig:getAchievement(achievementId)
+	return self._achievementConfig.configDict[achievementId]
 end
 
-function var_0_0.getTask(arg_10_0, arg_10_1)
-	return arg_10_0._achievementTaskConfig.configDict[arg_10_1]
+function AchievementConfig:getTask(taskId)
+	return self._achievementTaskConfig.configDict[taskId]
 end
 
-function var_0_0.getGroup(arg_11_0, arg_11_1)
-	return arg_11_0._achievementGroupConfig.configDict[arg_11_1]
+function AchievementConfig:getGroup(groupId)
+	return self._achievementGroupConfig.configDict[groupId]
 end
 
-function var_0_0.getGroupName(arg_12_0, arg_12_1)
-	local var_12_0 = var_0_0.instance:getGroup(arg_12_1)
+function AchievementConfig:getGroupName(groupId)
+	local groupCfg = AchievementConfig.instance:getGroup(groupId)
 
-	if not var_12_0 then
-		return luaLang(AchievementEnum.SpGroupNameLangId[arg_12_1])
+	if not groupCfg then
+		return luaLang(AchievementEnum.SpGroupNameLangId[groupId])
 	end
 
-	return var_12_0 and var_12_0.name
+	return groupCfg and groupCfg.name
 end
 
-function var_0_0.getAchievementFirstTask(arg_13_0, arg_13_1)
-	return arg_13_0._taskFirstLevelDict[arg_13_1]
+function AchievementConfig:getAchievementFirstTask(achievementId)
+	return self._taskFirstLevelDict[achievementId]
 end
 
-function var_0_0.getTaskByAchievementLevel(arg_14_0, arg_14_1, arg_14_2)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._achievementTaskConfig.configList) do
-		if iter_14_1.achievementId == arg_14_1 and iter_14_1.level == arg_14_2 then
-			return iter_14_1
+function AchievementConfig:getTaskByAchievementLevel(achievementId, level)
+	for i, taskCO in ipairs(self._achievementTaskConfig.configList) do
+		if taskCO.achievementId == achievementId and taskCO.level == level then
+			return taskCO
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getAchievementMaxLevelTask(arg_15_0, arg_15_1)
-	local var_15_0 = {}
+function AchievementConfig:getAchievementMaxLevelTask(achievementId)
+	local taskList = {}
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._achievementTaskConfig.configList) do
-		if iter_15_1.achievementId == arg_15_1 then
-			table.insert(var_15_0, iter_15_1)
+	for _, taskCO in ipairs(self._achievementTaskConfig.configList) do
+		if taskCO.achievementId == achievementId then
+			table.insert(taskList, taskCO)
 		end
 	end
 
-	table.sort(var_15_0, arg_15_0.achievementTaskSortFuncByLevel)
+	table.sort(taskList, self.achievementTaskSortFuncByLevel)
 
-	return var_15_0[1]
+	return taskList[1]
 end
 
-function var_0_0.achievementTaskSortFuncByLevel(arg_16_0, arg_16_1)
-	if arg_16_0.level ~= arg_16_1.level then
-		return arg_16_0.level > arg_16_1.level
+function AchievementConfig.achievementTaskSortFuncByLevel(a, b)
+	if a.level ~= b.level then
+		return a.level > b.level
 	end
 
-	return arg_16_0.id < arg_16_1.id
+	return a.id < b.id
 end
 
-function var_0_0.getAchievementsByGroupId(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = {}
+function AchievementConfig:getAchievementsByGroupId(groupId, sortFunc)
+	local result = {}
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._achievementConfig.configList) do
-		if iter_17_1.groupId == arg_17_1 then
-			table.insert(var_17_0, iter_17_1)
+	for i, achievementCO in ipairs(self._achievementConfig.configList) do
+		if achievementCO.groupId == groupId then
+			table.insert(result, achievementCO)
 		end
 	end
 
-	arg_17_2 = arg_17_2 or var_0_0.achievmentSortFuncInGroup
+	sortFunc = sortFunc or AchievementConfig.achievmentSortFuncInGroup
 
-	table.sort(var_17_0, arg_17_2)
+	table.sort(result, sortFunc)
 
-	return var_17_0
+	return result
 end
 
-function var_0_0.achievmentSortFuncInGroup(arg_18_0, arg_18_1)
-	if arg_18_0.order ~= arg_18_1.order then
-		return arg_18_0.order < arg_18_1.order
+function AchievementConfig.achievmentSortFuncInGroup(a, b)
+	if a.order ~= b.order then
+		return a.order < b.order
 	else
-		return arg_18_0.id < arg_18_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0.getTasksByAchievementId(arg_19_0, arg_19_1)
-	local var_19_0 = {}
+function AchievementConfig:getTasksByAchievementId(achievementId)
+	local result = {}
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._achievementTaskConfig.configList) do
-		if iter_19_1.achievementId == arg_19_1 then
-			table.insert(var_19_0, iter_19_1)
+	for _, taskCO in ipairs(self._achievementTaskConfig.configList) do
+		if taskCO.achievementId == achievementId then
+			table.insert(result, taskCO)
 		end
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.getAllAchievements(arg_20_0)
-	return arg_20_0._achievementConfig.configList
+function AchievementConfig:getAllAchievements()
+	return self._achievementConfig.configList
 end
 
-function var_0_0.getOnlineAchievements(arg_21_0)
-	return arg_21_0._achievementState[AchievementEnum.AchievementState.Online]
+function AchievementConfig:getOnlineAchievements()
+	return self._achievementState[AchievementEnum.AchievementState.Online]
 end
 
-function var_0_0.getAllTasks(arg_22_0)
-	return arg_22_0._achievementTaskConfig.configList
+function AchievementConfig:getAllTasks()
+	return self._achievementTaskConfig.configList
 end
 
-function var_0_0.getCategoryAchievementMap(arg_23_0)
-	local var_23_0 = {}
+function AchievementConfig:getCategoryAchievementMap()
+	local infoDict = {}
 
-	for iter_23_0, iter_23_1 in ipairs(AchievementEnum.Type) do
-		var_23_0[iter_23_0] = {}
+	for category, v in ipairs(AchievementEnum.Type) do
+		infoDict[category] = {}
 	end
 
-	local var_23_1 = arg_23_0:getOnlineAchievements()
+	local allCfgList = self:getOnlineAchievements()
 
-	if var_23_1 then
-		for iter_23_2, iter_23_3 in ipairs(var_23_1) do
-			var_23_0[iter_23_3.category] = var_23_0[iter_23_3.category] or {}
+	if allCfgList then
+		for _, cfg in ipairs(allCfgList) do
+			infoDict[cfg.category] = infoDict[cfg.category] or {}
 
-			local var_23_2 = var_23_0[iter_23_3.category]
+			local list = infoDict[cfg.category]
 
-			table.insert(var_23_2, iter_23_3)
+			table.insert(list, cfg)
 		end
 	end
 
-	return var_23_0
+	return infoDict
 end
 
-function var_0_0.getGroupBgUrl(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_0:getGroupEditConfigData(arg_24_1, arg_24_2)
+function AchievementConfig:getGroupBgUrl(groupId, paramType, isUpgrade)
+	local editorParam = self:getGroupEditConfigData(groupId, paramType)
 
-	if var_24_0 then
-		return arg_24_3 and var_24_0.groupUpgradeBgUrl or var_24_0.groupNormalBgUrl
+	if editorParam then
+		return isUpgrade and editorParam.groupUpgradeBgUrl or editorParam.groupNormalBgUrl
 	end
 end
 
-function var_0_0.getAchievementPosAndScaleInGroup(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = arg_25_0:getGroupEditConfigData(arg_25_1, arg_25_3)
+function AchievementConfig:getAchievementPosAndScaleInGroup(groupId, index, paramType)
+	local editorParam = self:getGroupEditConfigData(groupId, paramType)
 
-	if var_25_0 and var_25_0.id[arg_25_2] then
-		return var_25_0.pX[arg_25_2], var_25_0.pY[arg_25_2], var_25_0.sX[arg_25_2], var_25_0.sY[arg_25_2]
+	if editorParam and editorParam.id[index] then
+		return editorParam.pX[index], editorParam.pY[index], editorParam.sX[index], editorParam.sY[index]
 	end
 end
 
-function var_0_0.getGroupTitleColorConfig(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0:getGroupEditConfigData(arg_26_1, arg_26_2)
+function AchievementConfig:getGroupTitleColorConfig(groupId, paramType)
+	local editorParam = self:getGroupEditConfigData(groupId, paramType)
 
-	if var_26_0 and var_26_0.groupTitleColor then
-		return var_26_0.groupTitleColor
+	if editorParam and editorParam.groupTitleColor then
+		return editorParam.groupTitleColor
 	end
 end
 
-function var_0_0.getGroupParamIdTab(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_0:getGroupEditConfigData(arg_27_1, arg_27_2)
+function AchievementConfig:getGroupParamIdTab(groupId, paramType)
+	local editorParam = self:getGroupEditConfigData(groupId, paramType)
 
-	if var_27_0 and var_27_0.id then
-		return var_27_0.id
+	if editorParam and editorParam.id then
+		return editorParam.id
 	end
 end
 
-function var_0_0.getGroupEditConfigData(arg_28_0, arg_28_1, arg_28_2)
-	arg_28_0._groupParamTab = arg_28_0._groupParamTab or {}
+function AchievementConfig:getGroupEditConfigData(groupId, paramType)
+	self._groupParamTab = self._groupParamTab or {}
 
-	if not arg_28_0._groupParamTab[arg_28_1] then
-		arg_28_0._groupParamTab[arg_28_1] = {}
+	if not self._groupParamTab[groupId] then
+		self._groupParamTab[groupId] = {}
 	end
 
-	if not arg_28_0._groupParamTab[arg_28_1][arg_28_2] then
-		local var_28_0 = arg_28_0:getGroup(arg_28_1)
+	if not self._groupParamTab[groupId][paramType] then
+		local groupCfg = self:getGroup(groupId)
 
-		if arg_28_2 == AchievementEnum.GroupParamType.List then
-			if not string.nilorempty(var_28_0.uiListParam) then
-				arg_28_0._groupParamTab[arg_28_1][arg_28_2] = cjson.decode(var_28_0.uiListParam)
+		if paramType == AchievementEnum.GroupParamType.List then
+			if not string.nilorempty(groupCfg.uiListParam) then
+				self._groupParamTab[groupId][paramType] = cjson.decode(groupCfg.uiListParam)
 			end
-		elseif arg_28_2 == AchievementEnum.GroupParamType.Player and not string.nilorempty(var_28_0.uiPlayerParam) then
-			arg_28_0._groupParamTab[arg_28_1][arg_28_2] = cjson.decode(var_28_0.uiPlayerParam)
+		elseif paramType == AchievementEnum.GroupParamType.Player and not string.nilorempty(groupCfg.uiPlayerParam) then
+			self._groupParamTab[groupId][paramType] = cjson.decode(groupCfg.uiPlayerParam)
 		end
 	end
 
-	return arg_28_0._groupParamTab[arg_28_1][arg_28_2]
+	return self._groupParamTab[groupId][paramType]
 end
 
-function var_0_0.getWaitOnlineAchievementList(arg_29_0)
-	return arg_29_0._waitOnlineList
+function AchievementConfig:getWaitOnlineAchievementList()
+	return self._waitOnlineList
 end
 
-function var_0_0.getWaitOfflineAchievementList(arg_30_0)
-	return arg_30_0._waitOfflineList
+function AchievementConfig:getWaitOfflineAchievementList()
+	return self._waitOfflineList
 end
 
-function var_0_0.getStateAchievement(arg_31_0, arg_31_1)
-	return arg_31_0._achievementState and arg_31_0._achievementState[arg_31_1]
+function AchievementConfig:getStateAchievement(achievementState)
+	return self._achievementState and self._achievementState[achievementState]
 end
 
-function var_0_0.updateAchievementStateInternal(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	local var_32_0 = arg_32_0:getStateAchievement(arg_32_2)
+function AchievementConfig:updateAchievementStateInternal(achievementCfg, originState, targetState)
+	local originStateList = self:getStateAchievement(originState)
 
-	if var_32_0 then
-		tabletool.removeValue(var_32_0, arg_32_1)
+	if originStateList then
+		tabletool.removeValue(originStateList, achievementCfg)
 	end
 
-	local var_32_1 = arg_32_0:getStateAchievement(arg_32_3)
+	local targetStateList = self:getStateAchievement(targetState)
 
-	table.insert(var_32_1, arg_32_1)
+	table.insert(targetStateList, achievementCfg)
 end
 
-function var_0_0.onAchievementArriveOnlineTime(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0:getAchievement(arg_33_1)
+function AchievementConfig:onAchievementArriveOnlineTime(achievementId)
+	local achievementCfg = self:getAchievement(achievementId)
 
-	arg_33_0:updateAchievementStateInternal(var_33_0, AchievementEnum.AchievementState.Offline, AchievementEnum.AchievementState.Online)
-	tabletool.removeValue(arg_33_0._waitOnlineList, var_33_0)
+	self:updateAchievementStateInternal(achievementCfg, AchievementEnum.AchievementState.Offline, AchievementEnum.AchievementState.Online)
+	tabletool.removeValue(self._waitOnlineList, achievementCfg)
 end
 
-function var_0_0.onAchievementArriveOfflineTime(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0:getAchievement(arg_34_1)
+function AchievementConfig:onAchievementArriveOfflineTime(achievementId)
+	local achievementCfg = self:getAchievement(achievementId)
 
-	arg_34_0:updateAchievementStateInternal(var_34_0, AchievementEnum.AchievementState.Online, AchievementEnum.AchievementState.Offline)
-	tabletool.removeValue(arg_34_0._waitOfflineList, var_34_0)
+	self:updateAchievementStateInternal(achievementCfg, AchievementEnum.AchievementState.Online, AchievementEnum.AchievementState.Offline)
+	tabletool.removeValue(self._waitOfflineList, achievementCfg)
 end
 
-var_0_0.instance = var_0_0.New()
+function AchievementConfig:getGameCenterCfgList()
+	return self._gameCenterConfig and self._gameCenterConfig.configList
+end
 
-return var_0_0
+AchievementConfig.instance = AchievementConfig.New()
+
+return AchievementConfig

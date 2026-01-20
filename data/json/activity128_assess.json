@@ -218,5 +218,104 @@
     "battleIconBg": "v1a4_bossrush_ig_tipsbg4",
     "mainBg": "v1a6_bossrush_taskitembg3",
     "layer4Assess": 1
+  },
+  {
+    "level": 21,
+    "strLevel": "C",
+    "spriteName": "bossrush_icon_assess_c4",
+    "needPointBoss1": 50000,
+    "needPointBoss2": 50000,
+    "needPointBoss3": 50000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg1",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 22,
+    "strLevel": "B",
+    "spriteName": "bossrush_icon_assess_b4",
+    "needPointBoss1": 150000,
+    "needPointBoss2": 150000,
+    "needPointBoss3": 150000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg2",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 23,
+    "strLevel": "A",
+    "spriteName": "bossrush_icon_assess_a4",
+    "needPointBoss1": 300000,
+    "needPointBoss2": 300000,
+    "needPointBoss3": 300000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg3",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 24,
+    "strLevel": "S",
+    "spriteName": "bossrush_icon_assess_s4",
+    "needPointBoss1": 500000,
+    "needPointBoss2": 500000,
+    "needPointBoss3": 500000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg4",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 25,
+    "strLevel": "SS",
+    "spriteName": "bossrush_icon_assess_ss4",
+    "needPointBoss1": 800000,
+    "needPointBoss2": 800000,
+    "needPointBoss3": 800000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg4",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 26,
+    "strLevel": "SSS",
+    "spriteName": "bossrush_icon_assess_sss4",
+    "needPointBoss1": 1250000,
+    "needPointBoss2": 1250000,
+    "needPointBoss3": 1250000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg4",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 27,
+    "strLevel": "SSSS",
+    "spriteName": "bossrush_icon_assess_sss5",
+    "needPointBoss1": 2500000,
+    "needPointBoss2": 2500000,
+    "needPointBoss3": 2500000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg4",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 28,
+    "strLevel": "SSSSS",
+    "spriteName": "bossrush_icon_assess_sss6",
+    "needPointBoss1": 5000000,
+    "needPointBoss2": 5000000,
+    "needPointBoss3": 5000000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg4",
+    "mainBg": "",
+    "layer4Assess": 2
+  },
+  {
+    "level": 29,
+    "strLevel": "SSSSSS",
+    "spriteName": "bossrush_icon_assess_sss7",
+    "needPointBoss1": 10000000,
+    "needPointBoss2": 10000000,
+    "needPointBoss3": 10000000,
+    "battleIconBg": "v3a2_bossrush_ig_tipsbg4",
+    "mainBg": "",
+    "layer4Assess": 2
   }
 ]

@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.buff.BuffBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/buff/BuffBase.lua
 
-local var_0_0 = class("BuffBase")
+module("modules.logic.versionactivity2_7.lengzhou6.model.buff.BuffBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._id = 0
-	arg_1_0._configId = 0
-	arg_1_0._layerCount = 0
-	arg_1_0._addLimit = 1
+local BuffBase = class("BuffBase")
+
+function BuffBase:ctor()
+	self._id = 0
+	self._configId = 0
+	self._layerCount = 0
+	self._addLimit = 1
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._id = arg_2_1
-	arg_2_0.config = LengZhou6Config.instance:getEliminateBattleBuff(arg_2_2)
-	arg_2_0._addLimit = arg_2_0.config.limit
-	arg_2_0._configId = arg_2_2
-	arg_2_0._triggerPoint = arg_2_0.config.triggerPoint
-	arg_2_0._layerCount = 1
-	arg_2_0._effect = arg_2_0.config.effect
+function BuffBase:init(id, configId)
+	self._id = id
+	self.config = LengZhou6Config.instance:getEliminateBattleBuff(configId)
+	self._addLimit = self.config.limit
+	self._configId = configId
+	self._triggerPoint = self.config.triggerPoint
+	self._layerCount = 1
+	self._effect = self.config.effect
 end
 
-function var_0_0.getBuffEffect(arg_3_0)
-	return arg_3_0._effect
+function BuffBase:getBuffEffect()
+	return self._effect
 end
 
-function var_0_0.getLayerCount(arg_4_0)
-	return arg_4_0._layerCount
+function BuffBase:getLayerCount()
+	return self._layerCount
 end
 
-function var_0_0.addCount(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._layerCount + arg_5_1
+function BuffBase:addCount(diff)
+	local value = self._layerCount + diff
 
-	arg_5_0._layerCount = math.max(0, math.min(var_5_0, arg_5_0._addLimit))
+	self._layerCount = math.max(0, math.min(value, self._addLimit))
 end
 
-function var_0_0.execute(arg_6_0)
+function BuffBase:execute()
 	return true
 end
 
-return var_0_0
+return BuffBase

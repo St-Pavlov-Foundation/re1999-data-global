@@ -1,49 +1,65 @@
-﻿module("modules.logic.fight.mgr.FightGameMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightGameMgr.lua
 
-local var_0_0 = class("FightGameMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightGameMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.mgrList = {}
+local FightGameMgr = class("FightGameMgr", FightBaseClass)
 
-	arg_1_0:com_registEvent(ConnectAliveMgr.instance, ConnectEvent.OnLostConnect, arg_1_0.onLostConnect)
-	arg_1_0:com_registMsg(FightMsgId.RestartGame, arg_1_0.onRestartGame)
+function FightGameMgr:onConstructor()
+	self.mgrList = {}
 
-	var_0_0.restartMgr = arg_1_0:newClass(FightRestartMgr)
+	self:com_registEvent(ConnectAliveMgr.instance, ConnectEvent.OnLostConnect, self.onLostConnect)
+	self:com_registMsg(FightMsgId.RestartGame, self.onRestartGame)
+
+	FightGameMgr.restartMgr = self:newClass(FightRestartMgr)
 end
 
-function var_0_0.onLogicEnter(arg_2_0)
-	arg_2_0:registMgr()
-	arg_2_0:defineMgrRef()
+function FightGameMgr:onLogicEnter()
+	self:registMgr()
+	self:defineMgrRef()
 end
 
-function var_0_0.registMgr(arg_3_0)
-	arg_3_0.playMgr = arg_3_0:addMgr(FightPlayMgr)
-	arg_3_0.operateMgr = arg_3_0:addMgr(FightOperateMgr)
-	arg_3_0.checkCrashMgr = arg_3_0:addMgr(FightCheckCrashMgr)
-	arg_3_0.entrustEntityMgr = arg_3_0:addMgr(FightEntrustEntityMgr)
-	arg_3_0.entrustDeadEntityMgr = arg_3_0:addMgr(FightEntrustDeadEntityMgr)
-	arg_3_0.wadingEffect = arg_3_0:addMgr(FightWadingEffectMgr)
+function FightGameMgr:registMgr()
+	self.loaderMgr = self:addMgr(FightLoaderMgr)
+	self.playMgr = self:addMgr(FightPlayMgr)
+	self.operateMgr = self:addMgr(FightOperateMgr)
+	self.checkCrashMgr = self:addMgr(FightCheckCrashMgr)
+	self.entrustEntityMgr = self:addMgr(FightEntrustEntityMgr)
+	self.entrustDeadEntityMgr = self:addMgr(FightEntrustDeadEntityMgr)
+	self.wadingEffect = self:addMgr(FightWadingEffectMgr)
 
 	if GameSceneMgr.instance:useDefaultScene() == false then
-		arg_3_0.sceneTriggerSceneAnimatorMgr = arg_3_0:addMgr(FightSceneTriggerSceneAnimatorMgr)
+		self.sceneTriggerSceneAnimatorMgr = self:addMgr(FightSceneTriggerSceneAnimatorMgr)
 	end
 
-	arg_3_0.userDataClassMgr = arg_3_0:addMgr(FightUserDataClassMgr)
+	self.userDataClassMgr = self:addMgr(FightUserDataClassMgr)
+	self.magicCirCleMgr = self:addMgr(FightMagicCircleMgr)
+	self.entrustedWorkMgr = self:addMgr(FightEntrustedWorkMgr)
+	self.buffTypeId2EffectMgr = self:addMgr(FightBuffTypeId2EffectMgr)
+	self.entityEvolutionMgr = self:addMgr(FightEntityEvolutionMgr)
+	self.specialSceneEffectMgr = self:addMgr(FightSpecialSceneEffectMgr)
+	self.specialSceneIdleMgr = self:addMgr(FightSpecialSceneIdleMgr)
+	self.dynamicShadowMgr = self:addMgr(FightDynamicShadowMgr)
+	self.thunderMatMgr = self:addMgr(FightThunderMatMgr)
+	self.entityFootRingMgr = self:addMgr(FightEntityFootRingMgr)
+	self.weatherEffectMgr = self:addMgr(FightWeatherEffectMgr)
+	self.spineColorBySceneMgr = self:addMgr(FightSpineColorBySceneMgr)
+	self.bgmMgr = self:addMgr(FightBgmMgr)
+	self.bloomMgr = self:addMgr(FightBloomMgr)
 end
 
-function var_0_0.addMgr(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:newClass(arg_4_1)
+function FightGameMgr:addMgr(class)
+	local mgr = self:newClass(class)
 
-	table.insert(arg_4_0.mgrList, var_4_0)
+	table.insert(self.mgrList, mgr)
 
-	return var_4_0
+	return mgr
 end
 
-function var_0_0.defineMgrRef(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.mgrList) do
-		for iter_5_2, iter_5_3 in pairs(arg_5_0) do
-			if iter_5_3 == iter_5_1 then
-				var_0_0[iter_5_2] = iter_5_1
+function FightGameMgr:defineMgrRef()
+	for i, mgr in ipairs(self.mgrList) do
+		for k, v in pairs(self) do
+			if v == mgr then
+				FightGameMgr[k] = mgr
 
 				break
 			end
@@ -51,43 +67,45 @@ function var_0_0.defineMgrRef(arg_5_0)
 	end
 end
 
-function var_0_0.onRestartGame(arg_6_0)
-	for iter_6_0 = #arg_6_0.mgrList, 1, -1 do
-		arg_6_0.mgrList[iter_6_0]:disposeSelf()
-		table.remove(arg_6_0.mgrList, iter_6_0)
+function FightGameMgr:onRestartGame()
+	for i = #self.mgrList, 1, -1 do
+		self.mgrList[i]:disposeSelf()
+		table.remove(self.mgrList, i)
 	end
 
-	arg_6_0:registMgr()
-	arg_6_0:defineMgrRef()
+	self:registMgr()
+	self:defineMgrRef()
 end
 
-function var_0_0.onLostConnect(arg_7_0)
-	local var_7_0 = PlayerModel.instance:getPlayinfo()
-	local var_7_1 = "战斗超时断线,玩家uid:%d, 战斗id: %d"
-	local var_7_2 = string.format(var_7_1, var_7_0.userId, FightDataHelper.fieldMgr.battleId)
-	local var_7_3 = FightDataHelper.entityMgr.entityDataDic
+function FightGameMgr:onLostConnect()
+	local playerInfo = PlayerModel.instance:getPlayinfo()
+	local str = "战斗超时断线,玩家uid:%d, 战斗id: %d"
 
-	for iter_7_0, iter_7_1 in pairs(var_7_3) do
-		local var_7_4 = true
+	str = string.format(str, playerInfo.userId, FightDataHelper.fieldMgr.battleId)
 
-		if not iter_7_1:isMySide() then
-			var_7_4 = false
+	local entityDataDic = FightDataHelper.entityMgr.entityDataDic
+
+	for entityId, entityData in pairs(entityDataDic) do
+		local needPrint = true
+
+		if not entityData:isMySide() then
+			needPrint = false
 		end
 
-		if iter_7_0 == "0" then
-			var_7_4 = false
+		if entityId == "0" then
+			needPrint = false
 		end
 
-		if var_7_4 then
-			var_7_2 = var_7_2 .. ", heroId:" .. iter_7_1.modelId
+		if needPrint then
+			str = str .. ", heroId:" .. entityData.modelId
 		end
 	end
 
-	logError(var_7_2)
+	logError(str)
 end
 
-function var_0_0.onDestructor(arg_8_0)
+function FightGameMgr:onDestructor()
 	return
 end
 
-return var_0_0
+return FightGameMgr

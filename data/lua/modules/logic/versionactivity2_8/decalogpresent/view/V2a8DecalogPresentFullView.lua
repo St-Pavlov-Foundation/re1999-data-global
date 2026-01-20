@@ -1,20 +1,23 @@
-﻿module("modules.logic.versionactivity2_8.decalogpresent.view.V2a8DecalogPresentFullView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/decalogpresent/view/V2a8DecalogPresentFullView.lua
 
-local var_0_0 = class("V2a8DecalogPresentFullView", V1a9DecalogPresentFullView)
+module("modules.logic.versionactivity2_8.decalogpresent.view.V2a8DecalogPresentFullView", package.seeall)
 
-function var_0_0.refreshRemainTime(arg_1_0)
-	local var_1_0 = DecalogPresentModel.instance:getDecalogPresentActId()
-	local var_1_1 = ActivityModel.instance:getActMO(var_1_0):getRemainTimeStr3(false, true)
+local V2a8DecalogPresentFullView = class("V2a8DecalogPresentFullView", V1a9DecalogPresentFullView)
 
-	arg_1_0._txtremainTime.text = var_1_1
+function V2a8DecalogPresentFullView:refreshRemainTime()
+	local actId = DecalogPresentModel.instance:getDecalogPresentActId()
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
+	local timeStr = actInfoMo:getRemainTimeStr3(false, true)
+
+	self._txtremainTime.text = timeStr
 end
 
-function var_0_0.onOpen(arg_2_0)
-	local var_2_0 = arg_2_0.viewParam.parent
+function V2a8DecalogPresentFullView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_2_0, arg_2_0.viewGO)
-	arg_2_0:refresh()
+	gohelper.addChild(parentGO, self.viewGO)
+	self:refresh()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shuori_qiyuan_unlock_2)
 end
 
-return var_0_0
+return V2a8DecalogPresentFullView

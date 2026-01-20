@@ -1,15 +1,17 @@
-﻿module("modules.logic.signin.config.SignInConfig", package.seeall)
+﻿-- chunkname: @modules/logic/signin/config/SignInConfig.lua
 
-local var_0_0 = class("SignInConfig", BaseConfig)
+module("modules.logic.signin.config.SignInConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._signMonthRewards = nil
-	arg_1_0._signRewards = nil
-	arg_1_0._signDesc = nil
-	arg_1_0._goldRewards = nil
+local SignInConfig = class("SignInConfig", BaseConfig)
+
+function SignInConfig:ctor()
+	self._signMonthRewards = nil
+	self._signRewards = nil
+	self._signDesc = nil
+	self._goldRewards = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function SignInConfig:reqConfigNames()
 	return {
 		"sign_in_addup_bonus",
 		"sign_in_bonus",
@@ -19,60 +21,72 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "sign_in_addup_bonus" then
-		arg_3_0._signMonthRewards = arg_3_2
-	elseif arg_3_1 == "sign_in_bonus" then
-		arg_3_0._signRewards = arg_3_2
-	elseif arg_3_1 == "sign_in_word" then
-		arg_3_0._signDesc = arg_3_2
-	elseif arg_3_1 == "activity143_bonus" then
-		arg_3_0._goldRewards = arg_3_2
+function SignInConfig:onConfigLoaded(configName, configTable)
+	if configName == "sign_in_addup_bonus" then
+		self._signMonthRewards = configTable
+	elseif configName == "sign_in_bonus" then
+		self._signRewards = configTable
+	elseif configName == "sign_in_word" then
+		self._signDesc = configTable
+	elseif configName == "activity143_bonus" then
+		self._goldRewards = configTable
 	end
 end
 
-function var_0_0.getSignMonthReward(arg_4_0, arg_4_1)
-	return arg_4_0._signMonthRewards.configDict[arg_4_1]
+function SignInConfig:getSignMonthReward(id)
+	return self._signMonthRewards.configDict[id]
 end
 
-function var_0_0.getSignMonthRewards(arg_5_0)
-	return arg_5_0._signMonthRewards.configDict
+function SignInConfig:getSignMonthRewards()
+	return self._signMonthRewards.configDict
 end
 
-function var_0_0.getSignRewards(arg_6_0, arg_6_1)
-	return arg_6_0._signRewards.configDict[arg_6_1]
+function SignInConfig:getSignRewards(id)
+	return self._signRewards.configDict[id]
 end
 
-function var_0_0.getSignDesc(arg_7_0, arg_7_1)
-	return arg_7_0._signDesc.configDict[arg_7_1]
+function SignInConfig:getSignRewardBouns(id)
+	if not self._singRewardBonusDict then
+		self._singRewardBonusDict = {}
+
+		for _, cfg in ipairs(self._signRewards.configList) do
+			self._singRewardBonusDict[cfg.id] = string.splitToNumber(cfg.signinBonus, "#")
+		end
+	end
+
+	return self._singRewardBonusDict[id]
 end
 
-function var_0_0.getGoldReward(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._goldRewards.configDict[ActivityEnum.Activity.DailyAllowance]) do
-		if iter_8_1.day == arg_8_1 then
-			return iter_8_1.bonus
+function SignInConfig:getSignDesc(id)
+	return self._signDesc.configDict[id]
+end
+
+function SignInConfig:getGoldReward(day)
+	for _, v in pairs(self._goldRewards.configDict[ActivityEnum.Activity.DailyAllowance]) do
+		if v.day == day then
+			return v.bonus
 		end
 	end
 end
 
-function var_0_0.getSignDescByDate(arg_9_0, arg_9_1)
-	local var_9_0 = os.date("%Y-%m-%d 00:00:00", arg_9_1)
+function SignInConfig:getSignDescByDate(time)
+	local date = os.date("%Y-%m-%d 00:00:00", time)
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._signDesc.configDict) do
-		if iter_9_1.signindate == var_9_0 then
-			return iter_9_1.signinword
+	for _, v in pairs(self._signDesc.configDict) do
+		if v.signindate == date then
+			return v.signinword
 		end
 	end
 end
 
-function var_0_0.getSignInLifeTimeBonusCO(arg_10_0, arg_10_1)
-	return lua_sign_in_lifetime_bonus.configList[arg_10_1]
+function SignInConfig:getSignInLifeTimeBonusCO(stageid)
+	return lua_sign_in_lifetime_bonus.configList[stageid]
 end
 
-function var_0_0.getSignInLifeTimeBonusCount(arg_11_0)
+function SignInConfig:getSignInLifeTimeBonusCount()
 	return #lua_sign_in_lifetime_bonus.configList
 end
 
-var_0_0.instance = var_0_0.New()
+SignInConfig.instance = SignInConfig.New()
 
-return var_0_0
+return SignInConfig

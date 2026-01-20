@@ -1,178 +1,180 @@
-﻿module("modules.logic.room.view.transport.RoomTransportPathQuickLinkViewUI", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/transport/RoomTransportPathQuickLinkViewUI.lua
 
-local var_0_0 = class("RoomTransportPathQuickLinkViewUI", BaseView)
+module("modules.logic.room.view.transport.RoomTransportPathQuickLinkViewUI", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomTransportPathQuickLinkViewUI = class("RoomTransportPathQuickLinkViewUI", BaseView)
+
+function RoomTransportPathQuickLinkViewUI:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomTransportPathQuickLinkViewUI:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomTransportPathQuickLinkViewUI:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._gomapui = gohelper.findChild(arg_4_0.viewGO, "go_mapui")
-	arg_4_0._gomapuiitem = gohelper.findChild(arg_4_0.viewGO, "go_mapui/go_quickuiitem")
-	arg_4_0._gomapuiTrs = arg_4_0._gomapui.transform
-	arg_4_0._uiitemTBList = {
-		arg_4_0:_createTB(arg_4_0._gomapuiitem)
+function RoomTransportPathQuickLinkViewUI:_editableInitView()
+	self._gomapui = gohelper.findChild(self.viewGO, "go_mapui")
+	self._gomapuiitem = gohelper.findChild(self.viewGO, "go_mapui/go_quickuiitem")
+	self._gomapuiTrs = self._gomapui.transform
+	self._uiitemTBList = {
+		self:_createTB(self._gomapuiitem)
 	}
 
-	gohelper.setActive(arg_4_0._gomapuiitem, false)
+	gohelper.setActive(self._gomapuiitem, false)
 
-	arg_4_0._isLinkFinsh = true
+	self._isLinkFinsh = true
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RoomTransportPathQuickLinkViewUI:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._quickLinkMO = RoomTransportQuickLinkMO.New()
+function RoomTransportPathQuickLinkViewUI:onOpen()
+	self._quickLinkMO = RoomTransportQuickLinkMO.New()
 
-	arg_6_0:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, arg_6_0._cameraTransformUpdate, arg_6_0)
+	self:addEventCb(RoomMapController.instance, RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
 
-	if arg_6_0.viewContainer then
-		arg_6_0:addEventCb(arg_6_0.viewContainer, RoomEvent.TransportPathSelectLineItem, arg_6_0._onSelectLineItem, arg_6_0)
+	if self.viewContainer then
+		self:addEventCb(self.viewContainer, RoomEvent.TransportPathSelectLineItem, self._onSelectLineItem, self)
 	end
 
-	arg_6_0._quickLinkMO:init()
-	arg_6_0:startWaitRunDelayTask()
+	self._quickLinkMO:init()
+	self:startWaitRunDelayTask()
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0.__hasWaitRunDelayTask_ = false
+function RoomTransportPathQuickLinkViewUI:onClose()
+	self.__hasWaitRunDelayTask_ = false
 
-	TaskDispatcher.cancelTask(arg_7_0.__onWaitRunDelayTask_, arg_7_0)
+	TaskDispatcher.cancelTask(self.__onWaitRunDelayTask_, self)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function RoomTransportPathQuickLinkViewUI:onDestroyView()
 	return
 end
 
-function var_0_0._cameraTransformUpdate(arg_9_0)
-	arg_9_0:_refreshItemUIPos()
+function RoomTransportPathQuickLinkViewUI:_cameraTransformUpdate()
+	self:_refreshItemUIPos()
 end
 
-function var_0_0._onSelectLineItem(arg_10_0, arg_10_1)
-	if arg_10_1 == nil then
+function RoomTransportPathQuickLinkViewUI:_onSelectLineItem(lineDataMO)
+	if lineDataMO == nil then
 		return
 	end
 
-	local var_10_0 = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(arg_10_1.fromType, arg_10_1.toType)
+	local selectPathO = RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(lineDataMO.fromType, lineDataMO.toType)
 
-	if var_10_0 and var_10_0:isLinkFinish() then
-		arg_10_0._isLinkFinsh = true
+	if selectPathO and selectPathO:isLinkFinish() then
+		self._isLinkFinsh = true
 	else
-		arg_10_0._isLinkFinsh = false
+		self._isLinkFinsh = false
 
-		arg_10_0._quickLinkMO:findPath(arg_10_1.fromType, arg_10_1.toType, true)
+		self._quickLinkMO:findPath(lineDataMO.fromType, lineDataMO.toType, true)
 	end
 
-	arg_10_0:startWaitRunDelayTask()
+	self:startWaitRunDelayTask()
 end
 
-function var_0_0.startWaitRunDelayTask(arg_11_0)
-	if not arg_11_0.__hasWaitRunDelayTask_ then
-		arg_11_0.__hasWaitRunDelayTask_ = true
+function RoomTransportPathQuickLinkViewUI:startWaitRunDelayTask()
+	if not self.__hasWaitRunDelayTask_ then
+		self.__hasWaitRunDelayTask_ = true
 
-		TaskDispatcher.runDelay(arg_11_0.__onWaitRunDelayTask_, arg_11_0, 0.001)
-	end
-end
-
-function var_0_0.__onWaitRunDelayTask_(arg_12_0)
-	arg_12_0.__hasWaitRunDelayTask_ = false
-
-	arg_12_0:_refreshItemList()
-	arg_12_0:_refreshItemUIPos()
-end
-
-function var_0_0._createTB(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getUserDataTb_()
-
-	var_13_0.go = arg_13_1
-	var_13_0.goTrs = arg_13_1.transform
-	var_13_0._txtquick = gohelper.findChildText(arg_13_1, "txt_quick")
-
-	return var_13_0
-end
-
-function var_0_0._refreshTB(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_1.searchIndex ~= arg_14_2.searchIndex then
-		arg_14_1.searchIndex = arg_14_2.searchIndex
-		arg_14_1._txtquick.text = arg_14_2.searchIndex
-	end
-
-	if arg_14_1.hexPoint == nil or arg_14_1.hexPoint ~= arg_14_3 then
-		arg_14_1.hexPoint = arg_14_3
-
-		local var_14_0, var_14_1 = HexMath.hexXYToPosXY(arg_14_3.x, arg_14_3.y, RoomBlockEnum.BlockSize)
-
-		arg_14_1.worldPos = Vector3(var_14_0, 0, var_14_1)
+		TaskDispatcher.runDelay(self.__onWaitRunDelayTask_, self, 0.001)
 	end
 end
 
-function var_0_0._refreshItemList(arg_15_0)
-	local var_15_0 = arg_15_0._quickLinkMO:getNodeList()
-	local var_15_1 = 0
+function RoomTransportPathQuickLinkViewUI:__onWaitRunDelayTask_()
+	self.__hasWaitRunDelayTask_ = false
 
-	if not arg_15_0._isLinkFinsh and var_15_0 and #var_15_0 > 0 then
-		local var_15_2 = RoomMapHexPointModel.instance
-		local var_15_3 = RoomMapModel.instance
+	self:_refreshItemList()
+	self:_refreshItemUIPos()
+end
 
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			var_15_1 = var_15_1 + 1
+function RoomTransportPathQuickLinkViewUI:_createTB(go)
+	local tb = self:getUserDataTb_()
 
-			local var_15_4 = arg_15_0._uiitemTBList[var_15_1]
+	tb.go = go
+	tb.goTrs = go.transform
+	tb._txtquick = gohelper.findChildText(go, "txt_quick")
 
-			if not var_15_4 then
-				var_15_4 = arg_15_0:_createTB(gohelper.cloneInPlace(arg_15_0._gomapuiitem))
-				arg_15_0._uiitemTBList[var_15_1] = var_15_4
+	return tb
+end
+
+function RoomTransportPathQuickLinkViewUI:_refreshTB(tb, node, hexPoint)
+	if tb.searchIndex ~= node.searchIndex then
+		tb.searchIndex = node.searchIndex
+		tb._txtquick.text = node.searchIndex
+	end
+
+	if tb.hexPoint == nil or tb.hexPoint ~= hexPoint then
+		tb.hexPoint = hexPoint
+
+		local px, pz = HexMath.hexXYToPosXY(hexPoint.x, hexPoint.y, RoomBlockEnum.BlockSize)
+
+		tb.worldPos = Vector3(px, 0, pz)
+	end
+end
+
+function RoomTransportPathQuickLinkViewUI:_refreshItemList()
+	local nodeList = self._quickLinkMO:getNodeList()
+	local count = 0
+
+	if not self._isLinkFinsh and nodeList and #nodeList > 0 then
+		local tRoomMapHexPointModel = RoomMapHexPointModel.instance
+		local tRoomMapModel = RoomMapModel.instance
+
+		for _, node in ipairs(nodeList) do
+			count = count + 1
+
+			local itemTb = self._uiitemTBList[count]
+
+			if not itemTb then
+				itemTb = self:_createTB(gohelper.cloneInPlace(self._gomapuiitem))
+				self._uiitemTBList[count] = itemTb
 			end
 
-			arg_15_0:_refreshTB(var_15_4, iter_15_1, iter_15_1.hexPoint)
+			self:_refreshTB(itemTb, node, node.hexPoint)
 		end
 	end
 
-	for iter_15_2 = 1, #arg_15_0._uiitemTBList do
-		local var_15_5 = arg_15_0._uiitemTBList[iter_15_2]
-		local var_15_6 = iter_15_2 <= var_15_1
+	for i = 1, #self._uiitemTBList do
+		local itemTb = self._uiitemTBList[i]
+		local isActive = i <= count
 
-		if var_15_5.isActive ~= var_15_6 then
-			var_15_5.isActive = var_15_6
+		if itemTb.isActive ~= isActive then
+			itemTb.isActive = isActive
 
-			gohelper.setActive(var_15_5.go, var_15_6)
-		end
-	end
-end
-
-function var_0_0._refreshItemUIPos(arg_16_0)
-	for iter_16_0 = 1, #arg_16_0._uiitemTBList do
-		local var_16_0 = arg_16_0._uiitemTBList[iter_16_0]
-
-		if var_16_0.isActive then
-			arg_16_0:_setUIPos(var_16_0.worldPos, var_16_0.goTrs, arg_16_0._gomapuiTrs, 0.12)
+			gohelper.setActive(itemTb.go, isActive)
 		end
 	end
 end
 
-function var_0_0._setUIPos(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = RoomBendingHelper.worldToBendingSimple(arg_17_1)
-	local var_17_1 = var_17_0.x
-	local var_17_2 = var_17_0.z
+function RoomTransportPathQuickLinkViewUI:_refreshItemUIPos()
+	for i = 1, #self._uiitemTBList do
+		local itemTb = self._uiitemTBList[i]
 
-	arg_17_4 = arg_17_4 or 0.12
-
-	local var_17_3 = Vector3(var_17_1, var_17_0.y + arg_17_4, var_17_2)
-	local var_17_4 = recthelper.worldPosToAnchorPos(var_17_3, arg_17_3)
-
-	recthelper.setAnchor(arg_17_2, var_17_4.x, var_17_4.y)
+		if itemTb.isActive then
+			self:_setUIPos(itemTb.worldPos, itemTb.goTrs, self._gomapuiTrs, 0.12)
+		end
+	end
 end
 
-return var_0_0
+function RoomTransportPathQuickLinkViewUI:_setUIPos(worldPos, targetUIGOTrs, parentUIGOTrs, offsetY)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
+	local bendingPosX = bendingPos.x
+	local bendingPosZ = bendingPos.z
+
+	offsetY = offsetY or 0.12
+
+	local worldPos = Vector3(bendingPosX, bendingPos.y + offsetY, bendingPosZ)
+	local localPos = recthelper.worldPosToAnchorPos(worldPos, parentUIGOTrs)
+
+	recthelper.setAnchor(targetUIGOTrs, localPos.x, localPos.y)
+end
+
+return RoomTransportPathQuickLinkViewUI

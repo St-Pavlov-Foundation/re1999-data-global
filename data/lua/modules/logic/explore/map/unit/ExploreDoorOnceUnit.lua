@@ -1,50 +1,54 @@
-﻿module("modules.logic.explore.map.unit.ExploreDoorOnceUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreDoorOnceUnit.lua
 
-local var_0_0 = class("ExploreDoorOnceUnit", ExploreDoor)
+module("modules.logic.explore.map.unit.ExploreDoorOnceUnit", package.seeall)
 
-function var_0_0.tryTrigger(arg_1_0, ...)
-	if not arg_1_0.mo:isInteractActiveState() then
-		var_0_0.super.tryTrigger(arg_1_0, ...)
+local ExploreDoorOnceUnit = class("ExploreDoorOnceUnit", ExploreDoor)
+
+function ExploreDoorOnceUnit:tryTrigger(...)
+	if not self.mo:isInteractActiveState() then
+		ExploreDoorOnceUnit.super.tryTrigger(self, ...)
 	end
 end
 
-function var_0_0.cancelTrigger(arg_2_0, ...)
-	if not arg_2_0.mo:isInteractActiveState() then
-		var_0_0.super.cancelTrigger(arg_2_0, ...)
+function ExploreDoorOnceUnit:cancelTrigger(...)
+	if not self.mo:isInteractActiveState() then
+		ExploreDoorOnceUnit.super.cancelTrigger(self, ...)
 	end
 end
 
-function var_0_0.getIdleAnim(arg_3_0)
-	if arg_3_0.mo:isInteractActiveState() then
+function ExploreDoorOnceUnit:getIdleAnim()
+	if self.mo:isInteractActiveState() then
 		return ExploreAnimEnum.AnimName.active
 	else
-		return var_0_0.super.getIdleAnim(arg_3_0)
+		return ExploreDoorOnceUnit.super.getIdleAnim(self)
 	end
 end
 
-function var_0_0.onUpdateCount(arg_4_0, ...)
-	if arg_4_0.mo:isInteractActiveState() then
-		if arg_4_0.animComp._curAnim ~= ExploreAnimEnum.AnimName.nToA then
-			arg_4_0:playAnim(ExploreAnimEnum.AnimName.active)
+function ExploreDoorOnceUnit:onUpdateCount(...)
+	if self.mo:isInteractActiveState() then
+		local animName = self.animComp._curAnim
+
+		if animName ~= ExploreAnimEnum.AnimName.nToA then
+			self:playAnim(ExploreAnimEnum.AnimName.active)
 		end
 	else
-		var_0_0.super.onUpdateCount(arg_4_0, ...)
+		ExploreDoorOnceUnit.super.onUpdateCount(self, ...)
 	end
 end
 
-function var_0_0.onActiveChange(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		local var_5_0 = arg_5_0.animComp._curAnim
+function ExploreDoorOnceUnit:onActiveChange(nowActive)
+	if nowActive then
+		local animName = self.animComp._curAnim
 
-		if var_5_0 and var_5_0 ~= ExploreAnimEnum.AnimName.active and arg_5_0.animComp:isIdleAnim() then
-			arg_5_0:playAnim(ExploreAnimEnum.AnimName.nToA)
-			arg_5_0:checkShowIcon()
+		if animName and animName ~= ExploreAnimEnum.AnimName.active and self.animComp:isIdleAnim() then
+			self:playAnim(ExploreAnimEnum.AnimName.nToA)
+			self:checkShowIcon()
 
 			return
 		end
 	end
 
-	var_0_0.super.onActiveChange(arg_5_0, arg_5_1)
+	ExploreDoorOnceUnit.super.onActiveChange(self, nowActive)
 end
 
-return var_0_0
+return ExploreDoorOnceUnit

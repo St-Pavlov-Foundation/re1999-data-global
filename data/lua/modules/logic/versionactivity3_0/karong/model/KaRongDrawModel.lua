@@ -1,470 +1,471 @@
-﻿module("modules.logic.versionactivity3_0.karong.model.KaRongDrawModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/model/KaRongDrawModel.lua
 
-local var_0_0 = class("KaRongDrawModel", BaseModel)
+module("modules.logic.versionactivity3_0.karong.model.KaRongDrawModel", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0:release()
+local KaRongDrawModel = class("KaRongDrawModel", BaseModel)
+
+function KaRongDrawModel:reInit()
+	self:release()
 end
 
-function var_0_0.release(arg_2_0)
-	arg_2_0._statusMap = nil
-	arg_2_0._blockMap = nil
-	arg_2_0._objMap = nil
-	arg_2_0._objList = nil
-	arg_2_0._startX = nil
-	arg_2_0._startY = nil
-	arg_2_0._endX = nil
-	arg_2_0._endY = nil
-	arg_2_0._lineMap = nil
-	arg_2_0._interactCtrlMap = nil
-	arg_2_0._elementCo = nil
-	arg_2_0._interactPosX = nil
-	arg_2_0._interactPosY = nil
-	arg_2_0._effectDoneMap = nil
-	arg_2_0._avatarStartPos = nil
-	arg_2_0._avatarEndPos = nil
-	arg_2_0._checkPoints = {}
+function KaRongDrawModel:release()
+	self._statusMap = nil
+	self._blockMap = nil
+	self._objMap = nil
+	self._objList = nil
+	self._startX = nil
+	self._startY = nil
+	self._endX = nil
+	self._endY = nil
+	self._lineMap = nil
+	self._interactCtrlMap = nil
+	self._elementCo = nil
+	self._interactPosX = nil
+	self._interactPosY = nil
+	self._effectDoneMap = nil
+	self._avatarStartPos = nil
+	self._avatarEndPos = nil
+	self._checkPoints = {}
 
-	arg_2_0:clear()
+	self:clear()
 end
 
-function var_0_0.startGame(arg_3_0, arg_3_1)
-	arg_3_0:release()
-	arg_3_0:decode(arg_3_1.param)
+function KaRongDrawModel:startGame(elementCo)
+	self:release()
+	self:decode(elementCo.param)
 
-	arg_3_0._elementCo = arg_3_1
+	self._elementCo = elementCo
 end
 
-function var_0_0.decode(arg_4_0, arg_4_1)
-	arg_4_0._objMap = {}
-	arg_4_0._blockMap = {}
-	arg_4_0._lineMap = {}
-	arg_4_0._interactCtrlMap = {}
+function KaRongDrawModel:decode(mapInfoJson)
+	self._objMap = {}
+	self._blockMap = {}
+	self._lineMap = {}
+	self._interactCtrlMap = {}
 
-	local var_4_0 = cjson.decode(arg_4_1)
+	local mapCo = cjson.decode(mapInfoJson)
 
-	arg_4_0._width = var_4_0.width
-	arg_4_0._height = var_4_0.height
+	self._width = mapCo.width
+	self._height = mapCo.height
 
-	arg_4_0:decodeObj(arg_4_0._blockMap, var_4_0.blockMap)
-	arg_4_0:decodeObj(arg_4_0._objMap, var_4_0.objMap)
-	arg_4_0:initMapLineState(var_4_0)
-	arg_4_0:findStartAndEndPos()
-	arg_4_0:initConst()
+	self:decodeObj(self._blockMap, mapCo.blockMap)
+	self:decodeObj(self._objMap, mapCo.objMap)
+	self:initMapLineState(mapCo)
+	self:findStartAndEndPos()
+	self:initConst()
 end
 
-function var_0_0.findStartAndEndPos(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._objMap) do
-		if iter_5_1.objType == KaRongDrawEnum.MazeObjType.Start then
-			if iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Default or iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Three then
-				arg_5_0._startPosX = iter_5_1.x
-				arg_5_0._startPosY = iter_5_1.y
+function KaRongDrawModel:findStartAndEndPos()
+	for _, v in pairs(self._objMap) do
+		if v.objType == KaRongDrawEnum.MazeObjType.Start then
+			if v.subType == KaRongDrawEnum.MazeObjSubType.Default or v.subType == KaRongDrawEnum.MazeObjSubType.Three then
+				self._startPosX = v.x
+				self._startPosY = v.y
 			end
 
-			if iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Two or iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Three then
-				arg_5_0._avatarStartPos = Vector2.New(iter_5_1.x, iter_5_1.y)
+			if v.subType == KaRongDrawEnum.MazeObjSubType.Two or v.subType == KaRongDrawEnum.MazeObjSubType.Three then
+				self._avatarStartPos = Vector2.New(v.x, v.y)
 			end
-		elseif iter_5_1.objType == KaRongDrawEnum.MazeObjType.End then
-			if iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Default or iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Three then
-				arg_5_0._endPosX = iter_5_1.x
-				arg_5_0._endPosY = iter_5_1.y
+		elseif v.objType == KaRongDrawEnum.MazeObjType.End then
+			if v.subType == KaRongDrawEnum.MazeObjSubType.Default or v.subType == KaRongDrawEnum.MazeObjSubType.Three then
+				self._endPosX = v.x
+				self._endPosY = v.y
 			end
 
-			if iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Two or iter_5_1.subType == KaRongDrawEnum.MazeObjSubType.Three then
-				arg_5_0._avatarEndPos = Vector2.New(iter_5_1.x, iter_5_1.y)
+			if v.subType == KaRongDrawEnum.MazeObjSubType.Two or v.subType == KaRongDrawEnum.MazeObjSubType.Three then
+				self._avatarEndPos = Vector2.New(v.x, v.y)
 			end
 		end
 	end
 end
 
-function var_0_0.decodeObj(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_2 then
+function KaRongDrawModel:decodeObj(map, configMap)
+	if not configMap then
 		return
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_2) do
-		local var_6_0 = string.splitToNumber(iter_6_1.key, "_")
-		local var_6_1
-		local var_6_2 = #var_6_0
+	for _, co in pairs(configMap) do
+		local keySplit = string.splitToNumber(co.key, "_")
+		local mo
+		local keyLen = #keySplit
 
-		if var_6_2 <= 2 then
-			var_6_1 = arg_6_0:createMOByPos(var_6_0[1], var_6_0[2], iter_6_1)
+		if keyLen <= 2 then
+			mo = self:createMOByPos(keySplit[1], keySplit[2], co)
 
-			if iter_6_1.type == KaRongDrawEnum.MazeObjType.CheckPoint then
-				arg_6_0._checkPoints[#arg_6_0._checkPoints + 1] = var_6_1
+			if co.type == KaRongDrawEnum.MazeObjType.CheckPoint then
+				self._checkPoints[#self._checkPoints + 1] = mo
 			end
-		elseif var_6_2 >= 4 then
-			var_6_1 = arg_6_0:createMOByLine(var_6_0[1], var_6_0[2], var_6_0[3], var_6_0[4], iter_6_1)
+		elseif keyLen >= 4 then
+			mo = self:createMOByLine(keySplit[1], keySplit[2], keySplit[3], keySplit[4], co)
 		end
 
-		arg_6_1[iter_6_1.key] = var_6_1
+		map[co.key] = mo
 	end
 end
 
-function var_0_0.createMOByPos(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = KaRongDrawMO.New()
+function KaRongDrawModel:createMOByPos(x, y, co)
+	local mo = KaRongDrawMO.New()
 
-	var_7_0:initByPos(arg_7_1, arg_7_2, arg_7_3.type, arg_7_3.subType, arg_7_3.group, arg_7_3.priority, arg_7_3.iconUrl, arg_7_3.effects, arg_7_3.interactLines)
-	arg_7_0:addAtLast(var_7_0)
+	mo:initByPos(x, y, co.type, co.subType, co.group, co.priority, co.iconUrl, co.effects, co.interactLines)
+	self:addAtLast(mo)
 
-	return var_7_0
+	return mo
 end
 
-function var_0_0.createMOByLine(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5)
-	local var_8_0 = KaRongDrawMO.New()
+function KaRongDrawModel:createMOByLine(x1, y1, x2, y2, co)
+	local mo = KaRongDrawMO.New()
 
-	var_8_0:initByLine(arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5.type, arg_8_5.subType, arg_8_5.group, arg_8_5.priority, arg_8_5.iconUrl)
-	arg_8_0:addAtLast(var_8_0)
+	mo:initByLine(x1, y1, x2, y2, co.type, co.subType, co.group, co.priority, co.iconUrl)
+	self:addAtLast(mo)
 
-	return var_8_0
+	return mo
 end
 
-function var_0_0.initMapLineState(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1 and arg_9_1.blockMap
+function KaRongDrawModel:initMapLineState(mapCo)
+	local blockMap = mapCo and mapCo.blockMap
 
-	for iter_9_0, iter_9_1 in pairs(var_9_0 or {}) do
-		local var_9_1 = iter_9_1.key
+	for _, blockCo in pairs(blockMap or {}) do
+		local pos = blockCo.key
 
-		arg_9_0._lineMap[var_9_1] = KaRongDrawEnum.LineState.Disconnect
+		self._lineMap[pos] = KaRongDrawEnum.LineState.Disconnect
 	end
 
-	local var_9_2 = arg_9_1 and arg_9_1.objMap or {}
+	local objMap = mapCo and mapCo.objMap or {}
 
-	for iter_9_2, iter_9_3 in pairs(var_9_2) do
-		if iter_9_3.interactLines then
-			for iter_9_4, iter_9_5 in pairs(iter_9_3.interactLines) do
-				local var_9_3 = KaRongDrawHelper.getLineKey(iter_9_5.x1, iter_9_5.y1, iter_9_5.x2, iter_9_5.y2)
+	for _, objMo in pairs(objMap) do
+		if objMo.interactLines then
+			for _, interactLine in pairs(objMo.interactLines) do
+				local key = KaRongDrawHelper.getLineKey(interactLine.x1, interactLine.y1, interactLine.x2, interactLine.y2)
 
-				arg_9_0._lineMap[var_9_3] = KaRongDrawEnum.LineState.Switch_Off
-				arg_9_0._interactCtrlMap[var_9_3] = iter_9_3
+				self._lineMap[key] = KaRongDrawEnum.LineState.Switch_Off
+				self._interactCtrlMap[key] = objMo
 			end
 		end
 	end
 end
 
-function var_0_0.initConst(arg_10_0)
-	local var_10_0, var_10_1 = arg_10_0:getGameSize()
+function KaRongDrawModel:initConst()
+	local w, h = self:getGameSize()
 
-	arg_10_0._startX = -var_10_0 * 0.5 - 0.5
-	arg_10_0._startY = -var_10_1 * 0.5 - 0.5
+	self._startX = -w * 0.5 - 0.5
+	self._startY = -h * 0.5 - 0.5
 end
 
-function var_0_0.getStartPoint(arg_11_0)
-	return arg_11_0._startPosX, arg_11_0._startPosY
+function KaRongDrawModel:getStartPoint()
+	return self._startPosX, self._startPosY
 end
 
-function var_0_0.getAvatarStartPos(arg_12_0)
-	return arg_12_0._avatarStartPos
+function KaRongDrawModel:getAvatarStartPos()
+	return self._avatarStartPos
 end
 
-function var_0_0.getEndPoint(arg_13_0)
-	return arg_13_0._endPosX, arg_13_0._endPosY
+function KaRongDrawModel:getEndPoint()
+	return self._endPosX, self._endPosY
 end
 
-function var_0_0.getAvatarEndPos(arg_14_0)
-	return arg_14_0._avatarEndPos
+function KaRongDrawModel:getAvatarEndPos()
+	return self._avatarEndPos
 end
 
-function var_0_0.getElementCo(arg_15_0)
-	return arg_15_0._elementCo
+function KaRongDrawModel:getElementCo()
+	return self._elementCo
 end
 
-function var_0_0.setGameStatus(arg_16_0, arg_16_1)
-	if arg_16_0._elementCo then
-		arg_16_0._statusMap = arg_16_0._statusMap or {}
-		arg_16_0._statusMap[arg_16_0._elementCo.id] = arg_16_1
+function KaRongDrawModel:setGameStatus(isSucc)
+	if self._elementCo then
+		self._statusMap = self._statusMap or {}
+		self._statusMap[self._elementCo.id] = isSucc
 	end
 end
 
-function var_0_0.getObjAtPos(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = KaRongDrawHelper.getPosKey(arg_17_1, arg_17_2)
+function KaRongDrawModel:getObjAtPos(x, y)
+	local key = KaRongDrawHelper.getPosKey(x, y)
 
-	return arg_17_0._objMap[var_17_0]
+	return self._objMap[key]
 end
 
-function var_0_0.getObjAtLine(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = KaRongDrawHelper.getLineKey(arg_18_1, arg_18_2, arg_18_3, arg_18_4)
+function KaRongDrawModel:getObjAtLine(x1, y1, x2, y2)
+	local key = KaRongDrawHelper.getLineKey(x1, y1, x2, y2)
 
-	return arg_18_0._blockMap[var_18_0]
+	return self._blockMap[key]
 end
 
-function var_0_0.getObjByLineKey(arg_19_0, arg_19_1)
-	return arg_19_0._blockMap[arg_19_1]
+function KaRongDrawModel:getObjByLineKey(key)
+	return self._blockMap[key]
 end
 
-function var_0_0.getGameSize(arg_20_0)
-	return arg_20_0._width or 0, arg_20_0._height or 0
+function KaRongDrawModel:getGameSize()
+	return self._width or 0, self._height or 0
 end
 
-function var_0_0.getUIGridSize(arg_21_0)
+function KaRongDrawModel:getUIGridSize()
 	return KaRongDrawEnum.mazeUIGridWidth, KaRongDrawEnum.mazeUIGridHeight
 end
 
-function var_0_0.getObjectAnchor(arg_22_0, arg_22_1, arg_22_2)
-	return arg_22_0:getGridCenterPos(arg_22_1 - 0.5, arg_22_2 - 0.5)
+function KaRongDrawModel:getObjectAnchor(x, y)
+	return self:getGridCenterPos(x - 0.5, y - 0.5)
 end
 
-function var_0_0.getLineObjectAnchor(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	if arg_23_1 == arg_23_3 then
-		return arg_23_0:getGridCenterPos(arg_23_1 - 0.5, math.min(arg_23_2, arg_23_4))
-	elseif arg_23_2 == arg_23_4 then
-		return arg_23_0:getGridCenterPos(math.min(arg_23_1, arg_23_3), arg_23_2 - 0.5)
+function KaRongDrawModel:getLineObjectAnchor(x1, y1, x2, y2)
+	if x1 == x2 then
+		return self:getGridCenterPos(x1 - 0.5, math.min(y1, y2))
+	elseif y1 == y2 then
+		return self:getGridCenterPos(math.min(x1, x2), y1 - 0.5)
 	else
 		logError("错误线段,x和y均不相等")
 	end
 end
 
-function var_0_0.getLineAnchor(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	if arg_24_1 == arg_24_3 then
-		return arg_24_0:getGridCenterPos(arg_24_1 - 0.5, math.min(arg_24_2, arg_24_4))
-	elseif arg_24_2 == arg_24_4 then
-		return arg_24_0:getGridCenterPos(math.min(arg_24_1, arg_24_3), arg_24_2 - 0.5)
+function KaRongDrawModel:getLineAnchor(x1, y1, x2, y2)
+	if x1 == x2 then
+		return self:getGridCenterPos(x1 - 0.5, math.min(y1, y2))
+	elseif y1 == y2 then
+		return self:getGridCenterPos(math.min(x1, x2), y1 - 0.5)
 	else
 		logError("错误线段,x和y均不相等")
 	end
 end
 
-function var_0_0.getGridCenterPos(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0, var_25_1 = arg_25_0:getUIGridSize()
+function KaRongDrawModel:getGridCenterPos(x, y)
+	local w, h = self:getUIGridSize()
 
-	return (arg_25_0._startX + arg_25_1) * var_25_0, (arg_25_0._startY + arg_25_2) * var_25_1
+	return (self._startX + x) * w, (self._startY + y) * h
 end
 
-function var_0_0.getIntegerPosByTouchPos(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0, var_26_1 = arg_26_0:getUIGridSize()
-	local var_26_2 = math.floor((arg_26_1 - (arg_26_0._startX + 0.5) * var_26_0) / var_26_0)
-	local var_26_3 = math.floor((arg_26_2 - (arg_26_0._startY + 0.5) * var_26_1) / var_26_1)
-	local var_26_4, var_26_5 = arg_26_0:getGameSize()
-	local var_26_6 = -1
-	local var_26_7 = -1
+function KaRongDrawModel:getIntegerPosByTouchPos(touchX, touchY)
+	local w, h = self:getUIGridSize()
+	local x = math.floor((touchX - (self._startX + 0.5) * w) / w)
+	local y = math.floor((touchY - (self._startY + 0.5) * h) / h)
+	local totalW, totalH = self:getGameSize()
+	local posX, posY = -1, -1
 
-	if var_26_2 >= 0 and var_26_2 < var_26_4 and var_26_3 >= 0 and var_26_3 < var_26_5 then
-		var_26_6, var_26_7 = var_26_2 + 1, var_26_3 + 1
+	if x >= 0 and x < totalW and y >= 0 and y < totalH then
+		posX, posY = x + 1, y + 1
 	else
-		local var_26_8 = KaRongDrawEnum.mazeUILineWidth * 0.5
-		local var_26_9 = var_26_2 >= 0 and var_26_2 < var_26_4 and var_26_2 + 1 or -1
-		local var_26_10 = var_26_3 >= 0 and var_26_3 < var_26_5 and var_26_3 + 1 or -1
-		local var_26_11 = arg_26_1 - (arg_26_0._startX + 0.5) * var_26_0
-		local var_26_12 = arg_26_2 - (arg_26_0._startY + 0.5) * var_26_1
+		local lineWidth = KaRongDrawEnum.mazeUILineWidth * 0.5
+		local fixX = x >= 0 and x < totalW and x + 1 or -1
+		local fixY = y >= 0 and y < totalH and y + 1 or -1
+		local deltaX = touchX - (self._startX + 0.5) * w
+		local deltaY = touchY - (self._startY + 0.5) * h
 
-		if var_26_2 < 0 and var_26_11 > -var_26_8 then
-			var_26_9 = 1
-		elseif var_26_4 <= var_26_2 and var_26_11 < var_26_4 * var_26_0 + arg_26_0._startX + var_26_8 then
-			var_26_9 = var_26_4
+		if x < 0 and deltaX > -lineWidth then
+			fixX = 1
+		elseif totalW <= x and deltaX < totalW * w + self._startX + lineWidth then
+			fixX = totalW
 		end
 
-		if var_26_3 < 0 and var_26_12 > -var_26_8 then
-			var_26_10 = 1
-		elseif var_26_5 <= var_26_3 and var_26_12 < var_26_5 * var_26_1 + arg_26_0._startY + var_26_8 then
-			var_26_10 = var_26_5
+		if y < 0 and deltaY > -lineWidth then
+			fixY = 1
+		elseif totalH <= y and deltaY < totalH * h + self._startY + lineWidth then
+			fixY = totalH
 		end
 
-		if var_26_9 ~= -1 and var_26_10 ~= -1 then
-			var_26_6, var_26_7 = var_26_9, var_26_10
+		if fixX ~= -1 and fixY ~= -1 then
+			posX, posY = fixX, fixY
 		end
 	end
 
-	return var_26_6, var_26_7
+	return posX, posY
 end
 
-function var_0_0.getClosePosByTouchPos(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0, var_27_1 = arg_27_0:getUIGridSize()
-	local var_27_2, var_27_3 = arg_27_0:getIntegerPosByTouchPos(arg_27_1, arg_27_2)
+function KaRongDrawModel:getClosePosByTouchPos(x, y)
+	local w, h = self:getUIGridSize()
+	local x1, y1 = self:getIntegerPosByTouchPos(x, y)
 
-	if var_27_2 ~= -1 then
-		local var_27_4 = KaRongDrawEnum.mazeUILineWidth * 0.5
-		local var_27_5 = arg_27_1 - (arg_27_0._startX + 0.5) * var_27_0
-		local var_27_6 = (var_27_2 - 1) * var_27_0
-		local var_27_7 = false
+	if x1 ~= -1 then
+		local lineWidthHalf = KaRongDrawEnum.mazeUILineWidth * 0.5
+		local deltaX = x - (self._startX + 0.5) * w
+		local startX = (x1 - 1) * w
+		local outsideX = false
 
-		if var_27_5 >= var_27_6 + var_27_4 then
-			if var_27_5 >= var_27_6 + (var_27_0 - var_27_4) then
-				var_27_2 = var_27_2 + 1
+		if deltaX >= startX + lineWidthHalf then
+			if deltaX >= startX + (w - lineWidthHalf) then
+				x1 = x1 + 1
 			else
-				var_27_7 = true
+				outsideX = true
 			end
 		end
 
-		local var_27_8 = arg_27_2 - (arg_27_0._startY + 0.5) * var_27_1
-		local var_27_9 = (var_27_3 - 1) * var_27_1
-		local var_27_10 = false
+		local deltaY = y - (self._startY + 0.5) * h
+		local startY = (y1 - 1) * h
+		local outsideY = false
 
-		if var_27_8 >= var_27_9 + var_27_4 then
-			if var_27_8 >= var_27_9 + (var_27_1 - var_27_4) then
-				var_27_3 = var_27_3 + 1
+		if deltaY >= startY + lineWidthHalf then
+			if deltaY >= startY + (h - lineWidthHalf) then
+				y1 = y1 + 1
 			else
-				var_27_10 = true
+				outsideY = true
 			end
 		end
 
-		if var_27_7 or var_27_10 then
+		if outsideX or outsideY then
 			return -1, -1
 		end
 	end
 
-	return var_27_2, var_27_3
+	return x1, y1
 end
 
-function var_0_0.getLineFieldByTouchPos(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0, var_28_1 = arg_28_0:getUIGridSize()
-	local var_28_2, var_28_3 = arg_28_0:getIntegerPosByTouchPos(arg_28_1, arg_28_2)
-	local var_28_4 = var_28_2
-	local var_28_5 = var_28_3
-	local var_28_6
-	local var_28_7
+function KaRongDrawModel:getLineFieldByTouchPos(x, y)
+	local w, h = self:getUIGridSize()
+	local x1, y1 = self:getIntegerPosByTouchPos(x, y)
+	local x2, y2 = x1, y1
+	local progressX, progressY
 
-	if var_28_2 ~= -1 then
-		local var_28_8 = KaRongDrawEnum.mazeUILineWidth * 0.5
-		local var_28_9 = (var_28_2 - 1) * var_28_0
-		local var_28_10 = arg_28_1 - (arg_28_0._startX + 0.5) * var_28_0
-		local var_28_11 = false
+	if x1 ~= -1 then
+		local lineWidth = KaRongDrawEnum.mazeUILineWidth * 0.5
+		local startX = (x1 - 1) * w
+		local deltaX = x - (self._startX + 0.5) * w
+		local outsideX = false
 
-		if var_28_10 >= var_28_9 + var_28_8 then
-			var_28_4 = var_28_4 + 1
+		if deltaX >= startX + lineWidth then
+			x2 = x2 + 1
 
-			if var_28_10 < var_28_9 + (var_28_0 - var_28_8) then
-				var_28_11 = true
-				var_28_6 = (var_28_10 - var_28_9) / var_28_0
+			if deltaX < startX + (w - lineWidth) then
+				outsideX = true
+				progressX = (deltaX - startX) / w
 			else
-				var_28_2 = var_28_2 + 1
+				x1 = x1 + 1
 			end
 		end
 
-		local var_28_12 = (var_28_3 - 1) * var_28_1
-		local var_28_13 = arg_28_2 - (arg_28_0._startY + 0.5) * var_28_1
-		local var_28_14 = false
+		local startY = (y1 - 1) * h
+		local deltaY = y - (self._startY + 0.5) * h
+		local outsideY = false
 
-		if var_28_13 >= var_28_12 + var_28_8 then
-			var_28_5 = var_28_5 + 1
+		if deltaY >= startY + lineWidth then
+			y2 = y2 + 1
 
-			if var_28_13 < var_28_12 + (var_28_1 - var_28_8) then
-				var_28_14 = true
-				var_28_7 = (var_28_13 - var_28_12) / var_28_1
+			if deltaY < startY + (h - lineWidth) then
+				outsideY = true
+				progressY = (deltaY - startY) / h
 			else
-				var_28_3 = var_28_3 + 1
+				y1 = y1 + 1
 			end
 		end
 
-		if not var_28_11 or not var_28_14 then
-			return true, var_28_2, var_28_3, var_28_4, var_28_5, var_28_6, var_28_7
+		if not outsideX or not outsideY then
+			return true, x1, y1, x2, y2, progressX, progressY
 		end
 	end
 
 	return false
 end
 
-function var_0_0.getMapLineState(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4)
-	local var_29_0 = KaRongDrawHelper.getLineKey(arg_29_1, arg_29_2, arg_29_3, arg_29_4)
+function KaRongDrawModel:getMapLineState(startPosX, startPosY, endStartPosX, endStartPosY)
+	local key = KaRongDrawHelper.getLineKey(startPosX, startPosY, endStartPosX, endStartPosY)
 
-	return arg_29_0._lineMap and arg_29_0._lineMap[var_29_0]
+	return self._lineMap and self._lineMap[key]
 end
 
-function var_0_0.getAllMapLines(arg_30_0)
-	return arg_30_0._lineMap
+function KaRongDrawModel:getAllMapLines()
+	return self._lineMap
 end
 
-function var_0_0.getInteractLineCtrl(arg_31_0, arg_31_1, arg_31_2, arg_31_3, arg_31_4)
-	local var_31_0 = KaRongDrawHelper.getLineKey(arg_31_1, arg_31_2, arg_31_3, arg_31_4)
+function KaRongDrawModel:getInteractLineCtrl(x1, y1, x2, y2)
+	local key = KaRongDrawHelper.getLineKey(x1, y1, x2, y2)
 
-	return arg_31_0._interactCtrlMap and arg_31_0._interactCtrlMap[var_31_0]
+	return self._interactCtrlMap and self._interactCtrlMap[key]
 end
 
-function var_0_0.getPawnIconUrl(arg_32_0, arg_32_1)
-	if arg_32_1 then
+function KaRongDrawModel:getPawnIconUrl(isAvatar)
+	if isAvatar then
 		return "v3a0_karong_puzzle_head2"
 	else
 		return "v3a0_karong_puzzle_head"
 	end
 end
 
-function var_0_0.setMapLineState(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4, arg_33_5)
-	local var_33_0 = KaRongDrawHelper.getLineKey(arg_33_1, arg_33_2, arg_33_3, arg_33_4)
+function KaRongDrawModel:setMapLineState(startPosX, startPosY, endStartPosX, endStartPosY, lineState)
+	local key = KaRongDrawHelper.getLineKey(startPosX, startPosY, endStartPosX, endStartPosY)
 
-	arg_33_0._lineMap[var_33_0] = arg_33_5
+	self._lineMap[key] = lineState
 end
 
-function var_0_0.switchLine(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	local var_34_0 = arg_34_0:getInteractLines(arg_34_2, arg_34_3)
+function KaRongDrawModel:switchLine(lineState, interactPosX, interactPosY)
+	local interactLines = self:getInteractLines(interactPosX, interactPosY)
 
-	if not var_34_0 then
+	if not interactLines then
 		return
 	end
 
-	for iter_34_0, iter_34_1 in pairs(var_34_0) do
-		local var_34_1 = iter_34_1.x1
-		local var_34_2 = iter_34_1.y1
-		local var_34_3 = iter_34_1.x2
-		local var_34_4 = iter_34_1.y2
-		local var_34_5 = KaRongDrawHelper.getLineKey(var_34_1, var_34_2, var_34_3, var_34_4)
+	for _, interactLine in pairs(interactLines) do
+		local startPosX = interactLine.x1
+		local startPosY = interactLine.y1
+		local endPosX = interactLine.x2
+		local endPosY = interactLine.y2
+		local key = KaRongDrawHelper.getLineKey(startPosX, startPosY, endPosX, endPosY)
 
-		arg_34_0._lineMap[var_34_5] = arg_34_1
+		self._lineMap[key] = lineState
 
-		KaRongDrawController.instance:dispatchEvent(KaRongDrawEvent.SwitchLineState, var_34_1, var_34_2, var_34_3, var_34_4)
+		KaRongDrawController.instance:dispatchEvent(KaRongDrawEvent.SwitchLineState, startPosX, startPosY, endPosX, endPosY)
 	end
 
-	if arg_34_1 == KaRongDrawEnum.LineState.Connect then
-		arg_34_0._interactPosX = arg_34_2
-		arg_34_0._interactPosY = arg_34_3
+	if lineState == KaRongDrawEnum.LineState.Connect then
+		self._interactPosX = interactPosX
+		self._interactPosY = interactPosY
 	else
-		arg_34_0._interactPosX = nil
-		arg_34_0._interactPosY = nil
+		self._interactPosX = nil
+		self._interactPosY = nil
 	end
 end
 
-function var_0_0.getInteractLines(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_0:getObjAtPos(arg_35_1, arg_35_2)
+function KaRongDrawModel:getInteractLines(interactPosX, interactPosY)
+	local interactObj = self:getObjAtPos(interactPosX, interactPosY)
 
-	if var_35_0 then
-		return var_35_0.interactLines
+	if interactObj then
+		return interactObj.interactLines
 	end
 end
 
-function var_0_0.getInteractPos(arg_36_0)
-	return arg_36_0._interactPosX, arg_36_0._interactPosY
+function KaRongDrawModel:getInteractPos()
+	return self._interactPosX, self._interactPosY
 end
 
-function var_0_0.setTriggerEffectDone(arg_37_0, arg_37_1, arg_37_2)
-	arg_37_0._effectDoneMap = arg_37_0._effectDoneMap or {}
+function KaRongDrawModel:setTriggerEffectDone(posX, posY)
+	self._effectDoneMap = self._effectDoneMap or {}
 
-	local var_37_0 = KaRongDrawHelper.getPosKey(arg_37_1, arg_37_2)
+	local key = KaRongDrawHelper.getPosKey(posX, posY)
 
-	arg_37_0._effectDoneMap[var_37_0] = true
+	self._effectDoneMap[key] = true
 end
 
-function var_0_0.hasTriggerEffect(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = KaRongDrawHelper.getPosKey(arg_38_1, arg_38_2)
+function KaRongDrawModel:hasTriggerEffect(posX, posY)
+	local key = KaRongDrawHelper.getPosKey(posX, posY)
 
-	return arg_38_0._effectDoneMap and arg_38_0._effectDoneMap[var_38_0]
+	return self._effectDoneMap and self._effectDoneMap[key]
 end
 
-function var_0_0.canTriggerEffect(arg_39_0, arg_39_1, arg_39_2)
-	if arg_39_0:hasTriggerEffect(arg_39_1, arg_39_2) then
+function KaRongDrawModel:canTriggerEffect(posX, posY)
+	local hasTrigger = self:hasTriggerEffect(posX, posY)
+
+	if hasTrigger then
 		return false
 	end
 
-	local var_39_0 = arg_39_0:getObjAtPos(arg_39_1, arg_39_2)
+	local mo = self:getObjAtPos(posX, posY)
 
-	if not var_39_0 then
+	if not mo then
 		return false
-	elseif #var_39_0.effects == 0 then
+	elseif #mo.effects == 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getTriggerEffectDoneMap(arg_40_0)
-	return arg_40_0._effectDoneMap
+function KaRongDrawModel:getTriggerEffectDoneMap()
+	return self._effectDoneMap
 end
 
-function var_0_0.setTriggerEffectDoneMap(arg_41_0, arg_41_1)
-	arg_41_0._effectDoneMap = arg_41_1
+function KaRongDrawModel:setTriggerEffectDoneMap(effectDoneMap)
+	self._effectDoneMap = effectDoneMap
 end
 
-function var_0_0.getCheckPointMoList(arg_42_0)
-	return arg_42_0._checkPoints
+function KaRongDrawModel:getCheckPointMoList()
+	return self._checkPoints
 end
 
-var_0_0.instance = var_0_0.New()
+KaRongDrawModel.instance = KaRongDrawModel.New()
 
-return var_0_0
+return KaRongDrawModel

@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity2_7.enter.view.subview.VersionActivity2_7DungeonEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/enter/view/subview/VersionActivity2_7DungeonEnterView.lua
 
-local var_0_0 = class("VersionActivity2_7DungeonEnterView", VersionActivityFixedDungeonEnterView)
+module("modules.logic.versionactivity2_7.enter.view.subview.VersionActivity2_7DungeonEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_dec")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "logo/actbg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/actbg/image_TimeBG/#txt_time")
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_store")
-	arg_1_0._txtStoreNum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/normal/#txt_num")
-	arg_1_0._txtStoreTime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/#go_time/#txt_time")
-	arg_1_0._btnenter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_enter")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/#go_reddot")
-	arg_1_0._gohardModeUnLock = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/#go_hardModeUnLock")
-	arg_1_0._btnFinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Finished")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Locked")
+local VersionActivity2_7DungeonEnterView = class("VersionActivity2_7DungeonEnterView", VersionActivityFixedDungeonEnterView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_7DungeonEnterView:onInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "logo/#txt_dec")
+	self._gotime = gohelper.findChild(self.viewGO, "logo/actbg")
+	self._txttime = gohelper.findChildText(self.viewGO, "logo/actbg/image_TimeBG/#txt_time")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_store")
+	self._txtStoreNum = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/#txt_num")
+	self._txtStoreTime = gohelper.findChildText(self.viewGO, "entrance/#btn_store/#go_time/#txt_time")
+	self._btnenter = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_enter")
+	self._goreddot = gohelper.findChild(self.viewGO, "entrance/#btn_enter/#go_reddot")
+	self._gohardModeUnLock = gohelper.findChild(self.viewGO, "entrance/#btn_enter/#go_hardModeUnLock")
+	self._btnFinished = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Finished")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Locked")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-return var_0_0
+return VersionActivity2_7DungeonEnterView

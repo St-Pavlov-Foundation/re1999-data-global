@@ -1,72 +1,74 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.skill.MaLiAnNaSkillBase", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/skill/MaLiAnNaSkillBase.lua
 
-local var_0_0 = class("MaLiAnNaSkillBase")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.skill.MaLiAnNaSkillBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._id = 0
-	arg_1_0._configId = 0
-	arg_1_0._cdTime = 0
+local MaLiAnNaSkillBase = class("MaLiAnNaSkillBase")
+
+function MaLiAnNaSkillBase:ctor()
+	self._id = 0
+	self._configId = 0
+	self._cdTime = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._id = arg_2_1
-	arg_2_0._configId = arg_2_2
+function MaLiAnNaSkillBase:init(id, configId)
+	self._id = id
+	self._configId = configId
 
-	arg_2_0:_initEffect()
+	self:_initEffect()
 end
 
-function var_0_0.getConfig(arg_3_0)
-	return arg_3_0._config
+function MaLiAnNaSkillBase:getConfig()
+	return self._config
 end
 
-function var_0_0.getConfigId(arg_4_0)
-	return arg_4_0._configId
+function MaLiAnNaSkillBase:getConfigId()
+	return self._configId
 end
 
-function var_0_0._initEffect(arg_5_0)
-	if arg_5_0._config == nil then
+function MaLiAnNaSkillBase:_initEffect()
+	if self._config == nil then
 		return
 	end
 
-	local var_5_0 = arg_5_0._config.effect
+	local effect = self._config.effect
 
-	if not string.nilorempty(var_5_0) then
-		arg_5_0._effect = string.splitToNumber(var_5_0, "#")
+	if not string.nilorempty(effect) then
+		self._effect = string.splitToNumber(effect, "#")
 	end
 end
 
-function var_0_0.getSkillActionType(arg_6_0)
-	if arg_6_0._effect == nil then
+function MaLiAnNaSkillBase:getSkillActionType()
+	if self._effect == nil then
 		return nil
 	end
 
-	return arg_6_0._effect[1]
+	return self._effect[1]
 end
 
-function var_0_0.getEffect(arg_7_0)
-	return arg_7_0._effect
+function MaLiAnNaSkillBase:getEffect()
+	return self._effect
 end
 
-function var_0_0.getSkillType(arg_8_0)
-	return arg_8_0._skillType
+function MaLiAnNaSkillBase:getSkillType()
+	return self._skillType
 end
 
-function var_0_0.getCdTime(arg_9_0)
-	return arg_9_0._cdTime
+function MaLiAnNaSkillBase:getCdTime()
+	return self._cdTime
 end
 
-function var_0_0.update(arg_10_0, arg_10_1)
-	if arg_10_0._cdTime <= 0 then
+function MaLiAnNaSkillBase:update(time)
+	if self._cdTime <= 0 then
 		return true
 	end
 
-	arg_10_0._cdTime = math.max(arg_10_0._cdTime - arg_10_1 * 1000, 0)
+	self._cdTime = math.max(self._cdTime - time * 1000, 0)
 
 	return false
 end
 
-function var_0_0.execute(arg_11_0)
+function MaLiAnNaSkillBase:execute()
 	return
 end
 
-return var_0_0
+return MaLiAnNaSkillBase

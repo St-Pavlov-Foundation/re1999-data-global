@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.define.SportsNewsEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/define/SportsNewsEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_5.sportsnews.define.SportsNewsEnum", package.seeall)
 
-var_0_0.PageTabStatus = {
+local SportsNewsEnum = _M
+
+SportsNewsEnum.PageTabStatus = {
 	Lock = 3,
 	Select = 1,
 	UnSelect = 2
 }
 
-return var_0_0
+return SportsNewsEnum

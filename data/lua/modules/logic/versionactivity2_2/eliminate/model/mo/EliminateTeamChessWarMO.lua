@@ -1,166 +1,134 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.EliminateTeamChessWarMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/mo/EliminateTeamChessWarMO.lua
 
-local var_0_0 = class("EliminateTeamChessWarMO")
+module("modules.logic.versionactivity2_2.eliminate.model.mo.EliminateTeamChessWarMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.myCharacter = WarChessCharacterMO.New()
-	arg_1_0.enemyCharacter = WarChessCharacterMO.New()
-	arg_1_0.strongholds = {}
-	arg_1_0.winCondition = arg_1_1.winCondition
-	arg_1_0.extraWinCondition = arg_1_1.extraWinCondition
+local EliminateTeamChessWarMO = class("EliminateTeamChessWarMO")
 
-	arg_1_0.myCharacter:init(arg_1_1.myCharacter)
-	arg_1_0.enemyCharacter:init(arg_1_1.enemyCharacter)
-	arg_1_0:updateInfo(arg_1_1)
+function EliminateTeamChessWarMO:init(warInfo)
+	self.id = warInfo.id
+	self.myCharacter = WarChessCharacterMO.New()
+	self.enemyCharacter = WarChessCharacterMO.New()
+	self.strongholds = {}
+	self.winCondition = warInfo.winCondition
+	self.extraWinCondition = warInfo.extraWinCondition
+
+	self.myCharacter:init(warInfo.myCharacter)
+	self.enemyCharacter:init(warInfo.enemyCharacter)
+	self:updateInfo(warInfo)
 end
 
-function var_0_0.updateInfo(arg_2_0, arg_2_1)
-	arg_2_0.round = arg_2_1.round
+function EliminateTeamChessWarMO:updateInfo(warInfo)
+	self.round = warInfo.round
 
-	arg_2_0.myCharacter:updateInfo(arg_2_1.myCharacter)
-	arg_2_0.enemyCharacter:updateInfo(arg_2_1.enemyCharacter)
+	self.myCharacter:updateInfo(warInfo.myCharacter)
+	self.enemyCharacter:updateInfo(warInfo.enemyCharacter)
 
-	if arg_2_1.stronghold then
-		tabletool.clear(arg_2_0.strongholds)
+	if warInfo.stronghold then
+		tabletool.clear(self.strongholds)
 
-		arg_2_0.strongholds = GameUtil.rpcInfosToList(arg_2_1.stronghold, WarChessStrongholdMO)
+		self.strongholds = GameUtil.rpcInfosToList(warInfo.stronghold, WarChessStrongholdMO)
 
-		table.sort(arg_2_0.strongholds, function(arg_3_0, arg_3_1)
-			return arg_3_0.id < arg_3_1.id
+		table.sort(self.strongholds, function(a, b)
+			return a.id < b.id
 		end)
 	end
 
-	arg_2_0.winCondition = arg_2_1.winCondition
-	arg_2_0.extraWinCondition = arg_2_1.extraWinCondition
+	self.winCondition = warInfo.winCondition
+	self.extraWinCondition = warInfo.extraWinCondition
 
-	arg_2_0:updateStar()
+	self:updateStar()
 end
 
-function var_0_0.updateCondition(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0.winCondition ~= arg_4_1 or arg_4_0.extraWinCondition ~= arg_4_2
+function EliminateTeamChessWarMO:updateCondition(winCondition, extraWinCondition)
+	local isChange = self.winCondition ~= winCondition or self.extraWinCondition ~= extraWinCondition
 
-	arg_4_0.winCondition = arg_4_1
-	arg_4_0.extraWinCondition = arg_4_2
+	self.winCondition = winCondition
+	self.extraWinCondition = extraWinCondition
 
-	arg_4_0:updateStar()
+	self:updateStar()
 
-	return var_4_0
+	return isChange
 end
 
-function var_0_0.updateStar(arg_5_0)
-	local var_5_0 = 0
+function EliminateTeamChessWarMO:updateStar()
+	local star = 0
 
-	if arg_5_0:winConditionIsFinish() then
-		var_5_0 = var_5_0 + 1
+	if self:winConditionIsFinish() then
+		star = star + 1
 	end
 
-	if arg_5_0:extraWinConditionIsFinish() then
-		var_5_0 = var_5_0 + 1
+	if self:extraWinConditionIsFinish() then
+		star = star + 1
 	end
 
-	EliminateLevelModel.instance:setStar(var_5_0)
+	EliminateLevelModel.instance:setStar(star)
 end
 
-function var_0_0.updateForecastBehavior(arg_6_0, arg_6_1)
-	arg_6_0.enemyCharacter:updateForecastBehavior(arg_6_1)
+function EliminateTeamChessWarMO:updateForecastBehavior(forecastChessIds)
+	self.enemyCharacter:updateForecastBehavior(forecastChessIds)
 end
 
-function var_0_0.getSlotIds(arg_7_0)
-	return arg_7_0.myCharacter.slotIds
+function EliminateTeamChessWarMO:getSlotIds()
+	return self.myCharacter.slotIds
 end
 
-function var_0_0.getStrongholds(arg_8_0)
-	return arg_8_0.strongholds
+function EliminateTeamChessWarMO:getStrongholds()
+	return self.strongholds
 end
 
-function var_0_0.getStronghold(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.strongholds) do
-		if iter_9_1.id == arg_9_1 then
-			return iter_9_1
+function EliminateTeamChessWarMO:getStronghold(id)
+	for _, data in ipairs(self.strongholds) do
+		if data.id == id then
+			return data
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.updateChessPower(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0.strongholds then
-		for iter_10_0 = 1, #arg_10_0.strongholds do
-			if arg_10_0.strongholds[iter_10_0]:updateChessPower(arg_10_1, arg_10_2) then
+function EliminateTeamChessWarMO:updateChessPower(uid, diffValue)
+	if self.strongholds then
+		for i = 1, #self.strongholds do
+			local data = self.strongholds[i]
+
+			if data:updateChessPower(uid, diffValue) then
 				return
 			end
 		end
 	end
 end
 
-function var_0_0.updateSkillGrowUp(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_0.strongholds then
-		for iter_11_0 = 1, #arg_11_0.strongholds do
-			if arg_11_0.strongholds[iter_11_0]:updateSkillGrowUp(arg_11_1, arg_11_2, arg_11_3) then
+function EliminateTeamChessWarMO:updateSkillGrowUp(uid, skillId, upValue)
+	if self.strongholds then
+		for i = 1, #self.strongholds do
+			local data = self.strongholds[i]
+
+			if data:updateSkillGrowUp(uid, skillId, upValue) then
 				return
 			end
 		end
 	end
 end
 
-function var_0_0.updateDisplacementState(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0.strongholds then
-		for iter_12_0 = 1, #arg_12_0.strongholds do
-			if arg_12_0.strongholds[iter_12_0]:updateDisplacementState(arg_12_1, arg_12_2) then
+function EliminateTeamChessWarMO:updateDisplacementState(uid, displacementState)
+	if self.strongholds then
+		for i = 1, #self.strongholds do
+			local data = self.strongholds[i]
+
+			if data:updateDisplacementState(uid, displacementState) then
 				return
 			end
 		end
 	end
 end
 
-function var_0_0.updateStrongholdsScore(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_0.strongholds then
-		for iter_13_0 = 1, #arg_13_0.strongholds do
-			local var_13_0 = arg_13_0.strongholds[iter_13_0]
+function EliminateTeamChessWarMO:updateStrongholdsScore(strongholdId, teamType, diffValue)
+	if self.strongholds then
+		for i = 1, #self.strongholds do
+			local data = self.strongholds[i]
 
-			if var_13_0.id == arg_13_1 then
-				var_13_0:updateScore(arg_13_2, arg_13_3)
-
-				return
-			end
-		end
-	end
-end
-
-function var_0_0.updateMainCharacterHp(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-		arg_14_0.myCharacter:updateHp(arg_14_2)
-	end
-
-	if arg_14_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		arg_14_0.enemyCharacter:updateHp(arg_14_2)
-	end
-end
-
-function var_0_0.updateMainCharacterPower(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-		arg_15_0.myCharacter:updatePower(arg_15_2)
-	end
-
-	if arg_15_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		arg_15_0.enemyCharacter:updatePower(arg_15_2)
-	end
-end
-
-function var_0_0.updateResourceData(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_0.myCharacter then
-		arg_16_0.myCharacter:updateDiamondInfo(arg_16_1, arg_16_2)
-	end
-end
-
-function var_0_0.removeStrongholdChess(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_0.strongholds then
-		for iter_17_0 = 1, #arg_17_0.strongholds do
-			local var_17_0 = arg_17_0.strongholds[iter_17_0]
-
-			if var_17_0.id == arg_17_1 then
-				var_17_0:removeChess(arg_17_2)
+			if data.id == strongholdId then
+				data:updateScore(teamType, diffValue)
 
 				return
 			end
@@ -168,13 +136,54 @@ function var_0_0.removeStrongholdChess(arg_17_0, arg_17_1, arg_17_2)
 	end
 end
 
-function var_0_0.getChess(arg_18_0, arg_18_1)
-	if arg_18_0.strongholds then
-		for iter_18_0 = 1, #arg_18_0.strongholds do
-			local var_18_0 = arg_18_0.strongholds[iter_18_0]:getChess(arg_18_1)
+function EliminateTeamChessWarMO:updateMainCharacterHp(teamType, diffValue)
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		self.myCharacter:updateHp(diffValue)
+	end
 
-			if var_18_0 then
-				return var_18_0
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		self.enemyCharacter:updateHp(diffValue)
+	end
+end
+
+function EliminateTeamChessWarMO:updateMainCharacterPower(teamType, diffValue)
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		self.myCharacter:updatePower(diffValue)
+	end
+
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		self.enemyCharacter:updatePower(diffValue)
+	end
+end
+
+function EliminateTeamChessWarMO:updateResourceData(resourceId, diffValue)
+	if self.myCharacter then
+		self.myCharacter:updateDiamondInfo(resourceId, diffValue)
+	end
+end
+
+function EliminateTeamChessWarMO:removeStrongholdChess(strongholdId, uid)
+	if self.strongholds then
+		for i = 1, #self.strongholds do
+			local data = self.strongholds[i]
+
+			if data.id == strongholdId then
+				data:removeChess(uid)
+
+				return
+			end
+		end
+	end
+end
+
+function EliminateTeamChessWarMO:getChess(uid)
+	if self.strongholds then
+		for i = 1, #self.strongholds do
+			local data = self.strongholds[i]
+			local chess = data:getChess(uid)
+
+			if chess then
+				return chess
 			end
 		end
 	end
@@ -182,13 +191,13 @@ function var_0_0.getChess(arg_18_0, arg_18_1)
 	return nil
 end
 
-function var_0_0.strongHoldSettle(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_0.strongholds then
-		for iter_19_0 = 1, #arg_19_0.strongholds do
-			local var_19_0 = arg_19_0.strongholds[iter_19_0]
+function EliminateTeamChessWarMO:strongHoldSettle(strongholdId, state)
+	if self.strongholds then
+		for i = 1, #self.strongholds do
+			local data = self.strongholds[i]
 
-			if var_19_0.id == arg_19_1 then
-				var_19_0:updateStatus(arg_19_2)
+			if data.id == strongholdId then
+				data:updateStatus(state)
 
 				return
 			end
@@ -196,55 +205,55 @@ function var_0_0.strongHoldSettle(arg_19_0, arg_19_1, arg_19_2)
 	end
 end
 
-function var_0_0.diamondsIsEnough(arg_20_0, arg_20_1, arg_20_2)
-	if not arg_20_0.myCharacter then
+function EliminateTeamChessWarMO:diamondsIsEnough(diamondId, needCount)
+	if not self.myCharacter then
 		return false
 	end
 
-	return arg_20_0.myCharacter:diamondsIsEnough(arg_20_1, arg_20_2)
+	return self.myCharacter:diamondsIsEnough(diamondId, needCount)
 end
 
-function var_0_0.winConditionIsFinish(arg_21_0)
-	return arg_21_0.winCondition == 1
+function EliminateTeamChessWarMO:winConditionIsFinish()
+	return self.winCondition == 1
 end
 
-function var_0_0.extraWinConditionIsFinish(arg_22_0)
-	return arg_22_0.extraWinCondition == 1
+function EliminateTeamChessWarMO:extraWinConditionIsFinish()
+	return self.extraWinCondition == 1
 end
 
-function var_0_0.diffTeamChess(arg_23_0, arg_23_1)
-	local var_23_0 = true
+function EliminateTeamChessWarMO:diffTeamChess(diffChessWarMo)
+	local isSame = true
 
-	if arg_23_0.id ~= arg_23_1.id then
-		var_23_0 = false
+	if self.id ~= diffChessWarMo.id then
+		isSame = false
 	end
 
-	if not arg_23_0.myCharacter:diffData(arg_23_1.myCharacter) then
-		var_23_0 = false
+	if not self.myCharacter:diffData(diffChessWarMo.myCharacter) then
+		isSame = false
 	end
 
-	if not arg_23_0.enemyCharacter:diffData(arg_23_1.enemyCharacter) then
-		var_23_0 = false
+	if not self.enemyCharacter:diffData(diffChessWarMo.enemyCharacter) then
+		isSame = false
 	end
 
-	if #arg_23_0.strongholds ~= #arg_23_1.strongholds then
-		var_23_0 = false
+	if #self.strongholds ~= #diffChessWarMo.strongholds then
+		isSame = false
 	end
 
-	if arg_23_0.round ~= arg_23_1.round then
-		var_23_0 = false
+	if self.round ~= diffChessWarMo.round then
+		isSame = false
 	end
 
-	for iter_23_0 = 1, #arg_23_0.strongholds do
-		local var_23_1 = arg_23_0.strongholds[iter_23_0]
-		local var_23_2 = arg_23_1:getStronghold(var_23_1.id)
+	for i = 1, #self.strongholds do
+		local data = self.strongholds[i]
+		local diffData = diffChessWarMo:getStronghold(data.id)
 
-		if not var_23_1:diffData(var_23_2) then
-			var_23_0 = false
+		if not data:diffData(diffData) then
+			isSame = false
 		end
 	end
 
-	return var_23_0
+	return isSame
 end
 
-return var_0_0
+return EliminateTeamChessWarMO

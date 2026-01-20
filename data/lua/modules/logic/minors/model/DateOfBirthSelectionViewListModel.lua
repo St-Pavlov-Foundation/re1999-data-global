@@ -1,7 +1,9 @@
-﻿module("modules.logic.minors.model.DateOfBirthSelectionViewListModel", package.seeall)
+﻿-- chunkname: @modules/logic/minors/model/DateOfBirthSelectionViewListModel.lua
 
-local var_0_0 = class("DateOfBirthSelectionViewListModel", ListScrollModel)
+module("modules.logic.minors.model.DateOfBirthSelectionViewListModel", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local DateOfBirthSelectionViewListModel = class("DateOfBirthSelectionViewListModel", ListScrollModel)
 
-return var_0_0
+DateOfBirthSelectionViewListModel.instance = DateOfBirthSelectionViewListModel.New()
+
+return DateOfBirthSelectionViewListModel

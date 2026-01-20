@@ -1,183 +1,190 @@
-﻿module("modules.ugui.icon.common.CommonHeroIconNew", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/common/CommonHeroIconNew.lua
 
-local var_0_0 = class("CommonHeroIconNew", LuaCompBase)
+module("modules.ugui.icon.common.CommonHeroIconNew", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_1.transform
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.go, "#go_empty")
-	arg_1_0._goHero = gohelper.findChild(arg_1_0.go, "#go_hero")
-	arg_1_0._goBgFrame = gohelper.findChild(arg_1_0.go, "#go_hero/bgframe")
-	arg_1_0._heroIcon = gohelper.findChildSingleImage(arg_1_0.go, "#go_hero/heroicon")
-	arg_1_0._careerIcon = gohelper.findChildImage(arg_1_0.go, "#go_hero/career")
-	arg_1_0._goLevel = gohelper.findChild(arg_1_0.go, "#go_hero/#go_level")
-	arg_1_0._rankIcon = gohelper.findChildImage(arg_1_0.go, "#go_hero/#go_level/layout/#image_insight")
-	arg_1_0._txtLvHead = gohelper.findChildText(arg_1_0.go, "#go_hero/#go_level/layout/#txt_lvHead")
-	arg_1_0._txtLevel = gohelper.findChildText(arg_1_0.go, "#go_hero/#go_level/layout/#txt_level")
-	arg_1_0._rareIcon = gohelper.findChildImage(arg_1_0.go, "#go_hero/rare")
-	arg_1_0._clickCb = nil
-	arg_1_0._clickCbObj = nil
-	arg_1_0._btnClick = nil
+local CommonHeroIconNew = class("CommonHeroIconNew", LuaCompBase)
 
-	arg_1_0:isShowEmptyWhenNoneHero(true)
-	arg_1_0:updateIsEmpty()
+function CommonHeroIconNew:init(go)
+	self.go = go
+	self.trans = go.transform
+	self._goEmpty = gohelper.findChild(self.go, "#go_empty")
+	self._goHero = gohelper.findChild(self.go, "#go_hero")
+	self._goBgFrame = gohelper.findChild(self.go, "#go_hero/bgframe")
+	self._heroIcon = gohelper.findChildSingleImage(self.go, "#go_hero/heroicon")
+	self._careerIcon = gohelper.findChildImage(self.go, "#go_hero/career")
+	self._goLevel = gohelper.findChild(self.go, "#go_hero/#go_level")
+	self._rankIcon = gohelper.findChildImage(self.go, "#go_hero/#go_level/layout/#image_insight")
+	self._txtLvHead = gohelper.findChildText(self.go, "#go_hero/#go_level/layout/#txt_lvHead")
+	self._txtLevel = gohelper.findChildText(self.go, "#go_hero/#go_level/layout/#txt_level")
+	self._rareIcon = gohelper.findChildImage(self.go, "#go_hero/rare")
+	self._clickCb = nil
+	self._clickCbObj = nil
+	self._btnClick = nil
+
+	self:isShowEmptyWhenNoneHero(true)
+	self:updateIsEmpty()
 end
 
-function var_0_0.addClickListener(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._clickCb = arg_2_1
-	arg_2_0._clickCbObj = arg_2_2
+function CommonHeroIconNew:addClickListener(clickCb, clickCbObj)
+	self._clickCb = clickCb
+	self._clickCbObj = clickCbObj
 
-	if not arg_2_0._btnClick then
-		arg_2_0._btnClick = SLFramework.UGUI.UIClickListener.Get(arg_2_0.go)
+	if not self._btnClick then
+		self._btnClick = SLFramework.UGUI.UIClickListener.Get(self.go)
 	end
 
-	arg_2_0._btnClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+	self._btnClick:AddClickListener(self._onItemClick, self)
 end
 
-function var_0_0._onItemClick(arg_3_0)
-	if arg_3_0._clickCb then
-		if arg_3_0._clickCbObj then
-			arg_3_0._clickCb(arg_3_0._clickCbObj, arg_3_0._mo)
+function CommonHeroIconNew:_onItemClick()
+	if self._clickCb then
+		if self._clickCbObj then
+			self._clickCb(self._clickCbObj, self._mo)
 		else
-			arg_3_0._clickCb(arg_3_0._mo)
+			self._clickCb(self._mo)
 		end
 	end
 end
 
-function var_0_0.removeClickListener(arg_4_0)
-	if arg_4_0._btnClick then
-		arg_4_0._btnClick:RemoveClickListener()
+function CommonHeroIconNew:removeClickListener()
+	if self._btnClick then
+		self._btnClick:RemoveClickListener()
 	end
 
-	arg_4_0._clickCb = nil
-	arg_4_0._clickCbObj = nil
+	self._clickCb = nil
+	self._clickCbObj = nil
 end
 
-function var_0_0.getIsHasHero(arg_5_0)
-	local var_5_0 = arg_5_0._mo and arg_5_0._mo.config
-	local var_5_1 = var_5_0 and var_5_0.id
+function CommonHeroIconNew:getIsHasHero()
+	local heroCfg = self._mo and self._mo.config
+	local heroId = heroCfg and heroCfg.id
+	local result = heroId and heroId ~= 0
 
-	return var_5_1 and var_5_1 ~= 0
+	return result
 end
 
-function var_0_0.setScale(arg_6_0, arg_6_1)
-	transformhelper.setLocalScale(arg_6_0.trans, arg_6_1, arg_6_1, arg_6_1)
+function CommonHeroIconNew:setScale(scale)
+	transformhelper.setLocalScale(self.trans, scale, scale, scale)
 end
 
-function var_0_0.setAnchor(arg_7_0, arg_7_1, arg_7_2)
-	recthelper.setAnchor(arg_7_0.trans, arg_7_1, arg_7_2)
+function CommonHeroIconNew:setAnchor(anchorX, anchorY)
+	recthelper.setAnchor(self.trans, anchorX, anchorY)
 end
 
-function var_0_0.setIsBalance(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 and "#81abe5" or "#FFFFFF"
+function CommonHeroIconNew:setIsBalance(isBalance)
+	local color = isBalance and "#81abe5" or "#FFFFFF"
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._rankIcon, var_8_0)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._txtLvHead, var_8_0)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._txtLevel, var_8_0)
+	SLFramework.UGUI.GuiHelper.SetColor(self._rankIcon, color)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtLvHead, color)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtLevel, color)
 end
 
-function var_0_0.isShowEmptyWhenNoneHero(arg_9_0, arg_9_1)
-	arg_9_0._isShowEmptyWhenNoneHero = arg_9_1
+function CommonHeroIconNew:isShowEmptyWhenNoneHero(flag)
+	self._isShowEmptyWhenNoneHero = flag
 
-	if not arg_9_0:getIsHasHero() then
-		gohelper.setActive(arg_9_0._goEmpty, arg_9_1)
+	local isEmpty = not self:getIsHasHero()
+
+	if isEmpty then
+		gohelper.setActive(self._goEmpty, flag)
 	else
-		gohelper.setActive(arg_9_0._goEmpty, false)
+		gohelper.setActive(self._goEmpty, false)
 	end
 end
 
-function var_0_0.isShowBgFrame(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goBgFrame, arg_10_1)
+function CommonHeroIconNew:isShowBgFrame(flag)
+	gohelper.setActive(self._goBgFrame, flag)
 end
 
-function var_0_0.isShowLevel(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._goLevel, arg_11_1)
+function CommonHeroIconNew:isShowLevel(flag)
+	gohelper.setActive(self._goLevel, flag)
 end
 
-function var_0_0.isShowRare(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._rareIcon.gameObject, arg_12_1)
+function CommonHeroIconNew:isShowRare(flag)
+	gohelper.setActive(self._rareIcon.gameObject, flag)
 end
 
-function var_0_0.isShowCareer(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0._careerIcon.gameObject, arg_13_1)
+function CommonHeroIconNew:isShowCareer(flag)
+	gohelper.setActive(self._careerIcon.gameObject, flag)
 end
 
-function var_0_0.onUpdateHeroId(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = HeroConfig.instance:getHeroCO(arg_14_1)
+function CommonHeroIconNew:onUpdateHeroId(heroId, skinId)
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
 
-	if not var_14_0 then
+	if not heroCfg then
 		return
 	end
 
-	local var_14_1 = HeroMo.New()
-	local var_14_2 = arg_14_2 or var_14_0.skinId
+	local heroMo = HeroMo.New()
+	local useSkinId = skinId or heroCfg.skinId
 
-	var_14_1:init({
-		heroId = arg_14_1,
-		skin = var_14_2
-	}, var_14_0)
-	arg_14_0:onUpdateMO(var_14_1)
+	heroMo:init({
+		heroId = heroId,
+		skin = useSkinId
+	}, heroCfg)
+	self:onUpdateMO(heroMo)
 end
 
-function var_0_0.onUpdateMO(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1 and arg_15_1.config
+function CommonHeroIconNew:onUpdateMO(heroMO)
+	local heroCfg = heroMO and heroMO.config
 
-	if not var_15_0 then
-		arg_15_0:updateIsEmpty()
-
-		return
-	end
-
-	arg_15_0._mo = arg_15_1
-
-	local var_15_1 = tostring(var_15_0.career)
-
-	UISpriteSetMgr.instance:setCommonSprite(arg_15_0._careerIcon, "lssx_" .. var_15_1)
-
-	local var_15_2 = arg_15_0._mo.skin
-	local var_15_3 = SkinConfig.instance:getSkinCo(var_15_2)
-
-	if not var_15_3 then
-		logError(string.format("CommonHeroIconNew:onUpdateMO error, skinConfig is nil, skinId: %s", var_15_2))
+	if not heroCfg then
+		self:updateIsEmpty()
 
 		return
 	end
 
-	local var_15_4 = ResUrl.getRoomHeadIcon(var_15_3.headIcon)
+	self._mo = heroMO
 
-	arg_15_0._heroIcon:LoadImage(var_15_4)
+	local strCareer = tostring(heroCfg.career)
 
-	local var_15_5, var_15_6 = HeroConfig.instance:getShowLevel(arg_15_0._mo.level)
+	UISpriteSetMgr.instance:setCommonSprite(self._careerIcon, "lssx_" .. strCareer)
 
-	if var_15_6 and var_15_6 > 1 then
-		local var_15_7 = var_15_6 - 1
+	local skinId = self._mo.skin
+	local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_15_0._rankIcon, "dongxi_xiao_" .. var_15_7)
-	else
-		gohelper.setActive(arg_15_0._rankIcon.gameObject, false)
+	if not skinConfig then
+		logError(string.format("CommonHeroIconNew:onUpdateMO error, skinConfig is nil, skinId: %s", skinId))
+
+		return
 	end
 
-	arg_15_0._txtLevel.text = var_15_5
+	local heroIconPath = ResUrl.getRoomHeadIcon(skinConfig.headIcon)
 
-	local var_15_8 = var_15_0.rare
+	self._heroIcon:LoadImage(heroIconPath)
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_15_0._rareIcon, "equipbar" .. CharacterEnum.Color[var_15_8])
-	arg_15_0:updateIsEmpty()
+	local showLevel, rank = HeroConfig.instance:getShowLevel(self._mo.level)
+
+	if rank and rank > 1 then
+		local tmpRank = rank - 1
+
+		UISpriteSetMgr.instance:setCommonSprite(self._rankIcon, "dongxi_xiao_" .. tmpRank)
+	else
+		gohelper.setActive(self._rankIcon.gameObject, false)
+	end
+
+	self._txtLevel.text = showLevel
+
+	local rare = heroCfg.rare
+
+	UISpriteSetMgr.instance:setCommonSprite(self._rareIcon, "equipbar" .. CharacterEnum.Color[rare])
+	self:updateIsEmpty()
 end
 
-function var_0_0.updateIsEmpty(arg_16_0)
-	if arg_16_0:getIsHasHero() then
-		gohelper.setActive(arg_16_0._goHero, true)
-		gohelper.setActive(arg_16_0._goEmpty, false)
+function CommonHeroIconNew:updateIsEmpty()
+	local isHasHero = self:getIsHasHero()
+
+	if isHasHero then
+		gohelper.setActive(self._goHero, true)
+		gohelper.setActive(self._goEmpty, false)
 	else
-		gohelper.setActive(arg_16_0._goHero, false)
-		gohelper.setActive(arg_16_0._goEmpty, arg_16_0._isShowEmptyWhenNoneHero)
+		gohelper.setActive(self._goHero, false)
+		gohelper.setActive(self._goEmpty, self._isShowEmptyWhenNoneHero)
 	end
 end
 
-function var_0_0.onDestroy(arg_17_0)
-	arg_17_0._heroIcon:UnLoadImage()
-	arg_17_0:isShowEmptyWhenNoneHero(true)
+function CommonHeroIconNew:onDestroy()
+	self._heroIcon:UnLoadImage()
+	self:isShowEmptyWhenNoneHero(true)
 end
 
-return var_0_0
+return CommonHeroIconNew

@@ -1,270 +1,269 @@
-﻿module("modules.logic.room.view.RoomCharacterPlaceItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomCharacterPlaceItem.lua
 
-local var_0_0 = class("RoomCharacterPlaceItem", ListScrollCellExtend)
+module("modules.logic.room.view.RoomCharacterPlaceItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "role/heroicon")
-	arg_1_0._gobeplaced = gohelper.findChild(arg_1_0.viewGO, "placeicon")
-	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "go_click")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "select")
-	arg_1_0._gotrust = gohelper.findChild(arg_1_0.viewGO, "trust")
-	arg_1_0._txttrust = gohelper.findChildText(arg_1_0.viewGO, "trust/txt_trust")
-	arg_1_0._goonbirthdayicon = gohelper.findChild(arg_1_0.viewGO, "#go_onbirthdayicon")
-	arg_1_0._gorole = gohelper.findChild(arg_1_0.viewGO, "role")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "role/career")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "role/rare")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "role/name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "role/name/nameEn")
+local RoomCharacterPlaceItem = class("RoomCharacterPlaceItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCharacterPlaceItem:onInitView()
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "role/heroicon")
+	self._gobeplaced = gohelper.findChild(self.viewGO, "placeicon")
+	self._goclick = gohelper.findChild(self.viewGO, "go_click")
+	self._goselect = gohelper.findChild(self.viewGO, "select")
+	self._gotrust = gohelper.findChild(self.viewGO, "trust")
+	self._txttrust = gohelper.findChildText(self.viewGO, "trust/txt_trust")
+	self._goonbirthdayicon = gohelper.findChild(self.viewGO, "#go_onbirthdayicon")
+	self._gorole = gohelper.findChild(self.viewGO, "role")
+	self._imagecareer = gohelper.findChildImage(self.viewGO, "role/career")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "role/rare")
+	self._txtname = gohelper.findChildText(self.viewGO, "role/name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "role/name/nameEn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomCharacterPlaceItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomCharacterPlaceItem:removeEvents()
 	return
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._scene.camera:isTweening() then
+function RoomCharacterPlaceItem:_btnclickOnClick()
+	if self._scene.camera:isTweening() then
 		return
 	end
 
-	if arg_4_0._isDragUI then
+	if self._isDragUI then
 		return
 	end
 
-	local var_4_0 = arg_4_0._mo.heroId
-	local var_4_1 = arg_4_0._mo.skinId
+	local heroId = self._mo.heroId
+	local skinId = self._mo.skinId
 
 	if RoomHelper.isFSMState(RoomEnum.FSMObState.Idle) or RoomHelper.isFSMState(RoomEnum.FSMObState.PlaceCharacterConfirm) then
 		RoomCharacterModel.instance:endAllMove()
 
-		local var_4_2 = RoomCharacterModel.instance:getTempCharacterMO()
+		local tempCharacterMO = RoomCharacterModel.instance:getTempCharacterMO()
 
-		if var_4_2 and var_4_2.id == var_4_0 then
-			RoomCharacterPlaceListModel.instance:setSelect(arg_4_0._mo.id)
-			arg_4_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
+		if tempCharacterMO and tempCharacterMO.id == heroId then
+			RoomCharacterPlaceListModel.instance:setSelect(self._mo.id)
+			self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
 				focus = true,
-				heroId = var_4_0
+				heroId = heroId
 			})
 
 			return
 		end
 
-		if arg_4_0._mo.use then
-			RoomCharacterPlaceListModel.instance:setSelect(arg_4_0._mo.id)
+		if self._mo.use then
+			RoomCharacterPlaceListModel.instance:setSelect(self._mo.id)
 
-			local var_4_3 = RoomCharacterModel.instance:getCharacterMOById(var_4_0)
+			local roomCharacterMO = RoomCharacterModel.instance:getCharacterMOById(heroId)
 
-			arg_4_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
-				heroId = var_4_0
+			self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
+				heroId = heroId
 			})
 		else
-			local function var_4_4(arg_5_0, arg_5_1, arg_5_2)
-				local var_5_0 = RoomCharacterHelper.getRecommendHexPoint(arg_5_0, arg_5_1, arg_5_2)
+			local function replaceHeroFunction(heroId, skinId, nearPosition)
+				local bestParam = RoomCharacterHelper.getRecommendHexPoint(heroId, skinId, nearPosition)
 
-				if not var_5_0 then
+				if not bestParam then
 					GameFacade.showToast(ToastEnum.RoomCharacterPlace)
 
 					return
 				end
 
 				RoomCharacterPlaceListModel.instance:setSelect(nil)
-				RoomCharacterPlaceListModel.instance:setSelect(arg_5_0)
-				arg_4_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
-					heroId = arg_5_0,
-					skinId = arg_5_1,
-					position = var_5_0.position
+				RoomCharacterPlaceListModel.instance:setSelect(heroId)
+				self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
+					heroId = heroId,
+					skinId = skinId,
+					position = bestParam.position
 				})
 			end
 
-			local var_4_5 = RoomCharacterModel.instance:getConfirmCharacterCount()
-			local var_4_6 = RoomCharacterModel.instance:getMaxCharacterCount()
+			local count = RoomCharacterModel.instance:getConfirmCharacterCount()
+			local maxCount = RoomCharacterModel.instance:getMaxCharacterCount()
 
-			if var_4_2 then
-				if var_4_6 <= var_4_5 - 1 then
+			if tempCharacterMO then
+				if maxCount <= count - 1 then
 					GameFacade.showToast(ToastEnum.RoomCharacterPlace2)
 
 					return
 				end
 
-				local var_4_7 = Vector2(var_4_2.currentPosition.x, var_4_2.currentPosition.z)
+				local nearPosition = Vector2(tempCharacterMO.currentPosition.x, tempCharacterMO.currentPosition.z)
 
-				if var_4_2.characterState == RoomCharacterEnum.CharacterState.Revert then
-					RoomMapController.instance:unUseCharacterRequest(var_4_2.heroId, function()
-						var_4_4(var_4_0, var_4_1, var_4_7)
+				if tempCharacterMO.characterState == RoomCharacterEnum.CharacterState.Revert then
+					RoomMapController.instance:unUseCharacterRequest(tempCharacterMO.heroId, function()
+						replaceHeroFunction(heroId, skinId, nearPosition)
 					end)
 				else
-					var_4_4(var_4_0, var_4_1, var_4_7)
+					replaceHeroFunction(heroId, skinId, nearPosition)
 				end
 
 				return
 			end
 
-			if var_4_6 <= var_4_5 then
+			if maxCount <= count then
 				GameFacade.showToast(ToastEnum.RoomCharacterPlace2)
 
 				return
 			end
 
-			var_4_4(var_4_0, var_4_1, nil)
+			replaceHeroFunction(heroId, skinId, nil)
 		end
 	end
 end
 
-function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._isDragUI = true
-	arg_7_0._isDragFirstBegin = true
+function RoomCharacterPlaceItem:_onDragBegin(param, pointerEventData)
+	self._isDragUI = true
+	self._isDragFirstBegin = true
 
-	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterListOnDragBeginListener, arg_7_2)
+	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterListOnDragBeginListener, pointerEventData)
 end
 
-function var_0_0._onDrag(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._isDragUI = true
+function RoomCharacterPlaceItem:_onDrag(param, pointerEventData)
+	self._isDragUI = true
 
-	if arg_8_0._isStartDrag then
-		RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, arg_8_2.position)
-	elseif arg_8_2.position.y > arg_8_0._dragStartY and arg_8_0._isDragFirstBegin then
-		local var_8_0 = arg_8_0._mo.id
-		local var_8_1 = RoomCharacterModel.instance:getTempCharacterMO()
-		local var_8_2 = RoomCharacterModel.instance:getConfirmCharacterCount()
-		local var_8_3 = RoomCharacterModel.instance:getMaxCharacterCount()
+	if self._isStartDrag then
+		RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, pointerEventData.position)
+	elseif pointerEventData.position.y > self._dragStartY and self._isDragFirstBegin then
+		local heroId = self._mo.id
+		local tempCharacterMO = RoomCharacterModel.instance:getTempCharacterMO()
+		local count = RoomCharacterModel.instance:getConfirmCharacterCount()
+		local maxCount = RoomCharacterModel.instance:getMaxCharacterCount()
 
-		if not arg_8_0._mo.use and (not var_8_1 or var_8_1.id ~= var_8_0) and var_8_3 <= var_8_2 then
+		if not self._mo.use and (not tempCharacterMO or tempCharacterMO.id ~= heroId) and maxCount <= count then
 			GameFacade.showToast(ToastEnum.RoomCharacterPlace2)
 
-			arg_8_0._isDragFirstBegin = false
+			self._isDragFirstBegin = false
 		else
-			arg_8_0._isStartDrag = true
+			self._isStartDrag = true
 
-			arg_8_0._scene.touch:setUIDragScreenScroll(true)
+			self._scene.touch:setUIDragScreenScroll(true)
 
-			local var_8_4 = arg_8_0._mo.skinId
-			local var_8_5 = RoomBendingHelper.screenToWorld(arg_8_2.position)
-			local var_8_6 = RoomCharacterHelper.getRecommendHexPoint(var_8_0, var_8_4, var_8_5)
+			local skinId = self._mo.skinId
+			local worldPos = RoomBendingHelper.screenToWorld(pointerEventData.position)
+			local bestParam = RoomCharacterHelper.getRecommendHexPoint(heroId, skinId, worldPos)
 
-			if var_8_6 then
-				arg_8_0._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
+			if bestParam then
+				self._scene.fsm:triggerEvent(RoomSceneEvent.TryPlaceCharacter, {
 					uidrag = true,
-					heroId = var_8_0,
-					skinId = var_8_4,
-					position = var_8_6.position
+					heroId = heroId,
+					skinId = skinId,
+					position = bestParam.position
 				})
-				RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, arg_8_2.position, var_8_0)
+				RoomMapController.instance:dispatchEvent(RoomEvent.TouchPressCharacter, pointerEventData.position, heroId)
 			else
 				GameFacade.showToast(ToastEnum.RoomCharacterPlace)
 
-				arg_8_0._isDragFirstBegin = false
+				self._isDragFirstBegin = false
 			end
 		end
 	end
 
-	if not arg_8_0._isStartDrag then
-		RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterListOnDragListener, arg_8_2)
+	if not self._isStartDrag then
+		RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterListOnDragListener, pointerEventData)
 	end
 end
 
-function var_0_0._onDragEnd(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._isDragUI = false
+function RoomCharacterPlaceItem:_onDragEnd(param, pointerEventData)
+	self._isDragUI = false
 
-	if arg_9_0._isStartDrag then
-		arg_9_0._isStartDrag = false
+	if self._isStartDrag then
+		self._isStartDrag = false
 
-		arg_9_0._scene.touch:setUIDragScreenScroll(false)
-		RoomMapController.instance:dispatchEvent(RoomEvent.TouchDropCharacter, arg_9_2.position)
+		self._scene.touch:setUIDragScreenScroll(false)
+		RoomMapController.instance:dispatchEvent(RoomEvent.TouchDropCharacter, pointerEventData.position)
 	end
 
-	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterListOnDragEndListener, arg_9_2)
+	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterListOnDragEndListener, pointerEventData)
 end
 
-function var_0_0._btnclickOnClickDown(arg_10_0)
-	arg_10_0._isDragUI = false
+function RoomCharacterPlaceItem:_btnclickOnClickDown()
+	self._isDragUI = false
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_11_0._isSelect = false
+function RoomCharacterPlaceItem:_editableInitView()
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._isSelect = false
 
-	gohelper.addUIClickAudio(arg_11_0._goclick, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._goclick, AudioEnum.UI.UI_Common_Click)
 
-	arg_11_0._canvasGroup = arg_11_0._gorole:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_11_0._uiclick = SLFramework.UGUI.UIClickListener.Get(arg_11_0._goclick)
+	self._canvasGroup = self._gorole:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._uiclick = SLFramework.UGUI.UIClickListener.Get(self._goclick)
 
-	arg_11_0._uiclick:AddClickListener(arg_11_0._btnclickOnClick, arg_11_0)
-	arg_11_0._uiclick:AddClickDownListener(arg_11_0._btnclickOnClickDown, arg_11_0)
+	self._uiclick:AddClickListener(self._btnclickOnClick, self)
+	self._uiclick:AddClickDownListener(self._btnclickOnClickDown, self)
 
-	arg_11_0._uidrag = SLFramework.UGUI.UIDragListener.Get(arg_11_0._goclick)
+	self._uidrag = SLFramework.UGUI.UIDragListener.Get(self._goclick)
 
-	arg_11_0._uidrag:AddDragBeginListener(arg_11_0._onDragBegin, arg_11_0)
-	arg_11_0._uidrag:AddDragListener(arg_11_0._onDrag, arg_11_0)
-	arg_11_0._uidrag:AddDragEndListener(arg_11_0._onDragEnd, arg_11_0)
+	self._uidrag:AddDragBeginListener(self._onDragBegin, self)
+	self._uidrag:AddDragListener(self._onDrag, self)
+	self._uidrag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_11_0._isStartDrag = false
-	arg_11_0._isDragFirstBegin = false
-	arg_11_0._isDragUI = false
-	arg_11_0._dragStartY = 350 * UnityEngine.Screen.height / 1080
+	self._isStartDrag = false
+	self._isDragFirstBegin = false
+	self._isDragUI = false
+	self._dragStartY = 350 * UnityEngine.Screen.height / 1080
 end
 
-function var_0_0._refreshUI(arg_12_0)
-	arg_12_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(arg_12_0._mo.skinConfig.headIcon))
-	gohelper.setActive(arg_12_0._gobeplaced, arg_12_0._mo.use)
+function RoomCharacterPlaceItem:_refreshUI()
+	self._simageicon:LoadImage(ResUrl.getRoomHeadIcon(self._mo.skinConfig.headIcon))
+	gohelper.setActive(self._gobeplaced, self._mo.use)
 
-	local var_12_0 = RoomCharacterModel.instance:isOnBirthday(arg_12_0._mo.heroConfig.id)
+	local isOnBirthday = RoomCharacterModel.instance:isOnBirthday(self._mo.heroConfig.id)
 
-	gohelper.setActive(arg_12_0._goonbirthdayicon, var_12_0)
+	gohelper.setActive(self._goonbirthdayicon, isOnBirthday)
 
-	if arg_12_0._mo.use then
-		arg_12_0._canvasGroup.alpha = 0.7
+	if self._mo.use then
+		self._canvasGroup.alpha = 0.7
 	else
-		arg_12_0._canvasGroup.alpha = 1
+		self._canvasGroup.alpha = 1
 	end
 
-	gohelper.addUIClickAudio(arg_12_0._goclick, arg_12_0._mo.use and AudioEnum.UI.UI_Common_Click or AudioEnum.UI.Play_UI_Copies)
-	UISpriteSetMgr.instance:setCommonSprite(arg_12_0._imagecareer, "lssx_" .. arg_12_0._mo.heroConfig.career)
-	UISpriteSetMgr.instance:setCommonSprite(arg_12_0._imagerare, "bgequip" .. CharacterEnum.Color[arg_12_0._mo.heroConfig.rare])
+	gohelper.addUIClickAudio(self._goclick, self._mo.use and AudioEnum.UI.UI_Common_Click or AudioEnum.UI.Play_UI_Copies)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. self._mo.heroConfig.career)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare, "bgequip" .. CharacterEnum.Color[self._mo.heroConfig.rare])
 
-	arg_12_0._txtname.text = arg_12_0._mo.heroConfig.name
-	arg_12_0._txtnameen.text = arg_12_0._mo.heroConfig.nameEng
+	self._txtname.text = self._mo.heroConfig.name
+	self._txtnameen.text = self._mo.heroConfig.nameEng
 
-	local var_12_1 = RoomCharacterPlaceListModel.instance:getOrder()
-	local var_12_2
+	local order = RoomCharacterPlaceListModel.instance:getOrder()
+	local orderFaith = order == RoomCharacterEnum.CharacterOrderType.FaithUp or order == RoomCharacterEnum.CharacterOrderType.FaithDown
+	local faith = HeroConfig.instance:getFaithPercent(self._mo.heroMO.faith)[1]
+	local faithColor = faith ~= 1 and "#cccccc" or "#e59650"
 
-	var_12_2 = var_12_1 == RoomCharacterEnum.CharacterOrderType.FaithUp or var_12_1 == RoomCharacterEnum.CharacterOrderType.FaithDown
-
-	local var_12_3 = HeroConfig.instance:getFaithPercent(arg_12_0._mo.heroMO.faith)[1]
-	local var_12_4 = var_12_3 ~= 1 and "#cccccc" or "#e59650"
-
-	arg_12_0._txttrust.text = string.format("<color=%s>%s%%</color>", var_12_4, var_12_3 * 100)
+	self._txttrust.text = string.format("<color=%s>%s%%</color>", faithColor, faith * 100)
 end
 
-function var_0_0.onUpdateMO(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0._goselect, arg_13_0._isSelect)
+function RoomCharacterPlaceItem:onUpdateMO(mo)
+	gohelper.setActive(self._goselect, self._isSelect)
 
-	arg_13_0._mo = arg_13_1
+	self._mo = mo
 
-	arg_13_0:_refreshUI()
+	self:_refreshUI()
 
-	arg_13_0._uidrag.enabled = RoomCharacterModel.instance:canDragCharacter()
+	self._uidrag.enabled = RoomCharacterModel.instance:canDragCharacter()
 end
 
-function var_0_0.onSelect(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._goselect, arg_14_1)
+function RoomCharacterPlaceItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 
-	arg_14_0._isSelect = arg_14_1
+	self._isSelect = isSelect
 end
 
-function var_0_0.onDestroy(arg_15_0)
-	arg_15_0._simageicon:UnLoadImage()
-	arg_15_0._uiclick:RemoveClickListener()
-	arg_15_0._uiclick:RemoveClickDownListener()
-	arg_15_0._uidrag:RemoveDragBeginListener()
-	arg_15_0._uidrag:RemoveDragListener()
-	arg_15_0._uidrag:RemoveDragEndListener()
+function RoomCharacterPlaceItem:onDestroy()
+	self._simageicon:UnLoadImage()
+	self._uiclick:RemoveClickListener()
+	self._uiclick:RemoveClickDownListener()
+	self._uidrag:RemoveDragBeginListener()
+	self._uidrag:RemoveDragListener()
+	self._uidrag:RemoveDragEndListener()
 end
 
-return var_0_0
+return RoomCharacterPlaceItem

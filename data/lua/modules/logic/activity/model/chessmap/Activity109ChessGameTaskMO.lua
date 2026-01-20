@@ -1,35 +1,37 @@
-﻿module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskMO", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/chessmap/Activity109ChessGameTaskMO.lua
 
-local var_0_0 = pureTable("Activity109ChessGameTaskMO")
+module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.config = arg_1_1.config
-	arg_1_0.taskMO = arg_1_1
+local Activity109ChessGameTaskMO = pureTable("Activity109ChessGameTaskMO")
+
+function Activity109ChessGameTaskMO:init(taskMO)
+	self.id = taskMO.id
+	self.config = taskMO.config
+	self.taskMO = taskMO
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.taskMO = arg_2_1
+function Activity109ChessGameTaskMO:updateMO(taskMO)
+	self.taskMO = taskMO
 end
 
-function var_0_0.isLock(arg_3_0)
-	return arg_3_0.taskMO == nil
+function Activity109ChessGameTaskMO:isLock()
+	return self.taskMO == nil
 end
 
-function var_0_0.isFinished(arg_4_0)
-	if arg_4_0.taskMO then
-		return arg_4_0.taskMO.hasFinished
+function Activity109ChessGameTaskMO:isFinished()
+	if self.taskMO then
+		return self.taskMO.hasFinished
 	end
 
 	return false
 end
 
-function var_0_0.alreadyGotReward(arg_5_0)
-	if arg_5_0.taskMO then
-		return arg_5_0.taskMO.finishCount > 0
+function Activity109ChessGameTaskMO:alreadyGotReward()
+	if self.taskMO then
+		return self.taskMO.finishCount > 0
 	end
 
 	return false
 end
 
-return var_0_0
+return Activity109ChessGameTaskMO

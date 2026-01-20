@@ -1,155 +1,157 @@
-﻿module("modules.logic.weather.controller.WeatherSwitchComp", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherSwitchComp.lua
 
-local var_0_0 = class("WeatherSwitchComp")
-local var_0_1 = 6000
-local var_0_2 = 1
-local var_0_3 = 4
+module("modules.logic.weather.controller.WeatherSwitchComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local WeatherSwitchComp = class("WeatherSwitchComp")
+local FAKE_TIME = 6000
+local MIN_LIGHT_MODE = 1
+local MAX_LIGHT_MODE = 4
+
+function WeatherSwitchComp:ctor()
 	return
 end
 
-function var_0_0.pause(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._checkReport, arg_2_0)
+function WeatherSwitchComp:pause()
+	TaskDispatcher.cancelTask(self._checkReport, self)
 end
 
-function var_0_0.continue(arg_3_0)
-	TaskDispatcher.runRepeat(arg_3_0._checkReport, arg_3_0, 1)
+function WeatherSwitchComp:continue()
+	TaskDispatcher.runRepeat(self._checkReport, self, 1)
 end
 
-function var_0_0.onSceneHide(arg_4_0)
-	arg_4_0._isHide = true
+function WeatherSwitchComp:onSceneHide()
+	self._isHide = true
 
-	TaskDispatcher.cancelTask(arg_4_0._checkReport, arg_4_0)
+	TaskDispatcher.cancelTask(self._checkReport, self)
 end
 
-function var_0_0.onSceneShow(arg_5_0)
-	if not arg_5_0._isHide then
+function WeatherSwitchComp:onSceneShow()
+	if not self._isHide then
 		return
 	end
 
-	arg_5_0._isHide = false
+	self._isHide = false
 
-	TaskDispatcher.runRepeat(arg_5_0._checkReport, arg_5_0, 1)
-	arg_5_0:chaneWeatherLightMode(arg_5_0._initReport.lightMode, arg_5_0._initReport)
+	TaskDispatcher.runRepeat(self._checkReport, self, 1)
+	self:chaneWeatherLightMode(self._initReport.lightMode, self._initReport)
 end
 
-function var_0_0.getLightMode(arg_6_0)
-	return arg_6_0._lightMode
+function WeatherSwitchComp:getLightMode()
+	return self._lightMode
 end
 
-function var_0_0.getReportIndex(arg_7_0)
-	return arg_7_0._reportIndex
+function WeatherSwitchComp:getReportIndex()
+	return self._reportIndex
 end
 
-function var_0_0.getReportList(arg_8_0)
-	return arg_8_0._reportList
+function WeatherSwitchComp:getReportList()
+	return self._reportList
 end
 
-function var_0_0.switchPrevLightMode(arg_9_0)
-	if arg_9_0._lightMode <= var_0_2 then
+function WeatherSwitchComp:switchPrevLightMode()
+	if self._lightMode <= MIN_LIGHT_MODE then
 		return
 	end
 
-	arg_9_0._lightMode = arg_9_0._lightMode - 1
+	self._lightMode = self._lightMode - 1
 
-	arg_9_0:chaneWeatherLightMode(arg_9_0._lightMode)
+	self:chaneWeatherLightMode(self._lightMode)
 end
 
-function var_0_0.switchNextLightMode(arg_10_0)
-	if arg_10_0._lightMode >= var_0_3 then
+function WeatherSwitchComp:switchNextLightMode()
+	if self._lightMode >= MAX_LIGHT_MODE then
 		return
 	end
 
-	arg_10_0._lightMode = arg_10_0._lightMode + 1
+	self._lightMode = self._lightMode + 1
 
-	arg_10_0:chaneWeatherLightMode(arg_10_0._lightMode)
+	self:chaneWeatherLightMode(self._lightMode)
 end
 
-function var_0_0.switchNextReport(arg_11_0)
-	arg_11_0._reportIndex = arg_11_0._reportIndex + 1
+function WeatherSwitchComp:switchNextReport()
+	self._reportIndex = self._reportIndex + 1
 
-	if arg_11_0._reportIndex > #arg_11_0._reportList then
-		arg_11_0._reportIndex = 1
+	if self._reportIndex > #self._reportList then
+		self._reportIndex = 1
 	end
 
-	arg_11_0:chaneWeatherLightMode(arg_11_0._lightMode, arg_11_0._reportList[arg_11_0._reportIndex])
+	self:chaneWeatherLightMode(self._lightMode, self._reportList[self._reportIndex])
 end
 
-function var_0_0.switchReport(arg_12_0, arg_12_1)
-	arg_12_0._reportIndex = arg_12_1
+function WeatherSwitchComp:switchReport(index)
+	self._reportIndex = index
 
-	arg_12_0:chaneWeatherLightMode(arg_12_0._lightMode, arg_12_0._reportList[arg_12_0._reportIndex])
+	self:chaneWeatherLightMode(self._lightMode, self._reportList[self._reportIndex])
 end
 
-function var_0_0.onInit(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._sceneId = arg_13_1
+function WeatherSwitchComp:onInit(sceneId, weatherComp)
+	self._sceneId = sceneId
 
-	local var_13_0 = lua_scene_switch.configDict[arg_13_1]
+	local sceneConfig = lua_scene_switch.configDict[sceneId]
 
-	arg_13_0._initReportId = var_13_0.initReportId
-	arg_13_0._initReport = lua_weather_report.configDict[arg_13_0._initReportId]
-	arg_13_0._reportList = {}
-	arg_13_0._changeTime = var_13_0.reportSwitchTime
-	arg_13_0._weatherComp = arg_13_2
+	self._initReportId = sceneConfig.initReportId
+	self._initReport = lua_weather_report.configDict[self._initReportId]
+	self._reportList = {}
+	self._changeTime = sceneConfig.reportSwitchTime
+	self._weatherComp = weatherComp
 
-	TaskDispatcher.runRepeat(arg_13_0._checkReport, arg_13_0, 1)
-	arg_13_0:chaneWeatherLightMode(arg_13_0._initReport.lightMode, arg_13_0._initReport)
+	TaskDispatcher.runRepeat(self._checkReport, self, 1)
+	self:chaneWeatherLightMode(self._initReport.lightMode, self._initReport)
 end
 
-function var_0_0.chaneWeatherLightMode(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._lightMode = arg_14_1
-	arg_14_0._reportList = WeatherConfig.instance:getReportList(arg_14_1, arg_14_0._sceneId)
-	arg_14_0._reportIndex = arg_14_2 and tabletool.indexOf(arg_14_0._reportList, arg_14_2) or 1
+function WeatherSwitchComp:chaneWeatherLightMode(mode, report)
+	self._lightMode = mode
+	self._reportList = WeatherConfig.instance:getReportList(mode, self._sceneId)
+	self._reportIndex = report and tabletool.indexOf(self._reportList, report) or 1
 
-	if #arg_14_0._reportList <= 0 then
-		logError(string.format("WeatherSwitchComp:chaneWeatherLightMode reportList is empty mode:%s,sceneId:%s", arg_14_1, arg_14_0._sceneId))
+	if #self._reportList <= 0 then
+		logError(string.format("WeatherSwitchComp:chaneWeatherLightMode reportList is empty mode:%s,sceneId:%s", mode, self._sceneId))
 	end
 
-	arg_14_0:applyReport()
+	self:applyReport()
 end
 
-function var_0_0.applyReport(arg_15_0)
-	local var_15_0 = arg_15_0._reportList[arg_15_0._reportIndex]
+function WeatherSwitchComp:applyReport()
+	local report = self._reportList[self._reportIndex]
 
-	if not var_15_0 then
+	if not report then
 		return
 	end
 
-	arg_15_0._weatherComp:changeReportId(var_15_0.id, var_0_1)
+	self._weatherComp:changeReportId(report.id, FAKE_TIME)
 
-	arg_15_0._endTime = Time.time + arg_15_0._changeTime
+	self._endTime = Time.time + self._changeTime
 
-	if arg_15_0._calback then
-		arg_15_0._calback(arg_15_0._callbackObj)
+	if self._calback then
+		self._calback(self._callbackObj)
 	end
 end
 
-function var_0_0.addReportChangeCallback(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._calback = arg_16_1
-	arg_16_0._callbackObj = arg_16_2
+function WeatherSwitchComp:addReportChangeCallback(callback, callbackObj)
+	self._calback = callback
+	self._callbackObj = callbackObj
 end
 
-function var_0_0.removeReportChangeCallback(arg_17_0)
-	arg_17_0._calback = nil
-	arg_17_0._callbackObj = nil
+function WeatherSwitchComp:removeReportChangeCallback()
+	self._calback = nil
+	self._callbackObj = nil
 end
 
-function var_0_0._checkReport(arg_18_0)
-	if arg_18_0._endTime and Time.time >= arg_18_0._endTime then
-		arg_18_0._reportIndex = arg_18_0._reportIndex + 1
+function WeatherSwitchComp:_checkReport()
+	if self._endTime and Time.time >= self._endTime then
+		self._reportIndex = self._reportIndex + 1
 
-		if arg_18_0._reportIndex > #arg_18_0._reportList then
-			arg_18_0._reportIndex = 1
+		if self._reportIndex > #self._reportList then
+			self._reportIndex = 1
 		end
 
-		arg_18_0:applyReport()
+		self:applyReport()
 	end
 end
 
-function var_0_0.onSceneClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._checkReport, arg_19_0)
-	arg_19_0:removeReportChangeCallback()
+function WeatherSwitchComp:onSceneClose()
+	TaskDispatcher.cancelTask(self._checkReport, self)
+	self:removeReportChangeCallback()
 end
 
-return var_0_0
+return WeatherSwitchComp

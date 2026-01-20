@@ -1,154 +1,159 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelOptionItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaLevelOptionItem.lua
 
-local var_0_0 = class("LoperaLevelOptionItem", ListScrollCellExtend)
-local var_0_1 = VersionActivity2_2Enum.ActivityId.Lopera
+module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelOptionItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._optionText = gohelper.findChildText(arg_1_0.viewGO, "#txt_Choice")
-	arg_1_0._optionEffectText = gohelper.findChildText(arg_1_0.viewGO, "#txt_Choice/#txt_effect")
-	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "image_ChoiceBG")
-	arg_1_0._goProp = gohelper.findChild(arg_1_0.viewGO, "#image_Prop")
-	arg_1_0._imgPropIcon = gohelper.findChildImage(arg_1_0.viewGO, "#image_Prop")
-	arg_1_0._goPowerIcon = gohelper.findChild(arg_1_0.viewGO, "image_Power")
-	arg_1_0._goOption = gohelper.findChild(arg_1_0.viewGO, "#txt_Choice")
-	arg_1_0._goEffectOption = gohelper.findChild(arg_1_0.viewGO, "go_optionWithEffect")
-	arg_1_0._txtEffectOption = gohelper.findChildText(arg_1_0.viewGO, "go_optionWithEffect/#txt_option")
-	arg_1_0._txtEffect = gohelper.findChildText(arg_1_0.viewGO, "go_optionWithEffect/#txt_effect")
-	arg_1_0._costText = gohelper.findChildText(arg_1_0.viewGO, "#txt_PowerNum")
-	arg_1_0._goCostNum = gohelper.findChild(arg_1_0.viewGO, "#txt_PowerNum")
+local LoperaLevelOptionItem = class("LoperaLevelOptionItem", ListScrollCellExtend)
+local loperaActId = VersionActivity2_2Enum.ActivityId.Lopera
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LoperaLevelOptionItem:onInitView()
+	self._optionText = gohelper.findChildText(self.viewGO, "#txt_Choice")
+	self._optionEffectText = gohelper.findChildText(self.viewGO, "#txt_Choice/#txt_effect")
+	self._btn = gohelper.findChildButtonWithAudio(self.viewGO, "image_ChoiceBG")
+	self._goProp = gohelper.findChild(self.viewGO, "#image_Prop")
+	self._imgPropIcon = gohelper.findChildImage(self.viewGO, "#image_Prop")
+	self._goPowerIcon = gohelper.findChild(self.viewGO, "image_Power")
+	self._goOption = gohelper.findChild(self.viewGO, "#txt_Choice")
+	self._goEffectOption = gohelper.findChild(self.viewGO, "go_optionWithEffect")
+	self._txtEffectOption = gohelper.findChildText(self.viewGO, "go_optionWithEffect/#txt_option")
+	self._txtEffect = gohelper.findChildText(self.viewGO, "go_optionWithEffect/#txt_effect")
+	self._costText = gohelper.findChildText(self.viewGO, "#txt_PowerNum")
+	self._goCostNum = gohelper.findChild(self.viewGO, "#txt_PowerNum")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btn:AddClickListener(arg_2_0._clickOption, arg_2_0)
+function LoperaLevelOptionItem:addEvents()
+	self._btn:AddClickListener(self._clickOption, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btn:RemoveClickListener()
+function LoperaLevelOptionItem:removeEvents()
+	self._btn:RemoveClickListener()
 end
 
-function var_0_0._clickOption(arg_4_0)
-	if not string.nilorempty(arg_4_0._mo.costItems) then
-		local var_4_0 = string.split(arg_4_0._mo.costItems, "|")
-		local var_4_1 = string.splitToNumber(var_4_0[1], "#")[1]
-		local var_4_2 = string.splitToNumber(var_4_0[1], "#")[2]
-		local var_4_3 = Activity168Model.instance:getItemCount(var_4_1)
-		local var_4_4 = Activity168Config.instance:getGameItemCfg(var_0_1, var_4_1)
-		local var_4_5 = Activity168Config.instance:getComposeTypeCfg(var_0_1, var_4_4.compostType)
+function LoperaLevelOptionItem:_clickOption()
+	if not string.nilorempty(self._mo.costItems) then
+		local itemParamsArray = string.split(self._mo.costItems, "|")
+		local itemId = string.splitToNumber(itemParamsArray[1], "#")[1]
+		local itemCost = string.splitToNumber(itemParamsArray[1], "#")[2]
+		local itemCount = Activity168Model.instance:getItemCount(itemId)
+		local itemCfg = Activity168Config.instance:getGameItemCfg(loperaActId, itemId)
+		local itemTypeCfg = Activity168Config.instance:getComposeTypeCfg(loperaActId, itemCfg.compostType)
 
-		if var_4_3 < var_4_2 then
-			local var_4_6 = var_4_5.name
-			local var_4_7 = var_4_4.name
-			local var_4_8 = formatLuaLang("store_currency_limit", var_4_6 .. "-" .. var_4_7)
+		if itemCount < itemCost then
+			local itemTypeName = itemTypeCfg.name
+			local itemName = itemCfg.name
+			local toastContent = formatLuaLang("store_currency_limit", itemTypeName .. "-" .. itemName)
 
-			ToastController.instance:showToastWithString(var_4_8)
+			ToastController.instance:showToastWithString(toastContent)
 
 			return
 		end
 	end
 
-	LoperaController.instance:selectOption(arg_4_0._mo.optionId)
+	LoperaController.instance:selectOption(self._mo.optionId)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function LoperaLevelOptionItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
-	arg_6_0:addEventCb(LoperaController.instance, LoperaEvent.ComposeDone, arg_6_0.refreshUI, arg_6_0)
+function LoperaLevelOptionItem:_editableAddEvents()
+	self:addEventCb(LoperaController.instance, LoperaEvent.ComposeDone, self.refreshUI, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
-	arg_7_0:removeEventCb(LoperaController.instance, LoperaEvent.ComposeDone, arg_7_0.refreshUI, arg_7_0)
+function LoperaLevelOptionItem:_editableRemoveEvents()
+	self:removeEventCb(LoperaController.instance, LoperaEvent.ComposeDone, self.refreshUI, self)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
+function LoperaLevelOptionItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	if not arg_9_0._mo then
+function LoperaLevelOptionItem:refreshUI()
+	if not self._mo then
 		return
 	end
 
-	gohelper.setActive(arg_9_0._goProp, false)
-	gohelper.setActive(arg_9_0._goPowerIcon, false)
-	gohelper.setActive(arg_9_0._goCostNum, false)
-	gohelper.setActive(arg_9_0._goEffectOption, false)
-	gohelper.setActive(arg_9_0._goOption, false)
-	gohelper.setActive(arg_9_0._txtEffect.gameObject, true)
-	gohelper.setActive(arg_9_0._optionEffectText.gameObject, false)
+	gohelper.setActive(self._goProp, false)
+	gohelper.setActive(self._goPowerIcon, false)
+	gohelper.setActive(self._goCostNum, false)
+	gohelper.setActive(self._goEffectOption, false)
+	gohelper.setActive(self._goOption, false)
+	gohelper.setActive(self._txtEffect.gameObject, true)
+	gohelper.setActive(self._optionEffectText.gameObject, false)
 
-	arg_9_0._btn.enabled = true
+	self._btn.enabled = true
 
-	local var_9_0 = Activity168Config.instance:getOptionEffectCfg(arg_9_0._mo.effectId)
+	local effectCfg = Activity168Config.instance:getOptionEffectCfg(self._mo.effectId)
 
-	if not string.nilorempty(arg_9_0._mo.costItems) then
-		gohelper.setActive(arg_9_0._goProp, true)
-		gohelper.setActive(arg_9_0._goCostNum, true)
+	if not string.nilorempty(self._mo.costItems) then
+		gohelper.setActive(self._goProp, true)
+		gohelper.setActive(self._goCostNum, true)
 
-		local var_9_1 = string.split(arg_9_0._mo.costItems, "|")
-		local var_9_2 = string.splitToNumber(var_9_1[1], "#")[1]
-		local var_9_3 = string.splitToNumber(var_9_1[1], "#")[2]
-		local var_9_4 = Activity168Config.instance:getGameItemCfg(VersionActivity2_2Enum.ActivityId.Lopera, var_9_2)
-		local var_9_5 = Activity168Model.instance:getItemCount(var_9_2)
+		local itemParamsArray = string.split(self._mo.costItems, "|")
+		local itemId = string.splitToNumber(itemParamsArray[1], "#")[1]
+		local itemCost = string.splitToNumber(itemParamsArray[1], "#")[2]
+		local itemCfg = Activity168Config.instance:getGameItemCfg(VersionActivity2_2Enum.ActivityId.Lopera, itemId)
+		local itemCount = Activity168Model.instance:getItemCount(itemId)
 
-		arg_9_0._optionText.text = arg_9_0._mo.name
+		self._optionText.text = self._mo.name
 
-		local var_9_6 = LoperaController.instance:checkOptionChoosed(arg_9_0._mo.optionId)
+		local isChoosed = LoperaController.instance:checkOptionChoosed(self._mo.optionId)
 
-		gohelper.setActive(arg_9_0._optionEffectText.gameObject, true)
+		gohelper.setActive(self._optionEffectText.gameObject, true)
 
-		arg_9_0._optionEffectText.text = var_9_6 and var_9_0 and var_9_0.desc or ""
-		gohelper.findChildText(arg_9_0._goProp, "#txt_PropNum").text = var_9_5
-		arg_9_0._costText.text = "-" .. var_9_3
+		self._optionEffectText.text = isChoosed and effectCfg and effectCfg.desc or ""
 
-		local var_9_7 = var_9_5 < var_9_3
+		local itemCountText = gohelper.findChildText(self._goProp, "#txt_PropNum")
 
-		ZProj.UGUIHelper.SetGrayscale(arg_9_0._btn.gameObject, var_9_7)
+		itemCountText.text = itemCount
+		self._costText.text = "-" .. itemCost
 
-		arg_9_0._btn.enabled = not var_9_7
+		local isGray = itemCount < itemCost
 
-		UISpriteSetMgr.instance:setLoperaItemSprite(arg_9_0._imgPropIcon, var_9_4.icon, false)
-		gohelper.setActive(arg_9_0._goOption, true)
-	elseif var_9_0 then
-		gohelper.setActive(arg_9_0._goEffectOption, true)
+		ZProj.UGUIHelper.SetGrayscale(self._btn.gameObject, isGray)
 
-		arg_9_0._txtEffectOption.text = arg_9_0._mo.name
+		self._btn.enabled = not isGray
 
-		local var_9_8 = LoperaController.instance:checkOptionChoosed(arg_9_0._mo.optionId)
+		UISpriteSetMgr.instance:setLoperaItemSprite(self._imgPropIcon, itemCfg.icon, false)
+		gohelper.setActive(self._goOption, true)
+	elseif effectCfg then
+		gohelper.setActive(self._goEffectOption, true)
 
-		gohelper.setActive(arg_9_0._txtEffect.gameObject, var_9_8)
+		self._txtEffectOption.text = self._mo.name
 
-		if var_9_8 then
-			arg_9_0._txtEffect.text = var_9_0.desc
+		local isChoosed = LoperaController.instance:checkOptionChoosed(self._mo.optionId)
+
+		gohelper.setActive(self._txtEffect.gameObject, isChoosed)
+
+		if isChoosed then
+			self._txtEffect.text = effectCfg.desc
 		end
 
-		ZProj.UGUIHelper.SetGrayscale(arg_9_0._btn.gameObject, false)
+		ZProj.UGUIHelper.SetGrayscale(self._btn.gameObject, false)
 	else
-		gohelper.setActive(arg_9_0._goEffectOption, true)
+		gohelper.setActive(self._goEffectOption, true)
 
-		arg_9_0._txtEffectOption.text = arg_9_0._mo.name
+		self._txtEffectOption.text = self._mo.name
 
-		local var_9_9 = LoperaController.instance:checkOptionChoosed(arg_9_0._mo.optionId)
+		local isChoosed = LoperaController.instance:checkOptionChoosed(self._mo.optionId)
 
-		gohelper.setActive(arg_9_0._txtEffect.gameObject, var_9_9)
+		gohelper.setActive(self._txtEffect.gameObject, isChoosed)
 
-		if var_9_9 then
-			arg_9_0._txtEffect.text = luaLang("lopera_event_no_effect_buff")
+		if isChoosed then
+			self._txtEffect.text = luaLang("lopera_event_no_effect_buff")
 		end
 
-		ZProj.UGUIHelper.SetGrayscale(arg_9_0._btn.gameObject, false)
+		ZProj.UGUIHelper.SetGrayscale(self._btn.gameObject, false)
 	end
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function LoperaLevelOptionItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return LoperaLevelOptionItem

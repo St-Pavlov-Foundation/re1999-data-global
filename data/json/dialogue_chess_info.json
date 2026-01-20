@@ -910,5 +910,17 @@
     "id": 2,
     "res": "dialogue_npc14_right",
     "pos": "165#0"
+  },
+  {
+    "dialogueId": 52,
+    "id": 1,
+    "res": "dialogue_zhiyeren_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 52,
+    "id": 2,
+    "res": "dialogue_adaila_right",
+    "pos": "165#0"
   }
 ]

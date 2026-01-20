@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.layout.RoomLayoutFindShareViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/layout/RoomLayoutFindShareViewContainer.lua
 
-local var_0_0 = class("RoomLayoutFindShareViewContainer", BaseViewContainer)
+module("modules.logic.room.view.layout.RoomLayoutFindShareViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomLayoutFindShareViewContainer = class("RoomLayoutFindShareViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomLayoutFindShareView.New())
+function RoomLayoutFindShareViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomLayoutFindShareView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomLayoutFindShareViewContainer

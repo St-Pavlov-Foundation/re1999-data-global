@@ -1,30 +1,32 @@
-﻿module("modules.logic.fight.system.work.FightParallelPlaySameSkillStep", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightParallelPlaySameSkillStep.lua
 
-local var_0_0 = class("FightParallelPlaySameSkillStep", BaseWork)
+module("modules.logic.fight.system.work.FightParallelPlaySameSkillStep", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0.preStepData = arg_1_2
+local FightParallelPlaySameSkillStep = class("FightParallelPlaySameSkillStep", BaseWork)
 
-	FightController.instance:registerCallback(FightEvent.ParallelPlaySameSkillCheck, arg_1_0._parallelPlaySameSkillCheck, arg_1_0)
+function FightParallelPlaySameSkillStep:ctor(fightStepData, preStepData)
+	self.fightStepData = fightStepData
+	self.preStepData = preStepData
+
+	FightController.instance:registerCallback(FightEvent.ParallelPlaySameSkillCheck, self._parallelPlaySameSkillCheck, self)
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:onDone(true)
+function FightParallelPlaySameSkillStep:onStart()
+	self:onDone(true)
 end
 
-function var_0_0._parallelPlaySameSkillCheck(arg_3_0, arg_3_1)
-	if arg_3_1 ~= arg_3_0.preStepData then
+function FightParallelPlaySameSkillStep:_parallelPlaySameSkillCheck(playingFightStepData)
+	if playingFightStepData ~= self.preStepData then
 		return
 	end
 
-	if arg_3_0.fightStepData.fromId == arg_3_0.preStepData.fromId and arg_3_0.fightStepData.actId == arg_3_0.preStepData.actId and arg_3_0.fightStepData.toId == arg_3_0.preStepData.toId then
-		FightController.instance:dispatchEvent(FightEvent.ParallelPlaySameSkillDoneThis, arg_3_1)
+	if self.fightStepData.fromId == self.preStepData.fromId and self.fightStepData.actId == self.preStepData.actId and self.fightStepData.toId == self.preStepData.toId then
+		FightController.instance:dispatchEvent(FightEvent.ParallelPlaySameSkillDoneThis, playingFightStepData)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlaySameSkillCheck, arg_4_0._parallelPlaySameSkillCheck, arg_4_0)
+function FightParallelPlaySameSkillStep:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlaySameSkillCheck, self._parallelPlaySameSkillCheck, self)
 end
 
-return var_0_0
+return FightParallelPlaySameSkillStep

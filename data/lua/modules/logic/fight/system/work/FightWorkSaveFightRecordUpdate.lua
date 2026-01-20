@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.system.work.FightWorkSaveFightRecordUpdate", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSaveFightRecordUpdate.lua
 
-local var_0_0 = class("FightWorkSaveFightRecordUpdate", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkSaveFightRecordUpdate", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.entity and arg_1_0.actEffectData.entity.uid
-	local var_1_1 = var_1_0 and FightHelper.getEntity(var_1_0)
-	local var_1_2 = var_1_1 and var_1_1:getMO()
+local FightWorkSaveFightRecordUpdate = class("FightWorkSaveFightRecordUpdate", FightEffectBase)
 
-	arg_1_0.beforeHp = var_1_2 and var_1_2.currentHp or 0
+function FightWorkSaveFightRecordUpdate:beforePlayEffectData()
+	local entityId = self.actEffectData.entity and self.actEffectData.entity.uid
+	local entity = entityId and FightHelper.getEntity(entityId)
+	local entityMo = entity and entity:getMO()
+
+	self.beforeHp = entityMo and entityMo.currentHp or 0
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0.actEffectData.entity and arg_2_0.actEffectData.entity.uid
-	local var_2_1 = var_2_0 and FightHelper.getEntity(var_2_0)
+function FightWorkSaveFightRecordUpdate:onStart()
+	local entityId = self.actEffectData.entity and self.actEffectData.entity.uid
+	local entity = entityId and FightHelper.getEntity(entityId)
 
-	if not var_2_1 then
+	if not entity then
 		return
 	end
 
-	if var_2_1.nameUI then
-		var_2_1.nameUI:resetHp()
+	if entity.nameUI then
+		entity.nameUI:resetHp()
 	end
 
-	local var_2_2 = var_2_1 and var_2_1:getMO()
-	local var_2_3 = var_2_2 and var_2_2.currentHp or 0
+	local entityMo = entity and entity:getMO()
+	local curHp = entityMo and entityMo.currentHp or 0
 
-	FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_2_1, var_2_3 - arg_2_0.beforeHp)
+	FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, curHp - self.beforeHp)
 
-	return arg_2_0:onDone(true)
+	return self:onDone(true)
 end
 
-return var_0_0
+return FightWorkSaveFightRecordUpdate

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114DiceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114DiceViewContainer.lua
 
-local var_0_0 = class("Activity114DiceViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114DiceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.view = Activity114DiceView.New()
+local Activity114DiceViewContainer = class("Activity114DiceViewContainer", BaseViewContainer)
+
+function Activity114DiceViewContainer:buildViews()
+	self.view = Activity114DiceView.New()
 
 	return {
-		arg_1_0.view
+		self.view
 	}
 end
 
-return var_0_0
+return Activity114DiceViewContainer

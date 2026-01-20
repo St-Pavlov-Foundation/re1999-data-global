@@ -1,47 +1,49 @@
-﻿module("modules.logic.chessgame.controller.ChessStatController", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/controller/ChessStatController.lua
 
-local var_0_0 = class("ChessStatController")
+module("modules.logic.chessgame.controller.ChessStatController", package.seeall)
 
-function var_0_0.startStat(arg_1_0)
-	arg_1_0.startTime = ServerTime.now()
+local ChessStatController = class("ChessStatController")
+
+function ChessStatController:startStat()
+	self.startTime = ServerTime.now()
 end
 
-function var_0_0.statSuccess(arg_2_0)
-	arg_2_0:_statEnd(StatEnum.Result.Success)
+function ChessStatController:statSuccess()
+	self:_statEnd(StatEnum.Result.Success)
 end
 
-function var_0_0.statFail(arg_3_0)
-	arg_3_0:_statEnd(StatEnum.Result.Fail)
+function ChessStatController:statFail()
+	self:_statEnd(StatEnum.Result.Fail)
 end
 
-function var_0_0.statReset(arg_4_0)
-	arg_4_0:_statEnd(StatEnum.Result.Reset)
-	arg_4_0:startStat()
+function ChessStatController:statReset()
+	self:_statEnd(StatEnum.Result.Reset)
+	self:startStat()
 end
 
-function var_0_0.statAbort(arg_5_0)
-	arg_5_0:_statEnd(StatEnum.Result.Abort)
+function ChessStatController:statAbort()
+	self:_statEnd(StatEnum.Result.Abort)
 end
 
-function var_0_0._statEnd(arg_6_0, arg_6_1)
-	if not arg_6_0.startTime then
+function ChessStatController:_statEnd(result)
+	if not self.startTime then
 		return
 	end
 
 	StatController.instance:track(StatEnum.EventName.ExitLanShouPaActivity, {
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_6_0.startTime,
+		[StatEnum.EventProperties.UseTime] = ServerTime.now() - self.startTime,
 		[StatEnum.EventProperties.EpisodeId] = tostring(ChessModel.instance:getEpisodeId()),
 		[StatEnum.EventProperties.RoundNum] = ChessGameModel.instance:getRound(),
 		[StatEnum.EventProperties.GoalNum] = ChessGameModel.instance:getCompletedCount(),
-		[StatEnum.EventProperties.Result] = arg_6_1,
+		[StatEnum.EventProperties.Result] = result,
 		[StatEnum.EventProperties.BackNum] = ChessGameModel.instance:getRollBackNum()
 	})
 	ChessGameModel.instance:clearRound()
 	ChessGameModel.instance:clearRollbackNum()
 
-	arg_6_0.startTime = nil
+	self.startTime = nil
 end
 
-var_0_0.instance = var_0_0.New()
+ChessStatController.instance = ChessStatController.New()
 
-return var_0_0
+return ChessStatController

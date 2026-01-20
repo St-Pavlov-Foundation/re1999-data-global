@@ -1,18 +1,20 @@
-﻿module("modules.logic.fight.entity.FightEntityASFD", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityASFD.lua
 
-local var_0_0 = class("FightEntityASFD", BaseFightEntity)
+module("modules.logic.fight.entity.FightEntityASFD", package.seeall)
 
-function var_0_0.getTag(arg_1_0)
+local FightEntityASFD = class("FightEntityASFD", BaseFightEntity)
+
+function FightEntityASFD:getTag()
 	return SceneTag.UnitNpc
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
-	FightRenderOrderMgr.instance:unregister(arg_2_0.id)
+function FightEntityASFD:init(go)
+	FightEntityASFD.super.init(self, go)
+	FightRenderOrderMgr.instance:unregister(self.id)
 end
 
-function var_0_0.initComponents(arg_3_0)
-	arg_3_0:addComp("effect", FightEffectComp)
+function FightEntityASFD:initComponents()
+	self:addComp("effect", FightEffectComp)
 end
 
-return var_0_0
+return FightEntityASFD

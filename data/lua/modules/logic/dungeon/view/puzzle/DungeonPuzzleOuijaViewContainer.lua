@@ -1,15 +1,17 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleOuijaViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzleOuijaViewContainer.lua
 
-local var_0_0 = class("DungeonPuzzleOuijaViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzleOuijaViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DungeonPuzzleOuijaViewContainer = class("DungeonPuzzleOuijaViewContainer", BaseViewContainer)
+
+function DungeonPuzzleOuijaViewContainer:buildViews()
 	return {
 		DungeonPuzzleOuijaView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function DungeonPuzzleOuijaViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -19,4 +21,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-return var_0_0
+return DungeonPuzzleOuijaViewContainer

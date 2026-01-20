@@ -1,8 +1,10 @@
-﻿module("modules.audio.bgm.AudioBgmEnum", package.seeall)
+﻿-- chunkname: @modules/audio/bgm/AudioBgmEnum.lua
 
-local var_0_0 = _M
+module("modules.audio.bgm.AudioBgmEnum", package.seeall)
 
-var_0_0.Layer = {
+local AudioBgmEnum = _M
+
+AudioBgmEnum.Layer = {
 	Act_GeTian = 602,
 	VersionActivity3_0MainAmbientSound = 3003,
 	YaXian = 202,
@@ -66,7 +68,7 @@ var_0_0.Layer = {
 	VersionActivity2_4WuErLiXi = 2405,
 	VersionActivity1_3Act120 = 308,
 	VersionActivity2_5Main = 2105,
-	VersionActivity1_4Main = 400,
+	Rouge2Scene = 3203,
 	RoleStoryActivity = 402,
 	VersionActivity2_6Main = 2601,
 	VersionActivity2_6_DiceHero = 2602,
@@ -85,10 +87,13 @@ var_0_0.Layer = {
 	VersionActivityVideoView = 18,
 	VersionActivity1_2Main = 200,
 	Story = 21,
-	VersionActivity3_1Main = 3101,
+	Udimo = 3202,
 	NecrologistStoryView = 3102,
 	HeroInvitation = 905,
 	VersionActivity2_4WuErLiXiGame = 2406,
+	VersionActivity3_2Main = 3201,
+	VersionActivity3_1Main = 3101,
+	VersionActivity1_4Main = 400,
 	DungeonAmbientSound = 3,
 	HeroGroupCharacter = 20,
 	Act_KaKaNia = 910,
@@ -108,9 +113,9 @@ var_0_0.Layer = {
 	Meilanni = 15,
 	Act_QuNiang = 601
 }
-var_0_0.UsageType = {
+AudioBgmEnum.UsageType = {
 	View = 2,
 	Scene = 1
 }
 
-return var_0_0
+return AudioBgmEnum

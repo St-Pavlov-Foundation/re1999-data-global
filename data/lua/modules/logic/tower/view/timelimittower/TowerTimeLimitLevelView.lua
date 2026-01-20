@@ -1,458 +1,460 @@
-﻿module("modules.logic.tower.view.timelimittower.TowerTimeLimitLevelView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/timelimittower/TowerTimeLimitLevelView.lua
 
-local var_0_0 = class("TowerTimeLimitLevelView", BaseView)
+module("modules.logic.tower.view.timelimittower.TowerTimeLimitLevelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "simage_title/timebg/#txt_time")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "score/#simage_icon")
-	arg_1_0._goTaskPointContent = gohelper.findChild(arg_1_0.viewGO, "score/#go_taskPointContent")
-	arg_1_0._goTaskPointItem = gohelper.findChild(arg_1_0.viewGO, "score/#go_taskPointContent/#go_taskPointItem")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "score/#txt_score")
-	arg_1_0._txtTaskNum = gohelper.findChildText(arg_1_0.viewGO, "score/#txt_taskNum")
-	arg_1_0._btntaskClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "score/#btn_taskClick")
-	arg_1_0._goBoss = gohelper.findChild(arg_1_0.viewGO, "root/main/boss")
-	arg_1_0._btnbossClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/main/boss/#btn_bossClick")
-	arg_1_0._gobossContent = gohelper.findChild(arg_1_0.viewGO, "root/main/boss/#go_bossContent")
-	arg_1_0._gobossItem = gohelper.findChild(arg_1_0.viewGO, "root/main/boss/#go_bossContent/#go_bossItem")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._btncloseDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_closeDetail")
-	arg_1_0._godetailInfo = gohelper.findChild(arg_1_0.viewGO, "root/#go_detailInfo")
-	arg_1_0._goSwitchEfeect = gohelper.findChild(arg_1_0.viewGO, "root/#go_detailInfo/#go_difficulty/index/vx_refresh")
-	arg_1_0._goTaskReddot = gohelper.findChild(arg_1_0.viewGO, "score/#go_taskReddot")
+local TowerTimeLimitLevelView = class("TowerTimeLimitLevelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerTimeLimitLevelView:onInitView()
+	self._txttime = gohelper.findChildText(self.viewGO, "simage_title/timebg/#txt_time")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "score/#simage_icon")
+	self._goTaskPointContent = gohelper.findChild(self.viewGO, "score/#go_taskPointContent")
+	self._goTaskPointItem = gohelper.findChild(self.viewGO, "score/#go_taskPointContent/#go_taskPointItem")
+	self._txtscore = gohelper.findChildText(self.viewGO, "score/#txt_score")
+	self._txtTaskNum = gohelper.findChildText(self.viewGO, "score/#txt_taskNum")
+	self._btntaskClick = gohelper.findChildButtonWithAudio(self.viewGO, "score/#btn_taskClick")
+	self._goBoss = gohelper.findChild(self.viewGO, "root/main/boss")
+	self._btnbossClick = gohelper.findChildButtonWithAudio(self.viewGO, "root/main/boss/#btn_bossClick")
+	self._gobossContent = gohelper.findChild(self.viewGO, "root/main/boss/#go_bossContent")
+	self._gobossItem = gohelper.findChild(self.viewGO, "root/main/boss/#go_bossContent/#go_bossItem")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._btncloseDetail = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_closeDetail")
+	self._godetailInfo = gohelper.findChild(self.viewGO, "root/#go_detailInfo")
+	self._goSwitchEfeect = gohelper.findChild(self.viewGO, "root/#go_detailInfo/#go_difficulty/index/vx_refresh")
+	self._goTaskReddot = gohelper.findChild(self.viewGO, "score/#go_taskReddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseDetail:AddClickListener(arg_2_0._btncloseDetailOnClick, arg_2_0)
-	arg_2_0._btntaskClick:AddClickListener(arg_2_0._btnTaskClick, arg_2_0)
-	arg_2_0._btnbossClick:AddClickListener(arg_2_0._btnBossClick, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_2_0.refreshUI, arg_2_0)
+function TowerTimeLimitLevelView:addEvents()
+	self._btncloseDetail:AddClickListener(self._btncloseDetailOnClick, self)
+	self._btntaskClick:AddClickListener(self._btnTaskClick, self)
+	self._btnbossClick:AddClickListener(self._btnBossClick, self)
+	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseDetail:RemoveClickListener()
-	arg_3_0._btntaskClick:RemoveClickListener()
-	arg_3_0._btnbossClick:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_3_0.refreshRemainTime, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_3_0.refreshUI, arg_3_0)
+function TowerTimeLimitLevelView:removeEvents()
+	self._btncloseDetail:RemoveClickListener()
+	self._btntaskClick:RemoveClickListener()
+	self._btnbossClick:RemoveClickListener()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, self.refreshUI, self)
 end
 
-var_0_0.AnimBlockKey = "TowerTimeLimitDetailAnimBlock"
-var_0_0.EpisodeScaleAnimTime = 0.5
-var_0_0.OpenDetailTime = 0.25
-var_0_0.closeDetailTime = 0.167
-var_0_0.closeToNormalTime = 0.33
-var_0_0.fadeItemAlpha = 0.6
+TowerTimeLimitLevelView.AnimBlockKey = "TowerTimeLimitDetailAnimBlock"
+TowerTimeLimitLevelView.EpisodeScaleAnimTime = 0.5
+TowerTimeLimitLevelView.OpenDetailTime = 0.25
+TowerTimeLimitLevelView.closeDetailTime = 0.167
+TowerTimeLimitLevelView.closeToNormalTime = 0.33
+TowerTimeLimitLevelView.fadeItemAlpha = 0.6
 
-function var_0_0._btncloseDetailOnClick(arg_4_0)
-	UIBlockMgr.instance:startBlock(var_0_0.AnimBlock)
+function TowerTimeLimitLevelView:_btncloseDetailOnClick()
+	UIBlockMgr.instance:startBlock(TowerTimeLimitLevelView.AnimBlock)
 
-	if arg_4_0.isOpenDetail then
-		arg_4_0.rootAnimtorPlayer:Play(UIAnimationName.Close, arg_4_0.closeDetailFinish, arg_4_0)
+	if self.isOpenDetail then
+		self.rootAnimtorPlayer:Play(UIAnimationName.Close, self.closeDetailFinish, self)
 	end
 
-	arg_4_0.isOpenDetail = false
+	self.isOpenDetail = false
 
 	TowerTimeLimitLevelModel.instance:setCurSelectEntrance(0)
-	arg_4_0:setCloseOverrideFunc()
-	arg_4_0:refreshDetailShowUI()
-	arg_4_0:playCloseItemAnim()
+	self:setCloseOverrideFunc()
+	self:refreshDetailShowUI()
+	self:playCloseItemAnim()
 
-	arg_4_0.lastSelectEntranceId = 0
+	self.lastSelectEntranceId = 0
 
-	gohelper.setActive(arg_4_0._goSwitchEfeect, false)
+	gohelper.setActive(self._goSwitchEfeect, false)
 end
 
-function var_0_0.closeDetailFinish(arg_5_0)
-	UIBlockMgr.instance:endBlock(var_0_0.AnimBlock)
-	gohelper.setActive(arg_5_0._btncloseDetail.gameObject, false)
+function TowerTimeLimitLevelView:closeDetailFinish()
+	UIBlockMgr.instance:endBlock(TowerTimeLimitLevelView.AnimBlock)
+	gohelper.setActive(self._btncloseDetail.gameObject, false)
 end
 
-function var_0_0._btnEpisodeItemClick(arg_6_0, arg_6_1)
-	TowerTimeLimitLevelModel.instance:setCurSelectEntrance(arg_6_1.entranceId)
+function TowerTimeLimitLevelView:_btnEpisodeItemClick(episodeItem)
+	TowerTimeLimitLevelModel.instance:setCurSelectEntrance(episodeItem.entranceId)
 
-	if not arg_6_0.isOpenDetail then
-		UIBlockMgr.instance:startBlock(var_0_0.AnimBlock)
-		arg_6_0.rootAnimtorPlayer:Play(UIAnimationName.Open, arg_6_0.openDetailFinish, arg_6_0)
-		arg_6_0.viewContainer:getTowerTimeLimitLevelInfoView():refreshUI()
+	if not self.isOpenDetail then
+		UIBlockMgr.instance:startBlock(TowerTimeLimitLevelView.AnimBlock)
+		self.rootAnimtorPlayer:Play(UIAnimationName.Open, self.openDetailFinish, self)
+		self.viewContainer:getTowerTimeLimitLevelInfoView():refreshUI()
 	end
 
-	arg_6_0:playOpenAndSwitchItemAnim(arg_6_1)
+	self:playOpenAndSwitchItemAnim(episodeItem)
 
-	arg_6_0.lastSelectEntranceId = arg_6_1.entranceId
-	arg_6_0.isOpenDetail = true
+	self.lastSelectEntranceId = episodeItem.entranceId
+	self.isOpenDetail = true
 
-	arg_6_0:setCloseOverrideFunc()
-	arg_6_0:refreshDetailShowUI()
+	self:setCloseOverrideFunc()
+	self:refreshDetailShowUI()
 end
 
-function var_0_0.openDetailFinish(arg_7_0)
-	UIBlockMgr.instance:endBlock(var_0_0.AnimBlock)
-	gohelper.setActive(arg_7_0._btncloseDetail.gameObject, true)
+function TowerTimeLimitLevelView:openDetailFinish()
+	UIBlockMgr.instance:endBlock(TowerTimeLimitLevelView.AnimBlock)
+	gohelper.setActive(self._btncloseDetail.gameObject, true)
 end
 
-function var_0_0._btnTaskClick(arg_8_0)
-	local var_8_0 = {
-		towerType = TowerEnum.TowerType.Limited,
-		towerId = arg_8_0.seasonId
-	}
+function TowerTimeLimitLevelView:_btnTaskClick()
+	local param = {}
 
-	TowerController.instance:openTowerTaskView(var_8_0)
+	param.towerType = TowerEnum.TowerType.Limited
+	param.towerId = self.seasonId
+
+	TowerController.instance:openTowerTaskView(param)
 end
 
-function var_0_0._btnBossClick(arg_9_0)
-	TowerController.instance:openAssistBossView(nil, nil, TowerEnum.TowerType.Limited, arg_9_0.seasonId)
+function TowerTimeLimitLevelView:_btnBossClick()
+	TowerController.instance:openAssistBossView(nil, nil, TowerEnum.TowerType.Limited, self.seasonId)
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0.goRoot = gohelper.findChild(arg_10_0.viewGO, "root")
-	arg_10_0.rootAnimtorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_10_0.goRoot)
-	arg_10_0.episodeTab = arg_10_0:getUserDataTb_()
-	arg_10_0.bossItemTab = arg_10_0:getUserDataTb_()
+function TowerTimeLimitLevelView:_editableInitView()
+	self.goRoot = gohelper.findChild(self.viewGO, "root")
+	self.rootAnimtorPlayer = ZProj.ProjAnimatorPlayer.Get(self.goRoot)
+	self.episodeTab = self:getUserDataTb_()
+	self.bossItemTab = self:getUserDataTb_()
 
-	arg_10_0:initEpisodeItem()
+	self:initEpisodeItem()
 	TowerTimeLimitLevelModel.instance:initDifficultyMulti()
 
-	arg_10_0.isOpenDetail = false
+	self.isOpenDetail = false
 
-	gohelper.setActive(arg_10_0._btncloseDetail.gameObject, false)
+	gohelper.setActive(self._btncloseDetail.gameObject, false)
 
-	arg_10_0.lastSelectEntranceId = 0
+	self.lastSelectEntranceId = 0
 end
 
-function var_0_0.initEpisodeItem(arg_11_0)
-	for iter_11_0 = 1, 3 do
-		local var_11_0 = {
-			entranceId = iter_11_0,
-			go = gohelper.findChild(arg_11_0.viewGO, "root/main/episodeNode/episode" .. iter_11_0)
-		}
+function TowerTimeLimitLevelView:initEpisodeItem()
+	for i = 1, 3 do
+		local episodeItem = {}
 
-		var_11_0.goSelect = gohelper.findChild(var_11_0.go, "go_select")
-		var_11_0.goFinish = gohelper.findChild(var_11_0.go, "go_finish")
-		var_11_0.goEnemy = gohelper.findChild(var_11_0.go, "go_finish/group/enemy")
-		var_11_0.simageEnemy = gohelper.findChildSingleImage(var_11_0.go, "go_finish/group/enemy/simage_enemy")
-		var_11_0.goHeroContent = gohelper.findChild(var_11_0.go, "go_finish/group/hero")
-		var_11_0.goHeroItem = gohelper.findChild(var_11_0.go, "go_finish/group/hero/heroItem")
-		var_11_0.txtScore = gohelper.findChildText(var_11_0.go, "go_finish/score/txt_score")
-		var_11_0.goScore = gohelper.findChild(var_11_0.go, "go_finish/score")
-		var_11_0.goPointContent = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent")
-		var_11_0.goPointItem = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent/go_PointItem")
-		var_11_0.goPointItemLight = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent/go_PointItem/ani")
-		var_11_0.goPointItemGrey = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent/go_PointItem/grey")
-		var_11_0.btnClick = gohelper.findChildButtonWithAudio(var_11_0.go, "click")
+		episodeItem.entranceId = i
+		episodeItem.go = gohelper.findChild(self.viewGO, "root/main/episodeNode/episode" .. i)
+		episodeItem.goSelect = gohelper.findChild(episodeItem.go, "go_select")
+		episodeItem.goFinish = gohelper.findChild(episodeItem.go, "go_finish")
+		episodeItem.goEnemy = gohelper.findChild(episodeItem.go, "go_finish/group/enemy")
+		episodeItem.simageEnemy = gohelper.findChildSingleImage(episodeItem.go, "go_finish/group/enemy/simage_enemy")
+		episodeItem.goHeroContent = gohelper.findChild(episodeItem.go, "go_finish/group/hero")
+		episodeItem.goHeroItem = gohelper.findChild(episodeItem.go, "go_finish/group/hero/heroItem")
+		episodeItem.txtScore = gohelper.findChildText(episodeItem.go, "go_finish/score/txt_score")
+		episodeItem.goScore = gohelper.findChild(episodeItem.go, "go_finish/score")
+		episodeItem.goPointContent = gohelper.findChild(episodeItem.go, "go_finish/score/go_PointContent")
+		episodeItem.goPointItem = gohelper.findChild(episodeItem.go, "go_finish/score/go_PointContent/go_PointItem")
+		episodeItem.goPointItemLight = gohelper.findChild(episodeItem.go, "go_finish/score/go_PointContent/go_PointItem/ani")
+		episodeItem.goPointItemGrey = gohelper.findChild(episodeItem.go, "go_finish/score/go_PointContent/go_PointItem/grey")
+		episodeItem.btnClick = gohelper.findChildButtonWithAudio(episodeItem.go, "click")
 
-		var_11_0.btnClick:AddClickListener(arg_11_0._btnEpisodeItemClick, arg_11_0, var_11_0)
+		episodeItem.btnClick:AddClickListener(self._btnEpisodeItemClick, self, episodeItem)
 
-		var_11_0.curDifficulty = TowerEnum.Difficulty.Easy
-		var_11_0.heroItemTab = arg_11_0:getUserDataTb_()
-		var_11_0.anim = var_11_0.go:GetComponent(gohelper.Type_Animator)
-		var_11_0.canvasGroup = var_11_0.go:GetComponent(gohelper.Type_CanvasGroup)
-		var_11_0.canvasGroup.alpha = 1
+		episodeItem.curDifficulty = TowerEnum.Difficulty.Easy
+		episodeItem.heroItemTab = self:getUserDataTb_()
+		episodeItem.anim = episodeItem.go:GetComponent(gohelper.Type_Animator)
+		episodeItem.canvasGroup = episodeItem.go:GetComponent(gohelper.Type_CanvasGroup)
+		episodeItem.canvasGroup.alpha = 1
 
-		gohelper.setActive(var_11_0.goHeroItem, false)
-		table.insert(arg_11_0.episodeTab, var_11_0)
+		gohelper.setActive(episodeItem.goHeroItem, false)
+		table.insert(self.episodeTab, episodeItem)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
+function TowerTimeLimitLevelView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_13_0)
+function TowerTimeLimitLevelView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_mln_day_night)
-	RedDotController.instance:addRedDot(arg_13_0._goTaskReddot, RedDotEnum.DotNode.TowerTask)
-	gohelper.setActive(arg_13_0._godetailInfo.gameObject, false)
-	arg_13_0:refreshUI()
-	arg_13_0:setCloseOverrideFunc()
+	RedDotController.instance:addRedDot(self._goTaskReddot, RedDotEnum.DotNode.TowerTask)
+	gohelper.setActive(self._godetailInfo.gameObject, false)
+	self:refreshUI()
+	self:setCloseOverrideFunc()
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	local var_14_0 = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+function TowerTimeLimitLevelView:refreshUI()
+	local curOpenMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 
-	if var_14_0 then
-		arg_14_0.seasonId = var_14_0.towerId
+	if curOpenMo then
+		self.seasonId = curOpenMo.towerId
 
-		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewTimeLimitOpen, var_14_0.id, var_14_0, TowerEnum.UnlockKey)
+		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewTimeLimitOpen, curOpenMo.id, curOpenMo, TowerEnum.UnlockKey)
 	else
 		logError("数据异常，当前没有开启的限时塔")
 
 		return
 	end
 
-	arg_14_0:refreshEpisode()
-	arg_14_0:refreshTotalScore()
-	arg_14_0:refreshRemainTime()
-	arg_14_0:refreshAssistBoss()
-	TaskDispatcher.cancelTask(arg_14_0.refreshRemainTime, arg_14_0)
-	TaskDispatcher.runRepeat(arg_14_0.refreshRemainTime, arg_14_0, 1)
+	self:refreshEpisode()
+	self:refreshTotalScore()
+	self:refreshRemainTime()
+	self:refreshAssistBoss()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, 1)
 end
 
-function var_0_0.refreshEpisode(arg_15_0)
-	local var_15_0 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, arg_15_0.seasonId)
+function TowerTimeLimitLevelView:refreshEpisode()
+	local towerInfoMo = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, self.seasonId)
 
-	arg_15_0.totalScore = 0
+	self.totalScore = 0
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.episodeTab) do
-		local var_15_1 = TowerConfig.instance:getTowerLimitedTimeCoList(arg_15_0.seasonId, iter_15_0)[1].layerId
-		local var_15_2 = var_15_0:getLayerScore(var_15_1)
-		local var_15_3 = var_15_0:getLayerSubEpisodeList(var_15_1)
-		local var_15_4 = var_15_3 and var_15_3[1].assistBossId or 0
-		local var_15_5 = var_15_3 and var_15_3[1].heroIds or {}
-		local var_15_6 = TowerTimeLimitLevelModel.instance.curSelectEntrance
+	for entranceId, episodeItem in ipairs(self.episodeTab) do
+		local towerCoList = TowerConfig.instance:getTowerLimitedTimeCoList(self.seasonId, entranceId)
+		local layerId = towerCoList[1].layerId
+		local curMaxScore = towerInfoMo:getLayerScore(layerId)
+		local subEpisodeMoList = towerInfoMo:getLayerSubEpisodeList(layerId)
+		local assistBossId = subEpisodeMoList and subEpisodeMoList[1].assistBossId or 0
+		local heroIdList = subEpisodeMoList and subEpisodeMoList[1].heroIds or {}
+		local curSelectEntrance = TowerTimeLimitLevelModel.instance.curSelectEntrance
 
-		gohelper.setActive(iter_15_1.goSelect, var_15_6 == iter_15_0)
-		gohelper.setActive(iter_15_1.goFinish, var_15_5 and #var_15_5 > 0)
-		gohelper.setActive(iter_15_1.goEnemy, var_15_4 > 0)
-		gohelper.setActive(iter_15_1.goHeroContent, var_15_5 and #var_15_5 > 0)
+		gohelper.setActive(episodeItem.goSelect, curSelectEntrance == entranceId)
+		gohelper.setActive(episodeItem.goFinish, heroIdList and #heroIdList > 0)
+		gohelper.setActive(episodeItem.goEnemy, assistBossId > 0)
+		gohelper.setActive(episodeItem.goHeroContent, heroIdList and #heroIdList > 0)
 
-		iter_15_1.txtScore.text = var_15_2
+		episodeItem.txtScore.text = curMaxScore
 
-		local var_15_7 = TowerConfig.instance:getScoreToStarConfig(var_15_2)
+		local starLevel = TowerConfig.instance:getScoreToStarConfig(curMaxScore)
 
-		gohelper.setActive(iter_15_1.goScore, var_15_2 > 0)
-		gohelper.setActive(iter_15_1.goPointItemLight, var_15_7 > 0)
-		gohelper.setActive(iter_15_1.goPointItemGrey, var_15_7 == 0)
+		gohelper.setActive(episodeItem.goScore, curMaxScore > 0)
+		gohelper.setActive(episodeItem.goPointItemLight, starLevel > 0)
+		gohelper.setActive(episodeItem.goPointItemGrey, starLevel == 0)
 
-		if var_15_7 > 0 then
-			local var_15_8 = {}
+		if starLevel > 0 then
+			local starLevelList = {}
 
-			for iter_15_2 = 1, Mathf.Min(var_15_7, TowerEnum.MaxShowStarNum) do
-				table.insert(var_15_8, iter_15_2)
+			for i = 1, Mathf.Min(starLevel, TowerEnum.MaxShowStarNum) do
+				table.insert(starLevelList, i)
 			end
 
-			gohelper.CreateObjList(arg_15_0, arg_15_0.scoreStarShow, var_15_8, iter_15_1.goPointContent, iter_15_1.goPointItem)
+			gohelper.CreateObjList(self, self.scoreStarShow, starLevelList, episodeItem.goPointContent, episodeItem.goPointItem)
 		end
 
-		if var_15_4 > 0 then
-			local var_15_9 = TowerConfig.instance:getAssistBossConfig(var_15_4)
-			local var_15_10 = FightConfig.instance:getSkinCO(var_15_9.skinId)
+		if assistBossId > 0 then
+			local assistBossConfig = TowerConfig.instance:getAssistBossConfig(assistBossId)
+			local skinConfig = FightConfig.instance:getSkinCO(assistBossConfig.skinId)
 
-			iter_15_1.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(var_15_10.headIcon))
+			episodeItem.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
 		end
 
-		for iter_15_3, iter_15_4 in ipairs(var_15_5) do
-			if not iter_15_1.heroItemTab[iter_15_3] then
-				iter_15_1.heroItemTab[iter_15_3] = {}
-				iter_15_1.heroItemTab[iter_15_3].go = gohelper.clone(iter_15_1.goHeroItem, iter_15_1.goHeroContent, "heroItem" .. iter_15_3)
-				iter_15_1.heroItemTab[iter_15_3].simageHero = gohelper.findChildSingleImage(iter_15_1.heroItemTab[iter_15_3].go, "simage_hero")
+		for index, heroId in ipairs(heroIdList) do
+			if not episodeItem.heroItemTab[index] then
+				episodeItem.heroItemTab[index] = {}
+				episodeItem.heroItemTab[index].go = gohelper.clone(episodeItem.goHeroItem, episodeItem.goHeroContent, "heroItem" .. index)
+				episodeItem.heroItemTab[index].simageHero = gohelper.findChildSingleImage(episodeItem.heroItemTab[index].go, "simage_hero")
 			end
 
-			gohelper.setActive(iter_15_1.heroItemTab[iter_15_3].go, true)
+			gohelper.setActive(episodeItem.heroItemTab[index].go, true)
 
-			local var_15_11 = HeroModel.instance:getByHeroId(iter_15_4)
+			local heroMO = HeroModel.instance:getByHeroId(heroId)
 
-			if var_15_11 then
-				local var_15_12 = FightConfig.instance:getSkinCO(var_15_11.skin)
+			if heroMO then
+				local skinConfig = FightConfig.instance:getSkinCO(heroMO.skin)
 
-				iter_15_1.heroItemTab[iter_15_3].simageHero:LoadImage(ResUrl.getHeadIconSmall(var_15_12.retangleIcon))
+				episodeItem.heroItemTab[index].simageHero:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
 			else
-				local var_15_13 = HeroConfig.instance:getHeroCO(iter_15_4)
-				local var_15_14 = SkinConfig.instance:getSkinCo(var_15_13.skinId)
+				local heroCo = HeroConfig.instance:getHeroCO(heroId)
+				local skinConfig = SkinConfig.instance:getSkinCo(heroCo.skinId)
 
-				iter_15_1.heroItemTab[iter_15_3].simageHero:LoadImage(ResUrl.getHeadIconSmall(var_15_14.retangleIcon))
+				episodeItem.heroItemTab[index].simageHero:LoadImage(ResUrl.getHeadIconSmall(skinConfig.retangleIcon))
 			end
 		end
 
-		for iter_15_5 = #var_15_5 + 1, #iter_15_1.heroItemTab do
-			gohelper.setActive(iter_15_1.heroItemTab[iter_15_5].go, false)
+		for i = #heroIdList + 1, #episodeItem.heroItemTab do
+			gohelper.setActive(episodeItem.heroItemTab[i].go, false)
 		end
 
-		arg_15_0.totalScore = arg_15_0.totalScore + var_15_2
+		self.totalScore = self.totalScore + curMaxScore
 	end
 end
 
-function var_0_0.scoreStarShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	gohelper.setActive(arg_16_1, arg_16_3 <= arg_16_2)
+function TowerTimeLimitLevelView:scoreStarShow(obj, data, index)
+	gohelper.setActive(obj, index <= data)
 end
 
-function var_0_0.refreshTotalScore(arg_17_0)
-	local var_17_0 = TowerTaskModel.instance.limitTimeTaskList
+function TowerTimeLimitLevelView:refreshTotalScore()
+	local TaskMoList = TowerTaskModel.instance.limitTimeTaskList
 
-	arg_17_0.taskFinishCount = TowerTaskModel.instance:getTaskItemRewardCount(var_17_0)
+	self.taskFinishCount = TowerTaskModel.instance:getTaskItemRewardCount(TaskMoList)
 
-	gohelper.CreateObjList(arg_17_0, arg_17_0.taskProgressShow, var_17_0, arg_17_0._goTaskPointContent, arg_17_0._goTaskPointItem)
+	gohelper.CreateObjList(self, self.taskProgressShow, TaskMoList, self._goTaskPointContent, self._goTaskPointItem)
 
-	arg_17_0._txtscore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_curtotalscore"), {
-		arg_17_0.totalScore
+	self._txtscore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_curtotalscore"), {
+		self.totalScore
 	})
 
-	local var_17_1 = TowerTaskModel.instance:getCurTaskList(TowerEnum.TowerType.Limited)
-	local var_17_2 = TowerTaskModel.instance:getTaskItemRewardCount(var_17_1)
+	local timeLimitTaskList = TowerTaskModel.instance:getCurTaskList(TowerEnum.TowerType.Limited)
+	local finishCount = TowerTaskModel.instance:getTaskItemRewardCount(timeLimitTaskList)
 
-	arg_17_0._txtTaskNum.text = string.format("%s/%s", var_17_2, #var_17_1)
+	self._txtTaskNum.text = string.format("%s/%s", finishCount, #timeLimitTaskList)
 end
 
-function var_0_0.taskProgressShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = gohelper.findChild(arg_18_1, "go_light")
+function TowerTimeLimitLevelView:taskProgressShow(obj, data, index)
+	local light = gohelper.findChild(obj, "go_light")
 
-	gohelper.setActive(var_18_0, arg_18_3 <= arg_18_0.taskFinishCount)
+	gohelper.setActive(light, index <= self.taskFinishCount)
 end
 
-function var_0_0.refreshRemainTime(arg_19_0)
-	local var_19_0 = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Limited, arg_19_0.seasonId, TowerEnum.TowerStatus.Open).nextTime / 1000 - ServerTime.now()
-	local var_19_1 = TimeUtil.getFormatTime(var_19_0)
-	local var_19_2 = ""
+function TowerTimeLimitLevelView:refreshRemainTime()
+	local towerOpenMo = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Limited, self.seasonId, TowerEnum.TowerStatus.Open)
+	local remainTimeStamp = towerOpenMo.nextTime / 1000 - ServerTime.now()
+	local date, dateformate = TimeUtil.getFormatTime(remainTimeStamp), ""
 
-	arg_19_0._txttime.text = var_19_0 > 0 and GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_refreshtime"), {
-		var_19_1,
-		var_19_2
+	self._txttime.text = remainTimeStamp > 0 and GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_refreshtime"), {
+		date,
+		dateformate
 	}) or ""
 end
 
-function var_0_0.refreshAssistBoss(arg_20_0)
-	local var_20_0 = TowerConfig.instance:getTowerLimitedTimeCo(arg_20_0.seasonId)
-	local var_20_1 = string.splitToNumber(var_20_0.bossPool, "#")
+function TowerTimeLimitLevelView:refreshAssistBoss()
+	local limitedTimeCo = TowerConfig.instance:getTowerLimitedTimeCo(self.seasonId)
+	local bossIdList = string.splitToNumber(limitedTimeCo.bossPool, "#")
 
-	arg_20_0.entranceBossUseMap = TowerTimeLimitLevelModel.instance:getEntranceBossUsedMap(arg_20_0.seasonId)
+	self.entranceBossUseMap = TowerTimeLimitLevelModel.instance:getEntranceBossUsedMap(self.seasonId)
 
-	gohelper.CreateObjList(arg_20_0, arg_20_0.bossItemShow, var_20_1, arg_20_0._gobossContent, arg_20_0._gobossItem)
+	gohelper.CreateObjList(self, self.bossItemShow, bossIdList, self._gobossContent, self._gobossItem)
 
 	if ViewMgr.instance:isOpen(ViewName.TowerAssistBossView) then
-		TowerController.instance:openAssistBossView(nil, nil, TowerEnum.TowerType.Limited, arg_20_0.seasonId)
+		TowerController.instance:openAssistBossView(nil, nil, TowerEnum.TowerType.Limited, self.seasonId)
 	end
 end
 
-function var_0_0.bossItemShow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = arg_21_0.bossItemTab[arg_21_3]
+function TowerTimeLimitLevelView:bossItemShow(obj, data, index)
+	local bossItem = self.bossItemTab[index]
 
-	if not var_21_0 then
-		var_21_0 = {}
-		arg_21_0.bossItemTab[arg_21_3] = var_21_0
+	if not bossItem then
+		bossItem = {}
+		self.bossItemTab[index] = bossItem
 	end
 
-	var_21_0.go = arg_21_1
-	var_21_0.simageEnemy = gohelper.findChildSingleImage(var_21_0.go, "simage_enemy")
-	var_21_0.imageCareer = gohelper.findChildImage(var_21_0.go, "image_career")
-	var_21_0.goUsed = gohelper.findChild(var_21_0.go, "go_used")
-	var_21_0.txtOrder = gohelper.findChildText(var_21_0.go, "go_used/txt_order")
+	bossItem.go = obj
+	bossItem.simageEnemy = gohelper.findChildSingleImage(bossItem.go, "simage_enemy")
+	bossItem.imageCareer = gohelper.findChildImage(bossItem.go, "image_career")
+	bossItem.goUsed = gohelper.findChild(bossItem.go, "go_used")
+	bossItem.txtOrder = gohelper.findChildText(bossItem.go, "go_used/txt_order")
 
-	local var_21_1 = TowerConfig.instance:getAssistBossConfig(arg_21_2)
-	local var_21_2 = FightConfig.instance:getSkinCO(var_21_1.skinId)
+	local assistBossConfig = TowerConfig.instance:getAssistBossConfig(data)
+	local skinConfig = FightConfig.instance:getSkinCO(assistBossConfig.skinId)
 
-	var_21_0.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(var_21_2.headIcon))
-	UISpriteSetMgr.instance:setEnemyInfoSprite(var_21_0.imageCareer, "sxy_" .. tostring(var_21_1.career))
+	bossItem.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setEnemyInfoSprite(bossItem.imageCareer, "sxy_" .. tostring(assistBossConfig.career))
 
-	local var_21_3 = 0
+	local usedEntranceId = 0
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_0.entranceBossUseMap) do
-		if iter_21_1 == arg_21_2 then
-			var_21_3 = iter_21_0
+	for entranceId, bossId in pairs(self.entranceBossUseMap) do
+		if bossId == data then
+			usedEntranceId = entranceId
 
 			break
 		end
 	end
 
-	gohelper.setActive(var_21_0.goUsed, var_21_3 > 0)
+	gohelper.setActive(bossItem.goUsed, usedEntranceId > 0)
 
-	var_21_0.txtOrder.text = var_21_3 > 0 and var_21_3 or ""
+	bossItem.txtOrder.text = usedEntranceId > 0 and usedEntranceId or ""
 end
 
-function var_0_0.refreshDetailShowUI(arg_22_0)
-	gohelper.setActive(arg_22_0._godetailInfo.gameObject, arg_22_0.isOpenDetail)
-	gohelper.setActive(arg_22_0._goBoss, not arg_22_0.isOpenDetail)
-	gohelper.setActive(arg_22_0._btncloseDetail.gameObject, arg_22_0.isOpenDetail)
+function TowerTimeLimitLevelView:refreshDetailShowUI()
+	gohelper.setActive(self._godetailInfo.gameObject, self.isOpenDetail)
+	gohelper.setActive(self._goBoss, not self.isOpenDetail)
+	gohelper.setActive(self._btncloseDetail.gameObject, self.isOpenDetail)
 
-	local var_22_0 = TowerTimeLimitLevelModel.instance.curSelectEntrance
+	local curSelectEntrance = TowerTimeLimitLevelModel.instance.curSelectEntrance
 
-	for iter_22_0, iter_22_1 in pairs(arg_22_0.episodeTab) do
-		gohelper.setActive(iter_22_1.goSelect, iter_22_0 == var_22_0)
+	for entrance, episodeItem in pairs(self.episodeTab) do
+		gohelper.setActive(episodeItem.goSelect, entrance == curSelectEntrance)
 	end
 end
 
-function var_0_0.playOpenAndSwitchItemAnim(arg_23_0, arg_23_1)
-	if arg_23_0.lastSelectEntranceId ~= arg_23_1.entranceId then
-		arg_23_1.anim:Play(UIAnimationName.Open, 0, 0)
+function TowerTimeLimitLevelView:playOpenAndSwitchItemAnim(episodeItem)
+	if self.lastSelectEntranceId ~= episodeItem.entranceId then
+		episodeItem.anim:Play(UIAnimationName.Open, 0, 0)
 
-		if arg_23_0.isOpenDetail then
-			if arg_23_0["itemTweenId" .. arg_23_1.entranceId] then
-				ZProj.TweenHelper.KillById(arg_23_0["itemTweenId" .. arg_23_1.entranceId])
+		if self.isOpenDetail then
+			if self["itemTweenId" .. episodeItem.entranceId] then
+				ZProj.TweenHelper.KillById(self["itemTweenId" .. episodeItem.entranceId])
 			end
 
-			arg_23_0["itemTweenId" .. arg_23_1.entranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_23_0.episodeTab[arg_23_1.entranceId].go, var_0_0.fadeItemAlpha, 1, var_0_0.OpenDetailTime)
+			self["itemTweenId" .. episodeItem.entranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(self.episodeTab[episodeItem.entranceId].go, TowerTimeLimitLevelView.fadeItemAlpha, 1, TowerTimeLimitLevelView.OpenDetailTime)
 		end
 
-		if arg_23_0.lastSelectEntranceId ~= 0 then
-			arg_23_0.rootAnimtorPlayer:Play(UIAnimationName.Switch)
-			arg_23_0.episodeTab[arg_23_0.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
+		if self.lastSelectEntranceId ~= 0 then
+			self.rootAnimtorPlayer:Play(UIAnimationName.Switch)
+			self.episodeTab[self.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
 
-			if arg_23_0["itemTweenId" .. arg_23_0.lastSelectEntranceId] then
-				ZProj.TweenHelper.KillById(arg_23_0["itemTweenId" .. arg_23_0.lastSelectEntranceId])
+			if self["itemTweenId" .. self.lastSelectEntranceId] then
+				ZProj.TweenHelper.KillById(self["itemTweenId" .. self.lastSelectEntranceId])
 			end
 
-			arg_23_0["itemTweenId" .. arg_23_0.lastSelectEntranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_23_0.episodeTab[arg_23_0.lastSelectEntranceId].go, 1, var_0_0.fadeItemAlpha, var_0_0.closeDetailTime)
+			self["itemTweenId" .. self.lastSelectEntranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(self.episodeTab[self.lastSelectEntranceId].go, 1, TowerTimeLimitLevelView.fadeItemAlpha, TowerTimeLimitLevelView.closeDetailTime)
 		end
 
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0.episodeTab) do
-			if arg_23_0.lastSelectEntranceId > 0 then
-				if iter_23_0 ~= arg_23_1.entranceId and iter_23_0 ~= arg_23_0.lastSelectEntranceId then
-					iter_23_1.anim:Play(UIAnimationName.Idle, 0, 0)
+		for entranceId, item in ipairs(self.episodeTab) do
+			if self.lastSelectEntranceId > 0 then
+				if entranceId ~= episodeItem.entranceId and entranceId ~= self.lastSelectEntranceId then
+					item.anim:Play(UIAnimationName.Idle, 0, 0)
 
-					iter_23_1.canvasGroup.alpha = var_0_0.fadeItemAlpha
+					item.canvasGroup.alpha = TowerTimeLimitLevelView.fadeItemAlpha
 				end
-			elseif iter_23_0 ~= arg_23_1.entranceId then
-				if arg_23_0["itemTweenId" .. iter_23_0] then
-					ZProj.TweenHelper.KillById(arg_23_0["itemTweenId" .. iter_23_0])
+			elseif entranceId ~= episodeItem.entranceId then
+				if self["itemTweenId" .. entranceId] then
+					ZProj.TweenHelper.KillById(self["itemTweenId" .. entranceId])
 				end
 
-				arg_23_0["itemTweenId" .. iter_23_0] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_23_0.episodeTab[iter_23_0].go, 1, var_0_0.fadeItemAlpha, var_0_0.OpenDetailTime)
+				self["itemTweenId" .. entranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(self.episodeTab[entranceId].go, 1, TowerTimeLimitLevelView.fadeItemAlpha, TowerTimeLimitLevelView.OpenDetailTime)
 			end
 		end
 	end
 end
 
-function var_0_0.playCloseItemAnim(arg_24_0)
-	arg_24_0.episodeTab[arg_24_0.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
+function TowerTimeLimitLevelView:playCloseItemAnim()
+	self.episodeTab[self.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
 
-	for iter_24_0, iter_24_1 in pairs(arg_24_0.episodeTab) do
-		if iter_24_0 ~= arg_24_0.lastSelectEntranceId then
-			if arg_24_0["itemTweenId" .. iter_24_0] then
-				ZProj.TweenHelper.KillById(arg_24_0["itemTweenId" .. iter_24_0])
+	for entrance, episodeItem in pairs(self.episodeTab) do
+		if entrance ~= self.lastSelectEntranceId then
+			if self["itemTweenId" .. entrance] then
+				ZProj.TweenHelper.KillById(self["itemTweenId" .. entrance])
 			end
 
-			arg_24_0["itemTweenId" .. iter_24_0] = ZProj.TweenHelper.DOFadeCanvasGroup(iter_24_1.go, var_0_0.fadeItemAlpha, 1, var_0_0.closeToNormalTime)
+			self["itemTweenId" .. entrance] = ZProj.TweenHelper.DOFadeCanvasGroup(episodeItem.go, TowerTimeLimitLevelView.fadeItemAlpha, 1, TowerTimeLimitLevelView.closeToNormalTime)
 		end
 	end
 end
 
-function var_0_0.setCloseOverrideFunc(arg_25_0)
-	if arg_25_0.isOpenDetail then
-		arg_25_0.viewContainer:setOverrideCloseClick(arg_25_0._btncloseDetailOnClick, arg_25_0)
+function TowerTimeLimitLevelView:setCloseOverrideFunc()
+	if self.isOpenDetail then
+		self.viewContainer:setOverrideCloseClick(self._btncloseDetailOnClick, self)
 	else
-		arg_25_0.viewContainer:setOverrideCloseClick(arg_25_0.closeThis, arg_25_0)
+		self.viewContainer:setOverrideCloseClick(self.closeThis, self)
 	end
 end
 
-function var_0_0.onClose(arg_26_0)
+function TowerTimeLimitLevelView:onClose()
 	TowerTimeLimitLevelModel.instance:cleanData()
-	arg_26_0.rootAnimtorPlayer:Stop()
+	self.rootAnimtorPlayer:Stop()
 
-	for iter_26_0 = 1, 3 do
-		if arg_26_0["itemTweenId" .. iter_26_0] then
-			ZProj.TweenHelper.KillById(arg_26_0["itemTweenId" .. iter_26_0])
+	for entrance = 1, 3 do
+		if self["itemTweenId" .. entrance] then
+			ZProj.TweenHelper.KillById(self["itemTweenId" .. entrance])
 		end
 	end
 
 	TowerModel.instance:cleanTrialData()
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	for iter_27_0, iter_27_1 in pairs(arg_27_0.episodeTab) do
-		iter_27_1.simageEnemy:UnLoadImage()
-		iter_27_1.btnClick:RemoveClickListener()
+function TowerTimeLimitLevelView:onDestroyView()
+	for index, episodeItem in pairs(self.episodeTab) do
+		episodeItem.simageEnemy:UnLoadImage()
+		episodeItem.btnClick:RemoveClickListener()
 
-		for iter_27_2, iter_27_3 in pairs(iter_27_1.heroItemTab) do
-			iter_27_3.simageHero:UnLoadImage()
+		for _, heroItem in pairs(episodeItem.heroItemTab) do
+			heroItem.simageHero:UnLoadImage()
 		end
 	end
 
-	for iter_27_4, iter_27_5 in pairs(arg_27_0.bossItemTab) do
-		iter_27_5.simageEnemy:UnLoadImage()
+	for index, bossItem in pairs(self.bossItemTab) do
+		bossItem.simageEnemy:UnLoadImage()
 	end
 end
 
-return var_0_0
+return TowerTimeLimitLevelView

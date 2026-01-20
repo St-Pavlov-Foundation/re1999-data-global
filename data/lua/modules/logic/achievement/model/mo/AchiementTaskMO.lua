@@ -1,17 +1,19 @@
-﻿module("modules.logic.achievement.model.mo.AchiementTaskMO", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/model/mo/AchiementTaskMO.lua
 
-local var_0_0 = pureTable("AchiementTaskMO")
+module("modules.logic.achievement.model.mo.AchiementTaskMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.cfg = arg_1_1
-	arg_1_0.id = arg_1_1.id
+local AchiementTaskMO = pureTable("AchiementTaskMO")
+
+function AchiementTaskMO:init(config)
+	self.cfg = config
+	self.id = config.id
 end
 
-function var_0_0.updateByServerData(arg_2_0, arg_2_1)
-	arg_2_0.progress = arg_2_1.progress
-	arg_2_0.hasFinished = arg_2_1.hasFinish
-	arg_2_0.isNew = arg_2_1.new
-	arg_2_0.finishTime = arg_2_1.finishTime
+function AchiementTaskMO:updateByServerData(serverData)
+	self.progress = serverData.progress
+	self.hasFinished = serverData.hasFinish
+	self.isNew = serverData.new
+	self.finishTime = serverData.finishTime
 end
 
-return var_0_0
+return AchiementTaskMO

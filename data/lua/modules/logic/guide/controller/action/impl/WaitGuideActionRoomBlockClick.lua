@@ -1,39 +1,43 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBlockClick", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomBlockClick.lua
 
-local var_0_0 = class("WaitGuideActionRoomBlockClick", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomBlockClick", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local WaitGuideActionRoomBlockClick = class("WaitGuideActionRoomBlockClick", BaseGuideAction)
+
+function WaitGuideActionRoomBlockClick:ctor(guideId, stepId, actionParam)
+	WaitGuideActionRoomBlockClick.super.ctor(self, guideId, stepId, actionParam)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function WaitGuideActionRoomBlockClick:onStart(context)
+	WaitGuideActionRoomBlockClick.super.onStart(self, context)
 	GuideViewMgr.instance:enableHoleClick()
-	GuideViewMgr.instance:setHoleClickCallback(arg_2_0._onClickTarget, arg_2_0)
+	GuideViewMgr.instance:setHoleClickCallback(self._onClickTarget, self)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function WaitGuideActionRoomBlockClick:clearWork()
 	GuideViewMgr.instance:setHoleClickCallback(nil, nil)
-	TaskDispatcher.cancelTask(arg_3_0._onDelayDone, arg_3_0)
+	TaskDispatcher.cancelTask(self._onDelayDone, self)
 end
 
-function var_0_0._onClickTarget(arg_4_0, arg_4_1)
-	if arg_4_1 then
+function WaitGuideActionRoomBlockClick:_onClickTarget(isInside)
+	if isInside then
 		GuideViewMgr.instance:disableHoleClick()
 		GuideViewMgr.instance:setHoleClickCallback(nil, nil)
-		TaskDispatcher.runDelay(arg_4_0._onDelayDone, arg_4_0, 0.01)
+		TaskDispatcher.runDelay(self._onDelayDone, self, 0.01)
 
-		local var_4_0 = GuideModel.instance:getStepGOPath(arg_4_0.guideId, arg_4_0.stepId)
-		local var_4_1 = gohelper.find(var_4_0).transform.position
-		local var_4_2 = RoomBendingHelper.worldToBendingSimple(var_4_1)
-		local var_4_3 = CameraMgr.instance:getMainCamera():WorldToScreenPoint(var_4_2)
+		local goPath = GuideModel.instance:getStepGOPath(self.guideId, self.stepId)
+		local blockGO = gohelper.find(goPath)
+		local worldPos = blockGO.transform.position
+		local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
+		local mainCamera = CameraMgr.instance:getMainCamera()
+		local screenPos = mainCamera:WorldToScreenPoint(bendingPos)
 
-		RoomMapController.instance:dispatchEvent(RoomEvent.TouchClickScene, var_4_3)
+		RoomMapController.instance:dispatchEvent(RoomEvent.TouchClickScene, screenPos)
 	end
 end
 
-function var_0_0._onDelayDone(arg_5_0)
-	arg_5_0:onDone(true)
+function WaitGuideActionRoomBlockClick:_onDelayDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return WaitGuideActionRoomBlockClick

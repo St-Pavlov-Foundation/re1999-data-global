@@ -1,42 +1,44 @@
-﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle8", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/specialIdle/EntitySpecialIdle8.lua
 
-local var_0_0 = class("EntitySpecialIdle8", UserDataDispose)
+module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle8", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, arg_1_0._onMySideRoundEnd, arg_1_0)
+local EntitySpecialIdle8 = class("EntitySpecialIdle8", UserDataDispose)
 
-	arg_1_0._act_round = 0
-	arg_1_0._round = 0
-	arg_1_0._entity = arg_1_1
+function EntitySpecialIdle8:ctor(entity)
+	self:__onInit()
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
+
+	self._act_round = 0
+	self._round = 0
+	self._entity = entity
 end
 
-function var_0_0._onSkillPlayFinish(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_1.id ~= arg_2_0._entity.id then
+function EntitySpecialIdle8:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if entity.id ~= self._entity.id then
 		return
 	end
 
-	arg_2_0._act_round = FightModel.instance:getCurRoundId()
+	self._act_round = FightModel.instance:getCurRoundId()
 end
 
-function var_0_0._onMySideRoundEnd(arg_3_0)
-	arg_3_0._round = FightModel.instance:getCurRoundId()
+function EntitySpecialIdle8:_onMySideRoundEnd()
+	self._round = FightModel.instance:getCurRoundId()
 
-	if arg_3_0._round - arg_3_0._act_round > 1 then
-		arg_3_0._act_round = arg_3_0._round
+	if self._round - self._act_round > 1 then
+		self._act_round = self._round
 
-		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_3_0._entity.id)
+		FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, self._entity.id)
 	end
 end
 
-function var_0_0.releaseSelf(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_4_0._onSkillPlayFinish, arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, arg_4_0._onMySideRoundEnd, arg_4_0)
+function EntitySpecialIdle8:releaseSelf()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
 
-	arg_4_0._entity = nil
+	self._entity = nil
 
-	arg_4_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return EntitySpecialIdle8

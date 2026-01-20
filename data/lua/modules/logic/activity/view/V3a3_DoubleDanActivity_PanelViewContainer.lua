@@ -1,13 +1,15 @@
-﻿module("modules.logic.activity.view.V3a3_DoubleDanActivity_PanelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V3a3_DoubleDanActivity_PanelViewContainer.lua
 
-local var_0_0 = class("V3a3_DoubleDanActivity_PanelViewContainer", V3a3_DoubleDanActivityViewImplContainer)
+module("modules.logic.activity.view.V3a3_DoubleDanActivity_PanelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V3a3_DoubleDanActivity_PanelViewContainer = class("V3a3_DoubleDanActivity_PanelViewContainer", V3a3_DoubleDanActivityViewImplContainer)
 
-	table.insert(var_1_0, V3a3_DoubleDanActivity_PanelView.New())
+function V3a3_DoubleDanActivity_PanelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V3a3_DoubleDanActivity_PanelView.New())
+
+	return views
 end
 
-return var_0_0
+return V3a3_DoubleDanActivity_PanelViewContainer

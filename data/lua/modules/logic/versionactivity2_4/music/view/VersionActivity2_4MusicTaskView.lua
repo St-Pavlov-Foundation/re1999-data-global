@@ -1,88 +1,90 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicTaskView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicTaskView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local VersionActivity2_4MusicTaskView = class("VersionActivity2_4MusicTaskView", BaseView)
+
+function VersionActivity2_4MusicTaskView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity2_4MusicTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity2_4MusicTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+function VersionActivity2_4MusicTaskView:_editableInitView()
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivity2_4MusicTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0.refreshRight, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
+function VersionActivity2_4MusicTaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshRight, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, TimeUtil.OneMinuteSecond)
-	arg_6_0:refreshLeft()
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
+	self:refreshLeft()
 	VersionActivity2_4MusicTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity179
-	}, arg_6_0._oneClaimReward, arg_6_0)
+	}, self._oneClaimReward, self)
 end
 
-function var_0_0._oneClaimReward(arg_7_0)
-	arg_7_0:refreshRight()
+function VersionActivity2_4MusicTaskView:_oneClaimReward()
+	self:refreshRight()
 end
 
-function var_0_0.refreshLeft(arg_8_0)
-	arg_8_0:refreshRemainTime()
+function VersionActivity2_4MusicTaskView:refreshLeft()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshRemainTime(arg_9_0)
-	local var_9_0 = Activity179Model.instance:getActivityId()
-	local var_9_1 = ActivityModel.instance:getActivityInfo()[var_9_0]
+function VersionActivity2_4MusicTaskView:refreshRemainTime()
+	local activityId = Activity179Model.instance:getActivityId()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[activityId]
 
-	if var_9_1 then
-		local var_9_2 = var_9_1:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		if var_9_2 > 0 then
-			local var_9_3 = TimeUtil.SecondToActivityTimeFormat(var_9_2)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_9_0._txtremaintime.text = var_9_3
+			self._txtremaintime.text = dateStr
 
 			return
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_9_0.refreshRemainTime, arg_9_0)
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.refreshRight(arg_10_0)
+function VersionActivity2_4MusicTaskView:refreshRight()
 	VersionActivity2_4MusicTaskListModel.instance:initTask()
 	VersionActivity2_4MusicTaskListModel.instance:sortTaskMoList()
 	VersionActivity2_4MusicTaskListModel.instance:refreshList()
 end
 
-function var_0_0._onOpenViewFinish(arg_11_0, arg_11_1)
-	if arg_11_1 == ViewName.VersionActivity2_4MusicOpinionTabView then
-		arg_11_0:closeThis()
+function VersionActivity2_4MusicTaskView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.VersionActivity2_4MusicOpinionTabView then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.refreshRemainTime, arg_12_0)
+function VersionActivity2_4MusicTaskView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function VersionActivity2_4MusicTaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicTaskView

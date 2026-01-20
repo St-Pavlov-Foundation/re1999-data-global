@@ -1,10 +1,12 @@
-﻿module("modules.logic.summon.model.SummonPoolHistoryTypeMO", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonPoolHistoryTypeMO.lua
 
-local var_0_0 = pureTable("SummonPoolHistoryTypeMO")
+module("modules.logic.summon.model.SummonPoolHistoryTypeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1
-	arg_1_0.config = arg_1_2 or SummonConfig.instance:getPoolDetailConfig(arg_1_1)
+local SummonPoolHistoryTypeMO = pureTable("SummonPoolHistoryTypeMO")
+
+function SummonPoolHistoryTypeMO:init(id, config)
+	self.id = id
+	self.config = config or SummonConfig.instance:getPoolDetailConfig(id)
 end
 
-return var_0_0
+return SummonPoolHistoryTypeMO

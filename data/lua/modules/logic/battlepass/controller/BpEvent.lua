@@ -1,26 +1,28 @@
-﻿module("modules.logic.battlepass.controller.BpEvent", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/controller/BpEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.battlepass.controller.BpEvent", package.seeall)
 
-var_0_0.OnGetInfo = 1
-var_0_0.OnGetBonus = 2
-var_0_0.OnUpdateScore = 3
-var_0_0.OnUpdatePayStatus = 4
-var_0_0.OnBuyLevel = 5
-var_0_0.OnTaskUpdate = 6
-var_0_0.OnRedDotUpdate = 7
-var_0_0.onSelectBonusGet = 8
-var_0_0.SetGetAllCallBack = 100
-var_0_0.SetGetAllEnable = 101
-var_0_0.TapViewOpenAnimBegin = 102
-var_0_0.TapViewCloseAnimBegin = 103
-var_0_0.TapViewCloseAnimEnd = 104
-var_0_0.OnTaskFinishAnim = 105
-var_0_0.ShowUnlockBonusAnim = 106
-var_0_0.OnViewOpenFinish = 107
-var_0_0.BonusAnimEnd = 108
-var_0_0.ForcePlayBonusAnim = 109
-var_0_0.TaskTabChange = 110
-var_0_0.OnLevelUp = 111
+local BpEvent = _M
 
-return var_0_0
+BpEvent.OnGetInfo = 1
+BpEvent.OnGetBonus = 2
+BpEvent.OnUpdateScore = 3
+BpEvent.OnUpdatePayStatus = 4
+BpEvent.OnBuyLevel = 5
+BpEvent.OnTaskUpdate = 6
+BpEvent.OnRedDotUpdate = 7
+BpEvent.onSelectBonusGet = 8
+BpEvent.SetGetAllCallBack = 100
+BpEvent.SetGetAllEnable = 101
+BpEvent.TapViewOpenAnimBegin = 102
+BpEvent.TapViewCloseAnimBegin = 103
+BpEvent.TapViewCloseAnimEnd = 104
+BpEvent.OnTaskFinishAnim = 105
+BpEvent.ShowUnlockBonusAnim = 106
+BpEvent.OnViewOpenFinish = 107
+BpEvent.BonusAnimEnd = 108
+BpEvent.ForcePlayBonusAnim = 109
+BpEvent.TaskTabChange = 110
+BpEvent.OnLevelUp = 111
+
+return BpEvent

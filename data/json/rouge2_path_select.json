@@ -1,0 +1,34 @@
+[
+  {
+    "id": 111,
+    "mapRes": "singlebg/rouge2/map/rouge2_map1.png#singlebg/rouge2/map/rouge2_map2.png",
+    "simageMapPos": "-371#253",
+    "startPos": "-531#-50",
+    "startDesc": "language_10101712",
+    "confirmDesc": "language_10101713"
+  },
+  {
+    "id": 121,
+    "mapRes": "singlebg/rouge2/map/rouge2_map1.png#singlebg/rouge2/map/rouge2_map2.png",
+    "simageMapPos": "-700#50",
+    "startPos": "-509#116",
+    "startDesc": "language_10101714",
+    "confirmDesc": "language_10101715"
+  },
+  {
+    "id": 131,
+    "mapRes": "singlebg/rouge2/map/rouge2_map1.png#singlebg/rouge2/map/rouge2_map2.png",
+    "simageMapPos": "-510#234",
+    "startPos": "98#-110",
+    "startDesc": "language_10101716",
+    "confirmDesc": "language_10101717"
+  },
+  {
+    "id": 141,
+    "mapRes": "singlebg/rouge2/map/rouge2_map1.png#singlebg/rouge2/map/rouge2_map2.png",
+    "simageMapPos": "-580#0",
+    "startPos": "-263#102",
+    "startDesc": "",
+    "confirmDesc": ""
+  }
+]

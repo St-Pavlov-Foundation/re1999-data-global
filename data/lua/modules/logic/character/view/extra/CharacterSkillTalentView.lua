@@ -1,145 +1,150 @@
-﻿module("modules.logic.character.view.extra.CharacterSkillTalentView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterSkillTalentView.lua
 
-local var_0_0 = class("CharacterSkillTalentView", BaseView)
+module("modules.logic.character.view.extra.CharacterSkillTalentView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._txtremainTalentPoint = gohelper.findChildText(arg_1_0.viewGO, "talentpoint/#txt_remainTalentPoint")
-	arg_1_0._txtremainTalentPointEffect = gohelper.findChildText(arg_1_0.viewGO, "talentpoint/#txt_effect")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "bottom/#txt_title")
-	arg_1_0._imageTagIcon = gohelper.findChildImage(arg_1_0.viewGO, "bottom/#txt_title/#image_TagIcon")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "bottom/#scroll_desc")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "bottom/#scroll_desc/Viewport/#txt_desc")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local CharacterSkillTalentView = class("CharacterSkillTalentView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkillTalentView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._txtremainTalentPoint = gohelper.findChildText(self.viewGO, "talentpoint/#txt_remainTalentPoint")
+	self._txtremainTalentPointEffect = gohelper.findChildText(self.viewGO, "talentpoint/#txt_effect")
+	self._txttitle = gohelper.findChildText(self.viewGO, "bottom/#txt_title")
+	self._imageTagIcon = gohelper.findChildImage(self.viewGO, "bottom/#txt_title/#image_TagIcon")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "bottom/#scroll_desc")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "bottom/#scroll_desc/Viewport/#txt_desc")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, arg_2_0._refreshView, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, arg_2_0._refreshView, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, arg_2_0._refreshView, arg_2_0)
+function CharacterSkillTalentView:addEvents()
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, self._refreshView, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, self._refreshView, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, self._refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, arg_3_0._refreshView, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, arg_3_0._refreshView, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, arg_3_0._refreshView, arg_3_0)
+function CharacterSkillTalentView:removeEvents()
+	self._btnreset:RemoveClickListener()
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onChoiceHero3124TalentTreeReply, self._refreshView, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onResetHero3124TalentTreeReply, self._refreshView, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onCancelHero3124TalentTreeReply, self._refreshView, self)
 end
 
-function var_0_0._btnresetOnClick(arg_4_0)
-	if not arg_4_0.heroMo:isOwnHero() then
+function CharacterSkillTalentView:_btnresetOnClick()
+	if not self.heroMo:isOwnHero() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.ResetTalentSkillTree, MsgBoxEnum.BoxType.Yes_No, arg_4_0.sendResetTalentTree, nil, nil, arg_4_0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.ResetTalentSkillTree, MsgBoxEnum.BoxType.Yes_No, self.sendResetTalentTree, nil, nil, self)
 end
 
-function var_0_0.sendResetTalentTree(arg_5_0)
-	HeroRpc.instance:setResetHero3124TalentTreeRequest(arg_5_0.heroMo.heroId)
+function CharacterSkillTalentView:sendResetTalentTree()
+	HeroRpc.instance:setResetHero3124TalentTreeRequest(self.heroMo.heroId)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._gobottom = gohelper.findChild(arg_6_0.viewGO, "bottom")
+function CharacterSkillTalentView:_editableInitView()
+	self._gobottom = gohelper.findChild(self.viewGO, "bottom")
 
-	local var_6_0 = gohelper.findChild(arg_6_0.viewGO, "talentpoint")
+	local gotalentpoint = gohelper.findChild(self.viewGO, "talentpoint")
 
-	arg_6_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO.gameObject)
-	arg_6_0._talentPointAnim = var_6_0:GetComponent(typeof(UnityEngine.Animator))
+	self._animPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO.gameObject)
+	self._talentPointAnim = gotalentpoint:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function CharacterSkillTalentView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.heroMo = arg_8_0.viewParam
-	arg_8_0.skillTalentMo = arg_8_0.heroMo.extraMo:getSkillTalentMo()
-	arg_8_0._isOpen = true
+function CharacterSkillTalentView:onOpen()
+	self.heroMo = self.viewParam
 
-	arg_8_0:_refreshView()
+	local extraMo = self.heroMo.extraMo
+
+	self.skillTalentMo = extraMo:getSkillTalentMo()
+	self._isOpen = true
+
+	self:_refreshView()
 end
 
-function var_0_0._refreshView(arg_9_0)
-	local var_9_0 = arg_9_0.skillTalentMo:getMainFieldMo()
+function CharacterSkillTalentView:_refreshView()
+	local mainFieldMo = self.skillTalentMo:getMainFieldMo()
 
-	arg_9_0:_refreshDetail(var_9_0)
-	arg_9_0:_refreshNode()
+	self:_refreshDetail(mainFieldMo)
+	self:_refreshNode()
 end
 
-function var_0_0._refreshNode(arg_10_0)
-	if arg_10_0._talentpoint and arg_10_0._talentpoint ~= arg_10_0.skillTalentMo:getTalentpoint() then
-		arg_10_0._talentPointAnim:Play(CharacterExtraEnum.SkillTreeAnimName.Click, 0, 0)
+function CharacterSkillTalentView:_refreshNode()
+	if self._talentpoint and self._talentpoint ~= self.skillTalentMo:getTalentpoint() then
+		self._talentPointAnim:Play(CharacterExtraEnum.SkillTreeAnimName.Click, 0, 0)
 	end
 
-	arg_10_0._talentpoint = arg_10_0.skillTalentMo:getTalentpoint()
-	arg_10_0._txtremainTalentPoint.text = arg_10_0._talentpoint
-	arg_10_0._txtremainTalentPointEffect.text = arg_10_0._talentpoint
+	self._talentpoint = self.skillTalentMo:getTalentpoint()
+	self._txtremainTalentPoint.text = self._talentpoint
+	self._txtremainTalentPointEffect.text = self._talentpoint
 
-	gohelper.setActive(arg_10_0._btnreset.gameObject, not arg_10_0.skillTalentMo:isNotLight())
+	gohelper.setActive(self._btnreset.gameObject, not self.skillTalentMo:isNotLight())
 end
 
-function var_0_0._refreshDetail(arg_11_0, arg_11_1)
-	local var_11_0
+function CharacterSkillTalentView:_refreshDetail(mo)
+	local animName
 
-	if arg_11_1 then
-		local var_11_1 = arg_11_0.heroMo.exSkillLevel
-		local var_11_2 = arg_11_1.co
-		local var_11_3 = var_11_2.sub
-		local var_11_4 = arg_11_1:getFieldDesc(var_11_1)
+	if mo then
+		local exSkillLevel = self.heroMo.exSkillLevel
+		local co = mo.co
+		local sub = co.sub
+		local fieldDesc = mo:getFieldDesc(exSkillLevel)
 
-		arg_11_0._txttitle.text = var_11_2.fieldName
-		arg_11_0._fieldDesc = arg_11_0._fieldDesc or MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._txtdesc.gameObject, SkillDescComp)
+		self._txttitle.text = co.fieldName
+		self._fieldDesc = self._fieldDesc or MonoHelper.addNoUpdateLuaComOnceToGo(self._txtdesc.gameObject, SkillDescComp)
 
-		local var_11_5 = var_11_4 .. arg_11_0.skillTalentMo:getLightNodeAdditionalDesc(var_11_1)
+		local desc = fieldDesc .. self.skillTalentMo:getLightNodeAdditionalDesc(exSkillLevel)
 
-		arg_11_0._fieldDesc:updateInfo(arg_11_0._txtdesc, var_11_5, arg_11_0.heroMo.heroId)
-		arg_11_0._fieldDesc:setTipParam(nil, Vector2(250, -365))
-		arg_11_0._fieldDesc:setBuffTipPivot(CommonBuffTipEnum.Pivot.Down)
-		UISpriteSetMgr.instance:setUiCharacterSprite(arg_11_0._imageTagIcon, arg_11_0.skillTalentMo:getSmallSubIconPath(var_11_3))
+		self._fieldDesc:updateInfo(self._txtdesc, desc, self.heroMo.heroId)
+		self._fieldDesc:setTipParam(nil, Vector2(250, -365))
+		self._fieldDesc:setBuffTipPivot(CommonBuffTipEnum.Pivot.Down)
+		UISpriteSetMgr.instance:setUiCharacterSprite(self._imageTagIcon, self.skillTalentMo:getSmallSubIconPath(sub))
 
-		if arg_11_0._isOpen then
-			var_11_0 = CharacterExtraEnum.SkillTreeAnimName.OpenBottom
-		elseif not arg_11_0.isShowBottom then
-			var_11_0 = CharacterExtraEnum.SkillTreeAnimName.Bottom
+		if self._isOpen then
+			animName = CharacterExtraEnum.SkillTreeAnimName.OpenBottom
+		elseif not self.isShowBottom then
+			animName = CharacterExtraEnum.SkillTreeAnimName.Bottom
 		end
 
-		arg_11_0.isShowBottom = true
+		self.isShowBottom = true
 	else
-		if arg_11_0._isOpen then
-			var_11_0 = CharacterExtraEnum.SkillTreeAnimName.OpenNomal
-		elseif arg_11_0.isShowBottom then
-			var_11_0 = CharacterExtraEnum.SkillTreeAnimName.Normal
+		if self._isOpen then
+			animName = CharacterExtraEnum.SkillTreeAnimName.OpenNomal
+		elseif self.isShowBottom then
+			animName = CharacterExtraEnum.SkillTreeAnimName.Normal
 		end
 
-		arg_11_0.isShowBottom = false
+		self.isShowBottom = false
 	end
 
-	if not string.nilorempty(var_11_0) then
-		gohelper.setActive(arg_11_0._gobottom, true)
-		arg_11_0._animPlayer:Play(var_11_0, arg_11_0._playAnimCallback, arg_11_0)
+	if not string.nilorempty(animName) then
+		gohelper.setActive(self._gobottom, true)
+		self._animPlayer:Play(animName, self._playAnimCallback, self)
 	end
 
-	arg_11_0._isOpen = false
+	self._isOpen = false
 end
 
-function var_0_0._playAnimCallback(arg_12_0)
-	if not arg_12_0.isShowBottom then
-		gohelper.setActive(arg_12_0._gobottom, false)
+function CharacterSkillTalentView:_playAnimCallback()
+	if not self.isShowBottom then
+		gohelper.setActive(self._gobottom, false)
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
+function CharacterSkillTalentView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function CharacterSkillTalentView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CharacterSkillTalentView

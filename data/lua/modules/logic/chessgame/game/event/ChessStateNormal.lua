@@ -1,75 +1,81 @@
-﻿module("modules.logic.chessgame.game.event.ChessStateNormal", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/game/event/ChessStateNormal.lua
 
-local var_0_0 = class("ChessStateNormal", ChessStateBase)
+module("modules.logic.chessgame.game.event.ChessStateNormal", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local ChessStateNormal = class("ChessStateNormal", ChessStateBase)
+
+function ChessStateNormal:start()
 	logNormal("ChessStateNormal start")
-	ChessGameController.instance:dispatchEvent(ChessGameEvent.EventStart, arg_1_0:getStateType())
+	ChessGameController.instance:dispatchEvent(ChessGameEvent.EventStart, self:getStateType())
 end
 
-function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0, var_2_1 = ChessGameController.instance:searchInteractByPos(arg_2_1, arg_2_2, ChessGameController.filterSelectable)
-	local var_2_2 = ChessGameController.instance:getClickStatus()
+function ChessStateNormal:onClickPos(x, y, manualClick)
+	local len, result = ChessGameController.instance:searchInteractByPos(x, y, ChessGameController.filterSelectable)
+	local clickStatus = ChessGameController.instance:getClickStatus()
 
-	if var_2_2 == ChessGameEnum.SelectPosStatus.None then
-		arg_2_0:onClickInNoneStatus(var_2_0, var_2_1, arg_2_3)
-	elseif var_2_2 == ChessGameEnum.SelectPosStatus.SelectObjWaitPos then
-		arg_2_0:onClickInSelectObjWaitPosStatus(arg_2_1, arg_2_2, var_2_0, var_2_1, arg_2_3)
-	elseif var_2_2 == ChessGameEnum.SelectPosStatus.CatchObj then
-		arg_2_0:onClickCatchObjWaitPosStatus(arg_2_1, arg_2_2, var_2_0, var_2_1, arg_2_3)
-	elseif var_2_2 == ChessGameEnum.SelectPosStatus.ShowTalk then
-		arg_2_0:onClickShowTalkWaitPosStatus()
+	if clickStatus == ChessGameEnum.SelectPosStatus.None then
+		self:onClickInNoneStatus(len, result, manualClick)
+	elseif clickStatus == ChessGameEnum.SelectPosStatus.SelectObjWaitPos then
+		self:onClickInSelectObjWaitPosStatus(x, y, len, result, manualClick)
+	elseif clickStatus == ChessGameEnum.SelectPosStatus.CatchObj then
+		self:onClickCatchObjWaitPosStatus(x, y, len, result, manualClick)
+	elseif clickStatus == ChessGameEnum.SelectPosStatus.ShowTalk then
+		self:onClickShowTalkWaitPosStatus()
 	end
 end
 
-function var_0_0.onClickInNoneStatus(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_1 >= 1 then
-		local var_3_0 = arg_3_1 > 1 and arg_3_2[1] or arg_3_2
+function ChessStateNormal:onClickInNoneStatus(clickObjLength, result, manualClick)
+	if clickObjLength >= 1 then
+		local clickObj = clickObjLength > 1 and result[1] or result
 
-		if var_3_0.objType ~= ChessGameEnum.InteractType.Role then
+		if clickObj.objType ~= ChessGameEnum.InteractType.Role then
 			GameFacade.showToast(ToastEnum.ChessCanNotSelect)
 		else
-			ChessGameController.instance:setSelectObj(var_3_0)
+			ChessGameController.instance:setSelectObj(clickObj)
 
-			arg_3_0._lastSelectObj = ChessGameController.instance:getSelectObj()
+			self._lastSelectObj = ChessGameController.instance:getSelectObj()
 		end
 	end
 end
 
-function var_0_0.onClickInSelectObjWaitPosStatus(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
-	local var_4_0 = ChessGameController.instance:getSelectObj()
+function ChessStateNormal:onClickInSelectObjWaitPosStatus(x, y, len, result, manualClick)
+	local obj = ChessGameController.instance:getSelectObj()
 
-	arg_4_0._lastSelectObj = var_4_0
+	self._lastSelectObj = obj
 
-	if var_4_0 and var_4_0:getHandler() then
-		if var_4_0:getHandler():onSelectPos(arg_4_1, arg_4_2) then
+	if obj and obj:getHandler() then
+		local rs = obj:getHandler():onSelectPos(x, y)
+
+		if rs then
 			if ChessGameController.instance.eventMgr:isPlayingFlow() then
 				return
 			end
 
-			arg_4_0:onClickPos(arg_4_1, arg_4_2, arg_4_5)
+			self:onClickPos(x, y, manualClick)
 		end
 	else
 		logError("select obj missing!")
 	end
 end
 
-function var_0_0.onClickCatchObjWaitPosStatus(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	local var_5_0 = ChessGameController.instance:getSelectObj()
+function ChessStateNormal:onClickCatchObjWaitPosStatus(x, y, len, result, manualClick)
+	local obj = ChessGameController.instance:getSelectObj()
 
-	arg_5_0._lastSelectObj = var_5_0
+	self._lastSelectObj = obj
 
-	if var_5_0 and var_5_0:getHandler() then
-		if var_5_0:getHandler():onSetPosWithCatchObj(arg_5_1, arg_5_2) then
-			arg_5_0:onClickPos(arg_5_1, arg_5_2, arg_5_5)
+	if obj and obj:getHandler() then
+		local rs = obj:getHandler():onSetPosWithCatchObj(x, y)
+
+		if rs then
+			self:onClickPos(x, y, manualClick)
 		end
 	else
 		logError("select obj missing!")
 	end
 end
 
-function var_0_0.onClickShowTalkWaitPosStatus(arg_6_0)
+function ChessStateNormal:onClickShowTalkWaitPosStatus()
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.ClickOnTalking)
 end
 
-return var_0_0
+return ChessStateNormal

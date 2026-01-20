@@ -1,21 +1,25 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkHeroGroupHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkHeroGroupHeroItem.lua
 
-local var_0_0 = class("WeekWalkHeroGroupHeroItem", HeroGroupHeroItem)
+module("modules.logic.weekwalk.view.WeekWalkHeroGroupHeroItem", package.seeall)
 
-function var_0_0.checkWeekWalkCd(arg_1_0)
-	if HeroGroupModel.instance:isAdventureOrWeekWalk() and arg_1_0._heroMO ~= nil and arg_1_0.monsterCO == nil then
-		if WeekWalkModel.instance:getCurMapHeroCd(arg_1_0._heroMO.config.id) > 0 then
-			arg_1_0._playDeathAnim = true
+local WeekWalkHeroGroupHeroItem = class("WeekWalkHeroGroupHeroItem", HeroGroupHeroItem)
 
-			arg_1_0:playAnim("herogroup_hero_deal")
+function WeekWalkHeroGroupHeroItem:checkWeekWalkCd()
+	if HeroGroupModel.instance:isAdventureOrWeekWalk() and self._heroMO ~= nil and self.monsterCO == nil then
+		local cd = WeekWalkModel.instance:getCurMapHeroCd(self._heroMO.config.id)
 
-			arg_1_0.tweenid = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, arg_1_0.setGrayFactor, nil, arg_1_0)
+		if cd > 0 then
+			self._playDeathAnim = true
 
-			return arg_1_0._heroMO.id
+			self:playAnim("herogroup_hero_deal")
+
+			self.tweenid = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.5, self.setGrayFactor, nil, self)
+
+			return self._heroMO.id
 		else
-			arg_1_0._commonHeroCard:setGrayScale(false)
+			self._commonHeroCard:setGrayScale(false)
 		end
 	end
 end
 
-return var_0_0
+return WeekWalkHeroGroupHeroItem

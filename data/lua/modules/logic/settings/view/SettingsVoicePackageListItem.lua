@@ -1,158 +1,164 @@
-﻿module("modules.logic.settings.view.SettingsVoicePackageListItem", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsVoicePackageListItem.lua
 
-local var_0_0 = class("SettingsVoicePackageListItem", ListScrollCellExtend)
+module("modules.logic.settings.view.SettingsVoicePackageListItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtname1 = gohelper.findChildText(arg_1_0.viewGO, "#go_selected/#txt_name")
-	arg_1_0._txtname2 = gohelper.findChildText(arg_1_0.viewGO, "#go_unselected/#txt_name")
-	arg_1_0._txtsize1 = gohelper.findChildText(arg_1_0.viewGO, "#go_selected/#txt_size")
-	arg_1_0._txtsize2 = gohelper.findChildText(arg_1_0.viewGO, "#go_unselected/#txt_size")
-	arg_1_0._txtVersion = gohelper.findChildText(arg_1_0.viewGO, "#txt_version")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._gounselected = gohelper.findChild(arg_1_0.viewGO, "#go_unselected")
-	arg_1_0._gocur1 = gohelper.findChild(arg_1_0.viewGO, "#go_selected/#txt_selected")
-	arg_1_0._gocur2 = gohelper.findChild(arg_1_0.viewGO, "#go_unselected/#txt_selected")
-	arg_1_0._goNowIcon1 = gohelper.findChild(arg_1_0.viewGO, "#go_selected/#txt_name/#go_icon")
-	arg_1_0._goNowIcon2 = gohelper.findChild(arg_1_0.viewGO, "#go_unselected/#txt_name/#go_icon")
+local SettingsVoicePackageListItem = class("SettingsVoicePackageListItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SettingsVoicePackageListItem:onInitView()
+	self._txtname1 = gohelper.findChildText(self.viewGO, "#go_selected/#txt_name")
+	self._txtname2 = gohelper.findChildText(self.viewGO, "#go_unselected/#txt_name")
+	self._txtsize1 = gohelper.findChildText(self.viewGO, "#go_selected/#txt_size")
+	self._txtsize2 = gohelper.findChildText(self.viewGO, "#go_unselected/#txt_size")
+	self._txtVersion = gohelper.findChildText(self.viewGO, "#txt_version")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._gounselected = gohelper.findChild(self.viewGO, "#go_unselected")
+	self._gocur1 = gohelper.findChild(self.viewGO, "#go_selected/#txt_selected")
+	self._gocur2 = gohelper.findChild(self.viewGO, "#go_unselected/#txt_selected")
+	self._goNowIcon1 = gohelper.findChild(self.viewGO, "#go_selected/#txt_name/#go_icon")
+	self._goNowIcon2 = gohelper.findChild(self.viewGO, "#go_unselected/#txt_name/#go_icon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SettingsVoicePackageListItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SettingsVoicePackageListItem:removeEvents()
 	return
 end
 
-function var_0_0._btndownloadOnClick(arg_4_0)
-	local var_4_0 = arg_4_0._mo:getStatus()
+function SettingsVoicePackageListItem:_btndownloadOnClick()
+	local status = self._mo:getStatus()
 
-	logWarn("SettingsVoicePackageListItem _btndownloadOnClick self._mo.lang = " .. arg_4_0._mo.lang .. " status = " .. var_4_0)
+	logWarn("SettingsVoicePackageListItem _btndownloadOnClick self._mo.lang = " .. self._mo.lang .. " status = " .. status)
 	AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_property_click)
 
-	if var_4_0 == SettingsVoicePackageController.NotDownload or var_4_0 == SettingsVoicePackageController.NeedUpdate then
-		SettingsVoicePackageController.instance:startDownload(arg_4_0._mo)
+	if status == SettingsVoicePackageController.NotDownload or status == SettingsVoicePackageController.NeedUpdate then
+		SettingsVoicePackageController.instance:startDownload(self._mo)
 	end
 end
 
-function var_0_0._btnstopdownloadOnClick(arg_5_0)
-	SettingsVoicePackageController.instance:stopDownload(arg_5_0._mo)
+function SettingsVoicePackageListItem:_btnstopdownloadOnClick()
+	SettingsVoicePackageController.instance:stopDownload(self._mo)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._gotogclick = gohelper.findChild(arg_6_0.viewGO, "#go_togclick")
-	arg_6_0._btn = gohelper.getClickWithAudio(arg_6_0._gotogclick)
+function SettingsVoicePackageListItem:_editableInitView()
+	self._gotogclick = gohelper.findChild(self.viewGO, "#go_togclick")
+	self._btn = gohelper.getClickWithAudio(self._gotogclick)
 end
 
-function var_0_0._editableAddEvents(arg_7_0)
-	arg_7_0._btn:AddClickListener(arg_7_0._onClick, arg_7_0)
-	arg_7_0:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnPackItemStateChange, arg_7_0._onPackItemStateChange, arg_7_0)
-	arg_7_0:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnChangeSelecetDownloadVoicePack, arg_7_0._updateSelecet, arg_7_0)
+function SettingsVoicePackageListItem:_editableAddEvents()
+	self._btn:AddClickListener(self._onClick, self)
+	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnPackItemStateChange, self._onPackItemStateChange, self)
+	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnChangeSelecetDownloadVoicePack, self._updateSelecet, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_8_0)
-	arg_8_0._btn:RemoveClickListener()
-	arg_8_0:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnPackItemStateChange, arg_8_0._onPackItemStateChange, arg_8_0)
-	arg_8_0:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnChangeSelecetDownloadVoicePack, arg_8_0._updateSelecet, arg_8_0)
+function SettingsVoicePackageListItem:_editableRemoveEvents()
+	self._btn:RemoveClickListener()
+	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnPackItemStateChange, self._onPackItemStateChange, self)
+	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnChangeSelecetDownloadVoicePack, self._updateSelecet, self)
 end
 
-function var_0_0._onPackItemStateChange(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0._mo.lang ~= arg_9_1 then
+function SettingsVoicePackageListItem:_onPackItemStateChange(packName, failReason)
+	if self._mo.lang ~= packName then
 		return
 	end
 
-	arg_9_0:_updateStatus()
+	self:_updateStatus()
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0._mo = arg_10_1
+function SettingsVoicePackageListItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_10_0 = luaLang(arg_10_1.nameLangId)
-	local var_10_1 = GameConfig:GetDefaultVoiceShortcut()
-	local var_10_2 = arg_10_0._mo.lang == var_10_1
-	local var_10_3 = HotUpdateVoiceMgr.IsGuoFu and HotUpdateVoiceMgr.ForceSelect[arg_10_0._mo.lang]
+	local txtName = luaLang(mo.nameLangId)
+	local defaultVoiceShortcut = GameConfig:GetDefaultVoiceShortcut()
+	local isDefaultVoice = self._mo.lang == defaultVoiceShortcut
+	local isForceVoice = HotUpdateVoiceMgr.IsGuoFu and HotUpdateVoiceMgr.ForceSelect[self._mo.lang]
 
-	if var_10_2 or var_10_3 then
-		var_10_0 = formatLuaLang("voice_package_default", var_10_0)
-		arg_10_0._txtname2.alpha = 0.8
+	if isDefaultVoice or isForceVoice then
+		txtName = formatLuaLang("voice_package_default", txtName)
+		self._txtname2.alpha = 0.8
 	else
-		arg_10_0._txtname2.alpha = 1
+		self._txtname2.alpha = 1
 	end
 
-	arg_10_0._txtname1.text = var_10_0
-	arg_10_0._txtname2.text = var_10_0
+	self._txtname1.text = txtName
+	self._txtname2.text = txtName
 
-	local var_10_4 = GameConfig:GetCurVoiceShortcut()
+	local cur = GameConfig:GetCurVoiceShortcut()
 
-	arg_10_0:_updateSelecet(var_10_4)
+	self:_updateSelecet(cur)
 
-	local var_10_5 = var_10_4 == arg_10_0._mo.lang
+	local isCurVoice = cur == self._mo.lang
 
-	gohelper.setActive(arg_10_0._gocur1, var_10_5)
-	gohelper.setActive(arg_10_0._gocur2, var_10_5)
-	gohelper.setActive(arg_10_0._goNowIcon1, var_10_5)
-	gohelper.setActive(arg_10_0._goNowIcon2, var_10_5)
-	arg_10_0:_updateStatus()
+	gohelper.setActive(self._gocur1, isCurVoice)
+	gohelper.setActive(self._gocur2, isCurVoice)
+	gohelper.setActive(self._goNowIcon1, isCurVoice)
+	gohelper.setActive(self._goNowIcon2, isCurVoice)
+	self:_updateStatus()
 
-	if arg_10_0._txtVersion then
-		arg_10_0._txtVersion.text = arg_10_0:_getLangCurVersion(arg_10_0._mo.lang, var_10_1)
+	if self._txtVersion then
+		self._txtVersion.text = self:_getLangCurVersion(self._mo.lang, defaultVoiceShortcut)
 	end
 end
 
-function var_0_0._getLangCurVersion(arg_11_0, arg_11_1, arg_11_2)
-	if HotUpdateVoiceMgr.IsGuoFu and arg_11_1 == arg_11_2 then
-		arg_11_1 = HotUpdateVoiceMgr.LangZh
-	end
-
-	local var_11_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
-	local var_11_1 = var_11_0.VoiceBranch
-	local var_11_2 = var_11_0:GetLocalVersion(arg_11_1)
-
-	if string.nilorempty(var_11_2) then
+function SettingsVoicePackageListItem:_getLangCurVersion(langShortcut, defaultShortcut)
+	if not ProjBooter.instance:isUseBigZip() then
 		return ""
 	end
 
-	return string.format("V.%s.%s", tostring(var_11_1), tostring(var_11_2))
+	if HotUpdateVoiceMgr.IsGuoFu and langShortcut == defaultShortcut then
+		langShortcut = HotUpdateVoiceMgr.LangZh
+	end
+
+	local optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+	local voiceBranch = optionalUpdateInst.VoiceBranch
+	local localVersion = optionalUpdateInst:GetLocalVersion(langShortcut)
+
+	if string.nilorempty(localVersion) then
+		return ""
+	end
+
+	return string.format("V.%s.%s", tostring(voiceBranch), tostring(localVersion))
 end
 
-function var_0_0._updateStatus(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._mo:getStatus()
+function SettingsVoicePackageListItem:_updateStatus(curSize, allSize)
+	local status = self._mo:getStatus()
 
-	if var_12_0 == SettingsVoicePackageController.NotDownload or var_12_0 == SettingsVoicePackageController.NeedUpdate then
-		local var_12_1 = var_12_0 == SettingsVoicePackageController.NeedUpdate and luaLang("voice_package_update_5") or "(%s)"
-		local var_12_2, var_12_3, var_12_4 = arg_12_0._mo:getLeftSizeMBorGB()
-		local var_12_5 = string.format("%.2f%s", var_12_2, var_12_4)
-		local var_12_6 = string.format(var_12_1, var_12_5)
+	if self._mo:needDownload() then
+		local foramtStr = status == SettingsVoicePackageController.NeedUpdate and luaLang("voice_package_update_5") or "(%s)"
+		local leftSize, size, units = self._mo:getLeftSizeMBorGB()
+		local sizeStr = string.format("%.2f%s", leftSize, units)
+		local str = string.format(foramtStr, sizeStr)
 
-		arg_12_0._txtsize1.text = var_12_6
-		arg_12_0._txtsize2.text = var_12_6
+		self._txtsize1.text = str
+		self._txtsize2.text = str
 	else
-		arg_12_0._txtsize1.text = ""
-		arg_12_0._txtsize2.text = ""
+		self._txtsize1.text = ""
+		self._txtsize2.text = ""
 	end
 end
 
-function var_0_0._onClick(arg_13_0)
-	SettingsVoicePackageController.instance:dispatchEvent(SettingsEvent.OnChangeSelecetDownloadVoicePack, arg_13_0._mo.lang)
+function SettingsVoicePackageListItem:_onClick()
+	SettingsVoicePackageController.instance:dispatchEvent(SettingsEvent.OnChangeSelecetDownloadVoicePack, self._mo.lang)
 end
 
-function var_0_0._updateSelecet(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1 == arg_14_0._mo.lang
+function SettingsVoicePackageListItem:_updateSelecet(lang)
+	local seleceted = lang == self._mo.lang
 
-	gohelper.setActive(arg_14_0._goselected, var_14_0)
-	gohelper.setActive(arg_14_0._gounselected, var_14_0 == false)
+	gohelper.setActive(self._goselected, seleceted)
+	gohelper.setActive(self._gounselected, seleceted == false)
 end
 
-function var_0_0.onSelect(arg_15_0, arg_15_1)
+function SettingsVoicePackageListItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function SettingsVoicePackageListItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return SettingsVoicePackageListItem

@@ -1,13 +1,15 @@
-﻿module("modules.logic.dungeon.defines.DungeonJumpGameEvent", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/defines/DungeonJumpGameEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.dungeon.defines.DungeonJumpGameEvent", package.seeall)
 
-var_0_0.AutoJumpOnMaxDistance = var_0_1()
-var_0_0.JumpGameReStart = var_0_1()
-var_0_0.JumpGameLongPressGuide = var_0_1()
-var_0_0.JumpGameGuideCompleted = var_0_1()
-var_0_0.JumpGameEnter = var_0_1()
-var_0_0.JumpGameCompleted = var_0_1()
-var_0_0.JumpGameArriveNode = var_0_1()
-var_0_0.JumpGameExit = var_0_1()
+local DungeonJumpGameEvent = _M
+local _get = GameUtil.getUniqueTb()
+
+DungeonJumpGameEvent.AutoJumpOnMaxDistance = _get()
+DungeonJumpGameEvent.JumpGameReStart = _get()
+DungeonJumpGameEvent.JumpGameLongPressGuide = _get()
+DungeonJumpGameEvent.JumpGameGuideCompleted = _get()
+DungeonJumpGameEvent.JumpGameEnter = _get()
+DungeonJumpGameEvent.JumpGameCompleted = _get()
+DungeonJumpGameEvent.JumpGameArriveNode = _get()
+DungeonJumpGameEvent.JumpGameExit = _get()

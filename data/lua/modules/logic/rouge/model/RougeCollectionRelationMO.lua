@@ -1,26 +1,28 @@
-﻿module("modules.logic.rouge.model.RougeCollectionRelationMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeCollectionRelationMO.lua
 
-local var_0_0 = pureTable("RougeCollectionRelationMO")
+module("modules.logic.rouge.model.RougeCollectionRelationMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.effectIndex = tonumber(arg_1_1.effectIndex)
-	arg_1_0.showType = tonumber(arg_1_1.showType)
+local RougeCollectionRelationMO = pureTable("RougeCollectionRelationMO")
 
-	arg_1_0:updateTrueCollectionIds(arg_1_1.trueGuids)
+function RougeCollectionRelationMO:init(info)
+	self.effectIndex = tonumber(info.effectIndex)
+	self.showType = tonumber(info.showType)
+
+	self:updateTrueCollectionIds(info.trueGuids)
 end
 
-function var_0_0.updateTrueCollectionIds(arg_2_0, arg_2_1)
-	arg_2_0.trueIds = {}
+function RougeCollectionRelationMO:updateTrueCollectionIds(ids)
+	self.trueIds = {}
 
-	if arg_2_1 then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-			table.insert(arg_2_0.trueIds, tonumber(iter_2_1))
+	if ids then
+		for _, id in ipairs(ids) do
+			table.insert(self.trueIds, tonumber(id))
 		end
 	end
 end
 
-function var_0_0.getTrueCollectionIds(arg_3_0)
-	return arg_3_0.trueIds
+function RougeCollectionRelationMO:getTrueCollectionIds()
+	return self.trueIds
 end
 
-return var_0_0
+return RougeCollectionRelationMO

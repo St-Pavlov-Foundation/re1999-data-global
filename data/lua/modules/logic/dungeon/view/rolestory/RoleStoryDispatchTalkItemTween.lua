@@ -1,426 +1,435 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchTalkItemTween", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryDispatchTalkItemTween.lua
 
-local var_0_0 = class("RoleStoryDispatchTalkItemTween", UserDataDispose)
+module("modules.logic.dungeon.view.rolestory.RoleStoryDispatchTalkItemTween", package.seeall)
 
-function var_0_0._playTween_overseas(arg_1_0)
-	arg_1_0.text:GetPreferredValues()
+local RoleStoryDispatchTalkItemTween = class("RoleStoryDispatchTalkItemTween", UserDataDispose)
 
-	arg_1_0._lastBottomLeft = 0
-	arg_1_0._lineSpace = 0
-	arg_1_0.transform = arg_1_0.text.transform
-	arg_1_0.gameObject = arg_1_0.text.gameObject
-	arg_1_0.canvasGroup = arg_1_0.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+function RoleStoryDispatchTalkItemTween:_playTween_overseas()
+	self.text:GetPreferredValues()
 
-	local var_1_0 = UnityEngine.Shader
+	self._lastBottomLeft = 0
+	self._lineSpace = 0
+	self.transform = self.text.transform
+	self.gameObject = self.text.gameObject
+	self.canvasGroup = self.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	arg_1_0._LineMinYId = var_1_0.PropertyToID("_LineMinY")
-	arg_1_0._LineMaxYId = var_1_0.PropertyToID("_LineMaxY")
+	local _shader = UnityEngine.Shader
 
-	local var_1_1 = UnityEngine.Screen.height
+	self._LineMinYId = _shader.PropertyToID("_LineMinY")
+	self._LineMaxYId = _shader.PropertyToID("_LineMaxY")
 
-	arg_1_0._conMat = arg_1_0.text.fontMaterial
+	local height = UnityEngine.Screen.height
 
-	arg_1_0._conMat:EnableKeyword("_GRADUAL_ON")
-	arg_1_0._conMat:SetFloat(arg_1_0._LineMinYId, var_1_1)
-	arg_1_0._conMat:SetFloat(arg_1_0._LineMaxYId, var_1_1)
+	self._conMat = self.text.fontMaterial
 
-	arg_1_0._contentX, arg_1_0._contentY, _ = transformhelper.getLocalPos(arg_1_0.transform)
+	self._conMat:EnableKeyword("_GRADUAL_ON")
+	self._conMat:SetFloat(self._LineMinYId, height)
+	self._conMat:SetFloat(self._LineMaxYId, height)
 
-	transformhelper.setLocalPos(arg_1_0.transform, arg_1_0._contentX, arg_1_0._contentY, 1)
+	self._contentX, self._contentY, _ = transformhelper.getLocalPos(self.transform)
 
-	arg_1_0._fontNormalMat = arg_1_0.text.fontSharedMaterial
-	arg_1_0._hasUnderline = string.find(arg_1_0.content, "<u>") and string.find(arg_1_0.content, "</u>")
-	arg_1_0._lineSpacing = arg_1_0.text.lineSpacing
+	transformhelper.setLocalPos(self.transform, self._contentX, self._contentY, 1)
 
-	TaskDispatcher.cancelTask(arg_1_0._delayShow, arg_1_0)
+	self._fontNormalMat = self.text.fontSharedMaterial
+	self._hasUnderline = string.find(self.content, "<u>") and string.find(self.content, "</u>")
+	self._lineSpacing = self.text.lineSpacing
+
+	TaskDispatcher.cancelTask(self._delayShow, self)
 end
 
-function var_0_0._initText_overseas(arg_2_0)
-	arg_2_0._lastBottomLeft = 0
-	arg_2_0._lineSpace = 0
-	arg_2_0._subMeshs = {}
+function RoleStoryDispatchTalkItemTween:_initText_overseas()
+	self._lastBottomLeft = 0
+	self._lineSpace = 0
+	self._subMeshs = {}
 
-	local var_2_0 = arg_2_0.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+	local subMeshs = self.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
 
-	if var_2_0 then
-		local var_2_1 = var_2_0:GetEnumerator()
+	if subMeshs then
+		local iter = subMeshs:GetEnumerator()
 
-		while var_2_1:MoveNext() do
-			local var_2_2 = var_2_1.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+		while iter:MoveNext() do
+			local subMesh = iter.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
 
-			table.insert(arg_2_0._subMeshs, var_2_2)
+			table.insert(self._subMeshs, subMesh)
 		end
 	end
 
-	local var_2_3 = arg_2_0.text:GetTextInfo(arg_2_0.content)
-	local var_2_4 = 0
-	local var_2_5 = CameraMgr.instance:getUICamera()
-	local var_2_6 = arg_2_0.transform
+	local textInfo = self.text:GetTextInfo(self.content)
+	local totalVisibleCharacterCount = 0
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local contentTransform = self.transform
 
-	arg_2_0.textInfo = var_2_3
-	arg_2_0.lineInfoList = {}
+	self.textInfo = textInfo
+	self.lineInfoList = {}
 
-	for iter_2_0 = 1, var_2_3.lineCount do
-		local var_2_7 = var_2_3.lineInfo[iter_2_0 - 1]
-		local var_2_8 = var_2_4 + 1
+	for i = 1, textInfo.lineCount do
+		local lineInfo = textInfo.lineInfo[i - 1]
+		local prevLineTotalCount = totalVisibleCharacterCount + 1
 
-		var_2_4 = var_2_4 + var_2_7.visibleCharacterCount
+		totalVisibleCharacterCount = totalVisibleCharacterCount + lineInfo.visibleCharacterCount
 
-		local var_2_9 = var_2_3.characterInfo
-		local var_2_10 = var_2_9[var_2_7.firstVisibleCharacterIndex]
-		local var_2_11 = var_2_9[var_2_7.lastVisibleCharacterIndex]
-		local var_2_12 = var_2_5:WorldToScreenPoint(var_2_6:TransformPoint(var_2_10.bottomLeft))
-		local var_2_13 = var_2_5:WorldToScreenPoint(var_2_6:TransformPoint(var_2_10.topLeft))
-		local var_2_14 = var_2_12.y
-		local var_2_15 = var_2_13.y
+		local characterInfo = textInfo.characterInfo
+		local firstChar = characterInfo[lineInfo.firstVisibleCharacterIndex]
+		local lastChar = characterInfo[lineInfo.lastVisibleCharacterIndex]
+		local firstBL = uiCamera:WorldToScreenPoint(contentTransform:TransformPoint(firstChar.bottomLeft))
+		local firstTL = uiCamera:WorldToScreenPoint(contentTransform:TransformPoint(firstChar.topLeft))
+		local minbly = firstBL.y
+		local maxtly = firstTL.y
 
-		for iter_2_1 = var_2_7.firstVisibleCharacterIndex, var_2_7.lastVisibleCharacterIndex do
-			local var_2_16 = var_2_9[iter_2_1]
-			local var_2_17 = var_2_5:WorldToScreenPoint(var_2_6:TransformPoint(var_2_16.bottomLeft))
+		for index = lineInfo.firstVisibleCharacterIndex, lineInfo.lastVisibleCharacterIndex do
+			local char = characterInfo[index]
+			local bl = uiCamera:WorldToScreenPoint(contentTransform:TransformPoint(char.bottomLeft))
 
-			if var_2_14 > var_2_17.y then
-				var_2_14 = var_2_17.y
+			if minbly > bl.y then
+				minbly = bl.y
 			end
 
-			local var_2_18 = var_2_5:WorldToScreenPoint(var_2_6:TransformPoint(var_2_16.topLeft))
+			local tl = uiCamera:WorldToScreenPoint(contentTransform:TransformPoint(char.topLeft))
 
-			if var_2_15 < var_2_18.y then
-				var_2_15 = var_2_18.y
+			if maxtly < tl.y then
+				maxtly = tl.y
 			end
 		end
 
-		var_2_12.y = var_2_14
-		var_2_13.y = var_2_15
+		firstBL.y = minbly
+		firstTL.y = maxtly
 
-		local var_2_19 = var_2_5:WorldToScreenPoint(var_2_6:TransformPoint(var_2_11.bottomRight))
+		local lastBR = uiCamera:WorldToScreenPoint(contentTransform:TransformPoint(lastChar.bottomRight))
 
-		table.insert(arg_2_0.lineInfoList, {
-			var_2_7,
-			var_2_8,
-			var_2_4,
-			var_2_12,
-			var_2_13,
-			var_2_19
+		table.insert(self.lineInfoList, {
+			lineInfo,
+			prevLineTotalCount,
+			totalVisibleCharacterCount,
+			firstBL,
+			firstTL,
+			lastBR
 		})
 	end
 
-	arg_2_0.characterCount = var_2_4
-	arg_2_0.delayTime = arg_2_0:getDelayTime(var_2_4)
-	arg_2_0._curLine = nil
+	self.characterCount = totalVisibleCharacterCount
+	self.delayTime = self:getDelayTime(totalVisibleCharacterCount)
+	self._curLine = nil
 
-	GameUtil.onDestroyViewMember_TweenId(arg_2_0, "tweenId")
+	GameUtil.onDestroyViewMember_TweenId(self, "tweenId")
 end
 
-function var_0_0._frameCallback_overseas(arg_3_0, arg_3_1)
-	local var_3_0 = UnityEngine.Screen.width
+function RoleStoryDispatchTalkItemTween:_frameCallback_overseas(value)
+	local screenWidth = UnityEngine.Screen.width
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.lineInfoList) do
-		local var_3_1 = iter_3_1[1]
-		local var_3_2 = iter_3_1[2]
-		local var_3_3 = iter_3_1[3]
+	for i, v in ipairs(self.lineInfoList) do
+		local lineInfo = v[1]
+		local startCount = v[2]
+		local endCount = v[3]
 
-		if var_3_2 <= arg_3_1 and arg_3_1 <= var_3_3 and var_3_2 ~= var_3_3 then
-			local var_3_4 = iter_3_1[4]
-			local var_3_5 = iter_3_1[5]
-			local var_3_6 = iter_3_1[6]
+		if startCount <= value and value <= endCount and startCount ~= endCount then
+			local firstBL = v[4]
+			local firstTL = v[5]
+			local lastBR = v[6]
 
-			if arg_3_0._curLine ~= iter_3_0 then
-				arg_3_0._curLine = iter_3_0
+			if self._curLine ~= i then
+				self._curLine = i
 
-				local var_3_7 = var_3_4.y
-				local var_3_8 = var_3_5
+				local maxBL_y = firstBL.y
+				local maxTL = firstTL
 
-				for iter_3_2, iter_3_3 in pairs(arg_3_0._subMeshs) do
-					if iter_3_3.sharedMaterial then
-						iter_3_3.sharedMaterial = arg_3_0._fontNormalMat
+				for _, mesh in pairs(self._subMeshs) do
+					if mesh.sharedMaterial then
+						mesh.sharedMaterial = self._fontNormalMat
 					end
 				end
 
-				if iter_3_0 == 1 then
-					if arg_3_0._hasUnderline then
-						arg_3_0._conMat:SetFloat(arg_3_0._LineMinYId, var_3_7 - 4)
+				if i == 1 then
+					if self._hasUnderline then
+						self._conMat:SetFloat(self._LineMinYId, maxBL_y - 4)
 					else
-						arg_3_0._conMat:SetFloat(arg_3_0._LineMinYId, var_3_7)
+						self._conMat:SetFloat(self._LineMinYId, maxBL_y)
 					end
 
-					arg_3_0._conMat:SetFloat(arg_3_0._LineMaxYId, var_3_8.y)
+					self._conMat:SetFloat(self._LineMaxYId, maxTL.y)
 				else
-					arg_3_0._lineSpace = arg_3_0._lastBottomLeft - var_3_8.y > 0 and arg_3_0._lastBottomLeft - var_3_8.y or arg_3_0._lineSpace
+					self._lineSpace = self._lastBottomLeft - maxTL.y > 0 and self._lastBottomLeft - maxTL.y or self._lineSpace
 
-					arg_3_0._conMat:SetFloat(arg_3_0._LineMinYId, var_3_7)
-					arg_3_0._conMat:SetFloat(arg_3_0._LineMaxYId, var_3_8.y + arg_3_0._lineSpace)
+					self._conMat:SetFloat(self._LineMinYId, maxBL_y)
+					self._conMat:SetFloat(self._LineMaxYId, maxTL.y + self._lineSpace)
 				end
 
-				arg_3_0._lastBottomLeft = var_3_7
+				self._lastBottomLeft = maxBL_y
 
-				local var_3_9 = arg_3_0.gameObject
+				local go = self.gameObject
 
-				gohelper.setActive(var_3_9, false)
-				gohelper.setActive(var_3_9, true)
+				gohelper.setActive(go, false)
+				gohelper.setActive(go, true)
 			end
 
-			local var_3_10 = var_3_2 == var_3_3 and 1 or (arg_3_1 - var_3_2) / (var_3_3 - var_3_2)
-			local var_3_11 = 1 - Mathf.Lerp(var_3_4.x - 10, var_3_6.x + 10, var_3_10) / var_3_0
-			local var_3_12, var_3_13, var_3_14 = transformhelper.getLocalPos(arg_3_0.transform)
+			local rate = startCount == endCount and 1 or (value - startCount) / (endCount - startCount)
+			local screenPosX = Mathf.Lerp(firstBL.x - 10, lastBR.x + 10, rate)
+			local posZ = 1 - screenPosX / screenWidth
+			local x, y, _ = transformhelper.getLocalPos(self.transform)
 
-			transformhelper.setLocalPos(arg_3_0.transform, var_3_12, var_3_13, var_3_11)
+			transformhelper.setLocalPos(self.transform, x, y, posZ)
 		end
 	end
 end
 
-function var_0_0._onTextFinished_overseas(arg_4_0)
-	arg_4_0:killTween()
-	arg_4_0:_disable_GRADUAL_ON()
+function RoleStoryDispatchTalkItemTween:_onTextFinished_overseas()
+	self:killTween()
+	self:_disable_GRADUAL_ON()
 
-	local var_4_0, var_4_1, var_4_2 = transformhelper.getLocalPos(arg_4_0.transform)
+	local x, y, z = transformhelper.getLocalPos(self.transform)
 
-	transformhelper.setLocalPos(arg_4_0.transform, var_4_0, var_4_1, 0)
-	arg_4_0:_doCallback()
+	transformhelper.setLocalPos(self.transform, x, y, 0)
+	self:_doCallback()
 end
 
-function var_0_0._disable_GRADUAL_ON(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._subMeshs or {}) do
-		local var_5_0 = iter_5_1.sharedMaterial
+function RoleStoryDispatchTalkItemTween:_disable_GRADUAL_ON()
+	for _, mesh in pairs(self._subMeshs or {}) do
+		local material = mesh.sharedMaterial
 
-		if not gohelper.isNil(var_5_0) then
-			var_5_0:DisableKeyword("_GRADUAL_ON")
-			var_5_0:SetFloat(arg_5_0._LineMinYId, 0)
-			var_5_0:SetFloat(arg_5_0._LineMaxYId, 0)
+		if not gohelper.isNil(material) then
+			material:DisableKeyword("_GRADUAL_ON")
+			material:SetFloat(self._LineMinYId, 0)
+			material:SetFloat(self._LineMaxYId, 0)
 		end
 	end
 
-	arg_5_0._conMat:DisableKeyword("_GRADUAL_ON")
-	arg_5_0._conMat:SetFloat(arg_5_0._LineMinYId, 0)
-	arg_5_0._conMat:SetFloat(arg_5_0._LineMaxYId, 0)
+	self._conMat:DisableKeyword("_GRADUAL_ON")
+	self._conMat:SetFloat(self._LineMinYId, 0)
+	self._conMat:SetFloat(self._LineMaxYId, 0)
 end
 
-function var_0_0.ctor(arg_6_0)
-	arg_6_0:__onInit()
+function RoleStoryDispatchTalkItemTween:ctor()
+	self:__onInit()
 end
 
-function var_0_0.playTween(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	arg_7_0:killTween()
+function RoleStoryDispatchTalkItemTween:playTween(text, content, callback, callbackObj, scrollContent)
+	self:killTween()
 
-	arg_7_0.callback = arg_7_3
-	arg_7_0.callbackObj = arg_7_4
-	arg_7_0.text = arg_7_1
-	arg_7_0.content = arg_7_2
-	arg_7_0.scrollContent = arg_7_5
+	self.callback = callback
+	self.callbackObj = callbackObj
+	self.text = text
+	self.content = content
+	self.scrollContent = scrollContent
 
-	arg_7_0:_playTween_overseas()
-	TaskDispatcher.runDelay(arg_7_0._delayShow, arg_7_0, 0.05)
+	self:_playTween_overseas()
+	TaskDispatcher.runDelay(self._delayShow, self, 0.05)
 end
 
-function var_0_0._delayShow(arg_8_0)
-	arg_8_0:_initText_overseas()
+function RoleStoryDispatchTalkItemTween:_delayShow()
+	self:_initText_overseas()
 
-	arg_8_0.canvasGroup.alpha = 1
-	arg_8_0.tweenId = ZProj.TweenHelper.DOTweenFloat(1, arg_8_0.characterCount, arg_8_0.delayTime, arg_8_0.frameCallback, arg_8_0.onTextFinished, arg_8_0, nil, EaseType.Linear)
+	self.canvasGroup.alpha = 1
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(1, self.characterCount, self.delayTime, self.frameCallback, self.onTextFinished, self, nil, EaseType.Linear)
 
-	arg_8_0:moveContent()
+	self:moveContent()
 end
 
-function var_0_0.moveContent(arg_9_0)
-	local var_9_0 = arg_9_0.scrollContent.transform
-	local var_9_1 = recthelper.getHeight(var_9_0.parent)
-	local var_9_2 = recthelper.getHeight(var_9_0)
-	local var_9_3 = math.max(var_9_2 - var_9_1, 0)
-	local var_9_4 = recthelper.getAnchorY(arg_9_0.transform.parent) + recthelper.getHeight(arg_9_0.transform.parent)
-	local var_9_5 = math.max(var_9_3, var_9_4 - var_9_1)
+function RoleStoryDispatchTalkItemTween:moveContent()
+	local contentTransform = self.scrollContent.transform
+	local scrollHeight = recthelper.getHeight(contentTransform.parent)
+	local contentHeight = recthelper.getHeight(contentTransform)
+	local maxPos = math.max(contentHeight - scrollHeight, 0)
+	local txtPos = recthelper.getAnchorY(self.transform.parent)
+	local txtHeight = recthelper.getHeight(self.transform.parent)
+	local txtPosY = txtPos + txtHeight
+	local caleMovePosY = math.max(maxPos, txtPosY - scrollHeight)
 
-	arg_9_0.moveId = ZProj.TweenHelper.DOAnchorPosY(var_9_0, var_9_5, arg_9_0.delayTime * 0.8, nil, nil, nil, EaseType.Linear)
+	self.moveId = ZProj.TweenHelper.DOAnchorPosY(contentTransform, caleMovePosY, self.delayTime * 0.8, nil, nil, nil, EaseType.Linear)
 end
 
-function var_0_0._doCallback(arg_10_0)
-	local var_10_0 = arg_10_0.callback
-	local var_10_1 = arg_10_0.callbackObj
+function RoleStoryDispatchTalkItemTween:_doCallback()
+	local callback = self.callback
+	local callbackObj = self.callbackObj
 
-	arg_10_0.callback = nil
-	arg_10_0.callbackObj = nil
+	self.callback = nil
+	self.callbackObj = nil
 
-	if var_10_0 then
-		var_10_0(var_10_1)
+	if callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.frameCallback(arg_11_0, arg_11_1)
-	do return arg_11_0:_frameCallback_overseas(arg_11_1) end
+function RoleStoryDispatchTalkItemTween:frameCallback(value)
+	do return self:_frameCallback_overseas(value) end
 
-	local var_11_0 = UnityEngine.Screen.width
-	local var_11_1 = CameraMgr.instance:getUICamera()
+	local screenWidth = UnityEngine.Screen.width
+	local uiCamera = CameraMgr.instance:getUICamera()
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.lineInfoList) do
-		local var_11_2 = iter_11_1[1]
-		local var_11_3 = iter_11_1[2]
-		local var_11_4 = iter_11_1[3]
+	for i, v in ipairs(self.lineInfoList) do
+		local lineInfo = v[1]
+		local startCount = v[2]
+		local endCount = v[3]
 
-		if var_11_3 <= arg_11_1 and arg_11_1 <= var_11_4 then
-			local var_11_5 = arg_11_0.textInfo.characterInfo
-			local var_11_6 = var_11_5[var_11_2.firstVisibleCharacterIndex]
-			local var_11_7 = var_11_5[var_11_2.lastVisibleCharacterIndex]
-			local var_11_8 = var_11_1:WorldToScreenPoint(arg_11_0.transform:TransformPoint(var_11_6.bottomLeft))
-			local var_11_9 = var_11_8
-			local var_11_10 = var_11_8.y
+		if startCount <= value and value <= endCount then
+			local characterInfo = self.textInfo.characterInfo
+			local firstChar = characterInfo[lineInfo.firstVisibleCharacterIndex]
+			local lastChar = characterInfo[lineInfo.lastVisibleCharacterIndex]
+			local firstBL = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(firstChar.bottomLeft))
+			local maxBL = firstBL
+			local minbly = firstBL.y
 
-			for iter_11_2 = var_11_2.firstVisibleCharacterIndex, var_11_2.lastVisibleCharacterIndex do
-				local var_11_11 = var_11_5[iter_11_2]
-				local var_11_12 = var_11_1:WorldToScreenPoint(arg_11_0.transform:TransformPoint(var_11_11.bottomLeft))
+			for j = lineInfo.firstVisibleCharacterIndex, lineInfo.lastVisibleCharacterIndex do
+				local char = characterInfo[j]
+				local tl = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(char.bottomLeft))
 
-				if var_11_10 > var_11_12.y then
-					var_11_10 = var_11_12.y
+				if minbly > tl.y then
+					minbly = tl.y
 				end
 			end
 
-			var_11_9.y = var_11_10
+			maxBL.y = minbly
 
-			local var_11_13 = var_11_1:WorldToScreenPoint(arg_11_0.transform:TransformPoint(var_11_6.topLeft))
-			local var_11_14 = var_11_13
-			local var_11_15 = var_11_13.y
+			local firstTL = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(firstChar.topLeft))
+			local maxTL = firstTL
+			local maxtly = firstTL.y
 
-			for iter_11_3 = var_11_2.firstVisibleCharacterIndex, var_11_2.lastVisibleCharacterIndex do
-				local var_11_16 = var_11_5[iter_11_3]
-				local var_11_17 = var_11_1:WorldToScreenPoint(arg_11_0.transform:TransformPoint(var_11_16.topLeft))
+			for j = lineInfo.firstVisibleCharacterIndex, lineInfo.lastVisibleCharacterIndex do
+				local char = characterInfo[j]
+				local tl = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(char.topLeft))
 
-				if var_11_15 < var_11_17.y then
-					var_11_15 = var_11_17.y
+				if maxtly < tl.y then
+					maxtly = tl.y
 				end
 			end
 
-			var_11_14.y = var_11_15
+			maxTL.y = maxtly
 
-			local var_11_18 = var_11_1:WorldToScreenPoint(arg_11_0.transform:TransformPoint(var_11_7.bottomRight))
+			local lastBR = uiCamera:WorldToScreenPoint(self.transform:TransformPoint(lastChar.bottomRight))
 
-			if iter_11_0 == 1 then
-				arg_11_0._conMat:SetFloat(arg_11_0._LineMinYId, var_11_9.y)
-				arg_11_0._conMat:SetFloat(arg_11_0._LineMaxYId, var_11_14.y + 10)
+			if i == 1 then
+				self._conMat:SetFloat(self._LineMinYId, maxBL.y)
+				self._conMat:SetFloat(self._LineMaxYId, maxTL.y + 10)
 
-				for iter_11_4, iter_11_5 in pairs(arg_11_0._subMeshs) do
-					if iter_11_5.materialForRendering then
-						iter_11_5.materialForRendering:SetFloat(arg_11_0._LineMinYId, var_11_9.y)
-						iter_11_5.materialForRendering:SetFloat(arg_11_0._LineMaxYId, var_11_14.y + 10)
-						iter_11_5.materialForRendering:EnableKeyword("_GRADUAL_ON")
+				for _, mesh in pairs(self._subMeshs) do
+					if mesh.materialForRendering then
+						mesh.materialForRendering:SetFloat(self._LineMinYId, maxBL.y)
+						mesh.materialForRendering:SetFloat(self._LineMaxYId, maxTL.y + 10)
+						mesh.materialForRendering:EnableKeyword("_GRADUAL_ON")
 					end
 				end
 			else
-				arg_11_0._conMat:SetFloat(arg_11_0._LineMinYId, var_11_9.y)
-				arg_11_0._conMat:SetFloat(arg_11_0._LineMaxYId, var_11_14.y)
+				self._conMat:SetFloat(self._LineMinYId, maxBL.y)
+				self._conMat:SetFloat(self._LineMaxYId, maxTL.y)
 
-				for iter_11_6, iter_11_7 in pairs(arg_11_0._subMeshs) do
-					if iter_11_7.materialForRendering then
-						iter_11_7.materialForRendering:SetFloat(arg_11_0._LineMinYId, var_11_9.y)
-						iter_11_7.materialForRendering:SetFloat(arg_11_0._LineMaxYId, var_11_14.y)
-						iter_11_7.materialForRendering:EnableKeyword("_GRADUAL_ON")
+				for _, mesh in pairs(self._subMeshs) do
+					if mesh.materialForRendering then
+						mesh.materialForRendering:SetFloat(self._LineMinYId, maxBL.y)
+						mesh.materialForRendering:SetFloat(self._LineMaxYId, maxTL.y)
+						mesh.materialForRendering:EnableKeyword("_GRADUAL_ON")
 					end
 				end
 			end
 
-			local var_11_19 = arg_11_0.gameObject
+			local go = self.gameObject
 
-			gohelper.setActive(var_11_19, false)
-			gohelper.setActive(var_11_19, true)
+			gohelper.setActive(go, false)
+			gohelper.setActive(go, true)
 
-			local var_11_20 = var_11_3 == var_11_4 and 1 or (arg_11_1 - var_11_3) / (var_11_4 - var_11_3)
-			local var_11_21 = 1 - Mathf.Lerp(var_11_9.x - 10, var_11_18.x + 10, var_11_20) / var_11_0
+			local rate = startCount == endCount and 1 or (value - startCount) / (endCount - startCount)
+			local screenPosX = Mathf.Lerp(maxBL.x - 10, lastBR.x + 10, rate)
+			local posZ = 1 - screenPosX / screenWidth
 
-			transformhelper.setLocalPos(arg_11_0.transform, arg_11_0._contentX, arg_11_0._contentY, var_11_21)
+			transformhelper.setLocalPos(self.transform, self._contentX, self._contentY, posZ)
 		end
 	end
 end
 
-function var_0_0.onTextFinished(arg_12_0)
-	do return arg_12_0:_onTextFinished_overseas() end
+function RoleStoryDispatchTalkItemTween:onTextFinished()
+	do return self:_onTextFinished_overseas() end
 
-	arg_12_0:killTween()
+	self:killTween()
 
-	local var_12_0, var_12_1, var_12_2 = transformhelper.getLocalPos(arg_12_0.transform)
+	local x, y, z = transformhelper.getLocalPos(self.transform)
 
-	transformhelper.setLocalPos(arg_12_0.transform, var_12_0, var_12_1, 0)
-	arg_12_0._conMat:DisableKeyword("_GRADUAL_ON")
+	transformhelper.setLocalPos(self.transform, x, y, 0)
+	self._conMat:DisableKeyword("_GRADUAL_ON")
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._subMeshs) do
-		if iter_12_1.materialForRendering then
-			iter_12_1.materialForRendering:DisableKeyword("_GRADUAL_ON")
+	for _, v in pairs(self._subMeshs) do
+		if v.materialForRendering then
+			v.materialForRendering:DisableKeyword("_GRADUAL_ON")
 		end
 	end
 
-	arg_12_0:_doCallback()
+	self:_doCallback()
 end
 
-function var_0_0.initText(arg_13_0)
-	arg_13_0.transform = arg_13_0.text.transform
-	arg_13_0.gameObject = arg_13_0.text.gameObject
-	arg_13_0.canvasGroup = arg_13_0.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_13_0._subMeshs = {}
-	arg_13_0._conMat = arg_13_0.text.fontMaterial
+function RoleStoryDispatchTalkItemTween:initText()
+	self.transform = self.text.transform
+	self.gameObject = self.text.gameObject
+	self.canvasGroup = self.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._subMeshs = {}
+	self._conMat = self.text.fontMaterial
 
-	arg_13_0._conMat:EnableKeyword("_GRADUAL_ON")
-	arg_13_0._conMat:DisableKeyword("_DISSOLVE_ON")
+	self._conMat:EnableKeyword("_GRADUAL_ON")
+	self._conMat:DisableKeyword("_DISSOLVE_ON")
 
-	local var_13_0 = UnityEngine.Shader
+	local _shader = UnityEngine.Shader
 
-	arg_13_0._LineMinYId = var_13_0.PropertyToID("_LineMinY")
-	arg_13_0._LineMaxYId = var_13_0.PropertyToID("_LineMaxY")
-	arg_13_0._contentX, arg_13_0._contentY, _ = transformhelper.getLocalPos(arg_13_0.transform)
+	self._LineMinYId = _shader.PropertyToID("_LineMinY")
+	self._LineMaxYId = _shader.PropertyToID("_LineMaxY")
+	self._contentX, self._contentY, _ = transformhelper.getLocalPos(self.transform)
 
-	local var_13_1 = arg_13_0.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+	local subMeshs = self.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
 
-	if var_13_1 then
-		local var_13_2 = var_13_1:GetEnumerator()
+	if subMeshs then
+		local iter = subMeshs:GetEnumerator()
 
-		while var_13_2:MoveNext() do
-			local var_13_3 = var_13_2.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+		while iter:MoveNext() do
+			local subMesh = iter.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
 
-			table.insert(arg_13_0._subMeshs, var_13_3)
+			table.insert(self._subMeshs, subMesh)
 		end
 	end
 
-	arg_13_0.textInfo = arg_13_0.text:GetTextInfo(arg_13_0.content)
-	arg_13_0.lineInfoList = {}
+	self.textInfo = self.text:GetTextInfo(self.content)
+	self.lineInfoList = {}
 
-	local var_13_4 = 0
+	local totalVisibleCharacterCount = 0
 
-	for iter_13_0 = 1, arg_13_0.textInfo.lineCount do
-		local var_13_5 = arg_13_0.textInfo.lineInfo[iter_13_0 - 1]
-		local var_13_6 = var_13_4 + 1
+	for i = 1, self.textInfo.lineCount do
+		local lineInfo = self.textInfo.lineInfo[i - 1]
+		local prevLineTotalCount = totalVisibleCharacterCount + 1
 
-		var_13_4 = var_13_4 + var_13_5.visibleCharacterCount
+		totalVisibleCharacterCount = totalVisibleCharacterCount + lineInfo.visibleCharacterCount
 
-		table.insert(arg_13_0.lineInfoList, {
-			var_13_5,
-			var_13_6,
-			var_13_4
+		table.insert(self.lineInfoList, {
+			lineInfo,
+			prevLineTotalCount,
+			totalVisibleCharacterCount
 		})
 	end
 
-	arg_13_0.characterCount = var_13_4
-	arg_13_0.delayTime = arg_13_0:getDelayTime(var_13_4)
+	self.characterCount = totalVisibleCharacterCount
+	self.delayTime = self:getDelayTime(totalVisibleCharacterCount)
 end
 
-function var_0_0.getDelayTime(arg_14_0, arg_14_1)
-	local var_14_0 = 4
+function RoleStoryDispatchTalkItemTween:getDelayTime(characterCount)
+	local speed = 4
+	local time = 0.08 * characterCount
 
-	return 0.08 * arg_14_1 / var_14_0
+	time = time / speed
+
+	return time
 end
 
-function var_0_0.killTween(arg_15_0)
-	if arg_15_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_15_0.tweenId)
+function RoleStoryDispatchTalkItemTween:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_15_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	if arg_15_0.moveId then
-		ZProj.TweenHelper.KillById(arg_15_0.moveId)
+	if self.moveId then
+		ZProj.TweenHelper.KillById(self.moveId)
 
-		arg_15_0.moveId = nil
+		self.moveId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_15_0._delayShow, arg_15_0)
+	TaskDispatcher.cancelTask(self._delayShow, self)
 end
 
-function var_0_0.destroy(arg_16_0)
-	arg_16_0:killTween()
-	arg_16_0:__onDispose()
+function RoleStoryDispatchTalkItemTween:destroy()
+	self:killTween()
+	self:__onDispose()
 end
 
-return var_0_0
+return RoleStoryDispatchTalkItemTween

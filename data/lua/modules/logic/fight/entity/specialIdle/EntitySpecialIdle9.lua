@@ -1,24 +1,26 @@
-﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle9", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/specialIdle/EntitySpecialIdle9.lua
 
-local var_0_0 = class("EntitySpecialIdle9", UserDataDispose)
+module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle9", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
-	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, arg_1_0._onMySideRoundEnd, arg_1_0)
+local EntitySpecialIdle9 = class("EntitySpecialIdle9", UserDataDispose)
 
-	arg_1_0._entity = arg_1_1
+function EntitySpecialIdle9:ctor(entity)
+	self:__onInit()
+	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
+
+	self._entity = entity
 end
 
-function var_0_0._onMySideRoundEnd(arg_2_0)
-	FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_2_0._entity.id)
+function EntitySpecialIdle9:_onMySideRoundEnd()
+	FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, self._entity.id)
 end
 
-function var_0_0.releaseSelf(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, arg_3_0._onMySideRoundEnd, arg_3_0)
+function EntitySpecialIdle9:releaseSelf()
+	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
 
-	arg_3_0._entity = nil
+	self._entity = nil
 
-	arg_3_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return EntitySpecialIdle9

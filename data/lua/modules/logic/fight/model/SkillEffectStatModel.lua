@@ -1,192 +1,188 @@
-﻿module("modules.logic.fight.model.SkillEffectStatModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/SkillEffectStatModel.lua
 
-local var_0_0 = class("SkillEffectStatModel", ListScrollModel)
+module("modules.logic.fight.model.SkillEffectStatModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.idCounter = 1
-	arg_1_0.toggleId = 1
-	arg_1_0.titleMO = {}
-	arg_1_0.maxMO = {}
-	arg_1_0.totalMO = {}
-	arg_1_0.type1MOList = {}
-	arg_1_0.type2MOList = {}
-	arg_1_0.type1MOCount = 0
-	arg_1_0.type2MOCount = 0
+local SkillEffectStatModel = class("SkillEffectStatModel", ListScrollModel)
 
-	arg_1_0:clearStat()
+function SkillEffectStatModel:onInit()
+	self.idCounter = 1
+	self.toggleId = 1
+	self.titleMO = {}
+	self.maxMO = {}
+	self.totalMO = {}
+	self.type1MOList = {}
+	self.type2MOList = {}
+	self.type1MOCount = 0
+	self.type2MOCount = 0
+
+	self:clearStat()
 end
 
-function var_0_0.switchTab(arg_2_0, arg_2_1)
-	arg_2_0.toggleId = arg_2_1
+function SkillEffectStatModel:switchTab(toggleId)
+	self.toggleId = toggleId
 end
 
-function var_0_0.clearStat(arg_3_0)
-	arg_3_0._maxParticleSystem = 0
-	arg_3_0._maxParticleCount = 0
-	arg_3_0._maxMaterialCount = 0
-	arg_3_0._maxTextureCount = 0
+function SkillEffectStatModel:clearStat()
+	self._maxParticleSystem = 0
+	self._maxParticleCount = 0
+	self._maxMaterialCount = 0
+	self._maxTextureCount = 0
 end
 
-function var_0_0.statistic(arg_4_0)
-	arg_4_0.type1MOCount = 0
-	arg_4_0.type2MOCount = 0
-	arg_4_0.idCounter = 1
+function SkillEffectStatModel:statistic()
+	self.type1MOCount = 0
+	self.type2MOCount = 0
+	self.idCounter = 1
 
-	local var_4_0 = 1
-	local var_4_1 = {}
-	local var_4_2 = {}
-	local var_4_3 = FightEffectPool.getId2UsingWrapDict()
+	local oldListIndex = 1
+	local effectPrefabList = {}
+	local moList = {}
+	local usingDict = FightEffectPool.getId2UsingWrapDict()
 
-	for iter_4_0, iter_4_1 in pairs(var_4_3) do
-		if not gohelper.isNil(iter_4_1.effectGO) then
-			table.insert(var_4_1, iter_4_1.effectGO)
+	for _, wrap in pairs(usingDict) do
+		if not gohelper.isNil(wrap.effectGO) then
+			table.insert(effectPrefabList, wrap.effectGO)
 		end
 	end
 
-	local var_4_4 = 0
-	local var_4_5 = 0
-	local var_4_6 = 0
-	local var_4_7 = 0
+	local max1, max2, max3, max4 = 0, 0, 0, 0
 
-	for iter_4_2, iter_4_3 in ipairs(var_4_1) do
-		local var_4_8, var_4_9, var_4_10, var_4_11 = arg_4_0:_statSingle(iter_4_3)
+	for _, effectGO in ipairs(effectPrefabList) do
+		local c1, c2, c3, c4 = self:_statSingle(effectGO)
 
-		if var_4_8 > 0 or var_4_9 > 0 or var_4_10 > 0 or var_4_11 > 0 then
-			arg_4_0.type2MOCount = arg_4_0.type2MOCount + 1
+		if c1 > 0 or c2 > 0 or c3 > 0 or c4 > 0 then
+			self.type2MOCount = self.type2MOCount + 1
 
-			local var_4_12 = arg_4_0.type2MOList[arg_4_0.type2MOCount]
+			local type2MO = self.type2MOList[self.type2MOCount]
 
-			if not var_4_12 then
-				var_4_12 = {}
-				arg_4_0.type2MOList[arg_4_0.type2MOCount] = var_4_12
+			if not type2MO then
+				type2MO = {}
+				self.type2MOList[self.type2MOCount] = type2MO
 			end
 
-			arg_4_0:_setMO(var_4_12, iter_4_3.name, iter_4_3, var_4_8, var_4_9, var_4_10, var_4_11)
+			self:_setMO(type2MO, effectGO.name, effectGO, c1, c2, c3, c4)
 		end
 
-		var_4_4 = var_4_4 + var_4_8
-		var_4_5 = var_4_5 + var_4_9
-		var_4_6 = var_4_6 + var_4_10
-		var_4_7 = var_4_7 + var_4_11
+		max1 = max1 + c1
+		max2 = max2 + c2
+		max3 = max3 + c3
+		max4 = max4 + c4
 	end
 
-	arg_4_0:_setMO(arg_4_0.titleMO, "", nil, "粒子系统", "粒子数", "材质数", "贴图数")
-	arg_4_0:_setMO(arg_4_0.totalMO, "总计", nil, var_4_4, var_4_5, var_4_6, var_4_7)
+	self:_setMO(self.titleMO, "", nil, "粒子系统", "粒子数", "材质数", "贴图数")
+	self:_setMO(self.totalMO, "总计", nil, max1, max2, max3, max4)
 
-	arg_4_0._maxParticleSystem = var_4_4 < arg_4_0._maxParticleSystem and arg_4_0._maxParticleSystem or var_4_4
-	arg_4_0._maxParticleCount = var_4_5 < arg_4_0._maxParticleCount and arg_4_0._maxParticleCount or var_4_5
-	arg_4_0._maxMaterialCount = var_4_6 < arg_4_0._maxMaterialCount and arg_4_0._maxMaterialCount or var_4_6
-	arg_4_0._maxTextureCount = var_4_7 < arg_4_0._maxTextureCount and arg_4_0._maxTextureCount or var_4_7
+	self._maxParticleSystem = max1 < self._maxParticleSystem and self._maxParticleSystem or max1
+	self._maxParticleCount = max2 < self._maxParticleCount and self._maxParticleCount or max2
+	self._maxMaterialCount = max3 < self._maxMaterialCount and self._maxMaterialCount or max3
+	self._maxTextureCount = max4 < self._maxTextureCount and self._maxTextureCount or max4
 
-	arg_4_0:_setMO(arg_4_0.maxMO, "最大数", nil, arg_4_0._maxParticleSystem, arg_4_0._maxParticleCount, arg_4_0._maxMaterialCount, arg_4_0._maxTextureCount)
+	self:_setMO(self.maxMO, "最大数", nil, self._maxParticleSystem, self._maxParticleCount, self._maxMaterialCount, self._maxTextureCount)
 
-	local var_4_13 = {}
+	local list = {}
 
-	if arg_4_0.toggleId == 1 then
-		for iter_4_4 = 1, arg_4_0.type1MOCount do
-			table.insert(var_4_13, arg_4_0.type1MOList[iter_4_4])
+	if self.toggleId == 1 then
+		for i = 1, self.type1MOCount do
+			table.insert(list, self.type1MOList[i])
 		end
 	else
-		for iter_4_5 = 1, arg_4_0.type2MOCount do
-			table.insert(var_4_13, arg_4_0.type2MOList[iter_4_5])
+		for i = 1, self.type2MOCount do
+			table.insert(list, self.type2MOList[i])
 		end
 	end
 
-	table.sort(var_4_13, function(arg_5_0, arg_5_1)
-		if arg_5_0.particleCount ~= arg_5_1.particleCount then
-			return arg_5_0.particleCount > arg_5_1.particleCount
-		elseif arg_5_0.particleSystem ~= arg_5_1.particleSystem then
-			return arg_5_0.particleSystem > arg_5_1.particleSystem
+	table.sort(list, function(mo1, mo2)
+		if mo1.particleCount ~= mo2.particleCount then
+			return mo1.particleCount > mo2.particleCount
+		elseif mo1.particleSystem ~= mo2.particleSystem then
+			return mo1.particleSystem > mo2.particleSystem
 		else
-			return arg_5_0.id < arg_5_1.id
+			return mo1.id < mo2.id
 		end
 	end)
-	table.insert(var_4_13, 1, arg_4_0.totalMO)
-	table.insert(var_4_13, 1, arg_4_0.maxMO)
-	table.insert(var_4_13, 1, arg_4_0.titleMO)
-	arg_4_0:setList(var_4_13)
+	table.insert(list, 1, self.totalMO)
+	table.insert(list, 1, self.maxMO)
+	table.insert(list, 1, self.titleMO)
+	self:setList(list)
 end
 
-function var_0_0._statSingle(arg_6_0, arg_6_1)
-	if not arg_6_1.activeInHierarchy then
+function SkillEffectStatModel:_statSingle(go)
+	if not go.activeInHierarchy then
 		return 0, 0, 0, 0
 	end
 
-	local var_6_0 = 0
-	local var_6_1 = 0
-	local var_6_2 = 0
-	local var_6_3 = 0
-	local var_6_4 = arg_6_1:GetComponent(typeof("UnityEngine.ParticleSystem"))
+	local c1, c2, c3, c4 = 0, 0, 0, 0
+	local particleSystem = go:GetComponent(typeof("UnityEngine.ParticleSystem"))
 
-	if var_6_4 then
-		var_6_0 = var_6_0 + 1
-		var_6_1 = var_6_1 + var_6_4.particleCount
+	if particleSystem then
+		c1 = c1 + 1
+		c2 = c2 + particleSystem.particleCount
 	end
 
-	local var_6_5 = arg_6_1:GetComponent(typeof("UnityEngine.Renderer"))
+	local renderer = go:GetComponent(typeof("UnityEngine.Renderer"))
 
-	if var_6_5 then
-		local var_6_6 = var_6_5.sharedMaterials
-		local var_6_7 = var_6_6.Length
+	if renderer then
+		local sharedMaterials = renderer.sharedMaterials
+		local len = sharedMaterials.Length
 
-		for iter_6_0 = 0, var_6_7 - 1 do
-			local var_6_8 = var_6_6[iter_6_0]
+		for i = 0, len - 1 do
+			local material = sharedMaterials[i]
 
-			if not gohelper.isNil(var_6_8) then
-				var_6_2 = var_6_2 + 1
+			if not gohelper.isNil(material) then
+				c3 = c3 + 1
 
-				local var_6_9 = var_6_8:GetTexturePropertyNames()
+				local texturePropertyNames = material:GetTexturePropertyNames()
 
-				for iter_6_1 = 0, var_6_9.Length - 1 do
-					local var_6_10 = var_6_9[iter_6_1]
+				for j = 0, texturePropertyNames.Length - 1 do
+					local texturePropertyName = texturePropertyNames[j]
 
-					if var_6_8:GetTexture(var_6_10) then
-						var_6_3 = var_6_3 + 1
+					if material:GetTexture(texturePropertyName) then
+						c4 = c4 + 1
 					end
 				end
 			end
 		end
 	end
 
-	if var_6_0 > 0 or var_6_1 > 0 or var_6_2 > 0 or var_6_3 > 0 then
-		arg_6_0.type1MOCount = arg_6_0.type1MOCount + 1
+	if c1 > 0 or c2 > 0 or c3 > 0 or c4 > 0 then
+		self.type1MOCount = self.type1MOCount + 1
 
-		local var_6_11 = arg_6_0.type1MOList[arg_6_0.type1MOCount]
+		local type1MO = self.type1MOList[self.type1MOCount]
 
-		if not var_6_11 then
-			var_6_11 = {}
-			arg_6_0.type1MOList[arg_6_0.type1MOCount] = var_6_11
+		if not type1MO then
+			type1MO = {}
+			self.type1MOList[self.type1MOCount] = type1MO
 		end
 
-		arg_6_0:_setMO(var_6_11, arg_6_1.name, arg_6_1, var_6_0, var_6_1, var_6_2, var_6_3)
+		self:_setMO(type1MO, go.name, go, c1, c2, c3, c4)
 	end
 
-	local var_6_12 = arg_6_1.transform
-	local var_6_13 = var_6_12.childCount
+	local tr = go.transform
+	local childCount = tr.childCount
 
-	for iter_6_2 = 0, var_6_13 - 1 do
-		local var_6_14, var_6_15, var_6_16, var_6_17 = arg_6_0:_statSingle(var_6_12:GetChild(iter_6_2).gameObject)
+	for i = 0, childCount - 1 do
+		local cc1, cc2, cc3, cc4 = self:_statSingle(tr:GetChild(i).gameObject)
 
-		var_6_0 = var_6_0 + var_6_14
-		var_6_1 = var_6_1 + var_6_15
-		var_6_2 = var_6_2 + var_6_16
-		var_6_3 = var_6_3 + var_6_17
+		c1 = c1 + cc1
+		c2 = c2 + cc2
+		c3 = c3 + cc3
+		c4 = c4 + cc4
 	end
 
-	return var_6_0, var_6_1, var_6_2, var_6_3
+	return c1, c2, c3, c4
 end
 
-function var_0_0._setMO(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6, arg_7_7)
-	arg_7_1.name = arg_7_2
-	arg_7_1.go = arg_7_3
-	arg_7_1.particleSystem = arg_7_4
-	arg_7_1.particleCount = arg_7_5
-	arg_7_1.materialCount = arg_7_6
-	arg_7_1.textureCount = arg_7_7
-	arg_7_1.id = arg_7_0.idCounter
-	arg_7_0.idCounter = arg_7_0.idCounter + 1
+function SkillEffectStatModel:_setMO(type1MO, name, go, c1, c2, c3, c4)
+	type1MO.name = name
+	type1MO.go = go
+	type1MO.particleSystem = c1
+	type1MO.particleCount = c2
+	type1MO.materialCount = c3
+	type1MO.textureCount = c4
+	type1MO.id = self.idCounter
+	self.idCounter = self.idCounter + 1
 end
 
-var_0_0.instance = var_0_0.New()
+SkillEffectStatModel.instance = SkillEffectStatModel.New()
 
-return var_0_0
+return SkillEffectStatModel

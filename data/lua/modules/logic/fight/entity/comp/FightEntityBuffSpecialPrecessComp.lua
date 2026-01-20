@@ -1,34 +1,36 @@
-﻿module("modules.logic.fight.entity.comp.FightEntityBuffSpecialPrecessComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightEntityBuffSpecialPrecessComp.lua
 
-local var_0_0 = class("FightEntityBuffSpecialPrecessComp", FightBaseClass)
+module("modules.logic.fight.entity.comp.FightEntityBuffSpecialPrecessComp", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1)
-	arg_1_0._entity = arg_1_1
+local FightEntityBuffSpecialPrecessComp = class("FightEntityBuffSpecialPrecessComp", FightBaseClass)
 
-	arg_1_0:com_registFightEvent(FightEvent.AddEntityBuff, arg_1_0._onAddEntityBuff)
+function FightEntityBuffSpecialPrecessComp:onLogicEnter(entity)
+	self._entity = entity
+
+	self:com_registFightEvent(FightEvent.AddEntityBuff, self._onAddEntityBuff)
 end
 
-function var_0_0._onAddEntityBuff(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= arg_2_0._entity.id then
+function FightEntityBuffSpecialPrecessComp:_onAddEntityBuff(entityId, buffMO)
+	if entityId ~= self._entity.id then
 		return
 	end
 
-	arg_2_0:_registBuffIdClass(arg_2_2.buffId, arg_2_2.uid)
+	self:_registBuffIdClass(buffMO.buffId, buffMO.uid)
 end
 
-local var_0_1 = {
+local buffId2Class = {
 	[4150022] = FightBuffJuDaBenYePuDormancyHand,
 	[4150023] = FightBuffJuDaBenYePuDormancyTail
 }
 
-function var_0_0._registBuffIdClass(arg_3_0, arg_3_1, arg_3_2)
-	if var_0_1[arg_3_1] then
-		arg_3_0:newClass(var_0_1[arg_3_1], arg_3_0._entity, arg_3_1, arg_3_2)
+function FightEntityBuffSpecialPrecessComp:_registBuffIdClass(buffId, buffUid)
+	if buffId2Class[buffId] then
+		self:newClass(buffId2Class[buffId], self._entity, buffId, buffUid)
 	end
 end
 
-function var_0_0.onLogicExit(arg_4_0)
+function FightEntityBuffSpecialPrecessComp:onLogicExit()
 	return
 end
 
-return var_0_0
+return FightEntityBuffSpecialPrecessComp

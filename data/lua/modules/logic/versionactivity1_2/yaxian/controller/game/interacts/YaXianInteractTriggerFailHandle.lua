@@ -1,59 +1,60 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.interacts.YaXianInteractTriggerFailHandle", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/interacts/YaXianInteractTriggerFailHandle.lua
 
-local var_0_0 = class("YaXianInteractTriggerFailHandle", YaXianInteractHandleBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.interacts.YaXianInteractTriggerFailHandle", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local YaXianInteractTriggerFailHandle = class("YaXianInteractTriggerFailHandle", YaXianInteractHandleBase)
 
-	arg_1_0._enableAlarm = true
+function YaXianInteractTriggerFailHandle:init(targetObj)
+	YaXianInteractTriggerFailHandle.super.init(self, targetObj)
+
+	self._enableAlarm = true
 end
 
-function var_0_0.onDrawAlert(arg_2_0, arg_2_1)
-	if not arg_2_0._enableAlarm then
+function YaXianInteractTriggerFailHandle:onDrawAlert(map)
+	if not self._enableAlarm then
 		return
 	end
 
-	local var_2_0 = arg_2_0._target.originData.posX
-	local var_2_1 = arg_2_0._target.originData.posY
+	local curX, curY = self._target.originData.posX, self._target.originData.posY
 
-	var_0_0.insertToAlertMap(arg_2_1, var_2_0 + 1, var_2_1)
-	var_0_0.insertToAlertMap(arg_2_1, var_2_0 - 1, var_2_1)
-	var_0_0.insertToAlertMap(arg_2_1, var_2_0, var_2_1 + 1)
-	var_0_0.insertToAlertMap(arg_2_1, var_2_0, var_2_1 - 1)
+	YaXianInteractTriggerFailHandle.insertToAlertMap(map, curX + 1, curY)
+	YaXianInteractTriggerFailHandle.insertToAlertMap(map, curX - 1, curY)
+	YaXianInteractTriggerFailHandle.insertToAlertMap(map, curX, curY + 1)
+	YaXianInteractTriggerFailHandle.insertToAlertMap(map, curX, curY - 1)
 end
 
-function var_0_0.insertToAlertMap(arg_3_0, arg_3_1, arg_3_2)
-	if YaXianGameController.instance:posCanWalk(arg_3_1, arg_3_2) then
-		arg_3_0[arg_3_1] = arg_3_0[arg_3_1] or {}
-		arg_3_0[arg_3_1][arg_3_2] = true
+function YaXianInteractTriggerFailHandle.insertToAlertMap(map, x, y)
+	if YaXianGameController.instance:posCanWalk(x, y) then
+		map[x] = map[x] or {}
+		map[x][y] = true
 	end
 end
 
-function var_0_0.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0._enableAlarm = false
+function YaXianInteractTriggerFailHandle:moveTo(x, y, callback, callbackObj)
+	self._enableAlarm = false
 
-	var_0_0.super.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	YaXianInteractTriggerFailHandle.super.moveTo(self, x, y, callback, callbackObj)
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.onMoveCompleted(arg_5_0)
-	var_0_0.super.onMoveCompleted(arg_5_0)
+function YaXianInteractTriggerFailHandle:onMoveCompleted()
+	YaXianInteractTriggerFailHandle.super.onMoveCompleted(self)
 
-	arg_5_0._enableAlarm = true
+	self._enableAlarm = true
 
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.onAvatarLoaded(arg_6_0)
-	var_0_0.super.onAvatarLoaded(arg_6_0)
+function YaXianInteractTriggerFailHandle:onAvatarLoaded()
+	YaXianInteractTriggerFailHandle.super.onAvatarLoaded(self)
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.dispose(arg_7_0)
-	arg_7_0._enableAlarm = false
+function YaXianInteractTriggerFailHandle:dispose()
+	self._enableAlarm = false
 
-	var_0_0.super.dispose(arg_7_0)
+	YaXianInteractTriggerFailHandle.super.dispose(self)
 	YaXianGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-return var_0_0
+return YaXianInteractTriggerFailHandle

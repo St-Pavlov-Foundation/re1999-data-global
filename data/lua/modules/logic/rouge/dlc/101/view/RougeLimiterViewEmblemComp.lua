@@ -1,82 +1,84 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterViewEmblemComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterViewEmblemComp.lua
 
-local var_0_0 = class("RougeLimiterViewEmblemComp", BaseView)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterViewEmblemComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local RougeLimiterViewEmblemComp = class("RougeLimiterViewEmblemComp", BaseView)
 
-	arg_1_0.rootPath = arg_1_1
+function RougeLimiterViewEmblemComp:ctor(rootPath)
+	RougeLimiterViewEmblemComp.super.ctor(self)
+
+	self.rootPath = rootPath
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._goroot = gohelper.findChild(arg_2_0.viewGO, arg_2_0.rootPath)
-	arg_2_0._txtpoint = gohelper.findChildText(arg_2_0._goroot, "point/#txt_point")
-	arg_2_0._btnclick = gohelper.findChildButtonWithAudio(arg_2_0._goroot, "point/#btn_click")
-	arg_2_0._gotips = gohelper.findChild(arg_2_0._goroot, "tips")
-	arg_2_0._txttips = gohelper.findChildText(arg_2_0._goroot, "tips/#txt_tips")
+function RougeLimiterViewEmblemComp:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, self.rootPath)
+	self._txtpoint = gohelper.findChildText(self._goroot, "point/#txt_point")
+	self._btnclick = gohelper.findChildButtonWithAudio(self._goroot, "point/#btn_click")
+	self._gotips = gohelper.findChild(self._goroot, "tips")
+	self._txttips = gohelper.findChildText(self._goroot, "tips/#txt_tips")
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0._btnclick:AddClickListener(arg_3_0._btnclickOnClick, arg_3_0)
+function RougeLimiterViewEmblemComp:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	arg_4_0._btnclick:RemoveClickListener()
+function RougeLimiterViewEmblemComp:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
-	arg_5_0._isTipVisible = not arg_5_0._isTipVisible
+function RougeLimiterViewEmblemComp:_btnclickOnClick()
+	self._isTipVisible = not self._isTipVisible
 
-	gohelper.setActive(arg_5_0._gotips, arg_5_0._isTipVisible)
+	gohelper.setActive(self._gotips, self._isTipVisible)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateEmblem, arg_6_0._onUpdateEmblem, arg_6_0)
+function RougeLimiterViewEmblemComp:_editableInitView()
+	self:addEventCb(RougeDLCController101.instance, RougeDLCEvent101.UpdateEmblem, self._onUpdateEmblem, self)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function RougeLimiterViewEmblemComp:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._emblemCount = RougeDLCModel101.instance:getTotalEmblemCount()
+function RougeLimiterViewEmblemComp:onOpen()
+	self._emblemCount = RougeDLCModel101.instance:getTotalEmblemCount()
 
-	arg_8_0:initEmblemCount()
-	arg_8_0:refreshEmblemTips()
+	self:initEmblemCount()
+	self:refreshEmblemTips()
 end
 
-function var_0_0.initEmblemCount(arg_9_0)
-	arg_9_0._txtpoint.text = arg_9_0._emblemCount
+function RougeLimiterViewEmblemComp:initEmblemCount()
+	self._txtpoint.text = self._emblemCount
 end
 
-function var_0_0.refreshEmblemTips(arg_10_0)
-	local var_10_0 = lua_rouge_dlc_const.configDict[RougeDLCEnum101.Const.MaxEmblemCount]
-	local var_10_1 = var_10_0 and var_10_0.value or 0
-	local var_10_2 = {
-		arg_10_0._emblemCount,
-		var_10_1
+function RougeLimiterViewEmblemComp:refreshEmblemTips()
+	local maxEmbleCountCo = lua_rouge_dlc_const.configDict[RougeDLCEnum101.Const.MaxEmblemCount]
+	local maxEmblemCount = maxEmbleCountCo and maxEmbleCountCo.value or 0
+	local params = {
+		self._emblemCount,
+		maxEmblemCount
 	}
 
-	arg_10_0._txttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_dlc_101_emblemTips"), var_10_2)
+	self._txttips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_dlc_101_emblemTips"), params)
 end
 
-function var_0_0._onUpdateEmblem(arg_11_0)
-	arg_11_0._emblemCount = RougeDLCModel101.instance:getTotalEmblemCount()
+function RougeLimiterViewEmblemComp:_onUpdateEmblem()
+	self._emblemCount = RougeDLCModel101.instance:getTotalEmblemCount()
 
-	arg_11_0:initEmblemCount()
-	arg_11_0:refreshEmblemTips()
+	self:initEmblemCount()
+	self:refreshEmblemTips()
 end
 
-function var_0_0.onClose(arg_12_0)
+function RougeLimiterViewEmblemComp:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function RougeLimiterViewEmblemComp:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeLimiterViewEmblemComp

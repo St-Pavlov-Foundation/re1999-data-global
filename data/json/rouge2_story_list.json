@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "storyIdList": "603200",
+    "eventId": "",
+    "fullImage": "rouge_mainstory_cg_1_2",
+    "stageId": 1,
+    "name": "language_10102661"
+  },
+  {
+    "id": 2,
+    "storyIdList": "600901",
+    "eventId": "146",
+    "fullImage": "",
+    "stageId": 2,
+    "name": "language_10101001"
+  },
+  {
+    "id": 3,
+    "storyIdList": "600901",
+    "eventId": "147",
+    "fullImage": "",
+    "stageId": 3,
+    "name": "language_10101002"
+  },
+  {
+    "id": 4,
+    "storyIdList": "600901",
+    "eventId": "148",
+    "fullImage": "",
+    "stageId": 4,
+    "name": "language_10101003"
+  },
+  {
+    "id": 5,
+    "storyIdList": "600901",
+    "eventId": "149",
+    "fullImage": "",
+    "stageId": 5,
+    "name": "language_10101004"
+  },
+  {
+    "id": 6,
+    "storyIdList": "600901",
+    "eventId": "150",
+    "fullImage": "",
+    "stageId": 6,
+    "name": "language_10102662"
+  },
+  {
+    "id": 7,
+    "storyIdList": "600901",
+    "eventId": "151",
+    "fullImage": "",
+    "stageId": 7,
+    "name": "language_10102663"
+  },
+  {
+    "id": 8,
+    "storyIdList": "600901",
+    "eventId": "152",
+    "fullImage": "",
+    "stageId": 8,
+    "name": "language_10102664"
+  },
+  {
+    "id": 9,
+    "storyIdList": "600901",
+    "eventId": "153",
+    "fullImage": "",
+    "stageId": 9,
+    "name": "language_10102665"
+  },
+  {
+    "id": 10,
+    "storyIdList": "603201",
+    "eventId": "",
+    "fullImage": "rouge_mainstory_cg_10_2",
+    "stageId": 10,
+    "name": "language_10100920"
+  },
+  {
+    "id": 11,
+    "storyIdList": "603202",
+    "eventId": "",
+    "fullImage": "rouge_mainstory_cg_9_2",
+    "stageId": 10,
+    "name": "language_10100921"
+  }
+]

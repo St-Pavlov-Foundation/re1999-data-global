@@ -1,18 +1,20 @@
-﻿module("modules.logic.settings.view.SettingsCdkeyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsCdkeyViewContainer.lua
 
-local var_0_0 = class("SettingsCdkeyViewContainer", BaseViewContainer)
+module("modules.logic.settings.view.SettingsCdkeyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SettingsCdkeyViewContainer = class("SettingsCdkeyViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SettingsCdkeyView.New())
+function SettingsCdkeyViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SettingsCdkeyView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function SettingsCdkeyViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return SettingsCdkeyViewContainer

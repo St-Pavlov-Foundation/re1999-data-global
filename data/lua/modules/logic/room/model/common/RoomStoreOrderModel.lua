@@ -1,16 +1,18 @@
-﻿module("modules.logic.room.model.common.RoomStoreOrderModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomStoreOrderModel.lua
 
-local var_0_0 = class("RoomStoreOrderModel", BaseModel)
+module("modules.logic.room.model.common.RoomStoreOrderModel", package.seeall)
 
-function var_0_0.getMOByList(arg_1_0, arg_1_1)
-	if arg_1_1 and #arg_1_1 > 0 then
-		local var_1_0 = arg_1_0:getList()
+local RoomStoreOrderModel = class("RoomStoreOrderModel", BaseModel)
 
-		for iter_1_0 = 1, #var_1_0 do
-			local var_1_1 = var_1_0[iter_1_0]
+function RoomStoreOrderModel:getMOByList(materialDataMOList)
+	if materialDataMOList and #materialDataMOList > 0 then
+		local list = self:getList()
 
-			if var_1_1:isSameValue(arg_1_1) then
-				return var_1_1
+		for i = 1, #list do
+			local mo = list[i]
+
+			if mo:isSameValue(materialDataMOList) then
+				return mo
 			end
 		end
 	end
@@ -18,29 +20,29 @@ function var_0_0.getMOByList(arg_1_0, arg_1_1)
 	return nil
 end
 
-function var_0_0.addByStoreItemMOList(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = arg_2_0:getById(arg_2_2)
+function RoomStoreOrderModel:addByStoreItemMOList(storeItemMOList, goodsId, themeId)
+	local orderMO = self:getById(goodsId)
 
-	if not var_2_0 then
-		var_2_0 = RoomStoreOrderMO.New()
+	if not orderMO then
+		orderMO = RoomStoreOrderMO.New()
 
-		arg_2_0:addAtLast(var_2_0)
+		self:addAtLast(orderMO)
 	end
 
-	var_2_0:init(arg_2_2, arg_2_3)
+	orderMO:init(goodsId, themeId)
 
-	for iter_2_0 = 1, #arg_2_1 do
-		local var_2_1 = arg_2_1[iter_2_0]
-		local var_2_2 = var_2_1:getCanBuyNum()
+	for i = 1, #storeItemMOList do
+		local stroeItemMO = storeItemMOList[i]
+		local canBuyNum = stroeItemMO:getCanBuyNum()
 
-		if var_2_2 > 0 then
-			var_2_0:addValue(var_2_1.materialType, var_2_1.itemId, var_2_2)
+		if canBuyNum > 0 then
+			orderMO:addValue(stroeItemMO.materialType, stroeItemMO.itemId, canBuyNum)
 		end
 	end
 
-	return var_2_0
+	return orderMO
 end
 
-var_0_0.instance = var_0_0.New()
+RoomStoreOrderModel.instance = RoomStoreOrderModel.New()
 
-return var_0_0
+return RoomStoreOrderModel

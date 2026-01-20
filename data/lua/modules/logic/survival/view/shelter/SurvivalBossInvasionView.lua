@@ -1,326 +1,332 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalBossInvasionView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalBossInvasionView.lua
 
-local var_0_0 = class("SurvivalBossInvasionView", LuaCompBase)
+module("modules.logic.survival.view.shelter.SurvivalBossInvasionView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.posType = arg_1_1
+local SurvivalBossInvasionView = class("SurvivalBossInvasionView", LuaCompBase)
+
+function SurvivalBossInvasionView:ctor(posType)
+	self.posType = posType
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0.pos_mainview = gohelper.findChild(arg_2_0.viewGO, "pos_mainview")
-	arg_2_0.pos_teamview = gohelper.findChild(arg_2_0.viewGO, "pos_teamview")
-	arg_2_0.go_boss = gohelper.findChild(arg_2_0.viewGO, "#go_BossBuff")
-	arg_2_0.go_monster = gohelper.findChildButtonWithAudio(arg_2_0.go_boss, "#go_monster")
-	arg_2_0.go_monsterHeadIcon = gohelper.findChildSingleImage(arg_2_0.go_boss, "#go_monster/#go_monsterHeadIcon")
-	arg_2_0.go_eff_weak = gohelper.findChild(arg_2_0.go_boss, "#go_monster/#go_eff_weak")
-	arg_2_0.go_debuff = gohelper.findChild(arg_2_0.go_boss, "#go_monster/#go_eff_weak/#go_debuff")
-	arg_2_0.txt_LimitTime = gohelper.findChildTextMesh(arg_2_0.go_boss, "#go_monster/#txt_LimitTime")
-	arg_2_0.go_icon_Limit = gohelper.findChild(arg_2_0.go_boss, "#go_monster/#txt_LimitTime/icon")
-	arg_2_0.txt_noIcon = gohelper.findChildTextMesh(arg_2_0.go_boss, "#go_monster/#txt_noIcon")
-	arg_2_0.txt_score = gohelper.findChildTextMesh(arg_2_0.go_boss, "Content/score/#txt_score")
-	arg_2_0.go_buff = gohelper.findChild(arg_2_0.go_boss, "Content/#go_buff")
-	arg_2_0.go_Content = gohelper.findChild(arg_2_0.go_boss, "Content")
-	arg_2_0.layoutContent = arg_2_0.go_Content:GetComponent(gohelper.Type_VerticalLayoutGroup)
-	arg_2_0.scrollBar = gohelper.findChildScrollbar(arg_2_0.go_boss, "Content/Scrollbar")
-	arg_2_0.image_progress = gohelper.findChildImage(arg_2_0.go_boss, "Content/#image_progress")
-	arg_2_0.go_tips = gohelper.findChild(arg_2_0.viewGO, "#go_tips")
-	arg_2_0.go_tips_layout = gohelper.findChild(arg_2_0.go_tips, "layout")
-	arg_2_0.btn_close_tips = gohelper.findChildButton(arg_2_0.go_tips, "#btn_close")
-	arg_2_0.txt_desc = gohelper.findChildTextMesh(arg_2_0.go_tips, "layout/#txt_desc")
-	arg_2_0.txt_condition_tips = gohelper.findChildTextMesh(arg_2_0.go_tips, "layout/#txt_condition")
+function SurvivalBossInvasionView:init(viewGO)
+	self.viewGO = viewGO
+	self.pos_mainview = gohelper.findChild(self.viewGO, "pos_mainview")
+	self.pos_teamview = gohelper.findChild(self.viewGO, "pos_teamview")
+	self.go_boss = gohelper.findChild(self.viewGO, "#go_BossBuff")
+	self.go_monster = gohelper.findChildButtonWithAudio(self.go_boss, "#go_monster")
+	self.go_monsterHeadIcon = gohelper.findChildSingleImage(self.go_boss, "#go_monster/#go_monsterHeadIcon")
+	self.go_eff_weak = gohelper.findChild(self.go_boss, "#go_monster/#go_eff_weak")
+	self.go_debuff = gohelper.findChild(self.go_boss, "#go_monster/#go_eff_weak/#go_debuff")
+	self.txt_LimitTime = gohelper.findChildTextMesh(self.go_boss, "#go_monster/#txt_LimitTime")
+	self.go_icon_Limit = gohelper.findChild(self.go_boss, "#go_monster/#txt_LimitTime/icon")
+	self.txt_noIcon = gohelper.findChildTextMesh(self.go_boss, "#go_monster/#txt_noIcon")
+	self.txt_score = gohelper.findChildTextMesh(self.go_boss, "Content/score/#txt_score")
+	self.go_buff = gohelper.findChild(self.go_boss, "Content/#go_buff")
+	self.go_Content = gohelper.findChild(self.go_boss, "Content")
+	self.layoutContent = self.go_Content:GetComponent(gohelper.Type_VerticalLayoutGroup)
+	self.scrollBar = gohelper.findChildScrollbar(self.go_boss, "Content/Scrollbar")
+	self.image_progress = gohelper.findChildImage(self.go_boss, "Content/#image_progress")
+	self.go_tips = gohelper.findChild(self.viewGO, "#go_tips")
+	self.go_tips_layout = gohelper.findChild(self.go_tips, "layout")
+	self.btn_close_tips = gohelper.findChildButton(self.go_tips, "#btn_close")
+	self.txt_desc = gohelper.findChildTextMesh(self.go_tips, "layout/#txt_desc")
+	self.txt_condition_tips = gohelper.findChildTextMesh(self.go_tips, "layout/#txt_condition")
 
-	gohelper.setActive(arg_2_0.go_buff, false)
+	gohelper.setActive(self.go_buff, false)
 
-	arg_2_0.customItems = {}
-	arg_2_0.posType = arg_2_0.posType or 1
+	self.customItems = {}
+	self.posType = self.posType or 1
 
-	if arg_2_0.posType == 2 then
-		arg_2_0.go_boss.transform:SetParent(arg_2_0.pos_teamview.transform, false)
+	if self.posType == 2 then
+		self.go_boss.transform:SetParent(self.pos_teamview.transform, false)
 	else
-		arg_2_0.go_boss.transform:SetParent(arg_2_0.pos_mainview.transform, false)
+		self.go_boss.transform:SetParent(self.pos_mainview.transform, false)
 	end
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addClickCb(arg_3_0.go_monster, arg_3_0.onClickBoss, arg_3_0)
-	arg_3_0:addClickCb(arg_3_0.btn_close_tips, arg_3_0.onCloseTip, arg_3_0)
-	arg_3_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_3_0.onShelterBagUpdate, arg_3_0)
-	arg_3_0:addEventCb(SurvivalController.instance, SurvivalEvent.AbandonFight, arg_3_0.onAbandonFight, arg_3_0)
-	arg_3_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnDelayPopupFinishEvent, arg_3_0.onDelayPopupFinishEvent, arg_3_0)
+function SurvivalBossInvasionView:addEventListeners()
+	self:addClickCb(self.go_monster, self.onClickBoss, self)
+	self:addClickCb(self.btn_close_tips, self.onCloseTip, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.AbandonFight, self.onAbandonFight, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnDelayPopupFinishEvent, self.onDelayPopupFinishEvent, self)
 end
 
-function var_0_0.onStart(arg_4_0)
-	arg_4_0.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
-	arg_4_0.clientMo = arg_4_0.weekInfo.clientData
+function SurvivalBossInvasionView:onStart()
+	self.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	self.clientMo = self.weekInfo.clientData
 
-	arg_4_0:refresh()
-	arg_4_0:refreshDecoding(false)
-	arg_4_0:refreshList(false)
+	self:refresh()
+	self:refreshDecoding(false)
+	self:refreshList(false)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0.textTweenId then
-		ZProj.TweenHelper.KillById(arg_5_0.textTweenId)
+function SurvivalBossInvasionView:onDestroy()
+	if self.textTweenId then
+		ZProj.TweenHelper.KillById(self.textTweenId)
 
-		arg_5_0.textTweenId = nil
+		self.textTweenId = nil
 	end
 
-	if arg_5_0.progressTweenId then
-		ZProj.TweenHelper.KillById(arg_5_0.progressTweenId)
+	if self.progressTweenId then
+		ZProj.TweenHelper.KillById(self.progressTweenId)
 
-		arg_5_0.progressTweenId = nil
+		self.progressTweenId = nil
 	end
 end
 
-function var_0_0.onShelterBagUpdate(arg_6_0)
-	arg_6_0:refreshDecoding(true)
-	arg_6_0.clientMo:saveDataToServer()
+function SurvivalBossInvasionView:onShelterBagUpdate()
+	self:refreshDecoding(true)
+	self.clientMo:saveDataToServer()
 end
 
-function var_0_0.onAbandonFight(arg_7_0)
-	arg_7_0:refresh()
-	arg_7_0:refreshDecoding(false)
-	arg_7_0:refreshList(false)
+function SurvivalBossInvasionView:onAbandonFight()
+	self:refresh()
+	self:refreshDecoding(false)
+	self:refreshList(false)
 end
 
-function var_0_0.onDelayPopupFinishEvent(arg_8_0)
-	arg_8_0:refreshDecoding(true)
-	arg_8_0:refreshList(true)
+function SurvivalBossInvasionView:onDelayPopupFinishEvent()
+	self:refreshDecoding(true)
+	self:refreshList(true)
 end
 
-function var_0_0.onCloseTip(arg_9_0)
-	gohelper.setActive(arg_9_0.go_tips, false)
+function SurvivalBossInvasionView:onCloseTip()
+	gohelper.setActive(self.go_tips, false)
 end
 
-function var_0_0.refresh(arg_10_0)
-	arg_10_0.intrudeBox = arg_10_0.weekInfo.intrudeBox
-	arg_10_0.fight = arg_10_0.weekInfo:getMonsterFight()
+function SurvivalBossInvasionView:refresh()
+	self.intrudeBox = self.weekInfo.intrudeBox
+	self.fight = self.weekInfo:getMonsterFight()
 
-	if arg_10_0.fight.fightId <= 0 then
-		gohelper.setActive(arg_10_0.go_boss, false)
+	if self.fight.fightId <= 0 then
+		gohelper.setActive(self.go_boss, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0.go_boss, true)
+	gohelper.setActive(self.go_boss, true)
 
-	arg_10_0.cleanPoints = arg_10_0.fight.cleanPoints
+	self.cleanPoints = self.fight.cleanPoints
 
-	local var_10_0 = arg_10_0.fight.fightCo.smallheadicon
+	local smallIcon = self.fight.fightCo.smallheadicon
 
-	if var_10_0 then
-		arg_10_0.go_monsterHeadIcon:LoadImage(ResUrl.monsterHeadIcon(var_10_0))
+	if smallIcon then
+		self.go_monsterHeadIcon:LoadImage(ResUrl.monsterHeadIcon(smallIcon))
 	end
 
-	local var_10_1 = arg_10_0.weekInfo.day
-	local var_10_2 = arg_10_0.intrudeBox:getNextBossCreateDay(var_10_1) - var_10_1
+	local curDay = self.weekInfo.day
+	local createDay = self.intrudeBox:getNextBossCreateDay(curDay)
+	local remain = createDay - curDay
 
-	gohelper.setActive(arg_10_0.go_icon_Limit, var_10_2 > 0)
+	gohelper.setActive(self.go_icon_Limit, remain > 0)
 
-	if var_10_2 <= 0 then
-		gohelper.setActive(arg_10_0.txt_noIcon.gameObject, true)
-		gohelper.setActive(arg_10_0.txt_LimitTime.gameObject, false)
+	if remain <= 0 then
+		gohelper.setActive(self.txt_noIcon.gameObject, true)
+		gohelper.setActive(self.txt_LimitTime.gameObject, false)
 
-		arg_10_0.txt_noIcon.text = luaLang("survival_mainview_monster_fight")
+		self.txt_noIcon.text = luaLang("survival_mainview_monster_fight")
 	else
-		gohelper.setActive(arg_10_0.txt_noIcon.gameObject, false)
-		gohelper.setActive(arg_10_0.txt_LimitTime.gameObject, true)
+		gohelper.setActive(self.txt_noIcon.gameObject, false)
+		gohelper.setActive(self.txt_LimitTime.gameObject, true)
 
-		arg_10_0.txt_LimitTime.text = string.format("%s%s", var_10_2, luaLang("time_day"))
+		self.txt_LimitTime.text = string.format("%s%s", remain, luaLang("time_day"))
 	end
 end
 
-function var_0_0.refreshDecoding(arg_11_0, arg_11_1)
-	if arg_11_0.fight.fightId <= 0 then
+function SurvivalBossInvasionView:refreshDecoding(isCheckChange)
+	if self.fight.fightId <= 0 then
 		return
 	end
 
-	local var_11_0 = arg_11_0.clientMo.data
+	local clientData = self.clientMo.data
 
-	arg_11_0.decodingCurNum = arg_11_0.weekInfo:getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(SurvivalEnum.CurrencyType.Decoding)
+	self.decodingCurNum = self.weekInfo:getBag(SurvivalEnum.ItemSource.Shelter):getItemCountPlus(SurvivalEnum.CurrencyType.Decoding)
 
-	local var_11_1 = var_11_0.decodingItemNum
+	local decodingItemNum = clientData.decodingItemNum
 
-	arg_11_0.txt_score.text = string.format("<#FF8640>%s</color>/%s", var_11_1, arg_11_0.fight:getMaxCleanPoint())
+	self.txt_score.text = string.format("<#FF8640>%s</color>/%s", decodingItemNum, self.fight:getMaxCleanPoint())
 
-	if arg_11_1 then
-		if var_11_1 < arg_11_0.decodingCurNum then
-			arg_11_0.textTweenId = ZProj.TweenHelper.DOTweenFloat(var_11_1, arg_11_0.decodingCurNum, 1.5, arg_11_0.onTween, arg_11_0.onTweenFinish, arg_11_0, nil, EaseType.OutQuart)
+	if isCheckChange then
+		if decodingItemNum < self.decodingCurNum then
+			self.textTweenId = ZProj.TweenHelper.DOTweenFloat(decodingItemNum, self.decodingCurNum, 1.5, self.onTween, self.onTweenFinish, self, nil, EaseType.OutQuart)
 
-			arg_11_0.clientMo:setDecodingItemNum(arg_11_0.decodingCurNum)
-		elseif var_11_1 > arg_11_0.decodingCurNum then
-			arg_11_0.txt_score.text = string.format("<#FF8640>%s</color>/%s", arg_11_0.decodingCurNum, arg_11_0.fight:getMaxCleanPoint())
+			self.clientMo:setDecodingItemNum(self.decodingCurNum)
+		elseif decodingItemNum > self.decodingCurNum then
+			self.txt_score.text = string.format("<#FF8640>%s</color>/%s", self.decodingCurNum, self.fight:getMaxCleanPoint())
 
-			arg_11_0.clientMo:setDecodingItemNum(arg_11_0.decodingCurNum)
+			self.clientMo:setDecodingItemNum(self.decodingCurNum)
 		end
-	elseif not arg_11_1 and var_11_1 > arg_11_0.decodingCurNum then
-		arg_11_0.txt_score.text = string.format("<#FF8640>%s</color>/%s", arg_11_0.decodingCurNum, arg_11_0.fight:getMaxCleanPoint())
+	elseif not isCheckChange and decodingItemNum > self.decodingCurNum then
+		self.txt_score.text = string.format("<#FF8640>%s</color>/%s", self.decodingCurNum, self.fight:getMaxCleanPoint())
 
-		arg_11_0.clientMo:setDecodingItemNum(arg_11_0.decodingCurNum)
+		self.clientMo:setDecodingItemNum(self.decodingCurNum)
 	end
 end
 
-function var_0_0.onTween(arg_12_0, arg_12_1)
-	arg_12_0.txt_score.text = string.format("<#FF8640>%s</color>/%s", math.floor(arg_12_1), arg_12_0.fight:getMaxCleanPoint())
+function SurvivalBossInvasionView:onTween(value)
+	self.txt_score.text = string.format("<#FF8640>%s</color>/%s", math.floor(value), self.fight:getMaxCleanPoint())
 end
 
-function var_0_0.onTweenFinish(arg_13_0)
-	arg_13_0:onTween(arg_13_0.decodingCurNum)
+function SurvivalBossInvasionView:onTweenFinish()
+	self:onTween(self.decodingCurNum)
 end
 
-function var_0_0.refreshList(arg_14_0, arg_14_1)
-	if arg_14_0.fight.fightId <= 0 then
+function SurvivalBossInvasionView:refreshList(isCheckChange)
+	if self.fight.fightId <= 0 then
 		return
 	end
 
-	local var_14_0 = arg_14_0.clientMo.data
-	local var_14_1 = arg_14_0.fight.intrudeSchemeMos
+	local clientData = self.clientMo.data
+	local intrudeSchemeMos = self.fight.intrudeSchemeMos
 
-	arg_14_0.survivalIntrudeSchemeMo = {}
+	self.survivalIntrudeSchemeMo = {}
 
-	for iter_14_0 = #var_14_1, 1, -1 do
-		table.insert(arg_14_0.survivalIntrudeSchemeMo, var_14_1[iter_14_0])
+	for i = #intrudeSchemeMos, 1, -1 do
+		table.insert(self.survivalIntrudeSchemeMo, intrudeSchemeMos[i])
 	end
 
-	arg_14_0.repressNum = 0
+	self.repressNum = 0
 
-	for iter_14_1, iter_14_2 in ipairs(var_14_1) do
-		if iter_14_2.survivalIntrudeScheme.repress then
-			arg_14_0.repressNum = arg_14_0.repressNum + 1
+	for i, mo in ipairs(intrudeSchemeMos) do
+		if mo.survivalIntrudeScheme.repress then
+			self.repressNum = self.repressNum + 1
 		end
 	end
 
-	local var_14_2 = arg_14_0.repressNum > 0
+	local curIsBossWeak = self.repressNum > 0
 
-	gohelper.setActive(arg_14_0.go_eff_weak, var_14_2)
+	gohelper.setActive(self.go_eff_weak, curIsBossWeak)
 
-	if var_14_2 and arg_14_1 and var_14_2 and var_14_0.isBossWeak ~= var_14_2 then
-		gohelper.setActive(arg_14_0.go_debuff, true)
-		arg_14_0.clientMo:setIsBossWeak(var_14_2)
+	if curIsBossWeak and isCheckChange and curIsBossWeak and clientData.isBossWeak ~= curIsBossWeak then
+		gohelper.setActive(self.go_debuff, true)
+		self.clientMo:setIsBossWeak(curIsBossWeak)
 	end
 
-	local var_14_3 = #arg_14_0.customItems
-	local var_14_4 = #arg_14_0.survivalIntrudeSchemeMo
+	local customItemAmount = #self.customItems
+	local listLength = #self.survivalIntrudeSchemeMo
 
-	for iter_14_3 = 1, var_14_4 do
-		local var_14_5 = arg_14_0.survivalIntrudeSchemeMo[iter_14_3]
+	for i = 1, listLength do
+		local mo = self.survivalIntrudeSchemeMo[i]
 
-		if var_14_3 < iter_14_3 then
-			local var_14_6 = gohelper.clone(arg_14_0.go_buff, arg_14_0.go_Content)
+		if customItemAmount < i then
+			local obj = gohelper.clone(self.go_buff, self.go_Content)
 
-			gohelper.setActive(var_14_6, true)
+			gohelper.setActive(obj, true)
 
-			local var_14_7 = arg_14_0:getUserDataTb_()
+			local t = self:getUserDataTb_()
 
-			var_14_7.imgIcon = var_14_6:GetComponent(gohelper.Type_Image)
-			var_14_7.btnClick = gohelper.findButtonWithAudio(var_14_6)
-			var_14_7.anim = gohelper.findComponentAnim(var_14_6)
+			t.imgIcon = obj:GetComponent(gohelper.Type_Image)
+			t.btnClick = gohelper.findButtonWithAudio(obj)
+			t.anim = gohelper.findComponentAnim(obj)
 
-			arg_14_0:addClickCb(var_14_7.btnClick, arg_14_0.onClickCustomItem, arg_14_0, {
-				mo = var_14_5,
-				trans = var_14_7.imgIcon.transform
+			self:addClickCb(t.btnClick, self.onClickCustomItem, self, {
+				mo = mo,
+				trans = t.imgIcon.transform
 			})
 
-			arg_14_0.customItems[iter_14_3] = var_14_7
+			self.customItems[i] = t
 		end
 
-		arg_14_0:refreshCustomItems(arg_14_0.customItems[iter_14_3], var_14_5)
+		self:refreshCustomItems(self.customItems[i], mo)
 
-		local var_14_8 = var_14_5.survivalIntrudeScheme.repress
-		local var_14_9 = arg_14_0.clientMo:getBossRepress(arg_14_0.fight.fightId, var_14_5.survivalIntrudeScheme.id)
+		local curIsRepress = mo.survivalIntrudeScheme.repress
+		local isRepress = self.clientMo:getBossRepress(self.fight.fightId, mo.survivalIntrudeScheme.id)
 
-		if arg_14_1 and var_14_8 ~= var_14_9 then
-			if var_14_8 then
-				arg_14_0.customItems[iter_14_3].anim:Play("open", 0, 0)
+		if isCheckChange and curIsRepress ~= isRepress then
+			if curIsRepress then
+				self.customItems[i].anim:Play("open", 0, 0)
 			end
 
-			arg_14_0.clientMo:setBossRepress(arg_14_0.fight.fightId, var_14_5.survivalIntrudeScheme.id)
+			self.clientMo:setBossRepress(self.fight.fightId, mo.survivalIntrudeScheme.id)
 		end
 	end
 
-	for iter_14_4 = var_14_4 + 1, var_14_3 do
-		arg_14_0.customItems[iter_14_4]:setData(nil)
+	for i = listLength + 1, customItemAmount do
+		self.customItems[i]:setData(nil)
 	end
 
-	local var_14_10 = 92
-	local var_14_11 = arg_14_0.layoutContent.spacing
-	local var_14_12 = 9
-	local var_14_13 = #var_14_1
-	local var_14_14 = var_14_10 * var_14_13 + (var_14_13 - 1) * var_14_11 + var_14_12
-	local var_14_15 = var_14_12 / var_14_14
-	local var_14_16 = arg_14_0.repressNum
+	local itemH = 92
+	local dur = self.layoutContent.spacing
+	local progressOffsetH = 9
+	local num = #intrudeSchemeMos
+	local progressH = itemH * num + (num - 1) * dur + progressOffsetH
+	local perClip = progressOffsetH / progressH
+	local index = self.repressNum
+	local h = itemH * index + (index - 1) * dur
+	local per = h / progressH
 
-	arg_14_0.curRepressProgress = var_14_15 + (var_14_10 * var_14_16 + (var_14_16 - 1) * var_14_11) / var_14_14
+	self.curRepressProgress = perClip + per
 
-	local var_14_17 = var_14_0.bossRepressProgress
+	local bossRepressProgress = clientData.bossRepressProgress
 
-	arg_14_0.image_progress.fillAmount = var_14_17
+	self.image_progress.fillAmount = bossRepressProgress
 
-	arg_14_0.scrollBar:SetValue(var_14_17)
+	self.scrollBar:SetValue(bossRepressProgress)
 
-	if arg_14_1 then
-		if var_14_17 < arg_14_0.curRepressProgress then
-			arg_14_0.progressTweenId = ZProj.TweenHelper.DOTweenFloat(var_14_17, arg_14_0.curRepressProgress, 1.5, arg_14_0.onProgressTween, arg_14_0.onProgressTweenFinish, arg_14_0, nil, EaseType.OutQuart)
+	if isCheckChange then
+		if bossRepressProgress < self.curRepressProgress then
+			self.progressTweenId = ZProj.TweenHelper.DOTweenFloat(bossRepressProgress, self.curRepressProgress, 1.5, self.onProgressTween, self.onProgressTweenFinish, self, nil, EaseType.OutQuart)
 
-			arg_14_0.clientMo:setBossRepressProgress(arg_14_0.curRepressProgress)
-		elseif var_14_17 > arg_14_0.curRepressProgress then
-			arg_14_0.image_progress.fillAmount = arg_14_0.curRepressProgress
+			self.clientMo:setBossRepressProgress(self.curRepressProgress)
+		elseif bossRepressProgress > self.curRepressProgress then
+			self.image_progress.fillAmount = self.curRepressProgress
 
-			arg_14_0.clientMo:setBossRepressProgress(arg_14_0.curRepressProgress)
+			self.clientMo:setBossRepressProgress(self.curRepressProgress)
 		end
-	elseif not arg_14_1 and var_14_17 > arg_14_0.curRepressProgress then
-		arg_14_0.image_progress.fillAmount = arg_14_0.curRepressProgress
+	elseif not isCheckChange and bossRepressProgress > self.curRepressProgress then
+		self.image_progress.fillAmount = self.curRepressProgress
 
-		arg_14_0.clientMo:setBossRepressProgress(arg_14_0.curRepressProgress)
+		self.clientMo:setBossRepressProgress(self.curRepressProgress)
 	end
 end
 
-function var_0_0.onProgressTween(arg_15_0, arg_15_1)
-	arg_15_0.image_progress.fillAmount = arg_15_1
+function SurvivalBossInvasionView:onProgressTween(value)
+	self.image_progress.fillAmount = value
 
-	arg_15_0.scrollBar:SetValue(arg_15_1)
+	self.scrollBar:SetValue(value)
 end
 
-function var_0_0.onProgressTweenFinish(arg_16_0)
-	arg_16_0:onProgressTween(arg_16_0.curRepressProgress)
+function SurvivalBossInvasionView:onProgressTweenFinish()
+	self:onProgressTween(self.curRepressProgress)
 end
 
-function var_0_0.refreshCustomItems(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_2:getDisplayIcon()
+function SurvivalBossInvasionView:refreshCustomItems(t, mo)
+	local path = mo:getDisplayIcon()
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_17_1.imgIcon, var_17_0)
+	UISpriteSetMgr.instance:setSurvivalSprite(t.imgIcon, path)
 end
 
-function var_0_0.onClickCustomItem(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1.mo
-	local var_18_1 = arg_18_1.trans.position
-	local var_18_2 = recthelper.rectToRelativeAnchorPos(var_18_1, arg_18_0.go_tips.transform)
-	local var_18_3 = var_18_2.x - 66
+function SurvivalBossInvasionView:onClickCustomItem(param)
+	local mo = param.mo
+	local trans = param.trans
+	local worldPos = trans.position
+	local anchorPos = recthelper.rectToRelativeAnchorPos(worldPos, self.go_tips.transform)
+	local x = anchorPos.x - 66
 
-	if arg_18_0.posType == 2 then
-		var_18_3 = var_18_2.x + 66 + recthelper.getWidth(arg_18_0.go_tips_layout.transform)
+	if self.posType == 2 then
+		x = anchorPos.x + 66 + recthelper.getWidth(self.go_tips_layout.transform)
 	end
 
-	recthelper.setAnchor(arg_18_0.go_tips_layout.transform, var_18_3, var_18_2.y)
-	gohelper.setActive(arg_18_0.go_tips, true)
+	recthelper.setAnchor(self.go_tips_layout.transform, x, anchorPos.y)
+	gohelper.setActive(self.go_tips, true)
 
-	arg_18_0.txt_desc.text = var_18_0.intrudeSchemeCfg.desc
+	self.txt_desc.text = mo.intrudeSchemeCfg.desc
 
-	if var_18_0.survivalIntrudeScheme.repress then
-		arg_18_0.txt_condition_tips.text = luaLang("SurvivalBossInvasionView_1")
+	if mo.survivalIntrudeScheme.repress then
+		self.txt_condition_tips.text = luaLang("SurvivalBossInvasionView_1")
 	else
-		arg_18_0.txt_condition_tips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalBossInvasionView_2"), {
-			var_18_0.point
+		self.txt_condition_tips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalBossInvasionView_2"), {
+			mo.point
 		})
 	end
 end
 
-function var_0_0.onClickBoss(arg_19_0)
+function SurvivalBossInvasionView:onClickBoss()
 	SurvivalStatHelper.instance:statBtnClick("onClickBoss", "SurvivalBossInvasionView")
 	ViewMgr.instance:openView(ViewName.SurvivalMonsterEventView, {
 		showType = SurvivalEnum.SurvivalMonsterEventViewShowType.Normal
 	})
 end
 
-return var_0_0
+return SurvivalBossInvasionView

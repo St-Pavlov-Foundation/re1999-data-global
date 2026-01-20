@@ -1,17 +1,19 @@
-﻿module("modules.logic.sp01.linkgift.view.V2a9_LinkGiftViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/linkgift/view/V2a9_LinkGiftViewContainer.lua
 
-local var_0_0 = class("V2a9_LinkGiftViewContainer", BaseViewContainer)
+module("modules.logic.sp01.linkgift.view.V2a9_LinkGiftViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a9_LinkGiftViewContainer = class("V2a9_LinkGiftViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V2a9_LinkGiftView.New())
+function V2a9_LinkGiftViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V2a9_LinkGiftView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function V2a9_LinkGiftViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return V2a9_LinkGiftViewContainer

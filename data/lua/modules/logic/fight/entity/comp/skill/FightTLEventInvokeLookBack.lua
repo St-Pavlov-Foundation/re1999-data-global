@@ -1,51 +1,53 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeLookBack", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventInvokeLookBack.lua
 
-local var_0_0 = class("FightTLEventInvokeLookBack", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeLookBack", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_1 and arg_1_1.actEffect
+local FightTLEventInvokeLookBack = class("FightTLEventInvokeLookBack", FightTimelineTrackItem)
 
-	if not var_1_0 then
+function FightTLEventInvokeLookBack:onTrackStart(fightStepData, duration, paramsArr)
+	local effectTypeList = fightStepData and fightStepData.actEffect
+
+	if not effectTypeList then
 		return
 	end
 
-	local var_1_1 = {}
-	local var_1_2 = false
+	local effectList = {}
+	local start = false
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if iter_1_1.effectType == FightEnum.EffectType.SAVEFIGHTRECORDSTART then
-			var_1_2 = true
-		elseif iter_1_1.effectType == FightEnum.EffectType.SAVEFIGHTRECORDEND then
+	for _, actEffectData in ipairs(effectTypeList) do
+		if actEffectData.effectType == FightEnum.EffectType.SAVEFIGHTRECORDSTART then
+			start = true
+		elseif actEffectData.effectType == FightEnum.EffectType.SAVEFIGHTRECORDEND then
 			break
-		elseif var_1_2 then
-			table.insert(var_1_1, iter_1_1)
+		elseif start then
+			table.insert(effectList, actEffectData)
 		end
 	end
 
-	if #var_1_1 < 1 then
+	if #effectList < 1 then
 		return
 	end
 
-	local var_1_3 = arg_1_0:com_registFlowParallel()
+	local flow = self:com_registFlowParallel()
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_1) do
-		local var_1_4 = FightStepBuilder.ActEffectWorkCls[iter_1_3.effectType]
+	for _, actEffectData in ipairs(effectList) do
+		local workCls = FightStepBuilder.ActEffectWorkCls[actEffectData.effectType]
 
-		if var_1_4 then
-			var_1_3:registWork(var_1_4, arg_1_1, iter_1_3)
+		if workCls then
+			flow:registWork(workCls, fightStepData, actEffectData)
 		end
 	end
 
-	arg_1_0:addWork2TimelineFinishWork(var_1_3)
-	var_1_3:start()
+	self:addWork2TimelineFinishWork(flow)
+	flow:start()
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventInvokeLookBack:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventInvokeLookBack:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventInvokeLookBack

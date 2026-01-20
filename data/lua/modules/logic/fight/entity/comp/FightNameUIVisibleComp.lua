@@ -1,138 +1,142 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUIVisibleComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUIVisibleComp.lua
 
-local var_0_0 = class("FightNameUIVisibleComp", LuaCompBase)
+module("modules.logic.fight.entity.comp.FightNameUIVisibleComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._showBySkillStart = {}
-	arg_1_0._hideByEntity = {}
-	arg_1_0._showByTimeline = {}
-	arg_1_0._hideByTimeline = {}
+local FightNameUIVisibleComp = class("FightNameUIVisibleComp", LuaCompBase)
+
+function FightNameUIVisibleComp:ctor(entity)
+	self.entity = entity
+	self._showBySkillStart = {}
+	self._hideByEntity = {}
+	self._showByTimeline = {}
+	self._hideByTimeline = {}
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_2_0._onSkillPlayStart, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.SetEntityVisibleByTimeline, arg_2_0._setEntityVisibleByTimeline, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.SetNameUIVisibleByTimeline, arg_2_0._setNameUIVisibleByTimeline, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.ForceEndSkillStep, arg_2_0._forceEndSkillStep, arg_2_0, LuaEventSystem.High)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function FightNameUIVisibleComp:addEventListeners()
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:registerCallback(FightEvent.SetEntityVisibleByTimeline, self._setEntityVisibleByTimeline, self)
+	FightController.instance:registerCallback(FightEvent.SetNameUIVisibleByTimeline, self._setNameUIVisibleByTimeline, self)
+	FightController.instance:registerCallback(FightEvent.ForceEndSkillStep, self._forceEndSkillStep, self, LuaEventSystem.High)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.beforeDestroy(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_3_0._onSkillPlayStart, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.SetEntityVisibleByTimeline, arg_3_0._setEntityVisibleByTimeline, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.SetNameUIVisibleByTimeline, arg_3_0._setNameUIVisibleByTimeline, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.ForceEndSkillStep, arg_3_0._forceEndSkillStep, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function FightNameUIVisibleComp:beforeDestroy()
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	FightController.instance:unregisterCallback(FightEvent.SetEntityVisibleByTimeline, self._setEntityVisibleByTimeline, self)
+	FightController.instance:unregisterCallback(FightEvent.SetNameUIVisibleByTimeline, self._setNameUIVisibleByTimeline, self)
+	FightController.instance:unregisterCallback(FightEvent.ForceEndSkillStep, self._forceEndSkillStep, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.FightQuitTipView and arg_4_0.entity.nameUI then
-		arg_4_0.entity.nameUI:setActive(false)
+function FightNameUIVisibleComp:_onOpenView(viewName)
+	if viewName == ViewName.FightQuitTipView and self.entity.nameUI then
+		self.entity.nameUI:setActive(false)
 	end
 end
 
-function var_0_0._onCloseView(arg_5_0, arg_5_1)
-	if arg_5_1 == ViewName.FightQuitTipView then
-		arg_5_0:_checkVisible()
+function FightNameUIVisibleComp:_onCloseView(viewName)
+	if viewName == ViewName.FightQuitTipView then
+		self:_checkVisible()
 	end
 end
 
-local var_0_1 = {
+local filterEffectType = {
 	[FightEnum.EffectType.STORAGEINJURY] = true,
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = true,
 	[FightEnum.EffectType.SHIELDVALUECHANGE] = true,
 	[FightEnum.EffectType.SHAREHURT] = true
 }
 
-function var_0_0._onSkillPlayStart(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if FightHelper.getRelativeEntityIdDict(arg_6_3, var_0_1)[arg_6_0.entity.id] then
-		table.insert(arg_6_0._showBySkillStart, arg_6_3)
+function FightNameUIVisibleComp:_onSkillPlayStart(entity, skillId, fightStepData)
+	local dict = FightHelper.getRelativeEntityIdDict(fightStepData, filterEffectType)
+
+	if dict[self.entity.id] then
+		table.insert(self._showBySkillStart, fightStepData)
 	end
 
-	arg_6_0:_checkVisible()
+	self:_checkVisible()
 end
 
-function var_0_0._onSkillPlayFinish(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	tabletool.removeValue(arg_7_0._showBySkillStart, arg_7_3)
-	tabletool.removeValue(arg_7_0._hideByEntity, arg_7_3)
-	tabletool.removeValue(arg_7_0._showByTimeline, arg_7_3)
-	tabletool.removeValue(arg_7_0._hideByTimeline, arg_7_3)
+function FightNameUIVisibleComp:_onSkillPlayFinish(entity, skillId, fightStepData)
+	tabletool.removeValue(self._showBySkillStart, fightStepData)
+	tabletool.removeValue(self._hideByEntity, fightStepData)
+	tabletool.removeValue(self._showByTimeline, fightStepData)
+	tabletool.removeValue(self._hideByTimeline, fightStepData)
 
-	local var_7_0
-	local var_7_1 = FightHelper.getAllEntitys()
+	local is_same_skill_playing
+	local all_entity = FightHelper.getAllEntitys()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		if iter_7_1.skill and iter_7_1.skill:sameSkillPlaying() then
-			var_7_0 = true
+	for i, tar_entity in ipairs(all_entity) do
+		if tar_entity.skill and tar_entity.skill:sameSkillPlaying() then
+			is_same_skill_playing = true
 
 			break
 		end
 	end
 
-	if var_7_0 then
+	if is_same_skill_playing then
 		return
 	end
 
-	arg_7_0:_checkVisible()
+	self:_checkVisible()
 end
 
-function var_0_0._forceEndSkillStep(arg_8_0, arg_8_1)
-	tabletool.removeValue(arg_8_0._hideByEntity, arg_8_1)
+function FightNameUIVisibleComp:_forceEndSkillStep(fightStepData)
+	tabletool.removeValue(self._hideByEntity, fightStepData)
 end
 
-function var_0_0._setEntityVisibleByTimeline(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	if arg_9_0.entity.id ~= arg_9_1.id then
+function FightNameUIVisibleComp:_setEntityVisibleByTimeline(entity, fightStepData, isVisible, transitionTime)
+	if self.entity.id ~= entity.id then
 		return
 	end
 
-	tabletool.removeValue(arg_9_0._hideByEntity, arg_9_2)
+	tabletool.removeValue(self._hideByEntity, fightStepData)
 
-	if not arg_9_3 then
-		table.insert(arg_9_0._hideByEntity, arg_9_2)
+	if not isVisible then
+		table.insert(self._hideByEntity, fightStepData)
 	end
 
-	arg_9_0:_checkVisible()
+	self:_checkVisible()
 end
 
-function var_0_0._setNameUIVisibleByTimeline(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_0.entity.id ~= arg_10_1.id then
+function FightNameUIVisibleComp:_setNameUIVisibleByTimeline(entity, fightStepData, isVisible)
+	if self.entity.id ~= entity.id then
 		return
 	end
 
-	if arg_10_3 then
-		if not tabletool.indexOf(arg_10_0._showByTimeline, arg_10_2) then
-			table.insert(arg_10_0._showByTimeline, arg_10_2)
+	if isVisible then
+		if not tabletool.indexOf(self._showByTimeline, fightStepData) then
+			table.insert(self._showByTimeline, fightStepData)
 		end
-	elseif not tabletool.indexOf(arg_10_0._hideByTimeline, arg_10_2) then
-		table.insert(arg_10_0._hideByTimeline, arg_10_2)
+	elseif not tabletool.indexOf(self._hideByTimeline, fightStepData) then
+		table.insert(self._hideByTimeline, fightStepData)
 	end
 
-	arg_10_0:_checkVisible()
+	self:_checkVisible()
 end
 
-function var_0_0._checkVisible(arg_11_0)
-	if arg_11_0.entity.nameUI then
+function FightNameUIVisibleComp:_checkVisible()
+	if self.entity.nameUI then
 		if FightSkillMgr.instance:isPlayingAnyTimeline() then
-			if #arg_11_0._hideByEntity > 0 then
-				arg_11_0.entity.nameUI:setActive(false)
-			elseif #arg_11_0._showByTimeline > 0 then
-				arg_11_0.entity.nameUI:setActive(true)
-			elseif #arg_11_0._hideByTimeline > 0 then
-				arg_11_0.entity.nameUI:setActive(false)
-			elseif #arg_11_0._showBySkillStart > 0 then
-				arg_11_0.entity.nameUI:setActive(true)
+			if #self._hideByEntity > 0 then
+				self.entity.nameUI:setActive(false)
+			elseif #self._showByTimeline > 0 then
+				self.entity.nameUI:setActive(true)
+			elseif #self._hideByTimeline > 0 then
+				self.entity.nameUI:setActive(false)
+			elseif #self._showBySkillStart > 0 then
+				self.entity.nameUI:setActive(true)
 			else
-				arg_11_0.entity.nameUI:setActive(false)
+				self.entity.nameUI:setActive(false)
 			end
 		else
-			arg_11_0.entity.nameUI:setActive(true)
+			self.entity.nameUI:setActive(true)
 		end
 	end
 end
 
-return var_0_0
+return FightNameUIVisibleComp

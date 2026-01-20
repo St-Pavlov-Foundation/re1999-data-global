@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.controller.Activity114Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/controller/Activity114Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_2.jiexika.controller.Activity114Event", package.seeall)
 
-var_0_0.OnAttrUpdate = 1
-var_0_0.OnAttentionUpdate = 2
-var_0_0.OnCGUpdate = 3
-var_0_0.OnRoundUpdate = 4
-var_0_0.OnEventProcessEnd = 5
-var_0_0.OnFightResult = 6
-var_0_0.OnNewFeature = 7
-var_0_0.OnEnterSchoolUpdate = 8
-var_0_0.OnEventProcessStart = 9
-var_0_0.OnEventEndWithResult = 10
-var_0_0.ShowHideEduOper = 101
-var_0_0.EduSelectAttrChange = 102
-var_0_0.ShowFeaturesTips = 103
-var_0_0.UnLockRedDotUpdate = 104
-var_0_0.MainViewAnimEnd = 105
-var_0_0.MainViewAnimBegin = 106
-var_0_0.GuideBegin = 201
-var_0_0.StoryFinish = 202
+local Activity114Event = _M
 
-return var_0_0
+Activity114Event.OnAttrUpdate = 1
+Activity114Event.OnAttentionUpdate = 2
+Activity114Event.OnCGUpdate = 3
+Activity114Event.OnRoundUpdate = 4
+Activity114Event.OnEventProcessEnd = 5
+Activity114Event.OnFightResult = 6
+Activity114Event.OnNewFeature = 7
+Activity114Event.OnEnterSchoolUpdate = 8
+Activity114Event.OnEventProcessStart = 9
+Activity114Event.OnEventEndWithResult = 10
+Activity114Event.ShowHideEduOper = 101
+Activity114Event.EduSelectAttrChange = 102
+Activity114Event.ShowFeaturesTips = 103
+Activity114Event.UnLockRedDotUpdate = 104
+Activity114Event.MainViewAnimEnd = 105
+Activity114Event.MainViewAnimBegin = 106
+Activity114Event.GuideBegin = 201
+Activity114Event.StoryFinish = 202
+
+return Activity114Event

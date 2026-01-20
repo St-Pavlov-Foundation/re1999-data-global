@@ -1,90 +1,92 @@
-﻿module("modules.logic.tips.view.stress.FightFocusAct183StressComp", package.seeall)
+﻿-- chunkname: @modules/logic/tips/view/stress/FightFocusAct183StressComp.lua
 
-local var_0_0 = class("FightFocusAct183StressComp", FightFocusStressCompBase)
+module("modules.logic.tips.view.stress.FightFocusAct183StressComp", package.seeall)
 
-var_0_0.PrefabPath = FightNameUIStressMgr.PrefabPath
+local FightFocusAct183StressComp = class("FightFocusAct183StressComp", FightFocusStressCompBase)
 
-function var_0_0.getUiType(arg_1_0)
+FightFocusAct183StressComp.PrefabPath = FightNameUIStressMgr.PrefabPath
+
+function FightFocusAct183StressComp:getUiType()
 	return FightNameUIStressMgr.UiType.Act183
 end
 
-function var_0_0.initUI(arg_2_0)
-	arg_2_0.stressText = gohelper.findChildText(arg_2_0.instanceGo, "#txt_stress")
-	arg_2_0.goYellow = gohelper.findChild(arg_2_0.instanceGo, "yellow")
-	arg_2_0.goBroken = gohelper.findChild(arg_2_0.instanceGo, "broken")
-	arg_2_0.click = gohelper.findChildClickWithDefaultAudio(arg_2_0.instanceGo, "#go_clickarea")
+function FightFocusAct183StressComp:initUI()
+	self.stressText = gohelper.findChildText(self.instanceGo, "#txt_stress")
+	self.goYellow = gohelper.findChild(self.instanceGo, "yellow")
+	self.goBroken = gohelper.findChild(self.instanceGo, "broken")
+	self.click = gohelper.findChildClickWithDefaultAudio(self.instanceGo, "#go_clickarea")
 
-	arg_2_0.click:AddClickListener(arg_2_0.onClickStress, arg_2_0)
+	self.click:AddClickListener(self.onClickStress, self)
 end
 
-function var_0_0.onClickStress(arg_3_0)
-	if not arg_3_0.entityMo then
+function FightFocusAct183StressComp:onClickStress()
+	if not self.entityMo then
 		return
 	end
 
-	local var_3_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act183]
+	local customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act183]
 
-	if var_3_0 then
-		local var_3_1 = var_3_0.stressIdentity[arg_3_0.entityMo.id]
+	if customData then
+		local identityList = customData.stressIdentity[self.entityMo.id]
 
-		if var_3_1 then
-			StressTipController.instance:openAct183StressTip(var_3_1)
+		if identityList then
+			StressTipController.instance:openAct183StressTip(identityList)
 
 			return
 		end
 	end
 
-	local var_3_2 = arg_3_0.entityMo:getCO()
-	local var_3_3 = var_3_2 and lua_monster_skill_template.configDict[var_3_2.skillTemplate]
-	local var_3_4 = var_3_3 and var_3_3.identity
+	local co = self.entityMo:getCO()
+	local monsterTemplateCo = co and lua_monster_skill_template.configDict[co.skillTemplate]
+	local identityId = monsterTemplateCo and monsterTemplateCo.identity
 
-	if not var_3_4 then
+	if not identityId then
 		return
 	end
 
 	StressTipController.instance:openAct183StressTip({
-		var_3_4
+		identityId
 	})
 end
 
-function var_0_0.refreshStress(arg_4_0, arg_4_1)
-	if not arg_4_0.loaded then
-		arg_4_0.cacheEntityMo = arg_4_1
+function FightFocusAct183StressComp:refreshStress(entityMo)
+	if not self.loaded then
+		self.cacheEntityMo = entityMo
 
 		return
 	end
 
-	if not arg_4_1 then
-		arg_4_0:hide()
+	if not entityMo then
+		self:hide()
 
 		return
 	end
 
-	if not arg_4_1:hasStress() then
-		arg_4_0:hide()
+	if not entityMo:hasStress() then
+		self:hide()
 
 		return
 	end
 
-	arg_4_0:show()
+	self:show()
 
-	arg_4_0.entityMo = arg_4_1
+	self.entityMo = entityMo
 
-	local var_4_0 = arg_4_1:getPowerInfo(FightEnum.PowerType.Stress)
-	local var_4_1 = var_4_0 and var_4_0.num or 0
+	local powerInfo = entityMo:getPowerInfo(FightEnum.PowerType.Stress)
+	local curStress = powerInfo and powerInfo.num or 0
 
-	arg_4_0.stressText.text = var_4_1
+	self.stressText.text = curStress
 
-	gohelper.setActive(arg_4_0.goYellow, var_4_1 <= StressAct183Behavior.StressThreshold)
-	gohelper.setActive(arg_4_0.goBroken, var_4_1 > StressAct183Behavior.StressThreshold)
+	gohelper.setActive(self.goYellow, curStress <= StressAct183Behavior.StressThreshold)
+	gohelper.setActive(self.goBroken, curStress > StressAct183Behavior.StressThreshold)
 end
 
-function var_0_0.destroy(arg_5_0)
-	arg_5_0.click:RemoveClickListener()
+function FightFocusAct183StressComp:destroy()
+	self.click:RemoveClickListener()
 
-	arg_5_0.click = nil
+	self.click = nil
 
-	var_0_0.super.destroy(arg_5_0)
+	FightFocusAct183StressComp.super.destroy(self)
 end
 
-return var_0_0
+return FightFocusAct183StressComp

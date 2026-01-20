@@ -1,569 +1,584 @@
-﻿module("modules.logic.rouge.controller.RougeCollectionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/controller/RougeCollectionHelper.lua
 
-local var_0_0 = _M
-local var_0_1 = Vector2.New(0, 0)
+module("modules.logic.rouge.controller.RougeCollectionHelper", package.seeall)
 
-var_0_0.CollectionSlotCellSize = Vector2.New(98, 98)
+local RougeCollectionHelper = _M
+local CollectionSlotCenterPosition = Vector2.New(0, 0)
 
-function var_0_0.anchorPos2SlotPos(arg_1_0)
-	if not arg_1_0 then
+RougeCollectionHelper.CollectionSlotCellSize = Vector2.New(98, 98)
+
+function RougeCollectionHelper.anchorPos2SlotPos(anchorPos)
+	if not anchorPos then
 		logError("anchorPos is nil")
 
-		return var_0_1.x, var_0_1.y
+		return CollectionSlotCenterPosition.x, CollectionSlotCenterPosition.y
 	end
 
-	local var_1_0 = Vector2(arg_1_0.x - var_0_1.x, -arg_1_0.y - var_0_1.y)
-	local var_1_1 = math.floor(var_1_0.x / var_0_0.CollectionSlotCellSize.x + 0.5)
-	local var_1_2 = math.floor(var_1_0.y / var_0_0.CollectionSlotCellSize.y + 0.5)
+	local offset = Vector2(anchorPos.x - CollectionSlotCenterPosition.x, -anchorPos.y - CollectionSlotCenterPosition.y)
+	local slotPosX = math.floor(offset.x / RougeCollectionHelper.CollectionSlotCellSize.x + 0.5)
+	local slotPosY = math.floor(offset.y / RougeCollectionHelper.CollectionSlotCellSize.y + 0.5)
 
-	return var_1_1, var_1_2
+	return slotPosX, slotPosY
 end
 
-function var_0_0.slotPos2AnchorPos(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_0 then
+function RougeCollectionHelper.slotPos2AnchorPos(slotPos, cellSizeX, cellSizeY)
+	if not slotPos then
 		return Vector2.zero
 	end
 
-	arg_2_1 = arg_2_1 or var_0_0.CollectionSlotCellSize.x
-	arg_2_2 = arg_2_2 or var_0_0.CollectionSlotCellSize.y
+	cellSizeX = cellSizeX or RougeCollectionHelper.CollectionSlotCellSize.x
+	cellSizeY = cellSizeY or RougeCollectionHelper.CollectionSlotCellSize.y
 
-	local var_2_0 = arg_2_0.x * arg_2_1 + var_0_1.x
-	local var_2_1 = -arg_2_0.y * arg_2_2 + var_0_1.y
+	local anchorPosX = slotPos.x * cellSizeX + CollectionSlotCenterPosition.x
+	local anchorPosY = -slotPos.y * cellSizeY + CollectionSlotCenterPosition.y
 
-	return var_2_0, var_2_1
+	return anchorPosX, anchorPosY
 end
 
-function var_0_0.getCollectionPlacePosition(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = Vector2(arg_3_0.x - 0.5, arg_3_0.y - 0.5)
-	local var_3_1, var_3_2 = var_0_0.slotPos2AnchorPos(var_3_0, arg_3_1, arg_3_2)
+function RougeCollectionHelper.getCollectionPlacePosition(leftTopPos, cellSizeX, cellSizeY)
+	local centerPos = Vector2(leftTopPos.x - 0.5, leftTopPos.y - 0.5)
+	local centerAnchorPosX, centerAnchorPosY = RougeCollectionHelper.slotPos2AnchorPos(centerPos, cellSizeX, cellSizeY)
 
-	return var_3_1, var_3_2
+	return centerAnchorPosX, centerAnchorPosY
 end
 
-function var_0_0.getSlotCellSize()
-	return var_0_0.CollectionSlotCellSize
+function RougeCollectionHelper.getSlotCellSize()
+	return RougeCollectionHelper.CollectionSlotCellSize
 end
 
-function var_0_0.getSlotCellInsideLine(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0 then
+function RougeCollectionHelper.getSlotCellInsideLine(shapeCfgMap, slotCellPos, isRevertTop)
+	if not shapeCfgMap then
 		return
 	end
 
-	local var_5_0 = arg_5_1 + Vector2(0, 1)
-	local var_5_1 = arg_5_1 - Vector2(0, 1)
-	local var_5_2 = arg_5_1 - Vector2(1, 0)
-	local var_5_3 = arg_5_1 + Vector2(1, 0)
+	local topPos = slotCellPos + Vector2(0, 1)
+	local bottomPos = slotCellPos - Vector2(0, 1)
+	local leftPos = slotCellPos - Vector2(1, 0)
+	local rightPos = slotCellPos + Vector2(1, 0)
 
-	if arg_5_2 then
-		var_5_1, var_5_0 = var_5_0, var_5_1
+	if isRevertTop then
+		local tempTop = topPos
+
+		topPos = bottomPos
+		bottomPos = tempTop
 	end
 
-	local var_5_4 = {}
+	local result = {}
 
-	if arg_5_0[var_5_0.x] and arg_5_0[var_5_0.x][var_5_0.y] then
-		table.insert(var_5_4, RougeEnum.SlotCellDirection.Top)
+	if shapeCfgMap[topPos.x] and shapeCfgMap[topPos.x][topPos.y] then
+		table.insert(result, RougeEnum.SlotCellDirection.Top)
 	end
 
-	if arg_5_0[var_5_1.x] and arg_5_0[var_5_1.x][var_5_1.y] then
-		table.insert(var_5_4, RougeEnum.SlotCellDirection.Bottom)
+	if shapeCfgMap[bottomPos.x] and shapeCfgMap[bottomPos.x][bottomPos.y] then
+		table.insert(result, RougeEnum.SlotCellDirection.Bottom)
 	end
 
-	if arg_5_0[var_5_2.x] and arg_5_0[var_5_2.x][var_5_2.y] then
-		table.insert(var_5_4, RougeEnum.SlotCellDirection.Left)
+	if shapeCfgMap[leftPos.x] and shapeCfgMap[leftPos.x][leftPos.y] then
+		table.insert(result, RougeEnum.SlotCellDirection.Left)
 	end
 
-	if arg_5_0[var_5_3.x] and arg_5_0[var_5_3.x][var_5_3.y] then
-		table.insert(var_5_4, RougeEnum.SlotCellDirection.Right)
+	if shapeCfgMap[rightPos.x] and shapeCfgMap[rightPos.x][rightPos.y] then
+		table.insert(result, RougeEnum.SlotCellDirection.Right)
 	end
 
-	return var_5_4
+	return result
 end
 
-function var_0_0.getCollectionTopLeftSlotPos(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = var_0_0.getCollectionTopLeftPos(arg_6_0, arg_6_2)
+function RougeCollectionHelper.getCollectionTopLeftSlotPos(collectionCfgId, centerSlotPos, rotation)
+	local leftTopOffset = RougeCollectionHelper.getCollectionTopLeftPos(collectionCfgId, rotation)
 
-	return Vector2(arg_6_1.x + var_6_0.x, arg_6_1.y - var_6_0.y)
+	return Vector2(centerSlotPos.x + leftTopOffset.x, centerSlotPos.y - leftTopOffset.y)
 end
 
-function var_0_0.getCollectionCenterSlotPos(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = var_0_0.getCollectionTopLeftPos(arg_7_0, arg_7_1)
+function RougeCollectionHelper.getCollectionCenterSlotPos(collectionCfgId, rotation, topLeftPos)
+	local leftTopOffset = RougeCollectionHelper.getCollectionTopLeftPos(collectionCfgId, rotation)
 
-	if not var_7_0 then
-		return arg_7_2
+	if not leftTopOffset then
+		return topLeftPos
 	end
 
-	local var_7_1 = arg_7_2.y + var_7_0.y
-	local var_7_2 = arg_7_2.x - var_7_0.x
+	local centerSlotPosY = topLeftPos.y + leftTopOffset.y
+	local centerSlotPosX = topLeftPos.x - leftTopOffset.x
 
-	return Vector2(var_7_2, var_7_1)
+	return Vector2(centerSlotPosX, centerSlotPosY)
 end
 
-function var_0_0.getCollectionTopLeftPos(arg_8_0, arg_8_1)
-	local var_8_0 = RougeCollectionConfig.instance:getRotateEditorParam(arg_8_0, arg_8_1, RougeEnum.CollectionEditorParamType.Shape)
-	local var_8_1 = 1000
-	local var_8_2 = 1000
-	local var_8_3 = -1000
-	local var_8_4 = -1000
+function RougeCollectionHelper.getCollectionTopLeftPos(collectionCfgId, rotation)
+	local shapeCfgs = RougeCollectionConfig.instance:getRotateEditorParam(collectionCfgId, rotation, RougeEnum.CollectionEditorParamType.Shape)
+	local minSlotPosX, minSlotPosY = 1000, 1000
+	local maxSlotPosX, maxSlotPosY = -1000, -1000
 
-	if var_8_0 then
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			if var_8_1 > iter_8_1.x then
-				var_8_1 = iter_8_1.x
+	if shapeCfgs then
+		for _, cell in pairs(shapeCfgs) do
+			if minSlotPosX > cell.x then
+				minSlotPosX = cell.x
 			end
 
-			if var_8_2 > iter_8_1.y then
-				var_8_2 = iter_8_1.x
+			if minSlotPosY > cell.y then
+				minSlotPosY = cell.x
 			end
 
-			if var_8_3 < iter_8_1.y then
-				var_8_3 = iter_8_1.x
+			if maxSlotPosX < cell.y then
+				maxSlotPosX = cell.x
 			end
 
-			if var_8_4 < iter_8_1.y then
-				var_8_4 = iter_8_1.y
+			if maxSlotPosY < cell.y then
+				maxSlotPosY = cell.y
 			end
 		end
 	end
 
-	return Vector2(var_8_1, var_8_4)
+	return Vector2(minSlotPosX, maxSlotPosY)
 end
 
-function var_0_0.getRotateAngleByRotation(arg_9_0)
-	arg_9_0 = arg_9_0 or 0
-	arg_9_0 = Mathf.Clamp(arg_9_0, 0, 3)
+function RougeCollectionHelper.getRotateAngleByRotation(rotation)
+	rotation = rotation or 0
+	rotation = Mathf.Clamp(rotation, 0, 3)
 
-	return arg_9_0 * -90
+	return rotation * -90
 end
 
-function var_0_0.getCollectionIconUrl(arg_10_0)
-	local var_10_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_10_0)
+function RougeCollectionHelper.getCollectionIconUrl(collectionCfgId)
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
 
-	if var_10_0 then
-		return ResUrl.getRougeIcon("collection/" .. var_10_0.iconPath)
+	if collectionCfg then
+		return ResUrl.getRougeIcon("collection/" .. collectionCfg.iconPath)
 	end
 end
 
-function var_0_0.getCollectionSizeAfterRotation(arg_11_0, arg_11_1)
-	local var_11_0, var_11_1 = RougeCollectionConfig.instance:getShapeSize(arg_11_0)
+function RougeCollectionHelper.getCollectionSizeAfterRotation(collectionCfgId, rotation)
+	local width, height = RougeCollectionConfig.instance:getShapeSize(collectionCfgId)
 
-	arg_11_1 = arg_11_1 or 0
+	rotation = rotation or 0
 
-	if arg_11_1 % 2 == 0 then
-		return var_11_0, var_11_1
+	if rotation % 2 == 0 then
+		return width, height
 	else
-		return var_11_1, var_11_0
+		return height, width
 	end
 end
 
-function var_0_0.loadShapeGrid(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	gohelper.setActive(arg_12_2, false)
+function RougeCollectionHelper.loadShapeGrid(collectionId, gridContainer, gridItem, gridList, scallWithSize)
+	gohelper.setActive(gridItem, false)
 
-	local var_12_0 = RougeCollectionConfig.instance:getShapeMatrix(arg_12_0)
-	local var_12_1, var_12_2 = RougeCollectionConfig.instance:getShapeSize(arg_12_0)
+	local matrix = RougeCollectionConfig.instance:getShapeMatrix(collectionId)
+	local width, height = RougeCollectionConfig.instance:getShapeSize(collectionId)
 
-	if arg_12_4 == nil or arg_12_4 == true then
-		local var_12_3 = var_0_0.getCollectionBgScaleSize(var_12_1, var_12_2)
+	if scallWithSize == nil or scallWithSize == true then
+		local scale = RougeCollectionHelper.getCollectionBgScaleSize(width, height)
 
-		transformhelper.setLocalScale(arg_12_1.transform, var_12_3, var_12_3, 1)
+		transformhelper.setLocalScale(gridContainer.transform, scale, scale, 1)
 	end
 
-	gohelper.onceAddComponent(arg_12_1, gohelper.Type_GridLayoutGroup).constraintCount = var_12_1
+	local gridLayout = gohelper.onceAddComponent(gridContainer, gohelper.Type_GridLayoutGroup)
 
-	local var_12_4 = 0
+	gridLayout.constraintCount = width
 
-	for iter_12_0 = 1, var_12_2 do
-		for iter_12_1 = 1, var_12_1 do
-			var_12_4 = var_12_4 + 1
+	local index = 0
 
-			local var_12_5
+	for i = 1, height do
+		for j = 1, width do
+			index = index + 1
 
-			if arg_12_3 then
-				var_12_5 = arg_12_3[var_12_4]
+			local grid
 
-				if not var_12_5 then
-					var_12_5 = gohelper.cloneInPlace(arg_12_2)
+			if gridList then
+				grid = gridList[index]
 
-					table.insert(arg_12_3, var_12_5)
+				if not grid then
+					grid = gohelper.cloneInPlace(gridItem)
+
+					table.insert(gridList, grid)
 				end
 			else
-				var_12_5 = gohelper.cloneInPlace(arg_12_2)
+				grid = gohelper.cloneInPlace(gridItem)
 			end
 
-			gohelper.setActive(var_12_5, true)
+			gohelper.setActive(grid, true)
 
-			local var_12_6 = var_12_5:GetComponent(gohelper.Type_Image)
-			local var_12_7 = tonumber(var_12_0[iter_12_0][iter_12_1]) == 1
+			local image = grid:GetComponent(gohelper.Type_Image)
+			local isImageEnabled = tonumber(matrix[i][j]) == 1
 
-			var_12_6.enabled = var_12_7
+			image.enabled = isImageEnabled
 
-			if var_12_7 then
-				local var_12_8 = RougeCollectionConfig.instance:getCollectionCfg(arg_12_0)
-				local var_12_9 = var_12_8 and var_12_8.showRare
+			if isImageEnabled then
+				local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionId)
+				local showRare = collectionCfg and collectionCfg.showRare
 
-				UISpriteSetMgr.instance:setRougeSprite(var_12_6, "rouge_collection_grid_big_" .. tostring(var_12_9))
+				UISpriteSetMgr.instance:setRougeSprite(image, "rouge_collection_grid_big_" .. tostring(showRare))
 			end
 		end
 	end
 
-	if arg_12_3 then
-		for iter_12_2 = var_12_4 + 1, #arg_12_3 do
-			gohelper.setActive(arg_12_3[iter_12_2], false)
+	if gridList then
+		for i = index + 1, #gridList do
+			gohelper.setActive(gridList[i], false)
 		end
 	end
 end
 
-function var_0_0.getCollectionBgScaleSize(arg_13_0, arg_13_1)
-	if arg_13_0 == 0 or arg_13_1 == 0 then
+function RougeCollectionHelper.getCollectionBgScaleSize(width, height)
+	if width == 0 or height == 0 then
 		logError("get collection size zero, please check")
 
 		return 0
 	end
 
-	if arg_13_1 < arg_13_0 then
-		return RougeEnum.CollectionBgMaxSize / arg_13_0
+	if height < width then
+		return RougeEnum.CollectionBgMaxSize / width
 	end
 
-	return RougeEnum.CollectionBgMaxSize / arg_13_1
+	return RougeEnum.CollectionBgMaxSize / height
 end
 
-function var_0_0.loadTags(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = RougeCollectionConfig.instance:getCollectionTags(arg_14_0)
+function RougeCollectionHelper.loadTags(collectionId, goTagItem, goList)
+	local tagList = RougeCollectionConfig.instance:getCollectionTags(collectionId)
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_1
+	for index, tag in ipairs(tagList) do
+		local go
 
-		if arg_14_2 then
-			var_14_1 = arg_14_2[iter_14_0]
+		if goList then
+			go = goList[index]
 
-			if not var_14_1 then
-				var_14_1 = gohelper.cloneInPlace(arg_14_1)
+			if not go then
+				go = gohelper.cloneInPlace(goTagItem)
 
-				table.insert(arg_14_2, var_14_1)
+				table.insert(goList, go)
 			end
 		else
-			var_14_1 = gohelper.cloneInPlace(arg_14_1)
+			go = gohelper.cloneInPlace(goTagItem)
 		end
 
-		local var_14_2 = RougeCollectionConfig.instance:getCollectioTagCo(iter_14_1)
+		local tagCo = RougeCollectionConfig.instance:getCollectioTagCo(tag)
 
-		gohelper.setActive(var_14_1, true)
+		gohelper.setActive(go, true)
 
-		local var_14_3 = gohelper.findChildImage(var_14_1, "image_tagicon")
+		local image = gohelper.findChildImage(go, "image_tagicon")
 
-		UISpriteSetMgr.instance:setRougeSprite(var_14_3, var_14_2 and var_14_2.iconUrl)
+		UISpriteSetMgr.instance:setRougeSprite(image, tagCo and tagCo.iconUrl)
 	end
 
-	for iter_14_2 = #var_14_0 + 1, #arg_14_2 do
-		gohelper.setActive(arg_14_2[iter_14_2], false)
+	for i = #tagList + 1, #goList do
+		gohelper.setActive(goList[i], false)
 	end
 end
 
-function var_0_0.loadCollectionAndEnchantTagsById(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = RougeCollectionModel.instance:getCollectionByUid(arg_15_0)
+function RougeCollectionHelper.loadCollectionAndEnchantTagsById(collectionId, goTagParent, goTagItem)
+	local collectionMO = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-	if not var_15_0 then
+	if not collectionMO then
 		return
 	end
 
-	local var_15_1 = var_15_0.cfgId
-	local var_15_2 = var_15_0:getAllEnchantCfgId()
+	local collectionCfgId = collectionMO.cfgId
+	local enchantCfgIds = collectionMO:getAllEnchantCfgId()
 
-	var_0_0.loadCollectionAndEnchantTags(var_15_1, var_15_2, arg_15_1, arg_15_2)
+	RougeCollectionHelper.loadCollectionAndEnchantTags(collectionCfgId, enchantCfgIds, goTagParent, goTagItem)
 end
 
-function var_0_0.loadCollectionAndEnchantTags(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0, var_16_1 = var_0_0.getCollectionAndEnchantTagIds(arg_16_0, arg_16_1)
-	local var_16_2 = var_16_0 and #var_16_0 or 0
+function RougeCollectionHelper.loadCollectionAndEnchantTags(collectionCfgId, enchantCfgIds, goTagParent, goTagItem)
+	local collectionTags, enchantTags = RougeCollectionHelper.getCollectionAndEnchantTagIds(collectionCfgId, enchantCfgIds)
+	local collectionTagCount = collectionTags and #collectionTags or 0
 
-	var_16_0 = var_16_0 or {}
+	collectionTags = collectionTags or {}
 
-	tabletool.addValues(var_16_0, var_16_1)
-	gohelper.CreateObjList(nil, var_0_0._loadCollectionTagCallBack, var_16_0, arg_16_2, arg_16_3, nil, 1, var_16_2)
-	gohelper.CreateObjList(nil, var_0_0._loadEnchantTagCallBack, var_16_0, arg_16_2, arg_16_3, nil, var_16_2 + 1)
+	tabletool.addValues(collectionTags, enchantTags)
+	gohelper.CreateObjList(nil, RougeCollectionHelper._loadCollectionTagCallBack, collectionTags, goTagParent, goTagItem, nil, 1, collectionTagCount)
+	gohelper.CreateObjList(nil, RougeCollectionHelper._loadEnchantTagCallBack, collectionTags, goTagParent, goTagItem, nil, collectionTagCount + 1)
 end
 
-function var_0_0.loadCollectionTags(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_17_0)
+function RougeCollectionHelper.loadCollectionTags(collectionCfgId, goTagParent, goTagItem)
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
 
-	if not var_17_0 then
+	if not collectionCfg then
 		return
 	end
 
-	local var_17_1 = var_17_0.tags or {}
+	local tags = collectionCfg.tags or {}
 
-	gohelper.CreateObjList(nil, var_0_0._loadCollectionTagCallBack, var_17_1, arg_17_1, arg_17_2)
+	gohelper.CreateObjList(nil, RougeCollectionHelper._loadCollectionTagCallBack, tags, goTagParent, goTagItem)
 end
 
-function var_0_0._loadCollectionTagCallBack(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	var_0_0._loadCollectionIconFunc(arg_18_1, arg_18_2, arg_18_3)
+function RougeCollectionHelper._loadCollectionTagCallBack(callBackObj, tagObj, tagId, index)
+	RougeCollectionHelper._loadCollectionIconFunc(tagObj, tagId, index)
 
-	local var_18_0 = gohelper.findChildImage(arg_18_1, "image_tagframe")
+	local frameImg = gohelper.findChildImage(tagObj, "image_tagframe")
 
-	UISpriteSetMgr.instance:setRougeSprite(var_18_0, "rouge_collection_tagframe_1")
+	UISpriteSetMgr.instance:setRougeSprite(frameImg, "rouge_collection_tagframe_1")
 end
 
-function var_0_0._loadEnchantTagCallBack(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	var_0_0._loadCollectionIconFunc(arg_19_1, arg_19_2, arg_19_3)
+function RougeCollectionHelper._loadEnchantTagCallBack(callbackObj, tagObj, tagId, index)
+	RougeCollectionHelper._loadCollectionIconFunc(tagObj, tagId, index)
 
-	local var_19_0 = gohelper.findChildImage(arg_19_1, "image_tagframe")
+	local frameImg = gohelper.findChildImage(tagObj, "image_tagframe")
 
-	UISpriteSetMgr.instance:setRougeSprite(var_19_0, "rouge_collection_tagframe_2")
+	UISpriteSetMgr.instance:setRougeSprite(frameImg, "rouge_collection_tagframe_2")
 end
 
-function var_0_0._loadCollectionIconFunc(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = gohelper.findChildImage(arg_20_0, "image_tagicon")
-	local var_20_1 = RougeCollectionConfig.instance:getCollectioTagCo(arg_20_1)
+function RougeCollectionHelper._loadCollectionIconFunc(tagObj, tagId, index)
+	local tagImg = gohelper.findChildImage(tagObj, "image_tagicon")
+	local tagCo = RougeCollectionConfig.instance:getCollectioTagCo(tagId)
 
-	UISpriteSetMgr.instance:setRougeSprite(var_20_0, var_20_1 and var_20_1.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(tagImg, tagCo and tagCo.iconUrl)
 end
 
-function var_0_0.getCollectionAndEnchantTagIds(arg_21_0, arg_21_1)
-	local var_21_0 = {}
-	local var_21_1 = {}
-	local var_21_2 = {}
-	local var_21_3 = RougeCollectionConfig.instance:getCollectionCfg(arg_21_0)
-	local var_21_4 = var_21_3 and var_21_3.tags
+function RougeCollectionHelper.getCollectionAndEnchantTagIds(collectionCfgId, enchantCfgIds)
+	local collectionTagIds = {}
+	local enchantTagIds = {}
+	local tagMap = {}
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
+	local collectiontags = collectionCfg and collectionCfg.tags
 
-	var_0_0._getFilterCollectionTags(var_21_4, var_21_0, var_21_2)
+	RougeCollectionHelper._getFilterCollectionTags(collectiontags, collectionTagIds, tagMap)
 
-	if arg_21_1 then
-		for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
-			if iter_21_1 > 0 then
-				local var_21_5 = RougeCollectionConfig.instance:getCollectionCfg(iter_21_1)
-				local var_21_6 = var_21_5 and var_21_5.tags
+	if enchantCfgIds then
+		for _, cfgId in ipairs(enchantCfgIds) do
+			if cfgId > 0 then
+				local enchantCfg = RougeCollectionConfig.instance:getCollectionCfg(cfgId)
+				local tags = enchantCfg and enchantCfg.tags
 
-				var_0_0._getFilterCollectionTags(var_21_6, var_21_1, var_21_2, true)
+				RougeCollectionHelper._getFilterCollectionTags(tags, enchantTagIds, tagMap, true)
 			end
 		end
 	end
 
-	return var_21_0, var_21_1
+	return collectionTagIds, enchantTagIds
 end
 
-function var_0_0._getFilterCollectionTags(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	if not arg_22_0 then
+function RougeCollectionHelper._getFilterCollectionTags(tags, list, filterMap, isFilterTypeTag)
+	if not tags then
 		return
 	end
 
-	arg_22_1 = arg_22_1 or {}
-	arg_22_2 = arg_22_2 or {}
+	list = list or {}
+	filterMap = filterMap or {}
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0) do
-		if var_0_0._isCollectionTagSatisfy(iter_22_1, arg_22_2, arg_22_3) then
-			table.insert(arg_22_1, iter_22_1)
+	for _, tagId in ipairs(tags) do
+		local isSatisfy = RougeCollectionHelper._isCollectionTagSatisfy(tagId, filterMap, isFilterTypeTag)
 
-			arg_22_2[iter_22_1] = true
+		if isSatisfy then
+			table.insert(list, tagId)
+
+			filterMap[tagId] = true
 		end
 	end
 end
 
-function var_0_0._isCollectionTagSatisfy(arg_23_0, arg_23_1, arg_23_2)
-	if not arg_23_0 or arg_23_1[arg_23_0] then
+function RougeCollectionHelper._isCollectionTagSatisfy(tagId, filterMap, isFilterTypeTag)
+	if not tagId or filterMap[tagId] then
 		return false
 	end
 
-	if arg_23_2 then
-		return arg_23_0 < RougeEnum.MinCollectionExtraTagID
+	if isFilterTypeTag then
+		return tagId < RougeEnum.MinCollectionExtraTagID
 	end
 
 	return true
 end
 
-function var_0_0.loadCollectionAndEnchantTagNames(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5)
-	local var_24_0, var_24_1 = var_0_0.getCollectionAndEnchantTagIds(arg_24_0, arg_24_1)
+function RougeCollectionHelper.loadCollectionAndEnchantTagNames(collectionCfgId, enchantCfgIds, goTagParent, goTagItem, overrideCb, overrideCbObj)
+	local collectionTags, enchantTags = RougeCollectionHelper.getCollectionAndEnchantTagIds(collectionCfgId, enchantCfgIds)
 
-	var_24_0 = var_24_0 or {}
+	collectionTags = collectionTags or {}
 
-	tabletool.addValues(var_24_0, var_24_1)
+	tabletool.addValues(collectionTags, enchantTags)
 
-	arg_24_4 = arg_24_4 or var_0_0._loadCollectionTagNameWithIconCallBack
-	arg_24_5 = arg_24_5 or var_0_0
+	overrideCb = overrideCb or RougeCollectionHelper._loadCollectionTagNameWithIconCallBack
+	overrideCbObj = overrideCbObj or RougeCollectionHelper
 
-	gohelper.CreateObjList(arg_24_5, arg_24_4, var_24_0, arg_24_2, arg_24_3)
+	gohelper.CreateObjList(overrideCbObj, overrideCb, collectionTags, goTagParent, goTagItem)
 end
 
-function var_0_0._loadCollectionTagNameWithIconCallBack(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = gohelper.findChildImage(arg_25_1, "image_tagicon")
-	local var_25_1 = RougeCollectionConfig.instance:getCollectioTagCo(arg_25_2)
+function RougeCollectionHelper:_loadCollectionTagNameWithIconCallBack(tagObj, tagId, index)
+	local tagImg = gohelper.findChildImage(tagObj, "image_tagicon")
+	local tagCo = RougeCollectionConfig.instance:getCollectioTagCo(tagId)
 
-	UISpriteSetMgr.instance:setRougeSprite(var_25_0, var_25_1 and var_25_1.iconUrl)
+	UISpriteSetMgr.instance:setRougeSprite(tagImg, tagCo and tagCo.iconUrl)
 
-	arg_25_1:GetComponent(gohelper.Type_TextMesh).text = var_25_1 and var_25_1.name
+	local tagTxt = tagObj:GetComponent(gohelper.Type_TextMesh)
+
+	tagTxt.text = tagCo and tagCo.name
 end
 
-function var_0_0._loadCollectionTagNameCallBack(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = RougeCollectionConfig.instance:getCollectioTagCo(arg_26_2)
+function RougeCollectionHelper:_loadCollectionTagNameCallBack(tagObj, tagId, index)
+	local tagCo = RougeCollectionConfig.instance:getCollectioTagCo(tagId)
+	local tagTxt = tagObj:GetComponent(gohelper.Type_TextMesh)
 
-	arg_26_1:GetComponent(gohelper.Type_TextMesh).text = var_26_0 and var_26_0.name
+	tagTxt.text = tagCo and tagCo.name
 end
 
-function var_0_0.computeAndSetCollectionIconScale(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	local var_27_0, var_27_1 = RougeCollectionConfig.instance:getShapeSize(arg_27_0)
-	local var_27_2 = var_27_0 * arg_27_2
+function RougeCollectionHelper.computeAndSetCollectionIconScale(collectionCfgId, iconTran, cellWidth, cellHeight)
+	local width, height = RougeCollectionConfig.instance:getShapeSize(collectionCfgId)
+	local scaleEdgeValue = width * cellWidth
 
-	if var_27_0 < var_27_1 then
-		var_27_2 = var_27_1 * arg_27_3
+	if width < height then
+		scaleEdgeValue = height * cellHeight
 	end
 
-	recthelper.setSize(arg_27_1, var_27_2, var_27_2)
+	recthelper.setSize(iconTran, scaleEdgeValue, scaleEdgeValue)
 end
 
-function var_0_0.checkCollectionHasAnyOneTag(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	if GameUtil.tabletool_dictIsEmpty(arg_28_2) and GameUtil.tabletool_dictIsEmpty(arg_28_3) then
+function RougeCollectionHelper.checkCollectionHasAnyOneTag(collectionCfgId, enchantCfgId, baseTag, extraTag)
+	if GameUtil.tabletool_dictIsEmpty(baseTag) and GameUtil.tabletool_dictIsEmpty(extraTag) then
 		return true
 	end
 
-	local var_28_0, var_28_1 = var_0_0.getCollectionAndEnchantTagIds(arg_28_0, arg_28_1)
-	local var_28_2 = {}
+	local collectionTags, enchantTags = RougeCollectionHelper.getCollectionAndEnchantTagIds(collectionCfgId, enchantCfgId)
+	local totalTags = {}
 
-	tabletool.addValues(var_28_2, var_28_0)
-	tabletool.addValues(var_28_2, var_28_1)
+	tabletool.addValues(totalTags, collectionTags)
+	tabletool.addValues(totalTags, enchantTags)
 
-	local var_28_3 = arg_28_2 and tabletool.len(arg_28_2) > 0
-	local var_28_4 = arg_28_3 and tabletool.len(arg_28_3) > 0
-	local var_28_5 = not var_28_3
-	local var_28_6 = not var_28_4
+	local isNeedCheckBaseTag = baseTag and tabletool.len(baseTag) > 0
+	local isNeedCheckExtraTag = extraTag and tabletool.len(extraTag) > 0
+	local isFitBaseTag = not isNeedCheckBaseTag
+	local isFitExtraTag = not isNeedCheckExtraTag
 
-	if var_28_2 then
-		for iter_28_0, iter_28_1 in ipairs(var_28_2) do
-			if var_28_3 and arg_28_2[iter_28_1] then
-				var_28_5 = true
+	if totalTags then
+		for _, tag in ipairs(totalTags) do
+			if isNeedCheckBaseTag and baseTag[tag] then
+				isFitBaseTag = true
 			end
 
-			if var_28_4 and arg_28_3[iter_28_1] then
-				var_28_6 = true
+			if isNeedCheckExtraTag and extraTag[tag] then
+				isFitExtraTag = true
 			end
 
-			if var_28_5 and var_28_6 then
+			if isFitBaseTag and isFitExtraTag then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.checkCollectionHasAnyOneTag1(arg_29_0, arg_29_1)
-	if GameUtil.tabletool_dictIsEmpty(arg_29_1) then
+function RougeCollectionHelper.checkCollectionHasAnyOneTag1(collectionId, checkTagMap)
+	if GameUtil.tabletool_dictIsEmpty(checkTagMap) then
 		return true
 	end
 
-	local var_29_0 = RougeCollectionConfig.instance:getCollectionTags(arg_29_0)
+	local tags = RougeCollectionConfig.instance:getCollectionTags(collectionId)
 
-	if var_29_0 then
-		for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-			if arg_29_1[iter_29_1] then
+	if tags then
+		for _, tag in ipairs(tags) do
+			if checkTagMap[tag] then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.removeInValidItem(arg_30_0)
-	if GameUtil.tabletool_dictIsEmpty(arg_30_0) then
+function RougeCollectionHelper.removeInValidItem(map)
+	if GameUtil.tabletool_dictIsEmpty(map) then
 		return
 	end
 
-	for iter_30_0, iter_30_1 in pairs(arg_30_0) do
-		if not arg_30_0[iter_30_0] then
-			arg_30_0[iter_30_0] = nil
+	for k, v in pairs(map) do
+		if not map[k] then
+			map[k] = nil
 		end
 	end
 end
 
-function var_0_0.buildCollectionSlotMOs(arg_31_0)
-	if not arg_31_0 then
+function RougeCollectionHelper.buildCollectionSlotMOs(serverMsg)
+	if not serverMsg then
 		return
 	end
 
-	local var_31_0 = {}
+	local moList = {}
 
-	for iter_31_0, iter_31_1 in ipairs(arg_31_0) do
-		local var_31_1 = var_0_0.buildNewCollectionSlotMO(iter_31_1)
+	for _, info in ipairs(serverMsg) do
+		local mo = RougeCollectionHelper.buildNewCollectionSlotMO(info)
 
-		table.insert(var_31_0, var_31_1)
+		table.insert(moList, mo)
 	end
 
-	return var_31_0
+	return moList
 end
 
-function var_0_0.buildNewCollectionSlotMO(arg_32_0)
-	local var_32_0 = RougeCollectionSlotMO.New()
+function RougeCollectionHelper.buildNewCollectionSlotMO(info)
+	local collectionMO = RougeCollectionSlotMO.New()
 
-	var_32_0:init(arg_32_0)
+	collectionMO:init(info)
 
-	return var_32_0
+	return collectionMO
 end
 
-function var_0_0.buildNewBagCollectionMO(arg_33_0)
-	local var_33_0 = RougeCollectionMO.New()
+function RougeCollectionHelper.buildNewBagCollectionMO(info)
+	local collectionMO = RougeCollectionMO.New()
 
-	var_33_0:init(arg_33_0)
+	collectionMO:init(info)
 
-	return var_33_0
+	return collectionMO
 end
 
-function var_0_0.isCollectionShapeAsSquare(arg_34_0)
-	local var_34_0, var_34_1 = RougeCollectionConfig.instance:getShapeSize(arg_34_0)
+function RougeCollectionHelper.isCollectionShapeAsSquare(collectionCfgId)
+	local width, height = RougeCollectionConfig.instance:getShapeSize(collectionCfgId)
 
-	if var_34_0 ~= var_34_1 then
+	if width ~= height then
 		return false
 	end
 
-	local var_34_2 = var_34_0 * var_34_1
-	local var_34_3 = RougeCollectionConfig.instance:getOriginEditorParam(arg_34_0, RougeEnum.CollectionEditorParamType.Shape)
+	local shapeSizeCellCount = width * height
+	local shapeCfg = RougeCollectionConfig.instance:getOriginEditorParam(collectionCfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local realCellCount = shapeCfg and #shapeCfg or 0
 
-	return var_34_2 == (var_34_3 and #var_34_3 or 0)
+	return shapeSizeCellCount == realCellCount
 end
 
-function var_0_0.getCollectionCellSlotPos(arg_35_0, arg_35_1)
-	return (Vector2(arg_35_1.x + arg_35_0.x, arg_35_0.y - arg_35_1.y))
+function RougeCollectionHelper.getCollectionCellSlotPos(centerPos, offset)
+	local cellSlotPos = Vector2(offset.x + centerPos.x, centerPos.y - offset.y)
+
+	return cellSlotPos
 end
 
-function var_0_0.isNewGetCollection(arg_36_0)
-	return arg_36_0 == RougeEnum.CollectionReason.Product or arg_36_0 == RougeEnum.CollectionReason.Composite
+function RougeCollectionHelper.isNewGetCollection(reason)
+	return reason == RougeEnum.CollectionReason.Product or reason == RougeEnum.CollectionReason.Composite
 end
 
-local var_0_2 = Vector2(1, 1)
+local oneCellCollectionDragPos = Vector2(1, 1)
 
-function var_0_0.getCollectionDragPos(arg_37_0, arg_37_1)
-	if not RougeCollectionConfig.instance:getCollectionCfg(arg_37_0) then
+function RougeCollectionHelper.getCollectionDragPos(collectionCfgId, rotation)
+	local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
+
+	if not collectionCfg then
 		return
 	end
 
-	local var_37_0 = RougeCollectionConfig.instance:getShapeMatrix(arg_37_0, arg_37_1)
-	local var_37_1 = tabletool.len(var_37_0)
-	local var_37_2 = var_37_0[var_37_1]
+	local shapeMatrix = RougeCollectionConfig.instance:getShapeMatrix(collectionCfgId, rotation)
+	local rowCount = tabletool.len(shapeMatrix)
+	local bottomRow = shapeMatrix[rowCount]
 
-	if var_37_1 <= 1 and #var_37_2 <= 1 then
-		return var_0_2.x, var_0_2.y
+	if rowCount <= 1 and #bottomRow <= 1 then
+		return oneCellCollectionDragPos.x, oneCellCollectionDragPos.y
 	end
 
-	if var_37_2 then
-		for iter_37_0, iter_37_1 in ipairs(var_37_2) do
-			if iter_37_1 and iter_37_1 > 0 then
-				return iter_37_0, var_37_1
+	if bottomRow then
+		for col, value in ipairs(bottomRow) do
+			if value and value > 0 then
+				return col, rowCount
 			end
 		end
 	end
 end
 
-function var_0_0.checkIsCollectionSlotArea(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	if not arg_38_0 or not arg_38_1 or not arg_38_2 then
+function RougeCollectionHelper.checkIsCollectionSlotArea(collectionCfgId, leftTopPos, rotation, checkout)
+	if not collectionCfgId or not leftTopPos or not rotation then
 		return
 	end
 
-	local var_38_0 = RougeCollectionConfig.instance:getShapeMatrix(arg_38_0, arg_38_2)
+	local rotationMatrix = RougeCollectionConfig.instance:getShapeMatrix(collectionCfgId, rotation)
 
-	if var_38_0 then
-		for iter_38_0, iter_38_1 in ipairs(var_38_0) do
-			for iter_38_2, iter_38_3 in ipairs(iter_38_1) do
-				if iter_38_3 and iter_38_3 > 0 then
-					local var_38_1 = arg_38_1.x + iter_38_2 - 1
-					local var_38_2 = arg_38_1.y + iter_38_0 - 1
-					local var_38_3 = var_0_0.isSlotPosInSlotArea(var_38_2, var_38_1)
+	if rotationMatrix then
+		for rowIndex, cols in ipairs(rotationMatrix) do
+			for colIndex, value in ipairs(cols) do
+				if value and value > 0 then
+					local col = leftTopPos.x + colIndex - 1
+					local row = leftTopPos.y + rowIndex - 1
+					local isInSlotArea = RougeCollectionHelper.isSlotPosInSlotArea(row, col)
 
-					if arg_38_3 and not var_38_3 then
+					if checkout and not isInSlotArea then
 						return true
-					elseif not arg_38_3 and var_38_3 then
+					elseif not checkout and isInSlotArea then
 						return true
 					end
 				end
@@ -572,157 +587,158 @@ function var_0_0.checkIsCollectionSlotArea(arg_38_0, arg_38_1, arg_38_2, arg_38_
 	end
 end
 
-function var_0_0.isSlotPosInSlotArea(arg_39_0, arg_39_1)
-	local var_39_0 = RougeCollectionModel.instance:getCurSlotAreaSize()
-	local var_39_1 = var_39_0.row or 0
-	local var_39_2 = var_39_0.col or 0
+function RougeCollectionHelper.isSlotPosInSlotArea(row, col)
+	local slotAreaSize = RougeCollectionModel.instance:getCurSlotAreaSize()
+	local slotRowCount = slotAreaSize.row or 0
+	local slotColCount = slotAreaSize.col or 0
 
-	if var_39_0 then
-		return arg_39_0 >= 0 and arg_39_0 < var_39_1 and arg_39_1 >= 0 and arg_39_1 < var_39_2
+	if slotAreaSize then
+		return row >= 0 and row < slotRowCount and col >= 0 and col < slotColCount
 	end
 end
 
-var_0_0.DefaultSlotParam = RougeCollectionSlotCompParam.New()
-var_0_0.StyleShowCollectionSlotParam = RougeCollectionSlotCompParam.New()
+RougeCollectionHelper.DefaultSlotParam = RougeCollectionSlotCompParam.New()
+RougeCollectionHelper.StyleShowCollectionSlotParam = RougeCollectionSlotCompParam.New()
 
-local var_0_3 = {
+local cellLineNameMap = {
 	[RougeEnum.LineState.Grey] = "rouge_bagline_yellow",
 	[RougeEnum.LineState.Green] = "rouge_bagline_yellow_light"
 }
 
-var_0_0.StyleShowCollectionSlotParam.cellLineNameMap = var_0_3
-var_0_0.StyleCollectionSlotParam = RougeCollectionSlotCompParam.New()
+RougeCollectionHelper.StyleShowCollectionSlotParam.cellLineNameMap = cellLineNameMap
+RougeCollectionHelper.StyleCollectionSlotParam = RougeCollectionSlotCompParam.New()
 
-local var_0_4 = {
+local cellLineNameMap = {
 	[RougeEnum.LineState.Grey] = "rouge_bagline_black",
 	[RougeEnum.LineState.Green] = "rouge_bagline_grey"
 }
 
-var_0_0.StyleCollectionSlotParam.cellLineNameMap = var_0_4
-var_0_0.ResultReViewCollectionSlotParam = RougeCollectionSlotCompParam.New()
-var_0_0.ResultReViewCollectionSlotParam.cellWidth = var_0_0.CollectionSlotCellSize.x
-var_0_0.ResultReViewCollectionSlotParam.cellHeight = var_0_0.CollectionSlotCellSize.y
+RougeCollectionHelper.StyleCollectionSlotParam.cellLineNameMap = cellLineNameMap
+RougeCollectionHelper.ResultReViewCollectionSlotParam = RougeCollectionSlotCompParam.New()
+RougeCollectionHelper.ResultReViewCollectionSlotParam.cellWidth = RougeCollectionHelper.CollectionSlotCellSize.x
+RougeCollectionHelper.ResultReViewCollectionSlotParam.cellHeight = RougeCollectionHelper.CollectionSlotCellSize.y
 
-local var_0_5 = {
+local reviewCellLineNameMap = {
 	[RougeEnum.LineState.Grey] = "rouge_collection_gridline_grey",
 	[RougeEnum.LineState.Green] = "rouge_collection_gridline_green",
 	[RougeEnum.LineState.Red] = "rouge_collection_gridline_red",
 	[RougeEnum.LineState.Blue] = "rouge_collection_gridline_blue"
 }
 
-var_0_0.ResultReViewCollectionSlotParam.cellLineNameMap = var_0_5
-var_0_0.ResultReViewCollectionSlotParam.showIcon = true
+RougeCollectionHelper.ResultReViewCollectionSlotParam.cellLineNameMap = reviewCellLineNameMap
+RougeCollectionHelper.ResultReViewCollectionSlotParam.showIcon = true
 
-function var_0_0.foreachCollectionCells(arg_40_0, arg_40_1, arg_40_2, ...)
-	if not arg_40_0 then
+function RougeCollectionHelper.foreachCollectionCells(collectionMO, callBack, callBackObj, ...)
+	if not collectionMO then
 		return
 	end
 
-	local var_40_0 = arg_40_0.cfgId
-	local var_40_1 = arg_40_0:getRotation()
-	local var_40_2 = RougeCollectionConfig.instance:getShapeMatrix(var_40_0, var_40_1)
+	local collectionCfgId = collectionMO.cfgId
+	local rotation = collectionMO:getRotation()
+	local shapeMatrix = RougeCollectionConfig.instance:getShapeMatrix(collectionCfgId, rotation)
 
-	if var_40_2 then
-		for iter_40_0, iter_40_1 in ipairs(var_40_2) do
-			for iter_40_2, iter_40_3 in ipairs(iter_40_1) do
-				if iter_40_3 and iter_40_3 > 0 then
-					arg_40_1(arg_40_2, arg_40_0, iter_40_0, iter_40_2, ...)
+	if shapeMatrix then
+		for row, rows in ipairs(shapeMatrix) do
+			for col, exist in ipairs(rows) do
+				if exist and exist > 0 then
+					callBack(callBackObj, collectionMO, row, col, ...)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getTwoCollectionConnectCell(arg_41_0, arg_41_1)
-	if not arg_41_0 or not arg_41_1 then
+function RougeCollectionHelper.getTwoCollectionConnectCell(originCollection, targetCollection)
+	if not originCollection or not targetCollection then
 		return
 	end
 
-	local var_41_0 = arg_41_1.cfgId
-	local var_41_1 = {}
+	local targetCfgId = targetCollection.cfgId
+	local result = {}
 
-	var_0_0.foreachCollectionCells(arg_41_0, var_0_0._checkIsTwoCollectionCellNear, nil, arg_41_1, var_41_1)
+	RougeCollectionHelper.foreachCollectionCells(originCollection, RougeCollectionHelper._checkIsTwoCollectionCellNear, nil, targetCollection, result)
 
-	if var_41_1 and #var_41_1 > 0 then
-		return var_41_1[1], var_41_1[2]
+	if result and #result > 0 then
+		return result[1], result[2]
 	end
 end
 
-function var_0_0._checkIsTwoCollectionCellNear(arg_42_0, arg_42_1, arg_42_2, arg_42_3, arg_42_4, arg_42_5)
-	if (not arg_42_1 or not arg_42_4) and arg_42_5 then
+function RougeCollectionHelper:_checkIsTwoCollectionCellNear(collectionMO, row, col, targetCollection, result)
+	if (not collectionMO or not targetCollection) and result then
 		return
 	end
 
-	local var_42_0 = arg_42_1:getLeftTopPos()
-	local var_42_1 = var_42_0.x + arg_42_3 - 1
-	local var_42_2 = var_42_0.y + arg_42_2 - 1
-	local var_42_3 = var_0_0._checkIsCellNearCollection(var_42_1 - 1, var_42_2, arg_42_4)
-	local var_42_4 = var_0_0._checkIsCellNearCollection(var_42_1 + 1, var_42_2, arg_42_4)
-	local var_42_5 = var_0_0._checkIsCellNearCollection(var_42_1, var_42_2 - 1, arg_42_4)
-	local var_42_6 = var_0_0._checkIsCellNearCollection(var_42_1, var_42_2 + 1, arg_42_4)
+	local originLeftTopPos = collectionMO:getLeftTopPos()
+	local cellPosX = originLeftTopPos.x + col - 1
+	local cellPosY = originLeftTopPos.y + row - 1
+	local leftNear = RougeCollectionHelper._checkIsCellNearCollection(cellPosX - 1, cellPosY, targetCollection)
+	local rightNear = RougeCollectionHelper._checkIsCellNearCollection(cellPosX + 1, cellPosY, targetCollection)
+	local bottomNear = RougeCollectionHelper._checkIsCellNearCollection(cellPosX, cellPosY - 1, targetCollection)
+	local topNear = RougeCollectionHelper._checkIsCellNearCollection(cellPosX, cellPosY + 1, targetCollection)
+	local isMatch = leftNear or rightNear or bottomNear or topNear
 
-	if var_42_3 or var_42_4 or var_42_5 or var_42_6 then
-		table.insert(arg_42_5, Vector2(var_42_1, var_42_2))
+	if isMatch then
+		table.insert(result, Vector2(cellPosX, cellPosY))
 
-		if var_42_3 then
-			table.insert(arg_42_5, Vector2(var_42_1 - 1, var_42_2))
-		elseif var_42_4 then
-			table.insert(arg_42_5, Vector2(var_42_1 + 1, var_42_2))
-		elseif var_42_5 then
-			table.insert(arg_42_5, Vector2(var_42_1, var_42_2 - 1))
+		if leftNear then
+			table.insert(result, Vector2(cellPosX - 1, cellPosY))
+		elseif rightNear then
+			table.insert(result, Vector2(cellPosX + 1, cellPosY))
+		elseif bottomNear then
+			table.insert(result, Vector2(cellPosX, cellPosY - 1))
 		else
-			table.insert(arg_42_5, Vector2(var_42_1, var_42_2 + 1))
+			table.insert(result, Vector2(cellPosX, cellPosY + 1))
 		end
 	end
 end
 
-function var_0_0._checkIsCellNearCollection(arg_43_0, arg_43_1, arg_43_2)
-	if not arg_43_2 then
+function RougeCollectionHelper._checkIsCellNearCollection(cellPosX, cellPosY, targetCollection)
+	if not targetCollection then
 		return
 	end
 
-	local var_43_0 = arg_43_2:getLeftTopPos()
-	local var_43_1 = arg_43_0 - var_43_0.x + 1
-	local var_43_2 = arg_43_1 - var_43_0.y + 1
-	local var_43_3 = RougeCollectionConfig.instance:getShapeMatrix(arg_43_2.cfgId, arg_43_2:getRotation())
-	local var_43_4 = false
+	local targetLeftTopPos = targetCollection:getLeftTopPos()
+	local cellInTargetMatrixCol = cellPosX - targetLeftTopPos.x + 1
+	local cellInTargetMatrixRow = cellPosY - targetLeftTopPos.y + 1
+	local targetMatrix = RougeCollectionConfig.instance:getShapeMatrix(targetCollection.cfgId, targetCollection:getRotation())
+	local isCellInTargetMatrix = false
 
-	if var_43_3 then
-		local var_43_5 = var_43_3[var_43_2] and var_43_3[var_43_2][var_43_1]
+	if targetMatrix then
+		local cellValuae = targetMatrix[cellInTargetMatrixRow] and targetMatrix[cellInTargetMatrixRow][cellInTargetMatrixCol]
 
-		var_43_4 = var_43_5 and var_43_5 > 0
+		isCellInTargetMatrix = cellValuae and cellValuae > 0
 	end
 
-	return var_43_4
+	return isCellInTargetMatrix
 end
 
-function var_0_0.isCanDragCollection()
+function RougeCollectionHelper.isCanDragCollection()
 	return UnityEngine.Input.touchCount <= 1
 end
 
-function var_0_0.isUniqueCollection(arg_45_0)
-	local var_45_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_45_0)
+function RougeCollectionHelper.isUniqueCollection(collectionId)
+	local co = RougeCollectionConfig.instance:getCollectionCfg(collectionId)
 
-	return var_45_0 and var_45_0.isUnique
+	return co and co.isUnique
 end
 
-function var_0_0.isUnremovableCollection(arg_46_0)
-	local var_46_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_46_0)
+function RougeCollectionHelper.isUnremovableCollection(collectionCfgId)
+	local co = RougeCollectionConfig.instance:getCollectionCfg(collectionCfgId)
 
-	return var_46_0 and var_46_0.unremovable
+	return co and co.unremovable
 end
 
-function var_0_0.getNotUniqueCollectionNum()
-	local var_47_0 = RougeCollectionModel.instance:getAllCollections()
-	local var_47_1 = 0
+function RougeCollectionHelper.getNotUniqueCollectionNum()
+	local collectionMoList = RougeCollectionModel.instance:getAllCollections()
+	local num = 0
 
-	for iter_47_0, iter_47_1 in ipairs(var_47_0) do
-		if not var_0_0.isUniqueCollection(iter_47_1.cfgId) then
-			var_47_1 = var_47_1 + 1
+	for _, collectionMo in ipairs(collectionMoList) do
+		if not RougeCollectionHelper.isUniqueCollection(collectionMo.cfgId) then
+			num = num + 1
 		end
 	end
 
-	return var_47_1
+	return num
 end
 
-return var_0_0
+return RougeCollectionHelper

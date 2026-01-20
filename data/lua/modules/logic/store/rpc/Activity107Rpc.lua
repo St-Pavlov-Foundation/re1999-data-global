@@ -1,39 +1,41 @@
-﻿module("modules.logic.store.rpc.Activity107Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/store/rpc/Activity107Rpc.lua
 
-local var_0_0 = class("Activity107Rpc", BaseRpc)
+module("modules.logic.store.rpc.Activity107Rpc", package.seeall)
 
-function var_0_0.sendGet107GoodsInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity107Module_pb.Get107GoodsInfoRequest()
+local Activity107Rpc = class("Activity107Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity107Rpc:sendGet107GoodsInfoRequest(activityId, callback, callbackObj)
+	local req = Activity107Module_pb.Get107GoodsInfoRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet107GoodsInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		ActivityStoreModel.instance:initActivityGoodsInfos(arg_2_2.activityId, arg_2_2.goodsInfos)
-		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnGet107GoodsInfo, arg_2_2.activityId)
+function Activity107Rpc:onReceiveGet107GoodsInfoReply(resultCode, msg)
+	if resultCode == 0 then
+		ActivityStoreModel.instance:initActivityGoodsInfos(msg.activityId, msg.goodsInfos)
+		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnGet107GoodsInfo, msg.activityId)
 	end
 end
 
-function var_0_0.sendBuy107GoodsRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = Activity107Module_pb.Buy107GoodsRequest()
+function Activity107Rpc:sendBuy107GoodsRequest(activityId, goodsId, num)
+	local req = Activity107Module_pb.Buy107GoodsRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.id = arg_3_2
-	var_3_0.num = arg_3_3
+	req.activityId = activityId
+	req.id = goodsId
+	req.num = num
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveBuy107GoodsReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		ActivityStoreModel.instance:updateActivityGoodsInfos(arg_4_2.activityId, arg_4_2.goodsInfo)
-		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnBuy107GoodsSuccess, arg_4_2.activityId, arg_4_2.goodsInfo.id)
+function Activity107Rpc:onReceiveBuy107GoodsReply(resultCode, msg)
+	if resultCode == 0 then
+		ActivityStoreModel.instance:updateActivityGoodsInfos(msg.activityId, msg.goodsInfo)
+		VersionActivityController.instance:dispatchEvent(VersionActivityEvent.OnBuy107GoodsSuccess, msg.activityId, msg.goodsInfo.id)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity107Rpc.instance = Activity107Rpc.New()
 
-return var_0_0
+return Activity107Rpc

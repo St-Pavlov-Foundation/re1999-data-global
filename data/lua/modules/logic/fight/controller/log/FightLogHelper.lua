@@ -1,475 +1,477 @@
-﻿module("modules.logic.fight.controller.log.FightLogHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/log/FightLogHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.fight.controller.log.FightLogHelper", package.seeall)
 
-function var_0_0.getPrefix(arg_1_0)
-	return string.rep("\t", arg_1_0)
+local FightLogHelper = _M
+
+function FightLogHelper.getPrefix(level)
+	return string.rep("\t", level)
 end
 
-function var_0_0.getMoListString(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	arg_2_3 = arg_2_3 or 0
+function FightLogHelper.getMoListString(moList, singleMoLogFunc, name, level, stack)
+	level = level or 0
 
-	local var_2_0 = var_0_0.getPrefix(arg_2_3)
+	local initPre = FightLogHelper.getPrefix(level)
 
-	if not arg_2_0 then
-		return string.format("%s %s : nil", var_2_0, arg_2_2)
+	if not moList then
+		return string.format("%s %s : nil", initPre, name)
 	end
 
-	if #arg_2_0 == 0 then
-		return string.format("%s %s : []", var_2_0, arg_2_2)
+	if #moList == 0 then
+		return string.format("%s %s : []", initPre, name)
 	end
 
-	local var_2_1 = {
-		string.format("%s %s : [", var_2_0, arg_2_2)
+	local strTb = {
+		string.format("%s %s : [", initPre, name)
 	}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
-		table.insert(var_2_1, arg_2_1(iter_2_1, arg_2_3 + 1, iter_2_0))
+	for index, mo in ipairs(moList) do
+		table.insert(strTb, singleMoLogFunc(mo, level + 1, index))
 	end
 
-	table.insert(var_2_1, var_2_0 .. "]")
+	table.insert(strTb, initPre .. "]")
 
-	return table.concat(var_2_1, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getMoDictString(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	arg_3_3 = arg_3_3 or 0
+function FightLogHelper.getMoDictString(moDict, singleMoLogFunc, name, level, stack)
+	level = level or 0
 
-	local var_3_0 = var_0_0.getPrefix(arg_3_3)
+	local initPre = FightLogHelper.getPrefix(level)
 
-	if not arg_3_0 then
-		return string.format("%s %s : nil", var_3_0, arg_3_2)
+	if not moDict then
+		return string.format("%s %s : nil", initPre, name)
 	end
 
-	if GameUtil.tabletool_dictIsEmpty(arg_3_0) then
-		return string.format("%s %s : []", var_3_0, arg_3_2)
+	if GameUtil.tabletool_dictIsEmpty(moDict) then
+		return string.format("%s %s : []", initPre, name)
 	end
 
-	local var_3_1 = {
-		string.format("%s %s : [", var_3_0, arg_3_2)
+	local strTb = {
+		string.format("%s %s : [", initPre, name)
 	}
 
-	var_0_0.addStack(var_3_1, var_0_0.getPrefix(arg_3_3 + 1), arg_3_4, arg_3_2)
+	FightLogHelper.addStack(strTb, FightLogHelper.getPrefix(level + 1), stack, name)
 
-	arg_3_4 = var_0_0.getStack(arg_3_4, arg_3_2)
+	stack = FightLogHelper.getStack(stack, name)
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0) do
-		table.insert(var_3_1, arg_3_1(iter_3_1, arg_3_3 + 1, tostring(iter_3_0), arg_3_4))
+	for key, mo in pairs(moDict) do
+		table.insert(strTb, singleMoLogFunc(mo, level + 1, tostring(key), stack))
 	end
 
-	table.insert(var_3_1, var_3_0 .. "]")
+	table.insert(strTb, initPre .. "]")
 
-	return table.concat(var_3_1, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.buildClassNameByIndex(arg_4_0, arg_4_1)
-	if arg_4_1 and arg_4_1 ~= 0 then
-		return arg_4_0 .. "_" .. tostring(arg_4_1)
+function FightLogHelper.buildClassNameByIndex(className, index)
+	if index and index ~= 0 then
+		return className .. "_" .. tostring(index)
 	end
 
-	return arg_4_0
+	return className
 end
 
-function var_0_0.getFightRoundString(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_1 = arg_5_1 or 0
+function FightLogHelper.getFightRoundString(fightRoundData, level, index)
+	level = level or 0
 
-	local var_5_0 = var_0_0.getPrefix(arg_5_1)
-	local var_5_1 = var_0_0.buildClassNameByIndex("FightRoundData", arg_5_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("FightRoundData", index)
 
-	if not arg_5_0 then
-		return string.format("%s %s : nil", var_5_0, var_5_1)
+	if not fightRoundData then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_5_2 = {}
+	local strTb = {}
 
-	table.insert(var_5_2, string.format("%s %s {", var_5_0, var_5_1))
+	table.insert(strTb, string.format("%s %s {", initPre, className))
 
-	arg_5_1 = arg_5_1 + 1
+	level = level + 1
 
-	local var_5_3 = var_0_0.getPrefix(arg_5_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_5_2, string.format("%s actPoint : %s", var_5_3, arg_5_0.actPoint))
-	table.insert(var_5_2, string.format("%s isFinish : %s", var_5_3, arg_5_0.isFinish))
-	table.insert(var_5_2, string.format("%s moveNum : %s", var_5_3, arg_5_0.moveNum))
-	table.insert(var_5_2, string.format("%s power : %s", var_5_3, arg_5_0.power))
-	table.insert(var_5_2, var_0_0.getFightStepListString(arg_5_0.fightStep, arg_5_1, "fightStep", "FightRound"))
-	table.insert(var_5_2, var_0_0.getFightStepListString(arg_5_0.nextRoundBeginStep, arg_5_1, "nextRoundBeginStep", "FightRound"))
-	table.insert(var_5_2, var_5_0 .. "}")
+	table.insert(strTb, string.format("%s actPoint : %s", pre, fightRoundData.actPoint))
+	table.insert(strTb, string.format("%s isFinish : %s", pre, fightRoundData.isFinish))
+	table.insert(strTb, string.format("%s moveNum : %s", pre, fightRoundData.moveNum))
+	table.insert(strTb, string.format("%s power : %s", pre, fightRoundData.power))
+	table.insert(strTb, FightLogHelper.getFightStepListString(fightRoundData.fightStep, level, "fightStep", "FightRound"))
+	table.insert(strTb, FightLogHelper.getFightStepListString(fightRoundData.nextRoundBeginStep, level, "nextRoundBeginStep", "FightRound"))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_5_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getFightStepString(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_1 = arg_6_1 or 0
+function FightLogHelper.getFightStepString(fightStepData, level, index)
+	level = level or 0
 
-	local var_6_0 = var_0_0.getPrefix(arg_6_1)
-	local var_6_1 = var_0_0.buildClassNameByIndex("FightStepData", arg_6_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("FightStepData", index)
 
-	if not arg_6_0 then
-		return string.format("%s %s : nil", var_6_0, var_6_1)
+	if not fightStepData then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_6_2 = {}
-	local var_6_3 = string.format("%s %s {", var_6_0, var_6_1)
+	local strTb = {}
+	local initStr = string.format("%s %s {", initPre, className)
 
-	table.insert(var_6_2, var_6_3)
+	table.insert(strTb, initStr)
 
-	arg_6_1 = arg_6_1 + 1
+	level = level + 1
 
-	local var_6_4 = var_0_0.getPrefix(arg_6_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_6_2, string.format("%s actType : %s %s", var_6_4, arg_6_0.actType, var_0_0.getActTypeName(arg_6_0.actType)))
+	table.insert(strTb, string.format("%s actType : %s %s", pre, fightStepData.actType, FightLogHelper.getActTypeName(fightStepData.actType)))
 
-	if arg_6_0.actType == FightEnum.ActType.SKILL then
-		table.insert(var_6_2, string.format("%s fromId : %s 技能发起者:%s", var_6_4, arg_6_0.fromId, var_0_0.getEntityName(arg_6_0.fromId)))
-		table.insert(var_6_2, string.format("%s toId : %s 技能承受者:%s", var_6_4, arg_6_0.toId, var_0_0.getEntityName(arg_6_0.toId)))
-		table.insert(var_6_2, string.format("%s actId : %s 技能名字:%s timeline : %s", var_6_4, arg_6_0.actId, var_0_0.getSkillName(arg_6_0.actId), var_0_0.getTimelineName(arg_6_0.fromId, arg_6_0.actId)))
+	if fightStepData.actType == FightEnum.ActType.SKILL then
+		table.insert(strTb, string.format("%s fromId : %s 技能发起者:%s", pre, fightStepData.fromId, FightLogHelper.getEntityName(fightStepData.fromId)))
+		table.insert(strTb, string.format("%s toId : %s 技能承受者:%s", pre, fightStepData.toId, FightLogHelper.getEntityName(fightStepData.toId)))
+		table.insert(strTb, string.format("%s actId : %s 技能名字:%s timeline : %s", pre, fightStepData.actId, FightLogHelper.getSkillName(fightStepData.actId), FightLogHelper.getTimelineName(fightStepData.fromId, fightStepData.actId)))
 	else
-		table.insert(var_6_2, string.format("%s fromId : %s", var_6_4, arg_6_0.fromId))
-		table.insert(var_6_2, string.format("%s toId : %s", var_6_4, arg_6_0.toId))
-		table.insert(var_6_2, string.format("%s actId : %s", var_6_4, arg_6_0.actId))
+		table.insert(strTb, string.format("%s fromId : %s", pre, fightStepData.fromId))
+		table.insert(strTb, string.format("%s toId : %s", pre, fightStepData.toId))
+		table.insert(strTb, string.format("%s actId : %s", pre, fightStepData.actId))
 	end
 
-	table.insert(var_6_2, string.format("%s cardIndex : %s", var_6_4, arg_6_0.cardIndex))
-	table.insert(var_6_2, string.format("%s supportHeroId : %s", var_6_4, arg_6_0.supportHeroId))
-	table.insert(var_6_2, string.format("%s fakeTimeline : %s", var_6_4, arg_6_0.fakeTimeline))
-	table.insert(var_6_2, var_0_0.getFightActEffectListString(arg_6_0.actEffect, arg_6_1, "actEffect"))
-	table.insert(var_6_2, var_6_0 .. "}")
+	table.insert(strTb, string.format("%s cardIndex : %s", pre, fightStepData.cardIndex))
+	table.insert(strTb, string.format("%s supportHeroId : %s", pre, fightStepData.supportHeroId))
+	table.insert(strTb, string.format("%s fakeTimeline : %s", pre, fightStepData.fakeTimeline))
+	table.insert(strTb, FightLogHelper.getFightActEffectListString(fightStepData.actEffect, level, "actEffect"))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_6_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getFightStepListString(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_2 = arg_7_2 or "fightStepDataList"
+function FightLogHelper.getFightStepListString(fightStepDataList, level, name, stack)
+	name = name or "fightStepDataList"
 
-	return var_0_0.getMoListString(arg_7_0, var_0_0.getFightStepString, arg_7_2, arg_7_1, arg_7_3)
+	return FightLogHelper.getMoListString(fightStepDataList, FightLogHelper.getFightStepString, name, level, stack)
 end
 
-function var_0_0.getFightActEffectString(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if FightLogFilterHelper.checkActEffectDataIsFilter(arg_8_0) then
+function FightLogHelper.getFightActEffectString(actEffectData, level, index, stack)
+	if FightLogFilterHelper.checkActEffectDataIsFilter(actEffectData) then
 		return ""
 	end
 
-	arg_8_1 = arg_8_1 or 0
+	level = level or 0
 
-	local var_8_0 = var_0_0.getPrefix(arg_8_1)
-	local var_8_1 = var_0_0.buildClassNameByIndex("ActEffectData", arg_8_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("ActEffectData", index)
 
-	if not arg_8_0 then
-		return string.format("%s %s : nil", var_8_0, var_8_1)
+	if not actEffectData then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_8_2 = {
-		string.format("%s %s {", var_8_0, var_8_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_8_1 = arg_8_1 + 1
+	level = level + 1
 
-	local var_8_3 = var_0_0.getPrefix(arg_8_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	var_0_0.addStack(var_8_2, var_8_3, arg_8_3, var_8_1)
-	table.insert(var_8_2, string.format("%s targetId : %s 作用对象:%s", var_8_3, arg_8_0.targetId, var_0_0.getEntityName(arg_8_0.targetId)))
-	table.insert(var_8_2, string.format("%s effectType : %s 效果类型:%s", var_8_3, arg_8_0.effectType, var_0_0.getEffectTypeName(arg_8_0.effectType)))
-	table.insert(var_8_2, string.format("%s effectNum : %s", var_8_3, arg_8_0.effectNum))
-	table.insert(var_8_2, string.format("%s effectNum1 : %s", var_8_3, arg_8_0.effectNum1))
-	table.insert(var_8_2, string.format("%s fromSide : %s", var_8_3, arg_8_0.fromSide))
-	table.insert(var_8_2, string.format("%s configEffect : %s", var_8_3, arg_8_0.configEffect))
-	table.insert(var_8_2, string.format("%s buffActId : %s", var_8_3, arg_8_0.buffActId))
-	table.insert(var_8_2, string.format("%s reserveId : %s", var_8_3, arg_8_0.reserveId))
-	table.insert(var_8_2, string.format("%s reserveStr : %s", var_8_3, arg_8_0.reserveStr))
-	table.insert(var_8_2, string.format("%s teamType : %s", var_8_3, arg_8_0.teamType))
-	table.insert(var_8_2, string.format("%s cardHeatValue : %s", var_8_3, arg_8_0.cardHeatValue))
-	table.insert(var_8_2, var_0_0.getAssistBossInfoString(arg_8_0.assistBossInfo, arg_8_1))
+	FightLogHelper.addStack(strTb, pre, stack, className)
+	table.insert(strTb, string.format("%s targetId : %s 作用对象:%s", pre, actEffectData.targetId, FightLogHelper.getEntityName(actEffectData.targetId)))
+	table.insert(strTb, string.format("%s effectType : %s 效果类型:%s", pre, actEffectData.effectType, FightLogHelper.getEffectTypeName(actEffectData.effectType)))
+	table.insert(strTb, string.format("%s effectNum : %s", pre, actEffectData.effectNum))
+	table.insert(strTb, string.format("%s effectNum1 : %s", pre, actEffectData.effectNum1))
+	table.insert(strTb, string.format("%s fromSide : %s", pre, actEffectData.fromSide))
+	table.insert(strTb, string.format("%s configEffect : %s", pre, actEffectData.configEffect))
+	table.insert(strTb, string.format("%s buffActId : %s", pre, actEffectData.buffActId))
+	table.insert(strTb, string.format("%s reserveId : %s", pre, actEffectData.reserveId))
+	table.insert(strTb, string.format("%s reserveStr : %s", pre, actEffectData.reserveStr))
+	table.insert(strTb, string.format("%s teamType : %s", pre, actEffectData.teamType))
+	table.insert(strTb, string.format("%s cardHeatValue : %s", pre, actEffectData.cardHeatValue))
+	table.insert(strTb, FightLogHelper.getAssistBossInfoString(actEffectData.assistBossInfo, level))
 
-	arg_8_3 = FightLogProtobufHelper.getStack(arg_8_3, var_8_1)
+	stack = FightLogProtobufHelper.getStack(stack, className)
 
-	table.insert(var_8_2, var_0_0.getCardInfoListString(arg_8_0.cardInfoList, arg_8_1, arg_8_3))
+	table.insert(strTb, FightLogHelper.getCardInfoListString(actEffectData.cardInfoList, level, stack))
 
-	if arg_8_0.cardInfo then
-		table.insert(var_8_2, var_0_0.getCardInfoString(arg_8_0.cardInfo, arg_8_1))
+	if actEffectData.cardInfo then
+		table.insert(strTb, FightLogHelper.getCardInfoString(actEffectData.cardInfo, level))
 	end
 
-	if arg_8_0.fightStep then
-		table.insert(var_8_2, var_0_0.getFightStepString(arg_8_0.fightStep, arg_8_1))
+	if actEffectData.fightStep then
+		table.insert(strTb, FightLogHelper.getFightStepString(actEffectData.fightStep, level))
 	end
 
-	if arg_8_0.buff then
-		table.insert(var_8_2, var_0_0.getFightBuffString(arg_8_0.buff, arg_8_1))
+	if actEffectData.buff then
+		table.insert(strTb, FightLogHelper.getFightBuffString(actEffectData.buff, level))
 	end
 
-	if arg_8_0.entity then
-		table.insert(var_8_2, var_0_0.getEntityMoString(arg_8_0.entity, arg_8_1))
+	if actEffectData.entity then
+		table.insert(strTb, FightLogHelper.getEntityMoString(actEffectData.entity, level))
 	end
 
-	if arg_8_0.magicCircle then
-		table.insert(var_8_2, var_0_0.getMagicCircleDataString(arg_8_0.magicCircle, arg_8_1))
+	if actEffectData.magicCircle then
+		table.insert(strTb, FightLogHelper.getMagicCircleDataString(actEffectData.magicCircle, level))
 	end
 
-	table.insert(var_8_2, var_8_0 .. "}")
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_8_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getMagicCircleDataString(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_1 = arg_9_1 or 0
+function FightLogHelper.getMagicCircleDataString(magicCircleData, level, index)
+	level = level or 0
 
-	local var_9_0 = var_0_0.getPrefix(arg_9_1)
-	local var_9_1 = var_0_0.buildClassNameByIndex("MagicCircle", arg_9_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("MagicCircle", index)
 
-	if not arg_9_0 then
-		return string.format("%s %s : nil", var_9_0, var_9_1)
+	if not magicCircleData then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_9_2 = {
-		string.format("%s %s {", var_9_0, var_9_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_9_1 = arg_9_1 + 1
+	level = level + 1
 
-	local var_9_3 = var_0_0.getPrefix(arg_9_1)
-	local var_9_4 = lua_magic_circle.configDict[arg_9_0.magicCircleId]
+	local pre = FightLogHelper.getPrefix(level)
+	local co = lua_magic_circle.configDict[magicCircleData.magicCircleId]
 
-	table.insert(var_9_2, string.format("%s createUid : %s, 创建者: %s", var_9_3, arg_9_0.createUid, var_0_0.getEntityName(arg_9_0.createUid)))
-	table.insert(var_9_2, string.format("%s magicCircleId : %s %s", var_9_3, arg_9_0.magicCircleId, var_9_4 and var_9_4.name))
-	table.insert(var_9_2, string.format("%s round : %s", var_9_3, arg_9_0.round))
-	table.insert(var_9_2, string.format("%s electricLevel : %s", var_9_3, arg_9_0.electricLevel))
-	table.insert(var_9_2, string.format("%s electricProgress : %s", var_9_3, arg_9_0.electricProgress))
-	table.insert(var_9_2, var_9_0 .. "}")
+	table.insert(strTb, string.format("%s createUid : %s, 创建者: %s", pre, magicCircleData.createUid, FightLogHelper.getEntityName(magicCircleData.createUid)))
+	table.insert(strTb, string.format("%s magicCircleId : %s %s", pre, magicCircleData.magicCircleId, co and co.name))
+	table.insert(strTb, string.format("%s round : %s", pre, magicCircleData.round))
+	table.insert(strTb, string.format("%s electricLevel : %s", pre, magicCircleData.electricLevel))
+	table.insert(strTb, string.format("%s electricProgress : %s", pre, magicCircleData.electricProgress))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_9_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getAssistBossInfoString(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_1 = arg_10_1 or 0
+function FightLogHelper.getAssistBossInfoString(assistBossInfo, level, index)
+	level = level or 0
 
-	local var_10_0 = var_0_0.getPrefix(arg_10_1)
-	local var_10_1 = var_0_0.buildClassNameByIndex("AssistBossInfo", arg_10_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("AssistBossInfo", index)
 
-	if not arg_10_0 then
-		return string.format("%s %s : nil", var_10_0, var_10_1)
+	if not assistBossInfo then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_10_2 = {
-		string.format("%s %s {", var_10_0, var_10_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_10_1 = arg_10_1 + 1
+	level = level + 1
 
-	local var_10_3 = var_0_0.getPrefix(arg_10_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_10_2, string.format("%s currCd : %s", var_10_3, arg_10_0.currCd))
-	table.insert(var_10_2, string.format("%s cdCfg : %s", var_10_3, arg_10_0.cdCfg))
-	table.insert(var_10_2, string.format("%s formId : %s", var_10_3, arg_10_0.formId))
-	table.insert(var_10_2, var_0_0.getAssistBossSkillInfoString(arg_10_0.skills, arg_10_1))
-	table.insert(var_10_2, var_10_0 .. "}")
+	table.insert(strTb, string.format("%s currCd : %s", pre, assistBossInfo.currCd))
+	table.insert(strTb, string.format("%s cdCfg : %s", pre, assistBossInfo.cdCfg))
+	table.insert(strTb, string.format("%s formId : %s", pre, assistBossInfo.formId))
+	table.insert(strTb, FightLogHelper.getAssistBossSkillInfoString(assistBossInfo.skills, level))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_10_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getAssistBossSkillInfoString(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_1 = arg_11_1 or 0
+function FightLogHelper.getAssistBossSkillInfoString(assistBossSkillInfo, level, index)
+	level = level or 0
 
-	local var_11_0 = var_0_0.getPrefix(arg_11_1)
-	local var_11_1 = var_0_0.buildClassNameByIndex("AssistBossSkillInfo", arg_11_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("AssistBossSkillInfo", index)
 
-	if not arg_11_0 then
-		return string.format("%s %s : nil", var_11_0, var_11_1)
+	if not assistBossSkillInfo then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_11_2 = {
-		string.format("%s %s {", var_11_0, var_11_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_11_1 = arg_11_1 + 1
+	level = level + 1
 
-	local var_11_3 = var_0_0.getPrefix(arg_11_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_11_2, string.format("%s skillId : %s", var_11_3, arg_11_0.skillId))
-	table.insert(var_11_2, string.format("%s needPower : %s", var_11_3, arg_11_0.needPower))
-	table.insert(var_11_2, string.format("%s powerLow : %s", var_11_3, arg_11_0.powerLow))
-	table.insert(var_11_2, string.format("%s powerHigh : %s", var_11_3, arg_11_0.powerHigh))
-	table.insert(var_11_2, var_11_0 .. "}")
+	table.insert(strTb, string.format("%s skillId : %s", pre, assistBossSkillInfo.skillId))
+	table.insert(strTb, string.format("%s needPower : %s", pre, assistBossSkillInfo.needPower))
+	table.insert(strTb, string.format("%s powerLow : %s", pre, assistBossSkillInfo.powerLow))
+	table.insert(strTb, string.format("%s powerHigh : %s", pre, assistBossSkillInfo.powerHigh))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_11_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getFightAssistBossSkillListString(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_2 = arg_12_2 or "assistBossSkillInfoList"
+function FightLogHelper.getFightAssistBossSkillListString(assistBossSkillInfoList, level, name)
+	name = name or "assistBossSkillInfoList"
 
-	return var_0_0.getMoListString(arg_12_0, var_0_0.getAssistBossSkillInfoString, arg_12_2, arg_12_1)
+	return FightLogHelper.getMoListString(assistBossSkillInfoList, FightLogHelper.getAssistBossSkillInfoString, name, level)
 end
 
-function var_0_0.getFightActEffectListString(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_2 = arg_13_2 or "effectDataList"
+function FightLogHelper.getFightActEffectListString(effectDataList, level, name)
+	name = name or "effectDataList"
 
-	return var_0_0.getMoListString(arg_13_0, var_0_0.getFightActEffectString, arg_13_2, arg_13_1)
+	return FightLogHelper.getMoListString(effectDataList, FightLogHelper.getFightActEffectString, name, level)
 end
 
-function var_0_0.getFightBuffString(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_1 = arg_14_1 or 0
+function FightLogHelper.getFightBuffString(buffMo, level, index)
+	level = level or 0
 
-	local var_14_0 = var_0_0.getPrefix(arg_14_1)
-	local var_14_1 = var_0_0.buildClassNameByIndex("FightBuffInfoData", arg_14_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("FightBuffInfoData", index)
 
-	if not arg_14_0 then
-		return string.format("%s %s : nil", var_14_0, var_14_1)
+	if not buffMo then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_14_2 = {
-		string.format("%s %s {", var_14_0, var_14_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_14_1 = arg_14_1 + 1
+	level = level + 1
 
-	local var_14_3 = var_0_0.getPrefix(arg_14_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_14_2, string.format("%s time : %s", var_14_3, arg_14_0.time))
-	table.insert(var_14_2, string.format("%s entityId : %s %s", var_14_3, arg_14_0.entityId, var_0_0.getEntityName(arg_14_0.entityId)))
-	table.insert(var_14_2, string.format("%s id : %s", var_14_3, arg_14_0.id))
-	table.insert(var_14_2, string.format("%s uid : %s", var_14_3, arg_14_0.uid))
-	table.insert(var_14_2, string.format("%s buffId : %s %s", var_14_3, arg_14_0.buffId, arg_14_0.name))
-	table.insert(var_14_2, string.format("%s duration : %s", var_14_3, arg_14_0.duration))
-	table.insert(var_14_2, string.format("%s exInfo : %s", var_14_3, arg_14_0.exInfo))
-	table.insert(var_14_2, string.format("%s fromUid : %s", var_14_3, arg_14_0.fromUid))
-	table.insert(var_14_2, string.format("%s count : %s", var_14_3, arg_14_0.count))
-	table.insert(var_14_2, string.format("%s name : %s", var_14_3, arg_14_0.name))
-	table.insert(var_14_2, string.format("%s actCommonParams : %s", var_14_3, arg_14_0.actCommonParams))
-	table.insert(var_14_2, string.format("%s layer : %s", var_14_3, arg_14_0.layer))
-	table.insert(var_14_2, var_14_0 .. "}")
+	table.insert(strTb, string.format("%s time : %s", pre, buffMo.time))
+	table.insert(strTb, string.format("%s entityId : %s %s", pre, buffMo.entityId, FightLogHelper.getEntityName(buffMo.entityId)))
+	table.insert(strTb, string.format("%s id : %s", pre, buffMo.id))
+	table.insert(strTb, string.format("%s uid : %s", pre, buffMo.uid))
+	table.insert(strTb, string.format("%s buffId : %s %s", pre, buffMo.buffId, buffMo.name))
+	table.insert(strTb, string.format("%s duration : %s", pre, buffMo.duration))
+	table.insert(strTb, string.format("%s exInfo : %s", pre, buffMo.exInfo))
+	table.insert(strTb, string.format("%s fromUid : %s", pre, buffMo.fromUid))
+	table.insert(strTb, string.format("%s count : %s", pre, buffMo.count))
+	table.insert(strTb, string.format("%s name : %s", pre, buffMo.name))
+	table.insert(strTb, string.format("%s actCommonParams : %s", pre, buffMo.actCommonParams))
+	table.insert(strTb, string.format("%s layer : %s", pre, buffMo.layer))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_14_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getFightBuffListString(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_2 = arg_15_2 or "buffMoList"
+function FightLogHelper.getFightBuffListString(buffMoList, level, name)
+	name = name or "buffMoList"
 
-	return var_0_0.getMoListString(arg_15_0, var_0_0.getFightBuffString, arg_15_2, arg_15_1)
+	return FightLogHelper.getMoListString(buffMoList, FightLogHelper.getFightBuffString, name, level)
 end
 
-function var_0_0.getFightBuffDictString(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_2 = arg_16_2 or "buffMoDict"
+function FightLogHelper.getFightBuffDictString(buffMoDict, level, name)
+	name = name or "buffMoDict"
 
-	return var_0_0.getMoDictString(arg_16_0, var_0_0.getFightBuffString, arg_16_2, arg_16_1)
+	return FightLogHelper.getMoDictString(buffMoDict, FightLogHelper.getFightBuffString, name, level)
 end
 
-function var_0_0.getEntityMoString(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_1 = arg_17_1 or 0
+function FightLogHelper.getEntityMoString(entityMo, level, index)
+	level = level or 0
 
-	local var_17_0 = var_0_0.getPrefix(arg_17_1)
-	local var_17_1 = var_0_0.buildClassNameByIndex("FightEntityMO", arg_17_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("FightEntityMO", index)
 
-	if not arg_17_0 then
-		return string.format("%s %s : nil", var_17_0, var_17_1)
+	if not entityMo then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_17_2 = {
-		string.format("%s %s {", var_17_0, var_17_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_17_1 = arg_17_1 + 1
+	level = level + 1
 
-	local var_17_3 = var_0_0.getPrefix(arg_17_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_17_2, string.format("%s id : %s", var_17_3, arg_17_0.id))
-	table.insert(var_17_2, string.format("%s uid : %s", var_17_3, arg_17_0.uid))
-	table.insert(var_17_2, string.format("%s modelId : %s", var_17_3, arg_17_0.modelId))
-	table.insert(var_17_2, string.format("%s skin : %s", var_17_3, arg_17_0.skin))
-	table.insert(var_17_2, string.format("%s originSkin : %s", var_17_3, arg_17_0.originSkin))
-	table.insert(var_17_2, string.format("%s position : %s", var_17_3, arg_17_0.position))
-	table.insert(var_17_2, string.format("%s entityType : %s", var_17_3, arg_17_0.entityType))
-	table.insert(var_17_2, string.format("%s userId : %s", var_17_3, arg_17_0.userId))
-	table.insert(var_17_2, string.format("%s exPoint : %s", var_17_3, arg_17_0.exPoint))
-	table.insert(var_17_2, string.format("%s level : %s", var_17_3, arg_17_0.level))
-	table.insert(var_17_2, string.format("%s currentHp : %s", var_17_3, arg_17_0.currentHp))
-	table.insert(var_17_2, string.format("%s equipUid : %s", var_17_3, arg_17_0.equipUid))
-	table.insert(var_17_2, string.format("%s side : %s", var_17_3, arg_17_0.side))
-	table.insert(var_17_2, string.format("%s career : %s", var_17_3, arg_17_0.career))
-	table.insert(var_17_2, string.format("%s storedExPoint : %s", var_17_3, arg_17_0.storedExPoint))
-	table.insert(var_17_2, var_17_0 .. "}")
+	table.insert(strTb, string.format("%s id : %s", pre, entityMo.id))
+	table.insert(strTb, string.format("%s uid : %s", pre, entityMo.uid))
+	table.insert(strTb, string.format("%s modelId : %s", pre, entityMo.modelId))
+	table.insert(strTb, string.format("%s skin : %s", pre, entityMo.skin))
+	table.insert(strTb, string.format("%s originSkin : %s", pre, entityMo.originSkin))
+	table.insert(strTb, string.format("%s position : %s", pre, entityMo.position))
+	table.insert(strTb, string.format("%s entityType : %s", pre, entityMo.entityType))
+	table.insert(strTb, string.format("%s userId : %s", pre, entityMo.userId))
+	table.insert(strTb, string.format("%s exPoint : %s", pre, entityMo.exPoint))
+	table.insert(strTb, string.format("%s level : %s", pre, entityMo.level))
+	table.insert(strTb, string.format("%s currentHp : %s", pre, entityMo.currentHp))
+	table.insert(strTb, string.format("%s equipUid : %s", pre, entityMo.equipUid))
+	table.insert(strTb, string.format("%s side : %s", pre, entityMo.side))
+	table.insert(strTb, string.format("%s career : %s", pre, entityMo.career))
+	table.insert(strTb, string.format("%s storedExPoint : %s", pre, entityMo.storedExPoint))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_17_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getFightEntityListString(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_2 = arg_18_2 or "entityMoList"
+function FightLogHelper.getFightEntityListString(entityMoList, level, name)
+	name = name or "entityMoList"
 
-	return var_0_0.getMoListString(arg_18_0, var_0_0.getEntityMoString, arg_18_2, arg_18_1)
+	return FightLogHelper.getMoListString(entityMoList, FightLogHelper.getEntityMoString, name, level)
 end
 
-function var_0_0.getCardInfoString(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_1 = arg_19_1 or 0
+function FightLogHelper.getCardInfoString(cardInfo, level, index)
+	level = level or 0
 
-	local var_19_0 = var_0_0.getPrefix(arg_19_1)
-	local var_19_1 = var_0_0.buildClassNameByIndex("FightCardInfoMO", arg_19_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("FightCardInfoMO", index)
 
-	if not arg_19_0 then
-		return string.format("%s %s : nil", var_19_0, var_19_1)
+	if not cardInfo then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_19_2 = {
-		string.format("%s %s {", var_19_0, var_19_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_19_1 = arg_19_1 + 1
+	level = level + 1
 
-	local var_19_3 = var_0_0.getPrefix(arg_19_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_19_2, string.format("%s uid : %s %s", var_19_3, arg_19_0.uid, var_0_0.getEntityName(arg_19_0.uid)))
-	table.insert(var_19_2, string.format("%s skillId : %s %s", var_19_3, arg_19_0.skillId, var_0_0.getSkillName(arg_19_0.skillId)))
-	table.insert(var_19_2, string.format("%s cardEffect : %s", var_19_3, arg_19_0.cardEffect))
-	table.insert(var_19_2, string.format("%s tempCard : %s", var_19_3, arg_19_0.tempCard))
-	table.insert(var_19_2, string.format("%s cardType : %s", var_19_3, arg_19_0.cardType))
-	table.insert(var_19_2, string.format("%s heroId : %s", var_19_3, arg_19_0.heroId))
-	table.insert(var_19_2, string.format("%s status : %s", var_19_3, arg_19_0.status))
-	table.insert(var_19_2, string.format("%s targetUid : %s %s", var_19_3, arg_19_0.targetUid, var_0_0.getEntityName(arg_19_0.targetUid)))
-	table.insert(var_19_2, string.format("%s energy : %s", var_19_3, arg_19_0.energy))
-	table.insert(var_19_2, string.format("%s areaRedOrBlue : %s", var_19_3, arg_19_0.areaRedOrBlue))
-	table.insert(var_19_2, string.format("%s heatId : %s", var_19_3, arg_19_0.heatId))
-	table.insert(var_19_2, var_0_0.getEnchantListString(arg_19_0.enchants, arg_19_1, "enchants"))
-	table.insert(var_19_2, var_19_0 .. "}")
+	table.insert(strTb, string.format("%s uid : %s %s", pre, cardInfo.uid, FightLogHelper.getEntityName(cardInfo.uid)))
+	table.insert(strTb, string.format("%s skillId : %s %s", pre, cardInfo.skillId, FightLogHelper.getSkillName(cardInfo.skillId)))
+	table.insert(strTb, string.format("%s cardEffect : %s", pre, cardInfo.cardEffect))
+	table.insert(strTb, string.format("%s tempCard : %s", pre, cardInfo.tempCard))
+	table.insert(strTb, string.format("%s cardType : %s", pre, cardInfo.cardType))
+	table.insert(strTb, string.format("%s heroId : %s", pre, cardInfo.heroId))
+	table.insert(strTb, string.format("%s status : %s", pre, cardInfo.status))
+	table.insert(strTb, string.format("%s targetUid : %s %s", pre, cardInfo.targetUid, FightLogHelper.getEntityName(cardInfo.targetUid)))
+	table.insert(strTb, string.format("%s energy : %s", pre, cardInfo.energy))
+	table.insert(strTb, string.format("%s areaRedOrBlue : %s", pre, cardInfo.areaRedOrBlue))
+	table.insert(strTb, string.format("%s heatId : %s", pre, cardInfo.heatId))
+	table.insert(strTb, FightLogHelper.getEnchantListString(cardInfo.enchants, level, "enchants"))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_19_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getCardInfoListString(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	arg_20_2 = arg_20_2 or "cardInfoList"
+function FightLogHelper.getCardInfoListString(cardInfoList, level, name, stack)
+	name = name or "cardInfoList"
 
-	return var_0_0.getMoListString(arg_20_0, var_0_0.getCardInfoString, arg_20_2, arg_20_1, arg_20_3)
+	return FightLogHelper.getMoListString(cardInfoList, FightLogHelper.getCardInfoString, name, level, stack)
 end
 
-function var_0_0.getCardInfoEnchantString(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_1 = arg_21_1 or 0
+function FightLogHelper.getCardInfoEnchantString(enchant, level, index)
+	level = level or 0
 
-	local var_21_0 = var_0_0.getPrefix(arg_21_1)
-	local var_21_1 = var_0_0.buildClassNameByIndex("CardEnchant", arg_21_2)
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("CardEnchant", index)
 
-	if not arg_21_0 then
-		return string.format("%s %s : nil", var_21_0, var_21_1)
+	if not enchant then
+		return string.format("%s %s : nil", initPre, className)
 	end
 
-	local var_21_2 = {
-		string.format("%s %s {", var_21_0, var_21_1)
+	local strTb = {
+		string.format("%s %s {", initPre, className)
 	}
 
-	arg_21_1 = arg_21_1 + 1
+	level = level + 1
 
-	local var_21_3 = var_0_0.getPrefix(arg_21_1)
+	local pre = FightLogHelper.getPrefix(level)
 
-	table.insert(var_21_2, string.format("%s enchantId : %s", var_21_3, arg_21_0.enchantId))
-	table.insert(var_21_2, string.format("%s duration : %s", var_21_3, arg_21_0.duration))
-	table.insert(var_21_2, string.format("%s exInfo : %s", var_21_3, table.concat(arg_21_0.exInfo, ",")))
-	table.insert(var_21_2, var_21_0 .. "}")
+	table.insert(strTb, string.format("%s enchantId : %s", pre, enchant.enchantId))
+	table.insert(strTb, string.format("%s duration : %s", pre, enchant.duration))
+	table.insert(strTb, string.format("%s exInfo : %s", pre, table.concat(enchant.exInfo, ",")))
+	table.insert(strTb, initPre .. "}")
 
-	return table.concat(var_21_2, "\n")
+	return table.concat(strTb, "\n")
 end
 
-function var_0_0.getEnchantListString(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	arg_22_2 = arg_22_2 or "enchantList"
+function FightLogHelper.getEnchantListString(enchantList, level, name, stack)
+	name = name or "enchantList"
 
-	return var_0_0.getMoListString(arg_22_0, var_0_0.getCardInfoEnchantString, arg_22_2, arg_22_1, arg_22_3)
+	return FightLogHelper.getMoListString(enchantList, FightLogHelper.getCardInfoEnchantString, name, level, stack)
 end
 
-var_0_0.ActTypeName = {
+FightLogHelper.ActTypeName = {
 	[FightEnum.ActType.SKILL] = "技能",
 	[FightEnum.ActType.BUFF] = "buff",
 	[FightEnum.ActType.EFFECT] = "效果",
@@ -477,20 +479,20 @@ var_0_0.ActTypeName = {
 	[FightEnum.ActType.CHANGEWAVE] = "换波次时机"
 }
 
-function var_0_0.getActTypeName(arg_23_0)
-	return arg_23_0 and var_0_0.ActTypeName[arg_23_0] or ""
+function FightLogHelper.getActTypeName(actType)
+	return actType and FightLogHelper.ActTypeName[actType] or ""
 end
 
-function var_0_0.getEntityName(arg_24_0)
-	if arg_24_0 == FightEntityScene.MySideId then
+function FightLogHelper.getEntityName(entityId)
+	if entityId == FightEntityScene.MySideId then
 		return "维尔汀"
-	elseif arg_24_0 == FightEntityScene.EnemySideId then
+	elseif entityId == FightEntityScene.EnemySideId then
 		return "重塑之手"
 	else
-		local var_24_0 = FightDataHelper.entityMgr:getById(arg_24_0)
+		local entityMo = FightDataHelper.entityMgr:getById(entityId)
 
-		if var_24_0 then
-			return var_24_0:getEntityName()
+		if entityMo then
+			return entityMo:getEntityName()
 		end
 
 		return ""
@@ -499,34 +501,34 @@ function var_0_0.getEntityName(arg_24_0)
 	return ""
 end
 
-function var_0_0.getSkillName(arg_25_0)
-	local var_25_0 = lua_skill.configDict[arg_25_0]
+function FightLogHelper.getSkillName(skillId)
+	local config = lua_skill.configDict[skillId]
 
-	return var_25_0 and var_25_0.name or ""
+	return config and config.name or ""
 end
 
-function var_0_0.getTimelineName(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0 and FightDataHelper.entityMgr:getById(arg_26_0)
-	local var_26_1 = FightConfig.instance:getSkinSkillTimeline(var_26_0 and var_26_0.skin, arg_26_1)
+function FightLogHelper.getTimelineName(entityId, skillId)
+	local entityMo = entityId and FightDataHelper.entityMgr:getById(entityId)
+	local timeline = FightConfig.instance:getSkinSkillTimeline(entityMo and entityMo.skin, skillId)
 
-	return string.nilorempty(var_26_1) and "nil" or var_26_1
+	return string.nilorempty(timeline) and "nil" or timeline
 end
 
-function var_0_0.getStack(arg_27_0, arg_27_1)
-	return arg_27_0 and string.format("%s.%s", arg_27_0, arg_27_1) or arg_27_1
+function FightLogHelper.getStack(stack, curName)
+	return stack and string.format("%s.%s", stack, curName) or curName
 end
 
-function var_0_0.addStack(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	arg_28_2 = var_0_0.getStack(arg_28_2, arg_28_3)
+function FightLogHelper.addStack(tb, pre, stack, curName)
+	stack = FightLogHelper.getStack(stack, curName)
 
-	if string.nilorempty(arg_28_2) then
+	if string.nilorempty(stack) then
 		return
 	end
 
-	table.insert(arg_28_0, string.format("%s stack : %s", arg_28_1, arg_28_2))
+	table.insert(tb, string.format("%s stack : %s", pre, stack))
 end
 
-var_0_0.EffectTypeNameDict = {
+FightLogHelper.EffectTypeNameDict = {
 	[FightEnum.EffectType.NONE] = "无效果",
 	[FightEnum.EffectType.MISS] = "闪避",
 	[FightEnum.EffectType.DAMAGE] = "造成伤害",
@@ -874,6 +876,13 @@ var_0_0.EffectTypeNameDict = {
 	[FightEnum.EffectType.RANDOMDICEUSESKILL] = "骰子表现随机释放技能",
 	[FightEnum.EffectType.TOWERDEEPCHANGE] = "爬塔深度变化",
 	[FightEnum.EffectType.FIGHTHURTDETAIL] = "战斗伤害通用信息结构",
+	[FightEnum.EffectType.ADDMAXROUND] = "加最大回合数",
+	[FightEnum.EffectType.RADIANCE] = "辉耀",
+	[FightEnum.EffectType.CRYSTALSELECT] = "选择水晶结果",
+	[FightEnum.EffectType.CRYSTALADDCARD] = "贝丽尔水晶生成卡",
+	[FightEnum.EffectType.ROUGE2MUSICCARDCHANGE] = "队伍手牌音符球变更",
+	[FightEnum.EffectType.ROUGE2MUSICBALLCHANGE] = "队伍储存区音符球变更",
+	[FightEnum.EffectType.ROUGE2CHECK] = "肉鸽2检定结果",
 	[FightEnum.EffectType.TRIGGER] = "触发器",
 	[FightEnum.EffectType.EZIOBIGSKILLDAMAGE] = "EZIO大招伤害",
 	[FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE] = "EZIO大招本源创伤",
@@ -881,8 +890,10 @@ var_0_0.EffectTypeNameDict = {
 	[FightEnum.EffectType.EZIOBIGSKILLEXIT] = "EZIO大招意外退出"
 }
 
-function var_0_0.getEffectTypeName(arg_29_0)
-	return var_0_0.EffectTypeNameDict[arg_29_0]
+function FightLogHelper.getEffectTypeName(effectType)
+	local name = FightLogHelper.EffectTypeNameDict[effectType]
+
+	return name
 end
 
-return var_0_0
+return FightLogHelper

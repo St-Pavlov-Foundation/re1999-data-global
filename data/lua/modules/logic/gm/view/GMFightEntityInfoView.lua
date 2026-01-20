@@ -1,149 +1,165 @@
-﻿module("modules.logic.gm.view.GMFightEntityInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightEntityInfoView.lua
 
-local var_0_0 = class("GMFightEntityInfoView", BaseView)
+module("modules.logic.gm.view.GMFightEntityInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.name_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/name/input")
-	arg_1_0.id_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/id/input")
-	arg_1_0.uid_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/uid/input")
-	arg_1_0.hp_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/hp/input")
-	arg_1_0.hp_max = gohelper.findChildText(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/hp/max")
-	arg_1_0.expoint_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/expoint/input")
-	arg_1_0.expoint_max = gohelper.findChildText(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/expoint/max")
-	arg_1_0.expoint_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/expoint")
-	arg_1_0.emitterEnergy_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy/input")
-	arg_1_0.emitterEnergy_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy")
-	arg_1_0.shield_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/shield/input")
-	arg_1_0.bloodPool_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool/input")
-	arg_1_0.bloodPool_max = gohelper.findChildText(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool/max")
-	arg_1_0.bloodPool_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool")
-	arg_1_0.health_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/health/input")
-	arg_1_0.health_max = gohelper.findChildText(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/health/max")
-	arg_1_0.health_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/health")
-	arg_1_0._icon = gohelper.findChildSingleImage(arg_1_0.viewGO, "info/image")
-	arg_1_0._imgIcon = gohelper.findChildImage(arg_1_0.viewGO, "info/image")
-	arg_1_0._imgCareer = gohelper.findChildImage(arg_1_0.viewGO, "info/image/career")
-	arg_1_0.powerItem = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/new_power/power_item")
+local GMFightEntityInfoView = class("GMFightEntityInfoView", BaseView)
 
-	gohelper.setActive(arg_1_0.powerItem, false)
+function GMFightEntityInfoView:onInitView()
+	self.name_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/name/input")
+	self.id_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/id/input")
+	self.uid_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/uid/input")
+	self.hp_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/hp/input")
+	self.hp_max = gohelper.findChildText(self.viewGO, "info/Scroll View/Viewport/Content/hp/max")
+	self.expoint_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/power/expoint/input")
+	self.expoint_max = gohelper.findChildText(self.viewGO, "info/Scroll View/Viewport/Content/power/expoint/max")
+	self.expoint_go = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/Content/power/expoint")
+	self.emitterEnergy_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy/input")
+	self.emitterEnergy_go = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy")
+	self.shield_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/power/shield/input")
+	self.bloodPool_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool/input")
+	self.bloodPool_max = gohelper.findChildText(self.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool/max")
+	self.bloodPool_go = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool")
+	self.heatScale_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/power/heatscale/input")
+	self.heatScale_max = gohelper.findChildText(self.viewGO, "info/Scroll View/Viewport/Content/power/heatscale/max")
+	self.heatScale_go = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/Content/power/heatscale")
+	self.health_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/power/health/input")
+	self.health_max = gohelper.findChildText(self.viewGO, "info/Scroll View/Viewport/Content/power/health/max")
+	self.health_go = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/Content/power/health")
+	self._icon = gohelper.findChildSingleImage(self.viewGO, "info/image")
+	self._imgIcon = gohelper.findChildImage(self.viewGO, "info/image")
+	self._imgCareer = gohelper.findChildImage(self.viewGO, "info/image/career")
+	self.powerItem = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/Content/new_power/power_item")
 
-	arg_1_0.powerItemList = {}
+	gohelper.setActive(self.powerItem, false)
+
+	self.powerItemList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(GMController.instance, GMFightEntityView.Evt_SelectHero, arg_2_0._onSelectHero, arg_2_0)
-	arg_2_0.hp_input:AddOnEndEdit(arg_2_0._onEndEditHp, arg_2_0)
-	arg_2_0.expoint_input:AddOnEndEdit(arg_2_0._onEndEditExpoint, arg_2_0)
-	arg_2_0.emitterEnergy_input:AddOnEndEdit(arg_2_0._onEndEditEmitterEnergy, arg_2_0)
-	arg_2_0.bloodPool_input:AddOnEndEdit(arg_2_0._onEndEditBloodPool, arg_2_0)
-	arg_2_0.health_input:AddOnEndEdit(arg_2_0._onEndEditHealth, arg_2_0)
+function GMFightEntityInfoView:addEvents()
+	self:addEventCb(GMController.instance, GMFightEntityView.Evt_SelectHero, self._onSelectHero, self)
+	self.hp_input:AddOnEndEdit(self._onEndEditHp, self)
+	self.expoint_input:AddOnEndEdit(self._onEndEditExpoint, self)
+	self.emitterEnergy_input:AddOnEndEdit(self._onEndEditEmitterEnergy, self)
+	self.bloodPool_input:AddOnEndEdit(self._onEndEditBloodPool, self)
+	self.heatScale_input:AddOnEndEdit(self._onEndEditHearScale, self)
+	self.health_input:AddOnEndEdit(self._onEndEditHealth, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(GMController.instance, GMFightEntityView.Evt_SelectHero, arg_3_0._onSelectHero, arg_3_0)
-	arg_3_0.hp_input:RemoveOnEndEdit()
-	arg_3_0.expoint_input:RemoveOnEndEdit()
-	arg_3_0.emitterEnergy_input:RemoveOnEndEdit()
-	arg_3_0.bloodPool_input:RemoveOnEndEdit()
-	arg_3_0.health_input:RemoveOnEndEdit()
+function GMFightEntityInfoView:removeEvents()
+	self:removeEventCb(GMController.instance, GMFightEntityView.Evt_SelectHero, self._onSelectHero, self)
+	self.hp_input:RemoveOnEndEdit()
+	self.expoint_input:RemoveOnEndEdit()
+	self.emitterEnergy_input:RemoveOnEndEdit()
+	self.bloodPool_input:RemoveOnEndEdit()
+	self.heatScale_input:RemoveOnEndEdit()
+	self.health_input:RemoveOnEndEdit()
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.powerItemList) do
-		iter_3_1.input:RemoveOnEndEdit()
+	for _, powerItem in ipairs(self.powerItemList) do
+		powerItem.input:RemoveOnEndEdit()
 	end
 end
 
-function var_0_0.onOpen(arg_4_0)
+function GMFightEntityInfoView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_5_0)
+function GMFightEntityInfoView:onClose()
 	return
 end
 
-function var_0_0._onSelectHero(arg_6_0, arg_6_1)
-	arg_6_0._entityMO = arg_6_1
+function GMFightEntityInfoView:_onSelectHero(entityMO)
+	self._entityMO = entityMO
 
-	arg_6_0.name_input:SetText(arg_6_1:getEntityName())
-	arg_6_0.id_input:SetText(tostring(arg_6_1.modelId))
-	arg_6_0.uid_input:SetText(tostring(arg_6_1.id))
-	arg_6_0.hp_input:SetText(tostring(arg_6_1.currentHp))
+	self.name_input:SetText(entityMO:getEntityName())
+	self.id_input:SetText(tostring(entityMO.modelId))
+	self.uid_input:SetText(tostring(entityMO.id))
+	self.hp_input:SetText(tostring(entityMO.currentHp))
 
-	arg_6_0.hp_max.text = "/" .. tostring(arg_6_1.attrMO.hp)
+	self.hp_max.text = "/" .. tostring(entityMO.attrMO.hp)
 
-	local var_6_0 = true
+	local expointVisible = true
+	local assistBoss = entityMO:isAssistBoss()
 
-	if arg_6_1:isAssistBoss() then
-		var_6_0 = false
+	if assistBoss then
+		expointVisible = false
 	end
 
-	if arg_6_1:isAct191Boss() then
-		var_6_0 = false
+	if entityMO:isAct191Boss() then
+		expointVisible = false
 	end
 
-	gohelper.setActive(arg_6_0.expoint_go, var_6_0)
+	gohelper.setActive(self.expoint_go, expointVisible)
 
-	if var_6_0 then
-		arg_6_0.expoint_input:SetText(tostring(arg_6_1.exPoint))
+	if expointVisible then
+		self.expoint_input:SetText(tostring(entityMO.exPoint))
 
-		arg_6_0.expoint_max.text = "/" .. tostring(arg_6_1:getMaxExPoint())
+		self.expoint_max.text = "/" .. tostring(entityMO:getMaxExPoint())
 	end
 
-	local var_6_1 = arg_6_1:isASFDEmitter()
+	local isASFDEmitter = entityMO:isASFDEmitter()
 
-	gohelper.setActive(arg_6_0.emitterEnergy_go, var_6_1)
+	gohelper.setActive(self.emitterEnergy_go, isASFDEmitter)
 
-	local var_6_2 = FightEnum.TeamType.MySide
-	local var_6_3 = FightDataHelper.getBloodPool(var_6_2)
-	local var_6_4 = arg_6_0._entityMO.id == FightEntityScene.MySideId and var_6_3
+	local teamType = FightEnum.TeamType.MySide
+	local bloodPool = FightDataHelper.getBloodPool(teamType)
+	local showBloodPool = self._entityMO.id == FightEntityScene.MySideId and bloodPool
 
-	if var_6_4 then
-		arg_6_0.bloodPool_input:SetText(var_6_3.value)
+	if showBloodPool then
+		self.bloodPool_input:SetText(bloodPool.value)
 
-		arg_6_0.bloodPool_max.text = "/" .. tostring(var_6_3.max)
+		self.bloodPool_max.text = "/" .. tostring(bloodPool.max)
 	end
 
-	gohelper.setActive(arg_6_0.bloodPool_go, var_6_4)
+	gohelper.setActive(self.bloodPool_go, showBloodPool)
 
-	local var_6_5 = FightHelper.getSurvivalEntityHealth(arg_6_1.id)
-	local var_6_6 = var_6_5 ~= nil
+	local heatScale = FightDataHelper.getHeatScale(teamType)
+	local showHeatScale = self._entityMO.id == FightEntityScene.MySideId and heatScale
 
-	gohelper.setActive(arg_6_0.health_go, var_6_6)
+	if showHeatScale then
+		self.heatScale_input:SetText(heatScale.value)
 
-	if var_6_6 then
-		arg_6_0.health_input:SetText(var_6_5)
-
-		arg_6_0.health_max.text = "/" .. tostring(FightHelper.getSurvivalMaxHealth())
+		self.heatScale_max.text = "/" .. tostring(heatScale.max)
 	end
 
-	arg_6_0.shield_input:SetText(arg_6_1.shieldValue)
-	arg_6_0._icon:UnLoadImage()
+	gohelper.setActive(self.heatScale_go, showHeatScale)
 
-	if not arg_6_1:isMonster() or not lua_monster.configDict[arg_6_1.modelId] then
-		local var_6_7 = lua_character.configDict[arg_6_1.modelId]
+	local health = FightHelper.getSurvivalEntityHealth(entityMO.id)
+	local showHealth = health ~= nil
+
+	gohelper.setActive(self.health_go, showHealth)
+
+	if showHealth then
+		self.health_input:SetText(health)
+
+		self.health_max.text = "/" .. tostring(FightHelper.getSurvivalMaxHealth())
 	end
 
-	local var_6_8 = FightConfig.instance:getSkinCO(arg_6_1.originSkin)
+	self.shield_input:SetText(entityMO.shieldValue)
+	self._icon:UnLoadImage()
 
-	if arg_6_1:isCharacter() then
-		local var_6_9 = ResUrl.getHeadIconSmall(var_6_8.retangleIcon)
+	local modelCO = entityMO:isMonster() and lua_monster.configDict[entityMO.modelId] or lua_character.configDict[entityMO.modelId]
+	local skinCO = FightConfig.instance:getSkinCO(entityMO.originSkin)
 
-		arg_6_0._icon:LoadImage(var_6_9)
-	elseif arg_6_1:isMonster() then
-		gohelper.getSingleImage(arg_6_0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_6_8.headIcon))
+	if entityMO:isCharacter() then
+		local iconPath = ResUrl.getHeadIconSmall(skinCO.retangleIcon)
 
-		arg_6_0._imgIcon.enabled = true
+		self._icon:LoadImage(iconPath)
+	elseif entityMO:isMonster() then
+		gohelper.getSingleImage(self._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinCO.headIcon))
+
+		self._imgIcon.enabled = true
 	end
 
-	local var_6_10 = arg_6_1:getCareer()
+	local career = entityMO:getCareer()
 
-	if var_6_10 ~= 0 then
-		UISpriteSetMgr.instance:setEnemyInfoSprite(arg_6_0._imgCareer, "sxy_" .. tostring(var_6_10))
+	if career ~= 0 then
+		UISpriteSetMgr.instance:setEnemyInfoSprite(self._imgCareer, "sxy_" .. tostring(career))
 	end
 
-	arg_6_0:refreshPowerList(arg_6_1)
+	self:refreshPowerList(entityMO)
 end
 
-var_0_0.PowerId2Name = {
+GMFightEntityInfoView.PowerId2Name = {
 	[FightEnum.PowerType.Power] = "灵光",
 	[FightEnum.PowerType.Energy] = "BOSS能量",
 	[FightEnum.PowerType.Stress] = "压力",
@@ -151,233 +167,265 @@ var_0_0.PowerId2Name = {
 	[FightEnum.PowerType.PlayerFinisherSkill] = "主角终结技",
 	[FightEnum.PowerType.Alert] = "警戒值",
 	[FightEnum.PowerType.Act191Boss] = "斗蛐蛐",
-	[FightEnum.PowerType.SurvivalDot] = "探索dot流派"
+	[FightEnum.PowerType.SurvivalDot] = "探索dot流派",
+	[FightEnum.PowerType.ZongMaoBossEnergy] = "鬃毛boss",
+	[FightEnum.PowerType.ZongMaoYinNiZhi] = "隐匿值"
 }
-var_0_0.PowerItemInputWidth = 50
+GMFightEntityInfoView.PowerItemInputWidth = 50
 
-function var_0_0.initPowerOnEndEditHandleDict(arg_7_0)
-	if not var_0_0.PowerId2OnEndEditFuncDict then
-		var_0_0.PowerId2OnEndEditFuncDict = {
-			[FightEnum.PowerType.Power] = arg_7_0._onEndEditPower,
-			[FightEnum.PowerType.Alert] = arg_7_0._onEndEditAlert,
-			[FightEnum.PowerType.Stress] = arg_7_0._onEndEditStress,
-			[FightEnum.PowerType.AssistBoss] = arg_7_0._onEndEditAssistBoss,
-			[FightEnum.PowerType.SurvivalDot] = arg_7_0._onEndEditSurvivalDot
+function GMFightEntityInfoView:initPowerOnEndEditHandleDict()
+	if not GMFightEntityInfoView.PowerId2OnEndEditFuncDict then
+		GMFightEntityInfoView.PowerId2OnEndEditFuncDict = {
+			[FightEnum.PowerType.Power] = self._onEndEditPower,
+			[FightEnum.PowerType.Alert] = self._onEndEditAlert,
+			[FightEnum.PowerType.Stress] = self._onEndEditStress,
+			[FightEnum.PowerType.AssistBoss] = self._onEndEditAssistBoss,
+			[FightEnum.PowerType.SurvivalDot] = self._onEndEditSurvivalDot,
+			[FightEnum.PowerType.ZongMaoBossEnergy] = self._onEndEditZongMaoBossEnergy,
+			[FightEnum.PowerType.ZongMaoYinNiZhi] = self._onEndEditZongMaoYinNiZhi
 		}
 	end
 end
 
-function var_0_0.refreshPowerList(arg_8_0, arg_8_1)
-	arg_8_0:initPowerOnEndEditHandleDict()
+function GMFightEntityInfoView:refreshPowerList(entityMo)
+	self:initPowerOnEndEditHandleDict()
 
-	arg_8_0.powerId2PowerItemDict = arg_8_0.powerId2PowerItemDict or {}
+	self.powerId2PowerItemDict = self.powerId2PowerItemDict or {}
 
-	tabletool.clear(arg_8_0.powerId2PowerItemDict)
+	tabletool.clear(self.powerId2PowerItemDict)
 
-	local var_8_0 = 0
+	local powerCount = 0
 
-	for iter_8_0, iter_8_1 in pairs(FightEnum.PowerType) do
-		local var_8_1 = arg_8_1:getPowerInfo(iter_8_1)
+	for powerName, power in pairs(FightEnum.PowerType) do
+		local powerInfo = entityMo:getPowerInfo(power)
 
-		if var_8_1 then
-			var_8_0 = var_8_0 + 1
+		if powerInfo then
+			powerCount = powerCount + 1
 
-			local var_8_2 = arg_8_0.powerItemList[var_8_0]
+			local powerItem = self.powerItemList[powerCount]
 
-			if not var_8_2 then
-				var_8_2 = arg_8_0:getUserDataTb_()
-				var_8_2.go = gohelper.cloneInPlace(arg_8_0.powerItem)
-				var_8_2.rectGo = var_8_2.go:GetComponent(gohelper.Type_RectTransform)
-				var_8_2.txtLabel = gohelper.findChildText(var_8_2.go, "label")
-				var_8_2.rectLabel = var_8_2.txtLabel:GetComponent(gohelper.Type_RectTransform)
-				var_8_2.input = gohelper.findChildTextMeshInputField(var_8_2.go, "input")
-				var_8_2.rectInput = var_8_2.input:GetComponent(gohelper.Type_RectTransform)
-				var_8_2.txtMax = gohelper.findChildText(var_8_2.go, "max")
-				var_8_2.rectMax = var_8_2.txtMax:GetComponent(gohelper.Type_RectTransform)
+			if not powerItem then
+				powerItem = self:getUserDataTb_()
+				powerItem.go = gohelper.cloneInPlace(self.powerItem)
+				powerItem.rectGo = powerItem.go:GetComponent(gohelper.Type_RectTransform)
+				powerItem.txtLabel = gohelper.findChildText(powerItem.go, "label")
+				powerItem.rectLabel = powerItem.txtLabel:GetComponent(gohelper.Type_RectTransform)
+				powerItem.input = gohelper.findChildTextMeshInputField(powerItem.go, "input")
+				powerItem.rectInput = powerItem.input:GetComponent(gohelper.Type_RectTransform)
+				powerItem.txtMax = gohelper.findChildText(powerItem.go, "max")
+				powerItem.rectMax = powerItem.txtMax:GetComponent(gohelper.Type_RectTransform)
 
-				table.insert(arg_8_0.powerItemList, var_8_2)
+				table.insert(self.powerItemList, powerItem)
 			end
 
-			var_8_2.input:RemoveOnEndEdit()
+			powerItem.input:RemoveOnEndEdit()
 
-			local var_8_3 = var_0_0.PowerId2OnEndEditFuncDict[iter_8_1]
+			local onEndEdit = GMFightEntityInfoView.PowerId2OnEndEditFuncDict[power]
 
-			if var_8_3 then
-				var_8_2.input:AddOnEndEdit(var_8_3, arg_8_0)
+			if onEndEdit then
+				powerItem.input:AddOnEndEdit(onEndEdit, self)
 			end
 
-			gohelper.setActive(var_8_2.go, true)
+			gohelper.setActive(powerItem.go, true)
 
-			var_8_2.txtLabel.text = arg_8_0.PowerId2Name[iter_8_1] or iter_8_0
+			powerItem.txtLabel.text = self.PowerId2Name[power] or powerName
 
-			var_8_2.input:SetTextWithoutNotify(tostring(var_8_1.num))
+			powerItem.input:SetTextWithoutNotify(tostring(powerInfo.num))
 
-			var_8_2.txtMax.text = "/" .. tostring(var_8_1.max)
+			powerItem.txtMax.text = "/" .. tostring(powerInfo.max)
 
-			local var_8_4 = GameUtil.getTextRenderSize(var_8_2.txtLabel)
-			local var_8_5 = GameUtil.getTextRenderSize(var_8_2.txtMax)
+			local labelWidth = GameUtil.getTextRenderSize(powerItem.txtLabel)
+			local maxWidth = GameUtil.getTextRenderSize(powerItem.txtMax)
 
-			recthelper.setAnchorX(var_8_2.rectInput, var_8_4)
-			recthelper.setAnchorX(var_8_2.rectMax, var_8_4 + arg_8_0.PowerItemInputWidth)
+			recthelper.setAnchorX(powerItem.rectInput, labelWidth)
+			recthelper.setAnchorX(powerItem.rectMax, labelWidth + self.PowerItemInputWidth)
 
-			local var_8_6 = var_8_4 + arg_8_0.PowerItemInputWidth + var_8_5
+			local totalWidth = labelWidth + self.PowerItemInputWidth + maxWidth
 
-			recthelper.setWidth(var_8_2.rectGo, var_8_6)
+			recthelper.setWidth(powerItem.rectGo, totalWidth)
 
-			arg_8_0.powerId2PowerItemDict[iter_8_1] = var_8_2
+			self.powerId2PowerItemDict[power] = powerItem
 		end
 	end
 
-	for iter_8_2 = var_8_0 + 1, #arg_8_0.powerItemList do
-		local var_8_7 = arg_8_0.powerItemList[iter_8_2]
+	for i = powerCount + 1, #self.powerItemList do
+		local powerItem = self.powerItemList[i]
 
-		if var_8_7 then
-			gohelper.setActive(var_8_7.go, false)
+		if powerItem then
+			gohelper.setActive(powerItem.go, false)
 		end
 	end
 end
 
-function var_0_0._onEndEditHp(arg_9_0, arg_9_1)
-	local var_9_0 = GMFightEntityModel.instance.entityMO
-	local var_9_1 = tonumber(arg_9_1)
+function GMFightEntityInfoView:_onEndEditHp(inputStr)
+	local entityMO = GMFightEntityModel.instance.entityMO
+	local targetHp = tonumber(inputStr)
 
-	if var_9_1 then
-		local var_9_2 = var_9_0.currentHp
-		local var_9_3 = var_9_0.attrMO.hp
-		local var_9_4 = Mathf.Clamp(var_9_1, 0, var_9_3)
+	if targetHp then
+		local old = entityMO.currentHp
+		local maxHp = entityMO.attrMO.hp
+		local fixedHp = Mathf.Clamp(targetHp, 0, maxHp)
 
-		if var_9_1 ~= var_9_4 then
-			arg_9_0.hp_input:SetTextWithoutNotify(tostring(var_9_4))
+		if targetHp ~= fixedHp then
+			self.hp_input:SetTextWithoutNotify(tostring(fixedHp))
 		end
 
-		var_9_0.currentHp = var_9_4
+		entityMO.currentHp = fixedHp
 
-		local var_9_5 = FightLocalDataMgr.instance:getEntityById(var_9_0.id)
+		local localEntityMO = FightLocalDataMgr.instance:getEntityById(entityMO.id)
 
-		if var_9_5 then
-			var_9_5.currentHp = var_9_4
+		if localEntityMO then
+			localEntityMO.currentHp = fixedHp
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, var_9_0.id, var_9_2, var_9_4)
-		GMRpc.instance:sendGMRequest(string.format("fightChangeLife %s %d", var_9_0.id, var_9_4))
+		FightController.instance:dispatchEvent(FightEvent.OnCurrentHpChange, entityMO.id, old, fixedHp)
+		GMRpc.instance:sendGMRequest(string.format("fightChangeLife %s %d", entityMO.id, fixedHp))
 	end
 end
 
-function var_0_0._onEndEditExpoint(arg_10_0, arg_10_1)
-	local var_10_0 = GMFightEntityModel.instance.entityMO
-	local var_10_1 = tonumber(arg_10_1)
+function GMFightEntityInfoView:_onEndEditExpoint(inputStr)
+	local entityMO = GMFightEntityModel.instance.entityMO
+	local targetExpoint = tonumber(inputStr)
 
-	if var_10_1 then
-		local var_10_2 = var_10_0:getMaxExPoint()
-		local var_10_3 = Mathf.Clamp(var_10_1, 0, var_10_2)
+	if targetExpoint then
+		local maxExpoint = entityMO:getMaxExPoint()
+		local fixedExpoint = Mathf.Clamp(targetExpoint, 0, maxExpoint)
 
-		if var_10_1 ~= var_10_3 then
-			arg_10_0.expoint_input:SetTextWithoutNotify(tostring(var_10_3))
+		if targetExpoint ~= fixedExpoint then
+			self.expoint_input:SetTextWithoutNotify(tostring(fixedExpoint))
 		end
 
-		local var_10_4 = var_10_0.exPoint
+		local oldNum = entityMO.exPoint
 
-		var_10_0.exPoint = var_10_3
+		entityMO.exPoint = fixedExpoint
 
-		local var_10_5 = FightLocalDataMgr.instance:getEntityById(var_10_0.id)
+		local localEntityMO = FightLocalDataMgr.instance:getEntityById(entityMO.id)
 
-		if var_10_5 then
-			var_10_5.exPoint = var_10_3
+		if localEntityMO then
+			localEntityMO.exPoint = fixedExpoint
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, var_10_0.id, var_10_4, var_10_0.exPoint)
-		GMRpc.instance:sendGMRequest(string.format("fightChangeExPoint %s %d", var_10_0.id, var_10_3))
+		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, entityMO.id, oldNum, entityMO.exPoint)
+		GMRpc.instance:sendGMRequest(string.format("fightChangeExPoint %s %d", entityMO.id, fixedExpoint))
 	end
 end
 
-function var_0_0._onEndEditPower(arg_11_0, arg_11_1)
-	arg_11_0:onEndEditPower(FightEnum.PowerType.Power, arg_11_1)
+function GMFightEntityInfoView:_onEndEditPower(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.Power, inputStr)
 end
 
-function var_0_0._onEndEditAlert(arg_12_0, arg_12_1)
-	arg_12_0:onEndEditPower(FightEnum.PowerType.Alert, arg_12_1)
+function GMFightEntityInfoView:_onEndEditAlert(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.Alert, inputStr)
 end
 
-function var_0_0._onEndEditStress(arg_13_0, arg_13_1)
-	arg_13_0:onEndEditPower(FightEnum.PowerType.Stress, arg_13_1)
+function GMFightEntityInfoView:_onEndEditStress(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.Stress, inputStr)
 end
 
-function var_0_0._onEndEditAssistBoss(arg_14_0, arg_14_1)
-	arg_14_0:onEndEditPower(FightEnum.PowerType.AssistBoss, arg_14_1)
+function GMFightEntityInfoView:_onEndEditAssistBoss(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.AssistBoss, inputStr)
 end
 
-function var_0_0._onEndEditSurvivalDot(arg_15_0, arg_15_1)
-	arg_15_0:onEndEditPower(FightEnum.PowerType.SurvivalDot, arg_15_1)
+function GMFightEntityInfoView:_onEndEditSurvivalDot(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.SurvivalDot, inputStr)
 end
 
-function var_0_0.onEndEditPower(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = GMFightEntityModel.instance.entityMO
-	local var_16_1 = tonumber(arg_16_2)
+function GMFightEntityInfoView:_onEndEditZongMaoBossEnergy(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.ZongMaoBossEnergy, inputStr)
+end
 
-	if var_16_1 then
-		local var_16_2 = var_16_0:getPowerInfo(arg_16_1)
-		local var_16_3 = var_16_2 and var_16_2.num or 0
-		local var_16_4 = var_16_2 and var_16_2.max or 0
-		local var_16_5 = Mathf.Clamp(var_16_1, 0, var_16_4)
+function GMFightEntityInfoView:_onEndEditZongMaoYinNiZhi(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.ZongMaoYinNiZhi, inputStr)
+end
 
-		if var_16_1 ~= var_16_5 then
-			arg_16_0.powerId2PowerItemDict[arg_16_1].input:SetTextWithoutNotify(tostring(var_16_5))
+function GMFightEntityInfoView:onEndEditPower(powerId, text)
+	local entityMO = GMFightEntityModel.instance.entityMO
+	local value = tonumber(text)
+
+	if value then
+		local powerInfo = entityMO:getPowerInfo(powerId)
+		local oldPowerValue = powerInfo and powerInfo.num or 0
+		local maxPowerValue = powerInfo and powerInfo.max or 0
+		local fixedPowerValue = Mathf.Clamp(value, 0, maxPowerValue)
+
+		if value ~= fixedPowerValue then
+			local powerItem = self.powerId2PowerItemDict[powerId]
+
+			powerItem.input:SetTextWithoutNotify(tostring(fixedPowerValue))
 		end
 
-		var_16_2.num = var_16_5
+		powerInfo.num = fixedPowerValue
 
-		local var_16_6 = FightLocalDataMgr.instance:getEntityById(var_16_0.id)
+		local localEntityMO = FightLocalDataMgr.instance:getEntityById(entityMO.id)
 
-		if var_16_6 then
-			local var_16_7 = var_16_6:getPowerInfo(arg_16_1)
+		if localEntityMO then
+			local localPowerInfo = localEntityMO:getPowerInfo(powerId)
 
-			if var_16_7 then
-				var_16_7.num = var_16_5
+			if localPowerInfo then
+				localPowerInfo.num = fixedPowerValue
 			end
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.PowerChange, var_16_0.id, arg_16_1, var_16_3, var_16_5)
-		GMRpc.instance:sendGMRequest(string.format("fightChangePower %s %s %d", var_16_0.id, arg_16_1, var_16_5))
+		FightController.instance:dispatchEvent(FightEvent.PowerChange, entityMO.id, powerId, oldPowerValue, fixedPowerValue)
+		GMRpc.instance:sendGMRequest(string.format("fightChangePower %s %s %d", entityMO.id, powerId, fixedPowerValue))
 	end
 end
 
-function var_0_0._onEndEditEmitterEnergy(arg_17_0, arg_17_1)
-	local var_17_0 = GMFightEntityModel.instance.entityMO
+function GMFightEntityInfoView:_onEndEditEmitterEnergy(inputStr)
+	local entityMO = GMFightEntityModel.instance.entityMO
 
-	if not var_17_0:isASFDEmitter() then
+	if not entityMO:isASFDEmitter() then
 		return
 	end
 
-	local var_17_1 = tonumber(arg_17_1)
+	local energy = tonumber(inputStr)
 
-	if not var_17_1 then
+	if not energy then
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(string.format("fightChangeEmitterEnergy %s %d", var_17_0.id, var_17_1))
-	FightDataHelper.ASFDDataMgr:changeEmitterEnergy(FightEnum.EntitySide.MySide, var_17_1)
+	GMRpc.instance:sendGMRequest(string.format("fightChangeEmitterEnergy %s %d", entityMO.id, energy))
+	FightDataHelper.ASFDDataMgr:changeEmitterEnergy(FightEnum.EntitySide.MySide, energy)
 end
 
-function var_0_0._onEndEditBloodPool(arg_18_0, arg_18_1)
-	local var_18_0 = tonumber(arg_18_1)
+function GMFightEntityInfoView:_onEndEditBloodPool(inputStr)
+	local value = tonumber(inputStr)
 
-	if not var_18_0 then
+	if not value then
 		return
 	end
 
-	local var_18_1 = FightEnum.TeamType.MySide
-	local var_18_2 = FightDataHelper.getBloodPool(var_18_1)
-	local var_18_3 = var_18_2.max
-	local var_18_4 = math.min(math.max(0, var_18_0), var_18_3)
+	local teamType = FightEnum.TeamType.MySide
+	local bloodPool = FightDataHelper.getBloodPool(teamType)
+	local max = bloodPool.max
 
-	var_18_2.value = var_18_4
+	value = math.min(math.max(0, value), max)
+	bloodPool.value = value
 
-	GMRpc.instance:sendGMRequest(string.format("setBloodPoolValue %d", var_18_4))
-	FightController.instance:dispatchEvent(FightEvent.BloodPool_ValueChange, var_18_1)
+	GMRpc.instance:sendGMRequest(string.format("setBloodPoolValue %d", value))
+	FightController.instance:dispatchEvent(FightEvent.BloodPool_ValueChange, teamType)
 end
 
-function var_0_0._onEndEditHealth(arg_19_0, arg_19_1)
-	local var_19_0 = tonumber(arg_19_1)
+function GMFightEntityInfoView:_onEndEditHearScale(inputStr)
+	local value = tonumber(inputStr)
+
+	if not value then
+		return
+	end
+
+	local teamType = FightEnum.TeamType.MySide
+	local heatScale = FightDataHelper.getHeatScale(teamType)
+	local max = heatScale.max
+
+	value = math.min(math.max(0, value), max)
+	heatScale.value = value
+
+	GMRpc.instance:sendGMRequest(string.format("setBloodPoolValue %d", value))
+	FightController.instance:dispatchEvent(FightEvent.HeatScale_ValueChange, teamType)
 end
 
-return var_0_0
+function GMFightEntityInfoView:_onEndEditHealth(inputStr)
+	local value = tonumber(inputStr)
+end
+
+return GMFightEntityInfoView

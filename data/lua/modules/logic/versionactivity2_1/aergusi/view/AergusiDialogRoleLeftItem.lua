@@ -1,126 +1,129 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleLeftItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiDialogRoleLeftItem.lua
 
-local var_0_0 = class("AergusiDialogRoleLeftItem", AergusiDialogRoleItemBase)
-local var_0_1 = -4.9039
-local var_0_2 = 22
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleLeftItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, ...)
-	var_0_0.super.ctor(arg_1_0, ...)
+local AergusiDialogRoleLeftItem = class("AergusiDialogRoleLeftItem", AergusiDialogRoleItemBase)
+local kMarkTopOffsetY = -4.9039
+local kMarkTopLineSpacine = 22
+
+function AergusiDialogRoleLeftItem:ctor(...)
+	AergusiDialogRoleLeftItem.super.ctor(self, ...)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.go = arg_2_1
-	arg_2_0._resPath = arg_2_2
-	arg_2_0._golight = gohelper.findChild(arg_2_1, "light")
-	arg_2_0._gochess = gohelper.findChild(arg_2_1, "chessitem")
-	arg_2_0._simagechess = gohelper.findChildSingleImage(arg_2_1, "chessitem/#chess")
-	arg_2_0._gotalk = gohelper.findChild(arg_2_1, "go_talking")
-	arg_2_0._gobubble = gohelper.findChild(arg_2_1, "go_bubble")
-	arg_2_0._gospeakbubble = gohelper.findChild(arg_2_1, "go_bubble/go_speakbubble")
-	arg_2_0._txtspeakbubbledesc = gohelper.findChildText(arg_2_1, "go_bubble/go_speakbubble/txt_dec")
-	arg_2_0._gothinkbubble = gohelper.findChild(arg_2_1, "go_bubble/go_thinkbubble")
-	arg_2_0._txtthinkbubbledesc = gohelper.findChildText(arg_2_1, "go_bubble/go_thinkbubble/txt_dec")
-	arg_2_0._gopatience = gohelper.findChild(arg_2_1, "#go_patience")
-	arg_2_0._imageprogress = gohelper.findChildImage(arg_2_1, "#go_patience/#image_progress")
-	arg_2_0._goprogress = gohelper.findChild(arg_2_1, "#go_patience/#progress")
+function AergusiDialogRoleLeftItem:init(go, path)
+	self.go = go
+	self._resPath = path
+	self._golight = gohelper.findChild(go, "light")
+	self._gochess = gohelper.findChild(go, "chessitem")
+	self._simagechess = gohelper.findChildSingleImage(go, "chessitem/#chess")
+	self._gotalk = gohelper.findChild(go, "go_talking")
+	self._gobubble = gohelper.findChild(go, "go_bubble")
+	self._gospeakbubble = gohelper.findChild(go, "go_bubble/go_speakbubble")
+	self._txtspeakbubbledesc = gohelper.findChildText(go, "go_bubble/go_speakbubble/txt_dec")
+	self._gothinkbubble = gohelper.findChild(go, "go_bubble/go_thinkbubble")
+	self._txtthinkbubbledesc = gohelper.findChildText(go, "go_bubble/go_thinkbubble/txt_dec")
+	self._gopatience = gohelper.findChild(go, "#go_patience")
+	self._imageprogress = gohelper.findChildImage(go, "#go_patience/#image_progress")
+	self._goprogress = gohelper.findChild(go, "#go_patience/#progress")
 
-	gohelper.setActive(arg_2_0.go, true)
-	gohelper.setActive(arg_2_0._gobubble, false)
-	gohelper.setActive(arg_2_0._golight, false)
-	gohelper.setActive(arg_2_0._gotalk, false)
+	gohelper.setActive(self.go, true)
+	gohelper.setActive(self._gobubble, false)
+	gohelper.setActive(self._golight, false)
+	gohelper.setActive(self._gotalk, false)
 
-	arg_2_0._chessAni = arg_2_0._gochess:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._progressAni = arg_2_0._goprogress:GetComponent(typeof(UnityEngine.Animator))
+	self._chessAni = self._gochess:GetComponent(typeof(UnityEngine.Animator))
+	self._progressAni = self._goprogress:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_2_0:showPatience()
-	arg_2_0._simagechess:LoadImage(ResUrl.getV2a1AergusiSingleBg(arg_2_0._resPath))
-	arg_2_0:_addEvents()
+	self:showPatience()
+	self._simagechess:LoadImage(ResUrl.getV2a1AergusiSingleBg(self._resPath))
+	self:_addEvents()
 
-	arg_2_0._txtspeakbubbledescMarkTopIndex = arg_2_0:createMarktopCmp(arg_2_0._txtspeakbubbledesc)
-	arg_2_0._txtthinkbubbledescMarkTopIndex = arg_2_0:createMarktopCmp(arg_2_0._txtthinkbubbledesc)
+	self._txtspeakbubbledescMarkTopIndex = self:createMarktopCmp(self._txtspeakbubbledesc)
+	self._txtthinkbubbledescMarkTopIndex = self:createMarktopCmp(self._txtthinkbubbledesc)
 
-	arg_2_0:setTopOffset(arg_2_0._txtspeakbubbledescMarkTopIndex, 0, var_0_1)
-	arg_2_0:setTopOffset(arg_2_0._txtthinkbubbledescMarkTopIndex, 0, var_0_1)
-	arg_2_0:setLineSpacing(arg_2_0._txtspeakbubbledescMarkTopIndex, var_0_2)
-	arg_2_0:setLineSpacing(arg_2_0._txtthinkbubbledescMarkTopIndex, var_0_2)
+	self:setTopOffset(self._txtspeakbubbledescMarkTopIndex, 0, kMarkTopOffsetY)
+	self:setTopOffset(self._txtthinkbubbledescMarkTopIndex, 0, kMarkTopOffsetY)
+	self:setLineSpacing(self._txtspeakbubbledescMarkTopIndex, kMarkTopLineSpacine)
+	self:setLineSpacing(self._txtthinkbubbledescMarkTopIndex, kMarkTopLineSpacine)
 end
 
-function var_0_0.showTalking(arg_3_0)
-	arg_3_0._chessAni:Play("jump", 0, 0)
-	gohelper.setActive(arg_3_0._golight, true)
-	gohelper.setActive(arg_3_0._gotalk, true)
-	TaskDispatcher.runDelay(arg_3_0.hideTalking, arg_3_0, 3)
+function AergusiDialogRoleLeftItem:showTalking()
+	self._chessAni:Play("jump", 0, 0)
+	gohelper.setActive(self._golight, true)
+	gohelper.setActive(self._gotalk, true)
+	TaskDispatcher.runDelay(self.hideTalking, self, 3)
 end
 
-function var_0_0.hideTalking(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.hideTalking, arg_4_0)
-	gohelper.setActive(arg_4_0._golight, false)
-	gohelper.setActive(arg_4_0._gotalk, false)
+function AergusiDialogRoleLeftItem:hideTalking()
+	TaskDispatcher.cancelTask(self.hideTalking, self)
+	gohelper.setActive(self._golight, false)
+	gohelper.setActive(self._gotalk, false)
 end
 
-function var_0_0.showPatience(arg_5_0)
-	gohelper.setActive(arg_5_0._gopatience, true)
+function AergusiDialogRoleLeftItem:showPatience()
+	gohelper.setActive(self._gopatience, true)
 
-	local var_5_0 = AergusiDialogModel.instance:getLeftErrorTimes()
-	local var_5_1 = AergusiModel.instance:getCurEpisode()
-	local var_5_2 = var_5_0 / AergusiConfig.instance:getEpisodeConfig(nil, var_5_1).maxError
+	local leftTimes = AergusiDialogModel.instance:getLeftErrorTimes()
+	local episodeId = AergusiModel.instance:getCurEpisode()
+	local episodeCo = AergusiConfig.instance:getEpisodeConfig(nil, episodeId)
+	local leftErrorRate = leftTimes / episodeCo.maxError
 
-	arg_5_0._imageprogress.fillAmount = var_5_2
+	self._imageprogress.fillAmount = leftErrorRate
 
-	if var_5_0 == 3 then
-		UISpriteSetMgr.instance:setV2a1AergusiSprite(arg_5_0._imageprogress, "v2a1_aergusi_chat_progress_green")
-	elseif var_5_0 == 2 then
-		UISpriteSetMgr.instance:setV2a1AergusiSprite(arg_5_0._imageprogress, "v2a1_aergusi_chat_progress_yellow")
-		gohelper.setActive(arg_5_0._goprogress, true)
+	if leftTimes == 3 then
+		UISpriteSetMgr.instance:setV2a1AergusiSprite(self._imageprogress, "v2a1_aergusi_chat_progress_green")
+	elseif leftTimes == 2 then
+		UISpriteSetMgr.instance:setV2a1AergusiSprite(self._imageprogress, "v2a1_aergusi_chat_progress_yellow")
+		gohelper.setActive(self._goprogress, true)
 		AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_error)
-		arg_5_0._progressAni:Play("toyellow")
-	elseif var_5_0 == 1 then
-		UISpriteSetMgr.instance:setV2a1AergusiSprite(arg_5_0._imageprogress, "v2a1_aergusi_chat_progress_red")
-		gohelper.setActive(arg_5_0._goprogress, true)
+		self._progressAni:Play("toyellow")
+	elseif leftTimes == 1 then
+		UISpriteSetMgr.instance:setV2a1AergusiSprite(self._imageprogress, "v2a1_aergusi_chat_progress_red")
+		gohelper.setActive(self._goprogress, true)
 		AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_error)
-		arg_5_0._progressAni:Play("tored")
+		self._progressAni:Play("tored")
 	else
-		gohelper.setActive(arg_5_0._goprogress, true)
+		gohelper.setActive(self._goprogress, true)
 		AudioMgr.instance:trigger(AudioEnum.Activity163.play_ui_wangshi_argus_level_error)
-		arg_5_0._progressAni:Play("toempty")
+		self._progressAni:Play("toempty")
 	end
 end
 
-function var_0_0.showBubble(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_0._gobubble, true)
+function AergusiDialogRoleLeftItem:showBubble(bubbleCo)
+	gohelper.setActive(self._gobubble, true)
 
-	if arg_6_1.bubbleType == AergusiEnum.DialogBubbleType.Speaker then
-		gohelper.setActive(arg_6_0._gospeakbubble, true)
-		gohelper.setActive(arg_6_0._gothinkbubble, false)
-		arg_6_0:setTextWithMarktopByIndex(arg_6_0._txtspeakbubbledescMarkTopIndex, arg_6_1.content)
+	if bubbleCo.bubbleType == AergusiEnum.DialogBubbleType.Speaker then
+		gohelper.setActive(self._gospeakbubble, true)
+		gohelper.setActive(self._gothinkbubble, false)
+		self:setTextWithMarktopByIndex(self._txtspeakbubbledescMarkTopIndex, bubbleCo.content)
 	else
-		gohelper.setActive(arg_6_0._gothinkbubble, true)
-		gohelper.setActive(arg_6_0._gospeakbubble, false)
-		arg_6_0:setTextWithMarktopByIndex(arg_6_0._txtthinkbubbledescMarkTopIndex, arg_6_1.content)
+		gohelper.setActive(self._gothinkbubble, true)
+		gohelper.setActive(self._gospeakbubble, false)
+		self:setTextWithMarktopByIndex(self._txtthinkbubbledescMarkTopIndex, bubbleCo.content)
 	end
 end
 
-function var_0_0.hideBubble(arg_7_0)
-	gohelper.setActive(arg_7_0._gobubble, false)
+function AergusiDialogRoleLeftItem:hideBubble()
+	gohelper.setActive(self._gobubble, false)
 end
 
-function var_0_0._addEvents(arg_8_0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnStartErrorBubbleDialog, arg_8_0._onStartErrorBubbleDialog, arg_8_0)
+function AergusiDialogRoleLeftItem:_addEvents()
+	AergusiController.instance:registerCallback(AergusiEvent.OnStartErrorBubbleDialog, self._onStartErrorBubbleDialog, self)
 end
 
-function var_0_0._removeEvents(arg_9_0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnStartErrorBubbleDialog, arg_9_0._onStartErrorBubbleDialog, arg_9_0)
+function AergusiDialogRoleLeftItem:_removeEvents()
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnStartErrorBubbleDialog, self._onStartErrorBubbleDialog, self)
 end
 
-function var_0_0._onStartErrorBubbleDialog(arg_10_0, arg_10_1)
-	arg_10_0:showPatience()
+function AergusiDialogRoleLeftItem:_onStartErrorBubbleDialog(bubbleId)
+	self:showPatience()
 end
 
-function var_0_0.destroy(arg_11_0)
-	arg_11_0._simagechess:UnLoadImage()
-	arg_11_0:_removeEvents()
-	TaskDispatcher.cancelTask(arg_11_0.hideTalking, arg_11_0)
-	var_0_0.super.destroy(arg_11_0)
+function AergusiDialogRoleLeftItem:destroy()
+	self._simagechess:UnLoadImage()
+	self:_removeEvents()
+	TaskDispatcher.cancelTask(self.hideTalking, self)
+	AergusiDialogRoleLeftItem.super.destroy(self)
 end
 
-return var_0_0
+return AergusiDialogRoleLeftItem

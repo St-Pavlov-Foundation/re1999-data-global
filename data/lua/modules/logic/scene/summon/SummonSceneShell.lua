@@ -1,116 +1,118 @@
-﻿module("modules.logic.scene.summon.SummonSceneShell", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/SummonSceneShell.lua
 
-local var_0_0 = class("SummonSceneShell")
-local var_0_1 = {
+module("modules.logic.scene.summon.SummonSceneShell", package.seeall)
+
+local SummonSceneShell = class("SummonSceneShell")
+local SummonSceneStep = {
 	Prepared = 3,
 	Close = 1,
 	Start = 2
 }
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._curSceneId = arg_1_1
-	arg_1_0._curLevelId = arg_1_2
-	arg_1_0._curStep = var_0_1.Close
-	arg_1_0._allComps = {}
+function SummonSceneShell:init(sceneId, levelId)
+	self._curSceneId = sceneId
+	self._curLevelId = levelId
+	self._curStep = SummonSceneStep.Close
+	self._allComps = {}
 
-	arg_1_0:registClz()
+	self:registClz()
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._allComps) do
-		if iter_1_1.onInit then
-			iter_1_1:onInit()
+	for _, comp in ipairs(self._allComps) do
+		if comp.onInit then
+			comp:onInit()
 		end
 	end
 end
 
-function var_0_0.registClz(arg_2_0)
-	arg_2_0:_addComp("director", SummonSceneDirector)
-	arg_2_0:_addComp("view", SummonSceneViewComp)
-	arg_2_0:_addComp("bgm", SummonSceneBgmComp)
-	arg_2_0:_addComp("cameraAnim", SummonSceneCameraComp)
-	arg_2_0:_addComp("preloader", SummonScenePreloader)
-	arg_2_0:_addComp("selector", SummonSceneSelector)
+function SummonSceneShell:registClz()
+	self:_addComp("director", SummonSceneDirector)
+	self:_addComp("view", SummonSceneViewComp)
+	self:_addComp("bgm", SummonSceneBgmComp)
+	self:_addComp("cameraAnim", SummonSceneCameraComp)
+	self:_addComp("preloader", SummonScenePreloader)
+	self:_addComp("selector", SummonSceneSelector)
 end
 
-function var_0_0._addComp(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_2.New(arg_3_0)
+function SummonSceneShell:_addComp(compName, compDefine)
+	local compObj = compDefine.New(self)
 
-	arg_3_0[arg_3_1] = var_3_0
+	self[compName] = compObj
 
-	table.insert(arg_3_0._allComps, var_3_0)
+	table.insert(self._allComps, compObj)
 end
 
-function var_0_0.onStart(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._curStep ~= var_0_1.Close then
+function SummonSceneShell:onStart(sceneId, levelId)
+	if self._curStep ~= SummonSceneStep.Close then
 		return
 	end
 
-	arg_4_0._curStep = var_0_1.Start
+	self._curStep = SummonSceneStep.Start
 
 	logNormal("summmon start")
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._allComps) do
-		if iter_4_1.onSceneStart and not iter_4_1.isOnStarted then
-			iter_4_1:onSceneStart(arg_4_1, arg_4_2)
+	for _, comp in ipairs(self._allComps) do
+		if comp.onSceneStart and not comp.isOnStarted then
+			comp:onSceneStart(sceneId, levelId)
 		end
 	end
 end
 
-function var_0_0.onPrepared(arg_5_0)
-	if arg_5_0._curStep ~= var_0_1.Start then
+function SummonSceneShell:onPrepared()
+	if self._curStep ~= SummonSceneStep.Start then
 		return
 	end
 
-	arg_5_0._curStep = var_0_1.Prepared
+	self._curStep = SummonSceneStep.Prepared
 
 	logNormal("summmon onPrepared")
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0._allComps) do
-		if iter_5_1.onScenePrepared then
-			iter_5_1:onScenePrepared(arg_5_0._curSceneId, arg_5_0._curLevelId)
+	for _, comp in ipairs(self._allComps) do
+		if comp.onScenePrepared then
+			comp:onScenePrepared(self._curSceneId, self._curLevelId)
 		end
 	end
 
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonScenePrepared)
 end
 
-function var_0_0.onClose(arg_6_0)
-	if arg_6_0._curStep == var_0_1.Close then
+function SummonSceneShell:onClose()
+	if self._curStep == SummonSceneStep.Close then
 		return
 	end
 
-	arg_6_0._curStep = var_0_1.Close
+	self._curStep = SummonSceneStep.Close
 
 	logNormal("summmon close")
 
-	arg_6_0._isClosing = true
+	self._isClosing = true
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._allComps) do
-		if iter_6_1.onSceneClose then
-			iter_6_1:onSceneClose()
+	for _, comp in ipairs(self._allComps) do
+		if comp.onSceneClose then
+			comp:onSceneClose()
 		end
 	end
 
-	arg_6_0._isClosing = false
+	self._isClosing = false
 end
 
-function var_0_0.onHide(arg_7_0)
-	if arg_7_0._curStep == var_0_1.Close then
+function SummonSceneShell:onHide()
+	if self._curStep == SummonSceneStep.Close then
 		return
 	end
 
-	arg_7_0._curStep = var_0_1.Close
+	self._curStep = SummonSceneStep.Close
 
 	logNormal("summmon hide")
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._allComps) do
-		if iter_7_1.onSceneHide then
-			iter_7_1:onSceneHide()
+	for _, comp in ipairs(self._allComps) do
+		if comp.onSceneHide then
+			comp:onSceneHide()
 		end
 	end
 end
 
-function var_0_0.getSceneContainerGO(arg_8_0)
+function SummonSceneShell:getSceneContainerGO()
 	return VirtualSummonScene.instance:getRootGO()
 end
 
-return var_0_0
+return SummonSceneShell

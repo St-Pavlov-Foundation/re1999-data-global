@@ -1,57 +1,59 @@
-﻿module("modules.logic.tower.model.TowerPermanentMo", package.seeall)
+﻿-- chunkname: @modules/logic/tower/model/TowerPermanentMo.lua
 
-local var_0_0 = pureTable("TowerPermanentMo")
+module("modules.logic.tower.model.TowerPermanentMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.ItemType = 1
-	arg_1_0.stage = arg_1_1
-	arg_1_0.configList = arg_1_2
+local TowerPermanentMo = pureTable("TowerPermanentMo")
+
+function TowerPermanentMo:init(stage, configList)
+	self.ItemType = 1
+	self.stage = stage
+	self.configList = configList
 end
 
-function var_0_0.reInit(arg_2_0)
+function TowerPermanentMo:reInit()
 	return
 end
 
-function var_0_0.getIsUnFold(arg_3_0)
-	return arg_3_0.isUnFold
+function TowerPermanentMo:getIsUnFold()
+	return self.isUnFold
 end
 
-function var_0_0.setIsUnFold(arg_4_0, arg_4_1)
-	arg_4_0.isUnFold = arg_4_1
+function TowerPermanentMo:setIsUnFold(isUnFold)
+	self.isUnFold = isUnFold
 end
 
-function var_0_0.getAltitudeHeight(arg_5_0, arg_5_1)
-	local var_5_0 = tabletool.len(arg_5_0.configList)
+function TowerPermanentMo:getAltitudeHeight(isUnFold)
+	local itemCount = tabletool.len(self.configList)
 
-	if arg_5_1 then
-		return var_5_0 * TowerEnum.PermanentUI.SingleItemH + (var_5_0 - 1) * TowerEnum.PermanentUI.ItemSpaceH
+	if isUnFold then
+		return itemCount * TowerEnum.PermanentUI.SingleItemH + (itemCount - 1) * TowerEnum.PermanentUI.ItemSpaceH
 	end
 
 	return 0
 end
 
-function var_0_0.getStageHeight(arg_6_0, arg_6_1)
-	if arg_6_0.curUnFoldingH then
-		return TowerEnum.PermanentUI.StageTitleH + arg_6_0.curUnFoldingH
+function TowerPermanentMo:getStageHeight(isUnFold)
+	if self.curUnFoldingH then
+		return TowerEnum.PermanentUI.StageTitleH + self.curUnFoldingH
 	end
 
-	if tabletool.len(arg_6_0.configList) == 0 then
+	if tabletool.len(self.configList) == 0 then
 		return TowerEnum.PermanentUI.LockTipH
 	end
 
-	return TowerEnum.PermanentUI.StageTitleH + arg_6_0:getAltitudeHeight(arg_6_1)
+	return TowerEnum.PermanentUI.StageTitleH + self:getAltitudeHeight(isUnFold)
 end
 
-function var_0_0.overrideStageHeight(arg_7_0, arg_7_1)
-	arg_7_0.curUnFoldingH = arg_7_1
+function TowerPermanentMo:overrideStageHeight(value)
+	self.curUnFoldingH = value
 end
 
-function var_0_0.cleanCurUnFoldingH(arg_8_0)
-	arg_8_0.curUnFoldingH = nil
+function TowerPermanentMo:cleanCurUnFoldingH()
+	self.curUnFoldingH = nil
 end
 
-function var_0_0.checkIsOnline(arg_9_0)
-	return TowerPermanentModel.instance:checkStageIsOnline(arg_9_0.stage)
+function TowerPermanentMo:checkIsOnline()
+	return TowerPermanentModel.instance:checkStageIsOnline(self.stage)
 end
 
-return var_0_0
+return TowerPermanentMo

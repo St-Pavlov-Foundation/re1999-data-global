@@ -1,22 +1,24 @@
-﻿module("modules.logic.ressplit.work.ResSplitRoleStoryWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/ResSplitRoleStoryWork.lua
 
-local var_0_0 = class("ResSplitRoleStoryWork", BaseWork)
+module("modules.logic.ressplit.work.ResSplitRoleStoryWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = ResSplitConfig.instance:getAppIncludeConfig()
-	local var_1_1 = {}
+local ResSplitRoleStoryWork = class("ResSplitRoleStoryWork", BaseWork)
 
-	for iter_1_0, iter_1_1 in pairs(var_1_0) do
-		if iter_1_1.heroStoryIds then
-			for iter_1_2, iter_1_3 in pairs(iter_1_1.heroStoryIds) do
-				local var_1_2 = RoleStoryConfig.instance:getStoryById(iter_1_3)
+function ResSplitRoleStoryWork:onStart(context)
+	local dic = ResSplitConfig.instance:getAppIncludeConfig()
+	local heroStoryIds = {}
 
-				ResSplitModel.instance:addIncludeChapter(var_1_2.chapterId)
+	for i, v in pairs(dic) do
+		if v.heroStoryIds then
+			for n, storyId in pairs(v.heroStoryIds) do
+				local config = RoleStoryConfig.instance:getStoryById(storyId)
+
+				ResSplitModel.instance:addIncludeChapter(config.chapterId)
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return ResSplitRoleStoryWork

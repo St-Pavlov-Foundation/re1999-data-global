@@ -1,410 +1,412 @@
-﻿module("modules.logic.commandstation.view.CommandStationMapItem", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationMapItem.lua
 
-local var_0_0 = class("CommandStationMapItem", ListScrollCellExtend)
+module("modules.logic.commandstation.view.CommandStationMapItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goTime = gohelper.findChild(arg_1_0.viewGO, "#go_Time")
-	arg_1_0._goHighLight4 = gohelper.findChild(arg_1_0.viewGO, "#go_Time/#go_HighLight4")
-	arg_1_0._goImportant = gohelper.findChild(arg_1_0.viewGO, "#go_Time/#go_Important")
-	arg_1_0._txtEvent = gohelper.findChildText(arg_1_0.viewGO, "#go_Time/#txt_Event")
-	arg_1_0._goExpand4 = gohelper.findChild(arg_1_0.viewGO, "#go_Time/#go_Expand4")
-	arg_1_0._btnclicktime = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Time/#btn_click_time")
-	arg_1_0._goDispatch = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch")
-	arg_1_0._goHighLight3 = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_HighLight3")
-	arg_1_0._going = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_ing")
-	arg_1_0._goExpand3 = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Expand3")
-	arg_1_0._goFinish = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Finish")
-	arg_1_0._goRedPoint = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Finish/#go_RedPoint")
-	arg_1_0._goGet = gohelper.findChild(arg_1_0.viewGO, "#go_Dispatch/#go_Get")
-	arg_1_0._btnclickdispatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Dispatch/#btn_click_dispatch")
-	arg_1_0._goOutside = gohelper.findChild(arg_1_0.viewGO, "#go_Outside")
-	arg_1_0._goHighLight1 = gohelper.findChild(arg_1_0.viewGO, "#go_Outside/#go_HighLight1")
-	arg_1_0._goIcon1 = gohelper.findChild(arg_1_0.viewGO, "#go_Outside/#go_Icon1")
-	arg_1_0._goIcon2 = gohelper.findChild(arg_1_0.viewGO, "#go_Outside/#go_Icon2")
-	arg_1_0._goExpand1 = gohelper.findChild(arg_1_0.viewGO, "#go_Outside/#go_Expand1")
-	arg_1_0._btnclickoutside = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Outside/#btn_click_outside")
-	arg_1_0._goCharacter = gohelper.findChild(arg_1_0.viewGO, "#go_Character")
-	arg_1_0._goHighLight2 = gohelper.findChild(arg_1_0.viewGO, "#go_Character/#go_HighLight2")
-	arg_1_0._goExpand2 = gohelper.findChild(arg_1_0.viewGO, "#go_Character/#go_Expand2")
-	arg_1_0._btnclickcharacter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Character/#btn_click_character")
+local CommandStationMapItem = class("CommandStationMapItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationMapItem:onInitView()
+	self._goTime = gohelper.findChild(self.viewGO, "#go_Time")
+	self._goHighLight4 = gohelper.findChild(self.viewGO, "#go_Time/#go_HighLight4")
+	self._goImportant = gohelper.findChild(self.viewGO, "#go_Time/#go_Important")
+	self._txtEvent = gohelper.findChildText(self.viewGO, "#go_Time/#txt_Event")
+	self._goExpand4 = gohelper.findChild(self.viewGO, "#go_Time/#go_Expand4")
+	self._btnclicktime = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Time/#btn_click_time")
+	self._goDispatch = gohelper.findChild(self.viewGO, "#go_Dispatch")
+	self._goHighLight3 = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_HighLight3")
+	self._going = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_ing")
+	self._goExpand3 = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Expand3")
+	self._goFinish = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Finish")
+	self._goRedPoint = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Finish/#go_RedPoint")
+	self._goGet = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Get")
+	self._btnclickdispatch = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Dispatch/#btn_click_dispatch")
+	self._goOutside = gohelper.findChild(self.viewGO, "#go_Outside")
+	self._goHighLight1 = gohelper.findChild(self.viewGO, "#go_Outside/#go_HighLight1")
+	self._goIcon1 = gohelper.findChild(self.viewGO, "#go_Outside/#go_Icon1")
+	self._goIcon2 = gohelper.findChild(self.viewGO, "#go_Outside/#go_Icon2")
+	self._goExpand1 = gohelper.findChild(self.viewGO, "#go_Outside/#go_Expand1")
+	self._btnclickoutside = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Outside/#btn_click_outside")
+	self._goCharacter = gohelper.findChild(self.viewGO, "#go_Character")
+	self._goHighLight2 = gohelper.findChild(self.viewGO, "#go_Character/#go_HighLight2")
+	self._goExpand2 = gohelper.findChild(self.viewGO, "#go_Character/#go_Expand2")
+	self._btnclickcharacter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Character/#btn_click_character")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclicktime:AddClickListener(arg_2_0._btnclicktimeOnClick, arg_2_0)
-	arg_2_0._btnclickdispatch:AddClickListener(arg_2_0._btnclickdispatchOnClick, arg_2_0)
-	arg_2_0._btnclickoutside:AddClickListener(arg_2_0._btnclickoutsideOnClick, arg_2_0)
-	arg_2_0._btnclickcharacter:AddClickListener(arg_2_0._btnclickcharacterOnClick, arg_2_0)
+function CommandStationMapItem:addEvents()
+	self._btnclicktime:AddClickListener(self._btnclicktimeOnClick, self)
+	self._btnclickdispatch:AddClickListener(self._btnclickdispatchOnClick, self)
+	self._btnclickoutside:AddClickListener(self._btnclickoutsideOnClick, self)
+	self._btnclickcharacter:AddClickListener(self._btnclickcharacterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclicktime:RemoveClickListener()
-	arg_3_0._btnclickdispatch:RemoveClickListener()
-	arg_3_0._btnclickoutside:RemoveClickListener()
-	arg_3_0._btnclickcharacter:RemoveClickListener()
+function CommandStationMapItem:removeEvents()
+	self._btnclicktime:RemoveClickListener()
+	self._btnclickdispatch:RemoveClickListener()
+	self._btnclickoutside:RemoveClickListener()
+	self._btnclickcharacter:RemoveClickListener()
 end
 
-function var_0_0._btnclicktimeOnClick(arg_4_0)
-	arg_4_0:_btnclickOnClick()
+function CommandStationMapItem:_btnclicktimeOnClick()
+	self:_btnclickOnClick()
 end
 
-function var_0_0._btnclickdispatchOnClick(arg_5_0)
-	arg_5_0:_btnclickOnClick()
+function CommandStationMapItem:_btnclickdispatchOnClick()
+	self:_btnclickOnClick()
 end
 
-function var_0_0._btnclickoutsideOnClick(arg_6_0)
-	arg_6_0:_btnclickOnClick()
+function CommandStationMapItem:_btnclickoutsideOnClick()
+	self:_btnclickOnClick()
 end
 
-function var_0_0._btnclickcharacterOnClick(arg_7_0)
-	arg_7_0:_btnclickOnClick()
+function CommandStationMapItem:_btnclickcharacterOnClick()
+	self:_btnclickOnClick()
 end
 
-function var_0_0._btnclickOnClick(arg_8_0)
-	if not arg_8_0._eventConfig or arg_8_0._isClose then
+function CommandStationMapItem:_btnclickOnClick()
+	if not self._eventConfig or self._isClose then
 		return
 	end
 
-	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, arg_8_0._eventId)
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, self._eventId)
 
-	local var_8_0 = CommandStationMapModel.instance:getTimeId()
-	local var_8_1 = {
-		eventId = arg_8_0._eventId,
-		timeId = var_8_0
+	local timeId = CommandStationMapModel.instance:getTimeId()
+	local param = {
+		eventId = self._eventId,
+		timeId = timeId
 	}
 
-	if arg_8_0._category == CommandStationEnum.EventCategory.Normal then
-		if arg_8_0._eventTypeIsTime or arg_8_0._eventTypeIsNormal then
-			CommandStationController.instance:openCommandStationTimelineEventView(var_8_1)
-		elseif arg_8_0._eventTypeIsDialogue then
-			CommandStationController.instance:openCommandStationDialogueEventView(var_8_1)
-		elseif arg_8_0._eventTypeIsDispatch then
-			CommandStationController.instance:openCommandStationDispatchEventMainView(var_8_1)
+	if self._category == CommandStationEnum.EventCategory.Normal then
+		if self._eventTypeIsTime or self._eventTypeIsNormal then
+			CommandStationController.instance:openCommandStationTimelineEventView(param)
+		elseif self._eventTypeIsDialogue then
+			CommandStationController.instance:openCommandStationDialogueEventView(param)
+		elseif self._eventTypeIsDispatch then
+			CommandStationController.instance:openCommandStationDispatchEventMainView(param)
 		end
-	elseif arg_8_0._characterCategory then
-		CommandStationController.instance:openCommandStationCharacterEventView(var_8_1)
+	elseif self._characterCategory then
+		CommandStationController.instance:openCommandStationCharacterEventView(param)
 	end
 
-	arg_8_0:FocusEvent()
-	CommandStationController.StatCommandStationButtonClick("CommandStationMapItem", string.format("btnclickOnClick_%s_%s", var_8_0, arg_8_0._eventId))
+	self:FocusEvent()
+	CommandStationController.StatCommandStationButtonClick("CommandStationMapItem", string.format("btnclickOnClick_%s_%s", timeId, self._eventId))
 end
 
-function var_0_0.FirstFocusEvent(arg_9_0)
-	local var_9_0 = true
+function CommandStationMapItem:FirstFocusEvent()
+	local inBoundary = true
 
 	if ViewMgr.instance:isOpen(ViewName.CommandStationCharacterEventView) then
-		var_9_0 = false
+		inBoundary = false
 	end
 
-	if not gohelper.isNil(arg_9_0._sceneNodeGo) then
-		CommandStationController.instance:dispatchEvent(CommandStationEvent.SceneFocusPos, arg_9_0:_getLocalPos(), var_9_0)
-	end
-end
-
-function var_0_0.FocusEvent(arg_10_0)
-	if not gohelper.isNil(arg_10_0._sceneNodeGo) then
-		CommandStationController.instance:dispatchEvent(CommandStationEvent.SceneFocusPos, arg_10_0:_getLocalPos())
+	if not gohelper.isNil(self._sceneNodeGo) then
+		CommandStationController.instance:dispatchEvent(CommandStationEvent.SceneFocusPos, self:_getLocalPos(), inBoundary)
 	end
 end
 
-function var_0_0._getLocalPos(arg_11_0)
-	local var_11_0 = arg_11_0._sceneNodeGo.transform.localPosition
-
-	if arg_11_0._eventTypeIsDispatch or arg_11_0._characterCategory then
-		var_11_0.x = var_11_0.x + 1
+function CommandStationMapItem:FocusEvent()
+	if not gohelper.isNil(self._sceneNodeGo) then
+		CommandStationController.instance:dispatchEvent(CommandStationEvent.SceneFocusPos, self:_getLocalPos())
 	end
-
-	return var_11_0
 end
 
-function var_0_0.playCloseAnim(arg_12_0)
-	if arg_12_0._isClose then
+function CommandStationMapItem:_getLocalPos()
+	local pos = self._sceneNodeGo.transform.localPosition
+
+	if self._eventTypeIsDispatch or self._characterCategory then
+		pos.x = pos.x + 1
+	end
+
+	return pos
+end
+
+function CommandStationMapItem:playCloseAnim()
+	if self._isClose then
 		return
 	end
 
-	arg_12_0._isClose = true
+	self._isClose = true
 
-	TaskDispatcher.runDelay(arg_12_0._ensureClose, arg_12_0, 0.2)
-	arg_12_0._animatorPlayer:Play("close", arg_12_0._closeAnimDone, arg_12_0)
+	TaskDispatcher.runDelay(self._ensureClose, self, 0.2)
+	self._animatorPlayer:Play("close", self._closeAnimDone, self)
 end
 
-function var_0_0._ensureClose(arg_13_0)
-	arg_13_0:_closeAnimDone()
+function CommandStationMapItem:_ensureClose()
+	self:_closeAnimDone()
 end
 
-function var_0_0._closeAnimDone(arg_14_0)
-	gohelper.destroy(arg_14_0.viewGO)
+function CommandStationMapItem:_closeAnimDone()
+	gohelper.destroy(self.viewGO)
 end
 
-function var_0_0._commonAnimDone(arg_15_0)
+function CommandStationMapItem:_commonAnimDone()
 	return
 end
 
-function var_0_0._editableInitView(arg_16_0)
-	arg_16_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_16_0.viewGO)
-	arg_16_0._animator = arg_16_0.viewGO:GetComponent("Animator")
+function CommandStationMapItem:_editableInitView()
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._animator = self.viewGO:GetComponent("Animator")
 
-	gohelper.setActive(arg_16_0._goTime, false)
-	gohelper.setActive(arg_16_0._goOutside, false)
-	gohelper.setActive(arg_16_0._goDispatch, false)
-	gohelper.setActive(arg_16_0._goCharacter, false)
+	gohelper.setActive(self._goTime, false)
+	gohelper.setActive(self._goOutside, false)
+	gohelper.setActive(self._goDispatch, false)
+	gohelper.setActive(self._goCharacter, false)
 
-	for iter_16_0 = 1, 4 do
-		gohelper.setActive(arg_16_0["_goHighLight" .. iter_16_0], false)
-		gohelper.setActive(arg_16_0["_goExpand" .. iter_16_0], false)
+	for i = 1, 4 do
+		gohelper.setActive(self["_goHighLight" .. i], false)
+		gohelper.setActive(self["_goExpand" .. i], false)
 	end
 
-	arg_16_0._statusInfo = {
+	self._statusInfo = {
 		[CommandStationEnum.EventType.Main] = 4,
 		[CommandStationEnum.EventType.Dispatch] = 3,
 		[CommandStationEnum.EventType.Normal] = 1,
 		[CommandStationEnum.EventType.Dialogue] = 1
 	}
-	arg_16_0._characterStatus = 2
+	self._characterStatus = 2
 
-	arg_16_0:addEventCb(CommandStationController.instance, CommandStationEvent.SelectedEvent, arg_16_0._onSelectedEvent, arg_16_0)
-	arg_16_0:addEventCb(CommandStationController.instance, CommandStationEvent.CancelSelectedEvent, arg_16_0._onCancelSelectedEvent, arg_16_0)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.SelectedEvent, self._onSelectedEvent, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.CancelSelectedEvent, self._onCancelSelectedEvent, self)
 end
 
-function var_0_0._onCancelSelectedEvent(arg_17_0)
-	if arg_17_0._selectedSameType == false then
-		arg_17_0:_updateSelectedTypeState(true)
+function CommandStationMapItem:_onCancelSelectedEvent()
+	if self._selectedSameType == false then
+		self:_updateSelectedTypeState(true)
 	end
 
-	if arg_17_0._isSelected then
-		arg_17_0:FirstFocusEvent()
+	if self._isSelected then
+		self:FirstFocusEvent()
 	end
 
-	arg_17_0:_setSelected(false)
+	self:_setSelected(false)
 end
 
-function var_0_0._onSelectedEvent(arg_18_0, arg_18_1)
-	local var_18_0
+function CommandStationMapItem:_onSelectedEvent(eventId)
+	local config
 
-	if arg_18_0._category == CommandStationEnum.EventCategory.Normal then
-		var_18_0 = lua_copost_event.configDict[arg_18_1]
-	elseif arg_18_0._category == CommandStationEnum.EventCategory.Character then
-		var_18_0 = lua_copost_character_event.configDict[arg_18_1]
+	if self._category == CommandStationEnum.EventCategory.Normal then
+		config = lua_copost_event.configDict[eventId]
+	elseif self._category == CommandStationEnum.EventCategory.Character then
+		config = lua_copost_character_event.configDict[eventId]
 	end
 
-	arg_18_0._selectedSameType = var_18_0 and var_18_0.eventType == arg_18_0._eventConfig.eventType
+	self._selectedSameType = config and config.eventType == self._eventConfig.eventType
 
-	if not arg_18_0._selectedSameType then
-		arg_18_0:_updateSelectedTypeState(false)
+	if not self._selectedSameType then
+		self:_updateSelectedTypeState(false)
 	end
 
-	arg_18_0:_setSelected(arg_18_1 == arg_18_0._eventId)
+	self:_setSelected(eventId == self._eventId)
 end
 
-function var_0_0._updateSelectedTypeState(arg_19_0, arg_19_1)
-	if arg_19_0._isClose then
+function CommandStationMapItem:_updateSelectedTypeState(show)
+	if self._isClose then
 		return
 	end
 
-	arg_19_0._animator.enabled = true
+	self._animator.enabled = true
 
-	if arg_19_1 then
-		arg_19_0._animator:Play("open")
+	if show then
+		self._animator:Play("open")
 	else
-		arg_19_0._animator:Play("close")
+		self._animator:Play("close")
 	end
 end
 
-function var_0_0._setSelected(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0._characterCategory and arg_20_0._characterStatus or arg_20_0._statusInfo[arg_20_0._eventConfig.eventType]
+function CommandStationMapItem:_setSelected(isSelected)
+	local index = self._characterCategory and self._characterStatus or self._statusInfo[self._eventConfig.eventType]
 
-	arg_20_0:_setSelectedByIndex(var_20_0, arg_20_1)
+	self:_setSelectedByIndex(index, isSelected)
 end
 
-function var_0_0._setSelectedByIndex(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_2 and not arg_21_0._eventIsRead then
-		CommandStationRpc.instance:sendCommandPostEventReadRequest(arg_21_0._eventId)
+function CommandStationMapItem:_setSelectedByIndex(index, isSelected)
+	if isSelected and not self._eventIsRead then
+		CommandStationRpc.instance:sendCommandPostEventReadRequest(self._eventId)
 
-		arg_21_0._eventIsRead = true
+		self._eventIsRead = true
 	end
 
-	if not arg_21_0._isClose then
-		if arg_21_2 then
-			arg_21_0._animatorPlayer:Play("tobig", arg_21_0._commonAnimDone, arg_21_0)
-		elseif arg_21_0._isSelected then
-			arg_21_0._animatorPlayer:Play("backbig", arg_21_0._commonAnimDone, arg_21_0)
+	if not self._isClose then
+		if isSelected then
+			self._animatorPlayer:Play("tobig", self._commonAnimDone, self)
+		elseif self._isSelected then
+			self._animatorPlayer:Play("backbig", self._commonAnimDone, self)
 		end
 	end
 
-	gohelper.setActive(arg_21_0["_goHighLight" .. arg_21_1], not arg_21_0._eventIsRead)
-	gohelper.setActive(arg_21_0["_goExpand" .. arg_21_1], arg_21_2)
+	gohelper.setActive(self["_goHighLight" .. index], not self._eventIsRead)
+	gohelper.setActive(self["_goExpand" .. index], isSelected)
 
-	arg_21_0._isSelected = arg_21_2
+	self._isSelected = isSelected
 end
 
-function var_0_0._editableAddEvents(arg_22_0)
-	arg_22_0:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchFinish, arg_22_0._onDispatchFinish, arg_22_0)
-	arg_22_0:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchStart, arg_22_0._onDispatchStart, arg_22_0)
+function CommandStationMapItem:_editableAddEvents()
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchFinish, self._onDispatchFinish, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchStart, self._onDispatchStart, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_23_0)
+function CommandStationMapItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_24_0, arg_24_1, arg_24_2)
-	TaskDispatcher.cancelTask(arg_24_0._refreshDispatchEventView, arg_24_0)
+function CommandStationMapItem:onUpdateMO(eventId, category)
+	TaskDispatcher.cancelTask(self._refreshDispatchEventView, self)
 
-	arg_24_0._category = arg_24_2
-	arg_24_0._eventId = arg_24_1
-	arg_24_0._eventIsRead = CommandStationModel.instance:isEventRead(arg_24_0._eventId)
+	self._category = category
+	self._eventId = eventId
+	self._eventIsRead = CommandStationModel.instance:isEventRead(self._eventId)
 
-	if arg_24_0._category == CommandStationEnum.EventCategory.Normal then
-		arg_24_0._eventConfig = lua_copost_event.configDict[arg_24_0._eventId]
-	elseif arg_24_0._category == CommandStationEnum.EventCategory.Character then
-		arg_24_0._characterCategory = true
-		arg_24_0._eventConfig = lua_copost_character_event.configDict[arg_24_0._eventId]
+	if self._category == CommandStationEnum.EventCategory.Normal then
+		self._eventConfig = lua_copost_event.configDict[self._eventId]
+	elseif self._category == CommandStationEnum.EventCategory.Character then
+		self._characterCategory = true
+		self._eventConfig = lua_copost_character_event.configDict[self._eventId]
 	end
 
-	if not arg_24_0._eventConfig then
-		logError(string.format("CommandStationMapItem event config not found, eventId: %d, category: %d", arg_24_0._eventId, arg_24_0._category))
+	if not self._eventConfig then
+		logError(string.format("CommandStationMapItem event config not found, eventId: %d, category: %d", self._eventId, self._category))
 
 		return
 	end
 
-	arg_24_0:_setSelected(false)
-	arg_24_0:_setPos()
+	self:_setSelected(false)
+	self:_setPos()
 
-	if arg_24_0._characterCategory then
-		arg_24_0:_showCharacterEvent()
-
-		return
-	end
-
-	arg_24_0:_showNormalEvent()
-end
-
-function var_0_0._setPos(arg_25_0)
-	if arg_25_0._uiFollower then
-		return
-	end
-
-	arg_25_0._uiFollower = gohelper.onceAddComponent(arg_25_0.viewGO, typeof(ZProj.UIFollower))
-
-	local var_25_0 = string.format("%s_%s_%s", arg_25_0._category, arg_25_0._eventId, arg_25_0._eventConfig.eventType)
-	local var_25_1 = CommandStationMapModel.instance:getSceneNode(var_25_0)
-
-	arg_25_0.viewGO.name = var_25_0
-
-	local var_25_2 = arg_25_0._eventConfig.eventCoordinate
-	local var_25_3 = var_25_2[1] or 0
-	local var_25_4 = var_25_2[2] or 0
-
-	transformhelper.setLocalPos(var_25_1.transform, var_25_3, var_25_4, 0)
-
-	local var_25_5 = CameraMgr.instance:getMainCamera()
-	local var_25_6 = CameraMgr.instance:getUICamera()
-	local var_25_7 = ViewMgr.instance:getUIRoot().transform
-
-	arg_25_0._uiFollower:Set(var_25_5, var_25_6, var_25_7, var_25_1.transform, 0, 0, 0, 0, 0)
-	arg_25_0._uiFollower:SetEnable(true)
-	arg_25_0._uiFollower:ForceUpdate()
-
-	arg_25_0._sceneNodeGo = var_25_1
-end
-
-function var_0_0._showCharacterEvent(arg_26_0)
-	local var_26_0 = arg_26_0._eventConfig.chaId
-
-	arg_26_0._singleImage = gohelper.findChildSingleImage(arg_26_0._goCharacter, "image_Icon")
-
-	local var_26_1 = lua_copost_character.configDict[var_26_0]
-
-	if var_26_1 then
-		arg_26_0._singleImage:LoadImage(ResUrl.getHeadIconSmall(var_26_1.chaPicture))
-	end
-
-	gohelper.setActive(arg_26_0._goCharacter, true)
-end
-
-function var_0_0.isMainType(arg_27_0)
-	return arg_27_0._eventConfig.eventType == CommandStationEnum.EventType.Main
-end
-
-function var_0_0._showNormalEvent(arg_28_0)
-	arg_28_0._eventTypeIsTime = arg_28_0:isMainType()
-	arg_28_0._eventTypeIsNormal = arg_28_0._eventConfig.eventType == CommandStationEnum.EventType.Normal
-	arg_28_0._eventTypeIsDialogue = arg_28_0._eventConfig.eventType == CommandStationEnum.EventType.Dialogue
-	arg_28_0._eventTypeIsDispatch = arg_28_0._eventConfig.eventType == CommandStationEnum.EventType.Dispatch
-
-	gohelper.setActive(arg_28_0._goTime, arg_28_0._eventTypeIsTime)
-	gohelper.setActive(arg_28_0._goOutside, arg_28_0._eventTypeIsDialogue or arg_28_0._eventTypeIsNormal)
-	gohelper.setActive(arg_28_0._goDispatch, arg_28_0._eventTypeIsDispatch)
-
-	if arg_28_0._eventTypeIsDialogue or arg_28_0._eventTypeIsNormal then
-		arg_28_0:_updateDialogueEventView()
+	if self._characterCategory then
+		self:_showCharacterEvent()
 
 		return
 	end
 
-	if arg_28_0._eventTypeIsDispatch then
-		arg_28_0:_updateDispatchEventView()
+	self:_showNormalEvent()
+end
+
+function CommandStationMapItem:_setPos()
+	if self._uiFollower then
+		return
+	end
+
+	self._uiFollower = gohelper.onceAddComponent(self.viewGO, typeof(ZProj.UIFollower))
+
+	local name = string.format("%s_%s_%s", self._category, self._eventId, self._eventConfig.eventType)
+	local entity = CommandStationMapModel.instance:getSceneNode(name)
+
+	self.viewGO.name = name
+
+	local eventCoordinate = self._eventConfig.eventCoordinate
+	local posX = eventCoordinate[1] or 0
+	local posY = eventCoordinate[2] or 0
+
+	transformhelper.setLocalPos(entity.transform, posX, posY, 0)
+
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local uiCamera = CameraMgr.instance:getUICamera()
+	local plane = ViewMgr.instance:getUIRoot().transform
+
+	self._uiFollower:Set(mainCamera, uiCamera, plane, entity.transform, 0, 0, 0, 0, 0)
+	self._uiFollower:SetEnable(true)
+	self._uiFollower:ForceUpdate()
+
+	self._sceneNodeGo = entity
+end
+
+function CommandStationMapItem:_showCharacterEvent()
+	local chaId = self._eventConfig.chaId
+
+	self._singleImage = gohelper.findChildSingleImage(self._goCharacter, "image_Icon")
+
+	local chaConfig = lua_copost_character.configDict[chaId]
+
+	if chaConfig then
+		self._singleImage:LoadImage(ResUrl.getHeadIconSmall(chaConfig.chaPicture))
+	end
+
+	gohelper.setActive(self._goCharacter, true)
+end
+
+function CommandStationMapItem:isMainType()
+	return self._eventConfig.eventType == CommandStationEnum.EventType.Main
+end
+
+function CommandStationMapItem:_showNormalEvent()
+	self._eventTypeIsTime = self:isMainType()
+	self._eventTypeIsNormal = self._eventConfig.eventType == CommandStationEnum.EventType.Normal
+	self._eventTypeIsDialogue = self._eventConfig.eventType == CommandStationEnum.EventType.Dialogue
+	self._eventTypeIsDispatch = self._eventConfig.eventType == CommandStationEnum.EventType.Dispatch
+
+	gohelper.setActive(self._goTime, self._eventTypeIsTime)
+	gohelper.setActive(self._goOutside, self._eventTypeIsDialogue or self._eventTypeIsNormal)
+	gohelper.setActive(self._goDispatch, self._eventTypeIsDispatch)
+
+	if self._eventTypeIsDialogue or self._eventTypeIsNormal then
+		self:_updateDialogueEventView()
+
+		return
+	end
+
+	if self._eventTypeIsDispatch then
+		self:_updateDispatchEventView()
 
 		return
 	end
 end
 
-function var_0_0._updateDialogueEventView(arg_29_0)
-	gohelper.setActive(arg_29_0._goIcon1, arg_29_0._eventTypeIsNormal)
-	gohelper.setActive(arg_29_0._goIcon2, arg_29_0._eventTypeIsDialogue)
+function CommandStationMapItem:_updateDialogueEventView()
+	gohelper.setActive(self._goIcon1, self._eventTypeIsNormal)
+	gohelper.setActive(self._goIcon2, self._eventTypeIsDialogue)
 end
 
-function var_0_0._updateDispatchEventView(arg_30_0)
-	local var_30_0 = CommandStationModel.instance:getDispatchEventState(arg_30_0._eventId)
-	local var_30_1 = var_30_0 == CommandStationEnum.DispatchState.InProgress
-	local var_30_2 = var_30_0 == CommandStationEnum.DispatchState.Completed
-	local var_30_3 = var_30_0 == CommandStationEnum.DispatchState.GetReward
+function CommandStationMapItem:_updateDispatchEventView()
+	local state = CommandStationModel.instance:getDispatchEventState(self._eventId)
+	local isInProgress = state == CommandStationEnum.DispatchState.InProgress
+	local isCompleted = state == CommandStationEnum.DispatchState.Completed
+	local isGetReward = state == CommandStationEnum.DispatchState.GetReward
 
-	gohelper.setActive(arg_30_0._goFinish, var_30_2)
-	gohelper.setActive(arg_30_0._going, var_30_1)
-	gohelper.setActive(arg_30_0._goGet, var_30_3)
-	TaskDispatcher.cancelTask(arg_30_0._refreshDispatchEventView, arg_30_0)
+	gohelper.setActive(self._goFinish, isCompleted)
+	gohelper.setActive(self._going, isInProgress)
+	gohelper.setActive(self._goGet, isGetReward)
+	TaskDispatcher.cancelTask(self._refreshDispatchEventView, self)
 
-	if var_30_1 then
-		TaskDispatcher.runRepeat(arg_30_0._refreshDispatchEventView, arg_30_0, 1)
+	if isInProgress then
+		TaskDispatcher.runRepeat(self._refreshDispatchEventView, self, 1)
 	end
 end
 
-function var_0_0._refreshDispatchEventView(arg_31_0)
-	local var_31_0 = CommandStationModel.instance:getDispatchEventState(arg_31_0._eventId)
-	local var_31_1 = var_31_0 == CommandStationEnum.DispatchState.InProgress
-	local var_31_2 = var_31_0 == CommandStationEnum.DispatchState.Completed
+function CommandStationMapItem:_refreshDispatchEventView()
+	local state = CommandStationModel.instance:getDispatchEventState(self._eventId)
+	local isInProgress = state == CommandStationEnum.DispatchState.InProgress
+	local isCompleted = state == CommandStationEnum.DispatchState.Completed
 
-	gohelper.setActive(arg_31_0._goFinish, var_31_2)
-	gohelper.setActive(arg_31_0._going, var_31_1)
+	gohelper.setActive(self._goFinish, isCompleted)
+	gohelper.setActive(self._going, isInProgress)
 
-	if var_31_2 then
-		TaskDispatcher.cancelTask(arg_31_0._refreshDispatchEventView, arg_31_0)
+	if isCompleted then
+		TaskDispatcher.cancelTask(self._refreshDispatchEventView, self)
 	end
 end
 
-function var_0_0._onDispatchFinish(arg_32_0)
-	if arg_32_0._eventTypeIsDispatch then
-		arg_32_0:_updateDispatchEventView()
+function CommandStationMapItem:_onDispatchFinish()
+	if self._eventTypeIsDispatch then
+		self:_updateDispatchEventView()
 	end
 end
 
-function var_0_0._onDispatchStart(arg_33_0)
-	if arg_33_0._eventTypeIsDispatch then
-		arg_33_0:_updateDispatchEventView()
+function CommandStationMapItem:_onDispatchStart()
+	if self._eventTypeIsDispatch then
+		self:_updateDispatchEventView()
 	end
 end
 
-function var_0_0.onSelect(arg_34_0, arg_34_1)
+function CommandStationMapItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._ensureClose, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._refreshDispatchEventView, arg_35_0)
-	gohelper.destroy(arg_35_0._sceneNodeGo)
+function CommandStationMapItem:onDestroyView()
+	TaskDispatcher.cancelTask(self._ensureClose, self)
+	TaskDispatcher.cancelTask(self._refreshDispatchEventView, self)
+	gohelper.destroy(self._sceneNodeGo)
 end
 
-return var_0_0
+return CommandStationMapItem

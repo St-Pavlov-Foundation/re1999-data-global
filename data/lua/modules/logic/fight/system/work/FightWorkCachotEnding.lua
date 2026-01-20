@@ -1,32 +1,36 @@
-﻿module("modules.logic.fight.system.work.FightWorkCachotEnding", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCachotEnding.lua
 
-local var_0_0 = class("FightWorkCachotEnding", BaseWork)
+module("modules.logic.fight.system.work.FightWorkCachotEnding", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+local FightWorkCachotEnding = class("FightWorkCachotEnding", BaseWork)
 
-	if not var_1_0 or var_1_0.type ~= DungeonEnum.EpisodeType.Cachot then
-		arg_1_0:onDone(true)
+function FightWorkCachotEnding:onStart(context)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if not episodeCo or episodeCo.type ~= DungeonEnum.EpisodeType.Cachot then
+		self:onDone(true)
 
 		return
 	end
 
-	if V1a6_CachotModel.instance:getRogueEndingInfo() ~= nil then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseViewFinish, arg_1_0)
+	local rogueEndingInfo = V1a6_CachotModel.instance:getRogueEndingInfo()
+
+	if rogueEndingInfo ~= nil then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 		V1a6_CachotController.instance:openV1a6_CachotFinishView()
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.V1a6_CachotResultView then
-		arg_2_0:onDone(true)
+function FightWorkCachotEnding:_onCloseViewFinish(viewName)
+	if viewName == ViewName.V1a6_CachotResultView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
+function FightWorkCachotEnding:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return FightWorkCachotEnding

@@ -1,112 +1,114 @@
-﻿module("modules.logic.task.config.TaskConfigGetDefine", package.seeall)
+﻿-- chunkname: @modules/logic/task/config/TaskConfigGetDefine.lua
 
-local var_0_0 = class("TaskConfigGetDefine", BaseConfig)
+module("modules.logic.task.config.TaskConfigGetDefine", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._defineList = {
-		[TaskEnum.TaskType.Activity189] = var_0_0._getActivity189,
-		[TaskEnum.TaskType.Daily] = var_0_0._getDaily,
-		[TaskEnum.TaskType.Weekly] = var_0_0._getWeekly,
-		[TaskEnum.TaskType.Achievement] = var_0_0._getAchievement,
-		[TaskEnum.TaskType.Novice] = var_0_0._getNovice,
-		[TaskEnum.TaskType.Room] = var_0_0._getRoom,
-		[TaskEnum.TaskType.Activity106] = var_0_0._getAct106,
-		[TaskEnum.TaskType.Season] = var_0_0._getSeason,
-		[TaskEnum.TaskType.ActivityDungeon] = var_0_0._getActivityDungeon,
-		[TaskEnum.TaskType.ActivityShow] = var_0_0._getActivityShow,
-		[TaskEnum.TaskType.Activity128] = var_0_0._getActivity128,
-		[TaskEnum.TaskType.Season123] = var_0_0._getSeason123,
-		[TaskEnum.TaskType.RoleActivity] = var_0_0._getRoleActivity,
-		[TaskEnum.TaskType.Activity125] = var_0_0._getActivity125,
-		[TaskEnum.TaskType.Activity183] = var_0_0._getAct183Task,
-		[TaskEnum.TaskType.Activity189] = var_0_0._getActivity189,
-		[TaskEnum.TaskType.AssassinOutside] = var_0_0._getAssassinOutside,
-		[TaskEnum.TaskType.StoreLinkPackage] = var_0_0._getStoreLinkPackage,
-		[TaskEnum.TaskType.NecrologistStory] = var_0_0._getNecrologistStory,
-		[TaskEnum.TaskType.Activity210] = function(arg_2_0)
-			return lua_activity210_task.configDict[arg_2_0]
+local TaskConfigGetDefine = class("TaskConfigGetDefine", BaseConfig)
+
+function TaskConfigGetDefine:ctor()
+	self._defineList = {
+		[TaskEnum.TaskType.Activity189] = TaskConfigGetDefine._getActivity189,
+		[TaskEnum.TaskType.Daily] = TaskConfigGetDefine._getDaily,
+		[TaskEnum.TaskType.Weekly] = TaskConfigGetDefine._getWeekly,
+		[TaskEnum.TaskType.Achievement] = TaskConfigGetDefine._getAchievement,
+		[TaskEnum.TaskType.Novice] = TaskConfigGetDefine._getNovice,
+		[TaskEnum.TaskType.Room] = TaskConfigGetDefine._getRoom,
+		[TaskEnum.TaskType.Activity106] = TaskConfigGetDefine._getAct106,
+		[TaskEnum.TaskType.Season] = TaskConfigGetDefine._getSeason,
+		[TaskEnum.TaskType.ActivityDungeon] = TaskConfigGetDefine._getActivityDungeon,
+		[TaskEnum.TaskType.ActivityShow] = TaskConfigGetDefine._getActivityShow,
+		[TaskEnum.TaskType.Activity128] = TaskConfigGetDefine._getActivity128,
+		[TaskEnum.TaskType.Season123] = TaskConfigGetDefine._getSeason123,
+		[TaskEnum.TaskType.RoleActivity] = TaskConfigGetDefine._getRoleActivity,
+		[TaskEnum.TaskType.Activity125] = TaskConfigGetDefine._getActivity125,
+		[TaskEnum.TaskType.Activity183] = TaskConfigGetDefine._getAct183Task,
+		[TaskEnum.TaskType.Activity189] = TaskConfigGetDefine._getActivity189,
+		[TaskEnum.TaskType.AssassinOutside] = TaskConfigGetDefine._getAssassinOutside,
+		[TaskEnum.TaskType.StoreLinkPackage] = TaskConfigGetDefine._getStoreLinkPackage,
+		[TaskEnum.TaskType.NecrologistStory] = TaskConfigGetDefine._getNecrologistStory,
+		[TaskEnum.TaskType.Activity210] = function(id)
+			return lua_activity210_task.configDict[id]
 		end
 	}
 end
 
-function var_0_0._getDaily(arg_3_0)
-	return TaskConfig.instance:gettaskdailyCO(arg_3_0)
+function TaskConfigGetDefine._getDaily(id)
+	return TaskConfig.instance:gettaskdailyCO(id)
 end
 
-function var_0_0._getWeekly(arg_4_0)
-	return TaskConfig.instance:gettaskweeklyCO(arg_4_0)
+function TaskConfigGetDefine._getWeekly(id)
+	return TaskConfig.instance:gettaskweeklyCO(id)
 end
 
-function var_0_0._getAchievement(arg_5_0)
-	return TaskConfig.instance:gettaskachievementCO(arg_5_0)
+function TaskConfigGetDefine._getAchievement(id)
+	return TaskConfig.instance:gettaskachievementCO(id)
 end
 
-function var_0_0._getNovice(arg_6_0)
-	return TaskConfig.instance:gettaskNoviceConfig(arg_6_0)
+function TaskConfigGetDefine._getNovice(id)
+	return TaskConfig.instance:gettaskNoviceConfig(id)
 end
 
-function var_0_0._getRoom(arg_7_0)
-	return TaskConfig.instance:gettaskRoomCO(arg_7_0)
+function TaskConfigGetDefine._getRoom(id)
+	return TaskConfig.instance:gettaskRoomCO(id)
 end
 
-function var_0_0._getAct106(arg_8_0)
-	return Activity106Config.instance:getActivityWarmUpTaskCo(arg_8_0)
+function TaskConfigGetDefine._getAct106(id)
+	return Activity106Config.instance:getActivityWarmUpTaskCo(id)
 end
 
-function var_0_0._getSeason(arg_9_0)
-	return TaskConfig.instance:getSeasonTaskCo(arg_9_0)
+function TaskConfigGetDefine._getSeason(id)
+	return TaskConfig.instance:getSeasonTaskCo(id)
 end
 
-function var_0_0._getActivityDungeon(arg_10_0)
-	return VersionActivityConfig.instance:getAct113TaskConfig(arg_10_0)
+function TaskConfigGetDefine._getActivityDungeon(id)
+	return VersionActivityConfig.instance:getAct113TaskConfig(id)
 end
 
-function var_0_0._getActivityShow(arg_11_0)
-	return TaskConfig.instance:getTaskActivityShowConfig(arg_11_0)
+function TaskConfigGetDefine._getActivityShow(id)
+	return TaskConfig.instance:getTaskActivityShowConfig(id)
 end
 
-function var_0_0._getActivity128(arg_12_0)
-	return BossRushConfig.instance:getTaskCO(arg_12_0)
+function TaskConfigGetDefine._getActivity128(id)
+	return BossRushConfig.instance:getTaskCO(id)
 end
 
-function var_0_0._getSeason123(arg_13_0)
-	return Season123Config.instance:getSeason123TaskCo(arg_13_0)
+function TaskConfigGetDefine._getSeason123(id)
+	return Season123Config.instance:getSeason123TaskCo(id)
 end
 
-function var_0_0._getRoleActivity(arg_14_0)
-	return RoleActivityConfig.instance:getTaskCo(arg_14_0)
+function TaskConfigGetDefine._getRoleActivity(id)
+	return RoleActivityConfig.instance:getTaskCo(id)
 end
 
-function var_0_0._getAct183Task(arg_15_0)
-	return Act183Config.instance:getTaskConfig(arg_15_0)
+function TaskConfigGetDefine._getAct183Task(id)
+	return Act183Config.instance:getTaskConfig(id)
 end
 
-function var_0_0.getTaskConfigFunc(arg_16_0, arg_16_1)
-	arg_16_1 = tonumber(arg_16_1)
+function TaskConfigGetDefine:getTaskConfigFunc(type)
+	type = tonumber(type)
 
-	return arg_16_0._defineList[arg_16_1]
+	return self._defineList[type]
 end
 
-function var_0_0._getActivity125(arg_17_0)
-	return Activity125Config.instance:getTaskCO(arg_17_0)
+function TaskConfigGetDefine._getActivity125(id)
+	return Activity125Config.instance:getTaskCO(id)
 end
 
-function var_0_0._getActivity189(arg_18_0)
-	return Activity189Config.instance:getTaskCO(arg_18_0)
+function TaskConfigGetDefine._getActivity189(id)
+	return Activity189Config.instance:getTaskCO(id)
 end
 
-function var_0_0._getAssassinOutside(arg_19_0)
-	return AssassinConfig.instance:getTaskCo(arg_19_0)
+function TaskConfigGetDefine._getAssassinOutside(id)
+	return AssassinConfig.instance:getTaskCo(id)
 end
 
-function var_0_0._getStoreLinkPackage(arg_20_0)
-	return StoreConfig.instance:getChargeConditionalConfig(arg_20_0)
+function TaskConfigGetDefine._getStoreLinkPackage(id)
+	return StoreConfig.instance:getChargeConditionalConfig(id)
 end
 
-function var_0_0._getNecrologistStory(arg_21_0)
-	return NecrologistStoryConfig.instance:getTaskCo(arg_21_0)
+function TaskConfigGetDefine._getNecrologistStory(id)
+	return NecrologistStoryConfig.instance:getTaskCo(id)
 end
 
-var_0_0.instance = var_0_0.New()
+TaskConfigGetDefine.instance = TaskConfigGetDefine.New()
 
-return var_0_0
+return TaskConfigGetDefine

@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType6", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartAbandonType/FightRestartAbandonType6.lua
 
-local var_0_0 = class("FightRestartAbandonType6", FightRestartAbandonType1)
+module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType6", package.seeall)
 
-function var_0_0.episodeCostIsEnough(arg_1_0)
+local FightRestartAbandonType6 = class("FightRestartAbandonType6", FightRestartAbandonType1)
+
+function FightRestartAbandonType6:episodeCostIsEnough()
 	if DungeonModel.instance:getChapterRemainingNum(DungeonEnum.ChapterType.Equip) > 0 then
-		arg_1_0._box_type = MessageBoxIdDefine.EquipFreeRestart
+		self._box_type = MessageBoxIdDefine.EquipFreeRestart
 
 		return true
 	end
 
-	return var_0_0.super.episodeCostIsEnough(arg_1_0)
+	return FightRestartAbandonType6.super.episodeCostIsEnough(self)
 end
 
-return var_0_0
+return FightRestartAbandonType6

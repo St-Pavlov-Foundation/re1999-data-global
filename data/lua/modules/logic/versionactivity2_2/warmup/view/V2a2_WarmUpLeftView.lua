@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/warmup/view/V2a2_WarmUpLeftView.lua
 
-local var_0_0 = class("V2a2_WarmUpLeftView", BaseView)
+module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._middleGo = gohelper.findChild(arg_1_0.viewGO, "Middle")
+local V2a2_WarmUpLeftView = class("V2a2_WarmUpLeftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a2_WarmUpLeftView:onInitView()
+	self._middleGo = gohelper.findChild(self.viewGO, "Middle")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V2a2_WarmUpLeftView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V2a2_WarmUpLeftView:removeEvents()
 	return
 end
 
@@ -24,78 +26,81 @@ setNeedLoadModule("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftV
 setNeedLoadModule("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day4", "V2a2_WarmUpLeftView_Day4")
 setNeedLoadModule("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day5", "V2a2_WarmUpLeftView_Day5")
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._dayItemList = {}
+function V2a2_WarmUpLeftView:_editableInitView()
+	self._dayItemList = {}
 
-	for iter_4_0 = 1, 5 do
-		local var_4_0 = gohelper.findChild(arg_4_0._middleGo, "day" .. iter_4_0)
-		local var_4_1 = _G["V2a2_WarmUpLeftView_Day" .. iter_4_0].New({
-			parent = arg_4_0,
-			baseViewContainer = arg_4_0.viewContainer
+	for i = 1, 5 do
+		local go = gohelper.findChild(self._middleGo, "day" .. i)
+		local clsDefine = _G["V2a2_WarmUpLeftView_Day" .. i]
+		local item = clsDefine.New({
+			parent = self,
+			baseViewContainer = self.viewContainer
 		})
 
-		var_4_1:setIndex(iter_4_0)
-		var_4_1:_internal_setEpisode(iter_4_0)
-		var_4_1:init(var_4_0)
+		item:setIndex(i)
+		item:_internal_setEpisode(i)
+		item:init(go)
 
-		arg_4_0._dayItemList[iter_4_0] = var_4_1
+		self._dayItemList[i] = item
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
+function V2a2_WarmUpLeftView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_6_0)
+function V2a2_WarmUpLeftView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	GameUtil.onDestroyViewMemberList(arg_7_0, "_dayItemList")
+function V2a2_WarmUpLeftView:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_dayItemList")
 end
 
-function var_0_0.onDataUpdateFirst(arg_8_0)
-	arg_8_0._lastEpisodeId = nil
+function V2a2_WarmUpLeftView:onDataUpdateFirst()
+	self._lastEpisodeId = nil
 
 	if isDebugBuild then
-		assert(arg_8_0.viewContainer:getEpisodeCount() <= 5, "invalid config json_activity125 actId: " .. arg_8_0.viewContainer:actId())
+		assert(self.viewContainer:getEpisodeCount() <= 5, "invalid config json_activity125 actId: " .. self.viewContainer:actId())
 	end
 
-	arg_8_0:_getItem():onDataUpdateFirst()
+	self:_getItem():onDataUpdateFirst()
 end
 
-function var_0_0.onDataUpdate(arg_9_0)
-	arg_9_0:setActiveByEpisode(arg_9_0:_episodeId())
-	arg_9_0:_getItem():onDataUpdate()
+function V2a2_WarmUpLeftView:onDataUpdate()
+	self:setActiveByEpisode(self:_episodeId())
+	self:_getItem():onDataUpdate()
 end
 
-function var_0_0.onSwitchEpisode(arg_10_0)
-	arg_10_0:setActiveByEpisode(arg_10_0:_episodeId())
-	arg_10_0:_getItem():onSwitchEpisode()
+function V2a2_WarmUpLeftView:onSwitchEpisode()
+	self:setActiveByEpisode(self:_episodeId())
+	self:_getItem():onSwitchEpisode()
 end
 
-function var_0_0.setActiveByEpisode(arg_11_0, arg_11_1)
-	if arg_11_0._lastEpisodeId then
-		arg_11_0:_getItem(arg_11_0._lastEpisodeId):setActive(false)
+function V2a2_WarmUpLeftView:setActiveByEpisode(episodeId)
+	if self._lastEpisodeId then
+		local item = self:_getItem(self._lastEpisodeId)
+
+		item:setActive(false)
 	end
 
-	arg_11_0._lastEpisodeId = arg_11_1
+	self._lastEpisodeId = episodeId
 
-	arg_11_0:_getItem(arg_11_1):setActive(true)
+	self:_getItem(episodeId):setActive(true)
 end
 
-function var_0_0._episodeId(arg_12_0)
-	return arg_12_0.viewContainer:getCurSelectedEpisode()
+function V2a2_WarmUpLeftView:_episodeId()
+	return self.viewContainer:getCurSelectedEpisode()
 end
 
-function var_0_0.episode2Index(arg_13_0, arg_13_1)
-	return arg_13_0.viewContainer:episode2Index(arg_13_1 or arg_13_0:_episodeId())
+function V2a2_WarmUpLeftView:episode2Index(episodeId)
+	return self.viewContainer:episode2Index(episodeId or self:_episodeId())
 end
 
-function var_0_0._getItem(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:episode2Index(arg_14_1)
+function V2a2_WarmUpLeftView:_getItem(episodeId)
+	local index = self:episode2Index(episodeId)
 
-	return arg_14_0._dayItemList[var_14_0]
+	return self._dayItemList[index]
 end
 
-return var_0_0
+return V2a2_WarmUpLeftView

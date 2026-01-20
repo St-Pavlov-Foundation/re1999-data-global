@@ -1,74 +1,77 @@
-﻿module("modules.logic.versionactivity1_7.dungeon.view.task.VersionActivity1_7TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/dungeon/view/task/VersionActivity1_7TaskView.lua
 
-local var_0_0 = class("VersionActivity1_7TaskView", BaseView)
+module("modules.logic.versionactivity1_7.dungeon.view.task.VersionActivity1_7TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageLangTxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
+local VersionActivity1_7TaskView = class("VersionActivity1_7TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_7TaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageLangTxt = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_langtxt")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_7TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_7TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageFullBG:LoadImage("singlebg/v1a7_mainactivity_singlebg/v1a7_task_fullbg.png")
-	arg_4_0._simageLangTxt:LoadImage("singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_task_title.png")
+function VersionActivity1_7TaskView:_editableInitView()
+	self._simageFullBG:LoadImage("singlebg/v1a7_mainactivity_singlebg/v1a7_task_fullbg.png")
+	self._simageLangTxt:LoadImage("singlebg_lang/txt_v1a7_mainactivity_singlebg/v1a7_task_title.png")
 
-	arg_4_0._txtremaintime = gohelper.findChildText(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivity1_7TaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function VersionActivity1_7TaskView:onOpen()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, arg_6_0._onOpen, arg_6_0)
+	}, self._onOpen, self)
 end
 
-function var_0_0._onOpen(arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_7_0.refreshRight, arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_7_0.refreshRight, arg_7_0)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_7_0.refreshRight, arg_7_0)
+function VersionActivity1_7TaskView:_onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshRight, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshRight, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, TimeUtil.OneMinuteSecond)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 	VersionActivity1_7TaskListModel.instance:initTask()
-	arg_7_0:refreshLeft()
-	arg_7_0:refreshRight()
+	self:refreshLeft()
+	self:refreshRight()
 end
 
-function var_0_0.refreshLeft(arg_8_0)
-	arg_8_0:refreshRemainTime()
+function VersionActivity1_7TaskView:refreshLeft()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshRemainTime(arg_9_0)
-	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_7Enum.ActivityId.Dungeon]:getRealEndTimeStamp() - ServerTime.now()
+function VersionActivity1_7TaskView:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_7Enum.ActivityId.Dungeon]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	arg_9_0._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(var_9_0)
+	self._txtremaintime.text = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 end
 
-function var_0_0.refreshRight(arg_10_0)
+function VersionActivity1_7TaskView:refreshRight()
 	VersionActivity1_7TaskListModel.instance:sortTaskMoList()
 	VersionActivity1_7TaskListModel.instance:refreshList()
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.refreshRemainTime, arg_11_0)
+function VersionActivity1_7TaskView:onClose()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simageFullBG:UnLoadImage()
-	arg_12_0._simageLangTxt:UnLoadImage()
+function VersionActivity1_7TaskView:onDestroyView()
+	self._simageFullBG:UnLoadImage()
+	self._simageLangTxt:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_7TaskView

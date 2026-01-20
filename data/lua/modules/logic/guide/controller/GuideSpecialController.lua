@@ -1,15 +1,17 @@
-﻿module("modules.logic.guide.controller.GuideSpecialController", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/GuideSpecialController.lua
 
-local var_0_0 = class("GuideSpecialController", BaseController)
+module("modules.logic.guide.controller.GuideSpecialController", package.seeall)
 
-function var_0_0.onInitFinish(arg_1_0)
-	arg_1_0._guideJumpHandler = GuideJumpHandler.New()
+local GuideSpecialController = class("GuideSpecialController", BaseController)
+
+function GuideSpecialController:onInitFinish()
+	self._guideJumpHandler = GuideJumpHandler.New()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._guideJumpHandler:reInit()
+function GuideSpecialController:reInit()
+	self._guideJumpHandler:reInit()
 end
 
-var_0_0.instance = var_0_0.New()
+GuideSpecialController.instance = GuideSpecialController.New()
 
-return var_0_0
+return GuideSpecialController

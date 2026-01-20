@@ -1,84 +1,86 @@
-﻿module("modules.logic.gm.view.GM_RecommendStoreView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_RecommendStoreView.lua
 
-local var_0_0 = class("GM_RecommendStoreView", BaseView)
+module("modules.logic.gm.view.GM_RecommendStoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
-	arg_1_0._item1Toggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item1/Toggle")
-	arg_1_0._item2Toggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item2/Toggle")
-	arg_1_0._item3Toggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item3/Toggle")
+local GM_RecommendStoreView = class("GM_RecommendStoreView", BaseView)
+
+function GM_RecommendStoreView:onInitView()
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._item1Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item1/Toggle")
+	self._item2Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item2/Toggle")
+	self._item3Toggle = gohelper.findChildToggle(self.viewGO, "viewport/content/item3/Toggle")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._item1Toggle:AddOnValueChanged(arg_2_0._onItem1ToggleValueChanged, arg_2_0)
-	arg_2_0._item2Toggle:AddOnValueChanged(arg_2_0._onItem2ToggleValueChanged, arg_2_0)
-	arg_2_0._item3Toggle:AddOnValueChanged(arg_2_0._onItem3ToggleValueChanged, arg_2_0)
+function GM_RecommendStoreView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._item1Toggle:AddOnValueChanged(self._onItem1ToggleValueChanged, self)
+	self._item2Toggle:AddOnValueChanged(self._onItem2ToggleValueChanged, self)
+	self._item3Toggle:AddOnValueChanged(self._onItem3ToggleValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._item1Toggle:RemoveOnValueChanged()
-	arg_3_0._item2Toggle:RemoveOnValueChanged()
-	arg_3_0._item3Toggle:RemoveOnValueChanged()
+function GM_RecommendStoreView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._item1Toggle:RemoveOnValueChanged()
+	self._item2Toggle:RemoveOnValueChanged()
+	self._item3Toggle:RemoveOnValueChanged()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:_refreshItem1()
-	arg_4_0:_refreshItem2()
-	arg_4_0:_refreshItem3()
+function GM_RecommendStoreView:onOpen()
+	self:_refreshItem1()
+	self:_refreshItem2()
+	self:_refreshItem3()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function GM_RecommendStoreView:onDestroyView()
 	return
 end
 
-var_0_0.s_ShowAllBanner = false
+GM_RecommendStoreView.s_ShowAllBanner = false
 
-function var_0_0._refreshItem1(arg_6_0)
-	local var_6_0 = var_0_0.s_ShowAllBanner
+function GM_RecommendStoreView:_refreshItem1()
+	local isOn = GM_RecommendStoreView.s_ShowAllBanner
 
-	arg_6_0._item1Toggle.isOn = var_6_0
+	self._item1Toggle.isOn = isOn
 end
 
-function var_0_0._onItem1ToggleValueChanged(arg_7_0)
-	local var_7_0 = arg_7_0._item1Toggle.isOn
+function GM_RecommendStoreView:_onItem1ToggleValueChanged()
+	local isOn = self._item1Toggle.isOn
 
-	var_0_0.s_ShowAllBanner = var_7_0
+	GM_RecommendStoreView.s_ShowAllBanner = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.RecommendStore_ShowAllBannerUpdate, var_7_0)
+	GMController.instance:dispatchEvent(GMEvent.RecommendStore_ShowAllBannerUpdate, isOn)
 end
 
-var_0_0.s_ShowAllTabId = false
+GM_RecommendStoreView.s_ShowAllTabId = false
 
-function var_0_0._refreshItem2(arg_8_0)
-	local var_8_0 = var_0_0.s_ShowAllTabId
+function GM_RecommendStoreView:_refreshItem2()
+	local isOn = GM_RecommendStoreView.s_ShowAllTabId
 
-	arg_8_0._item2Toggle.isOn = var_8_0
+	self._item2Toggle.isOn = isOn
 end
 
-function var_0_0._onItem2ToggleValueChanged(arg_9_0)
-	local var_9_0 = arg_9_0._item2Toggle.isOn
+function GM_RecommendStoreView:_onItem2ToggleValueChanged()
+	local isOn = self._item2Toggle.isOn
 
-	var_0_0.s_ShowAllTabId = var_9_0
+	GM_RecommendStoreView.s_ShowAllTabId = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.RecommendStore_ShowAllTabIdUpdate, var_9_0)
+	GMController.instance:dispatchEvent(GMEvent.RecommendStore_ShowAllTabIdUpdate, isOn)
 end
 
-var_0_0.s_StopBannerLoopAnim = false
+GM_RecommendStoreView.s_StopBannerLoopAnim = false
 
-function var_0_0._refreshItem3(arg_10_0)
-	local var_10_0 = var_0_0.s_StopBannerLoopAnim
+function GM_RecommendStoreView:_refreshItem3()
+	local isOn = GM_RecommendStoreView.s_StopBannerLoopAnim
 
-	arg_10_0._item3Toggle.isOn = var_10_0
+	self._item3Toggle.isOn = isOn
 end
 
-function var_0_0._onItem3ToggleValueChanged(arg_11_0)
-	local var_11_0 = arg_11_0._item3Toggle.isOn
+function GM_RecommendStoreView:_onItem3ToggleValueChanged()
+	local isOn = self._item3Toggle.isOn
 
-	var_0_0.s_StopBannerLoopAnim = var_11_0
+	GM_RecommendStoreView.s_StopBannerLoopAnim = isOn
 
-	GMController.instance:dispatchEvent(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, var_11_0)
+	GMController.instance:dispatchEvent(GMEvent.RecommendStore_StopBannerLoopAnimUpdate, isOn)
 end
 
-return var_0_0
+return GM_RecommendStoreView

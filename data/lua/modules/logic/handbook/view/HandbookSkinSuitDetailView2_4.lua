@@ -1,30 +1,32 @@
-﻿module("modules.logic.handbook.view.HandbookSkinSuitDetailView2_4", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookSkinSuitDetailView2_4.lua
 
-local var_0_0 = class("HandbookSkinSuitDetailView2_4", HandbookSkinSuitDetailViewBase)
-local var_0_1 = 20014
+module("modules.logic.handbook.view.HandbookSkinSuitDetailView2_4", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	HandbookSkinSuitDetailViewBase.onInitView(arg_1_0)
+local HandbookSkinSuitDetailView2_4 = class("HandbookSkinSuitDetailView2_4", HandbookSkinSuitDetailViewBase)
+local skinSuitId = 20014
+
+function HandbookSkinSuitDetailView2_4:onInitView()
+	HandbookSkinSuitDetailViewBase.onInitView(self)
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0.viewGO)
+function HandbookSkinSuitDetailView2_4:_editableInitView()
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onOpen(arg_3_0)
-	HandbookSkinSuitDetailViewBase.onOpen(arg_3_0)
-	arg_3_0:_getPhotoRootGo(#arg_3_0._skinIdList)
-	arg_3_0:_refreshSkinItems()
-	arg_3_0:_refreshDesc()
-	arg_3_0:_refreshBg()
+function HandbookSkinSuitDetailView2_4:onOpen()
+	HandbookSkinSuitDetailViewBase.onOpen(self)
+	self:_getPhotoRootGo(#self._skinIdList)
+	self:_refreshSkinItems()
+	self:_refreshDesc()
+	self:_refreshBg()
 end
 
-function var_0_0.refreshUI(arg_4_0)
+function HandbookSkinSuitDetailView2_4:refreshUI()
 	return
 end
 
-function var_0_0.refreshBtnStatus(arg_5_0)
+function HandbookSkinSuitDetailView2_4:refreshBtnStatus()
 	return
 end
 
-return var_0_0
+return HandbookSkinSuitDetailView2_4

@@ -1,8 +1,10 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalMainViewContainer.lua
 
-local var_0_0 = class("SurvivalMainViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.SurvivalMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalMainViewContainer = class("SurvivalMainViewContainer", BaseViewContainer)
+
+function SurvivalMainViewContainer:buildViews()
 	return {
 		SurvivalMainView.New(),
 		ShelterSceneUnitView.New(),
@@ -14,29 +16,29 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function SurvivalMainViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		var_2_0:setOverrideClose(arg_2_0.defaultOverrideCloseClick, arg_2_0)
+		navView:setOverrideClose(self.defaultOverrideCloseClick, self)
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-function var_0_0.defaultOverrideCloseClick(arg_3_0)
+function SurvivalMainViewContainer:defaultOverrideCloseClick()
 	SurvivalController.instance:exitMap()
 	SurvivalStatHelper.instance:statBtnClick("OnClose", "SurvivalMainView")
 end
 
-function var_0_0.setMainViewVisible(arg_4_0, arg_4_1)
-	arg_4_0:_setVisible(arg_4_1)
+function SurvivalMainViewContainer:setMainViewVisible(isVisible)
+	self:_setVisible(isVisible)
 end
 
-return var_0_0
+return SurvivalMainViewContainer

@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @modules/configs/feilinshiduo/lua_feilinshiduo_map_103.lua
+
+return {
 	gameConfig = {
 		sceneScale = 1.5,
 		playerForward = 1

@@ -1,68 +1,69 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.base.KaRongDrawBaseObj", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/base/KaRongDrawBaseObj.lua
 
-local var_0_0 = class("KaRongDrawBaseObj", UserDataDispose)
+module("modules.logic.versionactivity3_0.karong.view.base.KaRongDrawBaseObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local KaRongDrawBaseObj = class("KaRongDrawBaseObj", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0._image = gohelper.findChildImage(arg_1_0.go, "#image_content")
+function KaRongDrawBaseObj:ctor(go)
+	self:__onInit()
+
+	self.go = go
+	self._image = gohelper.findChildImage(self.go, "#image_content")
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1)
-	arg_2_0.mo = arg_2_1
-	arg_2_0.isEnter = false
+function KaRongDrawBaseObj:onInit(mo)
+	self.mo = mo
+	self.isEnter = false
 
-	gohelper.setActive(arg_2_0.go, true)
-	arg_2_0:_setPosition()
-	arg_2_0:_setIcon()
+	gohelper.setActive(self.go, true)
+	self:_setPosition()
+	self:_setIcon()
 end
 
-function var_0_0.onEnter(arg_3_0)
-	arg_3_0.isEnter = true
+function KaRongDrawBaseObj:onEnter()
+	self.isEnter = true
 
-	arg_3_0:_setIcon()
+	self:_setIcon()
 end
 
-function var_0_0.onExit(arg_4_0)
-	arg_4_0.isEnter = false
+function KaRongDrawBaseObj:onExit()
+	self.isEnter = false
 
-	arg_4_0:_setIcon()
+	self:_setIcon()
 end
 
-function var_0_0._setPosition(arg_5_0)
-	local var_5_0
-	local var_5_1
+function KaRongDrawBaseObj:_setPosition()
+	local anchorX, anchorY
 
-	if arg_5_0.mo.positionType == KaRongDrawEnum.PositionType.Point then
-		var_5_0, var_5_1 = KaRongDrawModel.instance:getObjectAnchor(arg_5_0.mo.x, arg_5_0.mo.y)
+	if self.mo.positionType == KaRongDrawEnum.PositionType.Point then
+		anchorX, anchorY = KaRongDrawModel.instance:getObjectAnchor(self.mo.x, self.mo.y)
 	else
-		var_5_0, var_5_1 = KaRongDrawModel.instance:getLineObjectAnchor(arg_5_0.mo.x1, arg_5_0.mo.y1, arg_5_0.mo.x2, arg_5_0.mo.y2)
+		anchorX, anchorY = KaRongDrawModel.instance:getLineObjectAnchor(self.mo.x1, self.mo.y1, self.mo.x2, self.mo.y2)
 	end
 
-	recthelper.setAnchor(arg_5_0.go.transform, var_5_0, var_5_1)
+	recthelper.setAnchor(self.go.transform, anchorX, anchorY)
 end
 
-function var_0_0._setIcon(arg_6_0)
-	local var_6_0 = arg_6_0:_getIconUrl()
+function KaRongDrawBaseObj:_setIcon()
+	local iconUrl = self:_getIconUrl()
 
-	if not string.nilorempty(var_6_0) then
-		UISpriteSetMgr.instance:setV3a0KaRongSprite(arg_6_0._image, var_6_0, true)
-	end
-end
-
-function var_0_0._getIconUrl(arg_7_0)
-	if arg_7_0.mo and arg_7_0.mo.iconUrl then
-		return arg_7_0.mo.iconUrl
+	if not string.nilorempty(iconUrl) then
+		UISpriteSetMgr.instance:setV3a0KaRongSprite(self._image, iconUrl, true)
 	end
 end
 
-function var_0_0.destroy(arg_8_0)
-	gohelper.destroy(arg_8_0.go)
-
-	arg_8_0.isEnter = false
-
-	arg_8_0:__onDispose()
+function KaRongDrawBaseObj:_getIconUrl()
+	if self.mo and self.mo.iconUrl then
+		return self.mo.iconUrl
+	end
 end
 
-return var_0_0
+function KaRongDrawBaseObj:destroy()
+	gohelper.destroy(self.go)
+
+	self.isEnter = false
+
+	self:__onDispose()
+end
+
+return KaRongDrawBaseObj

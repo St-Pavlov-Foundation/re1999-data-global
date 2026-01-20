@@ -1,93 +1,95 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueStateInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/mo/RogueStateInfoMO.lua
 
-local var_0_0 = pureTable("RogueStateInfoMO")
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueStateInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1.activityId
-	arg_1_0.start = arg_1_1.start
-	arg_1_0.weekScore = arg_1_1.weekScore
-	arg_1_0.totalScore = arg_1_1.totalScore
-	arg_1_0.scoreLimit = arg_1_1.scoreLimit
-	arg_1_0.stage = arg_1_1.stage
-	arg_1_0.nextStageSecond = arg_1_1.nextStageSecond
-	arg_1_0.difficulty = arg_1_1.difficulty
-	arg_1_0.layer = arg_1_1.layer
-	arg_1_0.hasCollections = {}
+local RogueStateInfoMO = pureTable("RogueStateInfoMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.hasCollections) do
-		table.insert(arg_1_0.hasCollections, iter_1_1)
+function RogueStateInfoMO:init(info)
+	self.activityId = info.activityId
+	self.start = info.start
+	self.weekScore = info.weekScore
+	self.totalScore = info.totalScore
+	self.scoreLimit = info.scoreLimit
+	self.stage = info.stage
+	self.nextStageSecond = info.nextStageSecond
+	self.difficulty = info.difficulty
+	self.layer = info.layer
+	self.hasCollections = {}
+
+	for i, v in ipairs(info.hasCollections) do
+		table.insert(self.hasCollections, v)
 	end
 
-	arg_1_0.unlockCollections = {}
+	self.unlockCollections = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.unlockCollections) do
-		table.insert(arg_1_0.unlockCollections, iter_1_3)
+	for i, v in ipairs(info.unlockCollections) do
+		table.insert(self.unlockCollections, v)
 	end
 
-	arg_1_0.getRewards = {}
+	self.getRewards = {}
 
-	for iter_1_4, iter_1_5 in ipairs(arg_1_1.getRewards) do
-		table.insert(arg_1_0.getRewards, iter_1_5)
+	for i, v in ipairs(info.getRewards) do
+		table.insert(self.getRewards, v)
 	end
 
-	arg_1_0.passDifficulty = {}
+	self.passDifficulty = {}
 
-	for iter_1_6, iter_1_7 in ipairs(arg_1_1.passDifficulty) do
-		table.insert(arg_1_0.passDifficulty, iter_1_7)
+	for i, v in ipairs(info.passDifficulty) do
+		table.insert(self.passDifficulty, v)
 	end
 
-	arg_1_0:updateUnlockCollectionsNew(arg_1_1.unlockCollectionsNew)
+	self:updateUnlockCollectionsNew(info.unlockCollectionsNew)
 
-	arg_1_0.lastGroup = RogueGroupInfoMO.New()
+	self.lastGroup = RogueGroupInfoMO.New()
 
-	arg_1_0.lastGroup:init(arg_1_1.lastGroup)
+	self.lastGroup:init(info.lastGroup)
 
-	arg_1_0.lastBackupGroup = RogueGroupInfoMO.New()
+	self.lastBackupGroup = RogueGroupInfoMO.New()
 
-	arg_1_0.lastBackupGroup:init(arg_1_1.lastBackupGroup)
+	self.lastBackupGroup:init(info.lastBackupGroup)
 end
 
-function var_0_0.getLastGroupInfo(arg_2_0, arg_2_1)
-	local var_2_0 = {}
-	local var_2_1 = {}
+function RogueStateInfoMO:getLastGroupInfo(backupNum)
+	local heroList = {}
+	local equips = {}
 
-	arg_2_1 = arg_2_1 or 0
+	backupNum = backupNum or 0
 
-	tabletool.addValues(var_2_0, arg_2_0.lastGroup.heroList)
-	tabletool.addValues(var_2_1, arg_2_0.lastGroup.equips)
+	tabletool.addValues(heroList, self.lastGroup.heroList)
+	tabletool.addValues(equips, self.lastGroup.equips)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.lastBackupGroup.heroList) do
-		if iter_2_0 <= arg_2_1 then
-			table.insert(var_2_0, iter_2_1)
+	for i, v in ipairs(self.lastBackupGroup.heroList) do
+		if i <= backupNum then
+			table.insert(heroList, v)
 		end
 	end
 
-	for iter_2_2, iter_2_3 in ipairs(arg_2_0.lastBackupGroup.equips) do
-		if iter_2_2 <= arg_2_1 then
-			table.insert(var_2_1, iter_2_3)
+	for i, v in ipairs(self.lastBackupGroup.equips) do
+		if i <= backupNum then
+			table.insert(equips, v)
 		end
 	end
 
-	local var_2_2 = {}
+	local equipsArray = {}
 
-	for iter_2_4, iter_2_5 in ipairs(var_2_1) do
-		var_2_2[iter_2_4 - 1] = iter_2_5
-		iter_2_5.index = iter_2_4 - 1
+	for i, v in ipairs(equips) do
+		equipsArray[i - 1] = v
+		v.index = i - 1
 	end
 
-	return var_2_0, var_2_2
+	return heroList, equipsArray
 end
 
-function var_0_0.isStart(arg_3_0)
-	return arg_3_0.start
+function RogueStateInfoMO:isStart()
+	return self.start
 end
 
-function var_0_0.updateUnlockCollectionsNew(arg_4_0, arg_4_1)
-	arg_4_0.unlockCollectionsNew = {}
+function RogueStateInfoMO:updateUnlockCollectionsNew(unlockCollectionsNew)
+	self.unlockCollectionsNew = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-		arg_4_0.unlockCollectionsNew[iter_4_1] = true
+	for _, collectionId in ipairs(unlockCollectionsNew) do
+		self.unlockCollectionsNew[collectionId] = true
 	end
 end
 
-return var_0_0
+return RogueStateInfoMO

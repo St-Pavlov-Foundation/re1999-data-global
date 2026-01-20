@@ -1,35 +1,39 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.view.V3a1_GaoSiNiao_TaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/view/V3a1_GaoSiNiao_TaskViewContainer.lua
 
-local var_0_0 = class("V3a1_GaoSiNiao_TaskViewContainer", CorvusTaskViewContainer)
+module("modules.logic.versionactivity3_1.gaosiniao.view.V3a1_GaoSiNiao_TaskViewContainer", package.seeall)
 
-function var_0_0.onCreateListScrollParam(arg_1_0)
-	return (var_0_0.super.onCreateListScrollParam(arg_1_0))
+local V3a1_GaoSiNiao_TaskViewContainer = class("V3a1_GaoSiNiao_TaskViewContainer", CorvusTaskViewContainer)
+
+function V3a1_GaoSiNiao_TaskViewContainer:onCreateListScrollParam()
+	local listScrollParam = V3a1_GaoSiNiao_TaskViewContainer.super.onCreateListScrollParam(self)
+
+	return listScrollParam
 end
 
-function var_0_0.onCreateMainView(arg_2_0)
+function V3a1_GaoSiNiao_TaskViewContainer:onCreateMainView()
 	return V3a1_GaoSiNiao_TaskView.New()
 end
 
-function var_0_0.onCreateListScrollParam(arg_3_0)
-	local var_3_0 = ListScrollParam.New()
+function V3a1_GaoSiNiao_TaskViewContainer:onCreateListScrollParam()
+	local listScrollParam = ListScrollParam.New()
 
-	var_3_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_3_0.sortMode = ScrollEnum.ScrollSortDown
-	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
-	var_3_0.lineCount = 1
-	var_3_0.cellWidth = 1160
-	var_3_0.cellHeight = 165
-	var_3_0.cellSpaceV = 0
-	var_3_0.startSpace = 0
-	var_3_0.scrollGOPath = "#scroll_TaskList"
-	var_3_0.cellClass = V3a1_GaoSiNiao_TaskViewItem
-	var_3_0.rectMaskSoftness = {
+	listScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	listScrollParam.sortMode = ScrollEnum.ScrollSortDown
+	listScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	listScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	listScrollParam.lineCount = 1
+	listScrollParam.cellWidth = 1160
+	listScrollParam.cellHeight = 165
+	listScrollParam.cellSpaceV = 0
+	listScrollParam.startSpace = 0
+	listScrollParam.scrollGOPath = "#scroll_TaskList"
+	listScrollParam.cellClass = V3a1_GaoSiNiao_TaskViewItem
+	listScrollParam.rectMaskSoftness = {
 		0,
 		0
 	}
 
-	return var_3_0
+	return listScrollParam
 end
 
-return var_0_0
+return V3a1_GaoSiNiao_TaskViewContainer

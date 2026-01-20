@@ -1,50 +1,54 @@
-﻿module("modules.logic.playercard.view.comp.PlayerCardAssit", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/comp/PlayerCardAssit.lua
 
-local var_0_0 = class("PlayerCardAssit", BasePlayerCardComp)
+module("modules.logic.playercard.view.comp.PlayerCardAssit", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local PlayerCardAssit = class("PlayerCardAssit", BasePlayerCardComp)
+
+function PlayerCardAssit:onInitView()
 	return
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.SetShowHero, arg_2_0.onRefreshView, arg_2_0)
+function PlayerCardAssit:addEventListeners()
+	self:addEventCb(PlayerController.instance, PlayerEvent.SetShowHero, self.onRefreshView, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.SetShowHero, arg_3_0.onRefreshView, arg_3_0)
+function PlayerCardAssit:removeEventListeners()
+	self:removeEventCb(PlayerController.instance, PlayerEvent.SetShowHero, self.onRefreshView, self)
 end
 
-function var_0_0.onRefreshView(arg_4_0)
-	local var_4_0 = arg_4_0:getPlayerInfo()
+function PlayerCardAssit:onRefreshView()
+	local info = self:getPlayerInfo()
 
-	arg_4_0:_initPlayerShowCard(var_4_0.showHeros)
+	self:_initPlayerShowCard(info.showHeros)
 end
 
-function var_0_0._initPlayerShowCard(arg_5_0, arg_5_1)
-	for iter_5_0 = 1, 3 do
-		arg_5_0:getOrCreateItem(iter_5_0):setData(arg_5_1[iter_5_0], arg_5_0:isPlayerSelf(), arg_5_0.compType)
+function PlayerCardAssit:_initPlayerShowCard(showHeros)
+	for i = 1, 3 do
+		local item = self:getOrCreateItem(i)
+
+		item:setData(showHeros[i], self:isPlayerSelf(), self.compType)
 	end
 end
 
-function var_0_0.getOrCreateItem(arg_6_0, arg_6_1)
-	if not arg_6_0.items then
-		arg_6_0.items = {}
+function PlayerCardAssit:getOrCreateItem(index)
+	if not self.items then
+		self.items = {}
 	end
 
-	local var_6_0 = arg_6_0.items[arg_6_1]
+	local item = self.items[index]
 
-	if not var_6_0 then
-		local var_6_1 = gohelper.findChild(arg_6_0.viewGO, "layout/#go_assithero" .. arg_6_1)
+	if not item then
+		local go = gohelper.findChild(self.viewGO, "layout/#go_assithero" .. index)
 
-		var_6_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, PlayerCardAssitItem)
-		arg_6_0.items[arg_6_1] = var_6_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, PlayerCardAssitItem)
+		self.items[index] = item
 	end
 
-	return var_6_0
+	return item
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function PlayerCardAssit:onDestroy()
 	return
 end
 
-return var_0_0
+return PlayerCardAssit

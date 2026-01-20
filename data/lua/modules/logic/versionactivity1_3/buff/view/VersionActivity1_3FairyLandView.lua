@@ -1,106 +1,108 @@
-﻿module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3FairyLandView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/buff/view/VersionActivity1_3FairyLandView.lua
 
-local var_0_0 = class("VersionActivity1_3FairyLandView", BaseView)
+module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3FairyLandView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_bg")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_bg2")
-	arg_1_0._imagetitle = gohelper.findChildImage(arg_1_0.viewGO, "root/#image_title")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_confirm")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "root/#go_content")
+local VersionActivity1_3FairyLandView = class("VersionActivity1_3FairyLandView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_3FairyLandView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "root/#simage_bg")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "root/#simage_bg2")
+	self._imagetitle = gohelper.findChildImage(self.viewGO, "root/#image_title")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_confirm")
+	self._gocontent = gohelper.findChild(self.viewGO, "root/#go_content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+function VersionActivity1_3FairyLandView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
+function VersionActivity1_3FairyLandView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	if not arg_4_0._useDreamCard then
-		PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityDungeon1_3SelectedDreamCard), arg_4_0._selectedItem.config.id)
+function VersionActivity1_3FairyLandView:_btnconfirmOnClick()
+	if not self._useDreamCard then
+		PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityDungeon1_3SelectedDreamCard), self._selectedItem.config.id)
 	end
 
-	if arg_4_0._selectedItem then
-		Activity126Controller.instance:dispatchEvent(Activity126Event.selectDreamLandCard, arg_4_0._selectedItem.config)
+	if self._selectedItem then
+		Activity126Controller.instance:dispatchEvent(Activity126Event.selectDreamLandCard, self._selectedItem.config)
 	end
 
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getFairyLandIcon("v1a3_fairyland_bg"))
-	arg_5_0._simagebg2:LoadImage(ResUrl.getFairyLandIcon("v1a3_fairyland_bg2"))
+function VersionActivity1_3FairyLandView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getFairyLandIcon("v1a3_fairyland_bg"))
+	self._simagebg2:LoadImage(ResUrl.getFairyLandIcon("v1a3_fairyland_bg2"))
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_3.play_ui_molu_seek_open)
 end
 
-function var_0_0._initItems(arg_6_0)
-	arg_6_0._itemList = arg_6_0:getUserDataTb_()
+function VersionActivity1_3FairyLandView:_initItems()
+	self._itemList = self:getUserDataTb_()
 
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[1]
+	local itemPath = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_6_0, iter_6_1 in ipairs(lua_activity126_dreamland_card.configList) do
-		if arg_6_0:_hasDreamCard(iter_6_1.id) then
-			local var_6_1 = arg_6_0:getResInst(var_6_0, arg_6_0._gocontent)
-			local var_6_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, VersionActivity1_3FairyLandItem, {
-				arg_6_0,
-				iter_6_1
+	for i, v in ipairs(lua_activity126_dreamland_card.configList) do
+		if self:_hasDreamCard(v.id) then
+			local itemGo = self:getResInst(itemPath, self._gocontent)
+			local landItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, VersionActivity1_3FairyLandItem, {
+				self,
+				v
 			})
 
-			table.insert(arg_6_0._itemList, var_6_2)
+			table.insert(self._itemList, landItem)
 		end
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(arg_6_0._itemList) do
-		if iter_6_3.config == arg_6_0._cardConfig then
-			arg_6_0:landItemClick(iter_6_3)
+	for i, v in ipairs(self._itemList) do
+		if v.config == self._cardConfig then
+			self:landItemClick(v)
 
 			break
 		end
 	end
 end
 
-function var_0_0._hasDreamCard(arg_7_0, arg_7_1)
-	if arg_7_0._taskConfig and arg_7_0._useDreamCard then
-		return string.find(arg_7_0._taskConfig.dreamCards, arg_7_1)
+function VersionActivity1_3FairyLandView:_hasDreamCard(id)
+	if self._taskConfig and self._useDreamCard then
+		return string.find(self._taskConfig.dreamCards, id)
 	end
 
-	return Activity126Model.instance:hasDreamCard(arg_7_1)
+	return Activity126Model.instance:hasDreamCard(id)
 end
 
-function var_0_0.landItemClick(arg_8_0, arg_8_1)
-	arg_8_0._selectedItem = arg_8_1
+function VersionActivity1_3FairyLandView:landItemClick(item)
+	self._selectedItem = item
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._itemList) do
-		iter_8_1:setSelected(iter_8_1 == arg_8_1)
+	for i, v in ipairs(self._itemList) do
+		v:setSelected(v == item)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function VersionActivity1_3FairyLandView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0._taskConfig = arg_10_0.viewParam[1]
-	arg_10_0._cardConfig = arg_10_0.viewParam[2]
-	arg_10_0._useDreamCard = not string.nilorempty(arg_10_0._taskConfig.dreamCards)
+function VersionActivity1_3FairyLandView:onOpen()
+	self._taskConfig = self.viewParam[1]
+	self._cardConfig = self.viewParam[2]
+	self._useDreamCard = not string.nilorempty(self._taskConfig.dreamCards)
 
-	arg_10_0:_initItems()
+	self:_initItems()
 end
 
-function var_0_0.onClose(arg_11_0)
+function VersionActivity1_3FairyLandView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagebg:UnLoadImage()
-	arg_12_0._simagebg2:UnLoadImage()
+function VersionActivity1_3FairyLandView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_3FairyLandView

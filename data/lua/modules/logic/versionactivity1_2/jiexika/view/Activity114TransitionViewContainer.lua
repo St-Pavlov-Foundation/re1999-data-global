@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114TransitionViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114TransitionViewContainer.lua
 
-local var_0_0 = class("Activity114TransitionViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114TransitionViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity114TransitionViewContainer = class("Activity114TransitionViewContainer", BaseViewContainer)
+
+function Activity114TransitionViewContainer:buildViews()
 	return {
 		Activity114TransitionView.New()
 	}
 end
 
-return var_0_0
+return Activity114TransitionViewContainer

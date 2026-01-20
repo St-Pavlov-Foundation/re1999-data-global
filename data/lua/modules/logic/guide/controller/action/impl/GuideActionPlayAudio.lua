@@ -1,29 +1,31 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionPlayAudio", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionPlayAudio.lua
 
-local var_0_0 = class("GuideActionPlayAudio", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionPlayAudio", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local GuideActionPlayAudio = class("GuideActionPlayAudio", BaseGuideAction)
 
-	arg_1_0._audioId = tonumber(arg_1_3) or nil
+function GuideActionPlayAudio:ctor(guideId, stepId, actionParam)
+	GuideActionPlayAudio.super.ctor(self, guideId, stepId, actionParam)
+
+	self._audioId = tonumber(actionParam) or nil
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function GuideActionPlayAudio:onStart(context)
+	GuideActionPlayAudio.super.onStart(self, context)
 
-	if arg_2_0._audioId then
-		GuideAudioMgr.instance:playAudio(arg_2_0._audioId)
+	if self._audioId then
+		GuideAudioMgr.instance:playAudio(self._audioId)
 	else
-		logError("Guide audio id nil, guide_" .. arg_2_0.guideId .. "_" .. arg_2_0.stepId)
+		logError("Guide audio id nil, guide_" .. self.guideId .. "_" .. self.stepId)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.onDestroy(arg_3_0, arg_3_1)
-	if arg_3_0._audioId then
+function GuideActionPlayAudio:onDestroy(context)
+	if self._audioId then
 		GuideAudioMgr.instance:stopAudio()
 	end
 end
 
-return var_0_0
+return GuideActionPlayAudio

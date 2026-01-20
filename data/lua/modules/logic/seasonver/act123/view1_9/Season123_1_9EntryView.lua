@@ -1,410 +1,415 @@
-﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9EntryView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_9/Season123_1_9EntryView.lua
 
-local var_0_0 = class("Season123_1_9EntryView", BaseView)
+module("modules.logic.seasonver.act123.view1_9.Season123_1_9EntryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goentranceitem = gohelper.findChild(arg_1_0.viewGO, "#go_entrance/#go_entrance_item")
-	arg_1_0._btnprev = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_entrance/#btn_prev")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_entrance/#btn_next")
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftbtns/#go_store/#btn_store")
-	arg_1_0._txtstoreCoinNum = gohelper.findChildText(arg_1_0.viewGO, "leftbtns/#go_store/#txt_num")
-	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_story/#btn_story")
-	arg_1_0._gostoryRedDot = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_story/#btn_story/#go_storyRedDot")
-	arg_1_0._btnequipBook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_celebrity/#btn_celebrity")
-	arg_1_0._btnoverview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftbtns/#btn_overview")
-	arg_1_0._btnachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_achievement/#btn_achievement")
-	arg_1_0._goachievementRedDot = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_achievement/#btn_achievement/#go_achievementRedDot")
-	arg_1_0._gocards = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_cards")
-	arg_1_0._btncards = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_cards/#btn_cards")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_cards/#go_hasget")
-	arg_1_0._txtcardPackageNum = gohelper.findChildText(arg_1_0.viewGO, "rightbtns/#go_cards/#go_hasget/#txt_num")
-	arg_1_0._txtpropnum = gohelper.findChildText(arg_1_0.viewGO, "rightbtns/#go_retail/#go_currency/#txt_propnum")
-	arg_1_0._goretail = gohelper.findChild(arg_1_0.viewGO, "rightbtns/#go_retail")
-	arg_1_0._btnretail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rightbtns/#go_retail/#btn_retail")
-	arg_1_0._golight = gohelper.findChild(arg_1_0.viewGO, "#go_entrance/light")
-	arg_1_0._goexcessive = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_time")
-	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0._animExcessive = arg_1_0._goexcessive:GetComponent(gohelper.Type_Animator)
+local Season123_1_9EntryView = class("Season123_1_9EntryView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_1_9EntryView:onInitView()
+	self._goentranceitem = gohelper.findChild(self.viewGO, "#go_entrance/#go_entrance_item")
+	self._btnprev = gohelper.findChildButtonWithAudio(self.viewGO, "#go_entrance/#btn_prev")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "#go_entrance/#btn_next")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "leftbtns/#go_store/#btn_store")
+	self._txtstoreCoinNum = gohelper.findChildText(self.viewGO, "leftbtns/#go_store/#txt_num")
+	self._btnstory = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_story/#btn_story")
+	self._gostoryRedDot = gohelper.findChild(self.viewGO, "rightbtns/#go_story/#btn_story/#go_storyRedDot")
+	self._btnequipBook = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_celebrity/#btn_celebrity")
+	self._btnoverview = gohelper.findChildButtonWithAudio(self.viewGO, "leftbtns/#btn_overview")
+	self._btnachievement = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_achievement/#btn_achievement")
+	self._goachievementRedDot = gohelper.findChild(self.viewGO, "rightbtns/#go_achievement/#btn_achievement/#go_achievementRedDot")
+	self._gocards = gohelper.findChild(self.viewGO, "rightbtns/#go_cards")
+	self._btncards = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_cards/#btn_cards")
+	self._gohasget = gohelper.findChild(self.viewGO, "rightbtns/#go_cards/#go_hasget")
+	self._txtcardPackageNum = gohelper.findChildText(self.viewGO, "rightbtns/#go_cards/#go_hasget/#txt_num")
+	self._txtpropnum = gohelper.findChildText(self.viewGO, "rightbtns/#go_retail/#go_currency/#txt_propnum")
+	self._goretail = gohelper.findChild(self.viewGO, "rightbtns/#go_retail")
+	self._btnretail = gohelper.findChildButtonWithAudio(self.viewGO, "rightbtns/#go_retail/#btn_retail")
+	self._golight = gohelper.findChild(self.viewGO, "#go_entrance/light")
+	self._goexcessive = gohelper.findChild(self.viewGO, "#go_excessive")
+	self._txttime = gohelper.findChildText(self.viewGO, "#go_title/#txt_time")
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._animExcessive = self._goexcessive:GetComponent(gohelper.Type_Animator)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnprev:AddClickListener(arg_2_0._btnprevOnClick, arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._btnStoreOnClick, arg_2_0)
-	arg_2_0._btnstory:AddClickListener(arg_2_0._btnStoryOnClick, arg_2_0)
-	arg_2_0._btnequipBook:AddClickListener(arg_2_0._btnEquipBookOnClick, arg_2_0)
-	arg_2_0._btnoverview:AddClickListener(arg_2_0._btnOverviewOnClick, arg_2_0)
-	arg_2_0._btnachievement:AddClickListener(arg_2_0._btnAchievementOnClick, arg_2_0)
-	arg_2_0._btncards:AddClickListener(arg_2_0._btnCardPackageOnClick, arg_2_0)
-	arg_2_0._btnretail:AddClickListener(arg_2_0._btnRetailOnClick, arg_2_0)
+function Season123_1_9EntryView:addEvents()
+	self._btnprev:AddClickListener(self._btnprevOnClick, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnstore:AddClickListener(self._btnStoreOnClick, self)
+	self._btnstory:AddClickListener(self._btnStoryOnClick, self)
+	self._btnequipBook:AddClickListener(self._btnEquipBookOnClick, self)
+	self._btnoverview:AddClickListener(self._btnOverviewOnClick, self)
+	self._btnachievement:AddClickListener(self._btnAchievementOnClick, self)
+	self._btncards:AddClickListener(self._btnCardPackageOnClick, self)
+	self._btnretail:AddClickListener(self._btnRetailOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnprev:RemoveClickListener()
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnstore:RemoveClickListener()
-	arg_3_0._btnstory:RemoveClickListener()
-	arg_3_0._btnequipBook:RemoveClickListener()
-	arg_3_0._btnoverview:RemoveClickListener()
-	arg_3_0._btnachievement:RemoveClickListener()
-	arg_3_0._btncards:RemoveClickListener()
-	arg_3_0._btnretail:RemoveClickListener()
+function Season123_1_9EntryView:removeEvents()
+	self._btnprev:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
+	self._btnstore:RemoveClickListener()
+	self._btnstory:RemoveClickListener()
+	self._btnequipBook:RemoveClickListener()
+	self._btnoverview:RemoveClickListener()
+	self._btnachievement:RemoveClickListener()
+	self._btncards:RemoveClickListener()
+	self._btnretail:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._entryList = {}
-	arg_4_0._centerItem = nil
+function Season123_1_9EntryView:_editableInitView()
+	self._entryList = {}
+	self._centerItem = nil
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._centerItem then
-		arg_5_0._centerItem:dispose()
+function Season123_1_9EntryView:onDestroyView()
+	if self._centerItem then
+		self._centerItem:dispose()
 
-		arg_5_0._centerItem = nil
+		self._centerItem = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_5_0.refreshRemainTime, arg_5_0)
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 	Season123EntryController.instance:onCloseView()
 end
 
-function var_0_0.onOpen(arg_6_0)
+function Season123_1_9EntryView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.season123_entryview_open)
 
-	local var_6_0 = arg_6_0.viewParam.actId
+	local actId = self.viewParam.actId
 
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, arg_6_0.handleGetActInfo, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.StageInfoChanged, arg_6_0.refreshCenter, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, arg_6_0.refreshCenter, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.StageFinishWithoutStory, arg_6_0.handleStageFinishWithoutStory, arg_6_0)
-	arg_6_0:addEventCb(Season123EntryController.instance, Season123Event.EntrySceneLoaded, arg_6_0.handleSceneLoaded, arg_6_0)
-	arg_6_0:addEventCb(Season123EntryController.instance, Season123Event.EntryStageChanged, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_6_0.refreshCardPackageUI, arg_6_0)
-	arg_6_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_6_0.handleItemChanged, arg_6_0)
-	arg_6_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_6_0.handleItemChanged, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.OtherViewAutoOpened, arg_6_0.handleOtherViewAutoOpened, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0.onCloseView, arg_6_0)
-	Season123EntryController.instance:onOpenView(var_6_0)
+	self:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, self.handleGetActInfo, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.StageInfoChanged, self.refreshCenter, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, self.refreshCenter, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.StageFinishWithoutStory, self.handleStageFinishWithoutStory, self)
+	self:addEventCb(Season123EntryController.instance, Season123Event.EntrySceneLoaded, self.handleSceneLoaded, self)
+	self:addEventCb(Season123EntryController.instance, Season123Event.EntryStageChanged, self.refreshUI, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.refreshCardPackageUI, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.handleItemChanged, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.handleItemChanged, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.OtherViewAutoOpened, self.handleOtherViewAutoOpened, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
+	Season123EntryController.instance:onOpenView(actId)
 
-	local var_6_1 = ActivityModel.instance:getActMO(var_6_0)
+	local actMO = ActivityModel.instance:getActMO(actId)
 
-	if not var_6_1 or not var_6_1:isOpen() or var_6_1:isExpired() then
+	if not actMO or not actMO:isOpen() or actMO:isExpired() then
 		return
 	end
 
-	arg_6_0:checkFirstOpenOverview()
-	arg_6_0:checkSceneLoaded()
-	arg_6_0:refreshUI()
-	arg_6_0:initRedDot()
+	self:checkFirstOpenOverview()
+	self:checkSceneLoaded()
+	self:refreshUI()
+	self:initRedDot()
 	Season123Controller.instance:dispatchEvent(Season123Event.GuideEntryOtherViewPop)
 
-	if arg_6_0.viewParam.jumpId then
-		Season123EntryController.instance:processJumpParam(arg_6_0.viewParam)
+	if self.viewParam.jumpId then
+		Season123EntryController.instance:processJumpParam(self.viewParam)
 	else
 		Season123Controller.instance:dispatchEvent(Season123Event.GuideEntryOtherViewClose)
 	end
 
-	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, 1)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, 1)
 end
 
-function var_0_0.onClose(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._switchStage, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._enterRetailView, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._endBlock, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._autoClickNext, arg_7_0)
+function Season123_1_9EntryView:onClose()
+	TaskDispatcher.cancelTask(self._switchStage, self)
+	TaskDispatcher.cancelTask(self._enterRetailView, self)
+	TaskDispatcher.cancelTask(self._endBlock, self)
+	TaskDispatcher.cancelTask(self._autoClickNext, self)
 end
 
-function var_0_0.checkFirstOpenOverview(arg_8_0)
-	if Season123EntryModel.instance:isFirstOpen() then
+function Season123_1_9EntryView:checkFirstOpenOverview()
+	local isFirstOpen = Season123EntryModel.instance:isFirstOpen()
+
+	if isFirstOpen then
 		Season123Controller.instance:openSeasonOverview({
-			actId = arg_8_0.viewParam.actId
+			actId = self.viewParam.actId
 		})
-		Season123EntryModel.instance:setAlreadyVisited(arg_8_0.viewParam.actId)
+		Season123EntryModel.instance:setAlreadyVisited(self.viewParam.actId)
 	end
 end
 
-function var_0_0.checkSceneIsLoaded(arg_9_0)
+function Season123_1_9EntryView:checkSceneIsLoaded()
 	return
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	local var_10_0 = ActivityModel.instance:getActMO(arg_10_0.viewParam.actId)
+function Season123_1_9EntryView:refreshUI()
+	local actMO = ActivityModel.instance:getActMO(self.viewParam.actId)
 
-	if not var_10_0 or not var_10_0:isOpen() or var_10_0:isExpired() then
+	if not actMO or not actMO:isOpen() or actMO:isExpired() then
 		return
 	end
 
-	arg_10_0:refreshCenter()
-	arg_10_0:refreshPageBtn()
-	arg_10_0:refreshCardPackageUI()
-	arg_10_0:refreshUTTURetailTicket()
-	arg_10_0:refreshStoreCoin()
-	arg_10_0:checkHasReadUnlockStory()
-	arg_10_0:refreshRemainTime()
+	self:refreshCenter()
+	self:refreshPageBtn()
+	self:refreshCardPackageUI()
+	self:refreshUTTURetailTicket()
+	self:refreshStoreCoin()
+	self:checkHasReadUnlockStory()
+	self:refreshRemainTime()
 end
 
-function var_0_0.refreshCenter(arg_11_0)
-	if arg_11_0._centerItem then
-		arg_11_0._centerItem:refreshUI()
+function Season123_1_9EntryView:refreshCenter()
+	if self._centerItem then
+		self._centerItem:refreshUI()
 	end
 
-	local var_11_0, var_11_1, var_11_2 = Season123ProgressUtils.isStageUnlock(arg_11_0.viewParam.actId, Season123EntryModel.instance:getCurrentStage())
+	local rs, reason, value = Season123ProgressUtils.isStageUnlock(self.viewParam.actId, Season123EntryModel.instance:getCurrentStage())
 
-	gohelper.setActive(arg_11_0._golight, var_11_0)
-	arg_11_0:checkHasReadUnlockStory()
+	gohelper.setActive(self._golight, rs)
+	self:checkHasReadUnlockStory()
 end
 
-function var_0_0.refreshPageBtn(arg_12_0)
-	local var_12_0 = Season123Config.instance:getStageCos(Season123EntryModel.instance.activityId)
+function Season123_1_9EntryView:refreshPageBtn()
+	local stageList = Season123Config.instance:getStageCos(Season123EntryModel.instance.activityId)
 
-	if not var_12_0 or #var_12_0 <= 1 then
-		gohelper.setActive(arg_12_0._btnprev, false)
-		gohelper.setActive(arg_12_0._btnnext, false)
+	if not stageList or #stageList <= 1 then
+		gohelper.setActive(self._btnprev, false)
+		gohelper.setActive(self._btnnext, false)
 
 		return
 	end
 
-	local var_12_1 = Season123EntryModel.instance:getCurrentStageIndex()
+	local index = Season123EntryModel.instance:getCurrentStageIndex()
 
-	gohelper.setActive(arg_12_0._btnprev, var_12_1 > 1)
-	gohelper.setActive(arg_12_0._btnnext, var_12_1 < #var_12_0)
+	gohelper.setActive(self._btnprev, index > 1)
+	gohelper.setActive(self._btnnext, index < #stageList)
 end
 
-function var_0_0.refreshCardPackageUI(arg_13_0)
-	local var_13_0 = Season123CardPackageModel.instance:initPackageCount()
+function Season123_1_9EntryView:refreshCardPackageUI()
+	local cardPackageCount = Season123CardPackageModel.instance:initPackageCount()
 
-	arg_13_0._btncards.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = var_13_0 == 0 and 0.5 or 1
-	arg_13_0._txtcardPackageNum.text = var_13_0
+	self._btncards.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = cardPackageCount == 0 and 0.5 or 1
+	self._txtcardPackageNum.text = cardPackageCount
 
-	gohelper.setActive(arg_13_0._gohasget, var_13_0 > 0)
+	gohelper.setActive(self._gohasget, cardPackageCount > 0)
 end
 
-function var_0_0.refreshUTTURetailTicket(arg_14_0)
-	local var_14_0 = Season123EntryModel.instance:isRetailOpen()
+function Season123_1_9EntryView:refreshUTTURetailTicket()
+	local isFunctionOpen = Season123EntryModel.instance:isRetailOpen()
 
-	gohelper.setActive(arg_14_0._goretail, var_14_0)
+	gohelper.setActive(self._goretail, isFunctionOpen)
 
-	if var_14_0 then
-		local var_14_1, var_14_2 = Season123EntryModel.instance:getUTTUTicketNum()
+	if isFunctionOpen then
+		local curNum, maxNum = Season123EntryModel.instance:getUTTUTicketNum()
 
-		arg_14_0._hasEnoughTicket = var_14_1 >= 1
+		self._hasEnoughTicket = curNum >= 1
 
-		local var_14_3 = var_14_1 == 0 and "<color=#CF4543>" .. var_14_1 .. "</color>/" .. var_14_2 or var_14_1 .. "/" .. var_14_2
+		local contentStr = curNum == 0 and "<color=#CF4543>" .. curNum .. "</color>/" .. maxNum or curNum .. "/" .. maxNum
 
-		arg_14_0._txtpropnum.text = var_14_3
+		self._txtpropnum.text = contentStr
 	end
 end
 
-function var_0_0.refreshStoreCoin(arg_15_0)
-	local var_15_0 = Season123Config.instance:getSeasonConstNum(arg_15_0.viewParam.actId, Activity123Enum.Const.StoreCoinId)
-	local var_15_1 = CurrencyModel.instance:getCurrency(var_15_0)
-	local var_15_2 = var_15_1 and var_15_1.quantity or 0
+function Season123_1_9EntryView:refreshStoreCoin()
+	local storeCoinId = Season123Config.instance:getSeasonConstNum(self.viewParam.actId, Activity123Enum.Const.StoreCoinId)
+	local currencyMO = CurrencyModel.instance:getCurrency(storeCoinId)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_15_0._txtstoreCoinNum.text = GameUtil.numberDisplay(var_15_2)
+	self._txtstoreCoinNum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.refreshRemainTime(arg_16_0)
-	local var_16_0 = arg_16_0.viewParam.actId
-	local var_16_1 = ActivityModel.instance:getActMO(arg_16_0.viewParam.actId)
+function Season123_1_9EntryView:refreshRemainTime()
+	local actId = self.viewParam.actId
+	local actMO = ActivityModel.instance:getActMO(self.viewParam.actId)
 
-	if not var_16_1 then
+	if not actMO then
 		return
 	end
 
-	local var_16_2 = var_16_1:getRealEndTimeStamp() - ServerTime.now()
+	local offsetSecond = actMO:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_16_2 > 0 then
-		local var_16_3 = TimeUtil.SecondToActivityTimeFormat(var_16_2)
+	if offsetSecond > 0 then
+		local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-		arg_16_0._txttime.text = var_16_3
+		self._txttime.text = dateStr
 	else
-		arg_16_0._txttime.text = luaLang("ended")
+		self._txttime.text = luaLang("ended")
 	end
 end
 
-function var_0_0.handleGetActInfo(arg_17_0, arg_17_1)
-	if arg_17_0.viewParam.actId == arg_17_1 then
-		arg_17_0:refreshUI()
+function Season123_1_9EntryView:handleGetActInfo(actId)
+	if self.viewParam.actId == actId then
+		self:refreshUI()
 	end
 end
 
-function var_0_0.handleOtherViewAutoOpened(arg_18_0)
-	arg_18_0._anim:Play(var_0_0.Anim.Close)
+function Season123_1_9EntryView:handleOtherViewAutoOpened()
+	self._anim:Play(Season123_1_9EntryView.Anim.Close)
 end
 
-function var_0_0.handleItemChanged(arg_19_0)
-	arg_19_0:refreshUTTURetailTicket()
-	arg_19_0:refreshStoreCoin()
+function Season123_1_9EntryView:handleItemChanged()
+	self:refreshUTTURetailTicket()
+	self:refreshStoreCoin()
 end
 
-function var_0_0.handleSceneLoaded(arg_20_0)
-	arg_20_0:checkSceneLoaded()
+function Season123_1_9EntryView:handleSceneLoaded()
+	self:checkSceneLoaded()
 end
 
-function var_0_0.handleStageFinishWithoutStory(arg_21_0)
-	if arg_21_0._anim then
-		arg_21_0._anim:Play(var_0_0.Anim.Switch, 0, 0)
+function Season123_1_9EntryView:handleStageFinishWithoutStory()
+	if self._anim then
+		self._anim:Play(Season123_1_9EntryView.Anim.Switch, 0, 0)
 	end
 end
 
-function var_0_0.checkSceneLoaded(arg_22_0)
-	if arg_22_0._isCenterInited then
+function Season123_1_9EntryView:checkSceneLoaded()
+	if self._isCenterInited then
 		return
 	end
 
-	local var_22_0 = CameraMgr.instance:getSceneRoot()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
+	local sceneGO = gohelper.findChild(sceneRoot, "Season123_1_9EntryScene/scene")
 
-	if gohelper.findChild(var_22_0, "Season123_1_9EntryScene/scene") then
-		gohelper.setActive(arg_22_0._goentranceitem, true)
+	if sceneGO then
+		gohelper.setActive(self._goentranceitem, true)
 
-		arg_22_0._centerItem = Season123_1_9EntryItem.New()
+		self._centerItem = Season123_1_9EntryItem.New()
 
-		arg_22_0._centerItem:init(arg_22_0._goentranceitem, arg_22_0._anim)
-		arg_22_0._centerItem:initData(arg_22_0.viewParam.actId)
+		self._centerItem:init(self._goentranceitem, self._anim)
+		self._centerItem:initData(self.viewParam.actId)
 
-		arg_22_0._isCenterInited = true
+		self._isCenterInited = true
 	end
 end
 
-function var_0_0._btnprevOnClick(arg_23_0)
+function Season123_1_9EntryView:_btnprevOnClick()
 	UIBlockMgrExtend.instance:setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("switchStage")
-	arg_23_0._animExcessive:Play(var_0_0.Anim.Hard)
+	self._animExcessive:Play(Season123_1_9EntryView.Anim.Hard)
 	AudioMgr.instance:trigger(AudioEnum.UI.season123_stage_switch)
 
-	arg_23_0.isNext = false
+	self.isNext = false
 
-	TaskDispatcher.runDelay(arg_23_0._switchStage, arg_23_0, 0.5)
-	TaskDispatcher.runDelay(arg_23_0._endBlock, arg_23_0, 1)
+	TaskDispatcher.runDelay(self._switchStage, self, 0.5)
+	TaskDispatcher.runDelay(self._endBlock, self, 1)
 end
 
-function var_0_0._btnnextOnClick(arg_24_0)
+function Season123_1_9EntryView:_btnnextOnClick()
 	UIBlockMgrExtend.instance:setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("switchStage")
-	arg_24_0._animExcessive:Play(var_0_0.Anim.Story)
+	self._animExcessive:Play(Season123_1_9EntryView.Anim.Story)
 	AudioMgr.instance:trigger(AudioEnum.UI.season123_stage_switch)
 
-	arg_24_0.isNext = true
+	self.isNext = true
 
-	TaskDispatcher.runDelay(arg_24_0._switchStage, arg_24_0, 0.5)
-	TaskDispatcher.runDelay(arg_24_0._endBlock, arg_24_0, 1)
+	TaskDispatcher.runDelay(self._switchStage, self, 0.5)
+	TaskDispatcher.runDelay(self._endBlock, self, 1)
 end
 
-function var_0_0._btnStoreOnClick(arg_25_0)
-	Season123Controller.instance:openSeasonStoreView(arg_25_0.viewParam.actId)
+function Season123_1_9EntryView:_btnStoreOnClick()
+	Season123Controller.instance:openSeasonStoreView(self.viewParam.actId)
 end
 
-function var_0_0._btnStoryOnClick(arg_26_0)
+function Season123_1_9EntryView:_btnStoryOnClick()
 	Season123Controller.instance:openSeasonStoryView({
-		actId = arg_26_0.viewParam.actId
+		actId = self.viewParam.actId
 	})
 end
 
-function var_0_0._btnEquipBookOnClick(arg_27_0)
-	Season123Controller.instance:openSeasonEquipBookView(arg_27_0.viewParam.actId)
+function Season123_1_9EntryView:_btnEquipBookOnClick()
+	Season123Controller.instance:openSeasonEquipBookView(self.viewParam.actId)
 end
 
-function var_0_0._btnOverviewOnClick(arg_28_0)
+function Season123_1_9EntryView:_btnOverviewOnClick()
 	Season123Controller.instance:openSeasonOverview({
-		actId = arg_28_0.viewParam.actId
+		actId = self.viewParam.actId
 	})
 end
 
-function var_0_0._btnAchievementOnClick(arg_29_0)
+function Season123_1_9EntryView:_btnAchievementOnClick()
 	Season123Controller.instance:openSeasonTaskView({
-		actId = arg_29_0.viewParam.actId
+		actId = self.viewParam.actId
 	})
 end
 
-function var_0_0._btnCardPackageOnClick(arg_30_0)
+function Season123_1_9EntryView:_btnCardPackageOnClick()
 	Season123Controller.instance:openSeasonCardPackageView({
-		actId = arg_30_0.viewParam.actId
+		actId = self.viewParam.actId
 	})
 end
 
-function var_0_0._btnRetailOnClick(arg_31_0)
-	if not arg_31_0._isCenterInited then
+function Season123_1_9EntryView:_btnRetailOnClick()
+	if not self._isCenterInited then
 		return
 	end
 
-	arg_31_0._anim:Play(var_0_0.Anim.Close)
-	TaskDispatcher.runDelay(arg_31_0._enterRetailView, arg_31_0, 0.17)
+	self._anim:Play(Season123_1_9EntryView.Anim.Close)
+	TaskDispatcher.runDelay(self._enterRetailView, self, 0.17)
 end
 
-function var_0_0._enterRetailView(arg_32_0)
+function Season123_1_9EntryView:_enterRetailView()
 	Season123Controller.instance:openSeasonRetail({
-		actId = arg_32_0.viewParam.actId
+		actId = self.viewParam.actId
 	})
 end
 
-function var_0_0._btnTrialOnClick(arg_33_0)
+function Season123_1_9EntryView:_btnTrialOnClick()
 	Season123EntryController.instance:enterTrailFightScene()
 end
 
-function var_0_0.onCloseView(arg_34_0, arg_34_1)
-	if arg_34_1 == ViewName.Season123_1_9EpisodeListView then
-		arg_34_0._anim:Play(var_0_0.Anim.Switch1, 0, 0)
+function Season123_1_9EntryView:onCloseView(viewName)
+	if viewName == ViewName.Season123_1_9EpisodeListView then
+		self._anim:Play(Season123_1_9EntryView.Anim.Switch1, 0, 0)
 	end
 
-	if arg_34_1 == ViewName.Season123_1_9RetailView then
-		arg_34_0._anim:Play(var_0_0.Anim.Switch, 0, 0)
+	if viewName == ViewName.Season123_1_9RetailView then
+		self._anim:Play(Season123_1_9EntryView.Anim.Switch, 0, 0)
 	end
 
-	if arg_34_1 == ViewName.Season123_1_9StoryPagePopView then
-		arg_34_0._anim:Play(var_0_0.Anim.Switch, 0, 0)
-		TaskDispatcher.runDelay(arg_34_0._autoClickNext, arg_34_0, 0.5)
+	if viewName == ViewName.Season123_1_9StoryPagePopView then
+		self._anim:Play(Season123_1_9EntryView.Anim.Switch, 0, 0)
+		TaskDispatcher.runDelay(self._autoClickNext, self, 0.5)
 	end
 end
 
-function var_0_0._switchStage(arg_35_0)
-	Season123EntryController.instance:switchStage(arg_35_0.isNext)
+function Season123_1_9EntryView:_switchStage()
+	Season123EntryController.instance:switchStage(self.isNext)
 
-	arg_35_0.isNext = nil
+	self.isNext = nil
 end
 
-function var_0_0._endBlock(arg_36_0)
+function Season123_1_9EntryView:_endBlock()
 	UIBlockMgr.instance:endBlock("switchStage")
 	UIBlockMgrExtend.instance:setNeedCircleMv(true)
 end
 
-function var_0_0.initRedDot(arg_37_0)
-	local var_37_0 = {}
+function Season123_1_9EntryView:initRedDot()
+	local mutiRedDotData = {}
 
-	for iter_37_0 = 1, 6 do
-		table.insert(var_37_0, {
+	for i = 1, 6 do
+		table.insert(mutiRedDotData, {
 			id = RedDotEnum.DotNode.Season123StageReward,
-			uid = iter_37_0
+			uid = i
 		})
 	end
 
-	table.insert(var_37_0, {
+	table.insert(mutiRedDotData, {
 		id = RedDotEnum.DotNode.Season123Task
 	})
-	RedDotController.instance:addMultiRedDot(arg_37_0._goachievementRedDot, var_37_0)
-	RedDotController.instance:addRedDot(arg_37_0._gostoryRedDot, RedDotEnum.DotNode.Season123Story)
+	RedDotController.instance:addMultiRedDot(self._goachievementRedDot, mutiRedDotData)
+	RedDotController.instance:addRedDot(self._gostoryRedDot, RedDotEnum.DotNode.Season123Story)
 end
 
-function var_0_0.checkHasReadUnlockStory(arg_38_0)
-	Season123Controller.instance:checkHasReadUnlockStory(arg_38_0.viewParam.actId)
+function Season123_1_9EntryView:checkHasReadUnlockStory()
+	Season123Controller.instance:checkHasReadUnlockStory(self.viewParam.actId)
 end
 
-function var_0_0._autoClickNext(arg_39_0)
-	local var_39_0 = Season123Model.instance:getActInfo(arg_39_0.viewParam.actId)
+function Season123_1_9EntryView:_autoClickNext()
+	local seasonMO = Season123Model.instance:getActInfo(self.viewParam.actId)
 
-	if var_39_0 then
-		local var_39_1 = var_39_0:getCurrentStage()
+	if seasonMO then
+		local stageMO = seasonMO:getCurrentStage()
 
-		if var_39_1 and not Season123Config.instance:isLastStage(arg_39_0.viewParam.actId, var_39_1.stage) then
-			arg_39_0:_btnnextOnClick()
+		if stageMO and not Season123Config.instance:isLastStage(self.viewParam.actId, stageMO.stage) then
+			self:_btnnextOnClick()
 		end
 	end
 end
 
-var_0_0.Anim = {
+Season123_1_9EntryView.Anim = {
 	Story = "story",
 	Close = "close",
 	Switch1 = "switch1",
@@ -412,4 +417,4 @@ var_0_0.Anim = {
 	Hard = "hard"
 }
 
-return var_0_0
+return Season123_1_9EntryView

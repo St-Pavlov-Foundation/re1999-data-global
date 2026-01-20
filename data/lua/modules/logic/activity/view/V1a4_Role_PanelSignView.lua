@@ -1,121 +1,126 @@
-﻿module("modules.logic.activity.view.V1a4_Role_PanelSignView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a4_Role_PanelSignView.lua
 
-local var_0_0 = class("V1a4_Role_PanelSignView", Activity101SignViewBase)
+module("modules.logic.activity.view.V1a4_Role_PanelSignView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
-	arg_1_0._btnemptyTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyTop")
-	arg_1_0._btnemptyBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBottom")
-	arg_1_0._btnemptyLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyLeft")
-	arg_1_0._btnemptyRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyRight")
+local V1a4_Role_PanelSignView = class("V1a4_Role_PanelSignView", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a4_Role_PanelSignView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Root/image_LimitTimeBG/#txt_title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Close")
+	self._btnemptyTop = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyTop")
+	self._btnemptyBottom = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyBottom")
+	self._btnemptyLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyLeft")
+	self._btnemptyRight = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyRight")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	Activity101SignViewBase.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnemptyTop:AddClickListener(arg_2_0._btnemptyTopOnClick, arg_2_0)
-	arg_2_0._btnemptyBottom:AddClickListener(arg_2_0._btnemptyBottomOnClick, arg_2_0)
-	arg_2_0._btnemptyLeft:AddClickListener(arg_2_0._btnemptyLeftOnClick, arg_2_0)
-	arg_2_0._btnemptyRight:AddClickListener(arg_2_0._btnemptyRightOnClick, arg_2_0)
+function V1a4_Role_PanelSignView:addEvents()
+	Activity101SignViewBase.addEvents(self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnemptyTop:AddClickListener(self._btnemptyTopOnClick, self)
+	self._btnemptyBottom:AddClickListener(self._btnemptyBottomOnClick, self)
+	self._btnemptyLeft:AddClickListener(self._btnemptyLeftOnClick, self)
+	self._btnemptyRight:AddClickListener(self._btnemptyRightOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	Activity101SignViewBase.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnemptyTop:RemoveClickListener()
-	arg_3_0._btnemptyBottom:RemoveClickListener()
-	arg_3_0._btnemptyLeft:RemoveClickListener()
-	arg_3_0._btnemptyRight:RemoveClickListener()
+function V1a4_Role_PanelSignView:removeEvents()
+	Activity101SignViewBase.removeEvents(self)
+	self._btnClose:RemoveClickListener()
+	self._btnemptyTop:RemoveClickListener()
+	self._btnemptyBottom:RemoveClickListener()
+	self._btnemptyLeft:RemoveClickListener()
+	self._btnemptyRight:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function V1a4_Role_PanelSignView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyTopOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function V1a4_Role_PanelSignView:_btnemptyTopOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyBottomOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function V1a4_Role_PanelSignView:_btnemptyBottomOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyLeftOnClick(arg_7_0)
-	arg_7_0:closeThis()
+function V1a4_Role_PanelSignView:_btnemptyLeftOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnemptyRightOnClick(arg_8_0)
-	arg_8_0:closeThis()
+function V1a4_Role_PanelSignView:_btnemptyRightOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._txtLimitTime.text = ""
+function V1a4_Role_PanelSignView:onOpen()
+	self._txtLimitTime.text = ""
 
-	arg_9_0:internal_set_actId(arg_9_0.viewParam.actId)
-	arg_9_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
-	arg_9_0:internal_onOpen()
+	self:internal_set_actId(self.viewParam.actId)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
+	self:internal_onOpen()
 
-	local var_9_0 = arg_9_0:actCO()
+	local CO = self:actCO()
 
-	arg_9_0._txtTitle.text = var_9_0.name
+	self._txtTitle.text = CO.name
 
-	TaskDispatcher.runRepeat(arg_9_0._refreshTimeTick, arg_9_0, 1)
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onClose(arg_10_0)
-	arg_10_0._isFirst = nil
+function V1a4_Role_PanelSignView:onClose()
+	self._isFirst = nil
 
-	TaskDispatcher.cancelTask(arg_10_0._refreshTimeTick, arg_10_0)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simageTitle:UnLoadImage()
-	arg_11_0._simagePanelBG:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_11_0._refreshTimeTick, arg_11_0)
+function V1a4_Role_PanelSignView:onDestroyView()
+	self._simageTitle:UnLoadImage()
+	self._simagePanelBG:UnLoadImage()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_12_0)
-	arg_12_0:_refreshList()
-	arg_12_0:_updateScrollViewPos()
-	arg_12_0:_refreshTimeTick()
+function V1a4_Role_PanelSignView:onRefresh()
+	self:_refreshList()
+	self:_updateScrollViewPos()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_13_0)
-	arg_13_0._txtLimitTime.text = arg_13_0:getRemainTimeStr()
+function V1a4_Role_PanelSignView:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-function var_0_0._updateScrollViewPos(arg_14_0)
-	if arg_14_0._isFirst then
+function V1a4_Role_PanelSignView:_updateScrollViewPos()
+	if self._isFirst then
 		return
 	end
 
-	arg_14_0._isFirst = true
+	self._isFirst = true
 
-	arg_14_0:updateRewardCouldGetHorizontalScrollPixel(function(arg_15_0)
-		if arg_15_0 <= 4 then
-			return arg_15_0 - 4
+	self:updateRewardCouldGetHorizontalScrollPixel(function(index)
+		if index <= 4 then
+			return index - 4
 		else
-			local var_15_0 = arg_14_0:getTempDataList()
+			local list = self:getTempDataList()
 
-			return var_15_0 and #var_15_0 or arg_15_0
+			return list and #list or index
 		end
 	end)
 end
 
-function var_0_0._setPinStartIndex(arg_16_0, arg_16_1)
-	local var_16_0, var_16_1 = arg_16_0:getRewardCouldGetIndex()
-	local var_16_2 = var_16_1 <= 4 and 1 or 3
+function V1a4_Role_PanelSignView:_setPinStartIndex(dataList)
+	local _, index = self:getRewardCouldGetIndex()
 
-	arg_16_0.viewContainer:getScrollModel():setStartPinIndex(var_16_2)
+	index = index <= 4 and 1 or 3
+
+	local scrollModel = self.viewContainer:getScrollModel()
+
+	scrollModel:setStartPinIndex(index)
 end
 
-return var_0_0
+return V1a4_Role_PanelSignView

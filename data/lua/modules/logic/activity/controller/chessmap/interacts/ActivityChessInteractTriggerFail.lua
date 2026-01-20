@@ -1,76 +1,78 @@
-﻿module("modules.logic.activity.controller.chessmap.interacts.ActivityChessInteractTriggerFail", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/interacts/ActivityChessInteractTriggerFail.lua
 
-local var_0_0 = class("ActivityChessInteractTriggerFail", ActivityChessInteractBase)
+module("modules.logic.activity.controller.chessmap.interacts.ActivityChessInteractTriggerFail", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local ActivityChessInteractTriggerFail = class("ActivityChessInteractTriggerFail", ActivityChessInteractBase)
 
-	arg_1_0._enableAlarm = true
+function ActivityChessInteractTriggerFail:init(targetObj)
+	ActivityChessInteractTriggerFail.super.init(self, targetObj)
+
+	self._enableAlarm = true
 end
 
-function var_0_0.onDrawAlert(arg_2_0, arg_2_1)
-	if not arg_2_0._enableAlarm then
+function ActivityChessInteractTriggerFail:onDrawAlert(map)
+	if not self._enableAlarm then
 		return
 	end
 
-	local var_2_0 = arg_2_0._target.originData.posX
-	local var_2_1 = arg_2_0._target.originData.posY
+	local curX, curY = self._target.originData.posX, self._target.originData.posY
 
-	var_0_0.insertToAlertMap(arg_2_1, var_2_0, var_2_1)
+	ActivityChessInteractTriggerFail.insertToAlertMap(map, curX, curY)
 
-	if arg_2_0._target.originData.data and arg_2_0._target.originData.data.alertArea then
-		local var_2_2 = arg_2_0._target.originData.data.alertArea
+	if self._target.originData.data and self._target.originData.data.alertArea then
+		local alertArea = self._target.originData.data.alertArea
+		local needRefreshFace = #alertArea == 1
 
-		if #var_2_2 == 1 then
-			local var_2_3 = var_2_2[1].x
-			local var_2_4 = var_2_2[1].y
-			local var_2_5 = arg_2_0._target.originData.posX
-			local var_2_6 = arg_2_0._target.originData.posY
-			local var_2_7 = ActivityChessMapUtils.ToDirection(var_2_5, var_2_6, var_2_3, var_2_4)
+		if needRefreshFace then
+			local tarX, tarY = alertArea[1].x, alertArea[1].y
+			local srcX, srcY = self._target.originData.posX, self._target.originData.posY
+			local dir = ActivityChessMapUtils.ToDirection(srcX, srcY, tarX, tarY)
 
-			arg_2_0:faceTo(var_2_7)
+			self:faceTo(dir)
 		end
 	end
 end
 
-function var_0_0.insertToAlertMap(arg_3_0, arg_3_1, arg_3_2)
-	if ActivityChessGameModel.instance:isPosInChessBoard(arg_3_1, arg_3_2) and ActivityChessGameModel.instance:getBaseTile(arg_3_1, arg_3_2) ~= ActivityChessEnum.TileBaseType.None then
-		arg_3_0[arg_3_1] = arg_3_0[arg_3_1] or {}
-		arg_3_0[arg_3_1][arg_3_2] = true
+function ActivityChessInteractTriggerFail.insertToAlertMap(map, x, y)
+	if ActivityChessGameModel.instance:isPosInChessBoard(x, y) and ActivityChessGameModel.instance:getBaseTile(x, y) ~= ActivityChessEnum.TileBaseType.None then
+		map[x] = map[x] or {}
+		map[x][y] = true
 	end
 end
 
-function var_0_0.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0._enableAlarm = false
-	arg_4_0._moveTargetX = arg_4_1
-	arg_4_0._moveTargetY = arg_4_2
+function ActivityChessInteractTriggerFail:moveTo(x, y, callback, callbackObj)
+	self._enableAlarm = false
+	self._moveTargetX = x
+	self._moveTargetY = y
 
-	var_0_0.super.moveTo(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	ActivityChessInteractTriggerFail.super.moveTo(self, x, y, callback, callbackObj)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.onMoveCompleted(arg_5_0)
-	var_0_0.super.onMoveCompleted(arg_5_0)
+function ActivityChessInteractTriggerFail:onMoveCompleted()
+	ActivityChessInteractTriggerFail.super.onMoveCompleted(self)
 
-	arg_5_0._enableAlarm = true
+	self._enableAlarm = true
 
-	if ActivityChessGameController.instance:searchInteractByPos(arg_5_0._moveTargetX, arg_5_0._moveTargetY, ActivityChessGameController.filterSelectable) > 0 then
+	local resultCount = ActivityChessGameController.instance:searchInteractByPos(self._moveTargetX, self._moveTargetY, ActivityChessGameController.filterSelectable)
+
+	if resultCount > 0 then
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.SheriffCatch)
 	end
 
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.onAvatarLoaded(arg_6_0)
-	var_0_0.super.onAvatarLoaded(arg_6_0)
+function ActivityChessInteractTriggerFail:onAvatarLoaded()
+	ActivityChessInteractTriggerFail.super.onAvatarLoaded(self)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-function var_0_0.dispose(arg_7_0)
-	arg_7_0._enableAlarm = false
+function ActivityChessInteractTriggerFail:dispose()
+	self._enableAlarm = false
 
-	var_0_0.super.dispose(arg_7_0)
+	ActivityChessInteractTriggerFail.super.dispose(self)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.RefreshAlarmArea)
 end
 
-return var_0_0
+return ActivityChessInteractTriggerFail

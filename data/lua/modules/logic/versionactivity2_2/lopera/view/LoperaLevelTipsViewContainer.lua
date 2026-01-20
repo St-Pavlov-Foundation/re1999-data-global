@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/view/LoperaLevelTipsViewContainer.lua
 
-local var_0_0 = class("LoperaLevelTipsViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.lopera.view.LoperaLevelTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LoperaLevelTipsViewContainer = class("LoperaLevelTipsViewContainer", BaseViewContainer)
+
+function LoperaLevelTipsViewContainer:buildViews()
 	return {
 		LoperaLevelTipsView.New()
 	}
 end
 
-return var_0_0
+return LoperaLevelTipsViewContainer

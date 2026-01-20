@@ -1,20 +1,26 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomConfirmBuilding", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerRoomConfirmBuilding.lua
 
-local var_0_0 = class("GuideTriggerRoomConfirmBuilding", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerRoomConfirmBuilding", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	RoomBuildingController.instance:registerCallback(RoomEvent.ConfirmBuilding, arg_1_0._onConfirmBuilding, arg_1_0)
+local GuideTriggerRoomConfirmBuilding = class("GuideTriggerRoomConfirmBuilding", BaseGuideTrigger)
+
+function GuideTriggerRoomConfirmBuilding:ctor(triggerKey)
+	GuideTriggerRoomConfirmBuilding.super.ctor(self, triggerKey)
+	RoomBuildingController.instance:registerCallback(RoomEvent.ConfirmBuilding, self._onConfirmBuilding, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return arg_2_1 == tonumber(arg_2_2)
+function GuideTriggerRoomConfirmBuilding:assertGuideSatisfy(param, configParam)
+	local configBuildingId = tonumber(configParam)
+
+	return param == configBuildingId
 end
 
-function var_0_0._onConfirmBuilding(arg_3_0, arg_3_1)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerRoomConfirmBuilding:_onConfirmBuilding(buildingId)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Room then
+		self:checkStartGuide(buildingId)
 	end
 end
 
-return var_0_0
+return GuideTriggerRoomConfirmBuilding

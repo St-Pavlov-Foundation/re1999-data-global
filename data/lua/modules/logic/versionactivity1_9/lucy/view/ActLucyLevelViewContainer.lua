@@ -1,35 +1,37 @@
-﻿module("modules.logic.versionactivity1_9.lucy.view.ActLucyLevelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/lucy/view/ActLucyLevelViewContainer.lua
 
-local var_0_0 = class("ActLucyLevelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.lucy.view.ActLucyLevelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActLucyLevelViewContainer = class("ActLucyLevelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActLucyLevelView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+function ActLucyLevelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActLucyLevelView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
+function ActLucyLevelViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonsView
+			self._navigateButtonsView
 		}
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
+function ActLucyLevelViewContainer:onContainerInit()
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_9Enum.ActivityId.Lucy)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_9Enum.ActivityId.Lucy
 	})
 end
 
-return var_0_0
+return ActLucyLevelViewContainer

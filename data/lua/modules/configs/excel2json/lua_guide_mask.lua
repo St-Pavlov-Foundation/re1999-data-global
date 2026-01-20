@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_guide_mask", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_guide_mask.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_guide_mask", package.seeall)
+
+local lua_guide_mask = {}
+local fields = {
 	uiOffset1 = 2,
 	uiInfo1 = 3,
 	uiOffset2 = 5,
@@ -16,13 +18,13 @@ local var_0_1 = {
 	uiOffset3 = 8,
 	uiOffset4 = 11
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_guide_mask.onLoad(json)
+	lua_guide_mask.configList, lua_guide_mask.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_guide_mask

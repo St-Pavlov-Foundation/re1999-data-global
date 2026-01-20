@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_3.chess.config.Activity122Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/config/Activity122Config.lua
 
-local var_0_0 = class("Activity122Config", BaseConfig)
+module("modules.logic.versionactivity1_3.chess.config.Activity122Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._act122Objects = nil
-	arg_1_0._act122Map = nil
-	arg_1_0._act122Episode = nil
-	arg_1_0._act122Task = nil
-	arg_1_0._act122StroyCfg = nil
-	arg_1_0._act122Tips = nil
-	arg_1_0._act122EffectCfg = nil
-	arg_1_0._episodeListDict = {}
-	arg_1_0._chapterIdListDict = {}
-	arg_1_0._chapterEpisodeListDict = {}
-	arg_1_0._mapStoryListDict = {}
-	arg_1_0._chapterEpisodeListDict = {}
+local Activity122Config = class("Activity122Config", BaseConfig)
+
+function Activity122Config:ctor()
+	self._act122Objects = nil
+	self._act122Map = nil
+	self._act122Episode = nil
+	self._act122Task = nil
+	self._act122StroyCfg = nil
+	self._act122Tips = nil
+	self._act122EffectCfg = nil
+	self._episodeListDict = {}
+	self._chapterIdListDict = {}
+	self._chapterEpisodeListDict = {}
+	self._mapStoryListDict = {}
+	self._chapterEpisodeListDict = {}
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity122Config:reqConfigNames()
 	return {
 		"activity122_map",
 		"activity122_interact",
@@ -29,220 +31,220 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity122_interact" then
-		arg_3_0._act122Objects = arg_3_2
-	elseif arg_3_1 == "activity122_map" then
-		arg_3_0._act122Map = arg_3_2
-	elseif arg_3_1 == "activity122_episode" then
-		arg_3_0._act122Episode = arg_3_2
-	elseif arg_3_1 == "activity122_task" then
-		arg_3_0._act122Task = arg_3_2
-	elseif arg_3_1 == "activity122_tips" then
-		arg_3_0._act122Tips = arg_3_2
-	elseif arg_3_1 == "activity122_interact_effect" then
-		arg_3_0._act122EffectCfg = arg_3_2
-	elseif arg_3_1 == "activity122_story" then
-		arg_3_0._act122StroyCfg = arg_3_2
+function Activity122Config:onConfigLoaded(configName, configTable)
+	if configName == "activity122_interact" then
+		self._act122Objects = configTable
+	elseif configName == "activity122_map" then
+		self._act122Map = configTable
+	elseif configName == "activity122_episode" then
+		self._act122Episode = configTable
+	elseif configName == "activity122_task" then
+		self._act122Task = configTable
+	elseif configName == "activity122_tips" then
+		self._act122Tips = configTable
+	elseif configName == "activity122_interact_effect" then
+		self._act122EffectCfg = configTable
+	elseif configName == "activity122_story" then
+		self._act122StroyCfg = configTable
 	end
 end
 
-function var_0_0.getTaskByActId(arg_4_0, arg_4_1)
-	local var_4_0 = {}
+function Activity122Config:getTaskByActId(actId)
+	local list = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._act122Task.configList) do
-		if iter_4_1.activityId == arg_4_1 then
-			table.insert(var_4_0, iter_4_1)
+	for _, co in ipairs(self._act122Task.configList) do
+		if co.activityId == actId then
+			table.insert(list, co)
 		end
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0.getInteractObjectCo(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._act122Objects.configDict[arg_5_1] then
-		return arg_5_0._act122Objects.configDict[arg_5_1][arg_5_2]
+function Activity122Config:getInteractObjectCo(actId, id)
+	if self._act122Objects.configDict[actId] then
+		return self._act122Objects.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getMapCo(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._act122Map.configDict[arg_6_1] then
-		return arg_6_0._act122Map.configDict[arg_6_1][arg_6_2]
+function Activity122Config:getMapCo(actId, id)
+	if self._act122Map.configDict[actId] then
+		return self._act122Map.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeCo(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0._act122Episode.configDict[arg_7_1] then
-		return arg_7_0._act122Episode.configDict[arg_7_1][arg_7_2]
+function Activity122Config:getEpisodeCo(actId, id)
+	if self._act122Episode.configDict[actId] then
+		return self._act122Episode.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getChapterEpisodeList(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0._chapterEpisodeListDict[arg_8_1] then
-		return arg_8_0._chapterEpisodeListDict[arg_8_1][arg_8_2]
+function Activity122Config:getChapterEpisodeList(actId, chapterId)
+	if self._chapterEpisodeListDict[actId] then
+		return self._chapterEpisodeListDict[actId][chapterId]
 	end
 
-	local var_8_0 = arg_8_0:getEpisodeList(arg_8_1)
+	local episodeCfgList = self:getEpisodeList(actId)
 
-	if not var_8_0 then
+	if not episodeCfgList then
 		return nil
 	end
 
-	local var_8_1 = {}
+	local listDict = {}
 
-	arg_8_0._chapterEpisodeListDict[arg_8_1] = var_8_1
+	self._chapterEpisodeListDict[actId] = listDict
 
-	local var_8_2
+	local templist
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_3 = var_8_1[iter_8_1.chapterId]
+	for i, episodeCfg in ipairs(episodeCfgList) do
+		templist = listDict[episodeCfg.chapterId]
 
-		if not var_8_3 then
-			var_8_3 = {}
-			var_8_1[iter_8_1.chapterId] = var_8_3
+		if not templist then
+			templist = {}
+			listDict[episodeCfg.chapterId] = templist
 		end
 
-		table.insert(var_8_3, iter_8_1)
+		table.insert(templist, episodeCfg)
 	end
 
-	return var_8_1[arg_8_2]
+	return listDict[chapterId]
 end
 
-function var_0_0.getEffectCo(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0._act122EffectCfg and arg_9_0._act122EffectCfg.configDict[arg_9_2]
+function Activity122Config:getEffectCo(actId, id)
+	return self._act122EffectCfg and self._act122EffectCfg.configDict[id]
 end
 
-function var_0_0.getTipsCfg(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_0._act122Tips.configDict[arg_10_1] then
-		return arg_10_0._act122Tips.configDict[arg_10_1][arg_10_2]
+function Activity122Config:getTipsCfg(actId, id)
+	if self._act122Tips.configDict[actId] then
+		return self._act122Tips.configDict[actId][id]
 	end
 
 	return nil
 end
 
-function var_0_0.getChapterEpisodeId(arg_11_0, arg_11_1)
+function Activity122Config:getChapterEpisodeId(actId)
 	return Activity1_3ChessEnum.chapterId, Activity1_3ChessEnum.episodeId
 end
 
-function var_0_0.getEpisodeList(arg_12_0, arg_12_1)
-	if arg_12_0._episodeListDict[arg_12_1] then
-		return arg_12_0._episodeListDict[arg_12_1], arg_12_0._chapterIdListDict[arg_12_1]
+function Activity122Config:getEpisodeList(actId)
+	if self._episodeListDict[actId] then
+		return self._episodeListDict[actId], self._chapterIdListDict[actId]
 	end
 
-	local var_12_0 = {}
-	local var_12_1 = {}
+	local episodeList = {}
+	local chapterIdList = {}
 
-	arg_12_0._episodeListDict[arg_12_1] = var_12_0
-	arg_12_0._chapterIdListDict[arg_12_1] = var_12_1
+	self._episodeListDict[actId] = episodeList
+	self._chapterIdListDict[actId] = chapterIdList
 
-	if arg_12_0._act122Episode and arg_12_0._act122Episode.configDict[arg_12_1] then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0._act122Episode.configDict[arg_12_1]) do
-			var_12_0[#var_12_0 + 1] = iter_12_1
+	if self._act122Episode and self._act122Episode.configDict[actId] then
+		for k, v in pairs(self._act122Episode.configDict[actId]) do
+			episodeList[#episodeList + 1] = v
 
-			if not tabletool.indexOf(var_12_1, iter_12_1.chapterId) and iter_12_1.chapterId then
-				var_12_1[#var_12_1 + 1] = iter_12_1.chapterId
+			if not tabletool.indexOf(chapterIdList, v.chapterId) and v.chapterId then
+				chapterIdList[#chapterIdList + 1] = v.chapterId
 			end
 		end
 
-		table.sort(var_12_0, var_0_0.sortEpisode)
-		table.sort(var_12_1, var_0_0.sortChapter)
+		table.sort(episodeList, Activity122Config.sortEpisode)
+		table.sort(chapterIdList, Activity122Config.sortChapter)
 	end
 
-	return var_12_0, var_12_1
+	return episodeList, chapterIdList
 end
 
-function var_0_0.sortEpisode(arg_13_0, arg_13_1)
-	if arg_13_0.id ~= arg_13_1.id then
-		return arg_13_0.id < arg_13_1.id
-	end
-end
-
-function var_0_0.sortChapter(arg_14_0, arg_14_1)
-	if arg_14_0 ~= arg_14_1 then
-		return arg_14_0 < arg_14_1
+function Activity122Config.sortEpisode(item1, item2)
+	if item1.id ~= item2.id then
+		return item1.id < item2.id
 	end
 end
 
-function var_0_0.getTaskList(arg_15_0)
-	if arg_15_0._task_list then
-		return arg_15_0._task_list
+function Activity122Config.sortChapter(item1, item2)
+	if item1 ~= item2 then
+		return item1 < item2
+	end
+end
+
+function Activity122Config:getTaskList()
+	if self._task_list then
+		return self._task_list
 	end
 
-	arg_15_0._task_list = {}
+	self._task_list = {}
 
-	for iter_15_0, iter_15_1 in pairs(lua_activity122_task.configDict) do
-		if Activity122Model.instance:getCurActivityID() == iter_15_1.activityId then
-			table.insert(arg_15_0._task_list, iter_15_1)
+	for k, v in pairs(lua_activity122_task.configDict) do
+		if Activity122Model.instance:getCurActivityID() == v.activityId then
+			table.insert(self._task_list, v)
 		end
 	end
 
-	return arg_15_0._task_list
+	return self._task_list
 end
 
-function var_0_0._createStoryCo(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+function Activity122Config:_createStoryCo(storyId, cfg, typeId)
 	return {
-		storyId = arg_16_1,
-		typeId = arg_16_3,
-		config = arg_16_2
+		storyId = storyId,
+		typeId = typeId,
+		config = cfg
 	}
 end
 
-function var_0_0._isChessTipsCfg(arg_17_0, arg_17_1)
-	local var_17_0 = VersionActivity1_3Enum.ActivityId.Act304
+function Activity122Config:_isChessTipsCfg(storyId)
+	local actId = VersionActivity1_3Enum.ActivityId.Act304
 
-	return arg_17_0:getTipsCfg(var_17_0, arg_17_1) ~= nil
+	return self:getTipsCfg(actId, storyId) ~= nil
 end
 
-function var_0_0.getEpisodeStoryList(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_0._episodeStoryListDict then
-		arg_18_0:_initStroyCfg()
+function Activity122Config:getEpisodeStoryList(actId, episodeId)
+	if not self._episodeStoryListDict then
+		self:_initStroyCfg()
 	end
 
-	return arg_18_0._episodeStoryListDict[arg_18_1] and arg_18_0._episodeStoryListDict[arg_18_1][arg_18_2]
+	return self._episodeStoryListDict[actId] and self._episodeStoryListDict[actId][episodeId]
 end
 
-function var_0_0._initStroyCfg(arg_19_0)
-	arg_19_0._episodeStoryListDict = {}
+function Activity122Config:_initStroyCfg()
+	self._episodeStoryListDict = {}
 
-	local var_19_0 = {}
+	local tempStroyList = {}
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._act122StroyCfg.configList) do
-		local var_19_1 = iter_19_1.activityId
-		local var_19_2 = arg_19_0._episodeStoryListDict[var_19_1]
+	for i, cfg in ipairs(self._act122StroyCfg.configList) do
+		local tempActId = cfg.activityId
+		local actDict = self._episodeStoryListDict[tempActId]
 
-		if not var_19_2 then
-			var_19_2 = {}
-			arg_19_0._episodeStoryListDict[var_19_1] = var_19_2
+		if not actDict then
+			actDict = {}
+			self._episodeStoryListDict[tempActId] = actDict
 		end
 
-		local var_19_3 = var_19_2[iter_19_1.episodeId]
+		local stroyList = actDict[cfg.episodeId]
 
-		if not var_19_3 then
-			var_19_3 = {}
-			var_19_2[iter_19_1.episodeId] = var_19_3
-			var_19_0[#var_19_0 + 1] = var_19_3
+		if not stroyList then
+			stroyList = {}
+			actDict[cfg.episodeId] = stroyList
+			tempStroyList[#tempStroyList + 1] = stroyList
 		end
 
-		table.insert(var_19_3, iter_19_1)
+		table.insert(stroyList, cfg)
 	end
 
-	for iter_19_2, iter_19_3 in ipairs(var_19_0) do
-		table.sort(iter_19_3, var_0_0.sortStory)
-	end
-end
-
-function var_0_0.sortStory(arg_20_0, arg_20_1)
-	if arg_20_0.order ~= arg_20_1.order then
-		return arg_20_0.order < arg_20_1.order
+	for _, stroyCfgList in ipairs(tempStroyList) do
+		table.sort(stroyCfgList, Activity122Config.sortStory)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function Activity122Config.sortStory(a, b)
+	if a.order ~= b.order then
+		return a.order < b.order
+	end
+end
 
-return var_0_0
+Activity122Config.instance = Activity122Config.New()
+
+return Activity122Config

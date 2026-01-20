@@ -1,156 +1,158 @@
-﻿module("modules.logic.gm.view.GMFightEntityBuffItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightEntityBuffItem.lua
 
-local var_0_0 = class("GMFightEntityBuffItem", ListScrollCell)
+module("modules.logic.gm.view.GMFightEntityBuffItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._id = gohelper.findChildTextMeshInputField(arg_1_1, "id")
-	arg_1_0._name = gohelper.findChildText(arg_1_1, "name")
-	arg_1_0._type = gohelper.findChildText(arg_1_1, "type")
-	arg_1_0._set = gohelper.findChildText(arg_1_1, "set")
-	arg_1_0._duration = gohelper.findChildTextMeshInputField(arg_1_1, "duration")
-	arg_1_0._count = gohelper.findChildTextMeshInputField(arg_1_1, "count")
-	arg_1_0._layer = gohelper.findChildTextMeshInputField(arg_1_1, "layer")
-	arg_1_0._btnDel = gohelper.findChildButtonWithAudio(arg_1_1, "btnDel")
+local GMFightEntityBuffItem = class("GMFightEntityBuffItem", ListScrollCell)
+
+function GMFightEntityBuffItem:init(go)
+	self._go = go
+	self._id = gohelper.findChildTextMeshInputField(go, "id")
+	self._name = gohelper.findChildText(go, "name")
+	self._type = gohelper.findChildText(go, "type")
+	self._set = gohelper.findChildText(go, "set")
+	self._duration = gohelper.findChildTextMeshInputField(go, "duration")
+	self._count = gohelper.findChildTextMeshInputField(go, "count")
+	self._layer = gohelper.findChildTextMeshInputField(go, "layer")
+	self._btnDel = gohelper.findChildButtonWithAudio(go, "btnDel")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnDel:AddClickListener(arg_2_0._onClickDel, arg_2_0)
-	arg_2_0._duration:AddOnEndEdit(arg_2_0._onAddEditDuration, arg_2_0)
-	arg_2_0._count:AddOnEndEdit(arg_2_0._onAddEditCount, arg_2_0)
-	arg_2_0._layer:AddOnEndEdit(arg_2_0._onAddEditLayer, arg_2_0)
+function GMFightEntityBuffItem:addEventListeners()
+	self._btnDel:AddClickListener(self._onClickDel, self)
+	self._duration:AddOnEndEdit(self._onAddEditDuration, self)
+	self._count:AddOnEndEdit(self._onAddEditCount, self)
+	self._layer:AddOnEndEdit(self._onAddEditLayer, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnDel:RemoveClickListener()
-	arg_3_0._duration:RemoveOnEndEdit()
-	arg_3_0._count:RemoveOnEndEdit()
-	arg_3_0._layer:RemoveOnEndEdit()
+function GMFightEntityBuffItem:removeEventListeners()
+	self._btnDel:RemoveClickListener()
+	self._duration:RemoveOnEndEdit()
+	self._count:RemoveOnEndEdit()
+	self._layer:RemoveOnEndEdit()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function GMFightEntityBuffItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_4_0 = lua_skill_buff.configDict[arg_4_0._mo.buffId]
-	local var_4_1 = var_4_0 and lua_skill_bufftype.configDict[var_4_0.typeId]
+	local buffCO = lua_skill_buff.configDict[self._mo.buffId]
+	local buffTypeCO = buffCO and lua_skill_bufftype.configDict[buffCO.typeId]
 
-	arg_4_0._id:SetText(tostring(arg_4_0._mo.buffId))
+	self._id:SetText(tostring(self._mo.buffId))
 
-	arg_4_0._name.text = var_4_0 and var_4_0.name or ""
-	arg_4_0._type.text = var_4_0 and tostring(var_4_0.typeId) or ""
-	arg_4_0._set.text = var_4_1 and tostring(var_4_1.type) or ""
+	self._name.text = buffCO and buffCO.name or ""
+	self._type.text = buffCO and tostring(buffCO.typeId) or ""
+	self._set.text = buffTypeCO and tostring(buffTypeCO.type) or ""
 
-	arg_4_0._duration:SetText(tostring(arg_4_0._mo.duration) or "")
-	arg_4_0._count:SetText(tostring(arg_4_0._mo.count) or "")
-	arg_4_0._layer:SetText(tostring(arg_4_0._mo.layer) or "")
+	self._duration:SetText(tostring(self._mo.duration) or "")
+	self._count:SetText(tostring(self._mo.count) or "")
+	self._layer:SetText(tostring(self._mo.layer) or "")
 end
 
-function var_0_0._onClickDel(arg_5_0)
-	local var_5_0 = lua_skill_buff.configDict[arg_5_0._mo.buffId]
+function GMFightEntityBuffItem:_onClickDel()
+	local buffCO = lua_skill_buff.configDict[self._mo.buffId]
 
-	if var_5_0 then
-		GameFacade.showToast(ToastEnum.IconId, "del buff " .. var_5_0.name)
+	if buffCO then
+		GameFacade.showToast(ToastEnum.IconId, "del buff " .. buffCO.name)
 	else
 		GameFacade.showToast(ToastEnum.IconId, "buff config not exist")
 	end
 
-	local var_5_1 = GMFightEntityModel.instance.entityMO
+	local entityMO = GMFightEntityModel.instance.entityMO
 
-	GMRpc.instance:sendGMRequest(string.format("fightDelBuff %s %s", tostring(var_5_1.id), tostring(arg_5_0._mo.uid)))
-	var_5_1:delBuff(arg_5_0._mo.uid)
+	GMRpc.instance:sendGMRequest(string.format("fightDelBuff %s %s", tostring(entityMO.id), tostring(self._mo.uid)))
+	entityMO:delBuff(self._mo.uid)
 
-	local var_5_2 = FightHelper.getEntity(var_5_1.id)
+	local entity = FightHelper.getEntity(entityMO.id)
 
-	if var_5_2 and var_5_2.buff then
-		var_5_2.buff:delBuff(arg_5_0._mo.uid)
+	if entity and entity.buff then
+		entity.buff:delBuff(self._mo.uid)
 	end
 
-	local var_5_3 = FightLocalDataMgr.instance.entityMgr:getById(var_5_1.id)
+	local localData = FightLocalDataMgr.instance.entityMgr:getById(entityMO.id)
 
-	if var_5_3 then
-		var_5_3:delBuff(arg_5_0._mo.uid)
+	if localData then
+		localData:delBuff(self._mo.uid)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_5_1.id, FightEnum.EffectType.BUFFDEL, arg_5_0._mo.buffId, arg_5_0._mo.uid, 0)
-	FightRpc.instance:sendEntityInfoRequest(var_5_1.id)
+	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFDEL, self._mo.buffId, self._mo.uid, 0, self._mo)
+	FightRpc.instance:sendEntityInfoRequest(entityMO.id)
 end
 
-function var_0_0._onAddEditDuration(arg_6_0, arg_6_1)
-	local var_6_0 = tonumber(arg_6_1)
+function GMFightEntityBuffItem:_onAddEditDuration(inputStr)
+	local targetDuration = tonumber(inputStr)
 
-	if var_6_0 and (var_6_0 == -1 or var_6_0 > 0) then
-		local var_6_1 = GMFightEntityModel.instance.entityMO
+	if targetDuration and (targetDuration == -1 or targetDuration > 0) then
+		local entityMO = GMFightEntityModel.instance.entityMO
 
-		arg_6_0._mo.duration = var_6_0
+		self._mo.duration = targetDuration
 
-		local var_6_2 = FightLocalDataMgr.instance.entityMgr:getById(var_6_1.id)
+		local localData = FightLocalDataMgr.instance.entityMgr:getById(entityMO.id)
 
-		if var_6_2 then
-			local var_6_3 = var_6_2:getBuffMO(arg_6_0._mo.uid)
+		if localData then
+			local buffMO = localData:getBuffMO(self._mo.uid)
 
-			if var_6_3 then
-				var_6_3.duration = var_6_0
+			if buffMO then
+				buffMO.duration = targetDuration
 			end
 		end
 
-		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_6_1.id, arg_6_0._mo.id, arg_6_0._mo.count, var_6_0, arg_6_0._mo.layer))
-		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_6_1.id, FightEnum.EffectType.BUFFUPDATE, arg_6_0._mo.buffId, arg_6_0._mo.uid, 0)
+		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", entityMO.id, self._mo.id, self._mo.count, targetDuration, self._mo.layer))
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFUPDATE, self._mo.buffId, self._mo.uid, 0)
 	else
-		arg_6_0._duration:SetText(tostring(arg_6_0._mo.duration) or "")
+		self._duration:SetText(tostring(self._mo.duration) or "")
 		GameFacade.showToast(ToastEnum.IconId, "修正数值错误")
 	end
 end
 
-function var_0_0._onAddEditCount(arg_7_0, arg_7_1)
-	local var_7_0 = tonumber(arg_7_1)
+function GMFightEntityBuffItem:_onAddEditCount(inputStr)
+	local targetCount = tonumber(inputStr)
 
-	if var_7_0 and var_7_0 > 0 then
-		local var_7_1 = GMFightEntityModel.instance.entityMO
+	if targetCount and targetCount > 0 then
+		local entityMO = GMFightEntityModel.instance.entityMO
 
-		arg_7_0._mo.count = var_7_0
+		self._mo.count = targetCount
 
-		local var_7_2 = FightLocalDataMgr.instance.entityMgr:getById(var_7_1.id)
+		local localData = FightLocalDataMgr.instance.entityMgr:getById(entityMO.id)
 
-		if var_7_2 then
-			local var_7_3 = var_7_2:getBuffMO(arg_7_0._mo.uid)
+		if localData then
+			local buffMO = localData:getBuffMO(self._mo.uid)
 
-			if var_7_3 then
-				var_7_3.count = var_7_0
+			if buffMO then
+				buffMO.count = targetCount
 			end
 		end
 
-		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_7_1.id, arg_7_0._mo.id, var_7_0, arg_7_0._mo.duration, arg_7_0._mo.layer))
-		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_7_1.id, FightEnum.EffectType.BUFFUPDATE, arg_7_0._mo.buffId, arg_7_0._mo.uid, 0)
+		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", entityMO.id, self._mo.id, targetCount, self._mo.duration, self._mo.layer))
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFUPDATE, self._mo.buffId, self._mo.uid, 0)
 	else
-		arg_7_0._count:SetText(tostring(arg_7_0._mo.count) or "")
+		self._count:SetText(tostring(self._mo.count) or "")
 		GameFacade.showToast(ToastEnum.IconId, "修正数值错误")
 	end
 end
 
-function var_0_0._onAddEditLayer(arg_8_0, arg_8_1)
-	local var_8_0 = tonumber(arg_8_1)
+function GMFightEntityBuffItem:_onAddEditLayer(inputStr)
+	local targetLayer = tonumber(inputStr)
 
-	if var_8_0 and var_8_0 > 0 then
-		local var_8_1 = GMFightEntityModel.instance.entityMO
+	if targetLayer and targetLayer > 0 then
+		local entityMO = GMFightEntityModel.instance.entityMO
 
-		arg_8_0._mo.layer = var_8_0
+		self._mo.layer = targetLayer
 
-		local var_8_2 = FightLocalDataMgr.instance.entityMgr:getById(var_8_1.id)
+		local localData = FightLocalDataMgr.instance.entityMgr:getById(entityMO.id)
 
-		if var_8_2 then
-			local var_8_3 = var_8_2:getBuffMO(arg_8_0._mo.uid)
+		if localData then
+			local buffMO = localData:getBuffMO(self._mo.uid)
 
-			if var_8_3 then
-				var_8_3.layer = var_8_0
+			if buffMO then
+				buffMO.layer = targetLayer
 			end
 		end
 
-		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_8_1.id, arg_8_0._mo.id, arg_8_0._mo.count, arg_8_0._mo.duration, var_8_0))
-		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_8_1.id, FightEnum.EffectType.BUFFUPDATE, arg_8_0._mo.buffId, arg_8_0._mo.uid, 0)
+		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", entityMO.id, self._mo.id, self._mo.count, self._mo.duration, targetLayer))
+		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFUPDATE, self._mo.buffId, self._mo.uid, 0)
 	else
-		arg_8_0._layer:SetText(tostring(arg_8_0._mo.layer) or "")
+		self._layer:SetText(tostring(self._mo.layer) or "")
 		GameFacade.showToast(ToastEnum.IconId, "修正数值错误")
 	end
 end
 
-return var_0_0
+return GMFightEntityBuffItem

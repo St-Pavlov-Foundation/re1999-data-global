@@ -1,247 +1,249 @@
-﻿module("modules.logic.rouge.dlc.103.view.RougeBossCollectionDropItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/103/view/RougeBossCollectionDropItem.lua
 
-local var_0_0 = class("RougeBossCollectionDropItem", UserDataDispose)
+module("modules.logic.rouge.dlc.103.view.RougeBossCollectionDropItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local RougeBossCollectionDropItem = class("RougeBossCollectionDropItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.parent = arg_1_2
+function RougeBossCollectionDropItem:init(go, parent)
+	self:__onInit()
 
-	arg_1_0:_editableInitView()
+	self.go = go
+	self.parent = parent
+
+	self:_editableInitView()
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0.animator = arg_2_0.go:GetComponent(gohelper.Type_Animator)
-	arg_2_0._goselect = gohelper.findChild(arg_2_0.go, "#go_select")
-	arg_2_0._goenchantlist = gohelper.findChild(arg_2_0.go, "#go_enchantlist")
-	arg_2_0._gohole = gohelper.findChild(arg_2_0.go, "#go_enchantlist/#go_hole")
-	arg_2_0._gridLayout = gohelper.findChild(arg_2_0.go, "Grid")
-	arg_2_0._gogriditem = gohelper.findChild(arg_2_0.go, "Grid/#go_grid")
-	arg_2_0._simagecollection = gohelper.findChildSingleImage(arg_2_0.go, "#simage_collection")
-	arg_2_0._txtname = gohelper.findChildText(arg_2_0.go, "#txt_name")
-	arg_2_0._scrollreward = gohelper.findChild(arg_2_0.go, "scroll_desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_2_0._godescContent = gohelper.findChild(arg_2_0.go, "scroll_desc/Viewport/#go_descContent")
-	arg_2_0._scrollbossattr = gohelper.findChildScrollRect(arg_2_0.go, "#scroll_bossattr")
-	arg_2_0._gobossDescContent = gohelper.findChild(arg_2_0.go, "#scroll_bossattr/Viewport/#go_bossDescContent")
-	arg_2_0._txtbossattrdesc = gohelper.findChildText(arg_2_0.go, "#scroll_bossattr/Viewport/#go_bossDescContent/go_bossattritem/#txt_desc")
-	arg_2_0._gotags = gohelper.findChild(arg_2_0.go, "tagcontent/tags")
-	arg_2_0._gotagitem = gohelper.findChild(arg_2_0.go, "tagcontent/tags/#go_tagitem")
-	arg_2_0._gotips = gohelper.findChild(arg_2_0.go, "#go_tips")
-	arg_2_0._gotipscontent = gohelper.findChild(arg_2_0.go, "#go_tips/#go_tipscontent")
-	arg_2_0._gotipitem = gohelper.findChild(arg_2_0.go, "#go_tips/#go_tipscontent/#txt_tagitem")
-	arg_2_0._btnopentagtips = gohelper.findChildButtonWithAudio(arg_2_0.go, "tagcontent/#btn_opentagtips")
-	arg_2_0._btnclosetagtips = gohelper.findChildButtonWithAudio(arg_2_0.go, "#go_tips/#btn_closetips")
-	arg_2_0._btnfresh = gohelper.findChildButtonWithAudio(arg_2_0.go, "#scroll_bossattr/#btn_fresh")
-	arg_2_0._gofreshicon_drak = gohelper.findChild(arg_2_0.go, "#scroll_bossattr/#btn_fresh/dark")
-	arg_2_0._gofreshicon_light = gohelper.findChild(arg_2_0.go, "#scroll_bossattr/#btn_fresh/light")
-	arg_2_0.holeGoList = arg_2_0:getUserDataTb_()
+function RougeBossCollectionDropItem:_editableInitView()
+	self.animator = self.go:GetComponent(gohelper.Type_Animator)
+	self._goselect = gohelper.findChild(self.go, "#go_select")
+	self._goenchantlist = gohelper.findChild(self.go, "#go_enchantlist")
+	self._gohole = gohelper.findChild(self.go, "#go_enchantlist/#go_hole")
+	self._gridLayout = gohelper.findChild(self.go, "Grid")
+	self._gogriditem = gohelper.findChild(self.go, "Grid/#go_grid")
+	self._simagecollection = gohelper.findChildSingleImage(self.go, "#simage_collection")
+	self._txtname = gohelper.findChildText(self.go, "#txt_name")
+	self._scrollreward = gohelper.findChild(self.go, "scroll_desc"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._godescContent = gohelper.findChild(self.go, "scroll_desc/Viewport/#go_descContent")
+	self._scrollbossattr = gohelper.findChildScrollRect(self.go, "#scroll_bossattr")
+	self._gobossDescContent = gohelper.findChild(self.go, "#scroll_bossattr/Viewport/#go_bossDescContent")
+	self._txtbossattrdesc = gohelper.findChildText(self.go, "#scroll_bossattr/Viewport/#go_bossDescContent/go_bossattritem/#txt_desc")
+	self._gotags = gohelper.findChild(self.go, "tagcontent/tags")
+	self._gotagitem = gohelper.findChild(self.go, "tagcontent/tags/#go_tagitem")
+	self._gotips = gohelper.findChild(self.go, "#go_tips")
+	self._gotipscontent = gohelper.findChild(self.go, "#go_tips/#go_tipscontent")
+	self._gotipitem = gohelper.findChild(self.go, "#go_tips/#go_tipscontent/#txt_tagitem")
+	self._btnopentagtips = gohelper.findChildButtonWithAudio(self.go, "tagcontent/#btn_opentagtips")
+	self._btnclosetagtips = gohelper.findChildButtonWithAudio(self.go, "#go_tips/#btn_closetips")
+	self._btnfresh = gohelper.findChildButtonWithAudio(self.go, "#scroll_bossattr/#btn_fresh")
+	self._gofreshicon_drak = gohelper.findChild(self.go, "#scroll_bossattr/#btn_fresh/dark")
+	self._gofreshicon_light = gohelper.findChild(self.go, "#scroll_bossattr/#btn_fresh/light")
+	self.holeGoList = self:getUserDataTb_()
 
-	table.insert(arg_2_0.holeGoList, arg_2_0._gohole)
+	table.insert(self.holeGoList, self._gohole)
 
-	arg_2_0.gridList = arg_2_0:getUserDataTb_()
-	arg_2_0._itemInstTab = arg_2_0:getUserDataTb_()
-	arg_2_0.click = gohelper.getClickWithDefaultAudio(arg_2_0.go)
+	self.gridList = self:getUserDataTb_()
+	self._itemInstTab = self:getUserDataTb_()
+	self.click = gohelper.getClickWithDefaultAudio(self.go)
 
-	arg_2_0.click:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
-	arg_2_0._btnopentagtips:AddClickListener(arg_2_0._opentagtipsOnClick, arg_2_0)
-	arg_2_0._btnclosetagtips:AddClickListener(arg_2_0._closetagtipsOnClick, arg_2_0)
-	arg_2_0._btnfresh:AddClickListener(arg_2_0._btnfreshOnClick, arg_2_0)
+	self.click:AddClickListener(self.onClickSelf, self)
+	self._btnopentagtips:AddClickListener(self._opentagtipsOnClick, self)
+	self._btnclosetagtips:AddClickListener(self._closetagtipsOnClick, self)
+	self._btnfresh:AddClickListener(self._btnfreshOnClick, self)
 
-	arg_2_0._bossviewportclick = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#scroll_bossattr/Viewport")
+	self._bossviewportclick = gohelper.findChildClickWithDefaultAudio(self.go, "#scroll_bossattr/Viewport")
 
-	arg_2_0._bossviewportclick:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
+	self._bossviewportclick:AddClickListener(self.onClickSelf, self)
 
-	arg_2_0._bossdescclick = gohelper.getClickWithDefaultAudio(arg_2_0._txtbossattrdesc.gameObject)
+	self._bossdescclick = gohelper.getClickWithDefaultAudio(self._txtbossattrdesc.gameObject)
 
-	arg_2_0._bossdescclick:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
-	arg_2_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectDropChange, arg_2_0.onSelectDropChange, arg_2_0)
-	arg_2_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_2_0._onSwitchCollectionInfoType, arg_2_0)
-	arg_2_0:addEventCb(RougeController.instance, RougeEvent.ShowMonsterRuleDesc, arg_2_0.switchShowMonsterRuleDesc, arg_2_0)
+	self._bossdescclick:AddClickListener(self.onClickSelf, self)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectDropChange, self.onSelectDropChange, self)
+	self:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, self._onSwitchCollectionInfoType, self)
+	self:addEventCb(RougeController.instance, RougeEvent.ShowMonsterRuleDesc, self.switchShowMonsterRuleDesc, self)
 end
 
-function var_0_0.onClickSelf(arg_3_0)
-	arg_3_0.parent:selectPos(arg_3_0.index)
-	arg_3_0:refreshSelect()
+function RougeBossCollectionDropItem:onClickSelf()
+	self.parent:selectPos(self.index)
+	self:refreshSelect()
 end
 
-function var_0_0._opentagtipsOnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._gotips, true)
-	RougeCollectionHelper.loadCollectionAndEnchantTagNames(arg_4_0.collectionId, nil, arg_4_0._gotipscontent, arg_4_0._gotipitem)
+function RougeBossCollectionDropItem:_opentagtipsOnClick()
+	gohelper.setActive(self._gotips, true)
+	RougeCollectionHelper.loadCollectionAndEnchantTagNames(self.collectionId, nil, self._gotipscontent, self._gotipitem)
 end
 
-function var_0_0._closetagtipsOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._gotips, false)
+function RougeBossCollectionDropItem:_closetagtipsOnClick()
+	gohelper.setActive(self._gotips, false)
 end
 
-function var_0_0._btnfreshOnClick(arg_6_0)
-	if not arg_6_0._canFresh then
+function RougeBossCollectionDropItem:_btnfreshOnClick()
+	if not self._canFresh then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.RefreshRougeBossCollection)
-	arg_6_0.animator:Play("open", 0, 0)
+	self.animator:Play("open", 0, 0)
 
-	local var_6_0 = RougeModel.instance:getSeason()
+	local season = RougeModel.instance:getSeason()
 
-	RougeRpc.instance:sendRougeRefreshMonsterRuleRequest(var_6_0, arg_6_0.index)
+	RougeRpc.instance:sendRougeRefreshMonsterRuleRequest(season, self.index)
 end
 
-function var_0_0.onSelectDropChange(arg_7_0)
-	arg_7_0.select = arg_7_0.parent:isSelect(arg_7_0.index)
+function RougeBossCollectionDropItem:onSelectDropChange()
+	self.select = self.parent:isSelect(self.index)
 
-	arg_7_0:refreshSelect()
+	self:refreshSelect()
 end
 
-function var_0_0.setParentScroll(arg_8_0, arg_8_1)
-	arg_8_0._scrollreward.parentGameObject = arg_8_1
+function RougeBossCollectionDropItem:setParentScroll(parentScroll)
+	self._scrollreward.parentGameObject = parentScroll
 end
 
-function var_0_0.update(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	arg_9_0.select = false
-	arg_9_0.index = arg_9_1
-	arg_9_0.collectionId = tonumber(arg_9_2)
-	arg_9_0.collectionCo = RougeCollectionConfig.instance:getCollectionCfg(arg_9_0.collectionId)
-	arg_9_0.monsterRuleId = tonumber(arg_9_3)
-	arg_9_0.monsterRuleCo = RougeDLCConfig103.instance:getMonsterRuleConfig(arg_9_0.monsterRuleId)
-	arg_9_0.isShowMonsterRule = arg_9_4
+function RougeBossCollectionDropItem:update(index, collectionId, monsterRuleId, isShowMonsterRule)
+	self.select = false
+	self.index = index
+	self.collectionId = tonumber(collectionId)
+	self.collectionCo = RougeCollectionConfig.instance:getCollectionCfg(self.collectionId)
+	self.monsterRuleId = tonumber(monsterRuleId)
+	self.monsterRuleCo = RougeDLCConfig103.instance:getMonsterRuleConfig(self.monsterRuleId)
+	self.isShowMonsterRule = isShowMonsterRule
 
-	arg_9_0:refreshHole()
-	RougeCollectionHelper.loadShapeGrid(arg_9_0.collectionId, arg_9_0._gridLayout, arg_9_0._gogriditem, arg_9_0.gridList)
-	RougeCollectionHelper.loadCollectionTags(arg_9_0.collectionId, arg_9_0._gotags, arg_9_0._gotagitem)
-	arg_9_0._simagecollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_9_0.collectionId))
+	self:refreshHole()
+	RougeCollectionHelper.loadShapeGrid(self.collectionId, self._gridLayout, self._gogriditem, self.gridList)
+	RougeCollectionHelper.loadCollectionTags(self.collectionId, self._gotags, self._gotagitem)
+	self._simagecollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(self.collectionId))
 
-	arg_9_0._txtname.text = RougeCollectionConfig.instance:getCollectionName(arg_9_0.collectionId)
+	self._txtname.text = RougeCollectionConfig.instance:getCollectionName(self.collectionId)
 
-	arg_9_0:refreshCollectionDesc()
-	arg_9_0:refreshSelect()
+	self:refreshCollectionDesc()
+	self:refreshSelect()
 end
 
-function var_0_0.refreshHole(arg_10_0)
-	local var_10_0 = arg_10_0.collectionCo.holeNum
+function RougeBossCollectionDropItem:refreshHole()
+	local holeNum = self.collectionCo.holeNum
 
-	gohelper.setActive(arg_10_0._goenchantlist, var_10_0 > 0)
+	gohelper.setActive(self._goenchantlist, holeNum > 0)
 
-	if var_10_0 > 1 then
-		for iter_10_0 = 1, var_10_0 do
-			local var_10_1 = arg_10_0.holeGoList[iter_10_0]
+	if holeNum > 1 then
+		for i = 1, holeNum do
+			local hole = self.holeGoList[i]
 
-			if not var_10_1 then
-				var_10_1 = gohelper.cloneInPlace(arg_10_0._gohole)
+			if not hole then
+				hole = gohelper.cloneInPlace(self._gohole)
 
-				table.insert(arg_10_0.holeGoList, var_10_1)
+				table.insert(self.holeGoList, hole)
 			end
 
-			gohelper.setActive(var_10_1, true)
+			gohelper.setActive(hole, true)
 		end
 
-		for iter_10_1 = var_10_0 + 1, #arg_10_0.holeGoList do
-			gohelper.setActive(arg_10_0.holeGoList[iter_10_1], false)
+		for i = holeNum + 1, #self.holeGoList do
+			gohelper.setActive(self.holeGoList[i], false)
 		end
 	end
 end
 
-function var_0_0.refreshEffectDesc(arg_11_0)
-	arg_11_0._allClicks = arg_11_0._allClicks or arg_11_0:getUserDataTb_()
-	arg_11_0._clickLen = arg_11_0._clickLen or 0
+function RougeBossCollectionDropItem:refreshEffectDesc()
+	self._allClicks = self._allClicks or self:getUserDataTb_()
+	self._clickLen = self._clickLen or 0
 
-	for iter_11_0 = 1, arg_11_0._clickLen do
-		arg_11_0._allClicks[iter_11_0]:RemoveClickListener()
+	for i = 1, self._clickLen do
+		self._allClicks[i]:RemoveClickListener()
 	end
 
-	arg_11_0._clickLen = 0
+	self._clickLen = 0
 
-	RougeCollectionDescHelper.setCollectionDescInfos2(arg_11_0.collectionId, nil, arg_11_0._godescContent, arg_11_0._itemInstTab)
+	RougeCollectionDescHelper.setCollectionDescInfos2(self.collectionId, nil, self._godescContent, self._itemInstTab)
 
-	local var_11_0 = arg_11_0._scrollreward.gameObject:GetComponentsInChildren(typeof(SLFramework.UGUI.UIClickListener), true)
+	local clicks = self._scrollreward.gameObject:GetComponentsInChildren(typeof(SLFramework.UGUI.UIClickListener), true)
 
-	arg_11_0._clickLen = var_11_0.Length
+	self._clickLen = clicks.Length
 
-	for iter_11_1 = 0, arg_11_0._clickLen - 1 do
-		arg_11_0._allClicks[iter_11_1 + 1] = var_11_0[iter_11_1]
+	for i = 0, self._clickLen - 1 do
+		self._allClicks[i + 1] = clicks[i]
 
-		arg_11_0._allClicks[iter_11_1 + 1]:AddClickListener(arg_11_0.onClickSelf, arg_11_0)
-		gohelper.addUIClickAudio(arg_11_0._allClicks[iter_11_1 + 1].gameObject)
+		self._allClicks[i + 1]:AddClickListener(self.onClickSelf, self)
+		gohelper.addUIClickAudio(self._allClicks[i + 1].gameObject)
 	end
 end
 
-function var_0_0.refreshBossAttrDesc(arg_12_0)
-	local var_12_0 = arg_12_0.monsterRuleCo and arg_12_0.monsterRuleCo.desc or ""
+function RougeBossCollectionDropItem:refreshBossAttrDesc()
+	local attrDesc = self.monsterRuleCo and self.monsterRuleCo.desc or ""
 
-	arg_12_0._txtbossattrdesc.text = SkillHelper.addLink(var_12_0)
+	self._txtbossattrdesc.text = SkillHelper.addLink(attrDesc)
 
-	SkillHelper.addHyperLinkClick(arg_12_0._txtbossattrdesc)
+	SkillHelper.addHyperLinkClick(self._txtbossattrdesc)
 end
 
-function var_0_0.refreshFreshBtn(arg_13_0)
-	local var_13_0 = RougeMapModel.instance:getMonsterRuleRemainCanFreshNum()
+function RougeBossCollectionDropItem:refreshFreshBtn()
+	local remainCanFreshNum = RougeMapModel.instance:getMonsterRuleRemainCanFreshNum()
 
-	arg_13_0._canFresh = var_13_0 and var_13_0 > 0
+	self._canFresh = remainCanFreshNum and remainCanFreshNum > 0
 
-	gohelper.setActive(arg_13_0._gofreshicon_light, arg_13_0._canFresh)
-	gohelper.setActive(arg_13_0._gofreshicon_drak, not arg_13_0._canFresh)
+	gohelper.setActive(self._gofreshicon_light, self._canFresh)
+	gohelper.setActive(self._gofreshicon_drak, not self._canFresh)
 end
 
-function var_0_0.refreshCollectionDesc(arg_14_0)
-	gohelper.setActive(arg_14_0._scrollreward.gameObject, not arg_14_0.isShowMonsterRule)
-	gohelper.setActive(arg_14_0._scrollbossattr.gameObject, arg_14_0.isShowMonsterRule)
+function RougeBossCollectionDropItem:refreshCollectionDesc()
+	gohelper.setActive(self._scrollreward.gameObject, not self.isShowMonsterRule)
+	gohelper.setActive(self._scrollbossattr.gameObject, self.isShowMonsterRule)
 
-	if arg_14_0.isShowMonsterRule then
-		arg_14_0:refreshBossAttrDesc()
-		arg_14_0:refreshFreshBtn()
+	if self.isShowMonsterRule then
+		self:refreshBossAttrDesc()
+		self:refreshFreshBtn()
 	else
-		arg_14_0:refreshEffectDesc()
+		self:refreshEffectDesc()
 	end
 end
 
-function var_0_0.switchShowMonsterRuleDesc(arg_15_0, arg_15_1)
-	arg_15_0.animator:Play("open", 0, 0)
+function RougeBossCollectionDropItem:switchShowMonsterRuleDesc(isShowMonsterRule)
+	self.animator:Play("open", 0, 0)
 
-	arg_15_0.isShowMonsterRule = arg_15_1
+	self.isShowMonsterRule = isShowMonsterRule
 
-	arg_15_0:refreshCollectionDesc()
+	self:refreshCollectionDesc()
 end
 
-function var_0_0.refreshSelect(arg_16_0)
-	gohelper.setActive(arg_16_0._goselect, arg_16_0.select)
+function RougeBossCollectionDropItem:refreshSelect()
+	gohelper.setActive(self._goselect, self.select)
 end
 
-function var_0_0._onSwitchCollectionInfoType(arg_17_0)
-	arg_17_0:refreshEffectDesc()
+function RougeBossCollectionDropItem:_onSwitchCollectionInfoType()
+	self:refreshEffectDesc()
 end
 
-function var_0_0.hide(arg_18_0)
-	gohelper.setActive(arg_18_0.go, false)
+function RougeBossCollectionDropItem:hide()
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.show(arg_19_0)
-	if arg_19_0.go.activeInHierarchy then
+function RougeBossCollectionDropItem:show()
+	if self.go.activeInHierarchy then
 		return
 	end
 
-	arg_19_0.animator:Play("open", 0, 0)
-	gohelper.setActive(arg_19_0.go, true)
+	self.animator:Play("open", 0, 0)
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.onClose(arg_20_0)
-	arg_20_0.animator:Play(arg_20_0.select and "close" or "normal", 0, 0)
+function RougeBossCollectionDropItem:onClose()
+	self.animator:Play(self.select and "close" or "normal", 0, 0)
 end
 
-function var_0_0.destroy(arg_21_0)
-	if arg_21_0._clickLen then
-		for iter_21_0 = 1, arg_21_0._clickLen do
-			arg_21_0._allClicks[iter_21_0]:RemoveClickListener()
+function RougeBossCollectionDropItem:destroy()
+	if self._clickLen then
+		for i = 1, self._clickLen do
+			self._allClicks[i]:RemoveClickListener()
 		end
 	end
 
-	arg_21_0.click:RemoveClickListener()
-	arg_21_0._btnopentagtips:RemoveClickListener()
-	arg_21_0._btnclosetagtips:RemoveClickListener()
-	arg_21_0._btnfresh:RemoveClickListener()
-	arg_21_0._bossdescclick:RemoveClickListener()
-	arg_21_0._bossviewportclick:RemoveClickListener()
-	arg_21_0._simagecollection:UnLoadImage()
-	arg_21_0:__onDispose()
+	self.click:RemoveClickListener()
+	self._btnopentagtips:RemoveClickListener()
+	self._btnclosetagtips:RemoveClickListener()
+	self._btnfresh:RemoveClickListener()
+	self._bossdescclick:RemoveClickListener()
+	self._bossviewportclick:RemoveClickListener()
+	self._simagecollection:UnLoadImage()
+	self:__onDispose()
 end
 
-return var_0_0
+return RougeBossCollectionDropItem

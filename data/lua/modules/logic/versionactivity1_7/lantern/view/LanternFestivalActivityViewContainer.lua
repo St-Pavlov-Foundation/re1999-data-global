@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalActivityViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_7/lantern/view/LanternFestivalActivityViewContainer.lua
 
-local var_0_0 = class("LanternFestivalActivityViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalActivityViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local LanternFestivalActivityViewContainer = class("LanternFestivalActivityViewContainer", BaseViewContainer)
+
+function LanternFestivalActivityViewContainer:buildViews()
 	return {
 		LanternFestivalActivityView.New()
 	}
 end
 
-return var_0_0
+return LanternFestivalActivityViewContainer

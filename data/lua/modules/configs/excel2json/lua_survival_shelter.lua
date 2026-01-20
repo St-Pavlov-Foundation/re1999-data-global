@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_survival_shelter", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_survival_shelter.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_survival_shelter", package.seeall)
+
+local lua_survival_shelter = {}
+local fields = {
 	versions = 5,
 	difficultLv = 3,
 	maxNpcNum = 7,
@@ -17,13 +19,13 @@ local var_0_1 = {
 	position = 8,
 	shelterChange = 6
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_survival_shelter.onLoad(json)
+	lua_survival_shelter.configList, lua_survival_shelter.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_survival_shelter

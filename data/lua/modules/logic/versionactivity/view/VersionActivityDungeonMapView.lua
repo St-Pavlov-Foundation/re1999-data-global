@@ -1,176 +1,178 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityDungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityDungeonMapView.lua
 
-local var_0_0 = class("VersionActivityDungeonMapView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityDungeonMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._topLeftGo = gohelper.findChild(arg_1_0.viewGO, "top_left")
-	arg_1_0._topRightGo = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
-	arg_1_0._topLeftElementGo = gohelper.findChild(arg_1_0.viewGO, "top_left_element")
-	arg_1_0._goversionactivity = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_versionActivity")
-	arg_1_0._gomain = gohelper.findChild(arg_1_0.viewGO, "#go_main")
-	arg_1_0._gores = gohelper.findChild(arg_1_0.viewGO, "#go_res")
-	arg_1_0._btnequipstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_equipstore")
-	arg_1_0._btnactivitystore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_activitystore")
-	arg_1_0._btnactivitytask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_activitytask")
-	arg_1_0._txtstorenum = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_activitystore/#txt_num")
-	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
-	arg_1_0._scrollcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_content")
+local VersionActivityDungeonMapView = class("VersionActivityDungeonMapView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityDungeonMapView:onInitView()
+	self._topLeftGo = gohelper.findChild(self.viewGO, "top_left")
+	self._topRightGo = gohelper.findChild(self.viewGO, "#go_topright")
+	self._topLeftElementGo = gohelper.findChild(self.viewGO, "top_left_element")
+	self._goversionactivity = gohelper.findChild(self.viewGO, "#go_tasklist/#go_versionActivity")
+	self._gomain = gohelper.findChild(self.viewGO, "#go_main")
+	self._gores = gohelper.findChild(self.viewGO, "#go_res")
+	self._btnequipstore = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#btn_equipstore")
+	self._btnactivitystore = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#btn_activitystore")
+	self._btnactivitytask = gohelper.findChildButtonWithAudio(self.viewGO, "#go_topright/#btn_activitytask")
+	self._txtstorenum = gohelper.findChildText(self.viewGO, "#go_topright/#btn_activitystore/#txt_num")
+	self._btncloseview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeview")
+	self._scrollcontent = gohelper.findChild(self.viewGO, "#scroll_content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnactivitystore:AddClickListener(arg_2_0.btnActivityStoreOnClick, arg_2_0)
-	arg_2_0._btnactivitytask:AddClickListener(arg_2_0.btnActivityTaskOnClick, arg_2_0)
-	arg_2_0._btncloseview:AddClickListener(arg_2_0._btncloseviewOnClick, arg_2_0)
+function VersionActivityDungeonMapView:addEvents()
+	self._btnactivitystore:AddClickListener(self.btnActivityStoreOnClick, self)
+	self._btnactivitytask:AddClickListener(self.btnActivityTaskOnClick, self)
+	self._btncloseview:AddClickListener(self._btncloseviewOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnactivitystore:RemoveClickListener()
-	arg_3_0._btnactivitytask:RemoveClickListener()
-	arg_3_0._btncloseview:RemoveClickListener()
+function VersionActivityDungeonMapView:removeEvents()
+	self._btnactivitystore:RemoveClickListener()
+	self._btnactivitytask:RemoveClickListener()
+	self._btncloseview:RemoveClickListener()
 end
 
-function var_0_0.btnActivityStoreOnClick(arg_4_0)
+function VersionActivityDungeonMapView:btnActivityStoreOnClick()
 	VersionActivityController.instance:openLeiMiTeBeiStoreView(VersionActivityEnum.ActivityId.Act113)
 end
 
-function var_0_0.btnActivityTaskOnClick(arg_5_0)
+function VersionActivityDungeonMapView:btnActivityTaskOnClick()
 	VersionActivityController.instance:openLeiMiTeBeiTaskView()
 end
 
-function var_0_0._btncloseviewOnClick(arg_6_0)
-	arg_6_0:_showSwitchMode()
+function VersionActivityDungeonMapView:_btncloseviewOnClick()
+	self:_showSwitchMode()
 	ViewMgr.instance:closeView(ViewName.VersionActivityDungeonMapLevelView)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	gohelper.setActive(arg_7_0._goversionactivity, true)
-	gohelper.setActive(arg_7_0._btnactivitystore.gameObject, false)
-	gohelper.setActive(arg_7_0._btnactivitytask.gameObject, false)
-	gohelper.setActive(arg_7_0._gomain, false)
-	gohelper.setActive(arg_7_0._gores, false)
-	gohelper.setActive(arg_7_0._btnequipstore.gameObject, false)
+function VersionActivityDungeonMapView:_editableInitView()
+	gohelper.setActive(self._goversionactivity, true)
+	gohelper.setActive(self._btnactivitystore.gameObject, false)
+	gohelper.setActive(self._btnactivitytask.gameObject, false)
+	gohelper.setActive(self._gomain, false)
+	gohelper.setActive(self._gores, false)
+	gohelper.setActive(self._btnequipstore.gameObject, false)
 
-	arg_7_0.modeAnimator = arg_7_0._goversionactivity:GetComponent(typeof(UnityEngine.Animator))
-	arg_7_0.txtTaskGet = gohelper.findChildText(arg_7_0.viewGO, "#go_topright/#btn_activitytask/#txt_get")
-	arg_7_0.goTaskRedDot = gohelper.findChild(arg_7_0.viewGO, "#go_topright/#btn_activitytask/#go_reddot")
+	self.modeAnimator = self._goversionactivity:GetComponent(typeof(UnityEngine.Animator))
+	self.txtTaskGet = gohelper.findChildText(self.viewGO, "#go_topright/#btn_activitytask/#txt_get")
+	self.goTaskRedDot = gohelper.findChild(self.viewGO, "#go_topright/#btn_activitytask/#go_reddot")
 
-	RedDotController.instance:addRedDot(arg_7_0.goTaskRedDot, RedDotEnum.DotNode.LeiMiTeBeiTask)
-	arg_7_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_7_0.refreshTaskUI, arg_7_0)
-	gohelper.removeUIClickAudio(arg_7_0._btncloseview.gameObject)
+	RedDotController.instance:addRedDot(self.goTaskRedDot, RedDotEnum.DotNode.LeiMiTeBeiTask)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshTaskUI, self)
+	gohelper.removeUIClickAudio(self._btncloseview.gameObject)
 
-	arg_7_0._rectmask2D = arg_7_0._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	arg_7_0._goSwitchMode = gohelper.findChild(arg_7_0.viewGO, "#go_tasklist")
+	self._rectmask2D = self._scrollcontent:GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	self._goSwitchMode = gohelper.findChild(self.viewGO, "#go_tasklist")
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0:refreshUI()
+function VersionActivityDungeonMapView:onUpdateParam()
+	self:refreshUI()
 end
 
-function var_0_0._onEscBtnClick(arg_9_0)
-	arg_9_0:closeThis()
+function VersionActivityDungeonMapView:_onEscBtnClick()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_10_0._onOpenView, arg_10_0)
-	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_10_0._onCloseView, arg_10_0)
-	arg_10_0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_10_0._setEpisodeListVisible, arg_10_0)
-	arg_10_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_10_0.refreshActivityCurrency, arg_10_0)
-	arg_10_0:refreshUI()
-	NavigateMgr.instance:addEscape(ViewName.VersionActivityDungeonMapView, arg_10_0._onEscBtnClick, arg_10_0)
+function VersionActivityDungeonMapView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, self._setEpisodeListVisible, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshActivityCurrency, self)
+	self:refreshUI()
+	NavigateMgr.instance:addEscape(ViewName.VersionActivityDungeonMapView, self._onEscBtnClick, self)
 
 	if ViewMgr.instance:isOpen(ViewName.VersionActivityDungeonMapLevelView) then
-		arg_10_0:_onOpenView(ViewName.VersionActivityDungeonMapLevelView)
+		self:_onOpenView(ViewName.VersionActivityDungeonMapLevelView)
 	end
 
-	arg_10_0:_showSwitchMode()
+	self:_showSwitchMode()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0:refreshTaskUI()
-	arg_11_0:refreshActivityCurrency()
+function VersionActivityDungeonMapView:refreshUI()
+	self:refreshTaskUI()
+	self:refreshActivityCurrency()
 end
 
-function var_0_0.refreshTaskUI(arg_12_0)
-	arg_12_0.txtTaskGet.text = string.format("%s/%s", arg_12_0:getFinishTaskCount(), VersionActivityConfig.instance:getAct113TaskCount(VersionActivityEnum.ActivityId.Act113))
+function VersionActivityDungeonMapView:refreshTaskUI()
+	self.txtTaskGet.text = string.format("%s/%s", self:getFinishTaskCount(), VersionActivityConfig.instance:getAct113TaskCount(VersionActivityEnum.ActivityId.Act113))
 end
 
-function var_0_0.refreshActivityCurrency(arg_13_0)
-	local var_13_0 = ReactivityModel.instance:getActivityCurrencyId(VersionActivityEnum.ActivityId.Act113)
-	local var_13_1 = CurrencyModel.instance:getCurrency(var_13_0)
-	local var_13_2 = var_13_1 and var_13_1.quantity or 0
+function VersionActivityDungeonMapView:refreshActivityCurrency()
+	local currencyId = ReactivityModel.instance:getActivityCurrencyId(VersionActivityEnum.ActivityId.Act113)
+	local currencyMO = CurrencyModel.instance:getCurrency(currencyId)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_13_0._txtstorenum.text = GameUtil.numberDisplay(var_13_2)
+	self._txtstorenum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.getFinishTaskCount(arg_14_0)
-	local var_14_0 = 0
-	local var_14_1
+function VersionActivityDungeonMapView:getFinishTaskCount()
+	local finishTaskCount = 0
+	local taskMo
 
-	for iter_14_0, iter_14_1 in ipairs(VersionActivityConfig.instance:getAct113TaskList(VersionActivityEnum.ActivityId.Act113)) do
-		local var_14_2 = TaskModel.instance:getTaskById(iter_14_1.id)
+	for _, taskCo in ipairs(VersionActivityConfig.instance:getAct113TaskList(VersionActivityEnum.ActivityId.Act113)) do
+		taskMo = TaskModel.instance:getTaskById(taskCo.id)
 
-		if var_14_2 and var_14_2.finishCount >= iter_14_1.maxFinishCount then
-			var_14_0 = var_14_0 + 1
+		if taskMo and taskMo.finishCount >= taskCo.maxFinishCount then
+			finishTaskCount = finishTaskCount + 1
 		end
 	end
 
-	return var_14_0
+	return finishTaskCount
 end
 
-function var_0_0._setEpisodeListVisible(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0._topLeftGo, arg_15_1)
+function VersionActivityDungeonMapView:_setEpisodeListVisible(value)
+	gohelper.setActive(self._topLeftGo, value)
 
-	if arg_15_1 then
-		arg_15_0.modeAnimator:Play(UIAnimationName.Open, 0, 0)
+	if value then
+		self.modeAnimator:Play(UIAnimationName.Open, 0, 0)
 	else
-		arg_15_0.modeAnimator:Play(UIAnimationName.Close, 0, 0)
+		self.modeAnimator:Play(UIAnimationName.Close, 0, 0)
 	end
 end
 
-function var_0_0._onOpenView(arg_16_0, arg_16_1)
-	if arg_16_1 == ViewName.VersionActivityDungeonMapLevelView then
-		arg_16_0.modeAnimator:Play(UIAnimationName.Close, 0, 0)
-		gohelper.setActive(arg_16_0._btncloseview, true)
+function VersionActivityDungeonMapView:_onOpenView(viewName)
+	if viewName == ViewName.VersionActivityDungeonMapLevelView then
+		self.modeAnimator:Play(UIAnimationName.Close, 0, 0)
+		gohelper.setActive(self._btncloseview, true)
 
-		arg_16_0._rectmask2D.padding = Vector4(0, 0, 600, 0)
+		self._rectmask2D.padding = Vector4(0, 0, 600, 0)
 
-		TaskDispatcher.cancelTask(arg_16_0._hideSwitchMode, arg_16_0)
-		TaskDispatcher.runDelay(arg_16_0._hideSwitchMode, arg_16_0, 0.667)
+		TaskDispatcher.cancelTask(self._hideSwitchMode, self)
+		TaskDispatcher.runDelay(self._hideSwitchMode, self, 0.667)
 	end
 end
 
-function var_0_0._onCloseView(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.VersionActivityDungeonMapLevelView then
-		arg_17_0.modeAnimator:Play(UIAnimationName.Open, 0, 0)
-		gohelper.setActive(arg_17_0._btncloseview, false)
+function VersionActivityDungeonMapView:_onCloseView(viewName)
+	if viewName == ViewName.VersionActivityDungeonMapLevelView then
+		self.modeAnimator:Play(UIAnimationName.Open, 0, 0)
+		gohelper.setActive(self._btncloseview, false)
 
-		arg_17_0._rectmask2D.padding = Vector4(0, 0, 0, 0)
+		self._rectmask2D.padding = Vector4(0, 0, 0, 0)
 
-		arg_17_0:_showSwitchMode()
+		self:_showSwitchMode()
 	end
 end
 
-function var_0_0._showSwitchMode(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._hideSwitchMode, arg_18_0)
-	gohelper.setActive(arg_18_0._goSwitchMode, true)
+function VersionActivityDungeonMapView:_showSwitchMode()
+	TaskDispatcher.cancelTask(self._hideSwitchMode, self)
+	gohelper.setActive(self._goSwitchMode, true)
 end
 
-function var_0_0._hideSwitchMode(arg_19_0)
-	gohelper.setActive(arg_19_0._goSwitchMode, false)
+function VersionActivityDungeonMapView:_hideSwitchMode()
+	gohelper.setActive(self._goSwitchMode, false)
 
-	arg_19_0._isShowSwitchMode = false
+	self._isShowSwitchMode = false
 end
 
-function var_0_0.onClose(arg_20_0)
+function VersionActivityDungeonMapView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function VersionActivityDungeonMapView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivityDungeonMapView

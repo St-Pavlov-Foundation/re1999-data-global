@@ -1,748 +1,763 @@
-﻿module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryEditView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/activity165/view/Activity165StoryEditView.lua
 
-local var_0_0 = class("Activity165StoryEditView", BaseView)
+module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryEditView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gostory = gohelper.findChild(arg_1_0.viewGO, "#go_story")
-	arg_1_0._goending = gohelper.findChild(arg_1_0.viewGO, "#go_ending")
-	arg_1_0._simagepic = gohelper.findChildImage(arg_1_0.viewGO, "#go_assessment/#simage_pic")
-	arg_1_0._txtstory = gohelper.findChildText(arg_1_0.viewGO, "#go_ending/scroll_story/Viewport/#txt_story")
-	arg_1_0._goassessment = gohelper.findChild(arg_1_0.viewGO, "#go_assessment")
-	arg_1_0._imageassessment = gohelper.findChildImage(arg_1_0.viewGO, "#go_assessment/#image_assessment")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "#go_assessment/scroll_dec/Viewport/#txt_dec")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_restart")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_story/#go_tips")
-	arg_1_0._gokeywordpanel = gohelper.findChild(arg_1_0.viewGO, "#go_keywordpanel")
-	arg_1_0._btnkeywordpanelclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_keywordpanel/#btn_close")
-	arg_1_0._gokeywords = gohelper.findChild(arg_1_0.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords/#image_icon")
-	arg_1_0._txtkeywords = gohelper.findChildText(arg_1_0.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords/#txt_keywords")
-	arg_1_0._btnkeywords = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords/#btn_keywords")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_keywordpanel/#btn_ok")
-	arg_1_0._godragContainer = gohelper.findChild(arg_1_0.viewGO, "#go_dragContainer")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Activity165StoryEditView = class("Activity165StoryEditView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity165StoryEditView:onInitView()
+	self._gostory = gohelper.findChild(self.viewGO, "#go_story")
+	self._goending = gohelper.findChild(self.viewGO, "#go_ending")
+	self._simagepic = gohelper.findChildImage(self.viewGO, "#go_assessment/#simage_pic")
+	self._txtstory = gohelper.findChildText(self.viewGO, "#go_ending/scroll_story/Viewport/#txt_story")
+	self._goassessment = gohelper.findChild(self.viewGO, "#go_assessment")
+	self._imageassessment = gohelper.findChildImage(self.viewGO, "#go_assessment/#image_assessment")
+	self._txtdec = gohelper.findChildText(self.viewGO, "#go_assessment/scroll_dec/Viewport/#txt_dec")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_restart")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_story/#go_tips")
+	self._gokeywordpanel = gohelper.findChild(self.viewGO, "#go_keywordpanel")
+	self._btnkeywordpanelclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_keywordpanel/#btn_close")
+	self._gokeywords = gohelper.findChild(self.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords/#image_icon")
+	self._txtkeywords = gohelper.findChildText(self.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords/#txt_keywords")
+	self._btnkeywords = gohelper.findChildButtonWithAudio(self.viewGO, "#go_keywordpanel/scroll_keywords/Viewport/Content/#go_keywords/#btn_keywords")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_keywordpanel/#btn_ok")
+	self._godragContainer = gohelper.findChild(self.viewGO, "#go_dragContainer")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
-	arg_2_0._btnkeywords:AddClickListener(arg_2_0._btnkeywordsOnClick, arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
-	arg_2_0._btnkeywordpanelclose:AddClickListener(arg_2_0._btnkeywordpanelcloseOnClick, arg_2_0)
-	arg_2_0:_addEvents()
+function Activity165StoryEditView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
+	self._btnkeywords:AddClickListener(self._btnkeywordsOnClick, self)
+	self._btnok:AddClickListener(self._btnokOnClick, self)
+	self._btnkeywordpanelclose:AddClickListener(self._btnkeywordpanelcloseOnClick, self)
+	self:_addEvents()
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnkeywords:RemoveClickListener()
-	arg_3_0._btnok:RemoveClickListener()
-	arg_3_0._btnkeywordpanelclose:RemoveClickListener()
-	arg_3_0:_removeEvents()
+function Activity165StoryEditView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnkeywords:RemoveClickListener()
+	self._btnok:RemoveClickListener()
+	self._btnkeywordpanelclose:RemoveClickListener()
+	self:_removeEvents()
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	arg_4_0:beginGenerateEnding()
+function Activity165StoryEditView:_btnconfirmOnClick()
+	self:beginGenerateEnding()
 end
 
-function var_0_0._btnresetOnClick(arg_5_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act165ResetEditor, MsgBoxEnum.BoxType.Yes_No, arg_5_0._restartStory, nil, nil, arg_5_0, nil)
+function Activity165StoryEditView:_btnresetOnClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act165ResetEditor, MsgBoxEnum.BoxType.Yes_No, self._restartStory, nil, nil, self, nil)
 end
 
-function var_0_0._btnrestartOnClick(arg_6_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.Act165ResetEditor, MsgBoxEnum.BoxType.Yes_No, arg_6_0._restartStory, nil, nil, arg_6_0, nil)
+function Activity165StoryEditView:_btnrestartOnClick()
+	GameFacade.showMessageBox(MessageBoxIdDefine.Act165ResetEditor, MsgBoxEnum.BoxType.Yes_No, self._restartStory, nil, nil, self, nil)
 end
 
-function var_0_0._btndialogcontainerOnClick(arg_7_0)
-	if arg_7_0.isEndingAnim then
-		gohelper.setActive(arg_7_0._godialogcontainer.gameObject, false)
-		arg_7_0:_showAssessment()
+function Activity165StoryEditView:_btndialogcontainerOnClick()
+	if self.isEndingAnim then
+		gohelper.setActive(self._godialogcontainer.gameObject, false)
+		self:_showAssessment()
 	end
 end
 
-function var_0_0._btnkeywordpanelcloseOnClick(arg_8_0)
-	local var_8_0 = arg_8_0._storyMo:getSelectStepIndex()
+function Activity165StoryEditView:_btnkeywordpanelcloseOnClick()
+	local curStepIndex = self._storyMo:getSelectStepIndex()
 
-	arg_8_0:_closeKwPanel(var_8_0)
+	self:_closeKwPanel(curStepIndex)
 end
 
-function var_0_0._btnokOnClick(arg_9_0)
-	local var_9_0 = arg_9_0._storyMo:getSelectStepIndex()
+function Activity165StoryEditView:_btnokOnClick()
+	local curStepIndex = self._storyMo:getSelectStepIndex()
 
-	if arg_9_0._storyMo:isFillingStep() then
-		if var_9_0 and arg_9_0._curStep and (arg_9_0._storyMo:checkIsFinishStep() or arg_9_0._curStep:isNullKeyword()) then
-			arg_9_0:_closeKwPanel(var_9_0)
+	if self._storyMo:isFillingStep() then
+		if curStepIndex and self._curStep then
+			local isSuccess = self._storyMo:checkIsFinishStep() or self._curStep:isNullKeyword()
+
+			if isSuccess then
+				self:_closeKwPanel(curStepIndex)
+			end
 		end
 	else
-		arg_9_0:_closeKwPanel(var_9_0)
+		self:_closeKwPanel(curStepIndex)
 	end
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0._goassessmentVX_s = gohelper.findChild(arg_10_0.viewGO, "#go_assessment/#vx_s")
-	arg_10_0._godialogcontainer = gohelper.findChild(arg_10_0.viewGO, "#go_dialogcontainer")
-	arg_10_0._btndialog = gohelper.getClick(arg_10_0._godialogcontainer)
+function Activity165StoryEditView:_editableInitView()
+	self._goassessmentVX_s = gohelper.findChild(self.viewGO, "#go_assessment/#vx_s")
+	self._godialogcontainer = gohelper.findChild(self.viewGO, "#go_dialogcontainer")
+	self._btndialog = gohelper.getClick(self._godialogcontainer)
 
-	arg_10_0._btndialog:AddClickListener(arg_10_0._btndialogcontainerOnClick, arg_10_0)
-	gohelper.setActive(arg_10_0._godialogcontainer.gameObject, false)
+	self._btndialog:AddClickListener(self._btndialogcontainerOnClick, self)
+	gohelper.setActive(self._godialogcontainer.gameObject, false)
 
-	arg_10_0._simagedialogicon = gohelper.findChildSingleImage(arg_10_0._godialogcontainer, "#go_dialog/container/headframe/headicon")
-	arg_10_0._txtdialog = gohelper.findChildText(arg_10_0._godialogcontainer, "#go_dialog/container/go_normalcontent/txt_contentcn")
-	arg_10_0._simagedialogbg = gohelper.findChildSingleImage(arg_10_0._godialogcontainer, "#go_dialog/container/simagebg")
-	arg_10_0._keywordPanelAnim = SLFramework.AnimatorPlayer.Get(arg_10_0._gokeywordpanel.gameObject)
-	arg_10_0._viewAnim = SLFramework.AnimatorPlayer.Get(arg_10_0.viewGO.gameObject)
-	arg_10_0._btnconfirmAnim = arg_10_0._btnconfirm.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_10_0._goexcessive = gohelper.findChild(arg_10_0.viewGO, "excessive")
-	arg_10_0._endAnim = SLFramework.AnimatorPlayer.Get(arg_10_0._goending.gameObject)
-	arg_10_0._assessmentAnim = SLFramework.AnimatorPlayer.Get(arg_10_0._goassessment.gameObject)
-	arg_10_0._assessmentAnimEvent = arg_10_0._goassessment:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._simagedialogicon = gohelper.findChildSingleImage(self._godialogcontainer, "#go_dialog/container/headframe/headicon")
+	self._txtdialog = gohelper.findChildText(self._godialogcontainer, "#go_dialog/container/go_normalcontent/txt_contentcn")
+	self._simagedialogbg = gohelper.findChildSingleImage(self._godialogcontainer, "#go_dialog/container/simagebg")
+	self._keywordPanelAnim = SLFramework.AnimatorPlayer.Get(self._gokeywordpanel.gameObject)
+	self._viewAnim = SLFramework.AnimatorPlayer.Get(self.viewGO.gameObject)
+	self._btnconfirmAnim = self._btnconfirm.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._goexcessive = gohelper.findChild(self.viewGO, "excessive")
+	self._endAnim = SLFramework.AnimatorPlayer.Get(self._goending.gameObject)
+	self._assessmentAnim = SLFramework.AnimatorPlayer.Get(self._goassessment.gameObject)
+	self._assessmentAnimEvent = self._goassessment:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	arg_10_0._assessmentAnimEvent:AddEventListener("PlayAudio", arg_10_0._playAssessmentAudio, arg_10_0)
+	self._assessmentAnimEvent:AddEventListener("PlayAudio", self._playAssessmentAudio, self)
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function Activity165StoryEditView:onUpdateParam()
 	return
 end
 
-function var_0_0._btnclickOnClick(arg_12_0)
-	if arg_12_0._isFinishPlayEnding then
+function Activity165StoryEditView:_btnclickOnClick()
+	if self._isFinishPlayEnding then
 		return
 	end
 
-	if arg_12_0._storyMo:getState() == Activity165Enum.StoryStage.Ending then
-		if not arg_12_0._tweenEndingId then
+	local state = self._storyMo:getState()
+
+	if state == Activity165Enum.StoryStage.Ending then
+		if not self._tweenEndingId then
 			return
 		end
 
-		arg_12_0:_killEndingTxtAnim()
-		arg_12_0:_showEndingCallBack()
+		self:_killEndingTxtAnim()
+		self:_showEndingCallBack()
 	else
-		if not arg_12_0._playerStepAnimIndex then
+		if not self._playerStepAnimIndex then
 			return
 		end
 
-		local var_12_0 = arg_12_0._stepItemList[arg_12_0._playerStepAnimIndex]
+		local item = self._stepItemList[self._playerStepAnimIndex]
 
-		if not var_12_0 or not var_12_0._isUnlock then
-			arg_12_0._playerStepAnimIndex = nil
+		if not item or not item._isUnlock then
+			self._playerStepAnimIndex = nil
 
 			return
 		end
 
-		arg_12_0._playerStepAnimIndex = nil
+		self._playerStepAnimIndex = nil
 
-		var_12_0:finishStoryAnim()
+		item:finishStoryAnim()
 	end
 end
 
-function var_0_0._addEvents(arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.Act165GetInfoReply, arg_13_0._Act165GetInfoReply, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.Act165RestartReply, arg_13_0._Act165RestartReply, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.Act165GenerateEndingReply, arg_13_0._Act165GenerateEndingReply, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.Act165ModifyKeywordReply, arg_13_0._Act165ModifyKeywordReply, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.onClickStepBtn, arg_13_0._onClickStepBtn, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.OnFinishStep, arg_13_0._OnFinishStep, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.onClickUsedKeyword, arg_13_0._onClickUsedKeyword, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.canfinishStory, arg_13_0._canfinishStory, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.refrshEditView, arg_13_0.onRefresh, arg_13_0)
-	arg_13_0:addEventCb(Activity165Controller.instance, Activity165Event.finishStepAnim, arg_13_0._finishStepAnim, arg_13_0)
-	arg_13_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_13_0.onRefreshActivity, arg_13_0)
+function Activity165StoryEditView:_addEvents()
+	self:addEventCb(Activity165Controller.instance, Activity165Event.Act165GetInfoReply, self._Act165GetInfoReply, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.Act165RestartReply, self._Act165RestartReply, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.Act165GenerateEndingReply, self._Act165GenerateEndingReply, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.Act165ModifyKeywordReply, self._Act165ModifyKeywordReply, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.onClickStepBtn, self._onClickStepBtn, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.OnFinishStep, self._OnFinishStep, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.onClickUsedKeyword, self._onClickUsedKeyword, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.canfinishStory, self._canfinishStory, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.refrshEditView, self.onRefresh, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.finishStepAnim, self._finishStepAnim, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
 end
 
-function var_0_0._removeEvents(arg_14_0)
-	arg_14_0._btnclick:RemoveClickListener()
+function Activity165StoryEditView:_removeEvents()
+	self._btnclick:RemoveClickListener()
 
-	if arg_14_0._btndialog then
-		arg_14_0._btndialog:RemoveClickListener()
+	if self._btndialog then
+		self._btndialog:RemoveClickListener()
 	end
 
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.Act165GetInfoReply, arg_14_0._Act165GetInfoReply, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.Act165RestartReply, arg_14_0._Act165RestartReply, arg_14_0)
-	arg_14_0:addEventCb(Activity165Controller.instance, Activity165Event.Act165GenerateEndingReply, arg_14_0._Act165GenerateEndingReply, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.Act165ModifyKeywordReply, arg_14_0._Act165ModifyKeywordReply, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.onClickStepBtn, arg_14_0._onClickStepBtn, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.OnFinishStep, arg_14_0._OnFinishStep, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.onClickUsedKeyword, arg_14_0._onClickUsedKeyword, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.canfinishStory, arg_14_0._canfinishStory, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.refrshEditView, arg_14_0.onRefresh, arg_14_0)
-	arg_14_0:removeEventCb(Activity165Controller.instance, Activity165Event.finishStepAnim, arg_14_0._finishStepAnim, arg_14_0)
-	arg_14_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_14_0.onRefreshActivity, arg_14_0)
-	arg_14_0._assessmentAnimEvent:RemoveEventListener("PlayAudio")
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.Act165GetInfoReply, self._Act165GetInfoReply, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.Act165RestartReply, self._Act165RestartReply, self)
+	self:addEventCb(Activity165Controller.instance, Activity165Event.Act165GenerateEndingReply, self._Act165GenerateEndingReply, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.Act165ModifyKeywordReply, self._Act165ModifyKeywordReply, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.onClickStepBtn, self._onClickStepBtn, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.OnFinishStep, self._OnFinishStep, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.onClickUsedKeyword, self._onClickUsedKeyword, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.canfinishStory, self._canfinishStory, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.refrshEditView, self.onRefresh, self)
+	self:removeEventCb(Activity165Controller.instance, Activity165Event.finishStepAnim, self._finishStepAnim, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self._assessmentAnimEvent:RemoveEventListener("PlayAudio")
 end
 
-function var_0_0._onClickStepBtn(arg_15_0, arg_15_1)
-	if arg_15_0._storyMo:getSelectStepIndex() then
+function Activity165StoryEditView:_onClickStepBtn(index)
+	if self._storyMo:getSelectStepIndex() then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._stepItemList) do
-		if iter_15_1:isPlayingTxt() then
+	for _, item in ipairs(self._stepItemList) do
+		if item:isPlayingTxt() then
 			return
 		end
 	end
 
-	local var_15_0 = arg_15_0._stepItemList[arg_15_1]
+	local stepItem = self._stepItemList[index]
 
-	arg_15_0._storyMo:setSelectStepIndex(arg_15_1)
-	var_15_0:refreshFillStepState()
+	self._storyMo:setSelectStepIndex(index)
+	stepItem:refreshFillStepState()
 
-	if arg_15_0._curStep then
-		arg_15_0._curStep:refreshFillStepState()
+	if self._curStep then
+		self._curStep:refreshFillStepState()
 	end
 
-	arg_15_0._curStep = var_15_0
+	self._curStep = stepItem
 
-	arg_15_0:_refreshKeywordItem()
-	arg_15_0:_activeKeywordPanel(true)
+	self:_refreshKeywordItem()
+	self:_activeKeywordPanel(true)
 
-	local var_15_1 = Activity165Enum.EditStepMoveAnim[arg_15_1].Move
+	local anim = Activity165Enum.EditStepMoveAnim[index].Move
 
-	arg_15_0._viewAnim:Play(var_15_1, nil, arg_15_0)
+	self._viewAnim:Play(anim, nil, self)
 
-	if arg_15_0._storyMo:getState() == Activity165Enum.StoryStage.isEndFill then
-		gohelper.setActive(arg_15_0._btnconfirm.gameObject, false)
-	end
-end
-
-function var_0_0._OnFinishStep(arg_16_0, arg_16_1)
-	arg_16_0._curfinishStep = arg_16_1
-
-	if LuaUtil.tableNotEmpty(arg_16_1) then
-		arg_16_0:_onFinishStepItem(1)
+	if self._storyMo:getState() == Activity165Enum.StoryStage.isEndFill then
+		gohelper.setActive(self._btnconfirm.gameObject, false)
 	end
 end
 
-function var_0_0._onFinishStepItem(arg_17_0, arg_17_1)
-	arg_17_0._finishStepIndex = arg_17_1
+function Activity165StoryEditView:_OnFinishStep(finishSteps)
+	self._curfinishStep = finishSteps
 
-	if arg_17_1 > #arg_17_0._curfinishStep then
+	if LuaUtil.tableNotEmpty(finishSteps) then
+		self:_onFinishStepItem(1)
+	end
+end
+
+function Activity165StoryEditView:_onFinishStepItem(index)
+	self._finishStepIndex = index
+
+	if index > #self._curfinishStep then
 		return
 	end
 
-	local var_17_0 = arg_17_0._storyMo:unlockStepCount() - #arg_17_0._curfinishStep + arg_17_1 - 1
+	local unlockStepCount = self._storyMo:unlockStepCount()
+	local itemIndex = unlockStepCount - #self._curfinishStep + index - 1
 
-	arg_17_0._playerStepAnimIndex = var_17_0
+	self._playerStepAnimIndex = itemIndex
 
-	if var_17_0 == 3 then
-		gohelper.setActive(arg_17_0._golocked, true)
-		arg_17_0._lockRightAnim:Play(Activity165Enum.EditViewAnim.Unlock, arg_17_0._hideLockRight, arg_17_0)
+	if itemIndex == 3 then
+		gohelper.setActive(self._golocked, true)
+		self._lockRightAnim:Play(Activity165Enum.EditViewAnim.Unlock, self._hideLockRight, self)
 	end
 
-	local var_17_1 = arg_17_0._curfinishStep[arg_17_1]
-	local var_17_2 = arg_17_0._storyMo:getStepMo(var_17_1)
+	local stepId = self._curfinishStep[index]
+	local stepMo = self._storyMo:getStepMo(stepId)
 
-	if var_17_2 and var_17_2.isEndingStep then
+	if stepMo and stepMo.isEndingStep then
 		return
 	end
 
-	arg_17_0._stepItemList[var_17_0]:onFinishStep(var_17_1)
+	self._stepItemList[itemIndex]:onFinishStep(stepId)
 	AudioMgr.instance:trigger(AudioEnum.Activity156.play_ui_wangshi_fill_win)
 end
 
-function var_0_0._hideLockRight(arg_18_0)
-	gohelper.setActive(arg_18_0._golocked, false)
+function Activity165StoryEditView:_hideLockRight()
+	gohelper.setActive(self._golocked, false)
 end
 
-function var_0_0._canfinishStory(arg_19_0)
-	arg_19_0:_activeKeywordPanel(false)
-	arg_19_0:_onRefreshStoryState()
-	arg_19_0:_refreshTip()
+function Activity165StoryEditView:_canfinishStory()
+	self:_activeKeywordPanel(false)
+	self:_onRefreshStoryState()
+	self:_refreshTip()
 end
 
-function var_0_0._finishStepAnim(arg_20_0)
-	if arg_20_0._finishStepIndex > #arg_20_0._curfinishStep then
-		arg_20_0._playerStepAnimIndex = nil
+function Activity165StoryEditView:_finishStepAnim()
+	if self._finishStepIndex > #self._curfinishStep then
+		self._playerStepAnimIndex = nil
 
 		return
 	end
 
-	if arg_20_0._storyMo:getState() ~= Activity165Enum.StoryStage.Filling then
+	if self._storyMo:getState() ~= Activity165Enum.StoryStage.Filling then
 		return
 	end
 
-	local var_20_0 = arg_20_0._curfinishStep[arg_20_0._finishStepIndex]
-	local var_20_1 = arg_20_0._storyMo:getStepMo(var_20_0)
+	local stepId = self._curfinishStep[self._finishStepIndex]
+	local stepMo = self._storyMo:getStepMo(stepId)
 
-	if var_20_1 and var_20_1.isEndingStep then
-		arg_20_0._storyMo:finishStroy()
+	if stepMo and stepMo.isEndingStep then
+		self._storyMo:finishStroy()
 
-		arg_20_0._playerStepAnimIndex = nil
-
-		return
-	end
-
-	local var_20_2 = arg_20_0._storyMo:unlockStepCount() - #arg_20_0._curfinishStep + arg_20_0._finishStepIndex
-	local var_20_3 = arg_20_0._stepItemList[var_20_2]
-	local var_20_4 = arg_20_0._curfinishStep[arg_20_0._finishStepIndex + 1]
-	local var_20_5 = arg_20_0._storyMo:getStepMo(var_20_4)
-
-	if var_20_5 and var_20_5.isEndingStep then
-		arg_20_0._storyMo:finishStroy()
-
-		arg_20_0._playerStepAnimIndex = nil
+		self._playerStepAnimIndex = nil
 
 		return
 	end
 
-	var_20_3:onUpdateMO(var_20_4)
+	local unlockStepCount = self._storyMo:unlockStepCount()
+	local itemIndex = unlockStepCount - #self._curfinishStep + self._finishStepIndex
+	local nextItem = self._stepItemList[itemIndex]
+	local nextStepId = self._curfinishStep[self._finishStepIndex + 1]
+	local nextStepMo = self._storyMo:getStepMo(nextStepId)
 
-	if arg_20_0._finishStepIndex + 1 >= #arg_20_0._curfinishStep then
-		var_20_3:showEgLock()
+	if nextStepMo and nextStepMo.isEndingStep then
+		self._storyMo:finishStroy()
+
+		self._playerStepAnimIndex = nil
+
+		return
 	end
 
-	arg_20_0:_onFinishStepItem(arg_20_0._finishStepIndex + 1)
+	nextItem:onUpdateMO(nextStepId)
+
+	if self._finishStepIndex + 1 >= #self._curfinishStep then
+		nextItem:showEgLock()
+	end
+
+	self:_onFinishStepItem(self._finishStepIndex + 1)
 end
 
-function var_0_0._onClickUsedKeyword(arg_21_0, arg_21_1)
-	if arg_21_0._isDraging or not arg_21_0._storyMo.curStepIndex then
+function Activity165StoryEditView:_onClickUsedKeyword(kwId)
+	if self._isDraging or not self._storyMo.curStepIndex then
 		return
 	end
 
-	arg_21_0._clickKwId = arg_21_1
+	self._clickKwId = kwId
 
-	local var_21_0 = arg_21_0._storyMo:getKeywordMo(arg_21_1)
+	local mo = self._storyMo:getKeywordMo(kwId)
 
-	arg_21_0:checkKeyword()
+	self:checkKeyword()
 
-	if arg_21_0._storyMo:isFillingStep() then
-		if var_21_0.isUsed then
-			if arg_21_0._curStep and arg_21_0._curStep:isKeyword(arg_21_1) then
-				arg_21_0._storyMo:removeUseKeywords(arg_21_1)
-				arg_21_0._curStep:removeKeywordItem(arg_21_1)
+	if self._storyMo:isFillingStep() then
+		if mo.isUsed then
+			if self._curStep and self._curStep:isKeyword(kwId) then
+				self._storyMo:removeUseKeywords(kwId)
+				self._curStep:removeKeywordItem(kwId)
 			end
 		else
-			arg_21_0:_tryFillKeyword(arg_21_1, true)
+			self:_tryFillKeyword(kwId, true)
 		end
-	elseif var_21_0.isUsed or arg_21_0._curStep:tryFillKeyword() then
-		GameFacade.showMessageBox(MessageBoxIdDefine.Act165ResetStep, MsgBoxEnum.BoxType.Yes_No, arg_21_0._onclickPreStepYesCallback, nil, nil, arg_21_0)
+	elseif mo.isUsed or self._curStep:tryFillKeyword() then
+		GameFacade.showMessageBox(MessageBoxIdDefine.Act165ResetStep, MsgBoxEnum.BoxType.Yes_No, self._onclickPreStepYesCallback, nil, nil, self)
 	end
 end
 
-function var_0_0._Act165GetInfoReply(arg_22_0)
-	arg_22_0:_refreshStep()
+function Activity165StoryEditView:_Act165GetInfoReply()
+	self:_refreshStep()
 end
 
-function var_0_0._Act165RestartReply(arg_23_0, arg_23_1)
-	if arg_23_0._clickKwId then
-		arg_23_0:_onClickUsedKeyword(arg_23_0._clickKwId)
+function Activity165StoryEditView:_Act165RestartReply(msg)
+	if self._clickKwId then
+		self:_onClickUsedKeyword(self._clickKwId)
 	end
 
-	arg_23_0:onRefresh()
+	self:onRefresh()
 
-	arg_23_0._clickKwId = nil
+	self._clickKwId = nil
 end
 
-function var_0_0._Act165GenerateEndingReply(arg_24_0, arg_24_1)
+function Activity165StoryEditView:_Act165GenerateEndingReply(msg)
 	return
 end
 
-function var_0_0._Act165ModifyKeywordReply(arg_25_0, arg_25_1)
-	arg_25_0:_refreshKeywordItem()
+function Activity165StoryEditView:_Act165ModifyKeywordReply(msg)
+	self:_refreshKeywordItem()
 end
 
-function var_0_0.onOpen(arg_26_0)
-	arg_26_0._actId = Activity165Model.instance:getActivityId()
-	arg_26_0._storyId = arg_26_0.viewParam.storyId
-	arg_26_0.reviewEnding = arg_26_0.viewParam.reviewEnding
-	arg_26_0._storyMo = Activity165Model.instance:getStoryMo(arg_26_0._actId, arg_26_0._storyId)
+function Activity165StoryEditView:onOpen()
+	self._actId = Activity165Model.instance:getActivityId()
+	self._storyId = self.viewParam.storyId
+	self.reviewEnding = self.viewParam.reviewEnding
+	self._storyMo = Activity165Model.instance:getStoryMo(self._actId, self._storyId)
 
-	arg_26_0._storyMo:setReviewEnding(arg_26_0.reviewEnding)
+	self._storyMo:setReviewEnding(self.reviewEnding)
 
-	arg_26_0._clickKwId = nil
+	self._clickKwId = nil
 
-	arg_26_0:_createStoryGo()
+	self:_createStoryGo()
 
-	arg_26_0.isEndingAnim = false
-	arg_26_0._isCloseKePanel = false
+	self.isEndingAnim = false
+	self._isCloseKePanel = false
 
-	arg_26_0:_onRefreshStoryState()
-	arg_26_0:_activeKeywordPanel(false)
-	gohelper.setActive(arg_26_0._goexcessive.gameObject, false)
-	arg_26_0:_refreshTip()
+	self:_onRefreshStoryState()
+	self:_activeKeywordPanel(false)
+	gohelper.setActive(self._goexcessive.gameObject, false)
+	self:_refreshTip()
 
-	arg_26_0._isFinishPlayEnding = false
+	self._isFinishPlayEnding = false
 
 	AudioMgr.instance:trigger(AudioEnum.Activity156.play_ui_wangshi_enter)
 end
 
-function var_0_0.onRefresh(arg_27_0)
-	arg_27_0:_onRefreshStoryState()
-	arg_27_0:_refreshStep()
-	arg_27_0:_refreshKeywordItem()
+function Activity165StoryEditView:onRefresh()
+	self:_onRefreshStoryState()
+	self:_refreshStep()
+	self:_refreshKeywordItem()
 end
 
-function var_0_0._onRefreshStoryState(arg_28_0)
-	local var_28_0 = arg_28_0._storyMo:getState()
-	local var_28_1 = var_28_0 == Activity165Enum.StoryStage.isEndFill
-	local var_28_2 = var_28_0 == Activity165Enum.StoryStage.Ending
+function Activity165StoryEditView:_onRefreshStoryState()
+	local stage = self._storyMo:getState()
+	local isStoryFinish = stage == Activity165Enum.StoryStage.isEndFill
+	local isEnding = stage == Activity165Enum.StoryStage.Ending
 
-	if var_28_1 or var_28_2 then
-		local var_28_3 = arg_28_0._storyMo:getUnlockStepIdRemoveEndingCount()
-		local var_28_4 = math.min(#arg_28_0._stepItemList, var_28_3)
-		local var_28_5 = arg_28_0._stepItemList[var_28_4 + 1]
-		local var_28_6 = var_28_4 > 1 and 324 or -484
-		local var_28_7 = var_28_5 and var_28_5.goParent.transform.localPosition.y or -200
+	if isStoryFinish or isEnding then
+		local unlockStepCount = self._storyMo:getUnlockStepIdRemoveEndingCount()
+		local index = math.min(#self._stepItemList, unlockStepCount)
+		local item = self._stepItemList[index + 1]
+		local posX = index > 1 and 324 or -484
+		local posY = item and item.goParent.transform.localPosition.y or -200
 
-		recthelper.setAnchor(arg_28_0._btnconfirm.transform, var_28_6, var_28_7)
-		recthelper.setAnchor(arg_28_0._goending.transform, var_28_6, var_28_7 - 100)
-		recthelper.setAnchor(arg_28_0._goassessment.transform, var_28_6, var_28_7 - 240)
+		recthelper.setAnchor(self._btnconfirm.transform, posX, posY)
+		recthelper.setAnchor(self._goending.transform, posX, posY - 100)
+		recthelper.setAnchor(self._goassessment.transform, posX, posY - 240)
 
-		if arg_28_0._storyMo:getUnlockStepIdRemoveEndingCount() > 1 then
-			gohelper.setActive(arg_28_0._golocked, false)
+		if self._storyMo:getUnlockStepIdRemoveEndingCount() > 1 then
+			gohelper.setActive(self._golocked, false)
 		end
 	end
 
-	gohelper.setActive(arg_28_0._btnconfirm.gameObject, var_28_1)
-	gohelper.setActive(arg_28_0._goending.gameObject, var_28_2)
-	gohelper.setActive(arg_28_0._goassessment.gameObject, var_28_2)
-	gohelper.setActive(arg_28_0._btnreset.gameObject, not var_28_2)
-	gohelper.setActive(arg_28_0._btnrestart.gameObject, var_28_2 and not arg_28_0.reviewEnding)
+	gohelper.setActive(self._btnconfirm.gameObject, isStoryFinish)
+	gohelper.setActive(self._goending.gameObject, isEnding)
+	gohelper.setActive(self._goassessment.gameObject, isEnding)
+	gohelper.setActive(self._btnreset.gameObject, not isEnding)
+	gohelper.setActive(self._btnrestart.gameObject, isEnding and not self.reviewEnding)
 
-	if var_28_2 then
-		arg_28_0:_showEnding()
+	if isEnding then
+		self:_showEnding()
 	end
 end
 
-function var_0_0._createStoryGo(arg_29_0)
-	local var_29_0 = arg_29_0.viewContainer:getSetting().otherRes[1]
-	local var_29_1 = gohelper.findChild(arg_29_0._gostory, "story")
+function Activity165StoryEditView:_createStoryGo()
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local storyParent = gohelper.findChild(self._gostory, "story")
 
-	arg_29_0._storyItem = arg_29_0:getResInst(var_29_0, var_29_1, "story_" .. arg_29_0._storyId)
-	arg_29_0._golocked = gohelper.findChild(arg_29_0._storyItem, "#go_point/#go_locked")
-	arg_29_0._lockRightAnim = SLFramework.AnimatorPlayer.Get(arg_29_0._golocked.gameObject)
-	arg_29_0._btnclick = gohelper.findChildButtonWithAudio(arg_29_0._storyItem, "#btn_click")
+	self._storyItem = self:getResInst(path, storyParent, "story_" .. self._storyId)
+	self._golocked = gohelper.findChild(self._storyItem, "#go_point/#go_locked")
+	self._lockRightAnim = SLFramework.AnimatorPlayer.Get(self._golocked.gameObject)
+	self._btnclick = gohelper.findChildButtonWithAudio(self._storyItem, "#btn_click")
 
-	arg_29_0._btnclick:AddClickListener(arg_29_0._btnclickOnClick, arg_29_0)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 
-	arg_29_0._storyAnim = SLFramework.AnimatorPlayer.Get(arg_29_0._storyItem.gameObject)
+	self._storyAnim = SLFramework.AnimatorPlayer.Get(self._storyItem.gameObject)
 
-	local var_29_2 = gohelper.findChildText(arg_29_0._storyItem, "#txt_title")
-	local var_29_3 = gohelper.findChildText(arg_29_0._storyItem, "begin/scroll_story/Viewport/#txt_dec")
-	local var_29_4 = gohelper.findChildImage(arg_29_0._storyItem, "begin/icon/#image_icon")
-	local var_29_5 = gohelper.findChildScrollRect(arg_29_0._storyItem, "begin/scroll_story")
+	local _stroyName = gohelper.findChildText(self._storyItem, "#txt_title")
+	local _beginTxt = gohelper.findChildText(self._storyItem, "begin/scroll_story/Viewport/#txt_dec")
+	local _beginIcon = gohelper.findChildImage(self._storyItem, "begin/icon/#image_icon")
+	local _beginscroll = gohelper.findChildScrollRect(self._storyItem, "begin/scroll_story")
 
-	if arg_29_0._storyMo then
-		var_29_2.text = arg_29_0._storyMo:getStoryName(76)
+	if self._storyMo then
+		_stroyName.text = self._storyMo:getStoryName(76)
 
-		local var_29_6 = arg_29_0._storyMo:getStoryFirstStepMo()
+		local firstStep = self._storyMo:getStoryFirstStepMo()
 
-		var_29_3.text = var_29_6 and var_29_6.stepCo.text
+		_beginTxt.text = firstStep and firstStep.stepCo.text
 
-		local var_29_7 = var_29_6 and var_29_6.stepCo.pic
+		local icon = firstStep and firstStep.stepCo.pic
 
-		if not string.nilorempty(var_29_7) then
-			UISpriteSetMgr.instance:setV2a1Act165Sprite(var_29_4, var_29_7, true)
+		if not string.nilorempty(icon) then
+			UISpriteSetMgr.instance:setV2a1Act165Sprite(_beginIcon, icon, true)
 		end
 
-		arg_29_0:_createStepList()
+		self:_createStepList()
 	end
 
-	var_29_5.verticalNormalizedPosition = 1
+	_beginscroll.verticalNormalizedPosition = 1
 end
 
-function var_0_0._createStepList(arg_30_0)
-	local var_30_0 = gohelper.findChild(arg_30_0._storyItem, "#go_point/eg")
-	local var_30_1 = gohelper.findChild(var_30_0, "#go_eg")
+function Activity165StoryEditView:_createStepList()
+	local _goegeroot = gohelper.findChild(self._storyItem, "#go_point/eg")
+	local _goeg = gohelper.findChild(_goegeroot, "#go_eg")
 
-	gohelper.setActive(var_30_1.gameObject, false)
+	gohelper.setActive(_goeg.gameObject, false)
 
-	local var_30_2 = gohelper.findChild(arg_30_0._storyItem, "#go_point/point")
-	local var_30_3 = var_30_2.transform.childCount
+	local _ponit = gohelper.findChild(self._storyItem, "#go_point/point")
+	local _childCount = _ponit.transform.childCount
 
-	gohelper.setActive(var_30_0, false)
+	gohelper.setActive(_goegeroot, false)
 
-	arg_30_0._stepItemList = arg_30_0:getUserDataTb_()
+	self._stepItemList = self:getUserDataTb_()
 
-	for iter_30_0 = 1, var_30_3 do
-		local var_30_4 = gohelper.findChild(var_30_2, iter_30_0)
-		local var_30_5 = gohelper.clone(var_30_1, var_30_4)
-		local var_30_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_30_5, Activity165StepItem)
+	for i = 1, _childCount do
+		local _goChild = gohelper.findChild(_ponit, i)
+		local child = gohelper.clone(_goeg, _goChild)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(child, Activity165StepItem)
 
-		var_30_6.goParent = var_30_4
+		item.goParent = _goChild
 
-		var_30_6:onInitItem(arg_30_0._storyMo, iter_30_0)
-		gohelper.setActive(var_30_5.gameObject, true)
+		item:onInitItem(self._storyMo, i)
+		gohelper.setActive(child.gameObject, true)
 
-		arg_30_0._stepItemList[iter_30_0] = var_30_6
+		self._stepItemList[i] = item
 	end
 
-	arg_30_0:_refreshStep()
+	self:_refreshStep()
 end
 
-function var_0_0._refreshStep(arg_31_0)
-	local var_31_0 = arg_31_0._storyMo:getUnlockStepIdRemoveEnding()
+function Activity165StoryEditView:_refreshStep()
+	local stepIds = self._storyMo:getUnlockStepIdRemoveEnding()
 
-	for iter_31_0, iter_31_1 in pairs(arg_31_0._stepItemList) do
-		iter_31_1:onUpdateMO(var_31_0[iter_31_0])
+	for index, item in pairs(self._stepItemList) do
+		item:onUpdateMO(stepIds[index])
 	end
 
-	local var_31_1 = arg_31_0._storyMo:getUnlockStepIdRemoveEndingCount()
+	local unlockStepCount = self._storyMo:getUnlockStepIdRemoveEndingCount()
 
-	gohelper.setActive(arg_31_0._golocked, var_31_1 < 3)
+	gohelper.setActive(self._golocked, unlockStepCount < 3)
 
-	if var_31_1 < 3 then
-		arg_31_0._lockRightAnim:Play(Activity165Enum.EditViewAnim.Idle, nil, arg_31_0)
+	if unlockStepCount < 3 then
+		self._lockRightAnim:Play(Activity165Enum.EditViewAnim.Idle, nil, self)
 	end
 end
 
-function var_0_0._refreshTip(arg_32_0)
+function Activity165StoryEditView:_refreshTip()
 	return
 end
 
-function var_0_0._restartStory(arg_33_0)
-	TaskDispatcher.cancelTask(arg_33_0._restartStoryCallback, arg_33_0)
-	TaskDispatcher.cancelTask(arg_33_0._hideExcessive, arg_33_0)
-	gohelper.setActive(arg_33_0._goexcessive.gameObject, true)
-	TaskDispatcher.runDelay(arg_33_0._restartStoryCallback, arg_33_0, 0.5)
-	TaskDispatcher.runDelay(arg_33_0._hideExcessive, arg_33_0, 1)
+function Activity165StoryEditView:_restartStory()
+	TaskDispatcher.cancelTask(self._restartStoryCallback, self)
+	TaskDispatcher.cancelTask(self._hideExcessive, self)
+	gohelper.setActive(self._goexcessive.gameObject, true)
+	TaskDispatcher.runDelay(self._restartStoryCallback, self, 0.5)
+	TaskDispatcher.runDelay(self._hideExcessive, self, 1)
 
-	arg_33_0._isFinishPlayEnding = false
+	self._isFinishPlayEnding = false
 end
 
-function var_0_0._restartStoryCallback(arg_34_0)
-	gohelper.setActive(arg_34_0._godialogcontainer.gameObject, false)
-	arg_34_0._storyMo:onRestart()
-	Activity165Rpc.instance:sendAct165RestartRequest(arg_34_0._actId, arg_34_0._storyId, arg_34_0._storyMo:getFirstStepId())
+function Activity165StoryEditView:_restartStoryCallback()
+	gohelper.setActive(self._godialogcontainer.gameObject, false)
+	self._storyMo:onRestart()
+	Activity165Rpc.instance:sendAct165RestartRequest(self._actId, self._storyId, self._storyMo:getFirstStepId())
 end
 
-function var_0_0._hideExcessive(arg_35_0)
-	gohelper.setActive(arg_35_0._goexcessive.gameObject, false)
+function Activity165StoryEditView:_hideExcessive()
+	gohelper.setActive(self._goexcessive.gameObject, false)
 end
 
-function var_0_0._onclickPreStepYesCallback(arg_36_0)
-	arg_36_0._storyMo:resetStep()
+function Activity165StoryEditView:_onclickPreStepYesCallback()
+	self._storyMo:resetStep()
 
-	if arg_36_0._storyMo.curStepInde then
-		for iter_36_0 = arg_36_0._storyMo.curStepIndex + 1, #arg_36_0._stepItemList do
-			arg_36_0._stepItemList[iter_36_0]:clearStep()
+	if self._storyMo.curStepInde then
+		for i = self._storyMo.curStepIndex + 1, #self._stepItemList do
+			local item = self._stepItemList[i]
+
+			item:clearStep()
 		end
 	end
 
-	arg_36_0._curStep:onRefreshMo()
+	self._curStep:onRefreshMo()
 
-	local var_36_0 = arg_36_0._storyMo:getUnlockStepIdRemoveEndingCount()
+	local unlockStepCount = self._storyMo:getUnlockStepIdRemoveEndingCount()
 
-	gohelper.setActive(arg_36_0._golocked, var_36_0 < 3)
+	gohelper.setActive(self._golocked, unlockStepCount < 3)
 end
 
-function var_0_0.playCloseAnim(arg_37_0, arg_37_1, arg_37_2)
-	if arg_37_0._storyAnim then
-		arg_37_0._storyAnim:Play(Activity165Enum.EditViewAnim.Close, arg_37_1, arg_37_2)
+function Activity165StoryEditView:playCloseAnim(callback, callbackobj)
+	if self._storyAnim then
+		self._storyAnim:Play(Activity165Enum.EditViewAnim.Close, callback, callbackobj)
 
-		if arg_37_0._goending.activeSelf then
-			arg_37_0._endAnim:Play(Activity165Enum.EditViewAnim.Close, nil, arg_37_0)
+		if self._goending.activeSelf then
+			self._endAnim:Play(Activity165Enum.EditViewAnim.Close, nil, self)
 		end
 
-		if arg_37_0._goassessment.activeSelf then
-			arg_37_0._assessmentAnim:Play(Activity165Enum.EditViewAnim.Close, nil, arg_37_0)
+		if self._goassessment.activeSelf then
+			self._assessmentAnim:Play(Activity165Enum.EditViewAnim.Close, nil, self)
 		end
 
-		arg_37_0._viewAnim:Play(Activity165Enum.EditViewAnim.Close, nil, arg_37_0)
-	elseif arg_37_1 then
-		arg_37_1(arg_37_2)
+		self._viewAnim:Play(Activity165Enum.EditViewAnim.Close, nil, self)
+	elseif callback then
+		callback(callbackobj)
 	end
 end
 
-function var_0_0._refreshKeywordItem(arg_38_0)
-	if arg_38_0._storyMo then
-		arg_38_0._keywordItems = arg_38_0:getUserDataTb_()
+function Activity165StoryEditView:_refreshKeywordItem()
+	if self._storyMo then
+		self._keywordItems = self:getUserDataTb_()
 
-		local var_38_0 = arg_38_0._storyMo:getKeywordList()
+		local molist = self._storyMo:getKeywordList()
 
-		gohelper.CreateObjList(arg_38_0, arg_38_0._createKeywordCallback, var_38_0, arg_38_0._gokeywords.transform.parent.gameObject, arg_38_0._gokeywords, Activity165KeywordItem)
+		gohelper.CreateObjList(self, self._createKeywordCallback, molist, self._gokeywords.transform.parent.gameObject, self._gokeywords, Activity165KeywordItem)
 	end
 
-	arg_38_0:_refreshKeywordPanel()
+	self:_refreshKeywordPanel()
 end
 
-function var_0_0._createKeywordCallback(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
-	arg_39_1:onUpdateMO(arg_39_2)
-	arg_39_1:setDragEvent(arg_39_0._onDragBegin, arg_39_0._onDrag, arg_39_0._onDragEnd, arg_39_0)
+function Activity165StoryEditView:_createKeywordCallback(com, data, index)
+	com:onUpdateMO(data)
+	com:setDragEvent(self._onDragBegin, self._onDrag, self._onDragEnd, self)
 
-	arg_39_0._keywordItems[arg_39_2.keywordId] = arg_39_1
+	self._keywordItems[data.keywordId] = com
 end
 
-function var_0_0._activeKeywordPanel(arg_40_0, arg_40_1)
-	if not arg_40_1 then
-		arg_40_0._storyMo:setSelectStepIndex()
+function Activity165StoryEditView:_activeKeywordPanel(isActive)
+	if not isActive then
+		self._storyMo:setSelectStepIndex()
 
-		for iter_40_0, iter_40_1 in pairs(arg_40_0._stepItemList) do
-			iter_40_1:refreshFillStepState()
-		end
-	end
-
-	local var_40_0 = arg_40_1 and Activity165Enum.EditViewAnim.Open or Activity165Enum.EditViewAnim.Close
-
-	local function var_40_1()
-		if not arg_40_1 then
-			gohelper.setActive(arg_40_0._gokeywordpanel, false)
-			gohelper.setActive(arg_40_0._gotopleft, true)
+		for _, item in pairs(self._stepItemList) do
+			item:refreshFillStepState()
 		end
 	end
 
-	if arg_40_1 then
-		gohelper.setActive(arg_40_0._gokeywordpanel, true)
-		gohelper.setActive(arg_40_0._gotopleft, false)
+	local anim = isActive and Activity165Enum.EditViewAnim.Open or Activity165Enum.EditViewAnim.Close
+
+	local function animFinish()
+		if not isActive then
+			gohelper.setActive(self._gokeywordpanel, false)
+			gohelper.setActive(self._gotopleft, true)
+		end
 	end
 
-	if arg_40_0._gokeywordpanel.activeSelf then
-		arg_40_0._keywordPanelAnim:Play(var_40_0, var_40_1, arg_40_0)
+	if isActive then
+		gohelper.setActive(self._gokeywordpanel, true)
+		gohelper.setActive(self._gotopleft, false)
+	end
+
+	if self._gokeywordpanel.activeSelf then
+		self._keywordPanelAnim:Play(anim, animFinish, self)
 	end
 end
 
-function var_0_0._refreshKeywordPanel(arg_42_0)
-	for iter_42_0, iter_42_1 in pairs(arg_42_0._keywordItems) do
-		iter_42_1:onRefresh()
+function Activity165StoryEditView:_refreshKeywordPanel()
+	for _, item in pairs(self._keywordItems) do
+		item:onRefresh()
 	end
 end
 
-function var_0_0._onDragBegin(arg_43_0, arg_43_1, arg_43_2)
-	if arg_43_0._isDraging then
+function Activity165StoryEditView:_onDragBegin(param, pointerEventData)
+	if self._isDraging then
 		return
 	end
 
-	local var_43_0 = arg_43_1
-	local var_43_1 = arg_43_0._storyMo:getKeywordMo(var_43_0)
+	local _keywordId = param
+	local _keywordMo = self._storyMo:getKeywordMo(_keywordId)
 
-	if not var_43_1 or var_43_1.isUsed then
+	if not _keywordMo or _keywordMo.isUsed then
 		return
 	end
 
-	if arg_43_0._curStep and arg_43_0._curStep:isFullKeyword() then
+	if self._curStep and self._curStep:isFullKeyword() then
 		return
 	end
 
-	arg_43_0:checkKeyword()
-	gohelper.setActive(arg_43_0._godragContainer.gameObject, true)
+	self:checkKeyword()
+	gohelper.setActive(self._godragContainer.gameObject, true)
 
-	arg_43_0._isDraging = true
+	self._isDraging = true
 
-	local var_43_2 = arg_43_0:_getDragKeywordItem()
+	local _dragItem = self:_getDragKeywordItem()
 
-	if var_43_2 then
-		var_43_2.id = var_43_0
+	if _dragItem then
+		_dragItem.id = _keywordId
 
-		local var_43_3 = Activity165Config.instance:getKeywordCo(arg_43_0._actId, var_43_0)
+		local co = Activity165Config.instance:getKeywordCo(self._actId, _keywordId)
 
-		if not string.nilorempty(var_43_3.pic) then
-			UISpriteSetMgr.instance:setV2a1Act165Sprite(arg_43_0._dragKeywordItem.icon, var_43_3.pic)
+		if not string.nilorempty(co.pic) then
+			UISpriteSetMgr.instance:setV2a1Act165Sprite(self._dragKeywordItem.icon, co.pic)
 		end
 
-		gohelper.setActive(arg_43_0._dragKeywordItem.go, true)
-		arg_43_0._keywordItems[var_43_0]:Using()
+		gohelper.setActive(self._dragKeywordItem.go, true)
+
+		local _keywordItem = self._keywordItems[_keywordId]
+
+		_keywordItem:Using()
 	end
 
-	arg_43_0:_setDragItemPos()
+	self:_setDragItemPos()
 end
 
-function var_0_0.checkKeyword(arg_44_0)
-	if not arg_44_0._curStep then
+function Activity165StoryEditView:checkKeyword()
+	if not self._curStep then
 		return
 	end
 
-	local var_44_0 = arg_44_0._curStep._keywordIdList
+	local stepKws = self._curStep._keywordIdList
 
-	for iter_44_0, iter_44_1 in ipairs(arg_44_0._storyMo:getKeywordList()) do
-		if iter_44_1.isUsed then
-			local var_44_1 = iter_44_1.keywordId
+	for _, mo in ipairs(self._storyMo:getKeywordList()) do
+		if mo.isUsed then
+			local id = mo.keywordId
 
-			if not LuaUtil.tableContains(var_44_0, var_44_1) then
-				arg_44_0._curStep:addKeywordItem(var_44_1)
+			if not LuaUtil.tableContains(stepKws, id) then
+				self._curStep:addKeywordItem(id)
 			end
 		end
 	end
 end
 
-function var_0_0._onDrag(arg_45_0, arg_45_1, arg_45_2)
-	if not arg_45_0._isDraging then
+function Activity165StoryEditView:_onDrag(param, pointerEventData)
+	if not self._isDraging then
 		return
 	end
 
-	arg_45_0:_setDragItemPos()
+	self:_setDragItemPos()
 
-	if arg_45_0:_isInCurStep() then
-		arg_45_0._curStep:setBogusKeyword(arg_45_0._dragKeywordItem.id)
+	if self:_isInCurStep() then
+		self._curStep:setBogusKeyword(self._dragKeywordItem.id)
 	else
-		arg_45_0._curStep:refreshBogusKeyword()
+		self._curStep:refreshBogusKeyword()
 	end
 end
 
-function var_0_0._onDragEndEvent(arg_46_0)
-	arg_46_0._isDraging = false
+function Activity165StoryEditView:_onDragEndEvent()
+	self._isDraging = false
 
-	arg_46_0._curStep:cancelBogusKeyword()
+	self._curStep:cancelBogusKeyword()
 
-	local var_46_0 = arg_46_0:_isInCurStep() and arg_46_0._dragKeywordItem
+	local isCanDrag = self:_isInCurStep() and self._dragKeywordItem
 
-	arg_46_0:_tryFillKeyword(arg_46_0._dragKeywordItem.id, var_46_0)
-	gohelper.setActive(arg_46_0._dragKeywordItem.go, false)
+	self:_tryFillKeyword(self._dragKeywordItem.id, isCanDrag)
+	gohelper.setActive(self._dragKeywordItem.go, false)
 end
 
-function var_0_0._onDragEnd(arg_47_0, arg_47_1, arg_47_2)
-	if not arg_47_0._isDraging then
+function Activity165StoryEditView:_onDragEnd(param, pointerEventData)
+	if not self._isDraging then
 		return
 	end
 
-	arg_47_0:_onDragEndEvent()
+	self:_onDragEndEvent()
 end
 
-function var_0_0._setDragItemPos(arg_48_0)
-	if arg_48_0._dragKeywordItem then
-		local var_48_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_48_0._godragContainer.transform)
+function Activity165StoryEditView:_setDragItemPos()
+	if self._dragKeywordItem then
+		local _dragPos = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), self._godragContainer.transform)
 
-		recthelper.setAnchor(arg_48_0._dragKeywordItem.go.transform, var_48_0.x, var_48_0.y)
+		recthelper.setAnchor(self._dragKeywordItem.go.transform, _dragPos.x, _dragPos.y)
 	end
 end
 
-function var_0_0._getDragKeywordItem(arg_49_0)
-	if not arg_49_0._dragKeywordItem then
-		local var_49_0 = gohelper.findChild(arg_49_0._gokeywords, "#image_icon")
-		local var_49_1 = gohelper.clone(var_49_0, arg_49_0._godragContainer, "dragItem")
+function Activity165StoryEditView:_getDragKeywordItem()
+	if not self._dragKeywordItem then
+		local _go = gohelper.findChild(self._gokeywords, "#image_icon")
+		local go = gohelper.clone(_go, self._godragContainer, "dragItem")
 
-		arg_49_0._dragKeywordItem = {}
-		arg_49_0._dragKeywordItem.go = var_49_1
-		arg_49_0._dragKeywordItem.icon = var_49_1:GetComponent(typeof(UnityEngine.UI.Image))
+		self._dragKeywordItem = {}
+		self._dragKeywordItem.go = go
+		self._dragKeywordItem.icon = go:GetComponent(typeof(UnityEngine.UI.Image))
 	end
 
-	return arg_49_0._dragKeywordItem
+	return self._dragKeywordItem
 end
 
-function var_0_0._tryFillKeyword(arg_50_0, arg_50_1, arg_50_2)
-	if arg_50_2 and arg_50_0._curStep:tryFillKeyword(arg_50_1) then
-		arg_50_0:_fillKeyword(arg_50_1)
+function Activity165StoryEditView:_tryFillKeyword(kwId, isCanDrag)
+	if isCanDrag and self._curStep:tryFillKeyword(kwId) then
+		self:_fillKeyword(kwId)
 	else
-		arg_50_0:_failFillKeyword(arg_50_1)
+		self:_failFillKeyword(kwId)
 	end
 
-	arg_50_0._clickKwId = nil
+	self._clickKwId = nil
 end
 
-function var_0_0._fillKeyword(arg_51_0, arg_51_1)
-	arg_51_0._curStep:fillKeyword(arg_51_1)
-	arg_51_0._storyMo:fillKeyword(arg_51_1, arg_51_0._curStep._index)
-	arg_51_0._keywordItems[arg_51_1]:onRefresh()
+function Activity165StoryEditView:_fillKeyword(kwId)
+	self._curStep:fillKeyword(kwId)
+	self._storyMo:fillKeyword(kwId, self._curStep._index)
+	self._keywordItems[kwId]:onRefresh()
 	AudioMgr.instance:trigger(AudioEnum.Activity156.play_ui_wangshi_fill)
 end
 
-function var_0_0._failFillKeyword(arg_52_0, arg_52_1)
-	arg_52_0._keywordItems[arg_52_1]:clearUsing()
-	arg_52_0._curStep:failFillKeyword(arg_52_1)
+function Activity165StoryEditView:_failFillKeyword(kwId)
+	self._keywordItems[kwId]:clearUsing()
+	self._curStep:failFillKeyword(kwId)
 end
 
-function var_0_0._isInCurStep(arg_53_0)
-	if arg_53_0._curStep then
-		local var_53_0 = arg_53_0:_getRectMatrix(arg_53_0._curStep._btnclick, 500)
-		local var_53_1 = arg_53_0:_getRectMatrix(arg_53_0._dragKeywordItem.go, 0)
+function Activity165StoryEditView:_isInCurStep()
+	if self._curStep then
+		local _stepRect = self:_getRectMatrix(self._curStep._btnclick, 500)
+		local _dragRect = self:_getRectMatrix(self._dragKeywordItem.go, 0)
 
-		if var_53_0.left > var_53_1.right or var_53_1.left > var_53_0.right or var_53_0.bottom > var_53_1.top or var_53_1.bottom > var_53_0.top then
+		if _stepRect.left > _dragRect.right or _dragRect.left > _stepRect.right or _stepRect.bottom > _dragRect.top or _dragRect.bottom > _stepRect.top then
 			return false
 		else
 			return true
@@ -750,218 +765,226 @@ function var_0_0._isInCurStep(arg_53_0)
 	end
 end
 
-function var_0_0._getRectMatrix(arg_54_0, arg_54_1, arg_54_2)
-	local var_54_0, var_54_1 = recthelper.rectToRelativeAnchorPos2(arg_54_1.transform.position, arg_54_0.viewGO.transform)
-
-	return {
-		left = var_54_0 - arg_54_1.transform.rect.width * 0.5 - arg_54_2,
-		right = var_54_0 + arg_54_1.transform.rect.width * 0.5 + arg_54_2,
-		top = var_54_1 + arg_54_1.transform.rect.height * 0.5 + arg_54_2,
-		bottom = var_54_1 - arg_54_1.transform.rect.height * 0.5 - arg_54_2
+function Activity165StoryEditView:_getRectMatrix(go, addRange)
+	local posX, posY = recthelper.rectToRelativeAnchorPos2(go.transform.position, self.viewGO.transform)
+	local rect = {
+		left = posX - go.transform.rect.width * 0.5 - addRange,
+		right = posX + go.transform.rect.width * 0.5 + addRange,
+		top = posY + go.transform.rect.height * 0.5 + addRange,
+		bottom = posY - go.transform.rect.height * 0.5 - addRange
 	}
+
+	return rect
 end
 
-function var_0_0._closeKwPanel(arg_55_0, arg_55_1)
-	if arg_55_0._isCloseKePanel then
+function Activity165StoryEditView:_closeKwPanel(curStepIndex)
+	if self._isCloseKePanel then
 		return
 	end
 
-	arg_55_0._isCloseKePanel = true
+	self._isCloseKePanel = true
 
-	arg_55_0:_activeKeywordPanel(false)
-	arg_55_0._curStep:refreshFillStepState(false)
+	self:_activeKeywordPanel(false)
+	self._curStep:refreshFillStepState(false)
 
-	local var_55_0 = Activity165Enum.EditStepMoveAnim[arg_55_1].Back
+	local anim = Activity165Enum.EditStepMoveAnim[curStepIndex].Back
 
-	arg_55_0._viewAnim:Play(var_55_0, arg_55_0.backKwPanelCB, arg_55_0)
+	self._viewAnim:Play(anim, self.backKwPanelCB, self)
 end
 
-function var_0_0.backKwPanelCB(arg_56_0)
-	if arg_56_0._storyMo:getState() == Activity165Enum.StoryStage.isEndFill then
-		gohelper.setActive(arg_56_0._btnconfirm.gameObject, true)
-		arg_56_0._btnconfirmAnim:Play(Activity165Enum.EditViewAnim.story_btn_open, 0, 1)
+function Activity165StoryEditView:backKwPanelCB()
+	if self._storyMo:getState() == Activity165Enum.StoryStage.isEndFill then
+		gohelper.setActive(self._btnconfirm.gameObject, true)
+		self._btnconfirmAnim:Play(Activity165Enum.EditViewAnim.story_btn_open, 0, 1)
 	end
 
-	arg_56_0._isCloseKePanel = false
+	self._isCloseKePanel = false
 end
 
-function var_0_0.beginGenerateEnding(arg_57_0)
-	gohelper.setActive(arg_57_0._btnconfirm.gameObject, false)
-	gohelper.setActive(arg_57_0._goending.gameObject, true)
-	gohelper.setActive(arg_57_0._btnreset.gameObject, false)
+function Activity165StoryEditView:beginGenerateEnding()
+	gohelper.setActive(self._btnconfirm.gameObject, false)
+	gohelper.setActive(self._goending.gameObject, true)
+	gohelper.setActive(self._btnreset.gameObject, false)
 
-	arg_57_0.isEndingAnim = true
+	self.isEndingAnim = true
 
-	arg_57_0:_showEnding()
-	arg_57_0._storyMo:generateStroy()
+	self:_showEnding()
+	self._storyMo:generateStroy()
 end
 
-function var_0_0.generateEndingCallback(arg_58_0)
+function Activity165StoryEditView:generateEndingCallback()
 	return
 end
 
-function var_0_0._showDialog(arg_59_0)
-	local var_59_0 = arg_59_0:_getEndingCo()
+function Activity165StoryEditView:_showDialog()
+	local co = self:_getEndingCo()
 
-	if var_59_0 then
-		local var_59_1 = ResUrl.getHeadIconSmall("309901")
-		local var_59_2 = var_59_0.text
+	if co then
+		local icon = ResUrl.getHeadIconSmall("309901")
+		local dialogConfig = co.text
 
-		arg_59_0._txtdialog.text = var_59_2
+		self._txtdialog.text = dialogConfig
 
-		if not arg_59_0._tmpFadeIn then
-			local var_59_3 = gohelper.findChild(arg_59_0._godialogcontainer, "#go_dialog/container")
+		if not self._tmpFadeIn then
+			local container = gohelper.findChild(self._godialogcontainer, "#go_dialog/container")
 
-			arg_59_0._tmpFadeIn = MonoHelper.addLuaComOnceToGo(var_59_3, TMPFadeIn)
+			self._tmpFadeIn = MonoHelper.addLuaComOnceToGo(container, TMPFadeIn)
 		end
 
-		arg_59_0._tmpFadeIn:playNormalText(var_59_2)
-		arg_59_0._simagedialogicon:LoadImage(var_59_1)
-		gohelper.setActive(arg_59_0._godialogcontainer.gameObject, true)
+		self._tmpFadeIn:playNormalText(dialogConfig)
+		self._simagedialogicon:LoadImage(icon)
+		gohelper.setActive(self._godialogcontainer.gameObject, true)
 	else
-		arg_59_0:_showAssessment()
+		self:_showAssessment()
 	end
 end
 
-function var_0_0._showEnding(arg_60_0)
-	arg_60_0:_killEndingTxtAnim()
+function Activity165StoryEditView:_showEnding()
+	self:_killEndingTxtAnim()
 
-	arg_60_0._txtstory.text = ""
+	self._txtstory.text = ""
 
-	if arg_60_0.isEndingAnim then
-		arg_60_0._endAnim:Play(Activity165Enum.EditViewAnim.Play, nil, arg_60_0)
-		arg_60_0:_doEndingText()
+	if self.isEndingAnim then
+		self._endAnim:Play(Activity165Enum.EditViewAnim.Play, nil, self)
+		self:_doEndingText()
 	else
-		arg_60_0:_showEndingCallBack()
+		self:_showEndingCallBack()
 	end
 
-	local var_60_0 = arg_60_0:_getEndingCo()
+	local co = self:_getEndingCo()
 
-	if not var_60_0 then
+	if not co then
 		return
 	end
 
-	if not string.nilorempty(var_60_0.pic) then
-		UISpriteSetMgr.instance:setV2a1Act165_2Sprite(arg_60_0._simagepic, var_60_0.pic)
+	if not string.nilorempty(co.pic) then
+		UISpriteSetMgr.instance:setV2a1Act165_2Sprite(self._simagepic, co.pic)
 	end
 
-	if not string.nilorempty(var_60_0.level) then
-		local var_60_1 = "v2a1_strangetale_assessment_" .. var_60_0.level
+	if not string.nilorempty(co.level) then
+		local icon = "v2a1_strangetale_assessment_" .. co.level
 
-		UISpriteSetMgr.instance:setV2a1Act165_2Sprite(arg_60_0._imageassessment, var_60_1)
+		UISpriteSetMgr.instance:setV2a1Act165_2Sprite(self._imageassessment, icon)
 
-		local var_60_2 = var_60_0.level == Activity165Enum.EndingAssessment.S
+		local isS = co.level == Activity165Enum.EndingAssessment.S
 
-		gohelper.setActive(arg_60_0._goassessmentVX_s, var_60_2)
+		gohelper.setActive(self._goassessmentVX_s, isS)
 	end
 
-	arg_60_0._txtdec.text = var_60_0.text
+	self._txtdec.text = co.text
 end
 
-function var_0_0._setEndingText(arg_61_0)
-	arg_61_0._txtstory.text = arg_61_0._storyMo:getEndingText()
+function Activity165StoryEditView:_setEndingText()
+	self._txtstory.text = self._storyMo:getEndingText()
 end
 
-function var_0_0._doEndingText(arg_62_0)
-	local var_62_0 = arg_62_0._storyMo:getEndingText()
+function Activity165StoryEditView:_doEndingText()
+	local txt = self._storyMo:getEndingText()
 
-	arg_62_0._separateChars = Activity165Model.instance:setSeparateChars(var_62_0)
-	arg_62_0._tweenTime = 0
+	self._separateChars = Activity165Model.instance:setSeparateChars(txt)
+	self._tweenTime = 0
 
-	if not arg_62_0._scrollEndingStory then
-		arg_62_0._scrollEndingStory = gohelper.findChildScrollRect(arg_62_0.viewGO, "#go_ending/scroll_story")
+	if not self._scrollEndingStory then
+		self._scrollEndingStory = gohelper.findChildScrollRect(self.viewGO, "#go_ending/scroll_story")
 	end
 
-	local var_62_1 = #arg_62_0._separateChars
-	local var_62_2 = var_62_1 * 0.033
+	local txtLen = #self._separateChars
+	local time = txtLen * 0.033
 
-	arg_62_0._tweenEndingId = ZProj.TweenHelper.DOTweenFloat(1, var_62_1, var_62_2, arg_62_0._onTweenFrameCallback, arg_62_0._showEndingCallBack, arg_62_0, nil, EaseType.Linear)
+	self._tweenEndingId = ZProj.TweenHelper.DOTweenFloat(1, txtLen, time, self._onTweenFrameCallback, self._showEndingCallBack, self, nil, EaseType.Linear)
 end
 
-function var_0_0._onTweenFrameCallback(arg_63_0, arg_63_1)
-	if not arg_63_0.isEndingAnim or arg_63_1 - arg_63_0._tweenTime < 1 then
+function Activity165StoryEditView:_onTweenFrameCallback(value)
+	if not self.isEndingAnim or value - self._tweenTime < 1 then
 		return
 	end
 
-	if arg_63_0._separateChars and arg_63_1 <= #arg_63_0._separateChars then
-		local var_63_0 = math.floor(arg_63_1)
+	if self._separateChars and value <= #self._separateChars then
+		local index = math.floor(value)
 
-		arg_63_0._txtstory.text = arg_63_0._separateChars[var_63_0]
+		self._txtstory.text = self._separateChars[index]
 
-		if arg_63_0._scrollEndingStory.verticalNormalizedPosition ~= 0 then
-			arg_63_0._scrollEndingStory.verticalNormalizedPosition = 0
+		if self._scrollEndingStory.verticalNormalizedPosition ~= 0 then
+			self._scrollEndingStory.verticalNormalizedPosition = 0
 		end
 	else
-		arg_63_0:_setEndingText()
+		self:_setEndingText()
 	end
 
-	arg_63_0._tweenTime = arg_63_1
+	self._tweenTime = value
 end
 
-function var_0_0._showEndingCallBack(arg_64_0)
-	arg_64_0:_setEndingText()
+function Activity165StoryEditView:_showEndingCallBack()
+	self:_setEndingText()
 
-	if arg_64_0.isEndingAnim and arg_64_0._storyMo:isShowDialog() then
-		TaskDispatcher.runDelay(arg_64_0._showDialog, arg_64_0, 0.3)
+	if self.isEndingAnim and self._storyMo:isShowDialog() then
+		TaskDispatcher.runDelay(self._showDialog, self, 0.3)
 	else
-		arg_64_0:_showAssessment()
+		self:_showAssessment()
 	end
 
-	arg_64_0._isFinishPlayEnding = true
+	self._isFinishPlayEnding = true
 end
 
-function var_0_0._getEndingCo(arg_65_0)
-	return (arg_65_0._storyMo:getEndingCo())
+function Activity165StoryEditView:_getEndingCo()
+	local co = self._storyMo:getEndingCo()
+
+	return co
 end
 
-function var_0_0._showAssessment(arg_66_0)
-	gohelper.setActive(arg_66_0._btnconfirm.gameObject, false)
-	gohelper.setActive(arg_66_0._goending.gameObject, true)
-	gohelper.setActive(arg_66_0._goassessment.gameObject, true)
-	gohelper.setActive(arg_66_0._btnreset.gameObject, false)
-	gohelper.setActive(arg_66_0._btnrestart.gameObject, not arg_66_0.reviewEnding)
-	gohelper.setActive(arg_66_0._godragContainer.gameObject, false)
-	arg_66_0._assessmentAnim:Play(Activity165Enum.EditViewAnim.Play, nil, arg_66_0)
+function Activity165StoryEditView:_showAssessment()
+	gohelper.setActive(self._btnconfirm.gameObject, false)
+	gohelper.setActive(self._goending.gameObject, true)
+	gohelper.setActive(self._goassessment.gameObject, true)
+	gohelper.setActive(self._btnreset.gameObject, false)
+	gohelper.setActive(self._btnrestart.gameObject, not self.reviewEnding)
+	gohelper.setActive(self._godragContainer.gameObject, false)
+	self._assessmentAnim:Play(Activity165Enum.EditViewAnim.Play, nil, self)
 
-	arg_66_0.isEndingAnim = false
+	self.isEndingAnim = false
 
-	if arg_66_0._storyMo:getUnlockStepIdRemoveEndingCount() > 1 then
-		gohelper.setActive(arg_66_0._golocked, false)
+	if self._storyMo:getUnlockStepIdRemoveEndingCount() > 1 then
+		gohelper.setActive(self._golocked, false)
 	end
 end
 
-function var_0_0._playAssessmentAudio(arg_67_0)
+function Activity165StoryEditView:_playAssessmentAudio()
 	AudioMgr.instance:trigger(AudioEnum.Activity156.play_ui_wangshi_generate)
 end
 
-function var_0_0.onRefreshActivity(arg_68_0, arg_68_1)
-	if arg_68_1 == Activity165Model.instance:getActivityId() and not (ActivityHelper.getActivityStatusAndToast(arg_68_1) == ActivityEnum.ActivityStatus.Normal) then
-		arg_68_0:closeThis()
-		GameFacade.showToast(ToastEnum.ActivityEnd)
+function Activity165StoryEditView:onRefreshActivity(actId)
+	if actId == Activity165Model.instance:getActivityId() then
+		local status = ActivityHelper.getActivityStatusAndToast(actId)
+		local isNormal = status == ActivityEnum.ActivityStatus.Normal
+
+		if not isNormal then
+			self:closeThis()
+			GameFacade.showToast(ToastEnum.ActivityEnd)
+		end
 	end
 end
 
-function var_0_0.onClose(arg_69_0)
-	arg_69_0._storyMo:setSelectStepIndex()
-	arg_69_0._storyMo:saveStepUseKeywords()
+function Activity165StoryEditView:onClose()
+	self._storyMo:setSelectStepIndex()
+	self._storyMo:saveStepUseKeywords()
 end
 
-function var_0_0.onDestroyView(arg_70_0)
-	TaskDispatcher.cancelTask(arg_70_0._restartStoryCallback, arg_70_0)
-	TaskDispatcher.cancelTask(arg_70_0._showEndingCallBack, arg_70_0)
-	TaskDispatcher.cancelTask(arg_70_0._hideExcessive, arg_70_0)
-	TaskDispatcher.cancelTask(arg_70_0._showDialog, arg_70_0)
-	arg_70_0._simagedialogicon:UnLoadImage()
-	arg_70_0._simagedialogbg:UnLoadImage()
-	arg_70_0:_killEndingTxtAnim()
+function Activity165StoryEditView:onDestroyView()
+	TaskDispatcher.cancelTask(self._restartStoryCallback, self)
+	TaskDispatcher.cancelTask(self._showEndingCallBack, self)
+	TaskDispatcher.cancelTask(self._hideExcessive, self)
+	TaskDispatcher.cancelTask(self._showDialog, self)
+	self._simagedialogicon:UnLoadImage()
+	self._simagedialogbg:UnLoadImage()
+	self:_killEndingTxtAnim()
 end
 
-function var_0_0._killEndingTxtAnim(arg_71_0)
-	if arg_71_0._tweenEndingId then
-		ZProj.TweenHelper.KillById(arg_71_0._tweenEndingId)
+function Activity165StoryEditView:_killEndingTxtAnim()
+	if self._tweenEndingId then
+		ZProj.TweenHelper.KillById(self._tweenEndingId)
 
-		arg_71_0._tweenEndingId = nil
+		self._tweenEndingId = nil
 	end
 end
 
-return var_0_0
+return Activity165StoryEditView

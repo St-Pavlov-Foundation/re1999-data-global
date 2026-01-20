@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventLYSpecialSpinePlayAniName", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventLYSpecialSpinePlayAniName.lua
 
-local var_0_0 = class("FightTLEventLYSpecialSpinePlayAniName", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventLYSpecialSpinePlayAniName", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_3[1]
+local FightTLEventLYSpecialSpinePlayAniName = class("FightTLEventLYSpecialSpinePlayAniName", FightTimelineTrackItem)
 
-	FightController.instance:dispatchEvent(FightEvent.TimelineLYSpecialSpinePlayAniName, var_1_0)
+function FightTLEventLYSpecialSpinePlayAniName:onTrackStart(fightStepData, duration, paramsArr)
+	local animName = paramsArr[1]
+
+	FightController.instance:dispatchEvent(FightEvent.TimelineLYSpecialSpinePlayAniName, animName)
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEventLYSpecialSpinePlayAniName:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_3_0)
+function FightTLEventLYSpecialSpinePlayAniName:onDestructor()
 	return
 end
 
-return var_0_0
+return FightTLEventLYSpecialSpinePlayAniName

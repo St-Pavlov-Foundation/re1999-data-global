@@ -1,20 +1,22 @@
-﻿module("modules.logic.survival.view.shelter.ShelterHeroGroupFightViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterHeroGroupFightViewContainer.lua
 
-local var_0_0 = class("ShelterHeroGroupFightViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.survival.view.shelter.ShelterHeroGroupFightViewContainer", package.seeall)
 
-function var_0_0.defineFightView(arg_1_0)
-	var_0_0.super.defineFightView(arg_1_0)
+local ShelterHeroGroupFightViewContainer = class("ShelterHeroGroupFightViewContainer", HeroGroupFightViewContainer)
 
-	arg_1_0._heroGroupFightView = ShelterHeroGroupFightView.New()
-	arg_1_0._heroGroupFightListView = ShelterHeroGroupListView.New()
+function ShelterHeroGroupFightViewContainer:defineFightView()
+	ShelterHeroGroupFightViewContainer.super.defineFightView(self)
+
+	self._heroGroupFightView = ShelterHeroGroupFightView.New()
+	self._heroGroupFightListView = ShelterHeroGroupListView.New()
 end
 
-function var_0_0.getFightLevelView(arg_2_0)
+function ShelterHeroGroupFightViewContainer:getFightLevelView()
 	return ShelterHeroGroupFightView_Level.New()
 end
 
-function var_0_0.addLastViews(arg_3_0, arg_3_1)
-	table.insert(arg_3_1, SurvivalHeroGroupEquipView.New())
+function ShelterHeroGroupFightViewContainer:addLastViews(views)
+	table.insert(views, SurvivalHeroGroupEquipView.New())
 end
 
-return var_0_0
+return ShelterHeroGroupFightViewContainer

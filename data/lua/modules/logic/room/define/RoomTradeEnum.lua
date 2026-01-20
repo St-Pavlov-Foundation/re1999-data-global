@@ -1,22 +1,24 @@
-﻿module("modules.logic.room.define.RoomTradeEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomTradeEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomTradeEnum", package.seeall)
 
-var_0_0.Mode = {
+local RoomTradeEnum = _M
+
+RoomTradeEnum.Mode = {
 	Wholesale = 2,
 	DailyOrder = 1
 }
-var_0_0.RefreshType = {
+RoomTradeEnum.RefreshType = {
 	ActiveRefresh = 3,
 	DailyRefresh = 1,
 	FinishRefresh = 2
 }
-var_0_0.BarrageType = {
+RoomTradeEnum.BarrageType = {
 	Dialogue = 2,
 	DailyOrder = 3,
 	Weather = 1
 }
-var_0_0.LevelUnlock = {
+RoomTradeEnum.LevelUnlock = {
 	GetBouns = 10,
 	NewBuilding = 1,
 	LevelBonus = 9,
@@ -29,30 +31,30 @@ var_0_0.LevelUnlock = {
 	TransportSystemOpen = 8,
 	TrainSlotCount = 4
 }
-var_0_0.ConstId = {
+RoomTradeEnum.ConstId = {
 	DailyHighOrderAddRate = 7,
 	DailyOrderFinishMaxCount = 6,
 	DialogueBarrageOdds = 9,
 	DailyOrderRefreshTime = 4
 }
-var_0_0.CameraId = 2233
-var_0_0.TradeAnim = {
+RoomTradeEnum.CameraId = 2233
+RoomTradeEnum.TradeAnim = {
 	Swicth = "swicth",
 	DailyOrderOpen = "roomdailyorderview_open",
 	Unlock = "unlock"
 }
-var_0_0.TradeDailyOrderAnim = {
+RoomTradeEnum.TradeDailyOrderAnim = {
 	Delivery = "delivery",
 	Update = "update",
 	Idle = "idle",
 	Open = "open"
 }
-var_0_0.TradeTaskAnim = {
+RoomTradeEnum.TradeTaskAnim = {
 	Swicth = "switch",
 	Idle = "idle"
 }
-var_0_0.GuideUnlock = {
+RoomTradeEnum.GuideUnlock = {
 	Summon = 416
 }
 
-return var_0_0
+return RoomTradeEnum

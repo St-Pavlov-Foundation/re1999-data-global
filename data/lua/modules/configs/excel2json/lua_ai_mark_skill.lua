@@ -1,16 +1,18 @@
-﻿module("modules.configs.excel2json.lua_ai_mark_skill", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_ai_mark_skill.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_ai_mark_skill", package.seeall)
+
+local lua_ai_mark_skill = {}
+local fields = {
 	skillId = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"skillId"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_ai_mark_skill.onLoad(json)
+	lua_ai_mark_skill.configList, lua_ai_mark_skill.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_ai_mark_skill

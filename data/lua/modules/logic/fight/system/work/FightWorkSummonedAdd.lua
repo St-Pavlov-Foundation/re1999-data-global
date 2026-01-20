@@ -1,35 +1,38 @@
-﻿module("modules.logic.fight.system.work.FightWorkSummonedAdd", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSummonedAdd.lua
 
-local var_0_0 = class("FightWorkSummonedAdd", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkSummonedAdd", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0._targetId = arg_1_0.actEffectData.targetId
+local FightWorkSummonedAdd = class("FightWorkSummonedAdd", FightEffectBase)
 
-	local var_1_0 = FightDataHelper.entityMgr:getById(arg_1_0._targetId)
+function FightWorkSummonedAdd:onStart()
+	self._targetId = self.actEffectData.targetId
 
-	if var_1_0 and arg_1_0.actEffectData.summoned then
-		local var_1_1 = var_1_0:getSummonedInfo():getData(arg_1_0.actEffectData.summoned.uid)
-		local var_1_2 = FightConfig.instance:getSummonedConfig(var_1_1.summonedId, var_1_1.level)
+	local entityMO = FightDataHelper.entityMgr:getById(self._targetId)
 
-		if var_1_2 then
-			arg_1_0:com_registTimer(arg_1_0._delayDone, var_1_2.enterTime / 1000 / FightModel.instance:getSpeed())
-			FightController.instance:dispatchEvent(FightEvent.SummonedAdd, arg_1_0._targetId, var_1_1)
+	if entityMO and self.actEffectData.summoned then
+		local summonedInfo = entityMO:getSummonedInfo()
+		local data = summonedInfo:getData(self.actEffectData.summoned.uid)
+		local config = FightConfig.instance:getSummonedConfig(data.summonedId, data.level)
+
+		if config then
+			self:com_registTimer(self._delayDone, config.enterTime / 1000 / FightModel.instance:getSpeed())
+			FightController.instance:dispatchEvent(FightEvent.SummonedAdd, self._targetId, data)
 
 			return
 		end
 
-		logError("挂件表找不到id:" .. var_1_1.summonedId .. "  等级:" .. var_1_1.level)
+		logError("挂件表找不到id:" .. data.summonedId .. "  等级:" .. data.level)
 	end
 
-	arg_1_0:_delayDone()
+	self:_delayDone()
 end
 
-function var_0_0._delayDone(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkSummonedAdd:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkSummonedAdd:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkSummonedAdd

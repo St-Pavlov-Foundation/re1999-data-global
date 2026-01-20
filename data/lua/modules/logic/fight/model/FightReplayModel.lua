@@ -1,28 +1,30 @@
-﻿module("modules.logic.fight.model.FightReplayModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/FightReplayModel.lua
 
-local var_0_0 = class("FightReplayModel", BaseModel)
+module("modules.logic.fight.model.FightReplayModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FightReplayModel = class("FightReplayModel", BaseModel)
+
+function FightReplayModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function FightReplayModel:reInit()
 	return
 end
 
-function var_0_0.onReceiveGetFightOperReply(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function FightReplayModel:onReceiveGetFightOperReply(msg)
+	local list = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.operRecords) do
-		local var_3_1 = FightRoundOperRecordMO.New()
+	for _, operRecord in ipairs(msg.operRecords) do
+		local mo = FightRoundOperRecordMO.New()
 
-		var_3_1:init(iter_3_1)
-		table.insert(var_3_0, var_3_1)
+		mo:init(operRecord)
+		table.insert(list, mo)
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+FightReplayModel.instance = FightReplayModel.New()
 
-return var_0_0
+return FightReplayModel

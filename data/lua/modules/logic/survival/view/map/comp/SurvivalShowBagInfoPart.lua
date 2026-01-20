@@ -1,34 +1,36 @@
-﻿module("modules.logic.survival.view.map.comp.SurvivalShowBagInfoPart", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/comp/SurvivalShowBagInfoPart.lua
 
-local var_0_0 = class("SurvivalShowBagInfoPart", SurvivalBagInfoPart)
+module("modules.logic.survival.view.map.comp.SurvivalShowBagInfoPart", package.seeall)
 
-function var_0_0._onSelectClick(arg_1_0)
-	SurvivalShelterChooseEquipListModel.instance:setSelectIdToPos(arg_1_0.mo.id)
+local SurvivalShowBagInfoPart = class("SurvivalShowBagInfoPart", SurvivalBagInfoPart)
+
+function SurvivalShowBagInfoPart:_onSelectClick()
+	SurvivalShelterChooseEquipListModel.instance:setSelectIdToPos(self.mo.id)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function SurvivalShowBagInfoPart:init(go)
+	SurvivalShowBagInfoPart.super.init(self, go)
 
-	local var_2_0 = gohelper.findChild(arg_2_1, "root/#go_info/Frequency")
+	local frequency = gohelper.findChild(go, "root/#go_info/Frequency")
 
-	gohelper.setActive(var_2_0, false)
+	gohelper.setActive(frequency, false)
 end
 
-function var_0_0.updateBaseInfo(arg_3_0)
-	var_0_0.super.updateBaseInfo(arg_3_0)
-	gohelper.setActive(arg_3_0._btnselect, arg_3_0._showUseBtn)
-	arg_3_0:_refreshUseState()
+function SurvivalShowBagInfoPart:updateBaseInfo()
+	SurvivalShowBagInfoPart.super.updateBaseInfo(self)
+	gohelper.setActive(self._btnselect, self._showUseBtn)
+	self:_refreshUseState()
 end
 
-function var_0_0._onUnEquipClick(arg_4_0)
+function SurvivalShowBagInfoPart:_onUnEquipClick()
 	SurvivalShelterChooseEquipListModel.instance:setSelectIdToPos(nil)
 end
 
-function var_0_0._refreshUseState(arg_5_0)
-	local var_5_0 = SurvivalShelterChooseEquipListModel.instance:getSelectIdByPos(1)
+function SurvivalShowBagInfoPart:_refreshUseState()
+	local id = SurvivalShelterChooseEquipListModel.instance:getSelectIdByPos(1)
 
-	gohelper.setActive(arg_5_0._btnselect, var_5_0 == nil or var_5_0 ~= arg_5_0.mo.id)
-	gohelper.setActive(arg_5_0._btnunequip, var_5_0 ~= nil and var_5_0 == arg_5_0.mo.id)
+	gohelper.setActive(self._btnselect, id == nil or id ~= self.mo.id)
+	gohelper.setActive(self._btnunequip, id ~= nil and id == self.mo.id)
 end
 
-return var_0_0
+return SurvivalShowBagInfoPart

@@ -1,394 +1,401 @@
-﻿module("modules.logic.rouge.view.RougeCollectionGiftView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionGiftView.lua
 
-local var_0_0 = class("RougeCollectionGiftView", BaseView)
+module("modules.logic.rouge.view.RougeCollectionGiftView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
-	arg_1_0._gorougepageprogress = gohelper.findChild(arg_1_0.viewGO, "#go_rougepageprogress")
-	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "scroll_view/Viewport/Content/#go_collectionitem")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_start")
-	arg_1_0._btnemptyBlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBlock")
+local RougeCollectionGiftView = class("RougeCollectionGiftView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionGiftView:onInitView()
+	self._simagemaskbg = gohelper.findChildSingleImage(self.viewGO, "#simage_maskbg")
+	self._gorougepageprogress = gohelper.findChild(self.viewGO, "#go_rougepageprogress")
+	self._gocollectionitem = gohelper.findChild(self.viewGO, "scroll_view/Viewport/Content/#go_collectionitem")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_start")
+	self._btnemptyBlock = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_emptyBlock")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnemptyBlock:AddClickListener(arg_2_0._btnemptyBlockOnClick, arg_2_0)
+function RougeCollectionGiftView:addEvents()
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnemptyBlock:AddClickListener(self._btnemptyBlockOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnemptyBlock:RemoveClickListener()
+function RougeCollectionGiftView:removeEvents()
+	self._btnstart:RemoveClickListener()
+	self._btnemptyBlock:RemoveClickListener()
 end
 
-local var_0_1 = ZProj.TweenHelper
+local csTweenHelper = ZProj.TweenHelper
 
-var_0_0.Type = {
+RougeCollectionGiftView.Type = {
 	DropGroup = 2,
 	Drop = 1,
 	None = 0
 }
 
-function var_0_0._btnstartOnClick(arg_4_0)
-	arg_4_0:_submitFunc()
+function RougeCollectionGiftView:_btnstartOnClick()
+	self:_submitFunc()
 end
 
-function var_0_0._btnemptyBlockOnClick(arg_5_0)
-	arg_5_0:setActiveBlock(false)
+function RougeCollectionGiftView:_btnemptyBlockOnClick()
+	self:setActiveBlock(false)
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._btnemptyBlockGo = arg_6_0._btnemptyBlock.gameObject
-	arg_6_0._scrollview = gohelper.findChildScrollRect(arg_6_0.viewGO, "scroll_view")
-	arg_6_0._tipsText = gohelper.findChildText(arg_6_0.viewGO, "tips")
-	arg_6_0._scrollViewGo = arg_6_0._scrollview.gameObject
-	arg_6_0._scrollViewLimitScrollCmp = arg_6_0._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
-	arg_6_0._scrollViewTrans = arg_6_0._scrollViewGo.transform
-	arg_6_0._btnstartGo = arg_6_0._btnstart.gameObject
-	arg_6_0._collectionObjList = {}
+function RougeCollectionGiftView:_editableInitView()
+	self._btnemptyBlockGo = self._btnemptyBlock.gameObject
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "scroll_view")
+	self._tipsText = gohelper.findChildText(self.viewGO, "tips")
+	self._scrollViewGo = self._scrollview.gameObject
+	self._scrollViewLimitScrollCmp = self._scrollViewGo:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._scrollViewTrans = self._scrollViewGo.transform
+	self._btnstartGo = self._btnstart.gameObject
+	self._collectionObjList = {}
 
-	arg_6_0:_initPageProgress()
+	self:_initPageProgress()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:_refresh()
+function RougeCollectionGiftView:onUpdateParam()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._isBlocked = nil
-	arg_8_0._hasSelectedCount = 0
-	arg_8_0._hasSelectedIndexDict = {}
+function RougeCollectionGiftView:onOpen()
+	self._isBlocked = nil
+	self._hasSelectedCount = 0
+	self._hasSelectedIndexDict = {}
 
-	arg_8_0:_setActiveBtn(false)
-	arg_8_0:onUpdateParam()
+	self:_setActiveBtn(false)
+	self:onUpdateParam()
 
-	arg_8_0._tipsText.text = string.format(luaLang("rougecollectiongiftview_txt_tips"), arg_8_0:_selectRewardNum())
+	self._tipsText.text = string.format(luaLang("rougecollectiongiftview_txt_tips"), self:_selectRewardNum())
 
-	arg_8_0.viewContainer:registerCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, arg_8_0._onSelectIndexByUser, arg_8_0)
+	self.viewContainer:registerCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, self._onSelectIndexByUser, self)
 end
 
-function var_0_0.onOpenFinish(arg_9_0)
+function RougeCollectionGiftView:onOpenFinish()
 	ViewMgr.instance:closeView(ViewName.RougeDifficultyView)
-	gohelper.setActive(arg_9_0._gocollectionitem, false)
+	gohelper.setActive(self._gocollectionitem, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_clearing_open_20190323)
 end
 
-function var_0_0.onClose(arg_10_0)
-	arg_10_0:_killTween()
-	arg_10_0.viewContainer:unregisterCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, arg_10_0._onSelectIndexByUser, arg_10_0)
-	GameUtil.onDestroyViewMemberList(arg_10_0, "_collectionObjList")
+function RougeCollectionGiftView:onClose()
+	self:_killTween()
+	self.viewContainer:unregisterCallback(RougeEvent.RougeCollectionGiftView_OnSelectIndex, self._onSelectIndexByUser, self)
+	GameUtil.onDestroyViewMemberList(self, "_collectionObjList")
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RougeCollectionGiftView:onDestroyView()
 	return
 end
 
-function var_0_0._refresh(arg_12_0)
-	arg_12_0:_refreshList()
-	arg_12_0:_refreshConfirmBtn()
+function RougeCollectionGiftView:_refresh()
+	self:_refreshList()
+	self:_refreshConfirmBtn()
 end
 
-function var_0_0._refreshConfirmBtn(arg_13_0)
-	local var_13_0 = arg_13_0._hasSelectedCount == arg_13_0:_selectRewardNum()
+function RougeCollectionGiftView:_refreshConfirmBtn()
+	local isActive = self._hasSelectedCount == self:_selectRewardNum()
 
-	gohelper.setActive(arg_13_0._btnstartGo, var_13_0)
-	arg_13_0:_tweenTipsText(not var_13_0)
+	gohelper.setActive(self._btnstartGo, isActive)
+	self:_tweenTipsText(not isActive)
 end
 
-local var_0_2 = 0.4
+local kTweenTipsTextDuration = 0.4
 
-function var_0_0._tweenTipsText(arg_14_0, arg_14_1)
-	arg_14_0:_killTween()
+function RougeCollectionGiftView:_tweenTipsText(isActive)
+	self:_killTween()
 
-	local var_14_0 = arg_14_1 and 1 or 0
-	local var_14_1 = arg_14_0._tipsText.alpha
+	local toAlpha = isActive and 1 or 0
+	local fromAlpha = self._tipsText.alpha
 
-	arg_14_0._tweenId = var_0_1.DoFade(arg_14_0._tipsText, var_14_1, var_14_0, var_0_2, nil, nil, nil, EaseType.OutQuad)
+	self._tweenId = csTweenHelper.DoFade(self._tipsText, fromAlpha, toAlpha, kTweenTipsTextDuration, nil, nil, nil, EaseType.OutQuad)
 end
 
-function var_0_0._killTween(arg_15_0)
-	GameUtil.onDestroyViewMember_TweenId(arg_15_0, "_tweenId")
+function RougeCollectionGiftView:_killTween()
+	GameUtil.onDestroyViewMember_TweenId(self, "_tweenId")
 end
 
-function var_0_0._refreshList(arg_16_0)
-	local var_16_0 = arg_16_0:_getRewardList()
+function RougeCollectionGiftView:_refreshList()
+	local rewardList = self:_getRewardList()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_1
+	for i, data in ipairs(rewardList) do
+		local item
 
-		if iter_16_0 > #arg_16_0._collectionObjList then
-			var_16_1 = arg_16_0:_create_RougeCollectionGiftViewItem(iter_16_0)
+		if i > #self._collectionObjList then
+			item = self:_create_RougeCollectionGiftViewItem(i)
 
-			table.insert(arg_16_0._collectionObjList, var_16_1)
+			table.insert(self._collectionObjList, item)
 		else
-			var_16_1 = arg_16_0._collectionObjList[iter_16_0]
+			item = self._collectionObjList[i]
 		end
 
-		var_16_1:onUpdateMO(iter_16_1)
-		var_16_1:setActive(true)
-		var_16_1:setSelected(arg_16_0._hasSelectedIndexDict[iter_16_0] and true or false)
+		item:onUpdateMO(data)
+		item:setActive(true)
+		item:setSelected(self._hasSelectedIndexDict[i] and true or false)
 	end
 
-	for iter_16_2 = #var_16_0 + 1, #arg_16_0._collectionObjList do
-		arg_16_0._collectionObjList[iter_16_2]:setActive(false)
+	for i = #rewardList + 1, #self._collectionObjList do
+		local item = self._collectionObjList[i]
+
+		item:setActive(false)
 	end
 end
 
-function var_0_0._getRewardList(arg_17_0)
-	if not arg_17_0._tmpRewardList then
-		arg_17_0._tmpRewardList = arg_17_0:_rewardList()
+function RougeCollectionGiftView:_getRewardList()
+	if not self._tmpRewardList then
+		self._tmpRewardList = self:_rewardList()
 	end
 
-	return arg_17_0._tmpRewardList
+	return self._tmpRewardList
 end
 
-function var_0_0._create_RougeCollectionGiftViewItem(arg_18_0, arg_18_1)
-	local var_18_0 = gohelper.cloneInPlace(arg_18_0._gocollectionitem)
-	local var_18_1 = RougeCollectionGiftViewItem.New({
-		parent = arg_18_0,
-		baseViewContainer = arg_18_0.viewContainer
+function RougeCollectionGiftView:_create_RougeCollectionGiftViewItem(index)
+	local go = gohelper.cloneInPlace(self._gocollectionitem)
+	local item = RougeCollectionGiftViewItem.New({
+		parent = self,
+		baseViewContainer = self.viewContainer
 	})
 
-	var_18_1:setIndex(arg_18_1)
-	var_18_1:init(var_18_0)
+	item:setIndex(index)
+	item:init(go)
 
-	return var_18_1
+	return item
 end
 
-function var_0_0._setActiveBtn(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._btnstartGo, arg_19_1)
+function RougeCollectionGiftView:_setActiveBtn(isActive)
+	gohelper.setActive(self._btnstartGo, isActive)
 end
 
-function var_0_0._initPageProgress(arg_20_0)
-	local var_20_0 = RougePageProgress
-	local var_20_1 = arg_20_0.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, arg_20_0._gorougepageprogress, var_20_0.__cname)
+function RougeCollectionGiftView:_initPageProgress()
+	local itemClass = RougePageProgress
+	local go = self.viewContainer:getResInst(RougeEnum.ResPath.rougepageprogress, self._gorougepageprogress, itemClass.__cname)
 
-	arg_20_0._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(var_20_1, var_20_0)
+	self._pageProgress = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 
-	arg_20_0._pageProgress:setData()
+	self._pageProgress:setData()
 end
 
-function var_0_0._selectRewardNum(arg_21_0)
-	if not arg_21_0.viewParam then
-		return arg_21_0:_getRougeSelectRewardNum()
+function RougeCollectionGiftView:_selectRewardNum()
+	if not self.viewParam then
+		return self:_getRougeSelectRewardNum()
 	end
 
-	return arg_21_0.viewParam.selectRewardNum or arg_21_0:_getRougeSelectRewardNum()
+	return self.viewParam.selectRewardNum or self:_getRougeSelectRewardNum()
 end
 
-function var_0_0._rewardList(arg_22_0)
-	if not arg_22_0.viewParam then
-		return arg_22_0:_getRougeLastRewardList()
+function RougeCollectionGiftView:_rewardList()
+	if not self.viewParam then
+		return self:_getRougeLastRewardList()
 	end
 
-	return arg_22_0.viewParam.rewardList or arg_22_0:_getRougeLastRewardList()
+	return self.viewParam.rewardList or self:_getRougeLastRewardList()
 end
 
-function var_0_0._submitFunc(arg_23_0)
-	if not arg_23_0.viewParam then
-		arg_23_0:_defaultSubmitFunc()
+function RougeCollectionGiftView:_submitFunc()
+	if not self.viewParam then
+		self:_defaultSubmitFunc()
 
 		return
 	end
 
-	if arg_23_0.viewParam.submitFunc then
-		arg_23_0.viewParam.submitFunc(arg_23_0)
+	if self.viewParam.submitFunc then
+		self.viewParam.submitFunc(self)
 	else
-		arg_23_0:_defaultSubmitFunc()
+		self:_defaultSubmitFunc()
 	end
 end
 
-function var_0_0._getRougeSelectRewardNum(arg_24_0)
+function RougeCollectionGiftView:_getRougeSelectRewardNum()
 	return RougeModel.instance:getSelectRewardNum() or 0
 end
 
-function var_0_0._getRougeLastRewardList(arg_25_0)
-	local var_25_0 = RougeModel.instance:getLastRewardList()
-	local var_25_1 = {}
+function RougeCollectionGiftView:_getRougeLastRewardList()
+	local lastReward = RougeModel.instance:getLastRewardList()
+	local list = {}
 
-	if not var_25_0 or #var_25_0 == 0 then
-		return var_25_1
+	if not lastReward or #lastReward == 0 then
+		return list
 	end
 
-	local var_25_2 = RougeOutsideModel.instance:config()
+	local cfg = RougeOutsideModel.instance:config()
 
-	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
-		local var_25_3 = iter_25_1.id
-		local var_25_4 = iter_25_1.param
-		local var_25_5 = var_25_2:getLastRewardCO(var_25_3)
-		local var_25_6 = var_25_5.type
-		local var_25_7 = {
+	for _, v in ipairs(lastReward) do
+		local id = v.id
+		local param = v.param
+		local lastRewardCO = cfg:getLastRewardCO(id)
+		local type = lastRewardCO.type
+		local item = {
 			title = "",
-			id = var_25_3,
+			id = id,
 			descList = {},
-			type = var_0_0.Type.unknown
+			type = RougeCollectionGiftView.Type.unknown
 		}
 
-		if var_25_6 == "drop" then
-			var_25_7.type = var_0_0.Type.Drop
-			var_25_7.title = var_25_5.title
+		if type == "drop" then
+			item.type = RougeCollectionGiftView.Type.Drop
+			item.title = lastRewardCO.title
 
-			table.insert(var_25_7.descList, var_25_5.desc)
+			table.insert(item.descList, lastRewardCO.desc)
 
-			var_25_7.resUrl = ResUrl.getRougeSingleBgCollection(var_25_5.iconName)
-		elseif var_25_6 == "dropGroup" then
-			var_25_7.type = var_0_0.Type.DropGroup
-			var_25_7.resUrl = nil
-			var_25_7.title = var_25_5.title
-			var_25_7.data = {}
+			item.resUrl = ResUrl.getRougeSingleBgCollection(lastRewardCO.iconName)
+		elseif type == "dropGroup" then
+			item.type = RougeCollectionGiftView.Type.DropGroup
+			item.resUrl = nil
+			item.title = lastRewardCO.title
+			item.data = {}
 
-			local var_25_8 = string.splitToNumber(var_25_4, "#")
+			local collectionIds = string.splitToNumber(param, "#")
 
-			var_25_7.data.collectionId = var_25_8[1]
+			item.data.collectionId = collectionIds[1]
 
-			for iter_25_2, iter_25_3 in ipairs(var_25_8) do
-				local var_25_9 = RougeCollectionConfig.instance:getCollectionCfg(iter_25_3)
+			for _, collectionId in ipairs(collectionIds) do
+				local collectionCfg = RougeCollectionConfig.instance:getCollectionCfg(collectionId)
 
-				if var_25_7.resUrl == nil and not string.nilorempty(var_25_9.iconPath) then
-					var_25_7.resUrl = ResUrl.getRougeSingleBgCollection(var_25_9.iconPath)
+				if item.resUrl == nil and not string.nilorempty(collectionCfg.iconPath) then
+					item.resUrl = ResUrl.getRougeSingleBgCollection(collectionCfg.iconPath)
 				end
 
-				local var_25_10, var_25_11 = RougeCollectionConfig.instance:getCollectionEffectsInfo(iter_25_3)
+				local effectDescList, effectDescIdList = RougeCollectionConfig.instance:getCollectionEffectsInfo(collectionId)
 
-				for iter_25_4, iter_25_5 in ipairs(var_25_10) do
-					table.insert(var_25_7.descList, HeroSkillModel.instance:skillDesToSpot(iter_25_5))
+				for _, desc in ipairs(effectDescList) do
+					table.insert(item.descList, HeroSkillModel.instance:skillDesToSpot(desc))
 				end
 
-				for iter_25_6, iter_25_7 in ipairs(var_25_11) do
-					local var_25_12 = SkillConfig.instance:getSkillEffectDescCo(iter_25_7)
-					local var_25_13 = RougeCollectionHelper.instance:getHeroSkillDesc(var_25_12.name, var_25_12.desc)
+				for _, effectDescId in ipairs(effectDescIdList) do
+					local effectCfg = SkillConfig.instance:getSkillEffectDescCo(effectDescId)
+					local desc = RougeCollectionHelper.instance:getHeroSkillDesc(effectCfg.name, effectCfg.desc)
 
-					table.insert(var_25_7.descList, HeroSkillModel.instance:skillDesToSpot(var_25_13))
+					table.insert(item.descList, HeroSkillModel.instance:skillDesToSpot(desc))
 				end
 			end
 		else
-			local var_25_14 = string.format("[RougeInfoMO:getLastRewardList] unsupported error type=%s, id=%s", var_25_6, var_25_3)
+			local errMsg = string.format("[RougeInfoMO:getLastRewardList] unsupported error type=%s, id=%s", type, id)
 
-			logError(var_25_14)
+			logError(errMsg)
 		end
 
-		table.insert(var_25_1, var_25_7)
+		table.insert(list, item)
 	end
 
-	return var_25_1
+	return list
 end
 
-function var_0_0._isSingleSelect(arg_26_0)
-	return arg_26_0:_selectRewardNum() == 1
+function RougeCollectionGiftView:_isSingleSelect()
+	return self:_selectRewardNum() == 1
 end
 
-function var_0_0._onSelectIndexByUser(arg_27_0, arg_27_1)
-	if arg_27_0:_isSingleSelect() then
-		arg_27_0:_onSelectIndex_SingleSelect(arg_27_1)
+function RougeCollectionGiftView:_onSelectIndexByUser(index)
+	if self:_isSingleSelect() then
+		self:_onSelectIndex_SingleSelect(index)
 	else
-		arg_27_0:_onSelectIndex_MultiSelect(arg_27_1)
+		self:_onSelectIndex_MultiSelect(index)
 	end
 end
 
-function var_0_0._onSelectIndex_SingleSelect(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0._collectionObjList[arg_28_1]
+function RougeCollectionGiftView:_onSelectIndex_SingleSelect(index)
+	local curItem = self._collectionObjList[index]
 
-	if arg_28_0._hasSelectedIndexDict[arg_28_1] then
+	if self._hasSelectedIndexDict[index] then
 		return
 	end
 
-	local var_28_1, var_28_2 = next(arg_28_0._hasSelectedIndexDict)
+	local lastIndex, _ = next(self._hasSelectedIndexDict)
 
-	if var_28_1 then
-		arg_28_0._hasSelectedIndexDict[var_28_1] = nil
+	if lastIndex then
+		self._hasSelectedIndexDict[lastIndex] = nil
 
-		arg_28_0._collectionObjList[var_28_1]:setSelected(false)
+		local lastItem = self._collectionObjList[lastIndex]
+
+		lastItem:setSelected(false)
 	end
 
-	var_28_0:setSelected(true)
+	curItem:setSelected(true)
 
-	arg_28_0._hasSelectedIndexDict[arg_28_1] = true
-	arg_28_0._hasSelectedCount = math.min(1, arg_28_0._hasSelectedCount + 1)
+	self._hasSelectedIndexDict[index] = true
+	self._hasSelectedCount = math.min(1, self._hasSelectedCount + 1)
 
-	arg_28_0:_refreshConfirmBtn()
+	self:_refreshConfirmBtn()
 end
 
-function var_0_0._onSelectIndex_MultiSelect(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0._collectionObjList[arg_29_1]
+function RougeCollectionGiftView:_onSelectIndex_MultiSelect(index)
+	local curItem = self._collectionObjList[index]
 
-	if arg_29_0._hasSelectedIndexDict[arg_29_1] then
-		arg_29_0._hasSelectedIndexDict[arg_29_1] = false
-		arg_29_0._hasSelectedCount = arg_29_0._hasSelectedCount - 1
+	if self._hasSelectedIndexDict[index] then
+		self._hasSelectedIndexDict[index] = false
+		self._hasSelectedCount = self._hasSelectedCount - 1
 
-		var_29_0:setSelected(false)
-		arg_29_0:_refreshConfirmBtn()
+		curItem:setSelected(false)
+		self:_refreshConfirmBtn()
 
 		return
 	end
 
-	if arg_29_0._hasSelectedCount >= arg_29_0:_selectRewardNum() then
+	if self._hasSelectedCount >= self:_selectRewardNum() then
 		GameFacade.showToast(ToastEnum.RougeCollectionGiftView_ReachMaxSelectedCount)
 
 		return
 	end
 
-	var_29_0:setSelected(true)
+	curItem:setSelected(true)
 
-	arg_29_0._hasSelectedIndexDict[arg_29_1] = true
-	arg_29_0._hasSelectedCount = arg_29_0._hasSelectedCount + 1
+	self._hasSelectedIndexDict[index] = true
+	self._hasSelectedCount = self._hasSelectedCount + 1
 
-	arg_29_0:_refreshConfirmBtn()
+	self:_refreshConfirmBtn()
 end
 
-local var_0_3 = "RougeCollectionGiftView:_defaultSubmitFunc"
+local kBlockKey = "RougeCollectionGiftView:_defaultSubmitFunc"
 
-function var_0_0._defaultSubmitFunc(arg_30_0)
-	UIBlockHelper.instance:startBlock(var_0_3, 1, arg_30_0.viewName)
+function RougeCollectionGiftView:_defaultSubmitFunc()
+	UIBlockHelper.instance:startBlock(kBlockKey, 1, self.viewName)
 
-	local var_30_0 = RougeOutsideModel.instance:season()
-	local var_30_1 = {}
-	local var_30_2 = arg_30_0:_getRewardList()
+	local season = RougeOutsideModel.instance:season()
+	local rewardId = {}
+	local rewardList = self:_getRewardList()
 
-	for iter_30_0, iter_30_1 in pairs(arg_30_0._hasSelectedIndexDict) do
-		local var_30_3 = var_30_2[iter_30_0].id
+	for index, bool in pairs(self._hasSelectedIndexDict) do
+		local data = rewardList[index]
+		local id = data.id
 
-		if iter_30_1 then
-			table.insert(var_30_1, var_30_3)
+		if bool then
+			table.insert(rewardId, id)
 		end
 	end
 
-	RougeRpc.instance:sendEnterRougeSelectRewardRequest(var_30_0, var_30_1, function(arg_31_0, arg_31_1)
-		if arg_31_1 ~= 0 then
-			logError("RougeCollectionGiftView:_defaultSubmitFunc resultCode=" .. tostring(arg_31_1))
+	RougeRpc.instance:sendEnterRougeSelectRewardRequest(season, rewardId, function(_, resultCode)
+		if resultCode ~= 0 then
+			logError("RougeCollectionGiftView:_defaultSubmitFunc resultCode=" .. tostring(resultCode))
 
 			return
 		end
 
-		UIBlockHelper.instance:endBlock(var_0_3)
+		UIBlockHelper.instance:endBlock(kBlockKey)
 		RougeController.instance:openRougeFactionView()
 	end)
 end
 
-function var_0_0.getScrollViewGo(arg_32_0)
-	return arg_32_0._scrollViewGo
+function RougeCollectionGiftView:getScrollViewGo()
+	return self._scrollViewGo
 end
 
-function var_0_0.getScrollRect(arg_33_0)
-	return arg_33_0._scrollViewLimitScrollCmp
+function RougeCollectionGiftView:getScrollRect()
+	return self._scrollViewLimitScrollCmp
 end
 
-function var_0_0.setActiveBlock(arg_34_0, arg_34_1)
-	if arg_34_0._isBlocked == arg_34_1 then
+function RougeCollectionGiftView:setActiveBlock(isActive)
+	if self._isBlocked == isActive then
 		return
 	end
 
-	arg_34_0._isBlocked = arg_34_1
+	self._isBlocked = isActive
 
-	gohelper.setActive(arg_34_0._btnemptyBlockGo, arg_34_1)
+	gohelper.setActive(self._btnemptyBlockGo, isActive)
 
-	if not arg_34_1 then
-		for iter_34_0, iter_34_1 in ipairs(arg_34_0._collectionObjList) do
-			iter_34_1:onCloseBlock()
+	if not isActive then
+		for _, item in ipairs(self._collectionObjList) do
+			item:onCloseBlock()
 		end
 	end
 end
 
-return var_0_0
+return RougeCollectionGiftView

@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity3_1.dungeon.define.VersionActivity3_1DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/dungeon/define/VersionActivity3_1DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_1.dungeon.define.VersionActivity3_1DungeonEvent", package.seeall)
 
-var_0_0.V3a1SceneAnimFinish = 3101
-var_0_0.V3a1SceneLoadSceneFinish = 3102
+local VersionActivity3_1DungeonEvent = _M
 
-return var_0_0
+VersionActivity3_1DungeonEvent.V3a1SceneAnimFinish = 3101
+VersionActivity3_1DungeonEvent.V3a1SceneLoadSceneFinish = 3102
+
+return VersionActivity3_1DungeonEvent

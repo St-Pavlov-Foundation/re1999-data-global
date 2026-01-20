@@ -1,136 +1,138 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0HeroGroupMainCardView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0HeroGroupMainCardView.lua
 
-local var_0_0 = class("Season123_2_0HeroGroupMainCardView", BaseView)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0HeroGroupMainCardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagerole = gohelper.findChildSingleImage(arg_1_0.viewGO, "herogroupcontain/#simage_role")
+local Season123_2_0HeroGroupMainCardView = class("Season123_2_0HeroGroupMainCardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_0HeroGroupMainCardView:onInitView()
+	self._simagerole = gohelper.findChildSingleImage(self.viewGO, "herogroupcontain/#simage_role")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season123_2_0HeroGroupMainCardView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season123_2_0HeroGroupMainCardView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagerole:LoadImage(ResUrl.getSeasonIcon("img_vertin.png"))
+function Season123_2_0HeroGroupMainCardView:_editableInitView()
+	self._simagerole:LoadImage(ResUrl.getSeasonIcon("img_vertin.png"))
 
-	arg_4_0._supercardItems = {}
-	arg_4_0._supercardGroups = {}
+	self._supercardItems = {}
+	self._supercardGroups = {}
 
-	for iter_4_0 = 1, Activity123Enum.MainCardNum do
-		local var_4_0 = arg_4_0:getUserDataTb_()
+	for i = 1, Activity123Enum.MainCardNum do
+		local groupObj = self:getUserDataTb_()
 
-		var_4_0.golight = gohelper.findChild(arg_4_0.viewGO, string.format("herogroupcontain/#go_supercard%s/light", iter_4_0))
-		var_4_0.goempty = gohelper.findChild(arg_4_0.viewGO, string.format("herogroupcontain/#go_supercard%s/#go_supercardempty", iter_4_0))
-		var_4_0.gopos = gohelper.findChild(arg_4_0.viewGO, string.format("herogroupcontain/#go_supercard%s/#go_supercardpos", iter_4_0))
-		var_4_0.btnclick = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, string.format("herogroupcontain/#go_supercard%s/#btn_supercardclick", iter_4_0))
+		groupObj.golight = gohelper.findChild(self.viewGO, string.format("herogroupcontain/#go_supercard%s/light", i))
+		groupObj.goempty = gohelper.findChild(self.viewGO, string.format("herogroupcontain/#go_supercard%s/#go_supercardempty", i))
+		groupObj.gopos = gohelper.findChild(self.viewGO, string.format("herogroupcontain/#go_supercard%s/#go_supercardpos", i))
+		groupObj.btnclick = gohelper.findChildButtonWithAudio(self.viewGO, string.format("herogroupcontain/#go_supercard%s/#btn_supercardclick", i))
 
-		var_4_0.btnclick:AddClickListener(arg_4_0._btnseasonsupercardOnClick, arg_4_0, iter_4_0)
+		groupObj.btnclick:AddClickListener(self._btnseasonsupercardOnClick, self, i)
 
-		arg_4_0._supercardGroups[iter_4_0] = var_4_0
+		self._supercardGroups[i] = groupObj
 	end
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0._simagerole:UnLoadImage()
+function Season123_2_0HeroGroupMainCardView:onDestroyView()
+	self._simagerole:UnLoadImage()
 
-	if arg_5_0._supercardGroups then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._supercardGroups) do
-			iter_5_1.btnclick:RemoveClickListener()
+	if self._supercardGroups then
+		for _, cardGroup in pairs(self._supercardGroups) do
+			cardGroup.btnclick:RemoveClickListener()
 		end
 
-		arg_5_0._supercardGroups = nil
+		self._supercardGroups = nil
 	end
 
-	if arg_5_0._supercardItems then
-		for iter_5_2, iter_5_3 in pairs(arg_5_0._supercardItems) do
-			iter_5_3:destroy()
+	if self._supercardItems then
+		for _, item in pairs(self._supercardItems) do
+			item:destroy()
 		end
 
-		arg_5_0._supercardItems = nil
+		self._supercardItems = nil
 	end
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_6_0.refreshMainCards, arg_6_0)
-	arg_6_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_6_0.refreshMainCards, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, arg_6_0.refreshMainCards, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.RecordRspMainCardRefresh, arg_6_0.refreshMainCards, arg_6_0)
-	arg_6_0:refreshMainCards()
+function Season123_2_0HeroGroupMainCardView:onOpen()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self.refreshMainCards, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self.refreshMainCards, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, self.refreshMainCards, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.RecordRspMainCardRefresh, self.refreshMainCards, self)
+	self:refreshMainCards()
 end
 
-function var_0_0.onClose(arg_7_0)
+function Season123_2_0HeroGroupMainCardView:onClose()
 	return
 end
 
-function var_0_0.refreshMainCards(arg_8_0)
-	for iter_8_0 = 1, Activity123Enum.MainCardNum do
-		arg_8_0:_refreshMainCard(iter_8_0)
+function Season123_2_0HeroGroupMainCardView:refreshMainCards()
+	for slot = 1, Activity123Enum.MainCardNum do
+		self:_refreshMainCard(slot)
 	end
 end
 
-function var_0_0._refreshMainCard(arg_9_0, arg_9_1)
-	local var_9_0 = HeroGroupModel.instance:getCurGroupMO()
-	local var_9_1 = Season123HeroGroupModel.instance:getMainPosEquipId(arg_9_1)
-	local var_9_2 = arg_9_0._supercardGroups[arg_9_1]
-	local var_9_3 = arg_9_0._supercardItems[arg_9_1]
-	local var_9_4 = false
+function Season123_2_0HeroGroupMainCardView:_refreshMainCard(slot)
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local act104EquipId = Season123HeroGroupModel.instance:getMainPosEquipId(slot)
+	local cardGroup = self._supercardGroups[slot]
+	local cardItem = self._supercardItems[slot]
+	local showLight = false
 
-	if var_9_1 and var_9_1 ~= 0 then
-		if not var_9_3 then
-			var_9_3 = Season123_2_0CelebrityCardItem.New()
+	if act104EquipId and act104EquipId ~= 0 then
+		if not cardItem then
+			cardItem = Season123_2_0CelebrityCardItem.New()
 
-			var_9_3:init(var_9_2.gopos, var_9_1)
+			cardItem:init(cardGroup.gopos, act104EquipId)
 
-			arg_9_0._supercardItems[arg_9_1] = var_9_3
+			self._supercardItems[slot] = cardItem
 		else
-			gohelper.setActive(var_9_3.go, true)
-			var_9_3:reset(var_9_1)
+			gohelper.setActive(cardItem.go, true)
+			cardItem:reset(act104EquipId)
 		end
 
-		var_9_4 = true
-	elseif var_9_3 then
-		gohelper.setActive(var_9_3.go, false)
+		showLight = true
+	elseif cardItem then
+		gohelper.setActive(cardItem.go, false)
 	end
 
-	gohelper.setActive(var_9_2.golight, var_9_4)
+	gohelper.setActive(cardGroup.golight, showLight)
 
-	local var_9_5 = Season123Model.instance:getActInfo(arg_9_0.viewParam.actId)
+	local seasonMO = Season123Model.instance:getActInfo(self.viewParam.actId)
 
-	if not var_9_5 then
+	if not seasonMO then
 		return
 	end
 
-	local var_9_6 = var_9_5.heroGroupSnapshotSubId
-	local var_9_7 = Season123HeroGroupModel.instance:isEquipCardPosUnlock(arg_9_1, Season123EquipItemListModel.MainCharPos)
+	local snapshotSubId = seasonMO.heroGroupSnapshotSubId
+	local unlock = Season123HeroGroupModel.instance:isEquipCardPosUnlock(slot, Season123EquipItemListModel.MainCharPos)
 
-	gohelper.setActive(var_9_2.goempty, var_9_7)
-	gohelper.setActive(var_9_2.btnclick, var_9_7)
+	gohelper.setActive(cardGroup.goempty, unlock)
+	gohelper.setActive(cardGroup.btnclick, unlock)
 end
 
-function var_0_0._btnseasonsupercardOnClick(arg_10_0, arg_10_1)
+function Season123_2_0HeroGroupMainCardView:_btnseasonsupercardOnClick(slot)
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	local var_10_0 = {
-		actId = arg_10_0.viewParam.actId,
-		stage = arg_10_0.viewParam.stage,
-		slot = arg_10_1
+	local param = {
+		actId = self.viewParam.actId,
+		stage = self.viewParam.stage,
+		slot = slot
 	}
 
-	if not Season123HeroGroupModel.instance:isEquipCardPosUnlock(var_10_0.slot, Season123EquipItemListModel.MainCharPos) then
+	if not Season123HeroGroupModel.instance:isEquipCardPosUnlock(param.slot, Season123EquipItemListModel.MainCharPos) then
 		return
 	end
 
-	ViewMgr.instance:openView(Season123Controller.instance:getEquipHeroViewName(), var_10_0)
+	ViewMgr.instance:openView(Season123Controller.instance:getEquipHeroViewName(), param)
 end
 
-return var_0_0
+return Season123_2_0HeroGroupMainCardView

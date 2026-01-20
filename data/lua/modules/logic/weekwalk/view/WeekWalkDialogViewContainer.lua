@@ -1,30 +1,32 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkDialogViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkDialogViewContainer.lua
 
-local var_0_0 = class("WeekWalkDialogViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkDialogViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WeekWalkDialogViewContainer = class("WeekWalkDialogViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, WeekWalkDialogView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+function WeekWalkDialogViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, WeekWalkDialogView.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function WeekWalkDialogViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
+function WeekWalkDialogViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-return var_0_0
+return WeekWalkDialogViewContainer

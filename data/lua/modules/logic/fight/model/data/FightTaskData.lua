@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.model.data.FightTaskData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightTaskData.lua
 
-local var_0_0 = FightDataClass("FightTaskData")
+module("modules.logic.fight.model.data.FightTaskData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.taskId = arg_1_1.taskId
-	arg_1_0.status = arg_1_1.status
-	arg_1_0.values = {}
+local FightTaskData = FightDataClass("FightTaskData")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.values) do
-		table.insert(arg_1_0.values, FightTaskValueData.New(iter_1_1))
+function FightTaskData:onConstructor(proto)
+	self.taskId = proto.taskId
+	self.status = proto.status
+	self.values = {}
+
+	for i, v in ipairs(proto.values) do
+		table.insert(self.values, FightTaskValueData.New(v))
 	end
 end
 
-return var_0_0
+return FightTaskData

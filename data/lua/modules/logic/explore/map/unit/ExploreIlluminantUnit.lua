@@ -1,34 +1,36 @@
-﻿module("modules.logic.explore.map.unit.ExploreIlluminantUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreIlluminantUnit.lua
 
-local var_0_0 = class("ExploreIlluminantUnit", ExploreBaseDisplayUnit)
+module("modules.logic.explore.map.unit.ExploreIlluminantUnit", package.seeall)
 
-function var_0_0.onEnter(arg_1_0)
-	arg_1_0:updatePrism()
-	var_0_0.super.onEnter(arg_1_0)
+local ExploreIlluminantUnit = class("ExploreIlluminantUnit", ExploreBaseDisplayUnit)
+
+function ExploreIlluminantUnit:onEnter()
+	self:updatePrism()
+	ExploreIlluminantUnit.super.onEnter(self)
 end
 
-function var_0_0.onExit(arg_2_0)
-	arg_2_0:updatePrism()
+function ExploreIlluminantUnit:onExit()
+	self:updatePrism()
 end
 
-function var_0_0.updatePrism(arg_3_0)
-	local var_3_0 = ExploreController.instance:getMapLight()
+function ExploreIlluminantUnit:updatePrism()
+	local mapLight = ExploreController.instance:getMapLight()
 
-	if not var_3_0:isInitDone() then
+	if not mapLight:isInitDone() then
 		return
 	end
 
-	var_3_0:beginCheckStatusChange()
+	mapLight:beginCheckStatusChange()
 
-	local var_3_1 = ExploreController.instance:getMap():getUnitByPos(arg_3_0.nodePos)
+	local units = ExploreController.instance:getMap():getUnitByPos(self.nodePos)
 
-	for iter_3_0, iter_3_1 in pairs(var_3_1) do
-		if iter_3_1.mo:isInteractEnabled() and ExploreEnum.PrismTypes[iter_3_1:getUnitType()] then
-			iter_3_1:onBallLightChange()
+	for _, unit in pairs(units) do
+		if unit.mo:isInteractEnabled() and ExploreEnum.PrismTypes[unit:getUnitType()] then
+			unit:onBallLightChange()
 		end
 	end
 
-	var_3_0:endCheckStatus()
+	mapLight:endCheckStatus()
 end
 
-return var_0_0
+return ExploreIlluminantUnit

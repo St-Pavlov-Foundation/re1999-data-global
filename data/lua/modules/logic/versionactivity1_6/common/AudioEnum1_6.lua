@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_6.common.AudioEnum1_6", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/common/AudioEnum1_6.lua
 
-local var_0_0 = AudioEnum
-local var_0_1 = {
+module("modules.logic.versionactivity1_6.common.AudioEnum1_6", package.seeall)
+
+local AudioEnum = AudioEnum
+local bgm = {
 	role_activity_quniang = 3200093,
 	role_activity_getian = 3200094,
 	Act1_6DungeonBgm2 = 3200097,
 	Act1_6DungeonBgm1 = 3200095,
 	CachotMainScene = 3200099
 }
-local var_0_2 = {
+local UI = {
 	play_ui_dungeon_1_6_entrance_light = 20161012,
 	Act1_6DungeonSkillViewLvUp = 20161049,
 	play_ui_dungeon_1_6_newendings_enter = 20161030,
@@ -65,24 +67,24 @@ local var_0_2 = {
 	play_ui_dungeon_1_6_interface_open = 20161011
 }
 
-for iter_0_0, iter_0_1 in pairs(var_0_1) do
-	if isDebugBuild and var_0_0.Bgm[iter_0_0] then
-		logError("AudioEnum.Bgm重复定义" .. iter_0_0)
+for key, value in pairs(bgm) do
+	if isDebugBuild and AudioEnum.Bgm[key] then
+		logError("AudioEnum.Bgm重复定义" .. key)
 	end
 
-	var_0_0.Bgm[iter_0_0] = iter_0_1
+	AudioEnum.Bgm[key] = value
 end
 
-for iter_0_2, iter_0_3 in pairs(var_0_2) do
-	if isDebugBuild and var_0_0.UI[iter_0_2] then
-		logError("AudioEnum.UI重复定义" .. iter_0_2)
+for key, value in pairs(UI) do
+	if isDebugBuild and AudioEnum.UI[key] then
+		logError("AudioEnum.UI重复定义" .. key)
 	end
 
-	var_0_0.UI[iter_0_2] = iter_0_3
+	AudioEnum.UI[key] = value
 end
 
-function var_0_0.activate()
+function AudioEnum.activate()
 	return
 end
 
-return var_0_0
+return AudioEnum

@@ -1,27 +1,29 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaUpdateRoundStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/controller/step/TianShiNaNaUpdateRoundStep.lua
 
-local var_0_0 = class("TianShiNaNaUpdateRoundStep", TianShiNaNaStepBase)
+module("modules.logic.versionactivity2_2.tianshinana.controller.step.TianShiNaNaUpdateRoundStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	TianShiNaNaModel.instance.nowRound = arg_1_0._data.currRound
-	TianShiNaNaModel.instance.stepCount = arg_1_0._data.stepCount
-	TianShiNaNaModel.instance.waitClickJump = arg_1_0._data.reason == 1
+local TianShiNaNaUpdateRoundStep = class("TianShiNaNaUpdateRoundStep", TianShiNaNaStepBase)
 
-	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.RoundUpdate, tostring(arg_1_0._data.currRound + 1))
+function TianShiNaNaUpdateRoundStep:onStart()
+	TianShiNaNaModel.instance.nowRound = self._data.currRound
+	TianShiNaNaModel.instance.stepCount = self._data.stepCount
+	TianShiNaNaModel.instance.waitClickJump = self._data.reason == 1
+
+	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.RoundUpdate, tostring(self._data.currRound + 1))
 
 	if TianShiNaNaModel.instance.waitClickJump then
-		TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.WaitClickJumpRound, arg_1_0._onClick, arg_1_0)
+		TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.WaitClickJumpRound, self._onClick, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onClick(arg_2_0)
-	arg_2_0:onDone(true)
+function TianShiNaNaUpdateRoundStep:_onClick()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.WaitClickJumpRound, arg_3_0._onClick, arg_3_0)
+function TianShiNaNaUpdateRoundStep:clearWork()
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.WaitClickJumpRound, self._onClick, self)
 end
 
-return var_0_0
+return TianShiNaNaUpdateRoundStep

@@ -1,63 +1,68 @@
-﻿module("modules.logic.chargepush.controller.ChargePushController", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/controller/ChargePushController.lua
 
-local var_0_0 = class("ChargePushController", BaseController)
+module("modules.logic.chargepush.controller.ChargePushController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._pushViewOpenHandler = {
-		[ChargePushEnum.PushViewType.MonthCard] = arg_1_0._onMonthCardPushViewOpen,
-		[ChargePushEnum.PushViewType.LevelGoods] = arg_1_0._onLevelGoodsPushViewOpen
+local ChargePushController = class("ChargePushController", BaseController)
+
+function ChargePushController:onInit()
+	self._pushViewOpenHandler = {
+		[ChargePushEnum.PushViewType.MonthCard] = self._onMonthCardPushViewOpen,
+		[ChargePushEnum.PushViewType.LevelGoods] = self._onLevelGoodsPushViewOpen,
+		[ChargePushEnum.PushViewType.CommonGift] = self._onCommonGiftPushViewOpen
 	}
 end
 
-function var_0_0.reInit(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0.showCachePushView, arg_2_0)
+function ChargePushController:reInit()
+	TaskDispatcher.cancelTask(self.showCachePushView, self)
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenViewFinish, arg_3_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
-	MainController.instance:registerCallback(MainEvent.OnMainPopupFlowFinish, arg_3_0._onMainPopupFlowFinish, arg_3_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+function ChargePushController:addConstEvents()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	MainController.instance:registerCallback(MainEvent.OnMainPopupFlowFinish, self._onMainPopupFlowFinish, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0._onDailyRefresh(arg_4_0)
+function ChargePushController:_onDailyRefresh()
 	ChargePushRpc.instance:sendGetChargePushInfoRequest()
 end
 
-function var_0_0._onMainPopupFlowFinish(arg_5_0)
+function ChargePushController:_onMainPopupFlowFinish()
 	ChargePushRpc.instance:sendGetChargePushInfoRequest()
 end
 
-function var_0_0._onCloseViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 == arg_6_0.curPushView then
-		arg_6_0.curPushView = nil
+function ChargePushController:_onCloseViewFinish(viewName)
+	if viewName == self.curPushView then
+		self.curPushView = nil
 	end
 
-	arg_6_0:_viewChangeCheckIsInMainView()
+	self:_viewChangeCheckIsInMainView()
 end
 
-function var_0_0._onOpenViewFinish(arg_7_0, arg_7_1)
-	arg_7_0:_viewChangeCheckIsInMainView()
+function ChargePushController:_onOpenViewFinish(viewName)
+	self:_viewChangeCheckIsInMainView()
 end
 
-function var_0_0._viewChangeCheckIsInMainView(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.showCachePushView, arg_8_0)
+function ChargePushController:_viewChangeCheckIsInMainView()
+	TaskDispatcher.cancelTask(self.showCachePushView, self)
 
-	if not arg_8_0:isCanPushView() then
+	if not self:isCanPushView() then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_8_0.showCachePushView, arg_8_0, 1.6)
+	TaskDispatcher.runDelay(self.showCachePushView, self, 1.6)
 end
 
-function var_0_0.isCanPushView(arg_9_0)
-	local var_9_0 = ChargePushModel.instance:getCount()
+function ChargePushController:isCanPushView()
+	local count = ChargePushModel.instance:getCount()
 
-	if not var_9_0 or var_9_0 <= 0 then
+	if not count or count <= 0 then
 		return
 	end
 
-	if not MainController.instance:isInMainView() then
+	local isInMainView = MainController.instance:isInMainView()
+
+	if not isInMainView then
 		return
 	end
 
@@ -65,146 +70,169 @@ function var_0_0.isCanPushView(arg_9_0)
 		return
 	end
 
-	if arg_9_0:checkInGuide() then
+	local isInGuide = self:checkInGuide()
+
+	if isInGuide then
 		return
 	end
 
 	return true
 end
 
-function var_0_0.checkInGuide(arg_10_0)
+function ChargePushController:checkInGuide()
 	if GuideController.instance:isForbidGuides() then
 		return false
 	end
 
-	local var_10_0 = false
-	local var_10_1 = ViewMgr.instance:isOpen(ViewName.GuideView) or ViewMgr.instance:isOpen(ViewName.GuideView2)
-	local var_10_2 = GuideModel.instance:lastForceGuideId()
-	local var_10_3 = GuideModel.instance:isGuideFinish(var_10_2)
+	local result = false
+	local isOpenGuideView = ViewMgr.instance:isOpen(ViewName.GuideView) or ViewMgr.instance:isOpen(ViewName.GuideView2)
+	local forceGuideId = GuideModel.instance:lastForceGuideId()
+	local isFinishForceGuide = GuideModel.instance:isGuideFinish(forceGuideId)
 
-	if var_10_1 or not var_10_3 then
-		var_10_0 = true
+	if isOpenGuideView or not isFinishForceGuide then
+		result = true
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.showCachePushView(arg_11_0)
-	if not arg_11_0:isCanPushView() then
+function ChargePushController:showCachePushView()
+	if not self:isCanPushView() then
 		return
 	end
 
-	local var_11_0 = ChargePushModel.instance:popNextPushInfo()
+	local pushMo = ChargePushModel.instance:popNextPushInfo()
 
-	if not var_11_0 then
+	if not pushMo then
 		return
 	end
 
-	arg_11_0:showPushViewByConfig(var_11_0.config)
+	self:showPushViewByConfig(pushMo.config)
 end
 
-function var_0_0.showPushViewByConfig(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function ChargePushController:showPushViewByConfig(config)
+	if not config then
 		return
 	end
 
-	local var_12_0 = arg_12_0._pushViewOpenHandler[arg_12_1.className]
+	local handler = self._pushViewOpenHandler[config.className]
 
-	if not var_12_0 then
+	if not handler then
 		return
 	end
 
-	ChargePushRpc.instance:sendRecordchargePushRequest(arg_12_1.goodpushsId)
-	var_12_0(arg_12_0, arg_12_1)
+	ChargePushRpc.instance:sendRecordchargePushRequest(config.goodpushsId)
+	handler(self, config)
 
 	return true
 end
 
-function var_0_0._onMonthCardPushViewOpen(arg_13_0, arg_13_1)
-	local var_13_0 = StoreModel.instance:getMonthCardInfo()
-	local var_13_1 = var_13_0 and var_13_0:getRemainDay2() or StoreEnum.MonthCardStatus.NotPurchase
-	local var_13_2 = tonumber(arg_13_1.listenerType)
-	local var_13_3 = string.splitToNumber(arg_13_1.listenerParam, ",")
-	local var_13_4 = false
+function ChargePushController:_onMonthCardPushViewOpen(config)
+	local cardInfo = StoreModel.instance:getMonthCardInfo()
+	local remainDay = cardInfo and cardInfo:getRemainDay2() or StoreEnum.MonthCardStatus.NotPurchase
+	local listenerType = tonumber(config.listenerType)
+	local listenerParam = string.splitToNumber(config.listenerParam, ",")
+	local canPushView = false
 
-	if var_13_2 == ChargePushEnum.ListenerType.MonthCardBefore then
-		var_13_1 = var_13_1 + 1
-		var_13_4 = var_13_1 >= var_13_3[1] and var_13_1 <= var_13_3[2]
-	elseif var_13_2 == ChargePushEnum.ListenerType.MonthCardAfter then
-		var_13_4 = var_13_1 <= 0
+	if listenerType == ChargePushEnum.ListenerType.MonthCardBefore then
+		remainDay = remainDay + 1
+		canPushView = remainDay >= listenerParam[1] and remainDay <= listenerParam[2]
+	elseif listenerType == ChargePushEnum.ListenerType.MonthCardAfter then
+		canPushView = remainDay <= 0
 	else
-		logError(string.format("ChargePushController:_onMonthCardPushViewOpen listenerType error [%s] [%s]", arg_13_1.listenerType, arg_13_1.listenerParam))
+		logError(string.format("ChargePushController:_onMonthCardPushViewOpen listenerType error [%s] [%s]", config.listenerType, config.listenerParam))
 	end
 
-	if not var_13_4 then
+	if not canPushView then
 		return
 	end
 
-	arg_13_0:openPushView(ViewName.ChargePushMonthCardView, {
-		config = arg_13_1
+	self:openPushView(ViewName.ChargePushMonthCardView, {
+		config = config
 	})
 end
 
-function var_0_0._onLevelGoodsPushViewOpen(arg_14_0, arg_14_1)
-	local var_14_0 = {}
-	local var_14_1 = string.splitToNumber(arg_14_1.containedgoodsId, "#")
+function ChargePushController:_onLevelGoodsPushViewOpen(config)
+	local availableGoodsIds = {}
+	local goodsIds = string.splitToNumber(config.containedgoodsId, "#")
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_2 = StoreModel.instance:getGoodsMO(iter_14_1)
+	for i, v in ipairs(goodsIds) do
+		local goodsMO = StoreModel.instance:getGoodsMO(v)
 
-		if var_14_2 and not var_14_2:isSoldOut() then
-			table.insert(var_14_0, iter_14_1)
+		if goodsMO and not goodsMO:isSoldOut() then
+			table.insert(availableGoodsIds, v)
 		end
 	end
 
-	if #var_14_0 <= 0 then
+	if #availableGoodsIds <= 0 then
 		return
 	end
 
-	arg_14_0:openPushView(ViewName.ChargePushLevelGoodsView, {
-		config = arg_14_1
+	self:openPushView(ViewName.ChargePushLevelGoodsView, {
+		config = config
 	})
 end
 
-function var_0_0.openPushView(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0.curPushView = arg_15_1
+function ChargePushController:_onCommonGiftPushViewOpen(config)
+	local availableGoodsIds = {}
+	local goodsIds = string.splitToNumber(config.containedgoodsId, "#")
 
-	ChargePushStatController.instance:statShow(arg_15_2.config)
-	ViewMgr.instance:openView(arg_15_1, arg_15_2)
-end
+	for i, v in ipairs(goodsIds) do
+		local goodsMO = StoreModel.instance:getGoodsMO(v)
 
-function var_0_0.tryShowNextPush(arg_16_0, arg_16_1)
-	local var_16_0 = ChargePushModel.instance:getList()
-
-	if not var_16_0 or #var_16_0 <= 0 then
-		return
-	end
-
-	local var_16_1 = {}
-
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		if iter_16_1.config.className == arg_16_1 then
-			table.insert(var_16_1, iter_16_1)
+		if goodsMO and not goodsMO:isSoldOut() then
+			table.insert(availableGoodsIds, v)
 		end
 	end
 
-	table.sort(var_16_1, ChargePushMO.sortFunction)
-
-	if #var_16_1 <= 0 then
+	if #availableGoodsIds <= 0 then
 		return
 	end
 
-	local var_16_2 = var_16_1[1]
-
-	ChargePushModel.instance:remove(var_16_2)
-
-	return arg_16_0:showPushViewByConfig(var_16_2.config)
+	self:openPushView(ViewName.ChargePushCommonGiftView, {
+		config = config
+	})
 end
 
-function var_0_0.isInPushViewShow(arg_17_0)
-	return arg_17_0.curPushView and ViewMgr.instance:isOpen(arg_17_0.curPushView)
+function ChargePushController:openPushView(viewName, viewParam)
+	self.curPushView = viewName
+
+	ChargePushStatController.instance:statShow(viewParam.config)
+	ViewMgr.instance:openView(viewName, viewParam)
 end
 
-var_0_0.instance = var_0_0.New()
+function ChargePushController:tryShowNextPush(type)
+	local list = ChargePushModel.instance:getList()
 
-return var_0_0
+	if not list or #list <= 0 then
+		return
+	end
+
+	local pushList = {}
+
+	for _, v in ipairs(list) do
+		if v.config.className == type then
+			table.insert(pushList, v)
+		end
+	end
+
+	table.sort(pushList, ChargePushMO.sortFunction)
+
+	if #pushList <= 0 then
+		return
+	end
+
+	local pushMo = pushList[1]
+
+	ChargePushModel.instance:remove(pushMo)
+
+	return self:showPushViewByConfig(pushMo.config)
+end
+
+function ChargePushController:isInPushViewShow()
+	return self.curPushView and ViewMgr.instance:isOpen(self.curPushView)
+end
+
+ChargePushController.instance = ChargePushController.New()
+
+return ChargePushController

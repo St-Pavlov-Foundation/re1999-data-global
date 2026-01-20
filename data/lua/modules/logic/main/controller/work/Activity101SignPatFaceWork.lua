@@ -1,120 +1,124 @@
-﻿module("modules.logic.main.controller.work.Activity101SignPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/Activity101SignPatFaceWork.lua
 
-local var_0_0 = class("Activity101SignPatFaceWork", PatFaceWorkBase)
+module("modules.logic.main.controller.work.Activity101SignPatFaceWork", package.seeall)
 
-function var_0_0._viewName(arg_1_0)
-	return PatFaceConfig.instance:getPatFaceViewName(arg_1_0._patFaceId)
+local Activity101SignPatFaceWork = class("Activity101SignPatFaceWork", PatFaceWorkBase)
+
+function Activity101SignPatFaceWork:_viewName()
+	return PatFaceConfig.instance:getPatFaceViewName(self._patFaceId)
 end
 
-function var_0_0._actId(arg_2_0)
-	return PatFaceConfig.instance:getPatFaceActivityId(arg_2_0._patFaceId)
+function Activity101SignPatFaceWork:_actId()
+	return PatFaceConfig.instance:getPatFaceActivityId(self._patFaceId)
 end
 
-function var_0_0.checkCanPat(arg_3_0)
-	local var_3_0 = arg_3_0:_actId()
+function Activity101SignPatFaceWork:checkCanPat()
+	local actId = self:_actId()
 
-	return ActivityType101Model.instance:isOpen(var_3_0)
+	return ActivityType101Model.instance:isOpen(actId)
 end
 
-function var_0_0.startPat(arg_4_0)
-	arg_4_0:_startBlock()
+function Activity101SignPatFaceWork:startPat()
+	self:_startBlock()
 
-	local var_4_0 = arg_4_0:_actId()
+	local actId = self:_actId()
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_4_0._refreshNorSignActivity, arg_4_0)
-	Activity101Rpc.instance:sendGet101InfosRequest(var_4_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self._refreshNorSignActivity, self)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	arg_5_0:_endBlock()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_5_0._refreshNorSignActivity, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
+function Activity101SignPatFaceWork:clearWork()
+	self:_endBlock()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self._refreshNorSignActivity, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0:_viewName() then
+function Activity101SignPatFaceWork:_onOpenViewFinish(openingViewName)
+	local viewName = self:_viewName()
+
+	if openingViewName ~= viewName then
 		return
 	end
 
-	arg_6_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:_viewName()
+function Activity101SignPatFaceWork:_onCloseViewFinish(closingViewName)
+	local viewName = self:_viewName()
 
-	if arg_7_1 ~= var_7_0 then
+	if closingViewName ~= viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(var_7_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	arg_7_0:patComplete()
+	self:patComplete()
 end
 
-function var_0_0._refreshNorSignActivity(arg_8_0)
-	local var_8_0 = arg_8_0:_actId()
-	local var_8_1 = arg_8_0:_viewName()
+function Activity101SignPatFaceWork:_refreshNorSignActivity()
+	local actId = self:_actId()
+	local viewName = self:_viewName()
 
-	if not arg_8_0:isType101RewardCouldGetAnyOne() then
-		if ViewMgr.instance:isOpen(var_8_1) then
+	if not self:isType101RewardCouldGetAnyOne() then
+		if ViewMgr.instance:isOpen(viewName) then
 			return
 		end
 
-		arg_8_0:patComplete()
+		self:patComplete()
 
 		return
 	end
 
-	local var_8_2 = {
-		actId = var_8_0
+	local viewParam = {
+		actId = actId
 	}
 
-	if string.nilorempty(var_8_1) then
-		logError(string.format("Error: excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s\n没配 'patFaceViewName' !!", arg_8_0._patFaceId, var_8_0))
-		arg_8_0:patComplete()
+	if string.nilorempty(viewName) then
+		logError(string.format("Error: excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s\n没配 'patFaceViewName' !!", self._patFaceId, actId))
+		self:patComplete()
 
 		return
 	end
 
-	if not _G.ViewName[var_8_1] then
-		logError(string.format("Error: excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s, patFaceViewName: %s\nerror: modules_views.%s 不存在", arg_8_0._patFaceId, var_8_0, var_8_1, var_8_1))
-		arg_8_0:patComplete()
+	if not _G.ViewName[viewName] then
+		logError(string.format("Error: excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s, patFaceViewName: %s\nerror: modules_views.%s 不存在", self._patFaceId, actId, viewName, viewName))
+		self:patComplete()
 
 		return
 	end
 
-	ViewMgr.instance:openView(var_8_1, var_8_2)
+	ViewMgr.instance:openView(viewName, viewParam)
 end
 
-function var_0_0._endBlock(arg_9_0)
-	if not arg_9_0:_isBlock() then
+function Activity101SignPatFaceWork:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_10_0)
-	if arg_10_0:_isBlock() then
+function Activity101SignPatFaceWork:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_11_0)
+function Activity101SignPatFaceWork:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function var_0_0.isType101RewardCouldGetAnyOne(arg_12_0)
-	local var_12_0 = arg_12_0:_actId()
+function Activity101SignPatFaceWork:isType101RewardCouldGetAnyOne()
+	local actId = self:_actId()
 
-	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_12_0)
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
 end
 
-return var_0_0
+return Activity101SignPatFaceWork

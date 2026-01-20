@@ -1,360 +1,363 @@
-﻿module("modules.logic.bossrush.controller.BossRushController_Test", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/controller/BossRushController_Test.lua
 
-local var_0_0 = class("BossRushController_Test", BaseController)
-local var_0_1 = getGlobal("ddd") or SLFramework.SLLogger.Log
+module("modules.logic.bossrush.controller.BossRushController_Test", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local BossRushController_Test = class("BossRushController_Test", BaseController)
+local sMyPrintf = getGlobal("ddd") or SLFramework.SLLogger.Log
+
+function BossRushController_Test:onInit()
 	return
 end
 
-function var_0_0._test(arg_2_0, arg_2_1)
-	if not arg_2_1 then
+function BossRushController_Test:_test(inputText)
+	if not inputText then
 		return
 	end
 
-	local var_2_0 = "bossrush"
+	local prefix = "bossrush"
 
-	if arg_2_1 == "bossrush demo" then
-		arg_2_0:_test_demo()
-
-		return
-	end
-
-	if arg_2_1 == "bossrush red" then
-		arg_2_0:_test_red()
+	if inputText == "bossrush demo" then
+		self:_test_demo()
 
 		return
 	end
 
-	if arg_2_1 == "bossrush red reset" then
-		arg_2_0:_test_red_reset()
+	if inputText == "bossrush red" then
+		self:_test_red()
 
 		return
 	end
 
-	if arg_2_1 == "bossrush" then
+	if inputText == "bossrush red reset" then
+		self:_test_red_reset()
+
+		return
+	end
+
+	if inputText == "bossrush" then
 		BossRushController.instance:openMainView()
 
 		return
 	end
 
-	local var_2_1 = tonumber(arg_2_1:sub(#var_2_0 + 1))
+	local battleId = tonumber(inputText:sub(#prefix + 1))
 
-	if var_2_1 then
-		arg_2_0:_test_battle_demo(var_2_1)
+	if battleId then
+		self:_test_battle_demo(battleId)
 	end
 end
 
-function var_0_0._test_demo(arg_3_0)
-	local var_3_0 = BossRushConfig.instance:getStages()
-	local var_3_1 = BossRushConfig.instance:InfiniteDoubleMaxTimes()
-	local var_3_2 = BossRushModel.instance:getActivityId()
-	local var_3_3 = 800000
+function BossRushController_Test:_test_demo()
+	local stages = BossRushConfig.instance:getStages()
+	local infiniteDoubleMaxTimes = BossRushConfig.instance:InfiniteDoubleMaxTimes()
+	local activityId = BossRushModel.instance:getActivityId()
+	local sTotalPoint = 800000
 
-	local function var_3_4(arg_4_0)
-		local var_4_0 = BossRushConfig.instance:getStageRewardList(arg_4_0)
-		local var_4_1 = {
-			bossId = arg_4_0,
-			totalPoint = var_3_3 or math.random(0, 99999),
+	local function _make_bossDetail(stage)
+		local rewardList = BossRushConfig.instance:getStageRewardList(stage)
+		local res = {
+			bossId = stage,
+			totalPoint = sTotalPoint or math.random(0, 99999),
 			hasGetBonusIds = {},
 			highestPoint = math.random(0, 99999),
-			doubleNum = math.random(0, var_3_1)
+			doubleNum = math.random(0, infiniteDoubleMaxTimes)
 		}
-		local var_4_2 = 0
-		local var_4_3 = {}
+		local N = 0
+		local gotList = {}
 
-		for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-			if var_4_1.totalPoint >= iter_4_1.rewardPointNum then
-				var_4_2 = iter_4_0
-				var_4_3[#var_4_3 + 1] = iter_4_1.id
+		for i, v in ipairs(rewardList) do
+			if res.totalPoint >= v.rewardPointNum then
+				N = i
+				gotList[#gotList + 1] = v.id
 			end
 		end
 
-		local var_4_4 = var_4_2 or math.random(0, var_4_2)
+		local n = N or math.random(0, N)
 
-		for iter_4_2 = 1, var_4_4 do
-			local var_4_5 = var_4_3[iter_4_2]
+		for i = 1, n do
+			local id = gotList[i]
 
-			var_4_1.hasGetBonusIds[var_4_5] = true
+			res.hasGetBonusIds[id] = true
 		end
 
-		return var_4_1
+		return res
 	end
 
-	local function var_3_5(arg_5_0)
-		local var_5_0 = BossRushConfig.instance:getTaskCO(arg_5_0)
-		local var_5_1 = var_5_0.maxFinishCount
-		local var_5_2 = var_5_0.maxProgress
-		local var_5_3 = math.random(0, var_5_1)
-		local var_5_4 = math.random(0, 100) % 2 == 0 and true or false
+	local function _make_task(id)
+		local CO = BossRushConfig.instance:getTaskCO(id)
+		local maxFinishCount = CO.maxFinishCount
+		local maxProgress = CO.maxProgress
+		local finishCount = math.random(0, maxFinishCount)
+		local hasFinished = math.random(0, 100) % 2 == 0 and true or false
 
-		if var_5_1 <= var_5_3 then
-			var_5_4 = false
+		if maxFinishCount <= finishCount then
+			hasFinished = false
 		end
 
-		local var_5_5 = var_5_4 and var_5_2 or math.random(0, var_5_2)
+		local progress = hasFinished and maxProgress or math.random(0, maxProgress)
 
 		return {
-			id = arg_5_0,
-			finishCount = var_5_3,
-			progress = var_5_5,
-			hasFinished = var_5_4,
+			id = id,
+			finishCount = finishCount,
+			progress = progress,
+			hasFinished = hasFinished,
 			expiryTime = math.random(1000, 2000),
 			type = math.random(1, 2)
 		}
 	end
 
-	local var_3_6 = {
-		[var_3_2] = {}
+	local _activities = {
+		[activityId] = {}
 	}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_0) do
-		local var_3_7 = iter_3_1.stage
+	for _, v in pairs(stages) do
+		local stage = v.stage
 
-		var_3_6[var_3_2][var_3_7] = var_3_4(var_3_7)
+		_activities[activityId][stage] = _make_bossDetail(stage)
 	end
 
-	local function var_3_8(arg_6_0)
-		return tabletool.copy(var_3_6[var_3_2][arg_6_0])
+	local function _get_bossDetail(stage)
+		return tabletool.copy(_activities[activityId][stage])
 	end
 
-	local function var_3_9(arg_7_0)
-		local var_7_0 = var_3_6[var_3_2][arg_7_0]
-		local var_7_1 = {}
+	local function _get_hasGetBonusIds(stage)
+		local hasGetBonusIds = _activities[activityId][stage]
+		local res = {}
 
-		for iter_7_0, iter_7_1 in pairs(var_7_0) do
-			var_7_1[#var_7_1 + 1] = iter_7_0
+		for k, _ in pairs(hasGetBonusIds) do
+			res[#res + 1] = k
 		end
 
-		return var_7_1
+		return res
 	end
 
-	local function var_3_10(arg_8_0)
-		local var_8_0 = HeroMo.New()
-		local var_8_1 = HeroConfig.instance:getHeroCO(arg_8_0)
-		local var_8_2 = {
-			heroId = arg_8_0,
-			skin = var_8_1.skinId
+	local function _make_heroMo(heroId)
+		local res = HeroMo.New()
+		local config = HeroConfig.instance:getHeroCO(heroId)
+		local info = {
+			heroId = heroId,
+			skin = config.skinId
 		}
 
-		var_8_0:init(var_8_2, var_8_1)
+		res:init(info, config)
 
-		return var_8_0
+		return res
 	end
 
-	local function var_3_11(arg_9_0)
-		local var_9_0 = EquipMO.New()
-		local var_9_1 = {
+	local function _make_equipMo(equipId)
+		local res = EquipMO.New()
+		local info = {
 			count = 1,
 			isLock = false,
 			exp = 0,
 			uid = math.random(1, 9999999),
-			equipId = arg_9_0,
+			equipId = equipId,
 			level = math.random(1, 10),
 			breakLv = math.random(1, 2),
 			refineLv = math.random(1, 2)
 		}
 
-		var_9_0:init(var_9_1)
+		res:init(info)
 
-		return var_9_0
+		return res
 	end
 
-	local function var_3_12(arg_10_0)
-		local var_10_0 = arg_10_0.configList
+	local function _get_config_id(lua_xxx_config)
+		local list = lua_xxx_config.configList
+		local idx = math.random(1, #list)
 
-		return var_10_0[math.random(1, #var_10_0)].id
+		return list[idx].id
 	end
 
-	local var_3_13 = 0
-	local var_3_14 = FightParam.New()
-	local var_3_15 = BossRushController
-	local var_3_16 = BossRushRpc
-	local var_3_17 = BossRushModel
+	local resultCode = 0
+	local fightParam = FightParam.New()
+	local cCtrl = BossRushController
+	local cRpc = BossRushRpc
+	local cModel = BossRushModel
 
-	function var_3_16.sendGet128InfosRequest(arg_11_0, arg_11_1)
-		local var_11_0 = {
-			activityId = var_3_2,
+	function cRpc:sendGet128InfosRequest(callback)
+		local msg = {
+			activityId = activityId,
 			bossDetail = {}
 		}
 
-		for iter_11_0, iter_11_1 in pairs(var_3_0) do
-			local var_11_1 = iter_11_1.stage
+		for _, v in pairs(stages) do
+			local stage = v.stage
 
-			table.insert(var_11_0.bossDetail, var_3_8(var_11_1))
+			table.insert(msg.bossDetail, _get_bossDetail(stage))
 		end
 
-		BossRushRpc.instance:onReceiveGet128InfosReply(var_3_13, var_11_0)
+		BossRushRpc.instance:onReceiveGet128InfosReply(resultCode, msg)
 
-		if arg_11_1 then
-			arg_11_1()
+		if callback then
+			callback()
 		end
 	end
 
-	function var_3_16.sendAct128GetTotalRewardsRequest(arg_12_0, arg_12_1)
-		local var_12_0 = var_3_6[var_3_2][arg_12_1]
-		local var_12_1 = BossRushConfig.instance:getStageRewardList(arg_12_1)
+	function cRpc:sendAct128GetTotalRewardsRequest(stage)
+		local _bossInfo = _activities[activityId][stage]
+		local rewardList = BossRushConfig.instance:getStageRewardList(stage)
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-			if not var_12_0.hasGetBonusIds[iter_12_1.id] and var_12_0.totalPoint >= iter_12_1.rewardPointNum then
-				var_12_0.hasGetBonusIds[iter_12_1.id] = true
+		for _, v in ipairs(rewardList) do
+			if not _bossInfo.hasGetBonusIds[v.id] and _bossInfo.totalPoint >= v.rewardPointNum then
+				_bossInfo.hasGetBonusIds[v.id] = true
 			end
 		end
 
-		local var_12_2 = {
-			activityId = var_3_2,
-			bossId = arg_12_1,
-			hasGetBonusIds = var_3_9(arg_12_1)
+		local msg = {
+			activityId = activityId,
+			bossId = stage,
+			hasGetBonusIds = _get_hasGetBonusIds(stage)
 		}
 
-		BossRushRpc.instance:onReceiveAct128GetTotalRewardsReply(var_3_13, var_12_2)
+		BossRushRpc.instance:onReceiveAct128GetTotalRewardsReply(resultCode, msg)
 	end
 
-	function var_3_16.sendAct128DoublePointRequest(arg_13_0, arg_13_1)
-		local var_13_0 = var_3_6[var_3_2][arg_13_1]
-		local var_13_1 = math.random(10000, 200000)
+	function cRpc:sendAct128DoublePointRequest(stage)
+		local _bossInfo = _activities[activityId][stage]
+		local doublePoint = math.random(10000, 200000)
 
-		var_13_0.totalPoint = var_13_0.totalPoint + var_13_1
+		_bossInfo.totalPoint = _bossInfo.totalPoint + doublePoint
 
-		local var_13_2 = var_13_0.doubleNum + 1
+		local doubleNum = _bossInfo.doubleNum + 1
 
-		var_13_0.doubleNum = var_13_2
+		_bossInfo.doubleNum = doubleNum
 
-		local var_13_3 = {
-			activityId = var_3_2,
-			bossId = arg_13_1,
-			doublePoint = var_13_1,
-			totalPoint = var_13_0.totalPoint,
-			doubleNum = var_13_2
+		local msg = {
+			activityId = activityId,
+			bossId = stage,
+			doublePoint = doublePoint,
+			totalPoint = _bossInfo.totalPoint,
+			doubleNum = doubleNum
 		}
 
-		BossRushRpc.instance:onReceiveAct128DoublePointReply(var_3_13, var_13_3)
+		BossRushRpc.instance:onReceiveAct128DoublePointReply(resultCode, msg)
 	end
 
-	function var_3_17.getRealStartTimeStamp(arg_14_0)
+	function cModel:getRealStartTimeStamp()
 		return os.time()
 	end
 
-	function var_3_17.getRealEndTimeStamp(arg_15_0)
+	function cModel:getRealEndTimeStamp()
 		return os.time() + 2000
 	end
 
-	function var_3_17.getRemainTimeStr(arg_16_0)
+	function cModel:getRemainTimeStr()
 		return "xxxx"
 	end
 
-	function var_3_17.isBossLayerOpen(arg_17_0, arg_17_1, arg_17_2)
+	function cModel:isBossLayerOpen(stage, layer)
 		return true
 	end
 
-	function var_3_17.isActOnLine(arg_18_0)
+	function cModel:isActOnLine()
 		return true
 	end
 
-	function var_3_15.sendGetTaskInfoRequest(arg_19_0)
+	function cCtrl:sendGetTaskInfoRequest()
 		TaskController.instance:dispatchEvent(TaskEvent.SetTaskList)
 	end
 
-	function var_3_15.enterFightScene(arg_20_0, arg_20_1, arg_20_2)
-		function var_3_17.getBattleStageAndLayer(arg_21_0)
-			return arg_20_1, arg_20_2
+	function cCtrl:enterFightScene(stage, layer)
+		function cModel:getBattleStageAndLayer()
+			return stage, layer
 		end
 
 		BossRushController.instance:openResultPanel()
 	end
 
-	function var_3_15.isInBossRushInfiniteFight(arg_22_0)
+	function cCtrl:isInBossRushInfiniteFight()
 		return true
 	end
 
-	function TaskModel.getTaskMoList(arg_23_0)
-		local var_23_0 = BossRushConfig.instance:getAllTaskList()
-		local var_23_1 = {}
+	function TaskModel:getTaskMoList()
+		local taskCOList = BossRushConfig.instance:getAllTaskList()
+		local res = {}
 
-		for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-			local var_23_2 = iter_23_1.id
-			local var_23_3 = var_3_5(var_23_2)
+		for _, v in ipairs(taskCOList) do
+			local id = v.id
+			local pb = _make_task(id)
 
-			var_23_1[#var_23_1 + 1] = {
-				id = var_23_3.id,
-				progress = var_23_3.progress,
-				hasFinished = var_23_3.hasFinished,
-				finishCount = var_23_3.finishCount,
-				config = iter_23_1
+			res[#res + 1] = {
+				id = pb.id,
+				progress = pb.progress,
+				hasFinished = pb.hasFinished,
+				finishCount = pb.finishCount,
+				config = v
 			}
 		end
 
-		return var_23_1
+		return res
 	end
 
-	function var_3_17.getBattleStageAndLayer(arg_24_0)
+	function cModel:getBattleStageAndLayer()
 		return 1, 3
 	end
 
-	local var_3_18 = 1000000
+	local sFightScore = 1000000
 
-	function var_3_17.getFightScore(arg_25_0)
-		local var_25_0, var_25_1 = BossRushModel.instance:getBattleStageAndLayer()
-		local var_25_2 = BossRushConfig.instance:getBattleMaxPoints(var_25_0, var_25_1)
+	function cModel:getFightScore()
+		local stage, layer = BossRushModel.instance:getBattleStageAndLayer()
+		local max = BossRushConfig.instance:getBattleMaxPoints(stage, layer)
 
-		if var_25_2 == 0 then
-			var_25_2 = math.max(0, 99999999999)
+		if max == 0 then
+			max = math.max(0, 99999999999)
 		end
 
-		return var_3_18 or math.random(0, var_25_2)
+		return sFightScore or math.random(0, max)
 	end
 
-	function FightModel.getFightParam(arg_26_0)
-		return var_3_14
+	function FightModel:getFightParam()
+		return fightParam
 	end
 
-	function var_3_17.getStageScore(arg_27_0)
-		local var_27_0 = {}
-		local var_27_1 = math.random(3, 5)
+	function cModel:getStageScore()
+		local res = {}
+		local n = math.random(3, 5)
 
-		for iter_27_0 = 1, var_27_1 do
-			var_27_0[#var_27_0 + 1] = math.random(1000, 999999)
+		for i = 1, n do
+			res[#res + 1] = math.random(1000, 999999)
 		end
 
-		return var_27_0
+		return res
 	end
 
-	function var_3_17.setStageLastTotalPoint(arg_28_0, arg_28_1, arg_28_2)
+	function cModel:setStageLastTotalPoint(stage, value)
 		return
 	end
 
-	local var_3_19 = 0
-	local var_3_20 = 4
+	local heroCount = 0
+	local kMaxHeroCount = 4
 
-	function FightParam.getAllHeroMoList(arg_29_0)
-		local var_29_0 = {}
-		local var_29_1 = var_3_19
+	function FightParam:getAllHeroMoList()
+		local heroMoList = {}
+		local n = heroCount
 
-		var_3_19 = (var_3_19 + 1) % var_3_20
+		heroCount = (heroCount + 1) % kMaxHeroCount
 
-		for iter_29_0 = 0, var_29_1 do
-			local var_29_2 = var_3_12(_G.lua_character)
+		for i = 0, n do
+			local id = _get_config_id(_G.lua_character)
 
-			table.insert(var_29_0, var_3_10(var_29_2))
+			table.insert(heroMoList, _make_heroMo(id))
 		end
 
-		return var_29_0
+		return heroMoList
 	end
 
-	function FightParam.getEquipMoList(arg_30_0)
-		local var_30_0 = {}
-		local var_30_1 = math.random(1, 4)
+	function FightParam:getEquipMoList()
+		local equipMoList = {}
+		local n = math.random(1, 4)
 
-		for iter_30_0 = 1, var_30_1 do
-			local var_30_2 = var_3_12(_G.lua_equip)
+		for i = 1, n do
+			local id = _get_config_id(_G.lua_equip)
 
-			var_30_0[iter_30_0] = var_3_11(var_30_2)
+			equipMoList[i] = _make_equipMo(id)
 		end
 
-		return var_30_0
+		return equipMoList
 	end
 
-	function PlayerModel.getPlayinfo(arg_31_0)
+	function PlayerModel:getPlayinfo()
 		return {
 			portrait = 0,
 			name = "123456"
@@ -362,172 +365,178 @@ function var_0_0._test_demo(arg_3_0)
 	end
 
 	function ResUrl.getPlayerHeadIcon()
-		local var_32_0 = 170000 + math.random(1, 5)
+		local resName = 170000 + math.random(1, 5)
 
-		return string.format("singlebg/playerheadicon/%s.png", var_32_0)
+		return string.format("singlebg/playerheadicon/%s.png", resName)
 	end
 
-	function var_3_17.isBossOnline()
+	function cModel.isBossOnline()
 		return true
 	end
 
-	function var_3_17.getLastPointInfo(arg_34_0)
+	function cModel:getLastPointInfo()
 		return {
 			cur = 0,
 			max = 2500000
 		}
 	end
 
-	function V1a4_BossRushMainViewContainer.onContainerInit(arg_35_0)
+	local cViewContainer = V1a4_BossRushMainViewContainer
+
+	function cViewContainer:onContainerInit()
 		return
 	end
 
 	BossRushController.instance:openMainView(nil, true)
 end
 
-function var_0_0._test_battle_demo(arg_36_0, arg_36_1)
-	if not lua_battle.configDict[arg_36_1] then
-		logError("battleId not exist" .. tostring(arg_36_1))
+function BossRushController_Test:_test_battle_demo(battleId)
+	local battleCO = lua_battle.configDict[battleId]
+
+	if not battleCO then
+		logError("battleId not exist" .. tostring(battleId))
 
 		return
 	end
 
-	HeroGroupModel.instance:setParam(arg_36_1, nil, nil)
+	HeroGroupModel.instance:setParam(battleId, nil, nil)
 
-	local var_36_0 = HeroGroupModel.instance:getCurGroupMO()
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_36_0 then
+	if not curGroupMO then
 		logError("current HeroGroupMO is nil")
 		GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 		return
 	end
 
-	local var_36_1, var_36_2 = var_36_0:getMainList()
-	local var_36_3, var_36_4 = var_36_0:getSubList()
-	local var_36_5 = var_36_0:getAllHeroEquips()
-	local var_36_6 = FightController.instance:setFightParamByBattleId(arg_36_1)
-	local var_36_7 = DungeonEnum.ChapterType
+	local main, mainCount = curGroupMO:getMainList()
+	local sub, subCount = curGroupMO:getSubList()
+	local equips = curGroupMO:getAllHeroEquips()
+	local fightParam = FightController.instance:setFightParamByBattleId(battleId)
+	local E = DungeonEnum.ChapterType
 
-	for iter_36_0, iter_36_1 in ipairs(lua_episode.configList) do
-		if iter_36_1.battleId == arg_36_1 then
-			local var_36_8 = iter_36_1.id
-			local var_36_9 = iter_36_1.chapterId
-			local var_36_10 = DungeonConfig.instance:getChapterCO(var_36_9).type
+	for _, v in ipairs(lua_episode.configList) do
+		if v.battleId == battleId then
+			local episodeId = v.id
+			local chapterId = v.chapterId
+			local chapterCO = DungeonConfig.instance:getChapterCO(chapterId)
+			local t = chapterCO.type
 
-			if var_36_10 == var_36_7.BossRushNormal or var_36_10 == var_36_7.BossRushInfinite then
-				var_36_6.chapterId = var_36_9
-				var_36_6.episodeId = var_36_8
-				FightResultModel.instance.episodeId = var_36_8
+			if t == E.BossRushNormal or t == E.BossRushInfinite then
+				fightParam.chapterId = chapterId
+				fightParam.episodeId = episodeId
+				FightResultModel.instance.episodeId = episodeId
 
-				DungeonModel.instance:SetSendChapterEpisodeId(var_36_9, var_36_8)
+				DungeonModel.instance:SetSendChapterEpisodeId(chapterId, episodeId)
 
 				break
 			end
 		end
 	end
 
-	if not var_36_6.chapterId then
-		logError("invalid battleid: " .. tostring(arg_36_1))
+	if not fightParam.chapterId then
+		logError("invalid battleid: " .. tostring(battleId))
 
 		return
 	end
 
-	var_36_6:setMySide(var_36_0.clothId, var_36_1, var_36_3, var_36_5)
-	FightController.instance:sendTestFightId(var_36_6)
+	fightParam:setMySide(curGroupMO.clothId, main, sub, equips)
+	FightController.instance:sendTestFightId(fightParam)
 end
 
-function var_0_0._test_red(arg_37_0)
-	local var_37_0 = RedDotEnum.DotNode
-	local var_37_1 = {
-		[var_37_0.BossRushEnter] = "BossRushEnter(活动入口Root)",
-		[var_37_0.BossRushOpen] = "BossRushOpen(新功能开启)",
-		[var_37_0.BossRushBoss] = "BossRushBoss(Boss Root)",
-		[var_37_0.BossRushNewBoss] = "BossRushNewBoss(新boss解锁)",
-		[var_37_0.BossRushNewLayer] = "BossRushNewLayer(新难度解锁)",
-		[var_37_0.BossRushBossReward] = "BossRushBossReward(奖励可领取Root)",
-		[var_37_0.BossRushBossSchedule] = "BossRushBossSchedule(累计奖励可领)",
-		[var_37_0.BossRushBossAchievement] = "BossRushBossAchievement(成就奖励可领)"
+function BossRushController_Test:_test_red()
+	local E = RedDotEnum.DotNode
+	local focusIds = {
+		[E.BossRushEnter] = "BossRushEnter(活动入口Root)",
+		[E.BossRushOpen] = "BossRushOpen(新功能开启)",
+		[E.BossRushBoss] = "BossRushBoss(Boss Root)",
+		[E.BossRushNewBoss] = "BossRushNewBoss(新boss解锁)",
+		[E.BossRushNewLayer] = "BossRushNewLayer(新难度解锁)",
+		[E.BossRushBossReward] = "BossRushBossReward(奖励可领取Root)",
+		[E.BossRushBossSchedule] = "BossRushBossSchedule(累计奖励可领)",
+		[E.BossRushBossAchievement] = "BossRushBossAchievement(成就奖励可领)"
 	}
-	local var_37_2 = ""
-	local var_37_3 = {}
+	local str = ""
+	local dotInfos = {}
 
-	for iter_37_0, iter_37_1 in pairs(RedDotModel.instance._dotInfos or {}) do
-		if var_37_1[iter_37_0] then
-			var_37_3[iter_37_0] = iter_37_1
+	for id, v in pairs(RedDotModel.instance._dotInfos or {}) do
+		local name = focusIds[id]
+
+		if name then
+			dotInfos[id] = v
 		end
 	end
 
-	for iter_37_2, iter_37_3 in pairs(var_37_3) do
-		local var_37_4 = var_37_1[iter_37_2]
-		local var_37_5 = iter_37_2
-		local var_37_6 = "(" .. tostring(iter_37_2) .. ")" .. var_37_4 .. ":"
-		local var_37_7 = iter_37_3.infos
+	for id, v in pairs(dotInfos) do
+		local name = focusIds[id]
+		local defineId = id
+		local s = "(" .. tostring(id) .. ")" .. name .. ":"
+		local infos = v.infos
 
-		for iter_37_4, iter_37_5 in pairs(var_37_7) do
-			local var_37_8 = iter_37_5.value
-			local var_37_9 = ""
-			local var_37_10 = ""
-			local var_37_11 = ""
-			local var_37_12
+		for uid, vv in pairs(infos) do
+			local value = vv.value
+			local valueDesc = ""
+			local uidDesc = ""
+			local playerPrefsDesc = ""
 
-			if iter_37_2 == var_37_0.BossRushBossSchedule or iter_37_2 == var_37_0.BossRushBossAchievement then
-				var_37_12 = " <color=#FF00FF>(tingjie)</color>"
+			if id == E.BossRushBossSchedule or id == E.BossRushBossAchievement then
+				playerPrefsDesc = " <color=#FF00FF>(tingjie)</color>"
 			else
-				local var_37_13 = BossRushRedModel.instance:getDefaultValue(var_37_5)
-				local var_37_14 = BossRushRedModel.instance:_get(var_37_5, iter_37_4, var_37_13)
+				local defaultValue = BossRushRedModel.instance:getDefaultValue(defineId)
+				local savedValue = BossRushRedModel.instance:_get(defineId, uid, defaultValue)
 
-				var_37_12 = "(<color=#FFFF00>" .. tostring(var_37_14) .. "</color>)"
+				playerPrefsDesc = "(<color=#FFFF00>" .. tostring(savedValue) .. "</color>)"
 			end
 
-			if var_37_8 > 0 then
-				var_37_9 = " (<color=#00FF00>" .. tostring(var_37_8) .. "</color>)"
+			if value > 0 then
+				valueDesc = " (<color=#00FF00>" .. tostring(value) .. "</color>)"
 			else
-				var_37_9 = " (" .. tostring(var_37_8) .. ")"
+				valueDesc = " (" .. tostring(value) .. ")"
 			end
 
-			if iter_37_2 == var_37_0.BossRushNewLayer then
-				local var_37_15 = math.modf(iter_37_4 / 1000)
-				local var_37_16 = math.modf(iter_37_4 % 1000)
+			if id == E.BossRushNewLayer then
+				local stage = math.modf(uid / 1000)
+				local layer = math.modf(uid % 1000)
 
-				var_37_10 = "uid" .. var_37_12 .. ": " .. tostring(iter_37_4) .. string.format("[%s-%s]", var_37_15, var_37_16)
+				uidDesc = "uid" .. playerPrefsDesc .. ": " .. tostring(uid) .. string.format("[%s-%s]", stage, layer)
 			else
-				var_37_10 = "uid" .. var_37_12 .. ": " .. tostring(iter_37_4)
+				uidDesc = "uid" .. playerPrefsDesc .. ": " .. tostring(uid)
 			end
 
-			var_37_6 = var_37_6 .. "\n\t" .. var_37_10 .. var_37_9
+			s = s .. "\n\t" .. uidDesc .. valueDesc
 		end
 
-		if var_37_2 ~= "" then
-			var_37_2 = var_37_2 .. "\n"
+		if str ~= "" then
+			str = str .. "\n"
 		end
 
-		var_37_2 = var_37_2 .. var_37_6
+		str = str .. s
 	end
 
-	if var_37_2 == "" then
-		var_37_2 = "BossRush red data is NULL!!"
+	if str == "" then
+		str = "BossRush red data is NULL!!"
 	end
 
-	var_0_1("\n" .. var_37_2)
+	sMyPrintf("\n" .. str)
 end
 
-function var_0_0._test_red_reset(arg_38_0)
-	local var_38_0 = RedDotEnum.DotNode
-	local var_38_1 = BossRushConfig.instance:getStages()
+function BossRushController_Test:_test_red_reset()
+	local E = RedDotEnum.DotNode
+	local stages = BossRushConfig.instance:getStages()
 
-	for iter_38_0, iter_38_1 in pairs(var_38_1) do
-		local var_38_2 = iter_38_1.stage
+	for _, v in pairs(stages) do
+		local stage = v.stage
 
-		BossRushRedModel.instance:_deleteByDSL(var_38_0.BossRushOpen, var_38_2)
-		BossRushRedModel.instance:_deleteByDSL(var_38_0.BossRushNewBoss, var_38_2)
+		BossRushRedModel.instance:_deleteByDSL(E.BossRushOpen, stage)
+		BossRushRedModel.instance:_deleteByDSL(E.BossRushNewBoss, stage)
 
-		local var_38_3 = BossRushConfig.instance:getEpisodeStages(var_38_2)
+		local episodeStages = BossRushConfig.instance:getEpisodeStages(stage)
 
-		for iter_38_2, iter_38_3 in pairs(var_38_3) do
-			local var_38_4 = iter_38_3.layer
+		for _, layerCO in pairs(episodeStages) do
+			local layer = layerCO.layer
 
-			BossRushRedModel.instance:_deleteByDSL(var_38_0.BossRushNewLayer, var_38_2, var_38_4)
+			BossRushRedModel.instance:_deleteByDSL(E.BossRushNewLayer, stage, layer)
 		end
 	end
 
@@ -535,61 +544,134 @@ function var_0_0._test_red_reset(arg_38_0)
 	BossRushRedModel.instance:_reload()
 end
 
-function var_0_0._v1a6Enter(arg_39_0)
+function BossRushController_Test:_v1a6Enter()
 	ViewMgr.instance:openView(ViewName.V1a6_BossRush_EnterView)
 
-	local var_39_0 = V1a6_BossRush_EnterView
-	local var_39_1 = V1a6_BossRush_StoreModel
-	local var_39_2 = BossRushRpc
-	local var_39_3 = BossRushConfig
-	local var_39_4 = BossRushModel
-	local var_39_5 = FightParam
+	local cEnterView = V1a6_BossRush_EnterView
+	local cStoreModel = V1a6_BossRush_StoreModel
+	local cRpc = BossRushRpc
+	local cConfig = BossRushConfig
+	local cModel = BossRushModel
+	local cFightParam = FightParam
 
-	function var_39_0._btnUnOpenOnClick(arg_40_0)
-		var_0_0.instance:_test_demo()
+	function cEnterView:_btnUnOpenOnClick()
+		BossRushController_Test.instance:_test_demo()
 	end
 
-	function var_39_0._btnNormalOnClick(arg_41_0)
-		var_0_0.instance:_test_demo()
+	function cEnterView:_btnNormalOnClick()
+		BossRushController_Test.instance:_test_demo()
 	end
 
-	function var_39_4.getEvaluateList(arg_42_0)
-		local var_42_0 = {}
+	function cModel:getEvaluateList()
+		local ids = {}
 
-		for iter_42_0 = 1, 10 do
-			table.insert(var_42_0, iter_42_0)
+		for i = 1, 10 do
+			table.insert(ids, i)
 		end
 
-		return var_42_0
+		return ids
 	end
 
-	function var_39_3.getEvaluateInfo(arg_43_0, arg_43_1)
-		local var_43_0 = "测试标题—" .. arg_43_1
-		local var_43_1 = "测试评价—" .. arg_43_1
+	function cConfig:getEvaluateInfo(id)
+		local name = "测试标题—" .. id
+		local desc = "测试评价—" .. id
 
-		return var_43_0, var_43_1
+		return name, desc
 	end
 
-	function var_39_1.checkStoreNewGoods(arg_44_0)
+	function cStoreModel:checkStoreNewGoods()
 		return true
 	end
 
-	function var_39_5.getHeroEquipMoList(arg_45_0)
-		local var_45_0 = {}
-		local var_45_1 = var_39_5.getEquipMoList()
-		local var_45_2 = var_39_5.getAllHeroMoList()
+	function cFightParam:getHeroEquipMoList()
+		local heroEquipMoList = {}
+		local equidMoList = cFightParam.getEquipMoList()
+		local herosMoList = cFightParam.getAllHeroMoList()
 
-		for iter_45_0, iter_45_1 in pairs(var_45_2) do
-			table.insert(var_45_0, {
-				heroMo = iter_45_1,
-				equipMo = var_45_1[iter_45_0]
+		for i, heroMo in pairs(herosMoList) do
+			table.insert(heroEquipMoList, {
+				heroMo = heroMo,
+				equipMo = equidMoList[i]
 			})
 		end
 
-		return var_45_0
+		return heroEquipMoList
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function BossRushController_Test:_test_demo_v3a2()
+	local v2Detail = {
+		haveFight = true,
+		acceptExpPoint = 0
+	}
+	local bossDetail = {
+		{
+			bossId = 1,
+			layer4TotalPoint = 0,
+			highestPoint = 2500,
+			spHighestPoint = 0,
+			doubleNum = 0,
+			layer4HighestPoint = 0,
+			totalPoint = 2500,
+			hasGetBonusIds = {},
+			spItemTypeIds = {},
+			v2Detail = v2Detail
+		}
+	}
+	local msg = {
+		playerExp = 0,
+		playerLevel = 1,
+		gainMilestoneLevel = 0,
+		activityId = 13230,
+		bossDetail = bossDetail
+	}
 
-return var_0_0
+	Activity128Rpc.instance:onReceiveAct128InfoUpdatePush(0, msg)
+
+	function BossRushRpc.instance:sendAct128GetExpRequest(activityId, bossId, callback, callbackobj)
+		local mo = V3a2_BossRushModel.instance:getHandBookMo(bossId)
+		local info = {
+			acceptExpPoint = mo.saveExp,
+			haveFight = mo.haveFight
+		}
+
+		mo:setV3a2Detail(info)
+
+		if callback then
+			callback(callbackobj)
+		end
+	end
+
+	function BossRushRpc.instance:sendAct128GetMilestoneBonusRequest(activityId, callback, callbackobj)
+		local rank = V3a2_BossRushModel.instance:getRank()
+		local msg = {
+			activityId = activityId,
+			gainMilestoneLevel = rank
+		}
+
+		BossRushRpc.instance:onReceiveAct128GetMilestoneBonusReply(0, msg)
+
+		if callback then
+			callback(callbackobj)
+		end
+	end
+end
+
+function BossRushController_Test:_test_V3a2_Result_Score(baseScore, ruleScore)
+	function V3a2_BossRushModel.instance.getScore()
+		local score = {
+			baseScore = baseScore,
+			ruleScore = ruleScore
+		}
+
+		return score
+	end
+
+	function BossRushModel.instance.getFightScore()
+		return baseScore + ruleScore
+	end
+end
+
+BossRushController_Test.instance = BossRushController_Test.New()
+
+return BossRushController_Test

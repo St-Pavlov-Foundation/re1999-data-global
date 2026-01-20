@@ -1,206 +1,212 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureWrongTipItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureWrongTipItem.lua
 
-local var_0_0 = class("RoomManufactureWrongTipItem", LuaCompBase)
+module("modules.logic.room.view.manufacture.RoomManufactureWrongTipItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gowaitbg = gohelper.findChild(arg_1_0.go, "waitbg")
-	arg_1_0._gopausebg = gohelper.findChild(arg_1_0.go, "pausebg")
-	arg_1_0._imagequality = gohelper.findChildImage(arg_1_0.go, "info/item/#image_quality")
-	arg_1_0._simageproductionIcon = gohelper.findChildSingleImage(arg_1_0.go, "info/item/#simage_productionIcon")
-	arg_1_0._txtproductionName = gohelper.findChildText(arg_1_0.go, "info/item/#txt_productionName")
-	arg_1_0._golayoutstatus = gohelper.findChild(arg_1_0.go, "info/layoutStatus")
-	arg_1_0._goStatusItem = gohelper.findChild(arg_1_0.go, "info/layoutStatus/#simage_status")
-	arg_1_0._godec = gohelper.findChild(arg_1_0.go, "info/#go_dec")
-	arg_1_0._gowrongs = gohelper.findChild(arg_1_0.go, "#go_wrongs")
-	arg_1_0._gowrongItem = gohelper.findChild(arg_1_0.go, "#go_wrongs/#go_wrongItem")
+local RoomManufactureWrongTipItem = class("RoomManufactureWrongTipItem", LuaCompBase)
 
-	arg_1_0:setData()
+function RoomManufactureWrongTipItem:init(go)
+	self.go = go
+	self._gowaitbg = gohelper.findChild(self.go, "waitbg")
+	self._gopausebg = gohelper.findChild(self.go, "pausebg")
+	self._imagequality = gohelper.findChildImage(self.go, "info/item/#image_quality")
+	self._simageproductionIcon = gohelper.findChildSingleImage(self.go, "info/item/#simage_productionIcon")
+	self._txtproductionName = gohelper.findChildText(self.go, "info/item/#txt_productionName")
+	self._golayoutstatus = gohelper.findChild(self.go, "info/layoutStatus")
+	self._goStatusItem = gohelper.findChild(self.go, "info/layoutStatus/#simage_status")
+	self._godec = gohelper.findChild(self.go, "info/#go_dec")
+	self._gowrongs = gohelper.findChild(self.go, "#go_wrongs")
+	self._gowrongItem = gohelper.findChild(self.go, "#go_wrongs/#go_wrongItem")
+
+	self:setData()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function RoomManufactureWrongTipItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function RoomManufactureWrongTipItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onWrongItemJumpClick(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.wrongItemList[arg_4_1]
+function RoomManufactureWrongTipItem:onWrongItemJumpClick(index)
+	local wrongItem = self.wrongItemList[index]
 
-	if not var_4_0 then
+	if not wrongItem then
 		return
 	end
 
-	local var_4_1 = {
-		isOverView = arg_4_0.isOverView,
-		pathToType = arg_4_0.buildingType
+	local param = {
+		isOverView = self.isOverView,
+		pathToType = self.buildingType
 	}
 
-	ManufactureController.instance:clickWrongJump(var_4_0.data.wrongType, var_4_0.data.manufactureItemId, var_4_0.data.buildingType, var_4_1)
+	ManufactureController.instance:clickWrongJump(wrongItem.data.wrongType, wrongItem.data.manufactureItemId, wrongItem.data.buildingType, param)
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_0.buildingUid = arg_5_1
-	arg_5_0.manufactureItemId = arg_5_2
-	arg_5_0.wrongSlotIdList = arg_5_3
-	arg_5_0.isOverView = arg_5_4
-	arg_5_0.buildingType = ManufactureConfig.instance:getManufactureItemBelongBuildingType(arg_5_2)
+function RoomManufactureWrongTipItem:setData(buildingUid, manufactureItemId, wrongSlotIdList, isOverView)
+	self.buildingUid = buildingUid
+	self.manufactureItemId = manufactureItemId
+	self.wrongSlotIdList = wrongSlotIdList
+	self.isOverView = isOverView
+	self.buildingType = ManufactureConfig.instance:getManufactureItemBelongBuildingType(manufactureItemId)
 
-	arg_5_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_6_0)
-	if not arg_6_0.buildingUid or not arg_6_0.manufactureItemId or not arg_6_0.wrongSlotIdList then
+function RoomManufactureWrongTipItem:refresh()
+	if not self.buildingUid or not self.manufactureItemId or not self.wrongSlotIdList then
 		return
 	end
 
-	arg_6_0:setItemInfo()
+	self:setItemInfo()
 
-	local var_6_0, var_6_1 = ManufactureModel.instance:getAllWrongManufactureItemList(arg_6_0.buildingUid, arg_6_0.manufactureItemId, #arg_6_0.wrongSlotIdList)
+	local wrongItemList, wrongTypeList = ManufactureModel.instance:getAllWrongManufactureItemList(self.buildingUid, self.manufactureItemId, #self.wrongSlotIdList)
 
-	arg_6_0:setStatusItems(var_6_1)
-	arg_6_0:setWrongItems(var_6_0)
+	self:setStatusItems(wrongTypeList)
+	self:setWrongItems(wrongItemList)
 end
 
-function var_0_0.setItemInfo(arg_7_0)
-	local var_7_0 = ManufactureConfig.instance:getItemId(arg_7_0.manufactureItemId)
-	local var_7_1, var_7_2 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_7_0)
-	local var_7_3 = RoomManufactureEnum.RareImageMap[var_7_1.rare]
+function RoomManufactureWrongTipItem:setItemInfo()
+	local itemId = ManufactureConfig.instance:getItemId(self.manufactureItemId)
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, itemId)
+	local qualityImg = RoomManufactureEnum.RareImageMap[config.rare]
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_7_0._imagequality, var_7_3)
+	UISpriteSetMgr.instance:setCritterSprite(self._imagequality, qualityImg)
 
-	var_7_2 = ManufactureConfig.instance:getBatchIconPath(arg_7_0.manufactureItemId) or var_7_2
+	local batchIconPath = ManufactureConfig.instance:getBatchIconPath(self.manufactureItemId)
 
-	arg_7_0._simageproductionIcon:LoadImage(var_7_2)
+	icon = batchIconPath or icon
 
-	local var_7_4 = ManufactureConfig.instance:getManufactureItemName(arg_7_0.manufactureItemId)
+	self._simageproductionIcon:LoadImage(icon)
 
-	arg_7_0._txtproductionName.text = var_7_4
+	local itemName = ManufactureConfig.instance:getManufactureItemName(self.manufactureItemId)
+
+	self._txtproductionName.text = itemName
 end
 
-function var_0_0.setStatusItems(arg_8_0, arg_8_1)
-	arg_8_0.statusItemList = {}
+function RoomManufactureWrongTipItem:setStatusItems(wrongTypeList)
+	self.statusItemList = {}
 
-	local var_8_0 = false
+	local hasError = false
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		var_8_0 = iter_8_1 ~= RoomManufactureEnum.ManufactureWrongType.WaitPreMat
+	for _, wrongType in ipairs(wrongTypeList) do
+		hasError = wrongType ~= RoomManufactureEnum.ManufactureWrongType.WaitPreMat
 
-		if var_8_0 then
+		if hasError then
 			break
 		end
 	end
 
-	gohelper.setActive(arg_8_0._gowaitbg, not var_8_0)
-	gohelper.setActive(arg_8_0._gopausebg, var_8_0)
-	gohelper.CreateObjList(arg_8_0, arg_8_0._onSetStatusItem, arg_8_1, arg_8_0._golayoutstatus, arg_8_0._goStatusItem)
+	gohelper.setActive(self._gowaitbg, not hasError)
+	gohelper.setActive(self._gopausebg, hasError)
+	gohelper.CreateObjList(self, self._onSetStatusItem, wrongTypeList, self._golayoutstatus, self._goStatusItem)
 end
 
-function var_0_0._onSetStatusItem(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_0:getUserDataTb_()
+function RoomManufactureWrongTipItem:_onSetStatusItem(obj, data, index)
+	local statusItem = self:getUserDataTb_()
 
-	var_9_0.go = arg_9_1
-	var_9_0.wrongType = arg_9_2
-	var_9_0.simagestatus = arg_9_1:GetComponent(gohelper.Type_Image)
-	var_9_0.txtstatus = gohelper.findChildText(arg_9_1, "#txt_status")
+	statusItem.go = obj
+	statusItem.wrongType = data
+	statusItem.simagestatus = obj:GetComponent(gohelper.Type_Image)
+	statusItem.txtstatus = gohelper.findChildText(obj, "#txt_status")
 
-	local var_9_1
-	local var_9_2 = ""
-	local var_9_3 = RoomManufactureEnum.ManufactureWrongDisplay[arg_9_2]
+	local wrongIcon
+	local wrongTxt = ""
+	local displaySetting = RoomManufactureEnum.ManufactureWrongDisplay[data]
 
-	if var_9_3 then
-		var_9_1 = var_9_3.icon
-		var_9_2 = luaLang(var_9_3.desc)
+	if displaySetting then
+		wrongIcon = displaySetting.icon
+		wrongTxt = luaLang(displaySetting.desc)
 	end
 
-	if not string.nilorempty(var_9_1) then
-		UISpriteSetMgr.instance:setRoomSprite(var_9_0.simagestatus, var_9_1)
+	if not string.nilorempty(wrongIcon) then
+		UISpriteSetMgr.instance:setRoomSprite(statusItem.simagestatus, wrongIcon)
 	end
 
-	var_9_0.txtstatus.text = var_9_2
-	arg_9_0.statusItemList[arg_9_3] = var_9_0
+	statusItem.txtstatus.text = wrongTxt
+	self.statusItemList[index] = statusItem
 end
 
-function var_0_0.setWrongItems(arg_10_0, arg_10_1)
-	arg_10_0:clearWrongItemList()
-	gohelper.setActive(arg_10_0._godec, arg_10_1 and #arg_10_1 > 0)
-	gohelper.CreateObjList(arg_10_0, arg_10_0._onSetWrongItem, arg_10_1, arg_10_0._gowrongs, arg_10_0._gowrongItem)
+function RoomManufactureWrongTipItem:setWrongItems(wrongItemList)
+	self:clearWrongItemList()
+	gohelper.setActive(self._godec, wrongItemList and #wrongItemList > 0)
+	gohelper.CreateObjList(self, self._onSetWrongItem, wrongItemList, self._gowrongs, self._gowrongItem)
 end
 
-function var_0_0.clearWrongItemList(arg_11_0)
-	if arg_11_0.wrongItemList then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_0.wrongItemList) do
-			iter_11_1.needitemIcon:UnLoadImage()
-			iter_11_1.btnjump:RemoveClickListener()
+function RoomManufactureWrongTipItem:clearWrongItemList()
+	if self.wrongItemList then
+		for _, wrongItem in ipairs(self.wrongItemList) do
+			wrongItem.needitemIcon:UnLoadImage()
+			wrongItem.btnjump:RemoveClickListener()
 		end
 	end
 
-	arg_11_0.wrongItemList = {}
+	self.wrongItemList = {}
 end
 
-function var_0_0._onSetWrongItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = arg_12_0:getUserDataTb_()
+function RoomManufactureWrongTipItem:_onSetWrongItem(obj, data, index)
+	local wrongItem = self:getUserDataTb_()
 
-	var_12_0.go = arg_12_1
-	var_12_0.data = arg_12_2
-	var_12_0.goneedItem = gohelper.findChild(arg_12_1, "#go_needItem")
-	var_12_0.needitemquality = gohelper.findChildImage(arg_12_1, "#go_needItem/item/#image_quality")
-	var_12_0.needitemIcon = gohelper.findChildSingleImage(arg_12_1, "#go_needItem/item/#simage_productionIcon")
-	var_12_0.needitemName = gohelper.findChildText(arg_12_1, "#go_needItem/#txt_tipItemName")
-	var_12_0.txtneed = gohelper.findChildText(arg_12_1, "#go_needItem/#txt_need")
-	var_12_0.goneedLink = gohelper.findChild(arg_12_1, "#go_needLink")
-	var_12_0.simagestart = gohelper.findChildImage(arg_12_1, "#go_needLink/#simage_start")
-	var_12_0.simageend = gohelper.findChildImage(arg_12_1, "#go_needLink/#simage_end")
-	var_12_0.btnjump = gohelper.findChildClickWithDefaultAudio(arg_12_1, "#btn_jump")
-	var_12_0.txtjump = gohelper.findChildText(arg_12_1, "#btn_jump/#txt_jump")
+	wrongItem.go = obj
+	wrongItem.data = data
+	wrongItem.goneedItem = gohelper.findChild(obj, "#go_needItem")
+	wrongItem.needitemquality = gohelper.findChildImage(obj, "#go_needItem/item/#image_quality")
+	wrongItem.needitemIcon = gohelper.findChildSingleImage(obj, "#go_needItem/item/#simage_productionIcon")
+	wrongItem.needitemName = gohelper.findChildText(obj, "#go_needItem/#txt_tipItemName")
+	wrongItem.txtneed = gohelper.findChildText(obj, "#go_needItem/#txt_need")
+	wrongItem.goneedLink = gohelper.findChild(obj, "#go_needLink")
+	wrongItem.simagestart = gohelper.findChildImage(obj, "#go_needLink/#simage_start")
+	wrongItem.simageend = gohelper.findChildImage(obj, "#go_needLink/#simage_end")
+	wrongItem.btnjump = gohelper.findChildClickWithDefaultAudio(obj, "#btn_jump")
+	wrongItem.txtjump = gohelper.findChildText(obj, "#btn_jump/#txt_jump")
 
-	var_12_0.btnjump:AddClickListener(arg_12_0.onWrongItemJumpClick, arg_12_0, arg_12_3)
+	wrongItem.btnjump:AddClickListener(self.onWrongItemJumpClick, self, index)
 
-	local var_12_1 = var_12_0.data.wrongType
-	local var_12_2 = var_12_1 == RoomManufactureEnum.ManufactureWrongType.NoLinkPath
+	local wrongType = wrongItem.data.wrongType
+	local isLinkPath = wrongType == RoomManufactureEnum.ManufactureWrongType.NoLinkPath
 
-	gohelper.setActive(var_12_0.goneedItem, not var_12_2)
-	gohelper.setActive(var_12_0.goneedLink, var_12_2)
+	gohelper.setActive(wrongItem.goneedItem, not isLinkPath)
+	gohelper.setActive(wrongItem.goneedLink, isLinkPath)
 
-	if var_12_2 then
-		local var_12_3 = RoomConfig.instance:getBuildingTypeIcon(var_12_0.data.buildingType)
-		local var_12_4 = RoomConfig.instance:getBuildingTypeIcon(arg_12_0.buildingType)
+	if isLinkPath then
+		local startIcon = RoomConfig.instance:getBuildingTypeIcon(wrongItem.data.buildingType)
+		local endIcon = RoomConfig.instance:getBuildingTypeIcon(self.buildingType)
 
-		UISpriteSetMgr.instance:setRoomSprite(var_12_0.simagestart, var_12_3)
-		UISpriteSetMgr.instance:setRoomSprite(var_12_0.simageend, var_12_4)
+		UISpriteSetMgr.instance:setRoomSprite(wrongItem.simagestart, startIcon)
+		UISpriteSetMgr.instance:setRoomSprite(wrongItem.simageend, endIcon)
 	else
-		local var_12_5 = var_12_0.data.manufactureItemId
-		local var_12_6 = ManufactureConfig.instance:getItemId(var_12_5)
-		local var_12_7, var_12_8 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_12_6)
-		local var_12_9 = RoomManufactureEnum.RareImageMap[var_12_7.rare]
+		local manufactureItemId = wrongItem.data.manufactureItemId
+		local itemId = ManufactureConfig.instance:getItemId(manufactureItemId)
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, itemId)
+		local qualityImg = RoomManufactureEnum.RareImageMap[config.rare]
 
-		UISpriteSetMgr.instance:setCritterSprite(var_12_0.needitemquality, var_12_9)
+		UISpriteSetMgr.instance:setCritterSprite(wrongItem.needitemquality, qualityImg)
 
-		var_12_8 = ManufactureConfig.instance:getBatchIconPath(var_12_5) or var_12_8
+		local batchIconPath = ManufactureConfig.instance:getBatchIconPath(manufactureItemId)
 
-		var_12_0.needitemIcon:LoadImage(var_12_8)
+		icon = batchIconPath or icon
 
-		local var_12_10 = ManufactureConfig.instance:getManufactureItemName(var_12_5)
+		wrongItem.needitemIcon:LoadImage(icon)
 
-		var_12_0.needitemName.text = var_12_10
+		local itemName = ManufactureConfig.instance:getManufactureItemName(manufactureItemId)
 
-		local var_12_11 = ManufactureModel.instance:getManufactureItemCount(var_12_5)
-		local var_12_12 = string.format("<color=#D26D69>%s</color>", var_12_11)
+		wrongItem.needitemName.text = itemName
 
-		var_12_0.txtneed.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_manufacture_wrong_need_count"), var_12_12, var_12_0.data.needQuantity)
+		local curQuantity = ManufactureModel.instance:getManufactureItemCount(manufactureItemId)
+		local curQuantityWitchColor = string.format("<color=#D26D69>%s</color>", curQuantity)
+
+		wrongItem.txtneed.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("room_manufacture_wrong_need_count"), curQuantityWitchColor, wrongItem.data.needQuantity)
 	end
 
-	local var_12_13 = RoomManufactureEnum.ManufactureWrongDisplay[var_12_1]
+	local displaySetting = RoomManufactureEnum.ManufactureWrongDisplay[wrongType]
 
-	var_12_0.txtjump.text = luaLang(var_12_13.jumpDesc)
-	arg_12_0.wrongItemList[arg_12_3] = var_12_0
+	wrongItem.txtjump.text = luaLang(displaySetting.jumpDesc)
+	self.wrongItemList[index] = wrongItem
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	arg_13_0._simageproductionIcon:UnLoadImage()
-	arg_13_0:clearWrongItemList()
+function RoomManufactureWrongTipItem:onDestroy()
+	self._simageproductionIcon:UnLoadImage()
+	self:clearWrongItemList()
 end
 
-return var_0_0
+return RoomManufactureWrongTipItem

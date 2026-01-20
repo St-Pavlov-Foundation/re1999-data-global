@@ -1,34 +1,36 @@
-﻿module("modules.logic.dialogue.view.DialogueView", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/view/DialogueView.lua
 
-local var_0_0 = class("DialogueView", BaseView)
+module("modules.logic.dialogue.view.DialogueView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._godialoguecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer")
-	arg_1_0._goArrow = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/#go_arrow")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content")
-	arg_1_0._goleftdialogueitem = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem")
-	arg_1_0._gorightdialogueitem = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_rightdialogueitem")
-	arg_1_0._gosystemmessageitem = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_systemmessageitem")
-	arg_1_0._gooptionitem = gohelper.findChild(arg_1_0.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_optionitem")
-	arg_1_0._gonextstep = gohelper.findChild(arg_1_0.viewGO, "#go_nextstep")
-	arg_1_0._goleftblank = gohelper.findChild(arg_1_0.viewGO, "#go_leftblank")
-	arg_1_0._gorightblank = gohelper.findChild(arg_1_0.viewGO, "#go_rightblank")
+local DialogueView = class("DialogueView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DialogueView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._godialoguecontainer = gohelper.findChild(self.viewGO, "#go_dialoguecontainer")
+	self._goArrow = gohelper.findChild(self.viewGO, "#go_dialoguecontainer/#go_arrow")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content")
+	self._goleftdialogueitem = gohelper.findChild(self.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_leftdialogueitem")
+	self._gorightdialogueitem = gohelper.findChild(self.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_rightdialogueitem")
+	self._gosystemmessageitem = gohelper.findChild(self.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_systemmessageitem")
+	self._gooptionitem = gohelper.findChild(self.viewGO, "#go_dialoguecontainer/Scroll View/Viewport/#go_content/#go_optionitem")
+	self._gonextstep = gohelper.findChild(self.viewGO, "#go_nextstep")
+	self._goleftblank = gohelper.findChild(self.viewGO, "#go_leftblank")
+	self._gorightblank = gohelper.findChild(self.viewGO, "#go_rightblank")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DialogueView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DialogueView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function DialogueView:_editableInitView()
 	if LangSettings.instance:isJp() then
 		DialogueEnum.MessageBgOffsetWidth = 60
 		DialogueEnum.MessageBgOffsetHeight = 45
@@ -37,246 +39,250 @@ function var_0_0._editableInitView(arg_4_0)
 		DialogueEnum.MessageBgOffsetHeight = 20
 	end
 
-	arg_4_0.itemSourceGoDict = {
-		[DialogueEnum.Type.LeftMessage] = arg_4_0._goleftdialogueitem,
-		[DialogueEnum.Type.RightMessage] = arg_4_0._gorightdialogueitem,
-		[DialogueEnum.Type.SystemMessage] = arg_4_0._gosystemmessageitem,
-		[DialogueEnum.Type.Option] = arg_4_0._gooptionitem
+	self.itemSourceGoDict = {
+		[DialogueEnum.Type.LeftMessage] = self._goleftdialogueitem,
+		[DialogueEnum.Type.RightMessage] = self._gorightdialogueitem,
+		[DialogueEnum.Type.SystemMessage] = self._gosystemmessageitem,
+		[DialogueEnum.Type.Option] = self._gooptionitem
 	}
 
-	gohelper.setActive(arg_4_0._goArrow, false)
-	arg_4_0._simagefullbg:LoadImage(ResUrl.getDialogueSingleBg("dialogue_fullbg"))
+	gohelper.setActive(self._goArrow, false)
+	self._simagefullbg:LoadImage(ResUrl.getDialogueSingleBg("dialogue_fullbg"))
 
-	arg_4_0.scrollContent = gohelper.findChildScrollRect(arg_4_0.viewGO, "#go_dialoguecontainer/Scroll View")
-	arg_4_0.contentMinHeight = recthelper.getHeight(arg_4_0.scrollContent.transform)
+	self.scrollContent = gohelper.findChildScrollRect(self.viewGO, "#go_dialoguecontainer/Scroll View")
+	self.contentMinHeight = recthelper.getHeight(self.scrollContent.transform)
 
-	arg_4_0.scrollContent:AddOnValueChanged(arg_4_0.onScrollValueChanged, arg_4_0)
+	self.scrollContent:AddOnValueChanged(self.onScrollValueChanged, self)
 
-	arg_4_0.nextStepClick = gohelper.getClickWithDefaultAudio(arg_4_0._gonextstep)
+	self.nextStepClick = gohelper.getClickWithDefaultAudio(self._gonextstep)
 
-	arg_4_0.nextStepClick:AddClickListener(arg_4_0.onClickNextStep, arg_4_0)
+	self.nextStepClick:AddClickListener(self.onClickNextStep, self)
 
-	if arg_4_0._goleftblank then
-		arg_4_0.leftBlankClick = gohelper.getClickWithDefaultAudio(arg_4_0._goleftblank)
+	if self._goleftblank then
+		self.leftBlankClick = gohelper.getClickWithDefaultAudio(self._goleftblank)
 
-		arg_4_0.leftBlankClick:AddClickListener(arg_4_0._clickBlank, arg_4_0)
+		self.leftBlankClick:AddClickListener(self._clickBlank, self)
 	end
 
-	if arg_4_0._gorightblank then
-		arg_4_0.rightBlankClick = gohelper.getClickWithDefaultAudio(arg_4_0._gorightblank)
+	if self._gorightblank then
+		self.rightBlankClick = gohelper.getClickWithDefaultAudio(self._gorightblank)
 
-		arg_4_0.rightBlankClick:AddClickListener(arg_4_0._clickBlank, arg_4_0)
+		self.rightBlankClick:AddClickListener(self._clickBlank, self)
 	end
 
-	arg_4_0.drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0.scrollContent.gameObject)
+	self.drag = SLFramework.UGUI.UIDragListener.Get(self.scrollContent.gameObject)
 
-	arg_4_0.drag:AddDragBeginListener(arg_4_0.onBeginDrag, arg_4_0)
-	arg_4_0.drag:AddDragEndListener(arg_4_0.onEndDrag, arg_4_0)
+	self.drag:AddDragBeginListener(self.onBeginDrag, self)
+	self.drag:AddDragEndListener(self.onEndDrag, self)
 
-	arg_4_0.nextStepClick2 = gohelper.getClickWithDefaultAudio(arg_4_0.scrollContent.gameObject)
+	self.nextStepClick2 = gohelper.getClickWithDefaultAudio(self.scrollContent.gameObject)
 
-	arg_4_0.nextStepClick2:AddClickListener(arg_4_0.onClickNextStep, arg_4_0)
+	self.nextStepClick2:AddClickListener(self.onClickNextStep, self)
 
-	arg_4_0.rectTrContent = arg_4_0._gocontent.transform
+	self.rectTrContent = self._gocontent.transform
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.itemSourceGoDict) do
-		gohelper.setActive(iter_4_1, false)
+	for _, go in pairs(self.itemSourceGoDict) do
+		gohelper.setActive(go, false)
 	end
 
-	arg_4_0.dialogueItemList = {}
-	arg_4_0.contentHeight = 0
+	self.dialogueItemList = {}
+	self.contentHeight = 0
 
-	arg_4_0:addEventCb(DialogueController.instance, DialogueEvent.OnClickOption, arg_4_0.onClickOption, arg_4_0)
+	self:addEventCb(DialogueController.instance, DialogueEvent.OnClickOption, self.onClickOption, self)
 
-	arg_4_0.isFinishDialogue = false
+	self.isFinishDialogue = false
 end
 
-function var_0_0._clickBlank(arg_5_0)
-	arg_5_0:closeThis()
+function DialogueView:_clickBlank()
+	self:closeThis()
 end
 
-function var_0_0._showBlank(arg_6_0)
-	gohelper.setActive(arg_6_0._goleftblank, true)
-	gohelper.setActive(arg_6_0._gorightblank, true)
+function DialogueView:_showBlank()
+	gohelper.setActive(self._goleftblank, true)
+	gohelper.setActive(self._gorightblank, true)
 end
 
-function var_0_0.onBeginDrag(arg_7_0)
-	arg_7_0.dragging = true
+function DialogueView:onBeginDrag()
+	self.dragging = true
 end
 
-function var_0_0.onEndDrag(arg_8_0)
-	arg_8_0.dragging = false
+function DialogueView:onEndDrag()
+	self.dragging = false
 end
 
-function var_0_0.onScrollValueChanged(arg_9_0)
-	gohelper.setActive(arg_9_0._goArrow, arg_9_0.scrollContent.verticalNormalizedPosition >= 0.01)
+function DialogueView:onScrollValueChanged()
+	gohelper.setActive(self._goArrow, self.scrollContent.verticalNormalizedPosition >= 0.01)
 end
 
-function var_0_0.onClickNextStep(arg_10_0)
-	if arg_10_0.dragging then
+function DialogueView:onClickNextStep()
+	if self.dragging then
 		return
 	end
 
-	arg_10_0:playNext()
+	self:playNext()
 end
 
-function var_0_0.onClickOption(arg_11_0, arg_11_1)
-	arg_11_0:addStepList(arg_11_1)
-	arg_11_0:playNext()
+function DialogueView:onClickOption(jumpToGroupId)
+	self:addStepList(jumpToGroupId)
+	self:playNext()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0.dialogueId = arg_12_0.viewParam.dialogueId
-	arg_12_0.dialogueCo = DialogueConfig.instance:getDialogueCo(arg_12_0.dialogueId)
-	arg_12_0.stepCoList = {}
+function DialogueView:onOpen()
+	self.dialogueId = self.viewParam.dialogueId
+	self.dialogueCo = DialogueConfig.instance:getDialogueCo(self.dialogueId)
+	self.stepCoList = {}
 
-	arg_12_0:addStepList(arg_12_0.dialogueCo.startGroup)
-	arg_12_0:playNext()
+	self:addStepList(self.dialogueCo.startGroup)
+	self:playNext()
 end
 
-function var_0_0.addStepList(arg_13_0, arg_13_1)
-	local var_13_0 = DialogueConfig.instance:getDialogueStepList(arg_13_1)
+function DialogueView:addStepList(groupId)
+	local stepList = DialogueConfig.instance:getDialogueStepList(groupId)
 
-	for iter_13_0 = #var_13_0, 1, -1 do
-		table.insert(arg_13_0.stepCoList, var_13_0[iter_13_0])
+	for i = #stepList, 1, -1 do
+		table.insert(self.stepCoList, stepList[i])
 	end
 end
 
-function var_0_0.playNext(arg_14_0)
-	local var_14_0 = arg_14_0:popNextStep()
+function DialogueView:playNext()
+	local stepCo = self:popNextStep()
 
-	if not var_14_0 then
-		arg_14_0:onDialogueDone()
-
-		return
-	end
-
-	if var_14_0.type == DialogueEnum.Type.JumpToGroup then
-		arg_14_0:addStepList(tonumber(var_14_0.content))
-		arg_14_0:playNext()
+	if not stepCo then
+		self:onDialogueDone()
 
 		return
 	end
 
-	DialogueController.instance:dispatchEvent(DialogueEvent.BeforePlayStep, var_14_0)
+	if stepCo.type == DialogueEnum.Type.JumpToGroup then
+		self:addStepList(tonumber(stepCo.content))
+		self:playNext()
 
-	local var_14_1 = gohelper.cloneInPlace(arg_14_0.itemSourceGoDict[var_14_0.type])
-	local var_14_2 = DialogueItem.CreateItem(var_14_0, var_14_1, arg_14_0.contentHeight)
+		return
+	end
 
-	table.insert(arg_14_0.dialogueItemList, var_14_2)
+	DialogueController.instance:dispatchEvent(DialogueEvent.BeforePlayStep, stepCo)
 
-	arg_14_0.contentHeight = arg_14_0.contentHeight + var_14_2:getHeight() + DialogueEnum.IntervalY
+	local go = gohelper.cloneInPlace(self.itemSourceGoDict[stepCo.type])
+	local item = DialogueItem.CreateItem(stepCo, go, self.contentHeight)
 
-	recthelper.setHeight(arg_14_0.rectTrContent, Mathf.Max(arg_14_0.contentHeight, arg_14_0.contentMinHeight))
-	arg_14_0:playUpAnimation()
+	table.insert(self.dialogueItemList, item)
 
-	if not arg_14_0:checkIsHavdNextStepCo() then
-		arg_14_0:onDialogueDone()
+	self.contentHeight = self.contentHeight + item:getHeight() + DialogueEnum.IntervalY
+
+	recthelper.setHeight(self.rectTrContent, Mathf.Max(self.contentHeight, self.contentMinHeight))
+	self:playUpAnimation()
+
+	local isHaveNextStepCo = self:checkIsHavdNextStepCo()
+
+	if not isHaveNextStepCo then
+		self:onDialogueDone()
 	end
 end
 
-function var_0_0.popNextStep(arg_15_0)
-	local var_15_0 = #arg_15_0.stepCoList
+function DialogueView:popNextStep()
+	local stepLen = #self.stepCoList
 
-	if var_15_0 <= 0 then
+	if stepLen <= 0 then
 		return nil
 	end
 
-	local var_15_1 = arg_15_0.stepCoList[var_15_0]
+	local stepCo = self.stepCoList[stepLen]
 
-	arg_15_0.stepCoList[var_15_0] = nil
+	self.stepCoList[stepLen] = nil
 
-	return var_15_1
+	return stepCo
 end
 
-function var_0_0.checkIsHavdNextStepCo(arg_16_0)
-	if #arg_16_0.stepCoList <= 0 then
+function DialogueView:checkIsHavdNextStepCo()
+	local stepLen = #self.stepCoList
+
+	if stepLen <= 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.playUpAnimation(arg_17_0)
-	if arg_17_0.contentHeight <= arg_17_0.contentMinHeight then
+function DialogueView:playUpAnimation()
+	if self.contentHeight <= self.contentMinHeight then
 		return
 	end
 
-	arg_17_0:killTween()
+	self:killTween()
 
-	arg_17_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_17_0.scrollContent.verticalNormalizedPosition, 0, 0.5, arg_17_0.tweenFrameCallback, arg_17_0.tweenFinishCallback, arg_17_0)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(self.scrollContent.verticalNormalizedPosition, 0, 0.5, self.tweenFrameCallback, self.tweenFinishCallback, self)
 end
 
-function var_0_0.killTween(arg_18_0)
-	if arg_18_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_18_0.tweenId)
+function DialogueView:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_18_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.tweenFrameCallback(arg_19_0, arg_19_1)
-	arg_19_0.scrollContent.verticalNormalizedPosition = arg_19_1
+function DialogueView:tweenFrameCallback(value)
+	self.scrollContent.verticalNormalizedPosition = value
 end
 
-function var_0_0.tweenFinishCallback(arg_20_0)
-	gohelper.setActive(arg_20_0._goArrow, false)
+function DialogueView:tweenFinishCallback()
+	gohelper.setActive(self._goArrow, false)
 end
 
-function var_0_0.onDialogueDone(arg_21_0)
-	if arg_21_0._isDone then
+function DialogueView:onDialogueDone()
+	if self._isDone then
 		return
 	end
 
-	arg_21_0._isDone = true
+	self._isDone = true
 
-	arg_21_0:_showBlank()
-	gohelper.setActive(arg_21_0._gonextstep, false)
-	DialogueRpc.instance:sendRecordDialogInfoRequest(arg_21_0.dialogueId, arg_21_0.onReceiveInfo, arg_21_0)
+	self:_showBlank()
+	gohelper.setActive(self._gonextstep, false)
+	DialogueRpc.instance:sendRecordDialogInfoRequest(self.dialogueId, self.onReceiveInfo, self)
 end
 
-function var_0_0.onReceiveInfo(arg_22_0)
-	DialogueController.instance:dispatchEvent(DialogueEvent.OnDone, arg_22_0.dialogueId)
+function DialogueView:onReceiveInfo()
+	DialogueController.instance:dispatchEvent(DialogueEvent.OnDone, self.dialogueId)
 
-	arg_22_0.isFinishDialogue = true
+	self.isFinishDialogue = true
 end
 
-function var_0_0.onClose(arg_23_0)
-	arg_23_0:killTween()
+function DialogueView:onClose()
+	self:killTween()
 
-	if arg_23_0.isFinishDialogue then
+	if self.isFinishDialogue then
 		DialogueController.instance:dispatchEvent(DialogueEvent.OnCloseViewWithDialogueDone)
 	end
 
-	local var_23_0 = arg_23_0.viewParam.callback
-	local var_23_1 = arg_23_0.viewParam.callbackTarget
-	local var_23_2 = arg_23_0.viewParam.callbackParams or {}
+	local callback = self.viewParam.callback
+	local callbackTarget = self.viewParam.callbackTarget
+	local callbackParams = self.viewParam.callbackParams or {}
 
-	if var_23_0 then
-		var_23_0(var_23_1, var_23_2, arg_23_0.isFinishDialogue or arg_23_0._isDone)
+	if callback then
+		callback(callbackTarget, callbackParams, self.isFinishDialogue or self._isDone)
 	end
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0.dialogueItemList) do
-		iter_24_1:destroy()
+function DialogueView:onDestroyView()
+	for _, item in ipairs(self.dialogueItemList) do
+		item:destroy()
 	end
 
-	arg_24_0._simagefullbg:UnLoadImage()
-	arg_24_0.nextStepClick:RemoveClickListener()
-	arg_24_0.nextStepClick2:RemoveClickListener()
+	self._simagefullbg:UnLoadImage()
+	self.nextStepClick:RemoveClickListener()
+	self.nextStepClick2:RemoveClickListener()
 
-	if arg_24_0.leftBlankClick then
-		arg_24_0.leftBlankClick:RemoveClickListener()
+	if self.leftBlankClick then
+		self.leftBlankClick:RemoveClickListener()
 	end
 
-	if arg_24_0.rightBlankClick then
-		arg_24_0.rightBlankClick:RemoveClickListener()
+	if self.rightBlankClick then
+		self.rightBlankClick:RemoveClickListener()
 	end
 
-	arg_24_0.scrollContent:RemoveOnValueChanged()
-	arg_24_0.drag:RemoveDragBeginListener()
-	arg_24_0.drag:RemoveDragEndListener()
+	self.scrollContent:RemoveOnValueChanged()
+	self.drag:RemoveDragBeginListener()
+	self.drag:RemoveDragEndListener()
 end
 
-return var_0_0
+return DialogueView

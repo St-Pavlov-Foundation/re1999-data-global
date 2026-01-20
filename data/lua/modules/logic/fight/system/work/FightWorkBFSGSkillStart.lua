@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkBFSGSkillStart", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBFSGSkillStart.lua
 
-local var_0_0 = class("FightWorkBFSGSkillStart", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkBFSGSkillStart", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	var_0_0.BeiFangShaoGeUniqueSkill = 1
+local FightWorkBFSGSkillStart = class("FightWorkBFSGSkillStart", FightEffectBase)
+
+function FightWorkBFSGSkillStart:onStart()
+	FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill = 1
 	FightModel.forceParallelSkill = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, false)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkBFSGSkillStart:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkBFSGSkillStart

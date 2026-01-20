@@ -1,344 +1,349 @@
-﻿module("modules.logic.summon.view.SummonEquipFloatView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonEquipFloatView.lua
 
-local var_0_0 = class("SummonEquipFloatView", BaseView)
+module("modules.logic.summon.view.SummonEquipFloatView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goresult = gohelper.findChild(arg_1_0.viewGO, "#go_result")
-	arg_1_0._goresultitem = gohelper.findChild(arg_1_0.viewGO, "#go_result/resultcontent/#go_resultitem")
-	arg_1_0._btnopenall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_openall")
-	arg_1_0._btnreturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_return")
+local SummonEquipFloatView = class("SummonEquipFloatView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonEquipFloatView:onInitView()
+	self._goresult = gohelper.findChild(self.viewGO, "#go_result")
+	self._goresultitem = gohelper.findChild(self.viewGO, "#go_result/resultcontent/#go_resultitem")
+	self._btnopenall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#btn_openall")
+	self._btnreturn = gohelper.findChildButtonWithAudio(self.viewGO, "#go_result/#btn_return")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnopenall:AddClickListener(arg_2_0._btnopenallOnClick, arg_2_0)
+function SummonEquipFloatView:addEvents()
+	self._btnopenall:AddClickListener(self._btnopenallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnopenall:RemoveClickListener()
+function SummonEquipFloatView:removeEvents()
+	self._btnopenall:RemoveClickListener()
 end
 
-function var_0_0._btnopenallOnClick(arg_4_0)
+function SummonEquipFloatView:_btnopenallOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_click)
 
-	for iter_4_0 = 1, 10 do
-		arg_4_0:openSummonResult(iter_4_0, true)
+	for i = 1, 10 do
+		self:openSummonResult(i, true)
 	end
 
 	SummonController.instance:nextSummonPopupParam()
 end
 
-function var_0_0.handleSkip(arg_5_0)
-	if not arg_5_0._isDrawing or not arg_5_0.summonResult then
+function SummonEquipFloatView:handleSkip()
+	if not self._isDrawing or not self.summonResult then
 		return
 	end
 
 	SummonController.instance:clearSummonPopupList()
 
-	local var_5_0 = #arg_5_0.summonResult
+	local resultCount = #self.summonResult
 
-	if var_5_0 == 1 then
-		local var_5_1, var_5_2 = SummonModel.instance:openSummonEquipResult(1)
+	if resultCount == 1 then
+		local summonResultMO, isNew = SummonModel.instance:openSummonEquipResult(1)
 
-		if var_5_1 then
-			local var_5_3 = var_5_1.equipId
+		if summonResultMO then
+			local equipId = summonResultMO.equipId
 
 			ViewMgr.instance:openView(ViewName.SummonEquipGainView, {
 				skipVideo = true,
-				equipId = var_5_3,
-				summonResultMo = var_5_1
+				equipId = equipId,
+				summonResultMo = summonResultMO
 			})
 		end
-	elseif var_5_0 >= 10 then
-		for iter_5_0 = 1, 10 do
-			SummonModel.instance:openSummonResult(iter_5_0)
+	elseif resultCount >= 10 then
+		for i = 1, 10 do
+			SummonModel.instance:openSummonResult(i)
 		end
 
-		local var_5_4 = SummonController.instance:getLastPoolId()
+		local poolId = SummonController.instance:getLastPoolId()
 
-		if not var_5_4 then
+		if not poolId then
 			return
 		end
 
-		local var_5_5 = SummonConfig.instance:getSummonPool(var_5_4)
+		local poolCo = SummonConfig.instance:getSummonPool(poolId)
 
-		if not var_5_5 then
+		if not poolCo then
 			return
 		end
 
 		ViewMgr.instance:openView(ViewName.SummonResultView, {
-			summonResultList = arg_5_0.summonResult,
-			curPool = var_5_5
+			summonResultList = self.summonResult,
+			curPool = poolCo
 		})
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.setActive(arg_6_0._goresultitem, false)
+function SummonEquipFloatView:_editableInitView()
+	gohelper.setActive(self._goresultitem, false)
 
-	arg_6_0._resultitems = {}
-	arg_6_0._summonUIEffects = arg_6_0:getUserDataTb_()
+	self._resultitems = {}
+	self._summonUIEffects = self:getUserDataTb_()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_7_0.startDraw, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, arg_7_0.handleSummonAnimRareEffect, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_7_0.handleSummonAnimEnd, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, arg_7_0.handleSummonEnd, arg_7_0)
-	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_7_0.handleSkip, arg_7_0)
-	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_7_0.handleCloseView, arg_7_0)
-	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_7_0.handleOpenView, arg_7_0)
+function SummonEquipFloatView:onOpen()
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.startDraw, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, self.handleSummonAnimRareEffect, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, self.handleSummonAnimEnd, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, self.handleSummonEnd, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, self.handleSkip, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.handleCloseView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.handleOpenView, self)
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_8_0.startDraw, arg_8_0)
-	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, arg_8_0.handleSummonAnimRareEffect, arg_8_0)
-	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_8_0.handleSummonAnimEnd, arg_8_0)
-	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, arg_8_0.handleSummonEnd, arg_8_0)
-	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_8_0.handleSkip, arg_8_0)
-	arg_8_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_8_0.handleCloseView, arg_8_0)
-	arg_8_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_8_0.handleOpenView, arg_8_0)
+function SummonEquipFloatView:onClose()
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.startDraw, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, self.handleSummonAnimRareEffect, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, self.handleSummonAnimEnd, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, self.handleSummonEnd, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, self.handleSkip, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.handleCloseView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.handleOpenView, self)
 end
 
-function var_0_0.startDraw(arg_9_0)
+function SummonEquipFloatView:startDraw()
 	SummonController.instance:clearSummonPopupList()
 
-	arg_9_0.summonResult = SummonModel.instance:getSummonResult(true)
+	self.summonResult = SummonModel.instance:getSummonResult(true)
 
-	arg_9_0:recycleEffect()
+	self:recycleEffect()
 
-	arg_9_0._isDrawing = true
+	self._isDrawing = true
 end
 
-function var_0_0.handleSummonAnimEnd(arg_10_0)
-	arg_10_0:initSummonResult()
+function SummonEquipFloatView:handleSummonAnimEnd()
+	self:initSummonResult()
 end
 
-function var_0_0.handleSummonEnd(arg_11_0)
-	arg_11_0:recycleEffect()
+function SummonEquipFloatView:handleSummonEnd()
+	self:recycleEffect()
 end
 
-function var_0_0.handleSummonAnimRareEffect(arg_12_0)
-	local var_12_0
+function SummonEquipFloatView:handleSummonAnimRareEffect()
+	local uiNodes
 
-	if #arg_12_0.summonResult > 1 then
-		var_12_0 = SummonController.instance:getUINodes()
+	if #self.summonResult > 1 then
+		uiNodes = SummonController.instance:getUINodes()
 	else
-		var_12_0 = SummonController.instance:getOnlyUINode()
+		uiNodes = SummonController.instance:getOnlyUINode()
 	end
 
-	for iter_12_0 = 1, #arg_12_0.summonResult do
-		local var_12_1 = arg_12_0.summonResult[iter_12_0]
-		local var_12_2 = EquipConfig.instance:getEquipCo(var_12_1.equipId)
-		local var_12_3 = ""
-		local var_12_4 = ""
+	for i = 1, #self.summonResult do
+		local result = self.summonResult[i]
+		local equipCo = EquipConfig.instance:getEquipCo(result.equipId)
+		local effectUrl = ""
+		local animationName = ""
 
-		if var_12_2.rare <= 2 then
-			var_12_3 = SummonEnum.SummonPreloadPath.EquipUIN
-		elseif var_12_2.rare == 3 then
-			var_12_3 = SummonEnum.SummonPreloadPath.EquipUIR
-		elseif var_12_2.rare == 4 then
-			var_12_3 = SummonEnum.SummonPreloadPath.EquipUISR
+		if equipCo.rare <= 2 then
+			effectUrl = SummonEnum.SummonPreloadPath.EquipUIN
+		elseif equipCo.rare == 3 then
+			effectUrl = SummonEnum.SummonPreloadPath.EquipUIR
+		elseif equipCo.rare == 4 then
+			effectUrl = SummonEnum.SummonPreloadPath.EquipUISR
 		else
-			var_12_3 = SummonEnum.SummonPreloadPath.EquipUISSR
+			effectUrl = SummonEnum.SummonPreloadPath.EquipUISSR
 		end
 
-		local var_12_5 = SummonEnum.AnimationName[var_12_3]
-		local var_12_6 = SummonEffectPool.getEffect(var_12_3, var_12_0[iter_12_0])
+		animationName = SummonEnum.AnimationName[effectUrl]
 
-		var_12_6:setAnimationName(var_12_5)
-		var_12_6:play()
-		var_12_6:loadEquipWaitingClick()
-		var_12_6:setEquipFrame(false)
-		table.insert(arg_12_0._summonUIEffects, var_12_6)
+		local effectWrap = SummonEffectPool.getEffect(effectUrl, uiNodes[i])
+
+		effectWrap:setAnimationName(animationName)
+		effectWrap:play()
+		effectWrap:loadEquipWaitingClick()
+		effectWrap:setEquipFrame(false)
+		table.insert(self._summonUIEffects, effectWrap)
 	end
 end
 
-function var_0_0.initSummonResult(arg_13_0)
-	arg_13_0._waitEffectList = {}
-	arg_13_0._waitNormalEffectList = {}
+function SummonEquipFloatView:initSummonResult()
+	self._waitEffectList = {}
+	self._waitNormalEffectList = {}
 
-	local var_13_0
+	local uiNodes
 
-	if #arg_13_0.summonResult > 1 then
-		var_13_0 = SummonController.instance:getUINodes()
+	if #self.summonResult > 1 then
+		uiNodes = SummonController.instance:getUINodes()
 	else
-		var_13_0 = SummonController.instance:getOnlyUINode()
+		uiNodes = SummonController.instance:getOnlyUINode()
 	end
 
-	for iter_13_0 = 1, #arg_13_0.summonResult do
-		local var_13_1 = arg_13_0.summonResult[iter_13_0]
-		local var_13_2 = arg_13_0._resultitems[iter_13_0]
+	for i = 1, #self.summonResult do
+		local result = self.summonResult[i]
+		local resultitem = self._resultitems[i]
 
-		if not var_13_2 then
-			var_13_2 = arg_13_0:getUserDataTb_()
-			var_13_2.go = gohelper.cloneInPlace(arg_13_0._goresultitem, "item" .. iter_13_0)
-			var_13_2.index = iter_13_0
-			var_13_2.btnopen = gohelper.findChildButtonWithAudio(var_13_2.go, "btn_open")
+		if not resultitem then
+			resultitem = self:getUserDataTb_()
+			resultitem.go = gohelper.cloneInPlace(self._goresultitem, "item" .. i)
+			resultitem.index = i
+			resultitem.btnopen = gohelper.findChildButtonWithAudio(resultitem.go, "btn_open")
 
-			var_13_2.btnopen:AddClickListener(arg_13_0.onClickItem, arg_13_0, var_13_2)
-			table.insert(arg_13_0._resultitems, var_13_2)
+			resultitem.btnopen:AddClickListener(self.onClickItem, self, resultitem)
+			table.insert(self._resultitems, resultitem)
 		end
 
-		local var_13_3 = var_13_0[iter_13_0]
+		local uiNode = uiNodes[i]
 
-		if var_13_3 then
-			local var_13_4 = gohelper.findChild(var_13_3, "btn/btnTopLeft")
-			local var_13_5 = gohelper.findChild(var_13_3, "btn/btnBottomRight")
-			local var_13_6 = recthelper.worldPosToAnchorPos(var_13_4.transform.position, arg_13_0.viewGO.transform)
-			local var_13_7 = recthelper.worldPosToAnchorPos(var_13_5.transform.position, arg_13_0.viewGO.transform)
+		if uiNode then
+			local btnTopLeft = gohelper.findChild(uiNode, "btn/btnTopLeft")
+			local btnBottomRight = gohelper.findChild(uiNode, "btn/btnBottomRight")
+			local topLeftPos = recthelper.worldPosToAnchorPos(btnTopLeft.transform.position, self.viewGO.transform)
+			local BottomRightPos = recthelper.worldPosToAnchorPos(btnBottomRight.transform.position, self.viewGO.transform)
 
-			recthelper.setAnchor(var_13_2.go.transform, (var_13_6.x + var_13_7.x) / 2, (var_13_6.y + var_13_7.y) / 2)
-			recthelper.setHeight(var_13_2.go.transform, math.abs(var_13_6.y - var_13_7.y))
-			recthelper.setWidth(var_13_2.go.transform, math.abs(var_13_7.x - var_13_6.x))
+			recthelper.setAnchor(resultitem.go.transform, (topLeftPos.x + BottomRightPos.x) / 2, (topLeftPos.y + BottomRightPos.y) / 2)
+			recthelper.setHeight(resultitem.go.transform, math.abs(topLeftPos.y - BottomRightPos.y))
+			recthelper.setWidth(resultitem.go.transform, math.abs(BottomRightPos.x - topLeftPos.x))
 		end
 
-		gohelper.setActive(var_13_2.btnopen.gameObject, true)
-		gohelper.setActive(var_13_2.go, true)
+		gohelper.setActive(resultitem.btnopen.gameObject, true)
+		gohelper.setActive(resultitem.go, true)
 	end
 
-	for iter_13_1 = #arg_13_0.summonResult + 1, #arg_13_0._resultitems do
-		gohelper.setActive(arg_13_0._resultitems[iter_13_1].go, false)
+	for i = #self.summonResult + 1, #self._resultitems do
+		gohelper.setActive(self._resultitems[i].go, false)
 	end
 end
 
-function var_0_0.onClickItem(arg_14_0, arg_14_1)
+function SummonEquipFloatView:onClickItem(resultitem)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_click)
-	arg_14_0:openSummonResult(arg_14_1.index)
+	self:openSummonResult(resultitem.index)
 	SummonController.instance:nextSummonPopupParam()
 end
 
-function var_0_0.openSummonResult(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0, var_15_1 = SummonModel.instance:openSummonEquipResult(arg_15_1)
-	local var_15_2 = arg_15_0.summonResult
-	local var_15_3 = #var_15_2 >= 10
+function SummonEquipFloatView:openSummonResult(index, openall)
+	local summonResultMO, isNew = SummonModel.instance:openSummonEquipResult(index)
+	local summonResult = self.summonResult
+	local isSummonTen = #summonResult >= 10
 
-	if var_15_0 then
-		local var_15_4 = var_15_0.equipId
-		local var_15_5 = EquipConfig.instance:getEquipCo(var_15_4)
+	if summonResultMO then
+		local equipId = summonResultMO.equipId
+		local equipCo = EquipConfig.instance:getEquipCo(equipId)
 
-		if not arg_15_2 then
-			logNormal(string.format("获得心相:%s", var_15_5.name))
+		if not openall then
+			logNormal(string.format("获得心相:%s", equipCo.name))
 		end
 
-		if arg_15_0._resultitems[arg_15_1] then
-			gohelper.setActive(arg_15_0._resultitems[arg_15_1].btnopen.gameObject, false)
+		if self._resultitems[index] then
+			gohelper.setActive(self._resultitems[index].btnopen.gameObject, false)
 		end
 
-		if not var_15_3 or not arg_15_2 or var_15_5.rare >= 5 then
-			table.insert(arg_15_0._waitEffectList, {
-				index = arg_15_1,
-				equipId = var_15_4
+		if not isSummonTen or not openall or equipCo.rare >= 5 then
+			table.insert(self._waitEffectList, {
+				index = index,
+				equipId = equipId
 			})
 			SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.GainCharacterView, ViewName.SummonEquipGainView, {
-				equipId = var_15_4,
-				summonResultMo = var_15_0,
-				isSummonTen = var_15_3
+				equipId = equipId,
+				summonResultMo = summonResultMO,
+				isSummonTen = isSummonTen
 			})
-		elseif not arg_15_2 then
-			local var_15_6 = arg_15_0._summonUIEffects[arg_15_1]
+		elseif not openall then
+			local uiEffect = self._summonUIEffects[index]
 
-			var_15_6:setEquipFrame(true)
-			var_15_6:loadEquipIcon(var_15_4)
+			uiEffect:setEquipFrame(true)
+			uiEffect:loadEquipIcon(equipId)
 		else
-			table.insert(arg_15_0._waitNormalEffectList, {
-				index = arg_15_1,
-				equipId = var_15_4
+			table.insert(self._waitNormalEffectList, {
+				index = index,
+				equipId = equipId
 			})
 		end
 
 		if SummonModel.instance:isAllOpened() then
-			gohelper.setActive(arg_15_0._btnopenall.gameObject, false)
+			gohelper.setActive(self._btnopenall.gameObject, false)
 
-			if not var_15_3 then
-				gohelper.setActive(arg_15_0._btnreturn.gameObject, true)
+			if not isSummonTen then
+				gohelper.setActive(self._btnreturn.gameObject, true)
 			else
-				local var_15_7 = SummonController.instance:getLastPoolId()
+				local poolId = SummonController.instance:getLastPoolId()
 
-				if not var_15_7 then
+				if not poolId then
 					return
 				end
 
-				local var_15_8 = SummonConfig.instance:getSummonPool(var_15_7)
+				local poolCo = SummonConfig.instance:getSummonPool(poolId)
 
-				if not var_15_8 then
+				if not poolCo then
 					return
 				end
 
 				SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, ViewName.SummonResultView, {
-					summonResultList = var_15_2,
-					curPool = var_15_8
+					summonResultList = summonResult,
+					curPool = poolCo
 				})
 			end
 		end
 	end
 end
 
-function var_0_0._refreshIcons(arg_16_0)
-	if (not arg_16_0._waitEffectList or #arg_16_0._waitEffectList <= 1) and arg_16_0._waitNormalEffectList and #arg_16_0._waitNormalEffectList > 0 then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._waitNormalEffectList) do
-			local var_16_0 = iter_16_1.index
-			local var_16_1 = iter_16_1.equipId
-			local var_16_2 = arg_16_0._summonUIEffects[var_16_0]
+function SummonEquipFloatView:_refreshIcons()
+	if (not self._waitEffectList or #self._waitEffectList <= 1) and self._waitNormalEffectList and #self._waitNormalEffectList > 0 then
+		for _, normalEffectParam in ipairs(self._waitNormalEffectList) do
+			local index = normalEffectParam.index
+			local equipId = normalEffectParam.equipId
+			local uiEffect = self._summonUIEffects[index]
 
-			if var_16_2 then
-				var_16_2:setEquipFrame(true)
-				var_16_2:loadEquipIcon(var_16_1)
+			if uiEffect then
+				uiEffect:setEquipFrame(true)
+				uiEffect:loadEquipIcon(equipId)
 			end
 		end
 	end
 
-	if not arg_16_0._waitEffectList or #arg_16_0._waitEffectList <= 0 then
+	if not self._waitEffectList or #self._waitEffectList <= 0 then
 		return
 	end
 
-	local var_16_3 = arg_16_0._waitEffectList[1]
+	local param = self._waitEffectList[1]
 
-	table.remove(arg_16_0._waitEffectList, 1)
+	table.remove(self._waitEffectList, 1)
 
-	local var_16_4 = var_16_3.index
-	local var_16_5 = var_16_3.equipId
-	local var_16_6 = arg_16_0._summonUIEffects[var_16_4]
+	local index = param.index
+	local equipId = param.equipId
+	local uiEffect = self._summonUIEffects[index]
 
-	if not var_16_6 then
+	if not uiEffect then
 		return
 	end
 
-	var_16_6:setEquipFrame(true)
-	var_16_6:loadEquipIcon(var_16_5)
+	uiEffect:setEquipFrame(true)
+	uiEffect:loadEquipIcon(equipId)
 end
 
-function var_0_0.handleCloseView(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.SummonEquipGainView then
-		arg_17_0:_refreshIcons()
+function SummonEquipFloatView:handleCloseView(viewName)
+	if viewName == ViewName.SummonEquipGainView then
+		self:_refreshIcons()
 	end
 end
 
-function var_0_0.handleOpenView(arg_18_0, arg_18_1)
-	if arg_18_1 == ViewName.SummonResultView then
-		arg_18_0:_refreshIcons()
+function SummonEquipFloatView:handleOpenView(viewName)
+	if viewName == ViewName.SummonResultView then
+		self:_refreshIcons()
 	end
 end
 
-function var_0_0.recycleEffect(arg_19_0)
-	if arg_19_0._summonUIEffects then
-		for iter_19_0 = 1, #arg_19_0._summonUIEffects do
-			local var_19_0 = arg_19_0._summonUIEffects[iter_19_0]
+function SummonEquipFloatView:recycleEffect()
+	if self._summonUIEffects then
+		for i = 1, #self._summonUIEffects do
+			local effectWrap = self._summonUIEffects[i]
 
-			SummonEffectPool.returnEffect(var_19_0)
+			SummonEffectPool.returnEffect(effectWrap)
 
-			arg_19_0._summonUIEffects[iter_19_0] = nil
+			self._summonUIEffects[i] = nil
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	for iter_20_0 = 1, #arg_20_0._resultitems do
-		arg_20_0._resultitems[iter_20_0].btnopen:RemoveClickListener()
+function SummonEquipFloatView:onDestroyView()
+	for i = 1, #self._resultitems do
+		local resultitem = self._resultitems[i]
+
+		resultitem.btnopen:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return SummonEquipFloatView

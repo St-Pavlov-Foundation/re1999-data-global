@@ -1,107 +1,111 @@
-﻿module("modules.logic.main.controller.work.ShortenAct_PanelViewPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/ShortenAct_PanelViewPatFaceWork.lua
 
-local var_0_0 = string.format
-local var_0_1 = class("ShortenAct_PanelViewPatFaceWork", PatFaceWorkBase)
+module("modules.logic.main.controller.work.ShortenAct_PanelViewPatFaceWork", package.seeall)
 
-function var_0_1._viewName(arg_1_0)
-	return PatFaceConfig.instance:getPatFaceViewName(arg_1_0._patFaceId)
+local sf = string.format
+local ShortenAct_PanelViewPatFaceWork = class("ShortenAct_PanelViewPatFaceWork", PatFaceWorkBase)
+
+function ShortenAct_PanelViewPatFaceWork:_viewName()
+	return PatFaceConfig.instance:getPatFaceViewName(self._patFaceId)
 end
 
-function var_0_1._actId(arg_2_0)
-	return PatFaceConfig.instance:getPatFaceActivityId(arg_2_0._patFaceId)
+function ShortenAct_PanelViewPatFaceWork:_actId()
+	return PatFaceConfig.instance:getPatFaceActivityId(self._patFaceId)
 end
 
-function var_0_1.checkCanPat(arg_3_0)
-	local var_3_0 = arg_3_0:_actId()
+function ShortenAct_PanelViewPatFaceWork:checkCanPat()
+	local actId = self:_actId()
 
-	return ActivityHelper.getActivityStatus(var_3_0, true) == ActivityEnum.ActivityStatus.Normal
+	return ActivityHelper.getActivityStatus(actId, true) == ActivityEnum.ActivityStatus.Normal
 end
 
-function var_0_1.startPat(arg_4_0)
-	arg_4_0:_startBlock()
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-	Activity189Controller.instance:registerCallback(Activity189Event.onReceiveGetAct189InfoReply, arg_4_0._onReceiveGetAct189InfoReply, arg_4_0)
-	Activity189Controller.instance:sendGetAct189InfoRequest(arg_4_0:_actId())
+function ShortenAct_PanelViewPatFaceWork:startPat()
+	self:_startBlock()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	Activity189Controller.instance:registerCallback(Activity189Event.onReceiveGetAct189InfoReply, self._onReceiveGetAct189InfoReply, self)
+	Activity189Controller.instance:sendGetAct189InfoRequest(self:_actId())
 end
 
-function var_0_1.clearWork(arg_5_0)
-	arg_5_0:_endBlock()
-	Activity189Controller.instance:unregisterCallback(Activity189Event.onReceiveGetAct189InfoReply, arg_5_0._onReceiveGetAct189InfoReply, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
+function ShortenAct_PanelViewPatFaceWork:clearWork()
+	self:_endBlock()
+	Activity189Controller.instance:unregisterCallback(Activity189Event.onReceiveGetAct189InfoReply, self._onReceiveGetAct189InfoReply, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 end
 
-function var_0_1._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0:_viewName() then
+function ShortenAct_PanelViewPatFaceWork:_onOpenViewFinish(openingViewName)
+	local viewName = self:_viewName()
+
+	if openingViewName ~= viewName then
 		return
 	end
 
-	arg_6_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_1._onCloseViewFinish(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:_viewName()
+function ShortenAct_PanelViewPatFaceWork:_onCloseViewFinish(closingViewName)
+	local viewName = self:_viewName()
 
-	if arg_7_1 ~= var_7_0 then
+	if closingViewName ~= viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(var_7_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	arg_7_0:patComplete()
+	self:patComplete()
 end
 
-function var_0_1._onReceiveGetAct189InfoReply(arg_8_0)
-	local var_8_0 = arg_8_0:_viewName()
+function ShortenAct_PanelViewPatFaceWork:_onReceiveGetAct189InfoReply()
+	local viewName = self:_viewName()
 
-	if not arg_8_0:_isClaimable() then
-		arg_8_0:patComplete()
-
-		return
-	end
-
-	if string.nilorempty(var_8_0) then
-		logError(var_0_0("excel:P拍脸表.xlsx - sheet:export_拍脸 error id: %s, patFaceActivityId: %s, 没配 'patFaceViewName' !!", arg_8_0._patFaceId, arg_8_0:_actId()))
-		arg_8_0:patComplete()
-
-		return
-	end
-
-	if not ViewName[var_8_0] then
-		logError(var_0_0("excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s, patFaceViewName: %s, error: modules_views.%s 不存在", arg_8_0._patFaceId, arg_8_0:_actId(), var_8_0, var_8_0))
-		arg_8_0:patComplete()
+	if not self:_isClaimable() then
+		self:patComplete()
 
 		return
 	end
 
-	ViewMgr.instance:openView(var_8_0)
+	if string.nilorempty(viewName) then
+		logError(sf("excel:P拍脸表.xlsx - sheet:export_拍脸 error id: %s, patFaceActivityId: %s, 没配 'patFaceViewName' !!", self._patFaceId, self:_actId()))
+		self:patComplete()
+
+		return
+	end
+
+	if not ViewName[viewName] then
+		logError(sf("excel:P拍脸表.xlsx - sheet:export_拍脸 id: %s, patFaceActivityId: %s, patFaceViewName: %s, error: modules_views.%s 不存在", self._patFaceId, self:_actId(), viewName, viewName))
+		self:patComplete()
+
+		return
+	end
+
+	ViewMgr.instance:openView(viewName)
 end
 
-function var_0_1._endBlock(arg_9_0)
-	if not arg_9_0:_isBlock() then
+function ShortenAct_PanelViewPatFaceWork:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_1._startBlock(arg_10_0)
-	if arg_10_0:_isBlock() then
+function ShortenAct_PanelViewPatFaceWork:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_1._isBlock(arg_11_0)
+function ShortenAct_PanelViewPatFaceWork:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function var_0_1._isClaimable(arg_12_0)
-	return Activity189Model.instance:isClaimable(arg_12_0:_actId())
+function ShortenAct_PanelViewPatFaceWork:_isClaimable()
+	return Activity189Model.instance:isClaimable(self:_actId())
 end
 
-return var_0_1
+return ShortenAct_PanelViewPatFaceWork

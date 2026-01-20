@@ -1,80 +1,82 @@
-﻿module("modules.logic.explore.controller.steps.ExploreShowAreaStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreShowAreaStep.lua
 
-local var_0_0 = class("ExploreShowAreaStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreShowAreaStep", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._unLockAreas = arg_1_0._data.showAreas
+local ExploreShowAreaStep = class("ExploreShowAreaStep", ExploreStepBase)
 
-	if #arg_1_0._unLockAreas ~= 1 then
-		if #arg_1_0._unLockAreas > 1 then
+function ExploreShowAreaStep:onInit()
+	self._unLockAreas = self._data.showAreas
+
+	if #self._unLockAreas ~= 1 then
+		if #self._unLockAreas > 1 then
 			logError("暂不支持多区域同时解锁")
 		end
 
 		return
 	end
 
-	arg_1_0.areaGo = ExploreController.instance:getMap():getContainRootByAreaId(arg_1_0._unLockAreas[1]).go
-	arg_1_0._loader = MultiAbLoader.New()
+	self.areaGo = ExploreController.instance:getMap():getContainRootByAreaId(self._unLockAreas[1]).go
+	self._loader = MultiAbLoader.New()
 
-	arg_1_0._loader:addPath(string.format("explore/camera_anim/%d_%d.controller", ExploreModel.instance:getMapId(), arg_1_0._unLockAreas[1]))
-	arg_1_0._loader:startLoad(arg_1_0._loadedFinish, arg_1_0)
+	self._loader:addPath(string.format("explore/camera_anim/%d_%d.controller", ExploreModel.instance:getMapId(), self._unLockAreas[1]))
+	self._loader:startLoad(self._loadedFinish, self)
 end
 
-function var_0_0.onStart(arg_2_0)
-	if #arg_2_0._unLockAreas ~= 1 then
-		arg_2_0:onDone()
+function ExploreShowAreaStep:onStart()
+	if #self._unLockAreas ~= 1 then
+		self:onDone()
 
 		return
 	end
 
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.ShowArea)
-	gohelper.setActive(arg_2_0.areaGo, false)
+	gohelper.setActive(self.areaGo, false)
 
-	ExploreModel.instance.unLockAreaIds[arg_2_0._unLockAreas[1]] = true
+	ExploreModel.instance.unLockAreaIds[self._unLockAreas[1]] = true
 
 	ExploreController.instance:dispatchEvent(ExploreEvent.AreaShow)
 end
 
-function var_0_0._loadedFinish(arg_3_0)
-	if not arg_3_0._data then
+function ExploreShowAreaStep:_loadedFinish()
+	if not self._data then
 		return
 	end
 
-	gohelper.setActive(arg_3_0.areaGo, true)
+	gohelper.setActive(self.areaGo, true)
 
-	local var_3_0 = arg_3_0._loader:getFirstAssetItem():GetResource()
+	local ctrl = self._loader:getFirstAssetItem():GetResource()
 
-	arg_3_0._anim = gohelper.onceAddComponent(arg_3_0.areaGo, typeof(UnityEngine.Animator))
-	arg_3_0._anim.runtimeAnimatorController = var_3_0
+	self._anim = gohelper.onceAddComponent(self.areaGo, typeof(UnityEngine.Animator))
+	self._anim.runtimeAnimatorController = ctrl
 
-	local var_3_1 = arg_3_0._anim:GetCurrentAnimatorStateInfo(0)
+	local info = self._anim:GetCurrentAnimatorStateInfo(0)
 
-	TaskDispatcher.runDelay(arg_3_0._onAnimDone, arg_3_0, var_3_1.length)
+	TaskDispatcher.runDelay(self._onAnimDone, self, info.length)
 end
 
-function var_0_0._onAnimDone(arg_4_0)
-	arg_4_0:onDone()
+function ExploreShowAreaStep:_onAnimDone()
+	self:onDone()
 end
 
-function var_0_0.onDestory(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onAnimDone, arg_5_0)
+function ExploreShowAreaStep:onDestory()
+	TaskDispatcher.cancelTask(self._onAnimDone, self)
 
-	arg_5_0.areaGo = nil
+	self.areaGo = nil
 
-	if arg_5_0._anim then
-		gohelper.destroy(arg_5_0._anim)
+	if self._anim then
+		gohelper.destroy(self._anim)
 
-		arg_5_0._anim = nil
+		self._anim = nil
 	end
 
-	if arg_5_0._loader then
-		arg_5_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_5_0._loader = nil
+		self._loader = nil
 	end
 
 	ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.ShowArea)
-	var_0_0.super.onDestory(arg_5_0)
+	ExploreShowAreaStep.super.onDestory(self)
 end
 
-return var_0_0
+return ExploreShowAreaStep

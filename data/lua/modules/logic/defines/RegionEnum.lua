@@ -1,25 +1,27 @@
-﻿module("modules.logic.defines.RegionEnum", package.seeall)
+﻿-- chunkname: @modules/logic/defines/RegionEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.defines.RegionEnum", package.seeall)
 
-var_0_0.en = 1
-var_0_0.jp = 2
-var_0_0.zh = 3
-var_0_0.tw = 4
-var_0_0.ko = 5
-var_0_0.shortcutTab = {
-	[var_0_0.en] = "en",
-	[var_0_0.jp] = "jp",
-	[var_0_0.zh] = "zh",
-	[var_0_0.tw] = "tw",
-	[var_0_0.ko] = "ko"
+local RegionEnum = _M
+
+RegionEnum.en = 1
+RegionEnum.jp = 2
+RegionEnum.zh = 3
+RegionEnum.tw = 4
+RegionEnum.ko = 5
+RegionEnum.shortcutTab = {
+	[RegionEnum.en] = "en",
+	[RegionEnum.jp] = "jp",
+	[RegionEnum.zh] = "zh",
+	[RegionEnum.tw] = "tw",
+	[RegionEnum.ko] = "ko"
 }
-var_0_0.utcOffset = {
-	[var_0_0.en] = -18000,
-	[var_0_0.jp] = 32400,
-	[var_0_0.zh] = 28800,
-	[var_0_0.tw] = 28800,
-	[var_0_0.ko] = 32400
+RegionEnum.utcOffset = {
+	[RegionEnum.en] = -18000,
+	[RegionEnum.jp] = 32400,
+	[RegionEnum.zh] = 28800,
+	[RegionEnum.tw] = 28800,
+	[RegionEnum.ko] = 32400
 }
 
-return var_0_0
+return RegionEnum

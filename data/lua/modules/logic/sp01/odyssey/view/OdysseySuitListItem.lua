@@ -1,122 +1,124 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseySuitListItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseySuitListItem.lua
 
-local var_0_0 = class("OdysseySuitListItem", LuaCompBase)
+module("modules.logic.sp01.odyssey.view.OdysseySuitListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._goUnEffect = gohelper.findChild(arg_1_0.viewGO, "uneffect")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "uneffect/#image_icon")
-	arg_1_0._txtSuitName = gohelper.findChildText(arg_1_0.viewGO, "uneffect/#txt_SuitName")
-	arg_1_0._txtLevel = gohelper.findChildText(arg_1_0.viewGO, "uneffect/#txt_Level")
-	arg_1_0._goEffect = gohelper.findChild(arg_1_0.viewGO, "effect")
-	arg_1_0._imageiconEffect = gohelper.findChildImage(arg_1_0.viewGO, "effect/#image_icon")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "effect/Num/#txt_num")
-	arg_1_0._txtSuitNameEffect = gohelper.findChildText(arg_1_0.viewGO, "effect/#txt_SuitName")
-	arg_1_0._txtLevelEffect = gohelper.findChildText(arg_1_0.viewGO, "effect/#txt_Level")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+local OdysseySuitListItem = class("OdysseySuitListItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseySuitListItem:init(go)
+	self.viewGO = go
+	self._goUnEffect = gohelper.findChild(self.viewGO, "uneffect")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "uneffect/#image_icon")
+	self._txtSuitName = gohelper.findChildText(self.viewGO, "uneffect/#txt_SuitName")
+	self._txtLevel = gohelper.findChildText(self.viewGO, "uneffect/#txt_Level")
+	self._goEffect = gohelper.findChild(self.viewGO, "effect")
+	self._imageiconEffect = gohelper.findChildImage(self.viewGO, "effect/#image_icon")
+	self._txtnum = gohelper.findChildText(self.viewGO, "effect/Num/#txt_num")
+	self._txtSuitNameEffect = gohelper.findChildText(self.viewGO, "effect/#txt_SuitName")
+	self._txtLevelEffect = gohelper.findChildText(self.viewGO, "effect/#txt_Level")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function OdysseySuitListItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function OdysseySuitListItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	local var_4_0 = {
-		suitId = arg_4_0.id,
-		bagType = OdysseyEnum.BagType.FightPrepare,
-		pos = recthelper.uiPosToScreenPos(arg_4_0.viewGO.transform)
-	}
+function OdysseySuitListItem:_btnclickOnClick()
+	local param = {}
 
-	OdysseyController.instance:openSuitTipsView(var_4_0)
+	param.suitId = self.id
+	param.bagType = OdysseyEnum.BagType.FightPrepare
+	param.pos = recthelper.uiPosToScreenPos(self.viewGO.transform)
+
+	OdysseyController.instance:openSuitTipsView(param)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._effectFlashGO = gohelper.findChild(arg_5_0.viewGO, "effect/BG/vx_flash")
-	arg_5_0.curEffectState = nil
-	arg_5_0.curSuitLevel = 0
+function OdysseySuitListItem:_editableInitView()
+	self._effectFlashGO = gohelper.findChild(self.viewGO, "effect/BG/vx_flash")
+	self.curEffectState = nil
+	self.curSuitLevel = 0
 end
 
-function var_0_0.setInfo(arg_6_0, arg_6_1)
-	arg_6_0.id = arg_6_1
+function OdysseySuitListItem:setInfo(id)
+	self.id = id
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	local var_7_0 = OdysseyHeroGroupModel.instance:getCurHeroGroup()
-	local var_7_1 = arg_7_0.id
-	local var_7_2 = OdysseyConfig.instance:getEquipSuitConfig(var_7_1)
-	local var_7_3 = var_7_0:getOdysseyEquipSuit(var_7_1)
-	local var_7_4 = OdysseyConfig.instance:getEquipSuitAllEffect(var_7_1)
-	local var_7_5 = #var_7_4
-	local var_7_6 = {}
-	local var_7_7 = false
+function OdysseySuitListItem:refreshUI()
+	local curHeroGroupMo = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+	local id = self.id
+	local config = OdysseyConfig.instance:getEquipSuitConfig(id)
+	local suitInfo = curHeroGroupMo:getOdysseyEquipSuit(id)
+	local effectConfigList = OdysseyConfig.instance:getEquipSuitAllEffect(id)
+	local totalLevelCount = #effectConfigList
+	local levelDescTable = {}
+	local haveEffect = false
 
-	if var_7_3 ~= nil then
-		for iter_7_0 = 1, var_7_5 do
-			local var_7_8 = var_7_4[iter_7_0]
+	if suitInfo ~= nil then
+		for i = 1, totalLevelCount do
+			local levelConfig = effectConfigList[i]
 
-			if var_7_3 and var_7_3.count >= var_7_8.number then
-				var_7_7 = true
+			if suitInfo and suitInfo.count >= levelConfig.number then
+				haveEffect = true
 
 				break
 			end
 		end
 	end
 
-	if (arg_7_0.curSuitLevel < var_7_3.level and arg_7_0.curSuitLevel > 0 or arg_7_0.curEffectState == false) and var_7_7 then
-		gohelper.setActive(arg_7_0._effectFlashGO, false)
-		gohelper.setActive(arg_7_0._effectFlashGO, true)
+	if (self.curSuitLevel < suitInfo.level and self.curSuitLevel > 0 or self.curEffectState == false) and haveEffect then
+		gohelper.setActive(self._effectFlashGO, false)
+		gohelper.setActive(self._effectFlashGO, true)
 	end
 
-	arg_7_0.curSuitLevel = var_7_3.level
-	arg_7_0.curEffectState = var_7_7
+	self.curSuitLevel = suitInfo.level
+	self.curEffectState = haveEffect
 
-	gohelper.setActive(arg_7_0._goEffect, var_7_7)
-	gohelper.setActive(arg_7_0._goUnEffect, not var_7_7)
+	gohelper.setActive(self._goEffect, haveEffect)
+	gohelper.setActive(self._goUnEffect, not haveEffect)
 
-	local var_7_9 = not var_7_7 and arg_7_0._txtSuitName or arg_7_0._txtSuitNameEffect
-	local var_7_10 = not var_7_7 and arg_7_0._txtLevel or arg_7_0._txtLevelEffect
-	local var_7_11 = not var_7_7 and arg_7_0._imageicon or arg_7_0._imageiconEffect
-	local var_7_12 = not var_7_7 and "" or "<color=#ECDFBD>%s"
-	local var_7_13 = not var_7_7 and "" or "%s</color>"
-	local var_7_14 = false
+	local textName = not haveEffect and self._txtSuitName or self._txtSuitNameEffect
+	local textLevel = not haveEffect and self._txtLevel or self._txtLevelEffect
+	local imageIcon = not haveEffect and self._imageicon or self._imageiconEffect
+	local colorStart = not haveEffect and "" or "<color=#ECDFBD>%s"
+	local colorEnd = not haveEffect and "" or "%s</color>"
+	local endColor = false
 
-	for iter_7_1 = 1, var_7_5 do
-		local var_7_15 = var_7_4[iter_7_1]
+	for i = 1, totalLevelCount do
+		local levelConfig = effectConfigList[i]
 
-		table.insert(var_7_6, tostring(var_7_15.number))
+		table.insert(levelDescTable, tostring(levelConfig.number))
 
-		if var_7_7 and var_7_3.level <= var_7_15.level and var_7_14 == false then
-			var_7_14 = true
-			var_7_6[iter_7_1] = string.format(var_7_13, var_7_6[iter_7_1])
+		if haveEffect and suitInfo.level <= levelConfig.level and endColor == false then
+			endColor = true
+			levelDescTable[i] = string.format(colorEnd, levelDescTable[i])
 		end
 	end
 
-	if var_7_7 then
-		var_7_6[1] = string.format(var_7_12, var_7_6[1])
+	if haveEffect then
+		levelDescTable[1] = string.format(colorStart, levelDescTable[1])
 	end
 
-	var_7_10.text = table.concat(var_7_6, "/")
-	var_7_9.text = var_7_2.name
+	textLevel.text = table.concat(levelDescTable, "/")
+	textName.text = config.name
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(var_7_11, var_7_2.icon)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(imageIcon, config.icon)
 
-	arg_7_0._txtnum.text = tostring(var_7_3.count)
+	self._txtnum.text = tostring(suitInfo.count)
 end
 
-function var_0_0.setActive(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0.viewGO, arg_8_1)
+function OdysseySuitListItem:setActive(active)
+	gohelper.setActive(self.viewGO, active)
 end
 
-function var_0_0.onDestroy(arg_9_0)
+function OdysseySuitListItem:onDestroy()
 	return
 end
 
-return var_0_0
+return OdysseySuitListItem

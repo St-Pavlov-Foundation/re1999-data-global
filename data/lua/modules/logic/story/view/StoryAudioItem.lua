@@ -1,144 +1,148 @@
-﻿module("modules.logic.story.view.StoryAudioItem", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryAudioItem.lua
 
-local var_0_0 = class("StoryAudioItem")
+module("modules.logic.story.view.StoryAudioItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._audioId = arg_1_1
-	arg_1_0._playCount = 1
+local StoryAudioItem = class("StoryAudioItem")
+
+function StoryAudioItem:init(audioId)
+	self._audioId = audioId
+	self._playCount = 1
 end
 
-function var_0_0.pause(arg_2_0, arg_2_1)
+function StoryAudioItem:pause(pause)
 	return
 end
 
-function var_0_0.stop(arg_3_0, arg_3_1)
-	AudioEffectMgr.instance:stopAudio(arg_3_0._audioId, arg_3_1)
-	arg_3_0:onDestroy()
+function StoryAudioItem:stop(outTime)
+	AudioEffectMgr.instance:stopAudio(self._audioId, outTime)
+	self:onDestroy()
 end
 
-function var_0_0.play(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._hasDestroy = false
+function StoryAudioItem:play(inTime, outTime, volume)
+	self._hasDestroy = false
 
-	if AudioEffectMgr.instance:isPlaying(arg_4_0._audioId) then
-		arg_4_0:_resetAudio()
+	local isPlaying = AudioEffectMgr.instance:isPlaying(self._audioId)
+
+	if isPlaying then
+		self:_resetAudio()
 
 		return
 	end
 
-	local var_4_0 = AudioParam.New()
+	local param = AudioParam.New()
 
-	var_4_0.loopNum = arg_4_0._playCount
-	var_4_0.fadeInTime = arg_4_1
-	var_4_0.fadeOutTime = arg_4_2
-	var_4_0.volume = 100 * arg_4_3
+	param.loopNum = self._playCount
+	param.fadeInTime = inTime
+	param.fadeOutTime = outTime
+	param.volume = 100 * volume
 
-	AudioEffectMgr.instance:playAudio(arg_4_0._audioId, var_4_0)
-	arg_4_0:_setSwitch()
+	AudioEffectMgr.instance:playAudio(self._audioId, param)
+	self:_setSwitch()
 end
 
-function var_0_0.setLoop(arg_5_0)
-	arg_5_0._playCount = 999999
+function StoryAudioItem:setLoop()
+	self._playCount = 999999
 end
 
-function var_0_0.setCount(arg_6_0, arg_6_1)
-	arg_6_0._playCount = arg_6_1
+function StoryAudioItem:setCount(count)
+	self._playCount = count
 end
 
-function var_0_0.isPause(arg_7_0)
+function StoryAudioItem:isPause()
 	return
 end
 
-function var_0_0._resetAudio(arg_8_0)
-	AudioEffectMgr.instance:setVolume(arg_8_0._audioId, 100 * arg_8_0._audioParam.volume, arg_8_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
-	arg_8_0:_setSwitch()
+function StoryAudioItem:_resetAudio()
+	AudioEffectMgr.instance:setVolume(self._audioId, 100 * self._audioParam.volume, self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	self:_setSwitch()
 end
 
-function var_0_0._setSwitch(arg_9_0)
-	if arg_9_0._audioParam.orderType == StoryEnum.AudioOrderType.Adjust then
-		local var_9_0 = AudioMgr.instance:getIdFromString("plot_music_stae_strength")
-		local var_9_1 = AudioMgr.instance:getIdFromString("strength0" .. tostring(arg_9_0._audioParam.audioState))
+function StoryAudioItem:_setSwitch()
+	if self._audioParam.orderType == StoryEnum.AudioOrderType.Adjust then
+		local groupId = AudioMgr.instance:getIdFromString("plot_music_stae_strength")
+		local stateId = AudioMgr.instance:getIdFromString("strength0" .. tostring(self._audioParam.audioState))
 
-		if var_9_0 and var_9_1 then
-			AudioEffectMgr.instance:setSwitch(arg_9_0._audioId, var_9_0, var_9_1)
+		if groupId and stateId then
+			AudioEffectMgr.instance:setSwitch(self._audioId, groupId, stateId)
 		end
-	elseif arg_9_0._audioParam.orderType == StoryEnum.AudioOrderType.SetSwitch then
-		local var_9_2 = StoryConfig.instance:getStoryAudioSwitchConfig(arg_9_0._audioParam.audioState)
+	elseif self._audioParam.orderType == StoryEnum.AudioOrderType.SetSwitch then
+		local switchCo = StoryConfig.instance:getStoryAudioSwitchConfig(self._audioParam.audioState)
 
-		if var_9_2 then
-			local var_9_3 = AudioMgr.instance:getIdFromString(var_9_2.switchgroup)
-			local var_9_4 = AudioMgr.instance:getIdFromString(var_9_2.switchstate)
+		if switchCo then
+			local groupId = AudioMgr.instance:getIdFromString(switchCo.switchgroup)
+			local stateId = AudioMgr.instance:getIdFromString(switchCo.switchstate)
 
-			if var_9_3 and var_9_4 then
-				AudioEffectMgr.instance:setSwitch(arg_9_0._audioId, var_9_3, var_9_4)
+			if groupId and stateId then
+				AudioEffectMgr.instance:setSwitch(self._audioId, groupId, stateId)
 			end
 		end
 	end
 end
 
-function var_0_0.setAudio(arg_10_0, arg_10_1)
-	if arg_10_1.orderType == StoryEnum.AudioOrderType.Destroy and arg_10_0._hasDestroy then
+function StoryAudioItem:setAudio(audioParam)
+	if audioParam.orderType == StoryEnum.AudioOrderType.Destroy and self._hasDestroy then
 		return
 	end
 
-	arg_10_0._hasDestroy = false
+	self._hasDestroy = false
 
-	local var_10_0 = arg_10_1.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local delayTime = audioParam.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 
-	if var_10_0 < 0.1 then
-		arg_10_0:_startAudio(arg_10_1)
+	if delayTime < 0.1 then
+		self:_startAudio(audioParam)
 	else
 		TaskDispatcher.runDelay(function()
 			if not ViewMgr.instance:isOpen(ViewName.StoryView) then
 				return
 			end
 
-			if arg_10_0._hasDestroy then
+			if self._hasDestroy then
 				return
 			end
 
-			arg_10_0:_startAudio(arg_10_1)
-		end, arg_10_0, var_10_0)
+			self:_startAudio(audioParam)
+		end, self, delayTime)
 	end
 end
 
-function var_0_0._startAudio(arg_12_0, arg_12_1)
-	arg_12_0._audioParam = arg_12_1
+function StoryAudioItem:_startAudio(audioParam)
+	self._audioParam = audioParam
 
-	if arg_12_0._audioParam.orderType == StoryEnum.AudioOrderType.Continuity then
-		arg_12_0:_playLoop()
-	elseif arg_12_0._audioParam.orderType == StoryEnum.AudioOrderType.Single then
-		arg_12_0:_playSingle()
-	elseif arg_12_0._audioParam.orderType == StoryEnum.AudioOrderType.Destroy then
-		arg_12_0:_stopAudio()
-	elseif arg_12_0._audioParam.orderType == StoryEnum.AudioOrderType.Adjust then
-		arg_12_0:_resetAudio()
-	elseif arg_12_0._audioParam.orderType == StoryEnum.AudioOrderType.SetSwitch then
-		arg_12_0:play(arg_12_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_12_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_12_0._audioParam.volume)
+	if self._audioParam.orderType == StoryEnum.AudioOrderType.Continuity then
+		self:_playLoop()
+	elseif self._audioParam.orderType == StoryEnum.AudioOrderType.Single then
+		self:_playSingle()
+	elseif self._audioParam.orderType == StoryEnum.AudioOrderType.Destroy then
+		self:_stopAudio()
+	elseif self._audioParam.orderType == StoryEnum.AudioOrderType.Adjust then
+		self:_resetAudio()
+	elseif self._audioParam.orderType == StoryEnum.AudioOrderType.SetSwitch then
+		self:play(self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._audioParam.volume)
 	end
 end
 
-function var_0_0._playSingle(arg_13_0)
-	arg_13_0:setCount(arg_13_0._audioParam.count)
-	arg_13_0:play(arg_13_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_13_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_13_0._audioParam.volume)
+function StoryAudioItem:_playSingle()
+	self:setCount(self._audioParam.count)
+	self:play(self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._audioParam.volume)
 end
 
-function var_0_0._playLoop(arg_14_0)
-	arg_14_0:setLoop()
-	arg_14_0:play(arg_14_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_14_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], arg_14_0._audioParam.volume)
+function StoryAudioItem:_playLoop()
+	self:setLoop()
+	self:play(self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._audioParam.volume)
 end
 
-function var_0_0._stopAudio(arg_15_0)
-	arg_15_0:stop(arg_15_0._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+function StoryAudioItem:_stopAudio()
+	self:stop(self._audioParam.transTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	arg_16_0._hasDestroy = true
+function StoryAudioItem:onDestroy()
+	self._hasDestroy = true
 
-	TaskDispatcher.cancelTask(arg_16_0._dealAudio, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._playLoop, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._playSingle, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._stopAudio, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._resetAudio, arg_16_0)
+	TaskDispatcher.cancelTask(self._dealAudio, self)
+	TaskDispatcher.cancelTask(self._playLoop, self)
+	TaskDispatcher.cancelTask(self._playSingle, self)
+	TaskDispatcher.cancelTask(self._stopAudio, self)
+	TaskDispatcher.cancelTask(self._resetAudio, self)
 end
 
-return var_0_0
+return StoryAudioItem

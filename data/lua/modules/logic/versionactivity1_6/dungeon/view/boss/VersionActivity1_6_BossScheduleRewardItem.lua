@@ -1,81 +1,83 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6_BossScheduleRewardItem.lua
 
-local var_0_0 = class("VersionActivity1_6_BossScheduleRewardItem", LuaCompBase)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6_BossScheduleRewardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._imageQualityBg = gohelper.findChildImage(arg_1_1, "image_QualityBg")
-	arg_1_0._simageReward = gohelper.findChildSingleImage(arg_1_1, "simage_Reward")
-	arg_1_0._imageQualityFrame = gohelper.findChildImage(arg_1_1, "image_QualityFrame")
-	arg_1_0._goHasGet = gohelper.findChild(arg_1_1, "go_HasGet")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_1, "txt_Desc")
-	arg_1_0._click = gohelper.getClick(arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._anim = arg_1_1:GetComponent(gohelper.Type_Animator)
-	arg_1_0._goHasGetAnim = arg_1_0._goHasGet:GetComponent(gohelper.Type_Animator)
+local VersionActivity1_6_BossScheduleRewardItem = class("VersionActivity1_6_BossScheduleRewardItem", LuaCompBase)
 
-	arg_1_0._click:AddClickListener(arg_1_0._onClick, arg_1_0)
+function VersionActivity1_6_BossScheduleRewardItem:init(go)
+	self._imageQualityBg = gohelper.findChildImage(go, "image_QualityBg")
+	self._simageReward = gohelper.findChildSingleImage(go, "simage_Reward")
+	self._imageQualityFrame = gohelper.findChildImage(go, "image_QualityFrame")
+	self._goHasGet = gohelper.findChild(go, "go_HasGet")
+	self._txtDesc = gohelper.findChildText(go, "txt_Desc")
+	self._click = gohelper.getClick(go)
+	self.go = go
+	self._anim = go:GetComponent(gohelper.Type_Animator)
+	self._goHasGetAnim = self._goHasGet:GetComponent(gohelper.Type_Animator)
 
-	arg_1_0._isActive = false
+	self._click:AddClickListener(self._onClick, self)
 
-	gohelper.setActive(arg_1_1, false)
+	self._isActive = false
+
+	gohelper.setActive(go, false)
 end
 
-function var_0_0.onDestroy(arg_2_0)
-	arg_2_0._click:RemoveClickListener()
+function VersionActivity1_6_BossScheduleRewardItem:onDestroy()
+	self._click:RemoveClickListener()
 
-	if arg_2_0._simageReward then
-		arg_2_0._simageReward:UnLoadImage()
+	if self._simageReward then
+		self._simageReward:UnLoadImage()
 	end
 
-	arg_2_0._simageReward = nil
+	self._simageReward = nil
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	arg_3_0:onDestroy()
+function VersionActivity1_6_BossScheduleRewardItem:onDestroyView()
+	self:onDestroy()
 end
 
-function var_0_0.setData(arg_4_0, arg_4_1)
-	arg_4_0._itemCO = arg_4_1
+function VersionActivity1_6_BossScheduleRewardItem:setData(itemCO)
+	self._itemCO = itemCO
 
-	local var_4_0 = arg_4_1[1]
-	local var_4_1 = arg_4_1[2]
-	local var_4_2 = arg_4_1[3]
-	local var_4_3, var_4_4 = ItemModel.instance:getItemConfigAndIcon(var_4_0, var_4_1)
-	local var_4_5 = var_4_3.rare
+	local itemType = itemCO[1]
+	local itemId = itemCO[2]
+	local quantity = itemCO[3]
+	local itemConfig, iconPath = ItemModel.instance:getItemConfigAndIcon(itemType, itemId)
+	local rare = itemConfig.rare
 
-	UISpriteSetMgr.instance:setV1a4BossRushSprite(arg_4_0._imageQualityBg, BossRushConfig.instance:getQualityBgSpriteName(var_4_5))
-	UISpriteSetMgr.instance:setV1a4BossRushSprite(arg_4_0._imageQualityFrame, BossRushConfig.instance:getQualityFrameSpriteName(var_4_5))
-	arg_4_0._simageReward:LoadImage(var_4_4)
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(self._imageQualityBg, BossRushConfig.instance:getQualityBgSpriteName(rare))
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(self._imageQualityFrame, BossRushConfig.instance:getQualityFrameSpriteName(rare))
+	self._simageReward:LoadImage(iconPath)
 
-	arg_4_0._txtDesc.text = luaLang("multiple") .. var_4_2
+	self._txtDesc.text = luaLang("multiple") .. quantity
 end
 
-function var_0_0.setActive(arg_5_0, arg_5_1)
-	if arg_5_0._isActive == arg_5_1 then
+function VersionActivity1_6_BossScheduleRewardItem:setActive(isActive)
+	if self._isActive == isActive then
 		return
 	end
 
-	arg_5_0._isActive = arg_5_1
+	self._isActive = isActive
 
-	gohelper.setActive(arg_5_0.go, arg_5_1)
+	gohelper.setActive(self.go, isActive)
 end
 
-function var_0_0._onClick(arg_6_0)
-	local var_6_0 = arg_6_0._itemCO
+function VersionActivity1_6_BossScheduleRewardItem:_onClick()
+	local itemCO = self._itemCO
 
-	if not var_6_0 then
+	if not itemCO then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(var_6_0[1], var_6_0[2])
+	MaterialTipController.instance:showMaterialInfo(itemCO[1], itemCO[2])
 end
 
-function var_0_0.playAnim_HasGet(arg_7_0, arg_7_1, ...)
-	arg_7_0._goHasGetAnim:Play(arg_7_1, ...)
+function VersionActivity1_6_BossScheduleRewardItem:playAnim_HasGet(eAnimScheduleItemRewardItem_HasGet, ...)
+	self._goHasGetAnim:Play(eAnimScheduleItemRewardItem_HasGet, ...)
 end
 
-function var_0_0.playAnim(arg_8_0, arg_8_1, ...)
-	arg_8_0._anim:Play(arg_8_1, ...)
+function VersionActivity1_6_BossScheduleRewardItem:playAnim(eAnimScheduleItemRewardItem, ...)
+	self._anim:Play(eAnimScheduleItemRewardItem, ...)
 end
 
-return var_0_0
+return VersionActivity1_6_BossScheduleRewardItem

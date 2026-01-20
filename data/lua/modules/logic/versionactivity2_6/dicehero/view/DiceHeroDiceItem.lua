@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroDiceItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroDiceItem.lua
 
-local var_0_0 = class("DiceHeroDiceItem", LuaCompBase)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroDiceItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._index = arg_1_1.index
+local DiceHeroDiceItem = class("DiceHeroDiceItem", LuaCompBase)
+
+function DiceHeroDiceItem:ctor(param)
+	self._index = param.index
 end
 
-local var_0_1 = {
+local rotationDict = {
 	Vector3(90, 0, 0),
 	Vector3(90, 90, 0),
 	Vector3(90, 180, 0),
@@ -15,164 +17,164 @@ local var_0_1 = {
 	(Vector3(180, 0, 0))
 }
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._anim = gohelper.findChildAnim(arg_2_1, "")
-	arg_2_0._goselect = gohelper.findChild(arg_2_1, "#go_select")
-	arg_2_0._imagenum = gohelper.findChildImage(arg_2_1, "#image_num")
-	arg_2_0._imageicon = gohelper.findChildImage(arg_2_1, "#simage_dice")
-	arg_2_0._golimitlock = gohelper.findChild(arg_2_1, "#go_lock")
-	arg_2_0._golock = gohelper.findChild(arg_2_1, "#go_limitlock")
-	arg_2_0._golight = gohelper.findChild(arg_2_1, "#go_light")
-	arg_2_0._gogray = gohelper.findChild(arg_2_1, "#go_gray")
-	arg_2_0._diceRoot = gohelper.findChild(arg_2_1, "touzi_ani/touzi").transform
-	arg_2_0._uimeshes = arg_2_0:getUserDataTb_()
+function DiceHeroDiceItem:init(go)
+	self.go = go
+	self._anim = gohelper.findChildAnim(go, "")
+	self._goselect = gohelper.findChild(go, "#go_select")
+	self._imagenum = gohelper.findChildImage(go, "#image_num")
+	self._imageicon = gohelper.findChildImage(go, "#simage_dice")
+	self._golimitlock = gohelper.findChild(go, "#go_lock")
+	self._golock = gohelper.findChild(go, "#go_limitlock")
+	self._golight = gohelper.findChild(go, "#go_light")
+	self._gogray = gohelper.findChild(go, "#go_gray")
+	self._diceRoot = gohelper.findChild(go, "touzi_ani/touzi").transform
+	self._uimeshes = self:getUserDataTb_()
 
-	for iter_2_0 = 0, arg_2_0._diceRoot.childCount - 1 do
-		local var_2_0 = arg_2_0._diceRoot:GetChild(iter_2_0).gameObject
-		local var_2_1 = tonumber(var_2_0.name) or 1
+	for i = 0, self._diceRoot.childCount - 1 do
+		local diceMeshGo = self._diceRoot:GetChild(i).gameObject
+		local diceNum = tonumber(diceMeshGo.name) or 1
 
-		arg_2_0._uimeshes[var_2_1] = var_2_0:GetComponent(typeof(UIMesh))
+		self._uimeshes[diceNum] = diceMeshGo:GetComponent(typeof(UIMesh))
 	end
 
-	arg_2_0:_refresh(true)
+	self:_refresh(true)
 end
 
-function var_0_0.onStepEnd(arg_3_0, arg_3_1)
-	arg_3_0:_refresh(arg_3_1)
+function DiceHeroDiceItem:onStepEnd(isFirst)
+	self:_refresh(isFirst)
 end
 
-function var_0_0._refresh(arg_4_0, arg_4_1)
-	local var_4_0 = DiceHeroFightModel.instance:getGameData().diceBox.dices[arg_4_0._index]
+function DiceHeroDiceItem:_refresh(isFirst)
+	local diceMo = DiceHeroFightModel.instance:getGameData().diceBox.dices[self._index]
 
-	if var_4_0 and not var_4_0.deleted then
-		arg_4_0:updateInfo(var_4_0, arg_4_1)
-	elseif arg_4_0.diceMo then
-		arg_4_0.diceMo = nil
+	if diceMo and not diceMo.deleted then
+		self:updateInfo(diceMo, isFirst)
+	elseif self.diceMo then
+		self.diceMo = nil
 
-		arg_4_0._anim:Play("out")
+		self._anim:Play("out")
 	else
-		arg_4_0._anim:Play("out", 0, 1)
+		self._anim:Play("out", 0, 1)
 	end
 end
 
-function var_0_0.updateInfo(arg_5_0, arg_5_1, arg_5_2)
-	if (not arg_5_0.diceMo or arg_5_0.diceMo.deleted or arg_5_0.diceMo.uid ~= arg_5_1.uid) and not DiceHeroFightModel.instance.tempRoundEnd and not arg_5_2 then
-		arg_5_0._anim:Play("in", 0, 0)
+function DiceHeroDiceItem:updateInfo(diceMo, isFirst)
+	if (not self.diceMo or self.diceMo.deleted or self.diceMo.uid ~= diceMo.uid) and not DiceHeroFightModel.instance.tempRoundEnd and not isFirst then
+		self._anim:Play("in", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_roll)
 	end
 
-	if arg_5_0.diceMo then
-		DiceHeroHelper.instance:unregisterDice(arg_5_0.diceMo.uid)
+	if self.diceMo then
+		DiceHeroHelper.instance:unregisterDice(self.diceMo.uid)
 	end
 
-	DiceHeroHelper.instance:registerDice(arg_5_1.uid, arg_5_0)
+	DiceHeroHelper.instance:registerDice(diceMo.uid, self)
 
-	arg_5_0.diceMo = arg_5_1
+	self.diceMo = diceMo
 
-	local var_5_0 = var_0_1[arg_5_1.num]
+	local nowRotation = rotationDict[diceMo.num]
 
-	if var_5_0 then
-		transformhelper.setLocalRotation(arg_5_0._diceRoot, var_5_0.x, var_5_0.y, var_5_0.z)
+	if nowRotation then
+		transformhelper.setLocalRotation(self._diceRoot, nowRotation.x, nowRotation.y, nowRotation.z)
 	end
 
-	local var_5_1 = lua_dice.configDict[arg_5_1.diceId]
+	local diceCo = lua_dice.configDict[diceMo.diceId]
 
-	if var_5_1 then
-		local var_5_2 = string.splitToNumber(var_5_1.suitList, "#")
+	if diceCo then
+		local arr = string.splitToNumber(diceCo.suitList, "#")
 
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._uimeshes) do
-			local var_5_3 = lua_dice_suit.configDict[var_5_2[iter_5_0]]
+		for diceNum, uiMesh in pairs(self._uimeshes) do
+			local suitCo = lua_dice_suit.configDict[arr[diceNum]]
 
-			if var_5_3 then
-				local var_5_4 = DiceHeroHelper.instance:getDiceTexture(var_5_3.icon)
+			if suitCo then
+				local texture = DiceHeroHelper.instance:getDiceTexture(suitCo.icon)
 
-				if var_5_4 then
-					iter_5_1.texture = var_5_4
+				if texture then
+					uiMesh.texture = texture
 
-					iter_5_1:SetMaterialDirty()
+					uiMesh:SetMaterialDirty()
 				end
 			end
 		end
 	end
 
-	arg_5_0:refreshLock()
-	arg_5_0:setSelect(false)
+	self:refreshLock()
+	self:setSelect(false)
 end
 
-function var_0_0.refreshLock(arg_6_0)
-	gohelper.setActive(arg_6_0._golock, arg_6_0.diceMo.status == DiceHeroEnum.DiceStatu.SoftLock)
-	gohelper.setActive(arg_6_0._golimitlock, arg_6_0.diceMo.status == DiceHeroEnum.DiceStatu.HardLock)
+function DiceHeroDiceItem:refreshLock()
+	gohelper.setActive(self._golock, self.diceMo.status == DiceHeroEnum.DiceStatu.SoftLock)
+	gohelper.setActive(self._golimitlock, self.diceMo.status == DiceHeroEnum.DiceStatu.HardLock)
 end
 
-function var_0_0.setSelect(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0.diceMo and arg_7_0.diceMo.status == DiceHeroEnum.DiceStatu.HardLock
+function DiceHeroDiceItem:setSelect(isSelect, isCanSelect)
+	local isHardLock = self.diceMo and self.diceMo.status == DiceHeroEnum.DiceStatu.HardLock
 
-	gohelper.setActive(arg_7_0._goselect, arg_7_1)
+	gohelper.setActive(self._goselect, isSelect)
 
-	if arg_7_2 == nil then
-		gohelper.setActive(arg_7_0._golight, false)
-		gohelper.setActive(arg_7_0._gogray, var_7_0)
+	if isCanSelect == nil then
+		gohelper.setActive(self._golight, false)
+		gohelper.setActive(self._gogray, isHardLock)
 	else
-		gohelper.setActive(arg_7_0._golight, arg_7_2)
-		gohelper.setActive(arg_7_0._gogray, not arg_7_2 or var_7_0)
+		gohelper.setActive(self._golight, isCanSelect)
+		gohelper.setActive(self._gogray, not isCanSelect or isHardLock)
 	end
 end
 
-function var_0_0.markDeleted(arg_8_0)
-	if not arg_8_0.diceMo then
+function DiceHeroDiceItem:markDeleted()
+	if not self.diceMo then
 		return
 	end
 
-	arg_8_0.diceMo.deleted = true
+	self.diceMo.deleted = true
 
-	arg_8_0._anim:Play("out", 0, 0)
-	arg_8_0:setSelect(false)
+	self._anim:Play("out", 0, 0)
+	self:setSelect(false)
 end
 
-function var_0_0.playRefresh(arg_9_0, arg_9_1)
-	arg_9_0.diceMo = arg_9_1
+function DiceHeroDiceItem:playRefresh(diceMo)
+	self.diceMo = diceMo
 
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_roll)
-	arg_9_0._anim:Play("refresh", 0, 0)
+	self._anim:Play("refresh", 0, 0)
 
-	local var_9_0, var_9_1, var_9_2 = transformhelper.getLocalRotation(arg_9_0._diceRoot)
+	local nowRotationX, nowRotationY, nowRotationZ = transformhelper.getLocalRotation(self._diceRoot)
 
-	ZProj.TweenHelper.DOLocalRotate(arg_9_0._diceRoot, var_9_0 + math.random(100, 200), var_9_1 + math.random(100, 200), var_9_2 + math.random(100, 200), 0.2, arg_9_0._delayTweenRotate, arg_9_0, nil, EaseType.Linear)
-	TaskDispatcher.runDelay(arg_9_0._refresh, arg_9_0, 0.6)
+	ZProj.TweenHelper.DOLocalRotate(self._diceRoot, nowRotationX + math.random(100, 200), nowRotationY + math.random(100, 200), nowRotationZ + math.random(100, 200), 0.2, self._delayTweenRotate, self, nil, EaseType.Linear)
+	TaskDispatcher.runDelay(self._refresh, self, 0.6)
 end
 
-function var_0_0._delayTweenRotate(arg_10_0)
-	local var_10_0, var_10_1, var_10_2 = transformhelper.getLocalRotation(arg_10_0._diceRoot)
+function DiceHeroDiceItem:_delayTweenRotate()
+	local nowRotationX, nowRotationY, nowRotationZ = transformhelper.getLocalRotation(self._diceRoot)
 
-	ZProj.TweenHelper.DOLocalRotate(arg_10_0._diceRoot, var_10_0 + math.random(100, 200), var_10_1 + math.random(100, 200), var_10_2 + math.random(100, 200), 0.2, arg_10_0._delayTweenRotate2, arg_10_0, nil, EaseType.Linear)
+	ZProj.TweenHelper.DOLocalRotate(self._diceRoot, nowRotationX + math.random(100, 200), nowRotationY + math.random(100, 200), nowRotationZ + math.random(100, 200), 0.2, self._delayTweenRotate2, self, nil, EaseType.Linear)
 end
 
-function var_0_0._delayTweenRotate2(arg_11_0)
-	local var_11_0 = var_0_1[arg_11_0.diceMo.num]
+function DiceHeroDiceItem:_delayTweenRotate2()
+	local nowRotation = rotationDict[self.diceMo.num]
 
-	if var_11_0 then
-		ZProj.TweenHelper.DOLocalRotate(arg_11_0._diceRoot, var_11_0.x, var_11_0.y, var_11_0.z, 0.2, nil, nil, nil, EaseType.Linear)
+	if nowRotation then
+		ZProj.TweenHelper.DOLocalRotate(self._diceRoot, nowRotation.x, nowRotation.y, nowRotation.z, 0.2, nil, nil, nil, EaseType.Linear)
 	end
 end
 
-function var_0_0.startRoll(arg_12_0)
-	if not arg_12_0.diceMo or arg_12_0.diceMo.deleted then
-		arg_12_0._anim:Play("out", 0, 1)
+function DiceHeroDiceItem:startRoll()
+	if not self.diceMo or self.diceMo.deleted then
+		self._anim:Play("out", 0, 1)
 
 		return
 	end
 
-	arg_12_0._anim:Play("in", 0, 0)
+	self._anim:Play("in", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_roll)
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._refresh, arg_13_0)
+function DiceHeroDiceItem:onDestroy()
+	TaskDispatcher.cancelTask(self._refresh, self)
 
-	if arg_13_0.diceMo then
-		DiceHeroHelper.instance:unregisterDice(arg_13_0.diceMo.uid)
+	if self.diceMo then
+		DiceHeroHelper.instance:unregisterDice(self.diceMo.uid)
 	end
 end
 
-return var_0_0
+return DiceHeroDiceItem

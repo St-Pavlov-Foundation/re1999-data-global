@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkNuoDiKaTeamAttack342", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkNuoDiKaTeamAttack342.lua
 
-local var_0_0 = class("FightWorkNuoDiKaTeamAttack342", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkNuoDiKaTeamAttack342", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkNuoDiKaTeamAttack342 = class("FightWorkNuoDiKaTeamAttack342", FightEffectBase)
+
+function FightWorkNuoDiKaTeamAttack342:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkNuoDiKaTeamAttack342

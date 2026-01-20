@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroChangePowerWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/controller/effect/DiceHeroChangePowerWork.lua
 
-local var_0_0 = class("DiceHeroChangePowerWork", DiceHeroBaseEffectWork)
+module("modules.logic.versionactivity2_6.dicehero.controller.effect.DiceHeroChangePowerWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0._effectMo.targetId
-	local var_1_1 = DiceHeroHelper.instance:getEntity(var_1_0)
+local DiceHeroChangePowerWork = class("DiceHeroChangePowerWork", DiceHeroBaseEffectWork)
 
-	if not var_1_1 then
-		logError("找不到实体" .. var_1_0)
+function DiceHeroChangePowerWork:onStart(context)
+	local targetId = self._effectMo.targetId
+	local targetEntity = DiceHeroHelper.instance:getEntity(targetId)
+
+	if not targetEntity then
+		logError("找不到实体" .. targetId)
 
 		return
 	end
 
-	arg_1_0._targetEntity = var_1_1
-	arg_1_0._isFromCard = arg_1_0._effectMo.parent.isByCard
-	arg_1_0._targetPos = arg_1_0._targetEntity:getPos(2)
+	self._targetEntity = targetEntity
+	self._isFromCard = self._effectMo.parent.isByCard
+	self._targetPos = self._targetEntity:getPos(2)
 
-	if arg_1_0._isFromCard and string.nilorempty(arg_1_0._effectMo.extraData) and arg_1_0._effectMo.effectNum > 0 then
-		local var_1_2 = DiceHeroHelper.instance:getCard(tonumber(arg_1_0._effectMo.parent.reasonId))
+	if self._isFromCard and string.nilorempty(self._effectMo.extraData) and self._effectMo.effectNum > 0 then
+		local cardItem = DiceHeroHelper.instance:getCard(tonumber(self._effectMo.parent.reasonId))
 
-		arg_1_0._effectItem = DiceHeroHelper.instance:doEffect(5, var_1_2:getPos(), arg_1_0._targetPos)
+		self._effectItem = DiceHeroHelper.instance:doEffect(5, cardItem:getPos(), self._targetPos)
 
 		AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.play_ui_wenming_shot)
-		TaskDispatcher.runDelay(arg_1_0.addPower, arg_1_0, 0.5)
+		TaskDispatcher.runDelay(self.addPower, self, 0.5)
 	else
-		arg_1_0:addPower()
+		self:addPower()
 	end
 end
 
-function var_0_0.addPower(arg_2_0)
-	arg_2_0._targetEntity:addPower(arg_2_0._effectMo.effectNum)
-	arg_2_0:onDone(true)
+function DiceHeroChangePowerWork:addPower()
+	self._targetEntity:addPower(self._effectMo.effectNum)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	if arg_3_0._effectItem then
-		DiceHeroHelper.instance:returnEffectItemToPool(arg_3_0._effectItem)
+function DiceHeroChangePowerWork:clearWork()
+	if self._effectItem then
+		DiceHeroHelper.instance:returnEffectItemToPool(self._effectItem)
 
-		arg_3_0._effectItem = nil
+		self._effectItem = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_3_0.addPower, arg_3_0)
+	TaskDispatcher.cancelTask(self.addPower, self)
 end
 
-return var_0_0
+return DiceHeroChangePowerWork

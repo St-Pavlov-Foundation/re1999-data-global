@@ -1,750 +1,767 @@
-﻿module("modules.logic.equip.model.EquipChooseListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipChooseListModel.lua
 
-local var_0_0 = class("EquipChooseListModel", ListScrollModel)
+module("modules.logic.equip.model.EquipChooseListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._chooseEquipDic = {}
-	arg_1_0._chooseEquipList = {}
-	arg_1_0._maxCount = EquipEnum.StrengthenMaxCount
+local EquipChooseListModel = class("EquipChooseListModel", ListScrollModel)
+
+function EquipChooseListModel:onInit()
+	self._chooseEquipDic = {}
+	self._chooseEquipList = {}
+	self._maxCount = EquipEnum.StrengthenMaxCount
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function EquipChooseListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.initEquipMo(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._targetMO = arg_3_1
-	arg_3_0._config = arg_3_0._targetMO.config
+function EquipChooseListModel:initEquipMo(targetMO, resetSort)
+	self._targetMO = targetMO
+	self._config = self._targetMO.config
 
-	if arg_3_2 then
-		arg_3_0:resetSortStatus()
+	if resetSort then
+		self:resetSortStatus()
 	end
 end
 
-function var_0_0.updateStrengthenList(arg_4_0)
-	arg_4_0:initEquipList()
-	arg_4_0:_onChooseChange()
+function EquipChooseListModel:updateStrengthenList()
+	self:initEquipList()
+	self:_onChooseChange()
 end
 
-function var_0_0.updateStrengthenListAndRefresh(arg_5_0)
-	arg_5_0:updateStrengthenList()
-	arg_5_0:setEquipList()
+function EquipChooseListModel:updateStrengthenListAndRefresh()
+	self:updateStrengthenList()
+	self:setEquipList()
 end
 
-function var_0_0.initEquipList(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.filterMo = arg_6_1
-	arg_6_0._equipList = {}
+function EquipChooseListModel:initEquipList(filterMo, keepNum)
+	self.filterMo = filterMo
+	self._equipList = {}
 
-	arg_6_0:getEquipList(arg_6_0._equipList, arg_6_2)
-	arg_6_0:filterEquip()
-	arg_6_0:filterStrengthen(arg_6_0._equipList)
+	self:getEquipList(self._equipList, keepNum)
+	self:filterEquip()
+	self:filterStrengthen(self._equipList)
 end
 
-function var_0_0.filterEquip(arg_7_0)
-	if not arg_7_0.filterMo then
+function EquipChooseListModel:filterEquip()
+	if not self.filterMo then
 		return
 	end
 
-	local var_7_0 = {}
+	local equipList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._equipList) do
-		if iter_7_1.config and arg_7_0.filterMo:checkIsIncludeTag(iter_7_1.config) then
-			table.insert(var_7_0, iter_7_1)
+	for _, equipMo in ipairs(self._equipList) do
+		if equipMo.config and self.filterMo:checkIsIncludeTag(equipMo.config) then
+			table.insert(equipList, equipMo)
 		end
 	end
 
-	arg_7_0._equipList = var_7_0
+	self._equipList = equipList
 end
 
-function var_0_0.getEquipList(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = EquipModel.instance:getEquips()
+function EquipChooseListModel:getEquipList(equipList, keepNum, maxRare)
+	local list = EquipModel.instance:getEquips()
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if not iter_8_1._chooseNum then
-			iter_8_1._chooseNum = 0
+	for i, v in ipairs(list) do
+		if not v._chooseNum then
+			v._chooseNum = 0
 		end
 
-		if not arg_8_2 then
-			iter_8_1._chooseNum = 0
+		if not keepNum then
+			v._chooseNum = 0
 		end
 
-		local var_8_1 = iter_8_1.config
+		local co = v.config
 
-		if var_8_1 and iter_8_1.id ~= arg_8_0._targetMO.id and not EquipHelper.isSpRefineEquip(var_8_1) and iter_8_1.equipId ~= EquipConfig.instance:getEquipUniversalId() then
-			if arg_8_3 then
-				if arg_8_3 > var_8_1.rare then
-					table.insert(arg_8_1, iter_8_1)
+		if co and v.id ~= self._targetMO.id and not EquipHelper.isSpRefineEquip(co) and v.equipId ~= EquipConfig.instance:getEquipUniversalId() then
+			if maxRare then
+				if maxRare > co.rare then
+					table.insert(equipList, v)
 				end
 			else
-				table.insert(arg_8_1, iter_8_1)
+				table.insert(equipList, v)
 			end
 		end
 	end
 end
 
-function var_0_0.setEquipList(arg_9_0)
-	arg_9_0:setList(arg_9_0._equipList)
+function EquipChooseListModel:setEquipList()
+	self:setList(self._equipList)
 end
 
-function var_0_0.resetSelectedEquip(arg_10_0)
-	arg_10_0._chooseEquipDic = {}
-	arg_10_0._chooseEquipList = {}
+function EquipChooseListModel:resetSelectedEquip()
+	self._chooseEquipDic = {}
+	self._chooseEquipList = {}
 
-	arg_10_0:_onChooseChange()
+	self:_onChooseChange()
 end
 
-function var_0_0.getChooseNum(arg_11_0)
-	local var_11_0 = 0
+function EquipChooseListModel:getChooseNum()
+	local num = 0
 
-	if not arg_11_0._chooseEquipList then
-		return var_11_0
+	if not self._chooseEquipList then
+		return num
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._chooseEquipList) do
-		var_11_0 = var_11_0 + iter_11_1._chooseNum
+	for i, v in ipairs(self._chooseEquipList) do
+		num = num + v._chooseNum
 	end
 
-	return var_11_0
+	return num
 end
 
-function var_0_0.getChooseEquipsNum(arg_12_0)
-	return arg_12_0._chooseEquipList and #arg_12_0._chooseEquipList or 0
+function EquipChooseListModel:getChooseEquipsNum()
+	return self._chooseEquipList and #self._chooseEquipList or 0
 end
 
-function var_0_0._selectEquip(arg_13_0, arg_13_1)
-	if arg_13_1._chooseNum >= arg_13_1.count then
+function EquipChooseListModel:_selectEquip(equipMO)
+	if equipMO._chooseNum >= equipMO.count then
 		return EquipEnum.ChooseEquipStatus.BeyondEquipHadNum
 	end
 
-	if arg_13_1._chooseNum <= 0 and arg_13_0:getChooseEquipsNum() >= arg_13_0._maxCount then
+	if equipMO._chooseNum <= 0 and self:getChooseEquipsNum() >= self._maxCount then
 		return EquipEnum.ChooseEquipStatus.BeyondMaxSelectEquip
 	end
 
-	local var_13_0 = arg_13_0:calcStrengthen() or 0
+	local addexp = self:calcStrengthen()
 
-	if EquipConfig.instance:getStrengthenToLv(arg_13_0._config.rare, arg_13_0._targetMO.level, arg_13_0._targetMO.exp + var_13_0) >= EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_13_0._targetMO) then
+	addexp = addexp or 0
+
+	local currentLv = EquipConfig.instance:getStrengthenToLv(self._config.rare, self._targetMO.level, self._targetMO.exp + addexp)
+
+	if currentLv >= EquipConfig.instance:getCurrentBreakLevelMaxLevel(self._targetMO) then
 		return EquipEnum.ChooseEquipStatus.BeyondMaxStrengthenExperience
 	end
 
-	if arg_13_1._chooseNum == 0 then
-		table.insert(arg_13_0._chooseEquipList, arg_13_1)
+	if equipMO._chooseNum == 0 then
+		table.insert(self._chooseEquipList, equipMO)
 	end
 
-	arg_13_1._chooseNum = arg_13_1._chooseNum + 1
-	arg_13_0._chooseEquipDic[arg_13_1.id] = true
+	equipMO._chooseNum = equipMO._chooseNum + 1
+	self._chooseEquipDic[equipMO.id] = true
 
 	return EquipEnum.ChooseEquipStatus.Success
 end
 
-function var_0_0.selectEquip(arg_14_0, arg_14_1)
-	if arg_14_0.isLock then
+function EquipChooseListModel:selectEquip(equipMO)
+	if self.isLock then
 		return EquipEnum.ChooseEquipStatus.Lock
 	end
 
-	local var_14_0 = arg_14_0:_selectEquip(arg_14_1)
+	local status = self:_selectEquip(equipMO)
 
-	if var_14_0 == EquipEnum.ChooseEquipStatus.Success then
-		arg_14_0:_onChooseChange()
+	if status == EquipEnum.ChooseEquipStatus.Success then
+		self:_onChooseChange()
 	end
 
-	return var_14_0
+	return status
 end
 
-function var_0_0.deselectEquip(arg_15_0, arg_15_1)
-	if arg_15_0.isLock then
+function EquipChooseListModel:deselectEquip(equipMO)
+	if self.isLock then
 		return EquipEnum.ChooseEquipStatus.Lock
 	end
 
-	if not arg_15_1._chooseNum or arg_15_1._chooseNum <= 0 then
+	if not equipMO._chooseNum or equipMO._chooseNum <= 0 then
 		return EquipEnum.ChooseEquipStatus.ReduceNotSelectedEquip
 	end
 
-	arg_15_1._chooseNum = arg_15_1._chooseNum - 1
+	equipMO._chooseNum = equipMO._chooseNum - 1
 
-	if arg_15_1._chooseNum == 0 then
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0._chooseEquipList) do
-			if iter_15_1.id == arg_15_1.id then
-				arg_15_1._isBreak = false
-				arg_15_1._canBreak = nil
+	if equipMO._chooseNum == 0 then
+		for i, v in ipairs(self._chooseEquipList) do
+			if v.id == equipMO.id then
+				equipMO._isBreak = false
+				equipMO._canBreak = nil
 
-				table.remove(arg_15_0._chooseEquipList, iter_15_0)
+				table.remove(self._chooseEquipList, i)
 
 				break
 			end
 		end
 	end
 
-	arg_15_0._chooseEquipDic[arg_15_1.id] = arg_15_1._chooseNum > 0
+	self._chooseEquipDic[equipMO.id] = equipMO._chooseNum > 0
 
-	arg_15_0:_onChooseChange()
+	self:_onChooseChange()
 
 	return EquipEnum.ChooseEquipStatus.Success
 end
 
-function var_0_0.calcStrengthen(arg_16_0)
-	local var_16_0 = 0
+function EquipChooseListModel:calcStrengthen()
+	local addExp = 0
 
-	if not arg_16_0._targetMO then
-		return var_16_0
+	if not self._targetMO then
+		return addExp
 	end
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._chooseEquipList) do
-		for iter_16_2 = 1, iter_16_1._chooseNum do
-			var_16_0 = var_16_0 + EquipConfig.instance:getIncrementalExp(iter_16_1)
+	for i, v in ipairs(self._chooseEquipList) do
+		for j = 1, v._chooseNum do
+			addExp = addExp + EquipConfig.instance:getIncrementalExp(v)
 		end
 	end
 
-	return var_16_0
+	return addExp
 end
 
-function var_0_0._onChooseChange(arg_17_0)
-	EquipSelectedListModel.instance:updateList(arg_17_0._chooseEquipList)
+function EquipChooseListModel:_onChooseChange()
+	EquipSelectedListModel.instance:updateList(self._chooseEquipList)
 	EquipController.instance:dispatchEvent(EquipEvent.onChooseChange)
 end
 
-function var_0_0.getChooseEquipList(arg_18_0)
-	return arg_18_0._chooseEquipList
+function EquipChooseListModel:getChooseEquipList()
+	return self._chooseEquipList
 end
 
-function var_0_0.isChoose(arg_19_0, arg_19_1)
-	return arg_19_0._chooseEquipDic[arg_19_1.id]
+function EquipChooseListModel:isChoose(equipMO)
+	return self._chooseEquipDic[equipMO.id]
 end
 
-function var_0_0.canBreak(arg_20_0, arg_20_1)
-	return EquipConfig.instance:canBreak(arg_20_0._targetMO, arg_20_1)
+function EquipChooseListModel:canBreak(equipMO)
+	return EquipConfig.instance:canBreak(self._targetMO, equipMO)
 end
 
-function var_0_0._sortNormalEquip(arg_21_0, arg_21_1)
-	if arg_21_0.config.rare ~= arg_21_1.config.rare then
-		return arg_21_0.config.rare < arg_21_1.config.rare
+function EquipChooseListModel._sortNormalEquip(a, b)
+	if a.config.rare ~= b.config.rare then
+		return a.config.rare < b.config.rare
 	else
-		return arg_21_0.id < arg_21_1.id
+		return a.id < b.id
 	end
 end
 
-function var_0_0.canFastAdd(arg_22_0, arg_22_1)
-	if arg_22_1.isLock then
+function EquipChooseListModel._sortExpEquip(a, b)
+	local rareA = a.config.rare
+	local rareB = b.config.rare
+
+	if rareA ~= rareB then
+		return rareA < rareB
+	else
+		return a.config.id < b.config.id
+	end
+end
+
+function EquipChooseListModel:canFastAdd(equipMo)
+	if equipMo.isLock then
 		return false
 	end
 
-	if arg_22_0.equipUidToHeroMo and arg_22_0.equipUidToHeroMo[arg_22_1.uid] then
+	if self.equipUidToHeroMo and self.equipUidToHeroMo[equipMo.uid] then
 		return false
 	end
 
-	if arg_22_1.level > 1 or arg_22_1.refineLv > 1 then
+	if equipMo.level > 1 or equipMo.refineLv > 1 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.onlyAddExpEquip(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_0._chooseEquipDic = {}
-	arg_23_0._chooseEquipList = {}
+function EquipChooseListModel:onlyAddExpEquip(expEquipList, needExp)
+	self._chooseEquipDic = {}
+	self._chooseEquipList = {}
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_1) do
-		if iter_23_0 > EquipEnum.StrengthenMaxCount then
+	for index, equipMO in ipairs(expEquipList) do
+		if index > EquipEnum.StrengthenMaxCount then
 			break
 		end
 
-		local var_23_0 = EquipConfig.instance:getOneLevelEquipProduceExp(iter_23_1.equipId)
-		local var_23_1 = iter_23_1.count * var_23_0
+		local oneExp = EquipConfig.instance:getOneLevelEquipProduceExp(equipMO.equipId)
+		local exp = equipMO.count * oneExp
 
-		if arg_23_2 <= var_23_1 then
-			local var_23_2 = Mathf.Ceil(arg_23_2 / var_23_0)
+		if needExp <= exp then
+			local minNeedCount = Mathf.Ceil(needExp / oneExp)
 
-			arg_23_0:addEquipMo(iter_23_1, var_23_2)
+			self:addEquipMo(equipMO, minNeedCount)
 
 			break
 		end
 
-		arg_23_2 = arg_23_2 - var_23_1
+		needExp = needExp - exp
 
-		arg_23_0:addEquipMo(iter_23_1, iter_23_1.count)
+		self:addEquipMo(equipMO, equipMO.count)
 	end
 end
 
-function var_0_0.onlyAddNormalEquip(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = 0
+function EquipChooseListModel:onlyAddNormalEquip(normalEquipList, needExp)
+	local addExp = 0
 
-	arg_24_0._chooseEquipDic = {}
-	arg_24_0._chooseEquipList = {}
+	self._chooseEquipDic = {}
+	self._chooseEquipList = {}
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_1) do
-		if iter_24_0 > EquipEnum.StrengthenMaxCount then
+	for index, equipMO in ipairs(normalEquipList) do
+		if index > EquipEnum.StrengthenMaxCount then
 			break
 		end
 
-		var_24_0 = var_24_0 + EquipConfig.instance:getOneLevelEquipProduceExp(iter_24_1.config.rare)
+		local exp = EquipConfig.instance:getOneLevelEquipProduceExp(equipMO.config.rare)
 
-		arg_24_0:addEquipMo(iter_24_1, 1)
+		addExp = addExp + exp
 
-		if arg_24_2 <= var_24_0 then
+		self:addEquipMo(equipMO, 1)
+
+		if needExp <= addExp then
 			break
 		end
 	end
 end
 
-function var_0_0.mixtureExpAndNormalEquip(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	arg_25_0._chooseEquipDic = {}
-	arg_25_0._chooseEquipList = {}
+function EquipChooseListModel:mixtureExpAndNormalEquip(expEquipList, normalEquipList, needExp)
+	self._chooseEquipDic = {}
+	self._chooseEquipList = {}
 
-	local var_25_0 = arg_25_1[1]
-	local var_25_1 = EquipConfig.instance:getOneLevelEquipProduceExp(var_25_0.equipId)
+	local firstExpEquipMo = expEquipList[1]
+	local firstExpEquipExp = EquipConfig.instance:getOneLevelEquipProduceExp(firstExpEquipMo.equipId)
 
-	if arg_25_3 <= var_25_1 then
-		arg_25_0:addEquipMo(var_25_0, 1)
+	if needExp <= firstExpEquipExp then
+		self:addEquipMo(firstExpEquipMo, 1)
 
 		return
 	end
 
-	arg_25_3 = arg_25_3 - var_25_1
+	needExp = needExp - firstExpEquipExp
 
-	local var_25_2 = 0
-	local var_25_3 = EquipEnum.StrengthenMaxCount - 1
+	local frameCount = 0
+	local maxFrameCount = EquipEnum.StrengthenMaxCount - 1
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_2) do
-		local var_25_4 = EquipConfig.instance:getOneLevelEquipProduceExp(iter_25_1.config.rare)
+	for _, equipMO in ipairs(normalEquipList) do
+		local exp = EquipConfig.instance:getOneLevelEquipProduceExp(equipMO.config.rare)
 
-		arg_25_0:addEquipMo(iter_25_1, 1)
+		self:addEquipMo(equipMO, 1)
 
-		var_25_2 = var_25_2 + 1
-		arg_25_3 = arg_25_3 - var_25_4
+		frameCount = frameCount + 1
+		needExp = needExp - exp
 
-		if var_25_3 <= var_25_2 or arg_25_3 <= 0 then
+		if maxFrameCount <= frameCount or needExp <= 0 then
 			break
 		end
 	end
 
-	local var_25_5 = 0
+	local expIndex = 0
 
-	if arg_25_3 > 0 then
-		arg_25_3 = arg_25_3 + var_25_1
+	if needExp > 0 then
+		needExp = needExp + firstExpEquipExp
 
-		for iter_25_2, iter_25_3 in ipairs(arg_25_1) do
-			local var_25_6 = EquipConfig.instance:getOneLevelEquipProduceExp(iter_25_3.equipId)
+		for _, equipMo in ipairs(expEquipList) do
+			local oneExp = EquipConfig.instance:getOneLevelEquipProduceExp(equipMo.equipId)
 
-			var_25_2 = var_25_2 + 1
-			var_25_5 = var_25_5 + 1
+			frameCount = frameCount + 1
+			expIndex = expIndex + 1
 
-			local var_25_7 = iter_25_3.count * var_25_6
+			local exp = equipMo.count * oneExp
 
-			if arg_25_3 <= var_25_7 then
-				arg_25_0:addEquipMo(iter_25_3, Mathf.Ceil(arg_25_3 / var_25_6), var_25_5)
+			if needExp <= exp then
+				self:addEquipMo(equipMo, Mathf.Ceil(needExp / oneExp), expIndex)
 
 				break
 			end
 
-			arg_25_0:addEquipMo(iter_25_3, iter_25_3.count, var_25_5)
+			self:addEquipMo(equipMo, equipMo.count, expIndex)
 
-			arg_25_3 = arg_25_3 - var_25_7
+			needExp = needExp - exp
 
-			if var_25_2 >= EquipEnum.StrengthenMaxCount then
+			if frameCount >= EquipEnum.StrengthenMaxCount then
 				break
 			end
 		end
 	else
-		arg_25_0:addEquipMo(var_25_0, 1, 1)
+		self:addEquipMo(firstExpEquipMo, 1, 1)
 	end
 end
 
-function var_0_0.addEquipMo(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	arg_26_1._chooseNum = arg_26_2
-	arg_26_0._chooseEquipDic[arg_26_1.id] = true
+function EquipChooseListModel:addEquipMo(equipMo, count, insertIndex)
+	equipMo._chooseNum = count
+	self._chooseEquipDic[equipMo.id] = true
 
-	if not tabletool.indexOf(arg_26_0._chooseEquipList, arg_26_1) then
-		if arg_26_3 then
-			table.insert(arg_26_0._chooseEquipList, arg_26_3, arg_26_1)
+	if not tabletool.indexOf(self._chooseEquipList, equipMo) then
+		if insertIndex then
+			table.insert(self._chooseEquipList, insertIndex, equipMo)
 		else
-			table.insert(arg_26_0._chooseEquipList, arg_26_1)
+			table.insert(self._chooseEquipList, equipMo)
 		end
 	end
 end
 
-function var_0_0.fastAddEquip(arg_27_0)
-	local var_27_0 = EquipConfig.instance:getNeedExpToMaxLevel(arg_27_0._targetMO)
+function EquipChooseListModel:fastAddEquip()
+	local needExp = EquipConfig.instance:getNeedExpToMaxLevel(self._targetMO)
 
-	if var_27_0 <= 0 then
+	if needExp <= 0 then
 		GameFacade.showToast(ToastEnum.MaxLevEquips)
 
 		return
 	end
 
-	arg_27_0._chooseEquipDic = {}
-	arg_27_0._chooseEquipList = {}
+	self._chooseEquipDic = {}
+	self._chooseEquipList = {}
 
-	local var_27_1 = {}
+	local equipList = {}
 
-	arg_27_0:getEquipList(var_27_1, false, arg_27_0:getFilterRare())
+	self:getEquipList(equipList, false, self:getFilterRare())
 
-	local var_27_2 = {}
-	local var_27_3 = {}
-	local var_27_4 = true
+	local expEquipList = {}
+	local normalEquipList = {}
+	local isEmpty = true
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_1) do
-		if EquipHelper.isExpEquip(iter_27_1.config) then
-			table.insert(var_27_2, iter_27_1)
+	for _, equipMo in ipairs(equipList) do
+		if EquipHelper.isExpEquip(equipMo.config) then
+			table.insert(expEquipList, equipMo)
 
-			var_27_4 = false
-		elseif EquipHelper.isNormalEquip(iter_27_1.config) and arg_27_0:canFastAdd(iter_27_1) then
-			table.insert(var_27_3, iter_27_1)
+			isEmpty = false
+		elseif EquipHelper.isNormalEquip(equipMo.config) and self:canFastAdd(equipMo) then
+			table.insert(normalEquipList, equipMo)
 
-			var_27_4 = false
+			isEmpty = false
 		end
 	end
 
-	if var_27_4 then
-		arg_27_0:refreshEquip()
+	if isEmpty then
+		self:refreshEquip()
 		GameFacade.showToast(ToastEnum.NoFastEquips)
 
 		return
 	end
 
-	local var_27_5 = #var_27_2
-	local var_27_6 = #var_27_3
+	local expEquipCount = #expEquipList
+	local normalEquipCount = #normalEquipList
 
-	if var_27_5 ~= 0 then
-		table.sort(var_27_2, function(arg_28_0, arg_28_1)
-			return arg_28_0.config.rare < arg_28_1.config.rare
-		end)
+	if expEquipCount ~= 0 then
+		table.sort(expEquipList, EquipChooseListModel._sortExpEquip)
 	end
 
-	if var_27_6 ~= 0 then
-		table.sort(var_27_3, var_0_0._sortNormalEquip)
+	if normalEquipCount ~= 0 then
+		table.sort(normalEquipList, EquipChooseListModel._sortNormalEquip)
 	end
 
-	if var_27_6 == 0 then
-		arg_27_0:onlyAddExpEquip(var_27_2, var_27_0)
-	elseif var_27_5 == 0 then
-		arg_27_0:onlyAddNormalEquip(var_27_3, var_27_0)
+	if normalEquipCount == 0 then
+		self:onlyAddExpEquip(expEquipList, needExp)
+	elseif expEquipCount == 0 then
+		self:onlyAddNormalEquip(normalEquipList, needExp)
 	else
-		arg_27_0:mixtureExpAndNormalEquip(var_27_2, var_27_3, var_27_0)
+		self:mixtureExpAndNormalEquip(expEquipList, normalEquipList, needExp)
 	end
 
-	arg_27_0:refreshEquip()
+	self:refreshEquip()
 end
 
-function var_0_0.refreshEquip(arg_29_0)
+function EquipChooseListModel:refreshEquip()
 	EquipController.instance:dispatchEvent(EquipEvent.onChooseEquip)
-	arg_29_0:_onChooseChange()
-	arg_29_0:setList(arg_29_0._equipList)
+	self:_onChooseChange()
+	self:setList(self._equipList)
 
-	local var_29_0 = {}
+	local showEffectTab = {}
 
-	for iter_29_0, iter_29_1 in ipairs(arg_29_0._chooseEquipList) do
-		table.insert(var_29_0, iter_29_1.uid)
+	for _, v in ipairs(self._chooseEquipList) do
+		table.insert(showEffectTab, v.uid)
 	end
 
-	EquipController.instance:dispatchEvent(EquipEvent.onAddEquipToPlayEffect, var_29_0)
+	EquipController.instance:dispatchEvent(EquipEvent.onAddEquipToPlayEffect, showEffectTab)
 end
 
-function var_0_0._sortNormal(arg_30_0, arg_30_1)
-	local var_30_0 = var_0_0.instance
-	local var_30_1 = var_30_0:sortChoose(arg_30_0, arg_30_1)
+function EquipChooseListModel._sortNormal(a, b)
+	local self = EquipChooseListModel.instance
+	local result = self:sortChoose(a, b)
 
-	if var_30_1 == nil then
-		var_30_1 = var_30_0:sortSame(arg_30_0, arg_30_1)
+	if result == nil then
+		result = self:sortSame(a, b)
 	end
 
-	if var_30_1 == nil then
-		var_30_1 = var_30_0:sortQuality(arg_30_0, arg_30_1)
+	if result == nil then
+		result = self:sortQuality(a, b)
 	end
 
-	if var_30_1 == nil then
-		var_30_1 = var_30_0:sortExp(arg_30_0, arg_30_1)
+	if result == nil then
+		result = self:sortExp(a, b)
 	end
 
-	if var_30_1 == nil then
-		var_30_1 = var_30_0:sortLevel(arg_30_0, arg_30_1)
+	if result == nil then
+		result = self:sortLevel(a, b)
 	end
 
-	if var_30_1 == nil then
-		var_30_1 = var_30_0:sortId(arg_30_0, arg_30_1)
+	if result == nil then
+		result = self:sortId(a, b)
 	end
 
-	return var_30_1
+	return result
 end
 
-function var_0_0._sortMaxLevel(arg_31_0, arg_31_1)
-	local var_31_0 = var_0_0.instance
-	local var_31_1 = var_31_0:sortChoose(arg_31_0, arg_31_1)
+function EquipChooseListModel._sortMaxLevel(a, b)
+	local self = EquipChooseListModel.instance
+	local result = self:sortChoose(a, b)
 
-	if var_31_1 == nil then
-		var_31_1 = var_31_0:sortLevel(arg_31_0, arg_31_1)
+	if result == nil then
+		result = self:sortLevel(a, b)
 	end
 
-	if var_31_1 == nil then
-		var_31_1 = var_31_0:sortId(arg_31_0, arg_31_1)
+	if result == nil then
+		result = self:sortId(a, b)
 	end
 
-	return var_31_1
+	return result
 end
 
-function var_0_0._sortMaxBreak(arg_32_0, arg_32_1)
-	local var_32_0 = var_0_0.instance
-	local var_32_1 = var_32_0:sortChoose(arg_32_0, arg_32_1)
+function EquipChooseListModel._sortMaxBreak(a, b)
+	local self = EquipChooseListModel.instance
+	local result = self:sortChoose(a, b)
 
-	if var_32_1 == nil then
-		var_32_1 = var_32_0:sortQuality(arg_32_0, arg_32_1)
+	if result == nil then
+		result = self:sortQuality(a, b)
 	end
 
-	if var_32_1 == nil then
-		var_32_1 = var_32_0:sortExp(arg_32_0, arg_32_1)
+	if result == nil then
+		result = self:sortExp(a, b)
 	end
 
-	if var_32_1 == nil then
-		var_32_1 = var_32_0:sortLevel(arg_32_0, arg_32_1)
+	if result == nil then
+		result = self:sortLevel(a, b)
 	end
 
-	if var_32_1 == nil then
-		var_32_1 = var_32_0:sortId(arg_32_0, arg_32_1)
+	if result == nil then
+		result = self:sortId(a, b)
 	end
 
-	return var_32_1
+	return result
 end
 
-function var_0_0.filterStrengthen(arg_33_0, arg_33_1)
-	if arg_33_0._btnTag == 1 then
-		table.sort(arg_33_1, EquipHelper.sortByLevelFuncChooseListModel)
+function EquipChooseListModel:filterStrengthen(equipList)
+	if self._btnTag == 1 then
+		table.sort(equipList, EquipHelper.sortByLevelFuncChooseListModel)
 	else
-		table.sort(arg_33_1, EquipHelper.sortByQualityFuncChooseListModel)
+		table.sort(equipList, EquipHelper.sortByQualityFuncChooseListModel)
 	end
 end
 
-function var_0_0.sortId(arg_34_0, arg_34_1, arg_34_2)
-	local var_34_0 = arg_34_1.config.id
-	local var_34_1 = arg_34_2.config.id
+function EquipChooseListModel:sortId(a, b)
+	local valueA = a.config.id
+	local valueB = b.config.id
 
-	if var_34_0 == var_34_1 then
+	if valueA == valueB then
 		return false
 	end
 
-	return var_34_0 < var_34_1
+	return valueA < valueB
 end
 
-function var_0_0.sortLevel(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_1.level
-	local var_35_1 = arg_35_2.level
+function EquipChooseListModel:sortLevel(a, b)
+	local valueA = a.level
+	local valueB = b.level
 
-	if var_35_0 == var_35_1 then
+	if valueA == valueB then
 		return nil
 	end
 
-	if arg_35_0._levelAscend then
-		return var_35_0 < var_35_1
+	if self._levelAscend then
+		return valueA < valueB
 	else
-		return var_35_1 < var_35_0
+		return valueB < valueA
 	end
 end
 
-function var_0_0.sortExp(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = arg_36_1.config.isExpEquip
-	local var_36_1 = arg_36_2.config.isExpEquip
+function EquipChooseListModel:sortExp(a, b)
+	local valueA = a.config.isExpEquip
+	local valueB = b.config.isExpEquip
 
-	if var_36_0 == var_36_1 then
+	if valueA == valueB then
 		return nil
 	end
 
-	return var_36_1 < var_36_0
+	return valueB < valueA
 end
 
-function var_0_0.sortQuality(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = arg_37_1.config.rare
-	local var_37_1 = arg_37_2.config.rare
+function EquipChooseListModel:sortQuality(a, b)
+	local qualityA = a.config.rare
+	local qualityB = b.config.rare
 
-	if var_37_0 == var_37_1 then
+	if qualityA == qualityB then
 		return nil
 	end
 
-	if arg_37_0._qualityAscend then
-		return var_37_0 < var_37_1
+	if self._qualityAscend then
+		return qualityA < qualityB
 	else
-		return var_37_1 < var_37_0
+		return qualityB < qualityA
 	end
 end
 
-function var_0_0.sortSame(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = arg_38_1.config.id == arg_38_0._config.id
-	local var_38_1 = arg_38_2.config.id == arg_38_0._config.id
+function EquipChooseListModel:sortSame(a, b)
+	local sameA = a.config.id == self._config.id
+	local sameB = b.config.id == self._config.id
 
-	if var_38_0 and var_38_1 then
+	if sameA and sameB then
 		return nil
 	end
 
-	if var_38_0 then
+	if sameA then
 		return true
 	end
 
-	if var_38_1 then
+	if sameB then
 		return false
 	end
 end
 
-function var_0_0.sortChoose(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = arg_39_0._chooseEquipDic[arg_39_1.id]
-	local var_39_1 = arg_39_0._chooseEquipDic[arg_39_2.id]
+function EquipChooseListModel:sortChoose(a, b)
+	local chooseA = self._chooseEquipDic[a.id]
+	local chooseB = self._chooseEquipDic[b.id]
 
-	if var_39_0 and var_39_1 then
+	if chooseA and chooseB then
 		return nil
 	end
 
-	if var_39_0 then
+	if chooseA then
 		return true
 	end
 
-	if var_39_1 then
+	if chooseB then
 		return false
 	end
 end
 
-function var_0_0.getBtnTag(arg_40_0)
-	return arg_40_0._btnTag
+function EquipChooseListModel:getBtnTag()
+	return self._btnTag
 end
 
-function var_0_0.getRankState(arg_41_0)
-	return arg_41_0._levelAscend and 1 or -1, arg_41_0._qualityAscend and 1 or -1
+function EquipChooseListModel:getRankState()
+	return self._levelAscend and 1 or -1, self._qualityAscend and 1 or -1
 end
 
-function var_0_0.sordByLevel(arg_42_0)
-	arg_42_0:resetQualitySortStatus()
+function EquipChooseListModel:sordByLevel()
+	self:resetQualitySortStatus()
 
-	if arg_42_0._btnTag == 1 then
-		arg_42_0._levelAscend = not arg_42_0._levelAscend
+	if self._btnTag == 1 then
+		self._levelAscend = not self._levelAscend
 	else
-		arg_42_0._btnTag = 1
+		self._btnTag = 1
 	end
 
-	arg_42_0:filterStrengthen(arg_42_0._equipList)
-	arg_42_0:setList(arg_42_0._equipList)
+	self:filterStrengthen(self._equipList)
+	self:setList(self._equipList)
 end
 
-function var_0_0.sordByQuality(arg_43_0)
-	arg_43_0:resetLevelSortStatus()
+function EquipChooseListModel:sordByQuality()
+	self:resetLevelSortStatus()
 
-	if arg_43_0._btnTag == 2 then
-		arg_43_0._qualityAscend = not arg_43_0._qualityAscend
+	if self._btnTag == 2 then
+		self._qualityAscend = not self._qualityAscend
 	else
-		arg_43_0._btnTag = 2
+		self._btnTag = 2
 	end
 
-	arg_43_0:filterStrengthen(arg_43_0._equipList)
-	arg_43_0:setList(arg_43_0._equipList)
+	self:filterStrengthen(self._equipList)
+	self:setList(self._equipList)
 end
 
-function var_0_0.clearEquipList(arg_44_0)
-	local var_44_0 = EquipModel.instance:getEquips()
+function EquipChooseListModel:clearEquipList()
+	local list = EquipModel.instance:getEquips()
 
-	for iter_44_0, iter_44_1 in ipairs(var_44_0) do
-		iter_44_1._canBreak = nil
-		iter_44_1._isBreak = nil
+	for i, v in ipairs(list) do
+		v._canBreak = nil
+		v._isBreak = nil
 	end
 
-	arg_44_0._equipList = {}
-	arg_44_0._chooseEquipDic = {}
-	arg_44_0._chooseEquipList = {}
-	arg_44_0._targetMO = nil
+	self._equipList = {}
+	self._chooseEquipDic = {}
+	self._chooseEquipList = {}
+	self._targetMO = nil
 end
 
-function var_0_0.equipInTeam(arg_45_0, arg_45_1)
-	if not arg_45_0._allInTeamEquips then
-		arg_45_0._allInTeamEquips = {}
+function EquipChooseListModel:equipInTeam(uid)
+	if not self._allInTeamEquips then
+		self._allInTeamEquips = {}
 
-		local var_45_0 = HeroGroupModel.instance:getCurGroupMO()
+		local groupMO = HeroGroupModel.instance:getCurGroupMO()
 
-		if var_45_0 then
-			local var_45_1 = var_45_0:getAllPosEquips()
+		if groupMO then
+			local equips = groupMO:getAllPosEquips()
 
-			for iter_45_0, iter_45_1 in pairs(var_45_1) do
-				for iter_45_2, iter_45_3 in pairs(iter_45_1.equipUid) do
-					local var_45_2 = arg_45_0._allInTeamEquips[iter_45_3]
+			for pos, v in pairs(equips) do
+				for _, uid in pairs(v.equipUid) do
+					local groupList = self._allInTeamEquips[uid]
 
-					if not var_45_2 then
-						var_45_2 = {}
-						arg_45_0._allInTeamEquips[iter_45_3] = var_45_2
+					if not groupList then
+						groupList = {}
+						self._allInTeamEquips[uid] = groupList
 					end
 
-					table.insert(var_45_2, {
+					table.insert(groupList, {
 						1,
-						iter_45_0 + 1
+						pos + 1
 					})
 				end
 			end
 		end
 	end
 
-	return arg_45_0._allInTeamEquips[arg_45_1]
+	return self._allInTeamEquips[uid]
 end
 
-function var_0_0.clearTeamInfo(arg_46_0)
-	arg_46_0._allInTeamEquips = nil
+function EquipChooseListModel:clearTeamInfo()
+	self._allInTeamEquips = nil
 end
 
-function var_0_0.openEquipView(arg_47_0)
-	arg_47_0.equipUidToHeroMo = {}
-	arg_47_0.equipUidToInGroup = {}
+function EquipChooseListModel:openEquipView()
+	self.equipUidToHeroMo = {}
+	self.equipUidToInGroup = {}
 
-	local var_47_0 = HeroGroupModel.instance:getMainGroupMo()
-	local var_47_1 = var_47_0:getAllPosEquips()
-	local var_47_2 = var_47_0.heroList
+	local groupMO = HeroGroupModel.instance:getMainGroupMo()
+	local groupAllEquips = groupMO:getAllPosEquips()
+	local heroUidList = groupMO.heroList
 
-	for iter_47_0, iter_47_1 in pairs(var_47_1) do
-		local var_47_3 = HeroModel.instance:getById(var_47_2[iter_47_0 + 1])
+	for index, heroGroupEquipMO in pairs(groupAllEquips) do
+		local heroMo = HeroModel.instance:getById(heroUidList[index + 1])
 
-		arg_47_0.equipUidToHeroMo[iter_47_1.equipUid[1]] = var_47_3
-		arg_47_0.equipUidToInGroup[iter_47_1.equipUid[1]] = true
+		self.equipUidToHeroMo[heroGroupEquipMO.equipUid[1]] = heroMo
+		self.equipUidToInGroup[heroGroupEquipMO.equipUid[1]] = true
 	end
 
-	arg_47_0:resetSortStatus()
+	self:resetSortStatus()
 end
 
-function var_0_0.getHeroMoByEquipUid(arg_48_0, arg_48_1)
-	return arg_48_0.equipUidToHeroMo and arg_48_0.equipUidToHeroMo[arg_48_1]
+function EquipChooseListModel:getHeroMoByEquipUid(equipUid)
+	return self.equipUidToHeroMo and self.equipUidToHeroMo[equipUid]
 end
 
-function var_0_0.isInGroup(arg_49_0, arg_49_1)
-	return arg_49_0.equipUidToInGroup and arg_49_0.equipUidToInGroup[arg_49_1]
+function EquipChooseListModel:isInGroup(equipUid)
+	return self.equipUidToInGroup and self.equipUidToInGroup[equipUid]
 end
 
-function var_0_0.resetSortStatus(arg_50_0)
-	arg_50_0._btnTag = 1
+function EquipChooseListModel:resetSortStatus()
+	self._btnTag = 1
 
-	arg_50_0:resetLevelSortStatus()
-	arg_50_0:resetQualitySortStatus()
+	self:resetLevelSortStatus()
+	self:resetQualitySortStatus()
 end
 
-function var_0_0.resetLevelSortStatus(arg_51_0)
-	arg_51_0._levelAscend = false
+function EquipChooseListModel:resetLevelSortStatus()
+	self._levelAscend = false
 end
 
-function var_0_0.resetQualitySortStatus(arg_52_0)
-	arg_52_0._qualityAscend = false
+function EquipChooseListModel:resetQualitySortStatus()
+	self._qualityAscend = false
 end
 
-function var_0_0.getFilterRare(arg_53_0)
-	if not arg_53_0.filterRare then
-		arg_53_0.filterRare = EquipConfig.instance:getMinFilterRare()
+function EquipChooseListModel:getFilterRare()
+	if not self.filterRare then
+		self.filterRare = EquipConfig.instance:getMinFilterRare()
 	end
 
-	logNormal("EquipChooseListModel : get filter rare : " .. tostring(arg_53_0.filterRare))
+	logNormal("EquipChooseListModel : get filter rare : " .. tostring(self.filterRare))
 
-	return arg_53_0.filterRare
+	return self.filterRare
 end
 
-function var_0_0.setFilterRare(arg_54_0, arg_54_1)
-	logNormal("EquipChooseListModel : set filter rare : " .. tostring(arg_54_1))
+function EquipChooseListModel:setFilterRare(rare)
+	logNormal("EquipChooseListModel : set filter rare : " .. tostring(rare))
 
-	arg_54_0.filterRare = arg_54_1
+	self.filterRare = rare
 end
 
-function var_0_0.setIsLock(arg_55_0, arg_55_1)
-	arg_55_0.isLock = arg_55_1
+function EquipChooseListModel:setIsLock(isLock)
+	self.isLock = isLock
 end
 
-function var_0_0.clear(arg_56_0)
-	arg_56_0.equipUidToHeroMo = {}
-	arg_56_0.equipUidToInGroup = {}
+function EquipChooseListModel:clear()
+	self.equipUidToHeroMo = {}
+	self.equipUidToInGroup = {}
 end
 
-var_0_0.instance = var_0_0.New()
+EquipChooseListModel.instance = EquipChooseListModel.New()
 
-return var_0_0
+return EquipChooseListModel

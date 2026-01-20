@@ -1,171 +1,173 @@
-﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneMapEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/entitymgr/RoomSceneMapEntityMgr.lua
 
-local var_0_0 = class("RoomSceneMapEntityMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.room.comp.entitymgr.RoomSceneMapEntityMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneMapEntityMgr = class("RoomSceneMapEntityMgr", BaseSceneUnitMgr)
+
+function RoomSceneMapEntityMgr:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneMapEntityMgr:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
-	local var_2_0 = RoomMapBlockModel.instance:getBlockMOList()
+	local mapBlockMOList = RoomMapBlockModel.instance:getBlockMOList()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_1
+	for _, mo in ipairs(mapBlockMOList) do
+		local blockEntity
 
-		if iter_2_1.blockState == RoomBlockEnum.BlockState.Water then
-			var_2_1 = arg_2_0:getUnit(SceneTag.RoomEmptyBlock, iter_2_1.id)
+		if mo.blockState == RoomBlockEnum.BlockState.Water then
+			blockEntity = self:getUnit(SceneTag.RoomEmptyBlock, mo.id)
 		else
-			var_2_1 = arg_2_0:getUnit(SceneTag.RoomMapBlock, iter_2_1.id)
+			blockEntity = self:getUnit(SceneTag.RoomMapBlock, mo.id)
 		end
 
-		if not var_2_1 then
-			arg_2_0:spawnMapBlock(iter_2_1)
+		if not blockEntity then
+			self:spawnMapBlock(mo)
 		else
-			arg_2_0:_refreshBlockEntiy(var_2_1, iter_2_1)
+			self:_refreshBlockEntiy(blockEntity, mo)
 		end
 	end
 
-	if not arg_2_0:getUnit(SceneTag.Untagged, 1) then
-		arg_2_0:_spawnBlockEffect(RoomEnum.EffectKey.BlockCanPlaceKey, RoomBlockCanPlaceEntity, 1)
+	if not self:getUnit(SceneTag.Untagged, 1) then
+		self:_spawnBlockEffect(RoomEnum.EffectKey.BlockCanPlaceKey, RoomBlockCanPlaceEntity, 1)
 	end
 end
 
-function var_0_0.onSwitchMode(arg_3_0)
-	local var_3_0 = RoomMapBlockModel.instance
-	local var_3_1 = {
+function RoomSceneMapEntityMgr:onSwitchMode()
+	local tRoomMapBlockModel = RoomMapBlockModel.instance
+	local tempTags = {
 		SceneTag.RoomEmptyBlock,
 		SceneTag.RoomMapBlock
 	}
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		local var_3_2 = arg_3_0:getTagUnitDict(iter_3_1)
+	for _, tempSceneTag in ipairs(tempTags) do
+		local entityDic = self:getTagUnitDict(tempSceneTag)
 
-		if var_3_2 then
-			local var_3_3 = {}
+		if entityDic then
+			local removeIds = {}
 
-			for iter_3_2, iter_3_3 in pairs(var_3_2) do
-				local var_3_4
+			for unitId, entity in pairs(entityDic) do
+				local mo
 
-				if iter_3_1 == SceneTag.RoomEmptyBlock then
-					var_3_4 = var_3_0:getEmptyBlockMOById(iter_3_2)
+				if tempSceneTag == SceneTag.RoomEmptyBlock then
+					mo = tRoomMapBlockModel:getEmptyBlockMOById(unitId)
 				else
-					var_3_4 = var_3_0:getFullBlockMOById(iter_3_2)
+					mo = tRoomMapBlockModel:getFullBlockMOById(unitId)
 				end
 
-				if not var_3_4 then
-					table.insert(var_3_3, iter_3_2)
+				if not mo then
+					table.insert(removeIds, unitId)
 				end
 			end
 
-			for iter_3_4 = 1, #var_3_3 do
-				arg_3_0:removeUnit(iter_3_1, var_3_3[iter_3_4])
+			for i = 1, #removeIds do
+				self:removeUnit(tempSceneTag, removeIds[i])
 			end
 		end
 	end
 end
 
-function var_0_0._spawnBlockEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = arg_4_0._scene.go.blockRoot
-	local var_4_1 = gohelper.create3d(var_4_0, arg_4_1)
-	local var_4_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_1, arg_4_2, arg_4_3)
+function RoomSceneMapEntityMgr:_spawnBlockEffect(name, clsDefine, id)
+	local blockRoot = self._scene.go.blockRoot
+	local blockGO = gohelper.create3d(blockRoot, name)
+	local blockEffEntity = MonoHelper.addNoUpdateLuaComOnceToGo(blockGO, clsDefine, id)
 
-	gohelper.addChild(var_4_0, var_4_1)
-	arg_4_0:addUnit(var_4_2)
+	gohelper.addChild(blockRoot, blockGO)
+	self:addUnit(blockEffEntity)
 
-	return var_4_2
+	return blockEffEntity
 end
 
-function var_0_0.spawnMapBlock(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._scene.go.blockRoot
-	local var_5_1 = arg_5_1.hexPoint
+function RoomSceneMapEntityMgr:spawnMapBlock(mapBlockMO)
+	local blockRoot = self._scene.go.blockRoot
+	local hexPoint = mapBlockMO.hexPoint
 
-	if not var_5_1 then
+	if not hexPoint then
 		logError("RoomSceneMapEntityMgr: 没有位置信息")
 
 		return
 	end
 
-	local var_5_2 = gohelper.create3d(var_5_0, RoomResHelper.getBlockName(var_5_1))
-	local var_5_3
+	local blockGO = gohelper.create3d(blockRoot, RoomResHelper.getBlockName(hexPoint))
+	local blockEntity
 
-	if arg_5_1.blockState == RoomBlockEnum.BlockState.Water then
-		var_5_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_2, RoomEmptyBlockEntity, arg_5_1.id)
+	if mapBlockMO.blockState == RoomBlockEnum.BlockState.Water then
+		blockEntity = MonoHelper.addNoUpdateLuaComOnceToGo(blockGO, RoomEmptyBlockEntity, mapBlockMO.id)
 	else
-		var_5_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_2, RoomMapBlockEntity, arg_5_1.id)
+		blockEntity = MonoHelper.addNoUpdateLuaComOnceToGo(blockGO, RoomMapBlockEntity, mapBlockMO.id)
 	end
 
-	arg_5_0:addUnit(var_5_3)
-	gohelper.addChild(var_5_0, var_5_2)
-	arg_5_0:_refreshBlockEntiy(var_5_3, arg_5_1)
+	self:addUnit(blockEntity)
+	gohelper.addChild(blockRoot, blockGO)
+	self:_refreshBlockEntiy(blockEntity, mapBlockMO)
 
-	return var_5_3
+	return blockEntity
 end
 
-function var_0_0._refreshBlockEntiy(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = HexMath.hexToPosition(arg_6_2.hexPoint, RoomBlockEnum.BlockSize)
+function RoomSceneMapEntityMgr:_refreshBlockEntiy(blockEntity, mapBlockMO)
+	local position = HexMath.hexToPosition(mapBlockMO.hexPoint, RoomBlockEnum.BlockSize)
 
-	arg_6_1:setLocalPos(var_6_0.x, 0, var_6_0.y)
-	arg_6_1:refreshBlock()
-	arg_6_1:refreshRotation()
+	blockEntity:setLocalPos(position.x, 0, position.y)
+	blockEntity:refreshBlock()
+	blockEntity:refreshRotation()
 end
 
-function var_0_0.moveTo(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = HexMath.hexToPosition(arg_7_2, RoomBlockEnum.BlockSize)
+function RoomSceneMapEntityMgr:moveTo(entity, hexPoint)
+	local position = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
 
-	arg_7_1:setLocalPos(var_7_0.x, 0, var_7_0.y)
+	entity:setLocalPos(position.x, 0, position.y)
 end
 
-function var_0_0.destroyBlock(arg_8_0, arg_8_1)
-	arg_8_0:removeUnit(arg_8_1:getTag(), arg_8_1.id)
+function RoomSceneMapEntityMgr:destroyBlock(entity)
+	self:removeUnit(entity:getTag(), entity.id)
 end
 
-function var_0_0.getBlockEntity(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = (not arg_9_2 or arg_9_2 == SceneTag.RoomMapBlock) and arg_9_0:getTagUnitDict(SceneTag.RoomMapBlock)
-	local var_9_1 = var_9_0 and var_9_0[arg_9_1]
+function RoomSceneMapEntityMgr:getBlockEntity(id, sceneTag)
+	local tagEntitys = (not sceneTag or sceneTag == SceneTag.RoomMapBlock) and self:getTagUnitDict(SceneTag.RoomMapBlock)
+	local entity = tagEntitys and tagEntitys[id]
 
-	if var_9_1 then
-		return var_9_1
+	if entity then
+		return entity
 	end
 
-	local var_9_2 = (not arg_9_2 or arg_9_2 == SceneTag.RoomEmptyBlock) and arg_9_0:getTagUnitDict(SceneTag.RoomEmptyBlock)
+	tagEntitys = (not sceneTag or sceneTag == SceneTag.RoomEmptyBlock) and self:getTagUnitDict(SceneTag.RoomEmptyBlock)
 
-	return var_9_2 and var_9_2[arg_9_1]
+	return tagEntitys and tagEntitys[id]
 end
 
-function var_0_0.getMapBlockEntityDict(arg_10_0)
-	return arg_10_0._tagUnitDict[SceneTag.RoomMapBlock]
+function RoomSceneMapEntityMgr:getMapBlockEntityDict()
+	return self._tagUnitDict[SceneTag.RoomMapBlock]
 end
 
-function var_0_0.refreshAllBlockEntity(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getTagUnitDict(arg_11_1)
+function RoomSceneMapEntityMgr:refreshAllBlockEntity(sceneTag)
+	local entityDict = self:getTagUnitDict(sceneTag)
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in pairs(var_11_0) do
-			local var_11_1 = iter_11_1:getMO()
+	if entityDict then
+		for _, blockEntity in pairs(entityDict) do
+			local blockMO = blockEntity:getMO()
 
-			arg_11_0:_refreshBlockEntiy(iter_11_1, var_11_1)
+			self:_refreshBlockEntiy(blockEntity, blockMO)
 		end
 	end
 end
 
-function var_0_0.getPropertyBlock(arg_12_0)
-	if not arg_12_0._propertyBlock then
-		arg_12_0._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
+function RoomSceneMapEntityMgr:getPropertyBlock()
+	if not self._propertyBlock then
+		self._propertyBlock = UnityEngine.MaterialPropertyBlock.New()
 	end
 
-	return arg_12_0._propertyBlock
+	return self._propertyBlock
 end
 
-function var_0_0.onSceneClose(arg_13_0)
-	var_0_0.super.onSceneClose(arg_13_0)
+function RoomSceneMapEntityMgr:onSceneClose()
+	RoomSceneMapEntityMgr.super.onSceneClose(self)
 
-	if arg_13_0._propertyBlock then
-		arg_13_0._propertyBlock:Clear()
+	if self._propertyBlock then
+		self._propertyBlock:Clear()
 
-		arg_13_0._propertyBlock = nil
+		self._propertyBlock = nil
 	end
 end
 
-return var_0_0
+return RoomSceneMapEntityMgr

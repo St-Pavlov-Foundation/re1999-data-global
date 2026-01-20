@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.system.flow.FightRestartSequence", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/flow/FightRestartSequence.lua
 
-local var_0_0 = class("FightRestartSequence", FightWorkItem)
+module("modules.logic.fight.system.flow.FightRestartSequence", package.seeall)
 
-var_0_0.RestartType2Type = {
+local FightRestartSequence = class("FightRestartSequence", FightWorkItem)
+
+FightRestartSequence.RestartType2Type = {
 	[38] = 34,
 	[121] = 1,
 	[42] = 1,
@@ -33,19 +35,19 @@ var_0_0.RestartType2Type = {
 	[132] = 131
 }
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:com_registFlowSequence()
-	local var_1_1 = FightModel.instance:getFightParam()
+function FightRestartSequence:onStart()
+	local flow = self:com_registFlowSequence()
+	local fight_param = FightModel.instance:getFightParam()
 
-	var_1_0:addWork(FightWorkRestartAbandon.New(var_1_1))
-	var_1_0:addWork(FunctionWork.New(arg_1_0.startRestartGame, arg_1_0))
-	var_1_0:addWork(FightWorkRestartBefore.New(var_1_1))
-	var_1_0:addWork(FightWorkRestartRequest.New(var_1_1))
-	arg_1_0:playWorkAndDone(var_1_0)
+	flow:addWork(FightWorkRestartAbandon.New(fight_param))
+	flow:addWork(FunctionWork.New(self.startRestartGame, self))
+	flow:addWork(FightWorkRestartBefore.New(fight_param))
+	flow:addWork(FightWorkRestartRequest.New(fight_param))
+	self:playWorkAndDone(flow)
 end
 
-function var_0_0.startRestartGame(arg_2_0)
+function FightRestartSequence:startRestartGame()
 	FightMsgMgr.sendMsg(FightMsgId.RestartGame)
 end
 
-return var_0_0
+return FightRestartSequence

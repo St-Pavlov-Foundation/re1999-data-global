@@ -1,138 +1,140 @@
-﻿module("modules.logic.seasonver.act123.rpc.Activity123Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/rpc/Activity123Rpc.lua
 
-local var_0_0 = class("Activity123Rpc", BaseRpc)
+module("modules.logic.seasonver.act123.rpc.Activity123Rpc", package.seeall)
 
-function var_0_0.sendGet123InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity123Module_pb.Get123InfosRequest()
+local Activity123Rpc = class("Activity123Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity123Rpc:sendGet123InfosRequest(activityId, callback, callbackObj)
+	local req = Activity123Module_pb.Get123InfosRequest()
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet123InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function Activity123Rpc:onReceiveGet123InfosReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123Model.instance:setActInfo(arg_2_2)
-	Season123Controller.instance:dispatchEvent(Season123Event.GetActInfo, arg_2_2.activityId)
+	Season123Model.instance:setActInfo(msg)
+	Season123Controller.instance:dispatchEvent(Season123Event.GetActInfo, msg.activityId)
 end
 
-function var_0_0.onReceiveAct123BattleFinishPush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 ~= 0 then
+function Activity123Rpc:onReceiveAct123BattleFinishPush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123Model.instance:updateActInfoBattle(arg_3_2)
+	Season123Model.instance:updateActInfoBattle(msg)
 	Season123Controller.instance:dispatchEvent(Season123Event.GetActInfoBattleFinish)
 end
 
-function var_0_0.sendAct123EnterStageRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
-	local var_4_0 = Activity123Module_pb.Act123EnterStageRequest()
+function Activity123Rpc:sendAct123EnterStageRequest(activityId, stage, heroUids, equipUids, callback, callbackObj)
+	local req = Activity123Module_pb.Act123EnterStageRequest()
 
-	var_4_0.activityId = arg_4_1
-	var_4_0.stage = arg_4_2
+	req.activityId = activityId
+	req.stage = stage
 
-	for iter_4_0 = 1, #arg_4_3 do
-		var_4_0.heroUids:append(arg_4_3[iter_4_0])
+	for i = 1, #heroUids do
+		req.heroUids:append(heroUids[i])
 	end
 
-	return arg_4_0:sendMsg(var_4_0, arg_4_5, arg_4_6)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct123EnterStageReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= 0 then
+function Activity123Rpc:onReceiveAct123EnterStageReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123EpisodeListController.instance:onReceiveEnterStage(arg_5_2.stage)
+	Season123EpisodeListController.instance:onReceiveEnterStage(msg.stage)
 	Season123Controller.instance:dispatchEvent(Season123Event.EnterStageSuccess)
 end
 
-function var_0_0.sendAct123ChangeFightGroupRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = Activity123Module_pb.Act123ChangeFightGroupRequest()
+function Activity123Rpc:sendAct123ChangeFightGroupRequest(activityId, groupIndex, callback, callbackObj)
+	local req = Activity123Module_pb.Act123ChangeFightGroupRequest()
 
-	var_6_0.activityId = arg_6_1
-	var_6_0.heroGroupSnapshotSubId = arg_6_2
+	req.activityId = activityId
+	req.heroGroupSnapshotSubId = groupIndex
 
-	return arg_6_0:sendMsg(var_6_0, arg_6_3, arg_6_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct123ChangeFightGroupReply(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 ~= 0 then
+function Activity123Rpc:onReceiveAct123ChangeFightGroupReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_7_0 = Season123Model.instance:getActInfo(arg_7_2.activityId)
+	local mo = Season123Model.instance:getActInfo(msg.activityId)
 
-	if var_7_0 then
-		var_7_0.heroGroupSnapshotSubId = arg_7_2.heroGroupSnapshotSubId
+	if mo then
+		mo.heroGroupSnapshotSubId = msg.heroGroupSnapshotSubId
 
 		Season123Controller.instance:dispatchEvent(Season123Event.HeroGroupIndexChanged, {
-			actId = arg_7_2.activityId,
-			groupIndex = arg_7_2.heroGroupSnapshotSubId
+			actId = msg.activityId,
+			groupIndex = msg.heroGroupSnapshotSubId
 		})
 	end
 end
 
-function var_0_0.sendAct123EndStageRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	local var_8_0 = Activity123Module_pb.Act123EndStageRequest()
+function Activity123Rpc:sendAct123EndStageRequest(activityId, stage, callback, callbackObj)
+	local req = Activity123Module_pb.Act123EndStageRequest()
 
-	var_8_0.activityId = arg_8_1
-	var_8_0.stage = arg_8_2
+	req.activityId = activityId
+	req.stage = stage
 
-	return arg_8_0:sendMsg(var_8_0, arg_8_3, arg_8_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct123EndStageReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 ~= 0 then
+function Activity123Rpc:onReceiveAct123EndStageReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123Controller.instance:dispatchEvent(Season123Event.ResetStageFinished, arg_9_2.activityId)
+	Season123Controller.instance:dispatchEvent(Season123Event.ResetStageFinished, msg.activityId)
 end
 
-function var_0_0.onReceiveAct123ItemChangePush(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= 0 then
+function Activity123Rpc:onReceiveAct123ItemChangePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_10_0 = Season123Model.instance:getCurSeasonId()
+	local curSeasonId = Season123Model.instance:getCurSeasonId()
 
-	Season123Model.instance:updateItemMap(var_10_0, arg_10_2.act123Items, arg_10_2.deleteItems)
+	Season123Model.instance:updateItemMap(curSeasonId, msg.act123Items, msg.deleteItems)
 	Season123Controller.instance:dispatchEvent(Season123Event.OnEquipItemChange)
 end
 
-function var_0_0.sendStartAct123BattleRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7, arg_11_8, arg_11_9, arg_11_10, arg_11_11)
-	local var_11_0 = Activity123Module_pb.StartAct123BattleRequest()
+function Activity123Rpc:sendStartAct123BattleRequest(activityId, layer, chapterId, episodeId, fightParam, multiplication, endAdventure, useRecord, isRestart, callback, callbackObj)
+	local req = Activity123Module_pb.StartAct123BattleRequest()
 
-	var_11_0.activityId = arg_11_1
-	var_11_0.layer = arg_11_2
+	req.activityId = activityId
+	req.layer = layer
 
-	DungeonRpc.instance:packStartDungeonRequest(var_11_0.startDungeonRequest, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7, arg_11_8, arg_11_9)
-	Season123HeroGroupUtils.processFightGroupAssistHero(ModuleEnum.HeroGroupType.Season123, var_11_0.startDungeonRequest.fightGroup, arg_11_8)
+	DungeonRpc.instance:packStartDungeonRequest(req.startDungeonRequest, chapterId, episodeId, fightParam, multiplication, endAdventure, useRecord, isRestart)
+	Season123HeroGroupUtils.processFightGroupAssistHero(ModuleEnum.HeroGroupType.Season123, req.startDungeonRequest.fightGroup, useRecord)
 
-	return arg_11_0:sendMsg(var_11_0, arg_11_10, arg_11_11)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveStartAct123BattleReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == 0 then
-		local var_12_0 = Season123Model.instance:getBattleContext()
+function Activity123Rpc:onReceiveStartAct123BattleReply(resultCode, msg)
+	if resultCode == 0 then
+		local battleContext = Season123Model.instance:getBattleContext()
 
-		if var_12_0.actId == arg_12_2.activityId and (var_12_0.layer == nil or var_12_0.layer == arg_12_2.layer) then
-			local var_12_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+		if battleContext.actId == msg.activityId and (battleContext.layer == nil or battleContext.layer == msg.layer) then
+			local co = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
-			if var_12_1 and DungeonModel.isBattleEpisode(var_12_1) then
-				DungeonFightController.instance:onReceiveStartDungeonReply(arg_12_1, arg_12_2.startDungeonReply)
+			if co and DungeonModel.isBattleEpisode(co) then
+				DungeonFightController.instance:onReceiveStartDungeonReply(resultCode, msg.startDungeonReply)
 			end
 		end
 
-		if arg_12_2.updateAct123Stages and #arg_12_2.updateAct123Stages > 0 then
-			local var_12_2 = Season123Model.instance:getActInfo(arg_12_2.activityId)
+		if msg.updateAct123Stages and #msg.updateAct123Stages > 0 then
+			local seasonMO = Season123Model.instance:getActInfo(msg.activityId)
 
-			if var_12_2 then
-				var_12_2:updateStages(arg_12_2.updateAct123Stages)
+			if seasonMO then
+				seasonMO:updateStages(msg.updateAct123Stages)
 				Season123Controller.instance:dispatchEvent(Season123Event.StageInfoChanged)
 			end
 		end
@@ -141,145 +143,145 @@ function var_0_0.onReceiveStartAct123BattleReply(arg_12_0, arg_12_1, arg_12_2)
 	end
 end
 
-function var_0_0.sendComposeAct123EquipRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
-	local var_13_0 = Activity123Module_pb.ComposeAct123EquipRequest()
+function Activity123Rpc:sendComposeAct123EquipRequest(activityId, equipId, callback, callbackObj)
+	local req = Activity123Module_pb.ComposeAct123EquipRequest()
 
-	var_13_0.activityId = arg_13_1
-	var_13_0.equipId = arg_13_2
+	req.activityId = activityId
+	req.equipId = equipId
 
-	return arg_13_0:sendMsg(var_13_0, arg_13_3, arg_13_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveComposeAct123EquipReply(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 ~= 0 then
+function Activity123Rpc:onReceiveComposeAct123EquipReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	Season123EquipBookModel.instance:refreshBackpack()
-	Season123DecomposeModel.instance:initDatas(arg_14_2.activityId)
+	Season123DecomposeModel.instance:initDatas(msg.activityId)
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnItemChange)
 end
 
-function var_0_0.sendDecomposeAct123EquipRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	local var_15_0 = Activity123Module_pb.DecomposeAct123EquipRequest()
+function Activity123Rpc:sendDecomposeAct123EquipRequest(activityId, equipUids, callback, callbackObj)
+	local req = Activity123Module_pb.DecomposeAct123EquipRequest()
 
-	var_15_0.activityId = arg_15_1
+	req.activityId = activityId
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_2) do
-		table.insert(var_15_0.equipUids, iter_15_1)
+	for i, v in pairs(equipUids) do
+		table.insert(req.equipUids, v)
 	end
 
-	return arg_15_0:sendMsg(var_15_0, arg_15_3, arg_15_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveDecomposeAct123EquipReply(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 ~= 0 then
+function Activity123Rpc:onReceiveDecomposeAct123EquipReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123DecomposeModel.instance:removeHasDecomposeItems(arg_16_2.equipUids)
-	Season123EquipController.instance:checkHeroGroupCardExist(arg_16_2.activityId)
-	Season123EquipBookModel.instance:removeDecomposeEquipItem(arg_16_2.equipUids)
-	Season123DecomposeModel.instance:initDatas(arg_16_2.activityId)
+	Season123DecomposeModel.instance:removeHasDecomposeItems(msg.equipUids)
+	Season123EquipController.instance:checkHeroGroupCardExist(msg.activityId)
+	Season123EquipBookModel.instance:removeDecomposeEquipItem(msg.equipUids)
+	Season123DecomposeModel.instance:initDatas(msg.activityId)
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnItemChange)
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.CloseBatchDecomposeEffect)
 end
 
-function var_0_0.sendAct123OpenCardBagRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
-	local var_17_0 = Activity123Module_pb.Act123OpenCardBagRequest()
+function Activity123Rpc:sendAct123OpenCardBagRequest(activityId, itemId, callback, callbackObj)
+	local req = Activity123Module_pb.Act123OpenCardBagRequest()
 
-	var_17_0.activityId = arg_17_1
-	var_17_0.itemId = arg_17_2
+	req.activityId = activityId
+	req.itemId = itemId
 
-	return arg_17_0:sendMsg(var_17_0, arg_17_3, arg_17_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct123OpenCardBagReply(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_1 ~= 0 then
+function Activity123Rpc:onReceiveAct123OpenCardBagReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123CardPackageModel.instance:initData(arg_18_2.activityId)
-	Season123CardPackageModel.instance:setCardItemList(arg_18_2.act123EquipIds)
+	Season123CardPackageModel.instance:initData(msg.activityId)
+	Season123CardPackageModel.instance:setCardItemList(msg.act123EquipIds)
 	Season123Controller.instance:dispatchEvent(Season123Event.OnCardPackageOpen)
 end
 
-function var_0_0.sendAct123ResetOtherStageRequest(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	local var_19_0 = Activity123Module_pb.Act123ResetOtherStageRequest()
+function Activity123Rpc:sendAct123ResetOtherStageRequest(actId, stage, callback, callbackObj)
+	local req = Activity123Module_pb.Act123ResetOtherStageRequest()
 
-	var_19_0.activityId = arg_19_1
-	var_19_0.enterStage = arg_19_2
+	req.activityId = actId
+	req.enterStage = stage
 
-	return arg_19_0:sendMsg(var_19_0, arg_19_3, arg_19_4)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct123ResetOtherStageReply(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_1 == 0 and arg_20_2.updateAct123Stages and #arg_20_2.updateAct123Stages > 0 then
-		local var_20_0 = Season123Model.instance:getActInfo(arg_20_2.activityId)
+function Activity123Rpc:onReceiveAct123ResetOtherStageReply(resultCode, msg)
+	if resultCode == 0 and msg.updateAct123Stages and #msg.updateAct123Stages > 0 then
+		local seasonMO = Season123Model.instance:getActInfo(msg.activityId)
 
-		if var_20_0 then
-			var_20_0:updateStages(arg_20_2.updateAct123Stages)
+		if seasonMO then
+			seasonMO:updateStages(msg.updateAct123Stages)
 			Season123Controller.instance:dispatchEvent(Season123Event.StageInfoChanged)
 		end
 	end
 end
 
-function var_0_0.sendAct123ResetHighLayerRequest(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5)
-	local var_21_0 = Activity123Module_pb.Act123ResetHighLayerRequest()
+function Activity123Rpc:sendAct123ResetHighLayerRequest(actId, stage, layer, callback, callbackObj)
+	local req = Activity123Module_pb.Act123ResetHighLayerRequest()
 
-	var_21_0.activityId = arg_21_1
-	var_21_0.stage = arg_21_2
-	var_21_0.layer = arg_21_3
+	req.activityId = actId
+	req.stage = stage
+	req.layer = layer
 
-	return arg_21_0:sendMsg(var_21_0, arg_21_4, arg_21_5)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct123ResetHighLayerReply(arg_22_0, arg_22_1, arg_22_2)
-	if arg_22_1 == 0 and arg_22_2.updateAct123Stages and #arg_22_2.updateAct123Stages > 0 then
-		local var_22_0 = Season123Model.instance:getActInfo(arg_22_2.activityId)
+function Activity123Rpc:onReceiveAct123ResetHighLayerReply(resultCode, msg)
+	if resultCode == 0 and msg.updateAct123Stages and #msg.updateAct123Stages > 0 then
+		local seasonMO = Season123Model.instance:getActInfo(msg.activityId)
 
-		if var_22_0 then
-			var_22_0.stage = arg_22_2.stage
+		if seasonMO then
+			seasonMO.stage = msg.stage
 
-			var_22_0:updateStages(arg_22_2.updateAct123Stages)
+			seasonMO:updateStages(msg.updateAct123Stages)
 			Season123Controller.instance:dispatchEvent(Season123Event.StageInfoChanged)
 		end
 	end
 end
 
-function var_0_0.sendGetUnlockAct123EquipIdsRequest(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = Activity123Module_pb.GetUnlockAct123EquipIdsRequest()
+function Activity123Rpc:sendGetUnlockAct123EquipIdsRequest(actId, callback, callbackObj)
+	local req = Activity123Module_pb.GetUnlockAct123EquipIdsRequest()
 
-	var_23_0.activityId = arg_23_1
+	req.activityId = actId
 
-	return arg_23_0:sendMsg(var_23_0, arg_23_2, arg_23_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetUnlockAct123EquipIdsReply(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_1 ~= 0 then
+function Activity123Rpc:onReceiveGetUnlockAct123EquipIdsReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123Model.instance:setUnlockAct123EquipIds(arg_24_2)
+	Season123Model.instance:setUnlockAct123EquipIds(msg)
 end
 
-function var_0_0.sendGetAct123StageRecordRequest(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4)
-	local var_25_0 = Activity123Module_pb.GetAct123StageRecordRequest()
+function Activity123Rpc:sendGetAct123StageRecordRequest(actId, stage, cb, cbObj)
+	local req = Activity123Module_pb.GetAct123StageRecordRequest()
 
-	var_25_0.activityId = arg_25_1
-	var_25_0.stage = arg_25_2
+	req.activityId = actId
+	req.stage = stage
 
-	return arg_25_0:sendMsg(var_25_0, arg_25_3, arg_25_4)
+	return self:sendMsg(req, cb, cbObj)
 end
 
-function var_0_0.onReceiveGetAct123StageRecordReply(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_1 ~= 0 then
+function Activity123Rpc:onReceiveGetAct123StageRecordReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	Season123RecordModel.instance:setSeason123ServerRecordData(arg_26_2)
+	Season123RecordModel.instance:setSeason123ServerRecordData(msg)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity123Rpc.instance = Activity123Rpc.New()
 
-return var_0_0
+return Activity123Rpc

@@ -1,21 +1,23 @@
-﻿module("modules.common.others.CustomAnimContainer", package.seeall)
+﻿-- chunkname: @modules/common/others/CustomAnimContainer.lua
 
-local var_0_0 = BaseViewContainer
-local var_0_1 = typeof(SLFramework.AnimatorPlayer)
+module("modules.common.others.CustomAnimContainer", package.seeall)
 
-var_0_0.superOnContainerInit = var_0_0.onContainerInit
-var_0_0.superOnPlayOpenTransitionFinish = var_0_0.onPlayOpenTransitionFinish
-var_0_0.superOnPlayCloseTransitionFinish = var_0_0.onPlayCloseTransitionFinish
-var_0_0.superDestroyView = var_0_0.destroyView
-var_0_0.openViewTime = 0.2
-var_0_0.closeViewTime = 0.1
-var_0_0.openViewEase = EaseType.Linear
-var_0_0.closeViewEase = EaseType.Linear
+local BaseViewContainer = BaseViewContainer
+local TypeAnimatorPlayer = typeof(SLFramework.AnimatorPlayer)
 
-local var_0_2
+BaseViewContainer.superOnContainerInit = BaseViewContainer.onContainerInit
+BaseViewContainer.superOnPlayOpenTransitionFinish = BaseViewContainer.onPlayOpenTransitionFinish
+BaseViewContainer.superOnPlayCloseTransitionFinish = BaseViewContainer.onPlayCloseTransitionFinish
+BaseViewContainer.superDestroyView = BaseViewContainer.destroyView
+BaseViewContainer.openViewTime = 0.2
+BaseViewContainer.closeViewTime = 0.1
+BaseViewContainer.openViewEase = EaseType.Linear
+BaseViewContainer.closeViewEase = EaseType.Linear
 
-function var_0_0.initForceAnimViewList()
-	var_0_2 = {
+local forceCloseAnimViewList
+
+function BaseViewContainer.initForceAnimViewList()
+	forceCloseAnimViewList = {
 		ViewName.HeroGroupEditView,
 		ViewName.RougeHeroGroupEditView,
 		ViewName.HeroGroupPresetEditView,
@@ -35,338 +37,342 @@ function var_0_0.initForceAnimViewList()
 	}
 end
 
-function var_0_0.onContainerInit(arg_2_0)
-	var_0_0.superOnContainerInit(arg_2_0)
+function BaseViewContainer:onContainerInit()
+	BaseViewContainer.superOnContainerInit(self)
 
-	if not arg_2_0.viewGO then
+	if not self.viewGO then
 		return
 	end
 
-	local var_2_0 = arg_2_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if not var_2_0 then
+	if not animator then
 		return
 	end
 
-	local var_2_1 = var_2_0:GetCurrentAnimatorStateInfo(0)
-	local var_2_2 = var_2_1.normalizedTime
+	local stateInfo = animator:GetCurrentAnimatorStateInfo(0)
+	local normalizedTime = stateInfo.normalizedTime
 
-	if var_2_2 >= 1 then
+	if normalizedTime >= 1 then
 		return
 	end
 
-	local var_2_3 = var_2_1.length * (1 - var_2_2)
+	local length = stateInfo.length * (1 - normalizedTime)
 
-	if var_2_3 <= 0 then
+	if length <= 0 then
 		return
 	end
 
-	var_0_0.openViewAnimStartTime = Time.time
-	var_0_0.openViewAnimLength = math.min(var_2_3, 1)
+	BaseViewContainer.openViewAnimStartTime = Time.time
+	BaseViewContainer.openViewAnimLength = math.min(length, 1)
 end
 
-function var_0_0.playOpenTransition(arg_3_0, arg_3_1)
-	arg_3_0:_cancelBlock()
-	arg_3_0:_stopOpenCloseAnim()
+function BaseViewContainer:playOpenTransition(paramTable)
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
 
-	if not arg_3_0._viewSetting.anim or arg_3_0._viewSetting.anim ~= ViewAnim.Default then
-		if not string.nilorempty(arg_3_0._viewSetting.anim) then
-			arg_3_0:_setAnimatorRes()
+	if not self._viewSetting.anim or self._viewSetting.anim ~= ViewAnim.Default then
+		if not string.nilorempty(self._viewSetting.anim) then
+			self:_setAnimatorRes()
 
-			if not arg_3_1 or not arg_3_1.noBlock then
-				arg_3_0:startViewOpenBlock()
+			if not paramTable or not paramTable.noBlock then
+				self:startViewOpenBlock()
 			end
 
-			local var_3_0 = arg_3_0:__getAnimatorPlayer()
+			local animatorPlayer = self:__getAnimatorPlayer()
 
-			if not gohelper.isNil(var_3_0) then
-				local var_3_1 = arg_3_1 and arg_3_1.anim or "open"
+			if not gohelper.isNil(animatorPlayer) then
+				local animName = paramTable and paramTable.anim or "open"
 
-				var_3_0:Play(var_3_1, arg_3_0.onPlayOpenTransitionFinish, arg_3_0)
+				animatorPlayer:Play(animName, self.onPlayOpenTransitionFinish, self)
 			end
 
-			local var_3_2 = arg_3_1 and arg_3_1.duration or 2
+			local duration = paramTable and paramTable.duration or 2
 
-			TaskDispatcher.runDelay(arg_3_0.onPlayOpenTransitionFinish, arg_3_0, var_3_2)
+			TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, duration)
 		else
-			arg_3_0:onPlayOpenTransitionFinish()
+			self:onPlayOpenTransitionFinish()
 		end
 
 		return
 	end
 
-	if not arg_3_0._canvasGroup then
-		arg_3_0:onPlayOpenTransitionFinish()
+	if not self._canvasGroup then
+		self:onPlayOpenTransitionFinish()
 
 		return
 	end
 
-	if not arg_3_1 or not arg_3_1.noBlock then
-		arg_3_0:startViewOpenBlock()
+	if not paramTable or not paramTable.noBlock then
+		self:startViewOpenBlock()
 	end
 
-	arg_3_0:_animSetAlpha(0.01, true)
+	self:_animSetAlpha(0.01, true)
 
-	local var_3_3 = arg_3_0._viewSetting.customAnimFadeTime and arg_3_0._viewSetting.customAnimFadeTime[1] or var_0_0.openViewTime
-	local var_3_4 = var_0_0.openViewEase
+	local openViewTime = self._viewSetting.customAnimFadeTime and self._viewSetting.customAnimFadeTime[1] or BaseViewContainer.openViewTime
+	local openViewEase = BaseViewContainer.openViewEase
 
-	arg_3_0._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(0.01, 1, var_3_3, arg_3_0._onOpenTweenFrameCallback, arg_3_0._onOpenTweenFinishCallback, arg_3_0, nil, var_3_4)
+	self._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(0.01, 1, openViewTime, self._onOpenTweenFrameCallback, self._onOpenTweenFinishCallback, self, nil, openViewEase)
 
-	TaskDispatcher.runDelay(arg_3_0.onPlayOpenTransitionFinish, arg_3_0, 2)
+	TaskDispatcher.runDelay(self.onPlayOpenTransitionFinish, self, 2)
 end
 
-function var_0_0.onPlayOpenTransitionFinish(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.onPlayOpenTransitionFinish, arg_4_0)
-	arg_4_0:_cancelBlock()
-	var_0_0.superOnPlayOpenTransitionFinish(arg_4_0)
+function BaseViewContainer:onPlayOpenTransitionFinish()
+	TaskDispatcher.cancelTask(self.onPlayOpenTransitionFinish, self)
+	self:_cancelBlock()
+	BaseViewContainer.superOnPlayOpenTransitionFinish(self)
 end
 
-function var_0_0._setAnimatorRes(arg_5_0)
-	if string.find(arg_5_0._viewSetting.anim, ".controller") then
-		gohelper.onceAddComponent(arg_5_0.viewGO, typeof(UnityEngine.Animator)).runtimeAnimatorController = arg_5_0._abLoader:getAssetItem(arg_5_0._viewSetting.anim):GetResource()
+function BaseViewContainer:_setAnimatorRes()
+	if string.find(self._viewSetting.anim, ".controller") then
+		local animator = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
+		local animatorInst = self._abLoader:getAssetItem(self._viewSetting.anim):GetResource()
+
+		animator.runtimeAnimatorController = animatorInst
 	end
 end
 
-function var_0_0.__getAnimatorPlayer(arg_6_0)
-	if not arg_6_0.__animatorPlayer and not gohelper.isNil(arg_6_0.viewGO) then
-		arg_6_0.__animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
+function BaseViewContainer:__getAnimatorPlayer()
+	if not self.__animatorPlayer and not gohelper.isNil(self.viewGO) then
+		self.__animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
 	end
 
-	return arg_6_0.__animatorPlayer
+	return self.__animatorPlayer
 end
 
-function var_0_0._onOpenTweenFrameCallback(arg_7_0, arg_7_1)
-	if arg_7_0._viewStatus ~= var_0_0.Status_Opening then
+function BaseViewContainer:_onOpenTweenFrameCallback(value)
+	if self._viewStatus ~= BaseViewContainer.Status_Opening then
 		return
 	end
 
-	arg_7_0:_animSetAlpha(arg_7_1, true)
+	self:_animSetAlpha(value, true)
 end
 
-function var_0_0._onOpenTweenFinishCallback(arg_8_0)
-	arg_8_0._openAnimTweenId = nil
+function BaseViewContainer:_onOpenTweenFinishCallback()
+	self._openAnimTweenId = nil
 
-	if arg_8_0._viewStatus ~= var_0_0.Status_Opening then
+	if self._viewStatus ~= BaseViewContainer.Status_Opening then
 		return
 	end
 
-	arg_8_0:_animSetAlpha(1)
-	arg_8_0:onPlayOpenTransitionFinish()
+	self:_animSetAlpha(1)
+	self:onPlayOpenTransitionFinish()
 end
 
-function var_0_0._animSetAlpha(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._canvasGroup.alpha = arg_9_1
+function BaseViewContainer:_animSetAlpha(value, keepBg)
+	self._canvasGroup.alpha = value
 
 	do return end
 
-	local var_9_0 = arg_9_1
+	local bgValue = value
 
-	if arg_9_2 then
-		var_9_0 = arg_9_1 <= 0.0001 and 0 or 1 / arg_9_1
+	if keepBg then
+		bgValue = value <= 0.0001 and 0 or 1 / value
 	end
 
-	local var_9_1 = arg_9_0:_animGetBgs()
+	local bgs = self:_animGetBgs()
 
-	if not var_9_1 then
+	if not bgs then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in pairs(var_9_1) do
-		if iter_9_1.gameObject then
-			iter_9_1:SetAlpha(var_9_0)
+	for _, bg in pairs(bgs) do
+		if bg.gameObject then
+			bg:SetAlpha(bgValue)
 		end
 	end
 end
 
-function var_0_0._animGetBgs(arg_10_0)
-	if not arg_10_0._viewSetting.customAnimBg then
+function BaseViewContainer:_animGetBgs()
+	if not self._viewSetting.customAnimBg then
 		return nil
 	end
 
-	if arg_10_0._animBgs then
-		return arg_10_0._animBgs
+	if self._animBgs then
+		return self._animBgs
 	end
 
-	arg_10_0._animBgs = {}
+	self._animBgs = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._viewSetting.customAnimBg) do
-		local var_10_0 = gohelper.findChild(arg_10_0.viewGO, iter_10_1)
+	for _, path in ipairs(self._viewSetting.customAnimBg) do
+		local go = gohelper.findChild(self.viewGO, path)
 
-		if var_10_0 then
-			local var_10_1 = var_10_0:GetComponent(typeof(UnityEngine.CanvasRenderer))
+		if go then
+			local cr = go:GetComponent(typeof(UnityEngine.CanvasRenderer))
 
-			if var_10_1 then
-				table.insert(arg_10_0._animBgs, var_10_1)
+			if cr then
+				table.insert(self._animBgs, cr)
 			end
 
-			local var_10_2 = var_10_0:GetComponentsInChildren(typeof(UnityEngine.CanvasRenderer), true):GetEnumerator()
+			local crs = go:GetComponentsInChildren(typeof(UnityEngine.CanvasRenderer), true)
+			local iter = crs:GetEnumerator()
 
-			while var_10_2:MoveNext() do
-				table.insert(arg_10_0._animBgs, var_10_2.Current)
+			while iter:MoveNext() do
+				table.insert(self._animBgs, iter.Current)
 			end
 		end
 	end
 
-	return arg_10_0._animBgs
+	return self._animBgs
 end
 
-function var_0_0.animBgUpdate(arg_11_0)
-	arg_11_0._animBgs = nil
+function BaseViewContainer:animBgUpdate()
+	self._animBgs = nil
 end
 
-function var_0_0.playCloseTransition(arg_12_0, arg_12_1)
-	arg_12_0:_cancelBlock()
-	arg_12_0:_stopOpenCloseAnim()
+function BaseViewContainer:playCloseTransition(paramTable)
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
 
-	if not var_0_2 then
-		var_0_0.initForceAnimViewList()
+	if not forceCloseAnimViewList then
+		BaseViewContainer.initForceAnimViewList()
 	end
 
-	if (not arg_12_0._viewSetting.anim or arg_12_0._viewSetting.anim ~= ViewAnim.Default) and not LuaUtil.tableContains(var_0_2, arg_12_0.viewName) then
-		if not string.nilorempty(arg_12_0._viewSetting.anim) then
-			arg_12_0:_setAnimatorRes()
+	if (not self._viewSetting.anim or self._viewSetting.anim ~= ViewAnim.Default) and not LuaUtil.tableContains(forceCloseAnimViewList, self.viewName) then
+		if not string.nilorempty(self._viewSetting.anim) then
+			self:_setAnimatorRes()
 
-			if not arg_12_1 or not arg_12_1.noBlock then
-				arg_12_0:startViewCloseBlock()
+			if not paramTable or not paramTable.noBlock then
+				self:startViewCloseBlock()
 			end
 
-			local var_12_0 = arg_12_0:__getAnimatorPlayer()
+			local animatorPlayer = self:__getAnimatorPlayer()
 
-			if not gohelper.isNil(var_12_0) then
-				local var_12_1 = arg_12_1 and arg_12_1.anim or "close"
+			if not gohelper.isNil(animatorPlayer) then
+				local animName = paramTable and paramTable.anim or "close"
 
-				var_12_0:Play(var_12_1, arg_12_0.onPlayCloseTransitionFinish, arg_12_0)
+				animatorPlayer:Play(animName, self.onPlayCloseTransitionFinish, self)
 			end
 
-			local var_12_2 = arg_12_1 and arg_12_1.duration or 2
+			local duration = paramTable and paramTable.duration or 2
 
-			TaskDispatcher.runDelay(arg_12_0.onPlayCloseTransitionFinish, arg_12_0, var_12_2)
+			TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, duration)
 		else
-			arg_12_0:onPlayCloseTransitionFinish()
+			self:onPlayCloseTransitionFinish()
 		end
 
 		return
 	end
 
-	if not arg_12_0._canvasGroup then
-		arg_12_0:onPlayCloseTransitionFinish()
+	if not self._canvasGroup then
+		self:onPlayCloseTransitionFinish()
 
 		return
 	end
 
-	if not arg_12_1 or not arg_12_1.noBlock then
-		arg_12_0:startViewCloseBlock()
+	if not paramTable or not paramTable.noBlock then
+		self:startViewCloseBlock()
 	end
 
-	arg_12_0:_animSetAlpha(1)
+	self:_animSetAlpha(1)
 
-	local var_12_3 = arg_12_0._viewSetting.customAnimFadeTime and arg_12_0._viewSetting.customAnimFadeTime[2] or var_0_0.closeViewTime
-	local var_12_4 = var_0_0.closeViewEase
+	local closeViewTime = self._viewSetting.customAnimFadeTime and self._viewSetting.customAnimFadeTime[2] or BaseViewContainer.closeViewTime
+	local closeViewEase = BaseViewContainer.closeViewEase
 
-	arg_12_0._closeAnimTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, var_12_3, arg_12_0._onCloseTweenFrameCallback, arg_12_0._onCloseTweenFinishCallback, arg_12_0, nil, var_12_4)
+	self._closeAnimTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, closeViewTime, self._onCloseTweenFrameCallback, self._onCloseTweenFinishCallback, self, nil, closeViewEase)
 
-	TaskDispatcher.runDelay(arg_12_0.onPlayCloseTransitionFinish, arg_12_0, 2)
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 2)
 end
 
-function var_0_0.onPlayCloseTransitionFinish(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.onPlayCloseTransitionFinish, arg_13_0)
-	arg_13_0:_cancelBlock()
-	var_0_0.superOnPlayCloseTransitionFinish(arg_13_0)
+function BaseViewContainer:onPlayCloseTransitionFinish()
+	TaskDispatcher.cancelTask(self.onPlayCloseTransitionFinish, self)
+	self:_cancelBlock()
+	BaseViewContainer.superOnPlayCloseTransitionFinish(self)
 end
 
-function var_0_0._onCloseTweenFrameCallback(arg_14_0, arg_14_1)
-	if arg_14_0._viewStatus ~= var_0_0.Status_Closing then
+function BaseViewContainer:_onCloseTweenFrameCallback(value)
+	if self._viewStatus ~= BaseViewContainer.Status_Closing then
 		return
 	end
 
-	arg_14_0:_animSetAlpha(arg_14_1)
+	self:_animSetAlpha(value)
 end
 
-function var_0_0._onCloseTweenFinishCallback(arg_15_0)
-	arg_15_0._closeAnimTweenId = nil
+function BaseViewContainer:_onCloseTweenFinishCallback()
+	self._closeAnimTweenId = nil
 
-	if arg_15_0._viewStatus ~= var_0_0.Status_Closing then
+	if self._viewStatus ~= BaseViewContainer.Status_Closing then
 		return
 	end
 
-	arg_15_0:_animSetAlpha(0)
-	arg_15_0:onPlayCloseTransitionFinish()
+	self:_animSetAlpha(0)
+	self:onPlayCloseTransitionFinish()
 end
 
-function var_0_0.startViewOpenBlock(arg_16_0)
-	UIBlockMgr.instance:startBlock(arg_16_0:_getViewOpenBlock())
+function BaseViewContainer:startViewOpenBlock()
+	UIBlockMgr.instance:startBlock(self:_getViewOpenBlock())
 end
 
-function var_0_0.startViewCloseBlock(arg_17_0)
-	UIBlockMgr.instance:startBlock(arg_17_0:_getViewCloseBlock())
+function BaseViewContainer:startViewCloseBlock()
+	UIBlockMgr.instance:startBlock(self:_getViewCloseBlock())
 end
 
-function var_0_0._cancelBlock(arg_18_0)
-	UIBlockMgr.instance:endBlock(arg_18_0:_getViewOpenBlock())
-	UIBlockMgr.instance:endBlock(arg_18_0:_getViewCloseBlock())
+function BaseViewContainer:_cancelBlock()
+	UIBlockMgr.instance:endBlock(self:_getViewOpenBlock())
+	UIBlockMgr.instance:endBlock(self:_getViewCloseBlock())
 end
 
-function var_0_0._getViewOpenBlock(arg_19_0)
-	if not arg_19_0._viewOpenBlock then
-		arg_19_0._viewOpenBlock = arg_19_0.viewName .. "ViewOpenAnim"
+function BaseViewContainer:_getViewOpenBlock()
+	if not self._viewOpenBlock then
+		self._viewOpenBlock = self.viewName .. "ViewOpenAnim"
 	end
 
-	return arg_19_0._viewOpenBlock
+	return self._viewOpenBlock
 end
 
-function var_0_0._getViewCloseBlock(arg_20_0)
-	if not arg_20_0._viewCloseBlock then
-		arg_20_0._viewCloseBlock = arg_20_0.viewName .. "ViewCloseAnim"
+function BaseViewContainer:_getViewCloseBlock()
+	if not self._viewCloseBlock then
+		self._viewCloseBlock = self.viewName .. "ViewCloseAnim"
 	end
 
-	return arg_20_0._viewCloseBlock
+	return self._viewCloseBlock
 end
 
-function var_0_0._stopOpenCloseAnim(arg_21_0)
-	if arg_21_0._openAnimTweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._openAnimTweenId)
+function BaseViewContainer:_stopOpenCloseAnim()
+	if self._openAnimTweenId then
+		ZProj.TweenHelper.KillById(self._openAnimTweenId)
 
-		arg_21_0._openAnimTweenId = nil
+		self._openAnimTweenId = nil
 	end
 
-	if arg_21_0._closeAnimTweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._closeAnimTweenId)
+	if self._closeAnimTweenId then
+		ZProj.TweenHelper.KillById(self._closeAnimTweenId)
 
-		arg_21_0._closeAnimTweenId = nil
+		self._closeAnimTweenId = nil
 	end
 
-	if not gohelper.isNil(arg_21_0.__animatorPlayer) then
-		arg_21_0.__animatorPlayer:Stop()
+	if not gohelper.isNil(self.__animatorPlayer) then
+		self.__animatorPlayer:Stop()
 	end
 
-	TaskDispatcher.cancelTask(arg_21_0.onPlayOpenTransitionFinish, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0.onPlayCloseTransitionFinish, arg_21_0)
+	TaskDispatcher.cancelTask(self.onPlayOpenTransitionFinish, self)
+	TaskDispatcher.cancelTask(self.onPlayCloseTransitionFinish, self)
 end
 
-function var_0_0._stopAllAnimatorPlayers(arg_22_0)
-	if not gohelper.isNil(arg_22_0.viewGO) then
-		local var_22_0 = arg_22_0.viewGO:GetComponentsInChildren(var_0_1, true)
+function BaseViewContainer:_stopAllAnimatorPlayers()
+	if not gohelper.isNil(self.viewGO) then
+		local allAnimatorPlayers = self.viewGO:GetComponentsInChildren(TypeAnimatorPlayer, true)
 
-		if var_22_0 then
-			for iter_22_0 = 0, var_22_0.Length - 1 do
-				var_22_0[iter_22_0]:Stop()
+		if allAnimatorPlayers then
+			for i = 0, allAnimatorPlayers.Length - 1 do
+				allAnimatorPlayers[i]:Stop()
 			end
 		end
 	end
 end
 
-function var_0_0.destroyView(arg_23_0)
-	arg_23_0:_cancelBlock()
-	arg_23_0:_stopOpenCloseAnim()
-	arg_23_0:_stopAllAnimatorPlayers()
+function BaseViewContainer:destroyView()
+	self:_cancelBlock()
+	self:_stopOpenCloseAnim()
+	self:_stopAllAnimatorPlayers()
 
-	arg_23_0.__animatorPlayer = nil
+	self.__animatorPlayer = nil
 
-	var_0_0.superDestroyView(arg_23_0)
+	BaseViewContainer.superDestroyView(self)
 end
 
-function var_0_0.activateCustom()
+function BaseViewContainer.activateCustom()
 	return
 end
 
-return var_0_0
+return BaseViewContainer

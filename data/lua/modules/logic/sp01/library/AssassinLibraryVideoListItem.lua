@@ -1,28 +1,30 @@
-﻿module("modules.logic.sp01.library.AssassinLibraryVideoListItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/library/AssassinLibraryVideoListItem.lua
 
-local var_0_0 = class("AssassinLibraryVideoListItem", ListScrollCell)
+module("modules.logic.sp01.library.AssassinLibraryVideoListItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.go, "#go_Odd")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.go, "#go_Even")
-	arg_1_0._leftInfoIetem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._goleft, AssassinLibraryVideoInfoItem)
-	arg_1_0._rightInfoIetem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._goright, AssassinLibraryVideoInfoItem)
+local AssassinLibraryVideoListItem = class("AssassinLibraryVideoListItem", ListScrollCell)
+
+function AssassinLibraryVideoListItem:init(go)
+	self.go = go
+	self._goleft = gohelper.findChild(self.go, "#go_Odd")
+	self._goright = gohelper.findChild(self.go, "#go_Even")
+	self._leftInfoIetem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goleft, AssassinLibraryVideoInfoItem)
+	self._rightInfoIetem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goright, AssassinLibraryVideoInfoItem)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0._index % 2 == 1
-	local var_2_1 = arg_2_0._view._model:getCount()
+function AssassinLibraryVideoListItem:onUpdateMO(libraryCo)
+	local isUseLeft = self._index % 2 == 1
+	local allVideoCount = self._view._model:getCount()
 
-	if var_2_0 then
-		arg_2_0._leftInfoIetem:updateIndex(var_2_1, arg_2_0._index)
-		arg_2_0._leftInfoIetem:onUpdateMO(arg_2_1)
-		arg_2_0._rightInfoIetem:setIsUsing(false)
+	if isUseLeft then
+		self._leftInfoIetem:updateIndex(allVideoCount, self._index)
+		self._leftInfoIetem:onUpdateMO(libraryCo)
+		self._rightInfoIetem:setIsUsing(false)
 	else
-		arg_2_0._leftInfoIetem:setIsUsing(false)
-		arg_2_0._rightInfoIetem:updateIndex(var_2_1, arg_2_0._index)
-		arg_2_0._rightInfoIetem:onUpdateMO(arg_2_1)
+		self._leftInfoIetem:setIsUsing(false)
+		self._rightInfoIetem:updateIndex(allVideoCount, self._index)
+		self._rightInfoIetem:onUpdateMO(libraryCo)
 	end
 end
 
-return var_0_0
+return AssassinLibraryVideoListItem

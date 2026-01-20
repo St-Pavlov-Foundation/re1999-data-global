@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_actvity186_mini_game_question", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_actvity186_mini_game_question.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_actvity186_mini_game_question", package.seeall)
+
+local lua_actvity186_mini_game_question = {}
+local fields = {
 	rewardId1 = 7,
 	rewardId2 = 10,
 	question = 4,
@@ -17,11 +19,11 @@ local var_0_1 = {
 	activityId = 1,
 	sort = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	answer2 = 4,
 	feedback1 = 3,
 	question = 1,
@@ -32,8 +34,8 @@ local var_0_3 = {
 	answer1 = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_actvity186_mini_game_question.onLoad(json)
+	lua_actvity186_mini_game_question.configList, lua_actvity186_mini_game_question.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_actvity186_mini_game_question

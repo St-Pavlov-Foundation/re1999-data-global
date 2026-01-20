@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.config.NuoDiKaConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/config/NuoDiKaConfig.lua
 
-local var_0_0 = class("NuoDiKaConfig", BaseConfig)
+module("modules.logic.versionactivity2_8.nuodika.config.NuoDiKaConfig", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local NuoDiKaConfig = class("NuoDiKaConfig", BaseConfig)
+
+function NuoDiKaConfig:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function NuoDiKaConfig:reInit()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_3_0)
+function NuoDiKaConfig:reqConfigNames()
 	return {
 		"activity_nuodika_180_const",
 		"activity_nuodika_180_event",
@@ -20,84 +22,90 @@ function var_0_0.reqConfigNames(arg_3_0)
 	}
 end
 
-function var_0_0.getMapCo(arg_4_0, arg_4_1)
-	local var_4_0 = addGlobalModule("modules.configs.nuodika.lua_nuodika_map_" .. tostring(arg_4_1), "lua_nuodika_map_" .. tostring(arg_4_1))
+function NuoDiKaConfig:getMapCo(mapId)
+	local mapCo = addGlobalModule("modules.configs.nuodika.lua_nuodika_map_" .. tostring(mapId), "lua_nuodika_map_" .. tostring(mapId))
 
-	if not var_4_0 then
-		logError("诺谛卡地图配置不存在" .. arg_4_1)
+	if not mapCo then
+		logError("诺谛卡地图配置不存在" .. mapId)
 
 		return
 	end
 
-	return var_4_0
+	return mapCo
 end
 
-function var_0_0.getEpisodeCoList(arg_5_0, arg_5_1)
-	return (WuErLiXiConfig.instance:getEpisodeCoList(arg_5_1))
+function NuoDiKaConfig:getEpisodeCoList(activityId)
+	local coList = WuErLiXiConfig.instance:getEpisodeCoList(activityId)
+
+	return coList
 end
 
-function var_0_0.getEpisodeCo(arg_6_0, arg_6_1, arg_6_2)
-	return (WuErLiXiConfig.instance:getEpisodeCo(arg_6_1, arg_6_2))
+function NuoDiKaConfig:getEpisodeCo(activityId, episodeId)
+	local episodeCo = WuErLiXiConfig.instance:getEpisodeCo(activityId, episodeId)
+
+	return episodeCo
 end
 
-function var_0_0.getTaskByActId(arg_7_0, arg_7_1)
-	return (WuErLiXiConfig.instance:getTaskByActId(arg_7_1))
+function NuoDiKaConfig:getTaskByActId(activityId)
+	local list = WuErLiXiConfig.instance:getTaskByActId(activityId)
+
+	return list
 end
 
-function var_0_0.getEventList(arg_8_0)
+function NuoDiKaConfig:getEventList()
 	return lua_activity_nuodika_180_event.configList
 end
 
-function var_0_0.getEventCo(arg_9_0, arg_9_1)
-	return lua_activity_nuodika_180_event.configDict[arg_9_1]
+function NuoDiKaConfig:getEventCo(eventId)
+	return lua_activity_nuodika_180_event.configDict[eventId]
 end
 
-function var_0_0.getEnemyList(arg_10_0)
-	local var_10_0 = {}
+function NuoDiKaConfig:getEnemyList()
+	local list = {}
 
-	for iter_10_0, iter_10_1 in pairs(lua_activity_nuodika_180_enemy.configList) do
-		if iter_10_1.main == NuoDiKaEnum.EnemyType.Normal then
-			table.insert(var_10_0, iter_10_1)
+	for _, enemy in pairs(lua_activity_nuodika_180_enemy.configList) do
+		if enemy.main == NuoDiKaEnum.EnemyType.Normal then
+			table.insert(list, enemy)
 		end
 	end
 
-	return var_10_0
+	return list
 end
 
-function var_0_0.getMainRoleList(arg_11_0)
-	local var_11_0 = {}
+function NuoDiKaConfig:getMainRoleList()
+	local list = {}
 
-	for iter_11_0, iter_11_1 in pairs(lua_activity_nuodika_180_enemy.configList) do
-		if iter_11_1.main == NuoDiKaEnum.EnemyType.MainRole then
-			table.insert(var_11_0, iter_11_1)
+	for _, enemy in pairs(lua_activity_nuodika_180_enemy.configList) do
+		if enemy.main == NuoDiKaEnum.EnemyType.MainRole then
+			table.insert(list, enemy)
 		end
 	end
 
-	return var_11_0
+	return list
 end
 
-function var_0_0.getEnemyCo(arg_12_0, arg_12_1)
-	return lua_activity_nuodika_180_enemy.configDict[arg_12_1]
+function NuoDiKaConfig:getEnemyCo(enemyId)
+	return lua_activity_nuodika_180_enemy.configDict[enemyId]
 end
 
-function var_0_0.getItemList(arg_13_0)
+function NuoDiKaConfig:getItemList()
 	return lua_activity_nuodika_180_item.configList
 end
 
-function var_0_0.getItemCo(arg_14_0, arg_14_1)
-	return lua_activity_nuodika_180_item.configDict[arg_14_1]
+function NuoDiKaConfig:getItemCo(itemId)
+	return lua_activity_nuodika_180_item.configDict[itemId]
 end
 
-function var_0_0.getConstCo(arg_15_0, arg_15_1)
-	local var_15_0 = VersionActivity2_8Enum.ActivityId.NuoDiKa
+function NuoDiKaConfig:getConstCo(constId)
+	local actId = VersionActivity2_8Enum.ActivityId.NuoDiKa
 
-	return lua_activity_nuodika_180_const.configDict[var_15_0][arg_15_1]
+	return lua_activity_nuodika_180_const.configDict[actId][constId]
 end
 
-function var_0_0.getSkillCo(arg_16_0, arg_16_1)
-	return lua_activity_nuodika_180_skill.configDict[arg_16_1]
+function NuoDiKaConfig:getSkillCo(skillId)
+	return lua_activity_nuodika_180_skill.configDict[skillId]
 end
 
-var_0_0.instance = var_0_0.New()
+NuoDiKaConfig.instance = NuoDiKaConfig.New()
 
-return var_0_0
+return NuoDiKaConfig

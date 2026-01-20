@@ -1,67 +1,69 @@
-﻿module("modules.logic.summon.controller.SummonMainController", package.seeall)
+﻿-- chunkname: @modules/logic/summon/controller/SummonMainController.lua
 
-local var_0_0 = class("SummonMainController", BaseController)
+module("modules.logic.summon.controller.SummonMainController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local SummonMainController = class("SummonMainController", BaseController)
+
+function SummonMainController:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._pickHandlerMap = {
-		[SummonEnum.TabContentIndex.CharNormal] = arg_2_0.pickCharNormalRes,
-		[SummonEnum.TabContentIndex.EquipNormal] = arg_2_0.pickEquipNormalRes,
-		[SummonEnum.TabContentIndex.CharNewbie] = arg_2_0.pickCharNewbieRes,
-		[SummonEnum.TabContentIndex.CharProbUp] = arg_2_0.pickCharProbUpRes,
-		[SummonEnum.TabContentIndex.EquipProbUp] = arg_2_0.pickEquipProbUpRes
+function SummonMainController:reInit()
+	self._pickHandlerMap = {
+		[SummonEnum.TabContentIndex.CharNormal] = self.pickCharNormalRes,
+		[SummonEnum.TabContentIndex.EquipNormal] = self.pickEquipNormalRes,
+		[SummonEnum.TabContentIndex.CharNewbie] = self.pickCharNewbieRes,
+		[SummonEnum.TabContentIndex.CharProbUp] = self.pickCharProbUpRes,
+		[SummonEnum.TabContentIndex.EquipProbUp] = self.pickEquipProbUpRes
 	}
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function SummonMainController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_4_0.handleDailyRefresh, arg_4_0)
+function SummonMainController:addConstEvents()
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.handleDailyRefresh, self)
 end
 
-function var_0_0.openSummonView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+function SummonMainController:openSummonView(param, fromEnterScene, callback, callbackObj)
 	SummonMainModel.instance:initCategory()
 	SummonMainModel.instance:resetTabResSettings()
 	SummonMainCategoryListModel.instance:initCategory()
 
-	local var_5_0 = arg_5_1 and arg_5_1.jumpPoolId
+	local jumpPoolId = param and param.jumpPoolId
 
-	var_5_0 = var_5_0 or arg_5_0:trySetDefaultPoolId(arg_5_1)
+	jumpPoolId = jumpPoolId or self:trySetDefaultPoolId(param)
 
-	if var_5_0 then
-		SummonMainModel.instance:trySetSelectPoolId(var_5_0)
+	if jumpPoolId then
+		SummonMainModel.instance:trySetSelectPoolId(jumpPoolId)
 	end
 
-	if arg_5_1 and arg_5_1.jumpPoolId ~= nil and arg_5_1.defaultTabIds == nil then
-		local var_5_1 = SummonConfig.instance:getSummonPool(arg_5_1.jumpPoolId)
+	if param and param.jumpPoolId ~= nil and param.defaultTabIds == nil then
+		local targetPool = SummonConfig.instance:getSummonPool(param.jumpPoolId)
 
-		if var_5_1 then
-			local var_5_2 = SummonMainModel.instance:getADPageTabIndexForUI(var_5_1)
+		if targetPool then
+			local tabIndex = SummonMainModel.instance:getADPageTabIndexForUI(targetPool)
 
-			arg_5_1.defaultTabIds = {}
-			arg_5_1.defaultTabIds[3] = var_5_2
+			param.defaultTabIds = {}
+			param.defaultTabIds[3] = tabIndex
 		end
 	end
 
-	arg_5_0._openByEnterScene = arg_5_2
+	self._openByEnterScene = fromEnterScene
 
-	logNormal("openSummonView jumpPoolId = " .. tostring(var_5_0))
+	logNormal("openSummonView jumpPoolId = " .. tostring(jumpPoolId))
 
-	arg_5_0._callbackOpen = arg_5_3
-	arg_5_0._callbackObjOpen = arg_5_4
+	self._callbackOpen = callback
+	self._callbackObjOpen = callbackObj
 
 	ViewMgr.instance:openView(ViewName.SummonView)
 
-	if arg_5_1 and arg_5_1.hideADView then
-		arg_5_0:onViewOpened(ViewName.SummonADView)
+	if param and param.hideADView then
+		self:onViewOpened(ViewName.SummonADView)
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_5_0.onViewOpened, arg_5_0)
-		ViewMgr.instance:openView(ViewName.SummonADView, arg_5_1)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.onViewOpened, self)
+		ViewMgr.instance:openView(ViewName.SummonADView, param)
 	end
 
 	if SummonMainModel.equipPoolIsValid() and SummonModel.instance:getFreeEquipSummon() then
@@ -71,250 +73,253 @@ function var_0_0.openSummonView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
 	SummonModel.instance:clearCacheReward()
 end
 
-function var_0_0.trySetDefaultPoolId(arg_6_0, arg_6_1)
-	local var_6_0
+function SummonMainController:trySetDefaultPoolId(param)
+	local jumpPoolId
 
-	if arg_6_1 == nil or arg_6_1.defaultTabIds == nil then
-		local var_6_1 = SummonMainModel.instance:getFirstValidPool()
+	if param == nil or param.defaultTabIds == nil then
+		local defaultPool = SummonMainModel.instance:getFirstValidPool()
 
-		if var_6_1 then
-			local var_6_2 = var_6_1.id
+		if defaultPool then
+			jumpPoolId = defaultPool.id
 
-			if arg_6_1 ~= nil then
-				arg_6_1.jumpPoolId = var_6_2
+			if param ~= nil then
+				param.jumpPoolId = jumpPoolId
 			end
 
-			return var_6_2
+			return jumpPoolId
 		end
 	end
 end
 
-function var_0_0.onViewOpened(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.SummonADView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_7_0.onViewOpened, arg_7_0)
+function SummonMainController:onViewOpened(viewName)
+	if viewName == ViewName.SummonADView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onViewOpened, self)
 
-		if arg_7_0._callbackOpen then
-			arg_7_0._callbackOpen(arg_7_0._callbackObjOpen)
+		if self._callbackOpen then
+			self._callbackOpen(self._callbackObjOpen)
 		end
 
-		arg_7_0._callbackOpen = nil
-		arg_7_0._callbackObjOpen = nil
+		self._callbackOpen = nil
+		self._callbackObjOpen = nil
 	end
 end
 
-function var_0_0.sendStartSummon(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	SummonController.instance:setSendPoolId(arg_8_1)
+function SummonMainController:sendStartSummon(poolId, count, isFreeEquip, needGetInfo)
+	SummonController.instance:setSendPoolId(poolId)
 
-	arg_8_0._needGetInfo = false
+	self._needGetInfo = false
 
-	if arg_8_3 then
-		local var_8_0 = SummonModel.instance:getFreeEquipSummon()
+	if isFreeEquip then
+		local isFree = SummonModel.instance:getFreeEquipSummon()
 
-		SummonModel.instance:setSendEquipFreeSummon(var_8_0)
-		SummonRpc.instance:sendSummonRequest(arg_8_1, arg_8_2)
+		SummonModel.instance:setSendEquipFreeSummon(isFree)
+		SummonRpc.instance:sendSummonRequest(poolId, count)
 
-		if var_8_0 then
-			arg_8_0._needGetInfo = true
+		if isFree then
+			self._needGetInfo = true
 		end
 	else
 		SummonModel.instance:setSendEquipFreeSummon(false)
-		SummonRpc.instance:sendSummonRequest(arg_8_1, arg_8_2)
+		SummonRpc.instance:sendSummonRequest(poolId, count)
 
-		if arg_8_4 then
-			arg_8_0._needGetInfo = true
+		if needGetInfo then
+			self._needGetInfo = true
 		end
 	end
 end
 
-function var_0_0.getNeedGetInfo(arg_9_0)
-	return arg_9_0._needGetInfo
+function SummonMainController:getNeedGetInfo()
+	return self._needGetInfo
 end
 
-function var_0_0.openSummonDetail(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if not arg_10_1 then
+function SummonMainController:openSummonDetail(poolCo, extendData, summonSimulationActId)
+	if not poolCo then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Task_page)
 
-	local var_10_0 = {
-		poolId = arg_10_1.id,
-		poolDetailId = arg_10_1.poolDetail,
-		poolAwardTime = arg_10_1.awardTime,
-		summonSimulationActId = arg_10_3
-	}
+	local param = {}
 
-	if SummonConfig.poolIsLuckyBag(arg_10_1.id) then
-		if arg_10_2 then
-			var_10_0.luckyBagId = arg_10_2
+	param.poolId = poolCo.id
+	param.poolDetailId = poolCo.poolDetail
+	param.poolAwardTime = poolCo.awardTime
+	param.summonSimulationActId = summonSimulationActId
+
+	if SummonConfig.poolIsLuckyBag(poolCo.id) then
+		if extendData then
+			param.luckyBagId = extendData
 		end
 
-		ViewMgr.instance:openView(ViewName.SummonLuckyBagDetailView, var_10_0)
-	elseif arg_10_1.type == SummonEnum.Type.CustomPick or arg_10_1.type == SummonEnum.Type.StrongCustomOnePick then
-		ViewMgr.instance:openView(ViewName.SummonCustomPickDetailView, var_10_0)
+		ViewMgr.instance:openView(ViewName.SummonLuckyBagDetailView, param)
+	elseif poolCo.type == SummonEnum.Type.CustomPick or poolCo.type == SummonEnum.Type.StrongCustomOnePick then
+		ViewMgr.instance:openView(ViewName.SummonCustomPickDetailView, param)
 	else
-		ViewMgr.instance:openView(ViewName.SummonPoolDetailView, var_10_0)
+		ViewMgr.instance:openView(ViewName.SummonPoolDetailView, param)
 	end
 end
 
-function var_0_0.isFromSceneOpen(arg_11_0)
-	return arg_11_0._openByEnterScene
+function SummonMainController:isFromSceneOpen()
+	return self._openByEnterScene
 end
 
-function var_0_0.pickAllUIPreloadRes(arg_12_0)
-	local var_12_0 = {}
-	local var_12_1 = {}
-	local var_12_2 = SummonMainModel.getValidPools()
+function SummonMainController:pickAllUIPreloadRes()
+	local resSet = {}
+	local resList = {}
+	local validPools = SummonMainModel.getValidPools()
 
-	for iter_12_0 = 1, tabletool.len(var_12_2) do
-		local var_12_3 = var_12_2[iter_12_0]
-		local var_12_4 = var_12_3.customClz
+	for i = 1, tabletool.len(validPools) do
+		local poolCfg = validPools[i]
+		local customClz = poolCfg.customClz
 
-		if not string.nilorempty(var_12_4) then
-			local var_12_5 = SummonCharacterProbUpPreloadConfig.getPreLoadListByName(var_12_4)
+		if not string.nilorempty(customClz) then
+			local preloadList = SummonCharacterProbUpPreloadConfig.getPreLoadListByName(customClz)
 
-			if var_12_5 == nil then
-				local var_12_6 = SummonMainModel.instance:getADPageTabIndexForUI(var_12_3)
+			if preloadList == nil then
+				local tabIndex = SummonMainModel.instance:getADPageTabIndexForUI(poolCfg)
 
-				if var_12_6 then
-					var_12_5 = SummonMainModel.instance:getUIClassDef(var_12_6).preloadList
+				if tabIndex then
+					local clz = SummonMainModel.instance:getUIClassDef(tabIndex)
+
+					preloadList = clz.preloadList
 				end
 			end
 
-			if var_12_5 ~= nil then
-				for iter_12_1, iter_12_2 in ipairs(var_12_5) do
-					if not var_12_0[iter_12_2] then
-						table.insert(var_12_1, iter_12_2)
+			if preloadList ~= nil then
+				for _, path in ipairs(preloadList) do
+					if not resSet[path] then
+						table.insert(resList, path)
 
-						var_12_0[iter_12_2] = true
+						resSet[path] = true
 					end
 				end
 			end
 		end
 	end
 
-	return var_12_1
+	return resList
 end
 
-function var_0_0.getCurPoolPreloadRes(arg_13_0)
-	local var_13_0 = {}
-	local var_13_1 = {}
-	local var_13_2 = SummonMainModel.instance:getCurId()
-	local var_13_3 = SummonConfig.instance:getSummonPool(var_13_2)
+function SummonMainController:getCurPoolPreloadRes()
+	local resSet = {}
+	local resList = {}
+	local poolId = SummonMainModel.instance:getCurId()
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
 
-	if var_13_3 then
-		local var_13_4 = var_13_3.customClz
+	if poolCo then
+		local customClz = poolCo.customClz
 
-		if not string.nilorempty(var_13_4) then
-			local var_13_5 = SummonCharacterProbUpPreloadConfig.getPreLoadListByName(var_13_4)
+		if not string.nilorempty(customClz) then
+			local preloadList = SummonCharacterProbUpPreloadConfig.getPreLoadListByName(customClz)
 
-			if var_13_5 == nil then
-				local var_13_6 = SummonMainModel.getADPageTabIndex(var_13_3)
-				local var_13_7 = SummonMainModel.defaultUIClzMap[var_13_6]
-				local var_13_8
+			if preloadList == nil then
+				local tabIndexByType = SummonMainModel.getADPageTabIndex(poolCo)
+				local defaultClz = SummonMainModel.defaultUIClzMap[tabIndexByType]
+				local clz
 
-				if not string.nilorempty(var_13_3.customClz) then
-					var_13_8 = _G[var_13_3.customClz]
+				if not string.nilorempty(poolCo.customClz) then
+					clz = _G[poolCo.customClz]
 				end
 
-				var_13_8 = var_13_8 or var_13_7
-				var_13_5 = var_13_8.preloadList
+				clz = clz or defaultClz
+				preloadList = clz.preloadList
 			end
 
-			if var_13_5 ~= nil then
-				for iter_13_0, iter_13_1 in ipairs(var_13_5) do
-					if not var_13_0[iter_13_1] then
-						table.insert(var_13_1, iter_13_1)
+			if preloadList ~= nil then
+				for _, path in ipairs(preloadList) do
+					if not resSet[path] then
+						table.insert(resList, path)
 
-						var_13_0[iter_13_1] = true
+						resSet[path] = true
 					end
 				end
 			end
 		end
 	end
 
-	return var_13_1
+	return resList
 end
 
-function var_0_0.handleDailyRefresh(arg_14_0)
+function SummonMainController:handleDailyRefresh()
 	SummonRpc.instance:sendGetSummonInfoRequest()
 end
 
-function var_0_0.openpPogressRewardView(arg_15_0, arg_15_1)
-	local var_15_0 = SummonConfig.instance:getSummonPool(arg_15_1)
+function SummonMainController:openpPogressRewardView(poolId)
+	local poolCfg = SummonConfig.instance:getSummonPool(poolId)
 
-	if not var_15_0 then
+	if not poolCfg then
 		return
 	end
 
-	if string.nilorempty(var_15_0.progressRewards) then
-		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewards\"字段为nil", arg_15_1))
-
-		return
-	end
-
-	if string.nilorempty(var_15_0.progressRewardPrefab) then
-		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewardPrefab\"字段为nil", arg_15_1))
+	if string.nilorempty(poolCfg.progressRewards) then
+		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewards\"字段为nil", poolId))
 
 		return
 	end
 
-	local var_15_1 = ViewMgr.instance:getSetting(ViewName.SummonPoolPogressRewardView)
+	if string.nilorempty(poolCfg.progressRewardPrefab) then
+		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewardPrefab\"字段为nil", poolId))
 
-	if var_15_1 then
-		var_15_1.mainRes = string.format("ui/viewres/summon/%s", var_15_0.progressRewardPrefab)
+		return
+	end
+
+	local setting = ViewMgr.instance:getSetting(ViewName.SummonPoolPogressRewardView)
+
+	if setting then
+		setting.mainRes = string.format("ui/viewres/summon/%s", poolCfg.progressRewardPrefab)
 	end
 
 	ViewMgr.instance:openView(ViewName.SummonPoolPogressRewardView, {
-		poolId = arg_15_1
+		poolId = poolId
 	})
 end
 
-function var_0_0.openSummonConfirmView(arg_16_0, arg_16_1)
-	arg_16_0:setDiamondEnoughTipCb(arg_16_1)
+function SummonMainController:openSummonConfirmView(params)
+	self:setDiamondEnoughTipCb(params)
 
-	if not arg_16_0:canShowMessageOptionBoxView() then
-		arg_16_0:checkFreeDiamondEnough(arg_16_1)
+	if not self:canShowMessageOptionBoxView() then
+		self:checkFreeDiamondEnough(params)
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, arg_16_1)
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, params)
 end
 
-function var_0_0.canShowMessageOptionBoxView(arg_17_0)
-	local var_17_0 = arg_17_0:getOptionLocalKey()
+function SummonMainController:canShowMessageOptionBoxView()
+	local key = self:getOptionLocalKey()
+	local canShowView = TimeUtil.getDayFirstLoginRed(key)
 
-	return (TimeUtil.getDayFirstLoginRed(var_17_0))
+	return canShowView
 end
 
-function var_0_0.getOptionLocalKey(arg_18_0)
+function SummonMainController:getOptionLocalKey()
 	return string.format("SummonConfirmView#%s", tostring(PlayerModel.instance:getPlayinfo().userId))
 end
 
-function var_0_0.checkFreeDiamondEnough(arg_19_0, arg_19_1)
-	if arg_19_1.notEnough then
-		local var_19_0 = SummonMainModel.getCurrencyByCost(arg_19_1.type, arg_19_1.id)
+function SummonMainController:checkFreeDiamondEnough(params)
+	if params.notEnough then
+		local costData = SummonMainModel.getCurrencyByCost(params.type, params.id)
 
-		CurrencyController.instance:checkFreeDiamondEnoughDaily(arg_19_1.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.Summon, true, arg_19_1.callback, arg_19_1.callbackObj, nil, nil, arg_19_1.miss_quantity, var_19_0, arg_19_1.noCallback, arg_19_1.noCallbackObj)
-	elseif arg_19_1.callback and arg_19_1.callbackObj then
-		callWithCatch(arg_19_1.callback, arg_19_1.callbackObj)
+		CurrencyController.instance:checkFreeDiamondEnoughDaily(params.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.Summon, true, params.callback, params.callbackObj, nil, nil, params.miss_quantity, costData, params.noCallback, params.noCallbackObj)
+	elseif params.callback and params.callbackObj then
+		callWithCatch(params.callback, params.callbackObj)
 	end
 end
 
-function var_0_0.setDiamondEnoughTipCb(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_1.callback
-	local var_20_1 = arg_20_1.callbackObj
+function SummonMainController:setDiamondEnoughTipCb(params)
+	local oldCb = params.callback
+	local oldCallbackObj = params.callbackObj
 
-	function arg_20_1.callback()
-		if var_20_0 and var_20_1 then
-			callWithCatch(var_20_0, var_20_1)
+	function params.callback()
+		if oldCb and oldCallbackObj then
+			callWithCatch(oldCb, oldCallbackObj)
 		end
 
-		GameFacade.showToast(ToastEnum.ExchangeDiamondSummon, arg_20_1.miss_quantity)
+		GameFacade.showToast(ToastEnum.ExchangeDiamondSummon, params.miss_quantity)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SummonMainController.instance = SummonMainController.New()
 
-return var_0_0
+return SummonMainController

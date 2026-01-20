@@ -1,524 +1,529 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapUseItemView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapUseItemView.lua
 
-local var_0_0 = class("SurvivalMapUseItemView", BaseView)
-local var_0_1 = {
+module("modules.logic.survival.view.map.SurvivalMapUseItemView", package.seeall)
+
+local SurvivalMapUseItemView = class("SurvivalMapUseItemView", BaseView)
+local uinodes = {
 	"BottomRight",
 	"Left",
 	"Top",
 	"Bottom",
 	"#go_lefttop"
 }
-local var_0_2 = 0.6
-local var_0_3 = 0.42
-local var_0_4 = 7
-local var_0_5 = 10
-local var_0_6 = Vector2()
+local itemScaleMax = 0.6
+local itemScaleMin = 0.42
+local itemSpace = 7
+local itemNoScalePixel = 10
+local Vector2_zero = Vector2()
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_usedTips")
-	arg_1_0._txtTips = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_usedTips/#txt_usedTips")
-	arg_1_0._scrollRectWrap = gohelper.findChildScrollRect(arg_1_0.viewGO, "BottomRight/#go_bag/#scroll")
-	arg_1_0._scroll = arg_1_0._scrollRectWrap.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
-	arg_1_0._goviewport = gohelper.findChild(arg_1_0.viewGO, "BottomRight/#go_bag/#scroll/Viewport")
-	arg_1_0._goitemroot = gohelper.findChild(arg_1_0.viewGO, "BottomRight/#go_bag/#scroll/Viewport/#go_item")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "BottomRight/#go_bag/#scroll/Viewport/#go_item/item")
-	arg_1_0._allUIs = arg_1_0:getUserDataTb_()
+function SurvivalMapUseItemView:onInitView()
+	self._gotips = gohelper.findChild(self.viewGO, "#go_usedTips")
+	self._txtTips = gohelper.findChildTextMesh(self.viewGO, "#go_usedTips/#txt_usedTips")
+	self._scrollRectWrap = gohelper.findChildScrollRect(self.viewGO, "BottomRight/#go_bag/#scroll")
+	self._scroll = self._scrollRectWrap.gameObject:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._goviewport = gohelper.findChild(self.viewGO, "BottomRight/#go_bag/#scroll/Viewport")
+	self._goitemroot = gohelper.findChild(self.viewGO, "BottomRight/#go_bag/#scroll/Viewport/#go_item")
+	self._goitem = gohelper.findChild(self.viewGO, "BottomRight/#go_bag/#scroll/Viewport/#go_item/item")
+	self._allUIs = self:getUserDataTb_()
 
-	for iter_1_0, iter_1_1 in ipairs(var_0_1) do
-		arg_1_0._allUIs[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, iter_1_1)
+	for k, v in ipairs(uinodes) do
+		self._allUIs[k] = gohelper.findChild(self.viewGO, v)
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, arg_2_0._refreshQuickItems, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnUseQuickItem, arg_2_0._onUseQuickItem, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnClickTipsBtn, arg_2_0._onClickTipsBtn, arg_2_0)
-	arg_2_0.viewContainer:registerCallback(SurvivalEvent.OnClickSurvivalScene, arg_2_0._onSceneClick, arg_2_0)
-	arg_2_0._scrollRectWrap:AddOnValueChanged(arg_2_0._onScrollRectValueChanged, arg_2_0)
-	CommonDragHelper.instance:registerDragObj(arg_2_0._goviewport, arg_2_0._onBeginDrag, arg_2_0._onDrag, arg_2_0._onEndDrag, nil, arg_2_0, nil, true)
+function SurvivalMapUseItemView:addEvents()
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self._refreshQuickItems, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnUseQuickItem, self._onUseQuickItem, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnClickTipsBtn, self._onClickTipsBtn, self)
+	self.viewContainer:registerCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
+	self._scrollRectWrap:AddOnValueChanged(self._onScrollRectValueChanged, self)
+	CommonDragHelper.instance:registerDragObj(self._goviewport, self._onBeginDrag, self._onDrag, self._onEndDrag, nil, self, nil, true)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, arg_3_0._refreshQuickItems, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnUseQuickItem, arg_3_0._onUseQuickItem, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnClickTipsBtn, arg_3_0._onClickTipsBtn, arg_3_0)
-	arg_3_0.viewContainer:unregisterCallback(SurvivalEvent.OnClickSurvivalScene, arg_3_0._onSceneClick, arg_3_0)
-	arg_3_0._scrollRectWrap:RemoveOnValueChanged()
-	CommonDragHelper.instance:unregisterDragObj(arg_3_0._goviewport, arg_3_0._onBeginDrag, nil, arg_3_0._onEndDrag, nil, arg_3_0, nil, true)
+function SurvivalMapUseItemView:removeEvents()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self._refreshQuickItems, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnUseQuickItem, self._onUseQuickItem, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnClickTipsBtn, self._onClickTipsBtn, self)
+	self.viewContainer:unregisterCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
+	self._scrollRectWrap:RemoveOnValueChanged()
+	CommonDragHelper.instance:unregisterDragObj(self._goviewport, self._onBeginDrag, nil, self._onEndDrag, nil, self, nil, true)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function SurvivalMapUseItemView:onOpen()
 	SurvivalMapModel.instance.curUseItem = nil
 
-	gohelper.setActive(arg_4_0._gotips, false)
+	gohelper.setActive(self._gotips, false)
 
-	arg_4_0._txtTips.text = luaLang("survival_mainview_useitem_tips")
+	self._txtTips.text = luaLang("survival_mainview_useitem_tips")
 
-	local var_4_0 = arg_4_0.viewContainer._viewSetting.otherRes.infoView
-	local var_4_1 = gohelper.create2d(arg_4_0.viewGO, "#go_info")
-	local var_4_2 = arg_4_0:getResInst(var_4_0, var_4_1)
+	local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+	local infoRoot = gohelper.create2d(self.viewGO, "#go_info")
+	local infoGo = self:getResInst(infoViewRes, infoRoot)
 
-	arg_4_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_2, SurvivalBagInfoPart)
+	self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-	arg_4_0._infoPanel:setCloseShow(true)
-	arg_4_0._infoPanel:updateMo()
+	self._infoPanel:setCloseShow(true)
+	self._infoPanel:updateMo()
 
-	arg_4_0._itemWidth = recthelper.getWidth(arg_4_0._goitem.transform)
+	self._itemWidth = recthelper.getWidth(self._goitem.transform)
 
-	gohelper.setActive(arg_4_0._goitem, false)
+	gohelper.setActive(self._goitem, false)
 
-	arg_4_0._contentWidth = recthelper.getWidth(arg_4_0._goitemroot.transform)
-	arg_4_0._itemPool = arg_4_0:getUserDataTb_()
-	arg_4_0._itemInst = arg_4_0:getUserDataTb_()
-	arg_4_0._items = arg_4_0:getUserDataTb_()
-	arg_4_0._curCenterIndex = 0
+	self._contentWidth = recthelper.getWidth(self._goitemroot.transform)
+	self._itemPool = self:getUserDataTb_()
+	self._itemInst = self:getUserDataTb_()
+	self._items = self:getUserDataTb_()
+	self._curCenterIndex = 0
 
-	arg_4_0:_refreshQuickItems()
+	self:_refreshQuickItems()
 end
 
-function var_0_0._refreshQuickItems(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = SurvivalMapHelper.instance:getBagMo()
+function SurvivalMapUseItemView:_refreshQuickItems()
+	local list = {}
+	local bagMo = SurvivalMapHelper.instance:getBagMo()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1.items) do
-		if iter_5_1.co.type == SurvivalEnum.ItemType.Quick then
-			table.insert(var_5_0, iter_5_1)
+	for _, v in ipairs(bagMo.items) do
+		if v.co.type == SurvivalEnum.ItemType.Quick then
+			table.insert(list, v)
 		end
 	end
 
-	local var_5_2 = 5 - #var_5_0
+	local addNum = 5 - #list
 
-	if var_5_2 < 0 then
-		var_5_2 = 0
+	if addNum < 0 then
+		addNum = 0
 	end
 
-	local var_5_3 = math.ceil(var_5_2 / 2)
-	local var_5_4 = var_5_2 - var_5_3
+	local addLeft = math.ceil(addNum / 2)
+	local addRight = addNum - addLeft
 
-	for iter_5_2 = 1, var_5_3 do
-		table.insert(var_5_0, 1, SurvivalBagItemMo.Empty)
+	for i = 1, addLeft do
+		table.insert(list, 1, SurvivalBagItemMo.Empty)
 	end
 
-	for iter_5_3 = 1, var_5_4 do
-		table.insert(var_5_0, SurvivalBagItemMo.Empty)
+	for i = 1, addRight do
+		table.insert(list, SurvivalBagItemMo.Empty)
 	end
 
-	arg_5_0._showItemDatas = var_5_0
+	self._showItemDatas = list
 
-	arg_5_0:onViewPortScroll()
-	arg_5_0:showGoNum(arg_5_0._curCenterIndex)
-	arg_5_0._infoPanel:updateMo()
+	self:onViewPortScroll()
+	self:showGoNum(self._curCenterIndex)
+	self._infoPanel:updateMo()
 end
 
-function var_0_0._onBeginDrag(arg_6_0, arg_6_1, arg_6_2)
-	ZProj.UGUIHelper.PassEvent(arg_6_0._scrollRectWrap.gameObject, arg_6_2, 4)
+function SurvivalMapUseItemView:_onBeginDrag(_, pointerEventData)
+	ZProj.UGUIHelper.PassEvent(self._scrollRectWrap.gameObject, pointerEventData, 4)
 
-	if arg_6_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_6_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_6_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_6_0:showGoNum(nil)
-	TaskDispatcher.cancelTask(arg_6_0._checkScrollIsEnd, arg_6_0)
+	self:showGoNum(nil)
+	TaskDispatcher.cancelTask(self._checkScrollIsEnd, self)
 
-	arg_6_0._scroll.inertia = true
+	self._scroll.inertia = true
 end
 
-function var_0_0._onDrag(arg_7_0, arg_7_1, arg_7_2)
-	ZProj.UGUIHelper.PassEvent(arg_7_0._scrollRectWrap.gameObject, arg_7_2, 5)
+function SurvivalMapUseItemView:_onDrag(_, pointerEventData)
+	ZProj.UGUIHelper.PassEvent(self._scrollRectWrap.gameObject, pointerEventData, 5)
 end
 
-function var_0_0._onEndDrag(arg_8_0, arg_8_1, arg_8_2)
-	ZProj.UGUIHelper.PassEvent(arg_8_0._scrollRectWrap.gameObject, arg_8_2, 6)
+function SurvivalMapUseItemView:_onEndDrag(_, pointerEventData)
+	ZProj.UGUIHelper.PassEvent(self._scrollRectWrap.gameObject, pointerEventData, 6)
 
-	if math.abs(arg_8_0._scroll.velocity.x) > 100 then
-		TaskDispatcher.runRepeat(arg_8_0._checkScrollIsEnd, arg_8_0, 0)
+	if math.abs(self._scroll.velocity.x) > 100 then
+		TaskDispatcher.runRepeat(self._checkScrollIsEnd, self, 0)
 	else
-		arg_8_0:doTweenIndex(arg_8_0._curCenterIndex)
+		self:doTweenIndex(self._curCenterIndex)
 	end
 end
 
-function var_0_0._checkScrollIsEnd(arg_9_0)
-	if math.abs(arg_9_0._scroll.velocity.x) <= 100 then
-		TaskDispatcher.cancelTask(arg_9_0._checkScrollIsEnd, arg_9_0)
-		arg_9_0:doTweenIndex(arg_9_0._curCenterIndex)
+function SurvivalMapUseItemView:_checkScrollIsEnd()
+	if math.abs(self._scroll.velocity.x) <= 100 then
+		TaskDispatcher.cancelTask(self._checkScrollIsEnd, self)
+		self:doTweenIndex(self._curCenterIndex)
 	end
 end
 
-function var_0_0._onScrollRectValueChanged(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0:onViewPortScroll()
+function SurvivalMapUseItemView:_onScrollRectValueChanged(scrollX, scrollY)
+	self:onViewPortScroll()
 end
 
-function var_0_0.onViewPortScroll(arg_11_0)
-	arg_11_0:inPoolAll()
+function SurvivalMapUseItemView:onViewPortScroll()
+	self:inPoolAll()
 
-	local var_11_0 = arg_11_0._goitemroot.transform
-	local var_11_1 = -recthelper.getAnchorX(var_11_0)
-	local var_11_2 = arg_11_0._itemWidth * var_0_3 + var_0_4
-	local var_11_3 = Mathf.Round(var_11_1 / var_11_2)
-	local var_11_4 = var_11_3 * var_11_2
-	local var_11_5 = math.abs(var_11_1 - var_11_4)
-	local var_11_6 = var_0_3
+	local trans = self._goitemroot.transform
+	local rootX = -recthelper.getAnchorX(trans)
+	local itemTotalSpace = self._itemWidth * itemScaleMin + itemSpace
+	local index = Mathf.Round(rootX / itemTotalSpace)
+	local centerItemPos = index * itemTotalSpace
+	local dis = math.abs(rootX - centerItemPos)
+	local scale = itemScaleMin
 
-	if var_11_5 <= var_0_5 then
-		var_11_6 = var_0_2
+	if dis <= itemNoScalePixel then
+		scale = itemScaleMax
 	else
-		var_11_6 = Mathf.Lerp(var_0_2, var_0_3, (var_11_5 - var_0_5) / (arg_11_0._itemWidth / 2 - var_0_5))
+		scale = Mathf.Lerp(itemScaleMax, itemScaleMin, (dis - itemNoScalePixel) / (self._itemWidth / 2 - itemNoScalePixel))
 	end
 
-	arg_11_0._curCenterIndex = var_11_3
+	self._curCenterIndex = index
 
-	arg_11_0:createItem(var_11_4, var_11_6, var_11_3)
+	self:createItem(centerItemPos, scale, index)
 
-	local var_11_7 = var_0_3
-	local var_11_8 = var_0_3
-	local var_11_9 = var_11_4 - var_11_6 * arg_11_0._itemWidth * 0.5 - var_0_4
-	local var_11_10 = var_11_4 + var_11_6 * arg_11_0._itemWidth * 0.5 + var_0_4
+	local leftScale = itemScaleMin
+	local rightScale = itemScaleMin
+	local leftBorder = centerItemPos - scale * self._itemWidth * 0.5 - itemSpace
+	local rightBorder = centerItemPos + scale * self._itemWidth * 0.5 + itemSpace
 
-	if var_11_4 <= var_11_1 then
-		var_11_8 = var_0_3 + var_0_2 - var_11_6
+	if centerItemPos <= rootX then
+		rightScale = itemScaleMin + itemScaleMax - scale
 	else
-		var_11_7 = var_0_3 + var_0_2 - var_11_6
+		leftScale = itemScaleMin + itemScaleMax - scale
 	end
 
-	local var_11_11 = var_11_3 - 1
+	local leftIndex = index - 1
 
-	while var_11_1 - var_11_9 < arg_11_0._contentWidth / 2 do
-		local var_11_12 = var_11_9 - var_11_7 * arg_11_0._itemWidth * 0.5
+	while rootX - leftBorder < self._contentWidth / 2 do
+		local pos = leftBorder - leftScale * self._itemWidth * 0.5
 
-		arg_11_0:createItem(var_11_12, var_11_7, var_11_11)
+		self:createItem(pos, leftScale, leftIndex)
 
-		var_11_11 = var_11_11 - 1
-		var_11_9 = var_11_9 - var_11_7 * arg_11_0._itemWidth - var_0_4
-		var_11_7 = var_0_3
+		leftIndex = leftIndex - 1
+		leftBorder = leftBorder - leftScale * self._itemWidth - itemSpace
+		leftScale = itemScaleMin
 	end
 
-	local var_11_13 = var_11_3 + 1
+	local rightIndex = index + 1
 
-	while var_11_10 - var_11_1 < arg_11_0._contentWidth / 2 do
-		local var_11_14 = var_11_10 + var_11_8 * arg_11_0._itemWidth * 0.5
+	while rightBorder - rootX < self._contentWidth / 2 do
+		local pos = rightBorder + rightScale * self._itemWidth * 0.5
 
-		arg_11_0:createItem(var_11_14, var_11_8, var_11_13)
+		self:createItem(pos, rightScale, rightIndex)
 
-		var_11_13 = var_11_13 + 1
-		var_11_10 = var_11_10 + var_11_8 * arg_11_0._itemWidth + var_0_4
-		var_11_8 = var_0_3
+		rightIndex = rightIndex + 1
+		rightBorder = rightBorder + rightScale * self._itemWidth + itemSpace
+		rightScale = itemScaleMin
 	end
 
-	arg_11_0:refreshItemActive()
+	self:refreshItemActive()
 
-	if arg_11_0._showIndex then
-		arg_11_0:showGoNum(arg_11_0._showIndex)
+	if self._showIndex then
+		self:showGoNum(self._showIndex)
 	end
 end
 
-function var_0_0.createItem(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = arg_12_0:getFromPool()
-	local var_12_1 = var_12_0.transform
+function SurvivalMapUseItemView:createItem(pos, scale, index)
+	local obj = self:getFromPool()
+	local itemTrans = obj.transform
 
-	recthelper.setAnchorX(var_12_1, arg_12_1)
-	transformhelper.setLocalScale(var_12_1, arg_12_2, arg_12_2, arg_12_2)
+	recthelper.setAnchorX(itemTrans, pos)
+	transformhelper.setLocalScale(itemTrans, scale, scale, scale)
 
-	local var_12_2 = gohelper.findChild(var_12_0, "#go_item/inst")
-	local var_12_3 = gohelper.findChild(var_12_0, "#go_num")
-	local var_12_4 = gohelper.findChildTextMesh(var_12_0, "#go_num/#txt_num")
-	local var_12_5 = MonoHelper.getLuaComFromGo(var_12_2, SurvivalBagItem)
-	local var_12_6 = arg_12_0:getItemMo(arg_12_3)
+	local instGo = gohelper.findChild(obj, "#go_item/inst")
+	local gonum = gohelper.findChild(obj, "#go_num")
+	local txtnum = gohelper.findChildTextMesh(obj, "#go_num/#txt_num")
+	local item = MonoHelper.getLuaComFromGo(instGo, SurvivalBagItem)
+	local data = self:getItemMo(index)
 
-	var_12_0.name = "cell" .. arg_12_3
+	obj.name = "cell" .. index
 
-	var_12_5:updateMo(var_12_6)
+	item:updateMo(data)
 
-	var_12_5.___index = arg_12_3
-	arg_12_0._items[arg_12_3] = var_12_3
-	var_12_4.text = var_12_6.count
+	item.___index = index
+	self._items[index] = gonum
+	txtnum.text = data.count
 end
 
-function var_0_0.getItemMo(arg_13_0, arg_13_1)
-	local var_13_0 = #arg_13_0._showItemDatas
+function SurvivalMapUseItemView:getItemMo(index)
+	local len = #self._showItemDatas
 
-	if var_13_0 <= 0 then
+	if len <= 0 then
 		return SurvivalBagItemMo.Empty
 	end
 
-	arg_13_1 = arg_13_1 + 3
-	arg_13_1 = arg_13_1 % var_13_0
+	index = index + 3
+	index = index % len
 
-	if arg_13_1 <= 0 then
-		arg_13_1 = arg_13_1 + var_13_0
+	if index <= 0 then
+		index = index + len
 	end
 
-	return arg_13_0._showItemDatas[arg_13_1]
+	return self._showItemDatas[index]
 end
 
-function var_0_0.inPoolAll(arg_14_0)
-	tabletool.clear(arg_14_0._items)
-	tabletool.addValues(arg_14_0._itemPool, arg_14_0._itemInst)
-	tabletool.clear(arg_14_0._itemInst)
+function SurvivalMapUseItemView:inPoolAll()
+	tabletool.clear(self._items)
+	tabletool.addValues(self._itemPool, self._itemInst)
+	tabletool.clear(self._itemInst)
 end
 
-function var_0_0.refreshItemActive(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._itemPool) do
-		recthelper.setAnchorY(iter_15_1.transform, 500)
+function SurvivalMapUseItemView:refreshItemActive()
+	for _, go in pairs(self._itemPool) do
+		recthelper.setAnchorY(go.transform, 500)
 	end
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_0._itemInst) do
-		recthelper.setAnchorY(iter_15_3.transform, 0)
+	for _, go in pairs(self._itemInst) do
+		recthelper.setAnchorY(go.transform, 0)
 	end
 end
 
-function var_0_0.getFromPool(arg_16_0)
-	local var_16_0 = table.remove(arg_16_0._itemPool)
+function SurvivalMapUseItemView:getFromPool()
+	local item = table.remove(self._itemPool)
 
-	if not var_16_0 then
-		var_16_0 = gohelper.cloneInPlace(arg_16_0._goitem)
+	if not item then
+		item = gohelper.cloneInPlace(self._goitem)
 
-		gohelper.setActive(var_16_0, true)
+		gohelper.setActive(item, true)
 
-		local var_16_1 = arg_16_0.viewContainer:getSetting().otherRes.itemRes
-		local var_16_2 = arg_16_0:getResInst(var_16_1, gohelper.findChild(var_16_0, "#go_item"), "inst")
-		local var_16_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_2, SurvivalBagItem)
+		local itemRes = self.viewContainer:getSetting().otherRes.itemRes
+		local instGo = self:getResInst(itemRes, gohelper.findChild(item, "#go_item"), "inst")
+		local itemComp = MonoHelper.addNoUpdateLuaComOnceToGo(instGo, SurvivalBagItem)
 
-		var_16_3:setShowNum(false)
-		var_16_3:setClickCallback(arg_16_0._onItemClick, arg_16_0)
-		var_16_3:setCanClickEmpty(true)
+		itemComp:setShowNum(false)
+		itemComp:setClickCallback(self._onItemClick, self)
+		itemComp:setCanClickEmpty(true)
 	end
 
-	table.insert(arg_16_0._itemInst, var_16_0)
+	table.insert(self._itemInst, item)
 
-	return var_16_0
+	return item
 end
 
-function var_0_0.doTweenIndex(arg_17_0, arg_17_1)
-	arg_17_0._scroll.velocity = var_0_6
+function SurvivalMapUseItemView:doTweenIndex(index)
+	self._scroll.velocity = Vector2_zero
 
-	arg_17_0._scroll:StopMovement()
+	self._scroll:StopMovement()
 
-	arg_17_0._scroll.inertia = false
-	arg_17_0._toIndex = arg_17_1
+	self._scroll.inertia = false
+	self._toIndex = index
 
-	local var_17_0 = -(arg_17_0._itemWidth * var_0_3 + var_0_4) * arg_17_1
+	local offsetX = -(self._itemWidth * itemScaleMin + itemSpace) * index
 
-	arg_17_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_17_0._goitemroot.transform, var_17_0, 0.2, arg_17_0._onTweenEnd, arg_17_0)
+	self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._goitemroot.transform, offsetX, 0.2, self._onTweenEnd, self)
 end
 
-function var_0_0._onTweenEnd(arg_18_0)
-	arg_18_0._scroll:StopMovement()
+function SurvivalMapUseItemView:_onTweenEnd()
+	self._scroll:StopMovement()
 
-	arg_18_0._scroll.velocity = var_0_6
-	arg_18_0._scroll.inertia = true
-	arg_18_0._tweenId = nil
+	self._scroll.velocity = Vector2_zero
+	self._scroll.inertia = true
+	self._tweenId = nil
 
-	arg_18_0:showGoNum(arg_18_0._toIndex)
+	self:showGoNum(self._toIndex)
 
-	arg_18_0._toIndex = nil
+	self._toIndex = nil
 end
 
-function var_0_0.showGoNum(arg_19_0, arg_19_1)
+function SurvivalMapUseItemView:showGoNum(index)
 	if SurvivalMapModel.instance.curUseItem then
-		arg_19_0:cancelUseItem()
+		self:cancelUseItem()
 	end
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._items) do
-		local var_19_0 = not arg_19_0:getItemMo(iter_19_0):isEmpty()
+	for i, item in pairs(self._items) do
+		local itemMo = self:getItemMo(i)
+		local haveVal = not itemMo:isEmpty()
 
-		gohelper.setActive(iter_19_1, var_19_0 and iter_19_0 == arg_19_1)
+		gohelper.setActive(item, haveVal and i == index)
 	end
 
-	arg_19_0._showIndex = arg_19_1
+	self._showIndex = index
 end
 
-function var_0_0._onItemClick(arg_20_0, arg_20_1)
-	if arg_20_0._tweenId or not arg_20_0._showIndex then
+function SurvivalMapUseItemView:_onItemClick(item)
+	if self._tweenId or not self._showIndex then
 		return
 	end
 
-	if arg_20_1.___index == arg_20_0._showIndex then
-		if arg_20_1._mo == SurvivalMapModel.instance.curUseItem then
-			arg_20_0:cancelUseItem()
+	if item.___index == self._showIndex then
+		if item._mo == SurvivalMapModel.instance.curUseItem then
+			self:cancelUseItem()
 
 			return
 		end
 
-		if arg_20_1._mo:isEmpty() then
+		if item._mo:isEmpty() then
 			return
 		end
 
-		arg_20_0._infoPanel:updateMo(arg_20_1._mo)
+		self._infoPanel:updateMo(item._mo)
 	else
-		arg_20_0:doTweenIndex(arg_20_1.___index)
+		self:doTweenIndex(item.___index)
 	end
 end
 
-function var_0_0._onUseQuickItem(arg_21_0, arg_21_1)
-	local var_21_0 = SurvivalMapModel.instance:getCurMapCo().walkables
-	local var_21_1 = SurvivalMapModel.instance:getSceneMo().player.pos
-	local var_21_2 = arg_21_1.co.effect
+function SurvivalMapUseItemView:_onUseQuickItem(itemMo)
+	local walkable = SurvivalMapModel.instance:getCurMapCo().walkables
+	local playerPos = SurvivalMapModel.instance:getSceneMo().player.pos
+	local effectStr = itemMo.co.effect
 
-	if arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_Fly then
-		local var_21_3 = (string.splitToNumber(var_21_2, "#") or {})[1] or 0
+	if itemMo.co.subType == SurvivalEnum.ItemSubType.Quick_Fly then
+		local arr = string.splitToNumber(effectStr, "#") or {}
+		local range = arr[1] or 0
 
-		arg_21_0:setRangeByWalkable(var_21_1, var_21_3, var_21_0)
-	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_ClearFog then
-		local var_21_4 = (string.splitToNumber(var_21_2, "#") or {})[1] or 0
+		self:setRangeByWalkable(playerPos, range, walkable)
+	elseif itemMo.co.subType == SurvivalEnum.ItemSubType.Quick_ClearFog then
+		local arr = string.splitToNumber(effectStr, "#") or {}
+		local range = arr[1] or 0
 
-		arg_21_0:setRangeByWalkable(var_21_1, var_21_4, var_21_0)
-	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_SwapPos then
-		local var_21_5 = GameUtil.splitString2(var_21_2, true, "#", ",")
-		local var_21_6 = var_21_5[1] or {}
-		local var_21_7 = var_21_5[2] and var_21_5[2][1] or 0
+		self:setRangeByWalkable(playerPos, range, walkable)
+	elseif itemMo.co.subType == SurvivalEnum.ItemSubType.Quick_SwapPos then
+		local dict = GameUtil.splitString2(effectStr, true, "#", ",")
+		local subTypes = dict[1] or {}
+		local range = dict[2] and dict[2][1] or 0
 
-		arg_21_0:setRangeBySubType(var_21_1, var_21_7, var_21_6)
-	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_DelObstructNPCFight then
-		local var_21_8 = tonumber(var_21_2) or 0
+		self:setRangeBySubType(playerPos, range, subTypes)
+	elseif itemMo.co.subType == SurvivalEnum.ItemSubType.Quick_DelObstructNPCFight then
+		local range = tonumber(effectStr) or 0
 
-		arg_21_0:setRangeByBlockNPCFight(var_21_1, var_21_8)
-	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_TransferToEvent then
-		local var_21_9 = GameUtil.splitString2(var_21_2, true, "#", ",")
-		local var_21_10 = var_21_9[1] or {}
-		local var_21_11 = var_21_9[2] and var_21_9[2][1] or 0
+		self:setRangeByBlockNPCFight(playerPos, range)
+	elseif itemMo.co.subType == SurvivalEnum.ItemSubType.Quick_TransferToEvent then
+		local dict = GameUtil.splitString2(effectStr, true, "#", ",")
+		local subTypes = dict[1] or {}
+		local range = dict[2] and dict[2][1] or 0
 
-		arg_21_0:setRangeBySubType(var_21_1, var_21_11, var_21_10)
-	elseif arg_21_1.co.subType == SurvivalEnum.ItemSubType.Quick_TransferUnitOut then
-		local var_21_12 = GameUtil.splitString2(var_21_2, true, "#", ",")
-		local var_21_13 = var_21_12[1] and var_21_12[1][1] or 0
-		local var_21_14 = var_21_12[2] or {}
+		self:setRangeBySubType(playerPos, range, subTypes)
+	elseif itemMo.co.subType == SurvivalEnum.ItemSubType.Quick_TransferUnitOut then
+		local dict = GameUtil.splitString2(effectStr, true, "#", ",")
+		local range = dict[1] and dict[1][1] or 0
+		local subTypes = dict[2] or {}
 
-		arg_21_0:setRangeBySubType(var_21_1, var_21_13, var_21_14)
+		self:setRangeBySubType(playerPos, range, subTypes)
 	else
-		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(arg_21_1.uid, "")
+		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(itemMo.uid, "")
 
 		return
 	end
 
-	SurvivalMapModel.instance.curUseItem = arg_21_1
+	SurvivalMapModel.instance.curUseItem = itemMo
 
-	gohelper.setActive(arg_21_0._gotips, true)
+	gohelper.setActive(self._gotips, true)
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._allUIs) do
-		gohelper.setActive(iter_21_1, false)
+	for k, v in ipairs(self._allUIs) do
+		gohelper.setActive(v, false)
 	end
 
-	arg_21_0.viewContainer:setCloseFunc(arg_21_0.cancelUseItem, arg_21_0)
+	self.viewContainer:setCloseFunc(self.cancelUseItem, self)
 end
 
-function var_0_0.setRangeByWalkable(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = SurvivalHelper.instance:getAllPointsByDis(arg_22_1, arg_22_2)
+function SurvivalMapUseItemView:setRangeByWalkable(playerPos, range, walkable)
+	local list = SurvivalHelper.instance:getAllPointsByDis(playerPos, range)
 
-	for iter_22_0 = #var_22_0, 1, -1 do
-		if var_22_0[iter_22_0] == arg_22_1 or not SurvivalHelper.instance:getValueFromDict(arg_22_3, var_22_0[iter_22_0]) then
-			table.remove(var_22_0, iter_22_0)
+	for i = #list, 1, -1 do
+		if list[i] == playerPos or not SurvivalHelper.instance:getValueFromDict(walkable, list[i]) then
+			table.remove(list, i)
 		end
 	end
 
-	arg_22_0:setCanUsePoints(var_22_0)
+	self:setCanUsePoints(list)
 end
 
-function var_0_0.setRangeByBlockNPCFight(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_23_1 = SurvivalHelper.instance:getAllPointsByDis(arg_23_1, arg_23_2)
+function SurvivalMapUseItemView:setRangeByBlockNPCFight(playerPos, range)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local list = SurvivalHelper.instance:getAllPointsByDis(playerPos, range)
 
-	for iter_23_0 = #var_23_1, 1, -1 do
-		local var_23_2 = var_23_0:getBlockTypeByPos(var_23_1[iter_23_0]) == SurvivalEnum.UnitSubType.Block
-		local var_23_3 = false
+	for i = #list, 1, -1 do
+		local isBlock = sceneMo:getBlockTypeByPos(list[i]) == SurvivalEnum.UnitSubType.Block
+		local haveNpcOrFight = false
 
-		for iter_23_1, iter_23_2 in ipairs(var_23_0:getUnitByPos(var_23_1[iter_23_0], true, true)) do
-			if iter_23_2.unitType == SurvivalEnum.UnitType.NPC or iter_23_2.unitType == SurvivalEnum.UnitType.Battle then
-				var_23_3 = true
+		for _, unitMo in ipairs(sceneMo:getUnitByPos(list[i], true, true)) do
+			if unitMo.unitType == SurvivalEnum.UnitType.NPC or unitMo.unitType == SurvivalEnum.UnitType.Battle then
+				haveNpcOrFight = true
 
 				break
 			end
 		end
 
-		if var_23_1[iter_23_0] == arg_23_1 or not var_23_2 and not var_23_3 then
-			table.remove(var_23_1, iter_23_0)
+		if list[i] == playerPos or not isBlock and not haveNpcOrFight then
+			table.remove(list, i)
 		end
 	end
 
-	arg_23_0:setCanUsePoints(var_23_1)
+	self:setCanUsePoints(list)
 end
 
-function var_0_0.setRangeBySubType(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = {}
+function SurvivalMapUseItemView:setRangeBySubType(playerPos, range, subTypes)
+	local subTypeDict = {}
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_3) do
-		var_24_0[iter_24_1] = true
+	for _, subType in ipairs(subTypes) do
+		subTypeDict[subType] = true
 	end
 
-	local var_24_1 = SurvivalMapModel.instance:getSceneMo()
-	local var_24_2 = SurvivalHelper.instance:getAllPointsByDis(arg_24_1, arg_24_2)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local list = SurvivalHelper.instance:getAllPointsByDis(playerPos, range)
 
-	for iter_24_2 = #var_24_2, 1, -1 do
-		local var_24_3 = var_24_1:getUnitByPos(var_24_2[iter_24_2], true, true)
-		local var_24_4 = false
+	for i = #list, 1, -1 do
+		local units = sceneMo:getUnitByPos(list[i], true, true)
+		local find = false
 
-		for iter_24_3, iter_24_4 in ipairs(var_24_3) do
-			if iter_24_4.co and var_24_0[iter_24_4.co.subType] then
-				var_24_4 = true
+		for _, unitMo in ipairs(units) do
+			if unitMo.co and subTypeDict[unitMo.co.subType] then
+				find = true
 
 				break
 			end
 		end
 
-		if not var_24_4 then
-			table.remove(var_24_2, iter_24_2)
+		if not find then
+			table.remove(list, i)
 		end
 	end
 
-	arg_24_0:setCanUsePoints(var_24_2)
+	self:setCanUsePoints(list)
 end
 
-function var_0_0.setCanUsePoints(arg_25_0, arg_25_1)
-	arg_25_0._allCanUsePoints = {}
+function SurvivalMapUseItemView:setCanUsePoints(list)
+	self._allCanUsePoints = {}
 
-	for iter_25_0, iter_25_1 in ipairs(arg_25_1) do
-		table.insert(arg_25_0._allCanUsePoints, iter_25_1:clone())
-		SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-1, iter_25_1.q, iter_25_1.r, 2)
+	for _, v in ipairs(list) do
+		table.insert(self._allCanUsePoints, v:clone())
+		SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-1, v.q, v.r, 2)
 	end
 end
 
-function var_0_0._onSceneClick(arg_26_0, arg_26_1, arg_26_2)
+function SurvivalMapUseItemView:_onSceneClick(hexPos, data)
 	if not SurvivalMapModel.instance.curUseItem then
 		return
 	end
 
-	arg_26_2.use = true
+	data.use = true
 
-	if tabletool.indexOf(arg_26_0._allCanUsePoints, arg_26_1) then
-		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(SurvivalMapModel.instance.curUseItem.uid, string.format("%d#%d", arg_26_1.q, arg_26_1.r))
+	if tabletool.indexOf(self._allCanUsePoints, hexPos) then
+		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(SurvivalMapModel.instance.curUseItem.uid, string.format("%d#%d", hexPos.q, hexPos.r))
 	end
 
-	arg_26_0:cancelUseItem()
+	self:cancelUseItem()
 end
 
-function var_0_0.cancelUseItem(arg_27_0)
-	gohelper.setActive(arg_27_0._gotips, false)
+function SurvivalMapUseItemView:cancelUseItem()
+	gohelper.setActive(self._gotips, false)
 	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(-1)
 
 	SurvivalMapModel.instance.curUseItem = nil
 
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0._allUIs) do
-		gohelper.setActive(iter_27_1, true)
+	for k, v in ipairs(self._allUIs) do
+		gohelper.setActive(v, true)
 	end
 
-	arg_27_0.viewContainer:setCloseFunc()
+	self.viewContainer:setCloseFunc()
 end
 
-function var_0_0._onClickTipsBtn(arg_28_0)
-	arg_28_0._infoPanel:updateMo()
+function SurvivalMapUseItemView:_onClickTipsBtn()
+	self._infoPanel:updateMo()
 end
 
-function var_0_0.onDestroyView(arg_29_0)
-	if arg_29_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_29_0._tweenId)
+function SurvivalMapUseItemView:onDestroyView()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_29_0._tweenId = nil
+		self._tweenId = nil
 	end
 
 	SurvivalMapModel.instance.curUseItem = nil
 
-	TaskDispatcher.cancelTask(arg_29_0._checkScrollIsEnd, arg_29_0)
+	TaskDispatcher.cancelTask(self._checkScrollIsEnd, self)
 end
 
-return var_0_0
+return SurvivalMapUseItemView

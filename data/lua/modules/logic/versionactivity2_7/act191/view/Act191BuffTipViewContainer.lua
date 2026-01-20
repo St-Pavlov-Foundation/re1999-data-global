@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191BuffTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191BuffTipViewContainer.lua
 
-local var_0_0 = class("Act191BuffTipViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191BuffTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Act191BuffTipViewContainer = class("Act191BuffTipViewContainer", BaseViewContainer)
+
+function Act191BuffTipViewContainer:buildViews()
 	return {
 		Act191BuffTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Act191BuffTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Act191BuffTipViewContainer

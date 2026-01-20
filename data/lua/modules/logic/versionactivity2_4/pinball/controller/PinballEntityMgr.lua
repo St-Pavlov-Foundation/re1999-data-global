@@ -1,147 +1,151 @@
-﻿module("modules.logic.versionactivity2_4.pinball.controller.PinballEntityMgr", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/controller/PinballEntityMgr.lua
 
-local var_0_0 = class("PinballEntityMgr")
+module("modules.logic.versionactivity2_4.pinball.controller.PinballEntityMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._entitys = {}
-	arg_1_0._item = nil
-	arg_1_0._topItem = nil
-	arg_1_0._numItem = nil
-	arg_1_0._layers = {}
-	arg_1_0.uniqueId = 0
-	arg_1_0._curMarblesNum = 0
-	arg_1_0._totalNum = 0
+local PinballEntityMgr = class("PinballEntityMgr")
+
+function PinballEntityMgr:ctor()
+	self._entitys = {}
+	self._item = nil
+	self._topItem = nil
+	self._numItem = nil
+	self._layers = {}
+	self.uniqueId = 0
+	self._curMarblesNum = 0
+	self._totalNum = 0
 end
 
-function var_0_0.addEntity(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.uniqueId = arg_2_0.uniqueId + 1
+function PinballEntityMgr:addEntity(unitType, co)
+	self.uniqueId = self.uniqueId + 1
 
-	local var_2_0 = PinballEnum.UnitTypeToName[arg_2_1] or ""
-	local var_2_1 = _G[string.format("Pinball%sEntity", var_2_0)] or PinballColliderEntity
-	local var_2_2 = PinballEnum.UnitTypeToLayer[arg_2_1]
-	local var_2_3
+	local name = PinballEnum.UnitTypeToName[unitType] or ""
+	local cls = _G[string.format("Pinball%sEntity", name)] or PinballColliderEntity
+	local layer = PinballEnum.UnitTypeToLayer[unitType]
+	local go
 
-	if var_2_2 and arg_2_0._layers[var_2_2] then
-		var_2_3 = gohelper.clone(arg_2_0._item, arg_2_0._layers[var_2_2], var_2_0)
+	if layer and self._layers[layer] then
+		go = gohelper.clone(self._item, self._layers[layer], name)
 	else
-		var_2_3 = gohelper.cloneInPlace((PinballHelper.isMarblesType(arg_2_1) or arg_2_1 == PinballEnum.UnitType.CommonEffect) and arg_2_0._topItem or arg_2_0._item, var_2_0)
+		go = gohelper.cloneInPlace((PinballHelper.isMarblesType(unitType) or unitType == PinballEnum.UnitType.CommonEffect) and self._topItem or self._item, name)
 	end
 
-	gohelper.setActive(var_2_3, true)
+	gohelper.setActive(go, true)
 
-	local var_2_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_3, var_2_1)
+	local entity = MonoHelper.addNoUpdateLuaComOnceToGo(go, cls)
 
-	var_2_4.id = arg_2_0.uniqueId
-	var_2_4.unitType = arg_2_1
+	entity.id = self.uniqueId
+	entity.unitType = unitType
 
-	var_2_4:initByCo(arg_2_2)
-	var_2_4:loadRes()
+	entity:initByCo(co)
+	entity:loadRes()
 
-	if var_2_4:isMarblesType() then
-		arg_2_0._curMarblesNum = arg_2_0._curMarblesNum + 1
+	if entity:isMarblesType() then
+		self._curMarblesNum = self._curMarblesNum + 1
 	end
 
-	var_2_4:tick(0)
+	entity:tick(0)
 
-	arg_2_0._entitys[arg_2_0.uniqueId] = var_2_4
+	self._entitys[self.uniqueId] = entity
 
-	return var_2_4
+	return entity
 end
 
-function var_0_0.addNumShow(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._totalNum = arg_3_0._totalNum + arg_3_1
+function PinballEntityMgr:addNumShow(num, x, y)
+	self._totalNum = self._totalNum + num
 
-	local var_3_0 = gohelper.cloneInPlace(arg_3_0._numItem)
+	local go = gohelper.cloneInPlace(self._numItem)
 
-	gohelper.setActive(var_3_0, true)
+	gohelper.setActive(go, true)
 
-	local var_3_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, PinballNumShowEntity)
+	local entity = MonoHelper.addNoUpdateLuaComOnceToGo(go, PinballNumShowEntity)
 
-	var_3_1:setType(arg_3_0._totalNum)
-	var_3_1:setPos(arg_3_2, arg_3_3)
+	entity:setType(self._totalNum)
+	entity:setPos(x, y)
 end
 
-function var_0_0.removeEntity(arg_4_0, arg_4_1)
-	if arg_4_0._entitys[arg_4_1] then
-		arg_4_0._entitys[arg_4_1]:markDead()
+function PinballEntityMgr:removeEntity(id)
+	if self._entitys[id] then
+		self._entitys[id]:markDead()
 	end
 end
 
-function var_0_0.getEntity(arg_5_0, arg_5_1)
-	return arg_5_0._entitys[arg_5_1]
+function PinballEntityMgr:getEntity(id)
+	return self._entitys[id]
 end
 
-function var_0_0.getAllEntity(arg_6_0)
-	return arg_6_0._entitys
+function PinballEntityMgr:getAllEntity()
+	return self._entitys
 end
 
-function var_0_0.beginTick(arg_7_0)
-	TaskDispatcher.runRepeat(arg_7_0.frameTick, arg_7_0, 0, -1)
+function PinballEntityMgr:beginTick()
+	TaskDispatcher.runRepeat(self.frameTick, self, 0, -1)
 end
 
-function var_0_0.pauseTick(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.frameTick, arg_8_0)
+function PinballEntityMgr:pauseTick()
+	TaskDispatcher.cancelTask(self.frameTick, self)
 end
 
-function var_0_0.setRoot(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	arg_9_0._item = arg_9_1
-	arg_9_0._topItem = arg_9_2
-	arg_9_0._numItem = arg_9_3
-	arg_9_0._layers = arg_9_4
+function PinballEntityMgr:setRoot(normalItem, topItem, numItem, layers)
+	self._item = normalItem
+	self._topItem = topItem
+	self._numItem = numItem
+	self._layers = layers
 end
 
-function var_0_0.frameTick(arg_10_0)
+function PinballEntityMgr:frameTick()
 	if isDebugBuild and PinballModel.instance._gmkey then
-		arg_10_0:checkGMKey()
+		self:checkGMKey()
 	end
 
-	local var_10_0 = 3
-	local var_10_1 = Mathf.Clamp(UnityEngine.Time.deltaTime, 0.01, 0.1) / var_10_0
+	local count = 3
+	local dt = Mathf.Clamp(UnityEngine.Time.deltaTime, 0.01, 0.1)
 
-	for iter_10_0 = 1, var_10_0 do
-		arg_10_0:_tickDt(var_10_1)
+	dt = dt / count
+
+	for i = 1, count do
+		self:_tickDt(dt)
 	end
 end
 
-function var_0_0._tickDt(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._entitys) do
-		iter_11_1:tick(arg_11_1)
+function PinballEntityMgr:_tickDt(dt)
+	for _, entity in pairs(self._entitys) do
+		entity:tick(dt)
 	end
 
-	for iter_11_2, iter_11_3 in pairs(arg_11_0._entitys) do
-		if iter_11_3:isCheckHit() then
-			for iter_11_4 = #iter_11_3.curHitEntityIdList, 1, -1 do
-				local var_11_0 = iter_11_3.curHitEntityIdList[iter_11_4]
-				local var_11_1 = arg_11_0._entitys[var_11_0]
+	for _, entityA in pairs(self._entitys) do
+		if entityA:isCheckHit() then
+			for i = #entityA.curHitEntityIdList, 1, -1 do
+				local hitId = entityA.curHitEntityIdList[i]
+				local hitEntity = self._entitys[hitId]
 
-				if not var_11_1 or not PinballHelper.getHitInfo(iter_11_3, var_11_1) then
-					if var_11_1 then
-						var_11_1:onHitExit(iter_11_3.id)
-						tabletool.removeValue(var_11_1.curHitEntityIdList, iter_11_3.id)
+				if not hitEntity or not PinballHelper.getHitInfo(entityA, hitEntity) then
+					if hitEntity then
+						hitEntity:onHitExit(entityA.id)
+						tabletool.removeValue(hitEntity.curHitEntityIdList, entityA.id)
 					end
 
-					iter_11_3:onHitExit(var_11_0)
-					table.remove(iter_11_3.curHitEntityIdList, iter_11_4)
+					entityA:onHitExit(hitId)
+					table.remove(entityA.curHitEntityIdList, i)
 				end
 			end
 
-			for iter_11_5, iter_11_6 in pairs(arg_11_0._entitys) do
-				if iter_11_3 ~= iter_11_6 and iter_11_6:canHit() and not tabletool.indexOf(iter_11_3.curHitEntityIdList, iter_11_6.id) then
-					local var_11_2, var_11_3, var_11_4 = PinballHelper.getHitInfo(iter_11_3, iter_11_6)
+			for _, entityB in pairs(self._entitys) do
+				if entityA ~= entityB and entityB:canHit() and not tabletool.indexOf(entityA.curHitEntityIdList, entityB.id) then
+					local hitX, hitY, hitDir = PinballHelper.getHitInfo(entityA, entityB)
 
-					if var_11_2 then
-						table.insert(iter_11_3.curHitEntityIdList, iter_11_6.id)
-						table.insert(iter_11_6.curHitEntityIdList, iter_11_3.id)
+					if hitX then
+						table.insert(entityA.curHitEntityIdList, entityB.id)
+						table.insert(entityB.curHitEntityIdList, entityA.id)
 
-						if iter_11_3.unitType <= iter_11_6.unitType then
-							iter_11_3:onHitEnter(iter_11_6.id, var_11_2, var_11_3, var_11_4)
-							iter_11_6:onHitEnter(iter_11_3.id, var_11_2, var_11_3, -var_11_4)
+						if entityA.unitType <= entityB.unitType then
+							entityA:onHitEnter(entityB.id, hitX, hitY, hitDir)
+							entityB:onHitEnter(entityA.id, hitX, hitY, -hitDir)
 
 							break
 						end
 
-						iter_11_6:onHitEnter(iter_11_3.id, var_11_2, var_11_3, -var_11_4)
-						iter_11_3:onHitEnter(iter_11_6.id, var_11_2, var_11_3, var_11_4)
+						entityB:onHitEnter(entityA.id, hitX, hitY, -hitDir)
+						entityA:onHitEnter(entityB.id, hitX, hitY, hitDir)
 
 						break
 					end
@@ -150,87 +154,87 @@ function var_0_0._tickDt(arg_11_0, arg_11_1)
 		end
 	end
 
-	local var_11_5 = false
+	local isChange = false
 
-	for iter_11_7, iter_11_8 in pairs(arg_11_0._entitys) do
-		if iter_11_8.isDead then
-			if iter_11_8.curHitEntityIdList then
-				for iter_11_9, iter_11_10 in pairs(iter_11_8.curHitEntityIdList) do
-					local var_11_6 = arg_11_0._entitys[iter_11_10]
+	for id, entity in pairs(self._entitys) do
+		if entity.isDead then
+			if entity.curHitEntityIdList then
+				for _, hitId in pairs(entity.curHitEntityIdList) do
+					local hitEntity = self._entitys[hitId]
 
-					if var_11_6 then
-						var_11_6:onHitExit(iter_11_8.id)
-						tabletool.removeValue(var_11_6.curHitEntityIdList, iter_11_8.id)
-						iter_11_8:onHitExit(var_11_6.id)
+					if hitEntity then
+						hitEntity:onHitExit(entity.id)
+						tabletool.removeValue(hitEntity.curHitEntityIdList, entity.id)
+						entity:onHitExit(hitEntity.id)
 					end
 				end
 
-				iter_11_8.curHitEntityIdList = {}
+				entity.curHitEntityIdList = {}
 			end
 
-			if iter_11_8:isMarblesType() then
-				arg_11_0._curMarblesNum = arg_11_0._curMarblesNum - 1
-				var_11_5 = true
+			if entity:isMarblesType() then
+				self._curMarblesNum = self._curMarblesNum - 1
+				isChange = true
 			end
 
-			arg_11_0._entitys[iter_11_7]:dispose()
+			self._entitys[id]:dispose()
 
-			arg_11_0._entitys[iter_11_7] = nil
+			self._entitys[id] = nil
 		end
 	end
 
-	if var_11_5 and arg_11_0._curMarblesNum == 0 then
-		arg_11_0._totalNum = 0
+	if isChange and self._curMarblesNum == 0 then
+		self._totalNum = 0
 
 		PinballController.instance:dispatchEvent(PinballEvent.MarblesDead)
 	end
 end
 
-function var_0_0.checkGMKey(arg_12_0)
-	local var_12_0
+function PinballEntityMgr:checkGMKey()
+	local addBall
 
 	if UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha1) or UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Keypad1) then
-		var_12_0 = 1
+		addBall = 1
 	elseif UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha2) or UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Keypad2) then
-		var_12_0 = 2
+		addBall = 2
 	elseif UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha3) or UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Keypad3) then
-		var_12_0 = 3
+		addBall = 3
 	elseif UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha4) or UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Keypad4) then
-		var_12_0 = 4
+		addBall = 4
 	elseif UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha5) or UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Keypad5) then
-		var_12_0 = 5
+		addBall = 5
 	elseif UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Alpha0) or UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Keypad0) then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0._entitys) do
-			iter_12_1.vx = 0
-			iter_12_1.vy = 0
+		for _, entity in pairs(self._entitys) do
+			entity.vx = 0
+			entity.vy = 0
 		end
 	end
 
-	if var_12_0 then
-		local var_12_1 = ViewMgr.instance:getContainer(ViewName.PinballGameView)._views[2]
-		local var_12_2 = var_12_1._curBagDict
+	if addBall then
+		local view = ViewMgr.instance:getContainer(ViewName.PinballGameView)._views[2]
+		local dict = view._curBagDict
 
-		var_12_2[var_12_0] = var_12_2[var_12_0] + 1
+		dict[addBall] = dict[addBall] + 1
 
-		var_12_1:_refreshBagAndSaveData()
+		view:_refreshBagAndSaveData()
 	end
 end
 
-function var_0_0.clear(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.frameTick, arg_13_0)
+function PinballEntityMgr:clear()
+	TaskDispatcher.cancelTask(self.frameTick, self)
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._entitys) do
-		iter_13_1:dispose()
+	for _, entity in pairs(self._entitys) do
+		entity:dispose()
 	end
 
-	arg_13_0._entitys = {}
-	arg_13_0._item = nil
-	arg_13_0._topItem = nil
-	arg_13_0._numItem = nil
-	arg_13_0._layers = nil
-	arg_13_0._curMarblesNum = 0
+	self._entitys = {}
+	self._item = nil
+	self._topItem = nil
+	self._numItem = nil
+	self._layers = nil
+	self._curMarblesNum = 0
 end
 
-var_0_0.instance = var_0_0.New()
+PinballEntityMgr.instance = PinballEntityMgr.New()
 
-return var_0_0
+return PinballEntityMgr

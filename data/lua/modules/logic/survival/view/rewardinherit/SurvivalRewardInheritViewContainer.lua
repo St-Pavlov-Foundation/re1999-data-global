@@ -1,19 +1,23 @@
-﻿module("modules.logic.survival.view.rewardinherit.SurvivalRewardInheritViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/rewardinherit/SurvivalRewardInheritViewContainer.lua
 
-local var_0_0 = class("SurvivalRewardInheritViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.rewardinherit.SurvivalRewardInheritViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local SurvivalRewardInheritViewContainer = class("SurvivalRewardInheritViewContainer", BaseViewContainer)
+
+function SurvivalRewardInheritViewContainer:buildViews()
+	local views = {
 		SurvivalRewardInheritView.New()
 	}
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function SurvivalRewardInheritViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
+function SurvivalRewardInheritViewContainer:onContainerOpenFinish()
 	return
 end
 
-return var_0_0
+return SurvivalRewardInheritViewContainer

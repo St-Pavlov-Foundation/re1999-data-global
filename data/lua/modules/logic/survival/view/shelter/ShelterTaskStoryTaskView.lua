@@ -1,127 +1,129 @@
-﻿module("modules.logic.survival.view.shelter.ShelterTaskStoryTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterTaskStoryTaskView.lua
 
-local var_0_0 = class("ShelterTaskStoryTaskView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterTaskStoryTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goStory = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_npc")
-	arg_1_0.itemList = {}
-	arg_1_0.taskType = SurvivalEnum.TaskModule.StoryTask
-	arg_1_0.itemGO = gohelper.findChild(arg_1_0.viewGO, "#scroll_contentlist/viewport/content/#go_npc/#go_npcitem")
+local ShelterTaskStoryTaskView = class("ShelterTaskStoryTaskView", BaseView)
 
-	gohelper.setActive(arg_1_0.itemGO, false)
+function ShelterTaskStoryTaskView:onInitView()
+	self.goStory = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_npc")
+	self.itemList = {}
+	self.taskType = SurvivalEnum.TaskModule.StoryTask
+	self.itemGO = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_npc/#go_npcitem")
+
+	gohelper.setActive(self.itemGO, false)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, arg_2_0.refreshView, arg_2_0)
+function ShelterTaskStoryTaskView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, self.refreshView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, arg_3_0.refreshView, arg_3_0)
+function ShelterTaskStoryTaskView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnTaskViewUpdate, self.refreshView, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
+function ShelterTaskStoryTaskView:onOpen()
 	return
 end
 
-function var_0_0.refreshView(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1 == arg_5_0.taskType
+function ShelterTaskStoryTaskView:refreshView(taskType)
+	local isShow = taskType == self.taskType
 
-	arg_5_0:setTaskVisible(var_5_0)
+	self:setTaskVisible(isShow)
 end
 
-function var_0_0.setTaskVisible(arg_6_0, arg_6_1)
-	if arg_6_0._isVisible == arg_6_1 then
-		if arg_6_1 then
-			arg_6_0:refreshTask()
+function ShelterTaskStoryTaskView:setTaskVisible(isVisible)
+	if self._isVisible == isVisible then
+		if isVisible then
+			self:refreshTask()
 		end
 
 		return
 	end
 
-	arg_6_0._isVisible = arg_6_1
+	self._isVisible = isVisible
 
-	if arg_6_1 then
-		arg_6_0:refreshTask()
+	if isVisible then
+		self:refreshTask()
 
-		if not arg_6_0.animComp then
-			arg_6_0.animComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0.goStory, SurvivalItemListAnimComp)
+		if not self.animComp then
+			self.animComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.goStory, SurvivalItemListAnimComp)
 		end
 
-		arg_6_0.animComp:playListOpenAnim(arg_6_0.itemList, 0.06)
+		self.animComp:playListOpenAnim(self.itemList, 0.06)
 	else
-		gohelper.setActive(arg_6_0.goStory, false)
+		gohelper.setActive(self.goStory, false)
 	end
 end
 
-function var_0_0.refreshTask(arg_7_0)
-	local var_7_0 = SurvivalTaskModel.instance:getTaskList(SurvivalEnum.TaskModule.StoryTask)
-	local var_7_1 = #var_7_0
+function ShelterTaskStoryTaskView:refreshTask()
+	local list = SurvivalTaskModel.instance:getTaskList(SurvivalEnum.TaskModule.StoryTask)
+	local taskCount = #list
 
-	for iter_7_0 = 1, math.max(var_7_1, #arg_7_0.itemList) do
-		local var_7_2 = arg_7_0:getItem(iter_7_0)
+	for i = 1, math.max(taskCount, #self.itemList) do
+		local item = self:getItem(i)
 
-		arg_7_0:updateItem(var_7_2, var_7_0[iter_7_0])
+		self:updateItem(item, list[i])
 	end
 
-	gohelper.setActive(arg_7_0.goStory, var_7_1 > 0)
+	gohelper.setActive(self.goStory, taskCount > 0)
 end
 
-function var_0_0.getItem(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.itemList[arg_8_1]
+function ShelterTaskStoryTaskView:getItem(index)
+	local item = self.itemList[index]
 
-	if not var_8_0 then
-		var_8_0 = arg_8_0:createItem(arg_8_1, arg_8_0.goStory)
-		arg_8_0.itemList[arg_8_1] = var_8_0
+	if not item then
+		item = self:createItem(index, self.goStory)
+		self.itemList[index] = item
 	end
 
-	return var_8_0
+	return item
 end
 
-function var_0_0.createItem(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:getUserDataTb_()
+function ShelterTaskStoryTaskView:createItem(index, parentGO)
+	local item = self:getUserDataTb_()
 
-	var_9_0.index = arg_9_1
-	var_9_0.go = gohelper.clone(arg_9_0.itemGO, arg_9_2, tostring(arg_9_1))
-	var_9_0.goFinished = gohelper.findChild(var_9_0.go, "finished")
-	var_9_0.txtFinishedDesc = gohelper.findChildTextMesh(var_9_0.goFinished, "#txt_task")
-	var_9_0.goUnfinish = gohelper.findChild(var_9_0.go, "unfinish")
-	var_9_0.txtUnFinishDesc = gohelper.findChildTextMesh(var_9_0.goUnfinish, "#txt_task")
-	var_9_0.goFinishing = gohelper.findChild(var_9_0.go, "finishing")
-	var_9_0.txtFinishingDesc = gohelper.findChildTextMesh(var_9_0.goFinishing, "#txt_task")
-	var_9_0.anim = var_9_0.go:GetComponent(gohelper.Type_Animator)
+	item.index = index
+	item.go = gohelper.clone(self.itemGO, parentGO, tostring(index))
+	item.goFinished = gohelper.findChild(item.go, "finished")
+	item.txtFinishedDesc = gohelper.findChildTextMesh(item.goFinished, "#txt_task")
+	item.goUnfinish = gohelper.findChild(item.go, "unfinish")
+	item.txtUnFinishDesc = gohelper.findChildTextMesh(item.goUnfinish, "#txt_task")
+	item.goFinishing = gohelper.findChild(item.go, "finishing")
+	item.txtFinishingDesc = gohelper.findChildTextMesh(item.goFinishing, "#txt_task")
+	item.anim = item.go:GetComponent(gohelper.Type_Animator)
 
-	return var_9_0
+	return item
 end
 
-function var_0_0.updateItem(arg_10_0, arg_10_1, arg_10_2)
-	gohelper.setActive(arg_10_1.go, arg_10_2 ~= nil)
+function ShelterTaskStoryTaskView:updateItem(item, taskMo)
+	gohelper.setActive(item.go, taskMo ~= nil)
 
-	if not arg_10_2 then
+	if not taskMo then
 		return
 	end
 
-	local var_10_0 = not arg_10_2:isUnFinish()
-	local var_10_1 = arg_10_2:isFail()
+	local isFinish = not taskMo:isUnFinish()
+	local isFail = taskMo:isFail()
 
-	gohelper.setActive(arg_10_1.goFinished, var_10_0 and not var_10_1)
-	gohelper.setActive(arg_10_1.goUnfinish, not var_10_0)
-	gohelper.setActive(arg_10_1.goFinishing, var_10_0 and var_10_1)
+	gohelper.setActive(item.goFinished, isFinish and not isFail)
+	gohelper.setActive(item.goUnfinish, not isFinish)
+	gohelper.setActive(item.goFinishing, isFinish and isFail)
 
-	local var_10_2 = arg_10_2.co
+	local config = taskMo.co
 
-	if var_10_0 then
-		if var_10_1 then
-			arg_10_1.txtFinishingDesc.text = var_10_2 and var_10_2.desc3 or ""
+	if isFinish then
+		if isFail then
+			item.txtFinishingDesc.text = config and config.desc3 or ""
 		else
-			arg_10_1.txtFinishedDesc.text = var_10_2 and var_10_2.desc2 or ""
+			item.txtFinishedDesc.text = config and config.desc2 or ""
 		end
 	else
-		arg_10_1.txtUnFinishDesc.text = var_10_2 and var_10_2.desc or ""
+		item.txtUnFinishDesc.text = config and config.desc or ""
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function ShelterTaskStoryTaskView:onClose()
 	return
 end
 
-return var_0_0
+return ShelterTaskStoryTaskView

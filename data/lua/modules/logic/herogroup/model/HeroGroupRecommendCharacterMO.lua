@@ -1,18 +1,20 @@
-﻿module("modules.logic.herogroup.model.HeroGroupRecommendCharacterMO", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/model/HeroGroupRecommendCharacterMO.lua
 
-local var_0_0 = pureTable("HeroGroupRecommendCharacterMO")
+module("modules.logic.herogroup.model.HeroGroupRecommendCharacterMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	if not arg_1_1 or not arg_1_1.rate then
-		arg_1_0.isEmpty = true
-		arg_1_0.heroRecommendInfos = {}
+local HeroGroupRecommendCharacterMO = pureTable("HeroGroupRecommendCharacterMO")
+
+function HeroGroupRecommendCharacterMO:init(info)
+	if not info or not info.rate then
+		self.isEmpty = true
+		self.heroRecommendInfos = {}
 
 		return
 	end
 
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.heroRecommendInfos = arg_1_1.infos
-	arg_1_0.rate = arg_1_1.rate
+	self.heroId = info.heroId
+	self.heroRecommendInfos = info.infos
+	self.rate = info.rate
 end
 
-return var_0_0
+return HeroGroupRecommendCharacterMO

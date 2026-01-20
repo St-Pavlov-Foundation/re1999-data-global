@@ -1,37 +1,39 @@
-﻿module("modules.logic.gm.view.GMErrorItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMErrorItem.lua
 
-local var_0_0 = class("GMErrorItem", ListScrollCell)
+module("modules.logic.gm.view.GMErrorItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._text = gohelper.findChildText(arg_1_1, "text")
-	arg_1_0._click = gohelper.getClickWithAudio(arg_1_1)
-	arg_1_0._selectGO = gohelper.findChild(arg_1_1, "select")
+local GMErrorItem = class("GMErrorItem", ListScrollCell)
+
+function GMErrorItem:init(go)
+	self._go = go
+	self._text = gohelper.findChildText(go, "text")
+	self._click = gohelper.getClickWithAudio(go)
+	self._selectGO = gohelper.findChild(go, "select")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
+function GMErrorItem:addEventListeners()
+	self._click:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function GMErrorItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
-	arg_4_0._text.text = string.format("%s %s", os.date("%H:%M:%S", arg_4_1.time), arg_4_1.msg)
+function GMErrorItem:onUpdateMO(mo)
+	self._mo = mo
+	self._text.text = string.format("%s %s", os.date("%H:%M:%S", mo.time), mo.msg)
 end
 
-function var_0_0.onSelect(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._selectGO, arg_5_1)
+function GMErrorItem:onSelect(isSelect)
+	gohelper.setActive(self._selectGO, isSelect)
 
-	if arg_5_1 then
-		GMController.instance:dispatchEvent(GMEvent.GMLogView_Select, arg_5_0._mo)
+	if isSelect then
+		GMController.instance:dispatchEvent(GMEvent.GMLogView_Select, self._mo)
 	end
 end
 
-function var_0_0._onClickThis(arg_6_0)
-	arg_6_0._view:setSelect(arg_6_0._mo)
+function GMErrorItem:_onClickThis()
+	self._view:setSelect(self._mo)
 end
 
-return var_0_0
+return GMErrorItem

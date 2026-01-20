@@ -1,22 +1,24 @@
-﻿module("modules.configs.excel2json.lua_tower_talent_plan", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_tower_talent_plan.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_tower_talent_plan", package.seeall)
+
+local lua_tower_talent_plan = {}
+local fields = {
 	bossId = 1,
 	talentIds = 3,
 	planId = 2,
 	planName = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"bossId",
 	"planId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	planName = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_tower_talent_plan.onLoad(json)
+	lua_tower_talent_plan.configList, lua_tower_talent_plan.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_tower_talent_plan

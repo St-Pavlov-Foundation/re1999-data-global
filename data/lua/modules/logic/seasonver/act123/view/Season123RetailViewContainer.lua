@@ -1,8 +1,10 @@
-﻿module("modules.logic.seasonver.act123.view.Season123RetailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123RetailViewContainer.lua
 
-local var_0_0 = class("Season123RetailViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view.Season123RetailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123RetailViewContainer = class("Season123RetailViewContainer", BaseViewContainer)
+
+function Season123RetailViewContainer:buildViews()
 	return {
 		Season123CheckCloseView.New(),
 		Season123RetailView.New(),
@@ -11,40 +13,40 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function Season123RetailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == 2 then
-		return arg_2_0:buildCurrency()
+	elseif tabContainerId == 2 then
+		return self:buildCurrency()
 	end
 end
 
-function var_0_0.buildCurrency(arg_3_0)
-	arg_3_0._currencyView = CurrencyView.New({}, nil, nil, nil, true)
-	arg_3_0._currencyView.foreHideBtn = true
+function Season123RetailViewContainer:buildCurrency()
+	self._currencyView = CurrencyView.New({}, nil, nil, nil, true)
+	self._currencyView.foreHideBtn = true
 
 	return {
-		arg_3_0._currencyView
+		self._currencyView
 	}
 end
 
-function var_0_0.refreshCurrencyType(arg_4_0)
-	if arg_4_0._currencyView then
-		local var_4_0 = Season123RetailModel.instance.activityId
-		local var_4_1 = Season123Config.instance:getEquipItemCoin(var_4_0, Activity123Enum.Const.UttuTicketsCoin)
+function Season123RetailViewContainer:refreshCurrencyType()
+	if self._currencyView then
+		local actId = Season123RetailModel.instance.activityId
+		local ticketId = Season123Config.instance:getEquipItemCoin(actId, Activity123Enum.Const.UttuTicketsCoin)
 
-		arg_4_0._currencyView:setCurrencyType({
-			var_4_1
+		self._currencyView:setCurrencyType({
+			ticketId
 		})
 	end
 end
 
-return var_0_0
+return Season123RetailViewContainer

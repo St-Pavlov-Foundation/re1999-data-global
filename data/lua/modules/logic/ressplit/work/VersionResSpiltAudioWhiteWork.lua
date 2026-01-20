@@ -1,98 +1,100 @@
-﻿module("modules.logic.ressplit.work.VersionResSpiltAudioWhiteWork", package.seeall)
+﻿-- chunkname: @modules/logic/ressplit/work/VersionResSpiltAudioWhiteWork.lua
 
-local var_0_0 = class("VersionResSpiltAudioWhiteWork", BaseWork)
-local var_0_1 = {
+module("modules.logic.ressplit.work.VersionResSpiltAudioWhiteWork", package.seeall)
+
+local VersionResSpiltAudioWhiteWork = class("VersionResSpiltAudioWhiteWork", BaseWork)
+local _AuidoFuncType = {
 	toNumber = 2,
 	splitToNumber = 1
 }
-local var_0_2 = {
+local _GameCfgAudioWhiteList = {
 	{
 		resKey = "roleVoice",
 		separation = "|",
 		luaName = "lua_room_character",
-		funcType = var_0_1.splitToNumber
+		funcType = _AuidoFuncType.splitToNumber
 	}
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+function VersionResSpiltAudioWhiteWork:onStart(context)
 	logError(string.format("VersionResSpiltAudioWhiteWork:onStart(context) =====>"))
 
-	local var_1_0 = AudioConfig.instance:getAudioCO()
-	local var_1_1 = arg_1_0:_getAuidoIdWhiteListDict() or {}
-	local var_1_2 = arg_1_1 and arg_1_1.bankEvent2wenDic or {}
+	local allAudioDic = AudioConfig.instance:getAudioCO()
+	local audioIdWhiteDic = self:_getAuidoIdWhiteListDict() or {}
+	local bankEvent2wenDic = context and context.bankEvent2wenDic or {}
 
-	arg_1_0.bankNameWhiteDic = {}
-	arg_1_0.wenNameWhiteDic = {}
+	self.bankNameWhiteDic = {}
+	self.wenNameWhiteDic = {}
 
-	for iter_1_0, iter_1_1 in pairs(var_1_1) do
-		local var_1_3 = var_1_0[iter_1_0]
+	for audioId, v in pairs(audioIdWhiteDic) do
+		local audioCfg = allAudioDic[audioId]
 
-		if var_1_3 then
-			arg_1_0.bankNameWhiteDic[var_1_3.bankName] = true
+		if audioCfg then
+			self.bankNameWhiteDic[audioCfg.bankName] = true
 
-			local var_1_4 = var_1_2[var_1_3.eventName]
-			local var_1_5 = var_1_4 and var_1_4[var_1_3.bankName]
+			local eventNap = bankEvent2wenDic[audioCfg.eventName]
+			local wenNames = eventNap and eventNap[audioCfg.bankName]
 
-			if var_1_5 and type(var_1_5) == "table" then
-				for iter_1_2, iter_1_3 in ipairs(var_1_5) do
-					arg_1_0.wenNameWhiteDic[iter_1_3] = true
+			if wenNames and type(wenNames) == "table" then
+				for _, wenName in ipairs(wenNames) do
+					self.wenNameWhiteDic[wenName] = true
 				end
 			end
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._getAuidoIdWhiteListDict(arg_2_0)
-	local var_2_0 = {}
+function VersionResSpiltAudioWhiteWork:_getAuidoIdWhiteListDict()
+	local audioIdWhiteDic = {}
 
-	if not arg_2_0._ToNumberFuncMap then
-		arg_2_0._ToNumberFuncMap = {
-			[var_0_1.splitToNumber] = var_0_0._gameCfgWhiteSplitToNumber,
-			[var_0_1.toNumber] = var_0_0._gameCfgWhiteToNumber
+	if not self._ToNumberFuncMap then
+		self._ToNumberFuncMap = {
+			[_AuidoFuncType.splitToNumber] = VersionResSpiltAudioWhiteWork._gameCfgWhiteSplitToNumber,
+			[_AuidoFuncType.toNumber] = VersionResSpiltAudioWhiteWork._gameCfgWhiteToNumber
 		}
 	end
 
-	local var_2_1 = var_0_2
-	local var_2_2 = arg_2_0._ToNumberFuncMap
+	local whiteCfgList = _GameCfgAudioWhiteList
+	local numberFuncMap = self._ToNumberFuncMap
 
-	for iter_2_0 = 1, #var_2_1 do
-		local var_2_3 = var_2_1[iter_2_0]
-		local var_2_4 = _G[var_2_3.luaName]
+	for i = 1, #whiteCfgList do
+		local whiteCfg = whiteCfgList[i]
+		local tempLua = _G[whiteCfg.luaName]
 
-		if var_2_4 and var_2_4.configList then
-			local var_2_5 = var_2_4.configList
+		if tempLua and tempLua.configList then
+			local cfgList = tempLua.configList
 
-			for iter_2_1, iter_2_2 in ipairs(var_2_5) do
-				local var_2_6 = var_2_2[var_2_3.funcType]
+			for _, cfg in ipairs(cfgList) do
+				local func = numberFuncMap[whiteCfg.funcType]
 
-				if var_2_6 then
-					var_2_6(var_2_0, iter_2_2[var_2_3.resKey], var_2_3.separation)
+				if func then
+					func(audioIdWhiteDic, cfg[whiteCfg.resKey], whiteCfg.separation)
 				end
 			end
 		end
 	end
 
-	return var_2_0
+	return audioIdWhiteDic
 end
 
-function var_0_0._gameCfgWhiteSplitToNumber(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0 and not string.nilorempty(arg_3_1) and not string.nilorempty(arg_3_2) then
-		local var_3_0 = string.splitToNumber(arg_3_1, arg_3_2)
+function VersionResSpiltAudioWhiteWork._gameCfgWhiteSplitToNumber(whiteDic, res, separation)
+	if whiteDic and not string.nilorempty(res) and not string.nilorempty(separation) then
+		local nums = string.splitToNumber(res, separation)
 
-		if var_3_0 then
-			for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-				arg_3_0[iter_3_1] = true
+		if nums then
+			for k, v in ipairs(nums) do
+				whiteDic[v] = true
 			end
 		end
 	end
 end
 
-function var_0_0._gameCfgWhiteToNumber(arg_4_0, arg_4_1)
-	if arg_4_0 and arg_4_1 then
-		arg_4_0[tonumber(arg_4_1)] = true
+function VersionResSpiltAudioWhiteWork._gameCfgWhiteToNumber(whiteDic, value)
+	if whiteDic and value then
+		whiteDic[tonumber(value)] = true
 	end
 end
 
-return var_0_0
+return VersionResSpiltAudioWhiteWork

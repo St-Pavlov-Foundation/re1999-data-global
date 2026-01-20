@@ -1,82 +1,91 @@
-﻿module("modules.logic.jump.defines.JumpEnum", package.seeall)
+﻿-- chunkname: @modules/logic/jump/defines/JumpEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.jump.defines.JumpEnum", package.seeall)
 
-var_0_0.JumpStage = {
+local JumpEnum = _M
+
+JumpEnum.JumpStage = {
 	Jumping = 1,
 	Done = 3,
 	None = 0
 }
-var_0_0.JumpResult = {
+JumpEnum.JumpResult = {
 	Fail = 2,
 	Success = 1
 }
-var_0_0.JumpView = {
-	RoleStoryActivity = 31,
-	SignInView = 21,
-	SummonView = 2,
+JumpEnum.JumpView = {
 	MailView = 25,
-	SeasonMainView = 23,
-	TowerDeepOperAct = 42350000,
-	PushBox = 102,
+	SignInView = 21,
+	MainUISwitchInfoViewGiftSet = 203,
+	CuriseGuestAct = 10013221,
+	RougeMainView = 35,
+	TeachNoteView = 16,
+	V1a5Dungeon = 1501,
 	WeekWalk = 3801,
-	Tower = 107,
-	HandbookView = 17,
 	InvestigateView = 37,
-	MainView = 11,
-	BpView = 52,
-	Show = 99,
+	HandbookView = 17,
 	Achievement = 30,
-	Role6Game = 106,
+	PushBox = 102,
+	BpView = 52,
+	SeasonMainView = 23,
+	DungeonViewWithEpisode = 4,
+	SummonView = 2,
 	PackageStoreGoodsView = 204,
 	HeroGroupView = 8,
-	BossRush = 32,
-	V1a5Dungeon = 1501,
-	StoreView = 1,
-	PlayerClothView = 10,
-	V1a6Dungeon = 1601,
-	Season123 = 33,
-	RougeRewardView = 34,
-	TeachNoteView = 16,
-	RougeMainView = 35,
-	PermanentMainView = 36,
-	BackpackView = 9,
-	InvestigateOpinionTabView = 38,
-	DungeonViewWithEpisode = 4,
-	DiceHero = 108,
-	StoryHandBook = 173,
-	SummonViewGroup = 24,
-	SurvivalHandbook = 10013106,
-	RoomProductLineView = 15,
-	MainUISwitchInfoViewGiftSet = 203,
-	LeiMiTeBeiDungeonView = 101,
-	Act1_3DungeonView = 103,
-	SignInViewWithBirthDay = 22,
-	ActivityView = 100,
-	Role37Game = 105,
-	Odyssey = 202,
-	AssassinLibraryView = 205,
-	VersionEnterView = 110,
 	DungeonViewWithChapter = 3,
-	RoomFishing = 109,
+	StoreView = 1,
+	StoreSupplementMonthCardUseView = 56,
+	StoryHandBook = 173,
+	LeiMiTeBeiDungeonView = 101,
+	SignInViewWithBirthDay = 22,
 	Challenge = 183,
-	RoomView = 13,
-	Turnback = 104,
+	RoomFishing = 109,
 	CommandStationTask = 3001,
 	NoticeView = 19,
 	SocialView = 18,
-	DungeonViewWithType = 5,
+	DiceHero = 108,
 	EquipView = 51,
 	CharacterBackpackViewWithEquip = 7,
 	CharacterBackpackViewWithCharacter = 6,
 	ShelterBuilding = 2801,
-	TaskView = 12
+	TaskView = 12,
+	Rewind = 53,
+	RoleStoryActivity = 31,
+	RougeRewardView = 34,
+	MainView = 11,
+	TowerDeepOperAct = 42350000,
+	SummonViewGroup = 24,
+	Tower = 107,
+	PermanentMainView = 36,
+	InvestigateOpinionTabView = 38,
+	BackpackUseType = 54,
+	Role6Game = 106,
+	AssassinLibraryView = 205,
+	PlayerClothView = 10,
+	BackpackView = 9,
+	SkinGiftUseType = 55,
+	SurvivalHandbook = 10013106,
+	RoomProductLineView = 15,
+	Act1_3DungeonView = 103,
+	Season123 = 33,
+	Role37Game = 105,
+	Odyssey = 202,
+	WeiCheng = 3401,
+	VersionEnterView = 110,
+	V1a6Dungeon = 1601,
+	Turnback = 104,
+	Show = 99,
+	ActivityView = 100,
+	DungeonViewWithType = 5,
+	BossRush = 32,
+	RoomView = 13,
+	ZhuBi = 3501
 }
-var_0_0.CharacterBackpack = {
+JumpEnum.CharacterBackpack = {
 	Character = 1,
 	Equip = 2
 }
-var_0_0.DungeonChapterType = {
+JumpEnum.DungeonChapterType = {
 	WeekWalk = 9,
 	Story = 1,
 	Explore = 10,
@@ -84,20 +93,22 @@ var_0_0.DungeonChapterType = {
 	RoleStory = 19,
 	Resource = 3
 }
-var_0_0.HandbookType = {
+JumpEnum.HandbookType = {
 	Story = 3,
 	Equip = 2,
 	Character = 1,
 	CG = 4
 }
-var_0_0.JumpId = {
+JumpEnum.JumpId = {
 	GlowCharge = 10175,
 	Activity173 = 10012236,
+	MonthCardPackageView = 610001,
+	ChargeView = 10171,
 	DecorateStorePay = 10177,
 	RoomStoreTabFluff = 10012240,
 	RoomStore = 10172
 }
-var_0_0.ActIdEnum = {
+JumpEnum.ActIdEnum = {
 	Act1_4DungeonStore = 11406,
 	Act1_3Act304 = 11304,
 	Act1_3Act307 = 11307,
@@ -146,12 +157,12 @@ var_0_0.ActIdEnum = {
 	Act1_6GeTian = VersionActivity1_6Enum.ActivityId.Role2,
 	Act1_9WarmUp = ActivityEnum.Activity.Activity1_9WarmUp
 }
-var_0_0.LeiMiTeBeiSubJumpId = {
+JumpEnum.LeiMiTeBeiSubJumpId = {
 	DungeonHardMode = 2,
 	LeiMiTeBeiStore = 3,
 	DungeonStoryMode = 1
 }
-var_0_0.Activity1_2DungeonJump = {
+JumpEnum.Activity1_2DungeonJump = {
 	Jump2Daily = 6,
 	Task = 4,
 	Hard = 2,
@@ -160,13 +171,13 @@ var_0_0.Activity1_2DungeonJump = {
 	Jump2Dungeon = 5,
 	Normal = 1
 }
-var_0_0.Activity1_3DungeonJump = {
+JumpEnum.Activity1_3DungeonJump = {
 	Daily = 3,
 	Hard = 2,
 	Buff = 5,
 	Astrology = 4,
 	Normal = 1
 }
-var_0_0.BPChargeView = 610002
+JumpEnum.BPChargeView = 610002
 
-return var_0_0
+return JumpEnum

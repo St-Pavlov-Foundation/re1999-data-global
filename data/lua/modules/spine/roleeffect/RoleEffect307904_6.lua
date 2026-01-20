@@ -1,12 +1,14 @@
-﻿module("modules.spine.roleeffect.RoleEffect307904_6", package.seeall)
+﻿-- chunkname: @modules/spine/roleeffect/RoleEffect307904_6.lua
 
-local var_0_0 = class("RoleEffect307904_6", CommonRoleEffect)
+module("modules.spine.roleeffect.RoleEffect307904_6", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local RoleEffect307904_6 = class("RoleEffect307904_6", CommonRoleEffect)
 
-	arg_1_0._idleIndex = tabletool.indexOf(arg_1_0._motionList, "b_idle")
-	arg_1_0._lightBodyList = {
+function RoleEffect307904_6:init(roleEffectConfig)
+	RoleEffect307904_6.super.init(self, roleEffectConfig)
+
+	self._idleIndex = tabletool.indexOf(self._motionList, "b_idle")
+	self._lightBodyList = {
 		"b_idle",
 		"b_diantou",
 		"b_yaotou",
@@ -14,36 +16,36 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	}
 end
 
-function var_0_0.showBodyEffect(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._effectVisible = false
+function RoleEffect307904_6:showBodyEffect(bodyName, callback, callbackTarget)
+	self._effectVisible = false
 
-	if arg_2_0._index == arg_2_0._idleIndex then
-		if not tabletool.indexOf(arg_2_0._lightBodyList, arg_2_1) then
-			arg_2_0:_setNodeVisible(arg_2_0._index, false)
+	if self._index == self._idleIndex then
+		if not tabletool.indexOf(self._lightBodyList, bodyName) then
+			self:_setNodeVisible(self._index, false)
 		end
 	else
-		arg_2_0:_setNodeVisible(arg_2_0._index, false)
+		self:_setNodeVisible(self._index, false)
 	end
 
-	arg_2_0._index = tabletool.indexOf(arg_2_0._motionList, arg_2_1)
+	self._index = tabletool.indexOf(self._motionList, bodyName)
 
-	arg_2_0:_setNodeVisible(arg_2_0._index, true)
+	self:_setNodeVisible(self._index, true)
 
-	if tabletool.indexOf(arg_2_0._lightBodyList, arg_2_1) then
-		arg_2_0:_setNodeVisible(arg_2_0._idleIndex, true)
+	if tabletool.indexOf(self._lightBodyList, bodyName) then
+		self:_setNodeVisible(self._idleIndex, true)
 	end
 
-	if not arg_2_0._firstShow then
-		arg_2_0._firstShow = true
+	if not self._firstShow then
+		self._firstShow = true
 
-		arg_2_0:showEverNodes(false)
-		TaskDispatcher.cancelTask(arg_2_0._delayShowEverNodes, arg_2_0)
-		TaskDispatcher.runDelay(arg_2_0._delayShowEverNodes, arg_2_0, 0.3)
+		self:showEverNodes(false)
+		TaskDispatcher.cancelTask(self._delayShowEverNodes, self)
+		TaskDispatcher.runDelay(self._delayShowEverNodes, self, 0.3)
 	end
 
-	if arg_2_2 and arg_2_3 then
-		arg_2_2(arg_2_3, arg_2_0._effectVisible or arg_2_0._showEverEffect)
+	if callback and callbackTarget then
+		callback(callbackTarget, self._effectVisible or self._showEverEffect)
 	end
 end
 
-return var_0_0
+return RoleEffect307904_6

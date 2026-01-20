@@ -1,14 +1,16 @@
-﻿module("modules.logic.social.defines.ChatEnum", package.seeall)
+﻿-- chunkname: @modules/logic/social/defines/ChatEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.social.defines.ChatEnum", package.seeall)
 
-var_0_0.MsgType = {
+local ChatEnum = _M
+
+ChatEnum.MsgType = {
 	RoomSeekShare = 1,
 	RoomShareCode = 2
 }
-var_0_0.MsgTypeOPLang = {
-	[var_0_0.MsgType.RoomSeekShare] = "room_chatop_seek_share_title",
-	[var_0_0.MsgType.RoomShareCode] = "room_chatop_share_code_title"
+ChatEnum.MsgTypeOPLang = {
+	[ChatEnum.MsgType.RoomSeekShare] = "room_chatop_seek_share_title",
+	[ChatEnum.MsgType.RoomShareCode] = "room_chatop_share_code_title"
 }
 
-return var_0_0
+return ChatEnum

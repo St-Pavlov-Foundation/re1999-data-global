@@ -1,13 +1,15 @@
-﻿module("modules.logic.character.view.extra.CharacterWeaponEffectViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterWeaponEffectViewContainer.lua
 
-local var_0_0 = class("CharacterWeaponEffectViewContainer", BaseViewContainer)
+module("modules.logic.character.view.extra.CharacterWeaponEffectViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterWeaponEffectViewContainer = class("CharacterWeaponEffectViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CharacterWeaponEffectView.New())
+function CharacterWeaponEffectViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CharacterWeaponEffectView.New())
+
+	return views
 end
 
-return var_0_0
+return CharacterWeaponEffectViewContainer

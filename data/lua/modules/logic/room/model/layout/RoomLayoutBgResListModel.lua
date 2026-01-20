@@ -1,55 +1,57 @@
-﻿module("modules.logic.room.model.layout.RoomLayoutBgResListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/layout/RoomLayoutBgResListModel.lua
 
-local var_0_0 = class("RoomLayoutBgResListModel", ListScrollModel)
+module("modules.logic.room.model.layout.RoomLayoutBgResListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomLayoutBgResListModel = class("RoomLayoutBgResListModel", ListScrollModel)
+
+function RoomLayoutBgResListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomLayoutBgResListModel:reInit()
+	self:clear()
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	local var_3_0 = {}
-	local var_3_1 = RoomConfig.instance:getPlanCoverConfigList()
+function RoomLayoutBgResListModel:init(coverId)
+	local list = {}
+	local coverCfgList = RoomConfig.instance:getPlanCoverConfigList()
 
-	for iter_3_0 = 1, #var_3_1 do
-		local var_3_2 = RoomLayoutBgResMO.New()
-		local var_3_3 = var_3_1[iter_3_0]
+	for i = 1, #coverCfgList do
+		local mo = RoomLayoutBgResMO.New()
+		local cfg = coverCfgList[i]
 
-		var_3_2:init(var_3_3.id, var_3_3)
+		mo:init(cfg.id, cfg)
 
-		if var_3_3.id == arg_3_1 then
-			table.insert(var_3_0, 1, var_3_2)
+		if cfg.id == coverId then
+			table.insert(list, 1, mo)
 		else
-			table.insert(var_3_0, var_3_2)
+			table.insert(list, mo)
 		end
 	end
 
-	arg_3_0._selectId = nil
+	self._selectId = nil
 
-	arg_3_0:setList(var_3_0)
+	self:setList(list)
 end
 
-function var_0_0._refreshSelect(arg_4_0)
-	local var_4_0 = arg_4_0:getById(arg_4_0._selectId)
+function RoomLayoutBgResListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectId)
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._scrollViews) do
-		iter_4_1:setSelect(var_4_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.getSelectMO(arg_5_0)
-	return arg_5_0:getById(arg_5_0._selectId)
+function RoomLayoutBgResListModel:getSelectMO()
+	return self:getById(self._selectId)
 end
 
-function var_0_0.setSelect(arg_6_0, arg_6_1)
-	arg_6_0._selectId = arg_6_1
+function RoomLayoutBgResListModel:setSelect(id)
+	self._selectId = id
 
-	arg_6_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomLayoutBgResListModel.instance = RoomLayoutBgResListModel.New()
 
-return var_0_0
+return RoomLayoutBgResListModel

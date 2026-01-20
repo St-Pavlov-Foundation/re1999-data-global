@@ -1,199 +1,203 @@
-﻿module("modules.logic.scene.shelter.entity.SurvivalShelterUnitEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/entity/SurvivalShelterUnitEntity.lua
 
-local var_0_0 = class("SurvivalShelterUnitEntity", LuaCompBase)
+module("modules.logic.scene.shelter.entity.SurvivalShelterUnitEntity", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.unitType = arg_1_1.unitType
-	arg_1_0.unitId = arg_1_1.unitId
+local SurvivalShelterUnitEntity = class("SurvivalShelterUnitEntity", LuaCompBase)
 
-	SurvivalMapHelper.instance:addShelterEntity(arg_1_0.unitType, arg_1_0.unitId, arg_1_0)
-	arg_1_0:onCtor(arg_1_1)
+function SurvivalShelterUnitEntity:ctor(param)
+	self.unitType = param.unitType
+	self.unitId = param.unitId
+
+	SurvivalMapHelper.instance:addShelterEntity(self.unitType, self.unitId, self)
+	self:onCtor(param)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0.trans = arg_2_1.transform
+function SurvivalShelterUnitEntity:init(go)
+	self.go = go
+	self.trans = go.transform
 
-	arg_2_0:onInit()
-	arg_2_0:showEffect()
+	self:onInit()
+	self:showEffect()
 end
 
-function var_0_0.onLoadedEnd(arg_3_0)
-	arg_3_0._isVisible = nil
+function SurvivalShelterUnitEntity:onLoadedEnd()
+	self._isVisible = nil
 
-	arg_3_0:updateEntity()
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitAdd, arg_3_0.unitType, arg_3_0.unitId)
+	self:updateEntity()
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitAdd, self.unitType, self.unitId)
 end
 
-function var_0_0.updateEntity(arg_4_0, arg_4_1)
-	arg_4_0:refreshShow()
-	arg_4_0:onUpdateEntity()
-	arg_4_0:onChangeEntity(arg_4_1)
+function SurvivalShelterUnitEntity:updateEntity(updateAll)
+	self:refreshShow()
+	self:onUpdateEntity()
+	self:onChangeEntity(updateAll)
 end
 
-function var_0_0.refreshShow(arg_5_0)
-	local var_5_0 = arg_5_0:canShow()
+function SurvivalShelterUnitEntity:refreshShow()
+	local isVisible = self:canShow()
 
-	arg_5_0:setVisible(var_5_0)
+	self:setVisible(isVisible)
 end
 
-function var_0_0.setVisible(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0._isVisible == arg_6_1 and not arg_6_2 then
+function SurvivalShelterUnitEntity:setVisible(isVisible, force)
+	if self._isVisible == isVisible and not force then
 		return
 	end
 
-	arg_6_0._isVisible = arg_6_1
+	self._isVisible = isVisible
 
-	gohelper.setActive(arg_6_0.goModel, arg_6_0._isVisible)
-	gohelper.setActive(arg_6_0._effectRoot, arg_6_0._isVisible)
+	gohelper.setActive(self.goModel, self._isVisible)
+	gohelper.setActive(self._effectRoot, self._isVisible)
 end
 
-function var_0_0.isVisible(arg_7_0)
-	return arg_7_0._isVisible
+function SurvivalShelterUnitEntity:isVisible()
+	return self._isVisible
 end
 
-function var_0_0.canShow(arg_8_0)
+function SurvivalShelterUnitEntity:canShow()
 	return true
 end
 
-function var_0_0.onCtor(arg_9_0, arg_9_1)
+function SurvivalShelterUnitEntity:onCtor(param)
 	return
 end
 
-function var_0_0.onInit(arg_10_0)
+function SurvivalShelterUnitEntity:onInit()
 	return
 end
 
-function var_0_0.onUpdateEntity(arg_11_0)
+function SurvivalShelterUnitEntity:onUpdateEntity()
 	return
 end
 
-function var_0_0.needUI(arg_12_0)
+function SurvivalShelterUnitEntity:needUI()
 	return false
 end
 
-function var_0_0.getFolowerTransform(arg_13_0)
-	if gohelper.isNil(arg_13_0.goCenter) then
-		local var_13_0, var_13_1, var_13_2 = arg_13_0:getCenterPos()
+function SurvivalShelterUnitEntity:getFolowerTransform()
+	if gohelper.isNil(self.goCenter) then
+		local x, y, z = self:getCenterPos()
 
-		arg_13_0.goCenter = gohelper.create3d(arg_13_0.trans.parent.gameObject, "center")
-		arg_13_0.transCenter = arg_13_0.goCenter.transform
+		self.goCenter = gohelper.create3d(self.trans.parent.gameObject, "center")
+		self.transCenter = self.goCenter.transform
 
-		local var_13_3 = arg_13_0:getScale()
+		local scale = self:getScale()
 
-		transformhelper.setLocalPos(arg_13_0.transCenter, var_13_0, 0.5 * var_13_3, var_13_2)
-		gohelper.addChildPosStay(arg_13_0.go, arg_13_0.goCenter)
+		transformhelper.setLocalPos(self.transCenter, x, 0.5 * scale, z)
+		gohelper.addChildPosStay(self.go, self.goCenter)
 	end
 
-	return arg_13_0.transCenter
+	return self.transCenter
 end
 
-function var_0_0.getPos(arg_14_0)
-	return arg_14_0.pos
+function SurvivalShelterUnitEntity:getPos()
+	return self.pos
 end
 
-function var_0_0.getScale(arg_15_0)
+function SurvivalShelterUnitEntity:getScale()
 	return 1
 end
 
-function var_0_0.getCenterPos(arg_16_0)
-	local var_16_0 = arg_16_0:getPos()
-	local var_16_1, var_16_2, var_16_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_16_0.q, var_16_0.r)
+function SurvivalShelterUnitEntity:getCenterPos()
+	local pos = self:getPos()
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
 
-	return var_16_1, var_16_2, var_16_3
+	return x, y, z
 end
 
-function var_0_0.checkClick(arg_17_0, arg_17_1)
-	if not arg_17_0._isVisible then
+function SurvivalShelterUnitEntity:checkClick(hexPoint)
+	if not self._isVisible then
 		return false
 	end
 
-	return arg_17_0:getPos() == arg_17_1
+	return self:getPos() == hexPoint
 end
 
-function var_0_0.isInPlayerPos(arg_18_0)
-	local var_18_0 = SurvivalMapHelper.instance:getScene()
+function SurvivalShelterUnitEntity:isInPlayerPos()
+	local scene = SurvivalMapHelper.instance:getScene()
 
-	if not var_18_0 then
+	if not scene then
 		return false
 	end
 
-	return var_18_0.unit:getPlayer():isInPos(arg_18_0:getPos())
+	local player = scene.unit:getPlayer()
+
+	return player:isInPos(self:getPos())
 end
 
-function var_0_0.focusEntity(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = arg_19_0:getPos()
+function SurvivalShelterUnitEntity:focusEntity(time, callback, callbackObj)
+	local pos = self:getPos()
 
-	if not var_19_0 then
-		if arg_19_2 then
-			arg_19_2(arg_19_3)
+	if not pos then
+		if callback then
+			callback(callbackObj)
 		end
 
 		return
 	end
 
-	local var_19_1, var_19_2, var_19_3 = SurvivalHelper.instance:hexPointToWorldPoint(var_19_0.q, var_19_0.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
 
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(var_19_1, var_19_2, var_19_3), arg_19_1, arg_19_2, arg_19_3)
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.TweenCameraFocus, Vector3(x, y, z), time, callback, callbackObj)
 end
 
-function var_0_0.onChangeEntity(arg_20_0, arg_20_1)
-	if arg_20_1 then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitChange, arg_20_0.unitType)
+function SurvivalShelterUnitEntity:onChangeEntity(updateAll)
+	if updateAll then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitChange, self.unitType)
 	else
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitChange, arg_20_0.unitType, arg_20_0.unitId)
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitChange, self.unitType, self.unitId)
 	end
 end
 
-function var_0_0.onDestroy(arg_21_0)
-	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitDel, arg_21_0.unitType, arg_21_0.unitId)
+function SurvivalShelterUnitEntity:onDestroy()
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterMapUnitDel, self.unitType, self.unitId)
 end
 
-function var_0_0.getEffectPath(arg_22_0)
+function SurvivalShelterUnitEntity:getEffectPath()
 	return nil
 end
 
-function var_0_0.showEffect(arg_23_0)
-	arg_23_0._effectPath = arg_23_0:getEffectPath()
+function SurvivalShelterUnitEntity:showEffect()
+	self._effectPath = self:getEffectPath()
 
-	if arg_23_0._effectPath == nil then
+	if self._effectPath == nil then
 		return
 	end
 
-	if gohelper.isNil(arg_23_0._effectRoot) then
-		arg_23_0._effectRoot = gohelper.create3d(arg_23_0.trans.gameObject, "EffectRoot")
+	if gohelper.isNil(self._effectRoot) then
+		self._effectRoot = gohelper.create3d(self.trans.gameObject, "EffectRoot")
 
-		gohelper.setActive(arg_23_0._effectRoot, false)
+		gohelper.setActive(self._effectRoot, false)
 	end
 
-	if not gohelper.isNil(arg_23_0._goEffect) then
+	if not gohelper.isNil(self._goEffect) then
 		return
 	end
 
-	if arg_23_0._effectLoader then
+	if self._effectLoader then
 		return
 	end
 
-	arg_23_0._effectLoader = PrefabInstantiate.Create(arg_23_0._effectRoot)
+	self._effectLoader = PrefabInstantiate.Create(self._effectRoot)
 
-	arg_23_0._effectLoader:startLoad(arg_23_0._effectPath, arg_23_0._onEffectResLoadEnd, arg_23_0)
+	self._effectLoader:startLoad(self._effectPath, self._onEffectResLoadEnd, self)
 end
 
-function var_0_0._onEffectResLoadEnd(arg_24_0)
-	local var_24_0 = arg_24_0._effectLoader:getInstGO()
-	local var_24_1 = var_24_0.transform
+function SurvivalShelterUnitEntity:_onEffectResLoadEnd()
+	local go = self._effectLoader:getInstGO()
+	local trans = go.transform
 
-	arg_24_0._goEffect = var_24_0
+	self._goEffect = go
 
-	transformhelper.setLocalPos(var_24_1, 0, 0, 0)
-	transformhelper.setLocalRotation(var_24_1, 0, 0, 0)
-	transformhelper.setLocalScale(var_24_1, 1, 1, 1)
-	arg_24_0:onEffectLoadedEnd()
-	gohelper.setActive(arg_24_0._effectRoot, arg_24_0._isVisible)
+	transformhelper.setLocalPos(trans, 0, 0, 0)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	transformhelper.setLocalScale(trans, 1, 1, 1)
+	self:onEffectLoadedEnd()
+	gohelper.setActive(self._effectRoot, self._isVisible)
 end
 
-function var_0_0.onEffectLoadedEnd(arg_25_0)
+function SurvivalShelterUnitEntity:onEffectLoadedEnd()
 	return
 end
 
-return var_0_0
+return SurvivalShelterUnitEntity

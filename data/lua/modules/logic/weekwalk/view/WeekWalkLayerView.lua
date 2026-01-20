@@ -1,212 +1,220 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkLayerView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkLayerView.lua
 
-local var_0_0 = class("WeekWalkLayerView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkLayerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_left")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/#btn_right")
-	arg_1_0._goshallow = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_shallow ")
-	arg_1_0._godeep = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_deep")
-	arg_1_0._gocountdown = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_deep/#go_countdown")
-	arg_1_0._txtcountday = gohelper.findChildText(arg_1_0.viewGO, "bottom_left/#go_deep/#go_countdown/#txt_countday")
-	arg_1_0._goexcept = gohelper.findChild(arg_1_0.viewGO, "bottom_left/#go_deep/#go_except")
-	arg_1_0._goruleIcon = gohelper.findChild(arg_1_0.viewGO, "#go_ruleIcon")
-	arg_1_0._btnruleIcon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ruleIcon/#btn_ruleIcon")
+local WeekWalkLayerView = class("WeekWalkLayerView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkLayerView:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "btns/#btn_left")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "btns/#btn_right")
+	self._goshallow = gohelper.findChild(self.viewGO, "bottom_left/#go_shallow ")
+	self._godeep = gohelper.findChild(self.viewGO, "bottom_left/#go_deep")
+	self._gocountdown = gohelper.findChild(self.viewGO, "bottom_left/#go_deep/#go_countdown")
+	self._txtcountday = gohelper.findChildText(self.viewGO, "bottom_left/#go_deep/#go_countdown/#txt_countday")
+	self._goexcept = gohelper.findChild(self.viewGO, "bottom_left/#go_deep/#go_except")
+	self._goruleIcon = gohelper.findChild(self.viewGO, "#go_ruleIcon")
+	self._btnruleIcon = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ruleIcon/#btn_ruleIcon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnClick, arg_2_0)
-	arg_2_0._btnruleIcon:AddClickListener(arg_2_0._btnruleIconOnClick, arg_2_0)
+function WeekWalkLayerView:addEvents()
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
+	self._btnruleIcon:AddClickListener(self._btnruleIconOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
-	arg_3_0._btnruleIcon:RemoveClickListener()
+function WeekWalkLayerView:removeEvents()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
+	self._btnruleIcon:RemoveClickListener()
 end
 
-function var_0_0._btnruleIconOnClick(arg_4_0)
+function WeekWalkLayerView:_btnruleIconOnClick()
 	WeekWalkController.instance:openWeekWalkRuleView()
 end
 
-function var_0_0._btnleftOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._pageIndex
+function WeekWalkLayerView:_btnleftOnClick()
+	local curPageIndex = self._pageIndex
 
-	arg_5_0._pageIndex = var_5_0 - 1
+	self._pageIndex = curPageIndex - 1
 
-	arg_5_0:_tweenPos()
-	arg_5_0:_updateBtns()
-	arg_5_0:_pageTransition(var_5_0, arg_5_0._pageIndex)
+	self:_tweenPos()
+	self:_updateBtns()
+	self:_pageTransition(curPageIndex, self._pageIndex)
 end
 
-function var_0_0._btnrightOnClick(arg_6_0)
-	local var_6_0 = arg_6_0._pageIndex
+function WeekWalkLayerView:_btnrightOnClick()
+	local curPageIndex = self._pageIndex
 
-	arg_6_0._pageIndex = var_6_0 + 1
+	self._pageIndex = curPageIndex + 1
 
-	arg_6_0:_tweenPos()
-	arg_6_0:_updateBtns()
-	arg_6_0:_pageTransition(var_6_0, arg_6_0._pageIndex)
+	self:_tweenPos()
+	self:_updateBtns()
+	self:_pageTransition(curPageIndex, self._pageIndex)
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function WeekWalkLayerView:_editableInitView()
 	WeekWalkModel.instance:clearOldInfo()
-	gohelper.addUIClickAudio(arg_7_0._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
-	gohelper.addUIClickAudio(arg_7_0._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
+	gohelper.addUIClickAudio(self._btnleft.gameObject, AudioEnum.UI.Play_UI_help_switch)
+	gohelper.addUIClickAudio(self._btnright.gameObject, AudioEnum.UI.Play_UI_help_switch)
 
-	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_7_0._gotopleft = gohelper.findChild(arg_7_0.viewGO, "top_left")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._gotopleft = gohelper.findChild(self.viewGO, "top_left")
 
-	arg_7_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_7_0._OnGetInfo, arg_7_0)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, self._OnGetInfo, self)
 end
 
-function var_0_0._OnGetInfo(arg_8_0)
-	arg_8_0:_initPageList()
+function WeekWalkLayerView:_OnGetInfo()
+	self:_initPageList()
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._layerPageList) do
-		iter_8_1:updateLayerList(arg_8_0._pageList[iter_8_0])
+	for i, v in ipairs(self._layerPageList) do
+		v:updateLayerList(self._pageList[i])
 	end
 end
 
-function var_0_0._initPageList(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = {}
+function WeekWalkLayerView:_initPageList()
+	local pageList = {}
+	local page = {}
 
-	for iter_9_0, iter_9_1 in ipairs(lua_weekwalk.configList) do
-		if iter_9_1.type <= 2 then
-			local var_9_2 = 1
-			local var_9_3 = var_9_0[var_9_2] or {}
+	for i, v in ipairs(lua_weekwalk.configList) do
+		local type = v.type
 
-			table.insert(var_9_3, iter_9_1)
+		if type <= 2 then
+			local pageType = 1
+			local page = pageList[pageType] or {}
 
-			var_9_0[var_9_2] = var_9_3
+			table.insert(page, v)
+
+			pageList[pageType] = page
 		end
 	end
 
-	local var_9_4 = WeekWalkModel.instance:getInfo()
-	local var_9_5 = WeekWalkConfig.instance:getDeepLayer(var_9_4.issueId)
-	local var_9_6 = ResSplitConfig.instance:getMaxWeekWalkLayer()
+	local info = WeekWalkModel.instance:getInfo()
+	local deepLayerList = WeekWalkConfig.instance:getDeepLayer(info.issueId)
+	local maxLayer = ResSplitConfig.instance:getMaxWeekWalkLayer()
 
-	if var_9_5 then
-		for iter_9_2, iter_9_3 in ipairs(var_9_5) do
-			if not arg_9_0.isVerifing or not (var_9_6 < iter_9_3.layer) then
-				local var_9_7 = 2
-				local var_9_8 = var_9_0[var_9_7] or {}
+	if deepLayerList then
+		for i, v in ipairs(deepLayerList) do
+			if not self.isVerifing or not (maxLayer < v.layer) then
+				local pageType = 2
+				local page = pageList[pageType] or {}
 
-				table.insert(var_9_8, iter_9_3)
+				table.insert(page, v)
 
-				var_9_0[var_9_7] = var_9_8
+				pageList[pageType] = page
 			end
 		end
 	end
 
-	arg_9_0._pageList = var_9_0
+	self._pageList = pageList
 end
 
-function var_0_0._initPages(arg_10_0)
-	arg_10_0:_initPageList()
+function WeekWalkLayerView:_initPages()
+	self:_initPageList()
 
-	arg_10_0._layerPageList = arg_10_0:getUserDataTb_()
-	arg_10_0._pageIndex = 1
-	arg_10_0._maxPageIndex = 1
+	self._layerPageList = self:getUserDataTb_()
+	self._pageIndex = 1
+	self._maxPageIndex = 1
 end
 
-function var_0_0._addPages(arg_11_0)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._pageList) do
-		arg_11_0:_addPage(iter_11_0, iter_11_1)
+function WeekWalkLayerView:_addPages()
+	for i, v in ipairs(self._pageList) do
+		self:_addPage(i, v)
 	end
 end
 
-function var_0_0._addPage(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 > arg_12_0._maxPageIndex then
-		arg_12_0._maxPageIndex = arg_12_1
+function WeekWalkLayerView:_addPage(index, layerList)
+	if index > self._maxPageIndex then
+		self._maxPageIndex = index
 	end
 
-	if arg_12_0._layerPageList[arg_12_1] then
+	if self._layerPageList[index] then
 		return
 	end
 
-	local var_12_0 = arg_12_0.viewContainer:getSetting().otherRes[1]
-	local var_12_1 = arg_12_0:getResInst(var_12_0, arg_12_0._gocontent)
-	local var_12_2 = WeekWalkLayerPage.New()
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local pageGo = self:getResInst(path, self._gocontent)
+	local layerPage = WeekWalkLayerPage.New()
 
-	var_12_2:initView(var_12_1, {
-		arg_12_0,
-		arg_12_1,
-		arg_12_2
+	layerPage:initView(pageGo, {
+		self,
+		index,
+		layerList
 	})
-	recthelper.setAnchorX(var_12_1.transform, (arg_12_1 - 1) * 2808)
+	recthelper.setAnchorX(pageGo.transform, (index - 1) * 2808)
 
-	arg_12_0._layerPageList[arg_12_1] = var_12_2
+	self._layerPageList[index] = layerPage
 end
 
-function var_0_0._updateBtns(arg_13_0)
-	gohelper.setActive(arg_13_0._btnleft.gameObject, arg_13_0._pageIndex > 1)
+function WeekWalkLayerView:_updateBtns()
+	gohelper.setActive(self._btnleft.gameObject, self._pageIndex > 1)
 
-	local var_13_0 = arg_13_0._pageIndex < arg_13_0._maxPageIndex
+	local showRightBtn = self._pageIndex < self._maxPageIndex
 
-	var_13_0 = var_13_0 and arg_13_0:_shallowFinish()
+	showRightBtn = showRightBtn and self:_shallowFinish()
 
-	if arg_13_0.isVerifing then
-		var_13_0 = false
+	if self.isVerifing then
+		showRightBtn = false
 	end
 
-	gohelper.setActive(arg_13_0._btnright.gameObject, var_13_0)
-	arg_13_0:_updateTitles()
+	gohelper.setActive(self._btnright.gameObject, showRightBtn)
+	self:_updateTitles()
 end
 
-function var_0_0._shallowFinish(arg_14_0)
-	local var_14_0 = WeekWalkModel.instance:getMapInfo(205)
+function WeekWalkLayerView:_shallowFinish()
+	local mapInfo = WeekWalkModel.instance:getMapInfo(205)
 
-	return var_14_0 and var_14_0.isFinished > 0
+	return mapInfo and mapInfo.isFinished > 0
 end
 
-function var_0_0._onChangeRightBtnVisible(arg_15_0, arg_15_1)
-	if arg_15_0:_shallowFinish() then
+function WeekWalkLayerView:_onChangeRightBtnVisible(showRightBtn)
+	if self:_shallowFinish() then
 		return
 	end
 
-	if arg_15_0.isVerifing then
-		arg_15_1 = false
+	if self.isVerifing then
+		showRightBtn = false
 	end
 
-	gohelper.setActive(arg_15_0._btnright.gameObject, arg_15_1)
+	gohelper.setActive(self._btnright.gameObject, showRightBtn)
 end
 
-function var_0_0._updateTitles(arg_16_0)
-	local var_16_0 = var_0_0.isShallowPage(arg_16_0._pageIndex)
+function WeekWalkLayerView:_updateTitles()
+	local isShallowPage = WeekWalkLayerView.isShallowPage(self._pageIndex)
 
-	gohelper.setActive(arg_16_0._goshallow, var_16_0)
-	gohelper.setActive(arg_16_0._godeep, not var_16_0)
+	gohelper.setActive(self._goshallow, isShallowPage)
+	gohelper.setActive(self._godeep, not isShallowPage)
 
-	if not var_16_0 then
-		local var_16_1 = WeekWalkModel.instance:getInfo()
+	if not isShallowPage then
+		local info = WeekWalkModel.instance:getInfo()
 
-		gohelper.setActive(arg_16_0._goexcept, not var_16_1.isOpenDeep)
-		gohelper.setActive(arg_16_0._gocountdown, var_16_1.isOpenDeep)
+		gohelper.setActive(self._goexcept, not info.isOpenDeep)
+		gohelper.setActive(self._gocountdown, info.isOpenDeep)
 	end
 
-	gohelper.setActive(arg_16_0._goruleIcon, arg_16_0:_showDeepRuleBtn())
-	arg_16_0:_shallowPageOpenShow()
-	arg_16_0:_deepPageOpenShow()
+	gohelper.setActive(self._goruleIcon, self:_showDeepRuleBtn())
+	self:_shallowPageOpenShow()
+	self:_deepPageOpenShow()
 end
 
-function var_0_0._shallowPageOpenShow(arg_17_0)
-	if not var_0_0.isShallowPage(arg_17_0._pageIndex) then
+function WeekWalkLayerView:_shallowPageOpenShow()
+	local isShallowPage = WeekWalkLayerView.isShallowPage(self._pageIndex)
+
+	if not isShallowPage then
 		return
 	end
 
-	if not WeekWalkModel.instance:getInfo().isOpenDeep then
+	local info = WeekWalkModel.instance:getInfo()
+
+	if not info.isOpenDeep then
 		return
 	end
 
-	if not arg_17_0:_shallowFinish() then
+	if not self:_shallowFinish() then
 		return
 	end
 
@@ -217,244 +225,257 @@ function var_0_0._shallowPageOpenShow(arg_17_0)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideShallowPageOpenShow)
 end
 
-function var_0_0._deepPageOpenShow(arg_18_0)
-	if var_0_0.isShallowPage(arg_18_0._pageIndex) then
+function WeekWalkLayerView:_deepPageOpenShow()
+	local isShallowPage = WeekWalkLayerView.isShallowPage(self._pageIndex)
+
+	if isShallowPage then
 		return
 	end
 
-	if not WeekWalkModel.instance:getInfo().isOpenDeep then
+	local info = WeekWalkModel.instance:getInfo()
+
+	if not info.isOpenDeep then
 		return
 	end
 
-	if not arg_18_0:_shallowFinish() then
+	if not self:_shallowFinish() then
 		return
 	end
 
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideDeepPageOpenShow)
 end
 
-function var_0_0.isShallowPage(arg_19_0)
-	return arg_19_0 <= 1
+function WeekWalkLayerView.isShallowPage(index)
+	return index <= 1
 end
 
-function var_0_0._pageTransition(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0._layerPageList[arg_20_1]
-	local var_20_1 = arg_20_0._layerPageList[arg_20_2]
+function WeekWalkLayerView:_pageTransition(prevIndex, curIndex)
+	local prevPage = self._layerPageList[prevIndex]
+	local curPage = self._layerPageList[curIndex]
 
-	gohelper.setAsLastSibling(var_20_1.viewGO)
+	gohelper.setAsLastSibling(curPage.viewGO)
 
-	if arg_20_1 < arg_20_2 then
-		var_20_1:playAnim("weekwalklayerpage_slideleft02")
-		var_20_0:playAnim("weekwalklayerpage_slideleft01")
-		var_20_1:playBgAnim("weekwalklayerpage_bg_slideleft02")
-		var_20_0:playBgAnim("weekwalklayerpage_bg_slideleft01")
+	if prevIndex < curIndex then
+		curPage:playAnim("weekwalklayerpage_slideleft02")
+		prevPage:playAnim("weekwalklayerpage_slideleft01")
+		curPage:playBgAnim("weekwalklayerpage_bg_slideleft02")
+		prevPage:playBgAnim("weekwalklayerpage_bg_slideleft01")
 	else
-		var_20_1:playAnim("weekwalklayerpage_slideright02")
-		var_20_0:playAnim("weekwalklayerpage_slideright01")
-		var_20_1:playBgAnim("weekwalklayerpage_bg_slideright02")
-		var_20_0:playBgAnim("weekwalklayerpage_bg_slideright01")
+		curPage:playAnim("weekwalklayerpage_slideright02")
+		prevPage:playAnim("weekwalklayerpage_slideright01")
+		curPage:playBgAnim("weekwalklayerpage_bg_slideright02")
+		prevPage:playBgAnim("weekwalklayerpage_bg_slideright01")
 	end
 end
 
-function var_0_0._tweenPos(arg_21_0, arg_21_1)
-	if arg_21_0._prevPageIndex == arg_21_0._pageIndex then
+function WeekWalkLayerView:_tweenPos(noTween)
+	if self._prevPageIndex == self._pageIndex then
 		return
 	end
 
-	if arg_21_0:_getAmbientSound(arg_21_0._pageIndex) ~= arg_21_0._ambientSoundId then
-		arg_21_0:_endAmbientSound()
+	if self:_getAmbientSound(self._pageIndex) ~= self._ambientSoundId then
+		self:_endAmbientSound()
 	end
 
-	arg_21_0._prevPageIndex = arg_21_0._pageIndex
+	self._prevPageIndex = self._pageIndex
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._layerPageList) do
-		local var_21_0 = iter_21_1.viewGO
-		local var_21_1 = iter_21_0 == arg_21_0._pageIndex
+	for i, v in ipairs(self._layerPageList) do
+		local pageGo = v.viewGO
+		local isShow = i == self._pageIndex
 
-		iter_21_1:setVisible(var_21_1)
+		v:setVisible(isShow)
 
-		if var_21_1 then
-			iter_21_1:resetPos(arg_21_0._targetId)
+		if isShow then
+			v:resetPos(self._targetId)
 
-			arg_21_0._targetId = nil
+			self._targetId = nil
 
-			recthelper.setAnchorX(var_21_0.transform, 0)
+			recthelper.setAnchorX(pageGo.transform, 0)
 		else
-			recthelper.setAnchorX(var_21_0.transform, 10000)
+			recthelper.setAnchorX(pageGo.transform, 10000)
 		end
 	end
 
-	arg_21_0:_movePageDone()
+	self:_movePageDone()
 end
 
-function var_0_0._movePageDone(arg_22_0)
-	arg_22_0:_beginAmbientSound()
+function WeekWalkLayerView:_movePageDone()
+	self:_beginAmbientSound()
 
-	if arg_22_0._pageIndex == 2 then
+	if self._pageIndex == 2 then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideChangeToLayerPage3)
 	end
 
-	if arg_22_0._pageIndex == 3 then
+	if self._pageIndex == 3 then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideChangeToLayerPage5)
 	end
 end
 
-function var_0_0._beginAmbientSound(arg_23_0)
-	if not arg_23_0._isOpenFinish then
+function WeekWalkLayerView:_beginAmbientSound()
+	if not self._isOpenFinish then
 		return
 	end
 
-	if arg_23_0._ambientSoundId then
+	if self._ambientSoundId then
 		return
 	end
 end
 
-function var_0_0._endAmbientSound(arg_24_0)
-	if not arg_24_0._ambientSoundId then
+function WeekWalkLayerView:_endAmbientSound()
+	if not self._ambientSoundId then
 		return
 	end
 
-	arg_24_0._ambientSoundId = nil
+	self._ambientSoundId = nil
 end
 
-function var_0_0._getAmbientSound(arg_25_0, arg_25_1)
-	if arg_25_1 <= 1 then
+function WeekWalkLayerView:_getAmbientSound(pageIndex)
+	if pageIndex <= 1 then
 		return AudioEnum.WeekWalk.play_artificial_layer_type_2
-	elseif arg_25_1 <= 2 then
+	elseif pageIndex <= 2 then
 		return AudioEnum.WeekWalk.play_artificial_layer_type_3
 	end
 end
 
-function var_0_0.onUpdateParam(arg_26_0)
+function WeekWalkLayerView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_27_0)
-	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_27_0._onGetInfo, arg_27_0)
-	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeRightBtnVisible, arg_27_0._onChangeRightBtnVisible, arg_27_0)
-	arg_27_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.GuideMoveLayerPage, arg_27_0._onGuideMoveLayerPage, arg_27_0)
-	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_27_0._onCloseViewFinish, arg_27_0, LuaEventSystem.Low)
-	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_27_0._onOpenView, arg_27_0)
-	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_27_0._onCloseView, arg_27_0)
+function WeekWalkLayerView:onOpen()
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, self._onGetInfo, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnChangeRightBtnVisible, self._onChangeRightBtnVisible, self)
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.GuideMoveLayerPage, self._onGuideMoveLayerPage, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self, LuaEventSystem.Low)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideOnLayerViewOpen)
 
-	arg_27_0.isVerifing = VersionValidator.instance:isInReviewing()
+	self.isVerifing = VersionValidator.instance:isInReviewing()
 
-	arg_27_0:_initPages()
-	arg_27_0:_addPages()
-	arg_27_0:_moveTargetLayer()
-	arg_27_0:_updateBtns()
-	arg_27_0:_showDeadline()
+	self:_initPages()
+	self:_addPages()
+	self:_moveTargetLayer()
+	self:_updateBtns()
+	self:_showDeadline()
 end
 
-function var_0_0._onOpenView(arg_28_0, arg_28_1)
-	if arg_28_1 == ViewName.WeekWalkView then
-		arg_28_0._animator.enabled = true
+function WeekWalkLayerView:_onOpenView(viewName)
+	if viewName == ViewName.WeekWalkView then
+		self._animator.enabled = true
 
-		arg_28_0._animator:Play("weekwalklayerview_out", 0, 0)
-		TaskDispatcher.cancelTask(arg_28_0._delayHideBtnHelp, arg_28_0)
-		TaskDispatcher.runDelay(arg_28_0._delayHideBtnHelp, arg_28_0, 0.1)
-		gohelper.setActive(arg_28_0._goruleIcon, false)
+		self._animator:Play("weekwalklayerview_out", 0, 0)
+		TaskDispatcher.cancelTask(self._delayHideBtnHelp, self)
+		TaskDispatcher.runDelay(self._delayHideBtnHelp, self, 0.1)
+		gohelper.setActive(self._goruleIcon, false)
 	end
 end
 
-function var_0_0._delayHideBtnHelp(arg_29_0)
-	arg_29_0.viewContainer:getNavBtnView():setHelpVisible(false)
+function WeekWalkLayerView:_delayHideBtnHelp()
+	local btnView = self.viewContainer:getNavBtnView()
+
+	btnView:setHelpVisible(false)
 end
 
-function var_0_0._onCloseView(arg_30_0, arg_30_1)
-	if arg_30_1 == ViewName.WeekWalkView then
-		arg_30_0._animator.enabled = true
+function WeekWalkLayerView:_onCloseView(viewName)
+	if viewName == ViewName.WeekWalkView then
+		self._animator.enabled = true
 
-		arg_30_0._animator:Play(UIAnimationName.Open, 0, 0)
-		arg_30_0.viewContainer:getNavBtnView():setHelpVisible(true)
-		gohelper.setActive(arg_30_0._goruleIcon, arg_30_0:_showDeepRuleBtn())
-		arg_30_0._layerPageList[arg_30_0._pageIndex]:playAnim("weekwalklayerpage_in")
+		self._animator:Play(UIAnimationName.Open, 0, 0)
+
+		local btnView = self.viewContainer:getNavBtnView()
+
+		btnView:setHelpVisible(true)
+		gohelper.setActive(self._goruleIcon, self:_showDeepRuleBtn())
+
+		local curPage = self._layerPageList[self._pageIndex]
+
+		curPage:playAnim("weekwalklayerpage_in")
 	end
 end
 
-function var_0_0._showDeepRuleBtn(arg_31_0)
-	if not arg_31_0._pageIndex then
+function WeekWalkLayerView:_showDeepRuleBtn()
+	if not self._pageIndex then
 		return false
 	end
 
-	local var_31_0 = var_0_0.isShallowPage(arg_31_0._pageIndex)
-	local var_31_1 = WeekWalkModel.instance:getInfo()
+	local isShallowPage = WeekWalkLayerView.isShallowPage(self._pageIndex)
+	local info = WeekWalkModel.instance:getInfo()
 
-	return not var_31_0 and var_31_1.isOpenDeep
+	return not isShallowPage and info.isOpenDeep
 end
 
-function var_0_0._onCloseViewFinish(arg_32_0, arg_32_1)
-	if arg_32_1 == ViewName.WeekWalkView then
-		arg_32_0:_addPages()
-		arg_32_0:_updateBtns()
+function WeekWalkLayerView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.WeekWalkView then
+		self:_addPages()
+		self:_updateBtns()
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideOnLayerViewOpen)
 	end
 end
 
-function var_0_0.onOpenFinish(arg_33_0)
-	arg_33_0._isOpenFinish = true
+function WeekWalkLayerView:onOpenFinish()
+	self._isOpenFinish = true
 
-	arg_33_0:_beginAmbientSound()
+	self:_beginAmbientSound()
 end
 
-function var_0_0._showDeadline(arg_34_0)
-	TaskDispatcher.cancelTask(arg_34_0._onRefreshDeadline, arg_34_0)
+function WeekWalkLayerView:_showDeadline()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 
-	arg_34_0._endTime = WeekWalkModel.instance:getInfo().endTime
+	self._endTime = WeekWalkModel.instance:getInfo().endTime
 
-	TaskDispatcher.runRepeat(arg_34_0._onRefreshDeadline, arg_34_0, 1)
-	arg_34_0:_onRefreshDeadline()
+	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
+	self:_onRefreshDeadline()
 end
 
-function var_0_0._onRefreshDeadline(arg_35_0)
-	local var_35_0 = arg_35_0._endTime - ServerTime.now()
+function WeekWalkLayerView:_onRefreshDeadline()
+	local limitSec = self._endTime - ServerTime.now()
 
-	if var_35_0 <= 0 then
-		TaskDispatcher.cancelTask(arg_35_0._onRefreshDeadline, arg_35_0)
+	if limitSec <= 0 then
+		TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 	end
 
-	local var_35_1, var_35_2 = TimeUtil.secondToRoughTime2(math.floor(var_35_0))
+	local time, format = TimeUtil.secondToRoughTime2(math.floor(limitSec))
 
-	arg_35_0._txtcountday.text = var_35_1 .. var_35_2
+	self._txtcountday.text = time .. format
 end
 
-function var_0_0._onGetInfo(arg_36_0)
-	arg_36_0:_showDeadline()
-	arg_36_0:_updateTitles()
+function WeekWalkLayerView:_onGetInfo()
+	self:_showDeadline()
+	self:_updateTitles()
 end
 
-function var_0_0._onGuideMoveLayerPage(arg_37_0, arg_37_1)
-	arg_37_0._guideMoveMapId = tonumber(arg_37_1)
+function WeekWalkLayerView:_onGuideMoveLayerPage(mapId)
+	self._guideMoveMapId = tonumber(mapId)
 end
 
-function var_0_0._moveTargetLayer(arg_38_0)
-	arg_38_0._targetId = arg_38_0.viewParam and arg_38_0.viewParam.mapId
-	arg_38_0._targetLayerId = arg_38_0.viewParam and arg_38_0.viewParam.layerId
+function WeekWalkLayerView:_moveTargetLayer()
+	self._targetId = self.viewParam and self.viewParam.mapId
+	self._targetLayerId = self.viewParam and self.viewParam.layerId
 
-	if not arg_38_0._targetId and not arg_38_0._targetLayerId then
-		local var_38_0, var_38_1 = WeekWalkModel.instance:getInfo():getNotFinishedMap()
+	if not self._targetId and not self._targetLayerId then
+		local info = WeekWalkModel.instance:getInfo()
+		local map, index = info:getNotFinishedMap()
 
-		arg_38_0._targetId = var_38_0.id
+		self._targetId = map.id
 	end
 
-	if arg_38_0._guideMoveMapId then
-		arg_38_0._targetId = arg_38_0._guideMoveMapId
-		arg_38_0._guideMoveMapId = nil
+	if self._guideMoveMapId then
+		self._targetId = self._guideMoveMapId
+		self._guideMoveMapId = nil
 	end
 
-	if arg_38_0._targetId or arg_38_0._targetLayerId then
-		for iter_38_0, iter_38_1 in ipairs(arg_38_0._pageList) do
-			for iter_38_2, iter_38_3 in ipairs(iter_38_1) do
-				if iter_38_3.id == arg_38_0._targetId or iter_38_3.layer == arg_38_0._targetLayerId then
-					arg_38_0._pageIndex = iter_38_0
+	if self._targetId or self._targetLayerId then
+		for index, page in ipairs(self._pageList) do
+			for i, v in ipairs(page) do
+				if v.id == self._targetId or v.layer == self._targetLayerId then
+					self._pageIndex = index
 
-					arg_38_0:_tweenPos(true)
+					self:_tweenPos(true)
 
-					local var_38_2 = arg_38_0._layerPageList[arg_38_0._pageIndex]
+					local curPage = self._layerPageList[self._pageIndex]
 
-					gohelper.setAsLastSibling(var_38_2.viewGO)
-					var_38_2:playAnim("weekwalklayerpage_in")
+					gohelper.setAsLastSibling(curPage.viewGO)
+					curPage:playAnim("weekwalklayerpage_in")
 
 					return
 				end
@@ -463,19 +484,19 @@ function var_0_0._moveTargetLayer(arg_38_0)
 	end
 end
 
-function var_0_0.onClose(arg_39_0)
-	TaskDispatcher.cancelTask(arg_39_0._delayHideBtnHelp, arg_39_0)
-	arg_39_0:_endAmbientSound()
+function WeekWalkLayerView:onClose()
+	TaskDispatcher.cancelTask(self._delayHideBtnHelp, self)
+	self:_endAmbientSound()
 
-	for iter_39_0, iter_39_1 in ipairs(arg_39_0._layerPageList) do
-		iter_39_1:destroyView()
+	for i, v in ipairs(self._layerPageList) do
+		v:destroyView()
 	end
 
-	gohelper.setActive(arg_39_0._gotopleft, false)
+	gohelper.setActive(self._gotopleft, false)
 end
 
-function var_0_0.onDestroyView(arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0._onRefreshDeadline, arg_40_0)
+function WeekWalkLayerView:onDestroyView()
+	TaskDispatcher.cancelTask(self._onRefreshDeadline, self)
 end
 
-return var_0_0
+return WeekWalkLayerView

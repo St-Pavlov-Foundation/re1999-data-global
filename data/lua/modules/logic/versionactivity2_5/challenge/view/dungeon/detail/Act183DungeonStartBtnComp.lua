@@ -1,64 +1,71 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonStartBtnComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonStartBtnComp.lua
 
-local var_0_0 = class("Act183DungeonStartBtnComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonStartBtnComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonStartBtnComp = class("Act183DungeonStartBtnComp", Act183DungeonBaseComp)
 
-	arg_1_0._btnstart = gohelper.getClickWithDefaultAudio(arg_1_0.go)
+function Act183DungeonStartBtnComp:init(go)
+	Act183DungeonStartBtnComp.super.init(self, go)
+
+	self._btnstart = gohelper.getClickWithDefaultAudio(self.go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
+function Act183DungeonStartBtnComp:addEventListeners()
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
+function Act183DungeonStartBtnComp:removeEventListeners()
+	self._btnstart:RemoveClickListener()
 end
 
-function var_0_0._btnstartOnClick(arg_4_0)
-	if arg_4_0._episodeType == Act183Enum.EpisodeType.Boss and arg_4_0._groupEpisodeMo:isAnySubEpisodeNotFinished() then
-		local var_4_0 = arg_4_0._groupType == Act183Enum.GroupType.Daily and MessageBoxIdDefine.Act183FightDailyBossEpisode or MessageBoxIdDefine.Act183FightMainBossEpisode
+function Act183DungeonStartBtnComp:_btnstartOnClick()
+	if self._episodeType == Act183Enum.EpisodeType.Boss then
+		local isAnyNotFinished = self._groupEpisodeMo:isAnySubEpisodeNotFinished()
 
-		GameFacade.showMessageBox(var_4_0, MsgBoxEnum.BoxType.Yes_No, arg_4_0.enterBossFightIfSubNotFinish, nil, nil, arg_4_0)
+		if isAnyNotFinished then
+			local isDailyGroup = self._groupType == Act183Enum.GroupType.Daily
+			local msgBoxId = isDailyGroup and MessageBoxIdDefine.Act183FightDailyBossEpisode or MessageBoxIdDefine.Act183FightMainBossEpisode
 
+			GameFacade.showMessageBox(msgBoxId, MsgBoxEnum.BoxType.Yes_No, self.enterBossFightIfSubNotFinish, nil, nil, self)
+
+			return
+		end
+	end
+
+	self:enterFight()
+end
+
+function Act183DungeonStartBtnComp:enterFight()
+	local readyUseBadgeNum = self.mgr:getFuncValue(Act183DungeonSelectBadgeComp, "getReadyUseBadgeNum")
+	local selectConditionMap = self.mgr:getFuncValue(Act183DungeonRewardRuleComp, "getSelectConditionMap")
+
+	Act183HeroGroupController.instance:enterFight(self._episodeId, readyUseBadgeNum, selectConditionMap)
+end
+
+function Act183DungeonStartBtnComp:enterBossFightIfSubNotFinish()
+	self:addEventCb(Act183Controller.instance, Act183Event.OnPlayEffectDoneIfSubUnfinish, self._onPlayEffectDoneIfSubUnfinish, self)
+	Act183Controller.instance:dispatchEvent(Act183Event.FightBossIfSubUnfinish, self._episodeId)
+end
+
+function Act183DungeonStartBtnComp:_onPlayEffectDoneIfSubUnfinish(episodeId)
+	if self._episodeId ~= episodeId then
 		return
 	end
 
-	arg_4_0:enterFight()
+	self:enterFight()
+	self:removeEventCb(Act183Controller.instance, Act183Event.OnPlayEffectDoneIfSubUnfinish, self._onPlayEffectDoneIfSubUnfinish, self)
 end
 
-function var_0_0.enterFight(arg_5_0)
-	local var_5_0 = arg_5_0.mgr:getFuncValue(Act183DungeonSelectBadgeComp, "getReadyUseBadgeNum")
-	local var_5_1 = arg_5_0.mgr:getFuncValue(Act183DungeonRewardRuleComp, "getSelectConditionMap")
-
-	Act183HeroGroupController.instance:enterFight(arg_5_0._episodeId, var_5_0, var_5_1)
+function Act183DungeonStartBtnComp:checkIsVisible()
+	return self._status == Act183Enum.EpisodeStatus.Unlocked
 end
 
-function var_0_0.enterBossFightIfSubNotFinish(arg_6_0)
-	arg_6_0:addEventCb(Act183Controller.instance, Act183Event.OnPlayEffectDoneIfSubUnfinish, arg_6_0._onPlayEffectDoneIfSubUnfinish, arg_6_0)
-	Act183Controller.instance:dispatchEvent(Act183Event.FightBossIfSubUnfinish, arg_6_0._episodeId)
+function Act183DungeonStartBtnComp:show()
+	Act183DungeonStartBtnComp.super.show(self)
 end
 
-function var_0_0._onPlayEffectDoneIfSubUnfinish(arg_7_0, arg_7_1)
-	if arg_7_0._episodeId ~= arg_7_1 then
-		return
-	end
-
-	arg_7_0:enterFight()
-	arg_7_0:removeEventCb(Act183Controller.instance, Act183Event.OnPlayEffectDoneIfSubUnfinish, arg_7_0._onPlayEffectDoneIfSubUnfinish, arg_7_0)
+function Act183DungeonStartBtnComp:onDestroy()
+	Act183DungeonStartBtnComp.super.onDestroy(self)
 end
 
-function var_0_0.checkIsVisible(arg_8_0)
-	return arg_8_0._status == Act183Enum.EpisodeStatus.Unlocked
-end
-
-function var_0_0.show(arg_9_0)
-	var_0_0.super.show(arg_9_0)
-end
-
-function var_0_0.onDestroy(arg_10_0)
-	var_0_0.super.onDestroy(arg_10_0)
-end
-
-return var_0_0
+return Act183DungeonStartBtnComp

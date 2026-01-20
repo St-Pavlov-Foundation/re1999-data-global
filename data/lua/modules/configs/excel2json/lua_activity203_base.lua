@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity203_base", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity203_base.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity203_base", package.seeall)
+
+local lua_activity203_base = {}
+local fields = {
 	dispatchInterval = 7,
 	name = 2,
 	initialCamp = 6,
@@ -13,15 +15,15 @@ local var_0_1 = {
 	soldierRecover = 9,
 	soldierLimit = 10
 }
-local var_0_2 = {
+local primaryKey = {
 	"baseId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity203_base.onLoad(json)
+	lua_activity203_base.configList, lua_activity203_base.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity203_base

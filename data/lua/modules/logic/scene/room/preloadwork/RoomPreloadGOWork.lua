@@ -1,97 +1,99 @@
-﻿module("modules.logic.scene.room.preloadwork.RoomPreloadGOWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/preloadwork/RoomPreloadGOWork.lua
 
-local var_0_0 = class("RoomPreloadGOWork", BaseWork)
+module("modules.logic.scene.room.preloadwork.RoomPreloadGOWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:_getUIUrlList()
+local RoomPreloadGOWork = class("RoomPreloadGOWork", BaseWork)
 
-	arg_1_0._loader = MultiAbLoader.New()
+function RoomPreloadGOWork:onStart(context)
+	local uiUrlList = self:_getUIUrlList()
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		arg_1_0._loader:addPath(iter_1_1)
+	self._loader = MultiAbLoader.New()
+
+	for _, resPath in ipairs(uiUrlList) do
+		self._loader:addPath(resPath)
 	end
 
-	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:setLoadFailCallback(self._onPreloadOneFail)
+	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1:getAssetItemDict()
+function RoomPreloadGOWork:_onPreloadFinish(loader)
+	local assetItemDict = loader:getAssetItemDict()
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_0, iter_2_1)
+	for url, assetItem in pairs(assetItemDict) do
+		self.context.callback(self.context.callbackObj, url, assetItem)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
-	logError("RoomPreloadGOWork: 加载失败, url: " .. arg_3_2.ResPath)
+function RoomPreloadGOWork:_onPreloadOneFail(loader, assetItem)
+	logError("RoomPreloadGOWork: 加载失败, url: " .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function RoomPreloadGOWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_4_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._getUIUrlList(arg_5_0)
-	local var_5_0 = {}
+function RoomPreloadGOWork:_getUIUrlList()
+	local urlList = {}
 
 	if RoomController.instance:isEditMode() then
-		table.insert(var_5_0, RoomScenePreloader.ResEffectB)
-		table.insert(var_5_0, RoomScenePreloader.ResVXPlacingHere)
-		table.insert(var_5_0, RoomScenePreloader.ResSmoke)
-		table.insert(var_5_0, RoomScenePreloader.ResSmokeSnow)
+		table.insert(urlList, RoomScenePreloader.ResEffectB)
+		table.insert(urlList, RoomScenePreloader.ResVXPlacingHere)
+		table.insert(urlList, RoomScenePreloader.ResSmoke)
+		table.insert(urlList, RoomScenePreloader.ResSmokeSnow)
 	end
 
 	if RoomController.instance:isObMode() then
-		table.insert(var_5_0, RoomScenePreloader.ResEffectE)
-		table.insert(var_5_0, RoomScenePreloader.ResEffectD01)
-		table.insert(var_5_0, RoomScenePreloader.ResEffectD02)
-		table.insert(var_5_0, RoomScenePreloader.ResEffectD05)
-		table.insert(var_5_0, RoomScenePreloader.ResVXXuXian)
-		table.insert(var_5_0, RoomScenePreloader.ResCharacterClickHelper)
-		table.insert(var_5_0, RoomScenePreloader.ResEffectConfirmCharacter)
-		table.insert(var_5_0, RoomScenePreloader.ResEffectCharacterShadow)
-		table.insert(var_5_0, RoomScenePreloader.ResEffectPressingCharacter)
-		table.insert(var_5_0, RoomScenePreloader.ResEffectPlaceCharacter)
-		table.insert(var_5_0, RoomScenePreloader.ResCharacterFaithEffect)
+		table.insert(urlList, RoomScenePreloader.ResEffectE)
+		table.insert(urlList, RoomScenePreloader.ResEffectD01)
+		table.insert(urlList, RoomScenePreloader.ResEffectD02)
+		table.insert(urlList, RoomScenePreloader.ResEffectD05)
+		table.insert(urlList, RoomScenePreloader.ResVXXuXian)
+		table.insert(urlList, RoomScenePreloader.ResCharacterClickHelper)
+		table.insert(urlList, RoomScenePreloader.ResEffectConfirmCharacter)
+		table.insert(urlList, RoomScenePreloader.ResEffectCharacterShadow)
+		table.insert(urlList, RoomScenePreloader.ResEffectPressingCharacter)
+		table.insert(urlList, RoomScenePreloader.ResEffectPlaceCharacter)
+		table.insert(urlList, RoomScenePreloader.ResCharacterFaithEffect)
 	end
 
 	if RoomController.instance:isVisitMode() then
-		table.insert(var_5_0, RoomScenePreloader.ResEffectCharacterShadow)
+		table.insert(urlList, RoomScenePreloader.ResEffectCharacterShadow)
 	end
 
-	for iter_5_0, iter_5_1 in ipairs(RoomScenePreloader.ResEffectWaveList) do
-		table.insert(var_5_0, iter_5_1)
+	for _, res in ipairs(RoomScenePreloader.ResEffectWaveList) do
+		table.insert(urlList, res)
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(RoomScenePreloader.ResEffectWaveWithRiverList) do
-		table.insert(var_5_0, iter_5_3)
+	for _, res in ipairs(RoomScenePreloader.ResEffectWaveWithRiverList) do
+		table.insert(urlList, res)
 	end
 
-	table.insert(var_5_0, RoomScenePreloader.ResOcean)
+	table.insert(urlList, RoomScenePreloader.ResOcean)
 
 	if RoomController.instance:isDebugPackageMode() then
-		for iter_5_4, iter_5_5 in pairs(RoomScenePreloader.ResDebugPackageColorDict) do
-			table.insert(var_5_0, iter_5_5)
+		for _, res in pairs(RoomScenePreloader.ResDebugPackageColorDict) do
+			table.insert(urlList, res)
 		end
 	end
 
-	for iter_5_6, iter_5_7 in ipairs(RoomScenePreloader.ResCommonList) do
-		table.insert(var_5_0, iter_5_7)
+	for _, res in ipairs(RoomScenePreloader.ResCommonList) do
+		table.insert(urlList, res)
 	end
 
-	table.insert(var_5_0, RoomScenePreloader.ResFogParticle)
+	table.insert(urlList, RoomScenePreloader.ResFogParticle)
 
-	for iter_5_8, iter_5_9 in ipairs(var_5_0) do
-		arg_5_0.context.poolGODict[iter_5_9] = 6
+	for i, url in ipairs(urlList) do
+		self.context.poolGODict[url] = 6
 	end
 
-	return var_5_0
+	return urlList
 end
 
-return var_0_0
+return RoomPreloadGOWork

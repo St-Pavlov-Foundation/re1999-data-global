@@ -1,237 +1,242 @@
-﻿module("modules.logic.fight.view.FightProgress500MView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightProgress500MView.lua
 
-local var_0_0 = class("FightProgress500MView", FightBaseView)
+module("modules.logic.fight.view.FightProgress500MView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.imageBg = gohelper.findChildImage(arg_1_0.viewGO, "slider/#image_bg")
-	arg_1_0.imageIconBg = gohelper.findChildImage(arg_1_0.viewGO, "slider/#image_iconbg")
-	arg_1_0.imageIconVxDict = arg_1_0:getUserDataTb_()
+local FightProgress500MView = class("FightProgress500MView", FightBaseView)
 
-	for iter_1_0 = 1, 5 do
-		arg_1_0.imageIconVxDict[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, "slider/#iconbg_loop/#" .. iter_1_0)
+function FightProgress500MView:onInitView()
+	self.imageBg = gohelper.findChildImage(self.viewGO, "slider/#image_bg")
+	self.imageIconBg = gohelper.findChildImage(self.viewGO, "slider/#image_iconbg")
+	self.imageIconVxDict = self:getUserDataTb_()
+
+	for i = 1, 5 do
+		self.imageIconVxDict[i] = gohelper.findChild(self.viewGO, "slider/#iconbg_loop/#" .. i)
 	end
 
-	arg_1_0.imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "slider/#image_icon")
-	arg_1_0.imageSliderBg = gohelper.findChildImage(arg_1_0.viewGO, "slider/#image_sliderbg")
-	arg_1_0.imageSlider = gohelper.findChildImage(arg_1_0.viewGO, "slider/#image_sliderbg/#image_sliderfg")
+	self.imageIcon = gohelper.findChildImage(self.viewGO, "slider/#image_icon")
+	self.imageSliderBg = gohelper.findChildImage(self.viewGO, "slider/#image_sliderbg")
+	self.imageSlider = gohelper.findChildImage(self.viewGO, "slider/#image_sliderbg/#image_sliderfg")
 
-	local var_1_0 = arg_1_0.imageSlider:GetComponent(gohelper.Type_RectTransform)
+	local rectTr = self.imageSlider:GetComponent(gohelper.Type_RectTransform)
 
-	arg_1_0.progressWidth = recthelper.getWidth(var_1_0)
-	arg_1_0.goLoopAnim = gohelper.findChild(arg_1_0.viewGO, "slider/#image_sliderbg/#sliderfg_loop")
-	arg_1_0.loopAnimRectTr = gohelper.findChildComponent(arg_1_0.goLoopAnim, "sliderfg_light", gohelper.Type_RectTransform)
+	self.progressWidth = recthelper.getWidth(rectTr)
+	self.goLoopAnim = gohelper.findChild(self.viewGO, "slider/#image_sliderbg/#sliderfg_loop")
+	self.loopAnimRectTr = gohelper.findChildComponent(self.goLoopAnim, "sliderfg_light", gohelper.Type_RectTransform)
 
-	gohelper.setActive(arg_1_0.goLoopAnim, true)
+	gohelper.setActive(self.goLoopAnim, true)
 
-	arg_1_0.pointGo = gohelper.findChild(arg_1_0.viewGO, "slider/#image_sliderbg/pointLayout/#image_point")
+	self.pointGo = gohelper.findChild(self.viewGO, "slider/#image_sliderbg/pointLayout/#image_point")
 
-	gohelper.setActive(arg_1_0.pointGo, false)
+	gohelper.setActive(self.pointGo, false)
 
-	arg_1_0.txtProgress = gohelper.findChildText(arg_1_0.viewGO, "slider/#txt_progress")
-	arg_1_0.txtTitle = gohelper.findChildText(arg_1_0.viewGO, "slider/txt_title")
-	arg_1_0.btnClick = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "btn")
-	arg_1_0.animPlayer = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_1_0.commonTipViewPosTr = gohelper.findChild(arg_1_0.viewGO, "commontipview_pos"):GetComponent(gohelper.Type_RectTransform)
-	arg_1_0.tweenProgress = 0
+	self.txtProgress = gohelper.findChildText(self.viewGO, "slider/#txt_progress")
+	self.txtTitle = gohelper.findChildText(self.viewGO, "slider/txt_title")
+	self.btnClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "btn")
+	self.animPlayer = self.viewGO:GetComponent(gohelper.Type_Animator)
 
-	arg_1_0:initThreshold()
+	local commonTipViewPos = gohelper.findChild(self.viewGO, "commontipview_pos")
+
+	self.commonTipViewPosTr = commonTipViewPos:GetComponent(gohelper.Type_RectTransform)
+	self.tweenProgress = 0
+
+	self:initThreshold()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0.btnClick, arg_2_0.onClickProgress)
-	arg_2_0:com_registMsg(FightMsgId.NewProgressValueChange, arg_2_0.onProgressValueChange)
-	arg_2_0:com_registFightEvent(FightEvent.OnMonsterChange, arg_2_0.onMonsterChange)
+function FightProgress500MView:addEvents()
+	self:com_registClick(self.btnClick, self.onClickProgress)
+	self:com_registMsg(FightMsgId.NewProgressValueChange, self.onProgressValueChange)
+	self:com_registFightEvent(FightEvent.OnMonsterChange, self.onMonsterChange)
 end
 
-function var_0_0.initThreshold(arg_3_0)
-	local var_3_0 = lua_fight_const.configDict[55]
-	local var_3_1 = var_3_0 and var_3_0.value
+function FightProgress500MView:initThreshold()
+	local co = lua_fight_const.configDict[55]
+	local value = co and co.value
 
-	if string.nilorempty(var_3_1) then
+	if string.nilorempty(value) then
 		logError("密思海500m最终boss的蓄力条 阈值配置不存在")
 
-		arg_3_0.threshold = {
+		self.threshold = {
 			0.25,
 			0.5,
 			0.75,
 			1
 		}
 	else
-		arg_3_0.threshold = string.splitToNumber(var_3_1, "#")
+		self.threshold = string.splitToNumber(value, "#")
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0.threshold) do
-			arg_3_0.threshold[iter_3_0] = iter_3_1 / 100
+		for index, threshold in ipairs(self.threshold) do
+			self.threshold[index] = threshold / 100
 		end
 	end
 end
 
-function var_0_0.onMonsterChange(arg_4_0)
-	arg_4_0:refreshUI()
-	arg_4_0.animPlayer:Play("switch", 0, 0)
+function FightProgress500MView:onMonsterChange()
+	self:refreshUI()
+	self.animPlayer:Play("switch", 0, 0)
 	AudioMgr.instance:trigger(310010)
 end
 
-var_0_0.TweenDuration = 0.5
+FightProgress500MView.TweenDuration = 0.5
 
-function var_0_0.onProgressValueChange(arg_5_0)
-	arg_5_0:clearTween()
+function FightProgress500MView:onProgressValueChange()
+	self:clearTween()
 
-	arg_5_0.curProgress = arg_5_0:getCurProgress()
-	arg_5_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_5_0.tweenProgress, arg_5_0.curProgress, var_0_0.TweenDuration, arg_5_0.frameCallback, arg_5_0.doneCallback, arg_5_0)
+	self.curProgress = self:getCurProgress()
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(self.tweenProgress, self.curProgress, FightProgress500MView.TweenDuration, self.frameCallback, self.doneCallback, self)
 end
 
-function var_0_0.frameCallback(arg_6_0, arg_6_1)
-	arg_6_0:directSetProgress(arg_6_1)
+function FightProgress500MView:frameCallback(value)
+	self:directSetProgress(value)
 end
 
-function var_0_0.doneCallback(arg_7_0)
-	arg_7_0:directSetProgress(arg_7_0.curProgress)
+function FightProgress500MView:doneCallback()
+	self:directSetProgress(self.curProgress)
 
-	arg_7_0.tweenId = nil
+	self.tweenId = nil
 end
 
-function var_0_0.onClickProgress(arg_8_0)
-	local var_8_0 = recthelper.uiPosToScreenPos(arg_8_0.commonTipViewPosTr)
-	local var_8_1 = luaLang("pata_500M_pogress_title")
-	local var_8_2 = luaLang("pata_500M_pogress_desc")
+function FightProgress500MView:onClickProgress()
+	local screenPos = recthelper.uiPosToScreenPos(self.commonTipViewPosTr)
+	local title = luaLang("pata_500M_pogress_title")
+	local desc = luaLang("pata_500M_pogress_desc")
 
-	FightCommonTipController.instance:openCommonView(var_8_1, var_8_2, var_8_0)
+	FightCommonTipController.instance:openCommonView(title, desc, screenPos)
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0.curProgress = arg_9_0:getCurProgress()
+function FightProgress500MView:onOpen()
+	self.curProgress = self:getCurProgress()
 
-	arg_9_0:initPoint()
-	arg_9_0:refreshUI()
+	self:initPoint()
+	self:refreshUI()
 end
 
-function var_0_0.initPoint(arg_10_0)
-	arg_10_0.thresholdPointList = {}
-	arg_10_0.playedThresholdIndexDict = {}
+function FightProgress500MView:initPoint()
+	self.thresholdPointList = {}
+	self.playedThresholdIndexDict = {}
 
-	local var_10_0 = arg_10_0.pointGo.transform.parent
-	local var_10_1 = recthelper.getWidth(var_10_0)
+	local parent = self.pointGo.transform.parent
+	local width = recthelper.getWidth(parent)
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.threshold) do
-		local var_10_2 = arg_10_0:getUserDataTb_()
+	for index, threshold in ipairs(self.threshold) do
+		local pointItem = self:getUserDataTb_()
 
-		var_10_2.go = gohelper.cloneInPlace(arg_10_0.pointGo)
+		pointItem.go = gohelper.cloneInPlace(self.pointGo)
 
-		table.insert(arg_10_0.thresholdPointList, var_10_2)
+		table.insert(self.thresholdPointList, pointItem)
 
-		var_10_2.image = var_10_2.go:GetComponent(gohelper.Type_Image)
-		var_10_2.animLight = var_10_2.go:GetComponent(gohelper.Type_Animation)
+		pointItem.image = pointItem.go:GetComponent(gohelper.Type_Image)
+		pointItem.animLight = pointItem.go:GetComponent(gohelper.Type_Animation)
 
-		local var_10_3 = var_10_2.go:GetComponent(gohelper.Type_RectTransform)
+		local rectTr = pointItem.go:GetComponent(gohelper.Type_RectTransform)
 
-		recthelper.setAnchorX(var_10_3, iter_10_1 * var_10_1)
+		recthelper.setAnchorX(rectTr, threshold * width)
 
-		if iter_10_1 <= arg_10_0.curProgress then
-			gohelper.setActive(var_10_2.go, false)
+		if threshold <= self.curProgress then
+			gohelper.setActive(pointItem.go, false)
 
-			arg_10_0.playedThresholdIndexDict[iter_10_0] = true
+			self.playedThresholdIndexDict[index] = true
 		else
-			gohelper.setActive(var_10_2.go, true)
+			gohelper.setActive(pointItem.go, true)
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0.curStageCo = FightHelper.getBossCurStageCo_500M()
+function FightProgress500MView:refreshUI()
+	self.curStageCo = FightHelper.getBossCurStageCo_500M()
 
-	arg_11_0:refreshPoint()
-	arg_11_0:refreshImageIconVx()
-	UISpriteSetMgr.instance:setFightTowerSprite(arg_11_0.imageBg, arg_11_0.curStageCo.param4)
-	UISpriteSetMgr.instance:setFightTowerSprite(arg_11_0.imageIconBg, arg_11_0.curStageCo.param5)
-	UISpriteSetMgr.instance:setFightTowerSprite(arg_11_0.imageIcon, arg_11_0.curStageCo.param6)
-	UISpriteSetMgr.instance:setFightTowerSprite(arg_11_0.imageSliderBg, arg_11_0.curStageCo.param7)
-	UISpriteSetMgr.instance:setFightTowerSprite(arg_11_0.imageSlider, arg_11_0.curStageCo.param8)
-	arg_11_0:clearTween()
+	self:refreshPoint()
+	self:refreshImageIconVx()
+	UISpriteSetMgr.instance:setFightTowerSprite(self.imageBg, self.curStageCo.param4)
+	UISpriteSetMgr.instance:setFightTowerSprite(self.imageIconBg, self.curStageCo.param5)
+	UISpriteSetMgr.instance:setFightTowerSprite(self.imageIcon, self.curStageCo.param6)
+	UISpriteSetMgr.instance:setFightTowerSprite(self.imageSliderBg, self.curStageCo.param7)
+	UISpriteSetMgr.instance:setFightTowerSprite(self.imageSlider, self.curStageCo.param8)
+	self:clearTween()
 
-	arg_11_0.curProgress = arg_11_0:getCurProgress()
+	self.curProgress = self:getCurProgress()
 
-	arg_11_0:directSetProgress(arg_11_0.curProgress)
+	self:directSetProgress(self.curProgress)
 end
 
-function var_0_0.directSetProgress(arg_12_0, arg_12_1)
-	arg_12_0.tweenProgress = arg_12_1
-	arg_12_0.txtProgress.text = string.format("%s%%", math.floor(arg_12_0.tweenProgress * 100))
-	arg_12_0.imageSlider.fillAmount = arg_12_0.tweenProgress
+function FightProgress500MView:directSetProgress(progress)
+	self.tweenProgress = progress
+	self.txtProgress.text = string.format("%s%%", math.floor(self.tweenProgress * 100))
+	self.imageSlider.fillAmount = self.tweenProgress
 
-	recthelper.setWidth(arg_12_0.loopAnimRectTr, arg_12_0.progressWidth * arg_12_0.tweenProgress)
+	recthelper.setWidth(self.loopAnimRectTr, self.progressWidth * self.tweenProgress)
 end
 
-function var_0_0.cancelRefreshPointTask(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0.hidePlayedPoint, arg_13_0)
+function FightProgress500MView:cancelRefreshPointTask()
+	TaskDispatcher.cancelTask(self.hidePlayedPoint, self)
 end
 
-var_0_0.AnimLightLen = 1
+FightProgress500MView.AnimLightLen = 1
 
-function var_0_0.refreshPoint(arg_14_0)
-	arg_14_0:cancelRefreshPointTask()
+function FightProgress500MView:refreshPoint()
+	self:cancelRefreshPointTask()
 
-	local var_14_0 = arg_14_0.curStageCo and arg_14_0.curStageCo.param9 or ""
+	local pointIcon = self.curStageCo and self.curStageCo.param9 or ""
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.threshold) do
-		local var_14_1 = arg_14_0.thresholdPointList[iter_14_0]
+	for index, threshold in ipairs(self.threshold) do
+		local pointItem = self.thresholdPointList[index]
 
-		if iter_14_1 <= arg_14_0.curProgress then
-			UISpriteSetMgr.instance:setFightTowerSprite(var_14_1.image, var_14_0)
-			gohelper.setActive(var_14_1.go, not arg_14_0.playedThresholdIndexDict[iter_14_0])
+		if threshold <= self.curProgress then
+			UISpriteSetMgr.instance:setFightTowerSprite(pointItem.image, pointIcon)
+			gohelper.setActive(pointItem.go, not self.playedThresholdIndexDict[index])
 
-			if not arg_14_0.playedThresholdIndexDict[iter_14_0] then
-				arg_14_0.playedThresholdIndexDict[iter_14_0] = true
+			if not self.playedThresholdIndexDict[index] then
+				self.playedThresholdIndexDict[index] = true
 
-				var_14_1.animLight:Play()
-				arg_14_0:cancelRefreshPointTask()
-				TaskDispatcher.runDelay(arg_14_0.hidePlayedPoint, arg_14_0, var_0_0.AnimLightLen)
+				pointItem.animLight:Play()
+				self:cancelRefreshPointTask()
+				TaskDispatcher.runDelay(self.hidePlayedPoint, self, FightProgress500MView.AnimLightLen)
 			end
 		else
-			UISpriteSetMgr.instance:setFightTowerSprite(var_14_1.image, "fight_tower_point_0")
+			UISpriteSetMgr.instance:setFightTowerSprite(pointItem.image, "fight_tower_point_0")
 		end
 	end
 end
 
-function var_0_0.hidePlayedPoint(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.playedThresholdIndexDict) do
-		local var_15_0 = arg_15_0.thresholdPointList[iter_15_0]
+function FightProgress500MView:hidePlayedPoint()
+	for index, _ in pairs(self.playedThresholdIndexDict) do
+		local pointItem = self.thresholdPointList[index]
 
-		if var_15_0 then
-			gohelper.setActive(var_15_0.go, false)
+		if pointItem then
+			gohelper.setActive(pointItem.go, false)
 		end
 	end
 end
 
-function var_0_0.refreshImageIconVx(arg_16_0)
-	local var_16_0 = arg_16_0.curStageCo.level
+function FightProgress500MView:refreshImageIconVx()
+	local curLevel = self.curStageCo.level
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0.imageIconVxDict) do
-		gohelper.setActive(iter_16_1, iter_16_0 == var_16_0)
+	for index, goVx in ipairs(self.imageIconVxDict) do
+		gohelper.setActive(goVx, index == curLevel)
 	end
 end
 
-function var_0_0.getCurProgress(arg_17_0)
-	local var_17_0 = FightDataHelper.fieldMgr.progressDic
-	local var_17_1 = var_17_0 and var_17_0:getDataByShowId(FightEnum.ProgressId.Progress_500M)
+function FightProgress500MView:getCurProgress()
+	local progressDic = FightDataHelper.fieldMgr.progressDic
+	local data = progressDic and progressDic:getDataByShowId(FightEnum.ProgressId.Progress_500M)
 
-	if not var_17_1 then
+	if not data then
 		return 0
 	end
 
-	return var_17_1.value / var_17_1.max
+	return data.value / data.max
 end
 
-function var_0_0.clearTween(arg_18_0)
-	if arg_18_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_18_0.tweenId)
+function FightProgress500MView:clearTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_18_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0:clearTween()
-	arg_19_0:cancelRefreshPointTask()
+function FightProgress500MView:onDestroyView()
+	self:clearTween()
+	self:cancelRefreshPointTask()
 end
 
-return var_0_0
+return FightProgress500MView

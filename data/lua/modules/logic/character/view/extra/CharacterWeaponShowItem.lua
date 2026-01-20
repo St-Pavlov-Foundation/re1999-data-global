@@ -1,89 +1,93 @@
-﻿module("modules.logic.character.view.extra.CharacterWeaponShowItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/extra/CharacterWeaponShowItem.lua
 
-local var_0_0 = class("CharacterWeaponShowItem", LuaCompBase)
+module("modules.logic.character.view.extra.CharacterWeaponShowItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "root/#go_select")
-	arg_1_0._imageselecticon = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_select/#image_icon")
-	arg_1_0._gounselect = gohelper.findChild(arg_1_0.viewGO, "root/#go_unselect")
-	arg_1_0._imageunselecticon = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_unselect/#image_icon")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "root/#go_unselect/#go_reddot")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "root/#go_lock")
-	arg_1_0._imagelockicon = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_lock/#image_icon")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+local CharacterWeaponShowItem = class("CharacterWeaponShowItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterWeaponShowItem:onInitView()
+	self._goselect = gohelper.findChild(self.viewGO, "root/#go_select")
+	self._imageselecticon = gohelper.findChildImage(self.viewGO, "root/#go_select/#image_icon")
+	self._gounselect = gohelper.findChild(self.viewGO, "root/#go_unselect")
+	self._imageunselecticon = gohelper.findChildImage(self.viewGO, "root/#go_unselect/#image_icon")
+	self._goreddot = gohelper.findChild(self.viewGO, "root/#go_unselect/#go_reddot")
+	self._golock = gohelper.findChild(self.viewGO, "root/#go_lock")
+	self._imagelockicon = gohelper.findChildImage(self.viewGO, "root/#go_lock/#image_icon")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function CharacterWeaponShowItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function CharacterWeaponShowItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if not arg_4_0._heroMo:isOwnHero() then
+function CharacterWeaponShowItem:_btnclickOnClick()
+	if not self._heroMo:isOwnHero() then
 		return
 	end
 
-	arg_4_0._mo:cancelNew()
-	gohelper.setActive(arg_4_0._goreddot, false)
-	CharacterController.instance:dispatchEvent(CharacterEvent.onClickWeapon, arg_4_0._mo.type, arg_4_0._mo.weaponId)
+	self._mo:cancelNew()
+	gohelper.setActive(self._goreddot, false)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onClickWeapon, self._mo.type, self._mo.weaponId)
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0.viewGO = arg_5_1
+function CharacterWeaponShowItem:init(go)
+	self.viewGO = go
 
-	arg_5_0:onInitView()
+	self:onInitView()
 
-	arg_5_0._anim = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._txt = gohelper.findChildText(arg_6_0.viewGO, "txt")
+function CharacterWeaponShowItem:_editableInitView()
+	self._txt = gohelper.findChildText(self.viewGO, "txt")
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._mo = arg_7_1
-	arg_7_0._heroMo = arg_7_2
+function CharacterWeaponShowItem:onUpdateMO(mo, heroMo)
+	self._mo = mo
+	self._heroMo = heroMo
 
-	local var_7_0 = arg_7_0._mo.co.firsticon
+	local iconPath = self._mo.co.firsticon
 
-	if not string.nilorempty(var_7_0) then
-		UISpriteSetMgr.instance:setUiCharacterSprite(arg_7_0._imageselecticon, var_7_0)
-		UISpriteSetMgr.instance:setUiCharacterSprite(arg_7_0._imageunselecticon, var_7_0)
-		UISpriteSetMgr.instance:setUiCharacterSprite(arg_7_0._imagelockicon, var_7_0)
+	if not string.nilorempty(iconPath) then
+		UISpriteSetMgr.instance:setUiCharacterSprite(self._imageselecticon, iconPath)
+		UISpriteSetMgr.instance:setUiCharacterSprite(self._imageunselecticon, iconPath)
+		UISpriteSetMgr.instance:setUiCharacterSprite(self._imagelockicon, iconPath)
 	end
 
-	gohelper.setActive(arg_7_0.viewGO, true)
-	gohelper.setActive(arg_7_0._goreddot, arg_7_0._heroMo:isOwnHero() and arg_7_1:isNew())
-	arg_7_0:refreshStatus()
+	gohelper.setActive(self.viewGO, true)
+	gohelper.setActive(self._goreddot, self._heroMo:isOwnHero() and mo:isNew())
+	self:refreshStatus()
 end
 
-function var_0_0.refreshStatus(arg_8_0)
-	local var_8_0 = arg_8_0._mo:isLock()
-	local var_8_1 = arg_8_0._mo:isEquip()
+function CharacterWeaponShowItem:refreshStatus()
+	local lock = self._mo:isLock()
+	local equip = self._mo:isEquip()
 
-	gohelper.setActive(arg_8_0._goselect, not var_8_0 and var_8_1)
-	gohelper.setActive(arg_8_0._gounselect, not var_8_0 and not var_8_1)
-	gohelper.setActive(arg_8_0._golock, var_8_0)
+	gohelper.setActive(self._goselect, not lock and equip)
+	gohelper.setActive(self._gounselect, not lock and not equip)
+	gohelper.setActive(self._golock, lock)
 
-	if not var_8_0 and GameUtil.playerPrefsGetNumberByUserId(arg_8_0:_getUnlockAnimKey(), 0) == 0 then
-		arg_8_0._anim:Play(CharacterExtraEnum.WeaponAnimName.Unlock, 0, 0)
-		GameUtil.playerPrefsSetNumberByUserId(arg_8_0:_getUnlockAnimKey(), 1)
+	if not lock and GameUtil.playerPrefsGetNumberByUserId(self:_getUnlockAnimKey(), 0) == 0 then
+		self._anim:Play(CharacterExtraEnum.WeaponAnimName.Unlock, 0, 0)
+		GameUtil.playerPrefsSetNumberByUserId(self:_getUnlockAnimKey(), 1)
 	end
 end
 
-function var_0_0._getUnlockAnimKey(arg_9_0)
-	return (string.format("CharacterWeaponShowItem_getUnlockAnimKey_%s_%s_%s", arg_9_0._mo.heroId, arg_9_0._mo.type, arg_9_0._mo.weaponId))
+function CharacterWeaponShowItem:_getUnlockAnimKey()
+	local key = string.format("CharacterWeaponShowItem_getUnlockAnimKey_%s_%s_%s", self._mo.heroId, self._mo.type, self._mo.weaponId)
+
+	return key
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function CharacterWeaponShowItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return CharacterWeaponShowItem

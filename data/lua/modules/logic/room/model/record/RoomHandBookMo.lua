@@ -1,83 +1,85 @@
-﻿module("modules.logic.room.model.record.RoomHandBookMo", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomHandBookMo.lua
 
-local var_0_0 = class("RoomHandBookMo")
+module("modules.logic.room.model.record.RoomHandBookMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._config = nil
-	arg_1_0.id = nil
+local RoomHandBookMo = class("RoomHandBookMo")
+
+function RoomHandBookMo:ctor()
+	self._config = nil
+	self.id = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._config = arg_2_1
-	arg_2_0.id = arg_2_1.id
-	arg_2_0._isreverse = false
-	arg_2_0._mo = RoomHandBookModel.instance:getMoById(arg_2_0.id)
+function RoomHandBookMo:init(co)
+	self._config = co
+	self.id = co.id
+	self._isreverse = false
+	self._mo = RoomHandBookModel.instance:getMoById(self.id)
 end
 
-function var_0_0.getConfig(arg_3_0)
-	return arg_3_0._config
+function RoomHandBookMo:getConfig()
+	return self._config
 end
 
-function var_0_0.checkGotCritter(arg_4_0)
-	return arg_4_0._mo and true or false
+function RoomHandBookMo:checkGotCritter()
+	return self._mo and true or false
 end
 
-function var_0_0.getBackGroundId(arg_5_0)
-	if arg_5_0._mo and arg_5_0._mo.Background ~= 0 then
-		return arg_5_0._mo.Background
+function RoomHandBookMo:getBackGroundId()
+	if self._mo and self._mo.Background ~= 0 then
+		return self._mo.Background
 	end
 end
 
-function var_0_0.setBackGroundId(arg_6_0, arg_6_1)
-	arg_6_0._mo.Background = arg_6_1
+function RoomHandBookMo:setBackGroundId(id)
+	self._mo.Background = id
 end
 
-function var_0_0.checkUnlockSpeicalSkinById(arg_7_0)
-	if not arg_7_0._mo then
+function RoomHandBookMo:checkUnlockSpeicalSkinById()
+	if not self._mo then
 		return
 	end
 
-	return arg_7_0._mo.unlockSpecialSkin
+	return self._mo.unlockSpecialSkin
 end
 
-function var_0_0.setSpeicalSkin(arg_8_0, arg_8_1)
-	arg_8_0._mo.UseSpecialSkin = arg_8_1
+function RoomHandBookMo:setSpeicalSkin(state)
+	self._mo.UseSpecialSkin = state
 end
 
-function var_0_0.checkNew(arg_9_0)
-	if not arg_9_0._mo then
+function RoomHandBookMo:checkNew()
+	if not self._mo then
 		return
 	end
 
-	return arg_9_0._mo.isNew
+	return self._mo.isNew
 end
 
-function var_0_0.clearNewState(arg_10_0)
-	arg_10_0._mo.isNew = false
+function RoomHandBookMo:clearNewState()
+	self._mo.isNew = false
 end
 
-function var_0_0.setReverse(arg_11_0, arg_11_1)
-	arg_11_0._isreverse = arg_11_1
+function RoomHandBookMo:setReverse(state)
+	self._isreverse = state
 end
 
-function var_0_0.checkIsReverse(arg_12_0)
-	return arg_12_0._isreverse
+function RoomHandBookMo:checkIsReverse()
+	return self._isreverse
 end
 
-function var_0_0.checkShowMutate(arg_13_0)
-	if not arg_13_0._mo then
+function RoomHandBookMo:checkShowMutate()
+	if not self._mo then
 		return false
 	end
 
-	return arg_13_0._mo.unlockSpecialSkin and arg_13_0._mo.unlockNormalSkin
+	return self._mo.unlockSpecialSkin and self._mo.unlockNormalSkin
 end
 
-function var_0_0.checkShowSpeicalSkin(arg_14_0)
-	if not arg_14_0._mo then
+function RoomHandBookMo:checkShowSpeicalSkin()
+	if not self._mo then
 		return false
 	end
 
-	return arg_14_0._mo.UseSpecialSkin
+	return self._mo.UseSpecialSkin
 end
 
-return var_0_0
+return RoomHandBookMo

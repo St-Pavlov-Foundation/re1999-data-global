@@ -1,57 +1,59 @@
-﻿module("modules.logic.gm.view.GM_SummonADView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_SummonADView.lua
 
-local var_0_0 = class("GM_SummonADView")
+module("modules.logic.gm.view.GM_SummonADView", package.seeall)
 
-function var_0_0.register()
-	var_0_0.SummonMainView_register(SummonMainView)
-	var_0_0.SummonMainCategoryItem_register(SummonMainCategoryItem)
+local GM_SummonADView = class("GM_SummonADView")
+
+function GM_SummonADView.register()
+	GM_SummonADView.SummonMainView_register(SummonMainView)
+	GM_SummonADView.SummonMainCategoryItem_register(SummonMainCategoryItem)
 end
 
-function var_0_0.SummonMainView_register(arg_2_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
+function GM_SummonADView.SummonMainView_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(T, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(T, "removeEvents")
 
-	function arg_2_0._editableInitView(arg_3_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(arg_3_0)
+	function T:_editableInitView(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(self)
 	end
 
-	function arg_2_0.addEvents(arg_4_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
-		GM_SummonMainViewContainer.addEvents(arg_4_0)
+	function T:addEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(self)
+		GM_SummonMainViewContainer.addEvents(self)
 	end
 
-	function arg_2_0.removeEvents(arg_5_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
-		GM_SummonMainViewContainer.removeEvents(arg_5_0)
+	function T:removeEvents(...)
+		GMMinusModel.instance:callOriginalSelfFunc(self, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(self)
+		GM_SummonMainViewContainer.removeEvents(self)
 	end
 
-	function arg_2_0._gm_showAllTabIdUpdate()
+	function T._gm_showAllTabIdUpdate()
 		SummonController.instance:dispatchEvent(SummonEvent.onSummonInfoGot)
 	end
 end
 
-function var_0_0.SummonMainCategoryItem_register(arg_7_0)
-	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "_initCurrentComponents")
+function GM_SummonADView.SummonMainCategoryItem_register(T)
+	GMMinusModel.instance:saveOriginalFunc(T, "_initCurrentComponents")
 
-	function arg_7_0._initCurrentComponents(arg_8_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "_initCurrentComponents", ...)
+	function T._initCurrentComponents(selfObj, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(selfObj, "_initCurrentComponents", ...)
 
 		if not GM_SummonMainView.s_ShowAllTabId then
 			return
 		end
 
-		local var_8_0 = arg_8_0._mo.originConf
-		local var_8_1 = gohelper.getRichColorText("=====> id:" .. tostring(var_8_0.id), "#FFFF00")
+		local poolCfg = selfObj._mo.originConf
+		local showDesc = gohelper.getRichColorText("=====> id:" .. tostring(poolCfg.id), "#FFFF00")
 
-		arg_8_0._txtnameselect.text = var_8_1
-		arg_8_0._txtname.text = var_8_1
-		arg_8_0._txtnameen.text = var_8_1
-		arg_8_0._txtnameenselect.text = var_8_1
+		selfObj._txtnameselect.text = showDesc
+		selfObj._txtname.text = showDesc
+		selfObj._txtnameen.text = showDesc
+		selfObj._txtnameenselect.text = showDesc
 	end
 end
 
-return var_0_0
+return GM_SummonADView

@@ -1,10 +1,12 @@
-﻿module("modules.logic.season.defines.Activity104Enum", package.seeall)
+﻿-- chunkname: @modules/logic/season/defines/Activity104Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.season.defines.Activity104Enum", package.seeall)
 
-var_0_0.SeasonChapterId = 1201
-var_0_0.SeasonEpisodeId = 120101
-var_0_0.SeasonType = {
+local Activity104Enum = _M
+
+Activity104Enum.SeasonChapterId = 1201
+Activity104Enum.SeasonEpisodeId = 120101
+Activity104Enum.SeasonType = {
 	Season5 = 11500,
 	Season2 = 11200,
 	Season6 = 11600,
@@ -13,68 +15,68 @@ var_0_0.SeasonType = {
 	Season4 = 11400,
 	Season3 = 11300
 }
-var_0_0.SeasonStore = {
-	[var_0_0.SeasonType.Season1] = 11115,
-	[var_0_0.SeasonType.Season2] = 11210,
-	[var_0_0.SeasonType.Season3] = 11308,
-	[var_0_0.SeasonType.Season4] = 11410,
-	[var_0_0.SeasonType.Season5] = 11512,
-	[var_0_0.SeasonType.Season6] = 11607,
-	[var_0_0.SeasonType.SeasonV3A0] = 13003
+Activity104Enum.SeasonStore = {
+	[Activity104Enum.SeasonType.Season1] = 11115,
+	[Activity104Enum.SeasonType.Season2] = 11210,
+	[Activity104Enum.SeasonType.Season3] = 11308,
+	[Activity104Enum.SeasonType.Season4] = 11410,
+	[Activity104Enum.SeasonType.Season5] = 11512,
+	[Activity104Enum.SeasonType.Season6] = 11607,
+	[Activity104Enum.SeasonType.SeasonV3A0] = 13003
 }
-var_0_0.StoreUTTU = {
-	[var_0_0.SeasonType.Season1] = 1112,
-	[var_0_0.SeasonType.Season2] = 1212,
-	[var_0_0.SeasonType.Season3] = 1312,
-	[var_0_0.SeasonType.Season4] = 1412,
-	[var_0_0.SeasonType.Season5] = 1512,
-	[var_0_0.SeasonType.Season6] = 1612,
-	[var_0_0.SeasonType.SeasonV3A0] = 3012
+Activity104Enum.StoreUTTU = {
+	[Activity104Enum.SeasonType.Season1] = 1112,
+	[Activity104Enum.SeasonType.Season2] = 1212,
+	[Activity104Enum.SeasonType.Season3] = 1312,
+	[Activity104Enum.SeasonType.Season4] = 1412,
+	[Activity104Enum.SeasonType.Season5] = 1512,
+	[Activity104Enum.SeasonType.Season6] = 1612,
+	[Activity104Enum.SeasonType.SeasonV3A0] = 3012
 }
-var_0_0.SeasonViewPrefix = {
-	[var_0_0.SeasonType.Season1] = "",
-	[var_0_0.SeasonType.Season2] = "1_2",
-	[var_0_0.SeasonType.Season3] = "1_3",
-	[var_0_0.SeasonType.Season4] = "1_4",
-	[var_0_0.SeasonType.Season5] = "1_5",
-	[var_0_0.SeasonType.Season6] = "1_6",
-	[var_0_0.SeasonType.SeasonV3A0] = "3_0"
+Activity104Enum.SeasonViewPrefix = {
+	[Activity104Enum.SeasonType.Season1] = "",
+	[Activity104Enum.SeasonType.Season2] = "1_2",
+	[Activity104Enum.SeasonType.Season3] = "1_3",
+	[Activity104Enum.SeasonType.Season4] = "1_4",
+	[Activity104Enum.SeasonType.Season5] = "1_5",
+	[Activity104Enum.SeasonType.Season6] = "1_6",
+	[Activity104Enum.SeasonType.SeasonV3A0] = "3_0"
 }
-var_0_0.SeasonIconFolder = {
-	[var_0_0.SeasonType.Season3] = "v1a3_season",
-	[var_0_0.SeasonType.Season4] = "v1a4_season",
-	[var_0_0.SeasonType.Season5] = "v1a5_season",
-	[var_0_0.SeasonType.Season6] = "v1a6_season",
-	[var_0_0.SeasonType.SeasonV3A0] = "v3a0_season"
+Activity104Enum.SeasonIconFolder = {
+	[Activity104Enum.SeasonType.Season3] = "v1a3_season",
+	[Activity104Enum.SeasonType.Season4] = "v1a4_season",
+	[Activity104Enum.SeasonType.Season5] = "v1a5_season",
+	[Activity104Enum.SeasonType.Season6] = "v1a6_season",
+	[Activity104Enum.SeasonType.SeasonV3A0] = "v3a0_season"
 }
-var_0_0.CurSeasonId = var_0_0.SeasonType.SeasonV3A0
-var_0_0.BuffType = {
+Activity104Enum.CurSeasonId = Activity104Enum.SeasonType.SeasonV3A0
+Activity104Enum.BuffType = {
 	Buff = 2,
 	Debuff = 1
 }
-var_0_0.RuleTab = {
+Activity104Enum.RuleTab = {
 	Card = 2,
 	Rule = 1
 }
-var_0_0.CareerType = {
+Activity104Enum.CareerType = {
 	Shou = "4",
 	Ling_Or_Zhi = "5",
 	Xing = "2",
 	Mu = "3",
 	Yan = "1"
 }
-var_0_0.PlayerPrefsKeyItemUid = "Activity104ItemUid"
-var_0_0.Rare_Orange = 4
-var_0_0.MainRoleRare = 5
-var_0_0.MainRoleHeadIconID = 300101
-var_0_0.MainRoleSkinPath = "560501_vertin"
-var_0_0.JumpId = {
+Activity104Enum.PlayerPrefsKeyItemUid = "Activity104ItemUid"
+Activity104Enum.Rare_Orange = 4
+Activity104Enum.MainRoleRare = 5
+Activity104Enum.MainRoleHeadIconID = 300101
+Activity104Enum.MainRoleSkinPath = "560501_vertin"
+Activity104Enum.JumpId = {
 	Market = 1,
 	Discount = 3,
 	Trail = 4,
 	Retail = 2
 }
-var_0_0.ConstEnum = {
+Activity104Enum.ConstEnum = {
 	BlueToPurple = 2,
 	LastSeasonId = 12,
 	ReadProcessHead = 6,
@@ -94,7 +96,7 @@ var_0_0.ConstEnum = {
 	RetailGuidePos = 10,
 	SeasonOpenStorys = 9
 }
-var_0_0.ViewName = {
+Activity104Enum.ViewName = {
 	RetailView = "RetailView",
 	SettlementView = "SettlementView",
 	CelebrityCardTipView = "CelebrityCardTipView",
@@ -119,4 +121,4 @@ var_0_0.ViewName = {
 	TaskView = "TaskView"
 }
 
-return var_0_0
+return Activity104Enum

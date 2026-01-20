@@ -1,9 +1,11 @@
-﻿module("modules.logic.versionactivity1_6.act148.define.Act148Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act148/define/Act148Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.act148.define.Act148Event", package.seeall)
 
-var_0_0.SkillLvUp = 101
-var_0_0.SkillLvDown = 102
-var_0_0.SkillReset = 100
+local Act148Event = _M
 
-return var_0_0
+Act148Event.SkillLvUp = 101
+Act148Event.SkillLvDown = 102
+Act148Event.SkillReset = 100
+
+return Act148Event

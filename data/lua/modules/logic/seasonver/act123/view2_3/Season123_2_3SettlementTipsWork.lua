@@ -1,96 +1,104 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3SettlementTipsWork", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3SettlementTipsWork.lua
 
-local var_0_0 = class("Season123_2_3SettlementTipsWork", BaseWork)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3SettlementTipsWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0._context = arg_1_1
+local Season123_2_3SettlementTipsWork = class("Season123_2_3SettlementTipsWork", BaseWork)
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+function Season123_2_3SettlementTipsWork:onStart(context)
+	self._context = context
+
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 
 	if PopupController.instance:getPopupCount() > 0 then
 		PopupController.instance:setPause("fightsuccess", false)
 
-		arg_1_0._showPopupView = true
+		self._showPopupView = true
 	else
-		arg_1_0:_showEquipGet()
+		self:_showEquipGet()
 	end
 end
 
-function var_0_0._showEquipGet(arg_2_0)
+function Season123_2_3SettlementTipsWork:_showEquipGet()
 	PopupController.instance:setPause("fightsuccess", false)
 
-	local var_2_0 = {}
+	local reward_list = {}
 
-	tabletool.addValues(var_2_0, FightResultModel.instance:getFirstMaterialDataList())
-	tabletool.addValues(var_2_0, FightResultModel.instance:getExtraMaterialDataList())
-	tabletool.addValues(var_2_0, FightResultModel.instance:getMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getFirstMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getExtraMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getMaterialDataList())
 
-	local var_2_1 = {}
+	local equip_cards = {}
 
-	for iter_2_0 = #var_2_0, 1, -1 do
-		if var_2_0[iter_2_0].materilType == MaterialEnum.MaterialType.Season123EquipCard then
-			local var_2_2 = table.remove(var_2_0, iter_2_0)
+	for i = #reward_list, 1, -1 do
+		local data = reward_list[i]
 
-			table.insert(var_2_1, var_2_2.materilId)
+		if data.materilType == MaterialEnum.MaterialType.Season123EquipCard then
+			local tar_reward = table.remove(reward_list, i)
+
+			table.insert(equip_cards, tar_reward.materilId)
 		end
 	end
 
-	arg_2_0._showEquipCard = {}
+	self._showEquipCard = {}
 
-	local var_2_3 = arg_2_0._context.onlyShowNewCard
+	local onlyShowNewCard = self._context.onlyShowNewCard
 
-	for iter_2_1, iter_2_2 in ipairs(var_2_1) do
-		if var_2_3 then
-			if Season123Model.instance:isNewEquipBookCard(iter_2_2) then
-				table.insert(arg_2_0._showEquipCard, iter_2_2)
+	for i, cardId in ipairs(equip_cards) do
+		if onlyShowNewCard then
+			if Season123Model.instance:isNewEquipBookCard(cardId) then
+				table.insert(self._showEquipCard, cardId)
 			end
 		else
-			table.insert(arg_2_0._showEquipCard, iter_2_2)
+			table.insert(self._showEquipCard, cardId)
 		end
 	end
 
-	local var_2_4 = arg_2_0._context.delayTime
+	local delayTime = self._context.delayTime
 
-	if #arg_2_0._showEquipCard > 0 then
-		local var_2_5 = {}
+	if #self._showEquipCard > 0 then
+		local idDict = {}
 
-		for iter_2_3 = #arg_2_0._showEquipCard, 1, -1 do
-			local var_2_6 = arg_2_0._showEquipCard[iter_2_3]
+		for i = #self._showEquipCard, 1, -1 do
+			local cardId = self._showEquipCard[i]
 
-			if var_2_5[var_2_6] then
-				table.remove(arg_2_0._showEquipCard, iter_2_3)
+			if idDict[cardId] then
+				table.remove(self._showEquipCard, i)
 			else
-				var_2_5[var_2_6] = true
+				idDict[cardId] = true
 			end
 		end
 
-		TaskDispatcher.runDelay(arg_2_0._showGetCardView, arg_2_0, var_2_4)
+		TaskDispatcher.runDelay(self._showGetCardView, self, delayTime)
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_3_0, arg_3_1)
-	if arg_3_0._showPopupView then
+function Season123_2_3SettlementTipsWork:_onCloseViewFinish(viewName)
+	if self._showPopupView then
 		if PopupController.instance:getPopupCount() == 0 then
-			arg_3_0._showPopupView = nil
+			self._showPopupView = nil
 
-			arg_3_0:_showEquipGet()
+			self:_showEquipGet()
 		end
-	elseif arg_3_1 == ViewName.Season123_2_3CelebrityCardGetView then
-		arg_3_0:onDone(true)
+	else
+		local getViewName = ViewName.Season123_2_3CelebrityCardGetView
+
+		if viewName == getViewName then
+			self:onDone(true)
+		end
 	end
 end
 
-function var_0_0._showGetCardView(arg_4_0)
+function Season123_2_3SettlementTipsWork:_showGetCardView()
 	Season123Controller.instance:openSeasonCelebrityCardGetView({
 		is_item_id = true,
-		data = arg_4_0._showEquipCard
+		data = self._showEquipCard
 	})
 end
 
-function var_0_0.clearWork(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
+function Season123_2_3SettlementTipsWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-return var_0_0
+return Season123_2_3SettlementTipsWork

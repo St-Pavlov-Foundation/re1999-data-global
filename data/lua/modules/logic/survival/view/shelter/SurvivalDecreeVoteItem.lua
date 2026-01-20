@@ -1,39 +1,41 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalDecreeVoteItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalDecreeVoteItem.lua
 
-local var_0_0 = class("SurvivalDecreeVoteItem", SurvivalDecreeItem)
+module("modules.logic.survival.view.shelter.SurvivalDecreeVoteItem", package.seeall)
 
-function var_0_0.onUpdateMO(arg_1_0, arg_1_1)
-	arg_1_0.mo = arg_1_1
+local SurvivalDecreeVoteItem = class("SurvivalDecreeVoteItem", SurvivalDecreeItem)
 
-	local var_1_0 = false
-	local var_1_1 = arg_1_1 == nil or arg_1_1:isCurPolicyEmpty()
-	local var_1_2 = not var_1_0 and not var_1_1
-	local var_1_3 = not var_1_0 and var_1_1
+function SurvivalDecreeVoteItem:onUpdateMO(mo)
+	self.mo = mo
 
-	gohelper.setActive(arg_1_0.goHas, var_1_2)
-	gohelper.setActive(arg_1_0.goAdd, var_1_3)
-	gohelper.setActive(arg_1_0.goLocked, var_1_0)
-	gohelper.setActive(arg_1_0.goAnnouncement, false)
+	local isLocked = false
+	local isEmpty = mo == nil or mo:isCurPolicyEmpty()
+	local isShowHas = not isLocked and not isEmpty
+	local isShowAdd = not isLocked and isEmpty
 
-	if var_1_2 then
-		arg_1_0:refreshHas(true)
+	gohelper.setActive(self.goHas, isShowHas)
+	gohelper.setActive(self.goAdd, isShowAdd)
+	gohelper.setActive(self.goLocked, isLocked)
+	gohelper.setActive(self.goAnnouncement, false)
+
+	if isShowHas then
+		self:refreshHas(true)
 	end
 end
 
-function var_0_0.refreshHas(arg_2_0, arg_2_1)
-	gohelper.setActive(arg_2_0.btnVote, false)
-	gohelper.setActive(arg_2_0.goFinished, false)
-	gohelper.setActive(arg_2_0.goAnnouncement, true)
+function SurvivalDecreeVoteItem:refreshHas(isFinish)
+	gohelper.setActive(self.btnVote, false)
+	gohelper.setActive(self.goFinished, false)
+	gohelper.setActive(self.goAnnouncement, true)
 
-	local var_2_0 = arg_2_0.mo:getCurPolicyGroup():getPolicyList()
+	local list = self.mo:getCurPolicyGroup():getPolicyList()
 
-	for iter_2_0 = 1, math.max(#var_2_0, #arg_2_0.itemList) do
-		local var_2_1 = arg_2_0:getItem(iter_2_0)
+	for i = 1, math.max(#list, #self.itemList) do
+		local item = self:getItem(i)
 
-		arg_2_0:updateDescItem(var_2_1, var_2_0[iter_2_0], arg_2_1)
+		self:updateDescItem(item, list[i], isFinish)
 	end
 
-	recthelper.setHeight(arg_2_0.goDescer.transform, 381)
+	recthelper.setHeight(self.goDescer.transform, 381)
 end
 
-return var_0_0
+return SurvivalDecreeVoteItem

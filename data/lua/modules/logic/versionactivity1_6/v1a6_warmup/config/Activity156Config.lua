@@ -1,83 +1,86 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_warmup.config.Activity156Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_warmup/config/Activity156Config.lua
 
-local var_0_0 = class("Activity156Config", BaseConfig)
+module("modules.logic.versionactivity1_6.v1a6_warmup.config.Activity156Config", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._configTab = nil
-	arg_1_0._channelValueList = {}
-	arg_1_0._episodeCount = nil
+local Activity156Config = class("Activity156Config", BaseConfig)
+
+function Activity156Config:ctor()
+	self._configTab = nil
+	self._channelValueList = {}
+	self._episodeCount = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function Activity156Config:reqConfigNames()
 	return {
 		"activity125"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity125" then
-		arg_3_0._configTab = arg_3_2.configDict[ActivityEnum.Activity.Activity1_6WarmUp]
+function Activity156Config:onConfigLoaded(configName, configTable)
+	if configName == "activity125" then
+		self._configTab = configTable.configDict[ActivityEnum.Activity.Activity1_6WarmUp]
 	end
 end
 
-function var_0_0.getActConfig(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 and arg_4_2 and arg_4_0._configTab and arg_4_0._configTab[arg_4_1] then
-		return arg_4_0._configTab[arg_4_1][arg_4_2]
+function Activity156Config:getActConfig(configName, actId)
+	if configName and actId and self._configTab and self._configTab[configName] then
+		return self._configTab[configName][actId]
 	end
 
 	return nil
 end
 
-function var_0_0.getAct156Config(arg_5_0)
-	return arg_5_0._configTab
+function Activity156Config:getAct156Config()
+	return self._configTab
 end
 
-function var_0_0.getEpisodeDesc(arg_6_0, arg_6_1)
-	if arg_6_0._configTab and arg_6_0._configTab[arg_6_1] then
-		return arg_6_0._configTab[arg_6_1].text
+function Activity156Config:getEpisodeDesc(episodeId)
+	if self._configTab and self._configTab[episodeId] then
+		return self._configTab[episodeId].text
 	end
 end
 
-function var_0_0.getEpisodeConfig(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._configTab) do
-		if iter_7_1.id == arg_7_1 then
-			return iter_7_1
+function Activity156Config:getEpisodeConfig(id)
+	for index, value in ipairs(self._configTab) do
+		if value.id == id then
+			return value
 		end
 	end
 end
 
-function var_0_0.getEpisodeOpenDay(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getEpisodeConfig(arg_8_1)
+function Activity156Config:getEpisodeOpenDay(episodeId)
+	local cfg = self:getEpisodeConfig(episodeId)
 
-	if var_8_0 then
-		return var_8_0.openDay
+	if cfg then
+		return cfg.openDay
 	end
 end
 
-function var_0_0.getEpisodeRewardConfig(arg_9_0, arg_9_1)
-	if arg_9_0._configTab and arg_9_0._configTab and arg_9_0._configTab[arg_9_1] then
-		local var_9_0 = arg_9_0._configTab[arg_9_1].bonus
+function Activity156Config:getEpisodeRewardConfig(episodeId)
+	if self._configTab and self._configTab and self._configTab[episodeId] then
+		local rewardBonus = self._configTab[episodeId].bonus
+		local rewards = string.split(rewardBonus, "|")
 
-		return (string.split(var_9_0, "|"))
+		return rewards
 	end
 end
 
-function var_0_0.getPreEpisodeConfig(arg_10_0, arg_10_1)
-	if arg_10_0._configTab and arg_10_0._configTab[arg_10_1] then
-		local var_10_0 = arg_10_0._configTab[arg_10_1].preId
+function Activity156Config:getPreEpisodeConfig(episodeId)
+	if self._configTab and self._configTab[episodeId] then
+		local preEpisodeId = self._configTab[episodeId].preId
 
-		return arg_10_0._configTab[var_10_0]
+		return self._configTab[preEpisodeId]
 	end
 end
 
-function var_0_0.getEpisodeCount(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._episodeCount or tabletool.len(arg_11_0:getAct156Config(arg_11_1))
+function Activity156Config:getEpisodeCount(actId)
+	local episodeCount = self._episodeCount or tabletool.len(self:getAct156Config(actId))
 
-	arg_11_0._episodeCount = var_11_0
+	self._episodeCount = episodeCount
 
-	return var_11_0
+	return episodeCount
 end
 
-var_0_0.instance = var_0_0.New()
+Activity156Config.instance = Activity156Config.New()
 
-return var_0_0
+return Activity156Config

@@ -1,32 +1,37 @@
-﻿module("modules.configs.excel2json.lua_activity128_stage", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity128_stage.lua
 
-local var_0_0 = {}
-local var_0_1 = {
-	openDay = 7,
-	name = 3,
-	name_en = 4,
-	bossRushLevelDetailFullBgSimage = 9,
-	maxPoints = 5,
-	resultViewFullBgSImage = 10,
-	skinIds = 12,
-	bossRushMainItemBossSprite = 8,
-	skinScales = 13,
-	skinOffsetXYs = 14,
-	resultViewNameSImage = 11,
-	layer4MaxPoints = 6,
+module("modules.configs.excel2json.lua_activity128_stage", package.seeall)
+
+local lua_activity128_stage = {}
+local fields = {
+	skinIds = 15,
+	name = 4,
+	bossRushLevelDetailFullBgSimage = 12,
+	type = 6,
+	maxPoints = 7,
+	name_en = 5,
+	bossRushMainBg = 11,
+	bossRushMainItemBossSprite = 10,
+	skinOffsetXYs = 17,
+	resultViewNameSImage = 14,
+	layer4MaxPoints = 8,
 	stage = 2,
-	activityId = 1
+	activityId = 1,
+	openDay = 9,
+	skinScales = 16,
+	resultViewFullBgSImage = 13,
+	version = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"stage"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity128_stage.onLoad(json)
+	lua_activity128_stage.configList, lua_activity128_stage.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity128_stage

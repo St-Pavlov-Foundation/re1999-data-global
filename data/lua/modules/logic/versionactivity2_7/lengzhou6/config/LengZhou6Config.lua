@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.config.LengZhou6Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/config/LengZhou6Config.lua
 
-local var_0_0 = class("LengZhou6Config", BaseConfig)
+module("modules.logic.versionactivity2_7.lengzhou6.config.LengZhou6Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local LengZhou6Config = class("LengZhou6Config", BaseConfig)
+
+function LengZhou6Config:reqConfigNames()
 	return {
 		"activity190_episode",
 		"activity190_task",
@@ -18,85 +20,87 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._eliminateBattleDamage = {}
-	arg_2_0._eliminateBattleHeal = {}
-	arg_2_0._skillIdToSpecialAttr = nil
-	arg_2_0._enemyRandomIdsConfig = nil
-	arg_2_0._selectEnemyIds = nil
+function LengZhou6Config:onInit()
+	self._eliminateBattleDamage = {}
+	self._eliminateBattleHeal = {}
+	self._skillIdToSpecialAttr = nil
+	self._enemyRandomIdsConfig = nil
+	self._selectEnemyIds = nil
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function LengZhou6Config:onConfigLoaded(configName, configTable)
 	return
 end
 
-function var_0_0.getEpisodeConfig(arg_4_0, arg_4_1, arg_4_2)
-	return lua_activity190_episode.configDict[arg_4_1][arg_4_2]
+function LengZhou6Config:getEpisodeConfig(activityId, episodeId)
+	return lua_activity190_episode.configDict[activityId][episodeId]
 end
 
-function var_0_0.getEliminateBattleEliminateBlocks(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = lua_eliminate_battle_eliminateblocks.configDict[arg_5_1]
+function LengZhou6Config:getEliminateBattleEliminateBlocks(eliminateName, eliminateType)
+	local value = lua_eliminate_battle_eliminateblocks.configDict[eliminateName]
 
-	if arg_5_1 == nil or arg_5_2 == nil or var_5_0 == nil then
-		logError("getEliminateBattleEliminateBlocks error eliminateName or eliminateType is nil" .. tostring(arg_5_1) .. tostring(arg_5_2))
+	if eliminateName == nil or eliminateType == nil or value == nil then
+		logError("getEliminateBattleEliminateBlocks error eliminateName or eliminateType is nil" .. tostring(eliminateName) .. tostring(eliminateType))
 	end
 
-	if var_5_0 == nil then
+	if value == nil then
 		return nil
 	end
 
-	return var_5_0[arg_5_2]
+	return value[eliminateType]
 end
 
-function var_0_0.getEliminateBattleEnemy(arg_6_0, arg_6_1)
-	return lua_eliminate_battle_enemy.configDict[arg_6_1]
+function LengZhou6Config:getEliminateBattleEnemy(enemyId)
+	return lua_eliminate_battle_enemy.configDict[enemyId]
 end
 
-function var_0_0.getEliminateBattleEnemyBehavior(arg_7_0, arg_7_1)
-	return lua_eliminate_battle_enemybehavior.configDict[arg_7_1]
+function LengZhou6Config:getEliminateBattleEnemyBehavior(enemyId)
+	return lua_eliminate_battle_enemybehavior.configDict[enemyId]
 end
 
-function var_0_0.getEliminateBattleCharacter(arg_8_0, arg_8_1)
-	return lua_eliminate_battle_character.configDict[arg_8_1]
+function LengZhou6Config:getEliminateBattleCharacter(characterId)
+	return lua_eliminate_battle_character.configDict[characterId]
 end
 
-function var_0_0.getEliminateBattleSkill(arg_9_0, arg_9_1)
-	return lua_eliminate_battle_skill.configDict[arg_9_1]
+function LengZhou6Config:getEliminateBattleSkill(skillId)
+	return lua_eliminate_battle_skill.configDict[skillId]
 end
 
-function var_0_0.getEliminateBattleBuff(arg_10_0, arg_10_1)
-	return lua_eliminate_battle_buff.configDict[arg_10_1]
+function LengZhou6Config:getEliminateBattleBuff(buffId)
+	return lua_eliminate_battle_buff.configDict[buffId]
 end
 
-function var_0_0.getTaskByActId(arg_11_0, arg_11_1)
-	if arg_11_0._taskList == nil then
-		arg_11_0._taskList = {}
+function LengZhou6Config:getTaskByActId(activityId)
+	if self._taskList == nil then
+		self._taskList = {}
 
-		for iter_11_0, iter_11_1 in ipairs(lua_activity190_task.configList) do
-			if iter_11_1.activityId == arg_11_1 then
-				table.insert(arg_11_0._taskList, iter_11_1)
+		for _, co in ipairs(lua_activity190_task.configList) do
+			if co.activityId == activityId then
+				table.insert(self._taskList, co)
 			end
 		end
 	end
 
-	return arg_11_0._taskList
+	return self._taskList
 end
 
-function var_0_0.getPlayerAllSkillId(arg_12_0)
-	local var_12_0 = {}
+function LengZhou6Config:getPlayerAllSkillId()
+	local skillIds = {}
 
-	for iter_12_0, iter_12_1 in ipairs(lua_eliminate_battle_skill.configList) do
-		if iter_12_1.type == LengZhou6Enum.SkillType.active or iter_12_1.type == LengZhou6Enum.SkillType.passive and not var_0_0.instance:isPlayerChessPassive(iter_12_1.id) then
-			table.insert(var_12_0, iter_12_1.id)
+	for _, co in ipairs(lua_eliminate_battle_skill.configList) do
+		if co.type == LengZhou6Enum.SkillType.active or co.type == LengZhou6Enum.SkillType.passive and not LengZhou6Config.instance:isPlayerChessPassive(co.id) then
+			table.insert(skillIds, co.id)
 		end
 	end
 
-	return var_12_0
+	return skillIds
 end
 
-function var_0_0.isPlayerChessPassive(arg_13_0, arg_13_1)
-	for iter_13_0 = 1, 4 do
-		if var_0_0.instance:getEliminateBattleCost(iter_13_0) == arg_13_1 then
+function LengZhou6Config:isPlayerChessPassive(id)
+	for i = 1, 4 do
+		local skillId = LengZhou6Config.instance:getEliminateBattleCost(i)
+
+		if skillId == id then
 			return true
 		end
 	end
@@ -104,221 +108,225 @@ function var_0_0.isPlayerChessPassive(arg_13_0, arg_13_1)
 	return false
 end
 
-function var_0_0.getEnemyRandomIdsConfig(arg_14_0, arg_14_1)
-	if arg_14_0._enemyRandomIdsConfig == nil then
-		arg_14_0._enemyRandomIdsConfig = {}
-		arg_14_0._enemyEndlessLibraryRound = {}
+function LengZhou6Config:getEnemyRandomIdsConfig(endLessLayer)
+	if self._enemyRandomIdsConfig == nil then
+		self._enemyRandomIdsConfig = {}
+		self._enemyEndlessLibraryRound = {}
 
-		local var_14_0 = lua_eliminate_battle_endless_library_round.configList
+		local configList = lua_eliminate_battle_endless_library_round.configList
 
-		for iter_14_0 = 1, #var_14_0 do
-			local var_14_1 = var_14_0[iter_14_0]
-			local var_14_2 = string.splitToNumber(var_14_1.endlessLibraryRound, "#")
-			local var_14_3 = string.splitToNumber(var_14_1.randomIds, "#")
+		for i = 1, #configList do
+			local co = configList[i]
+			local endlessLibraryRound = string.splitToNumber(co.endlessLibraryRound, "#")
+			local randomIds = string.splitToNumber(co.randomIds, "#")
 
-			table.insert(arg_14_0._enemyEndlessLibraryRound, var_14_2[2])
-			table.insert(arg_14_0._enemyRandomIdsConfig, var_14_3)
+			table.insert(self._enemyEndlessLibraryRound, endlessLibraryRound[2])
+			table.insert(self._enemyRandomIdsConfig, randomIds)
 		end
 	end
 
-	local var_14_4 = arg_14_0:recordEnemyLastRandomId(arg_14_1)
+	local index = self:recordEnemyLastRandomId(endLessLayer)
 
-	return arg_14_0._enemyRandomIdsConfig[var_14_4]
+	return self._enemyRandomIdsConfig[index]
 end
 
-function var_0_0.getEnemyRandomRealIndex(arg_15_0, arg_15_1)
-	if arg_15_0._enemyEndlessLibraryRound == nil then
+function LengZhou6Config:getEnemyRandomRealIndex(index)
+	if self._enemyEndlessLibraryRound == nil then
 		return 1
 	end
 
-	for iter_15_0 = 1, #arg_15_0._enemyEndlessLibraryRound do
-		if arg_15_1 <= arg_15_0._enemyEndlessLibraryRound[iter_15_0] then
-			return iter_15_0
+	for i = 1, #self._enemyEndlessLibraryRound do
+		local value = self._enemyEndlessLibraryRound[i]
+
+		if index <= value then
+			return i
 		end
 	end
 end
 
-function var_0_0.recordEnemyLastRandomId(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getEnemyRandomRealIndex(arg_16_1)
+function LengZhou6Config:recordEnemyLastRandomId(endLessLayer)
+	local index = self:getEnemyRandomRealIndex(endLessLayer)
 
-	if arg_16_0._lastEnemyRoundIndex ~= nil and var_16_0 ~= arg_16_0._lastEnemyRoundIndex then
-		arg_16_0:clearSetSelectEnemyRandomId()
+	if self._lastEnemyRoundIndex ~= nil and index ~= self._lastEnemyRoundIndex then
+		self:clearSetSelectEnemyRandomId()
 	end
 
-	arg_16_0._lastEnemyRoundIndex = var_16_0
+	self._lastEnemyRoundIndex = index
 
-	return var_16_0
+	return index
 end
 
-function var_0_0.setSelectEnemyRandomId(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_2 == nil then
+function LengZhou6Config:setSelectEnemyRandomId(endLessLayer, id)
+	if id == nil then
 		return
 	end
 
-	if arg_17_0._selectEnemyIds == nil then
-		arg_17_0._selectEnemyIds = {}
+	if self._selectEnemyIds == nil then
+		self._selectEnemyIds = {}
 	end
 
-	local var_17_0 = arg_17_0._selectEnemyIds[arg_17_2] or 0
+	local count = self._selectEnemyIds[id] or 0
 
-	arg_17_0._selectEnemyIds[arg_17_2] = var_17_0 + 1
+	self._selectEnemyIds[id] = count + 1
 
-	if arg_17_0._selectEnemyIds[arg_17_2] == 2 then
-		local var_17_1 = arg_17_0:getEnemyRandomRealIndex(arg_17_1)
+	if self._selectEnemyIds[id] == 2 then
+		local index = self:getEnemyRandomRealIndex(endLessLayer)
 
-		if arg_17_0._enemyRandomIdsConfig ~= nil then
-			local var_17_2 = arg_17_0._enemyRandomIdsConfig[var_17_1]
+		if self._enemyRandomIdsConfig ~= nil then
+			local randomIds = self._enemyRandomIdsConfig[index]
 
-			for iter_17_0 = 1, #var_17_2 do
-				if var_17_2[iter_17_0] == arg_17_2 then
-					table.remove(var_17_2, iter_17_0)
+			for i = 1, #randomIds do
+				if randomIds[i] == id then
+					table.remove(randomIds, i)
 
 					break
 				end
 			end
 
-			arg_17_0._enemyRandomIdsConfig[var_17_1] = var_17_2
+			self._enemyRandomIdsConfig[index] = randomIds
 		end
 	end
 end
 
-function var_0_0.clearSetSelectEnemyRandomId(arg_18_0)
-	arg_18_0._selectEnemyIds = nil
+function LengZhou6Config:clearSetSelectEnemyRandomId()
+	self._selectEnemyIds = nil
 end
 
-function var_0_0.getEliminateBattleCost(arg_19_0, arg_19_1)
-	local var_19_0 = lua_eliminate_battle_cost.configDict[arg_19_1].value or 0
+function LengZhou6Config:getEliminateBattleCost(id)
+	local value = lua_eliminate_battle_cost.configDict[id].value or 0
 
-	return tonumber(var_19_0)
+	return tonumber(value)
 end
 
-function var_0_0.getEliminateBattleCostStr(arg_20_0, arg_20_1)
-	return lua_eliminate_battle_cost.configDict[arg_20_1].value
+function LengZhou6Config:getEliminateBattleCostStr(id)
+	return lua_eliminate_battle_cost.configDict[id].value
 end
 
-function var_0_0.getComboThreshold(arg_21_0)
-	return (arg_21_0:getEliminateBattleCost(27))
+function LengZhou6Config:getComboThreshold()
+	local value = self:getEliminateBattleCost(27)
+
+	return value
 end
 
-function var_0_0.getAllSpecialAttr(arg_22_0)
-	if arg_22_0._skillIdToSpecialAttr == nil then
-		arg_22_0._skillIdToSpecialAttr = {}
+function LengZhou6Config:getAllSpecialAttr()
+	if self._skillIdToSpecialAttr == nil then
+		self._skillIdToSpecialAttr = {}
 
-		for iter_22_0 = 28, 31 do
-			local var_22_0 = arg_22_0:getEliminateBattleCostStr(iter_22_0)
+		for i = 28, 31 do
+			local config = self:getEliminateBattleCostStr(i)
 
-			if not string.nilorempty(var_22_0) then
-				local var_22_1 = string.split(var_22_0, "#")
-				local var_22_2 = tonumber(var_22_1[1])
-				local var_22_3 = var_22_1[2]
-				local var_22_4 = var_22_1[3]
-				local var_22_5 = tonumber(var_22_1[4])
+			if not string.nilorempty(config) then
+				local list = string.split(config, "#")
+				local skillId = tonumber(list[1])
+				local effect = list[2]
+				local chessType = list[3]
+				local value = tonumber(list[4])
 
-				arg_22_0._skillIdToSpecialAttr[var_22_2] = {
-					effect = var_22_3,
-					chessType = var_22_4,
-					value = var_22_5
+				self._skillIdToSpecialAttr[skillId] = {
+					effect = effect,
+					chessType = chessType,
+					value = value
 				}
 			end
 		end
 	end
 
-	return arg_22_0._skillIdToSpecialAttr
+	return self._skillIdToSpecialAttr
 end
 
-function var_0_0.getEliminateBattleEndlessMode(arg_23_0, arg_23_1)
-	if arg_23_0._battleEndLessMode == nil then
-		arg_23_0._battleEndLessMode = {}
+function LengZhou6Config:getEliminateBattleEndlessMode(id)
+	if self._battleEndLessMode == nil then
+		self._battleEndLessMode = {}
 	end
 
-	if arg_23_0._battleEndLessMode[arg_23_1] == nil then
-		local var_23_0 = lua_eliminate_battle_endless_mode.configDict[arg_23_1]
+	if self._battleEndLessMode[id] == nil then
+		local info = lua_eliminate_battle_endless_mode.configDict[id]
 
-		if var_23_0 == nil then
+		if info == nil then
 			return nil
 		end
 
-		local var_23_1 = {
-			hp = tonumber(var_23_0.hpUp)
-		}
+		local data = {}
 
-		for iter_23_0 = 1, 5 do
-			local var_23_2 = var_23_0["skill" .. iter_23_0]
-			local var_23_3 = var_23_0["powerUp" .. iter_23_0]
+		data.hp = tonumber(info.hpUp)
 
-			if not string.nilorempty(var_23_2) then
-				var_23_1[var_23_2] = tonumber(var_23_3)
+		for i = 1, 5 do
+			local effectName = info["skill" .. i]
+			local powerUp = info["powerUp" .. i]
+
+			if not string.nilorempty(effectName) then
+				data[effectName] = tonumber(powerUp)
 			end
 		end
 
-		arg_23_0._battleEndLessMode[arg_23_1] = var_23_1
+		self._battleEndLessMode[id] = data
 	end
 
-	return arg_23_0._battleEndLessMode[arg_23_1]
+	return self._battleEndLessMode[id]
 end
 
-function var_0_0.getDamageValue(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._eliminateBattleDamage == nil then
-		arg_24_0._eliminateBattleDamage = {}
+function LengZhou6Config:getDamageValue(eliminateName, eliminateType)
+	if self._eliminateBattleDamage == nil then
+		self._eliminateBattleDamage = {}
 	end
 
-	if arg_24_0._eliminateBattleDamage[arg_24_1] == nil then
-		arg_24_0._eliminateBattleDamage[arg_24_1] = {}
+	if self._eliminateBattleDamage[eliminateName] == nil then
+		self._eliminateBattleDamage[eliminateName] = {}
 	end
 
-	if arg_24_0._eliminateBattleDamage[arg_24_1][arg_24_2] == nil then
-		local var_24_0 = {}
-		local var_24_1 = arg_24_0:getEliminateBattleEliminateBlocks(arg_24_1, arg_24_2)
+	if self._eliminateBattleDamage[eliminateName][eliminateType] == nil then
+		local data = {}
+		local configData = self:getEliminateBattleEliminateBlocks(eliminateName, eliminateType)
 
-		if var_24_1 ~= nil then
-			local var_24_2 = string.splitToNumber(var_24_1.damageRate, "#")
+		if configData ~= nil then
+			local dataValues = string.splitToNumber(configData.damageRate, "#")
 
-			var_24_0[1] = var_24_2[1]
-			var_24_0[2] = var_24_2[2]
+			data[1] = dataValues[1]
+			data[2] = dataValues[2]
 		end
 
-		arg_24_0._eliminateBattleDamage[arg_24_1][arg_24_2] = var_24_0
+		self._eliminateBattleDamage[eliminateName][eliminateType] = data
 	end
 
-	local var_24_3 = arg_24_0._eliminateBattleDamage[arg_24_1][arg_24_2]
+	local data = self._eliminateBattleDamage[eliminateName][eliminateType]
 
-	return var_24_3[1] or 0, var_24_3[2] or 0
+	return data[1] or 0, data[2] or 0
 end
 
-function var_0_0.getHealValue(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_0._eliminateBattleHeal == nil then
-		arg_25_0._eliminateBattleHeal = {}
+function LengZhou6Config:getHealValue(eliminateName, eliminateType)
+	if self._eliminateBattleHeal == nil then
+		self._eliminateBattleHeal = {}
 	end
 
-	if arg_25_0._eliminateBattleHeal[arg_25_1] == nil then
-		arg_25_0._eliminateBattleHeal[arg_25_1] = {}
+	if self._eliminateBattleHeal[eliminateName] == nil then
+		self._eliminateBattleHeal[eliminateName] = {}
 	end
 
-	if arg_25_0._eliminateBattleHeal[arg_25_1][arg_25_2] == nil then
-		local var_25_0 = {}
-		local var_25_1 = arg_25_0:getEliminateBattleEliminateBlocks(arg_25_1, arg_25_2)
+	if self._eliminateBattleHeal[eliminateName][eliminateType] == nil then
+		local data = {}
+		local configData = self:getEliminateBattleEliminateBlocks(eliminateName, eliminateType)
 
-		if var_25_1 ~= nil then
-			local var_25_2 = string.splitToNumber(var_25_1.healRate, "#")
+		if configData ~= nil then
+			local dataValues = string.splitToNumber(configData.healRate, "#")
 
-			var_25_0[1] = var_25_2[1]
-			var_25_0[2] = var_25_2[2]
+			data[1] = dataValues[1]
+			data[2] = dataValues[2]
 		end
 
-		arg_25_0._eliminateBattleHeal[arg_25_1][arg_25_2] = var_25_0
+		self._eliminateBattleHeal[eliminateName][eliminateType] = data
 	end
 
-	local var_25_3 = arg_25_0._eliminateBattleHeal[arg_25_1][arg_25_2]
+	local data = self._eliminateBattleHeal[eliminateName][eliminateType]
 
-	return var_25_3[1] or 0, var_25_3[2] or 0
+	return data[1] or 0, data[2] or 0
 end
 
-function var_0_0.clearLevelCache(arg_26_0)
-	arg_26_0._enemyRandomIdsConfig = nil
-	arg_26_0._enemyEndlessLibraryRound = nil
-	arg_26_0._selectEnemyIds = nil
+function LengZhou6Config:clearLevelCache()
+	self._enemyRandomIdsConfig = nil
+	self._enemyEndlessLibraryRound = nil
+	self._selectEnemyIds = nil
 end
 
-var_0_0.instance = var_0_0.New()
+LengZhou6Config.instance = LengZhou6Config.New()
 
-return var_0_0
+return LengZhou6Config

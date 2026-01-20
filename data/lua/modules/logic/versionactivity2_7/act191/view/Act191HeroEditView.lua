@@ -1,556 +1,562 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191HeroEditView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191HeroEditView.lua
 
-local var_0_0 = class("Act191HeroEditView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191HeroEditView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gononecharacter = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_nonecharacter")
-	arg_1_0._gocharacterinfo = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo")
-	arg_1_0._imagedmgtype = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
-	arg_1_0._imagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
-	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
-	arg_1_0._gopassiveskills = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
-	arg_1_0._btnpassiveskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
-	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
-	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_skill")
-	arg_1_0._btnExSkill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/quality/exSkill/#btn_ExSkill")
-	arg_1_0._goFetterIcon = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/fetters/Viewport/Content/#go_FetterIcon")
-	arg_1_0._goDestiny = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_Destiny")
-	arg_1_0._goDestinyLock = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/stone/#go_DestinyLock")
-	arg_1_0._goDestinyUnLock = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/stone/#go_DestinyUnLock")
-	arg_1_0._btnDestiny = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/#btn_Destiny")
-	arg_1_0._goAttrUp = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_AttrUp")
-	arg_1_0._goAttrUpFetter = gohelper.findChild(arg_1_0.viewGO, "characterinfo/#go_characterinfo/#go_AttrUp/attribute/#go_AttrUpFetter")
-	arg_1_0._gorolecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer")
-	arg_1_0._gorolesort = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
-	arg_1_0._goRareArrow = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank/txt/#go_RareArrow")
-	arg_1_0._btnquickedit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_quickedit")
-	arg_1_0._btnclassify = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
-	arg_1_0._goFetterContent = gohelper.findChild(arg_1_0.viewGO, "#go_rolecontainer/layout/#go_FetterContent")
-	arg_1_0._scrollcard = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rolecontainer/layout/#scroll_card")
-	arg_1_0._scrollquickedit = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_rolecontainer/layout/#scroll_quickedit")
-	arg_1_0._goDetail = gohelper.findChild(arg_1_0.viewGO, "#go_Detail")
-	arg_1_0._btnCloseDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Detail/#btn_CloseDetail")
-	arg_1_0._goDetailPassiveItem = gohelper.findChild(arg_1_0.viewGO, "#go_Detail/scroll_content/viewport/content/#go_DetailPassiveItem")
-	arg_1_0._goops = gohelper.findChild(arg_1_0.viewGO, "#go_ops")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ops/#btn_confirm")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ops/#btn_cancel")
-	arg_1_0._gosearchfilter = gohelper.findChild(arg_1_0.viewGO, "#go_searchfilter")
-	arg_1_0._btnclosefilterview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_searchfilter/#btn_closefilterview")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local Act191HeroEditView = class("Act191HeroEditView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191HeroEditView:onInitView()
+	self._gononecharacter = gohelper.findChild(self.viewGO, "characterinfo/#go_nonecharacter")
+	self._gocharacterinfo = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo")
+	self._imagedmgtype = gohelper.findChildImage(self.viewGO, "characterinfo/#go_characterinfo/#image_dmgtype")
+	self._imagecareericon = gohelper.findChildImage(self.viewGO, "characterinfo/#go_characterinfo/career/#image_careericon")
+	self._txtname = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/name/#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/name/#txt_nameen")
+	self._txtpassivename = gohelper.findChildText(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/bg/#txt_passivename")
+	self._gopassiveskills = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/#go_passiveskills")
+	self._btnpassiveskill = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/passiveskill/#btn_passiveskill")
+	self._goattribute = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/attribute/#go_attribute")
+	self._goskill = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_skill")
+	self._btnExSkill = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/quality/exSkill/#btn_ExSkill")
+	self._goFetterIcon = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/fetters/Viewport/Content/#go_FetterIcon")
+	self._goDestiny = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_Destiny")
+	self._goDestinyLock = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/stone/#go_DestinyLock")
+	self._goDestinyUnLock = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/stone/#go_DestinyUnLock")
+	self._btnDestiny = gohelper.findChildButtonWithAudio(self.viewGO, "characterinfo/#go_characterinfo/#go_Destiny/#btn_Destiny")
+	self._goAttrUp = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_AttrUp")
+	self._goAttrUpFetter = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/#go_AttrUp/attribute/#go_AttrUpFetter")
+	self._gorolecontainer = gohelper.findChild(self.viewGO, "#go_rolecontainer")
+	self._gorolesort = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank")
+	self._goRareArrow = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_rarerank/txt/#go_RareArrow")
+	self._btnquickedit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_quickedit")
+	self._btnclassify = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
+	self._goFetterContent = gohelper.findChild(self.viewGO, "#go_rolecontainer/layout/#go_FetterContent")
+	self._scrollcard = gohelper.findChildScrollRect(self.viewGO, "#go_rolecontainer/layout/#scroll_card")
+	self._scrollquickedit = gohelper.findChildScrollRect(self.viewGO, "#go_rolecontainer/layout/#scroll_quickedit")
+	self._goDetail = gohelper.findChild(self.viewGO, "#go_Detail")
+	self._btnCloseDetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Detail/#btn_CloseDetail")
+	self._goDetailPassiveItem = gohelper.findChild(self.viewGO, "#go_Detail/scroll_content/viewport/content/#go_DetailPassiveItem")
+	self._goops = gohelper.findChild(self.viewGO, "#go_ops")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_confirm")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_cancel")
+	self._gosearchfilter = gohelper.findChild(self.viewGO, "#go_searchfilter")
+	self._btnclosefilterview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/#btn_closefilterview")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnpassiveskill:AddClickListener(arg_2_0._btnpassiveskillOnClick, arg_2_0)
-	arg_2_0._btnExSkill:AddClickListener(arg_2_0._btnExSkillOnClick, arg_2_0)
-	arg_2_0._btnDestiny:AddClickListener(arg_2_0._btnDestinyOnClick, arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnquickedit:AddClickListener(arg_2_0._btnquickeditOnClick, arg_2_0)
-	arg_2_0._btnclassify:AddClickListener(arg_2_0._btnclassifyOnClick, arg_2_0)
-	arg_2_0._btnCloseDetail:AddClickListener(arg_2_0._btnCloseDetailOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnclosefilterview:AddClickListener(arg_2_0._btnclosefilterviewOnClick, arg_2_0)
+function Act191HeroEditView:addEvents()
+	self._btnpassiveskill:AddClickListener(self._btnpassiveskillOnClick, self)
+	self._btnExSkill:AddClickListener(self._btnExSkillOnClick, self)
+	self._btnDestiny:AddClickListener(self._btnDestinyOnClick, self)
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnquickedit:AddClickListener(self._btnquickeditOnClick, self)
+	self._btnclassify:AddClickListener(self._btnclassifyOnClick, self)
+	self._btnCloseDetail:AddClickListener(self._btnCloseDetailOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnclosefilterview:AddClickListener(self._btnclosefilterviewOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnpassiveskill:RemoveClickListener()
-	arg_3_0._btnExSkill:RemoveClickListener()
-	arg_3_0._btnDestiny:RemoveClickListener()
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnquickedit:RemoveClickListener()
-	arg_3_0._btnclassify:RemoveClickListener()
-	arg_3_0._btnCloseDetail:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnclosefilterview:RemoveClickListener()
+function Act191HeroEditView:removeEvents()
+	self._btnpassiveskill:RemoveClickListener()
+	self._btnExSkill:RemoveClickListener()
+	self._btnDestiny:RemoveClickListener()
+	self._btnrarerank:RemoveClickListener()
+	self._btnquickedit:RemoveClickListener()
+	self._btnclassify:RemoveClickListener()
+	self._btnCloseDetail:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnclosefilterview:RemoveClickListener()
 end
 
-function var_0_0._btnDestinyOnClick(arg_4_0)
-	ViewMgr.instance:openView(ViewName.Act191CharacterDestinyView, arg_4_0.config)
+function Act191HeroEditView:_btnDestinyOnClick()
+	ViewMgr.instance:openView(ViewName.Act191CharacterDestinyView, self.config)
 end
 
-function var_0_0._btnExSkillOnClick(arg_5_0)
-	local var_5_0 = Activity191Config.instance:getRoleCoByNativeId(arg_5_0._heroMo.heroId, arg_5_0._heroMo.star)
+function Act191HeroEditView:_btnExSkillOnClick()
+	local roleCo = Activity191Config.instance:getRoleCoByNativeId(self._heroMo.heroId, self._heroMo.star)
 
-	if var_5_0 then
+	if roleCo then
 		ViewMgr.instance:openView(ViewName.Act191CharacterExSkillView, {
-			config = var_5_0
+			config = roleCo
 		})
 	end
 end
 
-function var_0_0._btnclosefilterviewOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0._gosearchfilter, false)
+function Act191HeroEditView:_btnclosefilterviewOnClick()
+	gohelper.setActive(self._gosearchfilter, false)
 end
 
-function var_0_0._btnCloseDetailOnClick(arg_7_0)
-	gohelper.setActive(arg_7_0._goDetail, false)
+function Act191HeroEditView:_btnCloseDetailOnClick()
+	gohelper.setActive(self._goDetail, false)
 end
 
-function var_0_0._btncloseFilterViewOnClick(arg_8_0)
-	gohelper.setActive(arg_8_0._gosearchfilter, false)
+function Act191HeroEditView:_btncloseFilterViewOnClick()
+	gohelper.setActive(self._gosearchfilter, false)
 end
 
-function var_0_0._btnclassifyOnClick(arg_9_0)
-	gohelper.setActive(arg_9_0._gosearchfilter, true)
+function Act191HeroEditView:_btnclassifyOnClick()
+	gohelper.setActive(self._gosearchfilter, true)
 end
 
-function var_0_0._btnpassiveskillOnClick(arg_10_0)
-	if not arg_10_0.config then
+function Act191HeroEditView:_btnpassiveskillOnClick()
+	if not self.config then
 		return
 	end
 
-	if arg_10_0.config.type == Activity191Enum.CharacterType.Hero then
-		local var_10_0 = {
-			id = arg_10_0.config.id,
-			tipPos = Vector2.New(851, -59)
-		}
+	if self.config.type == Activity191Enum.CharacterType.Hero then
+		local info = {}
 
-		var_10_0.buffTipsX = 1603
-		var_10_0.anchorParams = {
+		info.id = self.config.id
+		info.tipPos = Vector2.New(851, -59)
+		info.buffTipsX = 1603
+		info.anchorParams = {
 			Vector2.New(0, 0.5),
 			Vector2.New(0, 0.5)
 		}
-		var_10_0.stoneId = arg_10_0.stoneId
+		info.stoneId = self.stoneId
 
-		ViewMgr.instance:openView(ViewName.Act191CharacterTipView, var_10_0)
+		ViewMgr.instance:openView(ViewName.Act191CharacterTipView, info)
 	else
-		arg_10_0:refreshPassiveDetail()
-		gohelper.setActive(arg_10_0._goDetail, true)
+		self:refreshPassiveDetail()
+		gohelper.setActive(self._goDetail, true)
 	end
 end
 
-function var_0_0.refreshPassiveDetail(arg_11_0)
-	local var_11_0 = #arg_11_0.passiveSkillIds
+function Act191HeroEditView:refreshPassiveDetail()
+	local passiveSkillCount = #self.passiveSkillIds
 
-	for iter_11_0 = 1, var_11_0 do
-		local var_11_1 = tonumber(arg_11_0.passiveSkillIds[iter_11_0])
-		local var_11_2 = lua_skill.configDict[var_11_1]
+	for i = 1, passiveSkillCount do
+		local passiveSkillId = tonumber(self.passiveSkillIds[i])
+		local skillConfig = lua_skill.configDict[passiveSkillId]
 
-		if var_11_2 then
-			local var_11_3 = arg_11_0._detailPassiveTables[iter_11_0]
+		if skillConfig then
+			local detailPassiveTable = self._detailPassiveTables[i]
 
-			if not var_11_3 then
-				local var_11_4 = gohelper.cloneInPlace(arg_11_0._goDetailPassiveItem, "item" .. iter_11_0)
+			if not detailPassiveTable then
+				local detailPassiveGO = gohelper.cloneInPlace(self._goDetailPassiveItem, "item" .. i)
 
-				var_11_3 = arg_11_0:getUserDataTb_()
-				var_11_3.go = var_11_4
-				var_11_3.name = gohelper.findChildText(var_11_4, "title/txt_name")
-				var_11_3.icon = gohelper.findChildSingleImage(var_11_4, "title/simage_icon")
-				var_11_3.desc = gohelper.findChildText(var_11_4, "txt_desc")
+				detailPassiveTable = self:getUserDataTb_()
+				detailPassiveTable.go = detailPassiveGO
+				detailPassiveTable.name = gohelper.findChildText(detailPassiveGO, "title/txt_name")
+				detailPassiveTable.icon = gohelper.findChildSingleImage(detailPassiveGO, "title/simage_icon")
+				detailPassiveTable.desc = gohelper.findChildText(detailPassiveGO, "txt_desc")
 
-				SkillHelper.addHyperLinkClick(var_11_3.desc, arg_11_0.onClickHyperLink, arg_11_0)
+				SkillHelper.addHyperLinkClick(detailPassiveTable.desc, self.onClickHyperLink, self)
 
-				var_11_3.line = gohelper.findChild(var_11_4, "txt_desc/image_line")
+				detailPassiveTable.line = gohelper.findChild(detailPassiveGO, "txt_desc/image_line")
 
-				table.insert(arg_11_0._detailPassiveTables, var_11_3)
+				table.insert(self._detailPassiveTables, detailPassiveTable)
 			end
 
-			var_11_3.name.text = var_11_2.name
-			var_11_3.desc.text = SkillHelper.getSkillDesc(arg_11_0.config.name, var_11_2)
+			detailPassiveTable.name.text = skillConfig.name
+			detailPassiveTable.desc.text = SkillHelper.getSkillDesc(self.config.name, skillConfig)
 
-			gohelper.setActive(var_11_3.go, true)
-			gohelper.setActive(var_11_3.line, iter_11_0 < var_11_0)
+			gohelper.setActive(detailPassiveTable.go, true)
+			gohelper.setActive(detailPassiveTable.line, i < passiveSkillCount)
 		else
-			logError(string.format("被动技能配置没找到, id: %d", var_11_1))
+			logError(string.format("被动技能配置没找到, id: %d", passiveSkillId))
 		end
 	end
 
-	for iter_11_1 = var_11_0 + 1, #arg_11_0._detailPassiveTables do
-		gohelper.setActive(arg_11_0._detailPassiveTables[iter_11_1].go, false)
+	for i = passiveSkillCount + 1, #self._detailPassiveTables do
+		gohelper.setActive(self._detailPassiveTables[i].go, false)
 	end
 end
 
-function var_0_0._btnconfirmOnClick(arg_12_0)
-	if arg_12_0._isShowQuickEdit then
-		local var_12_0 = Act191HeroQuickEditListModel.instance:getHeroIdMap()
+function Act191HeroEditView:_btnconfirmOnClick()
+	if self._isShowQuickEdit then
+		local heroIdMap = Act191HeroQuickEditListModel.instance:getHeroIdMap()
 
-		arg_12_0.gameInfo:saveQuickGroupInfo(var_12_0)
+		self.gameInfo:saveQuickGroupInfo(heroIdMap)
 	else
-		local var_12_1 = Act191HeroEditListModel.instance.specialHero
-		local var_12_2 = Activity191Model.instance:getActInfo():getGameInfo()
+		local specialHero = Act191HeroEditListModel.instance.specialHero
+		local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 
-		if arg_12_0._heroMo then
-			if arg_12_0._heroMo.heroId ~= var_12_1 then
-				var_12_2:replaceHeroInTeam(arg_12_0._heroMo.heroId, arg_12_0.curSlotIndex)
+		if self._heroMo then
+			if self._heroMo.heroId ~= specialHero then
+				gameInfo:replaceHeroInTeam(self._heroMo.heroId, self.curSlotIndex)
 			end
-		elseif var_12_1 then
-			var_12_2:removeHeroInTeam(var_12_1)
+		elseif specialHero then
+			gameInfo:removeHeroInTeam(specialHero)
 		end
 	end
 
-	arg_12_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btncancelOnClick(arg_13_0)
-	arg_13_0:closeThis()
+function Act191HeroEditView:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnrarerankOnClick(arg_14_0)
-	arg_14_0.sortRule = math.abs(arg_14_0.sortRule - 3)
+function Act191HeroEditView:_btnrarerankOnClick()
+	self.sortRule = math.abs(self.sortRule - 3)
 
-	arg_14_0:refreshBtnRare()
+	self:refreshBtnRare()
 
-	if arg_14_0._isShowQuickEdit then
-		Act191HeroQuickEditListModel.instance:filterData(arg_14_0.filterTag, arg_14_0.sortRule)
+	if self._isShowQuickEdit then
+		Act191HeroQuickEditListModel.instance:filterData(self.filterTag, self.sortRule)
 	else
-		Act191HeroEditListModel.instance:filterData(arg_14_0.filterTag, arg_14_0.sortRule)
+		Act191HeroEditListModel.instance:filterData(self.filterTag, self.sortRule)
 	end
 end
 
-function var_0_0._btnquickeditOnClick(arg_15_0)
-	arg_15_0._isShowQuickEdit = not arg_15_0._isShowQuickEdit
+function Act191HeroEditView:_btnquickeditOnClick()
+	self._isShowQuickEdit = not self._isShowQuickEdit
 
-	arg_15_0:_refreshEditMode()
+	self:_refreshEditMode()
 
-	if arg_15_0._isShowQuickEdit then
-		Act191HeroQuickEditListModel.instance:filterData(arg_15_0.filterTag, arg_15_0.sortRule)
-		arg_15_0:_onHeroItemClick(arg_15_0._quickHeroMo)
+	if self._isShowQuickEdit then
+		Act191HeroQuickEditListModel.instance:filterData(self.filterTag, self.sortRule)
+		self:_onHeroItemClick(self._quickHeroMo)
 	else
-		Act191HeroEditListModel.instance:filterData(arg_15_0.filterTag, arg_15_0.sortRule)
-		arg_15_0:_onHeroItemClick(arg_15_0._normalHeroMo)
+		Act191HeroEditListModel.instance:filterData(self.filterTag, self.sortRule)
+		self:_onHeroItemClick(self._normalHeroMo)
 	end
 end
 
-function var_0_0._editableInitView(arg_16_0)
-	arg_16_0.actId = Activity191Model.instance:getCurActId()
-	arg_16_0._detailPassiveTables = {}
-	arg_16_0._goScrollContent = gohelper.findChild(arg_16_0.viewGO, "#go_rolecontainer/#scroll_card/scrollcontent")
-	arg_16_0._imgBg = gohelper.findChildSingleImage(arg_16_0.viewGO, "bg/bgimg")
+function Act191HeroEditView:_editableInitView()
+	self.actId = Activity191Model.instance:getCurActId()
+	self._detailPassiveTables = {}
+	self._goScrollContent = gohelper.findChild(self.viewGO, "#go_rolecontainer/#scroll_card/scrollcontent")
+	self._imgBg = gohelper.findChildSingleImage(self.viewGO, "bg/bgimg")
 
-	arg_16_0._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
+	self._imgBg:LoadImage(ResUrl.getCommonViewBg("full/biandui_di"))
 
-	arg_16_0._classifyBtns = arg_16_0:getUserDataTb_()
+	self._classifyBtns = self:getUserDataTb_()
 
-	for iter_16_0 = 1, 2 do
-		arg_16_0._classifyBtns[iter_16_0] = gohelper.findChild(arg_16_0._btnclassify.gameObject, "btn" .. tostring(iter_16_0))
+	for i = 1, 2 do
+		self._classifyBtns[i] = gohelper.findChild(self._btnclassify.gameObject, "btn" .. tostring(i))
 	end
 
-	arg_16_0._goBtnEditQuickMode = gohelper.findChild(arg_16_0._btnquickedit.gameObject, "btn2")
-	arg_16_0._goBtnEditNormalMode = gohelper.findChild(arg_16_0._btnquickedit.gameObject, "btn1")
-	arg_16_0._attributevalues = {}
+	self._goBtnEditQuickMode = gohelper.findChild(self._btnquickedit.gameObject, "btn2")
+	self._goBtnEditNormalMode = gohelper.findChild(self._btnquickedit.gameObject, "btn1")
+	self._attributevalues = {}
 
-	for iter_16_1 = 1, 5 do
-		local var_16_0 = arg_16_0:getUserDataTb_()
+	for i = 1, 5 do
+		local o = self:getUserDataTb_()
 
-		var_16_0.txtAttr = gohelper.findChildText(arg_16_0._goattribute, "attribute" .. tostring(iter_16_1) .. "/txt_attribute")
-		var_16_0.txtUp = gohelper.findChildText(arg_16_0._goattribute, "attribute" .. tostring(iter_16_1) .. "/txt_up")
-		arg_16_0._attributevalues[iter_16_1] = var_16_0
+		o.txtAttr = gohelper.findChildText(self._goattribute, "attribute" .. tostring(i) .. "/txt_attribute")
+		o.txtUp = gohelper.findChildText(self._goattribute, "attribute" .. tostring(i) .. "/txt_up")
+		self._attributevalues[i] = o
 	end
 
-	for iter_16_2 = 1, 3 do
-		arg_16_0["goPassiveSkill" .. iter_16_2] = gohelper.findChild(arg_16_0._gopassiveskills, "passiveskill" .. tostring(iter_16_2))
+	for i = 1, 3 do
+		self["goPassiveSkill" .. i] = gohelper.findChild(self._gopassiveskills, "passiveskill" .. tostring(i))
 	end
 
-	arg_16_0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(arg_16_0._goskill, Act191SkillContainer)
-	arg_16_0.exGoList = arg_16_0:getUserDataTb_()
+	self._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(self._goskill, Act191SkillContainer)
+	self.exGoList = self:getUserDataTb_()
 
-	for iter_16_3 = 1, 5 do
-		local var_16_1 = "characterinfo/#go_characterinfo/quality/exSkill/go_ex" .. iter_16_3
+	for i = 1, 5 do
+		local path = "characterinfo/#go_characterinfo/quality/exSkill/go_ex" .. i
 
-		arg_16_0.exGoList[iter_16_3] = gohelper.findChild(arg_16_0.viewGO, var_16_1)
+		self.exGoList[i] = gohelper.findChild(self.viewGO, path)
 	end
 
-	arg_16_0.fetterIconItemList = {}
-	arg_16_0.fetterItemList = {}
-	arg_16_0._animator = arg_16_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.fetterIconItemList = {}
+	self.fetterItemList = {}
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_16_0._gononecharacter, true)
-	gohelper.setActive(arg_16_0._gocharacterinfo, false)
-	arg_16_0:_initFilterView()
+	gohelper.setActive(self._gononecharacter, true)
+	gohelper.setActive(self._gocharacterinfo, false)
+	self:_initFilterView()
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
-	arg_17_0.sortRule = Activity191Enum.SortRule.Down
+function Act191HeroEditView:onOpen()
+	self.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
+	self.sortRule = Activity191Enum.SortRule.Down
 
-	Act191HeroEditListModel.instance:initData(arg_17_0.viewParam)
+	Act191HeroEditListModel.instance:initData(self.viewParam)
 	Act191HeroQuickEditListModel.instance:initData()
 
-	arg_17_0.curSlotIndex = arg_17_0.viewParam.index
-	arg_17_0._isShowQuickEdit = false
-	arg_17_0._scrollcard.verticalNormalizedPosition = 1
-	arg_17_0._scrollquickedit.verticalNormalizedPosition = 1
+	self.curSlotIndex = self.viewParam.index
+	self._isShowQuickEdit = false
+	self._scrollcard.verticalNormalizedPosition = 1
+	self._scrollquickedit.verticalNormalizedPosition = 1
 
-	arg_17_0:_refreshEditMode()
-	arg_17_0:_refreshCharacterInfo()
-	arg_17_0:addEventCb(Activity191Controller.instance, Activity191Event.ClickHeroEditItem, arg_17_0._onHeroItemClick, arg_17_0)
-	gohelper.addUIClickAudio(arg_17_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_17_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
-	arg_17_0:refreshFetter()
+	self:_refreshEditMode()
+	self:_refreshCharacterInfo()
+	self:addEventCb(Activity191Controller.instance, Activity191Event.ClickHeroEditItem, self._onHeroItemClick, self)
+	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
+	self:refreshFetter()
 
-	arg_17_0.filterTag = nil
+	self.filterTag = nil
 
-	arg_17_0:refreshBtnRare()
-	arg_17_0:_refreshBtnClassify()
+	self:refreshBtnRare()
+	self:_refreshBtnClassify()
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0._heroMo = nil
-	arg_18_0.config = nil
+function Act191HeroEditView:onClose()
+	self._heroMo = nil
+	self.config = nil
 end
 
-function var_0_0.onDestroyView(arg_19_0)
+function Act191HeroEditView:onDestroyView()
 	Act191HeroEditListModel.instance:clear()
 	Act191HeroQuickEditListModel.instance:clear()
-	arg_19_0._imgBg:UnLoadImage()
+	self._imgBg:UnLoadImage()
 
-	arg_19_0._imgBg = nil
+	self._imgBg = nil
 end
 
-function var_0_0.refreshBtnRare(arg_20_0)
-	local var_20_0 = arg_20_0.sortRule == Activity191Enum.SortRule.Down and 0 or 180
+function Act191HeroEditView:refreshBtnRare()
+	local value = self.sortRule == Activity191Enum.SortRule.Down and 0 or 180
 
-	transformhelper.setLocalRotation(arg_20_0._goRareArrow.transform, 1, 1, var_20_0)
+	transformhelper.setLocalRotation(self._goRareArrow.transform, 1, 1, value)
 end
 
-function var_0_0.refreshDestiny(arg_21_0)
-	if string.nilorempty(arg_21_0.config.facetsId) then
-		gohelper.setActive(arg_21_0._goDestiny, false)
+function Act191HeroEditView:refreshDestiny()
+	if string.nilorempty(self.config.facetsId) then
+		gohelper.setActive(self._goDestiny, false)
 	else
-		gohelper.setActive(arg_21_0._goDestiny, true)
+		gohelper.setActive(self._goDestiny, true)
 	end
 end
 
-function var_0_0._onHeroItemClick(arg_22_0, arg_22_1)
-	if arg_22_0._isShowQuickEdit then
-		arg_22_0._quickHeroMo = arg_22_1
+function Act191HeroEditView:_onHeroItemClick(heroMo)
+	if self._isShowQuickEdit then
+		self._quickHeroMo = heroMo
 	else
-		arg_22_0._normalHeroMo = arg_22_1
+		self._normalHeroMo = heroMo
 	end
 
-	arg_22_0:refreshFetter()
+	self:refreshFetter()
 
-	if arg_22_0._heroMo and arg_22_1 and arg_22_0._heroMo.heroId == arg_22_1.heroId then
+	if self._heroMo and heroMo and self._heroMo.heroId == heroMo.heroId then
 		return
 	end
 
-	arg_22_0._heroMo = arg_22_1
-	arg_22_0.config = arg_22_1 and arg_22_1.config or nil
+	self._heroMo = heroMo
+	self.config = heroMo and heroMo.config or nil
 
-	arg_22_0:_refreshCharacterInfo()
+	self:_refreshCharacterInfo()
 end
 
-function var_0_0._refreshCharacterInfo(arg_23_0)
-	if arg_23_0.config then
-		arg_23_0.attrUpDic, arg_23_0.attrUpFetterList = arg_23_0.gameInfo:getAttrUpDicByRoleId(arg_23_0.config.roleId)
+function Act191HeroEditView:_refreshCharacterInfo()
+	if self.config then
+		self.attrUpDic, self.attrUpFetterList = self.gameInfo:getAttrUpDicByRoleId(self.config.roleId)
 
-		gohelper.setActive(arg_23_0._gononecharacter, false)
-		gohelper.setActive(arg_23_0._gocharacterinfo, true)
-		UISpriteSetMgr.instance:setCommonSprite(arg_23_0._imagecareericon, "sx_biandui_" .. tostring(arg_23_0.config.career))
-		UISpriteSetMgr.instance:setCommonSprite(arg_23_0._imagedmgtype, "dmgtype" .. tostring(arg_23_0.config.dmgType))
+		gohelper.setActive(self._gononecharacter, false)
+		gohelper.setActive(self._gocharacterinfo, true)
+		UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "sx_biandui_" .. tostring(self.config.career))
+		UISpriteSetMgr.instance:setCommonSprite(self._imagedmgtype, "dmgtype" .. tostring(self.config.dmgType))
 
-		arg_23_0._txtname.text = arg_23_0.config.name
+		self._txtname.text = self.config.name
 
-		gohelper.setActive(arg_23_0._goAttrUp, next(arg_23_0.attrUpDic))
+		gohelper.setActive(self._goAttrUp, next(self.attrUpDic))
 
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0.attrUpFetterList) do
-			local var_23_0 = gohelper.cloneInPlace(arg_23_0._goAttrUpFetter)
-			local var_23_1 = gohelper.findChildImage(var_23_0, "image_icon")
-			local var_23_2 = Activity191Config.instance:getRelationCo(iter_23_1)
+		for _, tag in ipairs(self.attrUpFetterList) do
+			local cloneGo = gohelper.cloneInPlace(self._goAttrUpFetter)
+			local fetterIcon = gohelper.findChildImage(cloneGo, "image_icon")
+			local relationCo = Activity191Config.instance:getRelationCo(tag)
 
-			Activity191Helper.setFetterIcon(var_23_1, var_23_2.icon)
+			Activity191Helper.setFetterIcon(fetterIcon, relationCo.icon)
 		end
 
-		gohelper.setActive(arg_23_0._goAttrUpFetter, false)
+		gohelper.setActive(self._goAttrUpFetter, false)
 
-		for iter_23_2, iter_23_3 in ipairs(CharacterEnum.BaseAttrIdList) do
-			local var_23_3 = arg_23_0._attributevalues[iter_23_2].txtUp
-			local var_23_4 = arg_23_0.attrUpDic[iter_23_3]
+		for k, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
+			local upText = self._attributevalues[k].txtUp
+			local value = self.attrUpDic[attrId]
 
-			if var_23_4 then
-				var_23_3.text = var_23_4 / 10 .. "%"
+			if value then
+				upText.text = value / 10 .. "%"
 			end
 
-			gohelper.setActive(var_23_3, var_23_4)
+			gohelper.setActive(upText, value)
 		end
 
-		local var_23_5 = lua_activity191_template.configDict[arg_23_0.config.id]
+		local attrCo = lua_activity191_template.configDict[self.config.id]
 
-		arg_23_0._attributevalues[1].txtAttr.text = var_23_5.attack
-		arg_23_0._attributevalues[2].txtAttr.text = var_23_5.life
-		arg_23_0._attributevalues[3].txtAttr.text = var_23_5.defense
-		arg_23_0._attributevalues[4].txtAttr.text = var_23_5.mdefense
-		arg_23_0._attributevalues[5].txtAttr.text = var_23_5.technic
-		arg_23_0.passiveSkillIds = Activity191Config.instance:getHeroPassiveSkillIdList(arg_23_0.config.id)
-		arg_23_0._txtpassivename.text = lua_skill.configDict[arg_23_0.passiveSkillIds[1]].name
+		self._attributevalues[1].txtAttr.text = attrCo.attack
+		self._attributevalues[2].txtAttr.text = attrCo.life
+		self._attributevalues[3].txtAttr.text = attrCo.defense
+		self._attributevalues[4].txtAttr.text = attrCo.mdefense
+		self._attributevalues[5].txtAttr.text = attrCo.technic
+		self.passiveSkillIds = Activity191Config.instance:getHeroPassiveSkillIdList(self.config.id)
+		self._txtpassivename.text = lua_skill.configDict[self.passiveSkillIds[1]].name
 
-		local var_23_6 = 0
+		local maxRank = 0
 
-		if arg_23_0.config.type == Activity191Enum.CharacterType.Hero then
-			var_23_6 = #SkillConfig.instance:getheroranksCO(arg_23_0.config.roleId) - 1
+		if self.config.type == Activity191Enum.CharacterType.Hero then
+			maxRank = #SkillConfig.instance:getheroranksCO(self.config.roleId) - 1
 		end
 
-		for iter_23_4 = 1, 3 do
-			local var_23_7 = arg_23_0["goPassiveSkill" .. iter_23_4]
+		for i = 1, 3 do
+			local go = self["goPassiveSkill" .. i]
 
-			gohelper.setActive(var_23_7, iter_23_4 <= var_23_6)
+			gohelper.setActive(go, i <= maxRank)
 		end
 
-		for iter_23_5, iter_23_6 in ipairs(arg_23_0.exGoList) do
-			gohelper.setActive(iter_23_6, iter_23_5 <= arg_23_0.config.exLevel)
+		for k, v in ipairs(self.exGoList) do
+			gohelper.setActive(v, k <= self.config.exLevel)
 		end
 
-		arg_23_0:refreshFetterIcon()
-		arg_23_0._skillContainer:setData(arg_23_0.config)
+		self:refreshFetterIcon()
+		self._skillContainer:setData(self.config)
 
-		arg_23_0.stoneId = arg_23_0.gameInfo:getStoneId(arg_23_0.config)
+		self.stoneId = self.gameInfo:getStoneId(self.config)
 
-		if arg_23_0.stoneId then
-			arg_23_0.passiveSkillIds = Activity191Helper.replaceSkill(arg_23_0.stoneId, arg_23_0.passiveSkillIds)
+		if self.stoneId then
+			self.passiveSkillIds = Activity191Helper.replaceSkill(self.stoneId, self.passiveSkillIds)
 		end
 
-		arg_23_0:refreshDestiny()
+		self:refreshDestiny()
 	else
-		gohelper.setActive(arg_23_0._gononecharacter, true)
-		gohelper.setActive(arg_23_0._gocharacterinfo, false)
+		gohelper.setActive(self._gononecharacter, true)
+		gohelper.setActive(self._gocharacterinfo, false)
 	end
 end
 
-function var_0_0.refreshFetterIcon(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0.fetterIconItemList) do
-		gohelper.setActive(iter_24_1.go, false)
+function Act191HeroEditView:refreshFetterIcon()
+	for _, item in ipairs(self.fetterIconItemList) do
+		gohelper.setActive(item.go, false)
 	end
 
-	local var_24_0 = string.split(arg_24_0.config.tag, "#")
+	local tagArr = string.split(self.config.tag, "#")
 
-	for iter_24_2, iter_24_3 in ipairs(var_24_0) do
-		local var_24_1 = arg_24_0.fetterIconItemList[iter_24_2]
+	for k, tag in ipairs(tagArr) do
+		local item = self.fetterIconItemList[k]
 
-		if not var_24_1 then
-			local var_24_2 = gohelper.cloneInPlace(arg_24_0._goFetterIcon)
+		if not item then
+			local go = gohelper.cloneInPlace(self._goFetterIcon)
 
-			var_24_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_24_2, Act191FetterIconItem)
-			arg_24_0.fetterIconItemList[iter_24_2] = var_24_1
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act191FetterIconItem)
+			self.fetterIconItemList[k] = item
 		end
 
-		var_24_1:setData(iter_24_3)
-		gohelper.setActive(var_24_1.go, true)
+		item:setData(tag)
+		gohelper.setActive(item.go, true)
 	end
 end
 
-function var_0_0._initFilterView(arg_25_0)
-	arg_25_0.filterItemMap = {}
+function Act191HeroEditView:_initFilterView()
+	self.filterItemMap = {}
 
-	local var_25_0 = gohelper.findChild(arg_25_0._gosearchfilter, "container/ScrollView/Viewport/Content/attrContainer/go_attr")
-	local var_25_1 = lua_activity191_relation_select.configDict[arg_25_0.actId]
+	local goAttr = gohelper.findChild(self._gosearchfilter, "container/ScrollView/Viewport/Content/attrContainer/go_attr")
+	local fetterSelectCoMap = lua_activity191_relation_select.configDict[self.actId]
 
-	table.sort(var_25_1, function(arg_26_0, arg_26_1)
-		return arg_26_0.sortIndex < arg_26_1.sortIndex
+	table.sort(fetterSelectCoMap, function(a, b)
+		return a.sortIndex < b.sortIndex
 	end)
 
-	for iter_25_0, iter_25_1 in pairs(var_25_1) do
-		local var_25_2 = Activity191Config.instance:getRelationCo(iter_25_1.tag)
+	for _, co in pairs(fetterSelectCoMap) do
+		local config = Activity191Config.instance:getRelationCo(co.tag)
 
-		if var_25_2 then
-			local var_25_3 = arg_25_0:getUserDataTb_()
-			local var_25_4 = gohelper.cloneInPlace(var_25_0, iter_25_1.tag)
+		if config then
+			local filterItem = self:getUserDataTb_()
+			local go = gohelper.cloneInPlace(goAttr, co.tag)
 
-			var_25_3.goUnselect = gohelper.findChild(var_25_4, "unselected")
-			var_25_3.goSelect = gohelper.findChild(var_25_4, "selected")
-			gohelper.findChildText(var_25_4, "unselected/info1").text = var_25_2.name
+			filterItem.goUnselect = gohelper.findChild(go, "unselected")
+			filterItem.goSelect = gohelper.findChild(go, "selected")
 
-			local var_25_5 = gohelper.findChildImage(var_25_4, "unselected/attrIcon1")
+			local txtFilterU = gohelper.findChildText(go, "unselected/info1")
 
-			Activity191Helper.setFetterIcon(var_25_5, var_25_2.icon)
+			txtFilterU.text = config.name
 
-			gohelper.findChildText(var_25_4, "selected/info2").text = var_25_2.name
+			local imageFilterU = gohelper.findChildImage(go, "unselected/attrIcon1")
 
-			local var_25_6 = gohelper.findChildImage(var_25_4, "selected/attrIcon2")
+			Activity191Helper.setFetterIcon(imageFilterU, config.icon)
 
-			Activity191Helper.setFetterIcon(var_25_6, var_25_2.icon)
+			local txtFilterS = gohelper.findChildText(go, "selected/info2")
 
-			local var_25_7 = gohelper.findChildButtonWithAudio(var_25_4, "click")
+			txtFilterS.text = config.name
 
-			arg_25_0:addClickCb(var_25_7, arg_25_0._filterItemClick, arg_25_0, iter_25_1.tag)
+			local imageFilterS = gohelper.findChildImage(go, "selected/attrIcon2")
 
-			arg_25_0.filterItemMap[iter_25_1.tag] = var_25_3
+			Activity191Helper.setFetterIcon(imageFilterS, config.icon)
+
+			local btnClick = gohelper.findChildButtonWithAudio(go, "click")
+
+			self:addClickCb(btnClick, self._filterItemClick, self, co.tag)
+
+			self.filterItemMap[co.tag] = filterItem
 		end
 	end
 
-	gohelper.setActive(var_25_0, false)
+	gohelper.setActive(goAttr, false)
 end
 
-function var_0_0._filterItemClick(arg_27_0, arg_27_1)
-	if arg_27_0.filterTag == arg_27_1 then
-		arg_27_0.filterTag = nil
+function Act191HeroEditView:_filterItemClick(tag)
+	if self.filterTag == tag then
+		self.filterTag = nil
 	else
-		arg_27_0.filterTag = arg_27_1
+		self.filterTag = tag
 	end
 
-	arg_27_0:_refreshBtnClassify()
+	self:_refreshBtnClassify()
 
-	if arg_27_0._isShowQuickEdit then
-		Act191HeroQuickEditListModel.instance:filterData(arg_27_0.filterTag, arg_27_0.sortRule)
+	if self._isShowQuickEdit then
+		Act191HeroQuickEditListModel.instance:filterData(self.filterTag, self.sortRule)
 	else
-		Act191HeroEditListModel.instance:filterData(arg_27_0.filterTag, arg_27_0.sortRule)
+		Act191HeroEditListModel.instance:filterData(self.filterTag, self.sortRule)
 	end
 end
 
-function var_0_0._refreshBtnClassify(arg_28_0)
-	gohelper.setActive(arg_28_0._classifyBtns[1], not arg_28_0.filterTag)
-	gohelper.setActive(arg_28_0._classifyBtns[2], arg_28_0.filterTag)
+function Act191HeroEditView:_refreshBtnClassify()
+	gohelper.setActive(self._classifyBtns[1], not self.filterTag)
+	gohelper.setActive(self._classifyBtns[2], self.filterTag)
 
-	for iter_28_0, iter_28_1 in pairs(arg_28_0.filterItemMap) do
-		gohelper.setActive(iter_28_1.goUnselect, iter_28_0 ~= arg_28_0.filterTag)
-		gohelper.setActive(iter_28_1.goSelect, iter_28_0 == arg_28_0.filterTag)
+	for k, item in pairs(self.filterItemMap) do
+		gohelper.setActive(item.goUnselect, k ~= self.filterTag)
+		gohelper.setActive(item.goSelect, k == self.filterTag)
 	end
 end
 
-function var_0_0._refreshEditMode(arg_29_0)
-	gohelper.setActive(arg_29_0._scrollquickedit.gameObject, arg_29_0._isShowQuickEdit)
-	gohelper.setActive(arg_29_0._scrollcard.gameObject, not arg_29_0._isShowQuickEdit)
-	gohelper.setActive(arg_29_0._goBtnEditQuickMode.gameObject, arg_29_0._isShowQuickEdit)
-	gohelper.setActive(arg_29_0._goBtnEditNormalMode.gameObject, not arg_29_0._isShowQuickEdit)
+function Act191HeroEditView:_refreshEditMode()
+	gohelper.setActive(self._scrollquickedit.gameObject, self._isShowQuickEdit)
+	gohelper.setActive(self._scrollcard.gameObject, not self._isShowQuickEdit)
+	gohelper.setActive(self._goBtnEditQuickMode.gameObject, self._isShowQuickEdit)
+	gohelper.setActive(self._goBtnEditNormalMode.gameObject, not self._isShowQuickEdit)
 end
 
-function var_0_0.onClickHyperLink(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = Vector2.New(0, 0)
+function Act191HeroEditView:onClickHyperLink(effectId, clickPosition)
+	local pos = Vector2.New(0, 0)
 
-	CommonBuffTipController:openCommonTipViewWithCustomPos(arg_30_1, var_30_0)
+	CommonBuffTipController:openCommonTipViewWithCustomPos(effectId, pos)
 end
 
-function var_0_0.refreshFetter(arg_31_0)
-	local var_31_0
+function Act191HeroEditView:refreshFetter()
+	local fetterCntDic
 
-	if arg_31_0._isShowQuickEdit then
-		local var_31_1 = Act191HeroQuickEditListModel.instance:getHeroIdMap()
+	if self._isShowQuickEdit then
+		local heroIdDic = Act191HeroQuickEditListModel.instance:getHeroIdMap()
 
-		var_31_0 = arg_31_0.gameInfo:getPreviewFetterCntDic(var_31_1)
+		fetterCntDic = self.gameInfo:getPreviewFetterCntDic(heroIdDic)
 	else
-		local var_31_2 = Act191HeroEditListModel.instance:getHeroIdMap()
+		local heroIdDic = Act191HeroEditListModel.instance:getHeroIdMap()
 
-		var_31_0 = arg_31_0.gameInfo:getPreviewFetterCntDic(var_31_2)
+		fetterCntDic = self.gameInfo:getPreviewFetterCntDic(heroIdDic)
 	end
 
-	for iter_31_0, iter_31_1 in ipairs(arg_31_0.fetterItemList) do
-		gohelper.setActive(iter_31_1.go, false)
+	for _, item in ipairs(self.fetterItemList) do
+		gohelper.setActive(item.go, false)
 	end
 
-	local var_31_3 = Activity191Helper.getActiveFetterInfoList(var_31_0)
+	local fetterInfoList = Activity191Helper.getActiveFetterInfoList(fetterCntDic)
 
-	for iter_31_2, iter_31_3 in ipairs(var_31_3) do
-		local var_31_4 = arg_31_0.fetterItemList[iter_31_2]
+	for k, info in ipairs(fetterInfoList) do
+		local item = self.fetterItemList[k]
 
-		if not var_31_4 then
-			local var_31_5 = arg_31_0:getResInst(Activity191Enum.PrefabPath.FetterItem, arg_31_0._goFetterContent)
+		if not item then
+			local go = self:getResInst(Activity191Enum.PrefabPath.FetterItem, self._goFetterContent)
 
-			var_31_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_31_5, Act191FetterItem)
-			arg_31_0.fetterItemList[iter_31_2] = var_31_4
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act191FetterItem)
+			self.fetterItemList[k] = item
 		end
 
-		var_31_4:setData(iter_31_3.config, iter_31_3.count)
-		gohelper.setActive(var_31_4.go, true)
+		item:setData(info.config, info.count)
+		gohelper.setActive(item.go, true)
 	end
 
-	gohelper.setActive(arg_31_0._goFetterContent, #var_31_3 ~= 0)
+	gohelper.setActive(self._goFetterContent, #fetterInfoList ~= 0)
 end
 
-return var_0_0
+return Act191HeroEditView

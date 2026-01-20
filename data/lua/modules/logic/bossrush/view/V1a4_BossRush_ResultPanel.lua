@@ -1,379 +1,381 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_ResultPanel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_ResultPanel.lua
 
-local var_0_0 = class("V1a4_BossRush_ResultPanel", BaseView)
+module("modules.logic.bossrush.view.V1a4_BossRush_ResultPanel", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
-	arg_1_0._goDouble = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_Double")
-	arg_1_0._goask = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_Double/#go_ask")
-	arg_1_0._txtDouble = gohelper.findChildText(arg_1_0.viewGO, "Root/Right/#go_Double/#go_ask/#txt_Double")
-	arg_1_0._btnOK = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/#go_Double/#go_ask/#btn_OK")
-	arg_1_0._goconfirm = gohelper.findChild(arg_1_0.viewGO, "Root/Right/#go_Double/#go_confirm")
-	arg_1_0._btnScore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Right/Total/txt_Total/#btn_Score")
-	arg_1_0._goDetailsRootXY = gohelper.findChild(arg_1_0.viewGO, "Root/Right/Total/txt_Total/#btn_Score/#go_DetailsRootXY")
-	arg_1_0._txtTotalScore = gohelper.findChildText(arg_1_0.viewGO, "Root/Right/Total/#txt_TotalScore")
-	arg_1_0._goSlider = gohelper.findChild(arg_1_0.viewGO, "Root/Right/Slider/#go_Slider")
-	arg_1_0._scrollprogress = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress")
-	arg_1_0._goprefabInst = gohelper.findChild(arg_1_0.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#go_prefabInst")
-	arg_1_0._imageSliderBG = gohelper.findChildImage(arg_1_0.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG")
-	arg_1_0._imageSliderFG1 = gohelper.findChildImage(arg_1_0.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1")
-	arg_1_0._imageSliderFG2 = gohelper.findChildImage(arg_1_0.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1/#image_SliderFG2")
-	arg_1_0._goAssessScore = gohelper.findChild(arg_1_0.viewGO, "Root/#go_AssessScore")
-	arg_1_0._goDetailsRoot = gohelper.findChild(arg_1_0.viewGO, "Root/#go_DetailsRoot")
-	arg_1_0._btnempty = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#go_DetailsRoot/#btn_empty")
-	arg_1_0._godetails = gohelper.findChild(arg_1_0.viewGO, "Root/#go_DetailsRoot/#go_details")
-	arg_1_0._scrollscore = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#go_DetailsRoot/#go_details/#scroll_score")
-	arg_1_0._goscore = gohelper.findChild(arg_1_0.viewGO, "Root/#go_DetailsRoot/#go_details/#scroll_score/Viewport/Content/#go_score")
-	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_DetailsRoot/#go_details/#scroll_score/Viewport/Content/#go_score/#txt_score")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_DetailsRoot/#go_details/#txt_total")
+local V1a4_BossRush_ResultPanel = class("V1a4_BossRush_ResultPanel", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a4_BossRush_ResultPanel:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_PanelBG")
+	self._goDouble = gohelper.findChild(self.viewGO, "Root/Right/#go_Double")
+	self._goask = gohelper.findChild(self.viewGO, "Root/Right/#go_Double/#go_ask")
+	self._txtDouble = gohelper.findChildText(self.viewGO, "Root/Right/#go_Double/#go_ask/#txt_Double")
+	self._btnOK = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/#go_Double/#go_ask/#btn_OK")
+	self._goconfirm = gohelper.findChild(self.viewGO, "Root/Right/#go_Double/#go_confirm")
+	self._btnScore = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Right/Total/txt_Total/#btn_Score")
+	self._goDetailsRootXY = gohelper.findChild(self.viewGO, "Root/Right/Total/txt_Total/#btn_Score/#go_DetailsRootXY")
+	self._txtTotalScore = gohelper.findChildText(self.viewGO, "Root/Right/Total/#txt_TotalScore")
+	self._goSlider = gohelper.findChild(self.viewGO, "Root/Right/Slider/#go_Slider")
+	self._scrollprogress = gohelper.findChildScrollRect(self.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress")
+	self._goprefabInst = gohelper.findChild(self.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#go_prefabInst")
+	self._imageSliderBG = gohelper.findChildImage(self.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG")
+	self._imageSliderFG1 = gohelper.findChildImage(self.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1")
+	self._imageSliderFG2 = gohelper.findChildImage(self.viewGO, "Root/Right/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1/#image_SliderFG2")
+	self._goAssessScore = gohelper.findChild(self.viewGO, "Root/#go_AssessScore")
+	self._goDetailsRoot = gohelper.findChild(self.viewGO, "Root/#go_DetailsRoot")
+	self._btnempty = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#go_DetailsRoot/#btn_empty")
+	self._godetails = gohelper.findChild(self.viewGO, "Root/#go_DetailsRoot/#go_details")
+	self._scrollscore = gohelper.findChildScrollRect(self.viewGO, "Root/#go_DetailsRoot/#go_details/#scroll_score")
+	self._goscore = gohelper.findChild(self.viewGO, "Root/#go_DetailsRoot/#go_details/#scroll_score/Viewport/Content/#go_score")
+	self._txtscore = gohelper.findChildText(self.viewGO, "Root/#go_DetailsRoot/#go_details/#scroll_score/Viewport/Content/#go_score/#txt_score")
+	self._txttotal = gohelper.findChildText(self.viewGO, "Root/#go_DetailsRoot/#go_details/#txt_total")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnOK:AddClickListener(arg_2_0._btnOKOnClick, arg_2_0)
-	arg_2_0._btnScore:AddClickListener(arg_2_0._btnScoreOnClick, arg_2_0)
-	arg_2_0._btnempty:AddClickListener(arg_2_0._btnemptyOnClick, arg_2_0)
+function V1a4_BossRush_ResultPanel:addEvents()
+	self._btnOK:AddClickListener(self._btnOKOnClick, self)
+	self._btnScore:AddClickListener(self._btnScoreOnClick, self)
+	self._btnempty:AddClickListener(self._btnemptyOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnOK:RemoveClickListener()
-	arg_3_0._btnScore:RemoveClickListener()
-	arg_3_0._btnempty:RemoveClickListener()
+function V1a4_BossRush_ResultPanel:removeEvents()
+	self._btnOK:RemoveClickListener()
+	self._btnScore:RemoveClickListener()
+	self._btnempty:RemoveClickListener()
 end
 
-local var_0_1 = string.format
-local var_0_2 = BossRushEnum.AnimEvtResultPanel
-local var_0_3 = 1.5
+local sf = string.format
+local eAnimEvt = BossRushEnum.AnimEvtResultPanel
+local kTweenSecond = 1.5
 
-function var_0_0.onClickModalMask(arg_4_0)
-	arg_4_0:closeThis()
+function V1a4_BossRush_ResultPanel:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._btnOKOnClick(arg_5_0)
+function V1a4_BossRush_ResultPanel:_btnOKOnClick()
 	AudioMgr.instance:trigger(AudioEnum.ui_role.play_ui_role_cover_open_1)
 
-	local var_5_0 = arg_5_0._curStage
+	local bossId = self._curStage
 
-	BossRushRpc.instance:sendAct128DoublePointRequest(var_5_0)
+	BossRushRpc.instance:sendAct128DoublePointRequest(bossId)
 end
 
-function var_0_0._btnScoreOnClick(arg_6_0)
-	arg_6_0:_setActiveDetail(true)
+function V1a4_BossRush_ResultPanel:_btnScoreOnClick()
+	self:_setActiveDetail(true)
 end
 
-function var_0_0._btnemptyOnClick(arg_7_0)
-	arg_7_0:_setActiveDetail(false)
+function V1a4_BossRush_ResultPanel:_btnemptyOnClick()
+	self:_setActiveDetail(false)
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function V1a4_BossRush_ResultPanel:_editableInitView()
 	FightController.instance:checkFightQuitTipViewClose()
 
-	arg_8_0._goDetailsRootTran = arg_8_0._goDetailsRoot.transform
-	arg_8_0._goDetailsRootXYTran = arg_8_0._goDetailsRootXY.transform
-	arg_8_0._anim = arg_8_0.viewGO:GetComponent(gohelper.Type_Animator)
-	arg_8_0._animEvent = arg_8_0.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
-	arg_8_0._completeAnimEvent = gohelper.findChild(arg_8_0.viewGO, "Root/Complete"):GetComponent(gohelper.Type_AnimationEventWrap)
+	self._goDetailsRootTran = self._goDetailsRoot.transform
+	self._goDetailsRootXYTran = self._goDetailsRootXY.transform
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
+	self._animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
+	self._completeAnimEvent = gohelper.findChild(self.viewGO, "Root/Complete"):GetComponent(gohelper.Type_AnimationEventWrap)
 
-	arg_8_0:_initAssessScore()
+	self:_initAssessScore()
 
-	arg_8_0._imageSliderFG1Tran = arg_8_0._imageSliderFG1:GetComponent(gohelper.Type_RectTransform)
-	arg_8_0._imageSliderFG2Tran = arg_8_0._imageSliderFG2:GetComponent(gohelper.Type_RectTransform)
-	arg_8_0._imageSliderBGTran = arg_8_0._imageSliderBG:GetComponent(gohelper.Type_RectTransform)
+	self._imageSliderFG1Tran = self._imageSliderFG1:GetComponent(gohelper.Type_RectTransform)
+	self._imageSliderFG2Tran = self._imageSliderFG2:GetComponent(gohelper.Type_RectTransform)
+	self._imageSliderBGTran = self._imageSliderBG:GetComponent(gohelper.Type_RectTransform)
 
-	arg_8_0._simagePanelBG:LoadImage(ResUrl.getV1a4BossRushSinglebg("v1a4_bossrush_resultpanelbg"))
+	self._simagePanelBG:LoadImage(ResUrl.getV1a4BossRushSinglebg("v1a4_bossrush_resultpanelbg"))
 
-	arg_8_0._txtDouble.text = ""
-	arg_8_0._txtTotalScore.text = ""
+	self._txtDouble.text = ""
+	self._txtTotalScore.text = ""
 
-	recthelper.setWidth(arg_8_0._imageSliderFG1Tran, 0)
-	recthelper.setWidth(arg_8_0._imageSliderFG2Tran, 0)
-	gohelper.setActive(arg_8_0._goconfirm, false)
-	gohelper.setActive(arg_8_0._goprefabInst, false)
-	arg_8_0:_setActiveDetail(false)
+	recthelper.setWidth(self._imageSliderFG1Tran, 0)
+	recthelper.setWidth(self._imageSliderFG2Tran, 0)
+	gohelper.setActive(self._goconfirm, false)
+	gohelper.setActive(self._goprefabInst, false)
+	self:_setActiveDetail(false)
 
-	arg_8_0._viewportWidth = recthelper.getWidth(arg_8_0._scrollprogress.transform)
-	arg_8_0._goprefabInstX = recthelper.getAnchorX(arg_8_0._goprefabInst.transform)
+	self._viewportWidth = recthelper.getWidth(self._scrollprogress.transform)
+	self._goprefabInstX = recthelper.getAnchorX(self._goprefabInst.transform)
 
-	arg_8_0._animEvent:AddEventListener(var_0_2.onOpenEnd, arg_8_0._onOpenEnd, arg_8_0)
-	arg_8_0._completeAnimEvent:AddEventListener(var_0_2.onCompleteOpenStart, arg_8_0._onCompleteOpenStart, arg_8_0)
-	gohelper.setActive(arg_8_0._btnScore, false)
+	self._animEvent:AddEventListener(eAnimEvt.onOpenEnd, self._onOpenEnd, self)
+	self._completeAnimEvent:AddEventListener(eAnimEvt.onCompleteOpenStart, self._onCompleteOpenStart, self)
+	gohelper.setActive(self._btnScore, false)
 
-	arg_8_0._scrollprogressContentTran = arg_8_0._scrollprogress.content
+	self._scrollprogressContentTran = self._scrollprogress.content
 end
 
-function var_0_0._initAssessScore(arg_9_0)
-	local var_9_0 = V1a4_BossRush_Assess_Score
-	local var_9_1 = arg_9_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_result_assess, arg_9_0._goAssessScore, var_9_0.__cname)
+function V1a4_BossRush_ResultPanel:_initAssessScore()
+	local itemClass = V1a4_BossRush_Assess_Score
+	local go = self.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrush_result_assess, self._goAssessScore, itemClass.__cname)
 
-	arg_9_0._assessScore = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, var_9_0)
+	self._assessScore = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 
-	arg_9_0._assessScore:setActiveDesc(false)
-	arg_9_0._assessIcon:initData(arg_9_0, false)
+	self._assessScore:setActiveDesc(false)
+	self._assessIcon:initData(self, false)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function V1a4_BossRush_ResultPanel:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._curStage, arg_11_0._curLayer = BossRushModel.instance:getBattleStageAndLayer()
+function V1a4_BossRush_ResultPanel:onOpen()
+	self._curStage, self._curLayer = BossRushModel.instance:getBattleStageAndLayer()
 
-	local var_11_0 = arg_11_0._curStage
-	local var_11_1 = BossRushController.instance:isInBossRushInfiniteFight(true)
-	local var_11_2 = BossRushModel.instance:getFightScore()
-	local var_11_3 = BossRushModel.instance:getDoubleTimesInfo(var_11_0)
-	local var_11_4 = var_11_2 > 0 and var_11_1 and var_11_3.cur > 0
-	local var_11_5 = BossRushModel.instance:getStagePointInfo(var_11_0)
+	local stage = self._curStage
+	local isInfinite = BossRushController.instance:isInBossRushInfiniteFight(true)
+	local fightScore = BossRushModel.instance:getFightScore()
+	local doubleTimesInfo = BossRushModel.instance:getDoubleTimesInfo(stage)
+	local isShowDouble = fightScore > 0 and isInfinite and doubleTimesInfo.cur > 0
+	local stagePointInfo = BossRushModel.instance:getStagePointInfo(stage)
 
-	gohelper.setActive(arg_11_0._goDouble, var_11_4)
-	arg_11_0._assessScore:setData(var_11_0, var_11_2)
-	arg_11_0._assessScore:setActiveNewRecord(BossRushModel.instance:checkIsNewHighestPointRecord(var_11_0))
+	gohelper.setActive(self._goDouble, isShowDouble)
+	self._assessScore:setData(stage, fightScore)
+	self._assessScore:setActiveNewRecord(BossRushModel.instance:checkIsNewHighestPointRecord(stage))
 
-	local var_11_6 = BossRushModel.instance:isSpecialLayer(arg_11_0._curLayer)
-	local var_11_7, var_11_8 = BossRushConfig.instance:getAssessSpriteName(var_11_0, var_11_2, var_11_6)
+	local special = BossRushModel.instance:isSpecialLayer(self._curLayer)
+	local type = special and BossRushEnum.AssessType.Layer4 or BossRushEnum.AssessType.Normal
+	local _, level = BossRushConfig.instance:getAssessSpriteName(stage, fightScore, type)
 
-	if var_11_8 > 0 then
-		arg_11_0._anim:Play(BossRushEnum.AnimResultPanel.InNotEmpty)
+	if level > 0 then
+		self._anim:Play(BossRushEnum.AnimResultPanel.InNotEmpty)
 	else
-		arg_11_0._anim:Play(BossRushEnum.AnimResultPanel.InEmpty)
+		self._anim:Play(BossRushEnum.AnimResultPanel.InEmpty)
 	end
 
-	arg_11_0._maxValue = var_11_5.max
-	arg_11_0._lastValue = var_11_5.cur
-	arg_11_0._firstValue = math.min(var_11_5.max, var_11_5.cur + var_11_2)
+	self._maxValue = stagePointInfo.max
+	self._lastValue = stagePointInfo.cur
+	self._firstValue = math.min(stagePointInfo.max, stagePointInfo.cur + fightScore)
 
-	arg_11_0:_refreshDoubleInfo()
-	arg_11_0:_refreshDetailScore()
-	arg_11_0:_refreshProgressBar(var_11_5.cur)
-	arg_11_0:_refreshTxtTotalScore(var_11_5.cur, var_11_5.max)
-	BossRushController.instance:registerCallback(BossRushEvent.OnReceiveAct128DoublePointRequestReply, arg_11_0._onReceiveAct128DoublePointRequestReply, arg_11_0)
+	self:_refreshDoubleInfo()
+	self:_refreshDetailScore()
+	self:_refreshProgressBar(stagePointInfo.cur)
+	self:_refreshTxtTotalScore(stagePointInfo.cur, stagePointInfo.max)
+	BossRushController.instance:registerCallback(BossRushEvent.OnReceiveAct128DoublePointRequestReply, self._onReceiveAct128DoublePointRequestReply, self)
 end
 
-function var_0_0.onOpenFinish(arg_12_0)
-	arg_12_0:_updateContentPosX()
+function V1a4_BossRush_ResultPanel:onOpenFinish()
+	self:_updateContentPosX()
 end
 
-function var_0_0.onClose(arg_13_0)
+function V1a4_BossRush_ResultPanel:onClose()
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.stop_ui_qiutu_progress_loop)
-	BossRushController.instance:unregisterCallback(BossRushEvent.OnReceiveAct128DoublePointRequestReply, arg_13_0._onReceiveAct128DoublePointRequestReply, arg_13_0)
-	ViewMgr.instance:openView(ViewName.V1a4_BossRush_ResultView, arg_13_0.viewParam)
+	BossRushController.instance:unregisterCallback(BossRushEvent.OnReceiveAct128DoublePointRequestReply, self._onReceiveAct128DoublePointRequestReply, self)
+	ViewMgr.instance:openView(ViewName.V1a4_BossRush_ResultView, self.viewParam)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0:_setActiveDetail(false)
-	arg_14_0:_deleteTweens()
-	arg_14_0._animEvent:RemoveEventListener(var_0_2.onOpenEnd)
-	arg_14_0._completeAnimEvent:RemoveEventListener(var_0_2.onCompleteOpenStart)
-	arg_14_0._simagePanelBG:UnLoadImage()
+function V1a4_BossRush_ResultPanel:onDestroyView()
+	self:_setActiveDetail(false)
+	self:_deleteTweens()
+	self._animEvent:RemoveEventListener(eAnimEvt.onOpenEnd)
+	self._completeAnimEvent:RemoveEventListener(eAnimEvt.onCompleteOpenStart)
+	self._simagePanelBG:UnLoadImage()
 end
 
-function var_0_0._refreshTxtTotalScore(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._txtTotalScore.text = var_0_1("<color=#FF8640>%s</color>/%s", arg_15_1 or 0, arg_15_2 or 0)
+function V1a4_BossRush_ResultPanel:_refreshTxtTotalScore(cur, max)
+	self._txtTotalScore.text = sf("<color=#FF8640>%s</color>/%s", cur or 0, max or 0)
 end
 
-function var_0_0._refresh(arg_16_0)
-	arg_16_0:_progressBarTween(arg_16_0._firstValue)
+function V1a4_BossRush_ResultPanel:_refresh()
+	self:_progressBarTween(self._firstValue)
 end
 
-function var_0_0._refreshDoubleInfo(arg_17_0)
-	local var_17_0 = arg_17_0._curStage
-	local var_17_1 = BossRushModel.instance:getDoubleTimesInfo(var_17_0)
-	local var_17_2 = {
-		var_17_1.cur,
-		var_17_1.max
+function V1a4_BossRush_ResultPanel:_refreshDoubleInfo()
+	local stage = self._curStage
+	local info = BossRushModel.instance:getDoubleTimesInfo(stage)
+	local tag = {
+		info.cur,
+		info.max
 	}
 
-	arg_17_0._txtDouble.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_bossrush_resultpanel_txt_double"), var_17_2)
+	self._txtDouble.text = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a4_bossrush_resultpanel_txt_double"), tag)
 end
 
-function var_0_0._refreshProgressBar(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0.viewContainer:getListScrollParam()
-	local var_18_1 = arg_18_0._curStage
-	local var_18_2 = arg_18_0._maxValue
-	local var_18_3 = arg_18_0._goprefabInstX
-	local var_18_4, var_18_5 = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(var_18_1, arg_18_1, var_18_0, var_18_3, 0, 0)
+function V1a4_BossRush_ResultPanel:_refreshProgressBar(firstValue, secondValue)
+	local listScrollParam = self.viewContainer:getListScrollParam()
+	local stage = self._curStage
+	local maxValue = self._maxValue
+	local firstStep = self._goprefabInstX
+	local firstWidth, maxWidth = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(stage, firstValue, listScrollParam, firstStep, 0, 0)
 
-	recthelper.setWidth(arg_18_0._imageSliderBGTran, var_18_5)
-	recthelper.setWidth(arg_18_0._imageSliderFG1Tran, var_18_4)
+	recthelper.setWidth(self._imageSliderBGTran, maxWidth)
+	recthelper.setWidth(self._imageSliderFG1Tran, firstWidth)
 
-	local var_18_6 = var_18_4
+	local secondWidth = firstWidth
 
-	if arg_18_2 then
-		local var_18_7 = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(var_18_1, arg_18_2, var_18_0, var_18_3, 0, 0)
+	if secondValue then
+		secondWidth = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(stage, secondValue, listScrollParam, firstStep, 0, 0)
 
-		recthelper.setWidth(arg_18_0._imageSliderFG2Tran, math.max(0, var_18_7 - var_18_4))
+		recthelper.setWidth(self._imageSliderFG2Tran, math.max(0, secondWidth - firstWidth))
 	end
 
-	arg_18_0:_refreshProgressBarPoints(arg_18_2 or arg_18_1)
-	arg_18_0:_refreshTxtTotalScore(arg_18_2 or arg_18_1, var_18_2)
+	self:_refreshProgressBarPoints(secondValue or firstValue)
+	self:_refreshTxtTotalScore(secondValue or firstValue, maxValue)
 end
 
-function var_0_0._calcProgressBarWidth(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0.viewContainer:getListScrollParam()
-	local var_19_1 = arg_19_0._curStage
-	local var_19_2 = arg_19_0._goprefabInstX
-	local var_19_3, var_19_4 = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(var_19_1, arg_19_1, var_19_0, var_19_2, 0, 0)
-	local var_19_5 = var_19_3
+function V1a4_BossRush_ResultPanel:_calcProgressBarWidth(firstValue, secondValue)
+	local listScrollParam = self.viewContainer:getListScrollParam()
+	local stage = self._curStage
+	local firstStep = self._goprefabInstX
+	local firstWidth, maxWidth = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(stage, firstValue, listScrollParam, firstStep, 0, 0)
+	local secondWidth = firstWidth
 
-	if arg_19_2 then
-		var_19_5 = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(var_19_1, arg_19_2, var_19_0, var_19_2, 0, 0)
+	if secondValue then
+		secondWidth = BossRushConfig.instance:calcStageRewardProgWidthByListScrollParam(stage, secondValue, listScrollParam, firstStep, 0, 0)
 	end
 
-	return var_19_3, var_19_5, var_19_4
+	return firstWidth, secondWidth, maxWidth
 end
 
-function var_0_0._deleteTweens(arg_20_0)
-	GameUtil.onDestroyViewMember_TweenId(arg_20_0, "_progressBar1TweenId")
-	GameUtil.onDestroyViewMember_TweenId(arg_20_0, "_progressBar2TweenId")
-	GameUtil.onDestroyViewMember_TweenId(arg_20_0, "_txtTotalScoreTweenId")
+function V1a4_BossRush_ResultPanel:_deleteTweens()
+	GameUtil.onDestroyViewMember_TweenId(self, "_progressBar1TweenId")
+	GameUtil.onDestroyViewMember_TweenId(self, "_progressBar2TweenId")
+	GameUtil.onDestroyViewMember_TweenId(self, "_txtTotalScoreTweenId")
 end
 
-function var_0_0._progressBarTween(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0._maxValue
+function V1a4_BossRush_ResultPanel:_progressBarTween(firstValue, secondValue)
+	local maxTo = self._maxValue
 
-	arg_21_0:_deleteTweens()
+	self:_deleteTweens()
 
-	local var_21_1, var_21_2, var_21_3 = arg_21_0:_calcProgressBarWidth(arg_21_1, arg_21_2)
-	local var_21_4 = math.max(0, var_21_2 - var_21_1)
-	local var_21_5
-	local var_21_6
+	local firstWidth, secondWidth, maxWidth = self:_calcProgressBarWidth(firstValue, secondValue)
+	local progressBar2To = math.max(0, secondWidth - firstWidth)
+	local from, to
 
-	recthelper.setWidth(arg_21_0._imageSliderBGTran, var_21_3)
+	recthelper.setWidth(self._imageSliderBGTran, maxWidth)
 
-	local var_21_7 = recthelper.getWidth(arg_21_0._imageSliderFG1Tran)
-	local var_21_8 = var_21_1
+	from = recthelper.getWidth(self._imageSliderFG1Tran)
+	to = firstWidth
 
-	if math.abs(var_21_7 - var_21_8) > 0.1 and var_21_7 < var_21_0 then
-		arg_21_0._progressBar1TweenId = ZProj.TweenHelper.DOTweenFloat(var_21_7, var_21_8, var_0_3, arg_21_0._progressBar1TweenUpdateCb, arg_21_0._progressBar1TweenEndCb, arg_21_0, nil, EaseType.OutQuad)
+	if math.abs(from - to) > 0.1 and from < maxTo then
+		self._progressBar1TweenId = ZProj.TweenHelper.DOTweenFloat(from, to, kTweenSecond, self._progressBar1TweenUpdateCb, self._progressBar1TweenEndCb, self, nil, EaseType.OutQuad)
 
 		AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.play_ui_qiutu_progress_loop)
 	end
 
-	if arg_21_2 then
-		var_21_7 = recthelper.getWidth(arg_21_0._imageSliderFG2Tran)
-		var_21_8 = var_21_4
+	if secondValue then
+		from = recthelper.getWidth(self._imageSliderFG2Tran)
+		to = progressBar2To
 
-		if math.abs(var_21_7 - var_21_8) > 0.1 and var_21_7 < var_21_0 then
-			arg_21_0._progressBar2TweenId = ZProj.TweenHelper.DOTweenFloat(var_21_7, var_21_8, var_0_3, arg_21_0._progressBar2TweenUpdateCb, arg_21_0._progressBar2TweenEndCb, arg_21_0, nil, EaseType.OutQuad)
+		if math.abs(from - to) > 0.1 and from < maxTo then
+			self._progressBar2TweenId = ZProj.TweenHelper.DOTweenFloat(from, to, kTweenSecond, self._progressBar2TweenUpdateCb, self._progressBar2TweenEndCb, self, nil, EaseType.OutQuad)
 
 			AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.play_ui_qiutu_progress_loop)
 		end
 	end
 
-	if not arg_21_2 then
-		var_21_7 = arg_21_0._lastValue
-		var_21_8 = arg_21_1
+	if not secondValue then
+		from = self._lastValue
+		to = firstValue
 	else
-		var_21_7 = arg_21_1
-		var_21_8 = arg_21_2
+		from = firstValue
+		to = secondValue
 	end
 
-	arg_21_0._txtTotalScoreTweenId = ZProj.TweenHelper.DOTweenFloat(var_21_7, var_21_8, var_0_3, arg_21_0._txtTotalScoreTweenUpdateCb, nil, arg_21_0, nil, EaseType.OutQuad)
+	self._txtTotalScoreTweenId = ZProj.TweenHelper.DOTweenFloat(from, to, kTweenSecond, self._txtTotalScoreTweenUpdateCb, nil, self, nil, EaseType.OutQuad)
 
-	arg_21_0:_refreshProgressBarPoints(arg_21_2 or arg_21_1)
+	self:_refreshProgressBarPoints(secondValue or firstValue)
 end
 
-function var_0_0._updateContentPosX(arg_22_0)
-	local var_22_0 = arg_22_0._viewportWidth * 0.5
-	local var_22_1 = recthelper.getWidth(arg_22_0._imageSliderFG1Tran)
-	local var_22_2 = recthelper.getWidth(arg_22_0._imageSliderFG2Tran)
-	local var_22_3 = recthelper.getWidth(arg_22_0._scrollprogressContentTran)
-	local var_22_4 = math.max(0, var_22_3 - arg_22_0._viewportWidth)
-	local var_22_5 = var_22_1 + var_22_2
-	local var_22_6 = -math.min(var_22_4, var_22_5 < var_22_0 and 0 or var_22_5 - var_22_0)
-	local var_22_7 = recthelper.getAnchorX(arg_22_0._scrollprogressContentTran)
+function V1a4_BossRush_ResultPanel:_updateContentPosX()
+	local offset = self._viewportWidth * 0.5
+	local firstWidth = recthelper.getWidth(self._imageSliderFG1Tran)
+	local secondWidth = recthelper.getWidth(self._imageSliderFG2Tran)
+	local maxWidth = recthelper.getWidth(self._scrollprogressContentTran)
+	local maxPosX = math.max(0, maxWidth - self._viewportWidth)
+	local progPosX = firstWidth + secondWidth
+	local newPosX = -math.min(maxPosX, progPosX < offset and 0 or progPosX - offset)
+	local nowPoxX = recthelper.getAnchorX(self._scrollprogressContentTran)
 
-	if math.abs(var_22_6 - var_22_7) < 0.1 then
+	if math.abs(newPosX - nowPoxX) < 0.1 then
 		return
 	end
 
-	recthelper.setAnchorX(arg_22_0._scrollprogressContentTran, var_22_6)
+	recthelper.setAnchorX(self._scrollprogressContentTran, newPosX)
 end
 
-function var_0_0._progressBar1TweenUpdateCb(arg_23_0, arg_23_1)
-	recthelper.setWidth(arg_23_0._imageSliderFG1Tran, arg_23_1)
-	arg_23_0:_updateContentPosX()
+function V1a4_BossRush_ResultPanel:_progressBar1TweenUpdateCb(value)
+	recthelper.setWidth(self._imageSliderFG1Tran, value)
+	self:_updateContentPosX()
 end
 
-function var_0_0._progressBar1TweenEndCb(arg_24_0)
+function V1a4_BossRush_ResultPanel:_progressBar1TweenEndCb()
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.stop_ui_qiutu_progress_loop)
 end
 
-function var_0_0._progressBar2TweenUpdateCb(arg_25_0, arg_25_1)
-	recthelper.setWidth(arg_25_0._imageSliderFG2Tran, arg_25_1)
-	arg_25_0:_updateContentPosX()
+function V1a4_BossRush_ResultPanel:_progressBar2TweenUpdateCb(value)
+	recthelper.setWidth(self._imageSliderFG2Tran, value)
+	self:_updateContentPosX()
 end
 
-function var_0_0._progressBar2TweenEndCb(arg_26_0)
+function V1a4_BossRush_ResultPanel:_progressBar2TweenEndCb()
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.stop_ui_qiutu_progress_loop)
 end
 
-function var_0_0._txtTotalScoreTweenUpdateCb(arg_27_0, arg_27_1)
-	arg_27_1 = math.modf(arg_27_1)
+function V1a4_BossRush_ResultPanel:_txtTotalScoreTweenUpdateCb(value)
+	value = math.modf(value)
 
-	arg_27_0:_refreshTxtTotalScore(arg_27_1, arg_27_0._maxValue)
+	self:_refreshTxtTotalScore(value, self._maxValue)
 end
 
-function var_0_0._refreshProgressBarPoints(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0._curStage
-	local var_28_1 = BossRushModel.instance:getResultPanelProgressBarPointList(var_28_0, arg_28_1)
+function V1a4_BossRush_ResultPanel:_refreshProgressBarPoints(curPoint)
+	local stage = self._curStage
+	local dataList = BossRushModel.instance:getResultPanelProgressBarPointList(stage, curPoint)
 
-	V1a4_BossRush_ResultPanelListModel.instance:setList(var_28_1)
+	V1a4_BossRush_ResultPanelListModel.instance:setList(dataList)
 end
 
-function var_0_0._onReceiveAct128DoublePointRequestReply(arg_29_0, arg_29_1)
-	gohelper.setActive(arg_29_0._goconfirm, true)
-	gohelper.setActive(arg_29_0._goask, false)
-	arg_29_0:_progressBarTween(arg_29_0._firstValue, arg_29_1)
+function V1a4_BossRush_ResultPanel:_onReceiveAct128DoublePointRequestReply(totalPoint)
+	gohelper.setActive(self._goconfirm, true)
+	gohelper.setActive(self._goask, false)
+	self:_progressBarTween(self._firstValue, totalPoint)
 end
 
-function var_0_0._refreshDetailScore(arg_30_0)
-	arg_30_0._txttotal.text = formatLuaLang("v1a4_bossrush_resultpanel_txt_total", BossRushModel.instance:getFightScore())
+function V1a4_BossRush_ResultPanel:_refreshDetailScore()
+	self._txttotal.text = formatLuaLang("v1a4_bossrush_resultpanel_txt_total", BossRushModel.instance:getFightScore())
 
-	local var_30_0 = BossRushModel.instance:getStageScore(arg_30_0._curStage, arg_30_0._curLayer)
-	local var_30_1 = #var_30_0
+	local stageScore = BossRushModel.instance:getStageScore(self._curStage, self._curLayer)
+	local stageCount = #stageScore
 
-	if not arg_30_0._itemsetailScore then
-		arg_30_0._itemsetailScore = arg_30_0:getUserDataTb_()
+	if not self._itemsetailScore then
+		self._itemsetailScore = self:getUserDataTb_()
 	end
 
-	for iter_30_0, iter_30_1 in ipairs(var_30_0) do
-		if iter_30_0 > #arg_30_0._itemsetailScore then
-			local var_30_2 = gohelper.cloneInPlace(arg_30_0._goscore)
+	for i, v in ipairs(stageScore) do
+		if i > #self._itemsetailScore then
+			local item = gohelper.cloneInPlace(self._goscore)
 
-			arg_30_0._itemsetailScore[iter_30_0] = var_30_2
+			self._itemsetailScore[i] = item
 		end
 
-		local var_30_3 = gohelper.findChildText(arg_30_0._itemsetailScore[iter_30_0], "#txt_score")
-		local var_30_4 = luaLang("p_v1a4_bossrush_resultpanel_txt_bosslosehp")
+		local txt = gohelper.findChildText(self._itemsetailScore[i], "#txt_score")
+		local desc = luaLang("p_v1a4_bossrush_resultpanel_txt_bosslosehp")
 
-		var_30_3.text = string.format(var_30_4, iter_30_0, iter_30_1)
+		txt.text = string.format(desc, i, v)
 	end
 
-	for iter_30_2, iter_30_3 in ipairs(arg_30_0._itemsetailScore) do
-		gohelper.setActive(iter_30_3, iter_30_2 <= var_30_1)
+	for i, v in ipairs(self._itemsetailScore) do
+		gohelper.setActive(v, i <= stageCount)
 	end
 end
 
-function var_0_0._onCompleteOpenStart(arg_31_0)
+function V1a4_BossRush_ResultPanel:_onCompleteOpenStart()
 	AudioMgr.instance:trigger(AudioEnum.ui_settleaccounts.play_ui_settleaccounts_win)
 end
 
-function var_0_0._onOpenEnd(arg_32_0)
-	arg_32_0:_refresh()
+function V1a4_BossRush_ResultPanel:_onOpenEnd()
+	self:_refresh()
 end
 
-function var_0_0._setActiveDetail(arg_33_0, arg_33_1)
-	if arg_33_1 then
-		local var_33_0, var_33_1 = recthelper.getAnchor(arg_33_0._goDetailsRootXYTran)
+function V1a4_BossRush_ResultPanel:_setActiveDetail(isActive)
+	if isActive then
+		local x, y = recthelper.getAnchor(self._goDetailsRootXYTran)
 
-		recthelper.setAnchor(arg_33_0._goDetailsRootTran, var_33_0, var_33_1)
+		recthelper.setAnchor(self._goDetailsRootTran, x, y)
 	end
 
-	gohelper.setActive(arg_33_0._goDetailsRoot, arg_33_1)
+	gohelper.setActive(self._goDetailsRoot, isActive)
 end
 
-return var_0_0
+return V1a4_BossRush_ResultPanel

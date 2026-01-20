@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_turnback", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_turnback.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_turnback", package.seeall)
+
+local lua_turnback = {}
+local fields = {
 	endStory = 8,
 	name = 3,
 	offlineDays = 4,
@@ -12,30 +14,32 @@ local var_0_1 = {
 	durationDays = 6,
 	endTime = 20,
 	additionChapterIds = 15,
-	buyDoubleBonusPrice = 22,
+	buyDoubleBonusPrice = 23,
 	bindActivityId = 2,
 	taskBonusMailId = 9,
 	startStory = 7,
-	canBuyDoubleBonus = 21,
-	bonusList = 23,
+	canBuyDoubleBonus = 22,
+	buyBonus = 24,
 	jumpId = 16,
 	priority = 17,
-	onlineDurationDays = 24,
+	onlineDurationDays = 26,
+	bonusList = 25,
 	additionDurationDays = 12,
 	condition = 5,
 	onceBonus = 11,
+	openDailyBonus = 21,
 	id = 1,
 	subModuleIds = 10
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_turnback.onLoad(json)
+	lua_turnback.configList, lua_turnback.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_turnback

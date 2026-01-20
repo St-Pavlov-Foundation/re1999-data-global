@@ -1,17 +1,19 @@
-﻿module("modules.logic.character.view.CharacterSkinFullScreenViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSkinFullScreenViewContainer.lua
 
-local var_0_0 = class("CharacterSkinFullScreenViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterSkinFullScreenViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterSkinFullScreenViewContainer = class("CharacterSkinFullScreenViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
-	table.insert(var_1_0, CharacterSkinFullScreenView.New())
+function CharacterSkinFullScreenViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+	table.insert(views, CharacterSkinFullScreenView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function CharacterSkinFullScreenViewContainer:buildTabViews(tabContainerId)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -21,14 +23,14 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	}
 end
 
-function var_0_0.playOpenTransition(arg_3_0)
+function CharacterSkinFullScreenViewContainer:playOpenTransition()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	var_0_0.super.playOpenTransition(arg_3_0)
+	CharacterSkinFullScreenViewContainer.super.playOpenTransition(self)
 end
 
-function var_0_0.onPlayOpenTransitionFinish(arg_4_0)
+function CharacterSkinFullScreenViewContainer:onPlayOpenTransitionFinish()
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
-	var_0_0.super.onPlayOpenTransitionFinish(arg_4_0)
+	CharacterSkinFullScreenViewContainer.super.onPlayOpenTransitionFinish(self)
 end
 
-return var_0_0
+return CharacterSkinFullScreenViewContainer

@@ -1,102 +1,108 @@
-﻿module("modules.logic.fight.system.work.FightWorkDissolveCardForDeadVersion0", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDissolveCardForDeadVersion0.lua
 
-local var_0_0 = class("FightWorkDissolveCardForDeadVersion0", BaseWork)
+module("modules.logic.fight.system.work.FightWorkDissolveCardForDeadVersion0", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.actEffectData = arg_1_1
+local FightWorkDissolveCardForDeadVersion0 = class("FightWorkDissolveCardForDeadVersion0", BaseWork)
+
+function FightWorkDissolveCardForDeadVersion0:ctor(actEffectData)
+	self.actEffectData = actEffectData
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
+function FightWorkDissolveCardForDeadVersion0:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 0.5)
 
-	local var_2_0 = arg_2_0.actEffectData.targetId
-	local var_2_1 = FightHelper.getEntity(var_2_0)
+	local entityId = self.actEffectData.targetId
+	local entity = FightHelper.getEntity(entityId)
 
-	if not var_2_1 then
-		arg_2_0:onDone(true)
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	if var_2_1:getMO() then
-		local var_2_2 = arg_2_0:_calcRemoveCard(var_2_0)
+	local entity_mo = entity:getMO()
 
-		if var_2_2 then
-			arg_2_0:_removeCard(var_2_2)
+	if entity_mo then
+		local removeIndexes = self:_calcRemoveCard(entityId)
+
+		if removeIndexes then
+			self:_removeCard(removeIndexes)
 
 			return
 		end
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._removeCard(arg_3_0, arg_3_1)
-	arg_3_0._needRemoveCard = true
-	arg_3_0._revertVisible = true
+function FightWorkDissolveCardForDeadVersion0:_removeCard(removeIndexes)
+	self._needRemoveCard = true
+	self._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	local var_3_0 = FightDataHelper.handCardMgr.handCard
-	local var_3_1 = #var_3_0
+	local cards = FightDataHelper.handCardMgr.handCard
+	local oldCount = #cards
 
-	table.sort(arg_3_1, FightWorkCardRemove2.sort)
+	table.sort(removeIndexes, FightWorkCardRemove2.sort)
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		table.remove(var_3_0, iter_3_1)
+	for i, v in ipairs(removeIndexes) do
+		table.remove(cards, v)
 	end
 
-	local var_3_2 = 0.033
-	local var_3_3 = 1.2 + var_3_2 * 7 + 3 * var_3_2 * (var_3_1 - #arg_3_1)
+	local dt = 0.033
+	local delayTime = 1.2 + dt * 7 + 3 * dt * (oldCount - #removeIndexes)
 
-	if FightCardDataHelper.canCombineCardListForPerformance(var_3_0) then
-		TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
-		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 10)
-		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_3_0._onCombineDone, arg_3_0)
-		FightController.instance:dispatchEvent(FightEvent.CardRemove, arg_3_1, var_3_3, true)
+	if FightCardDataHelper.canCombineCardListForPerformance(cards) then
+		TaskDispatcher.cancelTask(self._delayDone, self)
+		TaskDispatcher.runDelay(self._delayDone, self, 10)
+		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, self._onCombineDone, self)
+		FightController.instance:dispatchEvent(FightEvent.CardRemove, removeIndexes, delayTime, true)
 	else
-		TaskDispatcher.runDelay(arg_3_0._delayAfterPerformance, arg_3_0, var_3_3 / FightModel.instance:getUISpeed())
-		FightController.instance:dispatchEvent(FightEvent.CardRemove, arg_3_1)
+		TaskDispatcher.runDelay(self._delayAfterPerformance, self, delayTime / FightModel.instance:getUISpeed())
+		FightController.instance:dispatchEvent(FightEvent.CardRemove, removeIndexes)
 	end
 end
 
-function var_0_0._onCombineDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightWorkDissolveCardForDeadVersion0:_onCombineDone()
+	self:onDone(true)
 end
 
-function var_0_0._delayDone(arg_5_0)
+function FightWorkDissolveCardForDeadVersion0:_delayDone()
 	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-	arg_5_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._delayAfterPerformance(arg_6_0)
-	arg_6_0:onDone(true)
+function FightWorkDissolveCardForDeadVersion0:_delayAfterPerformance()
+	self:onDone(true)
 end
 
-function var_0_0._calcRemoveCard(arg_7_0, arg_7_1)
-	local var_7_0 = FightDataHelper.handCardMgr.handCard
-	local var_7_1
+function FightWorkDissolveCardForDeadVersion0:_calcRemoveCard(entityId)
+	local cards = FightDataHelper.handCardMgr.handCard
+	local dissolveCardIndexs
 
-	for iter_7_0 = #var_7_0, 1, -1 do
-		if var_7_0[iter_7_0].uid == arg_7_1 then
-			var_7_1 = var_7_1 or {}
+	for i = #cards, 1, -1 do
+		local cardInfo = cards[i]
 
-			table.insert(var_7_1, iter_7_0)
+		if cardInfo.uid == entityId then
+			dissolveCardIndexs = dissolveCardIndexs or {}
+
+			table.insert(dissolveCardIndexs, i)
 		end
 	end
 
-	return var_7_1
+	return dissolveCardIndexs
 end
 
-function var_0_0.clearWork(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._delayDone, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._delayAfterPerformance, arg_8_0)
+function FightWorkDissolveCardForDeadVersion0:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	TaskDispatcher.cancelTask(self._delayAfterPerformance, self)
 
-	if arg_8_0._needRemoveCard and arg_8_0._revertVisible then
+	if self._needRemoveCard and self._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_8_0._onCombineDone, arg_8_0)
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onCombineDone, self)
 end
 
-return var_0_0
+return FightWorkDissolveCardForDeadVersion0

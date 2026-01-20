@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryEyeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/dungeonboss/view/VersionActivity2_8BossStoryEyeViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_8BossStoryEyeViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.dungeonboss.view.VersionActivity2_8BossStoryEyeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity2_8BossStoryEyeViewContainer = class("VersionActivity2_8BossStoryEyeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity2_8BossStoryEyeView.New())
+function VersionActivity2_8BossStoryEyeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity2_8BossStoryEyeView.New())
+
+	return views
 end
 
-return var_0_0
+return VersionActivity2_8BossStoryEyeViewContainer

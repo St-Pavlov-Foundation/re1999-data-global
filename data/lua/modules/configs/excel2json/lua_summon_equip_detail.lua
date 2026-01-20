@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_summon_equip_detail", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_summon_equip_detail.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_summon_equip_detail", package.seeall)
+
+local lua_summon_equip_detail = {}
+local fields = {
 	texture = 4,
 	texturePoster = 5,
 	equipId = 3,
@@ -9,13 +11,13 @@ local var_0_1 = {
 	id = 1,
 	poolId = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_summon_equip_detail.onLoad(json)
+	lua_summon_equip_detail.configList, lua_summon_equip_detail.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_summon_equip_detail

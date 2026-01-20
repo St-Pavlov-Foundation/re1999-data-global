@@ -1,6 +1,8 @@
-﻿module("projbooter.config.BooterLanguageConfig", package.seeall)
+﻿-- chunkname: @projbooter/config/BooterLanguageConfig.lua
 
-local var_0_0 = {
+module("projbooter.config.BooterLanguageConfig", package.seeall)
+
+local BooterLanguageConfig = {
 	hotupdate = {
 		jp = "更新チェック中",
 		de = "",
@@ -980,15 +982,45 @@ local var_0_0 = {
 		fr = "",
 		thai = "",
 		en = "Verifying resources ..."
+	},
+	switch_zip = {
+		jp = "DLモード切替",
+		de = "",
+		zh = "切换下载模式",
+		tw = "切換下載模式",
+		kr = "다운로드 모드 전환",
+		fr = "",
+		thai = "",
+		en = "Switch Download Mode"
+	},
+	switch_zip_tips = {
+		jp = "ダウンロードモードを切り替えると、ゲームが再起動し、すべてのリソースを再ダウンロードすることになります。切り替えますか？",
+		de = "",
+		zh = "切换下载模式将重启游戏并重新下载所有游戏资源，是否继续？",
+		tw = "切換下載模式將重啟遊戲並重新下載所有遊戲資源，是否繼續？",
+		kr = "다운로드 모드를 변경하면 게임이 재시작되며, 모든 리소스를 다시 다운로드합니다. 계속하시겠습니까?",
+		fr = "",
+		thai = "",
+		en = "Switching the download mode will restart the game and re-download all resources. Continue?"
+	},
+	mass_download_fail_other_switch = {
+		jp = "%s\nリソースのダウンロードに失敗しました。再試行するか、ダウンロードモードを切り替えてからもう一度お試しください。",
+		de = "",
+		zh = "%s\n下载资源失败，请尝试重新下载或切换下载模式",
+		tw = "%s\n下載資源失敗，請嘗試重新下載或切換下載模式",
+		kr = "%s\n리소스 다운로드 실패. 다시 시도하시거나 다운로드 모드를 변경해 주세요.",
+		fr = "",
+		thai = "",
+		en = "%s\nDownload failed. Please redownload or try a different download mode."
 	}
 }
 
-function booterLang(arg_1_0)
-	local var_1_0 = GameConfig:GetCurLangShortcut()
+function booterLang(key)
+	local shortcut = GameConfig:GetCurLangShortcut()
 
-	return var_0_0[arg_1_0][var_1_0]
+	return BooterLanguageConfig[key][shortcut]
 end
 
 setGlobal("booterLang", booterLang)
 
-return var_0_0
+return BooterLanguageConfig

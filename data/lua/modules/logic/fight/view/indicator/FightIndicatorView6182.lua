@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.view.indicator.FightIndicatorView6182", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/indicator/FightIndicatorView6182.lua
 
-local var_0_0 = class("FightIndicatorView6182", FightIndicatorView)
+module("modules.logic.fight.view.indicator.FightIndicatorView6182", package.seeall)
 
-function var_0_0.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.initView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local FightIndicatorView6182 = class("FightIndicatorView6182", FightIndicatorView)
 
-	arg_1_0.totalIndicatorNum = 3
+function FightIndicatorView6182:initView(indicatorMgrView, indicatorId, totalIndicatorNum)
+	FightIndicatorView6182.super.initView(self, indicatorMgrView, indicatorId, totalIndicatorNum)
+
+	self.totalIndicatorNum = 3
 end
 
-function var_0_0.getCardConfig(arg_2_0)
-	return Season123Config.instance:getSeasonEquipCo(arg_2_0:getCardId())
+function FightIndicatorView6182:getCardConfig()
+	return Season123Config.instance:getSeasonEquipCo(self:getCardId())
 end
 
-function var_0_0.getCardId(arg_3_0)
+function FightIndicatorView6182:getCardId()
 	return 180041
 end
 
-return var_0_0
+return FightIndicatorView6182

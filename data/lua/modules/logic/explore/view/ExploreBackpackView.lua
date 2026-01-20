@@ -1,92 +1,94 @@
-﻿module("modules.logic.explore.view.ExploreBackpackView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBackpackView.lua
 
-local var_0_0 = class("ExploreBackpackView", BaseView)
+module("modules.logic.explore.view.ExploreBackpackView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
-	arg_1_0._gohasprop = gohelper.findChild(arg_1_0.viewGO, "#go_hasprop")
-	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
-	arg_1_0._propcontent = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_prop/viewport/propcontent")
+local ExploreBackpackView = class("ExploreBackpackView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ExploreBackpackView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self._gohasprop = gohelper.findChild(self.viewGO, "#go_hasprop")
+	self._scrollprop = gohelper.findChildScrollRect(self.viewGO, "#scroll_prop")
+	self._propcontent = gohelper.findChild(self.viewGO, "mask/#scroll_prop/viewport/propcontent")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(ExploreController.instance, ExploreEvent.OnItemChange, arg_2_0._updateItem, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, arg_2_0.OnItemKeyDown, arg_2_0)
+function ExploreBackpackView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(ExploreController.instance, ExploreEvent.OnItemChange, self._updateItem, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, self.OnItemKeyDown, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(ExploreController.instance, ExploreEvent.OnItemChange, arg_3_0._updateItem, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, arg_3_0.OnItemKeyDown, arg_3_0)
+function ExploreBackpackView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(ExploreController.instance, ExploreEvent.OnItemChange, self._updateItem, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyThirdDoorItemSelect, self.OnItemKeyDown, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function ExploreBackpackView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.itemList = {}
+function ExploreBackpackView:_editableInitView()
+	self.itemList = {}
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:_updateItem()
+function ExploreBackpackView:onOpen()
+	self:_updateItem()
 end
 
-function var_0_0._updateItem(arg_7_0)
-	local var_7_0 = ExploreBackpackModel.instance:getList()
-	local var_7_1 = arg_7_0.viewContainer:getSetting().otherRes[1]
+function ExploreBackpackView:_updateItem()
+	local items = ExploreBackpackModel.instance:getList()
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_2 = arg_7_0.itemList[iter_7_0]
+	for i, v in ipairs(items) do
+		local item = self.itemList[i]
 
-		if var_7_2 == nil then
-			local var_7_3 = arg_7_0:getResInst(var_7_1, arg_7_0._propcontent, "item")
+		if item == nil then
+			local itemGO = self:getResInst(path, self._propcontent, "item")
 
-			var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_3, ExploreBackpackPropListItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, ExploreBackpackPropListItem)
 		end
 
-		gohelper.setActive(var_7_2.go, true)
-		var_7_2:onUpdateMO(iter_7_1)
+		gohelper.setActive(item.go, true)
+		item:onUpdateMO(v)
 
-		arg_7_0.itemList[iter_7_0] = var_7_2
+		self.itemList[i] = item
 
-		local var_7_4 = gohelper.findChild(var_7_2.go, "#go_pcbtn")
+		local keytipsGo = gohelper.findChild(item.go, "#go_pcbtn")
 
-		PCInputController.instance:showkeyTips(var_7_4, PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.Item1 + iter_7_0 - 1)
+		PCInputController.instance:showkeyTips(keytipsGo, PCInputModel.Activity.thrityDoor, PCInputModel.thrityDoorFun.Item1 + i - 1)
 	end
 
-	for iter_7_2 = #var_7_0 + 1, #arg_7_0.itemList do
-		gohelper.setActive(arg_7_0.itemList[iter_7_2].go, false)
+	for i = #items + 1, #self.itemList do
+		gohelper.setActive(self.itemList[i].go, false)
 	end
 
-	gohelper.setActive(arg_7_0._goempty, #var_7_0 == 0)
-	gohelper.setActive(arg_7_0._gohasprop, #var_7_0 > 0)
+	gohelper.setActive(self._goempty, #items == 0)
+	gohelper.setActive(self._gohasprop, #items > 0)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.itemList) do
-		iter_8_1:onDestroyView()
+function ExploreBackpackView:onDestroyView()
+	for i, v in ipairs(self.itemList) do
+		v:onDestroyView()
 	end
 
-	arg_8_0.itemList = nil
+	self.itemList = nil
 end
 
-function var_0_0.OnItemKeyDown(arg_9_0, arg_9_1)
+function ExploreBackpackView:OnItemKeyDown(index)
 	if PCInputController.instance:isPopUpViewOpen({
 		ViewName.ExploreBackpackView
 	}) then
 		return
 	end
 
-	if arg_9_0.itemList[arg_9_1] then
-		arg_9_0.itemList[arg_9_1]:_onItemClick()
+	if self.itemList[index] then
+		self.itemList[index]:_onItemClick()
 	end
 end
 
-return var_0_0
+return ExploreBackpackView

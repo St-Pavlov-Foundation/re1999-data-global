@@ -1,113 +1,119 @@
-﻿module("modules.logic.scene.fight.comp.FightSceneSpecialIdleMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/comp/FightSceneSpecialIdleMgr.lua
 
-local var_0_0 = class("FightSceneSpecialIdleMgr", BaseSceneComp)
+module("modules.logic.scene.fight.comp.FightSceneSpecialIdleMgr", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	FightController.instance:registerCallback(FightEvent.StageChanged, arg_1_0.onStageChange, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.PlaySpecialIdle, arg_1_0._onPlaySpecialIdle, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnEntityDead, arg_1_0._releaseEntity, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._releaseAllEntity, arg_1_0)
+local FightSceneSpecialIdleMgr = class("FightSceneSpecialIdleMgr", BaseSceneComp)
 
-	arg_1_0._entity_dic = {}
-	arg_1_0._play_dic = {}
+function FightSceneSpecialIdleMgr:onSceneStart(sceneId, levelId)
+	FightController.instance:registerCallback(FightEvent.StageChanged, self.onStageChange, self)
+	FightController.instance:registerCallback(FightEvent.PlaySpecialIdle, self._onPlaySpecialIdle, self)
+	FightController.instance:registerCallback(FightEvent.OnEntityDead, self._releaseEntity, self)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntity, self)
+
+	self._entity_dic = {}
+	self._play_dic = {}
 end
 
-function var_0_0.onSceneClose(arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.PlaySpecialIdle, arg_2_0._onPlaySpecialIdle, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnEntityDead, arg_2_0._releaseEntity, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_2_0._releaseAllEntity, arg_2_0)
-	arg_2_0:_releaseAllEntity()
+function FightSceneSpecialIdleMgr:onSceneClose()
+	FightController.instance:unregisterCallback(FightEvent.StageChanged, self.onStageChange, self)
+	FightController.instance:unregisterCallback(FightEvent.PlaySpecialIdle, self._onPlaySpecialIdle, self)
+	FightController.instance:unregisterCallback(FightEvent.OnEntityDead, self._releaseEntity, self)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntity, self)
+	self:_releaseAllEntity()
 
-	arg_2_0._entity_dic = nil
-	arg_2_0._play_dic = nil
+	self._entity_dic = nil
+	self._play_dic = nil
 end
 
-function var_0_0.onStageChange(arg_3_0, arg_3_1)
-	if arg_3_1 == FightStageMgr.StageType.Operate then
-		local var_3_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+function FightSceneSpecialIdleMgr:onStageChange(stageType)
+	if stageType == FightStageMgr.StageType.Operate then
+		local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-			if iter_3_1.spine then
-				local var_3_1 = iter_3_1:getMO()
+		for _, entity in ipairs(entityList) do
+			if entity.spine then
+				local entity_mo = entity:getMO()
 
-				if var_0_0.Condition[var_3_1.modelId] then
-					if not arg_3_0._entity_dic[var_3_1.id] then
-						arg_3_0._entity_dic[var_3_1.id] = _G["EntitySpecialIdle" .. var_0_0.Condition[var_3_1.modelId]].New(iter_3_1)
+				if FightSceneSpecialIdleMgr.Condition[entity_mo.modelId] then
+					if not self._entity_dic[entity_mo.id] then
+						self._entity_dic[entity_mo.id] = _G["EntitySpecialIdle" .. FightSceneSpecialIdleMgr.Condition[entity_mo.modelId]].New(entity)
 					end
 
-					if arg_3_0._entity_dic[var_3_1.id].detectState then
-						arg_3_0._entity_dic[var_3_1.id]:detectState()
+					if self._entity_dic[entity_mo.id].detectState then
+						self._entity_dic[entity_mo.id]:detectState()
 					end
 				end
 			end
 		end
 
-		arg_3_0:_detectCanPlay()
+		self:_detectCanPlay()
 	end
 end
 
-function var_0_0._detectCanPlay(arg_4_0)
-	if arg_4_0._play_dic then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0._play_dic) do
-			local var_4_0 = FightHelper.getEntity(iter_4_1)
+function FightSceneSpecialIdleMgr:_detectCanPlay()
+	if self._play_dic then
+		for k, v in pairs(self._play_dic) do
+			local tar_entity = FightHelper.getEntity(v)
 
-			if var_4_0 then
-				local var_4_1 = lua_skin_special_act.configDict[var_4_0:getMO().modelId]
+			if tar_entity then
+				local config = lua_skin_special_act.configDict[tar_entity:getMO().modelId]
 
-				if var_4_1 and math.random(0, 100) <= var_4_1.probability and var_4_0.spine.tryPlay and var_4_0.spine:tryPlay(SpineAnimState.idle_special1, var_4_1.loop == 1 and true) then
-					arg_4_0._entityPlayActName = arg_4_0._entityPlayActName or {}
-					arg_4_0._entityPlayActName[var_4_0.id] = FightHelper.processEntityActionName(var_4_0, SpineAnimState.idle_special1)
+				if config then
+					local num = math.random(0, 100)
 
-					var_4_0.spine:addAnimEventCallback(arg_4_0._onAnimEvent, arg_4_0, var_4_0)
+					if num <= config.probability and tar_entity.spine.tryPlay and tar_entity.spine:tryPlay(SpineAnimState.idle_special1, config.loop == 1 and true) then
+						self._entityPlayActName = self._entityPlayActName or {}
+						self._entityPlayActName[tar_entity.id] = FightHelper.processEntityActionName(tar_entity, SpineAnimState.idle_special1)
+
+						tar_entity.spine:addAnimEventCallback(self._onAnimEvent, self, tar_entity)
+					end
 				end
 			end
 		end
 	end
 
-	arg_4_0._play_dic = {}
+	self._play_dic = {}
 end
 
-function var_0_0._onAnimEvent(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	if arg_5_0._entityPlayActName and arg_5_2 == SpineAnimEvent.ActionComplete and arg_5_1 == arg_5_0._entityPlayActName[arg_5_4.id] then
-		arg_5_4.spine:removeAnimEventCallback(arg_5_0._onAnimEvent, arg_5_0)
-		arg_5_4:resetAnimState()
+function FightSceneSpecialIdleMgr:_onAnimEvent(actionName, eventName, eventArgs, tar_entity)
+	if self._entityPlayActName and eventName == SpineAnimEvent.ActionComplete and actionName == self._entityPlayActName[tar_entity.id] then
+		tar_entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		tar_entity:resetAnimState()
 	end
 end
 
-function var_0_0._onPlaySpecialIdle(arg_6_0, arg_6_1)
-	arg_6_0._play_dic[arg_6_1] = arg_6_1
+function FightSceneSpecialIdleMgr:_onPlaySpecialIdle(entity_id)
+	self._play_dic[entity_id] = entity_id
 end
 
-function var_0_0._releaseEntity(arg_7_0, arg_7_1)
-	if arg_7_0._entity_dic and arg_7_0._entity_dic[arg_7_1] then
-		if arg_7_0._entityPlayActName then
-			arg_7_0._entityPlayActName[arg_7_1] = nil
+function FightSceneSpecialIdleMgr:_releaseEntity(entity_id)
+	if self._entity_dic and self._entity_dic[entity_id] then
+		if self._entityPlayActName then
+			self._entityPlayActName[entity_id] = nil
 		end
 
-		arg_7_0._entity_dic[arg_7_1]:releaseSelf()
+		self._entity_dic[entity_id]:releaseSelf()
 
-		arg_7_0._entity_dic[arg_7_1] = nil
+		self._entity_dic[entity_id] = nil
 
-		local var_7_0 = FightHelper.getEntity(arg_7_1)
+		local tar_entity = FightHelper.getEntity(entity_id)
 
-		if var_7_0 and var_7_0.spine then
-			var_7_0.spine:removeAnimEventCallback(arg_7_0._onAnimEvent, arg_7_0)
-		end
-	end
-end
-
-function var_0_0._releaseAllEntity(arg_8_0)
-	if arg_8_0._entity_dic then
-		for iter_8_0, iter_8_1 in pairs(arg_8_0._entity_dic) do
-			arg_8_0:_releaseEntity(iter_8_1.id)
+		if tar_entity and tar_entity.spine then
+			tar_entity.spine:removeAnimEventCallback(self._onAnimEvent, self)
 		end
 	end
-
-	arg_8_0._play_dic = {}
 end
 
-var_0_0.Condition = {
+function FightSceneSpecialIdleMgr:_releaseAllEntity()
+	if self._entity_dic then
+		for k, v in pairs(self._entity_dic) do
+			self:_releaseEntity(v.id)
+		end
+	end
+
+	self._play_dic = {}
+end
+
+FightSceneSpecialIdleMgr.Condition = {
 	[3003] = 2,
 	[3025] = 6,
 	[3039] = 8,
@@ -120,4 +126,4 @@ var_0_0.Condition = {
 	[3007] = 4
 }
 
-return var_0_0
+return FightSceneSpecialIdleMgr

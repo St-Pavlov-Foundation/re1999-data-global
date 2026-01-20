@@ -1,32 +1,34 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerBonusScene", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerBonusScene.lua
 
-local var_0_0 = class("ExploreTriggerBonusScene", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerBonusScene", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = tonumber(arg_1_2.mo.specialDatas[1])
-	local var_1_1 = {
-		id = var_1_0,
-		unit = arg_1_2,
-		callBack = arg_1_0.onFinish,
-		callBackObj = arg_1_0
-	}
+local ExploreTriggerBonusScene = class("ExploreTriggerBonusScene", ExploreTriggerBase)
 
-	ViewMgr.instance:openView(ViewName.ExploreBonusSceneView, var_1_1)
+function ExploreTriggerBonusScene:handle(id, unit)
+	local id = tonumber(unit.mo.specialDatas[1])
+	local param = {}
+
+	param.id = id
+	param.unit = unit
+	param.callBack = self.onFinish
+	param.callBackObj = self
+
+	ViewMgr.instance:openView(ViewName.ExploreBonusSceneView, param)
 end
 
-function var_0_0.onFinish(arg_2_0, arg_2_1)
-	ExploreSimpleModel.instance:onGetBonus(tonumber(arg_2_0._unit.mo.specialDatas[1]), arg_2_1)
+function ExploreTriggerBonusScene:onFinish(options)
+	ExploreSimpleModel.instance:onGetBonus(tonumber(self._unit.mo.specialDatas[1]), options)
 
-	local var_2_0 = {
+	local stepData = {
 		stepType = ExploreEnum.StepType.BonusSceneClient
 	}
 
-	ExploreStepController.instance:insertClientStep(var_2_0, 1)
-	arg_2_0:sendTriggerRequest(table.concat(arg_2_1, "#"))
+	ExploreStepController.instance:insertClientStep(stepData, 1)
+	self:sendTriggerRequest(table.concat(options, "#"))
 end
 
-function var_0_0.clearWork(arg_3_0)
+function ExploreTriggerBonusScene:clearWork()
 	ViewMgr.instance:closeView(ViewName.ExploreBonusSceneView)
 end
 
-return var_0_0
+return ExploreTriggerBonusScene

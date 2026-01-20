@@ -1,397 +1,399 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyDungeonInteractView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyDungeonInteractView.lua
 
-local var_0_0 = class("OdysseyDungeonInteractView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyDungeonInteractView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnfullscreen = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_fullscreen")
-	arg_1_0._gooptionItem = gohelper.findChild(arg_1_0.viewGO, "#go_optionItem")
-	arg_1_0._godialogOptionItem = gohelper.findChild(arg_1_0.viewGO, "#go_dialogOptionItem")
-	arg_1_0._godialogPanel = gohelper.findChild(arg_1_0.viewGO, "#go_dialogPanel")
-	arg_1_0._goheroIcon = gohelper.findChild(arg_1_0.viewGO, "#go_dialogPanel/dialog/role/#go_heroIcon")
-	arg_1_0._imagedialogHero = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_dialogPanel/dialog/role/#go_heroIcon/#image_dialogHero")
-	arg_1_0._goname = gohelper.findChild(arg_1_0.viewGO, "#go_dialogPanel/dialog/role/#go_name")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_dialogPanel/dialog/role/#go_name/#txt_name")
-	arg_1_0._godialogOptionList = gohelper.findChild(arg_1_0.viewGO, "#go_dialogPanel/#go_dialogOptionList")
-	arg_1_0._gooptionPanel = gohelper.findChild(arg_1_0.viewGO, "#go_optionPanel")
-	arg_1_0._txtoptionTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_optionPanel/panel/title/#txt_optionTitle")
-	arg_1_0._txtoptionTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#go_optionPanel/panel/title/#txt_optionTitleEn")
-	arg_1_0._txtoptionDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_optionPanel/panel/#scroll_desc/Viewport/Content/#txt_optionDesc")
-	arg_1_0._gooption = gohelper.findChild(arg_1_0.viewGO, "#go_optionPanel/panel/#go_option")
-	arg_1_0._imagepicture = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_optionPanel/panel/#image_picture")
-	arg_1_0._gofightPanel = gohelper.findChild(arg_1_0.viewGO, "#go_fightPanel")
-	arg_1_0._goheroLevel = gohelper.findChild(arg_1_0.viewGO, "#go_heroLevel")
+local OdysseyDungeonInteractView = class("OdysseyDungeonInteractView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyDungeonInteractView:onInitView()
+	self._btnfullscreen = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_fullscreen")
+	self._gooptionItem = gohelper.findChild(self.viewGO, "#go_optionItem")
+	self._godialogOptionItem = gohelper.findChild(self.viewGO, "#go_dialogOptionItem")
+	self._godialogPanel = gohelper.findChild(self.viewGO, "#go_dialogPanel")
+	self._goheroIcon = gohelper.findChild(self.viewGO, "#go_dialogPanel/dialog/role/#go_heroIcon")
+	self._imagedialogHero = gohelper.findChildSingleImage(self.viewGO, "#go_dialogPanel/dialog/role/#go_heroIcon/#image_dialogHero")
+	self._goname = gohelper.findChild(self.viewGO, "#go_dialogPanel/dialog/role/#go_name")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_dialogPanel/dialog/role/#go_name/#txt_name")
+	self._godialogOptionList = gohelper.findChild(self.viewGO, "#go_dialogPanel/#go_dialogOptionList")
+	self._gooptionPanel = gohelper.findChild(self.viewGO, "#go_optionPanel")
+	self._txtoptionTitle = gohelper.findChildText(self.viewGO, "#go_optionPanel/panel/title/#txt_optionTitle")
+	self._txtoptionTitleEn = gohelper.findChildText(self.viewGO, "#go_optionPanel/panel/title/#txt_optionTitleEn")
+	self._txtoptionDesc = gohelper.findChildText(self.viewGO, "#go_optionPanel/panel/#scroll_desc/Viewport/Content/#txt_optionDesc")
+	self._gooption = gohelper.findChild(self.viewGO, "#go_optionPanel/panel/#go_option")
+	self._imagepicture = gohelper.findChildSingleImage(self.viewGO, "#go_optionPanel/panel/#image_picture")
+	self._gofightPanel = gohelper.findChild(self.viewGO, "#go_fightPanel")
+	self._goheroLevel = gohelper.findChild(self.viewGO, "#go_heroLevel")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfullscreen:AddClickListener(arg_2_0._btnfullscreenOnClick, arg_2_0)
+function OdysseyDungeonInteractView:addEvents()
+	self._btnfullscreen:AddClickListener(self._btnfullscreenOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfullscreen:RemoveClickListener()
+function OdysseyDungeonInteractView:removeEvents()
+	self._btnfullscreen:RemoveClickListener()
 end
 
-function var_0_0._btnfullscreenOnClick(arg_4_0)
-	if arg_4_0.roleTmpFadeInComp and arg_4_0.roleTmpFadeInComp:isPlaying() then
-		arg_4_0.roleTmpFadeInComp:conFinished()
+function OdysseyDungeonInteractView:_btnfullscreenOnClick()
+	if self.roleTmpFadeInComp and self.roleTmpFadeInComp:isPlaying() then
+		self.roleTmpFadeInComp:conFinished()
 
 		return
 	end
 
-	if arg_4_0.narrationTmpFadeInComp and arg_4_0.narrationTmpFadeInComp:isPlaying() then
-		arg_4_0.narrationTmpFadeInComp:conFinished()
+	if self.narrationTmpFadeInComp and self.narrationTmpFadeInComp:isPlaying() then
+		self.narrationTmpFadeInComp:conFinished()
 
 		return
 	end
 
-	if arg_4_0.elementType == OdysseyEnum.ElementType.Dialog then
-		if not arg_4_0.hasOption then
-			arg_4_0.curDialogStep = arg_4_0.dialogConfig.nextStep
+	if self.elementType == OdysseyEnum.ElementType.Dialog then
+		if not self.hasOption then
+			self.curDialogStep = self.dialogConfig.nextStep
 
-			if arg_4_0.curDialogStep > 0 then
-				arg_4_0:doDialogStep()
+			if self.curDialogStep > 0 then
+				self:doDialogStep()
 			else
-				arg_4_0:onOptionStepFinish()
-				arg_4_0:closeThis()
+				self:onOptionStepFinish()
+				self:closeThis()
 			end
 		end
 	else
-		arg_4_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0.optionItemClick(arg_5_0, arg_5_1)
-	if not arg_5_1.isUnlock then
-		local var_5_0, var_5_1 = OdysseyDungeonModel.instance:checkConditionCanUnlock(arg_5_1.optionConfig.unlockCondition)
+function OdysseyDungeonInteractView:optionItemClick(optionItem)
+	if not optionItem.isUnlock then
+		local canUnlock, unlockParam = OdysseyDungeonModel.instance:checkConditionCanUnlock(optionItem.optionConfig.unlockCondition)
 
-		if var_5_1.type == OdysseyEnum.ConditionType.Item then
-			local var_5_2 = OdysseyConfig.instance:getItemConfig(var_5_1.itemId)
+		if unlockParam.type == OdysseyEnum.ConditionType.Item then
+			local itemConfig = OdysseyConfig.instance:getItemConfig(unlockParam.itemId)
 
-			GameFacade.showToast(ToastEnum.OdysseyLackItem, var_5_2.name)
-		elseif var_5_1.type == OdysseyEnum.ConditionType.Level then
+			GameFacade.showToast(ToastEnum.OdysseyLackItem, itemConfig.name)
+		elseif unlockParam.type == OdysseyEnum.ConditionType.Level then
 			GameFacade.showToast(ToastEnum.OdysseyLackLevel)
 		end
 
 		return
 	end
 
-	arg_5_0.curClickOptionItem = arg_5_1
-	arg_5_0.isNotFinish = arg_5_1.optionConfig.notFinish == OdysseyEnum.ElementOptionNotFinish
+	self.curClickOptionItem = optionItem
+	self.isNotFinish = optionItem.optionConfig.notFinish == OdysseyEnum.ElementOptionNotFinish
 
-	local var_5_3 = arg_5_1.optionConfig.story
+	local optionStoryId = optionItem.optionConfig.story
 
-	if arg_5_0.elementType == OdysseyEnum.ElementType.Dialog then
-		arg_5_0.curDialogStep = arg_5_1.optionData[2]
+	if self.elementType == OdysseyEnum.ElementType.Dialog then
+		self.curDialogStep = optionItem.optionData[2]
 
-		arg_5_0:doDialogStep()
-	elseif var_5_3 > 0 then
-		StoryController.instance:playStory(var_5_3)
+		self:doDialogStep()
+	elseif optionStoryId > 0 then
+		StoryController.instance:playStory(optionStoryId)
 
-		local var_5_4 = {
-			elementId = arg_5_0.elementConfig.id,
-			optionId = arg_5_1.optionConfig.id
-		}
+		local storyOptionParam = {}
 
-		OdysseyDungeonModel.instance:setStoryOptionParam(var_5_4)
-		arg_5_0:closeThis()
+		storyOptionParam.elementId = self.elementConfig.id
+		storyOptionParam.optionId = optionItem.optionConfig.id
+
+		OdysseyDungeonModel.instance:setStoryOptionParam(storyOptionParam)
+		self:closeThis()
 	else
-		arg_5_0:onOptionStepFinish()
-		arg_5_0:closeThis()
+		self:onOptionStepFinish()
+		self:closeThis()
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0.panelGOMap = arg_6_0:getUserDataTb_()
+function OdysseyDungeonInteractView:_editableInitView()
+	self.panelGOMap = self:getUserDataTb_()
 
-	for iter_6_0, iter_6_1 in ipairs(OdysseyEnum.ElementTypeRoot) do
-		arg_6_0.panelGOMap[iter_6_0] = arg_6_0["_go" .. iter_6_1 .. "Panel"]
+	for type, root in ipairs(OdysseyEnum.ElementTypeRoot) do
+		self.panelGOMap[type] = self["_go" .. root .. "Panel"]
 	end
 
-	arg_6_0.optionItemList = arg_6_0:getUserDataTb_()
+	self.optionItemList = self:getUserDataTb_()
 
-	gohelper.setActive(arg_6_0._gooptionItem, false)
-	gohelper.setActive(arg_6_0._godialogOptionItem, false)
-	gohelper.setActive(arg_6_0._goheroLevel, false)
+	gohelper.setActive(self._gooptionItem, false)
+	gohelper.setActive(self._godialogOptionItem, false)
+	gohelper.setActive(self._goheroLevel, false)
 
-	arg_6_0.godialogNarration = gohelper.findChild(arg_6_0.viewGO, "#go_dialogPanel/dialog/narration")
-	arg_6_0.godialogRole = gohelper.findChild(arg_6_0.viewGO, "#go_dialogPanel/dialog/role")
+	self.godialogNarration = gohelper.findChild(self.viewGO, "#go_dialogPanel/dialog/narration")
+	self.godialogRole = gohelper.findChild(self.viewGO, "#go_dialogPanel/dialog/role")
 
-	gohelper.setActive(arg_6_0.godialogNarration, false)
-	gohelper.setActive(arg_6_0.godialogRole, false)
+	gohelper.setActive(self.godialogNarration, false)
+	gohelper.setActive(self.godialogRole, false)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function OdysseyDungeonInteractView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.elementConfig = arg_8_0.viewParam.config
-	arg_8_0.elementType = arg_8_0.elementConfig.type
-	arg_8_0.levelGO = arg_8_0.viewContainer:getResInst(arg_8_0.viewContainer:getSetting().otherRes[2], arg_8_0._goheroLevel)
-	arg_8_0.levelComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0.levelGO, OdysseyDungeonLevelComp)
+function OdysseyDungeonInteractView:onOpen()
+	self.elementConfig = self.viewParam.config
+	self.elementType = self.elementConfig.type
+	self.levelGO = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes[2], self._goheroLevel)
+	self.levelComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.levelGO, OdysseyDungeonLevelComp)
 
-	arg_8_0:refreshUI()
-	arg_8_0:setDungeonUIShowState(false)
-	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.PlayElementAnim, arg_8_0.elementConfig.id, OdysseyEnum.ElementAnimName.Select)
+	self:refreshUI()
+	self:setDungeonUIShowState(false)
+	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.PlayElementAnim, self.elementConfig.id, OdysseyEnum.ElementAnimName.Select)
 end
 
-function var_0_0.setDungeonUIShowState(arg_9_0, arg_9_1)
-	if arg_9_0.elementType == OdysseyEnum.ElementType.Dialog then
-		OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.SetDungeonUIShowState, OdysseyEnum.DungeonUISideType.Bottom, arg_9_1)
+function OdysseyDungeonInteractView:setDungeonUIShowState(showState)
+	if self.elementType == OdysseyEnum.ElementType.Dialog then
+		OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.SetDungeonUIShowState, OdysseyEnum.DungeonUISideType.Bottom, showState)
 	else
-		OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.SetDungeonUIShowState, OdysseyEnum.DungeonUISideType.Right, arg_9_1)
+		OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.SetDungeonUIShowState, OdysseyEnum.DungeonUISideType.Right, showState)
 	end
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(OdysseyEnum.ElementTypeRoot) do
-		gohelper.setActive(arg_10_0.panelGOMap[iter_10_0], iter_10_0 == arg_10_0.elementType)
+function OdysseyDungeonInteractView:refreshUI()
+	for type, root in ipairs(OdysseyEnum.ElementTypeRoot) do
+		gohelper.setActive(self.panelGOMap[type], type == self.elementType)
 	end
 
-	if arg_10_0.elementType == OdysseyEnum.ElementType.Dialog then
-		arg_10_0.curDialogStep = 1
-		arg_10_0.dialogOptionMap = arg_10_0:getUserDataTb_()
+	if self.elementType == OdysseyEnum.ElementType.Dialog then
+		self.curDialogStep = 1
+		self.dialogOptionMap = self:getUserDataTb_()
 
-		TaskDispatcher.runDelay(arg_10_0.doDialogStep, arg_10_0, 0.4)
-	elseif arg_10_0.elementType == OdysseyEnum.ElementType.Option then
-		arg_10_0:refreshOptionPanel()
+		TaskDispatcher.runDelay(self.doDialogStep, self, 0.4)
+	elseif self.elementType == OdysseyEnum.ElementType.Option then
+		self:refreshOptionPanel()
 		AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_popup_unfold)
-	elseif arg_10_0.elementType == OdysseyEnum.ElementType.Fight then
-		arg_10_0.fightPanelView = arg_10_0.viewContainer:getInteractFightView()
+	elseif self.elementType == OdysseyEnum.ElementType.Fight then
+		self.fightPanelView = self.viewContainer:getInteractFightView()
 
-		arg_10_0.fightPanelView:refreshFightPanel()
+		self.fightPanelView:refreshFightPanel()
 		AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_popup_unfold)
 	end
 
-	gohelper.setActive(arg_10_0._btnfullscreen.gameObject, arg_10_0.elementType == OdysseyEnum.ElementType.Dialog)
-	arg_10_0:refreshLevel()
+	gohelper.setActive(self._btnfullscreen.gameObject, self.elementType == OdysseyEnum.ElementType.Dialog)
+	self:refreshLevel()
 end
 
-function var_0_0.doDialogStep(arg_11_0)
-	arg_11_0.dialogConfig = OdysseyConfig.instance:getDialogConfig(arg_11_0.elementConfig.id, arg_11_0.curDialogStep)
+function OdysseyDungeonInteractView:doDialogStep()
+	self.dialogConfig = OdysseyConfig.instance:getDialogConfig(self.elementConfig.id, self.curDialogStep)
 
-	if not arg_11_0.dialogConfig then
-		arg_11_0:onOptionStepFinish()
-		arg_11_0:closeThis()
+	if not self.dialogConfig then
+		self:onOptionStepFinish()
+		self:closeThis()
 
 		return
 	end
 
-	local var_11_0 = not string.nilorempty(arg_11_0.dialogConfig.picture)
+	local canShowHeroIcon = not string.nilorempty(self.dialogConfig.picture)
 
-	gohelper.setActive(arg_11_0._goheroIcon, var_11_0)
+	gohelper.setActive(self._goheroIcon, canShowHeroIcon)
 
-	if var_11_0 then
-		arg_11_0._imagedialogHero:LoadImage(ResUrl.getSp01OdysseySingleBg("map/" .. arg_11_0.dialogConfig.picture))
+	if canShowHeroIcon then
+		self._imagedialogHero:LoadImage(ResUrl.getSp01OdysseySingleBg("map/" .. self.dialogConfig.picture))
 	end
 
-	local var_11_1 = not string.nilorempty(arg_11_0.dialogConfig.name)
+	local canShowDialogName = not string.nilorempty(self.dialogConfig.name)
 
-	gohelper.setActive(arg_11_0._goname, var_11_1)
-	gohelper.setActive(arg_11_0.godialogRole, var_11_1)
-	gohelper.setActive(arg_11_0.godialogNarration, not var_11_1)
+	gohelper.setActive(self._goname, canShowDialogName)
+	gohelper.setActive(self.godialogRole, canShowDialogName)
+	gohelper.setActive(self.godialogNarration, not canShowDialogName)
 
-	arg_11_0._txtname.text = arg_11_0.dialogConfig.name
+	self._txtname.text = self.dialogConfig.name
 
-	local var_11_2 = string.replaceSpace(arg_11_0.dialogConfig.desc)
+	local descContent = string.replaceSpace(self.dialogConfig.desc)
 
-	if not arg_11_0.roleTmpFadeInComp then
-		arg_11_0.roleTmpFadeInComp = MonoHelper.addLuaComOnceToGo(arg_11_0.godialogRole, TMPFadeIn)
+	if not self.roleTmpFadeInComp then
+		self.roleTmpFadeInComp = MonoHelper.addLuaComOnceToGo(self.godialogRole, TMPFadeIn)
 	end
 
-	if not arg_11_0.narrationTmpFadeInComp then
-		arg_11_0.narrationTmpFadeInComp = MonoHelper.addLuaComOnceToGo(arg_11_0.godialogNarration, TMPFadeIn)
+	if not self.narrationTmpFadeInComp then
+		self.narrationTmpFadeInComp = MonoHelper.addLuaComOnceToGo(self.godialogNarration, TMPFadeIn)
 	end
 
-	arg_11_0.hasOption = not string.nilorempty(arg_11_0.dialogConfig.optionList)
+	self.hasOption = not string.nilorempty(self.dialogConfig.optionList)
 
-	if arg_11_0.hasOption then
-		if var_11_1 then
-			arg_11_0.roleTmpFadeInComp:playNormalText(var_11_2, arg_11_0.showDialogOptionList, arg_11_0)
+	if self.hasOption then
+		if canShowDialogName then
+			self.roleTmpFadeInComp:playNormalText(descContent, self.showDialogOptionList, self)
 		else
-			arg_11_0.narrationTmpFadeInComp:playNormalText(var_11_2, arg_11_0.showDialogOptionList, arg_11_0)
+			self.narrationTmpFadeInComp:playNormalText(descContent, self.showDialogOptionList, self)
 		end
 
-		gohelper.setActive(arg_11_0._godialogOptionList, false)
+		gohelper.setActive(self._godialogOptionList, false)
 
-		local var_11_3 = GameUtil.splitString2(arg_11_0.dialogConfig.optionList, true)
+		local optionList = GameUtil.splitString2(self.dialogConfig.optionList, true)
 
-		arg_11_0:createAndRefreshOptionItem(var_11_3, arg_11_0._godialogOptionList, arg_11_0._godialogOptionItem)
+		self:createAndRefreshOptionItem(optionList, self._godialogOptionList, self._godialogOptionItem)
 	else
-		if var_11_1 then
-			arg_11_0.roleTmpFadeInComp:playNormalText(var_11_2)
+		if canShowDialogName then
+			self.roleTmpFadeInComp:playNormalText(descContent)
 		else
-			arg_11_0.narrationTmpFadeInComp:playNormalText(var_11_2)
+			self.narrationTmpFadeInComp:playNormalText(descContent)
 		end
 
-		gohelper.setActive(arg_11_0._godialogOptionList, false)
+		gohelper.setActive(self._godialogOptionList, false)
 	end
 end
 
-function var_0_0.showDialogOptionList(arg_12_0)
-	gohelper.setActive(arg_12_0._godialogOptionList, true)
+function OdysseyDungeonInteractView:showDialogOptionList()
+	gohelper.setActive(self._godialogOptionList, true)
 	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_choice)
 end
 
-function var_0_0.createAndRefreshOptionItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_0.elementType == OdysseyEnum.ElementType.Dialog
+function OdysseyDungeonInteractView:createAndRefreshOptionItem(optionList, parentGO, optionItemGO)
+	local isDialogType = self.elementType == OdysseyEnum.ElementType.Dialog
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		local var_13_1 = arg_13_0.optionItemList[iter_13_0]
+	for index, optionData in ipairs(optionList) do
+		local optionItem = self.optionItemList[index]
 
-		if not var_13_1 then
-			var_13_1 = arg_13_0:getUserDataTb_()
-			var_13_1.go = gohelper.clone(arg_13_3, arg_13_2, "optionItem_" .. iter_13_0)
-			var_13_1.normalbg = gohelper.findChild(var_13_1.go, "go_normalbg")
-			var_13_1.lockbg = gohelper.findChild(var_13_1.go, "go_lockbg")
-			var_13_1.txtdesc = gohelper.findChildText(var_13_1.go, "content/txt_desc")
-			var_13_1.txtsubDesc = gohelper.findChildText(var_13_1.go, "content/txt_subdesc")
-			var_13_1.btnClick = gohelper.findChildButtonWithAudio(var_13_1.go, "btn_click")
+		if not optionItem then
+			optionItem = self:getUserDataTb_()
+			optionItem.go = gohelper.clone(optionItemGO, parentGO, "optionItem_" .. index)
+			optionItem.normalbg = gohelper.findChild(optionItem.go, "go_normalbg")
+			optionItem.lockbg = gohelper.findChild(optionItem.go, "go_lockbg")
+			optionItem.txtdesc = gohelper.findChildText(optionItem.go, "content/txt_desc")
+			optionItem.txtsubDesc = gohelper.findChildText(optionItem.go, "content/txt_subdesc")
+			optionItem.btnClick = gohelper.findChildButtonWithAudio(optionItem.go, "btn_click")
 
-			var_13_1.btnClick:AddClickListener(arg_13_0.optionItemClick, arg_13_0, var_13_1)
+			optionItem.btnClick:AddClickListener(self.optionItemClick, self, optionItem)
 
-			arg_13_0.optionItemList[iter_13_0] = var_13_1
+			self.optionItemList[index] = optionItem
 		end
 
-		gohelper.setActive(var_13_1.go, true)
+		gohelper.setActive(optionItem.go, true)
 
-		local var_13_2, var_13_3 = arg_13_0:getOptionUnlockAndSubDesc(iter_13_1)
+		local isUnlock, subDesc = self:getOptionUnlockAndSubDesc(optionData)
 
-		gohelper.setActive(var_13_1.lockbg, not var_13_2)
-		gohelper.setActive(var_13_1.normalbg, var_13_2)
+		gohelper.setActive(optionItem.lockbg, not isUnlock)
+		gohelper.setActive(optionItem.normalbg, isUnlock)
 
-		var_13_1.isUnlock = var_13_2
-		var_13_1.optionData = iter_13_1
-		var_13_1.optionConfig = OdysseyConfig.instance:getOptionConfig(iter_13_1[1])
-		var_13_1.txtdesc.text = var_13_1.optionConfig.desc
+		optionItem.isUnlock = isUnlock
+		optionItem.optionData = optionData
+		optionItem.optionConfig = OdysseyConfig.instance:getOptionConfig(optionData[1])
+		optionItem.txtdesc.text = optionItem.optionConfig.desc
 
-		local var_13_4 = not string.nilorempty(var_13_3)
+		local showSubDesc = not string.nilorempty(subDesc)
 
-		gohelper.setActive(var_13_1.txtsubDesc.gameObject, var_13_4)
+		gohelper.setActive(optionItem.txtsubDesc.gameObject, showSubDesc)
 
-		var_13_1.txtsubDesc.text = var_13_3 or ""
+		optionItem.txtsubDesc.text = subDesc or ""
 
-		if var_13_0 then
-			SLFramework.UGUI.GuiHelper.SetColor(var_13_1.txtdesc, var_13_2 and "#C5D9E6" or "#7F8D97")
+		if isDialogType then
+			SLFramework.UGUI.GuiHelper.SetColor(optionItem.txtdesc, isUnlock and "#C5D9E6" or "#7F8D97")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(var_13_1.txtdesc, var_13_2 and "#1D313E" or "#7B868D")
+			SLFramework.UGUI.GuiHelper.SetColor(optionItem.txtdesc, isUnlock and "#1D313E" or "#7B868D")
 		end
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_13_1.txtsubDesc, var_13_2 and "#21723B" or "#A54A4A")
+		SLFramework.UGUI.GuiHelper.SetColor(optionItem.txtsubDesc, isUnlock and "#21723B" or "#A54A4A")
 	end
 
-	for iter_13_2 = #arg_13_1 + 1, #arg_13_0.optionItemList do
-		gohelper.setActive(arg_13_0.optionItemList[iter_13_2].go, false)
+	for i = #optionList + 1, #self.optionItemList do
+		gohelper.setActive(self.optionItemList[i].go, false)
 	end
 end
 
-function var_0_0.getOptionUnlockAndSubDesc(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1[1]
+function OdysseyDungeonInteractView:getOptionUnlockAndSubDesc(optionData)
+	local optionId = optionData[1]
 
-	if not var_14_0 then
+	if not optionId then
 		return true
 	end
 
-	local var_14_1 = ""
-	local var_14_2 = OdysseyConfig.instance:getOptionConfig(var_14_0)
-	local var_14_3, var_14_4 = OdysseyDungeonModel.instance:checkConditionCanUnlock(var_14_2.unlockCondition)
+	local subDesc = ""
+	local optionConfig = OdysseyConfig.instance:getOptionConfig(optionId)
+	local canUnlock, unlockParam = OdysseyDungeonModel.instance:checkConditionCanUnlock(optionConfig.unlockCondition)
 
-	if not var_14_4 then
-		return var_14_3, var_14_1
+	if not unlockParam then
+		return canUnlock, subDesc
 	end
 
-	if var_14_4.type == OdysseyEnum.ConditionType.Item then
-		local var_14_5 = OdysseyConfig.instance:getItemConfig(var_14_4.itemId)
+	if unlockParam.type == OdysseyEnum.ConditionType.Item then
+		local itemConfig = OdysseyConfig.instance:getItemConfig(unlockParam.itemId)
 
-		var_14_1 = arg_14_0:replaceSubDescData(var_14_2.subDesc, {
-			var_14_5.name,
-			var_14_4.curItemCount,
-			var_14_4.unlockItemCount
+		subDesc = self:replaceSubDescData(optionConfig.subDesc, {
+			itemConfig.name,
+			unlockParam.curItemCount,
+			unlockParam.unlockItemCount
 		})
-	elseif var_14_4.type == OdysseyEnum.ConditionType.Level then
-		var_14_1 = arg_14_0:replaceSubDescData(var_14_2.subDesc, {
-			var_14_4.unlockLevel
-		})
-	end
-
-	return var_14_3, var_14_1
-end
-
-function var_0_0.replaceSubDescData(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_1
-
-	for iter_15_0 = 1, #arg_15_2 do
-		var_15_0 = string.gsub(var_15_0, "▩" .. iter_15_0 .. "%%s", arg_15_2[iter_15_0])
-	end
-
-	return var_15_0
-end
-
-function var_0_0.onOptionStepFinish(arg_16_0)
-	local var_16_0 = {
-		optionId = arg_16_0.curClickOptionItem and arg_16_0.curClickOptionItem.optionConfig.id or nil
-	}
-
-	if not arg_16_0.isNotFinish then
-		OdysseyRpc.instance:sendOdysseyMapInteractRequest(arg_16_0.elementConfig.id, var_16_0)
-	end
-end
-
-function var_0_0.refreshOptionPanel(arg_17_0)
-	local var_17_0 = OdysseyConfig.instance:getElemenetOptionConfig(arg_17_0.elementConfig.id)
-
-	arg_17_0._txtoptionTitle.text = var_17_0.title
-	arg_17_0._txtoptionDesc.text = var_17_0.desc
-
-	local var_17_1 = {}
-	local var_17_2 = string.splitToNumber(var_17_0.optionList, "#")
-
-	for iter_17_0, iter_17_1 in ipairs(var_17_2) do
-		table.insert(var_17_1, {
-			iter_17_1
+	elseif unlockParam.type == OdysseyEnum.ConditionType.Level then
+		subDesc = self:replaceSubDescData(optionConfig.subDesc, {
+			unlockParam.unlockLevel
 		})
 	end
 
-	arg_17_0._imagepicture:LoadImage(ResUrl.getSp01OdysseySingleBg(var_17_0.image))
-	arg_17_0:createAndRefreshOptionItem(var_17_1, arg_17_0._gooption, arg_17_0._gooptionItem)
+	return canUnlock, subDesc
 end
 
-function var_0_0.refreshLevel(arg_18_0)
-	if arg_18_0.elementType == OdysseyEnum.ElementType.Dialog then
-		gohelper.setActive(arg_18_0._goheroLevel, false)
+function OdysseyDungeonInteractView:replaceSubDescData(desc, params)
+	local curDesc = desc
+
+	for index = 1, #params do
+		curDesc = string.gsub(curDesc, "▩" .. index .. "%%s", params[index])
+	end
+
+	return curDesc
+end
+
+function OdysseyDungeonInteractView:onOptionStepFinish()
+	local optionParam = {}
+
+	optionParam.optionId = self.curClickOptionItem and self.curClickOptionItem.optionConfig.id or nil
+
+	if not self.isNotFinish then
+		OdysseyRpc.instance:sendOdysseyMapInteractRequest(self.elementConfig.id, optionParam)
+	end
+end
+
+function OdysseyDungeonInteractView:refreshOptionPanel()
+	local optionConfig = OdysseyConfig.instance:getElemenetOptionConfig(self.elementConfig.id)
+
+	self._txtoptionTitle.text = optionConfig.title
+	self._txtoptionDesc.text = optionConfig.desc
+
+	local optionDataList = {}
+	local optionList = string.splitToNumber(optionConfig.optionList, "#")
+
+	for index, optionId in ipairs(optionList) do
+		table.insert(optionDataList, {
+			optionId
+		})
+	end
+
+	self._imagepicture:LoadImage(ResUrl.getSp01OdysseySingleBg(optionConfig.image))
+	self:createAndRefreshOptionItem(optionDataList, self._gooption, self._gooptionItem)
+end
+
+function OdysseyDungeonInteractView:refreshLevel()
+	if self.elementType == OdysseyEnum.ElementType.Dialog then
+		gohelper.setActive(self._goheroLevel, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_18_0._goheroLevel, true)
-	arg_18_0.levelComp:refreshUI()
-	arg_18_0.levelComp:checkLevelDiffAndRefresh()
+	gohelper.setActive(self._goheroLevel, true)
+	self.levelComp:refreshUI()
+	self.levelComp:checkLevelDiffAndRefresh()
 end
 
-function var_0_0.onClose(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.optionItemList) do
-		iter_19_1.btnClick:RemoveClickListener()
+function OdysseyDungeonInteractView:onClose()
+	for _, optionItem in ipairs(self.optionItemList) do
+		optionItem.btnClick:RemoveClickListener()
 	end
 
 	OdysseyDungeonModel.instance:setJumpNeedOpenElement(0)
-	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.PlayElementAnim, arg_19_0.elementConfig.id, OdysseyEnum.ElementAnimName.Idle)
+	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.PlayElementAnim, self.elementConfig.id, OdysseyEnum.ElementAnimName.Idle)
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.ShowInteractCloseBtn, false)
 	AssassinController.instance:dispatchEvent(AssassinEvent.EnableLibraryToast, true)
 
-	if arg_19_0.elementType == OdysseyEnum.ElementType.Option or arg_19_0.elementType == OdysseyEnum.ElementType.Fight then
+	if self.elementType == OdysseyEnum.ElementType.Option or self.elementType == OdysseyEnum.ElementType.Fight then
 		AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_popup_fold)
 	end
 
-	TaskDispatcher.cancelTask(arg_19_0.doDialogStep, arg_19_0)
+	TaskDispatcher.cancelTask(self.doDialogStep, self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0._imagepicture:UnLoadImage()
-	arg_20_0._imagedialogHero:UnLoadImage()
-	arg_20_0:setDungeonUIShowState(true)
+function OdysseyDungeonInteractView:onDestroyView()
+	self._imagepicture:UnLoadImage()
+	self._imagedialogHero:UnLoadImage()
+	self:setDungeonUIShowState(true)
 end
 
-return var_0_0
+return OdysseyDungeonInteractView

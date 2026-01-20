@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.RoomBuildingInteractionViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomBuildingInteractionViewContainer.lua
 
-local var_0_0 = class("RoomBuildingInteractionViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomBuildingInteractionViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomBuildingInteractionViewContainer = class("RoomBuildingInteractionViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomBuildingInteractionView.New())
+function RoomBuildingInteractionViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomBuildingInteractionView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomBuildingInteractionViewContainer

@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.view.sudoku.VersionActivity2_4SudokuView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/view/sudoku/VersionActivity2_4SudokuView.lua
 
-local var_0_0 = class("VersionActivity2_4SudokuView", BaseView)
-local var_0_1 = 9
-local var_0_2 = 9
-local var_0_3 = 9
-local var_0_4 = 3
-local var_0_5 = {
+module("modules.logic.versionactivity2_4.dungeon.view.sudoku.VersionActivity2_4SudokuView", package.seeall)
+
+local VersionActivity2_4SudokuView = class("VersionActivity2_4SudokuView", BaseView)
+local numCountPerGroup = 9
+local numCountPerRow = 9
+local numCountPerCol = 9
+local groupCountPerLine = 3
+local keyBoardNums = {
 	1,
 	2,
 	3,
@@ -16,542 +18,539 @@ local var_0_5 = {
 	8,
 	9
 }
-local var_0_6 = "3025"
-local var_0_7 = 24101
-local var_0_8 = "girdin"
-local var_0_9 = "stage1in"
-local var_0_10 = "stage2in"
-local var_0_11 = "stage1to2"
-local var_0_12 = VersionActivity2_4SudokuController.instance
-local var_0_13 = VersionActivity2_4DungeonEvent
-local var_0_14 = 1001
+local signatureId = "3025"
+local sudokuGuideId = 24101
+local drawLineAniName = "girdin"
+local stage1InAniName = "stage1in"
+local stage2InAniName = "stage2in"
+local stage1To2AniName = "stage1to2"
+local ctrl = VersionActivity2_4SudokuController.instance
+local eventMap = VersionActivity2_4DungeonEvent
+local sudokuCfgId = 1001
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goStage1 = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage1")
-	arg_1_0._goStage2 = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage2")
-	arg_1_0._goSmallNumGridRoot = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage1/Root/Grid")
-	arg_1_0._goSmallNumGridItem = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage1/Root/Grid/#go_Item")
-	arg_1_0._goNumGridRoot = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage2/Root/Grid")
-	arg_1_0._goNumGridItem = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage2/Root/Grid/#go_Item")
-	arg_1_0._goKeyBoardGridRoot = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage2/KeyBoard/Grid")
-	arg_1_0._goKeyBoardGridItem = gohelper.findChild(arg_1_0.viewGO, "Rotate/Stage2/KeyBoard/Grid/#go_Item")
-	arg_1_0._go_complete = gohelper.findChild(arg_1_0.viewGO, "#go_complete")
-	arg_1_0._btnExit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_exit")
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._btnUndo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_return")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_signature")
-	arg_1_0._go_topleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function VersionActivity2_4SudokuView:onInitView()
+	self._goStage1 = gohelper.findChild(self.viewGO, "Rotate/Stage1")
+	self._goStage2 = gohelper.findChild(self.viewGO, "Rotate/Stage2")
+	self._goSmallNumGridRoot = gohelper.findChild(self.viewGO, "Rotate/Stage1/Root/Grid")
+	self._goSmallNumGridItem = gohelper.findChild(self.viewGO, "Rotate/Stage1/Root/Grid/#go_Item")
+	self._goNumGridRoot = gohelper.findChild(self.viewGO, "Rotate/Stage2/Root/Grid")
+	self._goNumGridItem = gohelper.findChild(self.viewGO, "Rotate/Stage2/Root/Grid/#go_Item")
+	self._goKeyBoardGridRoot = gohelper.findChild(self.viewGO, "Rotate/Stage2/KeyBoard/Grid")
+	self._goKeyBoardGridItem = gohelper.findChild(self.viewGO, "Rotate/Stage2/KeyBoard/Grid/#go_Item")
+	self._go_complete = gohelper.findChild(self.viewGO, "#go_complete")
+	self._btnExit = gohelper.findChildButtonWithAudio(self.viewGO, "btn_exit")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._btnUndo = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_return")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "#simage_signature")
+	self._go_topleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnExit:AddClickListener(arg_2_0._onEscBtnClick, arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0._onResetBtnClick, arg_2_0)
-	arg_2_0._btnUndo:AddClickListener(arg_2_0._onUndoBtnClick, arg_2_0)
+function VersionActivity2_4SudokuView:addEvents()
+	self._btnExit:AddClickListener(self._onEscBtnClick, self)
+	self._btnReset:AddClickListener(self._onResetBtnClick, self)
+	self._btnUndo:AddClickListener(self._onUndoBtnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnExit:RemoveClickListener()
-	arg_3_0._btnReset:RemoveClickListener()
-	arg_3_0._btnUndo:RemoveClickListener()
+function VersionActivity2_4SudokuView:removeEvents()
+	self._btnExit:RemoveClickListener()
+	self._btnReset:RemoveClickListener()
+	self._btnUndo:RemoveClickListener()
 end
 
-function var_0_0._onEscBtnClick(arg_4_0)
-	var_0_12:dispatchEvent(var_0_13.SudokuCompleted)
-	arg_4_0:closeThis()
+function VersionActivity2_4SudokuView:_onEscBtnClick()
+	ctrl:dispatchEvent(eventMap.SudokuCompleted)
+	self:closeThis()
 end
 
-function var_0_0._onResetBtnClick(arg_5_0)
-	var_0_12:resetGame()
+function VersionActivity2_4SudokuView:_onResetBtnClick()
+	ctrl:resetGame()
 end
 
-function var_0_0._onUndoBtnClick(arg_6_0)
-	var_0_12:excuteLastCmd()
+function VersionActivity2_4SudokuView:_onUndoBtnClick()
+	ctrl:excuteLastCmd()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._numItems = {}
-	arg_7_0._smallNumItems = {}
-	arg_7_0._curEditItem = nil
-	arg_7_0._keyboardItems = {}
-	arg_7_0._curKeyboardItem = nil
-	arg_7_0._curIdx = 0
+function VersionActivity2_4SudokuView:_editableInitView()
+	self._numItems = {}
+	self._smallNumItems = {}
+	self._curEditItem = nil
+	self._keyboardItems = {}
+	self._curKeyboardItem = nil
+	self._curIdx = 0
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0:onOpen()
+function VersionActivity2_4SudokuView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(var_0_12, var_0_13.SudokuSelectItem, arg_9_0._onSelectedNumItem, arg_9_0)
-	arg_9_0:addEventCb(var_0_12, var_0_13.SudokuSelectKeyboard, arg_9_0._onSelectedKeyboard, arg_9_0)
-	arg_9_0:addEventCb(var_0_12, var_0_13.DoSudokuCmd, arg_9_0._doSudokuCmd, arg_9_0)
-	arg_9_0:addEventCb(var_0_12, var_0_13.SudokuReset, arg_9_0._doSudokuReset, arg_9_0)
-	arg_9_0:addEventCb(var_0_12, var_0_13.SudokuViewAni, arg_9_0._doViewAnimation, arg_9_0)
+function VersionActivity2_4SudokuView:onOpen()
+	self:addEventCb(ctrl, eventMap.SudokuSelectItem, self._onSelectedNumItem, self)
+	self:addEventCb(ctrl, eventMap.SudokuSelectKeyboard, self._onSelectedKeyboard, self)
+	self:addEventCb(ctrl, eventMap.DoSudokuCmd, self._doSudokuCmd, self)
+	self:addEventCb(ctrl, eventMap.SudokuReset, self._doSudokuReset, self)
+	self:addEventCb(ctrl, eventMap.SudokuViewAni, self._doViewAnimation, self)
 
-	if GuideModel.instance:isGuideFinish(var_0_7) or GuideController.instance:isForbidGuides() then
-		gohelper.setActive(arg_9_0._goStage2, true)
+	if GuideModel.instance:isGuideFinish(sudokuGuideId) or GuideController.instance:isForbidGuides() then
+		gohelper.setActive(self._goStage2, true)
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_4Dungeon.play_ui_mln_page_turn)
-		arg_9_0._viewAnimator:Play(var_0_10, 0, 0)
+		self._viewAnimator:Play(stage2InAniName, 0, 0)
 	else
-		arg_9_0._viewAnimator:Play(var_0_9, 0, 0)
+		self._viewAnimator:Play(stage1InAniName, 0, 0)
 
-		arg_9_0._inGuide = true
+		self._inGuide = true
 	end
 
-	arg_9_0:_createNumItems()
-	arg_9_0:_createKeyboardItems()
-	arg_9_0:_createSmallNumItems(arg_9_0._allNum)
+	self:_createNumItems()
+	self:_createKeyboardItems()
+	self:_createSmallNumItems(self._allNum)
 end
 
-function var_0_0.onClose(arg_10_0)
+function VersionActivity2_4SudokuView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagesignature:UnLoadImage()
+function VersionActivity2_4SudokuView:onDestroyView()
+	self._simagesignature:UnLoadImage()
 end
 
-function var_0_0._createSmallNumItems(arg_12_0, arg_12_1)
-	gohelper.CreateObjList(arg_12_0, arg_12_0._createSmallNumItem, arg_12_1, arg_12_0._goSmallNumGridRoot, arg_12_0._goSmallNumGridItem, VersionActivity2_4SudokuNumItem, 1)
+function VersionActivity2_4SudokuView:_createSmallNumItems(numList)
+	gohelper.CreateObjList(self, self._createSmallNumItem, numList, self._goSmallNumGridRoot, self._goSmallNumGridItem, VersionActivity2_4SudokuNumItem, 1)
 end
 
-function var_0_0._createSmallNumItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	arg_13_0._smallNumItems[arg_13_3] = arg_13_1
+function VersionActivity2_4SudokuView:_createSmallNumItem(numItemComp, num, index)
+	self._smallNumItems[index] = numItemComp
 
-	arg_13_1:setItemData(arg_13_2, arg_13_3, nil, nil)
+	numItemComp:setItemData(num, index, nil, nil)
 
-	if arg_13_0._inGuide then
-		arg_13_1:refreshGuideView(true)
+	if self._inGuide then
+		numItemComp:refreshGuideView(true)
 	end
 end
 
-function var_0_0._createNumItems(arg_14_0)
-	arg_14_0._allNum = {}
-	arg_14_0._rowItems = {}
-	arg_14_0._colItems = {}
-	arg_14_0._groupItems = {}
-	arg_14_0._idx2CellIdx = {}
-	arg_14_0._idx2GroupIdx = {}
-	arg_14_0._emptyItem2Vaild = {}
-	arg_14_0._sameNumItems = {}
-	arg_14_0._conflictItems = {}
-	arg_14_0._sudukuCfg = VersionActivity2_4SudokuModel.instance:getSudokuCfg(var_0_14)
+function VersionActivity2_4SudokuView:_createNumItems()
+	self._allNum = {}
+	self._rowItems = {}
+	self._colItems = {}
+	self._groupItems = {}
+	self._idx2CellIdx = {}
+	self._idx2GroupIdx = {}
+	self._emptyItem2Vaild = {}
+	self._sameNumItems = {}
+	self._conflictItems = {}
+	self._sudukuCfg = VersionActivity2_4SudokuModel.instance:getSudokuCfg(sudokuCfgId)
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._sudukuCfg) do
-		for iter_14_2, iter_14_3 in ipairs(iter_14_1) do
-			local var_14_0 = arg_14_0:_groupCellIdx2Idx(iter_14_0, iter_14_2)
+	for cellGroupIdx, cellGroups in ipairs(self._sudukuCfg) do
+		for cellIdx, num in ipairs(cellGroups) do
+			local idx = self:_groupCellIdx2Idx(cellGroupIdx, cellIdx)
 
-			arg_14_0._allNum[var_14_0] = iter_14_3
-			arg_14_0._idx2CellIdx[var_14_0] = iter_14_2
-			arg_14_0._idx2GroupIdx[var_14_0] = iter_14_0
+			self._allNum[idx] = num
+			self._idx2CellIdx[idx] = cellIdx
+			self._idx2GroupIdx[idx] = cellGroupIdx
 
-			if iter_14_3 == 0 then
-				arg_14_0._emptyItem2Vaild[var_14_0] = false
+			if num == 0 then
+				self._emptyItem2Vaild[idx] = false
 			end
 		end
 	end
 
-	gohelper.CreateObjList(arg_14_0, arg_14_0._createNumItem, arg_14_0._allNum, arg_14_0._goNumGridRoot, arg_14_0._goNumGridItem, VersionActivity2_4SudokuNumItem, 1)
+	gohelper.CreateObjList(self, self._createNumItem, self._allNum, self._goNumGridRoot, self._goNumGridItem, VersionActivity2_4SudokuNumItem, 1)
 end
 
-function var_0_0._createNumItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0, var_15_1 = arg_15_0:_idx2GroupCellIdx(arg_15_3)
-	local var_15_2, var_15_3 = arg_15_0:_idx2RowCol(arg_15_3)
+function VersionActivity2_4SudokuView:_createNumItem(numItemComp, num, index)
+	local groupIdx, cellIdx = self:_idx2GroupCellIdx(index)
+	local row, col = self:_idx2RowCol(index)
 
-	arg_15_0._numItems[arg_15_3] = arg_15_1
-	arg_15_0._rowItems[var_15_2] = arg_15_0._rowItems[var_15_2] or {}
-	arg_15_0._colItems[var_15_3] = arg_15_0._colItems[var_15_3] or {}
-	arg_15_0._rowItems[var_15_2][var_15_3] = arg_15_1
-	arg_15_0._colItems[var_15_3][var_15_2] = arg_15_1
-	arg_15_0._groupItems[var_15_0] = arg_15_0._groupItems[var_15_0] or {}
-	arg_15_0._groupItems[var_15_0][var_15_1] = arg_15_1
+	self._numItems[index] = numItemComp
+	self._rowItems[row] = self._rowItems[row] or {}
+	self._colItems[col] = self._colItems[col] or {}
+	self._rowItems[row][col] = numItemComp
+	self._colItems[col][row] = numItemComp
+	self._groupItems[groupIdx] = self._groupItems[groupIdx] or {}
+	self._groupItems[groupIdx][cellIdx] = numItemComp
 
-	local var_15_4 = arg_15_0._allNum[arg_15_3]
+	local num = self._allNum[index]
 
-	arg_15_1:setItemData(var_15_4, arg_15_3, var_15_0, var_15_1)
+	numItemComp:setItemData(num, index, groupIdx, cellIdx)
 end
 
-function var_0_0._resetItemState(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	arg_16_1 = arg_16_1 or arg_16_0._numItems
+function VersionActivity2_4SudokuView:_resetItemState(items, sameNum, conflictNum)
+	items = items or self._numItems
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_1) do
-		if arg_16_2 then
-			iter_16_1:refreshSameNumView(false)
+	for _, item in pairs(items) do
+		if sameNum then
+			item:refreshSameNumView(false)
 		end
 
-		if arg_16_3 then
-			iter_16_1:refreshValidView(iter_16_1:isEditable() and arg_16_0._emptyItem2Vaild[iter_16_1:getItemIdx()] or false, false)
+		if conflictNum then
+			item:refreshValidView(item:isEditable() and self._emptyItem2Vaild[item:getItemIdx()] or false, false)
 		end
 	end
 end
 
-function var_0_0._getConflictItems(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._numItems[arg_17_1]:getItemNum()
-	local var_17_1, var_17_2 = arg_17_0:_idx2RowCol(arg_17_1)
-	local var_17_3 = {}
-	local var_17_4 = arg_17_0._rowItems[var_17_1]
+function VersionActivity2_4SudokuView:_getConflictItems(idx)
+	local checkItem = self._numItems[idx]
+	local curNum = checkItem:getItemNum()
+	local row, col = self:_idx2RowCol(idx)
+	local conflictItems = {}
+	local rowItems = self._rowItems[row]
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_4) do
-		if iter_17_1:getItemNum() == var_17_0 and iter_17_0 ~= var_17_2 then
-			var_17_3[iter_17_1:getItemIdx()] = iter_17_1
+	for i, item in ipairs(rowItems) do
+		if item:getItemNum() == curNum and i ~= col then
+			conflictItems[item:getItemIdx()] = item
 		end
 	end
 
-	local var_17_5 = arg_17_0._colItems[var_17_2]
+	local colItems = self._colItems[col]
 
-	for iter_17_2, iter_17_3 in ipairs(var_17_5) do
-		if iter_17_3:getItemNum() == var_17_0 and iter_17_2 ~= var_17_1 then
-			var_17_3[iter_17_3:getItemIdx()] = iter_17_3
+	for i, item in ipairs(colItems) do
+		if item:getItemNum() == curNum and i ~= row then
+			conflictItems[item:getItemIdx()] = item
 		end
 	end
 
-	local var_17_6, var_17_7 = arg_17_0:_idx2GroupCellIdx(arg_17_1)
-	local var_17_8 = arg_17_0._groupItems[var_17_6]
+	local groupIdx, cellIdx = self:_idx2GroupCellIdx(idx)
+	local groupItems = self._groupItems[groupIdx]
 
-	for iter_17_4, iter_17_5 in ipairs(var_17_8) do
-		if iter_17_5:getItemNum() == var_17_0 and iter_17_4 ~= var_17_7 then
-			var_17_3[iter_17_5:getItemIdx()] = iter_17_5
+	for i, item in ipairs(groupItems) do
+		if item:getItemNum() == curNum and i ~= cellIdx then
+			conflictItems[item:getItemIdx()] = item
 		end
 	end
 
-	return var_17_3
+	return conflictItems
 end
 
-function var_0_0._getSameNumItems(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._numItems[arg_18_1]:getItemNum()
-	local var_18_1 = {}
+function VersionActivity2_4SudokuView:_getSameNumItems(idx)
+	local checkItem = self._numItems[idx]
+	local curNum = checkItem:getItemNum()
+	local sameNumItems = {}
 
-	if var_18_0 ~= 0 then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_0._numItems) do
-			if iter_18_1:getItemNum() == var_18_0 and iter_18_0 ~= arg_18_1 then
-				var_18_1[iter_18_0] = iter_18_1
+	if curNum ~= 0 then
+		for i, item in ipairs(self._numItems) do
+			if item:getItemNum() == curNum and i ~= idx then
+				sameNumItems[i] = item
 			end
 		end
 	end
 
-	return var_18_1
+	return sameNumItems
 end
 
-function var_0_0._getAllConflictItems(arg_19_0)
-	local var_19_0 = {}
+function VersionActivity2_4SudokuView:_getAllConflictItems()
+	local allConflictItems = {}
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._emptyItem2Vaild) do
-		if not iter_19_1 then
-			local var_19_1 = arg_19_0._numItems[iter_19_0]
+	for idx, valid in pairs(self._emptyItem2Vaild) do
+		if not valid then
+			local item = self._numItems[idx]
 
-			if var_19_1:getItemNum() > 0 then
-				local var_19_2 = arg_19_0:_getConflictItems(iter_19_0)
+			if item:getItemNum() > 0 then
+				local conflictItems = self:_getConflictItems(idx)
 
-				var_19_2[iter_19_0] = var_19_1
+				conflictItems[idx] = item
 
-				for iter_19_2, iter_19_3 in pairs(var_19_2) do
-					var_19_0[iter_19_2] = iter_19_3
+				for conflictIdx, item in pairs(conflictItems) do
+					allConflictItems[conflictIdx] = item
 				end
 			end
 		end
 	end
 
-	return var_19_0
+	return allConflictItems
 end
 
-function var_0_0._createKeyboardItems(arg_20_0)
-	gohelper.CreateObjList(arg_20_0, arg_20_0._createKeyboardNumItem, var_0_5, arg_20_0._goKeyBoardGridRoot, arg_20_0._goKeyBoardGridItem, VersionActivity2_4SudokuKeyboardItem, 1)
+function VersionActivity2_4SudokuView:_createKeyboardItems()
+	gohelper.CreateObjList(self, self._createKeyboardNumItem, keyBoardNums, self._goKeyBoardGridRoot, self._goKeyBoardGridItem, VersionActivity2_4SudokuKeyboardItem, 1)
 end
 
-function var_0_0._createKeyboardNumItem(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = var_0_5[arg_21_3]
+function VersionActivity2_4SudokuView:_createKeyboardNumItem(numItemComp, num, index)
+	local num = keyBoardNums[index]
 
-	arg_21_1:setItemData(var_21_0, arg_21_3, nil, nil)
+	numItemComp:setItemData(num, index, nil, nil)
 
-	arg_21_0._keyboardItems[arg_21_3] = arg_21_1
+	self._keyboardItems[index] = numItemComp
 end
 
-function var_0_0._onSelectedKeyboard(arg_22_0, arg_22_1)
-	if arg_22_0._curKeyboardItem then
-		arg_22_0._curKeyboardItem:resetState()
+function VersionActivity2_4SudokuView:_onSelectedKeyboard(num)
+	if self._curKeyboardItem then
+		self._curKeyboardItem:resetState()
 	end
 
-	arg_22_0._curKeyboardItem = arg_22_0._keyboardItems[arg_22_1]
+	self._curKeyboardItem = self._keyboardItems[num]
 
-	local var_22_0 = VersionActivity2_4SudokuModel.instance:getSelectedItem()
+	local curIdx = VersionActivity2_4SudokuModel.instance:getSelectedItem()
 
-	if var_22_0 then
-		local var_22_1 = arg_22_0._numItems[var_22_0]
+	if curIdx then
+		local curItem = self._numItems[curIdx]
 
-		if not var_22_1:isEditable() then
+		if not curItem:isEditable() then
 			return
 		end
 
-		local var_22_2 = var_22_1:getItemNum()
-		local var_22_3 = VersionActivity2_4SudokuCmd.New(var_22_0, var_22_2, arg_22_1)
+		local oriNum = curItem:getItemNum()
+		local sudokuCmd = VersionActivity2_4SudokuCmd.New(curIdx, oriNum, num)
 
-		VersionActivity2_4SudokuController.instance:excuteNewCmd(var_22_3)
+		VersionActivity2_4SudokuController.instance:excuteNewCmd(sudokuCmd)
 	end
 end
 
-function var_0_0._onSelectedNumItem(arg_23_0, arg_23_1)
-	if arg_23_1 == arg_23_0._curIdx then
+function VersionActivity2_4SudokuView:_onSelectedNumItem(idx)
+	if idx == self._curIdx then
 		return
 	end
 
-	arg_23_0._curIdx = arg_23_1
+	self._curIdx = idx
 
-	arg_23_0:_resetItemState(arg_23_0._sameNumItems, true)
+	self:_resetItemState(self._sameNumItems, true)
 
-	if arg_23_0._curEditItem then
-		if arg_23_0._curEditItem:isEditable() and arg_23_0._emptyItem2Vaild[arg_23_0._curEditItem:getItemIdx()] then
-			arg_23_0._curEditItem:refreshValidView(true, false)
+	if self._curEditItem then
+		if self._curEditItem:isEditable() and self._emptyItem2Vaild[self._curEditItem:getItemIdx()] then
+			self._curEditItem:refreshValidView(true, false)
 		end
 
-		arg_23_0._curEditItem:refreshSelectView(false)
+		self._curEditItem:refreshSelectView(false)
 	end
 
-	arg_23_0._curEditItem = arg_23_0._numItems[arg_23_1]
+	self._curEditItem = self._numItems[idx]
 
-	if arg_23_0._curEditItem then
-		arg_23_0._curEditItem:refreshSelectView(true)
+	if self._curEditItem then
+		self._curEditItem:refreshSelectView(true)
 
-		if arg_23_0._curEditItem:isEditable() and arg_23_0._emptyItem2Vaild[arg_23_0._curEditItem:getItemIdx()] then
-			arg_23_0._curEditItem:refreshValidView(true, true)
+		if self._curEditItem:isEditable() and self._emptyItem2Vaild[self._curEditItem:getItemIdx()] then
+			self._curEditItem:refreshValidView(true, true)
 		end
 	end
 
-	local var_23_0 = arg_23_0._curEditItem:getItemNum()
-	local var_23_1 = false
+	local curItemNum = self._curEditItem:getItemNum()
+	local curItemValid = false
 
-	if var_23_0 > 0 then
-		var_23_1 = arg_23_0:_checkValid(arg_23_1)
+	if curItemNum > 0 then
+		local valid = self:_checkValid(idx)
+
+		curItemValid = valid
 	end
 
-	if arg_23_0._curEditItem:isEditable() then
-		if not arg_23_0._curKeyboardItem then
-			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(var_23_0)
+	if self._curEditItem:isEditable() then
+		if not self._curKeyboardItem then
+			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(curItemNum)
 
-			arg_23_0._curKeyboardItem = arg_23_0._keyboardItems[var_23_0]
+			self._curKeyboardItem = self._keyboardItems[curItemNum]
 
-			if arg_23_0._curKeyboardItem then
-				arg_23_0._curKeyboardItem:refreshValidView(var_23_1)
+			if self._curKeyboardItem then
+				self._curKeyboardItem:refreshValidView(curItemValid)
 			end
-		elseif var_23_0 == arg_23_0._curKeyboardItem:getItemNum() then
-			arg_23_0._curKeyboardItem:refreshValidView(var_23_1)
+		elseif curItemNum == self._curKeyboardItem:getItemNum() then
+			self._curKeyboardItem:refreshValidView(curItemValid)
 		else
-			arg_23_0._curKeyboardItem:resetState()
-			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(var_23_0)
+			self._curKeyboardItem:resetState()
+			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(curItemNum)
 
-			arg_23_0._curKeyboardItem = arg_23_0._keyboardItems[var_23_0]
+			self._curKeyboardItem = self._keyboardItems[curItemNum]
 
-			if arg_23_0._curKeyboardItem then
-				arg_23_0._curKeyboardItem:refreshValidView(var_23_1)
+			if self._curKeyboardItem then
+				self._curKeyboardItem:refreshValidView(curItemValid)
 			end
 		end
 	end
 
-	if var_23_0 > 0 then
-		if arg_23_0._sameNumItems and #arg_23_0._sameNumItems > 0 then
-			for iter_23_0, iter_23_1 in pairs(arg_23_0._sameNumItems) do
-				iter_23_1:refreshSameNumView(false)
+	if curItemNum > 0 then
+		if self._sameNumItems and #self._sameNumItems > 0 then
+			for _, sameNumItem in pairs(self._sameNumItems) do
+				sameNumItem:refreshSameNumView(false)
 			end
 		end
 
-		arg_23_0._sameNumItems = arg_23_0:_getSameNumItems(arg_23_1)
+		self._sameNumItems = self:_getSameNumItems(idx)
 
-		for iter_23_2, iter_23_3 in pairs(arg_23_0._sameNumItems) do
-			iter_23_3:refreshSameNumView(arg_23_0._conflictItems[iter_23_2] == nil)
+		for itemIdx, sameNumItem in pairs(self._sameNumItems) do
+			sameNumItem:refreshSameNumView(self._conflictItems[itemIdx] == nil)
 		end
 	end
 end
 
-function var_0_0._doSudokuCmd(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_1:getIdx()
-	local var_24_1 = arg_24_0._numItems[var_24_0]
-	local var_24_2 = var_24_1 and var_24_1:getItemNum()
-	local var_24_3 = arg_24_1:getNewNum()
-	local var_24_4 = arg_24_1:isUndo()
+function VersionActivity2_4SudokuView:_doSudokuCmd(cmd)
+	local idx = cmd:getIdx()
+	local curItem = self._numItems[idx]
+	local oriNum = curItem and curItem:getItemNum()
+	local newNum = cmd:getNewNum()
+	local isUndo = cmd:isUndo()
 
-	if var_24_1 and var_24_2 ~= var_24_3 then
-		arg_24_0:_resetItemState(arg_24_0._sameNumItems, true)
-		var_24_1:setItemNum(var_24_3)
-		var_24_1:refreshUI()
+	if curItem and oriNum ~= newNum then
+		self:_resetItemState(self._sameNumItems, true)
+		curItem:setItemNum(newNum)
+		curItem:refreshUI()
 
-		local var_24_5 = arg_24_0:_checkValid(var_24_0)
+		local valid = self:_checkValid(idx)
 
-		if not var_24_5 and not var_24_4 then
-			var_0_12:addErrorCount()
+		if not valid and not isUndo then
+			ctrl:addErrorCount()
 		end
 
-		var_24_1:setItemVaild(var_24_5)
+		curItem:setItemVaild(valid)
 
-		arg_24_0._emptyItem2Vaild[var_24_0] = var_24_5
+		self._emptyItem2Vaild[idx] = valid
 
-		if var_24_5 then
-			for iter_24_0, iter_24_1 in pairs(arg_24_0._emptyItem2Vaild) do
-				if iter_24_0 ~= var_24_0 then
-					local var_24_6 = arg_24_0._numItems[iter_24_0]
-					local var_24_7 = arg_24_0:_checkValid(iter_24_0)
+		if valid then
+			for itemIdx, vaild in pairs(self._emptyItem2Vaild) do
+				if itemIdx ~= idx then
+					local item = self._numItems[itemIdx]
+					local itemValid = self:_checkValid(itemIdx)
 
-					arg_24_0._emptyItem2Vaild[iter_24_0] = var_24_7
+					self._emptyItem2Vaild[itemIdx] = itemValid
 
-					var_24_6:setItemVaild(var_24_7)
+					item:setItemVaild(itemValid)
 				end
 			end
 		end
 
-		local var_24_8 = arg_24_0._conflictItems
+		local oriConflictItems = self._conflictItems
 
-		arg_24_0._conflictItems = arg_24_0:_getAllConflictItems()
+		self._conflictItems = self:_getAllConflictItems()
 
-		if not arg_24_0._curKeyboardItem then
-			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(var_24_3)
+		if not self._curKeyboardItem then
+			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(newNum)
 
-			arg_24_0._curKeyboardItem = arg_24_0._keyboardItems[var_24_3]
+			self._curKeyboardItem = self._keyboardItems[newNum]
 
-			if arg_24_0._curKeyboardItem then
-				arg_24_0._curKeyboardItem:refreshValidView(var_24_5, var_24_4)
+			if self._curKeyboardItem then
+				self._curKeyboardItem:refreshValidView(valid, isUndo)
 			end
-		elseif var_24_3 == arg_24_0._curKeyboardItem:getItemNum() then
-			arg_24_0._curKeyboardItem:refreshValidView(var_24_5, var_24_4)
+		elseif newNum == self._curKeyboardItem:getItemNum() then
+			self._curKeyboardItem:refreshValidView(valid, isUndo)
 		else
-			arg_24_0._curKeyboardItem:resetState()
-			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(var_24_3)
+			self._curKeyboardItem:resetState()
+			VersionActivity2_4SudokuModel.instance:selectKeyboardItem(newNum)
 
-			arg_24_0._curKeyboardItem = arg_24_0._keyboardItems[var_24_3]
+			self._curKeyboardItem = self._keyboardItems[newNum]
 
-			if arg_24_0._curKeyboardItem then
-				arg_24_0._curKeyboardItem:refreshValidView(var_24_5, var_24_4)
+			if self._curKeyboardItem then
+				self._curKeyboardItem:refreshValidView(valid, isUndo)
 			end
 		end
 
-		for iter_24_2, iter_24_3 in pairs(arg_24_0._conflictItems) do
-			var_24_8[iter_24_2] = nil
+		for itemIdx, confictItem in pairs(self._conflictItems) do
+			oriConflictItems[itemIdx] = nil
 
-			iter_24_3:refreshValidView(false, true, var_24_4)
+			confictItem:refreshValidView(false, true, isUndo)
 		end
 
-		arg_24_0:_resetItemState(var_24_8, false, true, var_24_4)
+		self:_resetItemState(oriConflictItems, false, true, isUndo)
 
-		arg_24_0._sameNumItems = arg_24_0:_getSameNumItems(var_24_0)
+		self._sameNumItems = self:_getSameNumItems(idx)
 
-		for iter_24_4, iter_24_5 in pairs(arg_24_0._sameNumItems) do
-			iter_24_5:refreshSameNumView(arg_24_0._conflictItems[iter_24_4] == nil, var_24_4)
+		for itemIdx, sameNumItem in pairs(self._sameNumItems) do
+			sameNumItem:refreshSameNumView(self._conflictItems[itemIdx] == nil, isUndo)
 		end
 
-		var_24_1:refreshValidView(var_24_5, var_24_3 ~= 0, var_24_4)
-	elseif arg_24_0._curKeyboardItem then
-		arg_24_0._curKeyboardItem:refreshUI()
+		curItem:refreshValidView(valid, newNum ~= 0, isUndo)
+	elseif self._curKeyboardItem then
+		self._curKeyboardItem:refreshUI()
 	end
 
-	if arg_24_0:_checkPass() then
-		arg_24_0:_refreshPassView()
+	local isPass = self:_checkPass()
+
+	if isPass then
+		self:_refreshPassView()
 		VersionActivity2_4SudokuController.instance:setStatResult("done")
 		VersionActivity2_4SudokuController.instance:sendStat()
 	end
 end
 
-function var_0_0._doSudokuReset(arg_25_0)
-	arg_25_0:_resetItemState(arg_25_0._conflictItems, false, true)
-	arg_25_0:_resetItemState(arg_25_0._sameNumItems, true)
+function VersionActivity2_4SudokuView:_doSudokuReset()
+	self:_resetItemState(self._conflictItems, false, true)
+	self:_resetItemState(self._sameNumItems, true)
 
-	if arg_25_0._curKeyboardItem then
-		arg_25_0._curKeyboardItem:resetState()
+	if self._curKeyboardItem then
+		self._curKeyboardItem:resetState()
 	end
 
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._emptyItem2Vaild) do
-		local var_25_0 = arg_25_0._numItems[iter_25_0]
+	for idx, valid in pairs(self._emptyItem2Vaild) do
+		local item = self._numItems[idx]
 
-		var_25_0:setItemNum(0)
-		var_25_0:refreshUI()
-		var_25_0:refreshSelectView(false)
-		var_25_0:refreshValidView(false, false)
+		item:setItemNum(0)
+		item:refreshUI()
+		item:refreshSelectView(false)
+		item:refreshValidView(false, false)
 
-		arg_25_0._emptyItem2Vaild[iter_25_0] = false
+		self._emptyItem2Vaild[idx] = false
 	end
 
-	arg_25_0._curIdx = nil
+	self._curIdx = nil
 end
 
-function var_0_0._refreshPassView(arg_26_0)
-	gohelper.setActive(arg_26_0._go_complete, true)
-	gohelper.setActive(arg_26_0._btnExit.gameObject, true)
-	gohelper.setActive(arg_26_0._simagesignature.gameObject, true)
-	gohelper.setActive(arg_26_0._go_topleft, false)
-	gohelper.setActive(arg_26_0._btnUndo.gameObject, false)
-	gohelper.setActive(arg_26_0._btnReset.gameObject, false)
-	arg_26_0._simagesignature:UnLoadImage()
-	arg_26_0._simagesignature:LoadImage(ResUrl.getSignature(var_0_6))
+function VersionActivity2_4SudokuView:_refreshPassView()
+	gohelper.setActive(self._go_complete, true)
+	gohelper.setActive(self._btnExit.gameObject, true)
+	gohelper.setActive(self._simagesignature.gameObject, true)
+	gohelper.setActive(self._go_topleft, false)
+	gohelper.setActive(self._btnUndo.gameObject, false)
+	gohelper.setActive(self._btnReset.gameObject, false)
+	self._simagesignature:UnLoadImage()
+	self._simagesignature:LoadImage(ResUrl.getSignature(signatureId))
 	VersionActivity2_4SudokuModel.instance:selectItem(nil)
-	arg_26_0:_resetItemState(arg_26_0._conflictItems, false, true)
-	arg_26_0:_resetItemState(arg_26_0._sameNumItems, true)
+	self:_resetItemState(self._conflictItems, false, true)
+	self:_resetItemState(self._sameNumItems, true)
 
-	if arg_26_0._curKeyboardItem then
-		arg_26_0._curKeyboardItem:resetState()
+	if self._curKeyboardItem then
+		self._curKeyboardItem:resetState()
 	end
 
-	for iter_26_0, iter_26_1 in pairs(arg_26_0._emptyItem2Vaild) do
-		arg_26_0._numItems[iter_26_0]:refreshValidView(true, false)
+	for idx, valid in pairs(self._emptyItem2Vaild) do
+		local item = self._numItems[idx]
 
-		arg_26_0._emptyItem2Vaild[iter_26_0] = false
+		item:refreshValidView(true, false)
+
+		self._emptyItem2Vaild[idx] = false
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_4Dungeon.play_ui_diqiu_complete)
-	arg_26_0._curEditItem:refreshSelectView(false)
+	self._curEditItem:refreshSelectView(false)
 end
 
-function var_0_0._doViewAnimation(arg_27_0, arg_27_1)
-	if arg_27_1 == var_0_8 then
+function VersionActivity2_4SudokuView:_doViewAnimation(aniName)
+	if aniName == drawLineAniName then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_4Dungeon.play_ui_lvhu_clue_write_2)
-	elseif arg_27_1 == var_0_11 then
+	elseif aniName == stage1To2AniName then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_4Dungeon.play_ui_mln_page_turn)
 	end
 
-	arg_27_0._viewAnimator:Play(arg_27_1, 0, 0)
+	self._viewAnimator:Play(aniName, 0, 0)
 end
 
-function var_0_0._checkValid(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0._numItems[arg_28_1]:getItemNum()
+function VersionActivity2_4SudokuView:_checkValid(idx)
+	local checkItem = self._numItems[idx]
+	local curNum = checkItem:getItemNum()
 
-	if var_28_0 == 0 then
+	if curNum == 0 then
 		return false
 	end
 
-	local var_28_1, var_28_2 = arg_28_0:_idx2RowCol(arg_28_1)
-	local var_28_3 = arg_28_0._rowItems[var_28_1]
+	local row, col = self:_idx2RowCol(idx)
+	local rowItems = self._rowItems[row]
 
-	for iter_28_0, iter_28_1 in ipairs(var_28_3) do
-		if iter_28_1:getItemNum() == var_28_0 and iter_28_0 ~= var_28_2 then
+	for i, item in ipairs(rowItems) do
+		if item:getItemNum() == curNum and i ~= col then
 			return false
 		end
 	end
 
-	local var_28_4 = arg_28_0._colItems[var_28_2]
+	local colItems = self._colItems[col]
 
-	for iter_28_2, iter_28_3 in ipairs(var_28_4) do
-		if iter_28_3:getItemNum() == var_28_0 and iter_28_2 ~= var_28_1 then
+	for i, item in ipairs(colItems) do
+		if item:getItemNum() == curNum and i ~= row then
 			return false
 		end
 	end
 
-	local var_28_5, var_28_6 = arg_28_0:_idx2GroupCellIdx(arg_28_1)
-	local var_28_7 = arg_28_0._groupItems[var_28_5]
+	local groupIdx, cellIdx = self:_idx2GroupCellIdx(idx)
+	local groupItems = self._groupItems[groupIdx]
 
-	for iter_28_4, iter_28_5 in ipairs(var_28_7) do
-		if iter_28_5:getItemNum() == var_28_0 and iter_28_4 ~= var_28_6 then
-			return false
-		end
-	end
-
-	return true
-end
-
-function var_0_0._checkPass(arg_29_0)
-	local var_29_0 = true
-
-	for iter_29_0, iter_29_1 in pairs(arg_29_0._emptyItem2Vaild) do
-		if not iter_29_1 then
+	for i, item in ipairs(groupItems) do
+		if item:getItemNum() == curNum and i ~= cellIdx then
 			return false
 		end
 	end
@@ -559,19 +558,33 @@ function var_0_0._checkPass(arg_29_0)
 	return true
 end
 
-function var_0_0._idx2GroupCellIdx(arg_30_0, arg_30_1)
-	return arg_30_0._idx2GroupIdx[arg_30_1], arg_30_0._idx2CellIdx[arg_30_1]
+function VersionActivity2_4SudokuView:_checkPass()
+	local allEmptyWrited = true
+
+	for idx, valid in pairs(self._emptyItem2Vaild) do
+		if not valid then
+			return false
+		end
+	end
+
+	return true
 end
 
-function var_0_0._groupCellIdx2Idx(arg_31_0, arg_31_1, arg_31_2)
-	return math.floor((arg_31_1 - 1) / var_0_4) * var_0_1 * var_0_4 + (arg_31_1 - 1) % var_0_4 * var_0_4 + math.floor((arg_31_2 - 1) / var_0_4) * var_0_1 + (arg_31_2 - 1) % var_0_4 + 1
+function VersionActivity2_4SudokuView:_idx2GroupCellIdx(idx)
+	return self._idx2GroupIdx[idx], self._idx2CellIdx[idx]
 end
 
-function var_0_0._idx2RowCol(arg_32_0, arg_32_1)
-	local var_32_0 = math.floor((arg_32_1 - 1) / var_0_2) + 1
-	local var_32_1 = math.floor((arg_32_1 - 1) % var_0_2) + 1
+function VersionActivity2_4SudokuView:_groupCellIdx2Idx(groupIdx, cellIdx)
+	local idx = math.floor((groupIdx - 1) / groupCountPerLine) * numCountPerGroup * groupCountPerLine + (groupIdx - 1) % groupCountPerLine * groupCountPerLine + math.floor((cellIdx - 1) / groupCountPerLine) * numCountPerGroup + (cellIdx - 1) % groupCountPerLine + 1
 
-	return var_32_0, var_32_1
+	return idx
 end
 
-return var_0_0
+function VersionActivity2_4SudokuView:_idx2RowCol(idx)
+	local row = math.floor((idx - 1) / numCountPerRow) + 1
+	local col = math.floor((idx - 1) % numCountPerRow) + 1
+
+	return row, col
+end
+
+return VersionActivity2_4SudokuView

@@ -1,222 +1,225 @@
-﻿module("modules.logic.playercard.view.PlayerCardAchievementSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardAchievementSelectView.lua
 
-local var_0_0 = class("PlayerCardAchievementSelectView", BaseView)
+module("modules.logic.playercard.view.PlayerCardAchievementSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocategoryitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_category/categorycontent/#go_categoryitem")
-	arg_1_0._goselectgroup = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop/#go_selectgroup")
-	arg_1_0._goselectsingle = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop/#go_selectsingle")
-	arg_1_0._gounselectgroup = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop/#go_unselectgroup")
-	arg_1_0._gounselectsingle = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop/#go_unselectsingle")
-	arg_1_0._btnswitchgroup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_lefttop/#btn_switchgroup")
-	arg_1_0._btnsave = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_save")
-	arg_1_0._txtselectnum = gohelper.findChildText(arg_1_0.viewGO, "#btn_save/#txt_selectnum")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
-	arg_1_0._btnclear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_clear")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_empty")
-	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_content")
-	arg_1_0._goscrollnameplate = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_content_misihai")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
-	arg_1_0._simageBottomBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_BottomBG")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+local PlayerCardAchievementSelectView = class("PlayerCardAchievementSelectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PlayerCardAchievementSelectView:onInitView()
+	self._gocategoryitem = gohelper.findChild(self.viewGO, "#scroll_category/categorycontent/#go_categoryitem")
+	self._goselectgroup = gohelper.findChild(self.viewGO, "#go_lefttop/#go_selectgroup")
+	self._goselectsingle = gohelper.findChild(self.viewGO, "#go_lefttop/#go_selectsingle")
+	self._gounselectgroup = gohelper.findChild(self.viewGO, "#go_lefttop/#go_unselectgroup")
+	self._gounselectsingle = gohelper.findChild(self.viewGO, "#go_lefttop/#go_unselectsingle")
+	self._btnswitchgroup = gohelper.findChildButtonWithAudio(self.viewGO, "#go_lefttop/#btn_switchgroup")
+	self._btnsave = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_save")
+	self._txtselectnum = gohelper.findChildText(self.viewGO, "#btn_save/#txt_selectnum")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_cancel")
+	self._btnclear = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_clear")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_container/#go_empty")
+	self._goscrollcontent = gohelper.findChild(self.viewGO, "#go_container/#scroll_content")
+	self._goscrollnameplate = gohelper.findChild(self.viewGO, "#go_container/#scroll_content_misihai")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._simageBottomBG = gohelper.findChildSingleImage(self.viewGO, "#simage_BottomBG")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnswitchgroup:AddClickListener(arg_2_0._btnswitchgroupOnClick, arg_2_0)
-	arg_2_0._btnsave:AddClickListener(arg_2_0._btnsaveOnClick, arg_2_0)
-	arg_2_0._btnclear:AddClickListener(arg_2_0._btnclearOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
+function PlayerCardAchievementSelectView:addEvents()
+	self._btnswitchgroup:AddClickListener(self._btnswitchgroupOnClick, self)
+	self._btnsave:AddClickListener(self._btnsaveOnClick, self)
+	self._btnclear:AddClickListener(self._btnclearOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnswitchgroup:RemoveClickListener()
-	arg_3_0._btnsave:RemoveClickListener()
-	arg_3_0._btnclear:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
+function PlayerCardAchievementSelectView:removeEvents()
+	self._btnswitchgroup:RemoveClickListener()
+	self._btnsave:RemoveClickListener()
+	self._btnclear:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getAchievementIcon("achievement_editfullbg"))
-	arg_4_0._simageBottomBG:LoadImage(ResUrl.getAchievementIcon("achievement_editbottombg"))
-	arg_4_0:initCategory()
+function PlayerCardAchievementSelectView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getAchievementIcon("achievement_editfullbg"))
+	self._simageBottomBG:LoadImage(ResUrl.getAchievementIcon("achievement_editbottombg"))
+	self:initCategory()
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._categoryItems then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._categoryItems) do
-			iter_5_1.btnself:RemoveClickListener()
+function PlayerCardAchievementSelectView:onDestroyView()
+	if self._categoryItems then
+		for _, item in pairs(self._categoryItems) do
+			item.btnself:RemoveClickListener()
 		end
 
-		arg_5_0._categoryItems = nil
+		self._categoryItems = nil
 	end
 
-	arg_5_0._simagebg:UnLoadImage()
-	arg_5_0._simageBottomBG:UnLoadImage()
+	self._simagebg:UnLoadImage()
+	self._simageBottomBG:UnLoadImage()
 	PlayerCardAchievementSelectController.instance:onCloseView()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = PlayerCardAchievementSelectController.instance:isCurrentShowGroupInPlayerView() and arg_6_0._focusTypes[4] or arg_6_0._focusTypes[1]
+function PlayerCardAchievementSelectView:onOpen()
+	local isGroup = PlayerCardAchievementSelectController.instance:isCurrentShowGroupInPlayerView()
+	local focusType = isGroup and self._focusTypes[4] or self._focusTypes[1]
 
-	PlayerCardAchievementSelectController.instance:onOpenView(var_6_0)
-	arg_6_0:addEventCb(PlayerCardAchievementSelectController.instance, AchievementEvent.SelectViewUpdated, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:refreshUI()
+	PlayerCardAchievementSelectController.instance:onOpenView(focusType)
+	self:addEventCb(PlayerCardAchievementSelectController.instance, AchievementEvent.SelectViewUpdated, self.refreshUI, self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
+function PlayerCardAchievementSelectView:onClose()
 	return
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	local var_8_0 = PlayerCardAchievementSelectListModel.instance.isGroup
-	local var_8_1 = PlayerCardAchievementSelectListModel.instance:getCount()
-	local var_8_2 = PlayerCardAchievementSelectListModel.instance:getSelectCount()
-	local var_8_3 = PlayerCardAchievementSelectListModel.instance:checkIsNamePlate()
-	local var_8_4 = var_8_1 <= 0
+function PlayerCardAchievementSelectView:refreshUI()
+	local isGroup = PlayerCardAchievementSelectListModel.instance.isGroup
+	local count = PlayerCardAchievementSelectListModel.instance:getCount()
+	local selectCount = PlayerCardAchievementSelectListModel.instance:getSelectCount()
+	local isNamePlate = PlayerCardAchievementSelectListModel.instance:checkIsNamePlate()
+	local isEmpty = count <= 0
 
-	gohelper.setActive(arg_8_0._goselectgroup, var_8_0)
-	gohelper.setActive(arg_8_0._gounselectsingle, var_8_0)
-	gohelper.setActive(arg_8_0._goselectsingle, not var_8_0)
-	gohelper.setActive(arg_8_0._gounselectgroup, not var_8_0)
-	gohelper.setActive(arg_8_0._goempty, var_8_4)
-	gohelper.setActive(arg_8_0._goscrollcontent, not var_8_4 and not var_8_3)
-	gohelper.setActive(arg_8_0._goscrollnameplate, not var_8_4 and var_8_3)
-	gohelper.setActive(arg_8_0._btnclear.gameObject, var_8_2 > 0)
-	gohelper.setActive(arg_8_0._golefttop, not var_8_3)
+	gohelper.setActive(self._goselectgroup, isGroup)
+	gohelper.setActive(self._gounselectsingle, isGroup)
+	gohelper.setActive(self._goselectsingle, not isGroup)
+	gohelper.setActive(self._gounselectgroup, not isGroup)
+	gohelper.setActive(self._goempty, isEmpty)
+	gohelper.setActive(self._goscrollcontent, not isEmpty and not isNamePlate)
+	gohelper.setActive(self._goscrollnameplate, not isEmpty and isNamePlate)
+	gohelper.setActive(self._btnclear.gameObject, selectCount > 0)
+	gohelper.setActive(self._golefttop, not isNamePlate)
 
-	if var_8_3 then
-		local var_8_5 = {
+	if isNamePlate then
+		local tag = {
 			PlayerCardAchievementSelectListModel.instance:getSingleSelectedCount(),
 			AchievementEnum.ShowMaxNamePlateCount
 		}
 
-		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectsingle"), var_8_5)
-	elseif var_8_0 then
-		local var_8_6 = {
+		self._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectsingle"), tag)
+	elseif isGroup then
+		local tag = {
 			PlayerCardAchievementSelectListModel.instance:getGroupSelectedCount(),
 			AchievementEnum.ShowMaxGroupCount
 		}
 
-		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectgroup"), var_8_6)
+		self._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectgroup"), tag)
 	else
-		local var_8_7 = {
+		local tag = {
 			PlayerCardAchievementSelectListModel.instance:getSingleSelectedCount(),
 			AchievementEnum.ShowMaxSingleCount
 		}
 
-		arg_8_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectsingle"), var_8_7)
+		self._txtselectnum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("achievementselectview_selectsingle"), tag)
 	end
 
-	arg_8_0:refreshCategory()
+	self:refreshCategory()
 end
 
-function var_0_0.refreshCategory(arg_9_0)
-	local var_9_0 = PlayerCardAchievementSelectListModel.instance:getCurrentCategory()
+function PlayerCardAchievementSelectView:refreshCategory()
+	local curCategory = PlayerCardAchievementSelectListModel.instance:getCurrentCategory()
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._categoryItems) do
-		local var_9_1 = var_9_0 == arg_9_0._focusTypes[iter_9_0]
+	for index, item in pairs(self._categoryItems) do
+		local isSelected = curCategory == self._focusTypes[index]
 
-		gohelper.setActive(iter_9_1.goselected, var_9_1)
-		gohelper.setActive(iter_9_1.gounselected, not var_9_1)
+		gohelper.setActive(item.goselected, isSelected)
+		gohelper.setActive(item.gounselected, not isSelected)
 
-		local var_9_2 = PlayerCardAchievementSelectListModel.instance:getSelectCountByCategory(arg_9_0._focusTypes[iter_9_0])
+		local categorySelectCount = PlayerCardAchievementSelectListModel.instance:getSelectCountByCategory(self._focusTypes[index])
 
-		gohelper.setActive(iter_9_1.goreddot, var_9_2 > 0)
+		gohelper.setActive(item.goreddot, categorySelectCount > 0)
 
-		iter_9_1.txtselectcount.text = var_9_2
+		item.txtselectcount.text = categorySelectCount
 	end
 end
 
-function var_0_0.initCategory(arg_10_0)
-	arg_10_0._focusTypes = {
+function PlayerCardAchievementSelectView:initCategory()
+	self._focusTypes = {
 		AchievementEnum.Type.Story,
 		AchievementEnum.Type.Normal,
 		AchievementEnum.Type.GamePlay,
 		AchievementEnum.Type.Activity,
 		AchievementEnum.Type.NamePlate
 	}
-	arg_10_0._categoryItems = {}
+	self._categoryItems = {}
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._focusTypes) do
-		local var_10_0 = arg_10_0:getUserDataTb_()
+	for index, categoryType in pairs(self._focusTypes) do
+		local item = self:getUserDataTb_()
 
-		var_10_0.go = gohelper.cloneInPlace(arg_10_0._gocategoryitem, "category_" .. tostring(iter_10_0))
+		item.go = gohelper.cloneInPlace(self._gocategoryitem, "category_" .. tostring(index))
 
-		gohelper.setActive(var_10_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_10_0.gounselected = gohelper.findChild(var_10_0.go, "go_unselected")
-		var_10_0.txtitemcn1 = gohelper.findChildText(var_10_0.go, "go_unselected/txt_itemcn1")
-		var_10_0.txtitemen1 = gohelper.findChildText(var_10_0.go, "go_unselected/txt_itemen1")
-		var_10_0.goselected = gohelper.findChild(var_10_0.go, "go_selected")
-		var_10_0.txtitemcn2 = gohelper.findChildText(var_10_0.go, "go_selected/txt_itemcn2")
-		var_10_0.txtitemen2 = gohelper.findChildText(var_10_0.go, "go_selected/txt_itemen2")
-		var_10_0.goreddot = gohelper.findChild(var_10_0.go, "go_reddot")
-		var_10_0.txtselectcount = gohelper.findChildText(var_10_0.go, "go_reddot/txt_reddot")
-		var_10_0.btnself = gohelper.findChildButtonWithAudio(var_10_0.go, "btn_self")
+		item.gounselected = gohelper.findChild(item.go, "go_unselected")
+		item.txtitemcn1 = gohelper.findChildText(item.go, "go_unselected/txt_itemcn1")
+		item.txtitemen1 = gohelper.findChildText(item.go, "go_unselected/txt_itemen1")
+		item.goselected = gohelper.findChild(item.go, "go_selected")
+		item.txtitemcn2 = gohelper.findChildText(item.go, "go_selected/txt_itemcn2")
+		item.txtitemen2 = gohelper.findChildText(item.go, "go_selected/txt_itemen2")
+		item.goreddot = gohelper.findChild(item.go, "go_reddot")
+		item.txtselectcount = gohelper.findChildText(item.go, "go_reddot/txt_reddot")
+		item.btnself = gohelper.findChildButtonWithAudio(item.go, "btn_self")
 
-		var_10_0.btnself:AddClickListener(arg_10_0.onClickCategory, arg_10_0, iter_10_0)
+		item.btnself:AddClickListener(self.onClickCategory, self, index)
 
-		local var_10_1 = AchievementEnum.TypeName[iter_10_1]
-		local var_10_2 = AchievementEnum.TypeNameEn[iter_10_1]
+		local nameId = AchievementEnum.TypeName[categoryType]
+		local nameEn = AchievementEnum.TypeNameEn[categoryType]
 
-		if not string.nilorempty(var_10_1) then
-			var_10_0.txtitemcn1.text = luaLang(var_10_1)
-			var_10_0.txtitemcn2.text = luaLang(var_10_1)
-			var_10_0.txtitemen1.text = tostring(var_10_2)
-			var_10_0.txtitemen2.text = tostring(var_10_2)
+		if not string.nilorempty(nameId) then
+			item.txtitemcn1.text = luaLang(nameId)
+			item.txtitemcn2.text = luaLang(nameId)
+			item.txtitemen1.text = tostring(nameEn)
+			item.txtitemen2.text = tostring(nameEn)
 		end
 
-		arg_10_0._categoryItems[iter_10_0] = var_10_0
+		self._categoryItems[index] = item
 	end
 end
 
-function var_0_0.onClickCategory(arg_11_0, arg_11_1)
-	local var_11_0 = PlayerCardAchievementSelectListModel.instance:getCurrentCategory()
-	local var_11_1 = arg_11_0._focusTypes[arg_11_1]
+function PlayerCardAchievementSelectView:onClickCategory(index)
+	local curCategory = PlayerCardAchievementSelectListModel.instance:getCurrentCategory()
+	local category = self._focusTypes[index]
 
-	if var_11_0 == var_11_1 then
+	if curCategory == category then
 		return
 	end
 
-	arg_11_0.viewContainer._scrollView._csMixScroll:ResetScrollPos()
+	self.viewContainer._scrollView._csMixScroll:ResetScrollPos()
 	PlayerCardAchievementSelectListModel.instance:setItemAniHasShownIndex(0)
-	PlayerCardAchievementSelectController.instance:setCategory(var_11_1)
+	PlayerCardAchievementSelectController.instance:setCategory(category)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_switch)
 end
 
-function var_0_0._btnswitchgroupOnClick(arg_12_0)
-	arg_12_0.viewContainer._scrollView._csMixScroll:ResetScrollPos()
+function PlayerCardAchievementSelectView:_btnswitchgroupOnClick()
+	self.viewContainer._scrollView._csMixScroll:ResetScrollPos()
 	PlayerCardAchievementSelectListModel.instance:setItemAniHasShownIndex(0)
 	PlayerCardAchievementSelectController.instance:switchGroup()
 end
 
-function var_0_0._btnsaveOnClick(arg_13_0)
+function PlayerCardAchievementSelectView:_btnsaveOnClick()
 	PlayerCardController.instance:saveAchievement()
-	arg_13_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnclearOnClick(arg_14_0)
+function PlayerCardAchievementSelectView:_btnclearOnClick()
 	PlayerCardAchievementSelectController.instance:clearAllSelect()
 end
 
-function var_0_0._btncancelOnClick(arg_15_0)
-	arg_15_0:closeThis()
+function PlayerCardAchievementSelectView:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._jump2AchievementMainView(arg_16_0)
+function PlayerCardAchievementSelectView:_jump2AchievementMainView()
 	PlayerCardAchievementSelectController.instance:resumeToOriginSelect()
 
-	local var_16_0 = PlayerCardAchievementSelectListModel.instance:getCurrentCategory()
+	local curCategory = PlayerCardAchievementSelectListModel.instance:getCurrentCategory()
 
 	ViewMgr.instance:openView(ViewName.PlayerCardAchievementSelectView, {
-		selectType = var_16_0,
+		selectType = curCategory,
 		jumpFrom = ViewName.PlayerCardAchievementSelectView
 	})
-	arg_16_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return PlayerCardAchievementSelectView

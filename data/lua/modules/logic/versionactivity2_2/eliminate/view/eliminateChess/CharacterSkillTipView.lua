@@ -1,246 +1,254 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.CharacterSkillTipView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/CharacterSkillTipView.lua
 
-local var_0_0 = class("CharacterSkillTipView", BaseView)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.CharacterSkillTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._gochessTip = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip")
-	arg_1_0._imageRoleSkill = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip/Info/image/#image_RoleSkill")
-	arg_1_0._simageRoleSkill = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_chessTip/Info/image/#image_RoleSkill")
-	arg_1_0._goSkillEnergyBG = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip/Info/#go_SkillEnergyBG")
-	arg_1_0._txtRoleCostNum = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Info/#go_SkillEnergyBG/#txt_RoleCostNum")
-	arg_1_0._txtSkillName = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Info/#txt_SkillName")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip/Scroll View/Viewport/#txt_Descr")
-	arg_1_0._btnclick2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click_2")
-	arg_1_0._gochessTip2 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2")
-	arg_1_0._imageChessQualityBG = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip_2/Info/#image_ChessQualityBG")
-	arg_1_0._imageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_chessTip_2/Info/#image_Chess")
-	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/#go_Resource")
-	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem")
-	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
-	arg_1_0._txtResourceNum = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
-	arg_1_0._txtFireNum = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip_2/Info/image_Fire/#txt_FireNum")
-	arg_1_0._goStar1 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/Stars/#go_Star1")
-	arg_1_0._goStar2 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/Stars/#go_Star2")
-	arg_1_0._goStar3 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/Stars/#go_Star3")
-	arg_1_0._goStar4 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/Stars/#go_Star4")
-	arg_1_0._goStar5 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/Stars/#go_Star5")
-	arg_1_0._goStar6 = gohelper.findChild(arg_1_0.viewGO, "#go_chessTip_2/Info/Stars/#go_Star6")
-	arg_1_0._txtChessName = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip_2/Info/#txt_ChessName")
-	arg_1_0._txtchessDescr = gohelper.findChildText(arg_1_0.viewGO, "#go_chessTip_2/Scroll View/Viewport/#txt_chess_Descr")
+local CharacterSkillTipView = class("CharacterSkillTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSkillTipView:onInitView()
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._gochessTip = gohelper.findChild(self.viewGO, "#go_chessTip")
+	self._imageRoleSkill = gohelper.findChildImage(self.viewGO, "#go_chessTip/Info/image/#image_RoleSkill")
+	self._simageRoleSkill = gohelper.findChildSingleImage(self.viewGO, "#go_chessTip/Info/image/#image_RoleSkill")
+	self._goSkillEnergyBG = gohelper.findChild(self.viewGO, "#go_chessTip/Info/#go_SkillEnergyBG")
+	self._txtRoleCostNum = gohelper.findChildText(self.viewGO, "#go_chessTip/Info/#go_SkillEnergyBG/#txt_RoleCostNum")
+	self._txtSkillName = gohelper.findChildText(self.viewGO, "#go_chessTip/Info/#txt_SkillName")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "#go_chessTip/Scroll View/Viewport/#txt_Descr")
+	self._btnclick2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click_2")
+	self._gochessTip2 = gohelper.findChild(self.viewGO, "#go_chessTip_2")
+	self._imageChessQualityBG = gohelper.findChildImage(self.viewGO, "#go_chessTip_2/Info/#image_ChessQualityBG")
+	self._imageChess = gohelper.findChildSingleImage(self.viewGO, "#go_chessTip_2/Info/#image_Chess")
+	self._goResource = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/#go_Resource")
+	self._goResourceItem = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem")
+	self._imageResourceQuality = gohelper.findChildImage(self.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
+	self._txtResourceNum = gohelper.findChildText(self.viewGO, "#go_chessTip_2/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
+	self._txtFireNum = gohelper.findChildText(self.viewGO, "#go_chessTip_2/Info/image_Fire/#txt_FireNum")
+	self._goStar1 = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/Stars/#go_Star1")
+	self._goStar2 = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/Stars/#go_Star2")
+	self._goStar3 = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/Stars/#go_Star3")
+	self._goStar4 = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/Stars/#go_Star4")
+	self._goStar5 = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/Stars/#go_Star5")
+	self._goStar6 = gohelper.findChild(self.viewGO, "#go_chessTip_2/Info/Stars/#go_Star6")
+	self._txtChessName = gohelper.findChildText(self.viewGO, "#go_chessTip_2/Info/#txt_ChessName")
+	self._txtchessDescr = gohelper.findChildText(self.viewGO, "#go_chessTip_2/Scroll View/Viewport/#txt_chess_Descr")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
-	arg_2_0._btnclick2:AddClickListener(arg_2_0._btnclick2OnClick, arg_2_0)
+function CharacterSkillTipView:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self._btnclick2:AddClickListener(self._btnclick2OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnclick2:RemoveClickListener()
+function CharacterSkillTipView:removeEvents()
+	self._btnclick:RemoveClickListener()
+	self._btnclick2:RemoveClickListener()
 end
 
-function var_0_0._btnclick2OnClick(arg_4_0)
-	arg_4_0:hideSoliderInfo()
+function CharacterSkillTipView:_btnclick2OnClick()
+	self:hideSoliderInfo()
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
-	if arg_5_0._clickBgCb then
-		arg_5_0._clickBgCb(arg_5_0._clickBgCbTarget)
+function CharacterSkillTipView:_btnclickOnClick()
+	if self._clickBgCb then
+		self._clickBgCb(self._clickBgCbTarget)
 	end
 
-	arg_5_0:hideView()
+	self:hideView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._chessTipAni = arg_6_0._gochessTip:GetComponent(typeof(UnityEngine.Animator))
+function CharacterSkillTipView:_editableInitView()
+	self._chessTipAni = self._gochessTip:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function CharacterSkillTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam
+function CharacterSkillTipView:onOpen()
+	local param = self.viewParam
 
-	arg_8_0._showType = var_8_0.showType
+	self._showType = param.showType
 
-	local var_8_1 = var_8_0.skillId
-	local var_8_2 = var_8_0.forecastChess
-	local var_8_3 = var_8_0.point
+	local skillId = param.skillId
+	local forecastChess = param.forecastChess
+	local parent = param.point
 
-	if arg_8_0._showType == EliminateLevelEnum.skillShowType.skill then
-		arg_8_0:setSkillId(var_8_1)
+	if self._showType == EliminateLevelEnum.skillShowType.skill then
+		self:setSkillId(skillId)
 	end
 
-	if arg_8_0._showType == EliminateLevelEnum.skillShowType.forecast then
-		arg_8_0:setForecastChess(var_8_2)
+	if self._showType == EliminateLevelEnum.skillShowType.forecast then
+		self:setForecastChess(forecastChess)
 	end
 
-	arg_8_0:setChessTip2Active(false)
-	arg_8_0:setPoint(var_8_3)
+	self:setChessTip2Active(false)
+	self:setPoint(parent)
 end
 
-function var_0_0.onClose(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.closeThis, arg_9_0)
+function CharacterSkillTipView:onClose()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-function var_0_0.setSkillId(arg_10_0, arg_10_1)
-	arg_10_0._skillId = arg_10_1
+function CharacterSkillTipView:setSkillId(skillId)
+	self._skillId = skillId
 
-	local var_10_0 = EliminateConfig.instance:getMainCharacterSkillConfig(arg_10_1)
+	local skillConfig = EliminateConfig.instance:getMainCharacterSkillConfig(skillId)
 
-	arg_10_0._txtSkillName.text = var_10_0 and var_10_0.name or ""
-	arg_10_0._txtDescr.text = var_10_0 and EliminateLevelModel.instance.formatString(var_10_0.desc) or ""
-	arg_10_0._txtRoleCostNum.text = var_10_0 and var_10_0.cost or ""
+	self._txtSkillName.text = skillConfig and skillConfig.name or ""
+	self._txtDescr.text = skillConfig and EliminateLevelModel.instance.formatString(skillConfig.desc) or ""
+	self._txtRoleCostNum.text = skillConfig and skillConfig.cost or ""
 
-	local var_10_1 = var_10_0 and var_10_0.icon or ""
+	local icon = skillConfig and skillConfig.icon or ""
 
-	if not string.nilorempty(var_10_1) then
-		UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_10_0._imageRoleSkill, var_10_1, false)
+	if not string.nilorempty(icon) then
+		UISpriteSetMgr.instance:setV2a2EliminateSprite(self._imageRoleSkill, icon, false)
 	end
 
-	arg_10_0:refreshShowByType()
+	self:refreshShowByType()
 end
 
-function var_0_0.setForecastChess(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1[1]
-	local var_11_1 = var_11_0.chessId
-	local var_11_2 = EliminateConfig.instance:getSoldierChessConfig(var_11_1)
-	local var_11_3 = var_11_2 and var_11_2.resPic or ""
+function CharacterSkillTipView:setForecastChess(forecastChess)
+	local forecastData = forecastChess[1]
+	local chessId = forecastData.chessId
+	local config = EliminateConfig.instance:getSoldierChessConfig(chessId)
+	local icon = config and config.resPic or ""
 
-	if not string.nilorempty(var_11_3) then
-		SurvivalUnitIconHelper.instance:setNpcIcon(arg_11_0._simageRoleSkill, var_11_3)
-		gohelper.setActive(arg_11_0._goEnemySkill, true)
+	if not string.nilorempty(icon) then
+		SurvivalUnitIconHelper.instance:setNpcIcon(self._simageRoleSkill, icon)
+		gohelper.setActive(self._goEnemySkill, true)
 	end
 
-	local var_11_4 = EliminateLevelModel.instance:getRoundNumber()
-	local var_11_5 = ""
-	local var_11_6 = luaLang("CharacterSkillTipView_chess_residue_round_fmt")
+	local curRound = EliminateLevelModel.instance:getRoundNumber()
+	local desc = ""
+	local tempDesc = luaLang("CharacterSkillTipView_chess_residue_round_fmt")
 
-	for iter_11_0 = 1, #arg_11_1 do
-		local var_11_7 = arg_11_1[iter_11_0].chessId
-		local var_11_8 = EliminateConfig.instance:getSoldierChessConfig(var_11_7)
-		local var_11_9 = var_11_0.round - var_11_4
-		local var_11_10 = string.format(luaLang("CharacterSkillTipView_txtDescr_overseas"), var_11_7, var_11_8.name)
+	for i = 1, #forecastChess do
+		local data = forecastChess[i]
+		local chessId = data.chessId
 
-		var_11_5 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_11_6, var_11_9, var_11_10) .. "\n"
+		config = EliminateConfig.instance:getSoldierChessConfig(chessId)
+
+		local round = forecastData.round
+		local residueRound = round - curRound
+		local name = string.format(luaLang("CharacterSkillTipView_txtDescr_overseas"), chessId, config.name)
+
+		desc = GameUtil.getSubPlaceholderLuaLangTwoParam(tempDesc, residueRound, name) .. "\n"
 	end
 
-	arg_11_0._txtDescr.text = var_11_5
+	self._txtDescr.text = desc
 
-	gohelper.onceAddComponent(arg_11_0._txtDescr.gameObject, typeof(ZProj.TMPHyperLinkClick)):SetClickListener(arg_11_0.txtClick, arg_11_0)
-	arg_11_0:refreshShowByType()
+	local hyperLinkClick = gohelper.onceAddComponent(self._txtDescr.gameObject, typeof(ZProj.TMPHyperLinkClick))
+
+	hyperLinkClick:SetClickListener(self.txtClick, self)
+	self:refreshShowByType()
 end
 
-function var_0_0.txtClick(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._showType == EliminateLevelEnum.skillShowType.skill then
+function CharacterSkillTipView:txtClick(data, clickPosition)
+	if self._showType == EliminateLevelEnum.skillShowType.skill then
 		return
 	end
 
-	arg_12_0:showSoliderInfo(tonumber(arg_12_1))
+	self:showSoliderInfo(tonumber(data))
 end
 
-function var_0_0.refreshShowByType(arg_13_0)
-	gohelper.setActive(arg_13_0._txtSkillName.gameObject, arg_13_0._showType == EliminateLevelEnum.skillShowType.skill)
-	gohelper.setActive(arg_13_0._goSkillEnergyBG, arg_13_0._showType == EliminateLevelEnum.skillShowType.skill)
+function CharacterSkillTipView:refreshShowByType()
+	gohelper.setActive(self._txtSkillName.gameObject, self._showType == EliminateLevelEnum.skillShowType.skill)
+	gohelper.setActive(self._goSkillEnergyBG, self._showType == EliminateLevelEnum.skillShowType.skill)
 end
 
-function var_0_0.showSoliderInfo(arg_14_0, arg_14_1)
-	arg_14_0:showSoliderInfoByClick(arg_14_1)
+function CharacterSkillTipView:showSoliderInfo(soliderId)
+	self:showSoliderInfoByClick(soliderId)
 end
 
-function var_0_0.hideSoliderInfo(arg_15_0)
-	arg_15_0:setChessTip2Active(false)
+function CharacterSkillTipView:hideSoliderInfo()
+	self:setChessTip2Active(false)
 end
 
-function var_0_0.setChessTip2Active(arg_16_0, arg_16_1)
-	gohelper.setActive(arg_16_0._btnclick2, arg_16_1)
-	gohelper.setActive(arg_16_0._gochessTip2, arg_16_1)
+function CharacterSkillTipView:setChessTip2Active(active)
+	gohelper.setActive(self._btnclick2, active)
+	gohelper.setActive(self._gochessTip2, active)
 end
 
-function var_0_0.showSoliderInfoByClick(arg_17_0, arg_17_1)
-	local var_17_0 = EliminateConfig.instance:getSoldierChessConfig(arg_17_1)
+function CharacterSkillTipView:showSoliderInfoByClick(soliderId)
+	local config = EliminateConfig.instance:getSoldierChessConfig(soliderId)
 
-	if var_17_0 == nil then
+	if config == nil then
 		return
 	end
 
-	SurvivalUnitIconHelper.instance:setNpcIcon(arg_17_0._imageChess, var_17_0.resPic)
-	UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_17_0._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. var_17_0.level, false)
+	SurvivalUnitIconHelper.instance:setNpcIcon(self._imageChess, config.resPic)
+	UISpriteSetMgr.instance:setV2a2EliminateSprite(self._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. config.level, false)
 
-	arg_17_0._txtFireNum.text = var_17_0.defaultPower
-	arg_17_0._txtChessName.text = var_17_0.name
+	self._txtFireNum.text = config.defaultPower
+	self._txtChessName.text = config.name
 
-	local var_17_1 = EliminateConfig.instance:getSoldierChessDesc(arg_17_1)
+	local desc = EliminateConfig.instance:getSoldierChessDesc(soliderId)
 
-	arg_17_0._txtchessDescr.text = EliminateLevelModel.instance.formatString(var_17_1)
+	self._txtchessDescr.text = EliminateLevelModel.instance.formatString(desc)
 
-	local var_17_2, var_17_3 = EliminateConfig.instance:getSoldierChessConfigConst(arg_17_1)
+	local costs, _ = EliminateConfig.instance:getSoldierChessConfigConst(soliderId)
 
-	if arg_17_0._resourceItem then
-		for iter_17_0 = 1, #arg_17_0._resourceItem do
-			local var_17_4 = arg_17_0._resourceItem[iter_17_0]
+	if self._resourceItem then
+		for i = 1, #self._resourceItem do
+			local item = self._resourceItem[i]
 
-			gohelper.setActive(var_17_4, false)
-			gohelper.destroy(var_17_4)
+			gohelper.setActive(item, false)
+			gohelper.destroy(item)
 		end
 
-		tabletool.clear(arg_17_0._resourceItem)
+		tabletool.clear(self._resourceItem)
 	else
-		arg_17_0._resourceItem = arg_17_0:getUserDataTb_()
+		self._resourceItem = self:getUserDataTb_()
 	end
 
-	if not var_17_2 then
+	if not costs then
 		return
 	end
 
-	for iter_17_1, iter_17_2 in ipairs(var_17_2) do
-		local var_17_5 = iter_17_2[1]
-		local var_17_6 = iter_17_2[2]
-		local var_17_7 = gohelper.clone(arg_17_0._goResourceItem, arg_17_0._goResource, var_17_5)
-		local var_17_8 = gohelper.findChildImage(var_17_7, "#image_ResourceQuality")
-		local var_17_9 = gohelper.findChildText(var_17_7, "#image_ResourceQuality/#txt_ResourceNum")
+	for _, cost in ipairs(costs) do
+		local resourceId = cost[1]
+		local num = cost[2]
+		local item = gohelper.clone(self._goResourceItem, self._goResource, resourceId)
+		local resourceImage = gohelper.findChildImage(item, "#image_ResourceQuality")
+		local resourceNumberText = gohelper.findChildText(item, "#image_ResourceQuality/#txt_ResourceNum")
 
-		UISpriteSetMgr.instance:setV2a2EliminateSprite(var_17_8, EliminateTeamChessEnum.ResourceTypeToImagePath[var_17_5], false)
+		UISpriteSetMgr.instance:setV2a2EliminateSprite(resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 
-		var_17_9.text = var_17_6
+		resourceNumberText.text = num
 
-		gohelper.setActive(var_17_7, true)
-		table.insert(arg_17_0._resourceItem, var_17_7)
+		gohelper.setActive(item, true)
+		table.insert(self._resourceItem, item)
 	end
 
-	arg_17_0:setChessTip2Active(true)
+	self:setChessTip2Active(true)
 end
 
-function var_0_0.setClickBgCb(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._clickBgCb = arg_18_1
-	arg_18_0._clickBgCbTarget = arg_18_2
+function CharacterSkillTipView:setClickBgCb(cb, cbTarget)
+	self._clickBgCb = cb
+	self._clickBgCbTarget = cbTarget
 end
 
-function var_0_0.setPoint(arg_19_0, arg_19_1)
-	if not gohelper.isNil(arg_19_1) then
-		local var_19_0, var_19_1, var_19_2 = transformhelper.getPos(arg_19_1.transform)
-		local var_19_3, var_19_4 = recthelper.worldPosToAnchorPosXYZ(var_19_0, var_19_1, var_19_2, arg_19_0.viewGO.transform)
+function CharacterSkillTipView:setPoint(point)
+	if not gohelper.isNil(point) then
+		local posX, posY, posZ = transformhelper.getPos(point.transform)
+		local rectPosX, rectPosY = recthelper.worldPosToAnchorPosXYZ(posX, posY, posZ, self.viewGO.transform)
 
-		recthelper.setAnchor(arg_19_0._gochessTip.transform, var_19_3, var_19_4)
-		gohelper.setActive(arg_19_0._gochessTip, true)
-	end
-end
-
-function var_0_0.hideView(arg_20_0)
-	if arg_20_0._chessTipAni then
-		arg_20_0._chessTipAni:Play("close")
-		TaskDispatcher.runDelay(arg_20_0.closeThis, arg_20_0, 0.33)
+		recthelper.setAnchor(self._gochessTip.transform, rectPosX, rectPosY)
+		gohelper.setActive(self._gochessTip, true)
 	end
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function CharacterSkillTipView:hideView()
+	if self._chessTipAni then
+		self._chessTipAni:Play("close")
+		TaskDispatcher.runDelay(self.closeThis, self, 0.33)
+	end
+end
+
+function CharacterSkillTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CharacterSkillTipView

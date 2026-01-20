@@ -1,88 +1,90 @@
-﻿module("modules.logic.versionactivity3_0.enter.view.VersionActivity3_0EnterDragView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/enter/view/VersionActivity3_0EnterDragView.lua
 
-local var_0_0 = class("VersionActivity3_0EnterDragView", BaseView)
+module("modules.logic.versionactivity3_0.enter.view.VersionActivity3_0EnterDragView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local VersionActivity3_0EnterDragView = class("VersionActivity3_0EnterDragView", BaseView)
 
-	arg_1_0._nodeName = arg_1_1
+function VersionActivity3_0EnterDragView:ctor(nodeName)
+	VersionActivity3_0EnterDragView.super.ctor(self)
+
+	self._nodeName = nodeName
 end
 
-function var_0_0.onInitView(arg_2_0)
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+function VersionActivity3_0EnterDragView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
+function VersionActivity3_0EnterDragView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_4_0)
+function VersionActivity3_0EnterDragView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	if not arg_5_0._nodeName then
+function VersionActivity3_0EnterDragView:_editableInitView()
+	if not self._nodeName then
 		logError(string.format("需要给VersionActivity3_0EnterDragView传递拖动节点名称"))
 
 		return
 	end
 
-	local var_5_0 = gohelper.findChild(arg_5_0.viewGO, arg_5_0._nodeName)
+	local node = gohelper.findChild(self.viewGO, self._nodeName)
 
-	if not var_5_0 then
-		logError(string.format("VersionActivity3_0EnterDragView没有找到节点:%s", arg_5_0._nodeName))
+	if not node then
+		logError(string.format("VersionActivity3_0EnterDragView没有找到节点:%s", self._nodeName))
 
 		return
 	end
 
-	local var_5_1 = arg_5_0.viewContainer:getSetting().otherRes[1]
-	local var_5_2 = arg_5_0.viewContainer:getResInst(var_5_1, arg_5_0.viewGO)
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local dragItemGo = self.viewContainer:getResInst(path, self.viewGO)
 
-	gohelper.setSiblingAfter(var_5_2, var_5_0)
+	gohelper.setSiblingAfter(dragItemGo, node)
 
-	arg_5_0._drag = SLFramework.UGUI.UIDragListener.Get(var_5_2)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(dragItemGo)
 
-	arg_5_0._drag:AddDragBeginListener(arg_5_0._onDragBegin, arg_5_0)
-	arg_5_0._drag:AddDragEndListener(arg_5_0._onDragEnd, arg_5_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 end
 
-function var_0_0.onOpen(arg_6_0)
+function VersionActivity3_0EnterDragView:onOpen()
 	return
 end
 
-function var_0_0._onDragBegin(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._dragBeginPos = arg_7_2.position
+function VersionActivity3_0EnterDragView:_onDragBegin(param, pointerEventData)
+	self._dragBeginPos = pointerEventData.position
 end
 
-function var_0_0._onDragEnd(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_0._dragBeginPos then
+function VersionActivity3_0EnterDragView:_onDragEnd(param, pointerEventData)
+	if not self._dragBeginPos then
 		return
 	end
 
-	local var_8_0 = arg_8_2.position - arg_8_0._dragBeginPos
+	local deltaPos = pointerEventData.position - self._dragBeginPos
 
-	if math.abs(var_8_0.x) < 50 or math.abs(var_8_0.y) > 100 then
+	if math.abs(deltaPos.x) < 50 or math.abs(deltaPos.y) > 100 then
 		return
 	end
 
-	local var_8_1 = var_8_0.x < 0
+	local moveLeft = deltaPos.x < 0
 
-	VersionActivityBaseController.instance:dispatchEvent(VersionActivityEnterViewEvent.DragOpenAct, var_8_1)
+	VersionActivityBaseController.instance:dispatchEvent(VersionActivityEnterViewEvent.DragOpenAct, moveLeft)
 end
 
-function var_0_0.onClose(arg_9_0)
+function VersionActivity3_0EnterDragView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	if arg_10_0._drag then
-		arg_10_0._drag:RemoveDragBeginListener()
-		arg_10_0._drag:RemoveDragEndListener()
+function VersionActivity3_0EnterDragView:onDestroyView()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_10_0._drag = nil
+		self._drag = nil
 	end
 end
 
-return var_0_0
+return VersionActivity3_0EnterDragView

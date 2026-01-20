@@ -1,21 +1,23 @@
-﻿module("projbooter.sdk.SDKDataTrackMgr", package.seeall)
+﻿-- chunkname: @projbooter/sdk/SDKDataTrackMgr.lua
 
-local var_0_0 = class("SDKDataTrackMgr")
+module("projbooter.sdk.SDKDataTrackMgr", package.seeall)
 
-function var_0_0.trackNoticeLoad(arg_1_0, arg_1_1)
-	var_0_0.instance:track(var_0_0.EventName.notice_load, {
-		[var_0_0.EventProperties.notice_id] = arg_1_1.notice_id or -1
+local SDKDataTrackMgr = class("SDKDataTrackMgr")
+
+function SDKDataTrackMgr:trackNoticeLoad(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.notice_load, {
+		[SDKDataTrackMgr.EventProperties.notice_id] = data.notice_id or -1
 	})
 end
 
-function var_0_0.trackNoticeJump(arg_2_0, arg_2_1)
-	var_0_0.instance:track(var_0_0.EventName.notice_jump, {
-		[var_0_0.EventProperties.notice_id] = arg_2_1.notice_id or -1,
-		[var_0_0.EventProperties.notice_jump_id] = arg_2_1.notice_jump_id or -1
+function SDKDataTrackMgr:trackNoticeJump(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.notice_jump, {
+		[SDKDataTrackMgr.EventProperties.notice_id] = data.notice_id or -1,
+		[SDKDataTrackMgr.EventProperties.notice_jump_id] = data.notice_jump_id or -1
 	})
 end
 
-var_0_0.EventName = {
+SDKDataTrackMgr.EventName = {
 	resources_downloading = "resources_downloading",
 	hotupdate_41_60 = "hotupdate_41_60",
 	resource_load = "resource_load",
@@ -35,6 +37,7 @@ var_0_0.EventName = {
 	HotUpdate = "hot_update",
 	event_hostswitch = "event_hostswitch",
 	voice_pack_delete = "voice_pack_delete",
+	resource_fixup = "resource_fixup",
 	unzip_finish = "unzip_finish",
 	unzip_start = "unzip_start",
 	main_hero_interaction = "main_hero_interaction",
@@ -51,116 +54,124 @@ var_0_0.EventName = {
 	resource_load_fail = "resource_load_fail",
 	unzip_finish_fail = "unzip_finish_fail"
 }
-var_0_0.EventProperties = {
+SDKDataTrackMgr.EventProperties = {
 	data_length = "data_length",
-	UpdateAmount = "update_amount",
-	host_ip = "host_ip",
+	resource_fixup_count = "resource_count",
+	entrance = "entrance",
 	current_language = "current_language",
 	main_hero_interaction_voice_id = "voiceid",
 	notice_jump_id = "jump_id",
 	update_amount = "update_amount",
-	spend_time = "spend_time",
 	voice_pack_before = "voice_pack_before",
+	host_ip = "host_ip",
 	start_timestamp = "start_timestamp",
-	result_message = "result_message",
+	resource_type = "resource_type",
 	result = "result",
 	download_voice_pack_list = "download_voice_pack_list",
-	entrance = "entrance",
-	main_hero_interaction_area_id = "area_id",
 	gamescene = "gamescene",
-	main_hero_interaction_skin_id = "skinid",
+	main_hero_interaction_area_id = "area_id",
+	fail_count = "fail_count",
+	result_code = "result_code",
 	UpdatePercentage = "update_percentage",
-	request_result = "request_result",
-	resource_type = "resource_type",
-	currenthost = "currenthost",
+	voice_pack_delete = "voice_pack_delete",
 	current_voice_pack_used = "current_voice_pack_used",
 	result_msg = "result_msg",
-	voice_pack_delete = "voice_pack_delete",
 	switchcount = "switchcount",
-	result_code = "result_code",
-	notice_id = "notice_id",
-	request_url = "request_url",
 	current_voice_pack_list = "current_voice_pack_list",
-	step = "step"
+	step = "step",
+	UpdateAmount = "update_amount",
+	spend_time = "spend_time",
+	result_message = "result_message",
+	currenthost = "currenthost",
+	main_hero_interaction_skin_id = "skinid",
+	resource_fixup_status = "status",
+	request_result = "request_result",
+	notice_id = "notice_id",
+	request_url = "request_url"
 }
-var_0_0.RequestResult = {
+SDKDataTrackMgr.RequestResult = {
 	success = "success",
 	fail = "fail"
 }
-var_0_0.Result = {
+SDKDataTrackMgr.Result = {
 	success = "success",
 	fail = "fail"
 }
-var_0_0.UserProperties = {
+SDKDataTrackMgr.UserProperties = {
 	FirstStartTime = "frist_star_time",
 	DownloadChannel = "DownloadChannel",
 	AppChannelId = "app_channelid",
 	AppSubChannelId = "app_subchannelid"
 }
-var_0_0.PropertyTypes = {
-	[var_0_0.EventProperties.notice_id] = "number",
-	[var_0_0.EventProperties.notice_jump_id] = "number",
-	[var_0_0.EventProperties.UpdateAmount] = "number",
-	[var_0_0.EventProperties.UpdatePercentage] = "string",
-	[var_0_0.UserProperties.DownloadChannel] = "string",
-	[var_0_0.UserProperties.AppChannelId] = "string",
-	[var_0_0.UserProperties.AppSubChannelId] = "string",
-	[var_0_0.UserProperties.AppSubChannelId] = "string",
-	[var_0_0.EventProperties.request_result] = "string",
-	[var_0_0.EventProperties.request_url] = "string",
-	[var_0_0.EventProperties.result_code] = "string",
-	[var_0_0.EventProperties.result_message] = "string",
-	[var_0_0.EventProperties.start_timestamp] = "datetime",
-	[var_0_0.EventProperties.spend_time] = "number",
-	[var_0_0.EventProperties.data_length] = "number",
-	[var_0_0.EventProperties.host_ip] = "string",
-	[var_0_0.EventProperties.result] = "string",
-	[var_0_0.EventProperties.result_msg] = "string",
-	[var_0_0.EventProperties.current_language] = "string",
-	[var_0_0.EventProperties.entrance] = "string",
-	[var_0_0.EventProperties.current_voice_pack_list] = "list",
-	[var_0_0.EventProperties.current_voice_pack_used] = "string",
-	[var_0_0.EventProperties.download_voice_pack_list] = "list",
-	[var_0_0.EventProperties.update_amount] = "number",
-	[var_0_0.EventProperties.step] = "string",
-	[var_0_0.EventProperties.voice_pack_before] = "string",
-	[var_0_0.EventProperties.voice_pack_delete] = "string",
-	[var_0_0.EventProperties.gamescene] = "string",
-	[var_0_0.EventProperties.currenthost] = "string",
-	[var_0_0.EventProperties.switchcount] = "number",
-	[var_0_0.EventProperties.resource_type] = "list",
-	[var_0_0.EventProperties.main_hero_interaction_skin_id] = "number",
-	[var_0_0.EventProperties.main_hero_interaction_area_id] = "number",
-	[var_0_0.EventProperties.main_hero_interaction_voice_id] = "string"
+SDKDataTrackMgr.PropertyTypes = {
+	[SDKDataTrackMgr.EventProperties.notice_id] = "number",
+	[SDKDataTrackMgr.EventProperties.notice_jump_id] = "number",
+	[SDKDataTrackMgr.EventProperties.UpdateAmount] = "number",
+	[SDKDataTrackMgr.EventProperties.UpdatePercentage] = "string",
+	[SDKDataTrackMgr.UserProperties.DownloadChannel] = "string",
+	[SDKDataTrackMgr.UserProperties.AppChannelId] = "string",
+	[SDKDataTrackMgr.UserProperties.AppSubChannelId] = "string",
+	[SDKDataTrackMgr.UserProperties.AppSubChannelId] = "string",
+	[SDKDataTrackMgr.EventProperties.request_result] = "string",
+	[SDKDataTrackMgr.EventProperties.request_url] = "string",
+	[SDKDataTrackMgr.EventProperties.result_code] = "string",
+	[SDKDataTrackMgr.EventProperties.result_message] = "string",
+	[SDKDataTrackMgr.EventProperties.start_timestamp] = "datetime",
+	[SDKDataTrackMgr.EventProperties.spend_time] = "number",
+	[SDKDataTrackMgr.EventProperties.data_length] = "number",
+	[SDKDataTrackMgr.EventProperties.host_ip] = "string",
+	[SDKDataTrackMgr.EventProperties.result] = "string",
+	[SDKDataTrackMgr.EventProperties.result_msg] = "string",
+	[SDKDataTrackMgr.EventProperties.current_language] = "string",
+	[SDKDataTrackMgr.EventProperties.entrance] = "string",
+	[SDKDataTrackMgr.EventProperties.current_voice_pack_list] = "list",
+	[SDKDataTrackMgr.EventProperties.current_voice_pack_used] = "string",
+	[SDKDataTrackMgr.EventProperties.download_voice_pack_list] = "list",
+	[SDKDataTrackMgr.EventProperties.update_amount] = "number",
+	[SDKDataTrackMgr.EventProperties.step] = "string",
+	[SDKDataTrackMgr.EventProperties.voice_pack_before] = "string",
+	[SDKDataTrackMgr.EventProperties.voice_pack_delete] = "string",
+	[SDKDataTrackMgr.EventProperties.gamescene] = "string",
+	[SDKDataTrackMgr.EventProperties.currenthost] = "string",
+	[SDKDataTrackMgr.EventProperties.switchcount] = "number",
+	[SDKDataTrackMgr.EventProperties.resource_type] = "list",
+	[SDKDataTrackMgr.EventProperties.main_hero_interaction_skin_id] = "number",
+	[SDKDataTrackMgr.EventProperties.main_hero_interaction_area_id] = "number",
+	[SDKDataTrackMgr.EventProperties.main_hero_interaction_voice_id] = "string",
+	[SDKDataTrackMgr.EventProperties.resource_fixup_status] = "string",
+	[SDKDataTrackMgr.EventProperties.resource_fixup_count] = "number"
 }
-var_0_0.DefinedTypeToLuaType = {
+SDKDataTrackMgr.DefinedTypeToLuaType = {
 	string = "string",
 	array = "table",
 	datetime = "number",
+	object = "table",
 	boolean = "boolean",
 	list = "table",
 	number = "number"
 }
-var_0_0.FirstStartTimePrefsKey = "DataTrackFirstStartTime"
-var_0_0.MediaEvent = {
+SDKDataTrackMgr.FirstStartTimePrefsKey = "DataTrackFirstStartTime"
+SDKDataTrackMgr.MediaEvent = {
 	purchase_firstGachaPack = "purchase_firstGacha20Pack",
 	chapter_progress_3 = "chapter_progress_3",
 	plot_progress_3_15 = "plot_progress_3_15",
-	plot_progress_1_1 = "plot_progress_1_1",
+	game_source_completed = "game_source_completed",
 	purchase = "purchase",
 	roleLevel_15_achieve = "roleLevel_15_achieve",
-	purchase_mothlyCard = "purchase_mothlyCard",
-	purchase_bp_small = "purchase_bp_small",
+	plot_progress_1_11 = "plot_progress_1_11",
+	chapter_progress_1 = "chapter_progress_1",
 	plot_progress_3_14 = "plot_progress_3_14",
 	purchase_firstResourcePack = "purchase_firstResourcePack",
 	game_summon_01 = "game_summon_01",
 	purchase_level10pack = "purchase_level10pack",
-	chapter_progress_1 = "chapter_progress_1",
+	plot_progress_1_1 = "plot_progress_1_1",
 	purchase_level5pack = "purchase_level5pack",
 	plot_progress_1_4 = "plot_progress_1_4",
 	first_purchase = "first_purchase",
-	game_source_completed = "game_source_completed",
+	purchase_mothlyCard = "purchase_mothlyCard",
+	plot_progress_1_9 = "plot_progress_1_9",
 	purchase_bp_large = "purchase_bp_large",
+	purchase_bp_small = "purchase_bp_small",
 	purchase_firstChargePack = "purchase_firstChargePack",
 	roleLevel_10_achieve = "roleLevel_10_achieve",
 	chapter_progress_2 = "chapter_progress_2",
@@ -170,7 +181,7 @@ var_0_0.MediaEvent = {
 	roleLevel_5_achieve = "roleLevel_5_achieve",
 	purchase_monthlyGachaPack = "purchase_monthlyGachaPack"
 }
-var_0_0.ChannelEvent = {
+SDKDataTrackMgr.ChannelEvent = {
 	stdhour1 = "stdhour1",
 	stdrecharge = "stdrecharge",
 	stdmonthly = "stdmonthly",
@@ -182,77 +193,77 @@ var_0_0.ChannelEvent = {
 	stdlackofdiamonds = "stdlackofdiamonds"
 }
 
-function var_0_0.ctor(arg_3_0)
-	arg_3_0.csharpInst = ZProj.SDKDataTrackManager.Instance
+function SDKDataTrackMgr:ctor()
+	self.csharpInst = ZProj.SDKDataTrackManager.Instance
 end
 
-function var_0_0.initSDKDataTrack(arg_4_0)
-	arg_4_0.csharpInst:InitSDKDataTrack()
-	arg_4_0:_setFirstStartTimeProperty()
+function SDKDataTrackMgr:initSDKDataTrack()
+	self.csharpInst:InitSDKDataTrack()
+	self:_setFirstStartTimeProperty()
 end
 
-function var_0_0.getDataTrackProperties(arg_5_0)
-	if not arg_5_0:isEnableDataTrack() then
+function SDKDataTrackMgr:getDataTrackProperties()
+	if not self:isEnableDataTrack() then
 		return ""
 	end
 
-	return arg_5_0.csharpInst:CallGetStrFunc("getDataTrackProperties")
+	return self.csharpInst:CallGetStrFunc("getDataTrackProperties")
 end
 
-function var_0_0.roleLogin(arg_6_0, arg_6_1)
-	if not arg_6_0:isEnableDataTrack() then
+function SDKDataTrackMgr:roleLogin(roleId)
+	if not self:isEnableDataTrack() then
 		return
 	end
 
-	arg_6_0.csharpInst:CallVoidFuncWithParams("roleLogin", tostring(arg_6_1))
+	self.csharpInst:CallVoidFuncWithParams("roleLogin", tostring(roleId))
 
-	local var_6_0 = tostring(SDKMgr.instance:getChannelId())
-	local var_6_1 = tostring(SDKMgr.instance:getSubChannelId())
+	local channelId = tostring(SDKMgr.instance:getChannelId())
+	local subChannelId = tostring(SDKMgr.instance:getSubChannelId())
 
-	arg_6_0:profileSet({
-		[var_0_0.UserProperties.AppChannelId] = var_6_0,
-		[var_0_0.UserProperties.AppSubChannelId] = var_6_1
+	self:profileSet({
+		[SDKDataTrackMgr.UserProperties.AppChannelId] = channelId,
+		[SDKDataTrackMgr.UserProperties.AppSubChannelId] = subChannelId
 	})
 end
 
-function var_0_0.track(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = {}
+function SDKDataTrackMgr:track(eventName, luaProperties)
+	local emptyPropertyNames = {}
 
-	arg_7_2 = arg_7_2 or {}
+	luaProperties = luaProperties or {}
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_2) do
-		local var_7_1 = var_0_0.PropertyTypes[iter_7_0]
+	for propertyName, param in pairs(luaProperties) do
+		local definedType = SDKDataTrackMgr.PropertyTypes[propertyName]
 
-		if not string.nilorempty(var_7_1) and type(iter_7_1) ~= var_0_0.DefinedTypeToLuaType[var_7_1] then
-			logError(string.format("埋点 属性类型不一致, propertyName: %s, param: %s, currentType: %s, definedType: %s", tostring(iter_7_0), tostring(iter_7_1), type(iter_7_1), var_0_0.DefinedTypeToLuaType[var_7_1]))
+		if not string.nilorempty(definedType) and type(param) ~= SDKDataTrackMgr.DefinedTypeToLuaType[definedType] then
+			logError(string.format("埋点 属性类型不一致, propertyName: %s, param: %s, currentType: %s, definedType: %s", tostring(propertyName), tostring(param), type(param), SDKDataTrackMgr.DefinedTypeToLuaType[definedType]))
 		end
 
-		if var_7_1 == "array" or var_7_1 == "list" and JsonUtil then
-			JsonUtil.markAsArray(iter_7_1)
+		if definedType == "array" or definedType == "list" and JsonUtil then
+			JsonUtil.markAsArray(param)
 		end
 
-		if var_7_1 == "array" and #iter_7_1 <= 0 then
-			table.insert(var_7_0, iter_7_0)
+		if definedType == "array" and #param <= 0 then
+			table.insert(emptyPropertyNames, propertyName)
 		end
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(var_7_0) do
-		arg_7_2[iter_7_3] = nil
+	for i, emptyPropertyName in ipairs(emptyPropertyNames) do
+		luaProperties[emptyPropertyName] = nil
 	end
 
 	if isDebugBuild then
-		logNormal("track event : eventName : " .. arg_7_1 .. ", properties : " .. cjson.encode(arg_7_2))
+		logNormal("track event : eventName : " .. eventName .. ", properties : " .. cjson.encode(luaProperties))
 	end
 
-	if not arg_7_0:isEnableDataTrack() then
+	if not self:isEnableDataTrack() then
 		return
 	end
 
-	return arg_7_0.csharpInst:CallVoidFuncWithParams("track", arg_7_1, arg_7_0:_tableToDictionary(arg_7_2))
+	return self.csharpInst:CallVoidFuncWithParams("track", eventName, self:_tableToDictionary(luaProperties))
 end
 
-function var_0_0.trackMediaEvent(arg_8_0, arg_8_1)
-	if not arg_8_0:isEnableDataTrack() then
+function SDKDataTrackMgr:trackMediaEvent(eventName)
+	if not self:isEnableDataTrack() then
 		return
 	end
 
@@ -260,16 +271,17 @@ function var_0_0.trackMediaEvent(arg_8_0, arg_8_1)
 		return
 	end
 
-	local var_8_0 = {
-		eventName = arg_8_1
-	}
-	local var_8_1 = cjson.encode(var_8_0)
+	local luaProperties = {}
 
-	return arg_8_0.csharpInst:CallVoidFuncWithParams("trackMediaEvent", var_8_1)
+	luaProperties.eventName = eventName
+
+	local resultJson = cjson.encode(luaProperties)
+
+	return self.csharpInst:CallVoidFuncWithParams("trackMediaEvent", resultJson)
 end
 
-function var_0_0.trackMediaPayEvent(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0:isEnableDataTrack() then
+function SDKDataTrackMgr:trackMediaPayEvent(eventName, payData)
+	if not self:isEnableDataTrack() then
 		return
 	end
 
@@ -277,217 +289,228 @@ function var_0_0.trackMediaPayEvent(arg_9_0, arg_9_1, arg_9_2)
 		return
 	end
 
-	local var_9_0 = {
-		eventName = arg_9_1,
-		amount = arg_9_2.amount,
-		currency = arg_9_2.currency,
-		productId = arg_9_2.productId,
-		goodsName = arg_9_2.goodsName,
-		goodsId = arg_9_2.goodsId
-	}
-	local var_9_1 = cjson.encode(var_9_0)
+	local luaProperties = {}
 
-	return arg_9_0.csharpInst:CallVoidFuncWithParams("trackMediaPayEvent", var_9_1)
+	luaProperties.eventName = eventName
+	luaProperties.amount = payData.amount
+	luaProperties.currency = payData.currency
+	luaProperties.productId = payData.productId
+	luaProperties.goodsName = payData.goodsName
+	luaProperties.goodsId = payData.goodsId
+
+	local resultJson = cjson.encode(luaProperties)
+
+	return self.csharpInst:CallVoidFuncWithParams("trackMediaPayEvent", resultJson)
 end
 
-function var_0_0.trackChannelEvent(arg_10_0, arg_10_1)
-	if not arg_10_0:isEnableDataTrack() then
+function SDKDataTrackMgr:trackChannelEvent(eventName)
+	if not self:isEnableDataTrack() then
 		return
 	end
 
-	local var_10_0 = {
-		eventName = arg_10_1
-	}
-	local var_10_1 = cjson.encode(var_10_0)
+	local luaProperties = {}
 
-	return arg_10_0.csharpInst:CallVoidFuncWithParams("trackChannelEvent", var_10_1)
+	luaProperties.eventName = eventName
+
+	local resultJson = cjson.encode(luaProperties)
+
+	return self.csharpInst:CallVoidFuncWithParams("trackChannelEvent", resultJson)
 end
 
-function var_0_0.profileSet(arg_11_0, arg_11_1)
-	if not arg_11_0:isEnableDataTrack() then
+function SDKDataTrackMgr:profileSet(luaProperties)
+	if not self:isEnableDataTrack() then
 		return
 	end
 
-	return arg_11_0.csharpInst:CallVoidFuncWithParams("profileSet", arg_11_0:_tableToDictionary(arg_11_1))
+	return self.csharpInst:CallVoidFuncWithParams("profileSet", self:_tableToDictionary(luaProperties))
 end
 
-function var_0_0.isEnableDataTrack(arg_12_0)
+function SDKDataTrackMgr:isEnableDataTrack()
 	return not SLFramework.FrameworkSettings.IsEditor and not GameChannelConfig.isSlsdk()
 end
 
-function var_0_0._setFirstStartTimeProperty(arg_13_0)
-	local var_13_0 = UnityEngine.PlayerPrefs.GetInt(var_0_0.FirstStartTimePrefsKey, 0)
-	local var_13_1 = tostring(SDKMgr.instance:getSubChannelId())
+function SDKDataTrackMgr:_setFirstStartTimeProperty()
+	local firstStartTime = UnityEngine.PlayerPrefs.GetInt(SDKDataTrackMgr.FirstStartTimePrefsKey, 0)
+	local subChannelId = tostring(SDKMgr.instance:getSubChannelId())
 
-	if var_13_0 == 0 then
-		local var_13_2 = os.time()
+	if firstStartTime == 0 then
+		firstStartTime = os.time()
 
-		UnityEngine.PlayerPrefs.SetInt(var_0_0.FirstStartTimePrefsKey, var_13_2)
+		UnityEngine.PlayerPrefs.SetInt(SDKDataTrackMgr.FirstStartTimePrefsKey, firstStartTime)
 
-		local var_13_3 = os.date("%Y-%m-%d %H:%M:%S", var_13_2)
+		local timeProperty = os.date("%Y-%m-%d %H:%M:%S", firstStartTime)
 
-		arg_13_0:profileSet({
-			[var_0_0.UserProperties.DownloadChannel] = var_13_1
+		self:profileSet({
+			[SDKDataTrackMgr.UserProperties.DownloadChannel] = subChannelId
 		})
 	end
 end
 
-function var_0_0.trackChooseServerEvent(arg_14_0)
-	var_0_0.instance:track(var_0_0.EventName.ChooseServer, {})
+function SDKDataTrackMgr:trackChooseServerEvent()
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.ChooseServer, {})
 end
 
-function var_0_0.trackHotupdateFilesCheckEvent(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 == var_0_0.Result.fail then
-		var_0_0.instance:track(var_0_0.EventName.hotupdate_files_check_fail, {
-			[var_0_0.EventProperties.result_msg] = arg_15_2 or ""
-		})
-	else
-		var_0_0.instance:track(var_0_0.EventName.hotupdate_files_check, {})
-	end
-end
-
-function var_0_0.trackUnzipFinishEvent(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_1 == var_0_0.Result.fail then
-		var_0_0.instance:track(var_0_0.EventName.unzip_finish_fail, {
-			[var_0_0.EventProperties.result_msg] = arg_16_2 or ""
+function SDKDataTrackMgr:trackHotupdateFilesCheckEvent(result, msg)
+	if result == SDKDataTrackMgr.Result.fail then
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hotupdate_files_check_fail, {
+			[SDKDataTrackMgr.EventProperties.result_msg] = msg or ""
 		})
 	else
-		var_0_0.instance:track(var_0_0.EventName.unzip_finish, {})
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hotupdate_files_check, {})
 	end
 end
 
-function var_0_0.trackResourceLoadFinishEvent(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_1 == var_0_0.Result.fail then
-		var_0_0.instance:track(var_0_0.EventName.resource_load_fail, {
-			[var_0_0.EventProperties.result_msg] = arg_17_2 or ""
+function SDKDataTrackMgr:trackUnzipFinishEvent(result, msg)
+	if result == SDKDataTrackMgr.Result.fail then
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.unzip_finish_fail, {
+			[SDKDataTrackMgr.EventProperties.result_msg] = msg or ""
 		})
 	else
-		var_0_0.instance:track(var_0_0.EventName.resource_load_finish, {})
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.unzip_finish, {})
 	end
 end
 
-function var_0_0.trackGetRemoteVersionEvent(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	arg_18_3 = arg_18_3 and tostring(arg_18_3)
+function SDKDataTrackMgr:trackResourceLoadFinishEvent(result, msg)
+	if result == SDKDataTrackMgr.Result.fail then
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.resource_load_fail, {
+			[SDKDataTrackMgr.EventProperties.result_msg] = msg or ""
+		})
+	else
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.resource_load_finish, {})
+	end
+end
 
-	var_0_0.instance:track(var_0_0.EventName.hotupdate_request, {
-		[var_0_0.EventProperties.request_result] = arg_18_1,
-		[var_0_0.EventProperties.request_url] = arg_18_2,
-		[var_0_0.EventProperties.result_code] = arg_18_3 or "",
-		[var_0_0.EventProperties.result_message] = arg_18_4 or ""
+function SDKDataTrackMgr:trackGetRemoteVersionEvent(result, url, code, message)
+	code = code and tostring(code)
+
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hotupdate_request, {
+		[SDKDataTrackMgr.EventProperties.request_result] = result,
+		[SDKDataTrackMgr.EventProperties.request_url] = url,
+		[SDKDataTrackMgr.EventProperties.result_code] = code or "",
+		[SDKDataTrackMgr.EventProperties.result_message] = message or ""
 	})
 end
 
-function var_0_0.trackHotUpdateResourceEvent(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	arg_19_3 = arg_19_3 and tostring(arg_19_3)
+function SDKDataTrackMgr:trackHotUpdateResourceEvent(result, url, code, message)
+	code = code and tostring(code)
 
-	var_0_0.instance:track(var_0_0.EventName.hotupdate_request_resource, {
-		[var_0_0.EventProperties.request_result] = arg_19_1,
-		[var_0_0.EventProperties.request_url] = arg_19_2,
-		[var_0_0.EventProperties.result_code] = arg_19_3 or "",
-		[var_0_0.EventProperties.result_message] = arg_19_4 or ""
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hotupdate_request_resource, {
+		[SDKDataTrackMgr.EventProperties.request_result] = result,
+		[SDKDataTrackMgr.EventProperties.request_url] = url,
+		[SDKDataTrackMgr.EventProperties.result_code] = code or "",
+		[SDKDataTrackMgr.EventProperties.result_message] = message or ""
 	})
 end
 
-function var_0_0.trackSocketConnectEvent(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
-	if arg_20_1 == var_0_0.RequestResult.success then
-		var_0_0.instance:track(var_0_0.EventName.first_socket_connect)
+function SDKDataTrackMgr:trackSocketConnectEvent(result, startTimestamp, spendTime, dataLength, hostIp)
+	if result == SDKDataTrackMgr.RequestResult.success then
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.first_socket_connect)
 	end
 
-	var_0_0.instance:track(var_0_0.EventName.socket_connect, {
-		[var_0_0.EventProperties.request_result] = arg_20_1,
-		[var_0_0.EventProperties.start_timestamp] = arg_20_2,
-		[var_0_0.EventProperties.spend_time] = arg_20_3,
-		[var_0_0.EventProperties.data_length] = arg_20_4,
-		[var_0_0.EventProperties.host_ip] = arg_20_5
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.socket_connect, {
+		[SDKDataTrackMgr.EventProperties.request_result] = result,
+		[SDKDataTrackMgr.EventProperties.start_timestamp] = startTimestamp,
+		[SDKDataTrackMgr.EventProperties.spend_time] = spendTime,
+		[SDKDataTrackMgr.EventProperties.data_length] = dataLength,
+		[SDKDataTrackMgr.EventProperties.host_ip] = hostIp
 	})
 end
 
-function var_0_0.trackVoicePackDownloadConfirm(arg_21_0, arg_21_1)
-	var_0_0.instance:track(var_0_0.EventName.voice_pack_download_confirm, {
-		[var_0_0.EventProperties.current_language] = GameConfig:GetCurLangShortcut(),
-		[var_0_0.EventProperties.current_voice_pack_used] = GameConfig:GetCurVoiceShortcut(),
-		[var_0_0.EventProperties.current_voice_pack_list] = arg_21_1.current_voice_pack_list or {},
-		[var_0_0.EventProperties.download_voice_pack_list] = arg_21_1.download_voice_pack_list or {},
-		[var_0_0.EventProperties.entrance] = arg_21_1.entrance,
-		[var_0_0.EventProperties.update_amount] = arg_21_1.update_amount or 0
+function SDKDataTrackMgr:trackVoicePackDownloadConfirm(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.voice_pack_download_confirm, {
+		[SDKDataTrackMgr.EventProperties.current_language] = GameConfig:GetCurLangShortcut(),
+		[SDKDataTrackMgr.EventProperties.current_voice_pack_used] = GameConfig:GetCurVoiceShortcut(),
+		[SDKDataTrackMgr.EventProperties.current_voice_pack_list] = data.current_voice_pack_list or {},
+		[SDKDataTrackMgr.EventProperties.download_voice_pack_list] = data.download_voice_pack_list or {},
+		[SDKDataTrackMgr.EventProperties.entrance] = data.entrance,
+		[SDKDataTrackMgr.EventProperties.update_amount] = data.update_amount or 0
 	})
 end
 
-function var_0_0.trackVoicePackDownloading(arg_22_0, arg_22_1)
-	var_0_0.instance:track(var_0_0.EventName.voice_pack_downloading, {
-		[var_0_0.EventProperties.step] = arg_22_1.step,
-		[var_0_0.EventProperties.download_voice_pack_list] = arg_22_1.download_voice_pack_list or {},
-		[var_0_0.EventProperties.update_amount] = arg_22_1.update_amount or 0,
-		[var_0_0.EventProperties.spend_time] = arg_22_1.spend_time or 0,
-		[var_0_0.EventProperties.result_msg] = arg_22_1.result_msg or ""
+function SDKDataTrackMgr:trackVoicePackDownloading(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.voice_pack_downloading, {
+		[SDKDataTrackMgr.EventProperties.step] = data.step,
+		[SDKDataTrackMgr.EventProperties.download_voice_pack_list] = data.download_voice_pack_list or {},
+		[SDKDataTrackMgr.EventProperties.update_amount] = data.update_amount or 0,
+		[SDKDataTrackMgr.EventProperties.spend_time] = data.spend_time or 0,
+		[SDKDataTrackMgr.EventProperties.result_msg] = data.result_msg or ""
 	})
 end
 
-function var_0_0.trackOptionPackDownloading(arg_23_0, arg_23_1)
-	var_0_0.instance:track(var_0_0.EventName.resources_downloading, {
-		[var_0_0.EventProperties.step] = arg_23_1.step,
-		[var_0_0.EventProperties.resource_type] = arg_23_1.resource_type or "",
-		[var_0_0.EventProperties.update_amount] = arg_23_1.update_amount or 0,
-		[var_0_0.EventProperties.spend_time] = arg_23_1.spend_time or 0,
-		[var_0_0.EventProperties.result_msg] = arg_23_1.result_msg or ""
+function SDKDataTrackMgr:trackOptionPackDownloading(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.resources_downloading, {
+		[SDKDataTrackMgr.EventProperties.step] = data.step,
+		[SDKDataTrackMgr.EventProperties.resource_type] = data.resource_type or "",
+		[SDKDataTrackMgr.EventProperties.update_amount] = data.update_amount or 0,
+		[SDKDataTrackMgr.EventProperties.spend_time] = data.spend_time or 0,
+		[SDKDataTrackMgr.EventProperties.result_msg] = data.result_msg or ""
 	})
 end
 
-function var_0_0.trackOptionPackConfirmDownload(arg_24_0, arg_24_1)
-	var_0_0.instance:track(var_0_0.EventName.confirm_download_resources, {
-		[var_0_0.EventProperties.resource_type] = arg_24_1.resource_type or {}
+function SDKDataTrackMgr:trackOptionPackConfirmDownload(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.confirm_download_resources, {
+		[SDKDataTrackMgr.EventProperties.resource_type] = data.resource_type or {}
 	})
 end
 
-function var_0_0.trackVoicePackSwitch(arg_25_0, arg_25_1)
-	var_0_0.instance:track(var_0_0.EventName.voice_pack_switch, {
-		[var_0_0.EventProperties.current_language] = arg_25_1.current_language,
-		[var_0_0.EventProperties.entrance] = arg_25_1.entrance or "",
-		[var_0_0.EventProperties.current_voice_pack_list] = arg_25_1.current_voice_pack_list or {},
-		[var_0_0.EventProperties.current_voice_pack_used] = arg_25_1.current_voice_pack_used or "",
-		[var_0_0.EventProperties.voice_pack_before] = arg_25_1.voice_pack_before or ""
+function SDKDataTrackMgr:trackVoicePackSwitch(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.voice_pack_switch, {
+		[SDKDataTrackMgr.EventProperties.current_language] = data.current_language,
+		[SDKDataTrackMgr.EventProperties.entrance] = data.entrance or "",
+		[SDKDataTrackMgr.EventProperties.current_voice_pack_list] = data.current_voice_pack_list or {},
+		[SDKDataTrackMgr.EventProperties.current_voice_pack_used] = data.current_voice_pack_used or "",
+		[SDKDataTrackMgr.EventProperties.voice_pack_before] = data.voice_pack_before or ""
 	})
 end
 
-function var_0_0.trackVoicePackDelete(arg_26_0, arg_26_1)
-	var_0_0.instance:track(var_0_0.EventName.voice_pack_delete, {
-		[var_0_0.EventProperties.current_language] = arg_26_1.current_language,
-		[var_0_0.EventProperties.current_voice_pack_list] = arg_26_1.current_voice_pack_list or {},
-		[var_0_0.EventProperties.current_voice_pack_used] = arg_26_1.current_voice_pack_used or "",
-		[var_0_0.EventProperties.voice_pack_delete] = arg_26_1.voice_pack_delete or ""
+function SDKDataTrackMgr:trackVoicePackDelete(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.voice_pack_delete, {
+		[SDKDataTrackMgr.EventProperties.current_language] = data.current_language,
+		[SDKDataTrackMgr.EventProperties.current_voice_pack_list] = data.current_voice_pack_list or {},
+		[SDKDataTrackMgr.EventProperties.current_voice_pack_used] = data.current_voice_pack_used or "",
+		[SDKDataTrackMgr.EventProperties.voice_pack_delete] = data.voice_pack_delete or ""
 	})
 end
 
-function var_0_0.trackDomainFailCount(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	if arg_27_3 > 0 then
-		var_0_0.instance:track(var_0_0.EventName.event_hostswitch, {
-			[var_0_0.EventProperties.gamescene] = arg_27_1,
-			[var_0_0.EventProperties.currenthost] = arg_27_2,
-			[var_0_0.EventProperties.switchcount] = arg_27_3
+function SDKDataTrackMgr:trackDomainFailCount(scene, domain, failCount)
+	if failCount > 0 then
+		SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.event_hostswitch, {
+			[SDKDataTrackMgr.EventProperties.gamescene] = scene,
+			[SDKDataTrackMgr.EventProperties.currenthost] = domain,
+			[SDKDataTrackMgr.EventProperties.switchcount] = failCount
 		})
 	end
 end
 
-function var_0_0.trackMainHeroInteraction(arg_28_0, arg_28_1)
-	var_0_0.instance:track(var_0_0.EventName.main_hero_interaction, {
-		[var_0_0.EventProperties.main_hero_interaction_skin_id] = arg_28_1.main_hero_interaction_skin_id or -1,
-		[var_0_0.EventProperties.main_hero_interaction_area_id] = arg_28_1.main_hero_interaction_area_id or -1,
-		[var_0_0.EventProperties.main_hero_interaction_voice_id] = arg_28_1.main_hero_interaction_voice_id or ""
+function SDKDataTrackMgr:trackMainHeroInteraction(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.main_hero_interaction, {
+		[SDKDataTrackMgr.EventProperties.main_hero_interaction_skin_id] = data.main_hero_interaction_skin_id or -1,
+		[SDKDataTrackMgr.EventProperties.main_hero_interaction_area_id] = data.main_hero_interaction_area_id or -1,
+		[SDKDataTrackMgr.EventProperties.main_hero_interaction_voice_id] = data.main_hero_interaction_voice_id or ""
 	})
 end
 
-function var_0_0._tableToDictionary(arg_29_0, arg_29_1)
-	local var_29_0
+function SDKDataTrackMgr:_tableToDictionary(luaTable)
+	local jsonStr
 
 	if JsonUtil then
-		var_29_0 = JsonUtil.encode(arg_29_1)
+		jsonStr = JsonUtil.encode(luaTable)
 	else
-		var_29_0 = cjson.encode(arg_29_1)
+		jsonStr = cjson.encode(luaTable)
 	end
 
-	return arg_29_0.csharpInst:ConvertDictionary(var_29_0)
+	return self.csharpInst:ConvertDictionary(jsonStr)
 end
 
-var_0_0.instance = var_0_0.New()
+function SDKDataTrackMgr:trackResourceFixup(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.resource_fixup, {
+		[SDKDataTrackMgr.EventProperties.resource_fixup_status] = data.status or "",
+		[SDKDataTrackMgr.EventProperties.resource_fixup_count] = data.count or 0,
+		[SDKDataTrackMgr.EventProperties.entrance] = data.entrance or "",
+		[SDKDataTrackMgr.EventProperties.fail_count] = data.fail_count or 0
+	})
+end
 
-return var_0_0
+SDKDataTrackMgr.instance = SDKDataTrackMgr.New()
+
+return SDKDataTrackMgr

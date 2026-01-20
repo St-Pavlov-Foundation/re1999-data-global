@@ -1,98 +1,100 @@
-﻿module("modules.logic.roomfishing.view.RoomFishingStoreView", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/view/RoomFishingStoreView.lua
 
-local var_0_0 = class("RoomFishingStoreView", BaseView)
+module("modules.logic.roomfishing.view.RoomFishingStoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_store")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_content")
-	arg_1_0._gostoregoodsitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_content/#go_storegoodsitem")
+local RoomFishingStoreView = class("RoomFishingStoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomFishingStoreView:onInitView()
+	self._scrollstore = gohelper.findChildScrollRect(self.viewGO, "#scroll_store")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_content")
+	self._gostoregoodsitem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_content/#go_storegoodsitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_2_0._onStoreInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_2_0._onStoreInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
+function RoomFishingStoreView:addEvents()
+	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._onStoreInfoUpdate, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._onStoreInfoUpdate, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_3_0._onStoreInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_3_0._onStoreInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+function RoomFishingStoreView:removeEvents()
+	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._onStoreInfoUpdate, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._onStoreInfoUpdate, self)
+	self:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0._onDailyRefresh(arg_4_0)
+function RoomFishingStoreView:_onDailyRefresh()
 	StoreRpc.instance:sendGetStoreInfosRequest({
 		StoreEnum.StoreId.RoomFishingStore
 	})
 end
 
-function var_0_0._onStoreInfoUpdate(arg_5_0)
-	arg_5_0:setGoodsItems()
+function RoomFishingStoreView:_onStoreInfoUpdate()
+	self:setGoodsItems()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function RoomFishingStoreView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function RoomFishingStoreView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:setGoodsItems()
+function RoomFishingStoreView:onOpen()
+	self:setGoodsItems()
 	AudioMgr.instance:trigger(AudioEnum3_1.RoomFishing.ui_home_mingdi_jihuan)
 end
 
-local function var_0_1(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:isSoldOut()
-	local var_9_1 = arg_9_1:isSoldOut()
-	local var_9_2 = arg_9_0:alreadyHas()
-	local var_9_3 = arg_9_1:alreadyHas()
+local function _sortStoreItem(xMO, yMO)
+	local xSoldOut = xMO:isSoldOut()
+	local ySoldOut = yMO:isSoldOut()
+	local xHas = xMO:alreadyHas()
+	local yHas = yMO:alreadyHas()
 
-	if var_9_2 and not var_9_3 then
+	if xHas and not yHas then
 		return false
-	elseif var_9_3 and not var_9_2 then
+	elseif yHas and not xHas then
 		return true
 	end
 
-	if var_9_0 and not var_9_1 then
+	if xSoldOut and not ySoldOut then
 		return false
-	elseif var_9_1 and not var_9_0 then
+	elseif ySoldOut and not xSoldOut then
 		return true
 	end
 
-	local var_9_4 = StoreConfig.instance:getGoodsConfig(arg_9_0.goodsId)
-	local var_9_5 = StoreConfig.instance:getGoodsConfig(arg_9_1.goodsId)
+	local xConfig = StoreConfig.instance:getGoodsConfig(xMO.goodsId)
+	local yConfig = StoreConfig.instance:getGoodsConfig(yMO.goodsId)
 
-	if var_9_4.order ~= var_9_5.order then
-		return var_9_4.order < var_9_5.order
+	if xConfig.order ~= yConfig.order then
+		return xConfig.order < yConfig.order
 	end
 
-	return var_9_4.id < var_9_5.id
+	return xConfig.id < yConfig.id
 end
 
-function var_0_0.setGoodsItems(arg_10_0)
-	local var_10_0 = FishingStoreModel.instance:getStoreGroupMO()
-	local var_10_1 = var_10_0 and var_10_0:getGoodsList() or {}
+function RoomFishingStoreView:setGoodsItems()
+	local storeMO = FishingStoreModel.instance:getStoreGroupMO()
+	local goodsList = storeMO and storeMO:getGoodsList() or {}
 
-	table.sort(var_10_1, var_0_1)
-	gohelper.CreateObjList(arg_10_0, arg_10_0._onGoodsItemShow, var_10_1, arg_10_0._gocontent, arg_10_0._gostoregoodsitem, RoomFishingStoreItem)
+	table.sort(goodsList, _sortStoreItem)
+	gohelper.CreateObjList(self, self._onGoodsItemShow, goodsList, self._gocontent, self._gostoregoodsitem, RoomFishingStoreItem)
 end
 
-function var_0_0._onGoodsItemShow(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_1:onUpdateMO(arg_11_2)
+function RoomFishingStoreView:_onGoodsItemShow(obj, data, index)
+	obj:onUpdateMO(data)
 end
 
-function var_0_0.onClose(arg_12_0)
+function RoomFishingStoreView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function RoomFishingStoreView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomFishingStoreView

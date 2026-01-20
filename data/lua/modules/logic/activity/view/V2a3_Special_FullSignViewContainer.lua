@@ -1,19 +1,21 @@
-﻿module("modules.logic.activity.view.V2a3_Special_FullSignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V2a3_Special_FullSignViewContainer.lua
 
-local var_0_0 = class("V2a3_Special_FullSignViewContainer", V2a3_Special_SignItemViewContainer)
+module("modules.logic.activity.view.V2a3_Special_FullSignViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a3_Special_FullSignViewContainer = class("V2a3_Special_FullSignViewContainer", V2a3_Special_SignItemViewContainer)
 
-	arg_1_0._view = V2a3_Special_FullSignView.New()
+function V2a3_Special_FullSignViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._view)
+	self._view = V2a3_Special_FullSignView.New()
 
-	return var_1_0
+	table.insert(views, self._view)
+
+	return views
 end
 
-function var_0_0.view(arg_2_0)
-	return arg_2_0._view
+function V2a3_Special_FullSignViewContainer:view()
+	return self._view
 end
 
-return var_0_0
+return V2a3_Special_FullSignViewContainer

@@ -1,62 +1,64 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessStoryView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/Activity1_3ChessStoryView.lua
 
-local var_0_0 = class("Activity1_3ChessStoryView", BaseView)
+module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessStoryView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title/#txt_Title")
-	arg_1_0._scrollChapterList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ChapterList")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._btncloseMask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeMask")
+local Activity1_3ChessStoryView = class("Activity1_3ChessStoryView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity1_3ChessStoryView:onInitView()
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "#simage_PanelBG")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "Title/#txt_Title")
+	self._scrollChapterList = gohelper.findChildScrollRect(self.viewGO, "#scroll_ChapterList")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._btncloseMask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeMask")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btncloseMask:AddClickListener(arg_2_0._btncloseMaskOnClick, arg_2_0)
+function Activity1_3ChessStoryView:addEvents()
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btncloseMask:AddClickListener(self._btncloseMaskOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btncloseMask:RemoveClickListener()
+function Activity1_3ChessStoryView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btncloseMask:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Activity1_3ChessStoryView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btncloseMaskOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function Activity1_3ChessStoryView:_btncloseMaskOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._txtTitleEn = gohelper.findChildText(arg_6_0.viewGO, "Title/#txt_Title/txt_TitleEn")
+function Activity1_3ChessStoryView:_editableInitView()
+	self._txtTitleEn = gohelper.findChildText(self.viewGO, "Title/#txt_Title/txt_TitleEn")
 
-	arg_6_0._simagePanelBG:LoadImage(ResUrl.get1_3ChessMapIcon("v1a3_role2_storybg"))
+	self._simagePanelBG:LoadImage(ResUrl.get1_3ChessMapIcon("v1a3_role2_storybg"))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function Activity1_3ChessStoryView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	Activity122StoryListModel.instance:init(arg_8_0.viewParam.actId, arg_8_0.viewParam.episodeId)
+function Activity1_3ChessStoryView:onOpen()
+	Activity122StoryListModel.instance:init(self.viewParam.actId, self.viewParam.episodeId)
 
-	local var_8_0 = Activity122Config.instance:getEpisodeCo(arg_8_0.viewParam.actId, arg_8_0.viewParam.episodeId)
+	local expiodeCfg = Activity122Config.instance:getEpisodeCo(self.viewParam.actId, self.viewParam.episodeId)
 
-	arg_8_0._txtTitle.text = var_8_0 and var_8_0.name or ""
-	arg_8_0._txtTitleEn.text = var_8_0 and var_8_0.orderId or ""
+	self._txtTitle.text = expiodeCfg and expiodeCfg.name or ""
+	self._txtTitleEn.text = expiodeCfg and expiodeCfg.orderId or ""
 end
 
-function var_0_0.onClose(arg_9_0)
+function Activity1_3ChessStoryView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagePanelBG:UnLoadImage()
+function Activity1_3ChessStoryView:onDestroyView()
+	self._simagePanelBG:UnLoadImage()
 end
 
-return var_0_0
+return Activity1_3ChessStoryView

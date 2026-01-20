@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_stress", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_stress.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_stress", package.seeall)
+
+local lua_stress = {}
+local fields = {
 	desc = 3,
 	pressParam = 7,
 	rule = 8,
@@ -11,13 +13,13 @@ local var_0_1 = {
 	condition = 5,
 	identity = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_stress.onLoad(json)
+	lua_stress.configList, lua_stress.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_stress

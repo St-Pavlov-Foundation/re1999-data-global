@@ -1,515 +1,532 @@
-﻿module("modules.logic.store.model.StoreGoodsMO", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/StoreGoodsMO.lua
 
-local var_0_0 = pureTable("StoreGoodsMO")
+module("modules.logic.store.model.StoreGoodsMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.belongStoreId = arg_1_1
-	arg_1_0.goodsId = arg_1_2.goodsId
-	arg_1_0.buyCount = arg_1_2.buyCount
-	arg_1_0.offlineTime = tonumber(arg_1_2.offlineTime) / 1000
-	arg_1_0.config = StoreConfig.instance:getGoodsConfig(arg_1_0.goodsId)
+local StoreGoodsMO = pureTable("StoreGoodsMO")
 
-	if string.nilorempty(arg_1_0.config.reduction) == false then
-		arg_1_0.reductionInfo = string.splitToNumber(arg_1_0.config.reduction, "#")
+function StoreGoodsMO:init(belongStoreId, info)
+	self.belongStoreId = belongStoreId
+	self.goodsId = info.goodsId
+	self.buyCount = info.buyCount
+	self.offlineTime = tonumber(info.offlineTime) / 1000
+	self.config = StoreConfig.instance:getGoodsConfig(self.goodsId)
+
+	if string.nilorempty(self.config.reduction) == false then
+		self.reductionInfo = string.splitToNumber(self.config.reduction, "#")
 	end
 
-	arg_1_0:initRedDotTime()
+	self:initRedDotTime()
 end
 
-function var_0_0.initRedDotTime(arg_2_0)
-	if string.nilorempty(arg_2_0.config.newStartTime) then
-		arg_2_0.newStartTime = 0
+function StoreGoodsMO:initRedDotTime()
+	if string.nilorempty(self.config.newStartTime) then
+		self.newStartTime = 0
 	else
-		arg_2_0.newStartTime = TimeUtil.stringToTimestamp(arg_2_0.config.newStartTime) - ServerTime.clientToServerOffset()
+		local newStartTimeStamp = TimeUtil.stringToTimestamp(self.config.newStartTime) - ServerTime.clientToServerOffset()
+
+		self.newStartTime = newStartTimeStamp
 	end
 
-	if string.nilorempty(arg_2_0.config.newEndTime) then
-		arg_2_0.newEndTime = 0
+	if string.nilorempty(self.config.newEndTime) then
+		self.newEndTime = 0
 	else
-		arg_2_0.newEndTime = TimeUtil.stringToTimestamp(arg_2_0.config.newEndTime) - ServerTime.clientToServerOffset()
+		local newEndTimeStamp = TimeUtil.stringToTimestamp(self.config.newEndTime) - ServerTime.clientToServerOffset()
+
+		self.newEndTime = newEndTimeStamp
 	end
 end
 
-function var_0_0.getOffTab(arg_3_0)
-	return arg_3_0.config.offTag
+function StoreGoodsMO:getOffTab()
+	return self.config.offTag
 end
 
-function var_0_0.getOfflineTime(arg_4_0)
-	if arg_4_0.config.activityId > 0 then
-		return ActivityModel.instance:getActEndTime(arg_4_0.config.activityId) / 1000
+function StoreGoodsMO:getOfflineTime()
+	if self.config.activityId > 0 then
+		return ActivityModel.instance:getActEndTime(self.config.activityId) / 1000
 	else
-		return arg_4_0.offlineTime
+		return self.offlineTime
 	end
 end
 
-function var_0_0.getCost(arg_5_0, arg_5_1)
-	if arg_5_1 <= 0 then
+function StoreGoodsMO:getCost(count)
+	if count <= 0 then
 		return 0
 	end
 
-	local var_5_0 = arg_5_0.config.cost
+	local cost = self.config.cost
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(cost) then
 		return 0
 	end
 
-	local var_5_1 = 0
-	local var_5_2 = string.split(var_5_0, "|")
+	local result = 0
+	local costs = string.split(cost, "|")
 
-	for iter_5_0 = arg_5_0.buyCount + 1, arg_5_0.buyCount + arg_5_1 do
-		local var_5_3 = var_5_2[iter_5_0] or var_5_2[#var_5_2]
-		local var_5_4 = string.splitToNumber(var_5_3, "#")[3]
+	for index = self.buyCount + 1, self.buyCount + count do
+		local costParam = costs[index] or costs[#costs]
+		local costInfo = string.splitToNumber(costParam, "#")
+		local costQuantity = costInfo[3]
 
-		if iter_5_0 >= #var_5_2 then
-			var_5_1 = var_5_1 + var_5_4 * (arg_5_0.buyCount + arg_5_1 - iter_5_0 + 1)
+		if index >= #costs then
+			result = result + costQuantity * (self.buyCount + count - index + 1)
 
 			break
 		else
-			var_5_1 = var_5_1 + var_5_4
+			result = result + costQuantity
 		end
 	end
 
-	return var_5_1
+	return result
 end
 
-function var_0_0.getAllCostInfo(arg_6_0)
-	local var_6_0 = GameUtil.splitString2(arg_6_0.config.cost, true)
-	local var_6_1 = GameUtil.splitString2(arg_6_0.config.cost2, true)
+function StoreGoodsMO:getAllCostInfo()
+	local costs1 = GameUtil.splitString2(self.config.cost, true)
+	local costs2 = GameUtil.splitString2(self.config.cost2, true)
 
-	return var_6_0, var_6_1
+	return costs1, costs2
 end
 
-function var_0_0.getBuyMaxQuantity(arg_7_0)
-	local var_7_0 = -1
-	local var_7_1 = StoreEnum.LimitType.Default
-	local var_7_2 = 0
+function StoreGoodsMO:getBuyMaxQuantity()
+	local result = -1
+	local limitType = StoreEnum.LimitType.Default
+	local buyLimit = 0
 
-	if arg_7_0.config.maxBuyCount > 0 then
-		var_7_2 = math.max(arg_7_0.config.maxBuyCount - arg_7_0.buyCount, 0)
+	if self.config.maxBuyCount > 0 then
+		buyLimit = math.max(self.config.maxBuyCount - self.buyCount, 0)
 	else
-		var_7_2 = -1
+		buyLimit = -1
 	end
 
-	local var_7_3 = false
-	local var_7_4 = 0
+	local currencyChanged = false
+	local currencyLimit = 0
 
-	if arg_7_0.config.cost and arg_7_0.config.cost ~= "" then
-		local var_7_5 = {}
-		local var_7_6 = string.split(arg_7_0.config.cost, "|")
+	if self.config.cost and self.config.cost ~= "" then
+		local spend = {}
+		local costs = string.split(self.config.cost, "|")
 
-		if #var_7_6 > 1 then
-			var_7_3 = true
+		if #costs > 1 then
+			currencyChanged = true
 		end
 
-		local var_7_7 = CommonConfig.instance:getConstNum(ConstEnum.StoreMaxBuyCount)
+		local storeMaxBuyCount = CommonConfig.instance:getConstNum(ConstEnum.StoreMaxBuyCount)
 
-		while var_7_4 < var_7_7 do
-			local var_7_8 = var_7_6[arg_7_0.buyCount + var_7_4 + 1] or var_7_6[#var_7_6]
-			local var_7_9 = string.splitToNumber(var_7_8, "#")
-			local var_7_10 = var_7_9[1]
-			local var_7_11 = var_7_9[2]
-			local var_7_12 = var_7_9[3]
+		while currencyLimit < storeMaxBuyCount do
+			local costParam = costs[self.buyCount + currencyLimit + 1] or costs[#costs]
+			local costInfo = string.splitToNumber(costParam, "#")
+			local costType = costInfo[1]
+			local costId = costInfo[2]
+			local costQuantity = costInfo[3]
 
-			if arg_7_0.buyCount + var_7_4 + 1 >= #var_7_6 then
-				if var_7_12 == 0 then
-					var_7_4 = -1
+			if self.buyCount + currencyLimit + 1 >= #costs then
+				if costQuantity == 0 then
+					currencyLimit = -1
 
 					break
 				end
 
-				local var_7_13 = ItemModel.instance:getItemQuantity(var_7_10, var_7_11)
+				local hasQuantity = ItemModel.instance:getItemQuantity(costType, costId)
 
-				for iter_7_0, iter_7_1 in pairs(var_7_5) do
-					if iter_7_1.type == var_7_10 and iter_7_1.id == var_7_11 then
-						var_7_13 = var_7_13 - iter_7_1.quantity
+				for _, item in pairs(spend) do
+					if item.type == costType and item.id == costId then
+						hasQuantity = hasQuantity - item.quantity
 					end
 				end
 
-				var_7_4 = var_7_4 + math.floor(var_7_13 / var_7_12)
+				currencyLimit = currencyLimit + math.floor(hasQuantity / costQuantity)
 
 				break
 			else
-				table.insert(var_7_5, {
-					type = var_7_10,
-					id = var_7_11,
-					quantity = var_7_12
+				table.insert(spend, {
+					type = costType,
+					id = costId,
+					quantity = costQuantity
 				})
 
-				local var_7_14, var_7_15, var_7_16 = ItemModel.instance:hasEnoughItems(var_7_5)
+				local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItems(spend)
 
-				if not var_7_15 then
+				if not enough then
 					break
 				end
 
-				var_7_4 = var_7_4 + 1
+				currencyLimit = currencyLimit + 1
 			end
 		end
 	else
-		var_7_4 = -1
+		currencyLimit = -1
 	end
 
-	if var_7_3 then
-		var_7_0 = math.min(var_7_2, 1)
-		var_7_0 = math.min(var_7_0, var_7_4)
-		var_7_1 = StoreEnum.LimitType.CurrencyChanged
+	if currencyChanged then
+		result = math.min(buyLimit, 1)
+		result = math.min(result, currencyLimit)
+		limitType = StoreEnum.LimitType.CurrencyChanged
 
-		if var_7_2 < 1 and var_7_2 >= 0 then
-			var_7_1 = StoreEnum.LimitType.BuyLimit
-		elseif var_7_4 < 1 and var_7_4 >= 0 then
-			var_7_1 = StoreEnum.LimitType.Currency
+		if buyLimit < 1 and buyLimit >= 0 then
+			limitType = StoreEnum.LimitType.BuyLimit
+		elseif currencyLimit < 1 and currencyLimit >= 0 then
+			limitType = StoreEnum.LimitType.Currency
 		end
-	elseif var_7_2 < 0 and var_7_4 < 0 then
-		logError("商品购买数量计算错误: " .. arg_7_0.goodsId)
+	elseif buyLimit < 0 and currencyLimit < 0 then
+		logError("商品购买数量计算错误: " .. self.goodsId)
 
-		var_7_0 = -1
-		var_7_1 = StoreEnum.LimitType.Default
-	elseif var_7_2 < 0 then
-		var_7_0 = var_7_4
-		var_7_1 = StoreEnum.LimitType.Currency
-	elseif var_7_4 < 0 then
-		var_7_0 = var_7_2
-		var_7_1 = StoreEnum.LimitType.BuyLimit
+		result = -1
+		limitType = StoreEnum.LimitType.Default
+	elseif buyLimit < 0 then
+		result = currencyLimit
+		limitType = StoreEnum.LimitType.Currency
+	elseif currencyLimit < 0 then
+		result = buyLimit
+		limitType = StoreEnum.LimitType.BuyLimit
 	else
-		var_7_0 = math.min(var_7_2, var_7_4)
-		var_7_1 = var_7_2 <= var_7_4 and StoreEnum.LimitType.BuyLimit or StoreEnum.LimitType.Currency
+		result = math.min(buyLimit, currencyLimit)
+		limitType = buyLimit <= currencyLimit and StoreEnum.LimitType.BuyLimit or StoreEnum.LimitType.Currency
 	end
 
-	return var_7_0, var_7_1
+	return result, limitType
 end
 
-function var_0_0.getBuyMaxQuantityByCost2(arg_8_0)
-	local var_8_0 = -1
-	local var_8_1 = StoreEnum.LimitType.Default
-	local var_8_2 = 0
+function StoreGoodsMO:getBuyMaxQuantityByCost2()
+	local result = -1
+	local limitType = StoreEnum.LimitType.Default
+	local buyLimit = 0
 
-	if arg_8_0.config.maxBuyCount > 0 then
-		var_8_2 = math.max(arg_8_0.config.maxBuyCount - arg_8_0.buyCount, 0)
+	if self.config.maxBuyCount > 0 then
+		buyLimit = math.max(self.config.maxBuyCount - self.buyCount, 0)
 	else
-		var_8_2 = -1
+		buyLimit = -1
 	end
 
-	local var_8_3 = false
-	local var_8_4 = 0
+	local currencyChanged = false
+	local currencyLimit = 0
 
-	if arg_8_0.config.cost2 and arg_8_0.config.cost2 ~= "" then
-		local var_8_5 = {}
-		local var_8_6 = string.split(arg_8_0.config.cost2, "|")
+	if self.config.cost2 and self.config.cost2 ~= "" then
+		local spend = {}
+		local costs = string.split(self.config.cost2, "|")
 
-		if #var_8_6 > 1 then
-			var_8_3 = true
+		if #costs > 1 then
+			currencyChanged = true
 		end
 
-		local var_8_7 = CommonConfig.instance:getConstNum(ConstEnum.StoreMaxBuyCount)
+		local storeMaxBuyCount = CommonConfig.instance:getConstNum(ConstEnum.StoreMaxBuyCount)
 
-		while var_8_4 < var_8_7 do
-			local var_8_8 = var_8_6[arg_8_0.buyCount + var_8_4 + 1] or var_8_6[#var_8_6]
-			local var_8_9 = string.splitToNumber(var_8_8, "#")
-			local var_8_10 = var_8_9[1]
-			local var_8_11 = var_8_9[2]
-			local var_8_12 = var_8_9[3]
+		while currencyLimit < storeMaxBuyCount do
+			local costParam = costs[self.buyCount + currencyLimit + 1] or costs[#costs]
+			local costInfo = string.splitToNumber(costParam, "#")
+			local costType = costInfo[1]
+			local costId = costInfo[2]
+			local costQuantity = costInfo[3]
 
-			if arg_8_0.buyCount + var_8_4 + 1 >= #var_8_6 then
-				if var_8_12 == 0 then
-					var_8_4 = -1
+			if self.buyCount + currencyLimit + 1 >= #costs then
+				if costQuantity == 0 then
+					currencyLimit = -1
 
 					break
 				end
 
-				local var_8_13 = ItemModel.instance:getItemQuantity(var_8_10, var_8_11)
+				local hasQuantity = ItemModel.instance:getItemQuantity(costType, costId)
 
-				for iter_8_0, iter_8_1 in pairs(var_8_5) do
-					if iter_8_1.type == var_8_10 and iter_8_1.id == var_8_11 then
-						var_8_13 = var_8_13 - iter_8_1.quantity
+				for _, item in pairs(spend) do
+					if item.type == costType and item.id == costId then
+						hasQuantity = hasQuantity - item.quantity
 					end
 				end
 
-				var_8_4 = var_8_4 + math.floor(var_8_13 / var_8_12)
+				currencyLimit = currencyLimit + math.floor(hasQuantity / costQuantity)
 
 				break
 			else
-				table.insert(var_8_5, {
-					type = var_8_10,
-					id = var_8_11,
-					quantity = var_8_12
+				table.insert(spend, {
+					type = costType,
+					id = costId,
+					quantity = costQuantity
 				})
 
-				local var_8_14, var_8_15, var_8_16 = ItemModel.instance:hasEnoughItems(var_8_5)
+				local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItems(spend)
 
-				if not var_8_15 then
+				if not enough then
 					break
 				end
 
-				var_8_4 = var_8_4 + 1
+				currencyLimit = currencyLimit + 1
 			end
 		end
 	else
-		var_8_4 = -1
+		currencyLimit = -1
 	end
 
-	if var_8_3 then
-		var_8_0 = math.min(var_8_2, 1)
-		var_8_0 = math.min(var_8_0, var_8_4)
-		var_8_1 = StoreEnum.LimitType.CurrencyChanged
+	if currencyChanged then
+		result = math.min(buyLimit, 1)
+		result = math.min(result, currencyLimit)
+		limitType = StoreEnum.LimitType.CurrencyChanged
 
-		if var_8_2 < 1 and var_8_2 >= 0 then
-			var_8_1 = StoreEnum.LimitType.BuyLimit
-		elseif var_8_4 < 1 and var_8_4 >= 0 then
-			var_8_1 = StoreEnum.LimitType.Currency
+		if buyLimit < 1 and buyLimit >= 0 then
+			limitType = StoreEnum.LimitType.BuyLimit
+		elseif currencyLimit < 1 and currencyLimit >= 0 then
+			limitType = StoreEnum.LimitType.Currency
 		end
-	elseif var_8_2 < 0 and var_8_4 < 0 then
-		logError("商品购买数量计算错误: " .. arg_8_0.goodsId)
+	elseif buyLimit < 0 and currencyLimit < 0 then
+		logError("商品购买数量计算错误: " .. self.goodsId)
 
-		var_8_0 = -1
-		var_8_1 = StoreEnum.LimitType.Default
-	elseif var_8_2 < 0 then
-		var_8_0 = var_8_4
-		var_8_1 = StoreEnum.LimitType.Currency
-	elseif var_8_4 < 0 then
-		var_8_0 = var_8_2
-		var_8_1 = StoreEnum.LimitType.BuyLimit
+		result = -1
+		limitType = StoreEnum.LimitType.Default
+	elseif buyLimit < 0 then
+		result = currencyLimit
+		limitType = StoreEnum.LimitType.Currency
+	elseif currencyLimit < 0 then
+		result = buyLimit
+		limitType = StoreEnum.LimitType.BuyLimit
 	else
-		var_8_0 = math.min(var_8_2, var_8_4)
-		var_8_1 = var_8_2 <= var_8_4 and StoreEnum.LimitType.BuyLimit or StoreEnum.LimitType.Currency
+		result = math.min(buyLimit, currencyLimit)
+		limitType = buyLimit <= currencyLimit and StoreEnum.LimitType.BuyLimit or StoreEnum.LimitType.Currency
 	end
 
-	return var_8_0, var_8_1
+	return result, limitType
 end
 
-function var_0_0.canAffordQuantity(arg_9_0)
-	if not string.nilorempty(arg_9_0.config.cost) then
-		local var_9_0 = 0
-		local var_9_1 = {}
-		local var_9_2 = string.split(arg_9_0.config.cost, "|")
-		local var_9_3 = CommonConfig.instance:getConstNum(ConstEnum.StoreMaxBuyCount)
+function StoreGoodsMO:canAffordQuantity()
+	if not string.nilorempty(self.config.cost) then
+		local afford = 0
+		local spend = {}
+		local costs = string.split(self.config.cost, "|")
+		local storeMaxBuyCount = CommonConfig.instance:getConstNum(ConstEnum.StoreMaxBuyCount)
 
-		while var_9_0 < var_9_3 do
-			local var_9_4 = var_9_2[arg_9_0.buyCount + var_9_0 + 1] or var_9_2[#var_9_2]
-			local var_9_5 = string.splitToNumber(var_9_4, "#")
-			local var_9_6 = var_9_5[1]
-			local var_9_7 = var_9_5[2]
-			local var_9_8 = var_9_5[3]
+		while afford < storeMaxBuyCount do
+			local costParam = costs[self.buyCount + afford + 1] or costs[#costs]
+			local costInfo = string.splitToNumber(costParam, "#")
+			local costType = costInfo[1]
+			local costId = costInfo[2]
+			local costQuantity = costInfo[3]
 
-			if arg_9_0.buyCount + var_9_0 + 1 >= #var_9_2 then
-				if var_9_8 == 0 then
+			if self.buyCount + afford + 1 >= #costs then
+				if costQuantity == 0 then
 					return -1
 				end
 
-				local var_9_9 = ItemModel.instance:getItemQuantity(var_9_6, var_9_7)
+				local hasQuantity = ItemModel.instance:getItemQuantity(costType, costId)
 
-				for iter_9_0, iter_9_1 in pairs(var_9_1) do
-					if iter_9_1.type == var_9_6 and iter_9_1.id == var_9_7 then
-						var_9_9 = var_9_9 - iter_9_1.quantity
+				for _, item in pairs(spend) do
+					if item.type == costType and item.id == costId then
+						hasQuantity = hasQuantity - item.quantity
 					end
 				end
 
-				var_9_0 = var_9_0 + math.floor(var_9_9 / var_9_8)
+				afford = afford + math.floor(hasQuantity / costQuantity)
 
 				break
 			else
-				table.insert(var_9_1, {
-					type = var_9_6,
-					id = var_9_7,
-					quantity = var_9_8
+				table.insert(spend, {
+					type = costType,
+					id = costId,
+					quantity = costQuantity
 				})
 
-				local var_9_10, var_9_11, var_9_12 = ItemModel.instance:hasEnoughItems(var_9_1)
+				local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItems(spend)
 
-				if not var_9_11 then
+				if not enough then
 					break
 				end
 
-				var_9_0 = var_9_0 + 1
+				afford = afford + 1
 			end
 		end
 
-		return var_9_0
+		return afford
 	else
 		return -1
 	end
 end
 
-function var_0_0.getLimitSoldNum(arg_10_0)
-	local var_10_0 = arg_10_0.config.product
-	local var_10_1 = GameUtil.splitString2(var_10_0, true)
-	local var_10_2 = var_10_1[1][1]
-	local var_10_3 = var_10_1[1][2]
+function StoreGoodsMO:getLimitSoldNum()
+	local product = self.config.product
+	local productArr = GameUtil.splitString2(product, true)
+	local itemType = productArr[1][1]
+	local itemId = productArr[1][2]
 
-	if var_10_2 == MaterialEnum.MaterialType.Equip then
-		local var_10_4 = ItemModel.instance:getItemConfig(var_10_2, var_10_3)
+	if itemType == MaterialEnum.MaterialType.Equip then
+		local itemConfig = ItemModel.instance:getItemConfig(itemType, itemId)
 
-		if not var_10_4 then
-			logError(string.format("获取道具配置失败: 道具类型 : %s, 道具id : %s", var_10_2, var_10_3))
+		if not itemConfig then
+			logError(string.format("获取道具配置失败: 道具类型 : %s, 道具id : %s", itemType, itemId))
 		end
 
-		return var_10_4.upperLimit
+		return itemConfig.upperLimit
 	end
 end
 
-function var_0_0.alreadyHas(arg_11_0)
-	local var_11_0 = arg_11_0.config.product
-	local var_11_1 = GameUtil.splitString2(var_11_0, true)
-	local var_11_2 = var_11_1[1][1]
-	local var_11_3 = var_11_1[1][2]
-	local var_11_4 = false
+function StoreGoodsMO:alreadyHas()
+	local product = self.config.product
+	local productArr = GameUtil.splitString2(product, true)
+	local itemType = productArr[1][1]
+	local itemId = productArr[1][2]
+	local has = false
 
-	if arg_11_0.belongStoreId == StoreEnum.StoreId.NewRoomStore or arg_11_0.belongStoreId == StoreEnum.StoreId.OldRoomStore then
-		var_11_4 = true
+	if self.belongStoreId == StoreEnum.StoreId.NewRoomStore or self.belongStoreId == StoreEnum.StoreId.OldRoomStore then
+		has = true
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-			var_11_2 = iter_11_1[1]
-			var_11_3 = iter_11_1[2]
+		for i, v in ipairs(productArr) do
+			itemType = v[1]
+			itemId = v[2]
 
-			local var_11_5 = ItemModel.instance:getItemQuantity(var_11_2, var_11_3)
-			local var_11_6 = ItemModel.instance:getItemConfig(var_11_2, var_11_3)
-			local var_11_7 = var_11_6 and var_11_6.numLimit or 1
+			local hasQuantity = ItemModel.instance:getItemQuantity(itemType, itemId)
+			local itemConfig = ItemModel.instance:getItemConfig(itemType, itemId)
+			local numLimit = itemConfig and itemConfig.numLimit or 1
 
-			if var_11_7 == 0 or var_11_5 < var_11_7 then
-				var_11_4 = false
+			if numLimit == 0 or hasQuantity < numLimit then
+				has = false
 
 				break
 			end
 		end
-	elseif var_11_2 == MaterialEnum.MaterialType.PlayerCloth then
-		var_11_4 = PlayerClothModel.instance:hasCloth(var_11_3)
-	elseif var_11_2 == MaterialEnum.MaterialType.HeroSkin then
-		var_11_4 = HeroModel.instance:checkHasSkin(var_11_3)
+	elseif itemType == MaterialEnum.MaterialType.PlayerCloth then
+		has = PlayerClothModel.instance:hasCloth(itemId)
+	elseif itemType == MaterialEnum.MaterialType.HeroSkin then
+		has = HeroModel.instance:checkHasSkin(itemId)
 	end
 
-	return var_11_4
+	return has
 end
 
-function var_0_0.buyGoodsReply(arg_12_0, arg_12_1)
-	arg_12_0.buyCount = arg_12_0.buyCount + arg_12_1
+function StoreGoodsMO:buyGoodsReply(num)
+	self.buyCount = self.buyCount + num
 end
 
-function var_0_0.hasProduct(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = false
+function StoreGoodsMO:hasProduct(type, id)
+	local result = false
 
-	if arg_13_1 and arg_13_2 then
-		local var_13_1 = arg_13_0.config.product
-		local var_13_2 = GameUtil.splitString2(var_13_1, true)
+	if type and id then
+		local product = self.config.product
+		local productArr = GameUtil.splitString2(product, true)
 
-		for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-			if arg_13_1 == iter_13_1[1] and arg_13_2 == iter_13_1[2] then
-				var_13_0 = true
+		for _, productItem in ipairs(productArr) do
+			if type == productItem[1] and id == productItem[2] then
+				result = true
 
 				break
 			end
 		end
 	end
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.intiActGoods(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_0.belongStoreId = arg_14_1
-	arg_14_0.goodsId = nil
-	arg_14_0.actGoodsId = arg_14_2
-	arg_14_0.actPoolId = arg_14_3
-	arg_14_0.isActGoods = true
+function StoreGoodsMO:intiActGoods(belongStoreId, actGoodsId, actPoolId)
+	self.belongStoreId = belongStoreId
+	self.goodsId = nil
+	self.actGoodsId = actGoodsId
+	self.actPoolId = actPoolId
+	self.isActGoods = true
 end
 
-function var_0_0.isSoldOut(arg_15_0)
-	if arg_15_0:getIsActGoods() then
+function StoreGoodsMO:isSoldOut()
+	if self:getIsActGoods() then
 		return false
 	end
 
-	if arg_15_0.config.maxBuyCount > 0 and arg_15_0.config.maxBuyCount <= arg_15_0.buyCount then
+	if self.config.maxBuyCount > 0 and self.config.maxBuyCount <= self.buyCount then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.needShowNew(arg_16_0)
-	if arg_16_0:getIsActGoods() then
+function StoreGoodsMO:needShowNew()
+	if self:getIsActGoods() then
 		return false
 	end
 
-	if arg_16_0:isSoldOut() then
+	if self:isSoldOut() then
 		return false
 	else
-		local var_16_0 = ServerTime.now()
+		local serverTime = ServerTime.now()
 
-		return var_16_0 >= arg_16_0.newStartTime and var_16_0 <= arg_16_0.newEndTime
+		return serverTime >= self.newStartTime and serverTime <= self.newEndTime
 	end
 end
 
-function var_0_0.getBelongStoreId(arg_17_0)
-	return arg_17_0.belongStoreId
+function StoreGoodsMO:getBelongStoreId()
+	return self.belongStoreId
 end
 
-function var_0_0.getActGoodsId(arg_18_0)
-	return arg_18_0.actGoodsId
+function StoreGoodsMO:getActGoodsId()
+	return self.actGoodsId
 end
 
-function var_0_0.getIsGreatActGoods(arg_19_0)
-	local var_19_0 = false
+function StoreGoodsMO:getIsGreatActGoods()
+	local result = false
 
-	if arg_19_0:getIsActGoods() then
-		var_19_0 = arg_19_0.actPoolId == FurnaceTreasureEnum.ActGoodsPool.Great
+	if self:getIsActGoods() then
+		result = self.actPoolId == FurnaceTreasureEnum.ActGoodsPool.Great
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.getIsActGoods(arg_20_0)
-	return arg_20_0.isActGoods or false
+function StoreGoodsMO:getIsActGoods()
+	return self.isActGoods or false
 end
 
-function var_0_0.getIsJumpGoods(arg_21_0)
-	return arg_21_0.config.jumpId ~= 0
+function StoreGoodsMO:getIsJumpGoods()
+	local isJumpGoods = self.config.jumpId ~= 0
+
+	return isJumpGoods
 end
 
-function var_0_0.getIsPackageGoods(arg_22_0)
-	return arg_22_0.config.bindgoodid ~= 0
+function StoreGoodsMO:getIsPackageGoods()
+	local isPackageGoods = self.config.bindgoodid ~= 0
+
+	return isPackageGoods
 end
 
-function var_0_0.getIsActivityGoods(arg_23_0)
-	return arg_23_0.config.activityId ~= 0
+function StoreGoodsMO:getIsActivityGoods()
+	local isActivityGoods = self.config.activityId ~= 0
+
+	return isActivityGoods
 end
 
-function var_0_0.checkJumpGoodCanOpen(arg_24_0)
-	if not arg_24_0:getIsJumpGoods() then
+function StoreGoodsMO:checkJumpGoodCanOpen()
+	if not self:getIsJumpGoods() then
 		return true
-	elseif arg_24_0:getIsPackageGoods() then
-		local var_24_0 = StoreModel.instance:getGoodsMO(arg_24_0.config.bindgoodid)
+	elseif self:getIsPackageGoods() then
+		local storeMO = StoreModel.instance:getGoodsMO(self.config.bindgoodid)
 
-		if var_24_0 then
-			local var_24_1 = ServerTime.now()
-			local var_24_2 = TimeUtil.stringToTimestamp(var_24_0.config.onlineTime)
-			local var_24_3 = TimeUtil.stringToTimestamp(var_24_0.config.offlineTime)
+		if storeMO then
+			local serverTime = ServerTime.now()
+			local onlineTime = TimeUtil.stringToTimestamp(storeMO.config.onlineTime)
+			local offlineTime = TimeUtil.stringToTimestamp(storeMO.config.offlineTime)
 
-			return var_24_2 <= var_24_1 and var_24_1 <= var_24_3
+			return onlineTime <= serverTime and serverTime <= offlineTime
 		else
 			return false
 		end
-	elseif arg_24_0:getIsActivityGoods() and ActivityHelper.getActivityStatus(arg_24_0.config.activityId) ~= ActivityEnum.ActivityStatus.Normal then
+	elseif self:getIsActivityGoods() then
+		local status = ActivityHelper.getActivityStatus(self.config.activityId)
+
+		if status ~= ActivityEnum.ActivityStatus.Normal then
+			return false
+		end
+	end
+
+	return true
+end
+
+function StoreGoodsMO:setNewRedDotKey()
+	local key = PlayerPrefsKey.StoreRoomTreeItemShowNew .. self.goodsId
+
+	GameUtil.playerPrefsSetStringByUserId(key, self.goodsId)
+end
+
+function StoreGoodsMO:checkShowNewRedDot()
+	local key = PlayerPrefsKey.StoreRoomTreeItemShowNew .. self.goodsId
+	local value = GameUtil.playerPrefsGetStringByUserId(key, nil)
+
+	if self.belongStoreId ~= StoreEnum.StoreId.NewRoomStore and self.belongStoreId ~= StoreEnum.StoreId.Skin then
+		return false
+	end
+
+	if value then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.setNewRedDotKey(arg_25_0)
-	local var_25_0 = PlayerPrefsKey.StoreRoomTreeItemShowNew .. arg_25_0.goodsId
-
-	GameUtil.playerPrefsSetStringByUserId(var_25_0, arg_25_0.goodsId)
-end
-
-function var_0_0.checkShowNewRedDot(arg_26_0)
-	local var_26_0 = PlayerPrefsKey.StoreRoomTreeItemShowNew .. arg_26_0.goodsId
-	local var_26_1 = GameUtil.playerPrefsGetStringByUserId(var_26_0, nil)
-
-	if arg_26_0.belongStoreId ~= StoreEnum.StoreId.NewRoomStore and arg_26_0.belongStoreId ~= StoreEnum.StoreId.Skin then
-		return false
-	end
-
-	if var_26_1 then
-		return false
-	end
-
-	return true
-end
-
-return var_0_0
+return StoreGoodsMO

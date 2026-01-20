@@ -1,0 +1,29 @@
+[
+  {
+    "id": 101,
+    "step": 1,
+    "type": 2,
+    "check_point": "201#20",
+    "interactive": "",
+    "desc": "",
+    "event": ""
+  },
+  {
+    "id": 101,
+    "step": 2,
+    "type": 2,
+    "check_point": "201#15",
+    "interactive": "",
+    "desc": "",
+    "event": ""
+  },
+  {
+    "id": 101,
+    "step": 3,
+    "type": 2,
+    "check_point": "201#10",
+    "interactive": "",
+    "desc": "",
+    "event": ""
+  }
+]

@@ -1,99 +1,107 @@
-﻿module("modules.logic.achievement.view.AchievementItemFoldAnimComp", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementItemFoldAnimComp.lua
 
-local var_0_0 = class("AchievementItemFoldAnimComp", LuaCompBase)
+module("modules.logic.achievement.view.AchievementItemFoldAnimComp", package.seeall)
 
-function var_0_0.Get(arg_1_0, arg_1_1)
-	local var_1_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+local AchievementItemFoldAnimComp = class("AchievementItemFoldAnimComp", LuaCompBase)
 
-	var_1_0:setFoldRoot(arg_1_1)
+function AchievementItemFoldAnimComp.Get(go, foldRootGo)
+	local animComp = MonoHelper.addNoUpdateLuaComOnceToGo(go, AchievementItemFoldAnimComp)
 
-	return var_1_0
+	animComp:setFoldRoot(foldRootGo)
+
+	return animComp
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._btnpopup = gohelper.getClickWithDefaultAudio(arg_2_0.go)
-	arg_2_0._gooff = gohelper.findChild(arg_2_0.go, "#go_off")
-	arg_2_0._goon = gohelper.findChild(arg_2_0.go, "#go_on")
+function AchievementItemFoldAnimComp:init(go)
+	self.go = go
+	self._btnpopup = gohelper.getClickWithDefaultAudio(self.go)
+	self._gooff = gohelper.findChild(self.go, "#go_off")
+	self._goon = gohelper.findChild(self.go, "#go_on")
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnpopup:AddClickListener(arg_3_0._btnpopupOnClick, arg_3_0)
-	arg_3_0:addEventCb(AchievementMainController.instance, AchievementEvent.OnPlayGroupFadeAnim, arg_3_0._onPlayGroupFadeAnimation, arg_3_0)
+function AchievementItemFoldAnimComp:addEventListeners()
+	self._btnpopup:AddClickListener(self._btnpopupOnClick, self)
+	self:addEventCb(AchievementMainController.instance, AchievementEvent.OnPlayGroupFadeAnim, self._onPlayGroupFadeAnimation, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnpopup:RemoveClickListener()
+function AchievementItemFoldAnimComp:removeEventListeners()
+	self._btnpopup:RemoveClickListener()
 end
 
-function var_0_0._btnpopupOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._mo:getIsFold()
-	local var_5_1 = arg_5_0._mo:getGroupId()
+function AchievementItemFoldAnimComp:_btnpopupOnClick()
+	local isFold = self._mo:getIsFold()
+	local groupId = self._mo:getGroupId()
 
-	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnClickGroupFoldBtn, var_5_1, not var_5_0)
+	AchievementMainController.instance:dispatchEvent(AchievementEvent.OnClickGroupFoldBtn, groupId, not isFold)
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	arg_6_0:killTween()
+function AchievementItemFoldAnimComp:onDestroy()
+	self:killTween()
 end
 
-function var_0_0.setFoldRoot(arg_7_0, arg_7_1)
-	arg_7_0._gofoldroot = arg_7_1
+function AchievementItemFoldAnimComp:setFoldRoot(foldRootGo)
+	self._gofoldroot = foldRootGo
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	if arg_8_0._mo ~= arg_8_1 then
-		arg_8_0:killTween()
+function AchievementItemFoldAnimComp:onUpdateMO(mo)
+	if self._mo ~= mo then
+		self:killTween()
 	end
 
-	arg_8_0._mo = arg_8_1
+	self._mo = mo
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._onPlayGroupFadeAnimation(arg_9_0, arg_9_1)
-	if not arg_9_1 or arg_9_1.mo ~= arg_9_0._mo then
+function AchievementItemFoldAnimComp:_onPlayGroupFadeAnimation(effectParams)
+	if not effectParams or effectParams.mo ~= self._mo then
 		return
 	end
 
-	arg_9_0._isFold = arg_9_1.isFold
+	self._isFold = effectParams.isFold
 
-	if not arg_9_0._isFold then
-		arg_9_0._mo:setIsFold(arg_9_0._isFold)
+	if not self._isFold then
+		self._mo:setIsFold(self._isFold)
 	end
 
-	local var_9_0 = arg_9_1.orginLineHeight
-	local var_9_1 = arg_9_1.targetLineHeight
-	local var_9_2 = arg_9_1.duration
+	local orginLineHeight = effectParams.orginLineHeight
+	local targetLineHeight = effectParams.targetLineHeight
+	local duration = effectParams.duration
 
-	arg_9_0._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(var_9_0, var_9_1, var_9_2, arg_9_0._onOpenTweenFrameCallback, arg_9_0._onOpenTweenFinishCallback, arg_9_0, nil)
+	self._openAnimTweenId = ZProj.TweenHelper.DOTweenFloat(orginLineHeight, targetLineHeight, duration, self._onOpenTweenFrameCallback, self._onOpenTweenFinishCallback, self, nil)
 end
 
-function var_0_0._onOpenTweenFrameCallback(arg_10_0, arg_10_1)
-	arg_10_0._mo:overrideLineHeight(arg_10_1)
-	AchievementMainCommonModel.instance:getCurViewExcuteModelInstance():onModelUpdate()
+function AchievementItemFoldAnimComp:_onOpenTweenFrameCallback(value)
+	self._mo:overrideLineHeight(value)
+
+	local modelInst = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
+
+	modelInst:onModelUpdate()
 end
 
-function var_0_0._onOpenTweenFinishCallback(arg_11_0)
-	arg_11_0._mo:clearOverrideLineHeight()
-	arg_11_0._mo:setIsFold(arg_11_0._isFold)
-	AchievementMainCommonModel.instance:getCurViewExcuteModelInstance():onModelUpdate()
+function AchievementItemFoldAnimComp:_onOpenTweenFinishCallback()
+	self._mo:clearOverrideLineHeight()
+	self._mo:setIsFold(self._isFold)
+
+	local modelInst = AchievementMainCommonModel.instance:getCurViewExcuteModelInstance()
+
+	modelInst:onModelUpdate()
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	local var_12_0 = arg_12_0._mo:getIsFold()
+function AchievementItemFoldAnimComp:refreshUI()
+	local isFold = self._mo:getIsFold()
 
-	gohelper.setActive(arg_12_0._goon, not var_12_0)
-	gohelper.setActive(arg_12_0._gooff, var_12_0)
-	gohelper.setActive(arg_12_0._gofoldroot, not var_12_0)
+	gohelper.setActive(self._goon, not isFold)
+	gohelper.setActive(self._gooff, isFold)
+	gohelper.setActive(self._gofoldroot, not isFold)
 end
 
-function var_0_0.killTween(arg_13_0)
-	if arg_13_0._openAnimTweenId then
-		ZProj.TweenHelper.KillById(arg_13_0._openAnimTweenId)
+function AchievementItemFoldAnimComp:killTween()
+	if self._openAnimTweenId then
+		ZProj.TweenHelper.KillById(self._openAnimTweenId)
 
-		arg_13_0._openAnimTweenId = nil
+		self._openAnimTweenId = nil
 	end
 end
 
-return var_0_0
+return AchievementItemFoldAnimComp

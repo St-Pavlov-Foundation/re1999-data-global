@@ -1,13 +1,15 @@
-﻿module("modules.logic.room.view.RoomBranchViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomBranchViewContainer.lua
 
-local var_0_0 = class("RoomBranchViewContainer", BaseViewContainer)
+module("modules.logic.room.view.RoomBranchViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomBranchViewContainer = class("RoomBranchViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomBranchView.New())
+function RoomBranchViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomBranchView.New())
+
+	return views
 end
 
-return var_0_0
+return RoomBranchViewContainer

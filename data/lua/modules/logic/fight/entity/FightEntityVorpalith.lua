@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.entity.FightEntityVorpalith", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityVorpalith.lua
 
-local var_0_0 = class("FightEntityVorpalith", BaseFightEntity)
+module("modules.logic.fight.entity.FightEntityVorpalith", package.seeall)
 
-function var_0_0.getTag(arg_1_0)
+local FightEntityVorpalith = class("FightEntityVorpalith", BaseFightEntity)
+
+function FightEntityVorpalith:getTag()
 	return SceneTag.UnitNpc
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
-	FightRenderOrderMgr.instance:unregister(arg_2_0.id)
+function FightEntityVorpalith:init(go)
+	FightEntityVorpalith.super.init(self, go)
+	FightRenderOrderMgr.instance:unregister(self.id)
 end
 
-function var_0_0.initComponents(arg_3_0)
-	arg_3_0:addComp("skill", FightSkillComp)
-	arg_3_0:addComp("effect", FightEffectComp)
-	arg_3_0:addComp("buff", FightBuffComp)
-	arg_3_0:addComp("vorpalithEventMgr", FightVorpalithEventMgrComp)
+function FightEntityVorpalith:initComponents()
+	self:addComp("skill", FightSkillComp)
+	self:addComp("effect", FightEffectComp)
+	self:addComp("buff", FightBuffComp)
+	self:addComp("vorpalithEventMgr", FightVorpalithEventMgrComp)
 end
 
-return var_0_0
+return FightEntityVorpalith

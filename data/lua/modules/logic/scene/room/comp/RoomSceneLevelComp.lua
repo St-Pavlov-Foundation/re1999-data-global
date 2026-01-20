@@ -1,14 +1,16 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneLevelComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneLevelComp.lua
 
-local var_0_0 = class("RoomSceneLevelComp", CommonSceneLevelComp)
+module("modules.logic.scene.room.comp.RoomSceneLevelComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:loadLevel(arg_1_2)
+local RoomSceneLevelComp = class("RoomSceneLevelComp", CommonSceneLevelComp)
+
+function RoomSceneLevelComp:init(sceneId, levelId)
+	self:loadLevel(levelId)
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._sceneId = arg_2_1
-	arg_2_0._levelId = arg_2_2
+function RoomSceneLevelComp:onSceneStart(sceneId, levelId)
+	self._sceneId = sceneId
+	self._levelId = levelId
 end
 
-return var_0_0
+return RoomSceneLevelComp

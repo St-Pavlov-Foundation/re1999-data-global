@@ -1,47 +1,49 @@
-﻿module("modules.logic.rouge.map.model.rpcmo.RougeStoreEventMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/model/rpcmo/RougeStoreEventMO.lua
 
-local var_0_0 = class("RougeStoreEventMO", RougeBaseEventMO)
+module("modules.logic.rouge.map.model.rpcmo.RougeStoreEventMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
+local RougeStoreEventMO = class("RougeStoreEventMO", RougeBaseEventMO)
 
-	arg_1_0.boughtPosList = arg_1_0.jsonData.boughtGoodsPosSet
+function RougeStoreEventMO:init(eventCo, data)
+	RougeStoreEventMO.super.init(self, eventCo, data)
 
-	if arg_1_0.jsonData.posGoodMap then
-		arg_1_0.posGoodsList = {}
+	self.boughtPosList = self.jsonData.boughtGoodsPosSet
 
-		for iter_1_0, iter_1_1 in pairs(arg_1_0.jsonData.posGoodMap) do
-			arg_1_0.posGoodsList[tonumber(iter_1_0)] = iter_1_1
+	if self.jsonData.posGoodMap then
+		self.posGoodsList = {}
+
+		for index, mo in pairs(self.jsonData.posGoodMap) do
+			self.posGoodsList[tonumber(index)] = mo
 		end
 	end
 
-	arg_1_0.refreshNum = arg_1_0.jsonData.refreshNum
-	arg_1_0.refreshNeedCoin = arg_1_0.jsonData.refreshNeedCoin
+	self.refreshNum = self.jsonData.refreshNum
+	self.refreshNeedCoin = self.jsonData.refreshNeedCoin
 end
 
-function var_0_0.update(arg_2_0, arg_2_1, arg_2_2)
-	var_0_0.super.update(arg_2_0, arg_2_1, arg_2_2)
+function RougeStoreEventMO:update(eventCo, data)
+	RougeStoreEventMO.super.update(self, eventCo, data)
 
-	arg_2_0.boughtPosList = arg_2_0.jsonData.boughtGoodsPosSet
+	self.boughtPosList = self.jsonData.boughtGoodsPosSet
 
-	if arg_2_0.jsonData.posGoodMap then
-		arg_2_0.posGoodsList = {}
+	if self.jsonData.posGoodMap then
+		self.posGoodsList = {}
 
-		for iter_2_0, iter_2_1 in pairs(arg_2_0.jsonData.posGoodMap) do
-			arg_2_0.posGoodsList[tonumber(iter_2_0)] = iter_2_1
+		for index, mo in pairs(self.jsonData.posGoodMap) do
+			self.posGoodsList[tonumber(index)] = mo
 		end
 	end
 
-	arg_2_0.refreshNum = arg_2_0.jsonData.refreshNum
-	arg_2_0.refreshNeedCoin = arg_2_0.jsonData.refreshNeedCoin
+	self.refreshNum = self.jsonData.refreshNum
+	self.refreshNeedCoin = self.jsonData.refreshNeedCoin
 end
 
-function var_0_0.checkIsSellOut(arg_3_0, arg_3_1)
-	return tabletool.indexOf(arg_3_0.boughtPosList, arg_3_1)
+function RougeStoreEventMO:checkIsSellOut(index)
+	return tabletool.indexOf(self.boughtPosList, index)
 end
 
-function var_0_0.__tostring(arg_4_0)
-	return var_0_0.super.__tostring(arg_4_0)
+function RougeStoreEventMO:__tostring()
+	return RougeStoreEventMO.super.__tostring(self)
 end
 
-return var_0_0
+return RougeStoreEventMO

@@ -1,178 +1,183 @@
-﻿module("modules.logic.activity.controller.chessmap.ActivityChessInteractObject", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/ActivityChessInteractObject.lua
 
-local var_0_0 = class("ActivityChessInteractObject")
-local var_0_1 = {
+module("modules.logic.activity.controller.chessmap.ActivityChessInteractObject", package.seeall)
+
+local ActivityChessInteractObject = class("ActivityChessInteractObject")
+local HandlerClzMap = {
 	[ActivityChessEnum.InteractType.Player] = ActivityChessInteractPlayer,
 	[ActivityChessEnum.InteractType.TriggerFail] = ActivityChessInteractTriggerFail
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.originData = arg_1_1
-	arg_1_0.id = arg_1_1.id
+function ActivityChessInteractObject:init(interactData)
+	self.originData = interactData
+	self.id = interactData.id
 
-	local var_1_0 = Activity109Config.instance:getInteractObjectCo(arg_1_0.originData.actId, arg_1_0.id)
+	local cfg = Activity109Config.instance:getInteractObjectCo(self.originData.actId, self.id)
 
-	if var_1_0 then
-		arg_1_0.objType = var_1_0.interactType
-		arg_1_0.config = var_1_0
-		arg_1_0._handler = (var_0_1[var_1_0.interactType] or ActivityChessInteractBase).New()
+	if cfg then
+		self.objType = cfg.interactType
+		self.config = cfg
 
-		arg_1_0._handler:init(arg_1_0)
+		local handlerClz = HandlerClzMap[cfg.interactType] or ActivityChessInteractBase
+
+		self._handler = handlerClz.New()
+
+		self._handler:init(self)
 	else
-		logError("can't find interact_object : " .. tostring(arg_1_1.actId) .. ", " .. tostring(arg_1_1.id))
+		logError("can't find interact_object : " .. tostring(interactData.actId) .. ", " .. tostring(interactData.id))
 	end
 
-	arg_1_0.goToObject = ActivityChessGotoObject.New(arg_1_0)
-	arg_1_0.effect = ActivityChessInteractEffect.New(arg_1_0)
-	arg_1_0.avatar = nil
+	self.goToObject = ActivityChessGotoObject.New(self)
+	self.effect = ActivityChessInteractEffect.New(self)
+	self.avatar = nil
 end
 
-function var_0_0.setAvatar(arg_2_0, arg_2_1)
-	arg_2_0.avatar = arg_2_1
+function ActivityChessInteractObject:setAvatar(avatarObj)
+	self.avatar = avatarObj
 
-	arg_2_0:updateAvatarInScene()
+	self:updateAvatarInScene()
 end
 
-function var_0_0.updateAvatarInScene(arg_3_0)
-	if not arg_3_0.avatar or not arg_3_0.avatar.sceneGo then
+function ActivityChessInteractObject:updateAvatarInScene()
+	if not self.avatar or not self.avatar.sceneGo then
 		return
 	end
 
-	if arg_3_0.originData.posX and arg_3_0.originData.posY then
-		local var_3_0, var_3_1, var_3_2 = ActivityChessGameController.instance:calcTilePosInScene(arg_3_0.originData.posX, arg_3_0.originData.posY, arg_3_0.avatar.order)
+	if self.originData.posX and self.originData.posY then
+		local sceneX, sceneY, sceneZ = ActivityChessGameController.instance:calcTilePosInScene(self.originData.posX, self.originData.posY, self.avatar.order)
 
-		arg_3_0.avatar.sceneX = var_3_0
-		arg_3_0.avatar.sceneY = var_3_1
+		self.avatar.sceneX = sceneX
+		self.avatar.sceneY = sceneY
 
-		transformhelper.setLocalPos(arg_3_0.avatar.sceneTf, var_3_0, var_3_1, var_3_2)
+		transformhelper.setLocalPos(self.avatar.sceneTf, sceneX, sceneY, sceneZ)
 	end
 
-	local var_3_3 = 0.6
+	local scale = 0.6
 
-	transformhelper.setLocalScale(arg_3_0.avatar.sceneTf, var_3_3, var_3_3, var_3_3)
+	transformhelper.setLocalScale(self.avatar.sceneTf, scale, scale, scale)
 
-	if arg_3_0.avatar.loader then
-		local var_3_4 = arg_3_0:getAvatarPath()
+	if self.avatar.loader then
+		local resPath = self:getAvatarPath()
 
-		if not string.nilorempty(var_3_4) then
-			arg_3_0.avatar.loader:startLoad(string.format("scenes/m_s12_dfw/prefab/picpe/%s.prefab", var_3_4), arg_3_0.onSceneObjectLoadFinish, arg_3_0)
+		if not string.nilorempty(resPath) then
+			self.avatar.loader:startLoad(string.format("scenes/m_s12_dfw/prefab/picpe/%s.prefab", resPath), self.onSceneObjectLoadFinish, self)
 		end
 	end
 end
 
-var_0_0.DirectionList = {
+ActivityChessInteractObject.DirectionList = {
 	2,
 	4,
 	6,
 	8
 }
-var_0_0.DirectionSet = {}
+ActivityChessInteractObject.DirectionSet = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.DirectionList) do
-	var_0_0.DirectionSet[iter_0_1] = true
+for k, v in pairs(ActivityChessInteractObject.DirectionList) do
+	ActivityChessInteractObject.DirectionSet[v] = true
 end
 
-function var_0_0.onSceneObjectLoadFinish(arg_4_0)
-	if arg_4_0.avatar and arg_4_0.avatar.loader then
-		local var_4_0 = arg_4_0.avatar.loader:getInstGO()
+function ActivityChessInteractObject:onSceneObjectLoadFinish()
+	if self.avatar and self.avatar.loader then
+		local go = self.avatar.loader:getInstGO()
 
-		if not gohelper.isNil(var_4_0) then
-			local var_4_1 = gohelper.findChild(var_4_0, "Canvas")
+		if not gohelper.isNil(go) then
+			local canvasGo = gohelper.findChild(go, "Canvas")
 
-			if var_4_1 then
-				local var_4_2 = var_4_1:GetComponent(typeof(UnityEngine.Canvas))
+			if canvasGo then
+				local canvas = canvasGo:GetComponent(typeof(UnityEngine.Canvas))
 
-				if var_4_2 then
-					var_4_2.worldCamera = CameraMgr.instance:getMainCamera()
+				if canvas then
+					canvas.worldCamera = CameraMgr.instance:getMainCamera()
 				end
 			end
 
-			for iter_4_0, iter_4_1 in ipairs(var_0_0.DirectionList) do
-				arg_4_0.avatar["goFaceTo" .. iter_4_1] = gohelper.findChild(var_4_0, "piecea/char_" .. iter_4_1)
+			for _, dir in ipairs(ActivityChessInteractObject.DirectionList) do
+				self.avatar["goFaceTo" .. dir] = gohelper.findChild(go, "piecea/char_" .. dir)
 			end
 		end
 
-		arg_4_0.avatar.isLoaded = true
+		self.avatar.isLoaded = true
 
-		arg_4_0:getHandler():onAvatarLoaded()
-		arg_4_0.goToObject:onAvatarLoaded()
-		arg_4_0.effect:onAvatarLoaded()
+		self:getHandler():onAvatarLoaded()
+		self.goToObject:onAvatarLoaded()
+		self.effect:onAvatarLoaded()
 	end
 end
 
-function var_0_0.tryGetGameObject(arg_5_0)
-	if arg_5_0.avatar and arg_5_0.avatar.loader then
-		local var_5_0 = arg_5_0.avatar.loader:getInstGO()
+function ActivityChessInteractObject:tryGetGameObject()
+	if self.avatar and self.avatar.loader then
+		local go = self.avatar.loader:getInstGO()
 
-		if not gohelper.isNil(var_5_0) then
-			return var_5_0
+		if not gohelper.isNil(go) then
+			return go
 		end
 	end
 end
 
-function var_0_0.getAvatarPath(arg_6_0)
-	local var_6_0 = arg_6_0.originData.actId
-	local var_6_1 = arg_6_0.originData.id
-	local var_6_2 = Activity109Config.instance:getInteractObjectCo(var_6_0, var_6_1)
+function ActivityChessInteractObject:getAvatarPath()
+	local actId = self.originData.actId
+	local objId = self.originData.id
+	local co = Activity109Config.instance:getInteractObjectCo(actId, objId)
 
-	if var_6_2 then
-		return var_6_2.avatar
+	if co then
+		return co.avatar
 	end
 end
 
-function var_0_0.canSelect(arg_7_0)
-	return arg_7_0.config and arg_7_0.config.interactType == ActivityChessEnum.InteractType.Player
+function ActivityChessInteractObject:canSelect()
+	return self.config and self.config.interactType == ActivityChessEnum.InteractType.Player
 end
 
-function var_0_0.getHandler(arg_8_0)
-	return arg_8_0._handler
+function ActivityChessInteractObject:getHandler()
+	return self._handler
 end
 
-function var_0_0.canBlock(arg_9_0)
-	return arg_9_0.config and (arg_9_0.config.interactType == ActivityChessEnum.InteractType.Obstacle or arg_9_0.config.interactType == ActivityChessEnum.InteractType.TriggerFail or arg_9_0.config.interactType == ActivityChessEnum.InteractType.Player)
+function ActivityChessInteractObject:canBlock()
+	return self.config and (self.config.interactType == ActivityChessEnum.InteractType.Obstacle or self.config.interactType == ActivityChessEnum.InteractType.TriggerFail or self.config.interactType == ActivityChessEnum.InteractType.Player)
 end
 
-function var_0_0.getSelectPriority(arg_10_0)
-	local var_10_0
+function ActivityChessInteractObject:getSelectPriority()
+	local p
 
-	if arg_10_0.config then
-		var_10_0 = ActivityChessEnum.InteractSelectPriority[arg_10_0.config.interactType]
+	if self.config then
+		p = ActivityChessEnum.InteractSelectPriority[self.config.interactType]
 	end
 
-	return var_10_0 or arg_10_0.id
+	return p or self.id
 end
 
-function var_0_0.dispose(arg_11_0)
-	if arg_11_0.avatar ~= nil then
-		if arg_11_0.avatar.loader then
-			arg_11_0.avatar.loader:dispose()
+function ActivityChessInteractObject:dispose()
+	if self.avatar ~= nil then
+		if self.avatar.loader then
+			self.avatar.loader:dispose()
 
-			arg_11_0.avatar.loader = nil
+			self.avatar.loader = nil
 		end
 
-		if not gohelper.isNil(arg_11_0.avatar.sceneGo) then
-			gohelper.setActive(arg_11_0.avatar.sceneGo, true)
-			gohelper.destroy(arg_11_0.avatar.sceneGo)
+		if not gohelper.isNil(self.avatar.sceneGo) then
+			gohelper.setActive(self.avatar.sceneGo, true)
+			gohelper.destroy(self.avatar.sceneGo)
 		end
 
-		ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.DeleteInteractAvatar, arg_11_0.avatar)
+		ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.DeleteInteractAvatar, self.avatar)
 
-		arg_11_0.avatar = nil
+		self.avatar = nil
 	end
 
-	local var_11_0 = {
+	local disposeCompName = {
 		"_handler",
 		"goToObject",
 		"effect"
 	}
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if arg_11_0[iter_11_1] ~= nil then
-			arg_11_0[iter_11_1]:dispose()
+	for i, name in ipairs(disposeCompName) do
+		if self[name] ~= nil then
+			self[name]:dispose()
 
-			arg_11_0[iter_11_1] = nil
+			self[name] = nil
 		end
 	end
 end
 
-return var_0_0
+return ActivityChessInteractObject

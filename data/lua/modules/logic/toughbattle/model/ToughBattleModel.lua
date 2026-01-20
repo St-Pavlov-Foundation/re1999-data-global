@@ -1,149 +1,155 @@
-﻿module("modules.logic.toughbattle.model.ToughBattleModel", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/model/ToughBattleModel.lua
 
-local var_0_0 = class("ToughBattleModel", BaseModel)
+module("modules.logic.toughbattle.model.ToughBattleModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._isActOnline = false
-	arg_1_0._actInfo = nil
-	arg_1_0._storyInfo = nil
-	arg_1_0._isJumpToActElement = false
+local ToughBattleModel = class("ToughBattleModel", BaseModel)
+
+function ToughBattleModel:onInit()
+	self._isActOnline = false
+	self._actInfo = nil
+	self._storyInfo = nil
+	self._isJumpToActElement = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function ToughBattleModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.getIsJumpActElement(arg_3_0)
-	return arg_3_0._isJumpToActElement
+function ToughBattleModel:getIsJumpActElement()
+	return self._isJumpToActElement
 end
 
-function var_0_0.setIsJumpActElement(arg_4_0, arg_4_1)
-	arg_4_0._isJumpToActElement = arg_4_1
+function ToughBattleModel:setIsJumpActElement(isJump)
+	self._isJumpToActElement = isJump
 end
 
-function var_0_0.getActIsOnline(arg_5_0)
-	return arg_5_0._isActOnline
+function ToughBattleModel:getActIsOnline()
+	return self._isActOnline
 end
 
-function var_0_0.setActOffLine(arg_6_0)
-	arg_6_0._isActOnline = false
-	arg_6_0._actInfo = nil
+function ToughBattleModel:setActOffLine()
+	self._isActOnline = false
+	self._actInfo = nil
 end
 
-function var_0_0.onGetActInfo(arg_7_0, arg_7_1)
-	arg_7_0._isActOnline = true
-	arg_7_0._actInfo = arg_7_1
+function ToughBattleModel:onGetActInfo(msg)
+	self._isActOnline = true
+	self._actInfo = msg
 
 	ToughBattleController.instance:dispatchEvent(ToughBattleEvent.ToughBattleActChange)
 end
 
-function var_0_0.getActInfo(arg_8_0)
-	return arg_8_0._actInfo
+function ToughBattleModel:getActInfo()
+	return self._actInfo
 end
 
-function var_0_0.isDropActItem(arg_9_0)
-	if not arg_9_0:getActIsOnline() then
+function ToughBattleModel:isDropActItem()
+	if not self:getActIsOnline() then
 		return true
 	end
 
-	return #arg_9_0._actInfo.enterDifficulty < 3
+	return #self._actInfo.enterDifficulty < 3
 end
 
-function var_0_0.onGetStoryInfo(arg_10_0, arg_10_1)
-	arg_10_0._storyInfo = arg_10_1
+function ToughBattleModel:onGetStoryInfo(msg)
+	self._storyInfo = msg
 end
 
-function var_0_0.getStoryInfo(arg_11_0)
-	return arg_11_0._storyInfo
+function ToughBattleModel:getStoryInfo()
+	return self._storyInfo
 end
 
-function var_0_0.isStoryFinish(arg_12_0)
-	if not arg_12_0._storyInfo then
+function ToughBattleModel:isStoryFinish()
+	if not self._storyInfo then
 		return false
 	end
 
-	return arg_12_0._storyInfo.openChallenge and #arg_12_0._storyInfo.passChallengeIds >= 4
+	return self._storyInfo.openChallenge and #self._storyInfo.passChallengeIds >= 4
 end
 
-function var_0_0.getEpisodeId(arg_13_0)
-	local var_13_0 = FightModel.instance:getFightParam()
+function ToughBattleModel:getEpisodeId()
+	local fightParam = FightModel.instance:getFightParam()
 
-	if not var_13_0 then
+	if not fightParam then
 		return false
 	end
 
-	local var_13_1 = var_13_0.episodeId
+	local episodeId = fightParam.episodeId
 
-	if not var_13_1 then
+	if not episodeId then
 		return false
 	end
 
-	if not ToughBattleConfig.instance:getCoByEpisodeId(var_13_1) then
+	local co = ToughBattleConfig.instance:getCoByEpisodeId(episodeId)
+
+	if not co then
 		return false
 	end
 
-	return var_13_1
+	return episodeId
 end
 
-function var_0_0.getAddTrialHeros(arg_14_0)
-	local var_14_0 = arg_14_0:getEpisodeId()
+function ToughBattleModel:getAddTrialHeros()
+	local episodeId = self:getEpisodeId()
 
-	if not var_14_0 then
+	if not episodeId then
 		return false
 	end
 
-	if not ToughBattleConfig.instance:getCoByEpisodeId(var_14_0) then
+	local co = ToughBattleConfig.instance:getCoByEpisodeId(episodeId)
+
+	if not co then
 		return false
 	end
 
-	local var_14_1 = ToughBattleConfig.instance:isActEpisodeId(var_14_0)
-	local var_14_2 = {}
+	local isAct = ToughBattleConfig.instance:isActEpisodeId(episodeId)
+	local heroIds = {}
 
-	if var_14_1 then
-		local var_14_3 = arg_14_0:getActInfo()
+	if isAct then
+		local info = self:getActInfo()
 
-		if not var_14_3 then
+		if not info then
 			return false
 		end
 
-		for iter_14_0, iter_14_1 in ipairs(var_14_3.passChallengeIds) do
-			local var_14_4 = lua_activity158_challenge.configDict[iter_14_1]
+		for _, id in ipairs(info.passChallengeIds) do
+			local actCo = lua_activity158_challenge.configDict[id]
 
-			if var_14_4 and var_14_4.heroId > 0 then
-				local var_14_5 = lua_siege_battle_hero.configDict[var_14_4.heroId]
+			if actCo and actCo.heroId > 0 then
+				local heroCo = lua_siege_battle_hero.configDict[actCo.heroId]
 
-				if var_14_5 and var_14_5.type == ToughBattleEnum.HeroType.Hero then
-					table.insert(var_14_2, tonumber(var_14_5.param))
+				if heroCo and heroCo.type == ToughBattleEnum.HeroType.Hero then
+					table.insert(heroIds, tonumber(heroCo.param))
 				end
 			end
 		end
 	else
-		local var_14_6 = arg_14_0:getStoryInfo()
+		local info = self:getStoryInfo()
 
-		if not var_14_6 then
+		if not info then
 			return false
 		end
 
-		for iter_14_2, iter_14_3 in ipairs(var_14_6.passChallengeIds) do
-			local var_14_7 = lua_siege_battle.configDict[iter_14_3]
+		for _, id in ipairs(info.passChallengeIds) do
+			local storyCo = lua_siege_battle.configDict[id]
 
-			if var_14_7 and var_14_7.heroId > 0 then
-				local var_14_8 = lua_siege_battle_hero.configDict[var_14_7.heroId]
+			if storyCo and storyCo.heroId > 0 then
+				local heroCo = lua_siege_battle_hero.configDict[storyCo.heroId]
 
-				if var_14_8 and var_14_8.type == ToughBattleEnum.HeroType.Hero then
-					table.insert(var_14_2, tonumber(var_14_8.param))
+				if heroCo and heroCo.type == ToughBattleEnum.HeroType.Hero then
+					table.insert(heroIds, tonumber(heroCo.param))
 				end
 			end
 		end
 	end
 
-	if not var_14_2[1] then
+	if not heroIds[1] then
 		return false
 	end
 
-	return var_14_2
+	return heroIds
 end
 
-var_0_0.instance = var_0_0.New()
+ToughBattleModel.instance = ToughBattleModel.New()
 
-return var_0_0
+return ToughBattleModel

@@ -1,65 +1,67 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_Assess_Score", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_Assess_Score.lua
 
-local var_0_0 = class("V1a4_BossRush_Assess_Score", V1a4_BossRush_AssessIcon)
+module("modules.logic.bossrush.view.V1a4_BossRush_Assess_Score", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	V1a4_BossRush_AssessIcon.init(arg_1_0, arg_1_1)
+local V1a4_BossRush_Assess_Score = class("V1a4_BossRush_Assess_Score", V1a4_BossRush_AssessIcon)
 
-	arg_1_0._txtScoreNum = gohelper.findChildText(arg_1_1, "Score/#txt_ScoreNum")
-	arg_1_0._txtScoreTran = gohelper.findChild(arg_1_1, "Score/#txt_Score").transform
-	arg_1_0._newRecordTran = gohelper.findChild(arg_1_1, "Score/#txt_ScoreNum/NewRecord").transform
-	arg_1_0.vxassess = {
-		[BossRushEnum.ScoreLevel.S] = gohelper.findChild(arg_1_0._imageAssessIcon.gameObject, "vx_s"),
-		[BossRushEnum.ScoreLevel.S_A] = gohelper.findChild(arg_1_0._imageAssessIcon.gameObject, "vx_ss"),
-		[BossRushEnum.ScoreLevel.S_AA] = gohelper.findChild(arg_1_0._imageAssessIcon.gameObject, "vx_sss")
+function V1a4_BossRush_Assess_Score:init(go)
+	V1a4_BossRush_AssessIcon.init(self, go)
+
+	self._txtScoreNum = gohelper.findChildText(go, "Score/#txt_ScoreNum")
+	self._txtScoreTran = gohelper.findChild(go, "Score/#txt_Score").transform
+	self._newRecordTran = gohelper.findChild(go, "Score/#txt_ScoreNum/NewRecord").transform
+	self.vxassess = {
+		[BossRushEnum.ScoreLevel.S] = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_s"),
+		[BossRushEnum.ScoreLevel.S_A] = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_ss"),
+		[BossRushEnum.ScoreLevel.S_AA] = gohelper.findChild(self._imageAssessIcon.gameObject, "vx_sss")
 	}
 
-	arg_1_0:setActiveNewRecord(false)
-	arg_1_0:showVX(false)
+	self:setActiveNewRecord(false)
+	self:showVX(false)
 
-	arg_1_0._txtScoreNum.text = ""
+	self._txtScoreNum.text = ""
 end
 
-function var_0_0.setActiveDesc(arg_2_0, arg_2_1)
-	GameUtil.setActive01(arg_2_0._txtScoreTran, arg_2_1)
+function V1a4_BossRush_Assess_Score:setActiveDesc(isActive)
+	GameUtil.setActive01(self._txtScoreTran, isActive)
 end
 
-function var_0_0.setActiveNewRecord(arg_3_0, arg_3_1)
-	GameUtil.setActive01(arg_3_0._newRecordTran, arg_3_1)
+function V1a4_BossRush_Assess_Score:setActiveNewRecord(isActive)
+	GameUtil.setActive01(self._newRecordTran, isActive)
 end
 
-function var_0_0.setData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	V1a4_BossRush_AssessIcon.setData(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function V1a4_BossRush_Assess_Score:setData(stage, score, type)
+	V1a4_BossRush_AssessIcon.setData(self, stage, score, type)
 
-	local var_4_0, var_4_1 = BossRushConfig.instance:getAssessSpriteName(arg_4_1, arg_4_2, arg_4_3)
+	local _, level = BossRushConfig.instance:getAssessSpriteName(stage, score, type)
 
-	arg_4_0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(arg_4_2)
+	self._txtScoreNum.text = BossRushConfig.instance:getScoreStr(score)
 
-	arg_4_0:showVX(var_4_1)
+	self:showVX(level)
 
-	if var_4_1 > 0 then
+	if level > 0 then
 		AudioMgr.instance:trigger(AudioEnum.ui_settleaccounts.play_ui_settleaccounts_resources_rare)
 	end
 end
 
-function var_0_0.setData_ResultView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0:setData(arg_5_1, arg_5_2, arg_5_3)
+function V1a4_BossRush_Assess_Score:setData_ResultView(stage, score, type)
+	self:setData(stage, score, type)
 
-	local var_5_0, var_5_1 = BossRushConfig.instance:getAssessSpriteName(arg_5_1, arg_5_2, arg_5_3)
+	local _, level = BossRushConfig.instance:getAssessSpriteName(stage, score, type)
 
-	if var_5_1 > 0 then
+	if level > 0 then
 		AudioMgr.instance:trigger(AudioEnum.ui_settleaccounts.play_ui_settleaccounts_resources)
 	end
 end
 
-function var_0_0.onDestroyView(arg_6_0)
+function V1a4_BossRush_Assess_Score:onDestroyView()
 	return
 end
 
-function var_0_0.showVX(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0.vxassess) do
-		gohelper.setActive(iter_7_1, arg_7_1 == iter_7_0)
+function V1a4_BossRush_Assess_Score:showVX(level)
+	for i, v in pairs(self.vxassess) do
+		gohelper.setActive(v, level == i)
 	end
 end
 
-return var_0_0
+return V1a4_BossRush_Assess_Score

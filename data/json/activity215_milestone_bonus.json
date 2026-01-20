@@ -1,0 +1,42 @@
+[
+  {
+    "activityId": 13213,
+    "rewardId": 1,
+    "coinNum": 4,
+    "bonus": "2#3#20000",
+    "isSpBonus": false,
+    "sourceid": 1002
+  },
+  {
+    "activityId": 13213,
+    "rewardId": 2,
+    "coinNum": 8,
+    "bonus": "1#110903#4",
+    "isSpBonus": false,
+    "sourceid": 1002
+  },
+  {
+    "activityId": 13213,
+    "rewardId": 3,
+    "coinNum": 12,
+    "bonus": "2#5#20000",
+    "isSpBonus": false,
+    "sourceid": 1002
+  },
+  {
+    "activityId": 13213,
+    "rewardId": 4,
+    "coinNum": 16,
+    "bonus": "1#110803#4",
+    "isSpBonus": false,
+    "sourceid": 1002
+  },
+  {
+    "activityId": 13213,
+    "rewardId": 5,
+    "coinNum": 20,
+    "bonus": "1#173302#1",
+    "isSpBonus": true,
+    "sourceid": 1002
+  }
+]

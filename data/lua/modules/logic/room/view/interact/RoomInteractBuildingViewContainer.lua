@@ -1,58 +1,60 @@
-﻿module("modules.logic.room.view.interact.RoomInteractBuildingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/interact/RoomInteractBuildingViewContainer.lua
 
-local var_0_0 = class("RoomInteractBuildingViewContainer", BaseViewContainer)
+module("modules.logic.room.view.interact.RoomInteractBuildingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomInteractBuildingViewContainer = class("RoomInteractBuildingViewContainer", BaseViewContainer)
 
-	arg_1_0._interactView = RoomInteractBuildingView.New()
+function RoomInteractBuildingViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._interactView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+	self._interactView = RoomInteractBuildingView.New()
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, self._interactView)
+	table.insert(views, TabViewGroup.New(1, "#go_BackBtns"))
 
-	var_1_1.scrollGOPath = "#go_right/#go_hero/#scroll_hero"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = RoomInteractCharacterItem.prefabUrl
-	var_1_1.cellClass = RoomInteractCharacterItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.cellWidth = 200
-	var_1_1.lineCount = 3
-	var_1_1.cellHeight = 205
-	var_1_1.cellSpaceH = 5
-	var_1_1.cellSpaceV = 4.6
-	var_1_1.startSpace = 10
-	var_1_1.emptyScrollParam = EmptyScrollParam.New()
+	local scrollParam = ListScrollParam.New()
 
-	var_1_1.emptyScrollParam:setFromView("#go_right/#go_hero/#go_empty")
-	table.insert(var_1_0, LuaListScrollView.New(RoomInteractCharacterListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "#go_right/#go_hero/#scroll_hero"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = RoomInteractCharacterItem.prefabUrl
+	scrollParam.cellClass = RoomInteractCharacterItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.cellWidth = 200
+	scrollParam.lineCount = 3
+	scrollParam.cellHeight = 205
+	scrollParam.cellSpaceH = 5
+	scrollParam.cellSpaceV = 4.6
+	scrollParam.startSpace = 10
+	scrollParam.emptyScrollParam = EmptyScrollParam.New()
 
-	return var_1_0
+	scrollParam.emptyScrollParam:setFromView("#go_right/#go_hero/#go_empty")
+	table.insert(views, LuaListScrollView.New(RoomInteractCharacterListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RoomInteractBuildingViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setCloseCheck(arg_2_0._navigateCloseView, arg_2_0)
+		self.navigateView:setCloseCheck(self._navigateCloseView, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._navigateCloseView(arg_3_0)
-	if arg_3_0._interactView then
-		arg_3_0._interactView:goBackClose()
+function RoomInteractBuildingViewContainer:_navigateCloseView()
+	if self._interactView then
+		self._interactView:goBackClose()
 	else
-		arg_3_0:closeThis()
+		self:closeThis()
 	end
 end
 
-return var_0_0
+return RoomInteractBuildingViewContainer

@@ -1,130 +1,137 @@
-﻿module("modules.logic.backpack.model.BackpackPropListModel", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/model/BackpackPropListModel.lua
 
-local var_0_0 = class("BackpackPropListModel", ListScrollModel)
+module("modules.logic.backpack.model.BackpackPropListModel", package.seeall)
 
-function var_0_0.setCategoryPropItemList(arg_1_0, arg_1_1)
-	local var_1_0 = {}
-	local var_1_1 = 1
+local BackpackPropListModel = class("BackpackPropListModel", ListScrollModel)
 
-	if not arg_1_1 then
-		arg_1_0:setList(var_1_0)
+function BackpackPropListModel:setCategoryPropItemList(list)
+	local co = {}
+	local fillId = 1
+
+	if not list then
+		self:setList(co)
 	end
 
-	table.sort(arg_1_1, var_0_0._sortProp)
+	table.sort(list, BackpackPropListModel._sortProp)
 
-	local function var_1_2(arg_2_0)
-		local var_2_0 = {
-			id = var_1_1,
-			config = arg_2_0
-		}
+	local function addPropList(v)
+		local o = {}
 
-		var_1_1 = var_1_1 + 1
+		o.id = fillId
+		o.config = v
+		fillId = fillId + 1
 
-		table.insert(var_1_0, var_2_0)
+		table.insert(co, o)
 	end
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-		if iter_1_1.isShow == 1 and iter_1_1.isStackable == 1 then
-			var_1_2(iter_1_1)
+	for _, v in pairs(list) do
+		if v.isShow == 1 and v.isStackable == 1 then
+			addPropList(v)
 		end
 
-		if iter_1_1.isShow == 1 and iter_1_1.isStackable == 0 then
-			for iter_1_2 = 1, iter_1_1.quantity do
-				var_1_2(iter_1_1)
+		if v.isShow == 1 and v.isStackable == 0 then
+			for i = 1, v.quantity do
+				addPropList(v)
 			end
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(co)
 end
 
-function var_0_0.clearList(arg_3_0)
-	arg_3_0:clear()
+function BackpackPropListModel:clearList()
+	self:clear()
 end
 
-function var_0_0._sortProp(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.type
+function BackpackPropListModel._sortProp(a, b)
+	local aconfig = ItemModel.instance:getItemConfig(a.type, a.id)
+	local bconfig = ItemModel.instance:getItemConfig(b.type, b.id)
+	local aSortIdx = aconfig and aconfig.itemSortIdx or 0
+	local bSortIdx = bconfig and bconfig.itemSortIdx or 0
 
-	if var_4_0 == MaterialEnum.MaterialType.Currency then
-		var_4_0 = -3
-	elseif var_4_0 == MaterialEnum.MaterialType.NewInsight then
-		var_4_0 = -2
-	elseif var_4_0 == MaterialEnum.MaterialType.PowerPotion then
-		var_4_0 = -1
+	if aSortIdx ~= bSortIdx then
+		return bSortIdx < aSortIdx
+	end
 
-		if arg_4_0.id ~= arg_4_1.id and arg_4_0.id == MaterialEnum.PowerId.OverflowPowerId then
+	local aType = a.type
+
+	if aType == MaterialEnum.MaterialType.Currency then
+		aType = -3
+	elseif aType == MaterialEnum.MaterialType.NewInsight then
+		aType = -2
+	elseif aType == MaterialEnum.MaterialType.PowerPotion then
+		aType = -1
+
+		if a.id ~= b.id and a.id == MaterialEnum.PowerId.OverflowPowerId then
 			return false
 		end
 	end
 
-	local var_4_1 = arg_4_1.type
+	local bType = b.type
 
-	if var_4_1 == MaterialEnum.MaterialType.Currency then
-		var_4_1 = -3
-	elseif var_4_1 == MaterialEnum.MaterialType.NewInsight then
-		var_4_1 = -2
-	elseif var_4_1 == MaterialEnum.MaterialType.PowerPotion then
-		var_4_1 = -1
+	if bType == MaterialEnum.MaterialType.Currency then
+		bType = -3
+	elseif bType == MaterialEnum.MaterialType.NewInsight then
+		bType = -2
+	elseif bType == MaterialEnum.MaterialType.PowerPotion then
+		bType = -1
 
-		if arg_4_0.id ~= arg_4_1.id and arg_4_1.id == MaterialEnum.PowerId.OverflowPowerId then
+		if a.id ~= b.id and b.id == MaterialEnum.PowerId.OverflowPowerId then
 			return true
 		end
 	end
 
-	if var_4_0 ~= var_4_1 then
-		return var_4_0 < var_4_1
+	if aType ~= bType then
+		return aType < bType
 	end
 
-	local var_4_2 = arg_4_0:itemExpireTime()
-	local var_4_3 = arg_4_1:itemExpireTime()
+	local aExpireTime = a:itemExpireTime()
+	local bExpireTime = b:itemExpireTime()
 
-	if var_4_2 ~= var_4_3 then
-		if var_4_3 == -1 or var_4_2 == -1 then
-			return var_4_3 < var_4_2
+	if aExpireTime ~= bExpireTime then
+		if bExpireTime == -1 or aExpireTime == -1 then
+			return bExpireTime < aExpireTime
 		else
-			return var_4_2 < var_4_3
+			return aExpireTime < bExpireTime
 		end
 	end
 
-	local var_4_4 = var_0_0._getSubTypeUseType(arg_4_0.subType)
-	local var_4_5 = var_0_0._getSubTypeUseType(arg_4_1.subType)
+	local aUseType = BackpackPropListModel._getSubTypeUseType(a.subType)
+	local bUseType = BackpackPropListModel._getSubTypeUseType(b.subType)
 
-	if var_4_4 ~= var_4_5 then
-		return var_4_5 < var_4_4
+	if aUseType ~= bUseType then
+		return bUseType < aUseType
 	end
 
-	local var_4_6 = ItemModel.instance:getItemConfig(arg_4_0.type, arg_4_0.id)
-	local var_4_7 = ItemModel.instance:getItemConfig(arg_4_1.type, arg_4_1.id)
-
-	if var_4_6.subType ~= var_4_7.subType then
-		return var_0_0._getSubclassPriority(var_4_6.subType) < var_0_0._getSubclassPriority(var_4_7.subType)
-	elseif var_4_6.rare ~= var_4_7.rare then
-		return var_4_6.rare > var_4_7.rare
-	elseif arg_4_0.id ~= arg_4_1.id then
-		return arg_4_0.id > arg_4_1.id
+	if aconfig.subType ~= bconfig.subType then
+		return BackpackPropListModel._getSubclassPriority(aconfig.subType) < BackpackPropListModel._getSubclassPriority(bconfig.subType)
+	elseif aconfig.rare ~= bconfig.rare then
+		return aconfig.rare > bconfig.rare
+	elseif a.id ~= b.id then
+		return a.id > b.id
 	end
 end
 
-function var_0_0._getSubclassPriority(arg_5_0)
-	local var_5_0 = BackpackConfig.instance:getSubclassCo()
+function BackpackPropListModel._getSubclassPriority(id)
+	local subCO = BackpackConfig.instance:getSubclassCo()
 
-	if not var_5_0[arg_5_0] then
+	if not subCO[id] then
 		return 0
 	end
 
-	return var_5_0[arg_5_0].priority
+	return subCO[id].priority
 end
 
-function var_0_0._getSubTypeUseType(arg_6_0)
-	local var_6_0 = lua_item_use.configDict[arg_6_0]
+function BackpackPropListModel._getSubTypeUseType(subTypeId)
+	local useTypeConfig = lua_item_use.configDict[subTypeId]
 
-	if not var_6_0 then
+	if not useTypeConfig then
 		return 0
 	end
 
-	return var_6_0.useType or 0
+	return useTypeConfig.useType or 0
 end
 
-var_0_0.instance = var_0_0.New()
+BackpackPropListModel.instance = BackpackPropListModel.New()
 
-return var_0_0
+return BackpackPropListModel

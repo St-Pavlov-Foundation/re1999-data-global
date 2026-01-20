@@ -1,10 +1,12 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionFinishMapElement", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionFinishMapElement.lua
 
-local var_0_0 = class("GuideActionFinishMapElement", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionFinishMapElement", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	DungeonRpc.instance:sendMapElementRequest(tonumber(arg_1_0.actionParam))
-	arg_1_0:onDone(true)
+local GuideActionFinishMapElement = class("GuideActionFinishMapElement", BaseGuideAction)
+
+function GuideActionFinishMapElement:onStart(context)
+	DungeonRpc.instance:sendMapElementRequest(tonumber(self.actionParam))
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionFinishMapElement

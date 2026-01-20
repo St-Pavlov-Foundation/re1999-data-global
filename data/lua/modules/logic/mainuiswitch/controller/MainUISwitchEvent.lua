@@ -1,12 +1,14 @@
-﻿module("modules.logic.mainuiswitch.controller.MainUISwitchEvent", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/controller/MainUISwitchEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.mainuiswitch.controller.MainUISwitchEvent", package.seeall)
 
-var_0_0.UseMainUI = GameUtil.getEventId()
-var_0_0.SwitchMainUI = GameUtil.getEventId()
-var_0_0.SwitchUIVisible = GameUtil.getEventId()
-var_0_0.PreviewSwitchUIVisible = GameUtil.getEventId()
-var_0_0.ClickMainViewBtn = GameUtil.getEventId()
-var_0_0.ClickEagle = GameUtil.getEventId()
+local MainUISwitchEvent = _M
 
-return var_0_0
+MainUISwitchEvent.UseMainUI = GameUtil.getEventId()
+MainUISwitchEvent.SwitchMainUI = GameUtil.getEventId()
+MainUISwitchEvent.SwitchUIVisible = GameUtil.getEventId()
+MainUISwitchEvent.PreviewSwitchUIVisible = GameUtil.getEventId()
+MainUISwitchEvent.ClickMainViewBtn = GameUtil.getEventId()
+MainUISwitchEvent.ClickEagle = GameUtil.getEventId()
+
+return MainUISwitchEvent

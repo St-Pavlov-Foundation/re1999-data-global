@@ -1,380 +1,390 @@
-﻿module("modules.logic.survival.model.SurvivalDifficultyModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/SurvivalDifficultyModel.lua
 
-local var_0_0 = class("SurvivalDifficultyModel", ListScrollModel)
+module("modules.logic.survival.model.SurvivalDifficultyModel", package.seeall)
 
-function var_0_0.refreshDifficulty(arg_1_0)
-	arg_1_0.customDifficulty = arg_1_0:loadCustomHard()
-	arg_1_0._customDifficultyDict = {}
+local SurvivalDifficultyModel = class("SurvivalDifficultyModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0.customDifficulty) do
-		arg_1_0._customDifficultyDict[iter_1_1] = true
+function SurvivalDifficultyModel:refreshDifficulty()
+	self.customDifficulty = self:loadCustomHard()
+	self._customDifficultyDict = {}
+
+	for i, v in ipairs(self.customDifficulty) do
+		self._customDifficultyDict[v] = true
 	end
 
-	arg_1_0.difficultyList = arg_1_0:getDifficultyList()
-	arg_1_0.customDifficultyList = arg_1_0:getCustomDifficultyList()
-	arg_1_0.customSelectIndex = 1
+	self.difficultyList = self:getDifficultyList()
+	self.customDifficultyList = self:getCustomDifficultyList()
+	self.customSelectIndex = 1
 
-	local var_1_0 = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.SurvivalHardSelect, 1)
+	local difficultyIndex = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.SurvivalHardSelect, 1)
 
-	arg_1_0.difficultyIndex = math.min(#arg_1_0.difficultyList, var_1_0)
+	difficultyIndex = math.min(#self.difficultyList, difficultyIndex)
+	self.difficultyIndex = difficultyIndex
 end
 
-function var_0_0.getDifficultyId(arg_2_0)
-	local var_2_0 = arg_2_0.difficultyList[arg_2_0.difficultyIndex]
+function SurvivalDifficultyModel:getDifficultyId()
+	local diff = self.difficultyList[self.difficultyIndex]
 
-	return var_2_0 and var_2_0.id or 0
+	return diff and diff.id or 0
 end
 
-function var_0_0.getCustomDifficulty(arg_3_0)
-	return arg_3_0.customDifficulty
+function SurvivalDifficultyModel:getCustomDifficulty()
+	return self.customDifficulty
 end
 
-function var_0_0.hasSelectCustomDifficulty(arg_4_0)
-	local var_4_0 = arg_4_0:getCustomDifficulty()
+function SurvivalDifficultyModel:hasSelectCustomDifficulty()
+	local list = self:getCustomDifficulty()
 
-	return next(var_4_0) ~= nil
+	return next(list) ~= nil
 end
 
-function var_0_0.isCustomDifficulty(arg_5_0)
-	return arg_5_0:getDifficultyId() == SurvivalConst.CustomDifficulty
+function SurvivalDifficultyModel:isCustomDifficulty()
+	local difficultyId = self:getDifficultyId()
+
+	return difficultyId == SurvivalConst.CustomDifficulty
 end
 
-function var_0_0.changeDifficultyIndex(arg_6_0, arg_6_1)
-	local var_6_0
-	local var_6_1 = arg_6_0:isCustomDifficulty()
+function SurvivalDifficultyModel:changeDifficultyIndex(value)
+	local animName
+	local lastIsCustom = self:isCustomDifficulty()
 
-	arg_6_0.difficultyIndex = arg_6_0.difficultyIndex + arg_6_1
+	self.difficultyIndex = self.difficultyIndex + value
 
-	if arg_6_0.difficultyIndex < 1 then
-		arg_6_0.difficultyIndex = #arg_6_0.difficultyList
+	if self.difficultyIndex < 1 then
+		self.difficultyIndex = #self.difficultyList
 	end
 
-	if arg_6_0.difficultyIndex > #arg_6_0.difficultyList then
-		arg_6_0.difficultyIndex = 1
+	if self.difficultyIndex > #self.difficultyList then
+		self.difficultyIndex = 1
 	end
 
-	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.SurvivalHardSelect, arg_6_0.difficultyIndex)
+	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.SurvivalHardSelect, self.difficultyIndex)
 
-	local var_6_2 = arg_6_0:isCustomDifficulty()
+	local curIsCustom = self:isCustomDifficulty()
 
-	if var_6_1 and not var_6_2 then
-		var_6_0 = "panel_out"
-	elseif not var_6_1 and var_6_2 then
-		var_6_0 = "panel_in"
-	elseif not var_6_1 and not var_6_2 then
-		var_6_0 = arg_6_1 > 0 and "switch_right" or "switch_left"
+	if lastIsCustom and not curIsCustom then
+		animName = "panel_out"
+	elseif not lastIsCustom and curIsCustom then
+		animName = "panel_in"
+	elseif not lastIsCustom and not curIsCustom then
+		animName = value > 0 and "switch_right" or "switch_left"
 	end
 
-	return var_6_0
+	return animName
 end
 
-function var_0_0.getArrowStatus(arg_7_0)
-	local var_7_0 = arg_7_0.difficultyIndex > 1
-	local var_7_1 = arg_7_0.difficultyIndex < #arg_7_0.difficultyList
+function SurvivalDifficultyModel:getArrowStatus()
+	local left = self.difficultyIndex > 1
+	local right = self.difficultyIndex < #self.difficultyList
 
-	return var_7_0, var_7_1
+	return left, right
 end
 
-function var_0_0.getDifficultyList(arg_8_0)
-	local var_8_0 = SurvivalModel.instance:getOutSideInfo()
-	local var_8_1 = {}
+function SurvivalDifficultyModel:getDifficultyList()
+	local info = SurvivalModel.instance:getOutSideInfo()
+	local list = {}
 
-	for iter_8_0, iter_8_1 in ipairs(lua_survival_hardness_mod.configList) do
-		if iter_8_1.optional == 1 and var_8_0:isUnlockDifficultyMod(iter_8_1.id) then
-			table.insert(var_8_1, iter_8_1)
+	for i, v in ipairs(lua_survival_hardness_mod.configList) do
+		if v.optional == 1 and info:isUnlockDifficultyMod(v.id) then
+			table.insert(list, v)
 		end
 	end
 
-	table.sort(var_8_1, SortUtil.keyLower("id"))
+	table.sort(list, SortUtil.keyLower("id"))
 
-	return var_8_1
+	return list
 end
 
-function var_0_0.getCustomDifficultyList(arg_9_0)
-	local var_9_0 = {}
+function SurvivalDifficultyModel:getCustomDifficultyList()
+	local list = {}
 
-	for iter_9_0, iter_9_1 in ipairs(lua_survival_hardness.configList) do
-		if iter_9_1.optional == 1 then
-			if not var_9_0[iter_9_1.type] then
-				var_9_0[iter_9_1.type] = {}
+	for i, v in ipairs(lua_survival_hardness.configList) do
+		if v.optional == 1 then
+			if not list[v.type] then
+				list[v.type] = {}
 			end
 
-			if not var_9_0[iter_9_1.type][iter_9_1.subtype] then
-				var_9_0[iter_9_1.type][iter_9_1.subtype] = {}
+			if not list[v.type][v.subtype] then
+				list[v.type][v.subtype] = {}
 			end
 
-			table.insert(var_9_0[iter_9_1.type][iter_9_1.subtype], iter_9_1)
+			table.insert(list[v.type][v.subtype], v)
 		end
 	end
 
-	for iter_9_2, iter_9_3 in pairs(var_9_0) do
-		for iter_9_4, iter_9_5 in pairs(iter_9_3) do
-			local var_9_1 = {}
+	for type, typeList in pairs(list) do
+		for subType, subList in pairs(typeList) do
+			local levelMap = {}
 
-			for iter_9_6, iter_9_7 in ipairs(iter_9_5) do
-				if var_9_1[iter_9_7.level] then
-					logError(string.format("有相同等级的配置, type:%s subType:%s level:%s id:%s %s", iter_9_2, iter_9_4, iter_9_7.level, var_9_1[iter_9_7.level].id, iter_9_7.id))
+			for _, config in ipairs(subList) do
+				if levelMap[config.level] then
+					logError(string.format("有相同等级的配置, type:%s subType:%s level:%s id:%s %s", type, subType, config.level, levelMap[config.level].id, config.id))
 				end
 
-				var_9_1[iter_9_7.level] = iter_9_7
+				levelMap[config.level] = config
 			end
 
-			local var_9_2 = {}
+			local newSubList = {}
 
-			for iter_9_8 = 1, 5 do
-				table.insert(var_9_2, var_9_1[iter_9_8] or {})
+			for level = 1, 5 do
+				table.insert(newSubList, levelMap[level] or {})
 			end
 
-			iter_9_3[iter_9_4] = var_9_2
+			typeList[subType] = newSubList
 		end
 	end
 
-	return var_9_0
+	return list
 end
 
-function var_0_0.getDifficultyAssess(arg_10_0)
-	local var_10_0 = arg_10_0:getList()
-	local var_10_1 = 0
+function SurvivalDifficultyModel:getDifficultyAssess()
+	local list = self:getList()
+	local assess = 0
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		local var_10_2 = iter_10_1.hardId
+	for _, v in pairs(list) do
+		local hardId = v.hardId
 
-		if var_10_2 then
-			var_10_1 = var_10_1 + lua_survival_hardness.configDict[var_10_2].scoreRate
+		if hardId then
+			local hardConfig = lua_survival_hardness.configDict[hardId]
+
+			assess = assess + hardConfig.scoreRate
 		end
 	end
 
-	return 1 + var_10_1 * 0.001
+	local ret = 1 + assess * 0.001
+
+	return ret
 end
 
-function var_0_0.getDifficultyShowList(arg_11_0)
-	local var_11_0 = {}
-	local var_11_1 = lua_survival_hardness_mod.configDict[arg_11_0:getDifficultyId()]
-	local var_11_2 = string.splitToNumber(var_11_1.hardness, "#")
+function SurvivalDifficultyModel:getDifficultyShowList()
+	local list = {}
+	local diffConfig = lua_survival_hardness_mod.configDict[self:getDifficultyId()]
+	local hardness = string.splitToNumber(diffConfig.hardness, "#")
 
-	if var_11_2 then
-		for iter_11_0, iter_11_1 in pairs(var_11_2) do
-			table.insert(var_11_0, {
-				hardId = iter_11_1
+	if hardness then
+		for _, hardId in pairs(hardness) do
+			table.insert(list, {
+				hardId = hardId
 			})
 		end
 	end
 
-	if arg_11_0:isCustomDifficulty() then
-		local var_11_3 = arg_11_0:getCustomDifficulty()
+	if self:isCustomDifficulty() then
+		local hardness = self:getCustomDifficulty()
 
-		if var_11_3 then
-			for iter_11_2, iter_11_3 in pairs(var_11_3) do
-				table.insert(var_11_0, {
-					hardId = iter_11_3
+		if hardness then
+			for _, hardId in pairs(hardness) do
+				table.insert(list, {
+					hardId = hardId
 				})
 			end
 		end
 	end
 
-	return var_11_0
+	return list
 end
 
-function var_0_0.refreshDifficultyShowList(arg_12_0)
-	local var_12_0 = arg_12_0:getDifficultyShowList()
-	local var_12_1 = arg_12_0:filterSameTypeHard(var_12_0, true)
-	local var_12_2 = {}
+function SurvivalDifficultyModel:refreshDifficultyShowList()
+	local list = self:getDifficultyShowList()
+	local filterList = self:filterSameTypeHard(list, true)
+	local dataList = {}
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		if lua_survival_hardness.configDict[iter_12_1.hardId].isShow == 0 then
-			table.insert(var_12_2, iter_12_1)
+	for _, v in ipairs(filterList) do
+		local hardConfig = lua_survival_hardness.configDict[v.hardId]
+
+		if hardConfig.isShow == 0 then
+			table.insert(dataList, v)
 		end
 	end
 
-	local var_12_3 = #var_12_2
+	local listCount = #dataList
 
-	if var_12_3 < 4 then
-		for iter_12_2 = var_12_3 + 1, 4 do
-			table.insert(var_12_2, {})
+	if listCount < 4 then
+		for i = listCount + 1, 4 do
+			table.insert(dataList, {})
 		end
 	end
 
-	arg_12_0:setList(var_12_2)
+	self:setList(dataList)
 end
 
-function var_0_0.filterSameTypeHard(arg_13_0, arg_13_1)
-	local var_13_0 = {}
-	local var_13_1 = {}
+function SurvivalDifficultyModel:filterSameTypeHard(list)
+	local dataList = {}
+	local typeSubtypeMap = {}
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		local var_13_2 = iter_13_1.hardId
+	for i, v in ipairs(list) do
+		local hardId = v.hardId
 
-		if var_13_2 then
-			local var_13_3 = lua_survival_hardness.configDict[var_13_2]
+		if hardId then
+			local hardConfig = lua_survival_hardness.configDict[hardId]
 
-			if var_13_3 then
-				local var_13_4 = string.format("%s_%s", var_13_3.type, var_13_3.subtype)
+			if hardConfig then
+				local key = string.format("%s_%s", hardConfig.type, hardConfig.subtype)
 
-				if var_13_1[var_13_4] then
-					local var_13_5 = lua_survival_hardness.configDict[var_13_1[var_13_4].hardId]
+				if typeSubtypeMap[key] then
+					local existingConfig = lua_survival_hardness.configDict[typeSubtypeMap[key].hardId]
 
-					if var_13_3.level > var_13_5.level then
-						var_13_1[var_13_4] = iter_13_1
+					if hardConfig.level > existingConfig.level then
+						typeSubtypeMap[key] = v
 					end
 				else
-					var_13_1[var_13_4] = iter_13_1
+					typeSubtypeMap[key] = v
 				end
 			end
 		end
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(arg_13_1) do
-		local var_13_6 = iter_13_3.hardId
+	for i, v in ipairs(list) do
+		local hardId = v.hardId
 
-		if var_13_6 then
-			local var_13_7 = lua_survival_hardness.configDict[var_13_6]
+		if hardId then
+			local hardConfig = lua_survival_hardness.configDict[hardId]
 
-			if var_13_7 then
-				local var_13_8 = string.format("%s_%s", var_13_7.type, var_13_7.subtype)
+			if hardConfig then
+				local key = string.format("%s_%s", hardConfig.type, hardConfig.subtype)
 
-				if var_13_1[var_13_8] and var_13_1[var_13_8].hardId == var_13_6 then
-					table.insert(var_13_0, iter_13_3)
+				if typeSubtypeMap[key] and typeSubtypeMap[key].hardId == hardId then
+					table.insert(dataList, v)
 				end
 			end
 		end
 	end
 
-	return var_13_0
+	return dataList
 end
 
-function var_0_0.sendDifficultyChoose(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0:getDifficultyId()
+function SurvivalDifficultyModel:sendDifficultyChoose(callback, callbackobj)
+	local difficultyId = self:getDifficultyId()
 
-	if arg_14_0:isCustomDifficulty() then
-		local var_14_1 = arg_14_0:getDifficultyShowList()
-		local var_14_2 = arg_14_0:filterSameTypeHard(var_14_1)
-		local var_14_3 = {}
+	if self:isCustomDifficulty() then
+		local list = self:getDifficultyShowList()
+		local dataList = self:filterSameTypeHard(list)
+		local hardness = {}
 
-		if var_14_2 then
-			local var_14_4 = lua_survival_hardness_mod.configDict[arg_14_0:getDifficultyId()]
-			local var_14_5 = string.splitToNumber(var_14_4.hardness, "#")
+		if dataList then
+			local diffConfig = lua_survival_hardness_mod.configDict[self:getDifficultyId()]
+			local hardIds = string.splitToNumber(diffConfig.hardness, "#")
 
-			for iter_14_0, iter_14_1 in pairs(var_14_2) do
-				local var_14_6 = iter_14_1.hardId
+			for _, v in pairs(dataList) do
+				local hardId = v.hardId
 
-				if var_14_6 then
-					local var_14_7 = lua_survival_hardness.configDict[var_14_6]
+				if hardId then
+					local hardConfig = lua_survival_hardness.configDict[hardId]
 
-					if var_14_7 and var_14_7.optional == 1 and not tabletool.indexOf(var_14_5, var_14_6) then
-						table.insert(var_14_3, var_14_6)
+					if hardConfig and hardConfig.optional == 1 and not tabletool.indexOf(hardIds, hardId) then
+						table.insert(hardness, hardId)
 					end
 				end
 			end
 		end
 
-		SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(var_14_0, var_14_3, arg_14_1, arg_14_2)
+		SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(difficultyId, hardness, callback, callbackobj)
 	else
-		SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(var_14_0, nil, arg_14_1, arg_14_2)
+		SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(difficultyId, nil, callback, callbackobj)
 	end
 end
 
-function var_0_0.setCustomSelectIndex(arg_15_0, arg_15_1)
-	if arg_15_0.customSelectIndex == arg_15_1 then
+function SurvivalDifficultyModel:setCustomSelectIndex(index)
+	if self.customSelectIndex == index then
 		return
 	end
 
-	arg_15_0.customSelectIndex = arg_15_1
+	self.customSelectIndex = index
 
 	return true
 end
 
-function var_0_0.getCustomSelectIndex(arg_16_0)
-	return arg_16_0.customSelectIndex
+function SurvivalDifficultyModel:getCustomSelectIndex()
+	return self.customSelectIndex
 end
 
-function var_0_0.getCustomDifficultyAssess(arg_17_0, arg_17_1)
-	local var_17_0 = 0
-	local var_17_1 = arg_17_0:getCustomDifficulty()
+function SurvivalDifficultyModel:getCustomDifficultyAssess(index)
+	local assess = 0
+	local hardness = self:getCustomDifficulty()
 
-	if var_17_1 then
-		for iter_17_0, iter_17_1 in pairs(var_17_1) do
-			local var_17_2 = lua_survival_hardness.configDict[iter_17_1]
+	if hardness then
+		for _, hardId in pairs(hardness) do
+			local config = lua_survival_hardness.configDict[hardId]
 
-			if var_17_2 and var_17_2.type == arg_17_1 then
-				var_17_0 = var_17_0 + var_17_2.level
+			if config and config.type == index then
+				assess = assess + config.level
 			end
 		end
 	end
 
-	return var_17_0
+	return assess
 end
 
-function var_0_0.isSelectCustomDifficulty(arg_18_0, arg_18_1)
-	return arg_18_0._customDifficultyDict[arg_18_1] ~= nil
+function SurvivalDifficultyModel:isSelectCustomDifficulty(hardId)
+	return self._customDifficultyDict[hardId] ~= nil
 end
 
-function var_0_0.selectCustomDifficulty(arg_19_0, arg_19_1)
-	local var_19_0 = lua_survival_hardness.configDict[arg_19_1]
-	local var_19_1
-	local var_19_2
+function SurvivalDifficultyModel:selectCustomDifficulty(hardId)
+	local curConfig = lua_survival_hardness.configDict[hardId]
+	local removeIndex, removeHard
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.customDifficulty) do
-		if iter_19_1 ~= arg_19_1 then
-			local var_19_3 = lua_survival_hardness.configDict[iter_19_1]
+	for i, v in ipairs(self.customDifficulty) do
+		if v ~= hardId then
+			local config = lua_survival_hardness.configDict[v]
 
-			if var_19_0.type == var_19_3.type and var_19_0.subtype == var_19_3.subtype then
-				var_19_1 = iter_19_0
-				var_19_2 = iter_19_1
+			if curConfig.type == config.type and curConfig.subtype == config.subtype then
+				removeIndex = i
+				removeHard = v
 
 				break
 			end
 		end
 	end
 
-	if var_19_1 then
-		arg_19_0._customDifficultyDict[var_19_2] = nil
+	if removeIndex then
+		self._customDifficultyDict[removeHard] = nil
 
-		table.remove(arg_19_0.customDifficulty, var_19_1)
+		table.remove(self.customDifficulty, removeIndex)
 	end
 
-	if arg_19_0:isSelectCustomDifficulty(arg_19_1) then
-		arg_19_0._customDifficultyDict[arg_19_1] = nil
+	if self:isSelectCustomDifficulty(hardId) then
+		self._customDifficultyDict[hardId] = nil
 
-		tabletool.removeValue(arg_19_0.customDifficulty, arg_19_1)
+		tabletool.removeValue(self.customDifficulty, hardId)
 	else
-		arg_19_0._customDifficultyDict[arg_19_1] = true
+		self._customDifficultyDict[hardId] = true
 
-		table.insert(arg_19_0.customDifficulty, arg_19_1)
+		table.insert(self.customDifficulty, hardId)
 	end
 
-	arg_19_0:saveCustomHard()
+	self:saveCustomHard()
 
 	return true
 end
 
-function var_0_0.saveCustomHard(arg_20_0)
-	local var_20_0 = arg_20_0:getCustomDifficulty()
-	local var_20_1 = string.format("%s_SurvivalCustomDifficulty", PlayerModel.instance:getPlayinfo().userId)
+function SurvivalDifficultyModel:saveCustomHard()
+	local list = self:getCustomDifficulty()
+	local key = string.format("%s_SurvivalCustomDifficulty", PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(var_20_1, table.concat(var_20_0, "#"))
+	PlayerPrefsHelper.setString(key, table.concat(list, "#"))
 end
 
-function var_0_0.loadCustomHard(arg_21_0)
-	local var_21_0 = string.format("%s_SurvivalCustomDifficulty", PlayerModel.instance:getPlayinfo().userId)
-	local var_21_1 = PlayerPrefsHelper.getString(var_21_0)
-	local var_21_2 = {}
+function SurvivalDifficultyModel:loadCustomHard()
+	local key = string.format("%s_SurvivalCustomDifficulty", PlayerModel.instance:getPlayinfo().userId)
+	local localPos = PlayerPrefsHelper.getString(key)
+	local hardList = {}
 
-	if not string.nilorempty(var_21_1) then
-		local var_21_3 = SurvivalModel.instance:getOutSideInfo()
-		local var_21_4 = string.splitToNumber(var_21_1, "#")
+	if not string.nilorempty(localPos) then
+		local info = SurvivalModel.instance:getOutSideInfo()
+		local list = string.splitToNumber(localPos, "#")
 
-		for iter_21_0, iter_21_1 in ipairs(var_21_4) do
-			local var_21_5 = lua_survival_hardness.configDict[iter_21_1]
+		for _, hardId in ipairs(list) do
+			local config = lua_survival_hardness.configDict[hardId]
 
-			if var_21_5 and var_21_5.optional == 1 and var_21_3:isUnlockDifficulty(iter_21_1) then
-				table.insert(var_21_2, iter_21_1)
+			if config and config.optional == 1 and info:isUnlockDifficulty(hardId) then
+				table.insert(hardList, hardId)
 			end
 		end
 	end
 
-	return var_21_2
+	return hardList
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalDifficultyModel.instance = SurvivalDifficultyModel.New()
 
-return var_0_0
+return SurvivalDifficultyModel

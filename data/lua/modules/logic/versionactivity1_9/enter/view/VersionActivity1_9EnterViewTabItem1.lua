@@ -1,24 +1,26 @@
-﻿module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterViewTabItem1", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/enter/view/VersionActivity1_9EnterViewTabItem1.lua
 
-local var_0_0 = class("VersionActivity1_9EnterViewTabItem1", VersionActivity1_9EnterViewBaseTabItem)
+module("modules.logic.versionactivity1_9.enter.view.VersionActivity1_9EnterViewTabItem1", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0.simageSelectTabImg = gohelper.findChildSingleImage(arg_1_0.rootGo, "#go_select/#simage_tabimg")
-	arg_1_0.simageUnSelectTabImg = gohelper.findChildSingleImage(arg_1_0.rootGo, "#go_unselect/#simage_tabimg")
+local VersionActivity1_9EnterViewTabItem1 = class("VersionActivity1_9EnterViewTabItem1", VersionActivity1_9EnterViewBaseTabItem)
 
-	var_0_0.super._editableInitView(arg_1_0)
+function VersionActivity1_9EnterViewTabItem1:_editableInitView()
+	self.simageSelectTabImg = gohelper.findChildSingleImage(self.rootGo, "#go_select/#simage_tabimg")
+	self.simageUnSelectTabImg = gohelper.findChildSingleImage(self.rootGo, "#go_unselect/#simage_tabimg")
+
+	VersionActivity1_9EnterViewTabItem1.super._editableInitView(self)
 end
 
-function var_0_0.refreshData(arg_2_0)
-	var_0_0.super.refreshData(arg_2_0)
-	arg_2_0.simageSelectTabImg:LoadImage(VersionActivity1_9Enum.ActId2SelectImgPath[arg_2_0.actId])
-	arg_2_0.simageUnSelectTabImg:LoadImage(VersionActivity1_9Enum.ActId2UnSelectImgPath[arg_2_0.actId])
+function VersionActivity1_9EnterViewTabItem1:refreshData()
+	VersionActivity1_9EnterViewTabItem1.super.refreshData(self)
+	self.simageSelectTabImg:LoadImage(VersionActivity1_9Enum.ActId2SelectImgPath[self.actId])
+	self.simageUnSelectTabImg:LoadImage(VersionActivity1_9Enum.ActId2UnSelectImgPath[self.actId])
 end
 
-function var_0_0.dispose(arg_3_0)
-	arg_3_0.simageSelectTabImg:UnLoadImage()
-	arg_3_0.simageUnSelectTabImg:UnLoadImage()
-	var_0_0.super.dispose(arg_3_0)
+function VersionActivity1_9EnterViewTabItem1:dispose()
+	self.simageSelectTabImg:UnLoadImage()
+	self.simageUnSelectTabImg:UnLoadImage()
+	VersionActivity1_9EnterViewTabItem1.super.dispose(self)
 end
 
-return var_0_0
+return VersionActivity1_9EnterViewTabItem1

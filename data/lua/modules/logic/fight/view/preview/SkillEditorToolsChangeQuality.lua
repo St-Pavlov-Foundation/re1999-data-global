@@ -1,77 +1,79 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorToolsChangeQuality", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorToolsChangeQuality.lua
 
-local var_0_0 = class("SkillEditorToolsChangeQuality", BaseViewExtended)
+module("modules.logic.fight.view.preview.SkillEditorToolsChangeQuality", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local SkillEditorToolsChangeQuality = class("SkillEditorToolsChangeQuality", BaseViewExtended)
+
+function SkillEditorToolsChangeQuality:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SkillEditorToolsChangeQuality:addEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_3_0)
+function SkillEditorToolsChangeQuality:_editableInitView()
 	return
 end
 
-function var_0_0.onRefreshViewParam(arg_4_0)
+function SkillEditorToolsChangeQuality:onRefreshViewParam()
 	return
 end
 
-function var_0_0._onBtnClick(arg_5_0)
-	arg_5_0:getParentView():hideToolsBtnList()
-	gohelper.setActive(arg_5_0._btn, true)
+function SkillEditorToolsChangeQuality:_onBtnClick()
+	self:getParentView():hideToolsBtnList()
+	gohelper.setActive(self._btn, true)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:getParentView():addToolBtn("画质", arg_6_0._onBtnClick, arg_6_0)
+function SkillEditorToolsChangeQuality:onOpen()
+	self:getParentView():addToolBtn("画质", self._onBtnClick, self)
 
-	arg_6_0._btn = arg_6_0:getParentView():addToolViewObj("画质")
-	arg_6_0._item = gohelper.findChild(arg_6_0._btn, "variant")
+	self._btn = self:getParentView():addToolViewObj("画质")
+	self._item = gohelper.findChild(self._btn, "variant")
 
-	arg_6_0:_showData()
+	self:_showData()
 end
 
-function var_0_0._showData(arg_7_0)
-	local var_7_0 = {
+function SkillEditorToolsChangeQuality:_showData()
+	local list = {
 		ModuleEnum.Performance.High,
 		ModuleEnum.Performance.Middle,
 		ModuleEnum.Performance.Low
 	}
 
-	arg_7_0:com_createObjList(arg_7_0._onItemShow, var_7_0, arg_7_0._btn, arg_7_0._item)
+	self:com_createObjList(self._onItemShow, list, self._btn, self._item)
 end
 
-function var_0_0._onItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = gohelper.findChildText(arg_8_1, "Text")
-	local var_8_1 = ""
+function SkillEditorToolsChangeQuality:_onItemShow(obj, data, index)
+	local text = gohelper.findChildText(obj, "Text")
+	local str = ""
 
-	if arg_8_2 == ModuleEnum.Performance.High then
-		var_8_1 = "高"
-	elseif arg_8_2 == ModuleEnum.Performance.Middle then
-		var_8_1 = "中"
-	elseif arg_8_2 == ModuleEnum.Performance.Low then
-		var_8_1 = "低"
+	if data == ModuleEnum.Performance.High then
+		str = "高"
+	elseif data == ModuleEnum.Performance.Middle then
+		str = "中"
+	elseif data == ModuleEnum.Performance.Low then
+		str = "低"
 	end
 
-	var_8_0.text = var_8_1
+	text.text = str
 
-	local var_8_2 = gohelper.getClick(arg_8_1)
+	local click = gohelper.getClick(obj)
 
-	arg_8_0:addClickCb(var_8_2, arg_8_0._onItemClick, arg_8_0, arg_8_2)
+	self:addClickCb(click, self._onItemClick, self, data)
 end
 
-function var_0_0._onItemClick(arg_9_0, arg_9_1)
-	GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_9_1)
+function SkillEditorToolsChangeQuality:_onItemClick(data)
+	GameGlobalMgr.instance:getScreenState():setLocalQuality(data)
 	FightEffectPool.dispose()
 end
 
-function var_0_0.onClose(arg_10_0)
+function SkillEditorToolsChangeQuality:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function SkillEditorToolsChangeQuality:onDestroyView()
 	return
 end
 
-return var_0_0
+return SkillEditorToolsChangeQuality

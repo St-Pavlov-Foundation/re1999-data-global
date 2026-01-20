@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_actvity205_stage", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_actvity205_stage.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_actvity205_stage", package.seeall)
+
+local lua_actvity205_stage = {}
+local fields = {
 	stageId = 2,
 	name = 6,
 	times = 5,
@@ -14,11 +16,11 @@ local var_0_1 = {
 	activityId = 1,
 	startTime = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"stageId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	ruleTitle = 4,
 	name = 1,
 	ruleDesc = 5,
@@ -26,8 +28,8 @@ local var_0_3 = {
 	desc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_actvity205_stage.onLoad(json)
+	lua_actvity205_stage.configList, lua_actvity205_stage.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_actvity205_stage

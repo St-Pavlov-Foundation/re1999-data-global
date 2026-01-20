@@ -1,222 +1,224 @@
-﻿module("modules.logic.room.mgr.RoomPreloadMgr", package.seeall)
+﻿-- chunkname: @modules/logic/room/mgr/RoomPreloadMgr.lua
 
-local var_0_0 = class("RoomPreloadMgr", BaseController)
+module("modules.logic.room.mgr.RoomPreloadMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomPreloadMgr = class("RoomPreloadMgr", BaseController)
+
+function RoomPreloadMgr:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function RoomPreloadMgr:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function RoomPreloadMgr:addConstEvents()
 	return
 end
 
-function var_0_0.startPreload(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function RoomPreloadMgr:startPreload()
+	if self._loader then
+		self._loader:dispose()
 	end
 
-	arg_4_0._loader = SequenceAbLoader.New()
+	self._loader = SequenceAbLoader.New()
 
-	arg_4_0:_addPreloadList(arg_4_0:_getSceneLevel())
-	arg_4_0:_addPreloadList(arg_4_0:_getView())
-	arg_4_0:_addPreloadList(arg_4_0:_getUIUrlList())
-	arg_4_0:_addPreloadList(arg_4_0:_getGOUrlList())
-	arg_4_0:_addPreloadList(arg_4_0:_getAnimUrlList())
-	arg_4_0:_addPreloadList(arg_4_0:_getBuildingUrlList())
-	arg_4_0._loader:setConcurrentCount(#arg_4_0._loader._pathList / 5)
-	RoomHelper.logElapse("++++++++++++ RoomPreloadMgr:startPreload, count = " .. #arg_4_0._loader._pathList)
-	arg_4_0._loader:setOneFinishCallback(arg_4_0._onOneFinish)
-	arg_4_0._loader:startLoad(arg_4_0._onLoadFinish, arg_4_0)
+	self:_addPreloadList(self:_getSceneLevel())
+	self:_addPreloadList(self:_getView())
+	self:_addPreloadList(self:_getUIUrlList())
+	self:_addPreloadList(self:_getGOUrlList())
+	self:_addPreloadList(self:_getAnimUrlList())
+	self:_addPreloadList(self:_getBuildingUrlList())
+	self._loader:setConcurrentCount(#self._loader._pathList / 5)
+	RoomHelper.logElapse("++++++++++++ RoomPreloadMgr:startPreload, count = " .. #self._loader._pathList)
+	self._loader:setOneFinishCallback(self._onOneFinish)
+	self._loader:startLoad(self._onLoadFinish, self)
 end
 
-function var_0_0._onOneFinish(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_2:GetResource(arg_5_2.ResPath)
+function RoomPreloadMgr:_onOneFinish(loader, assetItem)
+	assetItem:GetResource(assetItem.ResPath)
 end
 
-function var_0_0._onLoadFinish(arg_6_0, arg_6_1)
-	RoomHelper.logElapse("---------------- RoomPreloadMgr:preloadFinish, count = " .. #arg_6_0._loader._pathList)
+function RoomPreloadMgr:_onLoadFinish(loader)
+	RoomHelper.logElapse("---------------- RoomPreloadMgr:preloadFinish, count = " .. #self._loader._pathList)
 end
 
-function var_0_0._addPreloadList(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
-		arg_7_0._loader:addPath(iter_7_1)
+function RoomPreloadMgr:_addPreloadList(list)
+	for _, path in ipairs(list) do
+		self._loader:addPath(path)
 	end
 end
 
-function var_0_0._getSceneLevel(arg_8_0)
-	local var_8_0 = SceneConfig.instance:getSceneLevelCOs(RoomEnum.RoomSceneId)
+function RoomPreloadMgr:_getSceneLevel()
+	local levelCOs = SceneConfig.instance:getSceneLevelCOs(RoomEnum.RoomSceneId)
 
-	if var_8_0 then
-		local var_8_1 = var_8_0[1].id
+	if levelCOs then
+		local levelId = levelCOs[1].id
 
 		return {
-			ResUrl.getSceneLevelUrl(var_8_1)
+			ResUrl.getSceneLevelUrl(levelId)
 		}
 	end
 
 	return {}
 end
 
-function var_0_0._getView(arg_9_0)
-	local var_9_0 = {}
-	local var_9_1 = ViewMgr.instance:getSetting(ViewName.RoomView)
+function RoomPreloadMgr:_getView()
+	local list = {}
+	local roomViewSetting = ViewMgr.instance:getSetting(ViewName.RoomView)
 
-	table.insert(var_9_0, var_9_1.mainRes)
+	table.insert(list, roomViewSetting.mainRes)
 
-	if var_9_1.otherRes then
-		for iter_9_0, iter_9_1 in ipairs(var_9_1.otherRes) do
-			table.insert(var_9_0, iter_9_1)
+	if roomViewSetting.otherRes then
+		for _, path in ipairs(roomViewSetting.otherRes) do
+			table.insert(list, path)
 		end
 	end
 
-	if var_9_1.tabRes then
-		for iter_9_2, iter_9_3 in pairs(var_9_1.tabRes) do
-			for iter_9_4, iter_9_5 in pairs(iter_9_3) do
-				for iter_9_6, iter_9_7 in ipairs(iter_9_5) do
-					table.insert(var_9_0, iter_9_7)
+	if roomViewSetting.tabRes then
+		for _, pathList in pairs(roomViewSetting.tabRes) do
+			for _, pathList2 in pairs(pathList) do
+				for _, path in ipairs(pathList2) do
+					table.insert(list, path)
 				end
 			end
 		end
 	end
 
-	return var_9_0
+	return list
 end
 
-function var_0_0._getMapBlockUrlList(arg_10_0)
-	local var_10_0 = {}
+function RoomPreloadMgr:_getMapBlockUrlList()
+	local urlList = {}
 
-	table.insert(var_10_0, ResUrl.getRoomRes("ground/water/water"))
-	table.insert(var_10_0, RoomScenePreloader.DefaultLand)
-	table.insert(var_10_0, RoomScenePreloader.InitLand)
-	table.insert(var_10_0, RoomScenePreloader.ReplaceLand)
+	table.insert(urlList, ResUrl.getRoomRes("ground/water/water"))
+	table.insert(urlList, RoomScenePreloader.DefaultLand)
+	table.insert(urlList, RoomScenePreloader.InitLand)
+	table.insert(urlList, RoomScenePreloader.ReplaceLand)
 
-	for iter_10_0, iter_10_1 in pairs(RoomRiverEnum.RiverBlockType) do
-		table.insert(var_10_0, RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, iter_10_1))
-		table.insert(var_10_0, RoomResHelper.getMapRiverFloorResPath(iter_10_1))
+	for _, riverBlockType in pairs(RoomRiverEnum.RiverBlockType) do
+		table.insert(urlList, RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, riverBlockType))
+		table.insert(urlList, RoomResHelper.getMapRiverFloorResPath(riverBlockType))
 	end
 
-	for iter_10_2, iter_10_3 in pairs(RoomRiverEnum.LakeBlockType) do
-		table.insert(var_10_0, RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, iter_10_3))
+	for _, lakeBlockType in pairs(RoomRiverEnum.LakeBlockType) do
+		table.insert(urlList, RoomResHelper.getMapBlockResPath(RoomResourceEnum.ResourceId.River, lakeBlockType))
 	end
 
-	for iter_10_4, iter_10_5 in pairs(RoomRiverEnum.LakeFloorType) do
-		table.insert(var_10_0, RoomResHelper.getMapRiverFloorResPath(iter_10_5))
+	for _, lakeBlockType in pairs(RoomRiverEnum.LakeFloorType) do
+		table.insert(urlList, RoomResHelper.getMapRiverFloorResPath(lakeBlockType))
 	end
 
-	local var_10_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_10_6, iter_10_7 in ipairs(var_10_1) do
-		table.insert(var_10_0, RoomResHelper.getBuildingPath(iter_10_7.buildingId, iter_10_7.level))
+	for i, buildingMO in ipairs(buildingMOList) do
+		table.insert(urlList, RoomResHelper.getBuildingPath(buildingMO.buildingId, buildingMO.level))
 	end
 
-	return var_10_0
+	return urlList
 end
 
-function var_0_0._getUIUrlList(arg_11_0)
-	local var_11_0 = {}
+function RoomPreloadMgr:_getUIUrlList()
+	local urlList = {}
 
 	if RoomController.instance:isDebugPackageMode() then
-		table.insert(var_11_0, RoomScenePreloader.ResDebugPackageUI)
+		table.insert(urlList, RoomScenePreloader.ResDebugPackageUI)
 	end
 
-	table.insert(var_11_0, RoomViewConfirm.prefabPath)
+	table.insert(urlList, RoomViewConfirm.prefabPath)
 
-	return var_11_0
+	return urlList
 end
 
-function var_0_0._getGOUrlList(arg_12_0)
-	local var_12_0 = {}
+function RoomPreloadMgr:_getGOUrlList()
+	local urlList = {}
 
 	if RoomController.instance:isEditMode() then
-		table.insert(var_12_0, RoomScenePreloader.ResEffectB)
-		table.insert(var_12_0, RoomScenePreloader.ResVXPlacingHere)
-		table.insert(var_12_0, RoomScenePreloader.ResSmoke)
+		table.insert(urlList, RoomScenePreloader.ResEffectB)
+		table.insert(urlList, RoomScenePreloader.ResVXPlacingHere)
+		table.insert(urlList, RoomScenePreloader.ResSmoke)
 	end
 
 	if RoomController.instance:isObMode() then
-		table.insert(var_12_0, RoomScenePreloader.ResEffectE)
-		table.insert(var_12_0, RoomScenePreloader.ResEffectD01)
-		table.insert(var_12_0, RoomScenePreloader.ResEffectD02)
-		table.insert(var_12_0, RoomScenePreloader.ResEffectD05)
-		table.insert(var_12_0, RoomScenePreloader.ResVXXuXian)
-		table.insert(var_12_0, RoomScenePreloader.ResCharacterClickHelper)
-		table.insert(var_12_0, RoomScenePreloader.ResEffectConfirmCharacter)
-		table.insert(var_12_0, RoomScenePreloader.ResEffectCharacterShadow)
-		table.insert(var_12_0, RoomScenePreloader.ResEffectPressingCharacter)
-		table.insert(var_12_0, RoomScenePreloader.ResEffectPlaceCharacter)
+		table.insert(urlList, RoomScenePreloader.ResEffectE)
+		table.insert(urlList, RoomScenePreloader.ResEffectD01)
+		table.insert(urlList, RoomScenePreloader.ResEffectD02)
+		table.insert(urlList, RoomScenePreloader.ResEffectD05)
+		table.insert(urlList, RoomScenePreloader.ResVXXuXian)
+		table.insert(urlList, RoomScenePreloader.ResCharacterClickHelper)
+		table.insert(urlList, RoomScenePreloader.ResEffectConfirmCharacter)
+		table.insert(urlList, RoomScenePreloader.ResEffectCharacterShadow)
+		table.insert(urlList, RoomScenePreloader.ResEffectPressingCharacter)
+		table.insert(urlList, RoomScenePreloader.ResEffectPlaceCharacter)
 	end
 
 	if RoomController.instance:isVisitMode() then
-		table.insert(var_12_0, RoomScenePreloader.ResEffectCharacterShadow)
+		table.insert(urlList, RoomScenePreloader.ResEffectCharacterShadow)
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(RoomScenePreloader.ResEffectWaveList) do
-		table.insert(var_12_0, iter_12_1)
+	for _, res in ipairs(RoomScenePreloader.ResEffectWaveList) do
+		table.insert(urlList, res)
 	end
 
-	for iter_12_2, iter_12_3 in ipairs(RoomScenePreloader.ResEffectWaveWithRiverList) do
-		table.insert(var_12_0, iter_12_3)
+	for _, res in ipairs(RoomScenePreloader.ResEffectWaveWithRiverList) do
+		table.insert(urlList, res)
 	end
 
 	if RoomController.instance:isDebugPackageMode() then
-		for iter_12_4, iter_12_5 in pairs(RoomScenePreloader.ResDebugPackageColorDict) do
-			table.insert(var_12_0, iter_12_5)
+		for _, res in pairs(RoomScenePreloader.ResDebugPackageColorDict) do
+			table.insert(urlList, res)
 		end
 	end
 
-	for iter_12_6, iter_12_7 in ipairs(RoomScenePreloader.ResCommonList) do
-		table.insert(var_12_0, iter_12_7)
+	for _, res in ipairs(RoomScenePreloader.ResCommonList) do
+		table.insert(urlList, res)
 	end
 
-	table.insert(var_12_0, RoomScenePreloader.ResOcean)
-	table.insert(var_12_0, RoomScenePreloader.ResFogParticle)
+	table.insert(urlList, RoomScenePreloader.ResOcean)
+	table.insert(urlList, RoomScenePreloader.ResFogParticle)
 
 	if BootNativeUtil.isWindows() then
-		table.insert(var_12_0, RoomScenePreloader.DiffuseGI)
+		table.insert(urlList, RoomScenePreloader.DiffuseGI)
 	end
 
-	return var_12_0
+	return urlList
 end
 
-function var_0_0._getAnimUrlList(arg_13_0)
-	local var_13_0 = {}
+function RoomPreloadMgr:_getAnimUrlList()
+	local urlList = {}
 
-	for iter_13_0, iter_13_1 in pairs(RoomScenePreloader.ResAnim) do
-		table.insert(var_13_0, iter_13_1)
+	for _, res in pairs(RoomScenePreloader.ResAnim) do
+		table.insert(urlList, res)
 	end
 
-	return var_13_0
+	return urlList
 end
 
-function var_0_0._getBuildingUrlList(arg_14_0)
-	local var_14_0 = {}
-	local var_14_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+function RoomPreloadMgr:_getBuildingUrlList()
+	local urlList = {}
+	local ownBuildingList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_2 = RoomResHelper.getBuildingPath(iter_14_1.buildingId, iter_14_1.level)
+	for _, buildingMO in ipairs(ownBuildingList) do
+		local url = RoomResHelper.getBuildingPath(buildingMO.buildingId, buildingMO.level)
 
-		table.insert(var_14_0, var_14_2)
+		table.insert(urlList, url)
 	end
 
-	table.insert(var_14_0, RoomScenePreloader.ResInitBuilding)
+	table.insert(urlList, RoomScenePreloader.ResInitBuilding)
 
-	return var_14_0
+	return urlList
 end
 
-function var_0_0.dispose(arg_15_0)
+function RoomPreloadMgr:dispose()
 	RoomHelper.logElapse("---------------- RoomPreloadMgr:dispose")
 
-	if arg_15_0._loader then
-		arg_15_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_15_0._loader = nil
+		self._loader = nil
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomPreloadMgr.instance = RoomPreloadMgr.New()
 
-return var_0_0
+return RoomPreloadMgr

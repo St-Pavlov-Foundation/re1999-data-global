@@ -1,122 +1,129 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErEventView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErEventView.lua
 
-local var_0_0 = class("MoLiDeErEventView", BaseView)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnCloseBg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_CloseBg")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
-	arg_1_0._simagePic = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Pic")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_Title")
-	arg_1_0._scrollDesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Desc")
-	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "#scroll_Desc/Viewport/Content/#txt_Desc")
-	arg_1_0._goBtn = gohelper.findChild(arg_1_0.viewGO, "Btns/#go_Btn")
-	arg_1_0._goBG1 = gohelper.findChild(arg_1_0.viewGO, "Btns/#go_Btn/#go_BG1")
-	arg_1_0._goBG2 = gohelper.findChild(arg_1_0.viewGO, "Btns/#go_Btn/#go_BG2")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "Btns/#go_Btn/#txt_Name")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Btns/#go_Btn/#txt_Descr")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "Btns/#go_Btn/image_Icon/#txt_Num")
-	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "Btns/#go_options")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
-	arg_1_0._btnSkip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Skip")
-	arg_1_0._goDispatchParent = gohelper.findChild(arg_1_0.viewGO, "#go_DispatchParent")
-	arg_1_0._animator = gohelper.findChildComponent(arg_1_0.viewGO, "", gohelper.Type_Animator)
+local MoLiDeErEventView = class("MoLiDeErEventView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MoLiDeErEventView:onInitView()
+	self._btnCloseBg = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_CloseBg")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "#simage_PanelBG")
+	self._simagePic = gohelper.findChildSingleImage(self.viewGO, "#simage_Pic")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "#txt_Title")
+	self._scrollDesc = gohelper.findChildScrollRect(self.viewGO, "#scroll_Desc")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "#scroll_Desc/Viewport/Content/#txt_Desc")
+	self._goBtn = gohelper.findChild(self.viewGO, "Btns/#go_Btn")
+	self._goBG1 = gohelper.findChild(self.viewGO, "Btns/#go_Btn/#go_BG1")
+	self._goBG2 = gohelper.findChild(self.viewGO, "Btns/#go_Btn/#go_BG2")
+	self._txtName = gohelper.findChildText(self.viewGO, "Btns/#go_Btn/#txt_Name")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Btns/#go_Btn/#txt_Descr")
+	self._txtNum = gohelper.findChildText(self.viewGO, "Btns/#go_Btn/image_Icon/#txt_Num")
+	self._gooptions = gohelper.findChild(self.viewGO, "Btns/#go_options")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._btnSkip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Skip")
+	self._goDispatchParent = gohelper.findChild(self.viewGO, "#go_DispatchParent")
+	self._animator = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnCloseBg:AddClickListener(arg_2_0._btnCloseBgOnClick, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnSkip:AddClickListener(arg_2_0._btnSkipOnClick, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, arg_2_0.onOptionSelect, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, arg_2_0.onTeamSelect, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameDispatchTeam, arg_2_0.onDispatchTeam, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameWithdrawTeam, arg_2_0.onWithdrawTeam, arg_2_0)
-	arg_2_0:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, arg_2_0.onItemUse, arg_2_0)
+function MoLiDeErEventView:addEvents()
+	self._btnCloseBg:AddClickListener(self._btnCloseBgOnClick, self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnSkip:AddClickListener(self._btnSkipOnClick, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, self.onOptionSelect, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, self.onTeamSelect, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameDispatchTeam, self.onDispatchTeam, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameWithdrawTeam, self.onWithdrawTeam, self)
+	self:addEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, self.onItemUse, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnCloseBg:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnSkip:RemoveClickListener()
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, arg_3_0.onOptionSelect, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, arg_3_0.onTeamSelect, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameDispatchTeam, arg_3_0.onDispatchTeam, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameWithdrawTeam, arg_3_0.onWithdrawTeam, arg_3_0)
-	arg_3_0:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, arg_3_0.onItemUse, arg_3_0)
+function MoLiDeErEventView:removeEvents()
+	self._btnCloseBg:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
+	self._btnSkip:RemoveClickListener()
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameOptionSelect, self.onOptionSelect, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameTeamSelect, self.onTeamSelect, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameDispatchTeam, self.onDispatchTeam, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameWithdrawTeam, self.onWithdrawTeam, self)
+	self:removeEventCb(MoLiDeErGameController.instance, MoLiDeErEvent.GameUseItem, self.onItemUse, self)
 end
 
-function var_0_0._btnCloseBgOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function MoLiDeErEventView:_btnCloseBgOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnCloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function MoLiDeErEventView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnSkipOnClick(arg_6_0)
-	arg_6_0:onDescShowEnd()
+function MoLiDeErEventView:_btnSkipOnClick()
+	self:onDescShowEnd()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = arg_7_0.viewContainer._viewSetting.otherRes[1]
-	local var_7_1 = arg_7_0:getResInst(var_7_0, arg_7_0._goDispatchParent)
+function MoLiDeErEventView:_editableInitView()
+	local prefabPath = self.viewContainer._viewSetting.otherRes[1]
+	local prefab = self:getResInst(prefabPath, self._goDispatchParent)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(prefab, MoLiDeErDispatchItem)
 
-	arg_7_0._dispatchItem, arg_7_0._goDispatch = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, MoLiDeErDispatchItem), var_7_1
-	arg_7_0._optionItemList = {}
-	arg_7_0._optionParentPointList = {}
+	self._goDispatch = prefab
+	self._dispatchItem = item
+	self._optionItemList = {}
+	self._optionParentPointList = {}
 
-	local var_7_2 = arg_7_0._gooptions.transform.childCount
+	local childCount = self._gooptions.transform.childCount
 
-	for iter_7_0 = 1, var_7_2 do
-		local var_7_3 = arg_7_0._gooptions.transform:GetChild(iter_7_0 - 1).gameObject
+	for i = 1, childCount do
+		local childGo = self._gooptions.transform:GetChild(i - 1).gameObject
 
-		table.insert(arg_7_0._optionParentPointList, var_7_3)
+		table.insert(self._optionParentPointList, childGo)
 	end
 
-	gohelper.setActive(arg_7_0._goBtn, false)
-	gohelper.setActive(arg_7_0._goDispatch, false)
+	gohelper.setActive(self._goBtn, false)
+	gohelper.setActive(self._goDispatch, false)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function MoLiDeErEventView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam.eventId
-	local var_9_1 = arg_9_0.viewParam.state
-	local var_9_2 = arg_9_0.viewParam.optionId
+function MoLiDeErEventView:onOpen()
+	local eventId = self.viewParam.eventId
+	local state = self.viewParam.state
+	local optionId = self.viewParam.optionId
 
-	arg_9_0._eventId = var_9_0
-	arg_9_0._state = var_9_1
-	arg_9_0._optionId = var_9_2
-	arg_9_0._eventConfig = MoLiDeErConfig.instance:getEventConfig(var_9_0)
-	arg_9_0._eventInfo = MoLiDeErGameModel.instance:getCurGameInfo():getEventInfo(var_9_0)
+	self._eventId = eventId
+	self._state = state
+	self._optionId = optionId
+	self._eventConfig = MoLiDeErConfig.instance:getEventConfig(eventId)
 
-	if var_9_1 == MoLiDeErEnum.DispatchState.Finish then
+	local gameInfo = MoLiDeErGameModel.instance:getCurGameInfo()
+
+	self._eventInfo = gameInfo:getEventInfo(eventId)
+
+	if state == MoLiDeErEnum.DispatchState.Finish then
 		AudioMgr.instance:trigger(AudioEnum2_8.MoLiDeEr.play_ui_molu_jlbn_open)
 	end
 
-	arg_9_0:refreshInfo()
+	self:refreshInfo()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	arg_10_0:playAnim()
-	arg_10_0:refreshState()
-	arg_10_0:refreshOptions()
-	arg_10_0:refreshDispatch()
+function MoLiDeErEventView:refreshUI()
+	self:playAnim()
+	self:refreshState()
+	self:refreshOptions()
+	self:refreshDispatch()
 end
 
-function var_0_0.onItemUse(arg_11_0)
-	arg_11_0:refreshOptions()
+function MoLiDeErEventView:onItemUse()
+	self:refreshOptions()
 
-	local var_11_0 = MoLiDeErGameModel.instance:getSelectOptionId()
-	local var_11_1 = arg_11_0._optionItemList
+	local optionId = MoLiDeErGameModel.instance:getSelectOptionId()
+	local itemList = self._optionItemList
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		if iter_11_1.optionId and iter_11_1.optionId == var_11_0 and iter_11_1._canSelect == false then
+	for _, item in ipairs(itemList) do
+		if item.optionId and item.optionId == optionId and item._canSelect == false then
 			MoLiDeErGameModel.instance:setSelectOptionId(nil)
 
 			return
@@ -124,119 +131,125 @@ function var_0_0.onItemUse(arg_11_0)
 	end
 end
 
-function var_0_0.playAnim(arg_12_0)
-	local var_12_0 = arg_12_0._state == MoLiDeErEnum.DispatchState.Finish and MoLiDeErEnum.AnimName.EventViewFinishOpen or MoLiDeErEnum.AnimName.EventViewSwitchOpen
+function MoLiDeErEventView:playAnim()
+	local animName = self._state == MoLiDeErEnum.DispatchState.Finish and MoLiDeErEnum.AnimName.EventViewFinishOpen or MoLiDeErEnum.AnimName.EventViewSwitchOpen
 
-	if arg_12_0._animator then
-		arg_12_0._animator:Play(var_12_0, 0, 0)
+	if self._animator then
+		self._animator:Play(animName, 0, 0)
 	else
-		logError("莫莉德尔角色活动 关卡页面动画组件不存在 动画名：" .. var_12_0)
+		logError("莫莉德尔角色活动 关卡页面动画组件不存在 动画名：" .. animName)
 	end
 end
 
-function var_0_0.refreshState(arg_13_0)
-	local var_13_0 = arg_13_0._state
+function MoLiDeErEventView:refreshState()
+	local state = self._state
 
-	gohelper.setActive(arg_13_0._gooptions, var_13_0 ~= MoLiDeErEnum.DispatchState.Finish)
-	gohelper.setActive(arg_13_0._goDispatch, var_13_0 ~= MoLiDeErEnum.DispatchState.Finish)
+	gohelper.setActive(self._gooptions, state ~= MoLiDeErEnum.DispatchState.Finish)
+	gohelper.setActive(self._goDispatch, state ~= MoLiDeErEnum.DispatchState.Finish)
 end
 
-function var_0_0.refreshOptions(arg_14_0)
-	if arg_14_0._state ~= MoLiDeErEnum.DispatchState.Dispatch then
-		gohelper.setActive(arg_14_0._gooptions, false)
+function MoLiDeErEventView:refreshOptions()
+	local state = self._state
+
+	if state ~= MoLiDeErEnum.DispatchState.Dispatch then
+		gohelper.setActive(self._gooptions, false)
 
 		return
 	end
 
-	local var_14_0 = arg_14_0._eventInfo.options
+	local eventInfo = self._eventInfo
+	local optionInfoList = eventInfo.options
 
-	gohelper.setActive(arg_14_0._gooptions, var_14_0 ~= nil)
+	gohelper.setActive(self._gooptions, optionInfoList ~= nil)
 
-	if var_14_0 == nil then
+	if optionInfoList == nil then
 		return
 	end
 
-	local var_14_1 = #var_14_0
+	local optionCount = #optionInfoList
 
-	gohelper.setActive(arg_14_0._gooptions, var_14_1 > 0)
+	gohelper.setActive(self._gooptions, optionCount > 0)
 
-	if var_14_1 <= 0 then
+	if optionCount <= 0 then
 		return
 	end
 
-	local var_14_2 = arg_14_0._optionItemList
-	local var_14_3 = #var_14_2
-	local var_14_4 = arg_14_0._optionParentPointList
-	local var_14_5 = #arg_14_0._optionParentPointList
+	local itemList = self._optionItemList
+	local itemCount = #itemList
+	local parentList = self._optionParentPointList
+	local parentListCount = #self._optionParentPointList
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_6
+	for index, optionInfo in ipairs(optionInfoList) do
+		local item
 
-		if var_14_3 < iter_14_0 then
-			if var_14_5 < iter_14_0 then
+		if itemCount < index then
+			if parentListCount < index then
 				logError("莫莉德尔角色活动 选项数量超过上限")
 			else
-				local var_14_7 = var_14_4[iter_14_0]
-				local var_14_8 = gohelper.clone(arg_14_0._goBtn, var_14_7)
+				local parent = parentList[index]
+				local itemGo = gohelper.clone(self._goBtn, parent)
 
-				var_14_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_14_8, MoLiDeErOptionItem)
+				item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, MoLiDeErOptionItem)
 
-				table.insert(var_14_2, var_14_6)
+				table.insert(itemList, item)
 			end
 		else
-			var_14_6 = var_14_2[iter_14_0]
+			item = itemList[index]
 		end
 
-		var_14_6:setActive(true)
-		var_14_6:setData(iter_14_1)
+		item:setActive(true)
+		item:setData(optionInfo)
 	end
 
-	if var_14_1 < var_14_3 then
-		for iter_14_2 = var_14_1 + 1, var_14_3 do
-			var_14_2[iter_14_2]:setActive(false)
+	if optionCount < itemCount then
+		for i = optionCount + 1, itemCount do
+			local item = itemList[i]
+
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0.autoSpeak(arg_15_0)
-	if not arg_15_0._curTxtData then
+function MoLiDeErEventView:autoSpeak()
+	if not self._curTxtData then
 		return
 	end
 
-	local var_15_0 = (arg_15_0._curTxtData.index or 0) + 1
+	local curIndex = self._curTxtData.index or 0
 
-	arg_15_0._curTxtData.index = var_15_0
-	arg_15_0._curTxtData.txt.text = table.concat(arg_15_0._curTxtData.chars, "", 1, var_15_0)
-	arg_15_0._curTxtData.isEnd = var_15_0 >= arg_15_0._curTxtData.charCount
+	curIndex = curIndex + 1
+	self._curTxtData.index = curIndex
+	self._curTxtData.txt.text = table.concat(self._curTxtData.chars, "", 1, curIndex)
+	self._curTxtData.isEnd = curIndex >= self._curTxtData.charCount
 
-	if arg_15_0._curTxtData.isEnd then
-		arg_15_0:onDescShowEnd()
+	if self._curTxtData.isEnd then
+		self:onDescShowEnd()
 	end
 end
 
-function var_0_0.onDescShowEnd(arg_16_0)
-	if arg_16_0._curTxtData.isEnd == false then
-		local var_16_0 = arg_16_0._eventConfig
+function MoLiDeErEventView:onDescShowEnd()
+	if self._curTxtData.isEnd == false then
+		local config = self._eventConfig
 
-		arg_16_0._txtDesc.text = var_16_0.desc
+		self._txtDesc.text = config.desc
 	end
 
-	TaskDispatcher.cancelTask(arg_16_0.autoSpeak, arg_16_0)
-	gohelper.setActive(arg_16_0._btnSkip, false)
+	TaskDispatcher.cancelTask(self.autoSpeak, self)
+	gohelper.setActive(self._btnSkip, false)
 	AudioMgr.instance:trigger(AudioEnum2_6.DiceHero.stop_ui_feichi_yure_caption)
-	TaskDispatcher.runDelay(arg_16_0.onDescShowDelayTimEnd, arg_16_0, MoLiDeErEnum.DelayTime.DescBtnShowDelay)
-	arg_16_0:_lockScreen(true)
+	TaskDispatcher.runDelay(self.onDescShowDelayTimEnd, self, MoLiDeErEnum.DelayTime.DescBtnShowDelay)
+	self:_lockScreen(true)
 end
 
-function var_0_0.onDescShowDelayTimEnd(arg_17_0)
-	TaskDispatcher.cancelTask(arg_17_0.onDescShowDelayTimEnd, arg_17_0)
-	arg_17_0:_lockScreen(false)
-	arg_17_0:refreshUI()
+function MoLiDeErEventView:onDescShowDelayTimEnd()
+	TaskDispatcher.cancelTask(self.onDescShowDelayTimEnd, self)
+	self:_lockScreen(false)
+	self:refreshUI()
 	MoLiDeErGameController.instance:dispatchEvent(MoLiDeErEvent.GuideDescShowEnd)
 end
 
-function var_0_0._lockScreen(arg_18_0, arg_18_1)
-	if arg_18_1 then
+function MoLiDeErEventView:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("MoLiDeErEventView")
 	else
@@ -245,98 +258,103 @@ function var_0_0._lockScreen(arg_18_0, arg_18_1)
 	end
 end
 
-function var_0_0.refreshDispatch(arg_19_0)
-	local var_19_0 = arg_19_0._state
-	local var_19_1 = var_19_0 == MoLiDeErEnum.DispatchState.Dispatch or var_19_0 == MoLiDeErEnum.DispatchState.Dispatching
+function MoLiDeErEventView:refreshDispatch()
+	local state = self._state
+	local showDispatch = state == MoLiDeErEnum.DispatchState.Dispatch or state == MoLiDeErEnum.DispatchState.Dispatching
 
-	gohelper.setActive(arg_19_0._goDispatch, var_19_1)
+	gohelper.setActive(self._goDispatch, showDispatch)
 
-	if not var_19_1 then
+	if not showDispatch then
 		return
 	end
 
-	arg_19_0._dispatchItem:setData(arg_19_0._state, arg_19_0._eventId, arg_19_0._optionId)
+	local dispatchItem = self._dispatchItem
+
+	dispatchItem:setData(self._state, self._eventId, self._optionId)
 end
 
-function var_0_0.refreshInfo(arg_20_0)
-	local var_20_0 = arg_20_0._eventConfig
-	local var_20_1 = arg_20_0._optionId and arg_20_0._optionId ~= 0 and arg_20_0._state == MoLiDeErEnum.DispatchState.Finish
+function MoLiDeErEventView:refreshInfo()
+	local config = self._eventConfig
+	local showFinishDesc = self._optionId and self._optionId ~= 0 and self._state == MoLiDeErEnum.DispatchState.Finish
 
-	gohelper.setActive(arg_20_0._btnSkip, arg_20_0._state == MoLiDeErEnum.DispatchState.Dispatch)
+	gohelper.setActive(self._btnSkip, self._state == MoLiDeErEnum.DispatchState.Dispatch)
 
-	if var_20_1 then
-		local var_20_2 = arg_20_0._optionId
-		local var_20_3 = MoLiDeErConfig.instance:getOptionConfig(var_20_2)
-		local var_20_4 = MoLiDeErConfig.instance:getOptionResultConfig(var_20_3.optionResultId)
-		local var_20_5 = MoLiDeErHelper.getOptionResultEffectParamList(var_20_3.optionResultId)
+	if showFinishDesc then
+		local optionId = self._optionId
+		local optionConfig = MoLiDeErConfig.instance:getOptionConfig(optionId)
+		local optionResultConfig = MoLiDeErConfig.instance:getOptionResultConfig(optionConfig.optionResultId)
+		local valueList = MoLiDeErHelper.getOptionResultEffectParamList(optionConfig.optionResultId)
 
-		arg_20_0._txtTitle.text = var_20_4.name
-		arg_20_0._txtDesc.text = GameUtil.getSubPlaceholderLuaLang(var_20_4.desc, var_20_5)
+		self._txtTitle.text = optionResultConfig.name
+		self._txtDesc.text = GameUtil.getSubPlaceholderLuaLang(optionResultConfig.desc, valueList)
 
-		arg_20_0:refreshUI()
+		self:refreshUI()
 	else
-		arg_20_0._txtTitle.text = var_20_0.name
+		self._txtTitle.text = config.name
 
-		if arg_20_0._state == MoLiDeErEnum.DispatchState.Dispatch then
-			local var_20_6 = GameUtil.getUCharArrWithLineFeedWithoutRichTxt(var_20_0.desc)
-
-			arg_20_0._curTxtData = {
+		if self._state == MoLiDeErEnum.DispatchState.Dispatch then
+			local chars = GameUtil.getUCharArrWithLineFeedWithoutRichTxt(config.desc)
+			local curData = {
 				isEnd = false,
-				txt = arg_20_0._txtDesc,
-				chars = var_20_6,
-				charCount = #var_20_6
+				txt = self._txtDesc,
+				chars = chars,
+				charCount = #chars
 			}
 
-			TaskDispatcher.runRepeat(arg_20_0.autoSpeak, arg_20_0, MoLiDeErEnum.DelayTime.DescTextShowDelay)
-		else
-			arg_20_0._txtDesc.text = var_20_0.desc
+			self._curTxtData = curData
 
-			arg_20_0:refreshUI()
+			TaskDispatcher.runRepeat(self.autoSpeak, self, MoLiDeErEnum.DelayTime.DescTextShowDelay)
+		else
+			self._txtDesc.text = config.desc
+
+			self:refreshUI()
 		end
 	end
 end
 
-function var_0_0.onOptionSelect(arg_21_0, arg_21_1)
-	if arg_21_1 == arg_21_0._selectOptionId then
+function MoLiDeErEventView:onOptionSelect(optionId)
+	if optionId == self._selectOptionId then
 		return
 	end
 
-	arg_21_0._selectOptionId = arg_21_1
+	self._selectOptionId = optionId
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0._optionItemList) do
-		iter_21_1:setSelect(arg_21_1)
+	for _, item in ipairs(self._optionItemList) do
+		item:setSelect(optionId)
 	end
 end
 
-function var_0_0.onTeamSelect(arg_22_0, arg_22_1)
-	if arg_22_1 == nil then
+function MoLiDeErEventView:onTeamSelect(teamId)
+	if teamId == nil then
 		return
 	end
 
-	if arg_22_0._state == MoLiDeErEnum.DispatchState.Dispatch then
-		arg_22_0:refreshOptions()
+	local state = self._state
+
+	if state == MoLiDeErEnum.DispatchState.Dispatch then
+		self:refreshOptions()
 	end
 end
 
-function var_0_0.onDispatchTeam(arg_23_0)
-	if arg_23_0._state == MoLiDeErEnum.DispatchState.Dispatch then
-		arg_23_0:closeThis()
+function MoLiDeErEventView:onDispatchTeam()
+	if self._state == MoLiDeErEnum.DispatchState.Dispatch then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onWithdrawTeam(arg_24_0)
-	if arg_24_0._state == MoLiDeErEnum.DispatchState.Dispatching then
-		arg_24_0:closeThis()
+function MoLiDeErEventView:onWithdrawTeam()
+	if self._state == MoLiDeErEnum.DispatchState.Dispatching then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onClose(arg_25_0)
+function MoLiDeErEventView:onClose()
 	MoLiDeErGameModel.instance:resetSelect()
-	TaskDispatcher.cancelTask(arg_25_0._autoSpeak, arg_25_0)
+	TaskDispatcher.cancelTask(self._autoSpeak, self)
 end
 
-function var_0_0.onDestroyView(arg_26_0)
+function MoLiDeErEventView:onDestroyView()
 	return
 end
 
-return var_0_0
+return MoLiDeErEventView

@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.asfd.effectwork.FightWorkFixAttrTeamEnergyAndBuff", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/effectwork/FightWorkFixAttrTeamEnergyAndBuff.lua
 
-local var_0_0 = class("FightWorkFixAttrTeamEnergyAndBuff", FightEffectBase)
+module("modules.logic.fight.system.work.asfd.effectwork.FightWorkFixAttrTeamEnergyAndBuff", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:onDone(true)
+local FightWorkFixAttrTeamEnergyAndBuff = class("FightWorkFixAttrTeamEnergyAndBuff", FightEffectBase)
+
+function FightWorkFixAttrTeamEnergyAndBuff:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkFixAttrTeamEnergyAndBuff

@@ -1,10 +1,12 @@
-﻿module("modules.logic.character.model.SkinInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/SkinInfoMO.lua
 
-local var_0_0 = pureTable("SkinInfoMO")
+module("modules.logic.character.model.SkinInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.skin = arg_1_1.skin
-	arg_1_0.expireSec = arg_1_1.expireSec
+local SkinInfoMO = pureTable("SkinInfoMO")
+
+function SkinInfoMO:init(info)
+	self.skin = info.skin
+	self.expireSec = info.expireSec
 end
 
-return var_0_0
+return SkinInfoMO

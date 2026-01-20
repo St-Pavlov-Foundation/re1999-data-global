@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_7.newinsight.view.ActivityInsightShowView_2_7Container", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/newinsight/view/ActivityInsightShowView_2_7Container.lua
 
-local var_0_0 = class("ActivityInsightShowView_2_7Container", BaseViewContainer)
+module("modules.logic.versionactivity2_7.newinsight.view.ActivityInsightShowView_2_7Container", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityInsightShowView_2_7Container = class("ActivityInsightShowView_2_7Container", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityInsightShowView_2_7.New())
+function ActivityInsightShowView_2_7Container:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityInsightShowView_2_7.New())
+
+	return views
 end
 
-return var_0_0
+return ActivityInsightShowView_2_7Container

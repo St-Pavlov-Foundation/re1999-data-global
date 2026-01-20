@@ -1,163 +1,168 @@
-﻿module("modules.logic.turnback.view.TurnbackMainBtnItem", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/TurnbackMainBtnItem.lua
 
-local var_0_0 = class("TurnbackMainBtnItem", ActCenterItemBase)
+module("modules.logic.turnback.view.TurnbackMainBtnItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.turnbackId = arg_1_2
-	arg_1_0._hasSetRefreshTime = false
+local TurnbackMainBtnItem = class("TurnbackMainBtnItem", ActCenterItemBase)
 
-	var_0_0.super.init(arg_1_0, gohelper.cloneInPlace(arg_1_1))
+function TurnbackMainBtnItem:init(go, turnbackId)
+	self.turnbackId = turnbackId
+	self._hasSetRefreshTime = false
+
+	TurnbackMainBtnItem.super.init(self, gohelper.cloneInPlace(go))
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1)
-	arg_2_0:_initReddotitem()
-	arg_2_0:_refreshItem()
+function TurnbackMainBtnItem:onInit(go)
+	self:_initReddotitem()
+	self:_refreshItem()
 end
 
-function var_0_0.onClick(arg_3_0)
-	local var_3_0 = {
-		turnbackId = arg_3_0.turnbackId
+function TurnbackMainBtnItem:onClick()
+	local param = {
+		turnbackId = self.turnbackId
 	}
 
-	TurnbackController.instance:openTurnbackBeginnerView(var_3_0)
+	TurnbackController.instance:openTurnbackBeginnerView(param)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity.play_ui_activity_open)
 end
 
-function var_0_0._refreshItem(arg_4_0)
-	local var_4_0 = ActivityModel.showActivityEffect()
-	local var_4_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local var_4_2 = var_4_0 and var_4_1.mainViewActBtnPrefix .. "icon_4" or "icon_4"
+function TurnbackMainBtnItem:_refreshItem()
+	local isShow = ActivityModel.showActivityEffect()
+	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_4" or "icon_4"
 
-	UISpriteSetMgr.instance:setMainSprite(arg_4_0._imgitem, var_4_2, true)
+	UISpriteSetMgr.instance:setMainSprite(self._imgitem, spriteName, true)
 
-	if not var_4_0 then
-		local var_4_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	if not isShow then
+		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-		if var_4_3 then
-			for iter_4_0, iter_4_1 in ipairs(var_4_3.mainViewActBtn) do
-				local var_4_4 = gohelper.findChild(arg_4_0.go, iter_4_1)
+		if config then
+			for _, path in ipairs(config.mainViewActBtn) do
+				local go = gohelper.findChild(self.go, path)
 
-				if var_4_4 then
-					gohelper.setActive(var_4_4, var_4_0)
+				if go then
+					gohelper.setActive(go, isShow)
 				end
 			end
 		end
 	end
 
 	if TurnbackModel.instance:getCurTurnbackMoWithNilError() then
-		gohelper.setActive(arg_4_0._godeadline, true)
-		arg_4_0:_refreshRemainTime()
+		gohelper.setActive(self._godeadline, true)
+		self:_refreshRemainTime()
 
-		local var_4_5, var_4_6, var_4_7, var_4_8 = TurnbackModel.instance:getRemainTime()
+		local _, _, _, second = TurnbackModel.instance:getRemainTime()
 
-		TaskDispatcher.runDelay(arg_4_0._delayUpdateView, arg_4_0, var_4_8)
+		TaskDispatcher.runDelay(self._delayUpdateView, self, second)
 	else
-		gohelper.setActive(arg_4_0._godeadline, false)
+		gohelper.setActive(self._godeadline, false)
 	end
 
-	arg_4_0._redDot:refreshDot()
+	self._redDot:refreshDot()
 end
 
-function var_0_0._delayUpdateView(arg_5_0)
-	arg_5_0:_refreshRemainTime()
+function TurnbackMainBtnItem:_delayUpdateView()
+	self:_refreshRemainTime()
 
-	local var_5_0, var_5_1, var_5_2 = TurnbackModel.instance:getRemainTime()
+	local day, hour, minute = TurnbackModel.instance:getRemainTime()
 
-	TaskDispatcher.cancelTask(arg_5_0._refreshRemainTime, arg_5_0)
+	TaskDispatcher.cancelTask(self._refreshRemainTime, self)
 
-	if var_5_0 <= 0 and var_5_1 <= 1 and var_5_2 <= 1 and not arg_5_0._hasSetRefreshTime then
-		TaskDispatcher.runRepeat(arg_5_0._refreshRemainTime, arg_5_0, 2)
+	if day <= 0 and hour <= 1 and minute <= 1 and not self._hasSetRefreshTime then
+		TaskDispatcher.runRepeat(self._refreshRemainTime, self, 2)
 
-		arg_5_0._hasSetRefreshTime = true
+		self._hasSetRefreshTime = true
 	else
-		TaskDispatcher.runRepeat(arg_5_0._refreshRemainTime, arg_5_0, TimeUtil.OneMinuteSecond)
+		TaskDispatcher.runRepeat(self._refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 	end
 end
 
-function var_0_0._refreshRemainTime(arg_6_0)
-	local var_6_0, var_6_1, var_6_2, var_6_3 = TurnbackModel.instance:getRemainTime()
+function TurnbackMainBtnItem:_refreshRemainTime()
+	local day, hour, minute, second = TurnbackModel.instance:getRemainTime()
 
 	if not TurnbackModel.instance:isInOpenTime() then
-		TaskDispatcher.cancelTask(arg_6_0._refreshRemainTime, arg_6_0)
+		TaskDispatcher.cancelTask(self._refreshRemainTime, self)
 	end
 
-	if var_6_0 == 0 and var_6_1 <= 1 and var_6_2 <= 1 and not arg_6_0._hasSetRefreshTime then
-		TaskDispatcher.cancelTask(arg_6_0._refreshRemainTime, arg_6_0)
-		TaskDispatcher.runRepeat(arg_6_0._refreshRemainTime, arg_6_0, 2)
+	if day == 0 and hour <= 1 and minute <= 1 and not self._hasSetRefreshTime then
+		TaskDispatcher.cancelTask(self._refreshRemainTime, self)
+		TaskDispatcher.runRepeat(self._refreshRemainTime, self, 2)
 
-		arg_6_0._hasSetRefreshTime = true
+		self._hasSetRefreshTime = true
 	end
 
-	if var_6_0 >= 1 then
-		arg_6_0._txttime.text = string.format("%d d", var_6_0)
-	elseif var_6_0 == 0 and var_6_1 >= 1 then
-		arg_6_0._txttime.text = string.format("%d h", var_6_1)
-	elseif var_6_0 == 0 and var_6_1 < 1 and var_6_2 >= 1 then
-		arg_6_0._txttime.text = string.format("%d m", var_6_2)
-	elseif var_6_0 == 0 and var_6_1 < 1 and var_6_2 < 1 and var_6_3 >= 0 then
-		arg_6_0._txttime.text = "<1m"
-	elseif var_6_0 < 0 or not TurnbackModel.instance:isInOpenTime() then
-		TaskDispatcher.cancelTask(arg_6_0._refreshRemainTime, arg_6_0)
+	if day >= 1 then
+		self._txttime.text = string.format("%d d", day)
+	elseif day == 0 and hour >= 1 then
+		self._txttime.text = string.format("%d h", hour)
+	elseif day == 0 and hour < 1 and minute >= 1 then
+		self._txttime.text = string.format("%d m", minute)
+	elseif day == 0 and hour < 1 and minute < 1 and second >= 0 then
+		self._txttime.text = "<1m"
+	elseif day < 0 or not TurnbackModel.instance:isInOpenTime() then
+		TaskDispatcher.cancelTask(self._refreshRemainTime, self)
 	end
 
 	TurnbackController.instance:dispatchEvent(TurnbackEvent.RefreshRemainTime)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._refreshRemainTime, arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0._delayUpdateView, arg_7_0)
-	var_0_0.super.onDestroyView(arg_7_0)
+function TurnbackMainBtnItem:onDestroyView()
+	TaskDispatcher.cancelTask(self._refreshRemainTime, self)
+	TaskDispatcher.cancelTask(self._delayUpdateView, self)
+	TurnbackMainBtnItem.super.onDestroyView(self)
 end
 
-function var_0_0.isShowRedDot(arg_8_0)
-	return arg_8_0._redDot.show
+function TurnbackMainBtnItem:isShowRedDot()
+	return self._redDot.show
 end
 
-function var_0_0._initReddotitem(arg_9_0)
-	local var_9_0 = arg_9_0.go
-	local var_9_1 = gohelper.findChild(var_9_0, "go_activityreddot")
+function TurnbackMainBtnItem:_initReddotitem()
+	local go = self.go
 
-	arg_9_0._redDot = RedDotController.instance:addRedDot(var_9_1, RedDotEnum.DotNode.TurnbackEntre, nil, arg_9_0._checkCustomShowRedDotData, arg_9_0)
+	do
+		local rGo = gohelper.findChild(go, "go_activityreddot")
 
-	do return end
+		self._redDot = RedDotController.instance:addRedDot(rGo, RedDotEnum.DotNode.TurnbackEntre, nil, self._checkCustomShowRedDotData, self)
 
-	local var_9_2 = gohelper.findChild(var_9_0, "go_activityreddot/#go_special_reds")
-	local var_9_3 = var_9_2.transform
-	local var_9_4 = var_9_3.childCount
-
-	for iter_9_0 = 1, var_9_4 do
-		local var_9_5 = var_9_3:GetChild(iter_9_0 - 1)
-
-		gohelper.setActive(var_9_5.gameObject, false)
+		return
 	end
 
-	local var_9_6 = gohelper.findChild(var_9_2, "#go_turnback_red")
+	local redGos = gohelper.findChild(go, "go_activityreddot/#go_special_reds")
+	local t = redGos.transform
+	local n = t.childCount
 
-	arg_9_0._redDot = RedDotController.instance:addRedDotTag(var_9_6, RedDotEnum.DotNode.TurnbackEntre, false, arg_9_0._onRefreshDot, arg_9_0)
-	arg_9_0._btnitem2 = gohelper.getClick(var_9_6)
+	for i = 1, n do
+		local child = t:GetChild(i - 1)
+
+		gohelper.setActive(child.gameObject, false)
+	end
+
+	local redGo = gohelper.findChild(redGos, "#go_turnback_red")
+
+	self._redDot = RedDotController.instance:addRedDotTag(redGo, RedDotEnum.DotNode.TurnbackEntre, false, self._onRefreshDot, self)
+	self._btnitem2 = gohelper.getClick(redGo)
 end
 
-function var_0_0._onRefreshDot(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:_checkIsShowRed(arg_10_1.dotId, 0)
+function TurnbackMainBtnItem:_onRefreshDot(commonRedDotTag)
+	local isShow = self:_checkIsShowRed(commonRedDotTag.dotId, 0)
 
-	arg_10_1.show = var_10_0
+	commonRedDotTag.show = isShow
 
-	gohelper.setActive(arg_10_1.go, var_10_0)
-	gohelper.setActive(arg_10_0._imgGo, not var_10_0)
+	gohelper.setActive(commonRedDotTag.go, isShow)
+	gohelper.setActive(self._imgGo, not isShow)
 end
 
-function var_0_0._checkIsShowRed(arg_11_0, arg_11_1, arg_11_2)
-	if RedDotModel.instance:isDotShow(arg_11_1, arg_11_2 or 0) then
+function TurnbackMainBtnItem:_checkIsShowRed(id, uid)
+	if RedDotModel.instance:isDotShow(id, uid or 0) then
 		return true
 	end
 
-	local var_11_0 = TurnbackModel.instance:getCurTurnbackMo()
+	local curTurnbackMo = TurnbackModel.instance:getCurTurnbackMo()
 
-	if not var_11_0 then
+	if not curTurnbackMo then
 		return false
 	end
 
-	if var_11_0:isAdditionInOpenTime() and TurnbackController.instance:checkIsShowCustomRedDot(TurnbackEnum.ActivityId.DungeonShowView) then
+	if curTurnbackMo:isAdditionInOpenTime() and TurnbackController.instance:checkIsShowCustomRedDot(TurnbackEnum.ActivityId.DungeonShowView) then
 		return true
 	end
 
@@ -168,18 +173,8 @@ function var_0_0._checkIsShowRed(arg_11_0, arg_11_1, arg_11_2)
 	return false
 end
 
-function var_0_0._checkCustomShowRedDotData(arg_12_0, arg_12_1)
-	arg_12_1:defaultRefreshDot()
-
-	if not arg_12_1.show and not TurnbackModel.instance:isNewType() then
-		if TurnbackModel.instance:getCurTurnbackMo() and TurnbackModel.instance:getCurTurnbackMo():isAdditionInOpenTime() then
-			TurnbackController.instance:_checkCustomShowRedDotData(arg_12_1, TurnbackEnum.ActivityId.DungeonShowView)
-		end
-
-		if TurnbackModel.instance:getCurTurnbackMo() and TurnbackRecommendModel.instance:getCanShowRecommendCount() > 0 then
-			TurnbackController.instance:_checkCustomShowRedDotData(arg_12_1, TurnbackEnum.ActivityId.RecommendView)
-		end
-	end
+function TurnbackMainBtnItem:_checkCustomShowRedDotData(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 end
 
-return var_0_0
+return TurnbackMainBtnItem

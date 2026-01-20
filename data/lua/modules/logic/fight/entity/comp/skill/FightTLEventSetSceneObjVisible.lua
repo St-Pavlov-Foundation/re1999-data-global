@@ -1,56 +1,58 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetSceneObjVisible", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventSetSceneObjVisible.lua
 
-local var_0_0 = class("FightTLEventSetSceneObjVisible", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEventSetSceneObjVisible", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.fightStepData = arg_1_1
-	arg_1_0._paramsArr = arg_1_3
+local FightTLEventSetSceneObjVisible = class("FightTLEventSetSceneObjVisible", FightTimelineTrackItem)
 
-	if arg_1_0._paramsArr[3] == "1" then
+function FightTLEventSetSceneObjVisible:onTrackStart(fightStepData, duration, paramsArr)
+	self.fightStepData = fightStepData
+	self._paramsArr = paramsArr
+
+	if self._paramsArr[3] == "1" then
 		return
 	end
 
-	arg_1_0:_setVisible()
+	self:_setVisible()
 end
 
-function var_0_0._setVisible(arg_2_0)
-	if arg_2_0._paramsArr[4] == "1" then
-		local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
+function FightTLEventSetSceneObjVisible:_setVisible()
+	if self._paramsArr[4] == "1" then
+		local entity = FightHelper.getEntity(self.fightStepData.fromId)
 
-		if var_2_0 and var_2_0.skinSpineEffect then
-			if arg_2_0._paramsArr[2] == "1" then
-				var_2_0.skinSpineEffect:showEffects()
+		if entity and entity.skinSpineEffect then
+			if self._paramsArr[2] == "1" then
+				entity.skinSpineEffect:showEffects()
 			else
-				var_2_0.skinSpineEffect:hideEffects()
+				entity.skinSpineEffect:hideEffects()
 			end
 		end
 
 		return
 	end
 
-	local var_2_1 = GameSceneMgr.instance:getCurScene()
+	local fightScene = GameSceneMgr.instance:getCurScene()
 
-	if var_2_1 then
-		local var_2_2 = var_2_1.level:getSceneGo()
+	if fightScene then
+		local sceneObj = fightScene.level:getSceneGo()
 
-		if var_2_2 then
-			local var_2_3 = gohelper.findChild(var_2_2, arg_2_0._paramsArr[1])
+		if sceneObj then
+			local tarObj = gohelper.findChild(sceneObj, self._paramsArr[1])
 
-			if var_2_3 then
-				gohelper.setActive(var_2_3, arg_2_0._paramsArr[2] == "1")
+			if tarObj then
+				gohelper.setActive(tarObj, self._paramsArr[2] == "1")
 			end
 		end
 	end
 end
 
-function var_0_0.onTrackEnd(arg_3_0)
+function FightTLEventSetSceneObjVisible:onTrackEnd()
 	return
 end
 
-function var_0_0.onDestructor(arg_4_0)
-	if arg_4_0._paramsArr and arg_4_0._paramsArr[3] == "1" then
-		arg_4_0:_setVisible()
+function FightTLEventSetSceneObjVisible:onDestructor()
+	if self._paramsArr and self._paramsArr[3] == "1" then
+		self:_setVisible()
 	end
 end
 
-return var_0_0
+return FightTLEventSetSceneObjVisible

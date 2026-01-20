@@ -1,7 +1,9 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionPreloadFirstFight", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionPreloadFirstFight.lua
 
-local var_0_0 = class("GuideActionPreloadFirstFight", BaseGuideAction)
-local var_0_1 = {
+module("modules.logic.guide.controller.action.impl.GuideActionPreloadFirstFight", package.seeall)
+
+local GuideActionPreloadFirstFight = class("GuideActionPreloadFirstFight", BaseGuideAction)
+local Config = {
 	[1001] = {
 		myModelIds = {
 			100102,
@@ -59,32 +61,32 @@ local var_0_1 = {
 	}
 }
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+function GuideActionPreloadFirstFight:onStart(context)
+	GuideActionPreloadFirstFight.super.onStart(self, context)
 
 	if FightPreloadController.instance:isPreloading() then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = tonumber(arg_1_0.actionParam)
-	local var_1_1 = var_0_1[var_1_0]
+	local battleId = tonumber(self.actionParam)
+	local co = Config[battleId]
 
-	if not var_1_0 then
-		logError("no preload config, battleId = " .. var_1_0)
-		arg_1_0:onDone(true)
+	if not battleId then
+		logError("no preload config, battleId = " .. battleId)
+		self:onDone(true)
 	end
 
-	local var_1_2 = var_1_1.myModelIds
-	local var_1_3 = var_1_1.mySkinIds
-	local var_1_4 = var_1_1.enemyModelIds
-	local var_1_5 = var_1_1.enemySkinIds
-	local var_1_6 = var_1_1.subSkinIds
+	local myModelIds = co.myModelIds
+	local mySkinIds = co.mySkinIds
+	local enemyModelIds = co.enemyModelIds
+	local enemySkinIds = co.enemySkinIds
+	local subSkinIds = co.subSkinIds
 
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, 2)
-	FightPreloadController.instance:preloadReconnect(var_1_0, var_1_2, var_1_3, var_1_4, var_1_5, var_1_6)
-	arg_1_0:onDone(true)
+	FightPreloadController.instance:preloadReconnect(battleId, myModelIds, mySkinIds, enemyModelIds, enemySkinIds, subSkinIds)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionPreloadFirstFight

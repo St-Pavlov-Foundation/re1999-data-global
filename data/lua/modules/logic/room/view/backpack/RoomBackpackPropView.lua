@@ -1,56 +1,58 @@
-﻿module("modules.logic.room.view.backpack.RoomBackpackPropView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/backpack/RoomBackpackPropView.lua
 
-local var_0_0 = class("RoomBackpackPropView", BaseView)
+module("modules.logic.room.view.backpack.RoomBackpackPropView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+local RoomBackpackPropView = class("RoomBackpackPropView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomBackpackPropView:onInitView()
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChange, arg_2_0)
+function RoomBackpackPropView:addEvents()
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChange, arg_3_0)
+function RoomBackpackPropView:removeEvents()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChange, self)
 end
 
-function var_0_0._onItemChange(arg_4_0)
-	arg_4_0:refreshPropList()
+function RoomBackpackPropView:_onItemChange()
+	self:refreshPropList()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RoomBackpackPropView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function RoomBackpackPropView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshPropList()
+function RoomBackpackPropView:onOpen()
+	self:refreshPropList()
 end
 
-function var_0_0.refreshPropList(arg_8_0)
+function RoomBackpackPropView:refreshPropList()
 	RoomBackpackController.instance:refreshPropBackpackList()
-	arg_8_0:refreshIsEmpty()
+	self:refreshIsEmpty()
 end
 
-function var_0_0.refreshIsEmpty(arg_9_0)
-	local var_9_0 = RoomBackpackPropListModel.instance:isBackpackEmpty()
+function RoomBackpackPropView:refreshIsEmpty()
+	local isEmpty = RoomBackpackPropListModel.instance:isBackpackEmpty()
 
-	gohelper.setActive(arg_9_0._goempty, var_9_0)
+	gohelper.setActive(self._goempty, isEmpty)
 end
 
-function var_0_0.onClose(arg_10_0)
+function RoomBackpackPropView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function RoomBackpackPropView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomBackpackPropView

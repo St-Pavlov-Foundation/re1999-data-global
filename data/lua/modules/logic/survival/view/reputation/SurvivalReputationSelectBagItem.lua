@@ -1,22 +1,24 @@
-﻿module("modules.logic.survival.view.reputation.SurvivalReputationSelectBagItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/reputation/SurvivalReputationSelectBagItem.lua
 
-local var_0_0 = class("SurvivalReputationSelectBagItem", SurvivalSimpleListItem)
+module("modules.logic.survival.view.reputation.SurvivalReputationSelectBagItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
+local SurvivalReputationSelectBagItem = class("SurvivalReputationSelectBagItem", SurvivalSimpleListItem)
 
-	local var_1_0 = "ui/viewres/survival/map/survivalmapbagitem.prefab"
-	local var_1_1 = arg_1_0.viewContainer:getResInst(var_1_0, arg_1_0.viewGO)
+function SurvivalReputationSelectBagItem:init(viewGO)
+	self.viewGO = viewGO
 
-	arg_1_0.survivalBagItem = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_1, SurvivalBagItem)
+	local resPath = "ui/viewres/survival/map/survivalmapbagitem.prefab"
+	local item = self.viewContainer:getResInst(resPath, self.viewGO)
+
+	self.survivalBagItem = MonoHelper.addNoUpdateLuaComOnceToGo(item, SurvivalBagItem)
 end
 
-function var_0_0.onItemShow(arg_2_0, arg_2_1)
-	arg_2_0.survivalBagItem:updateMo(arg_2_1)
+function SurvivalReputationSelectBagItem:onItemShow(survivalBagItemMo)
+	self.survivalBagItem:updateMo(survivalBagItemMo)
 end
 
-function var_0_0.playSearch(arg_3_0)
-	arg_3_0.survivalBagItem:playSearch()
+function SurvivalReputationSelectBagItem:playSearch()
+	self.survivalBagItem:playSearch()
 end
 
-return var_0_0
+return SurvivalReputationSelectBagItem

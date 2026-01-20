@@ -1,51 +1,53 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionAdditionCondition", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionAdditionCondition.lua
 
-local var_0_0 = class("GuideActionAdditionCondition", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionAdditionCondition", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionAdditionCondition = class("GuideActionAdditionCondition", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_0.actionParam, "#")
-	local var_1_1 = var_1_0[1]
-	local var_1_2 = var_1_0[2]
-	local var_1_3 = var_1_0[3]
-	local var_1_4 = var_1_0[4]
-	local var_1_5 = arg_1_0[var_1_1]
+function GuideActionAdditionCondition:onStart(context)
+	GuideActionAdditionCondition.super.onStart(self, context)
 
-	if var_1_5 and var_1_5(arg_1_0, var_1_2) then
-		arg_1_0:additionStepId(arg_1_0.sourceGuideId or arg_1_0.guideId, var_1_3)
+	local param = string.split(self.actionParam, "#")
+	local funcName = param[1]
+	local funcParam = param[2]
+	local actionStr1 = param[3]
+	local actionStr2 = param[4]
+	local func = self[funcName]
+
+	if func and func(self, funcParam) then
+		self:additionStepId(self.sourceGuideId or self.guideId, actionStr1)
 	else
-		arg_1_0:additionStepId(arg_1_0.sourceGuideId or arg_1_0.guideId, var_1_4)
+		self:additionStepId(self.sourceGuideId or self.guideId, actionStr2)
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.additionStepId(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_1 then
+function GuideActionAdditionCondition:additionStepId(sourceGuideId, actionStr)
+	if not sourceGuideId then
 		return
 	end
 
-	local var_2_0 = GuideStepController.instance:getActionFlow(arg_2_1)
+	local flow = GuideStepController.instance:getActionFlow(sourceGuideId)
 
-	if not var_2_0 then
+	if not flow then
 		return
 	end
 
-	if not string.nilorempty(arg_2_2) then
-		arg_2_2 = string.gsub(arg_2_2, "&", "|")
-		arg_2_2 = string.gsub(arg_2_2, "*", "#")
+	if not string.nilorempty(actionStr) then
+		actionStr = string.gsub(actionStr, "&", "|")
+		actionStr = string.gsub(actionStr, "*", "#")
 
-		local var_2_1 = GuideActionBuilder.buildAction(arg_2_1, 0, arg_2_2)
+		local action = GuideActionBuilder.buildAction(sourceGuideId, 0, actionStr)
 
-		var_2_0:addWork(var_2_1)
+		flow:addWork(action)
 	end
 end
 
-function var_0_0.checkRoomTaskHasFinished(arg_3_0)
-	local var_3_0, var_3_1 = RoomSceneTaskController.instance:isFirstTaskFinished()
+function GuideActionAdditionCondition:checkRoomTaskHasFinished()
+	local hasFinish, taskIds = RoomSceneTaskController.instance:isFirstTaskFinished()
 
-	return var_3_0
+	return hasFinish
 end
 
-return var_0_0
+return GuideActionAdditionCondition

@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.model.data.FightExPointInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightExPointInfoData.lua
 
-local var_0_0 = FightDataClass("FightExPointInfoData")
+module("modules.logic.fight.model.data.FightExPointInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.exPoint = arg_1_1.exPoint
-	arg_1_0.powerInfos = {}
+local FightExPointInfoData = FightDataClass("FightExPointInfoData")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.powerInfos) do
-		table.insert(arg_1_0.powerInfos, FightPowerInfoData.New(iter_1_1))
+function FightExPointInfoData:onConstructor(proto)
+	self.uid = proto.uid
+	self.exPoint = proto.exPoint
+	self.powerInfos = {}
+
+	for i, v in ipairs(proto.powerInfos) do
+		table.insert(self.powerInfos, FightPowerInfoData.New(v))
 	end
 
-	arg_1_0.currentHp = arg_1_1.currentHp
+	self.currentHp = proto.currentHp
 end
 
-return var_0_0
+return FightExPointInfoData

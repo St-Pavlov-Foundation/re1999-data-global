@@ -1,209 +1,213 @@
-﻿module("modules.logic.versionactivity1_2.trade.model.Activity117Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/model/Activity117Model.lua
 
-local var_0_0 = class("Activity117Model", BaseModel)
+module("modules.logic.versionactivity1_2.trade.model.Activity117Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._actDict = {}
+local Activity117Model = class("Activity117Model", BaseModel)
+
+function Activity117Model:onInit()
+	self._actDict = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._actDict = {}
+function Activity117Model:reInit()
+	self._actDict = {}
 end
 
-function var_0_0.release(arg_3_0)
-	arg_3_0._actDict = {}
+function Activity117Model:release()
+	self._actDict = {}
 end
 
-function var_0_0.initAct(arg_4_0, arg_4_1)
-	arg_4_0:getActData(arg_4_1, true)
+function Activity117Model:initAct(actId)
+	self:getActData(actId, true)
 end
 
-function var_0_0.getActData(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1 then
+function Activity117Model:getActData(actId, create)
+	if not actId then
 		return
 	end
 
-	local var_5_0 = arg_5_0._actDict[arg_5_1]
+	local data = self._actDict[actId]
 
-	if not var_5_0 and arg_5_2 then
-		var_5_0 = Activity117MO.New()
+	if not data and create then
+		data = Activity117MO.New()
 
-		var_5_0:init(arg_5_1)
+		data:init(actId)
 
-		arg_5_0._actDict[arg_5_1] = var_5_0
+		self._actDict[actId] = data
 	end
 
-	return var_5_0
+	return data
 end
 
-function var_0_0.onReceiveInfos(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getActData(arg_6_1.activityId)
+function Activity117Model:onReceiveInfos(serverData)
+	local data = self:getActData(serverData.activityId)
 
-	if not var_6_0 then
+	if not data then
 		return
 	end
 
-	var_6_0:onInitServerData(arg_6_1)
+	data:onInitServerData(serverData)
 end
 
-function var_0_0.onNegotiateResult(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getActData(arg_7_1.activityId)
+function Activity117Model:onNegotiateResult(serverData)
+	local data = self:getActData(serverData.activityId)
 
-	if not var_7_0 then
+	if not data then
 		return
 	end
 
-	var_7_0:onNegotiateResult(arg_7_1)
+	data:onNegotiateResult(serverData)
 end
 
-function var_0_0.onDealSuccess(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getActData(arg_8_1.activityId)
+function Activity117Model:onDealSuccess(serverData)
+	local data = self:getActData(serverData.activityId)
 
-	if not var_8_0 then
+	if not data then
 		return
 	end
 
-	var_8_0:onDealSuccess(arg_8_1)
+	data:onDealSuccess(serverData)
 end
 
-function var_0_0.onOrderPush(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getActData(arg_9_1.activityId)
+function Activity117Model:onOrderPush(serverData)
+	local data = self:getActData(serverData.activityId)
 
-	if not var_9_0 then
+	if not data then
 		return
 	end
 
-	var_9_0:onOrderPush(arg_9_1)
+	data:onOrderPush(serverData)
 end
 
-function var_0_0.updateRewardDatas(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getActData(arg_10_1.activityId)
+function Activity117Model:updateRewardDatas(serverData)
+	local data = self:getActData(serverData.activityId)
 
-	if not var_10_0 then
+	if not data then
 		return
 	end
 
-	var_10_0:updateHasGetBonusIds(arg_10_1.bonusIds)
+	data:updateHasGetBonusIds(serverData.bonusIds)
 end
 
-function var_0_0.getOrderDataById(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getActData(arg_11_1)
+function Activity117Model:getOrderDataById(actId, id)
+	local data = self:getActData(actId)
 
-	if not var_11_0 then
+	if not data then
 		return
 	end
 
-	return var_11_0:getOrderData(arg_11_2)
+	return data:getOrderData(id)
 end
 
-function var_0_0.getOrderList(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getActData(arg_12_1)
+function Activity117Model:getOrderList(actId, type)
+	local data = self:getActData(actId)
 
-	if not var_12_0 then
+	if not data then
 		return
 	end
 
-	return var_12_0:getOrderList(arg_12_2)
+	return data:getOrderList(type)
 end
 
-function var_0_0.getRewardList(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getActData(arg_13_1)
+function Activity117Model:getRewardList(actId)
+	local data = self:getActData(actId)
 
-	if not var_13_0 then
+	if not data then
 		return
 	end
 
-	return var_13_0:getRewardList()
+	return data:getRewardList()
 end
 
-function var_0_0.getRemainDay(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getActData(arg_14_1)
+function Activity117Model:getRemainDay(actId)
+	local data = self:getActData(actId)
 
-	if not var_14_0 then
+	if not data then
 		return 0
 	end
 
-	return var_14_0:getRemainDay()
+	return data:getRemainDay()
 end
 
-function var_0_0.getCurrentScore(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getActData(arg_15_1)
+function Activity117Model:getCurrentScore(actId)
+	local data = self:getActData(actId)
 
-	if not var_15_0 then
+	if not data then
 		return 0
 	end
 
-	return var_15_0:getCurrentScore()
+	return data:getCurrentScore()
 end
 
-function var_0_0.getNextScore(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0:getActData(arg_16_1)
+function Activity117Model:getNextScore(actId, score)
+	local data = self:getActData(actId)
 
-	if not var_16_0 then
+	if not data then
 		return 0
 	end
 
-	return var_16_0:getNextScore(arg_16_2)
+	return data:getNextScore(score)
 end
 
-function var_0_0.setSelectOrder(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getActData(arg_17_1)
+function Activity117Model:setSelectOrder(actId, order)
+	local data = self:getActData(actId)
 
-	if not var_17_0 then
+	if not data then
 		return
 	end
 
-	var_17_0:setSelectOrder(arg_17_2)
+	data:setSelectOrder(order)
 end
 
-function var_0_0.getSelectOrder(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getActData(arg_18_1)
+function Activity117Model:getSelectOrder(actId)
+	local data = self:getActData(actId)
 
-	if not var_18_0 then
+	if not data then
 		return
 	end
 
-	return var_18_0:getSelectOrder()
+	return data:getSelectOrder()
 end
 
-function var_0_0.isSelectOrder(arg_19_0, arg_19_1)
-	return arg_19_0:getSelectOrder(arg_19_1) ~= nil
+function Activity117Model:isSelectOrder(actId)
+	local orderId = self:getSelectOrder(actId)
+
+	return orderId ~= nil
 end
 
-function var_0_0.setInQuote(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0:getActData(arg_20_1)
+function Activity117Model:setInQuote(actId, inQuote)
+	local data = self:getActData(actId)
 
-	if not var_20_0 then
+	if not data then
 		return
 	end
 
-	var_20_0:setInQuote(arg_20_2)
+	data:setInQuote(inQuote)
 end
 
-function var_0_0.isInQuote(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0:getActData(arg_21_1)
+function Activity117Model:isInQuote(actId)
+	local data = self:getActData(actId)
 
-	if not var_21_0 then
+	if not data then
 		return
 	end
 
-	return var_21_0:isInQuote()
+	return data:isInQuote()
 end
 
-function var_0_0.getFinishOrderCount(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:getActData(arg_22_1)
+function Activity117Model:getFinishOrderCount(actId)
+	local data = self:getActData(actId)
 
-	if not var_22_0 then
+	if not data then
 		return
 	end
 
-	return var_22_0:getFinishOrderCount()
+	return data:getFinishOrderCount()
 end
 
-function var_0_0.clear(arg_23_0)
+function Activity117Model:clear()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity117Model.instance = Activity117Model.New()
 
-return var_0_0
+return Activity117Model

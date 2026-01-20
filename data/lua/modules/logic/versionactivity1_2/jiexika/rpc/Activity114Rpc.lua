@@ -1,209 +1,210 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.rpc.Activity114Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/rpc/Activity114Rpc.lua
 
-local var_0_0 = class("Activity114Rpc", BaseRpc)
+module("modules.logic.versionactivity1_2.jiexika.rpc.Activity114Rpc", package.seeall)
 
-function var_0_0.sendGet114InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity114Module_pb.Get114InfosRequest()
+local Activity114Rpc = class("Activity114Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity114Rpc:sendGet114InfosRequest(actId, callback, callbackObj)
+	local req = Activity114Module_pb.Get114InfosRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = actId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGet114InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		Activity114Model.instance:onGetInfo(arg_2_2.activityId, arg_2_2.infos)
-		Activity114FeaturesModel.instance:onFeatureListUpdate(arg_2_2.infos.features)
-		Activity114TaskModel.instance:onGetTaskList(arg_2_2.act114Tasks)
+function Activity114Rpc:onReceiveGet114InfosReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity114Model.instance:onGetInfo(msg.activityId, msg.infos)
+		Activity114FeaturesModel.instance:onFeatureListUpdate(msg.infos.features)
+		Activity114TaskModel.instance:onGetTaskList(msg.act114Tasks)
 	end
 end
 
-function var_0_0.onReceiveAct114InfoPush(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == 0 then
-		Activity114Model.instance:onGetInfo(arg_3_2.activityId, arg_3_2.infos)
-		Activity114FeaturesModel.instance:onFeatureListUpdate(arg_3_2.infos.features)
+function Activity114Rpc:onReceiveAct114InfoPush(resultCode, msg)
+	if resultCode == 0 then
+		Activity114Model.instance:onGetInfo(msg.activityId, msg.infos)
+		Activity114FeaturesModel.instance:onFeatureListUpdate(msg.infos.features)
 	end
 end
 
-function var_0_0.onReceiveAct114TaskPush(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
+function Activity114Rpc:onReceiveAct114TaskPush(resultCode, msg)
+	if resultCode == 0 then
 		if Activity114Model.instance:isEnd() then
 			return
 		end
 
-		Activity114TaskModel.instance:onTaskListUpdate(arg_4_2.act114Tasks, arg_4_2.deleteTasks)
+		Activity114TaskModel.instance:onTaskListUpdate(msg.act114Tasks, msg.deleteTasks)
 	end
 end
 
-function var_0_0.receiveTaskReward(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = Activity114Module_pb.ReceiveAct114TaskRewardRequest()
+function Activity114Rpc:receiveTaskReward(actId, taskId)
+	local req = Activity114Module_pb.ReceiveAct114TaskRewardRequest()
 
-	var_5_0.activityId = arg_5_1
-	var_5_0.taskId = arg_5_2
+	req.activityId = actId
+	req.taskId = taskId
 
-	arg_5_0:sendMsg(var_5_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveReceiveAct114TaskRewardReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
+function Activity114Rpc:onReceiveReceiveAct114TaskRewardReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0._clearNewUnLock(arg_7_0)
+function Activity114Rpc:_clearNewUnLock()
 	Activity114Model.instance.newUnLockFeature = {}
 	Activity114Model.instance.newUnLockMeeting = {}
 	Activity114Model.instance.newUnLockTravel = {}
 end
 
-function var_0_0.eduRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	local var_8_0 = Activity114Module_pb.Act114EducateRequest()
+function Activity114Rpc:eduRequest(actId, attrId, callback, callobj)
+	local req = Activity114Module_pb.Act114EducateRequest()
 
-	var_8_0.activityId = arg_8_1
-	var_8_0.attrId = arg_8_2
+	req.activityId = actId
+	req.attrId = attrId
 
-	arg_8_0:_clearNewUnLock()
-	arg_8_0:sendMsg(var_8_0, arg_8_3, arg_8_4)
+	self:_clearNewUnLock()
+	self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveAct114EducateReply(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		local var_9_0 = Activity114Model.instance:getEventParams("eventCo")
+function Activity114Rpc:onReceiveAct114EducateReply(resultCode, msg)
+	if resultCode == 0 then
+		local eventCo = Activity114Model.instance:getEventParams("eventCo")
 
-		if not var_9_0 then
+		if not eventCo then
 			return
 		end
 
-		local var_9_1 = arg_9_2.isSuccess and Activity114Enum.Result.Success or Activity114Enum.Result.Fail
+		local result = msg.isSuccess and Activity114Enum.Result.Success or Activity114Enum.Result.Fail
 
-		Activity114Model.instance:setEventParams("result", var_9_1)
+		Activity114Model.instance:setEventParams("result", result)
 
-		local var_9_2
+		local storyId
 
-		if arg_9_2.isSuccess then
-			local var_9_3 = string.splitToNumber(var_9_0.config.successStoryId, "#")
+		if msg.isSuccess then
+			local arr = string.splitToNumber(eventCo.config.successStoryId, "#")
 
-			if Activity114Model.instance.playedEduSuccessStory and var_9_3 then
-				tabletool.removeValue(var_9_3, Activity114Model.instance.playedEduSuccessStory)
+			if Activity114Model.instance.playedEduSuccessStory and arr then
+				tabletool.removeValue(arr, Activity114Model.instance.playedEduSuccessStory)
 			end
 
-			if var_9_3 and #var_9_3 > 0 then
-				var_9_2 = var_9_3[math.random(1, #var_9_3)]
+			if arr and #arr > 0 then
+				storyId = arr[math.random(1, #arr)]
 			end
 
-			Activity114Model.instance.playedEduSuccessStory = var_9_2
+			Activity114Model.instance.playedEduSuccessStory = storyId
 		else
-			var_9_2 = var_9_0.config.failureStoryId
+			storyId = eventCo.config.failureStoryId
 		end
 
-		Activity114Model.instance:setEventParams("storyId", var_9_2)
+		Activity114Model.instance:setEventParams("storyId", storyId)
 	end
 end
 
-function var_0_0.travelRequest(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = Activity114Module_pb.Act114TravelRequest()
+function Activity114Rpc:travelRequest(actId, travelId)
+	local req = Activity114Module_pb.Act114TravelRequest()
 
-	var_10_0.activityId = arg_10_1
-	var_10_0.travelId = arg_10_2
+	req.activityId = actId
+	req.travelId = travelId
 
-	arg_10_0:_clearNewUnLock()
-	arg_10_0:sendMsg(var_10_0)
+	self:_clearNewUnLock()
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct114TravelReply(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_1 == 0 then
+function Activity114Rpc:onReceiveAct114TravelReply(resultCode, msg)
+	if resultCode == 0 then
 		ViewMgr.instance:closeView(ViewName.Activity114TravelView)
 
-		local var_11_0 = Activity114Model.instance.unLockTravelDict[arg_11_2.travelId]
-		local var_11_1 = Activity114Config.instance:getTravelCoList(Activity114Model.instance.id)[arg_11_2.travelId]
+		local mo = Activity114Model.instance.unLockTravelDict[msg.travelId]
+		local co = Activity114Config.instance:getTravelCoList(Activity114Model.instance.id)[msg.travelId]
 
-		if var_11_0.hasSpecialEvent and var_11_1.specialEvents > 0 then
-			local var_11_2 = {
+		if mo.hasSpecialEvent and co.specialEvents > 0 then
+			local context = {
 				type = Activity114Enum.EventType.Meet,
-				eventId = var_11_1.specialEvents
+				eventId = co.specialEvents
 			}
 
-			Activity114Model.instance:beginEvent(var_11_2)
+			Activity114Model.instance:beginEvent(context)
 
 			return
 		end
 
-		local var_11_3 = Activity114Model.instance.unLockEventDict
-		local var_11_4 = string.splitToNumber(var_11_1.events, "#")
-		local var_11_5 = var_11_4[var_11_0.times + 1]
+		local unLockEvents = Activity114Model.instance.unLockEventDict
+		local events = string.splitToNumber(co.events, "#")
+		local eventId = events[mo.times + 1]
 
-		if var_11_0.isBlock == 1 or not var_11_4[var_11_0.times + 1] or not var_11_3[var_11_4[var_11_0.times + 1]] then
-			var_11_5 = var_11_1.residentEvent
+		if mo.isBlock == 1 or not events[mo.times + 1] or not unLockEvents[events[mo.times + 1]] then
+			eventId = co.residentEvent
 		end
 
-		local var_11_6 = {
+		local context = {
 			type = Activity114Enum.EventType.Travel,
-			eventId = var_11_5
+			eventId = eventId
 		}
 
-		Activity114Model.instance:beginEvent(var_11_6)
+		Activity114Model.instance:beginEvent(context)
 	end
 end
 
-function var_0_0.meetRequest(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = Activity114Module_pb.Act114MeetingRequest()
+function Activity114Rpc:meetRequest(actId, meetingId)
+	local req = Activity114Module_pb.Act114MeetingRequest()
 
-	var_12_0.activityId = arg_12_1
-	var_12_0.meetingId = arg_12_2
+	req.activityId = actId
+	req.meetingId = meetingId
 
-	arg_12_0:_clearNewUnLock()
-	arg_12_0:sendMsg(var_12_0)
+	self:_clearNewUnLock()
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct114MeetingReply(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 == 0 then
+function Activity114Rpc:onReceiveAct114MeetingReply(resultCode, msg)
+	if resultCode == 0 then
 		ViewMgr.instance:closeView(ViewName.Activity114MeetView)
 
-		local var_13_0 = Activity114Model.instance.unLockMeetingDict[arg_13_2.meetingId]
-		local var_13_1 = Activity114Config.instance:getMeetingCoList(Activity114Model.instance.id)[arg_13_2.meetingId]
-		local var_13_2 = string.splitToNumber(var_13_1.events, "#")
-		local var_13_3 = {
+		local mo = Activity114Model.instance.unLockMeetingDict[msg.meetingId]
+		local co = Activity114Config.instance:getMeetingCoList(Activity114Model.instance.id)[msg.meetingId]
+		local events = string.splitToNumber(co.events, "#")
+		local context = {
 			type = Activity114Enum.EventType.Meet,
-			eventId = var_13_2[var_13_0.times + 1]
+			eventId = events[mo.times + 1]
 		}
 
-		Activity114Model.instance:beginEvent(var_13_3)
+		Activity114Model.instance:beginEvent(context)
 	end
 end
 
-function var_0_0.checkRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
-	local var_14_0 = Activity114Module_pb.CheckEventRequest()
+function Activity114Rpc:checkRequest(actId, isCheck, callback, callobj)
+	local req = Activity114Module_pb.CheckEventRequest()
 
-	var_14_0.activityId = arg_14_1
-	var_14_0.isCheck = arg_14_2
+	req.activityId = actId
+	req.isCheck = isCheck
 
-	arg_14_0:sendMsg(var_14_0, arg_14_3, arg_14_4)
+	self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveCheckEventReply(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 == 0 then
-		local var_15_0 = Activity114Model.instance:getEventParams("eventCo")
+function Activity114Rpc:onReceiveCheckEventReply(resultCode, msg)
+	if resultCode == 0 then
+		local eventCo = Activity114Model.instance:getEventParams("eventCo")
 
-		if not var_15_0 then
+		if not eventCo then
 			return
 		end
 
-		local var_15_1
-		local var_15_2
+		local result, diceResult
 
-		if var_15_0.config.isCheckEvent == 0 then
-			var_15_2 = nil
-			var_15_1 = Activity114Enum.Result.Success
-		elseif arg_15_2.dices[1] then
-			var_15_2 = arg_15_2.dices
-			var_15_1 = arg_15_2.isSuccess and Activity114Enum.Result.Success or Activity114Enum.Result.Fail
+		if eventCo.config.isCheckEvent == 0 then
+			diceResult = nil
+			result = Activity114Enum.Result.Success
+		elseif msg.dices[1] then
+			diceResult = msg.dices
+			result = msg.isSuccess and Activity114Enum.Result.Success or Activity114Enum.Result.Fail
 		else
-			var_15_2 = nil
-			var_15_1 = Activity114Enum.Result.None
+			diceResult = nil
+			result = Activity114Enum.Result.None
 		end
 
-		Activity114Model.instance:setEventParams("diceResult", var_15_2)
-		Activity114Model.instance:setEventParams("result", var_15_1)
+		Activity114Model.instance:setEventParams("diceResult", diceResult)
+		Activity114Model.instance:setEventParams("result", result)
 
 		if Activity114Model.instance.serverData.testEventId <= 0 then
 			ViewMgr.instance:closeView(ViewName.Activity114EventSelectView)
@@ -213,37 +214,37 @@ function var_0_0.onReceiveCheckEventReply(arg_15_0, arg_15_1, arg_15_2)
 	end
 end
 
-function var_0_0.keyDayRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = Activity114Module_pb.Act114KeyDayRequest()
+function Activity114Rpc:keyDayRequest(actId, callback, callobj)
+	local req = Activity114Module_pb.Act114KeyDayRequest()
 
-	var_16_0.activityId = arg_16_1
+	req.activityId = actId
 
-	arg_16_0:_clearNewUnLock()
-	arg_16_0:sendMsg(var_16_0, arg_16_2, arg_16_3)
+	self:_clearNewUnLock()
+	self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveAct114KeyDayReply(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_1 == 0 then
+function Activity114Rpc:onReceiveAct114KeyDayReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.answerRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = Activity114Module_pb.Act114TestRequest()
+function Activity114Rpc:answerRequest(actId, choice, callback, callobj)
+	local req = Activity114Module_pb.Act114TestRequest()
 
-	var_18_0.activityId = arg_18_1
-	var_18_0.choice = arg_18_2
+	req.activityId = actId
+	req.choice = choice
 
-	arg_18_0:sendMsg(var_18_0, arg_18_3, arg_18_4)
+	self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveAct114TestReply(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1 == 0 then
-		Activity114Model.instance.serverData.currentTest = arg_19_2.currentTest
+function Activity114Rpc:onReceiveAct114TestReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity114Model.instance.serverData.currentTest = msg.currentTest
 
-		if arg_19_2.successStatus ~= Activity114Enum.Result.NoFinish then
-			Activity114Model.instance:setEventParams("result", arg_19_2.successStatus)
-			Activity114Model.instance:setEventParams("totalScore", arg_19_2.score)
+		if msg.successStatus ~= Activity114Enum.Result.NoFinish then
+			Activity114Model.instance:setEventParams("result", msg.successStatus)
+			Activity114Model.instance:setEventParams("totalScore", msg.score)
 			ViewMgr.instance:closeView(ViewName.Activity114EventSelectView)
 		else
 			Activity114Model.instance:setEventParams("answerIds", Activity114Model.instance.serverData.testIds)
@@ -251,17 +252,17 @@ function var_0_0.onReceiveAct114TestReply(arg_19_0, arg_19_1, arg_19_2)
 	end
 end
 
-function var_0_0.resetRequest(arg_20_0, arg_20_1)
-	local var_20_0 = Activity114Module_pb.Act114ResetRequest()
+function Activity114Rpc:resetRequest(actId)
+	local req = Activity114Module_pb.Act114ResetRequest()
 
-	var_20_0.activityId = arg_20_1
+	req.activityId = actId
 
 	Activity114Model.instance:setResetRound()
-	arg_20_0:sendMsg(var_20_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct114ResetReply(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 == 0 then
+function Activity114Rpc:onReceiveAct114ResetReply(resultCode, msg)
+	if resultCode == 0 then
 		Activity114Model.instance:endStat(false, true)
 		Activity114Model.instance:beginStat()
 
@@ -271,133 +272,137 @@ function var_0_0.onReceiveAct114ResetReply(arg_21_0, arg_21_1, arg_21_2)
 	end
 end
 
-function var_0_0.restRequest(arg_22_0, arg_22_1)
-	local var_22_0 = Activity114Module_pb.Act114RestRequest()
+function Activity114Rpc:restRequest(actId)
+	local req = Activity114Module_pb.Act114RestRequest()
 
-	var_22_0.activityId = arg_22_1
+	req.activityId = actId
 
-	arg_22_0:_clearNewUnLock()
+	self:_clearNewUnLock()
 
 	Activity114Model.instance.preServerData = Activity114Model.instance.serverData
 
-	arg_22_0:sendMsg(var_22_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct114RestReply(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 == 0 then
-		local var_23_0 = Activity114Config.instance:getRestEventCo(arg_23_2.activityId, arg_23_2.successStatus)
+function Activity114Rpc:onReceiveAct114RestReply(resultCode, msg)
+	if resultCode == 0 then
+		local eventCo = Activity114Config.instance:getRestEventCo(msg.activityId, msg.successStatus)
 
-		if not var_23_0 then
-			logError("没有洁西卡休息事件配置" .. arg_23_2.activityId .. "  ++++ " .. arg_23_2.successStatus)
+		if not eventCo then
+			logError("没有洁西卡休息事件配置" .. msg.activityId .. "  ++++ " .. msg.successStatus)
 
 			return
 		end
 
-		local var_23_1 = {
+		local context = {
 			type = Activity114Enum.EventType.Rest,
-			eventId = var_23_0.config.id,
-			result = arg_23_2.successStatus,
+			eventId = eventCo.config.id,
+			result = msg.successStatus,
 			preAttention = Activity114Model.instance.preServerData.attention,
 			nowDay = Activity114Model.instance.preServerData.day,
 			nowRound = Activity114Model.instance.preServerData.round
 		}
 
-		Activity114Model.instance:beginEvent(var_23_1)
+		Activity114Model.instance:beginEvent(context)
 	end
 
 	Activity114Model.instance.preServerData = nil
 end
 
-function var_0_0.beforeBattle(arg_24_0, arg_24_1)
-	local var_24_0 = Activity114Module_pb.BeforeAct114BattleRequest()
+function Activity114Rpc:beforeBattle(actId)
+	local req = Activity114Module_pb.BeforeAct114BattleRequest()
 
-	var_24_0.activityId = arg_24_1
+	req.activityId = actId
 
-	arg_24_0:sendMsg(var_24_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveBeforeAct114BattleReply(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_1 == 0 then
+function Activity114Rpc:onReceiveBeforeAct114BattleReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.enterSchool(arg_26_0, arg_26_1)
-	local var_26_0 = Activity114Module_pb.EnterSchoolRequest()
+function Activity114Rpc:enterSchool(actId)
+	local req = Activity114Module_pb.EnterSchoolRequest()
 
-	var_26_0.activityId = arg_26_1
+	req.activityId = actId
 
-	arg_26_0:sendMsg(var_26_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveEnterSchoolReply(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_1 == 0 then
+function Activity114Rpc:onReceiveEnterSchoolReply(resultCode, msg)
+	if resultCode == 0 then
 		Activity114Model.instance.serverData.isEnterSchool = true
 	end
 end
 
-function var_0_0.markRoundStory(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	local var_28_0 = Activity114Module_pb.MarkRoundStoryRequest()
+function Activity114Rpc:markRoundStory(actId, callback, callobj)
+	local req = Activity114Module_pb.MarkRoundStoryRequest()
 
-	var_28_0.activityId = arg_28_1
+	req.activityId = actId
 
-	arg_28_0:sendMsg(var_28_0, arg_28_2, arg_28_3)
+	self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveMarkRoundStoryReply(arg_29_0, arg_29_1, arg_29_2)
-	if arg_29_1 == 0 then
+function Activity114Rpc:onReceiveMarkRoundStoryReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.markMeetingPlayUnlock(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = Activity114Module_pb.MarkMeetingPlayUnlockRequest()
+function Activity114Rpc:markMeetingPlayUnlock(actId, mettingId)
+	local req = Activity114Module_pb.MarkMeetingPlayUnlockRequest()
 
-	var_30_0.activityId = arg_30_1
-	var_30_0.meetingId = arg_30_2
+	req.activityId = actId
+	req.meetingId = mettingId
 
-	arg_30_0:sendMsg(var_30_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveMarkMeetingPlayUnlockReply(arg_31_0, arg_31_1, arg_31_2)
-	if arg_31_1 == 0 then
-		Activity114Model.instance.unLockMeetingDict[arg_31_2.meetingId].isPlayUnlock = 1
+function Activity114Rpc:onReceiveMarkMeetingPlayUnlockReply(resultCode, msg)
+	if resultCode == 0 then
+		local mo = Activity114Model.instance.unLockMeetingDict[msg.meetingId]
+
+		mo.isPlayUnlock = 1
 
 		Activity114Controller.instance:dispatchEvent(Activity114Event.UnLockRedDotUpdate)
 	end
 end
 
-function var_0_0.markTravelPlayUnlock(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = Activity114Module_pb.MarkTravelPlayUnlockRequest()
+function Activity114Rpc:markTravelPlayUnlock(actId, travelId)
+	local req = Activity114Module_pb.MarkTravelPlayUnlockRequest()
 
-	var_32_0.activityId = arg_32_1
-	var_32_0.travelId = arg_32_2
+	req.activityId = actId
+	req.travelId = travelId
 
-	arg_32_0:sendMsg(var_32_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveMarkTravelPlayUnlockReply(arg_33_0, arg_33_1, arg_33_2)
-	if arg_33_1 == 0 then
-		Activity114Model.instance.unLockTravelDict[arg_33_2.travelId].isPlayUnlock = 1
+function Activity114Rpc:onReceiveMarkTravelPlayUnlockReply(resultCode, msg)
+	if resultCode == 0 then
+		local mo = Activity114Model.instance.unLockTravelDict[msg.travelId]
+
+		mo.isPlayUnlock = 1
 
 		Activity114Controller.instance:dispatchEvent(Activity114Event.UnLockRedDotUpdate)
 	end
 end
 
-function var_0_0.markPhotoRed(arg_34_0, arg_34_1)
-	local var_34_0 = Activity114Module_pb.MarkUnlockNewPhotoRedDotRequest()
+function Activity114Rpc:markPhotoRed(actId)
+	local req = Activity114Module_pb.MarkUnlockNewPhotoRedDotRequest()
 
-	var_34_0.activityId = arg_34_1
+	req.activityId = actId
 
-	arg_34_0:sendMsg(var_34_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveMarkUnlockNewPhotoRedDotReply(arg_35_0, arg_35_1, arg_35_2)
-	if arg_35_1 == 0 then
+function Activity114Rpc:onReceiveMarkUnlockNewPhotoRedDotReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity114Rpc.instance = Activity114Rpc.New()
 
-return var_0_0
+return Activity114Rpc

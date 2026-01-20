@@ -1,101 +1,103 @@
-﻿module("modules.logic.versionactivity2_4.enter.view.subview.VersionActivity2_4MusicEnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/enter/view/subview/VersionActivity2_4MusicEnterView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicEnterView", VersionActivityEnterBaseSubView)
+module("modules.logic.versionactivity2_4.enter.view.subview.VersionActivity2_4MusicEnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._txtDescr = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Descr")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Enter")
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Enter/#go_reddot")
-	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Locked")
-	arg_1_0._btnTrial = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Try/image_TryBtn")
+local VersionActivity2_4MusicEnterView = class("VersionActivity2_4MusicEnterView", VersionActivityEnterBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicEnterView:onInitView()
+	self._txtLimitTime = gohelper.findChildTextMesh(self.viewGO, "Right/image_LimitTimeBG/#txt_LimitTime")
+	self._txtDescr = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_Descr")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Enter")
+	self._gored = gohelper.findChild(self.viewGO, "Right/#btn_Enter/#go_reddot")
+	self._btnLocked = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Locked")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Try/image_TryBtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._enterGame, arg_2_0)
-	arg_2_0._btnLocked:AddClickListener(arg_2_0._clickLock, arg_2_0)
-	arg_2_0._btnTrial:AddClickListener(arg_2_0._clickTrial, arg_2_0)
+function VersionActivity2_4MusicEnterView:addEvents()
+	self._btnEnter:AddClickListener(self._enterGame, self)
+	self._btnLocked:AddClickListener(self._clickLock, self)
+	self._btnTrial:AddClickListener(self._clickTrial, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnLocked:RemoveClickListener()
-	arg_3_0._btnTrial:RemoveClickListener()
+function VersionActivity2_4MusicEnterView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self._btnLocked:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.actId = VersionActivity2_4Enum.ActivityId.MusicGame
-	arg_4_0.actCo = ActivityConfig.instance:getActivityCo(arg_4_0.actId)
-	arg_4_0._txtDescr.text = arg_4_0.actCo.actDesc
+function VersionActivity2_4MusicEnterView:_editableInitView()
+	self.actId = VersionActivity2_4Enum.ActivityId.MusicGame
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
+	self._txtDescr.text = self.actCo.actDesc
 end
 
-function var_0_0.onOpen(arg_5_0)
-	var_0_0.super.onOpen(arg_5_0)
-	RedDotController.instance:addRedDot(arg_5_0._gored, RedDotEnum.DotNode.V2a4MusicTaskRed)
-	arg_5_0:_refreshTime()
+function VersionActivity2_4MusicEnterView:onOpen()
+	VersionActivity2_4MusicEnterView.super.onOpen(self)
+	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a4MusicTaskRed)
+	self:_refreshTime()
 end
 
-function var_0_0._enterGame(arg_6_0)
+function VersionActivity2_4MusicEnterView:_enterGame()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicChapterView()
 end
 
-function var_0_0._clickLock(arg_7_0)
-	local var_7_0, var_7_1 = OpenHelper.getToastIdAndParam(arg_7_0.actCo.openId)
+function VersionActivity2_4MusicEnterView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
 
-	if var_7_0 and var_7_0 ~= 0 then
-		GameFacade.showToastWithTableParam(var_7_0, var_7_1)
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
 	end
 end
 
-function var_0_0._clickTask(arg_8_0)
+function VersionActivity2_4MusicEnterView:_clickTask()
 	return
 end
 
-function var_0_0._clickTrial(arg_9_0)
-	if ActivityHelper.getActivityStatus(arg_9_0.actId) == ActivityEnum.ActivityStatus.Normal then
-		local var_9_0 = arg_9_0.actCo.tryoutEpisode
+function VersionActivity2_4MusicEnterView:_clickTrial()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actCo.tryoutEpisode
 
-		if var_9_0 <= 0 then
+		if episodeId <= 0 then
 			logError("没有配置对应的试用关卡")
 
 			return
 		end
 
-		local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0)
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		DungeonFightController.instance:enterFight(var_9_1.chapterId, var_9_0)
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
 	else
-		arg_9_0:_clickLock()
+		self:_clickLock()
 	end
 end
 
-function var_0_0.everySecondCall(arg_10_0)
-	arg_10_0:_refreshTime()
+function VersionActivity2_4MusicEnterView:everySecondCall()
+	self:_refreshTime()
 end
 
-function var_0_0._refreshTime(arg_11_0)
-	local var_11_0 = ActivityModel.instance:getActivityInfo()[arg_11_0.actId]
+function VersionActivity2_4MusicEnterView:_refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
 
-	if var_11_0 then
-		local var_11_1 = var_11_0:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_11_0._txtLimitTime.gameObject, var_11_1 > 0)
+		gohelper.setActive(self._txtLimitTime.gameObject, offsetSecond > 0)
 
-		if var_11_1 > 0 then
-			local var_11_2 = TimeUtil.SecondToActivityTimeFormat(var_11_1)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_11_0._txtLimitTime.text = var_11_2
+			self._txtLimitTime.text = dateStr
 		end
 
-		local var_11_3 = ActivityHelper.getActivityStatus(arg_11_0.actId) ~= ActivityEnum.ActivityStatus.Normal
+		local isLock = ActivityHelper.getActivityStatus(self.actId) ~= ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(arg_11_0._btnEnter, not var_11_3)
-		gohelper.setActive(arg_11_0._btnLocked, var_11_3)
+		gohelper.setActive(self._btnEnter, not isLock)
+		gohelper.setActive(self._btnLocked, isLock)
 	end
 end
 
-return var_0_0
+return VersionActivity2_4MusicEnterView

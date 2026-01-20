@@ -1,253 +1,257 @@
-﻿module("modules.logic.seasonver.act123.model.Season123PickHeroEntryModel", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123PickHeroEntryModel.lua
 
-local var_0_0 = class("Season123PickHeroEntryModel", BaseModel)
+module("modules.logic.seasonver.act123.model.Season123PickHeroEntryModel", package.seeall)
 
-function var_0_0.release(arg_1_0)
-	arg_1_0:clear()
+local Season123PickHeroEntryModel = class("Season123PickHeroEntryModel", BaseModel)
 
-	arg_1_0._supportPosMO = nil
-	arg_1_0.stage = nil
-	arg_1_0._equipIdList = nil
-	arg_1_0._lastHeroList = nil
+function Season123PickHeroEntryModel:release()
+	self:clear()
+
+	self._supportPosMO = nil
+	self.stage = nil
+	self._equipIdList = nil
+	self._lastHeroList = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.activityId = arg_2_1
-	arg_2_0.stage = arg_2_2
+function Season123PickHeroEntryModel:init(actId, stage)
+	self.activityId = actId
+	self.stage = stage
 
-	arg_2_0:initDatas()
-	arg_2_0:initFromLocal()
-	arg_2_0:clearLastSupportHero()
+	self:initDatas()
+	self:initFromLocal()
+	self:clearLastSupportHero()
 end
 
-function var_0_0.initDatas(arg_3_0)
-	local var_3_0 = {}
+function Season123PickHeroEntryModel:initDatas()
+	local list = {}
 
-	for iter_3_0 = 1, Activity123Enum.PickHeroCount do
-		local var_3_1 = Season123PickHeroEntryMO.New(iter_3_0)
+	for i = 1, Activity123Enum.PickHeroCount do
+		local mo = Season123PickHeroEntryMO.New(i)
 
-		table.insert(var_3_0, var_3_1)
+		table.insert(list, mo)
 
-		if iter_3_0 == Activity123Enum.SupportPosIndex then
-			arg_3_0._supportPosMO = var_3_1
+		if i == Activity123Enum.SupportPosIndex then
+			self._supportPosMO = mo
 		end
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(list)
 end
 
-function var_0_0.initFromLocal(arg_4_0)
-	local var_4_0 = arg_4_0:readSelectionFromLocal()
+function Season123PickHeroEntryModel:initFromLocal()
+	local list = self:readSelectionFromLocal()
 
-	for iter_4_0 = 1, #var_4_0 do
-		local var_4_1 = arg_4_0:getByIndex(iter_4_0)
-		local var_4_2 = HeroModel.instance:getById(var_4_0[iter_4_0])
+	for i = 1, #list do
+		local mo = self:getByIndex(i)
+		local heroMO = HeroModel.instance:getById(list[i])
 
-		var_4_1:updateByHeroMO(var_4_2, false)
+		mo:updateByHeroMO(heroMO, false)
 	end
 end
 
-function var_0_0.savePickHeroDatas(arg_5_0, arg_5_1)
-	if not arg_5_0._supportPosMO then
+function Season123PickHeroEntryModel:savePickHeroDatas(moList)
+	if not self._supportPosMO then
 		return
 	end
 
-	for iter_5_0 = 1, Activity123Enum.PickHeroCount do
-		local var_5_0 = arg_5_1[iter_5_0]
-		local var_5_1 = arg_5_0:getByIndex(iter_5_0)
+	for pos = 1, Activity123Enum.PickHeroCount do
+		local mo = moList[pos]
+		local entryMO = self:getByIndex(pos)
 
-		if var_5_1 == nil then
-			logError("Season123PickHeroEntryModel entryMO is nil : " .. tostring(iter_5_0))
+		if entryMO == nil then
+			logError("Season123PickHeroEntryModel entryMO is nil : " .. tostring(pos))
 
 			return
 		end
 
-		if var_5_0 then
-			if arg_5_0._supportPosMO.isSupport and var_5_0.heroId == arg_5_0._supportPosMO.heroId then
-				arg_5_0._supportPosMO:setEmpty()
+		if mo then
+			if self._supportPosMO.isSupport and mo.heroId == self._supportPosMO.heroId then
+				self._supportPosMO:setEmpty()
 			end
 
-			var_5_1:updateByPickMO(var_5_0)
-		elseif not var_5_1.isSupport then
-			var_5_1:setEmpty()
+			entryMO:updateByPickMO(mo)
+		elseif not entryMO.isSupport then
+			entryMO:setEmpty()
 		end
 	end
 end
 
-function var_0_0.setPickAssistData(arg_6_0, arg_6_1)
-	if not arg_6_0._supportPosMO then
+function Season123PickHeroEntryModel:setPickAssistData(pickAssistMO)
+	if not self._supportPosMO then
 		return
 	end
 
-	if arg_6_1 == nil then
-		if not arg_6_0._supportPosMO:getIsEmpty() and arg_6_0._supportPosMO.isSupport then
-			arg_6_0._supportPosMO:setEmpty()
+	if pickAssistMO == nil then
+		if not self._supportPosMO:getIsEmpty() and self._supportPosMO.isSupport then
+			self._supportPosMO:setEmpty()
 		end
 	else
-		local var_6_0 = arg_6_0:getList()
+		local moList = self:getList()
 
-		for iter_6_0 = 1, Activity123Enum.PickHeroCount do
-			local var_6_1 = var_6_0[iter_6_0]
+		for pos = 1, Activity123Enum.PickHeroCount do
+			local mo = moList[pos]
 
-			if arg_6_1.heroMO and arg_6_1.heroMO.heroId == var_6_1.heroId then
-				var_6_1:setEmpty()
+			if pickAssistMO.heroMO and pickAssistMO.heroMO.heroId == mo.heroId then
+				mo:setEmpty()
 			end
 		end
 
-		arg_6_0._supportPosMO:updateByPickAssistMO(arg_6_1)
+		self._supportPosMO:updateByPickAssistMO(pickAssistMO)
 	end
 end
 
-function var_0_0.setMainEquips(arg_7_0, arg_7_1)
-	arg_7_0._equipIdList = arg_7_1
+function Season123PickHeroEntryModel:setMainEquips(equipIdList)
+	self._equipIdList = equipIdList
 end
 
-function var_0_0.getSupportPosMO(arg_8_0)
-	return arg_8_0._supportPosMO
+function Season123PickHeroEntryModel:getSupportPosMO()
+	return self._supportPosMO
 end
 
-function var_0_0.getSupporterHeroUid(arg_9_0)
-	if arg_9_0._supportPosMO and arg_9_0._supportPosMO.isSupport and not arg_9_0._supportPosMO:getIsEmpty() then
-		return arg_9_0._supportPosMO.heroUid
+function Season123PickHeroEntryModel:getSupporterHeroUid()
+	if self._supportPosMO and self._supportPosMO.isSupport and not self._supportPosMO:getIsEmpty() then
+		return self._supportPosMO.heroUid
 	end
 end
 
-function var_0_0.getSelectCount(arg_10_0)
-	local var_10_0 = 0
-	local var_10_1 = arg_10_0:getList()
+function Season123PickHeroEntryModel:getSelectCount()
+	local count = 0
+	local list = self:getList()
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-		if not iter_10_1:getIsEmpty() then
-			var_10_0 = var_10_0 + 1
+	for _, mo in ipairs(list) do
+		if not mo:getIsEmpty() then
+			count = count + 1
 		end
 	end
 
-	return var_10_0
+	return count
 end
 
-function var_0_0.getLimitCount(arg_11_0)
+function Season123PickHeroEntryModel:getLimitCount()
 	return Activity123Enum.PickHeroCount
 end
 
-function var_0_0.getHeroUidList(arg_12_0)
-	local var_12_0 = arg_12_0:getList()
-	local var_12_1 = {}
+function Season123PickHeroEntryModel:getHeroUidList()
+	local list = self:getList()
+	local rs = {}
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		table.insert(var_12_1, iter_12_1.heroUid)
+	for _, mo in ipairs(list) do
+		table.insert(rs, mo.heroUid)
 	end
 
-	return var_12_1
+	return rs
 end
 
-function var_0_0.getMainCardList(arg_13_0)
-	return arg_13_0._equipIdList
+function Season123PickHeroEntryModel:getMainCardList()
+	return self._equipIdList
 end
 
-function var_0_0.getMainCardItemMO(arg_14_0, arg_14_1)
-	if arg_14_0._equipIdList then
-		local var_14_0 = arg_14_0._equipIdList[arg_14_1]
+function Season123PickHeroEntryModel:getMainCardItemMO(index)
+	if self._equipIdList then
+		local equipUid = self._equipIdList[index]
 
-		if var_14_0 and var_14_0 ~= Activity123Enum.EmptyUid then
-			local var_14_1 = Season123Model.instance:getActInfo(arg_14_0.activityId)
+		if equipUid and equipUid ~= Activity123Enum.EmptyUid then
+			local seasonMO = Season123Model.instance:getActInfo(self.activityId)
 
-			if not var_14_1 then
+			if not seasonMO then
 				return
 			end
 
-			return (var_14_1:getItemMO(var_14_0))
+			local itemMO = seasonMO:getItemMO(equipUid)
+
+			return itemMO
 		end
 	end
 end
 
-function var_0_0.flushSelectionToLocal(arg_15_0)
-	local var_15_0 = arg_15_0:getList()
-	local var_15_1 = {}
+function Season123PickHeroEntryModel:flushSelectionToLocal()
+	local list = self:getList()
+	local rs = {}
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		if not iter_15_1:getIsEmpty() and not iter_15_1.isSupport then
-			table.insert(var_15_1, iter_15_1.heroUid)
+	for _, mo in ipairs(list) do
+		if not mo:getIsEmpty() and not mo.isSupport then
+			table.insert(rs, mo.heroUid)
 		end
 	end
 
-	PlayerPrefsHelper.setString(arg_15_0:getLocalKey(), cjson.encode(var_15_1))
+	PlayerPrefsHelper.setString(self:getLocalKey(), cjson.encode(rs))
 end
 
-function var_0_0.readSelectionFromLocal(arg_16_0)
-	local var_16_0
-	local var_16_1 = PlayerPrefsHelper.getString(arg_16_0:getLocalKey(), "")
+function Season123PickHeroEntryModel:readSelectionFromLocal()
+	local list
+	local rs = PlayerPrefsHelper.getString(self:getLocalKey(), "")
 
-	if not string.nilorempty(var_16_1) then
-		var_16_0 = cjson.decode(var_16_1)
+	if not string.nilorempty(rs) then
+		list = cjson.decode(rs)
 	else
-		var_16_0 = {}
+		list = {}
 	end
 
-	return var_16_0
+	return list
 end
 
-function var_0_0.getLocalKey(arg_17_0)
-	return PlayerPrefsKey.Season123PickHeroList .. "#" .. tostring(arg_17_0.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function Season123PickHeroEntryModel:getLocalKey()
+	return PlayerPrefsKey.Season123PickHeroList .. "#" .. tostring(self.activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 end
 
-function var_0_0.getCutHeroList(arg_18_0)
-	local var_18_0 = arg_18_0._lastHeroList or arg_18_0:readSelectionFromLocal()
-	local var_18_1 = {}
-	local var_18_2 = {}
+function Season123PickHeroEntryModel:getCutHeroList()
+	local list = self._lastHeroList or self:readSelectionFromLocal()
+	local lastHeroIdList = {}
+	local cutHeroPosList = {}
 
-	for iter_18_0 = 1, #var_18_0 do
-		local var_18_3 = HeroModel.instance:getById(var_18_0[iter_18_0])
+	for i = 1, #list do
+		local heroMO = HeroModel.instance:getById(list[i])
 
-		if var_18_3 then
-			table.insert(var_18_1, var_18_3.heroId)
+		if heroMO then
+			table.insert(lastHeroIdList, heroMO.heroId)
 		end
 	end
 
-	for iter_18_1 = 1, Activity123Enum.PickHeroCount do
-		local var_18_4 = arg_18_0:getByIndex(iter_18_1)
+	for pos = 1, Activity123Enum.PickHeroCount do
+		local mo = self:getByIndex(pos)
 
-		if var_18_4 and not var_18_4:getIsEmpty() then
-			if var_18_4.isSupport then
-				if arg_18_0._lastSupportHeroId ~= var_18_4.heroId then
-					table.insert(var_18_2, iter_18_1)
+		if mo and not mo:getIsEmpty() then
+			if mo.isSupport then
+				if self._lastSupportHeroId ~= mo.heroId then
+					table.insert(cutHeroPosList, pos)
 				end
-			elseif var_18_1 then
-				if not LuaUtil.tableContains(var_18_1, var_18_4.heroId) then
-					table.insert(var_18_2, iter_18_1)
+			elseif lastHeroIdList then
+				if not LuaUtil.tableContains(lastHeroIdList, mo.heroId) then
+					table.insert(cutHeroPosList, pos)
 				end
 			else
-				table.insert(var_18_2, iter_18_1)
+				table.insert(cutHeroPosList, pos)
 			end
 		end
 	end
 
-	return var_18_2
+	return cutHeroPosList
 end
 
-function var_0_0.refeshLastHeroList(arg_19_0)
-	local var_19_0 = arg_19_0:getList()
+function Season123PickHeroEntryModel:refeshLastHeroList()
+	local list = self:getList()
 
-	arg_19_0._lastHeroList = {}
+	self._lastHeroList = {}
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		if not iter_19_1:getIsEmpty() then
-			table.insert(arg_19_0._lastHeroList, iter_19_1.heroUid)
+	for _, mo in ipairs(list) do
+		if not mo:getIsEmpty() then
+			table.insert(self._lastHeroList, mo.heroUid)
 		end
 
-		if iter_19_1.isSupport then
-			if iter_19_1:getIsEmpty() then
-				arg_19_0:clearLastSupportHero()
+		if mo.isSupport then
+			if mo:getIsEmpty() then
+				self:clearLastSupportHero()
 			else
-				arg_19_0._lastSupportHeroId = iter_19_1.heroId
+				self._lastSupportHeroId = mo.heroId
 			end
 		end
 	end
 end
 
-function var_0_0.clearLastSupportHero(arg_20_0)
-	arg_20_0._lastSupportHeroId = nil
+function Season123PickHeroEntryModel:clearLastSupportHero()
+	self._lastSupportHeroId = nil
 end
 
-var_0_0.instance = var_0_0.New()
+Season123PickHeroEntryModel.instance = Season123PickHeroEntryModel.New()
 
-return var_0_0
+return Season123PickHeroEntryModel

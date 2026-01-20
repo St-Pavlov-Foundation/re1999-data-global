@@ -1,92 +1,94 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186TaskView.lua
 
-local var_0_0 = class("Activity186TaskView", BaseView)
+module("modules.logic.versionactivity2_5.act186.view.Activity186TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.stageList = {}
+local Activity186TaskView = class("Activity186TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity186TaskView:onInitView()
+	self.stageList = {}
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.UpdateInfo, arg_2_0.onUpdateInfo, arg_2_0)
-	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.UpdateTask, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(Activity186Controller.instance, Activity186Event.FinishTask, arg_2_0.onFinishTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_2_0.refreshTask, arg_2_0)
-	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_2_0.refreshTask, arg_2_0)
+function Activity186TaskView:addEvents()
+	self:addEventCb(Activity186Controller.instance, Activity186Event.UpdateInfo, self.onUpdateInfo, self)
+	self:addEventCb(Activity186Controller.instance, Activity186Event.UpdateTask, self.refreshTask, self)
+	self:addEventCb(Activity186Controller.instance, Activity186Event.FinishTask, self.onFinishTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.refreshTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.refreshTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.refreshTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self.refreshTask, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity186TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity186TaskView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateInfo(arg_5_0)
-	arg_5_0:refreshView()
+function Activity186TaskView:onUpdateInfo()
+	self:refreshView()
 end
 
-function var_0_0.onFinishTask(arg_6_0)
-	arg_6_0:refreshTask()
+function Activity186TaskView:onFinishTask()
+	self:refreshTask()
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:refreshParam()
-	arg_7_0:refreshView()
+function Activity186TaskView:onUpdateParam()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_8_0)
+function Activity186TaskView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Act186.play_ui_mln_details_open)
-	arg_8_0:refreshParam()
-	arg_8_0:refreshView()
+	self:refreshParam()
+	self:refreshView()
 end
 
-function var_0_0.refreshParam(arg_9_0)
-	arg_9_0.actId = arg_9_0.viewParam.actId
-	arg_9_0.actMo = Activity186Model.instance:getById(arg_9_0.actId)
+function Activity186TaskView:refreshParam()
+	self.actId = self.viewParam.actId
+	self.actMo = Activity186Model.instance:getById(self.actId)
 
-	Activity186TaskListModel.instance:init(arg_9_0.actId)
+	Activity186TaskListModel.instance:init(self.actId)
 end
 
-function var_0_0.refreshView(arg_10_0)
-	arg_10_0:refreshTask()
-	arg_10_0:refreshStageList()
+function Activity186TaskView:refreshView()
+	self:refreshTask()
+	self:refreshStageList()
 end
 
-function var_0_0.refreshTask(arg_11_0)
+function Activity186TaskView:refreshTask()
 	Activity186TaskListModel.instance:refresh()
 end
 
-function var_0_0.refreshStageList(arg_12_0)
-	for iter_12_0 = 1, 3 do
-		local var_12_0 = arg_12_0.stageList[iter_12_0]
+function Activity186TaskView:refreshStageList()
+	for i = 1, 3 do
+		local stage = self.stageList[i]
 
-		if not var_12_0 then
-			local var_12_1 = gohelper.findChild(arg_12_0.viewGO, "root/stageList/stage" .. iter_12_0)
+		if not stage then
+			local go = gohelper.findChild(self.viewGO, "root/stageList/stage" .. i)
 
-			var_12_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1, Activity186StageItem)
-			arg_12_0.stageList[iter_12_0] = var_12_0
+			stage = MonoHelper.addNoUpdateLuaComOnceToGo(go, Activity186StageItem)
+			self.stageList[i] = stage
 		end
 
-		var_12_0:onUpdateMO({
-			id = iter_12_0,
-			actMo = arg_12_0.actMo
+		stage:onUpdateMO({
+			id = i,
+			actMo = self.actMo
 		})
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
+function Activity186TaskView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function Activity186TaskView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity186TaskView

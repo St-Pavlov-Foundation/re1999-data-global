@@ -1,33 +1,35 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalChooseBagItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalChooseBagItem.lua
 
-local var_0_0 = class("SurvivalChooseBagItem", SurvivalBagItem)
+module("modules.logic.survival.view.shelter.SurvivalChooseBagItem", package.seeall)
 
-function var_0_0.getEquipId(arg_1_0)
-	return arg_1_0._mo.id
+local SurvivalChooseBagItem = class("SurvivalChooseBagItem", SurvivalBagItem)
+
+function SurvivalChooseBagItem:getEquipId()
+	return self._mo.id
 end
 
-function var_0_0.updateMo(arg_2_0, arg_2_1)
-	var_0_0.super.updateMo(arg_2_0, arg_2_1)
+function SurvivalChooseBagItem:updateMo(mo)
+	SurvivalChooseBagItem.super.updateMo(self, mo)
 
-	arg_2_0._txtnum.text = ""
+	self._txtnum.text = ""
 
-	local var_2_0 = SurvivalShelterChooseEquipListModel.instance:getSelectIdByPos(1)
+	local id = SurvivalShelterChooseEquipListModel.instance:getSelectIdByPos(1)
 
-	gohelper.setActive(arg_2_0._goCollectionSelectTips, var_2_0 ~= nil and arg_2_0:getEquipId() == var_2_0)
+	gohelper.setActive(self._goCollectionSelectTips, id ~= nil and self:getEquipId() == id)
 end
 
-function var_0_0._onItemClick(arg_3_0)
-	if arg_3_0._mo:isEmpty() and not arg_3_0._canClickEmpty then
+function SurvivalChooseBagItem:_onItemClick()
+	if self._mo:isEmpty() and not self._canClickEmpty then
 		return
 	end
 
-	SurvivalShelterChooseEquipListModel.instance:setSelectEquip(arg_3_0:getEquipId())
+	SurvivalShelterChooseEquipListModel.instance:setSelectEquip(self:getEquipId())
 
-	if arg_3_0._callback then
-		arg_3_0._callback(arg_3_0._callobj, arg_3_0)
+	if self._callback then
+		self._callback(self._callobj, self)
 
 		return
 	end
 end
 
-return var_0_0
+return SurvivalChooseBagItem

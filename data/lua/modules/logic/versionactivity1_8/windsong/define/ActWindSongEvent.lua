@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_8.windsong.define.ActWindSongEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/windsong/define/ActWindSongEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_8.windsong.define.ActWindSongEvent", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.StoryItemClick = 2
-var_0_0.FightItemClick = 3
-var_0_0.TabSwitch = 4
+local ActWindSongEvent = _M
 
-return var_0_0
+ActWindSongEvent.OneClickClaimReward = 1
+ActWindSongEvent.StoryItemClick = 2
+ActWindSongEvent.FightItemClick = 3
+ActWindSongEvent.TabSwitch = 4
+
+return ActWindSongEvent

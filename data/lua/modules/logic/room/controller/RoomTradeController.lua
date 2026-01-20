@@ -1,94 +1,97 @@
-﻿module("modules.logic.room.controller.RoomTradeController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomTradeController.lua
 
-local var_0_0 = class("RoomTradeController", BaseController)
+module("modules.logic.room.controller.RoomTradeController", package.seeall)
 
-function var_0_0.finishDailyOrder(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	RoomRpc.instance:sendFinishOrderRequest(arg_1_1, arg_1_2, arg_1_3)
+local RoomTradeController = class("RoomTradeController", BaseController)
 
-	local var_1_0 = {}
+function RoomTradeController:finishDailyOrder(type, orderId, sellCount)
+	RoomRpc.instance:sendFinishOrderRequest(type, orderId, sellCount)
 
-	if arg_1_1 == RoomTradeEnum.Mode.DailyOrder then
-		local var_1_1 = RoomTradeModel.instance:getDailyOrderById(arg_1_2)
-		local var_1_2 = var_1_1:getPrice()
+	local moList = {}
 
-		if not string.nilorempty(var_1_2) then
-			local var_1_3 = GameUtil.splitString2(var_1_2, true)
+	if type == RoomTradeEnum.Mode.DailyOrder then
+		local orderMo = RoomTradeModel.instance:getDailyOrderById(orderId)
+		local price = orderMo:getPrice()
 
-			for iter_1_0, iter_1_1 in ipairs(var_1_3) do
-				local var_1_4 = {
-					materilType = iter_1_1[1],
-					materilId = iter_1_1[2],
-					quantity = var_1_1:getPriceCount()
+		if not string.nilorempty(price) then
+			local split = GameUtil.splitString2(price, true)
+
+			for _, v in ipairs(split) do
+				local mo = {
+					materilType = v[1],
+					materilId = v[2],
+					quantity = orderMo:getPriceCount()
 				}
 
-				table.insert(var_1_0, var_1_4)
+				table.insert(moList, mo)
 			end
 		end
 	else
-		local var_1_5, var_1_6, var_1_7 = RoomTradeModel.instance:getWholesaleGoodsById(arg_1_2):getUnitPrice()
-		local var_1_8 = {
-			materilType = var_1_5,
-			materilId = var_1_6,
-			quantity = var_1_7 * arg_1_3
+		local orderMo = RoomTradeModel.instance:getWholesaleGoodsById(orderId)
+		local type, id, price = orderMo:getUnitPrice()
+		local mo = {
+			materilType = type,
+			materilId = id,
+			quantity = price * sellCount
 		}
 
-		table.insert(var_1_0, var_1_8)
+		table.insert(moList, mo)
 	end
 
-	if LuaUtil.tableNotEmpty(var_1_0) then
-		RoomController.instance:showInteractionRewardToast(var_1_0)
+	if LuaUtil.tableNotEmpty(moList) then
+		RoomController.instance:showInteractionRewardToast(moList)
 	end
 
-	arg_1_0:dispatchEvent(RoomTradeEvent.OnFlyCurrency)
+	self:dispatchEvent(RoomTradeEvent.OnFlyCurrency)
 end
 
-function var_0_0.onFinishOrderReply(arg_2_0, arg_2_1)
-	local var_2_0 = {}
+function RoomTradeController:onFinishOrderReply(msg)
+	local moList = {}
 
-	if arg_2_1.orderType == RoomTradeEnum.Mode.DailyOrder then
-		RoomTradeModel.instance:onFinishDailyOrder(arg_2_1.orderId, arg_2_1.newPurchaseOrderInfo, arg_2_1.remainRefreshCount)
+	if msg.orderType == RoomTradeEnum.Mode.DailyOrder then
+		RoomTradeModel.instance:onFinishDailyOrder(msg.orderId, msg.newPurchaseOrderInfo, msg.remainRefreshCount)
 	else
-		RoomTradeModel.instance:onFinishWholesaleGoods(arg_2_1.orderId, arg_2_1.soldCount, arg_2_1.weeklyWholesaleRevenue)
+		RoomTradeModel.instance:onFinishWholesaleGoods(msg.orderId, msg.soldCount, msg.weeklyWholesaleRevenue)
 	end
 
-	arg_2_0:dispatchEvent(RoomTradeEvent.OnFinishOrder, arg_2_1.orderType)
+	self:dispatchEvent(RoomTradeEvent.OnFinishOrder, msg.orderType)
 end
 
-function var_0_0.refreshDailyOrder(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	RoomRpc.instance:sendRefreshPurchaseOrderRequest(arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+function RoomTradeController:refreshDailyOrder(orderId, guideId, stepId, callback, callbackObj)
+	RoomRpc.instance:sendRefreshPurchaseOrderRequest(orderId, guideId, stepId, callback, callbackObj)
 end
 
-function var_0_0.onRefreshDailyOrderReply(arg_4_0, arg_4_1)
-	RoomTradeModel.instance:onRefeshDailyOrder(arg_4_1.orderInfo, arg_4_1.remainRefreshCount)
-	arg_4_0:dispatchEvent(RoomTradeEvent.OnRefreshDailyOrder)
+function RoomTradeController:onRefreshDailyOrderReply(msg)
+	RoomTradeModel.instance:onRefeshDailyOrder(msg.orderInfo, msg.remainRefreshCount)
+	self:dispatchEvent(RoomTradeEvent.OnRefreshDailyOrder)
 end
 
-function var_0_0.tracedDailyOrder(arg_5_0, arg_5_1, arg_5_2)
-	RoomRpc.instance:sendChangePurchaseOrderTraceStateRequest(arg_5_1, arg_5_2)
+function RoomTradeController:tracedDailyOrder(orderId, isTrace)
+	RoomRpc.instance:sendChangePurchaseOrderTraceStateRequest(orderId, isTrace)
 end
 
-function var_0_0.onTracedDailyOrderReply(arg_6_0, arg_6_1)
-	RoomTradeModel.instance:onTracedDailyOrder(arg_6_1.orderId, arg_6_1.isTrace)
-	arg_6_0:dispatchEvent(RoomTradeEvent.OnTracedDailyOrder, arg_6_1.orderId)
+function RoomTradeController:onTracedDailyOrderReply(msg)
+	RoomTradeModel.instance:onTracedDailyOrder(msg.orderId, msg.isTrace)
+	self:dispatchEvent(RoomTradeEvent.OnTracedDailyOrder, msg.orderId)
 end
 
-function var_0_0.lockedDailyOrder(arg_7_0, arg_7_1, arg_7_2)
-	RoomRpc.instance:sendLockOrderRequest(arg_7_1, arg_7_2)
+function RoomTradeController:lockedDailyOrder(orderId, isLocked)
+	RoomRpc.instance:sendLockOrderRequest(orderId, isLocked)
 end
 
-function var_0_0.onLockedDailyOrderReply(arg_8_0, arg_8_1)
-	RoomTradeModel.instance:setIsLockedOrder(arg_8_1.orderId, arg_8_1.isLocked)
-	arg_8_0:dispatchEvent(RoomTradeEvent.OnLockedDailyOrder, arg_8_1.orderId)
+function RoomTradeController:onLockedDailyOrderReply(msg)
+	RoomTradeModel.instance:setIsLockedOrder(msg.orderId, msg.isLocked)
+	self:dispatchEvent(RoomTradeEvent.OnLockedDailyOrder, msg.orderId)
 end
 
-function var_0_0.openLevelUpTipView(arg_9_0, arg_9_1)
-	local var_9_0 = {
-		level = arg_9_1
+function RoomTradeController:openLevelUpTipView(level)
+	local param = {
+		level = level
 	}
 
-	ViewMgr.instance:openView(ViewName.RoomTradeLevelUpTipsView, var_9_0)
+	ViewMgr.instance:openView(ViewName.RoomTradeLevelUpTipsView, param)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomTradeController.instance = RoomTradeController.New()
 
-return var_0_0
+return RoomTradeController

@@ -1,26 +1,28 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerTowerDeepSuccReward", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerTowerDeepSuccReward.lua
 
-local var_0_0 = class("GuideTriggerTowerDeepSuccReward", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerTowerDeepSuccReward", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
+local GuideTriggerTowerDeepSuccReward = class("GuideTriggerTowerDeepSuccReward", BaseGuideTrigger)
+
+function GuideTriggerTowerDeepSuccReward:ctor(triggerKey)
+	GuideTriggerTowerDeepSuccReward.super.ctor(self, triggerKey)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == arg_2_2 then
-		local var_2_0 = TowerDeepTaskModel.instance:getSuccRewardTaskMo()
+function GuideTriggerTowerDeepSuccReward:assertGuideSatisfy(param, configParam)
+	if param == configParam then
+		local succDeepTaskMo = TowerDeepTaskModel.instance:getSuccRewardTaskMo()
 
-		if var_2_0 then
-			return TowerDeepTaskModel.instance:isTaskCanGet(var_2_0)
+		if succDeepTaskMo then
+			return TowerDeepTaskModel.instance:isTaskCanGet(succDeepTaskMo)
 		end
 	end
 
 	return false
 end
 
-function var_0_0._onOpenView(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerTowerDeepSuccReward:_onOpenView(viewName, viewParam)
+	self:checkStartGuide(viewName)
 end
 
-return var_0_0
+return GuideTriggerTowerDeepSuccReward

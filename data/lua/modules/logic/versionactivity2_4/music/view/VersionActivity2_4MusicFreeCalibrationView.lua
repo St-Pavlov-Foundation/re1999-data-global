@@ -1,64 +1,68 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicFreeCalibrationView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicFreeCalibrationView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocalibrationlist = gohelper.findChild(arg_1_0.viewGO, "root/#go_calibrationlist")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+local VersionActivity2_4MusicFreeCalibrationView = class("VersionActivity2_4MusicFreeCalibrationView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicFreeCalibrationView:onInitView()
+	self._gocalibrationlist = gohelper.findChild(self.viewGO, "root/#go_calibrationlist")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function VersionActivity2_4MusicFreeCalibrationView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function VersionActivity2_4MusicFreeCalibrationView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity2_4MusicFreeCalibrationView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
-	arg_5_0:closeThis()
+function VersionActivity2_4MusicFreeCalibrationView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._itemList = arg_6_0:getUserDataTb_()
+function VersionActivity2_4MusicFreeCalibrationView:_editableInitView()
+	self._itemList = self:getUserDataTb_()
 
-	for iter_6_0 = 1, 3 do
-		arg_6_0:_addItem(iter_6_0):onUpdateMO(iter_6_0)
+	for i = 1, 3 do
+		local item = self:_addItem(i)
+
+		item:onUpdateMO(i)
 	end
 end
 
-function var_0_0._addItem(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes[1]
-	local var_7_1 = arg_7_0:getResInst(var_7_0, arg_7_0._gocalibrationlist)
-	local var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, VersionActivity2_4MusicFreeCalibrationItem)
+function VersionActivity2_4MusicFreeCalibrationView:_addItem(index)
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local childGO = self:getResInst(path, self._gocalibrationlist)
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, VersionActivity2_4MusicFreeCalibrationItem)
 
-	arg_7_0._itemList[arg_7_1] = var_7_2
+	self._itemList[index] = item
 
-	return var_7_2
+	return item
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function VersionActivity2_4MusicFreeCalibrationView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function VersionActivity2_4MusicFreeCalibrationView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_10_0)
+function VersionActivity2_4MusicFreeCalibrationView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function VersionActivity2_4MusicFreeCalibrationView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicFreeCalibrationView

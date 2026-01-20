@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.model.mo.HeroSpAttributeMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/HeroSpAttributeMO.lua
 
-local var_0_0 = pureTable("HeroSpAttributeMO")
+module("modules.logic.fight.model.mo.HeroSpAttributeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.uid = arg_1_1
-	arg_1_0.revive = arg_1_2.revive
-	arg_1_0.heal = arg_1_2.heal
-	arg_1_0.absorb = arg_1_2.absorb
-	arg_1_0.defenseIgnore = arg_1_2.defenseIgnore
-	arg_1_0.clutch = arg_1_2.clutch
-	arg_1_0.finalAddDmg = arg_1_2.finalAddDmg
-	arg_1_0.finalDropDmg = arg_1_2.finalDropDmg
-	arg_1_0.normalSkillRate = arg_1_2.normalSkillRate
-	arg_1_0.playAddRate = arg_1_2.playAddRate
-	arg_1_0.playDropRate = arg_1_2.playDropRate
-	arg_1_0.dizzyResistances = arg_1_2.dizzyResistances
-	arg_1_0.sleepResistances = arg_1_2.sleepResistances
-	arg_1_0.petrifiedResistances = arg_1_2.petrifiedResistances
-	arg_1_0.frozenResistances = arg_1_2.frozenResistances
-	arg_1_0.disarmResistances = arg_1_2.disarmResistances
-	arg_1_0.forbidResistances = arg_1_2.forbidResistances
-	arg_1_0.sealResistances = arg_1_2.sealResistances
-	arg_1_0.cantGetExskillResistances = arg_1_2.cantGetExskillResistances
-	arg_1_0.delExPointResistances = arg_1_2.delExPointResistances
-	arg_1_0.stressUpResistances = arg_1_2.stressUpResistances
-	arg_1_0.controlResilience = arg_1_2.controlResilience
-	arg_1_0.delExPointResilience = arg_1_2.delExPointResilience
-	arg_1_0.stressUpResilience = arg_1_2.stressUpResilience
-	arg_1_0.charmResistances = arg_1_2.charmResistances
+local HeroSpAttributeMO = pureTable("HeroSpAttributeMO")
+
+function HeroSpAttributeMO:init(uid, info)
+	self.uid = uid
+	self.revive = info.revive
+	self.heal = info.heal
+	self.absorb = info.absorb
+	self.defenseIgnore = info.defenseIgnore
+	self.clutch = info.clutch
+	self.finalAddDmg = info.finalAddDmg
+	self.finalDropDmg = info.finalDropDmg
+	self.normalSkillRate = info.normalSkillRate
+	self.playAddRate = info.playAddRate
+	self.playDropRate = info.playDropRate
+	self.dizzyResistances = info.dizzyResistances
+	self.sleepResistances = info.sleepResistances
+	self.petrifiedResistances = info.petrifiedResistances
+	self.frozenResistances = info.frozenResistances
+	self.disarmResistances = info.disarmResistances
+	self.forbidResistances = info.forbidResistances
+	self.sealResistances = info.sealResistances
+	self.cantGetExskillResistances = info.cantGetExskillResistances
+	self.delExPointResistances = info.delExPointResistances
+	self.stressUpResistances = info.stressUpResistances
+	self.controlResilience = info.controlResilience
+	self.delExPointResilience = info.delExPointResilience
+	self.stressUpResilience = info.stressUpResilience
+	self.charmResistances = info.charmResistances
 end
 
-return var_0_0
+return HeroSpAttributeMO

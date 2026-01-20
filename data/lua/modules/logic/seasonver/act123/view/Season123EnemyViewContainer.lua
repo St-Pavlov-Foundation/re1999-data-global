@@ -1,8 +1,10 @@
-﻿module("modules.logic.seasonver.act123.view.Season123EnemyViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123EnemyViewContainer.lua
 
-local var_0_0 = class("Season123EnemyViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view.Season123EnemyViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123EnemyViewContainer = class("Season123EnemyViewContainer", BaseViewContainer)
+
+function Season123EnemyViewContainer:buildViews()
 	return {
 		Season123EnemyView.New(),
 		Season123EnemyTabList.New(),
@@ -11,22 +13,22 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+function Season123EnemyViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
+function Season123EnemyViewContainer:onContainerOpenFinish()
 	return
 end
 
-return var_0_0
+return Season123EnemyViewContainer

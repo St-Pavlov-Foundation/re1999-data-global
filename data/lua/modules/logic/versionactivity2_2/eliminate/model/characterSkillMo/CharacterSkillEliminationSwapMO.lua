@@ -1,70 +1,72 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillEliminationSwapMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/characterSkillMo/CharacterSkillEliminationSwapMO.lua
 
-local var_0_0 = class("CharacterSkillEliminationSwapMO", CharacterSkillMOBase)
+module("modules.logic.versionactivity2_2.eliminate.model.characterSkillMo.CharacterSkillEliminationSwapMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local CharacterSkillEliminationSwapMO = class("CharacterSkillEliminationSwapMO", CharacterSkillMOBase)
 
-	arg_1_0._x1 = -1
-	arg_1_0._x2 = -1
-	arg_1_0._y1 = -1
-	arg_1_0._y2 = -1
+function CharacterSkillEliminationSwapMO:init(skillId)
+	CharacterSkillEliminationSwapMO.super.init(self, skillId)
+
+	self._x1 = -1
+	self._x2 = -1
+	self._y1 = -1
+	self._y2 = -1
 end
 
-function var_0_0.getReleaseParam(arg_2_0)
-	arg_2_0._releaseParam = string.format("%d_%d_%d_%d", arg_2_0._x1 - 1, arg_2_0._y1 - 1, arg_2_0._x2 - 1, arg_2_0._y2 - 1)
+function CharacterSkillEliminationSwapMO:getReleaseParam()
+	self._releaseParam = string.format("%d_%d_%d_%d", self._x1 - 1, self._y1 - 1, self._x2 - 1, self._y2 - 1)
 
-	return arg_2_0._releaseParam
+	return self._releaseParam
 end
 
-function var_0_0.canRelease(arg_3_0)
-	return arg_3_0._x1 ~= -1 and arg_3_0._y1 ~= -1 and arg_3_0._x2 ~= -1 and arg_3_0._y2 ~= -1
+function CharacterSkillEliminationSwapMO:canRelease()
+	return self._x1 ~= -1 and self._y1 ~= -1 and self._x2 ~= -1 and self._y2 ~= -1
 end
 
-function var_0_0.playAction(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._cb = arg_4_1
-	arg_4_0._cbTarget = arg_4_2
+function CharacterSkillEliminationSwapMO:playAction(cb, cbTarget)
+	self._cb = cb
+	self._cbTarget = cbTarget
 
-	local var_4_0 = EliminateChessItemController.instance:getChessItem(arg_4_0._x1, arg_4_0._y1)
-	local var_4_1 = EliminateChessItemController.instance:getChessItem(arg_4_0._x2, arg_4_0._y2)
-	local var_4_2, var_4_3 = var_4_0:getGoPos()
-	local var_4_4, var_4_5 = var_4_1:getGoPos()
+	local item1 = EliminateChessItemController.instance:getChessItem(self._x1, self._y1)
+	local item2 = EliminateChessItemController.instance:getChessItem(self._x2, self._y2)
+	local wordX_1, worldY_1 = item1:getGoPos()
+	local wordX_2, worldY_2 = item2:getGoPos()
 
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_1, arg_4_0._x1, arg_4_0._y1, var_4_2, var_4_3, true, nil, nil)
-	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_2, arg_4_0._x2, arg_4_0._y2, var_4_4, var_4_5, true, arg_4_0.playActionEnd, arg_4_0)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_1, self._x1, self._y1, wordX_1, worldY_1, true, nil, nil)
+	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_2, self._x2, self._y2, wordX_2, worldY_2, true, self.playActionEnd, self)
 end
 
-function var_0_0.playActionEnd(arg_5_0)
+function CharacterSkillEliminationSwapMO:playActionEnd()
 	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_1, nil, nil, nil, nil, false, nil, nil)
 	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.PlayEliminateEffect, EliminateEnum.EffectType.exchange_2, nil, nil, nil, nil, false, nil, nil)
-	EliminateChessController.instance:exchangeCellShow(arg_5_0._x1, arg_5_0._y1, arg_5_0._x2, arg_5_0._y2, 0)
+	EliminateChessController.instance:exchangeCellShow(self._x1, self._y1, self._x2, self._y2, 0)
 
-	if arg_5_0._cb ~= nil then
-		arg_5_0._cb(arg_5_0._cbTarget)
+	if self._cb ~= nil then
+		self._cb(self._cbTarget)
 	else
-		EliminateChessController.instance:exchangeCellShow(arg_5_0._x2, arg_5_0._y2, arg_5_0._x1, arg_5_0._y1, 0)
+		EliminateChessController.instance:exchangeCellShow(self._x2, self._y2, self._x1, self._y1, 0)
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.WarChessCharacterSkillCancel, false)
 	end
 
-	arg_5_0._cb = nil
+	self._cb = nil
 end
 
-function var_0_0.cancelRelease(arg_6_0)
-	arg_6_0._cb = nil
+function CharacterSkillEliminationSwapMO:cancelRelease()
+	self._cb = nil
 end
 
-function var_0_0.setSkillParam(arg_7_0, ...)
-	local var_7_0 = {
+function CharacterSkillEliminationSwapMO:setSkillParam(...)
+	local args = {
 		...
 	}
 
-	if arg_7_0._x1 == -1 then
-		arg_7_0._x1 = var_7_0[1]
-		arg_7_0._y1 = var_7_0[2]
+	if self._x1 == -1 then
+		self._x1 = args[1]
+		self._y1 = args[2]
 	else
-		arg_7_0._x2 = var_7_0[1]
-		arg_7_0._y2 = var_7_0[2]
+		self._x2 = args[1]
+		self._y2 = args[2]
 	end
 end
 
-return var_0_0
+return CharacterSkillEliminationSwapMO

@@ -1,39 +1,41 @@
-﻿module("modules.logic.chargepush.rpc.ChargePushRpc", package.seeall)
+﻿-- chunkname: @modules/logic/chargepush/rpc/ChargePushRpc.lua
 
-local var_0_0 = class("ChargePushRpc", BaseRpc)
+module("modules.logic.chargepush.rpc.ChargePushRpc", package.seeall)
 
-function var_0_0.sendGetChargePushInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = ChargePushModule_pb.GetChargePushInfoRequest()
+local ChargePushRpc = class("ChargePushRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function ChargePushRpc:sendGetChargePushInfoRequest(callback, callbackObj)
+	local req = ChargePushModule_pb.GetChargePushInfoRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetChargePushInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
+function ChargePushRpc:onReceiveGetChargePushInfoReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendRecordchargePushRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = ChargePushModule_pb.RecordChargePushRequest()
+function ChargePushRpc:sendRecordchargePushRequest(id, callback, callbackObj)
+	local req = ChargePushModule_pb.RecordChargePushRequest()
 
-	var_3_0.id = arg_3_1
+	req.id = id
 
-	return arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveRecordChargePushReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
+function ChargePushRpc:onReceiveRecordChargePushReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.onReceiveGetChargePushPush(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
-		ChargePushModel.instance:onReceivePushInfo(arg_5_2)
+function ChargePushRpc:onReceiveGetChargePushPush(resultCode, msg)
+	if resultCode == 0 then
+		ChargePushModel.instance:onReceivePushInfo(msg)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ChargePushRpc.instance = ChargePushRpc.New()
 
-return var_0_0
+return ChargePushRpc

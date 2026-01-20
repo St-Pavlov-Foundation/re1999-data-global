@@ -1,39 +1,41 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectHeal", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectHeal.lua
 
-local var_0_0 = class("FightWorkEffectHeal", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectHeal", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not arg_1_0.actEffectData then
-		arg_1_0:onDone(true)
+local FightWorkEffectHeal = class("FightWorkEffectHeal", FightEffectBase)
+
+function FightWorkEffectHeal:onStart()
+	if not self.actEffectData then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
 
-	if var_1_0 then
-		if not var_1_0.nameUI then
-			arg_1_0:onDone(true)
+	if entity then
+		if not entity.nameUI then
+			self:onDone(true)
 
 			return
 		end
 
-		local var_1_1 = var_1_0.nameUI:getHp()
-		local var_1_2 = arg_1_0.actEffectData.effectNum
-		local var_1_3 = arg_1_0.actEffectData.effectType == FightEnum.EffectType.HEALCRIT and FightEnum.FloatType.crit_heal or FightEnum.FloatType.heal
+		local prevHp = entity.nameUI:getHp()
+		local effectNum = self.actEffectData.effectNum
+		local floatType = self.actEffectData.effectType == FightEnum.EffectType.HEALCRIT and FightEnum.FloatType.crit_heal or FightEnum.FloatType.heal
 
-		FightFloatMgr.instance:float(var_1_0.id, var_1_3, var_1_2, nil, arg_1_0.actEffectData.effectNum1 == 1)
-		var_1_0.nameUI:addHp(var_1_2)
-		FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, var_1_2)
+		FightFloatMgr.instance:float(entity.id, floatType, effectNum, nil, self.actEffectData.effectNum1 == 1)
+		entity.nameUI:addHp(effectNum)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, effectNum)
 
-		local var_1_4 = var_1_0.nameUI:getHp()
+		local nowHp = entity.nameUI:getHp()
 
-		if var_1_1 <= 0 and var_1_4 > 0 and not FightSkillMgr.instance:isPlayingAnyTimeline() then
-			var_1_0.nameUI:setActive(true)
+		if prevHp <= 0 and nowHp > 0 and not FightSkillMgr.instance:isPlayingAnyTimeline() then
+			entity.nameUI:setActive(true)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectHeal

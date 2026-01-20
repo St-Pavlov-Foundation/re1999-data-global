@@ -1,79 +1,81 @@
-﻿module("modules.logic.fight.model.FightStatModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/FightStatModel.lua
 
-local var_0_0 = class("FightStatModel", ListScrollModel)
+module("modules.logic.fight.model.FightStatModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._totalHarm = 0
-	arg_1_0._totalHurt = 0
-	arg_1_0._totalHeal = 0
+local FightStatModel = class("FightStatModel", ListScrollModel)
+
+function FightStatModel:onInit()
+	self._totalHarm = 0
+	self._totalHurt = 0
+	self._totalHeal = 0
 end
 
-function var_0_0.setAtkStatInfo(arg_2_0, arg_2_1)
-	arg_2_0._totalHarm = 0
-	arg_2_0._totalHurt = 0
-	arg_2_0._totalHeal = 0
+function FightStatModel:setAtkStatInfo(atkStatInfos)
+	self._totalHarm = 0
+	self._totalHurt = 0
+	self._totalHeal = 0
 
-	local var_2_0 = {}
+	local statMOList = {}
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		if not arg_2_0:checkShield(iter_2_1) then
-			local var_2_1 = iter_2_1.entityMO or FightDataHelper.entityMgr:getById(iter_2_1.heroUid)
+	for _, statInfo in ipairs(atkStatInfos) do
+		if not self:checkShield(statInfo) then
+			local entityMO = statInfo.entityMO or FightDataHelper.entityMgr:getById(statInfo.heroUid)
 
-			if iter_2_1.heroUid == FightASFDDataMgr.EmitterId then
-				var_2_1 = FightDataHelper.ASFDDataMgr:getEmitterEmitterMo()
+			if statInfo.heroUid == FightASFDDataMgr.EmitterId then
+				entityMO = FightDataHelper.ASFDDataMgr:getEmitterEmitterMo()
 			end
 
-			if var_2_1 then
-				local var_2_2 = FightStatMO.New()
+			if entityMO then
+				local statMO = FightStatMO.New()
 
-				var_2_2:init(iter_2_1)
+				statMO:init(statInfo)
 
-				var_2_2.entityMO = iter_2_1.entityMO
-				var_2_2.fromOtherFight = iter_2_1.entityMO and true or false
+				statMO.entityMO = statInfo.entityMO
+				statMO.fromOtherFight = statInfo.entityMO and true or false
 
-				table.insert(var_2_0, var_2_2)
+				table.insert(statMOList, statMO)
 
-				arg_2_0._totalHarm = arg_2_0._totalHarm + var_2_2.harm
-				arg_2_0._totalHurt = arg_2_0._totalHurt + var_2_2.hurt
-				arg_2_0._totalHeal = arg_2_0._totalHeal + var_2_2.heal
+				self._totalHarm = self._totalHarm + statMO.harm
+				self._totalHurt = self._totalHurt + statMO.hurt
+				self._totalHeal = self._totalHeal + statMO.heal
 			end
 		end
 	end
 
-	table.sort(var_2_0, function(arg_3_0, arg_3_1)
-		if arg_3_0.harm ~= arg_3_1.harm then
-			return arg_3_0.harm > arg_3_1.harm
+	table.sort(statMOList, function(mo1, mo2)
+		if mo1.harm ~= mo2.harm then
+			return mo1.harm > mo2.harm
 		else
-			return arg_3_0.entityId < arg_3_1.entityId
+			return mo1.entityId < mo2.entityId
 		end
 	end)
-	arg_2_0:setList(var_2_0)
+	self:setList(statMOList)
 end
 
-function var_0_0.checkShield(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function FightStatModel:checkShield(statInfo)
+	if not statInfo then
 		return true
 	end
 
-	if arg_4_1.heroUid == FightEntityScene.MySideId or arg_4_1.heroUid == FightEntityScene.EnemySideId then
+	if statInfo.heroUid == FightEntityScene.MySideId or statInfo.heroUid == FightEntityScene.EnemySideId then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getTotalHarm(arg_5_0)
-	return arg_5_0._totalHarm
+function FightStatModel:getTotalHarm()
+	return self._totalHarm
 end
 
-function var_0_0.getTotalHurt(arg_6_0)
-	return arg_6_0._totalHurt
+function FightStatModel:getTotalHurt()
+	return self._totalHurt
 end
 
-function var_0_0.getTotalHeal(arg_7_0)
-	return arg_7_0._totalHeal
+function FightStatModel:getTotalHeal()
+	return self._totalHeal
 end
 
-var_0_0.instance = var_0_0.New()
+FightStatModel.instance = FightStatModel.New()
 
-return var_0_0
+return FightStatModel

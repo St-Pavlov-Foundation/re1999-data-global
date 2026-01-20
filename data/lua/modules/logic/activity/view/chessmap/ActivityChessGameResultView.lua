@@ -1,164 +1,168 @@
-﻿module("modules.logic.activity.view.chessmap.ActivityChessGameResultView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/chessmap/ActivityChessGameResultView.lua
 
-local var_0_0 = class("ActivityChessGameResultView", BaseView)
+module("modules.logic.activity.view.chessmap.ActivityChessGameResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_quitgame")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_restart")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._gotargets = gohelper.findChild(arg_1_0.viewGO, "#go_targets")
-	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "#go_targets/#go_targetitem")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_success/#btn_close")
+local ActivityChessGameResultView = class("ActivityChessGameResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityChessGameResultView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._btnquitgame = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_quitgame")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "btn/#btn_restart")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._gotargets = gohelper.findChild(self.viewGO, "#go_targets")
+	self._gotargetitem = gohelper.findChild(self.viewGO, "#go_targets/#go_targetitem")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_success/#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function ActivityChessGameResultView:addEvents()
+	self._btnquitgame:AddClickListener(self._btnquitgameOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnquitgame:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function ActivityChessGameResultView:removeEvents()
+	self._btnquitgame:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
+function ActivityChessGameResultView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
 
-	arg_4_0._openTime = Time.time
-	arg_4_0._taskItems = {}
+	self._openTime = Time.time
+	self._taskItems = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0._simagebg1:UnLoadImage()
+function ActivityChessGameResultView:onDestroyView()
+	self._simagebg1:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	if arg_6_0.viewParam.result then
-		arg_6_0:refreshWin()
+function ActivityChessGameResultView:onOpen()
+	local isWin = self.viewParam.result
+
+	if isWin then
+		self:refreshWin()
 	else
-		arg_6_0:refreshLose()
+		self:refreshLose()
 	end
 end
 
-function var_0_0.onClose(arg_7_0)
+function ActivityChessGameResultView:onClose()
 	return
 end
 
-function var_0_0.refreshWin(arg_8_0)
-	gohelper.setActive(arg_8_0._gosuccess, true)
-	gohelper.setActive(arg_8_0._gofail, false)
-	arg_8_0:refreshTaskConditions()
-	gohelper.setActive(arg_8_0._btnquitgame.gameObject, false)
-	gohelper.setActive(arg_8_0._btnrestart.gameObject, false)
+function ActivityChessGameResultView:refreshWin()
+	gohelper.setActive(self._gosuccess, true)
+	gohelper.setActive(self._gofail, false)
+	self:refreshTaskConditions()
+	gohelper.setActive(self._btnquitgame.gameObject, false)
+	gohelper.setActive(self._btnrestart.gameObject, false)
 end
 
-function var_0_0.refreshLose(arg_9_0)
+function ActivityChessGameResultView:refreshLose()
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.ChallengeFailed)
-	gohelper.setActive(arg_9_0._gosuccess, false)
-	gohelper.setActive(arg_9_0._gofail, true)
-	arg_9_0:refreshTaskConditions()
+	gohelper.setActive(self._gosuccess, false)
+	gohelper.setActive(self._gofail, true)
+	self:refreshTaskConditions()
 end
 
-function var_0_0.refreshTaskConditions(arg_10_0)
-	local var_10_0 = Activity109ChessModel.instance:getActId()
-	local var_10_1 = Activity109ChessModel.instance:getEpisodeId()
+function ActivityChessGameResultView:refreshTaskConditions()
+	local actId = Activity109ChessModel.instance:getActId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
 
-	if not var_10_0 or not var_10_1 then
+	if not actId or not episodeId then
 		return
 	end
 
-	local var_10_2 = Activity109Config.instance:getEpisodeCo(var_10_0, var_10_1)
-	local var_10_3 = var_10_2.extStarCondition
-	local var_10_4 = string.split(var_10_3, "|")
-	local var_10_5 = string.split(var_10_2.conditionStr, "|")
-	local var_10_6 = #var_10_4 + 1
+	local episodeCfg = Activity109Config.instance:getEpisodeCo(actId, episodeId)
+	local conditionsStr = episodeCfg.extStarCondition
+	local conditions = string.split(conditionsStr, "|")
+	local conditionDesc = string.split(episodeCfg.conditionStr, "|")
+	local taskLen = #conditions + 1
 
-	for iter_10_0 = 1, var_10_6 do
-		local var_10_7 = arg_10_0:getOrCreateTaskItem(iter_10_0)
+	for i = 1, taskLen do
+		local taskItem = self:getOrCreateTaskItem(i)
 
-		if iter_10_0 == 1 then
-			arg_10_0:refreshTaskItem(var_10_7, nil, var_10_5[iter_10_0])
+		if i == 1 then
+			self:refreshTaskItem(taskItem, nil, conditionDesc[i])
 		else
-			arg_10_0:refreshTaskItem(var_10_7, var_10_4[iter_10_0 - 1], var_10_5[iter_10_0])
+			self:refreshTaskItem(taskItem, conditions[i - 1], conditionDesc[i])
 		end
 	end
 end
 
-function var_0_0.refreshTaskItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	gohelper.setActive(arg_11_1.go, true)
+function ActivityChessGameResultView:refreshTaskItem(taskItem, condition, descTxt)
+	gohelper.setActive(taskItem.go, true)
 
-	local var_11_0 = Activity109ChessModel.instance:getActId()
-	local var_11_1 = Activity109ChessModel.instance:getEpisodeId()
-	local var_11_2
-	local var_11_3 = false
+	local actId = Activity109ChessModel.instance:getActId()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
+	local desc
+	local isFinish = false
 
-	if not string.nilorempty(arg_11_2) then
-		local var_11_4 = string.splitToNumber(arg_11_2, "#")
+	if not string.nilorempty(condition) then
+		local params = string.splitToNumber(condition, "#")
 
-		var_11_2 = arg_11_3 or ActivityChessMapUtils.getClearConditionDesc(var_11_4, var_11_0)
-		var_11_3 = ActivityChessMapUtils.isClearConditionFinish(var_11_4, var_11_0)
+		desc = descTxt or ActivityChessMapUtils.getClearConditionDesc(params, actId)
+		isFinish = ActivityChessMapUtils.isClearConditionFinish(params, actId)
 	else
-		var_11_2 = arg_11_3 or luaLang("chessgame_clear_normal")
-		var_11_3 = ActivityChessGameModel.instance:getResult() == true
+		desc = descTxt or luaLang("chessgame_clear_normal")
+		isFinish = ActivityChessGameModel.instance:getResult() == true
 	end
 
-	arg_11_1.txtTaskDesc.text = var_11_2
+	taskItem.txtTaskDesc.text = desc
 
-	gohelper.setActive(arg_11_1.goFinish, var_11_3)
-	gohelper.setActive(arg_11_1.goUnFinish, not var_11_3)
+	gohelper.setActive(taskItem.goFinish, isFinish)
+	gohelper.setActive(taskItem.goUnFinish, not isFinish)
 end
 
-function var_0_0.getOrCreateTaskItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._taskItems[arg_12_1]
+function ActivityChessGameResultView:getOrCreateTaskItem(index)
+	local item = self._taskItems[index]
 
-	if not var_12_0 then
-		var_12_0 = arg_12_0:getUserDataTb_()
-		var_12_0.go = gohelper.cloneInPlace(arg_12_0._gotargetitem, "taskitem_" .. tostring(arg_12_1))
-		var_12_0.txtTaskDesc = gohelper.findChildText(var_12_0.go, "txt_taskdesc")
-		var_12_0.goFinish = gohelper.findChild(var_12_0.go, "result/go_finish")
-		var_12_0.goUnFinish = gohelper.findChild(var_12_0.go, "result/go_unfinish")
-		arg_12_0._taskItems[arg_12_1] = var_12_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._gotargetitem, "taskitem_" .. tostring(index))
+		item.txtTaskDesc = gohelper.findChildText(item.go, "txt_taskdesc")
+		item.goFinish = gohelper.findChild(item.go, "result/go_finish")
+		item.goUnFinish = gohelper.findChild(item.go, "result/go_unfinish")
+		self._taskItems[index] = item
 	end
 
-	return var_12_0
+	return item
 end
 
-function var_0_0.handleResetCompleted(arg_13_0)
+function ActivityChessGameResultView:handleResetCompleted()
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.ResetGameByResultView)
 end
 
-function var_0_0._btnquitgameOnClick(arg_14_0)
+function ActivityChessGameResultView:_btnquitgameOnClick()
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.GameResultQuit)
 
-	local var_14_0 = Activity109ChessModel.instance:getActId()
+	local actId = Activity109ChessModel.instance:getActId()
 
-	Activity109Rpc.instance:sendGetAct109InfoRequest(var_14_0)
-	arg_14_0:closeThis()
+	Activity109Rpc.instance:sendGetAct109InfoRequest(actId)
+	self:closeThis()
 end
 
-function var_0_0._btnrestartOnClick(arg_15_0)
-	local var_15_0 = Activity109ChessModel.instance:getEpisodeId()
+function ActivityChessGameResultView:_btnrestartOnClick()
+	local episodeId = Activity109ChessModel.instance:getEpisodeId()
 
-	if var_15_0 then
-		Activity109ChessController.instance:startNewEpisode(var_15_0, arg_15_0.handleResetCompleted, arg_15_0)
+	if episodeId then
+		Activity109ChessController.instance:startNewEpisode(episodeId, self.handleResetCompleted, self)
 	end
 
-	arg_15_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btncloseOnClick(arg_16_0)
-	if Time.time - (arg_16_0._openTime or 0) >= 1 then
-		arg_16_0:_btnquitgameOnClick()
+function ActivityChessGameResultView:_btncloseOnClick()
+	if Time.time - (self._openTime or 0) >= 1 then
+		self:_btnquitgameOnClick()
 	end
 end
 
-return var_0_0
+return ActivityChessGameResultView

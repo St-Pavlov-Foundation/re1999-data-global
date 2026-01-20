@@ -1,13 +1,15 @@
-﻿module("modules.logic.settings.view.KeyMapAlertViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/KeyMapAlertViewContainer.lua
 
-local var_0_0 = class("KeyMapAlertViewContainer", BaseViewContainer)
+module("modules.logic.settings.view.KeyMapAlertViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local KeyMapAlertViewContainer = class("KeyMapAlertViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, KeyMapAlertView.New())
+function KeyMapAlertViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, KeyMapAlertView.New())
+
+	return views
 end
 
-return var_0_0
+return KeyMapAlertViewContainer

@@ -1,105 +1,107 @@
-﻿module("modules.logic.rouge.view.RougeFavoriteCollectionViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFavoriteCollectionViewContainer.lua
 
-local var_0_0 = class("RougeFavoriteCollectionViewContainer", BaseViewContainer)
+module("modules.logic.rouge.view.RougeFavoriteCollectionViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeFavoriteCollectionViewContainer = class("RougeFavoriteCollectionViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeFavoriteCollectionView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
-	table.insert(var_1_0, TabViewGroup.New(2, "#go_content"))
-	table.insert(var_1_0, TabViewGroup.New(3, "#go_rougemapdetailcontainer"))
+function RougeFavoriteCollectionViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeFavoriteCollectionView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+	table.insert(views, TabViewGroup.New(2, "#go_content"))
+	table.insert(views, TabViewGroup.New(3, "#go_rougemapdetailcontainer"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeFavoriteCollectionViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 
-	if arg_2_1 == 2 then
-		local var_2_0 = MixScrollParam.New()
+	if tabContainerId == 2 then
+		local scrollParam2 = MixScrollParam.New()
 
-		var_2_0.scrollGOPath = "Left/#scroll_collection"
-		var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-		var_2_0.cellClass = RougeCollectionListRow
-		var_2_0.scrollDir = ScrollEnum.ScrollDirV
-		var_2_0.startSpace = 0
-		var_2_0.endSpace = 0
+		scrollParam2.scrollGOPath = "Left/#scroll_collection"
+		scrollParam2.prefabType = ScrollEnum.ScrollPrefabFromRes
+		scrollParam2.prefabUrl = self._viewSetting.otherRes[1]
+		scrollParam2.cellClass = RougeCollectionListRow
+		scrollParam2.scrollDir = ScrollEnum.ScrollDirV
+		scrollParam2.startSpace = 0
+		scrollParam2.endSpace = 0
 
-		local var_2_1 = ListScrollParam.New()
+		local scrollParam = ListScrollParam.New()
 
-		var_2_1.scrollGOPath = "Left/#scroll_collection"
-		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromView
-		var_2_1.prefabUrl = "Left/#scroll_collection/Viewport/Content/#go_collectionitem"
-		var_2_1.cellClass = RougeCollectionHandBookItem
-		var_2_1.scrollDir = ScrollEnum.ScrollDirV
-		var_2_1.lineCount = 4
-		var_2_1.cellWidth = 224
-		var_2_1.cellHeight = 224
-		var_2_1.cellSpaceH = 10
-		var_2_1.cellSpaceV = 0
-		var_2_1.startSpace = 61
-		var_2_1.endSpace = 0
+		scrollParam.scrollGOPath = "Left/#scroll_collection"
+		scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+		scrollParam.prefabUrl = "Left/#scroll_collection/Viewport/Content/#go_collectionitem"
+		scrollParam.cellClass = RougeCollectionHandBookItem
+		scrollParam.scrollDir = ScrollEnum.ScrollDirV
+		scrollParam.lineCount = 4
+		scrollParam.cellWidth = 224
+		scrollParam.cellHeight = 224
+		scrollParam.cellSpaceH = 10
+		scrollParam.cellSpaceV = 0
+		scrollParam.startSpace = 61
+		scrollParam.endSpace = 0
 
-		local var_2_2 = ListScrollParam.New()
+		local scrollParamEnchant = ListScrollParam.New()
 
-		var_2_2.scrollGOPath = "Right/#go_normal/bottom/scrollview"
-		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromView
-		var_2_2.prefabUrl = "Right/#go_normal/bottom/scrollview/Viewport/Content/Item"
-		var_2_2.cellClass = RougeCollectionListDropdownItem
-		var_2_2.scrollDir = ScrollEnum.ScrollDirV
-		var_2_2.lineCount = 1
-		var_2_2.cellWidth = 200
-		var_2_2.cellHeight = 120
-		var_2_2.cellSpaceH = 0
-		var_2_2.cellSpaceV = 0
-		var_2_2.startSpace = 20
-		var_2_2.endSpace = 0
-		arg_2_0._dropDownView = RougeCollectionListDropdownView.New()
-		arg_2_0._collectinListView = RougeCollectionListView.New()
+		scrollParamEnchant.scrollGOPath = "Right/#go_normal/bottom/scrollview"
+		scrollParamEnchant.prefabType = ScrollEnum.ScrollPrefabFromView
+		scrollParamEnchant.prefabUrl = "Right/#go_normal/bottom/scrollview/Viewport/Content/Item"
+		scrollParamEnchant.cellClass = RougeCollectionListDropdownItem
+		scrollParamEnchant.scrollDir = ScrollEnum.ScrollDirV
+		scrollParamEnchant.lineCount = 1
+		scrollParamEnchant.cellWidth = 200
+		scrollParamEnchant.cellHeight = 120
+		scrollParamEnchant.cellSpaceH = 0
+		scrollParamEnchant.cellSpaceV = 0
+		scrollParamEnchant.startSpace = 20
+		scrollParamEnchant.endSpace = 0
+		self._dropDownView = RougeCollectionListDropdownView.New()
+		self._collectinListView = RougeCollectionListView.New()
 
 		return {
 			MultiView.New({
-				LuaListScrollView.New(RougeFavoriteCollectionEnchantListModel.instance, var_2_2),
-				arg_2_0._dropDownView,
-				arg_2_0._collectinListView,
-				LuaMixScrollView.New(RougeCollectionListModel.instance, var_2_0)
+				LuaListScrollView.New(RougeFavoriteCollectionEnchantListModel.instance, scrollParamEnchant),
+				self._dropDownView,
+				self._collectinListView,
+				LuaMixScrollView.New(RougeCollectionListModel.instance, scrollParam2)
 			}),
 			MultiView.New({
 				RougeCollectionHandBookView.New(),
-				LuaListScrollView.New(RougeCollectionHandBookListModel.instance, var_2_1)
+				LuaListScrollView.New(RougeCollectionHandBookListModel.instance, scrollParam)
 			})
 		}
 	end
 
-	if arg_2_1 == 3 then
+	if tabContainerId == 3 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-function var_0_0.getDropDownView(arg_3_0)
-	return arg_3_0._dropDownView
+function RougeFavoriteCollectionViewContainer:getDropDownView()
+	return self._dropDownView
 end
 
-function var_0_0.getCollectionListView(arg_4_0)
-	return arg_4_0._collectinListView
+function RougeFavoriteCollectionViewContainer:getCollectionListView()
+	return self._collectinListView
 end
 
-function var_0_0.selectTabView(arg_5_0, arg_5_1)
-	arg_5_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_5_1)
+function RougeFavoriteCollectionViewContainer:selectTabView(selectId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, selectId)
 end
 
-return var_0_0
+return RougeFavoriteCollectionViewContainer

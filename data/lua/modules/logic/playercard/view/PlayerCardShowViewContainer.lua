@@ -1,28 +1,30 @@
-﻿module("modules.logic.playercard.view.PlayerCardShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/PlayerCardShowViewContainer.lua
 
-local var_0_0 = class("PlayerCardShowViewContainer", BaseViewContainer)
+module("modules.logic.playercard.view.PlayerCardShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerCardShowViewContainer = class("PlayerCardShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PlayerCardShowView.New())
+function PlayerCardShowViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, PlayerCardShowView.New())
 
-	var_1_1.scrollGOPath = "#scroll_card"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes.carditem
-	var_1_1.cellClass = PlayerCardCardItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 3
-	var_1_1.cellWidth = 482
-	var_1_1.cellHeight = 186
-	var_1_1.startSpace = 150
-	arg_1_0._scrollView = LuaListScrollView.New(PlayerCardProgressModel.instance, var_1_1)
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, arg_1_0._scrollView)
+	scrollParam.scrollGOPath = "#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes.carditem
+	scrollParam.cellClass = PlayerCardCardItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 482
+	scrollParam.cellHeight = 186
+	scrollParam.startSpace = 150
+	self._scrollView = LuaListScrollView.New(PlayerCardProgressModel.instance, scrollParam)
 
-	return var_1_0
+	table.insert(views, self._scrollView)
+
+	return views
 end
 
-return var_0_0
+return PlayerCardShowViewContainer

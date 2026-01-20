@@ -1,33 +1,36 @@
-﻿module("modules.logic.fight.system.work.FightWorkCheckLuXiHeroUpgrade", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCheckLuXiHeroUpgrade.lua
 
-local var_0_0 = class("FightWorkCheckLuXiHeroUpgrade", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkCheckLuXiHeroUpgrade", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightPlayerOperateMgr.detectUpgrade()
+local FightWorkCheckLuXiHeroUpgrade = class("FightWorkCheckLuXiHeroUpgrade", FightWorkItem)
 
-	if #var_1_0 > 0 then
-		for iter_1_0 = #var_1_0, 1, -1 do
-			local var_1_1 = var_1_0[iter_1_0]
+function FightWorkCheckLuXiHeroUpgrade:onStart()
+	local upgradeDataList = FightPlayerOperateMgr.detectUpgrade()
 
-			if lua_hero_upgrade.configDict[var_1_1.id].type == 1 then
-				FightRpc.instance:sendUseClothSkillRequest(var_1_1.id, var_1_1.entityId, var_1_1.optionIds[1], FightEnum.ClothSkillType.HeroUpgrade)
-				arg_1_0:cancelFightWorkSafeTimer()
+	if #upgradeDataList > 0 then
+		for i = #upgradeDataList, 1, -1 do
+			local data = upgradeDataList[i]
+			local config = lua_hero_upgrade.configDict[data.id]
+
+			if config.type == 1 then
+				FightRpc.instance:sendUseClothSkillRequest(data.id, data.entityId, data.optionIds[1], FightEnum.ClothSkillType.HeroUpgrade)
+				self:cancelFightWorkSafeTimer()
 
 				return
 			end
 		end
 
-		if #var_1_0 > 0 then
-			arg_1_0._upgradeDataList = var_1_0
+		if #upgradeDataList > 0 then
+			self._upgradeDataList = upgradeDataList
 
-			ViewMgr.instance:openView(ViewName.FightSkillStrengthenView, var_1_0)
-			arg_1_0:cancelFightWorkSafeTimer()
+			ViewMgr.instance:openView(ViewName.FightSkillStrengthenView, upgradeDataList)
+			self:cancelFightWorkSafeTimer()
 
 			return
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCheckLuXiHeroUpgrade

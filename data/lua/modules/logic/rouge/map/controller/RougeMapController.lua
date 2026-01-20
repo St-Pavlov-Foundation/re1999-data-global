@@ -1,108 +1,110 @@
-﻿module("modules.logic.rouge.map.controller.RougeMapController", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/controller/RougeMapController.lua
 
-local var_0_0 = class("RougeMapController")
+module("modules.logic.rouge.map.controller.RougeMapController", package.seeall)
 
-function var_0_0.registerMap(arg_1_0, arg_1_1)
-	arg_1_0.mapComp = arg_1_1
+local RougeMapController = class("RougeMapController")
+
+function RougeMapController:registerMap(mapComp)
+	self.mapComp = mapComp
 end
 
-function var_0_0.unregisterMap(arg_2_0)
-	arg_2_0.mapComp = nil
+function RougeMapController:unregisterMap()
+	self.mapComp = nil
 end
 
-function var_0_0.getMapComp(arg_3_0)
-	return arg_3_0.mapComp
+function RougeMapController:getMapComp()
+	return self.mapComp
 end
 
-function var_0_0.startMove(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.mapComp:getActorComp():moveToMapItem(nil, arg_4_1, arg_4_2)
+function RougeMapController:startMove(callback, callbackObj)
+	self.mapComp:getActorComp():moveToMapItem(nil, callback, callbackObj)
 end
 
-function var_0_0.moveToPieceItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.mapComp:getActorComp():moveToPieceItem(arg_5_1, arg_5_2, arg_5_3)
+function RougeMapController:moveToPieceItem(pieceMo, callback, callbackObj)
+	self.mapComp:getActorComp():moveToPieceItem(pieceMo, callback, callbackObj)
 end
 
-function var_0_0.moveToLeaveItem(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.mapComp:getActorComp():moveToLeaveItem(arg_6_1, arg_6_2)
+function RougeMapController:moveToLeaveItem(callback, callbackObj)
+	self.mapComp:getActorComp():moveToLeaveItem(callback, callbackObj)
 end
 
-function var_0_0.getActorMap(arg_7_0)
-	return arg_7_0.mapComp and arg_7_0.mapComp:getActorComp()
+function RougeMapController:getActorMap()
+	return self.mapComp and self.mapComp:getActorComp()
 end
 
-function var_0_0.openRougeFinishView(arg_8_0)
+function RougeMapController:openRougeFinishView()
 	ViewMgr.instance:openView(ViewName.RougeFinishView, RougeMapEnum.FinishEnum.Finish)
 end
 
-function var_0_0.openRougeFailView(arg_9_0)
+function RougeMapController:openRougeFailView()
 	ViewMgr.instance:openView(ViewName.RougeFinishView, RougeMapEnum.FinishEnum.Fail)
 end
 
-function var_0_0.checkEventChoicePlayedUnlockAnim(arg_10_0, arg_10_1)
-	arg_10_0:_initPlayedChoiceList()
+function RougeMapController:checkEventChoicePlayedUnlockAnim(choiceId)
+	self:_initPlayedChoiceList()
 
-	return tabletool.indexOf(arg_10_0.playedChoiceIdList, arg_10_1)
+	return tabletool.indexOf(self.playedChoiceIdList, choiceId)
 end
 
-function var_0_0.playedEventChoiceEvent(arg_11_0, arg_11_1)
-	arg_11_0:_initPlayedChoiceList()
+function RougeMapController:playedEventChoiceEvent(choiceId)
+	self:_initPlayedChoiceList()
 
-	if tabletool.indexOf(arg_11_0.playedChoiceIdList, arg_11_1) then
+	if tabletool.indexOf(self.playedChoiceIdList, choiceId) then
 		return
 	end
 
-	table.insert(arg_11_0.playedChoiceIdList, arg_11_1)
+	table.insert(self.playedChoiceIdList, choiceId)
 
-	local var_11_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId)
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId)
 
-	PlayerPrefsHelper.setString(var_11_0, table.concat(arg_11_0.playedChoiceIdList, "#"))
+	PlayerPrefsHelper.setString(key, table.concat(self.playedChoiceIdList, "#"))
 end
 
-function var_0_0._initPlayedChoiceList(arg_12_0)
-	if not arg_12_0.playedChoiceIdList then
-		local var_12_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId)
-		local var_12_1 = PlayerPrefsHelper.getString(var_12_0, "")
+function RougeMapController:_initPlayedChoiceList()
+	if not self.playedChoiceIdList then
+		local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimEventId)
+		local playedIdList = PlayerPrefsHelper.getString(key, "")
 
-		arg_12_0.playedChoiceIdList = string.splitToNumber(var_12_1, "#")
+		self.playedChoiceIdList = string.splitToNumber(playedIdList, "#")
 	end
 end
 
-function var_0_0.checkPieceChoicePlayedUnlockAnim(arg_13_0, arg_13_1)
-	arg_13_0:_initPlayedPieceChoiceList()
+function RougeMapController:checkPieceChoicePlayedUnlockAnim(choiceId)
+	self:_initPlayedPieceChoiceList()
 
-	return tabletool.indexOf(arg_13_0.playedPieceChoiceIdList, arg_13_1)
+	return tabletool.indexOf(self.playedPieceChoiceIdList, choiceId)
 end
 
-function var_0_0.playedPieceChoiceEvent(arg_14_0, arg_14_1)
-	arg_14_0:_initPlayedPieceChoiceList()
+function RougeMapController:playedPieceChoiceEvent(choiceId)
+	self:_initPlayedPieceChoiceList()
 
-	if tabletool.indexOf(arg_14_0.playedPieceChoiceIdList, arg_14_1) then
+	if tabletool.indexOf(self.playedPieceChoiceIdList, choiceId) then
 		return
 	end
 
-	table.insert(arg_14_0.playedPieceChoiceIdList, arg_14_1)
+	table.insert(self.playedPieceChoiceIdList, choiceId)
 
-	local var_14_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId)
+	local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId)
 
-	PlayerPrefsHelper.setString(var_14_0, table.concat(arg_14_0.playedPieceChoiceIdList, "#"))
+	PlayerPrefsHelper.setString(key, table.concat(self.playedPieceChoiceIdList, "#"))
 end
 
-function var_0_0._initPlayedPieceChoiceList(arg_15_0)
-	if not arg_15_0.playedPieceChoiceIdList then
-		local var_15_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId)
-		local var_15_1 = PlayerPrefsHelper.getString(var_15_0, "")
+function RougeMapController:_initPlayedPieceChoiceList()
+	if not self.playedPieceChoiceIdList then
+		local key = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.RougePlayedUnlockAnimPieceChoiceId)
+		local playedIdList = PlayerPrefsHelper.getString(key, "")
 
-		arg_15_0.playedPieceChoiceIdList = string.splitToNumber(var_15_1, "#")
+		self.playedPieceChoiceIdList = string.splitToNumber(playedIdList, "#")
 	end
 end
 
-function var_0_0.clear(arg_16_0)
-	arg_16_0.playedChoiceIdList = nil
-	arg_16_0.playedPieceChoiceIdList = nil
-	arg_16_0.mapComp = nil
+function RougeMapController:clear()
+	self.playedChoiceIdList = nil
+	self.playedPieceChoiceIdList = nil
+	self.mapComp = nil
 end
 
-function var_0_0.onExistFight(arg_17_0)
+function RougeMapController:onExistFight()
 	DungeonModel.instance.curSendEpisodeId = nil
 
 	if RougeModel.instance:isFinish() then
@@ -112,8 +114,8 @@ function var_0_0.onExistFight(arg_17_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RougeMapController.instance = RougeMapController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(RougeMapController.instance)
 
-return var_0_0
+return RougeMapController

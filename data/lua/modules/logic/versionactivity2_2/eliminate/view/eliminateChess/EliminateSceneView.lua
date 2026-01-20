@@ -1,394 +1,407 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateSceneView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/eliminateChess/EliminateSceneView.lua
 
-local var_0_0 = class("EliminateSceneView", BaseView)
+module("modules.logic.versionactivity2_2.eliminate.view.eliminateChess.EliminateSceneView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	local var_1_0 = CameraMgr.instance:getSceneRoot()
+local EliminateSceneView = class("EliminateSceneView", BaseView)
 
-	transformhelper.setLocalPos(var_1_0.transform, 0, 0, 0)
+function EliminateSceneView:onOpen()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_1_0._sceneRoot = UnityEngine.GameObject.New(arg_1_0.__cname)
+	transformhelper.setLocalPos(sceneRoot.transform, 0, 0, 0)
 
-	arg_1_0:beforeLoadScene()
-	gohelper.addChild(var_1_0, arg_1_0._sceneRoot)
-	transformhelper.setLocalPos(arg_1_0._sceneRoot.transform, 0, 5, 0)
-	MainCameraMgr.instance:addView(arg_1_0.viewName, arg_1_0._initCamera, nil, arg_1_0)
+	self._sceneRoot = UnityEngine.GameObject.New(self.__cname)
 
-	arg_1_0._loader1 = PrefabInstantiate.Create(arg_1_0._eliminateSceneGo)
+	self:beforeLoadScene()
+	gohelper.addChild(sceneRoot, self._sceneRoot)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, 5, 0)
+	MainCameraMgr.instance:addView(self.viewName, self._initCamera, nil, self)
 
-	arg_1_0._loader1:startLoad(arg_1_0:getEliminateScenePath(), arg_1_0._onEliminateSceneLoadEnd, arg_1_0)
+	self._loader1 = PrefabInstantiate.Create(self._eliminateSceneGo)
 
-	arg_1_0._loader2 = PrefabInstantiate.Create(arg_1_0._teamChessGo)
+	self._loader1:startLoad(self:getEliminateScenePath(), self._onEliminateSceneLoadEnd, self)
 
-	arg_1_0._loader2:startLoad(arg_1_0:getTeamChessScenePath(), arg_1_0._onTeamChessSceneLoadEnd, arg_1_0)
+	self._loader2 = PrefabInstantiate.Create(self._teamChessGo)
+
+	self._loader2:startLoad(self:getTeamChessScenePath(), self._onTeamChessSceneLoadEnd, self)
 end
 
-function var_0_0.beforeLoadScene(arg_2_0)
-	arg_2_0._sceneTrans = arg_2_0._sceneRoot.transform
-	arg_2_0._unitContainer = gohelper.create3d(arg_2_0._sceneRoot, "Unit")
-	arg_2_0._unitPosition = arg_2_0._unitContainer.transform.position
-	arg_2_0._unitEffectContainer = gohelper.create3d(arg_2_0._sceneRoot, "UnitEffect")
+function EliminateSceneView:beforeLoadScene()
+	self._sceneTrans = self._sceneRoot.transform
+	self._unitContainer = gohelper.create3d(self._sceneRoot, "Unit")
+	self._unitPosition = self._unitContainer.transform.position
+	self._unitEffectContainer = gohelper.create3d(self._sceneRoot, "UnitEffect")
 
-	TeamChessEffectPool.setPoolContainerGO(arg_2_0._unitEffectContainer)
-	arg_2_0:_initCanvas()
-	transformhelper.setLocalPos(arg_2_0._unitContainer.transform, 0, 0, 0)
+	TeamChessEffectPool.setPoolContainerGO(self._unitEffectContainer)
+	self:_initCanvas()
+	transformhelper.setLocalPos(self._unitContainer.transform, 0, 0, 0)
 
-	arg_2_0._eliminateSceneGo = gohelper.create3d(arg_2_0._sceneRoot, "EliminateScene")
-	arg_2_0._teamChessGo = gohelper.create3d(arg_2_0._sceneRoot, "TeamChessScene")
+	self._eliminateSceneGo = gohelper.create3d(self._sceneRoot, "EliminateScene")
+	self._teamChessGo = gohelper.create3d(self._sceneRoot, "TeamChessScene")
 
-	arg_2_0:updateSceneState()
+	self:updateSceneState()
 end
 
-function var_0_0.setGoPosZ(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0, var_3_1, var_3_2 = transformhelper.getPos(arg_3_1.transform)
+function EliminateSceneView:setGoPosZ(go, posZ)
+	local x, y, _ = transformhelper.getPos(go.transform)
 
-	transformhelper.setPos(arg_3_1.transform, var_3_0, var_3_1, arg_3_2)
+	transformhelper.setPos(go.transform, x, y, posZ)
 end
 
-function var_0_0.getTeamChessScenePath(arg_4_0)
-	return EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig().chessScene
+function EliminateSceneView:getTeamChessScenePath()
+	local config = EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig()
+
+	return config.chessScene
 end
 
-function var_0_0.getEliminateScenePath(arg_5_0)
-	return EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig().eliminateScene
+function EliminateSceneView:getEliminateScenePath()
+	local config = EliminateTeamChessModel.instance:getCurWarChessEpisodeConfig()
+
+	return config.eliminateScene
 end
 
-function var_0_0._onEliminateSceneLoadEnd(arg_6_0)
-	local var_6_0 = arg_6_0._loader1:getInstGO()
+function EliminateSceneView:_onEliminateSceneLoadEnd()
+	local go = self._loader1:getInstGO()
 
-	transformhelper.setLocalPos(var_6_0.transform, 0, 0.8, 0)
-	arg_6_0:setGoPosZ(var_6_0, 1)
+	transformhelper.setLocalPos(go.transform, 0, 0.8, 0)
+	self:setGoPosZ(go, 1)
 end
 
-function var_0_0._onTeamChessSceneLoadEnd(arg_7_0)
-	local var_7_0 = arg_7_0._loader2:getInstGO()
+function EliminateSceneView:_onTeamChessSceneLoadEnd()
+	local go = self._loader2:getInstGO()
 
-	transformhelper.setLocalPos(var_7_0.transform, 0, 0.8, 0)
+	transformhelper.setLocalPos(go.transform, 0, 0.8, 0)
 
-	local var_7_1, var_7_2, var_7_3 = transformhelper.getPos(var_7_0.transform)
+	local x, y, z = transformhelper.getPos(go.transform)
 
-	transformhelper.setPos(var_7_0.transform, var_7_1, var_7_2, 1)
+	transformhelper.setPos(go.transform, x, y, 1)
 end
 
-function var_0_0._initCamera(arg_8_0)
-	local var_8_0 = CameraMgr.instance:getMainCamera()
-	local var_8_1 = CameraMgr.instance:getMainCameraTrs()
-	local var_8_2 = GameUtil.getAdapterScale(true)
+function EliminateSceneView:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
+	local cameraTr = CameraMgr.instance:getMainCameraTrs()
+	local scale = GameUtil.getAdapterScale(true)
 
-	transformhelper.setLocalRotation(var_8_1, 0, 0, 0)
-	transformhelper.setLocalPos(var_8_1, 0, 0, 0)
+	transformhelper.setLocalRotation(cameraTr, 0, 0, 0)
+	transformhelper.setLocalPos(cameraTr, 0, 0, 0)
 
-	var_8_0.orthographic = true
-	var_8_0.orthographicSize = 5 * var_8_2
-	var_8_0.nearClipPlane = 0.3
-	var_8_0.farClipPlane = 1500
+	camera.orthographic = true
+	camera.orthographicSize = 5 * scale
+	camera.nearClipPlane = 0.3
+	camera.farClipPlane = 1500
 end
 
-function var_0_0.setSceneVisible(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._sceneRoot, arg_9_1)
+function EliminateSceneView:setSceneVisible(isVisible)
+	gohelper.setActive(self._sceneRoot, isVisible)
 end
 
-function var_0_0.addEvents(arg_10_0)
-	arg_10_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_10_0._onScreenResize, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemBeginDrag, arg_10_0.soliderItemDragBegin, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDrag, arg_10_0.soliderItemDrag, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragEnd, arg_10_0.soliderItemDragEnd, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RefreshStronghold3DChess, arg_10_0.refreshStronghold3DChess, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RemoveStronghold3DChess, arg_10_0.removeStronghold3DChess, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.HideAllStronghold3DChess, arg_10_0.hideAllStronghold3DChess, arg_10_0)
-	arg_10_0:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ShowChessEffect, arg_10_0.showEffect, arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, arg_10_0.updateViewState, arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, arg_10_0.updateSceneState, arg_10_0)
-	arg_10_0:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessViewWatchView, arg_10_0.updateTeamChessViewWatchState, arg_10_0)
+function EliminateSceneView:addEvents()
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemBeginDrag, self.soliderItemDragBegin, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDrag, self.soliderItemDrag, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.TeamChessItemDragEnd, self.soliderItemDragEnd, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RefreshStronghold3DChess, self.refreshStronghold3DChess, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.RemoveStronghold3DChess, self.removeStronghold3DChess, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.HideAllStronghold3DChess, self.hideAllStronghold3DChess, self)
+	self:addEventCb(EliminateTeamChessController.instance, EliminateChessEvent.ShowChessEffect, self.showEffect, self)
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChangeEnd, self.updateViewState, self)
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.EliminateRoundStateChange, self.updateSceneState, self)
+	self:addEventCb(EliminateLevelController.instance, EliminateChessEvent.TeamChessViewWatchView, self.updateTeamChessViewWatchState, self)
 end
 
-function var_0_0.removeEvents(arg_11_0)
+function EliminateSceneView:removeEvents()
 	return
 end
 
-function var_0_0.updateSceneState(arg_12_0)
-	local var_12_0 = EliminateLevelModel.instance:getCurRoundType()
-	local var_12_1 = var_12_0 == EliminateEnum.RoundType.TeamChess
-	local var_12_2 = var_12_0 == EliminateEnum.RoundType.Match3Chess
+function EliminateSceneView:updateSceneState()
+	local roundType = EliminateLevelModel.instance:getCurRoundType()
+	local isTeamChess = roundType == EliminateEnum.RoundType.TeamChess
+	local isMatch3Chess = roundType == EliminateEnum.RoundType.Match3Chess
 
-	if arg_12_0._eliminateSceneGo then
-		gohelper.setActive(arg_12_0._eliminateSceneGo, var_12_2)
+	if self._eliminateSceneGo then
+		gohelper.setActive(self._eliminateSceneGo, isMatch3Chess)
 	end
 
-	if arg_12_0._teamChessGo then
-		gohelper.setActive(arg_12_0._teamChessGo, var_12_1)
+	if self._teamChessGo then
+		gohelper.setActive(self._teamChessGo, isTeamChess)
 	end
 
-	if var_12_2 then
-		arg_12_0:updateViewState()
+	if isMatch3Chess then
+		self:updateViewState()
 	end
 end
 
-local var_0_1 = Vector2.zero
+local tempV2 = Vector2.zero
 
-function var_0_0.soliderItemDragBegin(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = TeamChessUnitEntityMgr.instance:getEmptyEntity(arg_13_0._unitContainer, arg_13_1)
+function EliminateSceneView:soliderItemDragBegin(soliderId, x, y)
+	local entity = TeamChessUnitEntityMgr.instance:getEmptyEntity(self._unitContainer, soliderId)
 
-	var_0_1.x, var_0_1.y = arg_13_2, arg_13_3
+	tempV2.x, tempV2.y = x, y
 
-	var_13_0:setScreenPoint(var_0_1)
-	var_13_0:setUnitParentPosition(arg_13_0._unitPosition)
-	var_13_0:updateByScreenPos()
-	var_13_0:setActive(true)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemBeginModelUpdated, arg_13_1, arg_13_2, arg_13_3)
+	entity:setScreenPoint(tempV2)
+	entity:setUnitParentPosition(self._unitPosition)
+	entity:updateByScreenPos()
+	entity:setActive(true)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemBeginModelUpdated, soliderId, x, y)
 end
 
-function var_0_0.soliderItemDrag(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
-	local var_14_0 = TeamChessUnitEntityMgr.instance:getEmptyEntity(arg_14_0._unitContainer, arg_14_1)
+function EliminateSceneView:soliderItemDrag(soliderId, uid, strongHoldId, x, y)
+	local entity = TeamChessUnitEntityMgr.instance:getEmptyEntity(self._unitContainer, soliderId)
 
-	var_0_1.x, var_0_1.y = arg_14_4, arg_14_5
+	tempV2.x, tempV2.y = x, y
 
-	var_14_0:setScreenPoint(var_0_1)
-	var_14_0:setUnitParentPosition(arg_14_0._unitPosition)
-	var_14_0:updateByScreenPos()
-	var_14_0:setActive(true)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragModelUpdated, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
+	entity:setScreenPoint(tempV2)
+	entity:setUnitParentPosition(self._unitPosition)
+	entity:updateByScreenPos()
+	entity:setActive(true)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragModelUpdated, soliderId, uid, strongHoldId, x, y)
 end
 
-function var_0_0.soliderItemDragEnd(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	TeamChessUnitEntityMgr.instance:getEmptyEntity(arg_15_0._unitContainer, arg_15_1):setActive(false)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragEndModelUpdated, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
+function EliminateSceneView:soliderItemDragEnd(soliderId, uid, strongHoldId, x, y)
+	local entity = TeamChessUnitEntityMgr.instance:getEmptyEntity(self._unitContainer, soliderId)
+
+	entity:setActive(false)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessItemDragEndModelUpdated, soliderId, uid, strongHoldId, x, y)
 end
 
-function var_0_0.refreshStronghold3DChess(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
-	if arg_16_1 == nil then
+function EliminateSceneView:refreshStronghold3DChess(data, strongholdId, pos, itemTr, playOutAndIn)
+	if data == nil then
 		return
 	end
 
-	if arg_16_0.teamChessUnitMoList == nil then
-		arg_16_0.teamChessUnitMoList = {}
-		arg_16_0.teamChessUnitItem = {}
+	if self.teamChessUnitMoList == nil then
+		self.teamChessUnitMoList = {}
+		self.teamChessUnitItem = {}
 	end
 
-	local var_16_0 = arg_16_1.uid
-	local var_16_1 = arg_16_0.teamChessUnitMoList[var_16_0]
-	local var_16_2 = TeamChessUnitEntityMgr.instance:getEntity(var_16_0)
+	local uid = data.uid
+	local mo = self.teamChessUnitMoList[uid]
+	local entity = TeamChessUnitEntityMgr.instance:getEntity(uid)
 
-	if var_16_1 ~= nil then
-		var_16_1:update(arg_16_1.uid, arg_16_1.id, arg_16_2, arg_16_3, arg_16_1.teamType)
+	if mo ~= nil then
+		mo:update(data.uid, data.id, strongholdId, pos, data.teamType)
 	else
-		var_16_1 = TeamChessUnitMO.New()
+		mo = TeamChessUnitMO.New()
 
-		var_16_1:init(arg_16_1.uid, arg_16_1.id, arg_16_2, arg_16_3, arg_16_1.teamType)
+		mo:init(data.uid, data.id, strongholdId, pos, data.teamType)
 
-		var_16_2 = TeamChessUnitEntityMgr.instance:addEntity(var_16_1, arg_16_0._unitContainer)
+		entity = TeamChessUnitEntityMgr.instance:addEntity(mo, self._unitContainer)
 	end
 
 	if canLogNormal then
-		logNormal("EliminateSceneView==>refreshStronghold3DChess--1", arg_16_1.uid)
+		logNormal("EliminateSceneView==>refreshStronghold3DChess--1", data.uid)
 	end
 
-	if var_16_2 ~= nil then
-		var_16_2:refreshTransform(arg_16_4, arg_16_0._unitPosition)
-		var_16_2:setCanClick(true)
-		var_16_2:setCanDrag(true)
-		var_16_2:setActive(true)
-		var_16_2:refreshMeshOrder()
+	if entity ~= nil then
+		entity:refreshTransform(itemTr, self._unitPosition)
+		entity:setCanClick(true)
+		entity:setCanDrag(true)
+		entity:setActive(true)
+		entity:refreshMeshOrder()
 	end
 
-	arg_16_0.teamChessUnitMoList[arg_16_1.uid] = var_16_1
+	self.teamChessUnitMoList[data.uid] = mo
 end
 
-function var_0_0.removeStronghold3DChess(arg_17_0, arg_17_1)
-	if arg_17_0.teamChessUnitMoList == nil then
+function EliminateSceneView:removeStronghold3DChess(uid)
+	if self.teamChessUnitMoList == nil then
 		return
 	end
 
-	arg_17_0.teamChessUnitMoList[arg_17_1] = nil
+	self.teamChessUnitMoList[uid] = nil
 
-	TeamChessUnitEntityMgr.instance:removeEntity(arg_17_1)
+	TeamChessUnitEntityMgr.instance:removeEntity(uid)
 end
 
-function var_0_0.hideAllStronghold3DChess(arg_18_0)
+function EliminateSceneView:hideAllStronghold3DChess()
 	TeamChessUnitEntityMgr.instance:setAllEntityActive(false)
 end
 
-function var_0_0.updateViewState(arg_19_0)
-	local var_19_0 = EliminateLevelModel.instance:getCurRoundType()
+function EliminateSceneView:updateViewState()
+	local roundType = EliminateLevelModel.instance:getCurRoundType()
 
-	TeamChessUnitEntityMgr.instance:setAllEntityActiveAndPlayAni(var_19_0 == EliminateEnum.RoundType.TeamChess)
-	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(var_19_0 == EliminateEnum.RoundType.TeamChess)
+	TeamChessUnitEntityMgr.instance:setAllEntityActiveAndPlayAni(roundType == EliminateEnum.RoundType.TeamChess)
+	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(roundType == EliminateEnum.RoundType.TeamChess)
 	TeamChessUnitEntityMgr.instance:setAllEmptyEntityActive(false)
 end
 
-function var_0_0.updateTeamChessViewWatchState(arg_20_0, arg_20_1)
-	if arg_20_1 then
+function EliminateSceneView:updateTeamChessViewWatchState(state)
+	if state then
 		TeamChessUnitEntityMgr.instance:cacheAllEntityShowMode()
 		TeamChessUnitEntityMgr.instance:setAllEntityNormal()
 	else
 		TeamChessUnitEntityMgr.instance:restoreEntityShowMode()
 	end
 
-	TeamChessUnitEntityMgr.instance:setAllEntityActiveAndPlayAni(arg_20_1)
-	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(arg_20_1)
+	TeamChessUnitEntityMgr.instance:setAllEntityActiveAndPlayAni(state)
+	TeamChessUnitEntityMgr.instance:setAllEntityCanClick(state)
 
-	if arg_20_0._eliminateSceneGo then
-		gohelper.setActive(arg_20_0._eliminateSceneGo, not arg_20_1)
+	if self._eliminateSceneGo then
+		gohelper.setActive(self._eliminateSceneGo, not state)
 	end
 
-	if arg_20_0._teamChessGo then
-		gohelper.setActive(arg_20_0._teamChessGo, arg_20_1)
-	end
-end
-
-function var_0_0.onOpenFinish(arg_21_0)
-	if arg_21_0._sceneGo then
-		arg_21_0:calcSceneBoard()
+	if self._teamChessGo then
+		gohelper.setActive(self._teamChessGo, state)
 	end
 end
 
-function var_0_0._onScreenResize(arg_22_0)
-	if arg_22_0._sceneGo then
-		arg_22_0:calcSceneBoard()
+function EliminateSceneView:onOpenFinish()
+	if self._sceneGo then
+		self:calcSceneBoard()
 	end
-
-	arg_22_0:calCanvasWidthAndHeight()
 end
 
-function var_0_0.calcSceneBoard(arg_23_0)
-	if not arg_23_0._sceneGo then
+function EliminateSceneView:_onScreenResize()
+	if self._sceneGo then
+		self:calcSceneBoard()
+	end
+
+	self:calCanvasWidthAndHeight()
+end
+
+function EliminateSceneView:calcSceneBoard()
+	if not self._sceneGo then
 		return
 	end
 
-	local var_23_0 = gohelper.findChild(arg_23_0._sceneGo, "BackGround/size")
+	local sizeGo = gohelper.findChild(self._sceneGo, "BackGround/size")
 
-	if not var_23_0 then
+	if not sizeGo then
 		return
 	end
 
-	local var_23_1 = var_23_0:GetComponentInChildren(typeof(UnityEngine.BoxCollider))
+	local box = sizeGo:GetComponentInChildren(typeof(UnityEngine.BoxCollider))
 
-	if not var_23_1 then
+	if not box then
 		return
 	end
 
-	arg_23_0._mapSize = var_23_1.size
+	self._mapSize = box.size
 
-	local var_23_2
-	local var_23_3 = GameUtil.getAdapterScale()
+	local canvasGo
+	local scale = GameUtil.getAdapterScale()
 
-	if var_23_3 ~= 1 then
-		var_23_2 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	if scale ~= 1 then
+		canvasGo = ViewMgr.instance:getUILayer(UILayerName.Hud)
 	else
-		var_23_2 = ViewMgr.instance:getUIRoot()
+		canvasGo = ViewMgr.instance:getUIRoot()
 	end
 
-	local var_23_4 = var_23_2.transform:GetWorldCorners()
-	local var_23_5 = var_23_4[1] * var_23_3
-	local var_23_6 = var_23_4[3] * var_23_3
+	local worldcorners = canvasGo.transform:GetWorldCorners()
+	local posTL = worldcorners[1] * scale
+	local posBR = worldcorners[3] * scale
 
-	arg_23_0._viewWidth = math.abs(var_23_6.x - var_23_5.x)
-	arg_23_0._viewHeight = math.abs(var_23_6.y - var_23_5.y)
+	self._viewWidth = math.abs(posBR.x - posTL.x)
+	self._viewHeight = math.abs(posBR.y - posTL.y)
 
-	local var_23_7 = 5.8
-	local var_23_8 = var_23_1.center
+	local cameraOffsetY = 5.8
+	local center = box.center
 
-	arg_23_0._mapMinX = var_23_5.x - (arg_23_0._mapSize.x / 2 - arg_23_0._viewWidth) - var_23_8.x
-	arg_23_0._mapMaxX = var_23_5.x + arg_23_0._mapSize.x / 2 - var_23_8.x
-	arg_23_0._mapMinY = var_23_5.y - arg_23_0._mapSize.y / 2 + var_23_7 - var_23_8.y
-	arg_23_0._mapMaxY = var_23_5.y + (arg_23_0._mapSize.y / 2 - arg_23_0._viewHeight) + var_23_7 - var_23_8.y
-	CameraMgr.instance:getMainCamera().orthographicSize = 5 * GameUtil.getAdapterScale(true)
+	self._mapMinX = posTL.x - (self._mapSize.x / 2 - self._viewWidth) - center.x
+	self._mapMaxX = posTL.x + self._mapSize.x / 2 - center.x
+	self._mapMinY = posTL.y - self._mapSize.y / 2 + cameraOffsetY - center.y
+	self._mapMaxY = posTL.y + (self._mapSize.y / 2 - self._viewHeight) + cameraOffsetY - center.y
+
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale(true)
+
+	camera.orthographicSize = 5 * scale
 end
 
-function var_0_0.calCanvasWidthAndHeight(arg_24_0)
-	if arg_24_0._sceneCanvasGo == nil then
+function EliminateSceneView:calCanvasWidthAndHeight()
+	if self._sceneCanvasGo == nil then
 		return
 	end
 
-	local var_24_0 = gohelper.find("POPUP_TOP").transform
-	local var_24_1 = recthelper.getWidth(var_24_0)
-	local var_24_2 = recthelper.getHeight(var_24_0)
+	local popupTop = gohelper.find("POPUP_TOP")
+	local uiRootTr = popupTop.transform
+	local width = recthelper.getWidth(uiRootTr)
+	local height = recthelper.getHeight(uiRootTr)
 
-	recthelper.setSize(arg_24_0._sceneCanvasGo.transform, var_24_1, var_24_2)
-	recthelper.setSize(arg_24_0._sceneTipCanvasGo.transform, var_24_1, var_24_2)
+	recthelper.setSize(self._sceneCanvasGo.transform, width, height)
+	recthelper.setSize(self._sceneTipCanvasGo.transform, width, height)
 
-	local var_24_3 = gohelper.findChild(arg_24_0._sceneCanvasGo, "#go_cameraMain")
+	local mainView = gohelper.findChild(self._sceneCanvasGo, "#go_cameraMain")
 
-	if var_24_3 ~= nil then
-		recthelper.setSize(var_24_3.transform, var_24_1, var_24_2)
+	if mainView ~= nil then
+		recthelper.setSize(mainView.transform, width, height)
 	end
 end
 
-function var_0_0._initCanvas(arg_25_0)
-	local var_25_0 = arg_25_0.viewContainer:getSetting().otherRes[4]
+function EliminateSceneView:_initCanvas()
+	local path = self.viewContainer:getSetting().otherRes[4]
 
-	arg_25_0._sceneCanvasGo = arg_25_0:getResInst(var_25_0, arg_25_0._sceneRoot)
-	arg_25_0._sceneCanvas = arg_25_0._sceneCanvasGo:GetComponent("Canvas")
-	arg_25_0._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
-	arg_25_0._sceneCanvas.sortingOrder = -1
-	arg_25_0._sceneTipCanvasGo = gohelper.clone(arg_25_0._sceneCanvasGo, arg_25_0._sceneRoot, "SceneTipCanvas")
-	arg_25_0._sceneTipCanvas = arg_25_0._sceneTipCanvasGo:GetComponent("Canvas")
-	arg_25_0._sceneTipCanvas.worldCamera = CameraMgr.instance:getMainCamera()
-	arg_25_0._sceneTipCanvas.sortingOrder = 30
+	self._sceneCanvasGo = self:getResInst(path, self._sceneRoot)
+	self._sceneCanvas = self._sceneCanvasGo:GetComponent("Canvas")
+	self._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
+	self._sceneCanvas.sortingOrder = -1
+	self._sceneTipCanvasGo = gohelper.clone(self._sceneCanvasGo, self._sceneRoot, "SceneTipCanvas")
+	self._sceneTipCanvas = self._sceneTipCanvasGo:GetComponent("Canvas")
+	self._sceneTipCanvas.worldCamera = CameraMgr.instance:getMainCamera()
+	self._sceneTipCanvas.sortingOrder = 30
 
-	arg_25_0.viewContainer:setTeamChessViewParent(arg_25_0._sceneCanvasGo, arg_25_0._sceneCanvas)
-	arg_25_0.viewContainer:setTeamChessTipViewParent(arg_25_0._sceneTipCanvasGo, arg_25_0._sceneTipCanvas)
-	transformhelper.setPosXY(arg_25_0._sceneCanvasGo.transform, 0, 0.8798389)
-	transformhelper.setPosXY(arg_25_0._sceneTipCanvasGo.transform, 0, 0.8798389)
+	self.viewContainer:setTeamChessViewParent(self._sceneCanvasGo, self._sceneCanvas)
+	self.viewContainer:setTeamChessTipViewParent(self._sceneTipCanvasGo, self._sceneTipCanvas)
+	transformhelper.setPosXY(self._sceneCanvasGo.transform, 0, 0.8798389)
+	transformhelper.setPosXY(self._sceneTipCanvasGo.transform, 0, 0.8798389)
 end
 
-function var_0_0.showEffect(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6, arg_26_7, arg_26_8)
-	arg_26_5 = arg_26_5 or 1
-	arg_26_6 = arg_26_6 or 1
-	arg_26_7 = arg_26_7 or 1
+function EliminateSceneView:showEffect(effectType, posX, posY, posZ, scaleX, scaleY, scaleZ, time)
+	scaleX = scaleX or 1
+	scaleY = scaleY or 1
+	scaleZ = scaleZ or 1
 
-	local var_26_0 = TeamChessEffectPool.getEffect(arg_26_1, arg_26_0._onEffectLoadEnd, arg_26_0)
+	local effect = TeamChessEffectPool.getEffect(effectType, self._onEffectLoadEnd, self)
 
-	var_26_0:setWorldPos(arg_26_2, arg_26_3, arg_26_4)
-	var_26_0:setWorldScale(arg_26_5, arg_26_6, arg_26_7)
-	var_26_0:play(arg_26_8)
+	effect:setWorldPos(posX, posY, posZ)
+	effect:setWorldScale(scaleX, scaleY, scaleZ)
+	effect:play(time)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	if arg_27_0.teamChessUnitMoList then
-		tabletool.clear(arg_27_0.teamChessUnitMoList)
+function EliminateSceneView:onDestroyView()
+	if self.teamChessUnitMoList then
+		tabletool.clear(self.teamChessUnitMoList)
 
-		arg_27_0.teamChessUnitMoList = nil
+		self.teamChessUnitMoList = nil
 	end
 
-	if arg_27_0._eliminateSceneGo then
-		arg_27_0._eliminateSceneGo = nil
+	if self._eliminateSceneGo then
+		self._eliminateSceneGo = nil
 	end
 
-	if arg_27_0._teamChessGo then
-		arg_27_0._teamChessGo = nil
+	if self._teamChessGo then
+		self._teamChessGo = nil
 	end
 
-	if arg_27_0._sceneTipCanvasGo then
-		arg_27_0._sceneTipCanvas = nil
-		arg_27_0._sceneTipCanvasGo = nil
+	if self._sceneTipCanvasGo then
+		self._sceneTipCanvas = nil
+		self._sceneTipCanvasGo = nil
 	end
 
-	if arg_27_0._sceneCanvasGo then
-		arg_27_0._sceneCanvas = nil
-		arg_27_0._sceneCanvasGo = nil
+	if self._sceneCanvasGo then
+		self._sceneCanvas = nil
+		self._sceneCanvasGo = nil
 	end
 
-	arg_27_0._unitContainer = nil
-	arg_27_0._unitEffectContainer = nil
+	self._unitContainer = nil
+	self._unitEffectContainer = nil
 
-	if arg_27_0._loader1 then
-		arg_27_0._loader1:dispose()
+	if self._loader1 then
+		self._loader1:dispose()
 
-		arg_27_0._loader1 = nil
+		self._loader1 = nil
 	end
 
-	if arg_27_0._loader2 then
-		arg_27_0._loader2:dispose()
+	if self._loader2 then
+		self._loader2:dispose()
 
-		arg_27_0._loader2 = nil
+		self._loader2 = nil
 	end
 
-	if arg_27_0._sceneRoot then
-		gohelper.destroy(arg_27_0._sceneRoot)
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_27_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 end
 
-return var_0_0
+return EliminateSceneView

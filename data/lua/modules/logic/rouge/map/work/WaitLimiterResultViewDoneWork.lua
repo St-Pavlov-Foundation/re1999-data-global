@@ -1,33 +1,39 @@
-﻿module("modules.logic.rouge.map.work.WaitLimiterResultViewDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/work/WaitLimiterResultViewDoneWork.lua
 
-local var_0_0 = class("WaitLimiterResultViewDoneWork", BaseWork)
+module("modules.logic.rouge.map.work.WaitLimiterResultViewDoneWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not arg_1_0:_checkIsNeedOpenRougeLimiterResultView() then
-		arg_1_0:onDone(true)
+local WaitLimiterResultViewDoneWork = class("WaitLimiterResultViewDoneWork", BaseWork)
+
+function WaitLimiterResultViewDoneWork:onStart()
+	local hasLimiterResult = self:_checkIsNeedOpenRougeLimiterResultView()
+
+	if not hasLimiterResult then
+		self:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0.onCloseViewDone, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self.onCloseViewDone, self)
 	RougeDLCController101.instance:openRougeLimiterResultView()
 end
 
-function var_0_0._checkIsNeedOpenRougeLimiterResultView(arg_2_0)
-	local var_2_0 = RougeModel.instance:getRougeResult()
+function WaitLimiterResultViewDoneWork:_checkIsNeedOpenRougeLimiterResultView()
+	local rougeResult = RougeModel.instance:getRougeResult()
+	local limiterResultMo = rougeResult and rougeResult:getLimiterResultMo()
+	local hasLimiterResult = limiterResultMo ~= nil
 
-	return (var_2_0 and var_2_0:getLimiterResultMo()) ~= nil
+	return hasLimiterResult
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_3_0.onCloseViewDone, arg_3_0)
+function WaitLimiterResultViewDoneWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self.onCloseViewDone, self)
 end
 
-function var_0_0.onCloseViewDone(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.RougeLimiterResultView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_4_0.onCloseView, arg_4_0)
-		arg_4_0:onDone(true)
+function WaitLimiterResultViewDoneWork:onCloseViewDone(viewName)
+	if viewName == ViewName.RougeLimiterResultView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self.onCloseView, self)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return WaitLimiterResultViewDoneWork

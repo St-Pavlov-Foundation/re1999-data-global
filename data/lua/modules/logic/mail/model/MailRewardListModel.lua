@@ -1,19 +1,21 @@
-﻿module("modules.logic.mail.model.MailRewardListModel", package.seeall)
+﻿-- chunkname: @modules/logic/mail/model/MailRewardListModel.lua
 
-local var_0_0 = class("MailRewardListModel", ListScrollModel)
+module("modules.logic.mail.model.MailRewardListModel", package.seeall)
 
-function var_0_0.setRewardList(arg_1_0, arg_1_1)
-	arg_1_0._moList = {}
+local MailRewardListModel = class("MailRewardListModel", ListScrollModel)
 
-	if arg_1_1 then
-		for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-			table.insert(arg_1_0._moList, iter_1_1)
+function MailRewardListModel:setRewardList(rewardList)
+	self._moList = {}
+
+	if rewardList then
+		for _, rewardMO in pairs(rewardList) do
+			table.insert(self._moList, rewardMO)
 		end
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
+	self:setList(self._moList)
 end
 
-var_0_0.instance = var_0_0.New()
+MailRewardListModel.instance = MailRewardListModel.New()
 
-return var_0_0
+return MailRewardListModel

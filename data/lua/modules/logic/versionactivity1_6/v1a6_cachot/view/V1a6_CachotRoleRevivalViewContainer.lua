@@ -1,32 +1,34 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoleRevivalViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotRoleRevivalViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotRoleRevivalViewContainer = class("V1a6_CachotRoleRevivalViewContainer", BaseViewContainer)
+
+function V1a6_CachotRoleRevivalViewContainer:buildViews()
 	return {
 		V1a6_CachotRoleRevivalView.New(),
-		LuaListScrollView.New(V1a6_CachotRoleRevivalPrepareListModel.instance, arg_1_0:_getPrepareListParam())
+		LuaListScrollView.New(V1a6_CachotRoleRevivalPrepareListModel.instance, self:_getPrepareListParam())
 	}
 end
 
-function var_0_0._getPrepareListParam(arg_2_0)
-	local var_2_0 = ListScrollParam.New()
+function V1a6_CachotRoleRevivalViewContainer:_getPrepareListParam()
+	local scrollParam = ListScrollParam.New()
 
-	var_2_0.scrollGOPath = "#go_tipswindow/scroll_view"
-	var_2_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_2_0.prefabUrl = arg_2_0._viewSetting.otherRes[2]
-	var_2_0.cellClass = V1a6_CachotRoleRevivalPrepareItem
-	var_2_0.scrollDir = ScrollEnum.ScrollDirH
-	var_2_0.lineCount = 4
-	var_2_0.cellWidth = 624
-	var_2_0.cellHeight = 192
-	var_2_0.cellSpaceH = 0
-	var_2_0.cellSpaceV = 0
-	var_2_0.startSpace = 0
-	var_2_0.endSpace = 0
-	var_2_0.minUpdateCountInFrame = 100
+	scrollParam.scrollGOPath = "#go_tipswindow/scroll_view"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[2]
+	scrollParam.cellClass = V1a6_CachotRoleRevivalPrepareItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 4
+	scrollParam.cellWidth = 624
+	scrollParam.cellHeight = 192
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
+	scrollParam.minUpdateCountInFrame = 100
 
-	return var_2_0
+	return scrollParam
 end
 
-return var_0_0
+return V1a6_CachotRoleRevivalViewContainer

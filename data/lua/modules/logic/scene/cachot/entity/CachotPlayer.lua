@@ -1,7 +1,9 @@
-﻿module("modules.logic.scene.cachot.entity.CachotPlayer", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/entity/CachotPlayer.lua
 
-local var_0_0 = class("CachotPlayer", BaseUnitSpawn)
-local var_0_1 = {
+module("modules.logic.scene.cachot.entity.CachotPlayer", package.seeall)
+
+local CachotPlayer = class("CachotPlayer", BaseUnitSpawn)
+local AnimName = {
 	IdleToMove = "move2",
 	MoveToIdle = "move2_2",
 	Idle = "idle",
@@ -10,161 +12,161 @@ local var_0_1 = {
 	TriggerIdle = "idle2",
 	Move = "move2_1"
 }
-local var_0_2 = {
-	[var_0_1.Idle] = true,
-	[var_0_1.Move] = true
+local LoopAnim = {
+	[AnimName.Idle] = true,
+	[AnimName.Move] = true
 }
 
-function var_0_0.Create(arg_1_0)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+function CachotPlayer.Create(containerGO)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(containerGO, CachotPlayer)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
+function CachotPlayer:init(go)
+	CachotPlayer.super.init(self, go)
 
-	arg_2_0.trans = arg_2_1.transform
-	arg_2_0._effectDict = {}
-	arg_2_0._effectContainer = gohelper.create3d(arg_2_0.go, "Effect")
+	self.trans = go.transform
+	self._effectDict = {}
+	self._effectContainer = gohelper.create3d(self.go, "Effect")
 
-	arg_2_0:loadSpine("roles/dilaoxiaoren/dilaoxiaoren.prefab")
+	self:loadSpine("roles/dilaoxiaoren/dilaoxiaoren.prefab")
 end
 
-function var_0_0.initComponents(arg_3_0)
-	arg_3_0:addComp("spine", UnitSpine)
-	arg_3_0:addComp("spineRenderer", UnitSpineRenderer)
-	arg_3_0.spine:setLayer(UnityLayer.Scene)
+function CachotPlayer:initComponents()
+	self:addComp("spine", UnitSpine)
+	self:addComp("spineRenderer", UnitSpineRenderer)
+	self.spine:setLayer(UnityLayer.Scene)
 end
 
-function var_0_0.loadSpine(arg_4_0, arg_4_1)
-	if arg_4_0.spine then
-		arg_4_0.spine:setResPath(arg_4_1, arg_4_0._onSpineLoaded, arg_4_0)
+function CachotPlayer:loadSpine(spinePath)
+	if self.spine then
+		self.spine:setResPath(spinePath, self._onSpineLoaded, self)
 	end
 end
 
-function var_0_0._onSpineLoaded(arg_5_0, arg_5_1)
-	if arg_5_0.spineRenderer then
-		arg_5_0.spineRenderer:setSpine(arg_5_1)
+function CachotPlayer:_onSpineLoaded(spine)
+	if self.spineRenderer then
+		self.spineRenderer:setSpine(spine)
 	end
 
-	arg_5_0.spine:addAnimEventCallback(arg_5_0._onAnimEvent, arg_5_0)
-	arg_5_0:playAnim(arg_5_0._cacheAnimName or var_0_1.Idle)
-	transformhelper.setLocalScale(arg_5_1:getSpineTr(), 0.435, 0.435, 0.435)
-	gohelper.setActive(arg_5_0.spine:getSpineGO(), arg_5_0._isActive)
+	self.spine:addAnimEventCallback(self._onAnimEvent, self)
+	self:playAnim(self._cacheAnimName or AnimName.Idle)
+	transformhelper.setLocalScale(spine:getSpineTr(), 0.435, 0.435, 0.435)
+	gohelper.setActive(self.spine:getSpineGO(), self._isActive)
 end
 
-function var_0_0.playAnim(arg_6_0, arg_6_1)
-	arg_6_0._cacheAnimName = arg_6_1
+function CachotPlayer:playAnim(animName)
+	self._cacheAnimName = animName
 
-	if arg_6_0.spine:getSpineGO() then
-		arg_6_0.spine:play(arg_6_1, var_0_2[arg_6_1], not var_0_2[arg_6_1])
+	if self.spine:getSpineGO() then
+		self.spine:play(animName, LoopAnim[animName], not LoopAnim[animName])
 	end
 end
 
-function var_0_0.playEnterAnim(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		arg_7_0:playAnim(var_0_1.MainSceneBorn)
+function CachotPlayer:playEnterAnim(isMainScene)
+	if isMainScene then
+		self:playAnim(AnimName.MainSceneBorn)
 	else
-		arg_7_0:playAnim(var_0_1.RogueSceneBorn)
-		arg_7_0:showEffect(V1a6_CachotEnum.PlayerEffect.RoleBornEffect)
-		TaskDispatcher.cancelTask(arg_7_0._delayHideEffect, arg_7_0)
-		TaskDispatcher.runDelay(arg_7_0._delayHideEffect, arg_7_0, 1.5)
+		self:playAnim(AnimName.RogueSceneBorn)
+		self:showEffect(V1a6_CachotEnum.PlayerEffect.RoleBornEffect)
+		TaskDispatcher.cancelTask(self._delayHideEffect, self)
+		TaskDispatcher.runDelay(self._delayHideEffect, self, 1.5)
 	end
 end
 
-function var_0_0._delayHideEffect(arg_8_0)
-	arg_8_0:hideEffect(V1a6_CachotEnum.PlayerEffect.RoleBornEffect)
+function CachotPlayer:_delayHideEffect()
+	self:hideEffect(V1a6_CachotEnum.PlayerEffect.RoleBornEffect)
 end
 
-function var_0_0._onAnimEvent(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 == SpineAnimEvent.ActionComplete then
-		if arg_9_1 == var_0_1.IdleToMove then
-			arg_9_0:playAnim(var_0_1.Move)
+function CachotPlayer:_onAnimEvent(actionName, eventName, eventArgs)
+	if eventName == SpineAnimEvent.ActionComplete then
+		if actionName == AnimName.IdleToMove then
+			self:playAnim(AnimName.Move)
 		else
-			arg_9_0:playAnim(var_0_1.Idle)
+			self:playAnim(AnimName.Idle)
 		end
 
-		if arg_9_1 == var_0_1.RogueSceneBorn then
+		if actionName == AnimName.RogueSceneBorn then
 			V1a6_CachotController.instance:dispatchEvent(V1a6_CachotEvent.CheckPlayStory)
 		end
 	end
 end
 
-function var_0_0.setIsMove(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_2 and arg_10_0._isMoving == arg_10_1 then
+function CachotPlayer:setIsMove(isMoving, isForce)
+	if not isForce and self._isMoving == isMoving then
 		return
 	end
 
-	arg_10_0._isMoving = arg_10_1
+	self._isMoving = isMoving
 
-	if not arg_10_0:isCanMove() then
+	if not self:isCanMove() then
 		return
 	end
 
-	if arg_10_0._cacheAnimName == var_0_1.Move and not arg_10_0._isMoving then
-		arg_10_0:playAnim(var_0_1.MoveToIdle)
-	elseif arg_10_0._cacheAnimName == var_0_1.Idle and arg_10_0._isMoving then
-		arg_10_0:playAnim(var_0_1.IdleToMove)
+	if self._cacheAnimName == AnimName.Move and not self._isMoving then
+		self:playAnim(AnimName.MoveToIdle)
+	elseif self._cacheAnimName == AnimName.Idle and self._isMoving then
+		self:playAnim(AnimName.IdleToMove)
 	else
-		arg_10_0:playAnim(arg_10_0._isMoving and var_0_1.Move or var_0_1.Idle)
+		self:playAnim(self._isMoving and AnimName.Move or AnimName.Idle)
 	end
 end
 
-function var_0_0.playTriggerAnim(arg_11_0)
-	arg_11_0:playAnim(var_0_1.TriggerIdle)
+function CachotPlayer:playTriggerAnim()
+	self:playAnim(AnimName.TriggerIdle)
 end
 
-function var_0_0.isCanMove(arg_12_0)
-	if not arg_12_0.spine:getSpineGO() or not arg_12_0.spine:getSpineGO().activeSelf then
+function CachotPlayer:isCanMove()
+	if not self.spine:getSpineGO() or not self.spine:getSpineGO().activeSelf then
 		return
 	end
 
-	return arg_12_0._cacheAnimName == var_0_1.Idle or arg_12_0._cacheAnimName == var_0_1.Move or arg_12_0._cacheAnimName == var_0_1.MoveToIdle or arg_12_0._cacheAnimName == var_0_1.IdleToMove or not arg_12_0._cacheAnimName
+	return self._cacheAnimName == AnimName.Idle or self._cacheAnimName == AnimName.Move or self._cacheAnimName == AnimName.MoveToIdle or self._cacheAnimName == AnimName.IdleToMove or not self._cacheAnimName
 end
 
-function var_0_0.setDir(arg_13_0, arg_13_1, arg_13_2)
-	if not arg_13_2 and arg_13_0._isLeft == arg_13_1 then
+function CachotPlayer:setDir(isLeft, isForce)
+	if not isForce and self._isLeft == isLeft then
 		return
 	end
 
-	arg_13_0._isLeft = arg_13_1
+	self._isLeft = isLeft
 
-	transformhelper.setLocalScale(arg_13_0.trans, arg_13_1 and 1 or -1, 1, 1)
+	transformhelper.setLocalScale(self.trans, isLeft and 1 or -1, 1, 1)
 end
 
-function var_0_0.showEffect(arg_14_0, arg_14_1)
-	if arg_14_0._effectDict[arg_14_1] then
+function CachotPlayer:showEffect(effectName)
+	if self._effectDict[effectName] then
 		return
 	end
 
-	local var_14_0 = GameSceneMgr.instance:getCurScene()
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	arg_14_0._effectDict[arg_14_1] = var_14_0.preloader:getResInst(CachotScenePreloader[arg_14_1], arg_14_0._effectContainer)
+	self._effectDict[effectName] = scene.preloader:getResInst(CachotScenePreloader[effectName], self._effectContainer)
 end
 
-function var_0_0.hideEffect(arg_15_0, arg_15_1)
-	if arg_15_0._effectDict[arg_15_1] then
-		gohelper.destroy(arg_15_0._effectDict[arg_15_1])
+function CachotPlayer:hideEffect(effectName)
+	if self._effectDict[effectName] then
+		gohelper.destroy(self._effectDict[effectName])
 
-		arg_15_0._effectDict[arg_15_1] = nil
+		self._effectDict[effectName] = nil
 	end
 end
 
-function var_0_0.setActive(arg_16_0, arg_16_1)
-	arg_16_0._isActive = arg_16_1
+function CachotPlayer:setActive(isShow)
+	self._isActive = isShow
 
-	gohelper.setActive(arg_16_0.spine:getSpineGO(), arg_16_1)
+	gohelper.setActive(self.spine:getSpineGO(), isShow)
 end
 
-function var_0_0.getPos(arg_17_0)
-	return arg_17_0.trans.position
+function CachotPlayer:getPos()
+	return self.trans.position
 end
 
-function var_0_0.dispose(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._delayHideEffect, arg_18_0)
-	gohelper.destroy(arg_18_0._effectContainer)
+function CachotPlayer:dispose()
+	TaskDispatcher.cancelTask(self._delayHideEffect, self)
+	gohelper.destroy(self._effectContainer)
 
-	arg_18_0._effectContainer = nil
-	arg_18_0._effectDict = {}
+	self._effectContainer = nil
+	self._effectDict = {}
 end
 
-return var_0_0
+return CachotPlayer

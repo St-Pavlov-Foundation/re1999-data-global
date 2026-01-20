@@ -1,58 +1,60 @@
-﻿module("modules.logic.room.utils.RoomDistributionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomDistributionHelper.lua
 
-local var_0_0 = {}
+module("modules.logic.room.utils.RoomDistributionHelper", package.seeall)
 
-function var_0_0.matchType(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_2 = arg_1_2 or 0
+local RoomDistributionHelper = {}
 
-	local var_1_0 = RoomDistributionEnum.DistributionTypeValue[arg_1_0]
+function RoomDistributionHelper.matchType(type, resourceList, rotate)
+	rotate = rotate or 0
 
-	for iter_1_0 = 1, 6 do
-		local var_1_1 = RoomRotateHelper.rotateDirection(iter_1_0, arg_1_2)
-		local var_1_2 = true
+	local typeValue = RoomDistributionEnum.DistributionTypeValue[type]
 
-		for iter_1_1 = 1, 6 do
-			if arg_1_1[RoomRotateHelper.rotateDirection(iter_1_1, arg_1_2)] ~= var_1_0[iter_1_1] then
-				var_1_2 = false
+	for i = 1, 6 do
+		local offset = RoomRotateHelper.rotateDirection(i, rotate)
+		local flag = true
+
+		for j = 1, 6 do
+			if resourceList[RoomRotateHelper.rotateDirection(j, rotate)] ~= typeValue[j] then
+				flag = false
 
 				break
 			end
 		end
 
-		if var_1_2 then
-			return true, var_1_1
+		if flag then
+			return true, offset
 		end
 
-		arg_1_1 = var_0_0._moveForward(arg_1_1)
+		resourceList = RoomDistributionHelper._moveForward(resourceList)
 	end
 
 	return false, 0
 end
 
-function var_0_0._moveForward(arg_2_0)
-	local var_2_0 = {}
+function RoomDistributionHelper._moveForward(resourceList)
+	local newResourceList = {}
 
-	for iter_2_0 = 1, 6 do
-		var_2_0[iter_2_0] = arg_2_0[RoomRotateHelper.rotateDirection(iter_2_0, 1)]
+	for i = 1, 6 do
+		newResourceList[i] = resourceList[RoomRotateHelper.rotateDirection(i, 1)]
 	end
 
-	return var_2_0
+	return newResourceList
 end
 
-function var_0_0.getIndex(arg_3_0, arg_3_1)
-	local var_3_0 = 0
+function RoomDistributionHelper.getIndex(resourceList, rotate)
+	local index = 0
 
-	for iter_3_0 = 1, 6 do
-		local var_3_1 = RoomRotateHelper.rotateDirection(iter_3_0, arg_3_1)
+	for i = 1, 6 do
+		local rotated = RoomRotateHelper.rotateDirection(i, rotate)
 
-		var_3_0 = var_3_1
+		index = rotated
 
-		if not arg_3_0[var_3_1] then
+		if not resourceList[rotated] then
 			break
 		end
 	end
 
-	return var_3_0
+	return index
 end
 
-return var_0_0
+return RoomDistributionHelper

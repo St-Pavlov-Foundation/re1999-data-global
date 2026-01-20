@@ -4088,7 +4088,7 @@
   {
     "id": 535,
     "groupId": 6000001,
-    "type": 2,
+    "type": 3,
     "unlock": "",
     "worthFix": -500,
     "item": 800031,
@@ -4097,7 +4097,7 @@
   {
     "id": 536,
     "groupId": 6000002,
-    "type": 2,
+    "type": 3,
     "unlock": "",
     "worthFix": -500,
     "item": 800032,
@@ -4124,7 +4124,7 @@
   {
     "id": 539,
     "groupId": 6000011,
-    "type": 2,
+    "type": 3,
     "unlock": "",
     "worthFix": 0,
     "item": 800031,
@@ -4133,7 +4133,7 @@
   {
     "id": 540,
     "groupId": 6000012,
-    "type": 2,
+    "type": 3,
     "unlock": "",
     "worthFix": 0,
     "item": 800032,
@@ -4160,7 +4160,7 @@
   {
     "id": 543,
     "groupId": 6000021,
-    "type": 2,
+    "type": 3,
     "unlock": "",
     "worthFix": 500,
     "item": 800031,
@@ -4169,7 +4169,7 @@
   {
     "id": 544,
     "groupId": 6000022,
-    "type": 2,
+    "type": 3,
     "unlock": "",
     "worthFix": 500,
     "item": 800032,
@@ -4250,7 +4250,7 @@
   {
     "id": 553,
     "groupId": 7000006,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 700007,
@@ -4259,7 +4259,7 @@
   {
     "id": 554,
     "groupId": 7000007,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 553002,
@@ -4268,7 +4268,7 @@
   {
     "id": 555,
     "groupId": 7000008,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 553005,
@@ -4277,7 +4277,7 @@
   {
     "id": 556,
     "groupId": 7000009,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 700002,
@@ -4286,7 +4286,7 @@
   {
     "id": 557,
     "groupId": 7000010,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 553008,
@@ -4295,7 +4295,7 @@
   {
     "id": 558,
     "groupId": 7000011,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 553011,
@@ -4304,7 +4304,7 @@
   {
     "id": 559,
     "groupId": 7000012,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 553012,
@@ -4313,7 +4313,7 @@
   {
     "id": 560,
     "groupId": 7000013,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 560001,
@@ -4322,7 +4322,7 @@
   {
     "id": 561,
     "groupId": 7000014,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 700006,
@@ -4331,7 +4331,7 @@
   {
     "id": 562,
     "groupId": 7000015,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 700003,
@@ -4340,7 +4340,7 @@
   {
     "id": 563,
     "groupId": 7000016,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 700005,
@@ -4349,7 +4349,7 @@
   {
     "id": 564,
     "groupId": 7000017,
-    "type": 4,
+    "type": 0,
     "unlock": "",
     "worthFix": 0,
     "item": 553006,

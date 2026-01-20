@@ -1,133 +1,135 @@
-﻿module("modules.logic.commandstation.rpc.CommandStationRpc", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/rpc/CommandStationRpc.lua
 
-local var_0_0 = class("CommandStationRpc", BaseRpc)
+module("modules.logic.commandstation.rpc.CommandStationRpc", package.seeall)
 
-function var_0_0.sendGetCommandPostInfoRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = CommandPostModule_pb.GetCommandPostInfoRequest()
+local CommandStationRpc = class("CommandStationRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function CommandStationRpc:sendGetCommandPostInfoRequest(callback, callobj)
+	local req = CommandPostModule_pb.GetCommandPostInfoRequest()
+
+	return self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveGetCommandPostInfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function CommandStationRpc:onReceiveGetCommandPostInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_2_0 = arg_2_2.eventList
-	local var_2_1 = arg_2_2.tasks
-	local var_2_2 = arg_2_2.catchTasks
-	local var_2_3 = arg_2_2.gainBonus
-	local var_2_4 = arg_2_2.paper
-	local var_2_5 = arg_2_2.catchNum
+	local eventList = msg.eventList
+	local tasks = msg.tasks
+	local catchTasks = msg.catchTasks
+	local gainBonus = msg.gainBonus
+	local paper = msg.paper
+	local catchNum = msg.catchNum
 
-	CommandStationModel.instance:updateEventList(var_2_0)
-	CommandStationTaskListModel.instance:initServerData(var_2_1, var_2_2)
+	CommandStationModel.instance:updateEventList(eventList)
 
-	CommandStationModel.instance.paper = var_2_4
-	CommandStationModel.instance.catchNum = var_2_5
+	CommandStationModel.instance.paper = paper
+	CommandStationModel.instance.catchNum = catchNum
 	CommandStationModel.instance.gainBonus = {
-		unpack(var_2_3)
+		unpack(gainBonus)
 	}
 
+	CommandStationTaskListModel.instance:initServerData(tasks, catchTasks)
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.OnGetCommandPostInfo)
 end
 
-function var_0_0.sendFinishCommandPostEventRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = CommandPostModule_pb.FinishCommandPostEventRequest()
+function CommandStationRpc:sendFinishCommandPostEventRequest(id, callback, callobj)
+	local req = CommandPostModule_pb.FinishCommandPostEventRequest()
 
-	var_3_0.id = arg_3_1
+	req.id = id
 
-	arg_3_0:sendMsg(var_3_0, arg_3_2, arg_3_3)
+	self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveFinishCommandPostEventReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function CommandStationRpc:onReceiveFinishCommandPostEventReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_4_0 = arg_4_2.id
+	local id = msg.id
 
-	CommandStationModel.instance:setEventFinish(var_4_0)
+	CommandStationModel.instance:setEventFinish(id)
 end
 
-function var_0_0.sendCommandPostDispatchRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = CommandPostModule_pb.CommandPostDispatchRequest()
+function CommandStationRpc:sendCommandPostDispatchRequest(eventId, heroIds, callback, callobj)
+	local req = CommandPostModule_pb.CommandPostDispatchRequest()
 
-	var_5_0.eventId = arg_5_1
+	req.eventId = eventId
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_2) do
-		table.insert(var_5_0.heroIds, iter_5_1)
+	for i, v in ipairs(heroIds) do
+		table.insert(req.heroIds, v)
 	end
 
-	arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
+	self:sendMsg(req, callback, callobj)
 end
 
-function var_0_0.onReceiveCommandPostDispatchReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 ~= 0 then
+function CommandStationRpc:onReceiveCommandPostDispatchReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.event
+	local event = msg.event
 
-	CommandStationModel.instance:updateEventInfo(var_6_0)
+	CommandStationModel.instance:updateEventInfo(event)
 end
 
-function var_0_0.sendCommandPostBonusAllRequest(arg_7_0)
-	local var_7_0 = CommandPostModule_pb.CommandPostBonusAllRequest()
+function CommandStationRpc:sendCommandPostBonusAllRequest()
+	local req = CommandPostModule_pb.CommandPostBonusAllRequest()
 
-	arg_7_0:sendMsg(var_7_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveCommandPostBonusAllReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= 0 then
+function CommandStationRpc:onReceiveCommandPostBonusAllReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_8_0 = arg_8_2.bonusId
+	local bonusId = msg.bonusId
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		table.insert(CommandStationModel.instance.gainBonus, iter_8_1)
+	for i, v in ipairs(bonusId) do
+		table.insert(CommandStationModel.instance.gainBonus, v)
 	end
 
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.OnBonusUpdate)
 end
 
-function var_0_0.sendCommandPostPaperRequest(arg_9_0)
-	local var_9_0 = CommandPostModule_pb.CommandPostPaperRequest()
+function CommandStationRpc:sendCommandPostPaperRequest()
+	local req = CommandPostModule_pb.CommandPostPaperRequest()
 
-	arg_9_0:sendMsg(var_9_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveCommandPostPaperReply(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= 0 then
+function CommandStationRpc:onReceiveCommandPostPaperReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_10_0 = arg_10_2.paper
+	local paper = msg.paper
 
-	CommandStationModel.instance.paper = var_10_0
+	CommandStationModel.instance.paper = paper
 
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.OnPaperUpdate)
 end
 
-function var_0_0.sendCommandPostEventReadRequest(arg_11_0, arg_11_1)
-	local var_11_0 = CommandPostModule_pb.CommandPostEventReadRequest()
+function CommandStationRpc:sendCommandPostEventReadRequest(id)
+	local req = CommandPostModule_pb.CommandPostEventReadRequest()
 
-	var_11_0.id = arg_11_1
+	req.id = id
 
-	arg_11_0:sendMsg(var_11_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveCommandPostEventReadReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 ~= 0 then
+function CommandStationRpc:onReceiveCommandPostEventReadReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_12_0 = arg_12_2.id
+	local id = msg.id
 
-	CommandStationModel.instance:setEventRead(var_12_0)
+	CommandStationModel.instance:setEventRead(id)
 end
 
-var_0_0.instance = var_0_0.New()
+CommandStationRpc.instance = CommandStationRpc.New()
 
-return var_0_0
+return CommandStationRpc

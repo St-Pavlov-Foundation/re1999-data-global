@@ -1,270 +1,275 @@
-﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneBuildingCritterMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/entitymgr/RoomSceneBuildingCritterMgr.lua
 
-local var_0_0 = class("RoomSceneBuildingCritterMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.room.comp.entitymgr.RoomSceneBuildingCritterMgr", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneBuildingCritterMgr = class("RoomSceneBuildingCritterMgr", BaseSceneUnitMgr)
+
+function RoomSceneBuildingCritterMgr:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomSceneBuildingCritterMgr:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
 	if RoomController.instance:isEditMode() then
 		return
 	end
 
-	arg_2_0:addEventListeners()
-	arg_2_0:refreshAllCritterEntities()
+	self:addEventListeners()
+	self:refreshAllCritterEntities()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	if arg_3_0._isInitAddEvent then
+function RoomSceneBuildingCritterMgr:addEventListeners()
+	if self._isInitAddEvent then
 		return
 	end
 
-	arg_3_0._isInitAddEvent = true
+	self._isInitAddEvent = true
 
-	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureInfoUpdate, arg_3_0._startRefreshAllTask, arg_3_0)
-	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0._startRefreshAllTask, arg_3_0)
-	ManufactureController.instance:registerCallback(ManufactureEvent.CritterWorkInfoChange, arg_3_0._startRefreshAllTask, arg_3_0)
-	CritterController.instance:registerCallback(CritterEvent.CritterBuildingChangeRestingCritter, arg_3_0._startRefreshAllTask, arg_3_0)
+	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureInfoUpdate, self._startRefreshAllTask, self)
+	ManufactureController.instance:registerCallback(ManufactureEvent.ManufactureBuildingInfoChange, self._startRefreshAllTask, self)
+	ManufactureController.instance:registerCallback(ManufactureEvent.CritterWorkInfoChange, self._startRefreshAllTask, self)
+	CritterController.instance:registerCallback(CritterEvent.CritterBuildingChangeRestingCritter, self._startRefreshAllTask, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	if not arg_4_0._isInitAddEvent then
+function RoomSceneBuildingCritterMgr:removeEventListeners()
+	if not self._isInitAddEvent then
 		return
 	end
 
-	arg_4_0._isInitAddEvent = false
+	self._isInitAddEvent = false
 
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureInfoUpdate, arg_4_0._startRefreshAllTask, arg_4_0)
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingInfoChange, arg_4_0._startRefreshAllTask, arg_4_0)
-	ManufactureController.instance:unregisterCallback(ManufactureEvent.CritterWorkInfoChange, arg_4_0._startRefreshAllTask, arg_4_0)
-	CritterController.instance:unregisterCallback(CritterEvent.CritterBuildingChangeRestingCritter, arg_4_0._startRefreshAllTask, arg_4_0)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureInfoUpdate, self._startRefreshAllTask, self)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.ManufactureBuildingInfoChange, self._startRefreshAllTask, self)
+	ManufactureController.instance:unregisterCallback(ManufactureEvent.CritterWorkInfoChange, self._startRefreshAllTask, self)
+	CritterController.instance:unregisterCallback(CritterEvent.CritterBuildingChangeRestingCritter, self._startRefreshAllTask, self)
 end
 
-function var_0_0._startRefreshAllTask(arg_5_0)
-	if not arg_5_0._isHasWaitRefreshAllTask then
-		arg_5_0._isHasWaitRefreshAllTask = true
+function RoomSceneBuildingCritterMgr:_startRefreshAllTask()
+	if not self._isHasWaitRefreshAllTask then
+		self._isHasWaitRefreshAllTask = true
 
-		TaskDispatcher.runDelay(arg_5_0._onRunRefreshAllTask, arg_5_0, 0.1)
+		TaskDispatcher.runDelay(self._onRunRefreshAllTask, self, 0.1)
 	end
 end
 
-function var_0_0._stopRefreshAllTask(arg_6_0)
-	if arg_6_0._isHasWaitRefreshAllTask then
-		arg_6_0._isHasWaitRefreshAllTask = false
+function RoomSceneBuildingCritterMgr:_stopRefreshAllTask()
+	if self._isHasWaitRefreshAllTask then
+		self._isHasWaitRefreshAllTask = false
 
-		TaskDispatcher.cancelTask(arg_6_0._onRunRefreshAllTask, arg_6_0)
+		TaskDispatcher.cancelTask(self._onRunRefreshAllTask, self)
 	end
 end
 
-function var_0_0._onRunRefreshAllTask(arg_7_0)
-	arg_7_0._isHasWaitRefreshAllTask = false
+function RoomSceneBuildingCritterMgr:_onRunRefreshAllTask()
+	self._isHasWaitRefreshAllTask = false
 
-	arg_7_0:refreshAllCritterEntities()
+	self:refreshAllCritterEntities()
 end
 
-function var_0_0.refreshAllCritterEntities(arg_8_0)
-	local var_8_0 = RoomModel.instance:getGameMode() == RoomEnum.GameMode.Ob
-	local var_8_1 = {}
-	local var_8_2 = arg_8_0:getRoomCritterEntityDict()
-	local var_8_3 = RoomCritterModel.instance
+function RoomSceneBuildingCritterMgr:refreshAllCritterEntities()
+	local gameMode = RoomModel.instance:getGameMode()
+	local isShowBuildingCritter = gameMode == RoomEnum.GameMode.Ob
+	local destroyCritterList = {}
+	local critterEntityDict = self:getRoomCritterEntityDict()
+	local tRoomCritterModel = RoomCritterModel.instance
 
-	for iter_8_0, iter_8_1 in pairs(var_8_2) do
-		local var_8_4
-		local var_8_5
+	for _, critterEntity in pairs(critterEntityDict) do
+		local stayBuildingUid, stayBuildingSlotId
 
-		if var_8_0 then
-			local var_8_6 = var_8_3:getCritterMOById(iter_8_1.id)
+		if isShowBuildingCritter then
+			local roomCritterMO = tRoomCritterModel:getCritterMOById(critterEntity.id)
 
-			if var_8_6 then
-				var_8_4, var_8_5 = var_8_6:getStayBuilding()
+			if roomCritterMO then
+				stayBuildingUid, stayBuildingSlotId = roomCritterMO:getStayBuilding()
 			end
 		end
 
-		if var_8_4 and var_8_5 then
-			local var_8_7 = arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_4, SceneTag.RoomBuilding)
+		if stayBuildingUid and stayBuildingSlotId then
+			local buildingEntity = self._scene.buildingmgr:getBuildingEntity(stayBuildingUid, SceneTag.RoomBuilding)
 
-			if var_8_7 then
-				local var_8_8 = var_8_7:getCritterPoint(var_8_5)
+			if buildingEntity then
+				local critterPointGO = buildingEntity:getCritterPoint(stayBuildingSlotId)
 
-				if not gohelper.isNil(var_8_8) then
-					local var_8_9, var_8_10, var_8_11 = transformhelper.getPos(var_8_8.transform)
+				if not gohelper.isNil(critterPointGO) then
+					local x, y, z = transformhelper.getPos(critterPointGO.transform)
 
-					iter_8_1:setLocalPos(var_8_9, var_8_10, var_8_11)
-					iter_8_1.critterspine:refreshAnimState()
+					critterEntity:setLocalPos(x, y, z)
+					critterEntity.critterspine:refreshAnimState()
 				end
 			end
 		else
-			var_8_1[#var_8_1 + 1] = iter_8_1
+			destroyCritterList[#destroyCritterList + 1] = critterEntity
 		end
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(var_8_1) do
-		arg_8_0:destroyCritter(iter_8_3)
+	for _, critterEntity in ipairs(destroyCritterList) do
+		self:destroyCritter(critterEntity)
 	end
 
-	if var_8_0 then
-		local var_8_12 = var_8_3:getRoomBuildingCritterList() or {}
+	if isShowBuildingCritter then
+		local buildingCritterMOList = tRoomCritterModel:getRoomBuildingCritterList() or {}
 
-		for iter_8_4, iter_8_5 in ipairs(var_8_12) do
-			local var_8_13 = iter_8_5:getId()
+		for _, mo in ipairs(buildingCritterMOList) do
+			local critterUid = mo:getId()
+			local critterEntity = self:getCritterEntity(critterUid)
 
-			if not arg_8_0:getCritterEntity(var_8_13) then
-				arg_8_0:spawnRoomCritter(iter_8_5)
+			if not critterEntity then
+				self:spawnRoomCritter(mo)
 			end
 		end
 	end
 end
 
-function var_0_0.spawnRoomCritter(arg_9_0, arg_9_1)
-	local var_9_0 = RoomController.instance:isObMode()
-	local var_9_1 = RoomController.instance:isVisitMode()
+function RoomSceneBuildingCritterMgr:spawnRoomCritter(roomCritterMO)
+	local isObMode = RoomController.instance:isObMode()
+	local isVisitMode = RoomController.instance:isVisitMode()
 
-	if not var_9_0 and not var_9_1 or not arg_9_1 then
+	if not isObMode and not isVisitMode or not roomCritterMO then
 		return
 	end
 
-	local var_9_2, var_9_3 = arg_9_1:getStayBuilding()
+	local stayBuildingUid, stayBuildingSlotId = roomCritterMO:getStayBuilding()
 
-	if not var_9_2 or not var_9_3 then
+	if not stayBuildingUid or not stayBuildingSlotId then
 		return
 	end
 
-	local var_9_4 = arg_9_0._scene.go.critterRoot
-	local var_9_5 = gohelper.create3d(var_9_4, string.format("%s", arg_9_1.id))
-	local var_9_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_5, RoomCritterEntity, arg_9_1.id)
-	local var_9_7 = {
+	local critterRoot = self._scene.go.critterRoot
+	local critterGO = gohelper.create3d(critterRoot, string.format("%s", roomCritterMO.id))
+	local critterEntity = MonoHelper.addNoUpdateLuaComOnceToGo(critterGO, RoomCritterEntity, roomCritterMO.id)
+	local currentPosition = {
 		z = 0,
 		x = 0,
 		y = 0
 	}
-	local var_9_8 = arg_9_0._scene.buildingmgr:getBuildingEntity(var_9_2, SceneTag.RoomBuilding)
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(stayBuildingUid, SceneTag.RoomBuilding)
 
-	if var_9_8 then
-		local var_9_9 = var_9_8:getCritterPoint(var_9_3)
+	if buildingEntity then
+		local critterPointGO = buildingEntity:getCritterPoint(stayBuildingSlotId)
 
-		if not gohelper.isNil(var_9_9) then
-			local var_9_10, var_9_11, var_9_12 = transformhelper.getPos(var_9_9.transform)
+		if not gohelper.isNil(critterPointGO) then
+			local x, y, z = transformhelper.getPos(critterPointGO.transform)
 
-			var_9_7.x = var_9_10
-			var_9_7.y = var_9_11
-			var_9_7.z = var_9_12
+			currentPosition.x = x
+			currentPosition.y = y
+			currentPosition.z = z
 		else
-			logError(string.format("RoomSceneBuildingCritterMgr:spawnRoomCritter error, no critter point, buildingUid:%s,index:%s", var_9_2, var_9_3 + 1))
+			logError(string.format("RoomSceneBuildingCritterMgr:spawnRoomCritter error, no critter point, buildingUid:%s,index:%s", stayBuildingUid, stayBuildingSlotId + 1))
 		end
 	end
 
-	var_9_6:setLocalPos(var_9_7.x, var_9_7.y, var_9_7.z)
+	critterEntity:setLocalPos(currentPosition.x, currentPosition.y, currentPosition.z)
 
-	if arg_9_1:isRestingCritter() then
-		var_9_6.critterspine:setScale(CritterEnum.CritterScaleInSeatSlot)
+	local isRestingCritter = roomCritterMO:isRestingCritter()
+
+	if isRestingCritter then
+		critterEntity.critterspine:setScale(CritterEnum.CritterScaleInSeatSlot)
 	end
 
-	arg_9_0:addUnit(var_9_6)
-	gohelper.addChild(var_9_4, var_9_5)
+	self:addUnit(critterEntity)
+	gohelper.addChild(critterRoot, critterGO)
 
-	return var_9_6
+	return critterEntity
 end
 
-function var_0_0.refreshAllCritterEntityPos(arg_10_0)
-	if not arg_10_0._scene then
+function RoomSceneBuildingCritterMgr:refreshAllCritterEntityPos()
+	if not self._scene then
 		return
 	end
 
-	local var_10_0 = arg_10_0:getRoomCritterEntityDict()
+	local critterEntityDict = self:getRoomCritterEntityDict()
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		local var_10_1 = iter_10_1:getMO()
-		local var_10_2
-		local var_10_3
+	for _, critterEntity in pairs(critterEntityDict) do
+		local roomCritterMO = critterEntity:getMO()
+		local stayBuildingUid, stayBuildingSlotId
 
-		if var_10_1 then
-			var_10_2, var_10_3 = var_10_1:getStayBuilding()
+		if roomCritterMO then
+			stayBuildingUid, stayBuildingSlotId = roomCritterMO:getStayBuilding()
 		end
 
-		if not var_10_2 or not var_10_3 then
+		if not stayBuildingUid or not stayBuildingSlotId then
 			return
 		end
 
-		local var_10_4 = arg_10_0._scene.buildingmgr:getBuildingEntity(var_10_2, SceneTag.RoomBuilding)
-		local var_10_5 = var_10_4 and var_10_4:getCritterPoint(var_10_3)
+		local buildingEntity = self._scene.buildingmgr:getBuildingEntity(stayBuildingUid, SceneTag.RoomBuilding)
+		local critterPointGO = buildingEntity and buildingEntity:getCritterPoint(stayBuildingSlotId)
 
-		if gohelper.isNil(var_10_5) then
+		if gohelper.isNil(critterPointGO) then
 			return
 		end
 
-		local var_10_6, var_10_7, var_10_8 = transformhelper.getPos(var_10_5.transform)
+		local x, y, z = transformhelper.getPos(critterPointGO.transform)
 
-		iter_10_1:setLocalPos(var_10_6, var_10_7, var_10_8)
+		critterEntity:setLocalPos(x, y, z)
 	end
 end
 
-function var_0_0.refreshCritterPosByBuilding(arg_11_0, arg_11_1)
-	if not arg_11_0._scene then
+function RoomSceneBuildingCritterMgr:refreshCritterPosByBuilding(buildingUid)
+	if not self._scene then
 		return
 	end
 
-	local var_11_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_11_1)
-	local var_11_1 = arg_11_0._scene.buildingmgr:getBuildingEntity(arg_11_1, SceneTag.RoomBuilding)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-	if not var_11_1 or not var_11_0 then
+	if not buildingEntity or not buildingMO then
 		return
 	end
 
-	local var_11_2
+	local critterDict
+	local isManufacture = ManufactureConfig.instance:isManufactureBuilding(buildingMO.buildingId)
 
-	if ManufactureConfig.instance:isManufactureBuilding(var_11_0.buildingId) then
-		local var_11_3 = ManufactureModel.instance:getManufactureMOById(arg_11_1)
+	if isManufacture then
+		local manufactureInfo = ManufactureModel.instance:getManufactureMOById(buildingUid)
 
-		var_11_2 = var_11_3 and var_11_3:getSlot2CritterDict()
+		critterDict = manufactureInfo and manufactureInfo:getSlot2CritterDict()
 	else
-		local var_11_4 = ManufactureModel.instance:getCritterBuildingMOById(arg_11_1)
+		local critterBuildingInfo = ManufactureModel.instance:getCritterBuildingMOById(buildingUid)
 
-		var_11_2 = var_11_4 and var_11_4:getSeatSlot2CritterDict()
+		critterDict = critterBuildingInfo and critterBuildingInfo:getSeatSlot2CritterDict()
 	end
 
-	if not var_11_2 then
+	if not critterDict then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in pairs(var_11_2) do
-		local var_11_5 = arg_11_0:getCritterEntity(iter_11_1)
-		local var_11_6 = var_11_1:getCritterPoint(iter_11_0)
+	for slotId, critterUid in pairs(critterDict) do
+		local critterEntity = self:getCritterEntity(critterUid)
+		local critterPointGO = buildingEntity:getCritterPoint(slotId)
 
-		if not var_11_5 or gohelper.isNil(var_11_6) then
+		if not critterEntity or gohelper.isNil(critterPointGO) then
 			return
 		end
 
-		local var_11_7, var_11_8, var_11_9 = transformhelper.getPos(var_11_6.transform)
+		local x, y, z = transformhelper.getPos(critterPointGO.transform)
 
-		var_11_5:setLocalPos(var_11_7, var_11_8, var_11_9)
+		critterEntity:setLocalPos(x, y, z)
 	end
 end
 
-function var_0_0.destroyCritter(arg_12_0, arg_12_1)
-	arg_12_0:removeUnit(arg_12_1:getTag(), arg_12_1.id)
+function RoomSceneBuildingCritterMgr:destroyCritter(entity)
+	self:removeUnit(entity:getTag(), entity.id)
 end
 
-function var_0_0._onUpdate(arg_13_0)
+function RoomSceneBuildingCritterMgr:_onUpdate()
 	return
 end
 
-function var_0_0.getCritterEntity(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = (not arg_14_2 or arg_14_2 == SceneTag.RoomCharacter) and arg_14_0:getTagUnitDict(SceneTag.RoomCharacter)
+function RoomSceneBuildingCritterMgr:getCritterEntity(id, sceneTag)
+	local tagEntityDict = (not sceneTag or sceneTag == SceneTag.RoomCharacter) and self:getTagUnitDict(SceneTag.RoomCharacter)
 
-	return var_14_0 and var_14_0[arg_14_1]
+	return tagEntityDict and tagEntityDict[id]
 end
 
-function var_0_0.getRoomCritterEntityDict(arg_15_0)
-	return arg_15_0._tagUnitDict[SceneTag.RoomCharacter] or {}
+function RoomSceneBuildingCritterMgr:getRoomCritterEntityDict()
+	return self._tagUnitDict[SceneTag.RoomCharacter] or {}
 end
 
-function var_0_0.onSceneClose(arg_16_0)
-	var_0_0.super.onSceneClose(arg_16_0)
-	arg_16_0:removeEventListeners()
-	arg_16_0:_stopRefreshAllTask()
+function RoomSceneBuildingCritterMgr:onSceneClose()
+	RoomSceneBuildingCritterMgr.super.onSceneClose(self)
+	self:removeEventListeners()
+	self:_stopRefreshAllTask()
 end
 
-return var_0_0
+return RoomSceneBuildingCritterMgr

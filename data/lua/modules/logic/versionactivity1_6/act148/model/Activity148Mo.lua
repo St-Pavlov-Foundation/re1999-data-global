@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity1_6.act148.model.Activity148Mo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act148/model/Activity148Mo.lua
 
-local var_0_0 = pureTable("Activity148Mo")
+module("modules.logic.versionactivity1_6.act148.model.Activity148Mo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._lv = arg_1_2
-	arg_1_0._type = arg_1_1
+local Activity148Mo = pureTable("Activity148Mo")
+
+function Activity148Mo:init(type, lv)
+	self._lv = lv
+	self._type = type
 end
 
-function var_0_0.getLevel(arg_2_0)
-	return arg_2_0._lv
+function Activity148Mo:getLevel()
+	return self._lv
 end
 
-function var_0_0.updateByServerData(arg_3_0, arg_3_1)
-	arg_3_0._lv = arg_3_1.level
+function Activity148Mo:updateByServerData(serverData)
+	self._lv = serverData.level
 end
 
-return var_0_0
+return Activity148Mo

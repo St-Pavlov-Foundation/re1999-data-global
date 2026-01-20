@@ -1,13 +1,15 @@
-﻿module("modules.logic.activity.view.show.ActivityStoryShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/show/ActivityStoryShowViewContainer.lua
 
-local var_0_0 = class("ActivityStoryShowViewContainer", BaseViewContainer)
+module("modules.logic.activity.view.show.ActivityStoryShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityStoryShowViewContainer = class("ActivityStoryShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityStoryShowView.New())
+function ActivityStoryShowViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityStoryShowView.New())
+
+	return views
 end
 
-return var_0_0
+return ActivityStoryShowViewContainer

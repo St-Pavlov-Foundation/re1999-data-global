@@ -1,124 +1,126 @@
-﻿module("modules.logic.fight.view.FightExPointSynchronizationView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightExPointSynchronizationView.lua
 
-local var_0_0 = class("FightExPointSynchronizationView", FightBaseView)
+module("modules.logic.fight.view.FightExPointSynchronizationView", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.entityData = arg_1_1
-	arg_1_0.entityId = arg_1_1.id
+local FightExPointSynchronizationView = class("FightExPointSynchronizationView", FightBaseView)
 
-	arg_1_0:com_registMsg(FightMsgId.GetExPointView, arg_1_0.onGetExPointView)
+function FightExPointSynchronizationView:onConstructor(entityData)
+	self.entityData = entityData
+	self.entityId = entityData.id
+
+	self:com_registMsg(FightMsgId.GetExPointView, self.onGetExPointView)
 end
 
-function var_0_0.onInitView(arg_2_0)
-	recthelper.setAnchorX(arg_2_0.viewGO.transform, 30)
+function FightExPointSynchronizationView:onInitView()
+	recthelper.setAnchorX(self.viewGO.transform, 30)
 
-	arg_2_0.preImg = gohelper.findChildImage(arg_2_0.viewGO, "root/go_pre")
-	arg_2_0.preImg.fillAmount = 0
-	arg_2_0.energyImg = gohelper.findChildImage(arg_2_0.viewGO, "root/go_energy")
-	arg_2_0.animator = gohelper.onceAddComponent(arg_2_0.viewGO, typeof(UnityEngine.Animator))
+	self.preImg = gohelper.findChildImage(self.viewGO, "root/go_pre")
+	self.preImg.fillAmount = 0
+	self.energyImg = gohelper.findChildImage(self.viewGO, "root/go_energy")
+	self.animator = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
 end
 
-function var_0_0.addEvents(arg_3_0)
-	arg_3_0:com_registMsg(FightMsgId.ShowAiJiAoExpointEffectBeforeUniqueSkill, arg_3_0.onShowAiJiAoExpointEffectBeforeUniqueSkill)
-	arg_3_0:com_registFightEvent(FightEvent.OnExpointMaxAdd, arg_3_0.onExPointMaxAdd)
-	arg_3_0:com_registFightEvent(FightEvent.OnExPointChange, arg_3_0.onExPointChange)
-	arg_3_0:com_registFightEvent(FightEvent.UpdateExPoint, arg_3_0.onUpdateExPoint)
-	arg_3_0:com_registFightEvent(FightEvent.CoverPerformanceEntityData, arg_3_0.onCoverPerformanceEntityData)
+function FightExPointSynchronizationView:addEvents()
+	self:com_registMsg(FightMsgId.ShowAiJiAoExpointEffectBeforeUniqueSkill, self.onShowAiJiAoExpointEffectBeforeUniqueSkill)
+	self:com_registFightEvent(FightEvent.OnExpointMaxAdd, self.onExPointMaxAdd)
+	self:com_registFightEvent(FightEvent.OnExPointChange, self.onExPointChange)
+	self:com_registFightEvent(FightEvent.UpdateExPoint, self.onUpdateExPoint)
+	self:com_registFightEvent(FightEvent.CoverPerformanceEntityData, self.onCoverPerformanceEntityData)
 
-	arg_3_0.tweenComp = arg_3_0:addComponent(FightTweenComponent)
+	self.tweenComp = self:addComponent(FightTweenComponent)
 end
 
-function var_0_0.removeEvents(arg_4_0)
+function FightExPointSynchronizationView:removeEvents()
 	return
 end
 
-function var_0_0.onCoverPerformanceEntityData(arg_5_0, arg_5_1)
-	if arg_5_1 ~= arg_5_0.entityId then
+function FightExPointSynchronizationView:onCoverPerformanceEntityData(entityId)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	arg_5_0:refreshSlider()
+	self:refreshSlider()
 end
 
-function var_0_0.onGetExPointView(arg_6_0, arg_6_1)
-	if arg_6_1 == arg_6_0.entityId then
-		arg_6_0:com_replyMsg(FightMsgId.GetExPointView, arg_6_0)
+function FightExPointSynchronizationView:onGetExPointView(entityId)
+	if entityId == self.entityId then
+		self:com_replyMsg(FightMsgId.GetExPointView, self)
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshSlider()
+function FightExPointSynchronizationView:onOpen()
+	self:refreshSlider()
 end
 
-function var_0_0.onExPointChange(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_1 ~= arg_8_0.entityId then
+function FightExPointSynchronizationView:onExPointChange(entityId, oldNum, newNum)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	local var_8_0, var_8_1 = arg_8_0:refreshSlider()
+	local cur, max = self:refreshSlider()
 
-	if arg_8_2 < arg_8_3 and var_8_0 < var_8_1 then
-		arg_8_0:playAni("add")
+	if oldNum < newNum and cur < max then
+		self:playAni("add")
 		AudioMgr.instance:trigger(20305031)
 	end
 end
 
-function var_0_0.onUpdateExPoint(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_1 ~= arg_9_0.entityId then
+function FightExPointSynchronizationView:onUpdateExPoint(entityId, oldNum, newNum)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	arg_9_0:refreshSlider()
+	self:refreshSlider()
 end
 
-function var_0_0.onExPointMaxAdd(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= arg_10_0.entityId then
+function FightExPointSynchronizationView:onExPointMaxAdd(entityId, offsetNum)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	arg_10_0:refreshSlider()
+	self:refreshSlider()
 end
 
-function var_0_0.refreshSlider(arg_11_0)
-	local var_11_0 = arg_11_0.entityData:getMaxExPoint()
-	local var_11_1 = arg_11_0.entityData.exPoint
-	local var_11_2 = var_11_1 / var_11_0
+function FightExPointSynchronizationView:refreshSlider()
+	local max = self.entityData:getMaxExPoint()
+	local cur = self.entityData.exPoint
+	local fillAmount = cur / max
 
-	arg_11_0.tweenComp:DOFillAmount(arg_11_0.energyImg, var_11_2, 0.2)
+	self.tweenComp:DOFillAmount(self.energyImg, fillAmount, 0.2)
 
-	if var_11_0 <= var_11_1 then
-		if arg_11_0.curAniName ~= "max" then
-			arg_11_0:playAni("max")
+	if max <= cur then
+		if self.curAniName ~= "max" then
+			self:playAni("max")
 		end
 	else
-		arg_11_0:playAni("idle")
+		self:playAni("idle")
 	end
 
-	return var_11_1, var_11_0
+	return cur, max
 end
 
-function var_0_0.onShowAiJiAoExpointEffectBeforeUniqueSkill(arg_12_0, arg_12_1)
-	if arg_12_1 ~= arg_12_0.entityId then
+function FightExPointSynchronizationView:onShowAiJiAoExpointEffectBeforeUniqueSkill(entityId)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	arg_12_0.curAniName = "dazhao"
+	self.curAniName = "dazhao"
 
-	FightMsgMgr.replyMsg(FightMsgId.ShowAiJiAoExpointEffectBeforeUniqueSkill, arg_12_0.viewGO)
+	FightMsgMgr.replyMsg(FightMsgId.ShowAiJiAoExpointEffectBeforeUniqueSkill, self.viewGO)
 end
 
-function var_0_0.playAni(arg_13_0, arg_13_1)
-	arg_13_0.curAniName = arg_13_1
+function FightExPointSynchronizationView:playAni(name)
+	self.curAniName = name
 
-	arg_13_0.animator:Play(arg_13_1, 0, 0)
+	self.animator:Play(name, 0, 0)
 end
 
-function var_0_0.onClose(arg_14_0)
+function FightExPointSynchronizationView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function FightExPointSynchronizationView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightExPointSynchronizationView

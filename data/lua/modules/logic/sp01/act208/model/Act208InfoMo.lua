@@ -1,31 +1,33 @@
-﻿module("modules.logic.sp01.act208.model.Act208InfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act208/model/Act208InfoMo.lua
 
-local var_0_0 = pureTable("Act208InfoMo")
+module("modules.logic.sp01.act208.model.Act208InfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.bonusList = {}
-	arg_1_0.bonusDic = {}
+local Act208InfoMo = pureTable("Act208InfoMo")
+
+function Act208InfoMo:init()
+	self.bonusList = {}
+	self.bonusDic = {}
 end
 
-function var_0_0.setInfo(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.activityId = arg_2_1
+function Act208InfoMo:setInfo(activityId, bonus)
+	self.activityId = activityId
 
-	tabletool.clear(arg_2_0.bonusList)
-	tabletool.clear(arg_2_0.bonusDic)
+	tabletool.clear(self.bonusList)
+	tabletool.clear(self.bonusDic)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_2) do
-		table.insert(arg_2_0.bonusList, iter_2_1)
+	for _, info in ipairs(bonus) do
+		table.insert(self.bonusList, info)
 
-		arg_2_0.bonusDic[iter_2_1.id] = iter_2_1
+		self.bonusDic[info.id] = info
 	end
 end
 
-function var_0_0.canGet(arg_3_0)
+function Act208InfoMo:canGet()
 	return
 end
 
-function var_0_0.isGet(arg_4_0)
+function Act208InfoMo:isGet()
 	return
 end
 
-return var_0_0
+return Act208InfoMo

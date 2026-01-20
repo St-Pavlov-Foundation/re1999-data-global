@@ -1,25 +1,27 @@
-﻿module("modules.logic.gm.view.GMLangTxtItem", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMLangTxtItem.lua
 
-local var_0_0 = class("GMLangTxtItem", ListScrollCell)
+module("modules.logic.gm.view.GMLangTxtItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txt = gohelper.findChildText(arg_1_1, "txt")
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+local GMLangTxtItem = class("GMLangTxtItem", ListScrollCell)
 
-	arg_1_0._click:AddClickListener(arg_1_0._onClick, arg_1_0)
+function GMLangTxtItem:init(go)
+	self._txt = gohelper.findChildText(go, "txt")
+	self._click = SLFramework.UGUI.UIClickListener.Get(go)
+
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_2_0)
-	arg_2_0._click:RemoveClickListener()
+function GMLangTxtItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
-	arg_3_0._data = arg_3_1.txt
-	arg_3_0._txt.text = arg_3_1.txt
+function GMLangTxtItem:onUpdateMO(mo)
+	self._data = mo.txt
+	self._txt.text = mo.txt
 end
 
-function var_0_0._onClick(arg_4_0)
-	arg_4_0._view.viewContainer:onLangTxtClick(arg_4_0._data)
+function GMLangTxtItem:_onClick()
+	self._view.viewContainer:onLangTxtClick(self._data)
 end
 
-return var_0_0
+return GMLangTxtItem

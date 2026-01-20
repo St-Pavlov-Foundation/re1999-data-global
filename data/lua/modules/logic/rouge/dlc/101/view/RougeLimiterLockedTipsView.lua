@@ -1,80 +1,84 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterLockedTipsView.lua
 
-local var_0_0 = class("RougeLimiterLockedTipsView", BaseView)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterLockedTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._scrolltips = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_tips")
-	arg_1_0._imagebufficon = gohelper.findChildImage(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/top/#image_bufficon")
-	arg_1_0._txtbufflevel = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/top/#txt_bufflevel")
-	arg_1_0._txtbuffname = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/top/#txt_buffname")
-	arg_1_0._godesccontainer = gohelper.findChild(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer")
-	arg_1_0._txtdecitem = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer/#txt_decitem")
-	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "#scroll_tips/Viewport/Content/#txt_tips")
+local RougeLimiterLockedTipsView = class("RougeLimiterLockedTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeLimiterLockedTipsView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._scrolltips = gohelper.findChildScrollRect(self.viewGO, "#scroll_tips")
+	self._imagebufficon = gohelper.findChildImage(self.viewGO, "#scroll_tips/Viewport/Content/top/#image_bufficon")
+	self._txtbufflevel = gohelper.findChildText(self.viewGO, "#scroll_tips/Viewport/Content/top/#txt_bufflevel")
+	self._txtbuffname = gohelper.findChildText(self.viewGO, "#scroll_tips/Viewport/Content/top/#txt_buffname")
+	self._godesccontainer = gohelper.findChild(self.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer")
+	self._txtdecitem = gohelper.findChildText(self.viewGO, "#scroll_tips/Viewport/Content/#go_desccontainer/#txt_decitem")
+	self._txttips = gohelper.findChildText(self.viewGO, "#scroll_tips/Viewport/Content/#txt_tips")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function RougeLimiterLockedTipsView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function RougeLimiterLockedTipsView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RougeLimiterLockedTipsView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function RougeLimiterLockedTipsView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function RougeLimiterLockedTipsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:refreshUnlockedTips()
+function RougeLimiterLockedTipsView:onOpen()
+	self:refreshUnlockedTips()
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenRougeLimiterLockedTips)
 end
 
-function var_0_0.refreshUnlockedTips(arg_8_0)
-	arg_8_0._limiterGroupId = arg_8_0.viewParam and arg_8_0.viewParam.limiterGroupId
+function RougeLimiterLockedTipsView:refreshUnlockedTips()
+	self._limiterGroupId = self.viewParam and self.viewParam.limiterGroupId
 
-	local var_8_0 = RougeDLCConfig101.instance:getLimiterGroupCo(arg_8_0._limiterGroupId)
-	local var_8_1 = RougeDLCConfig101.instance:getLimiterGroupMaxLevel(arg_8_0._limiterGroupId)
-	local var_8_2 = RougeDLCConfig101.instance:getLimiterCoByGroupIdAndLv(arg_8_0._limiterGroupId, var_8_1)
-	local var_8_3
+	local limiterGroupCo = RougeDLCConfig101.instance:getLimiterGroupCo(self._limiterGroupId)
+	local limiterGroupMaxLv = RougeDLCConfig101.instance:getLimiterGroupMaxLevel(self._limiterGroupId)
+	local maxLvLimiterCo = RougeDLCConfig101.instance:getLimiterCoByGroupIdAndLv(self._limiterGroupId, limiterGroupMaxLv)
+	local maxLvLimiterId = maxLvLimiterCo and maxLvLimiterCo.id
 
-	var_8_3 = var_8_2 and var_8_2.id
-	arg_8_0._txtbufflevel.text = GameUtil.getRomanNums(var_8_1)
-	arg_8_0._txtbuffname.text = var_8_0 and var_8_0.title
-	arg_8_0._txttips.text = var_8_0 and var_8_0.desc
+	self._txtbufflevel.text = GameUtil.getRomanNums(limiterGroupMaxLv)
+	self._txtbuffname.text = limiterGroupCo and limiterGroupCo.title
+	self._txttips.text = limiterGroupCo and limiterGroupCo.desc
 
-	UISpriteSetMgr.instance:setRouge4Sprite(arg_8_0._imagebufficon, var_8_0.icon)
-	arg_8_0:_refreshLimiterGroupDesc()
+	UISpriteSetMgr.instance:setRouge4Sprite(self._imagebufficon, limiterGroupCo.icon)
+	self:_refreshLimiterGroupDesc()
 end
 
-function var_0_0._refreshLimiterGroupDesc(arg_9_0)
-	local var_9_0 = RougeDLCConfig101.instance:getAllLimiterCosInGroup(arg_9_0._limiterGroupId)
+function RougeLimiterLockedTipsView:_refreshLimiterGroupDesc()
+	local limiterCos = RougeDLCConfig101.instance:getAllLimiterCosInGroup(self._limiterGroupId)
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._refreshGroupDesc, var_9_0, arg_9_0._godesccontainer, arg_9_0._txtdecitem.gameObject)
+	gohelper.CreateObjList(self, self._refreshGroupDesc, limiterCos, self._godesccontainer, self._txtdecitem.gameObject)
 end
 
-function var_0_0._refreshGroupDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	gohelper.onceAddComponent(arg_10_1, gohelper.Type_TextMesh).text = arg_10_2 and arg_10_2.desc
+function RougeLimiterLockedTipsView:_refreshGroupDesc(obj, limiterCo, index)
+	local txtdesc = gohelper.onceAddComponent(obj, gohelper.Type_TextMesh)
+	local desc = limiterCo and limiterCo.desc
+
+	txtdesc.text = desc
 end
 
-function var_0_0.onClose(arg_11_0)
+function RougeLimiterLockedTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function RougeLimiterLockedTipsView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeLimiterLockedTipsView

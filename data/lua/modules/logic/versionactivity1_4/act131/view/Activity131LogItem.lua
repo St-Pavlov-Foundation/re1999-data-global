@@ -1,287 +1,289 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131LogItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131LogItem.lua
 
-local var_0_0 = class("Activity131LogItem", MixScrollCell)
-local var_0_1 = SLFramework.UGUI.GuiHelper
+module("modules.logic.versionactivity1_4.act131.view.Activity131LogItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._goname = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_name")
-	arg_1_0._goplayicon = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_playicon")
-	arg_1_0._gostopicon = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_stopicon")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_name/#go_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#go_name/#txt_name")
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_content")
-	arg_1_0._gonorole = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_norole")
-	arg_1_0._btnplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_play")
-	arg_1_0._btnstop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_stop")
+local Activity131LogItem = class("Activity131LogItem", MixScrollCell)
+local UIHelper = SLFramework.UGUI.GuiHelper
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity131LogItem:init(go)
+	self.viewGO = go
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._goname = gohelper.findChild(self.viewGO, "#go_normal/#go_name")
+	self._goplayicon = gohelper.findChild(self.viewGO, "#go_normal/#go_playicon")
+	self._gostopicon = gohelper.findChild(self.viewGO, "#go_normal/#go_stopicon")
+	self._goicon = gohelper.findChild(self.viewGO, "#go_normal/#go_name/#go_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_normal/#go_name/#txt_name")
+	self._txtcontent = gohelper.findChildText(self.viewGO, "#go_normal/#txt_content")
+	self._gonorole = gohelper.findChild(self.viewGO, "#go_normal/#go_norole")
+	self._btnplay = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_play")
+	self._btnstop = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_stop")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity131LogItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity131LogItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._btnplay:AddClickListener(arg_4_0._onPlayClick, arg_4_0)
-	arg_4_0._btnstop:AddClickListener(arg_4_0._onStopClick, arg_4_0)
-	Activity131Controller.instance:registerCallback(Activity131Event.LogSelected, arg_4_0._onItemSelected, arg_4_0)
-	Activity131Controller.instance:registerCallback(Activity131Event.LogAudioFinished, arg_4_0._onItemAudioFinished, arg_4_0)
+function Activity131LogItem:_editableInitView()
+	self._btnplay:AddClickListener(self._onPlayClick, self)
+	self._btnstop:AddClickListener(self._onStopClick, self)
+	Activity131Controller.instance:registerCallback(Activity131Event.LogSelected, self._onItemSelected, self)
+	Activity131Controller.instance:registerCallback(Activity131Event.LogAudioFinished, self._onItemAudioFinished, self)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function Activity131LogItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function Activity131LogItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0._onItemAudioFinished(arg_7_0)
-	if not arg_7_0._audioId or arg_7_0._audioId == 0 then
+function Activity131LogItem:_onItemAudioFinished()
+	if not self._audioId or self._audioId == 0 then
 		return
 	end
 
-	if not arg_7_0._mo or type(arg_7_0._mo.info) ~= "number" then
+	if not self._mo or type(self._mo.info) ~= "number" then
 		return
 	end
 
-	if arg_7_0._audioId == Activity131LogListModel.instance:getPlayingLogAudioId() then
-		gohelper.setActive(arg_7_0._gostopicon, false)
-		gohelper.setActive(arg_7_0._goplayicon, true)
-		gohelper.setActive(arg_7_0._btnplay.gameObject, true)
-		gohelper.setActive(arg_7_0._btnstop.gameObject, false)
+	if self._audioId == Activity131LogListModel.instance:getPlayingLogAudioId() then
+		gohelper.setActive(self._gostopicon, false)
+		gohelper.setActive(self._goplayicon, true)
+		gohelper.setActive(self._btnplay.gameObject, true)
+		gohelper.setActive(self._btnstop.gameObject, false)
 
-		if arg_7_0:_isPlayerSpeech() then
-			var_0_1.SetColor(arg_7_0._txtname, "#CCAD8F")
-			var_0_1.SetColor(arg_7_0._txtcontent, "#CCAD8F")
-			arg_7_0:_setSpriteMeshColor("#CCAD8F")
+		if self:_isPlayerSpeech() then
+			UIHelper.SetColor(self._txtname, "#CCAD8F")
+			UIHelper.SetColor(self._txtcontent, "#CCAD8F")
+			self:_setSpriteMeshColor("#CCAD8F")
 		else
-			var_0_1.SetColor(arg_7_0._txtname, "#EEF1E8")
-			var_0_1.SetColor(arg_7_0._txtcontent, "#EEF1E8")
-			arg_7_0:_setSpriteMeshColor("#EEF1E8")
-			var_0_1.SetColor(arg_7_0._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
+			UIHelper.SetColor(self._txtname, "#EEF1E8")
+			UIHelper.SetColor(self._txtcontent, "#EEF1E8")
+			self:_setSpriteMeshColor("#EEF1E8")
+			UIHelper.SetColor(self._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
 		end
 	end
 end
 
-function var_0_0._onItemSelected(arg_8_0, arg_8_1)
-	if not arg_8_1 or arg_8_1 == 0 or not arg_8_0._audioId or arg_8_0._audioId == 0 then
+function Activity131LogItem:_onItemSelected(audioId)
+	if not audioId or audioId == 0 or not self._audioId or self._audioId == 0 then
 		return
 	end
 
-	if arg_8_0._audioId == arg_8_1 then
+	if self._audioId == audioId then
 		return
 	end
 
-	if arg_8_0._audioId ~= 0 then
-		AudioEffectMgr.instance:stopAudio(arg_8_0._audioId, 0)
-		gohelper.setActive(arg_8_0._goplayicon, true)
-		gohelper.setActive(arg_8_0._gostopicon, false)
-		gohelper.setActive(arg_8_0._btnplay.gameObject, true)
-		gohelper.setActive(arg_8_0._btnstop.gameObject, false)
+	if self._audioId ~= 0 then
+		AudioEffectMgr.instance:stopAudio(self._audioId, 0)
+		gohelper.setActive(self._goplayicon, true)
+		gohelper.setActive(self._gostopicon, false)
+		gohelper.setActive(self._btnplay.gameObject, true)
+		gohelper.setActive(self._btnstop.gameObject, false)
 	else
-		gohelper.setActive(arg_8_0._goplayicon, false)
-		gohelper.setActive(arg_8_0._gostopicon, false)
-		gohelper.setActive(arg_8_0._btnplay.gameObject, false)
-		gohelper.setActive(arg_8_0._btnstop.gameObject, false)
+		gohelper.setActive(self._goplayicon, false)
+		gohelper.setActive(self._gostopicon, false)
+		gohelper.setActive(self._btnplay.gameObject, false)
+		gohelper.setActive(self._btnstop.gameObject, false)
 	end
 end
 
-function var_0_0._onPlayClick(arg_9_0)
-	gohelper.setActive(arg_9_0._gostopicon, true)
-	gohelper.setActive(arg_9_0._goplayicon, false)
-	gohelper.setActive(arg_9_0._btnplay.gameObject, false)
-	gohelper.setActive(arg_9_0._btnstop.gameObject, true)
-	var_0_1.SetColor(arg_9_0._txtname, "#D56B39")
-	var_0_1.SetColor(arg_9_0._txtcontent, "#D56B39")
-	arg_9_0:_setSpriteMeshColor("#D56B39")
-	var_0_1.SetColor(arg_9_0._gonorole:GetComponent(gohelper.Type_Image), "#BD5C2F")
+function Activity131LogItem:_onPlayClick()
+	gohelper.setActive(self._gostopicon, true)
+	gohelper.setActive(self._goplayicon, false)
+	gohelper.setActive(self._btnplay.gameObject, false)
+	gohelper.setActive(self._btnstop.gameObject, true)
+	UIHelper.SetColor(self._txtname, "#D56B39")
+	UIHelper.SetColor(self._txtcontent, "#D56B39")
+	self:_setSpriteMeshColor("#D56B39")
+	UIHelper.SetColor(self._gonorole:GetComponent(gohelper.Type_Image), "#BD5C2F")
 
-	if arg_9_0._audioId ~= 0 and Activity131LogListModel.instance:getPlayingLogAudioId() ~= arg_9_0._audioId then
+	if self._audioId ~= 0 and Activity131LogListModel.instance:getPlayingLogAudioId() ~= self._audioId then
 		AudioEffectMgr.instance:stopAudio(Activity131LogListModel.instance:getPlayingLogAudioId(), 0)
-		AudioEffectMgr.instance:stopAudio(arg_9_0._audioId, 0)
+		AudioEffectMgr.instance:stopAudio(self._audioId, 0)
 	end
 
-	local var_9_0 = {}
+	local param = {}
 
-	var_9_0.loopNum = 1
-	var_9_0.fadeInTime = 0
-	var_9_0.fadeOutTime = 0
-	var_9_0.volume = 100
-	var_9_0.callback = arg_9_0._onAudioFinished
-	var_9_0.callbackTarget = arg_9_0
+	param.loopNum = 1
+	param.fadeInTime = 0
+	param.fadeOutTime = 0
+	param.volume = 100
+	param.callback = self._onAudioFinished
+	param.callbackTarget = self
 
-	AudioEffectMgr.instance:playAudio(arg_9_0._audioId, var_9_0)
-	Activity131LogListModel.instance:setPlayingLogAudio(arg_9_0._audioId)
-	Activity131Controller.instance:dispatchEvent(Activity131Event.LogSelected, arg_9_0._audioId)
+	AudioEffectMgr.instance:playAudio(self._audioId, param)
+	Activity131LogListModel.instance:setPlayingLogAudio(self._audioId)
+	Activity131Controller.instance:dispatchEvent(Activity131Event.LogSelected, self._audioId)
 end
 
-function var_0_0._onStopClick(arg_10_0)
-	gohelper.setActive(arg_10_0._gostopicon, false)
-	gohelper.setActive(arg_10_0._goplayicon, true)
-	gohelper.setActive(arg_10_0._btnplay.gameObject, true)
-	gohelper.setActive(arg_10_0._btnstop.gameObject, false)
+function Activity131LogItem:_onStopClick()
+	gohelper.setActive(self._gostopicon, false)
+	gohelper.setActive(self._goplayicon, true)
+	gohelper.setActive(self._btnplay.gameObject, true)
+	gohelper.setActive(self._btnstop.gameObject, false)
 
-	if arg_10_0:_isPlayerSpeech() then
-		var_0_1.SetColor(arg_10_0._txtname, "#CCAD8F")
-		var_0_1.SetColor(arg_10_0._txtcontent, "#CCAD8F")
-		arg_10_0:_setSpriteMeshColor("#CCAD8F")
+	if self:_isPlayerSpeech() then
+		UIHelper.SetColor(self._txtname, "#CCAD8F")
+		UIHelper.SetColor(self._txtcontent, "#CCAD8F")
+		self:_setSpriteMeshColor("#CCAD8F")
 	else
-		var_0_1.SetColor(arg_10_0._txtname, "#EEF1E8")
-		var_0_1.SetColor(arg_10_0._txtcontent, "#EEF1E8")
-		arg_10_0:_setSpriteMeshColor("#EEF1E8")
-		var_0_1.SetColor(arg_10_0._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
+		UIHelper.SetColor(self._txtname, "#EEF1E8")
+		UIHelper.SetColor(self._txtcontent, "#EEF1E8")
+		self:_setSpriteMeshColor("#EEF1E8")
+		UIHelper.SetColor(self._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
 	end
 
-	Activity131LogListModel.instance:setPlayingLogAudioFinished(arg_10_0._audioId)
-	AudioEffectMgr.instance:stopAudio(arg_10_0._audioId, 0)
+	Activity131LogListModel.instance:setPlayingLogAudioFinished(self._audioId)
+	AudioEffectMgr.instance:stopAudio(self._audioId, 0)
 end
 
-function var_0_0._onAudioFinished(arg_11_0)
+function Activity131LogItem:_onAudioFinished()
 	Activity131Controller.instance:dispatchEvent(Activity131Event.LogAudioFinished)
 
-	if arg_11_0._audioId ~= Activity131LogListModel.instance:getPlayingLogAudioId() then
+	if self._audioId ~= Activity131LogListModel.instance:getPlayingLogAudioId() then
 		Activity131LogListModel.instance:setPlayingLogAudio(0)
 	end
 
-	if arg_11_0._audioId == 0 then
+	if self._audioId == 0 then
 		return
 	end
 
-	Activity131LogListModel.instance:setPlayingLogAudioFinished(arg_11_0._audioId)
-	gohelper.setActive(arg_11_0._gostopicon, false)
-	gohelper.setActive(arg_11_0._goplayicon, true)
-	gohelper.setActive(arg_11_0._btnplay.gameObject, true)
-	gohelper.setActive(arg_11_0._btnstop.gameObject, false)
+	Activity131LogListModel.instance:setPlayingLogAudioFinished(self._audioId)
+	gohelper.setActive(self._gostopicon, false)
+	gohelper.setActive(self._goplayicon, true)
+	gohelper.setActive(self._btnplay.gameObject, true)
+	gohelper.setActive(self._btnstop.gameObject, false)
 
-	if arg_11_0:_isPlayerSpeech() then
-		var_0_1.SetColor(arg_11_0._txtname, "#CCAD8F")
-		var_0_1.SetColor(arg_11_0._txtcontent, "#CCAD8F")
-		arg_11_0:_setSpriteMeshColor("#CCAD8F")
+	if self:_isPlayerSpeech() then
+		UIHelper.SetColor(self._txtname, "#CCAD8F")
+		UIHelper.SetColor(self._txtcontent, "#CCAD8F")
+		self:_setSpriteMeshColor("#CCAD8F")
 	else
-		var_0_1.SetColor(arg_11_0._txtname, "#EEF1E8")
-		var_0_1.SetColor(arg_11_0._txtcontent, "#EEF1E8")
-		arg_11_0:_setSpriteMeshColor("#EEF1E8")
-		var_0_1.SetColor(arg_11_0._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
+		UIHelper.SetColor(self._txtname, "#EEF1E8")
+		UIHelper.SetColor(self._txtcontent, "#EEF1E8")
+		self:_setSpriteMeshColor("#EEF1E8")
+		UIHelper.SetColor(self._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
 	end
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_1 then
+function Activity131LogItem:onUpdateMO(mo, mixType)
+	if not mo then
 		return
 	end
 
-	arg_12_0._mo = arg_12_1
+	self._mo = mo
 
-	var_0_1.SetColor(arg_12_0._txtname, "#EEF1E8")
-	var_0_1.SetColor(arg_12_0._txtcontent, "#EEF1E8")
-	arg_12_0:_setSpriteMeshColor("#EEF1E8")
-	var_0_1.SetColor(arg_12_0._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
+	UIHelper.SetColor(self._txtname, "#EEF1E8")
+	UIHelper.SetColor(self._txtcontent, "#EEF1E8")
+	self:_setSpriteMeshColor("#EEF1E8")
+	UIHelper.SetColor(self._gonorole:GetComponent(gohelper.Type_Image), "#DFE2D9")
 
-	arg_12_0._txtcontent.text = arg_12_1:getSpeech()
-	arg_12_0._audioId = arg_12_1:getAudioId()
+	self._txtcontent.text = mo:getSpeech()
+	self._audioId = mo:getAudioId()
 
-	gohelper.setActive(arg_12_0._gonorole, false)
+	gohelper.setActive(self._gonorole, false)
 
-	if string.nilorempty(arg_12_1:getSpeaker()) or arg_12_2 == 1 then
-		gohelper.setActive(arg_12_0._goname, false)
+	if string.nilorempty(mo:getSpeaker()) or mixType == 1 then
+		gohelper.setActive(self._goname, false)
 	else
-		arg_12_0._txtname.text = string.format("%s:", arg_12_1:getSpeaker())
+		self._txtname.text = string.format("%s:", mo:getSpeaker())
 
-		gohelper.setActive(arg_12_0._goname, true)
+		gohelper.setActive(self._goname, true)
 	end
 
-	arg_12_0:_refreshAudioStatus()
+	self:_refreshAudioStatus()
 
-	if arg_12_0:_isPlayerSpeech() then
-		gohelper.setActive(arg_12_0._goicon, true)
-		var_0_1.SetColor(arg_12_0._txtname, "#CCAD8F")
-		var_0_1.SetColor(arg_12_0._txtcontent, "#CCAD8F")
-		arg_12_0:_setSpriteMeshColor("#CCAD8F")
+	if self:_isPlayerSpeech() then
+		gohelper.setActive(self._goicon, true)
+		UIHelper.SetColor(self._txtname, "#CCAD8F")
+		UIHelper.SetColor(self._txtcontent, "#CCAD8F")
+		self:_setSpriteMeshColor("#CCAD8F")
 	else
-		gohelper.setActive(arg_12_0._goicon, false)
+		gohelper.setActive(self._goicon, false)
 	end
 end
 
-function var_0_0._refreshAudioStatus(arg_13_0)
-	if arg_13_0._audioId ~= 0 then
-		local var_13_0 = arg_13_0._audioId == Activity131LogListModel.instance:getPlayingLogAudioId()
+function Activity131LogItem:_refreshAudioStatus()
+	if self._audioId ~= 0 then
+		local isPlaying = self._audioId == Activity131LogListModel.instance:getPlayingLogAudioId()
 
-		gohelper.setActive(arg_13_0._gostopicon, var_13_0)
-		gohelper.setActive(arg_13_0._goplayicon, not var_13_0)
-		gohelper.setActive(arg_13_0._btnplay.gameObject, not var_13_0)
-		gohelper.setActive(arg_13_0._btnstop.gameObject, var_13_0)
+		gohelper.setActive(self._gostopicon, isPlaying)
+		gohelper.setActive(self._goplayicon, not isPlaying)
+		gohelper.setActive(self._btnplay.gameObject, not isPlaying)
+		gohelper.setActive(self._btnstop.gameObject, isPlaying)
 
-		if var_13_0 then
-			var_0_1.SetColor(arg_13_0._txtname, "#D56B39")
-			var_0_1.SetColor(arg_13_0._txtcontent, "#D56B39")
-			arg_13_0:_setSpriteMeshColor("#D56B39")
-			var_0_1.SetColor(arg_13_0._gonorole:GetComponent(gohelper.Type_Image), "#BD5C2F")
+		if isPlaying then
+			UIHelper.SetColor(self._txtname, "#D56B39")
+			UIHelper.SetColor(self._txtcontent, "#D56B39")
+			self:_setSpriteMeshColor("#D56B39")
+			UIHelper.SetColor(self._gonorole:GetComponent(gohelper.Type_Image), "#BD5C2F")
 		end
 	else
-		gohelper.setActive(arg_13_0._gostopicon, false)
-		gohelper.setActive(arg_13_0._goplayicon, false)
-		gohelper.setActive(arg_13_0._btnplay.gameObject, false)
-		gohelper.setActive(arg_13_0._btnstop.gameObject, false)
+		gohelper.setActive(self._gostopicon, false)
+		gohelper.setActive(self._goplayicon, false)
+		gohelper.setActive(self._btnplay.gameObject, false)
+		gohelper.setActive(self._btnstop.gameObject, false)
 	end
 end
 
-function var_0_0._setSpriteMeshColor(arg_14_0, arg_14_1)
+function Activity131LogItem:_setSpriteMeshColor(color)
 	TaskDispatcher.runDelay(function()
-		if not arg_14_0._txtcontent then
+		if not self._txtcontent then
 			return
 		end
 
-		local var_15_0 = {}
-		local var_15_1 = arg_14_0._txtcontent.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+		local meshs = {}
+		local subMeshs = self._txtcontent.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
 
-		if var_15_1 then
-			local var_15_2 = var_15_1:GetEnumerator()
+		if subMeshs then
+			local iter = subMeshs:GetEnumerator()
 
-			while var_15_2:MoveNext() do
-				local var_15_3 = var_15_2.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+			while iter:MoveNext() do
+				local subMesh = iter.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
 
-				table.insert(var_15_0, var_15_3)
+				table.insert(meshs, subMesh)
 			end
 		end
 
-		local var_15_4 = GameUtil.parseColor(arg_14_1 .. "FF")
+		local matColor = GameUtil.parseColor(color .. "FF")
 
-		for iter_15_0, iter_15_1 in pairs(var_15_0) do
-			if iter_15_1.materialForRendering then
-				iter_15_1.materialForRendering:EnableKeyword("_GRADUAL_ON")
-				iter_15_1.materialForRendering:SetColor("_Color", var_15_4)
+		for _, v in pairs(meshs) do
+			if v.materialForRendering then
+				v.materialForRendering:EnableKeyword("_GRADUAL_ON")
+				v.materialForRendering:SetColor("_Color", matColor)
 			end
 		end
 	end, nil, 0.01)
 end
 
-function var_0_0._isPlayerSpeech(arg_16_0)
+function Activity131LogItem:_isPlayerSpeech()
 	return
 end
 
-function var_0_0.onSelect(arg_17_0, arg_17_1)
+function Activity131LogItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroy(arg_18_0)
-	if arg_18_0._audioId ~= 0 then
-		Activity131LogListModel.instance:setPlayingLogAudioFinished(arg_18_0._audioId)
-		AudioEffectMgr.instance:stopAudio(arg_18_0._audioId, 0)
+function Activity131LogItem:onDestroy()
+	if self._audioId ~= 0 then
+		Activity131LogListModel.instance:setPlayingLogAudioFinished(self._audioId)
+		AudioEffectMgr.instance:stopAudio(self._audioId, 0)
 	end
 
-	arg_18_0._btnplay:RemoveClickListener()
-	arg_18_0._btnstop:RemoveClickListener()
-	Activity131Controller.instance:unregisterCallback(Activity131Event.LogSelected, arg_18_0._onItemSelected, arg_18_0)
-	Activity131Controller.instance:unregisterCallback(Activity131Event.LogAudioFinished, arg_18_0._onItemAudioFinished, arg_18_0)
+	self._btnplay:RemoveClickListener()
+	self._btnstop:RemoveClickListener()
+	Activity131Controller.instance:unregisterCallback(Activity131Event.LogSelected, self._onItemSelected, self)
+	Activity131Controller.instance:unregisterCallback(Activity131Event.LogAudioFinished, self._onItemAudioFinished, self)
 end
 
-return var_0_0
+return Activity131LogItem

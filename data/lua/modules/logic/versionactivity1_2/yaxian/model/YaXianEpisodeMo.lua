@@ -1,23 +1,25 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.model.YaXianEpisodeMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/model/YaXianEpisodeMo.lua
 
-local var_0_0 = pureTable("YaXianEpisodeMo")
+module("modules.logic.versionactivity1_2.yaxian.model.YaXianEpisodeMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.actId = arg_1_1
+local YaXianEpisodeMo = pureTable("YaXianEpisodeMo")
 
-	arg_1_0:updateMO(arg_1_2)
+function YaXianEpisodeMo:init(actId, serverData)
+	self.actId = actId
+
+	self:updateMO(serverData)
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.star = arg_2_1.star
-	arg_2_0.totalCount = arg_2_1.totalCount
-	arg_2_0.config = YaXianConfig.instance:getEpisodeConfig(YaXianEnum.ActivityId, arg_2_0.id)
+function YaXianEpisodeMo:updateMO(serverData)
+	self.id = serverData.id
+	self.star = serverData.star
+	self.totalCount = serverData.totalCount
+	self.config = YaXianConfig.instance:getEpisodeConfig(YaXianEnum.ActivityId, self.id)
 end
 
-function var_0_0.updateData(arg_3_0, arg_3_1)
-	arg_3_0.star = arg_3_1.star
-	arg_3_0.totalCount = arg_3_1.totalCount
+function YaXianEpisodeMo:updateData(serverData)
+	self.star = serverData.star
+	self.totalCount = serverData.totalCount
 end
 
-return var_0_0
+return YaXianEpisodeMo

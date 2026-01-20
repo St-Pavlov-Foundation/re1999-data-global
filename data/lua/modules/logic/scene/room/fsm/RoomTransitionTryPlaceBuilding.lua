@@ -1,213 +1,215 @@
-﻿module("modules.logic.scene.room.fsm.RoomTransitionTryPlaceBuilding", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/fsm/RoomTransitionTryPlaceBuilding.lua
 
-local var_0_0 = class("RoomTransitionTryPlaceBuilding", SimpleFSMBaseTransition)
+module("modules.logic.scene.room.fsm.RoomTransitionTryPlaceBuilding", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
+local RoomTransitionTryPlaceBuilding = class("RoomTransitionTryPlaceBuilding", SimpleFSMBaseTransition)
+
+function RoomTransitionTryPlaceBuilding:start()
+	self._scene = GameSceneMgr.instance:getCurScene()
 end
 
-function var_0_0.check(arg_2_0)
+function RoomTransitionTryPlaceBuilding:check()
 	return true
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
-	arg_3_0._param = arg_3_1
+function RoomTransitionTryPlaceBuilding:onStart(param)
+	self._param = param
 
-	local var_3_0 = arg_3_0._param.buildingUid
-	local var_3_1 = RoomMapBuildingModel.instance:getTempBuildingMO()
-	local var_3_2 = arg_3_0._param.hexPoint or var_3_1 and var_3_1.hexPoint
-	local var_3_3 = arg_3_0._param.press
-	local var_3_4 = arg_3_0._param.focus
-	local var_3_5 = true
+	local buildingUid = self._param.buildingUid
+	local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local hexPoint = self._param.hexPoint or tempBuildingMO and tempBuildingMO.hexPoint
+	local press = self._param.press
+	local focus = self._param.focus
+	local isRefreshBuiling = true
 
-	if var_3_1 and var_3_0 and var_3_1.uid ~= var_3_0 then
-		arg_3_0:_replaceBuilding()
-	elseif var_3_1 then
-		arg_3_0:_changeBuilding()
+	if tempBuildingMO and buildingUid and tempBuildingMO.uid ~= buildingUid then
+		self:_replaceBuilding()
+	elseif tempBuildingMO then
+		self:_changeBuilding()
 
-		var_3_5 = false
+		isRefreshBuiling = false
 	else
-		arg_3_0:_placeBuilding()
+		self:_placeBuilding()
 	end
 
-	if var_3_5 then
-		RoomBuildingController.instance:dispatchEvent(RoomEvent.ClientPlaceBuilding, var_3_0)
-		arg_3_0:_startDelayRefresh()
+	if isRefreshBuiling then
+		RoomBuildingController.instance:dispatchEvent(RoomEvent.ClientPlaceBuilding, buildingUid)
+		self:_startDelayRefresh()
 	end
 
-	arg_3_0:onDone()
+	self:onDone()
 	RoomBuildingController.instance:refreshBuildingOccupy()
 
-	if var_3_2 and (not var_3_3 or var_3_4) then
-		local var_3_6 = HexMath.hexToPosition(var_3_2, RoomBlockEnum.BlockSize)
+	if hexPoint and (not press or focus) then
+		local pos = HexMath.hexToPosition(hexPoint, RoomBlockEnum.BlockSize)
 
-		if var_3_4 or arg_3_0:_isOutScreen(var_3_6) then
-			local var_3_7 = {
-				focusX = var_3_6.x,
-				focusY = var_3_6.y
-			}
+		if focus or self:_isOutScreen(pos) then
+			local cameraParam = {}
 
-			arg_3_0._scene.camera:tweenCamera(var_3_7, nil, arg_3_0.onDone, arg_3_0)
+			cameraParam.focusX = pos.x
+			cameraParam.focusY = pos.y
+
+			self._scene.camera:tweenCamera(cameraParam, nil, self.onDone, self)
 		end
 	end
 end
 
-function var_0_0._startDelayRefresh(arg_4_0)
-	if not arg_4_0._isStartDelayResfresh then
-		arg_4_0._isStartDelayResfresh = true
+function RoomTransitionTryPlaceBuilding:_startDelayRefresh()
+	if not self._isStartDelayResfresh then
+		self._isStartDelayResfresh = true
 
-		TaskDispatcher.runDelay(arg_4_0._onDelayRefresh, arg_4_0, 0.05)
+		TaskDispatcher.runDelay(self._onDelayRefresh, self, 0.05)
 	end
 end
 
-function var_0_0._onDelayRefresh(arg_5_0)
-	arg_5_0._isStartDelayResfresh = false
+function RoomTransitionTryPlaceBuilding:_onDelayRefresh()
+	self._isStartDelayResfresh = false
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.BuildingCanConfirm)
 end
 
-function var_0_0._isOutScreen(arg_6_0, arg_6_1)
-	return RoomHelper.isOutCameraFocus(arg_6_1)
+function RoomTransitionTryPlaceBuilding:_isOutScreen(pos)
+	return RoomHelper.isOutCameraFocus(pos)
 end
 
-function var_0_0._replaceBuilding(arg_7_0)
-	local var_7_0 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function RoomTransitionTryPlaceBuilding:_replaceBuilding()
+	local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	arg_7_0:_addBuildingNearBlock(var_7_0.buildingId, var_7_0.hexPoint, var_7_0.rotate)
+	self:_addBuildingNearBlock(tempBuildingMO.buildingId, tempBuildingMO.hexPoint, tempBuildingMO.rotate)
 
-	local var_7_1 = arg_7_0._scene.buildingmgr:getBuildingEntity(var_7_0.id, SceneTag.RoomBuilding)
+	local entity = self._scene.buildingmgr:getBuildingEntity(tempBuildingMO.id, SceneTag.RoomBuilding)
 
-	if var_7_0.buildingState == RoomBuildingEnum.BuildingState.Temp then
+	if tempBuildingMO.buildingState == RoomBuildingEnum.BuildingState.Temp then
 		RoomMapBuildingModel.instance:removeTempBuildingMO()
 
-		if var_7_1 then
-			arg_7_0._scene.buildingmgr:destroyBuilding(var_7_1)
+		if entity then
+			self._scene.buildingmgr:destroyBuilding(entity)
 		end
-	elseif var_7_0.buildingState == RoomBuildingEnum.BuildingState.Revert then
-		local var_7_2, var_7_3, var_7_4 = RoomMapBuildingModel.instance:removeRevertBuildingMO()
+	elseif tempBuildingMO.buildingState == RoomBuildingEnum.BuildingState.Revert then
+		local revertBuildingId, revertHexPoint, revertRotate = RoomMapBuildingModel.instance:removeRevertBuildingMO()
 
-		arg_7_0:_addBuildingNearBlock(var_7_2, var_7_3, var_7_4)
+		self:_addBuildingNearBlock(revertBuildingId, revertHexPoint, revertRotate)
 
-		if var_7_1 then
-			arg_7_0._scene.buildingmgr:moveTo(var_7_1, var_7_3)
-			var_7_1:refreshRotation()
-			var_7_1:refreshBuilding()
+		if entity then
+			self._scene.buildingmgr:moveTo(entity, revertHexPoint)
+			entity:refreshRotation()
+			entity:refreshBuilding()
 		end
 
-		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_7_0.id)
+		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, tempBuildingMO.id)
 	end
 
-	arg_7_0:_placeBuilding()
+	self:_placeBuilding()
 end
 
-function var_0_0._changeBuilding(arg_8_0)
-	local var_8_0 = arg_8_0._param.hexPoint
-	local var_8_1 = arg_8_0._param.rotate
-	local var_8_2 = arg_8_0._param.focus
-	local var_8_3 = arg_8_0._param.press
-	local var_8_4 = RoomMapBuildingModel.instance:getTempBuildingMO()
+function RoomTransitionTryPlaceBuilding:_changeBuilding()
+	local hexPoint = self._param.hexPoint
+	local rotate = self._param.rotate
+	local focus = self._param.focus
+	local press = self._param.press
+	local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	var_8_0 = var_8_0 or var_8_4.hexPoint
-	var_8_1 = var_8_1 or var_8_4.rotate
+	hexPoint = hexPoint or tempBuildingMO.hexPoint
+	rotate = rotate or tempBuildingMO.rotate
 
-	arg_8_0:_addBuildingNearBlock(var_8_4.buildingId, var_8_4.hexPoint, var_8_4.rotate)
+	self:_addBuildingNearBlock(tempBuildingMO.buildingId, tempBuildingMO.hexPoint, tempBuildingMO.rotate)
 
-	local var_8_5 = HexPoint(var_8_4.hexPoint.x, var_8_4.hexPoint.y)
-	local var_8_6 = var_8_4.rotate
+	local previousHexPoint = HexPoint(tempBuildingMO.hexPoint.x, tempBuildingMO.hexPoint.y)
+	local previousRotate = tempBuildingMO.rotate
 
-	RoomMapBuildingModel.instance:changeTempBuildingMO(var_8_0, var_8_1)
-	arg_8_0:_addBuildingNearBlock(var_8_4.buildingId, var_8_4.hexPoint, var_8_4.rotate)
+	RoomMapBuildingModel.instance:changeTempBuildingMO(hexPoint, rotate)
+	self:_addBuildingNearBlock(tempBuildingMO.buildingId, tempBuildingMO.hexPoint, tempBuildingMO.rotate)
 
-	if var_8_5 ~= var_8_0 or var_8_3 then
-		local var_8_7 = arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_4.id, SceneTag.RoomBuilding)
+	if previousHexPoint ~= hexPoint or press then
+		local entity = self._scene.buildingmgr:getBuildingEntity(tempBuildingMO.id, SceneTag.RoomBuilding)
 
-		if var_8_7 then
-			arg_8_0._scene.buildingmgr:moveTo(var_8_7, var_8_0)
+		if entity then
+			self._scene.buildingmgr:moveTo(entity, hexPoint)
 		end
 
-		if not var_8_3 then
-			arg_8_0:_playAnimatorOpen(var_8_7)
-		end
-	end
-
-	if var_8_6 ~= var_8_1 then
-		local var_8_8 = arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_4.id, SceneTag.RoomBuilding)
-
-		if var_8_8 then
-			var_8_8:refreshRotation(true)
-			var_8_8:refreshBuilding()
+		if not press then
+			self:_playAnimatorOpen(entity)
 		end
 	end
 
-	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_8_4.id)
+	if previousRotate ~= rotate then
+		local entity = self._scene.buildingmgr:getBuildingEntity(tempBuildingMO.id, SceneTag.RoomBuilding)
+
+		if entity then
+			entity:refreshRotation(true)
+			entity:refreshBuilding()
+		end
+	end
+
+	RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, tempBuildingMO.id)
 end
 
-function var_0_0._placeBuilding(arg_9_0)
-	local var_9_0 = arg_9_0._param.buildingUid
-	local var_9_1 = arg_9_0._param.hexPoint
-	local var_9_2 = arg_9_0._param.rotate
-	local var_9_3 = arg_9_0._param.press
-	local var_9_4 = RoomMapBuildingModel.instance:revertTempBuildingMO(var_9_0)
+function RoomTransitionTryPlaceBuilding:_placeBuilding()
+	local buildingUid = self._param.buildingUid
+	local hexPoint = self._param.hexPoint
+	local rotate = self._param.rotate
+	local press = self._param.press
+	local revertBuildingMO = RoomMapBuildingModel.instance:revertTempBuildingMO(buildingUid)
 
-	if not var_9_4 then
-		local var_9_5 = RoomInventoryBuildingModel.instance:getBuildingMOById(var_9_0)
+	if not revertBuildingMO then
+		local inventoryBuildingMO = RoomInventoryBuildingModel.instance:getBuildingMOById(buildingUid)
 
-		RoomMapBuildingModel.instance:addTempBuildingMO(var_9_5, var_9_1)
+		RoomMapBuildingModel.instance:addTempBuildingMO(inventoryBuildingMO, hexPoint)
 	end
 
-	local var_9_6 = RoomMapBuildingModel.instance:getTempBuildingMO()
+	local tempBuildingMO = RoomMapBuildingModel.instance:getTempBuildingMO()
 
-	if var_9_6 then
-		RoomMapBuildingModel.instance:changeTempBuildingMO(var_9_1, var_9_2)
-		arg_9_0:_addBuildingNearBlock(var_9_6.buildingId, var_9_6.hexPoint, var_9_6.rotate)
+	if tempBuildingMO then
+		RoomMapBuildingModel.instance:changeTempBuildingMO(hexPoint, rotate)
+		self:_addBuildingNearBlock(tempBuildingMO.buildingId, tempBuildingMO.hexPoint, tempBuildingMO.rotate)
 
-		local var_9_7 = arg_9_0._scene.buildingmgr:getBuildingEntity(var_9_6.id, SceneTag.RoomBuilding)
+		local entity = self._scene.buildingmgr:getBuildingEntity(tempBuildingMO.id, SceneTag.RoomBuilding)
 
-		if var_9_7 then
-			arg_9_0._scene.buildingmgr:moveTo(var_9_7, var_9_1)
-			var_9_7:refreshRotation()
-			var_9_7:refreshBuilding()
+		if entity then
+			self._scene.buildingmgr:moveTo(entity, hexPoint)
+			entity:refreshRotation()
+			entity:refreshBuilding()
 
-			if var_9_4 then
-				arg_9_0:_playAnimatorOpen(var_9_7)
+			if revertBuildingMO then
+				self:_playAnimatorOpen(entity)
 			end
 		else
-			local var_9_8 = arg_9_0._scene.buildingmgr:spawnMapBuilding(var_9_6)
+			entity = self._scene.buildingmgr:spawnMapBuilding(tempBuildingMO)
 
-			arg_9_0:_playAnimatorOpen(var_9_8)
+			self:_playAnimatorOpen(entity)
 		end
 
-		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, var_9_6.id)
+		RoomBuildingController.instance:dispatchEvent(RoomEvent.BuildingUIRefreshUI, tempBuildingMO.id)
 	end
 
-	arg_9_0:onDone()
+	self:onDone()
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshResourceUIShow)
 end
 
-function var_0_0._addBuildingNearBlock(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if not arg_10_2 then
+function RoomTransitionTryPlaceBuilding:_addBuildingNearBlock(buildingId, hexPoint, rotate)
+	if not hexPoint then
 		return
 	end
 
-	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(arg_10_1, arg_10_2, arg_10_3)
+	RoomBuildingController.instance:addWaitRefreshBuildingNearBlock(buildingId, hexPoint, rotate)
 end
 
-function var_0_0._playAnimatorOpen(arg_11_0, arg_11_1)
-	if arg_11_1 then
-		arg_11_1:playAnimator("open")
+function RoomTransitionTryPlaceBuilding:_playAnimatorOpen(entity)
+	if entity then
+		entity:playAnimator("open")
 
-		local var_11_0 = arg_11_1:getAlphaThresholdValue() or 0
+		local toValue = entity:getAlphaThresholdValue() or 0
 
-		arg_11_1:tweenAlphaThreshold(1, var_11_0, 0.5)
+		entity:tweenAlphaThreshold(1, toValue, 0.5)
 	end
 end
 
-function var_0_0.stop(arg_12_0)
+function RoomTransitionTryPlaceBuilding:stop()
 	return
 end
 
-function var_0_0.clear(arg_13_0)
+function RoomTransitionTryPlaceBuilding:clear()
 	return
 end
 
-return var_0_0
+return RoomTransitionTryPlaceBuilding

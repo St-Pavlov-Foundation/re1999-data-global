@@ -1,30 +1,32 @@
-﻿module("modules.logic.seasonver.act166.model.Season166AssistHeroSingleGroupMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/model/Season166AssistHeroSingleGroupMO.lua
 
-local var_0_0 = class("Season166AssistHeroSingleGroupMO", Season166HeroSingleGroupMO)
+module("modules.logic.seasonver.act166.model.Season166AssistHeroSingleGroupMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = nil
-	arg_1_0.heroUid = nil
-	arg_1_0.heroId = nil
-	arg_1_0._heroMo = nil
+local Season166AssistHeroSingleGroupMO = class("Season166AssistHeroSingleGroupMO", Season166HeroSingleGroupMO)
+
+function Season166AssistHeroSingleGroupMO:ctor()
+	self.id = nil
+	self.heroUid = nil
+	self.heroId = nil
+	self._heroMo = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.id = arg_2_1
-	arg_2_0.heroUid = 0
-	arg_2_0._heroMo = arg_2_2.heroMO
-	arg_2_0.heroId = arg_2_2 and arg_2_2.heroId or 0
-	arg_2_0.userId = arg_2_2 and arg_2_2.userId or 0
-	arg_2_0.pickAssistHeroMO = arg_2_2
-	arg_2_0.isAssist = true
+function Season166AssistHeroSingleGroupMO:init(id, pickAssistHeroMO)
+	self.id = id
+	self.heroUid = 0
+	self._heroMo = pickAssistHeroMO.heroMO
+	self.heroId = pickAssistHeroMO and pickAssistHeroMO.heroId or 0
+	self.userId = pickAssistHeroMO and pickAssistHeroMO.userId or 0
+	self.pickAssistHeroMO = pickAssistHeroMO
+	self.isAssist = true
 end
 
-function var_0_0.getHeroMO(arg_3_0)
-	return arg_3_0._heroMo
+function Season166AssistHeroSingleGroupMO:getHeroMO()
+	return self._heroMo
 end
 
-function var_0_0.isTrial(arg_4_0)
+function Season166AssistHeroSingleGroupMO:isTrial()
 	return true
 end
 
-return var_0_0
+return Season166AssistHeroSingleGroupMO

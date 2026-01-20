@@ -1,29 +1,34 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureAddPopViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureAddPopViewContainer.lua
 
-local var_0_0 = class("RoomManufactureAddPopViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomManufactureAddPopViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = MixScrollParam.New()
+local RoomManufactureAddPopViewContainer = class("RoomManufactureAddPopViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "root/#go_addPop/#scroll_production"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "root/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
-	var_1_1.cellClass = RoomManufactureFormulaItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+function RoomManufactureAddPopViewContainer:buildViews()
+	local views = {}
+	local scrollParam = MixScrollParam.New()
 
-	table.insert(var_1_0, LuaMixScrollView.New(ManufactureFormulaListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "root/#go_addPop/#scroll_production"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "root/#go_addPop/#scroll_production/viewport/content/#go_productionItem"
+	scrollParam.cellClass = RoomManufactureFormulaItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
 
-	arg_1_0._popView = RoomManufactureAddPopView.New()
+	table.insert(views, LuaMixScrollView.New(ManufactureFormulaListModel.instance, scrollParam))
 
-	table.insert(var_1_0, arg_1_0._popView)
+	self._popView = RoomManufactureAddPopView.New()
 
-	return var_1_0
+	table.insert(views, self._popView)
+
+	return views
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	arg_2_0:startViewCloseBlock()
-	arg_2_0._popView.animatorPlayer:Play(UIAnimationName.Close, arg_2_0.onPlayCloseTransitionFinish, arg_2_0)
+function RoomManufactureAddPopViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+
+	local animatorPlayer = self._popView.animatorPlayer
+
+	animatorPlayer:Play(UIAnimationName.Close, self.onPlayCloseTransitionFinish, self)
 end
 
-return var_0_0
+return RoomManufactureAddPopViewContainer

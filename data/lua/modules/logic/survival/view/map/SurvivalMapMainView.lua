@@ -1,24 +1,26 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapMainView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapMainView.lua
 
-local var_0_0 = class("SurvivalMapMainView", SurvivalMapDragBaseView)
+module("modules.logic.survival.view.map.SurvivalMapMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local SurvivalMapMainView = class("SurvivalMapMainView", SurvivalMapDragBaseView)
 
-	arg_1_0._btnbag = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BottomRight/#btn_bag")
-	arg_1_0._gobagfull = gohelper.findChild(arg_1_0.viewGO, "BottomRight/#btn_bag/#go_overweight")
-	arg_1_0._btnlog = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BottomRight/#btn_log")
-	arg_1_0._btnabort = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_abort")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_task")
-	arg_1_0._btnteam = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_team")
-	arg_1_0._txtTeamLv = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/#btn_team/go_level/#txt_level")
-	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_equip")
-	arg_1_0._goequipred = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_equip/go_arrow")
-	arg_1_0._gotask = gohelper.findChild(arg_1_0.viewGO, "Left/#go_task")
-	arg_1_0._txtTask = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/#go_task/TaskView/Viewport/Content/#txt_task")
-	arg_1_0._viewAnim = gohelper.findChildAnim(arg_1_0.viewGO, "")
-	arg_1_0._imageBlack = gohelper.findChildImage(arg_1_0.viewGO, "#image_black")
-	arg_1_0.igoreViewList = {
+function SurvivalMapMainView:onInitView()
+	SurvivalMapMainView.super.onInitView(self)
+
+	self._btnbag = gohelper.findChildButtonWithAudio(self.viewGO, "BottomRight/#btn_bag")
+	self._gobagfull = gohelper.findChild(self.viewGO, "BottomRight/#btn_bag/#go_overweight")
+	self._btnlog = gohelper.findChildButtonWithAudio(self.viewGO, "BottomRight/#btn_log")
+	self._btnabort = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_abort")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_task")
+	self._btnteam = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_team")
+	self._txtTeamLv = gohelper.findChildTextMesh(self.viewGO, "Left/#btn_team/go_level/#txt_level")
+	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_equip")
+	self._goequipred = gohelper.findChild(self.viewGO, "Left/#btn_equip/go_arrow")
+	self._gotask = gohelper.findChild(self.viewGO, "Left/#go_task")
+	self._txtTask = gohelper.findChildTextMesh(self.viewGO, "Left/#go_task/TaskView/Viewport/Content/#txt_task")
+	self._viewAnim = gohelper.findChildAnim(self.viewGO, "")
+	self._imageBlack = gohelper.findChildImage(self.viewGO, "#image_black")
+	self.igoreViewList = {
 		ViewName.SurvivalToastView,
 		ViewName.GuideView,
 		ViewName.GuideView2,
@@ -29,188 +31,191 @@ function var_0_0.onInitView(arg_1_0)
 	}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0._btnabort:AddClickListener(arg_2_0._onClickAbort, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._onClickTask, arg_2_0)
-	arg_2_0._btnteam:AddClickListener(arg_2_0._onClickTeam, arg_2_0)
-	arg_2_0._btnequip:AddClickListener(arg_2_0._onClickEquip, arg_2_0)
-	arg_2_0._btnbag:AddClickListener(arg_2_0._onClickBag, arg_2_0)
-	arg_2_0._btnlog:AddClickListener(arg_2_0._onClickLog, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, arg_2_0._refreshBagFull, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, arg_2_0._refreshTeamLv, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, arg_2_0._refreshCurTask, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipRedUpdate, arg_2_0.updateEquipRed, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnPlayerTornadoTransferBegin, arg_2_0.onPlayerTornadoTransferBegin, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnPlayerTornadoTransferEnd, arg_2_0.onPlayerTornadoTransferEnd, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.onFlowEnd, arg_2_0.checkPlaySpBlockAudio, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onRefreshViewState, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onRefreshViewState, arg_2_0)
-	arg_2_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_2_0.refreshHelpBtnPos, arg_2_0)
-	arg_2_0:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, arg_2_0.refreshHelpBtnPos, arg_2_0)
+function SurvivalMapMainView:addEvents()
+	SurvivalMapMainView.super.addEvents(self)
+	self._btnabort:AddClickListener(self._onClickAbort, self)
+	self._btntask:AddClickListener(self._onClickTask, self)
+	self._btnteam:AddClickListener(self._onClickTeam, self)
+	self._btnequip:AddClickListener(self._onClickEquip, self)
+	self._btnbag:AddClickListener(self._onClickBag, self)
+	self._btnlog:AddClickListener(self._onClickLog, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBagFull, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, self._refreshTeamLv, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, self._refreshCurTask, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipRedUpdate, self.updateEquipRed, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnPlayerTornadoTransferBegin, self.onPlayerTornadoTransferBegin, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnPlayerTornadoTransferEnd, self.onPlayerTornadoTransferEnd, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.onFlowEnd, self.checkPlaySpBlockAudio, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onRefreshViewState, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onRefreshViewState, self)
+	self:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.refreshHelpBtnPos, self)
+	self:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, self.refreshHelpBtnPos, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0._btnabort:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnteam:RemoveClickListener()
-	arg_3_0._btnequip:RemoveClickListener()
-	arg_3_0._btnbag:RemoveClickListener()
-	arg_3_0._btnlog:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, arg_3_0._refreshBagFull, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, arg_3_0._refreshTeamLv, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, arg_3_0._refreshCurTask, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipRedUpdate, arg_3_0.updateEquipRed, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnPlayerTornadoTransferBegin, arg_3_0.onPlayerTornadoTransferBegin, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnPlayerTornadoTransferEnd, arg_3_0.onPlayerTornadoTransferEnd, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.onFlowEnd, arg_3_0.checkPlaySpBlockAudio, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0.onRefreshViewState, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0.onRefreshViewState, arg_3_0)
-	arg_3_0:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_3_0.refreshHelpBtnPos, arg_3_0)
-	arg_3_0:removeEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, arg_3_0.refreshHelpBtnPos, arg_3_0)
+function SurvivalMapMainView:removeEvents()
+	SurvivalMapMainView.super.removeEvents(self)
+	self._btnabort:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self._btnteam:RemoveClickListener()
+	self._btnequip:RemoveClickListener()
+	self._btnbag:RemoveClickListener()
+	self._btnlog:RemoveClickListener()
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBagFull, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, self._refreshTeamLv, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, self._refreshCurTask, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipRedUpdate, self.updateEquipRed, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnPlayerTornadoTransferBegin, self.onPlayerTornadoTransferBegin, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnPlayerTornadoTransferEnd, self.onPlayerTornadoTransferEnd, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.onFlowEnd, self.checkPlaySpBlockAudio, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onRefreshViewState, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onRefreshViewState, self)
+	self:removeEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.refreshHelpBtnPos, self)
+	self:removeEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, self.refreshHelpBtnPos, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	var_0_0.super.onOpen(arg_4_0)
+function SurvivalMapMainView:onOpen()
+	SurvivalMapMainView.super.onOpen(self)
 
-	arg_4_0._scale = 1
+	self._scale = 1
 
-	local var_4_0 = SurvivalMapModel.instance:getSceneMo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
-	arg_4_0._targetPos = Vector3(var_4_0.player:getWorldPos())
+	self._targetPos = Vector3(sceneMo.player:getWorldPos())
 
-	SurvivalMapHelper.instance:setFocusPos(arg_4_0._targetPos.x, arg_4_0._targetPos.y, arg_4_0._targetPos.z)
-	arg_4_0:_setScale(SurvivalMapModel.instance.save_mapScale, true)
-	arg_4_0:_refreshBagFull()
-	arg_4_0:_refreshCurTask()
-	arg_4_0:_refreshTeamLv()
-	arg_4_0:onRefreshViewState()
-	arg_4_0:updateEquipRed()
-	arg_4_0:refreshHelpBtnPos()
+	SurvivalMapHelper.instance:setFocusPos(self._targetPos.x, self._targetPos.y, self._targetPos.z)
+	self:_setScale(SurvivalMapModel.instance.save_mapScale, true)
+	self:_refreshBagFull()
+	self:_refreshCurTask()
+	self:_refreshTeamLv()
+	self:onRefreshViewState()
+	self:updateEquipRed()
+	self:refreshHelpBtnPos()
 end
 
-function var_0_0.refreshHelpBtnPos(arg_5_0)
-	if HelpController.instance:checkGuideStepLock(HelpEnum.HelpId.Survival) then
-		recthelper.setAnchorX(arg_5_0._btnabort.transform, 349.3)
+function SurvivalMapMainView:refreshHelpBtnPos()
+	local showHelp = HelpController.instance:checkGuideStepLock(HelpEnum.HelpId.Survival)
+
+	if showHelp then
+		recthelper.setAnchorX(self._btnabort.transform, 349.3)
 	else
-		recthelper.setAnchorX(arg_5_0._btnabort.transform, 215.1)
+		recthelper.setAnchorX(self._btnabort.transform, 215.1)
 	end
 end
 
-function var_0_0.updateEquipRed(arg_6_0)
-	gohelper.setActive(arg_6_0._goequipred, SurvivalEquipRedDotHelper.instance.reddotType >= 0)
+function SurvivalMapMainView:updateEquipRed()
+	gohelper.setActive(self._goequipred, SurvivalEquipRedDotHelper.instance.reddotType >= 0)
 end
 
-function var_0_0.onRefreshViewState(arg_7_0)
-	if arg_7_0._isTopView == nil then
-		arg_7_0._isTopView = true
+function SurvivalMapMainView:onRefreshViewState()
+	if self._isTopView == nil then
+		self._isTopView = true
 	end
 
-	local var_7_0 = ViewHelper.instance:checkViewOnTheTop(arg_7_0.viewName, arg_7_0.igoreViewList)
+	local isInTop = ViewHelper.instance:checkViewOnTheTop(self.viewName, self.igoreViewList)
 
-	if var_7_0 == arg_7_0._isTopView then
+	if isInTop == self._isTopView then
 		return
 	end
 
-	arg_7_0._isTopView = var_7_0
+	self._isTopView = isInTop
 
-	arg_7_0._viewAnim:Play(arg_7_0._isTopView and "in" or "close", 0, 0)
+	self._viewAnim:Play(self._isTopView and "in" or "close", 0, 0)
 end
 
-function var_0_0._onClickAbort(arg_8_0)
-	GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalGiveUp, MsgBoxEnum.BoxType.Yes_No, arg_8_0._sendGiveUp, nil, nil, arg_8_0, nil, nil)
+function SurvivalMapMainView:_onClickAbort()
+	GameFacade.showMessageBox(MessageBoxIdDefine.SurvivalGiveUp, MsgBoxEnum.BoxType.Yes_No, self._sendGiveUp, nil, nil, self, nil, nil)
 	SurvivalStatHelper.instance:statBtnClick("_onClickAbort", "SurvivalMapMainView")
 end
 
-function var_0_0._sendGiveUp(arg_9_0)
+function SurvivalMapMainView:_sendGiveUp()
 	SurvivalInteriorRpc.instance:sendSurvivalSceneGiveUp()
 end
 
-function var_0_0._onClickBag(arg_10_0)
+function SurvivalMapMainView:_onClickBag()
 	ViewMgr.instance:openView(ViewName.SurvivalMapBagView)
 	SurvivalStatHelper.instance:statBtnClick("_onClickBag", "SurvivalMapMainView")
 end
 
-function var_0_0._onClickTask(arg_11_0)
+function SurvivalMapMainView:_onClickTask()
 	ViewMgr.instance:openView(ViewName.ShelterTaskView, {
 		moduleId = SurvivalEnum.TaskModule.NormalTask
 	})
 	SurvivalStatHelper.instance:statBtnClick("_onClickTask", "SurvivalMapMainView")
 end
 
-function var_0_0._onClickTeam(arg_12_0)
+function SurvivalMapMainView:_onClickTeam()
 	ViewMgr.instance:openView(ViewName.SurvivalMapTeamView)
 	SurvivalStatHelper.instance:statBtnClick("_onClickTeam", "SurvivalMapMainView")
 end
 
-function var_0_0._onClickEquip(arg_13_0)
+function SurvivalMapMainView:_onClickEquip()
 	SurvivalController.instance:openEquipView()
 	SurvivalStatHelper.instance:statBtnClick("_onClickEquip", "SurvivalMapMainView")
 end
 
-function var_0_0._onClickLog(arg_14_0)
+function SurvivalMapMainView:_onClickLog()
 	SurvivalInteriorRpc.instance:sendSurvivalSceneOperationLog()
 	SurvivalStatHelper.instance:statBtnClick("_onClickLog", "SurvivalMapMainView")
 end
 
-function var_0_0._refreshBagFull(arg_15_0)
-	local var_15_0 = SurvivalMapHelper.instance:getBagMo()
-	local var_15_1 = var_15_0.totalMass > var_15_0.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+function SurvivalMapMainView:_refreshBagFull()
+	local bagMo = SurvivalMapHelper.instance:getBagMo()
+	local isFull = bagMo.totalMass > bagMo.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
 
-	gohelper.setActive(arg_15_0._gobagfull, var_15_1)
+	gohelper.setActive(self._gobagfull, isFull)
 end
 
-function var_0_0._refreshCurTask(arg_16_0)
-	local var_16_0 = SurvivalMapModel.instance:getSceneMo().mainTask
-	local var_16_1 = var_16_0.taskId > 0 and SurvivalConfig.instance:getTaskCo(var_16_0.moduleId, var_16_0.taskId)
+function SurvivalMapMainView:_refreshCurTask()
+	local followTask = SurvivalMapModel.instance:getSceneMo().mainTask
+	local taskCo = followTask.taskId > 0 and SurvivalConfig.instance:getTaskCo(followTask.moduleId, followTask.taskId)
 
-	gohelper.setActive(arg_16_0._gotask, var_16_1)
+	gohelper.setActive(self._gotask, taskCo)
 
-	if var_16_1 then
-		arg_16_0._txtTask.text = var_16_1.desc2
+	if taskCo then
+		self._txtTask.text = taskCo.desc2
 	end
 end
 
-function var_0_0.calcSceneBoard(arg_17_0)
-	local var_17_0 = SurvivalMapHelper.instance:getSceneCameraComp()
+function SurvivalMapMainView:calcSceneBoard()
+	local camera = SurvivalMapHelper.instance:getSceneCameraComp()
 
-	arg_17_0._mapMinX = var_17_0.mapMinX
-	arg_17_0._mapMaxX = var_17_0.mapMaxX
-	arg_17_0._mapMinY = var_17_0.mapMinY
-	arg_17_0._mapMaxY = var_17_0.mapMaxY
-	arg_17_0._maxDis = var_17_0.maxDis
-	arg_17_0._minDis = var_17_0.minDis
+	self._mapMinX = camera.mapMinX
+	self._mapMaxX = camera.mapMaxX
+	self._mapMinY = camera.mapMinY
+	self._mapMaxY = camera.mapMaxY
+	self._maxDis = camera.maxDis
+	self._minDis = camera.minDis
 end
 
-function var_0_0.onClickScene(arg_18_0, arg_18_1, arg_18_2)
+function SurvivalMapMainView:onClickScene(worldpos, hexPos)
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_qiutu_general_click)
 
-	local var_18_0 = {}
+	local data = {}
 
-	arg_18_0.viewContainer:dispatchEvent(SurvivalEvent.OnClickSurvivalScene, arg_18_2, var_18_0)
+	self.viewContainer:dispatchEvent(SurvivalEvent.OnClickSurvivalScene, hexPos, data)
 
-	if var_18_0.use then
+	if data.use then
 		return
 	end
 
-	local var_18_1 = SurvivalMapModel.instance:getSceneMo().player.pos
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local playerPos = sceneMo.player.pos
 
-	if var_18_1 == arg_18_2 then
+	if playerPos == hexPos then
 		SurvivalMapModel.instance:setShowTarget()
 
 		if not SurvivalMapHelper.instance:isInFlow() then
-			SurvivalMapHelper.instance:tryShowEventView(var_18_1)
+			SurvivalMapHelper.instance:tryShowEventView(playerPos)
 		end
 
 		return
 	end
 
 	if not SurvivalMapHelper.instance:isInFlow() and isDebugBuild and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftControl) then
-		local var_18_2 = SurvivalMapHelper.instance:getEntity(0)
+		local player = SurvivalMapHelper.instance:getEntity(0)
 
-		var_18_2:setPosAndDir(arg_18_2, var_18_2._unitMo.dir)
-		GMRpc.instance:sendGMRequest("surPlayerMove " .. arg_18_2.q .. " " .. arg_18_2.r)
+		player:setPosAndDir(hexPos, player._unitMo.dir)
+		GMRpc.instance:sendGMRequest("surPlayerMove " .. hexPos.q .. " " .. hexPos.r)
 
 		return
 	end
@@ -219,34 +224,36 @@ function var_0_0.onClickScene(arg_18_0, arg_18_1, arg_18_2)
 		return
 	end
 
-	if SurvivalMapModel.instance:isInFog2(arg_18_2) then
+	if SurvivalMapModel.instance:isInFog2(hexPos) then
 		SurvivalMapModel.instance:setMoveToTarget()
 		SurvivalMapModel.instance:setShowTarget()
 
 		return
 	end
 
-	local var_18_3 = SurvivalMapModel.instance:getCurMapCo().walkables
-	local var_18_4 = SurvivalAStarFindPath.instance:findPath(var_18_1, arg_18_2, var_18_3)
+	local walkables = SurvivalMapModel.instance:getCurMapCo().walkables
+	local path = SurvivalAStarFindPath.instance:findPath(playerPos, hexPos, walkables)
 
-	if var_18_4 then
-		if SurvivalMapModel.instance:getShowTargetPos() == arg_18_2 then
-			SurvivalMapModel.instance:setMoveToTarget(var_18_4[#var_18_4], var_18_4)
+	if path then
+		local showTargetPos = SurvivalMapModel.instance:getShowTargetPos()
+
+		if showTargetPos == hexPos then
+			SurvivalMapModel.instance:setMoveToTarget(path[#path], path)
 			SurvivalMapModel.instance:setShowTarget(nil, true)
 
 			if not SurvivalMapHelper.instance:isInFlow() then
-				local var_18_5 = SurvivalHelper.instance:getDir(var_18_1, var_18_4[1])
+				local dir = SurvivalHelper.instance:getDir(playerPos, path[1])
 
-				SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.PlayerMove, tostring(var_18_5))
+				SurvivalInteriorRpc.instance:sendSurvivalSceneOperation(SurvivalEnum.OperType.PlayerMove, tostring(dir))
 			else
 				SurvivalMapHelper.instance:tryRemoveFlow()
 			end
 		else
-			SurvivalMapModel.instance:setShowTarget(arg_18_2)
-			table.insert(var_18_4, 1, var_18_1)
-			SurvivalMapHelper.instance:getScene().path:setPathListShow(var_18_4)
+			SurvivalMapModel.instance:setShowTarget(hexPos)
+			table.insert(path, 1, playerPos)
+			SurvivalMapHelper.instance:getScene().path:setPathListShow(path)
 
-			if SurvivalMapModel.instance._targetPos ~= arg_18_2 then
+			if SurvivalMapModel.instance._targetPos ~= hexPos then
 				SurvivalMapModel.instance:setMoveToTarget()
 			end
 		end
@@ -256,122 +263,126 @@ function var_0_0.onClickScene(arg_18_0, arg_18_1, arg_18_2)
 	end
 end
 
-function var_0_0.setScenePosSafety(arg_19_0, arg_19_1)
-	var_0_0.super.setScenePosSafety(arg_19_0, arg_19_1)
-	SurvivalMapHelper.instance:getSceneFogComp():updateCenterPos(arg_19_1)
+function SurvivalMapMainView:setScenePosSafety(targetPos)
+	SurvivalMapMainView.super.setScenePosSafety(self, targetPos)
+	SurvivalMapHelper.instance:getSceneFogComp():updateCenterPos(targetPos)
 	SurvivalMapHelper.instance:getSceneFogComp():updateTexture()
 	SurvivalMapHelper.instance:updateCloudShow()
-	arg_19_0:checkPlaySpBlockAudio()
+	self:checkPlaySpBlockAudio()
 end
 
-function var_0_0.onSceneScaleChange(arg_20_0)
+function SurvivalMapMainView:onSceneScaleChange()
 	SurvivalMapHelper.instance:getSceneFogComp():updateTexture()
 	SurvivalMapHelper.instance:updateCloudShow()
 end
 
-function var_0_0._refreshTeamLv(arg_21_0, arg_21_1)
-	if arg_21_1 and arg_21_1 ~= SurvivalEnum.AttrType.HeroFightLevel then
+function SurvivalMapMainView:_refreshTeamLv(attrId)
+	if attrId and attrId ~= SurvivalEnum.AttrType.HeroFightLevel then
 		return
 	end
 
-	local var_21_0 = SurvivalShelterModel.instance:getWeekInfo()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
-	arg_21_0._txtTeamLv.text = "Lv." .. var_21_0:getAttr(SurvivalEnum.AttrType.HeroFightLevel)
+	self._txtTeamLv.text = "Lv." .. weekInfo:getAttr(SurvivalEnum.AttrType.HeroFightLevel)
 end
 
-function var_0_0.onPlayerTornadoTransferBegin(arg_22_0)
-	gohelper.setActive(arg_22_0._imageBlack, true)
-	ZProj.TweenHelper.DoFade(arg_22_0._imageBlack, 0, 1, 0.8)
+function SurvivalMapMainView:onPlayerTornadoTransferBegin()
+	gohelper.setActive(self._imageBlack, true)
+	ZProj.TweenHelper.DoFade(self._imageBlack, 0, 1, 0.8)
 end
 
-function var_0_0.onPlayerTornadoTransferEnd(arg_23_0)
-	gohelper.setActive(arg_23_0._imageBlack, false)
+function SurvivalMapMainView:onPlayerTornadoTransferEnd()
+	gohelper.setActive(self._imageBlack, false)
 end
 
-local var_0_1 = Vector3()
-local var_0_2 = SurvivalHexNode.New()
-local var_0_3
+local v3 = Vector3()
+local node = SurvivalHexNode.New()
+local tornadoSpEvent
 
-function var_0_0.checkPlaySpBlockAudio(arg_24_0)
-	if not var_0_3 then
-		var_0_3 = tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TornadoSpEvent)))
+function SurvivalMapMainView:checkPlaySpBlockAudio()
+	if not tornadoSpEvent then
+		tornadoSpEvent = tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TornadoSpEvent)))
 	end
 
-	local var_24_0 = SurvivalMapModel.instance:getSceneMo()
-	local var_24_1 = UnityEngine.Screen.width
-	local var_24_2 = UnityEngine.Screen.height
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local screenWidth = UnityEngine.Screen.width
+	local screenHeight = UnityEngine.Screen.height
 
-	var_0_1:Set(var_24_1 / 2, var_24_2 / 2, 0)
+	v3:Set(screenWidth / 2, screenHeight / 2, 0)
 
-	local var_24_3 = SurvivalHelper.instance:getScene3DPos(var_0_1)
+	local screenCenterPos = SurvivalHelper.instance:getScene3DPos(v3)
 
-	var_0_2:set(SurvivalHelper.instance:worldPointToHex(var_24_3.x, var_24_3.y, var_24_3.z))
+	node:set(SurvivalHelper.instance:worldPointToHex(screenCenterPos.x, screenCenterPos.y, screenCenterPos.z))
 
-	local var_24_4
-	local var_24_5 = SurvivalHelper.instance:getAllPointsByDis(var_0_2, 6)
+	local haveTornado
+	local allPoints = SurvivalHelper.instance:getAllPointsByDis(node, 6)
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_5) do
-		local var_24_6 = var_24_0:getListByPos(iter_24_1)
+	for i, v in ipairs(allPoints) do
+		local units = sceneMo:getListByPos(v)
 
-		if var_24_6 then
-			for iter_24_2, iter_24_3 in ipairs(var_24_6) do
-				if iter_24_3.cfgId == var_0_3 then
-					var_24_4 = true
+		if units then
+			for _, unitMo in ipairs(units) do
+				if unitMo.cfgId == tornadoSpEvent then
+					haveTornado = true
 
 					break
 				end
 			end
 		end
 
-		if var_24_4 then
+		if haveTornado then
 			break
 		end
 	end
 
-	if var_24_4 ~= arg_24_0._haveTornado then
-		arg_24_0._haveTornado = var_24_4
+	if haveTornado ~= self._haveTornado then
+		self._haveTornado = haveTornado
 
-		if var_24_4 then
+		if haveTornado then
 			AudioMgr.instance:trigger(AudioEnum3_1.Survival.TornadoStart)
 		else
 			AudioMgr.instance:trigger(AudioEnum3_1.Survival.TornadoEnd)
 		end
 	end
 
-	if var_24_0.sceneProp.magmaStatus == SurvivalEnum.MagmaStatus.Active then
-		local var_24_7
+	local magmaState = sceneMo.sceneProp.magmaStatus
 
-		for iter_24_4, iter_24_5 in ipairs(var_24_5) do
-			if var_24_0:getBlockTypeByPos(iter_24_5) == SurvivalEnum.UnitSubType.Magma then
-				var_24_7 = true
+	if magmaState == SurvivalEnum.MagmaStatus.Active then
+		local haveMagma
+
+		for i, v in ipairs(allPoints) do
+			local blockType = sceneMo:getBlockTypeByPos(v)
+
+			if blockType == SurvivalEnum.UnitSubType.Magma then
+				haveMagma = true
 
 				break
 			end
 		end
 
-		if var_24_7 ~= arg_24_0._haveMagma then
-			arg_24_0._haveMagma = var_24_7
+		if haveMagma ~= self._haveMagma then
+			self._haveMagma = haveMagma
 
-			if var_24_7 then
+			if haveMagma then
 				AudioMgr.instance:trigger(AudioEnum3_1.Survival.MagmaActive)
 			else
 				AudioMgr.instance:trigger(AudioEnum3_1.Survival.MagmaDeactive)
 			end
 		end
-	elseif arg_24_0._haveMagma then
-		arg_24_0._haveMagma = nil
+	elseif self._haveMagma then
+		self._haveMagma = nil
 
 		AudioMgr.instance:trigger(AudioEnum3_1.Survival.MagmaDeactive)
 	end
 end
 
-function var_0_0.onClose(arg_25_0)
-	SurvivalMapModel.instance.save_mapScale = arg_25_0._scale or 1
+function SurvivalMapMainView:onClose()
+	SurvivalMapModel.instance.save_mapScale = self._scale or 1
 end
 
-function var_0_0.onDestroyView(arg_26_0)
+function SurvivalMapMainView:onDestroyView()
 	AudioMgr.instance:trigger(AudioEnum3_1.Survival.TornadoEnd)
 	AudioMgr.instance:trigger(AudioEnum3_1.Survival.MagmaDeactive)
 end
 
-return var_0_0
+return SurvivalMapMainView

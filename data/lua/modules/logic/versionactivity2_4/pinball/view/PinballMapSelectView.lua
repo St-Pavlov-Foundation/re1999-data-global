@@ -1,158 +1,169 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballMapSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballMapSelectView.lua
 
-local var_0_0 = class("PinballMapSelectView", BaseView)
+module("modules.logic.versionactivity2_4.pinball.view.PinballMapSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_name")
-	arg_1_0._txtdesc1 = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#scroll_dec/Viewport/Content/#txt_dec1")
-	arg_1_0._txtdesc2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#scroll_dec/Viewport/Content/#txt_dec2")
-	arg_1_0._txtdesc3 = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#scroll_dec/Viewport/Content/go_item/#txt_dec3")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "Right/#scroll_dec/Viewport/Content/go_item")
-	arg_1_0._icontype = gohelper.findChildImage(arg_1_0.viewGO, "Right/#scroll_dec/Viewport/Content/go_item/#txt_dec3/#image_icon")
-	arg_1_0._btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_start")
-	arg_1_0._txtCost = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_start/#txt_cost")
-	arg_1_0._topCurrencyRoot = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+local PinballMapSelectView = class("PinballMapSelectView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PinballMapSelectView:onInitView()
+	self._txtname = gohelper.findChildTextMesh(self.viewGO, "Right/#txt_name")
+	self._txtdesc1 = gohelper.findChildTextMesh(self.viewGO, "Right/#scroll_dec/Viewport/Content/#txt_dec1")
+	self._txtdesc2 = gohelper.findChildTextMesh(self.viewGO, "Right/#scroll_dec/Viewport/Content/#txt_dec2")
+	self._txtdesc3 = gohelper.findChildTextMesh(self.viewGO, "Right/#scroll_dec/Viewport/Content/go_item/#txt_dec3")
+	self._goitem = gohelper.findChild(self.viewGO, "Right/#scroll_dec/Viewport/Content/go_item")
+	self._icontype = gohelper.findChildImage(self.viewGO, "Right/#scroll_dec/Viewport/Content/go_item/#txt_dec3/#image_icon")
+	self._btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_start")
+	self._txtCost = gohelper.findChildTextMesh(self.viewGO, "Right/#btn_start/#txt_cost")
+	self._topCurrencyRoot = gohelper.findChild(self.viewGO, "#go_topright")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnStart:AddClickListener(arg_2_0._onStartClick, arg_2_0)
-	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, arg_2_0.updateCost, arg_2_0)
+function PinballMapSelectView:addEvents()
+	self._btnStart:AddClickListener(self._onStartClick, self)
+	PinballController.instance:registerCallback(PinballEvent.OnCurrencyChange, self.updateCost, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnStart:RemoveClickListener()
-	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, arg_3_0.updateCost, arg_3_0)
+function PinballMapSelectView:removeEvents()
+	self._btnStart:RemoveClickListener()
+	PinballController.instance:unregisterCallback(PinballEvent.OnCurrencyChange, self.updateCost, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._items = arg_4_0:getUserDataTb_()
-	arg_4_0._itemSelects = arg_4_0:getUserDataTb_()
+function PinballMapSelectView:_editableInitView()
+	self._items = self:getUserDataTb_()
+	self._itemSelects = self:getUserDataTb_()
 
-	for iter_4_0 = 1, 4 do
-		arg_4_0._items[iter_4_0] = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "Left/#go_item" .. iter_4_0)
-		arg_4_0._itemSelects[iter_4_0] = gohelper.findChild(arg_4_0._items[iter_4_0].gameObject, "#go_select")
-		gohelper.findChildTextMesh(arg_4_0._items[iter_4_0].gameObject, "txt_name").text = PinballConfig.instance:getRandomEpisode(iter_4_0).name
+	for i = 1, 4 do
+		self._items[i] = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_item" .. i)
+		self._itemSelects[i] = gohelper.findChild(self._items[i].gameObject, "#go_select")
 
-		arg_4_0:addClickCb(arg_4_0._items[iter_4_0], arg_4_0.onClickSelect, arg_4_0, iter_4_0)
+		local name = gohelper.findChildTextMesh(self._items[i].gameObject, "txt_name")
+		local episodeCO = PinballConfig.instance:getRandomEpisode(i)
+
+		name.text = episodeCO.name
+
+		self:addClickCb(self._items[i], self.onClickSelect, self, i)
 	end
 
-	arg_4_0:onClickSelect(1)
+	self:onClickSelect(1)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:createCurrencyItem()
-	arg_5_0:updateCost()
+function PinballMapSelectView:onOpen()
+	self:createCurrencyItem()
+	self:updateCost()
 
-	if not arg_5_0._enough and not PinballModel.instance.isGuideAddGrain then
+	if not self._enough and not PinballModel.instance.isGuideAddGrain then
 		GuideController.instance:dispatchEvent(GuideEvent.TriggerActive, GuideEnum.EventTrigger.Act178FoodNotEnough)
 	end
 end
 
-function var_0_0.updateCost(arg_6_0)
-	local var_6_0 = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.EpisodeCost) - PinballModel.instance:getCostDec()
-	local var_6_1 = math.max(0, var_6_0)
+function PinballMapSelectView:updateCost()
+	local cost = PinballConfig.instance:getConstValue(VersionActivity2_4Enum.ActivityId.Pinball, PinballEnum.ConstId.EpisodeCost)
 
-	if var_6_1 > PinballModel.instance:getResNum(PinballEnum.ResType.Food) then
-		arg_6_0._enough = false
-		arg_6_0._txtCost.text = string.format("<color=#FC8A6A>-%d", var_6_1)
+	cost = cost - PinballModel.instance:getCostDec()
+	cost = math.max(0, cost)
+
+	local nowFood = PinballModel.instance:getResNum(PinballEnum.ResType.Food)
+
+	if nowFood < cost then
+		self._enough = false
+		self._txtCost.text = string.format("<color=#FC8A6A>-%d", cost)
 	else
-		arg_6_0._enough = true
-		arg_6_0._txtCost.text = string.format("-%d", var_6_1)
+		self._enough = true
+		self._txtCost.text = string.format("-%d", cost)
 	end
 end
 
-function var_0_0.createCurrencyItem(arg_7_0)
-	local var_7_0 = {
+function PinballMapSelectView:createCurrencyItem()
+	local topCurrency = {
 		PinballEnum.ResType.Wood,
 		PinballEnum.ResType.Mine,
 		PinballEnum.ResType.Stone,
 		PinballEnum.ResType.Food
 	}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		local var_7_1 = arg_7_0:getResInst(arg_7_0.viewContainer._viewSetting.otherRes.currency, arg_7_0._topCurrencyRoot)
+	for _, currencyType in ipairs(topCurrency) do
+		local go = self:getResInst(self.viewContainer._viewSetting.otherRes.currency, self._topCurrencyRoot)
+		local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, PinballCurrencyItem)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, PinballCurrencyItem):setCurrencyType(iter_7_1)
+		comp:setCurrencyType(currencyType)
 	end
 end
 
-local var_0_1 = {
+local indexToResType = {
 	PinballEnum.ResType.Stone,
 	PinballEnum.ResType.Wood,
 	PinballEnum.ResType.Food,
 	PinballEnum.ResType.Mine
 }
 
-function var_0_0.onClickSelect(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._goitem, false)
-	gohelper.setActive(arg_8_0._goitem, true)
+function PinballMapSelectView:onClickSelect(index)
+	gohelper.setActive(self._goitem, false)
+	gohelper.setActive(self._goitem, true)
 
-	arg_8_0._curIndex = arg_8_1
+	self._curIndex = index
 
-	for iter_8_0 = 1, 4 do
-		gohelper.setActive(arg_8_0._itemSelects[iter_8_0], iter_8_0 == arg_8_1)
+	for i = 1, 4 do
+		gohelper.setActive(self._itemSelects[i], i == index)
 	end
 
-	local var_8_0 = PinballConfig.instance:getRandomEpisode(arg_8_1)
+	local episodeCO = PinballConfig.instance:getRandomEpisode(index)
 
-	if not var_8_0 then
+	if not episodeCO then
 		logError("没有副本配置")
 
 		return
 	end
 
-	arg_8_0._txtname.text = var_8_0.name
-	arg_8_0._txtdesc1.text = var_8_0.longDesc
-	arg_8_0._txtdesc2.text = var_8_0.desc
-	arg_8_0._txtdesc3.text = var_8_0.shortDesc
+	self._txtname.text = episodeCO.name
+	self._txtdesc1.text = episodeCO.longDesc
+	self._txtdesc2.text = episodeCO.desc
+	self._txtdesc3.text = episodeCO.shortDesc
 
-	local var_8_1 = var_0_1[var_8_0.type]
+	local resType = indexToResType[episodeCO.type]
 
-	if not var_8_1 then
+	if not resType then
 		return
 	end
 
-	local var_8_2 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_8_1]
+	local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][resType]
 
-	UISpriteSetMgr.instance:setAct178Sprite(arg_8_0._icontype, var_8_2.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(self._icontype, resCo.icon)
 end
 
-function var_0_0._onStartClick(arg_9_0)
-	if not arg_9_0._enough then
-		local var_9_0 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][PinballEnum.ResType.Food]
+function PinballMapSelectView:_onStartClick()
+	if not self._enough then
+		local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][PinballEnum.ResType.Food]
 
-		GameFacade.showToast(ToastEnum.DiamondBuy, var_9_0.name)
-
-		return
-	end
-
-	local var_9_1 = PinballConfig.instance:getRandomEpisode(arg_9_0._curIndex, PinballModel.instance.leftEpisodeId)
-
-	if not var_9_1 then
-		logError("随机关卡失败，index：" .. tostring(arg_9_0._curIndex))
+		GameFacade.showToast(ToastEnum.DiamondBuy, resCo.name)
 
 		return
 	end
 
-	PinballModel.instance.leftEpisodeId = var_9_1.id
+	local episodeCO = PinballConfig.instance:getRandomEpisode(self._curIndex, PinballModel.instance.leftEpisodeId)
 
-	Activity178Rpc.instance:sendAct178StartEpisode(VersionActivity2_4Enum.ActivityId.Pinball, PinballModel.instance.leftEpisodeId, arg_9_0._onReq, arg_9_0)
+	if not episodeCO then
+		logError("随机关卡失败，index：" .. tostring(self._curIndex))
+
+		return
+	end
+
+	PinballModel.instance.leftEpisodeId = episodeCO.id
+
+	Activity178Rpc.instance:sendAct178StartEpisode(VersionActivity2_4Enum.ActivityId.Pinball, PinballModel.instance.leftEpisodeId, self._onReq, self)
 end
 
-function var_0_0._onReq(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 ~= 0 then
+function PinballMapSelectView:_onReq(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.PinballGameView, {
-		index = arg_10_0._curIndex
+		index = self._curIndex
 	})
 	ViewMgr.instance:openView(ViewName.PinballStartLoadingView)
-	arg_10_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return PinballMapSelectView

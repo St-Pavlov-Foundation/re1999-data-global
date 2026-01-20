@@ -1,69 +1,74 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionClickMask", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionClickMask.lua
 
-local var_0_0 = class("WaitGuideActionClickMask", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionClickMask", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local WaitGuideActionClickMask = class("WaitGuideActionClickMask", BaseGuideAction)
 
-	local var_1_0 = string.split(arg_1_3, "#")
+function WaitGuideActionClickMask:ctor(guideId, stepId, actionParam)
+	WaitGuideActionClickMask.super.ctor(self, guideId, stepId, actionParam)
 
-	arg_1_0._beforeClickWaitSecond = #var_1_0 >= 1 and tonumber(var_1_0[1]) or 0
-	arg_1_0._afterClickWaitSecond = #var_1_0 >= 2 and tonumber(var_1_0[2]) or 0
-	arg_1_0._isForceGuide = GuideConfig.instance:getStepCO(arg_1_1, arg_1_2).notForce == 0
-	arg_1_0._alpha = nil
+	local paramList = string.split(actionParam, "#")
 
-	if #var_1_0 >= 3 then
-		arg_1_0._alpha = tonumber(var_1_0[3])
+	self._beforeClickWaitSecond = #paramList >= 1 and tonumber(paramList[1]) or 0
+	self._afterClickWaitSecond = #paramList >= 2 and tonumber(paramList[2]) or 0
+
+	local stepCO = GuideConfig.instance:getStepCO(guideId, stepId)
+
+	self._isForceGuide = stepCO.notForce == 0
+	self._alpha = nil
+
+	if #paramList >= 3 then
+		self._alpha = tonumber(paramList[3])
 	end
 
-	arg_1_0._goPath = GuideModel.instance:getStepGOPath(arg_1_1, arg_1_2)
+	self._goPath = GuideModel.instance:getStepGOPath(guideId, stepId)
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	var_0_0.super.onStart(arg_2_0, arg_2_1)
+function WaitGuideActionClickMask:onStart(context)
+	WaitGuideActionClickMask.super.onStart(self, context)
 
-	if arg_2_0._beforeClickWaitSecond > 0 then
+	if self._beforeClickWaitSecond > 0 then
 		GuideViewMgr.instance:disableHoleClick()
-		TaskDispatcher.runDelay(arg_2_0._onDelayStart, arg_2_0, arg_2_0._beforeClickWaitSecond)
+		TaskDispatcher.runDelay(self._onDelayStart, self, self._beforeClickWaitSecond)
 	else
-		arg_2_0:_onDelayStart()
+		self:_onDelayStart()
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
+function WaitGuideActionClickMask:clearWork()
 	GuideViewMgr.instance:setHoleClickCallback(nil, nil)
-	TaskDispatcher.cancelTask(arg_3_0._onDelayStart, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._onDelayDone, arg_3_0)
+	TaskDispatcher.cancelTask(self._onDelayStart, self)
+	TaskDispatcher.cancelTask(self._onDelayDone, self)
 end
 
-function var_0_0._onClickTarget(arg_4_0, arg_4_1)
-	if arg_4_1 or not arg_4_0._isForceGuide then
+function WaitGuideActionClickMask:_onClickTarget(isInside)
+	if isInside or not self._isForceGuide then
 		GuideViewMgr.instance:disableHoleClick()
 		GuideViewMgr.instance:setHoleClickCallback(nil, nil)
 
-		arg_4_0._isInside = arg_4_1
+		self._isInside = isInside
 
-		TaskDispatcher.runDelay(arg_4_0._onDelayDone, arg_4_0, arg_4_0._afterClickWaitSecond + 0.01)
+		TaskDispatcher.runDelay(self._onDelayDone, self, self._afterClickWaitSecond + 0.01)
 	end
 end
 
-function var_0_0._onDelayStart(arg_5_0)
-	local var_5_0 = arg_5_0._alpha or arg_5_0._isForceGuide == false and 0 or nil
+function WaitGuideActionClickMask:_onDelayStart()
+	local alpha = self._alpha or self._isForceGuide == false and 0 or nil
 
-	if var_5_0 then
-		GuideViewMgr.instance:setMaskAlpha(var_5_0)
+	if alpha then
+		GuideViewMgr.instance:setMaskAlpha(alpha)
 	end
 
 	GuideViewMgr.instance:enableHoleClick()
-	GuideViewMgr.instance:setHoleClickCallback(arg_5_0._onClickTarget, arg_5_0)
+	GuideViewMgr.instance:setHoleClickCallback(self._onClickTarget, self)
 end
 
-function var_0_0._onDelayDone(arg_6_0)
-	if arg_6_0._isInside then
-		arg_6_0:onDone(true)
-	elseif not arg_6_0._isForceGuide then
-		GuideController.instance:oneKeyFinishGuide(arg_6_0.guideId, false)
+function WaitGuideActionClickMask:_onDelayDone()
+	if self._isInside then
+		self:onDone(true)
+	elseif not self._isForceGuide then
+		GuideController.instance:oneKeyFinishGuide(self.guideId, false)
 	end
 end
 
-return var_0_0
+return WaitGuideActionClickMask

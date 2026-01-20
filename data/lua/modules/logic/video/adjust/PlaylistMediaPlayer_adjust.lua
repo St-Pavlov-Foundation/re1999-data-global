@@ -1,29 +1,31 @@
-﻿module("modules.logic.video.adjust.PlaylistMediaPlayer_adjust", package.seeall)
+﻿-- chunkname: @modules/logic/video/adjust/PlaylistMediaPlayer_adjust.lua
 
-local var_0_0 = class("PlaylistMediaPlayer_adjust")
+module("modules.logic.video.adjust.PlaylistMediaPlayer_adjust", package.seeall)
 
-function var_0_0.JumpToItem(arg_1_0, arg_1_1)
+local PlaylistMediaPlayer_adjust = class("PlaylistMediaPlayer_adjust")
+
+function PlaylistMediaPlayer_adjust:JumpToItem(index)
 	return
 end
 
-function var_0_0.Play(arg_2_0)
+function PlaylistMediaPlayer_adjust:Play()
 	return
 end
 
-function var_0_0.Pause(arg_3_0)
+function PlaylistMediaPlayer_adjust:Pause()
 	return
 end
 
-function var_0_0.Stop(arg_4_0)
+function PlaylistMediaPlayer_adjust:Stop()
 	return
 end
 
-function var_0_0.IsPaused(arg_5_0)
+function PlaylistMediaPlayer_adjust:IsPaused()
 	return
 end
 
-function var_0_0.Clear(arg_6_0)
+function PlaylistMediaPlayer_adjust:Clear()
 	return
 end
 
-return var_0_0
+return PlaylistMediaPlayer_adjust

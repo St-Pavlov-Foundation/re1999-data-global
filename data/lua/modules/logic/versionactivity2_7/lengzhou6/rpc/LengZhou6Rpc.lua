@@ -1,50 +1,52 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.rpc.LengZhou6Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/rpc/LengZhou6Rpc.lua
 
-local var_0_0 = class("LengZhou6Rpc", BaseRpc)
+module("modules.logic.versionactivity2_7.lengzhou6.rpc.LengZhou6Rpc", package.seeall)
 
-function var_0_0.sendGetAct190InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity190Module_pb.GetAct190InfoRequest()
+local LengZhou6Rpc = class("LengZhou6Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function LengZhou6Rpc:sendGetAct190InfoRequest(activityId, callback, callbackObj)
+	local req = Activity190Module_pb.GetAct190InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = activityId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetAct190InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function LengZhou6Rpc:onReceiveGetAct190InfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	LengZhou6Model.instance:onGetActInfo(arg_2_2)
+	LengZhou6Model.instance:onGetActInfo(msg)
 	LengZhou6Controller.instance:openLengZhou6LevelView()
 end
 
-function var_0_0.sendAct190FinishEpisodeRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = Activity190Module_pb.Act190FinishEpisodeRequest()
+function LengZhou6Rpc:sendAct190FinishEpisodeRequest(episodeId, progress, callback, callbackObj)
+	local req = Activity190Module_pb.Act190FinishEpisodeRequest()
 
-	var_3_0.activityId = LengZhou6Model.instance:getCurActId()
-	var_3_0.episodeId = arg_3_1
-	var_3_0.progress = arg_3_2 or ""
+	req.activityId = LengZhou6Model.instance:getCurActId()
+	req.episodeId = episodeId
+	req.progress = progress or ""
 
-	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct190FinishEpisodeReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function LengZhou6Rpc:onReceiveAct190FinishEpisodeReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	LengZhou6Controller.instance:onFinishEpisode(arg_4_2)
+	LengZhou6Controller.instance:onFinishEpisode(msg)
 end
 
-function var_0_0.onReceiveAct190EpisodePush(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 ~= 0 then
+function LengZhou6Rpc:onReceiveAct190EpisodePush(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	LengZhou6Model.instance:onPushActInfo(arg_5_2)
+	LengZhou6Model.instance:onPushActInfo(msg)
 end
 
-var_0_0.instance = var_0_0.New()
+LengZhou6Rpc.instance = LengZhou6Rpc.New()
 
-return var_0_0
+return LengZhou6Rpc

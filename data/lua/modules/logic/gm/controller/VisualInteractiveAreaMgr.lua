@@ -1,196 +1,271 @@
-﻿module("modules.logic.gm.controller.VisualInteractiveAreaMgr", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/VisualInteractiveAreaMgr.lua
 
-local var_0_0 = class("VisualInteractiveAreaMgr")
+module("modules.logic.gm.controller.VisualInteractiveAreaMgr", package.seeall)
 
-var_0_0.maskItemPath = "ui/viewres/gm/visualmaskitem.prefab"
-var_0_0.LoadStatus = {
+local VisualInteractiveAreaMgr = class("VisualInteractiveAreaMgr")
+
+VisualInteractiveAreaMgr.maskItemPath = "ui/viewres/gm/visualmaskitem.prefab"
+VisualInteractiveAreaMgr.textSizeItemPath = "ui/viewres/gm/textsizeitem.prefab"
+VisualInteractiveAreaMgr.LoadStatus = {
 	Loaded = 3,
 	LoadFail = 4,
 	Loading = 2,
 	None = 1
 }
-var_0_0.needCheckComponentList = {
+VisualInteractiveAreaMgr.needCheckComponentList = {
 	SLFramework.UGUI.ButtonWrap,
 	SLFramework.UGUI.UIClickListener
 }
-var_0_0.CloneMaskGoName = "cloneMaskItem"
-var_0_0.MaxStackLevel = 50
+VisualInteractiveAreaMgr.CloneMaskGoName = "cloneMaskItem"
+VisualInteractiveAreaMgr.TextSizeGoName = "textSizeItem"
+VisualInteractiveAreaMgr.MaxStackLevel = 50
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:loadMaskItem()
-	arg_1_0:createPool()
+function VisualInteractiveAreaMgr:init()
+	self:loadMaskItem()
+	self:createPool()
 
-	arg_1_0.viewName2MaskGoListDict = {}
+	self.viewName2MaskGoListDict = {}
+	self.viewName2TextSizeGoListDict = {}
+	self.listSourceFunc = LuaListScrollView.onUpdateFinish
+	self.tableViewSourceFunc = TabViewGroup._finishCallback
 end
 
-function var_0_0.loadMaskItem(arg_2_0)
-	arg_2_0.loadStatus = var_0_0.LoadStatus.Loading
+function VisualInteractiveAreaMgr:loadMaskItem()
+	self.loadStatus = VisualInteractiveAreaMgr.LoadStatus.Loading
+	self.loader = MultiAbLoader.New()
 
-	loadAbAsset(var_0_0.maskItemPath, true, arg_2_0._onLoadCallback, arg_2_0)
+	self.loader:addPath(VisualInteractiveAreaMgr.maskItemPath)
+	self.loader:addPath(VisualInteractiveAreaMgr.textSizeItemPath)
+	self.loader:setLoadFailCallback(self.onLoadFail, self)
+	self.loader:startLoad(self._onLoadCallback, self)
 end
 
-function var_0_0._onLoadCallback(arg_3_0, arg_3_1)
-	if arg_3_1.IsLoadSuccess then
-		local var_3_0 = arg_3_0.assetItem
+function VisualInteractiveAreaMgr:_onLoadCallback()
+	local maskAssetItem = self.loader:getAssetItem(VisualInteractiveAreaMgr.maskItemPath)
+	local textSizeItem = self.loader:getAssetItem(VisualInteractiveAreaMgr.textSizeItemPath)
 
-		arg_3_0.assetItem = arg_3_1
+	self.maskItemGo = gohelper.clone(maskAssetItem:GetResource(VisualInteractiveAreaMgr.maskItemPath), ViewMgr.instance:getUIRoot())
+	self.textSizeItemGo = gohelper.clone(textSizeItem:GetResource(VisualInteractiveAreaMgr.maskItemPath), ViewMgr.instance:getUIRoot())
 
-		arg_3_0.assetItem:Retain()
+	gohelper.setActive(self.maskItemGo, false)
+	gohelper.setActive(self.textSizeItemGo, false)
 
-		if var_3_0 then
-			var_3_0:Release()
-		end
+	self.loadStatus = VisualInteractiveAreaMgr.LoadStatus.Loaded
 
-		arg_3_0.maskItemGo = gohelper.clone(arg_3_0.assetItem:GetResource(var_0_0.maskItemPath), ViewMgr.instance:getUIRoot())
+	if self.needDelayShowMask then
+		self:showAllViewMaskGo()
+	end
+end
 
-		gohelper.setActive(arg_3_0.maskItemGo, false)
+function VisualInteractiveAreaMgr:onLoadFail()
+	self.maskItemGo = nil
+	self.textSizeItemGo = nil
+	self.loadStatus = VisualInteractiveAreaMgr.LoadStatus.LoadFail
 
-		arg_3_0.loadStatus = var_0_0.LoadStatus.Loaded
+	logError("load fail ...")
+end
 
-		if arg_3_0.needDelayShowMask then
-			arg_3_0:showAllViewMaskGo()
-		end
+function VisualInteractiveAreaMgr:createPool()
+	self.maskGoPool = {}
+	self.textSizeGoPool = {}
+	self.poolGO = gohelper.create2d(ViewMgr.instance:getUIRoot(), "maskPool")
+	self.poolTr = self.poolGO.transform
+
+	gohelper.setActive(self.poolGO, false)
+end
+
+function VisualInteractiveAreaMgr:beforeStart()
+	function LuaListScrollView.onUpdateFinish(scrollView)
+		self.listSourceFunc(scrollView)
+		self:showMaskGoByGo(scrollView._csListScroll.gameObject, scrollView.viewName)
+		self:showTextSizeByGo(scrollView._csListScroll.gameObject, scrollView.viewName)
+	end
+
+	function TabViewGroup._finishCallback(tabView, loader)
+		self.tableViewSourceFunc(tabView, loader)
+		self:showMaskGoByGo(tabView.viewGO, tabView.viewName)
+		self:showTextSizeByGo(tabView.viewGO, tabView.viewName)
+	end
+end
+
+function VisualInteractiveAreaMgr:beforeStop()
+	LuaListScrollView.onUpdateFinish = self.listSourceFunc
+	TabViewGroup._finishCallback = self.tableViewSourceFunc
+end
+
+function VisualInteractiveAreaMgr:tryStart()
+	self.visualInteractive = GMController.instance:getVisualInteractive()
+	self.textSizeActive = GMController.instance:getTextSizeActive()
+
+	if not self.visualInteractive and not self.textSizeActive then
+		self:stop()
+
+		return
+	end
+
+	self:beforeStart()
+
+	if self.loadStatus ~= VisualInteractiveAreaMgr.LoadStatus.Loaded then
+		self.needDelayShowMask = true
 	else
-		arg_3_0.maskItemGo = nil
-		arg_3_0.loadStatus = var_0_0.LoadStatus.LoadFail
+		self:showAllViewMaskGo()
+	end
 
-		logError("load fail ...")
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self.onCloseView, self)
+end
+
+function VisualInteractiveAreaMgr:stop()
+	self:beforeStop()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenView, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self.onCloseView, self)
+
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
+
+	for _, viewName in ipairs(viewNameList) do
+		self:recycleMaskGoByViewName(viewName)
+		self:recycleTextSizeGoByViewName(viewName)
 	end
 end
 
-function var_0_0.createPool(arg_4_0)
-	arg_4_0.maskGoPool = {}
-	arg_4_0.poolGO = gohelper.create2d(ViewMgr.instance:getUIRoot(), "maskPool")
-	arg_4_0.poolTr = arg_4_0.poolGO.transform
-
-	gohelper.setActive(arg_4_0.poolGO, false)
+function VisualInteractiveAreaMgr:onOpenView(viewName)
+	self:showMaskGoByViewName(viewName)
+	self:showTextSizeGoByViewName(viewName)
 end
 
-function var_0_0.beforeStart(arg_5_0)
-	arg_5_0.listSourceFunc = LuaListScrollView.onUpdateFinish
-
-	function LuaListScrollView.onUpdateFinish(arg_6_0)
-		arg_5_0.listSourceFunc(arg_6_0)
-		arg_5_0:showMaskGoByGo(arg_6_0._csListScroll.gameObject, arg_6_0.viewName)
-	end
-
-	arg_5_0.tableViewSourceFunc = TabViewGroup._finishCallback
-
-	function TabViewGroup._finishCallback(arg_7_0, arg_7_1)
-		arg_5_0.tableViewSourceFunc(arg_7_0, arg_7_1)
-		arg_5_0:showMaskGoByGo(arg_7_0.viewGO, arg_7_0.viewName)
-	end
+function VisualInteractiveAreaMgr:onCloseView(viewName)
+	self:recycleMaskGoByViewName(viewName)
+	self:recycleTextSizeGoByViewName(viewName)
 end
 
-function var_0_0.beforeStop(arg_8_0)
-	LuaListScrollView.onUpdateFinish = arg_8_0.listSourceFunc
-	TabViewGroup._finishCallback = arg_8_0.tableViewSourceFunc
-end
+function VisualInteractiveAreaMgr:showAllViewMaskGo()
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
 
-function var_0_0.start(arg_9_0)
-	arg_9_0:beforeStart()
-
-	if arg_9_0.loadStatus ~= var_0_0.LoadStatus.Loaded then
-		arg_9_0.needDelayShowMask = true
-	else
-		arg_9_0:showAllViewMaskGo()
-	end
-
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_9_0.onOpenView, arg_9_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_9_0.onCloseView, arg_9_0)
-end
-
-function var_0_0.stop(arg_10_0)
-	arg_10_0:beforeStop()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_10_0.onOpenView, arg_10_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_10_0.onCloseView, arg_10_0)
-
-	local var_10_0 = ViewMgr.instance:getOpenViewNameList()
-
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		arg_10_0:recycleMaskGoByViewName(iter_10_1)
-	end
-end
-
-function var_0_0.onOpenView(arg_11_0, arg_11_1)
-	arg_11_0:showMaskGoByViewName(arg_11_1)
-end
-
-function var_0_0.onCloseView(arg_12_0, arg_12_1)
-	arg_12_0:recycleMaskGoByViewName(arg_12_1)
-end
-
-function var_0_0.showAllViewMaskGo(arg_13_0)
-	local var_13_0 = ViewMgr.instance:getOpenViewNameList()
-
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if not arg_13_0.viewName2MaskGoListDict[iter_13_1] then
-			arg_13_0:showMaskGoByViewName(iter_13_1)
+	for _, viewName in ipairs(viewNameList) do
+		if not self.viewName2MaskGoListDict[viewName] then
+			self:showMaskGoByViewName(viewName)
+			self:showTextSizeGoByViewName(viewName)
 		end
 	end
 end
 
-function var_0_0.showMaskGoByViewName(arg_14_0, arg_14_1)
-	local var_14_0 = ViewMgr.instance:getContainer(arg_14_1)
+function VisualInteractiveAreaMgr:showMaskGoByViewName(viewName)
+	local viewContainer = ViewMgr.instance:getContainer(viewName)
 
-	arg_14_0:showMaskGoByGo(var_14_0.viewGO, arg_14_1)
+	self:showMaskGoByGo(viewContainer.viewGO, viewName)
 end
 
-function var_0_0.showMaskGoByGo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	arg_15_4 = arg_15_4 or 1
+function VisualInteractiveAreaMgr:showTextSizeGoByViewName(viewName)
+	local viewContainer = ViewMgr.instance:getContainer(viewName)
 
-	if arg_15_4 > var_0_0.MaxStackLevel then
+	self:showTextSizeByGo(viewContainer.viewGO, viewName)
+end
+
+function VisualInteractiveAreaMgr:showTextSizeByGo(go, viewName, level)
+	if not self.textSizeActive then
+		return
+	end
+
+	if go.name == VisualInteractiveAreaMgr.TextSizeGoName then
+		return
+	end
+
+	level = level or 1
+
+	if level > VisualInteractiveAreaMgr.MaxStackLevel then
 		logError("stack overflow ...")
 
 		return
 	end
 
-	if not arg_15_1 or not arg_15_1.transform then
+	if not go or not go.transform then
 		logError("go not be null")
 
 		return
 	end
 
-	if not arg_15_0.viewName2MaskGoListDict[arg_15_2] then
-		arg_15_0.viewName2MaskGoListDict[arg_15_2] = {}
+	if not self.viewName2TextSizeGoListDict[viewName] then
+		self.viewName2TextSizeGoListDict[viewName] = {}
 	end
 
-	arg_15_0.currentViewNameMaskList = arg_15_0.viewName2MaskGoListDict[arg_15_2]
+	self.currentViewNameTextGoList = self.viewName2TextSizeGoListDict[viewName]
 
-	arg_15_0:addMaskGo(arg_15_1, arg_15_3)
+	local transform = go.transform
 
-	arg_15_3 = arg_15_3 or arg_15_0:checkNeedAddMask(arg_15_1, arg_15_3)
+	for i = 1, transform.childCount do
+		self:showTextSizeByGo(transform:GetChild(i - 1).gameObject, viewName, level + 1)
+	end
 
-	local var_15_0 = arg_15_1.transform
+	local text = go:GetComponent(gohelper.Type_Text) or go:GetComponent(gohelper.Type_TextMesh)
 
-	for iter_15_0 = 1, var_15_0.childCount do
-		arg_15_0:showMaskGoByGo(var_15_0:GetChild(iter_15_0 - 1).gameObject, arg_15_2, arg_15_3, arg_15_4 + 1)
+	if text then
+		self:addTextSizeItemGo(go, text.fontSize)
 	end
 end
 
-function var_0_0.addMaskGo(arg_16_0, arg_16_1, arg_16_2)
-	if arg_16_0:checkNeedAddMask(arg_16_1, arg_16_2) then
-		local var_16_0 = arg_16_0:addMaskItemGo(arg_16_1)
+function VisualInteractiveAreaMgr:showMaskGoByGo(go, viewName, isClickChild, level)
+	if not self.visualInteractive then
+		return
+	end
 
-		if var_16_0 then
-			table.insert(arg_16_0.currentViewNameMaskList, var_16_0)
+	level = level or 1
+
+	if level > VisualInteractiveAreaMgr.MaxStackLevel then
+		logError("stack overflow ...")
+
+		return
+	end
+
+	if not go or not go.transform then
+		logError("go not be null")
+
+		return
+	end
+
+	if not self.viewName2MaskGoListDict[viewName] then
+		self.viewName2MaskGoListDict[viewName] = {}
+	end
+
+	self.currentViewNameMaskList = self.viewName2MaskGoListDict[viewName]
+
+	self:addMaskGo(go, isClickChild)
+
+	isClickChild = isClickChild or self:checkNeedAddMask(go, isClickChild)
+
+	local transform = go.transform
+
+	for i = 1, transform.childCount do
+		self:showMaskGoByGo(transform:GetChild(i - 1).gameObject, viewName, isClickChild, level + 1)
+	end
+end
+
+function VisualInteractiveAreaMgr:addMaskGo(go, isClickChild)
+	if self:checkNeedAddMask(go, isClickChild) then
+		local maskGo = self:addMaskItemGo(go)
+
+		if maskGo then
+			table.insert(self.currentViewNameMaskList, maskGo)
 		end
 	end
 end
 
-function var_0_0.checkNeedAddMask(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_2 then
-		local var_17_0 = arg_17_1:GetComponent(gohelper.Type_Graphic)
+function VisualInteractiveAreaMgr:checkNeedAddMask(go, isClickChild)
+	if not self.visualInteractive then
+		return false
+	end
 
-		if var_17_0 and var_17_0.raycastTarget then
+	if isClickChild then
+		local graphicCom = go:GetComponent(gohelper.Type_Graphic)
+
+		if graphicCom and graphicCom.raycastTarget then
 			return true
 		else
 			return false
 		end
 	end
 
-	for iter_17_0, iter_17_1 in ipairs(var_0_0.needCheckComponentList) do
-		if arg_17_1:GetComponent(typeof(iter_17_1)) then
+	for _, commClass in ipairs(VisualInteractiveAreaMgr.needCheckComponentList) do
+		if go:GetComponent(typeof(commClass)) then
 			return true
 		end
 	end
@@ -198,62 +273,122 @@ function var_0_0.checkNeedAddMask(arg_17_0, arg_17_1, arg_17_2)
 	return false
 end
 
-function var_0_0.addMaskItemGo(arg_18_0, arg_18_1)
-	if gohelper.findChild(arg_18_1, var_0_0.CloneMaskGoName) then
+function VisualInteractiveAreaMgr:addMaskItemGo(parentGo)
+	if gohelper.findChild(parentGo, VisualInteractiveAreaMgr.CloneMaskGoName) then
 		return nil
 	end
 
-	local var_18_0 = table.remove(arg_18_0.maskGoPool) or gohelper.clone(arg_18_0.maskItemGo, arg_18_1, var_0_0.CloneMaskGoName)
+	local maskGo = table.remove(self.maskGoPool)
 
-	var_18_0.transform:SetParent(arg_18_1.transform)
+	maskGo = maskGo or gohelper.clone(self.maskItemGo, parentGo, VisualInteractiveAreaMgr.CloneMaskGoName)
 
-	var_18_0.transform.offsetMax = Vector2.zero
-	var_18_0.transform.offsetMin = Vector2.zero
+	maskGo.transform:SetParent(parentGo.transform)
 
-	transformhelper.setLocalRotation(var_18_0.transform, 0, 0, 0)
-	transformhelper.setLocalScale(var_18_0.transform, 1, 1, 1)
+	maskGo.transform.offsetMax = Vector2.zero
+	maskGo.transform.offsetMin = Vector2.zero
 
-	local var_18_1 = gohelper.findChildText(var_18_0, "txt_size")
+	transformhelper.setLocalRotation(maskGo.transform, 0, 0, 0)
+	transformhelper.setLocalScale(maskGo.transform, 1, 1, 1)
 
-	if var_18_1 then
-		var_18_1.text = string.format("%.1f%s%.1f", recthelper.getWidth(var_18_0.transform), luaLang("multiple"), recthelper.getHeight(var_18_0.transform))
+	local txtSize = gohelper.findChildText(maskGo, "txt_size")
+
+	if txtSize then
+		txtSize.text = string.format("%.1f%s%.1f", recthelper.getWidth(maskGo.transform), luaLang("multiple"), recthelper.getHeight(maskGo.transform))
 	end
 
-	gohelper.setActive(var_18_0, true)
+	gohelper.setActive(maskGo, true)
 
-	return var_18_0
+	return maskGo
 end
 
-function var_0_0.recycleMaskGoByViewName(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.viewName2MaskGoListDict[arg_19_1]
+function VisualInteractiveAreaMgr:addTextSizeItemGo(parentGo, fontSize)
+	if gohelper.findChild(parentGo, VisualInteractiveAreaMgr.TextSizeGoName) then
+		return nil
+	end
 
-	if var_19_0 then
-		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-			if not gohelper.isNil(iter_19_1) then
-				iter_19_1.transform:SetParent(arg_19_0.poolTr)
-				table.insert(arg_19_0.maskGoPool, iter_19_1)
+	local textSizeGo = table.remove(self.textSizeGoPool)
+
+	textSizeGo = textSizeGo or gohelper.clone(self.textSizeItemGo, parentGo, VisualInteractiveAreaMgr.TextSizeGoName)
+
+	table.insert(self.currentViewNameTextGoList, textSizeGo)
+	textSizeGo.transform:SetParent(parentGo.transform)
+
+	textSizeGo.transform.offsetMax = Vector2.zero
+	textSizeGo.transform.offsetMin = Vector2.zero
+
+	transformhelper.setLocalRotation(textSizeGo.transform, 0, 0, 0)
+	transformhelper.setLocalScale(textSizeGo.transform, 1, 1, 1)
+
+	local txtSize = gohelper.findChildText(textSizeGo, "txt_size")
+
+	if txtSize then
+		txtSize.text = tostring(fontSize)
+	end
+
+	gohelper.setActive(textSizeGo, true)
+
+	return textSizeGo
+end
+
+function VisualInteractiveAreaMgr:recycleMaskGoByViewName(viewName)
+	local viewNameMaskGoList = self.viewName2MaskGoListDict[viewName]
+
+	if viewNameMaskGoList then
+		for _, maskGo in ipairs(viewNameMaskGoList) do
+			if not gohelper.isNil(maskGo) then
+				maskGo.transform:SetParent(self.poolTr)
+				table.insert(self.maskGoPool, maskGo)
 			end
 		end
 
-		arg_19_0.viewName2MaskGoListDict[arg_19_1] = nil
+		tabletool.clear(viewNameMaskGoList)
+
+		self.viewName2MaskGoListDict[viewName] = nil
 	end
 end
 
-function var_0_0.dispose(arg_20_0)
-	if arg_20_0.loadStatus == var_0_0.LoadStatus.Loading then
-		removeAssetLoadCb(var_0_0.maskItemPath, arg_20_0._onLoadCallback, arg_20_0)
+function VisualInteractiveAreaMgr:recycleTextSizeGoByViewName(viewName)
+	local viewNameTextSizeGoList = self.viewName2TextSizeGoListDict[viewName]
+
+	if viewNameTextSizeGoList then
+		for _, textSizeGo in ipairs(viewNameTextSizeGoList) do
+			if not gohelper.isNil(textSizeGo) then
+				textSizeGo.transform:SetParent(self.poolTr)
+				table.insert(self.textSizeGoPool, textSizeGo)
+			end
+		end
+
+		tabletool.clear(viewNameTextSizeGoList)
+
+		self.viewName2TextSizeGoListDict[viewName] = nil
 	end
-
-	if arg_20_0.assetItem then
-		arg_20_0.assetItem:Release()
-	end
-
-	arg_20_0:stop()
-
-	arg_20_0.maskGoPool = nil
-
-	gohelper.destroy(arg_20_0.maskItemGo)
-	gohelper.destroy(arg_20_0.poolGO)
 end
 
-return var_0_0
+function VisualInteractiveAreaMgr:dispose()
+	if self.loader then
+		self.loader:dispose()
+
+		self.loader = nil
+	end
+
+	self:stop()
+	tabletool.clear(self.textSizeGoPool)
+	tabletool.clear(self.maskGoPool)
+
+	self.maskGoPool = nil
+	self.textSizeGoPool = nil
+
+	gohelper.destroy(self.maskItemGo)
+
+	self.maskItemGo = nil
+
+	gohelper.destroy(self.textSizeItemGo)
+
+	self.textSizeItemGo = nil
+
+	gohelper.destroy(self.poolGO)
+
+	self.poolGO = nil
+end
+
+return VisualInteractiveAreaMgr

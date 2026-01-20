@@ -1,30 +1,32 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterViewContainer.lua
 
-local var_0_0 = class("RougeLimiterViewContainer", BaseViewContainer)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeLimiterViewContainer = class("RougeLimiterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeLimiterView.New())
-	table.insert(var_1_0, RougeLimiterDebuffTipsView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_LeftTop"))
-	table.insert(var_1_0, RougeLimiterViewEmblemComp.New("#go_RightTop"))
+function RougeLimiterViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeLimiterView.New())
+	table.insert(views, RougeLimiterDebuffTipsView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_LeftTop"))
+	table.insert(views, RougeLimiterViewEmblemComp.New("#go_RightTop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function RougeLimiterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return RougeLimiterViewContainer

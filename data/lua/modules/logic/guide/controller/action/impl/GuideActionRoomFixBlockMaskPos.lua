@@ -1,55 +1,58 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionRoomFixBlockMaskPos", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionRoomFixBlockMaskPos.lua
 
-local var_0_0 = class("GuideActionRoomFixBlockMaskPos", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionRoomFixBlockMaskPos", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionRoomFixBlockMaskPos = class("GuideActionRoomFixBlockMaskPos", BaseGuideAction)
 
-	local var_1_0 = GuideModel.instance:getStepGOPath(arg_1_0.guideId, arg_1_0.stepId)
-	local var_1_1 = gohelper.find(var_1_0)
+function GuideActionRoomFixBlockMaskPos:onStart(context)
+	GuideActionRoomFixBlockMaskPos.super.onStart(self, context)
 
-	if gohelper.isNil(var_1_1) then
-		logError(arg_1_0.guideId .. "_" .. arg_1_0.stepId .. " blockGO is nil: " .. var_1_0)
-		arg_1_0:onDone(true)
+	local goPath = GuideModel.instance:getStepGOPath(self.guideId, self.stepId)
+	local blockGO = gohelper.find(goPath)
+
+	if gohelper.isNil(blockGO) then
+		logError(self.guideId .. "_" .. self.stepId .. " blockGO is nil: " .. goPath)
+		self:onDone(true)
 
 		return
 	end
 
 	if ViewMgr.instance:isOpenFinish(ViewName.GuideView) then
-		arg_1_0:_fixPos()
+		self:_fixPos()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkOpenView, arg_1_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._checkOpenView, self)
 	end
 end
 
-function var_0_0._checkOpenView(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.GuideView then
-		arg_2_0:_fixPos()
+function GuideActionRoomFixBlockMaskPos:_checkOpenView(viewName)
+	if viewName == ViewName.GuideView then
+		self:_fixPos()
 	end
 end
 
-function var_0_0._fixPos(arg_3_0)
-	local var_3_0 = GuideModel.instance:getStepGOPath(arg_3_0.guideId, arg_3_0.stepId)
-	local var_3_1 = gohelper.find(var_3_0)
-	local var_3_2 = ViewMgr.instance:getContainer(ViewName.GuideView)
-	local var_3_3 = var_3_2 and var_3_2.viewGO
-	local var_3_4 = var_3_3 and var_3_3.transform
-	local var_3_5 = var_3_1.transform.position
-	local var_3_6 = RoomBendingHelper.worldToBendingSimple(var_3_5)
-	local var_3_7 = recthelper.worldPosToAnchorPos(var_3_5, var_3_4)
-	local var_3_8 = recthelper.worldPosToAnchorPos(var_3_6, var_3_4) - var_3_7
+function GuideActionRoomFixBlockMaskPos:_fixPos()
+	local goPath = GuideModel.instance:getStepGOPath(self.guideId, self.stepId)
+	local blockGO = gohelper.find(goPath)
+	local maskView = ViewMgr.instance:getContainer(ViewName.GuideView)
+	local maskViewGO = maskView and maskView.viewGO
+	local maskViewTr = maskViewGO and maskViewGO.transform
+	local worldPos = blockGO.transform.position
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
+	local origin = recthelper.worldPosToAnchorPos(worldPos, maskViewTr)
+	local bending = recthelper.worldPosToAnchorPos(bendingPos, maskViewTr)
+	local offset = bending - origin
 
-	GuideController.instance:dispatchEvent(GuideEvent.SetMaskOffset, var_3_8)
-	arg_3_0:onDone(true)
+	GuideController.instance:dispatchEvent(GuideEvent.SetMaskOffset, offset)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._checkOpenView, arg_4_0)
+function GuideActionRoomFixBlockMaskPos:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._checkOpenView, self)
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	var_0_0.super.onDestroy(arg_5_0)
+function GuideActionRoomFixBlockMaskPos:onDestroy()
+	GuideActionRoomFixBlockMaskPos.super.onDestroy(self)
 	GuideController.instance:dispatchEvent(GuideEvent.SetMaskOffset, nil)
 end
 
-return var_0_0
+return GuideActionRoomFixBlockMaskPos

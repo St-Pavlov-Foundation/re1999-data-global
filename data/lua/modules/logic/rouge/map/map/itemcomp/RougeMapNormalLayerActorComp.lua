@@ -1,127 +1,131 @@
-﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapNormalLayerActorComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/map/itemcomp/RougeMapNormalLayerActorComp.lua
 
-local var_0_0 = class("RougeMapNormalLayerActorComp", RougeMapBaseActorComp)
+module("modules.logic.rouge.map.map.itemcomp.RougeMapNormalLayerActorComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.init(arg_1_0, arg_1_1, arg_1_2)
+local RougeMapNormalLayerActorComp = class("RougeMapNormalLayerActorComp", RougeMapBaseActorComp)
 
-	arg_1_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.goActor)
+function RougeMapNormalLayerActorComp:init(go, map)
+	RougeMapNormalLayerActorComp.super.init(self, go, map)
 
-	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onBeforeActorMoveToEnd, arg_1_0.moveToEnd, arg_1_0)
-	arg_1_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_1_0.onCloseViewFinish, arg_1_0)
+	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.goActor)
+
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onBeforeActorMoveToEnd, self.moveToEnd, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 end
 
-function var_0_0.moveToMapItem(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_1 = arg_2_1 or RougeMapModel.instance:getCurNode().nodeId
+function RougeMapNormalLayerActorComp:moveToMapItem(id, callback, callbackObj)
+	id = id or RougeMapModel.instance:getCurNode().nodeId
 
-	local var_2_0, var_2_1, var_2_2 = arg_2_0.map:getMapItem(arg_2_1):getActorPos()
+	local mapItem = self.map:getMapItem(id)
+	local x, y, z = mapItem:getActorPos()
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onNormalActorBeforeMove)
-	arg_2_0:clearTween()
+	self:clearTween()
 
-	arg_2_0.callback = arg_2_2
-	arg_2_0.callbackObj = arg_2_3
-	arg_2_0.targetX, arg_2_0.targetY = var_2_0, var_2_1
+	self.callback = callback
+	self.callbackObj = callbackObj
+	self.targetX, self.targetY = x, y
 
 	AudioMgr.instance:trigger(AudioEnum.UI.NormalLayerMove)
-	arg_2_0.animatorPlayer:Play("start", arg_2_0.onStartAnimDone, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0.onStartAnimDone, arg_2_0, 0.5)
-	arg_2_0:startBlock()
+	self.animatorPlayer:Play("start", self.onStartAnimDone, self)
+	TaskDispatcher.runDelay(self.onStartAnimDone, self, 0.5)
+	self:startBlock()
 end
 
-function var_0_0.onStartAnimDone(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.onStartAnimDone, arg_3_0)
-	transformhelper.setLocalPos(arg_3_0.trActor, arg_3_0.targetX, arg_3_0.targetY, RougeMapHelper.getOffsetZ(arg_3_0.targetY))
-	arg_3_0.animatorPlayer:Play("stop", arg_3_0.onMovingDone, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0.onMovingDone, arg_3_0, 0.8)
+function RougeMapNormalLayerActorComp:onStartAnimDone()
+	TaskDispatcher.cancelTask(self.onStartAnimDone, self)
+	transformhelper.setLocalPos(self.trActor, self.targetX, self.targetY, RougeMapHelper.getOffsetZ(self.targetY))
+	self.animatorPlayer:Play("stop", self.onMovingDone, self)
+	TaskDispatcher.runDelay(self.onMovingDone, self, 0.8)
 end
 
-function var_0_0.onCloseViewFinish(arg_4_0, arg_4_1)
-	if arg_4_0.waitViewClose then
-		arg_4_0:moveToEnd()
+function RougeMapNormalLayerActorComp:onCloseViewFinish(viewName)
+	if self.waitViewClose then
+		self:moveToEnd()
 	end
 end
 
-function var_0_0.moveToEnd(arg_5_0)
+function RougeMapNormalLayerActorComp:moveToEnd()
 	if not RougeMapHelper.checkMapViewOnTop() then
-		arg_5_0.waitViewClose = true
+		self.waitViewClose = true
 
 		return
 	end
 
-	arg_5_0.waitViewClose = nil
+	self.waitViewClose = nil
 
 	if not RougeMapModel.instance:isNormalLayer() then
 		logError("不在路线层了？")
-		arg_5_0:onMoveToEndDoneCallback()
+		self:onMoveToEndDoneCallback()
 
 		return
 	end
 
-	local var_5_0 = RougeMapModel.instance:getEndNodeId()
+	local endId = RougeMapModel.instance:getEndNodeId()
 
-	arg_5_0.movingToEnd = true
+	self.movingToEnd = true
 
-	arg_5_0:moveToMapItem(var_5_0, arg_5_0.onMoveToEndDoneCallback, arg_5_0)
+	self:moveToMapItem(endId, self.onMoveToEndDoneCallback, self)
 end
 
-function var_0_0.onMovingDone(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.onMovingDone, arg_6_0)
-	arg_6_0:endBlock()
+function RougeMapNormalLayerActorComp:onMovingDone()
+	TaskDispatcher.cancelTask(self.onMovingDone, self)
+	self:endBlock()
 
-	arg_6_0.movingTweenId = nil
+	self.movingTweenId = nil
 
-	if arg_6_0.callback then
-		arg_6_0.callback(arg_6_0.callbackObj)
+	if self.callback then
+		self.callback(self.callbackObj)
 	end
 
-	arg_6_0.callback = nil
-	arg_6_0.callbackObj = nil
+	self.callback = nil
+	self.callbackObj = nil
 
-	if not arg_6_0.movingToEnd then
+	if not self.movingToEnd then
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onActorMovingDone)
 	end
 
-	arg_6_0.movingToEnd = nil
+	self.movingToEnd = nil
 end
 
-function var_0_0.onMoveToEndDoneCallback(arg_7_0)
-	arg_7_0:endBlock()
+function RougeMapNormalLayerActorComp:onMoveToEndDoneCallback()
+	self:endBlock()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onEndActorMoveToEnd)
 
-	local var_7_0 = RougeMapModel.instance:getLayerCo().endStoryId
+	local co = RougeMapModel.instance:getLayerCo()
+	local endId = co.endStoryId
 
-	if string.nilorempty(var_7_0) then
-		arg_7_0:_updateMapInfo()
-
-		return
-	end
-
-	local var_7_1 = string.splitToNumber(var_7_0, "|")
-
-	if StoryModel.instance:isStoryFinished(var_7_1[1]) then
-		arg_7_0:_updateMapInfo()
+	if string.nilorempty(endId) then
+		self:_updateMapInfo()
 
 		return
 	end
 
-	StoryController.instance:playStories(var_7_1, nil, arg_7_0.onStoryPlayDone, arg_7_0)
+	local storyIdList = string.splitToNumber(endId, "|")
+
+	if StoryModel.instance:isStoryFinished(storyIdList[1]) then
+		self:_updateMapInfo()
+
+		return
+	end
+
+	StoryController.instance:playStories(storyIdList, nil, self.onStoryPlayDone, self)
 end
 
-function var_0_0.onStoryPlayDone(arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0._updateMapInfo, arg_8_0, RougeMapEnum.WaitStoryCloseAnim)
+function RougeMapNormalLayerActorComp:onStoryPlayDone()
+	TaskDispatcher.runDelay(self._updateMapInfo, self, RougeMapEnum.WaitStoryCloseAnim)
 end
 
-function var_0_0._updateMapInfo(arg_9_0)
+function RougeMapNormalLayerActorComp:_updateMapInfo()
 	RougeMapModel.instance:updateToNewMapInfo()
 end
 
-function var_0_0.destroy(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.onMovingDone, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0.onStartAnimDone, arg_10_0)
-	arg_10_0.animatorPlayer:Stop()
-	TaskDispatcher.cancelTask(arg_10_0._updateMapInfo, arg_10_0)
-	var_0_0.super.destroy(arg_10_0)
+function RougeMapNormalLayerActorComp:destroy()
+	TaskDispatcher.cancelTask(self.onMovingDone, self)
+	TaskDispatcher.cancelTask(self.onStartAnimDone, self)
+	self.animatorPlayer:Stop()
+	TaskDispatcher.cancelTask(self._updateMapInfo, self)
+	RougeMapNormalLayerActorComp.super.destroy(self)
 end
 
-return var_0_0
+return RougeMapNormalLayerActorComp

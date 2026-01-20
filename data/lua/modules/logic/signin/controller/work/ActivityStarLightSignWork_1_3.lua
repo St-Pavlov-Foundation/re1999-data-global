@@ -1,120 +1,123 @@
-﻿module("modules.logic.signin.controller.work.ActivityStarLightSignWork_1_3", package.seeall)
+﻿-- chunkname: @modules/logic/signin/controller/work/ActivityStarLightSignWork_1_3.lua
 
-local var_0_0 = class("ActivityStarLightSignWork_1_3", BaseWork)
-local var_0_1 = 0
-local var_0_2 = {
+module("modules.logic.signin.controller.work.ActivityStarLightSignWork_1_3", package.seeall)
+
+local ActivityStarLightSignWork_1_3 = class("ActivityStarLightSignWork_1_3", BaseWork)
+local startIndex = 0
+local actIds = {
 	ActivityEnum.Activity.StarLightSignPart1_1_3,
 	ActivityEnum.Activity.StarLightSignPart2_1_3
 }
 
-local function var_0_3()
-	if not var_0_0.kViewNames then
-		local var_1_0 = {
+local function _initViewNames()
+	if not ActivityStarLightSignWork_1_3.kViewNames then
+		local viewNames = {
 			ViewName.ActivityStarLightSignPart1PaiLianView_1_3,
 			ViewName.ActivityStarLightSignPart2PaiLianView_1_3
 		}
 
-		var_0_0.kViewNames = var_1_0
+		ActivityStarLightSignWork_1_3.kViewNames = viewNames
 	end
 end
 
-function var_0_0.onStart(arg_2_0)
-	var_0_3()
+function ActivityStarLightSignWork_1_3:onStart()
+	_initViewNames()
 
-	if arg_2_0:_isExistGuide() then
-		arg_2_0:_endBlock()
-		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, arg_2_0._work, arg_2_0)
+	if self:_isExistGuide() then
+		self:_endBlock()
+		GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._work, self)
 	else
-		arg_2_0:_work()
+		self:_work()
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0._refreshNorSignActivity, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self._refreshNorSignActivity, self)
 end
 
-function var_0_0._refreshNorSignActivity(arg_3_0)
-	if not arg_3_0._actId then
+function ActivityStarLightSignWork_1_3:_refreshNorSignActivity()
+	if not self._actId then
 		return
 	end
 
-	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(arg_3_0._actId) then
-		if ViewMgr.instance:isOpen(arg_3_0._viewName) then
+	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(self._actId) then
+		if ViewMgr.instance:isOpen(self._viewName) then
 			return
 		end
 
-		arg_3_0:_work()
+		self:_work()
 
 		return
 	end
 
-	ViewMgr.instance:openView(arg_3_0._viewName)
+	ViewMgr.instance:openView(self._viewName)
 end
 
-function var_0_0._onCloseViewFinish(arg_4_0, arg_4_1)
-	if arg_4_1 ~= arg_4_0._viewName then
+function ActivityStarLightSignWork_1_3:_onCloseViewFinish(viewName)
+	if viewName ~= self._viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(arg_4_0._viewName) then
+	if ViewMgr.instance:isOpen(self._viewName) then
 		return
 	end
 
-	arg_4_0:_work()
+	self:_work()
 end
 
-function var_0_0._onOpenViewFinish(arg_5_0, arg_5_1)
-	if arg_5_1 ~= arg_5_0._viewName then
+function ActivityStarLightSignWork_1_3:_onOpenViewFinish(viewName)
+	if viewName ~= self._viewName then
 		return
 	end
 
-	arg_5_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_0.clearWork(arg_6_0)
-	if not arg_6_0.isSuccess then
-		arg_6_0:_endBlock()
+function ActivityStarLightSignWork_1_3:clearWork()
+	if not self.isSuccess then
+		self:_endBlock()
 	end
 
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, arg_6_0._work, arg_6_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_6_0._refreshNorSignActivity, arg_6_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_6_0._onCloseViewFinish, arg_6_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._work, self)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self._refreshNorSignActivity, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 
-	arg_6_0._actId = nil
-	arg_6_0._viewName = nil
-	var_0_1 = 0
+	self._actId = nil
+	self._viewName = nil
+	startIndex = 0
 end
 
-function var_0_0._pop(arg_7_0)
-	var_0_1 = var_0_1 + 1
+function ActivityStarLightSignWork_1_3:_pop()
+	startIndex = startIndex + 1
 
-	local var_7_0 = var_0_0.kViewNames[var_0_1]
+	local viewName = ActivityStarLightSignWork_1_3.kViewNames[startIndex]
+	local actId = actIds[startIndex]
 
-	return var_0_2[var_0_1], var_7_0
+	return actId, viewName
 end
 
-function var_0_0._work(arg_8_0)
-	arg_8_0:_startBlock()
+function ActivityStarLightSignWork_1_3:_work()
+	self:_startBlock()
 
-	arg_8_0._actId, arg_8_0._viewName = arg_8_0:_pop()
+	self._actId, self._viewName = self:_pop()
 
-	if not arg_8_0._actId then
-		arg_8_0:onDone(true)
+	if not self._actId then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_8_0 = arg_8_0._actId
+	local actId = self._actId
 
-	if ActivityModel.instance:isActOnLine(var_8_0) then
-		Activity101Rpc.instance:sendGet101InfosRequest(var_8_0)
+	if ActivityModel.instance:isActOnLine(actId) then
+		Activity101Rpc.instance:sendGet101InfosRequest(actId)
 	else
-		return arg_8_0:_work()
+		return self:_work()
 	end
 end
 
-function var_0_0._isExistGuide(arg_9_0)
+function ActivityStarLightSignWork_1_3:_isExistGuide()
 	if GuideModel.instance:isDoingClickGuide() and not GuideController.instance:isForbidGuides() then
 		return true
 	end
@@ -126,24 +129,24 @@ function var_0_0._isExistGuide(arg_9_0)
 	return false
 end
 
-function var_0_0._endBlock(arg_10_0)
-	if not arg_10_0:_isBlock() then
+function ActivityStarLightSignWork_1_3:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_11_0)
-	if arg_11_0:_isBlock() then
+function ActivityStarLightSignWork_1_3:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_12_0)
+function ActivityStarLightSignWork_1_3:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-return var_0_0
+return ActivityStarLightSignWork_1_3

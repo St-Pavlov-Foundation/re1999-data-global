@@ -1,31 +1,33 @@
-﻿module("modules.logic.fight.model.data.FightData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightData.lua
 
-local var_0_0 = FightDataClass("FightData")
+module("modules.logic.fight.model.data.FightData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.attacker = FightTeamData.New(arg_1_1.attacker)
-	arg_1_0.defender = FightTeamData.New(arg_1_1.defender)
-	arg_1_0.curRound = arg_1_1.curRound
-	arg_1_0.maxRound = arg_1_1.maxRound
-	arg_1_0.isFinish = arg_1_1.isFinish
-	arg_1_0.curWave = arg_1_1.curWave
-	arg_1_0.battleId = arg_1_1.battleId
+local FightData = FightDataClass("FightData")
 
-	if arg_1_1:HasField("magicCircle") then
-		arg_1_0.magicCircle = FightMagicCircleInfoData.New(arg_1_1.magicCircle)
+function FightData:onConstructor(proto)
+	self.attacker = FightTeamData.New(proto.attacker)
+	self.defender = FightTeamData.New(proto.defender)
+	self.curRound = proto.curRound
+	self.maxRound = proto.maxRound
+	self.isFinish = proto.isFinish
+	self.curWave = proto.curWave
+	self.battleId = proto.battleId
+
+	if proto:HasField("magicCircle") then
+		self.magicCircle = FightMagicCircleInfoData.New(proto.magicCircle)
 	end
 
-	arg_1_0.version = arg_1_1.version
-	arg_1_0.isRecord = arg_1_1.isRecord
-	arg_1_0.episodeId = arg_1_1.episodeId
-	arg_1_0.fightActType = arg_1_1.fightActType
-	arg_1_0.lastChangeHeroUid = arg_1_1.lastChangeHeroUid
-	arg_1_0.progress = arg_1_1.progress
-	arg_1_0.progressMax = arg_1_1.progressMax
-	arg_1_0.param = FightParamData.New(arg_1_1.param)
-	arg_1_0.customData = FightCustomData.New(arg_1_1.customData)
-	arg_1_0.fightTaskBox = FightTaskBoxData.New(arg_1_1.fightTaskBox)
-	arg_1_0.progressDic = FightProgressInfoData.New(arg_1_1.progressList)
+	self.version = proto.version
+	self.isRecord = proto.isRecord
+	self.episodeId = proto.episodeId
+	self.fightActType = proto.fightActType
+	self.lastChangeHeroUid = proto.lastChangeHeroUid
+	self.progress = proto.progress
+	self.progressMax = proto.progressMax
+	self.param = FightParamData.New(proto.param)
+	self.customData = FightCustomData.New(proto.customData)
+	self.fightTaskBox = FightTaskBoxData.New(proto.fightTaskBox)
+	self.progressDic = FightProgressInfoData.New(proto.progressList)
 end
 
-return var_0_0
+return FightData

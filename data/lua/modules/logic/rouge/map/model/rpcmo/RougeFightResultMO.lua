@@ -1,39 +1,41 @@
-﻿module("modules.logic.rouge.map.model.rpcmo.RougeFightResultMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/model/rpcmo/RougeFightResultMO.lua
 
-local var_0_0 = pureTable("RougeFightResultMO")
+module("modules.logic.rouge.map.model.rpcmo.RougeFightResultMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.addCoin = arg_1_1.addCoin
-	arg_1_0.dropCollectionNum = arg_1_1.dropCollectionNum
-	arg_1_0.dropSelectNum = arg_1_1.dropSelectNum
-	arg_1_0.addExp = arg_1_1.addExp
-	arg_1_0.isWin = arg_1_1.isWin
-	arg_1_0.retryNum = arg_1_1.retryNum
-	arg_1_0.season = arg_1_1.season
+local RougeFightResultMO = pureTable("RougeFightResultMO")
 
-	RougeModel.instance:updateRetryNum(arg_1_0.retryNum)
+function RougeFightResultMO:init(info)
+	self.addCoin = info.addCoin
+	self.dropCollectionNum = info.dropCollectionNum
+	self.dropSelectNum = info.dropSelectNum
+	self.addExp = info.addExp
+	self.isWin = info.isWin
+	self.retryNum = info.retryNum
+	self.season = info.season
 
-	arg_1_0.battleHeroList = {}
+	RougeModel.instance:updateRetryNum(self.retryNum)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.teamInfo.battleHeroList) do
-		table.insert(arg_1_0.battleHeroList, {
-			index = iter_1_1.index,
-			heroId = iter_1_1.heroId,
-			equipUid = iter_1_1.equipUid,
-			supportHeroId = iter_1_1.supportHeroId,
-			supportHeroSkill = iter_1_1.supportHeroSkill
+	self.battleHeroList = {}
+
+	for _, battleHero in ipairs(info.teamInfo.battleHeroList) do
+		table.insert(self.battleHeroList, {
+			index = battleHero.index,
+			heroId = battleHero.heroId,
+			equipUid = battleHero.equipUid,
+			supportHeroId = battleHero.supportHeroId,
+			supportHeroSkill = battleHero.supportHeroSkill
 		})
 	end
 
-	arg_1_0.heroLifeMap = {}
+	self.heroLifeMap = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.teamInfo.heroLifeList) do
-		arg_1_0.heroLifeMap[iter_1_3.heroId] = iter_1_3.life
+	for _, heroLife in ipairs(info.teamInfo.heroLifeList) do
+		self.heroLifeMap[heroLife.heroId] = heroLife.life
 	end
 end
 
-function var_0_0.getLife(arg_2_0, arg_2_1)
-	return arg_2_0.heroLifeMap[arg_2_1]
+function RougeFightResultMO:getLife(heroId)
+	return self.heroLifeMap[heroId]
 end
 
-return var_0_0
+return RougeFightResultMO

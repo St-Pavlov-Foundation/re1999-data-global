@@ -1,60 +1,63 @@
-﻿module("modules.logic.common.view.CommonRainEffectView", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/CommonRainEffectView.lua
 
-local var_0_0 = class("CommonRainEffectView", BaseView)
+module("modules.logic.common.view.CommonRainEffectView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0)
+local CommonRainEffectView = class("CommonRainEffectView", BaseView)
 
-	arg_1_0._containerPath = arg_1_1
+function CommonRainEffectView:ctor(containerPath)
+	CommonRainEffectView.super.ctor(self)
+
+	self._containerPath = containerPath
 end
 
-function var_0_0.onInitView(arg_2_0)
-	arg_2_0._goglowcontainer = gohelper.findChild(arg_2_0.viewGO, arg_2_0._containerPath)
+function CommonRainEffectView:onInitView()
+	self._goglowcontainer = gohelper.findChild(self.viewGO, self._containerPath)
 
-	if arg_2_0._editableInitView then
-		arg_2_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_3_0)
+function CommonRainEffectView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_4_0)
+function CommonRainEffectView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	local var_5_0 = "ui/viewres/effect/ui_character_rain.prefab"
+function CommonRainEffectView:_editableInitView()
+	local glowUrl = "ui/viewres/effect/ui_character_rain.prefab"
 
-	arg_5_0._effectLoader = MultiAbLoader.New()
+	self._effectLoader = MultiAbLoader.New()
 
-	arg_5_0._effectLoader:addPath(var_5_0)
-	arg_5_0._effectLoader:startLoad(function(arg_6_0)
-		local var_6_0 = arg_5_0._effectLoader:getAssetItem(var_5_0):GetResource(var_5_0)
+	self._effectLoader:addPath(glowUrl)
+	self._effectLoader:startLoad(function(multiAbLoader)
+		local glowAssetItem = self._effectLoader:getAssetItem(glowUrl)
+		local glowPrefab = glowAssetItem:GetResource(glowUrl)
 
-		gohelper.clone(var_6_0, arg_5_0._goglowcontainer)
+		gohelper.clone(glowPrefab, self._goglowcontainer)
 	end)
 end
 
-function var_0_0.onOpen(arg_7_0)
+function CommonRainEffectView:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function CommonRainEffectView:onClose()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function CommonRainEffectView:onUpdateParam()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	if arg_10_0._effectLoader then
-		arg_10_0._effectLoader:dispose()
+function CommonRainEffectView:onDestroyView()
+	if self._effectLoader then
+		self._effectLoader:dispose()
 
-		arg_10_0._effectLoader = nil
+		self._effectLoader = nil
 	end
 end
 
-return var_0_0
+return CommonRainEffectView

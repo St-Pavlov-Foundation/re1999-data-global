@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114TravelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114TravelViewContainer.lua
 
-local var_0_0 = class("Activity114TravelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114TravelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Activity114TravelViewContainer = class("Activity114TravelViewContainer", BaseViewContainer)
+
+function Activity114TravelViewContainer:buildViews()
 	return {
 		Activity114TravelView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Activity114TravelViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity114TravelViewContainer

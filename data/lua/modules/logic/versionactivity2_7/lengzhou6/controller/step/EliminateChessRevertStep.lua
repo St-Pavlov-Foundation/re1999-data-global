@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessRevertStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/EliminateChessRevertStep.lua
 
-local var_0_0 = class("EliminateChessRevertStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessRevertStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local EliminateChessRevertStep = class("EliminateChessRevertStep", EliminateChessStepBase)
+
+function EliminateChessRevertStep:onStart()
 	LengZhou6EliminateController.instance:revertRecord()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessRevertStep

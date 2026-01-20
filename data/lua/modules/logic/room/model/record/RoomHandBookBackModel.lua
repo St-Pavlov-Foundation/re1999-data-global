@@ -1,19 +1,21 @@
-﻿module("modules.logic.room.model.record.RoomHandBookBackModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomHandBookBackModel.lua
 
-local var_0_0 = class("RoomHandBookBackModel", BaseModel)
+module("modules.logic.room.model.record.RoomHandBookBackModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomHandBookBackModel = class("RoomHandBookBackModel", BaseModel)
+
+function RoomHandBookBackModel:onInit()
 	return
 end
 
-function var_0_0.getSelectMo(arg_2_0)
-	return arg_2_0._selectMo
+function RoomHandBookBackModel:getSelectMo()
+	return self._selectMo
 end
 
-function var_0_0.setSelectMo(arg_3_0, arg_3_1)
-	arg_3_0._selectMo = arg_3_1
+function RoomHandBookBackModel:setSelectMo(mo)
+	self._selectMo = mo
 end
 
-var_0_0.instance = var_0_0.New()
+RoomHandBookBackModel.instance = RoomHandBookBackModel.New()
 
-return var_0_0
+return RoomHandBookBackModel

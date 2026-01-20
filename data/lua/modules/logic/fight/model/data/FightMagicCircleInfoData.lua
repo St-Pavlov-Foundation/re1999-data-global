@@ -1,14 +1,16 @@
-﻿module("modules.logic.fight.model.data.FightMagicCircleInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightMagicCircleInfoData.lua
 
-local var_0_0 = FightDataClass("FightMagicCircleInfoData")
+module("modules.logic.fight.model.data.FightMagicCircleInfoData", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.magicCircleId = arg_1_1.magicCircleId
-	arg_1_0.round = arg_1_1.round
-	arg_1_0.createUid = arg_1_1.createUid
-	arg_1_0.electricLevel = arg_1_1.electricLevel
-	arg_1_0.electricProgress = arg_1_1.electricProgress
-	arg_1_0.maxElectricProgress = arg_1_1.maxElectricProgress
+local FightMagicCircleInfoData = FightDataClass("FightMagicCircleInfoData")
+
+function FightMagicCircleInfoData:onConstructor(proto)
+	self.magicCircleId = proto.magicCircleId
+	self.round = proto.round
+	self.createUid = proto.createUid
+	self.electricLevel = proto.electricLevel
+	self.electricProgress = proto.electricProgress
+	self.maxElectricProgress = proto.maxElectricProgress
 end
 
-return var_0_0
+return FightMagicCircleInfoData

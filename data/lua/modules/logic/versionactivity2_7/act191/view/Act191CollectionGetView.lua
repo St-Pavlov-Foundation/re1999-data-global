@@ -1,68 +1,72 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191CollectionGetView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191CollectionGetView.lua
 
-local var_0_0 = class("Act191CollectionGetView", BaseView)
+module("modules.logic.versionactivity2_7.act191.view.Act191CollectionGetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goOldItem = gohelper.findChild(arg_1_0.viewGO, "result/collection_before/#go_OldItem")
-	arg_1_0._goNewItem = gohelper.findChild(arg_1_0.viewGO, "result/collection_after/#go_NewItem")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "result/#go_topleft")
+local Act191CollectionGetView = class("Act191CollectionGetView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Act191CollectionGetView:onInitView()
+	self._goOldItem = gohelper.findChild(self.viewGO, "result/collection_before/#go_OldItem")
+	self._goNewItem = gohelper.findChild(self.viewGO, "result/collection_after/#go_NewItem")
+	self._gotopleft = gohelper.findChild(self.viewGO, "result/#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.onClickModalMask(arg_2_0)
-	if arg_2_0.canExit then
-		arg_2_0:closeThis()
+function Act191CollectionGetView:onClickModalMask()
+	if self.canExit then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:addEventCb(Activity191Controller.instance, Activity191Event.ClickCollectionItem, arg_3_0.onClickCollectionItem, arg_3_0)
+function Act191CollectionGetView:onOpen()
+	self:addEventCb(Activity191Controller.instance, Activity191Event.ClickCollectionItem, self.onClickCollectionItem, self)
 
-	local var_3_0 = arg_3_0.viewParam.oldIdList
+	local oldIdList = self.viewParam.oldIdList
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		local var_3_1 = gohelper.cloneInPlace(arg_3_0._goOldItem)
-		local var_3_2 = arg_3_0:getResInst(Activity191Enum.PrefabPath.CollectionItem, var_3_1)
+	for _, id in ipairs(oldIdList) do
+		local parent = gohelper.cloneInPlace(self._goOldItem)
+		local cloneGo = self:getResInst(Activity191Enum.PrefabPath.CollectionItem, parent)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, Act191CollectionItem)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_3_2, Act191CollectionItem):setData({
+		item:setData({
 			uid = 0,
-			itemId = iter_3_1
+			itemId = id
 		})
 	end
 
-	gohelper.setActive(arg_3_0._goOldItem, false)
+	gohelper.setActive(self._goOldItem, false)
 
-	local var_3_3 = arg_3_0.viewParam.newIdList
+	local newIdList = self.viewParam.newIdList
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_3) do
-		local var_3_4 = gohelper.cloneInPlace(arg_3_0._goNewItem)
-		local var_3_5 = arg_3_0:getResInst(Activity191Enum.PrefabPath.CollectionItem, var_3_4)
+	for _, id in ipairs(newIdList) do
+		local parent = gohelper.cloneInPlace(self._goNewItem)
+		local cloneGo = self:getResInst(Activity191Enum.PrefabPath.CollectionItem, parent)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, Act191CollectionItem)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_3_5, Act191CollectionItem):setData({
+		item:setData({
 			uid = 0,
-			itemId = iter_3_3
+			itemId = id
 		})
 	end
 
-	gohelper.setActive(arg_3_0._goNewItem, false)
-	TaskDispatcher.runDelay(arg_3_0.delaySet, arg_3_0, 2)
+	gohelper.setActive(self._goNewItem, false)
+	TaskDispatcher.runDelay(self.delaySet, self, 2)
 end
 
-function var_0_0.delaySet(arg_4_0)
-	arg_4_0.canExit = true
+function Act191CollectionGetView:delaySet()
+	self.canExit = true
 end
 
-function var_0_0.onClickCollectionItem(arg_5_0, arg_5_1, arg_5_2)
+function Act191CollectionGetView:onClickCollectionItem(_, id)
 	Activity191Controller.instance:openCollectionTipView({
-		itemId = arg_5_2
+		itemId = id
 	})
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.delaySet, arg_6_0)
+function Act191CollectionGetView:onDestroyView()
+	TaskDispatcher.cancelTask(self.delaySet, self)
 end
 
-return var_0_0
+return Act191CollectionGetView

@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/enter/define/VersionActivity1_6Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.enter.define.VersionActivity1_6Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity1_6Enum = _M
+
+VersionActivity1_6Enum.ActivityId = {
 	Role1 = 11605,
 	BossRush = 11604,
 	DungeonBossRush = 11609,
@@ -20,19 +22,19 @@ var_0_0.ActivityId = {
 	EnterView = 11601,
 	ReactivityStore = 11611
 }
-var_0_0.EnterViewActIdList = {
-	var_0_0.ActivityId.Dungeon,
-	var_0_0.ActivityId.Cachot,
-	var_0_0.ActivityId.Reactivity,
-	var_0_0.ActivityId.Role1,
-	var_0_0.ActivityId.Role2,
-	var_0_0.ActivityId.BossRush,
-	var_0_0.ActivityId.Season,
+VersionActivity1_6Enum.EnterViewActIdList = {
+	VersionActivity1_6Enum.ActivityId.Dungeon,
+	VersionActivity1_6Enum.ActivityId.Cachot,
+	VersionActivity1_6Enum.ActivityId.Reactivity,
+	VersionActivity1_6Enum.ActivityId.Role1,
+	VersionActivity1_6Enum.ActivityId.Role2,
+	VersionActivity1_6Enum.ActivityId.BossRush,
+	VersionActivity1_6Enum.ActivityId.Season,
 	{
-		var_0_0.ActivityId.RoleStory,
-		var_0_0.ActivityId.RoleStory2
+		VersionActivity1_6Enum.ActivityId.RoleStory,
+		VersionActivity1_6Enum.ActivityId.RoleStory2
 	},
-	var_0_0.ActivityId.Explore
+	VersionActivity1_6Enum.ActivityId.Explore
 }
 
-return var_0_0
+return VersionActivity1_6Enum

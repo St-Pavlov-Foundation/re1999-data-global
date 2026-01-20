@@ -1,74 +1,76 @@
-﻿module("modules.logic.dungeon.view.puzzle.DungeonPuzzleCircuitView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/puzzle/DungeonPuzzleCircuitView.lua
 
-local var_0_0 = class("DungeonPuzzleCircuitView", BaseView)
+module("modules.logic.dungeon.view.puzzle.DungeonPuzzleCircuitView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg2")
-	arg_1_0._gobasepoint = gohelper.findChild(arg_1_0.viewGO, "#go_basepoint")
-	arg_1_0._gocube = gohelper.findChild(arg_1_0.viewGO, "#go_basepoint/#go_cube")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goedit = gohelper.findChild(arg_1_0.viewGO, "#go_edit")
-	arg_1_0._btnexport = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_edit/#btn_export")
+local DungeonPuzzleCircuitView = class("DungeonPuzzleCircuitView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonPuzzleCircuitView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg1")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg2")
+	self._gobasepoint = gohelper.findChild(self.viewGO, "#go_basepoint")
+	self._gocube = gohelper.findChild(self.viewGO, "#go_basepoint/#go_cube")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goedit = gohelper.findChild(self.viewGO, "#go_edit")
+	self._btnexport = gohelper.findChildButtonWithAudio(self.viewGO, "#go_edit/#btn_export")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnexport:AddClickListener(arg_2_0._btnexportOnClick, arg_2_0)
+function DungeonPuzzleCircuitView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnexport:AddClickListener(self._btnexportOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnexport:RemoveClickListener()
+function DungeonPuzzleCircuitView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnexport:RemoveClickListener()
 end
 
-function var_0_0._btnexportOnClick(arg_4_0)
+function DungeonPuzzleCircuitView:_btnexportOnClick()
 	DungeonPuzzleCircuitModel.instance:debugData()
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function DungeonPuzzleCircuitView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagebg1:LoadImage(ResUrl.getDungeonPuzzleBg("full/bg_beijingtu"))
-	arg_6_0._simagebg2:LoadImage(ResUrl.getDungeonPuzzleBg("bg_caozuotai"))
-	gohelper.setActive(arg_6_0._goedit, false)
+function DungeonPuzzleCircuitView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getDungeonPuzzleBg("full/bg_beijingtu"))
+	self._simagebg2:LoadImage(ResUrl.getDungeonPuzzleBg("bg_caozuotai"))
+	gohelper.setActive(self._goedit, false)
 end
 
-function var_0_0._onDropValueChanged(arg_7_0, arg_7_1)
-	DungeonPuzzleCircuitModel.instance:setEditIndex(arg_7_1)
+function DungeonPuzzleCircuitView:_onDropValueChanged(index)
+	DungeonPuzzleCircuitModel.instance:setEditIndex(index)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function DungeonPuzzleCircuitView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function DungeonPuzzleCircuitView:onOpen()
 	return
 end
 
-function var_0_0.onCloseFinish(arg_10_0)
-	if arg_10_0._dropView then
-		arg_10_0._dropView:RemoveOnValueChanged()
+function DungeonPuzzleCircuitView:onCloseFinish()
+	if self._dropView then
+		self._dropView:RemoveOnValueChanged()
 	end
 
-	local var_10_0 = DungeonPuzzleCircuitModel.instance:getElementCo()
+	local elementCo = DungeonPuzzleCircuitModel.instance:getElementCo()
 
-	if var_10_0 and DungeonMapModel.instance:hasMapPuzzleStatus(var_10_0.id) then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, var_10_0.id)
+	if elementCo and DungeonMapModel.instance:hasMapPuzzleStatus(elementCo.id) then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnClickElement, elementCo.id)
 	end
 
 	DungeonPuzzleCircuitModel.instance:release()
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg1:UnLoadImage()
-	arg_11_0._simagebg2:UnLoadImage()
+function DungeonPuzzleCircuitView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 end
 
-return var_0_0
+return DungeonPuzzleCircuitView

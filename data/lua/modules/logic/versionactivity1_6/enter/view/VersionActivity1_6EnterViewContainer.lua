@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_6.enter.view.VersionActivity1_6EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/enter/view/VersionActivity1_6EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_6EnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.enter.view.VersionActivity1_6EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._subViewGroup = TabViewGroup.New(2, "#go_subview")
+local VersionActivity1_6EnterViewContainer = class("VersionActivity1_6EnterViewContainer", BaseViewContainer)
+
+function VersionActivity1_6EnterViewContainer:buildViews()
+	self._subViewGroup = TabViewGroup.New(2, "#go_subview")
 
 	return {
 		TabViewGroup.New(1, "#go_topleft"),
-		arg_1_0._subViewGroup,
+		self._subViewGroup,
 		VersionActivity1_6EnterView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function VersionActivity1_6EnterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -21,62 +23,62 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 				false
 			})
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_0 = {}
+	elseif tabContainerId == 2 then
+		local multView = {}
 
-		var_2_0[#var_2_0 + 1] = Va1_6DungeonEnterView.New()
-		var_2_0[#var_2_0 + 1] = V1a6_CachotEnterView.New()
-		var_2_0[#var_2_0 + 1] = ReactivityEnterview.New()
-		var_2_0[#var_2_0 + 1] = Va1_6QuNiangEnterView.New()
-		var_2_0[#var_2_0 + 1] = Va1_6GeTianEnterView.New()
-		var_2_0[#var_2_0 + 1] = V1a6_BossRush_EnterView.New()
-		var_2_0[#var_2_0 + 1] = Va1_6SeasonEnterView.New()
-		var_2_0[#var_2_0 + 1] = RoleStoryEnterView.New()
-		var_2_0[#var_2_0 + 1] = V1a6_ExploreEnterView.New()
+		multView[#multView + 1] = Va1_6DungeonEnterView.New()
+		multView[#multView + 1] = V1a6_CachotEnterView.New()
+		multView[#multView + 1] = ReactivityEnterview.New()
+		multView[#multView + 1] = Va1_6QuNiangEnterView.New()
+		multView[#multView + 1] = Va1_6GeTianEnterView.New()
+		multView[#multView + 1] = V1a6_BossRush_EnterView.New()
+		multView[#multView + 1] = Va1_6SeasonEnterView.New()
+		multView[#multView + 1] = RoleStoryEnterView.New()
+		multView[#multView + 1] = V1a6_ExploreEnterView.New()
 
-		return var_2_0
+		return multView
 	end
 end
 
-function var_0_0.selectActTab(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:modifyBgm(arg_3_2.actId)
-	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
+function VersionActivity1_6EnterViewContainer:selectActTab(jumpTabId, actTabItem)
+	self:modifyBgm(actTabItem.actId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, jumpTabId)
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	ActivityStageHelper.recordActivityStage(arg_4_0.viewParam.activityIdList)
+function VersionActivity1_6EnterViewContainer:onContainerInit()
+	ActivityStageHelper.recordActivityStage(self.viewParam.activityIdList)
 end
 
-function var_0_0.onContainerClose(arg_5_0)
-	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function VersionActivity1_6EnterViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-function var_0_0.modifyBgm(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0["onModifyBgmAct" .. arg_6_1]
+function VersionActivity1_6EnterViewContainer:modifyBgm(actId)
+	local modifyFunc = self["onModifyBgmAct" .. actId]
 
-	if var_6_0 then
-		var_6_0(arg_6_0)
+	if modifyFunc then
+		modifyFunc(self)
 
 		return
 	end
 
-	local var_6_1 = ActivityConfig.instance:getActivityEnterViewBgm(arg_6_1)
+	local bgmId = ActivityConfig.instance:getActivityEnterViewBgm(actId)
 
-	var_6_1 = var_6_1 ~= 0 and var_6_1 or AudioEnum.Bgm.Act1_6DungeonBgm1
+	bgmId = bgmId ~= 0 and bgmId or AudioEnum.Bgm.Act1_6DungeonBgm1
 
-	if arg_6_0._curBgmId == var_6_1 then
+	if self._curBgmId == bgmId then
 		return
 	end
 
-	arg_6_0._curBgmId = var_6_1
+	self._curBgmId = bgmId
 
-	if var_6_1 == AudioEnum.Bgm.Activity128LevelViewBgm then
-		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.VersionActivity1_6Main, var_6_1, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm, nil, nil, FightEnum.AudioSwitchGroup, FightEnum.AudioSwitch.Comeshow)
+	if bgmId == AudioEnum.Bgm.Activity128LevelViewBgm then
+		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.VersionActivity1_6Main, bgmId, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm, nil, nil, FightEnum.AudioSwitchGroup, FightEnum.AudioSwitch.Comeshow)
 	else
-		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.VersionActivity1_6Main, var_6_1, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+		AudioBgmManager.instance:modifyAndPlay(AudioBgmEnum.Layer.VersionActivity1_6Main, bgmId, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	end
 end
 
-return var_0_0
+return VersionActivity1_6EnterViewContainer

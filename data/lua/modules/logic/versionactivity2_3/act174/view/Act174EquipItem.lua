@@ -1,157 +1,159 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174EquipItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174EquipItem.lua
 
-local var_0_0 = class("Act174EquipItem", LuaCompBase)
+module("modules.logic.versionactivity2_3.act174.view.Act174EquipItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._teamView = arg_1_1
+local Act174EquipItem = class("Act174EquipItem", LuaCompBase)
+
+function Act174EquipItem:ctor(act174TeamView)
+	self._teamView = act174TeamView
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._imageQuality = gohelper.findChildImage(arg_2_1, "image_quality")
-	arg_2_0._simageCollection = gohelper.findChildSingleImage(arg_2_1, "simage_Collection")
-	arg_2_0._goEmpty = gohelper.findChild(arg_2_1, "go_Empty")
-	arg_2_0._click = gohelper.findChildClick(arg_2_1, "")
+function Act174EquipItem:init(go)
+	self._go = go
+	self._imageQuality = gohelper.findChildImage(go, "image_quality")
+	self._simageCollection = gohelper.findChildSingleImage(go, "simage_Collection")
+	self._goEmpty = gohelper.findChild(go, "go_Empty")
+	self._click = gohelper.findChildClick(go, "")
 
-	CommonDragHelper.instance:registerDragObj(arg_2_1, arg_2_0.beginDrag, nil, arg_2_0.endDrag, arg_2_0.checkDrag, arg_2_0)
+	CommonDragHelper.instance:registerDragObj(go, self.beginDrag, nil, self.endDrag, self.checkDrag, self)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._click:AddClickListener(arg_3_0.onClick, arg_3_0)
+function Act174EquipItem:addEventListeners()
+	self._click:AddClickListener(self.onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._click:RemoveClickListener()
+function Act174EquipItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0._simageCollection:UnLoadImage()
-	CommonDragHelper.instance:unregisterDragObj(arg_5_0._go)
+function Act174EquipItem:onDestroy()
+	self._simageCollection:UnLoadImage()
+	CommonDragHelper.instance:unregisterDragObj(self._go)
 end
 
-function var_0_0.setIndex(arg_6_0, arg_6_1)
-	arg_6_0._index = arg_6_1
+function Act174EquipItem:setIndex(index)
+	self._index = index
 
-	local var_6_0 = arg_6_0._teamView.unLockTeamCnt
-	local var_6_1 = Activity174Helper.CalculateRowColumn(arg_6_1)
+	local teamCnt = self._teamView.unLockTeamCnt
+	local row = Activity174Helper.CalculateRowColumn(index)
 
-	gohelper.setActive(arg_6_0._go, var_6_1 <= var_6_0)
+	gohelper.setActive(self._go, row <= teamCnt)
 end
 
-function var_0_0.setData(arg_7_0, arg_7_1)
-	arg_7_0._collectionId = arg_7_1
+function Act174EquipItem:setData(collectionId)
+	self._collectionId = collectionId
 
-	if arg_7_1 then
-		local var_7_0 = lua_activity174_collection.configDict[arg_7_1]
+	if collectionId then
+		local config = lua_activity174_collection.configDict[collectionId]
 
-		UISpriteSetMgr.instance:setAct174Sprite(arg_7_0._imageQuality, "act174_propitembg_" .. var_7_0.rare)
-		arg_7_0._simageCollection:LoadImage(ResUrl.getRougeSingleBgCollection(var_7_0.icon))
+		UISpriteSetMgr.instance:setAct174Sprite(self._imageQuality, "act174_propitembg_" .. config.rare)
+		self._simageCollection:LoadImage(ResUrl.getRougeSingleBgCollection(config.icon))
 	else
-		arg_7_0._simageCollection:UnLoadImage()
+		self._simageCollection:UnLoadImage()
 	end
 
-	gohelper.setActive(arg_7_0._imageQuality, arg_7_1)
-	gohelper.setActive(arg_7_0._simageCollection, arg_7_1)
-	gohelper.setActive(arg_7_0._goEmpty, not arg_7_1)
+	gohelper.setActive(self._imageQuality, collectionId)
+	gohelper.setActive(self._simageCollection, collectionId)
+	gohelper.setActive(self._goEmpty, not collectionId)
 end
 
-function var_0_0.onClick(arg_8_0)
-	if arg_8_0.tweenId or arg_8_0.isDraging then
+function Act174EquipItem:onClick()
+	if self.tweenId or self.isDraging then
 		return
 	end
 
-	arg_8_0._teamView:clickCollection(arg_8_0._index)
+	self._teamView:clickCollection(self._index)
 end
 
-function var_0_0.beginDrag(arg_9_0)
-	gohelper.setAsLastSibling(arg_9_0._go)
+function Act174EquipItem:beginDrag()
+	gohelper.setAsLastSibling(self._go)
 
-	arg_9_0.isDraging = true
+	self.isDraging = true
 end
 
-function var_0_0.endDrag(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0.isDraging = false
+function Act174EquipItem:endDrag(_, pointerEventData)
+	self.isDraging = false
 
-	local var_10_0 = arg_10_2.position
-	local var_10_1 = arg_10_0:findTarget(var_10_0)
+	local pos = pointerEventData.position
+	local targetItem = self:findTarget(pos)
 
-	if not var_10_1 then
-		local var_10_2 = arg_10_0._teamView.frameTrList[arg_10_0._index]
-		local var_10_3, var_10_4 = recthelper.getAnchor(var_10_2)
+	if not targetItem then
+		local targetTr = self._teamView.frameTrList[self._index]
+		local x, y = recthelper.getAnchor(targetTr)
 
-		arg_10_0:setToPos(arg_10_0._go.transform, Vector2(var_10_3, var_10_4), true, arg_10_0.tweenCallback, arg_10_0)
-		arg_10_0._teamView:UnInstallCollection(arg_10_0._index)
+		self:setToPos(self._go.transform, Vector2(x, y), true, self.tweenCallback, self)
+		self._teamView:UnInstallCollection(self._index)
 	else
-		local var_10_5 = arg_10_0._index
-		local var_10_6 = var_10_1._index
+		local from = self._index
+		local to = targetItem._index
 
-		if arg_10_0._teamView:canEquipMove(var_10_5, var_10_6) then
-			local var_10_7 = arg_10_0._teamView.frameTrList[var_10_6]
-			local var_10_8, var_10_9 = recthelper.getAnchor(var_10_7)
+		if self._teamView:canEquipMove(from, to) then
+			local targetTr = self._teamView.frameTrList[to]
+			local x, y = recthelper.getAnchor(targetTr)
 
-			arg_10_0:setToPos(arg_10_0._go.transform, Vector2(var_10_8, var_10_9), true, arg_10_0.tweenCallback, arg_10_0)
+			self:setToPos(self._go.transform, Vector2(x, y), true, self.tweenCallback, self)
 
-			if var_10_1 ~= arg_10_0 then
-				local var_10_10 = arg_10_0._teamView.frameTrList[arg_10_0._index]
-				local var_10_11, var_10_12 = recthelper.getAnchor(var_10_10)
+			if targetItem ~= self then
+				local tr = self._teamView.frameTrList[self._index]
+				local i, j = recthelper.getAnchor(tr)
 
-				arg_10_0:setToPos(var_10_1._go.transform, Vector2(var_10_11, var_10_12), true, function()
-					arg_10_0._teamView:exchangeEquipItem(arg_10_0._index, var_10_6)
-				end, arg_10_0)
+				self:setToPos(targetItem._go.transform, Vector2(i, j), true, function()
+					self._teamView:exchangeEquipItem(self._index, to)
+				end, self)
 			end
 		else
 			GameFacade.showToast(ToastEnum.Act174OnlyCollection)
 
-			local var_10_13 = arg_10_0._teamView.frameTrList[arg_10_0._index]
-			local var_10_14, var_10_15 = recthelper.getAnchor(var_10_13)
+			local targetTr = self._teamView.frameTrList[self._index]
+			local x, y = recthelper.getAnchor(targetTr)
 
-			arg_10_0:setToPos(arg_10_0._go.transform, Vector2(var_10_14, var_10_15), true, arg_10_0.tweenCallback, arg_10_0)
+			self:setToPos(self._go.transform, Vector2(x, y), true, self.tweenCallback, self)
 		end
 	end
 end
 
-function var_0_0.checkDrag(arg_12_0)
-	if arg_12_0._collectionId and arg_12_0._collectionId ~= 0 then
+function Act174EquipItem:checkDrag()
+	if self._collectionId and self._collectionId ~= 0 then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.findTarget(arg_13_0, arg_13_1)
-	for iter_13_0 = 1, arg_13_0._teamView.unLockTeamCnt * 4 do
-		local var_13_0 = arg_13_0._teamView.frameTrList[iter_13_0]
-		local var_13_1 = arg_13_0._teamView.equipItemList[iter_13_0]
-		local var_13_2, var_13_3 = recthelper.getAnchor(var_13_0)
-		local var_13_4 = var_13_0.parent
-		local var_13_5 = recthelper.screenPosToAnchorPos(arg_13_1, var_13_4)
+function Act174EquipItem:findTarget(position)
+	for i = 1, self._teamView.unLockTeamCnt * 4 do
+		local framTr = self._teamView.frameTrList[i]
+		local equipItem = self._teamView.equipItemList[i]
+		local x, y = recthelper.getAnchor(framTr)
+		local posTr = framTr.parent
+		local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-		if math.abs(var_13_5.x - var_13_2) * 2 < recthelper.getWidth(var_13_0) and math.abs(var_13_5.y - var_13_3) * 2 < recthelper.getHeight(var_13_0) then
-			return var_13_1 or nil
+		if math.abs(anchorPos.x - x) * 2 < recthelper.getWidth(framTr) and math.abs(anchorPos.y - y) * 2 < recthelper.getHeight(framTr) then
+			return equipItem or nil
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.setToPos(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5)
-	if arg_14_3 then
+function Act174EquipItem:setToPos(transform, anchorPos, tween, callback, callbackObj)
+	if tween then
 		CommonDragHelper.instance:setGlobalEnabled(false)
 
-		arg_14_0.tweenId = ZProj.TweenHelper.DOAnchorPos(arg_14_1, arg_14_2.x, arg_14_2.y, 0.2, arg_14_4, arg_14_5)
+		self.tweenId = ZProj.TweenHelper.DOAnchorPos(transform, anchorPos.x, anchorPos.y, 0.2, callback, callbackObj)
 	else
-		recthelper.setAnchor(arg_14_1, arg_14_2.x, arg_14_2.y)
+		recthelper.setAnchor(transform, anchorPos.x, anchorPos.y)
 
-		if arg_14_4 then
-			arg_14_4(arg_14_5)
+		if callback then
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0.tweenCallback(arg_15_0)
-	arg_15_0.tweenId = nil
+function Act174EquipItem:tweenCallback()
+	self.tweenId = nil
 
 	CommonDragHelper.instance:setGlobalEnabled(true)
 end
 
-return var_0_0
+return Act174EquipItem

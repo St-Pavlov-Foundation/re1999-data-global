@@ -1,23 +1,25 @@
-﻿module("modules.logic.rouge.map.view.store.RougeStoreGoodsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/store/RougeStoreGoodsViewContainer.lua
 
-local var_0_0 = class("RougeStoreGoodsViewContainer", BaseViewContainer)
+module("modules.logic.rouge.map.view.store.RougeStoreGoodsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeStoreGoodsViewContainer = class("RougeStoreGoodsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeStoreGoodsView.New())
-	table.insert(var_1_0, RougeMapCoinView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_rougemapdetailcontainer"))
+function RougeStoreGoodsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeStoreGoodsView.New())
+	table.insert(views, RougeMapCoinView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_rougemapdetailcontainer"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function RougeStoreGoodsViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-return var_0_0
+return RougeStoreGoodsViewContainer

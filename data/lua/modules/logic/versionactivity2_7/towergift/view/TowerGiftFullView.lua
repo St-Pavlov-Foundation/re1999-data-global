@@ -1,95 +1,97 @@
-﻿module("modules.logic.versionactivity2_7.towergift.view.TowerGiftFullView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/towergift/view/TowerGiftFullView.lua
 
-local var_0_0 = class("TowerGiftFullView", BaseView)
+module("modules.logic.versionactivity2_7.towergift.view.TowerGiftFullView", package.seeall)
 
-var_0_0.TaskId = 92001101
+local TowerGiftFullView = class("TowerGiftFullView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncheck = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_check")
-	arg_1_0._btn1Claim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward1/go_canget/#btn_Claim")
-	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "root/reward1/go_canget")
-	arg_1_0._goreceive = gohelper.findChild(arg_1_0.viewGO, "root/reward1/go_receive")
-	arg_1_0._gotaskreceive = gohelper.findChild(arg_1_0.viewGO, "root/reward2/go_receive")
-	arg_1_0._txtprogress = gohelper.findChildText(arg_1_0.viewGO, "root/reward2/go_goto/#txt_progress")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/reward2/go_goto/txt_dec")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/simage_fullbg/#txt_time")
-	arg_1_0._gogoto = gohelper.findChild(arg_1_0.viewGO, "root/reward2/go_goto")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "root/reward2/go_lock")
-	arg_1_0._btngoto = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward2/go_goto/#btn_goto")
-	arg_1_0._btnicon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/reward2/icon/click")
-	arg_1_0._bgmId = nil
+TowerGiftFullView.TaskId = 92001101
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerGiftFullView:onInitView()
+	self._btncheck = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_check")
+	self._btn1Claim = gohelper.findChildButtonWithAudio(self.viewGO, "root/reward1/go_canget/#btn_Claim")
+	self._gocanget = gohelper.findChild(self.viewGO, "root/reward1/go_canget")
+	self._goreceive = gohelper.findChild(self.viewGO, "root/reward1/go_receive")
+	self._gotaskreceive = gohelper.findChild(self.viewGO, "root/reward2/go_receive")
+	self._txtprogress = gohelper.findChildText(self.viewGO, "root/reward2/go_goto/#txt_progress")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/reward2/go_goto/txt_dec")
+	self._txttime = gohelper.findChildText(self.viewGO, "root/simage_fullbg/#txt_time")
+	self._gogoto = gohelper.findChild(self.viewGO, "root/reward2/go_goto")
+	self._golock = gohelper.findChild(self.viewGO, "root/reward2/go_lock")
+	self._btngoto = gohelper.findChildButtonWithAudio(self.viewGO, "root/reward2/go_goto/#btn_goto")
+	self._btnicon = gohelper.findChildButtonWithAudio(self.viewGO, "root/reward2/icon/click")
+	self._bgmId = nil
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncheck:AddClickListener(arg_2_0._btncheckOnClick, arg_2_0)
-	arg_2_0._btn1Claim:AddClickListener(arg_2_0._btn1ClaimOnClick, arg_2_0)
-	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
-	arg_2_0._btnicon:AddClickListener(arg_2_0._btniconOnClick, arg_2_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0.checkBgm, arg_2_0)
+function TowerGiftFullView:addEvents()
+	self._btncheck:AddClickListener(self._btncheckOnClick, self)
+	self._btn1Claim:AddClickListener(self._btn1ClaimOnClick, self)
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	self._btnicon:AddClickListener(self._btniconOnClick, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.refreshUI, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.checkBgm, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncheck:RemoveClickListener()
-	arg_3_0._btn1Claim:RemoveClickListener()
-	arg_3_0._btngoto:RemoveClickListener()
-	arg_3_0._btnicon:RemoveClickListener()
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0.checkBgm, arg_3_0)
+function TowerGiftFullView:removeEvents()
+	self._btncheck:RemoveClickListener()
+	self._btn1Claim:RemoveClickListener()
+	self._btngoto:RemoveClickListener()
+	self._btnicon:RemoveClickListener()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerRefreshTask, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.refreshUI, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.checkBgm, self)
 end
 
-function var_0_0._btncheckOnClick(arg_4_0)
-	local var_4_0 = {
+function TowerGiftFullView:_btncheckOnClick()
+	local param = {
 		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Effect,
 		heroId = TowerGiftEnum.ShowHeroList
 	}
 
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_4_0)
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, param)
 end
 
-function var_0_0._btn1ClaimOnClick(arg_5_0)
-	if not arg_5_0:checkReceied() and arg_5_0:checkCanGet() then
-		Activity101Rpc.instance:sendGet101BonusRequest(arg_5_0._actId, 1)
+function TowerGiftFullView:_btn1ClaimOnClick()
+	if not self:checkReceied() and self:checkCanGet() then
+		Activity101Rpc.instance:sendGet101BonusRequest(self._actId, 1)
 	end
 end
 
-function var_0_0._btngotoOnClick(arg_6_0)
+function TowerGiftFullView:_btngotoOnClick()
 	if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Tower) then
 		TowerController.instance:openTowerTaskView()
 
-		arg_6_0._bgmId = BGMSwitchModel.instance:getCurBgm()
+		self._bgmId = BGMSwitchModel.instance:getCurBgm()
 	else
-		local var_6_0, var_6_1, var_6_2 = JumpController.instance:canJumpNew(JumpEnum.JumpView.Tower)
+		local canJump, toastId, toastParamList = JumpController.instance:canJumpNew(JumpEnum.JumpView.Tower)
 
-		if not var_6_0 then
-			GameFacade.showToastWithTableParam(var_6_1, var_6_2)
+		if not canJump then
+			GameFacade.showToastWithTableParam(toastId, toastParamList)
 
 			return false
 		end
 	end
 end
 
-function var_0_0._btniconOnClick(arg_7_0)
+function TowerGiftFullView:_btniconOnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Item, TowerGiftEnum.StoneUpTicketId)
 end
 
-function var_0_0._editableInitView(arg_8_0)
+function TowerGiftFullView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function TowerGiftFullView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
+function TowerGiftFullView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_theft_open)
 
 	if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Tower) then
@@ -99,98 +101,102 @@ function var_0_0.onOpen(arg_10_0)
 		})
 	end
 
-	local var_10_0 = arg_10_0.viewParam.parent
+	local parentGO = self.viewParam.parent
 
-	arg_10_0._actId = arg_10_0.viewParam.actId
+	self._actId = self.viewParam.actId
 
-	gohelper.addChild(var_10_0, arg_10_0.viewGO)
-	Activity101Rpc.instance:sendGet101InfosRequest(arg_10_0._actId)
-	arg_10_0:refreshUI()
+	gohelper.addChild(parentGO, self.viewGO)
+	Activity101Rpc.instance:sendGet101InfosRequest(self._actId)
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Tower)
-	local var_11_1
+function TowerGiftFullView:refreshUI()
+	local isopen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Tower)
+	local actRewardTaskMO
 
-	if var_11_0 then
-		var_11_1 = TowerTaskModel.instance:getActRewardTask()
+	if isopen then
+		actRewardTaskMO = TowerTaskModel.instance:getActRewardTask()
 	end
 
-	local var_11_2 = var_11_1 and next(var_11_1)
+	local hadInfo = actRewardTaskMO and next(actRewardTaskMO)
 
-	if var_11_0 then
-		if not var_11_2 then
-			gohelper.setActive(arg_11_0._golock, true)
-			gohelper.setActive(arg_11_0._gogoto, false)
+	if isopen then
+		if not hadInfo then
+			gohelper.setActive(self._golock, true)
+			gohelper.setActive(self._gogoto, false)
 		else
-			gohelper.setActive(arg_11_0._golock, false)
-			gohelper.setActive(arg_11_0._gogoto, true)
+			gohelper.setActive(self._golock, false)
+			gohelper.setActive(self._gogoto, true)
 		end
 	else
-		gohelper.setActive(arg_11_0._golock, true)
-		gohelper.setActive(arg_11_0._gogoto, false)
+		gohelper.setActive(self._golock, true)
+		gohelper.setActive(self._gogoto, false)
 	end
 
-	if var_11_1 then
-		local var_11_3 = var_11_1:isClaimed()
+	if actRewardTaskMO then
+		local hasget = actRewardTaskMO:isClaimed()
 
-		gohelper.setActive(arg_11_0._gotaskreceive, var_11_3)
-		gohelper.setActive(arg_11_0._gogoto, not var_11_3)
+		gohelper.setActive(self._gotaskreceive, hasget)
+		gohelper.setActive(self._gogoto, not hasget)
 
-		if var_11_3 then
-			arg_11_0._txtprogress.text = luaLang("p_v2a7_tower_fullview_txt_finished")
+		if hasget then
+			self._txtprogress.text = luaLang("p_v2a7_tower_fullview_txt_finished")
 		end
 
-		gohelper.setActive(arg_11_0._txtprogress.gameObject, true)
+		gohelper.setActive(self._txtprogress.gameObject, true)
 
-		arg_11_0._txtprogress.text = string.format("<#ec5d5d>%s</color>/%s", var_11_1.progress, var_11_1.config.maxProgress)
+		self._txtprogress.text = string.format("<#ec5d5d>%s</color>/%s", actRewardTaskMO.progress, actRewardTaskMO.config.maxProgress)
 	end
 
-	local var_11_4 = arg_11_0:checkReceied()
-	local var_11_5 = arg_11_0:checkCanGet()
+	local received = self:checkReceied()
+	local canget = self:checkCanGet()
 
-	gohelper.setActive(arg_11_0._gocanget, var_11_5)
-	gohelper.setActive(arg_11_0._goreceive, var_11_4)
+	gohelper.setActive(self._gocanget, canget)
+	gohelper.setActive(self._goreceive, received)
 
-	arg_11_0._txttime.text = ActivityHelper.getActivityRemainTimeStr(arg_11_0._actId)
+	self._txttime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 end
 
-function var_0_0.checkReceied(arg_12_0)
-	return (ActivityType101Model.instance:isType101RewardGet(arg_12_0._actId, 1))
+function TowerGiftFullView:checkReceied()
+	local received = ActivityType101Model.instance:isType101RewardGet(self._actId, 1)
+
+	return received
 end
 
-function var_0_0.checkCanGet(arg_13_0)
-	return (ActivityType101Model.instance:isType101RewardCouldGet(arg_13_0._actId, 1))
+function TowerGiftFullView:checkCanGet()
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(self._actId, 1)
+
+	return couldGet
 end
 
-function var_0_0.checkBgm(arg_14_0, arg_14_1)
-	if arg_14_1 == ViewName.TowerMainView then
-		if arg_14_0._bgmId and arg_14_0._bgmId ~= -1 then
-			local var_14_0 = BGMSwitchConfig.instance:getBGMSwitchCO(arg_14_0._bgmId)
-			local var_14_1 = var_14_0 and var_14_0.audio
+function TowerGiftFullView:checkBgm(viewName)
+	if viewName == ViewName.TowerMainView then
+		if self._bgmId and self._bgmId ~= -1 then
+			local bgmSwitchCO = BGMSwitchConfig.instance:getBGMSwitchCO(self._bgmId)
+			local audioId = bgmSwitchCO and bgmSwitchCO.audio
 
-			AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Main, var_14_1)
+			AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Main, audioId)
 		else
-			local var_14_2 = BGMSwitchModel.instance:getUsedBgmIdFromServer()
+			local usedBgmId = BGMSwitchModel.instance:getUsedBgmIdFromServer()
 
-			if BGMSwitchModel.instance:isRandomBgmId(var_14_2) then
-				var_14_2 = BGMSwitchModel.instance:nextBgm(1, true)
+			if BGMSwitchModel.instance:isRandomBgmId(usedBgmId) then
+				usedBgmId = BGMSwitchModel.instance:nextBgm(1, true)
 			end
 
-			local var_14_3 = BGMSwitchConfig.instance:getBGMSwitchCO(var_14_2)
-			local var_14_4 = var_14_3 and var_14_3.audio or AudioEnum.UI.Play_Replay_Music_Daytime
+			local bgmSwitchCO = BGMSwitchConfig.instance:getBGMSwitchCO(usedBgmId)
+			local audioId = bgmSwitchCO and bgmSwitchCO.audio or AudioEnum.UI.Play_Replay_Music_Daytime
 
-			AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Main, var_14_4)
+			AudioBgmManager.instance:modifyBgmAudioId(AudioBgmEnum.Layer.Main, audioId)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
+function TowerGiftFullView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function TowerGiftFullView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerGiftFullView

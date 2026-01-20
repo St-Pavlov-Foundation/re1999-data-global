@@ -1,131 +1,133 @@
-﻿module("modules.logic.activity.view.ActivityNoviceSignItem", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityNoviceSignItem.lua
 
-local var_0_0 = class("ActivityNoviceSignItem", ListScrollCell)
+module("modules.logic.activity.view.ActivityNoviceSignItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
-	arg_1_0._gobg = gohelper.findChild(arg_1_1, "#go_normalday/normalbg")
-	arg_1_0._gotomorrowtag = gohelper.findChild(arg_1_1, "#go_tomorrowtag")
-	arg_1_0._gotodaynormalbg = gohelper.findChild(arg_1_1, "#go_todaynormalbg")
-	arg_1_0._txtdate = gohelper.findChildText(arg_1_1, "date/datecn")
-	arg_1_0._gonormalday = gohelper.findChild(arg_1_1, "#go_normalday")
-	arg_1_0._gonormalget = gohelper.findChild(arg_1_1, "#go_normalget")
-	arg_1_0._finalget = gohelper.findChild(arg_1_1, "#go_finalget")
-	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0._gotodaynormalbg)
-	arg_1_0._gofinalbg = gohelper.findChild(arg_1_1, "#go_finalday/finalbg")
-	arg_1_0._finalitemClick = gohelper.getClickWithAudio(arg_1_0._gofinalbg)
-	arg_1_0._siamgefinalrewardicon = gohelper.findChildSingleImage(arg_1_1, "#go_finalday/#siamge_finalrewardicon")
-	arg_1_0._gofinalday = gohelper.findChild(arg_1_1, "#go_finalday")
-	arg_1_0._goicon1 = gohelper.findChild(arg_1_1, "#go_normalday/content/#go_icon1")
-	arg_1_0._goicon2 = gohelper.findChild(arg_1_1, "#go_normalday/content/#go_icon2")
-	arg_1_0._canvascontent = gohelper.findChild(arg_1_1, "#go_normalday/content"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._canvasdate = gohelper.findChild(arg_1_1, "date"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._anim.enabled = false
+local ActivityNoviceSignItem = class("ActivityNoviceSignItem", ListScrollCell)
 
-	gohelper.setActive(arg_1_1, false)
+function ActivityNoviceSignItem:init(go)
+	self._go = go
+	self._gobg = gohelper.findChild(go, "#go_normalday/normalbg")
+	self._gotomorrowtag = gohelper.findChild(go, "#go_tomorrowtag")
+	self._gotodaynormalbg = gohelper.findChild(go, "#go_todaynormalbg")
+	self._txtdate = gohelper.findChildText(go, "date/datecn")
+	self._gonormalday = gohelper.findChild(go, "#go_normalday")
+	self._gonormalget = gohelper.findChild(go, "#go_normalget")
+	self._finalget = gohelper.findChild(go, "#go_finalget")
+	self._itemClick = gohelper.getClickWithAudio(self._gotodaynormalbg)
+	self._gofinalbg = gohelper.findChild(go, "#go_finalday/finalbg")
+	self._finalitemClick = gohelper.getClickWithAudio(self._gofinalbg)
+	self._siamgefinalrewardicon = gohelper.findChildSingleImage(go, "#go_finalday/#siamge_finalrewardicon")
+	self._gofinalday = gohelper.findChild(go, "#go_finalday")
+	self._goicon1 = gohelper.findChild(go, "#go_normalday/content/#go_icon1")
+	self._goicon2 = gohelper.findChild(go, "#go_normalday/content/#go_icon2")
+	self._canvascontent = gohelper.findChild(go, "#go_normalday/content"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._canvasdate = gohelper.findChild(go, "date"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self._anim.enabled = false
 
-	arg_1_0._rewardTab = {}
+	gohelper.setActive(go, false)
+
+	self._rewardTab = {}
 end
 
-var_0_0.finalday = 8
+ActivityNoviceSignItem.finalday = 8
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
-	arg_2_0._finalitemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+function ActivityNoviceSignItem:addEventListeners()
+	self._itemClick:AddClickListener(self._onItemClick, self)
+	self._finalitemClick:AddClickListener(self._onItemClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._itemClick:RemoveClickListener()
-	arg_3_0._finalitemClick:RemoveClickListener()
+function ActivityNoviceSignItem:removeEventListeners()
+	self._itemClick:RemoveClickListener()
+	self._finalitemClick:RemoveClickListener()
 end
 
-function var_0_0._onItemClick(arg_4_0)
+function ActivityNoviceSignItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Store_Good_Click)
 
-	local var_4_0 = ActivityType101Model.instance:isType101RewardCouldGet(ActivityEnum.Activity.NoviceSign, arg_4_0._index)
-	local var_4_1 = ActivityType101Model.instance:getType101LoginCount(ActivityEnum.Activity.NoviceSign)
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(ActivityEnum.Activity.NoviceSign, self._index)
+	local totalday = ActivityType101Model.instance:getType101LoginCount(ActivityEnum.Activity.NoviceSign)
 
-	if var_4_0 then
-		Activity101Rpc.instance:sendGet101BonusRequest(ActivityEnum.Activity.NoviceSign, arg_4_0._index)
+	if couldGet then
+		Activity101Rpc.instance:sendGet101BonusRequest(ActivityEnum.Activity.NoviceSign, self._index)
 	end
 
-	if arg_4_0._index == var_0_0.finalday and not var_4_0 then
-		MaterialTipController.instance:showMaterialInfo(tonumber(arg_4_0._prop[1]), tonumber(arg_4_0._prop[2]))
+	if self._index == ActivityNoviceSignItem.finalday and not couldGet then
+		MaterialTipController.instance:showMaterialInfo(tonumber(self._prop[1]), tonumber(self._prop[2]))
 	end
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function ActivityNoviceSignItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_5_0:_refreshItem()
-	TaskDispatcher.runDelay(arg_5_0._playAnimation, arg_5_0, arg_5_0._index * 0.03)
+	self:_refreshItem()
+	TaskDispatcher.runDelay(self._playAnimation, self, self._index * 0.03)
 end
 
-function var_0_0._refreshItem(arg_6_0)
-	ActivityType101Model.instance:setCurIndex(arg_6_0._index)
+function ActivityNoviceSignItem:_refreshItem()
+	ActivityType101Model.instance:setCurIndex(self._index)
 
-	if arg_6_0._index ~= var_0_0.finalday then
-		local var_6_0 = string.split(ActivityConfig.instance:getNorSignActivityCo(ActivityEnum.Activity.NoviceSign, arg_6_0._index).bonus, "|")
+	if self._index ~= ActivityNoviceSignItem.finalday then
+		local rewards = string.split(ActivityConfig.instance:getNorSignActivityCo(ActivityEnum.Activity.NoviceSign, self._index).bonus, "|")
 
-		for iter_6_0 = 1, #var_6_0 do
-			local var_6_1 = string.splitToNumber(var_6_0[iter_6_0], "#")
-			local var_6_2 = arg_6_0._rewardTab[iter_6_0]
+		for i = 1, #rewards do
+			local itemCo = string.splitToNumber(rewards[i], "#")
+			local item = self._rewardTab[i]
 
-			if not var_6_2 then
-				var_6_2 = IconMgr.instance:getCommonPropItemIcon(arg_6_0["_goicon" .. iter_6_0])
+			if not item then
+				item = IconMgr.instance:getCommonPropItemIcon(self["_goicon" .. i])
 
-				table.insert(arg_6_0._rewardTab, var_6_2)
+				table.insert(self._rewardTab, item)
 			end
 
-			var_6_2:setMOValue(var_6_1[1], var_6_1[2], var_6_1[3])
-			var_6_2:setCountFontSize(46)
-			var_6_2:setHideLvAndBreakFlag(true)
-			var_6_2:hideEquipLvAndBreak(true)
+			item:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+			item:setCountFontSize(46)
+			item:setHideLvAndBreakFlag(true)
+			item:hideEquipLvAndBreak(true)
 		end
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._txtdate, "#ADA697")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtdate, "#ADA697")
 	else
-		arg_6_0._prop = string.splitToNumber(ActivityConfig.instance:getNorSignActivityCo(ActivityEnum.Activity.NoviceSign, arg_6_0._index).bonus, "#")
+		self._prop = string.splitToNumber(ActivityConfig.instance:getNorSignActivityCo(ActivityEnum.Activity.NoviceSign, self._index).bonus, "#")
 
-		local var_6_3, var_6_4 = ItemModel.instance:getItemConfigAndIcon(arg_6_0._prop[1], arg_6_0._prop[2], true)
+		local config, icon = ItemModel.instance:getItemConfigAndIcon(self._prop[1], self._prop[2], true)
 
-		arg_6_0._siamgefinalrewardicon:LoadImage(var_6_4)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._txtdate, "#B57F50")
+		self._siamgefinalrewardicon:LoadImage(icon)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtdate, "#B57F50")
 	end
 
-	gohelper.setActive(arg_6_0._gofinalday, tonumber(arg_6_0._index) == var_0_0.finalday)
-	gohelper.setActive(arg_6_0._gonormalday, tonumber(arg_6_0._index) ~= var_0_0.finalday)
+	gohelper.setActive(self._gofinalday, tonumber(self._index) == ActivityNoviceSignItem.finalday)
+	gohelper.setActive(self._gonormalday, tonumber(self._index) ~= ActivityNoviceSignItem.finalday)
 
-	arg_6_0._txtdate.text = string.format("%02d", arg_6_0._index)
+	self._txtdate.text = string.format("%02d", self._index)
 
-	local var_6_5 = ActivityType101Model.instance:isType101RewardGet(ActivityEnum.Activity.NoviceSign, arg_6_0._index)
-	local var_6_6 = ActivityType101Model.instance:isType101RewardCouldGet(ActivityEnum.Activity.NoviceSign, arg_6_0._index)
-	local var_6_7 = ActivityType101Model.instance:getType101LoginCount(ActivityEnum.Activity.NoviceSign)
+	local rewardGet = ActivityType101Model.instance:isType101RewardGet(ActivityEnum.Activity.NoviceSign, self._index)
+	local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(ActivityEnum.Activity.NoviceSign, self._index)
+	local totalday = ActivityType101Model.instance:getType101LoginCount(ActivityEnum.Activity.NoviceSign)
 
-	gohelper.setActive(arg_6_0._gonormalget, var_6_5 and arg_6_0._index ~= var_0_0.finalday)
-	gohelper.setActive(arg_6_0._finalget, var_6_5 and arg_6_0._index == var_0_0.finalday)
-	gohelper.setActive(arg_6_0._gotodaynormalbg, var_6_6)
-	gohelper.setActive(arg_6_0._gotomorrowtag, arg_6_0._index == var_6_7 + 1)
+	gohelper.setActive(self._gonormalget, rewardGet and self._index ~= ActivityNoviceSignItem.finalday)
+	gohelper.setActive(self._finalget, rewardGet and self._index == ActivityNoviceSignItem.finalday)
+	gohelper.setActive(self._gotodaynormalbg, couldGet)
+	gohelper.setActive(self._gotomorrowtag, self._index == totalday + 1)
 
-	arg_6_0._canvascontent.alpha = var_6_5 and 0.8 or 1
-	arg_6_0._canvasdate.alpha = var_6_5 and 0.8 or 1
+	self._canvascontent.alpha = rewardGet and 0.8 or 1
+	self._canvasdate.alpha = rewardGet and 0.8 or 1
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_6_0._siamgefinalrewardicon:GetComponent(gohelper.Type_Image), var_6_5 and 0.8 or 1)
+	ZProj.UGUIHelper.SetColorAlpha(self._siamgefinalrewardicon:GetComponent(gohelper.Type_Image), rewardGet and 0.8 or 1)
 end
 
-function var_0_0._playAnimation(arg_7_0)
-	gohelper.setActive(arg_7_0._go, true)
+function ActivityNoviceSignItem:_playAnimation()
+	gohelper.setActive(self._go, true)
 
-	arg_7_0._anim.enabled = true
+	self._anim.enabled = true
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	if arg_8_0._index and tonumber(arg_8_0._index) == 8 then
-		arg_8_0._siamgefinalrewardicon:UnLoadImage()
+function ActivityNoviceSignItem:onDestroy()
+	if self._index and tonumber(self._index) == 8 then
+		self._siamgefinalrewardicon:UnLoadImage()
 	end
 
-	TaskDispatcher.cancelTask(arg_8_0._playAnimation, arg_8_0)
+	TaskDispatcher.cancelTask(self._playAnimation, self)
 end
 
-return var_0_0
+return ActivityNoviceSignItem

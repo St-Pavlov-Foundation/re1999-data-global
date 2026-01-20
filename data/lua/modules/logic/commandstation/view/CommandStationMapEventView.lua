@@ -1,213 +1,217 @@
-﻿module("modules.logic.commandstation.view.CommandStationMapEventView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationMapEventView.lua
 
-local var_0_0 = class("CommandStationMapEventView", BaseView)
+module("modules.logic.commandstation.view.CommandStationMapEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goevents = gohelper.findChild(arg_1_0.viewGO, "#go_bg/#go_events")
+local CommandStationMapEventView = class("CommandStationMapEventView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CommandStationMapEventView:onInitView()
+	self._goevents = gohelper.findChild(self.viewGO, "#go_bg/#go_events")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._eventList = arg_2_0:getUserDataTb_()
-	arg_2_0._decorationList = arg_2_0:getUserDataTb_()
+function CommandStationMapEventView:_editableInitView()
+	self._eventList = self:getUserDataTb_()
+	self._decorationList = self:getUserDataTb_()
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0:addEventCb(CommandStationController.instance, CommandStationEvent.MapLoadFinish, arg_3_0._onMapLoadFinish, arg_3_0)
-	arg_3_0:addEventCb(CommandStationController.instance, CommandStationEvent.ChangeEventCategory, arg_3_0._onChangeEventCategory, arg_3_0)
-	arg_3_0:addEventCb(CommandStationController.instance, CommandStationEvent.MoveTimeline, arg_3_0._onMoveTimeline, arg_3_0)
-	arg_3_0:addEventCb(CommandStationController.instance, CommandStationEvent.FocusEvent, arg_3_0._onFocusEvent, arg_3_0)
+function CommandStationMapEventView:onOpen()
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.MapLoadFinish, self._onMapLoadFinish, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.ChangeEventCategory, self._onChangeEventCategory, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.MoveTimeline, self._onMoveTimeline, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.FocusEvent, self._onFocusEvent, self)
 end
 
-function var_0_0._onFocusEvent(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._eventList[arg_4_1]
+function CommandStationMapEventView:_onFocusEvent(eventId)
+	local item = self._eventList[eventId]
 
-	if var_4_0 then
-		var_4_0:FocusEvent()
+	if item then
+		item:FocusEvent()
 	end
 end
 
-function var_0_0._onMapLoadFinish(arg_5_0, arg_5_1)
-	arg_5_0:_addDecoration(arg_5_1)
-	arg_5_0:_updateEventItems()
+function CommandStationMapEventView:_onMapLoadFinish(sceneGo)
+	self:_addDecoration(sceneGo)
+	self:_updateEventItems()
 end
 
-function var_0_0._onChangeEventCategory(arg_6_0)
-	arg_6_0:_updateEventItems()
+function CommandStationMapEventView:_onChangeEventCategory()
+	self:_updateEventItems()
 end
 
-function var_0_0._onMoveTimeline(arg_7_0)
-	arg_7_0:_updateEventItems()
+function CommandStationMapEventView:_onMoveTimeline()
+	self:_updateEventItems()
 end
 
-function var_0_0.filterEventList(arg_8_0, arg_8_1)
-	local var_8_0 = {}
+function CommandStationMapEventView.filterEventList(targetCharacterId, list)
+	local result = {}
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
-		if CommandStationConfig.instance:getCharacterIdByEventId(iter_8_1) == arg_8_0 then
-			table.insert(var_8_0, iter_8_1)
+	for i, chaEventId in ipairs(list) do
+		if CommandStationConfig.instance:getCharacterIdByEventId(chaEventId) == targetCharacterId then
+			table.insert(result, chaEventId)
 		end
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0._updateEventItems(arg_9_0)
-	local var_9_0 = CommandStationMapModel.instance:getTimeId()
-	local var_9_1 = CommandStationConfig.instance:getTimePointEpisodeId(var_9_0)
+function CommandStationMapEventView:_updateEventItems()
+	local timeId = CommandStationMapModel.instance:getTimeId()
+	local episodeId = CommandStationConfig.instance:getTimePointEpisodeId(timeId)
 
-	if not DungeonModel.instance:hasPassLevelAndStory(var_9_1) then
-		arg_9_0:_addEventItems()
+	if not DungeonModel.instance:hasPassLevelAndStory(episodeId) then
+		self:_addEventItems()
 
 		return
 	end
 
-	local var_9_2 = CommandStationMapModel.instance:getEventCategory()
-	local var_9_3 = var_9_2 == CommandStationEnum.EventCategory.Normal and CommandStationEnum.EventCategoryKey.Normal or CommandStationEnum.EventCategoryKey.Character
-	local var_9_4 = CommandStationConfig.instance:getEventList(var_9_0, nil, var_9_3)
+	local category = CommandStationMapModel.instance:getEventCategory()
+	local eventKey = category == CommandStationEnum.EventCategory.Normal and CommandStationEnum.EventCategoryKey.Normal or CommandStationEnum.EventCategoryKey.Character
+	local list = CommandStationConfig.instance:getEventList(timeId, nil, eventKey)
 
-	if var_9_2 == CommandStationEnum.EventCategory.Character and CommandStationMapModel.instance:getCharacterId() then
-		local var_9_5 = CommandStationMapModel.instance:getCharacterId()
+	if category == CommandStationEnum.EventCategory.Character and CommandStationMapModel.instance:getCharacterId() then
+		local targetCharacterId = CommandStationMapModel.instance:getCharacterId()
 
-		var_9_4 = var_0_0.filterEventList(var_9_5, var_9_4)
+		list = CommandStationMapEventView.filterEventList(targetCharacterId, list)
 	end
 
-	arg_9_0:_addEventItems(var_9_4)
+	self:_addEventItems(list)
 end
 
-function var_0_0.FocuseLeftEvent(arg_10_0)
-	local var_10_0, var_10_1 = arg_10_0:checkEventsDir()
+function CommandStationMapEventView:FocuseLeftEvent()
+	local leftEvent, _ = self:checkEventsDir()
 
-	if var_10_0 then
-		var_10_0:FirstFocusEvent()
-	end
-end
-
-function var_0_0.FocuseRightEvent(arg_11_0)
-	local var_11_0, var_11_1 = arg_11_0:checkEventsDir()
-
-	if var_11_1 then
-		var_11_1:FirstFocusEvent()
+	if leftEvent then
+		leftEvent:FirstFocusEvent()
 	end
 end
 
-function var_0_0.checkEventsDir(arg_12_0)
-	local var_12_0 = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
-	local var_12_1 = 20
-	local var_12_2 = var_12_0 / 2 + var_12_1
-	local var_12_3 = -var_12_2 - var_12_1
-	local var_12_4 = var_12_2
-	local var_12_5
-	local var_12_6
+function CommandStationMapEventView:FocuseRightEvent()
+	local _, rightEvent = self:checkEventsDir()
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._eventList) do
-		local var_12_7 = recthelper.getAnchorX(iter_12_1.viewGO.transform)
+	if rightEvent then
+		rightEvent:FirstFocusEvent()
+	end
+end
 
-		if var_12_7 < var_12_3 then
-			var_12_5 = iter_12_1
-		elseif var_12_4 < var_12_7 then
-			var_12_6 = iter_12_1
+function CommandStationMapEventView:checkEventsDir()
+	local screenWidth = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+	local offsetX = 20
+	local halfScreenWidth = screenWidth / 2 + offsetX
+	local minX = -halfScreenWidth - offsetX
+	local maxX = halfScreenWidth
+	local leftEvent, rightEvent
+
+	for i, v in pairs(self._eventList) do
+		local posX = recthelper.getAnchorX(v.viewGO.transform)
+
+		if posX < minX then
+			leftEvent = v
+		elseif maxX < posX then
+			rightEvent = v
 		end
 	end
 
-	return var_12_5, var_12_6
+	return leftEvent, rightEvent
 end
 
-function var_0_0._addEventItems(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._eventList) do
-		iter_13_1:playCloseAnim()
+function CommandStationMapEventView:_addEventItems(list)
+	for i, v in pairs(self._eventList) do
+		v:playCloseAnim()
 	end
 
-	tabletool.clear(arg_13_0._eventList)
+	tabletool.clear(self._eventList)
 	CommandStationMapModel.instance:clearSceneNodeList()
 
-	if not arg_13_1 then
+	if not list then
 		return
 	end
 
-	local var_13_0 = arg_13_0.viewContainer:getSetting().otherRes[1]
-	local var_13_1 = CommandStationMapModel.instance:getEventCategory()
-	local var_13_2 = false
-	local var_13_3
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local category = CommandStationMapModel.instance:getEventCategory()
+	local isFocusEvent = false
+	local firstItem
 
-	for iter_13_2, iter_13_3 in ipairs(arg_13_1) do
-		local var_13_4 = arg_13_0:getResInst(var_13_0, arg_13_0._goevents)
-		local var_13_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_4, CommandStationMapItem)
+	for i, v in ipairs(list) do
+		local go = self:getResInst(path, self._goevents)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, CommandStationMapItem)
 
-		var_13_5:onUpdateMO(iter_13_3, var_13_1)
+		item:onUpdateMO(v, category)
 
-		arg_13_0._eventList[iter_13_3] = var_13_5
+		self._eventList[v] = item
 
-		if iter_13_2 == 1 then
-			var_13_3 = var_13_5
+		if i == 1 then
+			firstItem = item
 		end
 
-		if var_13_1 == CommandStationEnum.EventCategory.Normal then
-			if not var_13_2 and var_13_5:isMainType() then
-				var_13_2 = true
+		if category == CommandStationEnum.EventCategory.Normal then
+			if not isFocusEvent and item:isMainType() then
+				isFocusEvent = true
 
-				var_13_5:FirstFocusEvent()
+				item:FirstFocusEvent()
 			end
-		elseif not var_13_2 then
-			var_13_2 = true
+		elseif not isFocusEvent then
+			isFocusEvent = true
 
-			var_13_5:FirstFocusEvent()
+			item:FirstFocusEvent()
 		end
 	end
 
-	if not var_13_2 and var_13_3 then
-		var_13_3:FirstFocusEvent()
+	if not isFocusEvent and firstItem then
+		firstItem:FirstFocusEvent()
 	end
 
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.EventCreateFinish)
 end
 
-function var_0_0._addDecoration(arg_14_0, arg_14_1)
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._decorationList) do
-		gohelper.destroy(iter_14_1)
+function CommandStationMapEventView:_addDecoration(sceneGo)
+	for k, v in pairs(self._decorationList) do
+		gohelper.destroy(v)
 
-		arg_14_0._decorationList[iter_14_0] = nil
+		self._decorationList[k] = nil
 	end
 
-	local var_14_0 = CommandStationMapModel.instance:getTimeId()
-	local var_14_1 = lua_copost_time_point_event.configDict[var_14_0]
-	local var_14_2 = var_14_1 and var_14_1.coordinatesId
+	local timeId = CommandStationMapModel.instance:getTimeId()
+	local config = lua_copost_time_point_event.configDict[timeId]
+	local coordinatesId = config and config.coordinatesId
 
-	if not var_14_2 then
+	if not coordinatesId then
 		return
 	end
 
-	for iter_14_2, iter_14_3 in ipairs(var_14_2) do
-		local var_14_3 = lua_copost_decoration_coordinates.configDict[iter_14_3]
+	for i, id in ipairs(coordinatesId) do
+		local coordinateConfig = lua_copost_decoration_coordinates.configDict[id]
 
-		if var_14_3 then
-			local var_14_4 = var_14_3.decorationId
-			local var_14_5 = lua_copost_decoration.configDict[var_14_4]
+		if coordinateConfig then
+			local decorationId = coordinateConfig.decorationId
+			local decorationConfig = lua_copost_decoration.configDict[decorationId]
 
-			if var_14_5 then
-				local var_14_6 = UnityEngine.GameObject.New(tostring(iter_14_3))
+			if decorationConfig then
+				local go = UnityEngine.GameObject.New(tostring(id))
 
-				gohelper.addChild(arg_14_1, var_14_6)
-				table.insert(arg_14_0._decorationList, var_14_6)
+				gohelper.addChild(sceneGo, go)
+				table.insert(self._decorationList, go)
 
-				local var_14_7 = var_14_3.coordinates
+				local pos = coordinateConfig.coordinates
 
-				transformhelper.setLocalPos(var_14_6.transform, var_14_7[1] or 0, var_14_7[2] or 0, var_14_7[3] or 0)
-				PrefabInstantiate.Create(var_14_6):startLoad(var_14_5.decoration)
+				transformhelper.setLocalPos(go.transform, pos[1] or 0, pos[2] or 0, pos[3] or 0)
+
+				local loader = PrefabInstantiate.Create(go)
+
+				loader:startLoad(decorationConfig.decoration)
 			else
-				logError(string.format("can not find decoration config, id = %s", var_14_4))
+				logError(string.format("can not find decoration config, id = %s", decorationId))
 			end
 		else
-			logError(string.format("can not find decoration coordinate config, id = %s", iter_14_3))
+			logError(string.format("can not find decoration coordinate config, id = %s", id))
 		end
 	end
 end
 
-function var_0_0.onClose(arg_15_0)
+function CommandStationMapEventView:onClose()
 	return
 end
 
-return var_0_0
+return CommandStationMapEventView

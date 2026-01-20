@@ -1,13 +1,15 @@
-﻿module("modules.logic.main.view.MainThumbnailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainThumbnailViewContainer.lua
 
-local var_0_0 = class("MainThumbnailViewContainer", BaseViewContainer)
+module("modules.logic.main.view.MainThumbnailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._heroView = MainThumbnailHeroView.New()
+local MainThumbnailViewContainer = class("MainThumbnailViewContainer", BaseViewContainer)
+
+function MainThumbnailViewContainer:buildViews()
+	self._heroView = MainThumbnailHeroView.New()
 
 	return {
 		MainThumbnailView.New(),
-		arg_1_0._heroView,
+		self._heroView,
 		MainThumbnailRecommendView.New(),
 		MainThumbnailBtnView.New(),
 		MainThumbnailBgmView.New(),
@@ -15,30 +17,30 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigationView = NavigateButtonsView.New({
+function MainThumbnailViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	}, 101)
 
 	return {
-		arg_2_0.navigationView
+		self.navigationView
 	}
 end
 
-function var_0_0.getThumbnailNav(arg_3_0)
-	return arg_3_0.navigationView
+function MainThumbnailViewContainer:getThumbnailNav()
+	return self.navigationView
 end
 
-function var_0_0.playCloseTransition(arg_4_0)
-	var_0_0.super.playCloseTransition(arg_4_0, {
+function MainThumbnailViewContainer:playCloseTransition()
+	MainThumbnailViewContainer.super.playCloseTransition(self, {
 		duration = 1
 	})
 end
 
-function var_0_0.getLightSpineGo(arg_5_0)
-	return arg_5_0._heroView:getLightSpineGo()
+function MainThumbnailViewContainer:getLightSpineGo()
+	return self._heroView:getLightSpineGo()
 end
 
-return var_0_0
+return MainThumbnailViewContainer

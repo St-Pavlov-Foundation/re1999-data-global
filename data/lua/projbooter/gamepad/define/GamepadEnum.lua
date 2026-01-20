@@ -1,8 +1,10 @@
-﻿module("projbooter.gamepad.define.GamepadEnum", package.seeall)
+﻿-- chunkname: @projbooter/gamepad/define/GamepadEnum.lua
 
-local var_0_0 = _M
+module("projbooter.gamepad.define.GamepadEnum", package.seeall)
 
-var_0_0.KeyCode = {
+local GamepadEnum = _M
+
+GamepadEnum.KeyCode = {
 	LT = "LT",
 	LeftStickHorizontal = "LeftStickHorizontal",
 	RT = "RT",
@@ -15,4 +17,4 @@ var_0_0.KeyCode = {
 	B = "B"
 }
 
-return var_0_0
+return GamepadEnum

@@ -1,587 +1,611 @@
-﻿module("modules.logic.room.entity.comp.RoomCharacterSpineComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomCharacterSpineComp.lua
 
-local var_0_0 = class("RoomCharacterSpineComp", RoomBaseSpineComp)
-local var_0_1 = 0.01
+module("modules.logic.room.entity.comp.RoomCharacterSpineComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	local var_1_0 = arg_1_0.entity:getMO()
+local RoomCharacterSpineComp = class("RoomCharacterSpineComp", RoomBaseSpineComp)
+local DefaulCharacterHeight = 0.01
 
-	arg_1_0._skinId = var_1_0.skinId
-	arg_1_0._heroId = var_1_0.heroId
-	arg_1_0._roomCharacterCfg = var_1_0.roomCharacterConfig
-	arg_1_0._characterRes = RoomResHelper.getCharacterPath(arg_1_0._skinId)
-	arg_1_0._animalRes = RoomResHelper.getAnimalPath(arg_1_0._skinId)
-	arg_1_0._cameraAnimABRes = RoomResHelper.getCharacterCameraAnimABPath(var_1_0.roomCharacterConfig.cameraAnimPath)
-	arg_1_0._cameraAnimRes = RoomResHelper.getCharacterCameraAnimPath(var_1_0.roomCharacterConfig.cameraAnimPath)
-	arg_1_0._effectABRes = RoomResHelper.getCharacterEffectABPath(var_1_0.roomCharacterConfig.effectPath)
-	arg_1_0._effectRes = RoomResHelper.getCharacterEffectPath(var_1_0.roomCharacterConfig.effectPath)
-	arg_1_0._isShow = false
-	arg_1_0._isHide = false
-	arg_1_0._shouldShowCharacter = false
-	arg_1_0._isInDistance = false
-	arg_1_0._alpha = 1
-	arg_1_0._zeroMix = var_1_0.roomCharacterConfig.zeroMix
-	arg_1_0._spinePrefabRes = arg_1_0._characterRes
+function RoomCharacterSpineComp:onInit()
+	local roomCharacterMO = self.entity:getMO()
 
-	if var_1_0.isAnimal then
-		arg_1_0._spinePrefabRes = arg_1_0._animalRes
+	self._skinId = roomCharacterMO.skinId
+	self._heroId = roomCharacterMO.heroId
+	self._roomCharacterCfg = roomCharacterMO.roomCharacterConfig
+	self._characterRes = RoomResHelper.getCharacterPath(self._skinId)
+	self._animalRes = RoomResHelper.getAnimalPath(self._skinId)
+	self._cameraAnimABRes = RoomResHelper.getCharacterCameraAnimABPath(roomCharacterMO.roomCharacterConfig.cameraAnimPath)
+	self._cameraAnimRes = RoomResHelper.getCharacterCameraAnimPath(roomCharacterMO.roomCharacterConfig.cameraAnimPath)
+	self._effectABRes = RoomResHelper.getCharacterEffectABPath(roomCharacterMO.roomCharacterConfig.effectPath)
+	self._effectRes = RoomResHelper.getCharacterEffectPath(roomCharacterMO.roomCharacterConfig.effectPath)
+	self._isShow = false
+	self._isHide = false
+	self._shouldShowCharacter = false
+	self._isInDistance = false
+	self._alpha = 1
+	self._zeroMix = roomCharacterMO.roomCharacterConfig.zeroMix
+	self._spinePrefabRes = self._characterRes
+
+	if roomCharacterMO.isAnimal then
+		self._spinePrefabRes = self._animalRes
 	end
 
-	arg_1_0:refreshAnimal()
-	arg_1_0:_cameraTransformUpdate()
-	arg_1_0:_refreshSpineShow()
+	self:refreshAnimal()
+	self:_cameraTransformUpdate()
+	self:_refreshSpineShow()
 end
 
-function var_0_0.refreshAnimal(arg_2_0)
-	local var_2_0 = arg_2_0.entity:getMO()
+function RoomCharacterSpineComp:refreshAnimal()
+	local mo = self.entity:getMO()
 
-	if not var_2_0 then
+	if not mo then
 		return
 	end
 
-	local var_2_1 = var_2_0.isAnimal or false
-	local var_2_2 = arg_2_0._isAnimal ~= var_2_1
+	local isAnimal = mo.isAnimal
 
-	arg_2_0._isAnimal = var_2_1
+	isAnimal = isAnimal or false
 
-	if var_2_2 then
-		arg_2_0._spinePrefabRes = var_2_1 and arg_2_0._animalRes or arg_2_0._characterRes
+	local changed = self._isAnimal ~= isAnimal
 
-		arg_2_0:clearSpine()
-		arg_2_0:_refreshShowCharacter(true)
+	self._isAnimal = isAnimal
+
+	if changed then
+		self._spinePrefabRes = isAnimal and self._animalRes or self._characterRes
+
+		self:clearSpine()
+		self:_refreshShowCharacter(true)
 	end
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_3_0._cameraTransformUpdate, arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, arg_3_0._refreshSpineShow, arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_3_0._updateShadowOffset, arg_3_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_3_0._onUpdate, arg_3_0)
+function RoomCharacterSpineComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, self._refreshSpineShow, self)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, self._updateShadowOffset, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, self._onUpdate, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_4_0._cameraTransformUpdate, arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, arg_4_0._refreshSpineShow, arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_4_0._updateShadowOffset, arg_4_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_4_0._onUpdate, arg_4_0)
+function RoomCharacterSpineComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, self._refreshSpineShow, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._updateShadowOffset, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, self._onUpdate, self)
 end
 
-function var_0_0.characterPosChanged(arg_5_0)
-	arg_5_0:_cameraTransformUpdate()
+function RoomCharacterSpineComp:characterPosChanged()
+	self:_cameraTransformUpdate()
 end
 
-function var_0_0._cameraTransformUpdate(arg_6_0)
-	local var_6_0 = arg_6_0._scene.camera:getCameraFocus()
-	local var_6_1, var_6_2, var_6_3 = transformhelper.getPos(arg_6_0.goTrs)
-	local var_6_4 = Vector2(var_6_1, var_6_3)
-	local var_6_5 = Vector2.Distance(var_6_0, var_6_4)
+function RoomCharacterSpineComp:_cameraTransformUpdate()
+	local focus = self._scene.camera:getCameraFocus()
+	local x, y, z = transformhelper.getPos(self.goTrs)
+	local spinePos = Vector2(x, z)
+	local distance = Vector2.Distance(focus, spinePos)
 
-	if var_6_5 < 3.5 then
-		arg_6_0._isInDistance = true
-	elseif var_6_5 > 4.5 then
-		arg_6_0._isInDistance = false
+	if distance < 3.5 then
+		self._isInDistance = true
+	elseif distance > 4.5 then
+		self._isInDistance = false
 	end
 
-	arg_6_0:_refreshShowCharacter()
+	self:_refreshShowCharacter()
 
-	if arg_6_0._spineGO and arg_6_0._spineGO.activeInHierarchy then
-		arg_6_0:refreshRotation()
+	if self._spineGO and self._spineGO.activeInHierarchy then
+		self:refreshRotation()
 	end
 
-	arg_6_0:refreshEffectPos()
+	self:refreshEffectPos()
 end
 
-function var_0_0._onUpdate(arg_7_0)
-	if arg_7_0._shadowPointGOTrs and arg_7_0._shadowGOTrs then
-		local var_7_0, var_7_1, var_7_2 = transformhelper.getPos(arg_7_0._shadowPointGOTrs)
+function RoomCharacterSpineComp:_onUpdate()
+	if self._shadowPointGOTrs and self._shadowGOTrs then
+		local px, py, pz = transformhelper.getPos(self._shadowPointGOTrs)
 
-		transformhelper.setPos(arg_7_0._shadowGOTrs, var_7_0, var_7_1, var_7_2)
+		transformhelper.setPos(self._shadowGOTrs, px, py, pz)
 	end
 end
 
-function var_0_0.refreshEffectPos(arg_8_0)
-	if not arg_8_0._specialIdleGO then
+function RoomCharacterSpineComp:refreshEffectPos()
+	if not self._specialIdleGO then
 		return
 	end
 
-	local var_8_0 = arg_8_0._specialIdleGOTrs.position
-	local var_8_1 = RoomBendingHelper.worldToBendingSimple(var_8_0)
+	local pos = self._specialIdleGOTrs.position
+	local offsetPos = RoomBendingHelper.worldToBendingSimple(pos)
 
-	arg_8_0._specialIdleGOTrs.localPosition = Vector3(0, var_8_1.y, 0)
+	self._specialIdleGOTrs.localPosition = Vector3(0, offsetPos.y, 0)
 end
 
-function var_0_0._refreshSpineShow(arg_9_0)
-	local var_9_0 = arg_9_0._scene.camera:getCameraState()
+function RoomCharacterSpineComp:_refreshSpineShow()
+	local cameraState = self._scene.camera:getCameraState()
 
-	arg_9_0._shouldShowCharacter = RoomCharacterController.instance:checkCanSpineShow(var_9_0)
+	self._shouldShowCharacter = RoomCharacterController.instance:checkCanSpineShow(cameraState)
 
-	arg_9_0:_refreshShowCharacter()
+	self:_refreshShowCharacter()
 end
 
-function var_0_0.changeMoveState(arg_10_0, arg_10_1)
-	if arg_10_0._moveState == arg_10_1 then
+function RoomCharacterSpineComp:changeMoveState(moveState)
+	if self._moveState == moveState then
 		return
 	end
 
-	arg_10_0._moveState = arg_10_1
+	self._moveState = moveState
 
-	arg_10_0:refreshAnimState()
+	self:refreshAnimState()
 end
 
-function var_0_0.touch(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.entity:getMO()
+function RoomCharacterSpineComp:touch(isTouch)
+	local mo = self.entity:getMO()
 
-	TaskDispatcher.cancelTask(arg_11_0._touchAfter, arg_11_0)
+	TaskDispatcher.cancelTask(self._touchAfter, self)
 
-	if arg_11_1 then
-		arg_11_0._touchAction = true
+	if isTouch then
+		self._touchAction = true
 
-		TaskDispatcher.runDelay(arg_11_0._touchAfter, arg_11_0, 13)
+		TaskDispatcher.runDelay(self._touchAfter, self, 13)
 
-		if arg_11_0:isRandomSpecialRate() then
-			arg_11_0:tryPlaySpecialIdle()
+		if self:isRandomSpecialRate() then
+			self:tryPlaySpecialIdle()
 		else
-			arg_11_0:play(RoomCharacterEnum.CharacterAnimStateName.Touch, false, true)
+			self:play(RoomCharacterEnum.CharacterAnimStateName.Touch, false, true)
 		end
 
-		local var_11_1 = var_11_0.roomCharacterConfig.roleVoice
+		local roleVoice = mo.roomCharacterConfig.roleVoice
 
-		if not string.nilorempty(var_11_1) then
-			local var_11_2 = string.splitToNumber(var_11_1, "|")
-			local var_11_3 = #var_11_2
+		if not string.nilorempty(roleVoice) then
+			local arr = string.splitToNumber(roleVoice, "|")
+			local len = #arr
 
-			if var_11_3 > 0 then
-				local var_11_4
+			if len > 0 then
+				local audioLang
 
-				if arg_11_0._heroId then
-					local var_11_5, var_11_6, var_11_7 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(arg_11_0._heroId)
-					local var_11_8 = LangSettings.shortcutTab[var_11_5]
+				if self._heroId then
+					local charVoiceLangId, langStr, usingDefaultLang = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(self._heroId)
+					local charVoiceLang = LangSettings.shortcutTab[charVoiceLangId]
 
-					if not string.nilorempty(var_11_8) and not var_11_7 then
-						var_11_4 = var_11_8
+					if not string.nilorempty(charVoiceLang) and not usingDefaultLang then
+						audioLang = charVoiceLang
 					end
 				end
 
-				local var_11_9 = math.random(1, var_11_3)
+				local randomIndex = math.random(1, len)
 
-				if var_11_4 then
-					arg_11_0:playVoiceWithLang(var_11_2[var_11_9], var_11_4)
+				if audioLang then
+					self:playVoiceWithLang(arr[randomIndex], audioLang)
 				else
-					arg_11_0:playVoice(var_11_2[var_11_9])
+					self:playVoice(arr[randomIndex])
 				end
 			end
 		end
 	else
-		arg_11_0:refreshAnimState()
+		self:refreshAnimState()
 	end
 end
 
-function var_0_0.isRandomSpecialRate(arg_12_0)
-	local var_12_0 = arg_12_0.entity:getMO()
+function RoomCharacterSpineComp:isRandomSpecialRate()
+	local roomCharacterMO = self.entity:getMO()
 
-	if not var_12_0:isHasSpecialIdle() then
+	if not roomCharacterMO:isHasSpecialIdle() then
 		return false
 	end
 
-	if var_12_0:getSpecialRate() <= math.random() then
+	local specialRate = roomCharacterMO:getSpecialRate()
+
+	if specialRate <= math.random() then
 		return false
 	end
 
-	local var_12_1 = var_12_0:getSpecialIdleWaterDistance()
+	local specialIdleWaterDistance = roomCharacterMO:getSpecialIdleWaterDistance()
 
-	if var_12_1 > 0 and RoomCharacterHelper.hasWaterNodeNear(arg_12_0.goTrs.position, var_12_1) then
-		return false
-	end
-
-	return true
-end
-
-function var_0_0.refreshAnimState(arg_13_0)
-	local var_13_0 = arg_13_0.entity:getMO()
-
-	if not var_13_0 then
-		return
-	end
-
-	if arg_13_0._isAnimal then
-		arg_13_0:play(RoomCharacterEnum.CharacterAnimalAnimStateName.Jump, false, true)
-	elseif var_13_0.isTouch then
-		if arg_13_0._touchAction then
-			arg_13_0:play(RoomCharacterEnum.CharacterAnimStateName.Touch, false, false)
-		else
-			arg_13_0:play(RoomCharacterHelper.getIdleAnimStateName(var_13_0.heroId), true, false)
-		end
-	else
-		local var_13_1 = arg_13_0:getAnimState()
-		local var_13_2 = RoomCharacterModel.instance:getTempCharacterMO()
-
-		if var_13_1 ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle or RoomCharacterHelper.getAnimStateName(arg_13_0._moveState, var_13_0.heroId) ~= RoomCharacterHelper.getIdleAnimStateName(var_13_0.heroId) or var_13_2 and var_13_2.id == arg_13_0.entity.id then
-			local var_13_3 = RoomCharacterEnum.CharacterLoopAnimState[arg_13_0._moveState] or false
-			local var_13_4 = not var_13_3 and arg_13_0._isAnimalActionComplete and true or false
-
-			arg_13_0:play(RoomCharacterHelper.getAnimStateName(arg_13_0._moveState, var_13_0.heroId), var_13_3, var_13_4)
-		end
-	end
-end
-
-function var_0_0.changeLookDir(arg_14_0, arg_14_1)
-	arg_14_0:setLookDir(arg_14_1)
-end
-
-function var_0_0._refreshShowCharacter(arg_15_0, arg_15_1)
-	if arg_15_0._isInDistance and arg_15_0._shouldShowCharacter then
-		if not arg_15_0._isShow or arg_15_1 then
-			arg_15_0._isShow = true
-			arg_15_0._isHide = false
-
-			arg_15_0:showSpine()
-		end
-	elseif not arg_15_0._isHide or arg_15_1 then
-		arg_15_0._isShow = false
-		arg_15_0._isHide = true
-
-		arg_15_0:hideSpine()
-	end
-end
-
-function var_0_0.addResToLoader(arg_16_0, arg_16_1)
-	var_0_0.super.addResToLoader(arg_16_0, arg_16_1)
-
-	if not string.nilorempty(arg_16_0._cameraAnimABRes) then
-		arg_16_1:addPath(arg_16_0._cameraAnimABRes)
-	end
-
-	if not string.nilorempty(arg_16_0._effectABRes) then
-		arg_16_1:addPath(arg_16_0._effectABRes)
-	end
-
-	arg_16_0.entity.characterspineeffect:addResToLoader(arg_16_1)
-end
-
-function var_0_0._onLoadFinish(arg_17_0, arg_17_1)
-	var_0_0.super._onLoadFinish(arg_17_0, arg_17_1)
-
-	if not string.nilorempty(arg_17_0._cameraAnimABRes) then
-		arg_17_0._cameraAnimController = arg_17_1:getAssetItem(arg_17_0._cameraAnimABRes):GetResource(arg_17_0._cameraAnimRes)
-	end
-
-	if not string.nilorempty(arg_17_0._effectABRes) then
-		arg_17_0._effectPrefab = arg_17_1:getAssetItem(arg_17_0._effectABRes):GetResource(arg_17_0._effectRes)
-	end
-
-	arg_17_0._mountheadGO = gohelper.findChild(arg_17_0._spineGO, "mountroot/mounthead")
-
-	if arg_17_0._mountheadGO then
-		arg_17_0._mountheadGOTrs = arg_17_0._mountheadGO.transform
-	end
-
-	arg_17_0._shadowPointGOTrs = nil
-
-	if not string.nilorempty(arg_17_0._roomCharacterCfg.shadow) then
-		local var_17_0 = gohelper.findChild(arg_17_0._spineGO, "mountroot/" .. arg_17_0._roomCharacterCfg.shadow)
-
-		if var_17_0 then
-			arg_17_0._shadowPointGOTrs = var_17_0.transform
-		end
-	end
-
-	arg_17_0:_spawnShadowGO(arg_17_1)
-	arg_17_0:_updateShadowOffset()
-	arg_17_0.entity.characterspineeffect:spawnEffect(arg_17_1)
-	arg_17_0:refreshAnimState()
-	arg_17_0:_cameraTransformUpdate()
-end
-
-function var_0_0._spawnShadowGO(arg_18_0, arg_18_1)
-	if arg_18_0.entity:getMO():getCanWade() then
-		return
-	end
-
-	local var_18_0 = arg_18_0._scene.preloader:getResource(RoomScenePreloader.ResEffectCharacterShadow)
-
-	arg_18_0._shadowGO = gohelper.clone(var_18_0, arg_18_0.entity.containerGO, "shadow")
-	arg_18_0._shadowGOTrs = arg_18_0._shadowGO.transform
-	arg_18_0._shadowGO:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingLayerName = "Default"
-
-	transformhelper.setLocalPos(arg_18_0._shadowGOTrs, 0, var_0_1, 0)
-end
-
-function var_0_0._updateShadowOffset(arg_19_0)
-	if not arg_19_0._material then
-		return
-	end
-
-	local var_19_0 = arg_19_0._scene.character:getShadowOffset()
-
-	arg_19_0._material:SetVector("_ShadowOffset", var_19_0)
-end
-
-function var_0_0._onLoadOneFail(arg_20_0, arg_20_1, arg_20_2)
-	logError("RoomCharacterSpineComp: 加载失败, url: " .. arg_20_2.ResPath)
-end
-
-function var_0_0.play(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	if not arg_21_1 then
-		return
-	end
-
-	if not arg_21_0._skeletonAnim then
-		return
-	end
-
-	arg_21_2 = arg_21_2 or false
-	arg_21_3 = arg_21_3 or false
-	arg_21_0._playAnimal = arg_21_0._playAnimal or false
-
-	if not (arg_21_3 or arg_21_1 ~= arg_21_0._curAnimState or arg_21_2 ~= arg_21_0._isLoop or arg_21_0._playAnimal ~= arg_21_0._isAnimal) then
-		return
-	end
-
-	if arg_21_1 ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
-		arg_21_0:_stopPlaySpecialIdle()
-	end
-
-	local var_21_0 = arg_21_0._curAnimState
-
-	arg_21_0._curAnimState = arg_21_1
-	arg_21_0._isLoop = arg_21_2
-	arg_21_0._playAnimal = arg_21_0._isAnimal
-
-	if arg_21_0._skeletonAnim:HasAnimation(arg_21_1) then
-		if arg_21_0._zeroMix and (arg_21_1 ~= var_21_0 or arg_21_3) then
-			arg_21_0._skeletonAnim:SetAnimation(0, arg_21_1, arg_21_0._isLoop, 0)
-
-			arg_21_0._skeletonAnim.loop = arg_21_0._isLoop
-		else
-			arg_21_0._skeletonAnim:PlayAnim(arg_21_1, arg_21_0._isLoop, arg_21_3)
-		end
-
-		arg_21_0:_moveCharacterUp(arg_21_1)
-		arg_21_0:_updateAnimShadow(arg_21_1)
-		arg_21_0.entity.characterspineeffect:play(arg_21_1)
-	else
-		local var_21_1 = gohelper.isNil(arg_21_0._spineGO) and "nil" or arg_21_0._spineGO.name
-
-		logError(string.format("heroId:%s  skinId:%s  animName:%s  goName:%s  Animation Name not exist ", arg_21_0._heroId, arg_21_0._skinId, arg_21_1, var_21_1))
-	end
-end
-
-function var_0_0._moveCharacterUp(arg_22_0, arg_22_1)
-	TaskDispatcher.cancelTask(arg_22_0._moveUp, arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._moveDown, arg_22_0)
-
-	local var_22_0 = arg_22_0.entity:getMO()
-
-	if not var_22_0 then
-		return
-	end
-
-	local var_22_1 = var_22_0.skinId
-
-	arg_22_0._moveConfig = RoomConfig.instance:getCharacterAnimConfig(var_22_1, arg_22_1)
-
-	if not arg_22_0._moveConfig then
-		arg_22_0:_killMoveTween()
-
-		if arg_22_0._spineGO then
-			arg_22_0._spineMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(arg_22_0._spineGOTrs, var_0_1, 0.05)
-		end
-
-		if arg_22_0._shadowGO then
-			arg_22_0._shadowMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(arg_22_0._shadowGOTrs, var_0_1, 0.05)
-		end
-
-		return
-	end
-
-	if arg_22_0._moveConfig.upTime > 0 then
-		TaskDispatcher.runDelay(arg_22_0._moveUp, arg_22_0, arg_22_0._moveConfig.upTime / 1000)
-	else
-		arg_22_0:_moveUp()
-	end
-
-	if arg_22_0._moveConfig.downTime > 0 then
-		TaskDispatcher.runDelay(arg_22_0._moveDown, arg_22_0, arg_22_0._moveConfig.downTime / 1000)
-	end
-end
-
-function var_0_0._moveUp(arg_23_0)
-	if not arg_23_0._moveConfig then
-		return
-	end
-
-	arg_23_0:_killMoveTween()
-
-	arg_23_0._spineMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(arg_23_0._spineGOTrs, arg_23_0._moveConfig.upDistance / 1000, arg_23_0._moveConfig.upDuration / 1000)
-	arg_23_0._shadowMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(arg_23_0._shadowGOTrs, arg_23_0._moveConfig.upDistance / 1000, arg_23_0._moveConfig.upDuration / 1000)
-end
-
-function var_0_0._moveDown(arg_24_0)
-	if not arg_24_0._moveConfig then
-		return
-	end
-
-	arg_24_0:_killMoveTween()
-
-	arg_24_0._spineMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(arg_24_0._spineGOTrs, var_0_1, arg_24_0._moveConfig.downDuration / 1000)
-	arg_24_0._shadowMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(arg_24_0._shadowGOTrs, var_0_1, arg_24_0._moveConfig.downDuration / 1000)
-end
-
-function var_0_0._killMoveTween(arg_25_0)
-	if arg_25_0._spineMoveTweenId then
-		ZProj.TweenHelper.KillById(arg_25_0._spineMoveTweenId)
-	end
-
-	if arg_25_0._shadowMoveTweenId then
-		ZProj.TweenHelper.KillById(arg_25_0._shadowMoveTweenId)
-	end
-end
-
-function var_0_0._onAnimCallback(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = GameSceneMgr.instance:getCurScene()
-	local var_26_1 = arg_26_0.entity:getMO()
-
-	arg_26_0._isAnimalActionComplete = arg_26_2 == SpineAnimEvent.ActionComplete
-
-	if arg_26_0._isAnimal and arg_26_1 == RoomCharacterEnum.CharacterAnimalAnimStateName.Jump and arg_26_2 == SpineAnimEvent.ActionComplete then
-		var_26_0.character:setCharacterAnimal(arg_26_0.entity.id, false)
-	elseif not arg_26_0._isAnimal and arg_26_0._touchAction and arg_26_2 == SpineAnimEvent.ActionComplete then
-		arg_26_0._touchAction = false
-
-		if arg_26_1 == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
-			arg_26_0:_stopPlaySpecialIdle()
-		end
-
-		arg_26_0:refreshAnimState()
-		TaskDispatcher.cancelTask(arg_26_0._touchAfter, arg_26_0)
-		TaskDispatcher.runDelay(arg_26_0._touchAfter, arg_26_0, RoomCharacterEnum.WaitingTimeAfterTouch)
-	elseif not arg_26_0._isAnimal and arg_26_1 == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle and arg_26_2 == SpineAnimEvent.ActionComplete then
-		arg_26_0:_stopPlaySpecialIdle()
-
-		local var_26_2 = RoomCharacterHelper.getAnimStateName(arg_26_0._moveState, var_26_1.heroId)
-
-		arg_26_0:play(var_26_2, RoomCharacterEnum.CharacterLoopAnimState[arg_26_0._moveState] or false, false)
-	elseif not arg_26_0._isAnimal and arg_26_0._curAnimState == arg_26_1 and arg_26_0._isLoop ~= true and arg_26_2 == SpineAnimEvent.ActionComplete then
-		local var_26_3 = RoomCharacterHelper.getNextAnimStateName(arg_26_0._moveState, arg_26_1)
-
-		if var_26_3 then
-			arg_26_0:play(var_26_3, var_26_3 == arg_26_1, false)
-		else
-			arg_26_0:play(RoomCharacterHelper.getIdleAnimStateName(var_26_1.heroId), true, false)
-		end
-	end
-end
-
-function var_0_0._stopPlaySpecialIdle(arg_27_0)
-	if arg_27_0._specialIdleAnimator then
-		arg_27_0._specialIdleAnimator.enabled = false
-	end
-
-	if arg_27_0._specialIdleGO then
-		gohelper.setActive(arg_27_0._specialIdleGO, false)
-	end
-
-	if arg_27_0._spineGO then
-		ZProj.CharacterSetVariantHelper.Disable(arg_27_0._spineGO)
-	end
-
-	if arg_27_0._meshRenderer and arg_27_0._material then
-		arg_27_0._meshRenderer.material = arg_27_0._material
-	end
-end
-
-function var_0_0.tryPlaySpecialIdle(arg_28_0)
-	if not arg_28_0._spineGO then
-		return
-	end
-
-	if arg_28_0.entity:getMO():isHasSpecialIdle() and arg_28_0._curAnimState ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
-		arg_28_0:play(RoomCharacterEnum.CharacterAnimStateName.SpecialIdle, false, false)
-
-		if arg_28_0._cameraAnimController then
-			if not arg_28_0._specialIdleAnimator then
-				arg_28_0._specialIdleAnimator = gohelper.onceAddComponent(arg_28_0._spineGO, typeof(UnityEngine.Animator))
-				arg_28_0._specialIdleAnimator.runtimeAnimatorController = arg_28_0._cameraAnimController
-			else
-				arg_28_0._specialIdleAnimator.runtimeAnimatorController = nil
-				arg_28_0._specialIdleAnimator.enabled = false
-				arg_28_0._specialIdleAnimator.enabled = true
-				arg_28_0._specialIdleAnimator.runtimeAnimatorController = arg_28_0._cameraAnimController
-			end
-		end
-
-		if arg_28_0._effectPrefab then
-			if not arg_28_0._specialIdleGO then
-				local var_28_0 = gohelper.findChild(arg_28_0._spineGO, "mountroot/mountbottom")
-
-				arg_28_0._specialIdleGO = gohelper.clone(arg_28_0._effectPrefab, var_28_0 or arg_28_0._spineGO, "special_idle_effect")
-				arg_28_0._specialIdleGOTrs = arg_28_0._specialIdleGO.transform
-			else
-				gohelper.setActive(arg_28_0._specialIdleGO, false)
-				gohelper.setActive(arg_28_0._specialIdleGO, true)
-			end
-
-			local var_28_1 = gohelper.findChild(arg_28_0._specialIdleGO, arg_28_0._effectPrefab.name .. "_r")
-			local var_28_2 = gohelper.findChild(arg_28_0._specialIdleGO, arg_28_0._effectPrefab.name .. "_l")
-
-			gohelper.setActive(var_28_1, arg_28_0._lookDir == SpineLookDir.Left)
-			gohelper.setActive(var_28_2, arg_28_0._lookDir == SpineLookDir.Right)
-		end
-	end
-end
-
-function var_0_0._updateAnimShadow(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:_isShowAnimShadow(arg_29_1)
-
-	if arg_29_0._isLastAminShadow ~= var_29_0 then
-		arg_29_0._isLastAminShadow = var_29_0
-
-		if var_29_0 then
-			arg_29_0._meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
-		else
-			arg_29_0._meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off
-		end
-	end
-end
-
-function var_0_0._isShowAnimShadow(arg_30_0, arg_30_1)
-	local var_30_0 = RoomConfig.instance:getCharacterShadowConfig(arg_30_0._skinId, arg_30_1 or arg_30_0._curAnimState)
-
-	if var_30_0 and var_30_0.shadow == 1 then
+	if specialIdleWaterDistance > 0 and RoomCharacterHelper.hasWaterNodeNear(self.goTrs.position, specialIdleWaterDistance) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._touchAfter(arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0._touchAfter, arg_31_0)
-	GameSceneMgr.instance:getCurScene().character:setCharacterTouch(arg_31_0.entity.id, false)
+function RoomCharacterSpineComp:refreshAnimState()
+	local mo = self.entity:getMO()
+
+	if not mo then
+		return
+	end
+
+	if self._isAnimal then
+		self:play(RoomCharacterEnum.CharacterAnimalAnimStateName.Jump, false, true)
+	elseif mo.isTouch then
+		if self._touchAction then
+			self:play(RoomCharacterEnum.CharacterAnimStateName.Touch, false, false)
+		else
+			self:play(RoomCharacterHelper.getIdleAnimStateName(mo.heroId), true, false)
+		end
+	else
+		local animState = self:getAnimState()
+		local tempCharacterMO = RoomCharacterModel.instance:getTempCharacterMO()
+
+		if animState ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle or RoomCharacterHelper.getAnimStateName(self._moveState, mo.heroId) ~= RoomCharacterHelper.getIdleAnimStateName(mo.heroId) or tempCharacterMO and tempCharacterMO.id == self.entity.id then
+			local isLoop = RoomCharacterEnum.CharacterLoopAnimState[self._moveState] or false
+			local isRest = not isLoop and self._isAnimalActionComplete and true or false
+
+			self:play(RoomCharacterHelper.getAnimStateName(self._moveState, mo.heroId), isLoop, isRest)
+		end
+	end
 end
 
-function var_0_0.getCharacterGO(arg_32_0)
-	return arg_32_0:getSpineGO()
+function RoomCharacterSpineComp:changeLookDir(lookDir)
+	self:setLookDir(lookDir)
 end
 
-function var_0_0.getShadowGO(arg_33_0)
-	return arg_33_0._shadowGO
+function RoomCharacterSpineComp:_refreshShowCharacter(force)
+	if self._isInDistance and self._shouldShowCharacter then
+		if not self._isShow or force then
+			self._isShow = true
+			self._isHide = false
+
+			self:showSpine()
+		end
+	elseif not self._isHide or force then
+		self._isShow = false
+		self._isHide = true
+
+		self:hideSpine()
+	end
 end
 
-function var_0_0.getMountheadGO(arg_34_0)
-	return arg_34_0._mountheadGO
+function RoomCharacterSpineComp:addResToLoader(loader)
+	RoomCharacterSpineComp.super.addResToLoader(self, loader)
+
+	if not string.nilorempty(self._cameraAnimABRes) then
+		loader:addPath(self._cameraAnimABRes)
+	end
+
+	if not string.nilorempty(self._effectABRes) then
+		loader:addPath(self._effectABRes)
+	end
+
+	self.entity.characterspineeffect:addResToLoader(loader)
 end
 
-function var_0_0.getMountheadGOTrs(arg_35_0)
-	return arg_35_0._mountheadGOTrs
+function RoomCharacterSpineComp:_onLoadFinish(loader)
+	RoomCharacterSpineComp.super._onLoadFinish(self, loader)
+
+	if not string.nilorempty(self._cameraAnimABRes) then
+		local cameraAnimABAssetItem = loader:getAssetItem(self._cameraAnimABRes)
+
+		self._cameraAnimController = cameraAnimABAssetItem:GetResource(self._cameraAnimRes)
+	end
+
+	if not string.nilorempty(self._effectABRes) then
+		local effectABAssetItem = loader:getAssetItem(self._effectABRes)
+
+		self._effectPrefab = effectABAssetItem:GetResource(self._effectRes)
+	end
+
+	self._mountheadGO = gohelper.findChild(self._spineGO, "mountroot/mounthead")
+
+	if self._mountheadGO then
+		self._mountheadGOTrs = self._mountheadGO.transform
+	end
+
+	self._shadowPointGOTrs = nil
+
+	if not string.nilorempty(self._roomCharacterCfg.shadow) then
+		local shadowPointGO = gohelper.findChild(self._spineGO, "mountroot/" .. self._roomCharacterCfg.shadow)
+
+		if shadowPointGO then
+			self._shadowPointGOTrs = shadowPointGO.transform
+		end
+	end
+
+	self:_spawnShadowGO(loader)
+	self:_updateShadowOffset()
+	self.entity.characterspineeffect:spawnEffect(loader)
+	self:refreshAnimState()
+	self:_cameraTransformUpdate()
 end
 
-function var_0_0._checkAnimator(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_0._scene.preloader:getResource(arg_36_1)
+function RoomCharacterSpineComp:_spawnShadowGO(loader)
+	local roomCharacterMO = self.entity:getMO()
+	local canWade = roomCharacterMO:getCanWade()
 
-	if var_36_0 then
-		arg_36_0._animator = gohelper.onceAddComponent(arg_36_0.entity.containerGO, typeof(UnityEngine.Animator))
-		arg_36_0._animatorPlayer = gohelper.onceAddComponent(arg_36_0.entity.containerGO, typeof(SLFramework.AnimatorPlayer))
-		arg_36_0._animator.runtimeAnimatorController = var_36_0
+	if canWade then
+		return
+	end
+
+	local shadowPrefab = self._scene.preloader:getResource(RoomScenePreloader.ResEffectCharacterShadow)
+
+	self._shadowGO = gohelper.clone(shadowPrefab, self.entity.containerGO, "shadow")
+	self._shadowGOTrs = self._shadowGO.transform
+
+	local shadowMeshRenderer = self._shadowGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+
+	shadowMeshRenderer.sortingLayerName = "Default"
+
+	transformhelper.setLocalPos(self._shadowGOTrs, 0, DefaulCharacterHeight, 0)
+end
+
+function RoomCharacterSpineComp:_updateShadowOffset()
+	if not self._material then
+		return
+	end
+
+	local shadowOffset = self._scene.character:getShadowOffset()
+
+	self._material:SetVector("_ShadowOffset", shadowOffset)
+end
+
+function RoomCharacterSpineComp:_onLoadOneFail(loader, assetItem)
+	logError("RoomCharacterSpineComp: 加载失败, url: " .. assetItem.ResPath)
+end
+
+function RoomCharacterSpineComp:play(animState, isLoop, reStart)
+	if not animState then
+		return
+	end
+
+	if not self._skeletonAnim then
+		return
+	end
+
+	isLoop = isLoop or false
+	reStart = reStart or false
+	self._playAnimal = self._playAnimal or false
+
+	local needPlay = reStart or animState ~= self._curAnimState or isLoop ~= self._isLoop or self._playAnimal ~= self._isAnimal
+
+	if not needPlay then
+		return
+	end
+
+	if animState ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
+		self:_stopPlaySpecialIdle()
+	end
+
+	local preAnimState = self._curAnimState
+
+	self._curAnimState = animState
+	self._isLoop = isLoop
+	self._playAnimal = self._isAnimal
+
+	if self._skeletonAnim:HasAnimation(animState) then
+		if self._zeroMix and (animState ~= preAnimState or reStart) then
+			self._skeletonAnim:SetAnimation(0, animState, self._isLoop, 0)
+
+			self._skeletonAnim.loop = self._isLoop
+		else
+			self._skeletonAnim:PlayAnim(animState, self._isLoop, reStart)
+		end
+
+		self:_moveCharacterUp(animState)
+		self:_updateAnimShadow(animState)
+		self.entity.characterspineeffect:play(animState)
+	else
+		local spineName = gohelper.isNil(self._spineGO) and "nil" or self._spineGO.name
+
+		logError(string.format("heroId:%s  skinId:%s  animName:%s  goName:%s  Animation Name not exist ", self._heroId, self._skinId, animState, spineName))
+	end
+end
+
+function RoomCharacterSpineComp:_moveCharacterUp(animName)
+	TaskDispatcher.cancelTask(self._moveUp, self)
+	TaskDispatcher.cancelTask(self._moveDown, self)
+
+	local roomCharacterMO = self.entity:getMO()
+
+	if not roomCharacterMO then
+		return
+	end
+
+	local skinId = roomCharacterMO.skinId
+
+	self._moveConfig = RoomConfig.instance:getCharacterAnimConfig(skinId, animName)
+
+	if not self._moveConfig then
+		self:_killMoveTween()
+
+		if self._spineGO then
+			self._spineMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(self._spineGOTrs, DefaulCharacterHeight, 0.05)
+		end
+
+		if self._shadowGO then
+			self._shadowMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(self._shadowGOTrs, DefaulCharacterHeight, 0.05)
+		end
+
+		return
+	end
+
+	if self._moveConfig.upTime > 0 then
+		TaskDispatcher.runDelay(self._moveUp, self, self._moveConfig.upTime / 1000)
+	else
+		self:_moveUp()
+	end
+
+	if self._moveConfig.downTime > 0 then
+		TaskDispatcher.runDelay(self._moveDown, self, self._moveConfig.downTime / 1000)
+	end
+end
+
+function RoomCharacterSpineComp:_moveUp()
+	if not self._moveConfig then
+		return
+	end
+
+	self:_killMoveTween()
+
+	self._spineMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(self._spineGOTrs, self._moveConfig.upDistance / 1000, self._moveConfig.upDuration / 1000)
+	self._shadowMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(self._shadowGOTrs, self._moveConfig.upDistance / 1000, self._moveConfig.upDuration / 1000)
+end
+
+function RoomCharacterSpineComp:_moveDown()
+	if not self._moveConfig then
+		return
+	end
+
+	self:_killMoveTween()
+
+	self._spineMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(self._spineGOTrs, DefaulCharacterHeight, self._moveConfig.downDuration / 1000)
+	self._shadowMoveTweenId = ZProj.TweenHelper.DOLocalMoveY(self._shadowGOTrs, DefaulCharacterHeight, self._moveConfig.downDuration / 1000)
+end
+
+function RoomCharacterSpineComp:_killMoveTween()
+	if self._spineMoveTweenId then
+		ZProj.TweenHelper.KillById(self._spineMoveTweenId)
+	end
+
+	if self._shadowMoveTweenId then
+		ZProj.TweenHelper.KillById(self._shadowMoveTweenId)
+	end
+end
+
+function RoomCharacterSpineComp:_onAnimCallback(actionName, eventName, eventArgs)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local mo = self.entity:getMO()
+
+	self._isAnimalActionComplete = eventName == SpineAnimEvent.ActionComplete
+
+	if self._isAnimal and actionName == RoomCharacterEnum.CharacterAnimalAnimStateName.Jump and eventName == SpineAnimEvent.ActionComplete then
+		scene.character:setCharacterAnimal(self.entity.id, false)
+	elseif not self._isAnimal and self._touchAction and eventName == SpineAnimEvent.ActionComplete then
+		self._touchAction = false
+
+		if actionName == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
+			self:_stopPlaySpecialIdle()
+		end
+
+		self:refreshAnimState()
+		TaskDispatcher.cancelTask(self._touchAfter, self)
+		TaskDispatcher.runDelay(self._touchAfter, self, RoomCharacterEnum.WaitingTimeAfterTouch)
+	elseif not self._isAnimal and actionName == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle and eventName == SpineAnimEvent.ActionComplete then
+		self:_stopPlaySpecialIdle()
+
+		local animName = RoomCharacterHelper.getAnimStateName(self._moveState, mo.heroId)
+
+		self:play(animName, RoomCharacterEnum.CharacterLoopAnimState[self._moveState] or false, false)
+	elseif not self._isAnimal and self._curAnimState == actionName and self._isLoop ~= true and eventName == SpineAnimEvent.ActionComplete then
+		local nextAnim = RoomCharacterHelper.getNextAnimStateName(self._moveState, actionName)
+
+		if nextAnim then
+			self:play(nextAnim, nextAnim == actionName, false)
+		else
+			self:play(RoomCharacterHelper.getIdleAnimStateName(mo.heroId), true, false)
+		end
+	end
+end
+
+function RoomCharacterSpineComp:_stopPlaySpecialIdle()
+	if self._specialIdleAnimator then
+		self._specialIdleAnimator.enabled = false
+	end
+
+	if self._specialIdleGO then
+		gohelper.setActive(self._specialIdleGO, false)
+	end
+
+	if self._spineGO then
+		ZProj.CharacterSetVariantHelper.Disable(self._spineGO)
+	end
+
+	if self._meshRenderer and self._material then
+		self._meshRenderer.material = self._material
+	end
+end
+
+function RoomCharacterSpineComp:tryPlaySpecialIdle()
+	if not self._spineGO then
+		return
+	end
+
+	local mo = self.entity:getMO()
+
+	if mo:isHasSpecialIdle() and self._curAnimState ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
+		self:play(RoomCharacterEnum.CharacterAnimStateName.SpecialIdle, false, false)
+
+		if self._cameraAnimController then
+			if not self._specialIdleAnimator then
+				self._specialIdleAnimator = gohelper.onceAddComponent(self._spineGO, typeof(UnityEngine.Animator))
+				self._specialIdleAnimator.runtimeAnimatorController = self._cameraAnimController
+			else
+				self._specialIdleAnimator.runtimeAnimatorController = nil
+				self._specialIdleAnimator.enabled = false
+				self._specialIdleAnimator.enabled = true
+				self._specialIdleAnimator.runtimeAnimatorController = self._cameraAnimController
+			end
+		end
+
+		if self._effectPrefab then
+			if not self._specialIdleGO then
+				local mountbottomGO = gohelper.findChild(self._spineGO, "mountroot/mountbottom")
+
+				self._specialIdleGO = gohelper.clone(self._effectPrefab, mountbottomGO or self._spineGO, "special_idle_effect")
+				self._specialIdleGOTrs = self._specialIdleGO.transform
+			else
+				gohelper.setActive(self._specialIdleGO, false)
+				gohelper.setActive(self._specialIdleGO, true)
+			end
+
+			local leftGO = gohelper.findChild(self._specialIdleGO, self._effectPrefab.name .. "_r")
+			local rightGO = gohelper.findChild(self._specialIdleGO, self._effectPrefab.name .. "_l")
+
+			gohelper.setActive(leftGO, self._lookDir == SpineLookDir.Left)
+			gohelper.setActive(rightGO, self._lookDir == SpineLookDir.Right)
+		end
+	end
+end
+
+function RoomCharacterSpineComp:_updateAnimShadow(animName)
+	local isShow = self:_isShowAnimShadow(animName)
+
+	if self._isLastAminShadow ~= isShow then
+		self._isLastAminShadow = isShow
+
+		if isShow then
+			self._meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
+		else
+			self._meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off
+		end
+	end
+end
+
+function RoomCharacterSpineComp:_isShowAnimShadow(animName)
+	local config = RoomConfig.instance:getCharacterShadowConfig(self._skinId, animName or self._curAnimState)
+
+	if config and config.shadow == 1 then
+		return false
+	end
+
+	return true
+end
+
+function RoomCharacterSpineComp:_touchAfter()
+	TaskDispatcher.cancelTask(self._touchAfter, self)
+
+	local scene = GameSceneMgr.instance:getCurScene()
+
+	scene.character:setCharacterTouch(self.entity.id, false)
+end
+
+function RoomCharacterSpineComp:getCharacterGO()
+	return self:getSpineGO()
+end
+
+function RoomCharacterSpineComp:getShadowGO()
+	return self._shadowGO
+end
+
+function RoomCharacterSpineComp:getMountheadGO()
+	return self._mountheadGO
+end
+
+function RoomCharacterSpineComp:getMountheadGOTrs()
+	return self._mountheadGOTrs
+end
+
+function RoomCharacterSpineComp:_checkAnimator(animRes)
+	local animController = self._scene.preloader:getResource(animRes)
+
+	if animController then
+		self._animator = gohelper.onceAddComponent(self.entity.containerGO, typeof(UnityEngine.Animator))
+		self._animatorPlayer = gohelper.onceAddComponent(self.entity.containerGO, typeof(SLFramework.AnimatorPlayer))
+		self._animator.runtimeAnimatorController = animController
 
 		return true
 	end
@@ -589,87 +613,87 @@ function var_0_0._checkAnimator(arg_36_0, arg_36_1)
 	return false
 end
 
-function var_0_0.playAnim(arg_37_0, arg_37_1, arg_37_2, arg_37_3, arg_37_4, arg_37_5)
-	local var_37_0 = arg_37_0:_checkAnimator(arg_37_1)
+function RoomCharacterSpineComp:playAnim(animRes, animName, normalizedTime, callback, callbackObj)
+	local isSuccess = self:_checkAnimator(animRes)
 
-	arg_37_0._callback = arg_37_4
-	arg_37_0._callbackObj = arg_37_5
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	if not arg_37_4 then
-		if var_37_0 then
-			arg_37_0._animator.enabled = true
+	if not callback then
+		if isSuccess then
+			self._animator.enabled = true
 
-			arg_37_0._animator:Play(arg_37_2, 0, arg_37_3 or 0)
+			self._animator:Play(animName, 0, normalizedTime or 0)
 		end
 	else
-		TaskDispatcher.cancelTask(arg_37_0._animDone, arg_37_0)
+		TaskDispatcher.cancelTask(self._animDone, self)
 
-		if var_37_0 then
-			arg_37_0._animatorPlayer:Play(arg_37_2, arg_37_0._animDone, arg_37_0)
+		if isSuccess then
+			self._animatorPlayer:Play(animName, self._animDone, self)
 		else
-			TaskDispatcher.runDelay(arg_37_0._animDone, arg_37_0, 0.1)
+			TaskDispatcher.runDelay(self._animDone, self, 0.1)
 		end
 	end
 end
 
-function var_0_0.clearAnim(arg_38_0)
-	arg_38_0._callback = nil
-	arg_38_0._callbackObj = nil
+function RoomCharacterSpineComp:clearAnim()
+	self._callback = nil
+	self._callbackObj = nil
 
-	if arg_38_0._animatorPlayer then
-		UnityEngine.Component.DestroyImmediate(arg_38_0._animatorPlayer)
+	if self._animatorPlayer then
+		UnityEngine.Component.DestroyImmediate(self._animatorPlayer)
 
-		arg_38_0._animatorPlayer = nil
+		self._animatorPlayer = nil
 	end
 
-	if arg_38_0._animator then
-		UnityEngine.Component.DestroyImmediate(arg_38_0._animator)
+	if self._animator then
+		UnityEngine.Component.DestroyImmediate(self._animator)
 
-		arg_38_0._animator = nil
-	end
-end
-
-function var_0_0._animDone(arg_39_0)
-	if arg_39_0._callback then
-		arg_39_0._callback(arg_39_0._callbackObj)
+		self._animator = nil
 	end
 end
 
-function var_0_0.clearSpine(arg_40_0)
-	if arg_40_0.entity and arg_40_0.entity.characterspineeffect then
-		arg_40_0.entity.characterspineeffect:clearEffect()
+function RoomCharacterSpineComp:_animDone()
+	if self._callback then
+		self._callback(self._callbackObj)
 	end
-
-	arg_40_0:_killMoveTween()
-	arg_40_0:clearAnim()
-	TaskDispatcher.cancelTask(arg_40_0._moveUp, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0._moveDown, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0._animDone, arg_40_0)
-	var_0_0.super.clearSpine(arg_40_0)
-
-	if arg_40_0._shadowGO then
-		gohelper.destroy(arg_40_0._shadowGO)
-
-		arg_40_0._shadowGO = nil
-		arg_40_0._shadowGOTrs = nil
-	end
-
-	arg_40_0._cameraAnimController = nil
-	arg_40_0._specialIdleAnimator = nil
-	arg_40_0._specialIdleGO = nil
-	arg_40_0._specialIdleGOTrs = nil
-	arg_40_0._effectPrefab = nil
-	arg_40_0._isLoop = nil
-	arg_40_0._mountheadGO = nil
-	arg_40_0._mountheadGOTrs = nil
-	arg_40_0._shadowPointGOTrs = nil
-
-	arg_40_0:_touchAfter()
 end
 
-function var_0_0.beforeDestroy(arg_41_0)
-	arg_41_0:removeEventListeners()
-	var_0_0.super.beforeDestroy(arg_41_0)
+function RoomCharacterSpineComp:clearSpine()
+	if self.entity and self.entity.characterspineeffect then
+		self.entity.characterspineeffect:clearEffect()
+	end
+
+	self:_killMoveTween()
+	self:clearAnim()
+	TaskDispatcher.cancelTask(self._moveUp, self)
+	TaskDispatcher.cancelTask(self._moveDown, self)
+	TaskDispatcher.cancelTask(self._animDone, self)
+	RoomCharacterSpineComp.super.clearSpine(self)
+
+	if self._shadowGO then
+		gohelper.destroy(self._shadowGO)
+
+		self._shadowGO = nil
+		self._shadowGOTrs = nil
+	end
+
+	self._cameraAnimController = nil
+	self._specialIdleAnimator = nil
+	self._specialIdleGO = nil
+	self._specialIdleGOTrs = nil
+	self._effectPrefab = nil
+	self._isLoop = nil
+	self._mountheadGO = nil
+	self._mountheadGOTrs = nil
+	self._shadowPointGOTrs = nil
+
+	self:_touchAfter()
 end
 
-return var_0_0
+function RoomCharacterSpineComp:beforeDestroy()
+	self:removeEventListeners()
+	RoomCharacterSpineComp.super.beforeDestroy(self)
+end
+
+return RoomCharacterSpineComp

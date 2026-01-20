@@ -1,1005 +1,1108 @@
-﻿module("modules.logic.store.view.DecorateStoreView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/DecorateStoreView.lua
 
-local var_0_0 = class("DecorateStoreView", BaseView)
+module("modules.logic.store.view.DecorateStoreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "Bg")
-	arg_1_0._gotypebg = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg")
-	arg_1_0._gotypebg1 = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg1")
-	arg_1_0._simagetypebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Bg/typebg/#go_typebg1/#simage_icon")
-	arg_1_0._gotypebg2 = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg2")
-	arg_1_0._gotypebg3 = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg3")
-	arg_1_0._gotypebg5 = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg5")
-	arg_1_0._gotypebg6 = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg6")
-	arg_1_0._gotypebg7 = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg7")
-	arg_1_0._simagetypebg7 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Bg/typebg/#go_typebg7/#simage_icon")
-	arg_1_0._gozs = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg2/zs")
-	arg_1_0._goskincontainer = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer")
-	arg_1_0._simageskin = gohelper.findChildSingleImage(arg_1_0.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#simage_skin")
-	arg_1_0._simagel2d = gohelper.findChildSingleImage(arg_1_0.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#go_spinecontainer/#simage_l2d")
-	arg_1_0._gobigspine = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
-	arg_1_0._gospinecontainer = gohelper.findChild(arg_1_0.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#go_spinecontainer")
-	arg_1_0._goview1 = gohelper.findChild(arg_1_0.viewGO, "UI/#go_view1")
-	arg_1_0._goContent1 = gohelper.findChild(arg_1_0.viewGO, "UI/#go_view1/Viewport/#go_Content1")
-	arg_1_0._btnunfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/#go_view1/#btn_unfold")
-	arg_1_0._goview2 = gohelper.findChild(arg_1_0.viewGO, "UI/#go_view2")
-	arg_1_0._goContent2 = gohelper.findChild(arg_1_0.viewGO, "UI/#go_view2/Viewport/#go_Content2")
-	arg_1_0._btnfold = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/#go_view2/#btn_fold")
-	arg_1_0._gocommon = gohelper.findChild(arg_1_0.viewGO, "UI/common")
-	arg_1_0._gohideclick = gohelper.findChild(arg_1_0.viewGO, "UI/common/#btn_hide/#go_hideclick")
-	arg_1_0._goowned = gohelper.findChild(arg_1_0.viewGO, "UI/common/#go_owned")
-	arg_1_0._btnhide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/common/layout/#btn_hide")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/common/layout/#btn_switch")
-	arg_1_0._txtswitch = gohelper.findChildText(arg_1_0.viewGO, "UI/common/layout/#btn_switch/#txt_switch")
-	arg_1_0._godynamiccontainer = gohelper.findChild(arg_1_0.viewGO, "UI/common/layout/smalldynamiccontainer")
-	arg_1_0._gosmallspine = gohelper.findChild(arg_1_0.viewGO, "UI/common/layout/smalldynamiccontainer/#go_smallspine")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/common/#btn_buy")
-	arg_1_0._godiscount = gohelper.findChild(arg_1_0.viewGO, "UI/common/#btn_buy/#go_discount")
-	arg_1_0._txtdiscount = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/#go_discount/#txt_discount")
-	arg_1_0._godiscount2 = gohelper.findChild(arg_1_0.viewGO, "UI/common/#btn_buy/#go_discount2")
-	arg_1_0._txtdiscount2 = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/#go_discount2/#txt_discount")
-	arg_1_0._gosingle = gohelper.findChild(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_single")
-	arg_1_0._imagesingleicon = gohelper.findChildImage(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_single/icon/simage_material")
-	arg_1_0._txtcurprice = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_single/txt_materialNum")
-	arg_1_0._txtoriginalprice = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_single/#txt_original_price")
-	arg_1_0._godouble = gohelper.findChild(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice")
-	arg_1_0._imagedoubleicon1 = gohelper.findChildImage(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency1/simage_material")
-	arg_1_0._txtcurprice1 = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency1/txt_materialNum")
-	arg_1_0._txtoriginalprice1 = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency1/#txt_original_price1")
-	arg_1_0._imagedoubleicon2 = gohelper.findChildImage(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency2/simage_material")
-	arg_1_0._txtcurprice2 = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency2/txt_materialNum")
-	arg_1_0._txtoriginalprice2 = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency2/#txt_original_price1")
-	arg_1_0._gofree = gohelper.findChild(arg_1_0.viewGO, "UI/common/#btn_buy/cost/#go_free")
-	arg_1_0._gocostclick = gohelper.findChild(arg_1_0.viewGO, "UI/common/#btn_buy/#go_costclick")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#txt_dec")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "UI/common/title/#txt_title")
-	arg_1_0._godiscounttip = gohelper.findChild(arg_1_0.viewGO, "UI/common/#go_discountTips")
-	arg_1_0._txtdiscounttip = gohelper.findChildText(arg_1_0.viewGO, "UI/common/#go_discountTips/#txt_discountTips")
-	arg_1_0._gotype = gohelper.findChild(arg_1_0.viewGO, "UI/type")
-	arg_1_0._gotype2 = gohelper.findChild(arg_1_0.viewGO, "UI/type/type2")
-	arg_1_0._txtrolename = gohelper.findChildText(arg_1_0.viewGO, "UI/type/type2/#txt_rolename")
-	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "UI/type/type2/#simage_signature")
-	arg_1_0._gotype4 = gohelper.findChild(arg_1_0.viewGO, "UI/type/type4")
-	arg_1_0._gotype5 = gohelper.findChild(arg_1_0.viewGO, "UI/type/type5")
-	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "UI/scroll_category/viewport/categorycontent/#go_storecategoryitem")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "UI/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_line")
-	arg_1_0._gotabreddot1 = gohelper.findChild(arg_1_0.viewGO, "UI/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_tabreddot1")
+local DecorateStoreView = class("DecorateStoreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DecorateStoreView:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "Bg")
+	self._gotypebg = gohelper.findChild(self.viewGO, "Bg/typebg")
+	self._gotypebg1 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg1")
+	self._simagetypebg1 = gohelper.findChildSingleImage(self.viewGO, "Bg/typebg/#go_typebg1/#simage_icon")
+	self._gotypebg2 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg2")
+	self._gotypebg3 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg3")
+	self._gotypebg5 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg5")
+	self._gotypebg6 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg6")
+	self._gotypebg7 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg7")
+	self._simagetypebg7 = gohelper.findChildSingleImage(self.viewGO, "Bg/typebg/#go_typebg7/#simage_icon")
+	self._gozs = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg2/zs")
+	self._goskincontainer = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer")
+	self._simageskin = gohelper.findChildSingleImage(self.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#simage_skin")
+	self._simagel2d = gohelper.findChildSingleImage(self.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#go_spinecontainer/#simage_l2d")
+	self._gobigspine = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#go_spinecontainer/#go_spine")
+	self._gospinecontainer = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer/#go_spinecontainer")
+	self._goview1 = gohelper.findChild(self.viewGO, "UI/#go_view1")
+	self._goContent1 = gohelper.findChild(self.viewGO, "UI/#go_view1/Viewport/#go_Content1")
+	self._btnunfold = gohelper.findChildButtonWithAudio(self.viewGO, "UI/#go_view1/#btn_unfold")
+	self._goview2 = gohelper.findChild(self.viewGO, "UI/#go_view2")
+	self._goContent2 = gohelper.findChild(self.viewGO, "UI/#go_view2/Viewport/#go_Content2")
+	self._btnfold = gohelper.findChildButtonWithAudio(self.viewGO, "UI/#go_view2/#btn_fold")
+	self._gocommon = gohelper.findChild(self.viewGO, "UI/common")
+	self._gohideclick = gohelper.findChild(self.viewGO, "UI/common/#btn_hide/#go_hideclick")
+	self._goowned = gohelper.findChild(self.viewGO, "UI/common/#go_owned")
+	self._btnhide = gohelper.findChildButtonWithAudio(self.viewGO, "UI/common/layout/#btn_hide")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.viewGO, "UI/common/layout/#btn_switch")
+	self._txtswitch = gohelper.findChildText(self.viewGO, "UI/common/layout/#btn_switch/#txt_switch")
+	self._godynamiccontainer = gohelper.findChild(self.viewGO, "UI/common/layout/smalldynamiccontainer")
+	self._gosmallspine = gohelper.findChild(self.viewGO, "UI/common/layout/smalldynamiccontainer/#go_smallspine")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "UI/common/#btn_buy")
+	self._godiscount = gohelper.findChild(self.viewGO, "UI/common/#btn_buy/#go_discount")
+	self._txtdiscount = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/#go_discount/#txt_discount")
+	self._godiscount2 = gohelper.findChild(self.viewGO, "UI/common/#btn_buy/#go_discount2")
+	self._txtdiscount2 = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/#go_discount2/#txt_discount")
+	self._gosingle = gohelper.findChild(self.viewGO, "UI/common/#btn_buy/cost/#go_single")
+	self._imagesingleicon = gohelper.findChildImage(self.viewGO, "UI/common/#btn_buy/cost/#go_single/icon/simage_material")
+	self._txtcurprice = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/cost/#go_single/txt_materialNum")
+	self._txtoriginalprice = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/cost/#go_single/#txt_original_price")
+	self._godouble = gohelper.findChild(self.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice")
+	self._imagedoubleicon1 = gohelper.findChildImage(self.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency1/simage_material")
+	self._txtcurprice1 = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency1/txt_materialNum")
+	self._txtoriginalprice1 = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency1/#txt_original_price1")
+	self._imagedoubleicon2 = gohelper.findChildImage(self.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency2/simage_material")
+	self._txtcurprice2 = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency2/txt_materialNum")
+	self._txtoriginalprice2 = gohelper.findChildText(self.viewGO, "UI/common/#btn_buy/cost/#go_doubleprice/currency2/#txt_original_price1")
+	self._gofree = gohelper.findChild(self.viewGO, "UI/common/#btn_buy/cost/#go_free")
+	self._gocostclick = gohelper.findChild(self.viewGO, "UI/common/#btn_buy/#go_costclick")
+	self._txtdec = gohelper.findChildText(self.viewGO, "UI/common/#txt_dec")
+	self._txttitle = gohelper.findChildText(self.viewGO, "UI/common/title/#txt_title")
+	self._godiscounttip = gohelper.findChild(self.viewGO, "UI/common/#go_discountTips")
+	self._txtdiscounttip = gohelper.findChildText(self.viewGO, "UI/common/#go_discountTips/#txt_discountTips")
+	self._gotype = gohelper.findChild(self.viewGO, "UI/type")
+	self._gotype2 = gohelper.findChild(self.viewGO, "UI/type/type2")
+	self._txtrolename = gohelper.findChildText(self.viewGO, "UI/type/type2/#txt_rolename")
+	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "UI/type/type2/#simage_signature")
+	self._gotype4 = gohelper.findChild(self.viewGO, "UI/type/type4")
+	self._gotype5 = gohelper.findChild(self.viewGO, "UI/type/type5")
+	self._gostorecategoryitem = gohelper.findChild(self.viewGO, "UI/scroll_category/viewport/categorycontent/#go_storecategoryitem")
+	self._goline = gohelper.findChild(self.viewGO, "UI/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_line")
+	self._gotabreddot1 = gohelper.findChild(self.viewGO, "UI/scroll_category/viewport/categorycontent/#go_storecategoryitem/#go_tabreddot1")
+	self._gotype6 = gohelper.findChild(self.viewGO, "UI/type/type6")
+	self.goTitleDesc = gohelper.findChild(self.viewGO, "UI/common/title/#txt_title/dec")
+	self.btnCheck = gohelper.findChildButtonWithAudio(self.viewGO, "UI/common/title/#txt_title/#btn_check")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnunfold:AddClickListener(arg_2_0._btnunfoldOnClick, arg_2_0)
-	arg_2_0._btnfold:AddClickListener(arg_2_0._btnfoldOnClick, arg_2_0)
-	arg_2_0._btnhide:AddClickListener(arg_2_0._btnhideOnClick, arg_2_0)
-	arg_2_0._btnswitch:AddClickListener(arg_2_0._btnswitchOnClick, arg_2_0)
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+function DecorateStoreView:addEvents()
+	self._btnunfold:AddClickListener(self._btnunfoldOnClick, self)
+	self._btnfold:AddClickListener(self._btnfoldOnClick, self)
+	self._btnhide:AddClickListener(self._btnhideOnClick, self)
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
+	self.btnCheck:AddClickListener(self.btnCheckOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnunfold:RemoveClickListener()
-	arg_3_0._btnfold:RemoveClickListener()
-	arg_3_0._btnhide:RemoveClickListener()
-	arg_3_0._btnswitch:RemoveClickListener()
-	arg_3_0._btnbuy:RemoveClickListener()
+function DecorateStoreView:removeEvents()
+	self._btnunfold:RemoveClickListener()
+	self._btnfold:RemoveClickListener()
+	self._btnhide:RemoveClickListener()
+	self._btnswitch:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
+	self.btnCheck:RemoveClickListener()
 end
 
-function var_0_0._btnunfoldOnClick(arg_4_0)
-	arg_4_0._viewAnim.enabled = true
+function DecorateStoreView:btnCheckOnClick()
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
+	local goodItemCos = string.splitToNumber(goodMo.config.product, "#")
 
-	arg_4_0._viewAnim:Play("goview2", 0, 0)
+	ViewMgr.instance:openView(ViewName.DecorateSkinListView, {
+		itemId = goodItemCos[2]
+	})
+end
+
+function DecorateStoreView:_btnunfoldOnClick()
+	self._viewAnim.enabled = true
+
+	self._viewAnim:Play("goview2", 0, 0)
 	DecorateStoreModel.instance:setCurViewType(DecorateStoreEnum.DecorateViewType.UnFold)
-	arg_4_0:_refreshGood(true)
+	self:_refreshGood(true)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_details_open)
 end
 
-function var_0_0._btnfoldOnClick(arg_5_0)
-	arg_5_0._viewAnim.enabled = true
+function DecorateStoreView:_btnfoldOnClick()
+	self._viewAnim.enabled = true
 
-	arg_5_0._viewAnim:Play("goview1", 0, 0)
+	self._viewAnim:Play("goview1", 0, 0)
 	DecorateStoreModel.instance:setCurViewType(DecorateStoreEnum.DecorateViewType.Fold)
-	arg_5_0:_refreshGood()
+	self:_refreshGood()
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_details_open)
 end
 
-function var_0_0._btnhideOnClick(arg_6_0)
-	arg_6_0._viewAnim:Play("hide", 0, 0)
+function DecorateStoreView:_btnhideOnClick()
+	self._viewAnim:Play("hide", 0, 0)
 	StoreController.instance:dispatchEvent(StoreEvent.PlayHideStoreAnim)
 	UIBlockMgr.instance:startBlock("decoratehide")
-	TaskDispatcher.runDelay(arg_6_0._startDefaultShowView, arg_6_0, 0.34)
+	TaskDispatcher.runDelay(self._startDefaultShowView, self, 0.34)
 end
 
-function var_0_0._startDefaultShowView(arg_7_0)
+function DecorateStoreView:_startDefaultShowView()
 	UIBlockMgr.instance:endBlock("decoratehide")
 
-	arg_7_0._viewAnim.enabled = false
+	self._viewAnim.enabled = false
 
-	if DecorateStoreModel.getItemType(arg_7_0._selectSecondTabId) == DecorateStoreEnum.DecorateItemType.MainScene then
-		local var_7_0 = {
-			sceneId = arg_7_0._sceneId,
-			callback = arg_7_0._showHideCallback,
-			callbackObj = arg_7_0
-		}
+	local curItemType = DecorateStoreModel.getItemType(self._selectSecondTabId)
 
-		ViewMgr.instance:openView(ViewName.MainSceneStoreShowView, var_7_0)
+	if curItemType == DecorateStoreEnum.DecorateItemType.MainScene then
+		local data = {}
+
+		data.sceneId = self._sceneId
+		data.callback = self._showHideCallback
+		data.callbackObj = self
+
+		ViewMgr.instance:openView(ViewName.MainSceneStoreShowView, data)
 	else
-		local var_7_1 = {
-			bg = gohelper.findChild(arg_7_0.viewGO.transform.parent.gameObject, "bg"),
-			contentBg = arg_7_0._gotypebg,
-			callback = arg_7_0._showHideCallback,
-			callbackObj = arg_7_0,
-			viewCls = arg_7_0._viewCls
-		}
+		local data = {}
 
-		ViewMgr.instance:openView(ViewName.DecorateStoreDefaultShowView, var_7_1)
+		data.bg = gohelper.findChild(self.viewGO.transform.parent.gameObject, "bg")
+		data.contentBg = self._gotypebg
+		data.callback = self._showHideCallback
+		data.callbackObj = self
+		data.viewCls = self._viewCls
+
+		ViewMgr.instance:openView(ViewName.DecorateStoreDefaultShowView, data)
 	end
 end
 
-function var_0_0._showHideCallback(arg_8_0, arg_8_1)
-	arg_8_0._viewAnim.enabled = true
+function DecorateStoreView:_showHideCallback(data)
+	self._viewAnim.enabled = true
 
-	arg_8_0._viewAnim:Play("show", 0, 0)
+	self._viewAnim:Play("show", 0, 0)
 
-	if DecorateStoreModel.getItemType(arg_8_0._selectSecondTabId) == DecorateStoreEnum.DecorateItemType.MainScene then
+	local curItemType = DecorateStoreModel.getItemType(self._selectSecondTabId)
+
+	if curItemType == DecorateStoreEnum.DecorateItemType.MainScene then
 		-- block empty
 	else
-		arg_8_1.bg.transform:SetParent(arg_8_0.viewGO.transform.parent, false)
-		gohelper.setAsFirstSibling(arg_8_1.bg)
-		arg_8_1.contentBg.transform:SetParent(arg_8_0._gobg.transform, false)
-		gohelper.setAsFirstSibling(arg_8_1.contentBg)
+		data.bg.transform:SetParent(self.viewGO.transform.parent, false)
+		gohelper.setAsFirstSibling(data.bg)
+		data.contentBg.transform:SetParent(self._gobg.transform, false)
+		gohelper.setAsFirstSibling(data.contentBg)
 	end
 
 	StoreController.instance:dispatchEvent(StoreEvent.PlayShowStoreAnim)
 end
 
-function var_0_0._btnswitchOnClick(arg_9_0)
-	arg_9_0._showLive2d = not arg_9_0._showLive2d
+function DecorateStoreView:_btnswitchOnClick()
+	self._showLive2d = not self._showLive2d
 
-	arg_9_0:_refreshBigSkin()
+	self:_refreshBigSkin()
 end
 
-function var_0_0._btnbuyOnClick(arg_10_0)
-	local var_10_0 = DecorateStoreModel.instance:getCurGood(arg_10_0._selectSecondTabId)
-	local var_10_1 = StoreModel.instance:getGoodsMO(var_10_0)
+function DecorateStoreView:_btnbuyOnClick()
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
 
-	StoreController.instance:openDecorateStoreGoodsView(var_10_1)
+	StoreController.instance:openDecorateStoreGoodsView(goodMo)
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._goodItems = {}
-	arg_11_0._categoryItemContainer = {}
-	arg_11_0._viewAnim = arg_11_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function DecorateStoreView:_editableInitView()
+	self._goodItems = {}
+	self._categoryItemContainer = {}
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_11_0._btnhide.gameObject, true)
+	gohelper.setActive(self._btnhide.gameObject, true)
 	DecorateStoreModel.instance:initDecorateReadState()
 end
 
-function var_0_0._onCloseView(arg_12_0, arg_12_1)
-	if (arg_12_1 == ViewName.MainSceneStoreShowView or arg_12_1 == ViewName.MainSceneSwitchInfoView) and arg_12_0._weatherSwitchControlComp then
-		MainSceneSwitchCameraController.instance:showScene(arg_12_0._sceneId, arg_12_0._showSceneFinished, arg_12_0)
+function DecorateStoreView:_onCloseView(viewName)
+	if (viewName == ViewName.MainSceneStoreShowView or viewName == ViewName.MainSceneSwitchInfoView) and self._weatherSwitchControlComp then
+		MainSceneSwitchCameraController.instance:showScene(self._sceneId, self._showSceneFinished, self)
 	end
 end
 
-function var_0_0._addEvents(arg_13_0)
-	arg_13_0:addEventCb(StoreController.instance, StoreEvent.DecorateGoodItemClick, arg_13_0._onGoodItemClick, arg_13_0)
-	arg_13_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_13_0._onGoodsChanged, arg_13_0)
-	arg_13_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_13_0._onGoodsChanged, arg_13_0)
-	arg_13_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_13_0._onCloseView, arg_13_0)
+function DecorateStoreView:_addEvents()
+	self:addEventCb(StoreController.instance, StoreEvent.DecorateGoodItemClick, self._onGoodItemClick, self)
+	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._onGoodsChanged, self)
+	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._onGoodsChanged, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(StoreController.instance, StoreEvent.DecorateStoreSkinSelectItemClick, self.onDecorateSkinSelectItem, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.GainSkin, self._refreshGood, self)
 end
 
-function var_0_0._removeEvents(arg_14_0)
-	arg_14_0:removeEventCb(StoreController.instance, StoreEvent.DecorateGoodItemClick, arg_14_0._onGoodItemClick, arg_14_0)
-	arg_14_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_14_0._onGoodsChanged, arg_14_0)
-	arg_14_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_14_0._onGoodsChanged, arg_14_0)
-	arg_14_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_14_0._onCloseView, arg_14_0)
+function DecorateStoreView:_removeEvents()
+	self:removeEventCb(StoreController.instance, StoreEvent.DecorateGoodItemClick, self._onGoodItemClick, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._onGoodsChanged, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._onGoodsChanged, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.DecorateStoreSkinSelectItemClick, self.onDecorateSkinSelectItem, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.GainSkin, self._refreshGood, self)
 end
 
-function var_0_0._onGoodItemClick(arg_15_0)
-	arg_15_0._showLive2d = false
+function DecorateStoreView:_onGoodItemClick()
+	self._showLive2d = false
 
-	local var_15_0 = DecorateStoreModel.instance:getCurViewType()
+	local isFold = DecorateStoreModel.instance:getCurViewType()
 
 	DecorateStoreModel.instance:setCurViewType(DecorateStoreEnum.DecorateViewType.Fold)
 
-	if var_15_0 == DecorateStoreEnum.DecorateViewType.UnFold then
-		local var_15_1 = DecorateStoreModel.instance:getCurGood(arg_15_0._selectSecondTabId)
-		local var_15_2 = DecorateStoreModel.instance:getDecorateGoodIndex(arg_15_0._selectSecondTabId, var_15_1)
-		local var_15_3 = #DecorateStoreModel.instance:getDecorateGoodList(arg_15_0._selectSecondTabId)
-		local var_15_4 = 0
+	if isFold == DecorateStoreEnum.DecorateViewType.UnFold then
+		local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+		local index = DecorateStoreModel.instance:getDecorateGoodIndex(self._selectSecondTabId, goodId)
+		local count = #DecorateStoreModel.instance:getDecorateGoodList(self._selectSecondTabId)
+		local posX = 0
 
-		if var_15_2 > 4 then
-			if var_15_3 - var_15_2 >= 4 then
-				var_15_4 = 55 - 360 * (var_15_2 - 4)
+		if index > 4 then
+			if count - index >= 4 then
+				posX = 55 - 360 * (index - 4)
 			else
-				var_15_4 = -360 * (var_15_2 - 4)
+				posX = -360 * (index - 4)
 			end
 		end
 
-		local var_15_5, var_15_6 = transformhelper.getLocalPos(arg_15_0._goContent1.transform)
+		local x, y = transformhelper.getLocalPos(self._goContent1.transform)
 
-		transformhelper.setLocalPos(arg_15_0._goContent1.transform, var_15_4, var_15_6, 0)
-		arg_15_0:_startGoodIn()
+		transformhelper.setLocalPos(self._goContent1.transform, posX, y, 0)
+		self:_startGoodIn()
 
 		return
 	end
 
-	arg_15_0._viewAnim:Play("out", 0, 0)
+	self._viewAnim:Play("out", 0, 0)
 	UIBlockMgr.instance:startBlock("decorateswitch")
-	TaskDispatcher.runDelay(arg_15_0._startGoodIn, arg_15_0, 0.17)
+	TaskDispatcher.runDelay(self._startGoodIn, self, 0.17)
 end
 
-function var_0_0._startGoodIn(arg_16_0)
+function DecorateStoreView:_startGoodIn()
 	UIBlockMgr.instance:endBlock("decorateswitch")
-	arg_16_0._viewAnim:Play("in", 0, 0)
-	arg_16_0:_refreshGood(true)
+	self._viewAnim:Play("in", 0, 0)
+	self:_refreshGood(true)
 end
 
-function var_0_0._onGoodsChanged(arg_17_0)
-	if #DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.NewDecorateStore) <= 0 then
+function DecorateStoreView:_onGoodsChanged()
+	local newGoods = DecorateStoreModel.instance:getDecorateGoodList(StoreEnum.StoreId.NewDecorateStore)
+	local hasNo = #newGoods <= 0
+
+	if hasNo then
 		return
 	end
 
-	arg_17_0:_onRefreshRedDot()
-	arg_17_0:_refreshGood()
+	self:_onRefreshRedDot()
+	self:_refreshGood()
 end
 
-function var_0_0.onOpen(arg_18_0)
+function DecorateStoreView:onOpen()
 	Activity186Model.instance:checkReadTask(Activity186Enum.ReadTaskId.Task4)
 
-	arg_18_0._opened = true
+	self._opened = true
 
-	arg_18_0:_addEvents()
+	self:_addEvents()
 	DecorateStoreModel.instance:setCurViewType(DecorateStoreEnum.DecorateViewType.Fold)
 
-	arg_18_0._selectFirstTabId = arg_18_0.viewContainer:getSelectFirstTabId()
+	self._selectFirstTabId = self.viewContainer:getSelectFirstTabId()
 
-	local var_18_0 = arg_18_0.viewContainer:getJumpTabId()
+	local jumpTabId = self.viewContainer:getJumpTabId()
 
-	arg_18_0:_refreshTabs(var_18_0, true, true)
+	self:_refreshTabs(jumpTabId, true, true)
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
-	arg_19_0._selectFirstTabId = arg_19_0.viewContainer:getSelectFirstTabId()
+function DecorateStoreView:onUpdateParam()
+	self._selectFirstTabId = self.viewContainer:getSelectFirstTabId()
 
-	local var_19_0 = arg_19_0.viewContainer:getJumpTabId()
+	local jumpTabId = self.viewContainer:getJumpTabId()
 
-	arg_19_0:_refreshTabs(var_19_0)
+	self:_refreshTabs(jumpTabId)
 end
 
-function var_0_0._refreshTabs(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0._selectSecondTabId
+function DecorateStoreView:_refreshTabs(selectTabId, openUpdate, scrollToRadDot)
+	local preSelectSecondTabId = self._selectSecondTabId
 
-	arg_20_0._selectSecondTabId = 0
+	self._selectSecondTabId = 0
 
-	if not StoreModel.instance:isTabOpen(arg_20_1) then
-		arg_20_1 = arg_20_0.viewContainer:getSelectFirstTabId()
+	if not StoreModel.instance:isTabOpen(selectTabId) then
+		selectTabId = self.viewContainer:getSelectFirstTabId()
 	end
 
-	local var_20_1
-	local var_20_2, var_20_3
+	local _
 
-	var_20_2, arg_20_0._selectSecondTabId, var_20_3 = StoreModel.instance:jumpTabIdToSelectTabId(arg_20_1)
+	_, self._selectSecondTabId, _ = StoreModel.instance:jumpTabIdToSelectTabId(selectTabId)
 
-	local var_20_4 = StoreConfig.instance:getTabConfig(arg_20_0._selectSecondTabId)
-	local var_20_5 = StoreConfig.instance:getTabConfig(arg_20_0.viewContainer:getSelectFirstTabId())
+	local secondConfig = StoreConfig.instance:getTabConfig(self._selectSecondTabId)
+	local firstConfig = StoreConfig.instance:getTabConfig(self.viewContainer:getSelectFirstTabId())
 
-	if var_20_4 and not string.nilorempty(var_20_4.showCost) then
-		arg_20_0.viewContainer:setCurrencyType(var_20_4.showCost)
-	elseif var_20_5 and not string.nilorempty(var_20_5.showCost) then
-		arg_20_0.viewContainer:setCurrencyType(var_20_5.showCost)
+	if secondConfig and not string.nilorempty(secondConfig.showCost) then
+		self.viewContainer:setCurrencyType(secondConfig.showCost)
+	elseif firstConfig and not string.nilorempty(firstConfig.showCost) then
+		self.viewContainer:setCurrencyType(firstConfig.showCost)
 	else
-		arg_20_0.viewContainer:setCurrencyType(nil)
+		self.viewContainer:setCurrencyType(nil)
 	end
 
-	if not arg_20_2 and var_20_0 == arg_20_0._selectSecondTabId then
+	if not openUpdate and preSelectSecondTabId == self._selectSecondTabId then
 		return
 	end
 
-	arg_20_0:_refreshAllSecondTabs()
-	StoreController.instance:readTab(arg_20_1)
-	arg_20_0:_onRefreshRedDot()
+	self:_refreshAllSecondTabs()
+	StoreController.instance:readTab(selectTabId)
+	self:_onRefreshRedDot()
 
-	arg_20_0._resetScrollPos = true
+	self._resetScrollPos = true
 
-	if arg_20_0._opened then
-		var_20_0 = nil
-		arg_20_0._opened = false
+	if self._opened then
+		preSelectSecondTabId = nil
+		self._opened = false
 	end
 
-	if var_20_0 and arg_20_0._goodItems[var_20_0] then
-		arg_20_0._viewAnim:Play("out", 0, 0)
+	if preSelectSecondTabId and self._goodItems[preSelectSecondTabId] then
+		self._viewAnim:Play("out", 0, 0)
 
-		for iter_20_0, iter_20_1 in pairs(arg_20_0._goodItems[var_20_0][DecorateStoreEnum.DecorateViewType.Fold]) do
-			iter_20_1:playOut()
+		for _, v in pairs(self._goodItems[preSelectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold]) do
+			v:playOut()
 		end
 
 		UIBlockMgr.instance:startBlock("decorateswitch")
-		TaskDispatcher.runDelay(arg_20_0._switchTabRefresh, arg_20_0, 0.17)
+		TaskDispatcher.runDelay(self._switchTabRefresh, self, 0.17)
 	else
-		arg_20_0._viewAnim:Play("in", 0, 0)
-		arg_20_0:_refreshGood()
+		self._viewAnim:Play("in", 0, 0)
+		self:_refreshGood()
 	end
 end
 
-function var_0_0._switchTabRefresh(arg_21_0)
+function DecorateStoreView:_switchTabRefresh()
 	UIBlockMgr.instance:endBlock("decorateswitch")
 
-	local var_21_0, var_21_1 = transformhelper.getLocalPos(arg_21_0._goContent1.transform)
+	local x, y = transformhelper.getLocalPos(self._goContent1.transform)
 
-	transformhelper.setLocalPos(arg_21_0._goContent1.transform, 0, var_21_1, 0)
-	arg_21_0._viewAnim:Play("in", 0, 0)
-	arg_21_0:_refreshGood()
+	transformhelper.setLocalPos(self._goContent1.transform, 0, y, 0)
+	self._viewAnim:Play("in", 0, 0)
+	self:_refreshGood()
 end
 
-function var_0_0._refreshAllSecondTabs(arg_22_0)
-	local var_22_0 = StoreModel.instance:getSecondTabs(arg_22_0._selectFirstTabId, true, true)
+function DecorateStoreView:_refreshAllSecondTabs()
+	local secondTabConfigs = StoreModel.instance:getSecondTabs(self._selectFirstTabId, true, true)
 
-	if var_22_0 and #var_22_0 > 0 then
-		for iter_22_0 = 1, #var_22_0 do
-			arg_22_0:_refreshSecondTabs(iter_22_0, var_22_0[iter_22_0])
+	if secondTabConfigs and #secondTabConfigs > 0 then
+		for i = 1, #secondTabConfigs do
+			self:_refreshSecondTabs(i, secondTabConfigs[i])
 
-			local var_22_1 = DecorateStoreModel.instance:getDecorateGoodList(var_22_0[iter_22_0].id)
+			local secondTabsGoods = DecorateStoreModel.instance:getDecorateGoodList(secondTabConfigs[i].id)
 
-			gohelper.setActive(arg_22_0._categoryItemContainer[iter_22_0].go, #var_22_1 > 0)
+			gohelper.setActive(self._categoryItemContainer[i].go, #secondTabsGoods > 0)
 		end
 
-		for iter_22_1 = #var_22_0 + 1, #arg_22_0._categoryItemContainer do
-			gohelper.setActive(arg_22_0._categoryItemContainer[iter_22_1].go, false)
+		for i = #secondTabConfigs + 1, #self._categoryItemContainer do
+			gohelper.setActive(self._categoryItemContainer[i].go, false)
 		end
 	else
-		for iter_22_2 = 1, #arg_22_0._categoryItemContainer do
-			gohelper.setActive(arg_22_0._categoryItemContainer[iter_22_2].go, false)
+		for i = 1, #self._categoryItemContainer do
+			gohelper.setActive(self._categoryItemContainer[i].go, false)
 		end
 	end
 end
 
-function var_0_0._refreshSecondTabs(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = arg_23_0._categoryItemContainer[arg_23_1] or arg_23_0:initCategoryItemTable(arg_23_1)
+function DecorateStoreView:_refreshSecondTabs(index, secondTabConfig)
+	local categoryItemTable = self._categoryItemContainer[index]
 
-	var_23_0.tabId = arg_23_2.id
-	var_23_0.txt_itemcn1.text = arg_23_2.name
-	var_23_0.txt_itemcn2.text = arg_23_2.name
-	var_23_0.txt_itemen1.text = arg_23_2.nameEn
-	var_23_0.txt_itemen2.text = arg_23_2.nameEn
+	categoryItemTable = categoryItemTable or self:initCategoryItemTable(index)
+	categoryItemTable.tabId = secondTabConfig.id
+	categoryItemTable.txt_itemcn1.text = secondTabConfig.name
+	categoryItemTable.txt_itemcn2.text = secondTabConfig.name
+	categoryItemTable.txt_itemen1.text = secondTabConfig.nameEn
+	categoryItemTable.txt_itemen2.text = secondTabConfig.nameEn
 
-	local var_23_1 = arg_23_0._selectSecondTabId == arg_23_2.id
+	local select = self._selectSecondTabId == secondTabConfig.id
 
-	gohelper.setActive(var_23_0.go_unselected, not var_23_1)
-	gohelper.setActive(var_23_0.go_selected, var_23_1)
+	gohelper.setActive(categoryItemTable.go_unselected, not select)
+	gohelper.setActive(categoryItemTable.go_selected, select)
 end
 
-function var_0_0.initCategoryItemTable(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getUserDataTb_()
+function DecorateStoreView:initCategoryItemTable(index)
+	local categoryItemTable = self:getUserDataTb_()
 
-	var_24_0.go = gohelper.cloneInPlace(arg_24_0._gostorecategoryitem, "item" .. arg_24_1)
-	var_24_0.go_unselected = gohelper.findChild(var_24_0.go, "go_unselected")
-	var_24_0.go_selected = gohelper.findChild(var_24_0.go, "go_selected")
-	var_24_0.go_line = gohelper.findChild(var_24_0.go, "go_line")
-	var_24_0.go_reddot = gohelper.findChild(var_24_0.go, "#go_tabreddot1")
-	var_24_0.txt_itemcn1 = gohelper.findChildText(var_24_0.go, "go_unselected/txt_itemcn1")
-	var_24_0.txt_itemen1 = gohelper.findChildText(var_24_0.go, "go_unselected/txt_itemen1")
-	var_24_0.txt_itemcn2 = gohelper.findChildText(var_24_0.go, "go_selected/txt_itemcn2")
-	var_24_0.txt_itemen2 = gohelper.findChildText(var_24_0.go, "go_selected/txt_itemen2")
-	var_24_0.go_childcategory = gohelper.findChild(var_24_0.go, "go_childcategory")
-	var_24_0.go_childItem = gohelper.findChild(var_24_0.go, "go_childcategory/go_childitem")
-	var_24_0.childItemContainer = {}
-	var_24_0.btnGO = gohelper.findChild(var_24_0.go, "clickArea")
-	var_24_0.btn = gohelper.getClickWithAudio(var_24_0.go, AudioEnum.UI.play_ui_bank_open)
-	var_24_0.tabId = 0
+	categoryItemTable.go = gohelper.cloneInPlace(self._gostorecategoryitem, "item" .. index)
+	categoryItemTable.go_unselected = gohelper.findChild(categoryItemTable.go, "go_unselected")
+	categoryItemTable.go_selected = gohelper.findChild(categoryItemTable.go, "go_selected")
+	categoryItemTable.go_line = gohelper.findChild(categoryItemTable.go, "go_line")
+	categoryItemTable.go_reddot = gohelper.findChild(categoryItemTable.go, "#go_tabreddot1")
+	categoryItemTable.txt_itemcn1 = gohelper.findChildText(categoryItemTable.go, "go_unselected/txt_itemcn1")
+	categoryItemTable.txt_itemen1 = gohelper.findChildText(categoryItemTable.go, "go_unselected/txt_itemen1")
+	categoryItemTable.txt_itemcn2 = gohelper.findChildText(categoryItemTable.go, "go_selected/txt_itemcn2")
+	categoryItemTable.txt_itemen2 = gohelper.findChildText(categoryItemTable.go, "go_selected/txt_itemen2")
+	categoryItemTable.go_childcategory = gohelper.findChild(categoryItemTable.go, "go_childcategory")
+	categoryItemTable.go_childItem = gohelper.findChild(categoryItemTable.go, "go_childcategory/go_childitem")
+	categoryItemTable.childItemContainer = {}
+	categoryItemTable.btnGO = gohelper.findChild(categoryItemTable.go, "clickArea")
+	categoryItemTable.btn = gohelper.getClickWithAudio(categoryItemTable.go, AudioEnum.UI.play_ui_bank_open)
+	categoryItemTable.tabId = 0
 
-	var_24_0.btn:AddClickListener(function(arg_25_0)
-		local var_25_0 = arg_25_0.tabId
+	categoryItemTable.btn:AddClickListener(function(categoryItemTable)
+		local jumpTab = categoryItemTable.tabId
 
-		arg_24_0:_refreshTabs(var_25_0)
-		StoreController.instance:statSwitchStore(var_25_0)
-	end, var_24_0)
-	table.insert(arg_24_0._categoryItemContainer, var_24_0)
-	gohelper.setActive(var_24_0.go_childItem, false)
+		self:_refreshTabs(jumpTab)
+		StoreController.instance:statSwitchStore(jumpTab)
+	end, categoryItemTable)
+	table.insert(self._categoryItemContainer, categoryItemTable)
+	gohelper.setActive(categoryItemTable.go_childItem, false)
 
-	return var_24_0
+	return categoryItemTable
 end
 
-function var_0_0._onRefreshRedDot(arg_26_0)
-	for iter_26_0, iter_26_1 in pairs(arg_26_0._categoryItemContainer) do
-		local var_26_0 = StoreModel.instance:isTabSecondRedDotShow(iter_26_1.tabId)
+function DecorateStoreView:_onRefreshRedDot()
+	for _, v in pairs(self._categoryItemContainer) do
+		local showReddot = StoreModel.instance:isTabSecondRedDotShow(v.tabId)
 
-		gohelper.setActive(iter_26_1.go_reddot, var_26_0)
+		gohelper.setActive(v.go_reddot, showReddot)
 	end
 end
 
-function var_0_0._refreshGood(arg_27_0, arg_27_1)
-	arg_27_0:_refreshGoodDetail()
-	arg_27_0:_refreshGoodItems(arg_27_1)
+function DecorateStoreView:_refreshGood(isUnfold)
+	self:_refreshGoodDetail()
+	self:_refreshGoodItems(isUnfold)
 end
 
-function var_0_0._refreshGoodItems(arg_28_0, arg_28_1)
-	local var_28_0 = DecorateStoreModel.instance:getDecorateGoodList(arg_28_0._selectSecondTabId)
+function DecorateStoreView:_refreshGoodItems(isUnfold)
+	local goods = DecorateStoreModel.instance:getDecorateGoodList(self._selectSecondTabId)
 
-	if not arg_28_0._goodItems[arg_28_0._selectSecondTabId] then
-		arg_28_0._goodItems[arg_28_0._selectSecondTabId] = {}
-		arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold] = {}
-		arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold] = {}
+	if not self._goodItems[self._selectSecondTabId] then
+		self._goodItems[self._selectSecondTabId] = {}
+		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold] = {}
+		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold] = {}
 	end
 
-	for iter_28_0, iter_28_1 in pairs(arg_28_0._goodItems) do
-		for iter_28_2, iter_28_3 in pairs(iter_28_1) do
-			for iter_28_4, iter_28_5 in pairs(iter_28_3) do
-				iter_28_5:hide()
+	for _, goods in pairs(self._goodItems) do
+		for _, items in pairs(goods) do
+			for _, item in pairs(items) do
+				item:hide()
 			end
 		end
 	end
 
-	for iter_28_6, iter_28_7 in ipairs(var_28_0) do
-		if not arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][iter_28_7.goodsId] then
-			local var_28_1 = arg_28_0.viewContainer:getSetting().otherRes[6]
-			local var_28_2 = arg_28_0:getResInst(var_28_1, arg_28_0._goContent1, "good_" .. tostring(iter_28_7.goodsId))
+	for index, v in ipairs(goods) do
+		if not self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId] then
+			local path = self.viewContainer:getSetting().otherRes[6]
+			local childGO = self:getResInst(path, self._goContent1, "good_" .. tostring(v.goodsId))
 
-			arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][iter_28_7.goodsId] = DecorateGoodsItem.New()
+			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId] = DecorateGoodsItem.New()
 
-			arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][iter_28_7.goodsId]:init(var_28_2, iter_28_7)
+			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:init(childGO, v)
 		else
-			arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][iter_28_7.goodsId]:reset(iter_28_7)
+			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:reset(v)
 		end
 
-		arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][iter_28_7.goodsId]:setFold(true)
-		arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][iter_28_7.goodsId]:playIn(iter_28_6, arg_28_1)
-		gohelper.setSibling(arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][iter_28_7.goodsId].go, iter_28_6)
+		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:setFold(true)
+		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:playIn(index, isUnfold)
+		gohelper.setSibling(self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId].go, index)
 
-		if not arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][iter_28_7.goodsId] then
-			local var_28_3 = arg_28_0.viewContainer:getSetting().otherRes[6]
-			local var_28_4 = arg_28_0:getResInst(var_28_3, arg_28_0._goContent2, "good_" .. tostring(iter_28_7.goodsId))
+		if not self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId] then
+			local path = self.viewContainer:getSetting().otherRes[6]
+			local childGO = self:getResInst(path, self._goContent2, "good_" .. tostring(v.goodsId))
 
-			arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][iter_28_7.goodsId] = DecorateGoodsItem.New()
+			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId] = DecorateGoodsItem.New()
 
-			arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][iter_28_7.goodsId]:init(var_28_4, iter_28_7)
+			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:init(childGO, v)
 		else
-			arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][iter_28_7.goodsId]:reset(iter_28_7)
+			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:reset(v)
 		end
 
-		arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][iter_28_7.goodsId]:setFold(false)
-		arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][iter_28_7.goodsId]:playIn(iter_28_6, arg_28_1)
-		gohelper.setSibling(arg_28_0._goodItems[arg_28_0._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][iter_28_7.goodsId].go, iter_28_6)
+		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:setFold(false)
+		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:playIn(index, isUnfold)
+		gohelper.setSibling(self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId].go, index)
 	end
 end
 
-function var_0_0._refreshGoodDetail(arg_29_0)
-	local var_29_0 = DecorateStoreModel.instance:getCurGood(arg_29_0._selectSecondTabId)
-	local var_29_1 = DecorateStoreModel.instance:getGoodDiscount(var_29_0)
-	local var_29_2 = DecorateStoreModel.instance:getGoodItemLimitTime(var_29_0)
-	local var_29_3 = DecorateStoreModel.instance:isDecorateGoodItemHas(var_29_0)
-	local var_29_4 = var_29_1 > 0 and var_29_1 < 100 and var_29_2 > 0 and not var_29_3
+function DecorateStoreView:_refreshGoodDetail()
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local disCount = DecorateStoreModel.instance:getGoodDiscount(goodId)
+	local offsetSecond = DecorateStoreModel.instance:getGoodItemLimitTime(goodId)
+	local hasItem = DecorateStoreModel.instance:isDecorateGoodItemHas(goodId)
+	local hasDiscount = disCount > 0 and disCount < 100 and offsetSecond > 0 and not hasItem
 
-	gohelper.setActive(arg_29_0._godiscounttip, var_29_4)
+	gohelper.setActive(self._godiscounttip, hasDiscount)
 
-	if var_29_4 then
-		local var_29_5 = TimeUtil.SecondToActivityTimeFormat(var_29_2)
+	if hasDiscount then
+		local limitTime = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-		arg_29_0._txtdiscounttip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("decoratestore_discount_limittime"), {
-			var_29_5
+		self._txtdiscounttip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("decoratestore_discount_limittime"), {
+			limitTime
 		})
 	end
 
-	DecorateStoreModel.instance:setGoodRead(var_29_0)
+	DecorateStoreModel.instance:setGoodRead(goodId)
 
-	local var_29_6 = DecorateStoreModel.instance:getCurViewType() == DecorateStoreEnum.DecorateViewType.Fold
+	local curViewType = DecorateStoreModel.instance:getCurViewType()
+	local isFold = curViewType == DecorateStoreEnum.DecorateViewType.Fold
 
-	gohelper.setActive(arg_29_0._goview1, var_29_6)
-	gohelper.setActive(arg_29_0._goview2, not var_29_6)
-	gohelper.setActive(arg_29_0._gocommon, var_29_6)
-	gohelper.setActive(arg_29_0._gotypebg3, false)
+	gohelper.setActive(self._goview1, isFold)
+	gohelper.setActive(self._goview2, not isFold)
+	gohelper.setActive(self._gocommon, isFold)
+	gohelper.setActive(self._gotypebg3, false)
 
-	local var_29_7 = DecorateStoreModel.getItemType(arg_29_0._selectSecondTabId)
+	local curItemType = DecorateStoreModel.getItemType(self._selectSecondTabId)
 
-	if var_29_7 ~= DecorateStoreEnum.DecorateItemType.Default and var_29_7 ~= DecorateStoreEnum.DecorateItemType.Icon then
-		arg_29_0:_hideDecorateDefault()
+	if curItemType ~= DecorateStoreEnum.DecorateItemType.Default and curItemType ~= DecorateStoreEnum.DecorateItemType.Icon then
+		self:_hideDecorateDefault()
 	end
 
-	if var_29_7 ~= DecorateStoreEnum.DecorateItemType.MainScene then
-		arg_29_0:_hideMainScene()
+	if curItemType ~= DecorateStoreEnum.DecorateItemType.SkinGift then
+		self:_hideDecorateSkinGift()
 	end
 
-	if var_29_7 ~= DecorateStoreEnum.DecorateItemType.Skin or not arg_29_0._showLive2d then
-		arg_29_0:_hideDecorateSkin()
+	if curItemType ~= DecorateStoreEnum.DecorateItemType.MainScene then
+		self:_hideMainScene()
 	end
 
-	if var_29_7 ~= DecorateStoreEnum.DecorateItemType.SelfCard then
-		arg_29_0:_hideDecorateSelfCard()
+	if curItemType ~= DecorateStoreEnum.DecorateItemType.Skin or not self._showLive2d then
+		self:_hideDecorateSkin()
 	end
 
-	if var_29_7 ~= DecorateStoreEnum.DecorateItemType.BuildingVideo then
-		arg_29_0:_hideDecorateBuildingVideo()
+	if curItemType ~= DecorateStoreEnum.DecorateItemType.SelfCard then
+		self:_hideDecorateSelfCard()
 	end
 
-	if var_29_7 == DecorateStoreEnum.DecorateItemType.Default or var_29_7 == DecorateStoreEnum.DecorateItemType.Icon then
-		arg_29_0:_updateDecorateDefault()
-	elseif var_29_7 == DecorateStoreEnum.DecorateItemType.Skin then
-		arg_29_0:_updateDecorateSkin()
-	elseif var_29_7 == DecorateStoreEnum.DecorateItemType.MainScene then
-		arg_29_0:_updateDecorateMainScene()
-	elseif var_29_7 == DecorateStoreEnum.DecorateItemType.SelfCard then
-		arg_29_0:_updateDecorateSelfCard()
-	elseif var_29_7 == DecorateStoreEnum.DecorateItemType.BuildingVideo then
-		arg_29_0:_updateDecorateBuildingVideo()
+	if curItemType ~= DecorateStoreEnum.DecorateItemType.BuildingVideo then
+		self:_hideDecorateBuildingVideo()
 	end
 
-	arg_29_0:_refreshCommonDetail()
+	if curItemType == DecorateStoreEnum.DecorateItemType.Default or curItemType == DecorateStoreEnum.DecorateItemType.Icon then
+		self:_updateDecorateDefault()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.Skin then
+		self:_updateDecorateSkin()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.MainScene then
+		self:_updateDecorateMainScene()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.SelfCard then
+		self:_updateDecorateSelfCard()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.BuildingVideo then
+		self:_updateDecorateBuildingVideo()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.SkinGift then
+		self:_updateDecorateSkinGift()
+	end
+
+	local btnCheckShow = curItemType == DecorateStoreEnum.DecorateItemType.SkinGift
+
+	gohelper.setActive(self.btnCheck, btnCheckShow)
+	gohelper.setActive(self.goTitleDesc, not btnCheckShow)
+	self:_refreshCommonDetail()
 end
 
-function var_0_0._refreshCommonDetail(arg_30_0)
-	local var_30_0 = DecorateStoreModel.instance:getCurGood(arg_30_0._selectSecondTabId)
-	local var_30_1 = StoreModel.instance:getGoodsMO(var_30_0)
-	local var_30_2 = DecorateStoreConfig.instance:getDecorateConfig(var_30_0)
+function DecorateStoreView:_refreshCommonDetail()
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
+	local decorateConfig = DecorateStoreConfig.instance:getDecorateConfig(goodId)
 
-	arg_30_0._txtdec.text = var_30_2.typeName
+	self._txtdec.text = decorateConfig.typeName
 
 	if LangSettings.instance:isJp() then
-		arg_30_0._txttitle.text = var_30_1.config.name
+		self._txttitle.text = goodMo.config.name
 	else
-		arg_30_0._txttitle.text = GameUtil.setFirstStrSize(var_30_1.config.name, tonumber(luaLang("DecorateStoreView_txttitle_setFirstStrSize")) or 100)
+		self._txttitle.text = GameUtil.setFirstStrSize(goodMo.config.name, tonumber(luaLang("DecorateStoreView_txttitle_setFirstStrSize")) or 100)
 	end
 
-	if DecorateStoreModel.instance:isDecorateGoodItemHas(var_30_0) then
-		gohelper.setActive(arg_30_0._goowned, true)
-		gohelper.setActive(arg_30_0._btnbuy.gameObject, false)
+	local hasItem = DecorateStoreModel.instance:isDecorateGoodItemHas(goodId)
+
+	if hasItem then
+		gohelper.setActive(self._goowned, true)
+		gohelper.setActive(self._btnbuy.gameObject, false)
 
 		return
 	end
 
-	if var_30_1.config.maxBuyCount > 0 and var_30_1.buyCount >= var_30_1.config.maxBuyCount then
-		gohelper.setActive(arg_30_0._goowned, true)
-		gohelper.setActive(arg_30_0._btnbuy.gameObject, false)
+	if goodMo.config.maxBuyCount > 0 and goodMo.buyCount >= goodMo.config.maxBuyCount then
+		gohelper.setActive(self._goowned, true)
+		gohelper.setActive(self._btnbuy.gameObject, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_30_0._goowned, false)
-	gohelper.setActive(arg_30_0._btnbuy.gameObject, true)
+	gohelper.setActive(self._goowned, false)
+	gohelper.setActive(self._btnbuy.gameObject, true)
 
-	local var_30_3 = var_30_2.offTag > 0 and var_30_2.offTag or 100
+	local discount = decorateConfig.offTag > 0 and decorateConfig.offTag or 100
 
-	if var_30_3 > 0 and var_30_3 < 100 then
-		gohelper.setActive(arg_30_0._godiscount, true)
+	if discount > 0 and discount < 100 then
+		gohelper.setActive(self._godiscount, true)
 
-		arg_30_0._txtdiscount.text = string.format("-%s%%", var_30_3)
+		self._txtdiscount.text = string.format("-%s%%", discount)
 	else
-		gohelper.setActive(arg_30_0._godiscount, false)
+		gohelper.setActive(self._godiscount, false)
 	end
 
-	local var_30_4 = DecorateStoreModel.instance:getGoodItemLimitTime(var_30_0) > 0 and DecorateStoreModel.instance:getGoodDiscount(var_30_0) or 100
+	local offsetSecond = DecorateStoreModel.instance:getGoodItemLimitTime(goodId)
+	local discount2 = offsetSecond > 0 and DecorateStoreModel.instance:getGoodDiscount(goodId) or 100
 
-	var_30_4 = var_30_4 == 0 and 100 or var_30_4
+	discount2 = discount2 == 0 and 100 or discount2
 
-	if var_30_4 > 0 and var_30_4 < 100 then
-		gohelper.setActive(arg_30_0._godiscount, false)
-		gohelper.setActive(arg_30_0._godiscount2, true)
+	local hasDiscount = discount2 > 0 and discount2 < 100
 
-		arg_30_0._txtdiscount2.text = string.format("-%s%%", var_30_4)
+	if hasDiscount then
+		gohelper.setActive(self._godiscount, false)
+		gohelper.setActive(self._godiscount2, true)
+
+		self._txtdiscount2.text = string.format("-%s%%", discount2)
 	else
-		gohelper.setActive(arg_30_0._godiscount2, false)
+		gohelper.setActive(self._godiscount2, false)
 	end
 
-	if not var_30_1.config.cost or var_30_1.config.cost == "" then
-		gohelper.setActive(arg_30_0._gosingle, false)
-		gohelper.setActive(arg_30_0._godouble, false)
-		gohelper.setActive(arg_30_0._gofree, true)
+	if not goodMo.config.cost or goodMo.config.cost == "" then
+		gohelper.setActive(self._gosingle, false)
+		gohelper.setActive(self._godouble, false)
+		gohelper.setActive(self._gofree, true)
 
 		return
 	end
 
-	gohelper.setActive(arg_30_0._gofree, false)
+	gohelper.setActive(self._gofree, false)
 
-	local var_30_5 = string.splitToNumber(var_30_1.config.cost, "#")
+	local costs = string.splitToNumber(goodMo.config.cost, "#")
 
-	if var_30_1.config.cost2 ~= "" then
-		gohelper.setActive(arg_30_0._gosingle, false)
-		gohelper.setActive(arg_30_0._godouble, true)
+	if goodMo.config.cost2 ~= "" then
+		gohelper.setActive(self._gosingle, false)
+		gohelper.setActive(self._godouble, true)
 
-		arg_30_0._txtcurprice1.text = 0.01 * var_30_4 * var_30_5[3]
+		self._txtcurprice1.text = 0.01 * discount2 * costs[3]
 
-		if var_30_2.originalCost1 > 0 then
-			gohelper.setActive(arg_30_0._txtoriginalprice1.gameObject, true)
+		if decorateConfig.originalCost1 > 0 then
+			gohelper.setActive(self._txtoriginalprice1.gameObject, true)
 
-			arg_30_0._txtoriginalprice1.text = var_30_2.originalCost1
+			self._txtoriginalprice1.text = decorateConfig.originalCost1
 		else
-			gohelper.setActive(arg_30_0._txtoriginalprice1.gameObject, false)
+			gohelper.setActive(self._txtoriginalprice1.gameObject, false)
 		end
 
-		local var_30_6, var_30_7 = ItemModel.instance:getItemConfigAndIcon(var_30_5[1], var_30_5[2])
+		local costCo, _ = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_30_0._imagedoubleicon1, var_30_6.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagedoubleicon1, costCo.icon .. "_1", true)
 
-		local var_30_8 = string.splitToNumber(var_30_1.config.cost2, "#")
+		local cost2s = string.splitToNumber(goodMo.config.cost2, "#")
 
-		arg_30_0._txtcurprice2.text = 0.01 * var_30_4 * var_30_8[3]
+		self._txtcurprice2.text = 0.01 * discount2 * cost2s[3]
 
-		if var_30_2.originalCost2 > 0 then
-			gohelper.setActive(arg_30_0._txtoriginalprice2.gameObject, true)
+		if decorateConfig.originalCost2 > 0 then
+			gohelper.setActive(self._txtoriginalprice2.gameObject, true)
 
-			arg_30_0._txtoriginalprice2.text = var_30_2.originalCost2
+			self._txtoriginalprice2.text = decorateConfig.originalCost2
 		else
-			gohelper.setActive(arg_30_0._txtoriginalprice2.gameObject, false)
+			gohelper.setActive(self._txtoriginalprice2.gameObject, false)
 		end
 
-		local var_30_9, var_30_10 = ItemModel.instance:getItemConfigAndIcon(var_30_8[1], var_30_8[2])
+		local cost2Co, _ = ItemModel.instance:getItemConfigAndIcon(cost2s[1], cost2s[2])
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_30_0._imagedoubleicon2, var_30_9.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagedoubleicon2, cost2Co.icon .. "_1", true)
 	else
-		gohelper.setActive(arg_30_0._gosingle, true)
-		gohelper.setActive(arg_30_0._godouble, false)
+		gohelper.setActive(self._gosingle, true)
+		gohelper.setActive(self._godouble, false)
 
-		arg_30_0._txtcurprice.text = 0.01 * var_30_4 * var_30_5[3]
+		self._txtcurprice.text = 0.01 * discount2 * costs[3]
 
-		if var_30_2.originalCost1 > 0 then
-			gohelper.setActive(arg_30_0._txtoriginalprice.gameObject, true)
+		if decorateConfig.originalCost1 > 0 then
+			gohelper.setActive(self._txtoriginalprice.gameObject, true)
 
-			arg_30_0._txtoriginalprice.text = var_30_2.originalCost1
+			self._txtoriginalprice.text = decorateConfig.originalCost1
 		else
-			gohelper.setActive(arg_30_0._txtoriginalprice.gameObject, false)
+			gohelper.setActive(self._txtoriginalprice.gameObject, false)
 		end
 
-		local var_30_11, var_30_12 = ItemModel.instance:getItemConfigAndIcon(var_30_5[1], var_30_5[2])
+		local costCo, _ = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_30_0._imagesingleicon, var_30_11.icon .. "_1", true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagesingleicon, costCo.icon .. "_1", true)
 	end
 end
 
-function var_0_0._hideDecorateDefault(arg_31_0)
-	gohelper.setActive(arg_31_0._gotypebg1, false)
-	gohelper.setActive(arg_31_0._gotypebg7, false)
+function DecorateStoreView:_hideDecorateDefault()
+	gohelper.setActive(self._gotypebg1, false)
+	gohelper.setActive(self._gotypebg7, false)
 end
 
-function var_0_0._updateDecorateDefault(arg_32_0)
-	local var_32_0 = DecorateStoreModel.instance:getCurGood(arg_32_0._selectSecondTabId)
-	local var_32_1 = DecorateStoreConfig.instance:getDecorateConfig(var_32_0)
+function DecorateStoreView:_updateDecorateDefault()
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local decorateConfig = DecorateStoreConfig.instance:getDecorateConfig(goodId)
 
-	if arg_32_0:_checkEffectBigImg(var_32_1) then
-		arg_32_0._simagetypebg7:LoadImage(ResUrl.getDecorateStoreImg(var_32_1.biglmg))
-		gohelper.setActive(arg_32_0._gotypebg1, false)
-		gohelper.setActive(arg_32_0._gotypebg7, true)
+	if self:_checkEffectBigImg(decorateConfig) then
+		self._simagetypebg7:LoadImage(ResUrl.getDecorateStoreImg(decorateConfig.biglmg))
+		gohelper.setActive(self._gotypebg1, false)
+		gohelper.setActive(self._gotypebg7, true)
 
 		return
 	end
 
-	gohelper.setActive(arg_32_0._gotypebg7, false)
-	gohelper.setActive(arg_32_0._gotypebg1, true)
-	arg_32_0._simagetypebg1:LoadImage(ResUrl.getDecorateStoreImg(var_32_1.biglmg), arg_32_0._onType1ImageLoaded, arg_32_0)
+	gohelper.setActive(self._gotypebg7, false)
+	gohelper.setActive(self._gotypebg1, true)
+	self._simagetypebg1:LoadImage(ResUrl.getDecorateStoreImg(decorateConfig.biglmg), self._onType1ImageLoaded, self)
 end
 
-function var_0_0._onType1ImageLoaded(arg_33_0)
-	arg_33_0._simagetypebg1.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+function DecorateStoreView:_onType1ImageLoaded()
+	self._simagetypebg1.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
 end
 
-function var_0_0._checkEffectBigImg(arg_34_0, arg_34_1)
-	if not arg_34_1 then
-		local var_34_0 = DecorateStoreModel.instance:getCurGood(arg_34_0._selectSecondTabId)
+function DecorateStoreView:_checkEffectBigImg(decorateConfig)
+	if not decorateConfig then
+		local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
 
-		arg_34_1 = DecorateStoreConfig.instance:getDecorateConfig(var_34_0)
+		decorateConfig = DecorateStoreConfig.instance:getDecorateConfig(goodId)
 	end
 
-	return arg_34_1 and arg_34_1.effectbiglmg == 1
+	return decorateConfig and decorateConfig.effectbiglmg == 1
 end
 
-function var_0_0._hideDecorateSkin(arg_35_0)
-	gohelper.setActive(arg_35_0._gotype2, false)
-	gohelper.setActive(arg_35_0._btnswitch.gameObject, false)
-	gohelper.setActive(arg_35_0._godynamiccontainer, false)
-	gohelper.setActive(arg_35_0._gotypebg2, false)
-	gohelper.setActive(arg_35_0._gotype2, false)
+function DecorateStoreView:onDecorateSkinSelectItem(skinId, isAuto)
+	self:refreshSkinPreview(skinId)
+
+	if self.skinListComp then
+		self.skinListComp:autoShowNextSkin(isAuto)
+	end
 end
 
-function var_0_0._updateDecorateSkin(arg_36_0)
-	gohelper.setActive(arg_36_0._btnswitch.gameObject, true)
-	gohelper.setActive(arg_36_0._godynamiccontainer, true)
-	gohelper.setActive(arg_36_0._gotypebg2, true)
-	gohelper.setActive(arg_36_0._gotype2, true)
+function DecorateStoreView:_hideDecorateSkinGift()
+	gohelper.setActive(self._gotype2, false)
+	gohelper.setActive(self._btnswitch.gameObject, false)
+	gohelper.setActive(self._godynamiccontainer, false)
+	gohelper.setActive(self._gotypebg2, false)
+	gohelper.setActive(self._gotype6, false)
 
-	local var_36_0 = DecorateStoreModel.instance:getCurGood(arg_36_0._selectSecondTabId)
-	local var_36_1 = StoreModel.instance:getGoodsMO(var_36_0)
-	local var_36_2 = string.splitToNumber(var_36_1.config.product, "#")
-
-	arg_36_0._skinCo = SkinConfig.instance:getSkinCo(var_36_2[2])
-
-	local var_36_3 = lua_character.configDict[arg_36_0._skinCo.characterId]
-
-	arg_36_0._txtrolename.text = var_36_3.name
-
-	arg_36_0._simagesignature:LoadImage(ResUrl.getSignature(var_36_3.signature))
-	arg_36_0:_refreshSmallSpine()
-	arg_36_0:_refreshBigSkin()
+	if self.skinListComp then
+		self.skinListComp:onClose()
+	end
 end
 
-function var_0_0._refreshBigSkin(arg_37_0)
-	if not string.nilorempty(arg_37_0._skinCo.live2dbg) then
-		gohelper.setActive(arg_37_0._simagel2d.gameObject, arg_37_0._showLive2d)
-		gohelper.setActive(arg_37_0._gozs, arg_37_0._showLive2d)
-		arg_37_0._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(arg_37_0._skinCo.live2dbg))
+function DecorateStoreView:_updateDecorateSkinGift()
+	gohelper.setActive(self._btnswitch.gameObject, true)
+	gohelper.setActive(self._godynamiccontainer, true)
+	gohelper.setActive(self._gotypebg2, true)
+	gohelper.setActive(self._gotype6, true)
+
+	if not self.skinListComp then
+		self.skinListComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gotype6, DecorateStoreSkinListComp)
+	end
+
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
+	local goodItemCos = string.splitToNumber(goodMo.config.product, "#")
+	local list = DecorateSkinSelectListModel.instance:getSkinList(goodItemCos[2])
+
+	self.skinListComp:setSkinList(list)
+
+	local selectMo = self.skinListComp:getSelect()
+
+	if selectMo then
+		self:refreshSkinPreview(selectMo.id)
+	end
+end
+
+function DecorateStoreView:_hideDecorateSkin()
+	gohelper.setActive(self._gotype2, false)
+	gohelper.setActive(self._btnswitch.gameObject, false)
+	gohelper.setActive(self._godynamiccontainer, false)
+	gohelper.setActive(self._gotypebg2, false)
+	gohelper.setActive(self._gotype2, false)
+end
+
+function DecorateStoreView:_updateDecorateSkin()
+	gohelper.setActive(self._btnswitch.gameObject, true)
+	gohelper.setActive(self._godynamiccontainer, true)
+	gohelper.setActive(self._gotypebg2, true)
+	gohelper.setActive(self._gotype2, true)
+
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
+	local goodItemCos = string.splitToNumber(goodMo.config.product, "#")
+
+	self:refreshSkinPreview(goodItemCos[2])
+end
+
+function DecorateStoreView:refreshSkinPreview(skinId)
+	self._skinCo = SkinConfig.instance:getSkinCo(skinId)
+
+	local heroCo = lua_character.configDict[self._skinCo.characterId]
+
+	self._txtrolename.text = heroCo.name
+
+	self._simagesignature:LoadImage(ResUrl.getSignature(heroCo.signature))
+	self:_refreshSmallSpine()
+	self:_refreshBigSkin()
+end
+
+function DecorateStoreView:_refreshBigSkin()
+	if not string.nilorempty(self._skinCo.live2dbg) then
+		gohelper.setActive(self._simagel2d.gameObject, self._showLive2d)
+		gohelper.setActive(self._gozs, self._showLive2d)
+		self._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(self._skinCo.live2dbg))
 	else
-		gohelper.setActive(arg_37_0._simagel2d.gameObject, false)
-		gohelper.setActive(arg_37_0._gozs, false)
+		gohelper.setActive(self._simagel2d.gameObject, false)
+		gohelper.setActive(self._gozs, false)
 	end
 
-	if arg_37_0._showLive2d then
-		if arg_37_0._uiSpine then
-			TaskDispatcher.cancelTask(arg_37_0._playSpineVoice, arg_37_0)
-			arg_37_0._uiSpine:onDestroy()
-			arg_37_0._uiSpine:stopVoice()
+	if self._showLive2d then
+		if self._uiSpine then
+			TaskDispatcher.cancelTask(self._playSpineVoice, self)
+			self._uiSpine:onDestroy()
+			self._uiSpine:stopVoice()
 
-			arg_37_0._uiSpine = nil
+			self._uiSpine = nil
 		end
 
-		gohelper.setActive(arg_37_0._gobigspine, true)
+		gohelper.setActive(self._gobigspine, true)
 
-		arg_37_0._uiSpine = GuiModelAgent.Create(arg_37_0._gobigspine, true)
+		self._uiSpine = GuiModelAgent.Create(self._gobigspine, true)
 
-		arg_37_0._uiSpine:setResPath(arg_37_0._skinCo, arg_37_0._onUISpineLoaded, arg_37_0)
+		self._uiSpine:setResPath(self._skinCo, self._onUISpineLoaded, self)
 
-		if not string.nilorempty(arg_37_0._skinCo.live2d) then
-			arg_37_0._uiSpine:setLive2dCameraLoadedCallback(arg_37_0._live2DCameraLoaded, arg_37_0)
+		local isLive2d = not string.nilorempty(self._skinCo.live2d)
+
+		if isLive2d then
+			self._uiSpine:setLive2dCameraLoadedCallback(self._live2DCameraLoaded, self)
 		end
 
-		arg_37_0._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
+		self._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
 	else
-		gohelper.setActive(arg_37_0._gobigspine, false)
-		gohelper.setActive(arg_37_0._simageskin.gameObject, true)
-		arg_37_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_37_0._skinCo.id), arg_37_0._loadedImage, arg_37_0)
+		gohelper.setActive(self._gobigspine, false)
+		gohelper.setActive(self._simageskin.gameObject, true)
+		self._simageskin:LoadImage(ResUrl.getHeadIconImg(self._skinCo.id), self._loadedImage, self)
 
-		arg_37_0._txtswitch.text = "L2D"
+		self._txtswitch.text = "L2D"
 	end
 end
 
-function var_0_0._loadedImage(arg_38_0)
-	ZProj.UGUIHelper.SetImageSize(arg_38_0._simageskin.gameObject)
+function DecorateStoreView:_loadedImage()
+	ZProj.UGUIHelper.SetImageSize(self._simageskin.gameObject)
 
-	local var_38_0 = arg_38_0._skinCo.skinViewImgOffset
+	local offsetStr = self._skinCo.skinViewImgOffset
 
-	if not string.nilorempty(var_38_0) then
-		local var_38_1 = string.splitToNumber(var_38_0, "#")
+	if not string.nilorempty(offsetStr) then
+		local offsets = string.splitToNumber(offsetStr, "#")
 
-		recthelper.setAnchor(arg_38_0._simageskin.transform, tonumber(var_38_1[1]), tonumber(var_38_1[2]))
-		transformhelper.setLocalScale(arg_38_0._simageskin.transform, tonumber(var_38_1[3]), tonumber(var_38_1[3]), tonumber(var_38_1[3]))
+		recthelper.setAnchor(self._simageskin.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		transformhelper.setLocalScale(self._simageskin.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	else
-		recthelper.setAnchor(arg_38_0._simageskin.transform, -150, -150)
-		transformhelper.setLocalScale(arg_38_0._simageskin.transform, 0.6, 0.6, 0.6)
+		recthelper.setAnchor(self._simageskin.transform, -150, -150)
+		transformhelper.setLocalScale(self._simageskin.transform, 0.6, 0.6, 0.6)
 	end
 
-	if arg_38_0._adjust then
+	if self._adjust then
 		return
 	end
 
-	local var_38_2 = DecorateStoreModel.instance:getCurGood(arg_38_0._selectSecondTabId)
-	local var_38_3 = DecorateStoreConfig.instance:getDecorateConfig(var_38_2)
-	local var_38_4 = string.splitToNumber(var_38_3.decorateskinOffset, "#")
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local decorateCo = DecorateStoreConfig.instance:getDecorateConfig(goodId)
+	local decorateOffsets = string.splitToNumber(decorateCo.decorateskinOffset, "#")
 
-	recthelper.setAnchor(arg_38_0._goskincontainer.transform, var_38_4[1] or 0, var_38_4[2] or 0)
-	transformhelper.setLocalScale(arg_38_0._goskincontainer.transform, var_38_4[3] or 1, var_38_4[3] or 1, var_38_4[3] or 1)
+	recthelper.setAnchor(self._goskincontainer.transform, decorateOffsets[1] or 0, decorateOffsets[2] or 0)
+	transformhelper.setLocalScale(self._goskincontainer.transform, decorateOffsets[3] or 1, decorateOffsets[3] or 1, decorateOffsets[3] or 1)
 end
 
-function var_0_0._live2DCameraLoaded(arg_39_0)
-	gohelper.setAsFirstSibling(arg_39_0._simagel2d.gameObject)
+function DecorateStoreView:_live2DCameraLoaded()
+	gohelper.setAsFirstSibling(self._simagel2d.gameObject)
 end
 
-function var_0_0._onUISpineLoaded(arg_40_0)
-	gohelper.setActive(arg_40_0._simageskin.gameObject, false)
-	ZProj.UGUIHelper.SetImageSize(arg_40_0._simageskin.gameObject)
-	arg_40_0._uiSpine:setAllLayer(UnityLayer.SceneEffect)
+function DecorateStoreView:_onUISpineLoaded()
+	gohelper.setActive(self._simageskin.gameObject, false)
+	ZProj.UGUIHelper.SetImageSize(self._simageskin.gameObject)
+	self._uiSpine:setAllLayer(UnityLayer.SceneEffect)
 
-	local var_40_0 = arg_40_0._skinCo.skinViewLive2dOffset
+	local offsetStr = self._skinCo.skinViewLive2dOffset
 
-	if string.nilorempty(var_40_0) then
-		var_40_0 = arg_40_0._skinCo.characterViewOffset
+	if string.nilorempty(offsetStr) then
+		offsetStr = self._skinCo.characterViewOffset
 	end
 
-	local var_40_1 = SkinConfig.instance:getSkinOffset(var_40_0)
+	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(arg_40_0._gobigspine.transform, tonumber(var_40_1[1]), tonumber(var_40_1[2]))
-	transformhelper.setLocalScale(arg_40_0._gobigspine.transform, tonumber(var_40_1[3]), tonumber(var_40_1[3]), tonumber(var_40_1[3]))
+	recthelper.setAnchor(self._gobigspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gobigspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 
-	if arg_40_0._adjust then
+	if self._adjust then
 		return
 	end
 
-	local var_40_2 = DecorateStoreModel.instance:getCurGood(arg_40_0._selectSecondTabId)
-	local var_40_3 = DecorateStoreConfig.instance:getDecorateConfig(var_40_2)
-	local var_40_4 = string.splitToNumber(var_40_3.decorateskinl2dOffset, "#")
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local decorateCo = DecorateStoreConfig.instance:getDecorateConfig(goodId)
+	local decorateOffsets = string.splitToNumber(decorateCo.decorateskinl2dOffset, "#")
 
-	recthelper.setAnchor(arg_40_0._goskincontainer.transform, var_40_4[1] or 0, var_40_4[2] or 0)
-	transformhelper.setLocalScale(arg_40_0._goskincontainer.transform, var_40_4[3] or 1, var_40_4[3] or 1, var_40_4[3] or 1)
+	recthelper.setAnchor(self._goskincontainer.transform, decorateOffsets[1] or 0, decorateOffsets[2] or 0)
+	transformhelper.setLocalScale(self._goskincontainer.transform, decorateOffsets[3] or 1, decorateOffsets[3] or 1, decorateOffsets[3] or 1)
 end
 
-function var_0_0._refreshSmallSpine(arg_41_0)
-	if not arg_41_0._smallSpine then
-		arg_41_0._smallSpine = GuiSpine.Create(arg_41_0._gosmallspine, false)
+function DecorateStoreView:_refreshSmallSpine()
+	if not self._smallSpine then
+		self._smallSpine = GuiSpine.Create(self._gosmallspine, false)
 	end
 
-	arg_41_0._smallSpine:stopVoice()
-	arg_41_0._smallSpine:setResPath(ResUrl.getSpineUIPrefab(arg_41_0._skinCo.spine), nil, nil, true)
+	self._smallSpine:stopVoice()
+	self._smallSpine:setResPath(ResUrl.getSpineUIPrefab(self._skinCo.spine), nil, nil, true)
 
-	local var_41_0 = SkinConfig.instance:getSkinOffset(arg_41_0._skinCo.skinSpineOffset)
+	local offsets = SkinConfig.instance:getSkinOffset(self._skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(arg_41_0._gosmallspine.transform, tonumber(var_41_0[1]), tonumber(var_41_0[2]))
-	transformhelper.setLocalScale(arg_41_0._gosmallspine.transform, tonumber(var_41_0[3]), tonumber(var_41_0[3]), tonumber(var_41_0[3]))
+	recthelper.setAnchor(self._gosmallspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	transformhelper.setLocalScale(self._gosmallspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
-function var_0_0._hideMainScene(arg_42_0)
-	if not arg_42_0._needShowMainScene then
+function DecorateStoreView:_hideMainScene()
+	if not self._needShowMainScene then
 		return
 	end
 
-	arg_42_0._needShowMainScene = false
+	self._needShowMainScene = false
 
 	MainSceneSwitchCameraController.instance:hideScene()
 	WeatherController.instance:onSceneShow()
-	gohelper.setActive(arg_42_0._gotype5, false)
-	gohelper.setActive(arg_42_0._rawImage, false)
-	gohelper.setActive(arg_42_0._gotypebg3, false)
+	gohelper.setActive(self._gotype5, false)
+	gohelper.setActive(self._rawImage, false)
+	gohelper.setActive(self._gotypebg3, false)
 end
 
-function var_0_0._updateDecorateMainScene(arg_43_0)
-	arg_43_0._sceneId = arg_43_0:_getMainSceneId()
+function DecorateStoreView:_updateDecorateMainScene()
+	self._sceneId = self:_getMainSceneId()
 
-	if not arg_43_0._sceneId then
+	if not self._sceneId then
 		logError("DecorateStoreView:_updateDecorateMainScene sceneId is nil")
 
 		return
 	end
 
-	gohelper.setActive(arg_43_0._gotypebg3, false)
+	gohelper.setActive(self._gotypebg3, false)
 
-	arg_43_0._needShowMainScene = true
+	self._needShowMainScene = true
 
-	gohelper.setActive(arg_43_0._rawImage, false)
+	gohelper.setActive(self._rawImage, false)
 	WeatherController.instance:onSceneHide()
-	MainSceneSwitchCameraController.instance:showScene(arg_43_0._sceneId, arg_43_0._showSceneFinished, arg_43_0)
+	MainSceneSwitchCameraController.instance:showScene(self._sceneId, self._showSceneFinished, self)
 end
 
-function var_0_0._getMainSceneId(arg_44_0)
-	local var_44_0 = DecorateStoreModel.instance:getCurGood(arg_44_0._selectSecondTabId)
-	local var_44_1 = var_44_0 and lua_store_goods.configDict[var_44_0]
-	local var_44_2 = var_44_1 and var_44_1.product
+function DecorateStoreView:_getMainSceneId()
+	local goodsId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodsConfig = goodsId and lua_store_goods.configDict[goodsId]
+	local product = goodsConfig and goodsConfig.product
 
-	if not var_44_2 then
+	if not product then
 		return nil
 	end
 
-	for iter_44_0, iter_44_1 in ipairs(lua_scene_switch.configList) do
-		if string.find(var_44_2, iter_44_1.itemId) then
-			return iter_44_1.id
+	for i, v in ipairs(lua_scene_switch.configList) do
+		if string.find(product, v.itemId) then
+			return v.id
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._showSceneFinished(arg_45_0, arg_45_1)
-	gohelper.setActive(arg_45_0._gotype5, true)
+function DecorateStoreView:_showSceneFinished(rt)
+	gohelper.setActive(self._gotype5, true)
 
-	if not arg_45_0._weatherSwitchControlComp then
-		arg_45_0._weatherSwitchControlComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_45_0._gotype5, WeatherSwitchControlComp)
-		arg_45_0._rawImage = gohelper.onceAddComponent(gohelper.findChild(arg_45_0.viewGO, "Bg/typebg/#go_typebg3/mainscenebg"), gohelper.Type_RawImage)
+	if not self._weatherSwitchControlComp then
+		self._weatherSwitchControlComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gotype5, WeatherSwitchControlComp)
+		self._rawImage = gohelper.onceAddComponent(gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg3/mainscenebg"), gohelper.Type_RawImage)
 	end
 
-	gohelper.setActive(arg_45_0._rawImage, true)
-	gohelper.setActive(arg_45_0._gotypebg3, true)
-	MainSceneSwitchInfoDisplayView.adjustRt(arg_45_0._rawImage, arg_45_1)
-	arg_45_0._weatherSwitchControlComp:updateScene(arg_45_0._sceneId, MainSceneSwitchCameraDisplayController.instance)
+	gohelper.setActive(self._rawImage, true)
+	gohelper.setActive(self._gotypebg3, true)
+	MainSceneSwitchInfoDisplayView.adjustRt(self._rawImage, rt)
+	self._weatherSwitchControlComp:updateScene(self._sceneId, MainSceneSwitchCameraDisplayController.instance)
 end
 
-function var_0_0._hideDecorateSelfCard(arg_46_0)
-	gohelper.setActive(arg_46_0._gotypebg5, false)
+function DecorateStoreView:_hideDecorateSelfCard()
+	gohelper.setActive(self._gotypebg5, false)
 
-	if arg_46_0._viewGo then
-		gohelper.destroy(arg_46_0._viewGo)
+	if self._viewGo then
+		gohelper.destroy(self._viewGo)
 
-		arg_46_0._viewGo = nil
+		self._viewGo = nil
 	end
 
-	if arg_46_0._viewCls then
-		arg_46_0._viewCls:onCloseInternal()
+	if self._viewCls then
+		self._viewCls:onCloseInternal()
 
-		arg_46_0._viewCls = nil
+		self._viewCls = nil
 	end
 
-	if arg_46_0._cardLoader then
-		arg_46_0._cardLoader:dispose()
+	if self._cardLoader then
+		self._cardLoader:dispose()
 
-		arg_46_0._cardLoader = nil
+		self._cardLoader = nil
 	end
 end
 
-function var_0_0._updateDecorateSelfCard(arg_47_0)
-	local var_47_0 = DecorateStoreModel.instance:getCurGood(arg_47_0._selectSecondTabId)
-	local var_47_1 = StoreModel.instance:getGoodsMO(var_47_0)
-	local var_47_2 = string.splitToNumber(var_47_1.config.product, "#")
-	local var_47_3 = string.format("playercardview_%s", var_47_2[2])
+function DecorateStoreView:_updateDecorateSelfCard()
+	self:_hideDecorateSelfCard()
 
-	arg_47_0._cardPath = string.format("ui/viewres/player/playercard/%s.prefab", var_47_3)
-	arg_47_0._cardLoader = MultiAbLoader.New()
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
+	local goodItemCos = string.splitToNumber(goodMo.config.product, "#")
+	local pathname = string.format("playercardview_%s", goodItemCos[2])
 
-	arg_47_0._cardLoader:addPath(arg_47_0._cardPath)
-	arg_47_0._cardLoader:startLoad(arg_47_0._onCardLoadFinish, arg_47_0)
+	self._cardPath = string.format("ui/viewres/player/playercard/%s.prefab", pathname)
+	self._cardLoader = MultiAbLoader.New()
+
+	self._cardLoader:addPath(self._cardPath)
+	self._cardLoader:startLoad(self._onCardLoadFinish, self)
 end
 
-function var_0_0._onCardLoadFinish(arg_48_0)
-	local var_48_0 = DecorateStoreModel.instance:getCurGood(arg_48_0._selectSecondTabId)
-	local var_48_1 = StoreModel.instance:getGoodsMO(var_48_0)
-	local var_48_2 = string.splitToNumber(var_48_1.config.product, "#")
+function DecorateStoreView:_onCardLoadFinish()
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
+	local goodItemCos = string.splitToNumber(goodMo.config.product, "#")
 
-	gohelper.setActive(arg_48_0._gotypebg5, true)
+	gohelper.setActive(self._gotypebg5, true)
 
-	local var_48_3 = arg_48_0._cardLoader:getAssetItem(arg_48_0._cardPath):GetResource(arg_48_0._cardPath)
+	local assetItem = self._cardLoader:getAssetItem(self._cardPath)
+	local viewPrefab = assetItem:GetResource(self._cardPath)
 
-	arg_48_0._viewGo = arg_48_0._viewGo or gohelper.clone(var_48_3, arg_48_0._gotypebg5)
-	arg_48_0._viewCls = arg_48_0._viewCls or MonoHelper.addNoUpdateLuaComOnceToGo(arg_48_0._viewGo, StorePlayerCardView)
-	arg_48_0._viewCls.viewParam = {
+	self._viewGo = self._viewGo or gohelper.clone(viewPrefab, self._gotypebg5)
+	self._viewCls = self._viewCls or MonoHelper.addNoUpdateLuaComOnceToGo(self._viewGo, StorePlayerCardView)
+	self._viewCls.viewParam = {
 		userId = PlayerModel.instance:getPlayinfo().userId
 	}
-	arg_48_0._viewCls.viewContainer = arg_48_0.viewContainer
+	self._viewCls.viewContainer = self.viewContainer
 
-	local var_48_4 = DecorateStoreConfig.instance:getDecorateConfig(var_48_0).showskinId
+	local decorateConfig = DecorateStoreConfig.instance:getDecorateConfig(goodId)
+	local skinId = decorateConfig.showskinId
 
-	arg_48_0._viewCls:onOpen(var_48_4, var_48_2[2])
-	arg_48_0._viewCls:backBottomView()
+	self._viewCls:onOpen(skinId, goodItemCos[2])
+	self._viewCls:backBottomView()
 end
 
-function var_0_0._hideDecorateBuildingVideo(arg_49_0)
-	gohelper.setActive(arg_49_0._gotypebg6, false)
+function DecorateStoreView:_hideDecorateBuildingVideo()
+	gohelper.setActive(self._gotypebg6, false)
 
-	if arg_49_0._videoPlayer then
-		arg_49_0._videoPlayer:Clear()
+	if self._videoPlayer then
+		self._videoPlayer:clear()
 
-		arg_49_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 end
 
-function var_0_0._updateDecorateBuildingVideo(arg_50_0)
-	gohelper.setActive(arg_50_0._gotypebg6, true)
+function DecorateStoreView:_updateDecorateBuildingVideo()
+	gohelper.setActive(self._gotypebg6, true)
 
-	if not arg_50_0._videoPlayer then
-		local var_50_0 = gohelper.findChild(arg_50_0._gotypebg6, "#go_video")
+	if not self._videoPlayer then
+		local parentGO = gohelper.findChild(self._gotypebg6, "#go_video")
 
-		arg_50_0._videoPlayer, arg_50_0._displauUGUI = AvProMgr.instance:getVideoPlayer(var_50_0)
+		self._videoPlayer = VideoPlayerMgr.instance:createGoAndVideoPlayer(parentGO)
 	end
 
-	local var_50_1 = DecorateStoreModel.instance:getCurGood(arg_50_0._selectSecondTabId)
-	local var_50_2 = DecorateStoreConfig.instance:getDecorateConfig(var_50_1)
+	local goodId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+	local decorateConfig = DecorateStoreConfig.instance:getDecorateConfig(goodId)
 
-	arg_50_0._videoPlayer:Play(arg_50_0._displauUGUI, langVideoUrl(var_50_2.video), true, nil, nil)
+	self._videoPlayer:play(decorateConfig.video, true, nil, nil)
 end
 
-function var_0_0.onClose(arg_51_0)
+function DecorateStoreView:onClose()
 	UIBlockMgr.instance:endBlock("decorateswitch")
 	UIBlockMgr.instance:endBlock("decoratehide")
-	TaskDispatcher.cancelTask(arg_51_0._switchTabRefresh, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0._startDefaultShowView, arg_51_0)
-	TaskDispatcher.cancelTask(arg_51_0._startGoodIn, arg_51_0)
-	arg_51_0:_removeEvents()
-	arg_51_0:_hideMainScene()
+	TaskDispatcher.cancelTask(self._switchTabRefresh, self)
+	TaskDispatcher.cancelTask(self._startDefaultShowView, self)
+	TaskDispatcher.cancelTask(self._startGoodIn, self)
+
+	if self.skinListComp then
+		self.skinListComp:onClose()
+	end
+
+	self:_removeEvents()
+	self:_hideMainScene()
 end
 
-function var_0_0.onDestroyView(arg_52_0)
+function DecorateStoreView:onDestroyView()
 	MainSceneSwitchCameraController.instance:clear()
 
-	if arg_52_0._goodItems then
-		for iter_52_0, iter_52_1 in pairs(arg_52_0._goodItems) do
-			for iter_52_2, iter_52_3 in pairs(iter_52_1) do
-				for iter_52_4, iter_52_5 in pairs(iter_52_3) do
-					iter_52_5:destroy()
+	if self._goodItems then
+		for _, goods in pairs(self._goodItems) do
+			for _, items in pairs(goods) do
+				for _, item in pairs(items) do
+					item:destroy()
 				end
 			end
 		end
 
-		arg_52_0._goodItems = nil
+		self._goodItems = nil
 	end
 
-	if arg_52_0._categoryItemContainer and #arg_52_0._categoryItemContainer > 0 then
-		for iter_52_6 = 1, #arg_52_0._categoryItemContainer do
-			arg_52_0._categoryItemContainer[iter_52_6].btn:RemoveClickListener()
+	if self._categoryItemContainer and #self._categoryItemContainer > 0 then
+		for i = 1, #self._categoryItemContainer do
+			self._categoryItemContainer[i].btn:RemoveClickListener()
 		end
 
-		arg_52_0._categoryItemContainer = nil
+		self._categoryItemContainer = nil
 	end
 end
 
-return var_0_0
+return DecorateStoreView

@@ -1,151 +1,156 @@
-﻿module("modules.logic.room.model.critter.RoomCritterPlaceListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomCritterPlaceListModel.lua
 
-local var_0_0 = class("RoomCritterPlaceListModel", ListScrollModel)
+module("modules.logic.room.model.critter.RoomCritterPlaceListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
-	arg_1_0:clearData()
+local RoomCritterPlaceListModel = class("RoomCritterPlaceListModel", ListScrollModel)
+
+function RoomCritterPlaceListModel:onInit()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function RoomCritterPlaceListModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_3_0)
-	arg_3_0:setOrder(CritterEnum.OrderType.MoodUp)
+function RoomCritterPlaceListModel:clearData()
+	self:setOrder(CritterEnum.OrderType.MoodUp)
 end
 
-local function var_0_1(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getId()
-	local var_4_1 = arg_4_1:getId()
-	local var_4_2 = ManufactureModel.instance:getCritterRestingBuilding(var_4_0)
-	local var_4_3 = ManufactureModel.instance:getCritterRestingBuilding(var_4_1)
-	local var_4_4 = false
-	local var_4_5 = false
-	local var_4_6 = var_0_0.instance:getTmpBuildingUid()
+local function _sortFunction(aCritterMO, bCritterMO)
+	local aCritterUid = aCritterMO:getId()
+	local bCritterUid = bCritterMO:getId()
+	local aRestBuilding = ManufactureModel.instance:getCritterRestingBuilding(aCritterUid)
+	local bRestBuilding = ManufactureModel.instance:getCritterRestingBuilding(bCritterUid)
+	local aIsRestInCurBuilding = false
+	local bIsRestInCurBuilding = false
+	local tmpCurBuildingUid = RoomCritterPlaceListModel.instance:getTmpBuildingUid()
 
-	if var_4_6 then
-		var_4_4 = var_4_2 == var_4_6
-		var_4_5 = var_4_3 == var_4_6
+	if tmpCurBuildingUid then
+		aIsRestInCurBuilding = aRestBuilding == tmpCurBuildingUid
+		bIsRestInCurBuilding = bRestBuilding == tmpCurBuildingUid
 	end
 
-	if var_4_4 ~= var_4_5 then
-		return var_4_4
+	if aIsRestInCurBuilding ~= bIsRestInCurBuilding then
+		return aIsRestInCurBuilding
 	end
 
-	local var_4_7 = var_0_0.instance:getOrder()
-	local var_4_8 = arg_4_0:getMoodValue()
-	local var_4_9 = arg_4_1:getMoodValue()
+	local order = RoomCritterPlaceListModel.instance:getOrder()
+	local aMood = aCritterMO:getMoodValue()
+	local bMood = bCritterMO:getMoodValue()
 
-	if var_4_8 ~= var_4_9 then
-		if var_4_7 == CritterEnum.OrderType.MoodDown then
-			return var_4_9 < var_4_8
-		elseif var_4_7 == CritterEnum.OrderType.MoodUp then
-			return var_4_8 < var_4_9
+	if aMood ~= bMood then
+		if order == CritterEnum.OrderType.MoodDown then
+			return bMood < aMood
+		elseif order == CritterEnum.OrderType.MoodUp then
+			return aMood < bMood
 		end
 	end
 
-	local var_4_10 = arg_4_0:getDefineId()
-	local var_4_11 = arg_4_1:getDefineId()
-	local var_4_12 = CritterConfig.instance:getCritterRare(var_4_10)
-	local var_4_13 = CritterConfig.instance:getCritterRare(var_4_11)
+	local aCritterId = aCritterMO:getDefineId()
+	local bCritterId = bCritterMO:getDefineId()
+	local aRare = CritterConfig.instance:getCritterRare(aCritterId)
+	local bRare = CritterConfig.instance:getCritterRare(bCritterId)
 
-	if var_4_12 ~= var_4_13 then
-		if var_4_7 == CritterEnum.OrderType.RareDown then
-			return var_4_13 < var_4_12
-		elseif var_4_7 == CritterEnum.OrderType.RareUp then
-			return var_4_12 < var_4_13
+	if aRare ~= bRare then
+		if order == CritterEnum.OrderType.RareDown then
+			return bRare < aRare
+		elseif order == CritterEnum.OrderType.RareUp then
+			return aRare < bRare
 		end
 	end
 
-	local var_4_14 = false
-	local var_4_15 = ManufactureModel.instance:getCritterWorkingBuilding(var_4_0)
-	local var_4_16 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_4_0)
+	local aIsWorking = false
+	local aWorkingBuilding = ManufactureModel.instance:getCritterWorkingBuilding(aCritterUid)
+	local aWorkingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(aCritterUid)
 
-	if var_4_15 or var_4_16 then
-		var_4_14 = true
+	if aWorkingBuilding or aWorkingPathMO then
+		aIsWorking = true
 	end
 
-	local var_4_17 = false
-	local var_4_18 = ManufactureModel.instance:getCritterWorkingBuilding(var_4_1)
-	local var_4_19 = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(var_4_1)
+	local bIsWorking = false
+	local bWorkingBuilding = ManufactureModel.instance:getCritterWorkingBuilding(bCritterUid)
+	local bWorkingPathMO = RoomMapTransportPathModel.instance:getTransportPathMOByCritterUid(bCritterUid)
 
-	if var_4_18 or var_4_19 then
-		var_4_17 = true
+	if bWorkingBuilding or bWorkingPathMO then
+		bIsWorking = true
 	end
 
-	if var_4_14 ~= var_4_17 then
-		return var_4_14
+	if aIsWorking ~= bIsWorking then
+		return aIsWorking
 	end
 
-	local var_4_20 = var_4_2 and true or false
-	local var_4_21 = var_4_3 and true or false
+	local aIsRest = aRestBuilding and true or false
+	local bIsRest = bRestBuilding and true or false
 
-	if var_4_20 ~= var_4_21 then
-		return var_4_21
+	if aIsRest ~= bIsRest then
+		return bIsRest
 	end
 
-	if var_4_10 ~= var_4_11 then
-		return var_4_10 < var_4_11
+	if aCritterId ~= bCritterId then
+		return aCritterId < bCritterId
 	end
 
-	return var_4_0 < var_4_1
+	return aCritterUid < bCritterUid
 end
 
-function var_0_0.setCritterPlaceList(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = CritterModel.instance:getAllCritters()
+function RoomCritterPlaceListModel:setCritterPlaceList(buildingUid)
+	local list = {}
+	local critterMOList = CritterModel.instance:getAllCritters()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		if not iter_5_1:isCultivating() then
-			table.insert(var_5_0, iter_5_1)
+	for _, critterMO in ipairs(critterMOList) do
+		local isCultivating = critterMO:isCultivating()
+
+		if not isCultivating then
+			table.insert(list, critterMO)
 		end
 	end
 
-	arg_5_0:setTmpBuildingUid(arg_5_1)
-	table.sort(var_5_0, var_0_1)
-	arg_5_0:setTmpBuildingUid()
-	arg_5_0:setList(var_5_0)
-	arg_5_0:refreshSelectList(arg_5_1)
+	self:setTmpBuildingUid(buildingUid)
+	table.sort(list, _sortFunction)
+	self:setTmpBuildingUid()
+	self:setList(list)
+	self:refreshSelectList(buildingUid)
 end
 
-function var_0_0.setTmpBuildingUid(arg_6_0, arg_6_1)
-	arg_6_0._tmpBuildingUid = arg_6_1
+function RoomCritterPlaceListModel:setTmpBuildingUid(buildingUid)
+	self._tmpBuildingUid = buildingUid
 end
 
-function var_0_0.getTmpBuildingUid(arg_7_0)
-	return arg_7_0._tmpBuildingUid
+function RoomCritterPlaceListModel:getTmpBuildingUid()
+	return self._tmpBuildingUid
 end
 
-function var_0_0.refreshSelectList(arg_8_0, arg_8_1)
-	local var_8_0 = {}
-	local var_8_1 = RoomMapBuildingModel.instance:getBuildingMOById(arg_8_1)
+function RoomCritterPlaceListModel:refreshSelectList(buildingUid)
+	local selectMOList = {}
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-	if var_8_1 then
-		local var_8_2 = arg_8_0:getList()
+	if buildingMO then
+		local list = self:getList()
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-			local var_8_3 = iter_8_1:getId()
+		for _, critterMO in ipairs(list) do
+			local critterUid = critterMO:getId()
+			local isInSeatSlot = buildingMO:isCritterInSeatSlot(critterUid)
 
-			if var_8_1:isCritterInSeatSlot(var_8_3) then
-				var_8_0[#var_8_0 + 1] = iter_8_1
+			if isInSeatSlot then
+				selectMOList[#selectMOList + 1] = critterMO
 			end
 		end
 	end
 
-	for iter_8_2, iter_8_3 in ipairs(arg_8_0._scrollViews) do
-		iter_8_3:setSelectList(var_8_0)
+	for _, view in ipairs(self._scrollViews) do
+		view:setSelectList(selectMOList)
 	end
 end
 
-function var_0_0.setOrder(arg_9_0, arg_9_1)
-	arg_9_0._order = arg_9_1
+function RoomCritterPlaceListModel:setOrder(order)
+	self._order = order
 end
 
-function var_0_0.getOrder(arg_10_0)
-	return arg_10_0._order
+function RoomCritterPlaceListModel:getOrder()
+	return self._order
 end
 
-var_0_0.instance = var_0_0.New()
+RoomCritterPlaceListModel.instance = RoomCritterPlaceListModel.New()
 
-return var_0_0
+return RoomCritterPlaceListModel

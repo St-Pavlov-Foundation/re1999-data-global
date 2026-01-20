@@ -1,72 +1,74 @@
-﻿module("modules.logic.scene.cachot.comp.CachotScenePreloader", package.seeall)
+﻿-- chunkname: @modules/logic/scene/cachot/comp/CachotScenePreloader.lua
 
-local var_0_0 = class("CachotScenePreloader", BaseSceneComp)
+module("modules.logic.scene.cachot.comp.CachotScenePreloader", package.seeall)
 
-var_0_0.DoorEffectPath = "effects/prefabs_cachot/v1a6_dilao_men.prefab"
-var_0_0.LightPath = "scenes/v1a6_m_s16_dilao_zjm/v1a6_m_s16_scene_light.prefab"
-var_0_0.EventItem = "ui/viewres/versionactivity_1_6/v1a6_cachot/v1a6_cachot_roomeventitem.prefab"
-var_0_0.RoleTransEffect = "effects/prefabs_cachot/v1a6_dilao_chuansong.prefab"
-var_0_0.RoleBornEffect = "effects/prefabs_cachot/v1a6_fangjianchusheng.prefab"
+local CachotScenePreloader = class("CachotScenePreloader", BaseSceneComp)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	if not arg_1_0._abLoader then
-		arg_1_0._abLoader = MultiAbLoader.New()
+CachotScenePreloader.DoorEffectPath = "effects/prefabs_cachot/v1a6_dilao_men.prefab"
+CachotScenePreloader.LightPath = "scenes/v1a6_m_s16_dilao_zjm/v1a6_m_s16_scene_light.prefab"
+CachotScenePreloader.EventItem = "ui/viewres/versionactivity_1_6/v1a6_cachot/v1a6_cachot_roomeventitem.prefab"
+CachotScenePreloader.RoleTransEffect = "effects/prefabs_cachot/v1a6_dilao_chuansong.prefab"
+CachotScenePreloader.RoleBornEffect = "effects/prefabs_cachot/v1a6_fangjianchusheng.prefab"
 
-		arg_1_0:_addLightAsset(arg_1_0._abLoader)
-		arg_1_0:_addMainSceneEffect(arg_1_0._abLoader)
-		arg_1_0:_addRoomSceneAsset(arg_1_0._abLoader)
-		arg_1_0._abLoader:startLoad(arg_1_0._onLoadedFinish, arg_1_0)
+function CachotScenePreloader:init(sceneId, levelId)
+	if not self._abLoader then
+		self._abLoader = MultiAbLoader.New()
+
+		self:_addLightAsset(self._abLoader)
+		self:_addMainSceneEffect(self._abLoader)
+		self:_addRoomSceneAsset(self._abLoader)
+		self._abLoader:startLoad(self._onLoadedFinish, self)
 	end
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+function CachotScenePreloader:onSceneStart(sceneId, levelId)
 	return
 end
 
-function var_0_0._addMainSceneEffect(arg_3_0, arg_3_1)
-	arg_3_1:addPath(var_0_0.DoorEffectPath)
-	arg_3_1:addPath(var_0_0.RoleTransEffect)
-	arg_3_1:addPath(var_0_0.RoleBornEffect)
+function CachotScenePreloader:_addMainSceneEffect(loader)
+	loader:addPath(CachotScenePreloader.DoorEffectPath)
+	loader:addPath(CachotScenePreloader.RoleTransEffect)
+	loader:addPath(CachotScenePreloader.RoleBornEffect)
 end
 
-function var_0_0._addRoomSceneAsset(arg_4_0, arg_4_1)
-	arg_4_1:addPath(var_0_0.EventItem)
+function CachotScenePreloader:_addRoomSceneAsset(loader)
+	loader:addPath(CachotScenePreloader.EventItem)
 end
 
-function var_0_0._addLightAsset(arg_5_0, arg_5_1)
-	arg_5_1:addPath(var_0_0.LightPath)
+function CachotScenePreloader:_addLightAsset(loader)
+	loader:addPath(CachotScenePreloader.LightPath)
 end
 
-function var_0_0._onLoadedFinish(arg_6_0)
-	arg_6_0:dispatchEvent(V1a6_CachotEvent.ScenePreloaded)
+function CachotScenePreloader:_onLoadedFinish()
+	self:dispatchEvent(V1a6_CachotEvent.ScenePreloaded)
 end
 
-function var_0_0.getResByPath(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._abLoader:getAssetItem(arg_7_1)
+function CachotScenePreloader:getResByPath(path)
+	local assetItem = self._abLoader:getAssetItem(path)
 
-	if not var_7_0 or not var_7_0.IsLoadSuccess then
-		logError("资源加载失败 。。。 " .. arg_7_1)
+	if not assetItem or not assetItem.IsLoadSuccess then
+		logError("资源加载失败 。。。 " .. path)
 
 		return
 	end
 
-	return var_7_0:GetResource()
+	return assetItem:GetResource()
 end
 
-function var_0_0.getResInst(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = arg_8_0:getResByPath(arg_8_1)
+function CachotScenePreloader:getResInst(path, parent, name)
+	local res = self:getResByPath(path)
 
-	if var_8_0 then
-		return gohelper.clone(var_8_0, arg_8_2, arg_8_3)
+	if res then
+		return gohelper.clone(res, parent, name)
 	end
 end
 
-function var_0_0.onSceneClose(arg_9_0)
-	if arg_9_0._abLoader then
-		arg_9_0._abLoader:dispose()
+function CachotScenePreloader:onSceneClose()
+	if self._abLoader then
+		self._abLoader:dispose()
 
-		arg_9_0._abLoader = nil
+		self._abLoader = nil
 	end
 end
 
-return var_0_0
+return CachotScenePreloader

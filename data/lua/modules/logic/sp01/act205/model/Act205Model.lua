@@ -1,121 +1,127 @@
-﻿module("modules.logic.sp01.act205.model.Act205Model", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/model/Act205Model.lua
 
-local var_0_0 = class("Act205Model", BaseModel)
+module("modules.logic.sp01.act205.model.Act205Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Act205Model = class("Act205Model", BaseModel)
+
+function Act205Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.gameInfoMap = {}
+function Act205Model:reInit()
+	self.gameInfoMap = {}
 end
 
-function var_0_0.getAct205Id(arg_3_0)
+function Act205Model:getAct205Id()
 	return Act205Enum.ActId
 end
 
-function var_0_0.setGameStageId(arg_4_0, arg_4_1)
-	arg_4_0.curStageId = arg_4_1
+function Act205Model:setGameStageId(stageId)
+	self.curStageId = stageId
 end
 
-function var_0_0.getGameStageId(arg_5_0)
-	return arg_5_0.curStageId
+function Act205Model:getGameStageId()
+	return self.curStageId
 end
 
-function var_0_0.isAct205Open(arg_6_0, arg_6_1)
-	local var_6_0 = false
-	local var_6_1 = arg_6_0:getAct205Id()
-	local var_6_2, var_6_3, var_6_4 = ActivityHelper.getActivityStatusAndToast(var_6_1)
+function Act205Model:isAct205Open(isToast)
+	local result = false
+	local actId = self:getAct205Id()
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_6_2 == ActivityEnum.ActivityStatus.Normal then
-		var_6_0 = true
-	elseif var_6_3 and arg_6_1 then
-		GameFacade.showToastWithTableParam(var_6_3, var_6_4)
+	if status == ActivityEnum.ActivityStatus.Normal then
+		result = true
+	elseif toastId and isToast then
+		GameFacade.showToastWithTableParam(toastId, paramList)
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.isGameStageOpen(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0:getAct205Id()
-	local var_7_1 = arg_7_0:getGameInfoMo(var_7_0, arg_7_1)
-	local var_7_2 = arg_7_0:isGameTimeOpen(arg_7_1) and var_7_1
+function Act205Model:isGameStageOpen(gameStageId, isToast)
+	local actId = self:getAct205Id()
+	local gameInfoMo = self:getGameInfoMo(actId, gameStageId)
+	local isGameTimeOpen = self:isGameTimeOpen(gameStageId)
+	local result = isGameTimeOpen and gameInfoMo
 
-	if not var_7_2 and arg_7_2 then
+	if not result and isToast then
 		GameFacade.showToast(ToastEnum.ActivityNotOpen)
 	end
 
-	return var_7_2
+	return result
 end
 
-function var_0_0.isGameTimeOpen(arg_8_0, arg_8_1)
-	if not arg_8_0:isAct205Open(true) then
+function Act205Model:isGameTimeOpen(gameStageId)
+	local isActOpen = self:isAct205Open(true)
+
+	if not isActOpen then
 		return false
 	end
 
-	local var_8_0 = arg_8_0:getAct205Id()
-	local var_8_1 = ServerTime.now()
-	local var_8_2 = Act205Config.instance:getGameStageOpenTimeStamp(var_8_0, arg_8_1)
-	local var_8_3 = Act205Config.instance:getGameStageEndTimeStamp(var_8_0, arg_8_1)
+	local actId = self:getAct205Id()
+	local nowTime = ServerTime.now()
+	local openTime = Act205Config.instance:getGameStageOpenTimeStamp(actId, gameStageId)
+	local endTime = Act205Config.instance:getGameStageEndTimeStamp(actId, gameStageId)
+	local result = openTime <= nowTime and nowTime < endTime
 
-	return var_8_2 <= var_8_1 and var_8_1 < var_8_3
+	return result
 end
 
-function var_0_0.getCurOpenGameStageId(arg_9_0)
-	for iter_9_0, iter_9_1 in pairs(Act205Enum.GameStageId) do
-		if arg_9_0:isGameStageOpen(iter_9_1) then
-			return iter_9_1
+function Act205Model:getCurOpenGameStageId()
+	for index, stageId in pairs(Act205Enum.GameStageId) do
+		if self:isGameStageOpen(stageId) then
+			return stageId
 		end
 	end
 end
 
-function var_0_0.setAct205Info(arg_10_0, arg_10_1)
-	arg_10_0.gameInfoMap = {}
+function Act205Model:setAct205Info(info)
+	self.gameInfoMap = {}
 
-	local var_10_0 = arg_10_0.gameInfoMap[arg_10_1.activityId]
+	local actInfo = self.gameInfoMap[info.activityId]
 
-	if not var_10_0 then
-		var_10_0 = {}
-		arg_10_0.gameInfoMap[arg_10_1.activityId] = var_10_0
+	if not actInfo then
+		actInfo = {}
+		self.gameInfoMap[info.activityId] = actInfo
 	end
 
-	local var_10_1 = var_10_0[arg_10_1.gameType]
+	local gameInfoMo = actInfo[info.gameType]
 
-	if not var_10_1 then
-		var_10_1 = Act205GameInfoMo.New()
+	if not gameInfoMo then
+		gameInfoMo = Act205GameInfoMo.New()
 
-		var_10_1:init(arg_10_1.activityId, arg_10_1.gameType)
+		gameInfoMo:init(info.activityId, info.gameType)
 
-		var_10_0[arg_10_1.gameType] = var_10_1
+		actInfo[info.gameType] = gameInfoMo
 	end
 
-	var_10_1:updateInfo(arg_10_1)
+	gameInfoMo:updateInfo(info)
 end
 
-function var_0_0.setAct205GameInfo(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.gameInfoMap[arg_11_1.activityId] and arg_11_0.gameInfoMap[arg_11_1.activityId][arg_11_1.gameType]
+function Act205Model:setAct205GameInfo(info)
+	local gameInfoMo = self.gameInfoMap[info.activityId] and self.gameInfoMap[info.activityId][info.gameType]
 
-	if not var_11_0 then
+	if not gameInfoMo then
 		return
 	end
 
-	var_11_0:setGameInfo(arg_11_1.gameInfo)
+	gameInfoMo:setGameInfo(info.gameInfo)
 end
 
-function var_0_0.updateGameInfo(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.gameInfoMap[arg_12_1.activityId] and arg_12_0.gameInfoMap[arg_12_1.activityId][arg_12_1.gameType]
+function Act205Model:updateGameInfo(info)
+	local gameInfoMo = self.gameInfoMap[info.activityId] and self.gameInfoMap[info.activityId][info.gameType]
 
-	if not var_12_0 then
+	if not gameInfoMo then
 		return
 	end
 
-	var_12_0:updateInfo(arg_12_1)
+	gameInfoMo:updateInfo(info)
 end
 
-function var_0_0.getGameInfoMo(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0.gameInfoMap[arg_13_1] and arg_13_0.gameInfoMap[arg_13_1][arg_13_2]
+function Act205Model:getGameInfoMo(activityId, gameType)
+	return self.gameInfoMap[activityId] and self.gameInfoMap[activityId][gameType]
 end
 
-var_0_0.instance = var_0_0.New()
+Act205Model.instance = Act205Model.New()
 
-return var_0_0
+return Act205Model

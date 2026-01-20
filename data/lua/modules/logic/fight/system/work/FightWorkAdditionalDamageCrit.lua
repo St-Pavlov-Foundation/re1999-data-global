@@ -1,27 +1,29 @@
-﻿module("modules.logic.fight.system.work.FightWorkAdditionalDamageCrit", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAdditionalDamageCrit.lua
 
-local var_0_0 = class("FightWorkAdditionalDamageCrit", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkAdditionalDamageCrit", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+local FightWorkAdditionalDamageCrit = class("FightWorkAdditionalDamageCrit", FightEffectBase)
 
-	if var_1_0 then
-		local var_1_1 = arg_1_0.actEffectData.effectNum
+function FightWorkAdditionalDamageCrit:onStart()
+	local entity = FightHelper.getEntity(self.actEffectData.targetId)
 
-		if var_1_1 > 0 then
-			local var_1_2 = var_1_0:isMySide() and -var_1_1 or var_1_1
+	if entity then
+		local effectNum = self.actEffectData.effectNum
 
-			FightFloatMgr.instance:float(var_1_0.id, FightEnum.FloatType.crit_additional_damage, var_1_2, nil, arg_1_0.actEffectData.effectNum1 == 1)
+		if effectNum > 0 then
+			local floatNum = entity:isMySide() and -effectNum or effectNum
 
-			if var_1_0.nameUI then
-				var_1_0.nameUI:addHp(-var_1_1)
+			FightFloatMgr.instance:float(entity.id, FightEnum.FloatType.crit_additional_damage, floatNum, nil, self.actEffectData.effectNum1 == 1)
+
+			if entity.nameUI then
+				entity.nameUI:addHp(-effectNum)
 			end
 
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_0, -var_1_1)
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, entity, -effectNum)
 		end
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkAdditionalDamageCrit

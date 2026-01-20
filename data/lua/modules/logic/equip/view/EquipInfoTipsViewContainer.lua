@@ -1,23 +1,25 @@
-﻿module("modules.logic.equip.view.EquipInfoTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipInfoTipsViewContainer.lua
 
-local var_0_0 = class("EquipInfoTipsViewContainer", BaseViewContainer)
+module("modules.logic.equip.view.EquipInfoTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.tipView = EquipInfoTipsView.New()
+local EquipInfoTipsViewContainer = class("EquipInfoTipsViewContainer", BaseViewContainer)
+
+function EquipInfoTipsViewContainer:buildViews()
+	self.tipView = EquipInfoTipsView.New()
 
 	return {
-		arg_1_0.tipView
+		self.tipView
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function EquipInfoTipsViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.playCloseTransition(arg_3_0)
-	arg_3_0:startViewCloseBlock()
-	arg_3_0.tipView.animatorPlayer:Play(UIAnimationName.Close, arg_3_0.onPlayCloseTransitionFinish, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0.onPlayCloseTransitionFinish, arg_3_0, 2)
+function EquipInfoTipsViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+	self.tipView.animatorPlayer:Play(UIAnimationName.Close, self.onPlayCloseTransitionFinish, self)
+	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 2)
 end
 
-return var_0_0
+return EquipInfoTipsViewContainer

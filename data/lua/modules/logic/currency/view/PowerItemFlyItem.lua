@@ -1,41 +1,43 @@
-﻿module("modules.logic.currency.view.PowerItemFlyItem", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/PowerItemFlyItem.lua
 
-local var_0_0 = class("PowerItemFlyItem", LuaCompBase)
-local var_0_1 = "powerview_fly"
+module("modules.logic.currency.view.PowerItemFlyItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.animPlayer = SLFramework.AnimatorPlayer.Get(arg_1_1)
-	arg_1_0.isFlying = false
+local PowerItemFlyItem = class("PowerItemFlyItem", LuaCompBase)
+local FlyAnimName = "powerview_fly"
+
+function PowerItemFlyItem:init(go)
+	self.go = go
+	self.animPlayer = SLFramework.AnimatorPlayer.Get(go)
+	self.isFlying = false
 end
 
-function var_0_0.fly(arg_2_0, arg_2_1)
-	arg_2_0.isFlying = true
+function PowerItemFlyItem:fly(delayTime)
+	self.isFlying = true
 
-	gohelper.setActive(arg_2_0.go, false)
-	TaskDispatcher.cancelTask(arg_2_0._playFlyAnim, arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._playFlyAnim, arg_2_0, arg_2_1)
+	gohelper.setActive(self.go, false)
+	TaskDispatcher.cancelTask(self._playFlyAnim, self)
+	TaskDispatcher.runDelay(self._playFlyAnim, self, delayTime)
 end
 
-function var_0_0._playFlyAnim(arg_3_0)
-	gohelper.setActive(arg_3_0.go, true)
-	arg_3_0.animPlayer:Play(var_0_1, arg_3_0._flyCallback, arg_3_0)
+function PowerItemFlyItem:_playFlyAnim()
+	gohelper.setActive(self.go, true)
+	self.animPlayer:Play(FlyAnimName, self._flyCallback, self)
 end
 
-function var_0_0._flyCallback(arg_4_0)
-	arg_4_0.isFlying = false
+function PowerItemFlyItem:_flyCallback()
+	self.isFlying = false
 
-	gohelper.setActive(arg_4_0.go, false)
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.isCanfly(arg_5_0)
-	return not arg_5_0.isFlying
+function PowerItemFlyItem:isCanfly()
+	return not self.isFlying
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._playFlyAnim, arg_6_0)
+function PowerItemFlyItem:onDestroy()
+	TaskDispatcher.cancelTask(self._playFlyAnim, self)
 
-	arg_6_0.isFlying = false
+	self.isFlying = false
 end
 
-return var_0_0
+return PowerItemFlyItem

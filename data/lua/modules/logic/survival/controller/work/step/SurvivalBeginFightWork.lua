@@ -1,31 +1,34 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalBeginFightWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalBeginFightWork.lua
 
-local var_0_0 = class("SurvivalBeginFightWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalBeginFightWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(ModuleEnum.HeroGroupSnapshotType.Survival, arg_1_0._onRecvMsg, arg_1_0)
+local SurvivalBeginFightWork = class("SurvivalBeginFightWork", SurvivalStepBaseWork)
+
+function SurvivalBeginFightWork:onStart(context)
+	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(ModuleEnum.HeroGroupSnapshotType.Survival, self._onRecvMsg, self)
 end
 
-function var_0_0._onRecvMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_2 == 0 and not arg_2_0.context.fastExecute then
-		local var_2_0 = SurvivalMapModel.instance:getSceneMo().unitsById[arg_2_0._stepMo.paramInt[1]]
+function SurvivalBeginFightWork:_onRecvMsg(cmd, resultCode, msg)
+	if resultCode == 0 and not self.context.fastExecute then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local unitMo = sceneMo.unitsById[self._stepMo.paramInt[1]]
 
-		if var_2_0 then
-			local var_2_1 = SurvivalConst.Survival_EpisodeId
-			local var_2_2 = DungeonConfig.instance:getEpisodeCO(var_2_1)
+		if unitMo then
+			local episodeId = SurvivalConst.Survival_EpisodeId
+			local config = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-			DungeonFightController.instance:enterFightByBattleId(var_2_2.chapterId, var_2_1, var_2_0.co.battleId)
+			DungeonFightController.instance:enterFightByBattleId(config.chapterId, episodeId, unitMo.co.battleId)
 
-			arg_2_0.context.isEnterFight = true
+			self.context.isEnterFight = true
 
-			arg_2_0:onDone(true)
+			self:onDone(true)
 		else
-			logError("战斗元件不存在" .. tostring(arg_2_0._stepMo.paramInt[1]))
-			arg_2_0:onDone(true)
+			logError("战斗元件不存在" .. tostring(self._stepMo.paramInt[1]))
+			self:onDone(true)
 		end
 	else
-		arg_2_0:onDone(false)
+		self:onDone(false)
 	end
 end
 
-return var_0_0
+return SurvivalBeginFightWork

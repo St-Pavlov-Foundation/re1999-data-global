@@ -1,12 +1,14 @@
-﻿module("modules.logic.explore.controller.steps.ExploreBattleStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreBattleStep.lua
 
-local var_0_0 = class("ExploreBattleStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreBattleStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId())
+local ExploreBattleStep = class("ExploreBattleStep", ExploreStepBase)
 
-	DungeonFightController.instance:enterFightByBattleId(var_1_0.chapterId, var_1_0.episodeId, arg_1_0._data.battleId)
-	arg_1_0:onDone()
+function ExploreBattleStep:onStart()
+	local config = ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId())
+
+	DungeonFightController.instance:enterFightByBattleId(config.chapterId, config.episodeId, self._data.battleId)
+	self:onDone()
 end
 
-return var_0_0
+return ExploreBattleStep

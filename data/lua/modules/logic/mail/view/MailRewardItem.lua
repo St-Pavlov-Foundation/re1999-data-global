@@ -1,106 +1,112 @@
-﻿module("modules.logic.mail.view.MailRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/mail/view/MailRewardItem.lua
 
-local var_0_0 = class("MailRewardItem")
+module("modules.logic.mail.view.MailRewardItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._commonitemcontainer = gohelper.findChild(arg_1_1, "commonitemcontainer")
-	arg_1_0._canvasGroup = arg_1_1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._txtcount = gohelper.findChildText(arg_1_1, "countbg/count")
-	arg_1_0._bg = gohelper.findChild(arg_1_1, "countbg")
+local MailRewardItem = class("MailRewardItem")
+
+function MailRewardItem:init(go)
+	self.go = go
+	self._commonitemcontainer = gohelper.findChild(go, "commonitemcontainer")
+	self._canvasGroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._txtcount = gohelper.findChildText(go, "countbg/count")
+	self._bg = gohelper.findChild(go, "countbg")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function MailRewardItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function MailRewardItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
-	arg_4_0.itemType = tonumber(arg_4_0._mo[1])
-	arg_4_0.itemId = tonumber(arg_4_0._mo[2])
+function MailRewardItem:onUpdateMO(mo)
+	self._mo = mo
+	self.itemType = tonumber(self._mo[1])
+	self.itemId = tonumber(self._mo[2])
 
-	local var_4_0 = tonumber(arg_4_0._mo[3])
+	local itemQuantity = tonumber(self._mo[3])
 
-	if arg_4_0.itemType == MaterialEnum.MaterialType.EquipCard or arg_4_0.itemType == MaterialEnum.MaterialType.Season123EquipCard then
-		recthelper.setWidth(arg_4_0.go.transform, 80.69)
+	if self.itemType == MaterialEnum.MaterialType.EquipCard or self.itemType == MaterialEnum.MaterialType.Season123EquipCard then
+		recthelper.setWidth(self.go.transform, 80.69)
 
-		if arg_4_0._commonitem then
-			gohelper.setActive(arg_4_0._commonitem.go, false)
+		if self._commonitem then
+			gohelper.setActive(self._commonitem.go, false)
 		end
 
-		gohelper.setActive(arg_4_0._bg.gameObject, false)
+		gohelper.setActive(self._bg.gameObject, false)
 
-		if not arg_4_0._equipCardItem then
-			arg_4_0._equipItemGo = gohelper.create2d(arg_4_0.go, "EquipCard")
+		if not self._equipCardItem then
+			self._equipItemGo = gohelper.create2d(self.go, "EquipCard")
 
-			transformhelper.setLocalScale(arg_4_0._equipItemGo.transform, 0.265, 0.265, 0.265)
+			transformhelper.setLocalScale(self._equipItemGo.transform, 0.265, 0.265, 0.265)
 
-			arg_4_0._equipCardItem = Season123CelebrityCardItem.New()
+			self._equipCardItem = Season123CelebrityCardItem.New()
 
-			arg_4_0._equipCardItem:init(arg_4_0._equipItemGo, arg_4_0.itemId, {
+			self._equipCardItem:init(self._equipItemGo, self.itemId, {
 				noClick = true
 			})
 		else
-			gohelper.setActive(arg_4_0._equipItemGo, true)
-			arg_4_0._equipCardItem:reset(nil, nil, arg_4_0.itemId)
+			gohelper.setActive(self._equipItemGo, true)
+			self._equipCardItem:reset(nil, nil, self.itemId)
 		end
 	else
-		recthelper.setWidth(arg_4_0.go.transform, 115)
+		recthelper.setWidth(self.go.transform, 115)
 
-		if not arg_4_0._commonitem then
-			arg_4_0._commonitem = IconMgr.instance:getCommonPropItemIcon(arg_4_0._commonitemcontainer)
+		if not self._commonitem then
+			self._commonitem = IconMgr.instance:getCommonPropItemIcon(self._commonitemcontainer)
 		end
 
-		gohelper.setActive(arg_4_0._equipItemGo, false)
-		gohelper.setActive(arg_4_0._commonitem.go, true)
-		gohelper.setActive(arg_4_0._bg.gameObject, true)
-		arg_4_0._commonitem:setMOValue(arg_4_0.itemType, arg_4_0.itemId, var_4_0, nil, true)
-		arg_4_0._commonitem:hideEffect()
+		gohelper.setActive(self._equipItemGo, false)
+		gohelper.setActive(self._commonitem.go, true)
+		gohelper.setActive(self._bg.gameObject, true)
+		self._commonitem:setMOValue(self.itemType, self.itemId, itemQuantity, nil, true)
+		self._commonitem:hideEffect()
 
-		if arg_4_0._commonitem:isEquipIcon() then
-			arg_4_0._commonitem:ShowEquipCount(arg_4_0._bg, arg_4_0._txtcount)
-			arg_4_0._commonitem:setHideLvAndBreakFlag(true)
-			arg_4_0._commonitem:hideEquipLvAndBreak(true)
+		if self._commonitem:isEquipIcon() then
+			self._commonitem:ShowEquipCount(self._bg, self._txtcount)
+			self._commonitem:setHideLvAndBreakFlag(true)
+			self._commonitem:hideEquipLvAndBreak(true)
 		else
-			arg_4_0._commonitem:isShowCount(false)
+			self._commonitem:isShowCount(false)
 
-			arg_4_0._txtcount.text = tostring(var_4_0)
+			self._txtcount.text = tostring(itemQuantity)
 
-			arg_4_0._commonitem:showStackableNum2(arg_4_0._bg, arg_4_0._txtcount)
+			self._commonitem:showStackableNum2(self._bg, self._txtcount)
 		end
 	end
 
-	arg_4_0._canvasGroup.alpha = arg_4_0._mo.state == MailEnum.ReadStatus.Read and 0.5 or 1
+	self._canvasGroup.alpha = self._mo.state == MailEnum.ReadStatus.Read and 0.5 or 1
 
-	if arg_4_0.itemType == MaterialEnum.MaterialType.Item and lua_item.configDict[arg_4_0.itemId].subType == ItemEnum.SubType.Portrait then
-		arg_4_0._commonitem:setFrameMaskable(true)
+	if self.itemType == MaterialEnum.MaterialType.Item then
+		local config = lua_item.configDict[self.itemId]
+
+		if config.subType == ItemEnum.SubType.Portrait then
+			self._commonitem:setFrameMaskable(true)
+		end
 	end
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0._commonitem then
-		arg_5_0._commonitem:onDestroy()
+function MailRewardItem:onDestroy()
+	if self._commonitem then
+		self._commonitem:onDestroy()
 	end
 
-	if arg_5_0._equipCardItem then
-		arg_5_0._equipCardItem:destroy()
+	if self._equipCardItem then
+		self._equipCardItem:destroy()
 	end
 
-	gohelper.destroy(arg_5_0._equipItemGo)
+	gohelper.destroy(self._equipItemGo)
 
-	arg_5_0._mo = nil
-	arg_5_0._commonitem = nil
-	arg_5_0._equipCardItem = nil
-	arg_5_0._equipItemGo = nil
-	arg_5_0.go = nil
-	arg_5_0._commonitemcontainer = nil
-	arg_5_0._canvasGroup = nil
-	arg_5_0._txtcount = nil
-	arg_5_0._bg = nil
+	self._mo = nil
+	self._commonitem = nil
+	self._equipCardItem = nil
+	self._equipItemGo = nil
+	self.go = nil
+	self._commonitemcontainer = nil
+	self._canvasGroup = nil
+	self._txtcount = nil
+	self._bg = nil
 end
 
-return var_0_0
+return MailRewardItem

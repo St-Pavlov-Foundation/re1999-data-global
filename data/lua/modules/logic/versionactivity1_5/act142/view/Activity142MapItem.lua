@@ -1,275 +1,280 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.Activity142MapItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/Activity142MapItem.lua
 
-local var_0_0 = class("Activity142MapItem", LuaCompBase)
+module("modules.logic.versionactivity1_5.act142.view.Activity142MapItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._clickCb = arg_1_1.clickCb
-	arg_1_0._clickCbObj = arg_1_1.clickCbObj
-	arg_1_0._starItemList = {}
+local Activity142MapItem = class("Activity142MapItem", LuaCompBase)
+
+function Activity142MapItem:ctor(param)
+	self._clickCb = param.clickCb
+	self._clickCbObj = param.clickCbObj
+	self._starItemList = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_2_0._go)
-	arg_2_0._golock = gohelper.findChild(arg_2_0._go, "#go_lock")
-	arg_2_0._simagemaplock = gohelper.findChildImage(arg_2_0._go, "#go_lock/mask/#simage_maplock")
-	arg_2_0._gonormal = gohelper.findChild(arg_2_0._go, "#go_normal")
-	arg_2_0._gonormalbg = gohelper.findChild(arg_2_0._go, "#go_normal/#simage_normalbg")
-	arg_2_0._gosinglebg = gohelper.findChild(arg_2_0._go, "#go_normal/#simage_singlebg")
-	arg_2_0._simagemap = gohelper.findChildImage(arg_2_0._go, "#go_normal/mask/#simage_map")
-	arg_2_0._characternum = gohelper.findChildText(arg_2_0._go, "#txt_characternum")
-	arg_2_0._txtmap = gohelper.findChildText(arg_2_0._go, "#txt_map")
-	arg_2_0._gostarts = gohelper.findChild(arg_2_0._go, "#go_starts")
-	arg_2_0._gostartitem = gohelper.findChild(arg_2_0._go, "#go_starts/#go_startitem")
+function Activity142MapItem:init(go)
+	self._go = go
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._go)
+	self._golock = gohelper.findChild(self._go, "#go_lock")
+	self._simagemaplock = gohelper.findChildImage(self._go, "#go_lock/mask/#simage_maplock")
+	self._gonormal = gohelper.findChild(self._go, "#go_normal")
+	self._gonormalbg = gohelper.findChild(self._go, "#go_normal/#simage_normalbg")
+	self._gosinglebg = gohelper.findChild(self._go, "#go_normal/#simage_singlebg")
+	self._simagemap = gohelper.findChildImage(self._go, "#go_normal/mask/#simage_map")
+	self._characternum = gohelper.findChildText(self._go, "#txt_characternum")
+	self._txtmap = gohelper.findChildText(self._go, "#txt_map")
+	self._gostarts = gohelper.findChild(self._go, "#go_starts")
+	self._gostartitem = gohelper.findChild(self._go, "#go_starts/#go_startitem")
 
-	gohelper.setActive(arg_2_0._gostartitem, false)
+	gohelper.setActive(self._gostartitem, false)
 
-	arg_2_0._btnclickarea = gohelper.findChildButtonWithAudio(arg_2_0._go, "#btn_clickarea")
-	arg_2_0._btnreplay = gohelper.findChildButtonWithAudio(arg_2_0._go, "#btn_replay")
+	self._btnclickarea = gohelper.findChildButtonWithAudio(self._go, "#btn_clickarea")
+	self._btnreplay = gohelper.findChildButtonWithAudio(self._go, "#btn_replay")
 
-	arg_2_0:setEpisodeId()
-	arg_2_0:setBg(false)
+	self:setEpisodeId()
+	self:setBg(false)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnreplay:AddClickListener(arg_3_0._btnreplayOnClick, arg_3_0)
-	arg_3_0._btnclickarea:AddClickListener(arg_3_0._onClick, arg_3_0)
+function Activity142MapItem:addEventListeners()
+	self._btnreplay:AddClickListener(self._btnreplayOnClick, self)
+	self._btnclickarea:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnreplay:RemoveClickListener()
-	arg_4_0._btnclickarea:RemoveClickListener()
+function Activity142MapItem:removeEventListeners()
+	self._btnreplay:RemoveClickListener()
+	self._btnclickarea:RemoveClickListener()
 end
 
-function var_0_0._btnreplayOnClick(arg_5_0)
-	if not arg_5_0._episodeId then
+function Activity142MapItem:_btnreplayOnClick()
+	if not self._episodeId then
 		return
 	end
 
-	Activity142Controller.instance:openStoryView(arg_5_0._episodeId)
+	Activity142Controller.instance:openStoryView(self._episodeId)
 end
 
-function var_0_0._onClick(arg_6_0)
-	if not arg_6_0._episodeId or not arg_6_0._clickCb then
+function Activity142MapItem:_onClick()
+	if not self._episodeId or not self._clickCb then
 		return
 	end
 
-	arg_6_0._clickCb(arg_6_0._clickCbObj, arg_6_0._episodeId)
+	self._clickCb(self._clickCbObj, self._episodeId)
 end
 
-function var_0_0.setEpisodeId(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0:cancelAllTaskDispatcher()
+function Activity142MapItem:setEpisodeId(episodeId, unlockAnimDelayTime)
+	self:cancelAllTaskDispatcher()
 
-	arg_7_0._episodeId = arg_7_1
+	self._episodeId = episodeId
 
-	if not arg_7_0._episodeId then
-		gohelper.setActive(arg_7_0._go, false)
+	if not self._episodeId then
+		gohelper.setActive(self._go, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_7_0._go, true)
+	gohelper.setActive(self._go, true)
 
-	local var_7_0 = Activity142Model.instance:getActivityId()
-	local var_7_1 = Activity142Config.instance:getEpisodeOrder(var_7_0, arg_7_0._episodeId) or ""
-	local var_7_2 = Activity142Config.instance:getEpisodeName(var_7_0, arg_7_0._episodeId) or ""
+	local actId = Activity142Model.instance:getActivityId()
+	local orderId = Activity142Config.instance:getEpisodeOrder(actId, self._episodeId) or ""
+	local name = Activity142Config.instance:getEpisodeName(actId, self._episodeId) or ""
 
-	arg_7_0._characternum.text = var_7_1
-	arg_7_0._txtmap.text = var_7_2
+	self._characternum.text = orderId
+	self._txtmap.text = name
 
-	local var_7_3 = Activity142Config.instance:getEpisodeNormalSP(var_7_0, arg_7_0._episodeId)
+	local normalSpriteName = Activity142Config.instance:getEpisodeNormalSP(actId, self._episodeId)
 
-	if var_7_3 then
-		UISpriteSetMgr.instance:setV1a5ChessSprite(arg_7_0._simagemap, var_7_3)
+	if normalSpriteName then
+		UISpriteSetMgr.instance:setV1a5ChessSprite(self._simagemap, normalSpriteName)
 	end
 
-	local var_7_4 = Activity142Config.instance:getEpisodeLockSP(var_7_0, arg_7_0._episodeId)
+	local lockSpriteName = Activity142Config.instance:getEpisodeLockSP(actId, self._episodeId)
 
-	if var_7_4 then
-		UISpriteSetMgr.instance:setV1a5ChessSprite(arg_7_0._simagemaplock, var_7_4)
+	if lockSpriteName then
+		UISpriteSetMgr.instance:setV1a5ChessSprite(self._simagemaplock, lockSpriteName)
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._starItemList) do
-		gohelper.setActive(iter_7_1.go, false)
+	for _, starItem in ipairs(self._starItemList) do
+		gohelper.setActive(starItem.go, false)
 	end
 
-	local var_7_5 = Activity142Config.instance:getEpisodeMaxStar(var_7_0, arg_7_0._episodeId)
+	local maxStar = Activity142Config.instance:getEpisodeMaxStar(actId, self._episodeId)
 
-	for iter_7_2 = 1, var_7_5 do
-		local var_7_6 = arg_7_0._starItemList[iter_7_2] or arg_7_0:_addStarItem()
+	for i = 1, maxStar do
+		local starItem = self._starItemList[i]
 
-		gohelper.setActive(var_7_6.go, true)
-		gohelper.setActive(var_7_6.grayGO, true)
-		gohelper.setActive(var_7_6.lightGO, false)
-		gohelper.setActive(var_7_6.lightEffectGO, false)
+		starItem = starItem or self:_addStarItem()
+
+		gohelper.setActive(starItem.go, true)
+		gohelper.setActive(starItem.grayGO, true)
+		gohelper.setActive(starItem.lightGO, false)
+		gohelper.setActive(starItem.lightEffectGO, false)
 	end
 
-	arg_7_0:refresh(arg_7_2)
+	self:refresh(unlockAnimDelayTime)
 end
 
-function var_0_0._addStarItem(arg_8_0)
-	local var_8_0 = #arg_8_0._starItemList + 1
-	local var_8_1 = arg_8_0:getUserDataTb_()
+function Activity142MapItem:_addStarItem()
+	local index = #self._starItemList + 1
+	local starItem = self:getUserDataTb_()
 
-	var_8_1.go = gohelper.clone(arg_8_0._gostartitem, arg_8_0._gostarts, "star" .. var_8_0)
-	var_8_1.grayGO = gohelper.findChild(var_8_1.go, "#go_gray")
-	var_8_1.lightGO = gohelper.findChild(var_8_1.go, "#go_light")
-	var_8_1.lightAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(var_8_1.lightGO)
-	var_8_1.lightEffectGO = gohelper.findChild(var_8_1.go, "#go_light/xing")
-	arg_8_0._starItemList[var_8_0] = var_8_1
+	starItem.go = gohelper.clone(self._gostartitem, self._gostarts, "star" .. index)
+	starItem.grayGO = gohelper.findChild(starItem.go, "#go_gray")
+	starItem.lightGO = gohelper.findChild(starItem.go, "#go_light")
+	starItem.lightAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(starItem.lightGO)
+	starItem.lightEffectGO = gohelper.findChild(starItem.go, "#go_light/xing")
+	self._starItemList[index] = starItem
 
-	ZProj.UGUIHelper.RebuildLayout(arg_8_0._gostarts.transform)
+	ZProj.UGUIHelper.RebuildLayout(self._gostarts.transform)
 
-	return var_8_1
+	return starItem
 end
 
-function var_0_0.setParent(arg_9_0, arg_9_1)
-	if gohelper.isNil(arg_9_0._go) or gohelper.isNil(arg_9_1) then
+function Activity142MapItem:setParent(parenGO)
+	if gohelper.isNil(self._go) or gohelper.isNil(parenGO) then
 		return
 	end
 
-	arg_9_0._go.transform:SetParent(arg_9_1.transform, false)
+	self._go.transform:SetParent(parenGO.transform, false)
 end
 
-function var_0_0.setBg(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._gosinglebg, arg_10_1)
-	gohelper.setActive(arg_10_0._gonormalbg, not arg_10_1)
+function Activity142MapItem:setBg(isSingle)
+	gohelper.setActive(self._gosinglebg, isSingle)
+	gohelper.setActive(self._gonormalbg, not isSingle)
 end
 
-function var_0_0.refresh(arg_11_0, arg_11_1)
-	if not arg_11_0._episodeId then
+function Activity142MapItem:refresh(unlockAnimDelayTime)
+	if not self._episodeId then
 		return
 	end
 
-	arg_11_0:_refreshUnlock(arg_11_1)
-	arg_11_0:_refreshStar()
-	arg_11_0:_refreshReplayBtn()
+	self:_refreshUnlock(unlockAnimDelayTime)
+	self:_refreshStar()
+	self:_refreshReplayBtn()
 end
 
-function var_0_0._refreshUnlock(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._animatorPlayer and arg_12_0._animatorPlayer.isActiveAndEnabled
+function Activity142MapItem:_refreshUnlock(delayTime)
+	local isAnimatorReady = self._animatorPlayer and self._animatorPlayer.isActiveAndEnabled
 
-	if var_12_0 then
-		arg_12_0._animatorPlayer:Play(Activity142Enum.MAP_ITEM_IDLE_ANIM)
+	if isAnimatorReady then
+		self._animatorPlayer:Play(Activity142Enum.MAP_ITEM_IDLE_ANIM)
 	end
 
-	local var_12_1 = Activity142Model.instance:getActivityId()
-	local var_12_2 = Activity142Model.instance:isEpisodeOpen(var_12_1, arg_12_0._episodeId)
-	local var_12_3 = string.format("%s_%s", Activity142Enum.MAP_ITEM_CACHE_KEY, arg_12_0._episodeId)
+	local actId = Activity142Model.instance:getActivityId()
+	local isOpen = Activity142Model.instance:isEpisodeOpen(actId, self._episodeId)
+	local cacheKey = string.format("%s_%s", Activity142Enum.MAP_ITEM_CACHE_KEY, self._episodeId)
+	local isPlayUnlockAnim = self._episodeId ~= Activity142Enum.AUTO_ENTER_EPISODE_ID and not Activity142Controller.instance:havePlayedUnlockAni(cacheKey)
 
-	if arg_12_0._episodeId ~= Activity142Enum.AUTO_ENTER_EPISODE_ID and not Activity142Controller.instance:havePlayedUnlockAni(var_12_3) and var_12_0 and var_12_2 then
-		arg_12_0:playMapItemUnlockAnim(arg_12_1)
+	if isPlayUnlockAnim and isAnimatorReady and isOpen then
+		self:playMapItemUnlockAnim(delayTime)
 	else
-		gohelper.setActive(arg_12_0._gonormal, var_12_2)
-		gohelper.setActive(arg_12_0._golock, not var_12_2)
+		gohelper.setActive(self._gonormal, isOpen)
+		gohelper.setActive(self._golock, not isOpen)
 	end
 end
 
-function var_0_0._refreshStar(arg_13_0)
-	local var_13_0 = Activity142Model.instance:getEpisodeData(arg_13_0._episodeId)
+function Activity142MapItem:_refreshStar()
+	local episodeData = Activity142Model.instance:getEpisodeData(self._episodeId)
 
-	if not var_13_0 then
+	if not episodeData then
 		return
 	end
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._starItemList) do
-		if iter_13_1.lightAnimatorPlayer then
-			iter_13_1.lightAnimatorPlayer:Play(Activity142Enum.MAP_STAR_IDLE_ANIM)
+	for i, starItem in ipairs(self._starItemList) do
+		if starItem.lightAnimatorPlayer then
+			starItem.lightAnimatorPlayer:Play(Activity142Enum.MAP_STAR_IDLE_ANIM)
 		end
 
-		local var_13_1 = string.format("%s_%s_%s", Activity142Enum.MAP_STAR_CACHE_KEY, arg_13_0._episodeId, iter_13_0)
-		local var_13_2 = not Activity142Controller.instance:havePlayedUnlockAni(var_13_1)
-		local var_13_3 = iter_13_0 <= var_13_0.star
+		local cacheKey = string.format("%s_%s_%s", Activity142Enum.MAP_STAR_CACHE_KEY, self._episodeId, i)
+		local isPlayUnlockAnim = not Activity142Controller.instance:havePlayedUnlockAni(cacheKey)
+		local isLight = i <= episodeData.star
 
-		if var_13_2 and iter_13_1.lightAnimatorPlayer and var_13_3 then
+		if isPlayUnlockAnim and starItem.lightAnimatorPlayer and isLight then
 			Activity142Helper.setAct142UIBlock(true, Activity142Enum.EPISODE_STAR_UNLOCK)
 			UIBlockMgrExtend.setNeedCircleMv(false)
-			gohelper.setActive(iter_13_1.grayGO, true)
-			gohelper.setActive(iter_13_1.lightGO, true)
-			iter_13_1.lightAnimatorPlayer:Play(Activity142Enum.MAP_STAR_OPEN_ANIM, arg_13_0._finishStarItemUnlockAnim, {
-				self = arg_13_0,
-				index = iter_13_0
+			gohelper.setActive(starItem.grayGO, true)
+			gohelper.setActive(starItem.lightGO, true)
+			starItem.lightAnimatorPlayer:Play(Activity142Enum.MAP_STAR_OPEN_ANIM, self._finishStarItemUnlockAnim, {
+				self = self,
+				index = i
 			})
 		else
-			gohelper.setActive(iter_13_1.grayGO, not var_13_3)
-			gohelper.setActive(iter_13_1.lightGO, var_13_3)
+			gohelper.setActive(starItem.grayGO, not isLight)
+			gohelper.setActive(starItem.lightGO, isLight)
 		end
 	end
 end
 
-function var_0_0._finishStarItemUnlockAnim(arg_14_0)
-	if not arg_14_0 or not arg_14_0.self or not arg_14_0.self._episodeId or not arg_14_0.index then
+function Activity142MapItem._finishStarItemUnlockAnim(param)
+	if not param or not param.self or not param.self._episodeId or not param.index then
 		return
 	end
 
-	local var_14_0 = arg_14_0.self
-	local var_14_1 = var_14_0._episodeId
-	local var_14_2 = arg_14_0.index
-	local var_14_3 = string.format("%s_%s_%s", Activity142Enum.MAP_STAR_CACHE_KEY, var_14_1, var_14_2)
+	local self = param.self
+	local episodeId = self._episodeId
+	local index = param.index
+	local cacheKey = string.format("%s_%s_%s", Activity142Enum.MAP_STAR_CACHE_KEY, episodeId, index)
 
-	Activity142Controller.instance:setPlayedUnlockAni(var_14_3)
-	var_14_0:_endBlock(true)
+	Activity142Controller.instance:setPlayedUnlockAni(cacheKey)
+	self:_endBlock(true)
 end
 
-function var_0_0._refreshReplayBtn(arg_15_0)
-	local var_15_0 = Activity142Model.instance:getActivityId()
-	local var_15_1 = Va3ChessConfig.instance:isStoryEpisode(var_15_0, arg_15_0._episodeId)
-	local var_15_2 = Activity142Config.instance:getEpisodeStoryList(var_15_0, arg_15_0._episodeId)
-	local var_15_3 = Activity142Model.instance:isEpisodeClear(arg_15_0._episodeId)
+function Activity142MapItem:_refreshReplayBtn()
+	local actId = Activity142Model.instance:getActivityId()
+	local isStoryEpisode = Va3ChessConfig.instance:isStoryEpisode(actId, self._episodeId)
+	local episodeStoryList = Activity142Config.instance:getEpisodeStoryList(actId, self._episodeId)
+	local isClear = Activity142Model.instance:isEpisodeClear(self._episodeId)
 
-	gohelper.setActive(arg_15_0._btnreplay.gameObject, var_15_3 and not var_15_1 and #var_15_2 > 0)
+	gohelper.setActive(self._btnreplay.gameObject, isClear and not isStoryEpisode and #episodeStoryList > 0)
 end
 
-function var_0_0.playMapItemUnlockAnim(arg_16_0, arg_16_1)
+function Activity142MapItem:playMapItemUnlockAnim(delayTime)
 	Activity142Helper.setAct142UIBlock(true, Activity142Enum.MAP_ITEM_UNLOCK)
-	gohelper.setActive(arg_16_0._golock, true)
-	gohelper.setActive(arg_16_0._gonormal, false)
+	gohelper.setActive(self._golock, true)
+	gohelper.setActive(self._gonormal, false)
 
-	if arg_16_1 and arg_16_1 > 0 then
-		TaskDispatcher.runDelay(arg_16_0._delayPlayMapItemUnlockAnim, arg_16_0, arg_16_1)
+	if delayTime and delayTime > 0 then
+		TaskDispatcher.runDelay(self._delayPlayMapItemUnlockAnim, self, delayTime)
 	else
-		arg_16_0:_delayPlayMapItemUnlockAnim()
+		self:_delayPlayMapItemUnlockAnim()
 	end
 end
 
-function var_0_0._delayPlayMapItemUnlockAnim(arg_17_0)
-	gohelper.setActive(arg_17_0._gonormal, true)
+function Activity142MapItem:_delayPlayMapItemUnlockAnim()
+	gohelper.setActive(self._gonormal, true)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity142.UnlockItem)
-	arg_17_0._animatorPlayer:Play(Activity142Enum.CATEGORY_UNLOCK_ANIM, arg_17_0._finishMapItemUnlockAnim, arg_17_0)
+	self._animatorPlayer:Play(Activity142Enum.CATEGORY_UNLOCK_ANIM, self._finishMapItemUnlockAnim, self)
 end
 
-function var_0_0._finishMapItemUnlockAnim(arg_18_0)
-	local var_18_0 = string.format("%s_%s", Activity142Enum.MAP_ITEM_CACHE_KEY, arg_18_0._episodeId)
+function Activity142MapItem:_finishMapItemUnlockAnim()
+	local cacheKey = string.format("%s_%s", Activity142Enum.MAP_ITEM_CACHE_KEY, self._episodeId)
 
-	Activity142Controller.instance:setPlayedUnlockAni(var_18_0)
-	arg_18_0:_endBlock()
+	Activity142Controller.instance:setPlayedUnlockAni(cacheKey)
+	self:_endBlock()
 end
 
-function var_0_0._endBlock(arg_19_0, arg_19_1)
-	local var_19_0 = Activity142Enum.MAP_ITEM_UNLOCK
+function Activity142MapItem:_endBlock(isStar)
+	local blockKey = Activity142Enum.MAP_ITEM_UNLOCK
 
-	if arg_19_1 then
-		var_19_0 = Activity142Enum.EPISODE_STAR_UNLOCK
+	if isStar then
+		blockKey = Activity142Enum.EPISODE_STAR_UNLOCK
 	end
 
-	Activity142Helper.setAct142UIBlock(false, var_19_0)
+	Activity142Helper.setAct142UIBlock(false, blockKey)
 end
 
-function var_0_0.onDestroy(arg_20_0)
-	arg_20_0._episodeId = nil
-	arg_20_0.clickCb = nil
-	arg_20_0.clickCbObj = nil
-	arg_20_0._starItemList = {}
+function Activity142MapItem:onDestroy()
+	self._episodeId = nil
+	self.clickCb = nil
+	self.clickCbObj = nil
+	self._starItemList = {}
 
-	arg_20_0:cancelAllTaskDispatcher()
-	arg_20_0:_endBlock()
-	arg_20_0:_endBlock(true)
+	self:cancelAllTaskDispatcher()
+	self:_endBlock()
+	self:_endBlock(true)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.cancelAllTaskDispatcher(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._delayPlayMapItemUnlockAnim, arg_21_0)
+function Activity142MapItem:cancelAllTaskDispatcher()
+	TaskDispatcher.cancelTask(self._delayPlayMapItemUnlockAnim, self)
 end
 
-return var_0_0
+return Activity142MapItem

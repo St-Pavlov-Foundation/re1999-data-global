@@ -1,106 +1,108 @@
-﻿module("modules.logic.room.model.map.RoomShowBlockPackageListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomShowBlockPackageListModel.lua
 
-local var_0_0 = class("RoomShowBlockPackageListModel", ListScrollModel)
+module("modules.logic.room.model.map.RoomShowBlockPackageListModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local RoomShowBlockPackageListModel = class("RoomShowBlockPackageListModel", ListScrollModel)
 
-	function arg_1_0._selectSortFunc(arg_2_0, arg_2_1)
-		local var_2_0 = arg_1_0._selectBlockPackageId == arg_2_0.id
-		local var_2_1 = arg_1_0._selectBlockPackageId == arg_2_1.id
+function RoomShowBlockPackageListModel:ctor()
+	RoomShowBlockPackageListModel.super.ctor(self)
 
-		if var_2_0 ~= var_2_1 then
-			if var_2_0 then
+	function self._selectSortFunc(a, b)
+		local ast = self._selectBlockPackageId == a.id
+		local bst = self._selectBlockPackageId == b.id
+
+		if ast ~= bst then
+			if ast then
 				return true
-			elseif var_2_1 then
+			elseif bst then
 				return false
 			end
 		end
 
-		local var_2_2 = arg_2_0.num < 1
-		local var_2_3 = arg_2_1.num < 1
+		local aFinish = a.num < 1
+		local bFinish = b.num < 1
 
-		if var_2_2 ~= var_2_3 then
-			return var_2_3
+		if aFinish ~= bFinish then
+			return bFinish
 		end
 
-		local var_2_4
+		local sort
 
-		if arg_1_0._isSortRate then
-			if arg_2_0.rare ~= arg_2_1.rare then
-				if arg_1_0._isSortOrder then
-					return arg_2_0.rare < arg_2_1.rare
+		if self._isSortRate then
+			if a.rare ~= b.rare then
+				if self._isSortOrder then
+					return a.rare < b.rare
 				else
-					return arg_2_0.rare > arg_2_1.rare
+					return a.rare > b.rare
 				end
 			end
 
-			if arg_2_0.num ~= arg_2_1.num then
-				return arg_2_0.num > arg_2_1.num
+			if a.num ~= b.num then
+				return a.num > b.num
 			end
 		else
-			if arg_2_0.num ~= arg_2_1.num then
-				if arg_1_0._isSortOrder then
-					return arg_2_0.num < arg_2_1.num
+			if a.num ~= b.num then
+				if self._isSortOrder then
+					return a.num < b.num
 				else
-					return arg_2_0.num > arg_2_1.num
+					return a.num > b.num
 				end
 			end
 
-			if arg_2_0.rare ~= arg_2_1.rare then
-				return arg_2_0.rare > arg_2_1.rare
+			if a.rare ~= b.rare then
+				return a.rare > b.rare
 			end
 		end
 
-		if arg_2_0.id ~= arg_2_1.id then
-			return arg_2_0.id < arg_2_1.id
+		if a.id ~= b.id then
+			return a.id < b.id
 		end
 	end
 end
 
-function var_0_0.getSortRate(arg_3_0)
-	return arg_3_0._isSortRate
+function RoomShowBlockPackageListModel:getSortRate()
+	return self._isSortRate
 end
 
-function var_0_0.getSortOrder(arg_4_0)
-	return arg_4_0._isSortOrder
+function RoomShowBlockPackageListModel:getSortOrder()
+	return self._isSortOrder
 end
 
-function var_0_0.setSortParam(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._isSortOrder = arg_5_2
-	arg_5_0._isSortRate = arg_5_1
+function RoomShowBlockPackageListModel:setSortParam(isSortRate, isSortOrder)
+	self._isSortOrder = isSortOrder
+	self._isSortRate = isSortRate
 
-	arg_5_0:sort(arg_5_0._selectSortFunc)
+	self:sort(self._selectSortFunc)
 end
 
-function var_0_0.setShowBlockList(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = RoomInventoryBlockModel.instance:getInventoryBlockPackageMOList()
+function RoomShowBlockPackageListModel:setShowBlockList()
+	local moList = {}
+	local packageMOList = RoomInventoryBlockModel.instance:getInventoryBlockPackageMOList()
 
-	for iter_6_0 = 1, #var_6_1 do
-		local var_6_2 = var_6_1[iter_6_0]
-		local var_6_3 = RoomConfig.instance:getBlockPackageConfig(var_6_2.id)
+	for i = 1, #packageMOList do
+		local packageMO = packageMOList[i]
+		local cfg = RoomConfig.instance:getBlockPackageConfig(packageMO.id)
 
-		if var_6_3 and arg_6_0:_checkTheme(var_6_2.id) then
-			local var_6_4 = RoomShowBlockPackageMO.New()
+		if cfg and self:_checkTheme(packageMO.id) then
+			local showMO = RoomShowBlockPackageMO.New()
 
-			var_6_4:init(var_6_2.id, var_6_2:getUnUseCount(), var_6_3.rare or 0)
-			table.insert(var_6_0, var_6_4)
+			showMO:init(packageMO.id, packageMO:getUnUseCount(), cfg.rare or 0)
+			table.insert(moList, showMO)
 		end
 	end
 
-	table.sort(var_6_0, arg_6_0._selectSortFunc)
-	arg_6_0:setList(var_6_0)
-	arg_6_0:setSelect(nil)
+	table.sort(moList, self._selectSortFunc)
+	self:setList(moList)
+	self:setSelect(nil)
 end
 
-function var_0_0._checkTheme(arg_7_0, arg_7_1)
-	local var_7_0 = RoomThemeFilterListModel.instance
+function RoomShowBlockPackageListModel:_checkTheme(packageId)
+	local tRoomThemeFilterListModel = RoomThemeFilterListModel.instance
 
-	if not var_7_0:getIsAll() and var_7_0:getSelectCount() > 0 then
-		local var_7_1 = RoomConfig.instance:getThemeIdByItem(arg_7_1, MaterialEnum.MaterialType.BlockPackage)
+	if not tRoomThemeFilterListModel:getIsAll() and tRoomThemeFilterListModel:getSelectCount() > 0 then
+		local themeId = RoomConfig.instance:getThemeIdByItem(packageId, MaterialEnum.MaterialType.BlockPackage)
 
-		if not var_7_0:isSelectById(var_7_1) then
+		if not tRoomThemeFilterListModel:isSelectById(themeId) then
 			return false
 		end
 	end
@@ -108,45 +110,45 @@ function var_0_0._checkTheme(arg_7_0, arg_7_1)
 	return true
 end
 
-function var_0_0.clearSelect(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._scrollViews) do
-		iter_8_1:setSelect(nil)
+function RoomShowBlockPackageListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_8_0._selectBlockPackageId = nil
+	self._selectBlockPackageId = nil
 end
 
-function var_0_0._refreshSelect(arg_9_0)
-	local var_9_0
-	local var_9_1 = arg_9_0:getList()
+function RoomShowBlockPackageListModel:_refreshSelect()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
-		if iter_9_1.id == arg_9_0._selectBlockPackageId then
-			var_9_0 = iter_9_1
+	for i, mo in ipairs(moList) do
+		if mo.id == self._selectBlockPackageId then
+			selectMO = mo
 
 			break
 		end
 	end
 
-	for iter_9_2, iter_9_3 in ipairs(arg_9_0._scrollViews) do
-		iter_9_3:setSelect(var_9_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_10_0, arg_10_1)
-	arg_10_0._selectBlockPackageId = arg_10_1
+function RoomShowBlockPackageListModel:setSelect(blockPackageId)
+	self._selectBlockPackageId = blockPackageId
 
-	arg_10_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.initShow(arg_11_0, arg_11_1)
-	arg_11_0._isSortRate = true
-	arg_11_0._isSortOrder = true
-	arg_11_0._selectBlockPackageId = arg_11_1
+function RoomShowBlockPackageListModel:initShow(blockPackageId)
+	self._isSortRate = true
+	self._isSortOrder = true
+	self._selectBlockPackageId = blockPackageId
 
-	arg_11_0:setShowBlockList()
+	self:setShowBlockList()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomShowBlockPackageListModel.instance = RoomShowBlockPackageListModel.New()
 
-return var_0_0
+return RoomShowBlockPackageListModel

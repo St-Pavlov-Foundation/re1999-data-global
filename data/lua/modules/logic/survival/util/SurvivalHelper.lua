@@ -1,135 +1,140 @@
-﻿module("modules.logic.survival.util.SurvivalHelper", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalHelper.lua
 
-local var_0_0 = class("SurvivalHelper")
-local var_0_1 = math.sqrt(3)
-local var_0_2 = Vector3()
+module("modules.logic.survival.util.SurvivalHelper", package.seeall)
 
-function var_0_0.getDistance(arg_1_0, arg_1_1, arg_1_2)
-	return (math.abs(arg_1_1.q - arg_1_2.q) + math.abs(arg_1_1.r - arg_1_2.r) + math.abs(arg_1_1.s - arg_1_2.s)) / 2
+local SurvivalHelper = class("SurvivalHelper")
+local sqrt3 = math.sqrt(3)
+local zeroV3 = Vector3()
+
+function SurvivalHelper:getDistance(a, b)
+	return (math.abs(a.q - b.q) + math.abs(a.r - b.r) + math.abs(a.s - b.s)) / 2
 end
 
-function var_0_0.getAllPointsByDis(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_2 or not arg_2_1 or arg_2_2 <= 0 then
+function SurvivalHelper:getAllPointsByDis(point, dis)
+	if not dis or not point or dis <= 0 then
 		return {}
 	end
 
-	local var_2_0 = {}
-	local var_2_1 = 0
+	local list = {}
+	local len = 0
 
-	for iter_2_0 = -arg_2_2, arg_2_2 do
-		for iter_2_1 = -arg_2_2, arg_2_2 do
-			for iter_2_2 = -arg_2_2, arg_2_2 do
-				if iter_2_0 + iter_2_1 + iter_2_2 == 0 then
-					var_2_1 = var_2_1 + 1
+	for q = -dis, dis do
+		for r = -dis, dis do
+			for s = -dis, dis do
+				if q + r + s == 0 then
+					len = len + 1
 
-					local var_2_2 = SurvivalMapModel.instance:getCacheHexNode(var_2_1)
+					local node = SurvivalMapModel.instance:getCacheHexNode(len)
 
-					var_2_2:set(iter_2_0 + arg_2_1.q, iter_2_1 + arg_2_1.r, iter_2_2 + arg_2_1.s)
-					table.insert(var_2_0, var_2_2)
+					node:set(q + point.q, r + point.r, s + point.s)
+					table.insert(list, node)
 				end
 			end
 		end
 	end
 
-	return var_2_0
+	return list
 end
 
-function var_0_0.hexPointToWorldPoint(arg_3_0, arg_3_1, arg_3_2)
-	return arg_3_2 / 4 * var_0_1 + arg_3_1 * var_0_1 / 2, 0, -arg_3_2 * 3 / 4
+function SurvivalHelper:hexPointToWorldPoint(q, r)
+	return r / 4 * sqrt3 + q * sqrt3 / 2, 0, -r * 3 / 4
 end
 
-function var_0_0.worldPointToHex(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = (arg_4_3 + arg_4_1 * var_0_1) * 2 / 3
-	local var_4_1 = -arg_4_3 * 4 / 3
-	local var_4_2 = -var_4_0 - var_4_1
-	local var_4_3 = Mathf.Round(var_4_0)
-	local var_4_4 = Mathf.Round(var_4_1)
-	local var_4_5 = Mathf.Round(var_4_2)
-	local var_4_6 = math.abs(var_4_0 - var_4_3)
-	local var_4_7 = math.abs(var_4_1 - var_4_4)
-	local var_4_8 = math.abs(var_4_2 - var_4_5)
+function SurvivalHelper:worldPointToHex(x, y, z)
+	local q = (z + x * sqrt3) * 2 / 3
+	local r = -z * 4 / 3
+	local s = -q - r
+	local roundQ = Mathf.Round(q)
+	local roundR = Mathf.Round(r)
+	local roundS = Mathf.Round(s)
+	local absQ = math.abs(q - roundQ)
+	local absR = math.abs(r - roundR)
+	local absS = math.abs(s - roundS)
 
-	if var_4_7 < var_4_6 and var_4_8 < var_4_6 then
-		var_4_3 = -var_4_4 - var_4_5
-	elseif var_4_8 < var_4_7 then
-		var_4_4 = -var_4_3 - var_4_5
+	if absR < absQ and absS < absQ then
+		roundQ = -roundR - roundS
+	elseif absS < absR then
+		roundR = -roundQ - roundS
 	else
-		var_4_5 = -var_4_3 - var_4_4
+		roundS = -roundQ - roundR
 	end
 
-	return var_4_3, var_4_4, var_4_5
+	return roundQ, roundR, roundS
 end
 
-function var_0_0.getScene3DPos(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_2 = arg_5_2 or 0
-	arg_5_1 = arg_5_1 or GamepadController.instance:getMousePosition()
+function SurvivalHelper:getScene3DPos(screenPos, yPos)
+	yPos = yPos or 0
+	screenPos = screenPos or GamepadController.instance:getMousePosition()
 
-	local var_5_0 = CameraMgr.instance:getMainCamera():ScreenPointToRay(arg_5_1)
-	local var_5_1 = var_5_0.direction
+	local mainCamera = CameraMgr.instance:getMainCamera()
+	local ray = mainCamera:ScreenPointToRay(screenPos)
+	local dir = ray.direction
 
-	if var_5_1.y == 0 then
-		return var_0_2
+	if dir.y == 0 then
+		return zeroV3
 	end
 
-	local var_5_2 = var_5_0.origin
-	local var_5_3 = -(var_5_2.y - arg_5_2) / var_5_1.y
+	local origin = ray.origin
+	local num = -(origin.y - yPos) / dir.y
 
-	return var_5_2:Add(var_5_1:Mul(var_5_3))
+	return origin:Add(dir:Mul(num))
 end
 
-function var_0_0.getDir(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_2.q - arg_6_1.q
-	local var_6_1 = arg_6_2.r - arg_6_1.r
-	local var_6_2 = math.max(math.abs(var_6_0), math.abs(var_6_1))
-	local var_6_3 = math.floor(var_6_0 / var_6_2)
-	local var_6_4 = math.floor(var_6_1 / var_6_2)
+function SurvivalHelper:getDir(fromPos, toPos)
+	local q = toPos.q - fromPos.q
+	local r = toPos.r - fromPos.r
+	local max_val = math.max(math.abs(q), math.abs(r))
+	local base_q, base_r = math.floor(q / max_val), math.floor(r / max_val)
 
-	for iter_6_0, iter_6_1 in pairs(SurvivalEnum.DirToPos) do
-		if iter_6_1.q == var_6_3 and iter_6_1.r == var_6_4 then
-			return iter_6_0
+	for dir, pos in pairs(SurvivalEnum.DirToPos) do
+		if pos.q == base_q and pos.r == base_r then
+			return dir
 		end
 	end
 
-	logError("not dir! " .. tostring(arg_6_1) .. " " .. tostring(arg_6_2))
+	logError("not dir! " .. tostring(fromPos) .. " " .. tostring(toPos))
 end
 
-function var_0_0.screenPosToRay(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_1 or GamepadController.instance:getMousePosition()
+function SurvivalHelper:screenPosToRay(screenPos)
+	screenPos = screenPos or GamepadController.instance:getMousePosition()
 
-	return (CameraMgr.instance:getMainCamera():ScreenPointToRay(arg_7_1))
+	local camera = CameraMgr.instance:getMainCamera()
+	local ray = camera:ScreenPointToRay(screenPos)
+
+	return ray
 end
 
-function var_0_0.isInSeasonAndVersion(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function SurvivalHelper:isInSeasonAndVersion(co)
+	if not co then
 		return false
 	end
 
-	local var_8_0 = SurvivalModel.instance:getOutSideInfo()
+	local outSideMo = SurvivalModel.instance:getOutSideInfo()
 
-	if not var_8_0 then
+	if not outSideMo then
 		return false
 	end
 
-	local var_8_1 = arg_8_1.versions
+	local needVersions = co.versions
 
-	if not string.nilorempty(var_8_1) then
-		local var_8_2 = GameUtil.splitString2(var_8_1, true)
+	if not string.nilorempty(needVersions) then
+		local list = GameUtil.splitString2(needVersions, true)
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-			table.sort(iter_8_1)
+		for _, versions in ipairs(list) do
+			table.sort(versions)
 
-			if not arg_8_0:isSame(iter_8_1, var_8_0.versions) then
+			if not self:isSame(versions, outSideMo.versions) then
 				return false
 			end
 		end
 	end
 
-	local var_8_3 = arg_8_1.seasons
+	local needSeasons = co.seasons
 
-	if not string.nilorempty(var_8_3) then
-		local var_8_4 = string.splitToNumber(var_8_3, "#")
+	if not string.nilorempty(needSeasons) then
+		local arr = string.splitToNumber(needSeasons, "#")
 
-		if not tabletool.indexOf(var_8_4, var_8_0.season) then
+		if not tabletool.indexOf(arr, outSideMo.season) then
 			return false
 		end
 	end
@@ -137,17 +142,17 @@ function var_0_0.isInSeasonAndVersion(arg_8_0, arg_8_1)
 	return true
 end
 
-function var_0_0.isSame(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_1 or not arg_9_2 then
+function SurvivalHelper:isSame(arrA, arrB)
+	if not arrA or not arrB then
 		return false
 	end
 
-	if #arg_9_1 ~= #arg_9_2 then
+	if #arrA ~= #arrB then
 		return false
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		if arg_9_2[iter_9_0] ~= iter_9_1 then
+	for k, v in ipairs(arrA) do
+		if arrB[k] ~= v then
 			return false
 		end
 	end
@@ -155,123 +160,122 @@ function var_0_0.isSame(arg_9_0, arg_9_1, arg_9_2)
 	return true
 end
 
-function var_0_0.makeArrFull(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = arg_10_3 * arg_10_4
-	local var_10_1 = #arg_10_1
+function SurvivalHelper:makeArrFull(arr, empty, row, col)
+	local min = row * col
+	local len = #arr
 
-	if var_10_1 < var_10_0 then
-		for iter_10_0 = var_10_1 + 1, var_10_0 do
-			table.insert(arg_10_1, arg_10_2)
+	if len < min then
+		for i = len + 1, min do
+			table.insert(arr, empty)
 		end
 	else
-		local var_10_2 = var_10_1 % arg_10_4
+		local num = len % col
 
-		if var_10_2 ~= 0 then
-			for iter_10_1 = var_10_2 + 1, arg_10_4 do
-				table.insert(arg_10_1, arg_10_2)
+		if num ~= 0 then
+			for i = num + 1, col do
+				table.insert(arr, empty)
 			end
 		end
 	end
 end
 
-function var_0_0.getOperResult(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_1 == SurvivalEnum.ConditionOper.GE then
-		return arg_11_3 <= arg_11_2
-	elseif arg_11_1 == SurvivalEnum.ConditionOper.EQ then
-		return arg_11_2 == arg_11_3
-	elseif arg_11_1 == SurvivalEnum.ConditionOper.LE then
-		return arg_11_2 <= arg_11_3
+function SurvivalHelper:getOperResult(oper, num1, num2)
+	if oper == SurvivalEnum.ConditionOper.GE then
+		return num2 <= num1
+	elseif oper == SurvivalEnum.ConditionOper.EQ then
+		return num1 == num2
+	elseif oper == SurvivalEnum.ConditionOper.LE then
+		return num1 <= num2
 	end
 end
 
-function var_0_0.fitlterPath(arg_12_0, arg_12_1)
-	if not arg_12_1 or #arg_12_1 < 3 then
-		return arg_12_1
+function SurvivalHelper:fitlterPath(path)
+	if not path or #path < 3 then
+		return path
 	end
 
-	local var_12_0 = {
-		arg_12_1[1]
+	local newPath = {
+		path[1]
 	}
-	local var_12_1 = arg_12_0:getDir(arg_12_1[1], arg_12_1[2])
+	local prevDir = self:getDir(path[1], path[2])
 
-	for iter_12_0 = 2, #arg_12_1 - 1 do
-		local var_12_2 = arg_12_0:getDir(arg_12_1[iter_12_0], arg_12_1[iter_12_0 + 1])
+	for i = 2, #path - 1 do
+		local currentDir = self:getDir(path[i], path[i + 1])
 
-		if var_12_2 ~= var_12_1 then
-			table.insert(var_12_0, arg_12_1[iter_12_0])
+		if currentDir ~= prevDir then
+			table.insert(newPath, path[i])
 
-			var_12_1 = var_12_2
+			prevDir = currentDir
 		end
 	end
 
-	table.insert(var_12_0, arg_12_1[#arg_12_1])
+	table.insert(newPath, path[#path])
 
-	return var_12_0
+	return newPath
 end
 
-function var_0_0.addNodeToDict(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_1[arg_13_2.q] then
-		arg_13_1[arg_13_2.q] = {}
+function SurvivalHelper:addNodeToDict(dict, node, value)
+	if not dict[node.q] then
+		dict[node.q] = {}
 	end
 
-	if arg_13_3 == nil then
-		arg_13_3 = arg_13_2
+	if value == nil then
+		value = node
 	end
 
-	arg_13_1[arg_13_2.q][arg_13_2.r] = arg_13_3
+	dict[node.q][node.r] = value
 end
 
-function var_0_0.removeNodeToDict(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_1[arg_14_2.q] then
+function SurvivalHelper:removeNodeToDict(dict, node)
+	if not dict[node.q] then
 		return
 	end
 
-	arg_14_1[arg_14_2.q][arg_14_2.r] = nil
+	dict[node.q][node.r] = nil
 end
 
-function var_0_0.isHaveNode(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_1[arg_15_2.q] then
+function SurvivalHelper:isHaveNode(dict, node)
+	if not dict[node.q] then
 		return nil
 	end
 
-	return arg_15_1[arg_15_2.q][arg_15_2.r] ~= nil
+	return dict[node.q][node.r] ~= nil
 end
 
-function var_0_0.getValueFromDict(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_1[arg_16_2.q] then
+function SurvivalHelper:getValueFromDict(dict, node)
+	if not dict[node.q] then
 		return nil
 	end
 
-	return arg_16_1[arg_16_2.q][arg_16_2.r]
+	return dict[node.q][node.r]
 end
 
-function var_0_0.getDirMustHave(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_2.q - arg_17_1.q
-	local var_17_1 = arg_17_2.r - arg_17_1.r
-	local var_17_2 = math.max(math.abs(var_17_0), math.abs(var_17_1))
-	local var_17_3 = math.floor(var_17_0 / var_17_2)
-	local var_17_4 = math.floor(var_17_1 / var_17_2)
+function SurvivalHelper:getDirMustHave(fromPos, toPos)
+	local q = toPos.q - fromPos.q
+	local r = toPos.r - fromPos.r
+	local max_val = math.max(math.abs(q), math.abs(r))
+	local base_q, base_r = math.floor(q / max_val), math.floor(r / max_val)
 
-	for iter_17_0, iter_17_1 in pairs(SurvivalEnum.DirToPos) do
-		if iter_17_1.q == var_17_3 and iter_17_1.r == var_17_4 then
-			return iter_17_0
+	for dir, pos in pairs(SurvivalEnum.DirToPos) do
+		if pos.q == base_q and pos.r == base_r then
+			return dir
 		end
 	end
 
 	return SurvivalEnum.Dir.Right
 end
 
-function var_0_0.createLuaSimpleListComp(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	local var_18_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_18_1, SurvivalSimpleListComp, {
-		listScrollParam = arg_18_2,
-		viewContainer = arg_18_4
+function SurvivalHelper:createLuaSimpleListComp(gameObject, listScrollParam, res, viewContainer)
+	local list = MonoHelper.addNoUpdateLuaComOnceToGo(gameObject, SurvivalSimpleListComp, {
+		listScrollParam = listScrollParam,
+		viewContainer = viewContainer
 	})
 
-	var_18_0:setRes(arg_18_3)
+	list:setRes(res)
 
-	return var_18_0
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalHelper.instance = SurvivalHelper.New()
 
-return var_0_0
+return SurvivalHelper

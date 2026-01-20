@@ -1,171 +1,173 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiDrawView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/view/graffiti/VersionActivity2_0DungeonGraffitiDrawView.lua
 
-local var_0_0 = class("VersionActivity2_0DungeonGraffitiDrawView", BaseView)
+module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiDrawView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._gograffiti = gohelper.findChild(arg_1_0.viewGO, "#go_graffiti")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_graffiti/#simage_icon")
-	arg_1_0._simagemaskicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_graffiti/#simage_maskicon")
-	arg_1_0._imagemaskicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_graffiti/#simage_maskicon")
-	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_start")
-	arg_1_0._btnfinish = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_finish")
-	arg_1_0._goinfo = gohelper.findChild(arg_1_0.viewGO, "#go_info")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_info/image_TitleBG/#txt_title")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_info/Scroll View/Viewport/#txt_desc")
-	arg_1_0._godrawcan = gohelper.findChild(arg_1_0.viewGO, "#go_drawcan")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_Tips")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._graffitiAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._gograffiti)
+local VersionActivity2_0DungeonGraffitiDrawView = class("VersionActivity2_0DungeonGraffitiDrawView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_0DungeonGraffitiDrawView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._gograffiti = gohelper.findChild(self.viewGO, "#go_graffiti")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_graffiti/#simage_icon")
+	self._simagemaskicon = gohelper.findChildSingleImage(self.viewGO, "#go_graffiti/#simage_maskicon")
+	self._imagemaskicon = gohelper.findChildImage(self.viewGO, "#go_graffiti/#simage_maskicon")
+	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_start")
+	self._btnfinish = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_finish")
+	self._goinfo = gohelper.findChild(self.viewGO, "#go_info")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_info/image_TitleBG/#txt_title")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_info/Scroll View/Viewport/#txt_desc")
+	self._godrawcan = gohelper.findChild(self.viewGO, "#go_drawcan")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_Tips")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._graffitiAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gograffiti)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
-	arg_2_0._btnfinish:AddClickListener(arg_2_0._btnfinishOnClick, arg_2_0)
+function VersionActivity2_0DungeonGraffitiDrawView:addEvents()
+	self._btnstart:AddClickListener(self._btnstartOnClick, self)
+	self._btnfinish:AddClickListener(self._btnfinishOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstart:RemoveClickListener()
-	arg_3_0._btnfinish:RemoveClickListener()
+function VersionActivity2_0DungeonGraffitiDrawView:removeEvents()
+	self._btnstart:RemoveClickListener()
+	self._btnfinish:RemoveClickListener()
 end
 
-function var_0_0._btnstartOnClick(arg_4_0)
-	arg_4_0._graffitiAnimatorPlayer:Play(UIAnimationName.Click, arg_4_0.hideBlock, arg_4_0)
-	gohelper.setActive(arg_4_0._btnstart.gameObject, false)
-	gohelper.setActive(arg_4_0._gotips.gameObject, true)
-	TaskDispatcher.runDelay(arg_4_0.addComp, arg_4_0, 0.01)
+function VersionActivity2_0DungeonGraffitiDrawView:_btnstartOnClick()
+	self._graffitiAnimatorPlayer:Play(UIAnimationName.Click, self.hideBlock, self)
+	gohelper.setActive(self._btnstart.gameObject, false)
+	gohelper.setActive(self._gotips.gameObject, true)
+	TaskDispatcher.runDelay(self.addComp, self, 0.01)
 	UIBlockMgr.instance:startBlock("enlargePictureAnim")
-	arg_4_0.viewContainer:setIsBeginDrawState(true)
-	gohelper.setActive(arg_4_0._gotopleft, false)
+	self.viewContainer:setIsBeginDrawState(true)
+	gohelper.setActive(self._gotopleft, false)
 end
 
-function var_0_0.hideBlock(arg_5_0)
+function VersionActivity2_0DungeonGraffitiDrawView:hideBlock()
 	UIBlockMgr.instance:endBlock("enlargePictureAnim")
 end
 
-function var_0_0._btnfinishOnClick(arg_6_0)
-	arg_6_0:closeThis()
+function VersionActivity2_0DungeonGraffitiDrawView:_btnfinishOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	gohelper.setActive(arg_7_0._godrawcan, false)
-	gohelper.setActive(arg_7_0._gotips, false)
+function VersionActivity2_0DungeonGraffitiDrawView:_editableInitView()
+	gohelper.setActive(self._godrawcan, false)
+	gohelper.setActive(self._gotips, false)
 
-	arg_7_0.rectTrViewGo = arg_7_0.viewGO:GetComponent(gohelper.Type_RectTransform)
+	self.rectTrViewGo = self.viewGO:GetComponent(gohelper.Type_RectTransform)
 end
 
-function var_0_0.setNativeSize(arg_8_0)
-	ZProj.UGUIHelper.SetImageSize(arg_8_0._simageicon.gameObject)
+function VersionActivity2_0DungeonGraffitiDrawView:setNativeSize()
+	ZProj.UGUIHelper.SetImageSize(self._simageicon.gameObject)
 end
 
-function var_0_0.setMaskNativeSize(arg_9_0)
-	ZProj.UGUIHelper.SetImageSize(arg_9_0._simagemaskicon.gameObject)
+function VersionActivity2_0DungeonGraffitiDrawView:setMaskNativeSize()
+	ZProj.UGUIHelper.SetImageSize(self._simagemaskicon.gameObject)
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:initData()
-	arg_10_0:refreshUI()
+function VersionActivity2_0DungeonGraffitiDrawView:onOpen()
+	self:initData()
+	self:refreshUI()
 end
 
-function var_0_0.initData(arg_11_0)
-	arg_11_0.state = arg_11_0.viewParam.graffitiMO.state
-	arg_11_0.graffitiId = arg_11_0.viewParam.graffitiMO.id
-	arg_11_0.config = arg_11_0.viewParam.graffitiMO.config
-	arg_11_0.normalMaterial = arg_11_0.viewParam.normalMaterial
-	arg_11_0.isFinish = arg_11_0.state == Activity161Enum.graffitiState.IsFinished
+function VersionActivity2_0DungeonGraffitiDrawView:initData()
+	self.state = self.viewParam.graffitiMO.state
+	self.graffitiId = self.viewParam.graffitiMO.id
+	self.config = self.viewParam.graffitiMO.config
+	self.normalMaterial = self.viewParam.normalMaterial
+	self.isFinish = self.state == Activity161Enum.graffitiState.IsFinished
 
-	local var_11_0 = string.format("%s_manual", arg_11_0.config.picture)
-	local var_11_1 = string.format("%s_manual", arg_11_0.config.picture)
+	local pictureRes = string.format("%s_manual", self.config.picture)
+	local pictureMaskRes = string.format("%s_manual", self.config.picture)
 
-	arg_11_0._simageicon:LoadImage(ResUrl.getGraffitiIcon(var_11_0), arg_11_0.setNativeSize, arg_11_0)
-	arg_11_0._simagemaskicon:LoadImage(ResUrl.getGraffitiIcon(var_11_1), arg_11_0.setMaskNativeSize, arg_11_0)
+	self._simageicon:LoadImage(ResUrl.getGraffitiIcon(pictureRes), self.setNativeSize, self)
+	self._simagemaskicon:LoadImage(ResUrl.getGraffitiIcon(pictureMaskRes), self.setMaskNativeSize, self)
 
-	arg_11_0._imagemaskicon.material = arg_11_0.normalMaterial
-	arg_11_0.uiCamera = CameraMgr.instance:getUICamera()
+	self._imagemaskicon.material = self.normalMaterial
+	self.uiCamera = CameraMgr.instance:getUICamera()
 
-	gohelper.setActive(arg_11_0._gotopleft, true)
+	gohelper.setActive(self._gotopleft, true)
 end
 
-function var_0_0.addComp(arg_12_0)
-	arg_12_0.erasePicture = ZProj.ErasePicture.AddComp(arg_12_0._gograffiti)
+function VersionActivity2_0DungeonGraffitiDrawView:addComp()
+	self.erasePicture = ZProj.ErasePicture.AddComp(self._gograffiti)
 
-	arg_12_0.erasePicture:InitData(arg_12_0.config.brushSize, arg_12_0.config.finishRate, arg_12_0._imagemaskicon, arg_12_0.uiCamera)
-	arg_12_0.erasePicture:setCallBack(arg_12_0.startDraw, arg_12_0, arg_12_0.showRate, arg_12_0, arg_12_0.endDraw, arg_12_0, arg_12_0.finishDraw, arg_12_0)
+	self.erasePicture:InitData(self.config.brushSize, self.config.finishRate, self._imagemaskicon, self.uiCamera)
+	self.erasePicture:setCallBack(self.startDraw, self, self.showRate, self, self.endDraw, self, self.finishDraw, self)
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0._txttitle.text = arg_13_0.config.finishTitle
-	arg_13_0._txtdesc.text = arg_13_0.config.finishDesc
+function VersionActivity2_0DungeonGraffitiDrawView:refreshUI()
+	self._txttitle.text = self.config.finishTitle
+	self._txtdesc.text = self.config.finishDesc
 
-	gohelper.setActive(arg_13_0._goinfo, arg_13_0.isFinish)
-	gohelper.setActive(arg_13_0._btnstart, not arg_13_0.isFinish)
-	gohelper.setActive(arg_13_0._btnfinish.gameObject, arg_13_0.isFinish)
-	gohelper.setActive(arg_13_0._simagemaskicon.gameObject, not arg_13_0.isFinish)
+	gohelper.setActive(self._goinfo, self.isFinish)
+	gohelper.setActive(self._btnstart, not self.isFinish)
+	gohelper.setActive(self._btnfinish.gameObject, self.isFinish)
+	gohelper.setActive(self._simagemaskicon.gameObject, not self.isFinish)
 end
 
-function var_0_0.startDraw(arg_14_0)
-	if arg_14_0.isFinish then
+function VersionActivity2_0DungeonGraffitiDrawView:startDraw()
+	if self.isFinish then
 		return
 	end
 
-	gohelper.setActive(arg_14_0._godrawcan, true)
-	arg_14_0:setDrawCanPos()
+	gohelper.setActive(self._godrawcan, true)
+	self:setDrawCanPos()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feichi_spray_loop)
 end
 
-function var_0_0.showRate(arg_15_0)
-	if arg_15_0.isFinish then
+function VersionActivity2_0DungeonGraffitiDrawView:showRate()
+	if self.isFinish then
 		return
 	end
 
-	gohelper.setActive(arg_15_0._godrawcan, true)
-	arg_15_0:setDrawCanPos()
+	gohelper.setActive(self._godrawcan, true)
+	self:setDrawCanPos()
 end
 
-function var_0_0.endDraw(arg_16_0)
-	gohelper.setActive(arg_16_0._godrawcan, false)
+function VersionActivity2_0DungeonGraffitiDrawView:endDraw()
+	gohelper.setActive(self._godrawcan, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_feichi_spray_loop)
 end
 
-function var_0_0.setDrawCanPos(arg_17_0)
-	local var_17_0, var_17_1 = recthelper.screenPosToAnchorPos2(GamepadController.instance:getMousePosition(), arg_17_0.rectTrViewGo)
+function VersionActivity2_0DungeonGraffitiDrawView:setDrawCanPos()
+	local uiCanPosX, uiCanPosY = recthelper.screenPosToAnchorPos2(GamepadController.instance:getMousePosition(), self.rectTrViewGo)
 
-	recthelper.setAnchor(arg_17_0._godrawcan.transform, var_17_0, var_17_1)
+	recthelper.setAnchor(self._godrawcan.transform, uiCanPosX, uiCanPosY)
 end
 
-function var_0_0.finishDraw(arg_18_0)
-	if arg_18_0.isFinish then
+function VersionActivity2_0DungeonGraffitiDrawView:finishDraw()
+	if self.isFinish then
 		return
 	end
 
-	arg_18_0.isFinish = true
+	self.isFinish = true
 
-	gohelper.setActive(arg_18_0._godrawcan, false)
-	gohelper.setActive(arg_18_0._gotips.gameObject, false)
-	arg_18_0:refreshUI()
-	DungeonRpc.instance:sendMapElementRequest(arg_18_0.config.elementId)
-	Activity161Model.instance:setGraffitiState(arg_18_0.config.elementId, Activity161Enum.graffitiState.IsFinished)
-	arg_18_0.viewContainer:setIsBeginDrawState(false)
+	gohelper.setActive(self._godrawcan, false)
+	gohelper.setActive(self._gotips.gameObject, false)
+	self:refreshUI()
+	DungeonRpc.instance:sendMapElementRequest(self.config.elementId)
+	Activity161Model.instance:setGraffitiState(self.config.elementId, Activity161Enum.graffitiState.IsFinished)
+	self.viewContainer:setIsBeginDrawState(false)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_feichi_spray_loop)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_feichi_spray_finish)
-	arg_18_0._graffitiAnimatorPlayer:Play("finish")
+	self._graffitiAnimatorPlayer:Play("finish")
 	Activity161Controller.instance:dispatchEvent(Activity161Event.FinishDrawGraffiti)
 end
 
-function var_0_0.onClose(arg_19_0)
-	arg_19_0._simageicon:UnLoadImage()
-	arg_19_0._simagemaskicon:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_19_0.addComp, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.hideBlock, arg_19_0)
+function VersionActivity2_0DungeonGraffitiDrawView:onClose()
+	self._simageicon:UnLoadImage()
+	self._simagemaskicon:UnLoadImage()
+	TaskDispatcher.cancelTask(self.addComp, self)
+	TaskDispatcher.cancelTask(self.hideBlock, self)
 	UIBlockMgr.instance:endBlock("enlargePictureAnim")
 end
 
-function var_0_0.onDestroyView(arg_20_0)
+function VersionActivity2_0DungeonGraffitiDrawView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_0DungeonGraffitiDrawView

@@ -1,80 +1,80 @@
-﻿module("modules.common.utils.Base64Util", package.seeall)
+﻿-- chunkname: @modules/common/utils/Base64Util.lua
 
-local var_0_0 = _M
+module("modules.common.utils.Base64Util", package.seeall)
 
-var_0_0.b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+local Base64Util = _M
 
-function var_0_0.encode(arg_1_0)
-	return (arg_1_0:gsub(".", function(arg_2_0)
-		local var_2_0 = ""
-		local var_2_1 = arg_2_0:byte()
+Base64Util.b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
-		for iter_2_0 = 8, 1, -1 do
-			var_2_0 = var_2_0 .. (var_2_1 % 2^iter_2_0 - var_2_1 % 2^(iter_2_0 - 1) > 0 and "1" or "0")
+function Base64Util.encode(data)
+	return (data:gsub(".", function(x)
+		local r, b = "", x:byte()
+
+		for i = 8, 1, -1 do
+			r = r .. (b % 2^i - b % 2^(i - 1) > 0 and "1" or "0")
 		end
 
-		return var_2_0
-	end) .. "0000"):gsub("%d%d%d?%d?%d?%d?", function(arg_3_0)
-		if #arg_3_0 < 6 then
+		return r
+	end) .. "0000"):gsub("%d%d%d?%d?%d?%d?", function(x)
+		if #x < 6 then
 			return ""
 		end
 
-		local var_3_0 = 0
+		local c = 0
 
-		for iter_3_0 = 1, 6 do
-			var_3_0 = var_3_0 + (arg_3_0:sub(iter_3_0, iter_3_0) == "1" and 2^(6 - iter_3_0) or 0)
+		for i = 1, 6 do
+			c = c + (x:sub(i, i) == "1" and 2^(6 - i) or 0)
 		end
 
-		return var_0_0.b:sub(var_3_0 + 1, var_3_0 + 1)
+		return Base64Util.b:sub(c + 1, c + 1)
 	end) .. ({
 		"",
 		"==",
 		"="
-	})[#arg_1_0 % 3 + 1]
+	})[#data % 3 + 1]
 end
 
-function var_0_0.decode(arg_4_0)
-	arg_4_0 = string.gsub(arg_4_0, "data:image/jpeg;base64,", "", 1)
-	arg_4_0 = string.gsub(arg_4_0, "data:image/png;base64,", "", 1)
-	arg_4_0 = string.gsub(arg_4_0, "[^" .. var_0_0.b .. "=]", "")
+function Base64Util.decode(data)
+	data = string.gsub(data, "data:image/jpeg;base64,", "", 1)
+	data = string.gsub(data, "data:image/png;base64,", "", 1)
+	data = string.gsub(data, "[^" .. Base64Util.b .. "=]", "")
 
-	return (arg_4_0:gsub(".", function(arg_5_0)
-		if arg_5_0 == "=" then
+	return (data:gsub(".", function(x)
+		if x == "=" then
 			return ""
 		end
 
-		local var_5_0 = ""
-		local var_5_1 = var_0_0.b:find(arg_5_0) - 1
+		local r, f = "", Base64Util.b:find(x) - 1
 
-		for iter_5_0 = 6, 1, -1 do
-			var_5_0 = var_5_0 .. (var_5_1 % 2^iter_5_0 - var_5_1 % 2^(iter_5_0 - 1) > 0 and "1" or "0")
+		for i = 6, 1, -1 do
+			r = r .. (f % 2^i - f % 2^(i - 1) > 0 and "1" or "0")
 		end
 
-		return var_5_0
-	end):gsub("%d%d%d?%d?%d?%d?%d?%d?", function(arg_6_0)
-		if #arg_6_0 ~= 8 then
+		return r
+	end):gsub("%d%d%d?%d?%d?%d?%d?%d?", function(x)
+		if #x ~= 8 then
 			return ""
 		end
 
-		local var_6_0 = 0
+		local c = 0
 
-		for iter_6_0 = 1, 8 do
-			var_6_0 = var_6_0 + (arg_6_0:sub(iter_6_0, iter_6_0) == "1" and 2^(8 - iter_6_0) or 0)
+		for i = 1, 8 do
+			c = c + (x:sub(i, i) == "1" and 2^(8 - i) or 0)
 		end
 
-		return string.char(var_6_0)
+		return string.char(c)
 	end))
 end
 
-function var_0_0.saveImage(arg_7_0)
-	local var_7_0 = var_0_0.decode(arg_7_0)
-	local var_7_1 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot")
-	local var_7_2 = System.DateTime.Now
-	local var_7_3 = string.format("screenshot_%s%s%s_%s%s%s%s.png", var_7_2.Year, var_7_2.Month, var_7_2.Day, var_7_2.Hour, var_7_2.Minute, var_7_2.Second, var_7_2.Millisecond)
-	local var_7_4 = System.IO.Path.Combine(var_7_1, var_7_3)
+function Base64Util.saveImage(box64String)
+	local bytes = Base64Util.decode(box64String)
+	local directory = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "screenshot")
+	local now = System.DateTime.Now
+	local fileName = string.format("screenshot_%s%s%s_%s%s%s%s.png", now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, now.Millisecond)
+	local path = System.IO.Path.Combine(directory, fileName)
 
-	SLFramework.FileHelper.WriteAllBytesToPath(var_7_4, var_7_0)
-	SDKMgr.instance:saveImage(var_7_4)
+	SLFramework.FileHelper.WriteAllBytesToPath(path, bytes)
+	SDKMgr.instance:saveImage(path)
 end
 
-return var_0_0
+return Base64Util

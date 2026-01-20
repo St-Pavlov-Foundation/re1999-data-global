@@ -1,7 +1,9 @@
-﻿module("modules.common.unit.UnitMoverHandler", package.seeall)
+﻿-- chunkname: @modules/common/unit/UnitMoverHandler.lua
 
-local var_0_0 = class("UnitMoverHandler", LuaCompBase)
-local var_0_1 = {
+module("modules.common.unit.UnitMoverHandler", package.seeall)
+
+local UnitMoverHandler = class("UnitMoverHandler", LuaCompBase)
+local MoverCls = {
 	UnitMoverEase,
 	UnitMoverParabola,
 	UnitMoverBezier,
@@ -10,37 +12,37 @@ local var_0_1 = {
 	UnitMoverBezier3
 }
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._moverList = {}
+function UnitMoverHandler:init(go)
+	self.go = go
+	self._moverList = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_0_1) do
-		local var_1_0 = MonoHelper.getLuaComFromGo(arg_1_0.go, iter_1_1)
+	for _, moverCls in ipairs(MoverCls) do
+		local mover = MonoHelper.getLuaComFromGo(self.go, moverCls)
 
-		if var_1_0 then
-			table.insert(arg_1_0._moverList, var_1_0)
+		if mover then
+			table.insert(self._moverList, mover)
 		end
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._moverList) do
-		iter_2_1:registerCallback(UnitMoveEvent.PosChanged, arg_2_0._onPosChange, arg_2_0)
+function UnitMoverHandler:addEventListeners()
+	for _, mover in ipairs(self._moverList) do
+		mover:registerCallback(UnitMoveEvent.PosChanged, self._onPosChange, self)
 	end
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._moverList) do
-		iter_3_1:unregisterCallback(UnitMoveEvent.PosChanged, arg_3_0._onPosChange, arg_3_0)
+function UnitMoverHandler:removeEventListeners()
+	for _, mover in ipairs(self._moverList) do
+		mover:unregisterCallback(UnitMoveEvent.PosChanged, self._onPosChange, self)
 	end
 end
 
-function var_0_0._onPosChange(arg_4_0, arg_4_1)
-	local var_4_0 = CameraMgr.instance:getSceneTransform()
-	local var_4_1, var_4_2, var_4_3 = transformhelper.getPos(var_4_0)
-	local var_4_4, var_4_5, var_4_6 = arg_4_1:getPos()
+function UnitMoverHandler:_onPosChange(mover)
+	local sceneRootTransform = CameraMgr.instance:getSceneTransform()
+	local offsetX, offsetY, offsetZ = transformhelper.getPos(sceneRootTransform)
+	local posX, posY, posZ = mover:getPos()
 
-	transformhelper.setPos(arg_4_0.go.transform, var_4_4 + var_4_1, var_4_5 + var_4_2, var_4_6 + var_4_3)
+	transformhelper.setPos(self.go.transform, posX + offsetX, posY + offsetY, posZ + offsetZ)
 end
 
-return var_0_0
+return UnitMoverHandler

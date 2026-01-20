@@ -1,10 +1,12 @@
-﻿module("modules.logic.herogroup.view.HeroGroupFightFiveHeroViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupFightFiveHeroViewContainer.lua
 
-local var_0_0 = class("HeroGroupFightFiveHeroViewContainer", HeroGroupFightViewContainer)
+module("modules.logic.herogroup.view.HeroGroupFightFiveHeroViewContainer", package.seeall)
 
-function var_0_0.defineFightView(arg_1_0)
-	arg_1_0._heroGroupFightView = HeroGroupFightFiveHeroView.New()
-	arg_1_0._heroGroupFightListView = HeroGroupListFiveHeroView.New()
+local HeroGroupFightFiveHeroViewContainer = class("HeroGroupFightFiveHeroViewContainer", HeroGroupFightViewContainer)
+
+function HeroGroupFightFiveHeroViewContainer:defineFightView()
+	self._heroGroupFightView = HeroGroupFightFiveHeroView.New()
+	self._heroGroupFightListView = HeroGroupListFiveHeroView.New()
 end
 
-return var_0_0
+return HeroGroupFightFiveHeroViewContainer

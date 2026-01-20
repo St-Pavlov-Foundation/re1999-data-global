@@ -1,16 +1,18 @@
-﻿module("modules.logic.activity.view.V1a5_DoubleFestival_WishPanelContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a5_DoubleFestival_WishPanelContainer.lua
 
-local var_0_0 = class("V1a5_DoubleFestival_WishPanelContainer", BaseViewContainer)
+module("modules.logic.activity.view.V1a5_DoubleFestival_WishPanelContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a5_DoubleFestival_WishPanelContainer = class("V1a5_DoubleFestival_WishPanelContainer", BaseViewContainer)
+
+function V1a5_DoubleFestival_WishPanelContainer:buildViews()
 	return {
 		V1a5_DoubleFestival_WishPanel.New()
 	}
 end
 
-function var_0_0.playOpenTransition(arg_2_0)
+function V1a5_DoubleFestival_WishPanelContainer:playOpenTransition()
 	AudioMgr.instance:trigger(AudioEnum.ui_mail.play_ui_mail_open_1)
-	arg_2_0:onPlayOpenTransitionFinish()
+	self:onPlayOpenTransitionFinish()
 end
 
-return var_0_0
+return V1a5_DoubleFestival_WishPanelContainer

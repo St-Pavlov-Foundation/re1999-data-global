@@ -1,70 +1,72 @@
-﻿module("modules.logic.meilanni.model.EpisodeInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/model/EpisodeInfoMO.lua
 
-local var_0_0 = pureTable("EpisodeInfoMO")
+module("modules.logic.meilanni.model.EpisodeInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.episodeId = arg_1_1.episodeId
-	arg_1_0.mapId = arg_1_1.mapId
-	arg_1_0.isFinish = arg_1_1.isFinish
-	arg_1_0.leftActPoint = arg_1_1.leftActPoint
-	arg_1_0.confirm = arg_1_1.confirm
+local EpisodeInfoMO = pureTable("EpisodeInfoMO")
 
-	arg_1_0:_initEvents(arg_1_1)
-	arg_1_0:_initHistorylist(arg_1_1)
+function EpisodeInfoMO:init(info)
+	self.episodeId = info.episodeId
+	self.mapId = info.mapId
+	self.isFinish = info.isFinish
+	self.leftActPoint = info.leftActPoint
+	self.confirm = info.confirm
 
-	arg_1_0.episodeConfig = lua_activity108_episode.configDict[arg_1_0.episodeId]
+	self:_initEvents(info)
+	self:_initHistorylist(info)
+
+	self.episodeConfig = lua_activity108_episode.configDict[self.episodeId]
 end
 
-function var_0_0._initEvents(arg_2_0, arg_2_1)
-	arg_2_0.events = {}
-	arg_2_0.eventMap = {}
-	arg_2_0.specialEventNum = 0
+function EpisodeInfoMO:_initEvents(info)
+	self.events = {}
+	self.eventMap = {}
+	self.specialEventNum = 0
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.events) do
-		local var_2_0 = EpisodeEventMO.New()
+	for i, v in ipairs(info.events) do
+		local e = EpisodeEventMO.New()
 
-		var_2_0:init(iter_2_1)
-		table.insert(arg_2_0.events, var_2_0)
+		e:init(v)
+		table.insert(self.events, e)
 
-		arg_2_0.eventMap[var_2_0.eventId] = var_2_0
+		self.eventMap[e.eventId] = e
 
-		if not var_2_0.isFinish and var_2_0.config.type == 1 then
-			arg_2_0.specialEventNum = arg_2_0.specialEventNum + 1
+		if not e.isFinish and e.config.type == 1 then
+			self.specialEventNum = self.specialEventNum + 1
 		end
 	end
 end
 
-function var_0_0._initHistorylist(arg_3_0, arg_3_1)
-	arg_3_0.historylist = {}
+function EpisodeInfoMO:_initHistorylist(info)
+	self.historylist = {}
 
-	local var_3_0
-	local var_3_1 = 0
+	local prevEventId
+	local historyLen = 0
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.historylist) do
-		local var_3_2 = EpisodeHistoryMO.New()
+	for i, v in ipairs(info.historylist) do
+		local data = EpisodeHistoryMO.New()
 
-		var_3_2:init(iter_3_1)
-		table.insert(arg_3_0.historylist, var_3_2)
+		data:init(v)
+		table.insert(self.historylist, data)
 
-		if iter_3_1.eventId ~= var_3_0 then
-			var_3_0 = iter_3_1.eventId
-			var_3_1 = var_3_1 + 1
+		if v.eventId ~= prevEventId then
+			prevEventId = v.eventId
+			historyLen = historyLen + 1
 		end
 	end
 
-	arg_3_0.historyLen = var_3_1
+	self.historyLen = historyLen
 end
 
-function var_0_0.getEventInfo(arg_4_0, arg_4_1)
-	return arg_4_0.eventMap[arg_4_1]
+function EpisodeInfoMO:getEventInfo(id)
+	return self.eventMap[id]
 end
 
-function var_0_0.getEventByBattleId(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.events) do
-		if iter_5_1:getConfigBattleId() == arg_5_1 then
-			return iter_5_1
+function EpisodeInfoMO:getEventByBattleId(id)
+	for i, v in ipairs(self.events) do
+		if v:getConfigBattleId() == id then
+			return v
 		end
 	end
 end
 
-return var_0_0
+return EpisodeInfoMO

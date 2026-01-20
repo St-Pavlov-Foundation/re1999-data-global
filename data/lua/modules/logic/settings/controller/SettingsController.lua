@@ -1,39 +1,41 @@
-﻿module("modules.logic.settings.controller.SettingsController", package.seeall)
+﻿-- chunkname: @modules/logic/settings/controller/SettingsController.lua
 
-local var_0_0 = class("SettingsController", BaseController)
+module("modules.logic.settings.controller.SettingsController", package.seeall)
 
-function var_0_0.openView(arg_1_0)
-	local var_1_0 = {
-		cateList = SettingsModel.instance:getSettingsCategoryList()
-	}
+local SettingsController = class("SettingsController", BaseController)
 
-	ViewMgr.instance:openView(ViewName.SettingsView, var_1_0)
+function SettingsController:openView()
+	local data = {}
+
+	data.cateList = SettingsModel.instance:getSettingsCategoryList()
+
+	ViewMgr.instance:openView(ViewName.SettingsView, data)
 end
 
-function var_0_0.onInit(arg_2_0)
+function SettingsController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function SettingsController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	AudioMgr.instance:registerCallback(AudioMgr.Evt_ChangeFinish, arg_4_0._onChangeFinish, arg_4_0)
-	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, arg_4_0._onLoginFinish, arg_4_0)
+function SettingsController:addConstEvents()
+	AudioMgr.instance:registerCallback(AudioMgr.Evt_ChangeFinish, self._onChangeFinish, self)
+	LoginController.instance:registerCallback(LoginEvent.OnLoginEnterMainScene, self._onLoginFinish, self)
 end
 
-function var_0_0.reInit(arg_5_0)
-	arg_5_0:checkRecordLogout()
+function SettingsController:reInit()
+	self:checkRecordLogout()
 end
 
-function var_0_0.changeLangTxt(arg_6_0)
+function SettingsController:changeLangTxt()
 	UIBlockMgr.instance:startBlock("SettingsController:changeLangTxt")
 
-	arg_6_0._fontAssetDone = false
-	arg_6_0._changeLangDelaytDone = false
+	self._fontAssetDone = false
+	self._changeLangDelaytDone = false
 
-	GameGlobalMgr.instance:getLangFont():changeFontAsset(arg_6_0._changeLangFontAssetCallBack, arg_6_0)
+	GameGlobalMgr.instance:getLangFont():changeFontAsset(self._changeLangFontAssetCallBack, self)
 	GameGlobalMgr.instance:getLangFont():ControlDoubleEn()
 	ViewMgr.instance:closeAllViews({
 		ViewName.SettingsView,
@@ -41,55 +43,55 @@ function var_0_0.changeLangTxt(arg_6_0)
 		ViewName.WaterMarkView
 	})
 	ViewDestroyMgr.instance:destroyImmediately()
-	TaskDispatcher.runDelay(var_0_0._changeLangTxtDelay, arg_6_0, 0.01)
+	TaskDispatcher.runDelay(SettingsController._changeLangTxtDelay, self, 0.01)
 end
 
-function var_0_0._changeLangFontAssetCallBack(arg_7_0)
-	arg_7_0._fontAssetDone = true
+function SettingsController:_changeLangFontAssetCallBack()
+	self._fontAssetDone = true
 
-	arg_7_0:_changeLang2()
+	self:_changeLang2()
 end
 
-function var_0_0._changeLangTxtDelay(arg_8_0)
-	arg_8_0._changeLangDelaytDone = true
+function SettingsController:_changeLangTxtDelay()
+	self._changeLangDelaytDone = true
 
-	arg_8_0:_changeLang2()
+	self:_changeLang2()
 end
 
-function var_0_0._changeLang2(arg_9_0)
-	if arg_9_0._fontAssetDone and arg_9_0._changeLangDelaytDone then
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, arg_9_0)
+function SettingsController:_changeLang2()
+	if self._fontAssetDone and self._changeLangDelaytDone then
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.ResGC, self)
 		ViewMgr.instance:openView(ViewName.MainView)
-		var_0_0.instance:dispatchEvent(SettingsEvent.OnChangeLangTxt)
+		SettingsController.instance:dispatchEvent(SettingsEvent.OnChangeLangTxt)
 
-		local var_9_0 = GameConfig:GetCurLangType()
-		local var_9_1 = LangSettings.aihelpKey[var_9_0]
+		local language = GameConfig:GetCurLangType()
+		local aihelpKey = LangSettings.aihelpKey[language]
 
-		if var_9_1 then
+		if aihelpKey then
 			if SDKMgr.instance.setLanguage then
-				SDKMgr.instance:setLanguage(var_9_1)
+				SDKMgr.instance:setLanguage(aihelpKey)
 			end
 		else
-			logError("aihelpKey miss :" .. var_9_0)
+			logError("aihelpKey miss :" .. language)
 		end
 
 		UIBlockMgr.instance:endBlock("SettingsController:changeLangTxt")
 	end
 end
 
-function var_0_0.getStoryVoiceType(arg_10_0)
-	local var_10_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.VoiceTypeKey_Story)
+function SettingsController:getStoryVoiceType()
+	local curVoiceType = PlayerPrefsHelper.getString(PlayerPrefsKey.VoiceTypeKey_Story)
 
-	if var_10_0 == nil then
-		var_10_0 = GameConfig:GetCurVoiceShortcut()
+	if curVoiceType == nil then
+		curVoiceType = GameConfig:GetCurVoiceShortcut()
 
-		PlayerPrefsHelper.setString(PlayerPrefsKey.VoiceTypeKey_Story, var_10_0)
+		PlayerPrefsHelper.setString(PlayerPrefsKey.VoiceTypeKey_Story, curVoiceType)
 	end
 
-	return var_10_0
+	return curVoiceType
 end
 
-function var_0_0.checkRecordLogout(arg_11_0)
+function SettingsController:checkRecordLogout()
 	logNormal("SettingsController:checkRecordLogout()")
 
 	if not SDKMgr.isSupportRecord or not SDKMgr.instance:isSupportRecord() then
@@ -103,33 +105,33 @@ function var_0_0.checkRecordLogout(arg_11_0)
 	SDKMgr.instance:hideRecordBubble()
 end
 
-function var_0_0._onLoginFinish(arg_12_0)
+function SettingsController:_onLoginFinish()
 	logNormal("SettingsController:_onLoginFinish()")
 
-	local var_12_0 = SettingsModel.instance:getRecordVideo()
+	local isRecordOn = SettingsModel.instance:getRecordVideo()
 
-	if SettingsShowHelper.canShowRecordVideo() and var_12_0 then
+	if SettingsShowHelper.canShowRecordVideo() and isRecordOn then
 		SDKMgr.instance:showRecordBubble()
 	end
 
 	if SDKMgr.instance:isEmulator() then
-		local var_12_1 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.EmulatorVideoCompatible, 0)
-		local var_12_2 = 2
+		local num = PlayerPrefsHelper.getNumber(PlayerPrefsKey.EmulatorVideoCompatible, 0)
+		local videoCode = 2
 
-		if var_12_1 ~= var_12_2 then
-			PlayerPrefsHelper.setNumber(PlayerPrefsKey.EmulatorVideoCompatible, var_12_2)
-			SettingsModel.instance:setVideoCompatible(var_12_2 == 1)
+		if num ~= videoCode then
+			PlayerPrefsHelper.setNumber(PlayerPrefsKey.EmulatorVideoCompatible, videoCode)
+			SettingsModel.instance:setVideoCompatible(videoCode == 1)
 		end
 	end
 
 	SettingsVoicePackageModel.instance:updateVoiceList(false)
 end
 
-function var_0_0.checkSwitchRecordVideo(arg_13_0)
+function SettingsController:checkSwitchRecordVideo()
 	if SettingsShowHelper.canShowRecordVideo() then
-		local var_13_0 = not SettingsModel.instance:getRecordVideo()
+		local isOn = not SettingsModel.instance:getRecordVideo()
 
-		if var_13_0 then
+		if isOn then
 			if BootNativeUtil.isAndroid() then
 				SDKMgr.instance:requestReadAndWritePermission()
 			end
@@ -145,7 +147,7 @@ function var_0_0.checkSwitchRecordVideo(arg_13_0)
 			SDKMgr.instance:hideRecordBubble()
 		end
 
-		SettingsModel.instance:setRecordVideo(var_13_0)
+		SettingsModel.instance:setRecordVideo(isOn)
 
 		return true
 	end
@@ -153,10 +155,10 @@ function var_0_0.checkSwitchRecordVideo(arg_13_0)
 	return false
 end
 
-function var_0_0._onChangeFinish(arg_14_0)
-	arg_14_0._inSwitch = false
+function SettingsController:_onChangeFinish()
+	self._inSwitch = false
 end
 
-var_0_0.instance = var_0_0.New()
+SettingsController.instance = SettingsController.New()
 
-return var_0_0
+return SettingsController

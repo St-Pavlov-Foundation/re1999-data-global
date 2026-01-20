@@ -1,64 +1,79 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationKeywordItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/view/VersionActivity2_3NewCultivationKeywordItem.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationKeywordItem", LuaCompBase)
+module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationKeywordItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._goKeyword = gohelper.findChild(arg_1_1, "#go_keyword")
-	arg_1_0._keywordTxtItemList = arg_1_0:getUserDataTb_()
-	arg_1_0._keywordParentGoList = arg_1_0:getUserDataTb_()
+local VersionActivity2_3NewCultivationKeywordItem = class("VersionActivity2_3NewCultivationKeywordItem", RougeSimpleItemBase)
 
-	arg_1_0:addKeyWordItem(arg_1_0._goKeyword)
+function VersionActivity2_3NewCultivationKeywordItem:ctor(ctorParam)
+	self:__onInit()
+	VersionActivity2_3NewCultivationKeywordItem.super.ctor(self, ctorParam)
+
+	self._keywordTxtItemList = self:getUserDataTb_()
+	self._keywordParentGoList = self:getUserDataTb_()
 end
 
-function var_0_0.addKeyWordItem(arg_2_0, arg_2_1)
-	table.insert(arg_2_0._keywordParentGoList, arg_2_1)
+function VersionActivity2_3NewCultivationKeywordItem:onInitView()
+	self._goKeyword = gohelper.findChild(self.viewGO, "#go_keyword")
 
-	local var_2_0 = gohelper.findChildText(arg_2_1, "#txt_tag")
-
-	table.insert(arg_2_0._keywordTxtItemList, var_2_0)
+	if self._editableInitView then
+		self:_editableInitView()
+	end
 end
 
-function var_0_0.refreshKeyword(arg_3_0, arg_3_1)
-	local var_3_0 = string.nilorempty(arg_3_1)
+function VersionActivity2_3NewCultivationKeywordItem:_editableInitView()
+	self:addKeyWordItem(self._goKeyword)
+end
 
-	gohelper.setActive(arg_3_0.go, not var_3_0)
+function VersionActivity2_3NewCultivationKeywordItem:addKeyWordItem(parentGo)
+	table.insert(self._keywordParentGoList, parentGo)
 
-	if var_3_0 then
+	local txtKeyword = gohelper.findChildText(parentGo, "#txt_tag")
+
+	table.insert(self._keywordTxtItemList, txtKeyword)
+end
+
+function VersionActivity2_3NewCultivationKeywordItem:refreshKeyword(keywordParam)
+	local isEmpty = string.nilorempty(keywordParam)
+
+	gohelper.setActive(self.viewGO, not isEmpty)
+
+	if isEmpty then
 		return
 	end
 
-	local var_3_1 = string.split(arg_3_1, "#")
+	local keywords = string.split(keywordParam, "#")
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		local var_3_2
+	for index, keyword in ipairs(keywords) do
+		local parentGo
 
-		if not arg_3_0._keywordParentGoList[iter_3_0] then
-			var_3_2 = gohelper.clone(arg_3_0._goKeyword, arg_3_0.go, tostring(iter_3_0))
+		if not self._keywordParentGoList[index] then
+			parentGo = gohelper.clone(self._goKeyword, self.viewGO, tostring(index))
 
-			arg_3_0:addKeyWordItem(var_3_2)
+			self:addKeyWordItem(parentGo)
 		else
-			var_3_2 = arg_3_0._keywordParentGoList[iter_3_0]
+			parentGo = self._keywordParentGoList[index]
 		end
 
-		gohelper.setActive(var_3_2, true)
+		gohelper.setActive(parentGo, true)
 
-		arg_3_0._keywordTxtItemList[iter_3_0].text = iter_3_1
+		local txtItem = self._keywordTxtItemList[index]
+
+		txtItem.text = keyword
 	end
 
-	local var_3_3 = #arg_3_0._keywordParentGoList
-	local var_3_4 = #var_3_1
+	local goCount = #self._keywordParentGoList
+	local keywordCount = #keywords
 
-	if var_3_4 < var_3_3 then
-		for iter_3_2 = var_3_4 + 1, var_3_3 do
-			gohelper.setActive(arg_3_0._keywordParentGoList[iter_3_2], false)
+	if keywordCount < goCount then
+		for i = keywordCount + 1, goCount do
+			gohelper.setActive(self._keywordParentGoList[i], false)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	arg_4_0._keywordParentGoList = nil
-	arg_4_0._keywordTxtItemList = nil
+function VersionActivity2_3NewCultivationKeywordItem:onDestroyView()
+	VersionActivity2_3NewCultivationKeywordItem.super.onDestroyView(self)
+	self:__onDispose()
 end
 
-return var_0_0
+return VersionActivity2_3NewCultivationKeywordItem

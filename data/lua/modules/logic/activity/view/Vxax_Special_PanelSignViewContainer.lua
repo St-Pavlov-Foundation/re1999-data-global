@@ -1,5 +1,8 @@
-﻿module("modules.logic.activity.view.Vxax_Special_PanelSignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/Vxax_Special_PanelSignViewContainer.lua
 
-local var_0_0 = Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView_ContainerImpl()
+module("modules.logic.activity.view.Vxax_Special_PanelSignViewContainer", package.seeall)
 
-return (class("Vxax_Special_PanelSignViewContainer", var_0_0))
+local Impl = Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView_ContainerImpl()
+local Vxax_Special_PanelSignViewContainer = class("Vxax_Special_PanelSignViewContainer", Impl)
+
+return Vxax_Special_PanelSignViewContainer

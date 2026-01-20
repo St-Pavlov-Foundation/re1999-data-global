@@ -1,103 +1,107 @@
-﻿module("modules.logic.room.controller.RoomChatShareController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomChatShareController.lua
 
-local var_0_0 = class("RoomChatShareController", BaseController)
+module("modules.logic.room.controller.RoomChatShareController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local RoomChatShareController = class("RoomChatShareController", BaseController)
+
+function RoomChatShareController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomChatShareController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
+function RoomChatShareController:clear()
 	return
 end
 
-function var_0_0.chatSeekShare(arg_4_0, arg_4_1)
-	if not RoomLayoutController.instance:isOpen() then
+function RoomChatShareController:chatSeekShare(socialMessageMO)
+	local isOpen = RoomLayoutController.instance:isOpen()
+
+	if not isOpen then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanShareCodeNotOpen)
 
 		return
 	end
 
 	if RoomLayoutModel.instance:isNeedRpcGet() then
-		RoomRpc.instance:sendGetRoomPlanInfoRequest(arg_4_0._onPlanInfoChatSeekShare, arg_4_0)
+		RoomRpc.instance:sendGetRoomPlanInfoRequest(self._onPlanInfoChatSeekShare, self)
 
 		return
 	end
 
-	arg_4_0._seekShareMsgMO = arg_4_1
+	self._seekShareMsgMO = socialMessageMO
 
-	arg_4_0:_chatSeekShare()
+	self:_chatSeekShare()
 end
 
-function var_0_0._onPlanInfoChatSeekShare(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == 0 then
-		arg_5_0:_chatSeekShare()
+function RoomChatShareController:_onPlanInfoChatSeekShare(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:_chatSeekShare()
 	end
 end
 
-function var_0_0._chatSeekShare(arg_6_0)
-	local var_6_0 = RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId)
+function RoomChatShareController:_chatSeekShare()
+	local layoutMO = RoomLayoutModel.instance:getById(RoomEnum.LayoutUsedPlanId)
 
-	if var_6_0:isSharing() then
-		arg_6_0:_sendChatSeekShare()
+	if layoutMO:isSharing() then
+		self:_sendChatSeekShare()
 
 		return
 	end
 
-	if var_6_0:isEmpty() or not var_6_0:haveEdited() then
+	if layoutMO:isEmpty() or not layoutMO:haveEdited() then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanNotCanShare)
 
 		return
 	end
 
-	local var_6_1 = RoomLayoutModel.instance:getCanShareCount()
+	local canShareCount = RoomLayoutModel.instance:getCanShareCount()
 
-	if var_6_1 <= 0 then
+	if canShareCount <= 0 then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanShareCodeNotNum)
 
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanCanShareCount, MsgBoxEnum.BoxType.Yes_No, arg_6_0._sendShareRoomPlanRequest, nil, nil, arg_6_0, nil, nil, var_6_1)
+	GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanCanShareCount, MsgBoxEnum.BoxType.Yes_No, self._sendShareRoomPlanRequest, nil, nil, self, nil, nil, canShareCount)
 end
 
-function var_0_0._sendShareRoomPlanRequest(arg_7_0)
-	RoomRpc.instance:sendShareRoomPlanRequest(RoomEnum.LayoutUsedPlanId, arg_7_0._onShareRoomPlanReply, arg_7_0)
+function RoomChatShareController:_sendShareRoomPlanRequest()
+	RoomRpc.instance:sendShareRoomPlanRequest(RoomEnum.LayoutUsedPlanId, self._onShareRoomPlanReply, self)
 end
 
-function var_0_0._onShareRoomPlanReply(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 == 0 then
-		arg_8_0:_sendChatSeekShare()
+function RoomChatShareController:_onShareRoomPlanReply(cmd, resultCode, msg)
+	if resultCode == 0 then
+		self:_sendChatSeekShare()
 	end
 end
 
-function var_0_0._sendChatSeekShare(arg_9_0)
-	if not arg_9_0._seekShareMsgMO then
+function RoomChatShareController:_sendChatSeekShare()
+	if not self._seekShareMsgMO then
 		return
 	end
 
-	local var_9_0 = RoomLayoutModel.instance:getById(0)
+	local layoutMO = RoomLayoutModel.instance:getById(0)
 
-	if var_9_0:isSharing() then
-		local var_9_1 = arg_9_0._seekShareMsgMO
+	if layoutMO:isSharing() then
+		local info = self._seekShareMsgMO
 
-		arg_9_0._seekShareMsgMO = nil
+		self._seekShareMsgMO = nil
 
-		local var_9_2 = var_9_0:getShareCode()
-		local var_9_3 = ChatEnum.MsgType.RoomShareCode
-		local var_9_4 = formatLuaLang("room_chat_share_code_content", var_9_2)
+		local extData = layoutMO:getShareCode()
+		local msgType = ChatEnum.MsgType.RoomShareCode
+		local sendValue = formatLuaLang("room_chat_share_code_content", extData)
 
-		ChatRpc.instance:sendSendMsgRequest(var_9_1.channelType, var_9_1.senderId, var_9_4, var_9_3, var_9_2)
+		ChatRpc.instance:sendSendMsgRequest(info.channelType, info.senderId, sendValue, msgType, extData)
 	end
 end
 
-function var_0_0.chatShareCode(arg_10_0, arg_10_1)
-	RoomLayoutController.instance:copyShareCodeTxt(arg_10_1.extData)
+function RoomChatShareController:chatShareCode(socialMessageMO)
+	RoomLayoutController.instance:copyShareCodeTxt(socialMessageMO.extData)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomChatShareController.instance = RoomChatShareController.New()
 
-return var_0_0
+return RoomChatShareController

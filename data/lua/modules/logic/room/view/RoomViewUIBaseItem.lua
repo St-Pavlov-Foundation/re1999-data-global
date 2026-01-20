@@ -1,137 +1,141 @@
-﻿module("modules.logic.room.view.RoomViewUIBaseItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomViewUIBaseItem.lua
 
-local var_0_0 = class("RoomViewUIBaseItem", LuaCompBase)
+module("modules.logic.room.view.RoomViewUIBaseItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.goTrs = arg_1_1.transform
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.go, "go_container")
-	arg_1_0._gocontainerTrs = arg_1_0._gocontainer.transform
-	arg_1_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_1_0._canvasGroup = arg_1_0.go:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._baseAnimator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._containerCanvasGroup = arg_1_0._gocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0._isShow = true
+local RoomViewUIBaseItem = class("RoomViewUIBaseItem", LuaCompBase)
 
-	if arg_1_0._customOnInit then
-		arg_1_0:_customOnInit()
+function RoomViewUIBaseItem:init(go)
+	self.go = go
+	self.goTrs = go.transform
+	self._gocontainer = gohelper.findChild(self.go, "go_container")
+	self._gocontainerTrs = self._gocontainer.transform
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self._canvasGroup = self.go:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._baseAnimator = self.go:GetComponent(typeof(UnityEngine.Animator))
+	self._containerCanvasGroup = self._gocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._isShow = true
+
+	if self._customOnInit then
+		self:_customOnInit()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	RoomMapController.instance:registerCallback(RoomEvent.RefreshUIShow, arg_2_0._refreshShow, arg_2_0)
-	RoomBuildingController.instance:registerCallback(RoomEvent.BuildingListShowChanged, arg_2_0._refreshShow, arg_2_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, arg_2_0._refreshShow, arg_2_0)
-	RoomMapController.instance:registerCallback(RoomEvent.BendingAmountUpdate, arg_2_0._refreshPosition, arg_2_0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_2_0._refreshPosition, arg_2_0)
-	RoomMapController.instance:registerCallback(RoomEvent.TouchClickUI3D, arg_2_0._onTouchClick, arg_2_0)
+function RoomViewUIBaseItem:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.RefreshUIShow, self._refreshShow, self)
+	RoomBuildingController.instance:registerCallback(RoomEvent.BuildingListShowChanged, self._refreshShow, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterListShowChanged, self._refreshShow, self)
+	RoomMapController.instance:registerCallback(RoomEvent.BendingAmountUpdate, self._refreshPosition, self)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, self._refreshPosition, self)
+	RoomMapController.instance:registerCallback(RoomEvent.TouchClickUI3D, self._onTouchClick, self)
 
-	if arg_2_0._customAddEventListeners then
-		arg_2_0:_customAddEventListeners()
+	if self._customAddEventListeners then
+		self:_customAddEventListeners()
 	end
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.RefreshUIShow, arg_3_0._refreshShow, arg_3_0)
-	RoomBuildingController.instance:unregisterCallback(RoomEvent.BuildingListShowChanged, arg_3_0._refreshShow, arg_3_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, arg_3_0._refreshShow, arg_3_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BendingAmountUpdate, arg_3_0._refreshPosition, arg_3_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_3_0._refreshPosition, arg_3_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.TouchClickUI3D, arg_3_0._onTouchClick, arg_3_0)
+function RoomViewUIBaseItem:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.RefreshUIShow, self._refreshShow, self)
+	RoomBuildingController.instance:unregisterCallback(RoomEvent.BuildingListShowChanged, self._refreshShow, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterListShowChanged, self._refreshShow, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.BendingAmountUpdate, self._refreshPosition, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._refreshPosition, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.TouchClickUI3D, self._onTouchClick, self)
 
-	if arg_3_0._customRemoveEventListeners then
-		arg_3_0:_customRemoveEventListeners()
+	if self._customRemoveEventListeners then
+		self:_customRemoveEventListeners()
 	end
 end
 
-function var_0_0._refreshPosition(arg_4_0)
-	local var_4_0 = arg_4_0:getUI3DPos()
-	local var_4_1 = RoomBendingHelper.worldToBendingSimple(var_4_0)
-	local var_4_2 = RoomBendingHelper.worldPosToAnchorPos(var_4_1, arg_4_0.goTrs.parent)
-	local var_4_3 = 0
+function RoomViewUIBaseItem:_refreshPosition()
+	local worldPos = self:getUI3DPos()
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
+	local anchorPos = RoomBendingHelper.worldPosToAnchorPos(bendingPos, self.goTrs.parent)
+	local scale = 0
 
-	if var_4_2 then
-		recthelper.setAnchor(arg_4_0.goTrs, var_4_2.x, var_4_2.y)
+	if anchorPos then
+		recthelper.setAnchor(self.goTrs, anchorPos.x, anchorPos.y)
 
-		local var_4_4 = arg_4_0._scene.camera:getCameraPosition()
-		local var_4_5 = Vector3.Distance(var_4_1, var_4_4)
+		local cameraPosition = self._scene.camera:getCameraPosition()
+		local distance = Vector3.Distance(bendingPos, cameraPosition)
 
-		var_4_3 = var_4_5 <= 3.5 and 1 or var_4_5 >= 7 and 0.5 or 1 - (var_4_5 - 3.5) / 3.5 / 2
+		scale = distance <= 3.5 and 1 or distance >= 7 and 0.5 or 1 - (distance - 3.5) / 3.5 / 2
 	end
 
-	transformhelper.setLocalScale(arg_4_0._gocontainerTrs, var_4_3, var_4_3, var_4_3)
-	arg_4_0:_refreshCanvasGroup()
+	transformhelper.setLocalScale(self._gocontainerTrs, scale, scale, scale)
+	self:_refreshCanvasGroup()
 end
 
-function var_0_0._refreshCanvasGroup(arg_5_0)
-	local var_5_0 = arg_5_0:getUI3DPos()
-	local var_5_1 = arg_5_0._scene.camera:getCameraPosition()
-	local var_5_2 = Vector2(var_5_0.x, var_5_0.z)
-	local var_5_3 = Vector2(var_5_1.x, var_5_1.z)
-	local var_5_4 = Vector2.Distance(var_5_2, var_5_3)
-	local var_5_5 = 1
+function RoomViewUIBaseItem:_refreshCanvasGroup()
+	local pos = self:getUI3DPos()
+	local cameraPosition = self._scene.camera:getCameraPosition()
+	local position = Vector2(pos.x, pos.z)
+	local cameraPosition = Vector2(cameraPosition.x, cameraPosition.z)
+	local distance = Vector2.Distance(position, cameraPosition)
+	local curAlpha = 1
 
-	if var_5_4 >= RoomBaseUIComp.fadeMax then
-		var_5_5 = 0
-	elseif var_5_4 <= RoomBaseUIComp.fadeMin then
-		var_5_5 = 1
+	if distance >= RoomBaseUIComp.fadeMax then
+		curAlpha = 0
+	elseif distance <= RoomBaseUIComp.fadeMin then
+		curAlpha = 1
 	else
-		var_5_5 = 1 - (var_5_4 - RoomBaseUIComp.fadeMin) / (RoomBaseUIComp.fadeMax - RoomBaseUIComp.fadeMin)
+		local lerp = 1 - (distance - RoomBaseUIComp.fadeMin) / (RoomBaseUIComp.fadeMax - RoomBaseUIComp.fadeMin)
 
-		if arg_5_0._lastAlpha and math.abs(arg_5_0._lastAlpha - var_5_5) < RoomBaseUIComp.alphaChangeMinimum then
-			var_5_5 = arg_5_0._lastAlpha
+		curAlpha = lerp
+
+		if self._lastAlpha and math.abs(self._lastAlpha - curAlpha) < RoomBaseUIComp.alphaChangeMinimum then
+			curAlpha = self._lastAlpha
 		end
 	end
 
-	local var_5_6 = var_5_5 > 0.25
+	local blocksRaycasts = curAlpha > 0.25
 
-	if arg_5_0._lastAlpha ~= var_5_5 then
-		arg_5_0._lastAlpha = var_5_5
-		arg_5_0._canvasGroup.alpha = var_5_5
+	if self._lastAlpha ~= curAlpha then
+		self._lastAlpha = curAlpha
+		self._canvasGroup.alpha = curAlpha
 	end
 
-	if arg_5_0._lastBlocksRaycasts ~= var_5_6 then
-		arg_5_0._lastBlocksRaycasts = var_5_6
-		arg_5_0._canvasGroup.blocksRaycasts = var_5_6
+	if self._lastBlocksRaycasts ~= blocksRaycasts then
+		self._lastBlocksRaycasts = blocksRaycasts
+		self._canvasGroup.blocksRaycasts = blocksRaycasts
 	end
 end
 
-function var_0_0.getUI3DPos(arg_6_0)
+function RoomViewUIBaseItem:getUI3DPos()
 	return
 end
 
-function var_0_0._setShow(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_1 then
-		if not arg_7_0._isShow then
-			arg_7_0._baseAnimator:Play("room_task_in", 0, arg_7_2 and 1 or 0)
+function RoomViewUIBaseItem:_setShow(isShow, immediately)
+	if isShow then
+		if not self._isShow then
+			self._baseAnimator:Play("room_task_in", 0, immediately and 1 or 0)
 		end
 
-		arg_7_0._containerCanvasGroup.blocksRaycasts = true
+		self._containerCanvasGroup.blocksRaycasts = true
 	else
-		if arg_7_0._isShow then
-			arg_7_0._baseAnimator:Play("room_task_out", 0, arg_7_2 and 1 or 0)
+		if self._isShow then
+			self._baseAnimator:Play("room_task_out", 0, immediately and 1 or 0)
 		end
 
-		arg_7_0._containerCanvasGroup.blocksRaycasts = false
+		self._containerCanvasGroup.blocksRaycasts = false
 	end
 
-	arg_7_0._isShow = arg_7_1
+	self._isShow = isShow
 end
 
-function var_0_0._onTouchClick(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_0._isShow and not arg_8_0._isReturning and arg_8_0.goTrs and arg_8_1 and arg_8_1.transform:IsChildOf(arg_8_0.goTrs) then
-		arg_8_0:_onClick(arg_8_1, arg_8_2)
+function RoomViewUIBaseItem:_onTouchClick(go, param)
+	if self._isShow and not self._isReturning and self.goTrs and go and go.transform:IsChildOf(self.goTrs) then
+		self:_onClick(go, param)
 	end
 end
 
-function var_0_0._onClick(arg_9_0, arg_9_1, arg_9_2)
+function RoomViewUIBaseItem:_onClick(go, param)
 	return
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	if arg_10_0._customOnDestory then
-		arg_10_0:_customOnDestory()
+function RoomViewUIBaseItem:onDestroy()
+	if self._customOnDestory then
+		self:_customOnDestory()
 	end
 end
 
-return var_0_0
+return RoomViewUIBaseItem

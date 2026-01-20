@@ -1,334 +1,338 @@
-﻿module("modules.logic.investigate.view.InvestigateOpinionCommonView", package.seeall)
+﻿-- chunkname: @modules/logic/investigate/view/InvestigateOpinionCommonView.lua
 
-local var_0_0 = class("InvestigateOpinionCommonView", BaseView)
+module("modules.logic.investigate.view.InvestigateOpinionCommonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_fullbg")
-	arg_1_0._simagefullbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_fullbg2")
-	arg_1_0._simagefullbg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_fullbg3")
-	arg_1_0._simagefullbg4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_fullbg3/#simage_fullbg4")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/#simage_title")
-	arg_1_0._btnleftarrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/view/#simage_title/#btn_leftarrow")
-	arg_1_0._goreddotleft = gohelper.findChild(arg_1_0.viewGO, "root/view/#simage_title/#btn_leftarrow/#go_reddotleft")
-	arg_1_0._btnrightarrow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/view/#simage_title/#btn_rightarrow")
-	arg_1_0._goreddotright = gohelper.findChild(arg_1_0.viewGO, "root/view/#simage_title/#btn_rightarrow/#go_reddotright")
-	arg_1_0._goprogress = gohelper.findChild(arg_1_0.viewGO, "root/view/#go_progress")
-	arg_1_0._goprogresitem = gohelper.findChild(arg_1_0.viewGO, "root/view/#go_progress/#go_progresitem")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/view/#scroll_desc")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "root/view/#scroll_desc/viewport/#go_content")
-	arg_1_0._txtroledec = gohelper.findChildText(arg_1_0.viewGO, "root/view/#scroll_desc/viewport/#go_content/top/roledecbg/#txt_roledec")
-	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "root/view/#scroll_desc/viewport/#go_content/#txt_dec")
-	arg_1_0._goOpinion = gohelper.findChild(arg_1_0.viewGO, "root/view/#go_Opinion")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+local InvestigateOpinionCommonView = class("InvestigateOpinionCommonView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function InvestigateOpinionCommonView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_fullbg")
+	self._simagefullbg2 = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_fullbg2")
+	self._simagefullbg3 = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_fullbg3")
+	self._simagefullbg4 = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_fullbg3/#simage_fullbg4")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "root/view/#simage_title")
+	self._btnleftarrow = gohelper.findChildButtonWithAudio(self.viewGO, "root/view/#simage_title/#btn_leftarrow")
+	self._goreddotleft = gohelper.findChild(self.viewGO, "root/view/#simage_title/#btn_leftarrow/#go_reddotleft")
+	self._btnrightarrow = gohelper.findChildButtonWithAudio(self.viewGO, "root/view/#simage_title/#btn_rightarrow")
+	self._goreddotright = gohelper.findChild(self.viewGO, "root/view/#simage_title/#btn_rightarrow/#go_reddotright")
+	self._goprogress = gohelper.findChild(self.viewGO, "root/view/#go_progress")
+	self._goprogresitem = gohelper.findChild(self.viewGO, "root/view/#go_progress/#go_progresitem")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "root/view/#scroll_desc")
+	self._gocontent = gohelper.findChild(self.viewGO, "root/view/#scroll_desc/viewport/#go_content")
+	self._txtroledec = gohelper.findChildText(self.viewGO, "root/view/#scroll_desc/viewport/#go_content/top/roledecbg/#txt_roledec")
+	self._txtdec = gohelper.findChildText(self.viewGO, "root/view/#scroll_desc/viewport/#go_content/#txt_dec")
+	self._goOpinion = gohelper.findChild(self.viewGO, "root/view/#go_Opinion")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnleftarrow:AddClickListener(arg_2_0._btnleftarrowOnClick, arg_2_0)
-	arg_2_0._btnrightarrow:AddClickListener(arg_2_0._btnrightarrowOnClick, arg_2_0)
+function InvestigateOpinionCommonView:addEvents()
+	self._btnleftarrow:AddClickListener(self._btnleftarrowOnClick, self)
+	self._btnrightarrow:AddClickListener(self._btnrightarrowOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnleftarrow:RemoveClickListener()
-	arg_3_0._btnrightarrow:RemoveClickListener()
+function InvestigateOpinionCommonView:removeEvents()
+	self._btnleftarrow:RemoveClickListener()
+	self._btnrightarrow:RemoveClickListener()
 end
 
-function var_0_0._btnleftarrowOnClick(arg_4_0)
-	local var_4_0, var_4_1 = arg_4_0:_getPrevValue(arg_4_0._moIndex, arg_4_0._moList)
+function InvestigateOpinionCommonView:_btnleftarrowOnClick()
+	local index, mo = self:_getPrevValue(self._moIndex, self._moList)
 
-	arg_4_0._moIndex = var_4_0
+	self._moIndex = index
 
-	InvestigateOpinionModel.instance:setInfo(var_4_1, arg_4_0._moList)
+	InvestigateOpinionModel.instance:setInfo(mo, self._moList)
 	InvestigateController.instance:dispatchEvent(InvestigateEvent.ChangeArrow)
 end
 
-function var_0_0._getPrevValue(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_1 = arg_5_1 - 1
+function InvestigateOpinionCommonView:_getPrevValue(index, moList)
+	index = index - 1
 
-	if arg_5_1 < 1 then
-		arg_5_1 = #arg_5_2
+	if index < 1 then
+		index = #moList
 	end
 
-	local var_5_0 = arg_5_2[arg_5_1]
+	local mo = moList[index]
 
-	return arg_5_1, var_5_0
+	return index, mo
 end
 
-function var_0_0._getNextValue(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_1 = arg_6_1 + 1
+function InvestigateOpinionCommonView:_getNextValue(index, moList)
+	index = index + 1
 
-	if arg_6_1 > #arg_6_2 then
-		arg_6_1 = 1
+	if index > #moList then
+		index = 1
 	end
 
-	local var_6_0 = arg_6_2[arg_6_1]
+	local mo = moList[index]
 
-	return arg_6_1, var_6_0
+	return index, mo
 end
 
-function var_0_0._btnrightarrowOnClick(arg_7_0)
-	local var_7_0, var_7_1 = arg_7_0:_getNextValue(arg_7_0._moIndex, arg_7_0._moList)
+function InvestigateOpinionCommonView:_btnrightarrowOnClick()
+	local index, mo = self:_getNextValue(self._moIndex, self._moList)
 
-	arg_7_0._moIndex = var_7_0
+	self._moIndex = index
 
-	InvestigateOpinionModel.instance:setInfo(var_7_1, arg_7_0._moList)
+	InvestigateOpinionModel.instance:setInfo(mo, self._moList)
 	InvestigateController.instance:dispatchEvent(InvestigateEvent.ChangeArrow)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._opinionItemList = arg_8_0:getUserDataTb_()
-	arg_8_0._progressItemList = arg_8_0:getUserDataTb_()
-	arg_8_0._descItemList = arg_8_0:getUserDataTb_()
-	arg_8_0._progressStatus = {}
-	arg_8_0._txtdec.text = ""
+function InvestigateOpinionCommonView:_editableInitView()
+	self._opinionItemList = self:getUserDataTb_()
+	self._progressItemList = self:getUserDataTb_()
+	self._descItemList = self:getUserDataTb_()
+	self._progressStatus = {}
+	self._txtdec.text = ""
 
-	gohelper.setActive(arg_8_0._txtdec, false)
-	gohelper.setActive(arg_8_0._goOpinion, true)
+	gohelper.setActive(self._txtdec, false)
+	gohelper.setActive(self._goOpinion, true)
 
-	arg_8_0._rootAnimator = arg_8_0.viewGO:GetComponent("Animator")
-	arg_8_0._goDragTip = gohelper.findChild(arg_8_0.viewGO, "root/view/#fullbg_glow")
-	arg_8_0._goUnFinishedTip = gohelper.findChild(arg_8_0.viewGO, "root/view/Bottom/txt_tips")
-	arg_8_0._goFinishedTip = gohelper.findChild(arg_8_0.viewGO, "root/view/Bottom/img_finished")
-	arg_8_0._redDotCompLeft = RedDotController.instance:addNotEventRedDot(arg_8_0._goreddotleft, arg_8_0._isShowLeftRedDot, arg_8_0)
-	arg_8_0._redDotCompRight = RedDotController.instance:addNotEventRedDot(arg_8_0._goreddotright, arg_8_0._isShowRightRedDot, arg_8_0)
+	self._rootAnimator = self.viewGO:GetComponent("Animator")
+	self._goDragTip = gohelper.findChild(self.viewGO, "root/view/#fullbg_glow")
+	self._goUnFinishedTip = gohelper.findChild(self.viewGO, "root/view/Bottom/txt_tips")
+	self._goFinishedTip = gohelper.findChild(self.viewGO, "root/view/Bottom/img_finished")
+	self._redDotCompLeft = RedDotController.instance:addNotEventRedDot(self._goreddotleft, self._isShowLeftRedDot, self)
+	self._redDotCompRight = RedDotController.instance:addNotEventRedDot(self._goreddotright, self._isShowRightRedDot, self)
 
-	arg_8_0:addEventCb(InvestigateController.instance, InvestigateEvent.ChangeArrow, arg_8_0._onChangeArrow, arg_8_0)
+	self:addEventCb(InvestigateController.instance, InvestigateEvent.ChangeArrow, self._onChangeArrow, self)
 end
 
-function var_0_0._onChangeArrow(arg_9_0)
-	arg_9_0._redDotCompLeft:refreshRedDot()
-	arg_9_0._redDotCompRight:refreshRedDot()
+function InvestigateOpinionCommonView:_onChangeArrow()
+	self._redDotCompLeft:refreshRedDot()
+	self._redDotCompRight:refreshRedDot()
 end
 
-function var_0_0._isShowLeftRedDot(arg_10_0)
-	local var_10_0, var_10_1 = InvestigateOpinionModel.instance:getInfo()
+function InvestigateOpinionCommonView:_isShowLeftRedDot()
+	local mo, moList = InvestigateOpinionModel.instance:getInfo()
 
-	if not var_10_0 or not var_10_1 then
+	if not mo or not moList then
 		return false
 	end
 
-	local var_10_2 = tabletool.indexOf(var_10_1, var_10_0)
+	local index = tabletool.indexOf(moList, mo)
 
-	if not var_10_2 then
+	if not index then
 		return false
 	end
 
-	local var_10_3, var_10_4 = arg_10_0:_getPrevValue(var_10_2, var_10_1)
+	local _, mo = self:_getPrevValue(index, moList)
 
-	return InvestigateController.showSingleInfoRedDot(var_10_4.id)
+	return InvestigateController.showSingleInfoRedDot(mo.id)
 end
 
-function var_0_0._isShowRightRedDot(arg_11_0)
-	local var_11_0, var_11_1 = InvestigateOpinionModel.instance:getInfo()
+function InvestigateOpinionCommonView:_isShowRightRedDot()
+	local mo, moList = InvestigateOpinionModel.instance:getInfo()
 
-	if not var_11_0 or not var_11_1 then
+	if not mo or not moList then
 		return false
 	end
 
-	local var_11_2 = tabletool.indexOf(var_11_1, var_11_0)
+	local index = tabletool.indexOf(moList, mo)
 
-	if not var_11_2 then
+	if not index then
 		return false
 	end
 
-	local var_11_3, var_11_4 = arg_11_0:_getNextValue(var_11_2, var_11_1)
+	local _, mo = self:_getNextValue(index, moList)
 
-	return InvestigateController.showSingleInfoRedDot(var_11_4.id)
+	return InvestigateController.showSingleInfoRedDot(mo.id)
 end
 
-function var_0_0._onLinkedOpinionSuccess(arg_12_0, arg_12_1)
-	arg_12_0:_updateProgress()
-	arg_12_0:_checkFinish()
+function InvestigateOpinionCommonView:_onLinkedOpinionSuccess(clueId)
+	self:_updateProgress()
+	self:_checkFinish()
 
-	arg_12_0._linkedClueId = arg_12_1
+	self._linkedClueId = clueId
 
-	arg_12_0:_initOpinionDescList(arg_12_0._opinionList)
+	self:_initOpinionDescList(self._opinionList)
 
-	arg_12_0._linkedClueId = nil
+	self._linkedClueId = nil
 end
 
-function var_0_0.onTabSwitchOpen(arg_13_0)
-	arg_13_0:addEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, arg_13_0._onLinkedOpinionSuccess, arg_13_0)
+function InvestigateOpinionCommonView:onTabSwitchOpen()
+	self:addEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, self._onLinkedOpinionSuccess, self)
 
-	local var_13_0, var_13_1 = InvestigateOpinionModel.instance:getInfo()
+	local mo, moList = InvestigateOpinionModel.instance:getInfo()
 
-	arg_13_0:_initInfo(var_13_0, var_13_1)
+	self:_initInfo(mo, moList)
 end
 
-function var_0_0.onTabSwitchClose(arg_14_0)
-	arg_14_0:removeEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, arg_14_0._onLinkedOpinionSuccess, arg_14_0)
+function InvestigateOpinionCommonView:onTabSwitchClose()
+	self:removeEventCb(InvestigateController.instance, InvestigateEvent.LinkedOpinionSuccess, self._onLinkedOpinionSuccess, self)
 end
 
-function var_0_0.setInExtendView(arg_15_0, arg_15_1)
-	arg_15_0._isInExtendView = arg_15_1
+function InvestigateOpinionCommonView:setInExtendView(isExtend)
+	self._isInExtendView = isExtend
 end
 
-function var_0_0.onOpen(arg_16_0)
+function InvestigateOpinionCommonView:onOpen()
 	return
 end
 
-function var_0_0._initInfo(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._moList = arg_17_2
-	arg_17_0._moIndex = arg_17_0._moList and tabletool.indexOf(arg_17_0._moList, arg_17_1)
-	arg_17_0._moNum = arg_17_0._moList and #arg_17_0._moList
+function InvestigateOpinionCommonView:_initInfo(mo, moList)
+	self._moList = moList
+	self._moIndex = self._moList and tabletool.indexOf(self._moList, mo)
+	self._moNum = self._moList and #self._moList
 
-	gohelper.setActive(arg_17_0._btnleftarrow, arg_17_0._moIndex ~= nil)
-	gohelper.setActive(arg_17_0._btnrightarrow, arg_17_0._moIndex ~= nil)
-	arg_17_0:_updateMo(arg_17_1)
+	gohelper.setActive(self._btnleftarrow, self._moIndex ~= nil)
+	gohelper.setActive(self._btnrightarrow, self._moIndex ~= nil)
+	self:_updateMo(mo)
 end
 
-function var_0_0._updateMo(arg_18_0, arg_18_1)
-	arg_18_0._mo = arg_18_1
-	arg_18_0._txtroledec.text = arg_18_0._mo.desc
-	arg_18_0._opinionList = InvestigateConfig.instance:getInvestigateRelatedClueInfos(arg_18_0._mo.id)
+function InvestigateOpinionCommonView:_updateMo(mo)
+	self._mo = mo
+	self._txtroledec.text = self._mo.desc
+	self._opinionList = InvestigateConfig.instance:getInvestigateRelatedClueInfos(self._mo.id)
 
-	arg_18_0:_initOpinionItems()
-	arg_18_0:_checkFinish()
-	arg_18_0:_initOpinionProgress(arg_18_0._opinionList)
-	arg_18_0:_initOpinionDescList(arg_18_0._opinionList)
-	arg_18_0._redDotCompLeft:refreshRedDot()
-	arg_18_0._redDotCompRight:refreshRedDot()
+	self:_initOpinionItems()
+	self:_checkFinish()
+	self:_initOpinionProgress(self._opinionList)
+	self:_initOpinionDescList(self._opinionList)
+	self._redDotCompLeft:refreshRedDot()
+	self._redDotCompRight:refreshRedDot()
 end
 
-function var_0_0._initOpinionItems(arg_19_0)
-	arg_19_0._opinionAllDataList = InvestigateConfig.instance:getInvestigateAllClueInfos(arg_19_0._mo.id)
-	arg_19_0._opinionNum = #arg_19_0._opinionAllDataList
+function InvestigateOpinionCommonView:_initOpinionItems()
+	self._opinionAllDataList = InvestigateConfig.instance:getInvestigateAllClueInfos(self._mo.id)
+	self._opinionNum = #self._opinionAllDataList
 
-	local var_19_0 = gohelper.findChild(arg_19_0._goOpinion, tostring(arg_19_0._opinionNum))
+	local posRoot = gohelper.findChild(self._goOpinion, tostring(self._opinionNum))
 
-	gohelper.setActive(var_19_0, true)
+	gohelper.setActive(posRoot, true)
 
-	local var_19_1 = arg_19_0._simagefullbg2 and arg_19_0._simagefullbg2.gameObject:GetComponent(typeof(UnityEngine.Collider2D))
-	local var_19_2 = arg_19_0.viewContainer:getSetting().otherRes[1]
+	local collider2D = self._simagefullbg2 and self._simagefullbg2.gameObject:GetComponent(typeof(UnityEngine.Collider2D))
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	if arg_19_0._curitemList then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_0._curitemList) do
-			gohelper.setActive(iter_19_1.viewGO, false)
+	if self._curitemList then
+		for i, v in ipairs(self._curitemList) do
+			gohelper.setActive(v.viewGO, false)
 		end
 	end
 
-	arg_19_0._curitemList = arg_19_0._opinionItemList[arg_19_0._mo.id] or arg_19_0:getUserDataTb_()
-	arg_19_0._opinionItemList[arg_19_0._mo.id] = arg_19_0._curitemList
+	self._curitemList = self._opinionItemList[self._mo.id] or self:getUserDataTb_()
+	self._opinionItemList[self._mo.id] = self._curitemList
 
-	for iter_19_2 = 1, arg_19_0._opinionNum do
-		local var_19_3 = arg_19_0._opinionAllDataList[iter_19_2]
+	for i = 1, self._opinionNum do
+		local data = self._opinionAllDataList[i]
 
-		if not var_19_3 then
+		if not data then
 			break
 		end
 
-		local var_19_4 = arg_19_0._curitemList[iter_19_2]
+		local item = self._curitemList[i]
 
-		if not var_19_4 then
-			local var_19_5 = gohelper.findChild(arg_19_0._goOpinion, string.format("%s/opinion%s", arg_19_0._opinionNum, iter_19_2))
-			local var_19_6 = gohelper.findChild(arg_19_0._goOpinion, string.format("%s/node%s", arg_19_0._opinionNum, iter_19_2))
-			local var_19_7 = arg_19_0:getResInst(var_19_2, var_19_5)
+		if not item then
+			local go = gohelper.findChild(self._goOpinion, string.format("%s/opinion%s", self._opinionNum, i))
+			local nodeEndGo = gohelper.findChild(self._goOpinion, string.format("%s/node%s", self._opinionNum, i))
+			local itemGo = self:getResInst(path, go)
 
-			var_19_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_19_7, InvestigateOpinionItem)
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, InvestigateOpinionItem)
 
-			var_19_4:setIndex(iter_19_2, arg_19_0._opinionNum)
-			var_19_4:setInExtendView(arg_19_0._isInExtendView)
+			item:setIndex(i, self._opinionNum)
+			item:setInExtendView(self._isInExtendView)
 
-			if not var_19_6 then
-				logError(string.format("_initOpinionItems nodeEndGo is nil path:%s/node%s", arg_19_0._opinionNum, iter_19_2))
+			if not nodeEndGo then
+				logError(string.format("_initOpinionItems nodeEndGo is nil path:%s/node%s", self._opinionNum, i))
 			end
 
-			var_19_4:onUpdateMO(var_19_3, var_19_1, var_19_5, var_19_6, arg_19_0._goDragTip)
+			item:onUpdateMO(data, collider2D, go, nodeEndGo, self._goDragTip)
 
-			arg_19_0._curitemList[iter_19_2] = var_19_4
+			self._curitemList[i] = item
 		end
 
-		gohelper.setActive(var_19_4.viewGO, true)
+		gohelper.setActive(item.viewGO, true)
 	end
 end
 
-function var_0_0._initOpinionProgress(arg_20_0, arg_20_1)
-	gohelper.CreateObjList(arg_20_0, arg_20_0._onItemShow, arg_20_1, arg_20_0._goprogress, arg_20_0._goprogresitem)
-	arg_20_0:_updateProgress()
+function InvestigateOpinionCommonView:_initOpinionProgress(data_list)
+	gohelper.CreateObjList(self, self._onItemShow, data_list, self._goprogress, self._goprogresitem)
+	self:_updateProgress()
 end
 
-function var_0_0._onItemShow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = arg_21_0:getUserDataTb_()
+function InvestigateOpinionCommonView:_onItemShow(obj, data, index)
+	local t = self:getUserDataTb_()
 
-	arg_21_0._progressItemList[arg_21_3] = var_21_0
-	var_21_0.unfinished = gohelper.findChild(arg_21_1, "unfinished")
-	var_21_0.finished = gohelper.findChild(arg_21_1, "finished")
-	var_21_0.light = gohelper.findChild(arg_21_1, "light")
-	var_21_0.config = arg_21_2
+	self._progressItemList[index] = t
+	t.unfinished = gohelper.findChild(obj, "unfinished")
+	t.finished = gohelper.findChild(obj, "finished")
+	t.light = gohelper.findChild(obj, "light")
+	t.config = data
 end
 
-function var_0_0._updateProgress(arg_22_0)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._progressItemList) do
-		local var_22_0 = InvestigateOpinionModel.instance:getLinkedStatus(iter_22_1.config.id)
+function InvestigateOpinionCommonView:_updateProgress()
+	for i, v in ipairs(self._progressItemList) do
+		local isFinished = InvestigateOpinionModel.instance:getLinkedStatus(v.config.id)
 
-		gohelper.setActive(iter_22_1.unfinished, not var_22_0)
-		gohelper.setActive(iter_22_1.finished, var_22_0)
+		gohelper.setActive(v.unfinished, not isFinished)
+		gohelper.setActive(v.finished, isFinished)
 
-		if not arg_22_0._isInExtendView then
-			local var_22_1 = arg_22_0._progressStatus[iter_22_0]
+		if not self._isInExtendView then
+			local oldStatus = self._progressStatus[i]
 
-			arg_22_0._progressStatus[iter_22_0] = var_22_0
+			self._progressStatus[i] = isFinished
 
-			if var_22_1 == false and var_22_0 then
-				gohelper.setActive(iter_22_1.light, true)
+			if oldStatus == false and isFinished then
+				gohelper.setActive(v.light, true)
 			end
 		end
 	end
 end
 
-function var_0_0._checkFinish(arg_23_0)
-	local var_23_0 = true
+function InvestigateOpinionCommonView:_checkFinish()
+	local isAllFinished = true
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0._opinionList) do
-		if InvestigateOpinionModel.instance:getLinkedStatus(iter_23_1.id) == false then
-			var_23_0 = false
+	for i, v in ipairs(self._opinionList) do
+		local isFinished = InvestigateOpinionModel.instance:getLinkedStatus(v.id)
+
+		if isFinished == false then
+			isAllFinished = false
 
 			break
 		end
 	end
 
-	gohelper.setActive(arg_23_0._goFinishedTip, var_23_0)
-	gohelper.setActive(arg_23_0._goUnFinishedTip, not var_23_0)
+	gohelper.setActive(self._goFinishedTip, isAllFinished)
+	gohelper.setActive(self._goUnFinishedTip, not isAllFinished)
 end
 
-function var_0_0._initOpinionDescList(arg_24_0, arg_24_1)
-	local var_24_0 = #arg_24_1
+function InvestigateOpinionCommonView:_initOpinionDescList(data_list)
+	local num = #data_list
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._descItemList) do
-		gohelper.setActive(iter_24_1, iter_24_0 <= var_24_0)
+	for i, v in ipairs(self._descItemList) do
+		gohelper.setActive(v, i <= num)
 	end
 
-	for iter_24_2, iter_24_3 in ipairs(arg_24_1) do
-		local var_24_1 = arg_24_0._descItemList[iter_24_2] or gohelper.cloneInPlace(arg_24_0._txtdec.gameObject)
+	for i, data in ipairs(data_list) do
+		local itemGo = self._descItemList[i] or gohelper.cloneInPlace(self._txtdec.gameObject)
 
-		arg_24_0._descItemList[iter_24_2] = var_24_1
+		self._descItemList[i] = itemGo
 
-		gohelper.setActive(var_24_1, true)
+		gohelper.setActive(itemGo, true)
 
-		local var_24_2 = InvestigateOpinionModel.instance:getLinkedStatus(iter_24_3.id)
-		local var_24_3 = gohelper.findChildTextMesh(var_24_1, "")
-		local var_24_4 = gohelper.findChild(var_24_1, "line")
+		local isLinked = InvestigateOpinionModel.instance:getLinkedStatus(data.id)
+		local txt = gohelper.findChildTextMesh(itemGo, "")
+		local line = gohelper.findChild(itemGo, "line")
 
-		var_24_3.text = iter_24_3.relatedDesc
+		txt.text = data.relatedDesc
 
-		local var_24_5 = var_24_3.color
+		local color = txt.color
 
-		var_24_5.a = var_24_2 and 1 or 0
-		var_24_3.color = var_24_5
+		color.a = isLinked and 1 or 0
+		txt.color = color
 
-		gohelper.setActive(var_24_4, var_24_2)
+		gohelper.setActive(line, isLinked)
 
-		if not arg_24_0._isInExtendView then
-			local var_24_6 = SLFramework.AnimatorPlayer.Get(var_24_1)
+		if not self._isInExtendView then
+			local animator = SLFramework.AnimatorPlayer.Get(itemGo)
 
-			if var_24_6 and iter_24_3.id == arg_24_0._linkedClueId then
-				var_24_6:Play("open", arg_24_0._openAnimDone, arg_24_0)
+			if animator and data.id == self._linkedClueId then
+				animator:Play("open", self._openAnimDone, self)
 
-				if var_24_0 > 2 then
-					arg_24_0._scrolldesc.verticalNormalizedPosition = iter_24_2 > 2 and 0 or 1
+				if num > 2 then
+					self._scrolldesc.verticalNormalizedPosition = i > 2 and 0 or 1
 				end
 
 				AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Investigate.play_ui_molu_jlbn_level_unlock)
@@ -337,16 +341,16 @@ function var_0_0._initOpinionDescList(arg_24_0, arg_24_1)
 	end
 end
 
-function var_0_0._openAnimDone(arg_25_0)
+function InvestigateOpinionCommonView:_openAnimDone()
 	return
 end
 
-function var_0_0.onClose(arg_26_0)
-	arg_26_0._rootAnimator:Play("close", 0, 0)
+function InvestigateOpinionCommonView:onClose()
+	self._rootAnimator:Play("close", 0, 0)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
+function InvestigateOpinionCommonView:onDestroyView()
 	return
 end
 
-return var_0_0
+return InvestigateOpinionCommonView

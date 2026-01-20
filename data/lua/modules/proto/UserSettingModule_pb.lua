@@ -1,136 +1,138 @@
-﻿local var_0_0 = require("protobuf.protobuf")
+﻿-- chunkname: @modules/proto/UserSettingModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
 
 module("modules.proto.UserSettingModule_pb", package.seeall)
 
-local var_0_1 = {
-	GETSETTINGINFOSREQUEST_MSG = var_0_0.Descriptor(),
-	GETSETTINGINFOSREPLY_MSG = var_0_0.Descriptor(),
-	GETSETTINGINFOSREPLYINFOSFIELD = var_0_0.FieldDescriptor(),
-	UPDATESETTINGINFOREPLY_MSG = var_0_0.Descriptor(),
-	UPDATESETTINGINFOREPLYTYPEFIELD = var_0_0.FieldDescriptor(),
-	UPDATESETTINGINFOREPLYPARAMFIELD = var_0_0.FieldDescriptor(),
-	UPDATESETTINGINFOREQUEST_MSG = var_0_0.Descriptor(),
-	UPDATESETTINGINFOREQUESTTYPEFIELD = var_0_0.FieldDescriptor(),
-	UPDATESETTINGINFOREQUESTPARAMFIELD = var_0_0.FieldDescriptor(),
-	SETTINGINFO_MSG = var_0_0.Descriptor(),
-	SETTINGINFOTYPEFIELD = var_0_0.FieldDescriptor(),
-	SETTINGINFOPARAMFIELD = var_0_0.FieldDescriptor()
-}
+local UserSettingModule_pb = {}
 
-var_0_1.GETSETTINGINFOSREQUEST_MSG.name = "GetSettingInfosRequest"
-var_0_1.GETSETTINGINFOSREQUEST_MSG.full_name = ".GetSettingInfosRequest"
-var_0_1.GETSETTINGINFOSREQUEST_MSG.nested_types = {}
-var_0_1.GETSETTINGINFOSREQUEST_MSG.enum_types = {}
-var_0_1.GETSETTINGINFOSREQUEST_MSG.fields = {}
-var_0_1.GETSETTINGINFOSREQUEST_MSG.is_extendable = false
-var_0_1.GETSETTINGINFOSREQUEST_MSG.extensions = {}
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.name = "infos"
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.full_name = ".GetSettingInfosReply.infos"
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.number = 1
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.index = 0
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.label = 3
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.has_default_value = false
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.default_value = {}
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.message_type = var_0_1.SETTINGINFO_MSG
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.type = 11
-var_0_1.GETSETTINGINFOSREPLYINFOSFIELD.cpp_type = 10
-var_0_1.GETSETTINGINFOSREPLY_MSG.name = "GetSettingInfosReply"
-var_0_1.GETSETTINGINFOSREPLY_MSG.full_name = ".GetSettingInfosReply"
-var_0_1.GETSETTINGINFOSREPLY_MSG.nested_types = {}
-var_0_1.GETSETTINGINFOSREPLY_MSG.enum_types = {}
-var_0_1.GETSETTINGINFOSREPLY_MSG.fields = {
-	var_0_1.GETSETTINGINFOSREPLYINFOSFIELD
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG = protobuf.Descriptor()
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG = protobuf.Descriptor()
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD = protobuf.FieldDescriptor()
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG = protobuf.Descriptor()
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD = protobuf.FieldDescriptor()
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD = protobuf.FieldDescriptor()
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG = protobuf.Descriptor()
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD = protobuf.FieldDescriptor()
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD = protobuf.FieldDescriptor()
+UserSettingModule_pb.SETTINGINFO_MSG = protobuf.Descriptor()
+UserSettingModule_pb.SETTINGINFOTYPEFIELD = protobuf.FieldDescriptor()
+UserSettingModule_pb.SETTINGINFOPARAMFIELD = protobuf.FieldDescriptor()
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG.name = "GetSettingInfosRequest"
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG.full_name = ".GetSettingInfosRequest"
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG.nested_types = {}
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG.enum_types = {}
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG.fields = {}
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG.is_extendable = false
+UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG.extensions = {}
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.name = "infos"
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.full_name = ".GetSettingInfosReply.infos"
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.number = 1
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.index = 0
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.label = 3
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.has_default_value = false
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.default_value = {}
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.message_type = UserSettingModule_pb.SETTINGINFO_MSG
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.type = 11
+UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD.cpp_type = 10
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG.name = "GetSettingInfosReply"
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG.full_name = ".GetSettingInfosReply"
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG.nested_types = {}
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG.enum_types = {}
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG.fields = {
+	UserSettingModule_pb.GETSETTINGINFOSREPLYINFOSFIELD
 }
-var_0_1.GETSETTINGINFOSREPLY_MSG.is_extendable = false
-var_0_1.GETSETTINGINFOSREPLY_MSG.extensions = {}
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.name = "type"
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.full_name = ".UpdateSettingInfoReply.type"
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.number = 1
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.index = 0
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.label = 1
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.has_default_value = false
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.default_value = 0
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.type = 5
-var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD.cpp_type = 1
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.name = "param"
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.full_name = ".UpdateSettingInfoReply.param"
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.number = 2
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.index = 1
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.label = 1
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.has_default_value = false
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.default_value = ""
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.type = 9
-var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD.cpp_type = 9
-var_0_1.UPDATESETTINGINFOREPLY_MSG.name = "UpdateSettingInfoReply"
-var_0_1.UPDATESETTINGINFOREPLY_MSG.full_name = ".UpdateSettingInfoReply"
-var_0_1.UPDATESETTINGINFOREPLY_MSG.nested_types = {}
-var_0_1.UPDATESETTINGINFOREPLY_MSG.enum_types = {}
-var_0_1.UPDATESETTINGINFOREPLY_MSG.fields = {
-	var_0_1.UPDATESETTINGINFOREPLYTYPEFIELD,
-	var_0_1.UPDATESETTINGINFOREPLYPARAMFIELD
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG.is_extendable = false
+UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG.extensions = {}
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.name = "type"
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.full_name = ".UpdateSettingInfoReply.type"
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.number = 1
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.index = 0
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.label = 1
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.has_default_value = false
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.default_value = 0
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.type = 5
+UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD.cpp_type = 1
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.name = "param"
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.full_name = ".UpdateSettingInfoReply.param"
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.number = 2
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.index = 1
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.label = 1
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.has_default_value = false
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.default_value = ""
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.type = 9
+UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD.cpp_type = 9
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG.name = "UpdateSettingInfoReply"
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG.full_name = ".UpdateSettingInfoReply"
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG.nested_types = {}
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG.enum_types = {}
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG.fields = {
+	UserSettingModule_pb.UPDATESETTINGINFOREPLYTYPEFIELD,
+	UserSettingModule_pb.UPDATESETTINGINFOREPLYPARAMFIELD
 }
-var_0_1.UPDATESETTINGINFOREPLY_MSG.is_extendable = false
-var_0_1.UPDATESETTINGINFOREPLY_MSG.extensions = {}
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.name = "type"
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.full_name = ".UpdateSettingInfoRequest.type"
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.number = 1
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.index = 0
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.label = 1
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.has_default_value = false
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.default_value = 0
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.type = 5
-var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD.cpp_type = 1
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.name = "param"
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.full_name = ".UpdateSettingInfoRequest.param"
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.number = 2
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.index = 1
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.label = 1
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.has_default_value = false
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.default_value = ""
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.type = 9
-var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD.cpp_type = 9
-var_0_1.UPDATESETTINGINFOREQUEST_MSG.name = "UpdateSettingInfoRequest"
-var_0_1.UPDATESETTINGINFOREQUEST_MSG.full_name = ".UpdateSettingInfoRequest"
-var_0_1.UPDATESETTINGINFOREQUEST_MSG.nested_types = {}
-var_0_1.UPDATESETTINGINFOREQUEST_MSG.enum_types = {}
-var_0_1.UPDATESETTINGINFOREQUEST_MSG.fields = {
-	var_0_1.UPDATESETTINGINFOREQUESTTYPEFIELD,
-	var_0_1.UPDATESETTINGINFOREQUESTPARAMFIELD
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG.is_extendable = false
+UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG.extensions = {}
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.name = "type"
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.full_name = ".UpdateSettingInfoRequest.type"
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.number = 1
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.index = 0
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.label = 1
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.has_default_value = false
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.default_value = 0
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.type = 5
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD.cpp_type = 1
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.name = "param"
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.full_name = ".UpdateSettingInfoRequest.param"
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.number = 2
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.index = 1
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.label = 1
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.has_default_value = false
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.default_value = ""
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.type = 9
+UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD.cpp_type = 9
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG.name = "UpdateSettingInfoRequest"
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG.full_name = ".UpdateSettingInfoRequest"
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG.nested_types = {}
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG.enum_types = {}
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG.fields = {
+	UserSettingModule_pb.UPDATESETTINGINFOREQUESTTYPEFIELD,
+	UserSettingModule_pb.UPDATESETTINGINFOREQUESTPARAMFIELD
 }
-var_0_1.UPDATESETTINGINFOREQUEST_MSG.is_extendable = false
-var_0_1.UPDATESETTINGINFOREQUEST_MSG.extensions = {}
-var_0_1.SETTINGINFOTYPEFIELD.name = "type"
-var_0_1.SETTINGINFOTYPEFIELD.full_name = ".SettingInfo.type"
-var_0_1.SETTINGINFOTYPEFIELD.number = 1
-var_0_1.SETTINGINFOTYPEFIELD.index = 0
-var_0_1.SETTINGINFOTYPEFIELD.label = 1
-var_0_1.SETTINGINFOTYPEFIELD.has_default_value = false
-var_0_1.SETTINGINFOTYPEFIELD.default_value = 0
-var_0_1.SETTINGINFOTYPEFIELD.type = 5
-var_0_1.SETTINGINFOTYPEFIELD.cpp_type = 1
-var_0_1.SETTINGINFOPARAMFIELD.name = "param"
-var_0_1.SETTINGINFOPARAMFIELD.full_name = ".SettingInfo.param"
-var_0_1.SETTINGINFOPARAMFIELD.number = 2
-var_0_1.SETTINGINFOPARAMFIELD.index = 1
-var_0_1.SETTINGINFOPARAMFIELD.label = 1
-var_0_1.SETTINGINFOPARAMFIELD.has_default_value = false
-var_0_1.SETTINGINFOPARAMFIELD.default_value = ""
-var_0_1.SETTINGINFOPARAMFIELD.type = 9
-var_0_1.SETTINGINFOPARAMFIELD.cpp_type = 9
-var_0_1.SETTINGINFO_MSG.name = "SettingInfo"
-var_0_1.SETTINGINFO_MSG.full_name = ".SettingInfo"
-var_0_1.SETTINGINFO_MSG.nested_types = {}
-var_0_1.SETTINGINFO_MSG.enum_types = {}
-var_0_1.SETTINGINFO_MSG.fields = {
-	var_0_1.SETTINGINFOTYPEFIELD,
-	var_0_1.SETTINGINFOPARAMFIELD
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG.is_extendable = false
+UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG.extensions = {}
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.name = "type"
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.full_name = ".SettingInfo.type"
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.number = 1
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.index = 0
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.label = 1
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.has_default_value = false
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.default_value = 0
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.type = 5
+UserSettingModule_pb.SETTINGINFOTYPEFIELD.cpp_type = 1
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.name = "param"
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.full_name = ".SettingInfo.param"
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.number = 2
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.index = 1
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.label = 1
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.has_default_value = false
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.default_value = ""
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.type = 9
+UserSettingModule_pb.SETTINGINFOPARAMFIELD.cpp_type = 9
+UserSettingModule_pb.SETTINGINFO_MSG.name = "SettingInfo"
+UserSettingModule_pb.SETTINGINFO_MSG.full_name = ".SettingInfo"
+UserSettingModule_pb.SETTINGINFO_MSG.nested_types = {}
+UserSettingModule_pb.SETTINGINFO_MSG.enum_types = {}
+UserSettingModule_pb.SETTINGINFO_MSG.fields = {
+	UserSettingModule_pb.SETTINGINFOTYPEFIELD,
+	UserSettingModule_pb.SETTINGINFOPARAMFIELD
 }
-var_0_1.SETTINGINFO_MSG.is_extendable = false
-var_0_1.SETTINGINFO_MSG.extensions = {}
-var_0_1.GetSettingInfosReply = var_0_0.Message(var_0_1.GETSETTINGINFOSREPLY_MSG)
-var_0_1.GetSettingInfosRequest = var_0_0.Message(var_0_1.GETSETTINGINFOSREQUEST_MSG)
-var_0_1.SettingInfo = var_0_0.Message(var_0_1.SETTINGINFO_MSG)
-var_0_1.UpdateSettingInfoReply = var_0_0.Message(var_0_1.UPDATESETTINGINFOREPLY_MSG)
-var_0_1.UpdateSettingInfoRequest = var_0_0.Message(var_0_1.UPDATESETTINGINFOREQUEST_MSG)
+UserSettingModule_pb.SETTINGINFO_MSG.is_extendable = false
+UserSettingModule_pb.SETTINGINFO_MSG.extensions = {}
+UserSettingModule_pb.GetSettingInfosReply = protobuf.Message(UserSettingModule_pb.GETSETTINGINFOSREPLY_MSG)
+UserSettingModule_pb.GetSettingInfosRequest = protobuf.Message(UserSettingModule_pb.GETSETTINGINFOSREQUEST_MSG)
+UserSettingModule_pb.SettingInfo = protobuf.Message(UserSettingModule_pb.SETTINGINFO_MSG)
+UserSettingModule_pb.UpdateSettingInfoReply = protobuf.Message(UserSettingModule_pb.UPDATESETTINGINFOREPLY_MSG)
+UserSettingModule_pb.UpdateSettingInfoRequest = protobuf.Message(UserSettingModule_pb.UPDATESETTINGINFOREQUEST_MSG)
 
-return var_0_1
+return UserSettingModule_pb

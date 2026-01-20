@@ -1,195 +1,198 @@
-﻿module("modules.logic.versionactivity1_4.dungeon.view.VersionActivity1_4DungeonEpisodeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/dungeon/view/VersionActivity1_4DungeonEpisodeView.lua
 
-local var_0_0 = class("VersionActivity1_4DungeonEpisodeView", BaseView)
+module("modules.logic.versionactivity1_4.dungeon.view.VersionActivity1_4DungeonEpisodeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.viewGO, "rotate/layout/top/title/#txt_title")
-	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "rotate/#go_bg/#txt_info")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/right/#go_fight/#btn_fight")
-	arg_1_0._btnbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnclosetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#btn_closetip")
-	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "rotate/right/#go_fight/cost/#txt_cost")
-	arg_1_0._simagecosticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "rotate/right/#go_fight/cost/#simage_costicon")
-	arg_1_0.goRewardContent = gohelper.findChild(arg_1_0.viewGO, "rotate/reward/#go_rewardContent")
-	arg_1_0._goactivityrewarditem = gohelper.findChild(arg_1_0.viewGO, "rotate/reward/#go_rewardContent/#go_activityrewarditem")
-	arg_1_0.rewardItems = arg_1_0:getUserDataTb_()
+local VersionActivity1_4DungeonEpisodeView = class("VersionActivity1_4DungeonEpisodeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_4DungeonEpisodeView:onInitView()
+	self.txtName = gohelper.findChildTextMesh(self.viewGO, "rotate/layout/top/title/#txt_title")
+	self.txtDesc = gohelper.findChildTextMesh(self.viewGO, "rotate/#go_bg/#txt_info")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/right/#go_fight/#btn_fight")
+	self._btnbg = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnclosetip = gohelper.findChildButtonWithAudio(self.viewGO, "rotate/#btn_closetip")
+	self._txtcost = gohelper.findChildText(self.viewGO, "rotate/right/#go_fight/cost/#txt_cost")
+	self._simagecosticon = gohelper.findChildSingleImage(self.viewGO, "rotate/right/#go_fight/cost/#simage_costicon")
+	self.goRewardContent = gohelper.findChild(self.viewGO, "rotate/reward/#go_rewardContent")
+	self._goactivityrewarditem = gohelper.findChild(self.viewGO, "rotate/reward/#go_rewardContent/#go_activityrewarditem")
+	self.rewardItems = self:getUserDataTb_()
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnbg:AddClickListener(arg_2_0._btnbgOnClick, arg_2_0)
-	arg_2_0._btnclosetip:AddClickListener(arg_2_0._btnbgOnClick, arg_2_0)
+function VersionActivity1_4DungeonEpisodeView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnbg:AddClickListener(self._btnbgOnClick, self)
+	self._btnclosetip:AddClickListener(self._btnbgOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnbg:RemoveClickListener()
-	arg_3_0._btnclosetip:RemoveClickListener()
+function VersionActivity1_4DungeonEpisodeView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnbg:RemoveClickListener()
+	self._btnclosetip:RemoveClickListener()
 end
 
-function var_0_0._btnbgOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity1_4DungeonEpisodeView:_btnbgOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnyesOnClick(arg_5_0)
-	local var_5_0 = DungeonConfig.instance:getEpisodeCO(arg_5_0.episodeId)
+function VersionActivity1_4DungeonEpisodeView:_btnyesOnClick()
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(self.episodeId)
 
-	if not var_5_0 then
+	if not episodeCo then
 		return
 	end
 
-	DungeonFightController.instance:enterFight(var_5_0.chapterId, var_5_0.id, 1)
+	DungeonFightController.instance:enterFight(episodeCo.chapterId, episodeCo.id, 1)
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function VersionActivity1_4DungeonEpisodeView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0.episodeId = arg_7_0.viewParam.episodeId
+function VersionActivity1_4DungeonEpisodeView:onUpdateParam()
+	self.episodeId = self.viewParam.episodeId
 
-	arg_7_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.episodeId = arg_8_0.viewParam.episodeId
+function VersionActivity1_4DungeonEpisodeView:onOpen()
+	self.episodeId = self.viewParam.episodeId
 
-	arg_8_0._simagecosticon:LoadImage(ResUrl.getCurrencyItemIcon("204_btn"))
-	arg_8_0:refreshView()
+	self._simagecosticon:LoadImage(ResUrl.getCurrencyItemIcon("204_btn"))
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0)
-	local var_9_0 = DungeonConfig.instance:getEpisodeCO(arg_9_0.episodeId)
+function VersionActivity1_4DungeonEpisodeView:refreshView()
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(self.episodeId)
 
-	if not var_9_0 then
+	if not episodeCo then
 		return
 	end
 
-	arg_9_0.txtName.text = var_9_0.name
-	arg_9_0.txtDesc.text = var_9_0.desc
+	self.txtName.text = episodeCo.name
+	self.txtDesc.text = episodeCo.desc
 
-	local var_9_1 = 0
+	local cost = 0
 
-	if not string.nilorempty(var_9_0.cost) then
-		var_9_1 = string.splitToNumber(var_9_0.cost, "#")[3]
+	if not string.nilorempty(episodeCo.cost) then
+		cost = string.splitToNumber(episodeCo.cost, "#")[3]
 	end
 
-	arg_9_0._txtcost.text = "-" .. var_9_1
+	self._txtcost.text = "-" .. cost
 
-	if var_9_1 <= CurrencyModel.instance:getPower() then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._txtcost, "#070706")
+	if cost <= CurrencyModel.instance:getPower() then
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtcost, "#070706")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._txtcost, "#800015")
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtcost, "#800015")
 	end
 
-	arg_9_0:refreshReward(var_9_0)
+	self:refreshReward(episodeCo)
 end
 
-function var_0_0.refreshReward(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._goactivityrewarditem, false)
+function VersionActivity1_4DungeonEpisodeView:refreshReward(episodeCo)
+	gohelper.setActive(self._goactivityrewarditem, false)
 
-	local var_10_0 = {}
-	local var_10_1 = 0
-	local var_10_2 = 0
-	local var_10_3 = DungeonModel.instance:getEpisodeInfo(arg_10_1.id)
+	local rewardList = {}
+	local firstRewardIndex = 0
+	local advancedRewardIndex = 0
+	local episodeMO = DungeonModel.instance:getEpisodeInfo(episodeCo.id)
 
-	if var_10_3 and var_10_3.star ~= DungeonEnum.StarType.Advanced then
-		tabletool.addValues(var_10_0, DungeonModel.instance:getEpisodeAdvancedBonus(arg_10_1.id))
+	if episodeMO and episodeMO.star ~= DungeonEnum.StarType.Advanced then
+		tabletool.addValues(rewardList, DungeonModel.instance:getEpisodeAdvancedBonus(episodeCo.id))
 
-		var_10_2 = #var_10_0
+		advancedRewardIndex = #rewardList
 	end
 
-	if var_10_3 and var_10_3.star == DungeonEnum.StarType.None then
-		tabletool.addValues(var_10_0, DungeonModel.instance:getEpisodeFirstBonus(arg_10_1.id))
+	if episodeMO and episodeMO.star == DungeonEnum.StarType.None then
+		tabletool.addValues(rewardList, DungeonModel.instance:getEpisodeFirstBonus(episodeCo.id))
 
-		var_10_1 = #var_10_0
+		firstRewardIndex = #rewardList
 	end
 
-	tabletool.addValues(var_10_0, DungeonModel.instance:getEpisodeRewardDisplayList(arg_10_1.id))
+	tabletool.addValues(rewardList, DungeonModel.instance:getEpisodeRewardDisplayList(episodeCo.id))
 
-	if #var_10_0 == 0 then
-		gohelper.setActive(arg_10_0.goRewardContent, false)
+	local rewardCount = #rewardList
+
+	if rewardCount == 0 then
+		gohelper.setActive(self.goRewardContent, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_10_0.goRewardContent, true)
+	gohelper.setActive(self.goRewardContent, true)
 
-	local var_10_4 = math.min(#var_10_0, 3)
-	local var_10_5
-	local var_10_6
+	local count = math.min(#rewardList, 3)
+	local reward, rewardItem
 
-	for iter_10_0 = 1, var_10_4 do
-		local var_10_7 = arg_10_0.rewardItems[iter_10_0]
+	for i = 1, count do
+		rewardItem = self.rewardItems[i]
 
-		if not var_10_7 then
-			var_10_7 = arg_10_0:getUserDataTb_()
-			var_10_7.go = gohelper.cloneInPlace(arg_10_0._goactivityrewarditem, "item" .. iter_10_0)
-			var_10_7.iconItem = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(var_10_7.go, "itemicon"))
-			var_10_7.gonormal = gohelper.findChild(var_10_7.go, "rare/#go_rare1")
-			var_10_7.gofirst = gohelper.findChild(var_10_7.go, "rare/#go_rare2")
-			var_10_7.goadvance = gohelper.findChild(var_10_7.go, "rare/#go_rare3")
-			var_10_7.gofirsthard = gohelper.findChild(var_10_7.go, "rare/#go_rare4")
-			var_10_7.txtnormal = gohelper.findChildText(var_10_7.go, "rare/#go_rare1/txt")
+		if not rewardItem then
+			rewardItem = self:getUserDataTb_()
+			rewardItem.go = gohelper.cloneInPlace(self._goactivityrewarditem, "item" .. i)
+			rewardItem.iconItem = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(rewardItem.go, "itemicon"))
+			rewardItem.gonormal = gohelper.findChild(rewardItem.go, "rare/#go_rare1")
+			rewardItem.gofirst = gohelper.findChild(rewardItem.go, "rare/#go_rare2")
+			rewardItem.goadvance = gohelper.findChild(rewardItem.go, "rare/#go_rare3")
+			rewardItem.gofirsthard = gohelper.findChild(rewardItem.go, "rare/#go_rare4")
+			rewardItem.txtnormal = gohelper.findChildText(rewardItem.go, "rare/#go_rare1/txt")
 
-			table.insert(arg_10_0.rewardItems, var_10_7)
+			table.insert(self.rewardItems, rewardItem)
 		end
 
-		local var_10_8 = var_10_0[iter_10_0]
+		reward = rewardList[i]
 
-		gohelper.setActive(var_10_7.gonormal, false)
-		gohelper.setActive(var_10_7.gofirst, false)
-		gohelper.setActive(var_10_7.goadvance, false)
-		gohelper.setActive(var_10_7.gofirsthard, false)
+		gohelper.setActive(rewardItem.gonormal, false)
+		gohelper.setActive(rewardItem.gofirst, false)
+		gohelper.setActive(rewardItem.goadvance, false)
+		gohelper.setActive(rewardItem.gofirsthard, false)
 
-		local var_10_9
-		local var_10_10
-		local var_10_11 = var_10_8[4] or var_10_8[3]
-		local var_10_12 = true
-		local var_10_13 = var_10_7.gofirst
-		local var_10_14 = var_10_7.goadvance
+		local goFirstRare, goAdvanceRare
+		local quantity = reward[4] or reward[3]
+		local isShowCount = true
 
-		if iter_10_0 <= var_10_2 then
-			gohelper.setActive(var_10_14, true)
-		elseif iter_10_0 <= var_10_1 then
-			gohelper.setActive(var_10_13, true)
+		goFirstRare = rewardItem.gofirst
+		goAdvanceRare = rewardItem.goadvance
+
+		if i <= advancedRewardIndex then
+			gohelper.setActive(goAdvanceRare, true)
+		elseif i <= firstRewardIndex then
+			gohelper.setActive(goFirstRare, true)
 		else
-			gohelper.setActive(var_10_7.gonormal, true)
+			gohelper.setActive(rewardItem.gonormal, true)
 
-			var_10_7.txtnormal.text = luaLang("dungeon_prob_flag" .. var_10_8[3])
+			rewardItem.txtnormal.text = luaLang("dungeon_prob_flag" .. reward[3])
 		end
 
-		var_10_7.iconItem:setMOValue(var_10_8[1], var_10_8[2], var_10_11, nil, true)
-		var_10_7.iconItem:setCountFontSize(42)
-		var_10_7.iconItem:setHideLvAndBreakFlag(true)
-		var_10_7.iconItem:hideEquipLvAndBreak(true)
-		var_10_7.iconItem:customOnClickCallback(arg_10_0._onRewardItemClick, arg_10_0)
-		gohelper.setActive(var_10_7.go, true)
+		rewardItem.iconItem:setMOValue(reward[1], reward[2], quantity, nil, true)
+		rewardItem.iconItem:setCountFontSize(42)
+		rewardItem.iconItem:setHideLvAndBreakFlag(true)
+		rewardItem.iconItem:hideEquipLvAndBreak(true)
+		rewardItem.iconItem:customOnClickCallback(self._onRewardItemClick, self)
+		gohelper.setActive(rewardItem.go, true)
 	end
 
-	for iter_10_1 = var_10_4 + 1, #arg_10_0.rewardItems do
-		gohelper.setActive(arg_10_0.rewardItems[iter_10_1].go, false)
+	for i = count + 1, #self.rewardItems do
+		gohelper.setActive(self.rewardItems[i].go, false)
 	end
 end
 
-function var_0_0.createRewardItem(arg_11_0, arg_11_1)
-	local var_11_0 = IconMgr.instance:getCommonPropItemIcon(arg_11_0.goRewardContent)
+function VersionActivity1_4DungeonEpisodeView:createRewardItem(index)
+	local item = IconMgr.instance:getCommonPropItemIcon(self.goRewardContent)
 
-	arg_11_0.rewardItemList[arg_11_1] = var_11_0
+	self.rewardItemList[index] = item
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.onClose(arg_12_0)
+function VersionActivity1_4DungeonEpisodeView:onClose()
 	VersionActivity1_4DungeonModel.instance:setSelectEpisodeId()
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simagecosticon:UnLoadImage()
+function VersionActivity1_4DungeonEpisodeView:onDestroyView()
+	self._simagecosticon:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_4DungeonEpisodeView

@@ -1,269 +1,279 @@
-﻿module("modules.logic.backpack.rpc.MaterialRpc", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/rpc/MaterialRpc.lua
 
-local var_0_0 = class("MaterialRpc", BaseRpc)
+module("modules.logic.backpack.rpc.MaterialRpc", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local MaterialRpc = class("MaterialRpc", BaseRpc)
+
+function MaterialRpc:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:set_onReceiveMaterialChangePushOnce(nil, nil)
+function MaterialRpc:reInit()
+	self:set_onReceiveMaterialChangePushOnce(nil, nil)
 end
 
-function var_0_0.receiveMaterial(arg_3_0)
-	local var_3_0 = {}
-	local var_3_1 = {}
-	local var_3_2 = {}
-	local var_3_3 = {}
+function MaterialRpc.receiveMaterial(msg)
+	local materialDataMOList = {}
+	local faithCO = {}
+	local equip_cards = {}
+	local season123EquipCards = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.dataList) do
-		local var_3_4
-		local var_3_5 = MaterialDataMO.New()
+	for _, v in ipairs(msg.dataList) do
+		local uid
+		local o = MaterialDataMO.New()
 
-		if iter_3_1.materilType == MaterialEnum.MaterialType.PowerPotion then
-			local var_3_6 = ItemPowerModel.instance:getLatestPowerChange()
+		if v.materilType == MaterialEnum.MaterialType.PowerPotion then
+			local latestPowerCo = ItemPowerModel.instance:getLatestPowerChange()
 
-			for iter_3_2, iter_3_3 in pairs(var_3_6) do
-				if tonumber(iter_3_3.itemid) == tonumber(iter_3_1.materilId) then
-					var_3_4 = iter_3_3.uid
+			for _, power in pairs(latestPowerCo) do
+				if tonumber(power.itemid) == tonumber(v.materilId) then
+					uid = power.uid
 				end
 			end
-		elseif iter_3_1.materilType == MaterialEnum.MaterialType.NewInsight then
-			local var_3_7 = ItemInsightModel.instance:getLatestInsightChange()
+		elseif v.materilType == MaterialEnum.MaterialType.NewInsight then
+			local latestInsightCo = ItemInsightModel.instance:getLatestInsightChange()
 
-			for iter_3_4, iter_3_5 in pairs(var_3_7) do
-				if tonumber(iter_3_5.itemid) == tonumber(iter_3_1.materilId) then
-					var_3_4 = iter_3_5.uid
+			for _, insight in pairs(latestInsightCo) do
+				if tonumber(insight.itemid) == tonumber(v.materilId) then
+					uid = insight.uid
 				end
 			end
 		end
 
-		var_3_5:initValue(iter_3_1.materilType, iter_3_1.materilId, iter_3_1.quantity, var_3_4, iter_3_1.roomBuildingLevel)
+		o:initValue(v.materilType, v.materilId, v.quantity, uid, v.roomBuildingLevel)
 
-		if iter_3_1.materilType == MaterialEnum.MaterialType.Faith then
-			table.insert(var_3_1, var_3_5)
-		elseif iter_3_1.materilType == MaterialEnum.MaterialType.EquipCard then
-			for iter_3_6 = 1, iter_3_1.quantity do
-				table.insert(var_3_2, iter_3_1.materilId)
+		if v.materilType == MaterialEnum.MaterialType.Faith then
+			table.insert(faithCO, o)
+		elseif v.materilType == MaterialEnum.MaterialType.EquipCard then
+			for i = 1, v.quantity do
+				table.insert(equip_cards, v.materilId)
 			end
-		elseif iter_3_1.materilType == MaterialEnum.MaterialType.Season123EquipCard then
-			for iter_3_7 = 1, iter_3_1.quantity do
-				table.insert(var_3_3, iter_3_1.materilId)
+		elseif v.materilType == MaterialEnum.MaterialType.Season123EquipCard then
+			for i = 1, v.quantity do
+				table.insert(season123EquipCards, v.materilId)
 			end
-		elseif iter_3_1.materilType == MaterialEnum.MaterialType.Act186Like then
+		elseif v.materilType == MaterialEnum.MaterialType.Act186Like then
 			-- block empty
 		else
-			table.insert(var_3_0, var_3_5)
+			table.insert(materialDataMOList, o)
 		end
 	end
 
-	return var_3_0, var_3_1, var_3_2, var_3_3
+	return materialDataMOList, faithCO, equip_cards, season123EquipCards
 end
 
-function var_0_0.set_onReceiveMaterialChangePushOnce(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._materialChangePushOnceCb = arg_4_1
-	arg_4_0._materialChangePushOnceCbObj = arg_4_2
+function MaterialRpc:set_onReceiveMaterialChangePushOnce(cb, cbObj)
+	self._materialChangePushOnceCb = cb
+	self._materialChangePushOnceCbObj = cbObj
 end
 
-function var_0_0.onReceiveMaterialChangePush(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0._materialChangePushOnceCb
+function MaterialRpc:onReceiveMaterialChangePush(resultCode, msg)
+	local onceCb = self._materialChangePushOnceCb
 
-	if var_5_0 then
-		local var_5_1 = arg_5_0._materialChangePushOnceCbObj
+	if onceCb then
+		local onceCbObj = self._materialChangePushOnceCbObj
 
-		arg_5_0:set_onReceiveMaterialChangePushOnce(nil, nil)
-		var_5_0(var_5_1, arg_5_1, arg_5_2)
+		self:set_onReceiveMaterialChangePushOnce(nil, nil)
+		onceCb(onceCbObj, resultCode, msg)
 
 		return
 	end
 
-	if arg_5_1 ~= 0 then
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_5_2, var_5_3, var_5_4, var_5_5 = var_0_0.receiveMaterial(arg_5_2)
+	local materialDataMOList, faithCO, equip_cards, season123EquipCards = MaterialRpc.receiveMaterial(msg)
 
-	arg_5_0:_onReceiveMaterialChangePush(arg_5_2, var_5_2, var_5_3, var_5_4, var_5_5)
+	self:_onReceiveMaterialChangePush(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
 end
 
-function var_0_0._onReceiveMaterialChangePush(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	local var_6_0 = arg_6_1.getApproach
+function MaterialRpc:_onReceiveMaterialChangePush(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
+	local getApproach = msg.getApproach
 
-	if var_6_0 == MaterialEnum.GetApproach.Charge then
-		PayController.instance:onReceiveMaterialChangePush(arg_6_2)
+	if getApproach == MaterialEnum.GetApproach.Charge then
+		PayController.instance:onReceiveMaterialChangePush(materialDataMOList)
 	end
 
-	if PopupCacheModel.instance:isIgnoreGetPropView(var_6_0) then
+	local isIgnore = PopupCacheModel.instance:isIgnoreGetPropView(getApproach)
+
+	if isIgnore then
 		return
 	end
 
-	if PopupCacheController.instance:tryCacheGetPropView(var_6_0, {
-		materialDataMOList = arg_6_2
-	}) then
+	local isCache = PopupCacheController.instance:tryCacheGetPropView(getApproach, {
+		materialDataMOList = materialDataMOList
+	})
+
+	if isCache then
 		return
 	end
 
-	if var_6_0 == MaterialEnum.GetApproach.RoomProductLine then
-		RoomController.instance:MaterialChangeByRoomProductLine(arg_6_2)
-	elseif var_6_0 == MaterialEnum.GetApproach.Explore then
+	if getApproach == MaterialEnum.GetApproach.RoomProductLine then
+		RoomController.instance:MaterialChangeByRoomProductLine(materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.Explore then
 		-- block empty
-	elseif var_6_0 == MaterialEnum.GetApproach.BattlePass then
-		BpController.instance:_showCommonPropView(arg_6_2)
-	elseif var_6_0 == MaterialEnum.GetApproach.DungeonRewardPoint then
-		DungeonController.instance:dispatchEvent(DungeonEvent.OnGetPointRewardMaterials, arg_6_2)
-	elseif var_6_0 == MaterialEnum.GetApproach.AstrologyStarReward then
-		VersionActivity1_3AstrologyModel.instance:setStarReward(arg_6_2)
+	elseif getApproach == MaterialEnum.GetApproach.BattlePass then
+		BpController.instance:_showCommonPropView(materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.DungeonRewardPoint then
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnGetPointRewardMaterials, materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.AstrologyStarReward then
+		VersionActivity1_3AstrologyModel.instance:setStarReward(materialDataMOList)
 
 		return
-	elseif var_6_0 == MaterialEnum.GetApproach.Task or arg_6_1.getApproach == MaterialEnum.GetApproach.TaskAct then
+	elseif getApproach == MaterialEnum.GetApproach.Task or msg.getApproach == MaterialEnum.GetApproach.TaskAct then
 		if ViewMgr.instance:isOpen(ViewName.WeekWalkRewardView) or ViewMgr.instance:isOpen(ViewName.WeekWalkLayerRewardView) then
-			WeekWalkTaskListModel.instance:setTaskRewardList(arg_6_2)
+			WeekWalkTaskListModel.instance:setTaskRewardList(materialDataMOList)
 
 			return
 		end
 
 		if ViewMgr.instance:isOpen(ViewName.WeekWalk_2LayerRewardView) then
-			WeekWalk_2TaskListModel.instance:setTaskRewardList(arg_6_2)
+			WeekWalk_2TaskListModel.instance:setTaskRewardList(materialDataMOList)
 
 			return
 		end
 
-		TaskController.instance:getRewardByLine(var_6_0, ViewName.CommonPropView, arg_6_2)
+		TaskController.instance:getRewardByLine(getApproach, ViewName.CommonPropView, materialDataMOList)
 
-		if #arg_6_4 > 0 then
-			Activity104Model.instance:addCardGetData(arg_6_4)
+		if #equip_cards > 0 then
+			Activity104Model.instance:addCardGetData(equip_cards)
 			Activity104Controller.instance:checkShowEquipSelfChoiceView()
 		end
 
-		if #arg_6_5 > 0 then
-			Season123Model.instance:addCardGetData(arg_6_5)
+		if #season123EquipCards > 0 then
+			Season123Model.instance:addCardGetData(season123EquipCards)
 		end
-	elseif var_6_0 == MaterialEnum.GetApproach.RoomInteraction then
-		RoomController.instance:showInteractionRewardToast(arg_6_2)
+	elseif getApproach == MaterialEnum.GetApproach.RoomInteraction then
+		RoomController.instance:showInteractionRewardToast(materialDataMOList)
 
-		if #arg_6_3 > 0 then
-			RoomCharacterController.instance:showGainFaithToast(arg_6_3)
+		if #faithCO > 0 then
+			RoomCharacterController.instance:showGainFaithToast(faithCO)
 		end
-	elseif var_6_0 == MaterialEnum.GetApproach.NoviceStageReward then
+	elseif getApproach == MaterialEnum.GetApproach.NoviceStageReward then
 		TaskModel.instance:setHasTaskNoviceStageReward(true)
-	elseif var_6_0 == MaterialEnum.GetApproach.SignIn then
-		SignInController.instance:setSigninReward(arg_6_2)
-	elseif var_6_0 == MaterialEnum.GetApproach.Act1_6SkillLvDown or var_6_0 == MaterialEnum.GetApproach.Act1_6SkillReset then
+	elseif getApproach == MaterialEnum.GetApproach.SignIn then
+		-- block empty
+	elseif getApproach == MaterialEnum.GetApproach.Birthday then
+		SignInController.instance:setSigninReward(materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.MonthCard or getApproach == MaterialEnum.GetApproach.SmallMonthCard or getApproach == MaterialEnum.GetApproach.SeasonCard then
+		SignInController.instance:openSigninPropView(materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.Act1_6SkillLvDown or getApproach == MaterialEnum.GetApproach.Act1_6SkillReset then
 		VersionActivity1_6DungeonController.instance:dispatchEvent(VersionActivity1_6DungeonEvent.SkillPointReturnBack)
 
 		return
-	elseif var_6_0 == MaterialEnum.GetApproach.v1a8Act157ComponentReward then
+	elseif getApproach == MaterialEnum.GetApproach.v1a8Act157ComponentReward then
 		return
-	elseif var_6_0 == MaterialEnum.GetApproach.v2a2Act169SummonNewPick and not SummonNewCustomPickChoiceListModel.instance:haveAllRole() then
-		SummonNewCustomPickChoiceController.instance:setSummonReward(arg_6_2)
+	elseif getApproach == MaterialEnum.GetApproach.v2a2Act169SummonNewPick and not SummonNewCustomPickChoiceListModel.instance:haveAllRole() then
+		SummonNewCustomPickChoiceController.instance:setSummonReward(materialDataMOList)
 
 		return
-	elseif var_6_0 == MaterialEnum.GetApproach.LifeCircleSign then
-		LifeCircleController.instance:openLifeCircleRewardView(arg_6_2)
-	elseif var_6_0 == MaterialEnum.GetApproach.AutoChessRankReward or var_6_0 == MaterialEnum.GetApproach.AutoChessPveReward then
-		AutoChessController.instance:addPopupView(ViewName.CommonPropView, arg_6_2)
-	elseif var_6_0 == MaterialEnum.GetApproach.Activity197View then
-		Activity197Controller.instance:setRummageReward(ViewName.CommonPropView, arg_6_2)
-	elseif var_6_0 == MaterialEnum.GetApproach.SkinCoupon then
-		PopupController.instance:addPopupView(PopupEnum.PriorityType.SkinCouponTipView, ViewName.SkinCouponTipView, arg_6_2)
+	elseif getApproach == MaterialEnum.GetApproach.LifeCircleSign then
+		LifeCircleController.instance:openLifeCircleRewardView(materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.AutoChessRankReward or getApproach == MaterialEnum.GetApproach.AutoChessPveReward then
+		AutoChessController.instance:addPopupView(ViewName.CommonPropView, materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.Activity197View then
+		Activity197Controller.instance:setRummageReward(ViewName.CommonPropView, materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.SkinCoupon then
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.SkinCouponTipView, ViewName.SkinCouponTipView, materialDataMOList)
 	else
-		arg_6_0:_onReceiveMaterialChangePush_default(arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
+		self:_onReceiveMaterialChangePush_default(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
 	end
 end
 
-function var_0_0._onReceiveMaterialChangePush_default(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	local var_7_0 = arg_7_1.getApproach
+function MaterialRpc:_onReceiveMaterialChangePush_default(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
+	local getApproach = msg.getApproach
 
-	if #arg_7_3 > 0 and var_7_0 == MaterialEnum.GetApproach.RoomGainFaith then
-		RoomCharacterController.instance:showGainFaithToast(arg_7_3)
+	if #faithCO > 0 and getApproach == MaterialEnum.GetApproach.RoomGainFaith then
+		RoomCharacterController.instance:showGainFaithToast(faithCO)
 	end
 
-	if #arg_7_4 > 0 then
-		Activity104Model.instance:addCardGetData(arg_7_4)
+	if #equip_cards > 0 then
+		Activity104Model.instance:addCardGetData(equip_cards)
 	end
 
-	if #arg_7_5 > 0 then
-		Season123Model.instance:addCardGetData(arg_7_5)
+	if #season123EquipCards > 0 then
+		Season123Model.instance:addCardGetData(season123EquipCards)
 	end
 
-	if #arg_7_2 == 1 and arg_7_2[1].materilType == MaterialEnum.MaterialType.HeroSkin then
+	if #materialDataMOList == 1 and materialDataMOList[1].materilType == MaterialEnum.MaterialType.HeroSkin then
 		return
 	end
 
-	if #arg_7_2 == 1 and arg_7_2[1].materilType == MaterialEnum.MaterialType.Item then
-		local var_7_1 = MainSceneSwitchConfig.instance:getConfigByItemId(arg_7_2[1].materilId)
+	if #materialDataMOList == 1 and materialDataMOList[1].materilType == MaterialEnum.MaterialType.Item then
+		local sceneSkinConfig = MainSceneSwitchConfig.instance:getConfigByItemId(materialDataMOList[1].materilId)
 
-		if var_7_1 then
+		if sceneSkinConfig then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainSceneSwitchInfoView, {
-				sceneSkinId = var_7_1.id,
-				materialDataMOList = arg_7_2
+				sceneSkinId = sceneSkinConfig.id,
+				materialDataMOList = materialDataMOList
 			})
 
 			return
 		end
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		local var_7_2 = MainSceneSwitchConfig.instance:getConfigByItemId(iter_7_1.materilId)
+	for _, mo in ipairs(materialDataMOList) do
+		local sceneSkinConfig = MainSceneSwitchConfig.instance:getConfigByItemId(mo.materilId)
 
-		if var_7_2 then
+		if sceneSkinConfig then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainSceneSwitchInfoView, {
-				sceneSkinId = var_7_2.id,
-				materialDataMOList = arg_7_2
+				sceneSkinId = sceneSkinConfig.id,
+				materialDataMOList = materialDataMOList
 			})
 		end
 
-		local var_7_3 = MainUISwitchConfig.instance:getUISwitchCoByItemId(iter_7_1.materilId)
+		local co = MainUISwitchConfig.instance:getUISwitchCoByItemId(mo.materilId)
 
-		if var_7_3 then
+		if co then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainUISwitchInfoBlurMaskView, {
-				SkinId = var_7_3.id
+				SkinId = co.id
 			})
 		end
 	end
 
-	for iter_7_2, iter_7_3 in ipairs(arg_7_2) do
-		local var_7_4 = FightUISwitchModel.instance:getStyleMoByItemId(iter_7_3.materilId)
+	for _, mo in ipairs(materialDataMOList) do
+		local styleMo = FightUISwitchModel.instance:getStyleMoByItemId(mo.materilId)
 
-		if var_7_4 then
+		if styleMo then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.FightUISwitchEquipView, {
-				mo = var_7_4
+				mo = styleMo
 			})
 		end
 	end
 
-	local var_7_5 = #arg_7_2
+	local itemCnt = #materialDataMOList
 
-	if var_7_5 ~= 0 and arg_7_2[1].materilType == MaterialEnum.MaterialType.Critter then
+	if itemCnt ~= 0 and materialDataMOList[1].materilType == MaterialEnum.MaterialType.Critter then
 		CritterController.instance:popUpCritterGetView()
 
-		if var_7_5 == 1 then
+		if itemCnt == 1 then
 			return
 		end
 	end
 
-	local var_7_6 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
+	local list = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
 
-	if var_7_6 and #var_7_6 > 0 then
-		for iter_7_4, iter_7_5 in ipairs(var_7_6) do
-			if #arg_7_2 == 1 and iter_7_5.id == arg_7_2[1].materilId then
-				PlayerCardController.instance:ShowChangeBgSkin(iter_7_5.id)
+	if list and #list > 0 then
+		for _, config in ipairs(list) do
+			if #materialDataMOList == 1 and config.id == materialDataMOList[1].materilId then
+				PlayerCardController.instance:ShowChangeBgSkin(config.id)
 			end
 		end
 	end
 
-	arg_7_0:simpleShowView(arg_7_2)
+	self:simpleShowView(materialDataMOList)
 end
 
-function var_0_0.simpleShowView(arg_8_0, arg_8_1)
-	if not #arg_8_1 or #arg_8_1 == 0 then
+function MaterialRpc:simpleShowView(materialDataMOList)
+	if not #materialDataMOList or #materialDataMOList == 0 then
 		return
 	end
 
-	RoomController.instance:popUpRoomBlockPackageView(arg_8_1)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_8_1)
+	RoomController.instance:popUpRoomBlockPackageView(materialDataMOList)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, materialDataMOList)
 end
 
-var_0_0.instance = var_0_0.New()
+MaterialRpc.instance = MaterialRpc.New()
 
-return var_0_0
+return MaterialRpc

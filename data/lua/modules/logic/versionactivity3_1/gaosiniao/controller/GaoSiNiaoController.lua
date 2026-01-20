@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.controller.GaoSiNiaoController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/controller/GaoSiNiaoController.lua
 
-local var_0_0 = class("GaoSiNiaoController", BaseController)
+module("modules.logic.versionactivity3_1.gaosiniao.controller.GaoSiNiaoController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._sys = GaoSiNiaoSysModel.instance
-	arg_1_0._battle = GaoSiNiaoBattleModel.instance
+local GaoSiNiaoController = class("GaoSiNiaoController", BaseController)
 
-	arg_1_0:reInit()
+function GaoSiNiaoController:onInit()
+	self._sys = GaoSiNiaoSysModel.instance
+	self._battle = GaoSiNiaoBattleModel.instance
+
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	GameUtil.onDestroyViewMember(arg_2_0, "_enterFlow")
-	GameUtil.onDestroyViewMember(arg_2_0, "_exitFlow")
+function GaoSiNiaoController:reInit()
+	GameUtil.onDestroyViewMember(self, "_enterFlow")
+	GameUtil.onDestroyViewMember(self, "_exitFlow")
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function GaoSiNiaoController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function GaoSiNiaoController:addConstEvents()
 	return
 end
 
-function var_0_0.enterLevelView(arg_5_0)
-	GaoSiNiaoRpc.instance:sendGetAct210InfoRequest(arg_5_0._enterLevelViewOnSvrCb, arg_5_0)
+function GaoSiNiaoController:enterLevelView()
+	GaoSiNiaoRpc.instance:sendGetAct210InfoRequest(self._enterLevelViewOnSvrCb, self)
 end
 
-function var_0_0._enterLevelViewOnSvrCb(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_2 ~= 0 then
-		logError("GaoSiNiaoController:enterLevelView resultCode=" .. tostring(arg_6_2))
+function GaoSiNiaoController:_enterLevelViewOnSvrCb(_, resultCode)
+	if resultCode ~= 0 then
+		logError("GaoSiNiaoController:enterLevelView resultCode=" .. tostring(resultCode))
 
 		return
 	end
@@ -36,56 +38,56 @@ function var_0_0._enterLevelViewOnSvrCb(arg_6_0, arg_6_1, arg_6_2)
 	ViewMgr.instance:openView(ViewName.V3a1_GaoSiNiao_LevelView)
 end
 
-function var_0_0.enterGame(arg_7_0, arg_7_1)
-	GameUtil.onDestroyViewMember(arg_7_0, "_enterFlow")
+function GaoSiNiaoController:enterGame(episodeId)
+	GameUtil.onDestroyViewMember(self, "_enterFlow")
 
-	arg_7_0._enterFlow = GaoSiNiaoEnterFlow.New()
+	self._enterFlow = GaoSiNiaoEnterFlow.New()
 
-	local var_7_0 = arg_7_0:config():getEpisodeCO_gameId(arg_7_1)
+	local gameId = self:config():getEpisodeCO_gameId(episodeId)
 
-	arg_7_0._enterFlow:registerDoneListener(arg_7_0._onEnterFlowRegisterDoneCb, arg_7_0)
-	arg_7_0._enterFlow:start(arg_7_1)
+	self._enterFlow:registerDoneListener(self._onEnterFlowRegisterDoneCb, self)
+	self._enterFlow:start(episodeId)
 end
 
-function var_0_0._onEnterFlowRegisterDoneCb(arg_8_0)
-	if not arg_8_0._enterFlow then
+function GaoSiNiaoController:_onEnterFlowRegisterDoneCb()
+	if not self._enterFlow then
 		return
 	end
 
-	local var_8_0 = arg_8_0._enterFlow:gameId()
-	local var_8_1 = arg_8_0._enterFlow:episodeId()
+	local gameId = self._enterFlow:gameId()
+	local episodeId = self._enterFlow:episodeId()
 
-	if var_8_0 == 0 then
-		arg_8_0:exitGame(var_8_1)
+	if gameId == 0 then
+		self:exitGame(episodeId)
 	end
 end
 
-function var_0_0.completeGame(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-	arg_9_1 = arg_9_1 or arg_9_0._battle:episodeId()
+function GaoSiNiaoController:completeGame(episodeId, progress, callback, cbObj)
+	episodeId = episodeId or self._battle:episodeId()
 
-	return GaoSiNiaoRpc.instance:sendAct210FinishEpisodeRequest(arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	return GaoSiNiaoRpc.instance:sendAct210FinishEpisodeRequest(episodeId, progress, callback, cbObj)
 end
 
-function var_0_0.exitGame(arg_10_0, arg_10_1)
-	GameUtil.onDestroyViewMember(arg_10_0, "_exitFlow")
+function GaoSiNiaoController:exitGame(episodeId)
+	GameUtil.onDestroyViewMember(self, "_exitFlow")
 
-	arg_10_0._exitFlow = GaoSiNiaoExitFlow.New()
+	self._exitFlow = GaoSiNiaoExitFlow.New()
 
-	arg_10_0._exitFlow:start(arg_10_1)
+	self._exitFlow:start(episodeId)
 end
 
-function var_0_0.actId(arg_11_0)
-	return arg_11_0._sys:actId()
+function GaoSiNiaoController:actId()
+	return self._sys:actId()
 end
 
-function var_0_0.taskType(arg_12_0)
-	return arg_12_0._sys:taskType()
+function GaoSiNiaoController:taskType()
+	return self._sys:taskType()
 end
 
-function var_0_0.config(arg_13_0)
-	return arg_13_0._sys:config()
+function GaoSiNiaoController:config()
+	return self._sys:config()
 end
 
-var_0_0.instance = var_0_0.New()
+GaoSiNiaoController.instance = GaoSiNiaoController.New()
 
-return var_0_0
+return GaoSiNiaoController

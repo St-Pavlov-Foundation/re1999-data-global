@@ -1,38 +1,40 @@
-﻿module("modules.logic.equip.view.work.DelayFuncWork", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/work/DelayFuncWork.lua
 
-local var_0_0 = class("DelayFuncWork", BaseWork)
+module("modules.logic.equip.view.work.DelayFuncWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0._func = arg_1_1
-	arg_1_0._target = arg_1_2
-	arg_1_0._delayTime = arg_1_3
-	arg_1_0._param = arg_1_4
+local DelayFuncWork = class("DelayFuncWork", BaseWork)
+
+function DelayFuncWork:ctor(func, target, delayTime, param)
+	self._func = func
+	self._target = target
+	self._delayTime = delayTime
+	self._param = param
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._func(arg_2_0._target, arg_2_0._param)
+function DelayFuncWork:onStart()
+	self._func(self._target, self._param)
 
-	if not arg_2_0._delayTime or arg_2_0._delayTime == 0 then
-		arg_2_0.hadDelayTask = false
+	if not self._delayTime or self._delayTime == 0 then
+		self.hadDelayTask = false
 
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	else
-		arg_2_0.hadDelayTask = true
+		self.hadDelayTask = true
 
-		TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, arg_2_0._delayTime)
+		TaskDispatcher.runDelay(self._delayDone, self, self._delayTime)
 	end
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function DelayFuncWork:_delayDone()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	var_0_0.super.clearWork(arg_4_0)
+function DelayFuncWork:clearWork()
+	DelayFuncWork.super.clearWork(self)
 
-	if arg_4_0.hadDelayTask then
-		TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+	if self.hadDelayTask then
+		TaskDispatcher.cancelTask(self._delayDone, self)
 	end
 end
 
-return var_0_0
+return DelayFuncWork

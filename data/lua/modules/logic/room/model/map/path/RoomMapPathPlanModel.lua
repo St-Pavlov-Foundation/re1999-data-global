@@ -1,66 +1,68 @@
-﻿module("modules.logic.room.model.map.path.RoomMapPathPlanModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/path/RoomMapPathPlanModel.lua
 
-local var_0_0 = class("RoomMapPathPlanModel", BaseModel)
+module("modules.logic.room.model.map.path.RoomMapPathPlanModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomMapPathPlanModel = class("RoomMapPathPlanModel", BaseModel)
+
+function RoomMapPathPlanModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomMapPathPlanModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomMapPathPlanModel:clear()
+	RoomMapPathPlanModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
+function RoomMapPathPlanModel:_clearData()
 	return
 end
 
-function var_0_0.init(arg_5_0)
-	arg_5_0:clear()
+function RoomMapPathPlanModel:init()
+	self:clear()
 end
 
-function var_0_0.initPath(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = RoomConfig.instance:getVehicleConfigList()
+function RoomMapPathPlanModel:initPath()
+	local resIds = {}
+	local vehicleCfgList = RoomConfig.instance:getVehicleConfigList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-		table.insert(var_6_0, iter_6_1.resId)
+	for _, cfg in ipairs(vehicleCfgList) do
+		table.insert(resIds, cfg.resId)
 	end
 
-	local var_6_2 = RoomResourceHelper.getResourcePointAreaMODict(nil, var_6_0)
-	local var_6_3 = {}
+	local resAreaMOMap = RoomResourceHelper.getResourcePointAreaMODict(nil, resIds)
+	local moList = {}
 
-	for iter_6_2, iter_6_3 in pairs(var_6_2) do
-		local var_6_4 = iter_6_3:findeArea()
+	for resourceId, areaMO in pairs(resAreaMOMap) do
+		local tempAreaList = areaMO:findeArea()
 
-		for iter_6_4, iter_6_5 in ipairs(var_6_4) do
-			local var_6_5 = iter_6_2 * 1000 + iter_6_4
-			local var_6_6 = RoomMapPathPlanMO.New()
+		for index, area in ipairs(tempAreaList) do
+			local id = resourceId * 1000 + index
+			local mo = RoomMapPathPlanMO.New()
 
-			var_6_6:init(var_6_5, iter_6_2, iter_6_5)
-			table.insert(var_6_3, var_6_6)
+			mo:init(id, resourceId, area)
+			table.insert(moList, mo)
 		end
 	end
 
-	arg_6_0:setList(var_6_3)
+	self:setList(moList)
 end
 
-function var_0_0.getPlanMOByXY(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_0:getList()
+function RoomMapPathPlanModel:getPlanMOByXY(x, y, resId)
+	local list = self:getList()
 
-	for iter_7_0 = 1, #var_7_0 do
-		local var_7_1 = var_7_0[iter_7_0]
+	for i = 1, #list do
+		local planMO = list[i]
 
-		if var_7_1.resourceId == arg_7_3 and var_7_1:getNodeByXY(arg_7_1, arg_7_2) then
-			return var_7_1
+		if planMO.resourceId == resId and planMO:getNodeByXY(x, y) then
+			return planMO
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomMapPathPlanModel.instance = RoomMapPathPlanModel.New()
 
-return var_0_0
+return RoomMapPathPlanModel

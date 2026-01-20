@@ -1,8 +1,10 @@
-﻿module("modules.logic.pcInput.activityAdapter.MainActivityAdapter", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/activityAdapter/MainActivityAdapter.lua
 
-local var_0_0 = class("MainActivityAdapter", BaseActivityAdapter)
+module("modules.logic.pcInput.activityAdapter.MainActivityAdapter", package.seeall)
 
-var_0_0.keytoFunction = {
+local MainActivityAdapter = class("MainActivityAdapter", BaseActivityAdapter)
+
+MainActivityAdapter.keytoFunction = {
 	function()
 		BpController.instance:openBattlePassView()
 	end,
@@ -78,29 +80,29 @@ var_0_0.keytoFunction = {
 	end
 }
 
-function var_0_0.ctor(arg_25_0)
-	BaseActivityAdapter.ctor(arg_25_0)
+function MainActivityAdapter:ctor()
+	BaseActivityAdapter.ctor(self)
 
-	arg_25_0.keytoFunction = var_0_0.keytoFunction
-	arg_25_0.activitid = PCInputModel.Activity.MainActivity
+	self.keytoFunction = MainActivityAdapter.keytoFunction
+	self.activitid = PCInputModel.Activity.MainActivity
 
-	arg_25_0:registerFunction()
+	self:registerFunction()
 end
 
-function var_0_0.OnkeyUp(arg_26_0, arg_26_1)
+function MainActivityAdapter:OnkeyUp(keyName)
 	if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.MainThumbnailView) or ViewMgr.instance:isOpen(ViewName.SettingsView) then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(arg_26_0, arg_26_1)
+	BaseActivityAdapter.OnkeyUp(self, keyName)
 end
 
-function var_0_0.OnkeyDown(arg_27_0, arg_27_1)
+function MainActivityAdapter:OnkeyDown(keyName)
 	if ViewMgr.instance:IsPopUpViewOpen() then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyDown(arg_27_0, arg_27_1)
+	BaseActivityAdapter.OnkeyDown(self, keyName)
 end
 
-return var_0_0
+return MainActivityAdapter

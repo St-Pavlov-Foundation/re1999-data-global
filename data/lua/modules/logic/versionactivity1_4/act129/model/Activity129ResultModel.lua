@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_4.act129.model.Activity129ResultModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/model/Activity129ResultModel.lua
 
-local var_0_0 = class("Activity129ResultModel", ListScrollModel)
+module("modules.logic.versionactivity1_4.act129.model.Activity129ResultModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity129ResultModel = class("Activity129ResultModel", ListScrollModel)
+
+function Activity129ResultModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity129ResultModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity129ResultModel.instance = Activity129ResultModel.New()
 
-return var_0_0
+return Activity129ResultModel

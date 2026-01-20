@@ -1,78 +1,80 @@
-﻿module("modules.logic.room.view.common.RoomThemeFilterItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomThemeFilterItem.lua
 
-local var_0_0 = class("RoomThemeFilterItem", ListScrollCellExtend)
+module("modules.logic.room.view.common.RoomThemeFilterItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomThemeFilterItem = class("RoomThemeFilterItem", ListScrollCellExtend)
+
+function RoomThemeFilterItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._onBtnclick, arg_2_0)
+function RoomThemeFilterItem:addEvents()
+	self._btnclick:AddClickListener(self._onBtnclick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RoomThemeFilterItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goselect = gohelper.findChild(arg_4_0.viewGO, "beselected")
-	arg_4_0._gounselect = gohelper.findChild(arg_4_0.viewGO, "unselected")
-	arg_4_0._txtselectName = gohelper.findChildText(arg_4_0.viewGO, "beselected/name")
-	arg_4_0._txtunselectName = gohelper.findChildText(arg_4_0.viewGO, "unselected/name")
-	arg_4_0._btnclick = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "click")
+function RoomThemeFilterItem:_editableInitView()
+	self._goselect = gohelper.findChild(self.viewGO, "beselected")
+	self._gounselect = gohelper.findChild(self.viewGO, "unselected")
+	self._txtselectName = gohelper.findChildText(self.viewGO, "beselected/name")
+	self._txtunselectName = gohelper.findChildText(self.viewGO, "unselected/name")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "click")
 end
 
-function var_0_0._onBtnclick(arg_5_0)
-	if not arg_5_0._themeItemMO then
+function RoomThemeFilterItem:_onBtnclick()
+	if not self._themeItemMO then
 		return
 	end
 
-	local var_5_0 = arg_5_0._themeItemMO.id
+	local themeId = self._themeItemMO.id
 
-	if RoomThemeFilterListModel.instance:isSelectById(var_5_0) then
-		RoomThemeFilterListModel.instance:setSelectById(var_5_0, false)
+	if RoomThemeFilterListModel.instance:isSelectById(themeId) then
+		RoomThemeFilterListModel.instance:setSelectById(themeId, false)
 	else
-		RoomThemeFilterListModel.instance:setSelectById(var_5_0, true)
+		RoomThemeFilterListModel.instance:setSelectById(themeId, true)
 	end
 
 	RoomMapController.instance:dispatchEvent(RoomEvent.UIRoomThemeFilterChanged)
 end
 
-function var_0_0._refreshUI(arg_6_0)
-	if not arg_6_0._themeItemMO then
+function RoomThemeFilterItem:_refreshUI()
+	if not self._themeItemMO then
 		return
 	end
 
-	if arg_6_0._lastId ~= arg_6_0._themeItemMO.id then
-		arg_6_0._lastId = arg_6_0._themeItemMO.id
-		arg_6_0._txtselectName.text = arg_6_0._themeItemMO.config.name
-		arg_6_0._txtunselectName.text = arg_6_0._themeItemMO.config.name
+	if self._lastId ~= self._themeItemMO.id then
+		self._lastId = self._themeItemMO.id
+		self._txtselectName.text = self._themeItemMO.config.name
+		self._txtunselectName.text = self._themeItemMO.config.name
 	end
 
-	local var_6_0 = RoomThemeFilterListModel.instance:isSelectById(arg_6_0._themeItemMO.id)
+	local isSelect = RoomThemeFilterListModel.instance:isSelectById(self._themeItemMO.id)
 
-	if arg_6_0._lastSelect ~= var_6_0 then
-		arg_6_0._lastSelect = var_6_0
+	if self._lastSelect ~= isSelect then
+		self._lastSelect = isSelect
 
-		gohelper.setActive(arg_6_0._goselect, var_6_0)
-		gohelper.setActive(arg_6_0._gounselect, not var_6_0)
+		gohelper.setActive(self._goselect, isSelect)
+		gohelper.setActive(self._gounselect, not isSelect)
 	end
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
-	arg_7_0._themeItemMO = arg_7_1
+function RoomThemeFilterItem:onUpdateMO(mo)
+	self._themeItemMO = mo
 
-	arg_7_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
+function RoomThemeFilterItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RoomThemeFilterItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomThemeFilterItem

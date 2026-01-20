@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity114_event", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity114_event.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity114_event", package.seeall)
+
+local lua_activity114_event = {}
+local fields = {
 	checkOptionText = 6,
 	isCheckEvent = 12,
 	disposable = 11,
@@ -24,17 +26,17 @@ local var_0_1 = {
 	successStoryId = 14,
 	checkfeatures = 9
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	checkOptionText = 1,
 	nonOptionText = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity114_event.onLoad(json)
+	lua_activity114_event.configList, lua_activity114_event.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity114_event

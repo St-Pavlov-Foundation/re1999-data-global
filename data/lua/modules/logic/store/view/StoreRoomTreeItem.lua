@@ -1,463 +1,469 @@
-﻿module("modules.logic.store.view.StoreRoomTreeItem", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreRoomTreeItem.lua
 
-local var_0_0 = class("StoreRoomTreeItem", TreeScrollCell)
+module("modules.logic.store.view.StoreRoomTreeItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._rootIndex = nil
-	arg_1_0._nodeIndex = nil
-	arg_1_0._go = nil
-	arg_1_0._view = nil
-	arg_1_0._isRoot = nil
-	arg_1_0._isNode = nil
-	arg_1_0.nodeItemList = {}
-	arg_1_0._firstUpdate = true
-	arg_1_0._animationStartTime = 0
-	arg_1_0.openduration = 0.6
-	arg_1_0.closeduration = 0.3
+local StoreRoomTreeItem = class("StoreRoomTreeItem", TreeScrollCell)
+
+function StoreRoomTreeItem:ctor()
+	self._rootIndex = nil
+	self._nodeIndex = nil
+	self._go = nil
+	self._view = nil
+	self._isRoot = nil
+	self._isNode = nil
+	self.nodeItemList = {}
+	self._firstUpdate = true
+	self._animationStartTime = 0
+	self.openduration = 0.6
+	self.closeduration = 0.3
 end
 
-function var_0_0.initRoot(arg_2_0)
-	local var_2_0 = arg_2_0:getUserDataTb_()
+function StoreRoomTreeItem:initRoot()
+	local root = self:getUserDataTb_()
 
-	var_2_0._go = gohelper.findChild(arg_2_0._go, "root")
-	var_2_0._gomain = gohelper.findChild(var_2_0._go, "#go_main")
-	var_2_0._simagebg = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_bg")
-	var_2_0._simageicon = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_icon")
-	var_2_0._simagemask = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_mask")
-	var_2_0._simagetitle = gohelper.findChildSingleImage(var_2_0._go, "#go_main/#simage_title")
-	var_2_0._txttitle = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_title")
-	var_2_0._gotheme = gohelper.findChild(var_2_0._go, "#go_main/left/#txt_title/#go_theme")
-	var_2_0._txttype = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_title/#go_theme/#txt_type")
-	var_2_0._goclicktype = gohelper.findChild(var_2_0._go, "#go_main/left/#txt_title/#go_theme/clickArea")
-	var_2_0._gotag = gohelper.findChild(var_2_0._go, "#go_main/left/#txt_title/#go_Tag")
-	var_2_0._txttag = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_title/#go_Tag/#txt_Tag")
-	var_2_0._txtdesc = gohelper.findChildText(var_2_0._go, "#go_main/left/#txt_desc")
-	var_2_0._txthuolinum = gohelper.findChildText(var_2_0._go, "#go_main/left/info/huoli/#txt_huolinum")
-	var_2_0._txtblocknum = gohelper.findChildText(var_2_0._go, "#go_main/left/info/dikuai/#txt_dikuainum")
-	var_2_0._btnbuy = gohelper.findChildButtonWithAudio(var_2_0._go, "#go_main/right/#btn_buy")
-	var_2_0._txtcost1num = gohelper.findChildText(var_2_0._go, "#go_main/right/#btn_buy/bg/cost1/#txt_cost1num")
-	var_2_0._imagecost1num = gohelper.findChildImage(var_2_0._go, "#go_main/right/#btn_buy/bg/cost1/icon")
-	var_2_0._txtcost2num = gohelper.findChildText(var_2_0._go, "#go_main/right/#btn_buy/bg/cost2/#txt_cost2num")
-	var_2_0._imagecost2num = gohelper.findChildImage(var_2_0._go, "#go_main/right/#btn_buy/bg/cost2/icon")
-	var_2_0._godiscount = gohelper.findChild(var_2_0._go, "#go_main/right/#go_discount")
-	var_2_0._golimit = gohelper.findChild(var_2_0._go, "#go_main/right/#go_limit")
-	var_2_0._gohas = gohelper.findChild(var_2_0._go, "#go_main/right/#go_has")
-	var_2_0._txtdiscount = gohelper.findChildText(var_2_0._go, "#go_main/right/#go_discount/bg/label/#txt_discount")
-	var_2_0._goempty = gohelper.findChild(var_2_0._go, "#go_empty")
-	arg_2_0.root = var_2_0
+	root._go = gohelper.findChild(self._go, "root")
+	root._gomain = gohelper.findChild(root._go, "#go_main")
+	root._simagebg = gohelper.findChildSingleImage(root._go, "#go_main/#simage_bg")
+	root._simageicon = gohelper.findChildSingleImage(root._go, "#go_main/#simage_icon")
+	root._simagemask = gohelper.findChildSingleImage(root._go, "#go_main/#simage_mask")
+	root._simagetitle = gohelper.findChildSingleImage(root._go, "#go_main/#simage_title")
+	root._txttitle = gohelper.findChildText(root._go, "#go_main/left/#txt_title")
+	root._gotheme = gohelper.findChild(root._go, "#go_main/left/#txt_title/#go_theme")
+	root._txttype = gohelper.findChildText(root._go, "#go_main/left/#txt_title/#go_theme/#txt_type")
+	root._goclicktype = gohelper.findChild(root._go, "#go_main/left/#txt_title/#go_theme/clickArea")
+	root._gotag = gohelper.findChild(root._go, "#go_main/left/#txt_title/#go_Tag")
+	root._txttag = gohelper.findChildText(root._go, "#go_main/left/#txt_title/#go_Tag/#txt_Tag")
+	root._txtdesc = gohelper.findChildText(root._go, "#go_main/left/#txt_desc")
+	root._txthuolinum = gohelper.findChildText(root._go, "#go_main/left/info/huoli/#txt_huolinum")
+	root._txtblocknum = gohelper.findChildText(root._go, "#go_main/left/info/dikuai/#txt_dikuainum")
+	root._btnbuy = gohelper.findChildButtonWithAudio(root._go, "#go_main/right/#btn_buy")
+	root._txtcost1num = gohelper.findChildText(root._go, "#go_main/right/#btn_buy/bg/cost1/#txt_cost1num")
+	root._imagecost1num = gohelper.findChildImage(root._go, "#go_main/right/#btn_buy/bg/cost1/icon")
+	root._txtcost2num = gohelper.findChildText(root._go, "#go_main/right/#btn_buy/bg/cost2/#txt_cost2num")
+	root._imagecost2num = gohelper.findChildImage(root._go, "#go_main/right/#btn_buy/bg/cost2/icon")
+	root._godiscount = gohelper.findChild(root._go, "#go_main/right/#go_discount")
+	root._golimit = gohelper.findChild(root._go, "#go_main/right/#go_limit")
+	root._gohas = gohelper.findChild(root._go, "#go_main/right/#go_has")
+	root._txtdiscount = gohelper.findChildText(root._go, "#go_main/right/#go_discount/bg/label/#txt_discount")
+	root._goempty = gohelper.findChild(root._go, "#go_empty")
+	self.root = root
 
-	arg_2_0.root._simagebg:LoadImage(ResUrl.getStoreWildness("img_taozhuang_bg"))
-	arg_2_0.root._simagetitle:LoadImage(ResUrl.getStoreWildness("img_deco_1"))
-	arg_2_0.root._simagemask:LoadImage(ResUrl.getStoreWildness("mask"))
+	self.root._simagebg:LoadImage(ResUrl.getStoreWildness("img_taozhuang_bg"))
+	self.root._simagetitle:LoadImage(ResUrl.getStoreWildness("img_deco_1"))
+	self.root._simagemask:LoadImage(ResUrl.getStoreWildness("mask"))
 
-	var_2_0._gonewtag = gohelper.findChild(var_2_0._go, "#go_main/#go_newtag")
-	var_2_0._goremaintime = gohelper.findChild(var_2_0._go, "#go_main/#go_remaintime")
-	var_2_0._txtremiantime = gohelper.findChildText(var_2_0._go, "#go_main/#go_remaintime/#txt_remaintime")
-	arg_2_0._animator = arg_2_0._go:GetComponent(typeof(UnityEngine.Animator))
+	root._gonewtag = gohelper.findChild(root._go, "#go_main/#go_newtag")
+	root._goremaintime = gohelper.findChild(root._go, "#go_main/#go_remaintime")
+	root._txtremiantime = gohelper.findChildText(root._go, "#go_main/#go_remaintime/#txt_remaintime")
+	self._animator = self._go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.initNode(arg_3_0)
-	local var_3_0 = arg_3_0:getUserDataTb_()
+function StoreRoomTreeItem:initNode()
+	local node = self:getUserDataTb_()
 
-	var_3_0._go = gohelper.findChild(arg_3_0._go, "node")
-	var_3_0._simagedetailbg = gohelper.findChildSingleImage(var_3_0._go, "#simage_detailbg")
-	var_3_0._content = gohelper.findChild(var_3_0._go, "content")
-	arg_3_0.node = var_3_0
+	node._go = gohelper.findChild(self._go, "node")
+	node._simagedetailbg = gohelper.findChildSingleImage(node._go, "#simage_detailbg")
+	node._content = gohelper.findChild(node._go, "content")
+	self.node = node
 end
 
-function var_0_0.addEventListeners(arg_4_0)
+function StoreRoomTreeItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	if arg_5_0.root then
-		if arg_5_0.root._click then
-			arg_5_0.root._click:RemoveClickListener()
+function StoreRoomTreeItem:removeEventListeners()
+	if self.root then
+		if self.root._click then
+			self.root._click:RemoveClickListener()
 		end
 
-		if arg_5_0.root._clickType then
-			arg_5_0.root._clickType:RemoveClickListener()
+		if self.root._clickType then
+			self.root._clickType:RemoveClickListener()
 		end
 
-		arg_5_0.root._btnbuy:RemoveClickListener()
-		arg_5_0.root._simagebg:UnLoadImage()
-		arg_5_0.root._simageicon:UnLoadImage()
-		arg_5_0.root._simagemask:UnLoadImage()
-		arg_5_0.root._simagetitle:UnLoadImage()
+		self.root._btnbuy:RemoveClickListener()
+		self.root._simagebg:UnLoadImage()
+		self.root._simageicon:UnLoadImage()
+		self.root._simagemask:UnLoadImage()
+		self.root._simagetitle:UnLoadImage()
 	end
 
-	if next(arg_5_0.nodeItemList) then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0.nodeItemList) do
-			iter_5_1.good:onDestroy()
+	if next(self.nodeItemList) then
+		for i, v in ipairs(self.nodeItemList) do
+			v.good:onDestroy()
 		end
 
-		arg_5_0.nodeItemList = nil
+		self.nodeItemList = nil
 	end
 end
 
-function var_0_0._onClick(arg_6_0)
-	if arg_6_0._view:isExpand(arg_6_0._rootIndex) then
+function StoreRoomTreeItem:_onClick()
+	if self._view:isExpand(self._rootIndex) then
 		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 
-		if arg_6_0.root._mo.treeRootParam then
+		if self.root._mo.treeRootParam then
 			StoreController.instance:dispatchEvent(StoreEvent.OpenRoomStoreNode, {
 				state = false,
-				index = arg_6_0._rootIndex,
-				itemHeight = recthelper.getHeight(arg_6_0._go.transform)
+				index = self._rootIndex,
+				itemHeight = recthelper.getHeight(self._go.transform)
 			})
 		end
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_close)
 
-		if arg_6_0.root._mo.treeRootParam then
+		if self.root._mo.treeRootParam then
 			StoreController.instance:dispatchEvent(StoreEvent.OpenRoomStoreNode, {
 				state = true,
-				index = arg_6_0._rootIndex,
-				itemHeight = recthelper.getHeight(arg_6_0._go.transform)
+				index = self._rootIndex,
+				itemHeight = recthelper.getHeight(self._go.transform)
 			})
 		end
 	end
 
-	arg_6_0.root._mo:setNewRedDotKey()
+	self.root._mo:setNewRedDotKey()
 end
 
-function var_0_0._onBuyBtn(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		StoreController.instance:openNormalGoodsView(arg_7_1)
+function StoreRoomTreeItem:_onBuyBtn(rootmo)
+	if rootmo then
+		StoreController.instance:openNormalGoodsView(rootmo)
 	else
 		logError("没找到rootmo")
 	end
 
-	arg_7_0.root._mo:setNewRedDotKey()
-	arg_7_0:refreshNewTag()
+	self.root._mo:setNewRedDotKey()
+	self:refreshNewTag()
 end
 
-function var_0_0._onClickType(arg_8_0)
-	if arg_8_0.themeId then
+function StoreRoomTreeItem:_onClickType()
+	if self.themeId then
 		ViewMgr.instance:openView(ViewName.RoomThemeTipView, {
 			type = MaterialEnum.MaterialType.RoomTheme,
-			id = arg_8_0.themeId
+			id = self.themeId
 		})
 	end
 
-	arg_8_0.root._mo:setNewRedDotKey()
-	arg_8_0:refreshNewTag()
+	self.root._mo:setNewRedDotKey()
+	self:refreshNewTag()
 end
 
-function var_0_0._findThemeId(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function StoreRoomTreeItem:_findThemeId(productInfoArr)
+	if not productInfoArr then
 		return
 	end
 
-	local var_9_0 = RoomConfig.instance
+	local tRoomConfig = RoomConfig.instance
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		local var_9_1 = var_9_0:getThemeIdByItem(iter_9_1[2], iter_9_1[1])
+	for i, v in ipairs(productInfoArr) do
+		local themeId = tRoomConfig:getThemeIdByItem(v[2], v[1])
 
-		if var_9_1 then
-			return var_9_1
+		if themeId then
+			return themeId
 		end
 	end
 end
 
-function var_0_0.onSelect(arg_10_0, arg_10_1)
+function StoreRoomTreeItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.refreshNewTag(arg_11_0)
-	local var_11_0 = arg_11_0.root._mo:checkShowNewRedDot()
+function StoreRoomTreeItem:refreshNewTag()
+	local needShowNew = self.root._mo:checkShowNewRedDot()
 
-	gohelper.setActive(arg_11_0.root._gonewtag, var_11_0)
+	gohelper.setActive(self.root._gonewtag, needShowNew)
 
-	if var_11_0 then
-		recthelper.setAnchorX(arg_11_0.root._txtremiantime.transform, -8)
+	if needShowNew then
+		recthelper.setAnchorX(self.root._txtremiantime.transform, -8)
 	else
-		recthelper.setAnchorX(arg_11_0.root._txtremiantime.transform, -40)
+		recthelper.setAnchorX(self.root._txtremiantime.transform, -40)
 	end
 end
 
-function var_0_0.onUpdateRootMO(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1.update
+function StoreRoomTreeItem:onUpdateRootMO(mo)
+	local update = mo.update
 
-	if arg_12_1.type and arg_12_1.type == 0 then
-		gohelper.setActive(arg_12_0.root._gomain, false)
-		gohelper.setActive(arg_12_0.root._goempty, true)
+	if mo.type and mo.type == 0 then
+		gohelper.setActive(self.root._gomain, false)
+		gohelper.setActive(self.root._goempty, true)
 
-		if arg_12_0.root._click then
-			arg_12_0.root._click:RemoveClickListener()
+		if self.root._click then
+			self.root._click:RemoveClickListener()
 		end
 
-		if arg_12_1.update then
-			arg_12_0._animationStartTime = Time.time
+		if mo.update then
+			self._animationStartTime = Time.time
 		end
 
-		arg_12_0:_refreshOpenAnimation()
+		self:_refreshOpenAnimation()
 
-		arg_12_1.update = false
+		mo.update = false
 	else
-		gohelper.setActive(arg_12_0.root._gomain, true)
-		gohelper.setActive(arg_12_0.root._goempty, false)
+		gohelper.setActive(self.root._gomain, true)
+		gohelper.setActive(self.root._goempty, false)
 
-		arg_12_0.has = false
-		arg_12_0.root._mo = arg_12_1
+		self.has = false
+		self.root._mo = mo
 
-		gohelper.setActive(arg_12_0.root._btnbuy.gameObject, true)
-		gohelper.setActive(arg_12_0.root._gohas, false)
-		arg_12_0.root._btnbuy:AddClickListener(arg_12_0._onBuyBtn, arg_12_0, arg_12_0.root._mo)
+		gohelper.setActive(self.root._btnbuy.gameObject, true)
+		gohelper.setActive(self.root._gohas, false)
+		self.root._btnbuy:AddClickListener(self._onBuyBtn, self, self.root._mo)
 
-		arg_12_0.root._click = SLFramework.UGUI.UIClickListener.Get(arg_12_0.root._go)
-		arg_12_0.root._clickType = SLFramework.UGUI.UIClickListener.Get(arg_12_0.root._goclicktype)
+		self.root._click = SLFramework.UGUI.UIClickListener.Get(self.root._go)
+		self.root._clickType = SLFramework.UGUI.UIClickListener.Get(self.root._goclicktype)
 
-		arg_12_0.root._click:AddClickListener(arg_12_0._onClick, arg_12_0)
-		arg_12_0.root._clickType:AddClickListener(arg_12_0._onClickType, arg_12_0)
+		self.root._click:AddClickListener(self._onClick, self)
+		self.root._clickType:AddClickListener(self._onClickType, self)
 
-		local var_12_1 = StoreConfig.instance:getGoodsConfig(arg_12_1.goodsId)
-		local var_12_2 = var_12_1.product
-		local var_12_3 = GameUtil.splitString2(var_12_2, true)
+		local goodsConfig = StoreConfig.instance:getGoodsConfig(mo.goodsId)
+		local product = goodsConfig.product
+		local productInfoArr = GameUtil.splitString2(product, true)
 
-		arg_12_0.root._simageicon:LoadImage(var_12_1.bigImg)
+		self.root._simageicon:LoadImage(goodsConfig.bigImg)
 
-		arg_12_0.root._txttitle.text = string.format("「%s」", arg_12_1.goodscn)
+		self.root._txttitle.text = string.format("「%s」", mo.goodscn)
 
-		local var_12_4 = GameUtil.splitString2(var_12_1.name)
+		local desc = GameUtil.splitString2(goodsConfig.name)
 
-		arg_12_0.root._txtdesc.text = var_12_4[1][2]
+		self.root._txtdesc.text = desc[1][2]
 
-		local var_12_5 = var_12_1.cost
+		local cost = goodsConfig.cost
 
-		if string.nilorempty(var_12_5) then
-			arg_12_0.root._txtcost1num.text = luaLang("store_free")
+		if string.nilorempty(cost) then
+			self.root._txtcost1num.text = luaLang("store_free")
 
-			gohelper.setActive(arg_12_0.root._imagecost1num.gameObject, false)
+			gohelper.setActive(self.root._imagecost1num.gameObject, false)
 		else
-			local var_12_6 = string.split(var_12_5, "|")
-			local var_12_7 = var_12_6[arg_12_1.buyCount + 1] or var_12_6[#var_12_6]
-			local var_12_8 = string.splitToNumber(var_12_7, "#")
-			local var_12_9 = var_12_8[1]
-			local var_12_10 = var_12_8[2]
+			local costs = string.split(cost, "|")
+			local costParam = costs[mo.buyCount + 1] or costs[#costs]
+			local costInfo = string.splitToNumber(costParam, "#")
+			local costType = costInfo[1]
+			local costId = costInfo[2]
 
-			arg_12_0.cost1Quantity = var_12_8[3]
+			self.cost1Quantity = costInfo[3]
 
-			local var_12_11, var_12_12 = ItemModel.instance:getItemConfigAndIcon(var_12_9, var_12_10)
-			local var_12_13 = var_12_11.icon
-			local var_12_14 = string.format("%s_1", var_12_13)
+			local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(costType, costId)
+			local id = costConfig.icon
+			local str = string.format("%s_1", id)
 
-			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_12_0.root._imagecost1num, var_12_14)
-			gohelper.setActive(arg_12_0.root._imagecost1num.gameObject, true)
+			UISpriteSetMgr.instance:setCurrencyItemSprite(self.root._imagecost1num, str)
+			gohelper.setActive(self.root._imagecost1num.gameObject, true)
 
-			arg_12_0.root._txtcost1num.text = arg_12_0.cost1Quantity
+			self.root._txtcost1num.text = self.cost1Quantity
 		end
 
-		local var_12_15 = var_12_1.cost2
+		local cost2 = goodsConfig.cost2
 
-		if string.nilorempty(var_12_15) then
-			gohelper.setActive(arg_12_0.root._imagecost2num.gameObject, false)
+		if string.nilorempty(cost2) then
+			gohelper.setActive(self.root._imagecost2num.gameObject, false)
 		else
-			local var_12_16 = string.split(var_12_15, "|")
-			local var_12_17 = var_12_16[arg_12_1.buyCount + 1] or var_12_16[#var_12_16]
-			local var_12_18 = string.splitToNumber(var_12_17, "#")
-			local var_12_19 = var_12_18[1]
-			local var_12_20 = var_12_18[2]
+			local costs = string.split(cost2, "|")
+			local costParam = costs[mo.buyCount + 1] or costs[#costs]
+			local costInfo = string.splitToNumber(costParam, "#")
+			local costType = costInfo[1]
+			local costId = costInfo[2]
 
-			arg_12_0.cost2Quantity = var_12_18[3]
+			self.cost2Quantity = costInfo[3]
 
-			local var_12_21, var_12_22 = ItemModel.instance:getItemConfigAndIcon(var_12_19, var_12_20)
-			local var_12_23 = var_12_21.icon
-			local var_12_24 = string.format("%s_1", var_12_23)
+			local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(costType, costId)
+			local id = costConfig.icon
+			local str = string.format("%s_1", id)
 
-			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_12_0.root._imagecost2num, var_12_24)
-			gohelper.setActive(arg_12_0.root._imagecost2num.gameObject, true)
+			UISpriteSetMgr.instance:setCurrencyItemSprite(self.root._imagecost2num, str)
+			gohelper.setActive(self.root._imagecost2num.gameObject, true)
 
-			arg_12_0.root._txtcost2num.text = arg_12_0.cost2Quantity
+			self.root._txtcost2num.text = self.cost2Quantity
 		end
 
-		gohelper.setActive(arg_12_0.root._godiscount, arg_12_1.config.originalCost > 0)
+		gohelper.setActive(self.root._godiscount, mo.config.originalCost > 0)
 
-		if not string.nilorempty(arg_12_0.cost2Quantity) then
-			local var_12_25 = arg_12_0.cost2Quantity / arg_12_1.config.originalCost
-			local var_12_26 = math.ceil(var_12_25 * 100)
+		if not string.nilorempty(self.cost2Quantity) then
+			local offTag = self.cost2Quantity / mo.config.originalCost
 
-			arg_12_0.root._txtdiscount.text = string.format("-%d%%", 100 - var_12_26)
+			offTag = math.ceil(offTag * 100)
+			self.root._txtdiscount.text = string.format("-%d%%", 100 - offTag)
 		end
 
-		local var_12_27 = 0
-		local var_12_28 = 0
+		local txthuolinum = 0
+		local blockNum = 0
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_3) do
-			arg_12_0.itemType = iter_12_1[1]
-			arg_12_0.itemId = iter_12_1[2]
-			arg_12_0.itemNum = iter_12_1[3]
+		for i, v in ipairs(productInfoArr) do
+			self.itemType = v[1]
+			self.itemId = v[2]
+			self.itemNum = v[3]
 
-			if arg_12_0.itemType == MaterialEnum.MaterialType.BlockPackage then
-				if arg_12_0.itemId and arg_12_0.itemNum then
-					var_12_27 = var_12_27 + RoomConfig.instance:getBlockPackageFullDegree(arg_12_0.itemId) * arg_12_0.itemNum
+			if self.itemType == MaterialEnum.MaterialType.BlockPackage then
+				if self.itemId and self.itemNum then
+					txthuolinum = txthuolinum + RoomConfig.instance:getBlockPackageFullDegree(self.itemId) * self.itemNum
 
-					local var_12_29 = RoomConfig.instance:getBlockListByPackageId(arg_12_0.itemId) or {}
+					local blockList = RoomConfig.instance:getBlockListByPackageId(self.itemId) or {}
 
-					for iter_12_2 = 1, #var_12_29 do
-						local var_12_30 = var_12_29[iter_12_2]
+					for j = 1, #blockList do
+						local blockCfg = blockList[j]
 
-						if var_12_30.ownType ~= RoomBlockEnum.OwnType.Special or RoomModel.instance:isHasBlockById(var_12_30.blockId) then
-							var_12_28 = var_12_28 + 1
+						if blockCfg.ownType ~= RoomBlockEnum.OwnType.Special or RoomModel.instance:isHasBlockById(blockCfg.blockId) then
+							blockNum = blockNum + 1
 						end
 					end
 
-					if var_12_28 < 1 and #var_12_29 >= 1 then
-						var_12_28 = 1
+					if blockNum < 1 and #blockList >= 1 then
+						blockNum = 1
 					end
 				else
 					logError("不存在值")
 				end
-			elseif arg_12_0.itemType == MaterialEnum.MaterialType.Building then
-				if arg_12_0.itemId and arg_12_0.itemNum then
-					var_12_27 = var_12_27 + RoomConfig.instance:getBuildingConfig(arg_12_0.itemId).buildDegree * arg_12_0.itemNum
+			elseif self.itemType == MaterialEnum.MaterialType.Building then
+				if self.itemId and self.itemNum then
+					local roomBuildingConfig = RoomConfig.instance:getBuildingConfig(self.itemId)
+
+					txthuolinum = txthuolinum + roomBuildingConfig.buildDegree * self.itemNum
 				else
 					logError("不存在值")
 				end
 			end
 		end
 
-		arg_12_0.root._txthuolinum.text = var_12_27
-		arg_12_0.root._txtblocknum.text = var_12_28
+		self.root._txthuolinum.text = txthuolinum
+		self.root._txtblocknum.text = blockNum
 
-		local var_12_31 = arg_12_0:checkChildCanJump(arg_12_1)
+		local canjump = self:checkChildCanJump(mo)
 
-		gohelper.setActive(arg_12_0.root._gotheme, not var_12_31)
-		gohelper.setActive(arg_12_0.root._gotag, var_12_31)
-		gohelper.setActive(arg_12_0.root._golimit, var_12_31)
-		gohelper.setActive(arg_12_0.root._btnbuy.gameObject, not var_12_31)
+		gohelper.setActive(self.root._gotheme, not canjump)
+		gohelper.setActive(self.root._gotag, canjump)
+		gohelper.setActive(self.root._golimit, canjump)
+		gohelper.setActive(self.root._btnbuy.gameObject, not canjump)
 
-		if not var_12_31 then
-			arg_12_0.themeId = arg_12_0:_findThemeId(var_12_3)
+		if not canjump then
+			self.themeId = self:_findThemeId(productInfoArr)
 
-			gohelper.setActive(arg_12_0.root._txttype.gameObject, arg_12_0.themeId ~= nil)
-			gohelper.setActive(arg_12_0.root._goclicktype, arg_12_0.themeId ~= nil)
+			gohelper.setActive(self.root._txttype.gameObject, self.themeId ~= nil)
+			gohelper.setActive(self.root._goclicktype, self.themeId ~= nil)
 		end
 
-		arg_12_0.has = arg_12_1:alreadyHas()
+		self.has = mo:alreadyHas()
 
-		if arg_12_0.has then
-			gohelper.setActive(arg_12_0.root._btnbuy.gameObject, false)
-			gohelper.setActive(arg_12_0.root._gohas, true)
-			gohelper.setActive(arg_12_0.root._golimit, false)
+		if self.has then
+			gohelper.setActive(self.root._btnbuy.gameObject, false)
+			gohelper.setActive(self.root._gohas, true)
+			gohelper.setActive(self.root._golimit, false)
 		end
 
-		local var_12_32 = arg_12_1:checkShowNewRedDot()
+		local needShowNew = mo:checkShowNewRedDot()
 
-		gohelper.setActive(arg_12_0.root._gonewtag, var_12_32)
+		gohelper.setActive(self.root._gonewtag, needShowNew)
 
-		if var_12_32 then
-			recthelper.setAnchorX(arg_12_0.root._txtremiantime.transform, -8)
+		if needShowNew then
+			recthelper.setAnchorX(self.root._txtremiantime.transform, -8)
 		else
-			recthelper.setAnchorX(arg_12_0.root._txtremiantime.transform, -40)
+			recthelper.setAnchorX(self.root._txtremiantime.transform, -40)
 		end
 
-		local var_12_33 = arg_12_1:getOfflineTime()
-		local var_12_34 = var_12_33 - ServerTime.now()
+		local offlineTime = mo:getOfflineTime()
+		local offEndTime = offlineTime - ServerTime.now()
 
-		gohelper.setActive(arg_12_0.root._goremaintime, var_12_33 > 0)
+		gohelper.setActive(self.root._goremaintime, offlineTime > 0)
 
-		if var_12_34 > 3600 then
-			local var_12_35, var_12_36 = TimeUtil.secondToRoughTime(var_12_34)
+		if offEndTime > 3600 then
+			local time, str = TimeUtil.secondToRoughTime(offEndTime)
 
-			arg_12_0.root._txtremiantime.text = formatLuaLang("remain", var_12_35 .. var_12_36)
+			self.root._txtremiantime.text = formatLuaLang("remain", time .. str)
 		else
-			arg_12_0.root._txtremiantime.text = luaLang("not_enough_one_hour")
+			self.root._txtremiantime.text = luaLang("not_enough_one_hour")
 		end
 	end
 
-	if var_12_0 then
-		arg_12_0._animationStartTime = Time.time
+	if update then
+		self._animationStartTime = Time.time
 	end
 
-	if not arg_12_1.isjump then
-		arg_12_0:_refreshOpenAnimation()
+	if not mo.isjump then
+		self:_refreshOpenAnimation()
 	end
 end
 
-function var_0_0.onUpdateNodeMO(arg_13_0, arg_13_1)
-	arg_13_0.node._simagedetailbg:LoadImage(ResUrl.getStoreWildness("img_zhankai_bg"))
+function StoreRoomTreeItem:onUpdateNodeMO(mo)
+	self.node._simagedetailbg:LoadImage(ResUrl.getStoreWildness("img_zhankai_bg"))
 
-	if next(arg_13_0.nodeItemList) and arg_13_0.nodeItemList.index ~= arg_13_1.rootindex then
-		for iter_13_0, iter_13_1 in ipairs(arg_13_0.nodeItemList) do
-			iter_13_1.good:onDestroy()
+	if next(self.nodeItemList) and self.nodeItemList.index ~= mo.rootindex then
+		for key, v in ipairs(self.nodeItemList) do
+			v.good:onDestroy()
 		end
 
-		gohelper.destroyAllChildren(arg_13_0.node._content)
+		gohelper.destroyAllChildren(self.node._content)
 
-		arg_13_0.nodeItemList = {}
+		self.nodeItemList = {}
 	end
 
-	if #arg_13_0.nodeItemList ~= #arg_13_1 then
-		for iter_13_2, iter_13_3 in ipairs(arg_13_0.nodeItemList) do
-			iter_13_3.good:onDestroy()
+	if #self.nodeItemList ~= #mo then
+		for key, v in ipairs(self.nodeItemList) do
+			v.good:onDestroy()
 		end
 
-		gohelper.destroyAllChildren(arg_13_0.node._content)
+		gohelper.destroyAllChildren(self.node._content)
 
-		arg_13_0.nodeItemList = {}
+		self.nodeItemList = {}
 	end
 
-	for iter_13_4, iter_13_5 in ipairs(arg_13_1) do
-		local var_13_0 = arg_13_0.nodeItemList[iter_13_4]
+	for i, childmo in ipairs(mo) do
+		local goodsItem = self.nodeItemList[i]
 
-		if var_13_0 == nil then
-			var_13_0 = {
-				parent = arg_13_0.node._content
+		if goodsItem == nil then
+			goodsItem = {
+				parent = self.node._content
 			}
 
-			local var_13_1 = arg_13_0._view:getResInst("ui/viewres/store/normalstoregoodsitem.prefab", var_13_0.parent, "roomNode" .. iter_13_4)
+			local itemGO = self._view:getResInst("ui/viewres/store/normalstoregoodsitem.prefab", goodsItem.parent, "roomNode" .. i)
 
-			var_13_0.good = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_1, NormalStoreGoodsItem)
+			goodsItem.good = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, NormalStoreGoodsItem)
 
-			var_13_0.good:hideOffflineTime()
-			var_13_0.good:init(var_13_1)
+			goodsItem.good:hideOffflineTime()
+			goodsItem.good:init(itemGO)
 
-			arg_13_0.nodeItemList[iter_13_4] = var_13_0
-			arg_13_0.nodeItemList.index = arg_13_1.rootindex
+			self.nodeItemList[i] = goodsItem
+			self.nodeItemList.index = mo.rootindex
 		end
 
-		var_13_0.good:onUpdateMO(iter_13_5)
-		gohelper.setActive(var_13_0.go, true)
+		goodsItem.good:onUpdateMO(childmo)
+		gohelper.setActive(goodsItem.go, true)
 	end
 end
 
-function var_0_0._refreshOpenAnimation(arg_14_0)
-	if not arg_14_0._animator or not arg_14_0._animator.gameObject.activeInHierarchy then
+function StoreRoomTreeItem:_refreshOpenAnimation()
+	if not self._animator or not self._animator.gameObject.activeInHierarchy then
 		return
 	end
 
-	local var_14_0 = arg_14_0:_getAnimationTime()
+	local openAnimTime = self:_getAnimationTime()
 
-	arg_14_0._animator.speed = 1
+	self._animator.speed = 1
 
-	arg_14_0._animator:Play(UIAnimationName.Open, 0, 0)
-	arg_14_0._animator:Update(0)
+	self._animator:Play(UIAnimationName.Open, 0, 0)
+	self._animator:Update(0)
 
-	local var_14_1 = arg_14_0._animator:GetCurrentAnimatorStateInfo(0).length
+	local currentAnimatorStateInfo = self._animator:GetCurrentAnimatorStateInfo(0)
+	local length = currentAnimatorStateInfo.length
 
-	if var_14_1 <= 0 then
-		var_14_1 = 1
+	if length <= 0 then
+		length = 1
 	end
 
-	arg_14_0._animator:Play(UIAnimationName.Open, 0, (Time.time - var_14_0) / var_14_1)
-	arg_14_0._animator:Update(0)
+	self._animator:Play(UIAnimationName.Open, 0, (Time.time - openAnimTime) / length)
+	self._animator:Update(0)
 end
 
-function var_0_0._getAnimationTime(arg_15_0)
-	if not arg_15_0._animationStartTime then
+function StoreRoomTreeItem:_getAnimationTime()
+	if not self._animationStartTime then
 		return nil
 	end
 
-	local var_15_0 = 0.1 * arg_15_0._rootIndex
+	local delayTime = 0.1
+	local _animationDelayTimes = delayTime * self._rootIndex
 
-	return arg_15_0._animationStartTime + var_15_0
+	return self._animationStartTime + _animationDelayTimes
 end
 
-function var_0_0.checkChildCanJump(arg_16_0, arg_16_1)
-	if arg_16_1.children and #arg_16_1.children > 0 then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_1.children) do
-			if iter_16_1.config.jumpId ~= 0 then
+function StoreRoomTreeItem:checkChildCanJump(mo)
+	if mo.children and #mo.children > 0 then
+		for index, nodemo in ipairs(mo.children) do
+			if nodemo.config.jumpId ~= 0 then
 				return true
 			end
 		end
@@ -466,4 +472,4 @@ function var_0_0.checkChildCanJump(arg_16_0, arg_16_1)
 	return false
 end
 
-return var_0_0
+return StoreRoomTreeItem

@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.view.indicator.FightIndicatorView4140004", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/indicator/FightIndicatorView4140004.lua
 
-local var_0_0 = class("FightIndicatorView4140004", FightIndicatorView)
+module("modules.logic.fight.view.indicator.FightIndicatorView4140004", package.seeall)
 
-function var_0_0.getCardId(arg_1_0)
+local FightIndicatorView4140004 = class("FightIndicatorView4140004", FightIndicatorView)
+
+function FightIndicatorView4140004:getCardId()
 	return 140002
 end
 
-return var_0_0
+return FightIndicatorView4140004

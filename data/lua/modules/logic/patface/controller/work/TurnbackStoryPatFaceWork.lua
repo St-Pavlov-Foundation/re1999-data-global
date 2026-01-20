@@ -1,30 +1,32 @@
-﻿module("modules.logic.patface.controller.work.TurnbackStoryPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/patface/controller/work/TurnbackStoryPatFaceWork.lua
 
-local var_0_0 = class("TurnbackStoryPatFaceWork", PatFaceWorkBase)
+module("modules.logic.patface.controller.work.TurnbackStoryPatFaceWork", package.seeall)
 
-function var_0_0.checkCanPat(arg_1_0)
-	local var_1_0 = false
-	local var_1_1 = TurnbackModel.instance:canShowTurnbackPop()
-	local var_1_2 = TurnbackModel.instance:getCurTurnbackId()
-	local var_1_3 = TurnbackController.instance:hasPlayedStoryVideo(var_1_2)
+local TurnbackStoryPatFaceWork = class("TurnbackStoryPatFaceWork", PatFaceWorkBase)
 
-	if var_1_1 and not var_1_3 then
-		var_1_0 = true
+function TurnbackStoryPatFaceWork:checkCanPat()
+	local result = false
+	local canShowPop = TurnbackModel.instance:canShowTurnbackPop()
+	local turnbackId = TurnbackModel.instance:getCurTurnbackId()
+	local hasPlayed = TurnbackController.instance:hasPlayedStoryVideo(turnbackId)
+
+	if canShowPop and not hasPlayed then
+		result = true
 	end
 
-	return var_1_0
+	return result
 end
 
-function var_0_0.startPat(arg_2_0)
-	local var_2_0 = TurnbackModel.instance:getCurTurnbackMo()
-	local var_2_1 = var_2_0 and var_2_0.config and var_2_0.config.startStory
+function TurnbackStoryPatFaceWork:startPat()
+	local TurnbackMo = TurnbackModel.instance:getCurTurnbackMo()
+	local storyId = TurnbackMo and TurnbackMo.config and TurnbackMo.config.startStory
 
-	if var_2_1 then
-		StoryController.instance:playStory(var_2_1, nil, arg_2_0.onPlayPatStoryFinish, arg_2_0)
+	if storyId then
+		StoryController.instance:playStory(storyId, nil, self.onPlayPatStoryFinish, self)
 	else
-		logError(string.format("TurnbackStoryPatFaceWork:startPat error, storyId is nil", var_2_1))
-		arg_2_0:onPlayPatStoryFinish()
+		logError(string.format("TurnbackStoryPatFaceWork:startPat error, storyId is nil", storyId))
+		self:onPlayPatStoryFinish()
 	end
 end
 
-return var_0_0
+return TurnbackStoryPatFaceWork

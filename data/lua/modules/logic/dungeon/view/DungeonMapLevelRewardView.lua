@@ -1,662 +1,710 @@
-﻿module("modules.logic.dungeon.view.DungeonMapLevelRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonMapLevelRewardView.lua
 
-local var_0_0 = class("DungeonMapLevelRewardView", BaseView)
+module("modules.logic.dungeon.view.DungeonMapLevelRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_rewarditem")
-	arg_1_0._gonoreward = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_noreward")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_reward")
-	arg_1_0._txtget = gohelper.findChildText(arg_1_0.viewGO, "anim/right/reward_container/#go_reward/#txt_get")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/right/reward_container/#go_reward/#btn_reward")
-	arg_1_0._gonormalrewardbg = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_reward/#go_normalrewardbg")
-	arg_1_0._gohardrewardbg = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_reward/#go_hardrewardbg")
-	arg_1_0._goTurnBackAddition = gohelper.findChild(arg_1_0.viewGO, "anim/right/turnback_tips")
-	arg_1_0._txtTurnBackAdditionTips = gohelper.findChildText(arg_1_0.viewGO, "anim/right/turnback_tips/#txt_des")
-	arg_1_0._goactreward = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_act_reward")
-	arg_1_0._goactnormalrewardbg = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_act_reward/#go_actnormalrewardbg")
-	arg_1_0._goacthardrewardbg = gohelper.findChild(arg_1_0.viewGO, "anim/right/reward_container/#go_act_reward/#go_acthardrewardbg")
-	arg_1_0._txtacttime = gohelper.findChildText(arg_1_0.viewGO, "anim/right/reward_container/#go_act_reward/#go_time/#txt_time")
-	arg_1_0._btnactreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/right/reward_container/#go_act_reward/#btn_actreward")
+local DungeonMapLevelRewardView = class("DungeonMapLevelRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonMapLevelRewardView:onInitView()
+	self._gorewarditem = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_rewarditem")
+	self._gonoreward = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_noreward")
+	self._goreward = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_reward")
+	self._txtget = gohelper.findChildText(self.viewGO, "anim/right/reward_container/#go_reward/#txt_get")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "anim/right/reward_container/#go_reward/#btn_reward")
+	self._gonormalrewardbg = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_reward/#go_normalrewardbg")
+	self._gohardrewardbg = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_reward/#go_hardrewardbg")
+	self._goTurnBackAddition = gohelper.findChild(self.viewGO, "anim/right/turnback_tips")
+	self._txtTurnBackAdditionTips = gohelper.findChildText(self.viewGO, "anim/right/turnback_tips/#txt_des")
+	self._goactreward = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_act_reward")
+	self._goactnormalrewardbg = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_act_reward/#go_actnormalrewardbg")
+	self._goacthardrewardbg = gohelper.findChild(self.viewGO, "anim/right/reward_container/#go_act_reward/#go_acthardrewardbg")
+	self._txtacttime = gohelper.findChildText(self.viewGO, "anim/right/reward_container/#go_act_reward/#go_time/#txt_time")
+	self._btnactreward = gohelper.findChildButtonWithAudio(self.viewGO, "anim/right/reward_container/#go_act_reward/#btn_actreward")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnactreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
+function DungeonMapLevelRewardView:addEvents()
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnactreward:AddClickListener(self._btnrewardOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnactreward:RemoveClickListener()
+function DungeonMapLevelRewardView:removeEvents()
+	self._btnreward:RemoveClickListener()
+	self._btnactreward:RemoveClickListener()
 end
 
-var_0_0.RewardType = {
+DungeonMapLevelRewardView.RewardType = {
 	Common = 1,
 	Act = 5,
 	TurnBack = 4,
 	OneStar = 2,
 	SecondStar = 3
 }
-var_0_0.TagType = DungeonEnum.TagType
+DungeonMapLevelRewardView.TagType = DungeonEnum.TagType
 
-function var_0_0._btnrewardOnClick(arg_4_0)
-	DungeonController.instance:openDungeonRewardView(arg_4_0.episodeConfig)
+function DungeonMapLevelRewardView:_btnrewardOnClick()
+	DungeonController.instance:openDungeonRewardView(self.episodeConfig)
 end
 
-function var_0_0.getRewardItem(arg_5_0, arg_5_1)
-	if #arg_5_0.rewardItemPool > 0 then
-		local var_5_0 = table.remove(arg_5_0.rewardItemPool)
+function DungeonMapLevelRewardView:getRewardItem(parent)
+	if #self.rewardItemPool > 0 then
+		local rewardItem = table.remove(self.rewardItemPool)
 
-		gohelper.setActive(var_5_0.go, true)
-		var_5_0.transform:SetParent(arg_5_1)
-		table.insert(arg_5_0.rewardItemList, var_5_0)
+		gohelper.setActive(rewardItem.go, true)
+		rewardItem.transform:SetParent(parent)
+		table.insert(self.rewardItemList, rewardItem)
 
-		return var_5_0
+		return rewardItem
 	end
 
-	local var_5_1 = arg_5_0:getUserDataTb_()
+	local rewardItem = self:getUserDataTb_()
 
-	var_5_1.go = gohelper.cloneInPlace(arg_5_0._gorewarditem)
-	var_5_1.transform = var_5_1.go:GetComponent(gohelper.Type_Transform)
+	rewardItem.go = gohelper.cloneInPlace(self._gorewarditem)
+	rewardItem.transform = rewardItem.go:GetComponent(gohelper.Type_Transform)
 
-	var_5_1.transform:SetParent(arg_5_1)
+	rewardItem.transform:SetParent(parent)
 
-	var_5_1.txtcount = gohelper.findChildText(var_5_1.go, "countbg/count")
-	var_5_1.gofirst = gohelper.findChild(var_5_1.go, "rare/#go_rare2")
-	var_5_1.goadvance = gohelper.findChild(var_5_1.go, "rare/#go_rare3")
-	var_5_1.gofirsthard = gohelper.findChild(var_5_1.go, "rare/#go_rare4")
-	var_5_1.gonormal = gohelper.findChild(var_5_1.go, "rare/#go_rare1")
-	var_5_1.txtnormal = gohelper.findChildText(var_5_1.go, "rare/#go_rare1/txt")
-	var_5_1.goAddition = gohelper.findChild(var_5_1.go, "turnback")
-	var_5_1.gocount = gohelper.findChild(var_5_1.go, "countbg")
-	var_5_1.itemIconGO = gohelper.findChild(var_5_1.go, "itemicon")
-	var_5_1.finished = gohelper.findChild(var_5_1.go, "finished")
-	var_5_1.storyfirst = gohelper.findChild(var_5_1.go, "first")
-	var_5_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_5_1.itemIconGO)
+	rewardItem.txtcount = gohelper.findChildText(rewardItem.go, "countbg/count")
+	rewardItem.gofirst = gohelper.findChild(rewardItem.go, "rare/#go_rare2")
+	rewardItem.goadvance = gohelper.findChild(rewardItem.go, "rare/#go_rare3")
+	rewardItem.gofirsthard = gohelper.findChild(rewardItem.go, "rare/#go_rare4")
+	rewardItem.gonormal = gohelper.findChild(rewardItem.go, "rare/#go_rare1")
+	rewardItem.txtnormal = gohelper.findChildText(rewardItem.go, "rare/#go_rare1/txt")
+	rewardItem.goAddition = gohelper.findChild(rewardItem.go, "turnback")
+	rewardItem.gocount = gohelper.findChild(rewardItem.go, "countbg")
+	rewardItem.itemIconGO = gohelper.findChild(rewardItem.go, "itemicon")
+	rewardItem.finished = gohelper.findChild(rewardItem.go, "finished")
+	rewardItem.storyfirst = gohelper.findChild(rewardItem.go, "first")
+	rewardItem.itemIcon = IconMgr.instance:getCommonPropItemIcon(rewardItem.itemIconGO)
 
-	gohelper.setActive(var_5_1.go, true)
-	table.insert(arg_5_0.rewardItemList, var_5_1)
+	gohelper.setActive(rewardItem.go, true)
+	table.insert(self.rewardItemList, rewardItem)
 
-	return var_5_1
+	return rewardItem
 end
 
-function var_0_0.recycleRewardItem(arg_6_0, arg_6_1)
-	if not arg_6_1 then
+function DungeonMapLevelRewardView:recycleRewardItem(rewardItem)
+	if not rewardItem then
 		return
 	end
 
-	local var_6_0 = arg_6_1.rewardData
+	local rewardData = rewardItem.rewardData
 
-	arg_6_1.rewardData = nil
+	rewardItem.rewardData = nil
 
-	if var_6_0.recycleCallback then
-		var_6_0.recycleCallback(arg_6_0, arg_6_1)
+	if rewardData.recycleCallback then
+		rewardData.recycleCallback(self, rewardItem)
 	end
 
-	gohelper.setActive(arg_6_1.go, false)
-	arg_6_1.transform:SetParent(arg_6_0.trRewardPool)
-	table.insert(arg_6_0.rewardItemPool, arg_6_1)
+	gohelper.setActive(rewardItem.go, false)
+	rewardItem.transform:SetParent(self.trRewardPool)
+	table.insert(self.rewardItemPool, rewardItem)
 end
 
-function var_0_0.recycleAllRewardItem(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.rewardItemList) do
-		arg_7_0:recycleRewardItem(iter_7_1)
+function DungeonMapLevelRewardView:recycleAllRewardItem()
+	for _, rewardItem in ipairs(self.rewardItemList) do
+		self:recycleRewardItem(rewardItem)
 	end
 
-	tabletool.clear(arg_7_0.rewardItemList)
+	tabletool.clear(self.rewardItemList)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.trRewardPool = gohelper.findChildComponent(arg_8_0.viewGO, "anim/right/reward_container/#go_rewardpool", gohelper.Type_Transform)
-	arg_8_0.trNormalReward = gohelper.findChildComponent(arg_8_0.viewGO, "anim/right/reward_container/#go_reward/rewardList", gohelper.Type_Transform)
-	arg_8_0.trActReward = gohelper.findChildComponent(arg_8_0.viewGO, "anim/right/reward_container/#go_act_reward/#go_act_rewardList", gohelper.Type_Transform)
-	arg_8_0.trActNormalReward = gohelper.findChildComponent(arg_8_0.viewGO, "anim/right/reward_container/#go_act_reward/#go_normal_rewardList", gohelper.Type_Transform)
+function DungeonMapLevelRewardView:_editableInitView()
+	self.trRewardPool = gohelper.findChildComponent(self.viewGO, "anim/right/reward_container/#go_rewardpool", gohelper.Type_Transform)
+	self.trNormalReward = gohelper.findChildComponent(self.viewGO, "anim/right/reward_container/#go_reward/rewardList", gohelper.Type_Transform)
+	self.trActReward = gohelper.findChildComponent(self.viewGO, "anim/right/reward_container/#go_act_reward/#go_act_rewardList", gohelper.Type_Transform)
+	self.trActNormalReward = gohelper.findChildComponent(self.viewGO, "anim/right/reward_container/#go_act_reward/#go_normal_rewardList", gohelper.Type_Transform)
 
-	gohelper.setActive(arg_8_0._gorewarditem, false)
+	gohelper.setActive(self._gorewarditem, false)
 
-	arg_8_0.rewardItemPool = {}
-	arg_8_0.rewardItemList = {}
-	arg_8_0.rewardList = {}
-	arg_8_0.actRewardList = {}
+	self.rewardItemPool = {}
+	self.rewardItemList = {}
+	self.rewardList = {}
+	self.actRewardList = {}
 
-	gohelper.addUIClickAudio(arg_8_0._btnreward.gameObject, AudioEnum.UI.Play_UI_General_OK)
-	arg_8_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_8_0.onRefreshActivityState, arg_8_0)
-	arg_8_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_8_0.refreshTurnBack, arg_8_0)
-	arg_8_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_8_0.onDailyRefresh, arg_8_0)
-	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.SwitchHardMode, arg_8_0.onSwitchHardMode, arg_8_0)
-	arg_8_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, arg_8_0.refreshReward, arg_8_0)
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_8_0._onCloseView, arg_8_0)
+	gohelper.addUIClickAudio(self._btnreward.gameObject, AudioEnum.UI.Play_UI_General_OK)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivityState, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self.refreshTurnBack, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self.onDailyRefresh, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.SwitchHardMode, self.onSwitchHardMode, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, self.refreshReward, self)
+	self:addEventCb(Activity217Controller.instance, Activity217Event.OnInfoChanged, self.refreshReward, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._onCloseView(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.CommonPropView then
-		arg_9_0:delayRefreshReward()
+function DungeonMapLevelRewardView:_onCloseView(viewName)
+	if viewName == ViewName.CommonPropView then
+		self:delayRefreshReward()
 	end
 end
 
-function var_0_0.onSwitchHardMode(arg_10_0, arg_10_1)
-	if not arg_10_1.episodeConfig then
+function DungeonMapLevelRewardView:onSwitchHardMode(param)
+	if not param.episodeConfig then
 		return
 	end
 
-	arg_10_0.episodeConfig = arg_10_1.episodeConfig
+	self.episodeConfig = param.episodeConfig
 
-	if arg_10_1.immediately then
-		arg_10_0.switchInit = true
+	if param.immediately then
+		self.switchInit = true
 
-		arg_10_0:delayRefreshReward()
+		self:delayRefreshReward()
 	else
-		TaskDispatcher.cancelTask(arg_10_0.delayRefreshReward, arg_10_0)
-		TaskDispatcher.runDelay(arg_10_0.delayRefreshReward, arg_10_0, 0.3)
+		TaskDispatcher.cancelTask(self.delayRefreshReward, self)
+		TaskDispatcher.runDelay(self.delayRefreshReward, self, 0.3)
 	end
 end
 
-function var_0_0.delayRefreshReward(arg_11_0)
-	arg_11_0:initData()
-	arg_11_0:refreshUI()
+function DungeonMapLevelRewardView:delayRefreshReward()
+	self:initData()
+	self:refreshUI()
 end
 
-function var_0_0.initData(arg_12_0)
-	arg_12_0.episodeId = arg_12_0.episodeConfig.id
-	arg_12_0.chapterId = arg_12_0.episodeConfig.chapterId
-	arg_12_0.chapterCo = DungeonConfig.instance:getChapterCO(arg_12_0.chapterId)
-	arg_12_0.episodeInfo = DungeonModel.instance:getEpisodeInfo(arg_12_0.episodeConfig.id)
-	arg_12_0.hardMode = arg_12_0.chapterCo.type == DungeonEnum.ChapterType.Hard
-	arg_12_0.isFree = false
+function DungeonMapLevelRewardView:initData()
+	self.episodeId = self.episodeConfig.id
+	self.chapterId = self.episodeConfig.chapterId
+	self.chapterCo = DungeonConfig.instance:getChapterCO(self.chapterId)
+	self.episodeInfo = DungeonModel.instance:getEpisodeInfo(self.episodeConfig.id)
+	self.hardMode = self.chapterCo.type == DungeonEnum.ChapterType.Hard
+	self.isFree = false
 
-	if arg_12_0.chapterCo.enterAfterFreeLimit > 0 then
-		arg_12_0.isFree = DungeonModel.instance:getChapterRemainingNum(arg_12_0.chapterCo.type) > 0
+	if self.chapterCo.enterAfterFreeLimit > 0 then
+		self.isFree = DungeonModel.instance:getChapterRemainingNum(self.chapterCo.type) > 0
 	end
 
-	arg_12_0:updateActiveActId()
+	self:updateActiveActId()
 end
 
-function var_0_0.updateActiveActId(arg_13_0)
-	arg_13_0.activityId = 0
-	arg_13_0.dropCo = nil
+function DungeonMapLevelRewardView:updateActiveActId()
+	self.activityId = 0
+	self.dropCo = nil
 
-	for iter_13_0, iter_13_1 in ipairs(lua_activity155_drop.configList) do
-		if arg_13_0.chapterId == iter_13_1.chapterId then
-			local var_13_0 = iter_13_1.activityId
+	for _, co in ipairs(lua_activity155_drop.configList) do
+		if self.chapterId == co.chapterId then
+			local actId = co.activityId
+			local status = ActivityHelper.getActivityStatus(actId, true)
 
-			if ActivityHelper.getActivityStatus(var_13_0, true) == ActivityEnum.ActivityStatus.Normal then
-				arg_13_0.activityId = var_13_0
-				arg_13_0.dropCo = iter_13_1
+			if status == ActivityEnum.ActivityStatus.Normal then
+				self.activityId = actId
+				self.dropCo = co
 
 				break
 			end
 		end
 	end
 
-	arg_13_0.showActReward = arg_13_0.activityId ~= 0
+	self.showActReward = self.activityId ~= 0
 end
 
-function var_0_0.initEpisodeCo(arg_14_0)
-	arg_14_0.episodeConfig = arg_14_0.viewParam[1]
+function DungeonMapLevelRewardView:initEpisodeCo()
+	self.episodeConfig = self.viewParam[1]
 
-	local var_14_0 = arg_14_0.viewParam[5]
-	local var_14_1
+	local hard = self.viewParam[5]
+	local chapterType
 
-	if var_14_0 == nil then
-		local var_14_2, var_14_3 = DungeonModel.instance:getLastSelectMode()
+	if hard == nil then
+		local lastMode, episodeId = DungeonModel.instance:getLastSelectMode()
 
-		if var_14_3 == arg_14_0.episodeConfig.id then
-			local var_14_4 = var_14_2
-			local var_14_5 = arg_14_0.episodeConfig.chainEpisode
+		if episodeId == self.episodeConfig.id then
+			chapterType = lastMode
 
-			if var_14_4 == DungeonEnum.ChapterType.Simple and var_14_5 ~= 0 then
-				arg_14_0.episodeConfig = DungeonConfig.instance:getEpisodeCO(var_14_5)
+			local chainEpisode = self.episodeConfig.chainEpisode
+
+			if chapterType == DungeonEnum.ChapterType.Simple and chainEpisode ~= 0 then
+				self.episodeConfig = DungeonConfig.instance:getEpisodeCO(chainEpisode)
 			end
 		end
-	elseif var_14_0 then
-		arg_14_0.episodeConfig = DungeonConfig.instance:getHardEpisode(arg_14_0.episodeConfig.id)
+	elseif hard then
+		self.episodeConfig = DungeonConfig.instance:getHardEpisode(self.episodeConfig.id)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
-	arg_15_0:initEpisodeCo()
-	arg_15_0:initData()
-	arg_15_0:refreshUI()
+function DungeonMapLevelRewardView:onUpdateParam()
+	self:initEpisodeCo()
+	self:initData()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	if arg_16_0.switchInit then
-		arg_16_0.switchInit = false
+function DungeonMapLevelRewardView:onOpen()
+	if self.switchInit then
+		self.switchInit = false
 
 		return
 	end
 
-	arg_16_0:initEpisodeCo()
-	arg_16_0:initData()
-	arg_16_0:refreshUI()
+	self:initEpisodeCo()
+	self:initData()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_17_0)
-	arg_17_0:refreshTxt()
-	arg_17_0:refreshTurnBackAdditionTips()
-	arg_17_0:refreshBG()
-	arg_17_0:refreshReward()
+function DungeonMapLevelRewardView:refreshUI()
+	self:refreshTxt()
+	self:refreshTurnBackAdditionTips()
+	self:refreshBG()
+	self:refreshReward()
 end
 
-function var_0_0.refreshBG(arg_18_0)
-	gohelper.setActive(arg_18_0._gonormalrewardbg, not arg_18_0.hardMode)
-	gohelper.setActive(arg_18_0._gohardrewardbg, arg_18_0.hardMode)
-	gohelper.setActive(arg_18_0._goactnormalrewardbg, not arg_18_0.hardMode)
-	gohelper.setActive(arg_18_0._goacthardrewardbg, arg_18_0.hardMode)
+function DungeonMapLevelRewardView:refreshBG()
+	gohelper.setActive(self._gonormalrewardbg, not self.hardMode)
+	gohelper.setActive(self._gohardrewardbg, self.hardMode)
+	gohelper.setActive(self._goactnormalrewardbg, not self.hardMode)
+	gohelper.setActive(self._goacthardrewardbg, self.hardMode)
 end
 
-function var_0_0.refreshTxt(arg_19_0)
-	arg_19_0._txtget.text = luaLang(arg_19_0.isFree and "p_dungeonmaplevelview_specialdrop" or "p_dungeonmaplevelview_get")
+function DungeonMapLevelRewardView:refreshTxt()
+	self._txtget.text = luaLang(self.isFree and "p_dungeonmaplevelview_specialdrop" or "p_dungeonmaplevelview_get")
 end
 
-function var_0_0.refreshTurnBackAdditionTips(arg_20_0)
-	local var_20_0 = TurnbackModel.instance:isShowTurnBackAddition(arg_20_0.episodeConfig.chapterId)
+function DungeonMapLevelRewardView:refreshTurnBackAdditionTips()
+	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self.chapterCo.id)
+	local multiDropShow = isMultiDrop and limit > 0
 
-	if var_20_0 then
-		local var_20_1, var_20_2 = TurnbackModel.instance:getAdditionCountInfo()
-		local var_20_3 = string.format("%s/%s", var_20_1, var_20_2)
+	if multiDropShow then
+		gohelper.setActive(self._goTurnBackAddition, false)
 
-		arg_20_0._txtTurnBackAdditionTips.text = formatLuaLang("turnback_addition_times", var_20_3)
-
-		local var_20_4 = gohelper.findChildComponent(arg_20_0.viewGO, "anim/right/#go_operation", gohelper.Type_Transform)
-
-		recthelper.setAnchorY(var_20_4, -20)
+		return
 	end
 
-	gohelper.setActive(arg_20_0._goTurnBackAddition, var_20_0)
+	local isShowAddition = TurnbackModel.instance:isShowTurnBackAddition(self.episodeConfig.chapterId)
+
+	if isShowAddition then
+		local remainCount, totalCount = TurnbackModel.instance:getAdditionCountInfo()
+		local strCount = string.format("%s/%s", remainCount, totalCount)
+
+		self._txtTurnBackAdditionTips.text = formatLuaLang("turnback_addition_times", strCount)
+
+		local operationTr = gohelper.findChildComponent(self.viewGO, "anim/right/#go_operation", gohelper.Type_Transform)
+
+		recthelper.setAnchorY(operationTr, -20)
+	end
+
+	gohelper.setActive(self._goTurnBackAddition, isShowAddition)
 end
 
-function var_0_0.refreshReward(arg_21_0)
-	arg_21_0:recycleAllRewardItem()
-	tabletool.clear(arg_21_0.rewardList)
-	tabletool.clear(arg_21_0.actRewardList)
-	gohelper.setActive(arg_21_0._gonoreward, false)
-	gohelper.setActive(arg_21_0._goreward, false)
-	gohelper.setActive(arg_21_0._goactreward, false)
+function DungeonMapLevelRewardView:refreshReward()
+	self:recycleAllRewardItem()
+	tabletool.clear(self.rewardList)
+	tabletool.clear(self.actRewardList)
+	gohelper.setActive(self._gonoreward, false)
+	gohelper.setActive(self._goreward, false)
+	gohelper.setActive(self._goactreward, false)
 
-	if arg_21_0.showActReward and not arg_21_0.isFree and arg_21_0.episodeConfig and arg_21_0.episodeConfig.type ~= DungeonEnum.EpisodeType.Story then
-		arg_21_0:refreshActReward()
+	if self.showActReward and not self.isFree and self.episodeConfig and self.episodeConfig.type ~= DungeonEnum.EpisodeType.Story then
+		self:refreshActReward()
 	else
-		arg_21_0:refreshNormalReward()
+		self:refreshNormalReward()
 	end
 end
 
-function var_0_0.refreshActReward(arg_22_0)
-	arg_22_0:refreshActTime()
-	arg_22_0:addFirstReward()
-	arg_22_0:addAdvanceReward()
-	arg_22_0:addNewReward()
-	arg_22_0:addDoubleDropReward()
-	arg_22_0:addFreeReward()
-	arg_22_0:addCommonRewardList()
-	arg_22_0:addActReward()
+function DungeonMapLevelRewardView:refreshActReward()
+	self:refreshActTime()
+	self:addFirstReward()
+	self:addAdvanceReward()
+	self:addNewReward()
+	self:addDoubleDropReward()
+	self:addFreeReward()
+	self:addCommonRewardList()
+	self:addActReward()
 
-	local var_22_0 = #arg_22_0.rewardList > 0 or #arg_22_0.actRewardList > 0
+	local hasReward = #self.rewardList > 0 or #self.actRewardList > 0
 
-	gohelper.setActive(arg_22_0._gonoreward, not var_22_0)
-	gohelper.setActive(arg_22_0._goactreward, var_22_0)
+	gohelper.setActive(self._gonoreward, not hasReward)
+	gohelper.setActive(self._goactreward, hasReward)
 
-	if var_22_0 then
-		for iter_22_0 = 1, 3 do
-			arg_22_0:refreshOneReward(arg_22_0.rewardList[iter_22_0], arg_22_0.trActNormalReward)
+	if hasReward then
+		for i = 1, 3 do
+			self:refreshOneReward(self.rewardList[i], self.trActNormalReward)
 		end
 
-		for iter_22_1 = 1, 3 do
-			arg_22_0:refreshOneReward(arg_22_0.actRewardList[iter_22_1], arg_22_0.trActReward)
+		for i = 1, 3 do
+			self:refreshOneReward(self.actRewardList[i], self.trActReward)
 		end
 	end
 end
 
-function var_0_0.refreshActTime(arg_23_0)
-	local var_23_0 = ActivityModel.instance:getActMO(arg_23_0.activityId)
+function DungeonMapLevelRewardView:refreshActTime()
+	local actInfo = ActivityModel.instance:getActMO(self.activityId)
 
-	if var_23_0 then
-		local var_23_1 = var_23_0:getRealEndTimeStamp() - ServerTime.now()
-		local var_23_2, var_23_3 = TimeUtil.secondToRoughTime(var_23_1, true)
+	if actInfo then
+		local offset = actInfo:getRealEndTimeStamp() - ServerTime.now()
+		local time, timeFormat = TimeUtil.secondToRoughTime(offset, true)
 
-		arg_23_0._txtacttime.text = string.format(var_23_2 .. var_23_3)
+		self._txtacttime.text = string.format(time .. timeFormat)
 	end
 end
 
-function var_0_0.refreshNormalReward(arg_24_0)
-	if arg_24_0.chapterCo.type == DungeonEnum.ChapterType.Simple or arg_24_0.episodeConfig.type == DungeonEnum.EpisodeType.Story then
-		arg_24_0:addFirstReward(true)
+function DungeonMapLevelRewardView:refreshNormalReward()
+	if self.chapterCo.type == DungeonEnum.ChapterType.Simple or self.episodeConfig.type == DungeonEnum.EpisodeType.Story then
+		self:addFirstReward(true)
 	else
-		arg_24_0:addFirstReward()
+		self:addFirstReward()
 	end
 
-	arg_24_0:addAdvanceReward()
-	arg_24_0:addNewReward()
-	arg_24_0:addDoubleDropReward()
-	arg_24_0:addFreeReward()
-	arg_24_0:addCommonRewardList()
+	self:addAdvanceReward()
+	self:addNewReward()
+	self:addDoubleDropReward()
+	self:addFreeReward()
+	self:addCommonRewardList()
 
-	local var_24_0 = #arg_24_0.rewardList > 0
+	local hasReward = #self.rewardList > 0
 
-	gohelper.setActive(arg_24_0._gonoreward, not var_24_0)
-	gohelper.setActive(arg_24_0._goreward, var_24_0)
+	gohelper.setActive(self._gonoreward, not hasReward)
+	gohelper.setActive(self._goreward, hasReward)
 
-	if var_24_0 then
-		for iter_24_0 = 1, 3 do
-			arg_24_0:refreshOneReward(arg_24_0.rewardList[iter_24_0], arg_24_0.trNormalReward)
+	if hasReward then
+		for i = 1, 3 do
+			self:refreshOneReward(self.rewardList[i], self.trNormalReward)
 		end
 
-		if arg_24_0.episodeConfig.type == DungeonEnum.EpisodeType.Story or arg_24_0.chapterCo.type == DungeonEnum.ChapterType.Simple then
-			for iter_24_1, iter_24_2 in ipairs(arg_24_0.rewardItemList) do
-				local var_24_1 = arg_24_0.episodeInfo.star ~= DungeonEnum.StarType.None
+		if self.episodeConfig.type == DungeonEnum.EpisodeType.Story or self.chapterCo.type == DungeonEnum.ChapterType.Simple then
+			for _, rewardItem in ipairs(self.rewardItemList) do
+				local isFinish = self.episodeInfo.star ~= DungeonEnum.StarType.None
 
-				gohelper.setActive(iter_24_2.finished, var_24_1)
+				gohelper.setActive(rewardItem.finished, isFinish)
 			end
 		end
 	end
 end
 
-function var_0_0._addReward(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4, arg_25_5, arg_25_6)
-	local var_25_0 = {
-		itemType = arg_25_1,
-		id = arg_25_2,
-		quantity = arg_25_3,
-		tagType = arg_25_4,
-		showQuantity = arg_25_5,
-		rewardType = arg_25_6
-	}
+function DungeonMapLevelRewardView:_addReward(itemType, id, quantity, tagType, showQuantity, rewardType)
+	local reward = {}
 
-	table.insert(arg_25_0.rewardList, var_25_0)
+	reward.itemType = itemType
+	reward.id = id
+	reward.quantity = quantity
+	reward.tagType = tagType
+	reward.showQuantity = showQuantity
+	reward.rewardType = rewardType
+
+	table.insert(self.rewardList, reward)
 end
 
-function var_0_0._addActReward(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4, arg_26_5, arg_26_6, arg_26_7, arg_26_8)
-	local var_26_0 = {
-		itemType = arg_26_1,
-		id = arg_26_2,
-		quantity = arg_26_3,
-		tagType = arg_26_4,
-		showQuantity = arg_26_5,
-		rewardType = var_0_0.RewardType.Act,
-		customBg = arg_26_6,
-		customRefreshCallback = arg_26_7,
-		recycleCallback = arg_26_8
-	}
+function DungeonMapLevelRewardView:_addActReward(itemType, id, quantity, tagType, showQuantity, customBg, customRefreshCallback, recycleCallback)
+	local reward = {}
 
-	table.insert(arg_26_0.actRewardList, var_26_0)
+	reward.itemType = itemType
+	reward.id = id
+	reward.quantity = quantity
+	reward.tagType = tagType
+	reward.showQuantity = showQuantity
+	reward.rewardType = DungeonMapLevelRewardView.RewardType.Act
+	reward.customBg = customBg
+	reward.customRefreshCallback = customRefreshCallback
+	reward.recycleCallback = recycleCallback
+
+	table.insert(self.actRewardList, reward)
 end
 
-function var_0_0.addActReward(arg_27_0)
-	local var_27_0 = arg_27_0.dropCo
-	local var_27_1 = var_27_0.itemId1
+function DungeonMapLevelRewardView:addActReward()
+	local dropCo = self.dropCo
+	local currencyReward = dropCo.itemId1
 
-	if not string.nilorempty(var_27_1) then
-		local var_27_2 = string.splitToNumber(var_27_1, "#")
-		local var_27_3 = CommonConfig.instance:getAct155CurrencyRatio() * string.splitToNumber(arg_27_0.episodeConfig.cost, "#")[3]
+	if not string.nilorempty(currencyReward) then
+		local array = string.splitToNumber(currencyReward, "#")
+		local ratio = CommonConfig.instance:getAct155CurrencyRatio()
+		local cost = string.splitToNumber(self.episodeConfig.cost, "#")[3]
+		local quantity = ratio * cost
 
-		arg_27_0:_addActReward(var_27_2[1], var_27_2[2], var_27_3, var_27_2[3], true, nil, arg_27_0.onRefreshV1a7Currency, arg_27_0.onRecycleV1a7Currency)
+		self:_addActReward(array[1], array[2], quantity, array[3], true, nil, self.onRefreshV1a7Currency, self.onRecycleV1a7Currency)
 	end
 
-	local var_27_4 = var_27_0.itemId2
+	local powerReward = dropCo.itemId2
 
-	if not string.nilorempty(var_27_4) then
-		local var_27_5 = string.splitToNumber(var_27_4, "#")
+	if not string.nilorempty(powerReward) then
+		local array = string.splitToNumber(powerReward, "#")
 
-		arg_27_0:_addActReward(var_27_5[1], var_27_5[2], 0, var_27_5[3], false, nil, arg_27_0.onRefreshV1a7Power, arg_27_0.onRecycleV1a7Currency)
+		self:_addActReward(array[1], array[2], 0, array[3], false, nil, self.onRefreshV1a7Power, self.onRecycleV1a7Currency)
 	end
 
-	local var_27_6 = ActivityHelper.getActivityStatus(VersionActivity1_9Enum.ActivityId.ToughBattle)
+	local act158Status = ActivityHelper.getActivityStatus(VersionActivity1_9Enum.ActivityId.ToughBattle)
 
-	if (var_27_6 == ActivityEnum.ActivityStatus.Normal or var_27_6 == ActivityEnum.ActivityStatus.NotUnlock) and ToughBattleModel.instance:isDropActItem() then
-		arg_27_0:_addActReward(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.V1a9ToughEnter, 0, var_0_0.TagType.Act, false, nil, arg_27_0.onRefreshV1a7Power, arg_27_0.onRecycleV1a7Currency)
+	if (act158Status == ActivityEnum.ActivityStatus.Normal or act158Status == ActivityEnum.ActivityStatus.NotUnlock) and ToughBattleModel.instance:isDropActItem() then
+		self:_addActReward(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.V1a9ToughEnter, 0, DungeonMapLevelRewardView.TagType.Act, false, nil, self.onRefreshV1a7Power, self.onRecycleV1a7Currency)
 	end
 end
 
-function var_0_0.addAdvanceReward(arg_28_0)
-	if arg_28_0.episodeInfo.star < DungeonEnum.StarType.Advanced then
-		for iter_28_0, iter_28_1 in ipairs(DungeonModel.instance:getEpisodeAdvancedBonus(arg_28_0.episodeId)) do
-			arg_28_0:_addReward(iter_28_1[1], iter_28_1[2], iter_28_1[3], var_0_0.TagType.SecondPass, true, var_0_0.RewardType.SecondStar)
+function DungeonMapLevelRewardView:addAdvanceReward()
+	if self.episodeInfo.star < DungeonEnum.StarType.Advanced then
+		for _, reward in ipairs(DungeonModel.instance:getEpisodeAdvancedBonus(self.episodeId)) do
+			self:_addReward(reward[1], reward[2], reward[3], DungeonMapLevelRewardView.TagType.SecondPass, true, DungeonMapLevelRewardView.RewardType.SecondStar)
 		end
 	end
 end
 
-function var_0_0.addFirstReward(arg_29_0, arg_29_1)
-	if arg_29_0.episodeInfo.star == DungeonEnum.StarType.None or arg_29_1 then
-		local var_29_0 = var_0_0.TagType.FirstPass
+function DungeonMapLevelRewardView:addFirstReward(direct)
+	if self.episodeInfo.star == DungeonEnum.StarType.None or direct then
+		local tagType = DungeonMapLevelRewardView.TagType.FirstPass
 
-		if arg_29_1 then
-			var_29_0 = var_0_0.TagType.StoryFirst
+		if direct then
+			tagType = DungeonMapLevelRewardView.TagType.StoryFirst
 		end
 
-		for iter_29_0, iter_29_1 in ipairs(DungeonModel.instance:getEpisodeFirstBonus(arg_29_0.episodeId)) do
-			local var_29_1 = true
+		for _, reward in ipairs(DungeonModel.instance:getEpisodeFirstBonus(self.episodeId)) do
+			local isShowReward = true
 
-			if tonumber(iter_29_1[1]) == MaterialEnum.MaterialType.Currency and tonumber(iter_29_1[2]) == CurrencyEnum.CurrencyType.V1a9ToughEnter then
-				local var_29_2 = ActivityHelper.getActivityStatus(VersionActivity1_9Enum.ActivityId.ToughBattle)
+			if tonumber(reward[1]) == MaterialEnum.MaterialType.Currency and tonumber(reward[2]) == CurrencyEnum.CurrencyType.V1a9ToughEnter then
+				local act158Status = ActivityHelper.getActivityStatus(VersionActivity1_9Enum.ActivityId.ToughBattle)
 
-				if var_29_2 ~= ActivityEnum.ActivityStatus.Normal and var_29_2 ~= ActivityEnum.ActivityStatus.NotUnlock then
-					var_29_1 = false
+				if act158Status ~= ActivityEnum.ActivityStatus.Normal and act158Status ~= ActivityEnum.ActivityStatus.NotUnlock then
+					isShowReward = false
 				end
 			end
 
-			if var_29_1 then
-				arg_29_0:_addReward(iter_29_1[1], iter_29_1[2], iter_29_1[3], var_29_0, true, var_0_0.RewardType.OneStar)
+			if isShowReward then
+				self:_addReward(reward[1], reward[2], reward[3], tagType, true, DungeonMapLevelRewardView.RewardType.OneStar)
 			end
 		end
 	end
 end
 
-function var_0_0.addFreeReward(arg_30_0)
-	if arg_30_0.isFree then
-		for iter_30_0, iter_30_1 in ipairs(DungeonModel.instance:getEpisodeFreeDisplayList(arg_30_0.episodeId)) do
-			arg_30_0:_addReward(iter_30_1[1], iter_30_1[2], 0, iter_30_1[3], false, var_0_0.RewardType.Common)
+function DungeonMapLevelRewardView:addFreeReward()
+	if self.isFree then
+		for _, reward in ipairs(DungeonModel.instance:getEpisodeFreeDisplayList(self.episodeId)) do
+			self:_addReward(reward[1], reward[2], 0, reward[3], false, DungeonMapLevelRewardView.RewardType.Common)
 		end
 	end
 end
 
-function var_0_0.addDoubleDropReward(arg_31_0)
-	if not DoubleDropModel.instance:isShowDoubleByEpisode(arg_31_0.episodeId, true) then
+function DungeonMapLevelRewardView:addDoubleDropReward()
+	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self.chapterCo.id)
+	local episodeShow = DoubleDropModel.instance:isShowDoubleByEpisode(self.episodeId, true)
+	local multiDropShow = isMultiDrop and limit > 0
+
+	if not episodeShow and not multiDropShow then
 		return
 	end
 
-	local var_31_0
+	local commonRewardList
+	local isResourceType = self.chapterCo.type == DungeonEnum.ChapterType.Gold or self.chapterCo.type == DungeonEnum.ChapterType.Exp
 
-	if arg_31_0.chapterCo.type == DungeonEnum.ChapterType.Gold or arg_31_0.chapterCo.type == DungeonEnum.ChapterType.Exp then
-		local var_31_1 = DungeonModel.instance:getEpisodeBonus(arg_31_0.episodeId)
+	if isResourceType then
+		commonRewardList = DungeonModel.instance:getEpisodeBonus(self.episodeId)
 
-		for iter_31_0, iter_31_1 in ipairs(var_31_1) do
-			arg_31_0:_addReward(iter_31_1[1], iter_31_1[2], iter_31_1[3], var_0_0.TagType.TurnBack, false, var_0_0.RewardType.TurnBack)
+		for _, reward in ipairs(commonRewardList) do
+			local count = multiDropShow and 2 * reward[3] or reward[3]
+
+			self:_addReward(reward[1], reward[2], count, DungeonMapLevelRewardView.TagType.TurnBack, true, DungeonMapLevelRewardView.RewardType.TurnBack)
 		end
 	else
-		local var_31_2 = DungeonModel.instance:getEpisodeRewardDisplayList(arg_31_0.episodeId)
+		commonRewardList = DungeonModel.instance:getEpisodeRewardDisplayList(self.episodeId)
 
-		for iter_31_2, iter_31_3 in ipairs(var_31_2) do
-			arg_31_0:_addReward(iter_31_3[1], iter_31_3[2], 0, var_0_0.TagType.TurnBack, false, var_0_0.RewardType.TurnBack)
+		for _, reward in ipairs(commonRewardList) do
+			self:_addReward(reward[1], reward[2], 0, DungeonMapLevelRewardView.TagType.TurnBack, false, DungeonMapLevelRewardView.RewardType.TurnBack)
 		end
 	end
 
-	local var_31_3 = DoubleDropModel.instance:getActId()
-	local var_31_4 = DoubleDropConfig.instance:getAct153ExtraBonus(var_31_3, arg_31_0.episodeId)
-	local var_31_5 = GameUtil.splitString2(var_31_4, true)
+	if multiDropShow then
+		local bonusCo = Activity217Config.instance:getBonusCO(self.episodeId)
 
-	if var_31_5 then
-		for iter_31_4, iter_31_5 in ipairs(var_31_5) do
-			arg_31_0:_addReward(iter_31_5[1], iter_31_5[2], iter_31_5[3], var_0_0.TagType.TurnBack, false, var_0_0.RewardType.TurnBack)
+		if bonusCo then
+			local extraBonusStr = bonusCo.extraBonus
+			local extraBonus = GameUtil.splitString2(extraBonusStr, true)
+
+			if extraBonus then
+				for _, reward in ipairs(extraBonus) do
+					self:_addReward(reward[1], reward[2], reward[3], DungeonMapLevelRewardView.TagType.TurnBack, false, DungeonMapLevelRewardView.RewardType.TurnBack)
+				end
+			end
+
+			return
+		end
+	end
+
+	local actId = DoubleDropModel.instance:getActId()
+	local extraBonusStr = DoubleDropConfig.instance:getAct153ExtraBonus(actId, self.episodeId)
+	local extraBonus = GameUtil.splitString2(extraBonusStr, true)
+
+	if extraBonus then
+		for _, reward in ipairs(extraBonus) do
+			self:_addReward(reward[1], reward[2], reward[3], DungeonMapLevelRewardView.TagType.TurnBack, false, DungeonMapLevelRewardView.RewardType.TurnBack)
 		end
 	end
 end
 
-function var_0_0.addCommonRewardList(arg_32_0)
-	local var_32_0
+function DungeonMapLevelRewardView:addCommonRewardList()
+	local commonRewardList
+	local isResourceType = self.chapterCo.type == DungeonEnum.ChapterType.Gold or self.chapterCo.type == DungeonEnum.ChapterType.Exp
 
-	if arg_32_0.chapterCo.type == DungeonEnum.ChapterType.Gold or arg_32_0.chapterCo.type == DungeonEnum.ChapterType.Exp then
-		var_32_0 = DungeonModel.instance:getEpisodeBonus(arg_32_0.episodeId)
+	if isResourceType then
+		commonRewardList = DungeonModel.instance:getEpisodeBonus(self.episodeId)
 
-		for iter_32_0, iter_32_1 in ipairs(var_32_0) do
-			arg_32_0:_addReward(iter_32_1[1], iter_32_1[2], iter_32_1[3], var_0_0.TagType.None, true, var_0_0.RewardType.Common)
+		for _, reward in ipairs(commonRewardList) do
+			self:_addReward(reward[1], reward[2], reward[3], DungeonMapLevelRewardView.TagType.None, true, DungeonMapLevelRewardView.RewardType.Common)
 		end
 	else
-		var_32_0 = DungeonModel.instance:getEpisodeRewardDisplayList(arg_32_0.episodeId)
+		commonRewardList = DungeonModel.instance:getEpisodeRewardDisplayList(self.episodeId)
 
-		for iter_32_2, iter_32_3 in ipairs(var_32_0) do
-			arg_32_0:_addReward(iter_32_3[1], iter_32_3[2], 0, iter_32_3[3], false, var_0_0.RewardType.Common)
+		for _, reward in ipairs(commonRewardList) do
+			self:_addReward(reward[1], reward[2], 0, reward[3], false, DungeonMapLevelRewardView.RewardType.Common)
 		end
 	end
 
-	if TurnbackModel.instance:isShowTurnBackAddition(arg_32_0.chapterId) then
-		local var_32_1 = TurnbackModel.instance:getAdditionRewardList(var_32_0)
+	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self.chapterCo.id)
+	local multiDropShow = isMultiDrop and limit > 0
+	local isShowAddition = TurnbackModel.instance:isShowTurnBackAddition(self.chapterId)
 
-		for iter_32_4, iter_32_5 in ipairs(var_32_1) do
-			arg_32_0:_addReward(iter_32_5[1], iter_32_5[2], iter_32_5[3], var_0_0.TagType.TurnBack, true, var_0_0.RewardType.TurnBack)
+	if not multiDropShow and isShowAddition then
+		local additionRewardList = TurnbackModel.instance:getAdditionRewardList(commonRewardList)
+
+		for _, reward in ipairs(additionRewardList) do
+			self:_addReward(reward[1], reward[2], reward[3], DungeonMapLevelRewardView.TagType.TurnBack, true, DungeonMapLevelRewardView.RewardType.TurnBack)
 		end
 	end
 end
 
-function var_0_0.addNewReward(arg_33_0)
-	local var_33_0 = DungeonModel.instance:getEpisodeReward(arg_33_0.episodeId)
+function DungeonMapLevelRewardView:addNewReward()
+	local commonRewardList = DungeonModel.instance:getEpisodeReward(self.episodeId)
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_0) do
-		arg_33_0:_addReward(iter_33_1[1], iter_33_1[2], 0, iter_33_1.tagType, false, var_0_0.RewardType.Common)
+	for _, reward in ipairs(commonRewardList) do
+		self:_addReward(reward[1], reward[2], 0, reward.tagType, false, DungeonMapLevelRewardView.RewardType.Common)
 	end
 end
 
-function var_0_0.setItemIcon(arg_34_0, arg_34_1)
-	arg_34_1:isShowAddition(false)
-	arg_34_1:isShowEquipAndItemCount(false)
-	arg_34_1:setHideLvAndBreakFlag(true)
-	arg_34_1:setShowCountFlag(false)
-	arg_34_1:hideEquipLvAndBreak(true)
+function DungeonMapLevelRewardView:setItemIcon(itemIcon)
+	itemIcon:isShowAddition(false)
+	itemIcon:isShowEquipAndItemCount(false)
+	itemIcon:setHideLvAndBreakFlag(true)
+	itemIcon:setShowCountFlag(false)
+	itemIcon:hideEquipLvAndBreak(true)
 end
 
-function var_0_0.refreshOneReward(arg_35_0, arg_35_1, arg_35_2)
-	if not arg_35_1 then
+function DungeonMapLevelRewardView:refreshOneReward(rewardData, parent)
+	if not rewardData then
 		return
 	end
 
-	local var_35_0 = arg_35_0:getRewardItem(arg_35_2)
+	local rewardItem = self:getRewardItem(parent)
 
-	var_35_0.rewardData = arg_35_1
+	rewardItem.rewardData = rewardData
 
-	var_35_0.itemIcon:setMOValue(arg_35_1.itemType, arg_35_1.id, arg_35_1.quantity, nil, true)
+	rewardItem.itemIcon:setMOValue(rewardData.itemType, rewardData.id, rewardData.quantity, nil, true)
 
-	if arg_35_1.customRefreshCallback then
-		arg_35_1.customRefreshCallback(arg_35_0, var_35_0)
+	if rewardData.customRefreshCallback then
+		rewardData.customRefreshCallback(self, rewardItem)
 	end
 
-	arg_35_0:setItemIcon(var_35_0.itemIcon)
-	arg_35_0:refreshTag(var_35_0)
-	arg_35_0:refreshCount(var_35_0)
-	arg_35_0:refreshCustomBg(var_35_0)
+	self:setItemIcon(rewardItem.itemIcon)
+	self:refreshTag(rewardItem)
+	self:refreshCount(rewardItem)
+	self:refreshCustomBg(rewardItem)
 
-	return var_35_0
+	return rewardItem
 end
 
-function var_0_0.refreshTag(arg_36_0, arg_36_1)
-	arg_36_0:clearRewardTag(arg_36_1)
+function DungeonMapLevelRewardView:refreshTag(rewardItem)
+	self:clearRewardTag(rewardItem)
 
-	local var_36_0 = arg_36_1.rewardData.tagType
+	local rewardData = rewardItem.rewardData
+	local tagType = rewardData.tagType
 
-	if var_36_0 == var_0_0.TagType.None then
+	if tagType == DungeonMapLevelRewardView.TagType.None then
 		return
 	end
 
-	if var_36_0 == var_0_0.TagType.SecondPass then
-		gohelper.setActive(arg_36_1.goadvance, true)
-	elseif var_36_0 == var_0_0.TagType.FirstPass then
-		gohelper.setActive(arg_36_1.gofirst, not arg_36_0.hardMode)
-		gohelper.setActive(arg_36_1.gofirsthard, arg_36_0.hardMode)
-	elseif var_36_0 == var_0_0.TagType.TurnBack then
-		gohelper.setActive(arg_36_1.goAddition, true)
-	elseif var_36_0 == var_0_0.TagType.StoryFirst then
-		gohelper.setActive(arg_36_1.storyfirst, true)
+	if tagType == DungeonMapLevelRewardView.TagType.SecondPass then
+		gohelper.setActive(rewardItem.goadvance, true)
+	elseif tagType == DungeonMapLevelRewardView.TagType.FirstPass then
+		gohelper.setActive(rewardItem.gofirst, not self.hardMode)
+		gohelper.setActive(rewardItem.gofirsthard, self.hardMode)
+	elseif tagType == DungeonMapLevelRewardView.TagType.TurnBack then
+		gohelper.setActive(rewardItem.goAddition, true)
+	elseif tagType == DungeonMapLevelRewardView.TagType.StoryFirst then
+		gohelper.setActive(rewardItem.storyfirst, true)
 	else
-		gohelper.setActive(arg_36_1.gonormal, true)
+		gohelper.setActive(rewardItem.gonormal, true)
 
-		arg_36_1.txtnormal.text = luaLang("dungeon_prob_flag" .. var_36_0)
+		rewardItem.txtnormal.text = luaLang("dungeon_prob_flag" .. tagType)
 	end
 end
 
-function var_0_0.clearRewardTag(arg_37_0, arg_37_1)
-	gohelper.setActive(arg_37_1.gofirst, false)
-	gohelper.setActive(arg_37_1.goadvance, false)
-	gohelper.setActive(arg_37_1.gofirsthard, false)
-	gohelper.setActive(arg_37_1.gonormal, false)
-	gohelper.setActive(arg_37_1.goAddition, false)
-	gohelper.setActive(arg_37_1.finished, false)
-	gohelper.setActive(arg_37_1.storyfirst, false)
+function DungeonMapLevelRewardView:clearRewardTag(rewardItem)
+	gohelper.setActive(rewardItem.gofirst, false)
+	gohelper.setActive(rewardItem.goadvance, false)
+	gohelper.setActive(rewardItem.gofirsthard, false)
+	gohelper.setActive(rewardItem.gonormal, false)
+	gohelper.setActive(rewardItem.goAddition, false)
+	gohelper.setActive(rewardItem.finished, false)
+	gohelper.setActive(rewardItem.storyfirst, false)
 end
 
-function var_0_0.refreshCount(arg_38_0, arg_38_1)
-	local var_38_0 = arg_38_1.rewardData.showQuantity
+function DungeonMapLevelRewardView:refreshCount(rewardItem)
+	local rewardData = rewardItem.rewardData
+	local showQuantity = rewardData.showQuantity
 
-	gohelper.setActive(arg_38_1.gocount, var_38_0)
+	gohelper.setActive(rewardItem.gocount, showQuantity)
 
-	if var_38_0 then
-		if arg_38_1.itemIcon:isEquipIcon() then
-			arg_38_1.itemIcon:ShowEquipCount(arg_38_1.gocount, arg_38_1.txtcount)
+	if showQuantity then
+		if rewardItem.itemIcon:isEquipIcon() then
+			rewardItem.itemIcon:ShowEquipCount(rewardItem.gocount, rewardItem.txtcount)
 		else
-			arg_38_1.itemIcon:showStackableNum2(arg_38_1.gocount, arg_38_1.txtcount)
+			rewardItem.itemIcon:showStackableNum2(rewardItem.gocount, rewardItem.txtcount)
 		end
 	end
 end
 
-function var_0_0.refreshCustomBg(arg_39_0, arg_39_1)
-	local var_39_0 = arg_39_1.rewardData.customBg
+function DungeonMapLevelRewardView:refreshCustomBg(rewardItem)
+	local rewardData = rewardItem.rewardData
+	local customBg = rewardData.customBg
 
-	if string.nilorempty(var_39_0) then
+	if string.nilorempty(customBg) then
 		return
 	end
 
-	arg_39_1.itemIcon:setIconBg(var_39_0)
+	rewardItem.itemIcon:setIconBg(customBg)
 end
 
-function var_0_0.onRefreshV1a7Power(arg_40_0, arg_40_1)
-	local var_40_0 = arg_40_1.itemIcon._itemIcon
+function DungeonMapLevelRewardView:onRefreshV1a7Power(rewardItem)
+	local itemIcon = rewardItem.itemIcon._itemIcon
 
-	var_40_0:setCanShowDeadLine(false)
+	itemIcon:setCanShowDeadLine(false)
 
-	var_40_0._gov1a7act = var_40_0._gov1a7act or gohelper.findChild(var_40_0.go, "act")
+	itemIcon._gov1a7act = itemIcon._gov1a7act or gohelper.findChild(itemIcon.go, "act")
 
-	gohelper.setActive(var_40_0._gov1a7act, true)
+	gohelper.setActive(itemIcon._gov1a7act, true)
 end
 
-function var_0_0.onRefreshV1a7Currency(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_1.itemIcon._itemIcon
+function DungeonMapLevelRewardView:onRefreshV1a7Currency(rewardItem)
+	local itemIcon = rewardItem.itemIcon._itemIcon
 
-	var_41_0._gov1a7act = var_41_0._gov1a7act or gohelper.findChild(var_41_0.go, "act")
+	itemIcon._gov1a7act = itemIcon._gov1a7act or gohelper.findChild(itemIcon.go, "act")
 
-	gohelper.setActive(var_41_0._gov1a7act, true)
+	gohelper.setActive(itemIcon._gov1a7act, true)
 end
 
-function var_0_0.onRecycleV1a7Currency(arg_42_0, arg_42_1)
-	local var_42_0 = arg_42_1.itemIcon._itemIcon
+function DungeonMapLevelRewardView:onRecycleV1a7Currency(rewardItem)
+	local itemIcon = rewardItem.itemIcon._itemIcon
 
-	gohelper.setActive(var_42_0._gov1a7act, false)
+	gohelper.setActive(itemIcon._gov1a7act, false)
 end
 
-function var_0_0.onClose(arg_43_0)
-	arg_43_0.switchInit = false
+function DungeonMapLevelRewardView:onClose()
+	self.switchInit = false
 
-	TaskDispatcher.cancelTask(arg_43_0.delayRefreshReward, arg_43_0)
+	TaskDispatcher.cancelTask(self.delayRefreshReward, self)
 end
 
-function var_0_0.onDestroyView(arg_44_0)
+function DungeonMapLevelRewardView:onDestroyView()
 	return
 end
 
-function var_0_0.onRefreshActivityState(arg_45_0, arg_45_1)
-	if arg_45_1 ~= arg_45_0.activityId then
+function DungeonMapLevelRewardView:onRefreshActivityState(actId)
+	if actId ~= self.activityId then
 		return
 	end
 
-	arg_45_0:updateActiveActId()
-	arg_45_0:refreshReward()
+	self:updateActiveActId()
+	self:refreshReward()
 end
 
-function var_0_0.onDailyRefresh(arg_46_0)
-	arg_46_0:refreshTurnBack()
+function DungeonMapLevelRewardView:onDailyRefresh()
+	self:refreshTurnBack()
 end
 
-function var_0_0.refreshTurnBack(arg_47_0)
-	arg_47_0:refreshTurnBackAdditionTips()
-	arg_47_0:refreshReward()
+function DungeonMapLevelRewardView:refreshTurnBack()
+	self:refreshTurnBackAdditionTips()
+	self:refreshReward()
 end
 
-return var_0_0
+return DungeonMapLevelRewardView

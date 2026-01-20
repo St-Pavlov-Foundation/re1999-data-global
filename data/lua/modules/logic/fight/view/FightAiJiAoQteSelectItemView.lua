@@ -1,82 +1,88 @@
-﻿module("modules.logic.fight.view.FightAiJiAoQteSelectItemView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightAiJiAoQteSelectItemView.lua
 
-local var_0_0 = class("FightAiJiAoQteSelectItemView", FightBaseView)
+module("modules.logic.fight.view.FightAiJiAoQteSelectItemView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.hpSlider = gohelper.findChildSlider(arg_1_0.viewGO, "#slider_hp")
-	arg_1_0.shieldSlider = gohelper.findChildSlider(arg_1_0.viewGO, "#slider_hp/#slider_hudun")
-	arg_1_0.roleIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_icon")
-	arg_1_0.restrain = gohelper.findChild(arg_1_0.viewGO, "restrain")
-	arg_1_0.restrainAni = gohelper.findChildComponent(arg_1_0.viewGO, "restrain/restrain", gohelper.Type_Animator)
-	arg_1_0.actRoot = gohelper.findChild(arg_1_0.viewGO, "actLayout")
-	arg_1_0.actItemObj = gohelper.findChild(arg_1_0.viewGO, "actLayout/act")
-	arg_1_0.goSelect = gohelper.findChild(arg_1_0.viewGO, "go_select")
-	arg_1_0.click = gohelper.findChildClick(arg_1_0.viewGO, "click")
+local FightAiJiAoQteSelectItemView = class("FightAiJiAoQteSelectItemView", FightBaseView)
+
+function FightAiJiAoQteSelectItemView:onInitView()
+	self.hpSlider = gohelper.findChildSlider(self.viewGO, "#slider_hp")
+	self.shieldSlider = gohelper.findChildSlider(self.viewGO, "#slider_hp/#slider_hudun")
+	self.roleIcon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self.restrain = gohelper.findChild(self.viewGO, "restrain")
+	self.restrainAni = gohelper.findChildComponent(self.viewGO, "restrain/restrain", gohelper.Type_Animator)
+	self.actRoot = gohelper.findChild(self.viewGO, "actLayout")
+	self.actItemObj = gohelper.findChild(self.viewGO, "actLayout/act")
+	self.goSelect = gohelper.findChild(self.viewGO, "go_select")
+	self.click = gohelper.findChildClick(self.viewGO, "click")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0.click, arg_2_0.onClick)
+function FightAiJiAoQteSelectItemView:addEvents()
+	self:com_registClick(self.click, self.onClick)
 end
 
-function var_0_0.onClick(arg_3_0)
-	arg_3_0.PARENT_VIEW:onSelectItem(arg_3_0.toId)
+function FightAiJiAoQteSelectItemView:onClick()
+	self.PARENT_VIEW:onSelectItem(self.toId)
 end
 
-function var_0_0.onConstructor(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.fromId = arg_4_1
-	arg_4_0.toId = arg_4_2
+function FightAiJiAoQteSelectItemView:onConstructor(fromId, toId)
+	self.fromId = fromId
+	self.toId = toId
 end
 
-function var_0_0.showSelect(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0.goSelect, arg_5_1 == arg_5_0.toId)
+function FightAiJiAoQteSelectItemView:showSelect(toId)
+	gohelper.setActive(self.goSelect, toId == self.toId)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = FightDataHelper.entityMgr:getById(arg_6_0.toId)
-	local var_6_1 = FightConfig.instance:getSkinCO(var_6_0.skin)
-	local var_6_2 = ""
+function FightAiJiAoQteSelectItemView:onOpen()
+	local entityMO = FightDataHelper.entityMgr:getById(self.toId)
+	local skinConfig = FightConfig.instance:getSkinCO(entityMO.skin)
+	local url = ""
 
-	if var_6_0:isEnemySide() then
-		var_6_2 = ResUrl.monsterHeadIcon(var_6_1.headIcon)
+	if entityMO:isEnemySide() then
+		url = ResUrl.monsterHeadIcon(skinConfig.headIcon)
 	else
-		var_6_2 = ResUrl.getHeadIconSmall(var_6_1.retangleIcon)
+		url = ResUrl.getHeadIconSmall(skinConfig.retangleIcon)
 	end
 
-	arg_6_0.roleIcon:LoadImage(var_6_2)
+	self.roleIcon:LoadImage(url)
 
-	local var_6_3 = var_6_0.currentHp
-	local var_6_4 = var_6_0.shieldValue
-	local var_6_5, var_6_6 = FightNameUI.getHpFillAmount(var_6_3, var_6_4, var_6_0.id)
+	local curHp = entityMO.currentHp
+	local curShield = entityMO.shieldValue
+	local hpFillAmount, shieldFillAmount = FightNameUI.getHpFillAmount(curHp, curShield, entityMO.id)
 
-	arg_6_0.hpSlider:SetValue(var_6_5)
-	arg_6_0.shieldSlider:SetValue(var_6_6)
+	self.hpSlider:SetValue(hpFillAmount)
+	self.shieldSlider:SetValue(shieldFillAmount)
 
-	local var_6_7 = FightDataHelper.entityMgr:getById(arg_6_0.fromId)
+	local fromEntityData = FightDataHelper.entityMgr:getById(self.fromId)
+	local restrainValue = FightConfig.instance:getRestrain(fromEntityData.career, entityMO.career) or 1000
 
-	if (FightConfig.instance:getRestrain(var_6_7.career, var_6_0.career) or 1000) > 1000 then
-		gohelper.setActive(arg_6_0.restrain, true)
-		arg_6_0.restrainAni:Play("fight_restrain_all_in", 0, 0)
-		arg_6_0.restrainAni:Update(0)
+	if restrainValue > 1000 then
+		gohelper.setActive(self.restrain, true)
+		self.restrainAni:Play("fight_restrain_all_in", 0, 0)
+		self.restrainAni:Update(0)
 	else
-		gohelper.setActive(arg_6_0.restrain, false)
+		gohelper.setActive(self.restrain, false)
 	end
 
-	local var_6_8 = FightDataHelper.roundMgr:getRoundData():getEntityAIUseCardMOList(arg_6_0.toId)
+	local roundData = FightDataHelper.roundMgr:getRoundData()
+	local playCardList = roundData:getEntityAIUseCardMOList(self.toId)
 
-	arg_6_0:com_createObjList(arg_6_0.onActItemShow, var_6_8, arg_6_0.actRoot, arg_6_0.actItemObj)
+	self:com_createObjList(self.onActItemShow, playCardList, self.actRoot, self.actItemObj)
 end
 
-function var_0_0.onActItemShow(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0:com_openSubView(FightNameUIOperationItem, arg_7_1):refreshItemData(arg_7_2)
-	gohelper.setActive(gohelper.findChild(arg_7_1, "round"), false)
+function FightAiJiAoQteSelectItemView:onActItemShow(obj, cardInfo, index)
+	local itemView = self:com_openSubView(FightNameUIOperationItem, obj)
+
+	itemView:refreshItemData(cardInfo)
+	gohelper.setActive(gohelper.findChild(obj, "round"), false)
 end
 
-function var_0_0.onClose(arg_8_0)
+function FightAiJiAoQteSelectItemView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function FightAiJiAoQteSelectItemView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightAiJiAoQteSelectItemView

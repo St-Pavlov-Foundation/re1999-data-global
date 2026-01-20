@@ -1,75 +1,77 @@
-﻿module("modules.logic.bossrush.view.V1a4_BossRush_HeroGroup", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/V1a4_BossRush_HeroGroup.lua
 
-local var_0_0 = class("V1a4_BossRush_HeroGroup", LuaCompBase)
+module("modules.logic.bossrush.view.V1a4_BossRush_HeroGroup", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._parentViewContainer = arg_1_1
+local V1a4_BossRush_HeroGroup = class("V1a4_BossRush_HeroGroup", LuaCompBase)
+
+function V1a4_BossRush_HeroGroup:ctor(parentViewContainer)
+	self._parentViewContainer = parentViewContainer
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.transform
-	local var_2_1 = var_2_0.childCount
+function V1a4_BossRush_HeroGroup:init(go)
+	local transform = go.transform
+	local childCount = transform.childCount
 
-	arg_2_0._groupList = arg_2_0:getUserDataTb_()
+	self._groupList = self:getUserDataTb_()
 
-	for iter_2_0 = 0, var_2_1 - 1 do
-		local var_2_2 = var_2_0:GetChild(iter_2_0)
-		local var_2_3 = arg_2_0:getUserDataTb_()
+	for i = 0, childCount - 1 do
+		local groupTran = transform:GetChild(i)
+		local list = self:getUserDataTb_()
 
-		for iter_2_1 = 0, iter_2_0 do
-			local var_2_4 = var_2_2:GetChild(iter_2_1).gameObject
+		for j = 0, i do
+			local itemTran = groupTran:GetChild(j)
+			local itemGo = itemTran.gameObject
 
-			table.insert(var_2_3, var_2_4)
+			table.insert(list, itemGo)
 		end
 
-		table.insert(arg_2_0._groupList, var_2_3)
+		table.insert(self._groupList, list)
 	end
 
-	arg_2_0._go = arg_2_1
+	self._go = go
 end
 
-function var_0_0._createHeroItem(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0
-	local var_3_1
+function V1a4_BossRush_HeroGroup:_createHeroItem(parentGO, heroMo, equipMo)
+	local itemClass, resPath
 
-	if arg_3_3 then
-		var_3_0 = V1a4_BossRush_HeroGroupItem1
-		var_3_1 = BossRushEnum.ResPath.v1a4_bossrush_herogroupitem1
+	if equipMo then
+		itemClass = V1a4_BossRush_HeroGroupItem1
+		resPath = BossRushEnum.ResPath.v1a4_bossrush_herogroupitem1
 	else
-		var_3_0 = V1a4_BossRush_HeroGroupItem2
-		var_3_1 = BossRushEnum.ResPath.v1a4_bossrush_herogroupitem2
+		itemClass = V1a4_BossRush_HeroGroupItem2
+		resPath = BossRushEnum.ResPath.v1a4_bossrush_herogroupitem2
 	end
 
-	local var_3_2 = arg_3_0._parentViewContainer:getResInst(var_3_1, arg_3_1 or arg_3_0._go, var_3_0.__cname)
+	local go = self._parentViewContainer:getResInst(resPath, parentGO or self._go, itemClass.__cname)
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_3_2, var_3_0)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 end
 
-function var_0_0.setDataByFightParam(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1:getHeroEquipMoList()
-	local var_4_1 = math.min(#arg_4_0._groupList, #var_4_0)
-	local var_4_2 = arg_4_0._groupList[var_4_1]
+function V1a4_BossRush_HeroGroup:setDataByFightParam(fightParam)
+	local heroEquipMoList = fightParam:getHeroEquipMoList()
+	local n = math.min(#self._groupList, #heroEquipMoList)
+	local group = self._groupList[n]
 
-	arg_4_0._heroList = {}
+	self._heroList = {}
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_3 = var_4_2[iter_4_0]
-		local var_4_4 = iter_4_1.heroMo
-		local var_4_5 = iter_4_1.equipMo
-		local var_4_6 = arg_4_0:_createHeroItem(var_4_3, var_4_4, var_4_5)
+	for i, v in ipairs(heroEquipMoList) do
+		local go = group[i]
+		local heroMo = v.heroMo
+		local equipMo = v.equipMo
+		local item = self:_createHeroItem(go, heroMo, equipMo)
 
-		var_4_6:setData(var_4_4, var_4_5)
+		item:setData(heroMo, equipMo)
 
-		arg_4_0._heroList[iter_4_0] = var_4_6
+		self._heroList[i] = item
 	end
 end
 
-function var_0_0.setDataByCurFightParam(arg_5_0)
-	arg_5_0:setDataByFightParam(FightModel.instance:getFightParam())
+function V1a4_BossRush_HeroGroup:setDataByCurFightParam()
+	self:setDataByFightParam(FightModel.instance:getFightParam())
 end
 
-function var_0_0.onDestroyView(arg_6_0)
-	GameUtil.onDestroyViewMemberList(arg_6_0, "_heroList")
+function V1a4_BossRush_HeroGroup:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_heroList")
 end
 
-return var_0_0
+return V1a4_BossRush_HeroGroup

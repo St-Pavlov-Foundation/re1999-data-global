@@ -1,66 +1,68 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapEquipEntryItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapEquipEntryItem.lua
 
-local var_0_0 = class("DungeonMapEquipEntryItem", LuaCompBase)
+module("modules.logic.dungeon.view.map.DungeonMapEquipEntryItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._index = arg_1_1[1]
-	arg_1_0._chapterId = arg_1_1[2]
-	arg_1_0._readyChapterId = nil
+local DungeonMapEquipEntryItem = class("DungeonMapEquipEntryItem", LuaCompBase)
+
+function DungeonMapEquipEntryItem:ctor(param)
+	self._index = param[1]
+	self._chapterId = param[2]
+	self._readyChapterId = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
-	arg_2_0._simageicon = gohelper.findChildSingleImage(arg_2_0.viewGO, "#simage_icon")
-	arg_2_0._txtnum = gohelper.findChildText(arg_2_0.viewGO, "#txt_num")
-	arg_2_0._imagefull = gohelper.findChildImage(arg_2_0.viewGO, "progress/#image_full")
-	arg_2_0._txtprogressNum = gohelper.findChildText(arg_2_0.viewGO, "progress/#txt_progressNum")
+function DungeonMapEquipEntryItem:init(go)
+	self.viewGO = go
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#txt_num")
+	self._imagefull = gohelper.findChildImage(self.viewGO, "progress/#image_full")
+	self._txtprogressNum = gohelper.findChildText(self.viewGO, "progress/#txt_progressNum")
 
-	local var_2_0 = lua_equip_chapter.configDict[arg_2_0._chapterId]
-	local var_2_1 = string.format("entry/bg_fuben_tesurukou_%s", var_2_0.group)
+	local equipChapterConfig = lua_equip_chapter.configDict[self._chapterId]
+	local url = string.format("entry/bg_fuben_tesurukou_%s", equipChapterConfig.group)
 
-	arg_2_0._simageicon:LoadImage(ResUrl.getDungeonIcon(var_2_1))
+	self._simageicon:LoadImage(ResUrl.getDungeonIcon(url))
 
-	local var_2_2 = DungeonConfig.instance:getChapterEpisodeCOList(arg_2_0._chapterId)
-	local var_2_3 = #var_2_2
-	local var_2_4 = 0
+	local list = DungeonConfig.instance:getChapterEpisodeCOList(self._chapterId)
+	local count = #list
+	local index = 0
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-		local var_2_5 = DungeonModel.instance:getEpisodeInfo(iter_2_1.id)
+	for i, v in ipairs(list) do
+		local info = DungeonModel.instance:getEpisodeInfo(v.id)
 
-		if DungeonModel.instance:hasPassLevel(iter_2_1.id) and var_2_5.challengeCount == 1 then
-			var_2_4 = var_2_4 + 1
+		if DungeonModel.instance:hasPassLevel(v.id) and info.challengeCount == 1 then
+			index = index + 1
 		else
-			arg_2_0._readyChapterId = iter_2_1.id
+			self._readyChapterId = v.id
 
 			break
 		end
 	end
 
-	arg_2_0._txtprogressNum.text = string.format("%s/%s", var_2_4, var_2_3)
-	arg_2_0._txtnum.text = "0" .. arg_2_0._index
-	arg_2_0._imagefull.fillAmount = var_2_4 / var_2_3
+	self._txtprogressNum.text = string.format("%s/%s", index, count)
+	self._txtnum.text = "0" .. self._index
+	self._imagefull.fillAmount = index / count
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._click = gohelper.getClickWithAudio(arg_3_0.viewGO)
+function DungeonMapEquipEntryItem:addEventListeners()
+	self._click = gohelper.getClickWithAudio(self.viewGO)
 
-	arg_3_0._click:AddClickListener(arg_3_0._onClick, arg_3_0)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._click:RemoveClickListener()
+function DungeonMapEquipEntryItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0._onClick(arg_5_0)
-	DungeonController.instance:openDungeonEquipEntryView(arg_5_0._chapterId)
+function DungeonMapEquipEntryItem:_onClick()
+	DungeonController.instance:openDungeonEquipEntryView(self._chapterId)
 end
 
-function var_0_0.onStart(arg_6_0)
+function DungeonMapEquipEntryItem:onStart()
 	return
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function DungeonMapEquipEntryItem:onDestroy()
 	return
 end
 
-return var_0_0
+return DungeonMapEquipEntryItem

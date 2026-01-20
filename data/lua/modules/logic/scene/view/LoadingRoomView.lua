@@ -1,10 +1,12 @@
-﻿module("modules.logic.scene.view.LoadingRoomView", package.seeall)
+﻿-- chunkname: @modules/logic/scene/view/LoadingRoomView.lua
 
-local var_0_0 = class("LoadingRoomView", LoadingBlackView)
+module("modules.logic.scene.view.LoadingRoomView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local LoadingRoomView = class("LoadingRoomView", LoadingBlackView)
+
+function LoadingRoomView:onInitView()
+	LoadingRoomView.super.onInitView(self)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_amb_home_mist)
 end
 
-return var_0_0
+return LoadingRoomView

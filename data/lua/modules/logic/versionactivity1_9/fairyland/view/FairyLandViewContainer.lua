@@ -1,53 +1,55 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/FairyLandViewContainer.lua
 
-local var_0_0 = class("FairyLandViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_9.fairyland.view.FairyLandViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FairyLandViewContainer = class("FairyLandViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FairyLandPuzzles.New())
-	table.insert(var_1_0, FairyLandView.New())
+function FairyLandViewContainer:buildViews()
+	local views = {}
 
-	arg_1_0.elements = FairyLandElements.New()
+	table.insert(views, FairyLandPuzzles.New())
+	table.insert(views, FairyLandView.New())
 
-	table.insert(var_1_0, arg_1_0.elements)
-	table.insert(var_1_0, FairyLandStairs.New())
+	self.elements = FairyLandElements.New()
 
-	arg_1_0.scene = FairyLandScene.New()
+	table.insert(views, self.elements)
+	table.insert(views, FairyLandStairs.New())
 
-	table.insert(var_1_0, arg_1_0.scene)
-	table.insert(var_1_0, FairyLandDialogView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_LeftTop"))
+	self.scene = FairyLandScene.New()
 
-	return var_1_0
+	table.insert(views, self.scene)
+	table.insert(views, FairyLandDialogView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_LeftTop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function FairyLandViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.getElement(arg_3_0, arg_3_1)
-	if arg_3_0.elements then
-		return arg_3_0.elements:getElementByType(arg_3_1)
+function FairyLandViewContainer:getElement(type)
+	if self.elements then
+		return self.elements:getElementByType(type)
 	end
 end
 
-function var_0_0._setVisible(arg_4_0, arg_4_1)
-	var_0_0.super._setVisible(arg_4_0, arg_4_1)
+function FairyLandViewContainer:_setVisible(isVisible)
+	FairyLandViewContainer.super._setVisible(self, isVisible)
 
-	if arg_4_0.scene then
-		arg_4_0.scene:setSceneVisible(arg_4_1)
+	if self.scene then
+		self.scene:setSceneVisible(isVisible)
 	end
 end
 
-return var_0_0
+return FairyLandViewContainer

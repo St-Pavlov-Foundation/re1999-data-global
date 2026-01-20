@@ -1,23 +1,25 @@
-﻿module("modules.logic.fight.system.work.FightWorkRestartAbandon", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRestartAbandon.lua
 
-local var_0_0 = class("FightWorkRestartAbandon", BaseWork)
+module("modules.logic.fight.system.work.FightWorkRestartAbandon", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._fightParam = arg_1_1
+local FightWorkRestartAbandon = class("FightWorkRestartAbandon", BaseWork)
+
+function FightWorkRestartAbandon:ctor(fightParam)
+	self._fightParam = fightParam
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0.episode_config = arg_2_0._fightParam:getCurEpisodeConfig()
-	arg_2_0.chapter_config = DungeonConfig.instance:getChapterCO(arg_2_0.episode_config.chapterId)
+function FightWorkRestartAbandon:onStart()
+	self.episode_config = self._fightParam:getCurEpisodeConfig()
+	self.chapter_config = DungeonConfig.instance:getChapterCO(self.episode_config.chapterId)
 
-	local var_2_0 = arg_2_0.chapter_config.type
-	local var_2_1 = _G["FightRestartAbandonType" .. var_2_0] or _G["FightRestartAbandonType" .. (FightRestartSequence.RestartType2Type[var_2_0] or var_2_0)]
+	local playType = self.chapter_config.type
+	local class = _G["FightRestartAbandonType" .. playType] or _G["FightRestartAbandonType" .. (FightRestartSequence.RestartType2Type[playType] or playType)]
 
-	if var_2_1 then
-		arg_2_0._abandon_class = var_2_1.New(arg_2_0, arg_2_0._fightParam, arg_2_0.episode_config, arg_2_0.chapter_config)
+	if class then
+		self._abandon_class = class.New(self, self._fightParam, self.episode_config, self.chapter_config)
 
-		if arg_2_0._abandon_class:canRestart() then
-			arg_2_0._abandon_class:abandon()
+		if self._abandon_class:canRestart() then
+			self._abandon_class:abandon()
 		else
 			FightGameMgr.restartMgr:cancelRestart()
 		end
@@ -26,13 +28,13 @@ function var_0_0.onStart(arg_2_0)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	if arg_3_0._abandon_class then
-		arg_3_0._abandon_class:releaseEvent()
-		arg_3_0._abandon_class:releaseSelf()
+function FightWorkRestartAbandon:clearWork()
+	if self._abandon_class then
+		self._abandon_class:releaseEvent()
+		self._abandon_class:releaseSelf()
 
-		arg_3_0._abandon_class = nil
+		self._abandon_class = nil
 	end
 end
 
-return var_0_0
+return FightWorkRestartAbandon

@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_4.wuerlixi.define.WuErLiXiEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/wuerlixi/define/WuErLiXiEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_4.wuerlixi.define.WuErLiXiEnum", package.seeall)
 
-var_0_0.EpisodeStatus = {
+local WuErLiXiEnum = _M
+
+WuErLiXiEnum.EpisodeStatus = {
 	BeforeStory = 0,
 	MapGame = 1,
 	Finished = 3,
 	AfterStory = 2
 }
-var_0_0.Dir = {
+WuErLiXiEnum.Dir = {
 	Down = 2,
 	Up = 0,
 	Right = 1,
 	Left = 3
 }
-var_0_0.UnitType = {
+WuErLiXiEnum.UnitType = {
 	Reflection = 5,
 	KeyStart = 2,
 	Obstacle = 4,
@@ -24,20 +26,20 @@ var_0_0.UnitType = {
 	SignalEnd = 3,
 	Key = 8
 }
-var_0_0.UnitTypeToName = {}
+WuErLiXiEnum.UnitTypeToName = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.UnitType) do
-	var_0_0.UnitTypeToName[iter_0_1] = iter_0_0
+for name, index in pairs(WuErLiXiEnum.UnitType) do
+	WuErLiXiEnum.UnitTypeToName[index] = name
 end
 
-var_0_0.NodeType = {
+WuErLiXiEnum.NodeType = {
 	Placeable = 1,
 	UnPlaceable = 2
 }
-var_0_0.RayType = {
+WuErLiXiEnum.RayType = {
 	SwitchSignal = 2,
 	NormalSignal = 1
 }
-var_0_0.GameMapNodeWidth = 84
+WuErLiXiEnum.GameMapNodeWidth = 84
 
-return var_0_0
+return WuErLiXiEnum

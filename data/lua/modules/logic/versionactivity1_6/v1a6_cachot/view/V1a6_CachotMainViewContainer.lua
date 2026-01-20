@@ -1,39 +1,43 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotMainViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotMainViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0._guideDragTip = V1a6_CachotGuideDragTip.New()
+local V1a6_CachotMainViewContainer = class("V1a6_CachotMainViewContainer", BaseViewContainer)
+
+function V1a6_CachotMainViewContainer:buildViews()
+	self._guideDragTip = V1a6_CachotGuideDragTip.New()
 
 	return {
 		V1a6_CachotMainView.New(),
 		V1a6_CachotPlayCtrlView.New(),
-		arg_1_0._guideDragTip,
+		self._guideDragTip,
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = NavigateButtonsView.New({
+function V1a6_CachotMainViewContainer:buildTabViews(tabContainerId)
+	local navView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
-	var_2_0:setOverrideClose(arg_2_0._onCloseClick, arg_2_0)
-	var_2_0:setOverrideHome(arg_2_0._onHomeClick, arg_2_0)
-	var_2_0:setCloseCheck(arg_2_0._navCloseCheck, arg_2_0)
+	navView:setOverrideClose(self._onCloseClick, self)
+	navView:setOverrideHome(self._onHomeClick, self)
+	navView:setCloseCheck(self._navCloseCheck, self)
 
 	return {
-		var_2_0
+		navView
 	}
 end
 
-function var_0_0._navCloseCheck(arg_3_0)
-	return not (arg_3_0._guideDragTip and arg_3_0._guideDragTip:isShowDragTip())
+function V1a6_CachotMainViewContainer:_navCloseCheck()
+	local showDragTip = self._guideDragTip and self._guideDragTip:isShowDragTip()
+
+	return not showDragTip
 end
 
-function var_0_0._onCloseClick(arg_4_0)
+function V1a6_CachotMainViewContainer:_onCloseClick()
 	MainController.instance:enterMainScene()
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_6EnterView)
@@ -41,8 +45,8 @@ function var_0_0._onCloseClick(arg_4_0)
 	end)
 end
 
-function var_0_0._onHomeClick(arg_6_0)
+function V1a6_CachotMainViewContainer:_onHomeClick()
 	MainController.instance:enterMainScene()
 end
 
-return var_0_0
+return V1a6_CachotMainViewContainer

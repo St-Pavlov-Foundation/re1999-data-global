@@ -1,30 +1,32 @@
-﻿module("modules.logic.weekwalk_2.define.WeekWalk_2Enum", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/define/WeekWalk_2Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.weekwalk_2.define.WeekWalk_2Enum", package.seeall)
 
-var_0_0.episodeId = 2600101
-var_0_0.MaxLayer = 4
-var_0_0.MaxStar = 3
-var_0_0.FirstDeepLayer = 1
-var_0_0.LayerStatus = {
+local WeekWalk_2Enum = _M
+
+WeekWalk_2Enum.episodeId = 2600101
+WeekWalk_2Enum.MaxLayer = 4
+WeekWalk_2Enum.MaxStar = 3
+WeekWalk_2Enum.FirstDeepLayer = 1
+WeekWalk_2Enum.LayerStatus = {
 	Pass = 2,
 	UnLock = 0,
 	Lock = 1
 }
-var_0_0.BattleIndex = {
+WeekWalk_2Enum.BattleIndex = {
 	Second = 2,
 	First = 1
 }
-var_0_0.TaskType = {
+WeekWalk_2Enum.TaskType = {
 	Season = 6,
 	Month = 5,
 	Once = 3
 }
-var_0_0.BattleStatus = {
+WeekWalk_2Enum.BattleStatus = {
 	Finished = 1,
 	UnFinished = 0
 }
-var_0_0.CupType = {
+WeekWalk_2Enum.CupType = {
 	None2 = 5,
 	Platinum = 4,
 	Copper = 1,
@@ -32,20 +34,20 @@ var_0_0.CupType = {
 	Silver = 2,
 	None = 0
 }
-var_0_0.LineValue = {
+WeekWalk_2Enum.LineValue = {
 	1,
 	0.7,
 	0.3,
 	0
 }
-var_0_0.OnceAnimType = {
+WeekWalk_2Enum.OnceAnimType = {
 	FightBuffNew = 5,
 	RuleNew = 2,
 	BuffNew = 3,
 	ResultReview = 4,
 	UnlockEpisode = 1
 }
-var_0_0.ResultAnimIndex = {
+WeekWalk_2Enum.ResultAnimIndex = {
 	Defence = 3,
 	Attack = 1,
 	Health = 2,
@@ -53,4 +55,4 @@ var_0_0.ResultAnimIndex = {
 	RoleData = 4
 }
 
-return var_0_0
+return WeekWalk_2Enum

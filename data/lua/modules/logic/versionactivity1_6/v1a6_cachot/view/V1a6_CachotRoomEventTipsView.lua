@@ -1,405 +1,413 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomEventTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoomEventTipsView.lua
 
-local var_0_0 = class("V1a6_CachotRoomEventTipsView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoomEventTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goheros = gohelper.findChild(arg_1_0.viewGO, "top/#go_herogroup")
-	arg_1_0._goheroparent = gohelper.findChild(arg_1_0.viewGO, "top/#go_herogroup/layout")
-	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "top/#go_herogroup/heroitem")
+local V1a6_CachotRoomEventTipsView = class("V1a6_CachotRoomEventTipsView", BaseView)
 
-	local var_1_0 = V1a6_CachotConfig.instance:getConstConfig(V1a6_CachotEnum.Const.RecoverEvent).value
+function V1a6_CachotRoomEventTipsView:onInitView()
+	self._goheros = gohelper.findChild(self.viewGO, "top/#go_herogroup")
+	self._goheroparent = gohelper.findChild(self.viewGO, "top/#go_herogroup/layout")
+	self._gohero = gohelper.findChild(self.viewGO, "top/#go_herogroup/heroitem")
 
-	arg_1_0._recoverEventId = tonumber(var_1_0)
+	local eventId = V1a6_CachotConfig.instance:getConstConfig(V1a6_CachotEnum.Const.RecoverEvent).value
+
+	self._recoverEventId = tonumber(eventId)
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V1a6_CachotRoomEventTipsView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V1a6_CachotRoomEventTipsView:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0._heroItems = arg_4_0:getUserDataTb_()
+function V1a6_CachotRoomEventTipsView:onOpen()
+	self._heroItems = self:getUserDataTb_()
 
-	gohelper.setActive(arg_4_0._goheros, false)
+	gohelper.setActive(self._goheros, false)
 
-	arg_4_0._needShowCureEffect = V1a6_CachotController.instance.needShowCureEffect
+	self._needShowCureEffect = V1a6_CachotController.instance.needShowCureEffect
 	V1a6_CachotController.instance.needShowCureEffect = nil
-	arg_4_0._cureAddHp = V1a6_CachotController.instance.cureAddHp
+	self._cureAddHp = V1a6_CachotController.instance.cureAddHp
 	V1a6_CachotController.instance.cureAddHp = nil
 
-	if arg_4_0._needShowCureEffect then
-		arg_4_0:_onRoomChangePlayAnim()
+	if self._needShowCureEffect then
+		self:_onRoomChangePlayAnim()
 	end
 
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0.onCloseViewFinishCall, arg_4_0, LuaEventSystem.High)
-	arg_4_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.SelectHero, arg_4_0._onSelectHero, arg_4_0)
-	arg_4_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnEventFinish, arg_4_0._onEventFinish, arg_4_0)
-	arg_4_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.RoomChangePlayAnim, arg_4_0._onRoomChangePlayAnim, arg_4_0)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseViewFinishCall, self, LuaEventSystem.High)
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.SelectHero, self._onSelectHero, self)
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnEventFinish, self._onEventFinish, self)
+	self:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.RoomChangePlayAnim, self._onRoomChangePlayAnim, self)
 end
 
-function var_0_0._onRoomChangePlayAnim(arg_5_0)
-	if arg_5_0._needShowCureEffect then
-		arg_5_0._needShowCureEffect = false
+function V1a6_CachotRoomEventTipsView:_onRoomChangePlayAnim()
+	if self._needShowCureEffect then
+		self._needShowCureEffect = false
 
-		arg_5_0:_showCureEffect()
+		self:_showCureEffect()
 	end
 end
 
-function var_0_0._onEventFinish(arg_6_0, arg_6_1)
-	local var_6_0 = lua_rogue_event.configDict[arg_6_1.eventId]
+function V1a6_CachotRoomEventTipsView:_onEventFinish(event)
+	local eventCo = lua_rogue_event.configDict[event.eventId]
 
-	if var_6_0.type == V1a6_CachotEnum.EventType.CharacterCure then
-		local var_6_1 = lua_rogue_event_life.configDict[var_6_0.eventId]
+	if eventCo.type == V1a6_CachotEnum.EventType.CharacterCure then
+		local cureCo = lua_rogue_event_life.configDict[eventCo.eventId]
 
-		if var_6_1 then
-			local var_6_2 = string.splitToNumber(var_6_1.num, "#")
-			local var_6_3 = var_6_2[1]
-			local var_6_4 = var_6_2[2]
-			local var_6_5 = var_6_1.lifeAdd / 10
+		if cureCo then
+			local arr = string.splitToNumber(cureCo.num, "#")
+			local type = arr[1]
+			local selectNum = arr[2]
+			local num = cureCo.lifeAdd / 10
 
-			arg_6_0._cureData = {
-				var_6_3,
-				var_6_4,
-				var_6_5,
-				arg_6_1.eventId
+			self._cureData = {
+				type,
+				selectNum,
+				num,
+				event.eventId
 			}
 
-			if arg_6_0:_showTipAtOnce() then
-				arg_6_0:_checkCure()
+			if self:_showTipAtOnce() then
+				self:_checkCure()
 			end
 		end
-	elseif var_6_0.type == V1a6_CachotEnum.EventType.CharacterRebirth then
-		local var_6_6 = lua_rogue_event_revive.configDict[var_6_0.eventId]
+	elseif eventCo.type == V1a6_CachotEnum.EventType.CharacterRebirth then
+		local reviveCo = lua_rogue_event_revive.configDict[eventCo.eventId]
 
-		if var_6_6 then
-			local var_6_7 = string.splitToNumber(var_6_6.num, "#")
-			local var_6_8 = var_6_7[1]
-			local var_6_9 = var_6_7[2]
+		if reviveCo then
+			local arr = string.splitToNumber(reviveCo.num, "#")
+			local type = arr[1]
+			local selectNum = arr[2]
 
-			arg_6_0._reviveData = {
-				var_6_8,
-				var_6_9
+			self._reviveData = {
+				type,
+				selectNum
 			}
 
-			if arg_6_0:_showTipAtOnce() then
-				arg_6_0:_checkRevive()
+			if self:_showTipAtOnce() then
+				self:_checkRevive()
 			end
 		end
-	elseif var_6_0.type == V1a6_CachotEnum.EventType.Tip then
-		local var_6_10 = lua_rogue_event_tips.configDict[var_6_0.eventId]
+	elseif eventCo.type == V1a6_CachotEnum.EventType.Tip then
+		local tipsCo = lua_rogue_event_tips.configDict[eventCo.eventId]
 
-		if var_6_10 then
+		if tipsCo then
 			V1a6_CachotEventController.instance:setPause(true, V1a6_CachotEnum.EventPauseType.Tips)
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CachotTips, ViewName.V1a6_CachotTipsView, {
-				str = var_6_10.desc,
+				str = tipsCo.desc,
 				style = V1a6_CachotEnum.TipStyle.Normal
 			})
 		end
 	end
 end
 
-function var_0_0._showTipAtOnce(arg_7_0)
+function V1a6_CachotRoomEventTipsView:_showTipAtOnce()
 	return ViewMgr.instance:isOpen(ViewName.V1a6_CachotRewardView)
 end
 
-function var_0_0._onSelectHero(arg_8_0, arg_8_1)
-	arg_8_0._selectHeroMo = arg_8_1
+function V1a6_CachotRoomEventTipsView:_onSelectHero(mo)
+	self._selectHeroMo = mo
 end
 
-function var_0_0.onCloseViewFinishCall(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.V1a6_CachotHeroGroupEditView and arg_9_0._selectHeroMo then
-		local var_9_0 = formatLuaLang("cachot_recruit", arg_9_0._selectHeroMo.config.name)
+function V1a6_CachotRoomEventTipsView:onCloseViewFinishCall(viewName)
+	if viewName == ViewName.V1a6_CachotHeroGroupEditView and self._selectHeroMo then
+		local tip = formatLuaLang("cachot_recruit", self._selectHeroMo.config.name)
 
-		arg_9_0._selectHeroMo = nil
+		self._selectHeroMo = nil
 
 		V1a6_CachotController.instance:openV1a6_CachotTipsView({
-			str = var_9_0,
+			str = tip,
 			style = V1a6_CachotEnum.TipStyle.Normal
 		})
-	elseif arg_9_1 == ViewName.V1a6_CachotEpisodeView or arg_9_1 == ViewName.V1a6_CachotNormalStoreGoodsView then
-		arg_9_0:_checkCure()
-		arg_9_0:_checkRevive()
-	elseif arg_9_1 == ViewName.V1a6_CachotRoleRecoverView then
-		arg_9_0:_checkCure()
+	elseif viewName == ViewName.V1a6_CachotEpisodeView or viewName == ViewName.V1a6_CachotNormalStoreGoodsView then
+		self:_checkCure()
+		self:_checkRevive()
+	elseif viewName == ViewName.V1a6_CachotRoleRecoverView then
+		self:_checkCure()
 	end
 end
 
-function var_0_0._checkRevive(arg_10_0)
-	local var_10_0 = arg_10_0._reviveData
+function V1a6_CachotRoomEventTipsView:_checkRevive()
+	local reviveData = self._reviveData
 
-	arg_10_0._reviveData = nil
+	self._reviveData = nil
 
-	if not var_10_0 then
+	if not reviveData then
 		return
 	end
 
-	if var_10_0[1] == 1 then
+	local type = reviveData[1]
+
+	if type == 1 then
 		-- block empty
 	end
 end
 
-function var_0_0._showRecoverFromReviveTip(arg_11_0)
-	local var_11_0 = lua_rogue_event_life.configDict[arg_11_0._recoverEventId].lifeAdd / 10
-	local var_11_1 = formatLuaLang("cachot_revival_nodead", tostring(var_11_0) .. "%")
+function V1a6_CachotRoomEventTipsView:_showRecoverFromReviveTip()
+	local cureCo = lua_rogue_event_life.configDict[self._recoverEventId]
+	local num = cureCo.lifeAdd / 10
+	local tip = formatLuaLang("cachot_revival_nodead", tostring(num) .. "%")
 
 	V1a6_CachotController.instance:openV1a6_CachotTipsView({
-		str = var_11_1,
+		str = tip,
 		style = V1a6_CachotEnum.TipStyle.Normal
 	})
 end
 
-function var_0_0._markNeedShowCureEffect(arg_12_0)
-	arg_12_0._needShowCureEffect = true
+function V1a6_CachotRoomEventTipsView:_markNeedShowCureEffect()
+	self._needShowCureEffect = true
 
 	if ViewMgr.instance:isOpen(ViewName.V1a6_CachotRewardView) and GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 		V1a6_CachotController.instance.needShowCureEffect = true
-		V1a6_CachotController.instance.cureAddHp = arg_12_0._cureAddHp
+		V1a6_CachotController.instance.cureAddHp = self._cureAddHp
 	end
 end
 
-function var_0_0._checkCure(arg_13_0)
-	local var_13_0 = arg_13_0._cureData
+function V1a6_CachotRoomEventTipsView:_checkCure()
+	local cureData = self._cureData
 
-	arg_13_0._cureData = nil
+	self._cureData = nil
 
-	if not var_13_0 then
+	if not cureData then
 		return
 	end
 
-	local var_13_1 = var_13_0[1]
-	local var_13_2 = var_13_0[3]
-	local var_13_3 = var_13_0[4]
+	local type = cureData[1]
+	local hpValue = cureData[3]
+	local eventId = cureData[4]
 
-	arg_13_0._cureAddHp = var_13_2 > 0
+	self._cureAddHp = hpValue > 0
+	hpValue = math.abs(hpValue)
 
-	local var_13_4 = math.abs(var_13_2)
-
-	if var_13_3 == arg_13_0._recoverEventId then
-		arg_13_0:_markNeedShowCureEffect()
-		arg_13_0:_showRecoverFromReviveTip()
+	if eventId == self._recoverEventId then
+		self:_markNeedShowCureEffect()
+		self:_showRecoverFromReviveTip()
 
 		return
 	end
 
-	if var_13_1 == 1 then
-		arg_13_0:_markNeedShowCureEffect()
-	elseif var_13_1 == 2 then
-		local var_13_5 = V1a6_CachotModel.instance:getChangeLifes()
-		local var_13_6 = ""
+	if type == 1 then
+		self:_markNeedShowCureEffect()
+	elseif type == 2 then
+		local lifes = V1a6_CachotModel.instance:getChangeLifes()
+		local heroNameList = ""
 
-		if var_13_5 then
-			for iter_13_0, iter_13_1 in ipairs(var_13_5) do
-				local var_13_7 = HeroModel.instance:getByHeroId(iter_13_1.heroId)
+		if lifes then
+			for i, v in ipairs(lifes) do
+				local heroMO = HeroModel.instance:getByHeroId(v.heroId)
 
-				if var_13_7 then
-					if string.nilorempty(var_13_6) then
-						var_13_6 = var_13_7.config.name
+				if heroMO then
+					if string.nilorempty(heroNameList) then
+						heroNameList = heroMO.config.name
 					else
-						var_13_6 = var_13_6 .. "、" .. var_13_7.config.name
+						heroNameList = heroNameList .. "、" .. heroMO.config.name
 					end
 				end
 			end
 		end
 
-		local var_13_8 = tostring(var_13_4) .. "%%"
+		local hpValueStr = tostring(hpValue) .. "%%"
 
-		if arg_13_0._cureAddHp then
-			local var_13_9 = luaLang("cachot_multi_add_hp")
+		if self._cureAddHp then
+			local tip = luaLang("cachot_multi_add_hp")
 
 			V1a6_CachotController.instance:openV1a6_CachotTipsView({
-				str = var_13_9,
+				str = tip,
 				style = V1a6_CachotEnum.TipStyle.Normal,
 				strExtra = {
-					var_13_6,
-					var_13_8
+					heroNameList,
+					hpValueStr
 				}
 			})
 		else
-			local var_13_10 = luaLang("cachot_multi_reduce_hp")
+			local tip = luaLang("cachot_multi_reduce_hp")
 
 			V1a6_CachotController.instance:openV1a6_CachotTipsView({
-				str = var_13_10,
+				str = tip,
 				style = V1a6_CachotEnum.TipStyle.Normal,
 				strExtra = {
-					var_13_6,
-					var_13_8
+					heroNameList,
+					hpValueStr
 				}
 			})
 		end
 
-		arg_13_0:_markNeedShowCureEffect()
-	elseif var_13_1 == 3 then
-		arg_13_0:_markNeedShowCureEffect()
+		self:_markNeedShowCureEffect()
+	elseif type == 3 then
+		self:_markNeedShowCureEffect()
 
-		local var_13_11 = tostring(var_13_4) .. "%"
+		local hpValueStr = tostring(hpValue) .. "%"
 
-		if arg_13_0._cureAddHp then
-			local var_13_12 = formatLuaLang("cachot_team_add_hp", var_13_11)
+		if self._cureAddHp then
+			local tip = formatLuaLang("cachot_team_add_hp", hpValueStr)
 
 			V1a6_CachotController.instance:openV1a6_CachotTipsView({
-				str = var_13_12,
+				str = tip,
 				style = V1a6_CachotEnum.TipStyle.Normal
 			})
 		else
-			local var_13_13 = formatLuaLang("cachot_team_reduce_hp", var_13_11)
+			local tip = formatLuaLang("cachot_team_reduce_hp", hpValueStr)
 
 			V1a6_CachotController.instance:openV1a6_CachotTipsView({
-				str = var_13_13,
+				str = tip,
 				style = V1a6_CachotEnum.TipStyle.Normal
 			})
 		end
 	end
 end
 
-function var_0_0._restrictChangeData(arg_14_0, arg_14_1)
-	local var_14_0 = 4
+function V1a6_CachotRoomEventTipsView:_restrictChangeData(changeData)
+	local maxNum = 4
 
-	if var_14_0 >= #arg_14_1 then
-		return arg_14_1
+	if maxNum >= #changeData then
+		return changeData
 	end
 
-	local var_14_1 = V1a6_CachotModel.instance:getTeamInfo()
-	local var_14_2 = {}
-	local var_14_3 = var_14_1:getCurGroupInfo()
+	local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
+	local groupHeroList = {}
+	local curGroupInfo = teamInfo:getCurGroupInfo()
 
-	if var_14_3 then
-		for iter_14_0, iter_14_1 in ipairs(var_14_3.heroList) do
-			local var_14_4 = HeroModel.instance:getById(iter_14_1)
+	if curGroupInfo then
+		for _, v in ipairs(curGroupInfo.heroList) do
+			local heroMo = HeroModel.instance:getById(v)
 
-			if var_14_4 and var_14_1:getHeroHp(var_14_4.heroId).life > 0 then
-				var_14_2[var_14_4.heroId] = true
+			if heroMo then
+				local nowHp = teamInfo:getHeroHp(heroMo.heroId)
+
+				if nowHp.life > 0 then
+					groupHeroList[heroMo.heroId] = true
+				end
 			end
 		end
 	end
 
-	local var_14_5 = {}
+	local result = {}
 
-	for iter_14_2, iter_14_3 in ipairs(arg_14_1) do
-		if var_14_2[iter_14_3.heroId] then
-			table.insert(var_14_5, iter_14_3)
+	for i, v in ipairs(changeData) do
+		if groupHeroList[v.heroId] then
+			table.insert(result, v)
 		end
 	end
 
-	if #var_14_5 == var_14_0 then
-		return var_14_5
+	if #result == maxNum then
+		return result
 	end
 
-	for iter_14_4 = 1, var_14_0 - #var_14_5 do
-		for iter_14_5, iter_14_6 in ipairs(arg_14_1) do
-			if not var_14_2[iter_14_6.heroId] then
-				table.insert(var_14_5, iter_14_6)
+	for i = 1, maxNum - #result do
+		for _, v in ipairs(changeData) do
+			if not groupHeroList[v.heroId] then
+				table.insert(result, v)
 
-				var_14_2[iter_14_6.heroId] = true
+				groupHeroList[v.heroId] = true
 
 				break
 			end
 		end
 	end
 
-	return var_14_5
+	return result
 end
 
-function var_0_0._showCureEffect(arg_15_0)
-	local var_15_0 = V1a6_CachotModel.instance:getChangeLifes()
+function V1a6_CachotRoomEventTipsView:_showCureEffect()
+	local lifes = V1a6_CachotModel.instance:getChangeLifes()
 
-	if not var_15_0 then
+	if not lifes then
 		return
 	end
 
-	local var_15_1 = V1a6_CachotModel.instance:getTeamInfo()
+	local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
 
-	arg_15_0._hpChangeData = {}
+	self._hpChangeData = {}
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		local var_15_2 = var_15_1:getHeroHp(iter_15_1.heroId)
+	for i, v in ipairs(lifes) do
+		local hpInfo = teamInfo:getHeroHp(v.heroId)
 
-		table.insert(arg_15_0._hpChangeData, {
+		table.insert(self._hpChangeData, {
 			total = 1000,
-			heroId = iter_15_1.heroId,
-			preVal = iter_15_1.life,
-			nowVal = var_15_2.life
+			heroId = v.heroId,
+			preVal = v.life,
+			nowVal = hpInfo.life
 		})
 	end
 
-	arg_15_0._hpChangeData = arg_15_0:_restrictChangeData(arg_15_0._hpChangeData)
+	self._hpChangeData = self:_restrictChangeData(self._hpChangeData)
 
-	gohelper.setActive(arg_15_0._goheros, true)
-	gohelper.CreateObjList(arg_15_0, arg_15_0._onItemLoad, arg_15_0._hpChangeData, arg_15_0._goheroparent, arg_15_0._gohero)
+	gohelper.setActive(self._goheros, true)
+	gohelper.CreateObjList(self, self._onItemLoad, self._hpChangeData, self._goheroparent, self._gohero)
 
-	if arg_15_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_15_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_15_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_15_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, arg_15_0._tweenUpdate, arg_15_0._tweenEnd, arg_15_0, nil, EaseType.Linear)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, self._tweenUpdate, self._tweenEnd, self, nil, EaseType.Linear)
 
-	arg_15_0:_tweenUpdate(0)
+	self:_tweenUpdate(0)
 
-	for iter_15_2 = #arg_15_0._hpChangeData + 1, #arg_15_0._heroItems do
-		local var_15_3 = arg_15_0._heroItems[iter_15_2]
+	for i = #self._hpChangeData + 1, #self._heroItems do
+		local item = self._heroItems[i]
 
-		gohelper.setActive(var_15_3 and var_15_3.go, false)
+		gohelper.setActive(item and item.go, false)
 	end
 
-	TaskDispatcher.cancelTask(arg_15_0._delayFinish, arg_15_0)
-	TaskDispatcher.runDelay(arg_15_0._delayFinish, arg_15_0, 2.1)
+	TaskDispatcher.cancelTask(self._delayFinish, self)
+	TaskDispatcher.runDelay(self._delayFinish, self, 2.1)
 end
 
-function var_0_0._delayFinish(arg_16_0)
-	gohelper.setActive(arg_16_0._goheros, false)
+function V1a6_CachotRoomEventTipsView:_delayFinish()
+	gohelper.setActive(self._goheros, false)
 end
 
-function var_0_0._onItemLoad(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_0._heroItems[arg_17_3]
+function V1a6_CachotRoomEventTipsView:_onItemLoad(obj, data, index)
+	local item = self._heroItems[index]
 
-	if not var_17_0 then
-		var_17_0 = arg_17_0:getUserDataTb_()
-		var_17_0.go = arg_17_1
-		var_17_0.animator = arg_17_1:GetComponent("Animator")
-		var_17_0.slider = gohelper.findChildSlider(arg_17_1, "#slider_hp")
-		var_17_0.icon = gohelper.findChildSingleImage(arg_17_1, "hero/#simage_rolehead")
-		var_17_0.arrowred = gohelper.findChildImage(arg_17_1, "arrow_red")
-		var_17_0.arrowgreen = gohelper.findChildImage(arg_17_1, "arrow_green")
-		arg_17_0._heroItems[arg_17_3] = var_17_0
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = obj
+		item.animator = obj:GetComponent("Animator")
+		item.slider = gohelper.findChildSlider(obj, "#slider_hp")
+		item.icon = gohelper.findChildSingleImage(obj, "hero/#simage_rolehead")
+		item.arrowred = gohelper.findChildImage(obj, "arrow_red")
+		item.arrowgreen = gohelper.findChildImage(obj, "arrow_green")
+		self._heroItems[index] = item
 	end
 
-	local var_17_1 = HeroModel.instance:getByHeroId(arg_17_2.heroId)
-	local var_17_2 = lua_skin.configDict[var_17_1.skin]
+	local heroMO = HeroModel.instance:getByHeroId(data.heroId)
+	local skinCo = lua_skin.configDict[heroMO.skin]
 
-	var_17_0.icon:LoadImage(ResUrl.getHeadIconSmall(var_17_2.headIcon))
-	gohelper.setActive(var_17_0.arrowred, not arg_17_0._cureAddHp)
-	gohelper.setActive(var_17_0.arrowgreen, arg_17_0._cureAddHp)
-	gohelper.setActive(var_17_0.go, true)
+	item.icon:LoadImage(ResUrl.getHeadIconSmall(skinCo.headIcon))
+	gohelper.setActive(item.arrowred, not self._cureAddHp)
+	gohelper.setActive(item.arrowgreen, self._cureAddHp)
+	gohelper.setActive(item.go, true)
 
-	if arg_17_0._cureAddHp then
-		var_17_0.animator:Play("healthy", 0, 0)
+	if self._cureAddHp then
+		item.animator:Play("healthy", 0, 0)
 	else
-		var_17_0.animator:Play(arg_17_2.nowVal <= 0 and "die" or "hit", 0, 0)
+		item.animator:Play(data.nowVal <= 0 and "die" or "hit", 0, 0)
 	end
 end
 
-function var_0_0._tweenUpdate(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._hpChangeData) do
-		arg_18_0._heroItems[iter_18_0].slider:SetValue(Mathf.Lerp(iter_18_1.preVal, iter_18_1.nowVal, arg_18_1) / iter_18_1.total)
+function V1a6_CachotRoomEventTipsView:_tweenUpdate(val)
+	for i, v in ipairs(self._hpChangeData) do
+		self._heroItems[i].slider:SetValue(Mathf.Lerp(v.preVal, v.nowVal, val) / v.total)
 	end
 end
 
-function var_0_0._tweenEnd(arg_19_0)
-	arg_19_0._tweenId = nil
+function V1a6_CachotRoomEventTipsView:_tweenEnd()
+	self._tweenId = nil
 end
 
-function var_0_0.onClose(arg_20_0)
-	if arg_20_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_20_0._tweenId)
+function V1a6_CachotRoomEventTipsView:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_20_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_20_0._delayFinish, arg_20_0)
+	TaskDispatcher.cancelTask(self._delayFinish, self)
 end
 
-return var_0_0
+return V1a6_CachotRoomEventTipsView

@@ -1,37 +1,40 @@
-﻿module("modules.logic.survival.controller.work.SummaryAct.SurvivalSummaryActBuildBlockWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SummaryAct/SurvivalSummaryActBuildBlockWork.lua
 
-local var_0_0 = class("SurvivalSummaryActBuildBlockWork", BaseWork)
+module("modules.logic.survival.controller.work.SummaryAct.SurvivalSummaryActBuildBlockWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.mapCo = arg_1_1.mapCo
-	arg_1_0.actMapId = arg_1_0.mapCo.mapId
+local SurvivalSummaryActBuildBlockWork = class("SurvivalSummaryActBuildBlockWork", BaseWork)
+
+function SurvivalSummaryActBuildBlockWork:ctor(param)
+	self.mapCo = param.mapCo
+	self.actMapId = self.mapCo.mapId
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = SurvivalMapHelper.instance:getScene():getSceneContainerGO()
+function SurvivalSummaryActBuildBlockWork:onStart()
+	local scene = SurvivalMapHelper.instance:getScene()
+	local goScene = scene:getSceneContainerGO()
 
-	arg_2_0.goBlockRoot = gohelper.create3d(var_2_0, "SummaryAct_BlockRoot")
+	self.goBlockRoot = gohelper.create3d(goScene, "SummaryAct_BlockRoot")
 
-	local var_2_1 = SurvivalConfig.instance:getShelterMapCo(arg_2_0.actMapId)
+	local mapCo = SurvivalConfig.instance:getShelterMapCo(self.actMapId)
 
-	arg_2_0.blocks = {}
+	self.blocks = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_1.allBlocks) do
-		local var_2_2 = tabletool.copy(iter_2_1)
+	for i, v in ipairs(mapCo.allBlocks) do
+		local blockCo = tabletool.copy(v)
 
-		var_2_2.pos = SurvivalHexNode.New(var_2_2.pos.q, var_2_2.pos.r + SurvivalModel.instance.summaryActPosOffset)
+		blockCo.pos = SurvivalHexNode.New(blockCo.pos.q, blockCo.pos.r + SurvivalModel.instance.summaryActPosOffset)
 
-		local var_2_3 = SurvivalShelterBlockEntity.Create(var_2_2, arg_2_0.goBlockRoot)
+		local block = SurvivalShelterBlockEntity.Create(blockCo, self.goBlockRoot)
 
-		table.insert(arg_2_0.blocks, var_2_3)
+		table.insert(self.blocks, block)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	gohelper.destroy(arg_3_0.goBlockRoot)
-	var_0_0.super.onDestroy(arg_3_0)
+function SurvivalSummaryActBuildBlockWork:onDestroy()
+	gohelper.destroy(self.goBlockRoot)
+	SurvivalSummaryActBuildBlockWork.super.onDestroy(self)
 end
 
-return var_0_0
+return SurvivalSummaryActBuildBlockWork

@@ -1,165 +1,169 @@
-﻿module("modules.logic.versionactivity3_0.enter.view.subview.VersionActivity3_0_v2a1_ReactivityEnterview", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/enter/view/subview/VersionActivity3_0_v2a1_ReactivityEnterview.lua
 
-local var_0_0 = class("VersionActivity3_0_v2a1_ReactivityEnterview", ReactivityEnterview)
+module("modules.logic.versionactivity3_0.enter.view.subview.VersionActivity3_0_v2a1_ReactivityEnterview", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_dec")
-	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "actbg")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "actbg/#txt_time")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_task")
-	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_task/#go_reddot")
-	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_store")
-	arg_1_0._txtStoreNum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/normal/#txt_num")
-	arg_1_0._txtStoreTime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_store/#go_time/#txt_time")
-	arg_1_0._btnenter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_enter")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "entrance/#btn_enter/#go_reddot")
-	arg_1_0._btnFinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Finished")
-	arg_1_0._btnreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_replay")
-	arg_1_0._btnExchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_Exchange")
+local VersionActivity3_0_v2a1_ReactivityEnterview = class("VersionActivity3_0_v2a1_ReactivityEnterview", ReactivityEnterview)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity3_0_v2a1_ReactivityEnterview:onInitView()
+	self._txtdesc = gohelper.findChildText(self.viewGO, "logo/#txt_dec")
+	self._gotime = gohelper.findChild(self.viewGO, "actbg")
+	self._txttime = gohelper.findChildText(self.viewGO, "actbg/#txt_time")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_task")
+	self._gotaskreddot = gohelper.findChild(self.viewGO, "entrance/#btn_task/#go_reddot")
+	self._btnstore = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_store")
+	self._txtStoreNum = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/#txt_num")
+	self._txtStoreTime = gohelper.findChildText(self.viewGO, "entrance/#btn_store/#go_time/#txt_time")
+	self._btnenter = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_enter")
+	self._goreddot = gohelper.findChild(self.viewGO, "entrance/#btn_enter/#go_reddot")
+	self._btnFinished = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Finished")
+	self._btnreplay = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_replay")
+	self._btnExchange = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_Exchange")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.refreshStoreCurrency, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btnstore:AddClickListener(arg_2_0._btnstoreOnClick, arg_2_0)
-	arg_2_0._btnenter:AddClickListener(arg_2_0._btnenterOnClick, arg_2_0)
-	arg_2_0._btnFinished:AddClickListener(arg_2_0._btnFinishedOnClick, arg_2_0)
-	arg_2_0._btnreplay:AddClickListener(arg_2_0._onClickReplay, arg_2_0)
-	arg_2_0._btnExchange:AddClickListener(arg_2_0._onClickExchange, arg_2_0)
+function VersionActivity3_0_v2a1_ReactivityEnterview:addEvents()
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshStoreCurrency, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnstore:AddClickListener(self._btnstoreOnClick, self)
+	self._btnenter:AddClickListener(self._btnenterOnClick, self)
+	self._btnFinished:AddClickListener(self._btnFinishedOnClick, self)
+	self._btnreplay:AddClickListener(self._onClickReplay, self)
+	self._btnExchange:AddClickListener(self._onClickExchange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.refreshStoreCurrency, arg_3_0)
-	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.onRefreshActivity, arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnstore:RemoveClickListener()
-	arg_3_0._btnenter:RemoveClickListener()
-	arg_3_0._btnFinished:RemoveClickListener()
-	arg_3_0._btnreplay:RemoveClickListener()
-	arg_3_0._btnExchange:RemoveClickListener()
+function VersionActivity3_0_v2a1_ReactivityEnterview:removeEvents()
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshStoreCurrency, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
+	self._btntask:RemoveClickListener()
+	self._btnstore:RemoveClickListener()
+	self._btnenter:RemoveClickListener()
+	self._btnFinished:RemoveClickListener()
+	self._btnreplay:RemoveClickListener()
+	self._btnExchange:RemoveClickListener()
 end
 
-function var_0_0.onRefreshActivity(arg_4_0, arg_4_1)
-	if arg_4_1 ~= arg_4_0.actId then
+function VersionActivity3_0_v2a1_ReactivityEnterview:onRefreshActivity(actId)
+	if actId ~= self.actId then
 		return
 	end
 
-	arg_4_0:refreshActivityState()
+	self:refreshActivityState()
 end
 
-function var_0_0._btntaskOnClick(arg_5_0)
+function VersionActivity3_0_v2a1_ReactivityEnterview:_btntaskOnClick()
 	ReactivityController.instance:openReactivityTaskView(VersionActivity3_0Enum.ActivityId.Reactivity)
 end
 
-function var_0_0._btnstoreOnClick(arg_6_0)
+function VersionActivity3_0_v2a1_ReactivityEnterview:_btnstoreOnClick()
 	ReactivityController.instance:openReactivityStoreView(VersionActivity3_0Enum.ActivityId.Reactivity)
 end
 
-function var_0_0._btnenterOnClick(arg_7_0)
+function VersionActivity3_0_v2a1_ReactivityEnterview:_btnenterOnClick()
 	VersionActivity2_1DungeonController.instance:openVersionActivityDungeonMapView()
 end
 
-function var_0_0._btnFinishedOnClick(arg_8_0)
+function VersionActivity3_0_v2a1_ReactivityEnterview:_btnFinishedOnClick()
 	GameFacade.showToast(ToastEnum.ActivityEnd)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._txtstorename = gohelper.findChildText(arg_9_0.viewGO, "entrance/#btn_store/normal/txt_shop")
-	arg_9_0.actId = VersionActivity2_1Enum.ActivityId.Dungeon
-	arg_9_0.animComp = VersionActivity2_1SubAnimatorComp.get(arg_9_0.viewGO, arg_9_0)
-	arg_9_0.goEnter = arg_9_0._btnenter.gameObject
-	arg_9_0.goFinish = arg_9_0._btnFinished.gameObject
-	arg_9_0.goStore = arg_9_0._btnstore.gameObject
-	arg_9_0.actId = VersionActivity3_0Enum.ActivityId.Reactivity
-	arg_9_0.actCo = ActivityConfig.instance:getActivityCo(arg_9_0.actId)
+function VersionActivity3_0_v2a1_ReactivityEnterview:_editableInitView()
+	self._txtstorename = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/txt_shop")
+	self.actId = VersionActivity2_1Enum.ActivityId.Dungeon
+	self.animComp = VersionActivity2_1SubAnimatorComp.get(self.viewGO, self)
+	self.goEnter = self._btnenter.gameObject
+	self.goFinish = self._btnFinished.gameObject
+	self.goStore = self._btnstore.gameObject
+	self.actId = VersionActivity3_0Enum.ActivityId.Reactivity
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
-	arg_9_0:_setDesc()
-	RedDotController.instance:addRedDot(arg_9_0._goreddot, RedDotEnum.DotNode.V2a1DungeonEnter)
-	RedDotController.instance:addRedDot(arg_9_0._gotaskreddot, RedDotEnum.DotNode.V2a1DungeonTask)
+	self:_setDesc()
+	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V2a1DungeonEnter)
+	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.V2a1DungeonTask)
 end
 
-function var_0_0._setDesc(arg_10_0)
-	if not arg_10_0.actCo or not arg_10_0._txtdesc then
+function VersionActivity3_0_v2a1_ReactivityEnterview:_setDesc()
+	if not self.actCo or not self._txtdesc then
 		return
 	end
 
-	arg_10_0._txtdesc.text = arg_10_0.actCo.actDesc
+	self._txtdesc.text = self.actCo.actDesc
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
-	arg_11_0:refreshUI()
+function VersionActivity3_0_v2a1_ReactivityEnterview:onUpdateParam()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:refreshUI()
+function VersionActivity3_0_v2a1_ReactivityEnterview:onOpen()
+	self:refreshUI()
 	Activity165Model.instance:onInitInfo()
-	arg_12_0.animComp:playOpenAnim()
-	TaskDispatcher.runRepeat(arg_12_0.everyMinuteCall, arg_12_0, TimeUtil.OneMinuteSecond)
+	self.animComp:playOpenAnim()
+	TaskDispatcher.runRepeat(self.everyMinuteCall, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0.everyMinuteCall(arg_13_0)
-	arg_13_0:refreshUI()
+function VersionActivity3_0_v2a1_ReactivityEnterview:everyMinuteCall()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0:refreshRemainTime()
-	arg_14_0:refreshActivityState()
-	arg_14_0:refreshStoreCurrency()
+function VersionActivity3_0_v2a1_ReactivityEnterview:refreshUI()
+	self:refreshRemainTime()
+	self:refreshActivityState()
+	self:refreshStoreCurrency()
 end
 
-function var_0_0.refreshRemainTime(arg_15_0)
-	local var_15_0 = ActivityModel.instance:getActivityInfo()[arg_15_0.actId]
+function VersionActivity3_0_v2a1_ReactivityEnterview:refreshRemainTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-	if var_15_0:getRealEndTimeStamp() - ServerTime.now() > 0 then
-		local var_15_1 = var_15_0:getRemainTimeStr3(false, false)
+	if offsetSecond > 0 then
+		local dateStr = actInfoMo:getRemainTimeStr3(false, false)
 
-		arg_15_0._txttime.text = var_15_1
+		self._txttime.text = dateStr
 
-		gohelper.setActive(arg_15_0._txttime, true)
+		gohelper.setActive(self._txttime, true)
 	else
-		gohelper.setActive(arg_15_0._txttime, false)
+		gohelper.setActive(self._txttime, false)
 	end
 
-	local var_15_2 = ActivityModel.instance:getActivityInfo()[VersionActivity3_0Enum.ActivityId.ReactivityStore]
+	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity3_0Enum.ActivityId.ReactivityStore]
 
-	arg_15_0._txtstorename.text = var_15_2.config.name
-	arg_15_0._txtStoreTime.text = var_15_2:getRemainTimeStr2ByEndTime(true)
+	self._txtstorename.text = storeActInfoMo.config.name
+	self._txtStoreTime.text = storeActInfoMo:getRemainTimeStr2ByEndTime(true)
 end
 
-function var_0_0.refreshActivityState(arg_16_0)
-	local var_16_0 = ActivityHelper.getActivityStatusAndToast(arg_16_0.actId)
-	local var_16_1 = var_16_0 == ActivityEnum.ActivityStatus.Normal
+function VersionActivity3_0_v2a1_ReactivityEnterview:refreshActivityState()
+	local status = ActivityHelper.getActivityStatusAndToast(self.actId)
+	local isNormal = status == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_16_0.goEnter, var_16_1)
-	gohelper.setActive(arg_16_0.goFinish, not var_16_1)
+	gohelper.setActive(self.goEnter, isNormal)
+	gohelper.setActive(self.goFinish, not isNormal)
 
-	local var_16_2 = var_16_0 == ActivityEnum.ActivityStatus.Expired
+	local isExpired = status == ActivityEnum.ActivityStatus.Expired
 
-	gohelper.setActive(arg_16_0._gotime, not var_16_2)
+	gohelper.setActive(self._gotime, not isExpired)
 
-	local var_16_3 = ActivityHelper.getActivityStatusAndToast(VersionActivity3_0Enum.ActivityId.ReactivityStore) == ActivityEnum.ActivityStatus.Normal
+	local storeStatus = ActivityHelper.getActivityStatusAndToast(VersionActivity3_0Enum.ActivityId.ReactivityStore)
+	local isStoreNormal = storeStatus == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_16_0.goStore, var_16_3)
+	gohelper.setActive(self.goStore, isStoreNormal)
 end
 
-function var_0_0.refreshStoreCurrency(arg_17_0)
-	local var_17_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a1Dungeon)
-	local var_17_1 = var_17_0 and var_17_0.quantity or 0
+function VersionActivity3_0_v2a1_ReactivityEnterview:refreshStoreCurrency()
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a1Dungeon)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_17_0._txtStoreNum.text = GameUtil.numberDisplay(var_17_1)
+	self._txtStoreNum.text = GameUtil.numberDisplay(quantity)
 end
 
-function var_0_0.onClose(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.everyMinuteCall, arg_18_0)
+function VersionActivity3_0_v2a1_ReactivityEnterview:onClose()
+	TaskDispatcher.cancelTask(self.everyMinuteCall, self)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0.animComp:destroy()
+function VersionActivity3_0_v2a1_ReactivityEnterview:onDestroyView()
+	self.animComp:destroy()
 end
 
-return var_0_0
+return VersionActivity3_0_v2a1_ReactivityEnterview

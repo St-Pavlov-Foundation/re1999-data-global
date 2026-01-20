@@ -1,78 +1,80 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameEventView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinStealthGameEventView.lua
 
-local var_0_0 = class("AssassinStealthGameEventView", BaseView)
+module("modules.logic.sp01.assassin2.outside.view.AssassinStealthGameEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_icon")
-	arg_1_0._btnclick = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#simage_Mask", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "root/name/#txt_name")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/eff/txt_desc")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_Close", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+local AssassinStealthGameEventView = class("AssassinStealthGameEventView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AssassinStealthGameEventView:onInitView()
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "root/#simage_icon")
+	self._btnclick = gohelper.findChildClickWithAudio(self.viewGO, "#simage_Mask", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+	self._txtname = gohelper.findChildText(self.viewGO, "root/name/#txt_name")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "root/eff/txt_desc")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_Close", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
+function AssassinStealthGameEventView:addEvents()
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnclick:AddClickListener(self._btnCloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
+function AssassinStealthGameEventView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnCloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function AssassinStealthGameEventView:_btnCloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._dirGOList = arg_5_0:getUserDataTb_()
-	arg_5_0._dirGOList[#arg_5_0._dirGOList + 1] = gohelper.findChild(arg_5_0.viewGO, "root/moveDir/Dir/up/#go_upLight")
-	arg_5_0._dirGOList[#arg_5_0._dirGOList + 1] = gohelper.findChild(arg_5_0.viewGO, "root/moveDir/Dir/down/#go_downLigth")
-	arg_5_0._dirGOList[#arg_5_0._dirGOList + 1] = gohelper.findChild(arg_5_0.viewGO, "root/moveDir/Dir/left/#go_leftLight")
-	arg_5_0._dirGOList[#arg_5_0._dirGOList + 1] = gohelper.findChild(arg_5_0.viewGO, "root/moveDir/Dir/right/#go_rightLight")
+function AssassinStealthGameEventView:_editableInitView()
+	self._dirGOList = self:getUserDataTb_()
+	self._dirGOList[#self._dirGOList + 1] = gohelper.findChild(self.viewGO, "root/moveDir/Dir/up/#go_upLight")
+	self._dirGOList[#self._dirGOList + 1] = gohelper.findChild(self.viewGO, "root/moveDir/Dir/down/#go_downLigth")
+	self._dirGOList[#self._dirGOList + 1] = gohelper.findChild(self.viewGO, "root/moveDir/Dir/left/#go_leftLight")
+	self._dirGOList[#self._dirGOList + 1] = gohelper.findChild(self.viewGO, "root/moveDir/Dir/right/#go_rightLight")
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function AssassinStealthGameEventView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = AssassinStealthGameModel.instance:getEventId()
-	local var_7_1 = AssassinConfig.instance:getEventImg(var_7_0)
+function AssassinStealthGameEventView:onOpen()
+	local eventId = AssassinStealthGameModel.instance:getEventId()
+	local img = AssassinConfig.instance:getEventImg(eventId)
 
-	if not string.nilorempty(var_7_1) then
-		local var_7_2 = ResUrl.getSp01AssassinSingleBg("stealth/" .. var_7_1)
+	if not string.nilorempty(img) then
+		local imgPath = ResUrl.getSp01AssassinSingleBg("stealth/" .. img)
 
-		arg_7_0._simageicon:LoadImage(var_7_2)
+		self._simageicon:LoadImage(imgPath)
 	end
 
-	local var_7_3 = AssassinConfig.instance:getEventName(var_7_0)
+	local name = AssassinConfig.instance:getEventName(eventId)
 
-	arg_7_0._txtname.text = var_7_3
+	self._txtname.text = name
 
-	local var_7_4 = AssassinConfig.instance:getEventDesc(var_7_0)
+	local desc = AssassinConfig.instance:getEventDesc(eventId)
 
-	arg_7_0._txtdesc.text = var_7_4
+	self._txtdesc.text = desc
 
-	local var_7_5 = AssassinStealthGameModel.instance:getEnemyMoveDir()
+	local moveDir = AssassinStealthGameModel.instance:getEnemyMoveDir()
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._dirGOList) do
-		gohelper.setActive(iter_7_1, iter_7_0 == var_7_5)
+	for dir, dirGo in ipairs(self._dirGOList) do
+		gohelper.setActive(dirGo, dir == moveDir)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_openmap)
 end
 
-function var_0_0.onClose(arg_8_0)
+function AssassinStealthGameEventView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simageicon:UnLoadImage()
+function AssassinStealthGameEventView:onDestroyView()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return AssassinStealthGameEventView

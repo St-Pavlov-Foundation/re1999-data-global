@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.controller.FightTLHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightTLHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.fight.controller.FightTLHelper", package.seeall)
 
-function var_0_0.getTableParam(arg_1_0, arg_1_1, arg_1_2)
-	if arg_1_2 then
-		return FightStrUtil.instance:getSplitToNumberCache(arg_1_0, arg_1_1)
+local FightTLHelper = _M
+
+function FightTLHelper.getTableParam(paramStr, delimiter, isNumber)
+	if isNumber then
+		return FightStrUtil.instance:getSplitToNumberCache(paramStr, delimiter)
 	else
-		return FightStrUtil.instance:getSplitCache(arg_1_0, arg_1_1)
+		return FightStrUtil.instance:getSplitCache(paramStr, delimiter)
 	end
 end
 
-function var_0_0.getBoolParam(arg_2_0)
-	return arg_2_0 == "1"
+function FightTLHelper.getBoolParam(paramStr)
+	return paramStr == "1"
 end
 
-function var_0_0.getNumberParam(arg_3_0)
-	return tonumber(arg_3_0)
+function FightTLHelper.getNumberParam(paramStr)
+	return tonumber(paramStr)
 end
 
-return var_0_0
+return FightTLHelper

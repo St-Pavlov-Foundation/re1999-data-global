@@ -1,28 +1,30 @@
-﻿module("modules.logic.survival.view.shelter.ShelterRestHeroSelectQuickEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterRestHeroSelectQuickEditItem.lua
 
-local var_0_0 = class("ShelterRestHeroSelectQuickEditItem", SurvivalInitHeroSelectQuickEditItem)
+module("modules.logic.survival.view.shelter.ShelterRestHeroSelectQuickEditItem", package.seeall)
 
-function var_0_0.getGroupModel(arg_1_0)
+local ShelterRestHeroSelectQuickEditItem = class("ShelterRestHeroSelectQuickEditItem", SurvivalInitHeroSelectQuickEditItem)
+
+function ShelterRestHeroSelectQuickEditItem:getGroupModel()
 	return ShelterRestGroupModel.instance
 end
 
-function var_0_0._onItemClick(arg_2_0)
+function ShelterRestHeroSelectQuickEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	local var_2_0 = arg_2_0:getGroupModel():tryAddHeroMo(arg_2_0._mo)
+	local addIndex = self:getGroupModel():tryAddHeroMo(self._mo)
 
-	if var_2_0 then
-		arg_2_0._view:selectCell(arg_2_0._index, true)
-		gohelper.setActive(arg_2_0._goorderbg, true)
-		gohelper.setActive(arg_2_0._goframe, true)
+	if addIndex then
+		self._view:selectCell(self._index, true)
+		gohelper.setActive(self._goorderbg, true)
+		gohelper.setActive(self._goframe, true)
 
-		arg_2_0._txtorder.text = var_2_0
+		self._txtorder.text = addIndex
 	else
-		gohelper.setActive(arg_2_0._goorderbg, false)
-		gohelper.setActive(arg_2_0._goframe, false)
+		gohelper.setActive(self._goorderbg, false)
+		gohelper.setActive(self._goframe, false)
 	end
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, arg_2_0._mo)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroEditItemSelectChange, self._mo)
 end
 
-return var_0_0
+return ShelterRestHeroSelectQuickEditItem

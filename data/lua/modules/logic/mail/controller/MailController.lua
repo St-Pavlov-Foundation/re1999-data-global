@@ -1,91 +1,110 @@
-﻿module("modules.logic.mail.controller.MailController", package.seeall)
+﻿-- chunkname: @modules/logic/mail/controller/MailController.lua
 
-local var_0_0 = class("MailController", BaseController)
+module("modules.logic.mail.controller.MailController", package.seeall)
 
-function var_0_0.open(arg_1_0)
+local MailController = class("MailController", BaseController)
+
+function MailController:open()
 	ViewMgr.instance:openView(ViewName.MailView)
 end
 
-function var_0_0.enterMailView(arg_2_0, arg_2_1)
+function MailController:enterMailView(mailId)
 	ViewMgr.instance:openView(ViewName.MailView)
 end
 
-function var_0_0.onInit(arg_3_0)
-	arg_3_0.showTitles = {}
-	arg_3_0.maxCacheMailToast = 3
-	arg_3_0.delayShowViews = nil
-	arg_3_0.recordedMailIdKey = "recordedMailIdKey"
-	arg_3_0.recordedIdDelimiter = ";"
-	arg_3_0.showedMailIds = {}
+function MailController:onInit()
+	self.showTitles = {}
+	self.maxCacheMailToast = 3
+	self.delayShowViews = nil
+	self.recordedMailIdKey = "recordedMailIdKey"
+	self.recordedIdDelimiter = ";"
+	self.showedMailIds = {}
 end
 
-function var_0_0.onInitFinish(arg_4_0)
-	arg_4_0:initShowedMailIds()
+function MailController:onInitFinish()
+	self:initShowedMailIds()
 end
 
-function var_0_0.addConstEvents(arg_5_0)
+function MailController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_6_0)
+function MailController:reInit()
 	return
 end
 
-function var_0_0.initInfo(arg_7_0)
-	arg_7_0.showTitles = {}
+function MailController:initInfo()
+	self.showTitles = {}
 
-	local var_7_0 = MailModel.instance:getMailList()
+	local mailList = MailModel.instance:getMailList()
+	local mailInfoList = {}
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1.state == MailEnum.ReadStatus.Unread and iter_7_1.needShowToast == 1 and not arg_7_0:isShowedMail(iter_7_1.id) then
-			if #arg_7_0.showTitles >= arg_7_0.maxCacheMailToast then
-				arg_7_0:recordShowedMailId(iter_7_1.id)
+	for _, mailMo in ipairs(mailList) do
+		if mailMo.state == MailEnum.ReadStatus.Unread and mailMo.needShowToast == 1 and not self:isShowedMail(mailMo.id) then
+			if #self.showTitles >= self.maxCacheMailToast then
+				self:recordShowedMailId(mailMo.id)
 			else
-				table.insert(arg_7_0.showTitles, 1, {
-					id = iter_7_1.id,
-					title = iter_7_1.title
+				table.insert(self.showTitles, 1, {
+					id = mailMo.id,
+					title = mailMo.title
 				})
 			end
 		end
+
+		local mailInfo = {
+			id = mailMo.id,
+			title = mailMo.title,
+			is_lock = mailMo.isLock == true,
+			is_read = mailMo.state == MailEnum.ReadStatus.Read
+		}
+
+		if mailMo:haveBonus() then
+			mailInfo.is_gain = mailMo.state == MailEnum.ReadStatus.Read
+		end
+
+		table.insert(mailInfoList, mailInfo)
 	end
 
-	arg_7_0:logNormal("init info, show mail length is " .. tostring(#arg_7_0.showTitles))
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_7_0._onCheckFuncUnlock, arg_7_0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_7_0._onFinishGuide, arg_7_0)
+	self:logNormal("init info, show mail length is " .. tostring(#self.showTitles))
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, self._onCheckFuncUnlock, self)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
+	StatController.instance:track(StatEnum.EventName.MailCache, {
+		[StatEnum.EventProperties.MailInfo] = mailInfoList
+	})
 end
 
-function var_0_0.addShowToastMail(arg_8_0, arg_8_1, arg_8_2)
-	table.insert(arg_8_0.showTitles, {
-		id = arg_8_1,
-		title = arg_8_2
+function MailController:addShowToastMail(incrId, title)
+	table.insert(self.showTitles, {
+		id = incrId,
+		title = title
 	})
 
-	if #arg_8_0.showTitles > arg_8_0.maxCacheMailToast then
-		local var_8_0 = table.remove(arg_8_0.showTitles, 1)
+	if #self.showTitles > self.maxCacheMailToast then
+		local tempMailMo = table.remove(self.showTitles, 1)
 
-		arg_8_0:recordShowedMailId(var_8_0.id)
+		self:recordShowedMailId(tempMailMo.id)
 	end
 end
 
-function var_0_0.initShowedMailIds(arg_9_0)
-	local var_9_0 = PlayerPrefsHelper.getString(arg_9_0.recordedMailIdKey, "")
+function MailController:initShowedMailIds()
+	local playerStr = PlayerPrefsHelper.getString(self.recordedMailIdKey, "")
 
-	arg_9_0.showedMailIds = {}
+	self.showedMailIds = {}
 
-	if not string.nilorempty(var_9_0) then
-		for iter_9_0, iter_9_1 in ipairs(string.split(var_9_0, arg_9_0.recordedIdDelimiter)) do
-			local var_9_1 = tonumber(iter_9_1)
+	if not string.nilorempty(playerStr) then
+		for _, v in ipairs(string.split(playerStr, self.recordedIdDelimiter)) do
+			local value = tonumber(v)
 
-			if var_9_1 then
-				table.insert(arg_9_0.showedMailIds, var_9_1)
+			if value then
+				table.insert(self.showedMailIds, value)
 			end
 		end
 	end
 end
 
-function var_0_0.isShowedMail(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.showedMailIds) do
-		if iter_10_1 == arg_10_1 then
+function MailController:isShowedMail(mailIncrId)
+	for _, mailId in ipairs(self.showedMailIds) do
+		if mailId == mailIncrId then
 			return true
 		end
 	end
@@ -93,9 +112,9 @@ function var_0_0.isShowedMail(arg_10_0, arg_10_1)
 	return false
 end
 
-function var_0_0.isDelayShow(arg_11_0)
-	if not arg_11_0.delayShowViews then
-		arg_11_0.delayShowViews = {
+function MailController:isDelayShow()
+	if not self.delayShowViews then
+		self.delayShowViews = {
 			ViewName.LoadingView,
 			ViewName.FightView,
 			ViewName.FightSuccView,
@@ -107,148 +126,173 @@ function var_0_0.isDelayShow(arg_11_0)
 		}
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.delayShowViews) do
-		if ViewMgr.instance:isOpen(iter_11_1) then
-			arg_11_0:logNormal("current view is " .. iter_11_1)
+	for k, v in ipairs(self.delayShowViews) do
+		if ViewMgr.instance:isOpen(v) then
+			self:logNormal("current view is " .. v)
 
 			return true
 		end
 	end
 
-	if not GuideController.instance:isForbidGuides() then
-		arg_11_0:logNormal("not forbid guide , check guide")
+	local forbidGuides = GuideController.instance:isForbidGuides()
 
-		local var_11_0 = GuideModel.instance:getDoingGuideId()
+	if not forbidGuides then
+		self:logNormal("not forbid guide , check guide")
 
-		if var_11_0 then
-			arg_11_0:logNormal("get doing guide Id is " .. tostring(var_11_0))
+		local guideId = GuideModel.instance:getDoingGuideId()
 
-			return true
-		end
-
-		if not GuideModel.instance:isGuideFinish(GuideModel.instance:lastForceGuideId()) then
-			arg_11_0:logNormal("last force guide Id not finish")
+		if guideId then
+			self:logNormal("get doing guide Id is " .. tostring(guideId))
 
 			return true
 		end
 
 		if not GuideModel.instance:isGuideFinish(GuideModel.instance:lastForceGuideId()) then
-			arg_11_0:logNormal("last force guide Id not finish")
+			self:logNormal("last force guide Id not finish")
+
+			return true
+		end
+
+		if not GuideModel.instance:isGuideFinish(GuideModel.instance:lastForceGuideId()) then
+			self:logNormal("last force guide Id not finish")
 
 			return true
 		end
 	else
-		arg_11_0:logNormal("forbid guide, skip check guide, check next")
+		self:logNormal("forbid guide, skip check guide, check next")
 	end
 
 	return false
 end
 
-function var_0_0.showGetMailToast(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0:addShowToastMail(arg_12_1, arg_12_2)
+function MailController:showGetMailToast(incrId, title)
+	self:addShowToastMail(incrId, title)
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		arg_12_0:logNormal("receive new mail, but not unlock MailModel , register OnFuncUnlockRefresh event ")
-		OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, arg_12_0._onCheckFuncUnlock, arg_12_0)
-		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_12_0._onCheckFuncUnlock, arg_12_0)
+		self:logNormal("receive new mail, but not unlock MailModel , register OnFuncUnlockRefresh event ")
+		OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, self._onCheckFuncUnlock, self)
+		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, self._onCheckFuncUnlock, self)
 
 		return
 	end
 
-	arg_12_0:showOrRegisterEvent()
+	self:showOrRegisterEvent()
 end
 
-function var_0_0.tryShowMailToast(arg_13_0)
+function MailController:tryShowMailToast()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_13_0._onCheckFuncUnlock, arg_13_0)
+		MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, self._onCheckFuncUnlock, self)
 	else
-		arg_13_0:showOrRegisterEvent()
+		self:showOrRegisterEvent()
 	end
 end
 
-function var_0_0.showOrRegisterEvent(arg_14_0)
-	if arg_14_0:isDelayShow() then
-		arg_14_0:logNormal("cat not show mail Toast, register event ...")
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_14_0._onOpenViewFinish, arg_14_0)
+function MailController:showOrRegisterEvent()
+	if self:isDelayShow() then
+		self:logNormal("cat not show mail Toast, register event ...")
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 	else
-		arg_14_0:logNormal("can show mail Toast ...")
-		arg_14_0:reallyShowToast()
+		self:logNormal("can show mail Toast ...")
+		self:reallyShowToast()
 	end
 end
 
-function var_0_0._onCheckFuncUnlock(arg_15_0)
+function MailController:_onCheckFuncUnlock()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		MainController.instance:unregisterCallback(MainEvent.OnFuncUnlockRefresh, arg_15_0._onCheckFuncUnlock, arg_15_0)
-		OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, arg_15_0._onCheckFuncUnlock, arg_15_0)
-		arg_15_0:logNormal("unlock mail model callback, check show mail ...")
-		arg_15_0:showOrRegisterEvent()
+		MainController.instance:unregisterCallback(MainEvent.OnFuncUnlockRefresh, self._onCheckFuncUnlock, self)
+		OpenController.instance:unregisterCallback(OpenEvent.GetOpenInfoSuccess, self._onCheckFuncUnlock, self)
+		self:logNormal("unlock mail model callback, check show mail ...")
+		self:showOrRegisterEvent()
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_16_0)
-	arg_16_0:logNormal("close finish event ")
+function MailController:_onOpenViewFinish()
+	self:logNormal("close finish event ")
 
-	if arg_16_0:isDelayShow() then
-		arg_16_0:logNormal("cat not show mail Toast")
+	if self:isDelayShow() then
+		self:logNormal("cat not show mail Toast")
 
 		return
 	else
-		arg_16_0:logNormal("can show mail Toast")
-		arg_16_0:reallyShowToast()
+		self:logNormal("can show mail Toast")
+		self:reallyShowToast()
 	end
 end
 
-function var_0_0._onFinishGuide(arg_17_0, arg_17_1)
-	arg_17_0:logNormal("receive finish guide push ...")
+function MailController:_onFinishGuide(guideId)
+	self:logNormal("receive finish guide push ...")
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Mail) then
-		arg_17_0:logNormal("receive finish guide push, but mail model not open , do nothing and return ...")
+		self:logNormal("receive finish guide push, but mail model not open , do nothing and return ...")
 
 		return
 	end
 
-	arg_17_0:showOrRegisterEvent()
+	self:showOrRegisterEvent()
 end
 
-function var_0_0.reallyShowToast(arg_18_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_18_0._onOpenViewFinish, arg_18_0)
-	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, arg_18_0._onCheckFuncUnlock, arg_18_0)
+function MailController:reallyShowToast()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	MainController.instance:registerCallback(MainEvent.OnFuncUnlockRefresh, self._onCheckFuncUnlock, self)
 
-	local var_18_0 = MailModel.instance:getReadedMailIds()
+	local readedMailIds = MailModel.instance:getReadedMailIds()
 
-	arg_18_0:logNormal("start show ...")
+	self:logNormal("start show ...")
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.showTitles) do
-		if var_18_0[iter_18_1.id] then
-			arg_18_0:logNormal(string.format("need show mail {id:%s, title:%s}, but it`s been read", iter_18_1.id, iter_18_1.title))
-			arg_18_0:recordShowedMailId(iter_18_1.id)
+	for _, mailMo in ipairs(self.showTitles) do
+		if readedMailIds[mailMo.id] then
+			self:logNormal(string.format("need show mail {id:%s, title:%s}, but it`s been read", mailMo.id, mailMo.title))
+			self:recordShowedMailId(mailMo.id)
 		else
-			arg_18_0:logNormal(string.format("need show mail {id:%s, title:%s}, can show", iter_18_1.id, iter_18_1.title))
-			arg_18_0:showToast(iter_18_1)
+			self:logNormal(string.format("need show mail {id:%s, title:%s}, can show", mailMo.id, mailMo.title))
+			self:showToast(mailMo)
 		end
 	end
 
-	arg_18_0.showTitles = {}
+	self.showTitles = {}
 end
 
-function var_0_0.showToast(arg_19_0, arg_19_1)
-	GameFacade.showToast(ToastEnum.MailToast, arg_19_1.title, arg_19_1.id)
-	arg_19_0:recordShowedMailId(arg_19_1.id)
+function MailController:showToast(mailMo)
+	GameFacade.showToast(ToastEnum.MailToast, mailMo.title, mailMo.id)
+	self:recordShowedMailId(mailMo.id)
 end
 
-function var_0_0.recordShowedMailId(arg_20_0, arg_20_1)
-	if arg_20_0:isShowedMail(arg_20_1) then
+function MailController:recordShowedMailId(mailIncrId)
+	if self:isShowedMail(mailIncrId) then
 		return
 	end
 
-	table.insert(arg_20_0.showedMailIds, arg_20_1)
-	PlayerPrefsHelper.setString(arg_20_0.recordedMailIdKey, table.concat(arg_20_0.showedMailIds, arg_20_0.recordedIdDelimiter))
+	table.insert(self.showedMailIds, mailIncrId)
+	PlayerPrefsHelper.setString(self.recordedMailIdKey, table.concat(self.showedMailIds, self.recordedIdDelimiter))
 end
 
-function var_0_0.logNormal(arg_21_0, arg_21_1)
-	logNormal("【mail toast】" .. arg_21_1)
+function MailController:logNormal(msg)
+	logNormal("【mail toast】" .. msg)
 end
 
-var_0_0.instance = var_0_0.New()
+function MailController:onReceiveMailLockReply(resultCode, msg)
+	if resultCode == 0 then
+		local id = tonumber(msg.incrId)
 
-return var_0_0
+		MailModel.instance:lockMail(id, msg.lock)
+		self:dispatchEvent(MailEvent.OnMailLockReply, id, msg.lock)
+
+		local toastId = msg.lock and ToastEnum.V3a2MailLock or ToastEnum.V3a2MailUnLock
+
+		GameFacade.showToast(toastId, MailModel.instance:getLockCount(), MailModel.instance:getLockMax())
+
+		local mailMO = MailModel.instance:getItemList(id)
+
+		if mailMO then
+			StatController.instance:track(StatEnum.EventName.MailLockOperation, {
+				[StatEnum.EventProperties.OperationType] = msg.lock and StatEnum.MailOperationType.Lock or StatEnum.MailOperationType.Unlock,
+				[StatEnum.EventProperties.MailId] = id,
+				[StatEnum.EventProperties.NoticeTitle] = mailMO.title
+			})
+		end
+	end
+end
+
+MailController.instance = MailController.New()
+
+return MailController

@@ -1,52 +1,54 @@
-﻿module("modules.logic.main.controller.work.ActivityRoleSignWorkBase", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/ActivityRoleSignWorkBase.lua
 
-local var_0_0 = class("ActivityRoleSignWorkBase", SimpleGiftWorkBase)
+module("modules.logic.main.controller.work.ActivityRoleSignWorkBase", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	var_0_0.super.onStart(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_1_0._refreshNorSignActivity, arg_1_0)
+local ActivityRoleSignWorkBase = class("ActivityRoleSignWorkBase", SimpleGiftWorkBase)
+
+function ActivityRoleSignWorkBase:onStart()
+	ActivityRoleSignWorkBase.super.onStart(self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self._refreshNorSignActivity, self)
 end
 
-function var_0_0.clearWork(arg_2_0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, arg_2_0._refreshNorSignActivity, arg_2_0)
-	var_0_0.super.clearWork(arg_2_0)
+function ActivityRoleSignWorkBase:clearWork()
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshNorSignActivity, self._refreshNorSignActivity, self)
+	ActivityRoleSignWorkBase.super.clearWork(self)
 end
 
-function var_0_0._refreshNorSignActivity(arg_3_0)
-	local var_3_0 = arg_3_0._actId
-	local var_3_1 = arg_3_0._viewName
+function ActivityRoleSignWorkBase:_refreshNorSignActivity()
+	local actId = self._actId
+	local viewName = self._viewName
 
-	if not var_3_0 then
+	if not actId then
 		return
 	end
 
-	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_3_0) then
-		if ViewMgr.instance:isOpen(var_3_1) then
+	if not ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId) then
+		if ViewMgr.instance:isOpen(viewName) then
 			return
 		end
 
-		arg_3_0:_work()
+		self:_work()
 
 		return
 	end
 
-	local var_3_2 = {
-		actId = var_3_0
+	local viewParam = {
+		actId = actId
 	}
 
-	ViewMgr.instance:openView(var_3_1, var_3_2)
+	ViewMgr.instance:openView(viewName, viewParam)
 end
 
-function var_0_0.onWork(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._actId
+function ActivityRoleSignWorkBase:onWork(refWorkContext)
+	local actId = self._actId
 
-	if ActivityType101Model.instance:isOpen(var_4_0) then
-		arg_4_1.bAutoWorkNext = false
+	if ActivityType101Model.instance:isOpen(actId) then
+		refWorkContext.bAutoWorkNext = false
 
-		Activity101Rpc.instance:sendGet101InfosRequest(var_4_0)
+		Activity101Rpc.instance:sendGet101InfosRequest(actId)
 	else
-		arg_4_1.bAutoWorkNext = true
+		refWorkContext.bAutoWorkNext = true
 	end
 end
 
-return var_0_0
+return ActivityRoleSignWorkBase

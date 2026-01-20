@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114KeyDayReqWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114KeyDayReqWork.lua
 
-local var_0_0 = class("Activity114KeyDayReqWork", Activity114BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114KeyDayReqWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	Activity114Rpc.instance:keyDayRequest(Activity114Model.instance.id, arg_1_0.onReply, arg_1_0)
+local Activity114KeyDayReqWork = class("Activity114KeyDayReqWork", Activity114BaseWork)
+
+function Activity114KeyDayReqWork:onStart(context)
+	Activity114Rpc.instance:keyDayRequest(Activity114Model.instance.id, self.onReply, self)
 end
 
-function var_0_0.onReply(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0:onDone(arg_2_2 == 0)
+function Activity114KeyDayReqWork:onReply(cmd, resultCode, msg)
+	self:onDone(resultCode == 0)
 end
 
-return var_0_0
+return Activity114KeyDayReqWork

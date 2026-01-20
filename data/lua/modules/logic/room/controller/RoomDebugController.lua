@@ -1,316 +1,322 @@
-﻿module("modules.logic.room.controller.RoomDebugController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomDebugController.lua
 
-local var_0_0 = class("RoomDebugController", BaseController)
-local var_0_1 = {
+module("modules.logic.room.controller.RoomDebugController", package.seeall)
+
+local RoomDebugController = class("RoomDebugController", BaseController)
+local _OWN_TYPE_MAP = {
 	[16] = 1
 }
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+function RoomDebugController:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomDebugController:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0._isDebugPlaceListShow = false
-	arg_3_0._isDebugPackageListShow = false
-	arg_3_0._isDebugBuildingListShow = false
-	arg_3_0._tempInitConfig = nil
-	arg_3_0._tempPackageConfig = nil
-	arg_3_0._editPackageOrder = false
+function RoomDebugController:clear()
+	self._isDebugPlaceListShow = false
+	self._isDebugPackageListShow = false
+	self._isDebugBuildingListShow = false
+	self._tempInitConfig = nil
+	self._tempPackageConfig = nil
+	self._editPackageOrder = false
 end
 
-function var_0_0.addConstEvents(arg_4_0)
+function RoomDebugController:addConstEvents()
 	return
 end
 
-function var_0_0.setEditPackageOrder(arg_5_0, arg_5_1)
-	arg_5_0._editPackageOrder = arg_5_1
+function RoomDebugController:setEditPackageOrder(editPackageOrder)
+	self._editPackageOrder = editPackageOrder
 
-	arg_5_0:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
+	self:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
 end
 
-function var_0_0.isEditPackageOrder(arg_6_0)
-	return arg_6_0._editPackageOrder
+function RoomDebugController:isEditPackageOrder()
+	return self._editPackageOrder
 end
 
-function var_0_0.getTempInitConfig(arg_7_0)
-	return arg_7_0._tempInitConfig
+function RoomDebugController:getTempInitConfig()
+	return self._tempInitConfig
 end
 
-function var_0_0.getTempPackageConfig(arg_8_0)
-	return arg_8_0._tempPackageConfig
+function RoomDebugController:getTempPackageConfig()
+	return self._tempPackageConfig
 end
 
-function var_0_0.getUseCountByDefineId(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getTempPackageConfig()
-	local var_9_1 = 0
+function RoomDebugController:getUseCountByDefineId(defineId)
+	local packageMapConfigs = self:getTempPackageConfig()
+	local count = 0
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-			for iter_9_2, iter_9_3 in ipairs(iter_9_1.infos) do
-				if iter_9_3.defineId == arg_9_1 then
-					var_9_1 = var_9_1 + 1
+	if packageMapConfigs then
+		for _, packageMapConfig in ipairs(packageMapConfigs) do
+			for _, info in ipairs(packageMapConfig.infos) do
+				if info.defineId == defineId then
+					count = count + 1
 				end
 			end
 		end
 	end
 
-	return var_9_1
+	return count
 end
 
-function var_0_0.openBuildingAreaView(arg_10_0)
+function RoomDebugController:openBuildingAreaView()
 	ViewMgr.instance:openView(ViewName.RoomDebugBuildingAreaView)
 end
 
-function var_0_0.openBuildingCamerView(arg_11_0)
+function RoomDebugController:openBuildingCamerView()
 	ViewMgr.instance:openView(ViewName.RoomDebugBuildingCameraView)
 end
 
-function var_0_0.setDebugPlaceListShow(arg_12_0, arg_12_1)
-	arg_12_0._isDebugPlaceListShow = arg_12_1
+function RoomDebugController:setDebugPlaceListShow(isShow)
+	self._isDebugPlaceListShow = isShow
 
-	arg_12_0:dispatchEvent(RoomEvent.DebugPlaceListShowChanged, arg_12_1)
+	self:dispatchEvent(RoomEvent.DebugPlaceListShowChanged, isShow)
 end
 
-function var_0_0.isDebugPlaceListShow(arg_13_0)
-	return arg_13_0._isDebugPlaceListShow
+function RoomDebugController:isDebugPlaceListShow()
+	return self._isDebugPlaceListShow
 end
 
-function var_0_0.setDebugPackageListShow(arg_14_0, arg_14_1)
-	arg_14_0._isDebugPackageListShow = arg_14_1
+function RoomDebugController:setDebugPackageListShow(isShow)
+	self._isDebugPackageListShow = isShow
 
-	arg_14_0:dispatchEvent(RoomEvent.DebugPackageListShowChanged, arg_14_1)
+	self:dispatchEvent(RoomEvent.DebugPackageListShowChanged, isShow)
 end
 
-function var_0_0.isDebugPackageListShow(arg_15_0)
-	return arg_15_0._isDebugPackageListShow
+function RoomDebugController:isDebugPackageListShow()
+	return self._isDebugPackageListShow
 end
 
-function var_0_0.setDebugBuildingListShow(arg_16_0, arg_16_1)
-	arg_16_0._isDebugBuildingListShow = arg_16_1
+function RoomDebugController:setDebugBuildingListShow(isShow)
+	self._isDebugBuildingListShow = isShow
 
-	arg_16_0:dispatchEvent(RoomEvent.DebugBuildingListShowChanged, arg_16_1)
+	self:dispatchEvent(RoomEvent.DebugBuildingListShowChanged, isShow)
 end
 
-function var_0_0.isDebugBuildingListShow(arg_17_0)
-	return arg_17_0._isDebugBuildingListShow
+function RoomDebugController:isDebugBuildingListShow()
+	return self._isDebugBuildingListShow
 end
 
-function var_0_0._getNextPackageOrder(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = 0
+function RoomDebugController:_getNextPackageOrder(packageId, blockId)
+	local maxPackageOrder = 0
 
-	if arg_18_0._tempPackageConfig then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_0._tempPackageConfig) do
-			for iter_18_2, iter_18_3 in ipairs(iter_18_1.infos) do
-				if iter_18_3.packageId == arg_18_1 and var_18_0 < iter_18_3.packageOrder and iter_18_3.blockId ~= arg_18_2 then
-					var_18_0 = iter_18_3.packageOrder
+	if self._tempPackageConfig then
+		for _, packageMapConfig in ipairs(self._tempPackageConfig) do
+			for _, info in ipairs(packageMapConfig.infos) do
+				if info.packageId == packageId and maxPackageOrder < info.packageOrder and info.blockId ~= blockId then
+					maxPackageOrder = info.packageOrder
 				end
 			end
 		end
 	end
 
-	return var_18_0 + 1
+	return maxPackageOrder + 1
 end
 
-function var_0_0._getNextBlockId(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = 0
-	local var_19_1 = RoomMapBlockModel.instance:getFullBlockMOList()
+function RoomDebugController:_getNextBlockId(isPackageMode, packageMapId)
+	local blockId = 0
+	local fullBlockMOList = RoomMapBlockModel.instance:getFullBlockMOList()
 
-	if arg_19_1 then
-		var_19_0 = arg_19_2 * 1000 + 1
+	if isPackageMode then
+		blockId = packageMapId * 1000 + 1
 
-		local var_19_2 = {}
+		local usedBlockIdDict = {}
 
-		if arg_19_0._tempPackageConfig then
-			for iter_19_0, iter_19_1 in ipairs(arg_19_0._tempPackageConfig) do
-				if iter_19_1.packageMapId ~= arg_19_2 then
-					for iter_19_2, iter_19_3 in ipairs(iter_19_1.infos) do
-						var_19_2[iter_19_3.blockId] = true
+		if self._tempPackageConfig then
+			for _, package in ipairs(self._tempPackageConfig) do
+				if package.packageMapId ~= packageMapId then
+					for _, info in ipairs(package.infos) do
+						usedBlockIdDict[info.blockId] = true
 					end
 				end
 			end
 		end
 
-		for iter_19_4, iter_19_5 in ipairs(var_19_1) do
-			var_19_2[iter_19_5.blockId] = true
+		for _, blockMO in ipairs(fullBlockMOList) do
+			usedBlockIdDict[blockMO.blockId] = true
 		end
 
-		while var_19_2[var_19_0] do
-			var_19_0 = var_19_0 + 1
+		while usedBlockIdDict[blockId] do
+			blockId = blockId + 1
 		end
 
-		return var_19_0
+		return blockId
 	else
-		for iter_19_6, iter_19_7 in ipairs(var_19_1) do
-			if var_19_0 > iter_19_7.blockId then
-				var_19_0 = iter_19_7.blockId
+		for _, blockMO in ipairs(fullBlockMOList) do
+			if blockId > blockMO.blockId then
+				blockId = blockMO.blockId
 			end
 		end
 
-		return var_19_0 - 1
+		return blockId - 1
 	end
 end
 
-function var_0_0._getNextBuildingUid(arg_20_0)
-	local var_20_0 = 0
-	local var_20_1 = RoomMapBuildingModel.instance:getBuildingMOList()
+function RoomDebugController:_getNextBuildingUid()
+	local maxBuildingUid = 0
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-		if var_20_0 < iter_20_1.id then
-			var_20_0 = iter_20_1.id
+	for _, buildingMO in ipairs(buildingMOList) do
+		if maxBuildingUid < buildingMO.id then
+			maxBuildingUid = buildingMO.id
 		end
 	end
 
-	return var_20_0 + 1
+	return maxBuildingUid + 1
 end
 
-function var_0_0.debugPlaceBlock(arg_21_0, arg_21_1)
-	local var_21_0 = RoomDebugPlaceListModel.instance:getSelect()
+function RoomDebugController:debugPlaceBlock(hexPoint)
+	local selectDefineId = RoomDebugPlaceListModel.instance:getSelect()
 
-	if not var_21_0 or var_21_0 == 0 then
+	if not selectDefineId or selectDefineId == 0 then
 		return
 	end
 
-	arg_21_0:_debugPlaceBlock(arg_21_1, var_21_0)
+	self:_debugPlaceBlock(hexPoint, selectDefineId)
 end
 
-function var_0_0._debugPlaceBlock(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = RoomController.instance:isDebugPackageMode()
-	local var_22_1 = RoomModel.instance:getDebugParam()
-	local var_22_2 = arg_22_0:_getNextBlockId(var_22_0, var_22_0 and var_22_1 and var_22_1.packageMapId)
-	local var_22_3 = {}
+function RoomDebugController:_debugPlaceBlock(hexPoint, defineId)
+	local isPackageMode = RoomController.instance:isDebugPackageMode()
+	local debugParam = RoomModel.instance:getDebugParam()
+	local blockId = self:_getNextBlockId(isPackageMode, isPackageMode and debugParam and debugParam.packageMapId)
+	local resourceList = {}
 
-	for iter_22_0 = 1, 6 do
-		table.insert(var_22_3, RoomResourceEnum.ResourceId.None)
+	for i = 1, 6 do
+		table.insert(resourceList, RoomResourceEnum.ResourceId.None)
 	end
 
-	local var_22_4 = {
+	local info = {
 		rotate = 0,
-		blockId = var_22_2,
-		defineId = arg_22_2,
+		blockId = blockId,
+		defineId = defineId,
 		mainRes = RoomResourceEnum.ResourceId.None,
 		blockState = RoomBlockEnum.BlockState.Map,
-		x = arg_22_1.x,
-		y = arg_22_1.y
+		x = hexPoint.x,
+		y = hexPoint.y
 	}
-	local var_22_5, var_22_6 = RoomMapBlockModel.instance:debugConfirmPlaceBlock(arg_22_1, var_22_4)
+	local blockMO, emptyMO = RoomMapBlockModel.instance:debugConfirmPlaceBlock(hexPoint, info)
 
-	RoomMapBlockModel.instance:refreshNearRiver(arg_22_1, 1)
-	arg_22_0:dispatchEvent(RoomEvent.DebugConfirmPlaceBlock, arg_22_1, var_22_5, var_22_6)
-	arg_22_0:saveDebugMapParam()
+	RoomMapBlockModel.instance:refreshNearRiver(hexPoint, 1)
+	self:dispatchEvent(RoomEvent.DebugConfirmPlaceBlock, hexPoint, blockMO, emptyMO)
+	self:saveDebugMapParam()
 	GameFacade.closeInputBox()
 end
 
-function var_0_0.debugRotateBlock(arg_23_0, arg_23_1)
-	local var_23_0 = RoomMapBlockModel.instance:getBlockMO(arg_23_1.x, arg_23_1.y)
+function RoomDebugController:debugRotateBlock(hexPoint)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_23_0.blockState ~= RoomBlockEnum.BlockState.Map then
+	if blockMO.blockState ~= RoomBlockEnum.BlockState.Map then
 		return
 	end
 
-	var_23_0.rotate = RoomRotateHelper.rotateRotate(var_23_0.rotate, 1)
+	blockMO.rotate = RoomRotateHelper.rotateRotate(blockMO.rotate, 1)
 
-	RoomMapBlockModel.instance:refreshNearRiver(arg_23_1, 1)
-	arg_23_0:dispatchEvent(RoomEvent.DebugRotateBlock, arg_23_1, var_23_0)
-	arg_23_0:saveDebugMapParam()
+	RoomMapBlockModel.instance:refreshNearRiver(hexPoint, 1)
+	self:dispatchEvent(RoomEvent.DebugRotateBlock, hexPoint, blockMO)
+	self:saveDebugMapParam()
 end
 
-function var_0_0.debugRootOutBlock(arg_24_0, arg_24_1)
-	if arg_24_1.x == 0 and arg_24_1.y == 0 then
+function RoomDebugController:debugRootOutBlock(hexPoint)
+	if hexPoint.x == 0 and hexPoint.y == 0 then
 		return
 	end
 
-	local var_24_0 = RoomMapBlockModel.instance:getBlockMO(arg_24_1.x, arg_24_1.y)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_24_0.blockState ~= RoomBlockEnum.BlockState.Map then
+	if blockMO.blockState ~= RoomBlockEnum.BlockState.Map then
 		return
 	end
 
-	local var_24_1 = RoomMapBlockModel.instance:debugRootOutBlock(arg_24_1)
+	local emptyMOList = RoomMapBlockModel.instance:debugRootOutBlock(hexPoint)
 
-	RoomMapBlockModel.instance:refreshNearRiver(arg_24_1, 1)
-	arg_24_0:dispatchEvent(RoomEvent.DebugRootOutBlock, arg_24_1, var_24_0, var_24_1)
-	arg_24_0:saveDebugMapParam()
+	RoomMapBlockModel.instance:refreshNearRiver(hexPoint, 1)
+	self:dispatchEvent(RoomEvent.DebugRootOutBlock, hexPoint, blockMO, emptyMOList)
+	self:saveDebugMapParam()
 end
 
-function var_0_0.debugReplaceBlock(arg_25_0, arg_25_1)
-	local var_25_0 = RoomMapBlockModel.instance:getBlockMO(arg_25_1.x, arg_25_1.y)
+function RoomDebugController:debugReplaceBlock(hexPoint)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_25_0.blockState ~= RoomBlockEnum.BlockState.Map then
+	if blockMO.blockState ~= RoomBlockEnum.BlockState.Map then
 		return
 	end
 
-	local var_25_1 = RoomDebugPlaceListModel.instance:getSelect()
+	local selectDefineId = RoomDebugPlaceListModel.instance:getSelect()
 
-	if not var_25_1 or var_25_1 == 0 then
+	if not selectDefineId or selectDefineId == 0 then
 		return
 	end
 
-	if var_25_1 == var_25_0.defineId then
+	if selectDefineId == blockMO.defineId then
 		return
 	end
 
-	arg_25_0:_debugReplaceBlock(arg_25_1, var_25_1)
+	self:_debugReplaceBlock(hexPoint, selectDefineId)
 end
 
-function var_0_0._debugReplaceBlock(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = RoomMapBlockModel.instance:getBlockMO(arg_26_1.x, arg_26_1.y)
+function RoomDebugController:_debugReplaceBlock(hexPoint, defineId)
+	local blockMO = RoomMapBlockModel.instance:getBlockMO(hexPoint.x, hexPoint.y)
 
-	if var_26_0.blockState ~= RoomBlockEnum.BlockState.Map then
+	if blockMO.blockState ~= RoomBlockEnum.BlockState.Map then
 		return
 	end
 
-	var_26_0.defineId = arg_26_2
+	blockMO.defineId = defineId
 
-	arg_26_0:dispatchEvent(RoomEvent.DebugReplaceBlock, arg_26_1, var_26_0)
+	self:dispatchEvent(RoomEvent.DebugReplaceBlock, hexPoint, blockMO)
 	GameFacade.closeInputBox()
 end
 
-function var_0_0.debugSetPackage(arg_27_0, arg_27_1)
-	local var_27_0 = RoomDebugPackageListModel.instance:getFilterPackageId()
+function RoomDebugController:debugSetPackage(blockId)
+	local selectPackageId = RoomDebugPackageListModel.instance:getFilterPackageId()
 
-	if not var_27_0 or var_27_0 == 0 then
+	if not selectPackageId or selectPackageId == 0 then
 		return
 	end
 
-	arg_27_0:debugSetPackageId(arg_27_1, var_27_0)
+	self:debugSetPackageId(blockId, selectPackageId)
 end
 
-function var_0_0.debugSetPackageId(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_0:getBlockInfoOrBlockMO(arg_28_1)
+function RoomDebugController:debugSetPackageId(blockId, packageId)
+	local info = self:getBlockInfoOrBlockMO(blockId)
 
-	if not var_28_0 then
+	if not info then
 		return
 	end
 
-	local var_28_1 = RoomDebugPackageListModel.instance:getFilterMainRes() or RoomResourceEnum.ResourceId.Empty
+	local selectMainRes = RoomDebugPackageListModel.instance:getFilterMainRes()
 
-	if arg_28_2 == 0 then
-		var_28_0.packageOrder = 0
-		var_28_0.mainRes = RoomResourceEnum.ResourceId.Empty
+	selectMainRes = selectMainRes or RoomResourceEnum.ResourceId.Empty
+
+	if packageId == 0 then
+		info.packageOrder = 0
+		info.mainRes = RoomResourceEnum.ResourceId.Empty
 	else
-		var_28_0.packageOrder = var_28_0.packageId == arg_28_2 and var_28_0.packageOrder or arg_28_0:_getNextPackageOrder(arg_28_2, var_28_0.blockId)
-		var_28_0.mainRes = var_28_1
+		local packageOrder = info.packageId == packageId and info.packageOrder or self:_getNextPackageOrder(packageId, info.blockId)
+
+		info.packageOrder = packageOrder
+		info.mainRes = selectMainRes
 	end
 
-	var_28_0.packageId = arg_28_2
+	info.packageId = packageId
 
-	arg_28_0:output(true)
+	self:output(true)
 	RoomDebugPackageListModel.instance:setDebugPackageList()
 
-	local var_28_2 = RoomMapBlockModel.instance:getFullBlockMOById(arg_28_1)
+	local blockMO = RoomMapBlockModel.instance:getFullBlockMOById(blockId)
 
-	arg_28_0:dispatchEvent(RoomEvent.DebugSetPackage, var_28_2 and var_28_2.hexPoint, var_28_2)
+	self:dispatchEvent(RoomEvent.DebugSetPackage, blockMO and blockMO.hexPoint, blockMO)
 	GameFacade.closeInputBox()
 end
 
-function var_0_0.debugSetMainRes(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:getBlockInfoOrBlockMO(arg_29_1)
+function RoomDebugController:debugSetMainRes(blockId)
+	local info = self:getBlockInfoOrBlockMO(blockId)
 
-	if not var_29_0 then
+	if not info then
 		return
 	end
 
@@ -319,36 +325,36 @@ function var_0_0.debugSetMainRes(arg_29_0, arg_29_1)
 		sureBtnName = "确定",
 		title = "设置分类",
 		cancelBtnName = "取消",
-		defaultInput = tostring(var_29_0.mainRes or -1),
-		sureCallback = function(arg_30_0)
-			arg_29_0:_debugSetMainRes(arg_29_1, tonumber(arg_30_0))
+		defaultInput = tostring(info.mainRes or -1),
+		sureCallback = function(inputStr)
+			self:_debugSetMainRes(blockId, tonumber(inputStr))
 		end
 	})
 end
 
-function var_0_0._debugSetMainRes(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_0:getBlockInfoOrBlockMO(arg_31_1)
+function RoomDebugController:_debugSetMainRes(blockId, mainRes)
+	local info = self:getBlockInfoOrBlockMO(blockId)
 
-	if not var_31_0 then
+	if not info then
 		return
 	end
 
-	if not arg_31_2 then
+	if not mainRes then
 		return
 	end
 
-	var_31_0.mainRes = arg_31_2
+	info.mainRes = mainRes
 
-	var_0_0.instance:output(true)
+	RoomDebugController.instance:output(true)
 	RoomDebugPackageListModel.instance:setDebugPackageList()
 	GameFacade.closeInputBox()
-	var_0_0.instance:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
+	RoomDebugController.instance:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
 end
 
-function var_0_0.debugSetPackageOrder(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_0:getBlockInfoOrBlockMO(arg_32_1)
+function RoomDebugController:debugSetPackageOrder(blockId)
+	local info = self:getBlockInfoOrBlockMO(blockId)
 
-	if not var_32_0 then
+	if not info then
 		return
 	end
 
@@ -357,164 +363,167 @@ function var_0_0.debugSetPackageOrder(arg_32_0, arg_32_1)
 		sureBtnName = "确定",
 		title = "设置排序",
 		cancelBtnName = "取消",
-		defaultInput = tostring(var_32_0.packageOrder or 0),
-		sureCallback = function(arg_33_0)
-			arg_32_0:_debugSetPackageOrder(arg_32_1, tonumber(arg_33_0))
+		defaultInput = tostring(info.packageOrder or 0),
+		sureCallback = function(inputStr)
+			self:_debugSetPackageOrder(blockId, tonumber(inputStr))
 		end
 	})
 end
 
-function var_0_0.debugSetPackageLastOrder(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0:getBlockInfoOrBlockMO(arg_34_1)
+function RoomDebugController:debugSetPackageLastOrder(blockId)
+	local info = self:getBlockInfoOrBlockMO(blockId)
 
-	if not var_34_0 then
+	if not info then
 		return
 	end
 
-	if var_34_0.packageId == 0 then
+	if info.packageId == 0 then
 		return
 	end
 
-	local var_34_1 = arg_34_0:_getNextPackageOrder(var_34_0.packageId, arg_34_1)
+	local packageOrder = self:_getNextPackageOrder(info.packageId, blockId)
 
-	arg_34_0:_debugSetPackageOrder(arg_34_1, var_34_1)
+	self:_debugSetPackageOrder(blockId, packageOrder)
 end
 
-function var_0_0._debugSetPackageOrder(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_0:getBlockInfoOrBlockMO(arg_35_1)
+function RoomDebugController:_debugSetPackageOrder(blockId, packageOrder)
+	local info = self:getBlockInfoOrBlockMO(blockId)
 
-	if not var_35_0 then
+	if not info then
 		return
 	end
 
-	if not arg_35_2 then
+	if not packageOrder then
 		return
 	end
 
-	var_35_0.packageOrder = arg_35_2
+	info.packageOrder = packageOrder
 
-	var_0_0.instance:output(true)
+	RoomDebugController.instance:output(true)
 	RoomDebugPackageListModel.instance:setDebugPackageList()
 	GameFacade.closeInputBox()
-	var_0_0.instance:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
+	RoomDebugController.instance:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
 end
 
-function var_0_0.exchangeOrder(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = arg_36_0:getBlockInfoOrBlockMO(arg_36_1)
-	local var_36_1 = arg_36_0:getBlockInfoOrBlockMO(arg_36_2)
+function RoomDebugController:exchangeOrder(blockIdA, blockIdB)
+	local blockInfoA = self:getBlockInfoOrBlockMO(blockIdA)
+	local blockInfoB = self:getBlockInfoOrBlockMO(blockIdB)
 
-	var_36_0.packageOrder, var_36_1.packageOrder = var_36_1.packageOrder, var_36_0.packageOrder
+	blockInfoA.packageOrder, blockInfoB.packageOrder = blockInfoB.packageOrder, blockInfoA.packageOrder
 
-	var_0_0.instance:output(true)
+	RoomDebugController.instance:output(true)
 	RoomDebugPackageListModel.instance:setDebugPackageList()
-	var_0_0.instance:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
+	RoomDebugController.instance:dispatchEvent(RoomEvent.DebugPackageOrderChanged)
 end
 
-function var_0_0.getBlockInfoOrBlockMO(arg_37_0, arg_37_1)
-	local var_37_0 = RoomMapBlockModel.instance:getFullBlockMOById(arg_37_1)
+function RoomDebugController:getBlockInfoOrBlockMO(blockId)
+	local blockMO = RoomMapBlockModel.instance:getFullBlockMOById(blockId)
 
-	if var_37_0 then
-		return var_37_0
+	if blockMO then
+		return blockMO
 	end
 
-	if not arg_37_0._tempPackageConfig then
+	if not self._tempPackageConfig then
 		return nil
 	end
 
-	for iter_37_0, iter_37_1 in ipairs(arg_37_0._tempPackageConfig) do
-		for iter_37_2, iter_37_3 in ipairs(iter_37_1.infos) do
-			if iter_37_3.blockId == arg_37_1 then
-				return iter_37_3
+	for _, packageMapConfig in ipairs(self._tempPackageConfig) do
+		for _, info in ipairs(packageMapConfig.infos) do
+			if info.blockId == blockId then
+				return info
 			end
 		end
 	end
 end
 
-function var_0_0.debugPlaceBuilding(arg_38_0, arg_38_1)
-	local var_38_0 = RoomDebugBuildingListModel.instance:getSelect()
+function RoomDebugController:debugPlaceBuilding(hexPoint)
+	local selectBuildingId = RoomDebugBuildingListModel.instance:getSelect()
 
-	if not var_38_0 then
+	if not selectBuildingId then
 		return
 	end
 
-	arg_38_0:_debugPlaceBuilding(arg_38_1, var_38_0)
+	self:_debugPlaceBuilding(hexPoint, selectBuildingId)
 end
 
-function var_0_0._debugPlaceBuilding(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = RoomMapBuildingModel.instance:getBuildingMO(arg_39_1.x, arg_39_1.y)
+function RoomDebugController:_debugPlaceBuilding(hexPoint, buildingId)
+	local replaceBuildingMO = RoomMapBuildingModel.instance:getBuildingMO(hexPoint.x, hexPoint.y)
 
-	if var_39_0 then
-		if var_39_0.buildingId == arg_39_2 then
+	if replaceBuildingMO then
+		if replaceBuildingMO.buildingId == buildingId then
 			return
 		else
-			var_0_0.instance:debugRootOutBuilding(arg_39_1)
+			RoomDebugController.instance:debugRootOutBuilding(hexPoint)
 		end
 	end
 
-	if not (arg_39_2 and RoomConfig.instance:getBuildingConfig(arg_39_2)) then
+	local buildingConfig = buildingId and RoomConfig.instance:getBuildingConfig(buildingId)
+
+	if not buildingConfig then
 		return
 	end
 
 	GameFacade.closeInputBox()
 
-	local var_39_1 = arg_39_0:_getNextBuildingUid()
-	local var_39_2 = RoomMapModel.instance:getBuildingConfigParam(arg_39_2).levelGroups
-	local var_39_3 = {}
+	local buildingUid = self:_getNextBuildingUid()
+	local buildingConfigParam = RoomMapModel.instance:getBuildingConfigParam(buildingId)
+	local levelGroups = buildingConfigParam.levelGroups
+	local levels = {}
 
-	for iter_39_0, iter_39_1 in ipairs(var_39_2) do
-		local var_39_4 = RoomConfig.instance:getLevelGroupMaxLevel(iter_39_1)
+	for i, levelGroup in ipairs(levelGroups) do
+		local maxLevel = RoomConfig.instance:getLevelGroupMaxLevel(levelGroup)
 
-		table.insert(var_39_3, var_39_4)
+		table.insert(levels, maxLevel)
 	end
 
-	local var_39_5 = {
+	local info = {
 		resAreaDirection = 0,
 		rotate = 0,
-		uid = var_39_1,
-		buildingId = arg_39_2,
-		levels = var_39_3,
+		uid = buildingUid,
+		buildingId = buildingId,
+		levels = levels,
 		buildingState = RoomBuildingEnum.BuildingState.Map,
-		x = arg_39_1.x,
-		y = arg_39_1.y
+		x = hexPoint.x,
+		y = hexPoint.y
 	}
-	local var_39_6 = RoomMapBuildingModel.instance:debugPlaceBuilding(arg_39_1, var_39_5)
+	local buildingMO = RoomMapBuildingModel.instance:debugPlaceBuilding(hexPoint, info)
 
 	RoomMapBuildingModel.instance:clearAllOccupyDict()
-	arg_39_0:dispatchEvent(RoomEvent.DebugPlaceBuilding, arg_39_1, var_39_6)
-	arg_39_0:saveDebugMapParam()
+	self:dispatchEvent(RoomEvent.DebugPlaceBuilding, hexPoint, buildingMO)
+	self:saveDebugMapParam()
 end
 
-function var_0_0.debugRotateBuilding(arg_40_0, arg_40_1)
-	local var_40_0 = RoomMapBuildingModel.instance:getBuildingMO(arg_40_1.x, arg_40_1.y)
+function RoomDebugController:debugRotateBuilding(hexPoint)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMO(hexPoint.x, hexPoint.y)
 
-	if not var_40_0 then
+	if not buildingMO then
 		return
 	end
 
-	local var_40_1 = var_40_0.rotate
+	local previousRotate = buildingMO.rotate
 
-	var_40_0.rotate = RoomRotateHelper.rotateRotate(var_40_0.rotate, 1)
+	buildingMO.rotate = RoomRotateHelper.rotateRotate(buildingMO.rotate, 1)
 
 	RoomMapBuildingModel.instance:clearAllOccupyDict()
-	arg_40_0:dispatchEvent(RoomEvent.DebugRotateBuilding, arg_40_1, var_40_0, var_40_1)
-	arg_40_0:saveDebugMapParam()
+	self:dispatchEvent(RoomEvent.DebugRotateBuilding, hexPoint, buildingMO, previousRotate)
+	self:saveDebugMapParam()
 end
 
-function var_0_0.debugRootOutBuilding(arg_41_0, arg_41_1)
-	local var_41_0 = RoomMapBuildingModel.instance:getBuildingMO(arg_41_1.x, arg_41_1.y)
+function RoomDebugController:debugRootOutBuilding(hexPoint)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMO(hexPoint.x, hexPoint.y)
 
-	if not var_41_0 then
+	if not buildingMO then
 		return
 	end
 
-	RoomMapBuildingModel.instance:debugRootOutBuilding(arg_41_1)
+	RoomMapBuildingModel.instance:debugRootOutBuilding(hexPoint)
 	RoomMapBuildingModel.instance:clearAllOccupyDict()
-	arg_41_0:dispatchEvent(RoomEvent.DebugRootOutBuilding, arg_41_1, var_41_0)
-	arg_41_0:saveDebugMapParam()
+	self:dispatchEvent(RoomEvent.DebugRootOutBuilding, hexPoint, buildingMO)
+	self:saveDebugMapParam()
 end
 
-function var_0_0.getEmptyMapInfo(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = arg_42_0:_getNextBlockId(arg_42_1, arg_42_2)
+function RoomDebugController:getEmptyMapInfo(isPackageMode, packageMapId)
+	local blockId = self:_getNextBlockId(isPackageMode, packageMapId)
 
 	return {
 		infos = {
@@ -524,7 +533,7 @@ function var_0_0.getEmptyMapInfo(arg_42_0, arg_42_1, arg_42_2)
 				packageOrder = 0,
 				x = 0,
 				y = 0,
-				blockId = var_42_0,
+				blockId = blockId,
 				defineId = RoomResourceEnum.EmptyDefineId,
 				mainRes = RoomResourceEnum.ResourceId.Empty
 			}
@@ -532,495 +541,507 @@ function var_0_0.getEmptyMapInfo(arg_42_0, arg_42_1, arg_42_2)
 	}
 end
 
-function var_0_0.getEmptyInitInfo(arg_43_0)
-	return {
-		infos = arg_43_0:getEmptyMapInfo().infos
-	}
+function RoomDebugController:getEmptyInitInfo()
+	local init = {}
+	local emptyMapInfo = self:getEmptyMapInfo()
+
+	init.infos = emptyMapInfo.infos
+
+	return init
 end
 
-function var_0_0.getEmptyPackageInfo(arg_44_0)
+function RoomDebugController:getEmptyPackageInfo()
 	return {}
 end
 
-function var_0_0.generateMapInfo(arg_45_0, arg_45_1, arg_45_2)
-	arg_45_1 = arg_45_1 or RoomMapBlockModel.instance:getFullBlockMOList()
-	arg_45_2 = arg_45_2 or RoomMapBuildingModel.instance:getBuildingMOList()
+function RoomDebugController:generateMapInfo(fullBlockMOList, mapBuildingMOList)
+	fullBlockMOList = fullBlockMOList or RoomMapBlockModel.instance:getFullBlockMOList()
+	mapBuildingMOList = mapBuildingMOList or RoomMapBuildingModel.instance:getBuildingMOList()
 
-	local var_45_0 = {
-		infos = {}
-	}
-	local var_45_1 = #arg_45_1
-	local var_45_2 = RoomController.instance:isDebugPackageMode()
+	local map = {}
 
-	for iter_45_0, iter_45_1 in ipairs(arg_45_1) do
-		if iter_45_1.blockState == RoomBlockEnum.BlockState.Map then
-			local var_45_3 = {
-				blockId = iter_45_1.blockId,
-				defineId = iter_45_1.defineId,
-				mainRes = iter_45_1.mainRes
-			}
+	map.infos = {}
 
-			var_45_3.x, var_45_3.y = iter_45_1.hexPoint.x, iter_45_1.hexPoint.y
-			var_45_3.rotate = iter_45_1.rotate
+	local blockCount = #fullBlockMOList
+	local isPackageMode = RoomController.instance:isDebugPackageMode()
 
-			if var_45_2 then
-				var_45_3.packageId = iter_45_1.packageId or 0
-				var_45_3.packageOrder = iter_45_1.packageOrder or iter_45_1.blockId
+	for i, blockMO in ipairs(fullBlockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map then
+			local info = {}
+
+			info.blockId = blockMO.blockId
+			info.defineId = blockMO.defineId
+			info.mainRes = blockMO.mainRes
+			info.x, info.y = blockMO.hexPoint.x, blockMO.hexPoint.y
+			info.rotate = blockMO.rotate
+
+			if isPackageMode then
+				info.packageId = blockMO.packageId or 0
+				info.packageOrder = blockMO.packageOrder or blockMO.blockId
 			end
 
-			table.insert(var_45_0.infos, var_45_3)
+			table.insert(map.infos, info)
 		end
 	end
 
-	var_45_0.buildingInfos = {}
+	map.buildingInfos = {}
 
-	for iter_45_2, iter_45_3 in ipairs(arg_45_2) do
-		local var_45_4 = {
-			uid = iter_45_2,
-			defineId = iter_45_3.buildingId
-		}
+	for i, buildingMO in ipairs(mapBuildingMOList) do
+		local info = {}
 
-		var_45_4.use = true
-		var_45_4.x = iter_45_3.hexPoint.x
-		var_45_4.y = iter_45_3.hexPoint.y
-		var_45_4.rotate = iter_45_3.rotate
-		var_45_4.resAreaDirection = iter_45_3.resAreaDirection
+		info.uid = i
+		info.defineId = buildingMO.buildingId
+		info.use = true
+		info.x = buildingMO.hexPoint.x
+		info.y = buildingMO.hexPoint.y
+		info.rotate = buildingMO.rotate
+		info.resAreaDirection = buildingMO.resAreaDirection
 
-		table.insert(var_45_0.buildingInfos, var_45_4)
+		table.insert(map.buildingInfos, info)
 	end
 
-	return var_45_0
+	return map
 end
 
-function var_0_0.getDebugMapInfo(arg_46_0)
-	local var_46_0
-	local var_46_1 = PlayerPrefsHelper.getString(PlayerPrefsKey.RoomDebugMapParam, "")
+function RoomDebugController:getDebugMapInfo()
+	local map
+	local mapParam = PlayerPrefsHelper.getString(PlayerPrefsKey.RoomDebugMapParam, "")
 
-	if string.nilorempty(var_46_1) then
-		var_46_0 = arg_46_0:getEmptyMapInfo()
+	if string.nilorempty(mapParam) then
+		map = self:getEmptyMapInfo()
 	else
-		var_46_0 = cjson.decode(var_46_1)
+		map = cjson.decode(mapParam)
 	end
 
-	var_46_0.remainBlock = 0
+	map.remainBlock = 0
 
-	return var_46_0
+	return map
 end
 
-function var_0_0.saveDebugMapParam(arg_47_0)
+function RoomDebugController:saveDebugMapParam()
 	if not RoomController.instance:isDebugNormalMode() then
 		return
 	end
 
-	local var_47_0 = arg_47_0:generateMapInfo()
+	local map = self:generateMapInfo()
 
-	if #var_47_0.infos > 0 then
-		local var_47_1 = cjson.encode(var_47_0)
+	if #map.infos > 0 then
+		local mapParam = cjson.encode(map)
 
-		PlayerPrefsHelper.setString(PlayerPrefsKey.RoomDebugMapParam, var_47_1)
+		PlayerPrefsHelper.setString(PlayerPrefsKey.RoomDebugMapParam, mapParam)
 	end
 end
 
-function var_0_0.getDebugInitInfo(arg_48_0, arg_48_1, arg_48_2)
-	if arg_48_0._tempInitConfig then
-		if arg_48_1 then
-			if arg_48_2 then
-				arg_48_1(arg_48_2, arg_48_0._tempInitConfig)
+function RoomDebugController:getDebugInitInfo(callback, callbackObj)
+	if self._tempInitConfig then
+		if callback then
+			if callbackObj then
+				callback(callbackObj, self._tempInitConfig)
 			else
-				arg_48_1(arg_48_0._tempInitConfig)
+				callback(self._tempInitConfig)
 			end
 		end
 
 		return
 	end
 
-	loadAbAsset(RoomEnum.InitMapConfigPathEditor, false, function(arg_49_0)
-		local var_49_0
+	loadAbAsset(RoomEnum.InitMapConfigPathEditor, false, function(assetItem)
+		local init
 
-		if arg_49_0.IsLoadSuccess then
-			local var_49_1 = arg_49_0:GetResource(RoomEnum.InitMapConfigPathEditor).text
+		if assetItem.IsLoadSuccess then
+			local textAsset = assetItem:GetResource(RoomEnum.InitMapConfigPathEditor)
+			local initParam = textAsset.text
 
-			var_49_0 = cjson.decode(var_49_1)
+			init = cjson.decode(initParam)
 		else
-			var_49_0 = arg_48_0:getEmptyInitInfo()
+			init = self:getEmptyInitInfo()
 		end
 
-		arg_48_0._tempInitConfig = var_49_0
+		self._tempInitConfig = init
 
-		if arg_48_1 then
-			if arg_48_2 then
-				arg_48_1(arg_48_2, var_49_0)
+		if callback then
+			if callbackObj then
+				callback(callbackObj, init)
 			else
-				arg_48_1(var_49_0)
+				callback(init)
 			end
 		end
 	end)
 end
 
-function var_0_0.getDebugInitMapInfo(arg_50_0, arg_50_1, arg_50_2, arg_50_3)
-	arg_50_0:getDebugInitInfo(function(arg_51_0)
-		local var_51_0 = {
-			infos = arg_51_0.infos
-		}
+function RoomDebugController:getDebugInitMapInfo(param, callback, callbackObj)
+	self:getDebugInitInfo(function(init)
+		local map = {}
 
-		if not var_51_0.infos then
-			var_51_0 = arg_50_0:getEmptyMapInfo()
+		map.infos = init.infos
+
+		if not map.infos then
+			map = self:getEmptyMapInfo()
 		end
 
-		if arg_50_2 then
-			if arg_50_3 then
-				arg_50_2(arg_50_3, var_51_0)
+		if callback then
+			if callbackObj then
+				callback(callbackObj, map)
 			else
-				arg_50_2(var_51_0)
+				callback(map)
 			end
 		end
 	end)
 end
 
-function var_0_0.outputInitJson(arg_52_0, arg_52_1)
-	arg_52_0:getDebugInitInfo(function(arg_53_0)
-		local var_53_0 = arg_52_0:generateMapInfo()
+function RoomDebugController:outputInitJson(temp)
+	self:getDebugInitInfo(function(init)
+		local map = self:generateMapInfo()
 
-		var_53_0.buildingInfos = nil
-		arg_53_0.infos = var_53_0.infos
+		map.buildingInfos = nil
+		init.infos = map.infos
 
-		arg_52_0:saveInitMapParam(arg_53_0, arg_52_1)
+		self:saveInitMapParam(init, temp)
 	end)
 end
 
-function var_0_0.resetInitJson(arg_54_0)
-	arg_54_0:getDebugInitInfo(function(arg_55_0)
-		arg_55_0.infos = arg_54_0:getEmptyMapInfo().infos
+function RoomDebugController:resetInitJson()
+	self:getDebugInitInfo(function(init)
+		local emptyMap = self:getEmptyMapInfo()
 
-		arg_54_0:saveInitMapParam(arg_55_0)
+		init.infos = emptyMap.infos
+
+		self:saveInitMapParam(init)
 	end)
 end
 
-function var_0_0.saveInitMapParam(arg_56_0, arg_56_1, arg_56_2)
-	arg_56_0._tempInitConfig = arg_56_1
+function RoomDebugController:saveInitMapParam(init, temp)
+	self._tempInitConfig = init
 
-	if arg_56_2 then
+	if temp then
 		return
 	end
 
-	local var_56_0 = cjson.encode(arg_56_1)
-	local var_56_1 = arg_56_0:_wrapClientConfigParam(arg_56_1, "block_init")
+	local initParam = cjson.encode(init)
+	local initClientParam = self:_wrapClientConfigParam(init, "block_init")
 
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	local var_56_2 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.InitMapConfigPathEditor)
-	local var_56_3 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.InitMapConfigPath)
-	local var_56_4 = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block_init.json")
+	local pathEditor = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.InitMapConfigPathEditor)
+	local pathClient = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.InitMapConfigPath)
+	local pathServer = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block_init.json")
 
-	SLFramework.FileHelper.WriteTextToPath(var_56_2, var_56_0)
-	SLFramework.FileHelper.WriteTextToPath(var_56_3, var_56_1)
-	SLFramework.FileHelper.WriteTextToPath(var_56_4, var_56_0)
-	arg_56_0:assetDatabaseRefresh()
+	SLFramework.FileHelper.WriteTextToPath(pathEditor, initParam)
+	SLFramework.FileHelper.WriteTextToPath(pathClient, initClientParam)
+	SLFramework.FileHelper.WriteTextToPath(pathServer, initParam)
+	self:assetDatabaseRefresh()
 	logNormal("导出完成 记得提交前后端配置文件")
 end
 
-function var_0_0.getDebugPackageInfo(arg_57_0, arg_57_1, arg_57_2, arg_57_3)
-	if arg_57_0._tempPackageConfig then
-		if arg_57_1 then
-			if arg_57_2 then
-				arg_57_1(arg_57_2, arg_57_0._tempPackageConfig, arg_57_3)
+function RoomDebugController:getDebugPackageInfo(callback, callbackObj, extraParam)
+	if self._tempPackageConfig then
+		if callback then
+			if callbackObj then
+				callback(callbackObj, self._tempPackageConfig, extraParam)
 			else
-				arg_57_1(arg_57_0._tempPackageConfig, arg_57_3)
+				callback(self._tempPackageConfig, extraParam)
 			end
 		end
 
 		return
 	end
 
-	local var_57_0 = MultiAbLoader.New()
+	local loader = MultiAbLoader.New()
 
-	var_57_0:addPath(RoomEnum.BlockPackageMapPath)
+	loader:addPath(RoomEnum.BlockPackageMapPath)
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_57_0:addPath(RoomEnum.BlockPackageDataPath)
+		loader:addPath(RoomEnum.BlockPackageDataPath)
 	end
 
-	var_57_0:startLoad(function()
-		local var_58_0 = var_57_0:getAssetItemDict()
-		local var_58_1 = var_58_0[RoomEnum.BlockPackageMapPath]:GetResource(RoomEnum.BlockPackageMapPath).text
-		local var_58_2 = cjson.decode(var_58_1)
+	loader:startLoad(function()
+		local assetItemDict = loader:getAssetItemDict()
+		local packageAssetItem = assetItemDict[RoomEnum.BlockPackageMapPath]
+		local packageTextAsset = packageAssetItem:GetResource(RoomEnum.BlockPackageMapPath)
+		local packageText = packageTextAsset.text
+		local package = cjson.decode(packageText)
 
 		if SLFramework.FrameworkSettings.IsEditor then
-			local var_58_3 = var_58_0[RoomEnum.BlockPackageDataPath]:GetResource(RoomEnum.BlockPackageDataPath).text
-			local var_58_4 = cjson.decode(var_58_3)[2]
+			local packageDataAssetItem = assetItemDict[RoomEnum.BlockPackageDataPath]
+			local packageDataTextAsset = packageDataAssetItem:GetResource(RoomEnum.BlockPackageDataPath)
+			local packageDataText = packageDataTextAsset.text
+			local packageDatas = cjson.decode(packageDataText)[2]
 
-			arg_57_0:_injectPackageInfo(var_58_2, var_58_4)
+			self:_injectPackageInfo(package, packageDatas)
 		end
 
-		arg_57_0:_refreshPackageOrder(var_58_2)
+		self:_refreshPackageOrder(package)
 
-		arg_57_0._tempPackageConfig = var_58_2
+		self._tempPackageConfig = package
 
-		if arg_57_1 then
-			if arg_57_2 then
-				arg_57_1(arg_57_2, var_58_2, arg_57_3)
+		if callback then
+			if callbackObj then
+				callback(callbackObj, package, extraParam)
 			else
-				arg_57_1(var_58_2, arg_57_3)
+				callback(package, extraParam)
 			end
 		end
 
-		var_57_0:dispose()
+		loader:dispose()
 	end)
 end
 
-function var_0_0._injectPackageInfo(arg_59_0, arg_59_1, arg_59_2)
-	local var_59_0 = {}
+function RoomDebugController:_injectPackageInfo(package, packageDatas)
+	local blockId2PackageDict = {}
 
-	for iter_59_0, iter_59_1 in ipairs(arg_59_2) do
-		local var_59_1 = iter_59_1.id
+	for _, packageInfo in ipairs(packageDatas) do
+		local packageId = packageInfo.id
 
-		for iter_59_2, iter_59_3 in ipairs(iter_59_1.infos) do
-			var_59_0[iter_59_3.blockId] = {
-				packageId = var_59_1,
-				packageOrder = iter_59_2
+		for packageOrder, info in ipairs(packageInfo.infos) do
+			blockId2PackageDict[info.blockId] = {
+				packageId = packageId,
+				packageOrder = packageOrder
 			}
 		end
 	end
 
-	for iter_59_4, iter_59_5 in ipairs(arg_59_1) do
-		for iter_59_6, iter_59_7 in ipairs(iter_59_5.infos) do
-			local var_59_2 = var_59_0[iter_59_7.blockId]
+	for _, packageMap in ipairs(package) do
+		for _, info in ipairs(packageMap.infos) do
+			local package = blockId2PackageDict[info.blockId]
 
-			iter_59_7.packageId = var_59_2 and var_59_2.packageId or 0
-			iter_59_7.packageOrder = var_59_2 and var_59_2.packageOrder or 0
+			info.packageId = package and package.packageId or 0
+			info.packageOrder = package and package.packageOrder or 0
 		end
 	end
 end
 
-function var_0_0.getDebugPackageMapInfo(arg_60_0, arg_60_1, arg_60_2, arg_60_3)
-	local var_60_0 = arg_60_1 and arg_60_1.packageMapId
+function RoomDebugController:getDebugPackageMapInfo(param, callback, callbackObj)
+	local packageMapId = param and param.packageMapId
 
-	arg_60_0:getDebugPackageInfo(function(arg_61_0)
-		local var_61_0 = {}
+	self:getDebugPackageInfo(function(package)
+		local map = {}
 
-		for iter_61_0, iter_61_1 in ipairs(arg_61_0) do
-			if iter_61_1.packageMapId == var_60_0 then
-				var_61_0.infos = iter_61_1.infos
-				var_61_0.buildingInfos = iter_61_1.buildingInfos
-				var_61_0.packageName = iter_61_1.packageName
+		for i, packageMap in ipairs(package) do
+			if packageMap.packageMapId == packageMapId then
+				map.infos = packageMap.infos
+				map.buildingInfos = packageMap.buildingInfos
+				map.packageName = packageMap.packageName
 
 				break
 			end
 		end
 
-		if not var_61_0.infos then
-			var_61_0 = arg_60_0:getEmptyMapInfo(true, var_60_0)
+		if not map.infos then
+			map = self:getEmptyMapInfo(true, packageMapId)
 		end
 
-		if arg_60_2 then
-			if arg_60_3 then
-				arg_60_2(arg_60_3, var_61_0)
+		if callback then
+			if callbackObj then
+				callback(callbackObj, map)
 			else
-				arg_60_2(var_61_0)
+				callback(map)
 			end
 		end
 	end)
 end
 
-function var_0_0.outputPackageJson(arg_62_0, arg_62_1, arg_62_2)
-	arg_62_0:getDebugPackageMapInfo({
-		packageMapId = arg_62_1
-	}, function(arg_63_0)
-		local var_63_0 = arg_62_0:generateMapInfo()
+function RoomDebugController:outputPackageJson(packageMapId, temp)
+	self:getDebugPackageMapInfo({
+		packageMapId = packageMapId
+	}, function(packageMap)
+		local map = self:generateMapInfo()
 
-		arg_63_0.infos = var_63_0.infos
-		arg_63_0.buildingInfos = var_63_0.buildingInfos
+		packageMap.infos = map.infos
+		packageMap.buildingInfos = map.buildingInfos
 
-		arg_62_0:savePackageMapParam(arg_62_1, arg_63_0, arg_62_2)
+		self:savePackageMapParam(packageMapId, packageMap, temp)
 	end)
 end
 
-function var_0_0.resetPackageJson(arg_64_0, arg_64_1, arg_64_2)
-	local var_64_0 = {
-		infos = arg_64_0:getEmptyMapInfo(true, arg_64_1).infos,
-		buildingInfos = {},
-		packageName = arg_64_2
-	}
+function RoomDebugController:resetPackageJson(packageMapId, packageName)
+	local packageMap = {}
+	local emptyMap = self:getEmptyMapInfo(true, packageMapId)
 
-	arg_64_0:savePackageMapParam(arg_64_1, var_64_0)
+	packageMap.infos = emptyMap.infos
+	packageMap.buildingInfos = {}
+	packageMap.packageName = packageName
+
+	self:savePackageMapParam(packageMapId, packageMap)
 end
 
-function var_0_0.copyPackageJson(arg_65_0, arg_65_1, arg_65_2, arg_65_3)
-	arg_65_0:getDebugPackageInfo(function(arg_66_0)
-		local var_66_0
+function RoomDebugController:copyPackageJson(packageMapId, packageName, copyPackageMapId)
+	self:getDebugPackageInfo(function(package)
+		local packageMap
 
-		for iter_66_0, iter_66_1 in ipairs(arg_66_0) do
-			if iter_66_1.packageMapId == arg_65_3 then
-				var_66_0 = LuaUtil.deepCopyNoMeta(iter_66_1)
+		for _, packageMapItem in ipairs(package) do
+			if packageMapItem.packageMapId == copyPackageMapId then
+				packageMap = LuaUtil.deepCopyNoMeta(packageMapItem)
 
 				break
 			end
 		end
 
-		if not var_66_0 then
+		if not packageMap then
 			return
 		end
 
-		var_66_0.packageName = arg_65_2
+		packageMap.packageName = packageName
 
-		local var_66_1 = arg_65_0:_getNextBlockId(true, arg_65_1)
+		local blockId = self:_getNextBlockId(true, packageMapId)
 
-		for iter_66_2, iter_66_3 in ipairs(var_66_0.infos) do
-			iter_66_3.mainRes = -1
-			iter_66_3.packageId = 0
-			iter_66_3.packageOrder = 0
-			iter_66_3.blockId = var_66_1
-			var_66_1 = var_66_1 + 1
+		for i, info in ipairs(packageMap.infos) do
+			info.mainRes = -1
+			info.packageId = 0
+			info.packageOrder = 0
+			info.blockId = blockId
+			blockId = blockId + 1
 		end
 
-		arg_65_0:savePackageMapParam(arg_65_1, var_66_0)
+		self:savePackageMapParam(packageMapId, packageMap)
 	end)
 end
 
-function var_0_0.deletePackageJson(arg_67_0, arg_67_1)
-	arg_67_0:getDebugPackageInfo(function(arg_68_0)
-		for iter_68_0, iter_68_1 in ipairs(arg_68_0) do
-			if iter_68_1.packageMapId == arg_67_1 then
-				table.remove(arg_68_0, iter_68_0)
+function RoomDebugController:deletePackageJson(packageMapId)
+	self:getDebugPackageInfo(function(package)
+		for i, packageMapItem in ipairs(package) do
+			if packageMapItem.packageMapId == packageMapId then
+				table.remove(package, i)
 
 				break
 			end
 		end
 
-		arg_67_0:_refreshPackageOrder(arg_68_0)
+		self:_refreshPackageOrder(package)
 
-		arg_67_0._tempPackageConfig = arg_68_0
+		self._tempPackageConfig = package
 
-		local var_68_0 = LuaUtil.deepCopyNoMeta(arg_68_0)
+		local clientPackage = LuaUtil.deepCopyNoMeta(package)
 
-		arg_67_0:_clearPackageInfo(var_68_0)
+		self:_clearPackageInfo(clientPackage)
 
-		local var_68_1, var_68_2 = arg_67_0:_getAllInfo(var_68_0)
-		local var_68_3 = arg_67_0:_jsonEncode(var_68_0)
+		local allPackageInfo, allPackageBuildingInfo = self:_getAllInfo(clientPackage)
+		local clientParam = self:_jsonEncode(clientPackage)
 
 		if not SLFramework.FrameworkSettings.IsEditor then
 			return
 		end
 
-		local var_68_4 = arg_67_0:_replaceInfoStr(var_68_3, var_68_1, var_68_2)
-		local var_68_5 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
+		clientParam = self:_replaceInfoStr(clientParam, allPackageInfo, allPackageBuildingInfo)
 
-		SLFramework.FileHelper.WriteTextToPath(var_68_5, var_68_4)
-		arg_67_0:savePackageDataParam(arg_68_0)
-		arg_67_0:assetDatabaseRefresh()
+		local pathClient = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
+
+		SLFramework.FileHelper.WriteTextToPath(pathClient, clientParam)
+		self:savePackageDataParam(package)
+		self:assetDatabaseRefresh()
 		logNormal("导出完成 记得提交前后端配置文件")
 	end)
 end
 
-function var_0_0.renamePackageJson(arg_69_0, arg_69_1, arg_69_2)
-	arg_69_0:getDebugPackageInfo(function(arg_70_0)
-		local var_70_0
+function RoomDebugController:renamePackageJson(packageMapId, packageName)
+	self:getDebugPackageInfo(function(package)
+		local packageMap
 
-		for iter_70_0, iter_70_1 in ipairs(arg_70_0) do
-			if iter_70_1.packageMapId == arg_69_1 then
-				iter_70_1.packageName = arg_69_2
-				var_70_0 = iter_70_1
+		for i, packageMapItem in ipairs(package) do
+			if packageMapItem.packageMapId == packageMapId then
+				packageMapItem.packageName = packageName
+				packageMap = packageMapItem
 
 				break
 			end
 		end
 
-		if var_70_0 then
-			arg_69_0:savePackageMapParam(arg_69_1, var_70_0)
+		if packageMap then
+			self:savePackageMapParam(packageMapId, packageMap)
 		end
 	end)
 end
 
-function var_0_0.changePackageMapIdJson(arg_71_0, arg_71_1, arg_71_2)
-	arg_71_0:getDebugPackageInfo(function(arg_72_0)
-		local var_72_0
+function RoomDebugController:changePackageMapIdJson(packageMapId, newPackageMapId)
+	self:getDebugPackageInfo(function(package)
+		local packageMap
 
-		for iter_72_0, iter_72_1 in ipairs(arg_72_0) do
-			if iter_72_1.packageMapId == arg_71_1 then
-				iter_72_1.packageMapId = arg_71_2
-				var_72_0 = iter_72_1
+		for i, packageMapItem in ipairs(package) do
+			if packageMapItem.packageMapId == packageMapId then
+				packageMapItem.packageMapId = newPackageMapId
+				packageMap = packageMapItem
 
-				local var_72_1 = arg_71_0:_getNextBlockId(true, arg_71_2)
+				local blockId = self:_getNextBlockId(true, newPackageMapId)
 
-				for iter_72_2, iter_72_3 in ipairs(var_72_0.infos) do
-					iter_72_3.blockId = var_72_1
-					var_72_1 = var_72_1 + 1
+				for _, info in ipairs(packageMap.infos) do
+					info.blockId = blockId
+					blockId = blockId + 1
 				end
 
 				break
 			end
 		end
 
-		if var_72_0 then
-			arg_71_0:savePackageMapParam(arg_71_2, var_72_0)
+		if packageMap then
+			self:savePackageMapParam(newPackageMapId, packageMap)
 		end
 	end)
 end
 
-function var_0_0.savePackageMapParam(arg_73_0, arg_73_1, arg_73_2, arg_73_3)
-	arg_73_0:getDebugPackageInfo(function(arg_74_0)
-		local var_74_0 = false
+function RoomDebugController:savePackageMapParam(packageMapId, packageMap, temp)
+	self:getDebugPackageInfo(function(package)
+		local flag = false
 
-		for iter_74_0, iter_74_1 in ipairs(arg_74_0) do
-			if iter_74_1.packageMapId == arg_73_1 then
-				iter_74_1.infos = arg_73_2.infos
-				iter_74_1.buildingInfos = arg_73_2.buildingInfos
-				iter_74_1.packageName = arg_73_2.packageName
-				var_74_0 = true
+		for i, packageMapItem in ipairs(package) do
+			if packageMapItem.packageMapId == packageMapId then
+				packageMapItem.infos = packageMap.infos
+				packageMapItem.buildingInfos = packageMap.buildingInfos
+				packageMapItem.packageName = packageMap.packageName
+				flag = true
 
 				break
 			end
 		end
 
-		if not var_74_0 then
-			table.insert(arg_74_0, {
-				packageMapId = arg_73_1,
-				infos = arg_73_2.infos,
-				buildingInfos = arg_73_2.buildingInfos,
-				packageName = arg_73_2.packageName
+		if not flag then
+			table.insert(package, {
+				packageMapId = packageMapId,
+				infos = packageMap.infos,
+				buildingInfos = packageMap.buildingInfos,
+				packageName = packageMap.packageName
 			})
 		end
 
-		arg_73_0:_refreshPackageOrder(arg_74_0)
+		self:_refreshPackageOrder(package)
 
-		arg_73_0._tempPackageConfig = arg_74_0
+		self._tempPackageConfig = package
 
-		if arg_73_3 then
+		if temp then
 			return
 		end
 
-		local var_74_1 = LuaUtil.deepCopyNoMeta(arg_74_0)
+		local clientPackage = LuaUtil.deepCopyNoMeta(package)
 
-		arg_73_0:_clearPackageInfo(var_74_1)
+		self:_clearPackageInfo(clientPackage)
 
-		local var_74_2, var_74_3 = arg_73_0:_getAllInfo(var_74_1)
-		local var_74_4 = arg_73_0:_jsonEncode(var_74_1)
+		local allPackageInfo, allPackageBuildingInfo = self:_getAllInfo(clientPackage)
+		local clientParam = self:_jsonEncode(clientPackage)
 
 		if not SLFramework.FrameworkSettings.IsEditor then
 			return
 		end
 
-		local var_74_5 = arg_73_0:_replaceInfoStr(var_74_4, var_74_2, var_74_3)
-		local var_74_6 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
+		clientParam = self:_replaceInfoStr(clientParam, allPackageInfo, allPackageBuildingInfo)
 
-		SLFramework.FileHelper.WriteTextToPath(var_74_6, var_74_5)
-		arg_73_0:savePackageDataParam(arg_74_0)
-		arg_73_0:assetDatabaseRefresh()
+		local pathClient = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
+
+		SLFramework.FileHelper.WriteTextToPath(pathClient, clientParam)
+		self:savePackageDataParam(package)
+		self:assetDatabaseRefresh()
 		logNormal("导出完成 记得提交前后端配置文件")
 	end)
 end
 
-function var_0_0._getAllInfo(arg_75_0, arg_75_1)
-	local var_75_0 = {}
-	local var_75_1 = {}
+function RoomDebugController:_getAllInfo(clientPackage)
+	local allPackageInfo = {}
+	local allPackageBuildingInfo = {}
 
-	for iter_75_0, iter_75_1 in ipairs(arg_75_1) do
-		local var_75_2 = {}
+	for i, clientPackageMapItem in ipairs(clientPackage) do
+		local infos = {}
 
-		for iter_75_2, iter_75_3 in ipairs(iter_75_1.infos) do
-			var_75_2[iter_75_2] = arg_75_0:_jsonEncodeOrdered(iter_75_3, {
+		for j, info in ipairs(clientPackageMapItem.infos) do
+			local infoStr = self:_jsonEncodeOrdered(info, {
 				"defineId",
 				"mainRes",
 				"x",
@@ -1028,15 +1049,19 @@ function var_0_0._getAllInfo(arg_75_0, arg_75_1)
 				"rotate",
 				"blockId"
 			})
+
+			infos[j] = infoStr
 		end
 
-		var_75_0[iter_75_0] = table.concat(var_75_2, ",\n")
+		local allInfoStr = table.concat(infos, ",\n")
 
-		local var_75_3 = {}
+		allPackageInfo[i] = allInfoStr
 
-		if iter_75_1.buildingInfos then
-			for iter_75_4, iter_75_5 in ipairs(iter_75_1.buildingInfos) do
-				var_75_3[iter_75_4] = arg_75_0:_jsonEncodeOrdered(iter_75_5, {
+		local buildingInfos = {}
+
+		if clientPackageMapItem.buildingInfos then
+			for j, buildingInfo in ipairs(clientPackageMapItem.buildingInfos) do
+				local infoStr = self:_jsonEncodeOrdered(buildingInfo, {
 					"uid",
 					"defineId",
 					"use",
@@ -1045,151 +1070,155 @@ function var_0_0._getAllInfo(arg_75_0, arg_75_1)
 					"rotate",
 					"resAreaDirection"
 				})
+
+				buildingInfos[j] = infoStr
 			end
 		end
 
-		var_75_1[iter_75_0] = table.concat(var_75_3, ",\n")
+		local allBuildingInfoStr = table.concat(buildingInfos, ",\n")
+
+		allPackageBuildingInfo[i] = allBuildingInfoStr
 	end
 
-	return var_75_0, var_75_1
+	return allPackageInfo, allPackageBuildingInfo
 end
 
-function var_0_0._replaceInfoStr(arg_76_0, arg_76_1, arg_76_2, arg_76_3)
-	local var_76_0 = arg_76_1
+function RoomDebugController:_replaceInfoStr(clientParam, allPackageInfo, allPackageBuildingInfo)
+	local result = clientParam
 
-	if arg_76_2 then
-		local var_76_1 = 0
+	if allPackageInfo then
+		local i = 0
 
-		var_76_0 = var_76_0:gsub("\"infos\":%b[]", function()
-			var_76_1 = var_76_1 + 1
+		result = result:gsub("\"infos\":%b[]", function()
+			i = i + 1
 
-			return "\"infos\":[" .. arg_76_2[var_76_1] .. "]"
+			return "\"infos\":[" .. allPackageInfo[i] .. "]"
 		end)
 	end
 
-	if arg_76_3 then
-		local var_76_2 = 0
+	if allPackageBuildingInfo then
+		local j = 0
 
-		var_76_0 = var_76_0:gsub("\"buildingInfos\":%b{}", "\"buildingInfos\":[]")
-		var_76_0 = var_76_0:gsub("\"buildingInfos\":%b[]", function()
-			var_76_2 = var_76_2 + 1
+		result = result:gsub("\"buildingInfos\":%b{}", "\"buildingInfos\":[]")
+		result = result:gsub("\"buildingInfos\":%b[]", function()
+			j = j + 1
 
-			return "\"buildingInfos\":[" .. arg_76_3[var_76_2] .. "]"
+			return "\"buildingInfos\":[" .. allPackageBuildingInfo[j] .. "]"
 		end)
-		var_76_0 = var_76_0:gsub("\"buildingInfos\":%[%]", "\"buildingInfos\":{}")
+		result = result:gsub("\"buildingInfos\":%[%]", "\"buildingInfos\":{}")
 	end
 
-	return var_76_0
+	return result
 end
 
-function var_0_0._clearPackageInfo(arg_79_0, arg_79_1)
-	for iter_79_0, iter_79_1 in ipairs(arg_79_1) do
-		for iter_79_2, iter_79_3 in ipairs(iter_79_1.infos) do
-			iter_79_3.packageId = nil
-			iter_79_3.packageOrder = nil
+function RoomDebugController:_clearPackageInfo(package)
+	for _, packageMapItem in ipairs(package) do
+		for _, info in ipairs(packageMapItem.infos) do
+			info.packageId = nil
+			info.packageOrder = nil
 		end
 
-		table.sort(iter_79_1.infos, function(arg_80_0, arg_80_1)
-			if arg_80_0.blockId ~= arg_80_1.blockId then
-				return arg_80_0.blockId < arg_80_1.blockId
+		table.sort(packageMapItem.infos, function(a, b)
+			if a.blockId ~= b.blockId then
+				return a.blockId < b.blockId
 			end
 		end)
 	end
 
-	table.sort(arg_79_1, function(arg_81_0, arg_81_1)
-		if arg_81_0.packageMapId ~= arg_81_1.packageMapId then
-			return arg_81_0.packageMapId < arg_81_1.packageMapId
+	table.sort(package, function(a, b)
+		if a.packageMapId ~= b.packageMapId then
+			return a.packageMapId < b.packageMapId
 		end
 	end)
 end
 
-function var_0_0._refreshPackageOrder(arg_82_0, arg_82_1)
-	local var_82_0 = {}
+function RoomDebugController:_refreshPackageOrder(package)
+	local packageDict = {}
 
-	for iter_82_0, iter_82_1 in ipairs(arg_82_1) do
-		for iter_82_2, iter_82_3 in ipairs(iter_82_1.infos) do
-			if iter_82_3.packageId and iter_82_3.packageId > 0 then
-				var_82_0[iter_82_3.packageId] = var_82_0[iter_82_3.packageId] or {}
-				var_82_0[iter_82_3.packageId][iter_82_3.mainRes] = var_82_0[iter_82_3.packageId][iter_82_3.mainRes] or {}
+	for _, packageMap in ipairs(package) do
+		for _, info in ipairs(packageMap.infos) do
+			if info.packageId and info.packageId > 0 then
+				packageDict[info.packageId] = packageDict[info.packageId] or {}
+				packageDict[info.packageId][info.mainRes] = packageDict[info.packageId][info.mainRes] or {}
 
-				table.insert(var_82_0[iter_82_3.packageId][iter_82_3.mainRes], iter_82_3)
+				table.insert(packageDict[info.packageId][info.mainRes], info)
 			end
 		end
 	end
 
-	for iter_82_4, iter_82_5 in pairs(var_82_0) do
-		for iter_82_6, iter_82_7 in pairs(iter_82_5) do
-			table.sort(iter_82_7, function(arg_83_0, arg_83_1)
-				return arg_83_0.packageOrder < arg_83_1.packageOrder
+	for packageId, dict in pairs(packageDict) do
+		for mainRes, infos in pairs(dict) do
+			table.sort(infos, function(a, b)
+				return a.packageOrder < b.packageOrder
 			end)
 		end
 	end
 
-	for iter_82_8, iter_82_9 in pairs(var_82_0) do
-		for iter_82_10, iter_82_11 in pairs(iter_82_9) do
-			for iter_82_12, iter_82_13 in ipairs(iter_82_11) do
-				iter_82_13.packageOrder = iter_82_12
+	for packageId, dict in pairs(packageDict) do
+		for mainRes, infos in pairs(dict) do
+			for i, info in ipairs(infos) do
+				info.packageOrder = i
 
-				local var_82_1 = RoomMapBlockModel.instance:getFullBlockMOById(iter_82_13.blockId)
+				local blockMO = RoomMapBlockModel.instance:getFullBlockMOById(info.blockId)
 
-				if var_82_1 then
-					var_82_1.packageOrder = iter_82_13.packageOrder
+				if blockMO then
+					blockMO.packageOrder = info.packageOrder
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.savePackageDataParam(arg_84_0, arg_84_1)
-	local var_84_0 = {}
+function RoomDebugController:savePackageDataParam(package)
+	local packageDatas = {}
 
-	for iter_84_0, iter_84_1 in ipairs(arg_84_1) do
-		for iter_84_2, iter_84_3 in ipairs(iter_84_1.infos) do
-			if iter_84_3.packageId and iter_84_3.packageId ~= 0 then
-				local var_84_1
+	for _, packageMap in ipairs(package) do
+		for _, info in ipairs(packageMap.infos) do
+			if info.packageId and info.packageId ~= 0 then
+				local packageData
 
-				for iter_84_4, iter_84_5 in ipairs(var_84_0) do
-					if iter_84_5.id == iter_84_3.packageId then
-						var_84_1 = iter_84_5
+				for _, packageDataItem in ipairs(packageDatas) do
+					if packageDataItem.id == info.packageId then
+						packageData = packageDataItem
 
 						break
 					end
 				end
 
-				if not var_84_1 then
-					var_84_1 = {
-						id = iter_84_3.packageId,
+				if not packageData then
+					packageData = {
+						id = info.packageId,
 						infos = {}
 					}
 
-					JsonUtil.markAsArray(var_84_1.infos)
-					table.insert(var_84_0, var_84_1)
+					JsonUtil.markAsArray(packageData.infos)
+					table.insert(packageDatas, packageData)
 				end
 
-				if iter_84_3.mainRes and iter_84_3.mainRes >= 0 then
-					table.insert(var_84_1.infos, {
-						blockId = iter_84_3.blockId,
-						defineId = iter_84_3.defineId,
-						mainRes = iter_84_3.mainRes,
-						packageOrder = iter_84_3.packageOrder,
-						ownType = var_0_1[iter_84_3.packageId] or 0
+				if info.mainRes and info.mainRes >= 0 then
+					table.insert(packageData.infos, {
+						blockId = info.blockId,
+						defineId = info.defineId,
+						mainRes = info.mainRes,
+						packageOrder = info.packageOrder,
+						ownType = _OWN_TYPE_MAP[info.packageId] or 0
 					})
 				end
 			end
 		end
 	end
 
-	for iter_84_6, iter_84_7 in ipairs(var_84_0) do
-		table.sort(iter_84_7.infos, function(arg_85_0, arg_85_1)
-			if arg_85_0.packageOrder ~= arg_85_1.packageOrder then
-				return arg_85_0.packageOrder < arg_85_1.packageOrder
+	for _, packageData in ipairs(packageDatas) do
+		table.sort(packageData.infos, function(x, y)
+			if x.packageOrder ~= y.packageOrder then
+				return x.packageOrder < y.packageOrder
 			end
 
-			return arg_85_0.blockId < arg_85_1.blockId
+			return x.blockId < y.blockId
 		end)
 
-		for iter_84_8, iter_84_9 in ipairs(iter_84_7.infos) do
-			iter_84_9.packageOrder = nil
+		for _, info in ipairs(packageData.infos) do
+			info.packageOrder = nil
 		end
 	end
 
@@ -1197,79 +1226,81 @@ function var_0_0.savePackageDataParam(arg_84_0, arg_84_1)
 		return
 	end
 
-	JsonUtil.markAsArray(var_84_0)
+	JsonUtil.markAsArray(packageDatas)
 
-	local var_84_2 = arg_84_0:_jsonEncode(var_84_0)
-	local var_84_3 = arg_84_0:_wrapClientConfigParam(var_84_0, "block_package_data")
-	local var_84_4 = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block_package_data.json")
-	local var_84_5 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageDataPath)
+	local serverParam = self:_jsonEncode(packageDatas)
+	local clientParam = self:_wrapClientConfigParam(packageDatas, "block_package_data")
+	local pathServer = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block_package_data.json")
+	local pathClient = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageDataPath)
 
-	SLFramework.FileHelper.WriteTextToPath(var_84_4, var_84_2)
-	SLFramework.FileHelper.WriteTextToPath(var_84_5, var_84_3)
+	SLFramework.FileHelper.WriteTextToPath(pathServer, serverParam)
+	SLFramework.FileHelper.WriteTextToPath(pathClient, clientParam)
 
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		local var_84_6 = GameSceneMgr.instance:getCurScene()
-		local var_84_7 = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block.json")
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
 
-		loadAbAsset(RoomEnum.BlockPath, false, function(arg_86_0)
-			if arg_86_0.IsLoadSuccess then
-				local var_86_0 = arg_86_0:GetResource(RoomEnum.BlockPath)
-				local var_86_1 = cjson.decode(var_86_0.text)[2]
-				local var_86_2 = {}
+	if sceneType == SceneType.Room then
+		local scene = GameSceneMgr.instance:getCurScene()
+		local blockDefinePathServer = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block.json")
 
-				for iter_86_0, iter_86_1 in ipairs(var_86_1) do
-					table.insert(var_86_2, {
-						defineId = iter_86_1.defineId,
-						resourceIds = iter_86_1.resourceIds,
-						category = iter_86_1.category,
-						prefabPath = iter_86_1.prefabPath
+		loadAbAsset(RoomEnum.BlockPath, false, function(assetItem)
+			if assetItem.IsLoadSuccess then
+				local textAsset = assetItem:GetResource(RoomEnum.BlockPath)
+				local defineBlockList = cjson.decode(textAsset.text)[2]
+				local serverBlockList = {}
+
+				for k, info in ipairs(defineBlockList) do
+					table.insert(serverBlockList, {
+						defineId = info.defineId,
+						resourceIds = info.resourceIds,
+						category = info.category,
+						prefabPath = info.prefabPath
 					})
 				end
 
-				SLFramework.FileHelper.WriteTextToPath(var_84_7, arg_84_0:_jsonEncode(var_86_2))
+				SLFramework.FileHelper.WriteTextToPath(blockDefinePathServer, self:_jsonEncode(serverBlockList))
 			end
 		end)
 	end
 
-	arg_84_0:_saveBlockPrefabExcelData(var_84_0)
+	self:_saveBlockPrefabExcelData(packageDatas)
 end
 
-function var_0_0._saveBlockPrefabExcelData(arg_87_0, arg_87_1)
-	local var_87_0 = "blockId resName packageId"
+function RoomDebugController:_saveBlockPrefabExcelData(packageDatas)
+	local datastr = "blockId resName packageId"
 
-	for iter_87_0, iter_87_1 in ipairs(arg_87_1) do
-		if var_0_1[iter_87_1.id] and iter_87_1.infos then
-			for iter_87_2, iter_87_3 in ipairs(iter_87_1.infos) do
-				local var_87_1 = RoomConfig.instance:getBlockDefineConfig(iter_87_3.defineId)
+	for _, packageData in ipairs(packageDatas) do
+		if _OWN_TYPE_MAP[packageData.id] and packageData.infos then
+			for _, info in ipairs(packageData.infos) do
+				local cfg = RoomConfig.instance:getBlockDefineConfig(info.defineId)
 
-				if var_87_1 then
-					var_87_0 = string.format("%s\n%s %s %s", var_87_0, iter_87_3.blockId, RoomHelper.getBlockPrefabName(var_87_1.prefabPath), iter_87_1.id)
+				if cfg then
+					datastr = string.format("%s\n%s %s %s", datastr, info.blockId, RoomHelper.getBlockPrefabName(cfg.prefabPath), packageData.id)
 				end
 			end
 		end
 	end
 
-	local var_87_2 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, "../../roomTempData/blockPrefabPath.txt")
+	local pathClient = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, "../../roomTempData/blockPrefabPath.txt")
 
-	SLFramework.FileHelper.WriteTextToPath(var_87_2, var_87_0)
-	logNormal("生成excel格式独立地块的id和资源名字的数据,导入excel方式：数据->从文本/CSV。\n文件路径：" .. var_87_2)
+	SLFramework.FileHelper.WriteTextToPath(pathClient, datastr)
+	logNormal("生成excel格式独立地块的id和资源名字的数据,导入excel方式：数据->从文本/CSV。\n文件路径：" .. pathClient)
 end
 
-function var_0_0.debugMoveAllMap(arg_88_0, arg_88_1, arg_88_2)
-	local var_88_0 = RoomCameraController.instance:getRoomScene()
+function RoomDebugController:debugMoveAllMap(offsetX, offsetY)
+	local scene = RoomCameraController.instance:getRoomScene()
 
-	if not var_88_0 or not arg_88_1 or not arg_88_2 then
+	if not scene or not offsetX or not offsetY then
 		return
 	end
 
-	RoomMapBuildingModel.instance:debugMoveAllBuilding(arg_88_1, arg_88_2)
-	var_88_0.buildingmgr:refreshAllBlockEntity()
-	RoomMapBlockModel.instance:debugMoveAllBlock(arg_88_1, arg_88_2)
-	var_88_0.mapmgr:refreshAllBlockEntity(SceneTag.RoomMapBlock)
-	var_88_0.mapmgr:refreshAllBlockEntity(SceneTag.RoomEmptyBlock)
+	RoomMapBuildingModel.instance:debugMoveAllBuilding(offsetX, offsetY)
+	scene.buildingmgr:refreshAllBlockEntity()
+	RoomMapBlockModel.instance:debugMoveAllBlock(offsetX, offsetY)
+	scene.mapmgr:refreshAllBlockEntity(SceneTag.RoomMapBlock)
+	scene.mapmgr:refreshAllBlockEntity(SceneTag.RoomEmptyBlock)
 end
 
-function var_0_0.assetDatabaseRefresh(arg_89_0)
+function RoomDebugController:assetDatabaseRefresh()
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
@@ -1277,41 +1308,41 @@ function var_0_0.assetDatabaseRefresh(arg_89_0)
 	require("tolua.reflection")
 	tolua.loadassembly("UnityEditor")
 
-	local var_89_0 = tolua.gettypemethod(typeof("UnityEditor.AssetDatabase"), "Refresh", System.Array.CreateInstance(typeof("System.Type"), 0))
+	local func = tolua.gettypemethod(typeof("UnityEditor.AssetDatabase"), "Refresh", System.Array.CreateInstance(typeof("System.Type"), 0))
 
-	var_89_0:Call()
-	var_89_0:Destroy()
+	func:Call()
+	func:Destroy()
 end
 
-function var_0_0.output(arg_90_0, arg_90_1)
+function RoomDebugController:output(temp)
 	if RoomController.instance:isDebugInitMode() then
-		local var_90_0 = RoomModel.instance:getDebugParam()
+		local debugParam = RoomModel.instance:getDebugParam()
 
-		arg_90_0:outputInitJson(arg_90_1)
+		self:outputInitJson(temp)
 	elseif RoomController.instance:isDebugPackageMode() then
-		local var_90_1 = RoomModel.instance:getDebugParam()
+		local debugParam = RoomModel.instance:getDebugParam()
 
-		arg_90_0:outputPackageJson(var_90_1.packageMapId, arg_90_1)
+		self:outputPackageJson(debugParam.packageMapId, temp)
 	end
 end
 
-function var_0_0.outputFishing(arg_91_0)
-	local var_91_0 = FishingEnum.Const.DefaultMapId
-	local var_91_1 = {}
-	local var_91_2 = RoomMapBlockModel.instance:getFullBlockMOList()
+function RoomDebugController:outputFishing()
+	local mapId = FishingEnum.Const.DefaultMapId
+	local blockInfos = {}
+	local fullBlockMOList = RoomMapBlockModel.instance:getFullBlockMOList()
 
-	for iter_91_0, iter_91_1 in ipairs(var_91_2) do
-		if iter_91_1.blockState == RoomBlockEnum.BlockState.Map then
-			local var_91_3 = {
-				mapId = var_91_0,
-				fishingBlockId = iter_91_1.blockId,
-				defineId = iter_91_1.defineId,
-				mainRes = iter_91_1.mainRes,
-				x = iter_91_1.hexPoint.x,
-				y = iter_91_1.hexPoint.y,
-				rotate = iter_91_1.rotate
+	for i, blockMO in ipairs(fullBlockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map then
+			local info = {
+				mapId = mapId,
+				fishingBlockId = blockMO.blockId,
+				defineId = blockMO.defineId,
+				mainRes = blockMO.mainRes,
+				x = blockMO.hexPoint.x,
+				y = blockMO.hexPoint.y,
+				rotate = blockMO.rotate
 			}
-			local var_91_4 = arg_91_0:_jsonEncodeOrdered(var_91_3, {
+			local infoStr = self:_jsonEncodeOrdered(info, {
 				"mapId",
 				"fishingBlockId",
 				"defineId",
@@ -1321,32 +1352,32 @@ function var_0_0.outputFishing(arg_91_0)
 				"rotate"
 			})
 
-			table.insert(var_91_1, var_91_4)
+			table.insert(blockInfos, infoStr)
 		end
 	end
 
-	local var_91_5 = table.concat(var_91_1, ",\n")
-	local var_91_6 = "[\"fishing_map_block\",[\n" .. var_91_5 .. "\n]]"
-	local var_91_7 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.FishingMapBlockPath)
+	local allBlockInfoStr = table.concat(blockInfos, ",\n")
+	local mapBlockContent = "[\"fishing_map_block\",[\n" .. allBlockInfoStr .. "\n]]"
+	local pathClient = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.FishingMapBlockPath)
 
-	SLFramework.FileHelper.WriteTextToPath(var_91_7, var_91_6)
+	SLFramework.FileHelper.WriteTextToPath(pathClient, mapBlockContent)
 
-	local var_91_8 = {}
-	local var_91_9 = RoomMapBuildingModel.instance:getBuildingMOList()
+	local buildingInfos = {}
+	local mapBuildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_91_2, iter_91_3 in ipairs(var_91_9) do
-		if iter_91_3.config and iter_91_3.config.buildingType ~= RoomBuildingEnum.BuildingType.Fishing then
-			local var_91_10 = {
+	for i, buildingMO in ipairs(mapBuildingMOList) do
+		if buildingMO.config and buildingMO.config.buildingType ~= RoomBuildingEnum.BuildingType.Fishing then
+			local info = {
 				use = true,
-				mapId = var_91_0,
-				uid = iter_91_2,
-				defineId = iter_91_3.buildingId,
-				x = iter_91_3.hexPoint.x,
-				y = iter_91_3.hexPoint.y,
-				rotate = iter_91_3.rotate,
-				resAreaDirection = iter_91_3.resAreaDirection
+				mapId = mapId,
+				uid = i,
+				defineId = buildingMO.buildingId,
+				x = buildingMO.hexPoint.x,
+				y = buildingMO.hexPoint.y,
+				rotate = buildingMO.rotate,
+				resAreaDirection = buildingMO.resAreaDirection
 			}
-			local var_91_11 = arg_91_0:_jsonEncodeOrdered(var_91_10, {
+			local infoStr = self:_jsonEncodeOrdered(info, {
 				"mapId",
 				"uid",
 				"defineId",
@@ -1357,55 +1388,58 @@ function var_0_0.outputFishing(arg_91_0)
 				"resAreaDirection"
 			})
 
-			table.insert(var_91_8, var_91_11)
+			table.insert(buildingInfos, infoStr)
 		end
 	end
 
-	local var_91_12 = table.concat(var_91_8, ",\n")
-	local var_91_13 = "[\"fishing_map_building\",[\n" .. var_91_12 .. "\n]]"
-	local var_91_14 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.FishingMapBuildingPath)
+	local allBuildingInfoStr = table.concat(buildingInfos, ",\n")
+	local mapBuildingContent = "[\"fishing_map_building\",[\n" .. allBuildingInfoStr .. "\n]]"
 
-	SLFramework.FileHelper.WriteTextToPath(var_91_14, var_91_13)
-	arg_91_0:output()
+	pathClient = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.FishingMapBuildingPath)
+
+	SLFramework.FileHelper.WriteTextToPath(pathClient, mapBuildingContent)
+	self:output()
 end
 
-function var_0_0._wrapClientConfigParam(arg_92_0, arg_92_1, arg_92_2)
-	local var_92_0 = {}
+function RoomDebugController:_wrapClientConfigParam(config, name)
+	local wrap = {}
 
-	JsonUtil.markAsArray(var_92_0)
-	table.insert(var_92_0, arg_92_2)
-	table.insert(var_92_0, arg_92_1)
+	JsonUtil.markAsArray(wrap)
+	table.insert(wrap, name)
+	table.insert(wrap, config)
 
-	return arg_92_0:_jsonEncode(var_92_0)
+	return self:_jsonEncode(wrap)
 end
 
-function var_0_0._jsonEncode(arg_93_0, arg_93_1)
-	local var_93_0 = JsonUtil.encode(arg_93_1)
+function RoomDebugController:_jsonEncode(obj)
+	local str = JsonUtil.encode(obj)
 
-	return (string.gsub(var_93_0, "},{", "},\n{"))
+	str = string.gsub(str, "},{", "},\n{")
+
+	return str
 end
 
-function var_0_0._jsonEncodeOrdered(arg_94_0, arg_94_1, arg_94_2)
-	local var_94_0 = {}
-	local var_94_1 = {}
+function RoomDebugController:_jsonEncodeOrdered(obj, order)
+	local parts = {}
+	local orderKeyDict = {}
 
-	for iter_94_0, iter_94_1 in ipairs(arg_94_2) do
-		if arg_94_1[iter_94_1] ~= nil then
-			table.insert(var_94_0, string.format("%q:%s", iter_94_1, cjson.encode(arg_94_1[iter_94_1])))
+	for _, key in ipairs(order) do
+		if obj[key] ~= nil then
+			table.insert(parts, string.format("%q:%s", key, cjson.encode(obj[key])))
 		end
 
-		var_94_1[iter_94_1] = true
+		orderKeyDict[key] = true
 	end
 
-	for iter_94_2, iter_94_3 in pairs(arg_94_1) do
-		if not var_94_1[iter_94_2] then
-			logError(string.format("RoomDebugController:_jsonEncodeOrdered error, no specific key order, key:%s", iter_94_2))
+	for key, _ in pairs(obj) do
+		if not orderKeyDict[key] then
+			logError(string.format("RoomDebugController:_jsonEncodeOrdered error, no specific key order, key:%s", key))
 		end
 	end
 
-	return "{" .. table.concat(var_94_0, ",") .. "}"
+	return "{" .. table.concat(parts, ",") .. "}"
 end
 
-var_0_0.instance = var_0_0.New()
+RoomDebugController.instance = RoomDebugController.New()
 
-return var_0_0
+return RoomDebugController

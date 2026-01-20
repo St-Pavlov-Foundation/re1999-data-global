@@ -1,245 +1,249 @@
-﻿module("modules.logic.sp01.warmup.view.V2a9_WarmUpContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/warmup/view/V2a9_WarmUpContainer.lua
 
-local var_0_0 = class("V2a9_WarmUpContainer", Activity125WarmUpViewBaseContainer)
-local var_0_1 = {
+module("modules.logic.sp01.warmup.view.V2a9_WarmUpContainer", package.seeall)
+
+local V2a9_WarmUpContainer = class("V2a9_WarmUpContainer", Activity125WarmUpViewBaseContainer)
+local StateEpisode = {
 	Done = 1999,
 	None = 0
 }
-local var_0_2 = "v2a9_warmup_pic_%s"
+local kResNameFormat = "v2a9_warmup_pic_%s"
 
-function var_0_0.getImgResUrl(arg_1_0, arg_1_1)
-	local var_1_0 = string.format(var_0_2, arg_1_1)
+function V2a9_WarmUpContainer:getImgResUrl(i)
+	local resName = string.format(kResNameFormat, i)
 
-	return ResUrl.getV2a9WarmUpSingleBg(var_1_0)
+	return ResUrl.getV2a9WarmUpSingleBg(resName)
 end
 
-function var_0_0.buildViews(arg_2_0)
-	arg_2_0._warmUp = V2a9_WarmUp.New()
-	arg_2_0._warmUpLeftView = V2a9_WarmUpLeftView.New()
+function V2a9_WarmUpContainer:buildViews()
+	self._warmUp = V2a9_WarmUp.New()
+	self._warmUpLeftView = V2a9_WarmUpLeftView.New()
 
 	return {
-		arg_2_0._warmUp,
-		arg_2_0._warmUpLeftView
+		self._warmUp,
+		self._warmUpLeftView
 	}
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0._needWaitCount = 0
-	arg_3_0.__isWaitingPlayHasGetAnim = false
+function V2a9_WarmUpContainer:onContainerInit()
+	self._needWaitCount = 0
+	self.__isWaitingPlayHasGetAnim = false
 
-	var_0_0.super.onContainerInit(arg_3_0)
+	V2a9_WarmUpContainer.super.onContainerInit(self)
 
-	arg_3_0._tweenSwitchContext = {
+	self._tweenSwitchContext = {
 		lastEpisode = false,
 		curEpisodeId = false
 	}
 end
 
-function var_0_0.onContainerOpen(arg_4_0)
-	arg_4_0._warmUp:setBlock_scroll(false)
-	var_0_0.super.onContainerOpen(arg_4_0)
+function V2a9_WarmUpContainer:onContainerOpen()
+	self._warmUp:setBlock_scroll(false)
+	V2a9_WarmUpContainer.super.onContainerOpen(self)
 
-	if arg_4_0._needWaitCount > 0 then
-		arg_4_0:tryTweenDesc()
+	if self._needWaitCount > 0 then
+		self:tryTweenDesc()
 	end
 end
 
-function var_0_0.onContainerClose(arg_5_0)
+function V2a9_WarmUpContainer:onContainerClose()
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	var_0_0.super.onContainerClose(arg_5_0)
+	V2a9_WarmUpContainer.super.onContainerClose(self)
 end
 
-function var_0_0.onContainerDestroy(arg_6_0)
-	arg_6_0:setCurSelectEpisodeIdSlient(nil)
+function V2a9_WarmUpContainer:onContainerDestroy()
+	self:setCurSelectEpisodeIdSlient(nil)
 
-	arg_6_0._needWaitCount = 0
-	arg_6_0._isPlaying = false
+	self._needWaitCount = 0
+	self._isPlaying = false
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
-	var_0_0.super:onContainerDestroy()
+	V2a9_WarmUpContainer.super:onContainerDestroy()
 end
 
-function var_0_0.onDataUpdateFirst(arg_7_0)
-	arg_7_0._warmUp:onDataUpdateFirst()
-	arg_7_0._warmUpLeftView:onDataUpdateFirst()
+function V2a9_WarmUpContainer:onDataUpdateFirst()
+	self._warmUp:onDataUpdateFirst()
+	self._warmUpLeftView:onDataUpdateFirst()
 end
 
-function var_0_0.onDataUpdate(arg_8_0)
-	arg_8_0._warmUp:onDataUpdate()
-	arg_8_0._warmUpLeftView:onDataUpdate()
+function V2a9_WarmUpContainer:onDataUpdate()
+	self._warmUp:onDataUpdate()
+	self._warmUpLeftView:onDataUpdate()
 end
 
-function var_0_0.onDataUpdateDoneFirst(arg_9_0)
-	arg_9_0:tryTweenDesc()
+function V2a9_WarmUpContainer:onDataUpdateDoneFirst()
+	self:tryTweenDesc()
 end
 
-function var_0_0.onSwitchEpisode(arg_10_0)
-	arg_10_0.__isWaitingPlayHasGetAnim = false
+function V2a9_WarmUpContainer:onSwitchEpisode()
+	self.__isWaitingPlayHasGetAnim = false
 
-	arg_10_0:_play_stop_UI_Bus()
-	arg_10_0._warmUp:setBlock_scroll(false)
-	arg_10_0._warmUp:onSwitchEpisode()
-	arg_10_0._warmUpLeftView:onSwitchEpisode()
+	self:_play_stop_UI_Bus()
+	self._warmUp:setBlock_scroll(false)
+	self._warmUp:onSwitchEpisode()
+	self._warmUpLeftView:onSwitchEpisode()
 end
 
-function var_0_0.onUpdateActivity(arg_11_0)
-	if arg_11_0._isPlaying then
-		arg_11_0:setLocalIsPlayCur()
-		arg_11_0._warmUp:onUpdateActivity()
+function V2a9_WarmUpContainer:onUpdateActivity()
+	if self._isPlaying then
+		self:setLocalIsPlayCur()
+		self._warmUp:onUpdateActivity()
 
-		arg_11_0._isPlaying = false
+		self._isPlaying = false
 	end
 end
 
-function var_0_0.episode2Index(arg_12_0, arg_12_1)
-	return arg_12_0._warmUp:episode2Index(arg_12_1)
+function V2a9_WarmUpContainer:episode2Index(episodeId)
+	return self._warmUp:episode2Index(episodeId)
 end
 
-function var_0_0.switchTabWithAnim(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0._tweenSwitchContext.lastEpisode then
+function V2a9_WarmUpContainer:switchTabWithAnim(lastEpisode, curEpisodeId)
+	if self._tweenSwitchContext.lastEpisode then
 		return
 	end
 
-	if not arg_13_2 then
-		arg_13_0._tweenSwitchContext.lastEpisode = false
-		arg_13_0._tweenSwitchContext.curEpisodeId = false
+	if not curEpisodeId then
+		self._tweenSwitchContext.lastEpisode = false
+		self._tweenSwitchContext.curEpisodeId = false
 
 		return
 	end
 
-	arg_13_0._isPlaying = false
-	arg_13_0._tweenSwitchContext.lastEpisode = arg_13_1
-	arg_13_0._tweenSwitchContext.curEpisodeId = arg_13_2
+	self._isPlaying = false
+	self._tweenSwitchContext.lastEpisode = lastEpisode
+	self._tweenSwitchContext.curEpisodeId = curEpisodeId
 
-	arg_13_0._warmUp:tweenSwitch(function()
-		arg_13_0._tweenSwitchContext.lastEpisode = false
+	self._warmUp:tweenSwitch(function()
+		self._tweenSwitchContext.lastEpisode = false
 	end)
 end
 
-function var_0_0.switchTabNoAnim(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_2 = arg_15_2 or arg_15_0._tweenSwitchContext.curEpisodeId
-	arg_15_0._tweenSwitchContext.lastEpisode = false
-	arg_15_0._tweenSwitchContext.curEpisodeId = false
+function V2a9_WarmUpContainer:switchTabNoAnim(lastEpisode, curEpisodeId)
+	curEpisodeId = curEpisodeId or self._tweenSwitchContext.curEpisodeId
+	self._tweenSwitchContext.lastEpisode = false
+	self._tweenSwitchContext.curEpisodeId = false
 
-	arg_15_0:setCurSelectEpisodeIdSlient(arg_15_2)
+	self:setCurSelectEpisodeIdSlient(curEpisodeId)
 	Activity125Controller.instance:dispatchEvent(Activity125Event.SwitchEpisode)
 end
 
-function var_0_0.sendFinishAct125EpisodeRequest(arg_16_0, ...)
-	arg_16_0.__isWaitingPlayHasGetAnim = true
+function V2a9_WarmUpContainer:sendFinishAct125EpisodeRequest(...)
+	self.__isWaitingPlayHasGetAnim = true
 
-	var_0_0.super.sendFinishAct125EpisodeRequest(arg_16_0, ...)
+	V2a9_WarmUpContainer.super.sendFinishAct125EpisodeRequest(self, ...)
 end
 
-function var_0_0.onCloseViewFinish(arg_17_0, arg_17_1)
-	if arg_17_1 ~= ViewName.CommonPropView then
+function V2a9_WarmUpContainer:onCloseViewFinish(viewName)
+	if viewName ~= ViewName.CommonPropView then
 		return
 	end
 
-	arg_17_0._warmUp:playRewardItemsHasGetAnim()
+	self._warmUp:playRewardItemsHasGetAnim()
 
-	arg_17_0.__isWaitingPlayHasGetAnim = false
+	self.__isWaitingPlayHasGetAnim = false
 end
 
-function var_0_0.isWaitingPlayHasGetAnim(arg_18_0)
-	return arg_18_0.__isWaitingPlayHasGetAnim
+function V2a9_WarmUpContainer:isWaitingPlayHasGetAnim()
+	return self.__isWaitingPlayHasGetAnim
 end
 
-function var_0_0.tryTweenDesc(arg_19_0)
-	arg_19_0._needWaitCount = 0
+function V2a9_WarmUpContainer:tryTweenDesc()
+	self._needWaitCount = 0
 
-	local var_19_0, var_19_1 = arg_19_0:getRLOCCur()
+	local isRecevied, localIsPlay = self:getRLOCCur()
 
-	if var_19_0 then
+	if isRecevied then
 		return
 	end
 
-	if var_19_1 then
+	if localIsPlay then
 		return
 	end
 
-	if not arg_19_0:checkIsDone() then
+	if not self:checkIsDone() then
 		return
 	end
 
-	arg_19_0:setLocalIsPlayCurByUser()
-	arg_19_0:openDesc()
+	self:setLocalIsPlayCurByUser()
+	self:openDesc()
 end
 
-function var_0_0.checkIsDone(arg_20_0, arg_20_1)
-	if arg_20_0:getRLOCCur() then
+function V2a9_WarmUpContainer:checkIsDone(episodeId)
+	local isRecevied = self:getRLOCCur()
+
+	if isRecevied then
 		return true
 	end
 
-	arg_20_1 = arg_20_1 or arg_20_0:getCurSelectedEpisode()
+	episodeId = episodeId or self:getCurSelectedEpisode()
 
-	return arg_20_0:getState(arg_20_1) == var_0_1.Done
+	return self:getState(episodeId) == StateEpisode.Done
 end
 
-function var_0_0.openDesc(arg_21_0)
-	arg_21_0._warmUp:setBlock_scroll(true)
-	arg_21_0:addNeedWaitCount()
-	arg_21_0._warmUp:openDesc(function()
-		arg_21_0._isPlaying = false
+function V2a9_WarmUpContainer:openDesc()
+	self._warmUp:setBlock_scroll(true)
+	self:addNeedWaitCount()
+	self._warmUp:openDesc(function()
+		self._isPlaying = false
 
-		arg_21_0:onAnimDone()
-		arg_21_0._warmUp:setBlock_scroll(false)
+		self:onAnimDone()
+		self._warmUp:setBlock_scroll(false)
 	end)
 end
 
-function var_0_0.setNeedWaitCount(arg_23_0, arg_23_1)
-	arg_23_0._needWaitCount = arg_23_1 or 1
+function V2a9_WarmUpContainer:setNeedWaitCount(needWaitCount)
+	self._needWaitCount = needWaitCount or 1
 end
 
-function var_0_0.addNeedWaitCount(arg_24_0)
-	arg_24_0:setNeedWaitCount(arg_24_0._needWaitCount and arg_24_0._needWaitCount + 1 or 1)
+function V2a9_WarmUpContainer:addNeedWaitCount()
+	self:setNeedWaitCount(self._needWaitCount and self._needWaitCount + 1 or 1)
 end
 
-function var_0_0.onAnimDone(arg_25_0)
-	arg_25_0._needWaitCount = arg_25_0._needWaitCount - 1
+function V2a9_WarmUpContainer:onAnimDone()
+	self._needWaitCount = self._needWaitCount - 1
 
-	if arg_25_0._needWaitCount > 0 then
+	if self._needWaitCount > 0 then
 		return
 	end
 
-	arg_25_0:setLocalIsPlayCur()
-	arg_25_0._warmUp:_refresh()
+	self:setLocalIsPlayCur()
+	self._warmUp:_refresh()
 end
 
-local var_0_3 = "Act125Episode|"
+local kEpisode = "Act125Episode|"
 
-function var_0_0._getPrefsKey(arg_26_0, arg_26_1)
-	return arg_26_0:getPrefsKeyPrefix() .. var_0_3 .. tostring(arg_26_1)
+function V2a9_WarmUpContainer:_getPrefsKey(episodeId)
+	return self:getPrefsKeyPrefix() .. kEpisode .. tostring(episodeId)
 end
 
-function var_0_0.saveState(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_0:_getPrefsKey(arg_27_1)
+function V2a9_WarmUpContainer:saveState(episodeId, value)
+	local key = self:_getPrefsKey(episodeId)
 
-	arg_27_0:saveInt(var_27_0, arg_27_2 or var_0_1.None)
+	self:saveInt(key, value or StateEpisode.None)
 end
 
-function var_0_0.getState(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_0:_getPrefsKey(arg_28_1)
+function V2a9_WarmUpContainer:getState(episodeId, defaultValue)
+	local key = self:_getPrefsKey(episodeId)
 
-	return arg_28_0:getInt(var_28_0, arg_28_2 or var_0_1.None)
+	return self:getInt(key, defaultValue or StateEpisode.None)
 end
 
-function var_0_0.saveStateDone(arg_29_0, arg_29_1, arg_29_2)
-	arg_29_0:saveState(arg_29_1, arg_29_2 and var_0_1.Done or var_0_1.None)
+function V2a9_WarmUpContainer:saveStateDone(episodeId, isDone)
+	self:saveState(episodeId, isDone and StateEpisode.Done or StateEpisode.None)
 
-	if arg_29_2 then
-		arg_29_0:onAnimDone()
+	if isDone then
+		self:onAnimDone()
 	end
 end
 
-function var_0_0.setLocalIsPlayCurByUser(arg_30_0)
-	arg_30_0._isPlaying = true
+function V2a9_WarmUpContainer:setLocalIsPlayCurByUser()
+	self._isPlaying = true
 end
 
-function var_0_0._play_stop_UI_Bus(arg_31_0)
-	if not arg_31_0._isPlaying then
+function V2a9_WarmUpContainer:_play_stop_UI_Bus()
+	if not self._isPlaying then
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
 	end
 end
 
-return var_0_0
+return V2a9_WarmUpContainer

@@ -1,46 +1,48 @@
-﻿module("modules.logic.weather.controller.behaviour.WeatherBehaviourContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/behaviour/WeatherBehaviourContainer.lua
 
-local var_0_0 = class("WeatherBehaviourContainer", BaseUnitSpawn)
+module("modules.logic.weather.controller.behaviour.WeatherBehaviourContainer", package.seeall)
 
-function var_0_0.Create(arg_1_0)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+local WeatherBehaviourContainer = class("WeatherBehaviourContainer", BaseUnitSpawn)
+
+function WeatherBehaviourContainer.Create(containerGO)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(containerGO, WeatherBehaviourContainer)
 end
 
-function var_0_0.setSceneId(arg_2_0, arg_2_1)
-	arg_2_0._sceneId = arg_2_1
-	arg_2_0._sceneConfig = lua_scene_switch.configDict[arg_2_0._sceneId]
+function WeatherBehaviourContainer:setSceneId(sceneId)
+	self._sceneId = sceneId
+	self._sceneConfig = lua_scene_switch.configDict[self._sceneId]
 
-	if arg_2_0._sceneId == MainSceneSwitchEnum.SpSceneId then
-		arg_2_0:addComp("dayNightChange", WeatherDayNightChange)
-		arg_2_0.dayNightChange:setSceneConfig(arg_2_0._sceneConfig)
+	if self._sceneId == MainSceneSwitchEnum.SpSceneId then
+		self:addComp("dayNightChange", WeatherDayNightChange)
+		self.dayNightChange:setSceneConfig(self._sceneConfig)
 	end
 end
 
-function var_0_0.setLightMats(arg_3_0, arg_3_1)
-	if arg_3_0._sceneId == MainSceneSwitchEnum.SpSceneId then
-		arg_3_0.dayNightChange:setLightMats(arg_3_1)
+function WeatherBehaviourContainer:setLightMats(lightMats)
+	if self._sceneId == MainSceneSwitchEnum.SpSceneId then
+		self.dayNightChange:setLightMats(lightMats)
 	end
 end
 
-function var_0_0.initComponents(arg_4_0)
+function WeatherBehaviourContainer:initComponents()
 	return
 end
 
-function var_0_0.setReport(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._prevReport = arg_5_1
-	arg_5_0._curReport = arg_5_2
+function WeatherBehaviourContainer:setReport(prevReport, curReport)
+	self._prevReport = prevReport
+	self._curReport = curReport
 
-	local var_5_0 = arg_5_0:getCompList()
+	local compList = self:getCompList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		iter_5_1:setReport(arg_5_1, arg_5_2)
+	for i, comp in ipairs(compList) do
+		comp:setReport(prevReport, curReport)
 	end
 end
 
-function var_0_0.changeBlendValue(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_0.dayNightChange then
-		arg_6_0.dayNightChange:changeBlendValue(arg_6_1, arg_6_2, arg_6_3)
+function WeatherBehaviourContainer:changeBlendValue(value, isEnd, revert)
+	if self.dayNightChange then
+		self.dayNightChange:changeBlendValue(value, isEnd, revert)
 	end
 end
 
-return var_0_0
+return WeatherBehaviourContainer

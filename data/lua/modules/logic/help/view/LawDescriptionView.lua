@@ -1,60 +1,62 @@
-﻿module("modules.logic.help.view.LawDescriptionView", package.seeall)
+﻿-- chunkname: @modules/logic/help/view/LawDescriptionView.lua
 
-local var_0_0 = class("LawDescriptionView", BaseView)
+module("modules.logic.help.view.LawDescriptionView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageblur = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_blur")
-	arg_1_0._simagetop = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_top")
-	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bottom")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_title")
-	arg_1_0._txttext = gohelper.findChildText(arg_1_0.viewGO, "scroll/viewport/#txt_text")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local LawDescriptionView = class("LawDescriptionView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LawDescriptionView:onInitView()
+	self._simageblur = gohelper.findChildSingleImage(self.viewGO, "#simage_blur")
+	self._simagetop = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_top")
+	self._simagebottom = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bottom")
+	self._txttitle = gohelper.findChildText(self.viewGO, "title/#txt_title")
+	self._txttext = gohelper.findChildText(self.viewGO, "scroll/viewport/#txt_text")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function LawDescriptionView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function LawDescriptionView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function LawDescriptionView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
-	arg_5_0:closeThis()
+function LawDescriptionView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	arg_6_0._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
+function LawDescriptionView:_editableInitView()
+	self._simagetop:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	self._simagebottom:LoadImage(ResUrl.getCommonIcon("bg_1"))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function LawDescriptionView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = arg_8_0.viewParam.id
-	local var_8_1 = HelpConfig.instance:getHelpPageCo(var_8_0)
+function LawDescriptionView:onOpen()
+	local id = self.viewParam.id
+	local helpPageCO = HelpConfig.instance:getHelpPageCo(id)
 
-	arg_8_0._txttitle.text = var_8_1.title
-	arg_8_0._txttext.text = var_8_1.text
+	self._txttitle.text = helpPageCO.title
+	self._txttext.text = helpPageCO.text
 end
 
-function var_0_0.onClose(arg_9_0)
+function LawDescriptionView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagetop:UnLoadImage()
-	arg_10_0._simagebottom:UnLoadImage()
+function LawDescriptionView:onDestroyView()
+	self._simagetop:UnLoadImage()
+	self._simagebottom:UnLoadImage()
 end
 
-return var_0_0
+return LawDescriptionView

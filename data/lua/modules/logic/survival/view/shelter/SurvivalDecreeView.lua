@@ -1,146 +1,154 @@
-﻿module("modules.logic.survival.view.shelter.SurvivalDecreeView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/SurvivalDecreeView.lua
 
-local var_0_0 = class("SurvivalDecreeView", BaseView)
+module("modules.logic.survival.view.shelter.SurvivalDecreeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goLayout = gohelper.findChild(arg_1_0.viewGO, "#go_Leader/LayoutGroup")
-	arg_1_0.layout = arg_1_0.goLayout:GetComponent(gohelper.Type_HorizontalLayoutGroup)
-	arg_1_0.itemList = {}
-	arg_1_0.goInfoRoot = gohelper.findChild(arg_1_0.viewGO, "Left/go_info")
+local SurvivalDecreeView = class("SurvivalDecreeView", BaseView)
+
+function SurvivalDecreeView:onInitView()
+	self.goLayout = gohelper.findChild(self.viewGO, "#go_Leader/LayoutGroup")
+	self.layout = self.goLayout:GetComponent(gohelper.Type_HorizontalLayoutGroup)
+	self.itemList = {}
+	self.goInfoRoot = gohelper.findChild(self.viewGO, "Left/go_info")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_2_0.onShelterBagUpdate, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, arg_2_0.onBuildingInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnDecreeDataUpdate, arg_2_0.onDecreeDataUpdate, arg_2_0)
+function SurvivalDecreeView:addEvents()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnDecreeDataUpdate, self.onDecreeDataUpdate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, arg_3_0.onBuildingInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, arg_3_0.onShelterBagUpdate, arg_3_0)
-	arg_3_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnDecreeDataUpdate, arg_3_0.onDecreeDataUpdate, arg_3_0)
+function SurvivalDecreeView:removeEvents()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnDecreeDataUpdate, self.onDecreeDataUpdate, self)
 end
 
-function var_0_0.onShelterBagUpdate(arg_4_0)
-	arg_4_0:refreshInfoView()
+function SurvivalDecreeView:onShelterBagUpdate()
+	self:refreshInfoView()
 end
 
-function var_0_0.onBuildingInfoUpdate(arg_5_0)
-	arg_5_0:refreshInfoView()
+function SurvivalDecreeView:onBuildingInfoUpdate()
+	self:refreshInfoView()
 end
 
-function var_0_0.onDecreeDataUpdate(arg_6_0)
-	arg_6_0:refreshView()
+function SurvivalDecreeView:onDecreeDataUpdate()
+	self:refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
+function SurvivalDecreeView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_general_2)
-	arg_7_0:refreshView()
-	arg_7_0:playOpenAnim()
+	self:refreshView()
+	self:playOpenAnim()
 end
 
-function var_0_0.refreshView(arg_8_0)
-	local var_8_0 = arg_8_0:getItemCount()
+function SurvivalDecreeView:refreshView()
+	local itemCount = self:getItemCount()
 
-	for iter_8_0 = 1, var_8_0 do
-		arg_8_0:getItem(iter_8_0):updateItem(iter_8_0)
+	for i = 1, itemCount do
+		local item = self:getItem(i)
+
+		item:updateItem(i)
 	end
 
-	arg_8_0:refreshInfoView()
+	self:refreshInfoView()
 end
 
-function var_0_0.getItemCount(arg_9_0)
-	local var_9_0 = 2
-	local var_9_1 = 0
-	local var_9_2 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Decree)
+function SurvivalDecreeView:getItemCount()
+	local maxCount = 2
+	local count = 0
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Decree)
 
-	if var_9_2 then
-		for iter_9_0 = var_9_0, 1, -1 do
-			if SurvivalConfig.instance:getBuildingConfig(var_9_2.buildingId, iter_9_0, true) then
-				var_9_1 = iter_9_0
+	if buildingInfo then
+		for i = maxCount, 1, -1 do
+			local buildConfig = SurvivalConfig.instance:getBuildingConfig(buildingInfo.buildingId, i, true)
+
+			if buildConfig then
+				count = i
 
 				break
 			end
 		end
 	end
 
-	return var_9_1
+	return count
 end
 
-function var_0_0.getItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.itemList[arg_10_1]
+function SurvivalDecreeView:getItem(index)
+	local item = self.itemList[index]
 
-	if not var_10_0 then
-		local var_10_1 = arg_10_0.viewContainer:getResInst(arg_10_0.viewContainer:getSetting().otherRes.itemRes, arg_10_0.goLayout, tostring(arg_10_1))
+	if not item then
+		local go = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes.itemRes, self.goLayout, tostring(index))
 
-		var_10_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_1, SurvivalDecreeItem)
-		arg_10_0.itemList[arg_10_1] = var_10_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalDecreeItem)
+		self.itemList[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.playOpenAnim(arg_11_0)
-	ZProj.UGUIHelper.RebuildLayout(arg_11_0.goLayout.transform)
+function SurvivalDecreeView:playOpenAnim()
+	ZProj.UGUIHelper.RebuildLayout(self.goLayout.transform)
 
-	arg_11_0.layout.enabled = false
+	self.layout.enabled = false
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.itemList) do
-		gohelper.setActive(iter_11_1.viewGO, false)
+	for i, v in ipairs(self.itemList) do
+		gohelper.setActive(v.viewGO, false)
 	end
 
-	arg_11_0._animIndex = 0
+	self._animIndex = 0
 
-	TaskDispatcher.runRepeat(arg_11_0._playItemOpenAnim, arg_11_0, 0.1, #arg_11_0.itemList)
+	TaskDispatcher.runRepeat(self._playItemOpenAnim, self, 0.1, #self.itemList)
 end
 
-function var_0_0._playItemOpenAnim(arg_12_0)
-	arg_12_0._animIndex = arg_12_0._animIndex + 1
+function SurvivalDecreeView:_playItemOpenAnim()
+	self._animIndex = self._animIndex + 1
 
-	local var_12_0 = arg_12_0.itemList[arg_12_0._animIndex]
+	local item = self.itemList[self._animIndex]
 
-	if var_12_0 then
-		gohelper.setActive(var_12_0.viewGO, true)
+	if item then
+		gohelper.setActive(item.viewGO, true)
 	end
 
-	if arg_12_0._animIndex >= #arg_12_0.itemList then
-		TaskDispatcher.cancelTask(arg_12_0._playItemOpenAnim, arg_12_0)
-		TaskDispatcher.runDelay(arg_12_0.playSwitchAnim, arg_12_0, 0.4)
-	end
-end
-
-function var_0_0.playSwitchAnim(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.itemList) do
-		iter_13_1:playSwitchAnim()
+	if self._animIndex >= #self.itemList then
+		TaskDispatcher.cancelTask(self._playItemOpenAnim, self)
+		TaskDispatcher.runDelay(self.playSwitchAnim, self, 0.4)
 	end
 end
 
-function var_0_0.refreshInfoView(arg_14_0)
-	local var_14_0 = SurvivalShelterModel.instance:getWeekInfo():getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Decree)
-
-	if not arg_14_0.infoView then
-		local var_14_1 = arg_14_0.viewContainer:getRes(arg_14_0.viewContainer:getSetting().otherRes.infoView)
-
-		arg_14_0.infoView = ShelterManagerInfoView.getView(var_14_1, arg_14_0.goInfoRoot, "infoView")
+function SurvivalDecreeView:playSwitchAnim()
+	for i, v in ipairs(self.itemList) do
+		v:playSwitchAnim()
 	end
-
-	local var_14_2 = {
-		showType = SurvivalEnum.InfoShowType.Building,
-		showId = var_14_0 and var_14_0.id or 0
-	}
-
-	arg_14_0.infoView:refreshParam(var_14_2)
 end
 
-function var_0_0.onClose(arg_15_0)
+function SurvivalDecreeView:refreshInfoView()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local buildingInfo = weekInfo:getBuildingInfoByBuildType(SurvivalEnum.BuildingType.Decree)
+
+	if not self.infoView then
+		local prefabRes = self.viewContainer:getRes(self.viewContainer:getSetting().otherRes.infoView)
+
+		self.infoView = ShelterManagerInfoView.getView(prefabRes, self.goInfoRoot, "infoView")
+	end
+
+	local param = {}
+
+	param.showType = SurvivalEnum.InfoShowType.Building
+	param.showId = buildingInfo and buildingInfo.id or 0
+
+	self.infoView:refreshParam(param)
+end
+
+function SurvivalDecreeView:onClose()
 	if PopupController.instance:isPause() then
 		PopupController.instance:setPause(ViewName.SurvivalDecreeVoteView, false)
 	end
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.playSwitchAnim, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._playItemOpenAnim, arg_16_0)
+function SurvivalDecreeView:onDestroyView()
+	TaskDispatcher.cancelTask(self.playSwitchAnim, self)
+	TaskDispatcher.cancelTask(self._playItemOpenAnim, self)
 end
 
-return var_0_0
+return SurvivalDecreeView

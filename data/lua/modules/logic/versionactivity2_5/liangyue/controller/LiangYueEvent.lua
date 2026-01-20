@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_5.liangyue.controller.LiangYueEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/liangyue/controller/LiangYueEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_5.liangyue.controller.LiangYueEvent", package.seeall)
 
-var_0_0.OnReceiveEpisodeInfo = var_0_1()
-var_0_0.OnEpisodeInfoPush = var_0_1()
-var_0_0.OnFinishEpisode = var_0_1()
-var_0_0.OneClickClaimReward = var_0_1()
-var_0_0.OnClickStoryItem = var_0_1()
-var_0_0.OnDragIllustration = var_0_1()
-var_0_0.OnAttributeMeetConditions = var_0_1()
-var_0_0.OnEpisodeUnlock = var_0_1()
+local LiangYueEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+LiangYueEvent.OnReceiveEpisodeInfo = _get()
+LiangYueEvent.OnEpisodeInfoPush = _get()
+LiangYueEvent.OnFinishEpisode = _get()
+LiangYueEvent.OneClickClaimReward = _get()
+LiangYueEvent.OnClickStoryItem = _get()
+LiangYueEvent.OnDragIllustration = _get()
+LiangYueEvent.OnAttributeMeetConditions = _get()
+LiangYueEvent.OnEpisodeUnlock = _get()
+
+return LiangYueEvent

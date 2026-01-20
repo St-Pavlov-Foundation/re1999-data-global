@@ -1,366 +1,375 @@
-﻿module("modules.logic.achievement.model.AchievementMainTileModel", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/model/AchievementMainTileModel.lua
 
-local var_0_0 = class("AchievementMainTileModel", ListScrollModel)
+module("modules.logic.achievement.model.AchievementMainTileModel", package.seeall)
 
-function var_0_0.initDatas(arg_1_0)
-	arg_1_0._moCacheMap = {}
-	arg_1_0._infoDict = AchievementConfig.instance:getCategoryAchievementMap()
-	arg_1_0._groupStateMap = {}
-	arg_1_0._fitAchievementCfgTab = {}
-	arg_1_0._curScrollFocusIndex = 1
-	arg_1_0._hasPlayOpenAnim = false
+local AchievementMainTileModel = class("AchievementMainTileModel", ListScrollModel)
+
+function AchievementMainTileModel:initDatas()
+	self._moCacheMap = {}
+	self._infoDict = AchievementConfig.instance:getCategoryAchievementMap()
+	self._groupStateMap = {}
+	self._fitAchievementCfgTab = {}
+	self._curScrollFocusIndex = 1
+	self._hasPlayOpenAnim = false
 end
 
-function var_0_0.refreshTabData(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = arg_2_0:getAchievementMOList(arg_2_1, arg_2_2, arg_2_3)
+function AchievementMainTileModel:refreshTabData(category, sortType, filterType, categoryAchievementCfgs)
+	local moList = self:getAchievementMOList(category, sortType, filterType)
 
-	if not var_2_0 then
-		local var_2_1 = arg_2_0:getFitCategoryAchievementCfgs(arg_2_1, arg_2_3, arg_2_4)
-		local var_2_2 = arg_2_0:getSortFunction(arg_2_2)
+	if not moList then
+		local fitAchievements = self:getFitCategoryAchievementCfgs(category, filterType, categoryAchievementCfgs)
+		local sortFunction = self:getSortFunction(sortType)
 
-		table.sort(var_2_1, var_2_2)
+		table.sort(fitAchievements, sortFunction)
 
-		var_2_0 = arg_2_0:buildAchievementMOList(var_2_1)
-		arg_2_0._moCacheMap[arg_2_1][arg_2_2][arg_2_3] = var_2_0
+		moList = self:buildAchievementMOList(fitAchievements)
+		self._moCacheMap[category][sortType][filterType] = moList
 	end
 
-	arg_2_0:setList(var_2_0)
+	self:setList(moList)
 end
 
-function var_0_0.getAchievementMOList(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._moCacheMap[arg_3_1] = arg_3_0._moCacheMap[arg_3_1] or {}
-	arg_3_0._moCacheMap[arg_3_1][arg_3_2] = arg_3_0._moCacheMap[arg_3_1][arg_3_2] or {}
+function AchievementMainTileModel:getAchievementMOList(category, sortType, filterType)
+	self._moCacheMap[category] = self._moCacheMap[category] or {}
+	self._moCacheMap[category][sortType] = self._moCacheMap[category][sortType] or {}
 
-	return arg_3_0._moCacheMap[arg_3_1][arg_3_2][arg_3_3]
+	return self._moCacheMap[category][sortType][filterType]
 end
 
-function var_0_0.getFitCategoryAchievementCfgs(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._fitAchievementCfgTab = arg_4_0._fitAchievementCfgTab or {}
+function AchievementMainTileModel:getFitCategoryAchievementCfgs(category, filterType, categoryAchievementCfgs)
+	self._fitAchievementCfgTab = self._fitAchievementCfgTab or {}
 
-	local var_4_0 = arg_4_0._fitAchievementCfgTab and arg_4_0._fitAchievementCfgTab[arg_4_1]
+	local fitAchievements = self._fitAchievementCfgTab and self._fitAchievementCfgTab[category]
 
-	if arg_4_3 and not var_4_0 then
-		local var_4_1 = {}
+	if categoryAchievementCfgs and not fitAchievements then
+		fitAchievements = {}
 
-		for iter_4_0, iter_4_1 in ipairs(arg_4_3) do
-			for iter_4_2, iter_4_3 in pairs(AchievementEnum.SearchFilterType) do
-				local var_4_2 = arg_4_0:getSearchFilterFunction(iter_4_3)
+		for _, achievementCfg in ipairs(categoryAchievementCfgs) do
+			for _, filterType in pairs(AchievementEnum.SearchFilterType) do
+				local filterFunction = self:getSearchFilterFunction(filterType)
 
-				var_4_1[iter_4_3] = var_4_1[iter_4_3] or {}
+				fitAchievements[filterType] = fitAchievements[filterType] or {}
 
-				if var_4_2 and var_4_2(arg_4_0, iter_4_1) then
-					table.insert(var_4_1[iter_4_3], iter_4_1)
+				if filterFunction and filterFunction(self, achievementCfg) and AchievementUtils.isShowByAchievementCfg(achievementCfg) then
+					table.insert(fitAchievements[filterType], achievementCfg)
 				end
 			end
 		end
 
-		arg_4_0._fitAchievementCfgTab[arg_4_1] = var_4_1
+		self._fitAchievementCfgTab[category] = fitAchievements
 	end
 
-	return arg_4_0._fitAchievementCfgTab[arg_4_1][arg_4_2]
+	return self._fitAchievementCfgTab[category][filterType]
 end
 
-function var_0_0.getSearchFilterFunction(arg_5_0, arg_5_1)
-	if not arg_5_0._searchFilterFuncMap then
-		arg_5_0._searchFilterFuncMap = {
-			[AchievementEnum.SearchFilterType.Unlocked] = arg_5_0.filterAchievementByUnlocked,
-			[AchievementEnum.SearchFilterType.Locked] = arg_5_0.filterAchievementByLocked,
-			[AchievementEnum.SearchFilterType.All] = arg_5_0.filterAchievementByAll
+function AchievementMainTileModel:getSearchFilterFunction(filterType)
+	if not self._searchFilterFuncMap then
+		self._searchFilterFuncMap = {
+			[AchievementEnum.SearchFilterType.Unlocked] = self.filterAchievementByUnlocked,
+			[AchievementEnum.SearchFilterType.Locked] = self.filterAchievementByLocked,
+			[AchievementEnum.SearchFilterType.All] = self.filterAchievementByAll
 		}
 	end
 
-	return arg_5_0._searchFilterFuncMap[arg_5_1]
+	return self._searchFilterFuncMap[filterType]
 end
 
-function var_0_0.filterAchievementByAll(arg_6_0, arg_6_1)
+function AchievementMainTileModel:filterAchievementByAll(achievementCfg)
 	return true
 end
 
-function var_0_0.filterAchievementByUnlocked(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.groupId
-	local var_7_1 = AchievementUtils.isActivityGroup(arg_7_1.id)
-	local var_7_2 = false
+function AchievementMainTileModel:filterAchievementByUnlocked(achievementCfg)
+	local groupId = achievementCfg.groupId
+	local isGroup = AchievementUtils.isActivityGroup(achievementCfg.id)
+	local isFit = false
 
-	if var_7_1 then
-		if arg_7_0._groupStateMap[var_7_0] == nil then
-			local var_7_3 = AchievementModel.instance:achievementGroupHasLocked(var_7_0)
+	if isGroup then
+		if self._groupStateMap[groupId] == nil then
+			local isGroupLocked = AchievementModel.instance:achievementGroupHasLocked(groupId)
 
-			arg_7_0._groupStateMap[var_7_0] = var_7_3
+			self._groupStateMap[groupId] = isGroupLocked
 		end
 
-		var_7_2 = not arg_7_0._groupStateMap[var_7_0]
+		isFit = not self._groupStateMap[groupId]
 	else
-		var_7_2 = not AchievementModel.instance:achievementHasLocked(arg_7_1.id)
+		isFit = not AchievementModel.instance:achievementHasLocked(achievementCfg.id)
 	end
 
-	return var_7_2
+	return isFit
 end
 
-function var_0_0.filterAchievementByLocked(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.groupId
-	local var_8_1 = AchievementUtils.isActivityGroup(arg_8_1.id)
-	local var_8_2 = false
+function AchievementMainTileModel:filterAchievementByLocked(achievementCfg)
+	local groupId = achievementCfg.groupId
+	local isGroup = AchievementUtils.isActivityGroup(achievementCfg.id)
+	local isFit = false
 
-	if var_8_1 then
-		if arg_8_0._groupStateMap[var_8_0] == nil then
-			local var_8_3 = AchievementModel.instance:achievementGroupHasLocked(var_8_0)
+	if isGroup then
+		if self._groupStateMap[groupId] == nil then
+			local isGroupLocked = AchievementModel.instance:achievementGroupHasLocked(groupId)
 
-			arg_8_0._groupStateMap[var_8_0] = var_8_3
+			self._groupStateMap[groupId] = isGroupLocked
 		end
 
-		var_8_2 = arg_8_0._groupStateMap[var_8_0]
+		isFit = self._groupStateMap[groupId]
 	else
-		var_8_2 = AchievementModel.instance:achievementHasLocked(arg_8_1.id)
+		isFit = AchievementModel.instance:achievementHasLocked(achievementCfg.id)
 	end
 
-	return var_8_2
+	return isFit
 end
 
-function var_0_0.buildAchievementMOList(arg_9_0, arg_9_1)
-	local var_9_0 = {}
-	local var_9_1 = {}
+function AchievementMainTileModel:buildAchievementMOList(achievementCfgList)
+	local moList = {}
+	local achievementList = {}
 
-	if not arg_9_1 then
+	if not achievementCfgList then
 		return
 	end
 
-	local var_9_2 = 0
-	local var_9_3 = true
+	local lastGroupId = 0
+	local isGroupTop = true
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		if var_9_2 == 0 then
-			if iter_9_1.groupId ~= 0 or #var_9_1 >= AchievementEnum.MainListLineCount then
-				if #var_9_1 > 0 then
-					arg_9_0:buildMO(var_9_0, var_9_1, var_9_2)
+	for _, cfg in ipairs(achievementCfgList) do
+		if lastGroupId == 0 then
+			if cfg.groupId ~= 0 or #achievementList >= AchievementEnum.MainListLineCount then
+				if #achievementList > 0 then
+					self:buildMO(moList, achievementList, lastGroupId)
 
-					var_9_1 = {}
+					achievementList = {}
 				end
 
-				var_9_2 = iter_9_1.groupId
+				lastGroupId = cfg.groupId
 			end
 		else
-			local var_9_4 = iter_9_1.category == AchievementEnum.Type.GamePlay and #var_9_1 >= AchievementEnum.MainListLineCount
-			local var_9_5 = iter_9_1.groupId ~= var_9_2
+			local isBreakLine = cfg.category == AchievementEnum.Type.GamePlay and #achievementList >= AchievementEnum.MainListLineCount
+			local isNewGroup = cfg.groupId ~= lastGroupId
 
-			if var_9_5 or var_9_4 then
-				arg_9_0:buildMO(var_9_0, var_9_1, var_9_2, var_9_3)
+			if isNewGroup or isBreakLine then
+				self:buildMO(moList, achievementList, lastGroupId, isGroupTop)
 
-				var_9_2 = iter_9_1.groupId
-				var_9_1 = {}
-				var_9_3 = var_9_5 and true or false
+				lastGroupId = cfg.groupId
+				achievementList = {}
+				isGroupTop = isNewGroup and true or false
 			end
 		end
 
-		table.insert(var_9_1, iter_9_1)
+		table.insert(achievementList, cfg)
 	end
 
-	if #var_9_1 > 0 then
-		arg_9_0:buildMO(var_9_0, var_9_1, var_9_2, var_9_3)
+	if #achievementList > 0 then
+		self:buildMO(moList, achievementList, lastGroupId, isGroupTop)
 	end
 
-	return var_9_0
+	return moList
 end
 
-function var_0_0.buildMO(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = AchievementTileMO.New()
+function AchievementMainTileModel:buildMO(moList, achievementList, groupId, isGroupTop)
+	local mo = AchievementTileMO.New()
 
-	var_10_0:init(arg_10_2, arg_10_3, arg_10_4)
-	table.insert(arg_10_1, var_10_0)
+	mo:init(achievementList, groupId, isGroupTop)
+	table.insert(moList, mo)
 end
 
-function var_0_0.getSortFunction(arg_11_0, arg_11_1)
-	if not arg_11_0._sortFuncMap then
-		arg_11_0._sortFuncMap = {
-			[AchievementEnum.SortType.RareDown] = arg_11_0.sortAchievementByRareDown,
-			[AchievementEnum.SortType.RareUp] = arg_11_0.sortAchievementByRareUp
+function AchievementMainTileModel:getSortFunction(sortType)
+	if not self._sortFuncMap then
+		self._sortFuncMap = {
+			[AchievementEnum.SortType.RareDown] = self.sortAchievementByRareDown,
+			[AchievementEnum.SortType.RareUp] = self.sortAchievementByRareUp
 		}
 	end
 
-	return arg_11_0._sortFuncMap[arg_11_1]
+	return self._sortFuncMap[sortType]
 end
 
-function var_0_0.sortAchievementByRareDown(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.groupId ~= 0
+function AchievementMainTileModel.sortAchievementByRareDown(a, b)
+	local aGroup = a.groupId ~= 0
+	local bGroup = b.groupId ~= 0
 
-	if var_12_0 ~= (arg_12_1.groupId ~= 0) then
-		return not var_12_0
+	if aGroup ~= bGroup then
+		return not aGroup
 	end
 
-	if var_12_0 then
-		if arg_12_0.groupId ~= arg_12_1.groupId then
-			local var_12_1 = AchievementConfig.instance:getGroup(arg_12_0.groupId)
-			local var_12_2 = AchievementConfig.instance:getGroup(arg_12_1.groupId)
-			local var_12_3 = var_12_1 and var_12_1.order or 0
-			local var_12_4 = var_12_2 and var_12_2.order or 0
+	if aGroup then
+		if a.groupId ~= b.groupId then
+			local aGroupCfg = AchievementConfig.instance:getGroup(a.groupId)
+			local bGroupCfg = AchievementConfig.instance:getGroup(b.groupId)
+			local aGroupOrder = aGroupCfg and aGroupCfg.order or 0
+			local bGroupOrder = bGroupCfg and bGroupCfg.order or 0
 
-			if var_12_3 ~= var_12_4 then
-				return var_12_3 < var_12_4
+			if aGroupOrder ~= bGroupOrder then
+				return aGroupOrder < bGroupOrder
 			end
 
-			return arg_12_0.groupId < arg_12_1.groupId
+			return a.groupId < b.groupId
 		end
 
-		if arg_12_0.order ~= arg_12_1.order then
-			return arg_12_0.order < arg_12_1.order
+		if a.order ~= b.order then
+			return a.order < b.order
 		end
 	else
-		local var_12_5 = AchievementModel.instance:achievementHasLocked(arg_12_0.id)
+		local aLocked = AchievementModel.instance:achievementHasLocked(a.id)
+		local bLocked = AchievementModel.instance:achievementHasLocked(b.id)
 
-		if var_12_5 ~= AchievementModel.instance:achievementHasLocked(arg_12_1.id) then
-			return not var_12_5
+		if aLocked ~= bLocked then
+			return not aLocked
 		end
 	end
 
-	return arg_12_0.id < arg_12_1.id
+	return a.id < b.id
 end
 
-function var_0_0.sortAchievementByRareUp(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0.groupId ~= 0
+function AchievementMainTileModel.sortAchievementByRareUp(a, b)
+	local aGroup = a.groupId ~= 0
+	local bGroup = b.groupId ~= 0
 
-	if var_13_0 ~= (arg_13_1.groupId ~= 0) then
-		return not var_13_0
+	if aGroup ~= bGroup then
+		return not aGroup
 	end
 
-	if var_13_0 then
-		if arg_13_0.groupId ~= arg_13_1.groupId then
-			local var_13_1 = AchievementModel.instance:getGroupLevel(arg_13_0.groupId)
-			local var_13_2 = AchievementModel.instance:getGroupLevel(arg_13_1.groupId)
+	if aGroup then
+		if a.groupId ~= b.groupId then
+			local aGroupLevel = AchievementModel.instance:getGroupLevel(a.groupId)
+			local bGroupLevel = AchievementModel.instance:getGroupLevel(b.groupId)
 
-			if var_13_1 ~= var_13_2 then
-				if var_13_1 * var_13_2 == 0 then
-					return var_13_1 ~= 0
+			if aGroupLevel ~= bGroupLevel then
+				if aGroupLevel * bGroupLevel == 0 then
+					return aGroupLevel ~= 0
 				end
 
-				return var_13_1 < var_13_2
+				return aGroupLevel < bGroupLevel
 			end
 
-			return arg_13_0.groupId < arg_13_1.groupId
+			return a.groupId < b.groupId
 		end
 
-		return arg_13_0.order < arg_13_1.order
+		return a.order < b.order
 	else
-		local var_13_3 = arg_13_0.id
-		local var_13_4 = arg_13_1.id
-		local var_13_5 = AchievementModel.instance:getAchievementLevel(var_13_3)
-		local var_13_6 = AchievementModel.instance:getAchievementLevel(var_13_4)
+		local aAchievementId = a.id
+		local bAchievementId = b.id
+		local aLevel = AchievementModel.instance:getAchievementLevel(aAchievementId)
+		local bLevel = AchievementModel.instance:getAchievementLevel(bAchievementId)
 
-		if var_13_5 ~= var_13_6 then
-			if var_13_5 * var_13_5 == 0 then
-				return var_13_5 ~= 0
+		if aLevel ~= bLevel then
+			if aLevel * aLevel == 0 then
+				return aLevel ~= 0
 			end
 
-			return var_13_5 < var_13_6
+			return aLevel < bLevel
 		end
 
-		return var_13_3 < var_13_4
+		return aAchievementId < bAchievementId
 	end
 end
 
-function var_0_0.getInfoList(arg_14_0, arg_14_1)
-	local var_14_0 = {}
-	local var_14_1 = arg_14_0:getList()
+function AchievementMainTileModel:getInfoList(scrollGO)
+	local mixCellInfos = {}
+	local list = self:getList()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_2 = iter_14_1:getIsFold()
-		local var_14_3 = iter_14_1:getLineHeight(nil, var_14_2)
-		local var_14_4 = SLFramework.UGUI.MixCellInfo.New(iter_14_1:getAchievementType(), var_14_3, iter_14_0)
+	for i, mo in ipairs(list) do
+		local isFold = mo:getIsFold()
+		local listItemHeight = mo:getLineHeight(nil, isFold)
+		local mixCellInfo = SLFramework.UGUI.MixCellInfo.New(mo:getAchievementType(), listItemHeight, i)
 
-		table.insert(var_14_0, var_14_4)
+		table.insert(mixCellInfos, mixCellInfo)
 	end
 
-	return var_14_0
+	return mixCellInfos
 end
 
-function var_0_0.getAchievementIndexAndScrollPixel(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = false
-	local var_15_1 = 0
-	local var_15_2 = 0
-	local var_15_3 = arg_15_0:getList()
+function AchievementMainTileModel:getAchievementIndexAndScrollPixel(achievementType, dataId)
+	local isSucc = false
+	local achievementIndex = 0
+	local scrollPixel = 0
+	local moList = self:getList()
 
-	if var_15_3 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_3) do
-			if not iter_15_1:isAchievementMatch(arg_15_1, arg_15_2) then
-				var_15_2 = var_15_2 + iter_15_1:getLineHeight()
+	if moList then
+		for index, mo in ipairs(moList) do
+			local isMatch = mo:isAchievementMatch(achievementType, dataId)
+
+			if not isMatch then
+				local lineHeight = mo:getLineHeight()
+
+				scrollPixel = scrollPixel + lineHeight
 			else
-				var_15_1 = iter_15_0
-				var_15_0 = true
+				achievementIndex = index
+				isSucc = true
 
 				break
 			end
 		end
 	end
 
-	return var_15_0, var_15_1, var_15_2
+	return isSucc, achievementIndex, scrollPixel
 end
 
-function var_0_0.getCurrentAchievementIds(arg_16_0)
-	local var_16_0 = {}
-	local var_16_1 = AchievementMainCommonModel.instance:getCurrentCategory()
-	local var_16_2 = AchievementMainCommonModel.instance:getCurrentFilterType()
-	local var_16_3 = arg_16_0:getFitCategoryAchievementCfgs(var_16_1, var_16_2)
-	local var_16_4 = AchievementMainCommonModel.instance:getCurrentSortType()
-	local var_16_5 = arg_16_0:getSortFunction(var_16_4)
+function AchievementMainTileModel:getCurrentAchievementIds()
+	local result = {}
+	local curCategory = AchievementMainCommonModel.instance:getCurrentCategory()
+	local curFilterType = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local fitCategoryCfgs = self:getFitCategoryAchievementCfgs(curCategory, curFilterType)
+	local curSortType = AchievementMainCommonModel.instance:getCurrentSortType()
+	local sortFunction = self:getSortFunction(curSortType)
 
-	table.sort(var_16_3, var_16_5)
+	table.sort(fitCategoryCfgs, sortFunction)
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_3) do
-		table.insert(var_16_0, iter_16_1.id)
+	for _, achievementCfg in ipairs(fitCategoryCfgs) do
+		table.insert(result, achievementCfg.id)
 	end
 
-	return var_16_0
+	return result
 end
 
-function var_0_0.markTaskHasShowNewEffect(arg_17_0, arg_17_1)
-	if arg_17_1 then
-		arg_17_0._newEffectTaskDict = arg_17_0._newEffectTaskDict or {}
-		arg_17_0._newEffectTaskDict[arg_17_1] = true
+function AchievementMainTileModel:markTaskHasShowNewEffect(taskId)
+	if taskId then
+		self._newEffectTaskDict = self._newEffectTaskDict or {}
+		self._newEffectTaskDict[taskId] = true
 	end
 end
 
-function var_0_0.isTaskHasShowNewEffect(arg_18_0, arg_18_1)
-	return arg_18_0._newEffectTaskDict and arg_18_0._newEffectTaskDict[arg_18_1]
+function AchievementMainTileModel:isTaskHasShowNewEffect(taskId)
+	return self._newEffectTaskDict and self._newEffectTaskDict[taskId]
 end
 
-function var_0_0.hasPlayOpenAnim(arg_19_0)
-	return arg_19_0._hasPlayOpenAnim
+function AchievementMainTileModel:hasPlayOpenAnim()
+	return self._hasPlayOpenAnim
 end
 
-function var_0_0.setHasPlayOpenAnim(arg_20_0, arg_20_1)
-	arg_20_0._hasPlayOpenAnim = arg_20_1
+function AchievementMainTileModel:setHasPlayOpenAnim(hasPlay)
+	self._hasPlayOpenAnim = hasPlay
 end
 
-function var_0_0.markScrollFocusIndex(arg_21_0, arg_21_1)
-	arg_21_0._curScrollFocusIndex = arg_21_1
+function AchievementMainTileModel:markScrollFocusIndex(focusIndex)
+	self._curScrollFocusIndex = focusIndex
 end
 
-function var_0_0.getScrollFocusIndex(arg_22_0)
-	return arg_22_0._curScrollFocusIndex
+function AchievementMainTileModel:getScrollFocusIndex()
+	return self._curScrollFocusIndex
 end
 
-function var_0_0.resetScrollFocusIndex(arg_23_0)
-	arg_23_0._curScrollFocusIndex = nil
+function AchievementMainTileModel:resetScrollFocusIndex()
+	self._curScrollFocusIndex = nil
 end
 
-function var_0_0.getCurGroupMoList(arg_24_0, arg_24_1)
-	local var_24_0 = {}
+function AchievementMainTileModel:getCurGroupMoList(groupId)
+	local moList = {}
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0:getCurMoList()) do
-		if iter_24_1.groupId == arg_24_1 then
-			table.insert(var_24_0, iter_24_1)
+	for _, mo in ipairs(self:getCurMoList()) do
+		if mo.groupId == groupId then
+			table.insert(moList, mo)
 		end
 	end
 
-	return var_24_0
+	return moList
 end
 
-function var_0_0.getCurMoList(arg_25_0)
-	local var_25_0 = AchievementMainCommonModel.instance:getCurrentCategory()
-	local var_25_1 = AchievementMainCommonModel.instance:getCurrentSortType()
-	local var_25_2 = AchievementMainCommonModel.instance:getCurrentFilterType()
+function AchievementMainTileModel:getCurMoList()
+	local category = AchievementMainCommonModel.instance:getCurrentCategory()
+	local sortType = AchievementMainCommonModel.instance:getCurrentSortType()
+	local filterType = AchievementMainCommonModel.instance:getCurrentFilterType()
 
-	return arg_25_0:getAchievementMOList(var_25_0, var_25_1, var_25_2)
+	return self:getAchievementMOList(category, sortType, filterType)
 end
 
-var_0_0.instance = var_0_0.New()
+AchievementMainTileModel.instance = AchievementMainTileModel.New()
 
-return var_0_0
+return AchievementMainTileModel

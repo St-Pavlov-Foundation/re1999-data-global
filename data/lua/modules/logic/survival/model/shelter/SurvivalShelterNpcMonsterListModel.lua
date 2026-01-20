@@ -1,58 +1,62 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalShelterNpcMonsterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalShelterNpcMonsterListModel.lua
 
-local var_0_0 = class("SurvivalShelterNpcMonsterListModel", ListScrollModel)
-local var_0_1 = 4
+module("modules.logic.survival.model.shelter.SurvivalShelterNpcMonsterListModel", package.seeall)
 
-function var_0_0.initViewParam(arg_1_0)
-	arg_1_0.selectNpcIds = {}
+local SurvivalShelterNpcMonsterListModel = class("SurvivalShelterNpcMonsterListModel", ListScrollModel)
+local selectMaxCount = 4
+
+function SurvivalShelterNpcMonsterListModel:initViewParam()
+	self.selectNpcIds = {}
 end
 
-function var_0_0.setSelectNpcId(arg_2_0, arg_2_1)
-	if arg_2_0:isSelectNpc(arg_2_1) then
+function SurvivalShelterNpcMonsterListModel:setSelectNpcId(npcId)
+	if self:isSelectNpc(npcId) then
 		return false
 	end
 
-	arg_2_0.selectNpcIds[#arg_2_0.selectNpcIds + 1] = arg_2_1
+	self.selectNpcIds[#self.selectNpcIds + 1] = npcId
 
 	return true
 end
 
-function var_0_0.setSelectNpcByList(arg_3_0, arg_3_1)
-	arg_3_0.selectNpcIds = {}
+function SurvivalShelterNpcMonsterListModel:setSelectNpcByList(npcIdList)
+	self.selectNpcIds = {}
 
-	if arg_3_1 == nil then
+	if npcIdList == nil then
 		return
 	end
 
-	for iter_3_0 = 1, #arg_3_1 do
-		local var_3_0 = arg_3_1[iter_3_0]
+	for i = 1, #npcIdList do
+		local npcId = npcIdList[i]
 
-		arg_3_0:setSelectNpcId(var_3_0)
+		self:setSelectNpcId(npcId)
 	end
 end
 
-function var_0_0.cancelSelect(arg_4_0, arg_4_1)
-	if not arg_4_0:isSelectNpc(arg_4_1) then
+function SurvivalShelterNpcMonsterListModel:cancelSelect(npcId)
+	if not self:isSelectNpc(npcId) then
 		return false
 	end
 
-	local var_4_0 = -1
+	local needDeleteIndex = -1
 
-	for iter_4_0 = 1, #arg_4_0.selectNpcIds do
-		if arg_4_0.selectNpcIds[iter_4_0] == arg_4_1 then
-			var_4_0 = iter_4_0
+	for i = 1, #self.selectNpcIds do
+		local id = self.selectNpcIds[i]
+
+		if id == npcId then
+			needDeleteIndex = i
 
 			break
 		end
 	end
 
-	if var_4_0 == -1 then
+	if needDeleteIndex == -1 then
 		return false
 	end
 
-	for iter_4_1 = #arg_4_0.selectNpcIds, 1, -1 do
-		if iter_4_1 == var_4_0 then
-			table.remove(arg_4_0.selectNpcIds, iter_4_1)
+	for i = #self.selectNpcIds, 1, -1 do
+		if i == needDeleteIndex then
+			table.remove(self.selectNpcIds, i)
 
 			break
 		end
@@ -61,17 +65,19 @@ function var_0_0.cancelSelect(arg_4_0, arg_4_1)
 	return true
 end
 
-function var_0_0.canSelect(arg_5_0)
-	return arg_5_0:getSelectCount() < var_0_1
+function SurvivalShelterNpcMonsterListModel:canSelect()
+	return self:getSelectCount() < selectMaxCount
 end
 
-function var_0_0.getSelectCount(arg_6_0)
-	return #arg_6_0.selectNpcIds
+function SurvivalShelterNpcMonsterListModel:getSelectCount()
+	return #self.selectNpcIds
 end
 
-function var_0_0.isSelectNpc(arg_7_0, arg_7_1)
-	for iter_7_0 = 1, #arg_7_0.selectNpcIds do
-		if arg_7_0.selectNpcIds[iter_7_0] == arg_7_1 then
+function SurvivalShelterNpcMonsterListModel:isSelectNpc(npcId)
+	for i = 1, #self.selectNpcIds do
+		local id = self.selectNpcIds[i]
+
+		if id == npcId then
 			return true
 		end
 	end
@@ -79,75 +85,76 @@ function var_0_0.isSelectNpc(arg_7_0, arg_7_1)
 	return false
 end
 
-function var_0_0.getSelectList(arg_8_0)
-	return arg_8_0.selectNpcIds
+function SurvivalShelterNpcMonsterListModel:getSelectList()
+	return self.selectNpcIds
 end
 
-function var_0_0.sort(arg_9_0, arg_9_1)
-	local var_9_0 = SurvivalShelterMonsterModel.instance:calRecommendNum(arg_9_0.id)
-	local var_9_1 = SurvivalShelterMonsterModel.instance:calRecommendNum(arg_9_1.id)
+function SurvivalShelterNpcMonsterListModel.sort(a, b)
+	local recommendNumA = SurvivalShelterMonsterModel.instance:calRecommendNum(a.id)
+	local recommendNumB = SurvivalShelterMonsterModel.instance:calRecommendNum(b.id)
 
-	if var_9_0 == var_9_1 then
-		return arg_9_0.id < arg_9_1.id
+	if recommendNumA == recommendNumB then
+		return a.id < b.id
 	end
 
-	return var_9_1 < var_9_0
+	return recommendNumB < recommendNumA
 end
 
-function var_0_0.refreshList(arg_10_0)
-	local var_10_0 = {}
-	local var_10_1 = {}
-	local var_10_2 = {}
-	local var_10_3 = SurvivalShelterModel.instance:getWeekInfo().npcDict
+function SurvivalShelterNpcMonsterListModel:refreshList()
+	local normalList = {}
+	local inDestroyBuildList = {}
+	local notInBuildList = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local npcDict = weekInfo.npcDict
 
-	if var_10_3 then
-		for iter_10_0, iter_10_1 in pairs(var_10_3) do
-			local var_10_4 = iter_10_1:getShelterNpcStatus()
+	if npcDict then
+		for _, v in pairs(npcDict) do
+			local status = v:getShelterNpcStatus()
 
-			if var_10_4 == SurvivalEnum.ShelterNpcStatus.InBuild then
-				var_10_0[#var_10_0 + 1] = iter_10_1
-			elseif var_10_4 == SurvivalEnum.ShelterNpcStatus.InDestoryBuild then
-				var_10_1[#var_10_1 + 1] = iter_10_1
+			if status == SurvivalEnum.ShelterNpcStatus.InBuild then
+				normalList[#normalList + 1] = v
+			elseif status == SurvivalEnum.ShelterNpcStatus.InDestoryBuild then
+				inDestroyBuildList[#inDestroyBuildList + 1] = v
 			end
 		end
 	end
 
-	if #var_10_0 > 1 then
-		table.sort(var_10_0, var_0_0.sort)
+	if #normalList > 1 then
+		table.sort(normalList, SurvivalShelterNpcMonsterListModel.sort)
 	end
 
-	if #var_10_1 > 1 then
-		table.sort(var_10_1, var_0_0.sort)
+	if #inDestroyBuildList > 1 then
+		table.sort(inDestroyBuildList, SurvivalShelterNpcMonsterListModel.sort)
 	end
 
-	if #var_10_2 > 1 then
-		table.sort(var_10_2, var_0_0.sort)
+	if #notInBuildList > 1 then
+		table.sort(notInBuildList, SurvivalShelterNpcMonsterListModel.sort)
 	end
 
-	tabletool.addValues(var_10_0, var_10_1)
-	tabletool.addValues(var_10_0, var_10_2)
+	tabletool.addValues(normalList, inDestroyBuildList)
+	tabletool.addValues(normalList, notInBuildList)
 
-	local var_10_5 = {}
-	local var_10_6 = 2
+	local dataList = {}
+	local lineCount = 2
 
-	for iter_10_2, iter_10_3 in ipairs(var_10_0) do
-		local var_10_7 = math.floor((iter_10_2 - 1) / var_10_6) + 1
-		local var_10_8 = var_10_5[var_10_7]
+	for i, v in ipairs(normalList) do
+		local index = math.floor((i - 1) / lineCount) + 1
+		local item = dataList[index]
 
-		if not var_10_8 then
-			var_10_8 = {
-				id = iter_10_2,
+		if not item then
+			item = {
+				id = i,
 				dataList = {}
 			}
-			var_10_5[var_10_7] = var_10_8
+			dataList[index] = item
 		end
 
-		table.insert(var_10_8.dataList, iter_10_3)
+		table.insert(item.dataList, v)
 	end
 
-	arg_10_0:setList(var_10_5)
+	self:setList(dataList)
 end
 
-var_0_0.instance = var_0_0.New()
+SurvivalShelterNpcMonsterListModel.instance = SurvivalShelterNpcMonsterListModel.New()
 
-return var_0_0
+return SurvivalShelterNpcMonsterListModel

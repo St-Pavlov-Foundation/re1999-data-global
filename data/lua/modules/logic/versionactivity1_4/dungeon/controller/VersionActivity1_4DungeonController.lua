@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_4.dungeon.controller.VersionActivity1_4DungeonController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/dungeon/controller/VersionActivity1_4DungeonController.lua
 
-local var_0_0 = class("VersionActivity1_4DungeonController", BaseController)
+module("modules.logic.versionactivity1_4.dungeon.controller.VersionActivity1_4DungeonController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_4DungeonController = class("VersionActivity1_4DungeonController", BaseController)
+
+function VersionActivity1_4DungeonController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_4DungeonController:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_4DungeonController.instance = VersionActivity1_4DungeonController.New()
 
-return var_0_0
+return VersionActivity1_4DungeonController

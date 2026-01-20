@@ -1,134 +1,137 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1EnemyTabList", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1EnemyTabList.lua
 
-local var_0_0 = class("Season123_2_1EnemyTabList", BaseView)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1EnemyTabList", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebattlelistbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_battlelist/#simage_battlelistbg")
-	arg_1_0._gobattlebtntemplate = gohelper.findChild(arg_1_0.viewGO, "go_battlelist/scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
+local Season123_2_1EnemyTabList = class("Season123_2_1EnemyTabList", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_1EnemyTabList:onInitView()
+	self._simagebattlelistbg = gohelper.findChildSingleImage(self.viewGO, "go_battlelist/#simage_battlelistbg")
+	self._gobattlebtntemplate = gohelper.findChild(self.viewGO, "go_battlelist/scroll_battle/Viewport/battlelist/#go_battlebtntemplate")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._simagebattlelistbg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
+function Season123_2_1EnemyTabList:_editableInitView()
+	self._simagebattlelistbg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
 
-	arg_2_0._tabItems = {}
+	self._tabItems = {}
 end
 
-function var_0_0.onDestroyView(arg_3_0)
-	if arg_3_0._tabItems then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0._tabItems) do
-			iter_3_1.btn:RemoveClickListener()
+function Season123_2_1EnemyTabList:onDestroyView()
+	if self._tabItems then
+		for _, item in ipairs(self._tabItems) do
+			item.btn:RemoveClickListener()
 		end
 
-		arg_3_0._tabItems = nil
+		self._tabItems = nil
 	end
 
-	arg_3_0._simagebattlelistbg:UnLoadImage()
+	self._simagebattlelistbg:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:addEventCb(Season123Controller.instance, Season123Event.EnemyDetailSwitchTab, arg_4_0.refreshSelect, arg_4_0)
-	arg_4_0:refreshUI()
+function Season123_2_1EnemyTabList:onOpen()
+	self:addEventCb(Season123Controller.instance, Season123Event.EnemyDetailSwitchTab, self.refreshSelect, self)
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_5_0)
-	arg_5_0:refreshItems()
-	arg_5_0:refreshSelect()
+function Season123_2_1EnemyTabList:refreshUI()
+	self:refreshItems()
+	self:refreshSelect()
 end
 
-function var_0_0.refreshItems(arg_6_0)
-	local var_6_0 = Season123EnemyModel.instance:getBattleIds()
+function Season123_2_1EnemyTabList:refreshItems()
+	local battleIds = Season123EnemyModel.instance:getBattleIds()
 
-	for iter_6_0 = 1, #var_6_0 do
-		local var_6_1 = arg_6_0:getOrCreateTabItem(iter_6_0)
+	for i = 1, #battleIds do
+		local item = self:getOrCreateTabItem(i)
 
-		var_6_1.txt.text = "0" .. tostring(iter_6_0)
+		item.txt.text = "0" .. tostring(i)
 
-		local var_6_2 = var_6_0[iter_6_0]
-		local var_6_3 = 1
+		local battleId = battleIds[i]
+		local starGot = 1
 
-		for iter_6_1 = 1, var_6_1.starCount do
-			local var_6_4 = var_6_1["imageStar" .. iter_6_1]
+		for index = 1, item.starCount do
+			local image = item["imageStar" .. index]
 
-			if var_6_4 then
-				UISpriteSetMgr.instance:setWeekWalkSprite(var_6_4, iter_6_1 <= var_6_3 and "star_highlight4" or "star_null4", true)
+			if image then
+				UISpriteSetMgr.instance:setWeekWalkSprite(image, index <= starGot and "star_highlight4" or "star_null4", true)
 			end
 		end
 	end
 end
 
-function var_0_0.getOrCreateTabItem(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._tabItems[arg_7_1]
+function Season123_2_1EnemyTabList:getOrCreateTabItem(index)
+	local item = self._tabItems[index]
 
-	if not var_7_0 then
-		var_7_0 = arg_7_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_7_1 = gohelper.cloneInPlace(arg_7_0._gobattlebtntemplate)
+		local go = gohelper.cloneInPlace(self._gobattlebtntemplate)
 
-		var_7_0.go = var_7_1
+		item.go = go
 
-		gohelper.setActive(var_7_0.go, true)
+		gohelper.setActive(item.go, true)
 
-		var_7_0.btn = gohelper.findChildButton(var_7_1, "btn")
-		var_7_0.txt = gohelper.findChildText(var_7_1, "txt")
-		var_7_0.selectIcon = gohelper.findChild(var_7_1, "selectIcon")
-		var_7_0.starGo2 = gohelper.findChild(var_7_1, "star2")
-		var_7_0.starGo3 = gohelper.findChild(var_7_1, "star3")
-		var_7_0.starGo = var_7_0.starGo3
+		item.btn = gohelper.findChildButton(go, "btn")
+		item.txt = gohelper.findChildText(go, "txt")
+		item.selectIcon = gohelper.findChild(go, "selectIcon")
+		item.starGo2 = gohelper.findChild(go, "star2")
+		item.starGo3 = gohelper.findChild(go, "star3")
+		item.starGo = item.starGo3
 
-		gohelper.setActive(var_7_0.starGo2, false)
-		gohelper.setActive(var_7_0.starGo3, false)
-		gohelper.setActive(var_7_0.starGo, true)
+		gohelper.setActive(item.starGo2, false)
+		gohelper.setActive(item.starGo3, false)
+		gohelper.setActive(item.starGo, true)
 
-		local var_7_2 = var_7_0.starGo.transform
+		local tfStar = item.starGo.transform
 
-		var_7_0.starCount = var_7_2.childCount
+		item.starCount = tfStar.childCount
 
-		for iter_7_0 = 1, var_7_0.starCount do
-			local var_7_3 = var_7_2:GetChild(iter_7_0 - 1):GetComponentInChildren(gohelper.Type_Image)
+		for index = 1, item.starCount do
+			local child = tfStar:GetChild(index - 1)
+			local image = child:GetComponentInChildren(gohelper.Type_Image)
 
-			var_7_0["imageStar" .. iter_7_0] = var_7_3
+			item["imageStar" .. index] = image
 		end
 
-		var_7_0.btn:AddClickListener(arg_7_0.onClickTab, arg_7_0, arg_7_1)
-		gohelper.addUIClickAudio(var_7_0.btn.gameObject, AudioEnum.WeekWalk.play_artificial_ui_checkpointswitch)
+		item.btn:AddClickListener(self.onClickTab, self, index)
+		gohelper.addUIClickAudio(item.btn.gameObject, AudioEnum.WeekWalk.play_artificial_ui_checkpointswitch)
 
-		arg_7_0._tabItems[arg_7_1] = var_7_0
+		self._tabItems[index] = item
 	end
 
-	return var_7_0
+	return item
 end
 
-function var_0_0.onClickTab(arg_8_0, arg_8_1)
-	Season123EnemyController.instance:switchTab(arg_8_1)
+function Season123_2_1EnemyTabList:onClickTab(index)
+	Season123EnemyController.instance:switchTab(index)
 end
 
-function var_0_0.refreshSelect(arg_9_0)
-	local var_9_0 = Season123EnemyModel.instance:getBattleIds()
+function Season123_2_1EnemyTabList:refreshSelect()
+	local battleIds = Season123EnemyModel.instance:getBattleIds()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_1 = arg_9_0:getOrCreateTabItem(iter_9_0)
-		local var_9_2 = Season123EnemyModel.instance.selectIndex == iter_9_0
+	for i, v in ipairs(battleIds) do
+		local item = self:getOrCreateTabItem(i)
+		local isSelected = Season123EnemyModel.instance.selectIndex == i
 
-		gohelper.setActive(var_9_1.selectIcon, var_9_2)
+		gohelper.setActive(item.selectIcon, isSelected)
 
-		if var_9_2 then
-			SLFramework.UGUI.GuiHelper.SetColor(var_9_1.txt, "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(var_9_1.imageStar1, "#FFFFFF")
-			SLFramework.UGUI.GuiHelper.SetColor(var_9_1.imageStar2, "#FFFFFF")
+		if isSelected then
+			SLFramework.UGUI.GuiHelper.SetColor(item.txt, "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(item.imageStar1, "#FFFFFF")
+			SLFramework.UGUI.GuiHelper.SetColor(item.imageStar2, "#FFFFFF")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(var_9_1.txt, "#6c6f64")
-			SLFramework.UGUI.GuiHelper.SetColor(var_9_1.imageStar1, "#C1C5B6")
-			SLFramework.UGUI.GuiHelper.SetColor(var_9_1.imageStar2, "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(item.txt, "#6c6f64")
+			SLFramework.UGUI.GuiHelper.SetColor(item.imageStar1, "#C1C5B6")
+			SLFramework.UGUI.GuiHelper.SetColor(item.imageStar2, "#C1C5B6")
 		end
 
-		if var_9_1.imageStar3 then
-			SLFramework.UGUI.GuiHelper.SetColor(var_9_1.imageStar3, var_9_2 and "#FFFFFF" or "#C1C5B6")
+		if item.imageStar3 then
+			SLFramework.UGUI.GuiHelper.SetColor(item.imageStar3, isSelected and "#FFFFFF" or "#C1C5B6")
 		end
 	end
 end
 
-return var_0_0
+return Season123_2_1EnemyTabList

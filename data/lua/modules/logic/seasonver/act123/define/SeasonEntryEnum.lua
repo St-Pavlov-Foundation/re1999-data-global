@@ -1,21 +1,23 @@
-﻿module("modules.logic.seasonver.act123.define.SeasonEntryEnum", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/define/SeasonEntryEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.seasonver.act123.define.SeasonEntryEnum", package.seeall)
 
-var_0_0.DefaultScenePosX = 0
-var_0_0.DefaultScenePosY = 0
-var_0_0.DefaultScenePosZ = 0
-var_0_0.SceneBoundMinX = -88
-var_0_0.SceneBoundMaxX = -18
-var_0_0.SceneBoundMinY = 9
-var_0_0.SceneBoundMaxY = 25
-var_0_0.FocusTweenTime = 0.45
-var_0_0.FocusScale = 0.6
-var_0_0.CameraSize = 5
-var_0_0.ResPath = {
+local SeasonEntryEnum = _M
+
+SeasonEntryEnum.DefaultScenePosX = 0
+SeasonEntryEnum.DefaultScenePosY = 0
+SeasonEntryEnum.DefaultScenePosZ = 0
+SeasonEntryEnum.SceneBoundMinX = -88
+SeasonEntryEnum.SceneBoundMaxX = -18
+SeasonEntryEnum.SceneBoundMinY = 9
+SeasonEntryEnum.SceneBoundMaxY = 25
+SeasonEntryEnum.FocusTweenTime = 0.45
+SeasonEntryEnum.FocusScale = 0.6
+SeasonEntryEnum.CameraSize = 5
+SeasonEntryEnum.ResPath = {
 	"_m_s15_chess_3",
 	"_m_s15_chess_2",
 	"_m_s15_chess_1"
 }
 
-return var_0_0
+return SeasonEntryEnum

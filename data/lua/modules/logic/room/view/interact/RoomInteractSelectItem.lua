@@ -1,86 +1,88 @@
-﻿module("modules.logic.room.view.interact.RoomInteractSelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/interact/RoomInteractSelectItem.lua
 
-local var_0_0 = class("RoomInteractSelectItem", ListScrollCellExtend)
+module("modules.logic.room.view.interact.RoomInteractSelectItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gohas = gohelper.findChild(arg_1_0.viewGO, "#go_has")
-	arg_1_0._goheroicon = gohelper.findChild(arg_1_0.viewGO, "#go_has/#go_heroicon")
-	arg_1_0._goloading = gohelper.findChild(arg_1_0.viewGO, "#go_loading")
-	arg_1_0._goheroicon2 = gohelper.findChild(arg_1_0.viewGO, "#go_loading/#go_heroicon")
-	arg_1_0._gonone = gohelper.findChild(arg_1_0.viewGO, "#go_none")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
-	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "#go_tag")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+local RoomInteractSelectItem = class("RoomInteractSelectItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomInteractSelectItem:onInitView()
+	self._gohas = gohelper.findChild(self.viewGO, "#go_has")
+	self._goheroicon = gohelper.findChild(self.viewGO, "#go_has/#go_heroicon")
+	self._goloading = gohelper.findChild(self.viewGO, "#go_loading")
+	self._goheroicon2 = gohelper.findChild(self.viewGO, "#go_loading/#go_heroicon")
+	self._gonone = gohelper.findChild(self.viewGO, "#go_none")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+	self._gotag = gohelper.findChild(self.viewGO, "#go_tag")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function RoomInteractSelectItem:addEvents()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function RoomInteractSelectItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._view and arg_4_0._view.viewContainer and arg_4_0._characterMO then
-		arg_4_0._view.viewContainer:dispatchEvent(RoomEvent.InteractBuildingSelectHero, arg_4_0._characterMO.heroId)
+function RoomInteractSelectItem:_btnclickOnClick()
+	if self._view and self._view.viewContainer and self._characterMO then
+		self._view.viewContainer:dispatchEvent(RoomEvent.InteractBuildingSelectHero, self._characterMO.heroId)
 	end
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._gotag, false)
-	gohelper.setActive(arg_5_0._goloading, false)
+function RoomInteractSelectItem:_editableInitView()
+	gohelper.setActive(self._gotag, false)
+	gohelper.setActive(self._goloading, false)
 
-	arg_5_0._simageicon = gohelper.findChildSingleImage(arg_5_0.viewGO, "#go_has/#go_heroicon")
-	arg_5_0._simageicon2 = gohelper.findChildSingleImage(arg_5_0.viewGO, "#go_loading/#go_heroicon")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_has/#go_heroicon")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "#go_loading/#go_heroicon")
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function RoomInteractSelectItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function RoomInteractSelectItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._characterMO = arg_8_1
+function RoomInteractSelectItem:onUpdateMO(mo)
+	self._characterMO = mo
 
-	arg_8_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
+function RoomInteractSelectItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageicon:UnLoadImage()
-	arg_10_0._simageicon2:UnLoadImage()
+function RoomInteractSelectItem:onDestroyView()
+	self._simageicon:UnLoadImage()
+	self._simageicon2:UnLoadImage()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	local var_11_0 = arg_11_0._characterMO
-	local var_11_1 = var_11_0 and true or false
+function RoomInteractSelectItem:refreshUI()
+	local mo = self._characterMO
+	local isHas = mo and true or false
 
-	if arg_11_0._lastIsHas ~= var_11_1 then
-		arg_11_0._lastIsHas = var_11_1
+	if self._lastIsHas ~= isHas then
+		self._lastIsHas = isHas
 
-		gohelper.setActive(arg_11_0._gohas, var_11_1)
-		gohelper.setActive(arg_11_0._gonone, not var_11_1)
+		gohelper.setActive(self._gohas, isHas)
+		gohelper.setActive(self._gonone, not isHas)
 	end
 
-	if var_11_1 and arg_11_0._lastMOid ~= var_11_0.id then
-		arg_11_0._lastMOid = var_11_0.id
+	if isHas and self._lastMOid ~= mo.id then
+		self._lastMOid = mo.id
 
-		local var_11_2 = ResUrl.getRoomHeadIcon(var_11_0.skinConfig.headIcon)
+		local headUrl = ResUrl.getRoomHeadIcon(mo.skinConfig.headIcon)
 
-		arg_11_0._simageicon:LoadImage(var_11_2)
-		arg_11_0._simageicon2:LoadImage(var_11_2)
+		self._simageicon:LoadImage(headUrl)
+		self._simageicon2:LoadImage(headUrl)
 	end
 end
 
-return var_0_0
+return RoomInteractSelectItem

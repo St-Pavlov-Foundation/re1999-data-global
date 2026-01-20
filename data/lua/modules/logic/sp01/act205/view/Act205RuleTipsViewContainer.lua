@@ -1,13 +1,15 @@
-﻿module("modules.logic.sp01.act205.view.Act205RuleTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act205/view/Act205RuleTipsViewContainer.lua
 
-local var_0_0 = class("Act205RuleTipsViewContainer", BaseViewContainer)
+module("modules.logic.sp01.act205.view.Act205RuleTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act205RuleTipsViewContainer = class("Act205RuleTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act205RuleTipsView.New())
+function Act205RuleTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act205RuleTipsView.New())
+
+	return views
 end
 
-return var_0_0
+return Act205RuleTipsViewContainer

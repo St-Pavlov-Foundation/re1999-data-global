@@ -1,754 +1,764 @@
-﻿module("modules.logic.room.entity.comp.RoomEffectComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomEffectComp.lua
 
-local var_0_0 = class("RoomEffectComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomEffectComp", package.seeall)
 
-var_0_0.SCENE_TRANSPARNET_OBJECT_KEY = "__transparent_set_layer_"
+local RoomEffectComp = class("RoomEffectComp", LuaCompBase)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.__willDestroy = false
+RoomEffectComp.SCENE_TRANSPARNET_OBJECT_KEY = "__transparent_set_layer_"
+
+function RoomEffectComp:ctor(entity)
+	self.entity = entity
+	self.__willDestroy = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
-	arg_2_0.go = arg_2_1
-	arg_2_0._paramDict = {}
-	arg_2_0._applyParamDict = {}
-	arg_2_0._goDict = arg_2_0:getUserDataTb_()
-	arg_2_0._goTransformDict = arg_2_0:getUserDataTb_()
-	arg_2_0._animatorDict = arg_2_0:getUserDataTb_()
-	arg_2_0._resDict = {}
-	arg_2_0._goActiveDict = {}
-	arg_2_0._goHasDict = {}
-	arg_2_0._delayDestroyDict = {}
-	arg_2_0._delayDestroyMinTime = nil
-	arg_2_0._sameNameComponentsDic = {}
-	arg_2_0._typeComponentsData = RoomEffectCompCacheData.New(arg_2_0)
-	arg_2_0._goSameNameChildsData = RoomEffectCompCacheData.New(arg_2_0)
-	arg_2_0._goPathChildsData = RoomEffectCompCacheData.New(arg_2_0)
-	arg_2_0._goSameNameChildsTrsData = RoomEffectCompCacheData.New(arg_2_0)
-	arg_2_0._goPathChildsTrsData = RoomEffectCompCacheData.New(arg_2_0)
-	arg_2_0.isEmulator = SDKMgr.instance:isEmulator()
+function RoomEffectComp:init(go)
+	self._scene = GameSceneMgr.instance:getCurScene()
+	self.go = go
+	self._paramDict = {}
+	self._applyParamDict = {}
+	self._goDict = self:getUserDataTb_()
+	self._goTransformDict = self:getUserDataTb_()
+	self._animatorDict = self:getUserDataTb_()
+	self._resDict = {}
+	self._goActiveDict = {}
+	self._goHasDict = {}
+	self._delayDestroyDict = {}
+	self._delayDestroyMinTime = nil
+	self._sameNameComponentsDic = {}
+	self._typeComponentsData = RoomEffectCompCacheData.New(self)
+	self._goSameNameChildsData = RoomEffectCompCacheData.New(self)
+	self._goPathChildsData = RoomEffectCompCacheData.New(self)
+	self._goSameNameChildsTrsData = RoomEffectCompCacheData.New(self)
+	self._goPathChildsTrsData = RoomEffectCompCacheData.New(self)
+	self.isEmulator = SDKMgr.instance:isEmulator()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function RoomEffectComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function RoomEffectComp:removeEventListeners()
 	return
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
-	arg_5_0.__willDestroy = true
+function RoomEffectComp:beforeDestroy()
+	self.__willDestroy = true
 
-	TaskDispatcher.cancelTask(arg_5_0._delayDestroy, arg_5_0)
-	arg_5_0:removeEventListeners()
-	arg_5_0:returnAllEffect()
+	TaskDispatcher.cancelTask(self._delayDestroy, self)
+	self:removeEventListeners()
+	self:returnAllEffect()
 end
 
-function var_0_0.isHasKey(arg_6_0, arg_6_1)
-	if arg_6_0._delayDestroyDict[arg_6_1] then
+function RoomEffectComp:isHasKey(key)
+	if self._delayDestroyDict[key] then
 		return false
 	end
 
-	if arg_6_0._paramDict[arg_6_1] == nil then
+	if self._paramDict[key] == nil then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.addParams(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0.__willDestroy then
+function RoomEffectComp:addParams(params, delayDestroy)
+	if self.__willDestroy then
 		return
 	end
 
-	local var_7_0 = Time.time
+	local curTime = Time.time
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
-		arg_7_0._paramDict[iter_7_0] = iter_7_1
+	for key, param in pairs(params) do
+		self._paramDict[key] = param
 
-		if arg_7_2 and arg_7_2 > 0 then
-			arg_7_0._delayDestroyDict[iter_7_0] = arg_7_2 + var_7_0
+		if delayDestroy and delayDestroy > 0 then
+			self._delayDestroyDict[key] = delayDestroy + curTime
 		else
-			arg_7_0._delayDestroyDict[iter_7_0] = nil
+			self._delayDestroyDict[key] = nil
 		end
 	end
 
-	arg_7_0:_refreshDelayDestroyTask()
+	self:_refreshDelayDestroyTask()
 end
 
-function var_0_0._refreshDelayDestroyTask(arg_8_0)
-	local var_8_0
+function RoomEffectComp:_refreshDelayDestroyTask()
+	local minTime
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._delayDestroyDict) do
-		if iter_8_1 and (not var_8_0 or iter_8_1 < var_8_0) then
-			var_8_0 = iter_8_1
+	for key, delayDestroy in pairs(self._delayDestroyDict) do
+		if delayDestroy and (not minTime or delayDestroy < minTime) then
+			minTime = delayDestroy
 		end
 	end
 
-	var_8_0 = var_8_0 and var_8_0 - Time.time
+	minTime = minTime and minTime - Time.time
 
-	if var_8_0 == nil and arg_8_0._delayDestroyMinTime then
-		arg_8_0._delayDestroyMinTime = nil
+	if minTime == nil and self._delayDestroyMinTime then
+		self._delayDestroyMinTime = nil
 
-		TaskDispatcher.cancelTask(arg_8_0._delayDestroy, arg_8_0)
+		TaskDispatcher.cancelTask(self._delayDestroy, self)
 	end
 
-	if var_8_0 and (arg_8_0._delayDestroyMinTime == nil or var_8_0 < arg_8_0._delayDestroyMinTime) then
-		if arg_8_0._delayDestroyMinTime then
-			TaskDispatcher.cancelTask(arg_8_0._delayDestroy, arg_8_0)
+	if minTime and (self._delayDestroyMinTime == nil or minTime < self._delayDestroyMinTime) then
+		if self._delayDestroyMinTime then
+			TaskDispatcher.cancelTask(self._delayDestroy, self)
 		end
 
-		arg_8_0._delayDestroyMinTime = var_8_0
+		self._delayDestroyMinTime = minTime
 
-		TaskDispatcher.runDelay(arg_8_0._delayDestroy, arg_8_0, arg_8_0._delayDestroyMinTime)
+		TaskDispatcher.runDelay(self._delayDestroy, self, self._delayDestroyMinTime)
 	end
 end
 
-function var_0_0._delayDestroy(arg_9_0)
-	local var_9_0 = Time.time + 0.001
+function RoomEffectComp:_delayDestroy()
+	local mintTime = Time.time + 0.001
 
-	arg_9_0._delayDestroyMinTime = nil
+	self._delayDestroyMinTime = nil
 
-	local var_9_1 = {}
+	local keyList = {}
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._delayDestroyDict) do
-		if iter_9_1 and iter_9_1 <= var_9_0 then
-			table.insert(var_9_1, iter_9_0)
+	for key, delayDestroy in pairs(self._delayDestroyDict) do
+		if delayDestroy and delayDestroy <= mintTime then
+			table.insert(keyList, key)
 		end
 	end
 
-	arg_9_0:removeParams(var_9_1)
-	arg_9_0:refreshEffect()
+	self:removeParams(keyList)
+	self:refreshEffect()
 end
 
-function var_0_0.changeParams(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in pairs(arg_10_1) do
-		if arg_10_0._paramDict[iter_10_0] then
-			for iter_10_2, iter_10_3 in pairs(iter_10_1) do
-				arg_10_0._paramDict[iter_10_0][iter_10_2] = iter_10_3
+function RoomEffectComp:changeParams(params)
+	for key, param in pairs(params) do
+		if self._paramDict[key] then
+			for property, value in pairs(param) do
+				self._paramDict[key][property] = value
 			end
 		end
 	end
 end
 
-function var_0_0.removeParams(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = Time.time
+function RoomEffectComp:removeParams(keyList, delayDestroy)
+	local curTime = Time.time
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-		if arg_11_2 and arg_11_2 > 0 then
-			arg_11_0._delayDestroyDict[iter_11_1] = arg_11_2 + var_11_0
+	for i, key in ipairs(keyList) do
+		if delayDestroy and delayDestroy > 0 then
+			self._delayDestroyDict[key] = delayDestroy + curTime
 		else
-			arg_11_0._paramDict[iter_11_1] = nil
-			arg_11_0._delayDestroyDict[iter_11_1] = nil
+			self._paramDict[key] = nil
+			self._delayDestroyDict[key] = nil
 		end
 	end
 
-	arg_11_0:_refreshDelayDestroyTask()
+	self:_refreshDelayDestroyTask()
 end
 
-function var_0_0.getEffectGOTrs(arg_12_0, arg_12_1)
-	return arg_12_0._goTransformDict[arg_12_1]
+function RoomEffectComp:getEffectGOTrs(key)
+	return self._goTransformDict[key]
 end
 
-function var_0_0.getEffectGO(arg_13_0, arg_13_1)
-	return arg_13_0._goDict[arg_13_1]
+function RoomEffectComp:getEffectGO(key)
+	return self._goDict[key]
 end
 
-function var_0_0.getEffectRes(arg_14_0, arg_14_1)
-	return arg_14_0._resDict[arg_14_1]
+function RoomEffectComp:getEffectRes(key)
+	return self._resDict[key]
 end
 
-function var_0_0.isSameResByKey(arg_15_0, arg_15_1, arg_15_2)
-	return arg_15_0._resDict[arg_15_1] == arg_15_2
+function RoomEffectComp:isSameResByKey(key, res)
+	return self._resDict[key] == res
 end
 
-function var_0_0.isHasEffectGOByKey(arg_16_0, arg_16_1)
-	return arg_16_0._goHasDict[arg_16_1]
+function RoomEffectComp:isHasEffectGOByKey(key)
+	return self._goHasDict[key]
 end
 
-function var_0_0.setActiveByKey(arg_17_0, arg_17_1, arg_17_2)
-	if arg_17_0.__willDestroy or arg_17_2 == nil then
+function RoomEffectComp:setActiveByKey(key, isActive)
+	if self.__willDestroy or isActive == nil then
 		return
 	end
 
-	local var_17_0 = arg_17_2 and true or false
+	local flag = isActive and true or false
 
-	if arg_17_0._goActiveDict[arg_17_1] ~= var_17_0 then
-		arg_17_0._goActiveDict[arg_17_1] = var_17_0
+	if self._goActiveDict[key] ~= flag then
+		self._goActiveDict[key] = flag
 
-		if arg_17_0._goHasDict[arg_17_1] then
-			gohelper.setActive(arg_17_0._goDict[arg_17_1], var_17_0)
+		if self._goHasDict[key] then
+			gohelper.setActive(self._goDict[key], flag)
 		end
 	end
 end
 
-function var_0_0.playEffectAnimator(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_0.__willDestroy then
+function RoomEffectComp:playEffectAnimator(key, animName)
+	if self.__willDestroy then
 		return
 	end
 
-	local var_18_0 = arg_18_0._animatorDict[arg_18_1]
+	local animator = self._animatorDict[key]
 
-	if var_18_0 == nil then
-		local var_18_1 = arg_18_0:getEffectGO(arg_18_1)
+	if animator == nil then
+		local go = self:getEffectGO(key)
 
-		if var_18_1 then
-			var_18_0 = var_18_1:GetComponent(RoomEnum.ComponentType.Animator)
-			arg_18_0._animatorDict[arg_18_1] = var_18_0 or false
+		if go then
+			animator = go:GetComponent(RoomEnum.ComponentType.Animator)
+			self._animatorDict[key] = animator or false
 		end
 	end
 
-	if var_18_0 then
-		var_18_0:Play(arg_18_2, 0, 0)
+	if animator then
+		animator:Play(animName, 0, 0)
 
 		return true
 	end
 end
 
-function var_0_0.getMeshRenderersByKey(arg_19_0, arg_19_1)
-	return arg_19_0:getComponentsByKey(arg_19_1, RoomEnum.ComponentName.MeshRenderer)
+function RoomEffectComp:getMeshRenderersByKey(key)
+	return self:getComponentsByKey(key, RoomEnum.ComponentName.MeshRenderer)
 end
 
-function var_0_0.getMeshRenderersByPath(arg_20_0, arg_20_1, arg_20_2)
-	return arg_20_0:getComponentsByPath(arg_20_1, RoomEnum.ComponentName.MeshRenderer, arg_20_2)
+function RoomEffectComp:getMeshRenderersByPath(key, path)
+	return self:getComponentsByPath(key, RoomEnum.ComponentName.MeshRenderer, path)
 end
 
-function var_0_0.getComponentsByPath(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = RoomEnum.ComponentType[arg_21_2]
+function RoomEffectComp:getComponentsByPath(key, componentName, path)
+	local type_component = RoomEnum.ComponentType[componentName]
 
-	if not var_21_0 then
+	if not type_component then
 		return
 	end
 
-	local var_21_1 = arg_21_0:_getSameCacheData(arg_21_2)
-	local var_21_2 = var_21_1:getDataByKey(arg_21_1, arg_21_3)
+	local tempCacheData = self:_getSameCacheData(componentName)
+	local list = tempCacheData:getDataByKey(key, path)
 
-	if arg_21_0.__willDestroy then
-		return var_21_2
+	if self.__willDestroy then
+		return list
 	end
 
-	if not var_21_2 and arg_21_0._goHasDict[arg_21_1] then
-		var_21_2 = {}
+	if not list and self._goHasDict[key] then
+		list = {}
 
-		var_21_1:addDataByKey(arg_21_1, arg_21_3, var_21_2)
+		tempCacheData:addDataByKey(key, path, list)
 
-		local var_21_3 = gohelper.findChild(arg_21_0._goDict[arg_21_1], arg_21_3)
+		local tempGo = gohelper.findChild(self._goDict[key], path)
 
-		if var_21_3 then
-			local var_21_4 = var_21_3:GetComponentsInChildren(var_21_0, true)
+		if tempGo then
+			local components = tempGo:GetComponentsInChildren(type_component, true)
 
-			arg_21_0:_cArrayToLuaTable(var_21_4, var_21_2)
+			self:_cArrayToLuaTable(components, list)
 		end
 	end
 
-	return var_21_2
+	return list
 end
 
-function var_0_0._getSameCacheData(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._sameNameComponentsDic[arg_22_1]
+function RoomEffectComp:_getSameCacheData(componentName)
+	local tempCacheData = self._sameNameComponentsDic[componentName]
 
-	if not var_22_0 then
-		var_22_0 = RoomEffectCompCacheData.New(arg_22_0)
-		arg_22_0._sameNameComponentsDic[arg_22_1] = var_22_0
+	if not tempCacheData then
+		tempCacheData = RoomEffectCompCacheData.New(self)
+		self._sameNameComponentsDic[componentName] = tempCacheData
 	end
 
-	return var_22_0
+	return tempCacheData
 end
 
-function var_0_0.getComponentsByKey(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = RoomEnum.ComponentType[arg_23_2]
+function RoomEffectComp:getComponentsByKey(key, componentName)
+	local type_component = RoomEnum.ComponentType[componentName]
 
-	if not var_23_0 then
+	if not type_component then
 		return
 	end
 
-	local var_23_1 = arg_23_0._typeComponentsData:getDataByKey(arg_23_1, arg_23_2)
+	local list = self._typeComponentsData:getDataByKey(key, componentName)
 
-	if arg_23_0.__willDestroy then
-		return var_23_1
+	if self.__willDestroy then
+		return list
 	end
 
-	if not var_23_1 and arg_23_0._goHasDict[arg_23_1] then
-		var_23_1 = {}
+	if not list and self._goHasDict[key] then
+		list = {}
 
-		arg_23_0._typeComponentsData:addDataByKey(arg_23_1, arg_23_2, var_23_1)
+		self._typeComponentsData:addDataByKey(key, componentName, list)
 
-		local var_23_2 = arg_23_0._goDict[arg_23_1]:GetComponentsInChildren(var_23_0, true)
+		local components = self._goDict[key]:GetComponentsInChildren(type_component, true)
 
-		arg_23_0:_cArrayToLuaTable(var_23_2, var_23_1)
+		self:_cArrayToLuaTable(components, list)
 	end
 
-	return var_23_1
+	return list
 end
 
-function var_0_0.getGameObjectsByName(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_0._goSameNameChildsData:getDataByKey(arg_24_1, arg_24_2)
+function RoomEffectComp:getGameObjectsByName(key, gameName)
+	local list = self._goSameNameChildsData:getDataByKey(key, gameName)
 
-	if arg_24_0.__willDestroy then
-		return var_24_0
+	if self.__willDestroy then
+		return list
 	end
 
-	if not var_24_0 and arg_24_0._goHasDict[arg_24_1] then
-		var_24_0 = {}
+	if not list and self._goHasDict[key] then
+		list = {}
 
-		arg_24_0._goSameNameChildsData:addDataByKey(arg_24_1, arg_24_2, var_24_0)
+		self._goSameNameChildsData:addDataByKey(key, gameName, list)
 
-		if var_0_0.SCENE_TRANSPARNET_OBJECT_KEY == arg_24_2 then
-			local var_24_1 = arg_24_0:getMeshRenderersByKey(arg_24_1)
+		if RoomEffectComp.SCENE_TRANSPARNET_OBJECT_KEY == gameName then
+			local transformList = self:getMeshRenderersByKey(key)
 
-			for iter_24_0 = 1, #var_24_1 do
-				local var_24_2 = var_24_1[iter_24_0]
-				local var_24_3 = string.find(var_24_2.name, "transparent")
+			for i = 1, #transformList do
+				local childTransform = transformList[i]
+				local index = string.find(childTransform.name, "transparent")
 
-				if var_24_3 and var_24_3 == 1 then
-					table.insert(var_24_0, var_24_2.gameObject)
+				if index and index == 1 then
+					table.insert(list, childTransform.gameObject)
 				end
 			end
 		else
-			RoomHelper.getGameObjectsByNameInChildren(arg_24_0._goDict[arg_24_1], arg_24_2, var_24_0)
+			RoomHelper.getGameObjectsByNameInChildren(self._goDict[key], gameName, list)
 		end
 	end
 
-	return var_24_0
+	return list
 end
 
-function var_0_0.getGameObjectByPath(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_0._goPathChildsData:getDataByKey(arg_25_1, arg_25_2)
+function RoomEffectComp:getGameObjectByPath(key, path)
+	local list = self._goPathChildsData:getDataByKey(key, path)
 
-	if not arg_25_0.__willDestroy and not var_25_0 and arg_25_0._goHasDict[arg_25_1] then
-		var_25_0 = {}
+	if not self.__willDestroy and not list and self._goHasDict[key] then
+		list = {}
 
-		arg_25_0._goPathChildsData:addDataByKey(arg_25_1, arg_25_2, var_25_0)
+		self._goPathChildsData:addDataByKey(key, path, list)
 
-		local var_25_1 = gohelper.findChild(arg_25_0._goDict[arg_25_1], arg_25_2)
+		local tempGo = gohelper.findChild(self._goDict[key], path)
 
-		if var_25_1 then
-			table.insert(var_25_0, var_25_1)
+		if tempGo then
+			table.insert(list, tempGo)
 		end
 	end
 
-	if var_25_0 then
-		return var_25_0[1]
+	if list then
+		return list[1]
 	end
 end
 
-function var_0_0.getGameObjectsTrsByName(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0._goSameNameChildsTrsData:getDataByKey(arg_26_1, arg_26_2)
+function RoomEffectComp:getGameObjectsTrsByName(key, gameName)
+	local list = self._goSameNameChildsTrsData:getDataByKey(key, gameName)
 
-	if arg_26_0.__willDestroy then
-		return var_26_0
+	if self.__willDestroy then
+		return list
 	end
 
-	if not var_26_0 and arg_26_0._goHasDict[arg_26_1] then
-		local var_26_1 = arg_26_0:getGameObjectsByName(arg_26_1, arg_26_2)
+	if not list and self._goHasDict[key] then
+		local goList = self:getGameObjectsByName(key, gameName)
 
-		if var_26_1 then
-			var_26_0 = {}
+		if goList then
+			list = {}
 
-			arg_26_0._goSameNameChildsTrsData:addDataByKey(arg_26_1, arg_26_2, var_26_0)
+			self._goSameNameChildsTrsData:addDataByKey(key, gameName, list)
 
-			for iter_26_0, iter_26_1 in ipairs(var_26_1) do
-				table.insert(var_26_0, iter_26_1.transform)
+			for _, go in ipairs(goList) do
+				table.insert(list, go.transform)
 			end
 		end
 	end
 
-	return var_26_0
+	return list
 end
 
-function var_0_0.getGameObjectTrsByPath(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_0._goPathChildsTrsData:getDataByKey(arg_27_1, arg_27_2)
+function RoomEffectComp:getGameObjectTrsByPath(key, path)
+	local list = self._goPathChildsTrsData:getDataByKey(key, path)
 
-	if not arg_27_0.__willDestroy and not var_27_0 and arg_27_0._goHasDict[arg_27_1] then
-		var_27_0 = {}
+	if not self.__willDestroy and not list and self._goHasDict[key] then
+		list = {}
 
-		arg_27_0._goPathChildsTrsData:addDataByKey(arg_27_1, arg_27_2, var_27_0)
+		self._goPathChildsTrsData:addDataByKey(key, path, list)
 
-		local var_27_1 = arg_27_0:getGameObjectByPath(arg_27_1, arg_27_2)
+		local tempGo = self:getGameObjectByPath(key, path)
 
-		if var_27_1 then
-			table.insert(var_27_0, var_27_1)
+		if tempGo then
+			table.insert(list, tempGo)
 		end
 	end
 
-	if var_27_0 then
-		return var_27_0[1]
+	if list then
+		return list[1]
 	end
 end
 
-function var_0_0.removeComponentsByKey(arg_28_0, arg_28_1)
-	arg_28_0._typeComponentsData:removeDataByKey(arg_28_1)
-	arg_28_0._goSameNameChildsData:removeDataByKey(arg_28_1)
-	arg_28_0._goPathChildsData:removeDataByKey(arg_28_1)
-	arg_28_0._goSameNameChildsTrsData:removeDataByKey(arg_28_1)
-	arg_28_0._goPathChildsTrsData:removeDataByKey(arg_28_1)
+function RoomEffectComp:removeComponentsByKey(key)
+	self._typeComponentsData:removeDataByKey(key)
+	self._goSameNameChildsData:removeDataByKey(key)
+	self._goPathChildsData:removeDataByKey(key)
+	self._goSameNameChildsTrsData:removeDataByKey(key)
+	self._goPathChildsTrsData:removeDataByKey(key)
 
-	for iter_28_0, iter_28_1 in pairs(arg_28_0._sameNameComponentsDic) do
-		iter_28_1:removeDataByKey(arg_28_1)
+	for componentName, cacheData in pairs(self._sameNameComponentsDic) do
+		cacheData:removeDataByKey(key)
 	end
 end
 
-function var_0_0.refreshEffect(arg_29_0)
-	if arg_29_0.__willDestroy then
+function RoomEffectComp:refreshEffect()
+	if self.__willDestroy then
 		return
 	end
 
-	local var_29_0 = false
+	local pathfindingColliderChanged = false
 
-	for iter_29_0, iter_29_1 in pairs(arg_29_0._resDict) do
-		local var_29_1 = arg_29_0._paramDict[iter_29_0]
+	for key, res in pairs(self._resDict) do
+		local param = self._paramDict[key]
 
-		if not var_29_1 or var_29_1.res ~= iter_29_1 then
-			arg_29_0:returnEffect(iter_29_0, arg_29_0._goDict[iter_29_0], iter_29_1)
+		if not param or param.res ~= res then
+			self:returnEffect(key, self._goDict[key], res)
 
-			local var_29_2 = arg_29_0._applyParamDict[iter_29_0]
+			local applyParam = self._applyParamDict[key]
 
-			if var_29_2 and var_29_2.pathfinding then
-				var_29_0 = true
+			if applyParam and applyParam.pathfinding then
+				pathfindingColliderChanged = true
 			end
 		end
 	end
 
-	local var_29_3 = {}
-	local var_29_4 = GameResMgr.IsFromEditorDir
+	local needPathList = {}
+	local isFromEditorDir = GameResMgr.IsFromEditorDir
 
-	for iter_29_2, iter_29_3 in pairs(arg_29_0._paramDict) do
-		if var_29_4 then
-			table.insert(var_29_3, iter_29_3.res)
+	for key, param in pairs(self._paramDict) do
+		if isFromEditorDir then
+			table.insert(needPathList, param.res)
 		else
-			table.insert(var_29_3, iter_29_3.ab or iter_29_3.res)
+			table.insert(needPathList, param.ab or param.res)
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().loader:makeSureLoaded(var_29_3, arg_29_0._rebuildEffect, arg_29_0)
-	arg_29_0:_tryClearClickCollider()
+	local sceneLoader = GameSceneMgr.instance:getCurScene().loader
 
-	if var_29_0 then
-		arg_29_0:_tryUpdatePathfindingCollider()
+	sceneLoader:makeSureLoaded(needPathList, self._rebuildEffect, self)
+	self:_tryClearClickCollider()
+
+	if pathfindingColliderChanged then
+		self:_tryUpdatePathfindingCollider()
 	end
 end
 
-function var_0_0._rebuildEffect(arg_30_0)
-	if arg_30_0.__willDestroy then
+function RoomEffectComp:_rebuildEffect()
+	if self.__willDestroy then
 		return
 	end
 
-	local var_30_0 = false
-	local var_30_1 = GameSceneMgr.instance:getCurScene().preloader
-	local var_30_2 = GameResMgr.IsFromEditorDir
+	local pathfindingColliderChanged = false
+	local preloader = GameSceneMgr.instance:getCurScene().preloader
+	local isFromEditorDir = GameResMgr.IsFromEditorDir
 
-	for iter_30_0, iter_30_1 in pairs(arg_30_0._paramDict) do
-		local var_30_3 = arg_30_0._goDict[iter_30_0]
-		local var_30_4 = arg_30_0._goTransformDict[iter_30_0]
-		local var_30_5 = true
+	for key, param in pairs(self._paramDict) do
+		local go = self._goDict[key]
+		local goTrs = self._goTransformDict[key]
+		local isNoGo = true
 
-		if var_30_3 then
-			var_30_5 = false
+		if go then
+			isNoGo = false
 		end
 
-		local var_30_6 = iter_30_1.res
-		local var_30_7 = iter_30_1.ab
-		local var_30_8 = iter_30_1.localPos or var_30_5 and Vector3.zero
-		local var_30_9 = iter_30_1.localRotation or var_30_5 and Vector3.zero
-		local var_30_10 = iter_30_1.localScale or var_30_5 and Vector3.one
-		local var_30_11 = iter_30_1.layer
-		local var_30_12 = iter_30_1.shadow
-		local var_30_13 = iter_30_1.batch
-		local var_30_14 = iter_30_1.highlight
-		local var_30_15 = iter_30_1.alphaThreshold
-		local var_30_16 = iter_30_1.isInventory
-		local var_30_17 = arg_30_0._applyParamDict[iter_30_0]
+		local res = param.res
+		local ab = param.ab
+		local localPos = param.localPos or isNoGo and Vector3.zero
+		local localRotation = param.localRotation or isNoGo and Vector3.zero
+		local localScale = param.localScale or isNoGo and Vector3.one
+		local layer = param.layer
+		local shadow = param.shadow
+		local batch = param.batch
+		local highlight = param.highlight
+		local alphaThreshold = param.alphaThreshold
+		local isInventory = param.isInventory
+		local applyParam = self._applyParamDict[key]
 
-		if var_30_5 and var_30_1 and var_30_1:exist(var_30_2 and var_30_6 or var_30_7 or var_30_6) then
-			local var_30_18 = arg_30_0.entity.containerGO
+		if isNoGo and preloader and preloader:exist(isFromEditorDir and res or ab or res) then
+			local containerGO = self.entity.containerGO
 
-			if iter_30_1.containerGO then
-				var_30_18 = iter_30_1.containerGO
+			if param.containerGO then
+				containerGO = param.containerGO
 			end
 
-			local var_30_19 = iter_30_1.name or iter_30_0
+			local name = param.name or key
 
-			var_30_3 = RoomGOPool.getInstance(var_30_6, var_30_18, var_30_19, var_30_7)
-			var_30_4 = var_30_3.transform
-			arg_30_0._goDict[iter_30_0] = var_30_3
-			arg_30_0._goTransformDict[iter_30_0] = var_30_4
-			arg_30_0._resDict[iter_30_0] = var_30_6
-			arg_30_0._goHasDict[iter_30_0] = true
+			go = RoomGOPool.getInstance(res, containerGO, name, ab)
+			goTrs = go.transform
+			self._goDict[key] = go
+			self._goTransformDict[key] = goTrs
+			self._resDict[key] = res
+			self._goHasDict[key] = true
 
-			if iter_30_1.pathfinding then
-				var_30_0 = true
+			if param.pathfinding then
+				pathfindingColliderChanged = true
 			end
 
-			if iter_30_1.deleteChildPath then
-				local var_30_20 = gohelper.findChild(var_30_3, iter_30_1.deleteChildPath)
+			if param.deleteChildPath then
+				local deleteGo = gohelper.findChild(go, param.deleteChildPath)
 
-				if var_30_20 then
-					gohelper.addChild(RoomGOPool.getPoolContainerGO(), var_30_20)
-					gohelper.destroy(var_30_20)
+				if deleteGo then
+					gohelper.addChild(RoomGOPool.getPoolContainerGO(), deleteGo)
+					gohelper.destroy(deleteGo)
 				end
 			end
 
-			if arg_30_0._goActiveDict[iter_30_0] ~= nil then
-				gohelper.setActive(var_30_3, arg_30_0._goActiveDict[iter_30_0])
+			if self._goActiveDict[key] ~= nil then
+				gohelper.setActive(go, self._goActiveDict[key])
 			end
 		end
 
-		if var_30_3 then
-			if iter_30_1.containerGO then
-				iter_30_1.containerGO = nil
+		if go then
+			if param.containerGO then
+				param.containerGO = nil
 			end
 
-			if var_30_8 then
-				transformhelper.setLocalPos(var_30_4, var_30_8.x, var_30_8.y, var_30_8.z)
+			if localPos then
+				transformhelper.setLocalPos(goTrs, localPos.x, localPos.y, localPos.z)
 			end
 
-			if var_30_9 then
-				transformhelper.setLocalRotation(var_30_4, var_30_9.x, var_30_9.y, var_30_9.z)
+			if localRotation then
+				transformhelper.setLocalRotation(goTrs, localRotation.x, localRotation.y, localRotation.z)
 			end
 
-			if var_30_10 then
-				transformhelper.setLocalScale(var_30_4, var_30_10.x, var_30_10.y, var_30_10.z)
+			if localScale then
+				transformhelper.setLocalScale(goTrs, localScale.x, localScale.y, localScale.z)
 			end
 
-			if var_30_13 ~= nil and (not var_30_17 or var_30_17.batch ~= var_30_13) then
-				arg_30_0:setBatch(iter_30_0, var_30_13)
+			if batch ~= nil and (not applyParam or applyParam.batch ~= batch) then
+				self:setBatch(key, batch)
 			end
 
-			if var_30_11 ~= nil and (not var_30_17 or var_30_17.layer ~= var_30_11) and var_30_11 ~= UnityLayer.SceneOpaque then
-				arg_30_0:setLayer(iter_30_0, var_30_11)
+			if layer ~= nil and (not applyParam or applyParam.layer ~= layer) and layer ~= UnityLayer.SceneOpaque then
+				self:setLayer(key, layer)
 			end
 
-			CurveWorldRenderer.InitCurveWorldRenderer(var_30_3)
+			CurveWorldRenderer.InitCurveWorldRenderer(go)
 
-			if var_30_12 ~= nil and (not var_30_17 or var_30_17.shadow ~= var_30_12) then
-				arg_30_0:setShadow(iter_30_0, var_30_12)
+			if shadow ~= nil and (not applyParam or applyParam.shadow ~= shadow) then
+				self:setShadow(key, shadow)
 			end
 
-			local var_30_21 = false
-			local var_30_22 = false
+			local mpbDirty = false
+			local isDimdegeKey = false
 
-			if not var_30_17 or var_30_14 ~= nil and var_30_17.highlight ~= var_30_14 then
-				var_30_21 = true
+			if not applyParam or highlight ~= nil and applyParam.highlight ~= highlight then
+				mpbDirty = true
 			end
 
-			if not var_30_17 or var_30_16 ~= nil and var_30_17.isInventory ~= var_30_16 then
-				var_30_22 = var_30_16
+			if not applyParam or isInventory ~= nil and applyParam.isInventory ~= isInventory then
+				isDimdegeKey = isInventory
 			end
 
-			if not var_30_17 or var_30_15 ~= nil and var_30_17.alphaThreshold ~= var_30_15 then
-				var_30_21 = true
+			if not applyParam or alphaThreshold ~= nil and applyParam.alphaThreshold ~= alphaThreshold then
+				mpbDirty = true
 			end
 
-			if var_30_21 then
-				arg_30_0:setMPB(iter_30_0, var_30_14, var_30_15, iter_30_1.alphaThresholdValue)
+			if mpbDirty then
+				self:setMPB(key, highlight, alphaThreshold, param.alphaThresholdValue)
 			end
 
-			if var_30_22 then
-				arg_30_0:setDimdegeKey(iter_30_0, false)
+			if isDimdegeKey then
+				self:setDimdegeKey(key, false)
 			end
 
-			arg_30_0._applyParamDict[iter_30_0] = tabletool.copy(iter_30_1)
+			self._applyParamDict[key] = tabletool.copy(param)
 		end
 	end
 
-	arg_30_0:_tryClearClickCollider()
+	self:_tryClearClickCollider()
 
-	if arg_30_0.entity.onEffectRebuild then
-		arg_30_0.entity:onEffectRebuild()
+	if self.entity.onEffectRebuild then
+		self.entity:onEffectRebuild()
 	end
 
-	for iter_30_2, iter_30_3 in ipairs(RoomEnum.EffectRebuildCompNames) do
-		local var_30_23 = arg_30_0.entity[iter_30_3]
+	for i, compName in ipairs(RoomEnum.EffectRebuildCompNames) do
+		local comp = self.entity[compName]
 
-		if var_30_23 and var_30_23.onEffectRebuild then
-			var_30_23:onEffectRebuild()
+		if comp and comp.onEffectRebuild then
+			comp:onEffectRebuild()
 		end
 	end
 
-	if var_30_0 then
-		arg_30_0:_tryUpdatePathfindingCollider()
+	if pathfindingColliderChanged then
+		self:_tryUpdatePathfindingCollider()
 	end
 end
 
-function var_0_0.setLayer(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_0._goDict[arg_31_1]
+function RoomEffectComp:setLayer(key, layer)
+	local go = self._goDict[key]
 
-	if not var_31_0 then
+	if not go then
 		return
 	end
 
-	if arg_31_2 == UnityLayer.SceneOrthogonalOpaque then
-		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 7, 8, true)
-		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 0, 8, false)
+	local isOrthCameraRender = layer == UnityLayer.SceneOrthogonalOpaque
+
+	if isOrthCameraRender then
+		RenderPipelineSetting.SetChildRenderLayerMask(go, 7, 8, true)
+		RenderPipelineSetting.SetChildRenderLayerMask(go, 0, 8, false)
 	else
-		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 0, 8, true)
-		RenderPipelineSetting.SetChildRenderLayerMask(var_31_0, 7, 8, false)
+		RenderPipelineSetting.SetChildRenderLayerMask(go, 0, 8, true)
+		RenderPipelineSetting.SetChildRenderLayerMask(go, 7, 8, false)
 	end
 end
 
-function var_0_0.setShadow(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0:getMeshRenderersByKey(arg_32_1)
+function RoomEffectComp:setShadow(key, shadow)
+	local meshRendererList = self:getMeshRenderersByKey(key)
 
-	if var_32_0 then
-		for iter_32_0 = 1, #var_32_0 do
-			local var_32_1 = var_32_0[iter_32_0]
+	if meshRendererList then
+		for i = 1, #meshRendererList do
+			local meshRenderer = meshRendererList[i]
 
-			if arg_32_2 then
-				var_32_1.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
-				var_32_1.receiveShadows = true
+			if shadow then
+				meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On
+				meshRenderer.receiveShadows = true
 			else
-				var_32_1.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off
-				var_32_1.receiveShadows = false
+				meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off
+				meshRenderer.receiveShadows = false
 			end
 		end
 	end
 end
 
-function var_0_0.setBatch(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_0:getComponentsByKey(arg_33_1, RoomEnum.ComponentName.BatchRendererEntity)
+function RoomEffectComp:setBatch(key, batch)
+	local batchRendererEntityList = self:getComponentsByKey(key, RoomEnum.ComponentName.BatchRendererEntity)
 
-	if var_33_0 then
-		for iter_33_0 = 1, #var_33_0 do
-			var_33_0[iter_33_0].enabled = arg_33_2
+	if batchRendererEntityList then
+		for i = 1, #batchRendererEntityList do
+			local batchRendererEntity = batchRendererEntityList[i]
+
+			batchRendererEntity.enabled = batch
 		end
 	end
 end
 
-function var_0_0.setMPB(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4)
-	local var_34_0 = arg_34_0:getMeshRenderersByKey(arg_34_1)
-	local var_34_1 = GameSceneMgr.instance:getCurScene()
-	local var_34_2
+function RoomEffectComp:setMPB(key, highlight, alphaThreshold, alphaThresholdValue)
+	local meshRendererList = self:getMeshRenderersByKey(key)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local mpb
 
-	if arg_34_2 or arg_34_3 then
-		var_34_2 = var_34_1.mapmgr:getPropertyBlock()
+	if highlight or alphaThreshold then
+		mpb = scene.mapmgr:getPropertyBlock()
 
-		var_34_2:Clear()
+		mpb:Clear()
 
-		if arg_34_2 then
-			var_34_2:SetVector("_Highlight", Vector4.New(0.3, 0.19, 0.06, 0))
+		if highlight then
+			mpb:SetVector("_Highlight", Vector4.New(0.3, 0.19, 0.06, 0))
 		end
 
-		if arg_34_3 then
-			var_34_2:SetFloat("_AlphaThreshold", arg_34_4 or 0.6)
+		if alphaThreshold then
+			mpb:SetFloat("_AlphaThreshold", alphaThresholdValue or 0.6)
 		end
 	end
 
-	if var_34_0 then
-		for iter_34_0 = 1, #var_34_0 do
-			local var_34_3 = var_34_0[iter_34_0]
+	if meshRendererList then
+		for i = 1, #meshRendererList do
+			local meshRenderer = meshRendererList[i]
 
-			if arg_34_3 ~= nil then
-				MaterialReplaceHelper.SetRendererKeyworld(var_34_3, "_SCREENCOORD", arg_34_3 and true or false)
+			if alphaThreshold ~= nil then
+				MaterialReplaceHelper.SetRendererKeyworld(meshRenderer, "_SCREENCOORD", alphaThreshold and true or false)
 			end
 
-			var_34_3:SetPropertyBlock(var_34_2)
+			meshRenderer:SetPropertyBlock(mpb)
 		end
 	end
 end
 
-function var_0_0.setDimdegeKey(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_0:getMeshRenderersByKey(arg_35_1)
+function RoomEffectComp:setDimdegeKey(key, open)
+	local meshRendererList = self:getMeshRenderersByKey(key)
 
-	if var_35_0 then
-		local var_35_1 = GameSceneMgr.instance:getCurScene().mapmgr:getPropertyBlock()
+	if meshRendererList then
+		local mpb = GameSceneMgr.instance:getCurScene().mapmgr:getPropertyBlock()
 
-		var_35_1:Clear()
-		var_35_1:SetFloat("_DimEdgeSize", arg_35_2 and 0 or 1)
+		mpb:Clear()
+		mpb:SetFloat("_DimEdgeSize", open and 0 or 1)
 
-		for iter_35_0 = 1, #var_35_0 do
-			var_35_0[iter_35_0]:SetPropertyBlock(var_35_1)
+		for i = 1, #meshRendererList do
+			local meshRenderer = meshRendererList[i]
+
+			meshRenderer:SetPropertyBlock(mpb)
 		end
 	end
 end
 
-function var_0_0.setMaterialKeyword(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	local var_36_0 = arg_36_0:_cArrayToLuaTable(arg_36_1.materials)
+function RoomEffectComp:setMaterialKeyword(rederer, keyword, flag)
+	local materialList = self:_cArrayToLuaTable(rederer.materials)
 
-	if var_36_0 then
-		for iter_36_0 = 1, #var_36_0 do
-			local var_36_1 = var_36_0[iter_36_0]
+	if materialList then
+		for i = 1, #materialList do
+			local material = materialList[i]
 
-			if arg_36_3 then
-				var_36_1:EnableKeyword(arg_36_2)
+			if flag then
+				material:EnableKeyword(keyword)
 			else
-				var_36_1:DisableKeyword(arg_36_2)
+				material:DisableKeyword(keyword)
 			end
 		end
 	end
 end
 
-function var_0_0.returnEffect(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	if not arg_37_2 or string.nilorempty(arg_37_3) then
+function RoomEffectComp:returnEffect(key, go, res)
+	if not go or string.nilorempty(res) then
 		return
 	end
 
-	local var_37_0 = arg_37_0._applyParamDict[arg_37_1]
+	local applyParam = self._applyParamDict[key]
 
-	if var_37_0 then
-		if var_37_0.isInventory then
-			arg_37_0:setDimdegeKey(arg_37_1, true)
+	if applyParam then
+		if applyParam.isInventory then
+			self:setDimdegeKey(key, true)
 		end
 
-		if var_37_0.layer and var_37_0.layer ~= UnityLayer.SceneOpaque then
-			arg_37_0:setLayer(arg_37_1, UnityLayer.SceneOpaque)
+		if applyParam.layer and applyParam.layer ~= UnityLayer.SceneOpaque then
+			self:setLayer(key, UnityLayer.SceneOpaque)
 		end
 
-		if var_37_0.batch == false then
-			arg_37_0:setBatch(true)
+		if applyParam.batch == false then
+			self:setBatch(true)
 		end
 
-		if arg_37_0._goActiveDict[arg_37_1] == false then
-			gohelper.setActive(arg_37_0._goDict[arg_37_1], true)
-		end
-	end
-
-	for iter_37_0, iter_37_1 in ipairs(RoomEnum.EffectRebuildCompNames) do
-		local var_37_1 = arg_37_0.entity[iter_37_1]
-
-		if var_37_1 and var_37_1.onEffectReturn then
-			var_37_1:onEffectReturn(arg_37_1, arg_37_3)
+		if self._goActiveDict[key] == false then
+			gohelper.setActive(self._goDict[key], true)
 		end
 	end
 
-	RoomGOPool.returnInstance(arg_37_3, arg_37_2)
-	arg_37_0:removeComponentsByKey(arg_37_1)
+	for i, compName in ipairs(RoomEnum.EffectRebuildCompNames) do
+		local comp = self.entity[compName]
 
-	arg_37_0._goDict[arg_37_1] = nil
-	arg_37_0._resDict[arg_37_1] = nil
-	arg_37_0._animatorDict[arg_37_1] = nil
-	arg_37_0._applyParamDict[arg_37_1] = nil
-	arg_37_0._goTransformDict[arg_37_1] = nil
-	arg_37_0._goActiveDict[arg_37_1] = nil
-	arg_37_0._goHasDict[arg_37_1] = nil
-end
-
-function var_0_0.returnAllEffect(arg_38_0)
-	TaskDispatcher.cancelTask(arg_38_0._delayDestroy, arg_38_0)
-
-	for iter_38_0, iter_38_1 in pairs(arg_38_0._resDict) do
-		arg_38_0:returnEffect(iter_38_0, arg_38_0._goDict[iter_38_0], iter_38_1)
+		if comp and comp.onEffectReturn then
+			comp:onEffectReturn(key, res)
+		end
 	end
 
-	arg_38_0._resDict = nil
-	arg_38_0._paramDict = nil
-	arg_38_0._applyParamDict = nil
+	RoomGOPool.returnInstance(res, go)
+	self:removeComponentsByKey(key)
+
+	self._goDict[key] = nil
+	self._resDict[key] = nil
+	self._animatorDict[key] = nil
+	self._applyParamDict[key] = nil
+	self._goTransformDict[key] = nil
+	self._goActiveDict[key] = nil
+	self._goHasDict[key] = nil
 end
 
-function var_0_0._cArrayToLuaTable(arg_39_0, arg_39_1, arg_39_2)
-	return RoomHelper.cArrayToLuaTable(arg_39_1, arg_39_2)
+function RoomEffectComp:returnAllEffect()
+	TaskDispatcher.cancelTask(self._delayDestroy, self)
+
+	for key, res in pairs(self._resDict) do
+		self:returnEffect(key, self._goDict[key], res)
+	end
+
+	self._resDict = nil
+	self._paramDict = nil
+	self._applyParamDict = nil
 end
 
-function var_0_0._tryClearClickCollider(arg_40_0)
-	if arg_40_0.entity.collider then
-		arg_40_0.entity.collider:clearColliderGOList()
+function RoomEffectComp:_cArrayToLuaTable(carray, luaList)
+	return RoomHelper.cArrayToLuaTable(carray, luaList)
+end
+
+function RoomEffectComp:_tryClearClickCollider()
+	if self.entity.collider then
+		self.entity.collider:clearColliderGOList()
 	end
 end
 
-function var_0_0._tryUpdatePathfindingCollider(arg_41_0)
-	RoomScenePathComp.addEntityCollider(arg_41_0.entity.go)
+function RoomEffectComp:_tryUpdatePathfindingCollider()
+	RoomScenePathComp.addEntityCollider(self.entity.go)
 end
 
-return var_0_0
+return RoomEffectComp

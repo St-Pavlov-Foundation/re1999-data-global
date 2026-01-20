@@ -1,53 +1,55 @@
-﻿module("modules.common.others.UISimpleScrollViewComponent", package.seeall)
+﻿-- chunkname: @modules/common/others/UISimpleScrollViewComponent.lua
 
-local var_0_0 = class("UISimpleScrollViewComponent", UserDataDispose)
+module("modules.common.others.UISimpleScrollViewComponent", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:__onInit()
+local UISimpleScrollViewComponent = class("UISimpleScrollViewComponent", UserDataDispose)
 
-	arg_1_0._sign_index = 0
+function UISimpleScrollViewComponent:ctor()
+	self:__onInit()
+
+	self._sign_index = 0
 end
 
-function var_0_0.registScrollView(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_0._scroll_view then
-		arg_2_0._scroll_view = {}
+function UISimpleScrollViewComponent:registScrollView(obj_root, scroll_param)
+	if not self._scroll_view then
+		self._scroll_view = {}
 	end
 
-	local var_2_0 = UISimpleScrollViewItem.New(arg_2_0.parentClass, arg_2_1, arg_2_2)
+	local scroll = UISimpleScrollViewItem.New(self.parentClass, obj_root, scroll_param)
 
-	var_2_0:__onInit()
-	var_2_0:startLogic(arg_2_1, arg_2_2)
+	scroll:__onInit()
+	scroll:startLogic(obj_root, scroll_param)
 
-	arg_2_0._sign_index = arg_2_0._sign_index + 1
-	var_2_0.sign_index = arg_2_0._sign_index
+	self._sign_index = self._sign_index + 1
+	scroll.sign_index = self._sign_index
 
-	table.insert(arg_2_0._scroll_view, var_2_0)
+	table.insert(self._scroll_view, scroll)
 
-	return var_2_0
+	return scroll
 end
 
-function var_0_0.registSimpleScrollView(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = arg_3_0:registScrollView(arg_3_1)
+function UISimpleScrollViewComponent:registSimpleScrollView(obj_root, scrollDir, lineCount)
+	local scroll = self:registScrollView(obj_root)
 
-	var_3_0:useDefaultParam(arg_3_2, arg_3_3)
+	scroll:useDefaultParam(scrollDir, lineCount)
 
-	return var_3_0
+	return scroll
 end
 
-function var_0_0.releaseSelf(arg_4_0)
-	if arg_4_0._scroll_view then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._scroll_view) do
-			if iter_4_1.releaseSelf then
-				iter_4_1:releaseSelf()
+function UISimpleScrollViewComponent:releaseSelf()
+	if self._scroll_view then
+		for i, v in ipairs(self._scroll_view) do
+			if v.releaseSelf then
+				v:releaseSelf()
 			end
 
-			iter_4_1:__onDispose()
+			v:__onDispose()
 		end
 	end
 
-	arg_4_0._scroll_view = nil
+	self._scroll_view = nil
 
-	arg_4_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return UISimpleScrollViewComponent

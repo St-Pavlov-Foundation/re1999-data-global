@@ -102,5 +102,21 @@
     "timeoutVoice": 10386167,
     "protectionTime": 0,
     "statusParams": "noChangeStatus"
+  },
+  {
+    "id": 1313419,
+    "time": 5.0,
+    "waitVoice": 1313420,
+    "timeoutVoice": 1313421,
+    "protectionTime": 6,
+    "statusParams": ""
+  },
+  {
+    "id": 1310063,
+    "time": 5.0,
+    "waitVoice": 1310064,
+    "timeoutVoice": 1310065,
+    "protectionTime": 6,
+    "statusParams": ""
   }
 ]

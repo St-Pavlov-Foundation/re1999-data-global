@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkResonanceLevel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkResonanceLevel.lua
 
-local var_0_0 = class("FightWorkResonanceLevel", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkResonanceLevel", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightRoundSequence.roundTempData.ResonanceLevel = arg_1_0.actEffectData.effectNum
+local FightWorkResonanceLevel = class("FightWorkResonanceLevel", FightEffectBase)
 
-	FightController.instance:dispatchEvent(FightEvent.ResonanceLevel, arg_1_0.actEffectData.effectNum)
-	arg_1_0:onDone(true)
+function FightWorkResonanceLevel:onStart()
+	FightRoundSequence.roundTempData.ResonanceLevel = self.actEffectData.effectNum
+
+	FightController.instance:dispatchEvent(FightEvent.ResonanceLevel, self.actEffectData.effectNum)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkResonanceLevel:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkResonanceLevel

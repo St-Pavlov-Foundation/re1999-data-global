@@ -1,124 +1,128 @@
-﻿module("modules.logic.main.controller.work.NewCultivationGiftPatFaceWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/NewCultivationGiftPatFaceWork.lua
 
-local var_0_0 = class("NewCultivationGiftPatFaceWork", PatFaceWorkBase)
+module("modules.logic.main.controller.work.NewCultivationGiftPatFaceWork", package.seeall)
 
-function var_0_0._viewName(arg_1_0)
-	return PatFaceConfig.instance:getPatFaceViewName(arg_1_0._patFaceId)
+local NewCultivationGiftPatFaceWork = class("NewCultivationGiftPatFaceWork", PatFaceWorkBase)
+
+function NewCultivationGiftPatFaceWork:_viewName()
+	return PatFaceConfig.instance:getPatFaceViewName(self._patFaceId)
 end
 
-function var_0_0._actId(arg_2_0)
-	return PatFaceConfig.instance:getPatFaceActivityId(arg_2_0._patFaceId)
+function NewCultivationGiftPatFaceWork:_actId()
+	return PatFaceConfig.instance:getPatFaceActivityId(self._patFaceId)
 end
 
-function var_0_0.checkCanPat(arg_3_0)
-	local var_3_0 = arg_3_0:_actId()
+function NewCultivationGiftPatFaceWork:checkCanPat()
+	local actId = self:_actId()
 
-	if not ActivityModel.instance:isActOnLine(var_3_0) then
+	if not ActivityModel.instance:isActOnLine(actId) then
 		return false
 	end
 
-	local var_3_1 = ActivityModel.instance:getActMO(var_3_0)
+	local activityInfoMo = ActivityModel.instance:getActMO(actId)
 
-	if var_3_1 == nil then
+	if activityInfoMo == nil then
 		return false
 	end
 
-	return var_3_1:isOpen() and not var_3_1:isExpired()
+	return activityInfoMo:isOpen() and not activityInfoMo:isExpired()
 end
 
-function var_0_0.startPat(arg_4_0)
-	arg_4_0:_startBlock()
+function NewCultivationGiftPatFaceWork:startPat()
+	self:_startBlock()
 
-	local var_4_0 = arg_4_0:_actId()
+	local actId = self:_actId()
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_4_0._onCloseViewFinish, arg_4_0)
-	Activity125Controller.instance:getAct125InfoFromServer(var_4_0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, arg_4_0.onReceiveActivityInfo, arg_4_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	Activity125Controller.instance:getAct125InfoFromServer(actId)
+	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, self.onReceiveActivityInfo, self)
 end
 
-function var_0_0.clearWork(arg_5_0)
-	arg_5_0:_endBlock()
+function NewCultivationGiftPatFaceWork:clearWork()
+	self:_endBlock()
 
-	arg_5_0._needRevert = false
+	self._needRevert = false
 
-	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, arg_5_0.onReceiveActivityInfo, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_5_0._onCloseViewFinish, arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0.OnGetReward, arg_5_0)
+	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, self.onReceiveActivityInfo, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.OnGetReward, self)
 end
 
-function var_0_0._onOpenViewFinish(arg_6_0, arg_6_1)
-	if arg_6_1 ~= arg_6_0:_viewName() then
+function NewCultivationGiftPatFaceWork:_onOpenViewFinish(openingViewName)
+	local viewName = self:_viewName()
+
+	if openingViewName ~= viewName then
 		return
 	end
 
-	arg_6_0:_endBlock()
+	self:_endBlock()
 end
 
-function var_0_0._onCloseViewFinish(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:_viewName()
+function NewCultivationGiftPatFaceWork:_onCloseViewFinish(closingViewName)
+	local viewName = self:_viewName()
 
-	if arg_7_1 ~= var_7_0 then
+	if closingViewName ~= viewName then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(var_7_0) then
+	if ViewMgr.instance:isOpen(viewName) then
 		return
 	end
 
-	arg_7_0:patComplete()
+	self:patComplete()
 end
 
-function var_0_0.onReceiveActivityInfo(arg_8_0)
-	local var_8_0 = arg_8_0:_actId()
-	local var_8_1 = arg_8_0:_viewName()
+function NewCultivationGiftPatFaceWork:onReceiveActivityInfo()
+	local actId = self:_actId()
+	local viewName = self:_viewName()
 
-	if arg_8_0:isActivityRewardGet() then
-		if ViewMgr.instance:isOpen(var_8_1) then
+	if self:isActivityRewardGet() then
+		if ViewMgr.instance:isOpen(viewName) then
 			return
 		end
 
-		arg_8_0:patComplete()
+		self:patComplete()
 
 		return
 	end
 
-	local var_8_2 = {
-		actId = var_8_0
+	local viewParam = {
+		actId = actId
 	}
 
-	ViewMgr.instance:openView(var_8_1, var_8_2)
+	ViewMgr.instance:openView(viewName, viewParam)
 end
 
-function var_0_0._endBlock(arg_9_0)
-	if not arg_9_0:_isBlock() then
+function NewCultivationGiftPatFaceWork:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_10_0)
-	if arg_10_0:_isBlock() then
+function NewCultivationGiftPatFaceWork:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_11_0)
+function NewCultivationGiftPatFaceWork:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-function var_0_0.isActivityRewardGet(arg_12_0)
-	local var_12_0 = arg_12_0:_actId()
-	local var_12_1 = Activity125Model.instance:getById(var_12_0)
+function NewCultivationGiftPatFaceWork:isActivityRewardGet()
+	local actId = self:_actId()
+	local activityInfo = Activity125Model.instance:getById(actId)
 
-	if var_12_1 == nil then
+	if activityInfo == nil then
 		return true
 	end
 
-	return var_12_1:isEpisodeFinished(1)
+	return activityInfo:isEpisodeFinished(1)
 end
 
-return var_0_0
+return NewCultivationGiftPatFaceWork

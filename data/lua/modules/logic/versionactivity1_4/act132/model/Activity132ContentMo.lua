@@ -1,22 +1,24 @@
-﻿module("modules.logic.versionactivity1_4.act132.model.Activity132ContentMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/model/Activity132ContentMo.lua
 
-local var_0_0 = class("Activity132ContentMo")
+module("modules.logic.versionactivity1_4.act132.model.Activity132ContentMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1.activityId
-	arg_1_0.contentId = arg_1_1.contentId
-	arg_1_0.content = arg_1_1.content
-	arg_1_0.condition = arg_1_1.condition
-	arg_1_0.unlockDesc = arg_1_1.unlockDesc
-	arg_1_0._cfg = arg_1_1
+local Activity132ContentMo = class("Activity132ContentMo")
+
+function Activity132ContentMo:ctor(cfg)
+	self.activityId = cfg.activityId
+	self.contentId = cfg.contentId
+	self.content = cfg.content
+	self.condition = cfg.condition
+	self.unlockDesc = cfg.unlockDesc
+	self._cfg = cfg
 end
 
-function var_0_0.getUnlockDesc(arg_2_0)
-	return arg_2_0._cfg.unlockDesc
+function Activity132ContentMo:getUnlockDesc()
+	return self._cfg.unlockDesc
 end
 
-function var_0_0.getContent(arg_3_0)
-	return arg_3_0._cfg.content
+function Activity132ContentMo:getContent()
+	return self._cfg.content
 end
 
-return var_0_0
+return Activity132ContentMo

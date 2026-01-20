@@ -1,130 +1,136 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeSwitchObj", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/view/PuzzleMazeSwitchObj.lua
 
-local var_0_0 = class("PuzzleMazeSwitchObj", PuzzleMazeBaseObj)
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.view.PuzzleMazeSwitchObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local PuzzleMazeSwitchObj = class("PuzzleMazeSwitchObj", PuzzleMazeBaseObj)
 
-	arg_1_0._image = gohelper.findChildImage(arg_1_0.go, "#image_content")
-	arg_1_0._imageindex = gohelper.findChildImage(arg_1_0.go, "#image_index")
-	arg_1_0._gointeractEffect = gohelper.findChild(arg_1_0.go, "vx_tips")
-	arg_1_0._goarriveEffect = gohelper.findChild(arg_1_0.go, "vx_smoke")
-	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.go, "#btn_switch")
+function PuzzleMazeSwitchObj:ctor(go)
+	PuzzleMazeSwitchObj.super.ctor(self, go)
 
-	arg_1_0._btnswitch:AddClickListener(arg_1_0._btnswitchOnClick, arg_1_0)
+	self._image = gohelper.findChildImage(self.go, "#image_content")
+	self._imageindex = gohelper.findChildImage(self.go, "#image_index")
+	self._gointeractEffect = gohelper.findChild(self.go, "vx_tips")
+	self._goarriveEffect = gohelper.findChild(self.go, "vx_smoke")
+	self._btnswitch = gohelper.findChildButtonWithAudio(self.go, "#btn_switch")
 
-	arg_1_0._isSwitched = false
+	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
 
-	arg_1_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.OnBeginDragPawn, arg_1_0._onBeginDragPawn, arg_1_0)
-	arg_1_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.OnEndDragPawn, arg_1_0._onEndDragPawn, arg_1_0)
-	arg_1_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.InitGameDone, arg_1_0._initGameDone, arg_1_0)
-	arg_1_0:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.OnSimulatePlaneDone, arg_1_0._onSimulatePlaneDone, arg_1_0)
+	self._isSwitched = false
+
+	self:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.OnBeginDragPawn, self._onBeginDragPawn, self)
+	self:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.OnEndDragPawn, self._onEndDragPawn, self)
+	self:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.InitGameDone, self._initGameDone, self)
+	self:addEventCb(PuzzleMazeDrawController.instance, PuzzleEvent.OnSimulatePlaneDone, self._onSimulatePlaneDone, self)
 end
 
-function var_0_0.onInit(arg_2_0, arg_2_1)
-	var_0_0.super.onInit(arg_2_0, arg_2_1)
+function PuzzleMazeSwitchObj:onInit(mo)
+	PuzzleMazeSwitchObj.super.onInit(self, mo)
 
-	arg_2_0._isSwitched = false
+	self._isSwitched = false
 
-	gohelper.setActive(arg_2_0._btnswitch.gameObject, false)
-	arg_2_0:_setInteractIndex()
+	gohelper.setActive(self._btnswitch.gameObject, false)
+	self:_setInteractIndex()
 end
 
-function var_0_0.onEnter(arg_3_0)
-	var_0_0.super.onEnter(arg_3_0)
-	arg_3_0:_tryRecyclePlane()
+function PuzzleMazeSwitchObj:onEnter()
+	PuzzleMazeSwitchObj.super.onEnter(self)
+	self:_tryRecyclePlane()
 end
 
-function var_0_0._setIcon(arg_4_0, arg_4_1)
-	var_0_0.super._setIcon(arg_4_0, arg_4_0._isSwitched)
-	ZProj.UGUIHelper.SetGrayscale(arg_4_0._image.gameObject, not arg_4_0._isSwitched)
-	gohelper.setActive(arg_4_0._goarriveEffect, arg_4_0._isSwitched)
+function PuzzleMazeSwitchObj:_setIcon(isLight)
+	PuzzleMazeSwitchObj.super._setIcon(self, self._isSwitched)
+	ZProj.UGUIHelper.SetGrayscale(self._image.gameObject, not self._isSwitched)
+	gohelper.setActive(self._goarriveEffect, self._isSwitched)
 end
 
-function var_0_0._getIcon(arg_5_0)
-	return arg_5_0._image
+function PuzzleMazeSwitchObj:_getIcon()
+	return self._image
 end
 
-function var_0_0._onBeginDragPawn(arg_6_0)
-	gohelper.setActive(arg_6_0._btnswitch.gameObject, false)
+function PuzzleMazeSwitchObj:_onBeginDragPawn()
+	gohelper.setActive(self._btnswitch.gameObject, false)
 end
 
-function var_0_0._onEndDragPawn(arg_7_0)
-	arg_7_0:_checkIfSwitchBtnVisible()
+function PuzzleMazeSwitchObj:_onEndDragPawn()
+	self:_checkIfSwitchBtnVisible()
 end
 
-function var_0_0._initGameDone(arg_8_0)
-	arg_8_0:_checkIfSwitchBtnVisible()
+function PuzzleMazeSwitchObj:_initGameDone()
+	self:_checkIfSwitchBtnVisible()
 end
 
-function var_0_0._setInteractIndex(arg_9_0)
-	local var_9_0 = arg_9_0.mo and arg_9_0.mo.group
-	local var_9_1 = var_9_0 and PuzzleEnum.InteractIndexIcon[var_9_0]
+function PuzzleMazeSwitchObj:_setInteractIndex()
+	local group = self.mo and self.mo.group
+	local iconUrl = group and PuzzleEnum.InteractIndexIcon[group]
 
-	if var_9_1 then
-		UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(arg_9_0._imageindex, var_9_1)
+	if iconUrl then
+		UISpriteSetMgr.instance:setV2a3ZhiXinQuanErSprite(self._imageindex, iconUrl)
 	end
 end
 
-function var_0_0._checkIfSwitchBtnVisible(arg_10_0)
-	if PuzzleMazeDrawController.instance:hasAlertObj() then
+function PuzzleMazeSwitchObj:_checkIfSwitchBtnVisible()
+	local hasAlertObj = PuzzleMazeDrawController.instance:hasAlertObj()
+
+	if hasAlertObj then
 		return
 	end
 
-	local var_10_0 = arg_10_0:_isPawnAround()
-	local var_10_1 = PuzzleMazeDrawModel.instance:isCanFlyPlane()
-	local var_10_2 = var_10_0 and var_10_1
+	local isPawnAround = self:_isPawnAround()
+	local isCanFlyPlane = PuzzleMazeDrawModel.instance:isCanFlyPlane()
+	local canInteract = isPawnAround and isCanFlyPlane
 
-	gohelper.setActive(arg_10_0._btnswitch.gameObject, var_10_2)
-	gohelper.setActive(arg_10_0._gointeractEffect, var_10_2)
+	gohelper.setActive(self._btnswitch.gameObject, canInteract)
+	gohelper.setActive(self._gointeractEffect, canInteract)
 end
 
-function var_0_0._isPawnAround(arg_11_0)
-	if not arg_11_0.mo or not arg_11_0.mo.x or not arg_11_0.mo.y then
+function PuzzleMazeSwitchObj:_isPawnAround()
+	if not self.mo or not self.mo.x or not self.mo.y then
 		return
 	end
 
-	local var_11_0, var_11_1 = PuzzleMazeDrawController.instance:getLastPos()
+	local pawnPosX, pawnPosY = PuzzleMazeDrawController.instance:getLastPos()
 
-	if not var_11_0 or not var_11_1 then
+	if not pawnPosX or not pawnPosY then
 		return
 	end
 
-	return math.abs(arg_11_0.mo.x - var_11_0) + math.abs(arg_11_0.mo.y - var_11_1) == 1
+	return math.abs(self.mo.x - pawnPosX) + math.abs(self.mo.y - pawnPosY) == 1
 end
 
-function var_0_0._btnswitchOnClick(arg_12_0)
-	arg_12_0._isSwitched = true
+function PuzzleMazeSwitchObj:_btnswitchOnClick()
+	self._isSwitched = true
 
-	gohelper.setActive(arg_12_0._btnswitch.gameObject, false)
-	gohelper.setActive(arg_12_0._gointeractEffect, false)
-	PuzzleMazeDrawController.instance:interactSwitchObj(arg_12_0.mo.x, arg_12_0.mo.y)
+	gohelper.setActive(self._btnswitch.gameObject, false)
+	gohelper.setActive(self._gointeractEffect, false)
+	PuzzleMazeDrawController.instance:interactSwitchObj(self.mo.x, self.mo.y)
 end
 
-function var_0_0._tryRecyclePlane(arg_13_0)
-	if PuzzleMazeDrawController.instance:hasAlertObj() or not arg_13_0._isSwitched then
+function PuzzleMazeSwitchObj:_tryRecyclePlane()
+	local hasAlertObj = PuzzleMazeDrawController.instance:hasAlertObj()
+
+	if hasAlertObj or not self._isSwitched then
 		return
 	end
 
-	local var_13_0, var_13_1 = PuzzleMazeDrawModel.instance:getCurPlanePos()
+	local curPlanePosX, curPlanePosY = PuzzleMazeDrawModel.instance:getCurPlanePos()
 
-	if arg_13_0.mo and arg_13_0.mo.x == var_13_0 and arg_13_0.mo.y == var_13_1 then
-		arg_13_0._isSwitched = false
+	if self.mo and self.mo.x == curPlanePosX and self.mo.y == curPlanePosY then
+		self._isSwitched = false
 
-		arg_13_0:_setIcon()
+		self:_setIcon()
 		PuzzleMazeDrawController.instance:recyclePlane()
 		AudioMgr.instance:trigger(AudioEnum.UI.Act176_RecyclePlane)
 	end
 end
 
-function var_0_0._onSimulatePlaneDone(arg_14_0)
-	arg_14_0:_setIcon()
+function PuzzleMazeSwitchObj:_onSimulatePlaneDone()
+	self:_setIcon()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act176_SwitchOn)
 end
 
-function var_0_0.destroy(arg_15_0)
-	arg_15_0._btnswitch:RemoveClickListener()
-	var_0_0.super.destroy(arg_15_0)
+function PuzzleMazeSwitchObj:destroy()
+	self._btnswitch:RemoveClickListener()
+	PuzzleMazeSwitchObj.super.destroy(self)
 end
 
-return var_0_0
+return PuzzleMazeSwitchObj

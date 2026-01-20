@@ -1,171 +1,173 @@
-﻿module("modules.logic.weekwalk.model.MapInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/model/MapInfoMO.lua
 
-local var_0_0 = pureTable("MapInfoMO")
+module("modules.logic.weekwalk.model.MapInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.sceneId = arg_1_1.sceneId
-	arg_1_0.isFinish = arg_1_1.isFinish
-	arg_1_0.isFinished = arg_1_1.isFinished
-	arg_1_0.buffId = arg_1_1.buffId
-	arg_1_0.isShowBuff = arg_1_1.isShowBuff
-	arg_1_0.isShowFinished = arg_1_1.isShowFinished
-	arg_1_0.isShowSelectCd = arg_1_1.isShowSelectCd
+local MapInfoMO = pureTable("MapInfoMO")
 
-	if arg_1_0.id == 9477 then
-		arg_1_0.sceneId = 17
+function MapInfoMO:init(info)
+	self.id = info.id
+	self.sceneId = info.sceneId
+	self.isFinish = info.isFinish
+	self.isFinished = info.isFinished
+	self.buffId = info.buffId
+	self.isShowBuff = info.isShowBuff
+	self.isShowFinished = info.isShowFinished
+	self.isShowSelectCd = info.isShowSelectCd
+
+	if self.id == 9477 then
+		self.sceneId = 17
 	end
 
-	arg_1_0.battleIds = {}
-	arg_1_0.battleInfos = {}
-	arg_1_0.battleInfoMap = {}
+	self.battleIds = {}
+	self.battleInfos = {}
+	self.battleInfoMap = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.battleInfos) do
-		if not arg_1_0.battleInfoMap[iter_1_1.battleId] then
-			local var_1_0 = BattleInfoMO.New()
+	for i, v in ipairs(info.battleInfos) do
+		if not self.battleInfoMap[v.battleId] then
+			local mo = BattleInfoMO.New()
 
-			var_1_0:init(iter_1_1)
-			var_1_0:setIndex(iter_1_0)
-			table.insert(arg_1_0.battleIds, iter_1_1.battleId)
-			table.insert(arg_1_0.battleInfos, var_1_0)
+			mo:init(v)
+			mo:setIndex(i)
+			table.insert(self.battleIds, v.battleId)
+			table.insert(self.battleInfos, mo)
 
-			arg_1_0.battleInfoMap[var_1_0.battleId] = var_1_0
+			self.battleInfoMap[mo.battleId] = mo
 		end
 	end
 
-	arg_1_0.elementInfos = {}
-	arg_1_0.elementInfoMap = {}
+	self.elementInfos = {}
+	self.elementInfoMap = {}
 
-	for iter_1_2, iter_1_3 in ipairs(arg_1_1.elementInfos) do
-		local var_1_1 = WeekwalkElementInfoMO.New()
+	for i, v in ipairs(info.elementInfos) do
+		local mo = WeekwalkElementInfoMO.New()
 
-		var_1_1:init(iter_1_3)
-		var_1_1:setMapInfo(arg_1_0)
-		table.insert(arg_1_0.elementInfos, var_1_1)
+		mo:init(v)
+		mo:setMapInfo(self)
+		table.insert(self.elementInfos, mo)
 
-		arg_1_0.elementInfoMap[var_1_1.elementId] = var_1_1
+		self.elementInfoMap[mo.elementId] = mo
 	end
 
-	arg_1_0._heroInfos = {}
-	arg_1_0._heroInfoList = {}
+	self._heroInfos = {}
+	self._heroInfoList = {}
 
-	if arg_1_1.heroInfos then
-		for iter_1_4, iter_1_5 in ipairs(arg_1_1.heroInfos) do
-			local var_1_2 = WeekwalkHeroInfoMO.New()
+	if info.heroInfos then
+		for i, v in ipairs(info.heroInfos) do
+			local info = WeekwalkHeroInfoMO.New()
 
-			var_1_2:init(iter_1_5)
+			info:init(v)
 
-			arg_1_0._heroInfos[iter_1_5.heroId] = var_1_2
+			self._heroInfos[v.heroId] = info
 
-			table.insert(arg_1_0._heroInfoList, var_1_2)
+			table.insert(self._heroInfoList, info)
 		end
 	end
 
-	arg_1_0._storyIds = {}
+	self._storyIds = {}
 
-	for iter_1_6, iter_1_7 in ipairs(arg_1_1.storyIds) do
-		arg_1_0._storyIds[iter_1_7] = iter_1_7
+	for i, v in ipairs(info.storyIds) do
+		self._storyIds[v] = v
 	end
 
-	arg_1_0._mapConfig = WeekWalkConfig.instance:getMapConfig(arg_1_0.id)
+	self._mapConfig = WeekWalkConfig.instance:getMapConfig(self.id)
 
-	if arg_1_0._mapConfig then
-		arg_1_0._typeConfig = lua_weekwalk_type.configDict[arg_1_0._mapConfig.type]
+	if self._mapConfig then
+		self._typeConfig = lua_weekwalk_type.configDict[self._mapConfig.type]
 	end
 end
 
-function var_0_0.getBattleInfoByIndex(arg_2_0, arg_2_1)
-	return arg_2_0.battleInfos[arg_2_1]
+function MapInfoMO:getBattleInfoByIndex(index)
+	return self.battleInfos[index]
 end
 
-function var_0_0.getLayer(arg_3_0)
-	return arg_3_0._mapConfig and arg_3_0._mapConfig.layer
+function MapInfoMO:getLayer()
+	return self._mapConfig and self._mapConfig.layer
 end
 
-function var_0_0.getMapConfig(arg_4_0)
-	return arg_4_0._mapConfig
+function MapInfoMO:getMapConfig()
+	return self._mapConfig
 end
 
-function var_0_0.storyIsFinished(arg_5_0, arg_5_1)
-	return arg_5_0._storyIds[arg_5_1]
+function MapInfoMO:storyIsFinished(storyId)
+	return self._storyIds[storyId]
 end
 
-function var_0_0.getElementInfo(arg_6_0, arg_6_1)
-	return arg_6_0.elementInfoMap[arg_6_1]
+function MapInfoMO:getElementInfo(id)
+	return self.elementInfoMap[id]
 end
 
-function var_0_0.getBattleInfo(arg_7_0, arg_7_1)
-	return arg_7_0.battleInfoMap[arg_7_1]
+function MapInfoMO:getBattleInfo(id)
+	return self.battleInfoMap[id]
 end
 
-function var_0_0.getHasStarIndex(arg_8_0)
-	for iter_8_0 = #arg_8_0.battleInfos, 1, -1 do
-		if arg_8_0.battleInfos[iter_8_0].star > 0 then
-			return iter_8_0
+function MapInfoMO:getHasStarIndex()
+	for i = #self.battleInfos, 1, -1 do
+		if self.battleInfos[i].star > 0 then
+			return i
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.getStarInfo(arg_9_0)
-	local var_9_0 = 0
+function MapInfoMO:getStarInfo()
+	local cur = 0
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.battleInfos) do
-		var_9_0 = var_9_0 + iter_9_1.maxStar
+	for i, v in ipairs(self.battleInfos) do
+		cur = cur + v.maxStar
 	end
 
-	return var_9_0, #arg_9_0.battleInfos * arg_9_0._typeConfig.starNum
+	return cur, #self.battleInfos * self._typeConfig.starNum
 end
 
-function var_0_0.getCurStarInfo(arg_10_0)
-	local var_10_0 = 0
+function MapInfoMO:getCurStarInfo()
+	local cur = 0
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.battleInfos) do
-		var_10_0 = var_10_0 + iter_10_1.star
+	for i, v in ipairs(self.battleInfos) do
+		cur = cur + v.star
 	end
 
-	return var_10_0, #arg_10_0.battleInfos * arg_10_0._typeConfig.starNum
+	return cur, #self.battleInfos * self._typeConfig.starNum
 end
 
-function var_0_0.getStarNumConfig(arg_11_0)
-	return arg_11_0._typeConfig.starNum
+function MapInfoMO:getStarNumConfig()
+	return self._typeConfig.starNum
 end
 
-function var_0_0.getNoStarBattleInfo(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.battleInfos) do
-		if iter_12_1.star <= 0 then
-			return iter_12_1
+function MapInfoMO:getNoStarBattleInfo()
+	for i, v in ipairs(self.battleInfos) do
+		if v.star <= 0 then
+			return v
 		end
 	end
 end
 
-function var_0_0.getNoStarBattleIndex(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0.battleInfos) do
-		if iter_13_1.maxStar <= 0 then
-			return iter_13_0
+function MapInfoMO:getNoStarBattleIndex()
+	for i, v in ipairs(self.battleInfos) do
+		if v.maxStar <= 0 then
+			return i
 		end
 	end
 
-	return #arg_13_0.battleInfos
+	return #self.battleInfos
 end
 
-function var_0_0.getHeroInfoList(arg_14_0)
-	return arg_14_0._heroInfoList
+function MapInfoMO:getHeroInfoList()
+	return self._heroInfoList
 end
 
-function var_0_0.getHeroCd(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._heroInfos[arg_15_1]
+function MapInfoMO:getHeroCd(id)
+	local info = self._heroInfos[id]
 
-	return var_15_0 and var_15_0.cd or 0
+	return info and info.cd or 0
 end
 
-function var_0_0.clearHeroCd(arg_16_0, arg_16_1)
-	arg_16_0.isShowSelectCd = false
+function MapInfoMO:clearHeroCd(list)
+	self.isShowSelectCd = false
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
-		arg_16_0._heroInfos[iter_16_1] = nil
+	for i, heroId in ipairs(list) do
+		self._heroInfos[heroId] = nil
 	end
 end
 
-return var_0_0
+return MapInfoMO

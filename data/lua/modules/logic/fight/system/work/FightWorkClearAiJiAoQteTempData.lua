@@ -1,15 +1,17 @@
-﻿module("modules.logic.fight.system.work.FightWorkClearAiJiAoQteTempData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkClearAiJiAoQteTempData.lua
 
-local var_0_0 = class("FightWorkClearAiJiAoQteTempData", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkClearAiJiAoQteTempData", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkClearAiJiAoQteTempData = class("FightWorkClearAiJiAoQteTempData", FightWorkItem)
+
+function FightWorkClearAiJiAoQteTempData:onStart()
 	FightDataHelper.tempMgr.aiJiAoFakeHpDic = {}
 	FightDataHelper.tempMgr.aiJiAoFakeShieldDic = {}
 	FightDataHelper.tempMgr.aiJiAoQteCount = 0
 	FightDataHelper.tempMgr.aiJiAoQteEndlessLoop = 0
 
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkClearAiJiAoQteTempData

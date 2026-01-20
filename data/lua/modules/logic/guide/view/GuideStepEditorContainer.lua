@@ -1,8 +1,10 @@
-﻿module("modules.logic.guide.view.GuideStepEditorContainer", package.seeall)
+﻿-- chunkname: @modules/logic/guide/view/GuideStepEditorContainer.lua
 
-local var_0_0 = class("GuideStepEditorContainer", BaseViewContainer)
+module("modules.logic.guide.view.GuideStepEditorContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GuideStepEditorContainer = class("GuideStepEditorContainer", BaseViewContainer)
+
+function GuideStepEditorContainer:buildViews()
 	return {
 		GuideStepEditor.New(),
 		GuideMaskView.New(),
@@ -12,4 +14,4 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-return var_0_0
+return GuideStepEditorContainer

@@ -1,22 +1,24 @@
-﻿module("modules.logic.fight.model.mo.FightStatMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightStatMO.lua
 
-local var_0_0 = pureTable("FightStatMO")
+module("modules.logic.fight.model.mo.FightStatMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.entityId = arg_1_1.heroUid
-	arg_1_0.harm = tonumber(arg_1_1.harm)
-	arg_1_0.hurt = tonumber(arg_1_1.hurt)
-	arg_1_0.heal = tonumber(arg_1_1.heal)
-	arg_1_0.cards = {}
+local FightStatMO = pureTable("FightStatMO")
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.cards) do
-		local var_1_0 = {
-			skillId = iter_1_1.skillId,
-			useCount = iter_1_1.useCount
-		}
+function FightStatMO:init(info)
+	self.entityId = info.heroUid
+	self.harm = tonumber(info.harm)
+	self.hurt = tonumber(info.hurt)
+	self.heal = tonumber(info.heal)
+	self.cards = {}
 
-		table.insert(arg_1_0.cards, var_1_0)
+	for i, v in ipairs(info.cards) do
+		local tab = {}
+
+		tab.skillId = v.skillId
+		tab.useCount = v.useCount
+
+		table.insert(self.cards, tab)
 	end
 end
 
-return var_0_0
+return FightStatMO

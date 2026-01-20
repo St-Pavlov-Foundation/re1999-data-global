@@ -1,252 +1,256 @@
-﻿module("modules.logic.survival.view.map.SurvivalMapBagView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalMapBagView.lua
 
-local var_0_0 = class("SurvivalMapBagView", BaseView)
+module("modules.logic.survival.view.map.SurvivalMapBagView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "root/Right/scroll_collection")
-	arg_1_0._toggleBagBg = gohelper.findChild(arg_1_0.viewGO, "root/toggleGroup/toggleBag/Background")
-	arg_1_0._toggleBagLabel = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/toggleGroup/toggleBag/Label")
-	arg_1_0._toggleNpcBg = gohelper.findChild(arg_1_0.viewGO, "root/toggleGroup/toggleNPC/Background")
-	arg_1_0._toggleNpcLabel = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/toggleGroup/toggleNPC/Label")
-	arg_1_0._goinfoview = gohelper.findChild(arg_1_0.viewGO, "root/#go_infoview")
-	arg_1_0._goheavy = gohelper.findChild(arg_1_0.viewGO, "root/Right/#go_heavy")
-	arg_1_0._gosort = gohelper.findChild(arg_1_0.viewGO, "root/Right/#go_sort")
+local SurvivalMapBagView = class("SurvivalMapBagView", BaseView)
 
-	for iter_1_0 = 1, 3 do
-		arg_1_0["_txtcurrency" .. iter_1_0] = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#go_tag/tag" .. iter_1_0 .. "/#txt_tag" .. iter_1_0)
-		arg_1_0["_btnCurrency" .. iter_1_0] = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_tag/tag" .. iter_1_0)
+function SurvivalMapBagView:onInitView()
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._goscroll = gohelper.findChild(self.viewGO, "root/Right/scroll_collection")
+	self._toggleBagBg = gohelper.findChild(self.viewGO, "root/toggleGroup/toggleBag/Background")
+	self._toggleBagLabel = gohelper.findChildTextMesh(self.viewGO, "root/toggleGroup/toggleBag/Label")
+	self._toggleNpcBg = gohelper.findChild(self.viewGO, "root/toggleGroup/toggleNPC/Background")
+	self._toggleNpcLabel = gohelper.findChildTextMesh(self.viewGO, "root/toggleGroup/toggleNPC/Label")
+	self._goinfoview = gohelper.findChild(self.viewGO, "root/#go_infoview")
+	self._goheavy = gohelper.findChild(self.viewGO, "root/Right/#go_heavy")
+	self._gosort = gohelper.findChild(self.viewGO, "root/Right/#go_sort")
+
+	for i = 1, 3 do
+		self["_txtcurrency" .. i] = gohelper.findChildTextMesh(self.viewGO, "root/#go_tag/tag" .. i .. "/#txt_tag" .. i)
+		self["_btnCurrency" .. i] = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_tag/tag" .. i)
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_2_0.onTabChange, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, arg_2_0._refreshBag, arg_2_0)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnShelterBagUpdate, arg_2_0._refreshBag, arg_2_0)
+function SurvivalMapBagView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self.viewContainer:registerCallback(ViewEvent.ToSwitchTab, self.onTabChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBag, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnShelterBagUpdate, self._refreshBag, self)
 
-	for iter_2_0 = 1, 3 do
-		arg_2_0["_btnCurrency" .. iter_2_0]:AddClickListener(arg_2_0._openCurrencyTips, arg_2_0, {
-			id = iter_2_0,
-			btn = arg_2_0["_btnCurrency" .. iter_2_0]
+	for i = 1, 3 do
+		self["_btnCurrency" .. i]:AddClickListener(self._openCurrencyTips, self, {
+			id = i,
+			btn = self["_btnCurrency" .. i]
 		})
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, arg_3_0.onTabChange, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, arg_3_0._refreshBag, arg_3_0)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnShelterBagUpdate, arg_3_0._refreshBag, arg_3_0)
+function SurvivalMapBagView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, self.onTabChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBag, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnShelterBagUpdate, self._refreshBag, self)
 
-	for iter_3_0 = 1, 3 do
-		arg_3_0["_btnCurrency" .. iter_3_0]:RemoveClickListener()
+	for i = 1, 3 do
+		self["_btnCurrency" .. i]:RemoveClickListener()
 	end
 end
 
-function var_0_0.onTabChange(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._curShowBag then
+function SurvivalMapBagView:onTabChange(_, toggleId)
+	if self._curShowBag then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_mail_open_1)
 	end
 
-	arg_4_2 = arg_4_2 - 1
+	toggleId = toggleId - 1
 
-	if arg_4_0._curShowBag == arg_4_2 then
+	if self._curShowBag == toggleId then
 		return
 	end
 
-	arg_4_0._curShowBag = arg_4_2
+	self._curShowBag = toggleId
 
-	local var_4_0 = arg_4_0._curShowBag == 1
+	local isBag = self._curShowBag == 1
 
-	gohelper.setActive(arg_4_0._toggleBagBg, var_4_0)
-	gohelper.setActive(arg_4_0._toggleNpcBg, not var_4_0)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._toggleBagLabel, var_4_0 and "#F5F1EB" or "#AEAEAE")
-	SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._toggleNpcLabel, var_4_0 and "#AEAEAE" or "#F5F1EB")
-	gohelper.setActive(arg_4_0._gosort, arg_4_0._curShowBag == 1)
-	arg_4_0:_refreshBag()
+	gohelper.setActive(self._toggleBagBg, isBag)
+	gohelper.setActive(self._toggleNpcBg, not isBag)
+	SLFramework.UGUI.GuiHelper.SetColor(self._toggleBagLabel, isBag and "#F5F1EB" or "#AEAEAE")
+	SLFramework.UGUI.GuiHelper.SetColor(self._toggleNpcLabel, isBag and "#AEAEAE" or "#F5F1EB")
+	gohelper.setActive(self._gosort, self._curShowBag == 1)
+	self:_refreshBag()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function SurvivalMapBagView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_bag_open)
-	MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._goheavy, SurvivalWeightPart, arg_5_0:getBag())
+	MonoHelper.addNoUpdateLuaComOnceToGo(self._goheavy, SurvivalWeightPart, self:getBag())
 
-	local var_5_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._gosort, SurvivalSortAndFilterPart)
-	local var_5_1 = {
-		{
-			desc = luaLang("survival_sort_time"),
-			type = SurvivalEnum.ItemSortType.Time
-		},
-		{
-			desc = luaLang("survival_sort_mass"),
-			type = SurvivalEnum.ItemSortType.Mass
-		},
-		{
-			desc = luaLang("survival_sort_worth"),
-			type = SurvivalEnum.ItemSortType.Worth
-		},
-		{
-			desc = luaLang("survival_sort_type"),
-			type = SurvivalEnum.ItemSortType.Type
-		}
+	local sortComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gosort, SurvivalSortAndFilterPart)
+	local sortOptions = {}
+
+	sortOptions[1] = {
+		desc = luaLang("survival_sort_time"),
+		type = SurvivalEnum.ItemSortType.Time
 	}
-	local var_5_2 = {
-		{
-			desc = luaLang("survival_filter_material"),
-			type = SurvivalEnum.ItemFilterType.Material
-		},
-		{
-			desc = luaLang("survival_filter_equip"),
-			type = SurvivalEnum.ItemFilterType.Equip
-		},
-		{
-			desc = luaLang("survival_filter_consume"),
-			type = SurvivalEnum.ItemFilterType.Consume
-		}
+	sortOptions[2] = {
+		desc = luaLang("survival_sort_mass"),
+		type = SurvivalEnum.ItemSortType.Mass
+	}
+	sortOptions[3] = {
+		desc = luaLang("survival_sort_worth"),
+		type = SurvivalEnum.ItemSortType.Worth
+	}
+	sortOptions[4] = {
+		desc = luaLang("survival_sort_type"),
+		type = SurvivalEnum.ItemSortType.Type
 	}
 
-	arg_5_0._curSort = var_5_1[1]
-	arg_5_0._isDec = true
-	arg_5_0._filterList = {}
+	local filterOptions = {}
 
-	var_5_0:setOptions(var_5_1, var_5_2, arg_5_0._curSort, arg_5_0._isDec)
-	var_5_0:setOptionChangeCallback(arg_5_0._onSortChange, arg_5_0)
+	filterOptions[1] = {
+		desc = luaLang("survival_filter_material"),
+		type = SurvivalEnum.ItemFilterType.Material
+	}
+	filterOptions[2] = {
+		desc = luaLang("survival_filter_equip"),
+		type = SurvivalEnum.ItemFilterType.Equip
+	}
+	filterOptions[3] = {
+		desc = luaLang("survival_filter_consume"),
+		type = SurvivalEnum.ItemFilterType.Consume
+	}
+	self._curSort = sortOptions[1]
+	self._isDec = true
+	self._filterList = {}
 
-	local var_5_3 = arg_5_0.viewContainer._viewSetting.otherRes.infoView
-	local var_5_4 = arg_5_0:getResInst(var_5_3, arg_5_0._goinfoview)
+	sortComp:setOptions(sortOptions, filterOptions, self._curSort, self._isDec)
+	sortComp:setOptionChangeCallback(self._onSortChange, self)
 
-	arg_5_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_4, SurvivalBagInfoPart)
+	local infoViewRes = self.viewContainer._viewSetting.otherRes.infoView
+	local infoGo = self:getResInst(infoViewRes, self._goinfoview)
 
-	arg_5_0._infoPanel:setIsShowEmpty(true)
+	self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-	local var_5_5 = arg_5_0.viewContainer._viewSetting.otherRes.itemRes
+	self._infoPanel:setIsShowEmpty(true)
 
-	arg_5_0._item = arg_5_0:getResInst(var_5_5, arg_5_0.viewGO)
+	local itemRes = self.viewContainer._viewSetting.otherRes.itemRes
 
-	gohelper.setActive(arg_5_0._item, false)
+	self._item = self:getResInst(itemRes, self.viewGO)
 
-	arg_5_0._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_0._goscroll, SurvivalSimpleListPart)
+	gohelper.setActive(self._item, false)
 
-	arg_5_0._simpleList:setCellUpdateCallBack(arg_5_0._createItem, arg_5_0, SurvivalBagItem, arg_5_0._item)
+	self._simpleList = MonoHelper.addNoUpdateLuaComOnceToGo(self._goscroll, SurvivalSimpleListPart)
+
+	self._simpleList:setCellUpdateCallBack(self._createItem, self, SurvivalBagItem, self._item)
 end
 
-function var_0_0._onSortChange(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0._curSort = arg_6_1
-	arg_6_0._isDec = arg_6_2
-	arg_6_0._filterList = arg_6_3
+function SurvivalMapBagView:_onSortChange(sortData, isDec, filterList)
+	self._curSort = sortData
+	self._isDec = isDec
+	self._filterList = filterList
 
-	arg_6_0:_refreshBag()
+	self:_refreshBag()
 end
 
-function var_0_0._refreshBag(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1
+function SurvivalMapBagView:_refreshBag()
+	local itemMos = {}
+	local preSelectUid
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0:getBag().items) do
-		if arg_7_0._curShowBag == 1 then
-			if not iter_7_1:isNPC() and SurvivalBagSortHelper.filterItemMo(arg_7_0._filterList, iter_7_1) then
-				table.insert(var_7_0, iter_7_1)
+	for _, itemMo in ipairs(self:getBag().items) do
+		if self._curShowBag == 1 then
+			if not itemMo:isNPC() and SurvivalBagSortHelper.filterItemMo(self._filterList, itemMo) then
+				table.insert(itemMos, itemMo)
 
-				if arg_7_0._preSelectUid == iter_7_1.uid then
-					var_7_1 = iter_7_1.uid
+				if self._preSelectUid == itemMo.uid then
+					preSelectUid = itemMo.uid
 				end
 			end
-		elseif iter_7_1:isNPC() then
-			table.insert(var_7_0, iter_7_1)
+		elseif itemMo:isNPC() then
+			table.insert(itemMos, itemMo)
 
-			if arg_7_0._preSelectUid == iter_7_1.uid then
-				var_7_1 = iter_7_1.uid
+			if self._preSelectUid == itemMo.uid then
+				preSelectUid = itemMo.uid
 			end
 		end
 	end
 
-	if arg_7_0._curShowBag == 1 then
-		SurvivalBagSortHelper.sortItems(var_7_0, arg_7_0._curSort.type, arg_7_0._isDec)
+	if self._curShowBag == 1 then
+		SurvivalBagSortHelper.sortItems(itemMos, self._curSort.type, self._isDec)
 	else
-		SurvivalBagSortHelper.sortItems(var_7_0, SurvivalEnum.ItemSortType.NPC, true)
+		SurvivalBagSortHelper.sortItems(itemMos, SurvivalEnum.ItemSortType.NPC, true)
 	end
 
-	if not var_7_1 and var_7_0[1] then
-		var_7_1 = var_7_0[1].uid
+	if not preSelectUid and itemMos[1] then
+		preSelectUid = itemMos[1].uid
 	end
 
-	SurvivalHelper.instance:makeArrFull(var_7_0, SurvivalBagItemMo.Empty, 4, 5)
+	SurvivalHelper.instance:makeArrFull(itemMos, SurvivalBagItemMo.Empty, 4, 5)
 
-	arg_7_0._preSelectUid = var_7_1
+	self._preSelectUid = preSelectUid
 
-	arg_7_0._simpleList:setList(var_7_0)
-	arg_7_0:_refreshInfo()
+	self._simpleList:setList(itemMos)
+	self:_refreshInfo()
 
-	for iter_7_2 = 1, 3 do
-		arg_7_0["_txtcurrency" .. iter_7_2].text = arg_7_0:getBag():getCurrencyNum(iter_7_2)
-	end
-end
-
-function var_0_0._createItem(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_1:updateMo(arg_8_2)
-	arg_8_1:setClickCallback(arg_8_0._onItemClick, arg_8_0)
-
-	if arg_8_2.uid == arg_8_0._preSelectUid and arg_8_0._preSelectUid then
-		arg_8_1:setIsSelect(true)
+	for i = 1, 3 do
+		self["_txtcurrency" .. i].text = self:getBag():getCurrencyNum(i)
 	end
 end
 
-function var_0_0._onItemClick(arg_9_0, arg_9_1)
-	if arg_9_1._mo:isEmpty() then
+function SurvivalMapBagView:_createItem(obj, data, index)
+	obj:updateMo(data)
+	obj:setClickCallback(self._onItemClick, self)
+
+	if data.uid == self._preSelectUid and self._preSelectUid then
+		obj:setIsSelect(true)
+	end
+end
+
+function SurvivalMapBagView:_onItemClick(item)
+	if item._mo:isEmpty() then
 		return
 	end
 
-	arg_9_0._preSelectUid = arg_9_1._mo.uid
+	self._preSelectUid = item._mo.uid
 
-	for iter_9_0 in pairs(arg_9_0._simpleList:getAllComps()) do
-		iter_9_0:setIsSelect(arg_9_0._preSelectUid and iter_9_0._mo.uid == arg_9_0._preSelectUid)
+	for comp in pairs(self._simpleList:getAllComps()) do
+		comp:setIsSelect(self._preSelectUid and comp._mo.uid == self._preSelectUid)
 	end
 
-	arg_9_0._anim.enabled = true
+	self._anim.enabled = true
 
-	arg_9_0._anim:Play("switch", 0, 0)
-	arg_9_0:_refreshInfo()
+	self._anim:Play("switch", 0, 0)
+	self:_refreshInfo()
 end
 
-function var_0_0._refreshInfo(arg_10_0)
-	local var_10_0 = arg_10_0._preSelectUid and arg_10_0:getBag().itemsByUid[arg_10_0._preSelectUid]
+function SurvivalMapBagView:_refreshInfo()
+	local itemMo = self._preSelectUid and self:getBag().itemsByUid[self._preSelectUid]
 
-	arg_10_0._infoPanel:updateMo(var_10_0)
+	self._infoPanel:updateMo(itemMo)
 
-	if var_10_0 then
+	if itemMo then
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_details)
 	end
 end
 
-function var_0_0.getBag(arg_11_0)
-	return SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Map)
+function SurvivalMapBagView:getBag()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	return weekInfo:getBag(SurvivalEnum.ItemSource.Map)
 end
 
-function var_0_0.onClickModalMask(arg_12_0)
-	arg_12_0:closeThis()
+function SurvivalMapBagView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._openCurrencyTips(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1.btn.transform
-	local var_13_1 = var_13_0.lossyScale
-	local var_13_2 = var_13_0.position
-	local var_13_3 = recthelper.getWidth(var_13_0)
-	local var_13_4 = recthelper.getHeight(var_13_0)
+function SurvivalMapBagView:_openCurrencyTips(param)
+	local trans = param.btn.transform
+	local scale = trans.lossyScale
+	local pos = trans.position
+	local width = recthelper.getWidth(trans)
+	local height = recthelper.getHeight(trans)
 
-	var_13_2.x = var_13_2.x + var_13_3 / 2 * var_13_1.x
-	var_13_2.y = var_13_2.y - var_13_4 / 2 * var_13_1.y
+	pos.x = pos.x + width / 2 * scale.x
+	pos.y = pos.y - height / 2 * scale.y
 
 	ViewMgr.instance:openView(ViewName.SurvivalCurrencyTipView, {
 		arrow = "BL",
-		id = arg_13_1.id,
-		pos = var_13_2
+		id = param.id,
+		pos = pos
 	})
 end
 
-function var_0_0.onClose(arg_14_0)
+function SurvivalMapBagView:onClose()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_mail_close)
-	TaskDispatcher.cancelTask(arg_14_0._refreshInfo, arg_14_0)
+	TaskDispatcher.cancelTask(self._refreshInfo, self)
 end
 
-return var_0_0
+return SurvivalMapBagView

@@ -1,243 +1,261 @@
-﻿module("modules.logic.versionactivity2_5.challenge.model.Act183Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/model/Act183Model.lua
 
-local var_0_0 = class("Act183Model", BaseModel)
+module("modules.logic.versionactivity2_5.challenge.model.Act183Model", package.seeall)
 
-function var_0_0.reInit(arg_1_0)
-	arg_1_0._activityId = nil
-	arg_1_0._actInfo = nil
-	arg_1_0._readyUseBadgeNum = nil
-	arg_1_0._selectConditions = nil
-	arg_1_0._recordRepressEpisodeId = nil
+local Act183Model = class("Act183Model", BaseModel)
 
-	arg_1_0:clearBattleFinishedInfo()
+function Act183Model:reInit()
+	self._activityId = nil
+	self._actInfo = nil
+	self._readyUseBadgeNum = nil
+	self._selectConditions = nil
+	self._recordRepressEpisodeId = nil
 
-	arg_1_0._unfinishTaskMap = nil
-	arg_1_0._initDone = false
+	self:clearBattleFinishedInfo()
+
+	self._unfinishTaskMap = nil
+	self._initDone = false
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._activityId = arg_2_1
-	arg_2_0._actInfo = Act183InfoMO.New()
+function Act183Model:init(activityId, actInfo)
+	self._activityId = activityId
+	self._actInfo = Act183InfoMO.New()
 
-	arg_2_0._actInfo:init(arg_2_2)
+	self._actInfo:init(actInfo)
 
-	arg_2_0._initDone = true
+	self._initDone = true
 end
 
-function var_0_0.isInitDone(arg_3_0)
-	return arg_3_0._initDone
+function Act183Model:isInitDone()
+	return self._initDone
 end
 
-function var_0_0.getActInfo(arg_4_0)
-	return arg_4_0._actInfo
+function Act183Model:getActInfo()
+	return self._actInfo
 end
 
-function var_0_0.getGroupEpisodeMo(arg_5_0, arg_5_1)
-	return arg_5_0._actInfo and arg_5_0._actInfo:getGroupEpisodeMo(arg_5_1)
+function Act183Model:getGroupEpisodeMo(groupId)
+	local groupMo = self._actInfo and self._actInfo:getGroupEpisodeMo(groupId)
+
+	return groupMo
 end
 
-function var_0_0.getEpisodeMo(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0:getGroupEpisodeMo(arg_6_1)
+function Act183Model:getEpisodeMo(groupId, episodeId)
+	local groupMo = self:getGroupEpisodeMo(groupId)
 
-	if var_6_0 then
-		return var_6_0:getEpisodeMo(arg_6_2)
+	if groupMo then
+		return groupMo:getEpisodeMo(episodeId)
 	end
 end
 
-function var_0_0.getEpisodeMoById(arg_7_0, arg_7_1)
-	local var_7_0 = Act183Config.instance:getEpisodeCo(arg_7_1)
+function Act183Model:getEpisodeMoById(episodeId)
+	local episodeCo = Act183Config.instance:getEpisodeCo(episodeId)
 
-	if var_7_0 then
-		return arg_7_0:getEpisodeMo(var_7_0.groupId, arg_7_1)
+	if episodeCo then
+		return self:getEpisodeMo(episodeCo.groupId, episodeId)
 	end
 end
 
-function var_0_0.setActivityId(arg_8_0, arg_8_1)
-	if arg_8_1 then
-		arg_8_0._activityId = arg_8_1
+function Act183Model:setActivityId(activityId)
+	if activityId then
+		self._activityId = activityId
 	end
 end
 
-function var_0_0.getActivityId(arg_9_0)
-	return arg_9_0._activityId
+function Act183Model:getActivityId()
+	return self._activityId
 end
 
-function var_0_0.getBadgeNum(arg_10_0)
-	if not arg_10_0._actInfo then
+function Act183Model:getBadgeNum()
+	if not self._actInfo then
 		logError("活动数据不存在")
 
 		return
 	end
 
-	return (arg_10_0._actInfo:getBadgeNum())
+	local badgeNum = self._actInfo:getBadgeNum()
+
+	return badgeNum
 end
 
-function var_0_0.recordEpisodeReadyUseBadgeNum(arg_11_0, arg_11_1)
-	arg_11_0._readyUseBadgeNum = arg_11_1 or 0
+function Act183Model:recordEpisodeReadyUseBadgeNum(badgeNum)
+	self._readyUseBadgeNum = badgeNum or 0
 end
 
-function var_0_0.getEpisodeReadyUseBadgeNum(arg_12_0)
-	return arg_12_0._readyUseBadgeNum or 0
+function Act183Model:getEpisodeReadyUseBadgeNum()
+	return self._readyUseBadgeNum or 0
 end
 
-function var_0_0.clearEpisodeReadyUseBadgeNum(arg_13_0)
-	arg_13_0._readyUseBadgeNum = nil
+function Act183Model:clearEpisodeReadyUseBadgeNum()
+	self._readyUseBadgeNum = nil
 end
 
-function var_0_0.getUnlockSupportHeros(arg_14_0)
-	return arg_14_0._actInfo and arg_14_0._actInfo:getUnlockSupportHeros()
+function Act183Model:getUnlockSupportHeros()
+	local unlockSupportHeros = self._actInfo and self._actInfo:getUnlockSupportHeros()
+
+	return unlockSupportHeros
 end
 
-function var_0_0.recordBattleFinishedInfo(arg_15_0, arg_15_1)
-	arg_15_0:clearBattleFinishedInfo()
+function Act183Model:recordBattleFinishedInfo(info)
+	self:clearBattleFinishedInfo()
 
-	arg_15_0._battleFinishedInfo = arg_15_1
+	self._battleFinishedInfo = info
 
-	if arg_15_0._actInfo and arg_15_0._battleFinishedInfo then
-		arg_15_0:recordNewFinishEpisodeId()
-		arg_15_0:recordNewFinishGroupId()
+	if self._actInfo and self._battleFinishedInfo then
+		self:recordNewFinishEpisodeId()
+		self:recordNewFinishGroupId()
 	end
 end
 
-function var_0_0.getBattleFinishedInfo(arg_16_0)
-	return arg_16_0._battleFinishedInfo
+function Act183Model:getBattleFinishedInfo()
+	return self._battleFinishedInfo
 end
 
-function var_0_0.clearBattleFinishedInfo(arg_17_0)
-	arg_17_0._battleFinishedInfo = nil
-	arg_17_0._newFinishEpisodeId = nil
-	arg_17_0._newFinishGroupId = nil
+function Act183Model:clearBattleFinishedInfo()
+	self._battleFinishedInfo = nil
+	self._newFinishEpisodeId = nil
+	self._newFinishGroupId = nil
 end
 
-function var_0_0.isHeroRepressInEpisode(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = Act183Config.instance:getEpisodeCo(arg_18_1)
-	local var_18_1 = var_18_0 and var_18_0.groupId
-	local var_18_2 = arg_18_0:getGroupEpisodeMo(var_18_1)
+function Act183Model:isHeroRepressInEpisode(episodeId, heroId)
+	local episodeCo = Act183Config.instance:getEpisodeCo(episodeId)
+	local groupId = episodeCo and episodeCo.groupId
+	local groupEpisodeMo = self:getGroupEpisodeMo(groupId)
 
-	return var_18_2 and var_18_2:isHeroRepress(arg_18_2)
+	return groupEpisodeMo and groupEpisodeMo:isHeroRepress(heroId)
 end
 
-function var_0_0.isHeroRepressInPreEpisode(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = Act183Config.instance:getEpisodeCo(arg_19_1)
-	local var_19_1 = var_19_0 and var_19_0.groupId
-	local var_19_2 = arg_19_0:getGroupEpisodeMo(var_19_1)
+function Act183Model:isHeroRepressInPreEpisode(episodeId, heroId)
+	local episodeCo = Act183Config.instance:getEpisodeCo(episodeId)
+	local groupId = episodeCo and episodeCo.groupId
+	local groupEpisodeMo = self:getGroupEpisodeMo(groupId)
+	local isRepress = groupEpisodeMo and groupEpisodeMo:isHeroRepressInPreEpisode(episodeId, heroId)
 
-	return var_19_2 and var_19_2:isHeroRepressInPreEpisode(arg_19_1, arg_19_2)
+	return isRepress
 end
 
-function var_0_0.recordEpisodeSelectConditions(arg_20_0, arg_20_1)
-	arg_20_0._selectConditions = {}
+function Act183Model:recordEpisodeSelectConditions(conditionStatusMap)
+	self._selectConditions = {}
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_1) do
-		if iter_20_1 == true then
-			table.insert(arg_20_0._selectConditions, iter_20_0)
+	for conditionId, status in pairs(conditionStatusMap) do
+		if status == true then
+			table.insert(self._selectConditions, conditionId)
 		end
 	end
 end
 
-function var_0_0.getRecordEpisodeSelectConditions(arg_21_0)
-	return arg_21_0._selectConditions
+function Act183Model:getRecordEpisodeSelectConditions()
+	return self._selectConditions
 end
 
-function var_0_0.recordNewFinishEpisodeId(arg_22_0)
-	if arg_22_0._battleFinishedInfo.win then
-		local var_22_0 = arg_22_0._battleFinishedInfo.episodeMo
-		local var_22_1 = var_22_0:getEpisodeId()
+function Act183Model:recordNewFinishEpisodeId()
+	local win = self._battleFinishedInfo.win
 
-		if arg_22_0:getEpisodeMoById(var_22_1):getStatus() ~= var_22_0:getStatus() then
-			arg_22_0._newFinishEpisodeId = var_22_1
+	if win then
+		local newEpisodeMo = self._battleFinishedInfo.episodeMo
+		local episodeId = newEpisodeMo:getEpisodeId()
+		local originEpisodeMo = self:getEpisodeMoById(episodeId)
+		local originStatus = originEpisodeMo:getStatus()
+		local newStatus = newEpisodeMo:getStatus()
+		local isNewFinished = originStatus ~= newStatus
+
+		if isNewFinished then
+			self._newFinishEpisodeId = episodeId
 		end
 	end
 end
 
-function var_0_0.recordNewFinishGroupId(arg_23_0)
-	local var_23_0 = arg_23_0._battleFinishedInfo.win
-	local var_23_1 = arg_23_0._battleFinishedInfo.groupFinished
+function Act183Model:recordNewFinishGroupId()
+	local win = self._battleFinishedInfo.win
+	local groupHasFinished = self._battleFinishedInfo.groupFinished
 
-	if var_23_0 and var_23_1 then
-		local var_23_2 = arg_23_0._battleFinishedInfo.episodeMo
-		local var_23_3 = var_23_2:getGroupId()
-		local var_23_4 = var_23_2:getPassOrder()
-		local var_23_5 = arg_23_0:getGroupEpisodeMo(var_23_3)
-		local var_23_6 = var_23_5 and var_23_5:isGroupFinished()
-		local var_23_7 = var_23_5 and var_23_5:getEpisodeCount() or 0
+	if win and groupHasFinished then
+		local newFinishEpisodeMo = self._battleFinishedInfo.episodeMo
+		local groupId = newFinishEpisodeMo:getGroupId()
+		local passOrder = newFinishEpisodeMo:getPassOrder()
+		local originGroupEpisode = self:getGroupEpisodeMo(groupId)
+		local isOriginFinished = originGroupEpisode and originGroupEpisode:isGroupFinished()
+		local episodeCount = originGroupEpisode and originGroupEpisode:getEpisodeCount() or 0
 
-		if not var_23_6 and var_23_7 <= var_23_4 then
-			arg_23_0._newFinishGroupId = var_23_3
+		if not isOriginFinished and episodeCount <= passOrder then
+			self._newFinishGroupId = groupId
 		end
 	end
 end
 
-function var_0_0.getNewFinishEpisodeId(arg_24_0)
-	return arg_24_0._newFinishEpisodeId
+function Act183Model:getNewFinishEpisodeId()
+	return self._newFinishEpisodeId
 end
 
-function var_0_0.isEpisodeNewUnlock(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0:getEpisodeMoById(arg_25_1)
+function Act183Model:isEpisodeNewUnlock(episodeId)
+	local episodeMo = self:getEpisodeMoById(episodeId)
+	local status = episodeMo and episodeMo:getStatus()
 
-	if (var_25_0 and var_25_0:getStatus()) ~= Act183Enum.EpisodeStatus.Unlocked then
+	if status ~= Act183Enum.EpisodeStatus.Unlocked then
 		return
 	end
 
-	if not arg_25_0._battleFinishedInfo then
+	if not self._battleFinishedInfo then
 		return
 	end
 
-	local var_25_1 = var_25_0:getPreEpisodeIds()
+	local preEpisodeIds = episodeMo:getPreEpisodeIds()
 
-	if var_25_1 then
-		local var_25_2 = arg_25_0._battleFinishedInfo.episodeMo
-		local var_25_3 = var_25_2 and var_25_2:getEpisodeId()
+	if preEpisodeIds then
+		local newFinishEpisodeMo = self._battleFinishedInfo.episodeMo
+		local newFinishEpisodeId = newFinishEpisodeMo and newFinishEpisodeMo:getEpisodeId()
 
-		return tabletool.indexOf(var_25_1, var_25_3) ~= nil
+		return tabletool.indexOf(preEpisodeIds, newFinishEpisodeId) ~= nil
 	end
 end
 
-function var_0_0.getNewFinishGroupId(arg_26_0)
-	return arg_26_0._newFinishGroupId
+function Act183Model:getNewFinishGroupId()
+	return self._newFinishGroupId
 end
 
-function var_0_0.initTaskStatusMap(arg_27_0)
-	if arg_27_0._initUnfinishTaskMapDone then
+function Act183Model:initTaskStatusMap()
+	if self._initUnfinishTaskMapDone then
 		return
 	end
 
-	arg_27_0._unfinishTaskMap = {}
+	self._unfinishTaskMap = {}
 
-	local var_27_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, arg_27_0._activityId)
+	local allTasks = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, self._activityId)
 
-	if var_27_0 then
-		for iter_27_0, iter_27_1 in ipairs(var_27_0) do
-			local var_27_1 = iter_27_1.config
-			local var_27_2 = var_27_1 and var_27_1.groupId
+	if allTasks then
+		for _, taskMo in ipairs(allTasks) do
+			local taskCo = taskMo.config
+			local groupId = taskCo and taskCo.groupId
 
-			arg_27_0._unfinishTaskMap[var_27_2] = arg_27_0._unfinishTaskMap[var_27_2] or {}
+			self._unfinishTaskMap[groupId] = self._unfinishTaskMap[groupId] or {}
 
-			if not Act183Helper.isTaskFinished(var_27_1.id) then
-				table.insert(arg_27_0._unfinishTaskMap[var_27_2], var_27_1.id)
+			local isTaskFinished = Act183Helper.isTaskFinished(taskCo.id)
+
+			if not isTaskFinished then
+				table.insert(self._unfinishTaskMap[groupId], taskCo.id)
 			end
 		end
 	end
 
-	arg_27_0._initUnfinishTaskMapDone = true
+	self._initUnfinishTaskMapDone = true
 end
 
-function var_0_0.getUnfinishTaskMap(arg_28_0)
-	return arg_28_0._unfinishTaskMap
+function Act183Model:getUnfinishTaskMap()
+	return self._unfinishTaskMap
 end
 
-function var_0_0.recordLastRepressEpisodeId(arg_29_0, arg_29_1)
-	arg_29_0._recordRepressEpisodeId = arg_29_1
+function Act183Model:recordLastRepressEpisodeId(episodeId)
+	self._recordRepressEpisodeId = episodeId
 end
 
-function var_0_0.getRecordLastRepressEpisodeId(arg_30_0)
-	return arg_30_0._recordRepressEpisodeId
+function Act183Model:getRecordLastRepressEpisodeId()
+	return self._recordRepressEpisodeId
 end
 
-function var_0_0.clearRecordLastRepressEpisodeId(arg_31_0)
-	arg_31_0._recordRepressEpisodeId = nil
+function Act183Model:clearRecordLastRepressEpisodeId()
+	self._recordRepressEpisodeId = nil
 end
 
-var_0_0.instance = var_0_0.New()
+Act183Model.instance = Act183Model.New()
 
-return var_0_0
+return Act183Model

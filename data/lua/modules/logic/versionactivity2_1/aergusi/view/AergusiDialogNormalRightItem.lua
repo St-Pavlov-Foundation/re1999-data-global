@@ -1,125 +1,131 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogNormalRightItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiDialogNormalRightItem.lua
 
-local var_0_0 = class("AergusiDialogNormalRightItem", AergusiDialogItem)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogNormalRightItem", package.seeall)
 
-function var_0_0.initView(arg_1_0)
-	arg_1_0._gorolebg = gohelper.findChild(arg_1_0.go, "rolebg")
-	arg_1_0._simageAvatar = gohelper.findChildSingleImage(arg_1_0.go, "rolebg/image_avatar")
-	arg_1_0._gorolebggrey = gohelper.findChild(arg_1_0.go, "rolebg_grey")
-	arg_1_0._simageAvatarGrey = gohelper.findChildSingleImage(arg_1_0.go, "rolebg_grey/image_avatar")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.go, "name")
-	arg_1_0._txtNameGrey = gohelper.findChildText(arg_1_0.go, "name_grey")
-	arg_1_0._txtContent = gohelper.findChildText(arg_1_0.go, "content_bg/txt_content")
-	arg_1_0._goreference = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference")
-	arg_1_0._txtreference = gohelper.findChildText(arg_1_0.go, "content_bg/txt_content/#go_reference/#txt_reference")
-	arg_1_0._goiconobjection = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_objection")
-	arg_1_0._goiconask = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_ask")
-	arg_1_0._goreferencegrey = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference_grey")
-	arg_1_0._txtreferencegrey = gohelper.findChildText(arg_1_0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference")
-	arg_1_0._goiconobjectiongrey = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_objection")
-	arg_1_0._goiconaskgrey = gohelper.findChild(arg_1_0.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_ask")
-	arg_1_0._goselectframe = gohelper.findChild(arg_1_0.go, "content_bg/selectframe")
-	arg_1_0._gomaskgrey = gohelper.findChild(arg_1_0.go, "content_bg/mask_grey")
-	arg_1_0._contentBgRt = gohelper.findChildComponent(arg_1_0.go, "content_bg", gohelper.Type_RectTransform)
-	arg_1_0._contentRt = arg_1_0._txtContent:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0.go.name = string.format("normalrightitem_%s_%s", arg_1_0.stepCo.id, arg_1_0.stepCo.stepId)
+local AergusiDialogNormalRightItem = class("AergusiDialogNormalRightItem", AergusiDialogItem)
+
+function AergusiDialogNormalRightItem:initView()
+	self._gorolebg = gohelper.findChild(self.go, "rolebg")
+	self._simageAvatar = gohelper.findChildSingleImage(self.go, "rolebg/image_avatar")
+	self._gorolebggrey = gohelper.findChild(self.go, "rolebg_grey")
+	self._simageAvatarGrey = gohelper.findChildSingleImage(self.go, "rolebg_grey/image_avatar")
+	self._txtName = gohelper.findChildText(self.go, "name")
+	self._txtNameGrey = gohelper.findChildText(self.go, "name_grey")
+	self._txtContent = gohelper.findChildText(self.go, "content_bg/txt_content")
+	self._goreference = gohelper.findChild(self.go, "content_bg/txt_content/#go_reference")
+	self._txtreference = gohelper.findChildText(self.go, "content_bg/txt_content/#go_reference/#txt_reference")
+	self._goiconobjection = gohelper.findChild(self.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_objection")
+	self._goiconask = gohelper.findChild(self.go, "content_bg/txt_content/#go_reference/#txt_reference/icon_ask")
+	self._goreferencegrey = gohelper.findChild(self.go, "content_bg/txt_content/#go_reference_grey")
+	self._txtreferencegrey = gohelper.findChildText(self.go, "content_bg/txt_content/#go_reference_grey/#txt_reference")
+	self._goiconobjectiongrey = gohelper.findChild(self.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_objection")
+	self._goiconaskgrey = gohelper.findChild(self.go, "content_bg/txt_content/#go_reference_grey/#txt_reference/icon_ask")
+	self._goselectframe = gohelper.findChild(self.go, "content_bg/selectframe")
+	self._gomaskgrey = gohelper.findChild(self.go, "content_bg/mask_grey")
+	self._contentBgRt = gohelper.findChildComponent(self.go, "content_bg", gohelper.Type_RectTransform)
+	self._contentRt = self._txtContent:GetComponent(gohelper.Type_RectTransform)
+	self.go.name = string.format("normalrightitem_%s_%s", self.stepCo.id, self.stepCo.stepId)
 
 	AudioMgr.instance:trigger(AudioEnum.Dialogue.play_ui_wulu_duihua)
 
-	arg_1_0._isReference = false
-	arg_1_0._txtContentMarkTopIndex = arg_1_0:createMarktopCmp(arg_1_0._txtContent)
+	self._isReference = false
+	self._txtContentMarkTopIndex = self:createMarktopCmp(self._txtContent)
 
-	arg_1_0:setTopOffset(arg_1_0._txtContentMarkTopIndex, 0, -6.151)
+	self:setTopOffset(self._txtContentMarkTopIndex, 0, -6.151)
 end
 
-function var_0_0.refresh(arg_2_0)
-	local var_2_0 = AergusiDialogModel.instance:getCurDialogGroup()
+function AergusiDialogNormalRightItem:refresh()
+	local curGroupId = AergusiDialogModel.instance:getCurDialogGroup()
 
-	gohelper.setActive(arg_2_0._gorolebg, var_2_0 == arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._gorolebggrey, var_2_0 ~= arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._txtName.gameObject, var_2_0 == arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._txtNameGrey.gameObject, var_2_0 ~= arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._gomaskgrey, var_2_0 ~= arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._goreference, var_2_0 == arg_2_0.stepCo.id)
-	gohelper.setActive(arg_2_0._goreferencegrey, var_2_0 ~= arg_2_0.stepCo.id)
-	arg_2_0:setTextWithMarktopByIndex(arg_2_0._txtContentMarkTopIndex, arg_2_0.stepCo.content)
-	arg_2_0._simageAvatar:LoadImage(ResUrl.getHeadIconSmall(arg_2_0.stepCo.speakerIcon))
-	arg_2_0._simageAvatarGrey:LoadImage(ResUrl.getHeadIconSmall(arg_2_0.stepCo.speakerIcon))
+	gohelper.setActive(self._gorolebg, curGroupId == self.stepCo.id)
+	gohelper.setActive(self._gorolebggrey, curGroupId ~= self.stepCo.id)
+	gohelper.setActive(self._txtName.gameObject, curGroupId == self.stepCo.id)
+	gohelper.setActive(self._txtNameGrey.gameObject, curGroupId ~= self.stepCo.id)
+	gohelper.setActive(self._gomaskgrey, curGroupId ~= self.stepCo.id)
+	gohelper.setActive(self._goreference, curGroupId == self.stepCo.id)
+	gohelper.setActive(self._goreferencegrey, curGroupId ~= self.stepCo.id)
+	self:setTextWithMarktopByIndex(self._txtContentMarkTopIndex, self.stepCo.content)
+	self._simageAvatar:LoadImage(ResUrl.getHeadIconSmall(self.stepCo.speakerIcon))
+	self._simageAvatarGrey:LoadImage(ResUrl.getHeadIconSmall(self.stepCo.speakerIcon))
 
-	arg_2_0._txtName.text = arg_2_0.stepCo.speaker
-	arg_2_0._txtNameGrey.text = arg_2_0.stepCo.speaker
+	self._txtName.text = self.stepCo.speaker
+	self._txtNameGrey.text = self.stepCo.speaker
 
-	gohelper.setActive(arg_2_0._goreference, arg_2_0._isReference)
-	gohelper.setActive(arg_2_0._goreferencegrey, arg_2_0._isReference)
-	gohelper.setActive(arg_2_0._goselectframe, false)
+	gohelper.setActive(self._goreference, self._isReference)
+	gohelper.setActive(self._goreferencegrey, self._isReference)
+	gohelper.setActive(self._goselectframe, false)
 end
 
-function var_0_0.setQutation(arg_3_0, arg_3_1)
-	if not arg_3_1 then
-		gohelper.setActive(arg_3_0._goreference, false)
+function AergusiDialogNormalRightItem:setQutation(qutationStepCo)
+	if not qutationStepCo then
+		gohelper.setActive(self._goreference, false)
 
 		return
 	end
 
-	local var_3_0 = string.splitToNumber(arg_3_1.condition, "#")[1]
+	local type = string.splitToNumber(qutationStepCo.condition, "#")[1]
 
-	arg_3_0._isReference = true
+	self._isReference = true
 
-	gohelper.setActive(arg_3_0._goreference, true)
+	gohelper.setActive(self._goreference, true)
 
-	arg_3_0._txtreference.text = arg_3_1.content
-	arg_3_0._txtreferencegrey.text = arg_3_1.content
+	self._txtreference.text = qutationStepCo.content
+	self._txtreferencegrey.text = qutationStepCo.content
 
-	gohelper.setActive(arg_3_0._goiconask, var_3_0 == AergusiEnum.OperationType.Probe)
-	gohelper.setActive(arg_3_0._goiconobjection, var_3_0 == AergusiEnum.OperationType.Refutation)
-	gohelper.setActive(arg_3_0._goiconaskgrey, var_3_0 == AergusiEnum.OperationType.Probe)
-	gohelper.setActive(arg_3_0._goiconobjectiongrey, var_3_0 == AergusiEnum.OperationType.Refutation)
-	arg_3_0:refresh()
-	arg_3_0:calculateHeight()
+	gohelper.setActive(self._goiconask, type == AergusiEnum.OperationType.Probe)
+	gohelper.setActive(self._goiconobjection, type == AergusiEnum.OperationType.Refutation)
+	gohelper.setActive(self._goiconaskgrey, type == AergusiEnum.OperationType.Probe)
+	gohelper.setActive(self._goiconobjectiongrey, type == AergusiEnum.OperationType.Refutation)
+	self:refresh()
+	self:calculateHeight()
 end
 
-function var_0_0.calculateHeight(arg_4_0)
-	local var_4_0 = arg_4_0._txtContent.preferredWidth
+function AergusiDialogNormalRightItem:calculateHeight()
+	local width = self._txtContent.preferredWidth
 
-	if var_4_0 <= AergusiEnum.MessageTxtMaxWidth then
-		local var_4_1 = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
+	if width <= AergusiEnum.MessageTxtMaxWidth then
+		local contentBgHeight = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
 
-		recthelper.setSize(arg_4_0._contentBgRt, var_4_0 + AergusiEnum.MessageBgOffsetWidth, var_4_1)
-		recthelper.setSize(arg_4_0._contentRt, var_4_0, AergusiEnum.MessageTxtOneLineHeight)
+		recthelper.setSize(self._contentBgRt, width + AergusiEnum.MessageBgOffsetWidth, contentBgHeight)
+		recthelper.setSize(self._contentRt, width, AergusiEnum.MessageTxtOneLineHeight)
 
 		return
 	end
 
-	local var_4_2 = AergusiEnum.MessageTxtMaxWidth
-	local var_4_3 = arg_4_0._txtContent.preferredHeight
-	local var_4_4 = var_4_3 + AergusiEnum.MessageBgOffsetHeight
+	width = AergusiEnum.MessageTxtMaxWidth
 
-	recthelper.setSize(arg_4_0._contentBgRt, AergusiEnum.MessageTxtMaxWidth + AergusiEnum.MessageBgOffsetWidth, var_4_4)
-	recthelper.setSize(arg_4_0._contentRt, var_4_2, var_4_3)
+	local height = self._txtContent.preferredHeight
+	local contentBgHeight = height + AergusiEnum.MessageBgOffsetHeight
+
+	recthelper.setSize(self._contentBgRt, AergusiEnum.MessageTxtMaxWidth + AergusiEnum.MessageBgOffsetWidth, contentBgHeight)
+	recthelper.setSize(self._contentRt, width, height)
 end
 
-function var_0_0.getHeight(arg_5_0)
-	local var_5_0 = arg_5_0._isReference and AergusiEnum.DialogDoubtOffsetHeight or 0
+function AergusiDialogNormalRightItem:getHeight()
+	local heightOffset = self._isReference and AergusiEnum.DialogDoubtOffsetHeight or 0
+	local width = self._txtContent.preferredWidth
 
-	if arg_5_0._txtContent.preferredWidth <= AergusiEnum.MessageTxtMaxWidth then
-		local var_5_1 = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
+	if width <= AergusiEnum.MessageTxtMaxWidth then
+		local contentBgHeight = AergusiEnum.MessageTxtOneLineHeight + AergusiEnum.MessageBgOffsetHeight
 
-		arg_5_0.height = Mathf.Max(AergusiEnum.MinHeight[arg_5_0.type] + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight, var_5_1 + AergusiEnum.MessageNameHeight + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight)
+		self.height = Mathf.Max(AergusiEnum.MinHeight[self.type] + heightOffset + AergusiEnum.DialogDoubtOffsetHeight, contentBgHeight + AergusiEnum.MessageNameHeight + heightOffset + AergusiEnum.DialogDoubtOffsetHeight)
 
-		return arg_5_0.height
+		return self.height
 	end
 
-	local var_5_2 = AergusiEnum.MessageTxtMaxWidth
-	local var_5_3 = AergusiEnum.MessageTxtOneLineHeight * arg_5_0._txtContent:GetTextInfo(arg_5_0._txtContent.text).lineCount + AergusiEnum.MessageBgOffsetHeight
+	width = AergusiEnum.MessageTxtMaxWidth
 
-	arg_5_0.height = Mathf.Max(AergusiEnum.MinHeight[arg_5_0.type] + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight, var_5_3 + AergusiEnum.MessageNameHeight + var_5_0 + AergusiEnum.DialogDoubtOffsetHeight)
+	local height = AergusiEnum.MessageTxtOneLineHeight * self._txtContent:GetTextInfo(self._txtContent.text).lineCount
+	local contentBgHeight = height + AergusiEnum.MessageBgOffsetHeight
 
-	return arg_5_0.height
+	self.height = Mathf.Max(AergusiEnum.MinHeight[self.type] + heightOffset + AergusiEnum.DialogDoubtOffsetHeight, contentBgHeight + AergusiEnum.MessageNameHeight + heightOffset + AergusiEnum.DialogDoubtOffsetHeight)
+
+	return self.height
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	arg_6_0._simageAvatar:UnLoadImage()
-	arg_6_0._simageAvatarGrey:UnLoadImage()
+function AergusiDialogNormalRightItem:onDestroy()
+	self._simageAvatar:UnLoadImage()
+	self._simageAvatarGrey:UnLoadImage()
 end
 
-return var_0_0
+return AergusiDialogNormalRightItem

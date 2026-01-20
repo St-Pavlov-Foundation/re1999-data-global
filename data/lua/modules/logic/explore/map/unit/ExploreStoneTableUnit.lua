@@ -1,45 +1,53 @@
-﻿module("modules.logic.explore.map.unit.ExploreStoneTableUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreStoneTableUnit.lua
 
-local var_0_0 = class("ExploreStoneTableUnit", ExploreBaseMoveUnit)
+module("modules.logic.explore.map.unit.ExploreStoneTableUnit", package.seeall)
 
-function var_0_0.getIdleAnim(arg_1_0)
-	local var_1_0 = var_0_0.super.getIdleAnim(arg_1_0)
+local ExploreStoneTableUnit = class("ExploreStoneTableUnit", ExploreBaseMoveUnit)
 
-	if var_1_0 == ExploreAnimEnum.AnimName.active then
-		if arg_1_0.mo:getInteractInfoMO().statusInfo.status ~= 1 then
-			var_1_0 = ExploreAnimEnum.AnimName.active
+function ExploreStoneTableUnit:getIdleAnim()
+	local anim = ExploreStoneTableUnit.super.getIdleAnim(self)
+
+	if anim == ExploreAnimEnum.AnimName.active then
+		local statusInfo = self.mo:getInteractInfoMO().statusInfo
+
+		if statusInfo.status ~= 1 then
+			anim = ExploreAnimEnum.AnimName.active
 		else
-			var_1_0 = ExploreAnimEnum.AnimName.active2
+			anim = ExploreAnimEnum.AnimName.active2
 		end
 	end
 
-	return var_1_0
+	return anim
 end
 
-function var_0_0.canTrigger(arg_2_0)
-	if arg_2_0.mo:isInteractActiveState() and arg_2_0.mo:getInteractInfoMO().statusInfo.status ~= 1 then
-		return false
+function ExploreStoneTableUnit:canTrigger()
+	if self.mo:isInteractActiveState() then
+		local statusInfo = self.mo:getInteractInfoMO().statusInfo
+
+		if statusInfo.status ~= 1 then
+			return false
+		end
 	end
 
-	return var_0_0.super.canTrigger(arg_2_0)
+	return ExploreStoneTableUnit.super.canTrigger(self)
 end
 
-function var_0_0.tryTrigger(arg_3_0, arg_3_1)
+function ExploreStoneTableUnit:tryTrigger(clientOnly)
 	if ExploreStepController.instance:getCurStepType() == ExploreEnum.StepType.DelUnit then
 		return
 	end
 
-	return var_0_0.super.tryTrigger(arg_3_0, arg_3_1)
+	return ExploreStoneTableUnit.super.tryTrigger(self, clientOnly)
 end
 
-function var_0_0.needInteractAnim(arg_4_0)
+function ExploreStoneTableUnit:needInteractAnim()
 	return true
 end
 
-function var_0_0.onStatus2Change(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.animComp:isIdleAnim() then
-		arg_5_0.animComp:playIdleAnim()
+function ExploreStoneTableUnit:onStatus2Change(preStatuInfo, nowStatuInfo)
+	if self.animComp:isIdleAnim() then
+		self.animComp:playIdleAnim()
 	end
 end
 
-return var_0_0
+return ExploreStoneTableUnit

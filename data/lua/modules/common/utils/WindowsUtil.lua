@@ -1,54 +1,59 @@
-﻿module("modules.common.utils.WindowsUtil", package.seeall)
+﻿-- chunkname: @modules/common/utils/WindowsUtil.lua
 
-return {
-	getSelectFileContent = function(arg_1_0, arg_1_1)
-		require("tolua.reflection")
-		tolua.loadassembly("UnityEditor")
+module("modules.common.utils.WindowsUtil", package.seeall)
 
-		local var_1_0 = System.Array.CreateInstance(typeof("System.Type"), 3)
+local WindowsUtil = {}
 
-		var_1_0[0] = typeof(System.String)
-		var_1_0[1] = typeof(System.String)
-		var_1_0[2] = typeof(System.String)
+function WindowsUtil.getSelectFileContent(title, ext)
+	require("tolua.reflection")
+	tolua.loadassembly("UnityEditor")
 
-		local var_1_1 = tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "OpenFilePanel", var_1_0)
-		local var_1_2 = SLFramework.FrameworkSettings.PersistentResRootDir
+	local arr = System.Array.CreateInstance(typeof("System.Type"), 3)
 
-		SLFramework.FileHelper.EnsureDir(var_1_2)
+	arr[0] = typeof(System.String)
+	arr[1] = typeof(System.String)
+	arr[2] = typeof(System.String)
 
-		local var_1_3 = var_1_1:Call(arg_1_0, var_1_2, arg_1_1)
-		local var_1_4
+	local func = tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "OpenFilePanel", arr)
+	local defaultFolder = SLFramework.FrameworkSettings.PersistentResRootDir
 
-		if not string.nilorempty(var_1_3) then
-			var_1_4 = SLFramework.FileHelper.ReadText(var_1_3)
-		end
+	SLFramework.FileHelper.EnsureDir(defaultFolder)
 
-		var_1_1:Destroy()
+	local path = func:Call(title, defaultFolder, ext)
+	local content
 
-		return var_1_4
-	end,
-	saveContentToFile = function(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-		require("tolua.reflection")
-		tolua.loadassembly("UnityEditor")
-
-		local var_2_0 = System.Array.CreateInstance(typeof("System.Type"), 4)
-
-		var_2_0[0] = typeof(System.String)
-		var_2_0[1] = typeof(System.String)
-		var_2_0[2] = typeof(System.String)
-		var_2_0[3] = typeof(System.String)
-
-		local var_2_1 = tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "SaveFilePanel", var_2_0)
-		local var_2_2 = SLFramework.FrameworkSettings.PersistentResRootDir
-
-		SLFramework.FileHelper.EnsureDir(var_2_2)
-
-		local var_2_3 = var_2_1:Call(arg_2_0, var_2_2, arg_2_2, arg_2_3)
-
-		if not string.nilorempty(var_2_3) then
-			SLFramework.FileHelper.WriteTextToPath(var_2_3, arg_2_1)
-		end
-
-		var_2_1:Destroy()
+	if not string.nilorempty(path) then
+		content = SLFramework.FileHelper.ReadText(path)
 	end
-}
+
+	func:Destroy()
+
+	return content
+end
+
+function WindowsUtil.saveContentToFile(title, content, defaultName, ext)
+	require("tolua.reflection")
+	tolua.loadassembly("UnityEditor")
+
+	local arr = System.Array.CreateInstance(typeof("System.Type"), 4)
+
+	arr[0] = typeof(System.String)
+	arr[1] = typeof(System.String)
+	arr[2] = typeof(System.String)
+	arr[3] = typeof(System.String)
+
+	local func = tolua.gettypemethod(typeof("UnityEditor.EditorUtility"), "SaveFilePanel", arr)
+	local defaultFolder = SLFramework.FrameworkSettings.PersistentResRootDir
+
+	SLFramework.FileHelper.EnsureDir(defaultFolder)
+
+	local path = func:Call(title, defaultFolder, defaultName, ext)
+
+	if not string.nilorempty(path) then
+		SLFramework.FileHelper.WriteTextToPath(path, content)
+	end
+
+	func:Destroy()
+end
+
+return WindowsUtil

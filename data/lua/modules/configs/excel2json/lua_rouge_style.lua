@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_rouge_style", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_rouge_style.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_rouge_style", package.seeall)
+
+local lua_rouge_style = {}
+local fields = {
 	coin = 8,
 	name = 4,
 	talentPointGroup = 17,
@@ -23,19 +25,19 @@ local var_0_1 = {
 	version = 3,
 	powerLimit = 10
 }
-local var_0_2 = {
+local primaryKey = {
 	"season",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	passiveSkillDescs2 = 4,
 	name = 1,
 	passiveSkillDescs = 3,
 	desc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_rouge_style.onLoad(json)
+	lua_rouge_style.configList, lua_rouge_style.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_rouge_style

@@ -1,87 +1,91 @@
-﻿module("modules.logic.tower.view.assistboss.TowerBossTalentModifyNameView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/assistboss/TowerBossTalentModifyNameView.lua
 
-local var_0_0 = class("TowerBossTalentModifyNameView", BaseView)
+module("modules.logic.tower.view.assistboss.TowerBossTalentModifyNameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncloseView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeView")
-	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/#simage_rightbg")
-	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "window/#simage_leftbg")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_close")
-	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottom/#btn_sure")
-	arg_1_0._input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "message/#input_signature")
-	arg_1_0._txttext = gohelper.findChildText(arg_1_0.viewGO, "message/#input_signature/textarea/#txt_text")
-	arg_1_0._btncleanname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "message/#btn_cleanname")
+local TowerBossTalentModifyNameView = class("TowerBossTalentModifyNameView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerBossTalentModifyNameView:onInitView()
+	self._btncloseView = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeView")
+	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "window/#simage_rightbg")
+	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "window/#simage_leftbg")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_close")
+	self._btnsure = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/#btn_sure")
+	self._input = gohelper.findChildTextMeshInputField(self.viewGO, "message/#input_signature")
+	self._txttext = gohelper.findChildText(self.viewGO, "message/#input_signature/textarea/#txt_text")
+	self._btncleanname = gohelper.findChildButtonWithAudio(self.viewGO, "message/#btn_cleanname")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseView:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
-	arg_2_0._btncleanname:AddClickListener(arg_2_0._btncleannameOnClick, arg_2_0)
-	arg_2_0._input:AddOnValueChanged(arg_2_0._onInputValueChanged, arg_2_0)
+function TowerBossTalentModifyNameView:addEvents()
+	self._btncloseView:AddClickListener(self._btncloseOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnsure:AddClickListener(self._btnsureOnClick, self)
+	self._btncleanname:AddClickListener(self._btncleannameOnClick, self)
+	self._input:AddOnValueChanged(self._onInputValueChanged, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseView:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnsure:RemoveClickListener()
-	arg_3_0._btncleanname:RemoveClickListener()
-	arg_3_0._input:RemoveOnValueChanged()
+function TowerBossTalentModifyNameView:removeEvents()
+	self._btncloseView:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnsure:RemoveClickListener()
+	self._btncleanname:RemoveClickListener()
+	self._input:RemoveOnValueChanged()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function TowerBossTalentModifyNameView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnsureOnClick(arg_5_0)
-	local var_5_0 = arg_5_0._input:GetText()
+function TowerBossTalentModifyNameView:_btnsureOnClick()
+	local str = self._input:GetText()
 
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(str) then
 		return
 	end
 
-	if CommonConfig.instance:getConstNum(141) < GameUtil.utf8len(var_5_0) then
+	local limit = CommonConfig.instance:getConstNum(141)
+
+	if limit < GameUtil.utf8len(str) then
 		GameFacade.showToast(ToastEnum.InformPlayerCharLen)
 
 		return
 	end
 
-	local var_5_1 = GameUtil.trimInput(var_5_0)
+	str = GameUtil.trimInput(str)
 
-	TowerRpc.instance:sendTowerRenameTalentPlanRequest(arg_5_0.bossId, var_5_1, arg_5_0._onRenameTalentReply, arg_5_0)
+	TowerRpc.instance:sendTowerRenameTalentPlanRequest(self.bossId, str, self._onRenameTalentReply, self)
 end
 
-function var_0_0._onRenameTalentReply(arg_6_0)
-	arg_6_0:_btncloseOnClick()
+function TowerBossTalentModifyNameView:_onRenameTalentReply()
+	self:_btncloseOnClick()
 	GameFacade.showToast(ToastEnum.PlayerModifyChangeName)
 end
 
-function var_0_0._btncleannameOnClick(arg_7_0)
-	arg_7_0._input:SetText("")
+function TowerBossTalentModifyNameView:_btncleannameOnClick()
+	self._input:SetText("")
 end
 
-function var_0_0._onInputValueChanged(arg_8_0)
-	local var_8_0 = arg_8_0._input:GetText()
+function TowerBossTalentModifyNameView:_onInputValueChanged()
+	local inputValue = self._input:GetText()
 
-	gohelper.setActive(arg_8_0._btncleanname, not string.nilorempty(var_8_0))
+	gohelper.setActive(self._btncleanname, not string.nilorempty(inputValue))
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_9_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function TowerBossTalentModifyNameView:_editableInitView()
+	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0.bossId = arg_10_0.viewParam.bossId
+function TowerBossTalentModifyNameView:onOpen()
+	self.bossId = self.viewParam.bossId
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagerightbg:UnLoadImage()
-	arg_11_0._simageleftbg:UnLoadImage()
+function TowerBossTalentModifyNameView:onDestroyView()
+	self._simagerightbg:UnLoadImage()
+	self._simageleftbg:UnLoadImage()
 end
 
-return var_0_0
+return TowerBossTalentModifyNameView

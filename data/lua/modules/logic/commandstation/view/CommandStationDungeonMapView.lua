@@ -1,241 +1,243 @@
-﻿module("modules.logic.commandstation.view.CommandStationDungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationDungeonMapView.lua
 
-local var_0_0 = class("CommandStationDungeonMapView", BaseView)
+module("modules.logic.commandstation.view.CommandStationDungeonMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_commandstation")
+local CommandStationDungeonMapView = class("CommandStationDungeonMapView", BaseView)
+
+function CommandStationDungeonMapView:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, "#go_commandstation")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_2_0.setEpisodeListVisible, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_2_0._onUpdateDungeonInfo, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, arg_2_0._loadSceneFinish, arg_2_0)
+function CommandStationDungeonMapView:addEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, self.setEpisodeListVisible, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
+	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, self._loadSceneFinish, self)
 end
 
-function var_0_0._loadSceneFinish(arg_3_0, arg_3_1)
-	arg_3_0.mapCfg = arg_3_1[1]
-	arg_3_0.sceneGo = arg_3_1[2]
-	arg_3_0.mapScene = arg_3_1[3]
-	arg_3_0.episodeConfig = arg_3_1.episodeConfig
+function CommandStationDungeonMapView:_loadSceneFinish(param)
+	self.mapCfg = param[1]
+	self.sceneGo = param[2]
+	self.mapScene = param[3]
+	self.episodeConfig = param.episodeConfig
 
-	arg_3_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.removeEvents(arg_4_0)
+function CommandStationDungeonMapView:removeEvents()
 	return
 end
 
-function var_0_0._initBtn(arg_5_0)
-	if arg_5_0._loader then
+function CommandStationDungeonMapView:_initBtn()
+	if self._loader then
 		return
 	end
 
-	local var_5_0 = "ui/viewres/commandstation/commandstation_dungeonmapenteritem.prefab"
+	local path = "ui/viewres/commandstation/commandstation_dungeonmapenteritem.prefab"
 
-	arg_5_0._loader = PrefabInstantiate.Create(arg_5_0._goroot)
+	self._loader = PrefabInstantiate.Create(self._goroot)
 
-	arg_5_0._loader:startLoad(var_5_0, arg_5_0._onResLoaded, arg_5_0)
+	self._loader:startLoad(path, self._onResLoaded, self)
 end
 
-function var_0_0._onResLoaded(arg_6_0)
-	arg_6_0._btnGo = arg_6_0._loader:getInstGO()
-	arg_6_0._btnEnter = gohelper.findChildButtonWithAudio(arg_6_0._btnGo, "#btn_enter")
+function CommandStationDungeonMapView:_onResLoaded()
+	self._btnGo = self._loader:getInstGO()
+	self._btnEnter = gohelper.findChildButtonWithAudio(self._btnGo, "#btn_enter")
 
-	arg_6_0._btnEnter:AddClickListener(arg_6_0.onClickEnter, arg_6_0)
+	self._btnEnter:AddClickListener(self.onClickEnter, self)
 
-	arg_6_0._gored = gohelper.findChild(arg_6_0._btnGo, "#btn_enter/#go_reddot")
-	arg_6_0._goFinish = gohelper.findChild(arg_6_0._btnGo, "#btn_enter/inside/finish")
-	arg_6_0._goFinishHintLight = gohelper.findChild(arg_6_0._btnGo, "#btn_enter/inside/finish/#effect_hint")
-	arg_6_0._goFinishHintLoop = gohelper.findChild(arg_6_0._btnGo, "#btn_enter/inside/finish/#effect_hint1")
-	arg_6_0._goFinishEffect = gohelper.findChild(arg_6_0._btnGo, "#btn_enter/inside/finish/#saoguang")
+	self._gored = gohelper.findChild(self._btnGo, "#btn_enter/#go_reddot")
+	self._goFinish = gohelper.findChild(self._btnGo, "#btn_enter/inside/finish")
+	self._goFinishHintLight = gohelper.findChild(self._btnGo, "#btn_enter/inside/finish/#effect_hint")
+	self._goFinishHintLoop = gohelper.findChild(self._btnGo, "#btn_enter/inside/finish/#effect_hint1")
+	self._goFinishEffect = gohelper.findChild(self._btnGo, "#btn_enter/inside/finish/#saoguang")
 
-	gohelper.setActive(arg_6_0._goFinishEffect, false)
+	gohelper.setActive(self._goFinishEffect, false)
 
-	arg_6_0._goNotFinish = gohelper.findChild(arg_6_0._btnGo, "#btn_enter/inside/unfinish")
-	arg_6_0._txt = gohelper.findChildText(arg_6_0._btnGo, "#btn_enter/inside/finish/time/#txt_time")
-	arg_6_0._anim = arg_6_0._btnGo:GetComponent("Animator")
+	self._goNotFinish = gohelper.findChild(self._btnGo, "#btn_enter/inside/unfinish")
+	self._txt = gohelper.findChildText(self._btnGo, "#btn_enter/inside/finish/time/#txt_time")
+	self._anim = self._btnGo:GetComponent("Animator")
 
-	arg_6_0:refreshView()
+	self:refreshView()
 
-	if arg_6_0._anim then
-		arg_6_0._anim:Play("open", 0, 0)
+	if self._anim then
+		self._anim:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.refreshView(arg_7_0)
-	if not arg_7_0.viewParam then
+function CommandStationDungeonMapView:refreshView()
+	if not self.viewParam then
 		return
 	end
 
-	arg_7_0.chapterId = arg_7_0.viewParam.chapterId
+	self.chapterId = self.viewParam.chapterId
 
-	arg_7_0:onActStateChange()
-	arg_7_0:_updateInfo()
+	self:onActStateChange()
+	self:_updateInfo()
 
-	if arg_7_0._gored then
+	if self._gored then
 		-- block empty
 	end
 end
 
-function var_0_0._updateInfo(arg_8_0, arg_8_1)
-	if gohelper.isNil(arg_8_0._txt) or not arg_8_0.episodeConfig then
+function CommandStationDungeonMapView:_updateInfo(showFinishEffect)
+	if gohelper.isNil(self._txt) or not self.episodeConfig then
 		return
 	end
 
-	arg_8_0._versionId = nil
-	arg_8_0._timeId = nil
+	self._versionId = nil
+	self._timeId = nil
 
-	local var_8_0 = arg_8_0.episodeConfig.chainEpisode > 0 and arg_8_0.episodeConfig.chainEpisode or arg_8_0.episodeConfig.id
-	local var_8_1 = DungeonModel.instance:hasPassLevelAndStory(var_8_0)
+	local episodeId = self.episodeConfig.chainEpisode > 0 and self.episodeConfig.chainEpisode or self.episodeConfig.id
+	local isFinished = DungeonModel.instance:hasPassLevelAndStory(episodeId)
 
-	if arg_8_1 and not arg_8_0._isFinished and var_8_1 then
-		gohelper.setActive(arg_8_0._goFinishEffect, false)
-		gohelper.setActive(arg_8_0._goFinishEffect, true)
+	if showFinishEffect and not self._isFinished and isFinished then
+		gohelper.setActive(self._goFinishEffect, false)
+		gohelper.setActive(self._goFinishEffect, true)
 	end
 
-	arg_8_0._isFinished = var_8_1
-	arg_8_0._episodeId = var_8_0
+	self._isFinished = isFinished
+	self._episodeId = episodeId
 
-	gohelper.setActive(arg_8_0._goFinish, var_8_1)
-	gohelper.setActive(arg_8_0._goNotFinish, not var_8_1)
+	gohelper.setActive(self._goFinish, isFinished)
+	gohelper.setActive(self._goNotFinish, not isFinished)
 
-	if var_8_1 then
-		local var_8_2 = CommandStationConfig.instance:getTimeGroupByEpisodeId(var_8_0)
-		local var_8_3 = var_8_2 and var_8_2.id or 0
+	if isFinished then
+		local timeGroup = CommandStationConfig.instance:getTimeGroupByEpisodeId(episodeId)
+		local timePoint = timeGroup and timeGroup.id or 0
 
-		arg_8_0._versionId = var_8_2 and var_8_2.versionId
-		arg_8_0._timeId = CommandStationConfig.instance:getTimeIdByEpisodeId(var_8_0)
+		self._versionId = timeGroup and timeGroup.versionId
+		self._timeId = CommandStationConfig.instance:getTimeIdByEpisodeId(episodeId)
 
-		if var_8_3 > 0 then
-			arg_8_0._txt.text = CommandStationConfig.instance:getTimePointName(var_8_3)
+		if timePoint > 0 then
+			self._txt.text = CommandStationConfig.instance:getTimePointName(timePoint)
 		else
-			arg_8_0._txt.text = ""
+			self._txt.text = ""
 		end
 	else
-		gohelper.setActive(arg_8_0._goFinishHintLight, false)
+		gohelper.setActive(self._goFinishHintLight, false)
 	end
 
-	arg_8_0._prevShowEffect = arg_8_0._showEffect
-	arg_8_0._showEffect = var_8_1 and not CommandStationController.hasOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLoopEffect, arg_8_0._episodeId)
+	self._prevShowEffect = self._showEffect
+	self._showEffect = isFinished and not CommandStationController.hasOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLoopEffect, self._episodeId)
 
-	arg_8_0:_updateEffect()
+	self:_updateEffect()
 end
 
-function var_0_0._updateEffect(arg_9_0)
-	gohelper.setActive(arg_9_0._goFinishHintLoop, arg_9_0._showEffect)
+function CommandStationDungeonMapView:_updateEffect()
+	gohelper.setActive(self._goFinishHintLoop, self._showEffect)
 
-	arg_9_0._isChangeShowEffect = false
+	self._isChangeShowEffect = false
 
 	if ViewMgr.instance:isOpen(ViewName.StoryView) or ViewMgr.instance:isOpen(ViewName.LoadingView) then
-		arg_9_0._isChangeShowEffect = arg_9_0._prevShowEffect ~= arg_9_0._showEffect and arg_9_0._showEffect
+		self._isChangeShowEffect = self._prevShowEffect ~= self._showEffect and self._showEffect
 
 		return
 	end
 
-	arg_9_0:_updateLightEffect()
+	self:_updateLightEffect()
 end
 
-function var_0_0._updateLightEffect(arg_10_0, arg_10_1)
-	if not arg_10_0._isFinished then
+function CommandStationDungeonMapView:_updateLightEffect(force)
+	if not self._isFinished then
 		return
 	end
 
-	if not CommandStationController.hasOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLightEffect, arg_10_0._episodeId) or arg_10_1 then
-		CommandStationController.setOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLightEffect, arg_10_0._episodeId)
-		gohelper.setActive(arg_10_0._goFinishHintLight, false)
-		gohelper.setActive(arg_10_0._goFinishHintLight, true)
+	if not CommandStationController.hasOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLightEffect, self._episodeId) or force then
+		CommandStationController.setOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLightEffect, self._episodeId)
+		gohelper.setActive(self._goFinishHintLight, false)
+		gohelper.setActive(self._goFinishHintLight, true)
 	end
 end
 
-function var_0_0._playAnim(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+function CommandStationDungeonMapView:_playAnim(name, value1, value2)
 	return
 end
 
-function var_0_0._playAnim2(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_0._anim then
-		arg_12_0._anim:Play(arg_12_1, arg_12_2, arg_12_3)
+function CommandStationDungeonMapView:_playAnim2(name, value1, value2)
+	if self._anim then
+		self._anim:Play(name, value1, value2)
 	end
 end
 
-function var_0_0.onOpen(arg_13_0)
-	if arg_13_0.episodeConfig then
-		arg_13_0:refreshView()
+function CommandStationDungeonMapView:onOpen()
+	if self.episodeConfig then
+		self:refreshView()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
-	if arg_14_0.episodeConfig then
-		arg_14_0:refreshView()
+function CommandStationDungeonMapView:onUpdateParam()
+	if self.episodeConfig then
+		self:refreshView()
 	end
 end
 
-function var_0_0.onOpenView(arg_15_0, arg_15_1)
-	if arg_15_1 == ViewName.DungeonMapLevelView then
-		arg_15_0:_playAnim("close", 0, 0)
+function CommandStationDungeonMapView:onOpenView(viewName)
+	if viewName == ViewName.DungeonMapLevelView then
+		self:_playAnim("close", 0, 0)
 	end
 end
 
-function var_0_0.onCloseViewFinish(arg_16_0, arg_16_1)
-	if arg_16_1 == ViewName.DungeonMapLevelView then
-		arg_16_0:_playAnim("open", 0, 0)
+function CommandStationDungeonMapView:onCloseViewFinish(viewName)
+	if viewName == ViewName.DungeonMapLevelView then
+		self:_playAnim("open", 0, 0)
 	end
 
-	if (arg_16_1 == ViewName.StoryFrontView or arg_16_1 == ViewName.LoadingView) and arg_16_0._isChangeShowEffect then
-		arg_16_0._isChangeShowEffect = false
+	if (viewName == ViewName.StoryFrontView or viewName == ViewName.LoadingView) and self._isChangeShowEffect then
+		self._isChangeShowEffect = false
 
-		arg_16_0:_updateLightEffect()
+		self:_updateLightEffect()
 	end
 
-	if arg_16_1 == ViewName.CommonPropView then
-		arg_16_0:_updateLightEffect(true)
+	if viewName == ViewName.CommonPropView then
+		self:_updateLightEffect(true)
 	end
 end
 
-function var_0_0.setEpisodeListVisible(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1 and arg_17_0._showRoot
+function CommandStationDungeonMapView:setEpisodeListVisible(value)
+	local show = value and self._showRoot
 
-	if not gohelper.isNil(arg_17_0._btnEnter) then
-		arg_17_0._btnEnter.button.interactable = var_17_0
+	if not gohelper.isNil(self._btnEnter) then
+		self._btnEnter.button.interactable = show
 	end
 
-	if var_17_0 then
-		arg_17_0:_playAnim2("open", 0, 0)
+	if show then
+		self:_playAnim2("open", 0, 0)
 	else
-		arg_17_0:_playAnim2("close", 0, 0)
+		self:_playAnim2("close", 0, 0)
 	end
 end
 
-function var_0_0._checkShowRoot(arg_18_0)
-	arg_18_0._showRoot = arg_18_0:_isShowRoot()
+function CommandStationDungeonMapView:_checkShowRoot()
+	self._showRoot = self:_isShowRoot()
 
-	if arg_18_0._showRoot then
-		arg_18_0:_initBtn()
-		gohelper.setActive(arg_18_0._goroot, true)
+	if self._showRoot then
+		self:_initBtn()
+		gohelper.setActive(self._goroot, true)
 	else
-		gohelper.setActive(arg_18_0._goroot, false)
+		gohelper.setActive(self._goroot, false)
 	end
 end
 
-function var_0_0._isShowRoot(arg_19_0)
-	return CommandStationController.instance:chapterInCommandStation(arg_19_0.chapterId)
+function CommandStationDungeonMapView:_isShowRoot()
+	return CommandStationController.instance:chapterInCommandStation(self.chapterId)
 end
 
-function var_0_0.onActStateChange(arg_20_0)
-	arg_20_0:_checkShowRoot()
+function CommandStationDungeonMapView:onActStateChange()
+	self:_checkShowRoot()
 end
 
-function var_0_0.onClickEnter(arg_21_0)
-	if arg_21_0._versionId and arg_21_0._timeId then
-		CommandStationMapModel.instance:setVersionId(arg_21_0._versionId)
-		CommandStationMapModel.instance:setTimeId(arg_21_0._timeId)
+function CommandStationDungeonMapView:onClickEnter()
+	if self._versionId and self._timeId then
+		CommandStationMapModel.instance:setVersionId(self._versionId)
+		CommandStationMapModel.instance:setTimeId(self._timeId)
 
-		if arg_21_0._showEffect then
-			arg_21_0._showEffect = false
+		if self._showEffect then
+			self._showEffect = false
 
-			CommandStationController.setOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLoopEffect, arg_21_0._episodeId)
-			arg_21_0:_updateEffect()
+			CommandStationController.setOnceActionKey(CommandStationEnum.PrefsKey.DungeonMapLoopEffect, self._episodeId)
+			self:_updateEffect()
 		end
 
 		if not ViewMgr.instance:isOpen(ViewName.CommandStationMapView) then
@@ -252,20 +254,20 @@ function var_0_0.onClickEnter(arg_21_0)
 	GameFacade.showToast(ToastEnum.CommandStationTip1)
 end
 
-function var_0_0.onClose(arg_23_0)
-	if arg_23_0._loader then
-		arg_23_0._loader:dispose()
+function CommandStationDungeonMapView:onClose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_23_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_23_0._btnEnter then
-		arg_23_0._btnEnter:RemoveClickListener()
+	if self._btnEnter then
+		self._btnEnter:RemoveClickListener()
 	end
 end
 
-function var_0_0._onUpdateDungeonInfo(arg_24_0)
-	arg_24_0:_updateInfo(true)
+function CommandStationDungeonMapView:_onUpdateDungeonInfo()
+	self:_updateInfo(true)
 end
 
-return var_0_0
+return CommandStationDungeonMapView

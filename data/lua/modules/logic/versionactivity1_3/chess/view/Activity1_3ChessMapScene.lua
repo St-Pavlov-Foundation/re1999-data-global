@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapScene", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/chess/view/Activity1_3ChessMapScene.lua
 
-local var_0_0 = class("Activity1_3ChessMapScene", BaseView)
-local var_0_1 = {
+module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapScene", package.seeall)
+
+local Activity1_3ChessMapScene = class("Activity1_3ChessMapScene", BaseView)
+local ChapterId2NodeIdDic = {
 	[Activity1_3ChessEnum.Chapter.One] = {
 		1,
 		2,
@@ -15,7 +17,7 @@ local var_0_1 = {
 		8
 	}
 }
-local var_0_2 = {
+local NodeElementInMapPath = {
 	{
 		"Obj-Plant/all/diffuse/zjm01_jy"
 	},
@@ -48,191 +50,191 @@ local var_0_2 = {
 	}
 }
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity1_3ChessMapScene:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.MapSceneActvie, arg_2_0.setSceneActive, arg_2_0)
+function Activity1_3ChessMapScene:addEvents()
+	self:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.MapSceneActvie, self.setSceneActive, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity1_3ChessMapScene:removeEvents()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_4_0)
+function Activity1_3ChessMapScene:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_5_0.onScreenResize, arg_5_0)
+function Activity1_3ChessMapScene:onOpen()
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self.onScreenResize, self)
 end
 
-function var_0_0.setSceneActive(arg_6_0, arg_6_1)
-	if arg_6_0._sceneRoot then
-		gohelper.setActive(arg_6_0._sceneRoot, arg_6_1)
+function Activity1_3ChessMapScene:setSceneActive(isActive)
+	if self._sceneRoot then
+		gohelper.setActive(self._sceneRoot, isActive)
 	end
 end
 
-function var_0_0.onClose(arg_7_0)
+function Activity1_3ChessMapScene:onClose()
 	return
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._pageIds = {
+function Activity1_3ChessMapScene:_editableInitView()
+	self._pageIds = {
 		Activity1_3ChessEnum.Chapter.One,
 		Activity1_3ChessEnum.Chapter.Two
 	}
-	arg_8_0._chapterSceneUdtbDict = {}
-	arg_8_0._chapterInactList = {}
+	self._chapterSceneUdtbDict = {}
+	self._chapterInactList = {}
 
-	arg_8_0:onScreenResize()
+	self:onScreenResize()
 
-	local var_8_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_8_1 = CameraMgr.instance:getSceneRoot()
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_8_0._sceneRoot = UnityEngine.GameObject.New("Activity1_3ChessMap")
+	self._sceneRoot = UnityEngine.GameObject.New("Activity1_3ChessMap")
 
-	local var_8_2, var_8_3, var_8_4 = transformhelper.getLocalPos(var_8_0)
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_8_0._sceneRoot.transform, 0, var_8_3, 0)
-	gohelper.addChild(var_8_1, arg_8_0._sceneRoot)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0.onScreenResize(arg_9_0)
-	local var_9_0 = CameraMgr.instance:getMainCamera()
-	local var_9_1 = GameUtil.getAdapterScale(true)
+function Activity1_3ChessMapScene:onScreenResize()
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale(true)
 
-	var_9_0.orthographic = true
-	var_9_0.orthographicSize = 7.5 * var_9_1
+	camera.orthographic = true
+	camera.orthographicSize = 7.5 * scale
 end
 
-function var_0_0.resetCamera(arg_10_0)
-	local var_10_0 = CameraMgr.instance:getMainCamera()
+function Activity1_3ChessMapScene:resetCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_10_0.orthographicSize = 5
-	var_10_0.orthographic = false
+	camera.orthographicSize = 5
+	camera.orthographic = false
 end
 
-function var_0_0.switchStage(arg_11_0, arg_11_1)
-	if not Activity1_3ChessEnum.MapSceneResPath[arg_11_1] then
+function Activity1_3ChessMapScene:switchStage(stage)
+	if not Activity1_3ChessEnum.MapSceneResPath[stage] then
 		return
 	end
 
-	if arg_11_0._chapterSceneUdtbDict then
-		arg_11_0:_createChapterScene(arg_11_1)
+	if self._chapterSceneUdtbDict then
+		self:_createChapterScene(stage)
 
-		for iter_11_0, iter_11_1 in pairs(arg_11_0._chapterSceneUdtbDict) do
-			gohelper.setActive(iter_11_1.go, iter_11_1.chaperId == arg_11_1)
+		for _, tb in pairs(self._chapterSceneUdtbDict) do
+			gohelper.setActive(tb.go, tb.chaperId == stage)
 		end
 	end
 end
 
-function var_0_0._createChapterScene(arg_12_0, arg_12_1)
-	if arg_12_0._chapterSceneUdtbDict and not arg_12_0._chapterSceneUdtbDict[arg_12_1] then
-		local var_12_0 = arg_12_0:getResInst(Activity1_3ChessEnum.MapSceneResPath[arg_12_1], arg_12_0._sceneRoot)
+function Activity1_3ChessMapScene:_createChapterScene(chaperId)
+	if self._chapterSceneUdtbDict and not self._chapterSceneUdtbDict[chaperId] then
+		local go = self:getResInst(Activity1_3ChessEnum.MapSceneResPath[chaperId], self._sceneRoot)
 
-		transformhelper.setLocalPos(var_12_0.transform, 0, 0, 0)
+		transformhelper.setLocalPos(go.transform, 0, 0, 0)
 
-		local var_12_1 = arg_12_0:getUserDataTb_()
+		local chapterData = self:getUserDataTb_()
 
-		var_12_1.go = var_12_0
-		var_12_1.chaperId = arg_12_1
-		var_12_1.nodeElementDic = {}
-		var_12_1.animator = gohelper.onceAddComponent(var_12_0, typeof(UnityEngine.Animator))
-		arg_12_0._chapterSceneUdtbDict[arg_12_1] = var_12_1
+		chapterData.go = go
+		chapterData.chaperId = chaperId
+		chapterData.nodeElementDic = {}
+		chapterData.animator = gohelper.onceAddComponent(go, typeof(UnityEngine.Animator))
+		self._chapterSceneUdtbDict[chaperId] = chapterData
 
-		arg_12_0:_initChapterSceneElement(arg_12_1)
+		self:_initChapterSceneElement(chaperId)
 	end
 end
 
-function var_0_0._initChapterSceneElement(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._chapterSceneUdtbDict[arg_13_1]
-	local var_13_1 = var_0_1[arg_13_1]
+function Activity1_3ChessMapScene:_initChapterSceneElement(chaperId)
+	local chapterData = self._chapterSceneUdtbDict[chaperId]
+	local nodeIds = ChapterId2NodeIdDic[chaperId]
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_2 = var_0_2[iter_13_1]
+	for _, nodeId in ipairs(nodeIds) do
+		local nodeElementPaths = NodeElementInMapPath[nodeId]
 
-		for iter_13_2, iter_13_3 in ipairs(var_13_2) do
-			local var_13_3 = gohelper.findChild(var_13_0.go, iter_13_3)
+		for _, elementPath in ipairs(nodeElementPaths) do
+			local elementGo = gohelper.findChild(chapterData.go, elementPath)
 
-			if var_13_3 then
-				if not var_13_0.nodeElementDic[iter_13_1] then
-					var_13_0.nodeElementDic[iter_13_1] = {}
+			if elementGo then
+				if not chapterData.nodeElementDic[nodeId] then
+					chapterData.nodeElementDic[nodeId] = {}
 				end
 
-				local var_13_4 = var_13_0.nodeElementDic[iter_13_1]
+				local nodeElements = chapterData.nodeElementDic[nodeId]
 
-				var_13_4[#var_13_4 + 1] = var_13_3
+				nodeElements[#nodeElements + 1] = elementGo
 
-				gohelper.setActive(var_13_3, false)
+				gohelper.setActive(elementGo, false)
 			end
 		end
 	end
 
-	arg_13_0:_refreshChaperSceneElement(arg_13_1)
+	self:_refreshChaperSceneElement(chaperId)
 end
 
-function var_0_0._refreshChaperSceneElement(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0._chapterSceneUdtbDict[arg_14_1]
-	local var_14_1 = var_14_0 and var_14_0.nodeElementDic
+function Activity1_3ChessMapScene:_refreshChaperSceneElement(chaperId, forceActive)
+	local chapterData = self._chapterSceneUdtbDict[chaperId]
+	local nodeElementDic = chapterData and chapterData.nodeElementDic
 
-	if not var_14_1 then
+	if not nodeElementDic then
 		return
 	end
 
-	for iter_14_0, iter_14_1 in pairs(var_14_1) do
-		local var_14_2 = Activity122Model.instance:getEpisodeData(iter_14_0)
-		local var_14_3 = var_14_2 and var_14_2.star > 0
+	for nodeId, nodeElements in pairs(nodeElementDic) do
+		local episodeData = Activity122Model.instance:getEpisodeData(nodeId)
+		local showElement = episodeData and episodeData.star > 0
 
-		if arg_14_2 ~= nil then
-			var_14_3 = arg_14_2
+		if forceActive ~= nil then
+			showElement = forceActive
 		end
 
-		for iter_14_2, iter_14_3 in ipairs(iter_14_1) do
-			gohelper.setActive(iter_14_3, var_14_3)
+		for _, nodeElementGo in ipairs(nodeElements) do
+			gohelper.setActive(nodeElementGo, showElement)
 		end
 	end
 end
 
-function var_0_0.onSetVisible(arg_15_0, arg_15_1)
-	if arg_15_1 then
-		arg_15_0:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.One)
-		arg_15_0:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.Two)
+function Activity1_3ChessMapScene:onSetVisible(visible)
+	if visible then
+		self:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.One)
+		self:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.Two)
 	else
-		arg_15_0:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.One, false)
-		arg_15_0:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.Two, false)
+		self:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.One, false)
+		self:_refreshChaperSceneElement(Activity1_3ChessEnum.Chapter.Two, false)
 	end
 end
 
-function var_0_0.playSceneEnterAni(arg_16_0, arg_16_1)
+function Activity1_3ChessMapScene:playSceneEnterAni(chaperId)
 	UIBlockMgr.instance:startBlock(Activity1_3ChessEnum.UIBlockKey)
 
-	local var_16_0 = arg_16_0._chapterSceneUdtbDict[arg_16_1]
+	local chapterData = self._chapterSceneUdtbDict[chaperId]
 
-	if var_16_0 and var_16_0.animator then
-		var_16_0.animator:Play("open")
+	if chapterData and chapterData.animator then
+		chapterData.animator:Play("open")
 	end
 
-	TaskDispatcher.runDelay(arg_16_0.playSceneEnterAniEnd, arg_16_0, 0.6)
+	TaskDispatcher.runDelay(self.playSceneEnterAniEnd, self, 0.6)
 end
 
-function var_0_0.playSceneEnterAniEnd(arg_17_0)
+function Activity1_3ChessMapScene:playSceneEnterAniEnd()
 	UIBlockMgr.instance:endBlock(Activity1_3ChessEnum.UIBlockKey)
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	if arg_18_0._sceneRoot then
-		gohelper.destroy(arg_18_0._sceneRoot)
+function Activity1_3ChessMapScene:onDestroyView()
+	if self._sceneRoot then
+		gohelper.destroy(self._sceneRoot)
 
-		arg_18_0._sceneRoot = nil
+		self._sceneRoot = nil
 	end
 
-	if arg_18_0._chapterSceneUdtbDict then
-		arg_18_0._chapterSceneUdtbDict = nil
+	if self._chapterSceneUdtbDict then
+		self._chapterSceneUdtbDict = nil
 	end
 end
 
-return var_0_0
+return Activity1_3ChessMapScene

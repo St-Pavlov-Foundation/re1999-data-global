@@ -1,65 +1,67 @@
-﻿module("modules.logic.fight.fightcomponent.FightDragComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightDragComponent.lua
 
-local var_0_0 = class("FightDragComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightDragComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0._dragDic = {}
+local FightDragComponent = class("FightDragComponent", FightBaseClass)
+
+function FightDragComponent:onConstructor()
+	self._dragDic = {}
 end
 
-function var_0_0.registDragBegin(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = arg_2_1:GetInstanceID()
+function FightDragComponent:registDragBegin(drag, callback, handle, param)
+	local id = drag:GetInstanceID()
 
-	arg_2_0._dragDic[var_2_0] = arg_2_1
+	self._dragDic[id] = drag
 
-	arg_2_1:AddDragBeginListener(arg_2_2, arg_2_3, arg_2_4)
+	drag:AddDragBeginListener(callback, handle, param)
 end
 
-function var_0_0.registDrag(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	local var_3_0 = arg_3_1:GetInstanceID()
+function FightDragComponent:registDrag(drag, callback, handle, param)
+	local id = drag:GetInstanceID()
 
-	arg_3_0._dragDic[var_3_0] = arg_3_1
+	self._dragDic[id] = drag
 
-	arg_3_1:AddDragListener(arg_3_2, arg_3_3, arg_3_4)
+	drag:AddDragListener(callback, handle, param)
 end
 
-function var_0_0.registDragEnd(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local var_4_0 = arg_4_1:GetInstanceID()
+function FightDragComponent:registDragEnd(drag, callback, handle, param)
+	local id = drag:GetInstanceID()
 
-	arg_4_0._dragDic[var_4_0] = arg_4_1
+	self._dragDic[id] = drag
 
-	arg_4_1:AddDragEndListener(arg_4_2, arg_4_3, arg_4_4)
+	drag:AddDragEndListener(callback, handle, param)
 end
 
-function var_0_0.removeDragBegin(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1:GetInstanceID()
+function FightDragComponent:removeDragBegin(drag)
+	local id = drag:GetInstanceID()
 
-	if arg_5_0._dragDic[var_5_0] then
-		arg_5_0._dragDic[var_5_0]:RemoveDragBeginListener()
+	if self._dragDic[id] then
+		self._dragDic[id]:RemoveDragBeginListener()
 	end
 end
 
-function var_0_0.removeDrag(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1:GetInstanceID()
+function FightDragComponent:removeDrag(drag)
+	local id = drag:GetInstanceID()
 
-	if arg_6_0._dragDic[var_6_0] then
-		arg_6_0._dragDic[var_6_0]:RemoveDragListener()
+	if self._dragDic[id] then
+		self._dragDic[id]:RemoveDragListener()
 	end
 end
 
-function var_0_0.removeDragEnd(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1:GetInstanceID()
+function FightDragComponent:removeDragEnd(drag)
+	local id = drag:GetInstanceID()
 
-	if arg_7_0._dragDic[var_7_0] then
-		arg_7_0._dragDic[var_7_0]:RemoveDragEndListener()
+	if self._dragDic[id] then
+		self._dragDic[id]:RemoveDragEndListener()
 	end
 end
 
-function var_0_0.onDestructor(arg_8_0)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._dragDic) do
-		iter_8_1:RemoveDragBeginListener()
-		iter_8_1:RemoveDragListener()
-		iter_8_1:RemoveDragEndListener()
+function FightDragComponent:onDestructor()
+	for k, drag in pairs(self._dragDic) do
+		drag:RemoveDragBeginListener()
+		drag:RemoveDragListener()
+		drag:RemoveDragEndListener()
 	end
 end
 
-return var_0_0
+return FightDragComponent

@@ -1,14 +1,16 @@
-﻿local var_0_0 = pureTable("Season123CardPackageItemMO")
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123CardPackageItemMO.lua
 
-function var_0_0.ctor(arg_1_0)
+local Season123CardPackageItemMO = pureTable("Season123CardPackageItemMO")
+
+function Season123CardPackageItemMO:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
-	arg_2_0.itemId = arg_2_1
-	arg_2_0.count = 1
-	arg_2_0.config = Season123Config.instance:getSeasonEquipCo(arg_2_1)
+function Season123CardPackageItemMO:init(itemId)
+	self.id = itemId
+	self.itemId = itemId
+	self.count = 1
+	self.config = Season123Config.instance:getSeasonEquipCo(itemId)
 end
 
-return var_0_0
+return Season123CardPackageItemMO

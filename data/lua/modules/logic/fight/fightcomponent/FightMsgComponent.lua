@@ -1,39 +1,41 @@
-﻿module("modules.logic.fight.fightcomponent.FightMsgComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightMsgComponent.lua
 
-local var_0_0 = class("FightMsgComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightMsgComponent", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.msgList = {}
-	arg_1_0.count = 0
+local FightMsgComponent = class("FightMsgComponent", FightBaseClass)
+
+function FightMsgComponent:onConstructor()
+	self.msgList = {}
+	self.count = 0
 end
 
-function var_0_0.registMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = FightMsgMgr.registMsg(arg_2_1, arg_2_2, arg_2_3)
+function FightMsgComponent:registMsg(msgId, callback, handle)
+	local item = FightMsgMgr.registMsg(msgId, callback, handle)
 
-	arg_2_0.count = arg_2_0.count + 1
-	arg_2_0.msgList[arg_2_0.count] = var_2_0
+	self.count = self.count + 1
+	self.msgList[self.count] = item
 
-	return var_2_0
+	return item
 end
 
-function var_0_0.removeMsg(arg_3_0, arg_3_1)
-	FightMsgMgr.removeMsg(arg_3_1)
+function FightMsgComponent:removeMsg(msgItem)
+	FightMsgMgr.removeMsg(msgItem)
 end
 
-function var_0_0.sendMsg(arg_4_0, arg_4_1, ...)
-	return FightMsgMgr.sendMsg(arg_4_1, ...)
+function FightMsgComponent:sendMsg(msgId, ...)
+	return FightMsgMgr.sendMsg(msgId, ...)
 end
 
-function var_0_0.replyMsg(arg_5_0, arg_5_1, arg_5_2)
-	FightMsgMgr.replyMsg(arg_5_1, arg_5_2)
+function FightMsgComponent:replyMsg(msgId, reply)
+	FightMsgMgr.replyMsg(msgId, reply)
 end
 
-function var_0_0.onDestructor(arg_6_0)
-	local var_6_0 = arg_6_0.msgList
+function FightMsgComponent:onDestructor()
+	local list = self.msgList
 
-	for iter_6_0 = arg_6_0.count, 1, -1 do
-		FightMsgMgr.removeMsg(var_6_0[iter_6_0])
+	for i = self.count, 1, -1 do
+		FightMsgMgr.removeMsg(list[i])
 	end
 end
 
-return var_0_0
+return FightMsgComponent

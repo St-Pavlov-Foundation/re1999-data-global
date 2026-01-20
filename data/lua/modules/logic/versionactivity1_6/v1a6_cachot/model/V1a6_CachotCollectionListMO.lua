@@ -1,32 +1,34 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionListMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotCollectionListMO.lua
 
-local var_0_0 = pureTable("V1a6_CachotCollectionListMO")
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionListMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.collectionType = arg_1_1
-	arg_1_0.collectionList = {}
-	arg_1_0.collectionDic = {}
-	arg_1_0._curCollectionCount = 0
-	arg_1_0._isTop = arg_1_2 or false
-	arg_1_0._maxCollectionNumSingleLine = arg_1_3
+local V1a6_CachotCollectionListMO = pureTable("V1a6_CachotCollectionListMO")
+
+function V1a6_CachotCollectionListMO:init(collectionType, isTop, maxCollectionNumSingleLine)
+	self.collectionType = collectionType
+	self.collectionList = {}
+	self.collectionDic = {}
+	self._curCollectionCount = 0
+	self._isTop = isTop or false
+	self._maxCollectionNumSingleLine = maxCollectionNumSingleLine
 end
 
-function var_0_0.addCollection(arg_2_0, arg_2_1)
-	if not arg_2_0.collectionDic[arg_2_1.id] then
-		arg_2_0.collectionDic[arg_2_1.id] = true
+function V1a6_CachotCollectionListMO:addCollection(collectionConfig)
+	if not self.collectionDic[collectionConfig.id] then
+		self.collectionDic[collectionConfig.id] = true
 
-		table.insert(arg_2_0.collectionList, arg_2_1)
+		table.insert(self.collectionList, collectionConfig)
 
-		arg_2_0._curCollectionCount = arg_2_0._curCollectionCount + 1
+		self._curCollectionCount = self._curCollectionCount + 1
 	end
 end
 
-function var_0_0.isFull(arg_3_0)
-	return arg_3_0._curCollectionCount >= arg_3_0._maxCollectionNumSingleLine
+function V1a6_CachotCollectionListMO:isFull()
+	return self._curCollectionCount >= self._maxCollectionNumSingleLine
 end
 
-function var_0_0.getLineHeight(arg_4_0)
-	return arg_4_0._isTop and 330 or 230
+function V1a6_CachotCollectionListMO:getLineHeight()
+	return self._isTop and 330 or 230
 end
 
-return var_0_0
+return V1a6_CachotCollectionListMO

@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.entity.comp.FightBuffComp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightBuffComp.lua
 
-local var_0_0 = class("FightBuffComp", LuaCompBase)
-local var_0_1 = 2
-local var_0_2 = {
+module("modules.logic.fight.entity.comp.FightBuffComp", package.seeall)
+
+local FightBuffComp = class("FightBuffComp", LuaCompBase)
+local OnceEffectTime = 2
+local BuffTypeHandlerCls = {
 	[FightEnum.BuffType_Petrified] = FightBuffFrozen,
 	[FightEnum.BuffType_Frozen] = FightBuffFrozen,
 	[FightEnum.BuffType_ExPointOverflowBank] = FightBuffStoredExPoint,
@@ -17,360 +19,369 @@ local var_0_2 = {
 	[FightEnum.BuffType_AddCardCastChannel] = FightBuffAddCardContinueChannel,
 	[FightEnum.BuffType_LockHpMax] = FightBuffLockHpComp
 }
-local var_0_3 = {
+local BuffIdHandlerCls = {
 	[31080132] = FightBuffAddBKLESpBuff,
 	[31080134] = FightBuffAddBKLESpBuff,
 	[106315001] = FightBuffAddScaleOffset
 }
-local var_0_4 = {
+local buffTypeIdHandCls = {
 	[FightEnum.BuffTypeId_CoverPerson] = FightBuffCoverPerson,
 	[31070111] = FightBuffSpecialCountCastBuff,
 	[31070121] = FightBuffSpecialCountCastBuff,
 	[900045418] = FightBuffWELXStarComp
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._entity = arg_1_1
-	arg_1_0._animPriorityQueue = PriorityQueue.New(var_0_0.buffCompareFuncAni)
-	arg_1_0._matPriorityQueue = PriorityQueue.New(var_0_0.buffCompareFuncMat)
-	arg_1_0._buffEffectDict = {}
-	arg_1_0._loopBuffEffectWrapDict = {}
-	arg_1_0._onceEffectDict = {}
-	arg_1_0._buffHandlerDict = {}
-	arg_1_0._buff_loop_effect_name = {}
-	arg_1_0._curBuffIdDic = {}
-	arg_1_0._delBuffEffectDic = {}
-	arg_1_0._addBuffEffectPathDic = {}
-	arg_1_0._curBuffTypeIdDic = {}
-	arg_1_0._buffDic = {}
-	arg_1_0.skinBuffEffectMgr = FightEntitySkinBuffEffectMgr.New()
+function FightBuffComp:ctor(entity)
+	self._entity = entity
+	self._animPriorityQueue = PriorityQueue.New(FightBuffComp.buffCompareFuncAni)
+	self._matPriorityQueue = PriorityQueue.New(FightBuffComp.buffCompareFuncMat)
+	self._buffEffectDict = {}
+	self._loopBuffEffectWrapDict = {}
+	self._onceEffectDict = {}
+	self._buffHandlerDict = {}
+	self._buff_loop_effect_name = {}
+	self._curBuffIdDic = {}
+	self._delBuffEffectDic = {}
+	self._addBuffEffectPathDic = {}
+	self._curBuffTypeIdDic = {}
+	self._buffDic = {}
+	self.skinBuffEffectMgr = FightEntitySkinBuffEffectMgr.New()
+	self.buffMgr = FightEntityBuffMgr.New()
 
-	arg_1_0:registSkinBuffEffect()
-
-	arg_1_0.buffMgr = FightEntityBuffMgr.New()
+	self:registSkinBuffEffect()
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, arg_2_0._onCoverPerformanceEntityData, arg_2_0)
+function FightBuffComp:init(go)
+	self:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, self._onCoverPerformanceEntityData, self)
 end
 
-function var_0_0.dealStartBuff(arg_3_0)
-	local var_3_0 = arg_3_0._entity:getMO()
+function FightBuffComp:dealStartBuff()
+	local entityMO = self._entity:getMO()
 
-	if var_3_0 then
-		arg_3_0.filter_start_buff_stacked = {}
+	if entityMO then
+		self.filter_start_buff_stacked = {}
 
-		for iter_3_0, iter_3_1 in pairs(var_3_0:getBuffDic()) do
-			arg_3_0:addBuff(iter_3_1, true)
+		for _, buffMO in pairs(entityMO:getBuffDic()) do
+			self:addBuff(buffMO, true)
 		end
 
-		arg_3_0.filter_start_buff_stacked = nil
+		self.filter_start_buff_stacked = nil
 	end
 
-	arg_3_0._entity:resetAnimState()
+	self._entity:resetAnimState()
 end
 
-function var_0_0.buffCompareFuncAni(arg_4_0, arg_4_1)
-	local var_4_0 = lua_skill_buff.configDict[arg_4_0.buffId]
-	local var_4_1 = lua_skill_buff.configDict[arg_4_1.buffId]
+function FightBuffComp.buffCompareFuncAni(buffMO1, buffMO2)
+	local buffCO1 = lua_skill_buff.configDict[buffMO1.buffId]
+	local buffCO2 = lua_skill_buff.configDict[buffMO2.buffId]
 
-	if not var_4_0 then
-		logError("buff表找不到id:" .. arg_4_0.buffId)
+	if not buffCO1 then
+		logError("buff表找不到id:" .. buffMO1.buffId)
 	end
 
-	if not var_4_1 then
-		logError("buff表找不到id:" .. arg_4_1.buffId)
+	if not buffCO2 then
+		logError("buff表找不到id:" .. buffMO2.buffId)
 	end
 
-	local var_4_2 = lua_skill_bufftype.configDict[var_4_0.typeId]
-	local var_4_3 = lua_skill_bufftype.configDict[var_4_1.typeId]
+	local buffTypeConfig1 = lua_skill_bufftype.configDict[buffCO1.typeId]
+	local buffTypeConfig2 = lua_skill_bufftype.configDict[buffCO2.typeId]
 
-	if not var_4_2 then
-		logError("buff类表找不到id:" .. var_4_0.typeId)
+	if not buffTypeConfig1 then
+		logError("buff类表找不到id:" .. buffCO1.typeId)
 	end
 
-	if not var_4_3 then
-		logError("buff类表找不到id:" .. var_4_1.typeId)
+	if not buffTypeConfig2 then
+		logError("buff类表找不到id:" .. buffCO2.typeId)
 	end
 
-	local var_4_4 = lua_skill_bufftype.configDict[var_4_0.typeId].aniSort
-	local var_4_5 = lua_skill_bufftype.configDict[var_4_1.typeId].aniSort
+	local priority1 = lua_skill_bufftype.configDict[buffCO1.typeId].aniSort
+	local priority2 = lua_skill_bufftype.configDict[buffCO2.typeId].aniSort
 
-	if var_4_4 ~= var_4_5 then
-		return var_4_5 < var_4_4
+	if priority1 ~= priority2 then
+		return priority2 < priority1
 	end
 
-	if var_4_4 == 0 and var_4_5 == 0 then
-		local var_4_6 = not string.nilorempty(var_4_0.animationName) and var_4_0.animationName ~= "0"
-		local var_4_7 = not string.nilorempty(var_4_1.animationName) and var_4_1.animationName ~= "0"
+	if priority1 == 0 and priority2 == 0 then
+		local has_act1 = not string.nilorempty(buffCO1.animationName) and buffCO1.animationName ~= "0"
+		local has_act2 = not string.nilorempty(buffCO2.animationName) and buffCO2.animationName ~= "0"
 
-		if var_4_6 and not var_4_7 then
+		if has_act1 and not has_act2 then
 			return true
-		elseif not var_4_6 and var_4_7 then
+		elseif not has_act1 and has_act2 then
 			return false
 		end
 	end
 
-	if arg_4_0.time ~= arg_4_1.time then
-		return arg_4_0.time > arg_4_1.time
+	if buffMO1.time ~= buffMO2.time then
+		return buffMO1.time > buffMO2.time
 	end
 
-	return arg_4_0.id > arg_4_1.id
+	return buffMO1.id > buffMO2.id
 end
 
-function var_0_0.buffCompareFuncMat(arg_5_0, arg_5_1)
-	local var_5_0 = lua_skill_buff.configDict[arg_5_0.buffId]
-	local var_5_1 = lua_skill_buff.configDict[arg_5_1.buffId]
-	local var_5_2 = lua_skill_bufftype.configDict[var_5_0.typeId].matSort
-	local var_5_3 = lua_skill_bufftype.configDict[var_5_1.typeId].matSort
+function FightBuffComp.buffCompareFuncMat(buffMO1, buffMO2)
+	local buffCO1 = lua_skill_buff.configDict[buffMO1.buffId]
+	local buffCO2 = lua_skill_buff.configDict[buffMO2.buffId]
+	local priority1 = lua_skill_bufftype.configDict[buffCO1.typeId].matSort
+	local priority2 = lua_skill_bufftype.configDict[buffCO2.typeId].matSort
 
-	if var_5_2 ~= var_5_3 then
-		return var_5_3 < var_5_2
+	if priority1 ~= priority2 then
+		return priority2 < priority1
 	end
 
-	if var_5_2 == 0 and var_5_3 == 0 then
-		local var_5_4 = not var_0_0.isEmptyMat(var_5_0.mat)
-		local var_5_5 = not var_0_0.isEmptyMat(var_5_1.mat)
+	if priority1 == 0 and priority2 == 0 then
+		local has_mat1 = not FightBuffComp.isEmptyMat(buffCO1.mat)
+		local has_mat2 = not FightBuffComp.isEmptyMat(buffCO2.mat)
 
-		if var_5_4 and not var_5_5 then
+		if has_mat1 and not has_mat2 then
 			return true
-		elseif not var_5_4 and var_5_5 then
+		elseif not has_mat1 and has_mat2 then
 			return false
 		end
 	end
 
-	if arg_5_0.time ~= arg_5_1.time then
-		return arg_5_0.time > arg_5_1.time
+	if buffMO1.time ~= buffMO2.time then
+		return buffMO1.time > buffMO2.time
 	end
 
-	return arg_5_0.id > arg_5_1.id
+	return buffMO1.id > buffMO2.id
 end
 
-function var_0_0.haveBuffId(arg_6_0, arg_6_1)
-	return arg_6_0._curBuffIdDic[arg_6_1] and arg_6_0._curBuffIdDic[arg_6_1] > 0
+function FightBuffComp:haveBuffId(buffId)
+	return self._curBuffIdDic[buffId] and self._curBuffIdDic[buffId] > 0
 end
 
-function var_0_0.haveBuffTypeId(arg_7_0, arg_7_1)
-	return arg_7_0._curBuffTypeIdDic[arg_7_1] and arg_7_0._curBuffTypeIdDic[arg_7_1] > 0
+function FightBuffComp:haveBuffTypeId(buffId)
+	return self._curBuffTypeIdDic[buffId] and self._curBuffTypeIdDic[buffId] > 0
 end
 
-function var_0_0.addBuff(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_1.type == FightEnum.BuffType.LayerSalveHalo then
+function FightBuffComp:addBuff(buff, dontPlayOnceEffect, stepUid)
+	local isLayerSalveHalo = buff.type == FightEnum.BuffType.LayerSalveHalo
+
+	if isLayerSalveHalo then
 		return
 	end
 
-	arg_8_0._buffDic[arg_8_1.uid] = arg_8_1
+	self._buffDic[buff.uid] = buff
 
-	arg_8_0:_showBuffFloat(arg_8_1)
+	self:_showBuffFloat(buff)
 
-	local var_8_0 = lua_skill_buff.configDict[arg_8_1.buffId]
+	local buffCO = lua_skill_buff.configDict[buff.buffId]
 
-	if not var_8_0 then
+	if not buffCO then
 		return
 	end
 
-	arg_8_0._curBuffIdDic[var_8_0.id] = (arg_8_0._curBuffIdDic[var_8_0.id] or 0) + 1
-	arg_8_0._curBuffTypeIdDic[var_8_0.typeId] = (arg_8_0._curBuffTypeIdDic[var_8_0.typeId] or 0) + 1
+	self._curBuffIdDic[buffCO.id] = (self._curBuffIdDic[buffCO.id] or 0) + 1
+	self._curBuffTypeIdDic[buffCO.typeId] = (self._curBuffTypeIdDic[buffCO.typeId] or 0) + 1
 
-	arg_8_0._animPriorityQueue:add(arg_8_1)
-	arg_8_0._matPriorityQueue:add(arg_8_1)
-	arg_8_0:_addBuffHandler(arg_8_1)
+	self._animPriorityQueue:add(buff)
+	self._matPriorityQueue:add(buff)
+	self:_addBuffHandler(buff)
 
-	local var_8_1 = FightSkillBuffMgr.instance:hasPlayBuffEffect(arg_8_0._entity.id, arg_8_1, arg_8_3)
-	local var_8_2 = var_8_0.effectloop ~= 0 or not arg_8_2
-	local var_8_3
-	local var_8_4, var_8_5, var_8_6 = FightHelper.processBuffEffectPath(var_8_0.effect, arg_8_0._entity, arg_8_1.buffId, "effectPath", var_8_0.audio)
-	local var_8_7, var_8_8 = FightHelper.filterBuffEffectBySkin(arg_8_1.buffId, arg_8_0._entity, var_8_4, var_8_5)
+	local hasPlayBuffEffect = FightSkillBuffMgr.instance:hasPlayBuffEffect(self._entity.id, buff, stepUid)
+	local needPlayOnceEffect = buffCO.effectloop ~= 0 or not dontPlayOnceEffect
+	local buffEffectNamePath
+	local buffEffectPath, audioId, effectReplaceConfig = FightHelper.processBuffEffectPath(buffCO.effect, self._entity, buff.buffId, "effectPath", buffCO.audio)
 
-	if var_8_8 > 0 and not AudioEffectMgr.instance:isPlaying(var_8_8) then
-		AudioEffectMgr.instance:playAudio(var_8_8)
+	buffEffectPath, audioId = FightHelper.filterBuffEffectBySkin(buff.buffId, self._entity, buffEffectPath, audioId)
+
+	if audioId > 0 and not AudioEffectMgr.instance:isPlaying(audioId) then
+		AudioEffectMgr.instance:playAudio(audioId)
 	end
 
-	local var_8_9 = var_8_7 ~= "0" and not string.nilorempty(var_8_7)
+	local hasBuffEffect = buffEffectPath ~= "0" and not string.nilorempty(buffEffectPath)
 
-	if var_8_9 then
-		if string.find(var_8_7, "/") then
-			var_8_3 = var_8_7
+	if hasBuffEffect then
+		local isPath = string.find(buffEffectPath, "/")
+
+		if isPath then
+			buffEffectNamePath = buffEffectPath
 		else
-			var_8_3 = "buff/" .. var_8_7
+			buffEffectNamePath = "buff/" .. buffEffectPath
 		end
 	end
 
-	local var_8_10 = FightHelper.getEffectUrlWithLod(var_8_3)
-	local var_8_11 = arg_8_0._entity.effect:getEffectWrap(var_8_3) and arg_8_0._addBuffEffectPathDic[var_8_10]
+	local effectFullPath = FightHelper.getEffectUrlWithLod(buffEffectNamePath)
+	local isPlayingEffect = self._entity.effect:getEffectWrap(buffEffectNamePath) and self._addBuffEffectPathDic[effectFullPath]
 
-	if not var_8_1 and var_8_9 and var_8_2 then
-		if not var_8_11 then
-			arg_8_0._addBuffEffectPathDic[var_8_10] = true
+	if not hasPlayBuffEffect and hasBuffEffect and needPlayOnceEffect then
+		if not isPlayingEffect then
+			self._addBuffEffectPathDic[effectFullPath] = true
 
-			local var_8_12
-			local var_8_13 = var_8_0.effectHangPoint
+			local effectWrap
+			local hangPoint = buffCO.effectHangPoint
 
-			if var_8_6 and not string.nilorempty(var_8_6.effectHang) then
-				var_8_13 = var_8_6.effectHang
+			if effectReplaceConfig and not string.nilorempty(effectReplaceConfig.effectHang) then
+				hangPoint = effectReplaceConfig.effectHang
 			end
 
-			if not string.nilorempty(var_8_13) then
-				var_8_12 = arg_8_0._entity.effect:addHangEffect(var_8_3, var_8_13)
+			if not string.nilorempty(hangPoint) then
+				effectWrap = self._entity.effect:addHangEffect(buffEffectNamePath, hangPoint)
 
-				var_8_12:setLocalPos(0, 0, 0)
+				effectWrap:setLocalPos(0, 0, 0)
 
-				if var_8_13 == ModuleEnum.SpineHangPointRoot then
-					var_8_12:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(arg_8_0._entity, var_8_3))
+				if hangPoint == ModuleEnum.SpineHangPointRoot then
+					effectWrap:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(self._entity, buffEffectNamePath))
 				end
 			else
-				var_8_12 = arg_8_0._entity.effect:addGlobalEffect(var_8_3)
+				effectWrap = self._entity.effect:addGlobalEffect(buffEffectNamePath)
 
-				local var_8_14, var_8_15, var_8_16 = transformhelper.getPos(arg_8_0._entity.go.transform)
+				local posX, posY, posZ = transformhelper.getPos(self._entity.go.transform)
 
-				var_8_12:setWorldPos(var_8_14, var_8_15, var_8_16)
+				effectWrap:setWorldPos(posX, posY, posZ)
 			end
 
-			FightRenderOrderMgr.instance:onAddEffectWrap(arg_8_0._entity.id, var_8_12)
+			FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 
-			arg_8_0._buffEffectDict[arg_8_1.uid] = var_8_12
+			self._buffEffectDict[buff.uid] = effectWrap
 
-			if var_8_0.effectloop == 0 then
-				arg_8_0._onceEffectDict[arg_8_1.uid] = Time.time + var_0_1
+			if buffCO.effectloop == 0 then
+				self._onceEffectDict[buff.uid] = Time.time + OnceEffectTime
 
-				TaskDispatcher.runRepeat(arg_8_0._onTickCheckRemoveEffect, arg_8_0, 0.2)
+				TaskDispatcher.runRepeat(self._onTickCheckRemoveEffect, self, 0.2)
 			end
-		elseif var_8_0.effectloop ~= 0 then
-			for iter_8_0, iter_8_1 in pairs(arg_8_0._buffEffectDict) do
-				if iter_8_1.path == var_8_10 then
-					arg_8_0._buffEffectDict[arg_8_1.uid] = iter_8_1
+		elseif buffCO.effectloop ~= 0 then
+			for i, v in pairs(self._buffEffectDict) do
+				if v.path == effectFullPath then
+					self._buffEffectDict[buff.uid] = v
 
 					break
 				end
 			end
 		end
 
-		if var_8_0.effectloop ~= 0 then
-			arg_8_0._buff_loop_effect_name[var_8_10] = (arg_8_0._buff_loop_effect_name[var_8_10] or 0) + 1
+		if buffCO.effectloop ~= 0 then
+			self._buff_loop_effect_name[effectFullPath] = (self._buff_loop_effect_name[effectFullPath] or 0) + 1
 		end
 	end
 
-	local var_8_17 = string.nilorempty(var_8_0.animationName) or var_8_0.animationName == "0"
-	local var_8_18 = var_0_0.isEmptyMat(var_8_0.mat)
-	local var_8_19 = string.nilorempty(var_8_0.bloommat) or var_8_0.bloommat == "0"
+	local isAnimationNil = string.nilorempty(buffCO.animationName) or buffCO.animationName == "0"
+	local isMatNil = FightBuffComp.isEmptyMat(buffCO.mat)
+	local isBloomMatNil = string.nilorempty(buffCO.bloommat) or buffCO.bloommat == "0"
 
-	if not var_8_17 or not var_8_18 or not var_8_19 then
-		if not var_8_17 then
-			arg_8_0._entity:resetAnimState()
+	if not isAnimationNil or not isMatNil or not isBloomMatNil then
+		if not isAnimationNil then
+			self._entity:resetAnimState()
 		end
 
-		arg_8_0._entity:resetSpineMat()
-		GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(var_8_0.bloommat, true, arg_8_0._entity, "buff_bloom")
-		arg_8_0:_udpateBuffVariant()
+		self._entity:resetSpineMat()
+		FightGameMgr.bloomMgr:setSingleEntityPass(buffCO.bloommat, true, self._entity, "buff_bloom")
+		self:_udpateBuffVariant()
 	end
 
-	GameSceneMgr.instance:getCurScene().specialEffectMgr:addBuff(arg_8_0._entity, arg_8_1)
-	FightController.instance:dispatchEvent(FightEvent.AddEntityBuff, arg_8_0._entity.id, arg_8_1)
-	arg_8_0.buffMgr:addBuff(arg_8_1)
+	FightGameMgr.specialSceneEffectMgr:addBuff(self._entity, buff)
+	FightController.instance:dispatchEvent(FightEvent.AddEntityBuff, self._entity.id, buff)
+	self.buffMgr:addBuff(buff)
 end
 
-function var_0_0.addLoopBuff(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function FightBuffComp:addLoopBuff(effectWrap)
+	if not effectWrap then
 		return
 	end
 
-	if arg_9_0._loopBuffEffectWrapDict then
-		arg_9_0._loopBuffEffectWrapDict[arg_9_1.uniqueId] = arg_9_1
+	if self._loopBuffEffectWrapDict then
+		self._loopBuffEffectWrapDict[effectWrap.uniqueId] = effectWrap
 	end
 end
 
-function var_0_0.removeLoopBuff(arg_10_0, arg_10_1)
-	if not arg_10_1 then
+function FightBuffComp:removeLoopBuff(effectWrap)
+	if not effectWrap then
 		return
 	end
 
-	if arg_10_0._loopBuffEffectWrapDict then
-		arg_10_0._loopBuffEffectWrapDict[arg_10_1.uniqueId] = nil
+	if self._loopBuffEffectWrapDict then
+		self._loopBuffEffectWrapDict[effectWrap.uniqueId] = nil
 	end
 end
 
-function var_0_0._addBuffHandler(arg_11_0, arg_11_1)
-	local var_11_0 = lua_skill_buff.configDict[arg_11_1.buffId]
+function FightBuffComp:_addBuffHandler(buff)
+	local buffCO = lua_skill_buff.configDict[buff.buffId]
 
-	if not var_11_0 then
+	if not buffCO then
 		return
 	end
 
-	local var_11_1
-	local var_11_2 = FightConfig.instance:getBuffFeatures(var_11_0.id)
+	local buffHandlerKey
+	local buffFeatures = FightConfig.instance:getBuffFeatures(buffCO.id)
 
-	for iter_11_0, iter_11_1 in pairs(var_11_2) do
-		if var_0_2[iter_11_0] then
-			local var_11_3 = iter_11_0
-			local var_11_4 = var_0_2[var_11_3]
-			local var_11_5 = FightBuffHandlerPool.getHandlerInst(var_11_3, var_11_4)
+	for k, v in pairs(buffFeatures) do
+		if BuffTypeHandlerCls[k] then
+			buffHandlerKey = k
 
-			if var_11_5 then
-				arg_11_0._buffHandlerDict[arg_11_1.uid] = var_11_5
+			local typeCls = BuffTypeHandlerCls[buffHandlerKey]
+			local buffHandler = FightBuffHandlerPool.getHandlerInst(buffHandlerKey, typeCls)
 
-				var_11_5:onBuffStart(arg_11_0._entity, arg_11_1)
+			if buffHandler then
+				self._buffHandlerDict[buff.uid] = buffHandler
+
+				buffHandler:onBuffStart(self._entity, buff)
 			end
 
 			break
 		end
 	end
 
-	if var_0_3[arg_11_1.buffId] then
-		local var_11_6 = var_0_3[arg_11_1.buffId]
-		local var_11_7 = FightBuffHandlerPool.getHandlerInst(arg_11_1.buffId, var_11_6)
+	if BuffIdHandlerCls[buff.buffId] then
+		local typeCls = BuffIdHandlerCls[buff.buffId]
+		local buffHandler = FightBuffHandlerPool.getHandlerInst(buff.buffId, typeCls)
 
-		if var_11_7 then
-			arg_11_0._buffHandlerDict[arg_11_1.uid] = var_11_7
+		if buffHandler then
+			self._buffHandlerDict[buff.uid] = buffHandler
 
-			var_11_7:onBuffStart(arg_11_0._entity, arg_11_1)
+			buffHandler:onBuffStart(self._entity, buff)
 		end
 	end
 
-	local var_11_8 = lua_skill_bufftype.configDict[var_11_0.typeId]
-	local var_11_9 = var_11_8 and var_11_8.id
+	local buffTypeCO = lua_skill_bufftype.configDict[buffCO.typeId]
+	local buffTypeId = buffTypeCO and buffTypeCO.id
 
-	if var_11_9 and var_0_4[var_11_9] then
-		local var_11_10 = var_0_4[var_11_9]
-		local var_11_11 = FightBuffHandlerPool.getHandlerInst(var_11_9, var_11_10)
+	if buffTypeId and buffTypeIdHandCls[buffTypeId] then
+		local typeCls = buffTypeIdHandCls[buffTypeId]
+		local buffHandler = FightBuffHandlerPool.getHandlerInst(buffTypeId, typeCls)
 
-		if var_11_11 then
-			arg_11_0._buffHandlerDict[arg_11_1.uid] = var_11_11
+		if buffHandler then
+			self._buffHandlerDict[buff.uid] = buffHandler
 
-			var_11_11:onBuffStart(arg_11_0._entity, arg_11_1)
+			buffHandler:onBuffStart(self._entity, buff)
 		end
 	end
 end
 
-function var_0_0._removeBuffHandler(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._buffHandlerDict[arg_12_1]
+function FightBuffComp:_removeBuffHandler(uid)
+	local buffHandler = self._buffHandlerDict[uid]
 
-	if var_12_0 then
-		arg_12_0._buffHandlerDict[arg_12_1] = nil
+	if buffHandler then
+		self._buffHandlerDict[uid] = nil
 
-		var_12_0:onBuffEnd()
-		FightBuffHandlerPool.putHandlerInst(var_12_0)
+		buffHandler:onBuffEnd()
+		FightBuffHandlerPool.putHandlerInst(buffHandler)
 	end
 end
 
-function var_0_0.updateBuff(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = arg_13_0._buffHandlerDict[arg_13_1.uid]
+function FightBuffComp:updateBuff(buff, oldMO, actEffectData)
+	local buffHandler = self._buffHandlerDict[buff.uid]
 
-	if var_13_0 and var_13_0.onBuffUpdate then
-		var_13_0:onBuffUpdate(arg_13_1)
+	if buffHandler and buffHandler.onBuffUpdate then
+		buffHandler:onBuffUpdate(buff)
 	end
 
-	if arg_13_1.type == FightEnum.BuffType.LayerSalveHalo then
+	local isLayerSalveHalo = buff.type == FightEnum.BuffType.LayerSalveHalo
+
+	if isLayerSalveHalo then
 		return
 	end
 
-	if not FightSkillBuffMgr.instance:hasPlayBuff(arg_13_3) and (arg_13_1.duration > arg_13_2.duration or arg_13_1.count > arg_13_2.count or arg_13_1.layer > arg_13_2.layer) then
-		arg_13_0:_showBuffFloat(arg_13_1)
+	local hasPlayBuff = FightSkillBuffMgr.instance:hasPlayBuff(actEffectData)
+
+	if not hasPlayBuff and (buff.duration > oldMO.duration or buff.count > oldMO.count or buff.layer > oldMO.layer) then
+		self:_showBuffFloat(buff)
 	end
 
-	arg_13_0.buffMgr:updateBuff(arg_13_1)
+	self.buffMgr:updateBuff(buff)
 end
 
-var_0_0.InVisibleColorDict = {
+FightBuffComp.InVisibleColorDict = {
 	["1"] = {
 		Color.New(0.55, 0.69, 0.71, 0),
 		Color.New(2.7, 6, 14.25, 0)
@@ -389,427 +400,444 @@ var_0_0.InVisibleColorDict = {
 	}
 }
 
-function var_0_0._udpateBuffVariant(arg_14_0)
-	local var_14_0
-	local var_14_1 = arg_14_0._entity.spineRenderer:getReplaceMat()
+function FightBuffComp:_udpateBuffVariant()
+	local hasInvisibleEffect
+	local spineMat = self._entity.spineRenderer:getReplaceMat()
 
-	if not var_14_1 then
+	if not spineMat then
 		return
 	end
 
-	local var_14_2 = arg_14_0._entity:getMO():getBuffDic()
+	local buffDic = self._entity:getMO():getBuffDic()
 
-	for iter_14_0, iter_14_1 in pairs(var_14_2) do
-		local var_14_3 = lua_skill_buff.configDict[iter_14_1.buffId]
+	for _, oneMO in pairs(buffDic) do
+		local buffCO = lua_skill_buff.configDict[oneMO.buffId]
 
-		if var_14_3 then
-			local var_14_4 = var_14_3.bloommat
+		if buffCO then
+			local bloomMatParam = buffCO.bloommat
+			local bloommat = string.sub(bloomMatParam, 1, #bloomMatParam - 1)
 
-			if string.sub(var_14_4, 1, #var_14_4 - 1) == FightSceneBloomComp.Bloom_invisible then
-				var_14_0 = string.sub(var_14_4, #var_14_4)
+			if bloommat == FightBloomMgr.Bloom_invisible then
+				hasInvisibleEffect = string.sub(bloomMatParam, #bloomMatParam)
 			end
 		end
 	end
 
-	if var_14_0 then
-		local var_14_5
-		local var_14_6
-		local var_14_7 = arg_14_0._entity:isMySide() and -1 or 1
-		local var_14_8 = var_0_0.InVisibleColorDict[var_14_0]
+	if hasInvisibleEffect then
+		local color0, color1
+		local side = self._entity:isMySide() and -1 or 1
+		local colorList = FightBuffComp.InVisibleColorDict[hasInvisibleEffect]
 
-		if var_14_8 then
-			var_14_5 = var_14_8[1]
-			var_14_6 = var_14_8[2]
-			var_14_5.a = var_14_7
+		if colorList then
+			color0 = colorList[1]
+			color1 = colorList[2]
+			color0.a = side
 		end
 
-		if var_14_5 then
-			GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(FightSceneBloomComp.Bloom_invisible, true, arg_14_0._entity, "buff_bloom")
-			var_14_1:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor"), var_14_5)
-			var_14_1:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor1"), var_14_6)
+		if color0 then
+			FightGameMgr.bloomMgr:setSingleEntityPass(FightBloomMgr.Bloom_invisible, true, self._entity, "buff_bloom")
+			spineMat:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor"), color0)
+			spineMat:SetColor(UnityEngine.Shader.PropertyToID("_InvisibleColor1"), color1)
 		end
 	else
-		GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(FightSceneBloomComp.Bloom_invisible, false, arg_14_0._entity, "buff_bloom")
+		FightGameMgr.bloomMgr:setSingleEntityPass(FightBloomMgr.Bloom_invisible, false, self._entity, "buff_bloom")
 	end
 end
 
-function var_0_0._onTickCheckRemoveEffect(arg_15_0)
-	local var_15_0
-	local var_15_1 = Time.time
+function FightBuffComp:_onTickCheckRemoveEffect()
+	local toRemoveUidList
+	local nowTime = Time.time
 
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._onceEffectDict) do
-		if iter_15_1 < var_15_1 then
-			var_15_0 = var_15_0 or {}
+	for uid, endTime in pairs(self._onceEffectDict) do
+		if endTime < nowTime then
+			toRemoveUidList = toRemoveUidList or {}
 
-			table.insert(var_15_0, iter_15_0)
+			table.insert(toRemoveUidList, uid)
 		end
 	end
 
-	if var_15_0 then
-		for iter_15_2, iter_15_3 in ipairs(var_15_0) do
-			local var_15_2 = arg_15_0._buffEffectDict[iter_15_3]
+	if toRemoveUidList then
+		for _, uid in ipairs(toRemoveUidList) do
+			local effectWrap = self._buffEffectDict[uid]
 
-			arg_15_0._entity.effect:removeEffect(var_15_2)
+			self._entity.effect:removeEffect(effectWrap)
 
-			arg_15_0._buffEffectDict[iter_15_3] = nil
-			arg_15_0._onceEffectDict[iter_15_3] = nil
-			arg_15_0._addBuffEffectPathDic[var_15_2.path] = nil
+			self._buffEffectDict[uid] = nil
+			self._onceEffectDict[uid] = nil
+			self._addBuffEffectPathDic[effectWrap.path] = nil
 		end
 	end
 
-	if tabletool.len(arg_15_0._onceEffectDict) == 0 then
-		TaskDispatcher.cancelTask(arg_15_0._onTickCheckRemoveEffect, arg_15_0)
+	if tabletool.len(self._onceEffectDict) == 0 then
+		TaskDispatcher.cancelTask(self._onTickCheckRemoveEffect, self)
 	end
 end
 
-function var_0_0._onTickCheckRemoveDelBuffEffect(arg_16_0)
-	local var_16_0 = Time.time
+function FightBuffComp:_onTickCheckRemoveDelBuffEffect()
+	local nowTime = Time.time
 
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._delBuffEffectDic) do
-		if var_16_0 > iter_16_1.time then
-			local var_16_1 = iter_16_1.effectWrap
+	for uid, data in pairs(self._delBuffEffectDic) do
+		if nowTime > data.time then
+			local effectWrap = data.effectWrap
 
-			arg_16_0._entity.effect:removeEffect(var_16_1)
+			self._entity.effect:removeEffect(effectWrap)
 
-			arg_16_0._delBuffEffectDic[iter_16_0] = nil
+			self._delBuffEffectDic[uid] = nil
 		end
 	end
 
-	if tabletool.len(arg_16_0._delBuffEffectDic) == 0 then
-		TaskDispatcher.cancelTask(arg_16_0._onTickCheckRemoveDelBuffEffect, arg_16_0)
+	if tabletool.len(self._delBuffEffectDic) == 0 then
+		TaskDispatcher.cancelTask(self._onTickCheckRemoveDelBuffEffect, self)
 	end
 end
 
-function var_0_0.showBuffEffects(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._buffEffectDict) do
-		iter_17_1:setActive(true, arg_17_1)
+function FightBuffComp:showBuffEffects(nonActiveKey)
+	for _, effectWrap in pairs(self._buffEffectDict) do
+		effectWrap:setActive(true, nonActiveKey)
 	end
 
-	for iter_17_2, iter_17_3 in pairs(arg_17_0._loopBuffEffectWrapDict) do
-		iter_17_3:setActive(true, arg_17_1)
+	for _, effectWrap in pairs(self._loopBuffEffectWrapDict) do
+		effectWrap:setActive(true, nonActiveKey)
 	end
 
-	GameSceneMgr.instance:getCurScene().specialEffectMgr:setBuffEffectVisible(arg_17_0._entity, true)
-	FightController.instance:dispatchEvent(FightEvent.SetBuffEffectVisible, arg_17_0._entity.id, true)
+	FightGameMgr.specialSceneEffectMgr:setBuffEffectVisible(self._entity, true)
+	FightController.instance:dispatchEvent(FightEvent.SetBuffEffectVisible, self._entity.id, true)
 end
 
-function var_0_0.hideBuffEffects(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._buffEffectDict) do
-		iter_18_1:setActive(false, arg_18_1)
+function FightBuffComp:hideBuffEffects(nonActiveKey)
+	for _, effectWrap in pairs(self._buffEffectDict) do
+		effectWrap:setActive(false, nonActiveKey)
 	end
 
-	for iter_18_2, iter_18_3 in pairs(arg_18_0._loopBuffEffectWrapDict) do
-		iter_18_3:setActive(false, arg_18_1)
+	for _, effectWrap in pairs(self._loopBuffEffectWrapDict) do
+		effectWrap:setActive(false, nonActiveKey)
 	end
 
-	GameSceneMgr.instance:getCurScene().specialEffectMgr:setBuffEffectVisible(arg_18_0._entity, false)
-	FightController.instance:dispatchEvent(FightEvent.SetBuffEffectVisible, arg_18_0._entity.id, false)
+	FightGameMgr.specialSceneEffectMgr:setBuffEffectVisible(self._entity, false)
+	FightController.instance:dispatchEvent(FightEvent.SetBuffEffectVisible, self._entity.id, false)
 end
 
-function var_0_0.hideLoopEffects(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._entity:getMO()
+function FightBuffComp:hideLoopEffects(nonActiveKey)
+	local entityMO = self._entity:getMO()
 
-	if not var_19_0 then
+	if not entityMO then
 		return
 	end
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._buffEffectDict) do
-		local var_19_1 = var_19_0:getBuffMO(iter_19_0)
-		local var_19_2 = var_19_1 and lua_skill_buff.configDict[var_19_1.buffId]
+	for buffUid, effectWrap in pairs(self._buffEffectDict) do
+		local buffMO = entityMO:getBuffMO(buffUid)
+		local buffCO = buffMO and lua_skill_buff.configDict[buffMO.buffId]
 
-		if var_19_2 then
-			local var_19_3 = lua_skill_bufftype.configDict[var_19_2.typeId]
+		if buffCO then
+			local buffTypeConfig = lua_skill_bufftype.configDict[buffCO.typeId]
 
-			if var_19_1 and var_19_2.effectloop == 1 and var_19_3.playEffect == 0 then
-				iter_19_1:setActive(false, arg_19_1)
+			if buffMO and buffCO.effectloop == 1 and buffTypeConfig.playEffect == 0 then
+				effectWrap:setActive(false, nonActiveKey)
 			end
-		elseif var_19_1 then
-			logError("buff表找不到id:" .. var_19_1.buffId)
+		elseif buffMO then
+			logError("buff表找不到id:" .. buffMO.buffId)
 		end
 	end
 
-	for iter_19_2, iter_19_3 in pairs(arg_19_0._loopBuffEffectWrapDict) do
-		iter_19_3:setActive(false, arg_19_1)
+	for _, effectWrap in pairs(self._loopBuffEffectWrapDict) do
+		effectWrap:setActive(false, nonActiveKey)
 	end
 end
 
-function var_0_0._showBuffFloat(arg_20_0, arg_20_1)
-	if arg_20_0.lockFloat then
+function FightBuffComp:_showBuffFloat(buff)
+	if self.lockFloat then
 		return
 	end
 
-	if arg_20_1.type == FightEnum.BuffType.LayerSalveHalo then
+	if buff.type == FightEnum.BuffType.LayerSalveHalo then
 		return
 	end
 
-	local var_20_0 = lua_skill_buff.configDict[arg_20_1.buffId]
+	local buffCO = lua_skill_buff.configDict[buff.buffId]
 
-	if var_20_0 then
-		if arg_20_0.filter_start_buff_stacked and FightSkillBuffMgr.instance:buffIsStackerBuff(var_20_0) then
-			if arg_20_0.filter_start_buff_stacked[arg_20_1.buffId] then
+	if buffCO then
+		if self.filter_start_buff_stacked and FightSkillBuffMgr.instance:buffIsStackerBuff(buffCO) then
+			if self.filter_start_buff_stacked[buff.buffId] then
 				return
 			else
-				arg_20_0.filter_start_buff_stacked[arg_20_1.buffId] = true
+				self.filter_start_buff_stacked[buff.buffId] = true
 			end
 		end
 
-		local var_20_1 = lua_skill_bufftype.configDict[var_20_0.typeId]
+		local buffTypeCO = lua_skill_bufftype.configDict[buffCO.typeId]
 
-		if var_20_1 and var_20_1.dontShowFloat ~= 0 then
-			local var_20_2 = var_20_0.name
+		if buffTypeCO and buffTypeCO.dontShowFloat ~= 0 then
+			local show_content = buffCO.name
 
-			if FightSkillBuffMgr.instance:buffIsStackerBuff(var_20_0) and var_20_1.takeStage == -1 then
-				local var_20_3 = FightSkillBuffMgr.instance:getStackedCount(arg_20_0._entity.id, arg_20_1)
+			if FightSkillBuffMgr.instance:buffIsStackerBuff(buffCO) and buffTypeCO.takeStage == -1 then
+				local stacked_count = FightSkillBuffMgr.instance:getStackedCount(self._entity.id, buff)
 
-				var_20_2 = var_20_2 .. luaLang("multiple") .. var_20_3
+				show_content = show_content .. luaLang("multiple") .. stacked_count
 			end
 
-			FightFloatMgr.instance:float(arg_20_1.entityId, FightEnum.FloatType.buff, var_20_2, var_20_1.dontShowFloat, false)
-		end
-	end
-end
-
-function var_0_0._onCoverPerformanceEntityData(arg_21_0, arg_21_1)
-	if arg_21_0._entity and arg_21_0._entity.id == arg_21_1 and arg_21_0._buffDic then
-		local var_21_0 = FightDataHelper.entityMgr:getById(arg_21_1)
-
-		if var_21_0 then
-			for iter_21_0, iter_21_1 in pairs(arg_21_0._buffDic) do
-				if not var_21_0.buffDic[iter_21_0] then
-					arg_21_0:delBuff(iter_21_0)
-				end
-			end
-
-			for iter_21_2, iter_21_3 in pairs(var_21_0.buffDic) do
-				if not arg_21_0._buffDic[iter_21_2] then
-					arg_21_0:addBuff(iter_21_3, true)
-				end
-			end
+			FightFloatMgr.instance:float(buff.entityId, FightEnum.FloatType.buff, show_content, buffTypeCO.dontShowFloat, false)
 		end
 	end
 end
 
-local var_0_5 = {
+function FightBuffComp:_onCoverPerformanceEntityData(entityId)
+	if self._entity and self._entity.id == entityId and self._buffDic then
+		local entityMO = FightDataHelper.entityMgr:getById(entityId)
+
+		if entityMO then
+			for buffUid, v in pairs(self._buffDic) do
+				if not entityMO.buffDic[buffUid] then
+					self:delBuff(buffUid)
+				end
+			end
+
+			for k, v in pairs(entityMO.buffDic) do
+				if not self._buffDic[k] then
+					self:addBuff(v, true)
+				end
+			end
+		end
+	end
+end
+
+local filterRemoveEffectWhenDead = {
 	[4150003] = true
 }
 
-function var_0_0.delBuff(arg_22_0, arg_22_1, arg_22_2)
-	if not arg_22_0._buffDic then
+function FightBuffComp:delBuff(buffUid, isDead)
+	if not self._buffDic then
 		return
 	end
 
-	local var_22_0 = arg_22_0._buffDic[arg_22_1]
+	local buffMO = self._buffDic[buffUid]
 
-	if not var_22_0 then
+	if not buffMO then
 		return
 	end
 
-	arg_22_0._buffDic[arg_22_1] = nil
+	self._buffDic[buffUid] = nil
 
-	if var_22_0.type == FightEnum.BuffType.LayerSalveHalo then
+	local isLayerSalveHalo = buffMO.type == FightEnum.BuffType.LayerSalveHalo
+
+	if isLayerSalveHalo then
 		return
 	end
 
-	local var_22_1 = var_22_0.uid
-	local var_22_2 = lua_skill_buff.configDict[var_22_0.buffId]
+	local uid = buffMO.uid
+	local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-	if var_22_2 then
-		if arg_22_0._curBuffIdDic[var_22_2.id] then
-			arg_22_0._curBuffIdDic[var_22_2.id] = arg_22_0._curBuffIdDic[var_22_2.id] - 1
+	if buffCO then
+		if self._curBuffIdDic[buffCO.id] then
+			self._curBuffIdDic[buffCO.id] = self._curBuffIdDic[buffCO.id] - 1
 		end
 
-		if arg_22_0._curBuffTypeIdDic[var_22_2.typeId] then
-			arg_22_0._curBuffTypeIdDic[var_22_2.typeId] = arg_22_0._curBuffTypeIdDic[var_22_2.typeId] - 1
+		if self._curBuffTypeIdDic[buffCO.typeId] then
+			self._curBuffTypeIdDic[buffCO.typeId] = self._curBuffTypeIdDic[buffCO.typeId] - 1
 		end
 
-		local function var_22_3(arg_23_0)
-			return arg_23_0.id == var_22_0.id
+		local function markRemvoeFunc(data)
+			return data.id == buffMO.id
 		end
 
-		local var_22_4 = arg_22_0._animPriorityQueue:getSize()
+		local oldCount = self._animPriorityQueue:getSize()
 
-		arg_22_0._animPriorityQueue:markRemove(var_22_3)
-		arg_22_0._matPriorityQueue:markRemove(var_22_3)
+		self._animPriorityQueue:markRemove(markRemvoeFunc)
+		self._matPriorityQueue:markRemove(markRemvoeFunc)
 
-		if var_22_2.effect ~= "0" and not string.nilorempty(var_22_2.effect) then
-			local var_22_5 = arg_22_0._buffEffectDict[var_22_1]
+		if buffCO.effect ~= "0" and not string.nilorempty(buffCO.effect) then
+			local effectWrap = self._buffEffectDict[uid]
 
-			if var_22_5 then
-				arg_22_0._buffEffectDict[var_22_1] = nil
-				arg_22_0._onceEffectDict[var_22_1] = nil
+			if effectWrap then
+				self._buffEffectDict[uid] = nil
+				self._onceEffectDict[uid] = nil
 
-				if arg_22_0._buff_loop_effect_name[var_22_5.path] then
-					arg_22_0._buff_loop_effect_name[var_22_5.path] = arg_22_0._buff_loop_effect_name[var_22_5.path] - 1
+				if self._buff_loop_effect_name[effectWrap.path] then
+					self._buff_loop_effect_name[effectWrap.path] = self._buff_loop_effect_name[effectWrap.path] - 1
 				end
 
-				if (arg_22_0._buff_loop_effect_name[var_22_5.path] or 0) == 0 then
-					arg_22_0._addBuffEffectPathDic[var_22_5.path] = nil
+				local reference_count = self._buff_loop_effect_name[effectWrap.path] or 0
 
-					arg_22_0._entity.effect:removeEffect(var_22_5)
-					FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_22_0._entity.id, var_22_5)
+				if reference_count == 0 then
+					self._addBuffEffectPathDic[effectWrap.path] = nil
+
+					self._entity.effect:removeEffect(effectWrap)
+					FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, effectWrap)
 				end
 			end
 		end
 
-		local var_22_6 = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(arg_22_0._entity.id)
-		local var_22_7 = var_22_2.id
-		local var_22_8, var_22_9 = FightHelper.processBuffEffectPath(var_22_2.delEffect, arg_22_0._entity, var_22_7, "delEffect", var_22_2.delAudio)
-		local var_22_10, var_22_11 = FightHelper.filterBuffEffectBySkin(var_22_7, arg_22_0._entity, var_22_8, var_22_9)
+		local cur_scene = GameSceneMgr.instance:getCurScene()
+		local tar_entity = cur_scene.entityMgr:getEntity(self._entity.id)
+		local buffId = buffCO.id
+		local effectPath, audioId = FightHelper.processBuffEffectPath(buffCO.delEffect, self._entity, buffId, "delEffect", buffCO.delAudio)
 
-		if var_22_11 > 0 then
-			FightAudioMgr.instance:playAudio(var_22_11)
+		effectPath, audioId = FightHelper.filterBuffEffectBySkin(buffId, self._entity, effectPath, audioId)
+
+		if audioId > 0 then
+			FightAudioMgr.instance:playAudio(audioId)
 		end
 
-		if var_22_6 and var_22_10 ~= "0" and not string.nilorempty(var_22_10) and var_22_6 == arg_22_0._entity then
-			local var_22_12 = true
+		if tar_entity and effectPath ~= "0" and not string.nilorempty(effectPath) and tar_entity == self._entity then
+			local canPlay = true
 
-			if arg_22_2 and var_0_5[var_22_2.id] then
-				var_22_12 = false
+			if isDead and filterRemoveEffectWhenDead[buffCO.id] then
+				canPlay = false
 			end
 
-			if var_22_12 then
-				local var_22_13
+			if canPlay then
+				local effectWrap
+				local isPath = string.find(effectPath, "/")
 
-				if string.find(var_22_10, "/") then
+				if isPath then
 					-- block empty
 				else
-					var_22_10 = "buff/" .. var_22_10
+					effectPath = "buff/" .. effectPath
 				end
 
-				if not string.nilorempty(var_22_2.delEffectHangPoint) then
-					var_22_13 = arg_22_0._entity.effect:addHangEffect(var_22_10, var_22_2.delEffectHangPoint)
+				if not string.nilorempty(buffCO.delEffectHangPoint) then
+					effectWrap = self._entity.effect:addHangEffect(effectPath, buffCO.delEffectHangPoint)
 
-					var_22_13:setLocalPos(0, 0, 0)
+					effectWrap:setLocalPos(0, 0, 0)
 
-					if var_22_2.delEffectHangPoint == ModuleEnum.SpineHangPointRoot then
-						var_22_13:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(arg_22_0._entity, var_22_10))
+					if buffCO.delEffectHangPoint == ModuleEnum.SpineHangPointRoot then
+						effectWrap:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(self._entity, effectPath))
 					end
 				else
-					var_22_13 = arg_22_0._entity.effect:addGlobalEffect(var_22_10)
+					effectWrap = self._entity.effect:addGlobalEffect(effectPath)
 
-					local var_22_14, var_22_15, var_22_16 = transformhelper.getPos(arg_22_0._entity.go.transform)
+					local posX, posY, posZ = transformhelper.getPos(self._entity.go.transform)
 
-					var_22_13:setWorldPos(var_22_14, var_22_15, var_22_16)
+					effectWrap:setWorldPos(posX, posY, posZ)
 				end
 
-				FightRenderOrderMgr.instance:onAddEffectWrap(arg_22_0._entity.id, var_22_13)
+				FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 
-				arg_22_0._delBuffEffectDic[var_22_1] = {
-					effectWrap = var_22_13,
-					time = Time.time + var_0_1
+				self._delBuffEffectDic[uid] = {
+					effectWrap = effectWrap,
+					time = Time.time + OnceEffectTime
 				}
 
-				TaskDispatcher.runRepeat(arg_22_0._onTickCheckRemoveDelBuffEffect, arg_22_0, 0.2)
+				TaskDispatcher.runRepeat(self._onTickCheckRemoveDelBuffEffect, self, 0.2)
 			end
 		end
 
-		arg_22_0:_removeBuffHandler(var_22_1)
+		self:_removeBuffHandler(uid)
 
-		local var_22_17 = string.nilorempty(var_22_2.animationName) or var_22_2.animationName == "0"
-		local var_22_18 = var_0_0.isEmptyMat(var_22_2.mat)
-		local var_22_19 = string.nilorempty(var_22_2.bloommat) or var_22_2.bloommat == "0"
+		local isAnimationNil = string.nilorempty(buffCO.animationName) or buffCO.animationName == "0"
+		local isMatNil = FightBuffComp.isEmptyMat(buffCO.mat)
+		local isBloomMatNil = string.nilorempty(buffCO.bloommat) or buffCO.bloommat == "0"
 
-		if not var_22_17 or not var_22_18 or not var_22_19 then
-			arg_22_0._entity:resetAnimState()
-			arg_22_0._entity:resetSpineMat()
-			GameSceneMgr.instance:getCurScene().bloom:setSingleEntityPass(var_22_2.bloommat, false, arg_22_0._entity, "buff_bloom")
-			arg_22_0:_udpateBuffVariant()
+		if not isAnimationNil or not isMatNil or not isBloomMatNil then
+			self._entity:resetAnimState()
+			self._entity:resetSpineMat()
+			FightGameMgr.bloomMgr:setSingleEntityPass(buffCO.bloommat, false, self._entity, "buff_bloom")
+			self:_udpateBuffVariant()
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().specialEffectMgr:delBuff(arg_22_0._entity, var_22_0)
-	FightController.instance:dispatchEvent(FightEvent.RemoveEntityBuff, arg_22_0._entity.id, var_22_0)
-	arg_22_0.buffMgr:removeBuff(var_22_0.uid)
+	FightGameMgr.specialSceneEffectMgr:delBuff(self._entity, buffMO)
+	FightController.instance:dispatchEvent(FightEvent.RemoveEntityBuff, self._entity.id, buffMO)
+	self.buffMgr:removeBuff(buffMO.uid)
 end
 
-function var_0_0.getBuffAnim(arg_24_0)
-	local var_24_0 = arg_24_0._animPriorityQueue:getFirst()
+function FightBuffComp:getBuffAnim()
+	local buffMO = self._animPriorityQueue:getFirst()
 
-	if var_24_0 then
-		local var_24_1 = lua_skill_buff.configDict[var_24_0.buffId]
+	if buffMO then
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-		if var_24_1 and not (string.nilorempty(var_24_1.animationName) or var_24_1.animationName == "0") then
-			return var_24_1.animationName, var_24_0
-		end
-	end
-end
+		if buffCO then
+			local isAnimationNil = string.nilorempty(buffCO.animationName) or buffCO.animationName == "0"
 
-function var_0_0.getBuffMatName(arg_25_0)
-	local var_25_0 = arg_25_0._matPriorityQueue:getFirst()
-
-	if var_25_0 then
-		local var_25_1 = lua_skill_buff.configDict[var_25_0.buffId]
-
-		if var_25_1 and not var_0_0.isEmptyMat(var_25_1.mat) then
-			return var_25_1.mat, var_25_0
+			if not isAnimationNil then
+				return buffCO.animationName, buffMO
+			end
 		end
 	end
 end
 
-function var_0_0.isEmptyMat(arg_26_0)
-	return arg_26_0 == nil or arg_26_0 == "" or arg_26_0 == "0" or arg_26_0 == "buff_immune"
-end
+function FightBuffComp:getBuffMatName()
+	local buffMO = self._matPriorityQueue:getFirst()
 
-function var_0_0.clear(arg_27_0)
-	for iter_27_0, iter_27_1 in pairs(arg_27_0._buffHandlerDict) do
-		FightBuffHandlerPool.putHandlerInst(iter_27_1)
-	end
-end
+	if buffMO then
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-function var_0_0.releaseAllBuff(arg_28_0)
-	if arg_28_0._buffDic then
-		for iter_28_0, iter_28_1 in pairs(arg_28_0._buffDic) do
-			arg_28_0:delBuff(iter_28_1.uid)
+		if buffCO and not FightBuffComp.isEmptyMat(buffCO.mat) then
+			return buffCO.mat, buffMO
 		end
 	end
 end
 
-function var_0_0.beforeDestroy(arg_29_0)
-	arg_29_0.skinBuffEffectMgr:disposeSelf()
-	arg_29_0.buffMgr:disposeSelf()
+function FightBuffComp.isEmptyMat(matName)
+	return matName == nil or matName == "" or matName == "0" or matName == "buff_immune"
+end
 
-	local var_29_0 = arg_29_0._entity:getMO()
+function FightBuffComp:clear()
+	for _, handler in pairs(self._buffHandlerDict) do
+		FightBuffHandlerPool.putHandlerInst(handler)
+	end
+end
 
-	if var_29_0 then
-		for iter_29_0, iter_29_1 in pairs(var_29_0:getBuffDic()) do
-			arg_29_0:delBuff(iter_29_1.uid)
+function FightBuffComp:releaseAllBuff()
+	if self._buffDic then
+		for k, v in pairs(self._buffDic) do
+			self:delBuff(v.uid)
+		end
+	end
+end
+
+function FightBuffComp:beforeDestroy()
+	self.skinBuffEffectMgr:disposeSelf()
+	self.buffMgr:disposeSelf()
+
+	local entityMO = self._entity:getMO()
+
+	if entityMO then
+		for _, buffMO in pairs(entityMO:getBuffDic()) do
+			self:delBuff(buffMO.uid)
 		end
 	end
 
-	GameSceneMgr.instance:getCurScene().specialEffectMgr:clearEffect(arg_29_0._entity)
+	FightGameMgr.specialSceneEffectMgr:clearEffect(self._entity)
 end
 
-function var_0_0.onDestroy(arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._onTickCheckRemoveEffect, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._onTickCheckRemoveDelBuffEffect, arg_30_0)
+function FightBuffComp:onDestroy()
+	TaskDispatcher.cancelTask(self._onTickCheckRemoveEffect, self)
+	TaskDispatcher.cancelTask(self._onTickCheckRemoveDelBuffEffect, self)
 
-	for iter_30_0, iter_30_1 in pairs(arg_30_0._buffHandlerDict) do
-		FightBuffHandlerPool.putHandlerInst(iter_30_1)
+	for _, handler in pairs(self._buffHandlerDict) do
+		FightBuffHandlerPool.putHandlerInst(handler)
 	end
 
-	arg_30_0._buffEffectDict = nil
-	arg_30_0._loopBuffEffectWrapDict = nil
-	arg_30_0._onceEffectDict = nil
-	arg_30_0._buffHandlerDict = nil
-	arg_30_0._buff_loop_effect_name = nil
-	arg_30_0.lockFloat = nil
-	arg_30_0._buffDic = nil
+	self._buffEffectDict = nil
+	self._loopBuffEffectWrapDict = nil
+	self._onceEffectDict = nil
+	self._buffHandlerDict = nil
+	self._buff_loop_effect_name = nil
+	self.lockFloat = nil
+	self._buffDic = nil
 end
 
-function var_0_0.registSkinBuffEffect(arg_31_0)
-	local var_31_0 = FightDataHelper.entityMgr:getById(arg_31_0._entity.id)
+function FightBuffComp:registSkinBuffEffect()
+	local entityData = FightDataHelper.entityMgr:getById(self._entity.id)
 
-	if not var_31_0 then
+	if not entityData then
 		return
 	end
 
-	local var_31_1 = arg_31_0.skinBuffEffectMgr
-	local var_31_2 = var_31_0.skin
-	local var_31_3 = lua_fight_luxi_upgrade_effect.configDict[var_31_2]
+	local skinBuffEffectMgr = self.skinBuffEffectMgr
+	local skinId = entityData.skin
+	local luxiUpgradeEffectConfig = lua_fight_luxi_upgrade_effect.configDict[skinId]
 
-	if var_31_3 then
-		var_31_1:newClass(FightBuffLuXiUpgradeEffect, arg_31_0._entity, var_31_0, var_31_3)
+	if luxiUpgradeEffectConfig then
+		skinBuffEffectMgr:newClass(FightBuffLuXiUpgradeEffect, self._entity, entityData, luxiUpgradeEffectConfig)
+	end
+
+	local zongMaoBossStageBuffIdEffectConfig = lua_zongmao_boss_stage_buffid_effect.configDict[skinId]
+
+	if zongMaoBossStageBuffIdEffectConfig then
+		self.buffMgr:newClass(FightZongMaoBossStageBuffIdEffect, self._entity, entityData, zongMaoBossStageBuffIdEffectConfig)
 	end
 end
 
-return var_0_0
+return FightBuffComp

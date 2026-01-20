@@ -1,98 +1,102 @@
-﻿module("modules.logic.gm.controller.SendWeWorkFileHelper", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/SendWeWorkFileHelper.lua
 
-local var_0_0 = class("SendWeWorkFileHelper")
-local var_0_1 = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=eea1a1a3-ed85-49a2-9178-449d249f1329&type=file"
-local var_0_2 = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=eea1a1a3-ed85-49a2-9178-449d249f1329"
+module("modules.logic.gm.controller.SendWeWorkFileHelper", package.seeall)
 
-function var_0_0.SendUserInfo(arg_1_0, arg_1_1)
-	local var_1_0 = UnityEngine.SystemInfo.deviceModel
-	local var_1_1 = PlayerModel.instance:getPlayinfo()
-	local var_1_2 = ""
-	local var_1_3 = string.format("**角色ID：**<font color=\"info\">%s</font>\n**角色名：**%s\n**设备：**%s", tostring(var_1_1 and var_1_1.userId), tostring(var_1_1 and var_1_1.name), tostring(var_1_0))
-	local var_1_4 = string.format("%s\n**服务器：**%s\n", var_1_3, LoginModel.instance.serverName)
-	local var_1_5 = {
+local SendWeWorkFileHelper = class("SendWeWorkFileHelper")
+local uploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=eea1a1a3-ed85-49a2-9178-449d249f1329&type=file"
+local sendMsgUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=eea1a1a3-ed85-49a2-9178-449d249f1329"
+
+function SendWeWorkFileHelper.SendUserInfo(callback, callbackObj)
+	local deviceUser = UnityEngine.SystemInfo.deviceModel
+	local playerInfo = PlayerModel.instance:getPlayinfo()
+	local msg = ""
+
+	msg = string.format("**角色ID：**<font color=\"info\">%s</font>\n**角色名：**%s\n**设备：**%s", tostring(playerInfo and playerInfo.userId), tostring(playerInfo and playerInfo.name), tostring(deviceUser))
+	msg = string.format("%s\n**服务器：**%s\n", msg, LoginModel.instance.serverName)
+
+	local msgJson = {
 		msgtype = "markdown",
 		markdown = {
-			content = var_1_4
+			content = msg
 		}
 	}
-	local var_1_6 = cjson.encode(var_1_5)
+	local msgJsonStr = cjson.encode(msgJson)
 
-	SLFramework.SLWebRequest.Instance:PostJson(var_0_2, var_1_6, arg_1_0 or var_0_0.onSendSuccess, arg_1_1)
+	SLFramework.SLWebRequestClient.Instance:PostJson(sendMsgUrl, msgJsonStr, callback or SendWeWorkFileHelper.onSendSuccess, callbackObj)
 end
 
-function var_0_0.onSendSuccess(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 then
+function SendWeWorkFileHelper.onSendSuccess(_, isSuccess, msg)
+	if isSuccess then
 		GameFacade.showToast(ToastEnum.IconId, "send success")
 	else
-		GameFacade.showToast(ToastEnum.IconId, "send fail " .. tostring(arg_2_2))
+		GameFacade.showToast(ToastEnum.IconId, "send fail " .. tostring(msg))
 	end
 end
 
-function var_0_0.SendFile(arg_3_0, arg_3_1, arg_3_2)
-	ZProj.SendWeWorkFileHelper.Instance:SendFile(var_0_1, var_0_2, arg_3_0, arg_3_1 or var_0_0.SendUserInfo, arg_3_2)
+function SendWeWorkFileHelper.SendFile(filePath, callback, callbackObj)
+	ZProj.SendWeWorkFileHelper.Instance:SendFile(uploadUrl, sendMsgUrl, filePath, callback or SendWeWorkFileHelper.SendUserInfo, callbackObj)
 end
 
-function var_0_0.SendPersistentFile(arg_4_0)
-	ZProj.SendWeWorkFileHelper.Instance:SendPersistentFile(var_0_1, var_0_2, arg_4_0, var_0_0.SendUserInfo)
+function SendWeWorkFileHelper.SendPersistentFile(filePath)
+	ZProj.SendWeWorkFileHelper.Instance:SendPersistentFile(uploadUrl, sendMsgUrl, filePath, SendWeWorkFileHelper.SendUserInfo)
 end
 
-function var_0_0.SendCurLogFile()
-	ZProj.SendWeWorkFileHelper.Instance:SendCurLogFile(var_0_1, var_0_2, var_0_0.SendUserInfo)
+function SendWeWorkFileHelper.SendCurLogFile()
+	ZProj.SendWeWorkFileHelper.Instance:SendCurLogFile(uploadUrl, sendMsgUrl, SendWeWorkFileHelper.SendUserInfo)
 end
 
-function var_0_0.SendLastLogFile()
-	local var_6_0
+function SendWeWorkFileHelper.SendLastLogFile()
+	local dir
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		var_6_0 = string.gsub(UnityEngine.Application.dataPath, "Assets", "")
+		dir = string.gsub(UnityEngine.Application.dataPath, "Assets", "")
 	else
-		var_6_0 = UnityEngine.Application.persistentDataPath
+		dir = UnityEngine.Application.persistentDataPath
 	end
 
-	local var_6_1 = System.IO.Path.Combine(var_6_0, "logicLog.old")
+	local filePath = System.IO.Path.Combine(dir, "logicLog.old")
 
-	ZProj.SendWeWorkFileHelper.Instance:SendFile(var_0_1, var_0_2, var_6_1, var_0_0.SendUserInfo)
+	ZProj.SendWeWorkFileHelper.Instance:SendFile(uploadUrl, sendMsgUrl, filePath, SendWeWorkFileHelper.SendUserInfo)
 end
 
-var_0_0.SendFightLogKey = "send fight log"
+SendWeWorkFileHelper.SendFightLogKey = "send fight log"
 
-function var_0_0.sendFightLogFile()
-	var_0_0.clearFlow()
+function SendWeWorkFileHelper.sendFightLogFile()
+	SendWeWorkFileHelper.clearFlow()
 
-	local var_7_0 = FightDataHelper.roundMgr:getAllOriginRoundData()
+	local roundDataList = FightDataHelper.roundMgr:getAllOriginRoundData()
 
-	if not var_7_0 then
+	if not roundDataList then
 		return
 	end
 
-	var_0_0.sendFightLogFlow = FlowSequence.New()
+	SendWeWorkFileHelper.sendFightLogFlow = FlowSequence.New()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		var_0_0.sendFightLogFlow:addWork(SendFightLogWork.New(iter_7_0, iter_7_1))
+	for roundIndex, roundData in ipairs(roundDataList) do
+		SendWeWorkFileHelper.sendFightLogFlow:addWork(SendFightLogWork.New(roundIndex, roundData))
 	end
 
-	var_0_0.sendFightLogFlow:addWork(SendUserInfoLogWork.New())
-	UIBlockMgr.instance:startBlock(var_0_0.SendFightLogKey)
-	var_0_0.sendFightLogFlow:registerDoneListener(var_0_0.onSendFlowDone)
-	var_0_0.sendFightLogFlow:start(FightModel.instance:getFightParam())
+	SendWeWorkFileHelper.sendFightLogFlow:addWork(SendUserInfoLogWork.New())
+	UIBlockMgr.instance:startBlock(SendWeWorkFileHelper.SendFightLogKey)
+	SendWeWorkFileHelper.sendFightLogFlow:registerDoneListener(SendWeWorkFileHelper.onSendFlowDone)
+	SendWeWorkFileHelper.sendFightLogFlow:start(FightModel.instance:getFightParam())
 end
 
-function var_0_0.clearFlow()
-	if var_0_0.sendFightLogFlow then
-		var_0_0.sendFightLogFlow:stop()
-		var_0_0.sendFightLogFlow:destroy()
+function SendWeWorkFileHelper.clearFlow()
+	if SendWeWorkFileHelper.sendFightLogFlow then
+		SendWeWorkFileHelper.sendFightLogFlow:stop()
+		SendWeWorkFileHelper.sendFightLogFlow:destroy()
 
-		var_0_0.sendFightLogFlow = nil
+		SendWeWorkFileHelper.sendFightLogFlow = nil
 	end
 
-	UIBlockMgr.instance:endBlock(var_0_0.SendFightLogKey)
+	UIBlockMgr.instance:endBlock(SendWeWorkFileHelper.SendFightLogKey)
 end
 
-function var_0_0.onSendFlowDone()
-	UIBlockMgr.instance:endBlock(var_0_0.SendFightLogKey)
+function SendWeWorkFileHelper.onSendFlowDone()
+	UIBlockMgr.instance:endBlock(SendWeWorkFileHelper.SendFightLogKey)
 
-	var_0_0.sendFightLogFlow = nil
+	SendWeWorkFileHelper.sendFightLogFlow = nil
 end
 
-return var_0_0
+return SendWeWorkFileHelper

@@ -1,49 +1,51 @@
-﻿module("modules.logic.fight.fightcomponent.FightLoaderList", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightLoaderList.lua
 
-local var_0_0 = class("FightLoaderList", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightLoaderList", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5)
-	arg_1_0.urlList = arg_1_1
-	arg_1_0.oneCallback = arg_1_2
-	arg_1_0.finishCallback = arg_1_3
-	arg_1_0.handle = arg_1_4
-	arg_1_0.paramList = arg_1_5 or {}
-	arg_1_0.count = 0
-	arg_1_0.urlDic = {}
+local FightLoaderList = class("FightLoaderList", FightBaseClass)
+
+function FightLoaderList:onConstructor(urlList, oneCallback, finishCallback, handle, paramList)
+	self.urlList = urlList
+	self.oneCallback = oneCallback
+	self.finishCallback = finishCallback
+	self.handle = handle
+	self.paramList = paramList or {}
+	self.count = 0
+	self.urlDic = {}
 end
 
-function var_0_0.startLoad(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0.urlList) do
-		local var_2_0 = arg_2_0:newClass(FightLoaderItem, iter_2_1, arg_2_0.onOneLoadCallback, arg_2_0, arg_2_0.paramList[iter_2_0])
+function FightLoaderList:startLoad()
+	for i, url in ipairs(self.urlList) do
+		local item = self:newClass(FightLoaderItem, url, self.onOneLoadCallback, self, self.paramList[i])
 
-		arg_2_0.urlDic[iter_2_1] = var_2_0
+		self.urlDic[url] = item
 
-		var_2_0:startLoad()
+		item:startLoad()
 	end
 end
 
-function var_0_0.onOneLoadCallback(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_0.oneCallback then
-		arg_3_0.oneCallback(arg_3_0.handle, arg_3_1, arg_3_2, arg_3_3)
+function FightLoaderList:onOneLoadCallback(success, loader, param)
+	if self.oneCallback then
+		self.oneCallback(self.handle, success, loader, param)
 	end
 
-	arg_3_0.count = arg_3_0.count + 1
+	self.count = self.count + 1
 
-	if arg_3_0.count == #arg_3_0.urlList and arg_3_0.finishCallback then
-		arg_3_0.finishCallback(arg_3_0.handle, arg_3_0)
-	end
-end
-
-function var_0_0.getAssetItem(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.urlDic[arg_4_1]
-
-	if var_4_0 then
-		return var_4_0.assetItem
+	if self.count == #self.urlList and self.finishCallback then
+		self.finishCallback(self.handle, self)
 	end
 end
 
-function var_0_0.onDestructor(arg_5_0)
+function FightLoaderList:getAssetItem(url)
+	local item = self.urlDic[url]
+
+	if item then
+		return item.assetItem
+	end
+end
+
+function FightLoaderList:onDestructor()
 	return
 end
 
-return var_0_0
+return FightLoaderList

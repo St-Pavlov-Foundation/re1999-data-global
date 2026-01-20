@@ -1,15 +1,17 @@
-﻿module("modules.logic.seasonver.act123.model.Season123HeroMO", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123HeroMO.lua
 
-local var_0_0 = pureTable("Season123HeroMO")
+module("modules.logic.seasonver.act123.model.Season123HeroMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.heroUid = arg_1_1.heroUid
-	arg_1_0.hpRate = arg_1_1.hpRate
-	arg_1_0.isAssist = arg_1_1.isAssist
+local Season123HeroMO = pureTable("Season123HeroMO")
+
+function Season123HeroMO:init(info, isAssist)
+	self.heroUid = info.heroUid
+	self.hpRate = info.hpRate
+	self.isAssist = info.isAssist
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	arg_2_0.hpRate = arg_2_1.hpRate
+function Season123HeroMO:update(info)
+	self.hpRate = info.hpRate
 end
 
-return var_0_0
+return Season123HeroMO

@@ -1,229 +1,245 @@
-﻿module("modules.logic.versionactivity2_5.act186.model.Activity186Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/model/Activity186Model.lua
 
-local var_0_0 = class("Activity186Model", BaseModel)
+module("modules.logic.versionactivity2_5.act186.model.Activity186Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Activity186Model = class("Activity186Model", BaseModel)
+
+function Activity186Model:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.localPrefsDict = {}
+function Activity186Model:reInit()
+	self.localPrefsDict = {}
 end
 
-function var_0_0.getActId(arg_3_0)
-	local var_3_0 = ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act186)
+function Activity186Model:getActId()
+	local list = ActivityModel.instance:getOnlineActIdByType(ActivityEnum.ActivityTypeID.Act186)
 
-	return var_3_0 and var_3_0[1]
+	return list and list[1]
 end
 
-function var_0_0.isActivityOnline(arg_4_0)
-	local var_4_0 = arg_4_0:getActId()
+function Activity186Model:isActivityOnline()
+	local actId = self:getActId()
 
-	if not var_4_0 then
+	if not actId then
 		return false
 	end
 
-	return ActivityModel.instance:isActOnLine(var_4_0)
+	return ActivityModel.instance:isActOnLine(actId)
 end
 
-function var_0_0.setActInfo(arg_5_0, arg_5_1)
-	arg_5_0:getActMo(arg_5_1.activityId):updateInfo(arg_5_1)
+function Activity186Model:setActInfo(info)
+	local mo = self:getActMo(info.activityId)
+
+	mo:updateInfo(info)
 end
 
-function var_0_0.getActMo(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getById(arg_6_1)
+function Activity186Model:getActMo(activityId)
+	local mo = self:getById(activityId)
 
-	if not var_6_0 then
-		var_6_0 = Activity186MO.New()
+	if not mo then
+		mo = Activity186MO.New()
 
-		var_6_0:init(arg_6_1)
-		arg_6_0:addAtLast(var_6_0)
+		mo:init(activityId)
+		self:addAtLast(mo)
 	end
 
-	return var_6_0
+	return mo
 end
 
-function var_0_0.onFinishAct186Task(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getById(arg_7_1.activityId)
+function Activity186Model:onFinishAct186Task(info)
+	local mo = self:getById(info.activityId)
 
-	if var_7_0 then
-		var_7_0:finishTask(arg_7_1.taskId)
-	end
-end
-
-function var_0_0.onGetAct186MilestoneReward(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getById(arg_8_1.activityId)
-
-	if var_8_0 then
-		var_8_0:acceptRewards(arg_8_1.getMilestoneProgress)
+	if mo then
+		mo:finishTask(info.taskId)
 	end
 end
 
-function var_0_0.onGetAct186DailyCollection(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getById(arg_9_1.activityId)
+function Activity186Model:onGetAct186MilestoneReward(info)
+	local mo = self:getById(info.activityId)
 
-	if var_9_0 then
-		var_9_0:onGetDailyCollection()
+	if mo then
+		mo:acceptRewards(info.getMilestoneProgress)
 	end
 end
 
-function var_0_0.onAct186TaskPush(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getById(arg_10_1.activityId)
+function Activity186Model:onGetAct186DailyCollection(info)
+	local mo = self:getById(info.activityId)
 
-	if var_10_0 then
-		var_10_0:pushTask(arg_10_1.act186Tasks, arg_10_1.deleteTasks)
+	if mo then
+		mo:onGetDailyCollection()
 	end
 end
 
-function var_0_0.onAct186LikePush(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getById(arg_11_1.activityId)
+function Activity186Model:onAct186TaskPush(info)
+	local mo = self:getById(info.activityId)
 
-	if var_11_0 then
-		var_11_0:pushLike(arg_11_1.likeInfos)
+	if mo then
+		mo:pushTask(info.act186Tasks, info.deleteTasks)
 	end
 end
 
-function var_0_0.onFinishAct186Game(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getById(arg_12_1.activityId)
+function Activity186Model:onAct186LikePush(info)
+	local mo = self:getById(info.activityId)
 
-	if var_12_0 then
-		var_12_0:finishGame(arg_12_1)
+	if mo then
+		mo:pushLike(info.likeInfos)
 	end
 end
 
-function var_0_0.onBTypeGamePlay(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getById(arg_13_1.activityId)
+function Activity186Model:onFinishAct186Game(info)
+	local mo = self:getById(info.activityId)
 
-	if var_13_0 then
-		var_13_0:playBTypeGame(arg_13_1)
+	if mo then
+		mo:finishGame(info)
 	end
 end
 
-function var_0_0.onGetAct186SpBonusInfo(arg_14_0, arg_14_1)
-	arg_14_0:getActMo(arg_14_1.act186ActivityId):setSpBonusStage(arg_14_1.spBonusStage)
-end
+function Activity186Model:onBTypeGamePlay(info)
+	local mo = self:getById(info.activityId)
 
-function var_0_0.onAcceptAct186SpBonus(arg_15_0, arg_15_1)
-	arg_15_0:getActMo(arg_15_1.act186ActivityId):setSpBonusStage(2)
-end
-
-function var_0_0.onGetOnceBonusReply(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getById(arg_16_1.activityId)
-
-	if var_16_0 then
-		var_16_0:onGetOnceBonus(arg_16_1)
+	if mo then
+		mo:playBTypeGame(info)
 	end
 end
 
-function var_0_0.getLocalPrefsTab(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:prefabKeyPrefs(arg_17_1, arg_17_2)
+function Activity186Model:onGetAct186SpBonusInfo(info)
+	local mo = self:getActMo(info.act186ActivityId)
 
-	if not arg_17_0.localPrefsDict[var_17_0] then
-		local var_17_1 = {}
-		local var_17_2 = Activity186Controller.instance:getPlayerPrefs(var_17_0)
-		local var_17_3 = GameUtil.splitString2(var_17_2, true)
+	mo:setSpBonusStage(info.spBonusStage)
+end
 
-		if var_17_3 then
-			for iter_17_0, iter_17_1 in ipairs(var_17_3) do
-				var_17_1[iter_17_1[1]] = iter_17_1[2]
+function Activity186Model:onAcceptAct186SpBonus(info)
+	local mo = self:getActMo(info.act186ActivityId)
+
+	mo:setSpBonusStage(2)
+end
+
+function Activity186Model:onGetOnceBonusReply(info)
+	local mo = self:getById(info.activityId)
+
+	if mo then
+		mo:onGetOnceBonus(info)
+	end
+end
+
+function Activity186Model:getLocalPrefsTab(key, activityId)
+	local uniqueKey = self:prefabKeyPrefs(key, activityId)
+
+	if not self.localPrefsDict[uniqueKey] then
+		local tab = {}
+		local saveStr = Activity186Controller.instance:getPlayerPrefs(uniqueKey)
+		local saveStateList = GameUtil.splitString2(saveStr, true)
+
+		if saveStateList then
+			for _, param in ipairs(saveStateList) do
+				local id = param[1]
+				local state = param[2]
+
+				tab[id] = state
 			end
 		end
 
-		arg_17_0.localPrefsDict[var_17_0] = var_17_1
+		self.localPrefsDict[uniqueKey] = tab
 	end
 
-	return arg_17_0.localPrefsDict[var_17_0]
+	return self.localPrefsDict[uniqueKey]
 end
 
-function var_0_0.getLocalPrefsState(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4)
-	return arg_18_0:getLocalPrefsTab(arg_18_1, arg_18_2)[arg_18_3] or arg_18_4
+function Activity186Model:getLocalPrefsState(key, activityId, id, defaultState)
+	local tab = self:getLocalPrefsTab(key, activityId)
+
+	return tab[id] or defaultState
 end
 
-function var_0_0.setLocalPrefsState(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	local var_19_0 = arg_19_0:getLocalPrefsTab(arg_19_1, arg_19_2)
+function Activity186Model:setLocalPrefsState(key, activityId, id, value)
+	local tab = self:getLocalPrefsTab(key, activityId)
 
-	if var_19_0[arg_19_3] == arg_19_4 then
+	if tab[id] == value then
 		return
 	end
 
-	var_19_0[arg_19_3] = arg_19_4
+	tab[id] = value
 
-	local var_19_1 = {}
+	local list = {}
 
-	for iter_19_0, iter_19_1 in pairs(var_19_0) do
-		table.insert(var_19_1, string.format("%s#%s", iter_19_0, iter_19_1))
+	for k, v in pairs(tab) do
+		table.insert(list, string.format("%s#%s", k, v))
 	end
 
-	local var_19_2 = table.concat(var_19_1, "|")
-	local var_19_3 = arg_19_0:prefabKeyPrefs(arg_19_1, arg_19_2)
+	local value = table.concat(list, "|")
+	local uniqueKey = self:prefabKeyPrefs(key, activityId)
 
-	Activity186Controller.instance:setPlayerPrefs(var_19_3, var_19_2)
+	Activity186Controller.instance:setPlayerPrefs(uniqueKey, value)
 end
 
-function var_0_0.prefabKeyPrefs(arg_20_0, arg_20_1, arg_20_2)
-	if string.nilorempty(arg_20_1) then
-		return arg_20_1
+function Activity186Model:prefabKeyPrefs(key, activityId)
+	if string.nilorempty(key) then
+		return key
 	end
 
-	return (string.format("%s_%s", arg_20_1, arg_20_2))
+	local result = string.format("%s_%s", key, activityId)
+
+	return result
 end
 
-function var_0_0.checkReadTasks(arg_21_0, arg_21_1)
-	if arg_21_1 then
-		for iter_21_0, iter_21_1 in pairs(arg_21_1) do
-			arg_21_0:checkReadTask(iter_21_1)
+function Activity186Model:checkReadTasks(taskIds)
+	if taskIds then
+		for k, v in pairs(taskIds) do
+			self:checkReadTask(v)
 		end
 	end
 end
 
-function var_0_0.checkReadTask(arg_22_0, arg_22_1)
-	if not arg_22_1 then
+function Activity186Model:checkReadTask(taskId)
+	if not taskId then
 		return
 	end
 
-	local var_22_0 = arg_22_0:getActMo(arg_22_0:getActId())
+	local mo = self:getActMo(self:getActId())
 
-	if not var_22_0 then
+	if not mo then
 		return
 	end
 
-	local var_22_1 = var_22_0:getTaskInfo(arg_22_1)
+	local taskInfo = mo:getTaskInfo(taskId)
 
-	if not var_22_1 then
+	if not taskInfo then
 		return
 	end
 
-	if var_22_1.hasGetBonus then
+	if taskInfo.hasGetBonus then
 		return
 	end
 
-	if var_22_0:checkTaskCanReward(var_22_1) then
+	if mo:checkTaskCanReward(taskInfo) then
 		return
 	end
 
-	TaskRpc.instance:sendFinishReadTaskRequest(arg_22_1)
+	TaskRpc.instance:sendFinishReadTaskRequest(taskId)
 end
 
-function var_0_0.isShowSignRed(arg_23_0)
-	local var_23_0 = ActivityEnum.Activity.V2a5_Act186Sign
+function Activity186Model:isShowSignRed()
+	local signActId = ActivityEnum.Activity.V2a5_Act186Sign
+	local status = ActivityHelper.getActivityStatus(signActId)
 
-	if ActivityHelper.getActivityStatus(var_23_0) ~= ActivityEnum.ActivityStatus.Normal then
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	local var_23_1 = false
-	local var_23_2 = arg_23_0:getActId()
-	local var_23_3 = arg_23_0:getById(var_23_2)
+	local isShow = false
+	local actId = self:getActId()
+	local mo = self:getById(actId)
 
-	if var_23_3 then
-		var_23_1 = var_23_3.spBonusStage == 1
+	if mo then
+		isShow = mo.spBonusStage == 1
 	end
 
-	var_23_1 = var_23_1 or ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_23_0)
+	isShow = isShow or ActivityType101Model.instance:isType101RewardCouldGetAnyOne(signActId)
 
-	return var_23_1
+	return isShow
 end
 
-var_0_0.instance = var_0_0.New()
+Activity186Model.instance = Activity186Model.New()
 
-return var_0_0
+return Activity186Model

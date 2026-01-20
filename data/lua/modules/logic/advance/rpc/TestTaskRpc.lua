@@ -1,7 +1,9 @@
-﻿module("modules.logic.advance.rpc.TestTaskRpc", package.seeall)
+﻿-- chunkname: @modules/logic/advance/rpc/TestTaskRpc.lua
 
-local var_0_0 = class("TestTaskRpc", BaseRpc)
+module("modules.logic.advance.rpc.TestTaskRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local TestTaskRpc = class("TestTaskRpc", BaseRpc)
 
-return var_0_0
+TestTaskRpc.instance = TestTaskRpc.New()
+
+return TestTaskRpc

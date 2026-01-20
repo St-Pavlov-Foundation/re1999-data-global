@@ -1,14 +1,16 @@
-﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepPickUpItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/yaxian/controller/game/step/YaXianStepPickUpItem.lua
 
-local var_0_0 = class("YaXianStepPickUpItem", YaXianStepBase)
+module("modules.logic.versionactivity1_2.yaxian.controller.game.step.YaXianStepPickUpItem", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	arg_1_0:finish()
+local YaXianStepPickUpItem = class("YaXianStepPickUpItem", YaXianStepBase)
+
+function YaXianStepPickUpItem:start()
+	self:finish()
 	logError("un handle Pick Up type")
 end
 
-function var_0_0.dispose(arg_2_0)
+function YaXianStepPickUpItem:dispose()
 	return
 end
 
-return var_0_0
+return YaXianStepPickUpItem

@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.controller.Activity157Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/controller/Activity157Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_8.dungeon.controller.Activity157Event", package.seeall)
 
-var_0_0.Act157RefreshEntrance = 1
-var_0_0.Act157RefreshSideMission = 2
-var_0_0.Act157RepairComponent = 3
-var_0_0.Act157GetComponentReward = 4
-var_0_0.Act157RefreshFactoryProduction = 5
-var_0_0.Act157FinishMission = 6
-var_0_0.Act157ChangeInProgressMissionGroup = 7
-var_0_0.Act157OnGetComponentReward = 8
-var_0_0.Act157PlayMissionUnlockAnim = 9
-var_0_0.Act157UpdateInfo = 10
-var_0_0.GuideHasUnlockFactoryEntrance = 100
-var_0_0.GuideHasRepairFirstComponent = 101
+local Activity157Event = _M
 
-return var_0_0
+Activity157Event.Act157RefreshEntrance = 1
+Activity157Event.Act157RefreshSideMission = 2
+Activity157Event.Act157RepairComponent = 3
+Activity157Event.Act157GetComponentReward = 4
+Activity157Event.Act157RefreshFactoryProduction = 5
+Activity157Event.Act157FinishMission = 6
+Activity157Event.Act157ChangeInProgressMissionGroup = 7
+Activity157Event.Act157OnGetComponentReward = 8
+Activity157Event.Act157PlayMissionUnlockAnim = 9
+Activity157Event.Act157UpdateInfo = 10
+Activity157Event.GuideHasUnlockFactoryEntrance = 100
+Activity157Event.GuideHasRepairFirstComponent = 101
+
+return Activity157Event

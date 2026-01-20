@@ -1,234 +1,248 @@
-﻿module("modules.logic.critter.utils.CritterHelper", package.seeall)
+﻿-- chunkname: @modules/logic/critter/utils/CritterHelper.lua
 
-local var_0_0 = {
-	getInitClassMOList = function(arg_1_0, arg_1_1, arg_1_2)
-		local var_1_0 = {}
+module("modules.logic.critter.utils.CritterHelper", package.seeall)
 
-		if arg_1_0 then
-			for iter_1_0, iter_1_1 in ipairs(arg_1_0) do
-				local var_1_1
+local CritterHelper = {}
 
-				if arg_1_2 then
-					var_1_1 = arg_1_2[iter_1_0]
-				end
+function CritterHelper.getInitClassMOList(infoList, classMO, oldMOList)
+	local moList = {}
 
-				var_1_1 = var_1_1 or arg_1_1.New()
+	if infoList then
+		for i, info in ipairs(infoList) do
+			local tempMO
 
-				var_1_1:init(iter_1_1)
-				table.insert(var_1_0, var_1_1)
+			if oldMOList then
+				tempMO = oldMOList[i]
 			end
+
+			tempMO = tempMO or classMO.New()
+
+			tempMO:init(info)
+			table.insert(moList, tempMO)
 		end
-
-		return var_1_0
-	end,
-	sortByCritterId = function(arg_2_0, arg_2_1)
-		local var_2_0 = arg_2_0:getDefineId()
-		local var_2_1 = arg_2_1:getDefineId()
-
-		if var_2_0 ~= var_2_1 then
-			return var_2_0 < var_2_1
-		end
-
-		return arg_2_0:getId() < arg_2_1:getId()
-	end
-}
-
-function var_0_0.sortByRareDescend(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:getDefineCfg()
-	local var_3_1 = arg_3_1:getDefineCfg()
-	local var_3_2 = var_3_0.rare
-	local var_3_3 = var_3_1.rare
-
-	if var_3_2 ~= var_3_3 then
-		return var_3_3 < var_3_2
 	end
 
-	return var_0_0.sortByCritterId(arg_3_0, arg_3_1)
+	return moList
 end
 
-function var_0_0.sortByRareAscend(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getDefineCfg()
-	local var_4_1 = arg_4_1:getDefineCfg()
-	local var_4_2 = var_4_0.rare
-	local var_4_3 = var_4_1.rare
+function CritterHelper.sortByCritterId(aCritterMO, bCritterMO)
+	local aCritterId = aCritterMO:getDefineId()
+	local bCritterId = bCritterMO:getDefineId()
 
-	if var_4_2 ~= var_4_3 then
-		return var_4_2 < var_4_3
+	if aCritterId ~= bCritterId then
+		return aCritterId < bCritterId
 	end
 
-	return var_0_0.sortByCritterId(arg_4_0, arg_4_1)
+	local aCritterUid = aCritterMO:getId()
+	local bCritterUid = bCritterMO:getId()
+
+	return aCritterUid < bCritterUid
 end
 
-function var_0_0.getCritterAttrSortFunc(arg_5_0, arg_5_1)
-	if not var_0_0._descendFuncMap then
-		var_0_0._descendFuncMap = {
-			[CritterEnum.AttributeType.Efficiency] = var_0_0.sortByEfficiencyDescend,
-			[CritterEnum.AttributeType.Patience] = var_0_0.sortByPatienceDescend,
-			[CritterEnum.AttributeType.Lucky] = var_0_0.sortByLuckyDescend
+function CritterHelper.sortByRareDescend(aCritterMO, bCritterMO)
+	local aCfg = aCritterMO:getDefineCfg()
+	local bCfg = bCritterMO:getDefineCfg()
+	local aRare = aCfg.rare
+	local bRare = bCfg.rare
+
+	if aRare ~= bRare then
+		return bRare < aRare
+	end
+
+	return CritterHelper.sortByCritterId(aCritterMO, bCritterMO)
+end
+
+function CritterHelper.sortByRareAscend(aCritterMO, bCritterMO)
+	local aCfg = aCritterMO:getDefineCfg()
+	local bCfg = bCritterMO:getDefineCfg()
+	local aRare = aCfg.rare
+	local bRare = bCfg.rare
+
+	if aRare ~= bRare then
+		return aRare < bRare
+	end
+
+	return CritterHelper.sortByCritterId(aCritterMO, bCritterMO)
+end
+
+function CritterHelper.getCritterAttrSortFunc(attrId, isHightToLow)
+	if not CritterHelper._descendFuncMap then
+		CritterHelper._descendFuncMap = {
+			[CritterEnum.AttributeType.Efficiency] = CritterHelper.sortByEfficiencyDescend,
+			[CritterEnum.AttributeType.Patience] = CritterHelper.sortByPatienceDescend,
+			[CritterEnum.AttributeType.Lucky] = CritterHelper.sortByLuckyDescend
 		}
-		var_0_0._ascendSortFuncMap = {
-			[CritterEnum.AttributeType.Efficiency] = var_0_0.sortByEfficiencyAscend,
-			[CritterEnum.AttributeType.Patience] = var_0_0.sortByPatienceAscend,
-			[CritterEnum.AttributeType.Lucky] = var_0_0.sortByLuckyAscend
+		CritterHelper._ascendSortFuncMap = {
+			[CritterEnum.AttributeType.Efficiency] = CritterHelper.sortByEfficiencyAscend,
+			[CritterEnum.AttributeType.Patience] = CritterHelper.sortByPatienceAscend,
+			[CritterEnum.AttributeType.Lucky] = CritterHelper.sortByLuckyAscend
 		}
 	end
 
-	return (arg_5_1 and var_0_0._ascendSortFuncMap or var_0_0._descendFuncMap)[arg_5_0]
+	local sortFuncMap = isHightToLow and CritterHelper._ascendSortFuncMap or CritterHelper._descendFuncMap
+
+	return sortFuncMap[attrId]
 end
 
-function var_0_0.sortByTotalAttrValue(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getTotalAttrValue()
-	local var_6_1 = arg_6_1:getTotalAttrValue()
+function CritterHelper.sortByTotalAttrValue(aCritterMO, bCritterMO)
+	local aTotalAttr = aCritterMO:getTotalAttrValue()
+	local bTotalAttr = bCritterMO:getTotalAttrValue()
 
-	if var_6_0 ~= var_6_1 then
-		return var_6_1 < var_6_0
+	if aTotalAttr ~= bTotalAttr then
+		return bTotalAttr < aTotalAttr
 	end
 
-	return var_0_0.sortByRareDescend(arg_6_0, arg_6_1)
+	return CritterHelper.sortByRareDescend(aCritterMO, bCritterMO)
 end
 
-function var_0_0.sortByEfficiencyDescend(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.efficiencyIncrRate
-	local var_7_1 = arg_7_1.efficiencyIncrRate
+function CritterHelper.sortByEfficiencyDescend(aCritterMO, bCritterMO)
+	local aEffIncrRate = aCritterMO.efficiencyIncrRate
+	local bEffIncrRate = bCritterMO.efficiencyIncrRate
 
-	if var_7_0 ~= var_7_1 then
-		return var_7_1 < var_7_0
+	if aEffIncrRate ~= bEffIncrRate then
+		return bEffIncrRate < aEffIncrRate
 	end
 
-	local var_7_2 = arg_7_0:isAddition(CritterEnum.AttributeType.Efficiency)
+	local aHasAddRate = aCritterMO:isAddition(CritterEnum.AttributeType.Efficiency)
+	local bHasAddRate = bCritterMO:isAddition(CritterEnum.AttributeType.Efficiency)
 
-	if var_7_2 ~= arg_7_1:isAddition(CritterEnum.AttributeType.Efficiency) then
-		return var_7_2
+	if aHasAddRate ~= bHasAddRate then
+		return aHasAddRate
 	end
 
-	if arg_7_0.efficiency ~= arg_7_1.efficiency then
-		return arg_7_0.efficiency > arg_7_1.efficiency
+	if aCritterMO.efficiency ~= bCritterMO.efficiency then
+		return aCritterMO.efficiency > bCritterMO.efficiency
 	end
 
-	return var_0_0.sortByTotalAttrValue(arg_7_0, arg_7_1)
+	return CritterHelper.sortByTotalAttrValue(aCritterMO, bCritterMO)
 end
 
-function var_0_0.sortByEfficiencyAscend(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.efficiencyIncrRate
-	local var_8_1 = arg_8_1.efficiencyIncrRate
+function CritterHelper.sortByEfficiencyAscend(aCritterMO, bCritterMO)
+	local aEffIncrRate = aCritterMO.efficiencyIncrRate
+	local bEffIncrRate = bCritterMO.efficiencyIncrRate
 
-	if var_8_0 ~= var_8_1 then
-		return var_8_0 < var_8_1
+	if aEffIncrRate ~= bEffIncrRate then
+		return aEffIncrRate < bEffIncrRate
 	end
 
-	local var_8_2 = arg_8_0:isAddition(CritterEnum.AttributeType.Efficiency)
+	local aHasAddRate = aCritterMO:isAddition(CritterEnum.AttributeType.Efficiency)
+	local bHasAddRate = bCritterMO:isAddition(CritterEnum.AttributeType.Efficiency)
 
-	if var_8_2 ~= arg_8_1:isAddition(CritterEnum.AttributeType.Efficiency) then
-		return var_8_2
+	if aHasAddRate ~= bHasAddRate then
+		return aHasAddRate
 	end
 
-	if arg_8_0.efficiency ~= arg_8_1.efficiency then
-		return arg_8_0.efficiency < arg_8_1.efficiency
+	if aCritterMO.efficiency ~= bCritterMO.efficiency then
+		return aCritterMO.efficiency < bCritterMO.efficiency
 	end
 
-	return var_0_0.sortByTotalAttrValue(arg_8_0, arg_8_1)
+	return CritterHelper.sortByTotalAttrValue(aCritterMO, bCritterMO)
 end
 
-function var_0_0.sortByPatienceDescend(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.patienceIncrRate
-	local var_9_1 = arg_9_1.patienceIncrRate
+function CritterHelper.sortByPatienceDescend(aCritterMO, bCritterMO)
+	local aPatIncrRate = aCritterMO.patienceIncrRate
+	local bPatIncrRate = bCritterMO.patienceIncrRate
 
-	if var_9_0 ~= var_9_1 then
-		return var_9_1 < var_9_0
+	if aPatIncrRate ~= bPatIncrRate then
+		return bPatIncrRate < aPatIncrRate
 	end
 
-	local var_9_2 = arg_9_0:isAddition(CritterEnum.AttributeType.Patience)
+	local aHasAddRate = aCritterMO:isAddition(CritterEnum.AttributeType.Patience)
+	local bHasAddRate = bCritterMO:isAddition(CritterEnum.AttributeType.Patience)
 
-	if var_9_2 ~= arg_9_1:isAddition(CritterEnum.AttributeType.Patience) then
-		return var_9_2
+	if aHasAddRate ~= bHasAddRate then
+		return aHasAddRate
 	end
 
-	if arg_9_0.patience ~= arg_9_1.patience then
-		return arg_9_0.patience > arg_9_1.patience
+	if aCritterMO.patience ~= bCritterMO.patience then
+		return aCritterMO.patience > bCritterMO.patience
 	end
 
-	return var_0_0.sortByTotalAttrValue(arg_9_0, arg_9_1)
+	return CritterHelper.sortByTotalAttrValue(aCritterMO, bCritterMO)
 end
 
-function var_0_0.sortByPatienceAscend(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.patienceIncrRate
-	local var_10_1 = arg_10_1.patienceIncrRate
+function CritterHelper.sortByPatienceAscend(aCritterMO, bCritterMO)
+	local aPatIncrRate = aCritterMO.patienceIncrRate
+	local bPatIncrRate = bCritterMO.patienceIncrRate
 
-	if var_10_0 ~= var_10_1 then
-		return var_10_0 < var_10_1
+	if aPatIncrRate ~= bPatIncrRate then
+		return aPatIncrRate < bPatIncrRate
 	end
 
-	local var_10_2 = arg_10_0:isAddition(CritterEnum.AttributeType.Patience)
+	local aHasAddRate = aCritterMO:isAddition(CritterEnum.AttributeType.Patience)
+	local bHasAddRate = bCritterMO:isAddition(CritterEnum.AttributeType.Patience)
 
-	if var_10_2 ~= arg_10_1:isAddition(CritterEnum.AttributeType.Patience) then
-		return var_10_2
+	if aHasAddRate ~= bHasAddRate then
+		return aHasAddRate
 	end
 
-	if arg_10_0.patience ~= arg_10_1.patience then
-		return arg_10_0.patience < arg_10_1.patience
+	if aCritterMO.patience ~= bCritterMO.patience then
+		return aCritterMO.patience < bCritterMO.patience
 	end
 
-	return var_0_0.sortByTotalAttrValue(arg_10_0, arg_10_1)
+	return CritterHelper.sortByTotalAttrValue(aCritterMO, bCritterMO)
 end
 
-function var_0_0.sortByLuckyDescend(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.luckyIncrRate
-	local var_11_1 = arg_11_1.luckyIncrRate
+function CritterHelper.sortByLuckyDescend(aCritterMO, bCritterMO)
+	local aLuckyIncrRate = aCritterMO.luckyIncrRate
+	local bLuckyIncrRate = bCritterMO.luckyIncrRate
 
-	if var_11_0 ~= var_11_1 then
-		return var_11_1 < var_11_0
+	if aLuckyIncrRate ~= bLuckyIncrRate then
+		return bLuckyIncrRate < aLuckyIncrRate
 	end
 
-	local var_11_2 = arg_11_0:isAddition(CritterEnum.AttributeType.Lucky)
+	local aHasAddRate = aCritterMO:isAddition(CritterEnum.AttributeType.Lucky)
+	local bHasAddRate = bCritterMO:isAddition(CritterEnum.AttributeType.Lucky)
 
-	if var_11_2 ~= arg_11_1:isAddition(CritterEnum.AttributeType.Lucky) then
-		return var_11_2
+	if aHasAddRate ~= bHasAddRate then
+		return aHasAddRate
 	end
 
-	if arg_11_0.lucky ~= arg_11_1.lucky then
-		return arg_11_0.lucky > arg_11_1.lucky
+	if aCritterMO.lucky ~= bCritterMO.lucky then
+		return aCritterMO.lucky > bCritterMO.lucky
 	end
 
-	return var_0_0.sortByRareDescend(arg_11_0, arg_11_1)
+	return CritterHelper.sortByRareDescend(aCritterMO, bCritterMO)
 end
 
-function var_0_0.sortByLuckyAscend(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.luckyIncrRate
-	local var_12_1 = arg_12_1.luckyIncrRate
+function CritterHelper.sortByLuckyAscend(aCritterMO, bCritterMO)
+	local aLuckyIncrRate = aCritterMO.luckyIncrRate
+	local bLuckyIncrRate = bCritterMO.luckyIncrRate
 
-	if var_12_0 ~= var_12_1 then
-		return var_12_0 < var_12_1
+	if aLuckyIncrRate ~= bLuckyIncrRate then
+		return aLuckyIncrRate < bLuckyIncrRate
 	end
 
-	local var_12_2 = arg_12_0:isAddition(CritterEnum.AttributeType.Lucky)
+	local aHasAddRate = aCritterMO:isAddition(CritterEnum.AttributeType.Lucky)
+	local bHasAddRate = bCritterMO:isAddition(CritterEnum.AttributeType.Lucky)
 
-	if var_12_2 ~= arg_12_1:isAddition(CritterEnum.AttributeType.Lucky) then
-		return var_12_2
+	if aHasAddRate ~= bHasAddRate then
+		return aHasAddRate
 	end
 
-	if arg_12_0.lucky ~= arg_12_1.lucky then
-		return arg_12_0.lucky < arg_12_1.lucky
+	if aCritterMO.lucky ~= bCritterMO.lucky then
+		return aCritterMO.lucky < bCritterMO.lucky
 	end
 
-	return var_0_0.sortByRareDescend(arg_12_0, arg_12_1)
+	return CritterHelper.sortByRareDescend(aCritterMO, bCritterMO)
 end
 
-function var_0_0.sortEvent(arg_13_0, arg_13_1)
-	local var_13_0 = var_0_0._getEventSortIndex(arg_13_0)
-	local var_13_1 = var_0_0._getEventSortIndex(arg_13_1)
+function CritterHelper.sortEvent(aCritterMO, bCritterMO)
+	local aIdx = CritterHelper._getEventSortIndex(aCritterMO)
+	local bIdx = CritterHelper._getEventSortIndex(bCritterMO)
 
-	if var_13_0 ~= var_13_1 then
-		return var_13_0 < var_13_1
+	if aIdx ~= bIdx then
+		return aIdx < bIdx
 	end
 end
 
-function var_0_0._getEventSortIndex(arg_14_0)
-	if arg_14_0:isNoMood() then
+function CritterHelper._getEventSortIndex(critterMO)
+	if critterMO:isNoMood() then
 		return 1
-	elseif arg_14_0:isCultivating() then
-		if arg_14_0.trainInfo:isHasEventTrigger() then
+	elseif critterMO:isCultivating() then
+		if critterMO.trainInfo:isHasEventTrigger() then
 			return 2
-		elseif arg_14_0.trainInfo:isTrainFinish() then
+		elseif critterMO.trainInfo:isTrainFinish() then
 			return 3
 		end
 	end
@@ -236,170 +250,170 @@ function var_0_0._getEventSortIndex(arg_14_0)
 	return 100
 end
 
-function var_0_0.getEventTypeByCritterMO(arg_15_0)
-	if not arg_15_0 then
+function CritterHelper.getEventTypeByCritterMO(critterMO)
+	if not critterMO then
 		return nil
 	end
 
-	if arg_15_0:isCultivating() then
-		if arg_15_0.trainInfo:isHasEventTrigger() then
+	if critterMO:isCultivating() then
+		if critterMO.trainInfo:isHasEventTrigger() then
 			return CritterEnum.CritterItemEventType.HasTrainEvent
-		elseif arg_15_0.trainInfo:isTrainFinish() then
+		elseif critterMO.trainInfo:isTrainFinish() then
 			return CritterEnum.CritterItemEventType.TrainEventComplete
 		end
-	elseif arg_15_0:isNoMoodWorking() then
+	elseif critterMO:isNoMoodWorking() then
 		return CritterEnum.CritterItemEventType.NoMoodWork
 	end
 
 	return nil
 end
 
-function var_0_0.getWorkCritterMOListByBuid(arg_16_0)
-	local var_16_0 = {}
-	local var_16_1 = CritterModel.instance:getAllCritters()
+function CritterHelper.getWorkCritterMOListByBuid(buildingUid)
+	local critterMOList = {}
+	local allMOList = CritterModel.instance:getAllCritters()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		if iter_16_1:isMaturity() and iter_16_1.workInfo and iter_16_1.workInfo.workBuildingUid == arg_16_0 then
-			table.insert(var_16_0, iter_16_1)
+	for _, critterMO in ipairs(allMOList) do
+		if critterMO:isMaturity() and critterMO.workInfo and critterMO.workInfo.workBuildingUid == buildingUid then
+			table.insert(critterMOList, critterMO)
 		end
 	end
 
-	return var_16_0
+	return critterMOList
 end
 
-var_0_0._sumTempAttrInfoParam = {}
+CritterHelper._sumTempAttrInfoParam = {}
 
-function var_0_0.sumArrtInfoMOByAttrId(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = var_0_0._sumTempAttrInfoParam
+function CritterHelper.sumArrtInfoMOByAttrId(attrId, critterMOList, buildingId, isPreview)
+	local attrInfo = CritterHelper._sumTempAttrInfoParam
 
-	var_17_0.attributeId = arg_17_0
-	var_17_0.value = 0
-	var_17_0.rate = 0
-	var_17_0.addRate = 0
+	attrInfo.attributeId = attrId
+	attrInfo.value = 0
+	attrInfo.rate = 0
+	attrInfo.addRate = 0
 
-	if arg_17_1 and #arg_17_1 > 0 then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-			local var_17_1 = iter_17_1:getAttributeInfoByType(arg_17_0, arg_17_2, arg_17_3)
+	if critterMOList and #critterMOList > 0 then
+		for _, critterMO in ipairs(critterMOList) do
+			local tempInfo = critterMO:getAttributeInfoByType(attrId, buildingId, isPreview)
 
-			if var_17_1 then
-				var_17_0.value = var_17_0.value + var_17_1.value
-				var_17_0.rate = var_17_0.rate + var_17_1.rate
-				var_17_0.addRate = var_17_0.addRate + var_17_1:getAdditionRate()
+			if tempInfo then
+				attrInfo.value = attrInfo.value + tempInfo.value
+				attrInfo.rate = attrInfo.rate + tempInfo.rate
+				attrInfo.addRate = attrInfo.addRate + tempInfo:getAdditionRate()
 			end
 		end
 	end
 
-	local var_17_2 = CritterAttributeInfoMO.New()
+	local infoMO = CritterAttributeInfoMO.New()
 
-	var_17_2:init(var_17_0)
+	infoMO:init(attrInfo)
 
-	return var_17_2
+	return infoMO
 end
 
-function var_0_0.getPreViewAttrValue(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = ManufactureCritterListModel.instance:getPreviewAttrInfo(arg_18_1, arg_18_2, arg_18_3)
+function CritterHelper.getPreViewAttrValue(attrId, critterUid, buildingId, isPreview)
+	local preAttrInfo = ManufactureCritterListModel.instance:getPreviewAttrInfo(critterUid, buildingId, isPreview)
 
-	if var_18_0 then
-		if arg_18_0 == CritterEnum.AttributeType.Efficiency then
-			return var_18_0.efficiency or 0
-		elseif arg_18_0 == CritterEnum.AttributeType.Patience then
-			return var_18_0.moodCostSpeed or 0
-		elseif arg_18_0 == CritterEnum.AttributeType.Lucky then
-			return var_18_0.criRate or 0
-		elseif arg_18_0 == CritterEnum.AttributeType.MoodRestore then
-			return var_18_0.moodCostSpeed or 0
+	if preAttrInfo then
+		if attrId == CritterEnum.AttributeType.Efficiency then
+			return preAttrInfo.efficiency or 0
+		elseif attrId == CritterEnum.AttributeType.Patience then
+			return preAttrInfo.moodCostSpeed or 0
+		elseif attrId == CritterEnum.AttributeType.Lucky then
+			return preAttrInfo.criRate or 0
+		elseif attrId == CritterEnum.AttributeType.MoodRestore then
+			return preAttrInfo.moodCostSpeed or 0
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.sumPreViewAttrValue(arg_19_0, arg_19_1)
-	local var_19_0 = 0
+function CritterHelper.sumPreViewAttrValue(attrId, critterUidList)
+	local value = 0
 
-	if arg_19_1 and #arg_19_1 > 0 then
-		for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
-			var_19_0 = var_19_0 + var_0_0.getPreViewAttrValue(arg_19_0, iter_19_1)
+	if critterUidList and #critterUidList > 0 then
+		for _, critterUid in ipairs(critterUidList) do
+			value = value + CritterHelper.getPreViewAttrValue(attrId, critterUid)
 		end
 	end
 
-	return var_19_0
+	return value
 end
 
-function var_0_0.formatAttrValue(arg_20_0, arg_20_1)
-	if arg_20_0 == CritterEnum.AttributeType.MoodRestore then
-		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("critter_mood_cost_speed"), arg_20_1)
-	elseif arg_20_0 == CritterEnum.AttributeType.Patience then
-		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("critter_mood_cost_speed"), arg_20_1)
-	elseif arg_20_0 == CritterEnum.AttributeType.Lucky then
-		return string.format("%s%%", arg_20_1)
+function CritterHelper.formatAttrValue(attrId, value)
+	if attrId == CritterEnum.AttributeType.MoodRestore then
+		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("critter_mood_cost_speed"), value)
+	elseif attrId == CritterEnum.AttributeType.Patience then
+		return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("critter_mood_cost_speed"), value)
+	elseif attrId == CritterEnum.AttributeType.Lucky then
+		return string.format("%s%%", value)
 	end
 
-	return arg_20_1
+	return value
 end
 
-function var_0_0.buildFakeCritterMoByConfig(arg_21_0)
-	local var_21_0 = CritterMO.New()
-	local var_21_1 = 0
-	local var_21_2 = 0
-	local var_21_3 = 0
-	local var_21_4 = 0
-	local var_21_5 = 0
-	local var_21_6 = 0
-	local var_21_7 = {}
+function CritterHelper.buildFakeCritterMoByConfig(config)
+	local critterMo = CritterMO.New()
+	local efficiency = 0
+	local patience = 0
+	local lucky = 0
+	local efficiencyIncrRate = 0
+	local patienceIncrRate = 0
+	local luckyIncrRate = 0
+	local skillInfo = {}
 
-	if arg_21_0 then
-		if not string.nilorempty(arg_21_0.baseAttribute) then
-			local var_21_8 = GameUtil.splitString2(arg_21_0.baseAttribute, true)
+	if config then
+		if not string.nilorempty(config.baseAttribute) then
+			local values = GameUtil.splitString2(config.baseAttribute, true)
 
-			var_21_1 = var_21_8[1][2] or 0
-			var_21_2 = var_21_8[2][2] or 0
-			var_21_3 = var_21_8[3][2] or 0
+			efficiency = values[1][2] or 0
+			patience = values[2][2] or 0
+			lucky = values[3][2] or 0
 		end
 
-		if not string.nilorempty(arg_21_0.baseAttribute) then
-			local var_21_9 = GameUtil.splitString2(arg_21_0.attributeIncrRate, true)
+		if not string.nilorempty(config.baseAttribute) then
+			local rates = GameUtil.splitString2(config.attributeIncrRate, true)
 
-			var_21_4 = var_21_9[1][2] or 0
-			var_21_5 = var_21_9[2][2] or 0
-			var_21_6 = var_21_9[3][2] or 0
+			efficiencyIncrRate = rates[1][2] or 0
+			patienceIncrRate = rates[2][2] or 0
+			luckyIncrRate = rates[3][2] or 0
 		end
 
-		var_21_7 = {
+		skillInfo = {
 			tags = {
-				arg_21_0.raceTag
+				config.raceTag
 			}
 		}
 	end
 
-	local var_21_10 = {
+	local info = {
 		uid = "0",
 		id = "0",
 		specialSkin = false,
-		defineId = arg_21_0.id,
-		efficiency = var_21_1,
-		patience = var_21_2,
-		lucky = var_21_3,
-		efficiencyIncrRate = var_21_4,
-		patienceIncrRate = var_21_5,
-		luckyIncrRate = var_21_6,
+		defineId = config.id,
+		efficiency = efficiency,
+		patience = patience,
+		lucky = lucky,
+		efficiencyIncrRate = efficiencyIncrRate,
+		patienceIncrRate = patienceIncrRate,
+		luckyIncrRate = luckyIncrRate,
 		tagAttributeRates = {},
-		skillInfo = var_21_7
+		skillInfo = skillInfo
 	}
 
-	var_21_0:init(var_21_10)
+	critterMo:init(info)
 
-	return var_21_0
+	return critterMo
 end
 
-function var_0_0.getPatienceChangeValue(arg_22_0)
-	local var_22_0 = CritterConfig.instance:getPatienceChangeCfg(arg_22_0)
+function CritterHelper.getPatienceChangeValue(buildingType)
+	local cfg = CritterConfig.instance:getPatienceChangeCfg(buildingType)
 
-	if var_22_0 then
-		return var_22_0.stepTime * var_22_0.stepValue / 3600
+	if cfg then
+		return cfg.stepTime * cfg.stepValue / 3600
 	end
 
 	return 0
 end
 
-return var_0_0
+return CritterHelper

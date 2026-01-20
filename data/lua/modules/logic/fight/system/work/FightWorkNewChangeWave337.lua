@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.system.work.FightWorkNewChangeWave337", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkNewChangeWave337.lua
 
-local var_0_0 = class("FightWorkNewChangeWave337", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkNewChangeWave337", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
+local FightWorkNewChangeWave337 = class("FightWorkNewChangeWave337", FightEffectBase)
 
-	var_1_0:registWork(Work2FightWork, FightWorkStepChangeWave, arg_1_0.actEffectData.fight)
-	var_1_0:registWork(Work2FightWork, FightWorkAppearTimeline)
-	var_1_0:registWork(Work2FightWork, FightWorkStartBornEnemy)
-	var_1_0:registWork(Work2FightWork, FightWorkFocusMonster)
-	var_1_0:registWork(FightWorkFunction, arg_1_0.sendChangeWaveEvent, arg_1_0)
-	var_1_0:start({})
+function FightWorkNewChangeWave337:onStart()
+	local flow = self:com_registWorkDoneFlowSequence()
+
+	flow:registWork(Work2FightWork, FightWorkStepChangeWave, self.actEffectData.fight)
+	flow:registWork(Work2FightWork, FightWorkAppearTimeline)
+	flow:registWork(Work2FightWork, FightWorkStartBornEnemy)
+	flow:registWork(Work2FightWork, FightWorkFocusMonster)
+	flow:registWork(FightWorkFunction, self.sendChangeWaveEvent, self)
+	flow:start({})
 end
 
-function var_0_0.sendChangeWaveEvent(arg_2_0)
+function FightWorkNewChangeWave337:sendChangeWaveEvent()
 	FightController.instance:beginWave()
 end
 
-return var_0_0
+return FightWorkNewChangeWave337

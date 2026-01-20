@@ -1,21 +1,23 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomEnterEdit", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerRoomEnterEdit.lua
 
-local var_0_0 = class("GuideTriggerRoomEnterEdit", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerRoomEnterEdit", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._onEnterOneSceneFinish, arg_1_0)
+local GuideTriggerRoomEnterEdit = class("GuideTriggerRoomEnterEdit", BaseGuideTrigger)
+
+function GuideTriggerRoomEnterEdit:ctor(triggerKey)
+	GuideTriggerRoomEnterEdit.super.ctor(self, triggerKey)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = arg_2_1 == SceneType.Room
-	local var_2_1 = RoomController.instance:isEditMode()
+function GuideTriggerRoomEnterEdit:assertGuideSatisfy(param, configParam)
+	local isRoomScene = param == SceneType.Room
+	local isEditMode = RoomController.instance:isEditMode()
 
-	return var_2_0 and var_2_1
+	return isRoomScene and isEditMode
 end
 
-function var_0_0._onEnterOneSceneFinish(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerRoomEnterEdit:_onEnterOneSceneFinish(sceneType, sceneId)
+	self:checkStartGuide(sceneType)
 end
 
-return var_0_0
+return GuideTriggerRoomEnterEdit

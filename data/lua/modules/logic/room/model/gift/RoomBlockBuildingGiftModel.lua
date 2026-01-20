@@ -1,110 +1,117 @@
-﻿module("modules.logic.room.model.gift.RoomBlockBuildingGiftModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/gift/RoomBlockBuildingGiftModel.lua
 
-local var_0_0 = class("RoomBlockBuildingGiftModel", BaseModel)
+module("modules.logic.room.model.gift.RoomBlockBuildingGiftModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	arg_1_0:clear()
+local RoomBlockBuildingGiftModel = class("RoomBlockBuildingGiftModel", BaseModel)
+
+function RoomBlockBuildingGiftModel:init()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function RoomBlockBuildingGiftModel:reInit()
+	self:clear()
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0._selectSubType = nil
-	arg_3_0._selectMo = nil
-	arg_3_0._themeFilterList = nil
+function RoomBlockBuildingGiftModel:clear()
+	self._selectSubType = nil
+	self._selectMo = nil
+	self._themeFilterList = nil
 
 	RoomThemeFilterListModel.instance:clear()
 end
 
-function var_0_0.getGiftBlockMos(arg_4_0, arg_4_1)
-	if not arg_4_0._blocksMos then
-		arg_4_0._blocksMos = {}
+function RoomBlockBuildingGiftModel:getGiftBlockMos(itemId)
+	if not self._blocksMos then
+		self._blocksMos = {}
 	end
 
-	local var_4_0 = arg_4_0._blocksMos[arg_4_1]
+	local blockMos = self._blocksMos[itemId]
 
-	if var_4_0 then
-		return var_4_0
+	if blockMos then
+		return blockMos
 	end
 
-	local var_4_1 = ItemConfig.instance:getItemCo(arg_4_1).rare
-	local var_4_2 = {}
-	local var_4_3 = RoomBuildingGiftListModel.instance:getRareMoList(var_4_1)
+	local itemCo = ItemConfig.instance:getItemCo(itemId)
+	local rare = itemCo.rare
 
-	table.sort(var_4_3, arg_4_0._sortBuilding)
+	blockMos = {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_3) do
-		local var_4_4 = {
-			iter_4_1.subType,
-			iter_4_1.id,
+	local buildingMoList = RoomBuildingGiftListModel.instance:getRareMoList(rare)
+
+	table.sort(buildingMoList, self._sortBuilding)
+
+	for _, mo in pairs(buildingMoList) do
+		local _mo = {
+			mo.subType,
+			mo.id,
 			1
 		}
 
-		table.insert(var_4_2, var_4_4)
+		table.insert(blockMos, _mo)
 	end
 
-	local var_4_5 = RoomBlockGiftListModel.instance:getRareMoList(var_4_1)
+	local blockMoList = RoomBlockGiftListModel.instance:getRareMoList(rare)
 
-	table.sort(var_4_5, arg_4_0._sortBlock)
+	table.sort(blockMoList, self._sortBlock)
 
-	for iter_4_2, iter_4_3 in pairs(var_4_5) do
-		local var_4_6 = {
-			iter_4_3.subType,
-			iter_4_3.id,
+	for _, mo in pairs(blockMoList) do
+		local _mo = {
+			mo.subType,
+			mo.id,
 			1
 		}
 
-		table.insert(var_4_2, var_4_6)
+		table.insert(blockMos, _mo)
 	end
 
-	return var_4_2
+	return blockMos
 end
 
-function var_0_0.getSubTypeListModelInstance(arg_5_0, arg_5_1)
-	arg_5_1 = arg_5_1 or arg_5_0:getSelectSubType()
+function RoomBlockBuildingGiftModel:getSubTypeListModelInstance(subType)
+	subType = subType or self:getSelectSubType()
 
-	return RoomBlockGiftEnum.SubTypeInfo[arg_5_1].ListModel.instance
+	local info = RoomBlockGiftEnum.SubTypeInfo[subType]
+
+	return info.ListModel.instance
 end
 
-function var_0_0._sortBlock(arg_6_0, arg_6_1)
-	if arg_6_0.rare ~= arg_6_1.rare then
-		return arg_6_0.rare > arg_6_1.rare
+function RoomBlockBuildingGiftModel._sortBlock(x, y)
+	if x.rare ~= y.rare then
+		return x.rare > y.rare
 	end
 
-	local var_6_0 = RoomConfig.instance:getBlockListByPackageId(arg_6_0.id)
-	local var_6_1 = var_6_0 and #var_6_0 or 0
-	local var_6_2 = RoomConfig.instance:getBlockListByPackageId(arg_6_1.id)
-	local var_6_3 = var_6_2 and #var_6_2 or 0
+	local xblockList = RoomConfig.instance:getBlockListByPackageId(x.id)
+	local xblockNum = xblockList and #xblockList or 0
+	local ylockList = RoomConfig.instance:getBlockListByPackageId(y.id)
+	local yblockNum = ylockList and #ylockList or 0
 
-	if var_6_1 ~= var_6_3 then
-		return var_6_3 < var_6_1
+	if xblockNum ~= yblockNum then
+		return yblockNum < xblockNum
 	end
 
-	return arg_6_0.id > arg_6_1.id
+	return x.id > y.id
 end
 
-function var_0_0._sortBuilding(arg_7_0, arg_7_1)
-	if arg_7_0.rare ~= arg_7_1.rare then
-		return arg_7_0.rare > arg_7_1.rare
+function RoomBlockBuildingGiftModel._sortBuilding(x, y)
+	if x.rare ~= y.rare then
+		return x.rare > y.rare
 	end
 
-	local var_7_0 = RoomConfig.instance:getBuildingConfig(arg_7_0.id)
-	local var_7_1 = RoomConfig.instance:getBuildingConfig(arg_7_1.id)
-	local var_7_2 = RoomConfig.instance:getBuildingAreaConfig(var_7_0.areaId)
-	local var_7_3 = RoomConfig.instance:getBuildingAreaConfig(var_7_1.areaId)
+	local xBuildingCo = RoomConfig.instance:getBuildingConfig(x.id)
+	local yBuildingCo = RoomConfig.instance:getBuildingConfig(y.id)
+	local xAreaCo = RoomConfig.instance:getBuildingAreaConfig(xBuildingCo.areaId)
+	local yAreaCo = RoomConfig.instance:getBuildingAreaConfig(yBuildingCo.areaId)
 
-	if var_7_2.occupy ~= var_7_3.occupy then
-		return var_7_2.occupy > var_7_3.occupy
+	if xAreaCo.occupy ~= yAreaCo.occupy then
+		return xAreaCo.occupy > yAreaCo.occupy
 	end
 
-	return arg_7_0.id > arg_7_1.id
+	return x.id > y.id
 end
 
-function var_0_0.isAllColloct(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(RoomBlockGiftEnum.SubTypeInfo) do
-		if not iter_8_1.ListModel.instance:isAllColloct(arg_8_1) then
+function RoomBlockBuildingGiftModel:isAllColloct(rare)
+	for _, info in pairs(RoomBlockGiftEnum.SubTypeInfo) do
+		if not info.ListModel.instance:isAllColloct(rare) then
 			return false
 		end
 	end
@@ -112,188 +119,198 @@ function var_0_0.isAllColloct(arg_8_0, arg_8_1)
 	return true
 end
 
-function var_0_0.getSelectSubType(arg_9_0)
-	return arg_9_0._selectSubType or MaterialEnum.MaterialType.BlockPackage
+function RoomBlockBuildingGiftModel:getSelectSubType()
+	return self._selectSubType or MaterialEnum.MaterialType.BlockPackage
 end
 
-function var_0_0.clickSortBlockRare(arg_10_0)
-	arg_10_0._sortNumType = RoomBlockGiftEnum.SortType.None
+function RoomBlockBuildingGiftModel:clickSortBlockRare()
+	self._sortNumType = RoomBlockGiftEnum.SortType.None
 
-	if not arg_10_0._sortRareType then
-		arg_10_0._sortRareType = RoomBlockGiftEnum.SortType.Order
+	if not self._sortRareType then
+		self._sortRareType = RoomBlockGiftEnum.SortType.Order
 
-		return arg_10_0._sortRareType
+		return self._sortRareType
 	end
 
-	if arg_10_0._sortRareType == RoomBlockGiftEnum.SortType.Order then
-		arg_10_0._sortRareType = RoomBlockGiftEnum.SortType.Reverse
+	if self._sortRareType == RoomBlockGiftEnum.SortType.Order then
+		self._sortRareType = RoomBlockGiftEnum.SortType.Reverse
 	else
-		arg_10_0._sortRareType = RoomBlockGiftEnum.SortType.Order
+		self._sortRareType = RoomBlockGiftEnum.SortType.Order
 	end
 
-	return arg_10_0._sortRareType
+	return self._sortRareType
 end
 
-function var_0_0.getSortBlockRare(arg_11_0)
-	return arg_11_0._sortRareType
+function RoomBlockBuildingGiftModel:getSortBlockRare()
+	return self._sortRareType
 end
 
-function var_0_0.clickSortBlockNum(arg_12_0)
-	arg_12_0._sortRareType = RoomBlockGiftEnum.SortType.None
+function RoomBlockBuildingGiftModel:clickSortBlockNum()
+	self._sortRareType = RoomBlockGiftEnum.SortType.None
 
-	if not arg_12_0._sortNumType then
-		arg_12_0._sortNumType = RoomBlockGiftEnum.SortType.Order
+	if not self._sortNumType then
+		self._sortNumType = RoomBlockGiftEnum.SortType.Order
 
-		return arg_12_0._sortNumType
+		return self._sortNumType
 	end
 
-	if arg_12_0._sortNumType == RoomBlockGiftEnum.SortType.Order then
-		arg_12_0._sortNumType = RoomBlockGiftEnum.SortType.Reverse
+	if self._sortNumType == RoomBlockGiftEnum.SortType.Order then
+		self._sortNumType = RoomBlockGiftEnum.SortType.Reverse
 	else
-		arg_12_0._sortNumType = RoomBlockGiftEnum.SortType.Order
+		self._sortNumType = RoomBlockGiftEnum.SortType.Order
 	end
 
-	return arg_12_0._sortNumType
+	return self._sortNumType
 end
 
-function var_0_0.getSortBlockNum(arg_13_0)
-	return arg_13_0._sortNumType
+function RoomBlockBuildingGiftModel:getSortBlockNum()
+	return self._sortNumType
 end
 
-function var_0_0.onOpenView(arg_14_0, arg_14_1)
-	arg_14_0._sortNumType = RoomBlockGiftEnum.SortType.None
-	arg_14_0._sortRareType = RoomBlockGiftEnum.SortType.Order
+function RoomBlockBuildingGiftModel:onOpenView(rare)
+	self._sortNumType = RoomBlockGiftEnum.SortType.None
+	self._sortRareType = RoomBlockGiftEnum.SortType.Order
 
-	arg_14_0:clearSelect()
-	arg_14_0:initSelect()
-	arg_14_0:setThemeList()
+	self:clearSelect()
+	self:initSelect()
+	self:setThemeList()
 
-	arg_14_0._rare = arg_14_1
+	self._rare = rare
 
-	arg_14_0:openSubType(MaterialEnum.MaterialType.BlockPackage)
+	self:openSubType(MaterialEnum.MaterialType.BlockPackage)
 end
 
-function var_0_0.openSubType(arg_15_0, arg_15_1)
-	var_0_0.instance:setThemeList()
-	arg_15_0:getSubTypeListModelInstance(arg_15_1):openSubType(arg_15_0._rare)
+function RoomBlockBuildingGiftModel:openSubType(subType)
+	RoomBlockBuildingGiftModel.instance:setThemeList()
 
-	arg_15_0._selectSubType = arg_15_1
+	local listModelInstance = self:getSubTypeListModelInstance(subType)
+
+	listModelInstance:openSubType(self._rare)
+
+	self._selectSubType = subType
 end
 
-function var_0_0.onCloseView(arg_16_0)
-	arg_16_0:saveThemeFilter()
+function RoomBlockBuildingGiftModel:onCloseView()
+	self:saveThemeFilter()
 end
 
-function var_0_0.initBlockBuilding(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in pairs(RoomBlockGiftEnum.SubTypeInfo) do
-		iter_17_1.ListModel.instance:setMoList(arg_17_1)
+function RoomBlockBuildingGiftModel:initBlockBuilding(rare)
+	for _, info in pairs(RoomBlockGiftEnum.SubTypeInfo) do
+		info.ListModel.instance:setMoList(rare)
 	end
 end
 
-function var_0_0.initSelect(arg_18_0)
+function RoomBlockBuildingGiftModel:initSelect()
 	return
 end
 
-function var_0_0.saveThemeFilter(arg_19_0)
-	arg_19_0._themeFilterList = RoomThemeFilterListModel.instance:getSelectIdList()
+function RoomBlockBuildingGiftModel:saveThemeFilter()
+	self._themeFilterList = RoomThemeFilterListModel.instance:getSelectIdList()
 end
 
-function var_0_0.setThemeList(arg_20_0)
-	arg_20_0:saveThemeFilter()
+function RoomBlockBuildingGiftModel:setThemeList()
+	self:saveThemeFilter()
 
-	local var_20_0 = arg_20_0:getSubTypeListModelInstance(arg_20_0:getSelectSubType())
+	local listModelInstance = self:getSubTypeListModelInstance(self:getSelectSubType())
 
-	var_20_0:setThemeList()
+	listModelInstance:setThemeList()
 
-	if arg_20_0._themeFilterList then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._themeFilterList) do
-			if var_20_0:isHasTheme(iter_20_1) then
-				RoomThemeFilterListModel.instance:setSelectById(iter_20_1, true)
+	if self._themeFilterList then
+		for _, id in ipairs(self._themeFilterList) do
+			local isHasTheme = listModelInstance:isHasTheme(id)
+
+			if isHasTheme then
+				RoomThemeFilterListModel.instance:setSelectById(id, true)
 			end
 		end
 	end
 end
 
-function var_0_0.onSort(arg_21_0)
-	arg_21_0:getSubTypeListModelInstance(arg_21_0:getSelectSubType()):onSort()
+function RoomBlockBuildingGiftModel:onSort()
+	local listModelInstance = self:getSubTypeListModelInstance(self:getSelectSubType())
+
+	listModelInstance:onSort()
 end
 
-function var_0_0.getThemeColloctCount(arg_22_0, arg_22_1)
-	local var_22_0 = 0
+function RoomBlockBuildingGiftModel:getThemeColloctCount(moList)
+	local collectCount = 0
 
-	if arg_22_1 then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
-			if iter_22_1:isCollect() then
-				var_22_0 = var_22_0 + 1
+	if moList then
+		for _, mo in ipairs(moList) do
+			if mo:isCollect() then
+				collectCount = collectCount + 1
 			end
 		end
 	end
 
-	return var_22_0
+	return collectCount
 end
 
-function var_0_0.onSelect(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_1.subType
-	local var_23_1 = arg_23_0:getSubTypeListModelInstance(var_23_0)
+function RoomBlockBuildingGiftModel:onSelect(mo)
+	local subType = mo.subType
+	local listModelInstance = self:getSubTypeListModelInstance(subType)
 
-	if arg_23_1.isSelect then
-		var_23_1:onSelect(arg_23_1, false)
+	if mo.isSelect then
+		listModelInstance:onSelect(mo, false)
 
-		arg_23_0._selectMo = nil
+		self._selectMo = nil
 	else
-		if arg_23_0._selectMo then
-			arg_23_0:getSubTypeListModelInstance(arg_23_0._selectMo.subType):onSelect(arg_23_0._selectMo, false)
+		if self._selectMo then
+			local selectListModel = self:getSubTypeListModelInstance(self._selectMo.subType)
+
+			selectListModel:onSelect(self._selectMo, false)
 		end
 
-		var_23_1:onSelect(arg_23_1, true)
+		listModelInstance:onSelect(mo, true)
 
-		arg_23_0._selectMo = arg_23_1
+		self._selectMo = mo
 	end
 end
 
-function var_0_0.clearSelect(arg_24_0)
-	if arg_24_0._selectMo then
-		local var_24_0 = arg_24_0._selectMo.subType
+function RoomBlockBuildingGiftModel:clearSelect()
+	if self._selectMo then
+		local subType = self._selectMo.subType
+		local listModelInstance = self:getSubTypeListModelInstance(subType)
 
-		arg_24_0:getSubTypeListModelInstance(var_24_0):onSelect(arg_24_0._selectMo, false)
+		listModelInstance:onSelect(self._selectMo, false)
 
-		arg_24_0._selectMo = nil
+		self._selectMo = nil
 	end
 end
 
-function var_0_0.getSelectCount(arg_25_0)
-	return arg_25_0._selectMo and 1 or 0
+function RoomBlockBuildingGiftModel:getSelectCount()
+	return self._selectMo and 1 or 0
 end
 
-function var_0_0.getMaxSelectCount(arg_26_0)
+function RoomBlockBuildingGiftModel:getMaxSelectCount()
 	return 1
 end
 
-function var_0_0.getSelectGoodsData(arg_27_0, arg_27_1)
-	if arg_27_0._selectMo then
-		local var_27_0 = arg_27_0._selectMo.subType
-		local var_27_1 = arg_27_0._selectMo.id
+function RoomBlockBuildingGiftModel:getSelectGoodsData(itemId)
+	if self._selectMo then
+		local type = self._selectMo.subType
+		local id = self._selectMo.id
 
-		if var_27_0 and var_27_1 then
-			local var_27_2 = var_27_1 * 10 + (arg_27_0._selectMo.subTypeIndex - 1)
+		if type and id then
+			local goodsId = id * 10 + (self._selectMo.subTypeIndex - 1)
 
-			if var_27_2 then
-				local var_27_3 = {
+			if goodsId then
+				local mo = {
 					quantity = 1,
-					materialId = arg_27_1
+					materialId = itemId
 				}
 
 				return {
 					data = {
-						var_27_3
+						mo
 					},
-					goodsId = var_27_2
+					goodsId = goodsId
 				}
 			end
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomBlockBuildingGiftModel.instance = RoomBlockBuildingGiftModel.New()
 
-return var_0_0
+return RoomBlockBuildingGiftModel

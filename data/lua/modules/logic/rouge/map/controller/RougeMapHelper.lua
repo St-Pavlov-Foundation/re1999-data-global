@@ -1,517 +1,549 @@
-﻿module("modules.logic.rouge.map.controller.RougeMapHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/controller/RougeMapHelper.lua
 
-local var_0_0 = class("RougeMapHelper")
+module("modules.logic.rouge.map.controller.RougeMapHelper", package.seeall)
 
-function var_0_0.blockEsc()
+local RougeMapHelper = class("RougeMapHelper")
+
+function RougeMapHelper.blockEsc()
 	return
 end
 
-var_0_0.StandardRate = 1.7777777777777777
+RougeMapHelper.StandardRate = 1.7777777777777777
 
-function var_0_0.getMiddleLayerCameraSize()
-	local var_2_0 = UnityEngine.Screen.width / UnityEngine.Screen.height
-	local var_2_1 = RougeMapModel.instance:getMapSize()
+function RougeMapHelper.getMiddleLayerCameraSize()
+	local w, h = UnityEngine.Screen.width, UnityEngine.Screen.height
+	local rate = w / h
+	local mapSize = RougeMapModel.instance:getMapSize()
 
-	if var_2_0 >= var_0_0.StandardRate then
-		return var_2_1.y / 2
+	if rate >= RougeMapHelper.StandardRate then
+		return mapSize.y / 2
 	end
 
-	return var_2_1.y * var_0_0.StandardRate / var_2_0 / 2
+	local mapWidth = mapSize.y * RougeMapHelper.StandardRate
+	local halfHeight = mapWidth / rate
+
+	return halfHeight / 2
 end
 
-function var_0_0.getNormalLayerCameraSize()
-	local var_3_0 = UnityEngine.Screen.width
-	local var_3_1 = UnityEngine.Screen.height
-	local var_3_2 = var_3_0 / var_3_1
-	local var_3_3 = RougeMapModel.instance:getMapSize().y / 2
+function RougeMapHelper.getNormalLayerCameraSize()
+	local w, h = UnityEngine.Screen.width, UnityEngine.Screen.height
+	local rate = w / h
+	local mapSize = RougeMapModel.instance:getMapSize()
+	local halfHeight = mapSize.y / 2
 
-	if var_3_2 >= var_0_0.StandardRate then
-		return var_3_3
+	if rate >= RougeMapHelper.StandardRate then
+		return halfHeight
 	end
 
-	return var_3_3 * (var_3_1 * var_0_0.StandardRate / var_3_0)
+	local scaleRate = h * RougeMapHelper.StandardRate / w
+
+	return halfHeight * scaleRate
 end
 
-function var_0_0.getUIRoot()
-	if UnityEngine.Screen.width / UnityEngine.Screen.height >= var_0_0.StandardRate then
+function RougeMapHelper.getUIRoot()
+	local w, h = UnityEngine.Screen.width, UnityEngine.Screen.height
+	local rate = w / h
+
+	if rate >= RougeMapHelper.StandardRate then
 		return ViewMgr.instance:getUIRoot()
 	end
 
 	return ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 end
 
-function var_0_0.getScenePos(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_1.z = arg_5_2
+function RougeMapHelper.getScenePos(camera, mousePos, offsetZ)
+	mousePos.z = offsetZ
 
-	local var_5_0 = arg_5_0:ScreenToWorldPoint(arg_5_1)
+	local pos = camera:ScreenToWorldPoint(mousePos)
 
-	var_5_0.x = var_0_0.retain2decimals(var_5_0.x)
-	var_5_0.y = var_0_0.retain2decimals(var_5_0.y)
-	var_5_0.z = var_0_0.retain2decimals(var_5_0.z)
+	pos.x = RougeMapHelper.retain2decimals(pos.x)
+	pos.y = RougeMapHelper.retain2decimals(pos.y)
+	pos.z = RougeMapHelper.retain2decimals(pos.z)
 
-	return var_5_0
+	return pos
 end
 
-function var_0_0.retain2decimals(arg_6_0)
-	return arg_6_0 - arg_6_0 % 0.01
+function RougeMapHelper.retain2decimals(num)
+	return num - num % 0.01
 end
 
-function var_0_0.getEpisodePosX(arg_7_0)
-	local var_7_0 = (arg_7_0 - 1) * RougeMapModel.instance:getMapEpisodeIntervalX()
+function RougeMapHelper.getEpisodePosX(index)
+	local interval = (index - 1) * RougeMapModel.instance:getMapEpisodeIntervalX()
+	local startOffsetX = RougeMapModel.instance:getMapStartOffsetX()
 
-	return RougeMapModel.instance:getMapStartOffsetX() + var_7_0
+	return startOffsetX + interval
 end
 
-function var_0_0.getNodeLocalPos(arg_8_0, arg_8_1)
-	local var_8_0 = var_0_0.randomX()
-	local var_8_1 = RougeMapEnum.NodeLocalPosY[arg_8_1][arg_8_0] + RougeMapEnum.NodeGlobalOffsetY
-	local var_8_2 = RougeMapModel.instance:getMapSize().y
+function RougeMapHelper.getNodeLocalPos(index, posType)
+	local x = RougeMapHelper.randomX()
+	local posList = RougeMapEnum.NodeLocalPosY[posType]
+	local posYRate = posList[index] + RougeMapEnum.NodeGlobalOffsetY
+	local mapSizeY = RougeMapModel.instance:getMapSize().y
 
-	return var_8_0, -var_8_1 * var_8_2, 0
+	return x, -posYRate * mapSizeY, 0
 end
 
-function var_0_0.randomX()
-	local var_9_0 = (RougeMapEnum.NodeLocalPosXRange * 2 + 1) * 100
+function RougeMapHelper.randomX()
+	local range = RougeMapEnum.NodeLocalPosXRange * 2 + 1
 
-	return math.random(100, var_9_0) * 0.01 - (RougeMapEnum.NodeLocalPosXRange + 1)
+	range = range * 100
+	range = math.random(100, range)
+	range = range * 0.01
+
+	local middle = RougeMapEnum.NodeLocalPosXRange + 1
+
+	return range - middle
 end
 
-function var_0_0.getNodeContainerPos(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	return var_0_0.getEpisodePosX(arg_10_0) + arg_10_1, arg_10_2, arg_10_3
+function RougeMapHelper.getNodeContainerPos(episodeIndex, posX, posY, posZ)
+	local episodePosX = RougeMapHelper.getEpisodePosX(episodeIndex)
+
+	return episodePosX + posX, posY, posZ
 end
 
-function var_0_0.getWorldPos(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(arg_11_0, arg_11_1, arg_11_2)
+function RougeMapHelper.getWorldPos(screenPos, camera, refPos)
+	local pos = SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(screenPos, camera, refPos)
 
-	return var_11_0.x, var_11_0.y, var_11_0.z
+	return pos.x, pos.y, pos.z
 end
 
-function var_0_0.getOffsetZ(arg_12_0)
-	if math.abs(arg_12_0) > 100 then
+function RougeMapHelper.getOffsetZ(posY)
+	if math.abs(posY) > 100 then
 		logWarn("abs Y > 100")
 	end
 
-	arg_12_0 = arg_12_0 - 100
+	posY = posY - 100
 
-	return arg_12_0 * 0.001
+	return posY * 0.001
 end
 
-var_0_0.MapType2Cls = {
+RougeMapHelper.MapType2Cls = {
 	[RougeMapEnum.MapType.Edit] = RougeMiddleLayerEditMap,
 	[RougeMapEnum.MapType.Normal] = RougeLayerMap,
 	[RougeMapEnum.MapType.Middle] = RougeMiddleLayerMap,
 	[RougeMapEnum.MapType.PathSelect] = RougePathSelectMap
 }
 
-function var_0_0.createMapComp(arg_13_0)
-	local var_13_0 = var_0_0.MapType2Cls[arg_13_0]
+function RougeMapHelper.createMapComp(mapType)
+	local cls = RougeMapHelper.MapType2Cls[mapType]
 
-	if not var_13_0 then
-		logError("not found map cls .. " .. tostring(arg_13_0))
+	if not cls then
+		logError("not found map cls .. " .. tostring(mapType))
 
-		var_13_0 = var_0_0.MapType2Cls[RougeMapEnum.MapType.Normal]
+		cls = RougeMapHelper.MapType2Cls[RougeMapEnum.MapType.Normal]
 	end
 
-	return (var_13_0.New())
+	local mapComp = cls.New()
+
+	return mapComp
 end
 
-function var_0_0.getScenePath(arg_14_0)
-	return string.format(RougeMapEnum.ScenePrefabFormat, arg_14_0)
+function RougeMapHelper.getScenePath(name)
+	return string.format(RougeMapEnum.ScenePrefabFormat, name)
 end
 
-function var_0_0.addMapOtherRes(arg_15_0, arg_15_1)
-	if arg_15_0 == RougeMapEnum.MapType.Edit then
-		arg_15_1:addPath(RougeMapEnum.RedNodeResPath)
-		arg_15_1:addPath(RougeMapEnum.GreenNodeResPath)
-		arg_15_1:addPath(RougeMapEnum.LineResPath)
-		arg_15_1:addPath(RougeMapEnum.MiddleLayerLeavePath)
-	elseif arg_15_0 == RougeMapEnum.MapType.Normal then
-		arg_15_1:addPath(RougeMapEnum.LinePrefabRes)
+function RougeMapHelper.addMapOtherRes(mapType, loader)
+	if mapType == RougeMapEnum.MapType.Edit then
+		loader:addPath(RougeMapEnum.RedNodeResPath)
+		loader:addPath(RougeMapEnum.GreenNodeResPath)
+		loader:addPath(RougeMapEnum.LineResPath)
+		loader:addPath(RougeMapEnum.MiddleLayerLeavePath)
+	elseif mapType == RougeMapEnum.MapType.Normal then
+		loader:addPath(RougeMapEnum.LinePrefabRes)
 
-		for iter_15_0, iter_15_1 in pairs(RougeMapEnum.LineIconRes) do
-			arg_15_1:addPath(iter_15_1)
+		for _, res in pairs(RougeMapEnum.LineIconRes) do
+			loader:addPath(res)
 		end
 
-		for iter_15_2, iter_15_3 in pairs(RougeMapEnum.IconPath) do
-			arg_15_1:addPath(var_0_0.getScenePath(iter_15_3))
+		for _, name in pairs(RougeMapEnum.IconPath) do
+			loader:addPath(RougeMapHelper.getScenePath(name))
 		end
 
-		for iter_15_4, iter_15_5 in pairs(RougeMapEnum.NodeBgPath) do
-			for iter_15_6, iter_15_7 in pairs(iter_15_5) do
-				arg_15_1:addPath(var_0_0.getScenePath(iter_15_7))
+		for _, tab in pairs(RougeMapEnum.NodeBgPath) do
+			for _, name in pairs(tab) do
+				loader:addPath(RougeMapHelper.getScenePath(name))
 			end
 		end
 
-		arg_15_1:addPath(var_0_0.getScenePath(RougeMapEnum.StartNodeBgPath))
-	elseif arg_15_0 == RougeMapEnum.MapType.Middle then
-		arg_15_1:addPath(RougeMapEnum.MiddleLayerLeavePath)
-		arg_15_1:addPath(RougeMapEnum.PieceBossEffect)
+		loader:addPath(RougeMapHelper.getScenePath(RougeMapEnum.StartNodeBgPath))
+	elseif mapType == RougeMapEnum.MapType.Middle then
+		loader:addPath(RougeMapEnum.MiddleLayerLeavePath)
+		loader:addPath(RougeMapEnum.PieceBossEffect)
 
-		local var_15_0 = RougeMapModel.instance:getMiddleLayerCo().dayOrNight
-		local var_15_1 = var_0_0.getPieceResPath(RougeMapEnum.ActorPiecePath, var_15_0)
+		local middleLayerCo = RougeMapModel.instance:getMiddleLayerCo()
+		local dayOrNight = middleLayerCo.dayOrNight
+		local actorPiecePath = RougeMapHelper.getPieceResPath(RougeMapEnum.ActorPiecePath, dayOrNight)
 
-		arg_15_1:addPath(var_15_1)
+		loader:addPath(actorPiecePath)
 
-		local var_15_2 = RougeMapModel.instance:getPieceList()
+		local pieceMoList = RougeMapModel.instance:getPieceList()
 
-		for iter_15_8, iter_15_9 in ipairs(var_15_2) do
-			local var_15_3 = iter_15_9:getPieceCo().pieceRes
+		for _, pieceMo in ipairs(pieceMoList) do
+			local co = pieceMo:getPieceCo()
+			local resPath = co.pieceRes
 
-			if not string.nilorempty(var_15_3) then
-				local var_15_4 = var_0_0.getPieceResPath(var_15_3, var_15_0)
+			if not string.nilorempty(resPath) then
+				resPath = RougeMapHelper.getPieceResPath(resPath, dayOrNight)
 
-				arg_15_1:addPath(var_15_4)
+				loader:addPath(resPath)
 			end
 		end
 
-		for iter_15_10, iter_15_11 in pairs(RougeMapEnum.PieceIconRes) do
-			arg_15_1:addPath(iter_15_11)
+		for _, res in pairs(RougeMapEnum.PieceIconRes) do
+			loader:addPath(res)
 		end
 
-		for iter_15_12, iter_15_13 in pairs(RougeMapEnum.PieceIconBgRes) do
-			arg_15_1:addPath(iter_15_13)
+		for _, res in pairs(RougeMapEnum.PieceIconBgRes) do
+			loader:addPath(res)
 		end
-	elseif arg_15_0 == RougeMapEnum.MapType.PathSelect then
+	elseif mapType == RougeMapEnum.MapType.PathSelect then
 		-- block empty
 	end
 end
 
-function var_0_0.getMapResPath(arg_16_0)
-	if arg_16_0 == RougeMapEnum.MapType.Edit then
-		local var_16_0 = RougeMapEditModel.instance.middleLayerId
+function RougeMapHelper.getMapResPath(mapType)
+	if mapType == RougeMapEnum.MapType.Edit then
+		local middleLayerId = RougeMapEditModel.instance.middleLayerId
 
-		return RougeMapConfig.instance:getMiddleMapResPath(var_16_0)
-	elseif arg_16_0 == RougeMapEnum.MapType.Middle then
-		local var_16_1 = RougeMapModel.instance:getMiddleLayerId()
+		return RougeMapConfig.instance:getMiddleMapResPath(middleLayerId)
+	elseif mapType == RougeMapEnum.MapType.Middle then
+		local middleLayerId = RougeMapModel.instance:getMiddleLayerId()
 
-		return RougeMapConfig.instance:getMiddleMapResPath(var_16_1)
-	elseif arg_16_0 == RougeMapEnum.MapType.Normal then
-		return RougeMapModel.instance:getLayerCo().mapRes
-	elseif arg_16_0 == RougeMapEnum.MapType.PathSelect then
-		return RougeMapModel.instance:getPathSelectCo().mapRes
+		return RougeMapConfig.instance:getMiddleMapResPath(middleLayerId)
+	elseif mapType == RougeMapEnum.MapType.Normal then
+		local layerCo = RougeMapModel.instance:getLayerCo()
+
+		return layerCo.mapRes
+	elseif mapType == RougeMapEnum.MapType.PathSelect then
+		local pathSelectCo = RougeMapModel.instance:getPathSelectCo()
+
+		return pathSelectCo.mapRes
 	end
 end
 
-function var_0_0.getPieceResPath(arg_17_0, arg_17_1)
-	local var_17_0 = RougeMapEnum.DayOrNightSuffix[arg_17_1]
+function RougeMapHelper.getPieceResPath(resName, dayOrNight)
+	local suffix = RougeMapEnum.DayOrNightSuffix[dayOrNight]
 
-	return string.format("scenes/v1a9_m_s16_dilao_room/scene_prefab/chess/%s_%s.prefab", arg_17_0, var_17_0)
+	return string.format("scenes/v1a9_m_s16_dilao_room/scene_prefab/chess/%s_%s.prefab", resName, suffix)
 end
 
-function var_0_0.formatLineParam(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_0 == RougeMapEnum.MiddleLayerPointType.Pieces or arg_18_0 == RougeMapEnum.MiddleLayerPointType.Leave then
-		return arg_18_0, arg_18_1, arg_18_2, arg_18_3
+function RougeMapHelper.formatLineParam(startType, startId, endType, endId)
+	if startType == RougeMapEnum.MiddleLayerPointType.Pieces or startType == RougeMapEnum.MiddleLayerPointType.Leave then
+		return startType, startId, endType, endId
 	end
 
-	return arg_18_2, arg_18_3, arg_18_0, arg_18_1
+	return endType, endId, startType, startId
 end
 
-function var_0_0.backToMainScene()
+function RougeMapHelper.backToMainScene()
 	RougeMapModel.instance:clearInteractive()
 	RougePopController.instance:clearAllPopView()
 	ViewMgr.instance:closeAllPopupViews(nil, true)
 	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal)
 	MainController.instance:enterMainScene(true, false)
-	SceneHelper.instance:waitSceneDone(SceneType.Main, var_0_0._onEnterMainSceneDone)
+	SceneHelper.instance:waitSceneDone(SceneType.Main, RougeMapHelper._onEnterMainSceneDone)
 end
 
-function var_0_0._onEnterMainSceneDone()
+function RougeMapHelper._onEnterMainSceneDone()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.RougeMainView)
 
-	local var_20_0 = FlowSequence.New()
+	local sequence = FlowSequence.New()
 
-	var_20_0:addWork(OpenViewWork.New({
+	sequence:addWork(OpenViewWork.New({
 		openFunction = DungeonController.openDungeonView,
 		openFunctionObj = DungeonController.instance,
 		waitOpenViewName = ViewName.DungeonView
 	}))
-	var_20_0:addWork(OpenViewWork.New({
+	sequence:addWork(OpenViewWork.New({
 		openFunction = RougeController.openRougeMainView,
 		openFunctionObj = RougeController.instance,
 		waitOpenViewName = ViewName.RougeMainView
 	}))
-	var_20_0:start()
+	sequence:start()
 end
 
-function var_0_0.getEpisodeIndex(arg_21_0)
-	return arg_21_0 + 1
+function RougeMapHelper.getEpisodeIndex(stage)
+	return stage + 1
 end
 
-function var_0_0.loadItem(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_2) do
-		local var_22_0 = arg_22_3[iter_22_0]
+function RougeMapHelper.loadItem(goItem, cls, moList, itemList)
+	for index, mo in ipairs(moList) do
+		local item = itemList[index]
 
-		if not var_22_0 then
-			var_22_0 = arg_22_1.New()
+		if not item then
+			item = cls.New()
 
-			local var_22_1 = gohelper.cloneInPlace(arg_22_0)
+			local go = gohelper.cloneInPlace(goItem)
 
-			var_22_0:init(var_22_1)
-			table.insert(arg_22_3, var_22_0)
+			item:init(go)
+			table.insert(itemList, item)
 		end
 
-		var_22_0:show()
-		var_22_0:update(iter_22_0, iter_22_1)
+		item:show()
+		item:update(index, mo)
 	end
 
-	for iter_22_2 = #arg_22_2 + 1, #arg_22_3 do
-		arg_22_3[iter_22_2]:hide()
+	for i = #moList + 1, #itemList do
+		itemList[i]:hide()
 	end
 end
 
-function var_0_0.loadItemWithCustomUpdateFunc(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
-	for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
-		local var_23_0 = arg_23_3[iter_23_0]
+function RougeMapHelper.loadItemWithCustomUpdateFunc(goItem, cls, dataList, itemList, updateFunc, updateFuncObj)
+	for index, data in ipairs(dataList) do
+		local item = itemList[index]
 
-		if not var_23_0 then
-			var_23_0 = arg_23_1.New()
+		if not item then
+			item = cls.New()
 
-			local var_23_1 = gohelper.cloneInPlace(arg_23_0)
+			local go = gohelper.cloneInPlace(goItem)
 
-			var_23_0:init(var_23_1)
-			table.insert(arg_23_3, var_23_0)
+			item:init(go)
+			table.insert(itemList, item)
 		end
 
-		var_23_0:show()
-		arg_23_4(arg_23_5, var_23_0, iter_23_0, iter_23_1)
+		item:show()
+		updateFunc(updateFuncObj, item, index, data)
 	end
 
-	for iter_23_2 = #arg_23_2 + 1, #arg_23_3 do
-		arg_23_3[iter_23_2]:hide()
+	for i = #dataList + 1, #itemList do
+		itemList[i]:hide()
 	end
 end
 
-function var_0_0.loadGoItem(arg_24_0, arg_24_1, arg_24_2)
-	for iter_24_0 = 1, arg_24_1 do
-		local var_24_0
+function RougeMapHelper.loadGoItem(goItem, num, itemList)
+	for i = 1, num do
+		local go
 
-		if arg_24_2 then
-			var_24_0 = arg_24_2[iter_24_0]
+		if itemList then
+			go = itemList[i]
 
-			if not var_24_0 then
-				var_24_0 = gohelper.cloneInPlace(arg_24_0)
+			if not go then
+				go = gohelper.cloneInPlace(goItem)
 
-				table.insert(arg_24_2, var_24_0)
+				table.insert(itemList, go)
 			end
 		else
-			var_24_0 = gohelper.cloneInPlace(arg_24_0)
+			go = gohelper.cloneInPlace(goItem)
 		end
 
-		gohelper.setActive(var_24_0, true)
+		gohelper.setActive(go, true)
 	end
 
-	if arg_24_2 then
-		for iter_24_1 = arg_24_1 + 1, #arg_24_2 do
-			gohelper.setActive(arg_24_2[iter_24_1], false)
+	if itemList then
+		for i = num + 1, #itemList do
+			gohelper.setActive(itemList[i], false)
 		end
 	end
 end
 
-function var_0_0.destroyItemList(arg_25_0)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0) do
-		iter_25_1:destroy()
+function RougeMapHelper.destroyItemList(itemList)
+	for _, item in pairs(itemList) do
+		item:destroy()
 	end
 end
 
-function var_0_0.getLineType(arg_26_0, arg_26_1)
-	local var_26_0 = RougeMapEnum.StatusLineMap[arg_26_0][arg_26_1]
+function RougeMapHelper.getLineType(curStatus, preStatus)
+	local lineType = RougeMapEnum.StatusLineMap[curStatus][preStatus]
 
-	if var_26_0 == RougeMapEnum.LineType.None then
-		logError(string.format("Impossible situation .. curStatus : %s   ---   preStatus : %s", arg_26_0, arg_26_1))
+	if lineType == RougeMapEnum.LineType.None then
+		logError(string.format("Impossible situation .. curStatus : %s   ---   preStatus : %s", curStatus, preStatus))
 
 		return RougeMapEnum.LineType.CantArrive
 	end
 
-	return var_26_0
+	return lineType
 end
 
-function var_0_0.getMiddleLayerPathListLen(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_0.pathPointPos
-	local var_27_1 = 0
+function RougeMapHelper.getMiddleLayerPathListLen(middleLayerCo, pathList, lenList)
+	local pathPointList = middleLayerCo.pathPointPos
+	local len = 0
 
-	for iter_27_0 = 2, #arg_27_1 do
-		local var_27_2 = var_27_0[arg_27_1[iter_27_0 - 1]]
-		local var_27_3 = var_27_0[arg_27_1[iter_27_0]]
-		local var_27_4 = Vector2.Distance(var_27_2, var_27_3)
+	for i = 2, #pathList do
+		local prePos = pathPointList[pathList[i - 1]]
+		local curPos = pathPointList[pathList[i]]
+		local curLen = Vector2.Distance(prePos, curPos)
 
-		var_27_1 = var_27_1 + var_27_4
+		len = len + curLen
 
-		table.insert(arg_27_2, var_27_4)
+		table.insert(lenList, curLen)
 	end
 
-	for iter_27_1, iter_27_2 in ipairs(arg_27_2) do
-		arg_27_2[iter_27_1] = iter_27_2 / var_27_1 + (arg_27_2[iter_27_1 - 1] or 0)
+	for i, curLen in ipairs(lenList) do
+		lenList[i] = curLen / len + (lenList[i - 1] or 0)
 	end
 
-	arg_27_2[#arg_27_2] = 1
+	lenList[#lenList] = 1
 
-	return var_27_1
+	return len
 end
 
-function var_0_0.getAngle(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	local var_28_0 = arg_28_2 - arg_28_0
-	local var_28_1 = arg_28_3 - arg_28_1
-	local var_28_2 = var_28_0 > 0 and 1 or -1
-	local var_28_3 = var_28_1 > 0 and 1 or -1
+function RougeMapHelper.getAngle(posA_X, posA_Y, posB_X, posB_Y)
+	local weight = posB_X - posA_X
+	local height = posB_Y - posA_Y
+	local w_symbol = weight > 0 and 1 or -1
+	local h_symbol = height > 0 and 1 or -1
 
-	if var_28_0 == 0 then
-		if var_28_1 == 0 then
+	if weight == 0 then
+		if height == 0 then
 			return 0
 		else
-			return var_28_3 > 0 and 90 or 270
+			return h_symbol > 0 and 90 or 270
 		end
 	end
 
-	if var_28_1 == 0 then
-		if var_28_0 == 0 then
+	if height == 0 then
+		if weight == 0 then
 			return 0
 		else
-			return var_28_2 > 0 and 0 or 180
+			return w_symbol > 0 and 0 or 180
 		end
 	end
 
-	local var_28_4 = math.abs(var_28_1) / math.abs(var_28_0)
-	local var_28_5 = math.atan(var_28_4) * 180 / math.pi
+	height = math.abs(height)
+	weight = math.abs(weight)
 
-	if var_28_2 > 0 then
-		if var_28_3 > 0 then
-			return var_28_5
+	local tanValue = height / weight
+	local rotationZ = math.atan(tanValue) * 180 / math.pi
+
+	if w_symbol > 0 then
+		if h_symbol > 0 then
+			return rotationZ
 		else
-			return 360 - var_28_5
+			return 360 - rotationZ
 		end
 	else
-		return 180 - var_28_3 * var_28_5
+		return 180 - h_symbol * rotationZ
 	end
 end
 
-function var_0_0.getPieceDir(arg_29_0)
-	if arg_29_0 >= 0 and arg_29_0 <= 90 then
+function RougeMapHelper.getPieceDir(angle)
+	if angle >= 0 and angle <= 90 then
 		return RougeMapEnum.PieceDir.Top
-	elseif arg_29_0 >= 90 and arg_29_0 <= 180 then
+	elseif angle >= 90 and angle <= 180 then
 		return RougeMapEnum.PieceDir.Left
-	elseif arg_29_0 >= 180 and arg_29_0 <= 270 then
+	elseif angle >= 180 and angle <= 270 then
 		return RougeMapEnum.PieceDir.Bottom
-	elseif arg_29_0 >= 270 and arg_29_0 <= 360 then
+	elseif angle >= 270 and angle <= 360 then
 		return RougeMapEnum.PieceDir.Right
 	end
 
 	return RougeMapEnum.PieceDir.Bottom
 end
 
-function var_0_0.getActorDir(arg_30_0, arg_30_1)
-	if arg_30_1 >= 0 and arg_30_1 <= 22.5 then
+function RougeMapHelper:getActorDir(angle)
+	if angle >= 0 and angle <= 22.5 then
 		return RougeMapEnum.ActorDir.RightTop
-	elseif arg_30_1 >= 22.5 and arg_30_1 <= 67.5 then
+	elseif angle >= 22.5 and angle <= 67.5 then
 		return RougeMapEnum.ActorDir.Top
-	elseif arg_30_1 >= 67.5 and arg_30_1 <= 112.5 then
+	elseif angle >= 67.5 and angle <= 112.5 then
 		return RougeMapEnum.ActorDir.LeftTop
-	elseif arg_30_1 >= 112.5 and arg_30_1 <= 157.5 then
+	elseif angle >= 112.5 and angle <= 157.5 then
 		return RougeMapEnum.ActorDir.Left
-	elseif arg_30_1 >= 157.5 and arg_30_1 <= 202.5 then
+	elseif angle >= 157.5 and angle <= 202.5 then
 		return RougeMapEnum.ActorDir.LeftBottom
-	elseif arg_30_1 >= 202.5 and arg_30_1 <= 247.5 then
+	elseif angle >= 202.5 and angle <= 247.5 then
 		return RougeMapEnum.ActorDir.Bottom
-	elseif arg_30_1 >= 247.5 and arg_30_1 <= 292.5 then
+	elseif angle >= 247.5 and angle <= 292.5 then
 		return RougeMapEnum.ActorDir.RightBottom
-	elseif arg_30_1 >= 292.5 and arg_30_1 <= 337.5 then
+	elseif angle >= 292.5 and angle <= 337.5 then
 		return RougeMapEnum.ActorDir.Right
-	elseif arg_30_1 >= 337.5 and arg_30_1 <= 360 then
+	elseif angle >= 337.5 and angle <= 360 then
 		return RougeMapEnum.ActorDir.RightTop
 	end
 
 	return RougeMapEnum.ActorDir.Bottom
 end
 
-function var_0_0.isEntrustPiece(arg_31_0)
-	return arg_31_0 == RougeMapEnum.PieceEntrustType.Normal or arg_31_0 == RougeMapEnum.PieceEntrustType.Hard
+function RougeMapHelper.isEntrustPiece(entrustType)
+	return entrustType == RougeMapEnum.PieceEntrustType.Normal or entrustType == RougeMapEnum.PieceEntrustType.Hard
 end
 
-function var_0_0.isRestPiece(arg_32_0)
-	return arg_32_0 == RougeMapEnum.PieceEntrustType.Rest
+function RougeMapHelper.isRestPiece(type)
+	return type == RougeMapEnum.PieceEntrustType.Rest
 end
 
-function var_0_0.isFightEvent(arg_33_0)
-	if not arg_33_0 then
+function RougeMapHelper.isFightEvent(eventType)
+	if not eventType then
 		return false
 	end
 
-	return arg_33_0 == RougeMapEnum.EventType.NormalFight or arg_33_0 == RougeMapEnum.EventType.HardFight or arg_33_0 == RougeMapEnum.EventType.EliteFight or arg_33_0 == RougeMapEnum.EventType.BossFight
+	return eventType == RougeMapEnum.EventType.NormalFight or eventType == RougeMapEnum.EventType.HardFight or eventType == RougeMapEnum.EventType.EliteFight or eventType == RougeMapEnum.EventType.BossFight
 end
 
-function var_0_0.isChoiceEvent(arg_34_0)
-	if not arg_34_0 then
+function RougeMapHelper.isChoiceEvent(eventType)
+	if not eventType then
 		return false
 	end
 
-	return arg_34_0 == RougeMapEnum.EventType.Reward or arg_34_0 == RougeMapEnum.EventType.Choice or arg_34_0 == RougeMapEnum.EventType.Rest
+	return eventType == RougeMapEnum.EventType.Reward or eventType == RougeMapEnum.EventType.Choice or eventType == RougeMapEnum.EventType.Rest
 end
 
-function var_0_0.isStoreEvent(arg_35_0)
-	if not arg_35_0 then
+function RougeMapHelper.isStoreEvent(eventType)
+	if not eventType then
 		return false
 	end
 
-	return arg_35_0 == RougeMapEnum.EventType.Store
+	return eventType == RougeMapEnum.EventType.Store
 end
 
-function var_0_0.getPos(arg_36_0)
-	local var_36_0 = string.splitToNumber(arg_36_0, "#")
+function RougeMapHelper.getPos(posStr)
+	local array = string.splitToNumber(posStr, "#")
 
-	return var_36_0[1], var_36_0[2]
+	return array[1], array[2]
 end
 
-function var_0_0.filterUnActivePieceChoice(arg_37_0)
-	for iter_37_0 = #arg_37_0, 1, -1 do
-		local var_37_0 = arg_37_0[iter_37_0]
-		local var_37_1 = lua_rouge_piece_select.configDict[var_37_0]
+function RougeMapHelper.filterUnActivePieceChoice(choiceIdList)
+	for i = #choiceIdList, 1, -1 do
+		local id = choiceIdList[i]
+		local co = lua_rouge_piece_select.configDict[id]
 
-		if not RougeMapUnlockHelper.checkIsUnlock(var_37_1.activeType, var_37_1.activeParam) then
-			table.remove(arg_37_0, iter_37_0)
+		if not RougeMapUnlockHelper.checkIsUnlock(co.activeType, co.activeParam) then
+			table.remove(choiceIdList, i)
 		end
 	end
 end
 
-function var_0_0.getChangeMapEnum(arg_38_0, arg_38_1)
-	if arg_38_0 == RougeMapEnum.MapType.Normal and arg_38_1 == RougeMapEnum.MapType.Middle then
+function RougeMapHelper.getChangeMapEnum(preMapType, curMapType)
+	if preMapType == RougeMapEnum.MapType.Normal and curMapType == RougeMapEnum.MapType.Middle then
 		return RougeMapEnum.ChangeMapEnum.NormalToMiddle
-	elseif arg_38_0 == RougeMapEnum.MapType.Middle and arg_38_1 == RougeMapEnum.MapType.PathSelect then
+	elseif preMapType == RougeMapEnum.MapType.Middle and curMapType == RougeMapEnum.MapType.PathSelect then
 		return RougeMapEnum.ChangeMapEnum.MiddleToPathSelect
-	elseif arg_38_0 == RougeMapEnum.MapType.PathSelect and arg_38_1 == RougeMapEnum.MapType.Normal then
+	elseif preMapType == RougeMapEnum.MapType.PathSelect and curMapType == RougeMapEnum.MapType.Normal then
 		return RougeMapEnum.ChangeMapEnum.PathSelectToNormal
 	end
 end
 
-function var_0_0.getLifeChangeStatus(arg_39_0, arg_39_1)
-	if arg_39_0 == arg_39_1 then
+function RougeMapHelper.getLifeChangeStatus(preLife, curLife)
+	if preLife == curLife then
 		return RougeMapEnum.LifeChangeStatus.Idle
 	end
 
-	if arg_39_0 < arg_39_1 then
+	if preLife < curLife then
 		return RougeMapEnum.LifeChangeStatus.Add
 	end
 
 	return RougeMapEnum.LifeChangeStatus.Reduce
 end
 
-function var_0_0.checkNeedFilterUnique(arg_40_0)
-	return arg_40_0 == RougeMapEnum.InteractType.LossAndCopy or arg_40_0 == RougeMapEnum.InteractType.LossNotUniqueCollection or arg_40_0 == RougeMapEnum.InteractType.StorageCollection
+function RougeMapHelper.checkNeedFilterUnique(interactType)
+	return interactType == RougeMapEnum.InteractType.LossAndCopy or interactType == RougeMapEnum.InteractType.LossNotUniqueCollection or interactType == RougeMapEnum.InteractType.StorageCollection
 end
 
-function var_0_0.getEndId()
-	local var_41_0 = RougeMapModel.instance:getCurPieceMo()
-	local var_41_1 = var_41_0 and var_41_0.selectId
-	local var_41_2 = var_41_1 and lua_rouge_piece_select.configDict[var_41_1]
+function RougeMapHelper.getEndId()
+	local curPieceMo = RougeMapModel.instance:getCurPieceMo()
+	local selectId = curPieceMo and curPieceMo.selectId
+	local co = selectId and lua_rouge_piece_select.configDict[selectId]
 
-	if not var_41_2 then
+	if not co then
 		return
 	end
 
-	local var_41_3 = string.splitToNumber(var_41_2.triggerParam, "#")
+	local paramArray = string.splitToNumber(co.triggerParam, "#")
 
-	return var_41_3 and var_41_3[2]
+	return paramArray and paramArray[2]
 end
 
-var_0_0.CommonIgnoreViewDict = {
+RougeMapHelper.CommonIgnoreViewDict = {
 	[ViewName.RougeMapView] = true,
 	[ViewName.RougeMapTipView] = true,
 	[ViewName.ToastView] = true,
@@ -520,13 +552,13 @@ var_0_0.CommonIgnoreViewDict = {
 	[ViewName.GuideView] = true
 }
 
-function var_0_0.checkMapViewOnTop(arg_42_0)
-	local var_42_0 = ViewMgr.instance:getOpenViewNameList()
+function RougeMapHelper.checkMapViewOnTop(log)
+	local openViewList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_42_0, iter_42_1 in ipairs(var_42_0) do
-		if not var_0_0.CommonIgnoreViewDict[iter_42_1] then
-			if arg_42_0 then
-				logNormal("cur top view : " .. tostring(iter_42_1))
+	for _, viewName in ipairs(openViewList) do
+		if not RougeMapHelper.CommonIgnoreViewDict[viewName] then
+			if log then
+				logNormal("cur top view : " .. tostring(viewName))
 			end
 
 			return false
@@ -536,7 +568,7 @@ function var_0_0.checkMapViewOnTop(arg_42_0)
 	return true
 end
 
-function var_0_0.clearMapData()
+function RougeMapHelper.clearMapData()
 	RougeMapController.instance:clear()
 	RougeMapModel.instance:clear()
 	RougeMapTipPopController.instance:clear()
@@ -544,4 +576,4 @@ function var_0_0.clearMapData()
 	RougePopController.instance:clearAllPopView()
 end
 
-return var_0_0
+return RougeMapHelper

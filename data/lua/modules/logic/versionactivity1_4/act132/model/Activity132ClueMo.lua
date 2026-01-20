@@ -1,51 +1,53 @@
-﻿module("modules.logic.versionactivity1_4.act132.model.Activity132ClueMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/model/Activity132ClueMo.lua
 
-local var_0_0 = class("Activity132ClueMo")
+module("modules.logic.versionactivity1_4.act132.model.Activity132ClueMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.activityId = arg_1_1.activityId
-	arg_1_0.clueId = arg_1_1.clueId
-	arg_1_0.name = arg_1_1.name
-	arg_1_0.contentDict = {}
+local Activity132ClueMo = class("Activity132ClueMo")
 
-	local var_1_0 = string.splitToNumber(arg_1_1.pos, "#")
+function Activity132ClueMo:ctor(cfg)
+	self.activityId = cfg.activityId
+	self.clueId = cfg.clueId
+	self.name = cfg.name
+	self.contentDict = {}
 
-	arg_1_0.posX = var_1_0[1] or 0
-	arg_1_0.posY = var_1_0[2] or 0
+	local posList = string.splitToNumber(cfg.pos, "#")
 
-	local var_1_1 = string.splitToNumber(arg_1_1.contents, "#")
+	self.posX = posList[1] or 0
+	self.posY = posList[2] or 0
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = Activity132Config.instance:getContentConfig(arg_1_0.activityId, iter_1_1)
+	local list = string.splitToNumber(cfg.contents, "#")
 
-		if var_1_2 then
-			arg_1_0.contentDict[iter_1_1] = Activity132ContentMo.New(var_1_2)
+	for i, contentId in ipairs(list) do
+		local contentCfg = Activity132Config.instance:getContentConfig(self.activityId, contentId)
+
+		if contentCfg then
+			self.contentDict[contentId] = Activity132ContentMo.New(contentCfg)
 		end
 	end
 
-	arg_1_0._cfg = arg_1_1
+	self._cfg = cfg
 end
 
-function var_0_0.getContentList(arg_2_0)
-	local var_2_0 = {}
+function Activity132ClueMo:getContentList()
+	local list = {}
 
-	for iter_2_0, iter_2_1 in pairs(arg_2_0.contentDict) do
-		table.insert(var_2_0, iter_2_1)
+	for k, v in pairs(self.contentDict) do
+		table.insert(list, v)
 	end
 
-	if #var_2_0 > 1 then
-		table.sort(var_2_0, SortUtil.keyLower("contentId"))
+	if #list > 1 then
+		table.sort(list, SortUtil.keyLower("contentId"))
 	end
 
-	return var_2_0
+	return list
 end
 
-function var_0_0.getPos(arg_3_0)
-	return arg_3_0.posX, arg_3_0.posY
+function Activity132ClueMo:getPos()
+	return self.posX, self.posY
 end
 
-function var_0_0.getName(arg_4_0)
-	return arg_4_0._cfg.name
+function Activity132ClueMo:getName()
+	return self._cfg.name
 end
 
-return var_0_0
+return Activity132ClueMo

@@ -1,22 +1,24 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionWaitForGuideFinish", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionWaitForGuideFinish.lua
 
-local var_0_0 = class("WaitGuideActionWaitForGuideFinish", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionWaitForGuideFinish", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionWaitForGuideFinish = class("WaitGuideActionWaitForGuideFinish", BaseGuideAction)
 
-	arg_1_0._waitForGuides = string.splitToNumber(arg_1_0.actionParam, "#")
+function WaitGuideActionWaitForGuideFinish:onStart(context)
+	WaitGuideActionWaitForGuideFinish.super.onStart(self, context)
 
-	if not arg_1_0:_hasDoingGuide() then
-		arg_1_0:onDone(true)
+	self._waitForGuides = string.splitToNumber(self.actionParam, "#")
+
+	if not self:_hasDoingGuide() then
+		self:onDone(true)
 	else
-		GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_1_0._onFinishGuide, arg_1_0)
+		GuideController.instance:registerCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
 	end
 end
 
-function var_0_0._hasDoingGuide(arg_2_0)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._waitForGuides) do
-		if GuideModel.instance:isGuideRunning(iter_2_1) then
+function WaitGuideActionWaitForGuideFinish:_hasDoingGuide()
+	for _, guideId in ipairs(self._waitForGuides) do
+		if GuideModel.instance:isGuideRunning(guideId) then
 			return true
 		end
 	end
@@ -24,14 +26,14 @@ function var_0_0._hasDoingGuide(arg_2_0)
 	return false
 end
 
-function var_0_0._onFinishGuide(arg_3_0)
-	if not arg_3_0:_hasDoingGuide() then
-		arg_3_0:onDone(true)
+function WaitGuideActionWaitForGuideFinish:_onFinishGuide()
+	if not self:_hasDoingGuide() then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_4_0._onFinishGuide, arg_4_0)
+function WaitGuideActionWaitForGuideFinish:clearWork()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, self._onFinishGuide, self)
 end
 
-return var_0_0
+return WaitGuideActionWaitForGuideFinish

@@ -1,9 +1,11 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreDoorOnceUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreDoorOnceUnitMO.lua
 
-local var_0_0 = class("ExploreDoorOnceUnitMO", ExploreDoorUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreDoorOnceUnitMO", package.seeall)
 
-function var_0_0.getUnitClass(arg_1_0)
+local ExploreDoorOnceUnitMO = class("ExploreDoorOnceUnitMO", ExploreDoorUnitMO)
+
+function ExploreDoorOnceUnitMO:getUnitClass()
 	return ExploreDoorOnceUnit
 end
 
-return var_0_0
+return ExploreDoorOnceUnitMO

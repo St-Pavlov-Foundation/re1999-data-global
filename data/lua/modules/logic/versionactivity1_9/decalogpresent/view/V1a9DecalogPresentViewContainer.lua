@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_9.decalogpresent.view.V1a9DecalogPresentViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/decalogpresent/view/V1a9DecalogPresentViewContainer.lua
 
-local var_0_0 = class("V1a9DecalogPresentViewContainer", DecalogPresentViewContainer)
+module("modules.logic.versionactivity1_9.decalogpresent.view.V1a9DecalogPresentViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V1a9DecalogPresentViewContainer = class("V1a9DecalogPresentViewContainer", DecalogPresentViewContainer)
 
-	table.insert(var_1_0, V1a9DecalogPresentView.New())
+function V1a9DecalogPresentViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V1a9DecalogPresentView.New())
+
+	return views
 end
 
-return var_0_0
+return V1a9DecalogPresentViewContainer

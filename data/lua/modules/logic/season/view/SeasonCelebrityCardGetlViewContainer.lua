@@ -1,17 +1,19 @@
-﻿module("modules.logic.season.view.SeasonCelebrityCardGetlViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view/SeasonCelebrityCardGetlViewContainer.lua
 
-local var_0_0 = class("SeasonCelebrityCardGetlViewContainer", BaseViewContainer)
+module("modules.logic.season.view.SeasonCelebrityCardGetlViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SeasonCelebrityCardGetlViewContainer = class("SeasonCelebrityCardGetlViewContainer", BaseViewContainer)
+
+function SeasonCelebrityCardGetlViewContainer:buildViews()
 	return {
 		SeasonCelebrityCardGetlView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function SeasonCelebrityCardGetlViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		-- block empty
 	end
 end
 
-return var_0_0
+return SeasonCelebrityCardGetlViewContainer

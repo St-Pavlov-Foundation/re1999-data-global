@@ -1,51 +1,53 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyTrialCharacterTalentTreeView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyTrialCharacterTalentTreeView.lua
 
-local var_0_0 = class("OdysseyTrialCharacterTalentTreeView", CharacterSkillTalentTreeView)
+module("modules.logic.sp01.odyssey.view.OdysseyTrialCharacterTalentTreeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local OdysseyTrialCharacterTalentTreeView = class("OdysseyTrialCharacterTalentTreeView", CharacterSkillTalentTreeView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyTrialCharacterTalentTreeView:onInitView()
+	OdysseyTrialCharacterTalentTreeView.super.onInitView(self)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, arg_2_0._onTrialTalentTreeChangeReply, arg_2_0)
-	arg_2_0:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, arg_2_0._onTrialTalentTreeResetReply, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, arg_2_0._onClickTalentTreeNode, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onCloseSkillTalentTipView, arg_2_0._onCloseSkillTalentTipView, arg_2_0)
+function OdysseyTrialCharacterTalentTreeView:addEvents()
+	OdysseyTrialCharacterTalentTreeView.super.addEvents(self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, self._onTrialTalentTreeChangeReply, self)
+	self:addEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, self._onTrialTalentTreeResetReply, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, self._onClickTalentTreeNode, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.onCloseSkillTalentTipView, self._onCloseSkillTalentTipView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, arg_3_0._onTrialTalentTreeChangeReply, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, arg_3_0._onTrialTalentTreeResetReply, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, arg_3_0._onClickTalentTreeNode, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onCloseSkillTalentTipView, arg_3_0._onCloseSkillTalentTipView, arg_3_0)
+function OdysseyTrialCharacterTalentTreeView:removeEvents()
+	OdysseyTrialCharacterTalentTreeView.super.removeEvents(self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeChange, self._onTrialTalentTreeChangeReply, self)
+	self:removeEventCb(OdysseyController.instance, OdysseyEvent.TrialTalentTreeReset, self._onTrialTalentTreeResetReply, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onClickTalentTreeNode, self._onClickTalentTreeNode, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.onCloseSkillTalentTipView, self._onCloseSkillTalentTipView, self)
 end
 
-function var_0_0._onTrialTalentTreeChangeReply(arg_4_0)
-	arg_4_0:_refreshView()
+function OdysseyTrialCharacterTalentTreeView:_onTrialTalentTreeChangeReply()
+	self:_refreshView()
 end
 
-function var_0_0._onTrialTalentTreeResetReply(arg_5_0)
-	arg_5_0:_refreshView()
+function OdysseyTrialCharacterTalentTreeView:_onTrialTalentTreeResetReply()
+	self:_refreshView()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.heroMo = arg_6_0.viewParam
+function OdysseyTrialCharacterTalentTreeView:onOpen()
+	self.heroMo = self.viewParam
 
-	local var_6_0 = arg_6_0.heroMo.extraMo
-	local var_6_1 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
-	local var_6_2 = tonumber(var_6_1.value)
+	local extraMo = self.heroMo.extraMo
+	local trialHeroConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
+	local trialHeroId = tonumber(trialHeroConstCo.value)
 
-	arg_6_0.isActTrialHero = arg_6_0.heroMo.trialCo and arg_6_0.heroMo.trialCo.id == var_6_2
-	arg_6_0.skillTalentMo = var_6_0 and arg_6_0.heroMo.trialCo and arg_6_0.isActTrialHero and OdysseyTalentModel.instance:getTrialCassandraTreeInfo() or var_6_0:getSkillTalentMo()
+	self.isActTrialHero = self.heroMo.trialCo and self.heroMo.trialCo.id == trialHeroId
+	self.skillTalentMo = extraMo and self.heroMo.trialCo and self.isActTrialHero and OdysseyTalentModel.instance:getTrialCassandraTreeInfo() or extraMo:getSkillTalentMo()
 
-	arg_6_0:_refreshSubTree()
-	arg_6_0:_refreshView()
+	self:_refreshSubTree()
+	self:_refreshView()
 end
 
-return var_0_0
+return OdysseyTrialCharacterTalentTreeView

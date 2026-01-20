@@ -1,103 +1,106 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174BattleHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174BattleHeroItem.lua
 
-local var_0_0 = class("Act174BattleHeroItem", LuaCompBase)
+module("modules.logic.versionactivity2_3.act174.view.Act174BattleHeroItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._readyItem = arg_1_1
+local Act174BattleHeroItem = class("Act174BattleHeroItem", LuaCompBase)
+
+function Act174BattleHeroItem:ctor(readyItem)
+	self._readyItem = readyItem
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._go = arg_2_1
-	arg_2_0._goSelect = gohelper.findChild(arg_2_1, "go_Select")
-	arg_2_0._goEmpty = gohelper.findChild(arg_2_1, "go_Empty")
-	arg_2_0._goHero = gohelper.findChild(arg_2_1, "go_Hero")
-	arg_2_0._imageRare = gohelper.findChildImage(arg_2_1, "go_Hero/rare")
-	arg_2_0._heroIcon = gohelper.findChildSingleImage(arg_2_1, "go_Hero/image_Hero")
-	arg_2_0._imageCareer = gohelper.findChildImage(arg_2_1, "go_Hero/image_Career")
-	arg_2_0._skillIcon = gohelper.findChildSingleImage(arg_2_1, "go_Hero/skill/image_Skill")
-	arg_2_0._collectionQuality = gohelper.findChildImage(arg_2_1, "go_Hero/collection/image_quality")
-	arg_2_0._collectionIcon = gohelper.findChildSingleImage(arg_2_1, "go_Hero/collection/image_Collection")
-	arg_2_0._collectionEmpty = gohelper.findChild(arg_2_1, "go_Hero/collection/empty")
-	arg_2_0._txtIndex = gohelper.findChildText(arg_2_1, "Index/txt_Index")
-	arg_2_0._goLock = gohelper.findChild(arg_2_1, "go_Lock")
-	arg_2_0._btnClick = gohelper.findChildButtonWithAudio(arg_2_1, "")
+function Act174BattleHeroItem:init(go)
+	self._go = go
+	self._goSelect = gohelper.findChild(go, "go_Select")
+	self._goEmpty = gohelper.findChild(go, "go_Empty")
+	self._goHero = gohelper.findChild(go, "go_Hero")
+	self._imageRare = gohelper.findChildImage(go, "go_Hero/rare")
+	self._heroIcon = gohelper.findChildSingleImage(go, "go_Hero/image_Hero")
+	self._imageCareer = gohelper.findChildImage(go, "go_Hero/image_Career")
+	self._skillIcon = gohelper.findChildSingleImage(go, "go_Hero/skill/image_Skill")
+	self._collectionQuality = gohelper.findChildImage(go, "go_Hero/collection/image_quality")
+	self._collectionIcon = gohelper.findChildSingleImage(go, "go_Hero/collection/image_Collection")
+	self._collectionEmpty = gohelper.findChild(go, "go_Hero/collection/empty")
+	self._txtIndex = gohelper.findChildText(go, "Index/txt_Index")
+	self._goLock = gohelper.findChild(go, "go_Lock")
+	self._btnClick = gohelper.findChildButtonWithAudio(go, "")
 
-	arg_2_0:addClickCb(arg_2_0._btnClick, arg_2_0.onClick, arg_2_0)
+	self:addClickCb(self._btnClick, self.onClick, self)
 
-	if arg_2_0._readyItem then
-		CommonDragHelper.instance:registerDragObj(arg_2_1, arg_2_0._readyItem.beginDrag, arg_2_0._readyItem.onDrag, arg_2_0._readyItem.endDrag, arg_2_0._readyItem.checkDrag, arg_2_0._readyItem, nil, true)
+	if self._readyItem then
+		CommonDragHelper.instance:registerDragObj(go, self._readyItem.beginDrag, self._readyItem.onDrag, self._readyItem.endDrag, self._readyItem.checkDrag, self._readyItem, nil, true)
 	end
 end
 
-function var_0_0.onClick(arg_3_0)
-	if arg_3_0._readyItem and arg_3_0._readyItem.isDraging or not arg_3_0.info then
+function Act174BattleHeroItem:onClick()
+	if self._readyItem and self._readyItem.isDraging or not self.info then
 		return
 	end
 
-	local var_3_0 = arg_3_0.itemId ~= 0 and arg_3_0.itemId or nil
+	local itemId = self.itemId ~= 0 and self.itemId or nil
 
-	Activity174Controller.instance:openRoleInfoView(arg_3_0.info.heroId, var_3_0)
+	Activity174Controller.instance:openRoleInfoView(self.info.heroId, itemId)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	arg_4_0._heroIcon:UnLoadImage()
-	arg_4_0._skillIcon:UnLoadImage()
-	arg_4_0._collectionIcon:UnLoadImage()
+function Act174BattleHeroItem:onDestroy()
+	self._heroIcon:UnLoadImage()
+	self._skillIcon:UnLoadImage()
+	self._collectionIcon:UnLoadImage()
 
-	if arg_4_0._readyItem then
-		CommonDragHelper.instance:unregisterDragObj(arg_4_0._go)
+	if self._readyItem then
+		CommonDragHelper.instance:unregisterDragObj(self._go)
 	end
 end
 
-function var_0_0.setIndex(arg_5_0, arg_5_1)
-	arg_5_0._txtIndex.text = arg_5_1
+function Act174BattleHeroItem:setIndex(index)
+	self._txtIndex.text = index
 end
 
-function var_0_0.setData(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.info = arg_6_1
+function Act174BattleHeroItem:setData(info, teamIndex, isEnemy)
+	self.info = info
 
-	local var_6_0 = Activity174Model.instance:getActInfo():getGameInfo()
+	local gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
 
-	if arg_6_1 then
-		local var_6_1 = Activity174Config.instance:getRoleCo(arg_6_1.heroId)
+	if info then
+		local roleCo = Activity174Config.instance:getRoleCo(info.heroId)
 
-		arg_6_0.itemId = arg_6_1.itemId
+		self.itemId = info.itemId
 
-		if arg_6_0.itemId == 0 then
-			arg_6_0.itemId = var_6_0:getTempCollectionId(arg_6_2, arg_6_1.index, arg_6_3)
+		if self.itemId == 0 then
+			self.itemId = gameInfo:getTempCollectionId(teamIndex, info.index, isEnemy)
 		end
 
-		local var_6_2 = lua_activity174_collection.configDict[arg_6_0.itemId]
+		local collectionCo = lua_activity174_collection.configDict[self.itemId]
 
-		if var_6_1 then
-			UISpriteSetMgr.instance:setAct174Sprite(arg_6_0._imageRare, "act174_ready_rolebg_" .. var_6_1.rare)
-			UISpriteSetMgr.instance:setCommonSprite(arg_6_0._imageCareer, "lssx_" .. var_6_1.career)
+		if roleCo then
+			UISpriteSetMgr.instance:setAct174Sprite(self._imageRare, "act174_ready_rolebg_" .. roleCo.rare)
+			UISpriteSetMgr.instance:setCommonSprite(self._imageCareer, "lssx_" .. roleCo.career)
 
-			local var_6_3 = ResUrl.getHeadIconMiddle(var_6_1.skinId)
+			local path = ResUrl.getHeadIconMiddle(roleCo.skinId)
 
-			arg_6_0._heroIcon:LoadImage(var_6_3)
+			self._heroIcon:LoadImage(path)
 
-			local var_6_4 = Activity174Config.instance:getHeroSkillIdDic(arg_6_1.heroId, true)[arg_6_1.priorSkill]
-			local var_6_5 = lua_skill.configDict[var_6_4]
+			local skillIdList = Activity174Config.instance:getHeroSkillIdDic(info.heroId, true)
+			local skillId = skillIdList[info.priorSkill]
+			local skillCo = lua_skill.configDict[skillId]
 
-			if var_6_5 then
-				arg_6_0._skillIcon:LoadImage(ResUrl.getSkillIcon(var_6_5.icon))
+			if skillCo then
+				self._skillIcon:LoadImage(ResUrl.getSkillIcon(skillCo.icon))
 			end
 
-			gohelper.setActive(arg_6_0._skillIcon, var_6_5)
+			gohelper.setActive(self._skillIcon, skillCo)
 		end
 
-		if var_6_2 then
-			arg_6_0._collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(var_6_2.icon))
-			UISpriteSetMgr.instance:setAct174Sprite(arg_6_0._collectionQuality, "act174_propitembg_" .. var_6_2.rare)
+		if collectionCo then
+			self._collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(collectionCo.icon))
+			UISpriteSetMgr.instance:setAct174Sprite(self._collectionQuality, "act174_propitembg_" .. collectionCo.rare)
 		end
 
-		gohelper.setActive(arg_6_0._collectionIcon, var_6_2)
-		gohelper.setActive(arg_6_0._collectionEmpty, not var_6_2)
+		gohelper.setActive(self._collectionIcon, collectionCo)
+		gohelper.setActive(self._collectionEmpty, not collectionCo)
 	end
 
-	gohelper.setActive(arg_6_0._goHero, arg_6_1)
-	gohelper.setActive(arg_6_0._goEmpty, not arg_6_1)
+	gohelper.setActive(self._goHero, info)
+	gohelper.setActive(self._goEmpty, not info)
 end
 
-return var_0_0
+return Act174BattleHeroItem

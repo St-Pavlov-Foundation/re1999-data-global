@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.controller.steps.ExploreUseItemStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreUseItemStep.lua
 
-local var_0_0 = class("ExploreUseItemStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreUseItemStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	ExploreModel.instance:setUseItemUid(tostring(arg_1_0._data.itemUid))
+local ExploreUseItemStep = class("ExploreUseItemStep", ExploreStepBase)
+
+function ExploreUseItemStep:onStart()
+	ExploreModel.instance:setUseItemUid(tostring(self._data.itemUid))
 	ExploreController.instance:getMap():checkAllRuneTrigger()
-	arg_1_0:onDone()
+	self:onDone()
 end
 
-return var_0_0
+return ExploreUseItemStep

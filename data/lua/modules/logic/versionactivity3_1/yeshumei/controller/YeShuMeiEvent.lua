@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity3_1.yeshumei.controller.YeShuMeiEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/yeshumei/controller/YeShuMeiEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity3_1.yeshumei.controller.YeShuMeiEvent", package.seeall)
 
-var_0_0.EpisodeFinished = var_0_1()
-var_0_0.OnBackToLevel = var_0_1()
-var_0_0.OneClickClaimReward = var_0_1()
-var_0_0.OnDragGuideFinish = var_0_1()
-var_0_0.ShowGuideDrag = var_0_1()
-var_0_0.OnClickShadowGuide = var_0_1()
+local YeShuMeiEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+YeShuMeiEvent.EpisodeFinished = _get()
+YeShuMeiEvent.OnBackToLevel = _get()
+YeShuMeiEvent.OneClickClaimReward = _get()
+YeShuMeiEvent.OnDragGuideFinish = _get()
+YeShuMeiEvent.ShowGuideDrag = _get()
+YeShuMeiEvent.OnClickShadowGuide = _get()
+
+return YeShuMeiEvent

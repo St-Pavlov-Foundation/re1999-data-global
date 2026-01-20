@@ -1,49 +1,52 @@
-﻿module("modules.logic.fight.view.assistboss.FightAssistBoss1", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/assistboss/FightAssistBoss1.lua
 
-local var_0_0 = class("FightAssistBoss1", FightAssistBossBase)
+module("modules.logic.fight.view.assistboss.FightAssistBoss1", package.seeall)
 
-function var_0_0.setPrefabPath(arg_1_0)
-	arg_1_0.prefabPath = "ui/viewres/assistboss/boss1.prefab"
+local FightAssistBoss1 = class("FightAssistBoss1", FightAssistBossBase)
+
+function FightAssistBoss1:setPrefabPath()
+	self.prefabPath = "ui/viewres/assistboss/boss1.prefab"
 end
 
-function var_0_0.initView(arg_2_0)
-	var_0_0.super.initView(arg_2_0)
+function FightAssistBoss1:initView()
+	FightAssistBoss1.super.initView(self)
 
-	arg_2_0.energyImage = gohelper.findChildImage(arg_2_0.viewGo, "head/energy")
-	arg_2_0.goEffect1 = gohelper.findChild(arg_2_0.viewGo, "head/dec2")
-	arg_2_0.goEffect2 = gohelper.findChild(arg_2_0.viewGo, "head/vx_eff")
+	self.energyImage = gohelper.findChildImage(self.viewGo, "head/energy")
+	self.goEffect1 = gohelper.findChild(self.viewGo, "head/dec2")
+	self.goEffect2 = gohelper.findChild(self.viewGo, "head/vx_eff")
 end
 
-function var_0_0.refreshPower(arg_3_0)
-	var_0_0.super.refreshPower(arg_3_0)
+function FightAssistBoss1:refreshPower()
+	FightAssistBoss1.super.refreshPower(self)
 
-	local var_3_0, var_3_1 = FightDataHelper.paTaMgr:getAssistBossPower()
+	local power, max = FightDataHelper.paTaMgr:getAssistBossPower()
 
-	arg_3_0:setFillAmount(arg_3_0.energyImage, var_3_0 / var_3_1)
-	arg_3_0:refreshEffect()
+	self:setFillAmount(self.energyImage, power / max)
+	self:refreshEffect()
 end
 
-function var_0_0.refreshCD(arg_4_0)
-	var_0_0.super.refreshCD(arg_4_0)
-	arg_4_0:refreshEffect()
+function FightAssistBoss1:refreshCD()
+	FightAssistBoss1.super.refreshCD(self)
+	self:refreshEffect()
 end
 
-function var_0_0.refreshEffect(arg_5_0)
-	local var_5_0 = true
+function FightAssistBoss1:refreshEffect()
+	local showEffect = true
+	local useSkill = FightDataHelper.paTaMgr:getCurUseSkillInfo()
 
-	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() then
-		local var_5_1 = false
+	if not useSkill then
+		showEffect = false
 
-		gohelper.setActive(arg_5_0.goEffect1, var_5_1)
-		gohelper.setActive(arg_5_0.goEffect2, var_5_1)
+		gohelper.setActive(self.goEffect1, showEffect)
+		gohelper.setActive(self.goEffect2, showEffect)
 
 		return
 	end
 
-	local var_5_2 = not arg_5_0:checkInCd()
+	showEffect = not self:checkInCd()
 
-	gohelper.setActive(arg_5_0.goEffect1, var_5_2)
-	gohelper.setActive(arg_5_0.goEffect2, var_5_2)
+	gohelper.setActive(self.goEffect1, showEffect)
+	gohelper.setActive(self.goEffect2, showEffect)
 end
 
-return var_0_0
+return FightAssistBoss1

@@ -1,34 +1,36 @@
-﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballResWoodEntity", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/entity/PinballResWoodEntity.lua
 
-local var_0_0 = class("PinballResWoodEntity", PinballResEntity)
+module("modules.logic.versionactivity2_4.pinball.entity.PinballResWoodEntity", package.seeall)
 
-function var_0_0.isBounce(arg_1_0)
+local PinballResWoodEntity = class("PinballResWoodEntity", PinballResEntity)
+
+function PinballResWoodEntity:isBounce()
 	return false
 end
 
-function var_0_0.onHitEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = PinballEntityMgr.instance:getEntity(arg_2_1)
+function PinballResWoodEntity:onHitEnter(hitEntityId, hitX, hitY, hitDir)
+	local hitEntity = PinballEntityMgr.instance:getEntity(hitEntityId)
 
-	if not var_2_0 then
+	if not hitEntity then
 		return
 	end
 
-	var_2_0.vx = var_2_0.vx * (1 - arg_2_0.decv)
-	var_2_0.vy = var_2_0.vy * (1 - arg_2_0.decv)
+	hitEntity.vx = hitEntity.vx * (1 - self.decv)
+	hitEntity.vy = hitEntity.vy * (1 - self.decv)
 end
 
-function var_0_0.onHitCount(arg_3_0)
-	PinballModel.instance:addGameRes(arg_3_0.resType, arg_3_0.resNum)
-	PinballEntityMgr.instance:addNumShow(arg_3_0.resNum, arg_3_0.x + arg_3_0.width, arg_3_0.y + arg_3_0.height)
-	arg_3_0:markDead()
+function PinballResWoodEntity:onHitCount()
+	PinballModel.instance:addGameRes(self.resType, self.resNum)
+	PinballEntityMgr.instance:addNumShow(self.resNum, self.x + self.width, self.y + self.height)
+	self:markDead()
 end
 
-function var_0_0.onInitByCo(arg_4_0)
-	local var_4_0 = string.splitToNumber(arg_4_0.spData, "#") or {}
+function PinballResWoodEntity:onInitByCo()
+	local arr = string.splitToNumber(self.spData, "#") or {}
 
-	arg_4_0.resNum = var_4_0[1] or 0
-	arg_4_0.decv = (var_4_0[2] or 0) / 1000
-	arg_4_0.decv = Mathf.Clamp(arg_4_0.decv, 0, 1)
+	self.resNum = arr[1] or 0
+	self.decv = (arr[2] or 0) / 1000
+	self.decv = Mathf.Clamp(self.decv, 0, 1)
 end
 
-return var_0_0
+return PinballResWoodEntity

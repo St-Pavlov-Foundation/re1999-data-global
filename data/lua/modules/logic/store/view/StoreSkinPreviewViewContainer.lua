@@ -1,32 +1,37 @@
-﻿module("modules.logic.store.view.StoreSkinPreviewViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinPreviewViewContainer.lua
 
-local var_0_0 = class("StoreSkinPreviewViewContainer", BaseViewContainer)
+module("modules.logic.store.view.StoreSkinPreviewViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoreSkinPreviewViewContainer = class("StoreSkinPreviewViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, StoreSkinPreviewRightView.New())
-	table.insert(var_1_0, CharacterSkinLeftView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btntopleft"))
-	table.insert(var_1_0, StoreSkinPreviewSpineGCView.New())
+function StoreSkinPreviewViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, StoreSkinPreviewRightView.New())
+	table.insert(views, CharacterSkinLeftView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btntopleft"))
+	table.insert(views, StoreSkinPreviewSpineGCView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.goodsMO = arg_2_0.viewParam.goodsMO
+function StoreSkinPreviewViewContainer:buildTabViews(tabContainerId)
+	self.goodsMO = self.viewParam.goodsMO
 
-	local var_2_0 = arg_2_0.goodsMO.config.product
-	local var_2_1 = string.splitToNumber(var_2_0, "#")[2]
+	local product = self.goodsMO.config.product
+	local productInfo = string.splitToNumber(product, "#")
+	local skinId = productInfo[2]
+	local suitId = HandbookConfig.instance:getSkinSuitIdBySkinId(skinId)
+	local isInHandbookSkin = suitId ~= nil
 
-	if HandbookConfig.instance:getSkinSuitIdBySkinId(var_2_1) ~= nil then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+	if isInHandbookSkin then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 	else
-		arg_2_0.navigateView = NavigateButtonsView.New({
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			true,
 			false
@@ -34,14 +39,16 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 
 	return {
-		arg_2_0.navigateView
+		self.navigateView
 	}
 end
 
-function var_0_0.onPlayOpenTransitionFinish(arg_3_0)
-	var_0_0.super.onPlayOpenTransitionFinish(arg_3_0)
+function StoreSkinPreviewViewContainer:onPlayOpenTransitionFinish()
+	StoreSkinPreviewViewContainer.super.onPlayOpenTransitionFinish(self)
 
-	arg_3_0.viewGO:GetComponent(typeof(UnityEngine.Animator)).enabled = true
+	local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	animator.enabled = true
 end
 
-return var_0_0
+return StoreSkinPreviewViewContainer

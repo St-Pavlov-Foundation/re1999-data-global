@@ -1,65 +1,72 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessRemoveStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/TeamChessRemoveStep.lua
 
-local var_0_0 = class("TeamChessRemoveStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessRemoveStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
+local TeamChessRemoveStep = class("TeamChessRemoveStep", EliminateTeamChessStepBase)
 
-	arg_1_0.strongholdId = var_1_0.strongholdId
-	arg_1_0.uid = var_1_0.uid
+function TeamChessRemoveStep:onStart()
+	local data = self._data
 
-	local var_1_1 = var_1_0.targetStrongholdId
-	local var_1_2 = EliminateTeamChessEnum.soliderChessOutAniTime
-	local var_1_3 = arg_1_0:calMoveOtherChessTime(var_1_2)
+	self.strongholdId = data.strongholdId
+	self.uid = data.uid
 
-	if var_1_1 ~= nil then
-		var_1_3 = var_1_3 + EliminateTeamChessEnum.chessShowMoveStateAniTime
+	local targetStrongholdId = data.targetStrongholdId
+	local delayTime = EliminateTeamChessEnum.soliderChessOutAniTime
 
-		local var_1_4 = EliminateTeamChessModel.instance:sourceStrongHoldInRight(arg_1_0.strongholdId, var_1_1) and -1 or 1
-		local var_1_5, var_1_6, var_1_7 = TeamChessUnitEntityMgr.instance:getEntity(arg_1_0.uid):getTopPosXYZ()
+	delayTime = self:calMoveOtherChessTime(delayTime)
 
-		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, EliminateTeamChessEnum.VxEffectType.Move, var_1_5, var_1_6, var_1_7, var_1_4, var_1_4, var_1_4)
-		TaskDispatcher.runDelay(arg_1_0._playRemoveChess, arg_1_0, EliminateTeamChessEnum.chessShowMoveStateAniTime)
+	if targetStrongholdId ~= nil then
+		delayTime = delayTime + EliminateTeamChessEnum.chessShowMoveStateAniTime
+
+		local isRight = EliminateTeamChessModel.instance:sourceStrongHoldInRight(self.strongholdId, targetStrongholdId)
+		local scale = isRight and -1 or 1
+		local entity = TeamChessUnitEntityMgr.instance:getEntity(self.uid)
+		local x, y, z = entity:getTopPosXYZ()
+
+		EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, EliminateTeamChessEnum.VxEffectType.Move, x, y, z, scale, scale, scale)
+		TaskDispatcher.runDelay(self._playRemoveChess, self, EliminateTeamChessEnum.chessShowMoveStateAniTime)
 	else
-		arg_1_0:_playRemoveChess()
+		self:_playRemoveChess()
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_3)
+	TaskDispatcher.runDelay(self._onDone, self, delayTime)
 end
 
-function var_0_0.calMoveOtherChessTime(arg_2_0, arg_2_1)
-	local var_2_0 = EliminateTeamChessModel.instance:getStronghold(arg_2_0.strongholdId)
-	local var_2_1 = var_2_0:getChess(arg_2_0.uid)
-	local var_2_2 = false
-	local var_2_3 = 0
-	local var_2_4 = 0
+function TeamChessRemoveStep:calMoveOtherChessTime(delayTime)
+	local strongHoldData = EliminateTeamChessModel.instance:getStronghold(self.strongholdId)
+	local chess = strongHoldData:getChess(self.uid)
+	local needAddTime = false
+	local chessIndex = 0
+	local totalCount = 0
 
-	if var_2_1.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
-		var_2_3 = var_2_0:getMySideIndexByUid(arg_2_0.uid)
-		var_2_4 = var_2_0:getPlayerSoliderCount()
+	if chess.teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		chessIndex = strongHoldData:getMySideIndexByUid(self.uid)
+		totalCount = strongHoldData:getPlayerSoliderCount()
 	end
 
-	if var_2_1.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		var_2_3 = var_2_0:getEnemySideIndexByUid(arg_2_0.uid)
-		var_2_4 = var_2_0:getEnemySoliderCount()
+	if chess.teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		chessIndex = strongHoldData:getEnemySideIndexByUid(self.uid)
+		totalCount = strongHoldData:getEnemySoliderCount()
 	end
 
-	if var_2_4 > 1 and var_2_3 ~= var_2_4 then
-		arg_2_1 = arg_2_1 + EliminateTeamChessEnum.teamChessPlaceStep
+	needAddTime = totalCount > 1 and chessIndex ~= totalCount
+
+	if needAddTime then
+		delayTime = delayTime + EliminateTeamChessEnum.teamChessPlaceStep
 	end
 
-	return arg_2_1
+	return delayTime
 end
 
-function var_0_0._playRemoveChess(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._playRemoveChess, arg_3_0)
+function TeamChessRemoveStep:_playRemoveChess()
+	TaskDispatcher.cancelTask(self._playRemoveChess, self)
 
-	local var_3_0 = EliminateTeamChessModel.instance:getStronghold(arg_3_0.strongholdId)
-	local var_3_1 = var_3_0:getMySideIndexByUid(arg_3_0.uid)
-	local var_3_2 = var_3_0:getChess(arg_3_0.uid)
+	local strongHoldData = EliminateTeamChessModel.instance:getStronghold(self.strongholdId)
+	local chessIndex = strongHoldData:getMySideIndexByUid(self.uid)
+	local chess = strongHoldData:getChess(self.uid)
 
-	EliminateTeamChessModel.instance:removeStrongholdChess(arg_3_0.strongholdId, arg_3_0.uid)
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.RemoveStrongholdChess, arg_3_0.strongholdId, arg_3_0.uid, var_3_1, var_3_2.teamType)
+	EliminateTeamChessModel.instance:removeStrongholdChess(self.strongholdId, self.uid)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.RemoveStrongholdChess, self.strongholdId, self.uid, chessIndex, chess.teamType)
 end
 
-return var_0_0
+return TeamChessRemoveStep

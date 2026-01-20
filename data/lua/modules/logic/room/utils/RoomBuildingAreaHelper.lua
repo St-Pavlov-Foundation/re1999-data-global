@@ -1,173 +1,187 @@
-﻿module("modules.logic.room.utils.RoomBuildingAreaHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomBuildingAreaHelper.lua
 
-return {
-	checkBuildingArea = function(arg_1_0, arg_1_1, arg_1_2)
-		local var_1_0 = RoomConfig.instance:getBuildingConfig(arg_1_0)
+module("modules.logic.room.utils.RoomBuildingAreaHelper", package.seeall)
 
-		if var_1_0 and RoomBuildingEnum.BuildingArea[var_1_0.buildingType] and var_1_0.isAreaMainBuilding == false then
-			local var_1_1 = RoomMapBuildingAreaModel.instance:getAreaMOByBType(var_1_0.buildingType)
+local RoomBuildingAreaHelper = {}
 
-			if not var_1_1 then
-				return false, RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.NoAreaMainBuilding
-			end
+function RoomBuildingAreaHelper.checkBuildingArea(buildingId, hexPoint, rotate)
+	local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
 
-			local var_1_2 = RoomMapModel.instance:getBuildingPointList(arg_1_0, arg_1_2)
+	if buildingCfg and RoomBuildingEnum.BuildingArea[buildingCfg.buildingType] and buildingCfg.isAreaMainBuilding == false then
+		local areaMO = RoomMapBuildingAreaModel.instance:getAreaMOByBType(buildingCfg.buildingType)
 
-			if var_1_2 then
-				local var_1_3
-
-				for iter_1_0 = 1, #var_1_2 do
-					local var_1_4 = var_1_2[iter_1_0]
-
-					if var_1_1:isInRangesByHexXY(var_1_4.x + arg_1_1.x, var_1_4.y + arg_1_1.y) then
-						return true
-					end
-				end
-			end
-
-			return false, RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.OutSizeAreaBuilding
+		if not areaMO then
+			return false, RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.NoAreaMainBuilding
 		end
 
-		return true
-	end,
-	isBuildingArea = function(arg_2_0)
-		local var_2_0 = RoomConfig.instance:getBuildingConfig(arg_2_0)
+		local points = RoomMapModel.instance:getBuildingPointList(buildingId, rotate)
 
-		if var_2_0 and RoomBuildingEnum.BuildingArea[var_2_0.buildingType] then
-			return true
-		end
+		if points then
+			local point
 
-		return false
-	end,
-	isAreaMainBuilding = function(arg_3_0)
-		local var_3_0 = RoomConfig.instance:getBuildingConfig(arg_3_0)
+			for i = 1, #points do
+				point = points[i]
 
-		if var_3_0 and RoomBuildingEnum.BuildingArea[var_3_0.buildingType] and var_3_0.isAreaMainBuilding == true then
-			return true
-		end
-
-		return false
-	end,
-	formatBuildingMOListNameStr = function(arg_4_0)
-		if not arg_4_0 or #arg_4_0 < 1 then
-			return ""
-		end
-
-		local var_4_0 = {}
-
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0) do
-			local var_4_1 = iter_4_1.buildingId
-
-			if not var_4_0[var_4_1] then
-				var_4_0[var_4_1] = 1
-			else
-				var_4_0[var_4_1] = var_4_0[var_4_1] + 1
-			end
-		end
-
-		local var_4_2 = {}
-
-		for iter_4_2, iter_4_3 in pairs(var_4_0) do
-			local var_4_3 = RoomConfig.instance:getBuildingConfig(iter_4_2)
-
-			if var_4_3 then
-				if iter_4_3 == 1 then
-					table.insert(var_4_2, var_4_3.name)
-				elseif iter_4_3 > 1 then
-					table.insert(var_4_2, string.format("%s * %s", var_4_3.name, iter_4_3))
+				if areaMO:isInRangesByHexXY(point.x + hexPoint.x, point.y + hexPoint.y) then
+					return true
 				end
 			end
 		end
 
-		local var_4_4 = luaLang("room_levelup_init_and1")
-
-		return table.concat(var_4_2, var_4_4)
-	end,
-	findTempOutBuildingMOList = function(arg_5_0)
-		local var_5_0 = RoomMapBuildingAreaModel.instance:getTempAreaMO()
-		local var_5_1
-
-		if not var_5_0 then
-			return var_5_1
-		end
-
-		local var_5_2 = var_5_0.buildingType
-		local var_5_3 = RoomMapBuildingModel.instance:getBuildingMOList()
-
-		for iter_5_0 = 1, #var_5_3 do
-			local var_5_4 = var_5_3[iter_5_0]
-
-			if var_5_4 and var_5_4:checkSameType(var_5_2) and not var_5_4:isAreaMainBuilding() and (arg_5_0 == true or not var_5_0:isInRangesByHexPoint(var_5_4.hexPoint)) then
-				var_5_1 = var_5_1 or {}
-
-				table.insert(var_5_1, var_5_4)
-			end
-		end
-
-		return var_5_1
-	end,
-	isHasWorkingByType = function(arg_6_0)
-		local var_6_0 = RoomMapBuildingAreaModel.instance:getAreaMOByBType(arg_6_0)
-
-		if not var_6_0 then
-			return false
-		end
-
-		local var_6_1 = var_6_0:getBuildingMOList(true)
-
-		for iter_6_0 = 1, #var_6_1 do
-			if var_6_1[iter_6_0]:getManufactureState() ~= RoomManufactureEnum.SlotState.Stop then
-				return true
-			end
-		end
-
-		return false
-	end,
-	findTempOutTransportMOList = function(arg_7_0)
-		local var_7_0 = RoomMapBuildingAreaModel.instance:getTempAreaMO()
-		local var_7_1
-
-		if not var_7_0 then
-			return var_7_1
-		end
-
-		local var_7_2 = var_7_0.buildingType
-		local var_7_3 = RoomMapTransportPathModel.instance:getTransportPathMOList()
-
-		for iter_7_0 = 1, #var_7_3 do
-			local var_7_4 = var_7_3[iter_7_0]
-
-			if var_7_4 and (var_7_4.fromType == var_7_2 and (arg_7_0 == true or not var_7_0:isInRangesByHexPoint(var_7_4:getFirstHexPoint())) or var_7_4.toType == var_7_2 and (arg_7_0 == true or not var_7_0:isInRangesByHexPoint(var_7_4:getLastHexPoint()))) then
-				var_7_1 = var_7_1 or {}
-
-				table.insert(var_7_1, var_7_4)
-			end
-		end
-
-		return var_7_1
-	end,
-	logTestAreaMO = function(arg_8_0)
-		if not arg_8_0 then
-			return
-		end
-
-		local var_8_0 = arg_8_0:getMainBuildingCfg()
-
-		if not var_8_0 then
-			return
-		end
-
-		local var_8_1 = arg_8_0:getRangesHexPointList() or {}
-		local var_8_2 = string.format("name:%s id:%s -->", var_8_0.name, var_8_0.id)
-		local var_8_3 = arg_8_0.mainBuildingMO.hexPoint
-		local var_8_4 = string.format("%s (%s,%s)  | ", var_8_2, var_8_3.x, var_8_3.y)
-
-		for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-			if iter_8_1 then
-				var_8_4 = string.format("%s (%s,%s)", var_8_4, iter_8_1.x, iter_8_1.y)
-			end
-		end
-
-		logNormal(var_8_4)
+		return false, RoomBuildingEnum.ConfirmPlaceBuildingErrorCode.OutSizeAreaBuilding
 	end
-}
+
+	return true
+end
+
+function RoomBuildingAreaHelper.isBuildingArea(buildingId)
+	local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
+
+	if buildingCfg and RoomBuildingEnum.BuildingArea[buildingCfg.buildingType] then
+		return true
+	end
+
+	return false
+end
+
+function RoomBuildingAreaHelper.isAreaMainBuilding(buildingId)
+	local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
+
+	if buildingCfg and RoomBuildingEnum.BuildingArea[buildingCfg.buildingType] and buildingCfg.isAreaMainBuilding == true then
+		return true
+	end
+
+	return false
+end
+
+function RoomBuildingAreaHelper.formatBuildingMOListNameStr(buildingMOList)
+	if not buildingMOList or #buildingMOList < 1 then
+		return ""
+	end
+
+	local buildingIdDict = {}
+
+	for _, buildingMO in ipairs(buildingMOList) do
+		local buildingId = buildingMO.buildingId
+
+		if not buildingIdDict[buildingId] then
+			buildingIdDict[buildingId] = 1
+		else
+			buildingIdDict[buildingId] = buildingIdDict[buildingId] + 1
+		end
+	end
+
+	local buildingNames = {}
+
+	for buildingId, num in pairs(buildingIdDict) do
+		local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
+
+		if buildingCfg then
+			if num == 1 then
+				table.insert(buildingNames, buildingCfg.name)
+			elseif num > 1 then
+				table.insert(buildingNames, string.format("%s * %s", buildingCfg.name, num))
+			end
+		end
+	end
+
+	local connchar = luaLang("room_levelup_init_and1")
+
+	return table.concat(buildingNames, connchar)
+end
+
+function RoomBuildingAreaHelper.findTempOutBuildingMOList(isUnUse)
+	local tempAreaMO = RoomMapBuildingAreaModel.instance:getTempAreaMO()
+	local moList
+
+	if not tempAreaMO then
+		return moList
+	end
+
+	local buildingType = tempAreaMO.buildingType
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
+
+	for i = 1, #buildingMOList do
+		local buildingMO = buildingMOList[i]
+
+		if buildingMO and buildingMO:checkSameType(buildingType) and not buildingMO:isAreaMainBuilding() and (isUnUse == true or not tempAreaMO:isInRangesByHexPoint(buildingMO.hexPoint)) then
+			moList = moList or {}
+
+			table.insert(moList, buildingMO)
+		end
+	end
+
+	return moList
+end
+
+function RoomBuildingAreaHelper.isHasWorkingByType(buildingType)
+	local buildingAreaMO = RoomMapBuildingAreaModel.instance:getAreaMOByBType(buildingType)
+
+	if not buildingAreaMO then
+		return false
+	end
+
+	local buildingMOList = buildingAreaMO:getBuildingMOList(true)
+
+	for i = 1, #buildingMOList do
+		local buildingMO = buildingMOList[i]
+
+		if buildingMO:getManufactureState() ~= RoomManufactureEnum.SlotState.Stop then
+			return true
+		end
+	end
+
+	return false
+end
+
+function RoomBuildingAreaHelper.findTempOutTransportMOList(isUnUse)
+	local tempAreaMO = RoomMapBuildingAreaModel.instance:getTempAreaMO()
+	local moList
+
+	if not tempAreaMO then
+		return moList
+	end
+
+	local buildingType = tempAreaMO.buildingType
+	local pathMOList = RoomMapTransportPathModel.instance:getTransportPathMOList()
+
+	for i = 1, #pathMOList do
+		local pathMO = pathMOList[i]
+
+		if pathMO and (pathMO.fromType == buildingType and (isUnUse == true or not tempAreaMO:isInRangesByHexPoint(pathMO:getFirstHexPoint())) or pathMO.toType == buildingType and (isUnUse == true or not tempAreaMO:isInRangesByHexPoint(pathMO:getLastHexPoint()))) then
+			moList = moList or {}
+
+			table.insert(moList, pathMO)
+		end
+	end
+
+	return moList
+end
+
+function RoomBuildingAreaHelper.logTestAreaMO(areaMO)
+	if not areaMO then
+		return
+	end
+
+	local buildingConfig = areaMO:getMainBuildingCfg()
+
+	if not buildingConfig then
+		return
+	end
+
+	local rangsHexList = areaMO:getRangesHexPointList() or {}
+	local listStr = string.format("name:%s id:%s -->", buildingConfig.name, buildingConfig.id)
+	local hexPoint = areaMO.mainBuildingMO.hexPoint
+
+	listStr = string.format("%s (%s,%s)  | ", listStr, hexPoint.x, hexPoint.y)
+
+	for _, hexPoint in ipairs(rangsHexList) do
+		if hexPoint then
+			listStr = string.format("%s (%s,%s)", listStr, hexPoint.x, hexPoint.y)
+		end
+	end
+
+	logNormal(listStr)
+end
+
+return RoomBuildingAreaHelper

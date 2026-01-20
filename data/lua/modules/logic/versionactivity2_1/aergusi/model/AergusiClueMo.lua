@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.model.AergusiClueMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/model/AergusiClueMo.lua
 
-local var_0_0 = class("AergusiClueMo")
+module("modules.logic.versionactivity2_1.aergusi.model.AergusiClueMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.clueId = 0
-	arg_1_0.status = 0
+local AergusiClueMo = class("AergusiClueMo")
+
+function AergusiClueMo:ctor()
+	self.clueId = 0
+	self.status = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.clueId = arg_2_1.clueId
-	arg_2_0.status = arg_2_1.status
+function AergusiClueMo:init(info)
+	self.clueId = info.clueId
+	self.status = info.status
 end
 
-return var_0_0
+return AergusiClueMo

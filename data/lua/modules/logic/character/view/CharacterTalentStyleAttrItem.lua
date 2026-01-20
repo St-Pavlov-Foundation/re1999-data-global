@@ -1,118 +1,120 @@
-﻿module("modules.logic.character.view.CharacterTalentStyleAttrItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentStyleAttrItem.lua
 
-local var_0_0 = class("CharacterTalentStyleAttrItem", LuaCompBase)
+module("modules.logic.character.view.CharacterTalentStyleAttrItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
-	arg_1_0._gonew = gohelper.findChild(arg_1_0.viewGO, "#go_new")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_num")
-	arg_1_0._txtchange = gohelper.findChildText(arg_1_0.viewGO, "#txt_name/#txt_num/#txt_change")
-	arg_1_0._imagechange = gohelper.findChildImage(arg_1_0.viewGO, "#txt_name/#txt_num/#image_change")
-	arg_1_0._godelete = gohelper.findChild(arg_1_0.viewGO, "#go_delete")
+local CharacterTalentStyleAttrItem = class("CharacterTalentStyleAttrItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterTalentStyleAttrItem:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "#go_bg")
+	self._gonew = gohelper.findChild(self.viewGO, "#go_new")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#image_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#txt_name/#txt_num")
+	self._txtchange = gohelper.findChildText(self.viewGO, "#txt_name/#txt_num/#txt_change")
+	self._imagechange = gohelper.findChildImage(self.viewGO, "#txt_name/#txt_num/#image_change")
+	self._godelete = gohelper.findChild(self.viewGO, "#go_delete")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CharacterTalentStyleAttrItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CharacterTalentStyleAttrItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function CharacterTalentStyleAttrItem:_editableInitView()
 	return
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0.viewGO = arg_5_1
+function CharacterTalentStyleAttrItem:init(go)
+	self.viewGO = go
 
-	arg_5_0:onInitView()
+	self:onInitView()
 
-	arg_5_0._canvasgroup = arg_5_1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self._canvasgroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function var_0_0.addEventListeners(arg_6_0)
-	arg_6_0:addEvents()
+function CharacterTalentStyleAttrItem:addEventListeners()
+	self:addEvents()
 end
 
-function var_0_0.removeEventListeners(arg_7_0)
-	arg_7_0:removeEvents()
+function CharacterTalentStyleAttrItem:removeEventListeners()
+	self:removeEvents()
 end
 
-function var_0_0.onStart(arg_8_0)
+function CharacterTalentStyleAttrItem:onStart()
 	return
 end
 
-function var_0_0.onDestroy(arg_9_0)
+function CharacterTalentStyleAttrItem:onDestroy()
 	return
 end
 
-function var_0_0.onRefreshMo(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(arg_10_2.key))
-	local var_10_1
-	local var_10_2 = arg_10_2.isDelete and 0 or arg_10_2.value
+function CharacterTalentStyleAttrItem:onRefreshMo(index, mo)
+	local config = HeroConfig.instance:getHeroAttributeCO(HeroConfig.instance:getIDByAttrType(mo.key))
+	local valueStr
+	local value = mo.isDelete and 0 or mo.value
 
-	if var_10_0.type ~= 1 then
-		var_10_1 = var_10_2 * 0.1 .. "%"
+	if config.type ~= 1 then
+		valueStr = value * 0.1 .. "%"
 	else
-		var_10_1 = math.floor(var_10_2)
+		valueStr = math.floor(value)
 	end
 
-	arg_10_0._txtnum.text = var_10_1
-	arg_10_0._txtname.text = var_10_0.name
+	self._txtnum.text = valueStr
+	self._txtname.text = config.name
 
-	gohelper.setActive(arg_10_0._gobg.gameObject, arg_10_1 % 2 == 0)
-	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imageicon, "icon_att_" .. var_10_0.id, true)
-	arg_10_0:_showAttrChage(arg_10_2)
+	gohelper.setActive(self._gobg.gameObject, index % 2 == 0)
+	UISpriteSetMgr.instance:setCommonSprite(self._imageicon, "icon_att_" .. config.id, true)
+	self:_showAttrChage(mo)
 end
 
-function var_0_0._showAttrChage(arg_11_0, arg_11_1)
-	local var_11_0 = 0
+function CharacterTalentStyleAttrItem:_showAttrChage(mo)
+	local _attrChangeType = 0
 
-	if arg_11_1.isNew then
-		var_11_0 = 3
+	if mo.isNew then
+		_attrChangeType = 3
 	end
 
-	if arg_11_1.isDelete then
-		var_11_0 = 4
+	if mo.isDelete then
+		_attrChangeType = 4
 	end
 
-	if arg_11_1.changeNum then
-		var_11_0 = arg_11_1.changeNum > 0 and 1 or 2
+	if mo.changeNum then
+		_attrChangeType = mo.changeNum > 0 and 1 or 2
 	end
 
-	local var_11_1 = CharacterTalentStyleEnum.AttrChange[var_11_0]
+	local _attrChange = CharacterTalentStyleEnum.AttrChange[_attrChangeType]
 
-	arg_11_0._txtnum.color = GameUtil.parseColor(var_11_1.NumColor)
+	self._txtnum.color = GameUtil.parseColor(_attrChange.NumColor)
 
-	local var_11_2 = not string.nilorempty(var_11_1.ChangeImage)
+	local isChangeImage = not string.nilorempty(_attrChange.ChangeImage)
 
-	if var_11_2 then
-		UISpriteSetMgr.instance:setUiCharacterSprite(arg_11_0._imagechange, var_11_1.ChangeImage)
+	if isChangeImage then
+		UISpriteSetMgr.instance:setUiCharacterSprite(self._imagechange, _attrChange.ChangeImage)
 	end
 
-	gohelper.setActive(arg_11_0._imagechange.gameObject, var_11_2)
+	gohelper.setActive(self._imagechange.gameObject, isChangeImage)
 
-	local var_11_3 = not string.nilorempty(var_11_1.ChangeText)
+	local isChangeTxt = not string.nilorempty(_attrChange.ChangeText)
 
-	if var_11_3 then
-		arg_11_0._txtchange.text = var_11_1.ChangeText
-		arg_11_0._txtchange.color = GameUtil.parseColor(var_11_1.ChangeColor)
+	if isChangeTxt then
+		self._txtchange.text = _attrChange.ChangeText
+		self._txtchange.color = GameUtil.parseColor(_attrChange.ChangeColor)
 	end
 
-	local var_11_4 = var_11_1.Alpha or 1
+	local alpha = _attrChange.Alpha or 1
 
-	arg_11_0._canvasgroup.alpha = var_11_4
+	self._canvasgroup.alpha = alpha
 
-	gohelper.setActive(arg_11_0._txtchange.gameObject, var_11_3)
-	gohelper.setActive(arg_11_0._gonew.gameObject, arg_11_1.isNew)
-	gohelper.setActive(arg_11_0._godelete.gameObject, arg_11_1.isDelete)
+	gohelper.setActive(self._txtchange.gameObject, isChangeTxt)
+	gohelper.setActive(self._gonew.gameObject, mo.isNew)
+	gohelper.setActive(self._godelete.gameObject, mo.isDelete)
 end
 
-return var_0_0
+return CharacterTalentStyleAttrItem

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/nuodika/view/NuoDiKaGameResultViewContainer.lua
 
-local var_0_0 = class("NuoDiKaGameResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.nuodika.view.NuoDiKaGameResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local NuoDiKaGameResultViewContainer = class("NuoDiKaGameResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, NuoDiKaGameResultView.New())
+function NuoDiKaGameResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, NuoDiKaGameResultView.New())
+
+	return views
 end
 
-return var_0_0
+return NuoDiKaGameResultViewContainer

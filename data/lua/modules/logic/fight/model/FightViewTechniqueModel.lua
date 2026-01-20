@@ -1,103 +1,107 @@
-﻿module("modules.logic.fight.model.FightViewTechniqueModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/FightViewTechniqueModel.lua
 
-local var_0_0 = class("FightViewTechniqueModel", ListScrollModel)
+module("modules.logic.fight.model.FightViewTechniqueModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._all = nil
+local FightViewTechniqueModel = class("FightViewTechniqueModel", ListScrollModel)
+
+function FightViewTechniqueModel:onInit()
+	self._all = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._all = nil
+function FightViewTechniqueModel:reInit()
+	self._all = nil
 end
 
-function var_0_0.initFromSimpleProperty(arg_3_0)
-	if arg_3_0._all then
+function FightViewTechniqueModel:initFromSimpleProperty()
+	if self._all then
 		return
 	end
 
-	arg_3_0._all = BaseModel.New()
+	self._all = BaseModel.New()
 
-	local var_3_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.FightTechnique)
-	local var_3_1 = FightStrUtil.instance:getSplitString2Cache(var_3_0 or "", true, "|", "#")
+	local recordStr = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.FightTechnique)
+	local recordArr = FightStrUtil.instance:getSplitString2Cache(recordStr or "", true, "|", "#")
 
-	if not var_3_1 then
+	if not recordArr then
 		return
 	end
 
-	local var_3_2 = {}
+	local unreadList = {}
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		for iter_3_2, iter_3_3 in ipairs(iter_3_1) do
-			if lua_fight_technique.configDict[iter_3_3] then
-				local var_3_3 = {
-					id = iter_3_3
+	for i, arr in ipairs(recordArr) do
+		for _, id in ipairs(arr) do
+			local co = lua_fight_technique.configDict[id]
+
+			if co then
+				local mo = {
+					id = id
 				}
 
-				arg_3_0._all:addAtLast(var_3_3)
+				self._all:addAtLast(mo)
 
-				if iter_3_0 == 2 then
-					table.insert(var_3_2, var_3_3)
+				if i == 2 then
+					table.insert(unreadList, mo)
 				end
 			end
 		end
 	end
 
-	arg_3_0:addList(var_3_2)
+	self:addList(unreadList)
 end
 
-function var_0_0.addUnread(arg_4_0, arg_4_1)
-	if arg_4_0._all:getById(arg_4_1) then
+function FightViewTechniqueModel:addUnread(id)
+	if self._all:getById(id) then
 		return
 	end
 
-	local var_4_0 = {
-		id = arg_4_1
+	local mo = {
+		id = id
 	}
 
-	arg_4_0._all:addAtLast(var_4_0)
-	arg_4_0:addAtLast(var_4_0)
+	self._all:addAtLast(mo)
+	self:addAtLast(mo)
 
-	return var_4_0
+	return mo
 end
 
-function var_0_0.markRead(arg_5_0, arg_5_1)
-	if not arg_5_0._all:getById(arg_5_1) or not arg_5_0:getById(arg_5_1) then
+function FightViewTechniqueModel:markRead(id)
+	if not self._all:getById(id) or not self:getById(id) then
 		return
 	end
 
-	local var_5_0 = arg_5_0:getById(arg_5_1)
+	local mo = self:getById(id)
 
-	arg_5_0:remove(var_5_0)
+	self:remove(mo)
 
-	return var_5_0
+	return mo
 end
 
-function var_0_0.getPropertyStr(arg_6_0)
-	local var_6_0 = {}
-	local var_6_1 = {}
-	local var_6_2 = arg_6_0._all:getList()
+function FightViewTechniqueModel:getPropertyStr()
+	local read = {}
+	local unread = {}
+	local allList = self._all:getList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_2) do
-		if arg_6_0:getById(iter_6_1.id) then
-			table.insert(var_6_1, iter_6_1.id)
+	for _, mo in ipairs(allList) do
+		if self:getById(mo.id) then
+			table.insert(unread, mo.id)
 		else
-			table.insert(var_6_0, iter_6_1.id)
+			table.insert(read, mo.id)
 		end
 	end
 
-	return string.format("%s|%s", table.concat(var_6_0, "#"), table.concat(var_6_1, "#"))
+	return string.format("%s|%s", table.concat(read, "#"), table.concat(unread, "#"))
 end
 
-function var_0_0.getAll(arg_7_0)
-	if arg_7_0._all then
-		return arg_7_0._all:getList()
+function FightViewTechniqueModel:getAll()
+	if self._all then
+		return self._all:getList()
 	end
 end
 
-function var_0_0.isUnlock(arg_8_0, arg_8_1)
-	if arg_8_0._all then
-		for iter_8_0, iter_8_1 in ipairs(arg_8_0._all:getList()) do
-			if iter_8_1.id == arg_8_1 then
+function FightViewTechniqueModel:isUnlock(id)
+	if self._all then
+		for i, v in ipairs(self._all:getList()) do
+			if v.id == id then
 				return true
 			end
 		end
@@ -106,14 +110,14 @@ function var_0_0.isUnlock(arg_8_0, arg_8_1)
 	return nil
 end
 
-function var_0_0.readTechnique(arg_9_0, arg_9_1)
-	if arg_9_1 and arg_9_0:markRead(arg_9_1) then
-		local var_9_0 = arg_9_0:getPropertyStr()
+function FightViewTechniqueModel:readTechnique(id)
+	if id and self:markRead(id) then
+		local propertyStr = self:getPropertyStr()
 
-		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, var_9_0)
+		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, propertyStr)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+FightViewTechniqueModel.instance = FightViewTechniqueModel.New()
 
-return var_0_0
+return FightViewTechniqueModel

@@ -1,110 +1,110 @@
-﻿module("modules.logic.survival.util.SurvivalHexNode", package.seeall)
+﻿-- chunkname: @modules/logic/survival/util/SurvivalHexNode.lua
 
-local var_0_0 = {}
+module("modules.logic.survival.util.SurvivalHexNode", package.seeall)
 
-function var_0_0.New(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = setmetatable({}, var_0_0)
+local SurvivalHexNode = {}
 
-	var_1_0:set(arg_1_0, arg_1_1, arg_1_2)
+function SurvivalHexNode.New(q, r, s)
+	local node = setmetatable({}, SurvivalHexNode)
 
-	return var_1_0
+	node:set(q, r, s)
+
+	return node
 end
 
-function var_0_0.set(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.q = arg_2_1 or 0
-	arg_2_0.r = arg_2_2 or 0
-	arg_2_0.s = arg_2_3 or -arg_2_0.q - arg_2_0.r
-	arg_2_0.gCost = 0
-	arg_2_0.hCost = 0
-	arg_2_0.parent = nil
+function SurvivalHexNode:set(q, r, s)
+	self.q = q or 0
+	self.r = r or 0
+	self.s = s or -self.q - self.r
+	self.gCost = 0
+	self.hCost = 0
+	self.parent = nil
 
-	return arg_2_0
+	return self
 end
 
-function var_0_0.copyFrom(arg_3_0, arg_3_1)
-	arg_3_0.q = arg_3_1.q
-	arg_3_0.r = arg_3_1.r
-	arg_3_0.s = arg_3_1.s
-	arg_3_0.gCost = 0
-	arg_3_0.hCost = 0
-	arg_3_0.parent = nil
+function SurvivalHexNode:copyFrom(node)
+	self.q = node.q
+	self.r = node.r
+	self.s = node.s
+	self.gCost = 0
+	self.hCost = 0
+	self.parent = nil
 
-	return arg_3_0
+	return self
 end
 
-function var_0_0.clone(arg_4_0)
-	return var_0_0.New(arg_4_0.q, arg_4_0.r)
+function SurvivalHexNode:clone()
+	return SurvivalHexNode.New(self.q, self.r)
 end
 
-function var_0_0.fCost(arg_5_0)
-	return arg_5_0.gCost + arg_5_0.hCost
+function SurvivalHexNode:fCost()
+	return self.gCost + self.hCost
 end
 
-function var_0_0.rotateDir(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_2 < 0 then
-		arg_6_2 = arg_6_2 + 6
+function SurvivalHexNode:rotateDir(center, rotateDir)
+	if rotateDir < 0 then
+		rotateDir = rotateDir + 6
 	end
 
-	local var_6_0
-	local var_6_1
-	local var_6_2
-	local var_6_3 = arg_6_0.q - arg_6_1.q
-	local var_6_4 = arg_6_0.r - arg_6_1.r
-	local var_6_5 = arg_6_0.s - arg_6_1.s
+	local dq_new, dr_new, ds_new
+	local delta_q = self.q - center.q
+	local delta_r = self.r - center.r
+	local delta_s = self.s - center.s
 
-	if arg_6_2 == 0 then
-		var_6_0, var_6_1, var_6_2 = var_6_3, var_6_4, var_6_5
-	elseif arg_6_2 == 1 then
-		var_6_0 = -var_6_4
-		var_6_1 = -var_6_5
-		var_6_2 = -var_6_3
-	elseif arg_6_2 == 2 then
-		var_6_0 = var_6_5
-		var_6_1 = var_6_3
-		var_6_2 = var_6_4
-	elseif arg_6_2 == 3 then
-		var_6_0 = -var_6_3
-		var_6_1 = -var_6_4
-		var_6_2 = -var_6_5
-	elseif arg_6_2 == 4 then
-		var_6_0 = var_6_4
-		var_6_1 = var_6_5
-		var_6_2 = var_6_3
-	elseif arg_6_2 == 5 then
-		var_6_0 = -var_6_5
-		var_6_1 = -var_6_3
-		var_6_2 = -var_6_4
+	if rotateDir == 0 then
+		dq_new, dr_new, ds_new = delta_q, delta_r, delta_s
+	elseif rotateDir == 1 then
+		dq_new = -delta_r
+		dr_new = -delta_s
+		ds_new = -delta_q
+	elseif rotateDir == 2 then
+		dq_new = delta_s
+		dr_new = delta_q
+		ds_new = delta_r
+	elseif rotateDir == 3 then
+		dq_new = -delta_q
+		dr_new = -delta_r
+		ds_new = -delta_s
+	elseif rotateDir == 4 then
+		dq_new = delta_r
+		dr_new = delta_s
+		ds_new = delta_q
+	elseif rotateDir == 5 then
+		dq_new = -delta_s
+		dr_new = -delta_q
+		ds_new = -delta_r
 	end
 
-	arg_6_0.q = arg_6_1.q + var_6_0
-	arg_6_0.r = arg_6_1.r + var_6_1
-	arg_6_0.s = arg_6_1.s + var_6_2
+	self.q = center.q + dq_new
+	self.r = center.r + dr_new
+	self.s = center.s + ds_new
 end
 
-function var_0_0.Add(arg_7_0, arg_7_1)
-	arg_7_0.q = arg_7_0.q + arg_7_1.q
-	arg_7_0.r = arg_7_0.r + arg_7_1.r
-	arg_7_0.s = arg_7_0.s + arg_7_1.s
+function SurvivalHexNode:Add(point)
+	self.q = self.q + point.q
+	self.r = self.r + point.r
+	self.s = self.s + point.s
 
-	return arg_7_0
+	return self
 end
 
-function var_0_0.__eq(arg_8_0, arg_8_1)
-	return arg_8_0.q == arg_8_1.q and arg_8_0.r == arg_8_1.r
+function SurvivalHexNode.__eq(a, b)
+	return a.q == b.q and a.r == b.r
 end
 
-function var_0_0.__add(arg_9_0, arg_9_1)
-	return var_0_0.New(arg_9_0.q + arg_9_1.q, arg_9_0.r + arg_9_1.r)
+function SurvivalHexNode.__add(a, b)
+	return SurvivalHexNode.New(a.q + b.q, a.r + b.r)
 end
 
-function var_0_0.__sub(arg_10_0, arg_10_1)
-	return var_0_0.New(arg_10_0.q - arg_10_1.q, arg_10_0.r - arg_10_1.r)
+function SurvivalHexNode.__sub(a, b)
+	return SurvivalHexNode.New(a.q - b.q, a.r - b.r)
 end
 
-function var_0_0.__tostring(arg_11_0)
-	return string.format("[%d,%d,%d]", arg_11_0.q, arg_11_0.r, arg_11_0.s)
+function SurvivalHexNode.__tostring(t)
+	return string.format("[%d,%d,%d]", t.q, t.r, t.s)
 end
 
-var_0_0.__index = var_0_0
+SurvivalHexNode.__index = SurvivalHexNode
 
-return var_0_0
+return SurvivalHexNode

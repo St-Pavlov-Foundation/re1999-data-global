@@ -1,60 +1,63 @@
-﻿module("modules.logic.playercard.view.comp.PlayerCardCardGroup", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/view/comp/PlayerCardCardGroup.lua
 
-local var_0_0 = class("PlayerCardCardGroup", BasePlayerCardComp)
+module("modules.logic.playercard.view.comp.PlayerCardCardGroup", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.items = {}
+local PlayerCardCardGroup = class("PlayerCardCardGroup", BasePlayerCardComp)
 
-	for iter_1_0 = 1, 4 do
-		arg_1_0.items[iter_1_0] = arg_1_0:createItem(iter_1_0)
+function PlayerCardCardGroup:onInitView()
+	self.items = {}
+
+	for i = 1, 4 do
+		self.items[i] = self:createItem(i)
 	end
 end
 
-function var_0_0.createItem(arg_2_0, arg_2_1)
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, "#go_card")
-	local var_2_1 = gohelper.clone(arg_2_0.itemRes, var_2_0, tostring(arg_2_1))
+function PlayerCardCardGroup:createItem(index)
+	local parentGO = gohelper.findChild(self.viewGO, "#go_card")
+	local go = gohelper.clone(self.itemRes, parentGO, tostring(index))
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, PlayerCardCardItem, {
+		index = index,
+		compType = self.compType
+	})
 
-	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, PlayerCardCardItem, {
-		index = arg_2_1,
-		compType = arg_2_0.compType
-	}))
+	return item
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function PlayerCardCardGroup:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function PlayerCardCardGroup:removeEventListeners()
 	return
 end
 
-function var_0_0.onRefreshView(arg_5_0)
-	local var_5_0 = arg_5_0.cardInfo:getCardData()
+function PlayerCardCardGroup:onRefreshView()
+	local data = self.cardInfo:getCardData()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.items) do
-		local var_5_1 = PlayerCardConfig.instance:getCardConfig(var_5_0[iter_5_0])
+	for i, v in ipairs(self.items) do
+		local config = PlayerCardConfig.instance:getCardConfig(data[i])
 
-		iter_5_1:refreshView(arg_5_0.cardInfo, var_5_1)
+		v:refreshView(self.cardInfo, config)
 	end
 
-	local var_5_2 = not arg_5_0:isSingle()
+	local isVisible = not self:isSingle()
 
-	arg_5_0.items[3]:setVisible(var_5_2)
-	arg_5_0.items[4]:setVisible(var_5_2)
+	self.items[3]:setVisible(isVisible)
+	self.items[4]:setVisible(isVisible)
 end
 
-function var_0_0.isSingle(arg_6_0)
-	if not arg_6_0.cardInfo then
+function PlayerCardCardGroup:isSingle()
+	if not self.cardInfo then
 		return
 	end
 
-	local var_6_0 = arg_6_0.cardInfo:getCardData()
+	local data = self.cardInfo:getCardData()
 
-	return var_6_0 and #var_6_0 < 3
+	return data and #data < 3
 end
 
-function var_0_0.onDestroy(arg_7_0)
+function PlayerCardCardGroup:onDestroy()
 	return
 end
 
-return var_0_0
+return PlayerCardCardGroup

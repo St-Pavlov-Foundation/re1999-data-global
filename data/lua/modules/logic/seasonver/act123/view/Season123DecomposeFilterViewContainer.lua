@@ -1,11 +1,13 @@
-﻿module("modules.logic.seasonver.act123.view.Season123DecomposeFilterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123DecomposeFilterViewContainer.lua
 
-local var_0_0 = class("Season123DecomposeFilterViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view.Season123DecomposeFilterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123DecomposeFilterViewContainer = class("Season123DecomposeFilterViewContainer", BaseViewContainer)
+
+function Season123DecomposeFilterViewContainer:buildViews()
 	return {
 		Season123DecomposeFilterView.New()
 	}
 end
 
-return var_0_0
+return Season123DecomposeFilterViewContainer

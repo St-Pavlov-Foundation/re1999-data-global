@@ -1,142 +1,144 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameEventView.lua
 
-local var_0_0 = class("AiZiLaGameEventView", BaseView)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_PanelBG")
-	arg_1_0._scrollDescr = gohelper.findChildScrollRect(arg_1_0.viewGO, "content/#scroll_Descr")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "content/#scroll_Descr/Viewport/Content/#txt_Descr")
-	arg_1_0._simagePanelBGMask = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_PanelBGMask")
-	arg_1_0._simageLevelPic = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_LevelPic")
-	arg_1_0._goselectItem = gohelper.findChild(arg_1_0.viewGO, "content/#go_selectItem")
-	arg_1_0._goEnable = gohelper.findChild(arg_1_0.viewGO, "content/#go_selectItem/#go_Enable")
-	arg_1_0._goDisable = gohelper.findChild(arg_1_0.viewGO, "content/#go_selectItem/#go_Disable")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "content/#go_selectItem/#txt_name")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "content/#go_selectItem/#txt_desc")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/#go_selectItem/#btn_click")
-	arg_1_0._goselectGroup = gohelper.findChild(arg_1_0.viewGO, "content/scroll_select/Viewport/#go_selectGroup")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+local AiZiLaGameEventView = class("AiZiLaGameEventView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaGameEventView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagePanelBG = gohelper.findChildSingleImage(self.viewGO, "content/#simage_PanelBG")
+	self._scrollDescr = gohelper.findChildScrollRect(self.viewGO, "content/#scroll_Descr")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "content/#scroll_Descr/Viewport/Content/#txt_Descr")
+	self._simagePanelBGMask = gohelper.findChildSingleImage(self.viewGO, "content/#simage_PanelBGMask")
+	self._simageLevelPic = gohelper.findChildSingleImage(self.viewGO, "content/#simage_LevelPic")
+	self._goselectItem = gohelper.findChild(self.viewGO, "content/#go_selectItem")
+	self._goEnable = gohelper.findChild(self.viewGO, "content/#go_selectItem/#go_Enable")
+	self._goDisable = gohelper.findChild(self.viewGO, "content/#go_selectItem/#go_Disable")
+	self._txtname = gohelper.findChildText(self.viewGO, "content/#go_selectItem/#txt_name")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "content/#go_selectItem/#txt_desc")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "content/#go_selectItem/#btn_click")
+	self._goselectGroup = gohelper.findChild(self.viewGO, "content/scroll_select/Viewport/#go_selectGroup")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function AiZiLaGameEventView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnclick:RemoveClickListener()
+function AiZiLaGameEventView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function AiZiLaGameEventView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnclickOnClick(arg_5_0)
+function AiZiLaGameEventView:_btnclickOnClick()
 	return
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._animator = arg_6_0.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
-	arg_6_0._goTagBG = gohelper.findChild(arg_6_0.viewGO, "content/image_TagBG")
+function AiZiLaGameEventView:_editableInitView()
+	self._animator = self.viewGO:GetComponent(AiZiLaEnum.ComponentType.Animator)
+	self._goTagBG = gohelper.findChild(self.viewGO, "content/image_TagBG")
 
-	transformhelper.setLocalPos(arg_6_0._goselectItem.transform, 0, 0, 0)
-	gohelper.setActive(arg_6_0._goselectItem, false)
+	transformhelper.setLocalPos(self._goselectItem.transform, 0, 0, 0)
+	gohelper.setActive(self._goselectItem, false)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function AiZiLaGameEventView:onUpdateParam()
 	return
 end
 
-function var_0_0.playViewAnimator(arg_8_0, arg_8_1)
-	if arg_8_0._animator then
-		arg_8_0._animator.enabled = true
+function AiZiLaGameEventView:playViewAnimator(animName)
+	if self._animator then
+		self._animator.enabled = true
 
-		arg_8_0._animator:Play(arg_8_1, 0, 0)
+		self._animator:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, arg_9_0.closeThis, arg_9_0)
-	arg_9_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.RefreshGameEpsiode, arg_9_0.refreshUI, arg_9_0)
+function AiZiLaGameEventView:onOpen()
+	self:addEventCb(AiZiLaController.instance, AiZiLaEvent.ExitGame, self.closeThis, self)
+	self:addEventCb(AiZiLaController.instance, AiZiLaEvent.RefreshGameEpsiode, self.refreshUI, self)
 
-	if arg_9_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_9_0.viewContainer.viewName, arg_9_0._btncloseOnClick, arg_9_0)
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._btncloseOnClick, self)
 	end
 
-	arg_9_0._eventId = AiZiLaGameModel.instance:getEventId()
-	arg_9_0._actId = AiZiLaGameModel.instance:getActivityID()
-	arg_9_0._eventCfg = AiZiLaConfig.instance:getEventCo(arg_9_0._actId, arg_9_0._eventId)
-	arg_9_0._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(arg_9_0._actId, AiZiLaGameModel.instance:getEpisodeId())
+	self._eventId = AiZiLaGameModel.instance:getEventId()
+	self._actId = AiZiLaGameModel.instance:getActivityID()
+	self._eventCfg = AiZiLaConfig.instance:getEventCo(self._actId, self._eventId)
+	self._episodeCfg = AiZiLaConfig.instance:getEpisodeCo(self._actId, AiZiLaGameModel.instance:getEpisodeId())
 
-	if not arg_9_0._eventCfg then
-		logError("export_事件 配置找不到: activityId:%s eventId:%s", arg_9_0._actId, arg_9_0._eventId)
+	if not self._eventCfg then
+		logError("export_事件 配置找不到: activityId:%s eventId:%s", self._actId, self._eventId)
 	end
 
-	if arg_9_0._eventCfg.eventType == AiZiLaEnum.EventType.BranchLine then
+	if self._eventCfg.eventType == AiZiLaEnum.EventType.BranchLine then
 		AiZiLaController.instance:dispatchEvent(AiZiLaEvent.OnBranchLineEvent)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.play_ui_wulu_aizila_forward_paper)
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_10_0)
+function AiZiLaGameEventView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simageLevelPic:UnLoadImage()
+function AiZiLaGameEventView:onDestroyView()
+	self._simageLevelPic:UnLoadImage()
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	if not arg_12_0._eventCfg then
+function AiZiLaGameEventView:refreshUI()
+	if not self._eventCfg then
 		return
 	end
 
-	if arg_12_0._episodeCfg and not string.nilorempty(arg_12_0._episodeCfg.picture) then
-		arg_12_0._simageLevelPic:LoadImage(string.format("%s.png", arg_12_0._episodeCfg.picture))
+	if self._episodeCfg and not string.nilorempty(self._episodeCfg.picture) then
+		self._simageLevelPic:LoadImage(string.format("%s.png", self._episodeCfg.picture))
 	end
 
-	gohelper.setActive(arg_12_0._goTagBG, arg_12_0._eventCfg.eventType == AiZiLaEnum.EventType.BranchLine)
+	gohelper.setActive(self._goTagBG, self._eventCfg.eventType == AiZiLaEnum.EventType.BranchLine)
 
-	local var_12_0 = arg_12_0:_getOptionMOList()
+	local datalist = self:_getOptionMOList()
 
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onSelectItem, var_12_0, arg_12_0._goselectGroup, arg_12_0._goselectItem, AiZiLaGameEventItem)
+	gohelper.CreateObjList(self, self._onSelectItem, datalist, self._goselectGroup, self._goselectItem, AiZiLaGameEventItem)
 
-	arg_12_0._txtDescr.text = arg_12_0._eventCfg.desc
+	self._txtDescr.text = self._eventCfg.desc
 end
 
-function var_0_0._getOptionMOList(arg_13_0)
-	local var_13_0 = {}
+function AiZiLaGameEventView:_getOptionMOList()
+	local datalist = {}
 
-	if arg_13_0._eventCfg and not string.nilorempty(arg_13_0._eventCfg.optionIds) then
-		local var_13_1 = string.splitToNumber(arg_13_0._eventCfg.optionIds, "|")
+	if self._eventCfg and not string.nilorempty(self._eventCfg.optionIds) then
+		local params = string.splitToNumber(self._eventCfg.optionIds, "|")
 
-		if var_13_1 then
-			for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-				table.insert(var_13_0, {
-					optionId = iter_13_1,
-					actId = arg_13_0._actId,
-					index = iter_13_0,
-					eventType = arg_13_0._eventCfg.eventType
+		if params then
+			for i, optionId in ipairs(params) do
+				table.insert(datalist, {
+					optionId = optionId,
+					actId = self._actId,
+					index = i,
+					eventType = self._eventCfg.eventType
 				})
 			end
 		end
 	end
 
-	return var_13_0
+	return datalist
 end
 
-function var_0_0._onSelectItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_1:onUpdateMO(arg_14_2)
+function AiZiLaGameEventView:_onSelectItem(cell_component, data, index)
+	cell_component:onUpdateMO(data)
 
-	arg_14_1._view = arg_14_0
+	cell_component._view = self
 end
 
-return var_0_0
+return AiZiLaGameEventView

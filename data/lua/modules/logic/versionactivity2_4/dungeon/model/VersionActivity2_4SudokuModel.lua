@@ -1,61 +1,65 @@
-﻿module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/dungeon/model/VersionActivity2_4SudokuModel.lua
 
-local var_0_0 = class("VersionActivity2_4SudokuModel", BaseModel)
-local var_0_1 = "modules.configs.sudoku.lua_sudoku_%s"
-local var_0_2 = "lua_sudoku_%s"
+module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._operateCmdList = {}
+local VersionActivity2_4SudokuModel = class("VersionActivity2_4SudokuModel", BaseModel)
+local sudokuConfigPath = "modules.configs.sudoku.lua_sudoku_%s"
+local sudokuConfigName = "lua_sudoku_%s"
+
+function VersionActivity2_4SudokuModel:onInit()
+	self._operateCmdList = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:init()
+function VersionActivity2_4SudokuModel:reInit()
+	self:init()
 end
 
-function var_0_0.init(arg_3_0)
-	arg_3_0._curSelectItemIdx = 0
+function VersionActivity2_4SudokuModel:init()
+	self._curSelectItemIdx = 0
 end
 
-function var_0_0.selectItem(arg_4_0, arg_4_1)
-	arg_4_0._curSelectItemIdx = arg_4_1
+function VersionActivity2_4SudokuModel:selectItem(idx)
+	self._curSelectItemIdx = idx
 end
 
-function var_0_0.getSelectedItem(arg_5_0)
-	return arg_5_0._curSelectItemIdx
+function VersionActivity2_4SudokuModel:getSelectedItem()
+	return self._curSelectItemIdx
 end
 
-function var_0_0.selectKeyboardItem(arg_6_0, arg_6_1)
-	arg_6_0._curSelectKeyboardIdx = arg_6_1
+function VersionActivity2_4SudokuModel:selectKeyboardItem(idx)
+	self._curSelectKeyboardIdx = idx
 end
 
-function var_0_0.getSelectedKeyboardItem(arg_7_0)
-	return arg_7_0._curSelectKeyboardIdx
+function VersionActivity2_4SudokuModel:getSelectedKeyboardItem()
+	return self._curSelectKeyboardIdx
 end
 
-function var_0_0.pushCmd(arg_8_0, arg_8_1)
-	arg_8_0._operateCmdList[#arg_8_0._operateCmdList + 1] = arg_8_1
+function VersionActivity2_4SudokuModel:pushCmd(cmd)
+	self._operateCmdList[#self._operateCmdList + 1] = cmd
 end
 
-function var_0_0.popCmd(arg_9_0)
-	if #arg_9_0._operateCmdList == 0 then
+function VersionActivity2_4SudokuModel:popCmd()
+	if #self._operateCmdList == 0 then
 		return nil
 	end
 
-	local var_9_0 = arg_9_0._operateCmdList[#arg_9_0._operateCmdList]
+	local lastCmd = self._operateCmdList[#self._operateCmdList]
 
-	arg_9_0._operateCmdList[#arg_9_0._operateCmdList] = nil
+	self._operateCmdList[#self._operateCmdList] = nil
 
-	return var_9_0
+	return lastCmd
 end
 
-function var_0_0.clearCmd(arg_10_0)
-	arg_10_0._operateCmdList = {}
+function VersionActivity2_4SudokuModel:clearCmd()
+	self._operateCmdList = {}
 end
 
-function var_0_0.getSudokuCfg(arg_11_0, arg_11_1)
-	return (addGlobalModule(string.format(var_0_1, arg_11_1), string.format("lua_chessgame_group_", arg_11_1)))
+function VersionActivity2_4SudokuModel:getSudokuCfg(id)
+	local sudokuCfg = addGlobalModule(string.format(sudokuConfigPath, id), string.format("lua_chessgame_group_", id))
+
+	return sudokuCfg
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_4SudokuModel.instance = VersionActivity2_4SudokuModel.New()
 
-return var_0_0
+return VersionActivity2_4SudokuModel

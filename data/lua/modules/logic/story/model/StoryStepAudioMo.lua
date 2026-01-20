@@ -1,11 +1,13 @@
-﻿module("modules.logic.story.model.StoryStepAudioMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryStepAudioMo.lua
 
-local var_0_0 = pureTable("StoryStepAudioMo")
+module("modules.logic.story.model.StoryStepAudioMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.audio = 0
-	arg_1_0.audioState = 0
-	arg_1_0.delayTimes = {
+local StoryStepAudioMo = pureTable("StoryStepAudioMo")
+
+function StoryStepAudioMo:ctor()
+	self.audio = 0
+	self.audioState = 0
+	self.delayTimes = {
 		0,
 		0,
 		0,
@@ -15,9 +17,9 @@ function var_0_0.ctor(arg_1_0)
 		0,
 		0
 	}
-	arg_1_0.orderType = 0
-	arg_1_0.volume = 1
-	arg_1_0.transTimes = {
+	self.orderType = 0
+	self.volume = 1
+	self.transTimes = {
 		0,
 		0,
 		0,
@@ -27,17 +29,17 @@ function var_0_0.ctor(arg_1_0)
 		0,
 		0
 	}
-	arg_1_0.count = 1
+	self.count = 1
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.audio = arg_2_1[1]
-	arg_2_0.audioState = arg_2_1[2]
-	arg_2_0.delayTimes = arg_2_1[3]
-	arg_2_0.orderType = arg_2_1[4]
-	arg_2_0.volume = arg_2_1[5]
-	arg_2_0.transTimes = arg_2_1[6]
-	arg_2_0.count = arg_2_1[7]
+function StoryStepAudioMo:init(info)
+	self.audio = info[1]
+	self.audioState = info[2]
+	self.delayTimes = info[3]
+	self.orderType = info[4]
+	self.volume = info[5]
+	self.transTimes = info[6]
+	self.count = info[7]
 end
 
-return var_0_0
+return StoryStepAudioMo

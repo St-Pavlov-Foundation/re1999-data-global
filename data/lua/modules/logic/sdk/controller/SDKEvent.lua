@@ -1,9 +1,11 @@
-﻿module("modules.logic.sdk.controller.SDKEvent", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/controller/SDKEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.sdk.controller.SDKEvent", package.seeall)
 
-var_0_0.BasePropertiesChange = 1
-var_0_0.GuestBindSucc = 2
-var_0_0.UpdateAccountBindBonus = 3
+local SDKEvent = _M
 
-return var_0_0
+SDKEvent.BasePropertiesChange = 1
+SDKEvent.GuestBindSucc = 2
+SDKEvent.UpdateAccountBindBonus = 3
+
+return SDKEvent

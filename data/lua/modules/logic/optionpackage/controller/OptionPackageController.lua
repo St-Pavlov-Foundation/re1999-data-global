@@ -1,181 +1,209 @@
-﻿module("modules.logic.optionpackage.controller.OptionPackageController", package.seeall)
+﻿-- chunkname: @modules/logic/optionpackage/controller/OptionPackageController.lua
 
-local var_0_0 = class("OptionPackageController", BaseController)
+module("modules.logic.optionpackage.controller.OptionPackageController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
-	arg_1_0._optionalUpdateInst = arg_1_0._optionalUpdate.Instance
-	arg_1_0._initialized = false
+local OptionPackageController = class("OptionPackageController", BaseController)
+
+function OptionPackageController:onInit()
+	self._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
+	self._optionalUpdateInst = self._optionalUpdate.Instance
+	self._initialized = false
 
 	if not HotUpdateVoiceMgr then
 		return
 	end
 
-	arg_1_0._initialized = true
-	arg_1_0._downloader = OptionPackageDownloader.New()
-	arg_1_0._httpWorker = OptionPackageHttpWorker.New()
-	arg_1_0._adapter = DownloadOptPackAdapter.New()
+	self._initialized = true
+	self._downloader = OptionPackageDownloader.New()
+	self._httpWorker = OptionPackageHttpWorker.New()
+	self._adapter = DownloadOptPackAdapter.New()
+
+	OptionPackageDownloadMgr.instance:initResInfo()
 end
 
-function var_0_0.onInitFinish(arg_2_0)
-	if not arg_2_0._initialized then
+function OptionPackageController:onInitFinish()
+	if not self._initialized then
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_2_0._startHttpWorker, arg_2_0, 10)
+	TaskDispatcher.runDelay(self._startHttpWorker, self, 10)
 
-	arg_2_0._localPackageNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList()
+	self._localPackageNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList()
 
-	arg_2_0:_updateLocalVersion()
+	self:_updateLocalVersion()
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function OptionPackageController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function OptionPackageController:reInit()
 	return
 end
 
-function var_0_0._startHttpWorker(arg_5_0)
+function OptionPackageController:_startHttpWorker()
 	logNormal("OptionPackageController:_startHttpWorker()")
 
-	local var_5_0 = OptionPackageEnum.PackageNameList
+	local packageNameList = OptionPackageEnum.PackageNameList
 
-	if #var_5_0 < 1 then
+	if #packageNameList < 1 then
 		return
 	end
 
-	local var_5_1 = {}
-	local var_5_2 = OptionPackageModel.instance:getSupportVoiceLangs()
-	local var_5_3 = {}
+	local httpGeterList = {}
+	local voiceLangs = OptionPackageModel.instance:getSupportVoiceLangs()
+	local langStrList = {}
 
-	tabletool.addValues(var_5_3, OptionPackageEnum.NeedPackLangList)
-	tabletool.addValues(var_5_3, var_5_2)
+	tabletool.addValues(langStrList, OptionPackageEnum.NeedPackLangList)
+	tabletool.addValues(langStrList, voiceLangs)
 
-	if var_5_3 and #var_5_3 > 0 then
-		local var_5_4 = HotUpdateOptionPackageMgr.instance:formatLangPackList(var_5_3, var_5_0)
+	if langStrList and #langStrList > 0 then
+		local langPackList = HotUpdateOptionPackageMgr.instance:formatLangPackList(langStrList, packageNameList)
 
-		table.insert(var_5_1, OptionPackageHttpGetter.New(OptionPackageEnum.SourceType.OptResVoice, var_5_4))
+		table.insert(httpGeterList, OptionPackageHttpGetter.New(OptionPackageEnum.SourceType.OptResVoice, langPackList))
 	end
 
-	arg_5_0._httpWorkerRequestCount = 0
+	self._httpWorkerRequestCount = 0
 
-	arg_5_0._httpWorker:start(var_5_1, arg_5_0._onHttpWorkerDone, arg_5_0)
+	self._httpWorker:start(httpGeterList, self._onHttpWorkerDone, self)
 end
 
-function var_0_0._onHttpWorkerDone(arg_6_0, arg_6_1)
-	if not arg_6_1 and arg_6_0._httpWorkerRequestCount < 3 then
-		arg_6_0._httpWorkerRequestCount = arg_6_0._httpWorkerRequestCount + 1
+function OptionPackageController:_onHttpWorkerDone(isAllSuccess)
+	if not isAllSuccess and self._httpWorkerRequestCount < 3 then
+		self._httpWorkerRequestCount = self._httpWorkerRequestCount + 1
 
-		arg_6_0._httpWorker:againGetHttp(arg_6_0._onHttpWorkerDone, arg_6_0)
-
-		return
-	end
-
-	if not arg_6_1 then
-		arg_6_0:_endHttpBlock()
+		self._httpWorker:againGetHttp(self._onHttpWorkerDone, self)
 
 		return
 	end
 
-	local var_6_0 = arg_6_0._httpWorker:getHttpResult()
+	if not isAllSuccess then
+		self:_endHttpBlock()
 
-	for iter_6_0, iter_6_1 in pairs(var_6_0) do
-		local var_6_1 = OptionPackageModel.instance:getPackageMO(iter_6_0)
+		return
+	end
 
-		if not var_6_1 then
-			local var_6_2 = string.split(iter_6_0, "-")
+	local httpResult = self._httpWorker:getHttpResult()
 
-			if var_6_2 and #var_6_2 > 1 then
-				var_6_1 = OptionPackageMO.New()
+	for langPackName, packInfoTb in pairs(httpResult) do
+		local packMO = OptionPackageModel.instance:getPackageMO(langPackName)
 
-				local var_6_3 = var_6_2[1]
-				local var_6_4 = var_6_2[2]
+		if not packMO then
+			local arrs = string.split(langPackName, "-")
 
-				var_6_1:init(var_6_4, var_6_3)
-				OptionPackageModel.instance:addPackageMO(var_6_1)
+			if arrs and #arrs > 1 then
+				packMO = OptionPackageMO.New()
+
+				local lang = arrs[1]
+				local packageName = arrs[2]
+
+				packMO:init(packageName, lang)
+				OptionPackageModel.instance:addPackageMO(packMO)
 			end
 		end
 
-		if var_6_1 then
-			logNormal(string.format("packMO:setPackInfo() langPackName :%s localVersion:%s", iter_6_0, var_6_1.localVersion))
-			var_6_1:setPackInfo(iter_6_1)
+		if packMO then
+			logNormal(string.format("packMO:setPackInfo() langPackName :%s localVersion:%s", langPackName, packMO.localVersion))
+			packMO:setPackInfo(packInfoTb)
 
-			if #var_6_1.downloadResList.names > 0 then
-				local var_6_5 = var_6_1.downloadResList
+			if #packMO.downloadResList.names > 0 then
+				local res = packMO.downloadResList
 
-				arg_6_0._optionalUpdateInst:InitBreakPointInfo(var_6_5.names, var_6_5.hashs, var_6_5.orders, var_6_5.lengths)
+				self._optionalUpdateInst:InitBreakPointInfo(res.names, res.hashs, res.orders, res.lengths)
 
-				local var_6_6 = arg_6_0._optionalUpdateInst:GetRecvSize()
-				local var_6_7 = tonumber(var_6_6)
+				local recvSize = self._optionalUpdateInst:GetRecvSize()
 
-				var_6_1:setLocalSize(var_6_7)
+				recvSize = tonumber(recvSize)
+
+				packMO:setLocalSize(recvSize)
 			end
 		end
 	end
 
-	arg_6_0:_endHttpBlock()
+	self:_endHttpBlock()
 end
 
-function var_0_0._updateLocalVersion(arg_7_0)
-	local var_7_0 = OptionPackageModel.instance:getPackageMOList()
+function OptionPackageController:_updateLocalVersion()
+	local packMOList = OptionPackageModel.instance:getPackageMOList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		if iter_7_1 then
-			local var_7_1 = arg_7_0:getLocalVersionInt(iter_7_1.langPack)
+	for _, packMO in ipairs(packMOList) do
+		if packMO then
+			local localVersion = self:getLocalVersionInt(packMO.langPack)
 
-			iter_7_1:setLocalVersion(var_7_1)
+			packMO:setLocalVersion(localVersion)
 		end
 	end
 end
 
-var_0_0.OPTION_PACKAGE_HTTP_REQUEST = "OptionPackageController.OPTION_PACKAGE_HTTP_REQUEST"
+OptionPackageController.OPTION_PACKAGE_HTTP_REQUEST = "OptionPackageController.OPTION_PACKAGE_HTTP_REQUEST"
 
-function var_0_0._startHttpBlock(arg_8_0)
-	UIBlockMgr.instance:startBlock(var_0_0.OPTION_PACKAGE_HTTP_REQUEST)
-	TaskDispatcher.cancelTask(arg_8_0._endHttpBlock, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0._endHttpBlock, arg_8_0, 10)
+function OptionPackageController:_startHttpBlock()
+	UIBlockMgr.instance:startBlock(OptionPackageController.OPTION_PACKAGE_HTTP_REQUEST)
+	TaskDispatcher.cancelTask(self._endHttpBlock, self)
+	TaskDispatcher.runDelay(self._endHttpBlock, self, 10)
 end
 
-function var_0_0._endHttpBlock(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._endHttpBlock, arg_9_0)
-	UIBlockMgr.instance:endBlock(var_0_0.OPTION_PACKAGE_HTTP_REQUEST)
+function OptionPackageController:_endHttpBlock()
+	TaskDispatcher.cancelTask(self._endHttpBlock, self)
+	UIBlockMgr.instance:endBlock(OptionPackageController.OPTION_PACKAGE_HTTP_REQUEST)
 end
 
-function var_0_0.checkNeedDownload(arg_10_0, arg_10_1)
-	if not arg_10_0._initialized or not OptionPackageEnum.HasPackageNameDict[arg_10_1] then
+function OptionPackageController:checkNeedDownload(packName)
+	if ProjBooter.instance:isUseBigZip() then
+		if not self._initialized or not OptionPackageEnum.HasPackageNameDict[packName] then
+			return false
+		end
+
+		if GameResMgr.IsFromEditorDir and not HotUpdateOptionPackageMgr.EnableEditorDebug then
+			return false
+		end
+
+		local isDone, isAllSuccess = self._httpWorker:checkWorkDone()
+
+		if not isDone then
+			self:_startHttpBlock()
+
+			return true
+		end
+
+		if isDone and not isAllSuccess then
+			self._httpWorker:againGetHttp(self._onHttpWorkerDone, self)
+			self:_startHttpBlock()
+
+			return true
+		end
+
+		local packageSetMO = OptionPackageModel.instance:getPackageSetMO(packName)
+		local curVoiceLangs = OptionPackageModel.instance:getNeedVoiceLangList()
+
+		if packageSetMO:isNeedDownload(curVoiceLangs) then
+			local allSize, localSize = packageSetMO:getDownloadSize(curVoiceLangs)
+			local needDownloadSize, size, units = OptionPackageHelper.getLeftSizeMBorGB(allSize, localSize)
+			local tipsStr = string.format("是否下载常驻活动资源？\n资源大小:%.2f%s", needDownloadSize, units)
+
+			self:_showDownloadMsgBox(packName, tipsStr)
+
+			return true
+		end
+
 		return false
+	else
+		return self:_checkNeedDownloadNew(packName)
 	end
+end
 
+function OptionPackageController:_checkNeedDownloadNew(packName)
 	if GameResMgr.IsFromEditorDir and not HotUpdateOptionPackageMgr.EnableEditorDebug then
 		return false
 	end
 
-	local var_10_0, var_10_1 = arg_10_0._httpWorker:checkWorkDone()
+	local diffList, allSize, dlcTypeList = OptionPackageDownloadMgr.instance:getDLCDiff(packName)
 
-	if not var_10_0 then
-		arg_10_0:_startHttpBlock()
+	if allSize > 0 then
+		local needDownloadSize, size, units = OptionPackageHelper.getLeftSizeMBorGB(allSize)
+		local tipsStr = string.format("是否下载常驻活动资源？\n资源大小:%.2f%s", needDownloadSize, units)
 
-		return true
-	end
-
-	if var_10_0 and not var_10_1 then
-		arg_10_0._httpWorker:againGetHttp(arg_10_0._onHttpWorkerDone, arg_10_0)
-		arg_10_0:_startHttpBlock()
-
-		return true
-	end
-
-	local var_10_2 = OptionPackageModel.instance:getPackageSetMO(arg_10_1)
-	local var_10_3 = OptionPackageModel.instance:getNeedVoiceLangList()
-
-	if var_10_2:isNeedDownload(var_10_3) then
-		local var_10_4, var_10_5 = var_10_2:getDownloadSize(var_10_3)
-		local var_10_6, var_10_7, var_10_8 = OptionPackageHelper.getLeftSizeMBorGB(var_10_4, var_10_5)
-		local var_10_9 = formatLuaLang("OptionPackageController_checkNeedDownload", var_10_6, var_10_8)
-
-		arg_10_0:_showDownloadMsgBox(arg_10_1, var_10_9)
+		self:_showDownloadMsgBox(packName, tipsStr, diffList, dlcTypeList)
 
 		return true
 	end
@@ -183,120 +211,128 @@ function var_0_0.checkNeedDownload(arg_10_0, arg_10_1)
 	return false
 end
 
-function var_0_0._showDownloadMsgBox(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._downloadPackName = arg_11_1
+function OptionPackageController:_showDownloadMsgBox(packName, tipsStr, diffList, dlcTypeList)
+	self._downloadList = diffList
+	self._downloadDLCTypeList = dlcTypeList
+	self._downloadPackName = packName
 
-	local var_11_0 = MessageBoxIdDefine.ForbidLogin
-	local var_11_1 = MsgBoxEnum.BoxType.Yes_No
-	local var_11_2 = "确定下载"
-	local var_11_3 = "YES DOWNLOAD"
-	local var_11_4 = "取消下载"
-	local var_11_5 = "CANCEL DOWNLOAD"
-	local var_11_6 = var_0_0._downloaderYes
-	local var_11_7 = var_0_0._downloaderNo
+	local messageBoxId = MessageBoxIdDefine.ForbidLogin
+	local msgBoxType = MsgBoxEnum.BoxType.Yes_No
+	local yesStr = "确定下载"
+	local yesStrEn = "YES DOWNLOAD"
+	local noStr = "取消下载"
+	local noStrEn = "CANCEL DOWNLOAD"
+	local yesCallback = OptionPackageController._downloaderYes
+	local noCallback = OptionPackageController._downloaderNo
 
-	MessageBoxController.instance:showSystemMsgBox(var_11_0, var_11_1, var_11_6, var_11_7, nil, nil, nil, nil, arg_11_2)
+	MessageBoxController.instance:showSystemMsgBox(messageBoxId, msgBoxType, yesCallback, noCallback, nil, nil, nil, nil, tipsStr)
 end
 
-function var_0_0.stopDownload(arg_12_0)
-	if arg_12_0._downloader then
-		arg_12_0._downloader:cancelDownload()
+function OptionPackageController:stopDownload()
+	if self._downloader then
+		self._downloader:cancelDownload()
 	end
 
-	var_0_0.instance._downloadPackName = nil
+	OptionPackageController.instance._downloadPackName = nil
 
-	arg_12_0:_updateLocalVersion()
+	self:_updateLocalVersion()
 	ViewMgr.instance:closeView(ViewName.OptionPackageDownloadView)
 end
 
-function var_0_0._downloaderNo()
-	var_0_0.instance._downloadPackName = nil
+function OptionPackageController._downloaderNo()
+	OptionPackageController.instance._downloadPackName = nil
 end
 
-function var_0_0._downloaderYes()
-	var_0_0.instance:_onStartDownload()
+function OptionPackageController._downloaderYes()
+	OptionPackageController.instance:_onStartDownload()
 end
 
-function var_0_0._onStartDownload(arg_15_0)
-	local var_15_0 = arg_15_0._downloadPackName
+function OptionPackageController:_onStartDownload()
+	local packSetName = self._downloadPackName
 
-	arg_15_0._downloadPackName = nil
+	self._downloadPackName = nil
 
-	local var_15_1 = OptionPackageModel.instance:getPackageSetMO(var_15_0)
-	local var_15_2 = OptionPackageModel.instance:getNeedVoiceLangList()
-	local var_15_3 = var_15_1:getDownloadInfoListTb(var_15_2)
+	local packageSetMO = OptionPackageModel.instance:getPackageSetMO(packSetName)
+	local curVoiceLangs = OptionPackageModel.instance:getNeedVoiceLangList()
+	local downloadListTb = packageSetMO:getDownloadInfoListTb(curVoiceLangs)
 
-	arg_15_0._adapter:setDownloder(arg_15_0._downloader, arg_15_0._httpWorker)
-	ViewMgr.instance:openView(ViewName.OptionPackageDownloadView)
-	arg_15_0._downloader:start(var_15_3, arg_15_0._onDownloadFinish, arg_15_0, arg_15_0._adapter)
-	OptionPackageModel.instance:addLocalPackSetName(var_15_0)
+	if ProjBooter.instance:isUseBigZip() then
+		self._adapter:setDownloder(self._downloader, self._httpWorker)
+		ViewMgr.instance:openView(ViewName.OptionPackageDownloadView)
+		self._downloader:start(downloadListTb, self._onDownloadFinish, self, self._adapter)
+	else
+		ViewMgr.instance:openView(ViewName.OptionPackageDownloadView)
+		OptionPackageDownloadMgr.instance:startDownload(packSetName, self._downloadList, self._downloadDLCTypeList, self._onDownloadFinish, self)
+	end
 
-	local var_15_4 = {}
+	OptionPackageModel.instance:addLocalPackSetName(packSetName)
 
-	for iter_15_0, iter_15_1 in pairs(var_15_3) do
-		if iter_15_1 and iter_15_1.res and #iter_15_1.res > 0 then
-			table.insert(var_15_4, iter_15_0)
+	local download_pack_list = {}
+
+	for lang, langTb in pairs(downloadListTb) do
+		if langTb and langTb.res and #langTb.res > 0 then
+			table.insert(download_pack_list, lang)
 		end
 	end
 
-	local var_15_5 = {
-		resource_type = var_15_4
-	}
+	local data = {}
 
-	SDKDataTrackMgr.instance:trackOptionPackConfirmDownload(var_15_5)
+	data.resource_type = download_pack_list
+
+	SDKDataTrackMgr.instance:trackOptionPackConfirmDownload(data)
 end
 
-function var_0_0._onDownloadFinish(arg_16_0)
+function OptionPackageController:_onDownloadFinish()
 	GameFacade.showToast(ToastEnum.VersionResDownloadSuccess)
-	arg_16_0:_updateLocalVersion()
+	self:_updateLocalVersion()
 	ViewMgr.instance:closeView(ViewName.OptionPackageDownloadView)
 end
 
-function var_0_0.getLocalVersionInt(arg_17_0, arg_17_1)
-	if not arg_17_0._initialized then
+function OptionPackageController:getLocalVersionInt(packItemName)
+	if not self._initialized then
 		return 0
 	end
 
-	local var_17_0 = arg_17_0._optionalUpdateInst:GetLocalVersion(arg_17_1)
+	local versionStr = self._optionalUpdateInst:GetLocalVersion(packItemName)
 
-	if not string.nilorempty(var_17_0) then
-		return tonumber(var_17_0)
+	if not string.nilorempty(versionStr) then
+		return tonumber(versionStr)
 	end
 
 	return 0
 end
 
-function var_0_0.getPackItemState(arg_18_0, arg_18_1, arg_18_2)
-	if not arg_18_0._initialized then
+function OptionPackageController:getPackItemState(packItemName, latestVersion)
+	if not self._initialized then
 		return OptionPackageEnum.UpdateState.AlreadyLatest
 	end
 
-	return arg_18_0._optionalUpdateInst:GetPackItemState(arg_18_1, arg_18_2)
+	return self._optionalUpdateInst:GetPackItemState(packItemName, latestVersion)
 end
 
-function var_0_0._getPackageName(arg_19_0, arg_19_1)
-	if not arg_19_0._initialized or not OptionPackageEnum.HasPackageNameDict[arg_19_1] then
+function OptionPackageController:_getPackageName(packageName)
+	if not self._initialized or not OptionPackageEnum.HasPackageNameDict[packageName] then
 		return
 	end
 
-	local var_19_0 = HotUpdateOptionPackageMgr.instance:getPackageNameList()
+	local packageNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList()
 
-	if not tabletool.indexOf(var_19_0, arg_19_1) then
+	if not tabletool.indexOf(packageNameList, packageName) then
 		-- block empty
 	end
 end
 
-function OptionPackageHttpWorker.againGetHttp(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0._httpGetterOnFinshFunc = arg_20_1
-	arg_20_0._httpGetterOnFinshObj = arg_20_2
+function OptionPackageHttpWorker:againGetHttp(onFinish, finishObj)
+	self._httpGetterOnFinshFunc = onFinish
+	self._httpGetterOnFinshObj = finishObj
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._httpGetterList) do
-		if not arg_20_0._httpGetterFinishDict[iter_20_1:getHttpId()] then
-			iter_20_1:start(arg_20_0._onHttpGetterFinish, arg_20_0)
+	for _, httpGetter in pairs(self._httpGetterList) do
+		if not self._httpGetterFinishDict[httpGetter:getHttpId()] then
+			httpGetter:start(self._onHttpGetterFinish, self)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+OptionPackageController.instance = OptionPackageController.New()
 
-return var_0_0
+return OptionPackageController

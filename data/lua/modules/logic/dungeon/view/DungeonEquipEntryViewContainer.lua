@@ -1,26 +1,28 @@
-﻿module("modules.logic.dungeon.view.DungeonEquipEntryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonEquipEntryViewContainer.lua
 
-local var_0_0 = class("DungeonEquipEntryViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.DungeonEquipEntryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local DungeonEquipEntryViewContainer = class("DungeonEquipEntryViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, DungeonEquipEntryView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+function DungeonEquipEntryViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, DungeonEquipEntryView.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function DungeonEquipEntryViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	})
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-return var_0_0
+return DungeonEquipEntryViewContainer

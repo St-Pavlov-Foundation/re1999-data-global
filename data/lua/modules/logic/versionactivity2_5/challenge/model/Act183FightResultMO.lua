@@ -1,29 +1,31 @@
-﻿module("modules.logic.versionactivity2_5.challenge.model.Act183FightResultMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/model/Act183FightResultMO.lua
 
-local var_0_0 = pureTable("Act183FightResultMO")
+module("modules.logic.versionactivity2_5.challenge.model.Act183FightResultMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._episodeId = arg_1_1.episodeId
-	arg_1_0._heroes = Act183Helper.rpcInfosToList(arg_1_1.heroes, Act183HeroMO)
-	arg_1_0._unlockConditions = {}
+local Act183FightResultMO = pureTable("Act183FightResultMO")
 
-	tabletool.addValues(arg_1_0._unlockConditions, arg_1_1.unlockConditions)
+function Act183FightResultMO:init(info)
+	self._episodeId = info.episodeId
+	self._heroes = Act183Helper.rpcInfosToList(info.heroes, Act183HeroMO)
+	self._unlockConditions = {}
 
-	arg_1_0._star = arg_1_1.star
+	tabletool.addValues(self._unlockConditions, info.unlockConditions)
+
+	self._star = info.star
 end
 
-function var_0_0.getHeroes(arg_2_0)
-	return arg_2_0._heroes
+function Act183FightResultMO:getHeroes()
+	return self._heroes
 end
 
-function var_0_0.isConditionPass(arg_3_0, arg_3_1)
-	if arg_3_0._unlockConditions then
-		return tabletool.indexOf(arg_3_0._unlockConditions, arg_3_1) ~= nil
+function Act183FightResultMO:isConditionPass(conditionId)
+	if self._unlockConditions then
+		return tabletool.indexOf(self._unlockConditions, conditionId) ~= nil
 	end
 end
 
-function var_0_0.getFinishStarCount(arg_4_0)
-	return arg_4_0._star
+function Act183FightResultMO:getFinishStarCount()
+	return self._star
 end
 
-return var_0_0
+return Act183FightResultMO

@@ -1,82 +1,84 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionLineItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotCollectionLineItem.lua
 
-local var_0_0 = class("V1a6_CachotCollectionLineItem", MixScrollCell)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionLineItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._golayout = gohelper.findChild(arg_1_1, "#go_layout")
-	arg_1_0._gotop = gohelper.findChild(arg_1_1, "#go_top")
-	arg_1_0._imagetitleicon = gohelper.findChildImage(arg_1_1, "#go_top/#image_titleicon")
+local V1a6_CachotCollectionLineItem = class("V1a6_CachotCollectionLineItem", MixScrollCell)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotCollectionLineItem:init(go)
+	self.viewGO = go
+	self._golayout = gohelper.findChild(go, "#go_layout")
+	self._gotop = gohelper.findChild(go, "#go_top")
+	self._imagetitleicon = gohelper.findChildImage(go, "#go_top/#image_titleicon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function V1a6_CachotCollectionLineItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function V1a6_CachotCollectionLineItem:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0._mo = arg_4_1
+function V1a6_CachotCollectionLineItem:onUpdateMO(mo, mixType, param)
+	self._mo = mo
 
-	arg_4_0:_initCloneCollectionItemRes()
-	arg_4_0:refreshUI()
+	self:_initCloneCollectionItemRes()
+	self:refreshUI()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._animator = gohelper.onceAddComponent(arg_5_0.viewGO, gohelper.Type_Animator)
+function V1a6_CachotCollectionLineItem:_editableInitView()
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 
-	V1a6_CachotCollectionController.instance:registerCallback(V1a6_CachotEvent.OnSwitchCategory, arg_5_0._resetAnimPlayState, arg_5_0)
+	V1a6_CachotCollectionController.instance:registerCallback(V1a6_CachotEvent.OnSwitchCategory, self._resetAnimPlayState, self)
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	gohelper.setActive(arg_6_0._gotop, arg_6_0._mo._isTop)
-	UISpriteSetMgr.instance:setV1a6CachotSprite(arg_6_0._imagetitleicon, "v1a6_cachot_icon_collectionsort" .. arg_6_0._mo.collectionType)
-	gohelper.CreateObjList(arg_6_0, arg_6_0._onUpdateCollectionItem, arg_6_0._mo.collectionList, arg_6_0._golayout, arg_6_0._cloneCollectionItemRes, V1a6_CachotCollectionItem)
-	arg_6_0:_playAnim()
+function V1a6_CachotCollectionLineItem:refreshUI()
+	gohelper.setActive(self._gotop, self._mo._isTop)
+	UISpriteSetMgr.instance:setV1a6CachotSprite(self._imagetitleicon, "v1a6_cachot_icon_collectionsort" .. self._mo.collectionType)
+	gohelper.CreateObjList(self, self._onUpdateCollectionItem, self._mo.collectionList, self._golayout, self._cloneCollectionItemRes, V1a6_CachotCollectionItem)
+	self:_playAnim()
 end
 
-function var_0_0._onUpdateCollectionItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	gohelper.setActive(arg_7_1.viewGO, arg_7_2 ~= nil)
+function V1a6_CachotCollectionLineItem:_onUpdateCollectionItem(obj, collectionCfg, index)
+	gohelper.setActive(obj.viewGO, collectionCfg ~= nil)
 
-	if arg_7_2 then
-		arg_7_1:onUpdateMO(arg_7_2, arg_7_0._index)
+	if collectionCfg then
+		obj:onUpdateMO(collectionCfg, self._index)
 	end
 end
 
-function var_0_0._initCloneCollectionItemRes(arg_8_0)
-	if not arg_8_0._cloneCollectionItemRes then
-		local var_8_0 = ViewMgr.instance:getSetting(arg_8_0._view.viewName)
+function V1a6_CachotCollectionLineItem:_initCloneCollectionItemRes()
+	if not self._cloneCollectionItemRes then
+		local viewSetting = ViewMgr.instance:getSetting(self._view.viewName)
 
-		arg_8_0._cloneCollectionItemRes = arg_8_0._view.viewContainer:getRes(var_8_0.otherRes[1])
+		self._cloneCollectionItemRes = self._view.viewContainer:getRes(viewSetting.otherRes[1])
 	end
 end
 
-function var_0_0._playAnim(arg_9_0)
-	if arg_9_0._mo._isTop and not arg_9_0._isPlayOpenAnimFinished then
-		arg_9_0._animator:Play("open", 0, 0)
+function V1a6_CachotCollectionLineItem:_playAnim()
+	if self._mo._isTop and not self._isPlayOpenAnimFinished then
+		self._animator:Play("open", 0, 0)
 
-		arg_9_0._isPlayOpenAnimFinished = true
+		self._isPlayOpenAnimFinished = true
 	else
-		arg_9_0._animator:Play("idle", 0, 0)
+		self._animator:Play("idle", 0, 0)
 	end
 end
 
-function var_0_0._resetAnimPlayState(arg_10_0)
-	arg_10_0._isPlayOpenAnimFinished = false
+function V1a6_CachotCollectionLineItem:_resetAnimPlayState()
+	self._isPlayOpenAnimFinished = false
 
-	arg_10_0:_playAnim()
+	self:_playAnim()
 end
 
-function var_0_0.onDestroy(arg_11_0)
-	arg_11_0._cloneCollectionItemRes = nil
+function V1a6_CachotCollectionLineItem:onDestroy()
+	self._cloneCollectionItemRes = nil
 
-	V1a6_CachotCollectionController.instance:unregisterCallback(V1a6_CachotEvent.OnSwitchCategory, arg_11_0._resetAnimPlayState, arg_11_0)
+	V1a6_CachotCollectionController.instance:unregisterCallback(V1a6_CachotEvent.OnSwitchCategory, self._resetAnimPlayState, self)
 end
 
-return var_0_0
+return V1a6_CachotCollectionLineItem

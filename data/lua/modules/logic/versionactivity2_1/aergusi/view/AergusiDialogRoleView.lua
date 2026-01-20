@@ -1,205 +1,207 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/view/AergusiDialogRoleView.lua
 
-local var_0_0 = class("AergusiDialogRoleView", BaseView)
+module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gochesscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer")
-	arg_1_0._goleftchessitem = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer/#go_leftchessitem")
-	arg_1_0._gorightchessitem = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer/#go_rightchessitem")
+local AergusiDialogRoleView = class("AergusiDialogRoleView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AergusiDialogRoleView:onInitView()
+	self._gochesscontainer = gohelper.findChild(self.viewGO, "#go_chesscontainer")
+	self._goleftchessitem = gohelper.findChild(self.viewGO, "#go_chesscontainer/#go_leftchessitem")
+	self._gorightchessitem = gohelper.findChild(self.viewGO, "#go_chesscontainer/#go_rightchessitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AergusiDialogRoleView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AergusiDialogRoleView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:_addEvents()
+function AergusiDialogRoleView:_editableInitView()
+	self:_addEvents()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:_initRoleItem()
+function AergusiDialogRoleView:onOpen()
+	self:_initRoleItem()
 end
 
-function var_0_0._initRoleItem(arg_6_0)
-	gohelper.setActive(arg_6_0._goleftchessitem, false)
-	gohelper.setActive(arg_6_0._gorightchessitem, false)
+function AergusiDialogRoleView:_initRoleItem()
+	gohelper.setActive(self._goleftchessitem, false)
+	gohelper.setActive(self._gorightchessitem, false)
 
-	arg_6_0._episodeConfig = AergusiConfig.instance:getEpisodeConfig(nil, arg_6_0.viewParam.episodeId)
+	self._episodeConfig = AergusiConfig.instance:getEpisodeConfig(nil, self.viewParam.episodeId)
 
-	if arg_6_0._episodeConfig.playerPieces ~= "" then
-		arg_6_0._rightRoleItem = AergusiDialogRoleRightItem.New()
+	if self._episodeConfig.playerPieces ~= "" then
+		self._rightRoleItem = AergusiDialogRoleRightItem.New()
 
-		arg_6_0._rightRoleItem:init(arg_6_0._gorightchessitem, arg_6_0._episodeConfig.playerPieces)
+		self._rightRoleItem:init(self._gorightchessitem, self._episodeConfig.playerPieces)
 	end
 
-	if arg_6_0._episodeConfig.opponentPieces ~= "" then
-		arg_6_0._leftRoleItem = AergusiDialogRoleLeftItem.New()
+	if self._episodeConfig.opponentPieces ~= "" then
+		self._leftRoleItem = AergusiDialogRoleLeftItem.New()
 
-		arg_6_0._leftRoleItem:init(arg_6_0._goleftchessitem, arg_6_0._episodeConfig.opponentPieces)
+		self._leftRoleItem:init(self._goleftchessitem, self._episodeConfig.opponentPieces)
 	end
 end
 
-function var_0_0._addEvents(arg_7_0)
-	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, arg_7_0._onEnterNextStep, arg_7_0)
-	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, arg_7_0._onStartAutoBubbleDialog, arg_7_0)
-	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, arg_7_0._onDialogAskFail, arg_7_0)
-	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, arg_7_0._onDialogStartErrorBubble, arg_7_0)
-	arg_7_0:addEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, arg_7_0._onDialogNotKeyAsk, arg_7_0)
+function AergusiDialogRoleView:_addEvents()
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, self._onEnterNextStep, self)
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, self._onStartAutoBubbleDialog, self)
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, self._onDialogAskFail, self)
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, self._onDialogStartErrorBubble, self)
+	self:addEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, self._onDialogNotKeyAsk, self)
 end
 
-function var_0_0._removeEvents(arg_8_0)
-	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, arg_8_0._onEnterNextStep, arg_8_0)
-	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, arg_8_0._onStartAutoBubbleDialog, arg_8_0)
-	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, arg_8_0._onDialogAskFail, arg_8_0)
-	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, arg_8_0._onDialogStartErrorBubble, arg_8_0)
-	arg_8_0:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, arg_8_0._onDialogNotKeyAsk, arg_8_0)
+function AergusiDialogRoleView:_removeEvents()
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnStartDialogNextStep, self._onEnterNextStep, self)
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnStartAutoBubbleDialog, self._onStartAutoBubbleDialog, self)
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogAskFail, self._onDialogAskFail, self)
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnStartErrorBubbleDialog, self._onDialogStartErrorBubble, self)
+	self:removeEventCb(AergusiController.instance, AergusiEvent.OnDialogNotKeyAsk, self._onDialogNotKeyAsk, self)
 end
 
-function var_0_0._onEnterNextStep(arg_9_0, arg_9_1)
-	arg_9_0._stepCo = arg_9_1
+function AergusiDialogRoleView:_onEnterNextStep(stepCo)
+	self._stepCo = stepCo
 
-	if arg_9_0._rightRoleItem then
-		arg_9_0._rightRoleItem:hideTalking()
+	if self._rightRoleItem then
+		self._rightRoleItem:hideTalking()
 	end
 
-	if arg_9_0._leftRoleItem then
-		arg_9_0._leftRoleItem:hideTalking()
+	if self._leftRoleItem then
+		self._leftRoleItem:hideTalking()
 	end
 
-	if arg_9_0._stepCo.pos == AergusiEnum.DialogType.NormalLeft then
-		if arg_9_0._leftRoleItem then
-			arg_9_0._leftRoleItem:showTalking()
+	if self._stepCo.pos == AergusiEnum.DialogType.NormalLeft then
+		if self._leftRoleItem then
+			self._leftRoleItem:showTalking()
 		end
-	elseif arg_9_0._stepCo.pos == AergusiEnum.DialogType.NormalRight and arg_9_0._rightRoleItem then
-		arg_9_0._rightRoleItem:showTalking()
+	elseif self._stepCo.pos == AergusiEnum.DialogType.NormalRight and self._rightRoleItem then
+		self._rightRoleItem:showTalking()
 	end
 end
 
-function var_0_0._onStartAutoBubbleDialog(arg_10_0, arg_10_1)
-	TaskDispatcher.cancelTask(arg_10_0._playNextAutoBubble, arg_10_0)
+function AergusiDialogRoleView:_onStartAutoBubbleDialog(param)
+	TaskDispatcher.cancelTask(self._playNextAutoBubble, self)
 
-	arg_10_0._autoCallback = arg_10_1.callback
-	arg_10_0._autoCallbackObj = arg_10_1.callbackObj
-	arg_10_0._stepCo = arg_10_1.stepCo
+	self._autoCallback = param.callback
+	self._autoCallbackObj = param.callbackObj
+	self._stepCo = param.stepCo
 
-	if arg_10_0._stepCo.condition ~= "" then
-		local var_10_0 = string.splitToNumber(arg_10_0._stepCo.condition, "#")
+	if self._stepCo.condition ~= "" then
+		local conditions = string.splitToNumber(self._stepCo.condition, "#")
 
-		if var_10_0[1] == AergusiEnum.OperationType.AutoBubble then
-			arg_10_0:_playBubbleGroup(var_10_0[2])
+		if conditions[1] == AergusiEnum.OperationType.AutoBubble then
+			self:_playBubbleGroup(conditions[2])
 
 			return
 		end
 	end
 
-	arg_10_0:_autoFinishCallback()
+	self:_autoFinishCallback()
 end
 
-function var_0_0._onDialogAskFail(arg_11_0, arg_11_1)
-	TaskDispatcher.cancelTask(arg_11_0._playNextAutoBubble, arg_11_0)
+function AergusiDialogRoleView:_onDialogAskFail(stepCo)
+	TaskDispatcher.cancelTask(self._playNextAutoBubble, self)
 
-	arg_11_0._stepCo = arg_11_1
+	self._stepCo = stepCo
 
-	local var_11_0 = AergusiConfig.instance:getEvidenceConfig(arg_11_0._stepCo.id).tips
+	local bubbleGroupId = AergusiConfig.instance:getEvidenceConfig(self._stepCo.id).tips
 
-	arg_11_0:_playBubbleGroup(var_11_0)
+	self:_playBubbleGroup(bubbleGroupId)
 end
 
-function var_0_0._onDialogStartErrorBubble(arg_12_0, arg_12_1)
-	TaskDispatcher.cancelTask(arg_12_0._playNextAutoBubble, arg_12_0)
+function AergusiDialogRoleView:_onDialogStartErrorBubble(param)
+	TaskDispatcher.cancelTask(self._playNextAutoBubble, self)
 
-	arg_12_0._autoCallback = arg_12_1.callback
-	arg_12_0._autoCallbackObj = arg_12_1.callbackObj
+	self._autoCallback = param.callback
+	self._autoCallbackObj = param.callbackObj
 
-	arg_12_0:_playBubbleGroup(arg_12_1.bubbleId)
+	self:_playBubbleGroup(param.bubbleId)
 end
 
-function var_0_0._onDialogNotKeyAsk(arg_13_0, arg_13_1)
-	arg_13_0:_playBubbleGroup(arg_13_1)
+function AergusiDialogRoleView:_onDialogNotKeyAsk(bubbleGroupId)
+	self:_playBubbleGroup(bubbleGroupId)
 end
 
-function var_0_0._playBubbleGroup(arg_14_0, arg_14_1)
+function AergusiDialogRoleView:_playBubbleGroup(bubbleGroupId)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
-	arg_14_0._playIndex = 1
-	arg_14_0._bubbleId = arg_14_1
+	self._playIndex = 1
+	self._bubbleId = bubbleGroupId
 
-	arg_14_0:_playNextAutoBubble()
+	self:_playNextAutoBubble()
 end
 
-function var_0_0._playNextAutoBubble(arg_15_0)
-	if arg_15_0._rightRoleItem then
-		arg_15_0._rightRoleItem:hideBubble()
-		arg_15_0._rightRoleItem:hideTalking()
+function AergusiDialogRoleView:_playNextAutoBubble()
+	if self._rightRoleItem then
+		self._rightRoleItem:hideBubble()
+		self._rightRoleItem:hideTalking()
 	end
 
-	if arg_15_0._leftRoleItem then
-		arg_15_0._leftRoleItem:hideBubble()
-		arg_15_0._leftRoleItem:hideTalking()
+	if self._leftRoleItem then
+		self._leftRoleItem:hideBubble()
+		self._leftRoleItem:hideTalking()
 	end
 
-	local var_15_0 = AergusiDialogModel.instance:getBubbleStepList(arg_15_0._bubbleId)
+	local stepList = AergusiDialogModel.instance:getBubbleStepList(self._bubbleId)
 
-	if arg_15_0._playIndex > #var_15_0 then
-		arg_15_0:_autoFinishCallback()
+	if self._playIndex > #stepList then
+		self:_autoFinishCallback()
 
 		return
 	else
-		local var_15_1 = AergusiConfig.instance:getBubbleConfig(arg_15_0._bubbleId, var_15_0[arg_15_0._playIndex].stepId)
+		local bubbleCo = AergusiConfig.instance:getBubbleConfig(self._bubbleId, stepList[self._playIndex].stepId)
 
-		if var_15_1.direction == AergusiEnum.DialogBubblePos.Left then
-			if arg_15_0._leftRoleItem then
-				arg_15_0._leftRoleItem:showBubble(var_15_0[arg_15_0._playIndex])
+		if bubbleCo.direction == AergusiEnum.DialogBubblePos.Left then
+			if self._leftRoleItem then
+				self._leftRoleItem:showBubble(stepList[self._playIndex])
 			end
-		elseif arg_15_0._rightRoleItem then
-			arg_15_0._rightRoleItem:showBubble(var_15_0[arg_15_0._playIndex])
+		elseif self._rightRoleItem then
+			self._rightRoleItem:showBubble(stepList[self._playIndex])
 		end
 
-		local var_15_2 = 0.05 * LuaUtil.getStrLen(var_15_1.content) + 1
+		local intervelTime = 0.05 * LuaUtil.getStrLen(bubbleCo.content) + 1
 
-		TaskDispatcher.runDelay(arg_15_0._playNextAutoBubble, arg_15_0, var_15_2)
+		TaskDispatcher.runDelay(self._playNextAutoBubble, self, intervelTime)
 	end
 
-	arg_15_0._playIndex = arg_15_0._playIndex + 1
+	self._playIndex = self._playIndex + 1
 end
 
-function var_0_0._autoFinishCallback(arg_16_0)
-	if arg_16_0._autoCallback then
-		arg_16_0._autoCallback(arg_16_0._autoCallbackObj)
+function AergusiDialogRoleView:_autoFinishCallback()
+	if self._autoCallback then
+		self._autoCallback(self._autoCallbackObj)
 
-		arg_16_0._autoCallback = nil
-		arg_16_0._autoCallbackObj = nil
+		self._autoCallback = nil
+		self._autoCallbackObj = nil
 	end
 end
 
-function var_0_0.onClose(arg_17_0)
+function AergusiDialogRoleView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0._playNextAutoBubble, arg_18_0)
+function AergusiDialogRoleView:onDestroyView()
+	TaskDispatcher.cancelTask(self._playNextAutoBubble, self)
 
-	if arg_18_0._rightRoleItem then
-		arg_18_0._rightRoleItem:destroy()
+	if self._rightRoleItem then
+		self._rightRoleItem:destroy()
 
-		arg_18_0._rightRoleItem = nil
+		self._rightRoleItem = nil
 	end
 
-	if arg_18_0._leftRoleItem then
-		arg_18_0._leftRoleItem:destroy()
+	if self._leftRoleItem then
+		self._leftRoleItem:destroy()
 
-		arg_18_0._leftRoleItem = nil
+		self._leftRoleItem = nil
 	end
 
-	arg_18_0:_removeEvents()
+	self:_removeEvents()
 end
 
-return var_0_0
+return AergusiDialogRoleView

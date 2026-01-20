@@ -1,86 +1,89 @@
-﻿module("modules.logic.room.view.manufacture.RoomViewUICritterBuildingItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomViewUICritterBuildingItem.lua
 
-local var_0_0 = class("RoomViewUICritterBuildingItem", RoomViewUIBaseItem)
+module("modules.logic.room.view.manufacture.RoomViewUICritterBuildingItem", package.seeall)
 
-function var_0_0._customOnInit(arg_1_0)
-	arg_1_0._gomain = gohelper.findChild(arg_1_0._gocontainer, "bubblebg/#go_main")
-	arg_1_0._imagebuildingicon = gohelper.findChildImage(arg_1_0._gocontainer, "#image_buildingicon")
-	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0._gocontainer, "bottom/txt_buildingName")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0._gocontainer, "bottom/#go_reddot")
-	arg_1_0._txtnamecn.text = luaLang("critter_restroom_name")
+local RoomViewUICritterBuildingItem = class("RoomViewUICritterBuildingItem", RoomViewUIBaseItem)
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_1_0._imagebuildingicon, "critter_buildingicon_1")
-	gohelper.setActive(arg_1_0._gomain, true)
+function RoomViewUICritterBuildingItem:_customOnInit()
+	self._gomain = gohelper.findChild(self._gocontainer, "bubblebg/#go_main")
+	self._imagebuildingicon = gohelper.findChildImage(self._gocontainer, "#image_buildingicon")
+	self._txtnamecn = gohelper.findChildText(self._gocontainer, "bottom/txt_buildingName")
+	self._goreddot = gohelper.findChild(self._gocontainer, "bottom/#go_reddot")
+	self._txtnamecn.text = luaLang("critter_restroom_name")
+
+	UISpriteSetMgr.instance:setCritterSprite(self._imagebuildingicon, "critter_buildingicon_1")
+	gohelper.setActive(self._gomain, true)
 end
 
-function var_0_0._customAddEventListeners(arg_2_0)
-	arg_2_0:refreshUI(true)
+function RoomViewUICritterBuildingItem:_customAddEventListeners()
+	self:refreshUI(true)
 end
 
-function var_0_0._customRemoveEventListeners(arg_3_0)
+function RoomViewUICritterBuildingItem:_customRemoveEventListeners()
 	return
 end
 
-function var_0_0._onClick(arg_4_0, arg_4_1, arg_4_2)
+function RoomViewUICritterBuildingItem:_onClick(go, param)
 	ManufactureController.instance:openCritterBuildingView()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.refreshUI(arg_5_0, arg_5_1)
-	arg_5_0:_refreshShow(arg_5_1)
-	arg_5_0:_refreshPosition()
+function RoomViewUICritterBuildingItem:refreshUI(isInit)
+	self:_refreshShow(isInit)
+	self:_refreshPosition()
 end
 
-function var_0_0._refreshShow(arg_6_0, arg_6_1)
+function RoomViewUICritterBuildingItem:_refreshShow(isInit)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		arg_6_0:_setShow(false, arg_6_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	local var_6_0 = arg_6_0._scene.camera:getCameraState()
+	local cameraState = self._scene.camera:getCameraState()
 
-	if var_6_0 ~= RoomEnum.CameraState.Overlook and var_6_0 ~= RoomEnum.CameraState.OverlookAll then
-		arg_6_0:_setShow(false, arg_6_1)
+	if cameraState ~= RoomEnum.CameraState.Overlook and cameraState ~= RoomEnum.CameraState.OverlookAll then
+		self:_setShow(false, isInit)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		arg_6_0:_setShow(false, arg_6_1)
+		self:_setShow(false, isInit)
 
 		return
 	end
 
-	arg_6_0:_setShow(true, arg_6_1)
+	self:_setShow(true, isInit)
 end
 
-function var_0_0.getUI3DPos(arg_7_0)
-	local var_7_0
-	local var_7_1 = ManufactureModel.instance:getCritterBuildingListInOrder()
+function RoomViewUICritterBuildingItem:getUI3DPos()
+	local buildingUid
+	local buildingList = ManufactureModel.instance:getCritterBuildingListInOrder()
 
-	if var_7_1 then
-		var_7_0 = var_7_1[1].buildingUid
+	if buildingList then
+		buildingUid = buildingList[1].buildingUid
 	end
 
-	local var_7_2 = arg_7_0._scene.buildingmgr:getBuildingEntity(var_7_0, SceneTag.RoomBuilding)
+	local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid, SceneTag.RoomBuilding)
 
-	if not var_7_2 then
-		arg_7_0:_setShow(false, true)
+	if not buildingEntity then
+		self:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	local var_7_3 = var_7_2:getHeadGO()
-	local var_7_4 = var_7_2.containerGO
-	local var_7_5 = var_7_3 and var_7_3.transform.position or var_7_4.transform.position
-	local var_7_6 = Vector3(var_7_5.x, var_7_5.y, var_7_5.z)
+	local headGO = buildingEntity:getHeadGO()
+	local containerGo = buildingEntity.containerGO
+	local position = headGO and headGO.transform.position or containerGo.transform.position
+	local worldPos = Vector3(position.x, position.y, position.z)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
 
-	return (RoomBendingHelper.worldToBendingSimple(var_7_6))
+	return bendingPos
 end
 
-function var_0_0._customOnDestory(arg_8_0)
+function RoomViewUICritterBuildingItem:_customOnDestory()
 	return
 end
 
-return var_0_0
+return RoomViewUICritterBuildingItem

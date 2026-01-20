@@ -1,113 +1,115 @@
-﻿module("modules.logic.store.view.StoreSkinConfirmView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinConfirmView.lua
 
-local var_0_0 = class("StoreSkinConfirmView", BaseView)
+module("modules.logic.store.view.StoreSkinConfirmView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagehuawen1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen1")
-	arg_1_0._simagehuawen2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/tipbg/#simage_huawen2")
-	arg_1_0._simagebeforeicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/before/#simage_beforeicon")
-	arg_1_0._simageaftericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "cost/after/#simage_aftericon")
-	arg_1_0._txtbeforequantity = gohelper.findChildText(arg_1_0.viewGO, "cost/before/numbg/#txt_beforequantity")
-	arg_1_0._txtafterquantity = gohelper.findChildText(arg_1_0.viewGO, "cost/after/numbg/#txt_afterquantity")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_desc")
-	arg_1_0._btnyes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_yes")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
+local StoreSkinConfirmView = class("StoreSkinConfirmView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoreSkinConfirmView:onInitView()
+	self._simagehuawen1 = gohelper.findChildSingleImage(self.viewGO, "bg/tipbg/#simage_huawen1")
+	self._simagehuawen2 = gohelper.findChildSingleImage(self.viewGO, "bg/tipbg/#simage_huawen2")
+	self._simagebeforeicon = gohelper.findChildSingleImage(self.viewGO, "cost/before/#simage_beforeicon")
+	self._simageaftericon = gohelper.findChildSingleImage(self.viewGO, "cost/after/#simage_aftericon")
+	self._txtbeforequantity = gohelper.findChildText(self.viewGO, "cost/before/numbg/#txt_beforequantity")
+	self._txtafterquantity = gohelper.findChildText(self.viewGO, "cost/after/numbg/#txt_afterquantity")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#txt_desc")
+	self._btnyes = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_yes")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_no")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
+function StoreSkinConfirmView:addEvents()
+	self._btnyes:AddClickListener(self._btnyesOnClick, self)
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnyes:RemoveClickListener()
-	arg_3_0._btnno:RemoveClickListener()
+function StoreSkinConfirmView:removeEvents()
+	self._btnyes:RemoveClickListener()
+	self._btnno:RemoveClickListener()
 end
 
-function var_0_0._btnyesOnClick(arg_4_0)
-	arg_4_0._yes = true
+function StoreSkinConfirmView:_btnyesOnClick()
+	self._yes = true
 
-	CurrencyController.instance:checkExchangeFreeDiamond(arg_4_0.viewParam.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.SkinStore, arg_4_0._callback, arg_4_0._callbackObj, arg_4_0.jumpCallBack, arg_4_0)
-	arg_4_0:closeThis()
+	CurrencyController.instance:checkExchangeFreeDiamond(self.viewParam.cost_quantity, CurrencyEnum.PayDiamondExchangeSource.SkinStore, self._callback, self._callbackObj, self.jumpCallBack, self)
+	self:closeThis()
 end
 
-function var_0_0._btnnoOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function StoreSkinConfirmView:_btnnoOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
-	arg_6_0._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
-	gohelper.addUIClickAudio(arg_6_0._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_6_0._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
+function StoreSkinConfirmView:_editableInitView()
+	self._simagehuawen1:LoadImage(ResUrl.getMessageIcon("huawen1_002"))
+	self._simagehuawen2:LoadImage(ResUrl.getMessageIcon("huawen2_003"))
+	gohelper.addUIClickAudio(self._btnyes.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(self._btnno.gameObject, AudioEnum.UI.UI_Common_Click)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:onOpen()
+function StoreSkinConfirmView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._type = arg_8_0.viewParam.type
-	arg_8_0._id = arg_8_0.viewParam.id
-	arg_8_0._quantity = arg_8_0.viewParam.quantity
-	arg_8_0._callback = arg_8_0.viewParam.callback
-	arg_8_0._callbackObj = arg_8_0.viewParam.callbackObj
-	arg_8_0._yes = false
-	arg_8_0.needTransform = arg_8_0.viewParam.needTransform
+function StoreSkinConfirmView:onOpen()
+	self._type = self.viewParam.type
+	self._id = self.viewParam.id
+	self._quantity = self.viewParam.quantity
+	self._callback = self.viewParam.callback
+	self._callbackObj = self.viewParam.callbackObj
+	self._yes = false
+	self.needTransform = self.viewParam.needTransform
 
-	local var_8_0 = false
+	local isDiamond = false
 
-	if arg_8_0._type == MaterialEnum.MaterialType.Currency and (arg_8_0._id == CurrencyEnum.CurrencyType.Diamond or arg_8_0._id == CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
-		var_8_0 = true
+	if self._type == MaterialEnum.MaterialType.Currency and (self._id == CurrencyEnum.CurrencyType.Diamond or self._id == CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
+		isDiamond = true
 	end
 
-	local var_8_1, var_8_2 = ItemModel.instance:getItemConfigAndIcon(arg_8_0._type, arg_8_0._id)
+	local config, icon = ItemModel.instance:getItemConfigAndIcon(self._type, self._id)
 
-	arg_8_0._simageaftericon:LoadImage(var_8_2)
+	self._simageaftericon:LoadImage(icon)
 
-	local var_8_3, var_8_4 = ItemModel.instance:getItemConfigAndIcon(arg_8_0.viewParam.cost_type, arg_8_0.viewParam.cost_id)
+	local afterConfig, afterIcon = ItemModel.instance:getItemConfigAndIcon(self.viewParam.cost_type, self.viewParam.cost_id)
 
-	arg_8_0._simagebeforeicon:LoadImage(var_8_4)
+	self._simagebeforeicon:LoadImage(afterIcon)
 
-	arg_8_0._txtbeforequantity.text = GameUtil.numberDisplay(arg_8_0.viewParam.cost_quantity)
-	arg_8_0._txtafterquantity.text = GameUtil.numberDisplay(arg_8_0.viewParam.miss_quantity)
+	self._txtbeforequantity.text = GameUtil.numberDisplay(self.viewParam.cost_quantity)
+	self._txtafterquantity.text = GameUtil.numberDisplay(self.viewParam.miss_quantity)
 
-	local var_8_5 = {
-		arg_8_0.viewParam.miss_quantity,
-		var_8_0 and luaLang("summon_confirm_quantifier1") or luaLang("skin_confirm_quantifier1"),
-		var_8_1.name,
-		arg_8_0.viewParam.cost_quantity,
-		var_8_3.name
+	local tag = {
+		self.viewParam.miss_quantity,
+		isDiamond and luaLang("summon_confirm_quantifier1") or luaLang("skin_confirm_quantifier1"),
+		config.name,
+		self.viewParam.cost_quantity,
+		afterConfig.name
 	}
 
-	arg_8_0._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("skin_transform_desc"), var_8_5)
+	self._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("skin_transform_desc"), tag)
 end
 
-function var_0_0.jumpCallBack(arg_9_0)
+function StoreSkinConfirmView:jumpCallBack()
 	ViewMgr.instance:closeView(ViewName.StoreSkinGoodsView)
 	ViewMgr.instance:closeView(ViewName.StoreSkinPreviewView)
-	arg_9_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_10_0)
+function StoreSkinConfirmView:onClose()
 	return
 end
 
-function var_0_0.onCloseFinish(arg_11_0)
-	if arg_11_0._yes and not arg_11_0.viewParam.notEnough and arg_11_0._callback then
-		arg_11_0._callback(arg_11_0._callbackObj)
+function StoreSkinConfirmView:onCloseFinish()
+	if self._yes and not self.viewParam.notEnough and self._callback then
+		self._callback(self._callbackObj)
 	end
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	arg_12_0._simagehuawen1:UnLoadImage()
-	arg_12_0._simagehuawen2:UnLoadImage()
-	arg_12_0._simagebeforeicon:UnLoadImage()
-	arg_12_0._simageaftericon:UnLoadImage()
+function StoreSkinConfirmView:onDestroyView()
+	self._simagehuawen1:UnLoadImage()
+	self._simagehuawen2:UnLoadImage()
+	self._simagebeforeicon:UnLoadImage()
+	self._simageaftericon:UnLoadImage()
 end
 
-return var_0_0
+return StoreSkinConfirmView

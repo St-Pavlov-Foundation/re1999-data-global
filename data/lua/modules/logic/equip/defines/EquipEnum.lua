@@ -1,11 +1,13 @@
-﻿module("modules.logic.equip.defines.EquipEnum", package.seeall)
+﻿-- chunkname: @modules/logic/equip/defines/EquipEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.equip.defines.EquipEnum", package.seeall)
 
-var_0_0.StrengthenMaxCount = 8
-var_0_0.RefineMaxCount = 5
-var_0_0.AnimationDurationTime = 0.167
-var_0_0.ChooseEquipStatus = {
+local EquipEnum = _M
+
+EquipEnum.StrengthenMaxCount = 8
+EquipEnum.RefineMaxCount = 5
+EquipEnum.AnimationDurationTime = 0.167
+EquipEnum.ChooseEquipStatus = {
 	Lock = 5,
 	BeyondEquipHadNum = 1,
 	ReduceNotSelectedEquip = 2,
@@ -13,7 +15,7 @@ var_0_0.ChooseEquipStatus = {
 	BeyondMaxSelectEquip = 3,
 	Success = 0
 }
-var_0_0.FromViewEnum = {
+EquipEnum.FromViewEnum = {
 	FromOdysseyHeroGroupFightView = 9,
 	FromCharacterView = 2,
 	FromCachotHeroGroupView = 4,
@@ -26,21 +28,22 @@ var_0_0.FromViewEnum = {
 	FromCachotHeroGroupFightView = 5,
 	FromPresetPreviewView = 11
 }
-var_0_0.ConstId = {
+EquipEnum.ConstId = {
 	equipNotShowRefineRare = 16
 }
-var_0_0.ClientEquipType = {
+EquipEnum.ClientEquipType = {
 	Config = 3,
 	TrialEquip = 2,
 	OtherPlayer = 4,
+	RecommedNot = 5,
 	TrialHero = 1,
 	Normal = 0
 }
-var_0_0.DecomposeMaxCount = 100
-var_0_0.DecomposeTxtAnimDuration = 0.5
-var_0_0.DecomposeAnimDuration = 0.9
-var_0_0.EquipEnterAnimWaitTime = 0.2
-var_0_0.EquipDecomposeMinRare = 2
-var_0_0.EquipDecomposeMaxRare = 3
+EquipEnum.DecomposeMaxCount = 100
+EquipEnum.DecomposeTxtAnimDuration = 0.5
+EquipEnum.DecomposeAnimDuration = 0.9
+EquipEnum.EquipEnterAnimWaitTime = 0.2
+EquipEnum.EquipDecomposeMinRare = 2
+EquipEnum.EquipDecomposeMaxRare = 3
 
-return var_0_0
+return EquipEnum

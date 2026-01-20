@@ -1,10 +1,12 @@
-﻿module("modules.logic.messagebox.config.MessageBoxIdDefine", package.seeall)
+﻿-- chunkname: @modules/logic/messagebox/config/MessageBoxIdDefine.lua
 
-return {
+module("modules.logic.messagebox.config.MessageBoxIdDefine", package.seeall)
+
+local MessageBoxIdDefine = {
 	FeiLinShiDuoResetTip = 250006,
 	CachotAbandonAward = 60103,
 	TradeShopConfirm = 93,
-	V1a6CachotMsgBox06 = 60106,
+	DecorateSkinSelectTips = 320008,
 	DownloadVoicePack = 85,
 	PermanentUnlockConfirm = 92001,
 	RoomLevelUpConfirm = 55,
@@ -33,7 +35,7 @@ return {
 	UsedLockedWaterReform = 220143,
 	WarmUpGameReFight = 72,
 	RoomChangeMainBuildingTransportPath = 220139,
-	SummonStrongCustomPickConfirm = 95003,
+	ItemHeroTalentUpTip = 320007,
 	WeekWalkExpire = 36,
 	EliminateAddedNotEnough = 220111,
 	RoomInventoryBlockMoreBack = 54,
@@ -145,11 +147,16 @@ return {
 	RoomTransportBuildingSkinShopBuy = 220140,
 	TowerDeepLoadCurSaveData = 311103,
 	V3A1YeShuMei_ResetGame = 311401,
+	SkinStoreDeductionUseTips = 320001,
+	HuiDiaoLanQuitGameTip = 320003,
+	CruiseGameCloseTip = 320004,
 	PinballRestConfirm2 = 240005,
 	DungeonPuzzleResetGame = 81,
+	SummonStrongCustomPickConfirm = 95003,
 	TowerResetSubEpisode = 230000,
 	ConfirmChangeBlockColor = 311204,
 	PCInputKeySwap = 220114,
+	V1a6CachotMsgBox06 = 60106,
 	RoomFishingCurrencyNotEnough = 311105,
 	PayDiamondNotEnough_Summon = 310001,
 	RoomEditShareLayoutPlan = 61604,
@@ -189,6 +196,7 @@ return {
 	RoomRevert = 31,
 	RougeFightRestartConfirm = 96003,
 	AddBlackTip = 80202,
+	Rouge2ExitEvent = 320010,
 	NewGameVersion = 78,
 	LoginLostConnect2 = 3,
 	V3A1NecrologistStory_ResetGame = 310005,
@@ -252,6 +260,7 @@ return {
 	SummonLuckyBagSelectCharRepeat2 = 51103,
 	ChargeStoreQuickUseTipWithNum = 250010,
 	RoomBackBlockHasTransportPath = 220105,
+	Rouge2NoFormula = 320011,
 	Va3Act124ResetGame = 30401,
 	ForbidSendMessage = 20,
 	RoomCritterTrainFastForwardExceed = 220145,
@@ -278,6 +287,7 @@ return {
 	RoomLayoutDelete = 40201,
 	RougeCollectionCompositeConfirm = 96004,
 	RoomOneKeyManufactureItem = 220107,
+	Rouge2FightFailConfirm = 320009,
 	SummonSimulationSelectCurrent = 220141,
 	Act165ResetEditor = 201001,
 	SummonSimulationSelectWithLeftTime = 220134,
@@ -289,6 +299,7 @@ return {
 	NationalGiftJumpTip = 311106,
 	SettingVideoHD = 250005,
 	DiceHeroReset = 260002,
+	SupplementMonthCardUseTip = 320005,
 	RuntimeCheckVersionHotfix = 91001,
 	SurvivalItemAbort = 280703,
 	CooperGarlandResetGame = 260009,
@@ -303,6 +314,7 @@ return {
 	ResetPushBox = 76,
 	V3a1_GaoSiNiao_GameView_Reset = 311301,
 	RoomCritterTrainChangeCritter = 220127,
+	Rouge2_Clear_CurFormula = 320002,
 	SummonLuckyBagSelectChar = 51101,
 	LoginLostConnect1 = 2,
 	Act167SummonNewTipWithNewBiePool = 220117,
@@ -316,3 +328,5 @@ return {
 	RougeFightFailConfirm = 96002,
 	HeroGroupPleaseAdd = 10
 }
+
+return MessageBoxIdDefine

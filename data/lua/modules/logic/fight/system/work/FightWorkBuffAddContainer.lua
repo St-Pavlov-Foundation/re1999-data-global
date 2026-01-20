@@ -1,97 +1,104 @@
-﻿module("modules.logic.fight.system.work.FightWorkBuffAddContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkBuffAddContainer.lua
 
-local var_0_0 = class("FightWorkBuffAddContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkBuffAddContainer", package.seeall)
+
+local FightWorkBuffAddContainer = class("FightWorkBuffAddContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.BUFFADD] = true
 }
-local var_0_2 = 0.15
-local var_0_3 = 0.05
+local BuffEffectTime = 0.15
+local BuffFloatTime = 0.05
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:getAdjacentSameEffectList(var_0_1, true)
-	local var_1_1 = arg_1_0:com_registWorkDoneFlowParallel()
-	local var_1_2 = {}
+function FightWorkBuffAddContainer:onStart()
+	local list = self:getAdjacentSameEffectList(parallelEffectType, true)
+	local parallelFlow = self:com_registWorkDoneFlowParallel()
+	local entityDic = {}
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_3 = iter_1_1.actEffectData
-		local var_1_4 = var_1_3.buff
+	for i, data in ipairs(list) do
+		local actEffectData = data.actEffectData
+		local buff = actEffectData.buff
 
-		if var_1_4 then
-			local var_1_5 = lua_skill_buff.configDict[var_1_4.buffId]
-			local var_1_6 = lua_skill_bufftype.configDict[var_1_5.typeId]
+		if buff then
+			local buffConfig = lua_skill_buff.configDict[buff.buffId]
 
-			if var_1_5 and var_1_6 then
-				local var_1_7 = var_1_2[var_1_3.targetId]
+			if not buffConfig then
+				logError(string.format("buffId : %s co is not found", buff.buffId))
+			end
 
-				if not var_1_7 then
-					var_1_7 = {}
-					var_1_2[var_1_3.targetId] = var_1_7
+			local buffTypeConfig = lua_skill_bufftype.configDict[buffConfig.typeId]
+
+			if buffConfig and buffTypeConfig then
+				local dataList = entityDic[actEffectData.targetId]
+
+				if not dataList then
+					dataList = {}
+					entityDic[actEffectData.targetId] = dataList
 				end
 
-				table.insert(var_1_7, iter_1_1)
+				table.insert(dataList, data)
 			end
 		end
 	end
 
-	local var_1_8 = {}
+	local entityFlow = {}
 
-	for iter_1_2, iter_1_3 in pairs(var_1_2) do
-		for iter_1_4, iter_1_5 in ipairs(iter_1_3) do
-			local var_1_9 = iter_1_5.fightStepData
-			local var_1_10 = iter_1_5.actEffectData
-			local var_1_11 = var_1_10.buff.buffId
-			local var_1_12 = lua_skill_buff.configDict[var_1_11]
-			local var_1_13 = lua_skill_bufftype.configDict[var_1_12.typeId]
-			local var_1_14 = var_1_8[var_1_10.targetId]
+	for k, v in pairs(entityDic) do
+		for i, data in ipairs(v) do
+			local fightStepData = data.fightStepData
+			local actEffectData = data.actEffectData
+			local buffId = actEffectData.buff.buffId
+			local buffConfig = lua_skill_buff.configDict[buffId]
+			local buffTypeConfig = lua_skill_bufftype.configDict[buffConfig.typeId]
+			local flow = entityFlow[actEffectData.targetId]
 
-			if not var_1_14 then
-				var_1_14 = var_1_1:registWork(FightWorkFlowSequence)
-				var_1_8[var_1_10.targetId] = var_1_14
+			if not flow then
+				flow = parallelFlow:registWork(FightWorkFlowSequence)
+				entityFlow[actEffectData.targetId] = flow
 			end
 
-			if var_1_12.isNoShow == 1 then
-				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
-			elseif var_1_13.skipDelay == 1 then
-				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
-			elseif lua_fight_stacked_buff_combine.configDict[var_1_12.id] then
-				local var_1_15 = iter_1_3[iter_1_4 + 1]
+			if buffConfig.isNoShow == 1 then
+				flow:registWork(FightWorkStepBuff, fightStepData, actEffectData)
+			elseif buffTypeConfig.skipDelay == 1 then
+				flow:registWork(FightWorkStepBuff, fightStepData, actEffectData)
+			elseif lua_fight_stacked_buff_combine.configDict[buffConfig.id] then
+				local nextEffect = v[i + 1]
 
-				if var_1_15 and var_1_15.buff and var_1_15.buff.buffId == var_1_11 then
-					var_1_14:registWork(FightWorkFunction, arg_1_0._lockEntityBuffFloat, arg_1_0, {
+				if nextEffect and nextEffect.buff and nextEffect.buff.buffId == buffId then
+					flow:registWork(FightWorkFunction, self._lockEntityBuffFloat, self, {
 						true,
-						entityId = var_1_10.targetId
+						entityId = actEffectData.targetId
 					})
 				else
-					var_1_14:registWork(FightWorkFunction, arg_1_0._lockEntityBuffFloat, arg_1_0, {
+					flow:registWork(FightWorkFunction, self._lockEntityBuffFloat, self, {
 						false,
-						entityId = var_1_10.targetId
+						entityId = actEffectData.targetId
 					})
 				end
 
-				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
-			elseif var_1_12.effect ~= "0" and not string.nilorempty(var_1_12.effect) then
-				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
-				var_1_14:registWork(FightWorkDelayTimer, var_0_2 / FightModel.instance:getSpeed())
+				flow:registWork(FightWorkStepBuff, fightStepData, actEffectData)
+			elseif buffConfig.effect ~= "0" and not string.nilorempty(buffConfig.effect) then
+				flow:registWork(FightWorkStepBuff, fightStepData, actEffectData)
+				flow:registWork(FightWorkDelayTimer, BuffEffectTime / FightModel.instance:getSpeed())
 			else
-				var_1_14:registWork(FightWorkStepBuff, var_1_9, var_1_10)
-				var_1_14:registWork(FightWorkDelayTimer, var_0_3 / FightModel.instance:getSpeed())
+				flow:registWork(FightWorkStepBuff, fightStepData, actEffectData)
+				flow:registWork(FightWorkDelayTimer, BuffFloatTime / FightModel.instance:getSpeed())
 			end
 		end
 	end
 
-	var_1_1:start()
+	parallelFlow:start()
 end
 
-function var_0_0._lockEntityBuffFloat(arg_2_0, arg_2_1)
-	local var_2_0 = FightHelper.getEntity(arg_2_1.entityId)
+function FightWorkBuffAddContainer:_lockEntityBuffFloat(param)
+	local tar_entity = FightHelper.getEntity(param.entityId)
 
-	if var_2_0 and var_2_0.buff then
-		var_2_0.buff.lockFloat = arg_2_1.state
+	if tar_entity and tar_entity.buff then
+		tar_entity.buff.lockFloat = param.state
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkBuffAddContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkBuffAddContainer

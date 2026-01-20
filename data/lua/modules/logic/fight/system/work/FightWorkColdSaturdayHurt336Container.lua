@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.system.work.FightWorkColdSaturdayHurt336Container", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkColdSaturdayHurt336Container.lua
 
-local var_0_0 = class("FightWorkColdSaturdayHurt336Container", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkColdSaturdayHurt336Container", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = {
+local FightWorkColdSaturdayHurt336Container = class("FightWorkColdSaturdayHurt336Container", FightStepEffectFlow)
+
+function FightWorkColdSaturdayHurt336Container:onStart()
+	local parallelType = {
 		[FightEnum.EffectType.BUFFADD] = true,
 		[FightEnum.EffectType.BUFFDEL] = true,
 		[FightEnum.EffectType.BUFFUPDATE] = true,
@@ -12,11 +14,11 @@ function var_0_0.onStart(arg_1_0)
 		[FightEnum.EffectType.CRIT] = true
 	}
 
-	arg_1_0:playAdjacentParallelEffect(var_1_0, true)
+	self:playAdjacentParallelEffect(parallelType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkColdSaturdayHurt336Container:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkColdSaturdayHurt336Container

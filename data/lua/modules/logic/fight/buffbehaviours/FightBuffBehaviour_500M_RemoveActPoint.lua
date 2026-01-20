@@ -1,54 +1,56 @@
-﻿module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_RemoveActPoint", package.seeall)
+﻿-- chunkname: @modules/logic/fight/buffbehaviours/FightBuffBehaviour_500M_RemoveActPoint.lua
 
-local var_0_0 = class("FightBuffBehaviour_500M_RemoveActPoint", FightBuffBehaviourBase)
-local var_0_1 = "ui/viewres/fight/fighttower/fightcardremoveview.prefab"
+module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_500M_RemoveActPoint", package.seeall)
 
-function var_0_0.onAddBuff(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+local FightBuffBehaviour_500M_RemoveActPoint = class("FightBuffBehaviour_500M_RemoveActPoint", FightBuffBehaviourBase)
+local removeEffect = "ui/viewres/fight/fighttower/fightcardremoveview.prefab"
+
+function FightBuffBehaviour_500M_RemoveActPoint:onAddBuff(entityId, buffId, buffMo)
 	FightModel.instance:setNeedPlay500MRemoveActEffect(true)
-	loadAbAsset(arg_1_0.co.param, true, arg_1_0.onLoadFinish, arg_1_0)
+	loadAbAsset(self.co.param, true, self.onLoadFinish, self)
 end
 
-function var_0_0.onLoadFinish(arg_2_0, arg_2_1)
-	if not arg_2_1.IsLoadSuccess then
+function FightBuffBehaviour_500M_RemoveActPoint:onLoadFinish(assetItem)
+	if not assetItem.IsLoadSuccess then
 		return
 	end
 
-	local var_2_0 = arg_2_0.assetItem
+	local oldAsstet = self.assetItem
 
-	arg_2_0.assetItem = arg_2_1
+	self.assetItem = assetItem
 
-	arg_2_1:Retain()
+	assetItem:Retain()
 
-	if var_2_0 then
-		var_2_0:Release()
+	if oldAsstet then
+		oldAsstet:Release()
 	end
 
-	arg_2_0.goRemoveEffect = gohelper.clone(arg_2_1:GetResource(arg_2_0.co.param), arg_2_0.viewGo)
+	self.goRemoveEffect = gohelper.clone(assetItem:GetResource(self.co.param), self.viewGo)
 
-	gohelper.setActive(arg_2_0.goRemoveEffect, false)
-	FightModel.instance:setRemoveActEffectObj(arg_2_0)
+	gohelper.setActive(self.goRemoveEffect, false)
+	FightModel.instance:setRemoveActEffectObj(self)
 end
 
-function var_0_0.onRemoveBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function FightBuffBehaviour_500M_RemoveActPoint:onRemoveBuff(entityId, buffId, buffMo)
 	FightModel.instance:setRemoveActEffectObj(nil)
 	FightModel.instance:setNeedPlay500MRemoveActEffect(nil)
 end
 
-function var_0_0.getRemoveEffectGo(arg_4_0)
-	return arg_4_0.goRemoveEffect
+function FightBuffBehaviour_500M_RemoveActPoint:getRemoveEffectGo()
+	return self.goRemoveEffect
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	if arg_5_0.assetItem then
-		arg_5_0.assetItem:Release()
+function FightBuffBehaviour_500M_RemoveActPoint:onDestroy()
+	if self.assetItem then
+		self.assetItem:Release()
 
-		arg_5_0.assetItem = nil
+		self.assetItem = nil
 	end
 
-	removeAssetLoadCb(arg_5_0.co.param, arg_5_0.onLoadFinish, arg_5_0)
+	removeAssetLoadCb(self.co.param, self.onLoadFinish, self)
 	FightModel.instance:setRemoveActEffectObj(nil)
 	FightModel.instance:setNeedPlay500MRemoveActEffect(nil)
-	var_0_0.super.onDestroy(arg_5_0)
+	FightBuffBehaviour_500M_RemoveActPoint.super.onDestroy(self)
 end
 
-return var_0_0
+return FightBuffBehaviour_500M_RemoveActPoint

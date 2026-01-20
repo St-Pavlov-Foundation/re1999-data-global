@@ -1,61 +1,66 @@
-﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepMove", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/step/ActivityChessStepMove.lua
 
-local var_0_0 = class("ActivityChessStepMove", ActivityChessStepBase)
+module("modules.logic.activity.controller.chessmap.step.ActivityChessStepMove", package.seeall)
 
-function var_0_0.start(arg_1_0)
-	local var_1_0 = arg_1_0.originData.id
-	local var_1_1 = arg_1_0.originData.x
-	local var_1_2 = arg_1_0.originData.y
-	local var_1_3 = arg_1_0.originData.direction
-	local var_1_4 = ActivityChessGameController.instance.interacts
+local ActivityChessStepMove = class("ActivityChessStepMove", ActivityChessStepBase)
 
-	if var_1_4 then
-		local var_1_5 = var_1_4:get(var_1_0)
+function ActivityChessStepMove:start()
+	local objId = self.originData.id
+	local tarX = self.originData.x
+	local tarY = self.originData.y
+	local dir = self.originData.direction
+	local interactMgr = ActivityChessGameController.instance.interacts
 
-		arg_1_0:startMove(var_1_5, var_1_1, var_1_2)
+	if interactMgr then
+		local interactObj = interactMgr:get(objId)
 
-		if var_1_3 ~= nil then
-			var_1_5:getHandler():faceTo(var_1_3)
+		self:startMove(interactObj, tarX, tarY)
+
+		if dir ~= nil then
+			interactObj:getHandler():faceTo(dir)
 		end
 	end
 end
 
-function var_0_0.startMove(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_1 and arg_2_1:getHandler() then
+function ActivityChessStepMove:startMove(interactObj, x, y)
+	if interactObj and interactObj:getHandler() then
 		ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.SetAlwayUpdateRenderOrder, true)
 
-		if arg_2_1.config.interactType == ActivityChessEnum.InteractType.Player then
-			arg_2_1:getHandler():moveTo(arg_2_2, arg_2_3, arg_2_0.finish, arg_2_0)
+		local interactType = interactObj.config.interactType
+
+		if interactType == ActivityChessEnum.InteractType.Player then
+			interactObj:getHandler():moveTo(x, y, self.finish, self)
 			AudioMgr.instance:trigger(AudioEnum.ChessGame.PlayerMove)
 		else
-			arg_2_1:getHandler():moveTo(arg_2_2, arg_2_3)
+			interactObj:getHandler():moveTo(x, y)
 
-			local var_2_0 = ActivityChessGameController.instance.event
+			local eventMgr = ActivityChessGameController.instance.event
 
-			arg_2_0:playEnemyMoveAudio()
-			arg_2_0:finish()
+			self:playEnemyMoveAudio()
+			self:finish()
 		end
 	else
-		arg_2_0:finish()
+		self:finish()
 	end
 end
 
-var_0_0.lastEnemyMoveTime = nil
-var_0_0.minSkipAudioTime = 0.01
+ActivityChessStepMove.lastEnemyMoveTime = nil
+ActivityChessStepMove.minSkipAudioTime = 0.01
 
-function var_0_0.playEnemyMoveAudio(arg_3_0)
-	local var_3_0 = Time.realtimeSinceStartup
+function ActivityChessStepMove:playEnemyMoveAudio()
+	local curTime = Time.realtimeSinceStartup
+	local needMerge = ActivityChessStepMove.lastEnemyMoveTime ~= nil and curTime - ActivityChessStepMove.lastEnemyMoveTime <= ActivityChessStepMove.minSkipAudioTime
 
-	if not (var_0_0.lastEnemyMoveTime ~= nil and var_3_0 - var_0_0.lastEnemyMoveTime <= var_0_0.minSkipAudioTime) then
+	if not needMerge then
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.EnemyMove)
 
-		var_0_0.lastEnemyMoveTime = var_3_0
+		ActivityChessStepMove.lastEnemyMoveTime = curTime
 	end
 end
 
-function var_0_0.finish(arg_4_0)
+function ActivityChessStepMove:finish()
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.SetAlwayUpdateRenderOrder, false)
-	var_0_0.super.finish(arg_4_0)
+	ActivityChessStepMove.super.finish(self)
 end
 
-return var_0_0
+return ActivityChessStepMove

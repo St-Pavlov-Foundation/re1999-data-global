@@ -1,15 +1,17 @@
-﻿module("modules.logic.dungeon.model.DungeonPuzzleChangeColorModel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/DungeonPuzzleChangeColorModel.lua
 
-local var_0_0 = class("DungeonPuzzleChangeColorModel", BaseModel)
+module("modules.logic.dungeon.model.DungeonPuzzleChangeColorModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local DungeonPuzzleChangeColorModel = class("DungeonPuzzleChangeColorModel", BaseModel)
+
+function DungeonPuzzleChangeColorModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function DungeonPuzzleChangeColorModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+DungeonPuzzleChangeColorModel.instance = DungeonPuzzleChangeColorModel.New()
 
-return var_0_0
+return DungeonPuzzleChangeColorModel

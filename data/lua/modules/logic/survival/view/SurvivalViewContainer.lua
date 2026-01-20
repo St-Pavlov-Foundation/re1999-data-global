@@ -1,26 +1,28 @@
-﻿module("modules.logic.survival.view.SurvivalViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/SurvivalViewContainer.lua
 
-local var_0_0 = class("SurvivalViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.SurvivalViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local SurvivalViewContainer = class("SurvivalViewContainer", BaseViewContainer)
+
+function SurvivalViewContainer:buildViews()
 	return {
 		SurvivalView.New(),
 		TabViewGroup.New(1, "#go_lefttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = NavigateButtonsView.New({
+function SurvivalViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local navView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			var_2_0
+			navView
 		}
 	end
 end
 
-return var_0_0
+return SurvivalViewContainer

@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/game/AiZiLaGameEventViewContainer.lua
 
-local var_0_0 = class("AiZiLaGameEventViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaGameEventViewContainer = class("AiZiLaGameEventViewContainer", BaseViewContainer)
 
-	arg_1_0._gameEventview = AiZiLaGameEventView.New()
+function AiZiLaGameEventViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._gameEventview)
+	self._gameEventview = AiZiLaGameEventView.New()
 
-	return var_1_0
+	table.insert(views, self._gameEventview)
+
+	return views
 end
 
-function var_0_0.playViewAnimator(arg_2_0, arg_2_1)
-	arg_2_0._gameEventview:playViewAnimator(arg_2_1)
+function AiZiLaGameEventViewContainer:playViewAnimator(animName)
+	self._gameEventview:playViewAnimator(animName)
 end
 
-return var_0_0
+return AiZiLaGameEventViewContainer

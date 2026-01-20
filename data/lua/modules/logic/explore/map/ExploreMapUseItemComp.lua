@@ -1,360 +1,369 @@
-﻿module("modules.logic.explore.map.ExploreMapUseItemComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/ExploreMapUseItemComp.lua
 
-local var_0_0 = class("ExploreMapUseItemComp", ExploreMapBaseComp)
-local var_0_1 = UnityEngine.Shader.PropertyToID("_OcclusionThreshold")
+module("modules.logic.explore.map.ExploreMapUseItemComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._legalPosDic = {}
-	arg_1_0._pos = Vector2.New()
-	arg_1_0._mo = nil
-	arg_1_0._highLightContainer = UnityEngine.GameObject.New("HighLight")
+local ExploreMapUseItemComp = class("ExploreMapUseItemComp", ExploreMapBaseComp)
+local occlusionThresholdId = UnityEngine.Shader.PropertyToID("_OcclusionThreshold")
 
-	gohelper.addChild(arg_1_0._mapGo, arg_1_0._highLightContainer)
+function ExploreMapUseItemComp:onInit()
+	self._legalPosDic = {}
+	self._pos = Vector2.New()
+	self._mo = nil
+	self._highLightContainer = UnityEngine.GameObject.New("HighLight")
 
-	arg_1_0._path = ResUrl.getExploreEffectPath(ExploreConstValue.PlaceEffect)
-	arg_1_0._tempUnitGo = nil
-	arg_1_0._tempUnitLoader = nil
-	arg_1_0._iconLoader = PrefabInstantiate.Create(arg_1_0._highLightContainer)
+	gohelper.addChild(self._mapGo, self._highLightContainer)
 
-	arg_1_0._iconLoader:startLoad(arg_1_0._path, arg_1_0._onAssetLoad, arg_1_0)
-	gohelper.setActive(arg_1_0._highLightContainer, false)
+	self._path = ResUrl.getExploreEffectPath(ExploreConstValue.PlaceEffect)
+	self._tempUnitGo = nil
+	self._tempUnitLoader = nil
+	self._iconLoader = PrefabInstantiate.Create(self._highLightContainer)
 
-	arg_1_0._useList = {}
-	arg_1_0._renderers = {}
+	self._iconLoader:startLoad(self._path, self._onAssetLoad, self)
+	gohelper.setActive(self._highLightContainer, false)
+
+	self._useList = {}
+	self._renderers = {}
 end
 
-function var_0_0._onAssetLoad(arg_2_0)
-	local var_2_0 = arg_2_0._iconLoader:getInstGO()
+function ExploreMapUseItemComp:_onAssetLoad()
+	local go = self._iconLoader:getInstGO()
 
-	arg_2_0._goSelect = gohelper.findChild(var_2_0, "root/select")
+	self._goSelect = gohelper.findChild(go, "root/select")
 
-	gohelper.setActive(arg_2_0._goSelect, false)
+	gohelper.setActive(self._goSelect, false)
 
-	arg_2_0._diban = {}
+	self._diban = {}
 
-	for iter_2_0 = -1, 1 do
-		for iter_2_1 = -1, 1 do
-			if iter_2_0 ~= 0 or iter_2_1 ~= 0 then
-				local var_2_1 = ExploreHelper.getKeyXY(iter_2_0, iter_2_1)
+	for i = -1, 1 do
+		for j = -1, 1 do
+			if i ~= 0 or j ~= 0 then
+				local key = ExploreHelper.getKeyXY(i, j)
 
-				arg_2_0._diban[var_2_1] = gohelper.findChild(var_2_0, "root/diban" .. var_2_1)
+				self._diban[key] = gohelper.findChild(go, "root/diban" .. key)
 			end
 		end
 	end
 
-	if arg_2_0._mo then
-		arg_2_0:_updateHighLight()
+	if self._mo then
+		self:_updateHighLight()
 	end
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addEventCb(ExploreController.instance, ExploreEvent.DragItemBegin, arg_3_0.changeStatus, arg_3_0)
+function ExploreMapUseItemComp:addEventListeners()
+	self:addEventCb(ExploreController.instance, ExploreEvent.DragItemBegin, self.changeStatus, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0:removeEventCb(ExploreController.instance, ExploreEvent.DragItemBegin, arg_4_0.changeStatus, arg_4_0)
+function ExploreMapUseItemComp:removeEventListeners()
+	self:removeEventCb(ExploreController.instance, ExploreEvent.DragItemBegin, self.changeStatus, self)
 end
 
-function var_0_0.changeStatus(arg_5_0, arg_5_1)
-	if not arg_5_0:beginStatus(arg_5_1) then
+function ExploreMapUseItemComp:changeStatus(mo)
+	if not self:beginStatus(mo) then
 		ToastController.instance:showToast(ExploreConstValue.Toast.CantUseItem)
 
 		return
 	end
 end
 
-function var_0_0._onDragItemBegin(arg_6_0, arg_6_1)
-	if arg_6_0._mo == arg_6_1 then
-		if arg_6_0._tempUnitLoader then
-			arg_6_0._tempUnitLoader:dispose()
+function ExploreMapUseItemComp:_onDragItemBegin(mo)
+	if self._mo == mo then
+		if self._tempUnitLoader then
+			self._tempUnitLoader:dispose()
 
-			arg_6_0._tempUnitLoader = nil
+			self._tempUnitLoader = nil
 		end
 
-		gohelper.destroy(arg_6_0._tempUnitGo)
+		gohelper.destroy(self._tempUnitGo)
 
-		arg_6_0._tempUnitGo = nil
+		self._tempUnitGo = nil
 
-		gohelper.setActive(arg_6_0._highLightContainer, false)
-		arg_6_0:_resetMat()
-		arg_6_0._map:setMapStatus(ExploreEnum.MapStatus.Normal)
+		gohelper.setActive(self._highLightContainer, false)
+		self:_resetMat()
+		self._map:setMapStatus(ExploreEnum.MapStatus.Normal)
 	else
-		gohelper.setActive(arg_6_0._highLightContainer, true)
+		gohelper.setActive(self._highLightContainer, true)
 
-		arg_6_0.highLightType = nil
-		arg_6_0._legalPosDic = {}
-		arg_6_0._mo = arg_6_1
+		self.highLightType = nil
+		self._legalPosDic = {}
+		self._mo = mo
 
-		local var_6_0 = ExploreController.instance:getMap():getHero()
-		local var_6_1 = var_6_0.nodePos
+		local hero = ExploreController.instance:getMap():getHero()
+		local heroPos = hero.nodePos
 
-		if var_6_0:isMoving() then
-			local var_6_2 = ExploreHelper.getKey(var_6_1)
-			local var_6_3 = ExploreMapModel.instance:getNode(var_6_2)
+		if hero:isMoving() then
+			local key = ExploreHelper.getKey(heroPos)
+			local node = ExploreMapModel.instance:getNode(key)
 
-			if ExploreModel.instance:isHeroInControl() and var_6_3.nodeType ~= ExploreEnum.NodeType.Ice then
-				local var_6_4 = var_6_0:stopMoving(false)
+			if ExploreModel.instance:isHeroInControl() and node.nodeType ~= ExploreEnum.NodeType.Ice then
+				local pos = hero:stopMoving(false)
 
-				if var_6_4 then
-					var_6_1 = var_6_4
+				if pos then
+					heroPos = pos
 				end
 			else
-				arg_6_0._map:setMapStatus(ExploreEnum.MapStatus.Normal)
+				self._map:setMapStatus(ExploreEnum.MapStatus.Normal)
 				ToastController.instance:showToast(ExploreConstValue.Toast.CantUseItem)
 
 				return
 			end
 		end
 
-		if arg_6_0._tempUnitLoader then
-			arg_6_0._tempUnitLoader:dispose()
+		if self._tempUnitLoader then
+			self._tempUnitLoader:dispose()
 		end
 
-		gohelper.destroy(arg_6_0._tempUnitGo)
+		gohelper.destroy(self._tempUnitGo)
 
-		local var_6_5 = tonumber(string.split(arg_6_1.config.effect, "#")[2])
-		local var_6_6 = lua_explore_unit.configDict[var_6_5].asset
+		local unitType = tonumber(string.split(mo.config.effect, "#")[2])
+		local assetPath = lua_explore_unit.configDict[unitType].asset
 
-		arg_6_0._tempUnitGo = UnityEngine.GameObject.New("TempUnit")
-		arg_6_0._tempUnitLoader = PrefabInstantiate.Create(arg_6_0._tempUnitGo)
+		self._tempUnitGo = UnityEngine.GameObject.New("TempUnit")
+		self._tempUnitLoader = PrefabInstantiate.Create(self._tempUnitGo)
 
-		arg_6_0._tempUnitLoader:startLoad(var_6_6, arg_6_0.onUnitLoadEnd, arg_6_0)
-		gohelper.setActive(arg_6_0._tempUnitGo, false)
+		self._tempUnitLoader:startLoad(assetPath, self.onUnitLoadEnd, self)
+		gohelper.setActive(self._tempUnitGo, false)
 
-		arg_6_0.highLightType = ExploreEnum.ItemEffectRange.Round
+		self.highLightType = ExploreEnum.ItemEffectRange.Round
 
-		if arg_6_0._goSelect then
-			arg_6_0:_updateHighLight(var_6_1)
+		if self._goSelect then
+			self:_updateHighLight(heroPos)
 		end
 	end
 end
 
-function var_0_0.onUnitLoadEnd(arg_7_0)
-	local var_7_0 = arg_7_0._tempUnitLoader:getInstGO():GetComponentsInChildren(typeof(UnityEngine.Collider))
+function ExploreMapUseItemComp:onUnitLoadEnd()
+	local go = self._tempUnitLoader:getInstGO()
+	local colliderList = go:GetComponentsInChildren(typeof(UnityEngine.Collider))
 
-	for iter_7_0 = 0, var_7_0.Length - 1 do
-		var_7_0[iter_7_0].enabled = false
+	for i = 0, colliderList.Length - 1 do
+		colliderList[i].enabled = false
 	end
 end
 
-function var_0_0.getCurItemMo(arg_8_0)
-	return arg_8_0._mo
+function ExploreMapUseItemComp:getCurItemMo()
+	return self._mo
 end
 
-function var_0_0.onMapClick(arg_9_0, arg_9_1)
-	local var_9_0, var_9_1 = arg_9_0._map:GetTilemapMousePos(arg_9_1, true)
+function ExploreMapUseItemComp:onMapClick(mousePosition)
+	local clickComp, pos = self._map:GetTilemapMousePos(mousePosition, true)
 
-	if not arg_9_0:_setUnit(arg_9_0._mo.id, var_9_1) then
-		arg_9_0._map:setMapStatus(ExploreEnum.MapStatus.Normal)
+	if not self:_setUnit(self._mo.id, pos) then
+		self._map:setMapStatus(ExploreEnum.MapStatus.Normal)
 	end
 end
 
-function var_0_0.onStatusEnd(arg_10_0)
-	arg_10_0:clearDrag()
+function ExploreMapUseItemComp:onStatusEnd()
+	self:clearDrag()
 
-	if arg_10_0._confirmView then
-		arg_10_0._confirmView:setTarget()
+	if self._confirmView then
+		self._confirmView:setTarget()
 	end
 
-	if arg_10_0._tempUnitLoader then
-		arg_10_0._tempUnitLoader:dispose()
+	if self._tempUnitLoader then
+		self._tempUnitLoader:dispose()
 
-		arg_10_0._tempUnitLoader = nil
+		self._tempUnitLoader = nil
 	end
 
-	gohelper.destroy(arg_10_0._tempUnitGo)
+	gohelper.destroy(self._tempUnitGo)
 
-	arg_10_0._tempUnitGo = nil
+	self._tempUnitGo = nil
 
-	gohelper.setActive(arg_10_0._highLightContainer, false)
-	arg_10_0:_resetMat()
-	gohelper.setActive(arg_10_0._goSelect, false)
+	gohelper.setActive(self._highLightContainer, false)
+	self:_resetMat()
+	gohelper.setActive(self._goSelect, false)
 end
 
-function var_0_0.onStatusStart(arg_11_0, arg_11_1)
-	arg_11_0:_onDragItemBegin(arg_11_1)
+function ExploreMapUseItemComp:onStatusStart(mo)
+	self:_onDragItemBegin(mo)
 end
 
-function var_0_0.clearDrag(arg_12_0)
-	arg_12_0.highLightType = nil
-	arg_12_0._mo = nil
+function ExploreMapUseItemComp:clearDrag()
+	self.highLightType = nil
+	self._mo = nil
 
-	arg_12_0:_updateHighLight()
+	self:_updateHighLight()
 end
 
-function var_0_0._updateHighLight(arg_13_0, arg_13_1)
-	arg_13_0._useList = {}
+function ExploreMapUseItemComp:_updateHighLight(heroPos)
+	self._useList = {}
 
-	local var_13_0 = false
+	local only4Dir = false
 
-	if arg_13_0._mo and arg_13_0._mo.itemEffect == ExploreEnum.ItemEffect.CreateUnit2 then
-		var_13_0 = true
+	if self._mo then
+		local effect = self._mo.itemEffect
+
+		if effect == ExploreEnum.ItemEffect.CreateUnit2 then
+			only4Dir = true
+		end
 	end
 
-	if arg_13_0.highLightType == ExploreEnum.ItemEffectRange.Round then
-		arg_13_1 = arg_13_1 or arg_13_0._map:getHeroPos()
+	if self.highLightType == ExploreEnum.ItemEffectRange.Round then
+		heroPos = heroPos or self._map:getHeroPos()
 
-		local var_13_1 = arg_13_0._map:getHero():getPos()
+		local heroWorldPos = self._map:getHero():getPos()
 
-		transformhelper.setPos(arg_13_0._highLightContainer.transform, var_13_1.x, var_13_1.y, var_13_1.z)
+		transformhelper.setPos(self._highLightContainer.transform, heroWorldPos.x, heroWorldPos.y, heroWorldPos.z)
 
-		for iter_13_0 = -1, 1 do
-			for iter_13_1 = -1, 1 do
-				local var_13_2 = ExploreHelper.getKeyXY(iter_13_0, iter_13_1)
-				local var_13_3 = arg_13_0._diban[var_13_2]
+		for offX = -1, 1 do
+			for offY = -1, 1 do
+				local nodeKey2 = ExploreHelper.getKeyXY(offX, offY)
+				local highLightGo = self._diban[nodeKey2]
 
-				if (iter_13_0 == 0 and iter_13_1 == 0) == false and (not var_13_0 or iter_13_0 == 0 or iter_13_1 == 0) then
-					arg_13_0._pos.x = arg_13_1.x + iter_13_0
-					arg_13_0._pos.y = arg_13_1.y + iter_13_1
+				if (offX == 0 and offY == 0) == false and (not only4Dir or offX == 0 or offY == 0) then
+					self._pos.x = heroPos.x + offX
+					self._pos.y = heroPos.y + offY
 
-					local var_13_4 = ExploreHelper.getKey(arg_13_0._pos)
+					local nodeKey = ExploreHelper.getKey(self._pos)
 
-					arg_13_0._useList[var_13_4] = var_13_3
+					self._useList[nodeKey] = highLightGo
 
-					local var_13_5 = ExploreMapModel.instance:getNode(var_13_4)
-					local var_13_6 = true
-					local var_13_7 = arg_13_0._map:getUnitByPos(arg_13_0._pos)
+					local node = ExploreMapModel.instance:getNode(nodeKey)
+					local canPlace = true
+					local units = self._map:getUnitByPos(self._pos)
 
-					for iter_13_2, iter_13_3 in pairs(var_13_7) do
-						if iter_13_3:isEnter() and not iter_13_3.mo.canUseItem then
-							var_13_6 = false
+					for _, unit in pairs(units) do
+						if unit:isEnter() and not unit.mo.canUseItem then
+							canPlace = false
 
 							break
 						end
 					end
 
-					if var_13_6 and var_13_5 and var_13_5:isWalkable() then
-						local var_13_8 = var_13_3.transform.position
-						local var_13_9 = var_13_8.y
+					if canPlace and node and node:isWalkable() then
+						local pos = highLightGo.transform.position
+						local prePos = pos.y
 
-						var_13_8.y = 10
+						pos.y = 10
 
-						local var_13_10, var_13_11 = UnityEngine.Physics.Raycast(var_13_8, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getSceneMask())
+						local isHit, hitInfo = UnityEngine.Physics.Raycast(pos, Vector3.down, nil, Mathf.Infinity, ExploreHelper.getSceneMask())
 
-						if var_13_10 then
-							var_13_8.y = var_13_11.point.y + 0.027
+						if isHit then
+							pos.y = hitInfo.point.y + 0.027
 						else
-							var_13_8.y = var_13_9
+							pos.y = prePos
 						end
 
-						for iter_13_4, iter_13_5 in pairs(var_13_7) do
-							local var_13_12 = iter_13_5.go:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+						for _, unit in pairs(units) do
+							local renderers = unit.go:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-							for iter_13_6 = 0, var_13_12.Length - 1 do
-								local var_13_13 = var_13_12[iter_13_6]
+							for i = 0, renderers.Length - 1 do
+								local renderer = renderers[i]
 
-								if not arg_13_0._renderers[var_13_13] then
-									arg_13_0._renderers[var_13_13] = true
+								if not self._renderers[renderer] then
+									self._renderers[renderer] = true
 								end
 
-								local var_13_14 = var_13_13.material
+								local material = renderer.material
 
-								var_13_14:EnableKeyword("_OCCLUSION_CLIP")
-								var_13_14:SetFloat(var_0_1, 0.5)
+								material:EnableKeyword("_OCCLUSION_CLIP")
+								material:SetFloat(occlusionThresholdId, 0.5)
 							end
 						end
 
-						gohelper.setActive(var_13_3, true)
+						gohelper.setActive(highLightGo, true)
 
-						arg_13_0._legalPosDic[var_13_4] = var_13_8.y
+						self._legalPosDic[nodeKey] = pos.y
 					else
-						gohelper.setActive(var_13_3, false)
+						gohelper.setActive(highLightGo, false)
 					end
 				else
-					gohelper.setActive(var_13_3, false)
+					gohelper.setActive(highLightGo, false)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.onCancel(arg_14_0, arg_14_1)
-	local var_14_0 = ExploreHelper.getKey(arg_14_1)
+function ExploreMapUseItemComp:onCancel(pos)
+	local nodeKey = ExploreHelper.getKey(pos)
 
-	gohelper.setActive(arg_14_0._goSelect, false)
-	gohelper.setActive(arg_14_0._useList[var_14_0], true)
-	gohelper.setActive(arg_14_0._tempUnitGo, false)
+	gohelper.setActive(self._goSelect, false)
+	gohelper.setActive(self._useList[nodeKey], true)
+	gohelper.setActive(self._tempUnitGo, false)
 end
 
-function var_0_0._setUnit(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 then
-		local var_15_0 = ExploreHelper.getKey(arg_15_2)
+function ExploreMapUseItemComp:_setUnit(id, pos)
+	if pos then
+		local nodeKey = ExploreHelper.getKey(pos)
 
-		if arg_15_0._legalPosDic[var_15_0] then
-			local var_15_1 = arg_15_0._mo.config.audioId
+		if self._legalPosDic[nodeKey] then
+			local audioId = self._mo.config.audioId
 
-			if var_15_1 and var_15_1 > 0 then
-				AudioMgr.instance:trigger(var_15_1)
+			if audioId and audioId > 0 then
+				AudioMgr.instance:trigger(audioId)
 			end
 
-			local var_15_2 = arg_15_0._useList[var_15_0].transform.position
+			local position = self._useList[nodeKey].transform.position
 
-			arg_15_0._goSelect.transform.position = var_15_2
-			var_15_2.y = arg_15_0._legalPosDic[var_15_0]
-			arg_15_0._tempUnitGo.transform.position = var_15_2
+			self._goSelect.transform.position = position
+			position.y = self._legalPosDic[nodeKey]
+			self._tempUnitGo.transform.position = position
 
-			gohelper.setActive(arg_15_0._tempUnitGo, true)
+			gohelper.setActive(self._tempUnitGo, true)
 
-			if not arg_15_0._confirmView then
-				arg_15_0._confirmView = ExploreUseItemConfirmView.New()
-			elseif arg_15_0._confirmView._targetPos then
-				local var_15_3 = ExploreHelper.getKey(arg_15_0._confirmView._targetPos)
+			if not self._confirmView then
+				self._confirmView = ExploreUseItemConfirmView.New()
+			elseif self._confirmView._targetPos then
+				local preNodeKey = ExploreHelper.getKey(self._confirmView._targetPos)
 
-				gohelper.setActive(arg_15_0._useList[var_15_3], true)
+				gohelper.setActive(self._useList[preNodeKey], true)
 			end
 
-			arg_15_0._confirmView:setTarget(arg_15_0._goSelect, arg_15_2)
-			gohelper.setActive(arg_15_0._goSelect, true)
-			gohelper.setActive(arg_15_0._useList[var_15_0], false)
+			self._confirmView:setTarget(self._goSelect, pos)
+			gohelper.setActive(self._goSelect, true)
+			gohelper.setActive(self._useList[nodeKey], false)
 
 			return true
 		end
 	end
 end
 
-function var_0_0._resetMat(arg_16_0)
-	for iter_16_0 in pairs(arg_16_0._renderers) do
-		if not tolua.isnull(iter_16_0) then
-			iter_16_0.material:DisableKeyword("_OCCLUSION_CLIP")
+function ExploreMapUseItemComp:_resetMat()
+	for renderer in pairs(self._renderers) do
+		if not tolua.isnull(renderer) then
+			local material = renderer.material
+
+			material:DisableKeyword("_OCCLUSION_CLIP")
 		end
 	end
 
-	arg_16_0._renderers = {}
+	self._renderers = {}
 end
 
-function var_0_0.onDestroy(arg_17_0)
-	if arg_17_0._confirmView then
-		arg_17_0._confirmView:dispose()
+function ExploreMapUseItemComp:onDestroy()
+	if self._confirmView then
+		self._confirmView:dispose()
 
-		arg_17_0._confirmView = nil
+		self._confirmView = nil
 	end
 
-	if arg_17_0._iconLoader then
-		arg_17_0._iconLoader:dispose()
+	if self._iconLoader then
+		self._iconLoader:dispose()
 
-		arg_17_0._iconLoader = nil
+		self._iconLoader = nil
 	end
 
-	if arg_17_0._tempUnitLoader then
-		arg_17_0._tempUnitLoader:dispose()
+	if self._tempUnitLoader then
+		self._tempUnitLoader:dispose()
 
-		arg_17_0._tempUnitLoader = nil
+		self._tempUnitLoader = nil
 	end
 
-	arg_17_0._renderers = {}
+	self._renderers = {}
 
-	gohelper.destroy(arg_17_0._tempUnitGo)
+	gohelper.destroy(self._tempUnitGo)
 
-	arg_17_0._tempUnitGo = nil
-	arg_17_0._goSelect = nil
-	arg_17_0._diban = nil
-	arg_17_0._mo = nil
+	self._tempUnitGo = nil
+	self._goSelect = nil
+	self._diban = nil
+	self._mo = nil
 
-	gohelper.destroy(arg_17_0._highLightContainer)
+	gohelper.destroy(self._highLightContainer)
 
-	arg_17_0._highLightContainer = nil
+	self._highLightContainer = nil
 
-	var_0_0.super.onDestroy(arg_17_0)
+	ExploreMapUseItemComp.super.onDestroy(self)
 end
 
-return var_0_0
+return ExploreMapUseItemComp

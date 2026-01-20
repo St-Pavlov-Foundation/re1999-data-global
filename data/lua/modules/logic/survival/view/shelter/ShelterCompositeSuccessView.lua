@@ -1,58 +1,60 @@
-﻿module("modules.logic.survival.view.shelter.ShelterCompositeSuccessView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterCompositeSuccessView.lua
 
-local var_0_0 = class("ShelterCompositeSuccessView", BaseView)
+module("modules.logic.survival.view.shelter.ShelterCompositeSuccessView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0.goInfoView = gohelper.findChild(arg_1_0.viewGO, "#go_infoview")
+local ShelterCompositeSuccessView = class("ShelterCompositeSuccessView", BaseView)
+
+function ShelterCompositeSuccessView:onInitView()
+	self.btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self.goInfoView = gohelper.findChild(self.viewGO, "#go_infoview")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickCloseBtn, arg_2_0)
+function ShelterCompositeSuccessView:addEvents()
+	self:addClickCb(self.btnClose, self.onClickCloseBtn, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0.btnClose)
+function ShelterCompositeSuccessView:removeEvents()
+	self:removeClickCb(self.btnClose)
 end
 
-function var_0_0.onClickCloseBtn(arg_4_0)
-	arg_4_0:closeThis()
+function ShelterCompositeSuccessView:onClickCloseBtn()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_5_0)
+function ShelterCompositeSuccessView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_wangshi_argus_level_finish)
 
-	arg_5_0.itemMo = arg_5_0.viewParam and arg_5_0.viewParam.itemMo
+	self.itemMo = self.viewParam and self.viewParam.itemMo
 
-	arg_5_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_6_0)
-	local var_6_0 = arg_6_0.itemMo
+function ShelterCompositeSuccessView:refreshView()
+	local itemMo = self.itemMo
 
-	if not var_6_0 then
-		gohelper.setActive(arg_6_0.goInfoView, false)
+	if not itemMo then
+		gohelper.setActive(self.goInfoView, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_6_0.goInfoView, true)
+	gohelper.setActive(self.goInfoView, true)
 
-	if not arg_6_0._infoPanel then
-		local var_6_1 = arg_6_0.viewContainer:getSetting().otherRes.infoView
-		local var_6_2 = arg_6_0.viewContainer:getResInst(var_6_1, arg_6_0.goInfoView)
+	if not self._infoPanel then
+		local infoViewRes = self.viewContainer:getSetting().otherRes.infoView
+		local infoGo = self.viewContainer:getResInst(infoViewRes, self.goInfoView)
 
-		arg_6_0._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_2, SurvivalBagInfoPart)
+		self._infoPanel = MonoHelper.addNoUpdateLuaComOnceToGo(infoGo, SurvivalBagInfoPart)
 
-		local var_6_3 = {
+		local t = {
 			[SurvivalEnum.ItemSource.Map] = SurvivalEnum.ItemSource.Info,
 			[SurvivalEnum.ItemSource.Shelter] = SurvivalEnum.ItemSource.Info
 		}
 
-		arg_6_0._infoPanel:setChangeSource(var_6_3)
+		self._infoPanel:setChangeSource(t)
 	end
 
-	arg_6_0._infoPanel:updateMo(var_6_0)
+	self._infoPanel:updateMo(itemMo)
 end
 
-return var_0_0
+return ShelterCompositeSuccessView

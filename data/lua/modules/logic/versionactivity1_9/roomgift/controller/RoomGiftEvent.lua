@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity1_9.roomgift.controller.RoomGiftEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/roomgift/controller/RoomGiftEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_9.roomgift.controller.RoomGiftEvent", package.seeall)
 
-var_0_0.UpdateActInfo = 1
-var_0_0.GetBonus = 2
+local RoomGiftEvent = _M
 
-return var_0_0
+RoomGiftEvent.UpdateActInfo = 1
+RoomGiftEvent.GetBonus = 2
+
+return RoomGiftEvent

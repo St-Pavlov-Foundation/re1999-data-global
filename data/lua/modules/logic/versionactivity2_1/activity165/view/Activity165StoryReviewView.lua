@@ -1,231 +1,236 @@
-﻿module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryReviewView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/activity165/view/Activity165StoryReviewView.lua
 
-local var_0_0 = class("Activity165StoryReviewView", BaseView)
+module("modules.logic.versionactivity2_1.activity165.view.Activity165StoryReviewView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
-	arg_1_0._goendingnode = gohelper.findChild(arg_1_0.viewGO, "#go_endingnode")
-	arg_1_0._goend1 = gohelper.findChild(arg_1_0.viewGO, "#go_endingnode/#go_end1")
-	arg_1_0._goend2 = gohelper.findChild(arg_1_0.viewGO, "#go_endingnode/#go_end2")
-	arg_1_0._goend3 = gohelper.findChild(arg_1_0.viewGO, "#go_endingnode/#go_end3")
-	arg_1_0._goend4 = gohelper.findChild(arg_1_0.viewGO, "#go_endingnode/#go_end4")
-	arg_1_0._goend5 = gohelper.findChild(arg_1_0.viewGO, "#go_endingnode/#go_end5")
-	arg_1_0._goend6 = gohelper.findChild(arg_1_0.viewGO, "#go_endingnode/#go_end6")
-	arg_1_0._btnstory1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_story1")
-	arg_1_0._btnstory2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_story2")
-	arg_1_0._btnstory3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Btn/#btn_story3")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local Activity165StoryReviewView = class("Activity165StoryReviewView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity165StoryReviewView:onInitView()
+	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#simage_title")
+	self._goendingnode = gohelper.findChild(self.viewGO, "#go_endingnode")
+	self._goend1 = gohelper.findChild(self.viewGO, "#go_endingnode/#go_end1")
+	self._goend2 = gohelper.findChild(self.viewGO, "#go_endingnode/#go_end2")
+	self._goend3 = gohelper.findChild(self.viewGO, "#go_endingnode/#go_end3")
+	self._goend4 = gohelper.findChild(self.viewGO, "#go_endingnode/#go_end4")
+	self._goend5 = gohelper.findChild(self.viewGO, "#go_endingnode/#go_end5")
+	self._goend6 = gohelper.findChild(self.viewGO, "#go_endingnode/#go_end6")
+	self._btnstory1 = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_story1")
+	self._btnstory2 = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_story2")
+	self._btnstory3 = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_story3")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstory1:AddClickListener(arg_2_0._btnstory1OnClick, arg_2_0)
-	arg_2_0._btnstory2:AddClickListener(arg_2_0._btnstory2OnClick, arg_2_0)
-	arg_2_0._btnstory3:AddClickListener(arg_2_0._btnstory3OnClick, arg_2_0)
-	arg_2_0._animationEvent:AddEventListener(Activity165Enum.ReviewViewAnim.Switch, arg_2_0.switchAnimCB, arg_2_0)
+function Activity165StoryReviewView:addEvents()
+	self._btnstory1:AddClickListener(self._btnstory1OnClick, self)
+	self._btnstory2:AddClickListener(self._btnstory2OnClick, self)
+	self._btnstory3:AddClickListener(self._btnstory3OnClick, self)
+	self._animationEvent:AddEventListener(Activity165Enum.ReviewViewAnim.Switch, self.switchAnimCB, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstory1:RemoveClickListener()
-	arg_3_0._btnstory2:RemoveClickListener()
-	arg_3_0._btnstory3:RemoveClickListener()
-	arg_3_0._animationEvent:RemoveEventListener(Activity165Enum.ReviewViewAnim.Switch)
+function Activity165StoryReviewView:removeEvents()
+	self._btnstory1:RemoveClickListener()
+	self._btnstory2:RemoveClickListener()
+	self._btnstory3:RemoveClickListener()
+	self._animationEvent:RemoveEventListener(Activity165Enum.ReviewViewAnim.Switch)
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._endingItem) do
-		iter_3_1.btn:RemoveClickListener()
+	for _, item in pairs(self._endingItem) do
+		item.btn:RemoveClickListener()
 	end
 end
 
-function var_0_0._btnstory1OnClick(arg_4_0)
-	arg_4_0:_switchAnim(1)
+function Activity165StoryReviewView:_btnstory1OnClick()
+	self:_switchAnim(1)
 end
 
-function var_0_0._btnstory2OnClick(arg_5_0)
-	arg_5_0:_switchAnim(2)
+function Activity165StoryReviewView:_btnstory2OnClick()
+	self:_switchAnim(2)
 end
 
-function var_0_0._btnstory3OnClick(arg_6_0)
-	arg_6_0:_switchAnim(3)
+function Activity165StoryReviewView:_btnstory3OnClick()
+	self:_switchAnim(3)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._btnState = arg_7_0:getUserDataTb_()
+function Activity165StoryReviewView:_editableInitView()
+	self._btnState = self:getUserDataTb_()
 
-	local var_7_0 = Activity165Model.instance:getAllActStory()
+	local storyMos = Activity165Model.instance:getAllActStory()
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		local var_7_1 = gohelper.findChild(arg_7_0.viewGO, "Btn/#btn_story" .. iter_7_0 .. "/selectbg")
-		local var_7_2 = gohelper.findChild(arg_7_0.viewGO, "Btn/#btn_story" .. iter_7_0 .. "/normalbg")
-		local var_7_3 = gohelper.findChildText(var_7_1, "txt_story")
-		local var_7_4 = gohelper.findChildText(var_7_2, "txt_story")
+	for i, mo in pairs(storyMos) do
+		local select = gohelper.findChild(self.viewGO, "Btn/#btn_story" .. i .. "/selectbg")
+		local normal = gohelper.findChild(self.viewGO, "Btn/#btn_story" .. i .. "/normalbg")
+		local txt1 = gohelper.findChildText(select, "txt_story")
+		local txt2 = gohelper.findChildText(normal, "txt_story")
 
-		arg_7_0._btnState[iter_7_0] = {
-			select = var_7_1,
-			normal = var_7_2
+		self._btnState[i] = {
+			select = select,
+			normal = normal
 		}
-		var_7_3.text = iter_7_1:getStoryName()
-		var_7_4.text = iter_7_1:getStoryName()
+		txt1.text = mo:getStoryName()
+		txt2.text = mo:getStoryName()
 	end
 
-	arg_7_0._endingItem = arg_7_0:getUserDataTb_()
+	self._endingItem = self:getUserDataTb_()
 
-	for iter_7_2 = 1, 6 do
-		local var_7_5 = gohelper.findChildImage(arg_7_0.viewGO, "#go_endingnode/#go_end" .. iter_7_2)
-		local var_7_6 = gohelper.findChild(var_7_5.gameObject, "#unlock")
-		local var_7_7 = gohelper.findChildButtonWithAudio(var_7_5.gameObject, "btn")
+	for i = 1, 6 do
+		local icon = gohelper.findChildImage(self.viewGO, "#go_endingnode/#go_end" .. i)
+		local unlock = gohelper.findChild(icon.gameObject, "#unlock")
+		local btn = gohelper.findChildButtonWithAudio(icon.gameObject, "btn")
 
-		arg_7_0._endingItem[iter_7_2] = {
-			icon = var_7_5,
-			unlock = var_7_6,
-			btn = var_7_7
+		self._endingItem[i] = {
+			icon = icon,
+			unlock = unlock,
+			btn = btn
 		}
 	end
 
-	arg_7_0._viewAnim = SLFramework.AnimatorPlayer.Get(arg_7_0.viewGO)
-	arg_7_0._animationEvent = arg_7_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._viewAnim = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._animationEvent = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function Activity165StoryReviewView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._actId = Activity165Model.instance:getActivityId()
+function Activity165StoryReviewView:onOpen()
+	self._actId = Activity165Model.instance:getActivityId()
 
-	local var_9_0 = arg_9_0.viewParam.storyId
+	local index = self.viewParam.storyId
 
-	arg_9_0._enterView = arg_9_0.viewParam.view
+	self._enterView = self.viewParam.view
 
-	arg_9_0:_onShowEnding(var_9_0)
-	arg_9_0:_activeTagBtn()
+	self:_onShowEnding(index)
+	self:_activeTagBtn()
 end
 
-function var_0_0.onClose(arg_10_0)
+function Activity165StoryReviewView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function Activity165StoryReviewView:onDestroyView()
 	return
 end
 
-function var_0_0._onShowEnding(arg_12_0, arg_12_1)
-	arg_12_0._pageIndex = arg_12_1
+function Activity165StoryReviewView:_onShowEnding(storyId)
+	self._pageIndex = storyId
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._btnState) do
-		gohelper.setActive(iter_12_1.select, iter_12_0 == arg_12_1)
-		gohelper.setActive(iter_12_1.normal, iter_12_0 ~= arg_12_1)
+	for i, item in pairs(self._btnState) do
+		gohelper.setActive(item.select, i == storyId)
+		gohelper.setActive(item.normal, i ~= storyId)
 	end
 
-	arg_12_0._mo = Activity165Model.instance:getStoryMo(arg_12_0._actId, arg_12_1)
+	self._mo = Activity165Model.instance:getStoryMo(self._actId, storyId)
 
-	local var_12_0 = 1
+	local index = 1
 
-	for iter_12_2, iter_12_3 in pairs(arg_12_0._mo.unlockEndings) do
-		local var_12_1 = arg_12_0._endingItem[var_12_0]
+	for ending, _ in pairs(self._mo.unlockEndings) do
+		local item = self._endingItem[index]
 
-		var_12_0 = var_12_0 + 1
+		index = index + 1
 
-		local var_12_2 = Activity165Config.instance:getEndingCo(arg_12_0._actId, iter_12_2).pic
+		local co = Activity165Config.instance:getEndingCo(self._actId, ending)
+		local icon = co.pic
 
-		if not string.nilorempty(var_12_2) then
-			UISpriteSetMgr.instance:setV2a1Act165_2Sprite(var_12_1.icon, var_12_2)
+		if not string.nilorempty(icon) then
+			UISpriteSetMgr.instance:setV2a1Act165_2Sprite(item.icon, icon)
 		end
 
-		local function var_12_3()
-			Activity165Controller.instance:openActivity165EditView(arg_12_1, iter_12_2)
+		local function cb()
+			Activity165Controller.instance:openActivity165EditView(storyId, ending)
 		end
 
-		var_12_1.btn:RemoveClickListener()
-		var_12_1.btn:AddClickListener(var_12_3, arg_12_0)
-		gohelper.setActive(var_12_1.icon.gameObject, true)
+		item.btn:RemoveClickListener()
+		item.btn:AddClickListener(cb, self)
+		gohelper.setActive(item.icon.gameObject, true)
 
-		local var_12_4 = arg_12_0:_isCanPlayUnlockAnim(iter_12_2)
+		local isPlay = self:_isCanPlayUnlockAnim(ending)
 
-		gohelper.setActive(var_12_1.unlock.gameObject, var_12_4)
+		gohelper.setActive(item.unlock.gameObject, isPlay)
 
-		if var_12_4 then
+		if isPlay then
 			AudioMgr.instance:trigger(AudioEnum.Activity156.play_ui_wangshi_review)
 		end
 	end
 
-	local var_12_5 = Activity165Config.instance:getEndingCosByStoryId(arg_12_0._actId, arg_12_1)
-	local var_12_6 = tabletool.len(var_12_5)
+	local endings = Activity165Config.instance:getEndingCosByStoryId(self._actId, storyId)
+	local endingCount = tabletool.len(endings)
 
-	for iter_12_4 = var_12_0, var_12_6 do
-		local var_12_7 = arg_12_0._endingItem[iter_12_4]
-		local var_12_8 = "v2a1_strangetale_ending_locked"
+	for i = index, endingCount do
+		local item = self._endingItem[i]
+		local icon = "v2a1_strangetale_ending_locked"
 
-		if not string.nilorempty(var_12_8) then
-			UISpriteSetMgr.instance:setV2a1Act165_2Sprite(var_12_7.icon, var_12_8)
+		if not string.nilorempty(icon) then
+			UISpriteSetMgr.instance:setV2a1Act165_2Sprite(item.icon, icon)
 		end
 
-		gohelper.setActive(var_12_7.icon.gameObject, true)
-		var_12_7.btn:RemoveClickListener()
+		gohelper.setActive(item.icon.gameObject, true)
+		item.btn:RemoveClickListener()
 
-		local function var_12_9()
+		local function cb()
 			GameFacade.showToast(ToastEnum.Act165EndingLock)
 		end
 
-		var_12_7.btn:AddClickListener(var_12_9, arg_12_0)
+		item.btn:AddClickListener(cb, self)
 	end
 
-	for iter_12_5 = var_12_6 + 1, #arg_12_0._endingItem do
-		local var_12_10 = arg_12_0._endingItem[iter_12_5]
+	for i = endingCount + 1, #self._endingItem do
+		local item = self._endingItem[i]
 
-		gohelper.setActive(var_12_10.icon.gameObject, false)
+		gohelper.setActive(item.icon.gameObject, false)
 	end
 
-	Activity165Model.instance:setEndingRedDot(arg_12_1)
+	Activity165Model.instance:setEndingRedDot(storyId)
 
-	if arg_12_0._enterView then
-		arg_12_0._enterView:_checkRedDot()
+	if self._enterView then
+		self._enterView:_checkRedDot()
 	end
 end
 
-function var_0_0._isCanPlayUnlockAnim(arg_15_0, arg_15_1)
-	if not arg_15_0._mo or not arg_15_1 then
+function Activity165StoryReviewView:_isCanPlayUnlockAnim(ending)
+	if not self._mo or not ending then
 		return false
 	end
 
-	if GameUtil.playerPrefsGetNumberByUserId(arg_15_0:_playUnlockKey(arg_15_1), 0) == 0 then
-		GameUtil.playerPrefsSetNumberByUserId(arg_15_0:_playUnlockKey(arg_15_1), 1)
+	local isCanPlay = GameUtil.playerPrefsGetNumberByUserId(self:_playUnlockKey(ending), 0) == 0
+
+	if isCanPlay then
+		GameUtil.playerPrefsSetNumberByUserId(self:_playUnlockKey(ending), 1)
 
 		return true
 	end
 end
 
-function var_0_0._activeTagBtn(arg_16_0)
-	for iter_16_0 = 1, Activity165Model.instance:getStoryCount() do
-		local var_16_0 = Activity165Model.instance:getStoryMo(arg_16_0._actId, iter_16_0)
-		local var_16_1 = var_16_0 and var_16_0.isUnlock
-		local var_16_2 = arg_16_0["_btnstory" .. iter_16_0]
+function Activity165StoryReviewView:_activeTagBtn()
+	for i = 1, Activity165Model.instance:getStoryCount() do
+		local mo = Activity165Model.instance:getStoryMo(self._actId, i)
+		local isUnlock = mo and mo.isUnlock
+		local gobtn = self["_btnstory" .. i]
 
-		if var_16_2 then
-			gohelper.setActive(var_16_2.gameObject, var_16_1)
+		if gobtn then
+			gohelper.setActive(gobtn.gameObject, isUnlock)
 		end
 	end
 end
 
-function var_0_0._playUnlockKey(arg_17_0, arg_17_1)
-	return string.format("Activity165EndingItem_isUnlock_%s_%s_%s", arg_17_0._actId, arg_17_0._mo.storyId, arg_17_1)
+function Activity165StoryReviewView:_playUnlockKey(ending)
+	return string.format("Activity165EndingItem_isUnlock_%s_%s_%s", self._actId, self._mo.storyId, ending)
 end
 
-function var_0_0._switchAnim(arg_18_0, arg_18_1)
-	if arg_18_0._pageIndex == arg_18_1 then
+function Activity165StoryReviewView:_switchAnim(index)
+	if self._pageIndex == index then
 		return
 	end
 
-	arg_18_0._pageIndex = arg_18_1
+	self._pageIndex = index
 
-	arg_18_0._viewAnim:Play(Activity165Enum.ReviewViewAnim.Switch, nil, arg_18_0)
+	self._viewAnim:Play(Activity165Enum.ReviewViewAnim.Switch, nil, self)
 end
 
-function var_0_0.switchAnimCB(arg_19_0)
-	arg_19_0:_onShowEnding(arg_19_0._pageIndex)
+function Activity165StoryReviewView:switchAnimCB()
+	self:_onShowEnding(self._pageIndex)
 end
 
-return var_0_0
+return Activity165StoryReviewView

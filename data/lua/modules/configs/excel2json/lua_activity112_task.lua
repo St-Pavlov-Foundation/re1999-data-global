@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity112_task", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity112_task.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity112_task", package.seeall)
+
+local lua_activity112_task = {}
+local fields = {
 	jumpId = 11,
 	isOnline = 3,
 	listenerType = 6,
@@ -14,16 +16,16 @@ local var_0_1 = {
 	activityId = 1,
 	sort = 9
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"taskId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity112_task.onLoad(json)
+	lua_activity112_task.configList, lua_activity112_task.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity112_task

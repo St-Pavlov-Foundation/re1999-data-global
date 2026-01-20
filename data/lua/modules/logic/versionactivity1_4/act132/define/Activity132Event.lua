@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_4.act132.define.Activity132Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act132/define/Activity132Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act132.define.Activity132Event", package.seeall)
 
-var_0_0.OnChangeCollect = 10000
-var_0_0.OnForceClueItem = 10001
-var_0_0.OnUpdateInfo = 10002
-var_0_0.OnContentUnlock = 10003
+local Activity132Event = _M
 
-return var_0_0
+Activity132Event.OnChangeCollect = 10000
+Activity132Event.OnForceClueItem = 10001
+Activity132Event.OnUpdateInfo = 10002
+Activity132Event.OnContentUnlock = 10003
+
+return Activity132Event

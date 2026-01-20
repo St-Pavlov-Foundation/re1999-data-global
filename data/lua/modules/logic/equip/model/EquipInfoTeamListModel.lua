@@ -1,117 +1,132 @@
-﻿module("modules.logic.equip.model.EquipInfoTeamListModel", package.seeall)
+﻿-- chunkname: @modules/logic/equip/model/EquipInfoTeamListModel.lua
 
-local var_0_0 = class("EquipInfoTeamListModel", EquipInfoBaseListModel)
+module("modules.logic.equip.model.EquipInfoTeamListModel", package.seeall)
 
-function var_0_0.onOpen(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.heroMo = arg_1_1.heroMo
+local EquipInfoTeamListModel = class("EquipInfoTeamListModel", EquipInfoBaseListModel)
 
-	arg_1_0:initTeamEquipList(arg_1_1, arg_1_2)
+function EquipInfoTeamListModel:onOpen(viewParam, filterMo)
+	self.heroMo = viewParam.heroMo
 
-	arg_1_0.curGroupMO = arg_1_1.heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
-	arg_1_0.maxHeroNum = arg_1_1.maxHeroNum
-	arg_1_0.posIndex = arg_1_1.posIndex
+	self:initTeamEquipList(viewParam, filterMo)
 
-	if arg_1_1 and arg_1_1.heroMo and arg_1_1.heroMo:isOtherPlayerHero() then
-		arg_1_0.otherPlayerHeroMo = arg_1_1.heroMo
+	self.curGroupMO = viewParam.heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
+	self.maxHeroNum = viewParam.maxHeroNum
+	self.posIndex = viewParam.posIndex
+
+	if viewParam and viewParam.heroMo and viewParam.heroMo:isOtherPlayerHero() then
+		self.otherPlayerHeroMo = viewParam.heroMo
 	end
 
-	local var_1_0 = arg_1_1.equipMo or arg_1_0.equipMoList and arg_1_0.equipMoList[1]
+	local equipMo = viewParam.equipMo
 
-	arg_1_0:setCurrentSelectEquipMo(var_1_0)
-	arg_1_0:initInTeamEquipUidToHero()
+	equipMo = equipMo or self.equipMoList and self.equipMoList[1]
+
+	self:setCurrentSelectEquipMo(equipMo)
+	self:initInTeamEquipUidToHero()
 end
 
-function var_0_0.initTeamEquipList(arg_2_0, arg_2_1, arg_2_2)
-	if (arg_2_1.equipMo and arg_2_1.equipMo.equipType) == EquipEnum.ClientEquipType.TrialHero then
-		arg_2_0.equipMoList = {
-			arg_2_1.equipMo
+function EquipInfoTeamListModel:initTeamEquipList(viewParam, filterMo)
+	local equipType = viewParam.equipMo and viewParam.equipMo.equipType
+
+	if equipType == EquipEnum.ClientEquipType.TrialHero then
+		self.equipMoList = {
+			viewParam.equipMo
 		}
 	else
-		arg_2_0:initEquipList(arg_2_2)
+		self:initEquipList(filterMo)
 	end
 end
 
-function var_0_0.initEquipList(arg_3_0, arg_3_1)
-	arg_3_0.equipMoList = {}
+function EquipInfoTeamListModel:initEquipList(filterMo)
+	self.equipMoList = {}
+	self.recommendEquip = self.heroMo and self.heroMo:getRecommendEquip() or {}
 
-	local var_3_0 = arg_3_1:isFiltering()
+	local isHasRecommed = LuaUtil.tableNotEmpty(self.recommendEquip)
+	local isFilter = filterMo:isFiltering()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-		for iter_3_0, iter_3_1 in ipairs(EquipModel.instance:getEquips()) do
-			if EquipHelper.isNormalEquip(iter_3_1.config) then
-				if var_3_0 then
-					if arg_3_1:checkIsIncludeTag(iter_3_1.config) then
-						table.insert(arg_3_0.equipMoList, iter_3_1)
+		for _, equipMo in ipairs(EquipModel.instance:getEquips()) do
+			if EquipHelper.isNormalEquip(equipMo.config) then
+				if isFilter then
+					if filterMo:checkIsIncludeTag(equipMo.config) then
+						self:_initCharacterEquipMO(isHasRecommed, equipMo)
 					end
 				else
-					table.insert(arg_3_0.equipMoList, iter_3_1)
+					self:_initCharacterEquipMO(isHasRecommed, equipMo)
 				end
 			end
 		end
 	end
 
-	for iter_3_2, iter_3_3 in ipairs(HeroGroupTrialModel.instance:getTrialEquipList()) do
-		if var_3_0 then
-			if arg_3_1:checkIsIncludeTag(iter_3_3.config) then
-				table.insert(arg_3_0.equipMoList, iter_3_3)
+	for _, equipMo in ipairs(HeroGroupTrialModel.instance:getTrialEquipList()) do
+		if isFilter then
+			if filterMo:checkIsIncludeTag(equipMo.config) then
+				self:_initCharacterEquipMO(isHasRecommed, equipMo)
 			end
 		else
-			table.insert(arg_3_0.equipMoList, iter_3_3)
+			self:_initCharacterEquipMO(isHasRecommed, equipMo)
 		end
 	end
 
-	arg_3_0:resortEquip()
+	self:resortEquip()
 end
 
-function var_0_0.initInTeamEquipUidToHero(arg_4_0)
-	arg_4_0.equipUidToHeroMo = {}
+function EquipInfoTeamListModel:_initCharacterEquipMO(isHasRecommed, equipMo)
+	local index = isHasRecommed and tabletool.indexOf(self.recommendEquip, equipMo.equipId) or -1
 
-	local var_4_0 = arg_4_0.curGroupMO.heroList
+	equipMo:setRecommedIndex(index)
+	table.insert(self.equipMoList, equipMo)
+end
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0.curGroupMO.equips) do
-		if not arg_4_0.maxHeroNum or iter_4_0 + 1 <= arg_4_0.maxHeroNum then
-			local var_4_1 = var_4_0[iter_4_0 + 1]
+function EquipInfoTeamListModel:initInTeamEquipUidToHero()
+	self.equipUidToHeroMo = {}
 
-			if var_4_1 and tonumber(var_4_1) < 0 then
-				arg_4_0.equipUidToHeroMo[iter_4_1.equipUid[1]] = HeroGroupTrialModel.instance:getById(var_4_1)
-			elseif arg_4_0.otherPlayerHeroMo and arg_4_0.otherPlayerHeroMo.uid == var_4_1 then
-				arg_4_0.equipUidToHeroMo[iter_4_1.equipUid[1]] = arg_4_0.otherPlayerHeroMo
+	local heroUidList = self.curGroupMO.heroList
+
+	for index, heroGroupEquipMO in pairs(self.curGroupMO.equips) do
+		if not self.maxHeroNum or index + 1 <= self.maxHeroNum then
+			local uid = heroUidList[index + 1]
+
+			if uid and tonumber(uid) < 0 then
+				self.equipUidToHeroMo[heroGroupEquipMO.equipUid[1]] = HeroGroupTrialModel.instance:getById(uid)
+			elseif self.otherPlayerHeroMo and self.otherPlayerHeroMo.uid == uid then
+				self.equipUidToHeroMo[heroGroupEquipMO.equipUid[1]] = self.otherPlayerHeroMo
 			else
-				arg_4_0.equipUidToHeroMo[iter_4_1.equipUid[1]] = HeroModel.instance:getById(var_4_1)
+				self.equipUidToHeroMo[heroGroupEquipMO.equipUid[1]] = HeroModel.instance:getById(uid)
 			end
 		end
 	end
 end
 
-function var_0_0.getGroupCurrentPosEquip(arg_5_0, arg_5_1)
-	return arg_5_0.curGroupMO:getPosEquips(arg_5_1 or arg_5_0.posIndex).equipUid
+function EquipInfoTeamListModel:getGroupCurrentPosEquip(posIndex)
+	return self.curGroupMO:getPosEquips(posIndex or self.posIndex).equipUid
 end
 
-function var_0_0.getCurrentPosIndex(arg_6_0)
-	return arg_6_0.posIndex
+function EquipInfoTeamListModel:getCurrentPosIndex()
+	return self.posIndex
 end
 
-function var_0_0.getRequestData(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = {
-		arg_7_2
-	}
+function EquipInfoTeamListModel:getRequestData(posIndex, equipUid)
+	local equips = {}
 
-	return arg_7_0.curGroupMO.groupId, arg_7_1, var_7_0
+	equips[1] = equipUid
+
+	return self.curGroupMO.groupId, posIndex, equips
 end
 
-function var_0_0.getHeroMoByEquipUid(arg_8_0, arg_8_1)
-	return arg_8_0.equipUidToHeroMo and arg_8_0.equipUidToHeroMo[arg_8_1]
+function EquipInfoTeamListModel:getHeroMoByEquipUid(equipUid)
+	return self.equipUidToHeroMo and self.equipUidToHeroMo[equipUid]
 end
 
-function var_0_0.clear(arg_9_0)
-	arg_9_0:onInit()
+function EquipInfoTeamListModel:clear()
+	self:onInit()
 
-	arg_9_0.selectedEquipMo = nil
-	arg_9_0.curGroupMO = nil
-	arg_9_0.posIndex = nil
-	arg_9_0.equipUidToHeroMo = nil
+	self.selectedEquipMo = nil
+	self.curGroupMO = nil
+	self.posIndex = nil
+	self.equipUidToHeroMo = nil
 end
 
-var_0_0.instance = var_0_0.New()
+EquipInfoTeamListModel.instance = EquipInfoTeamListModel.New()
 
-return var_0_0
+return EquipInfoTeamListModel

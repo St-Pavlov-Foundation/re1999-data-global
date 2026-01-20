@@ -1,15 +1,17 @@
-﻿module("modules.logic.settings.model.SettingsVoicePackageListModel", package.seeall)
+﻿-- chunkname: @modules/logic/settings/model/SettingsVoicePackageListModel.lua
 
-local var_0_0 = class("SettingsVoicePackageListModel", ListScrollModel)
+module("modules.logic.settings.model.SettingsVoicePackageListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local SettingsVoicePackageListModel = class("SettingsVoicePackageListModel", ListScrollModel)
+
+function SettingsVoicePackageListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function SettingsVoicePackageListModel:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+SettingsVoicePackageListModel.instance = SettingsVoicePackageListModel.New()
 
-return var_0_0
+return SettingsVoicePackageListModel

@@ -1,31 +1,33 @@
-﻿module("modules.logic.fight.system.work.asfd.FightWorkMissileASFDDone", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/FightWorkMissileASFDDone.lua
 
-local var_0_0 = class("FightWorkMissileASFDDone", BaseWork)
+module("modules.logic.fight.system.work.asfd.FightWorkMissileASFDDone", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.fightStepData = arg_1_1
+local FightWorkMissileASFDDone = class("FightWorkMissileASFDDone", BaseWork)
+
+function FightWorkMissileASFDDone:ctor(fightStepData)
+	self.fightStepData = fightStepData
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 1)
+function FightWorkMissileASFDDone:onStart()
+	TaskDispatcher.runDelay(self._delayDone, self, 1)
 
-	local var_2_0 = FightHelper.getASFDMgr()
+	local asfdMgr = FightHelper.getASFDMgr()
 
-	if var_2_0 then
-		var_2_0:clearEmitterEffect(arg_2_0.fightStepData)
+	if asfdMgr then
+		asfdMgr:clearEmitterEffect(self.fightStepData)
 	end
 
-	return arg_2_0:onDone(true)
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
+function FightWorkMissileASFDDone:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-function var_0_0._delayDone(arg_4_0)
+function FightWorkMissileASFDDone:_delayDone()
 	logError("奥术飞弹 等待发射完成 超时了")
 
-	return arg_4_0:onDone(true)
+	return self:onDone(true)
 end
 
-return var_0_0
+return FightWorkMissileASFDDone

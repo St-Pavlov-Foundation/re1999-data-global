@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity2_3.dungeon.define.VersionActivity2_3DungeonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/dungeon/define/VersionActivity2_3DungeonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_3.dungeon.define.VersionActivity2_3DungeonEvent", package.seeall)
 
-var_0_0.OnMapPosChanged = 1
-var_0_0.OnClickElement = 2
-var_0_0.FocusElement = 3
-var_0_0.OnHideInteractUI = 4
-var_0_0.OnAddOneElement = 5
-var_0_0.OnRemoveElement = 6
-var_0_0.OnRecycleAllElement = 7
-var_0_0.ManualClickElement = 8
-var_0_0.GuideShowElement = 9
-var_0_0.OnClickAllTaskFinish = 101
+local VersionActivity2_3DungeonEvent = _M
 
-return var_0_0
+VersionActivity2_3DungeonEvent.OnMapPosChanged = 1
+VersionActivity2_3DungeonEvent.OnClickElement = 2
+VersionActivity2_3DungeonEvent.FocusElement = 3
+VersionActivity2_3DungeonEvent.OnHideInteractUI = 4
+VersionActivity2_3DungeonEvent.OnAddOneElement = 5
+VersionActivity2_3DungeonEvent.OnRemoveElement = 6
+VersionActivity2_3DungeonEvent.OnRecycleAllElement = 7
+VersionActivity2_3DungeonEvent.ManualClickElement = 8
+VersionActivity2_3DungeonEvent.GuideShowElement = 9
+VersionActivity2_3DungeonEvent.OnClickAllTaskFinish = 101
+
+return VersionActivity2_3DungeonEvent

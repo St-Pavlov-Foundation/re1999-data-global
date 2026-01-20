@@ -1,69 +1,77 @@
-﻿module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummon_BaseViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/versionsummon/view/V2a9_VersionSummon_BaseViewContainer.lua
 
-local var_0_0 = class("V2a9_VersionSummon_BaseViewContainer", Activity101SignViewBaseContainer)
+module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummon_BaseViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	arg_1_0.__mainView = arg_1_0:_createMainView()
+local V2a9_VersionSummon_BaseViewContainer = class("V2a9_VersionSummon_BaseViewContainer", Activity101SignViewBaseContainer)
 
-	return arg_1_0:onBuildViews()
+function V2a9_VersionSummon_BaseViewContainer:buildViews()
+	self.__mainView = self:_createMainView()
+
+	return self:onBuildViews()
 end
 
-function var_0_0.onBuildViews(arg_2_0)
-	return {
-		arg_2_0.__mainView
+function V2a9_VersionSummon_BaseViewContainer:onBuildViews()
+	local views = {
+		self.__mainView
 	}
+
+	return views
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0.__onceGotRewardFetch101Infos = false
+function V2a9_VersionSummon_BaseViewContainer:onContainerInit()
+	self.__onceGotRewardFetch101Infos = false
 
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, arg_3_0._onRefreshNorSignActivity, arg_3_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshNorSignActivity, self._onRefreshNorSignActivity, self)
 end
 
-function var_0_0.getActMO(arg_4_0)
-	local var_4_0 = arg_4_0:actId()
+function V2a9_VersionSummon_BaseViewContainer:getActMO()
+	local actId = self:actId()
 
-	return ActivityModel.instance:getActMO(var_4_0)
+	return ActivityModel.instance:getActMO(actId)
 end
 
-function var_0_0.getActRemainTimeStr(arg_5_0)
-	local var_5_0 = arg_5_0:getActMO()
+function V2a9_VersionSummon_BaseViewContainer:getActRemainTimeStr()
+	local actInfoMo = self:getActMO()
 
-	if not var_5_0 then
+	if not actInfoMo then
 		return ""
 	end
 
-	return var_5_0:getRemainTimeStr3(false, true)
+	return actInfoMo:getRemainTimeStr3(false, true)
 end
 
-function var_0_0.sendGet101BonusRequest(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = 1
-	local var_6_1 = arg_6_0:actId()
+function V2a9_VersionSummon_BaseViewContainer:sendGet101BonusRequest(cb, cbObj)
+	local index = 1
+	local actId = self:actId()
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
 
-	if not ActivityType101Model.instance:isOpen(var_6_1) then
+	if not isOpen then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	if not ActivityType101Model.instance:isType101RewardCouldGet(var_6_1, var_6_0) then
+	local canReceive = ActivityType101Model.instance:isType101RewardCouldGet(actId, index)
+
+	if not canReceive then
 		GameFacade.showToast(ToastEnum.ActivityRewardHasReceive)
 
 		return
 	end
 
-	Activity101Rpc.instance:sendGet101BonusRequest(var_6_1, var_6_0, arg_6_1, arg_6_2)
+	Activity101Rpc.instance:sendGet101BonusRequest(actId, index, cb, cbObj)
 end
 
-function var_0_0.isType101RewardCouldGetAnyOne(arg_7_0)
-	local var_7_0 = false
-	local var_7_1 = arg_7_0:actId()
+function V2a9_VersionSummon_BaseViewContainer:isType101RewardCouldGetAnyOne()
+	local result = false
+	local actId = self:actId()
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
 
-	if ActivityType101Model.instance:isOpen(var_7_1) then
-		var_7_0 = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(var_7_1)
+	if isOpen then
+		result = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
 	end
 
-	return var_7_0
+	return result
 end
 
-return var_0_0
+return V2a9_VersionSummon_BaseViewContainer

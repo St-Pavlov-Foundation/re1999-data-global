@@ -1,277 +1,280 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyMembersTipView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyMembersTipView.lua
 
-local var_0_0 = class("OdysseyMembersTipView", BaseView)
+module("modules.logic.sp01.odyssey.view.OdysseyMembersTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_root")
-	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "#go_root/Info/#go_level")
-	arg_1_0._txtLevel = gohelper.findChildText(arg_1_0.viewGO, "#go_root/Info/#go_level/#txt_Level")
-	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "#go_root/Info/name/#txt_Name")
-	arg_1_0._txtType = gohelper.findChildText(arg_1_0.viewGO, "#go_root/Info/name/#txt_Type")
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_root/#scroll_desc")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#txt_desc")
-	arg_1_0._godescEffect = gohelper.findChild(arg_1_0.viewGO, "#go_root/image_LightBG")
-	arg_1_0._goclue = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_clue")
-	arg_1_0._goclueContent = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_clue/#go_clueContent")
-	arg_1_0._goclueItem = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_clue/#go_clueContent/#go_clueItem")
-	arg_1_0._goitemRoot = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_itemRoot")
-	arg_1_0._goitemContent = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_itemRoot/#go_itemContent")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_itemRoot/#go_itemContent/#go_item")
-	arg_1_0._gorewardRoot = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_rewardRoot")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_rewardRoot/#go_rewardContent")
-	arg_1_0._goreward = gohelper.findChild(arg_1_0.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_rewardRoot/#go_rewardContent/#go_reward")
-	arg_1_0._goExposed = gohelper.findChild(arg_1_0.viewGO, "#go_root/#go_Exposed")
-	arg_1_0._btncanExpose = gohelper.findChildClick(arg_1_0.viewGO, "#go_root/#go_Exposed/#btn_canExpose")
-	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "#go_root/#go_Exposed/#btn_canExpose/#image_progress")
-	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_root/#go_Exposed/#btn_canExpose/#go_reddot")
-	arg_1_0._btngoto = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_root/#go_Exposed/#btn_goto")
-	arg_1_0._godead = gohelper.findChild(arg_1_0.viewGO, "#go_root/#go_dead")
-	arg_1_0._gounExposed = gohelper.findChild(arg_1_0.viewGO, "#go_root/#go_unExposed")
-	arg_1_0._txtunExposed = gohelper.findChildText(arg_1_0.viewGO, "#go_root/#go_unExposed/#txt_unExposed")
+local OdysseyMembersTipView = class("OdysseyMembersTipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyMembersTipView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._goroot = gohelper.findChild(self.viewGO, "#go_root")
+	self._golevel = gohelper.findChild(self.viewGO, "#go_root/Info/#go_level")
+	self._txtLevel = gohelper.findChildText(self.viewGO, "#go_root/Info/#go_level/#txt_Level")
+	self._txtName = gohelper.findChildText(self.viewGO, "#go_root/Info/name/#txt_Name")
+	self._txtType = gohelper.findChildText(self.viewGO, "#go_root/Info/name/#txt_Type")
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "#go_root/#scroll_desc")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#txt_desc")
+	self._godescEffect = gohelper.findChild(self.viewGO, "#go_root/image_LightBG")
+	self._goclue = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_clue")
+	self._goclueContent = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_clue/#go_clueContent")
+	self._goclueItem = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_clue/#go_clueContent/#go_clueItem")
+	self._goitemRoot = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_itemRoot")
+	self._goitemContent = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_itemRoot/#go_itemContent")
+	self._goitem = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_itemRoot/#go_itemContent/#go_item")
+	self._gorewardRoot = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_rewardRoot")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_rewardRoot/#go_rewardContent")
+	self._goreward = gohelper.findChild(self.viewGO, "#go_root/#scroll_desc/Viewport/Content/#go_rewardRoot/#go_rewardContent/#go_reward")
+	self._goExposed = gohelper.findChild(self.viewGO, "#go_root/#go_Exposed")
+	self._btncanExpose = gohelper.findChildClick(self.viewGO, "#go_root/#go_Exposed/#btn_canExpose")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "#go_root/#go_Exposed/#btn_canExpose/#image_progress")
+	self._goreddot = gohelper.findChild(self.viewGO, "#go_root/#go_Exposed/#btn_canExpose/#go_reddot")
+	self._btngoto = gohelper.findChildButtonWithAudio(self.viewGO, "#go_root/#go_Exposed/#btn_goto")
+	self._godead = gohelper.findChild(self.viewGO, "#go_root/#go_dead")
+	self._gounExposed = gohelper.findChild(self.viewGO, "#go_root/#go_unExposed")
+	self._txtunExposed = gohelper.findChildText(self.viewGO, "#go_root/#go_unExposed/#txt_unExposed")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
-	arg_2_0._btncanExpose:AddClickDownListener(arg_2_0.canExposeOnClickDown, arg_2_0)
-	arg_2_0._btncanExpose:AddClickUpListener(arg_2_0.canExposeOnClickUp, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshReligionMembers, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.ShowExposeEffect, arg_2_0.showExposeEffect, arg_2_0)
+function OdysseyMembersTipView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	self._btncanExpose:AddClickDownListener(self.canExposeOnClickDown, self)
+	self._btncanExpose:AddClickUpListener(self.canExposeOnClickUp, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshReligionMembers, self.refreshUI, self)
+	self:addEventCb(OdysseyDungeonController.instance, OdysseyEvent.ShowExposeEffect, self.showExposeEffect, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btngoto:RemoveClickListener()
-	arg_3_0._btncanExpose:RemoveClickDownListener()
-	arg_3_0._btncanExpose:RemoveClickUpListener()
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshReligionMembers, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.ShowExposeEffect, arg_3_0.showExposeEffect, arg_3_0)
+function OdysseyMembersTipView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btngoto:RemoveClickListener()
+	self._btncanExpose:RemoveClickDownListener()
+	self._btncanExpose:RemoveClickUpListener()
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.RefreshReligionMembers, self.refreshUI, self)
+	self:removeEventCb(OdysseyDungeonController.instance, OdysseyEvent.ShowExposeEffect, self.showExposeEffect, self)
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function OdysseyMembersTipView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btngotoOnClick(arg_5_0)
-	OdysseyDungeonController.instance:jumpToMapElement(arg_5_0.fightElementCo.id)
-	arg_5_0:closeThis()
+function OdysseyMembersTipView:_btngotoOnClick()
+	OdysseyDungeonController.instance:jumpToMapElement(self.fightElementCo.id)
+	self:closeThis()
 	ViewMgr.instance:closeView(ViewName.OdysseyMembersView)
 end
 
-function var_0_0.canExposeOnClickDown(arg_6_0)
-	if arg_6_0.religionMo then
+function OdysseyMembersTipView:canExposeOnClickDown()
+	if self.religionMo then
 		return
 	end
 
-	arg_6_0:cleanProgressTween()
+	self:cleanProgressTween()
 
-	arg_6_0.progressTweenId = ZProj.TweenHelper.DOFillAmount(arg_6_0._imageprogress, 1, (1 - arg_6_0._imageprogress.fillAmount) * 2, arg_6_0.onExposeProgressFull, arg_6_0)
+	self.progressTweenId = ZProj.TweenHelper.DOFillAmount(self._imageprogress, 1, (1 - self._imageprogress.fillAmount) * 2, self.onExposeProgressFull, self)
 
 	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_press)
 end
 
-function var_0_0.canExposeOnClickUp(arg_7_0)
-	arg_7_0:cleanProgressTween()
+function OdysseyMembersTipView:canExposeOnClickUp()
+	self:cleanProgressTween()
 
-	if arg_7_0._imageprogress.fillAmount >= 1 or arg_7_0.religionMo then
+	if self._imageprogress.fillAmount >= 1 or self.religionMo then
 		return
 	end
 
-	arg_7_0.progressTweenId = ZProj.TweenHelper.DOFillAmount(arg_7_0._imageprogress, 0, arg_7_0._imageprogress.fillAmount * 2)
+	self.progressTweenId = ZProj.TweenHelper.DOFillAmount(self._imageprogress, 0, self._imageprogress.fillAmount * 2)
 end
 
-function var_0_0.onExposeProgressFull(arg_8_0)
-	OdysseyRpc.instance:sendOdysseyFightReligionDiscloseRequest(arg_8_0.religionId)
+function OdysseyMembersTipView:onExposeProgressFull()
+	OdysseyRpc.instance:sendOdysseyFightReligionDiscloseRequest(self.religionId)
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0.clueItemMap = arg_9_0:getUserDataTb_()
-	arg_9_0.rewardItemMap = arg_9_0:getUserDataTb_()
-	arg_9_0._imageprogress.fillAmount = 0
+function OdysseyMembersTipView:_editableInitView()
+	self.clueItemMap = self:getUserDataTb_()
+	self.rewardItemMap = self:getUserDataTb_()
+	self._imageprogress.fillAmount = 0
 
-	gohelper.setActive(arg_9_0._godescEffect, false)
+	gohelper.setActive(self._godescEffect, false)
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
+function OdysseyMembersTipView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0.religionCo = arg_11_0.viewParam.config
-	arg_11_0.religionId = arg_11_0.religionCo.id
-	arg_11_0.curMemberItemPos = arg_11_0.viewParam.pos
+function OdysseyMembersTipView:onOpen()
+	self.religionCo = self.viewParam.config
+	self.religionId = self.religionCo.id
+	self.curMemberItemPos = self.viewParam.pos
 
-	arg_11_0:setViewPos()
-	arg_11_0:refreshUI()
-	OdysseyMembersModel.instance:setHasClickReglionId(arg_11_0.religionId)
+	self:setViewPos()
+	self:refreshUI()
+	OdysseyMembersModel.instance:setHasClickReglionId(self.religionId)
 end
 
-var_0_0.TipHalfWidth = 434
+OdysseyMembersTipView.TipHalfWidth = 434
 
-function var_0_0.setViewPos(arg_12_0)
-	local var_12_0 = recthelper.uiPosToScreenPos(arg_12_0.curMemberItemPos.transform)
-	local var_12_1 = GameUtil.checkClickPositionInRight(var_12_0)
-	local var_12_2, var_12_3 = recthelper.screenPosToAnchorPos2(var_12_0, arg_12_0.viewGO.transform)
-	local var_12_4 = var_12_1 and var_12_2 - var_0_0.TipHalfWidth or var_12_2 + var_0_0.TipHalfWidth
+function OdysseyMembersTipView:setViewPos()
+	local itemScreenPosVector = recthelper.uiPosToScreenPos(self.curMemberItemPos.transform)
+	local isClickRight = GameUtil.checkClickPositionInRight(itemScreenPosVector)
+	local posX, posY = recthelper.screenPosToAnchorPos2(itemScreenPosVector, self.viewGO.transform)
+	local tipPosX = isClickRight and posX - OdysseyMembersTipView.TipHalfWidth or posX + OdysseyMembersTipView.TipHalfWidth
 
-	recthelper.setAnchorX(arg_12_0._goroot.transform, var_12_4)
+	recthelper.setAnchorX(self._goroot.transform, tipPosX)
 end
 
-function var_0_0.refreshUI(arg_13_0)
-	arg_13_0.religionMo = OdysseyModel.instance:getReligionInfoData(arg_13_0.religionId)
+function OdysseyMembersTipView:refreshUI()
+	self.religionMo = OdysseyModel.instance:getReligionInfoData(self.religionId)
 
-	gohelper.setActive(arg_13_0._golevel, arg_13_0.religionMo)
-	gohelper.setActive(arg_13_0._txtdesc.gameObject, arg_13_0.religionMo)
+	gohelper.setActive(self._golevel, self.religionMo)
+	gohelper.setActive(self._txtdesc.gameObject, self.religionMo)
 
-	arg_13_0.fightElementCo = OdysseyConfig.instance:getElementFightConfig(arg_13_0.religionCo.elementId)
+	self.fightElementCo = OdysseyConfig.instance:getElementFightConfig(self.religionCo.elementId)
 
-	local var_13_0 = arg_13_0.fightElementCo and arg_13_0.fightElementCo.enemyLevel or 1
-	local var_13_1 = OdysseyModel.instance:getHeroCurLevelAndExp()
+	local enemyLevel = self.fightElementCo and self.fightElementCo.enemyLevel or 1
+	local curHeroLevel = OdysseyModel.instance:getHeroCurLevelAndExp()
 
-	arg_13_0._txtLevel.text = var_13_1 < var_13_0 and string.format("<#E76969>%s</color>", var_13_0) or var_13_0
-	arg_13_0._txtName.text = arg_13_0.religionMo and arg_13_0.religionCo.name or arg_13_0.religionCo.notExposeName
-	arg_13_0._txtType.text = arg_13_0.religionCo.type
-	arg_13_0._txtdesc.text = arg_13_0.religionCo.desc
-	arg_13_0.canExpose = OdysseyMembersModel.instance:checkReligionMemberCanExpose(arg_13_0.religionId)
+	self._txtLevel.text = curHeroLevel < enemyLevel and string.format("<#E76969>%s</color>", enemyLevel) or enemyLevel
+	self._txtName.text = self.religionMo and self.religionCo.name or self.religionCo.notExposeName
+	self._txtType.text = self.religionCo.type
+	self._txtdesc.text = self.religionCo.desc
+	self.canExpose = OdysseyMembersModel.instance:checkReligionMemberCanExpose(self.religionId)
 
-	gohelper.setActive(arg_13_0._gounExposed, not arg_13_0.canExpose)
+	gohelper.setActive(self._gounExposed, not self.canExpose)
 
-	arg_13_0._txtunExposed.text = arg_13_0.religionCo.tips
+	self._txtunExposed.text = self.religionCo.tips
 
-	gohelper.setActive(arg_13_0._godead, arg_13_0.religionMo and arg_13_0.religionMo.status == OdysseyEnum.MemberStatus.Dead)
-	gohelper.setActive(arg_13_0._goExposed, arg_13_0.canExpose)
-	gohelper.setActive(arg_13_0._btncanExpose.gameObject, arg_13_0.canExpose and not arg_13_0.religionMo)
-	gohelper.setActive(arg_13_0._goreddot, arg_13_0.canExpose and not arg_13_0.religionMo)
-	gohelper.setActive(arg_13_0._btngoto.gameObject, arg_13_0.religionMo and arg_13_0.religionMo.status == OdysseyEnum.MemberStatus.Expose)
-	gohelper.setActive(arg_13_0._goclue, not arg_13_0.religionMo)
+	gohelper.setActive(self._godead, self.religionMo and self.religionMo.status == OdysseyEnum.MemberStatus.Dead)
+	gohelper.setActive(self._goExposed, self.canExpose)
+	gohelper.setActive(self._btncanExpose.gameObject, self.canExpose and not self.religionMo)
+	gohelper.setActive(self._goreddot, self.canExpose and not self.religionMo)
+	gohelper.setActive(self._btngoto.gameObject, self.religionMo and self.religionMo.status == OdysseyEnum.MemberStatus.Expose)
+	gohelper.setActive(self._goclue, not self.religionMo)
 
-	local var_13_2 = string.splitToNumber(arg_13_0.religionCo.clueList, "#")
+	local clueList = string.splitToNumber(self.religionCo.clueList, "#")
 
-	arg_13_0.newUnlockClueIdList = OdysseyMembersModel.instance:getNewClueIdList(arg_13_0.religionId)
+	self.newUnlockClueIdList = OdysseyMembersModel.instance:getNewClueIdList(self.religionId)
 
-	gohelper.CreateObjList(arg_13_0, arg_13_0.onClueShow, var_13_2, arg_13_0._goclueContent, arg_13_0._goclueItem)
+	gohelper.CreateObjList(self, self.onClueShow, clueList, self._goclueContent, self._goclueItem)
 
-	local var_13_3 = arg_13_0:getClueUnlockItem(var_13_2)
+	local clueItemList = self:getClueUnlockItem(clueList)
 
-	gohelper.CreateObjList(arg_13_0, arg_13_0.onClueItemShow, var_13_3, arg_13_0._goitemContent, arg_13_0._goitem)
-	gohelper.setActive(arg_13_0._goitemRoot, #var_13_3 > 0)
+	gohelper.CreateObjList(self, self.onClueItemShow, clueItemList, self._goitemContent, self._goitem)
+	gohelper.setActive(self._goitemRoot, #clueItemList > 0)
 
-	local var_13_4 = arg_13_0.fightElementCo.reward
+	local rewardStr = self.fightElementCo.reward
 
-	gohelper.setActive(arg_13_0._gorewardRoot, not string.nilorempty(var_13_4))
+	gohelper.setActive(self._gorewardRoot, not string.nilorempty(rewardStr))
 
-	if not string.nilorempty(var_13_4) then
-		local var_13_5 = GameUtil.splitString2(var_13_4)
+	if not string.nilorempty(rewardStr) then
+		local rewardList = GameUtil.splitString2(rewardStr)
 
-		gohelper.CreateObjList(arg_13_0, arg_13_0.onRewardItemShow, var_13_5, arg_13_0._gorewardContent, arg_13_0._goreward)
+		gohelper.CreateObjList(self, self.onRewardItemShow, rewardList, self._gorewardContent, self._goreward)
 	end
 end
 
-function var_0_0.onClueShow(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = arg_14_1:GetComponent(gohelper.Type_TextMesh)
-	local var_14_1 = gohelper.findChild(arg_14_1, "go_unknown")
-	local var_14_2 = gohelper.findChild(arg_14_1, "go_knowned")
-	local var_14_3 = gohelper.findChild(arg_14_1, "image_LightBG")
-	local var_14_4 = OdysseyConfig.instance:getReligionClueConfig(arg_14_2)
-	local var_14_5 = var_14_4.unlockCondition
-	local var_14_6 = OdysseyDungeonModel.instance:checkConditionCanUnlock(var_14_5)
+function OdysseyMembersTipView:onClueShow(obj, data, index)
+	local txtClue = obj:GetComponent(gohelper.Type_TextMesh)
+	local goUnknown = gohelper.findChild(obj, "go_unknown")
+	local goKnowned = gohelper.findChild(obj, "go_knowned")
+	local goLightEffect = gohelper.findChild(obj, "image_LightBG")
+	local clueCo = OdysseyConfig.instance:getReligionClueConfig(data)
+	local unlockConditionStr = clueCo.unlockCondition
+	local canUnlock = OdysseyDungeonModel.instance:checkConditionCanUnlock(unlockConditionStr)
 
-	var_14_0.text = var_14_6 and string.format("<#B69B6F>%s</color>", var_14_4.clue) or luaLang("odyssey_religion_notexpose_clue")
+	txtClue.text = canUnlock and string.format("<#B69B6F>%s</color>", clueCo.clue) or luaLang("odyssey_religion_notexpose_clue")
 
-	gohelper.setActive(var_14_1, not var_14_6)
-	gohelper.setActive(var_14_2, var_14_6)
-	gohelper.setActive(var_14_3, false)
+	gohelper.setActive(goUnknown, not canUnlock)
+	gohelper.setActive(goKnowned, canUnlock)
+	gohelper.setActive(goLightEffect, false)
 
-	local var_14_7 = OdysseyMembersModel.instance:getHasClickReglionId(arg_14_0.religionId)
-	local var_14_8 = tabletool.indexOf(arg_14_0.newUnlockClueIdList, arg_14_2)
+	local hasClick = OdysseyMembersModel.instance:getHasClickReglionId(self.religionId)
+	local canShowLightEffect = tabletool.indexOf(self.newUnlockClueIdList, data)
 
-	gohelper.setActive(var_14_3, var_14_8 and not var_14_7)
+	gohelper.setActive(goLightEffect, canShowLightEffect and not hasClick)
 end
 
-function var_0_0.onClueItemShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = arg_15_1
-	local var_15_1 = arg_15_0.clueItemMap[arg_15_2.clueId]
+function OdysseyMembersTipView:onClueItemShow(obj, data, index)
+	local itemPos = obj
+	local clueItem = self.clueItemMap[data.clueId]
 
-	if not var_15_1 then
-		var_15_1 = {
-			itemGO = arg_15_0.viewContainer:getResInst(arg_15_0.viewContainer:getSetting().otherRes[1], var_15_0)
+	if not clueItem then
+		clueItem = {
+			itemGO = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes[1], itemPos)
 		}
-		var_15_1.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1.itemGO, OdysseyItemIcon)
-		arg_15_0.clueItemMap[arg_15_2.clueId] = var_15_1
+		clueItem.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(clueItem.itemGO, OdysseyItemIcon)
+		self.clueItemMap[data.clueId] = clueItem
 	end
 
-	var_15_1.itemIcon:initRewardItemInfo(arg_15_2.itemType, arg_15_2.itemId, arg_15_2.itemCount)
+	clueItem.itemIcon:initRewardItemInfo(data.itemType, data.itemId, data.itemCount)
 end
 
-function var_0_0.getClueUnlockItem(arg_16_0, arg_16_1)
-	local var_16_0 = {}
+function OdysseyMembersTipView:getClueUnlockItem(clueList)
+	local clueItemList = {}
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
-		local var_16_1 = OdysseyConfig.instance:getReligionClueConfig(iter_16_1).unlockCondition
+	for _, clueId in ipairs(clueList) do
+		local clueCo = OdysseyConfig.instance:getReligionClueConfig(clueId)
+		local conditionStr = clueCo.unlockCondition
 
-		if not string.nilorempty(var_16_1) then
-			local var_16_2 = GameUtil.splitString2(var_16_1)
+		if not string.nilorempty(conditionStr) then
+			local unlockConditionList = GameUtil.splitString2(conditionStr)
 
-			for iter_16_2, iter_16_3 in ipairs(var_16_2) do
-				if iter_16_3[1] == OdysseyEnum.ConditionType.Item and OdysseyItemModel.instance:getItemCount(tonumber(iter_16_3[2])) > 0 then
-					table.insert(var_16_0, {
-						clueId = iter_16_1,
-						itemType = iter_16_3[1],
-						itemId = tonumber(iter_16_3[2]),
-						itemCount = tonumber(iter_16_3[3])
+			for _, conditionData in ipairs(unlockConditionList) do
+				if conditionData[1] == OdysseyEnum.ConditionType.Item and OdysseyItemModel.instance:getItemCount(tonumber(conditionData[2])) > 0 then
+					table.insert(clueItemList, {
+						clueId = clueId,
+						itemType = conditionData[1],
+						itemId = tonumber(conditionData[2]),
+						itemCount = tonumber(conditionData[3])
 					})
 				end
 			end
 		end
 	end
 
-	return var_16_0
+	return clueItemList
 end
 
-function var_0_0.onRewardItemShow(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_2[1]
-	local var_17_1 = tonumber(arg_17_2[2])
-	local var_17_2 = tonumber(arg_17_2[3])
-	local var_17_3 = gohelper.findChild(arg_17_1, "go_pos")
-	local var_17_4 = gohelper.findChild(arg_17_1, "go_get")
-	local var_17_5 = arg_17_0.rewardItemMap[arg_17_3]
+function OdysseyMembersTipView:onRewardItemShow(obj, data, index)
+	local itemType = data[1]
+	local itemId = tonumber(data[2])
+	local itemCount = tonumber(data[3])
+	local itemPos = gohelper.findChild(obj, "go_pos")
+	local goGet = gohelper.findChild(obj, "go_get")
+	local rewardItem = self.rewardItemMap[index]
 
-	if not var_17_5 then
-		var_17_5 = {
-			itemGO = arg_17_0.viewContainer:getResInst(arg_17_0.viewContainer:getSetting().otherRes[1], var_17_3)
+	if not rewardItem then
+		rewardItem = {
+			itemGO = self.viewContainer:getResInst(self.viewContainer:getSetting().otherRes[1], itemPos)
 		}
-		var_17_5.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_5.itemGO, OdysseyItemIcon)
-		arg_17_0.rewardItemMap[arg_17_3] = var_17_5
+		rewardItem.itemIcon = MonoHelper.addNoUpdateLuaComOnceToGo(rewardItem.itemGO, OdysseyItemIcon)
+		self.rewardItemMap[index] = rewardItem
 	end
 
-	var_17_5.itemIcon:initRewardItemInfo(var_17_0, var_17_1, var_17_2)
-	gohelper.setActive(var_17_4, arg_17_0.religionMo and arg_17_0.religionMo.status == OdysseyEnum.MemberStatus.Dead)
+	rewardItem.itemIcon:initRewardItemInfo(itemType, itemId, itemCount)
+	gohelper.setActive(goGet, self.religionMo and self.religionMo.status == OdysseyEnum.MemberStatus.Dead)
 end
 
-function var_0_0.showExposeEffect(arg_18_0)
-	gohelper.setActive(arg_18_0._godescEffect, false)
-	gohelper.setActive(arg_18_0._godescEffect, true)
+function OdysseyMembersTipView:showExposeEffect()
+	gohelper.setActive(self._godescEffect, false)
+	gohelper.setActive(self._godescEffect, true)
 end
 
-function var_0_0.cleanProgressTween(arg_19_0)
-	if arg_19_0.progressTweenId then
-		ZProj.TweenHelper.KillById(arg_19_0.progressTweenId)
+function OdysseyMembersTipView:cleanProgressTween()
+	if self.progressTweenId then
+		ZProj.TweenHelper.KillById(self.progressTweenId)
 
-		arg_19_0.progressTweenId = nil
+		self.progressTweenId = nil
 	end
 end
 
-function var_0_0.onClose(arg_20_0)
-	arg_20_0:cleanProgressTween()
+function OdysseyMembersTipView:onClose()
+	self:cleanProgressTween()
 end
 
-function var_0_0.onDestroyView(arg_21_0)
+function OdysseyMembersTipView:onDestroyView()
 	return
 end
 
-return var_0_0
+return OdysseyMembersTipView

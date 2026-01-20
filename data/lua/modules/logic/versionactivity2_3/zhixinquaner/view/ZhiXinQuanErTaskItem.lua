@@ -1,179 +1,183 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.view.ZhiXinQuanErTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/view/ZhiXinQuanErTaskItem.lua
 
-local var_0_0 = class("ZhiXinQuanErTaskItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_3.zhixinquaner.view.ZhiXinQuanErTaskItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_normalbg")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
-	arg_1_0._scrollreward = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
-	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_notfinishbg")
-	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_finishbg", AudioEnum.UI.play_ui_task_slide)
-	arg_1_0._goallfinish = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_allfinish")
-	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
-	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_getall/#simage_getallbg")
-	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
+local ZhiXinQuanErTaskItem = class("ZhiXinQuanErTaskItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ZhiXinQuanErTaskItem:onInitView()
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._simagenormalbg = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_normalbg")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num")
+	self._txttotal = gohelper.findChildText(self.viewGO, "#go_normal/progress/#txt_num/#txt_total")
+	self._txttaskdes = gohelper.findChildText(self.viewGO, "#go_normal/#txt_taskdes")
+	self._scrollreward = gohelper.findChild(self.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	self._gorewards = gohelper.findChild(self.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewards")
+	self._btnnotfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_notfinishbg")
+	self._btnfinishbg = gohelper.findChildButtonWithAudio(self.viewGO, "#go_normal/#btn_finishbg", AudioEnum.UI.play_ui_task_slide)
+	self._goallfinish = gohelper.findChild(self.viewGO, "#go_normal/#go_allfinish")
+	self._gogetall = gohelper.findChild(self.viewGO, "#go_getall")
+	self._simagegetallbg = gohelper.findChildSingleImage(self.viewGO, "#go_getall/#simage_getallbg")
+	self._btngetall = gohelper.findChildButtonWithAudio(self.viewGO, "#go_getall/#btn_getall/#btn_getall", AudioEnum.UI.play_ui_task_slide)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
-	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
-	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
+function ZhiXinQuanErTaskItem:addEvents()
+	self._btnnotfinishbg:AddClickListener(self._btnnotfinishbgOnClick, self)
+	self._btnfinishbg:AddClickListener(self._btnfinishbgOnClick, self)
+	self._btngetall:AddClickListener(self._btngetallOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnotfinishbg:RemoveClickListener()
-	arg_3_0._btnfinishbg:RemoveClickListener()
-	arg_3_0._btngetall:RemoveClickListener()
+function ZhiXinQuanErTaskItem:removeEvents()
+	self._btnnotfinishbg:RemoveClickListener()
+	self._btnfinishbg:RemoveClickListener()
+	self._btngetall:RemoveClickListener()
 end
 
-function var_0_0._btnnotfinishbgOnClick(arg_4_0)
-	if arg_4_0._actTaskMO.config.listenerType ~= "EpisodeFinish" then
-		local var_4_0 = tonumber(arg_4_0._actTaskMO.config.jumpid) or 0
+function ZhiXinQuanErTaskItem:_btnnotfinishbgOnClick()
+	local isNotEpisodeFinish = self._actTaskMO.config.listenerType ~= "EpisodeFinish"
 
-		if var_4_0 > 0 then
-			GameFacade.jump(var_4_0)
+	if isNotEpisodeFinish then
+		local jumpId = tonumber(self._actTaskMO.config.jumpid) or 0
+
+		if jumpId > 0 then
+			GameFacade.jump(jumpId)
 		end
 
 		return
 	end
 
-	local var_4_1 = arg_4_0._actTaskMO.config.listenerType ~= "StoryFinish"
+	local showFight = self._actTaskMO.config.listenerType ~= "StoryFinish"
 
-	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.TabSwitch, var_4_1)
-	ViewMgr.instance:closeView(arg_4_0._view.viewName)
+	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.TabSwitch, showFight)
+	ViewMgr.instance:closeView(self._view.viewName)
 end
 
-function var_0_0._btnfinishbgOnClick(arg_5_0)
-	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, arg_5_0._actTaskMO) then
-		arg_5_0:_onOneClickClaimReward()
+function ZhiXinQuanErTaskItem:_btnfinishbgOnClick()
+	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, self._actTaskMO) then
+		self:_onOneClickClaimReward()
 	end
 end
 
-function var_0_0._btngetallOnClick(arg_6_0)
-	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, arg_6_0._actTaskMO) then
+function ZhiXinQuanErTaskItem:_btngetallOnClick()
+	if RoleActivityController.instance:delayReward(RoleActivityEnum.AnimatorTime.TaskReward, self._actTaskMO) then
 		RoleActivityController.instance:dispatchEvent(RoleActivityEvent.OneClickClaimReward)
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_7_0.viewTrs = arg_7_0.viewGO.transform
+function ZhiXinQuanErTaskItem:_editableInitView()
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.viewTrs = self.viewGO.transform
 end
 
-function var_0_0._editableAddEvents(arg_8_0)
-	arg_8_0:addEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, arg_8_0._onOneClickClaimReward, arg_8_0)
+function ZhiXinQuanErTaskItem:_editableAddEvents()
+	self:addEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, self._onOneClickClaimReward, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_9_0)
-	arg_9_0:removeEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, arg_9_0._onOneClickClaimReward, arg_9_0)
+function ZhiXinQuanErTaskItem:_editableRemoveEvents()
+	self:removeEventCb(RoleActivityController.instance, RoleActivityEvent.OneClickClaimReward, self._onOneClickClaimReward, self)
 end
 
-function var_0_0._onOneClickClaimReward(arg_10_0)
-	if arg_10_0._actTaskMO.hasFinished or arg_10_0._actTaskMO.id == 0 then
-		arg_10_0._playFinishAnin = true
+function ZhiXinQuanErTaskItem:_onOneClickClaimReward()
+	if self._actTaskMO.hasFinished or self._actTaskMO.id == 0 then
+		self._playFinishAnin = true
 
-		arg_10_0._animator:Play("finish", 0, 0)
+		self._animator:Play("finish", 0, 0)
 	end
 end
 
-function var_0_0.getAnimator(arg_11_0)
-	return arg_11_0._animator
+function ZhiXinQuanErTaskItem:getAnimator()
+	return self._animator
 end
 
-function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
-	arg_12_0._scrollreward.parentGameObject = arg_12_0._view._csListScroll.gameObject
-	arg_12_0._actTaskMO = arg_12_1
+function ZhiXinQuanErTaskItem:onUpdateMO(mo)
+	self._scrollreward.parentGameObject = self._view._csListScroll.gameObject
+	self._actTaskMO = mo
 
-	local var_12_0 = RoleActivityTaskListModel.instance.instance:getRankDiff(arg_12_1)
+	local rankDiff = RoleActivityTaskListModel.instance.instance:getRankDiff(mo)
 
-	arg_12_0:_refreshUI()
-	arg_12_0:_moveByRankDiff(var_12_0)
+	self:_refreshUI()
+	self:_moveByRankDiff(rankDiff)
 end
 
-function var_0_0._moveByRankDiff(arg_13_0, arg_13_1)
-	if arg_13_1 and arg_13_1 ~= 0 then
-		if arg_13_0._rankDiffMoveId then
-			ZProj.TweenHelper.KillById(arg_13_0._rankDiffMoveId)
+function ZhiXinQuanErTaskItem:_moveByRankDiff(rankDiff)
+	if rankDiff and rankDiff ~= 0 then
+		if self._rankDiffMoveId then
+			ZProj.TweenHelper.KillById(self._rankDiffMoveId)
 
-			arg_13_0._rankDiffMoveId = nil
+			self._rankDiffMoveId = nil
 		end
 
-		local var_13_0, var_13_1, var_13_2 = transformhelper.getLocalPos(arg_13_0.viewTrs)
+		local posx, posy, posz = transformhelper.getLocalPos(self.viewTrs)
 
-		transformhelper.setLocalPosXY(arg_13_0.viewTrs, var_13_0, 165 * arg_13_1)
+		transformhelper.setLocalPosXY(self.viewTrs, posx, 165 * rankDiff)
 
-		arg_13_0._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_13_0.viewTrs, 0, RoleActivityEnum.AnimatorTime.TaskRewardMoveUp)
+		self._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(self.viewTrs, 0, RoleActivityEnum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function var_0_0._refreshUI(arg_14_0)
-	local var_14_0 = arg_14_0._actTaskMO
+function ZhiXinQuanErTaskItem:_refreshUI()
+	local atMO = self._actTaskMO
 
-	if not var_14_0 then
+	if not atMO then
 		return
 	end
 
-	local var_14_1 = var_14_0.id ~= 0
+	local isNormal = atMO.id ~= 0
 
-	gohelper.setActive(arg_14_0._gogetall, not var_14_1)
-	gohelper.setActive(arg_14_0._gonormal, var_14_1)
+	gohelper.setActive(self._gogetall, not isNormal)
+	gohelper.setActive(self._gonormal, isNormal)
 
-	if var_14_1 then
-		if arg_14_0._playFinishAnin then
-			arg_14_0._playFinishAnin = false
+	if isNormal then
+		if self._playFinishAnin then
+			self._playFinishAnin = false
 
-			arg_14_0._animator:Play("idle", 0, 1)
+			self._animator:Play("idle", 0, 1)
 		end
 
-		gohelper.setActive(arg_14_0._goallfinish, false)
-		gohelper.setActive(arg_14_0._btnnotfinishbg, false)
-		gohelper.setActive(arg_14_0._btnfinishbg, false)
+		gohelper.setActive(self._goallfinish, false)
+		gohelper.setActive(self._btnnotfinishbg, false)
+		gohelper.setActive(self._btnfinishbg, false)
 
-		if var_14_0.finishCount > 0 or var_14_0.preFinish then
-			gohelper.setActive(arg_14_0._goallfinish, true)
-		elseif var_14_0.hasFinished then
-			gohelper.setActive(arg_14_0._btnfinishbg, true)
+		if atMO.finishCount > 0 or atMO.preFinish then
+			gohelper.setActive(self._goallfinish, true)
+		elseif atMO.hasFinished then
+			gohelper.setActive(self._btnfinishbg, true)
 		else
-			gohelper.setActive(arg_14_0._btnnotfinishbg, true)
+			gohelper.setActive(self._btnnotfinishbg, true)
 		end
 
-		arg_14_0._txtnum.text = var_14_0.progress
-		arg_14_0._txttotal.text = var_14_0.config.maxProgress
-		arg_14_0._txttaskdes.text = var_14_0.config.taskDesc
+		self._txtnum.text = atMO.progress
+		self._txttotal.text = atMO.config.maxProgress
+		self._txttaskdes.text = atMO.config.taskDesc
 
-		local var_14_2 = ItemModel.instance:getItemDataListByConfigStr(var_14_0.config.bonus)
+		local item_list = ItemModel.instance:getItemDataListByConfigStr(atMO.config.bonus)
 
-		arg_14_0.item_list = var_14_2
+		self.item_list = item_list
 
-		IconMgr.instance:getCommonPropItemIconList(arg_14_0, arg_14_0._onItemShow, var_14_2, arg_14_0._gorewards)
+		IconMgr.instance:getCommonPropItemIconList(self, self._onItemShow, item_list, self._gorewards)
 	end
 
-	arg_14_0._scrollreward.horizontalNormalizedPosition = 0
+	self._scrollreward.horizontalNormalizedPosition = 0
 end
 
-function var_0_0._onItemShow(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	arg_15_1:onUpdateMO(arg_15_2)
-	arg_15_1:setConsume(true)
-	arg_15_1:showStackableNum2()
-	arg_15_1:isShowEffect(true)
-	arg_15_1:setAutoPlay(true)
-	arg_15_1:setCountFontSize(48)
+function ZhiXinQuanErTaskItem:_onItemShow(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:setConsume(true)
+	cell_component:showStackableNum2()
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
 end
 
-function var_0_0.onDestroyView(arg_16_0)
-	if arg_16_0._rankDiffMoveId then
-		ZProj.TweenHelper.KillById(arg_16_0._rankDiffMoveId)
+function ZhiXinQuanErTaskItem:onDestroyView()
+	if self._rankDiffMoveId then
+		ZProj.TweenHelper.KillById(self._rankDiffMoveId)
 
-		arg_16_0._rankDiffMoveId = nil
+		self._rankDiffMoveId = nil
 	end
 end
 
-return var_0_0
+return ZhiXinQuanErTaskItem

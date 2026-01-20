@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardClear", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardClear.lua
 
-local var_0_0 = class("FightWorkCardClear", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkCardClear", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:com_sendFightEvent(FightEvent.CardClear)
-	arg_1_0:onDone(true)
+local FightWorkCardClear = class("FightWorkCardClear", FightEffectBase)
+
+function FightWorkCardClear:onStart()
+	self:com_sendFightEvent(FightEvent.CardClear)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCardClear

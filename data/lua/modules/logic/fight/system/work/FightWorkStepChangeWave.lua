@@ -1,161 +1,166 @@
-﻿module("modules.logic.fight.system.work.FightWorkStepChangeWave", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkStepChangeWave.lua
 
-local var_0_0 = class("FightWorkStepChangeWave", BaseWork)
+module("modules.logic.fight.system.work.FightWorkStepChangeWave", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.nextWaveData = arg_1_1
+local FightWorkStepChangeWave = class("FightWorkStepChangeWave", BaseWork)
+
+function FightWorkStepChangeWave:ctor(nextWaveData)
+	self.nextWaveData = nextWaveData
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	arg_2_0._flow = FlowSequence.New()
+function FightWorkStepChangeWave:onStart(context)
+	self._flow = FlowSequence.New()
 
-	arg_2_0._flow:addWork(FightWorkWaveEndDialog.New())
-	arg_2_0._flow:addWork(FightWorkStepShowNoteWhenChangeWave.New())
-	arg_2_0._flow:addWork(WorkWaitSeconds.New(0.01))
-	arg_2_0._flow:addWork(FightWorkChangeWaveView.New())
-	arg_2_0._flow:addWork(FightWorkChangeWaveStartDialog.New())
-	arg_2_0._flow:registerDoneListener(arg_2_0._startChangeWave, arg_2_0)
-	arg_2_0._flow:start()
+	self._flow:addWork(FightWorkWaveEndDialog.New())
+	self._flow:addWork(FightWorkStepShowNoteWhenChangeWave.New())
+	self._flow:addWork(WorkWaitSeconds.New(0.01))
+	self._flow:addWork(FightWorkChangeWaveView.New())
+	self._flow:addWork(FightWorkChangeWaveStartDialog.New())
+	self._flow:registerDoneListener(self._startChangeWave, self)
+	self._flow:start()
 end
 
-function var_0_0._startChangeWave(arg_3_0)
+function FightWorkStepChangeWave:_startChangeWave()
 	FightController.instance:dispatchEvent(FightEvent.ChangeWaveStart)
 	FightPlayCardModel.instance:onEndRound()
 
-	arg_3_0.context.oldEntityIdDict = {}
+	self.context.oldEntityIdDict = {}
 
-	local var_3_0 = FightHelper.getAllEntitys()
+	local entitys = FightHelper.getAllEntitys()
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		iter_3_1:resetEntity()
+	for _, entity in ipairs(entitys) do
+		entity:resetEntity()
 
-		arg_3_0.context.oldEntityIdDict[iter_3_1.id] = true
+		self.context.oldEntityIdDict[entity.id] = true
 	end
 
-	local var_3_1 = arg_3_0.nextWaveData or FightDataHelper.cacheFightMgr:getNextFightData()
+	local fightData = self.nextWaveData or FightDataHelper.cacheFightMgr:getNextFightData()
 
-	if var_3_1 then
-		arg_3_0:_changeWave(var_3_1)
+	if fightData then
+		self:_changeWave(fightData)
 	else
 		logNormal("还没收到FightWavePush，继续等待")
-		FightController.instance:registerCallback(FightEvent.PushFightWave, arg_3_0._onPushFightWave, arg_3_0)
+		FightController.instance:registerCallback(FightEvent.PushFightWave, self._onPushFightWave, self)
 	end
 end
 
-function var_0_0._onPushFightWave(arg_4_0)
-	FightController.instance:unregisterCallback(FightEvent.PushFightWave, arg_4_0._onPushFightWave, arg_4_0)
+function FightWorkStepChangeWave:_onPushFightWave()
+	FightController.instance:unregisterCallback(FightEvent.PushFightWave, self._onPushFightWave, self)
 
-	local var_4_0 = arg_4_0.nextWaveData or FightDataHelper.cacheFightMgr:getNextFightData()
+	local fightData = self.nextWaveData or FightDataHelper.cacheFightMgr:getNextFightData()
 
-	if var_4_0 then
+	if fightData then
 		logNormal("终于等待换波次的信息了")
-		arg_4_0:_changeWave(var_4_0)
-		arg_4_0:onDone(true)
+		self:_changeWave(fightData)
+		self:onDone(true)
 	else
 		logError("没有换波次的信息")
-		arg_4_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._changeWave(arg_5_0, arg_5_1)
+function FightWorkStepChangeWave:_changeWave(fightData)
 	FightDataHelper.calMgr:playChangeWave()
 
-	arg_5_0.fightData = arg_5_1
+	self.fightData = fightData
 
-	local var_5_0 = FightModel.instance:getFightParam()
-	local var_5_1 = FightModel.instance:getCurWaveId()
-	local var_5_2 = var_5_1 + 1
-	local var_5_3 = var_5_0:getSceneLevel(var_5_1)
-	local var_5_4 = var_5_0:getSceneLevel(var_5_2)
+	local fightParam = FightModel.instance:getFightParam()
+	local currWaveId = FightModel.instance:getCurWaveId()
+	local nextWaveId = currWaveId + 1
+	local currLevelId = fightParam:getSceneLevel(currWaveId)
+	local nextLevelId = fightParam:getSceneLevel(nextWaveId)
 
-	if var_5_4 and var_5_4 ~= var_5_3 then
-		arg_5_0._nextLevelId = var_5_4
+	if nextLevelId and nextLevelId ~= currLevelId then
+		self._nextLevelId = nextLevelId
 
-		local var_5_5 = FightModel.instance:getSpeed()
+		local fightSpeed = FightModel.instance:getSpeed()
 
-		TaskDispatcher.runDelay(arg_5_0._delayDone, arg_5_0, 5)
-		TaskDispatcher.runDelay(arg_5_0._startLoadLevel, arg_5_0, 0.25 / var_5_5)
+		TaskDispatcher.runDelay(self._delayDone, self, 5)
+		TaskDispatcher.runDelay(self._startLoadLevel, self, 0.25 / fightSpeed)
 	else
-		arg_5_0:_changeEntity()
+		self:_changeEntity()
 		FightController.instance:dispatchEvent(FightEvent.ChangeWaveEnd)
-		arg_5_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._changeEntity(arg_6_0)
+function FightWorkStepChangeWave:_changeEntity()
 	logNormal("结束中准备下一波怪")
 
-	local var_6_0 = arg_6_0:_cacheExpoint()
-	local var_6_1 = GameSceneMgr.instance:getScene(SceneType.Fight)
-	local var_6_2 = FightModel.instance.power
+	local cacheExpoint = self:_cacheExpoint()
+	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
+	local power = FightModel.instance.power
 
-	var_6_1.entityMgr:changeWave(arg_6_0.fightData)
+	fightScene.entityMgr:changeWave(self.fightData)
 
-	FightModel.instance.power = var_6_2
+	FightModel.instance.power = power
 
-	arg_6_0:_applyExpoint(var_6_0)
+	self:_applyExpoint(cacheExpoint)
 end
 
-function var_0_0._startLoadLevel(arg_7_0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_7_0._onLevelLoaded, arg_7_0)
-	GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevelWithSwitchEffect(arg_7_0._nextLevelId)
+function FightWorkStepChangeWave:_startLoadLevel()
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+
+	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
+
+	fightScene.level:loadLevelWithSwitchEffect(self._nextLevelId)
 end
 
-function var_0_0._delayDone(arg_8_0)
-	arg_8_0:_changeEntity()
+function FightWorkStepChangeWave:_delayDone()
+	self:_changeEntity()
 	FightController.instance:dispatchEvent(FightEvent.ChangeWaveEnd)
-	arg_8_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onLevelLoaded(arg_9_0)
-	arg_9_0:_changeEntity()
+function FightWorkStepChangeWave:_onLevelLoaded()
+	self:_changeEntity()
 
-	local var_9_0 = FightHelper.getAllEntitys()
+	local entityList = FightHelper.getAllEntitys()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		iter_9_1:resetStandPos()
+	for _, entity in ipairs(entityList) do
+		entity:resetStandPos()
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.ChangeWaveEnd)
-	arg_9_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_10_0)
-	if arg_10_0._flow then
-		arg_10_0._flow:unregisterDoneListener(arg_10_0._startChangeWave, arg_10_0)
-		arg_10_0._flow:stop()
+function FightWorkStepChangeWave:clearWork()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._startChangeWave, self)
+		self._flow:stop()
 
-		arg_10_0._flow = nil
+		self._flow = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_10_0._delayDone, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._startLoadLevel, arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._delayCheckNextWaveDialog, arg_10_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_10_0._onLevelLoaded, arg_10_0)
-	FightController.instance:unregisterCallback(FightEvent.PushFightWave, arg_10_0._onPushFightWave, arg_10_0)
+	TaskDispatcher.cancelTask(self._delayDone, self)
+	TaskDispatcher.cancelTask(self._startLoadLevel, self)
+	TaskDispatcher.cancelTask(self._delayCheckNextWaveDialog, self)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.PushFightWave, self._onPushFightWave, self)
 end
 
-function var_0_0._cacheExpoint(arg_11_0)
-	local var_11_0 = {}
-	local var_11_1 = FightHelper.getAllEntitys()
+function FightWorkStepChangeWave:_cacheExpoint()
+	local dict = {}
+	local all = FightHelper.getAllEntitys()
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-		var_11_0[iter_11_1.id] = iter_11_1:getMO().exPoint
+	for _, entity in ipairs(all) do
+		dict[entity.id] = entity:getMO().exPoint
 	end
 
-	return var_11_0
+	return dict
 end
 
-function var_0_0._applyExpoint(arg_12_0, arg_12_1)
-	local var_12_0 = FightHelper.getAllEntitys()
+function FightWorkStepChangeWave:_applyExpoint(dict)
+	local all = FightHelper.getAllEntitys()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_1 = arg_12_1[iter_12_1.id]
+	for _, entity in ipairs(all) do
+		local expoint = dict[entity.id]
 
-		if var_12_1 then
-			iter_12_1:getMO():setExPoint(var_12_1)
+		if expoint then
+			entity:getMO():setExPoint(expoint)
 		end
 	end
 end
 
-return var_0_0
+return FightWorkStepChangeWave

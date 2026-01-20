@@ -1,52 +1,56 @@
-﻿module("modules.versionactivitybase.enterview.view.VersionActivityEnterBaseSubView", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/enterview/view/VersionActivityEnterBaseSubView.lua
 
-local var_0_0 = class("VersionActivityEnterBaseSubView", BaseView)
+module("modules.versionactivitybase.enterview.view.VersionActivityEnterBaseSubView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local VersionActivityEnterBaseSubView = class("VersionActivityEnterBaseSubView", BaseView)
+
+function VersionActivityEnterBaseSubView:onInitView()
 	return
 end
 
-function var_0_0._editableInitView(arg_2_0)
+function VersionActivityEnterBaseSubView:_editableInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_3_0)
-	local var_3_0 = arg_3_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function VersionActivityEnterBaseSubView:onOpen()
+	local viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if var_3_0 then
-		var_3_0:Play(UIAnimationName.Open, 0, 0)
+	if viewAnimator then
+		viewAnimator:Play(UIAnimationName.Open, 0, 0)
 	end
 
-	arg_3_0:everySecondCall()
-	arg_3_0:beginPerSecondRefresh()
+	self:everySecondCall()
+	self:beginPerSecondRefresh()
 end
 
-function var_0_0.onOpenFinish(arg_4_0)
+function VersionActivityEnterBaseSubView:onOpenFinish()
 	return
 end
 
-function var_0_0.onEnterVideoFinished(arg_5_0)
-	arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
+function VersionActivityEnterBaseSubView:onEnterVideoFinished()
+	local viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	viewAnimator:Play(UIAnimationName.Open, 0, 0)
 end
 
-function var_0_0.onClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0.everySecondCall, arg_6_0)
+function VersionActivityEnterBaseSubView:onClose()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
-	arg_7_0:everySecondCall()
+function VersionActivityEnterBaseSubView:onUpdateParam()
+	self:everySecondCall()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function VersionActivityEnterBaseSubView:onDestroyView()
 	return
 end
 
-function var_0_0.beginPerSecondRefresh(arg_9_0)
-	TaskDispatcher.runRepeat(arg_9_0.everySecondCall, arg_9_0, 1)
+function VersionActivityEnterBaseSubView:beginPerSecondRefresh()
+	TaskDispatcher.runRepeat(self.everySecondCall, self, 1)
 end
 
-function var_0_0.everySecondCall(arg_10_0)
+function VersionActivityEnterBaseSubView:everySecondCall()
 	return
 end
 
-return var_0_0
+return VersionActivityEnterBaseSubView

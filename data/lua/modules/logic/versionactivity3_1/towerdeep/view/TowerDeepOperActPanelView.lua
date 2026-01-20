@@ -1,183 +1,185 @@
-﻿module("modules.logic.versionactivity3_1.towerdeep.view.TowerDeepOperActPanelView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/towerdeep/view/TowerDeepOperActPanelView.lua
 
-local var_0_0 = class("TowerDeepOperActPanelView", BaseView)
+module("modules.logic.versionactivity3_1.towerdeep.view.TowerDeepOperActPanelView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/simage_fullbg/#txt_time")
-	arg_1_0._godeep = gohelper.findChild(arg_1_0.viewGO, "root/#go_deep")
-	arg_1_0._btntips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_deep/title/txt_title/#btn_tips")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "root/#go_deep/#go_tips")
-	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "root/#go_deep/#go_tips/txt_tips")
-	arg_1_0._btnclosetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_deep/#go_tips/#btn_closetips")
-	arg_1_0._gotask1 = gohelper.findChild(arg_1_0.viewGO, "root/#go_task1")
-	arg_1_0._gotask2 = gohelper.findChild(arg_1_0.viewGO, "root/#go_task2")
+local TowerDeepOperActPanelView = class("TowerDeepOperActPanelView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerDeepOperActPanelView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._txttime = gohelper.findChildText(self.viewGO, "root/simage_fullbg/#txt_time")
+	self._godeep = gohelper.findChild(self.viewGO, "root/#go_deep")
+	self._btntips = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_deep/title/txt_title/#btn_tips")
+	self._gotips = gohelper.findChild(self.viewGO, "root/#go_deep/#go_tips")
+	self._txttip = gohelper.findChildText(self.viewGO, "root/#go_deep/#go_tips/txt_tips")
+	self._btnclosetips = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_deep/#go_tips/#btn_closetips")
+	self._gotask1 = gohelper.findChild(self.viewGO, "root/#go_task1")
+	self._gotask2 = gohelper.findChild(self.viewGO, "root/#go_task2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btntips:AddClickListener(arg_2_0._btntipsOnClick, arg_2_0)
-	arg_2_0._btnclosetips:AddClickListener(arg_2_0._btnclosetipsOnClick, arg_2_0)
+function TowerDeepOperActPanelView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btntips:AddClickListener(self._btntipsOnClick, self)
+	self._btnclosetips:AddClickListener(self._btnclosetipsOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btntips:RemoveClickListener()
-	arg_3_0._btnclosetips:RemoveClickListener()
+function TowerDeepOperActPanelView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btntips:RemoveClickListener()
+	self._btnclosetips:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function TowerDeepOperActPanelView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btntipsOnClick(arg_5_0)
-	gohelper.setActive(arg_5_0._gotips, true)
+function TowerDeepOperActPanelView:_btntipsOnClick()
+	gohelper.setActive(self._gotips, true)
 end
 
-function var_0_0._btnclosetipsOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0._gotips, false)
+function TowerDeepOperActPanelView:_btnclosetipsOnClick()
+	gohelper.setActive(self._gotips, false)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._txttime.text = ""
+function TowerDeepOperActPanelView:_editableInitView()
+	self._txttime.text = ""
 
-	arg_7_0:_addSelfEvents()
+	self:_addSelfEvents()
 end
 
-function var_0_0._addSelfEvents(arg_8_0)
-	arg_8_0:addEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.onAct209InfoGet, arg_8_0._refreshDeep, arg_8_0)
-	arg_8_0:addEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.OnAct209InfoUpdate, arg_8_0._refreshDeep, arg_8_0)
-	arg_8_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_8_0._refreshTaskItems, arg_8_0)
-	arg_8_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_8_0._refreshTaskItems, arg_8_0)
+function TowerDeepOperActPanelView:_addSelfEvents()
+	self:addEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.onAct209InfoGet, self._refreshDeep, self)
+	self:addEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.OnAct209InfoUpdate, self._refreshDeep, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshTaskItems, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshTaskItems, self)
 end
 
-function var_0_0._removeSelfEvents(arg_9_0)
-	arg_9_0:removeEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.onAct209InfoGet, arg_9_0._refreshDeep, arg_9_0)
-	arg_9_0:removeEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.OnAct209InfoUpdate, arg_9_0._refreshDeep, arg_9_0)
-	arg_9_0:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_9_0._refreshTaskItems, arg_9_0)
-	arg_9_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_9_0._refreshTaskItems, arg_9_0)
+function TowerDeepOperActPanelView:_removeSelfEvents()
+	self:removeEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.onAct209InfoGet, self._refreshDeep, self)
+	self:removeEventCb(TowerDeepOperActController.instance, TowerDeepOperActEvent.OnAct209InfoUpdate, self._refreshDeep, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshTaskItems, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshTaskItems, self)
 end
 
-function var_0_0.onOpen(arg_10_0)
+function TowerDeepOperActPanelView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_ripple_entry)
 
-	arg_10_0._actId = VersionActivity3_1Enum.ActivityId.TowerDeep
-	arg_10_0._taskItems = {}
-	arg_10_0._deepItems = {}
-	arg_10_0._txttip.text = CommonConfig.instance:getConstStr(ConstEnum.TowerDeepTip)
+	self._actId = VersionActivity3_1Enum.ActivityId.TowerDeep
+	self._taskItems = {}
+	self._deepItems = {}
+	self._txttip.text = CommonConfig.instance:getConstStr(ConstEnum.TowerDeepTip)
 
-	arg_10_0:_refreshTaskItems()
-	arg_10_0:_refreshDeep()
-	arg_10_0:_refreshTimeTick()
-	TaskDispatcher.runRepeat(arg_10_0._refreshTimeTick, arg_10_0, 1)
+	self:_refreshTaskItems()
+	self:_refreshDeep()
+	self:_refreshTimeTick()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-local var_0_1 = {
+local lvStages = {
 	800,
 	1000
 }
 
-function var_0_0._refreshDeep(arg_11_0)
-	local var_11_0 = TowerDeepOperActModel.instance:getMaxLayer()
-	local var_11_1 = 1
+function TowerDeepOperActPanelView:_refreshDeep()
+	local maxLayer = TowerDeepOperActModel.instance:getMaxLayer()
+	local stage = 1
 
-	for iter_11_0 = 1, 2 do
-		if var_11_0 >= var_0_1[iter_11_0] then
-			var_11_1 = iter_11_0 + 1
+	for i = 1, 2 do
+		if maxLayer >= lvStages[i] then
+			stage = i + 1
 		end
 	end
 
-	for iter_11_1 = 1, 3 do
-		if not arg_11_0._deepItems[iter_11_1] then
-			arg_11_0._deepItems[iter_11_1] = {}
-			arg_11_0._deepItems[iter_11_1].go = gohelper.findChild(arg_11_0.viewGO, "root/#go_deep/deep" .. tostring(iter_11_1))
-			arg_11_0._deepItems[iter_11_1].txt = gohelper.findChildText(arg_11_0.viewGO, string.format("root/#go_deep/deep%s/#txt_deep_%s", tostring(iter_11_1), tostring(iter_11_1)))
+	for i = 1, 3 do
+		if not self._deepItems[i] then
+			self._deepItems[i] = {}
+			self._deepItems[i].go = gohelper.findChild(self.viewGO, "root/#go_deep/deep" .. tostring(i))
+			self._deepItems[i].txt = gohelper.findChildText(self.viewGO, string.format("root/#go_deep/deep%s/#txt_deep_%s", tostring(i), tostring(i)))
 		end
 
-		gohelper.setActive(arg_11_0._deepItems[iter_11_1].go, var_11_1 == iter_11_1)
+		gohelper.setActive(self._deepItems[i].go, stage == i)
 
-		if var_11_1 == iter_11_1 then
-			arg_11_0._deepItems[iter_11_1].txt.text = var_11_0
+		if stage == i then
+			self._deepItems[i].txt.text = maxLayer
 		end
 	end
 end
 
-function var_0_0._refreshTaskItems(arg_12_0)
-	local var_12_0 = 1
-	local var_12_1 = TowerDeepOperActConfig.instance:getTaskCos()
+function TowerDeepOperActPanelView:_refreshTaskItems()
+	local index = 1
+	local taskCos = TowerDeepOperActConfig.instance:getTaskCos()
 
-	for iter_12_0, iter_12_1 in LuaUtil.pairsByKeys(var_12_1) do
-		if iter_12_1.listenerType ~= TaskEnum.ListenerType.Act209GlobalTowerLayer then
-			if not arg_12_0._taskItems[iter_12_1.id] then
-				arg_12_0._taskItems[iter_12_1.id] = TowerDeepOperActTaskItem.New()
+	for _, taskCo in LuaUtil.pairsByKeys(taskCos) do
+		if taskCo.listenerType ~= TaskEnum.ListenerType.Act209GlobalTowerLayer then
+			if not self._taskItems[taskCo.id] then
+				self._taskItems[taskCo.id] = TowerDeepOperActTaskItem.New()
 
-				arg_12_0._taskItems[iter_12_1.id]:init(arg_12_0["_gotask" .. tostring(var_12_0)], iter_12_1)
+				self._taskItems[taskCo.id]:init(self["_gotask" .. tostring(index)], taskCo)
 
-				var_12_0 = var_12_0 + 1
+				index = index + 1
 			end
 
-			arg_12_0._taskItems[iter_12_1.id]:refresh()
+			self._taskItems[taskCo.id]:refresh()
 		end
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
+function TowerDeepOperActPanelView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0:_clearTimeTick()
+function TowerDeepOperActPanelView:onDestroyView()
+	self:_clearTimeTick()
 
-	if arg_14_0._taskItems then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._taskItems) do
-			iter_14_1:destroy()
+	if self._taskItems then
+		for _, item in pairs(self._taskItems) do
+			item:destroy()
 		end
 
-		arg_14_0._taskItems = nil
+		self._taskItems = nil
 	end
 end
 
-function var_0_0._clearTimeTick(arg_15_0)
-	TaskDispatcher.cancelTask(arg_15_0._refreshTimeTick, arg_15_0)
+function TowerDeepOperActPanelView:_clearTimeTick()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_16_0)
-	arg_16_0:_refreshTimeTick()
+function TowerDeepOperActPanelView:onRefresh()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_17_0)
-	arg_17_0._txttime.text = arg_17_0:_getRemainTimeStr()
+function TowerDeepOperActPanelView:_refreshTimeTick()
+	self._txttime.text = self:_getRemainTimeStr()
 end
 
-function var_0_0._getRemainTimeStr(arg_18_0)
-	local var_18_0 = ActivityModel.instance:getRemainTimeSec(arg_18_0._actId) or 0
+function TowerDeepOperActPanelView:_getRemainTimeStr()
+	local remainTimeSec = ActivityModel.instance:getRemainTimeSec(self._actId) or 0
 
-	if var_18_0 <= 0 then
+	if remainTimeSec <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	local var_18_1, var_18_2, var_18_3, var_18_4 = TimeUtil.secondsToDDHHMMSS(var_18_0)
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
 
-	if var_18_1 > 0 then
+	if day > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
-			var_18_1,
-			var_18_2
+			day,
+			hour
 		})
-	elseif var_18_2 > 0 then
+	elseif hour > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
-			var_18_2,
-			var_18_3
+			hour,
+			min
 		})
-	elseif var_18_3 > 0 then
+	elseif min > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
-			var_18_3
+			min
 		})
-	elseif var_18_4 > 0 then
+	elseif sec > 0 then
 		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
 			0,
 			1
@@ -187,4 +189,4 @@ function var_0_0._getRemainTimeStr(arg_18_0)
 	return luaLang("turnback_end")
 end
 
-return var_0_0
+return TowerDeepOperActPanelView

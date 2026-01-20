@@ -1,25 +1,27 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightWaveBegin", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionFightWaveBegin.lua
 
-local var_0_0 = class("WaitGuideActionFightWaveBegin", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionFightWaveBegin", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	FightController.instance:registerCallback(FightEvent.OnBeginWave, arg_1_0._onBeginWave, arg_1_0)
+local WaitGuideActionFightWaveBegin = class("WaitGuideActionFightWaveBegin", BaseGuideAction)
 
-	arg_1_0._groundId = tonumber(arg_1_0.actionParam)
+function WaitGuideActionFightWaveBegin:onStart(context)
+	WaitGuideActionFightWaveBegin.super.onStart(self, context)
+	FightController.instance:registerCallback(FightEvent.OnBeginWave, self._onBeginWave, self)
+
+	self._groundId = tonumber(self.actionParam)
 end
 
-function var_0_0._onBeginWave(arg_2_0)
-	if arg_2_0._groundId and FightModel.instance:getCurMonsterGroupId() ~= arg_2_0._groundId then
+function WaitGuideActionFightWaveBegin:_onBeginWave()
+	if self._groundId and FightModel.instance:getCurMonsterGroupId() ~= self._groundId then
 		return
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, arg_2_0._onBeginWave, arg_2_0)
-	arg_2_0:onDone(true)
+	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, self._onBeginWave, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, arg_3_0._onBeginWave, arg_3_0)
+function WaitGuideActionFightWaveBegin:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.OnBeginWave, self._onBeginWave, self)
 end
 
-return var_0_0
+return WaitGuideActionFightWaveBegin

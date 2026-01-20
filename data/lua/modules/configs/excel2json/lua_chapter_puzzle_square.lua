@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_chapter_puzzle_square", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_chapter_puzzle_square.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_chapter_puzzle_square", package.seeall)
+
+local lua_chapter_puzzle_square = {}
+local fields = {
 	id = 1,
 	shape = 2,
 	count = 3,
 	group = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_chapter_puzzle_square.onLoad(json)
+	lua_chapter_puzzle_square.configList, lua_chapter_puzzle_square.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_chapter_puzzle_square

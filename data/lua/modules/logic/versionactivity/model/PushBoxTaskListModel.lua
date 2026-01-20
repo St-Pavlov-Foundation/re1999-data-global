@@ -1,64 +1,66 @@
-﻿module("modules.logic.versionactivity.model.PushBoxTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/model/PushBoxTaskListModel.lua
 
-local var_0_0 = class("PushBoxTaskListModel", ListScrollModel)
+module("modules.logic.versionactivity.model.PushBoxTaskListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local PushBoxTaskListModel = class("PushBoxTaskListModel", ListScrollModel)
+
+function PushBoxTaskListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function PushBoxTaskListModel:reInit()
 	return
 end
 
-function var_0_0.initData(arg_3_0, arg_3_1)
-	arg_3_0.data = {}
+function PushBoxTaskListModel:initData(task_config_list)
+	self.data = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		local var_3_0 = {
-			id = iter_3_1.taskId,
-			config = iter_3_1
-		}
+	for i, v in ipairs(task_config_list) do
+		local tab = {}
 
-		table.insert(arg_3_0.data, var_3_0)
+		tab.id = v.taskId
+		tab.config = v
+
+		table.insert(self.data, tab)
 	end
 end
 
-function var_0_0.sortData(arg_4_0)
-	table.sort(arg_4_0.data, var_0_0.sortList)
+function PushBoxTaskListModel:sortData()
+	table.sort(self.data, PushBoxTaskListModel.sortList)
 end
 
-function var_0_0.sortList(arg_5_0, arg_5_1)
-	local var_5_0 = PushBoxModel.instance:getTaskData(arg_5_0.config.taskId)
-	local var_5_1 = PushBoxModel.instance:getTaskData(arg_5_1.config.taskId)
+function PushBoxTaskListModel.sortList(item1, item2)
+	local task1 = PushBoxModel.instance:getTaskData(item1.config.taskId)
+	local task2 = PushBoxModel.instance:getTaskData(item2.config.taskId)
 
-	if var_5_0.hasGetBonus and not var_5_1.hasGetBonus then
+	if task1.hasGetBonus and not task2.hasGetBonus then
 		return false
-	elseif not var_5_0.hasGetBonus and var_5_1.hasGetBonus then
+	elseif not task1.hasGetBonus and task2.hasGetBonus then
 		return true
 	else
-		local var_5_2 = var_5_0.progress >= arg_5_0.config.maxProgress
-		local var_5_3 = var_5_1.progress >= arg_5_1.config.maxProgress
+		local can_get_reward1 = task1.progress >= item1.config.maxProgress
+		local can_get_reward2 = task2.progress >= item2.config.maxProgress
 
-		if var_5_2 and not var_5_3 then
+		if can_get_reward1 and not can_get_reward2 then
 			return true
-		elseif not var_5_2 and var_5_3 then
+		elseif not can_get_reward1 and can_get_reward2 then
 			return false
 		else
-			return arg_5_0.config.sort < arg_5_1.config.sort
+			return item1.config.sort < item2.config.sort
 		end
 	end
 end
 
-function var_0_0.refreshData(arg_6_0)
-	arg_6_0:setList(arg_6_0.data)
+function PushBoxTaskListModel:refreshData()
+	self:setList(self.data)
 end
 
-function var_0_0.clearData(arg_7_0)
-	arg_7_0:clear()
+function PushBoxTaskListModel:clearData()
+	self:clear()
 
-	arg_7_0.data = nil
+	self.data = nil
 end
 
-var_0_0.instance = var_0_0.New()
+PushBoxTaskListModel.instance = PushBoxTaskListModel.New()
 
-return var_0_0
+return PushBoxTaskListModel

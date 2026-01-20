@@ -1,28 +1,29 @@
-﻿module("modules.logic.store.model.StoreSkinChargeMo", package.seeall)
+﻿-- chunkname: @modules/logic/store/model/StoreSkinChargeMo.lua
 
-local var_0_0 = pureTable("StoreSkinChargeMo")
+module("modules.logic.store.model.StoreSkinChargeMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.belongStoreId = arg_1_1
-	arg_1_0.id = arg_1_2.id
-	arg_1_0.buyCount = arg_1_2.buyCount
-	arg_1_0.config = StoreConfig.instance:getChargeGoodsConfig(arg_1_0.id)
+local StoreSkinChargeMo = pureTable("StoreSkinChargeMo")
+
+function StoreSkinChargeMo:init(belongStoreId, info)
+	self.belongStoreId = belongStoreId
+	self.id = info.id
+	self.buyCount = info.buyCount
+	self.config = StoreConfig.instance:getChargeGoodsConfig(self.id)
 end
 
-function var_0_0.getSkinChargePrice(arg_2_0)
-	local var_2_0
-	local var_2_1
+function StoreSkinChargeMo:getSkinChargePrice()
+	local price, originalPrice
 
-	if arg_2_0.config then
-		var_2_0 = arg_2_0.config.price
-		var_2_1 = arg_2_0.config.originalCost
+	if self.config then
+		price = self.config.price
+		originalPrice = self.config.originalCost
 	end
 
-	return var_2_0, var_2_1
+	return price, originalPrice
 end
 
-function var_0_0.isSoldOut(arg_3_0)
-	return arg_3_0.buyCount > 0
+function StoreSkinChargeMo:isSoldOut()
+	return self.buyCount > 0
 end
 
-return var_0_0
+return StoreSkinChargeMo

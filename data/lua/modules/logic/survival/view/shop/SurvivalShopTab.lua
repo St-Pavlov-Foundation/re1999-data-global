@@ -1,39 +1,41 @@
-﻿module("modules.logic.survival.view.shop.SurvivalShopTab", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shop/SurvivalShopTab.lua
 
-local var_0_0 = class("SurvivalShopTab", SurvivalSimpleListItem)
+module("modules.logic.survival.view.shop.SurvivalShopTab", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.btnClick = gohelper.findButtonWithAudio(arg_1_1)
-	arg_1_0.image_icon = gohelper.findChildImage(arg_1_1, "#image_icon")
+local SurvivalShopTab = class("SurvivalShopTab", SurvivalSimpleListItem)
+
+function SurvivalShopTab:init(viewGO)
+	self.btnClick = gohelper.findButtonWithAudio(viewGO)
+	self.image_icon = gohelper.findChildImage(viewGO, "#image_icon")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClick, arg_2_0.onClick, arg_2_0)
+function SurvivalShopTab:addEventListeners()
+	self:addClickCb(self.btnClick, self.onClick, self)
 end
 
-function var_0_0.onItemShow(arg_3_0, arg_3_1)
-	arg_3_0.cfg = arg_3_1.cfg
-	arg_3_0.tabId = arg_3_0.cfg.id
-	arg_3_0.onClickFunc = arg_3_1.onClickFunc
-	arg_3_0.context = arg_3_1.context
+function SurvivalShopTab:onItemShow(data)
+	self.cfg = data.cfg
+	self.tabId = self.cfg.id
+	self.onClickFunc = data.onClickFunc
+	self.context = data.context
 
-	UISpriteSetMgr.instance:setSurvivalSprite(arg_3_0.image_icon, arg_3_0.cfg.tabIcon)
+	UISpriteSetMgr.instance:setSurvivalSprite(self.image_icon, self.cfg.tabIcon)
 end
 
-function var_0_0.onSelectChange(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.image_icon.color
+function SurvivalShopTab:onSelectChange(isSelect)
+	local color = self.image_icon.color
 
-	if arg_4_1 then
-		arg_4_0.image_icon.color = Color.New(var_4_0.r, var_4_0.g, var_4_0.b, 1)
+	if isSelect then
+		self.image_icon.color = Color.New(color.r, color.g, color.b, 1)
 	else
-		arg_4_0.image_icon.color = Color.New(var_4_0.r, var_4_0.g, var_4_0.b, 0.4)
+		self.image_icon.color = Color.New(color.r, color.g, color.b, 0.4)
 	end
 end
 
-function var_0_0.onClick(arg_5_0)
-	if arg_5_0.onClickFunc then
-		arg_5_0.onClickFunc(arg_5_0.context, arg_5_0)
+function SurvivalShopTab:onClick()
+	if self.onClickFunc then
+		self.onClickFunc(self.context, self)
 	end
 end
 
-return var_0_0
+return SurvivalShopTab

@@ -1,220 +1,254 @@
-﻿module("modules.logic.fight.FightBaseClass", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightBaseClass.lua
 
-local var_0_0 = class("FightBaseClass", FightObject)
-local var_0_1 = rawset
-local var_0_2 = pairs
-local var_0_3 = type
-local var_0_4 = table
+module("modules.logic.fight.FightBaseClass", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.USER_DATA_LIST = nil
+local FightBaseClass = class("FightBaseClass", FightObject)
+local rawset = rawset
+local pairs = pairs
+local type = type
+local table = table
+
+function FightBaseClass:onConstructor()
+	self.USER_DATA_LIST = nil
 end
 
-function var_0_0.onLogicEnter(arg_2_0, ...)
+function FightBaseClass:onLogicEnter(...)
 	return
 end
 
-function var_0_0.onLogicExit(arg_3_0)
+function FightBaseClass:onLogicExit()
 	return
 end
 
-function var_0_0.onDestructor(arg_4_0)
-	if arg_4_0.USER_DATA_LIST then
-		local var_4_0 = arg_4_0.USER_DATA_LIST
+function FightBaseClass:onDestructor()
+	if self.USER_DATA_LIST then
+		local list = self.USER_DATA_LIST
 
-		for iter_4_0 = #var_4_0, 1, -1 do
-			local var_4_1 = var_4_0[iter_4_0]
+		for i = #list, 1, -1 do
+			local tab = list[i]
 
-			for iter_4_1 in var_0_2(var_4_1) do
-				var_0_1(var_4_1, iter_4_1, nil)
+			for key in pairs(tab) do
+				rawset(tab, key, nil)
 			end
 
-			var_0_1(var_4_0, iter_4_0, nil)
+			rawset(list, i, nil)
 		end
 
-		arg_4_0.USER_DATA_LIST = nil
+		self.USER_DATA_LIST = nil
 	end
 
-	for iter_4_2, iter_4_3 in var_0_2(arg_4_0) do
-		if var_0_3(iter_4_3) == "userdata" then
-			var_0_1(arg_4_0, iter_4_2, nil)
+	for k, v in pairs(self) do
+		if type(v) == "userdata" then
+			rawset(self, k, nil)
 		end
 	end
 end
 
-function var_0_0.onDestructorFinish(arg_5_0)
+function FightBaseClass:onDestructorFinish()
 	return
 end
 
-function var_0_0.newUserDataTable(arg_6_0)
-	if arg_6_0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用注册table的方法,请检查代码,类名:" .. arg_6_0.__cname)
+function FightBaseClass:newUserDataTable()
+	if self.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用注册table的方法,请检查代码,类名:" .. self.__cname)
 	end
 
-	if not arg_6_0.USER_DATA_LIST then
-		arg_6_0.USER_DATA_LIST = {}
+	if not self.USER_DATA_LIST then
+		self.USER_DATA_LIST = {}
 	end
 
-	local var_6_0 = {}
+	local tab = {}
 
-	var_0_4.insert(arg_6_0.USER_DATA_LIST, var_6_0)
+	table.insert(self.USER_DATA_LIST, tab)
 
-	return var_6_0
+	return tab
 end
 
-function var_0_0.getUserDataTb_(arg_7_0)
-	return arg_7_0:newUserDataTable()
+function FightBaseClass:getUserDataTb_()
+	return self:newUserDataTable()
 end
 
-function var_0_0.getComponent(arg_8_0, arg_8_1)
-	if arg_8_0.IS_DISPOSED then
-		logError("生命周期已经结束了,但是又调用了获取组件的方法,请检查代码,类名:" .. arg_8_0.__cname)
+function FightBaseClass:getComponent(clsDefine)
+	if self.IS_DISPOSED then
+		logError("生命周期已经结束了,但是又调用了获取组件的方法,请检查代码,类名:" .. self.__cname)
 	end
 
-	local var_8_0 = arg_8_1.__cname
+	local className = clsDefine.__cname
 
-	if arg_8_0[var_8_0] then
-		return arg_8_0[var_8_0]
+	if self[className] then
+		return self[className]
 	end
 
-	local var_8_1 = arg_8_0:addComponent(arg_8_1)
+	local comp = self:addComponent(clsDefine)
 
-	arg_8_0[var_8_0] = var_8_1
+	self[className] = comp
 
-	return var_8_1
+	return comp
 end
 
-function var_0_0.killComponent(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function FightBaseClass:killComponent(clsDefine)
+	if not clsDefine then
 		return
 	end
 
-	local var_9_0 = arg_9_1.__cname
-	local var_9_1 = arg_9_0[var_9_0]
+	local className = clsDefine.__cname
+	local myComp = self[className]
 
-	if var_9_1 then
-		var_9_1:disposeSelf()
+	if myComp then
+		myComp:disposeSelf()
 
-		arg_9_0[var_9_0] = nil
+		self[className] = nil
 	end
 end
 
-function var_0_0.com_loadAsset(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0:getComponent(FightLoaderComponent):loadAsset(arg_10_1, arg_10_2, arg_10_0, arg_10_3)
+function FightBaseClass:com_loadAsset(url, call_back, param)
+	local comp = self:getComponent(FightLoaderComponent)
+
+	comp:loadAsset(url, call_back, self, param)
 end
 
-function var_0_0.com_loadListAsset(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-	arg_11_0:getComponent(FightLoaderComponent):loadListAsset(arg_11_1, arg_11_2, arg_11_3, arg_11_0, arg_11_4)
+function FightBaseClass:com_loadListAsset(urlList, oneCallback, finishCallback, paramList)
+	local comp = self:getComponent(FightLoaderComponent)
+
+	comp:loadListAsset(urlList, oneCallback, finishCallback, self, paramList)
 end
 
-function var_0_0.com_registFlowSequence(arg_12_0)
-	return arg_12_0:com_registCustomFlow(FightWorkFlowSequence)
+function FightBaseClass:com_registFlowSequence()
+	return self:com_registCustomFlow(FightWorkFlowSequence)
 end
 
-function var_0_0.com_registFlowParallel(arg_13_0)
-	return arg_13_0:com_registCustomFlow(FightWorkFlowParallel)
+function FightBaseClass:com_registFlowParallel()
+	return self:com_registCustomFlow(FightWorkFlowParallel)
 end
 
-function var_0_0.com_registCustomFlow(arg_14_0, arg_14_1)
-	return arg_14_0:getComponent(FightFlowComponent):registCustomFlow(arg_14_1)
+function FightBaseClass:com_registCustomFlow(customFlow)
+	local comp = self:getComponent(FightFlowComponent)
+
+	return comp:registCustomFlow(customFlow)
 end
 
-function var_0_0.com_registWork(arg_15_0, arg_15_1, ...)
-	return arg_15_0:getComponent(FightWorkComponent):registWork(arg_15_1, ...)
+function FightBaseClass:com_registWork(class, ...)
+	local comp = self:getComponent(FightWorkComponent)
+
+	return comp:registWork(class, ...)
 end
 
-function var_0_0.com_playWork(arg_16_0, arg_16_1, ...)
-	arg_16_0:getComponent(FightWorkComponent):playWork(arg_16_1, ...)
+function FightBaseClass:com_playWork(class, ...)
+	local comp = self:getComponent(FightWorkComponent)
+
+	comp:playWork(class, ...)
 end
 
-function var_0_0.com_cancelTimer(arg_17_0, arg_17_1)
-	if not arg_17_1 then
+function FightBaseClass:com_cancelTimer(timer)
+	if not timer then
 		return
 	end
 
-	arg_17_1.isDone = true
+	timer.isDone = true
 end
 
-function var_0_0.com_registTimer(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	return arg_18_0:com_registRepeatTimer(arg_18_1, arg_18_2, 1, arg_18_3)
+function FightBaseClass:com_registTimer(callback, time, param)
+	return self:com_registRepeatTimer(callback, time, 1, param)
 end
 
-function var_0_0.com_registRepeatTimer(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
-	return arg_19_0:getComponent(FightTimerComponent):registRepeatTimer(arg_19_1, arg_19_0, arg_19_2, arg_19_3, arg_19_4)
+function FightBaseClass:com_registRepeatTimer(callback, time, repeatCount, param)
+	local comp = self:getComponent(FightTimerComponent)
+
+	return comp:registRepeatTimer(callback, self, time, repeatCount, param)
 end
 
-function var_0_0.com_registSingleTimer(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	return arg_20_0:getComponent(FightTimerComponent):registSingleTimer(arg_20_1, arg_20_0, arg_20_2, 1, arg_20_3)
+function FightBaseClass:com_registSingleTimer(callback, time, param)
+	local comp = self:getComponent(FightTimerComponent)
+
+	return comp:registSingleTimer(callback, self, time, 1, param)
 end
 
-function var_0_0.com_registSingleRepeatTimer(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
-	return arg_21_0:getComponent(FightTimerComponent):registSingleTimer(arg_21_1, arg_21_0, arg_21_2, arg_21_3, arg_21_4)
+function FightBaseClass:com_registSingleRepeatTimer(callback, time, repeatCount, param)
+	local comp = self:getComponent(FightTimerComponent)
+
+	return comp:registSingleTimer(callback, self, time, repeatCount, param)
 end
 
-function var_0_0.com_releaseSingleTimer(arg_22_0, arg_22_1)
-	return arg_22_0:getComponent(FightTimerComponent):releaseSingleTimer(arg_22_1)
+function FightBaseClass:com_releaseSingleTimer(callback)
+	local comp = self:getComponent(FightTimerComponent)
+
+	return comp:releaseSingleTimer(callback)
 end
 
-function var_0_0.com_restartTimer(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	return arg_23_0:com_restartRepeatTimer(arg_23_1, arg_23_2, 1, arg_23_3)
+function FightBaseClass:com_restartTimer(timerItem, time, param)
+	return self:com_restartRepeatTimer(timerItem, time, 1, param)
 end
 
-function var_0_0.com_restartRepeatTimer(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	if not arg_24_1.isDone then
-		arg_24_1:restart(arg_24_2, arg_24_3, arg_24_4)
+function FightBaseClass:com_restartRepeatTimer(timerItem, time, repeatCount, param)
+	if not timerItem.isDone then
+		timerItem:restart(time, repeatCount, param)
 
 		return
 	end
 
-	return arg_24_0:getComponent(FightTimerComponent):restartRepeatTimer(arg_24_1, arg_24_2, arg_24_3, arg_24_4)
+	local comp = self:getComponent(FightTimerComponent)
+
+	return comp:restartRepeatTimer(timerItem, time, repeatCount, param)
 end
 
-function var_0_0.com_registFightEvent(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	arg_25_0:com_registEvent(FightController.instance, arg_25_1, arg_25_2, arg_25_3)
+function FightBaseClass:com_registFightEvent(eventId, callback, priority)
+	self:com_registEvent(FightController.instance, eventId, callback, priority)
 end
 
-function var_0_0.com_registEvent(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4)
-	arg_26_0:getComponent(FightEventComponent):registEvent(arg_26_1, arg_26_2, arg_26_3, arg_26_0, arg_26_4)
+function FightBaseClass:com_registEvent(ctrl, eventId, callback, priority)
+	local comp = self:getComponent(FightEventComponent)
+
+	comp:registEvent(ctrl, eventId, callback, self, priority)
 end
 
-function var_0_0.com_cancelFightEvent(arg_27_0, arg_27_1, arg_27_2)
-	arg_27_0:com_cancelEvent(FightController.instance, arg_27_1, arg_27_2)
+function FightBaseClass:com_cancelFightEvent(eventId, callback)
+	self:com_cancelEvent(FightController.instance, eventId, callback)
 end
 
-function var_0_0.com_cancelEvent(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	arg_28_0:getComponent(FightEventComponent):cancelEvent(arg_28_1, arg_28_2, arg_28_3, arg_28_0)
+function FightBaseClass:com_cancelEvent(ctrl, eventId, callback)
+	local comp = self:getComponent(FightEventComponent)
+
+	comp:cancelEvent(ctrl, eventId, callback, self)
 end
 
-function var_0_0.com_sendFightEvent(arg_29_0, arg_29_1, ...)
-	FightController.instance:dispatchEvent(arg_29_1, ...)
+function FightBaseClass:com_sendFightEvent(eventId, ...)
+	FightController.instance:dispatchEvent(eventId, ...)
 end
 
-function var_0_0.com_sendEvent(arg_30_0, arg_30_1, arg_30_2, ...)
-	arg_30_1:dispatchEvent(arg_30_2, ...)
+function FightBaseClass:com_sendEvent(ctrl, eventId, ...)
+	ctrl:dispatchEvent(eventId, ...)
 end
 
-function var_0_0.com_registMsg(arg_31_0, arg_31_1, arg_31_2)
-	return arg_31_0:getComponent(FightMsgComponent):registMsg(arg_31_1, arg_31_2, arg_31_0)
+function FightBaseClass:com_registMsg(msgId, callback)
+	local comp = self:getComponent(FightMsgComponent)
+
+	return comp:registMsg(msgId, callback, self)
 end
 
-function var_0_0.com_removeMsg(arg_32_0, arg_32_1)
-	return arg_32_0:getComponent(FightMsgComponent):removeMsg(arg_32_1)
+function FightBaseClass:com_removeMsg(msgItem)
+	local comp = self:getComponent(FightMsgComponent)
+
+	return comp:removeMsg(msgItem)
 end
 
-function var_0_0.com_sendMsg(arg_33_0, arg_33_1, ...)
-	return FightMsgMgr.sendMsg(arg_33_1, ...)
+function FightBaseClass:com_sendMsg(msgId, ...)
+	return FightMsgMgr.sendMsg(msgId, ...)
 end
 
-function var_0_0.com_replyMsg(arg_34_0, arg_34_1, arg_34_2)
-	return FightMsgMgr.replyMsg(arg_34_1, arg_34_2)
+function FightBaseClass:com_replyMsg(msgId, reply)
+	return FightMsgMgr.replyMsg(msgId, reply)
 end
 
-function var_0_0.com_registUpdate(arg_35_0, arg_35_1, arg_35_2)
-	return arg_35_0:getComponent(FightUpdateComponent):registUpdate(arg_35_1, arg_35_0, arg_35_2)
+function FightBaseClass:com_registUpdate(func, param)
+	local comp = self:getComponent(FightUpdateComponent)
+
+	return comp:registUpdate(func, self, param)
 end
 
-function var_0_0.com_cancelUpdate(arg_36_0, arg_36_1)
-	return arg_36_0:getComponent(FightUpdateComponent):cancelUpdate(arg_36_1)
+function FightBaseClass:com_cancelUpdate(item)
+	local comp = self:getComponent(FightUpdateComponent)
+
+	return comp:cancelUpdate(item)
 end
 
-return var_0_0
+return FightBaseClass

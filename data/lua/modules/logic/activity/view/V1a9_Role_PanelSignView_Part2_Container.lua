@@ -1,9 +1,11 @@
-﻿module("modules.logic.activity.view.V1a9_Role_PanelSignView_Part2_Container", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a9_Role_PanelSignView_Part2_Container.lua
 
-local var_0_0 = class("V1a9_Role_PanelSignView_Part2_Container", V1a9_Role_SignItem_SignViewContainer)
+module("modules.logic.activity.view.V1a9_Role_PanelSignView_Part2_Container", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local V1a9_Role_PanelSignView_Part2_Container = class("V1a9_Role_PanelSignView_Part2_Container", V1a9_Role_SignItem_SignViewContainer)
+
+function V1a9_Role_PanelSignView_Part2_Container:onGetMainViewClassType()
 	return V1a9_Role_PanelSignView_Part2
 end
 
-return var_0_0
+return V1a9_Role_PanelSignView_Part2_Container

@@ -1,81 +1,84 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxElementMechanics", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxElementMechanics.lua
 
-local var_0_0 = class("PushBoxElementMechanics", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxElementMechanics", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local PushBoxElementMechanics = class("PushBoxElementMechanics", UserDataDispose)
 
-	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	arg_1_0._gameObject = arg_1_1
-	arg_1_0._transform = arg_1_1.transform
-	arg_1_0._cell = arg_1_2
+function PushBoxElementMechanics:ctor(gameObject, cell)
+	self:__onInit()
 
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._gameObject = gameObject
+	self._transform = gameObject.transform
+	self._cell = cell
+
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, self._onRefreshElement, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, self._onStepFinished, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, self._onRevertStep, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, self._onStartElement, self)
 end
 
-function var_0_0.setRendererIndex(arg_2_0)
-	local var_2_0 = arg_2_0._cell:getRendererIndex()
+function PushBoxElementMechanics:setRendererIndex()
+	local final_renderer_index = self._cell:getRendererIndex()
 
-	for iter_2_0 = 0, arg_2_0._transform.childCount - 1 do
-		local var_2_1 = arg_2_0._transform:GetChild(iter_2_0):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+	for i = 0, self._transform.childCount - 1 do
+		local tar_transform = self._transform:GetChild(i)
+		local meshRenderer = tar_transform:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-		for iter_2_1 = 0, var_2_1.Length - 1 do
-			var_2_1[iter_2_1].sortingOrder = var_2_0
+		for index = 0, meshRenderer.Length - 1 do
+			meshRenderer[index].sortingOrder = final_renderer_index
 		end
 	end
 end
 
-function var_0_0.refreshMechanicsState(arg_3_0, arg_3_1)
-	local var_3_0 = gohelper.findChild(arg_3_0._gameObject, "Normal")
-	local var_3_1 = gohelper.findChild(arg_3_0._gameObject, "Enabled")
+function PushBoxElementMechanics:refreshMechanicsState(has_box)
+	local close_obj = gohelper.findChild(self._gameObject, "Normal")
+	local open_obj = gohelper.findChild(self._gameObject, "Enabled")
 
-	gohelper.setActive(var_3_1, arg_3_1)
-	gohelper.setActive(var_3_0, not arg_3_1)
+	gohelper.setActive(open_obj, has_box)
+	gohelper.setActive(close_obj, not has_box)
 
-	if arg_3_1 and arg_3_1 ~= arg_3_0._last_has_box then
+	if has_box and has_box ~= self._last_has_box then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_organ_open)
 	end
 
-	arg_3_0._last_has_box = arg_3_1
+	self._last_has_box = has_box
 end
 
-function var_0_0._onStartElement(arg_4_0)
+function PushBoxElementMechanics:_onStartElement()
 	return
 end
 
-function var_0_0._onRevertStep(arg_5_0)
+function PushBoxElementMechanics:_onRevertStep()
 	return
 end
 
-function var_0_0._onRefreshElement(arg_6_0)
+function PushBoxElementMechanics:_onRefreshElement()
 	return
 end
 
-function var_0_0._onStepFinished(arg_7_0)
+function PushBoxElementMechanics:_onStepFinished()
 	return
 end
 
-function var_0_0.getPosX(arg_8_0)
-	return arg_8_0._cell:getPosX()
+function PushBoxElementMechanics:getPosX()
+	return self._cell:getPosX()
 end
 
-function var_0_0.getPosY(arg_9_0)
-	return arg_9_0._cell:getPosY()
+function PushBoxElementMechanics:getPosY()
+	return self._cell:getPosY()
 end
 
-function var_0_0.getObj(arg_10_0)
-	return arg_10_0._gameObject
+function PushBoxElementMechanics:getObj()
+	return self._gameObject
 end
 
-function var_0_0.getCell(arg_11_0)
-	return arg_11_0._cell
+function PushBoxElementMechanics:getCell()
+	return self._cell
 end
 
-function var_0_0.releaseSelf(arg_12_0)
-	arg_12_0:__onDispose()
+function PushBoxElementMechanics:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return PushBoxElementMechanics

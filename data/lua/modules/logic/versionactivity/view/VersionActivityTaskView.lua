@@ -1,100 +1,104 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityTaskView.lua
 
-local var_0_0 = class("VersionActivityTaskView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._simagedecorate2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_decorate2")
-	arg_1_0._scrollleft = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_left")
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_left/Viewport/Content/#go_item")
-	arg_1_0._txtgetcount = gohelper.findChildText(arg_1_0.viewGO, "horizontal/totalprogress/#txt_getcount")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local VersionActivityTaskView = class("VersionActivityTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityTaskView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._simagedecorate2 = gohelper.findChildSingleImage(self.viewGO, "#simage_decorate2")
+	self._scrollleft = gohelper.findChildScrollRect(self.viewGO, "#scroll_left")
+	self._goitem = gohelper.findChild(self.viewGO, "#scroll_left/Viewport/Content/#go_item")
+	self._txtgetcount = gohelper.findChildText(self.viewGO, "horizontal/totalprogress/#txt_getcount")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivityTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivityTaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goitem, false)
+function VersionActivityTaskView:_editableInitView()
+	gohelper.setActive(self._goitem, false)
 
-	arg_4_0.goTaskBonusContent = gohelper.findChild(arg_4_0.viewGO, "#scroll_left/Viewport/Content")
-	arg_4_0.itemResPath = arg_4_0.viewContainer:getSetting().otherRes[1]
-	arg_4_0.taskBonusItemList = {}
+	self.goTaskBonusContent = gohelper.findChild(self.viewGO, "#scroll_left/Viewport/Content")
+	self.itemResPath = self.viewContainer:getSetting().otherRes[1]
+	self.taskBonusItemList = {}
 
-	arg_4_0._simagebg:LoadImage(ResUrl.getVersionActivityIcon("full/bg1"))
+	self._simagebg:LoadImage(ResUrl.getVersionActivityIcon("full/bg1"))
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function VersionActivityTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnReceiveFinishTaskReply, arg_6_0.onReceiveFinishTaskReply, arg_6_0)
+function VersionActivityTaskView:onOpen()
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnReceiveFinishTaskReply, self.onReceiveFinishTaskReply, self)
 	VersionActivityTaskListModel.instance:initTaskList()
-	arg_6_0:setTaskBonusY()
-	arg_6_0:refreshUI()
+	self:setTaskBonusY()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_7_0)
-	arg_7_0:refreshLeftUI()
-	arg_7_0:refreshRightUI()
+function VersionActivityTaskView:refreshUI()
+	self:refreshLeftUI()
+	self:refreshRightUI()
 end
 
-function var_0_0.setTaskBonusY(arg_8_0)
-	local var_8_0 = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon).defineId
-	local var_8_1 = #TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.ActivityDungeon)
-	local var_8_2 = math.min(var_8_0, var_8_1 - 5)
-	local var_8_3 = 165 * var_8_2
+function VersionActivityTaskView:setTaskBonusY()
+	local curStage = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon).defineId
+	local taskBonusCount = #TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.ActivityDungeon)
 
-	transformhelper.setLocalPosXY(arg_8_0.goTaskBonusContent.transform, 0, var_8_3)
-	arg_8_0.viewContainer:setTaskBonusScrollViewIndexOffset(var_8_2)
+	curStage = math.min(curStage, taskBonusCount - 5)
+
+	local y = 165 * curStage
+
+	transformhelper.setLocalPosXY(self.goTaskBonusContent.transform, 0, y)
+	self.viewContainer:setTaskBonusScrollViewIndexOffset(curStage)
 end
 
-function var_0_0.refreshLeftUI(arg_9_0)
-	arg_9_0:refreshTaskBonusItem()
+function VersionActivityTaskView:refreshLeftUI()
+	self:refreshTaskBonusItem()
 end
 
-function var_0_0.refreshRightUI(arg_10_0)
-	arg_10_0._txtgetcount.text = string.format(" %s/%s", VersionActivityTaskListModel.instance:getGetRewardTaskCount(), VersionActivityConfig.instance:getAct113TaskCount(VersionActivityEnum.ActivityId.Act113))
+function VersionActivityTaskView:refreshRightUI()
+	self._txtgetcount.text = string.format(" %s/%s", VersionActivityTaskListModel.instance:getGetRewardTaskCount(), VersionActivityConfig.instance:getAct113TaskCount(VersionActivityEnum.ActivityId.Act113))
 
 	VersionActivityTaskListModel.instance:sortTaskMoList()
 	VersionActivityTaskListModel.instance:refreshList()
 end
 
-function var_0_0.refreshTaskBonusItem(arg_11_0)
+function VersionActivityTaskView:refreshTaskBonusItem()
 	VersionActivityTaskBonusListModel.instance:refreshList()
 end
 
-function var_0_0.onReceiveFinishTaskReply(arg_12_0)
-	arg_12_0:refreshRightUI()
+function VersionActivityTaskView:onReceiveFinishTaskReply()
+	self:refreshRightUI()
 	VersionActivityController.instance:dispatchEvent(VersionActivityEvent.AddTaskActivityBonus)
-	TaskDispatcher.runDelay(arg_12_0.onTaskBonusAnimationDone, arg_12_0, 0.833)
+	TaskDispatcher.runDelay(self.onTaskBonusAnimationDone, self, 0.833)
 end
 
-function var_0_0.onTaskBonusAnimationDone(arg_13_0)
-	arg_13_0:refreshLeftUI()
-	arg_13_0:setTaskBonusY()
+function VersionActivityTaskView:onTaskBonusAnimationDone()
+	self:refreshLeftUI()
+	self:setTaskBonusY()
 end
 
-function var_0_0.onClose(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.onTaskBonusAnimationDone, arg_14_0)
+function VersionActivityTaskView:onClose()
+	TaskDispatcher.cancelTask(self.onTaskBonusAnimationDone, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.taskBonusItemList) do
-		iter_15_1:onDestroyView()
+function VersionActivityTaskView:onDestroyView()
+	for _, taskBonusItem in ipairs(self.taskBonusItemList) do
+		taskBonusItem:onDestroyView()
 	end
 
-	arg_15_0._simagebg:UnLoadImage()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivityTaskView

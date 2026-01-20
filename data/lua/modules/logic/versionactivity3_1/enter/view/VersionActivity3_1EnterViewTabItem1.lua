@@ -1,63 +1,67 @@
-﻿module("modules.logic.versionactivity3_1.enter.view.VersionActivity3_1EnterViewTabItem1", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/enter/view/VersionActivity3_1EnterViewTabItem1.lua
 
-local var_0_0 = class("VersionActivity3_1EnterViewTabItem1", VersionActivityFixedEnterViewTabItemBase)
+module("modules.logic.versionactivity3_1.enter.view.VersionActivity3_1EnterViewTabItem1", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	if gohelper.isNil(arg_1_1) then
+local VersionActivity3_1EnterViewTabItem1 = class("VersionActivity3_1EnterViewTabItem1", VersionActivityFixedEnterViewTabItemBase)
+
+function VersionActivity3_1EnterViewTabItem1:init(go)
+	if gohelper.isNil(go) then
 		return
 	end
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.rectTr = arg_1_0.go:GetComponent(gohelper.Type_RectTransform)
-	arg_1_0.clickCollider = ZProj.BoxColliderClickListener.Get(arg_1_1)
+	self.go = go
+	self.rectTr = self.go:GetComponent(gohelper.Type_RectTransform)
+	self.clickCollider = ZProj.BoxColliderClickListener.Get(go)
 
-	arg_1_0.clickCollider:SetIgnoreUI(true)
+	self.clickCollider:SetIgnoreUI(true)
 
-	arg_1_0.click = gohelper.getClickWithDefaultAudio(arg_1_0.go)
+	self.click = gohelper.getClickWithDefaultAudio(self.go)
 
-	arg_1_0:_editableInitView()
-	gohelper.setActive(arg_1_0.go, true)
+	self:_editableInitView()
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0._getTagPath(arg_2_0)
+function VersionActivity3_1EnterViewTabItem1:_getTagPath()
 	return "#go_tag"
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	var_0_0.super.addEventListeners(arg_3_0)
-	arg_3_0.clickCollider:AddClickListener(arg_3_0.onClickCollider, arg_3_0)
+function VersionActivity3_1EnterViewTabItem1:addEventListeners()
+	VersionActivity3_1EnterViewTabItem1.super.addEventListeners(self)
+	self.clickCollider:AddClickListener(self.onClickCollider, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	var_0_0.super.removeEventListeners(arg_4_0)
-	arg_4_0.clickCollider:RemoveClickListener()
+function VersionActivity3_1EnterViewTabItem1:removeEventListeners()
+	VersionActivity3_1EnterViewTabItem1.super.removeEventListeners(self)
+	self.clickCollider:RemoveClickListener()
 end
 
-function var_0_0.onClickCollider(arg_5_0)
-	if arg_5_0:isRaycastScrollTab() then
+function VersionActivity3_1EnterViewTabItem1:onClickCollider()
+	if self:isRaycastScrollTab() then
 		return
 	end
 
-	arg_5_0:onClick()
+	self:onClick()
 end
 
-function var_0_0.isRaycastScrollTab(arg_6_0)
-	if not arg_6_0._pointerEventData then
-		arg_6_0._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine.EventSystems.EventSystem.current)
-		arg_6_0._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
+function VersionActivity3_1EnterViewTabItem1:isRaycastScrollTab()
+	if not self._pointerEventData then
+		self._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine.EventSystems.EventSystem.current)
+		self._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
 	end
 
-	arg_6_0._pointerEventData.position = UnityEngine.Input.mousePosition
+	self._pointerEventData.position = UnityEngine.Input.mousePosition
 
-	UnityEngine.EventSystems.EventSystem.current:RaycastAll(arg_6_0._pointerEventData, arg_6_0._raycastResults)
+	UnityEngine.EventSystems.EventSystem.current:RaycastAll(self._pointerEventData, self._raycastResults)
 
-	local var_6_0 = arg_6_0._raycastResults:GetEnumerator()
+	local iter = self._raycastResults:GetEnumerator()
 
-	while var_6_0:MoveNext() do
-		if var_6_0.Current.gameObject.name == "#scroll_tab" then
+	while iter:MoveNext() do
+		local raycastResult = iter.Current
+
+		if raycastResult.gameObject.name == "#scroll_tab" then
 			return true
 		end
 	end
 end
 
-return var_0_0
+return VersionActivity3_1EnterViewTabItem1

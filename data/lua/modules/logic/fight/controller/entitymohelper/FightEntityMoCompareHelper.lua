@@ -1,9 +1,11 @@
-﻿module("modules.logic.fight.controller.entitymohelper.FightEntityMoCompareHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/entitymohelper/FightEntityMoCompareHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.fight.controller.entitymohelper.FightEntityMoCompareHelper", package.seeall)
 
-var_0_0.DeepMaxStack = 100
-var_0_0.CompareFilterAttrDict = {
+local FightEntityMoCompareHelper = _M
+
+FightEntityMoCompareHelper.DeepMaxStack = 100
+FightEntityMoCompareHelper.CompareFilterAttrDict = {
 	stanceDic = true,
 	playCardExPoint = true,
 	buffFeaturesSplit = true,
@@ -20,81 +22,91 @@ var_0_0.CompareFilterAttrDict = {
 	_moveCardAddExpoint = true
 }
 
-function var_0_0.compareEntityMo(arg_1_0, arg_1_1)
-	var_0_0.initCompareHandleDict()
+function FightEntityMoCompareHelper.compareEntityMo(entityMo1, entityMo2)
+	FightEntityMoCompareHelper.initCompareHandleDict()
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
-		if not var_0_0.CompareFilterAttrDict[iter_1_0] and not (var_0_0.compareHandleDict[iter_1_0] or var_0_0.defaultTableDeepCompare)(iter_1_1, arg_1_1[iter_1_0]) then
-			return false
+	for key, value in pairs(entityMo1) do
+		if not FightEntityMoCompareHelper.CompareFilterAttrDict[key] then
+			local compareHandle = FightEntityMoCompareHelper.compareHandleDict[key]
+
+			compareHandle = compareHandle or FightEntityMoCompareHelper.defaultTableDeepCompare
+
+			local same = compareHandle(value, entityMo2[key])
+
+			if not same then
+				return false
+			end
 		end
 	end
 
 	return true
 end
 
-function var_0_0.initCompareHandleDict()
-	if not var_0_0.compareHandleDict then
-		var_0_0.compareHandleDict = {
-			buffModel = var_0_0.defaultTableDeepCompare,
-			_powerInfos = var_0_0.defaultTableDeepCompare,
-			summonedInfo = var_0_0.summonedInfoCompare,
-			attrMO = var_0_0.attrMoCompare
+function FightEntityMoCompareHelper.initCompareHandleDict()
+	if not FightEntityMoCompareHelper.compareHandleDict then
+		FightEntityMoCompareHelper.compareHandleDict = {
+			buffModel = FightEntityMoCompareHelper.defaultTableDeepCompare,
+			_powerInfos = FightEntityMoCompareHelper.defaultTableDeepCompare,
+			summonedInfo = FightEntityMoCompareHelper.summonedInfoCompare,
+			attrMO = FightEntityMoCompareHelper.attrMoCompare
 		}
 	end
 end
 
-function var_0_0.defaultCompare(arg_3_0, arg_3_1)
-	if arg_3_0 == arg_3_1 then
+function FightEntityMoCompareHelper.defaultCompare(valueA, valueB)
+	if valueA == valueB then
 		return true
 	end
 
-	if not arg_3_0 or not arg_3_1 then
+	if not valueA or not valueB then
 		return false
 	end
 
-	local var_3_0 = type(arg_3_0)
+	local typeA, typeB = type(valueA), type(valueB)
 
-	if var_3_0 ~= type(arg_3_1) then
+	if typeA ~= typeB then
 		return false
 	end
 
-	if var_3_0 == "table" then
-		return var_0_0.defaultTableCompare(arg_3_0, arg_3_1)
+	if typeA == "table" then
+		return FightEntityMoCompareHelper.defaultTableCompare(valueA, valueB)
 	end
 
-	return arg_3_0 == arg_3_1
+	return valueA == valueB
 end
 
-var_0_0.CompareStatus = {
+FightEntityMoCompareHelper.CompareStatus = {
 	CompareFinish = 2,
 	WaitCompare = 1
 }
 
-function var_0_0._innerTableCompare(arg_4_0, arg_4_1)
-	if arg_4_0 == arg_4_1 then
-		return var_0_0.CompareStatus.CompareFinish, true
+function FightEntityMoCompareHelper._innerTableCompare(tableA, tableB)
+	if tableA == tableB then
+		return FightEntityMoCompareHelper.CompareStatus.CompareFinish, true
 	end
 
-	if not arg_4_0 or not arg_4_1 then
-		return var_0_0.CompareStatus.CompareFinish, false
+	if not tableA or not tableB then
+		return FightEntityMoCompareHelper.CompareStatus.CompareFinish, false
 	end
 
-	if type(arg_4_0) ~= type(arg_4_1) then
-		return var_0_0.CompareStatus.CompareFinish, false
+	local typeA, typeB = type(tableA), type(tableB)
+
+	if typeA ~= typeB then
+		return FightEntityMoCompareHelper.CompareStatus.CompareFinish, false
 	end
 
-	return var_0_0.CompareStatus.WaitCompare, true
+	return FightEntityMoCompareHelper.CompareStatus.WaitCompare, true
 end
 
-function var_0_0.defaultTableCompare(arg_5_0, arg_5_1)
-	local var_5_0, var_5_1 = var_0_0._innerTableCompare(arg_5_0, arg_5_1)
+function FightEntityMoCompareHelper.defaultTableCompare(tableA, tableB)
+	local status, same = FightEntityMoCompareHelper._innerTableCompare(tableA, tableB)
 
-	if var_5_0 == var_0_0.CompareStatus.CompareFinish then
-		return var_5_1
+	if status == FightEntityMoCompareHelper.CompareStatus.CompareFinish then
+		return same
 	end
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
-		if not var_0_0.CompareFilterAttrDict[iter_5_0] and iter_5_1 ~= arg_5_0[iter_5_0] then
+	for key, value in pairs(tableB) do
+		if not FightEntityMoCompareHelper.CompareFilterAttrDict[key] and value ~= tableA[key] then
 			return false
 		end
 	end
@@ -102,42 +114,40 @@ function var_0_0.defaultTableCompare(arg_5_0, arg_5_1)
 	return true
 end
 
-function var_0_0.defaultTableDeepCompare(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_2 = arg_6_2 or 0
+function FightEntityMoCompareHelper.defaultTableDeepCompare(tableA, tableB, level, preKey)
+	level = level or 0
 
-	if arg_6_2 > var_0_0.DeepMaxStack then
+	if level > FightEntityMoCompareHelper.DeepMaxStack then
 		logError("stackoverflow")
 
-		return true, arg_6_3
+		return true, preKey
 	end
 
-	local var_6_0, var_6_1 = var_0_0._innerTableCompare(arg_6_0, arg_6_1)
+	local status, same = FightEntityMoCompareHelper._innerTableCompare(tableA, tableB)
 
-	if var_6_0 == var_0_0.CompareStatus.CompareFinish then
-		return var_6_1, arg_6_3
+	if status == FightEntityMoCompareHelper.CompareStatus.CompareFinish then
+		return same, preKey
 	end
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0) do
-		local var_6_2 = arg_6_3 and arg_6_3 .. iter_6_0 or iter_6_0
+	for key, aValue in pairs(tableA) do
+		local curKey = preKey and preKey .. key or key
 
-		if not var_0_0.CompareFilterAttrDict[iter_6_0] then
-			local var_6_3 = arg_6_1[iter_6_0]
-			local var_6_4 = type(iter_6_1)
+		if not FightEntityMoCompareHelper.CompareFilterAttrDict[key] then
+			local bValue = tableB[key]
+			local typeA, typeB = type(aValue), type(bValue)
 
-			if var_6_4 ~= type(var_6_3) then
-				return false, var_6_2
+			if typeA ~= typeB then
+				return false, curKey
 			end
 
-			if var_6_4 == "table" then
-				local var_6_5, var_6_6 = var_0_0.defaultTableDeepCompare(iter_6_1, var_6_3, arg_6_2 + 1, var_6_2)
+			if typeA == "table" then
+				same, curKey = FightEntityMoCompareHelper.defaultTableDeepCompare(aValue, bValue, level + 1, curKey)
 
-				var_6_2 = var_6_6
-
-				if not var_6_5 then
-					return false, var_6_2
+				if not same then
+					return false, curKey
 				end
-			elseif iter_6_1 ~= var_6_3 then
-				return false, var_6_2
+			elseif aValue ~= bValue then
+				return false, curKey
 			end
 		end
 	end
@@ -145,39 +155,39 @@ function var_0_0.defaultTableDeepCompare(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	return true
 end
 
-function var_0_0.summonedInfoCompare(arg_7_0, arg_7_1)
-	local var_7_0, var_7_1 = var_0_0._innerTableCompare(arg_7_0, arg_7_1)
+function FightEntityMoCompareHelper.summonedInfoCompare(summonedInfoA, summonedInfoB)
+	local status, same = FightEntityMoCompareHelper._innerTableCompare(summonedInfoA, summonedInfoB)
 
-	if var_7_0 == var_0_0.CompareStatus.CompareFinish then
-		return var_7_1
+	if status == FightEntityMoCompareHelper.CompareStatus.CompareFinish then
+		return same
 	end
 
-	local var_7_2 = arg_7_0.getDataDic and arg_7_0:getDataDic()
-	local var_7_3 = arg_7_1.getDataDic and arg_7_1:getDataDic()
+	local aData = summonedInfoA.getDataDic and summonedInfoA:getDataDic()
+	local bData = summonedInfoB.getDataDic and summonedInfoB:getDataDic()
 
-	return var_0_0.defaultTableDeepCompare(var_7_2, var_7_3)
+	return FightEntityMoCompareHelper.defaultTableDeepCompare(aData, bData)
 end
 
-function var_0_0.attrMoCompare(arg_8_0, arg_8_1)
-	local var_8_0, var_8_1 = var_0_0._innerTableCompare(arg_8_0, arg_8_1)
+function FightEntityMoCompareHelper.attrMoCompare(attrMo1, attrMo2)
+	local status, same = FightEntityMoCompareHelper._innerTableCompare(attrMo1, attrMo2)
 
-	if var_8_0 == var_0_0.CompareStatus.CompareFinish then
-		return var_8_1
+	if status == FightEntityMoCompareHelper.CompareStatus.CompareFinish then
+		return same
 	end
 
-	if arg_8_0.hp ~= arg_8_1.hp then
+	if attrMo1.hp ~= attrMo2.hp then
 		return false
 	end
 
-	if arg_8_0.multiHpIdx ~= arg_8_1.multiHpIdx then
+	if attrMo1.multiHpIdx ~= attrMo2.multiHpIdx then
 		return false
 	end
 
-	if arg_8_0.multiHpNum ~= arg_8_1.multiHpNum then
+	if attrMo1.multiHpNum ~= attrMo2.multiHpNum then
 		return false
 	end
 
 	return true
 end
 
-return var_0_0
+return FightEntityMoCompareHelper

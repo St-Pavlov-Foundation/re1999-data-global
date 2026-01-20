@@ -1,16 +1,18 @@
-﻿module("modules.logic.room.controller.RoomSceneTaskDetailController", package.seeall)
+﻿-- chunkname: @modules/logic/room/controller/RoomSceneTaskDetailController.lua
 
-local var_0_0 = class("RoomSceneTaskDetailController", BaseController)
+module("modules.logic.room.controller.RoomSceneTaskDetailController", package.seeall)
 
-function var_0_0.goToTask(arg_1_0, arg_1_1)
-	if arg_1_1.listenerType == RoomSceneTaskEnum.ListenerType.EditResArea or arg_1_1.listenerType == RoomSceneTaskEnum.ListenerType.EditHasResBlockCount then
-		return arg_1_0:goToEditMode()
-	elseif arg_1_1.listenerType == RoomSceneTaskEnum.ListenerType.RoomLevel then
-		return arg_1_0:goToHallLevelUp()
+local RoomSceneTaskDetailController = class("RoomSceneTaskDetailController", BaseController)
+
+function RoomSceneTaskDetailController:goToTask(taskCO)
+	if taskCO.listenerType == RoomSceneTaskEnum.ListenerType.EditResArea or taskCO.listenerType == RoomSceneTaskEnum.ListenerType.EditHasResBlockCount then
+		return self:goToEditMode()
+	elseif taskCO.listenerType == RoomSceneTaskEnum.ListenerType.RoomLevel then
+		return self:goToHallLevelUp()
 	end
 end
 
-function var_0_0.goToHallLevelUp(arg_2_0)
+function RoomSceneTaskDetailController:goToHallLevelUp()
 	if RoomController.instance:isEditMode() then
 		GameFacade.showToast(RoomEnum.Toast.TaskGoOBModeInEditMode)
 	elseif RoomController.instance:isObMode() then
@@ -18,7 +20,7 @@ function var_0_0.goToHallLevelUp(arg_2_0)
 	end
 end
 
-function var_0_0.goToEditMode(arg_3_0)
+function RoomSceneTaskDetailController:goToEditMode()
 	if RoomController.instance:isEditMode() then
 		GameFacade.showToast(RoomEnum.Toast.TaskAlreadyInEditMode)
 	else
@@ -28,6 +30,6 @@ function var_0_0.goToEditMode(arg_3_0)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomSceneTaskDetailController.instance = RoomSceneTaskDetailController.New()
 
-return var_0_0
+return RoomSceneTaskDetailController

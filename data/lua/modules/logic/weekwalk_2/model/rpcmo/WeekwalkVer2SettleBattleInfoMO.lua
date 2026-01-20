@@ -1,10 +1,12 @@
-﻿module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2SettleBattleInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/model/rpcmo/WeekwalkVer2SettleBattleInfoMO.lua
 
-local var_0_0 = pureTable("WeekwalkVer2SettleBattleInfoMO")
+module("modules.logic.weekwalk_2.model.rpcmo.WeekwalkVer2SettleBattleInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.battleId = arg_1_1.battleId
-	arg_1_0.cupInfos = GameUtil.rpcInfosToMap(arg_1_1.cupInfos or {}, WeekwalkVer2CupInfoMO, "index")
+local WeekwalkVer2SettleBattleInfoMO = pureTable("WeekwalkVer2SettleBattleInfoMO")
+
+function WeekwalkVer2SettleBattleInfoMO:init(info)
+	self.battleId = info.battleId
+	self.cupInfos = GameUtil.rpcInfosToMap(info.cupInfos or {}, WeekwalkVer2CupInfoMO, "index")
 end
 
-return var_0_0
+return WeekwalkVer2SettleBattleInfoMO

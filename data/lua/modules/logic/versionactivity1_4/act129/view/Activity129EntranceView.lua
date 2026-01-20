@@ -1,175 +1,183 @@
-﻿module("modules.logic.versionactivity1_4.act129.view.Activity129EntranceView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act129/view/Activity129EntranceView.lua
 
-local var_0_0 = class("Activity129EntranceView", BaseView)
+module("modules.logic.versionactivity1_4.act129.view.Activity129EntranceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goEntrance = gohelper.findChild(arg_1_0.viewGO, "#go_Entrance")
-	arg_1_0.txtLimitTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_Entrance/Title/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0.itemDict = {}
-	arg_1_0.anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local Activity129EntranceView = class("Activity129EntranceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity129EntranceView:onInitView()
+	self.goEntrance = gohelper.findChild(self.viewGO, "#go_Entrance")
+	self.txtLimitTime = gohelper.findChildTextMesh(self.viewGO, "#go_Entrance/Title/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self.itemDict = {}
+	self.anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_2_0.onEnterPool, arg_2_0)
-	arg_2_0:addEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, arg_2_0.OnGetInfoSuccess, arg_2_0)
+function Activity129EntranceView:addEvents()
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, self.onEnterPool, self)
+	self:addEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, self.OnGetInfoSuccess, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, arg_3_0.onEnterPool, arg_3_0)
-	arg_3_0:removeEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, arg_3_0.OnGetInfoSuccess, arg_3_0)
+function Activity129EntranceView:removeEvents()
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnEnterPool, self.onEnterPool, self)
+	self:removeEventCb(Activity129Controller.instance, Activity129Event.OnGetInfoSuccess, self.OnGetInfoSuccess, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function Activity129EntranceView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Activity129EntranceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onEnterPool(arg_6_0)
-	arg_6_0:refreshView()
+function Activity129EntranceView:onEnterPool()
+	self:refreshView()
 end
 
-function var_0_0.OnGetInfoSuccess(arg_7_0)
-	arg_7_0:refreshView(true)
+function Activity129EntranceView:OnGetInfoSuccess()
+	self:refreshView(true)
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0.actId = arg_8_0.viewParam.actId
-	arg_8_0.isOpen = true
+function Activity129EntranceView:onOpen()
+	self.actId = self.viewParam.actId
+	self.isOpen = true
 
-	arg_8_0:refreshView()
+	self:refreshView()
 end
 
-function var_0_0.refreshView(arg_9_0, arg_9_1)
-	TaskDispatcher.cancelTask(arg_9_0.refreshLeftTime, arg_9_0)
+function Activity129EntranceView:refreshView(isUpdate)
+	TaskDispatcher.cancelTask(self.refreshLeftTime, self)
 
-	if Activity129Model.instance:getSelectPoolId() then
-		gohelper.setActive(arg_9_0.goEntrance, false)
+	local selectPoolId = Activity129Model.instance:getSelectPoolId()
 
-		arg_9_0.isOpen = false
+	if selectPoolId then
+		gohelper.setActive(self.goEntrance, false)
+
+		self.isOpen = false
 
 		return
 	end
 
-	gohelper.setActive(arg_9_0.goEntrance, true)
+	gohelper.setActive(self.goEntrance, true)
 
-	if not arg_9_0.isOpen then
-		arg_9_0.anim:Play("switch", 0, 0)
+	if not self.isOpen then
+		self.anim:Play("switch", 0, 0)
 	end
 
-	arg_9_0.isOpen = true
+	self.isOpen = true
 
-	if not arg_9_1 then
+	if not isUpdate then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_smalluncharted_open)
 	end
 
-	local var_9_0 = Activity129Config.instance:getPoolDict(arg_9_0.actId)
+	local pools = Activity129Config.instance:getPoolDict(self.actId)
 
-	if var_9_0 then
-		for iter_9_0, iter_9_1 in pairs(var_9_0) do
-			local var_9_1 = arg_9_0.itemDict[iter_9_1.poolId] or arg_9_0:createPoolItem(iter_9_1.poolId)
+	if pools then
+		for k, v in pairs(pools) do
+			local item = self.itemDict[v.poolId]
 
-			arg_9_0:refreshPoolItem(var_9_1, iter_9_1)
+			item = item or self:createPoolItem(v.poolId)
+
+			self:refreshPoolItem(item, v)
 		end
 	end
 
-	arg_9_0:refreshLeftTime()
-	TaskDispatcher.runRepeat(arg_9_0.refreshLeftTime, arg_9_0, 60)
+	self:refreshLeftTime()
+	TaskDispatcher.runRepeat(self.refreshLeftTime, self, 60)
 end
 
-function var_0_0.createPoolItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getUserDataTb_()
+function Activity129EntranceView:createPoolItem(poolId)
+	local item = self:getUserDataTb_()
 
-	var_10_0.poolId = arg_10_1
-	var_10_0.go = gohelper.findChild(arg_10_0.goEntrance, string.format("Item%s", arg_10_1))
-	var_10_0.goItems = gohelper.findChild(var_10_0.go, "items")
-	var_10_0.txtItemTitle = gohelper.findChildTextMesh(var_10_0.go, "items/txt_ItemTitle")
-	var_10_0.goGet = gohelper.findChild(var_10_0.go, "#go_Get")
-	var_10_0.click = gohelper.findChildClickWithAudio(var_10_0.go, "click", AudioEnum.UI.play_ui_payment_click)
+	item.poolId = poolId
+	item.go = gohelper.findChild(self.goEntrance, string.format("Item%s", poolId))
+	item.goItems = gohelper.findChild(item.go, "items")
+	item.txtItemTitle = gohelper.findChildTextMesh(item.go, "items/txt_ItemTitle")
+	item.goGet = gohelper.findChild(item.go, "#go_Get")
+	item.click = gohelper.findChildClickWithAudio(item.go, "click", AudioEnum.UI.play_ui_payment_click)
 
-	var_10_0.click:AddClickListener(arg_10_0._onClickItem, arg_10_0, var_10_0)
+	item.click:AddClickListener(self._onClickItem, self, item)
 
-	var_10_0.simages = var_10_0.goItems:GetComponentsInChildren(typeof(SLFramework.UGUI.SingleImage), true)
+	item.simages = item.goItems:GetComponentsInChildren(typeof(SLFramework.UGUI.SingleImage), true)
 
-	local var_10_1 = var_10_0.simages:GetEnumerator()
+	local iter = item.simages:GetEnumerator()
 
-	while var_10_1:MoveNext() do
-		local var_10_2 = var_10_1.Current.curImageUrl
+	while iter:MoveNext() do
+		local str = iter.Current.curImageUrl
 
-		var_10_1.Current.curImageUrl = nil
+		iter.Current.curImageUrl = nil
 
-		var_10_1.Current:LoadImage(var_10_2)
+		iter.Current:LoadImage(str)
 	end
 
-	var_10_0.graphics = {}
+	item.graphics = {}
 
-	local var_10_3 = var_10_0.goItems:GetComponentsInChildren(gohelper.Type_Image, true):GetEnumerator()
+	local imgs = item.goItems:GetComponentsInChildren(gohelper.Type_Image, true)
+	local iterimg = imgs:GetEnumerator()
 
-	while var_10_3:MoveNext() do
-		table.insert(var_10_0.graphics, {
-			comp = var_10_3.Current,
-			color = GameUtil.colorToHex(var_10_3.Current.color)
+	while iterimg:MoveNext() do
+		table.insert(item.graphics, {
+			comp = iterimg.Current,
+			color = GameUtil.colorToHex(iterimg.Current.color)
 		})
 	end
 
-	local var_10_4 = var_10_0.goItems:GetComponentsInChildren(gohelper.Type_TextMesh, true):GetEnumerator()
+	local tmps = item.goItems:GetComponentsInChildren(gohelper.Type_TextMesh, true)
+	local itertmp = tmps:GetEnumerator()
 
-	while var_10_4:MoveNext() do
-		table.insert(var_10_0.graphics, {
-			comp = var_10_4.Current,
-			color = GameUtil.colorToHex(var_10_4.Current.color)
+	while itertmp:MoveNext() do
+		table.insert(item.graphics, {
+			comp = itertmp.Current,
+			color = GameUtil.colorToHex(itertmp.Current.color)
 		})
 	end
 
-	arg_10_0.itemDict[arg_10_1] = var_10_0
+	self.itemDict[poolId] = item
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.refreshPoolItem(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_1.txtItemTitle.text = arg_11_2.name
+function Activity129EntranceView:refreshPoolItem(item, config)
+	item.txtItemTitle.text = config.name
 
-	local var_11_0 = Activity129Model.instance:checkPoolIsEmpty(arg_11_0.actId, arg_11_2.poolId)
+	local isEmpty = Activity129Model.instance:checkPoolIsEmpty(self.actId, config.poolId)
 
-	gohelper.setActive(arg_11_1.goGet, var_11_0)
+	gohelper.setActive(item.goGet, isEmpty)
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_1.graphics) do
-		SLFramework.UGUI.GuiHelper.SetColor(iter_11_1.comp, var_11_0 and "#808080" or iter_11_1.color)
+	for i, v in ipairs(item.graphics) do
+		SLFramework.UGUI.GuiHelper.SetColor(v.comp, isEmpty and "#808080" or v.color)
 	end
 end
 
-function var_0_0._onClickItem(arg_12_0, arg_12_1)
-	Activity129Model.instance:setSelectPoolId(arg_12_1.poolId)
+function Activity129EntranceView:_onClickItem(item)
+	Activity129Model.instance:setSelectPoolId(item.poolId)
 end
 
-function var_0_0.refreshLeftTime(arg_13_0)
-	local var_13_0 = ActivityModel.instance:getActMO(arg_13_0.actId)
+function Activity129EntranceView:refreshLeftTime()
+	local actMO = ActivityModel.instance:getActMO(self.actId)
 
-	if var_13_0 then
-		arg_13_0.txtLimitTime.text = formatLuaLang("remain", string.format("%s%s", var_13_0:getRemainTime()))
+	if actMO then
+		self.txtLimitTime.text = formatLuaLang("remain", string.format("%s%s", actMO:getRemainTime()))
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0.refreshLeftTime, arg_14_0)
+function Activity129EntranceView:onClose()
+	TaskDispatcher.cancelTask(self.refreshLeftTime, self)
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.itemDict) do
-		local var_15_0 = iter_15_1.simages:GetEnumerator()
+function Activity129EntranceView:onDestroyView()
+	for k, item in pairs(self.itemDict) do
+		local iter = item.simages:GetEnumerator()
 
-		while var_15_0:MoveNext() do
-			var_15_0.Current:UnLoadImage()
+		while iter:MoveNext() do
+			iter.Current:UnLoadImage()
 		end
 
-		iter_15_1.click:RemoveClickListener()
+		item.click:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return Activity129EntranceView

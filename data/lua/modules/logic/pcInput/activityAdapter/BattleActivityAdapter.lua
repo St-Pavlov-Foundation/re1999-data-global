@@ -1,12 +1,14 @@
-﻿module("modules.logic.pcInput.activityAdapter.BattleActivityAdapter", package.seeall)
+﻿-- chunkname: @modules/logic/pcInput/activityAdapter/BattleActivityAdapter.lua
 
-local var_0_0 = class("BattleActivityAdapter", BaseActivityAdapter)
+module("modules.logic.pcInput.activityAdapter.BattleActivityAdapter", package.seeall)
 
-var_0_0.skillSelectKey = {
+local BattleActivityAdapter = class("BattleActivityAdapter", BaseActivityAdapter)
+
+BattleActivityAdapter.skillSelectKey = {
 	21,
 	22
 }
-var_0_0.keytoFunction = {
+BattleActivityAdapter.keytoFunction = {
 	function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBattleOpenEnemyInfo)
 	end,
@@ -75,17 +77,19 @@ var_0_0.keytoFunction = {
 	end
 }
 
-function var_0_0.ctor(arg_23_0)
-	BaseActivityAdapter.ctor(arg_23_0)
+function BattleActivityAdapter:ctor()
+	BaseActivityAdapter.ctor(self)
 
-	arg_23_0.keytoFunction = var_0_0.keytoFunction
-	arg_23_0.activitid = PCInputModel.Activity.battle
+	self.keytoFunction = BattleActivityAdapter.keytoFunction
+	self.activitid = PCInputModel.Activity.battle
 
-	arg_23_0:registerFunction()
+	self:registerFunction()
 end
 
-function var_0_0.OnkeyUp(arg_24_0, arg_24_1)
-	if not PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, arg_24_1) then
+function BattleActivityAdapter:OnkeyUp(keyName)
+	local config = PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, keyName)
+
+	if not config then
 		return
 	end
 
@@ -97,11 +101,13 @@ function var_0_0.OnkeyUp(arg_24_0, arg_24_1)
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(arg_24_0, arg_24_1)
+	BaseActivityAdapter.OnkeyUp(self, keyName)
 end
 
-function var_0_0.OnkeyDown(arg_25_0, arg_25_1)
-	if not PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, arg_25_1) then
+function BattleActivityAdapter:OnkeyDown(keyName)
+	local config = PCInputModel.instance:getkeyconfigBykeyName(PCInputModel.Activity.battle, keyName)
+
+	if not config then
 		return
 	end
 
@@ -113,7 +119,7 @@ function var_0_0.OnkeyDown(arg_25_0, arg_25_1)
 		return
 	end
 
-	BaseActivityAdapter.OnkeyDown(arg_25_0, arg_25_1)
+	BaseActivityAdapter.OnkeyDown(self, keyName)
 end
 
-return var_0_0
+return BattleActivityAdapter

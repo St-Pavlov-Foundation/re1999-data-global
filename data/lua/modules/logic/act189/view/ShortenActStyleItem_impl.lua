@@ -1,151 +1,161 @@
-﻿module("modules.logic.act189.view.ShortenActStyleItem_impl", package.seeall)
+﻿-- chunkname: @modules/logic/act189/view/ShortenActStyleItem_impl.lua
 
-local var_0_0 = table.insert
-local var_0_1 = class("ShortenActStyleItem_impl", RougeSimpleItemBase)
+module("modules.logic.act189.view.ShortenActStyleItem_impl", package.seeall)
 
-function var_0_1.ctor(arg_1_0, ...)
-	arg_1_0:__onInit()
-	var_0_1.super.ctor(arg_1_0, ...)
+local ti = table.insert
+local ShortenActStyleItem_impl = class("ShortenActStyleItem_impl", RougeSimpleItemBase)
+
+function ShortenActStyleItem_impl:ctor(...)
+	self:__onInit()
+	ShortenActStyleItem_impl.super.ctor(self, ...)
 end
 
-function var_0_1._getStyleCO(arg_2_0)
-	return arg_2_0:_assetGetParent():getStyleCO()
+function ShortenActStyleItem_impl:_getStyleCO()
+	local p = self:_assetGetParent()
+
+	return p:getStyleCO()
 end
 
-function var_0_1._getBonusList(arg_3_0)
-	return arg_3_0:_assetGetParent():getBonusList()
+function ShortenActStyleItem_impl:_getBonusList()
+	local p = self:_assetGetParent()
+
+	return p:getBonusList()
 end
 
-function var_0_1._isClaimable(arg_4_0)
-	return arg_4_0:_assetGetParent():isClaimable()
+function ShortenActStyleItem_impl:_isClaimable()
+	local p = self:_assetGetParent()
+
+	return p:isClaimable()
 end
 
-function var_0_1._editableInitView(arg_5_0)
-	var_0_1.super._editableInitView(arg_5_0)
+function ShortenActStyleItem_impl:_editableInitView()
+	ShortenActStyleItem_impl.super._editableInitView(self)
 
-	local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "1")
+	local _1Go = gohelper.findChild(self.viewGO, "1")
 
-	arg_5_0._simagerewardicon1Go = gohelper.findChild(var_5_0, "#simage_rewardicon1")
-	arg_5_0._simagerewardicon2Go = gohelper.findChild(var_5_0, "#simage_rewardicon2")
-	arg_5_0._goisget1 = gohelper.findChild(var_5_0, "#go_isget1")
-	arg_5_0._goisget2 = gohelper.findChild(var_5_0, "#go_isget2")
-	arg_5_0._gocanget1 = gohelper.findChild(var_5_0, "#go_canget1")
-	arg_5_0._gocanget2 = gohelper.findChild(var_5_0, "#go_canget2")
-	arg_5_0._txtnumbg1 = gohelper.findChildImage(var_5_0, "numbg1")
-	arg_5_0._txtnumbg2 = gohelper.findChildImage(var_5_0, "numbg2")
-	arg_5_0._txtnum1 = gohelper.findChildText(var_5_0, "numbg1/#txt_num1")
-	arg_5_0._txtnum2 = gohelper.findChildText(var_5_0, "numbg2/#txt_num2")
-	arg_5_0._gotimebg1 = gohelper.findChild(var_5_0, "#go_timebg1")
-	arg_5_0._gotimebg2 = gohelper.findChild(var_5_0, "#go_timebg2")
-	arg_5_0._gotimebgImg1 = arg_5_0._gotimebg1:GetComponent(gohelper.Type_Image)
-	arg_5_0._gotimebgImg2 = arg_5_0._gotimebg2:GetComponent(gohelper.Type_Image)
-	arg_5_0._commonPropItemIconList = {}
+	self._simagerewardicon1Go = gohelper.findChild(_1Go, "#simage_rewardicon1")
+	self._simagerewardicon2Go = gohelper.findChild(_1Go, "#simage_rewardicon2")
+	self._goisget1 = gohelper.findChild(_1Go, "#go_isget1")
+	self._goisget2 = gohelper.findChild(_1Go, "#go_isget2")
+	self._gocanget1 = gohelper.findChild(_1Go, "#go_canget1")
+	self._gocanget2 = gohelper.findChild(_1Go, "#go_canget2")
+	self._txtnumbg1 = gohelper.findChildImage(_1Go, "numbg1")
+	self._txtnumbg2 = gohelper.findChildImage(_1Go, "numbg2")
+	self._txtnum1 = gohelper.findChildText(_1Go, "numbg1/#txt_num1")
+	self._txtnum2 = gohelper.findChildText(_1Go, "numbg2/#txt_num2")
+	self._gotimebg1 = gohelper.findChild(_1Go, "#go_timebg1")
+	self._gotimebg2 = gohelper.findChild(_1Go, "#go_timebg2")
+	self._gotimebgImg1 = self._gotimebg1:GetComponent(gohelper.Type_Image)
+	self._gotimebgImg2 = self._gotimebg2:GetComponent(gohelper.Type_Image)
+	self._commonPropItemIconList = {}
 
-	local var_5_1 = IconMgr.instance:getCommonPropItemIcon(arg_5_0._simagerewardicon1Go)
-	local var_5_2 = IconMgr.instance:getCommonPropItemIcon(arg_5_0._simagerewardicon2Go)
+	local commonPropItemIcon1 = IconMgr.instance:getCommonPropItemIcon(self._simagerewardicon1Go)
+	local commonPropItemIcon2 = IconMgr.instance:getCommonPropItemIcon(self._simagerewardicon2Go)
 
-	var_0_0(arg_5_0._commonPropItemIconList, var_5_1)
-	var_0_0(arg_5_0._commonPropItemIconList, var_5_2)
+	ti(self._commonPropItemIconList, commonPropItemIcon1)
+	ti(self._commonPropItemIconList, commonPropItemIcon2)
 
-	arg_5_0._txtList = arg_5_0:getUserDataTb_()
+	self._txtList = self:getUserDataTb_()
 
-	var_0_0(arg_5_0._txtList, arg_5_0._txtnum1)
-	var_0_0(arg_5_0._txtList, arg_5_0._txtnum2)
+	ti(self._txtList, self._txtnum1)
+	ti(self._txtList, self._txtnum2)
 
-	arg_5_0._txtBgList = arg_5_0:getUserDataTb_()
+	self._txtBgList = self:getUserDataTb_()
 
-	var_0_0(arg_5_0._txtBgList, arg_5_0._txtnumbg1)
-	var_0_0(arg_5_0._txtBgList, arg_5_0._txtnumbg2)
+	ti(self._txtBgList, self._txtnumbg1)
+	ti(self._txtBgList, self._txtnumbg2)
 
-	arg_5_0._goisgetList = arg_5_0:getUserDataTb_()
+	self._goisgetList = self:getUserDataTb_()
 
-	var_0_0(arg_5_0._goisgetList, arg_5_0._goisget1)
-	var_0_0(arg_5_0._goisgetList, arg_5_0._goisget2)
+	ti(self._goisgetList, self._goisget1)
+	ti(self._goisgetList, self._goisget2)
 
-	arg_5_0._gocangetList = arg_5_0:getUserDataTb_()
+	self._gocangetList = self:getUserDataTb_()
 
-	var_0_0(arg_5_0._gocangetList, arg_5_0._gocanget1)
-	var_0_0(arg_5_0._gocangetList, arg_5_0._gocanget2)
+	ti(self._gocangetList, self._gocanget1)
+	ti(self._gocangetList, self._gocanget2)
 
-	arg_5_0._gotimebgList = arg_5_0:getUserDataTb_()
+	self._gotimebgList = self:getUserDataTb_()
 
-	var_0_0(arg_5_0._gotimebgList, arg_5_0._gotimebg1)
-	var_0_0(arg_5_0._gotimebgList, arg_5_0._gotimebg2)
+	ti(self._gotimebgList, self._gotimebg1)
+	ti(self._gotimebgList, self._gotimebg2)
 
-	arg_5_0._gotimebgImgList = arg_5_0:getUserDataTb_()
+	self._gotimebgImgList = self:getUserDataTb_()
 
-	var_0_0(arg_5_0._gotimebgImgList, arg_5_0._gotimebgImg1)
-	var_0_0(arg_5_0._gotimebgImgList, arg_5_0._gotimebgImg2)
+	ti(self._gotimebgImgList, self._gotimebgImg1)
+	ti(self._gotimebgImgList, self._gotimebgImg2)
 end
 
-local var_0_2 = "#A5A5A5A0"
+local kClaimedHexColor = "#A5A5A5A0"
 
-function var_0_1.setData(arg_6_0, arg_6_1)
-	var_0_1.super.setData(arg_6_0, arg_6_1)
+function ShortenActStyleItem_impl:setData(mo)
+	ShortenActStyleItem_impl.super.setData(self, mo)
 
-	local var_6_0 = arg_6_0:_getBonusList()
-	local var_6_1 = arg_6_0:_isClaimable()
-	local var_6_2 = not var_6_1
-	local var_6_3 = var_6_2 and var_0_2 or "#FFFFFF"
+	local bonusList = self:_getBonusList()
+	local isClaimable = self:_isClaimable()
+	local isClaimed = not isClaimable
+	local hexColor = isClaimed and kClaimedHexColor or "#FFFFFF"
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_4 = arg_6_0._commonPropItemIconList[iter_6_0]
-		local var_6_5 = arg_6_0._txtList[iter_6_0]
-		local var_6_6 = arg_6_0._txtBgList[iter_6_0]
-		local var_6_7 = arg_6_0._goisgetList[iter_6_0]
-		local var_6_8 = arg_6_0._gocangetList[iter_6_0]
-		local var_6_9 = arg_6_0._gotimebgList[iter_6_0]
-		local var_6_10 = arg_6_0._gotimebgImgList[iter_6_0]
-		local var_6_11 = iter_6_1[1]
-		local var_6_12 = iter_6_1[2]
-		local var_6_13 = iter_6_1[3]
+	for i, list in ipairs(bonusList) do
+		local itemIcon = self._commonPropItemIconList[i]
+		local itemCountTxt = self._txtList[i]
+		local itemCountTxtBg = self._txtBgList[i]
+		local goisget = self._goisgetList[i]
+		local gocanget = self._gocangetList[i]
+		local gotimebg = self._gotimebgList[i]
+		local gotimebgImg = self._gotimebgImgList[i]
+		local itemType = list[1]
+		local itemId = list[2]
+		local itemCount = list[3]
 
-		var_6_4:setMOValue(var_6_11, var_6_12, var_6_13)
-		var_6_4:isShowQuality(false)
-		var_6_4:isShowEquipAndItemCount(false)
-		var_6_4:setItemColor(var_6_2 and var_0_2 or nil)
-		var_6_4:customOnClickCallback(arg_6_0["_onClickItem" .. iter_6_0], arg_6_0)
-		var_6_4:setCanShowDeadLine(false)
+		itemIcon:setMOValue(itemType, itemId, itemCount)
+		itemIcon:isShowQuality(false)
+		itemIcon:isShowEquipAndItemCount(false)
+		itemIcon:setItemColor(isClaimed and kClaimedHexColor or nil)
+		itemIcon:customOnClickCallback(self["_onClickItem" .. i], self)
+		itemIcon:setCanShowDeadLine(false)
 
-		var_6_5.text = var_6_13 and luaLang("multiple") .. var_6_13 or ""
+		itemCountTxt.text = itemCount and luaLang("multiple") .. itemCount or ""
 
-		gohelper.setActive(var_6_7, var_6_2)
-		gohelper.setActive(var_6_8, var_6_1)
-		gohelper.setActive(var_6_9, var_6_4:isExpiredItem())
-		SLFramework.UGUI.GuiHelper.SetColor(var_6_5, var_6_3)
-		SLFramework.UGUI.GuiHelper.SetColor(var_6_6, var_6_3)
-		SLFramework.UGUI.GuiHelper.SetColor(var_6_10, var_6_3)
+		gohelper.setActive(goisget, isClaimed)
+		gohelper.setActive(gocanget, isClaimable)
+		gohelper.setActive(gotimebg, itemIcon:isExpiredItem())
+		SLFramework.UGUI.GuiHelper.SetColor(itemCountTxt, hexColor)
+		SLFramework.UGUI.GuiHelper.SetColor(itemCountTxtBg, hexColor)
+		SLFramework.UGUI.GuiHelper.SetColor(gotimebgImg, hexColor)
 	end
 end
 
-function var_0_1._onClickItem(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0:parent():onItemClick() then
+function ShortenActStyleItem_impl:_onClickItem(itemType, itemId)
+	local p = self:parent()
+
+	if not p:onItemClick() then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(arg_7_1, arg_7_2)
+	MaterialTipController.instance:showMaterialInfo(itemType, itemId)
 end
 
-function var_0_1._onClickItem2(arg_8_0)
-	local var_8_0 = arg_8_0:_getBonusList()[2]
-	local var_8_1 = var_8_0[1]
-	local var_8_2 = var_8_0[2]
+function ShortenActStyleItem_impl:_onClickItem2()
+	local paramList = self:_getBonusList()[2]
+	local itemType = paramList[1]
+	local itemId = paramList[2]
 
-	arg_8_0:_onClickItem(var_8_1, var_8_2)
+	self:_onClickItem(itemType, itemId)
 end
 
-function var_0_1._onClickItem1(arg_9_0)
-	local var_9_0 = arg_9_0:_getBonusList()[1]
-	local var_9_1 = var_9_0[1]
-	local var_9_2 = var_9_0[2]
+function ShortenActStyleItem_impl:_onClickItem1()
+	local paramList = self:_getBonusList()[1]
+	local itemType = paramList[1]
+	local itemId = paramList[2]
 
-	arg_9_0:_onClickItem(var_9_1, var_9_2)
+	self:_onClickItem(itemType, itemId)
 end
 
-function var_0_1.onDestroyView(arg_10_0)
-	GameUtil.onDestroyViewMemberList(arg_10_0, "_commonPropItemIconList")
-	var_0_1.super.onDestroyView(arg_10_0)
-	arg_10_0:__onDispose()
+function ShortenActStyleItem_impl:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_commonPropItemIconList")
+	ShortenActStyleItem_impl.super.onDestroyView(self)
+	self:__onDispose()
 end
 
-return var_0_1
+return ShortenActStyleItem_impl

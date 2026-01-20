@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.model.data.FightDataMgrBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightDataMgrBase.lua
 
-local var_0_0 = FightDataClass("FightDataMgrBase")
+module("modules.logic.fight.model.data.FightDataMgrBase", package.seeall)
 
-function var_0_0.updateData(arg_1_0, arg_1_1)
+local FightDataMgrBase = FightDataClass("FightDataMgrBase")
+
+function FightDataMgrBase:updateData(fightData)
 	return
 end
 
-function var_0_0.onCancelOperation(arg_2_0)
+function FightDataMgrBase:onCancelOperation()
 	return
 end
 
-function var_0_0.onStageChanged(arg_3_0, arg_3_1, arg_3_2)
+function FightDataMgrBase:onStageChanged(curStage, preStage)
 	return
 end
 
-function var_0_0.com_sendFightEvent(arg_4_0, arg_4_1, ...)
-	if arg_4_0.dataMgr.isLocalDataMgr then
+function FightDataMgrBase:com_sendFightEvent(eventId, ...)
+	if self.dataMgr.isLocalDataMgr then
 		return
 	end
 
-	FightController.instance:dispatchEvent(arg_4_1, ...)
+	FightController.instance:dispatchEvent(eventId, ...)
 end
 
-function var_0_0.com_sendMsg(arg_5_0, arg_5_1, ...)
-	if arg_5_0.dataMgr.isLocalDataMgr then
+function FightDataMgrBase:com_sendMsg(msgId, ...)
+	if self.dataMgr.isLocalDataMgr then
 		return
 	end
 
-	FightMsgMgr.sendMsg(arg_5_1, ...)
+	FightMsgMgr.sendMsg(msgId, ...)
 end
 
-return var_0_0
+return FightDataMgrBase

@@ -1,103 +1,105 @@
-﻿module("modules.logic.character.model.extra.CharacterExtraSkillTalentMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/extra/CharacterExtraSkillTalentMO.lua
 
-local var_0_0 = class("CharacterExtraSkillTalentMO")
+module("modules.logic.character.model.extra.CharacterExtraSkillTalentMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:_initRankTalentSkillPoint()
+local CharacterExtraSkillTalentMO = class("CharacterExtraSkillTalentMO")
+
+function CharacterExtraSkillTalentMO:ctor()
+	self:_initRankTalentSkillPoint()
 end
 
-function var_0_0.isUnlockSystem(arg_2_0)
-	if arg_2_0._unlockSystemRank then
-		return arg_2_0.heroMo.rank >= arg_2_0._unlockSystemRank
+function CharacterExtraSkillTalentMO:isUnlockSystem()
+	if self._unlockSystemRank then
+		return self.heroMo.rank >= self._unlockSystemRank
 	end
 end
 
-function var_0_0.refreshMo(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.heroMo = arg_3_2
+function CharacterExtraSkillTalentMO:refreshMo(extraStr, heroMo)
+	self.heroMo = heroMo
 
-	arg_3_0:initConfig()
+	self:initConfig()
 
-	arg_3_0._extra = {}
+	self._extra = {}
 
-	if not string.nilorempty(arg_3_1) then
-		local var_3_0 = GameUtil.splitString2(arg_3_1, false, "|", "#")
+	if not string.nilorempty(extraStr) then
+		local split = GameUtil.splitString2(extraStr, false, "|", "#")
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-			if not string.nilorempty(iter_3_1[1]) then
-				local var_3_1 = tonumber(iter_3_1[1])
+		for _, v in ipairs(split) do
+			if not string.nilorempty(v[1]) then
+				local sub = tonumber(v[1])
 
-				if not string.nilorempty(iter_3_1[2]) then
-					local var_3_2 = string.splitToNumber(iter_3_1[2], ",")
+				if not string.nilorempty(v[2]) then
+					local list = string.splitToNumber(v[2], ",")
 
-					arg_3_0._extra[var_3_1] = var_3_2
+					self._extra[sub] = list
 				end
 			end
 		end
 	end
 
-	arg_3_0:refreshStatus()
+	self:refreshStatus()
 end
 
-function var_0_0._initRankTalentSkillPoint(arg_4_0)
-	arg_4_0._rankTalentSkillPoint = {}
+function CharacterExtraSkillTalentMO:_initRankTalentSkillPoint()
+	self._rankTalentSkillPoint = {}
 
-	local var_4_0 = lua_fight_const.configDict[CharacterExtraEnum.UnlockTalentPointCountConst]
-	local var_4_1 = GameUtil.splitString2(var_4_0.value, true)
+	local constCo = lua_fight_const.configDict[CharacterExtraEnum.UnlockTalentPointCountConst]
+	local rankPoint = GameUtil.splitString2(constCo.value, true)
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
-		arg_4_0._rankTalentSkillPoint[iter_4_1[1]] = iter_4_1[2]
+	for _, v in ipairs(rankPoint) do
+		self._rankTalentSkillPoint[v[1]] = v[2]
 
-		if arg_4_0._unlockSystemRank then
-			arg_4_0._unlockSystemRank = math.min(arg_4_0._unlockSystemRank, iter_4_1[1])
+		if self._unlockSystemRank then
+			self._unlockSystemRank = math.min(self._unlockSystemRank, v[1])
 		else
-			arg_4_0._unlockSystemRank = iter_4_1[1]
+			self._unlockSystemRank = v[1]
 		end
 	end
 end
 
-function var_0_0.isNotLight(arg_5_0)
-	return not LuaUtil.tableNotEmpty(arg_5_0._extra)
+function CharacterExtraSkillTalentMO:isNotLight()
+	return not LuaUtil.tableNotEmpty(self._extra)
 end
 
-function var_0_0.getExtraCount(arg_6_0)
-	return arg_6_0._extra and tabletool.len(arg_6_0._extra) or 0
+function CharacterExtraSkillTalentMO:getExtraCount()
+	return self._extra and tabletool.len(self._extra) or 0
 end
 
-function var_0_0.getSubExtra(arg_7_0)
-	return arg_7_0._extra
+function CharacterExtraSkillTalentMO:getSubExtra()
+	return self._extra
 end
 
-function var_0_0.getMainFieldMo(arg_8_0)
-	if arg_8_0:isNotLight() then
+function CharacterExtraSkillTalentMO:getMainFieldMo()
+	if self:isNotLight() then
 		return
 	end
 
-	local var_8_0 = arg_8_0.heroMo.exSkillLevel
-	local var_8_1 = tabletool.len(arg_8_0._extra)
+	local exSkillLevel = self.heroMo.exSkillLevel
+	local count = tabletool.len(self._extra)
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._extra) do
-		if iter_8_1 and #iter_8_1 > 0 and (var_8_1 == 1 or #iter_8_1 == 3) then
-			table.sort(iter_8_1, function(arg_9_0, arg_9_1)
-				return arg_9_1 < arg_9_0
+	for sub, list in pairs(self._extra) do
+		if list and #list > 0 and (count == 1 or #list == 3) then
+			table.sort(list, function(a, b)
+				return b < a
 			end)
 
-			for iter_8_2, iter_8_3 in ipairs(iter_8_1) do
-				local var_8_2 = arg_8_0:getMoById(iter_8_0, iter_8_3)
-				local var_8_3 = var_8_2:getFieldDesc(var_8_0)
+			for _, id in ipairs(list) do
+				local mo = self:getMoById(sub, id)
+				local fieldDesc = mo:getFieldDesc(exSkillLevel)
 
-				if not string.nilorempty(var_8_3) then
-					return var_8_2
+				if not string.nilorempty(fieldDesc) then
+					return mo
 				end
 			end
 		end
 	end
 end
 
-function var_0_0._checkIsAllLight(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:getTreeMosBySub(arg_10_1)
+function CharacterExtraSkillTalentMO:_checkIsAllLight(sub, idList)
+	local treeMo = self:getTreeMosBySub(sub)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0:getTreeMoList()) do
-		if not LuaUtil.tableContains(arg_10_2, iter_10_1.id) then
+	for _, mo in ipairs(treeMo:getTreeMoList()) do
+		if not LuaUtil.tableContains(idList, mo.id) then
 			return false
 		end
 	end
@@ -105,279 +107,287 @@ function var_0_0._checkIsAllLight(arg_10_0, arg_10_1, arg_10_2)
 	return true
 end
 
-function var_0_0.showReddot(arg_11_0)
-	if not arg_11_0.heroMo or not arg_11_0.heroMo:isOwnHero() then
+function CharacterExtraSkillTalentMO:showReddot()
+	if not self.heroMo or not self.heroMo:isOwnHero() then
 		return
 	end
 
-	return arg_11_0:getTalentpoint() > 0
+	return self:getTalentpoint() > 0
 end
 
-function var_0_0.refreshStatus(arg_12_0)
-	local var_12_0 = arg_12_0:getTalentpoint()
-	local var_12_1 = {}
-	local var_12_2 = 0
+function CharacterExtraSkillTalentMO:refreshStatus()
+	local remainPoint = self:getTalentpoint()
+	local lightTreeNodeCount = {}
+	local totalCount = 0
 
-	if arg_12_0._extra then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0._extra) do
-			local var_12_3 = iter_12_1 and tabletool.len(iter_12_1) or 0
+	if self._extra then
+		for i, v in pairs(self._extra) do
+			local count = v and tabletool.len(v) or 0
 
-			var_12_1[iter_12_0] = var_12_3
-			var_12_2 = var_12_2 + var_12_3
+			lightTreeNodeCount[i] = count
+			totalCount = totalCount + count
 		end
 	end
 
-	for iter_12_2 = 1, CharacterExtraEnum.TalentSkillSubCount do
-		local var_12_4 = arg_12_0:getTreeMosBySub(iter_12_2):getTreeMoList()
-		local var_12_5 = var_12_1[iter_12_2] or 0
+	for i = 1, CharacterExtraEnum.TalentSkillSubCount do
+		local treeMo = self:getTreeMosBySub(i)
+		local moList = treeMo:getTreeMoList()
+		local lightCount = lightTreeNodeCount[i] or 0
 
-		for iter_12_3, iter_12_4 in ipairs(var_12_4) do
-			local var_12_6 = iter_12_3 - var_12_5
-			local var_12_7 = CharacterExtraEnum.SkillTreeNodeStatus.Lock
+		for j, mo in ipairs(moList) do
+			local needPoint = j - lightCount
+			local status = CharacterExtraEnum.SkillTreeNodeStatus.Lock
 
-			if var_12_2 == 0 then
-				var_12_7 = CharacterExtraEnum.SkillTreeNodeStatus.Normal
-			elseif var_12_5 > 0 then
-				if iter_12_3 <= var_12_5 then
-					var_12_7 = CharacterExtraEnum.SkillTreeNodeStatus.Light
-				elseif var_12_6 <= var_12_0 then
-					var_12_7 = CharacterExtraEnum.SkillTreeNodeStatus.Normal
+			if totalCount == 0 then
+				status = CharacterExtraEnum.SkillTreeNodeStatus.Normal
+			elseif lightCount > 0 then
+				if j <= lightCount then
+					status = CharacterExtraEnum.SkillTreeNodeStatus.Light
+				elseif needPoint <= remainPoint then
+					status = CharacterExtraEnum.SkillTreeNodeStatus.Normal
 				end
-			elseif var_12_2 >= CharacterExtraEnum.TalentSkillTreeNodeCount and var_12_6 <= var_12_0 then
-				var_12_7 = CharacterExtraEnum.SkillTreeNodeStatus.Normal
+			elseif totalCount >= CharacterExtraEnum.TalentSkillTreeNodeCount and needPoint <= remainPoint then
+				status = CharacterExtraEnum.SkillTreeNodeStatus.Normal
 			end
 
-			iter_12_4:setStatus(var_12_7)
+			mo:setStatus(status)
 		end
 	end
 end
 
-function var_0_0.initConfig(arg_13_0)
-	if arg_13_0._treeMoList then
+function CharacterExtraSkillTalentMO:initConfig()
+	if self._treeMoList then
 		return
 	end
 
-	local var_13_0 = CharacterExtraConfig.instance:getSkillTalentCos()
+	local list = CharacterExtraConfig.instance:getSkillTalentCos()
 
-	if not var_13_0 then
+	if not list then
 		return
 	end
 
-	arg_13_0._treeMoList = {}
+	self._treeMoList = {}
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		local var_13_1 = CharacterSkillTalentTreeMO.New()
+	for sub, coList in pairs(list) do
+		local mo = CharacterSkillTalentTreeMO.New()
 
-		var_13_1:initMo(iter_13_0, iter_13_1)
+		mo:initMo(sub, coList)
 
-		arg_13_0._treeMoList[iter_13_0] = var_13_1
+		self._treeMoList[sub] = mo
 	end
 end
 
-function var_0_0.getTreeMosBySub(arg_14_0, arg_14_1)
-	return arg_14_0._treeMoList and arg_14_0._treeMoList[arg_14_1]
+function CharacterExtraSkillTalentMO:getTreeMosBySub(sub)
+	return self._treeMoList and self._treeMoList[sub]
 end
 
-function var_0_0.getTreeNodeMoBySubLevel(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0._treeMoList[arg_15_1]
+function CharacterExtraSkillTalentMO:getTreeNodeMoBySubLevel(sub, level)
+	local mo = self._treeMoList[sub]
 
-	if var_15_0 then
-		return var_15_0:getNodeMoByLevel(arg_15_2)
+	if mo then
+		return mo:getNodeMoByLevel(level)
 	end
 end
 
-function var_0_0.getMoById(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0._treeMoList[arg_16_1]
+function CharacterExtraSkillTalentMO:getMoById(sub, id)
+	local mo = self._treeMoList[sub]
 
-	if var_16_0 then
-		return var_16_0:getMoById(arg_16_2)
+	if mo then
+		return mo:getMoById(id)
 	end
 end
 
-function var_0_0.getLightOrCancelNodes(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getTreeNodeMoBySubLevel(arg_17_1, arg_17_2)
-	local var_17_1 = arg_17_0._treeMoList[arg_17_1]:getTreeMoList()
-	local var_17_2 = {}
+function CharacterExtraSkillTalentMO:getLightOrCancelNodes(sub, level)
+	local mo = self:getTreeNodeMoBySubLevel(sub, level)
+	local mos = self._treeMoList[sub]:getTreeMoList()
+	local list = {}
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
-		if var_17_0:isLight() then
-			if var_17_0.level <= iter_17_1.level and iter_17_1:isLight() then
-				table.insert(var_17_2, iter_17_1)
+	for _, _mo in ipairs(mos) do
+		if mo:isLight() then
+			if mo.level <= _mo.level and _mo:isLight() then
+				table.insert(list, _mo)
 			end
-		elseif var_17_0.level >= iter_17_1.level and not iter_17_1:isLight() then
-			table.insert(var_17_2, iter_17_1)
+		elseif mo.level >= _mo.level and not _mo:isLight() then
+			table.insert(list, _mo)
 		end
 	end
 
-	return var_17_2
+	return list
 end
 
-function var_0_0.getRankTalentSkillPoint(arg_18_0, arg_18_1)
-	local var_18_0 = 0
+function CharacterExtraSkillTalentMO:getRankTalentSkillPoint(rank)
+	local point = 0
 
-	for iter_18_0 = arg_18_1, 1, -1 do
-		if arg_18_0._rankTalentSkillPoint[iter_18_0] then
-			var_18_0 = var_18_0 + arg_18_0._rankTalentSkillPoint[iter_18_0]
+	for i = rank, 1, -1 do
+		if self._rankTalentSkillPoint[i] then
+			point = point + self._rankTalentSkillPoint[i]
 		end
 	end
 
-	return var_18_0
+	return point
 end
 
-function var_0_0.getTalentSkillPointByRank(arg_19_0, arg_19_1)
-	return arg_19_0._rankTalentSkillPoint[arg_19_1] or 0
+function CharacterExtraSkillTalentMO:getTalentSkillPointByRank(rank)
+	return self._rankTalentSkillPoint[rank] or 0
 end
 
-function var_0_0.getTalentpoint(arg_20_0)
-	local var_20_0 = arg_20_0:getRankTalentSkillPoint(arg_20_0.heroMo.rank) or 0
-	local var_20_1 = 0
+function CharacterExtraSkillTalentMO:getTalentpoint()
+	local total = self:getRankTalentSkillPoint(self.heroMo.rank) or 0
+	local lightCount = 0
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._extra) do
-		for iter_20_2, iter_20_3 in pairs(iter_20_1) do
-			var_20_1 = var_20_1 + 1
+	for _, list in pairs(self._extra) do
+		for _, level in pairs(list) do
+			lightCount = lightCount + 1
 		end
 	end
 
-	return var_20_0 - var_20_1
+	local lightCount = lightCount
+
+	return total - lightCount
 end
 
-function var_0_0.isNullTalentPonit(arg_21_0)
-	return arg_21_0:getTalentpoint() == 0
+function CharacterExtraSkillTalentMO:isNullTalentPonit()
+	return self:getTalentpoint() == 0
 end
 
-function var_0_0.getUnlockSystemRank(arg_22_0)
-	return arg_22_0._unlockSystemRank
+function CharacterExtraSkillTalentMO:getUnlockSystemRank()
+	return self._unlockSystemRank
 end
 
-function var_0_0.getUnlockRankStr(arg_23_0, arg_23_1)
-	local var_23_0 = {}
+function CharacterExtraSkillTalentMO:getUnlockRankStr(rank)
+	local unlocktxt = {}
 
-	if not arg_23_0._unlockSystemRank then
+	if not self._unlockSystemRank then
 		return
 	end
 
-	if arg_23_0._unlockSystemRank == arg_23_1 then
-		local var_23_1 = luaLang("character_rankup_unlock_system")
-		local var_23_2 = GameUtil.getSubPlaceholderLuaLangOneParam(var_23_1, luaLang("character_rankup_system_1"))
+	if self._unlockSystemRank == rank then
+		local unlockFormat = luaLang("character_rankup_unlock_system")
+		local txt = GameUtil.getSubPlaceholderLuaLangOneParam(unlockFormat, luaLang("character_rankup_system_1"))
 
-		table.insert(var_23_0, var_23_2)
+		table.insert(unlocktxt, txt)
 	end
 
-	local var_23_3 = arg_23_0:getTalentSkillPointByRank(arg_23_1)
+	local point = self:getTalentSkillPointByRank(rank)
 
-	if var_23_3 and var_23_3 > 0 then
-		local var_23_4 = luaLang("character_rankup_talentskilltree_add_point")
-		local var_23_5 = GameUtil.getSubPlaceholderLuaLangOneParam(var_23_4, var_23_3)
+	if point and point > 0 then
+		local format = luaLang("character_rankup_talentskilltree_add_point")
+		local txt = GameUtil.getSubPlaceholderLuaLangOneParam(format, point)
 
-		table.insert(var_23_0, var_23_5)
+		table.insert(unlocktxt, txt)
 	end
 
-	return var_23_0
+	return unlocktxt
 end
 
-function var_0_0.getSmallSubIconPath(arg_24_0, arg_24_1)
-	return (string.format("characterskilltalent_job_0%s_small", arg_24_1))
+function CharacterExtraSkillTalentMO:getSmallSubIconPath(sub)
+	local iconPath = string.format("characterskilltalent_job_0%s_small", sub)
+
+	return iconPath
 end
 
-function var_0_0.getWhiteSubIconPath(arg_25_0, arg_25_1)
-	return (string.format("charactertalent_job_0%s", arg_25_1))
+function CharacterExtraSkillTalentMO:getWhiteSubIconPath(sub)
+	local iconPath = string.format("charactertalent_job_0%s", sub)
+
+	return iconPath
 end
 
-function var_0_0.getSubIconPath(arg_26_0, arg_26_1)
-	local var_26_0 = "characterskilltalent_job_0%s_%s"
-	local var_26_1 = arg_26_0:getTreeLightCount(arg_26_1)
-	local var_26_2 = 1
-	local var_26_3 = var_26_1 == 1 and 2 or var_26_1 == 0 and 1 or var_26_1
+function CharacterExtraSkillTalentMO:getSubIconPath(sub)
+	local format = "characterskilltalent_job_0%s_%s"
+	local count = self:getTreeLightCount(sub)
+	local num = 1
 
-	return string.format(var_26_0, arg_26_1, var_26_3)
+	num = count == 1 and 2 or count == 0 and 1 or count
+
+	return string.format(format, sub, num)
 end
 
-function var_0_0.getTreeLightCount(arg_27_0, arg_27_1)
-	if not arg_27_0._extra then
+function CharacterExtraSkillTalentMO:getTreeLightCount(sub)
+	if not self._extra then
 		return 0
 	end
 
-	local var_27_0 = tabletool.len(arg_27_0._extra)
-	local var_27_1 = arg_27_0._extra[arg_27_1]
+	local count = tabletool.len(self._extra)
+	local list = self._extra[sub]
 
-	if var_27_1 and #var_27_1 > 0 and (var_27_0 == 1 or #var_27_1 == 3) then
-		return #var_27_1
+	if list and #list > 0 and (count == 1 or #list == 3) then
+		return #list
 	end
 
 	return 0
 end
 
-function var_0_0.getLightNodeAdditionalDesc(arg_28_0, arg_28_1)
-	local var_28_0 = ""
+function CharacterExtraSkillTalentMO:getLightNodeAdditionalDesc(exSkillLevel)
+	local desc = ""
 
-	if not arg_28_0._extra then
-		return var_28_0
+	if not self._extra then
+		return desc
 	end
 
-	for iter_28_0, iter_28_1 in pairs(arg_28_0._extra) do
-		local var_28_1 = arg_28_0:getTreeMosBySub(iter_28_0)
+	for sub, _ in pairs(self._extra) do
+		local treeMo = self:getTreeMosBySub(sub)
 
-		var_28_0 = var_28_0 .. var_28_1:getLightNodeAdditionalDesc(arg_28_1)
+		desc = desc .. treeMo:getLightNodeAdditionalDesc(exSkillLevel)
 	end
 
-	return var_28_0
+	return desc
 end
 
-function var_0_0.getReplaceSkills(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:_getAllLightReplaceSkill()
+function CharacterExtraSkillTalentMO:getReplaceSkills(skillIds)
+	local replaceSkills = self:_getAllLightReplaceSkill()
 
-	if var_29_0 then
-		for iter_29_0, iter_29_1 in pairs(arg_29_1) do
-			for iter_29_2, iter_29_3 in ipairs(var_29_0) do
-				local var_29_1 = iter_29_3[1]
-				local var_29_2 = iter_29_3[2]
+	if replaceSkills then
+		for i, id in pairs(skillIds) do
+			for _, skillId in ipairs(replaceSkills) do
+				local orignSkillId = skillId[1]
+				local newSkillId = skillId[2]
 
-				if arg_29_1[iter_29_0] == var_29_1 then
-					arg_29_1[iter_29_0] = var_29_2
+				if skillIds[i] == orignSkillId then
+					skillIds[i] = newSkillId
 				end
 			end
 		end
 	end
 
-	return arg_29_1
+	return skillIds
 end
 
-function var_0_0._getAllLightReplaceSkill(arg_30_0)
-	local var_30_0 = {}
+function CharacterExtraSkillTalentMO:_getAllLightReplaceSkill()
+	local skillIds = {}
 
-	if not arg_30_0.heroMo then
-		return var_30_0
+	if not self.heroMo then
+		return skillIds
 	end
 
-	if not arg_30_0._extra then
-		return var_30_0
+	if not self._extra then
+		return skillIds
 	end
 
-	local var_30_1 = arg_30_0.heroMo.exSkillLevel
-	local var_30_2 = {}
+	local exSkillLevel = self.heroMo.exSkillLevel
+	local replaceSkill = {}
 
-	for iter_30_0, iter_30_1 in pairs(arg_30_0._extra) do
-		for iter_30_2, iter_30_3 in pairs(iter_30_1) do
-			local var_30_3 = arg_30_0:getMoById(iter_30_0, iter_30_3)
-			local var_30_4 = var_30_3 and var_30_3:getReplaceSkill(var_30_1)
-			local var_30_5 = {
-				id = iter_30_3,
-				skills = var_30_4
+	for sub, list in pairs(self._extra) do
+		for _, id in pairs(list) do
+			local mo = self:getMoById(sub, id)
+			local _replaceSkill = mo and mo:getReplaceSkill(exSkillLevel)
+			local _info = {
+				id = id,
+				skills = _replaceSkill
 			}
 
-			table.insert(var_30_2, var_30_5)
+			table.insert(replaceSkill, _info)
 		end
 	end
 
-	table.sort(var_30_2, function(arg_31_0, arg_31_1)
-		return arg_31_0.id < arg_31_1.id
+	table.sort(replaceSkill, function(a, b)
+		return a.id < b.id
 	end)
 
-	for iter_30_4, iter_30_5 in ipairs(var_30_2) do
-		tabletool.addValues(var_30_0, iter_30_5.skills)
+	for _, info in ipairs(replaceSkill) do
+		tabletool.addValues(skillIds, info.skills)
 	end
 
-	return var_30_0
+	return skillIds
 end
 
-return var_0_0
+return CharacterExtraSkillTalentMO

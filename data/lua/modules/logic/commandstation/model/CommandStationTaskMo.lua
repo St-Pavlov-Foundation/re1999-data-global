@@ -1,64 +1,66 @@
-﻿module("modules.logic.commandstation.model.CommandStationTaskMo", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/model/CommandStationTaskMo.lua
 
-local var_0_0 = pureTable("CommandStationTaskMo")
+module("modules.logic.commandstation.model.CommandStationTaskMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.config = arg_1_1
-	arg_1_0.taskMO = arg_1_2
-	arg_1_0.preFinish = false
+local CommandStationTaskMo = pureTable("CommandStationTaskMo")
+
+function CommandStationTaskMo:init(taskCfg, taskMO)
+	self.id = taskCfg.id
+	self.config = taskCfg
+	self.taskMO = taskMO
+	self.preFinish = false
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.taskMO = arg_2_1
+function CommandStationTaskMo:updateMO(taskMO)
+	self.taskMO = taskMO
 end
 
-function var_0_0.isLock(arg_3_0)
-	return arg_3_0.taskMO == nil
+function CommandStationTaskMo:isLock()
+	return self.taskMO == nil
 end
 
-function var_0_0.isFinished(arg_4_0)
-	if arg_4_0.preFinish then
+function CommandStationTaskMo:isFinished()
+	if self.preFinish then
 		return true
 	end
 
-	if arg_4_0.taskMO then
-		return arg_4_0.taskMO.finishCount > 0
+	if self.taskMO then
+		return self.taskMO.finishCount > 0
 	end
 
 	return false
 end
 
-function var_0_0.getMaxProgress(arg_5_0)
-	return arg_5_0.config and arg_5_0.config.maxProgress or 0
+function CommandStationTaskMo:getMaxProgress()
+	return self.config and self.config.maxProgress or 0
 end
 
-function var_0_0.getFinishProgress(arg_6_0)
-	return arg_6_0.taskMO and arg_6_0.taskMO.progress or 0
+function CommandStationTaskMo:getFinishProgress()
+	return self.taskMO and self.taskMO.progress or 0
 end
 
-function var_0_0.alreadyGotReward(arg_7_0)
-	if arg_7_0.id == -99999 then
+function CommandStationTaskMo:alreadyGotReward()
+	if self.id == -99999 then
 		return true
 	end
 
-	local var_7_0 = arg_7_0:getMaxProgress()
+	local maxProgress = self:getMaxProgress()
 
-	if var_7_0 > 0 and arg_7_0.taskMO then
-		return var_7_0 <= arg_7_0.taskMO.progress and arg_7_0.taskMO.finishCount == 0
+	if maxProgress > 0 and self.taskMO then
+		return maxProgress <= self.taskMO.progress and self.taskMO.finishCount == 0
 	end
 
 	return false
 end
 
-function var_0_0.getActivityStatus(arg_8_0)
-	local var_8_0 = arg_8_0.config and arg_8_0.config.activityid
+function CommandStationTaskMo:getActivityStatus()
+	local activityId = self.config and self.config.activityid
 
-	if not var_8_0 or var_8_0 <= 0 then
+	if not activityId or activityId <= 0 then
 		return nil
 	end
 
-	return ActivityHelper.getActivityStatus(var_8_0)
+	return ActivityHelper.getActivityStatus(activityId)
 end
 
-return var_0_0
+return CommandStationTaskMo

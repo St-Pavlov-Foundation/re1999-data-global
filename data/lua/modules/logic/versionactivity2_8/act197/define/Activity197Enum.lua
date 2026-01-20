@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.act197.define.Activity197Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act197/define/Activity197Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_8.act197.define.Activity197Enum", package.seeall)
 
-var_0_0.BigGainId = 1
-var_0_0.FindType = {
+local Activity197Enum = _M
+
+Activity197Enum.BigGainId = 1
+Activity197Enum.FindType = {
 	All = 2,
 	Single = 1
 }
-var_0_0.BulbCurrency = 2881
-var_0_0.KeyCurrency = 2882
+Activity197Enum.BulbCurrency = 2881
+Activity197Enum.KeyCurrency = 2882
 
-return var_0_0
+return Activity197Enum

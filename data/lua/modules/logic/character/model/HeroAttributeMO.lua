@@ -1,20 +1,22 @@
-﻿module("modules.logic.character.model.HeroAttributeMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/HeroAttributeMO.lua
 
-local var_0_0 = pureTable("HeroAttributeMO")
+module("modules.logic.character.model.HeroAttributeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.original_max_hp = arg_1_1.hp
-	arg_1_0.hp = arg_1_1.hp
-	arg_1_0.attack = arg_1_1.attack
-	arg_1_0.defense = arg_1_1.defense
-	arg_1_0.mdefense = arg_1_1.mdefense
-	arg_1_0.technic = arg_1_1.technic
-	arg_1_0.multiHpIdx = arg_1_1.multiHpIdx
-	arg_1_0.multiHpNum = arg_1_1.multiHpNum
+local HeroAttributeMO = pureTable("HeroAttributeMO")
+
+function HeroAttributeMO:init(info)
+	self.original_max_hp = info.hp
+	self.hp = info.hp
+	self.attack = info.attack
+	self.defense = info.defense
+	self.mdefense = info.mdefense
+	self.technic = info.technic
+	self.multiHpIdx = info.multiHpIdx
+	self.multiHpNum = info.multiHpNum
 end
 
-function var_0_0.getCurMultiHpIndex(arg_2_0)
-	return arg_2_0.multiHpIdx
+function HeroAttributeMO:getCurMultiHpIndex()
+	return self.multiHpIdx
 end
 
-return var_0_0
+return HeroAttributeMO

@@ -1,0 +1,58 @@
+[
+  {
+    "activityId": 13217,
+    "rewardId": 1,
+    "coinNum": 50,
+    "bonus": "1#110504#1",
+    "isSpBonus": false,
+    "source": "1003"
+  },
+  {
+    "activityId": 13217,
+    "rewardId": 2,
+    "coinNum": 100,
+    "bonus": "1#110304#1",
+    "isSpBonus": false,
+    "source": "1003"
+  },
+  {
+    "activityId": 13217,
+    "rewardId": 3,
+    "coinNum": 150,
+    "bonus": "1#111013#1",
+    "isSpBonus": false,
+    "source": "1003"
+  },
+  {
+    "activityId": 13217,
+    "rewardId": 4,
+    "coinNum": 250,
+    "bonus": "1#110204#1",
+    "isSpBonus": false,
+    "source": "1003"
+  },
+  {
+    "activityId": 13217,
+    "rewardId": 5,
+    "coinNum": 300,
+    "bonus": "1#110704#1",
+    "isSpBonus": false,
+    "source": "1003"
+  },
+  {
+    "activityId": 13217,
+    "rewardId": 6,
+    "coinNum": 370,
+    "bonus": "1#110904#1",
+    "isSpBonus": false,
+    "source": "1003"
+  },
+  {
+    "activityId": 13217,
+    "rewardId": 7,
+    "coinNum": 450,
+    "bonus": "1#110804#1",
+    "isSpBonus": false,
+    "source": "1003"
+  }
+]

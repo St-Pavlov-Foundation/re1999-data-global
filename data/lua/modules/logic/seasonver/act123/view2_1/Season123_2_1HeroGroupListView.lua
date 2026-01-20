@@ -1,221 +1,222 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1HeroGroupListView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1HeroGroupListView.lua
 
-local var_0_0 = class("Season123_2_1HeroGroupListView", BaseView)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1HeroGroupListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goheroarea = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/area")
-	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/hero")
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/hero/heroitem")
+local Season123_2_1HeroGroupListView = class("Season123_2_1HeroGroupListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_1HeroGroupListView:onInitView()
+	self._goheroarea = gohelper.findChild(self.viewGO, "herogroupcontain/area")
+	self._gohero = gohelper.findChild(self.viewGO, "herogroupcontain/hero")
+	self._goheroitem = gohelper.findChild(self.viewGO, "herogroupcontain/hero/heroitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._heroItemList = {}
-	arg_2_0._heroItemDrag = arg_2_0:getUserDataTb_()
+function Season123_2_1HeroGroupListView:_editableInitView()
+	self._heroItemList = {}
+	self._heroItemDrag = self:getUserDataTb_()
 
-	gohelper.setActive(arg_2_0._goheroitem, false)
-	gohelper.setActive(arg_2_0._goaidheroitem, false)
+	gohelper.setActive(self._goheroitem, false)
+	gohelper.setActive(self._goaidheroitem, false)
 
-	arg_2_0.heroPosTrList = arg_2_0:getUserDataTb_()
-	arg_2_0._heroItemPosList = arg_2_0:getUserDataTb_()
+	self.heroPosTrList = self:getUserDataTb_()
+	self._heroItemPosList = self:getUserDataTb_()
 
-	for iter_2_0 = 1, 4 do
-		local var_2_0 = gohelper.findChild(arg_2_0._goheroarea, "pos" .. iter_2_0 .. "/container").transform
-		local var_2_1 = gohelper.cloneInPlace(arg_2_0._goheroitem, "item" .. iter_2_0)
-		local var_2_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_2_1, Season123_2_1HeroGroupHeroItem, arg_2_0)
+	for i = 1, 4 do
+		local go = gohelper.findChild(self._goheroarea, "pos" .. i .. "/container")
+		local tr = go.transform
+		local cloneGO = gohelper.cloneInPlace(self._goheroitem, "item" .. i)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGO, Season123_2_1HeroGroupHeroItem, self)
 
-		table.insert(arg_2_0.heroPosTrList, var_2_0)
-		table.insert(arg_2_0._heroItemList, var_2_2)
-		gohelper.setActive(var_2_1, true)
+		table.insert(self.heroPosTrList, tr)
+		table.insert(self._heroItemList, item)
+		gohelper.setActive(cloneGO, true)
 	end
 
-	for iter_2_1 = 1, ModuleEnum.MaxHeroCountInGroup do
-		local var_2_3 = arg_2_0._heroItemList[iter_2_1]
+	for i = 1, ModuleEnum.MaxHeroCountInGroup do
+		local heroItem = self._heroItemList[i]
 
-		arg_2_0:_setHeroItemPos(var_2_3, iter_2_1)
-		table.insert(arg_2_0._heroItemPosList, var_2_3.go.transform)
-		var_2_3:setParent(arg_2_0.heroPosTrList[iter_2_1])
+		self:_setHeroItemPos(heroItem, i)
+		table.insert(self._heroItemPosList, heroItem.go.transform)
+		heroItem:setParent(self.heroPosTrList[i])
 
-		local var_2_4 = SLFramework.UGUI.UIDragListener.Get(var_2_3.go)
+		local drag = SLFramework.UGUI.UIDragListener.Get(heroItem.go)
 
-		table.insert(arg_2_0._heroItemDrag, var_2_4)
+		table.insert(self._heroItemDrag, drag)
 	end
 
-	arg_2_0._bgList = arg_2_0:getUserDataTb_()
-	arg_2_0._orderList = arg_2_0:getUserDataTb_()
+	self._bgList = self:getUserDataTb_()
+	self._orderList = self:getUserDataTb_()
 
-	local var_2_5 = HeroGroupModel.instance:positionOpenCount()
-	local var_2_6 = HeroGroupModel.instance:getBattleRoleNum()
+	local openCount = HeroGroupModel.instance:positionOpenCount()
+	local roleNum = HeroGroupModel.instance:getBattleRoleNum()
 
-	if var_2_6 then
-		var_2_5 = math.min(var_2_6, var_2_5)
+	if roleNum then
+		openCount = math.min(roleNum, openCount)
 	end
 
-	local var_2_7 = HeroGroupModel.instance.battleId
-	local var_2_8 = var_2_7 and lua_battle.configDict[var_2_7]
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
 
-	if var_2_8 then
-		var_2_5 = math.min(var_2_8.playerMax, var_2_5)
+	if battleCO then
+		openCount = math.min(battleCO.playerMax, openCount)
 	end
 
-	arg_2_0._openCount = var_2_5
+	self._openCount = openCount
 
-	for iter_2_2 = 1, 4 do
-		local var_2_9 = gohelper.findChild(arg_2_0.viewGO, "herogroupcontain/hero/bg" .. iter_2_2 .. "/bg")
+	for i = 1, 4 do
+		local bg = gohelper.findChild(self.viewGO, "herogroupcontain/hero/bg" .. i .. "/bg")
 
-		table.insert(arg_2_0._bgList, var_2_9)
+		table.insert(self._bgList, bg)
 
-		local var_2_10 = gohelper.findChildTextMesh(arg_2_0.viewGO, "herogroupcontain/hero/bg" .. iter_2_2 .. "/bg/#txt_order")
+		local order = gohelper.findChildTextMesh(self.viewGO, "herogroupcontain/hero/bg" .. i .. "/bg/#txt_order")
 
-		var_2_10.text = iter_2_2 <= var_2_5 and tostring(iter_2_2) or ""
+		order.text = i <= openCount and tostring(i) or ""
 
-		table.insert(arg_2_0._orderList, var_2_10)
+		table.insert(self._orderList, order)
 	end
 
-	HeroGroupModel.instance:setHeroGroupItemPos(arg_2_0._heroItemPosList)
+	HeroGroupModel.instance:setHeroGroupItemPos(self._heroItemPosList)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._heroItemDrag) do
-		iter_3_1:AddDragBeginListener(arg_3_0._onBeginDrag, arg_3_0, iter_3_0)
-		iter_3_1:AddDragListener(arg_3_0._onDrag, arg_3_0, iter_3_0)
-		iter_3_1:AddDragEndListener(arg_3_0._onEndDrag, arg_3_0, iter_3_0)
+function Season123_2_1HeroGroupListView:addEvents()
+	for i, drag in ipairs(self._heroItemDrag) do
+		drag:AddDragBeginListener(self._onBeginDrag, self, i)
+		drag:AddDragListener(self._onDrag, self, i)
+		drag:AddDragEndListener(self._onEndDrag, self, i)
 	end
 
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, arg_3_0._onHeroGroupExit, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_3_0._updateHeroList, arg_3_0)
-	arg_3_0:addEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, arg_3_0._onSnapshotSaveSucc, arg_3_0)
-	arg_3_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_3_0._onScreenSizeChange, arg_3_0)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroGroupExit, self._onHeroGroupExit, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._updateHeroList, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._updateHeroList, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, self._onSnapshotSaveSucc, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._heroItemDrag) do
-		iter_4_1:RemoveDragBeginListener()
-		iter_4_1:RemoveDragListener()
-		iter_4_1:RemoveDragEndListener()
+function Season123_2_1HeroGroupListView:removeEvents()
+	for _, drag in ipairs(self._heroItemDrag) do
+		drag:RemoveDragBeginListener()
+		drag:RemoveDragListener()
+		drag:RemoveDragEndListener()
 	end
 
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_4_0._updateHeroList, arg_4_0)
-	arg_4_0:removeEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, arg_4_0._onSnapshotSaveSucc, arg_4_0)
-	arg_4_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_4_0._onScreenSizeChange, arg_4_0)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._updateHeroList, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._updateHeroList, self)
+	self:removeEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, self._onSnapshotSaveSucc, self)
+	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._isOpen = true
+function Season123_2_1HeroGroupListView:onOpen()
+	self._isOpen = true
 
-	arg_5_0:_updateHeroList()
-	arg_5_0:_playOpenAnimation()
+	self:_updateHeroList()
+	self:_playOpenAnimation()
 end
 
-function var_0_0._playOpenAnimation(arg_6_0)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.heroPosTrList) do
-		if iter_6_1 then
-			local var_6_0 = iter_6_1.gameObject:GetComponent(typeof(UnityEngine.Animator))
+function Season123_2_1HeroGroupListView:_playOpenAnimation()
+	for i, posTr in ipairs(self.heroPosTrList) do
+		if posTr then
+			local anim = posTr.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-			var_6_0:Play("open")
-			var_6_0:Update(0)
+			anim:Play("open")
+			anim:Update(0)
 
-			var_6_0.speed = 1
+			anim.speed = 1
 		end
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(arg_6_0._heroItemList) do
-		if iter_6_3 then
-			local var_6_1 = iter_6_3.anim
+	for i, heroItem in ipairs(self._heroItemList) do
+		if heroItem then
+			local anim = heroItem.anim
 
-			var_6_1:Play("open")
-			var_6_1:Update(0)
+			anim:Play("open")
+			anim:Update(0)
 
-			var_6_1.speed = 1
+			anim.speed = 1
 		end
 	end
 
-	for iter_6_4, iter_6_5 in ipairs(arg_6_0._bgList) do
-		if iter_6_5 then
-			local var_6_2 = iter_6_5:GetComponent(typeof(UnityEngine.Animator))
+	for i, bg in ipairs(self._bgList) do
+		if bg then
+			local anim = bg:GetComponent(typeof(UnityEngine.Animator))
 
-			var_6_2:Play("open")
-			var_6_2:Update(0)
+			anim:Play("open")
+			anim:Update(0)
 
-			var_6_2.speed = 1
+			anim.speed = 1
 		end
 	end
 
-	arg_6_0:_checkRestrictHero()
+	self:_checkRestrictHero()
 end
 
-function var_0_0._checkRestrictHero(arg_7_0)
-	local var_7_0 = {}
-	local var_7_1 = false
-	local var_7_2
+function Season123_2_1HeroGroupListView:_checkRestrictHero()
+	local needRemoveHeroUidDict = {}
+	local isRemoveDeath = false
+	local removeDeadUidDict
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		local var_7_3
-
-		var_7_3, var_7_2 = Season123HeroGroupController.checkUnloadHero(Season123HeroGroupModel.instance.activityId, Season123HeroGroupModel.instance.stage, Season123HeroGroupModel.instance.layer)
+		isRemoveDeath, removeDeadUidDict = Season123HeroGroupController.checkUnloadHero(Season123HeroGroupModel.instance.activityId, Season123HeroGroupModel.instance.stage, Season123HeroGroupModel.instance.layer)
 	end
 
-	for iter_7_0 = 1, 4 do
-		local var_7_4 = HeroSingleGroupModel.instance:getById(iter_7_0)
+	for i = 1, 4 do
+		local heroSingleGroupMO = HeroSingleGroupModel.instance:getById(i)
 
-		if var_7_4 and HeroGroupModel.instance:isRestrict(var_7_4.heroUid) then
-			var_7_0[var_7_4.heroUid] = true
+		if heroSingleGroupMO and HeroGroupModel.instance:isRestrict(heroSingleGroupMO.heroUid) then
+			needRemoveHeroUidDict[heroSingleGroupMO.heroUid] = true
 		end
 	end
 
-	local var_7_5 = tabletool.len(var_7_0)
+	local needRemoveHeroCount = tabletool.len(needRemoveHeroUidDict)
 
-	if var_7_5 <= 0 and var_7_2 and tabletool.len(var_7_2) <= 0 then
+	if needRemoveHeroCount <= 0 and removeDeadUidDict and tabletool.len(removeDeadUidDict) <= 0 then
 		Season123HeroGroupController.instance:checkSeason123HeroGroup()
 
 		return
 	end
 
-	local var_7_6 = HeroGroupModel.instance:getCurrentBattleConfig()
-	local var_7_7 = var_7_6 and var_7_6.restrictReason
+	local battleCo = HeroGroupModel.instance:getCurrentBattleConfig()
+	local restrictReason = battleCo and battleCo.restrictReason
 
-	if not string.nilorempty(var_7_7) and var_7_5 > 0 then
-		ToastController.instance:showToastWithString(var_7_7)
+	if not string.nilorempty(restrictReason) and needRemoveHeroCount > 0 then
+		ToastController.instance:showToastWithString(restrictReason)
 	end
 
-	for iter_7_1, iter_7_2 in ipairs(arg_7_0._heroItemList) do
-		iter_7_2:playRestrictAnimation(var_7_0, var_7_2)
+	for _, heroItem in ipairs(self._heroItemList) do
+		heroItem:playRestrictAnimation(needRemoveHeroUidDict, removeDeadUidDict)
 	end
 
-	arg_7_0.needRemoveHeroUidDict = var_7_0
+	self.needRemoveHeroUidDict = needRemoveHeroUidDict
 
 	UIBlockMgr.instance:startBlock("removeRestrictHero")
-	TaskDispatcher.runDelay(arg_7_0._removeRestrictHero, arg_7_0, 1.5)
+	TaskDispatcher.runDelay(self._removeRestrictHero, self, 1.5)
 end
 
-function var_0_0._removeRestrictHero(arg_8_0)
+function Season123_2_1HeroGroupListView:_removeRestrictHero()
 	UIBlockMgr.instance:endBlock("removeRestrictHero")
 
-	if not arg_8_0.needRemoveHeroUidDict then
+	if not self.needRemoveHeroUidDict then
 		Season123HeroGroupController.instance:checkSeason123HeroGroup()
 
 		return
 	end
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.needRemoveHeroUidDict) do
-		HeroSingleGroupModel.instance:remove(iter_8_0)
+	for heroUid, _ in pairs(self.needRemoveHeroUidDict) do
+		HeroSingleGroupModel.instance:remove(heroUid)
 	end
 
 	HeroGroupModel.instance:replaceSingleGroup()
@@ -223,291 +224,293 @@ function var_0_0._removeRestrictHero(arg_8_0)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 
-function var_0_0._onHeroGroupExit(arg_9_0)
+function Season123_2_1HeroGroupListView:_onHeroGroupExit()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Formation_Cardsdisappear)
 
-	if arg_9_0._openTweenIdList then
-		for iter_9_0, iter_9_1 in ipairs(arg_9_0._openTweenIdList) do
-			ZProj.TweenHelper.KillById(iter_9_1)
+	if self._openTweenIdList then
+		for i, openTweenId in ipairs(self._openTweenIdList) do
+			ZProj.TweenHelper.KillById(openTweenId)
 		end
 	end
 
-	arg_9_0._closeTweenIdList = {}
+	self._closeTweenIdList = {}
 
-	for iter_9_2 = 1, 4 do
-		local var_9_0 = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.03 * (4 - iter_9_2), nil, arg_9_0._closeTweenFinish, arg_9_0, iter_9_2, EaseType.Linear)
+	for i = 1, 4 do
+		local closeTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.03 * (4 - i), nil, self._closeTweenFinish, self, i, EaseType.Linear)
 
-		table.insert(arg_9_0._closeTweenIdList, var_9_0)
+		table.insert(self._closeTweenIdList, closeTweenId)
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupExitEffect)
 	ViewMgr.instance:closeView(Season123Controller.instance:getHeroGroupFightViewName(), false, false)
 end
 
-function var_0_0._closeTweenFinish(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.heroPosTrList[arg_10_1]
+function Season123_2_1HeroGroupListView:_closeTweenFinish(index)
+	local posTr = self.heroPosTrList[index]
 
-	if var_10_0 then
-		local var_10_1 = var_10_0.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	if posTr then
+		local anim = posTr.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-		var_10_1:Play("close")
+		anim:Play("close")
 
-		var_10_1.speed = 1
+		anim.speed = 1
 	end
 
-	local var_10_2 = arg_10_0._heroItemList[arg_10_1]
+	local heroItem = self._heroItemList[index]
 
-	if var_10_2 then
-		local var_10_3 = var_10_2.anim
+	if heroItem then
+		local anim = heroItem.anim
 
-		var_10_3:Play("close")
+		anim:Play("close")
 
-		var_10_3.speed = 1
+		anim.speed = 1
 	end
 
-	local var_10_4 = arg_10_0._bgList[arg_10_1]
+	local bg = self._bgList[index]
 
-	if var_10_4 then
-		local var_10_5 = var_10_4:GetComponent(typeof(UnityEngine.Animator))
+	if bg then
+		local anim = bg:GetComponent(typeof(UnityEngine.Animator))
 
-		var_10_5:Play("close")
+		anim:Play("close")
 
-		var_10_5.speed = 1
+		anim.speed = 1
 	end
 end
 
-function var_0_0.canDrag(arg_11_0, arg_11_1, arg_11_2)
+function Season123_2_1HeroGroupListView:canDrag(param, isWrap)
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return false
 	end
 
-	local var_11_0 = arg_11_1
-	local var_11_1 = arg_11_0._heroItemList[var_11_0]
+	local index = param
+	local heroItem = self._heroItemList[index]
 
-	if var_11_1.isTrialLock then
+	if heroItem.isTrialLock then
 		return false
 	end
 
-	if not arg_11_2 and (var_11_1.mo:isEmpty() or var_11_1.mo.aid == -1 or arg_11_1 > HeroGroupModel.instance:positionOpenCount()) then
+	if not isWrap and (heroItem.mo:isEmpty() or heroItem.mo.aid == -1 or param > HeroGroupModel.instance:positionOpenCount()) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._onBeginDrag(arg_12_0, arg_12_1, arg_12_2)
+function Season123_2_1HeroGroupListView:_onBeginDrag(param, pointerEventData)
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if not arg_12_0:canDrag(arg_12_1) then
+	if not self:canDrag(param) then
 		return
 	end
 
-	if arg_12_0._tweening then
+	if self._tweening then
 		return
 	end
 
-	local var_12_0 = arg_12_1
-	local var_12_1 = arg_12_0._heroItemList[var_12_0]
+	local index = param
+	local heroItem = self._heroItemList[index]
 
-	if arg_12_1 <= arg_12_0._openCount then
-		arg_12_0._orderList[arg_12_1].text = arg_12_1
+	if param <= self._openCount then
+		self._orderList[param].text = param
 	end
 
-	if var_12_1.mo:isEmpty() or var_12_1.mo.aid == -1 or arg_12_1 > HeroGroupModel.instance:positionOpenCount() then
+	if heroItem.mo:isEmpty() or heroItem.mo.aid == -1 or param > HeroGroupModel.instance:positionOpenCount() then
 		return
 	end
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._heroItemList) do
-		iter_12_1:onItemBeginDrag(var_12_0)
+	for _, one in ipairs(self._heroItemList) do
+		one:onItemBeginDrag(index)
 	end
 
-	for iter_12_2, iter_12_3 in ipairs(arg_12_0._heroItemList) do
-		iter_12_3:flowOriginParent()
+	for _, heroItem in ipairs(self._heroItemList) do
+		heroItem:flowOriginParent()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_raise)
-	gohelper.setAsLastSibling(var_12_1.go)
+	gohelper.setAsLastSibling(heroItem.go)
 
-	local var_12_2 = recthelper.screenPosToAnchorPos(arg_12_2.position, arg_12_0._goheroarea.transform)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._goheroarea.transform)
 
-	arg_12_0:_tweenToPos(var_12_1, var_12_2)
+	self:_tweenToPos(heroItem, anchorPos)
 end
 
-function var_0_0._onDrag(arg_13_0, arg_13_1, arg_13_2)
+function Season123_2_1HeroGroupListView:_onDrag(param, pointerEventData)
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if not arg_13_0:canDrag(arg_13_1) then
-		if arg_13_0._heroItemList[arg_13_1].isTrialLock then
+	if not self:canDrag(param) then
+		local heroItem = self._heroItemList[param]
+
+		if heroItem.isTrialLock then
 			GameFacade.showToast(ToastEnum.TrialCantChangePos)
 		end
 
 		return
 	end
 
-	local var_13_0 = arg_13_1
-	local var_13_1 = arg_13_0._heroItemList[var_13_0]
+	local index = param
+	local heroItem = self._heroItemList[index]
 
-	if var_13_1.mo:isEmpty() or var_13_1.mo.aid == -1 or arg_13_1 > HeroGroupModel.instance:positionOpenCount() then
+	if heroItem.mo:isEmpty() or heroItem.mo.aid == -1 or param > HeroGroupModel.instance:positionOpenCount() then
 		return
 	end
 
-	local var_13_2 = recthelper.screenPosToAnchorPos(arg_13_2.position, arg_13_0._goheroarea.transform)
+	local anchorPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._goheroarea.transform)
 
-	arg_13_0:_tweenToPos(var_13_1, var_13_2)
+	self:_tweenToPos(heroItem, anchorPos)
 end
 
-function var_0_0._onEndDrag(arg_14_0, arg_14_1, arg_14_2)
+function Season123_2_1HeroGroupListView:_onEndDrag(param, pointerEventData)
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
 
-	if not arg_14_0:canDrag(arg_14_1) then
+	if not self:canDrag(param) then
 		return
 	end
 
-	local var_14_0 = arg_14_1
-	local var_14_1 = arg_14_0._heroItemList[var_14_0]
+	local index = param
+	local heroItem = self._heroItemList[index]
 
-	if var_14_1.mo:isEmpty() or var_14_1.mo.aid == -1 or var_14_0 > HeroGroupModel.instance:positionOpenCount() then
+	if heroItem.mo:isEmpty() or heroItem.mo.aid == -1 or index > HeroGroupModel.instance:positionOpenCount() then
 		return
 	end
 
-	local var_14_2 = arg_14_0:_calcIndex(arg_14_2.position)
+	local dragToIndex = self:_calcIndex(pointerEventData.position)
 
-	if var_14_2 == arg_14_1 or var_14_2 <= 0 then
-		arg_14_0._orderList[arg_14_1].text = ""
+	if dragToIndex == param or dragToIndex <= 0 then
+		self._orderList[param].text = ""
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._heroItemList) do
-		iter_14_1:onItemEndDrag(var_14_0, var_14_2)
+	for _, one in ipairs(self._heroItemList) do
+		one:onItemEndDrag(index, dragToIndex)
 	end
 
-	arg_14_0:_setDragEnabled(false)
+	self:_setDragEnabled(false)
 
-	local function var_14_3(arg_15_0, arg_15_1)
-		for iter_15_0, iter_15_1 in ipairs(arg_15_0._heroItemList) do
-			iter_15_1:onItemCompleteDrag(var_14_0, var_14_2, arg_15_1)
+	local function completeDragFunc(self, complete)
+		for _, one in ipairs(self._heroItemList) do
+			one:onItemCompleteDrag(index, dragToIndex, complete)
 		end
 
-		arg_15_0:_setDragEnabled(true)
+		self:_setDragEnabled(true)
 
-		for iter_15_2, iter_15_3 in ipairs(arg_15_0._heroItemList) do
-			iter_15_3:flowCurrentParent()
+		for _, heroItem in ipairs(self._heroItemList) do
+			heroItem:flowCurrentParent()
 		end
 	end
 
-	if var_14_2 <= 0 then
-		arg_14_0:_setHeroItemPos(var_14_1, var_14_0, true, var_14_3, arg_14_0)
+	if dragToIndex <= 0 then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 
 		return
 	end
 
-	if not arg_14_0:canDrag(var_14_2, true) then
-		local var_14_4 = arg_14_0._heroItemList[var_14_2]
+	if not self:canDrag(dragToIndex, true) then
+		local dragHeroItem = self._heroItemList[dragToIndex]
 
-		if var_14_4 and var_14_4.isTrialLock then
+		if dragHeroItem and dragHeroItem.isTrialLock then
 			GameFacade.showToast(ToastEnum.TrialCantChangePos)
 		end
 
-		arg_14_0:_setHeroItemPos(var_14_1, var_14_0, true, var_14_3, arg_14_0)
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 
 		return
 	end
 
-	local var_14_5 = HeroGroupModel.instance.battleId
-	local var_14_6 = var_14_5 and lua_battle.configDict[var_14_5]
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
 
-	if var_14_2 > HeroGroupModel.instance:positionOpenCount() then
-		arg_14_0:_setHeroItemPos(var_14_1, var_14_0, true, var_14_3, arg_14_0)
+	if dragToIndex > HeroGroupModel.instance:positionOpenCount() then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 
-		local var_14_7, var_14_8 = HeroGroupModel.instance:getPositionLockDesc(var_14_2)
+		local lockDesc, param = HeroGroupModel.instance:getPositionLockDesc(dragToIndex)
 
-		GameFacade.showToast(var_14_7, var_14_8)
+		GameFacade.showToast(lockDesc, param)
 
 		return
 	end
 
-	local var_14_9 = HeroGroupModel.instance:getBattleRoleNum()
+	local roleNum = HeroGroupModel.instance:getBattleRoleNum()
 
-	if var_14_9 and var_14_9 < var_14_2 then
-		arg_14_0:_setHeroItemPos(var_14_1, var_14_0, true, var_14_3, arg_14_0)
+	if roleNum and roleNum < dragToIndex then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 		GameFacade.showToast(ToastEnum.HeroGroupRoleNum)
 
 		return
 	end
 
-	if var_14_6 and var_14_1.mo.aid and var_14_2 > var_14_6.playerMax then
-		arg_14_0:_setHeroItemPos(var_14_1, var_14_0, true, var_14_3, arg_14_0)
+	if battleCO and heroItem.mo.aid and dragToIndex > battleCO.playerMax then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 		GameFacade.showToast(ToastEnum.HeroGroupPlayerMax)
 
 		return
 	end
 
-	local var_14_10 = arg_14_0._heroItemList[var_14_2]
+	local otherHeroItem = self._heroItemList[dragToIndex]
 
-	if var_14_10.mo.aid and var_14_10.mo.aid ~= -1 and var_14_6 and var_14_0 > var_14_6.playerMax then
-		arg_14_0:_setHeroItemPos(var_14_1, var_14_0, true, var_14_3, arg_14_0)
+	if otherHeroItem.mo.aid and otherHeroItem.mo.aid ~= -1 and battleCO and index > battleCO.playerMax then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 		GameFacade.showToast(ToastEnum.HeroGroupPlayerMax)
 
 		return
 	end
 
-	local var_14_11, var_14_12 = var_14_1:canMoveCardToPos(var_14_2 - 1)
-	local var_14_13, var_14_14 = var_14_10:canMoveCardToPos(var_14_0 - 1)
+	local canMoveTar, posStrTar = heroItem:canMoveCardToPos(dragToIndex - 1)
+	local canMoveSrc, posStrSrc = otherHeroItem:canMoveCardToPos(index - 1)
 
-	if not var_14_11 or not var_14_13 then
-		arg_14_0:_setHeroItemPos(var_14_1, var_14_0, true, var_14_3, arg_14_0)
+	if not canMoveTar or not canMoveSrc then
+		self:_setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 
-		if not var_14_11 then
-			GameFacade.showToast(Season123_2_1EquipItem.Toast_Pos_Wrong, var_14_12)
+		if not canMoveTar then
+			GameFacade.showToast(Season123_2_1EquipItem.Toast_Pos_Wrong, posStrTar)
 		end
 
-		if not var_14_13 then
-			GameFacade.showToast(Season123_2_1EquipItem.Toast_Pos_Wrong, var_14_14)
+		if not canMoveSrc then
+			GameFacade.showToast(Season123_2_1EquipItem.Toast_Pos_Wrong, posStrSrc)
 		end
 
 		return
 	end
 
-	if var_14_0 ~= var_14_2 then
+	if index ~= dragToIndex then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Team_release)
 	end
 
-	gohelper.setAsLastSibling(var_14_10.go)
-	gohelper.setAsLastSibling(var_14_1.go)
-	var_14_10:flowOriginParent()
+	gohelper.setAsLastSibling(otherHeroItem.go)
+	gohelper.setAsLastSibling(heroItem.go)
+	otherHeroItem:flowOriginParent()
 
-	arg_14_0._tweenId = arg_14_0:_setHeroItemPos(var_14_10, var_14_0, true)
+	self._tweenId = self:_setHeroItemPos(otherHeroItem, index, true)
 
-	arg_14_0:_setHeroItemPos(var_14_1, var_14_2, true, function()
-		if arg_14_0._tweenId then
-			ZProj.TweenHelper.KillById(arg_14_0._tweenId)
+	self:_setHeroItemPos(heroItem, dragToIndex, true, function()
+		if self._tweenId then
+			ZProj.TweenHelper.KillById(self._tweenId)
 		end
 
-		for iter_16_0, iter_16_1 in ipairs(arg_14_0._heroItemList) do
-			arg_14_0:_setHeroItemPos(iter_16_1, iter_16_0)
+		for i, heroItem in ipairs(self._heroItemList) do
+			self:_setHeroItemPos(heroItem, i)
 		end
 
-		var_14_3(arg_14_0, true)
-		Season123HeroGroupUtils.swapHeroItem(var_14_1.mo.id, var_14_10.mo.id)
+		completeDragFunc(self, true)
+		Season123HeroGroupUtils.swapHeroItem(heroItem.mo.id, otherHeroItem.mo.id)
 
 		if Season123HeroGroupModel.instance:isEpisodeSeason123() or Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
-			arg_14_0:_updateHeroList()
+			self:_updateHeroList()
 			Season123HeroGroupController.instance:saveCurrentHeroGroup()
 		else
-			local var_16_0 = HeroGroupModel.instance:getCurGroupMO()
-			local var_16_1 = HeroSingleGroupModel.instance:getHeroUids()
+			local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+			local newHeroUids = HeroSingleGroupModel.instance:getHeroUids()
 
-			for iter_16_2, iter_16_3 in ipairs(var_16_0.heroList) do
-				if var_16_1[iter_16_2] ~= iter_16_3 then
-					HeroSingleGroupModel.instance:setSingleGroup(var_16_0, true)
+			for i, heroUid in ipairs(heroGroupMO.heroList) do
+				if newHeroUids[i] ~= heroUid then
+					HeroSingleGroupModel.instance:setSingleGroup(heroGroupMO, true)
 					HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 					HeroGroupModel.instance:saveCurGroupData()
-					arg_14_0:_updateHeroList()
+					self:_updateHeroList()
 
 					break
 				end
@@ -516,114 +519,114 @@ function var_0_0._onEndDrag(arg_14_0, arg_14_1, arg_14_2)
 	end)
 end
 
-function var_0_0._setHeroItemPos(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
-	local var_17_0 = arg_17_0.heroPosTrList[arg_17_2]
-	local var_17_1 = recthelper.rectToRelativeAnchorPos(var_17_0.position, arg_17_0._goheroarea.transform)
+function Season123_2_1HeroGroupListView:_setHeroItemPos(heroItem, index, tween, callback, callbackObj)
+	local posTr = self.heroPosTrList[index]
+	local anchorPos = recthelper.rectToRelativeAnchorPos(posTr.position, self._goheroarea.transform)
 
-	if arg_17_3 then
-		return ZProj.TweenHelper.DOAnchorPos(arg_17_1.go.transform, var_17_1.x, var_17_1.y, 0.2, arg_17_4, arg_17_5)
+	if tween then
+		return ZProj.TweenHelper.DOAnchorPos(heroItem.go.transform, anchorPos.x, anchorPos.y, 0.2, callback, callbackObj)
 	else
-		recthelper.setAnchor(arg_17_1.go.transform, var_17_1.x, var_17_1.y)
+		recthelper.setAnchor(heroItem.go.transform, anchorPos.x, anchorPos.y)
 
-		if arg_17_4 then
-			arg_17_4(arg_17_5)
+		if callback then
+			callback(callbackObj)
 		end
 	end
 end
 
-function var_0_0._tweenToPos(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0, var_18_1 = recthelper.getAnchor(arg_18_1.go.transform)
+function Season123_2_1HeroGroupListView:_tweenToPos(heroItem, anchorPos)
+	local curAnchorX, curAnchorY = recthelper.getAnchor(heroItem.go.transform)
 
-	if math.abs(var_18_0 - arg_18_2.x) > 10 or math.abs(var_18_1 - arg_18_2.y) > 10 then
-		ZProj.TweenHelper.DOAnchorPos(arg_18_1.go.transform, arg_18_2.x, arg_18_2.y, 0.2)
+	if math.abs(curAnchorX - anchorPos.x) > 10 or math.abs(curAnchorY - anchorPos.y) > 10 then
+		ZProj.TweenHelper.DOAnchorPos(heroItem.go.transform, anchorPos.x, anchorPos.y, 0.2)
 	else
-		recthelper.setAnchor(arg_18_1.go.transform, arg_18_2.x, arg_18_2.y)
+		recthelper.setAnchor(heroItem.go.transform, anchorPos.x, anchorPos.y)
 	end
 end
 
-function var_0_0._setDragEnabled(arg_19_0, arg_19_1)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0._heroItemDrag) do
-		iter_19_1.enabled = arg_19_1
+function Season123_2_1HeroGroupListView:_setDragEnabled(isEnabled)
+	for i, drag in ipairs(self._heroItemDrag) do
+		drag.enabled = isEnabled
 	end
 end
 
-function var_0_0._updateHeroList(arg_20_0)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._heroItemList) do
-		local var_20_0
+function Season123_2_1HeroGroupListView:_updateHeroList()
+	for i, heroItem in ipairs(self._heroItemList) do
+		local mo
 
 		if Season123HeroGroupModel.instance:isEpisodeSeason123() or Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
-			local var_20_1 = HeroGroupModel.instance:getCurGroupMO()
+			local groupMO = HeroGroupModel.instance:getCurGroupMO()
 
-			var_20_0 = HeroSingleGroupMO.New()
-			var_20_0.id = iter_20_0
-			var_20_0.heroUid = var_20_1.heroList[iter_20_0]
+			mo = HeroSingleGroupMO.New()
+			mo.id = i
+			mo.heroUid = groupMO.heroList[i]
 
-			if var_20_1.isReplay then
-				local var_20_2 = var_20_1.replay_hero_data[var_20_0.heroUid]
+			if groupMO.isReplay then
+				local replayHeroData = groupMO.replay_hero_data[mo.heroUid]
 
-				iter_20_1:onUpdateMO(var_20_0, arg_20_0.viewParam, var_20_2)
+				heroItem:onUpdateMO(mo, self.viewParam, replayHeroData)
 			else
-				iter_20_1:onUpdateMO(var_20_0, arg_20_0.viewParam)
+				heroItem:onUpdateMO(mo, self.viewParam)
 			end
 		else
-			var_20_0 = HeroSingleGroupModel.instance:getById(iter_20_0)
+			mo = HeroSingleGroupModel.instance:getById(i)
 
-			iter_20_1:onUpdateMO(var_20_0, arg_20_0.viewParam)
+			heroItem:onUpdateMO(mo, self.viewParam)
 		end
 
-		if iter_20_0 <= arg_20_0._openCount then
-			arg_20_0._orderList[iter_20_0].text = var_20_0:isEmpty() and iter_20_0 or ""
+		if i <= self._openCount then
+			self._orderList[i].text = mo:isEmpty() and i or ""
 		end
 	end
 end
 
-function var_0_0._onSnapshotSaveSucc(arg_21_0)
-	arg_21_0:_updateHeroList()
-	gohelper.setActive(arg_21_0._goheroarea, false)
-	gohelper.setActive(arg_21_0._goheroarea, true)
-	gohelper.setActive(arg_21_0._gohero, false)
-	gohelper.setActive(arg_21_0._gohero, true)
+function Season123_2_1HeroGroupListView:_onSnapshotSaveSucc()
+	self:_updateHeroList()
+	gohelper.setActive(self._goheroarea, false)
+	gohelper.setActive(self._goheroarea, true)
+	gohelper.setActive(self._gohero, false)
+	gohelper.setActive(self._gohero, true)
 end
 
-function var_0_0._calcIndex(arg_22_0, arg_22_1)
-	for iter_22_0 = 1, 4 do
-		local var_22_0 = arg_22_0.heroPosTrList[iter_22_0].parent
-		local var_22_1 = recthelper.screenPosToAnchorPos(arg_22_1, var_22_0)
+function Season123_2_1HeroGroupListView:_calcIndex(position)
+	for i = 1, 4 do
+		local posTr = self.heroPosTrList[i].parent
+		local anchorPos = recthelper.screenPosToAnchorPos(position, posTr)
 
-		if math.abs(var_22_1.x) * 2 < recthelper.getWidth(var_22_0) and math.abs(var_22_1.y) * 2 < recthelper.getHeight(var_22_0) then
-			return iter_22_0
+		if math.abs(anchorPos.x) * 2 < recthelper.getWidth(posTr) and math.abs(anchorPos.y) * 2 < recthelper.getHeight(posTr) then
+			return i
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0.closeThis, arg_23_0)
+function Season123_2_1HeroGroupListView:onDestroyView()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 
-	if arg_23_0._openTweenIdList then
-		for iter_23_0, iter_23_1 in ipairs(arg_23_0._openTweenIdList) do
-			ZProj.TweenHelper.KillById(iter_23_1)
+	if self._openTweenIdList then
+		for i, openTweenId in ipairs(self._openTweenIdList) do
+			ZProj.TweenHelper.KillById(openTweenId)
 		end
 	end
 
-	if arg_23_0._closeTweenIdList then
-		for iter_23_2, iter_23_3 in ipairs(arg_23_0._closeTweenIdList) do
-			ZProj.TweenHelper.KillById(iter_23_3)
+	if self._closeTweenIdList then
+		for i, closeTweenId in ipairs(self._closeTweenIdList) do
+			ZProj.TweenHelper.KillById(closeTweenId)
 		end
 	end
 end
 
-function var_0_0._onScreenSizeChange(arg_24_0)
-	for iter_24_0 = 1, ModuleEnum.MaxHeroCountInGroup do
-		local var_24_0 = arg_24_0._heroItemList[iter_24_0]
+function Season123_2_1HeroGroupListView:_onScreenSizeChange()
+	for i = 1, ModuleEnum.MaxHeroCountInGroup do
+		local heroItem = self._heroItemList[i]
 
-		arg_24_0:_setHeroItemPos(var_24_0, iter_24_0)
+		self:_setHeroItemPos(heroItem, i)
 	end
 end
 
-function var_0_0.getHeroItemList(arg_25_0)
-	return arg_25_0._heroItemList
+function Season123_2_1HeroGroupListView:getHeroItemList()
+	return self._heroItemList
 end
 
-return var_0_0
+return Season123_2_1HeroGroupListView

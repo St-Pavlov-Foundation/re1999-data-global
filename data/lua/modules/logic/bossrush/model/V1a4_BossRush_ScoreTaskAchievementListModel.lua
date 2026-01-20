@@ -1,128 +1,132 @@
-﻿module("modules.logic.bossrush.model.V1a4_BossRush_ScoreTaskAchievementListModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/V1a4_BossRush_ScoreTaskAchievementListModel.lua
 
-local var_0_0 = class("V1a4_BossRush_ScoreTaskAchievementListModel", ListScrollModel)
+module("modules.logic.bossrush.model.V1a4_BossRush_ScoreTaskAchievementListModel", package.seeall)
 
-function var_0_0.setStaticData(arg_1_0, arg_1_1)
-	arg_1_0._staticData = arg_1_1
+local V1a4_BossRush_ScoreTaskAchievementListModel = class("V1a4_BossRush_ScoreTaskAchievementListModel", ListScrollModel)
+
+function V1a4_BossRush_ScoreTaskAchievementListModel:setStaticData(staticData)
+	self._staticData = staticData
 end
 
-function var_0_0.getStaticData(arg_2_0)
-	return arg_2_0._staticData
+function V1a4_BossRush_ScoreTaskAchievementListModel:getStaticData()
+	return self._staticData
 end
 
-function var_0_0.claimRewardByIndex(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0:getByIndex(arg_3_1)
+function V1a4_BossRush_ScoreTaskAchievementListModel:claimRewardByIndex(index)
+	local mo = self:getByIndex(index)
 
-	if not var_3_0 then
+	if not mo then
 		return
 	end
 
-	local var_3_1 = var_3_0.id
-	local var_3_2 = var_3_0.config
+	local id = mo.id
+	local config = mo.config
 
-	var_3_0.finishCount = math.min(var_3_0.finishCount + 1, var_3_2.maxFinishCount)
-	var_3_0.hasFinished = false
+	mo.finishCount = math.min(mo.finishCount + 1, config.maxFinishCount)
+	mo.hasFinished = false
 
-	arg_3_0:sort(arg_3_0._sort)
-	TaskRpc.instance:sendFinishTaskRequest(var_3_1)
+	self:sort(self._sort)
+	TaskRpc.instance:sendFinishTaskRequest(id)
 end
 
-function var_0_0._sort(arg_4_0, arg_4_1)
-	if arg_4_0.getAll then
+function V1a4_BossRush_ScoreTaskAchievementListModel._sort(a, b)
+	if a.getAll then
 		return true
 	end
 
-	if arg_4_1.getAll then
+	if b.getAll then
 		return false
 	end
 
-	local var_4_0 = arg_4_0.config
-	local var_4_1 = arg_4_1.config
-	local var_4_2 = arg_4_0.id
-	local var_4_3 = arg_4_1.id
-	local var_4_4 = arg_4_0.finishCount >= var_4_0.maxFinishCount and 1 or 0
-	local var_4_5 = arg_4_1.finishCount >= var_4_1.maxFinishCount and 1 or 0
-	local var_4_6 = arg_4_0.hasFinished and 1 or 0
-	local var_4_7 = arg_4_1.hasFinished and 1 or 0
-	local var_4_8 = arg_4_0.maxProgress
-	local var_4_9 = arg_4_1.maxProgress
+	local a_config = a.config
+	local b_config = b.config
+	local a_id = a.id
+	local b_id = b.id
+	local a_isGot = a.finishCount >= a_config.maxFinishCount and 1 or 0
+	local b_isGot = b.finishCount >= b_config.maxFinishCount and 1 or 0
+	local a_isAvaliable = a.hasFinished and 1 or 0
+	local b_isAvaliable = b.hasFinished and 1 or 0
+	local a_maxProgress = a.maxProgress
+	local b_maxProgress = b.maxProgress
 
-	if var_4_6 ~= var_4_7 then
-		return var_4_7 < var_4_6
+	if a_isAvaliable ~= b_isAvaliable then
+		return b_isAvaliable < a_isAvaliable
 	end
 
-	if var_4_4 ~= var_4_5 then
-		return var_4_4 < var_4_5
+	if a_isGot ~= b_isGot then
+		return a_isGot < b_isGot
 	end
 
-	if var_4_8 ~= var_4_9 then
-		return var_4_8 < var_4_9
+	if a_maxProgress ~= b_maxProgress then
+		return a_maxProgress < b_maxProgress
 	end
 
-	return var_4_2 < var_4_3
+	return a_id < b_id
 end
 
-function var_0_0.getFinishCount(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = 0
+function V1a4_BossRush_ScoreTaskAchievementListModel:getFinishCount(moList, stage)
+	local count = 0
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
-		if iter_5_1.config and iter_5_1.config.stage == arg_5_2 and iter_5_1.finishCount < iter_5_1.config.maxFinishCount and iter_5_1.hasFinished then
-			var_5_0 = var_5_0 + 1
+	for _, mo in pairs(moList) do
+		if mo.config and mo.config.stage == stage and mo.finishCount < mo.config.maxFinishCount and mo.hasFinished then
+			count = count + 1
 		end
 	end
 
-	return var_5_0
+	return count
 end
 
-function var_0_0.setAchievementMoList(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getMoList(arg_6_1)
+function V1a4_BossRush_ScoreTaskAchievementListModel:setAchievementMoList(stage)
+	local moList = self:getMoList(stage)
+	local finishTaskCount = self:getFinishCount(moList, stage)
 
-	if arg_6_0:getFinishCount(var_6_0, arg_6_1) > 1 then
-		table.insert(var_6_0, 1, {
+	if finishTaskCount > 1 then
+		table.insert(moList, 1, {
 			getAll = true,
-			stage = arg_6_1
+			stage = stage
 		})
 	end
 
-	table.sort(var_6_0, arg_6_0._sort)
-	arg_6_0:setList(var_6_0)
+	table.sort(moList, self._sort)
+	self:setList(moList)
 end
 
-function var_0_0.getAllAchievementTask(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getMoList(arg_7_1)
-	local var_7_1 = {}
+function V1a4_BossRush_ScoreTaskAchievementListModel:getAllAchievementTask(stage)
+	local moList = self:getMoList(stage)
+	local taskIds = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		table.insert(var_7_1, iter_7_1.id)
+	for _, mo in pairs(moList) do
+		table.insert(taskIds, mo.id)
 	end
 
-	return var_7_1
+	return taskIds
 end
 
-function var_0_0.isReddot(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:getMoList(arg_8_1, arg_8_2)
+function V1a4_BossRush_ScoreTaskAchievementListModel:isReddot(stage, tabIndex)
+	local tasks = self:getMoList(stage, tabIndex)
 
-	if var_8_0 then
-		for iter_8_0, iter_8_1 in pairs(var_8_0) do
-			local var_8_1 = iter_8_1.config
+	if tasks then
+		for _, mo in pairs(tasks) do
+			local config = mo.config
 
-			if iter_8_1.finishCount < var_8_1.maxFinishCount and iter_8_1.hasFinished then
+			if mo.finishCount < config.maxFinishCount and mo.hasFinished then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.getMoList(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = BossRushModel.instance:getActivityBonus()
+function V1a4_BossRush_ScoreTaskAchievementListModel:getMoList(stage, tabIndex)
+	local bonusTab = BossRushModel.instance:getActivityBonus()
 
-	arg_9_2 = arg_9_2 or V1a6_BossRush_BonusModel.instance:getTab() or 1
+	tabIndex = tabIndex or V1a6_BossRush_BonusModel.instance:getTab() or 1
 
-	local var_9_1 = var_9_0 and var_9_0[arg_9_2]
+	local tab = bonusTab and bonusTab[tabIndex]
+	local moList = tab and BossRushModel.instance:getMoListByStageAndType(stage, tab.TaskListenerType, tab.ScoreDesc)
 
-	return var_9_1 and BossRushModel.instance:getMoListByStageAndType(arg_9_1, var_9_1.TaskListenerType, var_9_1.ScoreDesc)
+	return moList
 end
 
-var_0_0.instance = var_0_0.New()
+V1a4_BossRush_ScoreTaskAchievementListModel.instance = V1a4_BossRush_ScoreTaskAchievementListModel.New()
 
-return var_0_0
+return V1a4_BossRush_ScoreTaskAchievementListModel

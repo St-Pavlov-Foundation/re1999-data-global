@@ -1,143 +1,145 @@
-﻿module("modules.logic.rouge.model.RougeCollectionMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeCollectionMO.lua
 
-local var_0_0 = class("RougeCollectionMO")
+module("modules.logic.rouge.model.RougeCollectionMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:initBaseInfo(arg_1_1)
-	arg_1_0:updateAttrValues(arg_1_1.attr)
+local RougeCollectionMO = class("RougeCollectionMO")
+
+function RougeCollectionMO:init(info)
+	self:initBaseInfo(info)
+	self:updateAttrValues(info.attr)
 end
 
-function var_0_0.initBaseInfo(arg_2_0, arg_2_1)
-	arg_2_0.id = tonumber(arg_2_1.id)
-	arg_2_0.cfgId = tonumber(arg_2_1.itemId)
-	arg_2_0.enchantIds = {}
+function RougeCollectionMO:initBaseInfo(info)
+	self.id = tonumber(info.id)
+	self.cfgId = tonumber(info.itemId)
+	self.enchantIds = {}
 
-	if arg_2_1.holdIds then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_1.holdIds) do
-			table.insert(arg_2_0.enchantIds, tonumber(iter_2_1))
+	if info.holdIds then
+		for _, holeId in ipairs(info.holdIds) do
+			table.insert(self.enchantIds, tonumber(holeId))
 		end
 	end
 
-	arg_2_0.enchantCfgIds = {}
+	self.enchantCfgIds = {}
 
-	if arg_2_1.holdItems then
-		for iter_2_2, iter_2_3 in ipairs(arg_2_1.holdItems) do
-			table.insert(arg_2_0.enchantCfgIds, tonumber(iter_2_3))
+	if info.holdItems then
+		for _, enchantCfgId in ipairs(info.holdItems) do
+			table.insert(self.enchantCfgIds, tonumber(enchantCfgId))
 		end
 	end
 end
 
-function var_0_0.getCollectionCfgId(arg_3_0)
-	return arg_3_0.cfgId
+function RougeCollectionMO:getCollectionCfgId()
+	return self.cfgId
 end
 
-function var_0_0.getCollectionId(arg_4_0)
-	return arg_4_0.id
+function RougeCollectionMO:getCollectionId()
+	return self.id
 end
 
-function var_0_0.isEnchant(arg_5_0, arg_5_1)
-	return arg_5_0.enchantIds and arg_5_0.enchantIds[arg_5_1] and arg_5_0.enchantIds[arg_5_1] > 0
+function RougeCollectionMO:isEnchant(index)
+	return self.enchantIds and self.enchantIds[index] and self.enchantIds[index] > 0
 end
 
-function var_0_0.getEnchantIdAndCfgId(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0.enchantIds and arg_6_0.enchantIds[arg_6_1]
-	local var_6_1 = arg_6_0.enchantCfgIds and arg_6_0.enchantCfgIds[arg_6_1]
+function RougeCollectionMO:getEnchantIdAndCfgId(holeIndex)
+	local uid = self.enchantIds and self.enchantIds[holeIndex]
+	local cfgId = self.enchantCfgIds and self.enchantCfgIds[holeIndex]
 
-	return var_6_0, var_6_1
+	return uid, cfgId
 end
 
-function var_0_0.getAllEnchantId(arg_7_0)
-	return arg_7_0.enchantIds
+function RougeCollectionMO:getAllEnchantId()
+	return self.enchantIds
 end
 
-function var_0_0.getEnchantCount(arg_8_0)
-	local var_8_0 = 0
+function RougeCollectionMO:getEnchantCount()
+	local enchantCount = 0
 
-	for iter_8_0, iter_8_1 in pairs(arg_8_0.enchantIds) do
-		if iter_8_1 and iter_8_1 > 0 then
-			var_8_0 = var_8_0 + 1
+	for _, enchantId in pairs(self.enchantIds) do
+		if enchantId and enchantId > 0 then
+			enchantCount = enchantCount + 1
 		end
 	end
 
-	return var_8_0
+	return enchantCount
 end
 
-function var_0_0.getAllEnchantCfgId(arg_9_0)
-	return arg_9_0.enchantCfgIds
+function RougeCollectionMO:getAllEnchantCfgId()
+	return self.enchantCfgIds
 end
 
-function var_0_0.updateEnchant(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0.enchantIds = arg_10_0.enchantIds or {}
-	arg_10_0.enchantIds[arg_10_2] = arg_10_1
+function RougeCollectionMO:updateEnchant(enchantId, holeIndex)
+	self.enchantIds = self.enchantIds or {}
+	self.enchantIds[holeIndex] = enchantId
 end
 
-function var_0_0.updateEnchantTargetId(arg_11_0, arg_11_1)
-	arg_11_0.enchantUid = arg_11_1
+function RougeCollectionMO:updateEnchantTargetId(targetId)
+	self.enchantUid = targetId
 end
 
-function var_0_0.getEnchantTargetId(arg_12_0)
-	return arg_12_0.enchantUid or 0
+function RougeCollectionMO:getEnchantTargetId()
+	return self.enchantUid or 0
 end
 
-function var_0_0.isEnchant2Collection(arg_13_0)
-	return arg_13_0.enchantUid and arg_13_0.enchantUid > 0
+function RougeCollectionMO:isEnchant2Collection()
+	return self.enchantUid and self.enchantUid > 0
 end
 
-function var_0_0.getRotation(arg_14_0)
+function RougeCollectionMO:getRotation()
 	return RougeEnum.CollectionRotation.Rotation_0
 end
 
-function var_0_0.updateInfo(arg_15_0, arg_15_1)
-	arg_15_0:init(arg_15_1)
+function RougeCollectionMO:updateInfo(info)
+	self:init(info)
 end
 
-function var_0_0.copyOtherCollectionMO(arg_16_0, arg_16_1)
-	if not arg_16_1 then
+function RougeCollectionMO:copyOtherCollectionMO(mo)
+	if not mo then
 		return
 	end
 
-	arg_16_0.id = arg_16_1.id
-	arg_16_0.cfgId = arg_16_1.cfgId
-	arg_16_0.enchantIds = {}
+	self.id = mo.id
+	self.cfgId = mo.cfgId
+	self.enchantIds = {}
 
-	if arg_16_1.enchantIds then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_1.enchantIds) do
-			table.insert(arg_16_0.enchantIds, tonumber(iter_16_1))
+	if mo.enchantIds then
+		for _, holeId in ipairs(mo.enchantIds) do
+			table.insert(self.enchantIds, tonumber(holeId))
 		end
 	end
 
-	arg_16_0.enchantCfgIds = {}
+	self.enchantCfgIds = {}
 
-	if arg_16_1.enchantCfgIds then
-		for iter_16_2, iter_16_3 in ipairs(arg_16_1.enchantCfgIds) do
-			table.insert(arg_16_0.enchantCfgIds, tonumber(iter_16_3))
-		end
-	end
-end
-
-function var_0_0.updateAttrValues(arg_17_0, arg_17_1)
-	arg_17_0.attrValueMap = {}
-
-	if arg_17_1 then
-		local var_17_0 = arg_17_1.attrIds
-		local var_17_1 = arg_17_1.attrVals
-
-		for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-			arg_17_0.attrValueMap[iter_17_1] = tonumber(var_17_1[iter_17_0])
+	if mo.enchantCfgIds then
+		for _, enchantCfgId in ipairs(mo.enchantCfgIds) do
+			table.insert(self.enchantCfgIds, tonumber(enchantCfgId))
 		end
 	end
 end
 
-function var_0_0.isAttrExist(arg_18_0, arg_18_1)
-	return arg_18_0.attrValueMap and arg_18_0.attrValueMap[arg_18_1] ~= nil
+function RougeCollectionMO:updateAttrValues(attrValues)
+	self.attrValueMap = {}
+
+	if attrValues then
+		local attrIds = attrValues.attrIds
+		local attrVals = attrValues.attrVals
+
+		for index, attrId in ipairs(attrIds) do
+			self.attrValueMap[attrId] = tonumber(attrVals[index])
+		end
+	end
 end
 
-function var_0_0.getAttrValueMap(arg_19_0)
-	return arg_19_0.attrValueMap
+function RougeCollectionMO:isAttrExist(attrId)
+	return self.attrValueMap and self.attrValueMap[attrId] ~= nil
 end
 
-function var_0_0.getLeftTopPos(arg_20_0)
+function RougeCollectionMO:getAttrValueMap()
+	return self.attrValueMap
+end
+
+function RougeCollectionMO:getLeftTopPos()
 	return Vector2(1000, 1000)
 end
 
-return var_0_0
+return RougeCollectionMO

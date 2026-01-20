@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotRoleRevivalResultViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotRoleRevivalResultViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRevivalResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotRoleRevivalResultViewContainer = class("V1a6_CachotRoleRevivalResultViewContainer", BaseViewContainer)
+
+function V1a6_CachotRoleRevivalResultViewContainer:buildViews()
 	return {
 		V1a6_CachotRoleRevivalResultView.New()
 	}
 end
 
-return var_0_0
+return V1a6_CachotRoleRevivalResultViewContainer

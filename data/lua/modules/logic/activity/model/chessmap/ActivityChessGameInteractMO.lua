@@ -1,27 +1,29 @@
-﻿module("modules.logic.activity.model.chessmap.ActivityChessGameInteractMO", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/chessmap/ActivityChessGameInteractMO.lua
 
-local var_0_0 = pureTable("ActivityChessGameInteractMO")
+module("modules.logic.activity.model.chessmap.ActivityChessGameInteractMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.id = arg_1_2.id
-	arg_1_0.actId = arg_1_1
+local ActivityChessGameInteractMO = pureTable("ActivityChessGameInteractMO")
 
-	arg_1_0:updateMO(arg_1_2)
+function ActivityChessGameInteractMO:init(actId, serverData)
+	self.id = serverData.id
+	self.actId = actId
+
+	self:updateMO(serverData)
 end
 
-function var_0_0.updateMO(arg_2_0, arg_2_1)
-	arg_2_0.posX = arg_2_1.x
-	arg_2_0.posY = arg_2_1.y
-	arg_2_0.direction = arg_2_1.direction or 6
+function ActivityChessGameInteractMO:updateMO(serverData)
+	self.posX = serverData.x
+	self.posY = serverData.y
+	self.direction = serverData.direction or 6
 
-	if not string.nilorempty(arg_2_1.data) then
-		arg_2_0.data = cjson.decode(arg_2_1.data)
+	if not string.nilorempty(serverData.data) then
+		self.data = cjson.decode(serverData.data)
 	end
 end
 
-function var_0_0.setXY(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.posX = arg_3_1
-	arg_3_0.posY = arg_3_2
+function ActivityChessGameInteractMO:setXY(x, y)
+	self.posX = x
+	self.posY = y
 end
 
-return var_0_0
+return ActivityChessGameInteractMO

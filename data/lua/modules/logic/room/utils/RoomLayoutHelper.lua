@@ -1,290 +1,297 @@
-﻿module("modules.logic.room.utils.RoomLayoutHelper", package.seeall)
+﻿-- chunkname: @modules/logic/room/utils/RoomLayoutHelper.lua
 
-local var_0_0 = {
-	tipLayoutAnchor = function(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-		local var_1_0 = recthelper.rectToRelativeAnchorPos(arg_1_2, arg_1_1)
-		local var_1_1 = var_1_0.x
-		local var_1_2 = var_1_0.y
-		local var_1_3 = recthelper.getWidth(arg_1_1)
-		local var_1_4 = recthelper.getHeight(arg_1_1)
-		local var_1_5 = var_1_3 * 0.5
-		local var_1_6 = var_1_4 * 0.5
-		local var_1_7 = recthelper.getWidth(arg_1_0)
-		local var_1_8 = recthelper.getHeight(arg_1_0)
-		local var_1_9 = var_1_7 * 0.5
-		local var_1_10 = var_1_8 * 0.5
-		local var_1_11 = 0
+module("modules.logic.room.utils.RoomLayoutHelper", package.seeall)
 
-		if arg_1_4 and arg_1_4 > 0 and var_1_10 < var_1_6 then
-			if var_1_2 > 0 then
-				var_1_11 = var_1_2 + arg_1_4 - var_1_10
-			else
-				var_1_11 = var_1_2 + var_1_10 - arg_1_4
-			end
+local RoomLayoutHelper = {}
 
-			local var_1_12 = var_1_6 - var_1_10
+function RoomLayoutHelper.tipLayoutAnchor(targetTrs, parentTrs, uiWorldPos, offWidth, offHeight)
+	local uiPos = recthelper.rectToRelativeAnchorPos(uiWorldPos, parentTrs)
+	local posX = uiPos.x
+	local posY = uiPos.y
+	local viewWidth = recthelper.getWidth(parentTrs)
+	local viewHeight = recthelper.getHeight(parentTrs)
+	local viewHalfWidth = viewWidth * 0.5
+	local viewHalfHeight = viewHeight * 0.5
+	local targetWidth = recthelper.getWidth(targetTrs)
+	local targetHeight = recthelper.getHeight(targetTrs)
+	local targetHalfWidth = targetWidth * 0.5
+	local targetHalfHeight = targetHeight * 0.5
+	local targetY = 0
 
-			if var_1_12 <= var_1_11 then
-				var_1_11 = var_1_12
-			elseif var_1_11 <= -var_1_12 then
-				var_1_11 = -var_1_12
-			end
-		end
-
-		if var_1_5 >= var_1_1 + var_1_7 + arg_1_3 then
-			transformhelper.setLocalPos(arg_1_0, var_1_1 + arg_1_3 + var_1_9, var_1_11, 0)
+	if offHeight and offHeight > 0 and targetHalfHeight < viewHalfHeight then
+		if posY > 0 then
+			targetY = posY + offHeight - targetHalfHeight
 		else
-			transformhelper.setLocalPos(arg_1_0, var_1_1 - arg_1_3 - var_1_9, var_1_11, 0)
-		end
-	end,
-	findBlockInfos = function(arg_2_0, arg_2_1)
-		local var_2_0 = {}
-		local var_2_1 = {}
-
-		if not arg_2_0 then
-			return var_2_0, var_2_1
+			targetY = posY + targetHalfHeight - offHeight
 		end
 
-		local var_2_2 = RoomConfig.instance
-		local var_2_3 = arg_2_1 == true
+		local d = viewHalfHeight - targetHalfHeight
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0) do
-			local var_2_4 = not var_2_2:getInitBlock(iter_2_1.blockId) and var_2_2:getBlock(iter_2_1.blockId)
-
-			if var_2_4 then
-				local var_2_5 = var_2_4.packageId
-
-				if var_2_3 and RoomBlockPackageEnum.ID.RoleBirthday == var_2_5 then
-					table.insert(var_2_1, iter_2_1.blockId)
-				elseif not var_2_0[var_2_5] then
-					var_2_0[var_2_5] = 1
-				else
-					var_2_0[var_2_5] = var_2_0[var_2_5] + 1
-				end
-			end
+		if d <= targetY then
+			targetY = d
+		elseif targetY <= -d then
+			targetY = -d
 		end
-
-		return var_2_0, var_2_1
-	end,
-	findbuildingInfos = function(arg_3_0)
-		local var_3_0 = {}
-
-		if not arg_3_0 then
-			return var_3_0
-		end
-
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0) do
-			local var_3_1 = iter_3_1.defineId
-
-			if not var_3_0[var_3_1] then
-				var_3_0[var_3_1] = 1
-			else
-				var_3_0[var_3_1] = var_3_0[var_3_1] + 1
-			end
-		end
-
-		return var_3_0
 	end
-}
 
-function var_0_0.createInfoByObInfo(arg_4_0)
-	local var_4_0 = {
+	local lwith = posX + targetWidth + offWidth
+
+	if lwith <= viewHalfWidth then
+		transformhelper.setLocalPos(targetTrs, posX + offWidth + targetHalfWidth, targetY, 0)
+	else
+		transformhelper.setLocalPos(targetTrs, posX - offWidth - targetHalfWidth, targetY, 0)
+	end
+end
+
+function RoomLayoutHelper.findBlockInfos(blockInfos, isBirthdayBlock)
+	local packageDict = {}
+	local roleBirthdayList = {}
+
+	if not blockInfos then
+		return packageDict, roleBirthdayList
+	end
+
+	local tRoomConfig = RoomConfig.instance
+	local isRoleBirthday = isBirthdayBlock == true
+
+	for i, info in ipairs(blockInfos) do
+		local blockCfg = not tRoomConfig:getInitBlock(info.blockId) and tRoomConfig:getBlock(info.blockId)
+
+		if blockCfg then
+			local packageId = blockCfg.packageId
+
+			if isRoleBirthday and RoomBlockPackageEnum.ID.RoleBirthday == packageId then
+				table.insert(roleBirthdayList, info.blockId)
+			elseif not packageDict[packageId] then
+				packageDict[packageId] = 1
+			else
+				packageDict[packageId] = packageDict[packageId] + 1
+			end
+		end
+	end
+
+	return packageDict, roleBirthdayList
+end
+
+function RoomLayoutHelper.findbuildingInfos(buildingInfos)
+	local buildingDict = {}
+
+	if not buildingInfos then
+		return buildingDict
+	end
+
+	for i, info in ipairs(buildingInfos) do
+		local buildingId = info.defineId
+
+		if not buildingDict[buildingId] then
+			buildingDict[buildingId] = 1
+		else
+			buildingDict[buildingId] = buildingDict[buildingId] + 1
+		end
+	end
+
+	return buildingDict
+end
+
+function RoomLayoutHelper.createInfoByObInfo(obInfo)
+	local info = {
 		infos = {},
 		buildingInfos = {}
 	}
 
-	tabletool.addValues(var_4_0.infos, arg_4_0.infos)
-	tabletool.addValues(var_4_0.buildingInfos, arg_4_0.buildingInfos)
+	tabletool.addValues(info.infos, obInfo.infos)
+	tabletool.addValues(info.buildingInfos, obInfo.buildingInfos)
 
-	local var_4_1, var_4_2 = var_0_0.sunDegreeInfos(var_4_0.infos, var_4_0.buildingInfos)
+	local totalDegree, blockCount = RoomLayoutHelper.sunDegreeInfos(info.infos, info.buildingInfos)
 
-	var_4_0.buildingDegree = var_4_1
-	var_4_0.blockCount = var_4_2
-	var_4_0.changeColorCount = arg_4_0.changeColorCount
+	info.buildingDegree = totalDegree
+	info.blockCount = blockCount
+	info.changeColorCount = obInfo.changeColorCount
 
-	return var_4_0
+	return info
 end
 
-function var_0_0.sunDegreeInfos(arg_5_0, arg_5_1)
-	local var_5_0 = RoomBlockEnum.InitBlockDegreeValue
-	local var_5_1 = 0
-	local var_5_2 = RoomConfig.instance
+function RoomLayoutHelper.sunDegreeInfos(blockInfos, buildingInfos)
+	local totalDegree = RoomBlockEnum.InitBlockDegreeValue
+	local blockCount = 0
+	local tRoomConfig = RoomConfig.instance
 
-	if arg_5_0 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0) do
-			if not var_5_2:getInitBlock(iter_5_1.blockId) then
-				var_5_1 = var_5_1 + 1
+	if blockInfos then
+		for i, blockInfo in ipairs(blockInfos) do
+			if not tRoomConfig:getInitBlock(blockInfo.blockId) then
+				blockCount = blockCount + 1
 
-				local var_5_3 = var_5_2:getPackageConfigByBlockId(iter_5_1.blockId)
+				local packageCfg = tRoomConfig:getPackageConfigByBlockId(blockInfo.blockId)
 
-				if var_5_3 then
-					var_5_0 = var_5_0 + var_5_3.blockBuildDegree
+				if packageCfg then
+					totalDegree = totalDegree + packageCfg.blockBuildDegree
 				end
 			end
 		end
 	end
 
-	if arg_5_1 then
-		for iter_5_2, iter_5_3 in ipairs(arg_5_1) do
-			local var_5_4 = var_5_2:getBuildingConfig(iter_5_3.defineId)
+	if buildingInfos then
+		for i, buildingInfo in ipairs(buildingInfos) do
+			local buildingCfg = tRoomConfig:getBuildingConfig(buildingInfo.defineId)
 
-			if var_5_4 then
-				var_5_0 = var_5_0 + var_5_4.buildDegree
+			if buildingCfg then
+				totalDegree = totalDegree + buildingCfg.buildDegree
 			end
 		end
 	end
 
-	return var_5_0, var_5_1
+	return totalDegree, blockCount
 end
 
-function var_0_0.comparePlanInfo(arg_6_0, arg_6_1)
-	local var_6_0 = 0
-	local var_6_1 = 0
-	local var_6_2 = 0
-	local var_6_3, var_6_4 = var_0_0.findBlockInfos(arg_6_0.infos)
-	local var_6_5 = var_0_0.findbuildingInfos(arg_6_0.buildingInfos)
-	local var_6_6
+function RoomLayoutHelper.comparePlanInfo(planInfo, isGetName)
+	local packageNum = 0
+	local roleBirthdayNum = 0
+	local buildingNum = 0
+	local packageDict, roleBirthdayList = RoomLayoutHelper.findBlockInfos(planInfo.infos)
+	local buildingDict = RoomLayoutHelper.findbuildingInfos(planInfo.buildingInfos)
+	local strList
 
-	if arg_6_1 ~= false then
-		var_6_6 = {}
+	if isGetName ~= false then
+		strList = {}
 	end
 
-	local var_6_7 = var_0_0._checkNeedNum
+	local _checkNeedNumFunc = RoomLayoutHelper._checkNeedNum
 
-	for iter_6_0, iter_6_1 in pairs(var_6_3) do
-		var_6_0 = var_6_0 + var_6_7(MaterialEnum.MaterialType.BlockPackage, iter_6_0, 1, var_6_6)
+	for packageId, blockNum in pairs(packageDict) do
+		packageNum = packageNum + _checkNeedNumFunc(MaterialEnum.MaterialType.BlockPackage, packageId, 1, strList)
 	end
 
-	for iter_6_2, iter_6_3 in ipairs(var_6_4) do
-		var_6_1 = var_6_1 + var_6_7(MaterialEnum.MaterialType.SpecialBlock, iter_6_3, 1, var_6_6)
+	for i, blockId in ipairs(roleBirthdayList) do
+		roleBirthdayNum = roleBirthdayNum + _checkNeedNumFunc(MaterialEnum.MaterialType.SpecialBlock, blockId, 1, strList)
 	end
 
-	for iter_6_4, iter_6_5 in pairs(var_6_5) do
-		var_6_2 = var_6_2 + var_6_7(MaterialEnum.MaterialType.Building, iter_6_4, iter_6_5, var_6_6)
+	for buildingId, needNum in pairs(buildingDict) do
+		buildingNum = buildingNum + _checkNeedNumFunc(MaterialEnum.MaterialType.Building, buildingId, needNum, strList)
 	end
 
-	return var_6_0, var_6_1, var_6_2, var_6_6
+	return packageNum, roleBirthdayNum, buildingNum, strList
 end
 
-function var_0_0._checkNeedNum(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_2 < 1 then
+function RoomLayoutHelper._checkNeedNum(itemType, itemId, needNum, strList)
+	if needNum < 1 then
 		return 0
 	end
 
-	local var_7_0 = ItemModel.instance
-	local var_7_1 = var_7_0:getItemQuantity(arg_7_0, arg_7_1) or 0
-	local var_7_2 = math.max(var_7_1, 0)
+	local tItemModel = ItemModel.instance
+	local num = tItemModel:getItemQuantity(itemType, itemId) or 0
 
-	if var_7_2 < arg_7_2 then
-		if arg_7_3 then
-			local var_7_3 = var_7_0:getItemConfig(arg_7_0, arg_7_1)
+	num = math.max(num, 0)
 
-			if var_7_3 then
-				table.insert(arg_7_3, var_7_3.name)
+	if num < needNum then
+		if strList then
+			local cfg = tItemModel:getItemConfig(itemType, itemId)
+
+			if cfg then
+				table.insert(strList, cfg.name)
 			else
-				table.insert(arg_7_3, arg_7_0 .. ":" .. arg_7_1)
+				table.insert(strList, itemType .. ":" .. itemId)
 			end
 		end
 
-		return arg_7_2 - var_7_2
+		return needNum - num
 	end
 
 	return 0
 end
 
-function var_0_0.connStrList(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0
-	local var_8_1 = #arg_8_0
+function RoomLayoutHelper.connStrList(strList, connchar, lastConnchar, maxCount)
+	local desStr
+	local count = #strList
 
-	arg_8_3 = arg_8_3 or var_8_1
+	maxCount = maxCount or count
 
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0) do
-		if iter_8_0 == 1 then
-			var_8_0 = iter_8_1
-		elseif iter_8_0 == var_8_1 and iter_8_0 > 1 then
-			var_8_0 = var_8_0 .. arg_8_2 .. iter_8_1
-		elseif arg_8_3 < iter_8_0 then
-			var_8_0 = var_8_0 .. "..."
+	for i, str in ipairs(strList) do
+		if i == 1 then
+			desStr = str
+		elseif i == count and i > 1 then
+			desStr = desStr .. lastConnchar .. str
+		elseif maxCount < i then
+			desStr = desStr .. "..."
 
 			break
 		else
-			var_8_0 = var_8_0 .. arg_8_1 .. iter_8_1
+			desStr = desStr .. connchar .. str
 		end
 	end
 
-	return var_8_0
+	return desStr
 end
 
-function var_0_0.checkVisitParamCoppare(arg_9_0)
-	if arg_9_0 and arg_9_0.isCompareInfo == true then
+function RoomLayoutHelper.checkVisitParamCoppare(visitParam)
+	if visitParam and visitParam.isCompareInfo == true then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.findHasBlockBuildingInfos(arg_10_0, arg_10_1)
-	local var_10_0, var_10_1 = var_0_0.findHasBlockInfos(arg_10_0)
-	local var_10_2 = var_0_0.findHasBuildingInfos(arg_10_1, var_10_1)
+function RoomLayoutHelper.findHasBlockBuildingInfos(pInfos, pBuildingInfos)
+	local blockInfos, removeBlockInfos = RoomLayoutHelper.findHasBlockInfos(pInfos)
+	local buildingInfos = RoomLayoutHelper.findHasBuildingInfos(pBuildingInfos, removeBlockInfos)
 
-	return var_10_0, var_10_2
+	return blockInfos, buildingInfos
 end
 
-function var_0_0.findHasBlockInfos(arg_11_0)
-	local var_11_0 = {}
-	local var_11_1 = {}
+function RoomLayoutHelper.findHasBlockInfos(pInfos)
+	local infos = {}
+	local removeInfos = {}
 
-	if not arg_11_0 then
-		return var_11_0, var_11_1
+	if not pInfos then
+		return infos, removeInfos
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0) do
-		if var_0_0.isHasBlockById(iter_11_1.blockId) then
-			table.insert(var_11_0, iter_11_1)
+	for i, info in ipairs(pInfos) do
+		if RoomLayoutHelper.isHasBlockById(info.blockId) then
+			table.insert(infos, info)
 		else
-			table.insert(var_11_1, iter_11_1)
+			table.insert(removeInfos, info)
 		end
 	end
 
-	return var_11_0, var_11_1
+	return infos, removeInfos
 end
 
-function var_0_0.findHasBuildingInfos(arg_12_0, arg_12_1)
-	local var_12_0 = {}
-	local var_12_1 = {}
+function RoomLayoutHelper.findHasBuildingInfos(pBuildingInfos, removeBlockInfos)
+	local bInfos = {}
+	local removeInfos = {}
 
-	if not arg_12_0 then
-		return var_12_0, var_12_1
+	if not pBuildingInfos then
+		return bInfos, removeInfos
 	end
 
-	local var_12_2 = {}
+	local countDic = {}
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0) do
-		local var_12_3 = iter_12_1.defineId
-		local var_12_4 = var_12_2[var_12_3] or 0
+	for i, buildInfo in ipairs(pBuildingInfos) do
+		local buildId = buildInfo.defineId
+		local count = countDic[buildId] or 0
 
-		if var_12_4 < RoomModel.instance:getBuildingCount(var_12_3) and not var_0_0._isInRemoveBlock(iter_12_1, arg_12_1) then
-			var_12_2[var_12_3] = var_12_4 + 1
+		if count < RoomModel.instance:getBuildingCount(buildId) and not RoomLayoutHelper._isInRemoveBlock(buildInfo, removeBlockInfos) then
+			countDic[buildId] = count + 1
 
-			table.insert(var_12_0, iter_12_1)
+			table.insert(bInfos, buildInfo)
 		else
-			table.insert(var_12_1, iter_12_1)
+			table.insert(removeInfos, buildInfo)
 		end
 	end
 
-	return var_12_0, var_12_1
+	return bInfos, removeInfos
 end
 
-function var_0_0._isInRemoveBlock(arg_13_0, arg_13_1)
-	if not arg_13_1 or #arg_13_1 < 1 then
+function RoomLayoutHelper._isInRemoveBlock(buildInfo, removeBlockInfos)
+	if not removeBlockInfos or #removeBlockInfos < 1 then
 		return false
 	end
 
-	local var_13_0 = HexPoint(arg_13_0.x, arg_13_0.y)
-	local var_13_1 = RoomBuildingHelper.getOccupyDict(arg_13_0.defineId, var_13_0, arg_13_0.rotate, arg_13_0.uid)
+	local hexPoint = HexPoint(buildInfo.x, buildInfo.y)
+	local dict = RoomBuildingHelper.getOccupyDict(buildInfo.defineId, hexPoint, buildInfo.rotate, buildInfo.uid)
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		if var_13_1[iter_13_1.x] and var_13_1[iter_13_1.x][iter_13_1.y] then
+	for i, info in ipairs(removeBlockInfos) do
+		if dict[info.x] and dict[info.x][info.y] then
 			return true
 		end
 	end
@@ -292,25 +299,25 @@ function var_0_0._isInRemoveBlock(arg_13_0, arg_13_1)
 	return false
 end
 
-function var_0_0.isHasBlockById(arg_14_0)
-	local var_14_0 = RoomConfig.instance
+function RoomLayoutHelper.isHasBlockById(blockId)
+	local tRoomConfig = RoomConfig.instance
 
-	if var_14_0:getInitBlock(arg_14_0) then
+	if tRoomConfig:getInitBlock(blockId) then
 		return true
 	end
 
-	local var_14_1 = var_14_0:getBlock(arg_14_0)
+	local blockCfg = tRoomConfig:getBlock(blockId)
 
-	if var_14_1 then
-		local var_14_2 = 1
+	if blockCfg then
+		local needNum = 1
 
-		if RoomBlockPackageEnum.ID.RoleBirthday == var_14_1.packageId then
-			var_14_2 = var_0_0._checkNeedNum(MaterialEnum.MaterialType.SpecialBlock, arg_14_0, 1)
+		if RoomBlockPackageEnum.ID.RoleBirthday == blockCfg.packageId then
+			needNum = RoomLayoutHelper._checkNeedNum(MaterialEnum.MaterialType.SpecialBlock, blockId, 1)
 		else
-			var_14_2 = var_0_0._checkNeedNum(MaterialEnum.MaterialType.BlockPackage, var_14_1.packageId, 1)
+			needNum = RoomLayoutHelper._checkNeedNum(MaterialEnum.MaterialType.BlockPackage, blockCfg.packageId, 1)
 		end
 
-		if var_14_2 == 0 then
+		if needNum == 0 then
 			return true
 		end
 	end
@@ -318,4 +325,4 @@ function var_0_0.isHasBlockById(arg_14_0)
 	return false
 end
 
-return var_0_0
+return RoomLayoutHelper

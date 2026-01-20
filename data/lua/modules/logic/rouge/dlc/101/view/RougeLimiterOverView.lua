@@ -1,150 +1,154 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterOverView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterOverView.lua
 
-local var_0_0 = class("RougeLimiterOverView", BaseView)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterOverView", package.seeall)
 
-var_0_0.TabType = {
+local RougeLimiterOverView = class("RougeLimiterOverView", BaseView)
+
+RougeLimiterOverView.TabType = {
 	Buff = 2,
 	Debuff = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._btndebuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/top/#btn_debuff")
-	arg_1_0._btnbuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/top/#btn_buff")
-	arg_1_0._txtdifficulty = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/difficultybg/#txt_difficulty")
-	arg_1_0._txtdec1 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_dec1")
-	arg_1_0._txtdec2 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_dec2")
-	arg_1_0._txtdec3 = gohelper.findChildText(arg_1_0.viewGO, "root/bottom/#txt_dec3")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "root/#go_empty")
+function RougeLimiterOverView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._btndebuff = gohelper.findChildButtonWithAudio(self.viewGO, "root/top/#btn_debuff")
+	self._btnbuff = gohelper.findChildButtonWithAudio(self.viewGO, "root/top/#btn_buff")
+	self._txtdifficulty = gohelper.findChildText(self.viewGO, "root/bottom/difficultybg/#txt_difficulty")
+	self._txtdec1 = gohelper.findChildText(self.viewGO, "root/bottom/#txt_dec1")
+	self._txtdec2 = gohelper.findChildText(self.viewGO, "root/bottom/#txt_dec2")
+	self._txtdec3 = gohelper.findChildText(self.viewGO, "root/bottom/#txt_dec3")
+	self._goempty = gohelper.findChild(self.viewGO, "root/#go_empty")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btndebuff:AddClickListener(arg_2_0._btndebuffOnClick, arg_2_0)
-	arg_2_0._btnbuff:AddClickListener(arg_2_0._btnbuffOnClick, arg_2_0)
+function RougeLimiterOverView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btndebuff:AddClickListener(self._btndebuffOnClick, self)
+	self._btnbuff:AddClickListener(self._btnbuffOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btndebuff:RemoveClickListener()
-	arg_3_0._btnbuff:RemoveClickListener()
+function RougeLimiterOverView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btndebuff:RemoveClickListener()
+	self._btnbuff:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function RougeLimiterOverView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btndebuffOnClick(arg_5_0)
-	arg_5_0:try2SwtichTabView(var_0_0.TabType.Debuff)
+function RougeLimiterOverView:_btndebuffOnClick()
+	self:try2SwtichTabView(RougeLimiterOverView.TabType.Debuff)
 end
 
-function var_0_0._btnbuffOnClick(arg_6_0)
-	arg_6_0:try2SwtichTabView(var_0_0.TabType.Buff)
+function RougeLimiterOverView:_btnbuffOnClick()
+	self:try2SwtichTabView(RougeLimiterOverView.TabType.Buff)
 end
 
-function var_0_0.try2SwtichTabView(arg_7_0, arg_7_1)
-	if arg_7_0._curTabId == arg_7_1 then
+function RougeLimiterOverView:try2SwtichTabView(tabId)
+	if self._curTabId == tabId then
 		return
 	end
 
-	arg_7_0._curTabId = arg_7_1
+	self._curTabId = tabId
 
-	arg_7_0.viewContainer:switchTab(arg_7_1)
-	arg_7_0:refreshUI()
+	self.viewContainer:switchTab(tabId)
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:refreshBarUI()
-	arg_8_0:refreshDifficulty()
-	arg_8_0:refreshEmptyUI()
+function RougeLimiterOverView:refreshUI()
+	self:refreshBarUI()
+	self:refreshDifficulty()
+	self:refreshEmptyUI()
 end
 
-function var_0_0.refreshBarUI(arg_9_0)
-	local var_9_0 = gohelper.findChild(arg_9_0._btndebuff.gameObject, "unselect")
-	local var_9_1 = gohelper.findChild(arg_9_0._btndebuff.gameObject, "selected")
-	local var_9_2 = gohelper.findChild(arg_9_0._btnbuff.gameObject, "unselect")
-	local var_9_3 = gohelper.findChild(arg_9_0._btnbuff.gameObject, "selected")
+function RougeLimiterOverView:refreshBarUI()
+	local gounselectdebuff = gohelper.findChild(self._btndebuff.gameObject, "unselect")
+	local goselectdebuff = gohelper.findChild(self._btndebuff.gameObject, "selected")
+	local gounselectbuff = gohelper.findChild(self._btnbuff.gameObject, "unselect")
+	local goselectbuff = gohelper.findChild(self._btnbuff.gameObject, "selected")
 
-	gohelper.setActive(var_9_0, arg_9_0._curTabId ~= var_0_0.TabType.Debuff)
-	gohelper.setActive(var_9_1, arg_9_0._curTabId == var_0_0.TabType.Debuff)
-	gohelper.setActive(var_9_2, arg_9_0._curTabId ~= var_0_0.TabType.Buff)
-	gohelper.setActive(var_9_3, arg_9_0._curTabId == var_0_0.TabType.Buff)
+	gohelper.setActive(gounselectdebuff, self._curTabId ~= RougeLimiterOverView.TabType.Debuff)
+	gohelper.setActive(goselectdebuff, self._curTabId == RougeLimiterOverView.TabType.Debuff)
+	gohelper.setActive(gounselectbuff, self._curTabId ~= RougeLimiterOverView.TabType.Buff)
+	gohelper.setActive(goselectbuff, self._curTabId == RougeLimiterOverView.TabType.Buff)
 end
 
-function var_0_0.refreshDifficulty(arg_10_0)
-	local var_10_0 = arg_10_0.viewParam and arg_10_0.viewParam.totalRiskValue or 0
-	local var_10_1 = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(var_10_0)
+function RougeLimiterOverView:refreshDifficulty()
+	local totalRiskValue = self.viewParam and self.viewParam.totalRiskValue or 0
+	local riskCO = RougeDLCConfig101.instance:getRougeRiskCoByRiskValue(totalRiskValue)
 
-	arg_10_0._txtdifficulty.text = var_10_1 and var_10_1.title
+	self._txtdifficulty.text = riskCO and riskCO.title
 
-	arg_10_0:refreshDesc(var_10_1 and var_10_1.desc)
+	self:refreshDesc(riskCO and riskCO.desc)
 end
 
-function var_0_0.refreshDesc(arg_11_0, arg_11_1)
-	local var_11_0 = {}
+function RougeLimiterOverView:refreshDesc(descStr)
+	local useMap = {}
 
-	if not string.nilorempty(arg_11_1) then
-		local var_11_1 = string.split(arg_11_1, "|")
+	if not string.nilorempty(descStr) then
+		local descList = string.split(descStr, "|")
 
-		for iter_11_0, iter_11_1 in ipairs(var_11_1) do
-			local var_11_2 = arg_11_0["_txtdec" .. iter_11_0]
+		for index, desc in ipairs(descList) do
+			local txtdesc = self["_txtdec" .. index]
 
-			var_11_2.text = iter_11_1
-			var_11_0[var_11_2] = true
+			txtdesc.text = desc
+			useMap[txtdesc] = true
 
-			gohelper.setActive(var_11_2.gameObject, true)
+			gohelper.setActive(txtdesc.gameObject, true)
 		end
 	end
 
-	for iter_11_2 = 1, RougeDLCEnum101.MaxRiskDescCount do
-		local var_11_3 = arg_11_0["_txtdec" .. iter_11_2]
+	for index = 1, RougeDLCEnum101.MaxRiskDescCount do
+		local txtdesc = self["_txtdec" .. index]
 
-		if var_11_3 and not var_11_0[var_11_3] then
-			gohelper.setActive(var_11_3.gameObject, false)
+		if txtdesc and not useMap[txtdesc] then
+			gohelper.setActive(txtdesc.gameObject, false)
 		end
 	end
 end
 
-function var_0_0.refreshEmptyUI(arg_12_0)
-	local var_12_0 = false
+function RougeLimiterOverView:refreshEmptyUI()
+	local isEmpty = false
 
-	if arg_12_0._curTabId == var_0_0.TabType.Debuff then
-		local var_12_1 = arg_12_0.viewParam and arg_12_0.viewParam.limiterIds
+	if self._curTabId == RougeLimiterOverView.TabType.Debuff then
+		local limiterIds = self.viewParam and self.viewParam.limiterIds
+		local limiterIdCount = limiterIds and #limiterIds or 0
 
-		var_12_0 = (var_12_1 and #var_12_1 or 0) <= 0
-	elseif arg_12_0._curTabId == var_0_0.TabType.Buff then
-		local var_12_2 = arg_12_0.viewParam and arg_12_0.viewParam.buffIds
+		isEmpty = limiterIdCount <= 0
+	elseif self._curTabId == RougeLimiterOverView.TabType.Buff then
+		local buffIds = self.viewParam and self.viewParam.buffIds
+		local buffIdCount = buffIds and #buffIds or 0
 
-		var_12_0 = (var_12_2 and #var_12_2 or 0) <= 0
+		isEmpty = buffIdCount <= 0
 	end
 
-	gohelper.setActive(arg_12_0._goempty, var_12_0)
+	gohelper.setActive(self._goempty, isEmpty)
 end
 
-function var_0_0._editableInitView(arg_13_0)
+function RougeLimiterOverView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function RougeLimiterOverView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0._curTabId = var_0_0.TabType.Debuff
+function RougeLimiterOverView:onOpen()
+	self._curTabId = RougeLimiterOverView.TabType.Debuff
 
-	arg_15_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_16_0)
+function RougeLimiterOverView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function RougeLimiterOverView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeLimiterOverView

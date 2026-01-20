@@ -1,71 +1,74 @@
-﻿module("modules.logic.rouge.model.RougeCollectionBagListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeCollectionBagListModel.lua
 
-local var_0_0 = class("RougeCollectionBagListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeCollectionBagListModel", package.seeall)
 
-function var_0_0.onInitData(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._baseTagFilterMap = arg_1_1
-	arg_1_0._extraTagFilterMap = arg_1_2
+local RougeCollectionBagListModel = class("RougeCollectionBagListModel", ListScrollModel)
 
-	arg_1_0:filterCollection()
-	arg_1_0:markCurSelectCollectionId()
+function RougeCollectionBagListModel:onInitData(baseTagFilterMap, extraTagFilterMap)
+	self._baseTagFilterMap = baseTagFilterMap
+	self._extraTagFilterMap = extraTagFilterMap
+
+	self:filterCollection()
+	self:markCurSelectCollectionId()
 end
 
-function var_0_0.filterCollection(arg_2_0)
-	local var_2_0 = {}
-	local var_2_1 = RougeCollectionModel.instance:getBagAreaCollection()
+function RougeCollectionBagListModel:filterCollection()
+	local showCollectionList = {}
+	local bagCollections = RougeCollectionModel.instance:getBagAreaCollection()
 
-	if var_2_1 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-			local var_2_2 = iter_2_1:getAllEnchantCfgId()
+	if bagCollections then
+		for _, collection in ipairs(bagCollections) do
+			local enchantCfgIds = collection:getAllEnchantCfgId()
+			local isTagFilter = RougeCollectionHelper.checkCollectionHasAnyOneTag(collection.cfgId, enchantCfgIds, self._baseTagFilterMap, self._extraTagFilterMap)
 
-			if RougeCollectionHelper.checkCollectionHasAnyOneTag(iter_2_1.cfgId, var_2_2, arg_2_0._baseTagFilterMap, arg_2_0._extraTagFilterMap) then
-				table.insert(var_2_0, iter_2_1)
+			if isTagFilter then
+				table.insert(showCollectionList, collection)
 			end
 		end
 	end
 
-	table.sort(var_2_0, arg_2_0.sortFunc)
-	arg_2_0:setList(var_2_0)
+	table.sort(showCollectionList, self.sortFunc)
+	self:setList(showCollectionList)
 end
 
-function var_0_0.sortFunc(arg_3_0, arg_3_1)
-	local var_3_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_0.cfgId)
-	local var_3_1 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_1.cfgId)
+function RougeCollectionBagListModel.sortFunc(a, b)
+	local aCfg = RougeCollectionConfig.instance:getCollectionCfg(a.cfgId)
+	local bCfg = RougeCollectionConfig.instance:getCollectionCfg(b.cfgId)
 
-	if var_3_0 and var_3_1 and var_3_0.showRare ~= var_3_1.showRare then
-		return var_3_0.showRare > var_3_1.showRare
+	if aCfg and bCfg and aCfg.showRare ~= bCfg.showRare then
+		return aCfg.showRare > bCfg.showRare
 	end
 
-	local var_3_2 = RougeCollectionConfig.instance:getCollectionCellCount(arg_3_0.cfgId, RougeEnum.CollectionEditorParamType.Shape)
-	local var_3_3 = RougeCollectionConfig.instance:getCollectionCellCount(arg_3_1.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local aSize = RougeCollectionConfig.instance:getCollectionCellCount(a.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local bSize = RougeCollectionConfig.instance:getCollectionCellCount(b.cfgId, RougeEnum.CollectionEditorParamType.Shape)
 
-	if var_3_2 ~= var_3_3 then
-		return var_3_3 < var_3_2
+	if aSize ~= bSize then
+		return bSize < aSize
 	end
 
-	return arg_3_0.id < arg_3_1.id
+	return a.id < b.id
 end
 
-function var_0_0.isBagEmpty(arg_4_0)
-	return arg_4_0:getCount() <= 0
+function RougeCollectionBagListModel:isBagEmpty()
+	return self:getCount() <= 0
 end
 
-function var_0_0.isFiltering(arg_5_0)
-	return not GameUtil.tabletool_dictIsEmpty(arg_5_0._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(arg_5_0._extraTagFilterMap)
+function RougeCollectionBagListModel:isFiltering()
+	return not GameUtil.tabletool_dictIsEmpty(self._baseTagFilterMap) or not GameUtil.tabletool_dictIsEmpty(self._extraTagFilterMap)
 end
 
-function var_0_0.isCollectionSelect(arg_6_0, arg_6_1)
-	if not arg_6_1 or not arg_6_0._curSelectCollection then
+function RougeCollectionBagListModel:isCollectionSelect(collectionId)
+	if not collectionId or not self._curSelectCollection then
 		return
 	end
 
-	return arg_6_0._curSelectCollection == arg_6_1
+	return self._curSelectCollection == collectionId
 end
 
-function var_0_0.markCurSelectCollectionId(arg_7_0, arg_7_1)
-	arg_7_0._curSelectCollection = arg_7_1
+function RougeCollectionBagListModel:markCurSelectCollectionId(newSelectCollectionId)
+	self._curSelectCollection = newSelectCollectionId
 end
 
-var_0_0.instance = var_0_0.New()
+RougeCollectionBagListModel.instance = RougeCollectionBagListModel.New()
 
-return var_0_0
+return RougeCollectionBagListModel

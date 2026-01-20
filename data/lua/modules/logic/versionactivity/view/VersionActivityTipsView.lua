@@ -1,64 +1,66 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityTipsView.lua
 
-local var_0_0 = class("VersionActivityTipsView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1", AudioEnum.UI.play_ui_help_close)
-	arg_1_0._scrollinfo = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_info")
-	arg_1_0._goinfoitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
-	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2", AudioEnum.UI.play_ui_help_close)
+local VersionActivityTipsView = class("VersionActivityTipsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityTipsView:onInitView()
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1", AudioEnum.UI.play_ui_help_close)
+	self._scrollinfo = gohelper.findChildScrollRect(self.viewGO, "#scroll_info")
+	self._goinfoitem = gohelper.findChild(self.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
+	self._btnclose2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close2", AudioEnum.UI.play_ui_help_close)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
-	arg_2_0._btnclose2:AddClickListener(arg_2_0._btnclose2OnClick, arg_2_0)
+function VersionActivityTipsView:addEvents()
+	self._btnclose1:AddClickListener(self._btnclose1OnClick, self)
+	self._btnclose2:AddClickListener(self._btnclose2OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose1:RemoveClickListener()
-	arg_3_0._btnclose2:RemoveClickListener()
+function VersionActivityTipsView:removeEvents()
+	self._btnclose1:RemoveClickListener()
+	self._btnclose2:RemoveClickListener()
 end
 
-function var_0_0._btnclose1OnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivityTipsView:_btnclose1OnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnclose2OnClick(arg_5_0)
-	arg_5_0:closeThis()
+function VersionActivityTipsView:_btnclose2OnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function VersionActivityTipsView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function VersionActivityTipsView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	local var_8_0 = luaLang("versionactivityexchange_rule")
-	local var_8_1 = string.split(var_8_0, "|")
+function VersionActivityTipsView:onOpen()
+	local langTxt = luaLang("versionactivityexchange_rule")
+	local strs = string.split(langTxt, "|")
 
-	for iter_8_0 = 1, #var_8_1, 2 do
-		local var_8_2 = gohelper.cloneInPlace(arg_8_0._goinfoitem, "infoitem")
+	for i = 1, #strs, 2 do
+		local item = gohelper.cloneInPlace(self._goinfoitem, "infoitem")
 
-		gohelper.setActive(var_8_2, true)
+		gohelper.setActive(item, true)
 
-		gohelper.findChildTextMesh(var_8_2, "txt_title").text = var_8_1[iter_8_0]
-		gohelper.findChildTextMesh(var_8_2, "txt_desc").text = var_8_1[iter_8_0 + 1]
+		gohelper.findChildTextMesh(item, "txt_title").text = strs[i]
+		gohelper.findChildTextMesh(item, "txt_desc").text = strs[i + 1]
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function VersionActivityTipsView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function VersionActivityTipsView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivityTipsView

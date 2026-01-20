@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballLoadingViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballLoadingViewContainer.lua
 
-local var_0_0 = class("PinballLoadingViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_4.pinball.view.PinballLoadingViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local PinballLoadingViewContainer = class("PinballLoadingViewContainer", BaseViewContainer)
+
+function PinballLoadingViewContainer:buildViews()
 	return {}
 end
 
-function var_0_0.onContainerOpen(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0.closeThis, arg_2_0, arg_2_0._viewSetting.delayTime or 2)
+function PinballLoadingViewContainer:onContainerOpen()
+	TaskDispatcher.runDelay(self.closeThis, self, self._viewSetting.delayTime or 2)
 end
 
-function var_0_0.onContainerClose(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.closeThis, arg_3_0)
+function PinballLoadingViewContainer:onContainerClose()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-return var_0_0
+return PinballLoadingViewContainer

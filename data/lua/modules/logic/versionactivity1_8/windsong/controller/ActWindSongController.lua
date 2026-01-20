@@ -1,51 +1,54 @@
-﻿module("modules.logic.versionactivity1_8.windsong.controller.ActWindSongController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/windsong/controller/ActWindSongController.lua
 
-local var_0_0 = class("ActWindSongController", BaseController)
+module("modules.logic.versionactivity1_8.windsong.controller.ActWindSongController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ActWindSongController = class("ActWindSongController", BaseController)
+
+function ActWindSongController:onInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_2_0.OnUpdateDungeonInfo, arg_2_0)
+function ActWindSongController:addConstEvents()
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self.OnUpdateDungeonInfo, self)
 end
 
-function var_0_0.OnUpdateDungeonInfo(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		ActWindSongModel.instance:checkFinishLevel(arg_3_1.episodeId, arg_3_1.star)
+function ActWindSongController:OnUpdateDungeonInfo(dungeonInfo)
+	if dungeonInfo then
+		ActWindSongModel.instance:checkFinishLevel(dungeonInfo.episodeId, dungeonInfo.star)
 	end
 end
 
-function var_0_0.enterActivity(arg_4_0)
-	local var_4_0 = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.WindSong).storyId
+function ActWindSongController:enterActivity()
+	local actConfig = ActivityConfig.instance:getActivityCo(VersionActivity1_8Enum.ActivityId.WindSong)
+	local storyId = actConfig.storyId
 
-	if var_4_0 > 0 and not StoryModel.instance:isStoryFinished(var_4_0) then
-		StoryController.instance:playStory(var_4_0, nil, arg_4_0._drirectOpenLevelView, arg_4_0)
+	if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+		StoryController.instance:playStory(storyId, nil, self._drirectOpenLevelView, self)
 	else
-		arg_4_0:_drirectOpenLevelView()
+		self:_drirectOpenLevelView()
 	end
 end
 
-function var_0_0.openLevelView(arg_5_0, arg_5_1)
+function ActWindSongController:openLevelView(viewParam)
 	if ViewMgr.instance:isOpen(ViewName.ActWindSongLevelView) then
-		if arg_5_1 ~= nil then
-			arg_5_0:dispatchEvent(ActWindSongEvent.TabSwitch, arg_5_1.needShowFight)
+		if viewParam ~= nil then
+			self:dispatchEvent(ActWindSongEvent.TabSwitch, viewParam.needShowFight)
 		end
 	else
-		arg_5_0:_drirectOpenLevelView(arg_5_1)
+		self:_drirectOpenLevelView(viewParam)
 	end
 end
 
-function var_0_0._drirectOpenLevelView(arg_6_0, arg_6_1)
-	ViewMgr.instance:openView(ViewName.ActWindSongLevelView, arg_6_1)
+function ActWindSongController:_drirectOpenLevelView(viewParam)
+	ViewMgr.instance:openView(ViewName.ActWindSongLevelView, viewParam)
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_view_open)
 end
 
-function var_0_0.delayReward(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0._actTaskMO == nil and arg_7_2 then
-		arg_7_0._actTaskMO = arg_7_2
+function ActWindSongController:delayReward(delayTime, taskMO)
+	if self._actTaskMO == nil and taskMO then
+		self._actTaskMO = taskMO
 
-		TaskDispatcher.runDelay(arg_7_0._onPreFinish, arg_7_0, arg_7_1)
+		TaskDispatcher.runDelay(self._onPreFinish, self, delayTime)
 
 		return true
 	end
@@ -53,34 +56,34 @@ function var_0_0.delayReward(arg_7_0, arg_7_1, arg_7_2)
 	return false
 end
 
-function var_0_0._onPreFinish(arg_8_0)
-	local var_8_0 = arg_8_0._actTaskMO
+function ActWindSongController:_onPreFinish()
+	local actTaskMO = self._actTaskMO
 
-	arg_8_0._actTaskMO = nil
+	self._actTaskMO = nil
 
-	if var_8_0 and (var_8_0.id == 0 or var_8_0.hasFinished) then
-		ActWindSongTaskListModel.instance:preFinish(var_8_0)
+	if actTaskMO and (actTaskMO.id == 0 or actTaskMO.hasFinished) then
+		ActWindSongTaskListModel.instance:preFinish(actTaskMO)
 
-		arg_8_0._actTaskId = var_8_0.id
+		self._actTaskId = actTaskMO.id
 
-		TaskDispatcher.runDelay(arg_8_0._onRewardTask, arg_8_0, ActWindSongEnum.AnimatorTime.TaskRewardMoveUp)
+		TaskDispatcher.runDelay(self._onRewardTask, self, ActWindSongEnum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function var_0_0._onRewardTask(arg_9_0)
-	local var_9_0 = arg_9_0._actTaskId
+function ActWindSongController:_onRewardTask()
+	local taskId = self._actTaskId
 
-	arg_9_0._actTaskId = nil
+	self._actTaskId = nil
 
-	if var_9_0 then
-		if var_9_0 == 0 then
+	if taskId then
+		if taskId == 0 then
 			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.RoleActivity, nil, nil, nil, nil, VersionActivity1_8Enum.ActivityId.WindSong)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(var_9_0)
+			TaskRpc.instance:sendFinishTaskRequest(taskId)
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ActWindSongController.instance = ActWindSongController.New()
 
-return var_0_0
+return ActWindSongController

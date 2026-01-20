@@ -1,177 +1,179 @@
-﻿module("modules.logic.versionactivity1_3.va3chess.game.comp.Va3ChessGotoObject", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/va3chess/game/comp/Va3ChessGotoObject.lua
 
-local var_0_0 = class("Va3ChessGotoObject")
+module("modules.logic.versionactivity1_3.va3chess.game.comp.Va3ChessGotoObject", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._target = arg_1_1
-	arg_1_0._srcList = nil
-	arg_1_0._itemTrackMark = false
+local Va3ChessGotoObject = class("Va3ChessGotoObject")
 
-	local var_1_0 = arg_1_0._target.originData.data
+function Va3ChessGotoObject:ctor(interactObj)
+	self._target = interactObj
+	self._srcList = nil
+	self._itemTrackMark = false
 
-	if var_1_0 then
-		arg_1_0._goToObjectId = var_1_0.goToObject
+	local extendData = self._target.originData.data
+
+	if extendData then
+		self._goToObjectId = extendData.goToObject
 	end
 
-	arg_1_0:initAttract()
+	self:initAttract()
 end
 
-function var_0_0.init(arg_2_0)
-	local var_2_0 = arg_2_0._target.originData.data
+function Va3ChessGotoObject:init()
+	local extendData = self._target.originData.data
 
-	if var_2_0 and var_2_0.goToObject then
-		local var_2_1 = var_2_0.goToObject
-		local var_2_2 = Va3ChessGameController.instance.interacts:get(var_2_1)
+	if extendData and extendData.goToObject then
+		local targetInteractId = extendData.goToObject
+		local targetInteractObj = Va3ChessGameController.instance.interacts:get(targetInteractId)
 
-		if var_2_2 then
-			var_2_2.goToObject:addSource(arg_2_0._target.originData.id)
+		if targetInteractObj then
+			targetInteractObj.goToObject:addSource(self._target.originData.id)
 		end
 	end
 end
 
-function var_0_0.initAttract(arg_3_0)
-	arg_3_0._attractEnemyMap = {}
+function Va3ChessGotoObject:initAttract()
+	self._attractEnemyMap = {}
 
-	if arg_3_0._target.config and arg_3_0._target.config.interactType == Va3ChessEnum.InteractType.Item and not string.nilorempty(arg_3_0._target.config.showParam) then
-		local var_3_0 = string.splitToNumber(arg_3_0._target.config.showParam, "#")
+	if self._target.config and self._target.config.interactType == Va3ChessEnum.InteractType.Item and not string.nilorempty(self._target.config.showParam) then
+		local showIds = string.splitToNumber(self._target.config.showParam, "#")
 
-		for iter_3_0, iter_3_1 in pairs(var_3_0) do
-			logNormal("Va3ChessGotoObject initAttract : " .. tostring(iter_3_1))
+		for _, id in pairs(showIds) do
+			logNormal("Va3ChessGotoObject initAttract : " .. tostring(id))
 
-			arg_3_0._attractEnemyMap[iter_3_1] = true
+			self._attractEnemyMap[id] = true
 		end
 	end
 end
 
-function var_0_0.updateGoToObject(arg_4_0)
-	local var_4_0
-	local var_4_1 = arg_4_0._target.originData.data
+function Va3ChessGotoObject:updateGoToObject()
+	local newId
+	local extendData = self._target.originData.data
 
-	if var_4_1 then
-		var_4_0 = var_4_1.goToObject
+	if extendData then
+		newId = extendData.goToObject
 	end
 
-	if arg_4_0._goToObjectId == var_4_0 then
+	if self._goToObjectId == newId then
 		return
 	end
 
-	arg_4_0:deleteRelation()
+	self:deleteRelation()
 
-	arg_4_0._goToObjectId = var_4_0
+	self._goToObjectId = newId
 
-	local var_4_2 = arg_4_0._target.originData.id
-	local var_4_3 = Va3ChessGameController.instance.interacts:get(var_4_0)
+	local selfId = self._target.originData.id
+	local targetInteract = Va3ChessGameController.instance.interacts:get(newId)
 
-	if var_4_3 ~= nil then
-		var_4_3.goToObject:addSource(var_4_2)
+	if targetInteract ~= nil then
+		targetInteract.goToObject:addSource(selfId)
 	end
 
-	arg_4_0:refreshTarget()
+	self:refreshTarget()
 end
 
-function var_0_0.deleteRelation(arg_5_0)
-	local var_5_0 = arg_5_0._target.originData.id
+function Va3ChessGotoObject:deleteRelation()
+	local selfId = self._target.originData.id
 
-	if arg_5_0._goToObjectId then
-		local var_5_1 = Va3ChessGameController.instance.interacts:get(arg_5_0._goToObjectId)
+	if self._goToObjectId then
+		local targetInteract = Va3ChessGameController.instance.interacts:get(self._goToObjectId)
 
-		if var_5_1 ~= nil and var_5_1.goToObject ~= nil then
-			var_5_1.goToObject:removeSource(var_5_0)
+		if targetInteract ~= nil and targetInteract.goToObject ~= nil then
+			targetInteract.goToObject:removeSource(selfId)
 		end
 	end
 end
 
-function var_0_0.refreshSource(arg_6_0)
-	if arg_6_0._target.avatar and arg_6_0._target.avatar.goTracked then
-		if arg_6_0._srcList then
-			gohelper.setActive(arg_6_0._target.avatar.goTracked, #arg_6_0._srcList > 0)
+function Va3ChessGotoObject:refreshSource()
+	if self._target.avatar and self._target.avatar.goTracked then
+		if self._srcList then
+			gohelper.setActive(self._target.avatar.goTracked, #self._srcList > 0)
 		else
-			gohelper.setActive(arg_6_0._target.avatar.goTracked, false)
+			gohelper.setActive(self._target.avatar.goTracked, false)
 		end
 	end
 end
 
-function var_0_0.refreshTarget(arg_7_0)
-	if arg_7_0._target.avatar then
-		local var_7_0 = false
-		local var_7_1 = false
+function Va3ChessGotoObject:refreshTarget()
+	if self._target.avatar then
+		local isPlayerTrack = false
+		local isItemTrack = false
 
-		if arg_7_0._goToObjectId ~= nil and arg_7_0._goToObjectId ~= 0 then
-			local var_7_2
-			local var_7_3 = Va3ChessGameController.instance.interacts:get(arg_7_0._goToObjectId)
+		if self._goToObjectId ~= nil and self._goToObjectId ~= 0 then
+			local targetType
+			local targetInteract = Va3ChessGameController.instance.interacts:get(self._goToObjectId)
 
-			if var_7_3 ~= nil then
-				var_7_2 = var_7_3.objType
+			if targetInteract ~= nil then
+				targetType = targetInteract.objType
 			end
 
-			if var_7_2 == Va3ChessEnum.InteractType.Item or var_7_2 == Va3ChessEnum.InteractType.NoEffectItem then
-				var_7_1 = true
+			if targetType == Va3ChessEnum.InteractType.Item or targetType == Va3ChessEnum.InteractType.NoEffectItem then
+				isItemTrack = true
 			else
-				var_7_0 = true
+				isPlayerTrack = true
 			end
 		end
 
-		local var_7_4 = arg_7_0._target.originData.data
+		local extendData = self._target.originData.data
 
-		if var_7_4 and var_7_4.lostTarget == true then
-			gohelper.setActive(arg_7_0._target.avatar.goTrackItem, false)
-			gohelper.setActive(arg_7_0._target.avatar.goTrack, false)
+		if extendData and extendData.lostTarget == true then
+			gohelper.setActive(self._target.avatar.goTrackItem, false)
+			gohelper.setActive(self._target.avatar.goTrack, false)
 
 			return
 		end
 
-		gohelper.setActive(arg_7_0._target.avatar.goTrackItem, var_7_1 or arg_7_0._itemTrackMark)
-		gohelper.setActive(arg_7_0._target.avatar.goTrack, var_7_0)
+		gohelper.setActive(self._target.avatar.goTrackItem, isItemTrack or self._itemTrackMark)
+		gohelper.setActive(self._target.avatar.goTrack, isPlayerTrack)
 	end
 end
 
-function var_0_0.addSource(arg_8_0, arg_8_1)
-	arg_8_0._srcList = arg_8_0._srcList or {}
+function Va3ChessGotoObject:addSource(srcId)
+	self._srcList = self._srcList or {}
 
-	table.insert(arg_8_0._srcList, arg_8_1)
-	arg_8_0:refreshSource()
+	table.insert(self._srcList, srcId)
+	self:refreshSource()
 end
 
-function var_0_0.removeSource(arg_9_0, arg_9_1)
-	if arg_9_0._srcList then
-		tabletool.removeValue(arg_9_0._srcList, arg_9_1)
+function Va3ChessGotoObject:removeSource(srcId)
+	if self._srcList then
+		tabletool.removeValue(self._srcList, srcId)
 	end
 
-	arg_9_0:refreshSource()
+	self:refreshSource()
 end
 
-function var_0_0.setItemTrackMark(arg_10_0, arg_10_1)
-	arg_10_0._itemTrackMark = arg_10_1
+function Va3ChessGotoObject:setItemTrackMark(value)
+	self._itemTrackMark = value
 end
 
-function var_0_0.setMarkAttract(arg_11_0, arg_11_1)
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._attractEnemyMap) do
-		local var_11_0 = Va3ChessGameController.instance.interacts:get(iter_11_0)
+function Va3ChessGotoObject:setMarkAttract(value)
+	for showId, _ in pairs(self._attractEnemyMap) do
+		local targetInteract = Va3ChessGameController.instance.interacts:get(showId)
 
-		if var_11_0 ~= nil then
-			var_11_0.goToObject:setItemTrackMark(arg_11_1)
-			var_11_0.goToObject:refreshTarget()
+		if targetInteract ~= nil then
+			targetInteract.goToObject:setItemTrackMark(value)
+			targetInteract.goToObject:refreshTarget()
 		end
 	end
 end
 
-function var_0_0.onAvatarLoaded(arg_12_0)
-	local var_12_0 = arg_12_0._target.avatar.loader
+function Va3ChessGotoObject:onAvatarLoaded()
+	local loader = self._target.avatar.loader
 
-	if not var_12_0 then
+	if not loader then
 		return
 	end
 
-	arg_12_0._target.avatar.goTracked = gohelper.findChild(var_12_0:getInstGO(), "piecea/vx_tracked")
-	arg_12_0._target.avatar.goTrack = gohelper.findChild(var_12_0:getInstGO(), "piecea/vx_track")
-	arg_12_0._target.avatar.goTrackItem = gohelper.findChild(var_12_0:getInstGO(), "piecea/vx_wenao")
+	self._target.avatar.goTracked = gohelper.findChild(loader:getInstGO(), "piecea/vx_tracked")
+	self._target.avatar.goTrack = gohelper.findChild(loader:getInstGO(), "piecea/vx_track")
+	self._target.avatar.goTrackItem = gohelper.findChild(loader:getInstGO(), "piecea/vx_wenao")
 
-	arg_12_0:refreshSource()
-	arg_12_0:refreshTarget()
+	self:refreshSource()
+	self:refreshTarget()
 end
 
-function var_0_0.dispose(arg_13_0)
-	arg_13_0:deleteRelation()
+function Va3ChessGotoObject:dispose()
+	self:deleteRelation()
 end
 
-return var_0_0
+return Va3ChessGotoObject

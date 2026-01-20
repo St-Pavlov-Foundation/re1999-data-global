@@ -1,43 +1,45 @@
-﻿module("modules.logic.fight.system.work.FightWorkFightStep", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkFightStep.lua
 
-local var_0_0 = class("FightWorkFightStep", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkFightStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	if not arg_1_0._workFlow then
-		arg_1_0._workFlow = FightWorkFlowSequence.New()
+local FightWorkFightStep = class("FightWorkFightStep", FightEffectBase)
+
+function FightWorkFightStep:onStart()
+	if not self._workFlow then
+		self._workFlow = FightWorkFlowSequence.New()
 		FightStepBuilder.lastEffect = nil
 
-		FightStepBuilder.addEffectWork(arg_1_0._workFlow, arg_1_0.actEffectData.fightStep)
+		FightStepBuilder.addEffectWork(self._workFlow, self.actEffectData.fightStep)
 
 		FightStepBuilder.lastEffect = nil
 	end
 
-	arg_1_0._workFlow:addWork(Work2FightWork.New(FightWorkShowEquipSkillEffect, arg_1_0.actEffectData.fightStep))
+	self._workFlow:addWork(Work2FightWork.New(FightWorkShowEquipSkillEffect, self.actEffectData.fightStep))
 
-	if arg_1_0.actEffectData.fightStep.actType == FightEnum.ActType.SKILL and not FightHelper.isTimelineStep(arg_1_0.actEffectData.fightStep) then
-		arg_1_0._workFlow:addWork(Work2FightWork.New(FightNonTimelineSkillStep, arg_1_0.actEffectData.fightStep))
+	if self.actEffectData.fightStep.actType == FightEnum.ActType.SKILL and not FightHelper.isTimelineStep(self.actEffectData.fightStep) then
+		self._workFlow:addWork(Work2FightWork.New(FightNonTimelineSkillStep, self.actEffectData.fightStep))
 	end
 
-	arg_1_0:cancelFightWorkSafeTimer()
-	arg_1_0._workFlow:registFinishCallback(arg_1_0._onFlowDone, arg_1_0)
+	self:cancelFightWorkSafeTimer()
+	self._workFlow:registFinishCallback(self._onFlowDone, self)
 
-	return arg_1_0._workFlow:start()
+	return self._workFlow:start()
 end
 
-function var_0_0.setFlow(arg_2_0, arg_2_1)
-	arg_2_0._workFlow = arg_2_1
+function FightWorkFightStep:setFlow(flow)
+	self._workFlow = flow
 end
 
-function var_0_0._onFlowDone(arg_3_0)
-	return arg_3_0:onDone(true)
+function FightWorkFightStep:_onFlowDone()
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._workFlow then
-		arg_4_0._workFlow:disposeSelf()
+function FightWorkFightStep:clearWork()
+	if self._workFlow then
+		self._workFlow:disposeSelf()
 
-		arg_4_0._workFlow = nil
+		self._workFlow = nil
 	end
 end
 
-return var_0_0
+return FightWorkFightStep

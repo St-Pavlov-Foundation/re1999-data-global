@@ -1,30 +1,32 @@
-﻿module("modules.logic.activity.view.ActivityBeginnerView", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityBeginnerView.lua
 
-local var_0_0 = class("ActivityBeginnerView", BaseView)
+module("modules.logic.activity.view.ActivityBeginnerView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
-	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_category/#scroll_categoryitem")
-	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
+local ActivityBeginnerView = class("ActivityBeginnerView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityBeginnerView:onInitView()
+	self._gocategory = gohelper.findChild(self.viewGO, "#go_category")
+	self._scrollitem = gohelper.findChildScrollRect(self.viewGO, "#go_category/#scroll_categoryitem")
+	self._gosubview = gohelper.findChild(self.viewGO, "#go_subview")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ActivityBeginnerView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ActivityBeginnerView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ActivityBeginnerView:_editableInitView()
 	return
 end
 
-local var_0_1 = {
+local activitySubViewDict = {
 	[ActivityEnum.Activity.GuestBind] = ViewName.ActivityGuestBindView,
 	[ActivityEnum.Activity.RoleSignViewPart1] = ViewName.V1a5_Role_FullSignView_Part1,
 	[ActivityEnum.Activity.RoleSignViewPart2] = ViewName.V1a5_Role_FullSignView_Part2,
@@ -131,12 +133,14 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a9_Act208] = ViewName.V2a9_Act208MainView,
 	[VersionActivity3_1Enum.ActivityId.SurvivalOperAct] = ViewName.SurvivalOperActFullView,
 	[VersionActivity3_1Enum.ActivityId.TowerDeep] = ViewName.TowerDeepOperActFullView,
-	[VersionActivity3_1Enum.ActivityId.BpOperAct] = ViewName.V3a1_BpOperActShowView,
+	[BpModel.instance:getCurVersionOperActId()] = ViewName.V3a1_BpOperActShowView,
 	[VersionActivity3_1Enum.ActivityId.NationalGift] = ViewName.NationalGiftFullView,
 	[ActivityEnum.Activity.V3a1_AutumnSign] = ViewName.V3a1_AutumnSign_FullView,
-	[ActivityEnum.Activity.V3a1_NewCultivationDestiny] = ViewName.VersionActivity2_3NewCultivationGiftView
+	[ActivityEnum.Activity.V3a1_NewCultivationDestiny] = ViewName.VersionActivity2_3NewCultivationGiftView,
+	[VersionActivity3_2Enum.ActivityId.CruiseTripleDrop] = ViewName.CruiseTripleDropFullView,
+	[VersionActivity3_2Enum.ActivityId.ActivityCollect] = ViewName.V3A2ActivityCollectView
 }
-local var_0_2 = {
+local actTypeSubViewDict = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
 	[ActivityEnum.ActivityTypeID.OpenTestWarmUp] = ViewName.ActivityWarmUpView,
 	[ActivityEnum.ActivityTypeID.DoubleDrop] = ViewName.V1a7_DoubleDropView,
@@ -144,305 +148,307 @@ local var_0_2 = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView
 }
 
-function var_0_0.onUpdateParam(arg_5_0)
+function ActivityBeginnerView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function ActivityBeginnerView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
-	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_6_0._refreshView, arg_6_0)
-	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_6_0.setCategoryListInteractable, arg_6_0)
-	arg_6_0:_initRole_FullSignView()
-	arg_6_0:_initSpecial_FullSignView()
-	arg_6_0:_initLinkageActivity_FullView()
-	arg_6_0:_initWarmUp()
-	arg_6_0:_initWarmUpH5()
-	arg_6_0:_initDoubleDan()
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshView, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, self.setCategoryListInteractable, self)
+	self:_initRole_FullSignView()
+	self:_initSpecial_FullSignView()
+	self:_initLinkageActivity_FullView()
+	self:_initWarmUp()
+	self:_initWarmUpH5()
+	self:_initSelfSelectCharacter()
+	self:_initVersionSummon()
+	self:_initCultivationDestiny()
 
-	arg_6_0._needSetSortInfos = true
+	self._needSetSortInfos = true
 
-	arg_6_0:_refreshView()
+	self:_refreshView()
 
-	arg_6_0._needSetSortInfos = false
+	self._needSetSortInfos = false
 end
 
-function var_0_0._refreshView(arg_7_0)
-	local var_7_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)
+function ActivityBeginnerView:_refreshView()
+	local actCo = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)
 
-	if not var_7_0 or not next(var_7_0) then
-		arg_7_0:closeThis()
+	if not actCo or not next(actCo) then
+		self:closeThis()
 	end
 
-	ActivityModel.instance:removeFinishedCategory(var_7_0)
+	ActivityModel.instance:removeFinishedCategory(actCo)
 
-	arg_7_0.data = {}
+	self.data = {}
 
-	local var_7_1 = BootNativeUtil.isIOS()
+	local isIos = BootNativeUtil.isIOS()
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if var_7_1 and ActivityEnum.IOSHideActIdMap[tonumber(iter_7_1)] then
+	for _, v in pairs(actCo) do
+		if isIos and ActivityEnum.IOSHideActIdMap[tonumber(v)] then
 			logNormal("iOS临时屏蔽双端登录活动入口")
 		else
-			local var_7_2 = {
-				id = iter_7_1,
-				co = ActivityConfig.instance:getActivityCo(iter_7_1),
-				type = ActivityEnum.ActivityType.Beginner
-			}
+			local o = {}
 
-			table.insert(arg_7_0.data, var_7_2)
+			o.id = v
+			o.co = ActivityConfig.instance:getActivityCo(v)
+			o.type = ActivityEnum.ActivityType.Beginner
+
+			table.insert(self.data, o)
 		end
 	end
 
-	if arg_7_0._needSetSortInfos then
-		arg_7_0._needSetSortInfos = false
+	if self._needSetSortInfos then
+		self._needSetSortInfos = false
 
-		ActivityBeginnerCategoryListModel.instance:setSortInfos(arg_7_0.data)
-		ActivityBeginnerCategoryListModel.instance:checkTargetCategory(arg_7_0.data)
+		ActivityBeginnerCategoryListModel.instance:setSortInfos(self.data)
+		ActivityBeginnerCategoryListModel.instance:checkTargetCategory(self.data)
 	end
 
 	ActivityBeginnerCategoryListModel.instance:setOpenViewTime()
-	ActivityBeginnerCategoryListModel.instance:setCategoryList(arg_7_0.data)
-	arg_7_0:_openSubView()
+	ActivityBeginnerCategoryListModel.instance:setCategoryList(self.data)
+	self:_openSubView()
 end
 
-function var_0_0._openSubView(arg_8_0)
-	if arg_8_0._viewName then
-		ViewMgr.instance:closeView(arg_8_0._viewName, true)
+function ActivityBeginnerView:_openSubView()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 	end
 
-	local var_8_0 = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Beginner)
+	local actId = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Beginner)
 
-	arg_8_0._viewName = var_0_1[var_8_0]
+	self._viewName = activitySubViewDict[actId]
 
-	if var_8_0 ~= 0 then
-		arg_8_0:setCategoryRedDotData(var_8_0)
+	if actId ~= 0 then
+		self:setCategoryRedDotData(actId)
 	end
 
-	if not arg_8_0._viewName then
-		local var_8_1 = ActivityConfig.instance:getActivityCo(var_8_0)
+	if not self._viewName then
+		local co = ActivityConfig.instance:getActivityCo(actId)
 
-		if var_8_1 then
-			if var_0_2[var_8_1.typeId] then
-				arg_8_0._viewName = var_0_2[var_8_1.typeId]
+		if co then
+			if actTypeSubViewDict[co.typeId] then
+				self._viewName = actTypeSubViewDict[co.typeId]
 			end
 
-			arg_8_0.viewContainer:refreshHelp(var_8_1.typeId)
+			self.viewContainer:refreshHelp(co.typeId)
 		else
-			arg_8_0.viewContainer:hideHelp()
+			self.viewContainer:hideHelp()
 
 			return
 		end
 	else
-		arg_8_0.viewContainer:hideHelp()
+		self.viewContainer:hideHelp()
 	end
 
-	local var_8_2 = {
-		parent = arg_8_0._gosubview,
-		actId = var_8_0,
-		root = arg_8_0.viewGO
+	local viewParam = {
+		parent = self._gosubview,
+		actId = actId,
+		root = self.viewGO
 	}
 
-	ViewMgr.instance:openView(arg_8_0._viewName, var_8_2, true)
+	ViewMgr.instance:openView(self._viewName, viewParam, true)
 end
 
-function var_0_0.setCategoryRedDotData(arg_9_0, arg_9_1)
-	local var_9_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_9_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function ActivityBeginnerView:setCategoryRedDotData(actId)
+	local key = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(actId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(var_9_0, "hasEnter")
+	PlayerPrefsHelper.setString(key, "hasEnter")
 
-	return var_9_0
+	return key
 end
 
-function var_0_0.closeSubView(arg_10_0)
-	if arg_10_0._viewName then
-		ViewMgr.instance:closeView(arg_10_0._viewName, true)
+function ActivityBeginnerView:closeSubView()
+	if self._viewName then
+		ViewMgr.instance:closeView(self._viewName, true)
 
-		arg_10_0._viewName = nil
+		self._viewName = nil
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function ActivityBeginnerView:onClose()
 	ActivityModel.instance:setTargetActivityCategoryId(0)
-	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_11_0._refreshView, arg_11_0)
-	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_11_0.setCategoryListInteractable, arg_11_0)
-	arg_11_0:closeSubView()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshView, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, self.setCategoryListInteractable, self)
+	self:closeSubView()
 	ActivityModel.instance:setTargetActivityCategoryId(0)
 	ActivityBeginnerCategoryListModel.instance:clear()
 end
 
-function var_0_0.setCategoryListInteractable(arg_12_0, arg_12_1)
-	if not arg_12_0._categoryListCanvasGroup then
-		arg_12_0._categoryListCanvasGroup = gohelper.onceAddComponent(arg_12_0._gocategory, typeof(UnityEngine.CanvasGroup))
+function ActivityBeginnerView:setCategoryListInteractable(isInteractable)
+	if not self._categoryListCanvasGroup then
+		self._categoryListCanvasGroup = gohelper.onceAddComponent(self._gocategory, typeof(UnityEngine.CanvasGroup))
 	end
 
-	arg_12_0._categoryListCanvasGroup.interactable = arg_12_1
-	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
-	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
+	self._categoryListCanvasGroup.interactable = isInteractable
+	self._categoryListCanvasGroup.blocksRaycasts = isInteractable
+	self._categoryListCanvasGroup.blocksRaycasts = isInteractable
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function ActivityBeginnerView:onDestroyView()
 	return
 end
 
-local var_0_3 = false
+local s_Role_FullSignView = false
 
-function var_0_0._initRole_FullSignView(arg_14_0)
-	if var_0_3 then
+function ActivityBeginnerView:_initRole_FullSignView()
+	if s_Role_FullSignView then
 		return
 	end
 
-	var_0_3 = true
+	s_Role_FullSignView = true
 
-	local var_14_0 = ActivityType101Model.instance:getRoleSignActIdList()
-	local var_14_1 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", var_14_0[1])
+	local roleSignActIdList = ActivityType101Config.instance:getRoleSignActIdList()
+	local key1 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", roleSignActIdList[1])
 
-	if var_14_1 then
-		local var_14_2 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part1", ViewName.Role_FullSignView_Part1)
+	if key1 then
+		local val1 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part1", ViewName.Role_FullSignView_Part1)
 
-		var_0_1[var_14_1] = var_14_2
+		activitySubViewDict[key1] = val1
 	end
 
-	local var_14_3 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", var_14_0[2])
+	local key2 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", roleSignActIdList[2])
 
-	if var_14_3 then
-		local var_14_4 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part2", ViewName.Role_FullSignView_Part2)
+	if key2 then
+		local val2 = GameBranchMgr.instance:Vxax_ViewName("Role_FullSignView_Part2", ViewName.Role_FullSignView_Part2)
 
-		var_0_1[var_14_3] = var_14_4
+		activitySubViewDict[key2] = val2
 	end
 end
 
-local var_0_4 = false
+local s_Special_FullSignView = false
 
-function var_0_0._initSpecial_FullSignView(arg_15_0)
-	if var_0_4 then
+function ActivityBeginnerView:_initSpecial_FullSignView()
+	if s_Special_FullSignView then
 		return
 	end
 
-	var_0_4 = true
+	s_Special_FullSignView = true
 
-	local var_15_0 = GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)
-	local var_15_1 = GameBranchMgr.instance:Vxax_ViewName("Special_FullSignView", ViewName.V2a3_Special_FullSignView)
+	local key = GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)
+	local val = GameBranchMgr.instance:Vxax_ViewName("Special_FullSignView", ViewName.V2a3_Special_FullSignView)
 
-	var_0_1[var_15_0] = var_15_1
+	activitySubViewDict[key] = val
 end
 
-local var_0_5 = false
+local s_LinkageActivity_FullView = false
 
-function var_0_0._initLinkageActivity_FullView(arg_16_0)
-	if var_0_5 then
+function ActivityBeginnerView:_initLinkageActivity_FullView()
+	if s_LinkageActivity_FullView then
 		return
 	end
 
-	var_0_5 = true
+	s_LinkageActivity_FullView = true
 
-	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.LinkageActivity_FullView)
-	local var_16_1 = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.LinkageActivity_FullView)
+	local key = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.LinkageActivity_FullView)
+	local val = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.LinkageActivity_FullView)
 
-	var_0_1[var_16_0] = var_16_1
+	activitySubViewDict[key] = val
 end
 
-local var_0_6 = false
+local s_WarmUp = false
 
-function var_0_0._initWarmUp(arg_17_0)
-	if var_0_6 then
+function ActivityBeginnerView:_initWarmUp()
+	if s_WarmUp then
 		return
 	end
 
-	var_0_6 = true
+	s_WarmUp = true
 
-	local var_17_0 = GameBranchMgr.instance:Vxax_ActId("WarmUp", ActivityEnum.Activity.V2a8_WarmUp)
-	local var_17_1 = GameBranchMgr.instance:Vxax_ViewName("WarmUp", ViewName.V2a8_WarmUp)
+	local key = GameBranchMgr.instance:Vxax_ActId("WarmUp", ActivityEnum.Activity.V2a8_WarmUp)
+	local val = GameBranchMgr.instance:Vxax_ViewName("WarmUp", ViewName.V2a8_WarmUp)
 
-	var_0_1[var_17_0] = var_17_1
+	activitySubViewDict[key] = val
 end
 
-local var_0_7 = false
+local s_WarmUpH5 = false
 
-function var_0_0._initWarmUpH5(arg_18_0)
-	if var_0_7 then
+function ActivityBeginnerView:_initWarmUpH5()
+	if s_WarmUpH5 then
 		return
 	end
 
-	var_0_7 = true
+	s_WarmUpH5 = true
 
-	local var_18_0 = ActivityType100Config.instance:getWarmUpH5ActivityId()
+	local actId = ActivityType100Config.instance:getWarmUpH5ActivityId()
 
-	var_0_1[var_18_0] = ViewName.ActivityWarmUpH5FullView
+	activitySubViewDict[actId] = ViewName.ActivityWarmUpH5FullView
 end
 
-local var_0_8 = false
+local s_SelfSelectCharacter = false
 
-function var_0_0._initSelfSelectCharacter(arg_19_0)
-	if var_0_8 then
+function ActivityBeginnerView:_initSelfSelectCharacter()
+	if s_SelfSelectCharacter then
 		return
 	end
 
-	var_0_8 = true
+	s_SelfSelectCharacter = true
 
-	local var_19_0 = Activity136Controller.instance:actId()
+	local actId = Activity136Controller.instance:actId()
 
-	var_0_1[var_19_0] = ViewName.Activity136FullView
+	activitySubViewDict[actId] = ViewName.Activity136FullView
 end
 
-local var_0_9 = false
+local s_VersionSummon = false
 
-function var_0_0._initVersionSummon(arg_20_0)
-	if var_0_9 then
+function ActivityBeginnerView:_initVersionSummon()
+	if s_VersionSummon then
 		return
 	end
 
-	var_0_9 = true
+	s_VersionSummon = true
 
-	local var_20_0 = ActivityType101Config.instance:getVersionSummonActIdList()
-	local var_20_1 = GameBranchMgr.instance:Vxax_ActId("VersionSummon_Part1", var_20_0[1])
+	local actIdList = ActivityType101Config.instance:getVersionSummonActIdList()
+	local key1 = GameBranchMgr.instance:Vxax_ActId("VersionSummon_Part1", actIdList[1])
 
-	if var_20_1 then
-		local var_20_2 = GameBranchMgr.instance:Vxax_ViewName("VersionSummon_Part1", ViewName.VersionSummonFull_Part1)
+	if key1 then
+		local val1 = GameBranchMgr.instance:Vxax_ViewName("VersionSummon_Part1", ViewName.VersionSummonFull_Part1)
 
-		var_0_1[var_20_1] = var_20_2
+		activitySubViewDict[key1] = val1
 	end
 
-	local var_20_3 = GameBranchMgr.instance:Vxax_ActId("VersionSummon_Part2", var_20_0[2])
+	local key2 = GameBranchMgr.instance:Vxax_ActId("VersionSummon_Part2", actIdList[2])
 
-	if var_20_3 then
-		local var_20_4 = GameBranchMgr.instance:Vxax_ViewName("VersionSummonFull_Part2", ViewName.VersionSummonFull_Part2)
+	if key2 then
+		local val2 = GameBranchMgr.instance:Vxax_ViewName("VersionSummonFull_Part2", ViewName.VersionSummonFull_Part2)
 
-		var_0_1[var_20_3] = var_20_4
+		activitySubViewDict[key2] = val2
 	end
 end
 
-local var_0_10 = false
+local s_CultivationDestiny = false
 
-function var_0_0._initCultivationDestiny(arg_21_0)
-	if var_0_10 then
+function ActivityBeginnerView:_initCultivationDestiny()
+	if s_CultivationDestiny then
 		return
 	end
 
-	var_0_10 = true
+	s_CultivationDestiny = true
 
-	local var_21_0 = Activity125Config.instance:getCultivationDestinyActId()
+	local actId = Activity125Config.instance:getCultivationDestinyActId()
 
-	if not var_0_1[var_21_0] then
-		var_0_1[var_21_0] = ViewName.VersionActivity2_3NewCultivationGiftView
+	if not activitySubViewDict[actId] then
+		activitySubViewDict[actId] = ViewName.VersionActivity2_3NewCultivationGiftView
 	end
 end
 
-local var_0_11 = false
+local s_DoubleDan = false
 
-function var_0_0._initDoubleDan(arg_22_0)
-	if var_0_11 then
+function ActivityBeginnerView:_initDoubleDan()
+	if s_DoubleDan then
 		return
 	end
 
-	var_0_11 = true
+	s_DoubleDan = true
 
-	local var_22_0 = GameBranchMgr.instance:Vxax_ActId("DoubleDan", ActivityType101Config.instance:getDoubleDanActId())
+	local actId = GameBranchMgr.instance:Vxax_ActId("DoubleDan", ActivityType101Config.instance:getDoubleDanActId())
 
-	if var_22_0 then
-		local var_22_1 = GameBranchMgr.instance:Vxax_ViewName("DoubleDanActivity_FullView", ViewName.V3a3_DoubleDanActivity_FullView)
+	if actId then
+		local viewName = GameBranchMgr.instance:Vxax_ViewName("DoubleDanActivity_FullView", ViewName.V3a3_DoubleDanActivity_FullView)
 
-		var_0_1[var_22_0] = var_22_1
+		activitySubViewDict[actId] = viewName
 	end
 end
 
-return var_0_0
+return ActivityBeginnerView

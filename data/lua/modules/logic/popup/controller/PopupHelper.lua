@@ -1,27 +1,33 @@
-﻿module("modules.logic.popup.controller.PopupHelper", package.seeall)
+﻿-- chunkname: @modules/logic/popup/controller/PopupHelper.lua
 
-local var_0_0 = class("PopupHelper")
+module("modules.logic.popup.controller.PopupHelper", package.seeall)
 
-function var_0_0.checkInFight()
-	return (GameSceneMgr.instance:isFightScene())
+local PopupHelper = class("PopupHelper")
+
+function PopupHelper.checkInFight()
+	local result = GameSceneMgr.instance:isFightScene()
+
+	return result
 end
 
-function var_0_0.checkInGuide()
-	local var_2_0 = false
-	local var_2_1 = GuideController.instance:isGuiding()
-	local var_2_2 = ViewMgr.instance:isOpen(ViewName.GuideView)
-	local var_2_3 = GuideModel.instance:lastForceGuideId()
-	local var_2_4 = GuideModel.instance:isGuideFinish(var_2_3)
+function PopupHelper.checkInGuide()
+	local result = false
+	local isGuiding = GuideController.instance:isGuiding()
+	local isOpenGuideView = ViewMgr.instance:isOpen(ViewName.GuideView)
+	local forceGuideId = GuideModel.instance:lastForceGuideId()
+	local isFinishForceGuide = GuideModel.instance:isGuideFinish(forceGuideId)
 
-	if var_2_1 or var_2_2 or not var_2_4 then
-		var_2_0 = true
+	if isGuiding or isOpenGuideView or not isFinishForceGuide then
+		result = true
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.checkInSummonDrawing()
-	return (SummonModel.instance:getIsDrawing())
+function PopupHelper.checkInSummonDrawing()
+	local result = SummonModel.instance:getIsDrawing()
+
+	return result
 end
 
-return var_0_0
+return PopupHelper

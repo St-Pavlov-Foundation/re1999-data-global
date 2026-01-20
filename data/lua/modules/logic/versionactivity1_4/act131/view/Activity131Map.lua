@@ -1,133 +1,136 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131Map", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131Map.lua
 
-local var_0_0 = class("Activity131Map", BaseView)
+module("modules.logic.versionactivity1_4.act131.view.Activity131Map", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+local Activity131Map = class("Activity131Map", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity131Map:onInitView()
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity131Map:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity131Map:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._elementList = arg_4_0:getUserDataTb_()
-	arg_4_0._tempVector = Vector3()
-	arg_4_0._sceneIndex = 1
-	arg_4_0._click = SLFramework.UGUI.UIClickListener.Get(arg_4_0._gofullscreen)
+function Activity131Map:_editableInitView()
+	self._elementList = self:getUserDataTb_()
+	self._tempVector = Vector3()
+	self._sceneIndex = 1
+	self._click = SLFramework.UGUI.UIClickListener.Get(self._gofullscreen)
 
-	arg_4_0:_initMap()
-	arg_4_0:_addEvents()
+	self:_initMap()
+	self:_addEvents()
 end
 
-function var_0_0._initMap(arg_5_0)
-	local var_5_0 = CameraMgr.instance:getSceneRoot()
+function Activity131Map:_initMap()
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_5_0._sceneRoot = UnityEngine.GameObject.New("Activity131Map")
+	self._sceneRoot = UnityEngine.GameObject.New("Activity131Map")
 
-	local var_5_1 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_5_2, var_5_3, var_5_4 = transformhelper.getLocalPos(var_5_1)
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_5_0._sceneRoot.transform, 0.5, var_5_3, 0)
-	gohelper.addChild(var_5_0, arg_5_0._sceneRoot)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0.5, y, 0)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 
-	local var_5_5 = string.split(Activity131Model.instance:getCurMapConfig().scenes, "#")
-	local var_5_6 = "ui/viewres/versionactivity_1_4/v1a4_6role/v1a4_role6_mapinteractiveitem.prefab"
+	local mainUrls = string.split(Activity131Model.instance:getCurMapConfig().scenes, "#")
+	local interactiveItemUrl = "ui/viewres/versionactivity_1_4/v1a4_6role/v1a4_role6_mapinteractiveitem.prefab"
 
-	arg_5_0._mapLoader = MultiAbLoader.New()
+	self._mapLoader = MultiAbLoader.New()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_5) do
-		arg_5_0._mapLoader:addPath(iter_5_1 .. ".prefab")
+	for _, mainUrl in ipairs(mainUrls) do
+		self._mapLoader:addPath(mainUrl .. ".prefab")
 	end
 
-	arg_5_0._mapLoader:addPath(var_5_6)
-	arg_5_0._mapLoader:startLoad(function(arg_6_0)
-		arg_5_0._mainPrefabs = {}
-		arg_5_0._elementRoots = {}
+	self._mapLoader:addPath(interactiveItemUrl)
+	self._mapLoader:startLoad(function(multiAbLoader)
+		self._mainPrefabs = {}
+		self._elementRoots = {}
 
-		for iter_6_0, iter_6_1 in ipairs(var_5_5) do
-			local var_6_0 = arg_5_0._mapLoader:getAssetItem(iter_6_1 .. ".prefab"):GetResource(iter_6_1 .. ".prefab")
-			local var_6_1 = gohelper.clone(var_6_0, arg_5_0._sceneRoot)
+		for _, mainUrl in ipairs(mainUrls) do
+			local mainAssetItem = self._mapLoader:getAssetItem(mainUrl .. ".prefab")
+			local mainPrefab = mainAssetItem:GetResource(mainUrl .. ".prefab")
+			local prefabGo = gohelper.clone(mainPrefab, self._sceneRoot)
 
-			gohelper.setActive(var_6_1, false)
-			table.insert(arg_5_0._mainPrefabs, var_6_1)
+			gohelper.setActive(prefabGo, false)
+			table.insert(self._mainPrefabs, prefabGo)
 		end
 
-		local var_6_2 = Activity131Model.instance:getCurEpisodeId()
-		local var_6_3 = Activity131Model.instance:getEpisodeCurSceneIndex(var_6_2)
+		local episodeId = Activity131Model.instance:getCurEpisodeId()
+		local curSceneIndex = Activity131Model.instance:getEpisodeCurSceneIndex(episodeId)
 
-		arg_5_0._sceneGo = arg_5_0._mainPrefabs[var_6_3]
+		self._sceneGo = self._mainPrefabs[curSceneIndex]
 
-		gohelper.setActive(arg_5_0._sceneGo, true)
+		gohelper.setActive(self._sceneGo, true)
 
-		arg_5_0._sceneAnimator = arg_5_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+		self._sceneAnimator = self._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-		arg_5_0._sceneAnimator:Play("open", 0, 0)
+		self._sceneAnimator:Play("open", 0, 0)
 
-		arg_5_0._backgroundGo = gohelper.findChild(arg_5_0._sceneGo, "root/BackGround")
-		arg_5_0._diffuseGo = gohelper.findChild(arg_5_0._sceneGo, "Obj-Plant/all/diffuse")
-		arg_5_0._elementRoots[var_6_3] = UnityEngine.GameObject.New("elementRoot")
+		self._backgroundGo = gohelper.findChild(self._sceneGo, "root/BackGround")
+		self._diffuseGo = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse")
+		self._elementRoots[curSceneIndex] = UnityEngine.GameObject.New("elementRoot")
 
-		gohelper.addChild(arg_5_0._mainPrefabs[var_6_3], arg_5_0._elementRoots[var_6_3])
+		gohelper.addChild(self._mainPrefabs[curSceneIndex], self._elementRoots[curSceneIndex])
 
-		arg_5_0._anim = arg_5_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+		self._anim = self._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-		local var_6_4 = arg_5_0._mapLoader:getAssetItem(var_5_6)
+		local interactAssetItem = self._mapLoader:getAssetItem(interactiveItemUrl)
 
-		arg_5_0._itemPrefab = var_6_4:GetResource(var_5_6)
+		self._itemPrefab = interactAssetItem:GetResource(interactiveItemUrl)
 
-		arg_5_0:_initElements()
+		self:_initElements()
 
-		arg_5_0._sceneLoaded = true
+		self._sceneLoaded = true
 
-		if arg_5_0._needCheckInit then
-			arg_5_0:_checkInitElements()
+		if self._needCheckInit then
+			self:_checkInitElements()
 
-			arg_5_0._needCheckInit = false
+			self._needCheckInit = false
 		end
 	end)
 end
 
-function var_0_0._initElements(arg_7_0)
-	arg_7_0:_showElements()
+function Activity131Map:_initElements()
+	self:_showElements()
 end
 
-function var_0_0._checkInitElements(arg_8_0)
-	if not arg_8_0._sceneLoaded then
-		arg_8_0._needCheckInit = true
+function Activity131Map:_checkInitElements()
+	if not self._sceneLoaded then
+		self._needCheckInit = true
 
 		return
 	end
 
-	arg_8_0._needCheckInit = false
+	self._needCheckInit = false
 
-	local var_8_0 = Activity131Model.instance:getCurMapInfo()
-	local var_8_1 = VersionActivity1_4Enum.ActivityId.Role6
-	local var_8_2 = Activity131Model.instance:getCurEpisodeId()
+	local curMapInfo = Activity131Model.instance:getCurMapInfo()
+	local actId = VersionActivity1_4Enum.ActivityId.Role6
+	local episodeId = Activity131Model.instance:getCurEpisodeId()
 
-	if var_8_0.progress == Activity131Enum.ProgressType.AfterStory then
+	if curMapInfo.progress == Activity131Enum.ProgressType.AfterStory then
 		Activity131Controller.instance:dispatchEvent(Activity131Event.ShowFinish)
 
 		return
 	end
 
-	local var_8_3 = Activity131Config.instance:getActivity131EpisodeCo(var_8_1, var_8_2)
+	local episodeCo = Activity131Config.instance:getActivity131EpisodeCo(actId, episodeId)
 
-	if var_8_3.elements ~= "" then
-		local var_8_4 = string.splitToNumber(var_8_3.elements, "#")
+	if episodeCo.elements ~= "" then
+		local elements = string.splitToNumber(episodeCo.elements, "#")
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_4) do
-			for iter_8_2, iter_8_3 in pairs(var_8_0.act131Elements) do
-				if iter_8_3.elementId == iter_8_1 and not iter_8_3.isFinish then
-					arg_8_0:_clickElement(nil, iter_8_3)
+		for _, v in ipairs(elements) do
+			for _, element in pairs(curMapInfo.act131Elements) do
+				if element.elementId == v and not element.isFinish then
+					self:_clickElement(nil, element)
 
 					return
 				end
@@ -135,43 +138,14 @@ function var_0_0._checkInitElements(arg_8_0)
 		end
 	end
 
-	for iter_8_4, iter_8_5 in pairs(var_8_0.act131Elements) do
-		if not iter_8_5.isFinish then
-			if #iter_8_5.typeList >= iter_8_5.index and iter_8_5.index ~= 0 then
-				arg_8_0:_clickElement(nil, iter_8_5)
+	for _, elementInfo in pairs(curMapInfo.act131Elements) do
+		if not elementInfo.isFinish then
+			if #elementInfo.typeList >= elementInfo.index and elementInfo.index ~= 0 then
+				self:_clickElement(nil, elementInfo)
 
 				return
-			elseif iter_8_5.index == 0 and iter_8_5.config.res == "" then
-				arg_8_0:_clickElement(nil, iter_8_5)
-
-				return
-			end
-		end
-	end
-end
-
-function var_0_0._clickUp(arg_9_0)
-	local var_9_0 = arg_9_0._elementMouseDown
-
-	arg_9_0._elementMouseDown = nil
-
-	if var_9_0 and var_9_0:isValid() then
-		var_9_0:onClick()
-	end
-end
-
-function var_0_0._onGamepadKeyDown(arg_10_0, arg_10_1)
-	if arg_10_1 == GamepadEnum.KeyCode.A then
-		local var_10_0 = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
-		local var_10_1 = UnityEngine.Physics2D.RaycastAll(var_10_0.origin, var_10_0.direction)
-		local var_10_2 = var_10_1.Length - 1
-
-		for iter_10_0 = 0, var_10_2 do
-			local var_10_3 = var_10_1[iter_10_0]
-			local var_10_4 = MonoHelper.getLuaComFromGo(var_10_3.transform.parent.gameObject, Activity131MapElement)
-
-			if var_10_4 then
-				var_10_4:onDown()
+			elseif elementInfo.index == 0 and elementInfo.config.res == "" then
+				self:_clickElement(nil, elementInfo)
 
 				return
 			end
@@ -179,379 +153,409 @@ function var_0_0._onGamepadKeyDown(arg_10_0, arg_10_1)
 	end
 end
 
-function var_0_0._onSceneClose(arg_11_0)
+function Activity131Map:_clickUp()
+	local element = self._elementMouseDown
+
+	self._elementMouseDown = nil
+
+	if element and element:isValid() then
+		element:onClick()
+	end
+end
+
+function Activity131Map:_onGamepadKeyDown(key)
+	if key == GamepadEnum.KeyCode.A then
+		local ray = CameraMgr.instance:getMainCamera():ScreenPointToRay(GamepadController.instance:getScreenPos())
+		local allRaycastHit = UnityEngine.Physics2D.RaycastAll(ray.origin, ray.direction)
+		local maxIndex = allRaycastHit.Length - 1
+
+		for i = 0, maxIndex do
+			local hitInfo = allRaycastHit[i]
+			local comp = MonoHelper.getLuaComFromGo(hitInfo.transform.parent.gameObject, Activity131MapElement)
+
+			if comp then
+				comp:onDown()
+
+				return
+			end
+		end
+	end
+end
+
+function Activity131Map:_onSceneClose()
 	return
 end
 
-function var_0_0._initCamera(arg_12_0)
-	local var_12_0 = CameraMgr.instance:getMainCamera()
+function Activity131Map:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	transformhelper.setLocalRotation(var_12_0.transform, 0, 0, 0)
+	transformhelper.setLocalRotation(camera.transform, 0, 0, 0)
 
-	local var_12_1 = GameUtil.getAdapterScale(true)
+	local scale = GameUtil.getAdapterScale(true)
 
-	var_12_0.orthographic = true
-	var_12_0.orthographicSize = 7.4 * var_12_1
+	camera.orthographic = true
+	camera.orthographicSize = 7.4 * scale
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:playAmbientAudio()
-	MainCameraMgr.instance:addView(ViewName.Activity131GameView, arg_13_0._initCamera, nil, arg_13_0)
+function Activity131Map:onOpen()
+	self:playAmbientAudio()
+	MainCameraMgr.instance:addView(ViewName.Activity131GameView, self._initCamera, nil, self)
 end
 
-function var_0_0.onClose(arg_14_0)
-	arg_14_0:_clearElements()
-	arg_14_0:_removeEvents()
-	arg_14_0:closeAmbientSound()
+function Activity131Map:onClose()
+	self:_clearElements()
+	self:_removeEvents()
+	self:closeAmbientSound()
 end
 
-function var_0_0._clearElements(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._elementList) do
-		iter_15_1:dispose(true)
+function Activity131Map:_clearElements()
+	for k, v in pairs(self._elementList) do
+		v:dispose(true)
 	end
 
-	arg_15_0._elementList = arg_15_0:getUserDataTb_()
+	self._elementList = self:getUserDataTb_()
 end
 
-function var_0_0._showElements(arg_16_0)
-	local var_16_0 = Activity131Model.instance:getCurEpisodeId()
-	local var_16_1 = Activity131Model.instance:getEpisodeElements(var_16_0)
-	local var_16_2 = VersionActivity1_4Enum.ActivityId.Role6
-	local var_16_3 = {}
+function Activity131Map:_showElements()
+	local episodeId = Activity131Model.instance:getCurEpisodeId()
+	local elementsList = Activity131Model.instance:getEpisodeElements(episodeId)
+	local actId = VersionActivity1_4Enum.ActivityId.Role6
+	local resStat = {}
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		local var_16_4 = Activity131Config.instance:getActivity131ElementCo(var_16_2, iter_16_1.elementId).res
+	for i, v in ipairs(elementsList) do
+		local resName = Activity131Config.instance:getActivity131ElementCo(actId, v.elementId).res
 
-		if not string.nilorempty(var_16_4) then
-			local var_16_5 = var_16_3[var_16_4] or {}
+		if not string.nilorempty(resName) then
+			local t = resStat[resName] or {}
 
-			if iter_16_1:isAvailable() or arg_16_0._elementList[iter_16_1.elementId] then
-				table.insert(var_16_5, iter_16_1)
+			if v:isAvailable() or self._elementList[v.elementId] then
+				table.insert(t, v)
 			end
 
-			var_16_3[var_16_4] = var_16_5
+			resStat[resName] = t
 		end
 	end
 
-	local var_16_6 = {}
+	local addList = {}
 
-	for iter_16_2 = #var_16_1, 1, -1 do
-		local var_16_7 = var_16_1[iter_16_2]
-		local var_16_8 = var_16_3[Activity131Config.instance:getActivity131ElementCo(var_16_2, var_16_7.elementId).res]
-		local var_16_9 = var_16_8 and #var_16_8 or 0
+	for i = #elementsList, 1, -1 do
+		local info = elementsList[i]
+		local resName = Activity131Config.instance:getActivity131ElementCo(actId, info.elementId).res
+		local statList = resStat[resName]
+		local statValue = statList and #statList or 0
 
-		if not var_16_7:isAvailable() then
-			arg_16_0:_removeElement(var_16_7, var_16_9 <= 1)
+		if not info:isAvailable() then
+			self:_removeElement(info, statValue <= 1)
 		else
-			table.insert(var_16_6, var_16_7)
+			table.insert(addList, info)
 		end
 	end
 
-	for iter_16_3 = #var_16_6, 1, -1 do
-		local var_16_10 = var_16_6[iter_16_3]
-		local var_16_11 = var_16_3[Activity131Config.instance:getActivity131ElementCo(var_16_2, var_16_10.elementId).res]
-		local var_16_12 = var_16_11 and #var_16_11 or 0
+	for i = #addList, 1, -1 do
+		local info = addList[i]
+		local resName = Activity131Config.instance:getActivity131ElementCo(actId, info.elementId).res
+		local statList = resStat[resName]
+		local statValue = statList and #statList or 0
 
-		arg_16_0:_addElement(var_16_10, var_16_12 <= 1)
+		self:_addElement(info, statValue <= 1)
 	end
 end
 
-function var_0_0._addElement(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0._elementList[arg_17_1.elementId]
+function Activity131Map:_addElement(elementInfo, fadeIn)
+	local elementComp = self._elementList[elementInfo.elementId]
 
-	if var_17_0 then
-		var_17_0:updateInfo(arg_17_1)
+	if elementComp then
+		elementComp:updateInfo(elementInfo)
 
 		return
 	end
 
-	local var_17_1 = Activity131Model.instance:getCurEpisodeId()
-	local var_17_2 = Activity131Model.instance:getEpisodeCurSceneIndex(var_17_1)
-	local var_17_3 = gohelper.findChild(arg_17_0._elementRoots[var_17_2], tostring(arg_17_1.elementId))
+	local episodeId = Activity131Model.instance:getCurEpisodeId()
+	local curSceneIndex = Activity131Model.instance:getEpisodeCurSceneIndex(episodeId)
+	local go = gohelper.findChild(self._elementRoots[curSceneIndex], tostring(elementInfo.elementId))
 
-	if not var_17_3 then
-		var_17_3 = UnityEngine.GameObject.New(tostring(arg_17_1.elementId))
+	if not go then
+		go = UnityEngine.GameObject.New(tostring(elementInfo.elementId))
 
-		gohelper.addChild(arg_17_0._elementRoots[var_17_2], var_17_3)
+		gohelper.addChild(self._elementRoots[curSceneIndex], go)
 	else
-		MonoHelper.removeLuaComFromGo(var_17_3, Activity131MapElement)
-		gohelper.destroyAllChildren(var_17_3)
+		MonoHelper.removeLuaComFromGo(go, Activity131MapElement)
+		gohelper.destroyAllChildren(go)
 	end
 
-	local var_17_4 = MonoHelper.addLuaComOnceToGo(var_17_3, Activity131MapElement, {
-		arg_17_1,
-		arg_17_0
+	elementComp = MonoHelper.addLuaComOnceToGo(go, Activity131MapElement, {
+		elementInfo,
+		self
 	})
+	self._elementList[elementInfo.elementId] = elementComp
 
-	arg_17_0._elementList[arg_17_1.elementId] = var_17_4
+	local resName = elementComp:getResName()
 
-	local var_17_5 = var_17_4:getResName()
-
-	if string.nilorempty(var_17_5) then
+	if string.nilorempty(resName) then
 		return
 	end
 
-	local var_17_6 = gohelper.findChild(arg_17_0._diffuseGo, var_17_5)
-	local var_17_7
+	local resGo = gohelper.findChild(self._diffuseGo, resName)
+	local itemGo
 
-	if not var_17_6 then
-		var_17_6 = gohelper.findChild(arg_17_0._backgroundGo, var_17_5)
-		var_17_7 = var_17_6
+	if not resGo then
+		resGo = gohelper.findChild(self._backgroundGo, resName)
+		itemGo = resGo
 	end
 
-	if not var_17_6 then
-		logError(string.format("元件id: %s no resGo:%s", arg_17_1.elementId, var_17_5))
+	if not resGo then
+		logError(string.format("元件id: %s no resGo:%s", elementInfo.elementId, resName))
 
 		return
 	end
 
-	local var_17_8, var_17_9, var_17_10 = transformhelper.getPos(var_17_6.transform)
+	local resGox, resGoy, resGoz = transformhelper.getPos(resGo.transform)
 
-	var_17_7 = var_17_7 or gohelper.clone(var_17_6, var_17_3, var_17_5)
+	itemGo = itemGo or gohelper.clone(resGo, go, resName)
 
-	gohelper.setActive(var_17_6, false)
-	transformhelper.setPos(var_17_7.transform, var_17_8, var_17_9, var_17_10)
-	gohelper.setLayer(var_17_7, UnityLayer.Scene, true)
-	var_17_4:setItemGo(var_17_7, arg_17_2)
+	gohelper.setActive(resGo, false)
+	transformhelper.setPos(itemGo.transform, resGox, resGoy, resGoz)
+	gohelper.setLayer(itemGo, UnityLayer.Scene, true)
+	elementComp:setItemGo(itemGo, fadeIn)
 end
 
-function var_0_0._removeElement(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_1.elementId
-	local var_18_1 = arg_18_0._elementList[var_18_0]
+function Activity131Map:_removeElement(elementInfo, fadeOut)
+	local id = elementInfo.elementId
+	local elementComp = self._elementList[id]
 
-	if not var_18_1 then
+	if not elementComp then
 		return
 	end
 
-	arg_18_0._elementList[var_18_0] = nil
+	self._elementList[id] = nil
 
-	var_18_1:updateInfo(arg_18_1)
-	var_18_1:disappear(arg_18_2)
+	elementComp:updateInfo(elementInfo)
+	elementComp:disappear(fadeOut)
 end
 
-function var_0_0.setElementDown(arg_19_0, arg_19_1)
+function Activity131Map:setElementDown(item)
 	if ViewMgr.instance:isOpen(ViewName.Activity131DialogView) then
 		return
 	end
 
-	arg_19_0._elementMouseDown = arg_19_1
+	self._elementMouseDown = item
 end
 
-function var_0_0.setScenePosSafety(arg_20_0, arg_20_1, arg_20_2)
-	if not arg_20_0._sceneGo then
+function Activity131Map:setScenePosSafety(targetPos, tween)
+	if not self._sceneGo then
 		return
 	end
 
-	if arg_20_1.x < arg_20_0._mapMinX then
-		arg_20_1.x = arg_20_0._mapMinX
-	elseif arg_20_1.x > arg_20_0._mapMaxX then
-		arg_20_1.x = arg_20_0._mapMaxX
+	if targetPos.x < self._mapMinX then
+		targetPos.x = self._mapMinX
+	elseif targetPos.x > self._mapMaxX then
+		targetPos.x = self._mapMaxX
 	end
 
-	if arg_20_1.y < arg_20_0._mapMinY then
-		arg_20_1.y = arg_20_0._mapMinY
-	elseif arg_20_1.y > arg_20_0._mapMaxY then
-		arg_20_1.y = arg_20_0._mapMaxY
+	if targetPos.y < self._mapMinY then
+		targetPos.y = self._mapMinY
+	elseif targetPos.y > self._mapMaxY then
+		targetPos.y = self._mapMaxY
 	end
 
-	if arg_20_2 then
-		ZProj.TweenHelper.DOLocalMove(arg_20_0._sceneGo.transform, arg_20_1.x, arg_20_1.y, 0, 0.26)
+	if tween then
+		ZProj.TweenHelper.DOLocalMove(self._sceneGo.transform, targetPos.x, targetPos.y, 0, 0.26)
 	else
-		arg_20_0._sceneGo.transform.localPosition = arg_20_1
+		self._sceneGo.transform.localPosition = targetPos
 	end
 end
 
-function var_0_0.onUpdateParam(arg_21_0)
+function Activity131Map:onUpdateParam()
 	return
 end
 
-function var_0_0._playEnterAnim(arg_22_0)
-	arg_22_0._isPlayAnim = true
+function Activity131Map:_playEnterAnim()
+	self._isPlayAnim = true
 
-	arg_22_0:_onPlayEnterAnim()
+	self:_onPlayEnterAnim()
 end
 
-function var_0_0._setInitPos(arg_23_0, arg_23_1)
-	if not arg_23_0._mapCfg then
+function Activity131Map:_setInitPos(tween)
+	if not self._mapCfg then
 		return
 	end
 
-	local var_23_0 = arg_23_0._mapCfg.initPos
-	local var_23_1 = string.splitToNumber(var_23_0, "#")
+	local pos = self._mapCfg.initPos
+	local posParam = string.splitToNumber(pos, "#")
 
-	arg_23_0:setScenePosSafety(Vector3(var_23_1[1], var_23_1[2], 0), arg_23_1)
+	self:setScenePosSafety(Vector3(posParam[1], posParam[2], 0), tween)
 end
 
-function var_0_0._onShowFinishAnimDone(arg_24_0)
-	arg_24_0:_showElements()
+function Activity131Map:_onShowFinishAnimDone()
+	self:_showElements()
 end
 
-function var_0_0._OnDialogReply(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0._elementList[arg_25_1]
+function Activity131Map:_OnDialogReply(id)
+	local elementComp = self._elementList[id]
 
-	if not var_25_0 then
+	if not elementComp then
 		return
 	end
 
-	arg_25_0:_OnClickElement(var_25_0)
+	self:_OnClickElement(elementComp)
 end
 
-function var_0_0._OnGuideClickElement(arg_26_0, arg_26_1)
-	local var_26_0 = tonumber(arg_26_1)
+function Activity131Map:_OnGuideClickElement(id)
+	local elementId = tonumber(id)
 
-	if not var_26_0 then
+	if not elementId then
 		return
 	end
 
-	local var_26_1 = arg_26_0._elementList[var_26_0]
+	local elementComp = self._elementList[elementId]
 
-	if not var_26_1 then
+	if not elementComp then
 		return
 	end
 
-	arg_26_0:_OnClickElement(var_26_1)
+	self:_OnClickElement(elementComp)
 end
 
-function var_0_0._OnClickElement(arg_27_0, arg_27_1)
-	arg_27_0:_clickElement(arg_27_1)
+function Activity131Map:_OnClickElement(mapElement)
+	self:_clickElement(mapElement)
 end
 
-function var_0_0._clickElement(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_1 and arg_28_1._info or arg_28_2
-	local var_28_1 = var_28_0.elementId
-	local var_28_2 = var_28_0:getType()
+function Activity131Map:_clickElement(mapElement, info)
+	local elementInfo = mapElement and mapElement._info or info
+	local id = elementInfo.elementId
+	local type = elementInfo:getType()
 
-	if var_28_2 == Activity131Enum.ElementType.Battle then
-		Activity131Controller.instance:dispatchEvent(Activity131Event.TriggerBattleElement, var_28_0)
-	elseif var_28_2 == Activity131Enum.ElementType.General then
-		local var_28_3 = tonumber(var_28_0.config.param)
+	if type == Activity131Enum.ElementType.Battle then
+		Activity131Controller.instance:dispatchEvent(Activity131Event.TriggerBattleElement, elementInfo)
+	elseif type == Activity131Enum.ElementType.General then
+		local audioId = tonumber(elementInfo.config.param)
 
-		AudioMgr.instance:trigger(var_28_3)
+		AudioMgr.instance:trigger(audioId)
 
-		local var_28_4 = VersionActivity1_4Enum.ActivityId.Role6
-		local var_28_5 = Activity131Model.instance:getCurEpisodeId()
+		local actId = VersionActivity1_4Enum.ActivityId.Role6
+		local episodeId = Activity131Model.instance:getCurEpisodeId()
 
-		Activity131Rpc.instance:sendAct131GeneralRequest(var_28_4, var_28_5, var_28_1)
-	elseif var_28_2 == Activity131Enum.ElementType.Respawn then
+		Activity131Rpc.instance:sendAct131GeneralRequest(actId, episodeId, id)
+	elseif type == Activity131Enum.ElementType.Respawn then
 		-- block empty
-	elseif var_28_2 == Activity131Enum.ElementType.Dialog then
+	elseif type == Activity131Enum.ElementType.Dialog then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
-		Activity131Controller.instance:openActivity131DialogView(var_28_0)
-	elseif var_28_2 == Activity131Enum.ElementType.TaskTip then
-		Activity131Controller.instance:dispatchEvent(Activity131Event.RefreshTaskTip, var_28_0)
-	elseif var_28_2 == Activity131Enum.ElementType.SetValue then
-		Activity131Controller.instance:dispatchEvent(Activity131Event.UnlockCollect, var_28_0)
-	elseif var_28_2 == Activity131Enum.ElementType.ChangeScene then
-		local var_28_6 = tonumber(string.split(var_28_0.config.param, "#")[var_28_0.index + 1])
+		Activity131Controller.instance:openActivity131DialogView(elementInfo)
+	elseif type == Activity131Enum.ElementType.TaskTip then
+		Activity131Controller.instance:dispatchEvent(Activity131Event.RefreshTaskTip, elementInfo)
+	elseif type == Activity131Enum.ElementType.SetValue then
+		Activity131Controller.instance:dispatchEvent(Activity131Event.UnlockCollect, elementInfo)
+	elseif type == Activity131Enum.ElementType.ChangeScene then
+		local index = tonumber(string.split(elementInfo.config.param, "#")[elementInfo.index + 1])
 
-		arg_28_0:_changeScene(var_28_6, var_28_0)
-	elseif var_28_2 == Activity131Enum.ElementType.LogStart or var_28_2 == Activity131Enum.ElementType.LogEnd then
-		Activity131Controller.instance:dispatchEvent(Activity131Event.TriggerLogElement, var_28_0)
+		self:_changeScene(index, elementInfo)
+	elseif type == Activity131Enum.ElementType.LogStart or type == Activity131Enum.ElementType.LogEnd then
+		Activity131Controller.instance:dispatchEvent(Activity131Event.TriggerLogElement, elementInfo)
 	end
 end
 
-function var_0_0._changeScene(arg_29_0, arg_29_1, arg_29_2)
-	if not arg_29_0._mainPrefabs[arg_29_1] then
+function Activity131Map:_changeScene(index, elementInfo)
+	if not self._mainPrefabs[index] then
 		logError("配置了一个不存在的场景标记！请检查配置")
 
 		return
 	end
 
-	gohelper.setActive(arg_29_0._sceneGo, false)
+	gohelper.setActive(self._sceneGo, false)
 
-	arg_29_0._sceneGo = arg_29_0._mainPrefabs[arg_29_1]
+	self._sceneGo = self._mainPrefabs[index]
 
-	gohelper.setActive(arg_29_0._sceneGo, true)
+	gohelper.setActive(self._sceneGo, true)
 
-	arg_29_0._backgroundGo = gohelper.findChild(arg_29_0._sceneGo, "root/BackGround")
-	arg_29_0._diffuseGo = gohelper.findChild(arg_29_0._sceneGo, "Obj-Plant/all/diffuse")
+	self._backgroundGo = gohelper.findChild(self._sceneGo, "root/BackGround")
+	self._diffuseGo = gohelper.findChild(self._sceneGo, "Obj-Plant/all/diffuse")
 
-	if not arg_29_0._elementRoots[arg_29_1] then
-		arg_29_0._elementRoots[arg_29_1] = UnityEngine.GameObject.New("elementRoot")
+	if not self._elementRoots[index] then
+		self._elementRoots[index] = UnityEngine.GameObject.New("elementRoot")
 
-		gohelper.addChild(arg_29_0._sceneGo, arg_29_0._elementRoots[arg_29_1])
+		gohelper.addChild(self._sceneGo, self._elementRoots[index])
 	end
 
-	arg_29_0._anim = arg_29_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+	self._anim = self._sceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-	if arg_29_2 and arg_29_2.elementId then
-		local var_29_0 = VersionActivity1_4Enum.ActivityId.Role6
-		local var_29_1 = Activity131Model.instance:getCurEpisodeId()
+	if elementInfo and elementInfo.elementId then
+		local actId = VersionActivity1_4Enum.ActivityId.Role6
+		local episodeId = Activity131Model.instance:getCurEpisodeId()
 
-		Activity131Rpc.instance:sendAct131GeneralRequest(var_29_0, var_29_1, arg_29_2.elementId, arg_29_0._onGeneralSuccess, arg_29_0)
+		Activity131Rpc.instance:sendAct131GeneralRequest(actId, episodeId, elementInfo.elementId, self._onGeneralSuccess, self)
 	end
 end
 
-function var_0_0._onRestartSet(arg_30_0)
-	arg_30_0:_clearElements()
-	arg_30_0:_changeScene(1)
-	arg_30_0:_showElements()
+function Activity131Map:_onRestartSet()
+	self:_clearElements()
+	self:_changeScene(1)
+	self:_showElements()
 end
 
-function var_0_0._onGeneralSuccess(arg_31_0)
-	arg_31_0:_showElements()
+function Activity131Map:_onGeneralSuccess()
+	self:_showElements()
 end
 
-function var_0_0._addEvents(arg_32_0)
-	arg_32_0._click:AddClickUpListener(arg_32_0._clickUp, arg_32_0)
+function Activity131Map:_addEvents()
+	self._click:AddClickUpListener(self._clickUp, self)
 
 	if GamepadController.instance:isOpen() then
-		arg_32_0:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, arg_32_0._onGamepadKeyDown, arg_32_0)
+		self:addEventCb(GamepadController.instance, GamepadEvent.KeyDown, self._onGamepadKeyDown, self)
 	end
 
-	arg_32_0:addEventCb(MainController.instance, MainEvent.OnSceneClose, arg_32_0._onSceneClose, arg_32_0)
-	arg_32_0:addEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, arg_32_0._showElements, arg_32_0)
-	arg_32_0:addEventCb(Activity131Controller.instance, Activity131Event.OnElementUpdate, arg_32_0._showElements, arg_32_0)
-	arg_32_0:addEventCb(Activity131Controller.instance, Activity131Event.OnRestartEpisodeSuccess, arg_32_0._onRestartSet, arg_32_0)
-	arg_32_0:addEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, arg_32_0._showElements, arg_32_0)
-	arg_32_0:addEventCb(Activity131Controller.instance, Activity131Event.OnClickElement, arg_32_0._OnClickElement, arg_32_0)
-	arg_32_0:addEventCb(Activity131Controller.instance, Activity131Event.AutoStartElement, arg_32_0._checkInitElements, arg_32_0)
-	arg_32_0:addEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, arg_32_0._checkInitElements, arg_32_0)
+	self:addEventCb(MainController.instance, MainEvent.OnSceneClose, self._onSceneClose, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, self._showElements, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.OnElementUpdate, self._showElements, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.OnRestartEpisodeSuccess, self._onRestartSet, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, self._showElements, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.OnClickElement, self._OnClickElement, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.AutoStartElement, self._checkInitElements, self)
+	self:addEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, self._checkInitElements, self)
 end
 
-function var_0_0._removeEvents(arg_33_0)
-	if arg_33_0._click then
-		arg_33_0._click:RemoveClickUpListener()
+function Activity131Map:_removeEvents()
+	if self._click then
+		self._click:RemoveClickUpListener()
 	end
 
 	if GamepadController.instance:isOpen() then
-		arg_33_0:removeEventCb(GamepadController.instance, GamepadEvent.KeyDown, arg_33_0._onGamepadKeyDown, arg_33_0)
+		self:removeEventCb(GamepadController.instance, GamepadEvent.KeyDown, self._onGamepadKeyDown, self)
 	end
 
-	arg_33_0:removeEventCb(MainController.instance, MainEvent.OnSceneClose, arg_33_0._onSceneClose, arg_33_0)
-	arg_33_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, arg_33_0._showElements, arg_33_0)
-	arg_33_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnElementUpdate, arg_33_0._showElements, arg_33_0)
-	arg_33_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnRestartEpisodeSuccess, arg_33_0._onRestartSet, arg_33_0)
-	arg_33_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, arg_33_0._showElements, arg_33_0)
-	arg_33_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnClickElement, arg_33_0._OnClickElement, arg_33_0)
-	arg_33_0:removeEventCb(Activity131Controller.instance, Activity131Event.AutoStartElement, arg_33_0._checkInitElements, arg_33_0)
-	arg_33_0:removeEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, arg_33_0._checkInitElements, arg_33_0)
+	self:removeEventCb(MainController.instance, MainEvent.OnSceneClose, self._onSceneClose, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.OnGeneralGameSuccess, self._showElements, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.OnElementUpdate, self._showElements, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.OnRestartEpisodeSuccess, self._onRestartSet, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, self._showElements, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.OnClickElement, self._OnClickElement, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.AutoStartElement, self._checkInitElements, self)
+	self:removeEventCb(Activity131Controller.instance, Activity131Event.OnDialogMarkSuccess, self._checkInitElements, self)
 end
 
-function var_0_0.onDestroyView(arg_34_0)
-	gohelper.destroy(arg_34_0._sceneRoot)
+function Activity131Map:onDestroyView()
+	gohelper.destroy(self._sceneRoot)
 
-	if arg_34_0._mapLoader then
-		arg_34_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 
-		arg_34_0._mapLoader = nil
+		self._mapLoader = nil
 	end
 end
 
-function var_0_0.playAmbientAudio(arg_35_0)
-	arg_35_0:closeAmbientSound()
+function Activity131Map:playAmbientAudio()
+	self:closeAmbientSound()
 	AudioMgr.instance:trigger(AudioEnum.UI.set_state_activityvol_on)
 
-	arg_35_0._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Bgm.ActivityMapAmbientBgm)
+	self._ambientAudioId = AudioMgr.instance:trigger(AudioEnum.Bgm.ActivityMapAmbientBgm)
 end
 
-function var_0_0.closeAmbientSound(arg_36_0)
-	if arg_36_0._ambientAudioId then
-		AudioMgr.instance:stopPlayingID(arg_36_0._ambientAudioId)
+function Activity131Map:closeAmbientSound()
+	if self._ambientAudioId then
+		AudioMgr.instance:stopPlayingID(self._ambientAudioId)
 		AudioMgr.instance:trigger(AudioEnum.UI.set_state_activityvol_off)
 
-		arg_36_0._ambientAudioId = nil
+		self._ambientAudioId = nil
 	end
 end
 
-return var_0_0
+return Activity131Map

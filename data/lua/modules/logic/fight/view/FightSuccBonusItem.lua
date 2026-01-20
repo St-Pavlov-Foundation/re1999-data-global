@@ -1,20 +1,22 @@
-﻿module("modules.logic.fight.view.FightSuccBonusItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSuccBonusItem.lua
 
-local var_0_0 = class("FightSuccBonusItem", ListScrollCell)
+module("modules.logic.fight.view.FightSuccBonusItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = gohelper.findChild(arg_1_1, "itemIcon")
+local FightSuccBonusItem = class("FightSuccBonusItem", ListScrollCell)
 
-	arg_1_0._itemIcon = IconMgr.instance:getCommonItemIcon(var_1_0)
-	arg_1_0._tagGO = gohelper.findChild(arg_1_1, "tag")
-	arg_1_0._imgFirstGO = gohelper.findChild(arg_1_1, "tag/imgFirst")
-	arg_1_0._imgNormalGO = gohelper.findChild(arg_1_1, "tag/imgNormal")
-	arg_1_0._imgHardGO = gohelper.findChild(arg_1_1, "tag/imgHard")
+function FightSuccBonusItem:init(go)
+	local itemIconGO = gohelper.findChild(go, "itemIcon")
+
+	self._itemIcon = IconMgr.instance:getCommonItemIcon(itemIconGO)
+	self._tagGO = gohelper.findChild(go, "tag")
+	self._imgFirstGO = gohelper.findChild(go, "tag/imgFirst")
+	self._imgNormalGO = gohelper.findChild(go, "tag/imgNormal")
+	self._imgHardGO = gohelper.findChild(go, "tag/imgHard")
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._itemIcon:onUpdateMO(arg_2_1)
-	arg_2_0._itemIcon:setCantJump(true)
+function FightSuccBonusItem:onUpdateMO(mo)
+	self._itemIcon:onUpdateMO(mo)
+	self._itemIcon:setCantJump(true)
 end
 
-return var_0_0
+return FightSuccBonusItem

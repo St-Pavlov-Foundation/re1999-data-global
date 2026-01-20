@@ -1,63 +1,65 @@
-﻿module("modules.logic.versionactivity2_8.common.VersionActivity2_8JumpHandleFunc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/common/VersionActivity2_8JumpHandleFunc.lua
 
-local var_0_0 = class("VersionActivity2_8JumpHandleFunc")
+module("modules.logic.versionactivity2_8.common.VersionActivity2_8JumpHandleFunc", package.seeall)
 
-function var_0_0.jumpTo12810(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1[2]
-	local var_1_1 = arg_1_1[3]
+local VersionActivity2_8JumpHandleFunc = class("VersionActivity2_8JumpHandleFunc")
 
-	table.insert(arg_1_0.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
-	table.insert(arg_1_0.closeViewNames, ViewName.NuoDiKaTaskView)
+function VersionActivity2_8JumpHandleFunc:jumpTo12810(paramsList)
+	local actId = paramsList[2]
+	local episodeId = paramsList[3]
+
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
+	table.insert(self.closeViewNames, ViewName.NuoDiKaTaskView)
 	VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		if ViewMgr.instance:isOpen(ViewName.NuoDiKaLevelView) then
-			local var_2_0 = {
-				actId = var_1_0,
-				episodeId = var_1_1
-			}
+			local data = {}
 
-			NuoDiKaController.instance:enterEpisode(var_2_0)
+			data.actId = actId
+			data.episodeId = episodeId
+
+			NuoDiKaController.instance:enterEpisode(data)
 		else
-			local var_2_1 = {
-				actId = var_1_0,
-				episodeId = var_1_1
-			}
+			local data = {}
 
-			NuoDiKaController.instance:enterLevelView(var_2_1)
+			data.actId = actId
+			data.episodeId = episodeId
+
+			NuoDiKaController.instance:enterLevelView(data)
 		end
-	end, nil, var_1_0, true)
+	end, nil, actId, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12811(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1[2]
-	local var_3_1 = arg_3_1[3]
+function VersionActivity2_8JumpHandleFunc:jumpTo12811(paramsList)
+	local actId = paramsList[2]
+	local episodeId = paramsList[3]
 
-	table.insert(arg_3_0.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
-	table.insert(arg_3_0.closeViewNames, ViewName.MoLiDeErTaskView)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
+	table.insert(self.closeViewNames, ViewName.MoLiDeErTaskView)
 	VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		if ViewMgr.instance:isOpen(ViewName.MoLiDeErLevelView) then
-			MoLiDeErController.instance:enterEpisode(var_3_0, var_3_1)
+			MoLiDeErController.instance:enterEpisode(actId, episodeId)
 		else
-			MoLiDeErController.instance:enterLevelView(var_3_0, var_3_1)
+			MoLiDeErController.instance:enterLevelView(actId, episodeId)
 		end
-	end, nil, var_3_0, true)
+	end, nil, actId, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12806(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1[2]
+function VersionActivity2_8JumpHandleFunc:jumpTo12806(paramsList)
+	local actId = paramsList[2]
 
-	VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, var_5_0)
+	VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId)
 
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpTo12803(arg_6_0, arg_6_1)
+function VersionActivity2_8JumpHandleFunc:jumpTo12803(paramsList)
 	VersionActivity2_8DungeonController.instance:openStoreView()
 
 	return JumpEnum.JumpResult.Success
 end
 
-return var_0_0
+return VersionActivity2_8JumpHandleFunc

@@ -1,13 +1,15 @@
-﻿module("modules.logic.store.view.StoreSkinDefaultShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/StoreSkinDefaultShowViewContainer.lua
 
-local var_0_0 = class("StoreSkinDefaultShowViewContainer", BaseViewContainer)
+module("modules.logic.store.view.StoreSkinDefaultShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoreSkinDefaultShowViewContainer = class("StoreSkinDefaultShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, StoreSkinDefaultShowView.New())
+function StoreSkinDefaultShowViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, StoreSkinDefaultShowView.New())
+
+	return views
 end
 
-return var_0_0
+return StoreSkinDefaultShowViewContainer

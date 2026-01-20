@@ -1,7 +1,9 @@
-﻿module("modules.logic.act201.controller.Activity201Event", package.seeall)
+﻿-- chunkname: @modules/logic/act201/controller/Activity201Event.lua
 
-local var_0_0 = _M
+module("modules.logic.act201.controller.Activity201Event", package.seeall)
 
-var_0_0.OnGetInfoSuccess = 1
+local Activity201Event = _M
 
-return var_0_0
+Activity201Event.OnGetInfoSuccess = 1
+
+return Activity201Event

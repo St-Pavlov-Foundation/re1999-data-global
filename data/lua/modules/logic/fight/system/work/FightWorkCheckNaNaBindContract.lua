@@ -1,33 +1,37 @@
-﻿module("modules.logic.fight.system.work.FightWorkCheckNaNaBindContract", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCheckNaNaBindContract.lua
 
-local var_0_0 = class("FightWorkCheckNaNaBindContract", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkCheckNaNaBindContract", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance.notifyEntityId
+local FightWorkCheckNaNaBindContract = class("FightWorkCheckNaNaBindContract", FightWorkItem)
 
-	if string.nilorempty(var_1_0) then
-		arg_1_0:onDone(true)
+function FightWorkCheckNaNaBindContract:onStart()
+	local notifyEntityId = FightModel.instance.notifyEntityId
 
-		return
-	end
-
-	if not FightHelper.getEntity(var_1_0) then
-		arg_1_0:onDone(true)
+	if string.nilorempty(notifyEntityId) then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_1 = FightModel.instance.canContractList
+	local entity = FightHelper.getEntity(notifyEntityId)
 
-	if not var_1_1 or #var_1_1 < 1 then
-		arg_1_0:onDone(true)
+	if not entity then
+		self:onDone(true)
+
+		return
+	end
+
+	local canContractList = FightModel.instance.canContractList
+
+	if not canContractList or #canContractList < 1 then
+		self:onDone(true)
 
 		return
 	end
 
 	FightDataHelper.stageMgr:enterOperateState(FightStageMgr.OperateStateType.BindContract)
 	ViewMgr.instance:openView(ViewName.FightNaNaTargetView)
-	arg_1_0:cancelFightWorkSafeTimer()
+	self:cancelFightWorkSafeTimer()
 end
 
-return var_0_0
+return FightWorkCheckNaNaBindContract

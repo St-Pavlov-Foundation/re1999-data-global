@@ -1,13 +1,15 @@
-﻿module("modules.logic.sdk.view.SDKScoreJumpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sdk/view/SDKScoreJumpViewContainer.lua
 
-local var_0_0 = class("SDKScoreJumpViewContainer", BaseViewContainer)
+module("modules.logic.sdk.view.SDKScoreJumpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SDKScoreJumpViewContainer = class("SDKScoreJumpViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SDKScoreJumpView.New())
+function SDKScoreJumpViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SDKScoreJumpView.New())
+
+	return views
 end
 
-return var_0_0
+return SDKScoreJumpViewContainer

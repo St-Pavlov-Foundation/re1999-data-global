@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawNormalObj", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/comp/KaRongDrawNormalObj.lua
 
-local var_0_0 = class("KaRongDrawNormalObj", KaRongDrawBaseObj)
+module("modules.logic.versionactivity3_0.karong.view.comp.KaRongDrawNormalObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local KaRongDrawNormalObj = class("KaRongDrawNormalObj", KaRongDrawBaseObj)
 
-	arg_1_0._gochecked = gohelper.findChild(arg_1_0.go, "#go_checked")
+function KaRongDrawNormalObj:ctor(go)
+	KaRongDrawNormalObj.super.ctor(self, go)
 
-	gohelper.setActive(arg_1_0._gochecked, false)
+	self._gochecked = gohelper.findChild(self.go, "#go_checked")
+
+	gohelper.setActive(self._gochecked, false)
 end
 
-return var_0_0
+return KaRongDrawNormalObj

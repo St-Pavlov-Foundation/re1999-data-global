@@ -1,150 +1,155 @@
-﻿module("modules.logic.fight.entity.mgr.FightSkillBuffMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/mgr/FightSkillBuffMgr.lua
 
-local var_0_0 = class("FightSkillBuffMgr")
+module("modules.logic.fight.entity.mgr.FightSkillBuffMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:_init()
+local FightSkillBuffMgr = class("FightSkillBuffMgr")
+
+function FightSkillBuffMgr:ctor()
+	self:_init()
 end
 
-function var_0_0._init(arg_2_0)
-	arg_2_0._buffPlayDict = {}
-	arg_2_0._buffEffectPlayDict = {}
+function FightSkillBuffMgr:_init()
+	self._buffPlayDict = {}
+	self._buffEffectPlayDict = {}
 end
 
-function var_0_0.clearCompleteBuff(arg_3_0)
-	arg_3_0:_init()
+function FightSkillBuffMgr:clearCompleteBuff()
+	self:_init()
 end
 
-function var_0_0.playSkillBuff(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0:hasPlayBuff(arg_4_2) then
-		FightWork2Work.New(FightWorkStepBuff, arg_4_1, arg_4_2):onStart()
+function FightSkillBuffMgr:playSkillBuff(fightStepData, actEffectData)
+	if not self:hasPlayBuff(actEffectData) then
+		local fightWorkStepBuff = FightWork2Work.New(FightWorkStepBuff, fightStepData, actEffectData)
 
-		local var_4_0 = arg_4_2.effectType
-		local var_4_1 = arg_4_2.buff
+		fightWorkStepBuff:onStart()
 
-		arg_4_0._buffPlayDict[arg_4_2.clientId] = true
+		local effectType = actEffectData.effectType
+		local buffMO = actEffectData.buff
 
-		local var_4_2 = arg_4_1.stepUid
+		self._buffPlayDict[actEffectData.clientId] = true
 
-		if var_4_2 and var_4_0 == FightEnum.EffectType.BUFFADD then
-			local var_4_3 = lua_skill_buff.configDict[var_4_1.buffId]
+		local stepUid = fightStepData.stepUid
 
-			if var_4_3 and var_4_3.effect ~= "0" and not string.nilorempty(var_4_3.effect) then
-				local var_4_4 = string.format(var_4_2 .. "-" .. var_4_1.entityId .. "-" .. var_4_3.effect)
+		if stepUid and effectType == FightEnum.EffectType.BUFFADD then
+			local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-				arg_4_0._buffEffectPlayDict[var_4_4] = true
+			if buffCO and buffCO.effect ~= "0" and not string.nilorempty(buffCO.effect) then
+				local key = string.format(stepUid .. "-" .. buffMO.entityId .. "-" .. buffCO.effect)
+
+				self._buffEffectPlayDict[key] = true
 			end
 		end
 	end
 end
 
-function var_0_0.hasPlayBuff(arg_5_0, arg_5_1)
-	return arg_5_0._buffPlayDict[arg_5_1.clientId]
+function FightSkillBuffMgr:hasPlayBuff(actEffectData)
+	return self._buffPlayDict[actEffectData.clientId]
 end
 
-function var_0_0.hasPlayBuffEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = lua_skill_buff.configDict[arg_6_2.buffId]
+function FightSkillBuffMgr:hasPlayBuffEffect(entityId, buff, stepUid)
+	local buffCO = lua_skill_buff.configDict[buff.buffId]
 
-	if arg_6_3 and var_6_0 and var_6_0.effect ~= "0" and not string.nilorempty(var_6_0.effect) then
-		local var_6_1 = string.format(arg_6_3 .. "-" .. arg_6_1 .. "-" .. var_6_0.effect)
+	if stepUid and buffCO and buffCO.effect ~= "0" and not string.nilorempty(buffCO.effect) then
+		local key = string.format(stepUid .. "-" .. entityId .. "-" .. buffCO.effect)
 
-		return arg_6_0._buffEffectPlayDict[var_6_1]
+		return self._buffEffectPlayDict[key]
 	end
 
 	return false
 end
 
-var_0_0.StackBuffFeatureList = {
+FightSkillBuffMgr.StackBuffFeatureList = {
 	FightEnum.BuffType_DeadlyPoison
 }
 
-function var_0_0.buffIsStackerBuff(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function FightSkillBuffMgr:buffIsStackerBuff(buff_config)
+	if not buff_config then
 		return false
 	end
 
-	local var_7_0 = arg_7_1.id
+	local buffId = buff_config.id
 
-	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(var_7_0) then
-		local var_7_1 = lua_skill_bufftype.configDict[arg_7_1.typeId]
-		local var_7_2 = FightStrUtil.instance:getSplitCache(var_7_1.includeTypes, "#")
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(buffId) then
+		local buff_type_config = lua_skill_bufftype.configDict[buff_config.typeId]
+		local tab = FightStrUtil.instance:getSplitCache(buff_type_config.includeTypes, "#")
 
-		return true, var_7_2[1]
+		return true, tab[1]
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(var_0_0.StackBuffFeatureList) do
-		if FightConfig.instance:hasBuffFeature(var_7_0, iter_7_1) then
-			local var_7_3 = lua_skill_bufftype.configDict[arg_7_1.typeId]
-			local var_7_4 = FightStrUtil.instance:getSplitCache(var_7_3.includeTypes, "#")
+	for _, feature in ipairs(FightSkillBuffMgr.StackBuffFeatureList) do
+		if FightConfig.instance:hasBuffFeature(buffId, feature) then
+			local buff_type_config = lua_skill_bufftype.configDict[buff_config.typeId]
+			local tab = FightStrUtil.instance:getSplitCache(buff_type_config.includeTypes, "#")
 
-			return true, var_7_4[1]
+			return true, tab[1]
 		end
 	end
 
-	local var_7_5 = lua_skill_bufftype.configDict[arg_7_1.typeId]
+	local buff_type_config = lua_skill_bufftype.configDict[buff_config.typeId]
 
-	if var_7_5 then
-		local var_7_6 = FightStrUtil.instance:getSplitCache(var_7_5.includeTypes, "#")[1]
+	if buff_type_config then
+		local tab = FightStrUtil.instance:getSplitCache(buff_type_config.includeTypes, "#")
+		local type = tab[1]
 
-		if var_7_6 == FightEnum.BuffIncludeTypes.Stacked or var_7_6 == FightEnum.BuffIncludeTypes.Stacked12 or var_7_6 == FightEnum.BuffIncludeTypes.Stacked15 or var_7_6 == FightEnum.BuffIncludeTypes.Stacked14 then
-			return true, var_7_6
+		if type == FightEnum.BuffIncludeTypes.Stacked or type == FightEnum.BuffIncludeTypes.Stacked12 or type == FightEnum.BuffIncludeTypes.Stacked15 or type == FightEnum.BuffIncludeTypes.Stacked14 then
+			return true, type
 		end
 	end
 end
 
-var_0_0.tempSignKeyDict = {}
+FightSkillBuffMgr.tempSignKeyDict = {}
 
-function var_0_0.dealStackerBuff(arg_8_0, arg_8_1)
-	local var_8_0 = var_0_0.tempSignKeyDict
+function FightSkillBuffMgr:dealStackerBuff(buff_list)
+	local type10_tab = FightSkillBuffMgr.tempSignKeyDict
 
-	tabletool.clear(var_8_0)
+	tabletool.clear(type10_tab)
 
-	for iter_8_0 = #arg_8_1, 1, -1 do
-		local var_8_1 = arg_8_1[iter_8_0]
-		local var_8_2 = lua_skill_buff.configDict[var_8_1.buffId]
+	for i = #buff_list, 1, -1 do
+		local buffMO = buff_list[i]
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-		if var_8_2 and arg_8_0:buffIsStackerBuff(var_8_2) then
-			local var_8_3 = FightBuffHelper.getBuffMoSignKey(var_8_1)
+		if buffCO and self:buffIsStackerBuff(buffCO) then
+			local sign_key = FightBuffHelper.getBuffMoSignKey(buffMO)
 
-			if not var_8_0[var_8_3] then
-				var_8_0[var_8_3] = true
+			if not type10_tab[sign_key] then
+				type10_tab[sign_key] = true
 			else
-				table.remove(arg_8_1, iter_8_0)
+				table.remove(buff_list, i)
 			end
 		end
 	end
 end
 
-function var_0_0.getStackedCount(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = lua_skill_buff.configDict[arg_9_2.buffId]
+function FightSkillBuffMgr:getStackedCount(entityId, buffMo)
+	local buffCo = lua_skill_buff.configDict[buffMo.buffId]
 
-	if not arg_9_0:buffIsStackerBuff(var_9_0) then
+	if not self:buffIsStackerBuff(buffCo) then
 		return 1
 	end
 
-	local var_9_1 = FightDataHelper.entityMgr:getById(arg_9_1)
-	local var_9_2 = var_9_1 and var_9_1:getBuffDic()
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
+	local buffDic = entityMO and entityMO:getBuffDic()
 
-	if var_9_2 then
-		local var_9_3 = FightBuffHelper.getBuffMoSignKey(arg_9_2)
-		local var_9_4 = 0
+	if buffDic then
+		local sign_key = FightBuffHelper.getBuffMoSignKey(buffMo)
+		local count = 0
 
-		for iter_9_0, iter_9_1 in pairs(var_9_2) do
-			if var_9_3 == FightBuffHelper.getBuffMoSignKey(iter_9_1) then
-				var_9_4 = var_9_4 + 1
+		for _, buffMO in pairs(buffDic) do
+			if sign_key == FightBuffHelper.getBuffMoSignKey(buffMO) then
+				count = count + 1
 
-				if iter_9_1.layer and iter_9_1.layer ~= 0 then
-					var_9_4 = var_9_4 + iter_9_1.layer - 1
+				if buffMO.layer and buffMO.layer ~= 0 then
+					count = count + buffMO.layer - 1
 				end
 			end
 		end
 
-		return var_9_4
+		return count
 	end
 
 	return 1
 end
 
-var_0_0.instance = var_0_0.New()
+FightSkillBuffMgr.instance = FightSkillBuffMgr.New()
 
-return var_0_0
+return FightSkillBuffMgr

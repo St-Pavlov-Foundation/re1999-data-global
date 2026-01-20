@@ -1,21 +1,23 @@
-﻿module("modules.configs.excel2json.lua_talent_scheme", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_talent_scheme.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_talent_scheme", package.seeall)
+
+local lua_talent_scheme = {}
+local fields = {
 	talentMould = 2,
 	starMould = 3,
 	talentId = 1,
 	talenScheme = 4
 }
-local var_0_2 = {
+local primaryKey = {
 	"talentId",
 	"talentMould",
 	"starMould"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_talent_scheme.onLoad(json)
+	lua_talent_scheme.configList, lua_talent_scheme.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_talent_scheme

@@ -1,64 +1,66 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaHandbookItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaHandbookItem.lua
 
-local var_0_0 = class("AiZiLaHandbookItem", AiZiLaGoodsItem)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaHandbookItem", package.seeall)
 
-function var_0_0._btnclickOnClick(arg_1_0)
-	if arg_1_0._mo then
-		AiZiLaHandbookListModel.instance:setSelect(arg_1_0._mo.itemId)
+local AiZiLaHandbookItem = class("AiZiLaHandbookItem", AiZiLaGoodsItem)
+
+function AiZiLaHandbookItem:_btnclickOnClick()
+	if self._mo then
+		AiZiLaHandbookListModel.instance:setSelect(self._mo.itemId)
 		AiZiLaController.instance:dispatchEvent(AiZiLaEvent.SelectItem)
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._canvasGroup = gohelper.onceAddComponent(arg_2_0.viewGO, gohelper.Type_CanvasGroup)
-	arg_2_0._goimagerare = arg_2_0._imagerare.gameObject
-	arg_2_0._goimageicon = arg_2_0._imageicon.gameObject
-	arg_2_0._goimagecountBG = arg_2_0._imagecountBG.gameObject
-	arg_2_0._lastGray = false
+function AiZiLaHandbookItem:_editableInitView()
+	self._canvasGroup = gohelper.onceAddComponent(self.viewGO, gohelper.Type_CanvasGroup)
+	self._goimagerare = self._imagerare.gameObject
+	self._goimageicon = self._imageicon.gameObject
+	self._goimagecountBG = self._imagecountBG.gameObject
+	self._lastGray = false
 end
 
-function var_0_0._editableAddEvents(arg_3_0)
+function AiZiLaHandbookItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_4_0)
+function AiZiLaHandbookItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
-	arg_5_0._mo = arg_5_1
+function AiZiLaHandbookItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_5_0 = arg_5_1:getQuantity()
+	local quantity = mo:getQuantity()
 
-	arg_5_0._txtcount.text = var_5_0
+	self._txtcount.text = quantity
 
-	arg_5_0:_refreshIcon(arg_5_1.itemId)
-	arg_5_0:_refreshGray(not AiZiLaModel.instance:isCollectItemId(arg_5_1.itemId))
+	self:_refreshIcon(mo.itemId)
+	self:_refreshGray(not AiZiLaModel.instance:isCollectItemId(mo.itemId))
 end
 
-function var_0_0._refreshGray(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1 and true or false
+function AiZiLaHandbookItem:_refreshGray(isGray)
+	local tempGray = isGray and true or false
 
-	if arg_6_0._lastGray ~= var_6_0 then
-		arg_6_0._lastGray = var_6_0
-		arg_6_0._canvasGroup.alpha = var_6_0 and 0.75 or 1
+	if self._lastGray ~= tempGray then
+		self._lastGray = tempGray
+		self._canvasGroup.alpha = tempGray and 0.75 or 1
 
-		arg_6_0:_setGrayMode(arg_6_0._goimagerare, var_6_0)
-		arg_6_0:_setGrayMode(arg_6_0._goimageicon, var_6_0)
-		arg_6_0:_setGrayMode(arg_6_0._goimagecountBG, var_6_0)
+		self:_setGrayMode(self._goimagerare, tempGray)
+		self:_setGrayMode(self._goimageicon, tempGray)
+		self:_setGrayMode(self._goimagecountBG, tempGray)
 	end
 end
 
-function var_0_0._setGrayMode(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_2 then
-		ZProj.UGUIHelper.SetGrayFactor(arg_7_1, 0.8)
+function AiZiLaHandbookItem:_setGrayMode(go, isGray)
+	if isGray then
+		ZProj.UGUIHelper.SetGrayFactor(go, 0.8)
 	else
-		ZProj.UGUIHelper.SetGrayscale(arg_7_1, false)
+		ZProj.UGUIHelper.SetGrayscale(go, false)
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function AiZiLaHandbookItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return AiZiLaHandbookItem

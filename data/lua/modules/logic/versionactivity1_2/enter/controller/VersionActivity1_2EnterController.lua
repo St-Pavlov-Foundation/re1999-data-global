@@ -1,96 +1,100 @@
-﻿module("modules.logic.versionactivity1_2.enter.controller.VersionActivity1_2EnterController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/enter/controller/VersionActivity1_2EnterController.lua
 
-local var_0_0 = class("VersionActivity1_2EnterController", BaseController)
+module("modules.logic.versionactivity1_2.enter.controller.VersionActivity1_2EnterController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local VersionActivity1_2EnterController = class("VersionActivity1_2EnterController", BaseController)
+
+function VersionActivity1_2EnterController:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity1_2EnterController:reInit()
 	return
 end
 
-function var_0_0._onFinishStory(arg_3_0, arg_3_1)
-	for iter_3_0, iter_3_1 in ipairs(VersionActivity1_2Enum.EnterViewActIdList) do
-		if ActivityHelper.getActivityStatus(iter_3_1) == ActivityEnum.ActivityStatus.Normal then
-			ActivityEnterMgr.instance:enterActivity(iter_3_1)
+function VersionActivity1_2EnterController:_onFinishStory(param)
+	for _, actId in ipairs(VersionActivity1_2Enum.EnterViewActIdList) do
+		local activityStatus = ActivityHelper.getActivityStatus(actId)
+
+		if activityStatus == ActivityEnum.ActivityStatus.Normal then
+			ActivityEnterMgr.instance:enterActivity(actId)
 		end
 	end
 
 	ActivityRpc.instance:sendActivityNewStageReadRequest(VersionActivity1_2Enum.EnterViewActIdList, function()
-		arg_3_0:_openVersionActivity1_2EnterView(arg_3_1 and arg_3_1.skipOpenAnim)
-	end, arg_3_0)
+		self:_openVersionActivity1_2EnterView(param and param.skipOpenAnim)
+	end, self)
 end
 
-function var_0_0._openVersionActivity1_2EnterView(arg_5_0, arg_5_1)
-	local var_5_0 = VersionActivity1_2Enum.ActivityId.EnterView
-	local var_5_1, var_5_2, var_5_3 = ActivityHelper.getActivityStatusAndToast(var_5_0)
+function VersionActivity1_2EnterController:_openVersionActivity1_2EnterView(skipOpenAnim)
+	local enterViewActId = VersionActivity1_2Enum.ActivityId.EnterView
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(enterViewActId)
 
-	if var_5_1 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_5_2 then
-			GameFacade.showToastWithTableParam(var_5_2, var_5_3)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, toastParamList)
 		end
 
 		return
 	end
 
-	if not VersionActivityBaseController.instance:isPlayedActivityVideo(var_5_0) then
-		local var_5_4 = ActivityModel.instance:getActMO(var_5_0)
-		local var_5_5 = var_5_4 and var_5_4.config and var_5_4.config.storyId
+	if not VersionActivityBaseController.instance:isPlayedActivityVideo(enterViewActId) then
+		local activityMo = ActivityModel.instance:getActMO(enterViewActId)
+		local storyId = activityMo and activityMo.config and activityMo.config.storyId
 
-		if var_5_5 and var_5_5 ~= 0 then
-			StoryController.instance:playStory(var_5_5, nil, arg_5_0._onFinishStory, arg_5_0, {
-				skipOpenAnim = arg_5_1
+		if storyId and storyId ~= 0 then
+			StoryController.instance:playStory(storyId, nil, self._onFinishStory, self, {
+				skipOpenAnim = skipOpenAnim
 			})
 		else
-			logWarn(string.format("act id %s dot config story id", var_5_5))
-			arg_5_0:_onFinishStory({
-				skipOpenAnim = arg_5_1
+			logWarn(string.format("act id %s dot config story id", storyId))
+			self:_onFinishStory({
+				skipOpenAnim = skipOpenAnim
 			})
 		end
 
 		return
 	end
 
-	local var_5_6 = {
-		actId = var_5_0,
-		skipOpenAnim = arg_5_1,
+	local viewParam = {
+		actId = enterViewActId,
+		skipOpenAnim = skipOpenAnim,
 		activityIdList = VersionActivity1_2Enum.EnterViewActIdList
 	}
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_2EnterView, var_5_6)
+	ViewMgr.instance:openView(ViewName.VersionActivity1_2EnterView, viewParam)
 
-	if arg_5_0.openedCallback then
-		arg_5_0.openedCallback(arg_5_0.openedCallbackObj, arg_5_0.openedCallbackParam)
+	if self.openedCallback then
+		self.openedCallback(self.openedCallbackObj, self.openedCallbackParam)
 
-		arg_5_0.openedCallback = nil
-		arg_5_0.openedCallbackObj = nil
-		arg_5_0.openedCallbackParam = nil
+		self.openedCallback = nil
+		self.openedCallbackObj = nil
+		self.openedCallbackParam = nil
 	end
 end
 
-function var_0_0.openVersionActivity1_2EnterView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.openedCallback = arg_6_1
-	arg_6_0.openedCallbackObj = arg_6_2
-	arg_6_0.openedCallbackParam = arg_6_3
+function VersionActivity1_2EnterController:openVersionActivity1_2EnterView(openedCallback, openedCallbackObj, openedCallbackParam)
+	self.openedCallback = openedCallback
+	self.openedCallbackObj = openedCallbackObj
+	self.openedCallbackParam = openedCallbackParam
 
-	arg_6_0:_openVersionActivity1_2EnterView()
+	self:_openVersionActivity1_2EnterView()
 end
 
-function var_0_0.directOpenVersionActivity1_2EnterView(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	arg_7_0.openedCallback = arg_7_1
-	arg_7_0.openedCallbackObj = arg_7_2
-	arg_7_0.openedCallbackParam = arg_7_3
+function VersionActivity1_2EnterController:directOpenVersionActivity1_2EnterView(openedCallback, openedCallbackObj, openedCallbackParam)
+	self.openedCallback = openedCallback
+	self.openedCallbackObj = openedCallbackObj
+	self.openedCallbackParam = openedCallbackParam
 
-	arg_7_0:_openVersionActivity1_2EnterView(true)
+	self:_openVersionActivity1_2EnterView(true)
 end
 
-function var_0_0.openActivityStoreView(arg_8_0)
-	local var_8_0, var_8_1, var_8_2 = ActivityHelper.getActivityStatusAndToast(VersionActivity1_2Enum.ActivityId.DungeonStore)
+function VersionActivity1_2EnterController:openActivityStoreView()
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(VersionActivity1_2Enum.ActivityId.DungeonStore)
 
-	if var_8_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_8_1 then
-			GameFacade.showToastWithTableParam(var_8_1, var_8_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, toastParamList)
 		end
 
 		return
@@ -99,6 +103,6 @@ function var_0_0.openActivityStoreView(arg_8_0)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_2StoreView)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_2EnterController.instance = VersionActivity1_2EnterController.New()
 
-return var_0_0
+return VersionActivity1_2EnterController

@@ -1,51 +1,53 @@
-﻿module("modules.logic.sp01.assassin2.outside.model.AssassinBackpackListModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/model/AssassinBackpackListModel.lua
 
-local var_0_0 = class("AssassinBackpackListModel", ListScrollModel)
+module("modules.logic.sp01.assassin2.outside.model.AssassinBackpackListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clearAll()
+local AssassinBackpackListModel = class("AssassinBackpackListModel", ListScrollModel)
+
+function AssassinBackpackListModel:onInit()
+	self:clearAll()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clearData()
+function AssassinBackpackListModel:reInit()
+	self:clearData()
 end
 
-function var_0_0.clearAll(arg_3_0)
-	arg_3_0:clear()
-	arg_3_0:clearData()
+function AssassinBackpackListModel:clearAll()
+	self:clear()
+	self:clearData()
 end
 
-function var_0_0.clearData(arg_4_0)
-	arg_4_0._selectedItemId = nil
+function AssassinBackpackListModel:clearData()
+	self._selectedItemId = nil
 end
 
-function var_0_0.setAssassinBackpackList(arg_5_0)
-	arg_5_0:clearAll()
+function AssassinBackpackListModel:setAssassinBackpackList()
+	self:clearAll()
 
-	local var_5_0 = AssassinItemModel.instance:getAssassinItemMoList()
+	local list = AssassinItemModel.instance:getAssassinItemMoList()
 
-	arg_5_0:setList(var_5_0)
+	self:setList(list)
 end
 
-local var_0_1 = 1
+local DEFAULT_SELECT_INDEX = 1
 
-function var_0_0.selectCell(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0:getByIndex(arg_6_1)
+function AssassinBackpackListModel:selectCell(index, isSelect)
+	local mo = self:getByIndex(index)
 
-	if not var_6_0 then
-		arg_6_1 = var_0_1
-		var_6_0 = arg_6_0:getByIndex(var_0_1)
+	if not mo then
+		index = DEFAULT_SELECT_INDEX
+		mo = self:getByIndex(DEFAULT_SELECT_INDEX)
 	end
 
-	var_0_0.super.selectCell(arg_6_0, arg_6_1, arg_6_2)
+	AssassinBackpackListModel.super.selectCell(self, index, isSelect)
 
-	arg_6_0._selectedItemId = var_6_0 and var_6_0:getId()
+	self._selectedItemId = mo and mo:getId()
 end
 
-function var_0_0.getSelectedItemId(arg_7_0)
-	return arg_7_0._selectedItemId
+function AssassinBackpackListModel:getSelectedItemId()
+	return self._selectedItemId
 end
 
-var_0_0.instance = var_0_0.New()
+AssassinBackpackListModel.instance = AssassinBackpackListModel.New()
 
-return var_0_0
+return AssassinBackpackListModel

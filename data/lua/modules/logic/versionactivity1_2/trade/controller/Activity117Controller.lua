@@ -1,51 +1,53 @@
-﻿module("modules.logic.versionactivity1_2.trade.controller.Activity117Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/controller/Activity117Controller.lua
 
-local var_0_0 = class("Activity117Controller", BaseController)
+module("modules.logic.versionactivity1_2.trade.controller.Activity117Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity117Controller = class("Activity117Controller", BaseController)
+
+function Activity117Controller:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity117Controller:reInit()
 	return
 end
 
-function var_0_0.openView(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0, var_3_1, var_3_2 = ActivityHelper.getActivityStatusAndToast(arg_3_1)
+function Activity117Controller:openView(actId, tabId)
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(actId)
 
-	if var_3_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_3_1 then
-			GameFacade.showToastWithTableParam(var_3_1, var_3_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, toastParamList)
 		end
 
 		return
 	end
 
-	arg_3_0:initAct(arg_3_1)
+	self:initAct(actId)
 
-	local var_3_3 = {
-		actId = arg_3_1,
-		tabIndex = arg_3_2
+	local param = {
+		actId = actId,
+		tabIndex = tabId
 	}
 
-	arg_3_0:openTradeBargainView(var_3_3)
+	self:openTradeBargainView(param)
 end
 
-function var_0_0.initAct(arg_4_0, arg_4_1)
-	Activity117Model.instance:initAct(arg_4_1)
-	Activity117Rpc.instance:sendAct117InfoRequest(arg_4_1)
+function Activity117Controller:initAct(actId)
+	Activity117Model.instance:initAct(actId)
+	Activity117Rpc.instance:sendAct117InfoRequest(actId)
 end
 
-function var_0_0.openTradeBargainView(arg_5_0, arg_5_1)
-	ViewMgr.instance:openView(ViewName.ActivityTradeBargain, arg_5_1)
+function Activity117Controller:openTradeBargainView(param)
+	ViewMgr.instance:openView(ViewName.ActivityTradeBargain, param)
 end
 
-function var_0_0.openTradeSuccessView(arg_6_0, arg_6_1)
-	ViewMgr.instance:openView(ViewName.ActivityTradeSuccessView, arg_6_1)
+function Activity117Controller:openTradeSuccessView(param)
+	ViewMgr.instance:openView(ViewName.ActivityTradeSuccessView, param)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity117Controller.instance = Activity117Controller.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Activity117Controller.instance)
 
-return var_0_0
+return Activity117Controller

@@ -1,79 +1,83 @@
-﻿module("modules.logic.summon.view.SummonView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonView.lua
 
-local var_0_0 = class("SummonView", BaseView)
+module("modules.logic.summon.view.SummonView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_skip")
-	arg_1_0._imageskiptxt = gohelper.findChildImage(arg_1_0.viewGO, "#btn_skip/#image_skiptxt")
-	arg_1_0._imageskip = gohelper.findChildImage(arg_1_0.viewGO, "#btn_skip/#image_skip")
+local SummonView = class("SummonView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonView:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_skip")
+	self._imageskiptxt = gohelper.findChildImage(self.viewGO, "#btn_skip/#image_skiptxt")
+	self._imageskip = gohelper.findChildImage(self.viewGO, "#btn_skip/#image_skip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
+function SummonView:addEvents()
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnskip:RemoveClickListener()
+function SummonView:removeEvents()
+	self._btnskip:RemoveClickListener()
 end
 
-function var_0_0._btnskipOnClick(arg_4_0)
-	local var_4_0 = UnityEngine.Input.mousePosition
+function SummonView:_btnskipOnClick()
+	local mousePos = UnityEngine.Input.mousePosition
 
 	if GamepadController.instance.getMousePosition then
-		var_4_0 = GamepadController.instance:getMousePosition()
+		mousePos = GamepadController.instance:getMousePosition()
 	end
 
-	local var_4_1 = recthelper.screenPosToAnchorPos(var_4_0, arg_4_0.viewGO.transform)
-	local var_4_2 = {
-		st = var_4_1
+	mousePos = recthelper.screenPosToAnchorPos(mousePos, self.viewGO.transform)
+
+	local dragPosInfo = {
+		st = mousePos
 	}
 
-	SummonController.instance:trackSummonClientEvent(true, var_4_2)
+	SummonController.instance:trackSummonClientEvent(true, dragPosInfo)
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonSkip)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._btnskip.gameObject, false)
+function SummonView:_editableInitView()
+	gohelper.setActive(self._btnskip.gameObject, false)
 end
 
-function var_0_0._initSummonView(arg_6_0)
+function SummonView:_initSummonView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function SummonView:onUpdateParam()
 	logNormal("SummonView onUpdateParam")
 end
 
-function var_0_0.onOpen(arg_8_0)
+function SummonView:onOpen()
 	logNormal("SummonView onOpen")
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, arg_8_0._handleSelectTab, arg_8_0)
-	arg_8_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_8_0.startDraw, arg_8_0)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, self._handleSelectTab, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.startDraw, self)
 	AudioMgr.instance:trigger(AudioEnum.Summon.Play_UI_CallFor_Open)
 	SummonMainModel.instance:updateLastPoolId()
-	arg_8_0:_handleSelectTab()
+	self:_handleSelectTab()
 end
 
-function var_0_0.startDraw(arg_9_0)
-	gohelper.setActive(arg_9_0._btnskip.gameObject, not SummonController.instance:isInSummonGuide() and not SummonModel.instance:getSendEquipFreeSummon())
+function SummonView:startDraw()
+	gohelper.setActive(self._btnskip.gameObject, not SummonController.instance:isInSummonGuide() and not SummonModel.instance:getSendEquipFreeSummon())
 end
 
-function var_0_0._handleSelectTab(arg_10_0)
-	local var_10_0 = SummonController.instance:getLastPoolId()
-	local var_10_1 = SummonMainModel.getResultTypeById(var_10_0)
+function SummonView:_handleSelectTab()
+	local poolId = SummonController.instance:getLastPoolId()
+	local resultType = SummonMainModel.getResultTypeById(poolId)
+	local tabIndex = resultType
 
-	arg_10_0.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, var_10_1)
+	self.viewContainer:dispatchEvent(ViewEvent.ToSwitchTab, 1, tabIndex)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function SummonView:onDestroyView()
 	return
 end
 
-function var_0_0.onClose(arg_12_0)
+function SummonView:onClose()
 	AudioMgr.instance:trigger(AudioEnum.Summon.Play_UI_CallFor_Close)
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Main and not ViewMgr.instance:isOpen(ViewName.MainView) then
@@ -81,4 +85,4 @@ function var_0_0.onClose(arg_12_0)
 	end
 end
 
-return var_0_0
+return SummonView

@@ -1,232 +1,233 @@
-﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8DecomposeFilterView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_8/Season123_1_8DecomposeFilterView.lua
 
-local var_0_0 = class("Season123_1_8DecomposeFilterView", BaseView)
+module("modules.logic.seasonver.act123.view1_8.Season123_1_8DecomposeFilterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gorare = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_rare")
-	arg_1_0._gorareContainer = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer")
-	arg_1_0._gorareItem = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer/#go_rareItem")
-	arg_1_0._gotag = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag")
-	arg_1_0._scrolltag = gohelper.findChildScrollRect(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag")
-	arg_1_0._gotagContainer = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer")
-	arg_1_0._gotagItem = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer/#go_tagItem")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_reset")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_confirm")
+local Season123_1_8DecomposeFilterView = class("Season123_1_8DecomposeFilterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_1_8DecomposeFilterView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gorare = gohelper.findChild(self.viewGO, "container/layoutgroup/#go_rare")
+	self._gorareContainer = gohelper.findChild(self.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer")
+	self._gorareItem = gohelper.findChild(self.viewGO, "container/layoutgroup/#go_rare/#go_rareContainer/#go_rareItem")
+	self._gotag = gohelper.findChild(self.viewGO, "container/layoutgroup/#go_tag")
+	self._scrolltag = gohelper.findChildScrollRect(self.viewGO, "container/layoutgroup/#go_tag/#scroll_tag")
+	self._gotagContainer = gohelper.findChild(self.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer")
+	self._gotagItem = gohelper.findChild(self.viewGO, "container/layoutgroup/#go_tag/#scroll_tag/Viewport/#go_tagContainer/#go_tagItem")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "container/#btn_reset")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "container/#btn_confirm")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+function Season123_1_8DecomposeFilterView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btnconfirm:RemoveClickListener()
+function Season123_1_8DecomposeFilterView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btnconfirm:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function Season123_1_8DecomposeFilterView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnresetOnClick(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0.rareSelectTab) do
-		arg_5_0.rareSelectTab[iter_5_0] = false
+function Season123_1_8DecomposeFilterView:_btnresetOnClick()
+	for index, v in pairs(self.rareSelectTab) do
+		self.rareSelectTab[index] = false
 	end
 
-	for iter_5_2, iter_5_3 in pairs(arg_5_0.tagSelectTab) do
-		arg_5_0.tagSelectTab[iter_5_2] = false
+	for index, v in pairs(self.tagSelectTab) do
+		self.tagSelectTab[index] = false
 	end
 
-	for iter_5_4, iter_5_5 in pairs(arg_5_0.rareItemTab) do
-		gohelper.setActive(iter_5_5.goSelected, false)
-		gohelper.setActive(iter_5_5.goUnSelected, true)
+	for index, rareItem in pairs(self.rareItemTab) do
+		gohelper.setActive(rareItem.goSelected, false)
+		gohelper.setActive(rareItem.goUnSelected, true)
 	end
 
-	for iter_5_6, iter_5_7 in pairs(arg_5_0.tagItemTab) do
-		gohelper.setActive(iter_5_7.goSelected, false)
-		gohelper.setActive(iter_5_7.goUnSelected, true)
+	for index, tagItem in pairs(self.tagItemTab) do
+		gohelper.setActive(tagItem.goSelected, false)
+		gohelper.setActive(tagItem.goUnSelected, true)
 	end
 end
 
-function var_0_0._btnconfirmOnClick(arg_6_0)
-	Season123DecomposeModel.instance:setRareSelectItem(arg_6_0.rareSelectTab)
-	Season123DecomposeModel.instance:setTagSelectItem(arg_6_0.tagSelectTab)
+function Season123_1_8DecomposeFilterView:_btnconfirmOnClick()
+	Season123DecomposeModel.instance:setRareSelectItem(self.rareSelectTab)
+	Season123DecomposeModel.instance:setTagSelectItem(self.tagSelectTab)
 	Season123DecomposeModel.instance:clearCurSelectItem()
 	Season123DecomposeModel.instance:initList()
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnResetBatchDecomposeView)
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnDecomposeItemSelect)
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	gohelper.setActive(arg_7_0._gorareItem, false)
+function Season123_1_8DecomposeFilterView:_editableInitView()
+	gohelper.setActive(self._gorareItem, false)
 
-	arg_7_0.rareItemTab = arg_7_0:getUserDataTb_()
-	arg_7_0.rareSelectTab = {}
-	arg_7_0.tagItemTab = arg_7_0:getUserDataTb_()
-	arg_7_0.tagSelectTab = {}
+	self.rareItemTab = self:getUserDataTb_()
+	self.rareSelectTab = {}
+	self.tagItemTab = self:getUserDataTb_()
+	self.tagSelectTab = {}
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0:createRareItem()
-	arg_8_0:createTagItem()
-	arg_8_0:refreshUI()
+function Season123_1_8DecomposeFilterView:onOpen()
+	self:createRareItem()
+	self:createTagItem()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0:refreshRareSelectUI()
-	arg_9_0:refreshTagSelectUI()
+function Season123_1_8DecomposeFilterView:refreshUI()
+	self:refreshRareSelectUI()
+	self:refreshTagSelectUI()
 end
 
-function var_0_0.refreshRareSelectUI(arg_10_0)
-	arg_10_0.rareSelectTab = tabletool.copy(Season123DecomposeModel.instance.rareSelectTab)
+function Season123_1_8DecomposeFilterView:refreshRareSelectUI()
+	self.rareSelectTab = tabletool.copy(Season123DecomposeModel.instance.rareSelectTab)
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.rareItemTab) do
-		gohelper.setActive(iter_10_1.goSelected, arg_10_0.rareSelectTab[iter_10_0])
-		gohelper.setActive(iter_10_1.goUnSelected, not arg_10_0.rareSelectTab[iter_10_0])
+	for index, rareItem in pairs(self.rareItemTab) do
+		gohelper.setActive(rareItem.goSelected, self.rareSelectTab[index])
+		gohelper.setActive(rareItem.goUnSelected, not self.rareSelectTab[index])
 	end
 end
 
-function var_0_0.refreshTagSelectUI(arg_11_0)
-	arg_11_0.tagSelectTab = tabletool.copy(Season123DecomposeModel.instance.tagSelectTab)
+function Season123_1_8DecomposeFilterView:refreshTagSelectUI()
+	self.tagSelectTab = tabletool.copy(Season123DecomposeModel.instance.tagSelectTab)
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0.tagItemTab) do
-		local var_11_0 = iter_11_1.data.id
+	for index, tagItem in pairs(self.tagItemTab) do
+		local tagId = tagItem.data.id
 
-		gohelper.setActive(iter_11_1.goSelected, arg_11_0.tagSelectTab[var_11_0])
-		gohelper.setActive(iter_11_1.goUnSelected, not arg_11_0.tagSelectTab[var_11_0])
+		gohelper.setActive(tagItem.goSelected, self.tagSelectTab[tagId])
+		gohelper.setActive(tagItem.goUnSelected, not self.tagSelectTab[tagId])
 	end
 end
 
-function var_0_0.createRareItem(arg_12_0)
-	for iter_12_0 = 5, 1, -1 do
-		local var_12_0 = arg_12_0.rareItemTab[iter_12_0]
+function Season123_1_8DecomposeFilterView:createRareItem()
+	for i = 5, 1, -1 do
+		local rareItem = self.rareItemTab[i]
 
-		if not var_12_0 then
-			var_12_0 = {
-				rare = iter_12_0,
-				go = gohelper.clone(arg_12_0._gorareItem, arg_12_0._gorareContainer, "rare" .. iter_12_0)
+		if not rareItem then
+			rareItem = {
+				rare = i,
+				go = gohelper.clone(self._gorareItem, self._gorareContainer, "rare" .. i)
 			}
-			var_12_0.goSelected = gohelper.findChild(var_12_0.go, "selected")
-			var_12_0.goUnSelected = gohelper.findChild(var_12_0.go, "unselected")
-			var_12_0.icon = gohelper.findChildImage(var_12_0.go, "image_rareicon")
-			var_12_0.txt = gohelper.findChildText(var_12_0.go, "tagText")
-			var_12_0.click = gohelper.findChildButtonWithAudio(var_12_0.go, "click")
-			arg_12_0.rareItemTab[iter_12_0] = var_12_0
+			rareItem.goSelected = gohelper.findChild(rareItem.go, "selected")
+			rareItem.goUnSelected = gohelper.findChild(rareItem.go, "unselected")
+			rareItem.icon = gohelper.findChildImage(rareItem.go, "image_rareicon")
+			rareItem.txt = gohelper.findChildText(rareItem.go, "tagText")
+			rareItem.click = gohelper.findChildButtonWithAudio(rareItem.go, "click")
+			self.rareItemTab[i] = rareItem
 		end
 
-		gohelper.setActive(var_12_0.go, true)
-		gohelper.setActive(var_12_0.goUnSelected, true)
-		gohelper.setActive(var_12_0.goSelected, false)
-		UISpriteSetMgr.instance:setSeason123Sprite(var_12_0.icon, "v1a7_season_cardcareer_" .. iter_12_0, true)
-		SLFramework.UGUI.GuiHelper.SetColor(var_12_0.txt, "#C1C1C1")
+		gohelper.setActive(rareItem.go, true)
+		gohelper.setActive(rareItem.goUnSelected, true)
+		gohelper.setActive(rareItem.goSelected, false)
+		UISpriteSetMgr.instance:setSeason123Sprite(rareItem.icon, "v1a7_season_cardcareer_" .. i, true)
+		SLFramework.UGUI.GuiHelper.SetColor(rareItem.txt, "#C1C1C1")
 
-		var_12_0.txt.text = luaLang("Season123Rare_" .. iter_12_0)
+		rareItem.txt.text = luaLang("Season123Rare_" .. i)
 
-		var_12_0.click:AddClickListener(arg_12_0.rareItemOnClick, arg_12_0, iter_12_0)
+		rareItem.click:AddClickListener(self.rareItemOnClick, self, i)
 	end
 end
 
-function var_0_0.rareItemOnClick(arg_13_0, arg_13_1)
-	arg_13_0:setRareSelectState(arg_13_1)
+function Season123_1_8DecomposeFilterView:rareItemOnClick(rare)
+	self:setRareSelectState(rare)
 
-	local var_13_0 = arg_13_0.rareSelectTab[arg_13_1]
+	local isSelected = self.rareSelectTab[rare]
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_13_0.rareItemTab[arg_13_1].txt, var_13_0 and "#FF7C41" or "#C1C1C1")
-	gohelper.setActive(arg_13_0.rareItemTab[arg_13_1].goSelected, var_13_0)
-	gohelper.setActive(arg_13_0.rareItemTab[arg_13_1].goUnSelected, not var_13_0)
+	SLFramework.UGUI.GuiHelper.SetColor(self.rareItemTab[rare].txt, isSelected and "#FF7C41" or "#C1C1C1")
+	gohelper.setActive(self.rareItemTab[rare].goSelected, isSelected)
+	gohelper.setActive(self.rareItemTab[rare].goUnSelected, not isSelected)
 end
 
-function var_0_0.setRareSelectState(arg_14_0, arg_14_1)
-	if arg_14_0.rareSelectTab[arg_14_1] then
-		arg_14_0.rareSelectTab[arg_14_1] = false
+function Season123_1_8DecomposeFilterView:setRareSelectState(itemRare)
+	if self.rareSelectTab[itemRare] then
+		self.rareSelectTab[itemRare] = false
 	else
-		arg_14_0.rareSelectTab[arg_14_1] = true
+		self.rareSelectTab[itemRare] = true
 	end
 end
 
-function var_0_0.createTagItem(arg_15_0)
-	local var_15_0 = Season123DecomposeModel.instance.curActId
-	local var_15_1 = Season123Config.instance:getSeasonTagDesc(var_15_0)
-	local var_15_2 = arg_15_0:tagItemSort(var_15_1)
+function Season123_1_8DecomposeFilterView:createTagItem()
+	local curSeasonId = Season123DecomposeModel.instance.curActId
+	local tagConfig = Season123Config.instance:getSeasonTagDesc(curSeasonId)
+	local tagConfigData = self:tagItemSort(tagConfig)
 
-	gohelper.CreateObjList(arg_15_0, arg_15_0.tagItemShow, var_15_2, arg_15_0._gotagContainer, arg_15_0._gotagItem)
+	gohelper.CreateObjList(self, self.tagItemShow, tagConfigData, self._gotagContainer, self._gotagItem)
 end
 
-function var_0_0.tagItemSort(arg_16_0, arg_16_1)
-	local var_16_0 = {}
-	local var_16_1 = tabletool.copy(arg_16_1)
+function Season123_1_8DecomposeFilterView:tagItemSort(tagConfig)
+	local tagConfigData = {}
+	local tagConfigTemp = tabletool.copy(tagConfig)
 
-	for iter_16_0, iter_16_1 in pairs(var_16_1) do
-		table.insert(var_16_0, iter_16_1)
+	for _, config in pairs(tagConfigTemp) do
+		table.insert(tagConfigData, config)
 	end
 
-	table.sort(var_16_0, function(arg_17_0, arg_17_1)
-		return arg_17_0.order < arg_17_1.order
+	table.sort(tagConfigData, function(a, b)
+		return a.order < b.order
 	end)
 
-	return var_16_0
+	return tagConfigData
 end
 
-function var_0_0.tagItemShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = {
-		data = arg_18_2,
-		go = arg_18_1
-	}
+function Season123_1_8DecomposeFilterView:tagItemShow(obj, data, index)
+	local tagItem = {}
 
-	var_18_0.goSelected = gohelper.findChild(var_18_0.go, "selected")
-	var_18_0.goUnSelected = gohelper.findChild(var_18_0.go, "unselected")
-	var_18_0.tagText = gohelper.findChildText(var_18_0.go, "tagText")
-	var_18_0.click = gohelper.findChildButtonWithAudio(var_18_0.go, "click")
+	tagItem.data = data
+	tagItem.go = obj
+	tagItem.goSelected = gohelper.findChild(tagItem.go, "selected")
+	tagItem.goUnSelected = gohelper.findChild(tagItem.go, "unselected")
+	tagItem.tagText = gohelper.findChildText(tagItem.go, "tagText")
+	tagItem.click = gohelper.findChildButtonWithAudio(tagItem.go, "click")
 
-	var_18_0.click:AddClickListener(arg_18_0.tagItemOnClick, arg_18_0, arg_18_2)
-	gohelper.setActive(var_18_0.goSelected, false)
-	gohelper.setActive(var_18_0.goUnSelected, true)
-	SLFramework.UGUI.GuiHelper.SetColor(var_18_0.tagText, "#C1C1C1")
+	tagItem.click:AddClickListener(self.tagItemOnClick, self, data)
+	gohelper.setActive(tagItem.goSelected, false)
+	gohelper.setActive(tagItem.goUnSelected, true)
+	SLFramework.UGUI.GuiHelper.SetColor(tagItem.tagText, "#C1C1C1")
 
-	var_18_0.tagText.text = arg_18_2.desc
-	arg_18_0.tagItemTab[arg_18_2.id] = var_18_0
+	tagItem.tagText.text = data.desc
+	self.tagItemTab[data.id] = tagItem
 end
 
-function var_0_0.tagItemOnClick(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_1.id
+function Season123_1_8DecomposeFilterView:tagItemOnClick(data)
+	local tagId = data.id
 
-	arg_19_0:setTagSelectState(var_19_0)
+	self:setTagSelectState(tagId)
 
-	local var_19_1 = arg_19_0.tagSelectTab[var_19_0]
+	local isSelected = self.tagSelectTab[tagId]
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_19_0.tagItemTab[var_19_0].tagText, var_19_1 and "#FF7C41" or "#C1C1C1")
-	gohelper.setActive(arg_19_0.tagItemTab[var_19_0].goSelected, var_19_1)
-	gohelper.setActive(arg_19_0.tagItemTab[var_19_0].goUnSelected, not var_19_1)
+	SLFramework.UGUI.GuiHelper.SetColor(self.tagItemTab[tagId].tagText, isSelected and "#FF7C41" or "#C1C1C1")
+	gohelper.setActive(self.tagItemTab[tagId].goSelected, isSelected)
+	gohelper.setActive(self.tagItemTab[tagId].goUnSelected, not isSelected)
 end
 
-function var_0_0.setTagSelectState(arg_20_0, arg_20_1)
-	if arg_20_0.tagSelectTab[arg_20_1] then
-		arg_20_0.tagSelectTab[arg_20_1] = false
+function Season123_1_8DecomposeFilterView:setTagSelectState(tagId)
+	if self.tagSelectTab[tagId] then
+		self.tagSelectTab[tagId] = false
 	else
-		arg_20_0.tagSelectTab[arg_20_1] = true
+		self.tagSelectTab[tagId] = true
 	end
 end
 
-function var_0_0.onClose(arg_21_0)
+function Season123_1_8DecomposeFilterView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	for iter_22_0, iter_22_1 in pairs(arg_22_0.rareItemTab) do
-		iter_22_1.click:RemoveClickListener()
+function Season123_1_8DecomposeFilterView:onDestroyView()
+	for _, item in pairs(self.rareItemTab) do
+		item.click:RemoveClickListener()
 	end
 
-	for iter_22_2, iter_22_3 in pairs(arg_22_0.tagItemTab) do
-		iter_22_3.click:RemoveClickListener()
+	for _, item in pairs(self.tagItemTab) do
+		item.click:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return Season123_1_8DecomposeFilterView

@@ -1,7 +1,9 @@
-﻿module("modules.logic.room.view.RoomInformPlayerViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomInformPlayerViewContainer.lua
 
-local var_0_0 = class("RoomInformPlayerViewContainer", BaseViewContainer)
-local var_0_1 = {
+module("modules.logic.room.view.RoomInformPlayerViewContainer", package.seeall)
+
+local RoomInformPlayerViewContainer = class("RoomInformPlayerViewContainer", BaseViewContainer)
+local langParam = {
 	[LangSettings.zh] = {
 		cellSpaceH = 37,
 		cellWidth = 280,
@@ -19,36 +21,36 @@ local var_0_1 = {
 	}
 }
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = var_0_1[GameConfig:GetCurLangType()] or var_0_1[LangSettings.zh]
-	local var_1_1 = ListScrollParam.New()
+function RoomInformPlayerViewContainer:buildViews()
+	local _langParam = langParam[GameConfig:GetCurLangType()] or langParam[LangSettings.zh]
+	local scrollParam = ListScrollParam.New()
 
-	var_1_1.scrollGOPath = "object/scroll_inform"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "object/scroll_inform/Viewport/#go_informContent/#go_informItem"
-	var_1_1.cellClass = RoomInformReportTypeItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = var_1_0.lineCount
-	var_1_1.cellWidth = var_1_0.cellWidth
-	var_1_1.cellHeight = 40
-	var_1_1.cellSpaceH = var_1_0.cellSpaceH
-	var_1_1.cellSpaceV = 33
-	var_1_1.startSpace = 0
+	scrollParam.scrollGOPath = "object/scroll_inform"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "object/scroll_inform/Viewport/#go_informContent/#go_informItem"
+	scrollParam.cellClass = RoomInformReportTypeItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = _langParam.lineCount
+	scrollParam.cellWidth = _langParam.cellWidth
+	scrollParam.cellHeight = 40
+	scrollParam.cellSpaceH = _langParam.cellSpaceH
+	scrollParam.cellSpaceV = 33
+	scrollParam.startSpace = 0
 
 	return {
 		CommonViewFrame.New(),
 		RoomInformPlayerView.New(),
-		LuaListScrollView.New(RoomReportTypeListModel.instance, var_1_1)
+		LuaListScrollView.New(RoomReportTypeListModel.instance, scrollParam)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function RoomInformPlayerViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
+function RoomInformPlayerViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_3_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomInformPlayerViewContainer

@@ -1,136 +1,139 @@
-﻿module("modules.logic.dungeon.view.DungeonViewEffect", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonViewEffect.lua
 
-local var_0_0 = class("DungeonViewEffect", BaseView)
+module("modules.logic.dungeon.view.DungeonViewEffect", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gostory = gohelper.findChild(arg_1_0.viewGO, "#go_story")
+local DungeonViewEffect = class("DungeonViewEffect", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonViewEffect:onInitView()
+	self._gostory = gohelper.findChild(self.viewGO, "#go_story")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function DungeonViewEffect:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function DungeonViewEffect:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._effect = gohelper.findChild(arg_4_0.viewGO, "#go_story/effect")
-	arg_4_0._effectTouchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_4_0._effect)
+function DungeonViewEffect:_editableInitView()
+	self._effect = gohelper.findChild(self.viewGO, "#go_story/effect")
+	self._effectTouchEventMgr = TouchEventMgrHepler.getTouchEventMgr(self._effect)
 
-	arg_4_0._effectTouchEventMgr:SetIgnoreUI(true)
-	arg_4_0._effectTouchEventMgr:SetOnlyTouch(true)
-	arg_4_0._effectTouchEventMgr:SetOnTouchDownCb(arg_4_0._onEffectTouchDown, arg_4_0)
-	arg_4_0:_loadEffect()
+	self._effectTouchEventMgr:SetIgnoreUI(true)
+	self._effectTouchEventMgr:SetOnlyTouch(true)
+	self._effectTouchEventMgr:SetOnTouchDownCb(self._onEffectTouchDown, self)
+	self:_loadEffect()
 end
 
-function var_0_0._loadEffect(arg_5_0)
-	arg_5_0._effectItem = arg_5_0:getUserDataTb_()
-	arg_5_0._effectIndex = 1
-	arg_5_0._effectNum = 3
-	arg_5_0._effectUrl = "ui/viewres/dungeon/dungeonview_effect.prefab"
-	arg_5_0._effectLoader = MultiAbLoader.New()
+function DungeonViewEffect:_loadEffect()
+	self._effectItem = self:getUserDataTb_()
+	self._effectIndex = 1
+	self._effectNum = 3
+	self._effectUrl = "ui/viewres/dungeon/dungeonview_effect.prefab"
+	self._effectLoader = MultiAbLoader.New()
 
-	arg_5_0._effectLoader:addPath(arg_5_0._effectUrl)
-	arg_5_0._effectLoader:startLoad(arg_5_0._effectLoaded, arg_5_0)
+	self._effectLoader:addPath(self._effectUrl)
+	self._effectLoader:startLoad(self._effectLoaded, self)
 end
 
-function var_0_0._effectLoaded(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1:getAssetItem(arg_6_0._effectUrl):GetResource(arg_6_0._effectUrl)
+function DungeonViewEffect:_effectLoaded(effectLoader)
+	local assetItem = effectLoader:getAssetItem(self._effectUrl)
+	local effectPrefab = assetItem:GetResource(self._effectUrl)
 
-	for iter_6_0 = 1, arg_6_0._effectNum do
-		local var_6_1 = arg_6_0:getUserDataTb_()
+	for i = 1, self._effectNum do
+		local item = self:getUserDataTb_()
 
-		var_6_1.go = gohelper.clone(var_6_0, arg_6_0._effect)
-		var_6_1.tweenId = nil
+		item.go = gohelper.clone(effectPrefab, self._effect)
+		item.tweenId = nil
 
-		table.insert(arg_6_0._effectItem, var_6_1)
-		gohelper.setActive(var_6_1.go, false)
+		table.insert(self._effectItem, item)
+		gohelper.setActive(item.go, false)
 	end
 end
 
-function var_0_0._onEffectTouchDown(arg_7_0, arg_7_1)
+function DungeonViewEffect:_onEffectTouchDown(pos)
 	if UIBlockMgr.instance:isBlock() then
 		return
 	end
 
-	local var_7_0 = ViewMgr.instance:getOpenViewNameList()
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	if not var_7_0 or #var_7_0 <= 0 then
+	if not viewNameList or #viewNameList <= 0 then
 		return
 	end
 
-	for iter_7_0 = #var_7_0, 1, -1 do
-		local var_7_1 = ViewMgr.instance:getSetting(var_7_0[iter_7_0])
+	for i = #viewNameList, 1, -1 do
+		local viewSetting = ViewMgr.instance:getSetting(viewNameList[i])
 
-		if var_7_0[iter_7_0] ~= ViewName.DungeonView and (var_7_1.layer == "POPUP_TOP" or var_7_1.layer == "POPUP") then
+		if viewNameList[i] ~= ViewName.DungeonView and (viewSetting.layer == "POPUP_TOP" or viewSetting.layer == "POPUP") then
 			return
 		end
 
-		if var_7_0[iter_7_0] == ViewName.DungeonView then
+		if viewNameList[i] == ViewName.DungeonView then
 			break
 		end
 	end
 
-	local var_7_2 = arg_7_0._effectItem[arg_7_0._effectIndex]
+	local item = self._effectItem[self._effectIndex]
 
-	if not var_7_2 then
+	if not item then
 		return
 	end
 
-	arg_7_1 = recthelper.screenPosToAnchorPos(arg_7_1, arg_7_0._effect.transform)
+	pos = recthelper.screenPosToAnchorPos(pos, self._effect.transform)
 
-	if var_7_2.tweenId then
-		ZProj.TweenHelper.KillById(var_7_2.tweenId)
-		gohelper.setActive(var_7_2.go, false)
+	if item.tweenId then
+		ZProj.TweenHelper.KillById(item.tweenId)
+		gohelper.setActive(item.go, false)
 	end
 
-	gohelper.setActive(var_7_2.go, true)
-	transformhelper.setLocalPosXY(var_7_2.go.transform, arg_7_1.x, arg_7_1.y)
+	gohelper.setActive(item.go, true)
+	transformhelper.setLocalPosXY(item.go.transform, pos.x, pos.y)
 
-	var_7_2.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, nil, arg_7_0._effectTweenFinish, arg_7_0, arg_7_0._effectIndex)
+	item.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1, nil, self._effectTweenFinish, self, self._effectIndex)
 
-	if arg_7_0._effectIndex >= arg_7_0._effectNum then
-		arg_7_0._effectIndex = 1
+	if self._effectIndex >= self._effectNum then
+		self._effectIndex = 1
 	else
-		arg_7_0._effectIndex = arg_7_0._effectIndex + 1
+		self._effectIndex = self._effectIndex + 1
 	end
 end
 
-function var_0_0._effectTweenFinish(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._effectItem[arg_8_1]
+function DungeonViewEffect:_effectTweenFinish(effectIndex)
+	local item = self._effectItem[effectIndex]
 
-	if not var_8_0 then
+	if not item then
 		return
 	end
 
-	var_8_0.tweenId = nil
+	item.tweenId = nil
 
-	gohelper.setActive(var_8_0.go, false)
+	gohelper.setActive(item.go, false)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	if arg_9_0._effectTouchEventMgr then
-		TouchEventMgrHepler.remove(arg_9_0._effectTouchEventMgr)
+function DungeonViewEffect:onDestroyView()
+	if self._effectTouchEventMgr then
+		TouchEventMgrHepler.remove(self._effectTouchEventMgr)
 
-		arg_9_0._effectTouchEventMgr = nil
+		self._effectTouchEventMgr = nil
 	end
 
-	if arg_9_0._effectLoader then
-		arg_9_0._effectLoader:dispose()
+	if self._effectLoader then
+		self._effectLoader:dispose()
 	end
 
-	for iter_9_0 = 1, #arg_9_0._effectItem do
-		local var_9_0 = arg_9_0._effectItem[iter_9_0]
+	for i = 1, #self._effectItem do
+		local item = self._effectItem[i]
 
-		if var_9_0.tweenId then
-			ZProj.TweenHelper.KillById(var_9_0.tweenId)
+		if item.tweenId then
+			ZProj.TweenHelper.KillById(item.tweenId)
 		end
 	end
 end
 
-return var_0_0
+return DungeonViewEffect

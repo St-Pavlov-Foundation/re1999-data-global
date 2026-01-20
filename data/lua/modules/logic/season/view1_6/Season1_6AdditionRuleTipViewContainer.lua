@@ -1,11 +1,13 @@
-﻿module("modules.logic.season.view1_6.Season1_6AdditionRuleTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_6/Season1_6AdditionRuleTipViewContainer.lua
 
-local var_0_0 = class("Season1_6AdditionRuleTipViewContainer", BaseViewContainer)
+module("modules.logic.season.view1_6.Season1_6AdditionRuleTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season1_6AdditionRuleTipViewContainer = class("Season1_6AdditionRuleTipViewContainer", BaseViewContainer)
+
+function Season1_6AdditionRuleTipViewContainer:buildViews()
 	return {
 		Season1_6AdditionRuleTipView.New()
 	}
 end
 
-return var_0_0
+return Season1_6AdditionRuleTipViewContainer

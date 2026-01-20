@@ -9,16 +9,16 @@
   {
     "id": 2,
     "patFaceActivityId": 0,
-    "patFaceViewName": "TurnbackPopupBeginnerView",
+    "patFaceViewName": "Turnback3PanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 99999
   },
   {
     "id": 3,
-    "patFaceActivityId": 12238,
+    "patFaceActivityId": 13202,
     "patFaceViewName": "Activity136View",
     "patFaceStoryId": 0,
-    "patFaceOrder": 20203
+    "patFaceOrder": 35000
   },
   {
     "id": 4,
@@ -211,10 +211,10 @@
   },
   {
     "id": 20203,
-    "patFaceActivityId": 12243,
+    "patFaceActivityId": 13204,
     "patFaceViewName": "BPSPFaceView",
     "patFaceStoryId": 0,
-    "patFaceOrder": 20201
+    "patFaceOrder": 85000
   },
   {
     "id": 20204,
@@ -452,7 +452,7 @@
     "patFaceActivityId": 12860,
     "patFaceViewName": "BPSkinFaceView",
     "patFaceStoryId": 0,
-    "patFaceOrder": 2090
+    "patFaceOrder": 90000
   },
   {
     "id": 30000,
@@ -536,7 +536,7 @@
     "patFaceActivityId": 0,
     "patFaceViewName": "",
     "patFaceStoryId": 0,
-    "patFaceOrder": 30100
+    "patFaceOrder": 40000
   },
   {
     "id": 30101,
@@ -572,6 +572,27 @@
     "patFaceViewName": "PowerMakerPatFaceView",
     "patFaceStoryId": 0,
     "patFaceOrder": 999999
+  },
+  {
+    "id": 30200,
+    "patFaceActivityId": 13208,
+    "patFaceViewName": "versionsummonpanel",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 30200
+  },
+  {
+    "id": 30201,
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 50000
+  },
+  {
+    "id": 30202,
+    "patFaceActivityId": 13228,
+    "patFaceViewName": "SummonNewCustomPickFullView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20000
   },
   {
     "id": 30300,

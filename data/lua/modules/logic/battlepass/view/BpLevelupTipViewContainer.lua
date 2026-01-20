@@ -1,11 +1,13 @@
-﻿module("modules.logic.battlepass.view.BpLevelupTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpLevelupTipViewContainer.lua
 
-local var_0_0 = class("BpLevelupTipViewContainer", BaseViewContainer)
+module("modules.logic.battlepass.view.BpLevelupTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpLevelupTipViewContainer = class("BpLevelupTipViewContainer", BaseViewContainer)
+
+function BpLevelupTipViewContainer:buildViews()
 	return {
 		BpLevelupTipView.New()
 	}
 end
 
-return var_0_0
+return BpLevelupTipViewContainer

@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity3_1.common.AudioEnum3_1", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/common/AudioEnum3_1.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity3_1.common.AudioEnum3_1", package.seeall)
 
-var_0_0.VersionActivity3_1Enter = {
+local AudioEnum3_1 = _M
+
+AudioEnum3_1.VersionActivity3_1Enter = {
 	play_ui_mingdi_entrance = 315002,
 	play_ui_mingdi_video = 315001
 }
-var_0_0.Power = {
+AudioEnum3_1.Power = {
 	play_ui_tili_candy = 310001
 }
-var_0_0.DouQuQu3 = {
+AudioEnum3_1.DouQuQu3 = {
 	ui_mingdi_aperture_shrink = 310035
 }
-var_0_0.BpOperAct = {
+AudioEnum3_1.BpOperAct = {
 	play_ui_bpoper_turn_card = 310034
 }
-var_0_0.SurvivalOperAct = {
+AudioEnum3_1.SurvivalOperAct = {
 	play_ui_diqiu_jinru = 20246001
 }
-var_0_0.NationalGift = {
+AudioEnum3_1.NationalGift = {
 	play_ui_leimi_souvenir_open = 310036,
 	play_ui_mln_page_turn = 310037
 }
-var_0_0.RoomFishing = {
+AudioEnum3_1.RoomFishing = {
 	ui_home_mingdi_huoqu2 = 310042,
 	ui_home_mingdi_jihuan = 310040,
 	play_ui_home_mingdi_harvest = 314001,
@@ -31,11 +33,11 @@ var_0_0.RoomFishing = {
 	ui_home_mingdi_huoqu1 = 310041,
 	ui_home_mingdi_dalao = 310039
 }
-var_0_0.play_ui_mingdi_success_unlock = 310043
-var_0_0.WarmUpH5 = {
+AudioEnum3_1.play_ui_mingdi_success_unlock = 310043
+AudioEnum3_1.WarmUpH5 = {
 	play_ui_mingdi_h5_open = 310044
 }
-var_0_0.Survival = {
+AudioEnum3_1.Survival = {
 	PlayerMoveByCar = 311009,
 	PlayerMoveByWater = 311008,
 	MagmaDeactive = 311005,
@@ -47,7 +49,7 @@ var_0_0.Survival = {
 	ui_mingdi_tansuo_bubble_eject = 311011,
 	TornadoStart = 311001
 }
-var_0_0.GaoSiNiao = {
+AudioEnum3_1.GaoSiNiao = {
 	play_ui_mingdi_gsn_win2 = 313006,
 	play_ui_mingdi_gsn_fang = 313004,
 	play_ui_mingdi_gsn_win = 313005,
@@ -60,7 +62,7 @@ var_0_0.GaoSiNiao = {
 	play_ui_mingdi_gsn_send = 313007,
 	play_ui_mingdi_gsn_open2 = 313002
 }
-var_0_0.YeShuMei = {
+AudioEnum3_1.YeShuMei = {
 	play_ui_mingdi_ysm_shadow = 316006,
 	play_ui_mingdi_ysm_mubiao = 316002,
 	play_ui_mingdi_ysm_dian = 316003,
@@ -71,4 +73,4 @@ var_0_0.YeShuMei = {
 	play_ui_mingdi_ysm_wrong = 316005
 }
 
-return var_0_0
+return AudioEnum3_1

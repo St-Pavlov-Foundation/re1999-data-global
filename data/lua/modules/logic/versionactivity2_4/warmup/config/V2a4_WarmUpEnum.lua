@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_4.warmup.config.V2a4_WarmUpEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/config/V2a4_WarmUpEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_4.warmup.config.V2a4_WarmUpEnum", package.seeall)
 
-var_0_0.DialogType = {
+local V2a4_WarmUpEnum = _M
+
+V2a4_WarmUpEnum.DialogType = {
 	ReplyAnsRight = 6,
 	Preface = 0,
 	AnsTrue = 9,
@@ -10,11 +12,11 @@ var_0_0.DialogType = {
 	ReplyAnsWrong = 5,
 	Wait = 3
 }
-var_0_0.AskType = {
+V2a4_WarmUpEnum.AskType = {
 	Text = 1,
 	Photo = 2
 }
-var_0_0.RoundState = {
+V2a4_WarmUpEnum.RoundState = {
 	ReplyResult = 5,
 	Ansed = 4,
 	Ask = 2,
@@ -24,4 +26,4 @@ var_0_0.RoundState = {
 	None = 0
 }
 
-return var_0_0
+return V2a4_WarmUpEnum

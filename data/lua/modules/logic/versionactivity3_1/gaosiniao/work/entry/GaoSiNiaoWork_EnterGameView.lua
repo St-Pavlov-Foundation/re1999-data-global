@@ -1,38 +1,40 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.work.entry.GaoSiNiaoWork_EnterGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/work/entry/GaoSiNiaoWork_EnterGameView.lua
 
-local var_0_0 = class("GaoSiNiaoWork_EnterGameView", GaoSiNiaoEntryFlow_WorkBase)
+module("modules.logic.versionactivity3_1.gaosiniao.work.entry.GaoSiNiaoWork_EnterGameView", package.seeall)
 
-function var_0_0.s_create(arg_1_0)
-	local var_1_0 = var_0_0.New()
+local GaoSiNiaoWork_EnterGameView = class("GaoSiNiaoWork_EnterGameView", GaoSiNiaoEntryFlow_WorkBase)
 
-	var_1_0._viewName = arg_1_0
+function GaoSiNiaoWork_EnterGameView.s_create(viewName)
+	local work = GaoSiNiaoWork_EnterGameView.New()
 
-	return var_1_0
+	work._viewName = viewName
+
+	return work
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:clearWork()
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
-	arg_2_0:restartBattle()
+function GaoSiNiaoWork_EnterGameView:onStart()
+	self:clearWork()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	self:restartBattle()
 
-	local var_2_0 = arg_2_0._viewName
+	local viewName = self._viewName
 
-	if not ViewMgr.instance:isOpen(var_2_0) then
-		ViewMgr.instance:openView(var_2_0)
+	if not ViewMgr.instance:isOpen(viewName) then
+		ViewMgr.instance:openView(viewName)
 	else
-		arg_2_0:onSucc()
+		self:onSucc()
 	end
 end
 
-function var_0_0._onOpenViewFinish(arg_3_0, arg_3_1)
-	if arg_3_0._viewName == arg_3_1 then
-		arg_3_0:onSucc()
+function GaoSiNiaoWork_EnterGameView:_onOpenViewFinish(viewName)
+	if self._viewName == viewName then
+		self:onSucc()
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenViewFinish, arg_4_0)
-	var_0_0.super.clearWork(arg_4_0)
+function GaoSiNiaoWork_EnterGameView:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	GaoSiNiaoWork_EnterGameView.super.clearWork(self)
 end
 
-return var_0_0
+return GaoSiNiaoWork_EnterGameView

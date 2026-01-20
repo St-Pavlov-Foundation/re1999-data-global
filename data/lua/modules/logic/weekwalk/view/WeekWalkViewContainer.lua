@@ -1,52 +1,54 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkViewContainer.lua
 
-local var_0_0 = class("WeekWalkViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local WeekWalkViewContainer = class("WeekWalkViewContainer", BaseViewContainer)
 
-	arg_1_0._weekWalkView = WeekWalkView.New()
-	arg_1_0._weekWalkMapView = WeekWalkMap.New()
+function WeekWalkViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._weekWalkMapView)
-	table.insert(var_1_0, arg_1_0._weekWalkView)
-	table.insert(var_1_0, WeekWalkEnding.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	self._weekWalkView = WeekWalkView.New()
+	self._weekWalkMapView = WeekWalkMap.New()
 
-	return var_1_0
+	table.insert(views, self._weekWalkMapView)
+	table.insert(views, self._weekWalkView)
+	table.insert(views, WeekWalkEnding.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.getWeekWalkMap(arg_2_0)
-	return arg_2_0._weekWalkMapView
+function WeekWalkViewContainer:getWeekWalkMap()
+	return self._weekWalkMapView
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	arg_3_0._navigateButtonView = NavigateButtonsView.New({
+function WeekWalkViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
 	}, HelpEnum.HelpId.WeekWalk)
 
-	arg_3_0._navigateButtonView:setOverrideClose(arg_3_0._overrideClose, arg_3_0)
+	self._navigateButtonView:setOverrideClose(self._overrideClose, self)
 
 	return {
-		arg_3_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-function var_0_0.getNavBtnView(arg_4_0)
-	return arg_4_0._navigateButtonView
+function WeekWalkViewContainer:getNavBtnView()
+	return self._navigateButtonView
 end
 
-function var_0_0._overrideClose(arg_5_0)
+function WeekWalkViewContainer:_overrideClose()
 	module_views_preloader.WeekWalkLayerViewPreload(function()
-		arg_5_0._weekWalkView._viewAnim:Play(UIAnimationName.Close, 0, 0)
-		TaskDispatcher.runDelay(arg_5_0._doClose, arg_5_0, 0.133)
+		self._weekWalkView._viewAnim:Play(UIAnimationName.Close, 0, 0)
+		TaskDispatcher.runDelay(self._doClose, self, 0.133)
 	end)
 end
 
-function var_0_0._doClose(arg_7_0)
-	arg_7_0:closeThis()
+function WeekWalkViewContainer:_doClose()
+	self:closeThis()
 
 	if not ViewMgr.instance:isOpen(ViewName.WeekWalkLayerView) then
 		WeekWalkController.instance:openWeekWalkLayerView({
@@ -55,17 +57,17 @@ function var_0_0._doClose(arg_7_0)
 	end
 end
 
-function var_0_0.onContainerInit(arg_8_0)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuide, arg_8_0._navigateButtonView.refreshUI, arg_8_0._navigateButtonView)
+function WeekWalkViewContainer:onContainerInit()
+	GuideController.instance:registerCallback(GuideEvent.FinishGuide, self._navigateButtonView.refreshUI, self._navigateButtonView)
 end
 
-function var_0_0.onContainerOpenFinish(arg_9_0)
-	arg_9_0._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
+function WeekWalkViewContainer:onContainerOpenFinish()
+	self._navigateButtonView:resetOnCloseViewAudio(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function var_0_0.onContainerDestroy(arg_10_0)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_10_0._navigateButtonView.refreshUI, arg_10_0._navigateButtonView)
-	TaskDispatcher.cancelTask(arg_10_0._doClose, arg_10_0)
+function WeekWalkViewContainer:onContainerDestroy()
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, self._navigateButtonView.refreshUI, self._navigateButtonView)
+	TaskDispatcher.cancelTask(self._doClose, self)
 end
 
-return var_0_0
+return WeekWalkViewContainer

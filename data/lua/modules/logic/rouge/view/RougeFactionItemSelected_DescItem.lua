@@ -1,59 +1,61 @@
-﻿module("modules.logic.rouge.view.RougeFactionItemSelected_DescItem", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeFactionItemSelected_DescItem.lua
 
-local var_0_0 = class("RougeFactionItemSelected_DescItem", UserDataDispose)
+module("modules.logic.rouge.view.RougeFactionItemSelected_DescItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RougeFactionItemSelected_DescItem = class("RougeFactionItemSelected_DescItem", UserDataDispose)
+
+function RougeFactionItemSelected_DescItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeFactionItemSelected_DescItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeFactionItemSelected_DescItem:removeEvents()
 	return
 end
 
-function var_0_0.ctor(arg_4_0, arg_4_1)
-	arg_4_0:__onInit()
+function RougeFactionItemSelected_DescItem:ctor(parent)
+	self:__onInit()
 
-	arg_4_0._parent = arg_4_1
+	self._parent = parent
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0.viewGO = arg_5_1
+function RougeFactionItemSelected_DescItem:init(go)
+	self.viewGO = go
 
-	arg_5_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0.setIndex(arg_6_0, arg_6_1)
-	arg_6_0._index = arg_6_1
+function RougeFactionItemSelected_DescItem:setIndex(index)
+	self._index = index
 end
 
-function var_0_0.index(arg_7_0)
-	return arg_7_0._index
+function RougeFactionItemSelected_DescItem:index()
+	return self._index
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0._txt = gohelper.findChildText(arg_8_0.viewGO, "")
+function RougeFactionItemSelected_DescItem:_editableInitView()
+	self._txt = gohelper.findChildText(self.viewGO, "")
 
-	arg_8_0:setData(nil)
+	self:setData(nil)
 end
 
-function var_0_0.setData(arg_9_0, arg_9_1)
-	arg_9_0._txt.text = arg_9_1 or ""
+function RougeFactionItemSelected_DescItem:setData(desc)
+	self._txt.text = desc or ""
 
-	arg_9_0:setActive(not string.nilorempty(arg_9_1))
+	self:setActive(not string.nilorempty(desc))
 end
 
-function var_0_0.setActive(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0.viewGO, arg_10_1)
+function RougeFactionItemSelected_DescItem:setActive(bool)
+	gohelper.setActive(self.viewGO, bool)
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0:__onDispose()
+function RougeFactionItemSelected_DescItem:onDestroyView()
+	self:__onDispose()
 end
 
-return var_0_0
+return RougeFactionItemSelected_DescItem

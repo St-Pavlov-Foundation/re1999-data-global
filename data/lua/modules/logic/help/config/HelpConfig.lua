@@ -1,15 +1,17 @@
-﻿module("modules.logic.help.config.HelpConfig", package.seeall)
+﻿-- chunkname: @modules/logic/help/config/HelpConfig.lua
 
-local var_0_0 = class("HelpConfig", BaseConfig)
+module("modules.logic.help.config.HelpConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._helpConfig = nil
-	arg_1_0._pageConfig = nil
-	arg_1_0._helpPageTabConfig = nil
-	arg_1_0._helpVideoConfig = nil
+local HelpConfig = class("HelpConfig", BaseConfig)
+
+function HelpConfig:ctor()
+	self._helpConfig = nil
+	self._pageConfig = nil
+	self._helpPageTabConfig = nil
+	self._helpVideoConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function HelpConfig:reqConfigNames()
 	return {
 		"viewhelp",
 		"helppage",
@@ -18,38 +20,38 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "viewhelp" then
-		arg_3_0._helpConfig = arg_3_2
-	elseif arg_3_1 == "helppage" then
-		arg_3_0._pageConfig = arg_3_2
-	elseif arg_3_1 == "help_page_tab" then
-		arg_3_0._helpPageTabConfig = arg_3_2
-	elseif arg_3_1 == "help_video" then
-		arg_3_0._helpVideoConfig = arg_3_2
+function HelpConfig:onConfigLoaded(configName, configTable)
+	if configName == "viewhelp" then
+		self._helpConfig = configTable
+	elseif configName == "helppage" then
+		self._pageConfig = configTable
+	elseif configName == "help_page_tab" then
+		self._helpPageTabConfig = configTable
+	elseif configName == "help_video" then
+		self._helpVideoConfig = configTable
 	end
 end
 
-function var_0_0.getHelpCO(arg_4_0, arg_4_1)
-	return arg_4_0._helpConfig.configDict[arg_4_1]
+function HelpConfig:getHelpCO(id)
+	return self._helpConfig.configDict[id]
 end
 
-function var_0_0.getHelpPageCo(arg_5_0, arg_5_1)
-	return arg_5_0._pageConfig.configDict[arg_5_1]
+function HelpConfig:getHelpPageCo(id)
+	return self._pageConfig.configDict[id]
 end
 
-function var_0_0.getHelpPageTabList(arg_6_0)
-	return arg_6_0._helpPageTabConfig.configList
+function HelpConfig:getHelpPageTabList()
+	return self._helpPageTabConfig.configList
 end
 
-function var_0_0.getHelpPageTabCO(arg_7_0, arg_7_1)
-	return arg_7_0._helpPageTabConfig.configDict[arg_7_1]
+function HelpConfig:getHelpPageTabCO(id)
+	return self._helpPageTabConfig.configDict[id]
 end
 
-function var_0_0.getHelpVideoCO(arg_8_0, arg_8_1)
-	return arg_8_0._helpVideoConfig.configDict[arg_8_1]
+function HelpConfig:getHelpVideoCO(id)
+	return self._helpVideoConfig.configDict[id]
 end
 
-var_0_0.instance = var_0_0.New()
+HelpConfig.instance = HelpConfig.New()
 
-return var_0_0
+return HelpConfig

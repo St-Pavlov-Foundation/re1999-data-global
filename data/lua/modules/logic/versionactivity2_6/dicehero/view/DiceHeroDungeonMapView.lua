@@ -1,87 +1,89 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroDungeonMapView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroDungeonMapView.lua
 
-local var_0_0 = class("DiceHeroDungeonMapView", BaseView)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroDungeonMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_dicebtn")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_dicebtn/#btn_enter", AudioEnum2_6.DiceHero.play_ui_wenming_alaifugameplay)
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "#go_dicebtn/#btn_enter/#go_reddot")
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "#go_dicebtn/#btn_enter")
+local DiceHeroDungeonMapView = class("DiceHeroDungeonMapView", BaseView)
+
+function DiceHeroDungeonMapView:onInitView()
+	self._goroot = gohelper.findChild(self.viewGO, "#go_dicebtn")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_dicebtn/#btn_enter", AudioEnum2_6.DiceHero.play_ui_wenming_alaifugameplay)
+	self._gored = gohelper.findChild(self.viewGO, "#go_dicebtn/#btn_enter/#go_reddot")
+	self._anim = gohelper.findChildAnim(self.viewGO, "#go_dicebtn/#btn_enter")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0.onClickEnter, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
-	arg_2_0:addEventCb(DiceHeroController.instance, DiceHeroEvent.InfoUpdate, arg_2_0.onActStateChange, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_2_0.setEpisodeListVisible, arg_2_0)
+function DiceHeroDungeonMapView:addEvents()
+	self._btnEnter:AddClickListener(self.onClickEnter, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
+	self:addEventCb(DiceHeroController.instance, DiceHeroEvent.InfoUpdate, self.onActStateChange, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, self.setEpisodeListVisible, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0.onOpenView, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0.onCloseViewFinish, arg_3_0)
-	arg_3_0:removeEventCb(DiceHeroController.instance, DiceHeroEvent.InfoUpdate, arg_3_0.onActStateChange, arg_3_0)
-	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_3_0.setEpisodeListVisible, arg_3_0)
+function DiceHeroDungeonMapView:removeEvents()
+	self._btnEnter:RemoveClickListener()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
+	self:removeEventCb(DiceHeroController.instance, DiceHeroEvent.InfoUpdate, self.onActStateChange, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, self.setEpisodeListVisible, self)
 end
 
-function var_0_0.refreshView(arg_4_0)
-	arg_4_0.chapterId = arg_4_0.viewParam.chapterId
+function DiceHeroDungeonMapView:refreshView()
+	self.chapterId = self.viewParam.chapterId
 
-	arg_4_0:onActStateChange()
-	RedDotController.instance:addRedDot(arg_4_0._gored, RedDotEnum.DotNode.V2a6DiceHero)
+	self:onActStateChange()
+	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a6DiceHero)
 
 	if ViewMgr.instance:isOpen(ViewName.DungeonMapLevelView) then
-		arg_4_0._anim:Play("close", 0, 1)
+		self._anim:Play("close", 0, 1)
 	else
-		arg_4_0._anim:Play("open", 0, 0)
+		self._anim:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:refreshView()
+function DiceHeroDungeonMapView:onOpen()
+	self:refreshView()
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:refreshView()
+function DiceHeroDungeonMapView:onUpdateParam()
+	self:refreshView()
 end
 
-function var_0_0.onOpenView(arg_7_0, arg_7_1)
-	if arg_7_1 == ViewName.DungeonMapLevelView then
-		arg_7_0._anim:Play("close", 0, 0)
+function DiceHeroDungeonMapView:onOpenView(viewName)
+	if viewName == ViewName.DungeonMapLevelView then
+		self._anim:Play("close", 0, 0)
 	end
 end
 
-function var_0_0.onCloseViewFinish(arg_8_0, arg_8_1)
-	if arg_8_1 == ViewName.DungeonMapLevelView then
-		arg_8_0._anim:Play("open", 0, 0)
+function DiceHeroDungeonMapView:onCloseViewFinish(viewName)
+	if viewName == ViewName.DungeonMapLevelView then
+		self._anim:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.setEpisodeListVisible(arg_9_0, arg_9_1)
-	if arg_9_1 and arg_9_0:isShowRoot() then
-		arg_9_0._anim:Play("open", 0, 0)
+function DiceHeroDungeonMapView:setEpisodeListVisible(value)
+	if value and self:isShowRoot() then
+		self._anim:Play("open", 0, 0)
 	else
-		arg_9_0._anim:Play("close", 0, 0)
+		self._anim:Play("close", 0, 0)
 	end
 end
 
-function var_0_0.isShowRoot(arg_10_0)
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DiceHero) and arg_10_0.chapterId == DungeonEnum.ChapterId.Main1_9 then
+function DiceHeroDungeonMapView:isShowRoot()
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DiceHero) and self.chapterId == DungeonEnum.ChapterId.Main1_9 then
 		return true
 	end
 end
 
-function var_0_0.onActStateChange(arg_11_0)
-	if arg_11_0:isShowRoot() then
-		gohelper.setActive(arg_11_0._goroot, true)
+function DiceHeroDungeonMapView:onActStateChange()
+	if self:isShowRoot() then
+		gohelper.setActive(self._goroot, true)
 	else
-		gohelper.setActive(arg_11_0._goroot, false)
+		gohelper.setActive(self._goroot, false)
 	end
 end
 
-function var_0_0.onClickEnter(arg_12_0)
+function DiceHeroDungeonMapView:onClickEnter()
 	ViewMgr.instance:openView(ViewName.DiceHeroMainView)
 end
 
-return var_0_0
+return DiceHeroDungeonMapView

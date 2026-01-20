@@ -1,104 +1,106 @@
-﻿module("modules.logic.fight.view.FightFocusOdysseyEquipView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightFocusOdysseyEquipView.lua
 
-local var_0_0 = class("FightFocusOdysseyEquipView", FightBaseView)
+module("modules.logic.fight.view.FightFocusOdysseyEquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.collectionObjList = {}
-	arg_1_0.simage_iconList = {}
-	arg_1_0.img_rareList = {}
+local FightFocusOdysseyEquipView = class("FightFocusOdysseyEquipView", FightBaseView)
 
-	for iter_1_0 = 1, 2 do
-		table.insert(arg_1_0.collectionObjList, gohelper.findChild(arg_1_0.viewGO, "root/collection" .. iter_1_0))
-		table.insert(arg_1_0.simage_iconList, gohelper.findChildSingleImage(arg_1_0.viewGO, "root/collection" .. iter_1_0 .. "/simage_Icon"))
-		table.insert(arg_1_0.img_rareList, gohelper.findChildImage(arg_1_0.viewGO, "root/collection" .. iter_1_0 .. "/image_Rare"))
+function FightFocusOdysseyEquipView:onInitView()
+	self.collectionObjList = {}
+	self.simage_iconList = {}
+	self.img_rareList = {}
+
+	for i = 1, 2 do
+		table.insert(self.collectionObjList, gohelper.findChild(self.viewGO, "root/collection" .. i))
+		table.insert(self.simage_iconList, gohelper.findChildSingleImage(self.viewGO, "root/collection" .. i .. "/simage_Icon"))
+		table.insert(self.img_rareList, gohelper.findChildImage(self.viewGO, "root/collection" .. i .. "/image_Rare"))
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightFocusOdysseyEquipView:addEvents()
 	return
 end
 
-function var_0_0.onConstructor(arg_3_0, arg_3_1)
-	arg_3_0.entityMO = arg_3_1
+function FightFocusOdysseyEquipView:onConstructor(entityMO)
+	self.entityMO = entityMO
 end
 
-function var_0_0.refreshEntityMO(arg_4_0, arg_4_1)
-	arg_4_0.entityMO = arg_4_1
+function FightFocusOdysseyEquipView:refreshEntityMO(entityMO)
+	self.entityMO = entityMO
 
-	if arg_4_0.viewGO then
-		arg_4_0:refreshCollection()
+	if self.viewGO then
+		self:refreshCollection()
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0.customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Odyssey]
-	arg_5_0.customData = arg_5_0.customData or FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act128Sp]
+function FightFocusOdysseyEquipView:onOpen()
+	self.customData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Odyssey]
+	self.customData = self.customData or FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act128Sp]
 
-	arg_5_0:refreshCollection()
+	self:refreshCollection()
 end
 
-function var_0_0.refreshCollection(arg_6_0)
-	if arg_6_0.entityMO:isEnemySide() then
-		gohelper.setActive(arg_6_0.viewGO, false)
+function FightFocusOdysseyEquipView:refreshCollection()
+	if self.entityMO:isEnemySide() then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	local var_6_0 = arg_6_0.customData.customUnitId2Equip
-	local var_6_1
+	local data = self.customData.customUnitId2Equip
+	local collectionList
 
-	for iter_6_0, iter_6_1 in pairs(var_6_0) do
-		if tonumber(iter_6_0) == arg_6_0.entityMO.customUnitId then
-			var_6_1 = iter_6_1
+	for k, v in pairs(data) do
+		if tonumber(k) == self.entityMO.customUnitId then
+			collectionList = v
 
 			break
 		end
 	end
 
-	if not var_6_1 then
-		gohelper.setActive(arg_6_0.viewGO, false)
+	if not collectionList then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	if #var_6_1 == 0 then
-		gohelper.setActive(arg_6_0.viewGO, false)
+	if #collectionList == 0 then
+		gohelper.setActive(self.viewGO, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_6_0.viewGO, true)
+	gohelper.setActive(self.viewGO, true)
 
-	for iter_6_2 = 1, #arg_6_0.collectionObjList do
-		local var_6_2 = arg_6_0.collectionObjList[iter_6_2]
-		local var_6_3 = var_6_1[iter_6_2]
+	for i = 1, #self.collectionObjList do
+		local obj = self.collectionObjList[i]
+		local itemId = collectionList[i]
 
-		if var_6_3 then
-			gohelper.setActive(var_6_2, true)
+		if itemId then
+			gohelper.setActive(obj, true)
 
-			local var_6_4 = lua_odyssey_item.configDict[var_6_3]
+			local config = lua_odyssey_item.configDict[itemId]
 
-			UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_6_0.img_rareList[iter_6_2], "odyssey_item_quality" .. var_6_4.rare)
+			UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self.img_rareList[i], "odyssey_item_quality" .. config.rare)
 
-			if var_6_4.type == OdysseyEnum.ItemType.Item then
-				arg_6_0.simage_iconList[iter_6_2]:LoadImage(ResUrl.getPropItemIcon(var_6_4.icon))
-			elseif var_6_4.type == OdysseyEnum.ItemType.Equip then
-				arg_6_0.simage_iconList[iter_6_2]:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(var_6_4.icon))
+			if config.type == OdysseyEnum.ItemType.Item then
+				self.simage_iconList[i]:LoadImage(ResUrl.getPropItemIcon(config.icon))
+			elseif config.type == OdysseyEnum.ItemType.Equip then
+				self.simage_iconList[i]:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(config.icon))
 			end
 
-			local var_6_5 = gohelper.getClickWithDefaultAudio(var_6_2)
+			local click = gohelper.getClickWithDefaultAudio(obj)
 
-			arg_6_0:com_registClick(var_6_5, arg_6_0.onItemClick, var_6_3)
+			self:com_registClick(click, self.onItemClick, itemId)
 		else
-			gohelper.setActive(var_6_2, false)
+			gohelper.setActive(obj, false)
 		end
 	end
 end
 
-function var_0_0.onItemClick(arg_7_0, arg_7_1)
+function FightFocusOdysseyEquipView:onItemClick(itemId)
 	OdysseyController.instance:showItemTipView({
-		itemId = arg_7_1
+		itemId = itemId
 	})
 end
 
-return var_0_0
+return FightFocusOdysseyEquipView

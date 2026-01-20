@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueCollectionMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/mo/RogueCollectionMO.lua
 
-local var_0_0 = pureTable("RogueCollectionMO")
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueCollectionMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.uid
-	arg_1_0.cfgId = arg_1_1.id
-	arg_1_0.leftUid = arg_1_1.leftUid
-	arg_1_0.rightUid = arg_1_1.rightUid
-	arg_1_0.baseId = arg_1_1.baseId
-	arg_1_0.enchantUid = arg_1_1.enchantUid
+local RogueCollectionMO = pureTable("RogueCollectionMO")
+
+function RogueCollectionMO:init(info)
+	self.id = info.uid
+	self.cfgId = info.id
+	self.leftUid = info.leftUid
+	self.rightUid = info.rightUid
+	self.baseId = info.baseId
+	self.enchantUid = info.enchantUid
 end
 
-function var_0_0.getEnchantId(arg_2_0, arg_2_1)
-	return arg_2_1 == V1a6_CachotEnum.CollectionHole.Left and arg_2_0.leftUid or arg_2_0.rightUid
+function RogueCollectionMO:getEnchantId(holeType)
+	return holeType == V1a6_CachotEnum.CollectionHole.Left and self.leftUid or self.rightUid
 end
 
-function var_0_0.isEnchant(arg_3_0)
-	return arg_3_0.enchantUid and arg_3_0.enchantUid ~= 0
+function RogueCollectionMO:isEnchant()
+	return self.enchantUid and self.enchantUid ~= 0
 end
 
-function var_0_0.getEnchantCount(arg_4_0)
-	local var_4_0 = 0
+function RogueCollectionMO:getEnchantCount()
+	local enchantCount = 0
 
-	if arg_4_0.leftUid and arg_4_0.leftUid ~= V1a6_CachotEnum.EmptyEnchantId then
-		var_4_0 = var_4_0 + 1
+	if self.leftUid and self.leftUid ~= V1a6_CachotEnum.EmptyEnchantId then
+		enchantCount = enchantCount + 1
 	end
 
-	if arg_4_0.rightUid and arg_4_0.rightUid ~= V1a6_CachotEnum.EmptyEnchantId then
-		var_4_0 = var_4_0 + 1
+	if self.rightUid and self.rightUid ~= V1a6_CachotEnum.EmptyEnchantId then
+		enchantCount = enchantCount + 1
 	end
 
-	return var_4_0
+	return enchantCount
 end
 
-return var_0_0
+return RogueCollectionMO

@@ -1,405 +1,415 @@
-﻿module("modules.logic.versionactivity2_8.act200.view.Activity2ndTakePhotosView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/act200/view/Activity2ndTakePhotosView.lua
 
-local var_0_0 = class("Activity2ndTakePhotosView", BaseView)
+module("modules.logic.versionactivity2_8.act200.view.Activity2ndTakePhotosView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_category/#scroll_category")
-	arg_1_0._gocategorycontent = gohelper.findChild(arg_1_0.viewGO, "#go_category/#scroll_category/viewport/content")
-	arg_1_0._gocategoryitem = gohelper.findChild(arg_1_0.viewGO, "#go_category/#scroll_category/viewport/content/#go_categoryitem")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "#txt_LimitTime")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "Bottom/txt_dec")
-	arg_1_0._simagephoto = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_photo")
-	arg_1_0._btnshot = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_shot")
-	arg_1_0._simageframe = gohelper.findChildSingleImage(arg_1_0.viewGO, "Success/#simage_frame")
-	arg_1_0._simagesuccessphoto = gohelper.findChildSingleImage(arg_1_0.viewGO, "Success/#simage_photo")
-	arg_1_0._goshoted = gohelper.findChild(arg_1_0.viewGO, "Success/#go_shoted")
-	arg_1_0._simagephotoSmall = gohelper.findChildSingleImage(arg_1_0.viewGO, "Bottom/#simage_photoSmall")
-	arg_1_0._gorewardicon = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_rewarditem/go_icon")
-	arg_1_0._gorewardreceive = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_rewarditem/go_receive")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_rewarditem")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "Success")
-	arg_1_0._goerror = gohelper.findChild(arg_1_0.viewGO, "Fail")
-	arg_1_0._goshotframe = gohelper.findChild(arg_1_0.viewGO, "#simage_photo/shotFrame")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#simage_photo/shotFrame/normal")
-	arg_1_0._gowrong = gohelper.findChild(arg_1_0.viewGO, "#simage_photo/shotFrame/wrong")
-	arg_1_0._btnclickphoto = gohelper.findChildButton(arg_1_0.viewGO, "#simage_photo/#btn_clickpoto")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._shotAnimator = arg_1_0._gonormal:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._successAnimator = arg_1_0._gosuccess:GetComponent(typeof(UnityEngine.Animator))
+local Activity2ndTakePhotosView = class("Activity2ndTakePhotosView", BaseView)
 
-	gohelper.setActive(arg_1_0._gocategoryitem, false)
+function Activity2ndTakePhotosView:onInitView()
+	self._gocategory = gohelper.findChild(self.viewGO, "#go_category")
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "#go_category/#scroll_category")
+	self._gocategorycontent = gohelper.findChild(self.viewGO, "#go_category/#scroll_category/viewport/content")
+	self._gocategoryitem = gohelper.findChild(self.viewGO, "#go_category/#scroll_category/viewport/content/#go_categoryitem")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "#txt_LimitTime")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "Bottom/txt_dec")
+	self._simagephoto = gohelper.findChildSingleImage(self.viewGO, "#simage_photo")
+	self._btnshot = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_shot")
+	self._simageframe = gohelper.findChildSingleImage(self.viewGO, "Success/#simage_frame")
+	self._simagesuccessphoto = gohelper.findChildSingleImage(self.viewGO, "Success/#simage_photo")
+	self._goshoted = gohelper.findChild(self.viewGO, "Success/#go_shoted")
+	self._simagephotoSmall = gohelper.findChildSingleImage(self.viewGO, "Bottom/#simage_photoSmall")
+	self._gorewardicon = gohelper.findChild(self.viewGO, "Bottom/#go_rewarditem/go_icon")
+	self._gorewardreceive = gohelper.findChild(self.viewGO, "Bottom/#go_rewarditem/go_receive")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "Bottom/#go_rewarditem")
+	self._gosuccess = gohelper.findChild(self.viewGO, "Success")
+	self._goerror = gohelper.findChild(self.viewGO, "Fail")
+	self._goshotframe = gohelper.findChild(self.viewGO, "#simage_photo/shotFrame")
+	self._gonormal = gohelper.findChild(self.viewGO, "#simage_photo/shotFrame/normal")
+	self._gowrong = gohelper.findChild(self.viewGO, "#simage_photo/shotFrame/wrong")
+	self._btnclickphoto = gohelper.findChildButton(self.viewGO, "#simage_photo/#btn_clickpoto")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._shotAnimator = self._gonormal:GetComponent(typeof(UnityEngine.Animator))
+	self._successAnimator = self._gosuccess:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0._categoryitemList = {}
-	arg_1_0._showErrorTime = 2
-	arg_1_0._switchAnimTime = 0.5
-	arg_1_0._shotFocusTime = 0.25
-	arg_1_0._successTime = 1.5
-	arg_1_0._isError = false
+	gohelper.setActive(self._gocategoryitem, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._categoryitemList = {}
+	self._showErrorTime = 2
+	self._switchAnimTime = 0.5
+	self._shotFocusTime = 0.25
+	self._successTime = 1.5
+	self._isError = false
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnshot:AddClickListener(arg_2_0._btnshotOnClick, arg_2_0)
-	arg_2_0._btnclickphoto:AddClickListener(arg_2_0._clickPhoto, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onRewardRefresh, arg_2_0)
-	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onRefreshActivity, arg_2_0)
+function Activity2ndTakePhotosView:addEvents()
+	self._btnshot:AddClickListener(self._btnshotOnClick, self)
+	self._btnclickphoto:AddClickListener(self._clickPhoto, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onRewardRefresh, self)
+	self:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivity, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnshot:RemoveClickListener()
-	arg_3_0._btnclickphoto:RemoveClickListener()
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onRewardRefresh, arg_3_0)
-	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+function Activity2ndTakePhotosView:removeEvents()
+	self._btnshot:RemoveClickListener()
+	self._btnclickphoto:RemoveClickListener()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onRewardRefresh, self)
+	self:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0._btnshotOnClick(arg_4_0)
-	local var_4_0 = false
-	local var_4_1 = not string.nilorempty(arg_4_0.config.position) and string.splitToNumber(arg_4_0.config.position, "#")
-	local var_4_2 = {
-		x = var_4_1[1],
-		y = var_4_1[2]
+function Activity2ndTakePhotosView:_btnshotOnClick()
+	local correct = false
+	local temp = not string.nilorempty(self.config.position) and string.splitToNumber(self.config.position, "#")
+	local pos = {
+		x = temp[1],
+		y = temp[2]
 	}
 
-	if Activity2ndTakePhotosHelper.checkPhotoAreaMoreGoal(arg_4_0.rectshotframe, var_4_2) then
-		gohelper.setActive(arg_4_0._gosuccess, true)
-		arg_4_0._successAnimator:Play("open", 0, 0)
-		arg_4_0:_refreshPhotoPanel(true)
-		TaskDispatcher.runDelay(arg_4_0._showSuccess, arg_4_0, arg_4_0._successTime)
-		Activity2ndController.instance:statTakePhotos(arg_4_0._currentIndex, true)
+	correct = Activity2ndTakePhotosHelper.checkPhotoAreaMoreGoal(self.rectshotframe, pos)
+
+	if correct then
+		gohelper.setActive(self._gosuccess, true)
+		self._successAnimator:Play("open", 0, 0)
+		self:_refreshPhotoPanel(true)
+		TaskDispatcher.runDelay(self._showSuccess, self, self._successTime)
+		Activity2ndController.instance:statTakePhotos(self._currentIndex, true)
 		AudioMgr.instance:trigger(AudioEnum2_8.TakePhotosActivity.play_ui_diqiu_yure_success_20249043)
 	else
-		arg_4_0._isError = true
+		self._isError = true
 
-		gohelper.setActive(arg_4_0._goerror, true)
-		gohelper.setActive(arg_4_0._gonormal, false)
-		gohelper.setActive(arg_4_0._gowrong, true)
-		TaskDispatcher.runDelay(arg_4_0._showError, arg_4_0, arg_4_0._showErrorTime)
-		Activity2ndController.instance:statTakePhotos(arg_4_0._currentIndex, false)
+		gohelper.setActive(self._goerror, true)
+		gohelper.setActive(self._gonormal, false)
+		gohelper.setActive(self._gowrong, true)
+		TaskDispatcher.runDelay(self._showError, self, self._showErrorTime)
+		Activity2ndController.instance:statTakePhotos(self._currentIndex, false)
 		AudioMgr.instance:trigger(AudioEnum.Warmup1_8.play_wrong)
 	end
 end
 
-function var_0_0._showSuccess(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._showSuccess, arg_5_0)
-	Activity125Rpc.instance:sendFinishAct125EpisodeRequest(arg_5_0._actId, arg_5_0._currentIndex, 0)
+function Activity2ndTakePhotosView:_showSuccess()
+	TaskDispatcher.cancelTask(self._showSuccess, self)
+	Activity125Rpc.instance:sendFinishAct125EpisodeRequest(self._actId, self._currentIndex, 0)
 end
 
-function var_0_0._showError(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._showError, arg_6_0)
+function Activity2ndTakePhotosView:_showError()
+	TaskDispatcher.cancelTask(self._showError, self)
 
-	arg_6_0._isError = false
+	self._isError = false
 
-	gohelper.setActive(arg_6_0._goerror, false)
-	gohelper.setActive(arg_6_0._gonormal, true)
-	gohelper.setActive(arg_6_0._gowrong, false)
+	gohelper.setActive(self._goerror, false)
+	gohelper.setActive(self._gonormal, true)
+	gohelper.setActive(self._gowrong, false)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0.rectSimagePhoto = arg_7_0._simagephoto.transform
-	arg_7_0.rectshotframe = arg_7_0._goshotframe.transform
+function Activity2ndTakePhotosView:_editableInitView()
+	self.rectSimagePhoto = self._simagephoto.transform
+	self.rectshotframe = self._goshotframe.transform
 
-	recthelper.setAnchor(arg_7_0.rectshotframe, 0, 0)
+	recthelper.setAnchor(self.rectshotframe, 0, 0)
 end
 
-function var_0_0._initCategoryItem(arg_8_0)
-	local var_8_0 = Activity2ndConfig.instance:getAct200ConfigList()
+function Activity2ndTakePhotosView:_initCategoryItem()
+	local configList = Activity2ndConfig.instance:getAct200ConfigList()
 
-	if not var_8_0 then
+	if not configList then
 		return logError("没有拍照活动配置")
 	end
 
-	local var_8_1 = 30
-	local var_8_2 = 50
-	local var_8_3 = 46
+	local topspace = 30
+	local bottomspace = 50
+	local itemspace = 46
 
-	arg_8_0.scrollHeight = recthelper.getHeight(arg_8_0._scrollcategory.transform)
-	arg_8_0._itemHeight = 120
-	arg_8_0._selectItemHeight = 132
+	self.scrollHeight = recthelper.getHeight(self._scrollcategory.transform)
+	self._itemHeight = 120
+	self._selectItemHeight = 132
 
-	local var_8_4 = #var_8_0
+	local count = #configList
 
-	arg_8_0._contentHeight = arg_8_0._selectItemHeight + arg_8_0._itemHeight * (var_8_4 - 1) + (var_8_4 - 1) * var_8_3 + var_8_1 + var_8_2
-	arg_8_0._canMoveHeight = math.max(0, arg_8_0._contentHeight - arg_8_0.scrollHeight)
+	self._contentHeight = self._selectItemHeight + self._itemHeight * (count - 1) + (count - 1) * itemspace + topspace + bottomspace
+	self._canMoveHeight = math.max(0, self._contentHeight - self.scrollHeight)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if not arg_8_0._categoryitemList[iter_8_0] then
-			local var_8_5 = arg_8_0:getUserDataTb_()
+	for index, co in ipairs(configList) do
+		local item = self._categoryitemList[index]
 
-			var_8_5.co = iter_8_1
-			var_8_5.index = iter_8_0
-			var_8_5.go = gohelper.clone(arg_8_0._gocategoryitem, arg_8_0._gocategorycontent, "categoryitem" .. iter_8_0)
-			var_8_5.goselect = gohelper.findChild(var_8_5.go, "#go_select")
-			var_8_5.txtselect = gohelper.findChildText(var_8_5.go, "#go_select/#txt_select")
-			var_8_5.gounselect = gohelper.findChild(var_8_5.go, "#txt_unselect")
-			var_8_5.txtunselect = gohelper.findChildText(var_8_5.go, "#txt_unselect")
-			var_8_5.golocked = gohelper.findChild(var_8_5.go, "#txt_locked")
-			var_8_5.txtlocked = gohelper.findChildText(var_8_5.go, "#txt_locked")
-			var_8_5.btnclick = gohelper.findChildButtonWithAudio(var_8_5.go, "#btn_click")
+		if not item then
+			item = self:getUserDataTb_()
+			item.co = co
+			item.index = index
+			item.go = gohelper.clone(self._gocategoryitem, self._gocategorycontent, "categoryitem" .. index)
+			item.goselect = gohelper.findChild(item.go, "#go_select")
+			item.txtselect = gohelper.findChildText(item.go, "#go_select/#txt_select")
+			item.gounselect = gohelper.findChild(item.go, "#txt_unselect")
+			item.txtunselect = gohelper.findChildText(item.go, "#txt_unselect")
+			item.golocked = gohelper.findChild(item.go, "#txt_locked")
+			item.txtlocked = gohelper.findChildText(item.go, "#txt_locked")
+			item.btnclick = gohelper.findChildButtonWithAudio(item.go, "#btn_click")
 
-			var_8_5.btnclick:AddClickListener(arg_8_0._clickCategoryItem, arg_8_0, var_8_5)
-			gohelper.setActive(var_8_5.go, true)
-			table.insert(arg_8_0._categoryitemList, var_8_5)
+			item.btnclick:AddClickListener(self._clickCategoryItem, self, item)
+			gohelper.setActive(item.go, true)
+			table.insert(self._categoryitemList, item)
 		end
 	end
 
-	arg_8_0:_autoSelectTab()
+	self:_autoSelectTab()
 end
 
-function var_0_0._clickCategoryItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1.index
-	local var_9_1 = arg_9_0:getCurSelectedEpisode()
-	local var_9_2, var_9_3, var_9_4 = Activity125Model.instance:isEpisodeDayOpen(arg_9_0._actId, var_9_0)
+function Activity2ndTakePhotosView:_clickCategoryItem(item)
+	local index = item.index
+	local curSelectedIndex = self:getCurSelectedEpisode()
+	local isOpen, remainDay, remainTime = Activity125Model.instance:isEpisodeDayOpen(self._actId, index)
 
-	if not var_9_2 then
-		if var_9_3 < 1 then
-			local var_9_5, var_9_6 = TimeUtil.secondToRoughTime2(var_9_4)
-			local var_9_7 = var_9_5 .. var_9_6
+	if not isOpen then
+		if remainDay < 1 then
+			local time, suffix = TimeUtil.secondToRoughTime2(remainTime)
+			local timestr = time .. suffix
 
-			GameFacade.showToastString(formatLuaLang("season123_overview_unlocktime_custom", var_9_7))
+			GameFacade.showToastString(formatLuaLang("season123_overview_unlocktime_custom", timestr))
 		else
-			GameFacade.showToast(ToastEnum.TakePhotoUnlockDay, var_9_3)
+			GameFacade.showToast(ToastEnum.TakePhotoUnlockDay, remainDay)
 		end
 
 		return
 	end
 
-	if not Activity125Model.instance:isEpisodeUnLock(arg_9_0._actId, var_9_0) then
+	local isTargetSelectEpisodeUnLock = Activity125Model.instance:isEpisodeUnLock(self._actId, index)
+
+	if not isTargetSelectEpisodeUnLock then
 		GameFacade.showToast(ToastEnum.Activity142PreEpisodeNotClear)
 
 		return
 	end
 
-	if var_9_1 ~= var_9_0 then
-		Activity125Model.instance:setSelectEpisodeId(arg_9_0._actId, var_9_0)
+	if curSelectedIndex ~= index then
+		Activity125Model.instance:setSelectEpisodeId(self._actId, index)
 
-		arg_9_0._currentIndex = var_9_0
+		self._currentIndex = index
 
-		arg_9_0._animator:Play("switch", 0, 0)
-		arg_9_0:_refreshItemList()
-		arg_9_0:_initPanelState()
-		TaskDispatcher.runDelay(arg_9_0._onSwitchFinish, arg_9_0, arg_9_0._switchAnimTime)
+		self._animator:Play("switch", 0, 0)
+		self:_refreshItemList()
+		self:_initPanelState()
+		TaskDispatcher.runDelay(self._onSwitchFinish, self, self._switchAnimTime)
 		AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_signal)
 	end
 end
 
-function var_0_0._onSwitchFinish(arg_10_0)
-	TaskDispatcher.cancelTask(arg_10_0._onSwitchFinish, arg_10_0)
-	arg_10_0:_refreshUI()
-	TaskDispatcher.runDelay(arg_10_0._onOpenFinish, arg_10_0, arg_10_0._shotFocusTime)
-	recthelper.setAnchor(arg_10_0.rectshotframe, 0, 0)
+function Activity2ndTakePhotosView:_onSwitchFinish()
+	TaskDispatcher.cancelTask(self._onSwitchFinish, self)
+	self:_refreshUI()
+	TaskDispatcher.runDelay(self._onOpenFinish, self, self._shotFocusTime)
+	recthelper.setAnchor(self.rectshotframe, 0, 0)
 end
 
-function var_0_0._initPanelState(arg_11_0)
-	gohelper.setActive(arg_11_0._gosuccess, false)
+function Activity2ndTakePhotosView:_initPanelState()
+	gohelper.setActive(self._gosuccess, false)
 end
 
-function var_0_0._refreshCategoryItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1.index == arg_12_0:getCurSelectedEpisode()
-	local var_12_1, var_12_2, var_12_3 = Activity125Model.instance:isEpisodeDayOpen(arg_12_0._actId, arg_12_1.index)
-	local var_12_4 = Activity125Model.instance:isEpisodeFinished(arg_12_0._actId, arg_12_1.index)
+function Activity2ndTakePhotosView:_refreshCategoryItem(item)
+	local isSelect = item.index == self:getCurSelectedEpisode()
+	local unlock, remainDay, remainTime = Activity125Model.instance:isEpisodeDayOpen(self._actId, item.index)
+	local isFinish = Activity125Model.instance:isEpisodeFinished(self._actId, item.index)
 
-	gohelper.setActive(arg_12_1.goselect, var_12_0 and var_12_1)
-	gohelper.setActive(arg_12_1.gounselect, not var_12_0 and var_12_1)
-	gohelper.setActive(arg_12_1.golocked, not var_12_1)
+	gohelper.setActive(item.goselect, isSelect and unlock)
+	gohelper.setActive(item.gounselect, not isSelect and unlock)
+	gohelper.setActive(item.golocked, not unlock)
 
-	local var_12_5 = var_12_4 and "#c66030" or "D7D7D7"
+	local color = isFinish and "#c66030" or "D7D7D7"
 
-	arg_12_1.txtselect.color = GameUtil.parseColor(var_12_5)
-	arg_12_1.txtselect.text = arg_12_1.co.name
-	arg_12_1.txtunselect.text = arg_12_1.co.name
-	arg_12_1.txtunselect.color = GameUtil.parseColor(var_12_5)
+	item.txtselect.color = GameUtil.parseColor(color)
+	item.txtselect.text = item.co.name
+	item.txtunselect.text = item.co.name
+	item.txtunselect.color = GameUtil.parseColor(color)
 
-	if not var_12_1 then
-		arg_12_1.txtlocked.text = formatLuaLang("versionactivity_1_2_119_unlock", var_12_2)
+	if not unlock then
+		item.txtlocked.text = formatLuaLang("versionactivity_1_2_119_unlock", remainDay)
 
-		if var_12_2 < 1 then
-			local var_12_6, var_12_7 = TimeUtil.secondToRoughTime2(var_12_3)
-			local var_12_8 = var_12_6 .. var_12_7
+		if remainDay < 1 then
+			local time, suffix = TimeUtil.secondToRoughTime2(remainTime)
+			local timestr = time .. suffix
 
-			arg_12_1.txtlocked.text = formatLuaLang("season123_overview_unlocktime_custom", var_12_8)
+			item.txtlocked.text = formatLuaLang("season123_overview_unlocktime_custom", timestr)
 		end
 	end
 end
 
-function var_0_0._refreshItemList(arg_13_0)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._categoryitemList) do
-		arg_13_0:_refreshCategoryItem(iter_13_1)
+function Activity2ndTakePhotosView:_refreshItemList()
+	for index, item in ipairs(self._categoryitemList) do
+		self:_refreshCategoryItem(item)
 	end
 end
 
-function var_0_0._refreshPhotoPanel(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1 and true or Activity125Model.instance:isEpisodeFinished(arg_14_0._actId, arg_14_0:getCurSelectedEpisode())
+function Activity2ndTakePhotosView:_refreshPhotoPanel(isfake)
+	local isSuccess = isfake and true or Activity125Model.instance:isEpisodeFinished(self._actId, self:getCurSelectedEpisode())
 
-	gohelper.setActive(arg_14_0._gosuccess, var_14_0)
-	gohelper.setActive(arg_14_0._btnshot.gameObject, not var_14_0)
-	gohelper.setActive(arg_14_0._goshotframe, not var_14_0)
+	gohelper.setActive(self._gosuccess, isSuccess)
+	gohelper.setActive(self._btnshot.gameObject, not isSuccess)
+	gohelper.setActive(self._goshotframe, not isSuccess)
 
-	local var_14_1 = "v2a8_gift_photo_"
-	local var_14_2 = "v2a8_gift_smallphoto_"
+	local photoName = "v2a8_gift_photo_"
+	local smallPhotoName = "v2a8_gift_smallphoto_"
 
-	var_14_1 = var_14_0 and var_14_1 .. arg_14_0._currentIndex .. "_1" .. ".jpg" or var_14_1 .. arg_14_0._currentIndex .. ".jpg"
-	var_14_2 = var_14_0 and var_14_2 .. arg_14_0._currentIndex .. "_1" .. ".png" or var_14_2 .. arg_14_0._currentIndex .. ".png"
+	photoName = isSuccess and photoName .. self._currentIndex .. "_1" .. ".jpg" or photoName .. self._currentIndex .. ".jpg"
+	smallPhotoName = isSuccess and smallPhotoName .. self._currentIndex .. "_1" .. ".png" or smallPhotoName .. self._currentIndex .. ".png"
 
-	if var_14_0 then
-		arg_14_0._simagesuccessphoto:LoadImage(ResUrl.getActivity2ndTakePhotoSingleBg(var_14_1))
+	if isSuccess then
+		self._simagesuccessphoto:LoadImage(ResUrl.getActivity2ndTakePhotoSingleBg(photoName))
 	end
 
-	arg_14_0._simagephoto:LoadImage(ResUrl.getActivity2ndTakePhotoSingleBg(var_14_1))
-	arg_14_0._simagephotoSmall:LoadImage(ResUrl.getActivity2ndTakePhotoSingleBg(var_14_2))
+	self._simagephoto:LoadImage(ResUrl.getActivity2ndTakePhotoSingleBg(photoName))
+	self._simagephotoSmall:LoadImage(ResUrl.getActivity2ndTakePhotoSingleBg(smallPhotoName))
 
-	arg_14_0._txtdesc.text = var_14_0 and arg_14_0.config.text or luaLang("p_v2a8_gift_fullview_txt_dec")
+	self._txtdesc.text = isSuccess and self.config.text or luaLang("p_v2a8_gift_fullview_txt_dec")
 end
 
-function var_0_0._refreshReward(arg_15_0)
-	local var_15_0 = Activity125Model.instance:isEpisodeFinished(arg_15_0._actId, arg_15_0:getCurSelectedEpisode())
+function Activity2ndTakePhotosView:_refreshReward()
+	local isSuccess = Activity125Model.instance:isEpisodeFinished(self._actId, self:getCurSelectedEpisode())
 
-	arg_15_0.rewardcomp = arg_15_0.rewardcomp or IconMgr.instance:getCommonPropItemIcon(arg_15_0._gorewardicon)
+	self.rewardcomp = self.rewardcomp or IconMgr.instance:getCommonPropItemIcon(self._gorewardicon)
 
-	local var_15_1 = arg_15_0.config and arg_15_0.config.bonus
+	local reawrdco = self.config and self.config.bonus
 
-	if var_15_1 and not string.nilorempty(var_15_1) then
-		local var_15_2 = string.splitToNumber(var_15_1, "#")
+	if reawrdco and not string.nilorempty(reawrdco) then
+		local bonus = string.splitToNumber(reawrdco, "#")
 
-		arg_15_0.rewardcomp:setMOValue(var_15_2[1], var_15_2[2], var_15_2[3], nil, true)
+		self.rewardcomp:setMOValue(bonus[1], bonus[2], bonus[3], nil, true)
 	end
 
-	gohelper.setActive(arg_15_0._gorewardreceive, var_15_0)
+	gohelper.setActive(self._gorewardreceive, isSuccess)
 end
 
-function var_0_0._refreshUI(arg_16_0)
-	arg_16_0.config = Activity2ndConfig.instance:getAct200ConfigById(arg_16_0._currentIndex)
-	arg_16_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_16_0._actId)
+function Activity2ndTakePhotosView:_refreshUI()
+	self.config = Activity2ndConfig.instance:getAct200ConfigById(self._currentIndex)
+	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self._actId)
 
-	arg_16_0:_refreshPhotoPanel()
-	arg_16_0:_refreshItemList()
-	arg_16_0:_refreshReward()
+	self:_refreshPhotoPanel()
+	self:_refreshItemList()
+	self:_refreshReward()
 
-	if not arg_16_0.config then
-		logError("没有关卡" .. arg_16_0._currentIndex .. "的配置")
-	end
-end
-
-function var_0_0._onRewardRefresh(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.CommonPropView then
-		gohelper.setActive(arg_17_0._gorewardreceive, true)
-		arg_17_0:_refreshItemList()
-		arg_17_0:_checkLastOpenIndexHeight()
+	if not self.config then
+		logError("没有关卡" .. self._currentIndex .. "的配置")
 	end
 end
 
-function var_0_0._checkLastOpenIndexHeight(arg_18_0)
-	local var_18_0 = Activity125Model.instance:getById(arg_18_0._actId)
-	local var_18_1 = recthelper.getAnchorY(arg_18_0._gocategorycontent.transform)
-	local var_18_2 = var_18_0:getFirstRewardEpisode()
-	local var_18_3 = 30
-	local var_18_4 = 46
-	local var_18_5 = 0
-
-	if var_18_2 > 1 then
-		var_18_5 = arg_18_0._selectItemHeight + arg_18_0._itemHeight * (var_18_2 - 2) + (var_18_2 - 1) * var_18_4 + var_18_3
-	end
-
-	if var_18_1 + var_18_5 > arg_18_0.scrollHeight then
-		local var_18_6 = var_18_5 - arg_18_0.scrollHeight + var_18_1 + arg_18_0._itemHeight
-
-		recthelper.setAnchorY(arg_18_0._gocategorycontent.transform, var_18_6)
+function Activity2ndTakePhotosView:_onRewardRefresh(viewName)
+	if viewName == ViewName.CommonPropView then
+		gohelper.setActive(self._gorewardreceive, true)
+		self:_refreshItemList()
+		self:_checkLastOpenIndexHeight()
 	end
 end
 
-function var_0_0._clickPhoto(arg_19_0)
-	arg_19_0._shotAnimator:Play("open", 0, 0)
+function Activity2ndTakePhotosView:_checkLastOpenIndexHeight()
+	local mo = Activity125Model.instance:getById(self._actId)
+	local hadmoveY = recthelper.getAnchorY(self._gocategorycontent.transform)
+	local lastUnlockIndex = mo:getFirstRewardEpisode()
+	local topspace = 30
+	local itemspace = 46
+	local height = 0
 
-	local var_19_0 = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), arg_19_0.rectSimagePhoto)
+	if lastUnlockIndex > 1 then
+		height = self._selectItemHeight + self._itemHeight * (lastUnlockIndex - 2) + (lastUnlockIndex - 1) * itemspace + topspace
+	end
 
-	arg_19_0:_checkShotFramePosAvailable(var_19_0)
+	if hadmoveY + height > self.scrollHeight then
+		local moveY = height - self.scrollHeight + hadmoveY + self._itemHeight
+
+		recthelper.setAnchorY(self._gocategorycontent.transform, moveY)
+	end
+end
+
+function Activity2ndTakePhotosView:_clickPhoto()
+	self._shotAnimator:Play("open", 0, 0)
+
+	local clickPos = recthelper.screenPosToAnchorPos(GamepadController.instance:getMousePosition(), self.rectSimagePhoto)
+
+	self:_checkShotFramePosAvailable(clickPos)
 	AudioMgr.instance:trigger(AudioEnum.WuErLiXi.play_ui_diqiu_choose)
 end
 
-function var_0_0._checkShotFramePosAvailable(arg_20_0, arg_20_1)
-	local var_20_0 = Activity2ndTakePhotosHelper.ClampPosition(arg_20_0.rectSimagePhoto, arg_20_0.rectshotframe, arg_20_1)
+function Activity2ndTakePhotosView:_checkShotFramePosAvailable(clickPos)
+	local pos = Activity2ndTakePhotosHelper.ClampPosition(self.rectSimagePhoto, self.rectshotframe, clickPos)
 
-	recthelper.setAnchor(arg_20_0.rectshotframe, var_20_0.x, var_20_0.y)
+	recthelper.setAnchor(self.rectshotframe, pos.x, pos.y)
 end
 
-function var_0_0._onDailyRefresh(arg_21_0)
-	if arg_21_0._actId then
-		Activity125Controller.instance:getAct125InfoFromServer(arg_21_0._actId)
+function Activity2ndTakePhotosView:_onDailyRefresh()
+	if self._actId then
+		Activity125Controller.instance:getAct125InfoFromServer(self._actId)
 	end
 end
 
-function var_0_0.getCurSelectedEpisode(arg_22_0)
-	return Activity125Model.instance:getSelectEpisodeId(arg_22_0._actId) or 1
+function Activity2ndTakePhotosView:getCurSelectedEpisode()
+	return Activity125Model.instance:getSelectEpisodeId(self._actId) or 1
 end
 
-function var_0_0.onUpdateParam(arg_23_0)
+function Activity2ndTakePhotosView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_24_0)
-	arg_24_0._actId = arg_24_0.viewParam.actId
+function Activity2ndTakePhotosView:onOpen()
+	self._actId = self.viewParam.actId
 
-	arg_24_0:_initCategoryItem()
+	self:_initCategoryItem()
 
-	arg_24_0._currentIndex = Activity125Model.instance:getById(arg_24_0._actId):getFirstRewardEpisode()
+	local mo = Activity125Model.instance:getById(self._actId)
 
-	Activity125Model.instance:setSelectEpisodeId(arg_24_0._actId, arg_24_0._currentIndex)
-	gohelper.setActive(arg_24_0._gonormal, true)
-	gohelper.setActive(arg_24_0._gowrong, false)
-	TaskDispatcher.runDelay(arg_24_0._onOpenFinish, arg_24_0, arg_24_0._shotFocusTime)
+	self._currentIndex = mo:getFirstRewardEpisode()
+
+	Activity125Model.instance:setSelectEpisodeId(self._actId, self._currentIndex)
+	gohelper.setActive(self._gonormal, true)
+	gohelper.setActive(self._gowrong, false)
+	TaskDispatcher.runDelay(self._onOpenFinish, self, self._shotFocusTime)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_7Enter.play_ui_jinye_unfold)
-	arg_24_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._onOpenFinish(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._onOpenFinish, arg_25_0)
-	arg_25_0._shotAnimator:Play("open", 0, 0)
+function Activity2ndTakePhotosView:_onOpenFinish()
+	TaskDispatcher.cancelTask(self._onOpenFinish, self)
+	self._shotAnimator:Play("open", 0, 0)
 end
 
-function var_0_0.onClose(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._onSwitchFinish, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._onOpenFinish, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._showError, arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._showSuccess, arg_26_0)
+function Activity2ndTakePhotosView:onClose()
+	TaskDispatcher.cancelTask(self._onSwitchFinish, self)
+	TaskDispatcher.cancelTask(self._onOpenFinish, self)
+	TaskDispatcher.cancelTask(self._showError, self)
+	TaskDispatcher.cancelTask(self._showSuccess, self)
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._categoryitemList) do
-		iter_26_1.btnclick:RemoveClickListener()
+	for _, item in ipairs(self._categoryitemList) do
+		item.btnclick:RemoveClickListener()
 	end
 end
 
-function var_0_0._autoSelectTab(arg_27_0)
-	local var_27_0 = Activity125Model.instance:getById(arg_27_0._actId):getFirstRewardEpisode() - 1
-	local var_27_1 = 30
-	local var_27_2 = 46
-	local var_27_3 = 0
+function Activity2ndTakePhotosView:_autoSelectTab()
+	local mo = Activity125Model.instance:getById(self._actId)
+	local lastUnlockIndex = mo:getFirstRewardEpisode() - 1
+	local topspace = 30
+	local itemspace = 46
+	local height = 0
 
-	if var_27_0 > 1 then
-		var_27_3 = arg_27_0._selectItemHeight + arg_27_0._itemHeight * (var_27_0 - 2) + (var_27_0 - 1) * var_27_2 + var_27_1
+	if lastUnlockIndex > 1 then
+		height = self._selectItemHeight + self._itemHeight * (lastUnlockIndex - 2) + (lastUnlockIndex - 1) * itemspace + topspace
 	end
 
-	if var_27_3 > arg_27_0._canMoveHeight then
-		var_27_3 = arg_27_0._canMoveHeight
+	if height > self._canMoveHeight then
+		height = self._canMoveHeight
 	end
 
-	recthelper.setAnchorY(arg_27_0._gocategorycontent.transform, var_27_3)
+	recthelper.setAnchorY(self._gocategorycontent.transform, height)
 end
 
-function var_0_0.onDestroyView(arg_28_0)
+function Activity2ndTakePhotosView:onDestroyView()
 	return
 end
 
-function var_0_0.onRefreshActivity(arg_29_0)
-	local var_29_0 = ActivityHelper.getActivityStatus(arg_29_0._actId)
+function Activity2ndTakePhotosView:onRefreshActivity()
+	local status = ActivityHelper.getActivityStatus(self._actId)
 
-	if var_29_0 == ActivityEnum.ActivityStatus.NotOnLine or var_29_0 == ActivityEnum.ActivityStatus.Expired then
+	if status == ActivityEnum.ActivityStatus.NotOnLine or status == ActivityEnum.ActivityStatus.Expired then
 		MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, ActivityLiveMgr.yesCallback)
 
 		return
 	end
 end
 
-return var_0_0
+return Activity2ndTakePhotosView

@@ -1,231 +1,236 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.LengZhou6Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/LengZhou6Model.lua
 
-local var_0_0 = class("LengZhou6Model", BaseModel)
+module("modules.logic.versionactivity2_7.lengzhou6.model.LengZhou6Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._actInfoMap = {}
-	arg_1_0._actNewestEpisodeDict = {}
+local LengZhou6Model = class("LengZhou6Model", BaseModel)
+
+function LengZhou6Model:onInit()
+	self._actInfoMap = {}
+	self._actNewestEpisodeDict = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._actInfoMap = {}
-	arg_2_0._actNewestEpisodeDict = {}
+function LengZhou6Model:reInit()
+	self._actInfoMap = {}
+	self._actNewestEpisodeDict = {}
 end
 
-function var_0_0.onGetActInfo(arg_3_0, arg_3_1)
-	arg_3_0._activityId = arg_3_1.activityId
+function LengZhou6Model:onGetActInfo(msg)
+	self._activityId = msg.activityId
 
-	local var_3_0 = arg_3_1.episodes
+	local infos = msg.episodes
 
-	if not var_3_0 or #var_3_0 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	if arg_3_0._actInfoMap == nil or tabletool.len(arg_3_0._actInfoMap) == 0 then
-		if arg_3_0._actInfoMap == nil then
-			arg_3_0._actInfoMap = {}
+	if self._actInfoMap == nil or tabletool.len(self._actInfoMap) == 0 then
+		if self._actInfoMap == nil then
+			self._actInfoMap = {}
 		end
 
-		local var_3_1 = lua_activity190_episode.configDict[arg_3_0._activityId]
+		local allEpisode = lua_activity190_episode.configDict[self._activityId]
 
-		for iter_3_0, iter_3_1 in pairs(var_3_1) do
-			if arg_3_0._actInfoMap[iter_3_0] == nil then
-				local var_3_2 = LengZhou6InfoMo.New()
+		for episodeId, _ in pairs(allEpisode) do
+			if self._actInfoMap[episodeId] == nil then
+				local mo = LengZhou6InfoMo.New()
 
-				var_3_2:init(arg_3_0:getCurActId(), iter_3_0, false)
+				mo:init(self:getCurActId(), episodeId, false)
 
-				arg_3_0._actInfoMap[iter_3_0] = var_3_2
+				self._actInfoMap[episodeId] = mo
 			end
 		end
 	end
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_0) do
-		local var_3_3 = iter_3_3.episodeId
+	for _, info in ipairs(infos) do
+		local episodeId = info.episodeId
 
-		arg_3_0._actInfoMap[var_3_3]:updateInfo(iter_3_3)
+		self._actInfoMap[episodeId]:updateInfo(info)
 	end
 
-	arg_3_0:updateNewestEpisode()
+	self:updateNewestEpisode()
 end
 
-function var_0_0.onFinishActInfo(arg_4_0, arg_4_1)
-	arg_4_0._activityId = arg_4_1.activityId
+function LengZhou6Model:onFinishActInfo(msg)
+	self._activityId = msg.activityId
 
-	local var_4_0 = arg_4_1.episodeId
+	local episodeId = msg.episodeId
 
-	if var_4_0 == nil then
+	if episodeId == nil then
 		return
 	end
 
-	if arg_4_0._actInfoMap ~= nil then
-		local var_4_1 = arg_4_0._actInfoMap[var_4_0]
+	if self._actInfoMap ~= nil then
+		local mo = self._actInfoMap[episodeId]
 
-		if var_4_1 then
-			var_4_1:updateIsFinish(true)
-			var_4_1:updateProgress(arg_4_1.progress)
+		if mo then
+			mo:updateIsFinish(true)
+			mo:updateProgress(msg.progress)
 		end
 	end
 end
 
-function var_0_0.onPushActInfo(arg_5_0, arg_5_1)
-	arg_5_0._activityId = arg_5_1.activityId
+function LengZhou6Model:onPushActInfo(msg)
+	self._activityId = msg.activityId
 
-	local var_5_0 = arg_5_1.episodes
+	local infos = msg.episodes
 
-	if not var_5_0 or #var_5_0 <= 0 then
+	if not infos or #infos <= 0 then
 		return
 	end
 
-	if arg_5_0._actInfoMap == nil or tabletool.len(arg_5_0._actInfoMap) == 0 then
-		if arg_5_0._actInfoMap == nil then
-			arg_5_0._actInfoMap = {}
+	if self._actInfoMap == nil or tabletool.len(self._actInfoMap) == 0 then
+		if self._actInfoMap == nil then
+			self._actInfoMap = {}
 		end
 
-		local var_5_1 = lua_activity190_episode.configDict[arg_5_0._activityId]
+		local allEpisode = lua_activity190_episode.configDict[self._activityId]
 
-		for iter_5_0, iter_5_1 in pairs(var_5_1) do
-			if arg_5_0._actInfoMap[iter_5_0] == nil then
-				local var_5_2 = LengZhou6InfoMo.New()
+		for episodeId, _ in pairs(allEpisode) do
+			if self._actInfoMap[episodeId] == nil then
+				local mo = LengZhou6InfoMo.New()
 
-				var_5_2:init(arg_5_0:getCurActId(), iter_5_0, false)
+				mo:init(self:getCurActId(), episodeId, false)
 
-				arg_5_0._actInfoMap[iter_5_0] = var_5_2
+				self._actInfoMap[episodeId] = mo
 			end
 		end
 	end
 
-	for iter_5_2, iter_5_3 in ipairs(var_5_0) do
-		local var_5_3 = iter_5_3.episodeId
-		local var_5_4 = arg_5_0._actInfoMap[var_5_3].preEpisodeId
+	for _, info in ipairs(infos) do
+		local episodeId = info.episodeId
+		local mo = self._actInfoMap[episodeId]
+		local preEpisodeId = mo.preEpisodeId
 
-		if arg_5_0._actInfoMap[var_5_4] then
-			arg_5_0._actInfoMap[var_5_4]:updateIsFinish(true)
+		if self._actInfoMap[preEpisodeId] then
+			self._actInfoMap[preEpisodeId]:updateIsFinish(true)
 		end
 	end
 
-	arg_5_0:updateNewestEpisode()
+	self:updateNewestEpisode()
 end
 
-function var_0_0.updateNewestEpisode(arg_6_0)
-	local var_6_0
-	local var_6_1
+function LengZhou6Model:updateNewestEpisode()
+	local newestEpisodeId, endLessEpisodeId
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._actInfoMap) do
-		local var_6_2 = arg_6_0:isUnlockEpisode(iter_6_0)
-		local var_6_3 = arg_6_0:isFinishedEpisode(iter_6_0)
+	for id, _ in pairs(self._actInfoMap) do
+		local isUnlock = self:isUnlockEpisode(id)
+		local isFinished = self:isFinishedEpisode(id)
 
-		if var_6_2 and not var_6_3 then
-			var_6_0 = iter_6_0
+		if isUnlock and not isFinished then
+			newestEpisodeId = id
 		end
 
-		if arg_6_0._actInfoMap[iter_6_0]:isEndlessEpisode() then
-			var_6_1 = iter_6_0
+		local episodeMo = self._actInfoMap[id]
+
+		if episodeMo:isEndlessEpisode() then
+			endLessEpisodeId = id
 		end
 	end
 
-	local var_6_4 = arg_6_0:getCurActId()
+	local actId = self:getCurActId()
 
-	if var_6_0 == nil then
-		arg_6_0._actNewestEpisodeDict[var_6_4] = var_6_1
+	if newestEpisodeId == nil then
+		self._actNewestEpisodeDict[actId] = endLessEpisodeId
 	else
-		arg_6_0._actNewestEpisodeDict[var_6_4] = var_6_0
+		self._actNewestEpisodeDict[actId] = newestEpisodeId
 	end
 end
 
-function var_0_0.getAllEpisodeIds(arg_7_0)
-	local var_7_0 = lua_activity190_episode.configDict[arg_7_0._activityId]
-	local var_7_1 = {}
+function LengZhou6Model:getAllEpisodeIds()
+	local configs = lua_activity190_episode.configDict[self._activityId]
+	local allIds = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		table.insert(var_7_1, iter_7_0)
+	for id, _ in pairs(configs) do
+		table.insert(allIds, id)
 	end
 
-	table.sort(var_7_1, function(arg_8_0, arg_8_1)
-		return arg_8_0 < arg_8_1
+	table.sort(allIds, function(a, b)
+		return a < b
 	end)
 
-	return var_7_1
+	return allIds
 end
 
-function var_0_0.getEpisodeInfoMo(arg_9_0, arg_9_1)
-	return arg_9_0._actInfoMap[arg_9_1]
+function LengZhou6Model:getEpisodeInfoMo(episodeId)
+	return self._actInfoMap[episodeId]
 end
 
-function var_0_0.getActInfoDic(arg_10_0)
-	return arg_10_0._actInfoMap
+function LengZhou6Model:getActInfoDic()
+	return self._actInfoMap
 end
 
-function var_0_0.isEpisodeFinish(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._actInfoMap[arg_11_1]
+function LengZhou6Model:isEpisodeFinish(episodeId)
+	local episodeMo = self._actInfoMap[episodeId]
 
-	if var_11_0 == nil then
+	if episodeMo == nil then
 		return false
 	end
 
-	return var_11_0.isFinish
+	return episodeMo.isFinish
 end
 
-function var_0_0.setCurEpisodeId(arg_12_0, arg_12_1)
-	arg_12_0._curEpisodeId = arg_12_1
+function LengZhou6Model:setCurEpisodeId(id)
+	self._curEpisodeId = id
 end
 
-function var_0_0.getCurEpisodeId(arg_13_0)
-	return arg_13_0._curEpisodeId
+function LengZhou6Model:getCurEpisodeId()
+	return self._curEpisodeId
 end
 
-function var_0_0.getCurActId(arg_14_0)
-	return arg_14_0._activityId
+function LengZhou6Model:getCurActId()
+	return self._activityId
 end
 
-function var_0_0.getEpisodeIsEndLess(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.enemyId
+function LengZhou6Model:getEpisodeIsEndLess(config)
+	local enemyId = config.enemyId
 
-	if not string.nilorempty(var_15_0) then
-		return var_15_0 == "2"
+	if not string.nilorempty(enemyId) then
+		return enemyId == "2"
 	end
 
 	return false
 end
 
-function var_0_0.getAct190Id(arg_16_0)
+function LengZhou6Model:getAct190Id()
 	return VersionActivity2_7Enum.ActivityId.LengZhou6
 end
 
-function var_0_0.isAct190Open(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0:getAct190Id()
-	local var_17_1
-	local var_17_2
-	local var_17_3
+function LengZhou6Model:isAct190Open(isToast)
+	local actId = self:getAct190Id()
+	local status, toastId, toastParam
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
-	if ActivityModel.instance:getActivityInfo()[var_17_0] then
-		var_17_1, var_17_2, var_17_3 = ActivityHelper.getActivityStatusAndToast(var_17_0)
+	if actInfoMo then
+		status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 	else
-		var_17_2 = ToastEnum.ActivityEnd
+		toastId = ToastEnum.ActivityEnd
 	end
 
-	if arg_17_1 and var_17_2 then
-		GameFacade.showToast(var_17_2, var_17_3)
+	if isToast and toastId then
+		GameFacade.showToast(toastId, toastParam)
 	end
 
-	return var_17_1 == ActivityEnum.ActivityStatus.Normal
+	local result = status == ActivityEnum.ActivityStatus.Normal
+
+	return result
 end
 
-function var_0_0.isUnlockEpisode(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._actInfoMap[arg_18_1]
+function LengZhou6Model:isUnlockEpisode(episodeId)
+	local episodeMo = self._actInfoMap[episodeId]
 
-	return var_18_0 ~= nil and var_18_0:unLock()
+	return episodeMo ~= nil and episodeMo:unLock()
 end
 
-function var_0_0.isFinishedEpisode(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._actInfoMap[arg_19_1]
+function LengZhou6Model:isFinishedEpisode(episodeId)
+	local episodeMo = self._actInfoMap[episodeId]
 
-	return var_19_0 ~= nil and var_19_0.isFinish
+	return episodeMo ~= nil and episodeMo.isFinish
 end
 
-function var_0_0.getNewestEpisodeId(arg_20_0, arg_20_1)
-	return arg_20_0._actNewestEpisodeDict[arg_20_1]
+function LengZhou6Model:getNewestEpisodeId(actId)
+	return self._actNewestEpisodeDict[actId]
 end
 
-var_0_0.instance = var_0_0.New()
+LengZhou6Model.instance = LengZhou6Model.New()
 
-return var_0_0
+return LengZhou6Model

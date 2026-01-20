@@ -1,24 +1,26 @@
-﻿module("modules.logic.scene.SceneEventName", package.seeall)
+﻿-- chunkname: @modules/logic/scene/SceneEventName.lua
 
-local var_0_0 = {}
+module("modules.logic.scene.SceneEventName", package.seeall)
 
-var_0_0.EnterScene = 9900
-var_0_0.EnterSceneFinish = 9901
-var_0_0.ExitScene = 9902
-var_0_0.OnLevelLoaded = 9903
-var_0_0.OpenLoading = 9904
-var_0_0.CloseLoading = 9905
-var_0_0.AgainOpenLoading = 9906
-var_0_0.DelayCloseLoading = 9907
-var_0_0.StopLoading = 9908
-var_0_0.WaitViewOpenCloseLoading = 9909
-var_0_0.SetLoadingTypeOnce = 9910
-var_0_0.WaitCloseHeadsetView = 9911
-var_0_0.ShowDownloadInfo = 9912
-var_0_0.SetManualClose = 9913
-var_0_0.ManualClose = 9914
-var_0_0.LoadingAnimEnd = 9915
-var_0_0.SceneGoChangeVisible = 9916
-var_0_0.CanCloseLoading = 9917
+local SceneEventName = {}
 
-return var_0_0
+SceneEventName.EnterScene = 9900
+SceneEventName.EnterSceneFinish = 9901
+SceneEventName.ExitScene = 9902
+SceneEventName.OnLevelLoaded = 9903
+SceneEventName.OpenLoading = 9904
+SceneEventName.CloseLoading = 9905
+SceneEventName.AgainOpenLoading = 9906
+SceneEventName.DelayCloseLoading = 9907
+SceneEventName.StopLoading = 9908
+SceneEventName.WaitViewOpenCloseLoading = 9909
+SceneEventName.SetLoadingTypeOnce = 9910
+SceneEventName.WaitCloseHeadsetView = 9911
+SceneEventName.ShowDownloadInfo = 9912
+SceneEventName.SetManualClose = 9913
+SceneEventName.ManualClose = 9914
+SceneEventName.LoadingAnimEnd = 9915
+SceneEventName.SceneGoChangeVisible = 9916
+SceneEventName.CanCloseLoading = 9917
+
+return SceneEventName

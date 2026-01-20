@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaGameMainViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/view/Activity201MaLiAnNaGameMainViewContainer.lua
 
-local var_0_0 = class("Activity201MaLiAnNaGameMainViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.view.Activity201MaLiAnNaGameMainViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity201MaLiAnNaGameMainViewContainer = class("Activity201MaLiAnNaGameMainViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity201MaLiAnNaGameMainView.New())
+function Activity201MaLiAnNaGameMainViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity201MaLiAnNaGameMainView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity201MaLiAnNaGameMainViewContainer

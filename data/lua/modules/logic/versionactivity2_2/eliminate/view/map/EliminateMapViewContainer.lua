@@ -1,20 +1,22 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/map/EliminateMapViewContainer.lua
 
-local var_0_0 = class("EliminateMapViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local EliminateMapViewContainer = class("EliminateMapViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, EliminateMapView.New())
-	table.insert(var_1_0, EliminateMapWindowView.New())
-	table.insert(var_1_0, EliminateMapAudioView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_left"))
+function EliminateMapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, EliminateMapView.New())
+	table.insert(views, EliminateMapWindowView.New())
+	table.insert(views, EliminateMapAudioView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function EliminateMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -25,34 +27,34 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.onContainerInit(arg_3_0)
-	arg_3_0:initViewParam()
+function EliminateMapViewContainer:onContainerInit()
+	self:initViewParam()
 end
 
-function var_0_0.initViewParam(arg_4_0)
-	arg_4_0.chapterId = arg_4_0.viewParam and arg_4_0.viewParam.chapterId
+function EliminateMapViewContainer:initViewParam()
+	self.chapterId = self.viewParam and self.viewParam.chapterId
 
-	if not arg_4_0.chapterId then
-		arg_4_0.chapterId = EliminateMapModel.instance:getLastCanFightChapterId()
+	if not self.chapterId then
+		self.chapterId = EliminateMapModel.instance:getLastCanFightChapterId()
 	end
 
-	if not EliminateMapModel.instance:checkChapterIsUnlock(arg_4_0.chapterId) then
-		arg_4_0.chapterId = EliminateMapEnum.DefaultChapterId
+	if not EliminateMapModel.instance:checkChapterIsUnlock(self.chapterId) then
+		self.chapterId = EliminateMapEnum.DefaultChapterId
 	end
 end
 
-function var_0_0.changeChapterId(arg_5_0, arg_5_1)
-	if arg_5_0.chapterId == arg_5_1 then
+function EliminateMapViewContainer:changeChapterId(chapterId)
+	if self.chapterId == chapterId then
 		return
 	end
 
-	arg_5_0.chapterId = arg_5_1
+	self.chapterId = chapterId
 
 	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.OnSelectChapterChange)
 end
 
-function var_0_0.setVisibleInternal(arg_6_0, arg_6_1)
-	var_0_0.super.setVisibleInternal(arg_6_0, arg_6_1)
+function EliminateMapViewContainer:setVisibleInternal(isVisible)
+	EliminateMapViewContainer.super.setVisibleInternal(self, isVisible)
 end
 
-return var_0_0
+return EliminateMapViewContainer

@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.view.FightCareerIntroduceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCareerIntroduceViewContainer.lua
 
-local var_0_0 = class("FightCareerIntroduceViewContainer", BaseViewContainer)
+module("modules.logic.fight.view.FightCareerIntroduceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local FightCareerIntroduceViewContainer = class("FightCareerIntroduceViewContainer", BaseViewContainer)
+
+function FightCareerIntroduceViewContainer:buildViews()
 	return {
 		FightCareerIntroduceView.New()
 	}
 end
 
-return var_0_0
+return FightCareerIntroduceViewContainer

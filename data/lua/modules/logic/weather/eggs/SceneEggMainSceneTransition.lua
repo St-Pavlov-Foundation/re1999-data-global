@@ -1,85 +1,92 @@
-﻿module("modules.logic.weather.eggs.SceneEggMainSceneTransition", package.seeall)
+﻿-- chunkname: @modules/logic/weather/eggs/SceneEggMainSceneTransition.lua
 
-local var_0_0 = class("SceneEggMainSceneTransition", SceneBaseEgg)
+module("modules.logic.weather.eggs.SceneEggMainSceneTransition", package.seeall)
 
-function var_0_0._onEnable(arg_1_0)
-	if not arg_1_0._context.isMainScene then
+local SceneEggMainSceneTransition = class("SceneEggMainSceneTransition", SceneBaseEgg)
+
+function SceneEggMainSceneTransition:_onEnable()
+	if not self._context.isMainScene then
 		return
 	end
 end
 
-function var_0_0._onDisable(arg_2_0)
-	if not arg_2_0._context.isMainScene then
+function SceneEggMainSceneTransition:_onDisable()
+	if not self._context.isMainScene then
 		return
 	end
 end
 
-function var_0_0._onInit(arg_3_0)
-	if not arg_3_0._context.isMainScene then
+function SceneEggMainSceneTransition:_onInit()
+	if not self._context.isMainScene then
 		return
 	end
 
-	arg_3_0._showSecond = tonumber(arg_3_0._eggConfig.actionParams)
+	self._showSecond = tonumber(self._eggConfig.actionParams)
 
-	MainController.instance:registerCallback(MainEvent.OnMainPopupFlowFinish, arg_3_0._onMainPopupFlowFinish, arg_3_0)
-	WeatherController.instance:registerCallback(WeatherEvent.MainViewHideTimeUpdate, arg_3_0._onMainViewHideTimeUpdate, arg_3_0)
+	MainController.instance:registerCallback(MainEvent.OnMainPopupFlowFinish, self._onMainPopupFlowFinish, self)
+	WeatherController.instance:registerCallback(WeatherEvent.MainViewHideTimeUpdate, self._onMainViewHideTimeUpdate, self)
 end
 
-function var_0_0._onMainViewHideTimeUpdate(arg_4_0, arg_4_1)
-	if arg_4_1 and arg_4_1 >= arg_4_0._showSecond then
+function SceneEggMainSceneTransition:_onMainViewHideTimeUpdate(time)
+	if time and time >= self._showSecond then
 		WeatherSceneController.instance:clearInfo()
-		arg_4_0:_showEffect()
+		self:_showEffect()
 	end
 end
 
-function var_0_0._onMainPopupFlowFinish(arg_5_0)
-	local var_5_0 = arg_5_0:_getZeroTime()
+function SceneEggMainSceneTransition:_onMainPopupFlowFinish()
+	local zeroTime = self:_getZeroTime()
 
-	PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.SceneEggMainSceneTransition), var_5_0)
-	arg_5_0:_showEffect()
+	PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.SceneEggMainSceneTransition), zeroTime)
+	self:_showEffect()
 end
 
-function var_0_0._showEffect(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._delayHideGoList, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._delayHideGoList, arg_6_0, 2)
-	arg_6_0:setGoListVisible(true)
+function SceneEggMainSceneTransition:_showEffect()
+	TaskDispatcher.cancelTask(self._delayHideGoList, self)
+	TaskDispatcher.runDelay(self._delayHideGoList, self, 2)
+	self:setGoListVisible(true)
 	PostProcessingMgr.instance:setUnitPPValue("sceneMaskTexDownTimes", 0)
 	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "SceneEggMainSceneTransition", true)
 end
 
-function var_0_0._delayHideGoList(arg_7_0)
-	arg_7_0:setGoListVisible(false)
+function SceneEggMainSceneTransition:_delayHideGoList()
+	self:setGoListVisible(false)
 	PostProcessingMgr.instance:setUnitPPValue("sceneMaskTexDownTimes", 1)
 	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "SceneEggMainSceneTransition", false)
 end
 
-function var_0_0._onSceneClose(arg_8_0)
-	if not arg_8_0._context.isMainScene then
+function SceneEggMainSceneTransition:_onSceneClose()
+	if not self._context.isMainScene then
 		return
 	end
 
-	MainController.instance:unregisterCallback(MainEvent.OnMainPopupFlowFinish, arg_8_0._onMainPopupFlowFinish, arg_8_0)
-	WeatherController.instance:unregisterCallback(WeatherEvent.MainViewHideTimeUpdate, arg_8_0._onMainViewHideTimeUpdate, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._delayHideGoList, arg_8_0)
-	arg_8_0:_delayHideGoList()
+	MainController.instance:unregisterCallback(MainEvent.OnMainPopupFlowFinish, self._onMainPopupFlowFinish, self)
+	WeatherController.instance:unregisterCallback(WeatherEvent.MainViewHideTimeUpdate, self._onMainViewHideTimeUpdate, self)
+	TaskDispatcher.cancelTask(self._delayHideGoList, self)
+	self:_delayHideGoList()
 end
 
-function var_0_0._hasDailyShow(arg_9_0)
-	if arg_9_0:_getZeroTime() ~= PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.SceneEggMainSceneTransition), 0) then
+function SceneEggMainSceneTransition:_hasDailyShow()
+	local zeroTime = self:_getZeroTime()
+	local saveZeroTime = PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.SceneEggMainSceneTransition), 0)
+
+	if zeroTime ~= saveZeroTime then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._getZeroTime(arg_10_0)
-	local var_10_0 = os.date("*t", os.time())
+function SceneEggMainSceneTransition:_getZeroTime()
+	local nowDate = os.date("*t", os.time())
 
-	var_10_0.hour = 0
-	var_10_0.min = 0
-	var_10_0.sec = 0
+	nowDate.hour = 0
+	nowDate.min = 0
+	nowDate.sec = 0
 
-	return (os.time(var_10_0))
+	local zeroTime = os.time(nowDate)
+
+	return zeroTime
 end
 
-return var_0_0
+return SceneEggMainSceneTransition

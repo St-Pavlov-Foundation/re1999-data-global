@@ -1,13 +1,15 @@
-﻿module("modules.logic.survival.view.shelter.ShelterCompositeSuccessViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterCompositeSuccessViewContainer.lua
 
-local var_0_0 = class("ShelterCompositeSuccessViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.ShelterCompositeSuccessViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ShelterCompositeSuccessViewContainer = class("ShelterCompositeSuccessViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ShelterCompositeSuccessView.New())
+function ShelterCompositeSuccessViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ShelterCompositeSuccessView.New())
+
+	return views
 end
 
-return var_0_0
+return ShelterCompositeSuccessViewContainer

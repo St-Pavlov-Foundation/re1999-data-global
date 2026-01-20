@@ -1,89 +1,91 @@
-﻿module("modules.logic.room.view.common.RoomSourcesCobrandLogoItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomSourcesCobrandLogoItem.lua
 
-local var_0_0 = class("RoomSourcesCobrandLogoItem", ListScrollCellExtend)
+module("modules.logic.room.view.common.RoomSourcesCobrandLogoItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imagelogoicon = gohelper.findChildImage(arg_1_0.viewGO, "logo/#image_logoicon")
+local RoomSourcesCobrandLogoItem = class("RoomSourcesCobrandLogoItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomSourcesCobrandLogoItem:onInitView()
+	self._imagelogoicon = gohelper.findChildImage(self.viewGO, "logo/#image_logoicon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomSourcesCobrandLogoItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomSourcesCobrandLogoItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function RoomSourcesCobrandLogoItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
+function RoomSourcesCobrandLogoItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
+function RoomSourcesCobrandLogoItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+function RoomSourcesCobrandLogoItem:onUpdateMO(mo)
 	return
 end
 
-function var_0_0.onSelect(arg_8_0, arg_8_1)
+function RoomSourcesCobrandLogoItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function RoomSourcesCobrandLogoItem:onDestroyView()
 	return
 end
 
-function var_0_0.setSourcesTypeStr(arg_10_0, arg_10_1)
-	arg_10_0._sourcesTypeCfg = arg_10_0:_findSourcesTypeCfg(arg_10_1)
-	arg_10_0._isShow = false
+function RoomSourcesCobrandLogoItem:setSourcesTypeStr(idStr)
+	self._sourcesTypeCfg = self:_findSourcesTypeCfg(idStr)
+	self._isShow = false
 
-	if arg_10_0._sourcesTypeCfg then
-		arg_10_0._isShow = true
+	if self._sourcesTypeCfg then
+		self._isShow = true
 
-		UISpriteSetMgr.instance:setRoomSprite(arg_10_0._imagelogoicon, arg_10_0._sourcesTypeCfg.bgIcon)
+		UISpriteSetMgr.instance:setRoomSprite(self._imagelogoicon, self._sourcesTypeCfg.bgIcon)
 	end
 
-	gohelper.setActive(arg_10_0.viewGO, arg_10_0._isShow)
+	gohelper.setActive(self.viewGO, self._isShow)
 end
 
-function var_0_0.getIsShow(arg_11_0)
-	return arg_11_0._isShow
+function RoomSourcesCobrandLogoItem:getIsShow()
+	return self._isShow
 end
 
-function var_0_0._findSourcesTypeCfg(arg_12_0, arg_12_1)
-	if not arg_12_1 or string.nilorempty(arg_12_1) then
+function RoomSourcesCobrandLogoItem:_findSourcesTypeCfg(idStr)
+	if not idStr or string.nilorempty(idStr) then
 		return nil
 	end
 
-	local var_12_0 = string.splitToNumber(arg_12_1, "#")
+	local idList = string.splitToNumber(idStr, "#")
 
-	if var_12_0 == nil or #var_12_0 < 1 then
+	if idList == nil or #idList < 1 then
 		return nil
 	end
 
-	local var_12_1
-	local var_12_2 = RoomEnum.SourcesShowType.Cobrand
+	local sourceTypeCfg
+	local showType = RoomEnum.SourcesShowType.Cobrand
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		local var_12_3 = RoomConfig.instance:getSourcesTypeConfig(iter_12_1)
+	for _, id in ipairs(idList) do
+		local tcfg = RoomConfig.instance:getSourcesTypeConfig(id)
 
-		if var_12_3 and var_12_3.showType == var_12_2 then
-			var_12_1 = var_12_3
+		if tcfg and tcfg.showType == showType then
+			sourceTypeCfg = tcfg
 
 			break
 		end
 	end
 
-	return var_12_1
+	return sourceTypeCfg
 end
 
-return var_0_0
+return RoomSourcesCobrandLogoItem

@@ -1,21 +1,23 @@
-﻿module("modules.logic.room.view.debug.RoomDebugEntranceViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugEntranceViewContainer.lua
 
-local var_0_0 = class("RoomDebugEntranceViewContainer", BaseViewContainer)
+module("modules.logic.room.view.debug.RoomDebugEntranceViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomDebugEntranceViewContainer = class("RoomDebugEntranceViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomDebugEntranceView.New())
+function RoomDebugEntranceViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomDebugEntranceView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function RoomDebugEntranceViewContainer:onContainerClickModalMask()
 	if RoomController.instance:isEditorMode() then
 		return
 	end
 
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomDebugEntranceViewContainer

@@ -5050,6 +5050,66 @@
     "isCn": 0
   },
   {
+    "id": 3207001,
+    "title": "",
+    "type": 2,
+    "text": "计策制定",
+    "icon": "v2a5_autochess_help_11",
+    "iconText": "v2a5_autochess_help_11",
+    "unlockGuideId": 32011,
+    "isCn": 1
+  },
+  {
+    "id": 3207002,
+    "title": "",
+    "type": 2,
+    "text": "团队建设",
+    "icon": "v2a5_autochess_help_12",
+    "iconText": "v2a5_autochess_help_12",
+    "unlockGuideId": 32011,
+    "isCn": 1
+  },
+  {
+    "id": 3207003,
+    "title": "",
+    "type": 2,
+    "text": "安保名录",
+    "icon": "v2a5_autochess_help_13",
+    "iconText": "v2a5_autochess_help_13",
+    "unlockGuideId": 32011,
+    "isCn": 1
+  },
+  {
+    "id": 3207004,
+    "title": "",
+    "type": 2,
+    "text": "对战规则",
+    "icon": "v2a5_autochess_help_14",
+    "iconText": "v2a5_autochess_help_14",
+    "unlockGuideId": 32013,
+    "isCn": 1
+  },
+  {
+    "id": 3207005,
+    "title": "",
+    "type": 2,
+    "text": "新鬃毛战斗指引1",
+    "icon": "v3a2_bossrush_help_1",
+    "iconText": "v3a2_bossrush_help_1",
+    "unlockGuideId": 32029,
+    "isCn": 0
+  },
+  {
+    "id": 3207006,
+    "title": "",
+    "type": 2,
+    "text": "新鬃毛战斗指引2",
+    "icon": "v3a2_bossrush_help_2",
+    "iconText": "v3a2_bossrush_help_2",
+    "unlockGuideId": 32029,
+    "isCn": 0
+  },
+  {
     "id": 2500201,
     "title": "",
     "type": 2,

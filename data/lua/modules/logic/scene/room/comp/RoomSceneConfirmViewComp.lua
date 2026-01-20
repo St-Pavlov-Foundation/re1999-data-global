@@ -1,85 +1,87 @@
-﻿module("modules.logic.scene.room.comp.RoomSceneConfirmViewComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomSceneConfirmViewComp.lua
 
-local var_0_0 = class("RoomSceneConfirmViewComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomSceneConfirmViewComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomSceneConfirmViewComp = class("RoomSceneConfirmViewComp", BaseSceneComp)
+
+function RoomSceneConfirmViewComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_0._confirmView then
-		local var_2_0 = RoomUIPool.getInstance(RoomViewConfirm.prefabPath, "roomViewConfirm")
-		local var_2_1 = RoomViewConfirm.New()
+function RoomSceneConfirmViewComp:init(sceneId, levelId)
+	if not self._confirmView then
+		local viewGO = RoomUIPool.getInstance(RoomViewConfirm.prefabPath, "roomViewConfirm")
+		local view = RoomViewConfirm.New()
 
-		arg_2_0._confirmView = var_2_1
+		self._confirmView = view
 
-		function var_2_1._setUIPos(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-			local var_3_0 = RoomBendingHelper.worldToBendingSimple(arg_3_1)
+		function view:_setUIPos(worldPos, offsetY, scale)
+			local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
 
-			arg_3_2 = arg_3_2 or 0
+			offsetY = offsetY or 0
 
-			local var_3_1 = arg_3_3 or 1
+			local scale = scale or 1
 
-			transformhelper.setLocalScale(arg_3_0._gocontainer.transform, var_3_1, var_3_1, var_3_1)
-			transformhelper.setPos(arg_3_0._gocontainer.transform, var_3_0.x, var_3_0.y + arg_3_2, var_3_0.z)
+			transformhelper.setLocalScale(self._gocontainer.transform, scale, scale, scale)
+			transformhelper.setPos(self._gocontainer.transform, bendingPos.x, bendingPos.y + offsetY, bendingPos.z)
 		end
 
-		var_2_1:__onInit()
+		view:__onInit()
 
-		var_2_1.viewGO = var_2_0
-		var_2_1.viewName = "RoomViewConfirm"
+		view.viewGO = viewGO
+		view.viewName = "RoomViewConfirm"
 
-		var_2_1:onInitViewInternal()
-		var_2_1:addEventsInternal()
-		var_2_1:onOpenInternal()
-		var_2_1:onOpenFinishInternal()
+		view:onInitViewInternal()
+		view:addEventsInternal()
+		view:onOpenInternal()
+		view:onOpenFinishInternal()
 
-		local var_2_2 = 0.017499999999999998
+		local scale = 0.017499999999999998
 
-		transformhelper.setLocalScale(var_2_0.transform, var_2_2, var_2_2, var_2_2)
-		transformhelper.setLocalRotation(var_2_1._gocontainer.transform, 90, 0, 0)
-		RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_2_0._cameraTransformUpdate, arg_2_0)
+		transformhelper.setLocalScale(viewGO.transform, scale, scale, scale)
+		transformhelper.setLocalRotation(view._gocontainer.transform, 90, 0, 0)
+		RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
 	end
 end
 
-function var_0_0._cameraTransformUpdate(arg_4_0)
-	if arg_4_0._confirmView then
-		local var_4_0 = CameraMgr.instance:getMainCameraTrs()
+function RoomSceneConfirmViewComp:_cameraTransformUpdate()
+	if self._confirmView then
+		local mainCameraTrs = CameraMgr.instance:getMainCameraTrs()
 
-		if var_4_0 then
-			local var_4_1, var_4_2, var_4_3 = transformhelper.getLocalRotation(var_4_0)
+		if mainCameraTrs then
+			local rx, ry, rz = transformhelper.getLocalRotation(mainCameraTrs)
 
-			transformhelper.setLocalRotation(arg_4_0._confirmView._gocontainer.transform, 90, var_4_2, 0)
+			transformhelper.setLocalRotation(self._confirmView._gocontainer.transform, 90, ry, 0)
 		end
 	end
 end
 
-function var_0_0.getViewGO(arg_5_0)
-	return arg_5_0._confirmView and arg_5_0._confirmView.viewGO
+function RoomSceneConfirmViewComp:getViewGO()
+	return self._confirmView and self._confirmView.viewGO
 end
 
-function var_0_0.onSceneClose(arg_6_0)
-	if arg_6_0._confirmView then
-		local var_6_0 = arg_6_0._confirmView
+function RoomSceneConfirmViewComp:onSceneClose()
+	if self._confirmView then
+		local view = self._confirmView
 
-		arg_6_0._confirmView = nil
+		self._confirmView = nil
 
-		var_6_0:onCloseInternal()
-		var_6_0:onCloseFinishInternal()
-		var_6_0:removeEventsInternal()
-		var_6_0:onDestroyViewInternal()
-		var_6_0:__onDispose()
+		view:onCloseInternal()
+		view:onCloseFinishInternal()
+		view:removeEventsInternal()
+		view:onDestroyViewInternal()
+		view:__onDispose()
 
-		if var_6_0.viewGO then
-			gohelper.destroy(var_6_0.viewGO)
+		if view.viewGO then
+			gohelper.destroy(view.viewGO)
 
-			var_6_0.viewGO = nil
+			view.viewGO = nil
 		end
 
-		RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_6_0._cameraTransformUpdate, arg_6_0)
+		RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
 	end
 
-	arg_6_0._touchComp = nil
+	self._touchComp = nil
 end
 
-return var_0_0
+return RoomSceneConfirmViewComp

@@ -1,33 +1,35 @@
-﻿module("modules.logic.dialogue.model.DialogueModel", package.seeall)
+﻿-- chunkname: @modules/logic/dialogue/model/DialogueModel.lua
 
-local var_0_0 = class("DialogueModel", ListScrollModel)
+module("modules.logic.dialogue.model.DialogueModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local DialogueModel = class("DialogueModel", ListScrollModel)
+
+function DialogueModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.dialogueDict = nil
+function DialogueModel:reInit()
+	self.dialogueDict = nil
 end
 
-function var_0_0.initDialogue(arg_3_0, arg_3_1)
-	arg_3_0.dialogueDict = {}
+function DialogueModel:initDialogue(dialogueList)
+	self.dialogueDict = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-		arg_3_0.dialogueDict[iter_3_1] = true
+	for _, dialogueId in ipairs(dialogueList) do
+		self.dialogueDict[dialogueId] = true
 	end
 end
 
-function var_0_0.updateDialogueInfo(arg_4_0, arg_4_1)
-	arg_4_0.dialogueDict[arg_4_1] = true
+function DialogueModel:updateDialogueInfo(dialogueId)
+	self.dialogueDict[dialogueId] = true
 
-	DialogueController.instance:dispatchEvent(DialogueEvent.OnDialogueInfoChange, arg_4_1)
+	DialogueController.instance:dispatchEvent(DialogueEvent.OnDialogueInfoChange, dialogueId)
 end
 
-function var_0_0.isFinishDialogue(arg_5_0, arg_5_1)
-	return arg_5_0.dialogueDict and arg_5_0.dialogueDict[arg_5_1]
+function DialogueModel:isFinishDialogue(dialogueId)
+	return self.dialogueDict and self.dialogueDict[dialogueId]
 end
 
-var_0_0.instance = var_0_0.New()
+DialogueModel.instance = DialogueModel.New()
 
-return var_0_0
+return DialogueModel

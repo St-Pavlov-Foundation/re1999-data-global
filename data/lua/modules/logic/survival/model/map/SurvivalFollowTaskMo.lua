@@ -1,19 +1,21 @@
-﻿module("modules.logic.survival.model.map.SurvivalFollowTaskMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalFollowTaskMo.lua
 
-local var_0_0 = pureTable("SurvivalFollowTaskMo")
+module("modules.logic.survival.model.map.SurvivalFollowTaskMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.type = 1
-	arg_1_0.moduleId = 0
-	arg_1_0.taskId = 0
-	arg_1_0.followUnitUid = 0
+local SurvivalFollowTaskMo = pureTable("SurvivalFollowTaskMo")
+
+function SurvivalFollowTaskMo:ctor()
+	self.type = 1
+	self.moduleId = 0
+	self.taskId = 0
+	self.followUnitUid = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.type = arg_2_1.moduleId == SurvivalEnum.TaskModule.MapMainTarget and 1 or 2
-	arg_2_0.moduleId = arg_2_1.moduleId
-	arg_2_0.taskId = arg_2_1.taskId
-	arg_2_0.followUnitUid = arg_2_1.followUnitUid
+function SurvivalFollowTaskMo:init(data)
+	self.type = data.moduleId == SurvivalEnum.TaskModule.MapMainTarget and 1 or 2
+	self.moduleId = data.moduleId
+	self.taskId = data.taskId
+	self.followUnitUid = data.followUnitUid
 end
 
-return var_0_0
+return SurvivalFollowTaskMo

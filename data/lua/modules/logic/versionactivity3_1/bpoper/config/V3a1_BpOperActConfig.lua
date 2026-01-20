@@ -1,31 +1,45 @@
-﻿module("modules.logic.versionactivity3_1.bpoper.config.V3a1_BpOperActConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/bpoper/config/V3a1_BpOperActConfig.lua
 
-local var_0_0 = class("V3a1_BpOperActConfig", BaseConfig)
+module("modules.logic.versionactivity3_1.bpoper.config.V3a1_BpOperActConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._taskConfig = nil
+local V3a1_BpOperActConfig = class("V3a1_BpOperActConfig", BaseConfig)
+
+function V3a1_BpOperActConfig:ctor()
+	self._taskConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function V3a1_BpOperActConfig:reqConfigNames()
 	return {
 		"activity214_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity214_task" then
-		arg_3_0._taskConfig = arg_3_2
+function V3a1_BpOperActConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity214_task" then
+		self._taskConfig = configTable
 	end
 end
 
-function var_0_0.getTaskCO(arg_4_0, arg_4_1)
-	return arg_4_0._taskConfig.configDict[arg_4_1]
+function V3a1_BpOperActConfig:getTaskCO(taskId)
+	return self._taskConfig.configDict[taskId]
 end
 
-function var_0_0.getTaskCos(arg_5_0)
-	return arg_5_0._taskConfig.configDict
+function V3a1_BpOperActConfig:getTaskCos(actId)
+	if not actId then
+		return self._taskConfig.configDict
+	end
+
+	local taskCos = {}
+
+	for _, taskCo in pairs(self._taskConfig.configDict) do
+		if taskCo.activityId == actId then
+			table.insert(taskCos, taskCo)
+		end
+	end
+
+	return taskCos
 end
 
-var_0_0.instance = var_0_0.New()
+V3a1_BpOperActConfig.instance = V3a1_BpOperActConfig.New()
 
-return var_0_0
+return V3a1_BpOperActConfig

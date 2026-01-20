@@ -1,37 +1,41 @@
-﻿module("modules.logic.fight.system.work.FightWorkShowBuffDialog", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkShowBuffDialog.lua
 
-local var_0_0 = class("FightWorkShowBuffDialog", BaseWork)
+module("modules.logic.fight.system.work.FightWorkShowBuffDialog", package.seeall)
 
-var_0_0.needStopWork = nil
-var_0_0.addBuffRoundId = nil
-var_0_0.delBuffRoundId = nil
+local FightWorkShowBuffDialog = class("FightWorkShowBuffDialog", BaseWork)
 
-function var_0_0.onStart(arg_1_0)
-	if FightModel.instance:getCurRoundId() == 1 then
-		var_0_0.addBuffRoundId = nil
-		var_0_0.delBuffRoundId = nil
+FightWorkShowBuffDialog.needStopWork = nil
+FightWorkShowBuffDialog.addBuffRoundId = nil
+FightWorkShowBuffDialog.delBuffRoundId = nil
+
+function FightWorkShowBuffDialog:onStart()
+	local roundId = FightModel.instance:getCurRoundId()
+
+	if roundId == 1 then
+		FightWorkShowBuffDialog.addBuffRoundId = nil
+		FightWorkShowBuffDialog.delBuffRoundId = nil
 	end
 
-	var_0_0.needStopWork = nil
+	FightWorkShowBuffDialog.needStopWork = nil
 
 	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.BuffRoundBefore)
 	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.BuffRoundAfter)
 	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.RoundEndAndCheckBuff)
 	FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.checkHaveMagicCircle)
 
-	if var_0_0.needStopWork then
-		arg_1_0._flow = FlowSequence.New()
+	if FightWorkShowBuffDialog.needStopWork then
+		self._flow = FlowSequence.New()
 
-		arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._detectPlayTimeline, arg_1_0))
-		arg_1_0._flow:addWork(FightWorkWaitDialog.New())
-		arg_1_0._flow:registerDoneListener(arg_1_0._onFightDialogEnd, arg_1_0)
-		arg_1_0._flow:start()
+		self._flow:addWork(FunctionWork.New(self._detectPlayTimeline, self))
+		self._flow:addWork(FightWorkWaitDialog.New())
+		self._flow:registerDoneListener(self._onFightDialogEnd, self)
+		self._flow:start()
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-local var_0_1 = {
+local _id2Timeline = {
 	[13304021] = "630404_innate1",
 	[13304022] = "630404_innate1",
 	[13304020] = "630404_innate1",
@@ -47,43 +51,43 @@ local var_0_1 = {
 	[13304010] = "630404_innate1"
 }
 
-function var_0_0._detectPlayTimeline(arg_2_0)
-	local var_2_0 = var_0_0.needStopWork
+function FightWorkShowBuffDialog:_detectPlayTimeline()
+	local config = FightWorkShowBuffDialog.needStopWork
 
-	if var_2_0 and var_0_1[var_2_0.id] then
-		local var_2_1 = "-1"
-		local var_2_2 = FightHelper.getEntity(var_2_1)
+	if config and _id2Timeline[config.id] then
+		local entityId = "-1"
+		local entity = FightHelper.getEntity(entityId)
 
-		if var_2_2 and var_2_2.skill then
-			local var_2_3 = {
+		if entity and entity.skill then
+			local temp_data = {
 				actId = 0,
 				stepUid = 0,
 				actEffect = {
 					{
-						targetId = var_2_1
+						targetId = entityId
 					}
 				},
-				fromId = var_2_1,
-				toId = var_2_1,
+				fromId = entityId,
+				toId = entityId,
 				actType = FightEnum.ActType.SKILL
 			}
 
-			var_2_2.skill:playTimeline(var_0_1[var_0_0.needStopWork.id], var_2_3)
+			entity.skill:playTimeline(_id2Timeline[FightWorkShowBuffDialog.needStopWork.id], temp_data)
 		end
 	end
 end
 
-function var_0_0._onFightDialogEnd(arg_3_0)
-	arg_3_0:onDone(true)
+function FightWorkShowBuffDialog:_onFightDialogEnd()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._flow then
-		arg_4_0._flow:unregisterDoneListener(arg_4_0._onFightDialogEnd, arg_4_0)
-		arg_4_0._flow:stop()
+function FightWorkShowBuffDialog:clearWork()
+	if self._flow then
+		self._flow:unregisterDoneListener(self._onFightDialogEnd, self)
+		self._flow:stop()
 
-		arg_4_0._flow = nil
+		self._flow = nil
 	end
 end
 
-return var_0_0
+return FightWorkShowBuffDialog

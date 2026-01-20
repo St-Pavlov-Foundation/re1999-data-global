@@ -1,50 +1,52 @@
-﻿module("modules.logic.fight.system.work.FightWorkAddUseCardContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAddUseCardContainer.lua
 
-local var_0_0 = class("FightWorkAddUseCardContainer", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkAddUseCardContainer", package.seeall)
 
-var_0_0.IndexList = {}
+local FightWorkAddUseCardContainer = class("FightWorkAddUseCardContainer", FightStepEffectFlow)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:getAdjacentSameEffectList(nil, false)
+FightWorkAddUseCardContainer.IndexList = {}
 
-	arg_1_0:customPlayEffectData(var_1_0)
+function FightWorkAddUseCardContainer:onStart()
+	local dataList = self:getAdjacentSameEffectList(nil, false)
 
-	local var_1_1 = var_0_0.IndexList
+	self:customPlayEffectData(dataList)
 
-	tabletool.clear(var_1_1)
+	local indexList = FightWorkAddUseCardContainer.IndexList
 
-	local var_1_2 = 0.5
+	tabletool.clear(indexList)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_3 = iter_1_1.actEffectData
-		local var_1_4 = var_1_3.effectNum
-		local var_1_5 = FightPlayCardModel.instance:getUsedCards()
+	local waitTime = 0.5
 
-		if var_1_4 - 1 > #var_1_5 then
-			var_1_4 = #var_1_5 + 1
+	for _, data in ipairs(dataList) do
+		local actEffectData = data.actEffectData
+		local index = actEffectData.effectNum
+		local curUsedCards = FightPlayCardModel.instance:getUsedCards()
+
+		if index - 1 > #curUsedCards then
+			index = #curUsedCards + 1
 		end
 
-		table.insert(var_1_1, var_1_4)
-		FightPlayCardModel.instance:addUseCard(var_1_4, var_1_3.cardInfo, var_1_3.effectNum1)
+		table.insert(indexList, index)
+		FightPlayCardModel.instance:addUseCard(index, actEffectData.cardInfo, actEffectData.effectNum1)
 
-		if FightHeroALFComp.ALFSkillDict[var_1_3.effectNum1] then
-			var_1_2 = 1.8
+		if FightHeroALFComp.ALFSkillDict[actEffectData.effectNum1] then
+			waitTime = 1.8
 		end
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.AddUseCard, var_1_1)
-	FightController.instance:dispatchEvent(FightEvent.AfterAddUseCardContainer, arg_1_0.fightStepData)
-	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_2 / FightModel.instance:getUISpeed())
+	FightController.instance:dispatchEvent(FightEvent.AddUseCard, indexList)
+	FightController.instance:dispatchEvent(FightEvent.AfterAddUseCardContainer, self.fightStepData)
+	self:com_registTimer(self._delayAfterPerformance, waitTime / FightModel.instance:getUISpeed())
 end
 
-function var_0_0.customPlayEffectData(arg_2_0, arg_2_1)
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		FightDataHelper.playEffectData(iter_2_1.actEffectData)
+function FightWorkAddUseCardContainer:customPlayEffectData(dataList)
+	for _, data in ipairs(dataList) do
+		FightDataHelper.playEffectData(data.actEffectData)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkAddUseCardContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkAddUseCardContainer

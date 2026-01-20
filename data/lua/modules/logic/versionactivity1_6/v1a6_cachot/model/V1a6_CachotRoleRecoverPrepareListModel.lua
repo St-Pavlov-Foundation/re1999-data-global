@@ -1,47 +1,52 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotRoleRecoverPrepareListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/V1a6_CachotRoleRecoverPrepareListModel.lua
 
-local var_0_0 = class("V1a6_CachotRoleRecoverPrepareListModel", ListScrollModel)
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotRoleRecoverPrepareListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local V1a6_CachotRoleRecoverPrepareListModel = class("V1a6_CachotRoleRecoverPrepareListModel", ListScrollModel)
+
+function V1a6_CachotRoleRecoverPrepareListModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function V1a6_CachotRoleRecoverPrepareListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.initList(arg_3_0)
-	local var_3_0 = V1a6_CachotModel.instance:getRogueInfo().teamInfo:getSupportLiveHeros()
+function V1a6_CachotRoleRecoverPrepareListModel:initList()
+	local rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+	local teamInfo = rogueInfo.teamInfo
+	local heroList = teamInfo:getSupportLiveHeros()
 
-	table.sort(var_3_0, var_0_0.sort)
+	table.sort(heroList, V1a6_CachotRoleRecoverPrepareListModel.sort)
 
-	local var_3_1 = math.ceil(#var_3_0 / 4)
-	local var_3_2 = math.max(var_3_1, 1)
+	local pageNum = math.ceil(#heroList / 4)
 
-	for iter_3_0 = #var_3_0 + 1, var_3_2 * 4 do
-		table.insert(var_3_0, HeroSingleGroupMO.New())
+	pageNum = math.max(pageNum, 1)
+
+	for i = #heroList + 1, pageNum * 4 do
+		table.insert(heroList, HeroSingleGroupMO.New())
 	end
 
-	arg_3_0:setList(var_3_0)
+	self:setList(heroList)
 end
 
-function var_0_0.sort(arg_4_0, arg_4_1)
-	if arg_4_0.hp ~= arg_4_1.hp then
-		return arg_4_0.hp > arg_4_1.hp
+function V1a6_CachotRoleRecoverPrepareListModel.sort(a, b)
+	if a.hp ~= b.hp then
+		return a.hp > b.hp
 	end
 
-	arg_4_0 = arg_4_0._heroMO
-	arg_4_1 = arg_4_1._heroMO
+	a = a._heroMO
+	b = b._heroMO
 
-	if arg_4_0.config.rare ~= arg_4_1.config.rare then
-		return arg_4_0.config.rare > arg_4_1.config.rare
-	elseif arg_4_0.level ~= arg_4_1.level then
-		return arg_4_0.level > arg_4_1.level
-	elseif arg_4_0.heroId ~= arg_4_1.heroId then
-		return arg_4_0.heroId > arg_4_1.heroId
+	if a.config.rare ~= b.config.rare then
+		return a.config.rare > b.config.rare
+	elseif a.level ~= b.level then
+		return a.level > b.level
+	elseif a.heroId ~= b.heroId then
+		return a.heroId > b.heroId
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+V1a6_CachotRoleRecoverPrepareListModel.instance = V1a6_CachotRoleRecoverPrepareListModel.New()
 
-return var_0_0
+return V1a6_CachotRoleRecoverPrepareListModel

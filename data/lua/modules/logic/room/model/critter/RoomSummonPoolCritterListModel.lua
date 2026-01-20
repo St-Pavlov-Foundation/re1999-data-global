@@ -1,23 +1,25 @@
-﻿module("modules.logic.room.model.critter.RoomSummonPoolCritterListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomSummonPoolCritterListModel.lua
 
-local var_0_0 = class("RoomSummonPoolCritterListModel", ListScrollModel)
+module("modules.logic.room.model.critter.RoomSummonPoolCritterListModel", package.seeall)
 
-function var_0_0.setDataList(arg_1_0, arg_1_1)
-	table.sort(arg_1_1, arg_1_0._sortFunction)
-	arg_1_0:setList(arg_1_1)
+local RoomSummonPoolCritterListModel = class("RoomSummonPoolCritterListModel", ListScrollModel)
+
+function RoomSummonPoolCritterListModel:setDataList(critterMos)
+	table.sort(critterMos, self._sortFunction)
+	self:setList(critterMos)
 end
 
-function var_0_0._sortFunction(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getPoolCount() <= 0
-	local var_2_1 = arg_2_1:getPoolCount() <= 0
+function RoomSummonPoolCritterListModel._sortFunction(a, b)
+	local aisNull = a:getPoolCount() <= 0
+	local bisNull = b:getPoolCount() <= 0
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_1
+	if aisNull ~= bisNull then
+		return bisNull
 	end
 
-	return arg_2_0.rare > arg_2_1.rare
+	return a.rare > b.rare
 end
 
-var_0_0.instance = var_0_0.New()
+RoomSummonPoolCritterListModel.instance = RoomSummonPoolCritterListModel.New()
 
-return var_0_0
+return RoomSummonPoolCritterListModel

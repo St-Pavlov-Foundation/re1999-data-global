@@ -1,15 +1,17 @@
-﻿module("modules.logic.explore.controller.steps.ExploreElevatorStep", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/steps/ExploreElevatorStep.lua
 
-local var_0_0 = class("ExploreElevatorStep", ExploreStepBase)
+module("modules.logic.explore.controller.steps.ExploreElevatorStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = ExploreModel.instance:getInteractInfo(arg_1_0._data.interactId)
+local ExploreElevatorStep = class("ExploreElevatorStep", ExploreStepBase)
 
-	if var_1_0 then
-		var_1_0.statusInfo.height = arg_1_0._data.height
+function ExploreElevatorStep:onStart()
+	local interactMo = ExploreModel.instance:getInteractInfo(self._data.interactId)
+
+	if interactMo then
+		interactMo.statusInfo.height = self._data.height
 	end
 
-	arg_1_0:onDone()
+	self:onDone()
 end
 
-return var_0_0
+return ExploreElevatorStep

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_5.act186.view.Activity186GameDrawlotsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/act186/view/Activity186GameDrawlotsViewContainer.lua
 
-local var_0_0 = class("Activity186GameDrawlotsViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.act186.view.Activity186GameDrawlotsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Activity186GameDrawlotsViewContainer = class("Activity186GameDrawlotsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Activity186GameDrawlotsView.New())
+function Activity186GameDrawlotsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Activity186GameDrawlotsView.New())
+
+	return views
 end
 
-return var_0_0
+return Activity186GameDrawlotsViewContainer

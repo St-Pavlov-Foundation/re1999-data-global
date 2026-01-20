@@ -1,46 +1,48 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapElement", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/view/HeroInvitationDungeonMapElement.lua
 
-local var_0_0 = class("HeroInvitationDungeonMapElement", DungeonMapElement)
+module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapElement", package.seeall)
 
-function var_0_0.setFinishAndDotDestroy(arg_1_0)
-	if not arg_1_0._wenhaoGo then
-		arg_1_0._waitFinishAndDotDestroy = true
+local HeroInvitationDungeonMapElement = class("HeroInvitationDungeonMapElement", DungeonMapElement)
+
+function HeroInvitationDungeonMapElement:setFinishAndDotDestroy()
+	if not self._wenhaoGo then
+		self._waitFinishAndDotDestroy = true
 
 		return
 	end
 
 	UIBlockHelper.instance:startBlock("DungeonMapSceneTweenPos", 1.6, ViewName.HeroInvitationDungeonMapView)
-	arg_1_0:setWenHaoAnim("finish")
+	self:setWenHaoAnim("finish")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
 end
 
-function var_0_0._wenHaoAnimDone(arg_2_0)
-	if arg_2_0._wenhaoAnimName == "finish" then
-		arg_2_0._sceneElements:onRemoveElementFinish()
+function HeroInvitationDungeonMapElement:_wenHaoAnimDone()
+	if self._wenhaoAnimName == "finish" then
+		self._sceneElements:onRemoveElementFinish()
 
-		if arg_2_0:getElementId() == 311114 then
-			TaskDispatcher.runDelay(arg_2_0.delayFinish, arg_2_0, 1)
+		if self:getElementId() == 311114 then
+			TaskDispatcher.runDelay(self.delayFinish, self, 1)
 		end
 	end
 end
 
-function var_0_0.delayFinish(arg_3_0)
+function HeroInvitationDungeonMapElement:delayFinish()
 	ViewMgr.instance:openView(ViewName.HeroInvitationView)
 end
 
-function var_0_0._onResLoaded(arg_4_0)
-	var_0_0.super._onResLoaded(arg_4_0)
+function HeroInvitationDungeonMapElement:_onResLoaded()
+	HeroInvitationDungeonMapElement.super._onResLoaded(self)
 
-	if arg_4_0._waitFinishAndDotDestroy then
-		arg_4_0._waitFinishAndDotDestroy = false
+	if self._waitFinishAndDotDestroy then
+		self._waitFinishAndDotDestroy = false
 
-		arg_4_0:setFinishAndDotDestroy()
+		self:setFinishAndDotDestroy()
 	end
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0.delayFinish, arg_5_0)
-	var_0_0.super.onDestroy(arg_5_0)
+function HeroInvitationDungeonMapElement:onDestroy()
+	TaskDispatcher.cancelTask(self.delayFinish, self)
+	HeroInvitationDungeonMapElement.super.onDestroy(self)
 end
 
-return var_0_0
+return HeroInvitationDungeonMapElement

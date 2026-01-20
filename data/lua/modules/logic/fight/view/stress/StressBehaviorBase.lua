@@ -1,60 +1,63 @@
-﻿module("modules.logic.fight.view.stress.StressBehaviorBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/stress/StressBehaviorBase.lua
 
-local var_0_0 = class("StressBehaviorBase", UserDataDispose)
+module("modules.logic.fight.view.stress.StressBehaviorBase", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local StressBehaviorBase = class("StressBehaviorBase", UserDataDispose)
 
-	arg_1_0.instanceGo = arg_1_1
-	arg_1_0.entity = arg_1_2
-	arg_1_0.entityId = arg_1_0.entity.id
-	arg_1_0.monsterId = arg_1_0.entity:getMO().modelId
+function StressBehaviorBase:init(go, entity)
+	self:__onInit()
 
-	arg_1_0:initUI()
-	arg_1_0:refreshUI()
-	arg_1_0:addCustomEvent()
+	self.instanceGo = go
+	self.entity = entity
+	self.entityId = self.entity.id
+	self.monsterId = self.entity:getMO().modelId
+
+	self:initUI()
+	self:refreshUI()
+	self:addCustomEvent()
 end
 
-function var_0_0.initUI(arg_2_0)
+function StressBehaviorBase:initUI()
 	return
 end
 
-function var_0_0.refreshUI(arg_3_0)
+function StressBehaviorBase:refreshUI()
 	return
 end
 
-function var_0_0.addCustomEvent(arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_4_0.onPowerChange, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.TriggerStressBehaviour, arg_4_0.triggerStressBehaviour, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_4_0.onStageChange, arg_4_0)
+function StressBehaviorBase:addCustomEvent()
+	self:addEventCb(FightController.instance, FightEvent.PowerChange, self.onPowerChange, self)
+	self:addEventCb(FightController.instance, FightEvent.TriggerStressBehaviour, self.triggerStressBehaviour, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
 end
 
-function var_0_0.onStageChange(arg_5_0)
+function StressBehaviorBase:onStageChange()
 	ViewMgr.instance:closeView(ViewName.StressTipView)
 end
 
-function var_0_0.onPowerChange(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+function StressBehaviorBase:onPowerChange(entityId, powerId, oldNum, newNum)
 	return
 end
 
-function var_0_0.triggerStressBehaviour(arg_7_0, arg_7_1, arg_7_2)
+function StressBehaviorBase:triggerStressBehaviour(entityId, behavior)
 	return
 end
 
-function var_0_0.getCurStress(arg_8_0)
-	local var_8_0 = arg_8_0.entity:getMO():getPowerInfo(FightEnum.PowerType.Stress)
+function StressBehaviorBase:getCurStress()
+	local entityMo = self.entity:getMO()
+	local data = entityMo:getPowerInfo(FightEnum.PowerType.Stress)
 
-	return var_8_0 and var_8_0.num or 0
+	return data and data.num or 0
 end
 
-function FightNameUIStressMgr.log(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0.entity:getMO()
+function FightNameUIStressMgr:log(text)
+	local entityMo = self.entity:getMO()
 
-	logError(string.format("[%s] : %s", var_9_0:getEntityName(), arg_9_1))
+	logError(string.format("[%s] : %s", entityMo:getEntityName(), text))
 end
 
-function var_0_0.beforeDestroy(arg_10_0)
-	arg_10_0:__onDispose()
+function StressBehaviorBase:beforeDestroy()
+	self:__onDispose()
 end
 
-return var_0_0
+return StressBehaviorBase

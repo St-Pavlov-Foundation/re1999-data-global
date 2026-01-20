@@ -1,218 +1,225 @@
-﻿module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_ScheduleView", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v1a6/taskachievement/V1a6_BossRush_ScheduleView.lua
 
-local var_0_0 = class("V1a6_BossRush_ScheduleView", BaseView)
+module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_ScheduleView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtTotalScore = gohelper.findChildText(arg_1_0.viewGO, "Left/Total/#txt_TotalScore")
-	arg_1_0._goSlider = gohelper.findChild(arg_1_0.viewGO, "Left/Slider/#go_Slider")
-	arg_1_0._scrollprogress = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/Slider/#go_Slider/#scroll_progress")
-	arg_1_0._imageSliderBG = gohelper.findChildImage(arg_1_0.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG")
-	arg_1_0._imageSliderFG1 = gohelper.findChildImage(arg_1_0.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1")
-	arg_1_0._imageSliderFG2 = gohelper.findChildImage(arg_1_0.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1/#image_SliderFG2")
-	arg_1_0._goprefabInst = gohelper.findChild(arg_1_0.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#go_prefabInst")
-	arg_1_0._scrollScoreList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#scroll_ScoreList")
-	arg_1_0._goRight = gohelper.findChild(arg_1_0.viewGO, "Right")
-	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local V1a6_BossRush_ScheduleView = class("V1a6_BossRush_ScheduleView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_BossRush_ScheduleView:onInitView()
+	self._txtTotalScore = gohelper.findChildText(self.viewGO, "Left/Total/#txt_TotalScore")
+	self._goSlider = gohelper.findChild(self.viewGO, "Left/Slider/#go_Slider")
+	self._scrollprogress = gohelper.findChildScrollRect(self.viewGO, "Left/Slider/#go_Slider/#scroll_progress")
+	self._imageSliderBG = gohelper.findChildImage(self.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG")
+	self._imageSliderFG1 = gohelper.findChildImage(self.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1")
+	self._imageSliderFG2 = gohelper.findChildImage(self.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#image_SliderBG/#image_SliderFG1/#image_SliderFG2")
+	self._goprefabInst = gohelper.findChild(self.viewGO, "Left/Slider/#go_Slider/#scroll_progress/viewport/content/#go_prefabInst")
+	self._scrollScoreList = gohelper.findChildScrollRect(self.viewGO, "Right/#scroll_ScoreList")
+	self._goRight = gohelper.findChild(self.viewGO, "Right")
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(BossRushController.instance, BossRushEvent.OnReceiveGet128SingleRewardReply, arg_2_0._refresh, arg_2_0)
-	arg_2_0:addEventCb(BossRushController.instance, BossRushEvent.OnReceiveAct128GetTotalRewardsReply, arg_2_0._refresh, arg_2_0)
+function V1a6_BossRush_ScheduleView:addEvents()
+	self:addEventCb(BossRushController.instance, BossRushEvent.OnReceiveGet128SingleRewardReply, self._refresh, self)
+	self:addEventCb(BossRushController.instance, BossRushEvent.OnReceiveAct128GetTotalRewardsReply, self._refresh, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(BossRushController.instance, BossRushEvent.OnReceiveGet128SingleRewardReply, arg_3_0._refresh, arg_3_0)
-	arg_3_0:removeEventCb(BossRushController.instance, BossRushEvent.OnReceiveAct128GetTotalRewardsReply, arg_3_0._refresh, arg_3_0)
+function V1a6_BossRush_ScheduleView:removeEvents()
+	self:removeEventCb(BossRushController.instance, BossRushEvent.OnReceiveGet128SingleRewardReply, self._refresh, self)
+	self:removeEventCb(BossRushController.instance, BossRushEvent.OnReceiveAct128GetTotalRewardsReply, self._refresh, self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0.scoreList = arg_4_0:getUserDataTb_()
+function V1a6_BossRush_ScheduleView:_editableInitView()
+	self.scoreList = self:getUserDataTb_()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function V1a6_BossRush_ScheduleView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.stage = arg_6_0.viewParam.stage
+function V1a6_BossRush_ScheduleView:onOpen()
+	self.stage = self.viewParam.stage
 
-	gohelper.setActive(arg_6_0._goRight, true)
-	arg_6_0:_refresh()
-	gohelper.setActive(arg_6_0._gostatus, false)
-	arg_6_0:playAnim(BossRushEnum.V1a6_BonusViewAnimName.In)
+	gohelper.setActive(self._goRight, true)
+	self:_refresh()
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
+	gohelper.setActive(self._gostatus, false)
+	self:playAnim(BossRushEnum.V1a6_BonusViewAnimName.In)
 
-	arg_6_0._scrollScoreList.verticalNormalizedPosition = 1
+	self._scrollScoreList.verticalNormalizedPosition = 1
 end
 
-function var_0_0.onClose(arg_7_0)
-	gohelper.setActive(arg_7_0._goRight, false)
-	arg_7_0:playAnim(BossRushEnum.V1a6_BonusViewAnimName.Out)
-	arg_7_0:_clearKillTween()
+function V1a6_BossRush_ScheduleView:onClose()
+	gohelper.setActive(self._goRight, false)
+	self:playAnim(BossRushEnum.V1a6_BonusViewAnimName.Out)
+	self:_clearKillTween()
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function V1a6_BossRush_ScheduleView:onDestroyView()
 	return
 end
 
-function var_0_0.refreshScore(arg_9_0)
-	local var_9_0 = BossRushModel.instance:getLastPointInfo(arg_9_0.stage)
-	local var_9_1 = var_9_0.cur
-	local var_9_2 = var_9_0.max
-	local var_9_3 = Mathf.Min(var_9_1, var_9_2)
-	local var_9_4 = {
-		curNum = var_9_3,
-		maxNum = var_9_2
+function V1a6_BossRush_ScheduleView:refreshScore()
+	local lastPointInfo = BossRushModel.instance:getLastPointInfo(self.stage)
+	local curNum, maxNum = lastPointInfo.cur, lastPointInfo.max
+
+	curNum = Mathf.Min(curNum, maxNum)
+
+	local param1 = {
+		curNum = curNum,
+		maxNum = maxNum
 	}
 
-	arg_9_0._tweenTime = 1.5
+	self._tweenTime = 1.5
 
-	local var_9_5, var_9_6 = arg_9_0:_getPrefsSchedule(arg_9_0.stage)
+	local lastscore, lastwidth = self:_getPrefsSchedule(self.stage)
+	local isChage1 = lastscore < curNum
 
-	if var_9_5 < var_9_3 then
-		arg_9_0:_refreshNumTxt(var_9_5, var_9_2)
+	if isChage1 then
+		self:_refreshNumTxt(lastscore, maxNum)
 
-		arg_9_0._tweenNumId = ZProj.TweenHelper.DOTweenFloat(0, var_9_3, arg_9_0._tweenTime, arg_9_0._onTweenNumUpdate, nil, arg_9_0, var_9_4, EaseType.OutQuad)
+		self._tweenNumId = ZProj.TweenHelper.DOTweenFloat(0, curNum, self._tweenTime, self._onTweenNumUpdate, nil, self, param1, EaseType.OutQuad)
 	else
-		arg_9_0:_refreshNumTxt(var_9_3, var_9_2)
+		self:_refreshNumTxt(curNum, maxNum)
 	end
 
-	arg_9_0._goContent = arg_9_0._scrollprogress.content
+	self._goContent = self._scrollprogress.content
 
-	local var_9_7 = arg_9_0._goContent.gameObject:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	local var_9_8 = arg_9_0._goprefabInst.transform.rect.width
-	local var_9_9 = var_9_7.spacing + var_9_8
-	local var_9_10 = 30 + var_9_8 * 0.5
-	local var_9_11, var_9_12 = V1a6_BossRush_BonusModel.instance:getScheduleProgressWidth(arg_9_0.stage, var_9_9, var_9_10)
-	local var_9_13 = {
-		grayWidth = var_9_11,
-		gotWidth = var_9_12
+	local layout = self._goContent.gameObject:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	local cellWidth = self._goprefabInst.transform.rect.width
+	local spacing = layout.spacing + cellWidth
+	local offset = 30 + cellWidth * 0.5
+	local grayWidth, gotWidth = V1a6_BossRush_BonusModel.instance:getScheduleProgressWidth(self.stage, spacing, offset)
+	local param = {
+		grayWidth = grayWidth,
+		gotWidth = gotWidth
 	}
 
-	recthelper.setWidth(arg_9_0._imageSliderBG.transform, var_9_11)
+	recthelper.setWidth(self._imageSliderBG.transform, grayWidth)
 
-	if var_9_6 < var_9_12 then
-		arg_9_0:_refrehSlider(var_9_6, var_9_11, var_9_12)
+	local isChage2 = lastwidth < gotWidth
 
-		arg_9_0._tweenSliderId = ZProj.TweenHelper.DOTweenFloat(var_9_6, var_9_12, arg_9_0._tweenTime, arg_9_0._onTweenSliderUpdate, nil, arg_9_0, var_9_13, EaseType.Linear)
+	if isChage2 then
+		self:_refrehSlider(lastwidth, grayWidth, gotWidth)
+
+		self._tweenSliderId = ZProj.TweenHelper.DOTweenFloat(lastwidth, gotWidth, self._tweenTime, self._onTweenSliderUpdate, nil, self, param, EaseType.Linear)
 	else
-		arg_9_0:_refrehSlider(var_9_12, var_9_11, var_9_12)
+		self:_refrehSlider(gotWidth, grayWidth, gotWidth)
 	end
 
-	arg_9_0:_setPrefsSchedule(arg_9_0.stage, var_9_3, var_9_12)
+	self:_setPrefsSchedule(self.stage, curNum, gotWidth)
 end
 
-function var_0_0._onTweenNumUpdate(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0:_refreshNumTxt(arg_10_1, arg_10_2.maxNum)
+function V1a6_BossRush_ScheduleView:_onTweenNumUpdate(value, param)
+	self:_refreshNumTxt(value, param.maxNum)
 end
 
-function var_0_0._onTweenSliderUpdate(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0:_refrehSlider(arg_11_1, arg_11_2.grayWidth, arg_11_2.gotWidth)
+function V1a6_BossRush_ScheduleView:_onTweenSliderUpdate(value, param)
+	self:_refrehSlider(value, param.grayWidth, param.gotWidth)
 end
 
-function var_0_0._clearKillTween(arg_12_0)
-	if arg_12_0._tweenSliderId then
-		ZProj.TweenHelper.KillById(arg_12_0._tweenSliderId)
+function V1a6_BossRush_ScheduleView:_clearKillTween()
+	if self._tweenSliderId then
+		ZProj.TweenHelper.KillById(self._tweenSliderId)
 
-		arg_12_0._tweenSliderId = nil
+		self._tweenSliderId = nil
 	end
 
-	if arg_12_0._tweenNumId then
-		ZProj.TweenHelper.KillById(arg_12_0._tweenNumId)
+	if self._tweenNumId then
+		ZProj.TweenHelper.KillById(self._tweenNumId)
 
-		arg_12_0._tweenNumId = nil
-	end
-end
-
-function var_0_0._refreshNumTxt(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0._txtTotalScore then
-		arg_13_1 = Mathf.Ceil(arg_13_1)
-		arg_13_0._txtTotalScore.text = string.format("<color=#ff8640><size=50>%s</size></color>/%s", arg_13_1, arg_13_2)
+		self._tweenNumId = nil
 	end
 end
 
-function var_0_0._refrehSlider(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if arg_14_0._imageSliderFG1 then
-		recthelper.setWidth(arg_14_0._imageSliderFG1.transform, arg_14_1)
-		recthelper.setWidth(arg_14_0._imageSliderFG2.transform, arg_14_3 - arg_14_1)
-	end
-
-	if arg_14_0._scrollprogress then
-		local var_14_0 = arg_14_2 and arg_14_2 > 0 and arg_14_1 / arg_14_2 or 0
-
-		arg_14_0._scrollprogress.horizontalNormalizedPosition = var_14_0
+function V1a6_BossRush_ScheduleView:_refreshNumTxt(cur, max)
+	if self._txtTotalScore then
+		cur = Mathf.Ceil(cur)
+		self._txtTotalScore.text = string.format("<color=#ff8640><size=50>%s</size></color>/%s", cur, max)
 	end
 end
 
-function var_0_0.refreshScoreItem(arg_15_0)
-	local var_15_0 = BossRushModel.instance:getScheduleViewRewardList(arg_15_0.stage)
-	local var_15_1 = BossRushModel.instance:getLastPointInfo(arg_15_0.stage).cur
+function V1a6_BossRush_ScheduleView:_refrehSlider(width, gray, got)
+	if self._imageSliderFG1 then
+		recthelper.setWidth(self._imageSliderFG1.transform, width)
+		recthelper.setWidth(self._imageSliderFG2.transform, got - width)
+	end
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		local var_15_2 = iter_15_1.stageRewardCO
+	if self._scrollprogress then
+		local normalized = gray and gray > 0 and width / gray or 0
 
-		if var_15_2 then
-			local var_15_3 = arg_15_0.scoreList[iter_15_0]
-			local var_15_4 = var_15_2.rewardPointNum
+		self._scrollprogress.horizontalNormalizedPosition = normalized
+	end
+end
 
-			if not var_15_3 then
-				var_15_3 = {
-					go = gohelper.cloneInPlace(arg_15_0._goprefabInst, "scoreitem_" .. iter_15_0)
+function V1a6_BossRush_ScheduleView:refreshScoreItem()
+	local dataList = BossRushModel.instance:getScheduleViewRewardList(self.stage)
+	local lastPointInfo = BossRushModel.instance:getLastPointInfo(self.stage)
+	local cur = lastPointInfo.cur
+
+	for i, data in pairs(dataList) do
+		local co = data.stageRewardCO
+
+		if co then
+			local item = self.scoreList[i]
+			local num = co.rewardPointNum
+
+			if not item then
+				item = {
+					go = gohelper.cloneInPlace(self._goprefabInst, "scoreitem_" .. i)
 				}
-				var_15_3.img = var_15_3.go:GetComponent(gohelper.Type_Image)
-				var_15_3.txt = gohelper.findChildText(var_15_3.go, "txt_Score")
-				arg_15_0.scoreList[iter_15_0] = var_15_3
+				item.img = item.go:GetComponent(gohelper.Type_Image)
+				item.txt = gohelper.findChildText(item.go, "txt_Score")
+				self.scoreList[i] = item
 			end
 
-			gohelper.setActive(var_15_3.go.gameObject, true)
+			gohelper.setActive(item.go.gameObject, true)
 
-			var_15_3.txt.text = var_15_4
+			item.txt.text = num
 
-			local var_15_5 = var_15_2.display > 0
-			local var_15_6 = var_15_4 <= var_15_1
+			local isDisplay = co.display > 0
+			local isAlready = num <= cur
 
-			UISpriteSetMgr.instance:setV1a4BossRushSprite(var_15_3.img, BossRushConfig.instance:getRewardStatusSpriteName(var_15_5, var_15_6))
+			UISpriteSetMgr.instance:setV1a4BossRushSprite(item.img, BossRushConfig.instance:getRewardStatusSpriteName(isDisplay, isAlready))
 		end
 	end
 end
 
-function var_0_0._refresh(arg_16_0)
-	arg_16_0:_refreshRight()
-	arg_16_0:refreshScoreItem()
-	arg_16_0:refreshScore()
+function V1a6_BossRush_ScheduleView:_refresh()
+	self:_refreshRight()
+	self:refreshScoreItem()
+	self:refreshScore()
 end
 
-function var_0_0._refreshRight(arg_17_0)
-	V1a6_BossRush_BonusModel.instance:selectScheduleTab(arg_17_0.stage)
+function V1a6_BossRush_ScheduleView:_refreshRight()
+	V1a6_BossRush_BonusModel.instance:selectScheduleTab(self.stage)
 end
 
-function var_0_0.playAnim(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if arg_18_0._animatorPlayer then
-		arg_18_0._animatorPlayer:Play(arg_18_1, arg_18_2, arg_18_3)
+function V1a6_BossRush_ScheduleView:playAnim(name, callback, callbackobj)
+	if self._animatorPlayer then
+		self._animatorPlayer:Play(name, callback, callbackobj)
 	end
 end
 
-function var_0_0._getPrefsSchedule(arg_19_0, arg_19_1)
-	local var_19_0 = GameUtil.playerPrefsGetStringByUserId(arg_19_0:_getPrefsKey(arg_19_1), "0|0")
-	local var_19_1 = string.split(var_19_0, "|")
-	local var_19_2 = tonumber(var_19_1[1])
-	local var_19_3 = tonumber(var_19_1[2])
+function V1a6_BossRush_ScheduleView:_getPrefsSchedule(stage)
+	local prefs = GameUtil.playerPrefsGetStringByUserId(self:_getPrefsKey(stage), "0|0")
+	local split = string.split(prefs, "|")
+	local score, width = tonumber(split[1]), tonumber(split[2])
 
-	return var_19_2, var_19_3
+	return score, width
 end
 
-function var_0_0._setPrefsSchedule(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	GameUtil.playerPrefsSetStringByUserId(arg_20_0:_getPrefsKey(arg_20_1), string.format("%s|%s", arg_20_2, arg_20_3))
+function V1a6_BossRush_ScheduleView:_setPrefsSchedule(stage, score, width)
+	GameUtil.playerPrefsSetStringByUserId(self:_getPrefsKey(stage), string.format("%s|%s", score, width))
 end
 
-function var_0_0._getPrefsKey(arg_21_0, arg_21_1)
-	local var_21_0 = BossRushConfig.instance:getActivityId()
+function V1a6_BossRush_ScheduleView:_getPrefsKey(stage)
+	local actId = BossRushConfig.instance:getActivityId()
 
-	return "V1a6_BossRush_ScheduleView_Schedule_" .. var_21_0 .. "_" .. arg_21_1
+	return "V1a6_BossRush_ScheduleView_Schedule_" .. actId .. "_" .. stage
 end
 
-return var_0_0
+return V1a6_BossRush_ScheduleView

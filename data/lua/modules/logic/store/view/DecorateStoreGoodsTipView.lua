@@ -1,36 +1,38 @@
-﻿module("modules.logic.store.view.DecorateStoreGoodsTipView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/DecorateStoreGoodsTipView.lua
 
-local var_0_0 = class("DecorateStoreGoodsTipView", RoomMaterialTipView)
+module("modules.logic.store.view.DecorateStoreGoodsTipView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local DecorateStoreGoodsTipView = class("DecorateStoreGoodsTipView", RoomMaterialTipView)
 
-	arg_1_0._simagetheme = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/iconmask/simage_theme")
-	arg_1_0._goitemContent = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/go_itemContent")
-	arg_1_0._simageinfobg = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/simage_infobg")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc/txt_name")
-	arg_1_0._goslider = gohelper.findChild(arg_1_0.viewGO, "left/banner/#go_slider")
+function DecorateStoreGoodsTipView:_editableInitView()
+	DecorateStoreGoodsTipView.super._editableInitView(self)
+
+	self._simagetheme = gohelper.findChildSingleImage(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/iconmask/simage_theme")
+	self._goitemContent = gohelper.findChildSingleImage(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/go_itemContent")
+	self._simageinfobg = gohelper.findChildSingleImage(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/simage_infobg")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc")
+	self._txtname = gohelper.findChildText(self.viewGO, "left/banner/#go_bannerContent/#go_roominfoItem/txt_desc/txt_name")
+	self._goslider = gohelper.findChild(self.viewGO, "left/banner/#go_slider")
 end
 
-function var_0_0._refreshUI(arg_2_0)
-	var_0_0.super._refreshUI(arg_2_0)
-	gohelper.setActive(arg_2_0._goitemContent.gameObject, false)
-	gohelper.setActive(arg_2_0._goslider.gameObject, false)
-	arg_2_0._simagetheme:LoadImage(ResUrl.getDecorateStoreBuyBannerFullPath(arg_2_0._config.id), function()
-		ZProj.UGUIHelper.SetImageSize(arg_2_0._simagetheme.gameObject)
-	end, arg_2_0)
+function DecorateStoreGoodsTipView:_refreshUI()
+	DecorateStoreGoodsTipView.super._refreshUI(self)
+	gohelper.setActive(self._goitemContent.gameObject, false)
+	gohelper.setActive(self._goslider.gameObject, false)
+	self._simagetheme:LoadImage(ResUrl.getDecorateStoreBuyBannerFullPath(self._config.id), function()
+		ZProj.UGUIHelper.SetImageSize(self._simagetheme.gameObject)
+	end, self)
 
-	arg_2_0._txtdesc.text = arg_2_0._config.desc
-	arg_2_0._txtname.text = arg_2_0._config.name
+	self._txtdesc.text = self._config.desc
+	self._txtname.text = self._config.name
 
-	arg_2_0._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
+	self._simageinfobg:LoadImage(ResUrl.getRoomImage("bg_zhezhao_yinying"))
 end
 
-function var_0_0.onDestroyView(arg_4_0)
-	var_0_0.super.onDestroyView(arg_4_0)
-	arg_4_0._simagetheme:UnLoadImage()
-	arg_4_0._simageinfobg:UnLoadImage()
+function DecorateStoreGoodsTipView:onDestroyView()
+	DecorateStoreGoodsTipView.super.onDestroyView(self)
+	self._simagetheme:UnLoadImage()
+	self._simageinfobg:UnLoadImage()
 end
 
-return var_0_0
+return DecorateStoreGoodsTipView

@@ -1,84 +1,90 @@
-﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0HeroGroupQuickEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_0/Season123_2_0HeroGroupQuickEditItem.lua
 
-local var_0_0 = class("Season123_2_0HeroGroupQuickEditItem", Season123_2_0HeroGroupEditItem)
+module("modules.logic.seasonver.act123.view2_0.Season123_2_0HeroGroupQuickEditItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Season123_2_0HeroGroupQuickEditItem = class("Season123_2_0HeroGroupQuickEditItem", Season123_2_0HeroGroupEditItem)
 
-	arg_1_0._imageorder = gohelper.findChildImage(arg_1_1, "#go_orderbg/#image_order")
-	arg_1_0._goorderbg = gohelper.findChild(arg_1_1, "#go_orderbg")
-	arg_1_0._gohp = gohelper.findChild(arg_1_1, "#go_hp")
-	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_1, "#go_hp/#slider_hp")
-	arg_1_0._imagehp = gohelper.findChildImage(arg_1_1, "#go_hp/#slider_hp/Fill Area/Fill")
-	arg_1_0._godead = gohelper.findChild(arg_1_1, "#go_dead")
+function Season123_2_0HeroGroupQuickEditItem:init(go)
+	Season123_2_0HeroGroupQuickEditItem.super.init(self, go)
 
-	arg_1_0:enableDeselect(false)
-	arg_1_0._heroItem:setNewShow(false)
-	gohelper.setActive(arg_1_0._goorderbg, false)
+	self._imageorder = gohelper.findChildImage(go, "#go_orderbg/#image_order")
+	self._goorderbg = gohelper.findChild(go, "#go_orderbg")
+	self._gohp = gohelper.findChild(go, "#go_hp")
+	self._sliderhp = gohelper.findChildSlider(go, "#go_hp/#slider_hp")
+	self._imagehp = gohelper.findChildImage(go, "#go_hp/#slider_hp/Fill Area/Fill")
+	self._godead = gohelper.findChild(go, "#go_dead")
+
+	self:enableDeselect(false)
+	self._heroItem:setNewShow(false)
+	gohelper.setActive(self._goorderbg, false)
 end
 
-function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
-	arg_2_0._mo = arg_2_1
+function Season123_2_0HeroGroupQuickEditItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_2_0._heroItem:onUpdateMO(arg_2_1)
-	arg_2_0._heroItem:setNewShow(false)
-	arg_2_0:updateLimitStatus()
+	self._heroItem:onUpdateMO(mo)
+	self._heroItem:setNewShow(false)
+	self:updateLimitStatus()
 
-	local var_2_0 = Season123HeroGroupQuickEditModel.instance:getHeroTeamPos(arg_2_0._mo.uid)
+	local index = Season123HeroGroupQuickEditModel.instance:getHeroTeamPos(self._mo.uid)
 
-	arg_2_0._team_pos_index = var_2_0
+	self._team_pos_index = index
 
-	if var_2_0 ~= 0 then
-		if not arg_2_0._open_ani_finish then
-			TaskDispatcher.runDelay(arg_2_0._show_goorderbg, arg_2_0, 0.3)
+	if index ~= 0 then
+		if not self._open_ani_finish then
+			TaskDispatcher.runDelay(self._show_goorderbg, self, 0.3)
 		else
-			arg_2_0:_show_goorderbg()
+			self:_show_goorderbg()
 		end
 	else
-		gohelper.setActive(arg_2_0._goorderbg, false)
+		gohelper.setActive(self._goorderbg, false)
 	end
 
-	arg_2_0._open_ani_finish = true
+	self._open_ani_finish = true
 
-	arg_2_0:refreshHp()
-	arg_2_0:refreshDead()
+	self:refreshHp()
+	self:refreshDead()
 end
 
-function var_0_0._show_goorderbg(arg_3_0)
-	gohelper.setActive(arg_3_0._goorderbg, true)
-	UISpriteSetMgr.instance:setHeroGroupSprite(arg_3_0._imageorder, "biandui_shuzi_" .. arg_3_0._team_pos_index)
+function Season123_2_0HeroGroupQuickEditItem:_show_goorderbg()
+	gohelper.setActive(self._goorderbg, true)
+	UISpriteSetMgr.instance:setHeroGroupSprite(self._imageorder, "biandui_shuzi_" .. self._team_pos_index)
 end
 
-function var_0_0._onItemClick(arg_4_0)
+function Season123_2_0HeroGroupQuickEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_4_0:checkRestrict(arg_4_0._mo.uid) or arg_4_0:checkHpZero(arg_4_0._mo.uid) then
+	if self:checkRestrict(self._mo.uid) or self:checkHpZero(self._mo.uid) then
 		return
 	end
 
-	if arg_4_0._mo and not Season123HeroGroupQuickEditModel.instance:selectHero(arg_4_0._mo.uid) then
-		return
+	if self._mo then
+		local result = Season123HeroGroupQuickEditModel.instance:selectHero(self._mo.uid)
+
+		if not result then
+			return
+		end
 	end
 
-	if arg_4_0._isSelect and arg_4_0._enableDeselect then
-		arg_4_0._view:selectCell(arg_4_0._index, false)
+	if self._isSelect and self._enableDeselect then
+		self._view:selectCell(self._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		arg_4_0._view:selectCell(arg_4_0._index, true)
+		self._view:selectCell(self._index, true)
 	end
 end
 
-function var_0_0.onSelect(arg_5_0, arg_5_1)
-	arg_5_0._isSelect = arg_5_1
+function Season123_2_0HeroGroupQuickEditItem:onSelect(select)
+	self._isSelect = select
 
-	if arg_5_1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_5_0._mo)
+	if select then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, self._mo)
 	end
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._show_goorderbg, arg_6_0)
-	var_0_0.super.onDestroy(arg_6_0)
+function Season123_2_0HeroGroupQuickEditItem:onDestroy()
+	TaskDispatcher.cancelTask(self._show_goorderbg, self)
+	Season123_2_0HeroGroupQuickEditItem.super.onDestroy(self)
 end
 
-return var_0_0
+return Season123_2_0HeroGroupQuickEditItem

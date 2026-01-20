@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkRougePowerChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkRougePowerChange.lua
 
-local var_0_0 = class("FightWorkRougePowerChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkRougePowerChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.Magic)
+local FightWorkRougePowerChange = class("FightWorkRougePowerChange", FightEffectBase)
 
-	FightModel.instance:setRougeExData(FightEnum.ExIndexForRouge.Magic, var_1_0 + arg_1_0.actEffectData.effectNum)
+function FightWorkRougePowerChange:onStart()
+	local value = FightModel.instance:getRougeExData(FightEnum.ExIndexForRouge.Magic)
+
+	FightModel.instance:setRougeExData(FightEnum.ExIndexForRouge.Magic, value + self.actEffectData.effectNum)
 	FightController.instance:dispatchEvent(FightEvent.RougeMagicChange)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkRougePowerChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkRougePowerChange

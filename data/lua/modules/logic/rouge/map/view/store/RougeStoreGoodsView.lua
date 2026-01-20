@@ -1,164 +1,168 @@
-﻿module("modules.logic.rouge.map.view.store.RougeStoreGoodsView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/store/RougeStoreGoodsView.lua
 
-local var_0_0 = class("RougeStoreGoodsView", BaseView)
+module("modules.logic.rouge.map.view.store.RougeStoreGoodsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#image_icon")
-	arg_1_0._txtcollectionname = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_collectionname")
-	arg_1_0._scrollcollectiondesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_collectiondesc")
-	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_collectiondesc/Viewport/#go_descContent")
-	arg_1_0._goGrid = gohelper.findChild(arg_1_0.viewGO, "Left/#go_grid")
-	arg_1_0._goGridItem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_grid/#go_griditem")
-	arg_1_0._gotagitem = gohelper.findChild(arg_1_0.viewGO, "Left/tags/#go_tagitem")
-	arg_1_0._goshapecell = gohelper.findChild(arg_1_0.viewGO, "Left/shape/#go_shapecell")
-	arg_1_0._goholetool = gohelper.findChild(arg_1_0.viewGO, "Left/#go_holetool")
-	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_holetool/#go_holeitem")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "#btn_confirm/ani/#txt_cost")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "Left/#go_tips")
-	arg_1_0._gotagnameitem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_tips/#go_tagnameitem")
+local RougeStoreGoodsView = class("RougeStoreGoodsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeStoreGoodsView:onInitView()
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "Left/#image_icon")
+	self._txtcollectionname = gohelper.findChildText(self.viewGO, "Left/#txt_collectionname")
+	self._scrollcollectiondesc = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_collectiondesc")
+	self._godescContent = gohelper.findChild(self.viewGO, "Left/#scroll_collectiondesc/Viewport/#go_descContent")
+	self._goGrid = gohelper.findChild(self.viewGO, "Left/#go_grid")
+	self._goGridItem = gohelper.findChild(self.viewGO, "Left/#go_grid/#go_griditem")
+	self._gotagitem = gohelper.findChild(self.viewGO, "Left/tags/#go_tagitem")
+	self._goshapecell = gohelper.findChild(self.viewGO, "Left/shape/#go_shapecell")
+	self._goholetool = gohelper.findChild(self.viewGO, "Left/#go_holetool")
+	self._goholeitem = gohelper.findChild(self.viewGO, "Left/#go_holetool/#go_holeitem")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._txtcost = gohelper.findChildText(self.viewGO, "#btn_confirm/ani/#txt_cost")
+	self._gotips = gohelper.findChild(self.viewGO, "Left/#go_tips")
+	self._gotagnameitem = gohelper.findChild(self.viewGO, "Left/#go_tips/#go_tagnameitem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+function RougeStoreGoodsView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
+function RougeStoreGoodsView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	if arg_4_0.sellOut then
+function RougeStoreGoodsView:_btnconfirmOnClick()
+	if self.sellOut then
 		GameFacade.showToast(ToastEnum.RougeStoreSellOut)
 
 		return
 	end
 
-	if RougeModel.instance:getRougeInfo().coin < arg_4_0.price then
+	local rougeInfo = RougeModel.instance:getRougeInfo()
+
+	if rougeInfo.coin < self.price then
 		GameFacade.showToast(ToastEnum.RougeCoinNotEnough)
 
 		return
 	end
 
-	arg_4_0.callbackId = RougeRpc.instance:sendRougeBuyGoodsRequest(arg_4_0.eventId, arg_4_0.pos, arg_4_0.onReceiveMsg, arg_4_0)
+	self.callbackId = RougeRpc.instance:sendRougeBuyGoodsRequest(self.eventId, self.pos, self.onReceiveMsg, self)
 end
 
-function var_0_0.onReceiveMsg(arg_5_0)
-	arg_5_0.callbackId = nil
+function RougeStoreGoodsView:onReceiveMsg()
+	self.callbackId = nil
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBuyGoods, arg_5_0.pos)
-	arg_5_0:closeThis()
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBuyGoods, self.pos)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.setActive(arg_6_0._goholeitem, false)
+function RougeStoreGoodsView:_editableInitView()
+	gohelper.setActive(self._goholeitem, false)
 
-	arg_6_0.bgClick = gohelper.findChildClickWithDefaultAudio(arg_6_0.viewGO, "mask")
+	self.bgClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "mask")
 
-	arg_6_0.bgClick:AddClickListener(arg_6_0.closeThis, arg_6_0)
+	self.bgClick:AddClickListener(self.closeThis, self)
 
-	arg_6_0.gridList = arg_6_0:getUserDataTb_()
-	arg_6_0.tagGoList = arg_6_0:getUserDataTb_()
-	arg_6_0.goHoleList = arg_6_0:getUserDataTb_()
-	arg_6_0._itemInstTab = arg_6_0:getUserDataTb_()
-	arg_6_0.rectDesc = arg_6_0._scrollcollectiondesc:GetComponent(gohelper.Type_RectTransform)
-	arg_6_0.animator = arg_6_0.viewGO:GetComponent(gohelper.Type_Animator)
+	self.gridList = self:getUserDataTb_()
+	self.tagGoList = self:getUserDataTb_()
+	self.goHoleList = self:getUserDataTb_()
+	self._itemInstTab = self:getUserDataTb_()
+	self.rectDesc = self._scrollcollectiondesc:GetComponent(gohelper.Type_RectTransform)
+	self.animator = self.viewGO:GetComponent(gohelper.Type_Animator)
 
-	arg_6_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_6_0._onSwitchCollectionInfoType, arg_6_0)
+	self:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, self._onSwitchCollectionInfoType, self)
 end
 
-function var_0_0.initData(arg_7_0)
-	arg_7_0.collectionId = arg_7_0.viewParam.collectionId
-	arg_7_0.price = arg_7_0.viewParam.price
-	arg_7_0.collectionCo = RougeCollectionConfig.instance:getCollectionCfg(arg_7_0.collectionId)
-	arg_7_0.pos = arg_7_0.viewParam.pos
-	arg_7_0.eventMo = arg_7_0.viewParam.eventMo
-	arg_7_0.eventId = arg_7_0.eventMo.eventId
-	arg_7_0.sellOut = arg_7_0.eventMo:checkIsSellOut(arg_7_0.pos)
+function RougeStoreGoodsView:initData()
+	self.collectionId = self.viewParam.collectionId
+	self.price = self.viewParam.price
+	self.collectionCo = RougeCollectionConfig.instance:getCollectionCfg(self.collectionId)
+	self.pos = self.viewParam.pos
+	self.eventMo = self.viewParam.eventMo
+	self.eventId = self.eventMo.eventId
+	self.sellOut = self.eventMo:checkIsSellOut(self.pos)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
-	arg_8_0:initData()
-	arg_8_0:refreshUI()
-	arg_8_0.animator:Play("open", 0, 0)
+function RougeStoreGoodsView:onUpdateParam()
+	self:initData()
+	self:refreshUI()
+	self.animator:Play("open", 0, 0)
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0.animator:Play("open", 0, 0)
-	arg_9_0:initData()
-	arg_9_0:refreshUI()
+function RougeStoreGoodsView:onOpen()
+	self.animator:Play("open", 0, 0)
+	self:initData()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	arg_10_0:refreshCollection()
-	arg_10_0:refreshCost()
+function RougeStoreGoodsView:refreshUI()
+	self:refreshCollection()
+	self:refreshCost()
 end
 
-function var_0_0.refreshCollection(arg_11_0)
-	local var_11_0 = arg_11_0.collectionId
+function RougeStoreGoodsView:refreshCollection()
+	local collectionId = self.collectionId
 
-	arg_11_0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_11_0))
+	self._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(collectionId))
 
-	arg_11_0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(var_11_0)
+	self._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(collectionId)
 
-	RougeCollectionHelper.loadShapeGrid(var_11_0, arg_11_0._goGrid, arg_11_0._goGridItem, arg_11_0.gridList, false)
-	arg_11_0:refreshDesc()
-	arg_11_0:refreshHole()
-	arg_11_0:refreshTag()
+	RougeCollectionHelper.loadShapeGrid(collectionId, self._goGrid, self._goGridItem, self.gridList, false)
+	self:refreshDesc()
+	self:refreshHole()
+	self:refreshTag()
 end
 
-function var_0_0.refreshDesc(arg_12_0)
-	RougeCollectionDescHelper.setCollectionDescInfos2(arg_12_0.collectionId, nil, arg_12_0._godescContent, arg_12_0._itemInstTab)
+function RougeStoreGoodsView:refreshDesc()
+	RougeCollectionDescHelper.setCollectionDescInfos2(self.collectionId, nil, self._godescContent, self._itemInstTab)
 end
 
-function var_0_0.refreshHole(arg_13_0)
-	local var_13_0 = arg_13_0.collectionCo.holeNum
+function RougeStoreGoodsView:refreshHole()
+	local holeNum = self.collectionCo.holeNum
 
-	gohelper.setActive(arg_13_0._goholetool, var_13_0 > 0)
+	gohelper.setActive(self._goholetool, holeNum > 0)
 
-	if var_13_0 > 0 then
-		recthelper.setHeight(arg_13_0.rectDesc, RougeMapEnum.StoreGoodsDescHeight.WithHole)
-		RougeMapHelper.loadGoItem(arg_13_0._goholeitem, var_13_0, arg_13_0.goHoleList)
+	if holeNum > 0 then
+		recthelper.setHeight(self.rectDesc, RougeMapEnum.StoreGoodsDescHeight.WithHole)
+		RougeMapHelper.loadGoItem(self._goholeitem, holeNum, self.goHoleList)
 	else
-		recthelper.setHeight(arg_13_0.rectDesc, RougeMapEnum.StoreGoodsDescHeight.NoHole)
+		recthelper.setHeight(self.rectDesc, RougeMapEnum.StoreGoodsDescHeight.NoHole)
 	end
 end
 
-function var_0_0.refreshTag(arg_14_0)
-	RougeCollectionHelper.loadTags(arg_14_0.collectionId, arg_14_0._gotagitem, arg_14_0.tagGoList)
-	RougeCollectionHelper.loadCollectionAndEnchantTagNames(arg_14_0.collectionId, nil, arg_14_0._gotips, arg_14_0._gotagnameitem, RougeCollectionHelper._loadCollectionTagNameCallBack)
+function RougeStoreGoodsView:refreshTag()
+	RougeCollectionHelper.loadTags(self.collectionId, self._gotagitem, self.tagGoList)
+	RougeCollectionHelper.loadCollectionAndEnchantTagNames(self.collectionId, nil, self._gotips, self._gotagnameitem, RougeCollectionHelper._loadCollectionTagNameCallBack)
 end
 
-function var_0_0.refreshCost(arg_15_0)
-	local var_15_0 = RougeModel.instance:getRougeInfo().coin
-	local var_15_1
+function RougeStoreGoodsView:refreshCost()
+	local curCoin = RougeModel.instance:getRougeInfo().coin
+	local coin
 
-	if var_15_0 < arg_15_0.price then
-		var_15_1 = string.format("<color=#EC6363>%s</color>", arg_15_0.price)
+	if curCoin < self.price then
+		coin = string.format("<color=#EC6363>%s</color>", self.price)
 	else
-		var_15_1 = arg_15_0.price
+		coin = self.price
 	end
 
-	arg_15_0._txtcost.text = var_15_1
+	self._txtcost.text = coin
 end
 
-function var_0_0._onSwitchCollectionInfoType(arg_16_0)
-	arg_16_0:refreshDesc()
+function RougeStoreGoodsView:_onSwitchCollectionInfoType()
+	self:refreshDesc()
 end
 
-function var_0_0.onClose(arg_17_0)
-	if arg_17_0.callbackId then
-		RougeRpc.instance:removeCallbackById(arg_17_0.callbackId)
+function RougeStoreGoodsView:onClose()
+	if self.callbackId then
+		RougeRpc.instance:removeCallbackById(self.callbackId)
 	end
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0._simageicon:UnLoadImage()
-	arg_18_0.bgClick:RemoveClickListener()
+function RougeStoreGoodsView:onDestroyView()
+	self._simageicon:UnLoadImage()
+	self.bgClick:RemoveClickListener()
 end
 
-return var_0_0
+return RougeStoreGoodsView

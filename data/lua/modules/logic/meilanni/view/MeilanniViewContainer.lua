@@ -1,30 +1,32 @@
-﻿module("modules.logic.meilanni.view.MeilanniViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniViewContainer.lua
 
-local var_0_0 = class("MeilanniViewContainer", BaseViewContainer)
+module("modules.logic.meilanni.view.MeilanniViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MeilanniViewContainer = class("MeilanniViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MeilanniView.New())
-	table.insert(var_1_0, MeilanniMap.New())
-	table.insert(var_1_0, MeilanniEventView.New())
-	table.insert(var_1_0, MeilanniDialogBtnView.New())
-	table.insert(var_1_0, MeilanniDialogView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+function MeilanniViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MeilanniView.New())
+	table.insert(views, MeilanniMap.New())
+	table.insert(views, MeilanniEventView.New())
+	table.insert(views, MeilanniDialogBtnView.New())
+	table.insert(views, MeilanniDialogView.New())
+	table.insert(views, TabViewGroup.New(1, "top_left"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function MeilanniViewContainer:buildTabViews(tabContainerId)
+	self._navigateButtonView = NavigateButtonsView.New({
 		true,
 		true,
 		true
 	}, HelpEnum.HelpId.VersionActivityMeiLanNi)
 
 	return {
-		arg_2_0._navigateButtonView
+		self._navigateButtonView
 	}
 end
 
-return var_0_0
+return MeilanniViewContainer

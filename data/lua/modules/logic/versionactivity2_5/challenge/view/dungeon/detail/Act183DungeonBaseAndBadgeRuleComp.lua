@@ -1,48 +1,50 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBaseAndBadgeRuleComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonBaseAndBadgeRuleComp.lua
 
-local var_0_0 = class("Act183DungeonBaseAndBadgeRuleComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonBaseAndBadgeRuleComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonBaseAndBadgeRuleComp = class("Act183DungeonBaseAndBadgeRuleComp", Act183DungeonBaseComp)
 
-	arg_1_0._gobadgerules = gohelper.findChild(arg_1_0.go, "#go_badgerules")
-	arg_1_0._gobaserules = gohelper.findChild(arg_1_0.go, "#go_baserules")
-	arg_1_0._badgeRuleComp = MonoHelper.addLuaComOnceToGo(arg_1_0._gobadgerules, Act183DungeonBadgeRuleComp)
-	arg_1_0._baseRuleComp = MonoHelper.addLuaComOnceToGo(arg_1_0._gobaserules, Act183DungeonBaseRuleComp)
-	arg_1_0._badgeRuleComp.container = arg_1_0
-	arg_1_0._baseRuleComp.container = arg_1_0
+function Act183DungeonBaseAndBadgeRuleComp:init(go)
+	Act183DungeonBaseAndBadgeRuleComp.super.init(self, go)
+
+	self._gobadgerules = gohelper.findChild(self.go, "#go_badgerules")
+	self._gobaserules = gohelper.findChild(self.go, "#go_baserules")
+	self._badgeRuleComp = MonoHelper.addLuaComOnceToGo(self._gobadgerules, Act183DungeonBadgeRuleComp)
+	self._baseRuleComp = MonoHelper.addLuaComOnceToGo(self._gobaserules, Act183DungeonBaseRuleComp)
+	self._badgeRuleComp.container = self
+	self._baseRuleComp.container = self
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function Act183DungeonBaseAndBadgeRuleComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function Act183DungeonBaseAndBadgeRuleComp:removeEventListeners()
 	return
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1)
-	var_0_0.super.updateInfo(arg_4_0, arg_4_1)
-	arg_4_0._badgeRuleComp:updateInfo(arg_4_1)
-	arg_4_0._baseRuleComp:updateInfo(arg_4_1)
+function Act183DungeonBaseAndBadgeRuleComp:updateInfo(episodeMo)
+	Act183DungeonBaseAndBadgeRuleComp.super.updateInfo(self, episodeMo)
+	self._badgeRuleComp:updateInfo(episodeMo)
+	self._baseRuleComp:updateInfo(episodeMo)
 end
 
-function var_0_0.refresh(arg_5_0)
-	var_0_0.super.refresh(arg_5_0)
-	arg_5_0._badgeRuleComp:refresh()
-	arg_5_0._baseRuleComp:refresh()
+function Act183DungeonBaseAndBadgeRuleComp:refresh()
+	Act183DungeonBaseAndBadgeRuleComp.super.refresh(self)
+	self._badgeRuleComp:refresh()
+	self._baseRuleComp:refresh()
 end
 
-function var_0_0.checkIsVisible(arg_6_0)
-	return arg_6_0._badgeRuleComp:checkIsVisible() or arg_6_0._baseRuleComp:checkIsVisible()
+function Act183DungeonBaseAndBadgeRuleComp:checkIsVisible()
+	return self._badgeRuleComp:checkIsVisible() or self._baseRuleComp:checkIsVisible()
 end
 
-function var_0_0.focus(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		return arg_7_0._badgeRuleComp:focus()
+function Act183DungeonBaseAndBadgeRuleComp:focus(isFocusBadgeRule)
+	if isFocusBadgeRule then
+		return self._badgeRuleComp:focus()
 	end
 
-	return arg_7_0._baseRuleComp:focus()
+	return self._baseRuleComp:focus()
 end
 
-return var_0_0
+return Act183DungeonBaseAndBadgeRuleComp

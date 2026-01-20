@@ -1,8 +1,10 @@
-﻿module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEvent", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/enterview/define/VersionActivityEnterViewEvent.lua
 
-local var_0_0 = _M
+module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEvent", package.seeall)
 
-var_0_0.SelectActId = 1
-var_0_0.DragOpenAct = 2
+local VersionActivityEnterViewEvent = _M
 
-return var_0_0
+VersionActivityEnterViewEvent.SelectActId = 1
+VersionActivityEnterViewEvent.DragOpenAct = 2
+
+return VersionActivityEnterViewEvent

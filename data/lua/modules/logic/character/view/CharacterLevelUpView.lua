@@ -1,880 +1,914 @@
-﻿module("modules.logic.character.view.CharacterLevelUpView", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterLevelUpView.lua
 
-local var_0_0 = class("CharacterLevelUpView", BaseView)
-local var_0_1 = 2
-local var_0_2 = 0.3
-local var_0_3 = 0.5
-local var_0_4 = 0.05
-local var_0_5 = 0.01
+module("modules.logic.character.view.CharacterLevelUpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._animGO = gohelper.findChild(arg_1_0.viewGO, "anim")
-	arg_1_0._anim = arg_1_0._animGO and arg_1_0._animGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._waveAnimation = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animation))
-	arg_1_0._lvCtrl = arg_1_0.viewGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	arg_1_0._goprevieweff = gohelper.findChild(arg_1_0.viewGO, "anim/lv/#lvimge_ffect")
-	arg_1_0._previewlvCtrl = arg_1_0._goprevieweff:GetComponent(typeof(ZProj.MaterialPropsCtrl))
-	arg_1_0._golv = gohelper.findChild(arg_1_0.viewGO, "anim/lv/#go_Lv")
-	arg_1_0._scrolllv = gohelper.findChildScrollRect(arg_1_0.viewGO, "anim/lv/#go_Lv/#scroll_Num")
-	arg_1_0._scrollrectlv = arg_1_0._scrolllv:GetComponent(typeof(UnityEngine.UI.ScrollRect))
-	arg_1_0._translvcontent = gohelper.findChild(arg_1_0.viewGO, "anim/lv/#go_Lv/#scroll_Num/Viewport/Content").transform
-	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "anim/lv/#go_Lv/Max")
-	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/lv/#go_Lv/Max")
-	arg_1_0._txtmax = gohelper.findChildText(arg_1_0.viewGO, "anim/lv/#go_Lv/Max/#txt_Num")
-	arg_1_0._gomaxlarrow = gohelper.findChild(arg_1_0.viewGO, "anim/lv/#go_Lv/Max/image_lArrow")
-	arg_1_0._gomaxrarrow = gohelper.findChild(arg_1_0.viewGO, "anim/lv/#go_Lv/Max/image_rArrow")
-	arg_1_0._scrolldrag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._scrolllv.gameObject)
-	arg_1_0._golvfull = gohelper.findChild(arg_1_0.viewGO, "anim/lv/#go_LvFull")
-	arg_1_0._txtfulllvnum = gohelper.findChildText(arg_1_0.viewGO, "anim/lv/#go_LvFull/#txt_LvNum")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "anim/#go_tips")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "anim/#go_righttop")
-	arg_1_0._btninsight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/#btn_insight")
-	arg_1_0._goupgrade = gohelper.findChild(arg_1_0.viewGO, "anim/#go_upgrade")
-	arg_1_0._goupgradetexten = gohelper.findChild(arg_1_0.viewGO, "anim/#go_upgrade/txten")
-	arg_1_0._btnuplevel = SLFramework.UGUI.UIClickListener.Get(arg_1_0._goupgrade)
-	arg_1_0._btnuplevellongpress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._goupgrade)
-	arg_1_0._golevelupbeffect = gohelper.findChild(arg_1_0.viewGO, "anim/#go_levelupbeffect")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gocharacterbg = gohelper.findChild(arg_1_0.viewGO, "anim/bg/#go_characterbg")
-	arg_1_0._goherogroupbg = gohelper.findChild(arg_1_0.viewGO, "anim/bg/#go_herogroupbg")
+local CharacterLevelUpView = class("CharacterLevelUpView", BaseView)
+local COST_ITEM_COUNT = 2
+local CLICK_LEVEL_TWEEN_TIME = 0.3
+local SELECT_NEAR_LEVEL_TWEEN_TIME = 0.5
+local LEVEL_UP_EFF_TIME = 0.05
+local NEXT_FRAME_TIME = 0.01
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterLevelUpView:onInitView()
+	self._animGO = gohelper.findChild(self.viewGO, "anim")
+	self._anim = self._animGO and self._animGO:GetComponent(typeof(UnityEngine.Animator))
+	self._waveAnimation = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
+	self._lvCtrl = self.viewGO:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self._goprevieweff = gohelper.findChild(self.viewGO, "anim/lv/#lvimge_ffect")
+	self._previewlvCtrl = self._goprevieweff:GetComponent(typeof(ZProj.MaterialPropsCtrl))
+	self._golv = gohelper.findChild(self.viewGO, "anim/lv/#go_Lv")
+	self._scrolllv = gohelper.findChildScrollRect(self.viewGO, "anim/lv/#go_Lv/#scroll_Num")
+	self._scrollrectlv = self._scrolllv:GetComponent(typeof(UnityEngine.UI.ScrollRect))
+
+	local golvcontent = gohelper.findChild(self.viewGO, "anim/lv/#go_Lv/#scroll_Num/Viewport/Content")
+
+	self._translvcontent = golvcontent.transform
+	self._gomax = gohelper.findChild(self.viewGO, "anim/lv/#go_Lv/Max")
+	self._btnmax = gohelper.findChildButtonWithAudio(self.viewGO, "anim/lv/#go_Lv/Max")
+	self._txtmax = gohelper.findChildText(self.viewGO, "anim/lv/#go_Lv/Max/#txt_Num")
+	self._gomaxlarrow = gohelper.findChild(self.viewGO, "anim/lv/#go_Lv/Max/image_lArrow")
+	self._gomaxrarrow = gohelper.findChild(self.viewGO, "anim/lv/#go_Lv/Max/image_rArrow")
+	self._scrolldrag = SLFramework.UGUI.UIDragListener.Get(self._scrolllv.gameObject)
+	self._golvfull = gohelper.findChild(self.viewGO, "anim/lv/#go_LvFull")
+	self._txtfulllvnum = gohelper.findChildText(self.viewGO, "anim/lv/#go_LvFull/#txt_LvNum")
+	self._gotips = gohelper.findChild(self.viewGO, "anim/#go_tips")
+	self._gorighttop = gohelper.findChild(self.viewGO, "anim/#go_righttop")
+	self._btninsight = gohelper.findChildButtonWithAudio(self.viewGO, "anim/#btn_insight")
+	self._goupgrade = gohelper.findChild(self.viewGO, "anim/#go_upgrade")
+	self._goupgradetexten = gohelper.findChild(self.viewGO, "anim/#go_upgrade/txten")
+	self._btnuplevel = SLFramework.UGUI.UIClickListener.Get(self._goupgrade)
+	self._btnuplevellongpress = SLFramework.UGUI.UILongPressListener.Get(self._goupgrade)
+	self._golevelupbeffect = gohelper.findChild(self.viewGO, "anim/#go_levelupbeffect")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gocharacterbg = gohelper.findChild(self.viewGO, "anim/bg/#go_characterbg")
+	self._goherogroupbg = gohelper.findChild(self.viewGO, "anim/bg/#go_herogroupbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._scrolldrag:AddDragBeginListener(arg_2_0._onLevelScrollDragBegin, arg_2_0)
-	arg_2_0._scrolldrag:AddDragEndListener(arg_2_0._onLevelScrollDragEnd, arg_2_0)
-	arg_2_0._scrolllv:AddOnValueChanged(arg_2_0._onLevelScrollChange, arg_2_0)
-	arg_2_0._btnmax:AddClickListener(arg_2_0._onMaxLevelClick, arg_2_0)
+function CharacterLevelUpView:addEvents()
+	self._scrolldrag:AddDragBeginListener(self._onLevelScrollDragBegin, self)
+	self._scrolldrag:AddDragEndListener(self._onLevelScrollDragEnd, self)
+	self._scrolllv:AddOnValueChanged(self._onLevelScrollChange, self)
+	self._btnmax:AddClickListener(self._onMaxLevelClick, self)
 
-	local var_2_0 = {}
+	local timeMatrix = {}
 
-	var_2_0[1] = 0.5
+	timeMatrix[1] = 0.5
 
-	for iter_2_0 = 2, 100 do
-		local var_2_1 = 0.9 * var_2_0[iter_2_0 - 1]
-		local var_2_2 = math.max(var_2_1, 0.2)
+	for i = 2, 100 do
+		local time = 0.9 * timeMatrix[i - 1]
+		local value = math.max(time, 0.2)
 
-		table.insert(var_2_0, var_2_2)
+		table.insert(timeMatrix, value)
 	end
 
-	arg_2_0._btnuplevellongpress:SetLongPressTime(var_2_0)
-	arg_2_0._btnuplevellongpress:AddLongPressListener(arg_2_0._onUpLevelLongPress, arg_2_0)
-	arg_2_0._btnuplevel:AddClickListener(arg_2_0._onUpLevelClick, arg_2_0)
-	arg_2_0._btnuplevel:AddClickUpListener(arg_2_0._onClickUp, arg_2_0)
-	arg_2_0._btninsight:AddClickListener(arg_2_0._btninsightOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_2_0._onClickHeroEditItem, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpClickLevel, arg_2_0._onClickLevel, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpViewClick, arg_2_0._localLevelUpConfirmSend, arg_2_0)
+	self._btnuplevellongpress:SetLongPressTime(timeMatrix)
+	self._btnuplevellongpress:AddLongPressListener(self._onUpLevelLongPress, self)
+	self._btnuplevel:AddClickListener(self._onUpLevelClick, self)
+	self._btnuplevel:AddClickUpListener(self._onClickUp, self)
+	self._btninsight:AddClickListener(self._btninsightOnClick, self)
+	self._btnclose:AddClickListener(self.closeThis, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, self._onClickHeroEditItem, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.levelUpClickLevel, self._onClickLevel, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.levelUpViewClick, self._localLevelUpConfirmSend, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._scrolldrag:RemoveDragBeginListener()
-	arg_3_0._scrolldrag:RemoveDragEndListener()
-	arg_3_0._scrolllv:RemoveOnValueChanged()
-	arg_3_0._btnmax:RemoveClickListener()
-	arg_3_0._btnuplevellongpress:RemoveLongPressListener()
-	arg_3_0._btnuplevel:RemoveClickListener()
-	arg_3_0._btnuplevel:RemoveClickUpListener()
-	arg_3_0._btninsight:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_3_0._onClickHeroEditItem, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpClickLevel, arg_3_0._onClickLevel, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpViewClick, arg_3_0._localLevelUpConfirmSend, arg_3_0)
+function CharacterLevelUpView:removeEvents()
+	self._scrolldrag:RemoveDragBeginListener()
+	self._scrolldrag:RemoveDragEndListener()
+	self._scrolllv:RemoveOnValueChanged()
+	self._btnmax:RemoveClickListener()
+	self._btnuplevellongpress:RemoveLongPressListener()
+	self._btnuplevel:RemoveClickListener()
+	self._btnuplevel:RemoveClickUpListener()
+	self._btninsight:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, self._onClickHeroEditItem, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.levelUpClickLevel, self._onClickLevel, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.levelUpViewClick, self._localLevelUpConfirmSend, self)
 end
 
-function var_0_0._onLevelScrollDragBegin(arg_4_0)
-	arg_4_0:killTween()
+function CharacterLevelUpView:_onLevelScrollDragBegin()
+	self:killTween()
 
-	arg_4_0._isDrag = true
+	self._isDrag = true
 end
 
-function var_0_0._onLevelScrollDragEnd(arg_5_0)
-	arg_5_0._isDrag = false
+function CharacterLevelUpView:_onLevelScrollDragEnd()
+	self._isDrag = false
 
-	if arg_5_0._scrollrectlv and arg_5_0:checkScrollMove(true) then
-		arg_5_0:_selectToNearLevel(true)
+	if self._scrollrectlv then
+		local isStop = self:checkScrollMove(true)
+
+		if isStop then
+			self:_selectToNearLevel(true)
+		end
 	end
 end
 
-function var_0_0._onLevelScrollChange(arg_6_0, arg_6_1)
-	arg_6_0:dispatchLevelScrollChange()
+function CharacterLevelUpView:_onLevelScrollChange(value)
+	self:dispatchLevelScrollChange()
 
-	if not arg_6_0._isDrag and not arg_6_0._tweenId and (arg_6_0:checkScrollMove() or arg_6_1 <= 0 or arg_6_1 >= 1) then
-		arg_6_0:_selectToNearLevel(true)
+	if not self._isDrag and not self._tweenId then
+		local isSlow = self:checkScrollMove()
+
+		if isSlow or value <= 0 or value >= 1 then
+			self:_selectToNearLevel(true)
+		end
 	end
 
-	local var_6_0 = arg_6_0:calScrollLevel()
+	local tmpLevel = self:calScrollLevel()
 
-	if arg_6_0.previewLevel and arg_6_0.previewLevel == var_6_0 then
+	if self.previewLevel and self.previewLevel == tmpLevel then
 		return
 	end
 
-	arg_6_0.previewLevel = var_6_0
+	self.previewLevel = tmpLevel
 
-	local var_6_1 = arg_6_0:getHeroLevel()
-	local var_6_2 = arg_6_0.previewLevel == var_6_1
+	local curLevel = self:getHeroLevel()
+	local isCurLevel = self.previewLevel == curLevel
 
-	gohelper.setActive(arg_6_0._goupgrade, not var_6_2)
-	gohelper.setActive(arg_6_0._tips[3], var_6_2)
-	arg_6_0:_refreshConsume(arg_6_0.previewLevel)
-	arg_6_0:_refreshMaxBtnStatus(arg_6_0.previewLevel)
-	arg_6_0:_refreshPreviewLevelHorizontal(arg_6_0.previewLevel)
+	gohelper.setActive(self._goupgrade, not isCurLevel)
+	gohelper.setActive(self._tips[3], isCurLevel)
+	self:_refreshConsume(self.previewLevel)
+	self:_refreshMaxBtnStatus(self.previewLevel)
+	self:_refreshPreviewLevelHorizontal(self.previewLevel)
 
-	if not arg_6_0._skipScrollAudio then
+	if not self._skipScrollAudio then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_role_upgrade_lv_item_scroll)
 	end
 
-	arg_6_0._skipScrollAudio = nil
+	self._skipScrollAudio = nil
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpChangePreviewLevel, arg_6_0.previewLevel)
+	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpChangePreviewLevel, self.previewLevel)
 end
 
-function var_0_0.checkScrollMove(arg_7_0, arg_7_1)
-	local var_7_0 = false
-	local var_7_1 = math.abs(arg_7_0._scrollrectlv and arg_7_0._scrollrectlv.velocity.x or 0)
+function CharacterLevelUpView:checkScrollMove(checkStop)
+	local result = false
+	local curVelocity = math.abs(self._scrollrectlv and self._scrollrectlv.velocity.x or 0)
 
-	if arg_7_1 then
-		local var_7_2 = 10
-		local var_7_3 = arg_7_0._scrollrectlv and arg_7_0._scrollrectlv.horizontalNormalizedPosition or 0
+	if checkStop then
+		local stopVelocity = 10
+		local horNormalizedPosition = self._scrollrectlv and self._scrollrectlv.horizontalNormalizedPosition or 0
 
-		var_7_0 = var_7_1 <= var_7_2 or var_7_3 <= 0.01 or var_7_3 >= 0.99
+		result = curVelocity <= stopVelocity or horNormalizedPosition <= 0.01 or horNormalizedPosition >= 0.99
 	else
-		var_7_0 = var_7_1 <= 50
+		local slowlyVelocity = 50
+
+		result = curVelocity <= slowlyVelocity
 	end
 
-	return var_7_0
+	return result
 end
 
-function var_0_0._selectToNearLevel(arg_8_0, arg_8_1)
-	arg_8_0:killTween()
-	arg_8_0._scrollrectlv:StopMovement()
+function CharacterLevelUpView:_selectToNearLevel(isTween)
+	self:killTween()
+	self._scrollrectlv:StopMovement()
 
-	arg_8_0._targetLevel = arg_8_0:calScrollLevel()
+	self._targetLevel = self:calScrollLevel()
 
-	arg_8_0:dispatchLevelScrollChange()
+	self:dispatchLevelScrollChange()
 
-	local var_8_0 = arg_8_0:calScrollPos(arg_8_0._targetLevel)
+	local scrollPos = self:calScrollPos(self._targetLevel)
 
-	if arg_8_1 then
-		local var_8_1 = true
-		local var_8_2 = arg_8_0._scrolllv.horizontalNormalizedPosition
+	if isTween then
+		local isNeedTween = true
+		local startPos = self._scrolllv.horizontalNormalizedPosition
 
-		if arg_8_0._heroMO then
-			local var_8_3 = arg_8_0:getHeroLevel()
-			local var_8_4 = 1 / (CharacterModel.instance:getrankEffects(arg_8_0._heroMO.heroId, arg_8_0._heroMO.rank)[1] - var_8_3)
+		if self._heroMO then
+			local curLevel = self:getHeroLevel()
+			local curRankMaxLv = CharacterModel.instance:getrankEffects(self._heroMO.heroId, self._heroMO.rank)[1]
+			local totalDiffLevel = curRankMaxLv - curLevel
+			local deltaPos = 1 / totalDiffLevel
+			local diff = math.abs(scrollPos - startPos)
 
-			var_8_1 = math.abs(var_8_0 - var_8_2) > var_8_4 / 100
+			isNeedTween = diff > deltaPos / 100
 		end
 
-		if var_8_1 then
-			arg_8_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_8_2, var_8_0, var_0_3, arg_8_0.tweenFrame, arg_8_0.tweenFinish, arg_8_0)
+		if isNeedTween then
+			self._tweenId = ZProj.TweenHelper.DOTweenFloat(startPos, scrollPos, SELECT_NEAR_LEVEL_TWEEN_TIME, self.tweenFrame, self.tweenFinish, self)
 		end
 	else
-		arg_8_0._scrolllv.horizontalNormalizedPosition = var_8_0
+		self._scrolllv.horizontalNormalizedPosition = scrollPos
 	end
 end
 
-function var_0_0._onMaxLevelClick(arg_9_0)
-	arg_9_0:_onClickLevel(arg_9_0._maxCanUpLevel)
+function CharacterLevelUpView:_onMaxLevelClick()
+	self:_onClickLevel(self._maxCanUpLevel)
 end
 
-function var_0_0._onUpLevelLongPress(arg_10_0)
-	local var_10_0 = arg_10_0:getHeroLevel()
+function CharacterLevelUpView:_onUpLevelLongPress()
+	local curLevel = self:getHeroLevel()
+	local isOneLevel = self._targetLevel - curLevel == 1
 
-	if arg_10_0._targetLevel - var_10_0 == 1 then
-		arg_10_0.longPress = true
+	if isOneLevel then
+		self.longPress = true
 
-		arg_10_0:_onUpLevelClick()
+		self:_onUpLevelClick()
 	end
 end
 
-function var_0_0._onClickUp(arg_11_0)
-	if not arg_11_0._heroMO or not arg_11_0.longPress then
+function CharacterLevelUpView:_onClickUp()
+	if not self._heroMO or not self.longPress then
 		return
 	end
 
-	arg_11_0.longPress = false
+	self.longPress = false
 
-	arg_11_0:_localLevelUpConfirmSend()
+	self:_localLevelUpConfirmSend()
 end
 
-function var_0_0._onUpLevelClick(arg_12_0)
-	local var_12_0 = UIBlockMgr.instance:isBlock()
-	local var_12_1 = arg_12_0:checkScrollMove(true)
+function CharacterLevelUpView:_onUpLevelClick()
+	local isBlock = UIBlockMgr.instance:isBlock()
+	local isStop = self:checkScrollMove(true)
 
-	if var_12_0 or not arg_12_0._heroMO or arg_12_0._isDrag or arg_12_0._tweenId or not var_12_1 then
+	if isBlock or not self._heroMO or self._isDrag or self._tweenId or not isStop then
 		return
 	end
 
-	local var_12_2 = arg_12_0:getHeroLevel()
-	local var_12_3 = var_12_2 < arg_12_0._targetLevel
-	local var_12_4 = CharacterModel.instance:isHeroLevelReachCeil(arg_12_0._heroMO.heroId, var_12_2)
+	local curLevel = self:getHeroLevel()
+	local isUpLevel = curLevel < self._targetLevel
+	local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(self._heroMO.heroId, curLevel)
 
-	if var_12_3 and not var_12_4 then
-		arg_12_0:_localLevelUp(arg_12_0._targetLevel)
+	if isUpLevel and not isReachLevelLimit then
+		self:_localLevelUp(self._targetLevel)
 
 		if GuideController.instance:isGuiding() and GuideModel.instance:getDoingGuideId() == CharacterEnum.LevelUpGuideId then
-			arg_12_0:_localLevelUpConfirmSend()
+			self:_localLevelUpConfirmSend()
 		end
 	else
-		arg_12_0._btnuplevellongpress:RemoveLongPressListener()
-		arg_12_0._btnuplevel:RemoveClickListener()
-		arg_12_0._btnuplevel:RemoveClickUpListener()
-		arg_12_0:_refreshView()
+		self._btnuplevellongpress:RemoveLongPressListener()
+		self._btnuplevel:RemoveClickListener()
+		self._btnuplevel:RemoveClickUpListener()
+		self:_refreshView()
 
-		if not arg_12_0.longPress then
+		if not self.longPress then
 			AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 		end
 	end
 end
 
-function var_0_0._localLevelUp(arg_13_0, arg_13_1)
-	if not arg_13_0._heroMO then
+function CharacterLevelUpView:_localLevelUp(argsNewLevel)
+	if not self._heroMO then
 		return
 	end
 
-	local var_13_0 = arg_13_0._heroMO.heroId
-	local var_13_1 = arg_13_0:getHeroLevel(true)
-	local var_13_2 = arg_13_0:getHeroLevel()
-	local var_13_3 = arg_13_1 or var_13_2 + 1
+	local heroId = self._heroMO.heroId
+	local realHeroLevel = self:getHeroLevel(true)
+	local curLevel = self:getHeroLevel()
+	local newLevel = argsNewLevel or curLevel + 1
+	local curRankMaxLv = CharacterModel.instance:getrankEffects(heroId, self._heroMO.rank)[1]
+	local isBreakMax = curRankMaxLv < newLevel
 
-	if var_13_3 > CharacterModel.instance:getrankEffects(var_13_0, arg_13_0._heroMO.rank)[1] or var_13_3 <= var_13_2 then
+	if isBreakMax or newLevel <= curLevel then
 		return
 	end
 
-	local var_13_4 = HeroConfig.instance:getLevelUpItems(var_13_0, var_13_1, var_13_3)
+	local items = HeroConfig.instance:getLevelUpItems(heroId, realHeroLevel, newLevel)
 
-	if var_13_4 then
-		local var_13_5, var_13_6, var_13_7 = ItemModel.instance:hasEnoughItems(var_13_4)
+	if items then
+		local notEnoughItemName, enough, icon = ItemModel.instance:hasEnoughItems(items)
 
-		if not var_13_6 then
-			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, var_13_7, var_13_5)
-			arg_13_0:_localLevelUpConfirmSend()
+		if not enough then
+			GameFacade.showToastWithIcon(ToastEnum.NotEnoughId, icon, notEnoughItemName)
+			self:_localLevelUpConfirmSend()
 
 			return
 		end
 	end
 
-	arg_13_0._lastHeroLevel = var_13_2
+	self._lastHeroLevel = curLevel
 
-	arg_13_0:playLevelUpEff(var_13_3)
-	arg_13_0.viewContainer:setLocalUpLevel(var_13_3)
-	TaskDispatcher.cancelTask(arg_13_0._delayRefreshView, arg_13_0)
-	TaskDispatcher.runDelay(arg_13_0._delayRefreshView, arg_13_0, var_0_4)
-	CharacterController.instance:dispatchEvent(CharacterEvent.levelUplocalItem, var_13_4)
+	self:playLevelUpEff(newLevel)
+	self.viewContainer:setLocalUpLevel(newLevel)
+	TaskDispatcher.cancelTask(self._delayRefreshView, self)
+	TaskDispatcher.runDelay(self._delayRefreshView, self, LEVEL_UP_EFF_TIME)
+	CharacterController.instance:dispatchEvent(CharacterEvent.levelUplocalItem, items)
 
-	if CharacterModel.instance:isHeroLevelReachCeil(var_13_0, var_13_3) then
-		arg_13_0._btnuplevellongpress:RemoveLongPressListener()
-		arg_13_0._btnuplevel:RemoveClickListener()
-		arg_13_0._btnuplevel:RemoveClickUpListener()
-		arg_13_0:_localLevelUpConfirmSend(true)
+	local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(heroId, newLevel)
+
+	if isReachLevelLimit then
+		self._btnuplevellongpress:RemoveLongPressListener()
+		self._btnuplevel:RemoveClickListener()
+		self._btnuplevel:RemoveClickUpListener()
+		self:_localLevelUpConfirmSend(true)
 	end
 end
 
-function var_0_0._delayRefreshView(arg_14_0)
-	arg_14_0:_refreshView()
+function CharacterLevelUpView:_delayRefreshView()
+	self:_refreshView()
 
-	local var_14_0 = arg_14_0._heroMO.heroId
-	local var_14_1 = arg_14_0:getHeroLevel()
-	local var_14_2 = true
+	local heroId = self._heroMO.heroId
+	local curLevel = self:getHeroLevel()
+	local isAutoSelectNextLevel = true
 
-	if not arg_14_0.longPress then
-		var_14_2 = false
+	if not self.longPress then
+		isAutoSelectNextLevel = false
 
-		local var_14_3 = arg_14_0._lastHeroLevel and var_14_1 - arg_14_0._lastHeroLevel == 1
-		local var_14_4 = CharacterModel.instance:isHeroLevelReachCeil(var_14_0, var_14_1)
+		local isOneLevel = self._lastHeroLevel and curLevel - self._lastHeroLevel == 1
+		local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(heroId, curLevel)
 
-		if var_14_3 and not var_14_4 then
-			local var_14_5 = arg_14_0:getHeroLevel(true)
-			local var_14_6 = HeroConfig.instance:getLevelUpItems(var_14_0, var_14_5, var_14_1 + 1)
+		if isOneLevel and not isReachLevelLimit then
+			local realHeroLevel = self:getHeroLevel(true)
+			local items = HeroConfig.instance:getLevelUpItems(heroId, realHeroLevel, curLevel + 1)
 
-			if var_14_6 then
-				local var_14_7, var_14_8, var_14_9 = ItemModel.instance:hasEnoughItems(var_14_6)
+			if items then
+				local _, enough, _ = ItemModel.instance:hasEnoughItems(items)
 
-				var_14_2 = var_14_8
+				isAutoSelectNextLevel = enough
 			end
 		end
 	end
 
-	arg_14_0._lastHeroLevel = nil
+	self._lastHeroLevel = nil
 
-	arg_14_0:_resetLevelScrollPos(var_14_2)
-	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpAttribute, var_14_1, var_14_0)
+	self:_resetLevelScrollPos(isAutoSelectNextLevel)
+	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpAttribute, curLevel, heroId)
 end
 
-function var_0_0._localLevelUpConfirmSend(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0._heroMO.heroId
-	local var_15_1 = arg_15_0:getHeroLevel()
-	local var_15_2 = var_15_1 > arg_15_0:getHeroLevel(true)
-	local var_15_3 = CharacterModel.instance:isHeroLevelReachCeil(var_15_0)
+function CharacterLevelUpView:_localLevelUpConfirmSend(failedRefresh)
+	local heroId = self._heroMO.heroId
+	local curLevel = self:getHeroLevel()
+	local realHeroLevel = self:getHeroLevel(true)
+	local isUpLevel = realHeroLevel < curLevel
+	local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(heroId)
 
-	if var_15_2 and not var_15_3 then
+	if isUpLevel and not isReachLevelLimit then
 		CharacterController.instance:dispatchEvent(CharacterEvent.levelUplocalItem, {}, true)
-		HeroRpc.instance:sendHeroLevelUpRequest(var_15_0, var_15_1, arg_15_0._localLevelUpConfirmSendCallback, arg_15_0)
-		arg_15_0.viewContainer:setWaitHeroLevelUpRefresh(true)
-	elseif arg_15_1 then
+		HeroRpc.instance:sendHeroLevelUpRequest(heroId, curLevel, self._localLevelUpConfirmSendCallback, self)
+		self.viewContainer:setWaitHeroLevelUpRefresh(true)
+	elseif failedRefresh then
 		CharacterController.instance:dispatchEvent(CharacterEvent.levelUplocalItem)
-		arg_15_0:_refreshView()
+		self:_refreshView()
 	end
 end
 
-function var_0_0._localLevelUpConfirmSendCallback(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	arg_16_0.viewContainer:setWaitHeroLevelUpRefresh(false)
-	arg_16_0.viewContainer:setLocalUpLevel()
+function CharacterLevelUpView:_localLevelUpConfirmSendCallback(cmd, resultCode, msg)
+	self.viewContainer:setWaitHeroLevelUpRefresh(false)
+	self.viewContainer:setLocalUpLevel()
 	CharacterController.instance:dispatchEvent(CharacterEvent.levelUplocalItem)
 end
 
-function var_0_0._btninsightOnClick(arg_17_0)
-	local function var_17_0()
-		CharacterController.instance:openCharacterRankUpView(arg_17_0._heroMO)
+function CharacterLevelUpView:_btninsightOnClick()
+	local function func()
+		CharacterController.instance:openCharacterRankUpView(self._heroMO)
 	end
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.showCharacterRankUpView, var_17_0)
-	arg_17_0:closeThis()
+	CharacterController.instance:dispatchEvent(CharacterEvent.showCharacterRankUpView, func)
+	self:closeThis()
 end
 
-function var_0_0._btnitemOnClick(arg_19_0, arg_19_1)
-	local var_19_0 = tonumber(arg_19_1.type)
-	local var_19_1 = tonumber(arg_19_1.id)
-	local var_19_2 = {
-		type = var_19_0,
-		id = var_19_1,
-		quantity = tonumber(arg_19_1.quantity),
+function CharacterLevelUpView:_btnitemOnClick(info)
+	local type = tonumber(info.type)
+	local id = tonumber(info.id)
+	local recordItem = {
+		type = type,
+		id = id,
+		quantity = tonumber(info.quantity),
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	}
 
-	MaterialTipController.instance:showMaterialInfo(var_19_0, var_19_1, false, nil, nil, var_19_2)
-	arg_19_0:_localLevelUpConfirmSend()
+	MaterialTipController.instance:showMaterialInfo(type, id, false, nil, nil, recordItem)
+	self:_localLevelUpConfirmSend()
 end
 
-function var_0_0._onItemChanged(arg_20_0)
-	if arg_20_0.viewContainer:getWaitHeroLevelUpRefresh() then
+function CharacterLevelUpView:_onItemChanged()
+	local waitHeroLevelUpRefresh = self.viewContainer:getWaitHeroLevelUpRefresh()
+
+	if waitHeroLevelUpRefresh then
 		return
 	end
 
-	arg_20_0:_refreshConsume()
-	arg_20_0:_refreshMaxCanUpLevel()
+	self:_refreshConsume()
+	self:_refreshMaxCanUpLevel()
 end
 
-function var_0_0._onClickHeroEditItem(arg_21_0, arg_21_1)
-	if not arg_21_1 or arg_21_1.heroId ~= arg_21_0._heroMO.heroId then
-		arg_21_0:closeThis()
+function CharacterLevelUpView:_onClickHeroEditItem(heroMO)
+	if not heroMO or heroMO.heroId ~= self._heroMO.heroId then
+		self:closeThis()
 	end
 end
 
-function var_0_0._onClickLevel(arg_22_0, arg_22_1)
-	if not arg_22_1 or not arg_22_0._heroMO then
+function CharacterLevelUpView:_onClickLevel(level)
+	if not level or not self._heroMO then
 		return
 	end
 
-	local var_22_0 = arg_22_1 > CharacterModel.instance:getrankEffects(arg_22_0._heroMO.heroId, arg_22_0._heroMO.rank)[1]
-	local var_22_1 = arg_22_1 < arg_22_0:getHeroLevel()
+	local curRankMaxLv = CharacterModel.instance:getrankEffects(self._heroMO.heroId, self._heroMO.rank)[1]
+	local isBreakMax = curRankMaxLv < level
+	local curLevel = self:getHeroLevel()
+	local isDownLevel = level < curLevel
 
-	if var_22_0 or var_22_1 then
+	if isBreakMax or isDownLevel then
 		return
 	end
 
-	arg_22_0._targetLevel = arg_22_1
+	self._targetLevel = level
 
-	local var_22_2 = arg_22_0:calScrollPos(arg_22_0._targetLevel)
-	local var_22_3 = arg_22_0._scrolllv.horizontalNormalizedPosition
+	local scrollPos = self:calScrollPos(self._targetLevel)
+	local startPos = self._scrolllv.horizontalNormalizedPosition
 
-	arg_22_0:killTween()
+	self:killTween()
 
-	arg_22_0._tweenId = ZProj.TweenHelper.DOTweenFloat(var_22_3, var_22_2, var_0_2, arg_22_0.tweenFrame, arg_22_0.tweenFinish, arg_22_0)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(startPos, scrollPos, CLICK_LEVEL_TWEEN_TIME, self.tweenFrame, self.tweenFinish, self)
 end
 
-function var_0_0.tweenFrame(arg_23_0, arg_23_1)
-	if not arg_23_0._scrolllv then
+function CharacterLevelUpView:tweenFrame(value)
+	if not self._scrolllv then
 		return
 	end
 
-	arg_23_0._scrolllv.horizontalNormalizedPosition = arg_23_1
+	self._scrolllv.horizontalNormalizedPosition = value
 end
 
-function var_0_0.tweenFinish(arg_24_0)
-	arg_24_0._tweenId = nil
+function CharacterLevelUpView:tweenFinish()
+	self._tweenId = nil
 
-	arg_24_0:_selectToNearLevel()
+	self:_selectToNearLevel()
 end
 
-function var_0_0.calScrollLevel(arg_25_0)
-	local var_25_0
+function CharacterLevelUpView:calScrollLevel()
+	local result
 
-	if arg_25_0._scrolllv and arg_25_0._heroMO then
-		local var_25_1 = arg_25_0:getHeroLevel()
-		local var_25_2 = CharacterModel.instance:getrankEffects(arg_25_0._heroMO.heroId, arg_25_0._heroMO.rank)[1]
-		local var_25_3 = var_25_2 - var_25_1
-		local var_25_4 = arg_25_0._scrolllv.horizontalNormalizedPosition
-		local var_25_5 = 1 / var_25_3
+	if self._scrolllv and self._heroMO then
+		local curLevel = self:getHeroLevel()
+		local curRankMaxLv = CharacterModel.instance:getrankEffects(self._heroMO.heroId, self._heroMO.rank)[1]
+		local totalDiffLevel = curRankMaxLv - curLevel
+		local scrollValue = self._scrolllv.horizontalNormalizedPosition
+		local deltaPos = 1 / totalDiffLevel
 
-		var_25_0 = var_25_1
+		result = curLevel
 
-		for iter_25_0 = 1, var_25_3 do
-			if var_25_4 < (iter_25_0 - 0.5) * var_25_5 then
+		for deltaLevel = 1, totalDiffLevel do
+			local levelPos = (deltaLevel - 0.5) * deltaPos
+
+			if scrollValue < levelPos then
 				break
 			end
 
-			var_25_0 = var_25_1 + iter_25_0
+			result = curLevel + deltaLevel
 		end
 
-		var_25_0 = Mathf.Clamp(var_25_0, var_25_1, var_25_2)
+		result = Mathf.Clamp(result, curLevel, curRankMaxLv)
 	end
 
-	return var_25_0
+	return result
 end
 
-function var_0_0.calScrollPos(arg_26_0, arg_26_1)
-	local var_26_0 = 0
+function CharacterLevelUpView:calScrollPos(targetLevel)
+	local result = 0
 
-	if arg_26_1 and arg_26_0._heroMO then
-		local var_26_1 = arg_26_0:getHeroLevel()
-		local var_26_2 = CharacterModel.instance:getrankEffects(arg_26_0._heroMO.heroId, arg_26_0._heroMO.rank)[1]
+	if targetLevel and self._heroMO then
+		local curLevel = self:getHeroLevel()
+		local curRankMaxLv = CharacterModel.instance:getrankEffects(self._heroMO.heroId, self._heroMO.rank)[1]
+		local diffLevel = targetLevel - curLevel
+		local totalDiffLevel = curRankMaxLv - curLevel
 
-		var_26_0 = (arg_26_1 - var_26_1) / (var_26_2 - var_26_1)
-		var_26_0 = Mathf.Clamp(var_26_0, 0, 1)
+		result = diffLevel / totalDiffLevel
+		result = Mathf.Clamp(result, 0, 1)
 	end
 
-	return var_26_0
+	return result
 end
 
-function var_0_0._editableInitView(arg_27_0)
-	arg_27_0._tips = arg_27_0:getUserDataTb_()
+function CharacterLevelUpView:_editableInitView()
+	self._tips = self:getUserDataTb_()
 
-	for iter_27_0 = 1, 3 do
-		arg_27_0._tips[iter_27_0] = gohelper.findChild(arg_27_0._gotips, "tips" .. tostring(iter_27_0))
+	for i = 1, 3 do
+		self._tips[i] = gohelper.findChild(self._gotips, "tips" .. tostring(i))
 	end
 
-	arg_27_0._txtfulllevel = gohelper.findChild(arg_27_0._tips[1], "full")
-	arg_27_0._tipitems = {}
+	self._txtfulllevel = gohelper.findChild(self._tips[1], "full")
+	self._tipitems = {}
 
-	for iter_27_1 = 1, var_0_1 do
-		local var_27_0 = arg_27_0:getUserDataTb_()
+	for i = 1, COST_ITEM_COUNT do
+		local o = self:getUserDataTb_()
 
-		var_27_0.go = gohelper.findChild(arg_27_0._tips[2], "item" .. tostring(iter_27_1))
-		var_27_0.icon = gohelper.findChildSingleImage(var_27_0.go, "icon")
-		var_27_0.value = gohelper.findChildText(var_27_0.go, "value")
-		var_27_0.btn = gohelper.findChildButtonWithAudio(var_27_0.go, "bg")
-		var_27_0.type = nil
-		var_27_0.id = nil
-		arg_27_0._tipitems[iter_27_1] = var_27_0
-	end
-end
-
-function var_0_0.onUpdateParam(arg_28_0)
-	arg_28_0:onOpen()
-end
-
-function var_0_0.onOpen(arg_29_0)
-	arg_29_0:clearVar()
-
-	arg_29_0._heroMO = arg_29_0.viewParam.heroMO
-	arg_29_0._enterViewName = arg_29_0.viewParam.enterViewName
-
-	arg_29_0:_setView()
-	arg_29_0:_refreshView()
-	arg_29_0:_resetLevelScrollPos(true, true)
-end
-
-function var_0_0.clearVar(arg_30_0)
-	arg_30_0:killTween()
-
-	arg_30_0._targetLevel = nil
-	arg_30_0.previewLevel = nil
-	arg_30_0._isDrag = false
-	arg_30_0.longPress = false
-	arg_30_0._lastHeroLevel = nil
-	arg_30_0._skipScrollAudio = nil
-	arg_30_0._maxCanUpLevel = nil
-end
-
-function var_0_0.killTween(arg_31_0)
-	if arg_31_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_31_0._tweenId)
-
-		arg_31_0._tweenId = nil
+		o.go = gohelper.findChild(self._tips[2], "item" .. tostring(i))
+		o.icon = gohelper.findChildSingleImage(o.go, "icon")
+		o.value = gohelper.findChildText(o.go, "value")
+		o.btn = gohelper.findChildButtonWithAudio(o.go, "bg")
+		o.type = nil
+		o.id = nil
+		self._tipitems[i] = o
 	end
 end
 
-function var_0_0._setView(arg_32_0)
-	local var_32_0 = arg_32_0._enterViewName == ViewName.HeroGroupEditView
+function CharacterLevelUpView:onUpdateParam()
+	self:onOpen()
+end
 
-	if var_32_0 then
-		arg_32_0._animGO.transform.anchorMin = Vector2(0, 0.5)
-		arg_32_0._animGO.transform.anchorMax = Vector2(0, 0.5)
-		arg_32_0._gorighttop.transform.anchorMin = Vector2(0, 1)
-		arg_32_0._gorighttop.transform.anchorMax = Vector2(0, 1)
+function CharacterLevelUpView:onOpen()
+	self:clearVar()
 
-		recthelper.setAnchor(arg_32_0._animGO.transform, 677.22, -50.4)
-		recthelper.setAnchor(arg_32_0._gorighttop.transform, 683, 1)
+	self._heroMO = self.viewParam.heroMO
+	self._enterViewName = self.viewParam.enterViewName
+
+	self:_setView()
+	self:_refreshView()
+	self:_resetLevelScrollPos(true, true)
+end
+
+function CharacterLevelUpView:clearVar()
+	self:killTween()
+
+	self._targetLevel = nil
+	self.previewLevel = nil
+	self._isDrag = false
+	self.longPress = false
+	self._lastHeroLevel = nil
+	self._skipScrollAudio = nil
+	self._maxCanUpLevel = nil
+end
+
+function CharacterLevelUpView:killTween()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
+
+		self._tweenId = nil
+	end
+end
+
+function CharacterLevelUpView:_setView()
+	local isHeroGroupEditView = self._enterViewName == ViewName.HeroGroupEditView
+
+	if isHeroGroupEditView then
+		self._animGO.transform.anchorMin = Vector2(0, 0.5)
+		self._animGO.transform.anchorMax = Vector2(0, 0.5)
+		self._gorighttop.transform.anchorMin = Vector2(0, 1)
+		self._gorighttop.transform.anchorMax = Vector2(0, 1)
+
+		recthelper.setAnchor(self._animGO.transform, 677.22, -50.4)
+		recthelper.setAnchor(self._gorighttop.transform, 683, 1)
 	else
-		arg_32_0._animGO.transform.anchorMin = Vector2(1, 0.5)
-		arg_32_0._animGO.transform.anchorMax = Vector2(1, 0.5)
-		arg_32_0._gorighttop.transform.anchorMin = Vector2(1, 1)
-		arg_32_0._gorighttop.transform.anchorMax = Vector2(1, 1)
+		self._animGO.transform.anchorMin = Vector2(1, 0.5)
+		self._animGO.transform.anchorMax = Vector2(1, 0.5)
+		self._gorighttop.transform.anchorMin = Vector2(1, 1)
+		self._gorighttop.transform.anchorMax = Vector2(1, 1)
 
-		recthelper.setAnchor(arg_32_0._animGO.transform, 0, 0)
-		recthelper.setAnchor(arg_32_0._gorighttop.transform, -50, -50)
+		recthelper.setAnchor(self._animGO.transform, 0, 0)
+		recthelper.setAnchor(self._gorighttop.transform, -50, -50)
 	end
 
-	gohelper.setActive(arg_32_0._btnclose.gameObject, not var_32_0)
-	gohelper.setActive(arg_32_0._goherogroupbg, var_32_0)
-	gohelper.setActive(arg_32_0._gocharacterbg, not var_32_0)
+	gohelper.setActive(self._btnclose.gameObject, not isHeroGroupEditView)
+	gohelper.setActive(self._goherogroupbg, isHeroGroupEditView)
+	gohelper.setActive(self._gocharacterbg, not isHeroGroupEditView)
 end
 
-function var_0_0._refreshView(arg_33_0)
-	arg_33_0:_refreshLevelHorizontal()
-	arg_33_0:_refreshLevelScroll()
-	arg_33_0:_refreshMaxCanUpLevel()
+function CharacterLevelUpView:_refreshView()
+	self:_refreshLevelHorizontal()
+	self:_refreshLevelScroll()
+	self:_refreshMaxCanUpLevel()
 end
 
-function var_0_0._refreshLevelScroll(arg_34_0)
-	local var_34_0 = arg_34_0._heroMO.heroId
-	local var_34_1 = arg_34_0:getHeroLevel()
-	local var_34_2 = CharacterModel.instance:isHeroLevelReachCeil(var_34_0, var_34_1)
+function CharacterLevelUpView:_refreshLevelScroll()
+	local heroId = self._heroMO.heroId
+	local curLevel = self:getHeroLevel()
+	local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(heroId, curLevel)
 
-	if var_34_2 then
-		local var_34_3 = HeroConfig.instance:getShowLevel(var_34_1)
+	if isReachLevelLimit then
+		local showLevel = HeroConfig.instance:getShowLevel(curLevel)
 
-		arg_34_0._txtfulllvnum.text = var_34_3
+		self._txtfulllvnum.text = showLevel
 
-		gohelper.setActive(arg_34_0._tips[2], false)
-		gohelper.setActive(arg_34_0._tips[3], false)
-		gohelper.setActive(arg_34_0._goupgrade, false)
-		gohelper.setActive(arg_34_0._golevelupbeffect, false)
+		gohelper.setActive(self._tips[2], false)
+		gohelper.setActive(self._tips[3], false)
+		gohelper.setActive(self._goupgrade, false)
+		gohelper.setActive(self._golevelupbeffect, false)
 
-		local var_34_4 = CharacterModel.instance:isHeroRankReachCeil(var_34_0)
+		local isMaxRank = CharacterModel.instance:isHeroRankReachCeil(heroId)
 
-		gohelper.setActive(arg_34_0._btninsight.gameObject, not var_34_4)
-		CharacterController.instance:dispatchEvent(CharacterEvent.levelUpChangePreviewLevel, var_34_1)
+		gohelper.setActive(self._btninsight.gameObject, not isMaxRank)
+		CharacterController.instance:dispatchEvent(CharacterEvent.levelUpChangePreviewLevel, curLevel)
 	else
-		gohelper.setActive(arg_34_0._btninsight.gameObject, false)
-		CharacterLevelListModel.instance:setCharacterLevelList(arg_34_0._heroMO, var_34_1)
-		TaskDispatcher.cancelTask(arg_34_0.dispatchLevelScrollChange, arg_34_0)
-		TaskDispatcher.runDelay(arg_34_0.dispatchLevelScrollChange, arg_34_0, var_0_5)
+		gohelper.setActive(self._btninsight.gameObject, false)
+		CharacterLevelListModel.instance:setCharacterLevelList(self._heroMO, curLevel)
+		TaskDispatcher.cancelTask(self.dispatchLevelScrollChange, self)
+		TaskDispatcher.runDelay(self.dispatchLevelScrollChange, self, NEXT_FRAME_TIME)
 	end
 
-	gohelper.setActive(arg_34_0._tips[1], var_34_2)
-	gohelper.setActive(arg_34_0._golv, not var_34_2)
-	gohelper.setActive(arg_34_0._golvfull, var_34_2)
+	gohelper.setActive(self._tips[1], isReachLevelLimit)
+	gohelper.setActive(self._golv, not isReachLevelLimit)
+	gohelper.setActive(self._golvfull, isReachLevelLimit)
 end
 
-function var_0_0.getContentOffset(arg_35_0)
-	return transformhelper.getLocalPos(arg_35_0._translvcontent)
+function CharacterLevelUpView:getContentOffset()
+	return transformhelper.getLocalPos(self._translvcontent)
 end
 
-function var_0_0.dispatchLevelScrollChange(arg_36_0)
-	local var_36_0 = arg_36_0:getContentOffset()
+function CharacterLevelUpView:dispatchLevelScrollChange()
+	local contentOffset = self:getContentOffset()
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.levelScrollChange, var_36_0)
+	CharacterController.instance:dispatchEvent(CharacterEvent.levelScrollChange, contentOffset)
 end
 
-function var_0_0._refreshConsume(arg_37_0, arg_37_1)
-	local var_37_0 = arg_37_0._heroMO.heroId
-	local var_37_1 = arg_37_0:getHeroLevel()
+function CharacterLevelUpView:_refreshConsume(argsTargetLevel)
+	local heroId = self._heroMO.heroId
+	local curLevel = self:getHeroLevel()
+	local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(heroId, curLevel)
 
-	if CharacterModel.instance:isHeroLevelReachCeil(var_37_0, var_37_1) then
+	if isReachLevelLimit then
 		return
 	end
 
-	local var_37_2 = arg_37_1 or arg_37_0._targetLevel
-	local var_37_3 = var_37_2 == var_37_1
+	local targetLevel = argsTargetLevel or self._targetLevel
+	local isCurLevel = targetLevel == curLevel
 
-	gohelper.setActive(arg_37_0._tips[2], not var_37_3)
+	gohelper.setActive(self._tips[2], not isCurLevel)
 
-	if var_37_3 then
-		gohelper.setActive(arg_37_0._golevelupbeffect, false)
+	if isCurLevel then
+		gohelper.setActive(self._golevelupbeffect, false)
 
 		return
 	end
 
-	local var_37_4 = true
-	local var_37_5 = HeroConfig.instance:getLevelUpItems(var_37_0, var_37_1, var_37_2)
-	local var_37_6 = arg_37_0:getLocalCost()
+	local hasEnough = true
+	local costItemList = HeroConfig.instance:getLevelUpItems(heroId, curLevel, targetLevel)
+	local localCostItemDict = self:getLocalCost()
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_5) do
-		local var_37_7 = arg_37_0._tipitems[iter_37_0]
+	for i, costItem in ipairs(costItemList) do
+		local tipItem = self._tipitems[i]
 
-		if var_37_7 then
-			local var_37_8 = tonumber(iter_37_1.type)
-			local var_37_9 = tonumber(iter_37_1.id)
-			local var_37_10 = var_37_7.type == var_37_8
-			local var_37_11 = var_37_7.id == var_37_9
+		if tipItem then
+			local type = tonumber(costItem.type)
+			local id = tonumber(costItem.id)
+			local isSameType = tipItem.type == type
+			local isSameId = tipItem.id == id
 
-			if not var_37_10 or not var_37_11 then
-				local var_37_12, var_37_13 = ItemModel.instance:getItemConfigAndIcon(var_37_8, var_37_9)
+			if not isSameType or not isSameId then
+				local _, icon = ItemModel.instance:getItemConfigAndIcon(type, id)
 
-				var_37_7.icon:LoadImage(var_37_13)
-				var_37_7.btn:RemoveClickListener()
-				var_37_7.btn:AddClickListener(arg_37_0._btnitemOnClick, arg_37_0, iter_37_1)
+				tipItem.icon:LoadImage(icon)
+				tipItem.btn:RemoveClickListener()
+				tipItem.btn:AddClickListener(self._btnitemOnClick, self, costItem)
 
-				var_37_7.type = var_37_8
-				var_37_7.id = var_37_9
+				tipItem.type = type
+				tipItem.id = id
 			end
 
-			local var_37_14 = ItemModel.instance:getItemQuantity(var_37_8, var_37_9)
+			local hasQuantity = ItemModel.instance:getItemQuantity(type, id)
 
-			if var_37_6 and var_37_6[var_37_8] and var_37_6[var_37_8][var_37_9] then
-				var_37_14 = var_37_14 - var_37_6[var_37_8][var_37_9]
+			if localCostItemDict and localCostItemDict[type] and localCostItemDict[type][id] then
+				hasQuantity = hasQuantity - localCostItemDict[type][id]
 			end
 
-			local var_37_15 = tonumber(iter_37_1.quantity)
+			local costQuantity = tonumber(costItem.quantity)
 
-			if var_37_14 < var_37_15 then
-				var_37_7.value.text = "<color=#cc492f>" .. tostring(GameUtil.numberDisplay(var_37_15)) .. "</color>"
-				var_37_4 = false
+			if hasQuantity < costQuantity then
+				tipItem.value.text = "<color=#cc492f>" .. tostring(GameUtil.numberDisplay(costQuantity)) .. "</color>"
+				hasEnough = false
 			else
-				var_37_7.value.text = tostring(GameUtil.numberDisplay(var_37_15))
+				tipItem.value.text = tostring(GameUtil.numberDisplay(costQuantity))
 			end
 
-			gohelper.setActive(var_37_7.go, true)
+			gohelper.setActive(tipItem.go, true)
 		end
 	end
 
-	local var_37_16 = #var_37_5
+	local costItemCount = #costItemList
 
-	if var_37_16 < var_0_1 then
-		for iter_37_2 = var_37_16 + 1, var_0_1 do
-			local var_37_17 = arg_37_0._tipitems[iter_37_2]
+	if costItemCount < COST_ITEM_COUNT then
+		for i = costItemCount + 1, COST_ITEM_COUNT do
+			local item = self._tipitems[i]
 
-			gohelper.setActive(var_37_17 and var_37_17.go, false)
+			gohelper.setActive(item and item.go, false)
 		end
 	end
 
-	gohelper.setActive(arg_37_0._golevelupbeffect, var_37_4)
-	ZProj.UGUIHelper.SetGrayscale(arg_37_0._goupgrade, not var_37_4)
-	ZProj.UGUIHelper.SetGrayscale(arg_37_0._goupgradetexten, not var_37_4)
+	gohelper.setActive(self._golevelupbeffect, hasEnough)
+	ZProj.UGUIHelper.SetGrayscale(self._goupgrade, not hasEnough)
+	ZProj.UGUIHelper.SetGrayscale(self._goupgradetexten, not hasEnough)
 end
 
-function var_0_0._refreshLevelHorizontal(arg_38_0)
-	if not arg_38_0._heroMO then
+function CharacterLevelUpView:_refreshLevelHorizontal()
+	if not self._heroMO then
 		return
 	end
 
-	local var_38_0 = arg_38_0._heroMO.heroId
-	local var_38_1 = 0
-	local var_38_2 = arg_38_0:getHeroLevel()
-	local var_38_3
+	local heroId = self._heroMO.heroId
+	local fillValue = 0
+	local curLevel = self:getHeroLevel()
+	local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(heroId, curLevel)
 
-	if CharacterModel.instance:isHeroLevelReachCeil(var_38_0, var_38_2) then
-		var_38_3 = 1
+	if isReachLevelLimit then
+		fillValue = 1
 	else
-		local var_38_4 = arg_38_0._heroMO.rank
-		local var_38_5 = CharacterModel.instance:getrankEffects(var_38_0, var_38_4 - 1)[1]
-		local var_38_6 = CharacterModel.instance:getrankEffects(var_38_0, var_38_4)[1]
+		local curRank = self._heroMO.rank
+		local preRankMaxLv = CharacterModel.instance:getrankEffects(heroId, curRank - 1)[1]
+		local curRankMaxLv = CharacterModel.instance:getrankEffects(heroId, curRank)[1]
 
-		var_38_3 = (var_38_2 - var_38_5) / (var_38_6 - var_38_5)
+		fillValue = (curLevel - preRankMaxLv) / (curRankMaxLv - preRankMaxLv)
 	end
 
-	if arg_38_0._lvCtrl then
-		arg_38_0._lvCtrl.float_01 = var_38_3
+	if self._lvCtrl then
+		self._lvCtrl.float_01 = fillValue
 
-		arg_38_0._lvCtrl:SetProps()
+		self._lvCtrl:SetProps()
 	end
 end
 
-function var_0_0._refreshPreviewLevelHorizontal(arg_39_0, arg_39_1)
-	if not arg_39_0._heroMO then
+function CharacterLevelUpView:_refreshPreviewLevelHorizontal(argsTargetLevel)
+	if not self._heroMO then
 		return
 	end
 
-	local var_39_0 = arg_39_1 or arg_39_0._targetLevel
-	local var_39_1 = 0
-	local var_39_2 = arg_39_0._heroMO.heroId
-	local var_39_3 = arg_39_0:getHeroLevel()
-	local var_39_4 = CharacterModel.instance:isHeroLevelReachCeil(var_39_2, var_39_3)
-	local var_39_5 = arg_39_1 == var_39_3
+	local targetLevel = argsTargetLevel or self._targetLevel
+	local fillValue = 0
+	local heroId = self._heroMO.heroId
+	local curLevel = self:getHeroLevel()
+	local isReachLevelLimit = CharacterModel.instance:isHeroLevelReachCeil(heroId, curLevel)
+	local isCurLevel = argsTargetLevel == curLevel
 
-	if var_39_4 or var_39_5 then
-		gohelper.setActive(arg_39_0._goprevieweff, false)
+	if isReachLevelLimit or isCurLevel then
+		gohelper.setActive(self._goprevieweff, false)
 
 		return
 	end
 
-	local var_39_6 = arg_39_0._heroMO.rank
-	local var_39_7 = CharacterModel.instance:getrankEffects(var_39_2, var_39_6 - 1)[1]
-	local var_39_8 = CharacterModel.instance:getrankEffects(var_39_2, var_39_6)[1]
-	local var_39_9 = (var_39_0 - var_39_7) / (var_39_8 - var_39_7)
+	local curRank = self._heroMO.rank
+	local preRankMaxLv = CharacterModel.instance:getrankEffects(heroId, curRank - 1)[1]
+	local curRankMaxLv = CharacterModel.instance:getrankEffects(heroId, curRank)[1]
 
-	if arg_39_0._previewlvCtrl then
-		arg_39_0._previewlvCtrl.float_01 = var_39_9
+	fillValue = (targetLevel - preRankMaxLv) / (curRankMaxLv - preRankMaxLv)
 
-		arg_39_0._previewlvCtrl:SetProps()
+	if self._previewlvCtrl then
+		self._previewlvCtrl.float_01 = fillValue
+
+		self._previewlvCtrl:SetProps()
 	end
 
-	gohelper.setActive(arg_39_0._goprevieweff, true)
+	gohelper.setActive(self._goprevieweff, true)
 end
 
-function var_0_0._refreshMaxCanUpLevel(arg_40_0)
-	arg_40_0._maxCanUpLevel = nil
+function CharacterLevelUpView:_refreshMaxCanUpLevel()
+	self._maxCanUpLevel = nil
 
-	if arg_40_0._heroMO then
-		local var_40_0 = arg_40_0._heroMO.heroId
-		local var_40_1 = arg_40_0:getLocalCost()
-		local var_40_2 = arg_40_0:getHeroLevel()
-		local var_40_3 = CharacterModel.instance:getrankEffects(var_40_0, arg_40_0._heroMO.rank)[1]
+	if self._heroMO then
+		local heroId = self._heroMO.heroId
+		local localCostItemDict = self:getLocalCost()
+		local curLevel = self:getHeroLevel()
+		local curRankMaxLv = CharacterModel.instance:getrankEffects(heroId, self._heroMO.rank)[1]
 
-		for iter_40_0 = var_40_2 + 1, var_40_3 do
-			local var_40_4 = true
-			local var_40_5 = HeroConfig.instance:getLevelUpItems(var_40_0, var_40_2, iter_40_0)
+		for lv = curLevel + 1, curRankMaxLv do
+			local isEnough = true
+			local costItemList = HeroConfig.instance:getLevelUpItems(heroId, curLevel, lv)
 
-			for iter_40_1, iter_40_2 in ipairs(var_40_5) do
-				local var_40_6 = tonumber(iter_40_2.type)
-				local var_40_7 = tonumber(iter_40_2.id)
-				local var_40_8 = tonumber(iter_40_2.quantity)
-				local var_40_9 = ItemModel.instance:getItemQuantity(var_40_6, var_40_7)
+			for _, costItem in ipairs(costItemList) do
+				local type = tonumber(costItem.type)
+				local id = tonumber(costItem.id)
+				local costQuantity = tonumber(costItem.quantity)
+				local hasQuantity = ItemModel.instance:getItemQuantity(type, id)
 
-				if var_40_1 and var_40_1[var_40_6] and var_40_1[var_40_6][var_40_7] then
-					var_40_9 = var_40_9 - var_40_1[var_40_6][var_40_7]
+				if localCostItemDict and localCostItemDict[type] and localCostItemDict[type][id] then
+					hasQuantity = hasQuantity - localCostItemDict[type][id]
 				end
 
-				if var_40_9 < var_40_8 then
-					var_40_4 = false
+				if hasQuantity < costQuantity then
+					isEnough = false
 
 					break
 				end
 			end
 
-			if not var_40_4 then
+			if not isEnough then
 				break
 			end
 
-			arg_40_0._maxCanUpLevel = iter_40_0
+			self._maxCanUpLevel = lv
 		end
 	end
 
-	local var_40_10 = arg_40_0._maxCanUpLevel and HeroConfig.instance:getShowLevel(arg_40_0._maxCanUpLevel) or ""
+	local showMaxLv = self._maxCanUpLevel and HeroConfig.instance:getShowLevel(self._maxCanUpLevel) or ""
 
-	arg_40_0._txtmax.text = formatLuaLang("v1a5_aizila_level", var_40_10)
+	self._txtmax.text = formatLuaLang("v1a5_aizila_level", showMaxLv)
 
-	arg_40_0:_refreshMaxBtnStatus()
+	self:_refreshMaxBtnStatus()
 end
 
-function var_0_0._refreshMaxBtnStatus(arg_41_0, arg_41_1)
-	local var_41_0 = arg_41_1 or arg_41_0._targetLevel
+function CharacterLevelUpView:_refreshMaxBtnStatus(argsTargetLevel)
+	local targetLevel = argsTargetLevel or self._targetLevel
 
-	if not arg_41_0._heroMO or not var_41_0 or not arg_41_0._maxCanUpLevel then
-		gohelper.setActive(arg_41_0._gomax, false)
+	if not self._heroMO or not targetLevel or not self._maxCanUpLevel then
+		gohelper.setActive(self._gomax, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_41_0._gomax, var_41_0 ~= arg_41_0._maxCanUpLevel)
-	gohelper.setActive(arg_41_0._gomaxlarrow, var_41_0 > arg_41_0._maxCanUpLevel)
-	gohelper.setActive(arg_41_0._gomaxrarrow, var_41_0 < arg_41_0._maxCanUpLevel)
+	gohelper.setActive(self._gomax, targetLevel ~= self._maxCanUpLevel)
+	gohelper.setActive(self._gomaxlarrow, targetLevel > self._maxCanUpLevel)
+	gohelper.setActive(self._gomaxrarrow, targetLevel < self._maxCanUpLevel)
 end
 
-function var_0_0._resetLevelScrollPos(arg_42_0, arg_42_1, arg_42_2)
-	arg_42_0:killTween()
+function CharacterLevelUpView:_resetLevelScrollPos(isNextLevel, isDelay)
+	self:killTween()
 
-	arg_42_0.previewLevel = nil
+	self.previewLevel = nil
 
-	if not arg_42_0._scrolllv then
+	if not self._scrolllv then
 		return
 	end
 
-	arg_42_0._skipScrollAudio = true
+	self._skipScrollAudio = true
 
-	local var_42_0 = arg_42_0:getHeroLevel()
+	local curLevel = self:getHeroLevel()
 
-	if arg_42_0._heroMO and arg_42_1 then
-		local var_42_1 = arg_42_0._heroMO.heroId
-		local var_42_2 = arg_42_0._heroMO.rank
-		local var_42_3 = CharacterModel.instance:getrankEffects(var_42_1, var_42_2)[1]
+	if self._heroMO and isNextLevel then
+		local heroId = self._heroMO.heroId
+		local curRank = self._heroMO.rank
+		local curRankMaxLv = CharacterModel.instance:getrankEffects(heroId, curRank)[1]
 
-		arg_42_0._targetLevel = math.min(var_42_0 + 1, var_42_3)
+		self._targetLevel = math.min(curLevel + 1, curRankMaxLv)
 
-		if arg_42_2 then
-			TaskDispatcher.cancelTask(arg_42_0.delaySetScrollPos, arg_42_0)
-			TaskDispatcher.runDelay(arg_42_0.delaySetScrollPos, arg_42_0, var_0_5)
+		if isDelay then
+			TaskDispatcher.cancelTask(self.delaySetScrollPos, self)
+			TaskDispatcher.runDelay(self.delaySetScrollPos, self, NEXT_FRAME_TIME)
 		else
-			local var_42_4 = arg_42_0:calScrollPos(arg_42_0._targetLevel)
+			local scrollPos = self:calScrollPos(self._targetLevel)
 
-			arg_42_0._scrolllv.horizontalNormalizedPosition = var_42_4
+			self._scrolllv.horizontalNormalizedPosition = scrollPos
 		end
 	else
-		arg_42_0._scrolllv.horizontalNormalizedPosition = 0
-		arg_42_0._targetLevel = var_42_0 or 0
+		self._scrolllv.horizontalNormalizedPosition = 0
+		self._targetLevel = curLevel or 0
 	end
 end
 
-function var_0_0.delaySetScrollPos(arg_43_0)
-	local var_43_0 = arg_43_0:calScrollPos(arg_43_0._targetLevel)
+function CharacterLevelUpView:delaySetScrollPos()
+	local scrollPos = self:calScrollPos(self._targetLevel)
 
-	arg_43_0._scrolllv.horizontalNormalizedPosition = var_43_0
+	self._scrolllv.horizontalNormalizedPosition = scrollPos
 end
 
-function var_0_0.getHeroLevel(arg_44_0, arg_44_1)
-	local var_44_0 = arg_44_0.viewContainer:getLocalUpLevel()
+function CharacterLevelUpView:getHeroLevel(isGetReal)
+	local result = self.viewContainer:getLocalUpLevel()
 
-	if not var_44_0 or arg_44_1 then
-		var_44_0 = arg_44_0._heroMO and arg_44_0._heroMO.level
+	if not result or isGetReal then
+		result = self._heroMO and self._heroMO.level
 	end
 
-	return var_44_0
+	return result
 end
 
-function var_0_0.getLocalCost(arg_45_0)
-	local var_45_0 = {}
+function CharacterLevelUpView:getLocalCost()
+	local result = {}
 
-	if arg_45_0._heroMO then
-		local var_45_1 = arg_45_0:getHeroLevel(true)
-		local var_45_2 = arg_45_0:getHeroLevel()
-		local var_45_3 = HeroConfig.instance:getLevelUpItems(arg_45_0._heroMO.heroId, var_45_1, var_45_2)
+	if self._heroMO then
+		local realHeroLevel = self:getHeroLevel(true)
+		local curLevel = self:getHeroLevel()
+		local items = HeroConfig.instance:getLevelUpItems(self._heroMO.heroId, realHeroLevel, curLevel)
 
-		for iter_45_0 = 1, #var_45_3 do
-			local var_45_4 = var_45_3[iter_45_0]
+		for i = 1, #items do
+			local item = items[i]
 
-			var_45_0[var_45_4.type] = var_45_0[var_45_4.type] or {}
-			var_45_0[var_45_4.type][var_45_4.id] = (var_45_0[var_45_4.type][var_45_4.id] or 0) + var_45_4.quantity
+			result[item.type] = result[item.type] or {}
+			result[item.type][item.id] = (result[item.type][item.id] or 0) + item.quantity
 		end
 	end
 
-	return var_45_0
+	return result
 end
 
-function var_0_0.playLevelUpEff(arg_46_0, arg_46_1)
-	if arg_46_0._anim then
-		arg_46_0._anim:Play(UIAnimationName.Click, 0, 0)
+function CharacterLevelUpView:playLevelUpEff(level)
+	if self._anim then
+		self._anim:Play(UIAnimationName.Click, 0, 0)
 	end
 
-	if arg_46_0._waveAnimation then
-		arg_46_0._waveAnimation:Stop()
-		arg_46_0._waveAnimation:Play()
+	if self._waveAnimation then
+		self._waveAnimation:Stop()
+		self._waveAnimation:Play()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_role_upgrade_2)
-	CharacterController.instance:dispatchEvent(CharacterEvent.characterLevelItemPlayEff, arg_46_1)
+	CharacterController.instance:dispatchEvent(CharacterEvent.characterLevelItemPlayEff, level)
 end
 
-function var_0_0.onClose(arg_47_0)
-	arg_47_0:removeEvents()
-	arg_47_0:clearVar()
-	TaskDispatcher.cancelTask(arg_47_0.dispatchLevelScrollChange, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0.delaySetScrollPos, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._delayRefreshView, arg_47_0)
-	arg_47_0:_localLevelUpConfirmSend()
+function CharacterLevelUpView:onClose()
+	self:removeEvents()
+	self:clearVar()
+	TaskDispatcher.cancelTask(self.dispatchLevelScrollChange, self)
+	TaskDispatcher.cancelTask(self.delaySetScrollPos, self)
+	TaskDispatcher.cancelTask(self._delayRefreshView, self)
+	self:_localLevelUpConfirmSend()
 end
 
-function var_0_0.onDestroyView(arg_48_0)
-	for iter_48_0 = 1, 2 do
-		local var_48_0 = arg_48_0._tipitems[iter_48_0]
+function CharacterLevelUpView:onDestroyView()
+	for i = 1, 2 do
+		local tipItem = self._tipitems[i]
 
-		var_48_0.icon:UnLoadImage()
-		var_48_0.btn:RemoveClickListener()
+		tipItem.icon:UnLoadImage()
+		tipItem.btn:RemoveClickListener()
 
-		var_48_0.type = nil
-		var_48_0.id = nil
+		tipItem.type = nil
+		tipItem.id = nil
 	end
 end
 
-return var_0_0
+return CharacterLevelUpView

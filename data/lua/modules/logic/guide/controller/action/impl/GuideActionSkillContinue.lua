@@ -1,11 +1,13 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionSkillContinue", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionSkillContinue.lua
 
-local var_0_0 = class("GuideActionSkillContinue", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionSkillContinue", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionSkillContinue = class("GuideActionSkillContinue", BaseGuideAction)
+
+function GuideActionSkillContinue:onStart(context)
+	GuideActionSkillContinue.super.onStart(self, context)
 	FightController.instance:dispatchEvent(FightEvent.OnGuideBeforeSkillContinue)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return GuideActionSkillContinue

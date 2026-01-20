@@ -1,71 +1,73 @@
-﻿module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicBeatModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/model/VersionActivity2_4MusicBeatModel.lua
 
-local var_0_0 = class("VersionActivity2_4MusicBeatModel", BaseModel)
+module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicBeatModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local VersionActivity2_4MusicBeatModel = class("VersionActivity2_4MusicBeatModel", BaseModel)
+
+function VersionActivity2_4MusicBeatModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function VersionActivity2_4MusicBeatModel:reInit()
 	return
 end
 
-function var_0_0.onStart(arg_3_0, arg_3_1)
+function VersionActivity2_4MusicBeatModel:onStart(episodeId)
 	VersionActivity2_4MusicController.instance:initBgm()
 
-	arg_3_0._episodeId = arg_3_1
+	self._episodeId = episodeId
 
-	local var_3_0, var_3_1 = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.Score)
+	local _, score = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.Score)
 
-	arg_3_0._scoreList = string.splitToNumber(var_3_1, "#")
+	self._scoreList = string.splitToNumber(score, "#")
 
-	local var_3_2, var_3_3 = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.ScoreTime)
-	local var_3_4 = GameUtil.splitString2(var_3_3, true, "|", "#")
+	local _, scoreTime = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.ScoreTime)
+	local list = GameUtil.splitString2(scoreTime, true, "|", "#")
 
-	arg_3_0._scoreShowTimeList = var_3_4[1]
-	arg_3_0._scoreTimeList = {}
-	arg_3_0._scoreTimeList[VersionActivity2_4MusicEnum.BeatGrade.Perfect] = var_3_4[2]
-	arg_3_0._scoreTimeList[VersionActivity2_4MusicEnum.BeatGrade.Great] = var_3_4[3]
-	arg_3_0._scoreTimeList[VersionActivity2_4MusicEnum.BeatGrade.Cool] = var_3_4[1]
-	arg_3_0._successCount = 0
+	self._scoreShowTimeList = list[1]
+	self._scoreTimeList = {}
+	self._scoreTimeList[VersionActivity2_4MusicEnum.BeatGrade.Perfect] = list[2]
+	self._scoreTimeList[VersionActivity2_4MusicEnum.BeatGrade.Great] = list[3]
+	self._scoreTimeList[VersionActivity2_4MusicEnum.BeatGrade.Cool] = list[1]
+	self._successCount = 0
 end
 
-function var_0_0.getSuccessCount(arg_4_0)
-	return arg_4_0._successCount
+function VersionActivity2_4MusicBeatModel:getSuccessCount()
+	return self._successCount
 end
 
-function var_0_0.setSuccessCount(arg_5_0, arg_5_1)
-	arg_5_0._successCount = arg_5_1
+function VersionActivity2_4MusicBeatModel:setSuccessCount(count)
+	self._successCount = count
 end
 
-function var_0_0.getEpisodeId(arg_6_0)
-	return arg_6_0._episodeId
+function VersionActivity2_4MusicBeatModel:getEpisodeId()
+	return self._episodeId
 end
 
-function var_0_0.updateGradleList(arg_7_0, arg_7_1)
-	arg_7_0._gradeList = arg_7_1
+function VersionActivity2_4MusicBeatModel:updateGradleList(list)
+	self._gradeList = list
 end
 
-function var_0_0.getGradleList(arg_8_0)
-	return arg_8_0._gradeList or {}
+function VersionActivity2_4MusicBeatModel:getGradleList()
+	return self._gradeList or {}
 end
 
-function var_0_0.getShowTime(arg_9_0)
-	return arg_9_0._scoreShowTimeList[1]
+function VersionActivity2_4MusicBeatModel:getShowTime()
+	return self._scoreShowTimeList[1]
 end
 
-function var_0_0.getHideTime(arg_10_0)
-	return arg_10_0._scoreShowTimeList[2]
+function VersionActivity2_4MusicBeatModel:getHideTime()
+	return self._scoreShowTimeList[2]
 end
 
-function var_0_0.getScoreTimeList(arg_11_0)
-	return arg_11_0._scoreTimeList
+function VersionActivity2_4MusicBeatModel:getScoreTimeList()
+	return self._scoreTimeList
 end
 
-function var_0_0.getGradeScore(arg_12_0, arg_12_1)
-	return arg_12_0._scoreList and arg_12_0._scoreList[arg_12_1] or 0
+function VersionActivity2_4MusicBeatModel:getGradeScore(index)
+	return self._scoreList and self._scoreList[index] or 0
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity2_4MusicBeatModel.instance = VersionActivity2_4MusicBeatModel.New()
 
-return var_0_0
+return VersionActivity2_4MusicBeatModel

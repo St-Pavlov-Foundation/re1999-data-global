@@ -1,229 +1,235 @@
-﻿module("modules.logic.roomfishing.view.RoomViewUIFishingItem", package.seeall)
+﻿-- chunkname: @modules/logic/roomfishing/view/RoomViewUIFishingItem.lua
 
-local var_0_0 = class("RoomViewUIFishingItem", RoomViewUIBaseItem)
+module("modules.logic.roomfishing.view.RoomViewUIFishingItem", package.seeall)
 
-function var_0_0._customOnInit(arg_1_0)
-	arg_1_0._simageProp = gohelper.findChildSingleImage(arg_1_0._gocontainer, "#simage_Prop")
-	arg_1_0._goNum = gohelper.findChild(arg_1_0._gocontainer, "Num")
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0._gocontainer, "Num/#txt_Num")
-	arg_1_0._gounfishing = gohelper.findChild(arg_1_0._gocontainer, "#go_unfishing")
-	arg_1_0._gofishing = gohelper.findChild(arg_1_0._gocontainer, "#go_fishing")
-	arg_1_0._txtTime = gohelper.findChildText(arg_1_0._gocontainer, "#go_fishing/#txt_RemainTime")
-	arg_1_0._transtipnode = gohelper.findChild(arg_1_0._gocontainer, "#go_tipNode").transform
+local RoomViewUIFishingItem = class("RoomViewUIFishingItem", RoomViewUIBaseItem)
 
-	arg_1_0:refreshUI(true)
+function RoomViewUIFishingItem:_customOnInit()
+	self._simageProp = gohelper.findChildSingleImage(self._gocontainer, "#simage_Prop")
+	self._goNum = gohelper.findChild(self._gocontainer, "Num")
+	self._txtNum = gohelper.findChildText(self._gocontainer, "Num/#txt_Num")
+	self._gounfishing = gohelper.findChild(self._gocontainer, "#go_unfishing")
+	self._gofishing = gohelper.findChild(self._gocontainer, "#go_fishing")
+	self._txtTime = gohelper.findChildText(self._gocontainer, "#go_fishing/#txt_RemainTime")
+	self._transtipnode = gohelper.findChild(self._gocontainer, "#go_tipNode").transform
+
+	self:refreshUI(true)
 end
 
-function var_0_0._customAddEventListeners(arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, arg_2_0._onFishingInfoUpdate, arg_2_0)
-	arg_2_0:addEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, arg_2_0._onFishingProgressUpdate, arg_2_0)
+function RoomViewUIFishingItem:_customAddEventListeners()
+	self:addEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, self._onFishingInfoUpdate, self)
+	self:addEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, self._onFishingProgressUpdate, self)
 end
 
-function var_0_0._customRemoveEventListeners(arg_3_0)
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, arg_3_0._onFishingInfoUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, arg_3_0._onFishingProgressUpdate, arg_3_0)
+function RoomViewUIFishingItem:_customRemoveEventListeners()
+	self:removeEventCb(FishingController.instance, FishingEvent.OnFishingInfoUpdate, self._onFishingInfoUpdate, self)
+	self:removeEventCb(FishingController.instance, FishingEvent.OnFishingProgressUpdate, self._onFishingProgressUpdate, self)
 end
 
-function var_0_0._onClick(arg_4_0, arg_4_1, arg_4_2)
+function RoomViewUIFishingItem:_onClick(go, param)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	local var_4_0 = arg_4_0:getBuildingMO()
+	local buildingMO = self:getBuildingMO()
 
-	if not var_4_0 then
-		arg_4_0:_cameraTweenFinish()
-
-		return
-	end
-
-	local var_4_1 = arg_4_0._scene.camera:getCameraState()
-	local var_4_2 = arg_4_0._scene.camera:getCameraFocus()
-	local var_4_3 = HexMath.hexToPosition(var_4_0.hexPoint, RoomBlockEnum.BlockSize)
-	local var_4_4 = var_4_3.x
-	local var_4_5 = var_4_3.y
-
-	if var_4_1 == RoomEnum.CameraState.OverlookAll and math.abs(var_4_2.x - var_4_4) < 0.1 and math.abs(var_4_2.y - var_4_5) < 0.1 then
-		arg_4_0:_cameraTweenFinish()
+	if not buildingMO then
+		self:_cameraTweenFinish()
 
 		return
 	end
 
-	arg_4_0._scene.camera:switchCameraState(RoomEnum.CameraState.OverlookAll, {
-		focusX = var_4_4,
-		focusY = var_4_5
-	}, nil, arg_4_0._cameraTweenFinish, arg_4_0)
-end
+	local camState = self._scene.camera:getCameraState()
+	local cameraFocus = self._scene.camera:getCameraFocus()
+	local pos = HexMath.hexToPosition(buildingMO.hexPoint, RoomBlockEnum.BlockSize)
+	local targetX = pos.x
+	local targetY = pos.y
 
-function var_0_0._cameraTweenFinish(arg_5_0)
-	local var_5_0 = FishingModel.instance:getCurShowingUserId()
-
-	if FishingModel.instance:getIsFishingInUserPool(var_5_0) then
-		return
-	end
-
-	FishingController.instance:dispatchEvent(FishingEvent.ShowFishingTip, arg_5_0._transtipnode.position)
-end
-
-function var_0_0._onFishingInfoUpdate(arg_6_0)
-	arg_6_0:_onInfoUpdate()
-end
-
-function var_0_0._onFishingProgressUpdate(arg_7_0)
-	arg_7_0:_onInfoUpdate()
-end
-
-function var_0_0._onInfoUpdate(arg_8_0)
-	arg_8_0:_refreshItem()
-
-	local var_8_0 = false
-	local var_8_1 = FishingModel.instance:getCurShowingUserId()
-	local var_8_2 = FishingModel.instance:getIsFishingInUserPool(var_8_1)
-
-	if arg_8_0._isShowFishing ~= var_8_2 then
-		var_8_0 = true
-	end
-
-	arg_8_0:_refreshStatus(var_8_0)
-end
-
-function var_0_0.refreshUI(arg_9_0, arg_9_1)
-	arg_9_0:_refreshShow(arg_9_1)
-	arg_9_0:_refreshItem()
-	arg_9_0:_refreshPosition()
-	arg_9_0:_refreshStatus()
-end
-
-function var_0_0._refreshItem(arg_10_0)
-	local var_10_0 = FishingModel.instance:getCurFishingPoolItem()
-
-	if not var_10_0 then
-		return
-	end
-
-	local var_10_1, var_10_2 = ItemModel.instance:getItemConfigAndIcon(var_10_0[1], var_10_0[2])
-
-	arg_10_0._simageProp:LoadImage(var_10_2)
-end
-
-function var_0_0._refreshShow(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._scene.camera:getCameraState()
-
-	if var_11_0 ~= RoomEnum.CameraState.Overlook and var_11_0 ~= RoomEnum.CameraState.OverlookAll then
-		arg_11_0:_setShow(false, arg_11_1)
+	if camState == RoomEnum.CameraState.OverlookAll and math.abs(cameraFocus.x - targetX) < 0.1 and math.abs(cameraFocus.y - targetY) < 0.1 then
+		self:_cameraTweenFinish()
 
 		return
 	end
 
-	local var_11_1 = arg_11_0:getBuildingEntity() ~= nil
-
-	arg_11_0:_setShow(var_11_1, arg_11_1)
-	arg_11_0:_refreshStatus()
+	self._scene.camera:switchCameraState(RoomEnum.CameraState.OverlookAll, {
+		focusX = targetX,
+		focusY = targetY
+	}, nil, self._cameraTweenFinish, self)
 end
 
-function var_0_0._refreshStatus(arg_12_0, arg_12_1)
-	local var_12_0
-	local var_12_1 = "room_task_in"
-	local var_12_2 = FishingModel.instance:getCurShowingUserId()
-	local var_12_3 = FishingModel.instance:getIsFishingInUserPool(var_12_2)
+function RoomViewUIFishingItem:_cameraTweenFinish()
+	local curPoolUserId = FishingModel.instance:getCurShowingUserId()
+	local isFishing = FishingModel.instance:getIsFishingInUserPool(curPoolUserId)
 
-	if var_12_3 then
-		arg_12_0:_refreshTime()
-		TaskDispatcher.cancelTask(arg_12_0._refreshTime, arg_12_0)
-		TaskDispatcher.runRepeat(arg_12_0._refreshTime, arg_12_0, TimeUtil.OneSecond)
+	if isFishing then
+		return
+	end
 
-		local var_12_4 = FishingModel.instance:getCurFishingPoolItem()
+	FishingController.instance:dispatchEvent(FishingEvent.ShowFishingTip, self._transtipnode.position)
+end
 
-		if var_12_4 then
-			local var_12_5 = FishingModel.instance:getFishingTimes(var_12_2)
+function RoomViewUIFishingItem:_onFishingInfoUpdate()
+	self:_onInfoUpdate()
+end
 
-			arg_12_0._txtNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), var_12_4[3] * var_12_5)
+function RoomViewUIFishingItem:_onFishingProgressUpdate()
+	self:_onInfoUpdate()
+end
 
-			gohelper.setActive(arg_12_0._goNum, true)
+function RoomViewUIFishingItem:_onInfoUpdate()
+	self:_refreshItem()
+
+	local playSwitchAnim = false
+	local curPoolUserId = FishingModel.instance:getCurShowingUserId()
+	local isFishing = FishingModel.instance:getIsFishingInUserPool(curPoolUserId)
+
+	if self._isShowFishing ~= isFishing then
+		playSwitchAnim = true
+	end
+
+	self:_refreshStatus(playSwitchAnim)
+end
+
+function RoomViewUIFishingItem:refreshUI(isInit)
+	self:_refreshShow(isInit)
+	self:_refreshItem()
+	self:_refreshPosition()
+	self:_refreshStatus()
+end
+
+function RoomViewUIFishingItem:_refreshItem()
+	local itemData = FishingModel.instance:getCurFishingPoolItem()
+
+	if not itemData then
+		return
+	end
+
+	local _, icon = ItemModel.instance:getItemConfigAndIcon(itemData[1], itemData[2])
+
+	self._simageProp:LoadImage(icon)
+end
+
+function RoomViewUIFishingItem:_refreshShow(isInit)
+	local cameraState = self._scene.camera:getCameraState()
+
+	if cameraState ~= RoomEnum.CameraState.Overlook and cameraState ~= RoomEnum.CameraState.OverlookAll then
+		self:_setShow(false, isInit)
+
+		return
+	end
+
+	local hasBuilding = self:getBuildingEntity() ~= nil
+
+	self:_setShow(hasBuilding, isInit)
+	self:_refreshStatus()
+end
+
+function RoomViewUIFishingItem:_refreshStatus(playAnim)
+	local audioId
+	local animName = "room_task_in"
+	local curPoolUserId = FishingModel.instance:getCurShowingUserId()
+	local isFishing = FishingModel.instance:getIsFishingInUserPool(curPoolUserId)
+
+	if isFishing then
+		self:_refreshTime()
+		TaskDispatcher.cancelTask(self._refreshTime, self)
+		TaskDispatcher.runRepeat(self._refreshTime, self, TimeUtil.OneSecond)
+
+		local itemData = FishingModel.instance:getCurFishingPoolItem()
+
+		if itemData then
+			local fishingTimes = FishingModel.instance:getFishingTimes(curPoolUserId)
+
+			self._txtNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multi_num"), itemData[3] * fishingTimes)
+
+			gohelper.setActive(self._goNum, true)
 		end
 
-		gohelper.setActive(arg_12_0._gofishing, true)
-		gohelper.setActive(arg_12_0._gounfishing, true)
+		gohelper.setActive(self._gofishing, true)
+		gohelper.setActive(self._gounfishing, true)
 
-		var_12_1 = "switch"
-		var_12_0 = AudioEnum3_1.RoomFishing.ui_home_mingdi_dalao
+		animName = "switch"
+		audioId = AudioEnum3_1.RoomFishing.ui_home_mingdi_dalao
 	else
-		gohelper.setActive(arg_12_0._gofishing, false)
-		gohelper.setActive(arg_12_0._gounfishing, true)
-		gohelper.setActive(arg_12_0._goNum, false)
+		gohelper.setActive(self._gofishing, false)
+		gohelper.setActive(self._gounfishing, true)
+		gohelper.setActive(self._goNum, false)
 	end
 
-	arg_12_0._isShowFishing = var_12_3
+	self._isShowFishing = isFishing
 
-	if arg_12_1 then
-		arg_12_0._baseAnimator:Play(var_12_1, 0, 0)
+	if playAnim then
+		self._baseAnimator:Play(animName, 0, 0)
 
-		if var_12_0 then
-			AudioMgr.instance:trigger(var_12_0)
+		if audioId then
+			AudioMgr.instance:trigger(audioId)
 		end
 	else
-		arg_12_0._baseAnimator:Play(var_12_1, 0, 1)
+		self._baseAnimator:Play(animName, 0, 1)
 	end
 end
 
-function var_0_0._refreshTime(arg_13_0)
-	local var_13_0 = FishingModel.instance:getCurShowingUserId()
-	local var_13_1 = FishingModel.instance:getRemainFishingTime(var_13_0)
-	local var_13_2, var_13_3, var_13_4 = TimeUtil.secondToHMS(var_13_1)
-	local var_13_5 = string.format("%02d", var_13_2)
-	local var_13_6 = string.format("%02d", var_13_3)
-	local var_13_7 = string.format("%02d", var_13_4)
+function RoomViewUIFishingItem:_refreshTime()
+	local curPoolUserId = FishingModel.instance:getCurShowingUserId()
+	local remainSecond = FishingModel.instance:getRemainFishingTime(curPoolUserId)
+	local hour, minute, second = TimeUtil.secondToHMS(remainSecond)
 
-	arg_13_0._txtTime.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("RoomFishing_fishing_time"), var_13_5, var_13_6, var_13_7)
+	hour = string.format("%02d", hour)
+	minute = string.format("%02d", minute)
+	second = string.format("%02d", second)
+	self._txtTime.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("RoomFishing_fishing_time"), hour, minute, second)
 
-	if var_13_1 <= 0 then
-		TaskDispatcher.cancelTask(arg_13_0._refreshTime, arg_13_0)
+	if remainSecond <= 0 then
+		TaskDispatcher.cancelTask(self._refreshTime, self)
 	end
 end
 
-function var_0_0.getUI3DPos(arg_14_0)
-	local var_14_0 = arg_14_0:getBuildingEntity()
+function RoomViewUIFishingItem:getUI3DPos()
+	local buildingEntity = self:getBuildingEntity()
 
-	if not var_14_0 then
-		arg_14_0:_setShow(false, true)
+	if not buildingEntity then
+		self:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	local var_14_1 = var_14_0.containerGO
-	local var_14_2 = var_14_0:getHeadGO()
-	local var_14_3 = var_14_2 and var_14_2.transform.position or var_14_1.transform.position
-	local var_14_4 = Vector3(var_14_3.x, var_14_3.y, var_14_3.z)
+	local containerGo = buildingEntity.containerGO
+	local headGO = buildingEntity:getHeadGO()
+	local position = headGO and headGO.transform.position or containerGo.transform.position
+	local worldPos = Vector3(position.x, position.y, position.z)
+	local bendingPos = RoomBendingHelper.worldToBendingSimple(worldPos)
 
-	return (RoomBendingHelper.worldToBendingSimple(var_14_4))
+	return bendingPos
 end
 
-function var_0_0.getBuildingMO(arg_15_0)
-	local var_15_0 = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
+function RoomViewUIFishingItem:getBuildingMO()
+	local buildingList = RoomMapBuildingModel.instance:getBuildingListByType(RoomBuildingEnum.BuildingType.Fishing)
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			local var_15_1 = iter_15_1:getBelongUserId()
-			local var_15_2 = PlayerModel.instance:getMyUserId()
+	if buildingList then
+		for _, buildingMO in ipairs(buildingList) do
+			local belongUserId = buildingMO:getBelongUserId()
+			local myUserId = PlayerModel.instance:getMyUserId()
 
-			if var_15_1 and var_15_1 == var_15_2 then
-				return iter_15_1
+			if belongUserId and belongUserId == myUserId then
+				return buildingMO
 			end
 		end
 	end
 end
 
-function var_0_0.getBuildingEntity(arg_16_0)
-	local var_16_0 = arg_16_0:getBuildingMO()
+function RoomViewUIFishingItem:getBuildingEntity()
+	local buildingMO = self:getBuildingMO()
 
-	if var_16_0 then
-		return (arg_16_0._scene.buildingmgr:getBuildingEntity(var_16_0.buildingUid, SceneTag.RoomBuilding))
+	if buildingMO then
+		local buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingMO.buildingUid, SceneTag.RoomBuilding)
+
+		return buildingEntity
 	end
 end
 
-function var_0_0._customOnDestory(arg_17_0)
-	arg_17_0._simageProp:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_17_0._refreshTime, arg_17_0)
+function RoomViewUIFishingItem:_customOnDestory()
+	self._simageProp:UnLoadImage()
+	TaskDispatcher.cancelTask(self._refreshTime, self)
 end
 
-var_0_0.prefabPath = "ui/viewres/room/fish/roomfishbubbleui.prefab"
+RoomViewUIFishingItem.prefabPath = "ui/viewres/room/fish/roomfishbubbleui.prefab"
 
-return var_0_0
+return RoomViewUIFishingItem

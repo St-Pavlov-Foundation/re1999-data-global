@@ -1,227 +1,198 @@
-﻿module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/newcultivationgift/view/VersionActivity2_3NewCultivationGiftView.lua
 
-local var_0_0 = class("VersionActivity2_3NewCultivationGiftView", BaseView)
+module("modules.logic.versionactivity2_3.newcultivationgift.view.VersionActivity2_3NewCultivationGiftView", package.seeall)
 
-var_0_0.REMAIN_TIME_REFRESH_INTERVAL = 10
+local VersionActivity2_3NewCultivationGiftView = class("VersionActivity2_3NewCultivationGiftView", BaseView)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_FullBG/#simage_Title")
-	arg_1_0._simageTitle2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_FullBG/#simage_Title2")
-	arg_1_0._simagerole = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_FullBG/#simage_role")
-	arg_1_0._simagedec1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_FullBG/#simage_dec1")
-	arg_1_0._simagedec2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_FullBG/#simage_dec2")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	arg_1_0._btnreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/reward/#btn_reward")
-	arg_1_0._btnstone = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/stone/txt_dec/#btn_stone")
-	arg_1_0._btnget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/Btn/#btn_get")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "Root/Btn/hasget")
+function VersionActivity2_3NewCultivationGiftView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_FullBG/#simage_Title")
+	self._simageTitle2 = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_FullBG/#simage_Title2")
+	self._simagerole = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_FullBG/#simage_role")
+	self._simagedec1 = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_FullBG/#simage_dec1")
+	self._simagedec2 = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_FullBG/#simage_dec2")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "Root/reward/#btn_reward")
+	self._btnstone = gohelper.findChildButtonWithAudio(self.viewGO, "Root/stone/txt_dec/#btn_stone")
+	self._gokeyword = gohelper.findChild(self.viewGO, "Root/stone/#go_keyword")
+	self._btnget = gohelper.findChildButtonWithAudio(self.viewGO, "Root/Btn/#btn_get")
+	self._gohasget = gohelper.findChild(self.viewGO, "Root/Btn/hasget")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnstone:AddClickListener(arg_2_0._btnstoneOnClick, arg_2_0)
-	arg_2_0._btnget:AddClickListener(arg_2_0._btngetOnClick, arg_2_0)
-	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, arg_2_0.onEpisodeFinished, arg_2_0)
-	TaskDispatcher.runRepeat(arg_2_0.refreshRemainTime, arg_2_0, arg_2_0.REMAIN_TIME_REFRESH_INTERVAL)
+function VersionActivity2_3NewCultivationGiftView:addEvents()
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnstone:AddClickListener(self._btnstoneOnClick, self)
+	self._btnget:AddClickListener(self._btngetOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnstone:RemoveClickListener()
-	arg_3_0._btnget:RemoveClickListener()
-	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, arg_3_0.onEpisodeFinished, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.refreshRemainTime, arg_3_0)
+function VersionActivity2_3NewCultivationGiftView:removeEvents()
+	self._btnreward:RemoveClickListener()
+	self._btnstone:RemoveClickListener()
+	self._btnget:RemoveClickListener()
 end
 
-function var_0_0._btnrewardOnClick(arg_4_0)
-	local var_4_0 = {
-		actId = arg_4_0._actId,
+function VersionActivity2_3NewCultivationGiftView:ctor(...)
+	VersionActivity2_3NewCultivationGiftView.super.ctor(self, ...)
+
+	self._itemList = {}
+end
+
+function VersionActivity2_3NewCultivationGiftView:_actId()
+	return self.viewContainer:actId()
+end
+
+function VersionActivity2_3NewCultivationGiftView:_btnrewardOnClick()
+	local param = {
+		actId = self:_actId(),
 		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Reward
 	}
 
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_4_0)
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, param)
 end
 
-function var_0_0._btnstoneOnClick(arg_5_0)
-	local var_5_0 = VersionActivity2_3NewCultivationDestinyModel.instance:getDestinyStoneById(arg_5_0._actId)
-	local var_5_1 = {
-		actId = arg_5_0._actId,
-		destinyId = var_5_0,
-		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Effect
+function VersionActivity2_3NewCultivationGiftView:_btnstoneOnClick()
+	local param = {
+		actId = self:_actId(),
+		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Effect,
+		destinyId = self.viewContainer:getDestinyStoneById()
 	}
 
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_5_1)
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, param)
 end
 
-function var_0_0._btnrewarddetailOnClick(arg_6_0)
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationGiftRewardView)
-end
-
-function var_0_0._btndetailOnClick(arg_7_0)
-	return
-end
-
-function var_0_0._btngetOnClick(arg_8_0)
-	if not Activity125Model.instance:isActivityOpen(arg_8_0._actId) then
+function VersionActivity2_3NewCultivationGiftView:_btngetOnClick()
+	if not self.viewContainer:isActivityOpen(self:_actId()) then
 		GameFacade.showToast(ToastEnum.ActivityNotInOpenTime)
 
 		return
 	end
 
-	local var_8_0 = Activity125Model.instance:getById(arg_8_0._actId)
+	local isClaimed = self.viewContainer:isClaimed()
 
-	if var_8_0 == nil then
+	if isClaimed then
 		return
 	end
 
-	local var_8_1 = var_8_0:getEpisodeList()
-
-	if var_8_1 == nil or #var_8_1 <= 0 then
-		return
-	end
-
-	local var_8_2 = var_8_1[1].id
-
-	if var_8_0:isEpisodeFinished(var_8_2) then
-		return
-	end
-
-	logNormal(string.format("_btninviteOnClick actId: %s episodeId: %s", tostring(arg_8_0._actId), tostring(var_8_2)))
-
-	local var_8_3 = Activity125Config.instance:getEpisodeConfig(arg_8_0._actId, var_8_2)
-
-	Activity125Controller.instance:onFinishActEpisode(arg_8_0._actId, var_8_2, var_8_3.targetFrequency)
+	self.viewContainer:sendFinishAct125EpisodeRequest()
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._goKeywordParent = gohelper.findChild(arg_9_0.viewGO, "Root/stone/#go_keyword")
-	arg_9_0._keywordItemList = {}
+function VersionActivity2_3NewCultivationGiftView:_onDataUpdate()
+	self:onUpdateParam()
+end
 
-	local var_9_0 = arg_9_0._goKeywordParent.transform.childCount
+function VersionActivity2_3NewCultivationGiftView:_editableInitView()
+	self._txtLimitTime.text = ""
 
-	for iter_9_0 = 1, var_9_0 do
-		local var_9_1 = arg_9_0._goKeywordParent.transform:GetChild(iter_9_0 - 1)
-		local var_9_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1.gameObject, VersionActivity2_3NewCultivationKeywordItem)
+	local parentTran = self._gokeyword.transform
+	local childCount = parentTran.childCount
 
-		table.insert(arg_9_0._keywordItemList, var_9_2)
+	for i = 1, childCount do
+		local t = parentTran:GetChild(i - 1)
+		local item = self:_create_VersionActivity2_3NewCultivationKeywordItem(t.gameObject, i)
+
+		table.insert(self._itemList, item)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_10_0)
-	return
+function VersionActivity2_3NewCultivationGiftView:onUpdateParam()
+	self:_refresh()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	local var_11_0 = arg_11_0.viewParam.parent
+function VersionActivity2_3NewCultivationGiftView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_11_0, arg_11_0.viewGO)
-
-	local var_11_1 = arg_11_0.viewParam.actId
-
-	arg_11_0._actId = var_11_1
-
-	Activity125Controller.instance:getAct125InfoFromServer(var_11_1)
+	gohelper.addChild(parentGO, self.viewGO)
+	self:onStart()
 end
 
-function var_0_0.onEpisodeFinished(arg_12_0)
-	local var_12_0 = Activity125Model.instance:getById(arg_12_0._actId)
-
-	if var_12_0 == nil then
-		return
-	end
-
-	local var_12_1 = var_12_0:getEpisodeList()
-
-	if var_12_1 == nil or #var_12_1 <= 0 then
-		return
-	end
-
-	logNormal(string.format("onEpisodeFinished actId: %s", tostring(arg_12_0._actId)))
-	arg_12_0:_refreshUI()
+function VersionActivity2_3NewCultivationGiftView:onStart()
+	self.viewContainer:setCurSelectEpisodeIdSlient(self.viewContainer:episodeId())
+	Activity125Controller.instance:registerCallback(Activity125Event.DataUpdate, self._onDataUpdate, self)
+	self:onUpdateParam()
 end
 
-function var_0_0._refreshUI(arg_13_0)
-	local var_13_0 = Activity125Model.instance:getById(arg_13_0._actId)
+function VersionActivity2_3NewCultivationGiftView:_refresh()
+	local isClaimed = self.viewContainer:isClaimed()
 
-	if var_13_0 == nil then
-		return
-	end
-
-	local var_13_1 = var_13_0:getEpisodeList()
-
-	if var_13_1 == nil or #var_13_1 <= 0 then
-		return
-	end
-
-	local var_13_2 = var_13_1[1].id
-	local var_13_3 = var_13_0:isEpisodeFinished(var_13_2)
-
-	gohelper.setActive(arg_13_0._btnget, not var_13_3)
-	gohelper.setActive(arg_13_0._gohasget, var_13_3)
-	arg_13_0:refreshRemainTime()
-	arg_13_0:_refreshKeyword()
+	gohelper.setActive(self._btnget, not isClaimed)
+	gohelper.setActive(self._gohasget, isClaimed)
+	self:_refreshRemainTime()
+	TaskDispatcher.cancelTask(self._refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self._refreshRemainTime, self, 1)
+	self:_refreshList()
 end
 
-function var_0_0._refreshKeyword(arg_14_0)
-	local var_14_0 = ActivityConfig.instance:getActivityCo(arg_14_0._actId).param
-	local var_14_1 = string.nilorempty(var_14_0)
+function VersionActivity2_3NewCultivationGiftView:_refreshList()
+	local stoneIds = self.viewContainer:getDestinyStoneById()
+	local keywordCount = #stoneIds
+	local isEmpty = keywordCount == 0
 
-	gohelper.setActive(arg_14_0._goKeywordParent, not var_14_1)
+	gohelper.setActive(self._gokeyword, not isEmpty)
 
-	if var_14_1 then
+	if isEmpty then
 		return
 	end
 
-	local var_14_2 = string.splitToNumber(var_14_0, "#")
+	local goCount = #self._itemList
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_2) do
-		local var_14_3 = arg_14_0._keywordItemList[iter_14_0]
+	for index, stoneId in ipairs(stoneIds) do
+		local item = self._itemList[index]
 
-		if not var_14_3 then
-			logError("狂想预热数量超过上限")
-		else
-			local var_14_4 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(iter_14_1)
+		if not item then
+			logError("error 狂想预热数量超过prefab node超过上限: 配置需要" .. tostring(keywordCount) .. "个, 但资源只有" .. tostring(goCount) .. "个")
 
-			var_14_3:refreshKeyword(var_14_4.keyword)
+			break
 		end
+
+		local destinyFacetConsumeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(stoneId)
+
+		item:refreshKeyword(destinyFacetConsumeCo.keyword)
 	end
 
-	local var_14_5 = #arg_14_0._keywordItemList
-	local var_14_6 = #var_14_2
+	for i = keywordCount + 1, goCount do
+		local item = self._itemList[i]
 
-	if var_14_6 < var_14_5 then
-		for iter_14_2 = var_14_6 + 1, var_14_5 do
-			arg_14_0._keywordItemList[iter_14_2]:refreshKeyword(nil)
-		end
+		item:refreshKeyword(nil)
 	end
 end
 
-function var_0_0.refreshRemainTime(arg_15_0)
-	local var_15_0 = ActivityModel.instance:getActMO(arg_15_0._actId):getRealEndTimeStamp()
-	local var_15_1 = ServerTime.now()
+function VersionActivity2_3NewCultivationGiftView:_refreshRemainTime()
+	local actInfo = self.viewContainer:ActivityInfoMo()
+	local endTime = actInfo:getRealEndTimeStamp()
+	local nowTime = ServerTime.now()
 
-	if var_15_0 <= var_15_1 then
-		arg_15_0._txtLimitTime.text = luaLang("ended")
+	if endTime <= nowTime then
+		self._txtLimitTime.text = luaLang("ended")
+	else
+		local dataStr = TimeUtil.SecondToActivityTimeFormat(endTime - nowTime)
 
-		return
+		self._txtLimitTime.text = dataStr
 	end
-
-	local var_15_2 = TimeUtil.SecondToActivityTimeFormat(var_15_0 - var_15_1)
-
-	arg_15_0._txtLimitTime.text = var_15_2
 end
 
-function var_0_0.onClose(arg_16_0)
-	return
+function VersionActivity2_3NewCultivationGiftView:_create_VersionActivity2_3NewCultivationKeywordItem(go, index)
+	local item = VersionActivity2_3NewCultivationKeywordItem.New({
+		parent = self,
+		baseViewContainer = self.viewContainer
+	})
+
+	item:setIndex(index)
+	item:init(go)
+
+	return item
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	return
+function VersionActivity2_3NewCultivationGiftView:onClose()
+	Activity125Controller.instance:unregisterCallback(Activity125Event.DataUpdate, self._onDataUpdate, self)
+	TaskDispatcher.cancelTask(self._refreshRemainTime, self)
 end
 
-return var_0_0
+function VersionActivity2_3NewCultivationGiftView:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_itemList")
+end
+
+return VersionActivity2_3NewCultivationGiftView

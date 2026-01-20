@@ -1,113 +1,116 @@
-﻿module("modules.logic.explore.map.unit.comp.ExplorePipeComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/comp/ExplorePipeComp.lua
 
-local var_0_0 = class("ExplorePipeComp", LuaCompBase)
-local var_0_1 = UnityEngine.Shader.PropertyToID("_GasColor")
-local var_0_2 = UnityEngine.Shader.PropertyToID("_Fade")
-local var_0_3 = UnityEngine.Shader.PropertyToID("_Process")
+module("modules.logic.explore.map.unit.comp.ExplorePipeComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.unit = arg_1_1
-	arg_1_0._allMatDict = {}
-	arg_1_0._dirToPipeType = {}
-	arg_1_0._fromColor = {}
-	arg_1_0._toColor = {}
+local ExplorePipeComp = class("ExplorePipeComp", LuaCompBase)
+local mainColorId = UnityEngine.Shader.PropertyToID("_GasColor")
+local fadeId = UnityEngine.Shader.PropertyToID("_Fade")
+local processId = UnityEngine.Shader.PropertyToID("_Process")
+
+function ExplorePipeComp:ctor(unit)
+	self.unit = unit
+	self._allMatDict = {}
+	self._dirToPipeType = {}
+	self._fromColor = {}
+	self._toColor = {}
 end
 
-function var_0_0.initData(arg_2_0)
-	for iter_2_0 = 0, 270, 90 do
-		arg_2_0._dirToPipeType[iter_2_0] = arg_2_0.unit.mo:getDirType(iter_2_0)
+function ExplorePipeComp:initData()
+	for i = 0, 270, 90 do
+		self._dirToPipeType[i] = self.unit.mo:getDirType(i)
 	end
 
-	arg_2_0._dirToPipeType[-1] = ExploreEnum.PipeGoNode.Center
+	self._dirToPipeType[-1] = ExploreEnum.PipeGoNode.Center
 end
 
-function var_0_0.setup(arg_3_0, arg_3_1)
-	arg_3_0.go = arg_3_1
-	arg_3_0._allMatDict = {}
+function ExplorePipeComp:setup(go)
+	self.go = go
+	self._allMatDict = {}
 
-	for iter_3_0, iter_3_1 in pairs(ExploreEnum.PipeGoNodeName) do
-		local var_3_0 = arg_3_0:_getMat(iter_3_1)
+	for type, name in pairs(ExploreEnum.PipeGoNodeName) do
+		local mat = self:_getMat(name)
 
-		if var_3_0 then
-			arg_3_0._allMatDict[iter_3_0] = var_3_0
+		if mat then
+			self._allMatDict[type] = mat
 
-			arg_3_0._allMatDict[iter_3_0]:SetFloat(var_0_3, 1)
+			self._allMatDict[type]:SetFloat(processId, 1)
 		end
 	end
 
-	arg_3_0:tweenColor(1)
+	self:tweenColor(1)
 end
 
-function var_0_0._getMat(arg_4_0, arg_4_1)
-	local var_4_0 = gohelper.findChild(arg_4_0.go, "#go_rotate/" .. arg_4_1)
+function ExplorePipeComp:_getMat(name)
+	local go = gohelper.findChild(self.go, "#go_rotate/" .. name)
 
-	if not var_4_0 then
+	if not go then
 		return
 	end
 
-	local var_4_1 = var_4_0:GetComponent(typeof(UnityEngine.Renderer))
+	local renderer = go:GetComponent(typeof(UnityEngine.Renderer))
+	local mat = renderer and renderer.material
 
-	return var_4_1 and var_4_1.material
+	return mat
 end
 
-function var_0_0.applyColor(arg_5_0, arg_5_1)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._dirToPipeType) do
-		arg_5_0._fromColor[iter_5_0] = arg_5_0._toColor[iter_5_0]
-		arg_5_0._toColor[iter_5_0] = arg_5_0.unit.mo:getColor(iter_5_0)
+function ExplorePipeComp:applyColor(applyNow)
+	for dir, type in pairs(self._dirToPipeType) do
+		self._fromColor[dir] = self._toColor[dir]
+		self._toColor[dir] = self.unit.mo:getColor(dir)
 	end
 
-	arg_5_0._toColor[-1] = arg_5_0.unit.mo:getColor(-1)
+	self._toColor[-1] = self.unit.mo:getColor(-1)
 
-	if arg_5_1 then
-		for iter_5_2, iter_5_3 in pairs(arg_5_0._toColor) do
-			arg_5_0._fromColor[iter_5_2] = iter_5_3
+	if applyNow then
+		for k, v in pairs(self._toColor) do
+			self._fromColor[k] = v
 		end
 
-		arg_5_0._fromColor[-1] = arg_5_0._toColor[-1]
+		self._fromColor[-1] = self._toColor[-1]
 
-		arg_5_0:tweenColor(1)
+		self:tweenColor(1)
 	end
 end
 
-local var_0_4 = Color()
+local cacheColor = Color()
 
-function var_0_0.tweenColor(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._toColor) do
-		local var_6_0 = arg_6_0._dirToPipeType[iter_6_0]
-		local var_6_1 = arg_6_0._allMatDict[var_6_0]
+function ExplorePipeComp:tweenColor(value)
+	for dir, color in pairs(self._toColor) do
+		local type = self._dirToPipeType[dir]
+		local mat = self._allMatDict[type]
 
-		if var_6_1 then
-			if iter_6_1 == arg_6_0._fromColor[iter_6_0] then
-				if iter_6_1 == ExploreEnum.PipeColor.None then
-					var_6_1:SetFloat(var_0_2, 1)
+		if mat then
+			if color == self._fromColor[dir] then
+				if color == ExploreEnum.PipeColor.None then
+					mat:SetFloat(fadeId, 1)
 				else
-					var_6_1:SetFloat(var_0_2, 0)
-					var_6_1:SetColor(var_0_1, ExploreEnum.PipeColorDef[iter_6_1])
+					mat:SetFloat(fadeId, 0)
+					mat:SetColor(mainColorId, ExploreEnum.PipeColorDef[color])
 				end
-			elseif iter_6_1 == ExploreEnum.PipeColor.None then
-				var_6_1:SetFloat(var_0_2, arg_6_1)
-			elseif arg_6_0._fromColor[iter_6_0] == ExploreEnum.PipeColor.None then
-				var_6_1:SetFloat(var_0_2, 1 - arg_6_1)
-				var_6_1:SetColor(var_0_1, ExploreEnum.PipeColorDef[iter_6_1])
+			elseif color == ExploreEnum.PipeColor.None then
+				mat:SetFloat(fadeId, value)
+			elseif self._fromColor[dir] == ExploreEnum.PipeColor.None then
+				mat:SetFloat(fadeId, 1 - value)
+				mat:SetColor(mainColorId, ExploreEnum.PipeColorDef[color])
 			else
-				var_6_1:SetFloat(var_0_2, 0)
-				var_6_1:SetColor(var_0_1, MaterialUtil.getLerpValue("Color", ExploreEnum.PipeColorDef[arg_6_0._fromColor[iter_6_0]], ExploreEnum.PipeColorDef[iter_6_1], arg_6_1, var_0_4))
+				mat:SetFloat(fadeId, 0)
+				mat:SetColor(mainColorId, MaterialUtil.getLerpValue("Color", ExploreEnum.PipeColorDef[self._fromColor[dir]], ExploreEnum.PipeColorDef[color], value, cacheColor))
 			end
 		end
 	end
 end
 
-function var_0_0.clear(arg_7_0)
-	arg_7_0._allMatDict = {}
+function ExplorePipeComp:clear()
+	self._allMatDict = {}
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0:clear()
+function ExplorePipeComp:onDestroy()
+	self:clear()
 
-	arg_8_0._fromColor = {}
-	arg_8_0._toColor = {}
-	arg_8_0._dirToPipeType = {}
-	arg_8_0.unit = nil
+	self._fromColor = {}
+	self._toColor = {}
+	self._dirToPipeType = {}
+	self.unit = nil
 end
 
-return var_0_0
+return ExplorePipeComp

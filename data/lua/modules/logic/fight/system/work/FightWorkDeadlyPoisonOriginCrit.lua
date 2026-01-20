@@ -1,3 +1,7 @@
-﻿module("modules.logic.fight.system.work.FightWorkDeadlyPoisonOriginCrit", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkDeadlyPoisonOriginCrit.lua
 
-return (class("FightWorkDeadlyPoisonOriginCrit", FightWorkOriginCrit))
+module("modules.logic.fight.system.work.FightWorkDeadlyPoisonOriginCrit", package.seeall)
+
+local FightWorkDeadlyPoisonOriginCrit = class("FightWorkDeadlyPoisonOriginCrit", FightWorkOriginCrit)
+
+return FightWorkDeadlyPoisonOriginCrit

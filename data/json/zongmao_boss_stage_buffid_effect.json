@@ -1,0 +1,44 @@
+[
+  {
+    "id": 610410,
+    "buffId": 109320109,
+    "effects": "buff/buff_rush_rank2#buff/buff_rush_rank2",
+    "hangpoints": "mountweapon#special1",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610410,
+    "buffId": 109320110,
+    "effects": "buff/buff_rush_rank4#buff/buff_rush_rank4",
+    "hangpoints": "mountweapon#special1",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610407,
+    "buffId": 109320109,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountbody",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610407,
+    "buffId": 109320110,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountbody",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 6404012,
+    "buffId": 109320109,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mounthead",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 6404012,
+    "buffId": 109320110,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mounthead",
+    "scales": "1,1,1"
+  }
+]

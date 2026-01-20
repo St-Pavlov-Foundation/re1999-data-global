@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "language_10044413",
+    "rareColor": "587FA1",
+    "buffColor": "1A365E",
+    "relicsColor": "DCD9C8"
+  },
+  {
+    "id": 2,
+    "name": "language_10044414",
+    "rareColor": "8D6993",
+    "buffColor": "451F60",
+    "relicsColor": "DCD9C8"
+  },
+  {
+    "id": 3,
+    "name": "language_10044415",
+    "rareColor": "C8A25A",
+    "buffColor": "853313",
+    "relicsColor": "DCD9C8"
+  },
+  {
+    "id": 4,
+    "name": "language_10044416",
+    "rareColor": "D07D45",
+    "buffColor": "D07D45",
+    "relicsColor": "F8F3DB"
+  },
+  {
+    "id": 5,
+    "name": "language_10103526",
+    "rareColor": "91353A",
+    "buffColor": "91353A",
+    "relicsColor": "DCD9C8"
+  }
+]

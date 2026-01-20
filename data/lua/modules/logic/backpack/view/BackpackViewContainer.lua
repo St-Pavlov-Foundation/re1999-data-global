@@ -1,23 +1,25 @@
-﻿module("modules.logic.backpack.view.BackpackViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/backpack/view/BackpackViewContainer.lua
 
-local var_0_0 = class("BackpackViewContainer", BaseViewContainer)
+module("modules.logic.backpack.view.BackpackViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local BackpackViewContainer = class("BackpackViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "#scroll_category"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[2]
-	var_1_0.cellClass = BackpackCategoryListItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 370
-	var_1_0.cellHeight = 110
-	var_1_0.cellSpaceH = 0
-	var_1_0.cellSpaceV = 4
+function BackpackViewContainer:buildViews()
+	local scrollParam1 = ListScrollParam.New()
+
+	scrollParam1.scrollGOPath = "#scroll_category"
+	scrollParam1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam1.prefabUrl = self._viewSetting.otherRes[2]
+	scrollParam1.cellClass = BackpackCategoryListItem
+	scrollParam1.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam1.lineCount = 1
+	scrollParam1.cellWidth = 370
+	scrollParam1.cellHeight = 110
+	scrollParam1.cellSpaceH = 0
+	scrollParam1.cellSpaceV = 4
 
 	return {
-		LuaListScrollView.New(BackpackCategoryListModel.instance, var_1_0),
+		LuaListScrollView.New(BackpackCategoryListModel.instance, scrollParam1),
 		BackpackView.New(),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(BackpackController.BackpackViewTabContainerId, "#go_container"),
@@ -25,102 +27,103 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	local var_2_0 = 0
+function BackpackViewContainer:buildTabViews(tabContainerId)
+	local langOffset = 0
 
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_1 = ListScrollParam.New()
+	elseif tabContainerId == 2 then
+		local scrollParam = ListScrollParam.New()
 
-		var_2_1.scrollGOPath = "#scroll_prop"
-		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-		var_2_1.cellClass = BackpackPropListItem
-		var_2_1.scrollDir = ScrollEnum.ScrollDirV
-		var_2_1.lineCount = 6
-		var_2_1.cellWidth = 254
-		var_2_1.cellHeight = 200
-		var_2_1.cellSpaceH = var_2_0
-		var_2_1.cellSpaceV = 25
-		var_2_1.startSpace = 28
-		var_2_1.endSpace = 0
-		var_2_1.minUpdateCountInFrame = 100
+		scrollParam.scrollGOPath = "#scroll_prop"
+		scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+		scrollParam.cellClass = BackpackPropListItem
+		scrollParam.scrollDir = ScrollEnum.ScrollDirV
+		scrollParam.lineCount = 6
+		scrollParam.cellWidth = 254
+		scrollParam.cellHeight = 200
+		scrollParam.cellSpaceH = langOffset
+		scrollParam.cellSpaceV = 25
+		scrollParam.startSpace = 28
+		scrollParam.endSpace = 0
+		scrollParam.minUpdateCountInFrame = 100
 
-		local var_2_2 = ListScrollParam.New()
+		local equipScrollParam = ListScrollParam.New()
 
-		var_2_2.scrollGOPath = "#scroll_equip"
-		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_2.prefabUrl = arg_2_0._viewSetting.otherRes[3]
-		var_2_2.cellClass = CharacterEquipItem
-		var_2_2.scrollDir = ScrollEnum.ScrollDirV
-		var_2_2.lineCount = 6
-		var_2_2.cellWidth = 220
-		var_2_2.cellHeight = 210
-		var_2_2.cellSpaceH = 33.8 + var_2_0
-		var_2_2.cellSpaceV = 13
-		var_2_2.startSpace = 16
-		var_2_2.minUpdateCountInFrame = 100
+		equipScrollParam.scrollGOPath = "#scroll_equip"
+		equipScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		equipScrollParam.prefabUrl = self._viewSetting.otherRes[3]
+		equipScrollParam.cellClass = CharacterEquipItem
+		equipScrollParam.scrollDir = ScrollEnum.ScrollDirV
+		equipScrollParam.lineCount = 6
+		equipScrollParam.cellWidth = 220
+		equipScrollParam.cellHeight = 210
+		equipScrollParam.cellSpaceH = 33.8 + langOffset
+		equipScrollParam.cellSpaceV = 13
+		equipScrollParam.startSpace = 16
+		equipScrollParam.minUpdateCountInFrame = 100
 
-		local var_2_3 = {}
-		local var_2_4
+		local equipAnimationDelayTimes = {}
+		local delayTime
 
-		for iter_2_0 = 1, 24 do
-			var_2_3[iter_2_0] = (math.ceil(iter_2_0 / 6) - 1) * 0.03
+		for i = 1, 24 do
+			delayTime = (math.ceil(i / 6) - 1) * 0.03
+			equipAnimationDelayTimes[i] = delayTime
 		end
 
-		local var_2_5 = ListScrollParam.New()
+		local antiqueScrollParam = ListScrollParam.New()
 
-		var_2_5.scrollGOPath = "#scroll_antique"
-		var_2_5.prefabType = ScrollEnum.ScrollPrefabFromRes
-		var_2_5.prefabUrl = arg_2_0._viewSetting.otherRes[1]
-		var_2_5.cellClass = AntiqueBackpackItem
-		var_2_5.scrollDir = ScrollEnum.ScrollDirV
-		var_2_5.lineCount = 6
-		var_2_5.cellWidth = 250
-		var_2_5.cellHeight = 250
-		var_2_5.cellSpaceH = 0
-		var_2_5.cellSpaceV = 0
-		var_2_5.startSpace = 20
-		var_2_5.endSpace = 10
-		var_2_5.minUpdateCountInFrame = 100
-		arg_2_0.notPlayAnimation = true
+		antiqueScrollParam.scrollGOPath = "#scroll_antique"
+		antiqueScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+		antiqueScrollParam.prefabUrl = self._viewSetting.otherRes[1]
+		antiqueScrollParam.cellClass = AntiqueBackpackItem
+		antiqueScrollParam.scrollDir = ScrollEnum.ScrollDirV
+		antiqueScrollParam.lineCount = 6
+		antiqueScrollParam.cellWidth = 250
+		antiqueScrollParam.cellHeight = 250
+		antiqueScrollParam.cellSpaceH = 0
+		antiqueScrollParam.cellSpaceV = 0
+		antiqueScrollParam.startSpace = 20
+		antiqueScrollParam.endSpace = 10
+		antiqueScrollParam.minUpdateCountInFrame = 100
+		self.notPlayAnimation = true
 
 		return {
 			MultiView.New({
 				BackpackPropView.New(),
-				LuaListScrollView.New(BackpackPropListModel.instance, var_2_1)
+				LuaListScrollView.New(BackpackPropListModel.instance, scrollParam)
 			}),
 			MultiView.New({
 				CharacterBackpackEquipView.New(),
-				LuaListScrollViewWithAnimator.New(CharacterBackpackEquipListModel.instance, var_2_2, var_2_3)
+				LuaListScrollViewWithAnimator.New(CharacterBackpackEquipListModel.instance, equipScrollParam, equipAnimationDelayTimes)
 			}),
 			MultiView.New({
 				AntiqueBackpackView.New(),
-				LuaListScrollViewWithAnimator.New(AntiqueBackpackListModel.instance, var_2_5)
+				LuaListScrollViewWithAnimator.New(AntiqueBackpackListModel.instance, antiqueScrollParam)
 			})
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
+function BackpackViewContainer:onContainerOpenFinish()
+	self.navigationView:resetOnCloseViewAudio(AudioEnum.UI.UI_Rolesclose)
 end
 
-function var_0_0.setCurrentSelectCategoryId(arg_4_0, arg_4_1)
-	arg_4_0.currentSelectCategoryId = arg_4_1 or ItemEnum.CategoryType.All
+function BackpackViewContainer:setCurrentSelectCategoryId(id)
+	self.currentSelectCategoryId = id or ItemEnum.CategoryType.All
 end
 
-function var_0_0.getCurrentSelectCategoryId(arg_5_0)
-	return arg_5_0.currentSelectCategoryId
+function BackpackViewContainer:getCurrentSelectCategoryId()
+	return self.currentSelectCategoryId
 end
 
-return var_0_0
+return BackpackViewContainer

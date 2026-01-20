@@ -1,34 +1,36 @@
-﻿module("modules.logic.room.view.debug.RoomDebugThemeFilterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/debug/RoomDebugThemeFilterViewContainer.lua
 
-local var_0_0 = class("RoomDebugThemeFilterViewContainer", BaseViewContainer)
+module("modules.logic.room.view.debug.RoomDebugThemeFilterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomDebugThemeFilterViewContainer = class("RoomDebugThemeFilterViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomDebugThemeFilterView.New())
+function RoomDebugThemeFilterViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, RoomDebugThemeFilterView.New())
 
-	var_1_1.scrollGOPath = "#go_content/#scroll_theme"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#go_content/#go_themeitem"
-	var_1_1.cellClass = RoomDebugThemeFilterItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 3
-	var_1_1.cellWidth = 386
-	var_1_1.cellHeight = 80
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
-	var_1_1.endSpace = 0
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(RoomDebugThemeFilterListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "#go_content/#scroll_theme"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_content/#go_themeitem"
+	scrollParam.cellClass = RoomDebugThemeFilterItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 3
+	scrollParam.cellWidth = 386
+	scrollParam.cellHeight = 80
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(RoomDebugThemeFilterListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function RoomDebugThemeFilterViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomDebugThemeFilterViewContainer

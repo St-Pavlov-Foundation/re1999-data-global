@@ -1,60 +1,62 @@
-﻿module("modules.logic.room.model.record.RoomHandBookBackListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/record/RoomHandBookBackListModel.lua
 
-local var_0_0 = class("RoomHandBookBackListModel", ListScrollModel)
+module("modules.logic.room.model.record.RoomHandBookBackListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.UtmStickers)
+local RoomHandBookBackListModel = class("RoomHandBookBackListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = RoomHandBookBackMo.New()
+function RoomHandBookBackListModel:init()
+	local moList = {}
+	local list = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.UtmStickers)
 
-		var_1_2:init(iter_1_1)
-		table.insert(var_1_0, var_1_2)
+	for index, itemMO in ipairs(list) do
+		local mo = RoomHandBookBackMo.New()
+
+		mo:init(itemMO)
+		table.insert(moList, mo)
 	end
 
-	local var_1_3 = RoomHandBookBackMo.New()
+	local emptymo = RoomHandBookBackMo.New()
 
-	var_1_3:setEmpty()
-	table.insert(var_1_0, var_1_3)
-	table.sort(var_1_0, var_0_0.sort)
+	emptymo:setEmpty()
+	table.insert(moList, emptymo)
+	table.sort(moList, RoomHandBookBackListModel.sort)
 
-	local var_1_4 = RoomHandBookModel.instance:getSelectMoBackGroundId()
+	local selectId = RoomHandBookModel.instance:getSelectMoBackGroundId()
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_0) do
-		if var_1_4 and var_1_4 == iter_1_3.id then
-			arg_1_0._selectIndex = iter_1_2
+	for index, mo in ipairs(moList) do
+		if selectId and selectId == mo.id then
+			self._selectIndex = index
 
-			RoomHandBookBackModel.instance:setSelectMo(iter_1_3)
+			RoomHandBookBackModel.instance:setSelectMo(mo)
 
 			break
-		elseif iter_1_3:isEmpty() then
-			arg_1_0._selectIndex = iter_1_2
+		elseif mo:isEmpty() then
+			self._selectIndex = index
 
-			RoomHandBookBackModel.instance:setSelectMo(iter_1_3)
+			RoomHandBookBackModel.instance:setSelectMo(mo)
 
 			break
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(moList)
 end
 
-function var_0_0.sort(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:checkIsUse() and 3 or arg_2_0:isEmpty() and 2 or 1
-	local var_2_1 = arg_2_1:checkIsUse() and 3 or arg_2_1:isEmpty() and 2 or 1
+function RoomHandBookBackListModel.sort(x, y)
+	local xvalue = x:checkIsUse() and 3 or x:isEmpty() and 2 or 1
+	local yvalue = y:checkIsUse() and 3 or y:isEmpty() and 2 or 1
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_1 < var_2_0
+	if xvalue ~= yvalue then
+		return yvalue < xvalue
 	else
-		return arg_2_0.id < arg_2_1.id
+		return x.id < y.id
 	end
 end
 
-function var_0_0.getSelectIndex(arg_3_0)
-	return arg_3_0._selectIndex or 1
+function RoomHandBookBackListModel:getSelectIndex()
+	return self._selectIndex or 1
 end
 
-var_0_0.instance = var_0_0.New()
+RoomHandBookBackListModel.instance = RoomHandBookBackListModel.New()
 
-return var_0_0
+return RoomHandBookBackListModel

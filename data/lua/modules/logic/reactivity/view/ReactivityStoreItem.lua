@@ -1,119 +1,122 @@
-﻿module("modules.logic.reactivity.view.ReactivityStoreItem", package.seeall)
+﻿-- chunkname: @modules/logic/reactivity/view/ReactivityStoreItem.lua
 
-local var_0_0 = class("ReactivityStoreItem", UserDataDispose)
+module("modules.logic.reactivity.view.ReactivityStoreItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ReactivityStoreItem = class("ReactivityStoreItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.goStoreGoodsItem = gohelper.findChild(arg_1_0.go, "#go_storegoodsitem")
+function ReactivityStoreItem:onInitView(go)
+	self:__onInit()
 
-	gohelper.setActive(arg_1_0.goStoreGoodsItem, false)
+	self.go = go
+	self.goStoreGoodsItem = gohelper.findChild(self.go, "#go_storegoodsitem")
 
-	arg_1_0.goodsItemList = arg_1_0:getUserDataTb_()
-	arg_1_0._clipPosY = 400
-	arg_1_0._startFadePosY = 360.32
-	arg_1_0._showTagPosY = 300
+	gohelper.setActive(self.goStoreGoodsItem, false)
 
-	arg_1_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_1_0.onBuyGoodsSuccess, arg_1_0)
+	self.goodsItemList = self:getUserDataTb_()
+	self._clipPosY = 400
+	self._startFadePosY = 360.32
+	self._showTagPosY = 300
+
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self.onBuyGoodsSuccess, self)
 end
 
-function var_0_0.onBuyGoodsSuccess(arg_2_0)
-	arg_2_0:sortGoodsCoList()
-	arg_2_0:refreshGoods()
+function ReactivityStoreItem:onBuyGoodsSuccess()
+	self:sortGoodsCoList()
+	self:refreshGoods()
 end
 
-function var_0_0.sortGoodsCoList(arg_3_0)
-	table.sort(arg_3_0.groupGoodsCoList, var_0_0.sortGoods)
+function ReactivityStoreItem:sortGoodsCoList()
+	table.sort(self.groupGoodsCoList, ReactivityStoreItem.sortGoods)
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1, arg_4_2)
-	gohelper.setActive(arg_4_0.go, true)
+function ReactivityStoreItem:updateInfo(groupId, groupGoodsCoList)
+	gohelper.setActive(self.go, true)
 
-	arg_4_0.groupGoodsCoList = arg_4_2
-	arg_4_0.groupId = arg_4_1
+	self.groupGoodsCoList = groupGoodsCoList
+	self.groupId = groupId
 
-	arg_4_0:sortGoodsCoList()
-	arg_4_0:refreshTag()
-	arg_4_0:refreshGoods()
+	self:sortGoodsCoList()
+	self:refreshTag()
+	self:refreshGoods()
 end
 
-function var_0_0.refreshTag(arg_5_0)
-	if arg_5_0.gotag then
+function ReactivityStoreItem:refreshTag()
+	if self.gotag then
 		return
 	end
 
-	arg_5_0.gotag = gohelper.findChild(arg_5_0.go, "tag" .. arg_5_0.groupId)
-	arg_5_0.canvasGroup = arg_5_0.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_5_0.imageTagType = gohelper.findChildImage(arg_5_0.gotag, "image_tagType")
+	self.gotag = gohelper.findChild(self.go, "tag" .. self.groupId)
+	self.canvasGroup = self.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self.imageTagType = gohelper.findChildImage(self.gotag, "image_tagType")
 
-	gohelper.setActive(arg_5_0.gotag, true)
+	gohelper.setActive(self.gotag, true)
 
-	arg_5_0.tagMaskList = arg_5_0:getUserDataTb_()
+	self.tagMaskList = self:getUserDataTb_()
 
-	table.insert(arg_5_0.tagMaskList, arg_5_0.imageTagType)
+	table.insert(self.tagMaskList, self.imageTagType)
 end
 
-function var_0_0.refreshGoods(arg_6_0)
-	local var_6_0
+function ReactivityStoreItem:refreshGoods()
+	local goodsItem
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.groupGoodsCoList) do
-		local var_6_1 = arg_6_0.goodsItemList[iter_6_0]
+	for index, goodsCo in ipairs(self.groupGoodsCoList) do
+		goodsItem = self.goodsItemList[index]
 
-		if not var_6_1 then
-			var_6_1 = ReactivityStoreGoodsItem.New()
+		if not goodsItem then
+			goodsItem = ReactivityStoreGoodsItem.New()
 
-			var_6_1:onInitView(gohelper.cloneInPlace(arg_6_0.goStoreGoodsItem))
-			table.insert(arg_6_0.goodsItemList, var_6_1)
+			goodsItem:onInitView(gohelper.cloneInPlace(self.goStoreGoodsItem))
+			table.insert(self.goodsItemList, goodsItem)
 		end
 
-		var_6_1:updateInfo(iter_6_1)
+		goodsItem:updateInfo(goodsCo)
 	end
 
-	for iter_6_2 = #arg_6_0.groupGoodsCoList + 1, #arg_6_0.goodsItemList do
-		arg_6_0.goodsItemList[iter_6_2]:hide()
+	for i = #self.groupGoodsCoList + 1, #self.goodsItemList do
+		self.goodsItemList[i]:hide()
 	end
 end
 
-function var_0_0.refreshTagClip(arg_7_0, arg_7_1)
-	if not arg_7_0.canvasGroup then
+function ReactivityStoreItem:refreshTagClip(scrollStore)
+	if not self.canvasGroup then
 		return
 	end
 
-	local var_7_0 = recthelper.rectToRelativeAnchorPos(arg_7_0.gotag.transform.position, arg_7_1.transform)
-	local var_7_1 = Mathf.Clamp((arg_7_0._clipPosY - var_7_0.y) / (arg_7_0._clipPosY - arg_7_0._startFadePosY), 0, 1)
+	local tagPosY = recthelper.rectToRelativeAnchorPos(self.gotag.transform.position, scrollStore.transform)
+	local rate = Mathf.Clamp((self._clipPosY - tagPosY.y) / (self._clipPosY - self._startFadePosY), 0, 1)
 
-	arg_7_0.canvasGroup.alpha = var_7_1
+	self.canvasGroup.alpha = rate
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.tagMaskList) do
-		iter_7_1.maskable = var_7_0.y <= arg_7_0._showTagPosY
+	for k, v in ipairs(self.tagMaskList) do
+		v.maskable = tagPosY.y <= self._showTagPosY
 	end
 end
 
-function var_0_0.sortGoods(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.maxBuyCount ~= 0 and arg_8_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_8_0.activityId, arg_8_0.id) <= 0
+function ReactivityStoreItem.sortGoods(goodCo1, goodCo2)
+	local goods1SellOut = goodCo1.maxBuyCount ~= 0 and goodCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(goodCo1.activityId, goodCo1.id) <= 0
+	local goods2SellOut = goodCo2.maxBuyCount ~= 0 and goodCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(goodCo2.activityId, goodCo2.id) <= 0
 
-	if var_8_0 ~= (arg_8_1.maxBuyCount ~= 0 and arg_8_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(arg_8_1.activityId, arg_8_1.id) <= 0) then
-		if var_8_0 then
+	if goods1SellOut ~= goods2SellOut then
+		if goods1SellOut then
 			return false
 		end
 
 		return true
 	end
 
-	return arg_8_0.id < arg_8_1.id
+	return goodCo1.id < goodCo2.id
 end
 
-function var_0_0.getHeight(arg_9_0)
-	return recthelper.getHeight(arg_9_0.go.transform)
+function ReactivityStoreItem:getHeight()
+	return recthelper.getHeight(self.go.transform)
 end
 
-function var_0_0.onDestroy(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0.goodsItemList) do
-		iter_10_1:onDestroy()
+function ReactivityStoreItem:onDestroy()
+	for _, goodsItem in ipairs(self.goodsItemList) do
+		goodsItem:onDestroy()
 	end
 
-	arg_10_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return ReactivityStoreItem

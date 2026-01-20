@@ -1,0 +1,42 @@
+[
+  {
+    "talent": 1,
+    "geniusId": 1000
+  },
+  {
+    "talent": 2,
+    "geniusId": 2000
+  },
+  {
+    "talent": 3,
+    "geniusId": 3000
+  },
+  {
+    "talent": 4,
+    "geniusId": 4000
+  },
+  {
+    "talent": 5,
+    "geniusId": 5000
+  },
+  {
+    "talent": 6,
+    "geniusId": 6000
+  },
+  {
+    "talent": 7,
+    "geniusId": 7000
+  },
+  {
+    "talent": 8,
+    "geniusId": 8000
+  },
+  {
+    "talent": 9,
+    "geniusId": 9000
+  },
+  {
+    "talent": 10,
+    "geniusId": 10000
+  }
+]

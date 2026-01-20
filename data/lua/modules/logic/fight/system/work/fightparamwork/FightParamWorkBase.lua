@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.fightparamwork.FightParamWorkBase", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/fightparamwork/FightParamWorkBase.lua
 
-local var_0_0 = class("FightParamWorkBase", FightWorkItem)
+module("modules.logic.fight.system.work.fightparamwork.FightParamWorkBase", package.seeall)
 
-function var_0_0.onLogicEnter(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0.keyId = arg_1_1
-	arg_1_0.oldValue = arg_1_2
-	arg_1_0.currValue = arg_1_3
-	arg_1_0.offset = arg_1_4
+local FightParamWorkBase = class("FightParamWorkBase", FightWorkItem)
+
+function FightParamWorkBase:onLogicEnter(keyId, oldValue, currValue, offset)
+	self.keyId = keyId
+	self.oldValue = oldValue
+	self.currValue = currValue
+	self.offset = offset
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0:onDone(true)
+function FightParamWorkBase:onStart()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightParamWorkBase

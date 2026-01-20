@@ -1,113 +1,119 @@
-﻿module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9FightSuccView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/dungeon/VersionActivity2_9FightSuccView.lua
 
-local var_0_0 = class("VersionActivity2_9FightSuccView", FightSuccView)
-local var_0_1 = 1
-local var_0_2 = 0.37
-local var_0_3 = 1
-local var_0_4 = 0.39
+module("modules.logic.sp01.assassin2.story.dungeon.VersionActivity2_9FightSuccView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	var_0_0.super.onOpen(arg_1_0)
+local VersionActivity2_9FightSuccView = class("VersionActivity2_9FightSuccView", FightSuccView)
+local FinishFlagAlpha = 1
+local UnFinishFlagAlpha = 0.37
+local FinishProgressIconAlpha = 1
+local UnFinishProgressIconAlpha = 0.39
 
-	local var_1_0 = DungeonConfig.instance:getFirstEpisodeWinConditionText(nil, FightModel.instance:getBattleId())
+function VersionActivity2_9FightSuccView:onOpen()
+	VersionActivity2_9FightSuccView.super.onOpen(self)
 
-	arg_1_0:_showPlatCondition(var_1_0, arg_1_0._goCondition, nil, DungeonEnum.StarType.Normal)
+	local conditionText = DungeonConfig.instance:getFirstEpisodeWinConditionText(nil, FightModel.instance:getBattleId())
+
+	self:_showPlatCondition(conditionText, self._goCondition, nil, DungeonEnum.StarType.Normal)
 end
 
-function var_0_0._showPlatCondition(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if string.nilorempty(arg_2_1) then
-		gohelper.setActive(arg_2_2, false)
+function VersionActivity2_9FightSuccView:_showPlatCondition(platConditionText, go, starImage, targetStarNum)
+	if string.nilorempty(platConditionText) then
+		gohelper.setActive(go, false)
 	else
-		gohelper.setActive(arg_2_2, true)
+		gohelper.setActive(go, true)
 
-		if arg_2_4 > (tonumber(FightResultModel.instance.star) or 0) then
-			gohelper.findChildText(arg_2_2, "condition").text = gohelper.getRichColorText(arg_2_1, "#6C6C6B")
+		local resultStar = tonumber(FightResultModel.instance.star) or 0
 
-			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(arg_2_2, "image_gou"), var_0_2)
-			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(arg_2_2, "star"), var_0_4)
-			SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildImage(arg_2_2, "star"), "#FFFFFF")
+		if resultStar < targetStarNum then
+			gohelper.findChildText(go, "condition").text = gohelper.getRichColorText(platConditionText, "#6C6C6B")
+
+			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(go, "image_gou"), UnFinishFlagAlpha)
+			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(go, "star"), UnFinishProgressIconAlpha)
+			SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildImage(go, "star"), "#FFFFFF")
 		else
-			gohelper.findChildText(arg_2_2, "condition").text = gohelper.getRichColorText(arg_2_1, "#C4C0BD")
+			gohelper.findChildText(go, "condition").text = gohelper.getRichColorText(platConditionText, "#C4C0BD")
 
-			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(arg_2_2, "image_gou"), var_0_1)
-			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(arg_2_2, "star"), var_0_3)
-			SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildImage(arg_2_2, "star"), "#FFFFFF")
+			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(go, "image_gou"), FinishFlagAlpha)
+			ZProj.UGUIHelper.SetColorAlpha(gohelper.findChildImage(go, "star"), FinishProgressIconAlpha)
+			SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildImage(go, "star"), "#FFFFFF")
 		end
 
-		VersionActivity2_9DungeonHelper.setEpisodeProgressIcon(arg_2_0._curEpisodeId, gohelper.findChildImage(arg_2_2, "star"))
+		VersionActivity2_9DungeonHelper.setEpisodeProgressIcon(self._curEpisodeId, gohelper.findChildImage(go, "star"))
 	end
 end
 
-function var_0_0._addItem(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = gohelper.clone(arg_3_0._bonusItemGo, arg_3_0._bonusItemContainer, arg_3_1.id)
-	local var_3_1 = gohelper.findChild(var_3_0, "container/itemIcon")
-	local var_3_2 = IconMgr.instance:getCommonPropItemIcon(var_3_1)
-	local var_3_3 = gohelper.findChild(var_3_0, "container/tag")
-	local var_3_4 = gohelper.findChild(var_3_0, "container/tag/imgFirst")
-	local var_3_5 = gohelper.findChild(var_3_0, "container/tag/imgFirstHard")
-	local var_3_6 = gohelper.findChild(var_3_0, "container/tag/imgFirstSimple")
-	local var_3_7 = gohelper.findChild(var_3_0, "container/tag/imgNormal")
-	local var_3_8 = gohelper.findChild(var_3_0, "container/tag/imgAdvance")
-	local var_3_9 = gohelper.findChild(var_3_0, "container/tag/imgEquipDaily")
-	local var_3_10 = gohelper.findChild(var_3_0, "container/tag/limitfirstbg")
-	local var_3_11 = gohelper.findChild(var_3_0, "container/tag/imgact")
-	local var_3_12 = gohelper.findChild(var_3_0, "container")
-	local var_3_13 = gohelper.findChild(var_3_0, "container/tag/#go_progress")
-	local var_3_14 = gohelper.findChildImage(var_3_0, "container/tag/#go_progress/#image_icon")
-	local var_3_15 = gohelper.findChildText(var_3_0, "container/tag/#go_progress/#txt_progress")
+function VersionActivity2_9FightSuccView:_addItem(material, customRefreshCallback, customRefreshCallbackParam)
+	local go = gohelper.clone(self._bonusItemGo, self._bonusItemContainer, material.id)
+	local itemIconGO = gohelper.findChild(go, "container/itemIcon")
+	local itemIcon = IconMgr.instance:getCommonPropItemIcon(itemIconGO)
+	local tagGO = gohelper.findChild(go, "container/tag")
+	local imgFirstGO = gohelper.findChild(go, "container/tag/imgFirst")
+	local imgFirstHardGO = gohelper.findChild(go, "container/tag/imgFirstHard")
+	local imgFirstSimpleGO = gohelper.findChild(go, "container/tag/imgFirstSimple")
+	local imgNormalGO = gohelper.findChild(go, "container/tag/imgNormal")
+	local imgAdvanceGO = gohelper.findChild(go, "container/tag/imgAdvance")
+	local imgEquipDailyGO = gohelper.findChild(go, "container/tag/imgEquipDaily")
+	local imgTimeFirstGO = gohelper.findChild(go, "container/tag/limitfirstbg")
+	local actTagGo = gohelper.findChild(go, "container/tag/imgact")
+	local containerGO = gohelper.findChild(go, "container")
+	local goprogress = gohelper.findChild(go, "container/tag/#go_progress")
+	local imageprogress = gohelper.findChildImage(go, "container/tag/#go_progress/#image_icon")
+	local txtprogress = gohelper.findChildText(go, "container/tag/#go_progress/#txt_progress")
 
-	gohelper.setActive(var_3_12, false)
-	gohelper.setActive(var_3_3, arg_3_1.bonusTag)
+	gohelper.setActive(containerGO, false)
+	gohelper.setActive(tagGO, material.bonusTag)
 
-	if arg_3_1.bonusTag then
-		local var_3_16 = arg_3_1.bonusTag == FightEnum.FightBonusTag.AdvencedBonus or arg_3_1.bonusTag == FightEnum.FightBonusTag.TimeFirstBonus
+	if material.bonusTag then
+		local isShowProgressTag = material.bonusTag == FightEnum.FightBonusTag.AdvencedBonus or material.bonusTag == FightEnum.FightBonusTag.TimeFirstBonus
 
-		gohelper.setActive(var_3_4, arg_3_1.bonusTag == FightEnum.FightBonusTag.FirstBonus and arg_3_0._normalMode)
-		gohelper.setActive(var_3_5, arg_3_1.bonusTag == FightEnum.FightBonusTag.FirstBonus and arg_3_0._hardMode)
-		gohelper.setActive(var_3_7, false)
-		gohelper.setActive(var_3_8, arg_3_1.bonusTag == FightEnum.FightBonusTag.AdvencedBonus and not var_3_16)
-		gohelper.setActive(var_3_9, arg_3_1.bonusTag == FightEnum.FightBonusTag.EquipDailyFreeBonus)
-		gohelper.setActive(var_3_10, arg_3_1.bonusTag == FightEnum.FightBonusTag.TimeFirstBonus and not var_3_16)
-		gohelper.setActive(var_3_11, arg_3_1.bonusTag == FightEnum.FightBonusTag.ActBonus)
-		gohelper.setActive(var_3_6, arg_3_1.bonusTag == FightEnum.FightBonusTag.SimpleBouns or FightEnum.FightBonusTag.FirstBonus and arg_3_0._simpleMode)
-		gohelper.setActive(var_3_13, var_3_16)
+		gohelper.setActive(imgFirstGO, material.bonusTag == FightEnum.FightBonusTag.FirstBonus and self._normalMode)
+		gohelper.setActive(imgFirstHardGO, material.bonusTag == FightEnum.FightBonusTag.FirstBonus and self._hardMode)
+		gohelper.setActive(imgNormalGO, false)
+		gohelper.setActive(imgAdvanceGO, material.bonusTag == FightEnum.FightBonusTag.AdvencedBonus and not isShowProgressTag)
+		gohelper.setActive(imgEquipDailyGO, material.bonusTag == FightEnum.FightBonusTag.EquipDailyFreeBonus)
+		gohelper.setActive(imgTimeFirstGO, material.bonusTag == FightEnum.FightBonusTag.TimeFirstBonus and not isShowProgressTag)
+		gohelper.setActive(actTagGo, material.bonusTag == FightEnum.FightBonusTag.ActBonus)
+		gohelper.setActive(imgFirstSimpleGO, material.bonusTag == FightEnum.FightBonusTag.SimpleBouns or FightEnum.FightBonusTag.FirstBonus and self._simpleMode)
+		gohelper.setActive(goprogress, isShowProgressTag)
 
-		if var_3_16 then
-			VersionActivity2_9DungeonHelper.setEpisodeProgressIcon(arg_3_0._curEpisodeId, var_3_14)
+		if isShowProgressTag then
+			VersionActivity2_9DungeonHelper.setEpisodeProgressIcon(self._curEpisodeId, imageprogress)
 
-			local var_3_17 = arg_3_1.bonusTag == FightEnum.FightBonusTag.TimeFirstBonus and DungeonEnum.StarType.Normal or DungeonEnum.StarType.Advanced
+			local starType = material.bonusTag == FightEnum.FightBonusTag.TimeFirstBonus and DungeonEnum.StarType.Normal or DungeonEnum.StarType.Advanced
 
-			VersionActivity2_9DungeonHelper.setEpisodeTargetProgress(arg_3_0._curEpisodeId, var_3_17, var_3_15)
+			VersionActivity2_9DungeonHelper.setEpisodeTargetProgress(self._curEpisodeId, starType, txtprogress)
 		end
 	end
 
-	arg_3_1.isIcon = true
+	material.isIcon = true
 
-	var_3_2:onUpdateMO(arg_3_1)
-	var_3_2:setCantJump(true)
-	var_3_2:setCountFontSize(40)
-	var_3_2:setAutoPlay(true)
-	var_3_2:isShowEquipRefineLv(true)
+	itemIcon:onUpdateMO(material)
+	itemIcon:setCantJump(true)
+	itemIcon:setCountFontSize(40)
+	itemIcon:setAutoPlay(true)
+	itemIcon:isShowEquipRefineLv(true)
 
-	local var_3_18 = false
+	local isShowAddition = false
 
-	if arg_3_1.bonusTag and arg_3_1.bonusTag == FightEnum.FightBonusTag.AdditionBonus then
-		var_3_18 = true
+	if material.bonusTag and material.bonusTag == FightEnum.FightBonusTag.AdditionBonus then
+		isShowAddition = true
 	end
 
-	var_3_2:isShowAddition(var_3_18)
+	itemIcon:isShowAddition(isShowAddition)
 
-	if arg_3_2 then
-		arg_3_2(arg_3_0, var_3_2, arg_3_3)
+	if customRefreshCallback then
+		customRefreshCallback(self, itemIcon, customRefreshCallbackParam)
 	end
 
-	gohelper.setActive(var_3_0, false)
+	gohelper.setActive(go, false)
 
-	var_3_3:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 0
+	local canvasGroup = tagGO:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	arg_3_0:applyBonusVfx(arg_3_1, var_3_0)
+	canvasGroup.alpha = 0
 
-	return var_3_12, var_3_0
+	self:applyBonusVfx(material, go)
+
+	return containerGO, go
 end
 
-return var_0_0
+return VersionActivity2_9FightSuccView

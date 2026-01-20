@@ -1,56 +1,59 @@
-﻿module("modules.logic.rouge.model.RougeCollectionUnEnchantListModel", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/model/RougeCollectionUnEnchantListModel.lua
 
-local var_0_0 = class("RougeCollectionUnEnchantListModel", ListScrollModel)
+module("modules.logic.rouge.model.RougeCollectionUnEnchantListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._collections = nil
+local RougeCollectionUnEnchantListModel = class("RougeCollectionUnEnchantListModel", ListScrollModel)
+
+function RougeCollectionUnEnchantListModel:onInit()
+	self._collections = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function RougeCollectionUnEnchantListModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.onInitData(arg_3_0, arg_3_1)
-	arg_3_0._collections = {}
+function RougeCollectionUnEnchantListModel:onInitData(collectionIds)
+	self._collections = {}
 
-	if arg_3_1 then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
-			local var_3_0 = RougeCollectionModel.instance:getCollectionByUid(iter_3_1)
+	if collectionIds then
+		for _, collectionId in ipairs(collectionIds) do
+			local collectionMO = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-			table.insert(arg_3_0._collections, var_3_0)
+			table.insert(self._collections, collectionMO)
 		end
 	end
 
-	arg_3_0:setList(arg_3_0._collections)
+	self:setList(self._collections)
 end
 
-function var_0_0.isBagEmpty(arg_4_0)
-	return arg_4_0:getCount() <= 0
+function RougeCollectionUnEnchantListModel:isBagEmpty()
+	return self:getCount() <= 0
 end
 
-function var_0_0.markCurSelectHoleIndex(arg_5_0, arg_5_1)
-	arg_5_0._selectHoleIndex = arg_5_1 or 1
+function RougeCollectionUnEnchantListModel:markCurSelectHoleIndex(newSelectHoleIndex)
+	self._selectHoleIndex = newSelectHoleIndex or 1
 end
 
-function var_0_0.getCurSelectHoleIndex(arg_6_0)
-	return arg_6_0._selectHoleIndex
+function RougeCollectionUnEnchantListModel:getCurSelectHoleIndex()
+	return self._selectHoleIndex
 end
 
-function var_0_0.switchSelectCollection(arg_7_0, arg_7_1)
-	arg_7_0._curSelectCollectionId = arg_7_1
+function RougeCollectionUnEnchantListModel:switchSelectCollection(selectCollectionId)
+	self._curSelectCollectionId = selectCollectionId
 end
 
-function var_0_0.getCurSelectIndex(arg_8_0)
-	local var_8_0 = arg_8_0:getCurSelectCollectionId()
-	local var_8_1 = arg_8_0:getById(var_8_0)
+function RougeCollectionUnEnchantListModel:getCurSelectIndex()
+	local selectCollectionId = self:getCurSelectCollectionId()
+	local selectCollectionMO = self:getById(selectCollectionId)
+	local selectCollectionIndex = self:getIndex(selectCollectionMO)
 
-	return (arg_8_0:getIndex(var_8_1))
+	return selectCollectionIndex
 end
 
-function var_0_0.getCurSelectCollectionId(arg_9_0)
-	return arg_9_0._curSelectCollectionId
+function RougeCollectionUnEnchantListModel:getCurSelectCollectionId()
+	return self._curSelectCollectionId
 end
 
-var_0_0.instance = var_0_0.New()
+RougeCollectionUnEnchantListModel.instance = RougeCollectionUnEnchantListModel.New()
 
-return var_0_0
+return RougeCollectionUnEnchantListModel

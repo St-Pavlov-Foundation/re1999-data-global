@@ -1,121 +1,123 @@
-﻿module("modules.logic.summon.view.component.SummonFreeSingleGacha", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/component/SummonFreeSingleGacha.lua
 
-local var_0_0 = class("SummonFreeSingleGacha", UserDataDispose)
+module("modules.logic.summon.view.component.SummonFreeSingleGacha", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local SummonFreeSingleGacha = class("SummonFreeSingleGacha", UserDataDispose)
 
-	arg_1_0._btnSummonGO = arg_1_1
-	arg_1_0._btnSummonGroupGO = nil
-	arg_1_0._summonId = arg_1_2
-	arg_1_0._canShowFree = SummonConfig.instance:canShowSingleFree(arg_1_0._summonId)
+function SummonFreeSingleGacha:ctor(singleSummonBtnGO, summonId)
+	self:__onInit()
 
-	if not gohelper.isNil(arg_1_0._btnSummonGO) and arg_1_0._canShowFree then
-		local var_1_0 = arg_1_0._btnSummonGO.transform.parent
+	self._btnSummonGO = singleSummonBtnGO
+	self._btnSummonGroupGO = nil
+	self._summonId = summonId
+	self._canShowFree = SummonConfig.instance:canShowSingleFree(self._summonId)
 
-		if not gohelper.isNil(var_1_0) and not gohelper.isNil(var_1_0.parent) then
-			arg_1_0._btnSummonGroupGO = var_1_0.gameObject
+	if not gohelper.isNil(self._btnSummonGO) and self._canShowFree then
+		local parent = self._btnSummonGO.transform.parent
 
-			local var_1_1 = var_1_0.parent.gameObject
+		if not gohelper.isNil(parent) and not gohelper.isNil(parent.parent) then
+			self._btnSummonGroupGO = parent.gameObject
 
-			gohelper.setActive(arg_1_0._btnSummonGroupGO, false)
+			local parentGO = parent.parent.gameObject
 
-			arg_1_0._prefabLoader = PrefabInstantiate.Create(var_1_1)
+			gohelper.setActive(self._btnSummonGroupGO, false)
 
-			arg_1_0._prefabLoader:startLoad(ResUrl.getSummonFreeButton(), arg_1_0.handleInstanceLoaded, arg_1_0)
+			self._prefabLoader = PrefabInstantiate.Create(parentGO)
+
+			self._prefabLoader:startLoad(ResUrl.getSummonFreeButton(), self.handleInstanceLoaded, self)
 		end
 	end
 end
 
-function var_0_0.dispose(arg_2_0)
-	logNormal("SummonFreeSingleGacha dispose : " .. tostring(arg_2_0._summonId))
+function SummonFreeSingleGacha:dispose()
+	logNormal("SummonFreeSingleGacha dispose : " .. tostring(self._summonId))
 
-	if arg_2_0._prefabLoader then
-		arg_2_0._prefabLoader:onDestroy()
+	if self._prefabLoader then
+		self._prefabLoader:onDestroy()
 	end
 
-	if arg_2_0._btnFreeSummon then
-		arg_2_0._btnFreeSummon:RemoveClickListener()
+	if self._btnFreeSummon then
+		self._btnFreeSummon:RemoveClickListener()
 	end
 
-	arg_2_0:__onDispose()
+	self:__onDispose()
 end
 
-function var_0_0.handleInstanceLoaded(arg_3_0)
-	if arg_3_0._prefabLoader and arg_3_0._summonId then
-		arg_3_0._btnFreeSummonGO = arg_3_0._prefabLoader:getInstGO()
+function SummonFreeSingleGacha:handleInstanceLoaded()
+	if self._prefabLoader and self._summonId then
+		self._btnFreeSummonGO = self._prefabLoader:getInstGO()
 
-		local var_3_0 = arg_3_0._btnSummonGroupGO.transform:GetSiblingIndex()
+		local siblingIndex = self._btnSummonGroupGO.transform:GetSiblingIndex()
 
-		arg_3_0._btnFreeSummonGO.transform:SetSiblingIndex(var_3_0 + 1)
-		arg_3_0:initButton()
-		arg_3_0:refreshUI()
-	end
-end
-
-function var_0_0.initButton(arg_4_0)
-	if arg_4_0._btnFreeSummonGO then
-		local var_4_0, var_4_1 = recthelper.getAnchor(arg_4_0._btnSummonGroupGO.transform)
-
-		recthelper.setAnchor(arg_4_0._btnFreeSummonGO.transform, var_4_0, var_4_1)
-
-		arg_4_0._gobtn = gohelper.findChild(arg_4_0._btnFreeSummonGO, "#go_btn")
-		arg_4_0._gobanner = gohelper.findChild(arg_4_0._btnFreeSummonGO, "#go_banner")
-		arg_4_0._txtbanner = gohelper.findChildText(arg_4_0._btnFreeSummonGO, "#go_banner/#txt_banner")
-		arg_4_0._btnFreeSummon = gohelper.findChildButton(arg_4_0._btnFreeSummonGO, "#go_btn/#btn_summonfree")
-
-		arg_4_0._btnFreeSummon:AddClickListener(arg_4_0.onClickSummon, arg_4_0)
-		arg_4_0:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_4_0.refreshOpenTime, arg_4_0)
+		self._btnFreeSummonGO.transform:SetSiblingIndex(siblingIndex + 1)
+		self:initButton()
+		self:refreshUI()
 	end
 end
 
-function var_0_0.onClickSummon(arg_5_0)
-	if arg_5_0._summonId then
+function SummonFreeSingleGacha:initButton()
+	if self._btnFreeSummonGO then
+		local x, y = recthelper.getAnchor(self._btnSummonGroupGO.transform)
+
+		recthelper.setAnchor(self._btnFreeSummonGO.transform, x, y)
+
+		self._gobtn = gohelper.findChild(self._btnFreeSummonGO, "#go_btn")
+		self._gobanner = gohelper.findChild(self._btnFreeSummonGO, "#go_banner")
+		self._txtbanner = gohelper.findChildText(self._btnFreeSummonGO, "#go_banner/#txt_banner")
+		self._btnFreeSummon = gohelper.findChildButton(self._btnFreeSummonGO, "#go_btn/#btn_summonfree")
+
+		self._btnFreeSummon:AddClickListener(self.onClickSummon, self)
+		self:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, self.refreshOpenTime, self)
+	end
+end
+
+function SummonFreeSingleGacha:onClickSummon()
+	if self._summonId then
 		logNormal("SummonFreeSingleGacha send summon 1")
-		SummonMainController.instance:sendStartSummon(arg_5_0._summonId, 1, false, true)
+		SummonMainController.instance:sendStartSummon(self._summonId, 1, false, true)
 	end
 end
 
-function var_0_0.refreshUI(arg_6_0)
-	if arg_6_0._summonId and not gohelper.isNil(arg_6_0._btnFreeSummonGO) and not gohelper.isNil(arg_6_0._btnSummonGroupGO) then
-		local var_6_0 = SummonMainModel.instance:getPoolServerMO(arg_6_0._summonId)
+function SummonFreeSingleGacha:refreshUI()
+	if self._summonId and not gohelper.isNil(self._btnFreeSummonGO) and not gohelper.isNil(self._btnSummonGroupGO) then
+		local summonMO = SummonMainModel.instance:getPoolServerMO(self._summonId)
 
-		if var_6_0.haveFree then
-			arg_6_0._needCountDown = false
+		if summonMO.haveFree then
+			self._needCountDown = false
 
-			gohelper.setActive(arg_6_0._btnFreeSummonGO, true)
-			gohelper.setActive(arg_6_0._btnSummonGroupGO, false)
-			gohelper.setActive(arg_6_0._gobtn, true)
+			gohelper.setActive(self._btnFreeSummonGO, true)
+			gohelper.setActive(self._btnSummonGroupGO, false)
+			gohelper.setActive(self._gobtn, true)
 
-			arg_6_0._txtbanner.text = luaLang("summon_timelimit_free")
+			self._txtbanner.text = luaLang("summon_timelimit_free")
 		else
-			gohelper.setActive(arg_6_0._gobtn, false)
-			gohelper.setActive(arg_6_0._btnSummonGroupGO, true)
+			gohelper.setActive(self._gobtn, false)
+			gohelper.setActive(self._btnSummonGroupGO, true)
 
-			local var_6_1 = SummonConfig.instance:getSummonPool(arg_6_0._summonId)
+			local poolCO = SummonConfig.instance:getSummonPool(self._summonId)
 
-			if var_6_1 and var_6_0.usedFreeCount < var_6_1.totalFreeCount then
-				arg_6_0._needCountDown = true
+			if poolCO and summonMO.usedFreeCount < poolCO.totalFreeCount then
+				self._needCountDown = true
 
-				gohelper.setActive(arg_6_0._btnFreeSummonGO, true)
+				gohelper.setActive(self._btnFreeSummonGO, true)
 			else
-				arg_6_0._needCountDown = false
+				self._needCountDown = false
 
-				gohelper.setActive(arg_6_0._btnFreeSummonGO, false)
+				gohelper.setActive(self._btnFreeSummonGO, false)
 			end
 		end
 	end
 
-	arg_6_0:refreshOpenTime()
+	self:refreshOpenTime()
 end
 
-function var_0_0.refreshOpenTime(arg_7_0)
-	if arg_7_0._needCountDown then
-		local var_7_0 = ServerTime.getToadyEndTimeStamp(true) - ServerTime.nowInLocal()
-		local var_7_1, var_7_2 = TimeUtil.secondToRoughTime2(var_7_0)
+function SummonFreeSingleGacha:refreshOpenTime()
+	if self._needCountDown then
+		local remainTime = ServerTime.getToadyEndTimeStamp(true) - ServerTime.nowInLocal()
+		local time, timeFormat = TimeUtil.secondToRoughTime2(remainTime)
 
-		arg_7_0._txtbanner.text = string.format(luaLang("summon_free_after_time"), tostring(var_7_1) .. tostring(var_7_2))
+		self._txtbanner.text = string.format(luaLang("summon_free_after_time"), tostring(time) .. tostring(timeFormat))
 	end
 end
 
-return var_0_0
+return SummonFreeSingleGacha

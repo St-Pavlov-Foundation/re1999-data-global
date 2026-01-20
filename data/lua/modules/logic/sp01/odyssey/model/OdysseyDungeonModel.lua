@@ -1,427 +1,434 @@
-﻿module("modules.logic.sp01.odyssey.model.OdysseyDungeonModel", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/model/OdysseyDungeonModel.lua
 
-local var_0_0 = class("OdysseyDungeonModel", BaseModel)
+module("modules.logic.sp01.odyssey.model.OdysseyDungeonModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local OdysseyDungeonModel = class("OdysseyDungeonModel", BaseModel)
+
+function OdysseyDungeonModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0.finishElementMap = {}
-	arg_2_0.hasFinishElementMap = {}
-	arg_2_0.newElementList = {}
-	arg_2_0.isDraggingMap = false
-	arg_2_0.isInMapSelectState = false
-	arg_2_0.needFocusMainMapSelectItem = false
-	arg_2_0.curInElementId = 0
-	arg_2_0.mapInfoTab = {}
-	arg_2_0.curElementMoTab = {}
-	arg_2_0.jumpNeedOpenElement = 0
-	arg_2_0.storyOptionParam = nil
-	arg_2_0.elementFightParam = nil
-	arg_2_0.curFightEpisodeId = nil
-	arg_2_0.curMapId = nil
+function OdysseyDungeonModel:reInit()
+	self.finishElementMap = {}
+	self.hasFinishElementMap = {}
+	self.newElementList = {}
+	self.isDraggingMap = false
+	self.isInMapSelectState = false
+	self.needFocusMainMapSelectItem = false
+	self.curInElementId = 0
+	self.mapInfoTab = {}
+	self.curElementMoTab = {}
+	self.jumpNeedOpenElement = 0
+	self.storyOptionParam = nil
+	self.elementFightParam = nil
+	self.curFightEpisodeId = nil
+	self.curMapId = nil
 end
 
-function var_0_0.updateMapInfo(arg_3_0, arg_3_1)
-	arg_3_0:setMapInfo(arg_3_1.maps)
-	arg_3_0:setCurInElementId(arg_3_1.currEleId)
-	arg_3_0:setMapElementInfo(arg_3_1)
+function OdysseyDungeonModel:updateMapInfo(mapInfo)
+	self:setMapInfo(mapInfo.maps)
+	self:setCurInElementId(mapInfo.currEleId)
+	self:setMapElementInfo(mapInfo)
 end
 
-function var_0_0.setCurInElementId(arg_4_0, arg_4_1)
-	arg_4_0.curInElementId = arg_4_1
+function OdysseyDungeonModel:setCurInElementId(elementId)
+	self.curInElementId = elementId
 end
 
-function var_0_0.getCurInElementId(arg_5_0)
-	return arg_5_0.curInElementId
+function OdysseyDungeonModel:getCurInElementId()
+	return self.curInElementId
 end
 
-function var_0_0.setMapInfo(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-		local var_6_0 = arg_6_0.mapInfoTab[iter_6_1.id]
+function OdysseyDungeonModel:setMapInfo(mapsInfo)
+	for index, mapInfo in ipairs(mapsInfo) do
+		local mapMo = self.mapInfoTab[mapInfo.id]
 
-		if not var_6_0 then
-			var_6_0 = OdysseyMapMo.New()
+		if not mapMo then
+			mapMo = OdysseyMapMo.New()
 
-			var_6_0:init(iter_6_1.id)
+			mapMo:init(mapInfo.id)
 
-			arg_6_0.mapInfoTab[iter_6_1.id] = var_6_0
+			self.mapInfoTab[mapInfo.id] = mapMo
 		end
 
-		var_6_0:updateInfo(iter_6_1)
+		mapMo:updateInfo(mapInfo)
 	end
 
-	arg_6_0.mapInfoList = {}
+	self.mapInfoList = {}
 
-	for iter_6_2, iter_6_3 in pairs(arg_6_0.mapInfoTab) do
-		table.insert(arg_6_0.mapInfoList, iter_6_3)
+	for mapId, mapMo in pairs(self.mapInfoTab) do
+		table.insert(self.mapInfoList, mapMo)
 	end
 
-	table.sort(arg_6_0.mapInfoList, function(arg_7_0, arg_7_1)
-		return arg_7_0.id < arg_7_1.id
+	table.sort(self.mapInfoList, function(a, b)
+		return a.id < b.id
 	end)
 end
 
-function var_0_0.getMapInfo(arg_8_0, arg_8_1)
-	return arg_8_0.mapInfoTab[arg_8_1]
+function OdysseyDungeonModel:getMapInfo(mapId)
+	return self.mapInfoTab[mapId]
 end
 
-function var_0_0.getMapInfoList(arg_9_0)
-	return arg_9_0.mapInfoList
+function OdysseyDungeonModel:getMapInfoList()
+	return self.mapInfoList
 end
 
-function var_0_0.setMapElementInfo(arg_10_0, arg_10_1)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1.finishedEleIds) do
-		arg_10_0:setHasFinishElementMap(iter_10_1)
+function OdysseyDungeonModel:setMapElementInfo(mapInfo)
+	for _, elementId in ipairs(mapInfo.finishedEleIds) do
+		self:setHasFinishElementMap(elementId)
 	end
 
-	arg_10_0:setAllElementInfo(arg_10_1.elements)
+	self:setAllElementInfo(mapInfo.elements)
 end
 
-function var_0_0.setHasFinishElementMap(arg_11_0, arg_11_1)
-	arg_11_0.hasFinishElementMap[arg_11_1] = true
+function OdysseyDungeonModel:setHasFinishElementMap(elementId)
+	self.hasFinishElementMap[elementId] = true
 end
 
-function var_0_0.setFinishElementMap(arg_12_0, arg_12_1)
-	arg_12_0.finishElementMap[arg_12_1] = true
+function OdysseyDungeonModel:setFinishElementMap(elementId)
+	self.finishElementMap[elementId] = true
 end
 
-function var_0_0.setAllElementInfo(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		arg_13_0:updateElementInfo(iter_13_1)
+function OdysseyDungeonModel:setAllElementInfo(elementInfos)
+	for _, elementInfo in ipairs(elementInfos) do
+		self:updateElementInfo(elementInfo)
 	end
 end
 
-function var_0_0.updateElementInfo(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.curElementMoTab[arg_14_1.id]
+function OdysseyDungeonModel:updateElementInfo(elementInfo)
+	local elementMo = self.curElementMoTab[elementInfo.id]
 
-	if not var_14_0 then
-		var_14_0 = OdysseyElementMo.New()
+	if not elementMo then
+		elementMo = OdysseyElementMo.New()
 
-		var_14_0:init(arg_14_1.id)
+		elementMo:init(elementInfo.id)
 
-		arg_14_0.curElementMoTab[arg_14_1.id] = var_14_0
+		self.curElementMoTab[elementInfo.id] = elementMo
 	end
 
-	var_14_0:updateInfo(arg_14_1)
+	elementMo:updateInfo(elementInfo)
 end
 
-function var_0_0.getElementMo(arg_15_0, arg_15_1)
-	return arg_15_0.curElementMoTab[arg_15_1]
+function OdysseyDungeonModel:getElementMo(elementId)
+	return self.curElementMoTab[elementId]
 end
 
-function var_0_0.getNewElementList(arg_16_0)
-	return arg_16_0.newElementList
+function OdysseyDungeonModel:getNewElementList()
+	return self.newElementList
 end
 
-function var_0_0.cleanNewElements(arg_17_0)
-	arg_17_0.newElementList = {}
+function OdysseyDungeonModel:cleanNewElements()
+	self.newElementList = {}
 end
 
-function var_0_0.addNewElement(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		if iter_18_1.status == OdysseyEnum.ElementStatus.Normal then
-			local var_18_0 = OdysseyConfig.instance:getElementConfig(iter_18_1.id)
+function OdysseyDungeonModel:addNewElement(elementInfos)
+	for _, elementInfo in ipairs(elementInfos) do
+		if elementInfo.status == OdysseyEnum.ElementStatus.Normal then
+			local elementCo = OdysseyConfig.instance:getElementConfig(elementInfo.id)
 
-			table.insert(arg_18_0.newElementList, var_18_0)
+			table.insert(self.newElementList, elementCo)
 		end
 	end
 end
 
-function var_0_0.setDraggingMapState(arg_19_0, arg_19_1)
-	arg_19_0.isDraggingMap = arg_19_1
+function OdysseyDungeonModel:setDraggingMapState(isDragging)
+	self.isDraggingMap = isDragging
 end
 
-function var_0_0.getDraggingMapState(arg_20_0)
-	return arg_20_0.isDraggingMap
+function OdysseyDungeonModel:getDraggingMapState()
+	return self.isDraggingMap
 end
 
-function var_0_0.setCurMapId(arg_21_0, arg_21_1)
-	arg_21_0.curMapId = arg_21_1
+function OdysseyDungeonModel:setCurMapId(mapId)
+	self.curMapId = mapId
 end
 
-function var_0_0.getCurMapId(arg_22_0)
-	return arg_22_0.curMapId or arg_22_0:getHeroInMapId()
+function OdysseyDungeonModel:getCurMapId()
+	return self.curMapId or self:getHeroInMapId()
 end
 
-function var_0_0.getHeroInMapId(arg_23_0)
-	local var_23_0 = OdysseyConfig.instance:getElementConfig(arg_23_0.curInElementId)
+function OdysseyDungeonModel:getHeroInMapId()
+	local elementCo = OdysseyConfig.instance:getElementConfig(self.curInElementId)
 
-	return var_23_0 and var_23_0.mapId or 1
+	return elementCo and elementCo.mapId or 1
 end
 
-function var_0_0.getElemenetInMapId(arg_24_0, arg_24_1)
-	local var_24_0 = OdysseyConfig.instance:getElementConfig(arg_24_1)
+function OdysseyDungeonModel:getElemenetInMapId(elementId)
+	local elementCo = OdysseyConfig.instance:getElementConfig(elementId)
 
-	return var_24_0 and var_24_0.mapId or 0
+	return elementCo and elementCo.mapId or 0
 end
 
-function var_0_0.getCurAllElementCoList(arg_25_0, arg_25_1)
-	local var_25_0 = {}
+function OdysseyDungeonModel:getCurAllElementCoList(mapId)
+	local curElementsList = {}
 
-	for iter_25_0, iter_25_1 in pairs(arg_25_0.curElementMoTab) do
-		if arg_25_0:checkElementCanShow(arg_25_1, iter_25_0) then
-			table.insert(var_25_0, iter_25_1.config)
+	for elementId, elementMo in pairs(self.curElementMoTab) do
+		if self:checkElementCanShow(mapId, elementId) then
+			table.insert(curElementsList, elementMo.config)
 		end
 	end
 
-	return var_25_0
+	return curElementsList
 end
 
-function var_0_0.checkElementCanShow(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0:isElementFinish(arg_26_2)
-	local var_26_1 = arg_26_0.curElementMoTab[arg_26_2]
+function OdysseyDungeonModel:checkElementCanShow(mapId, elementId)
+	local isElementFinish = self:isElementFinish(elementId)
+	local elementMo = self.curElementMoTab[elementId]
 
-	return var_26_1 and var_26_1.config and var_26_1.config.mapId == arg_26_1 and not var_26_0
+	return elementMo and elementMo.config and elementMo.config.mapId == mapId and not isElementFinish
 end
 
-function var_0_0.getCurMainElement(arg_27_0)
-	for iter_27_0, iter_27_1 in pairs(arg_27_0.mapInfoTab) do
-		local var_27_0 = arg_27_0:getCurAllElementCoList(iter_27_0)
+function OdysseyDungeonModel:getCurMainElement()
+	for mapId, mapMo in pairs(self.mapInfoTab) do
+		local elementList = self:getCurAllElementCoList(mapId)
 
-		for iter_27_2, iter_27_3 in ipairs(var_27_0) do
-			if iter_27_3.main == OdysseyEnum.DungeonMainElement then
-				return iter_27_1.config, iter_27_3
+		for index, elementCo in ipairs(elementList) do
+			if elementCo.main == OdysseyEnum.DungeonMainElement then
+				return mapMo.config, elementCo
 			end
 		end
 	end
 end
 
-function var_0_0.isElementFinish(arg_28_0, arg_28_1)
-	return arg_28_0.finishElementMap[arg_28_1]
+function OdysseyDungeonModel:isElementFinish(elementId)
+	return self.finishElementMap[elementId]
 end
 
-function var_0_0.setLastElementFightParam(arg_29_0, arg_29_1)
-	arg_29_0.elementFightParam = {}
-	arg_29_0.elementFightParam.lastEpisodeId = arg_29_1.episodeId
-	arg_29_0.elementFightParam.lastElementId = arg_29_1.elementId
+function OdysseyDungeonModel:setLastElementFightParam(param)
+	self.elementFightParam = {}
+	self.elementFightParam.lastEpisodeId = param.episodeId
+	self.elementFightParam.lastElementId = param.elementId
 
-	arg_29_0:setCurFightEpisodeId(arg_29_1.episodeId)
+	self:setCurFightEpisodeId(param.episodeId)
 end
 
-function var_0_0.getLastElementFightParam(arg_30_0)
-	return arg_30_0.elementFightParam
+function OdysseyDungeonModel:getLastElementFightParam()
+	return self.elementFightParam
 end
 
-function var_0_0.cleanLastElementFightParam(arg_31_0)
-	arg_31_0.elementFightParam = nil
+function OdysseyDungeonModel:cleanLastElementFightParam()
+	self.elementFightParam = nil
 end
 
-function var_0_0.setCurFightEpisodeId(arg_32_0, arg_32_1)
-	arg_32_0.curFightEpisodeId = arg_32_1
+function OdysseyDungeonModel:setCurFightEpisodeId(episodeId)
+	self.curFightEpisodeId = episodeId
 end
 
-function var_0_0.getCurFightEpisodeId(arg_33_0)
-	return arg_33_0.curFightEpisodeId
+function OdysseyDungeonModel:getCurFightEpisodeId()
+	return self.curFightEpisodeId
 end
 
-function var_0_0.checkConditionCanUnlock(arg_34_0, arg_34_1)
-	local var_34_0 = true
+function OdysseyDungeonModel:checkConditionCanUnlock(conditionStr)
+	local canUnlock = true
 
-	if string.nilorempty(arg_34_1) then
-		return var_34_0
+	if string.nilorempty(conditionStr) then
+		return canUnlock
 	end
 
-	local var_34_1 = {}
-	local var_34_2 = GameUtil.splitString2(arg_34_1)
+	local unlockInfoParam = {}
+	local unlockConditionList = GameUtil.splitString2(conditionStr)
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_2) do
-		if iter_34_1[1] == OdysseyEnum.ConditionType.Time then
-			local var_34_3 = tonumber(iter_34_1[2])
-			local var_34_4 = ActivityModel.instance:getActMO(VersionActivity2_9Enum.ActivityId.Dungeon2)
+	for index, conditionData in ipairs(unlockConditionList) do
+		if conditionData[1] == OdysseyEnum.ConditionType.Time then
+			local offsetTime = tonumber(conditionData[2])
+			local activityInfoMo = ActivityModel.instance:getActMO(VersionActivity2_9Enum.ActivityId.Dungeon2)
 
-			if var_34_4 then
-				local var_34_5 = var_34_4:getRealStartTimeStamp() + var_34_3 * TimeUtil.OneDaySecond - ServerTime.now()
+			if activityInfoMo then
+				local startTime = activityInfoMo:getRealStartTimeStamp()
+				local openTime = startTime + offsetTime * TimeUtil.OneDaySecond
+				local remainTimeStamp = openTime - ServerTime.now()
 
-				if var_34_5 > 0 then
-					var_34_0 = false
+				if remainTimeStamp > 0 then
+					canUnlock = false
 				end
 
-				var_34_1 = {
-					type = iter_34_1[1],
-					remainTimeStamp = var_34_5
+				unlockInfoParam = {
+					type = conditionData[1],
+					remainTimeStamp = remainTimeStamp
 				}
 			else
-				var_34_0 = false
-				var_34_1 = {
+				canUnlock = false
+				unlockInfoParam = {
 					remainTimeStamp = 0,
-					type = iter_34_1[1]
+					type = conditionData[1]
 				}
 			end
-		elseif iter_34_1[1] == OdysseyEnum.ConditionType.Finish then
-			if not arg_34_0:isElementFinish(tonumber(iter_34_1[2])) then
-				var_34_0 = false
+		elseif conditionData[1] == OdysseyEnum.ConditionType.Finish then
+			if not self:isElementFinish(tonumber(conditionData[2])) then
+				canUnlock = false
 			end
 
-			var_34_1 = {
-				type = iter_34_1[1],
-				elementId = tonumber(iter_34_1[2])
+			unlockInfoParam = {
+				type = conditionData[1],
+				elementId = tonumber(conditionData[2])
 			}
-		elseif iter_34_1[1] == iter_34_1[1] == OdysseyEnum.ConditionType.FinishOption then
-			if not arg_34_0:isElementFinish(tonumber(iter_34_1[2])) then
-				var_34_0 = false
+		elseif conditionData[1] == conditionData[1] == OdysseyEnum.ConditionType.FinishOption then
+			if not self:isElementFinish(tonumber(conditionData[2])) then
+				canUnlock = false
 			end
 
-			var_34_1 = {
-				type = iter_34_1[1],
-				elementId = tonumber(iter_34_1[2])
+			unlockInfoParam = {
+				type = conditionData[1],
+				elementId = tonumber(conditionData[2])
 			}
-		elseif iter_34_1[1] == OdysseyEnum.ConditionType.Level then
-			local var_34_6 = OdysseyModel.instance:getHeroCurLevelAndExp()
+		elseif conditionData[1] == OdysseyEnum.ConditionType.Level then
+			local heroLevel = OdysseyModel.instance:getHeroCurLevelAndExp()
 
-			if var_34_6 < tonumber(iter_34_1[2]) then
-				var_34_0 = false
+			if heroLevel < tonumber(conditionData[2]) then
+				canUnlock = false
 			end
 
-			var_34_1 = {
-				type = iter_34_1[1],
-				heroLevel = var_34_6,
-				unlockLevel = tonumber(iter_34_1[2])
+			unlockInfoParam = {
+				type = conditionData[1],
+				heroLevel = heroLevel,
+				unlockLevel = tonumber(conditionData[2])
 			}
-		elseif iter_34_1[1] == OdysseyEnum.ConditionType.Item then
-			local var_34_7 = tonumber(iter_34_1[2])
-			local var_34_8 = tonumber(iter_34_1[3])
-			local var_34_9 = OdysseyItemModel.instance:getItemCount(var_34_7)
+		elseif conditionData[1] == OdysseyEnum.ConditionType.Item then
+			local itemId, itemCount = tonumber(conditionData[2]), tonumber(conditionData[3])
+			local curItemCount = OdysseyItemModel.instance:getItemCount(itemId)
 
-			if var_34_9 < var_34_8 then
-				var_34_0 = false
+			if curItemCount < itemCount then
+				canUnlock = false
 			end
 
-			var_34_1 = {
-				type = iter_34_1[1],
-				curItemCount = var_34_9,
-				itemId = tonumber(iter_34_1[2]),
-				unlockItemCount = tonumber(iter_34_1[3])
+			unlockInfoParam = {
+				type = conditionData[1],
+				curItemCount = curItemCount,
+				itemId = tonumber(conditionData[2]),
+				unlockItemCount = tonumber(conditionData[3])
 			}
 		end
 
-		if not var_34_0 then
+		if not canUnlock then
 			break
 		end
 	end
 
-	return var_34_0, var_34_1
+	return canUnlock, unlockInfoParam
 end
 
-function var_0_0.getCurMercenaryElements(arg_35_0)
-	local var_35_0 = {}
+function OdysseyDungeonModel:getCurMercenaryElements()
+	local mercenaryElementMoList = {}
 
-	for iter_35_0, iter_35_1 in pairs(arg_35_0.curElementMoTab) do
-		if not iter_35_1.config then
-			logError(iter_35_1.id .. "元件配置不存在")
+	for index, elementMo in pairs(self.curElementMoTab) do
+		if not elementMo.config then
+			logError(elementMo.id .. "元件配置不存在")
 		end
 
-		if iter_35_1.config and iter_35_1.config.type == OdysseyEnum.ElementType.Fight and not iter_35_1:isFinish() then
-			local var_35_1 = OdysseyConfig.instance:getElementFightConfig(iter_35_1.id)
+		if elementMo.config and elementMo.config.type == OdysseyEnum.ElementType.Fight and not elementMo:isFinish() then
+			local fightElementConfig = OdysseyConfig.instance:getElementFightConfig(elementMo.id)
 
-			if var_35_1 and var_35_1.type == OdysseyEnum.FightType.Mercenary then
-				table.insert(var_35_0, iter_35_1)
+			if fightElementConfig and fightElementConfig.type == OdysseyEnum.FightType.Mercenary then
+				table.insert(mercenaryElementMoList, elementMo)
 			end
 		end
 	end
 
-	return var_35_0
+	return mercenaryElementMoList
 end
 
-function var_0_0.getMercenaryElementsByMap(arg_36_0, arg_36_1)
-	local var_36_0 = {}
-	local var_36_1 = arg_36_0:getCurMercenaryElements()
+function OdysseyDungeonModel:getMercenaryElementsByMap(mapId)
+	local mapMercenaryEleMoList = {}
+	local allMercenaryEleMoList = self:getCurMercenaryElements()
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
-		if iter_36_1.config.mapId == arg_36_1 then
-			table.insert(var_36_0, iter_36_1)
+	for _, elementMo in ipairs(allMercenaryEleMoList) do
+		if elementMo.config.mapId == mapId then
+			table.insert(mapMercenaryEleMoList, elementMo)
 		end
 	end
 
-	return var_36_0
+	return mapMercenaryEleMoList
 end
 
-function var_0_0.getMapFightElementMoList(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = {}
+function OdysseyDungeonModel:getMapFightElementMoList(mapId, fightType)
+	local mapFightElementMoList = {}
 
-	for iter_37_0, iter_37_1 in pairs(arg_37_0.curElementMoTab) do
-		if iter_37_1.config.type == OdysseyEnum.ElementType.Fight and iter_37_1.config.mapId == arg_37_1 then
-			local var_37_1 = OdysseyConfig.instance:getElementFightConfig(iter_37_1.id)
+	for _, elementMo in pairs(self.curElementMoTab) do
+		if elementMo.config.type == OdysseyEnum.ElementType.Fight and elementMo.config.mapId == mapId then
+			local fightElementConfig = OdysseyConfig.instance:getElementFightConfig(elementMo.id)
 
-			if var_37_1 and var_37_1.type == arg_37_2 then
-				table.insert(var_37_0, iter_37_1)
+			if fightElementConfig and fightElementConfig.type == fightType then
+				table.insert(mapFightElementMoList, elementMo)
 			end
 		end
 	end
 
-	return var_37_0
+	return mapFightElementMoList
 end
 
-function var_0_0.getMapNotFinishFightElementMoList(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = {}
+function OdysseyDungeonModel:getMapNotFinishFightElementMoList(mapId, fightType)
+	local mapFightElementMoList = {}
 
-	for iter_38_0, iter_38_1 in pairs(arg_38_0.curElementMoTab) do
-		if iter_38_1.config.type == OdysseyEnum.ElementType.Fight and iter_38_1.config.mapId == arg_38_1 then
-			local var_38_1 = OdysseyConfig.instance:getElementFightConfig(iter_38_1.id)
-			local var_38_2 = arg_38_0:isElementFinish(iter_38_1.id)
+	for _, elementMo in pairs(self.curElementMoTab) do
+		if elementMo.config.type == OdysseyEnum.ElementType.Fight and elementMo.config.mapId == mapId then
+			local fightElementConfig = OdysseyConfig.instance:getElementFightConfig(elementMo.id)
+			local isFinish = self:isElementFinish(elementMo.id)
 
-			if var_38_1 and var_38_1.type == arg_38_2 and not var_38_2 then
-				table.insert(var_38_0, iter_38_1)
+			if fightElementConfig and fightElementConfig.type == fightType and not isFinish then
+				table.insert(mapFightElementMoList, elementMo)
 			end
 		end
 	end
 
-	return var_38_0
+	return mapFightElementMoList
 end
 
-function var_0_0.setIsMapSelect(arg_39_0, arg_39_1)
-	arg_39_0.isInMapSelectState = arg_39_1
+function OdysseyDungeonModel:setIsMapSelect(state)
+	self.isInMapSelectState = state
 end
 
-function var_0_0.getIsInMapSelectState(arg_40_0)
-	return arg_40_0.isInMapSelectState
+function OdysseyDungeonModel:getIsInMapSelectState()
+	return self.isInMapSelectState
 end
 
-function var_0_0.setNeedFocusMainMapSelectItem(arg_41_0, arg_41_1)
-	arg_41_0.needFocusMainMapSelectItem = arg_41_1
+function OdysseyDungeonModel:setNeedFocusMainMapSelectItem(state)
+	self.needFocusMainMapSelectItem = state
 end
 
-function var_0_0.getNeedFocusMainMapSelectItem(arg_42_0)
-	return arg_42_0.needFocusMainMapSelectItem
+function OdysseyDungeonModel:getNeedFocusMainMapSelectItem()
+	return self.needFocusMainMapSelectItem
 end
 
-function var_0_0.setJumpNeedOpenElement(arg_43_0, arg_43_1)
-	arg_43_0.jumpNeedOpenElement = arg_43_1
+function OdysseyDungeonModel:setJumpNeedOpenElement(elementId)
+	self.jumpNeedOpenElement = elementId
 end
 
-function var_0_0.getJumpNeedOpenElement(arg_44_0)
-	return arg_44_0.jumpNeedOpenElement
+function OdysseyDungeonModel:getJumpNeedOpenElement()
+	return self.jumpNeedOpenElement
 end
 
-function var_0_0.setStoryOptionParam(arg_45_0, arg_45_1)
-	arg_45_0.storyOptionParam = arg_45_1
+function OdysseyDungeonModel:setStoryOptionParam(param)
+	self.storyOptionParam = param
 end
 
-function var_0_0.getStoryOptionParam(arg_46_0)
-	return arg_46_0.storyOptionParam
+function OdysseyDungeonModel:getStoryOptionParam()
+	return self.storyOptionParam
 end
 
-function var_0_0.getMapRes(arg_47_0, arg_47_1)
-	return OdysseyConfig.instance:getDungeonMapConfig(arg_47_1).res
+function OdysseyDungeonModel:getMapRes(mapId)
+	local mapConfig = OdysseyConfig.instance:getDungeonMapConfig(mapId)
+
+	return mapConfig.res
 end
 
-function var_0_0.getMythCoMyMapId(arg_48_0, arg_48_1)
-	local var_48_0 = OdysseyConfig.instance:getMythConfigList()
+function OdysseyDungeonModel:getMythCoMyMapId(mapId)
+	local mythConfigList = OdysseyConfig.instance:getMythConfigList()
 
-	for iter_48_0, iter_48_1 in ipairs(var_48_0) do
-		if arg_48_0:getElemenetInMapId(iter_48_1.elementId) == arg_48_1 then
-			return iter_48_1
+	for index, mythCo in ipairs(mythConfigList) do
+		local elementMapId = self:getElemenetInMapId(mythCo.elementId)
+
+		if elementMapId == mapId then
+			return mythCo
 		end
 	end
 end
 
-function var_0_0.checkHasFightTypeElement(arg_49_0, arg_49_1)
-	for iter_49_0, iter_49_1 in pairs(arg_49_0.curElementMoTab) do
-		if iter_49_1.config and iter_49_1.config.type == OdysseyEnum.ElementType.Fight then
-			local var_49_0 = OdysseyConfig.instance:getElementFightConfig(iter_49_1.id)
+function OdysseyDungeonModel:checkHasFightTypeElement(fightElementType)
+	for index, elementMo in pairs(self.curElementMoTab) do
+		if elementMo.config and elementMo.config.type == OdysseyEnum.ElementType.Fight then
+			local fightElementConfig = OdysseyConfig.instance:getElementFightConfig(elementMo.id)
 
-			if var_49_0 and var_49_0.type == arg_49_1 then
+			if fightElementConfig and fightElementConfig.type == fightElementType then
 				return true
 			end
 		end
@@ -430,82 +437,86 @@ function var_0_0.checkHasFightTypeElement(arg_49_0, arg_49_1)
 	return false
 end
 
-function var_0_0.getCanAutoExposeReligionCoList(arg_50_0)
-	local var_50_0 = {}
-	local var_50_1 = OdysseyConfig.instance:getReligionConfigList()
+function OdysseyDungeonModel:getCanAutoExposeReligionCoList()
+	local canAutoExposeList = {}
+	local religionCoList = OdysseyConfig.instance:getReligionConfigList()
 
-	for iter_50_0, iter_50_1 in ipairs(var_50_1) do
-		if iter_50_1.autoExpose == 1 and not OdysseyModel.instance:getReligionInfoData(iter_50_1.id) then
-			table.insert(var_50_0, iter_50_1)
+	for index, religionCo in ipairs(religionCoList) do
+		if religionCo.autoExpose == 1 then
+			local religionInfo = OdysseyModel.instance:getReligionInfoData(religionCo.id)
+
+			if not religionInfo then
+				table.insert(canAutoExposeList, religionCo)
+			end
 		end
 	end
 
-	return var_50_0
+	return canAutoExposeList
 end
 
-function var_0_0.checkHasNewUnlock(arg_51_0, arg_51_1, arg_51_2)
-	local var_51_0 = arg_51_0:getCurSaveLocalNewUnlock(arg_51_1)
-	local var_51_1 = {}
+function OdysseyDungeonModel:checkHasNewUnlock(key, curUnlockIdList)
+	local curSaveStrList = self:getCurSaveLocalNewUnlock(key)
+	local newUnlockIdList = {}
 
-	for iter_51_0, iter_51_1 in ipairs(arg_51_2) do
-		if not tabletool.indexOf(var_51_0, iter_51_1) then
-			table.insert(var_51_1, iter_51_1)
+	for index, id in ipairs(curUnlockIdList) do
+		if not tabletool.indexOf(curSaveStrList, id) then
+			table.insert(newUnlockIdList, id)
 		end
 	end
 
-	return #var_51_1 > 0, var_51_1
+	return #newUnlockIdList > 0, newUnlockIdList
 end
 
-function var_0_0.saveLocalCurNewLock(arg_52_0, arg_52_1, arg_52_2)
-	local var_52_0 = arg_52_0:getCurSaveLocalNewUnlock(arg_52_1)
-	local var_52_1 = var_52_0
+function OdysseyDungeonModel:saveLocalCurNewLock(key, curUnlockIdList)
+	local curSaveStrList = self:getCurSaveLocalNewUnlock(key)
+	local newSaveIdList = curSaveStrList
 
-	for iter_52_0, iter_52_1 in ipairs(arg_52_2) do
-		if not tabletool.indexOf(var_52_0, iter_52_1) then
-			table.insert(var_52_1, iter_52_1)
+	for index, id in ipairs(curUnlockIdList) do
+		if not tabletool.indexOf(curSaveStrList, id) then
+			table.insert(newSaveIdList, id)
 		end
 	end
 
-	OdysseyDungeonController.instance:setPlayerPrefs(arg_52_1, table.concat(var_52_1, "#"))
+	OdysseyDungeonController.instance:setPlayerPrefs(key, table.concat(newSaveIdList, "#"))
 end
 
-function var_0_0.getCurSaveLocalNewUnlock(arg_53_0, arg_53_1)
-	local var_53_0 = OdysseyDungeonController.instance:getPlayerPrefs(arg_53_1, "")
-	local var_53_1 = {}
+function OdysseyDungeonModel:getCurSaveLocalNewUnlock(key)
+	local saveLocalStr = OdysseyDungeonController.instance:getPlayerPrefs(key, "")
+	local curSaveStrList = {}
 
-	if not string.nilorempty(var_53_0) then
-		var_53_1 = string.splitToNumber(var_53_0, "#")
+	if not string.nilorempty(saveLocalStr) then
+		curSaveStrList = string.splitToNumber(saveLocalStr, "#")
 	end
 
-	return var_53_1
+	return curSaveStrList
 end
 
-function var_0_0.getCurUnlockMythIdList(arg_54_0)
-	local var_54_0 = {}
-	local var_54_1 = OdysseyConfig.instance:getMythConfigList()
+function OdysseyDungeonModel:getCurUnlockMythIdList()
+	local curUnlockMythIdList = {}
+	local mythConfigList = OdysseyConfig.instance:getMythConfigList()
 
-	for iter_54_0, iter_54_1 in ipairs(var_54_1) do
-		if arg_54_0:getElementMo(iter_54_1.elementId) then
-			table.insert(var_54_0, iter_54_1.id)
+	for index, mythCo in ipairs(mythConfigList) do
+		if self:getElementMo(mythCo.elementId) then
+			table.insert(curUnlockMythIdList, mythCo.id)
 		end
 	end
 
-	return var_54_0
+	return curUnlockMythIdList
 end
 
-function var_0_0.getCurUnlockMapIdList(arg_55_0)
-	local var_55_0 = {}
-	local var_55_1 = OdysseyConfig.instance:getAllDungeonMapCoList()
+function OdysseyDungeonModel:getCurUnlockMapIdList()
+	local curUnlockMapIdList = {}
+	local mapConfigList = OdysseyConfig.instance:getAllDungeonMapCoList()
 
-	for iter_55_0, iter_55_1 in ipairs(var_55_1) do
-		if arg_55_0:getMapInfo(iter_55_1.id) then
-			table.insert(var_55_0, iter_55_1.id)
+	for index, mapCo in ipairs(mapConfigList) do
+		if self:getMapInfo(mapCo.id) then
+			table.insert(curUnlockMapIdList, mapCo.id)
 		end
 	end
 
-	return var_55_0
+	return curUnlockMapIdList
 end
 
-var_0_0.instance = var_0_0.New()
+OdysseyDungeonModel.instance = OdysseyDungeonModel.New()
 
-return var_0_0
+return OdysseyDungeonModel

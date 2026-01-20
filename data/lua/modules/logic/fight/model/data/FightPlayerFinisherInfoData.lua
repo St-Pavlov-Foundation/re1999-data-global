@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.model.data.FightPlayerFinisherInfoData", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightPlayerFinisherInfoData.lua
 
-local var_0_0 = FightDataClass("FightPlayerFinisherInfoData")
+module("modules.logic.fight.model.data.FightPlayerFinisherInfoData", package.seeall)
 
-var_0_0.Type = {
+local FightPlayerFinisherInfoData = FightDataClass("FightPlayerFinisherInfoData")
+
+FightPlayerFinisherInfoData.Type = {
 	SurvivalTalent = 1,
 	Normal = 0
 }
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1)
-	arg_1_0.skills = {}
+function FightPlayerFinisherInfoData:onConstructor(proto)
+	self.skills = {}
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.skills) do
-		table.insert(arg_1_0.skills, FightPlayerFinisherSkillInfoData.New(iter_1_1))
+	for i, v in ipairs(proto.skills) do
+		table.insert(self.skills, FightPlayerFinisherSkillInfoData.New(v))
 	end
 
-	arg_1_0.roundUseLimit = arg_1_1.roundUseLimit
-	arg_1_0.type = arg_1_1.type
+	self.roundUseLimit = proto.roundUseLimit
+	self.type = proto.type
 end
 
-return var_0_0
+return FightPlayerFinisherInfoData

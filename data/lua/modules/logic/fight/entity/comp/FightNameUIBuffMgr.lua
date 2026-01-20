@@ -1,227 +1,230 @@
-﻿module("modules.logic.fight.entity.comp.FightNameUIBuffMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightNameUIBuffMgr.lua
 
-local var_0_0 = class("FightNameUIBuffMgr")
-local var_0_1 = 4
-local var_0_2 = {
+module("modules.logic.fight.entity.comp.FightNameUIBuffMgr", package.seeall)
+
+local FightNameUIBuffMgr = class("FightNameUIBuffMgr")
+local BuffCount1Line = 4
+local canPlaySpecialConfigEffectIdDict = {
 	[20004] = true,
 	[20003] = true,
 	[30003] = true,
 	[30004] = true
 }
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.entity = arg_1_1
-	arg_1_0.goBuffItem = arg_1_2
-	arg_1_0.opContainerTr = arg_1_3
-	arg_1_0.buffItemList = {}
-	arg_1_0.buffLineCount = 0
+function FightNameUIBuffMgr:init(entity, goBuffItem, opContainerTr)
+	self.entity = entity
+	self.goBuffItem = goBuffItem
+	self.opContainerTr = opContainerTr
+	self.buffItemList = {}
+	self.buffLineCount = 0
 
-	gohelper.setActive(arg_1_0.goBuffItem, false)
-	arg_1_0:refreshBuffList()
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceStart, arg_1_0.updateBuff, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.SkillHideBuffLayer, arg_1_0.updateBuff, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, arg_1_0.updateBuff, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.MultiHpChange, arg_1_0._onMultiHpChange, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_1_0.updateBuff, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_1_0.updateBuff, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.GMForceRefreshNameUIBuff, arg_1_0._onGMForceRefreshNameUIBuff, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.AfterForceUpdatePerformanceData, arg_1_0._onAfterForceUpdatePerformanceData, arg_1_0)
-	FightController.instance:registerCallback(FightEvent.CoverPerformanceEntityData, arg_1_0._onCoverPerformanceEntityData, arg_1_0)
+	gohelper.setActive(self.goBuffItem, false)
+	self:refreshBuffList()
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceStart, self.updateBuff, self)
+	FightController.instance:registerCallback(FightEvent.SkillHideBuffLayer, self.updateBuff, self)
+	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, self.updateBuff, self)
+	FightController.instance:registerCallback(FightEvent.MultiHpChange, self._onMultiHpChange, self)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, self.updateBuff, self)
+	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self.updateBuff, self)
+	FightController.instance:registerCallback(FightEvent.GMForceRefreshNameUIBuff, self._onGMForceRefreshNameUIBuff, self)
+	FightController.instance:registerCallback(FightEvent.AfterForceUpdatePerformanceData, self._onAfterForceUpdatePerformanceData, self)
+	FightController.instance:registerCallback(FightEvent.CoverPerformanceEntityData, self._onCoverPerformanceEntityData, self)
 end
 
-function var_0_0.beforeDestroy(arg_2_0)
-	arg_2_0.goBuffItem = nil
-	arg_2_0.opContainerTr = nil
-	arg_2_0.buffItemList = nil
-	arg_2_0.deleteBuffItemList = nil
+function FightNameUIBuffMgr:beforeDestroy()
+	self.goBuffItem = nil
+	self.opContainerTr = nil
+	self.buffItemList = nil
+	self.deleteBuffItemList = nil
 
-	TaskDispatcher.cancelTask(arg_2_0.playDeleteAniDone, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceStart, arg_2_0.updateBuff, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.SkillHideBuffLayer, arg_2_0.updateBuff, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, arg_2_0.updateBuff, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.MultiHpChange, arg_2_0._onMultiHpChange, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_2_0.updateBuff, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0.updateBuff, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.GMForceRefreshNameUIBuff, arg_2_0._onGMForceRefreshNameUIBuff, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.AfterForceUpdatePerformanceData, arg_2_0._onAfterForceUpdatePerformanceData, arg_2_0)
-	FightController.instance:unregisterCallback(FightEvent.CoverPerformanceEntityData, arg_2_0._onCoverPerformanceEntityData, arg_2_0)
+	TaskDispatcher.cancelTask(self.playDeleteAniDone, self)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceStart, self.updateBuff, self)
+	FightController.instance:unregisterCallback(FightEvent.SkillHideBuffLayer, self.updateBuff, self)
+	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, self.updateBuff, self)
+	FightController.instance:unregisterCallback(FightEvent.MultiHpChange, self._onMultiHpChange, self)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, self.updateBuff, self)
+	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, self.updateBuff, self)
+	FightController.instance:unregisterCallback(FightEvent.GMForceRefreshNameUIBuff, self._onGMForceRefreshNameUIBuff, self)
+	FightController.instance:unregisterCallback(FightEvent.AfterForceUpdatePerformanceData, self._onAfterForceUpdatePerformanceData, self)
+	FightController.instance:unregisterCallback(FightEvent.CoverPerformanceEntityData, self._onCoverPerformanceEntityData, self)
 end
 
-function var_0_0.updateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	if arg_3_1 and arg_3_1 ~= arg_3_0.entity.id then
+function FightNameUIBuffMgr:updateBuff(entityId, effectType, buffId, buff_uid, configEffect)
+	if entityId and entityId ~= self.entity.id then
 		return
 	end
 
-	if arg_3_2 == FightEnum.EffectType.BUFFDEL then
-		if not arg_3_0.deleteBuffItemList then
-			arg_3_0.deleteBuffItemList = {}
+	if effectType == FightEnum.EffectType.BUFFDEL then
+		if not self.deleteBuffItemList then
+			self.deleteBuffItemList = {}
 		end
 
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0.buffItemList) do
-			if iter_3_1.buffMO.uid == arg_3_4 then
-				local var_3_0 = table.remove(arg_3_0.buffItemList, iter_3_0)
-				local var_3_1 = 1
+		for i, v in ipairs(self.buffItemList) do
+			if v.buffMO.uid == buff_uid then
+				local buffItem = table.remove(self.buffItemList, i)
+				local ani_duration = 1
 
-				if var_0_2[arg_3_5] then
-					var_3_1 = var_3_0:playAni("close")
+				if canPlaySpecialConfigEffectIdDict[configEffect] then
+					ani_duration = buffItem:playAni("close")
 				else
-					var_3_1 = var_3_0:playAni("disappear")
+					ani_duration = buffItem:playAni("disappear")
 				end
 
-				table.insert(arg_3_0.deleteBuffItemList, var_3_0)
-				TaskDispatcher.runDelay(arg_3_0.playDeleteAniDone, arg_3_0, var_3_1)
+				table.insert(self.deleteBuffItemList, buffItem)
+				TaskDispatcher.runDelay(self.playDeleteAniDone, self, ani_duration)
 
 				break
 			end
 		end
 	end
 
-	arg_3_0:refreshBuffList()
+	self:refreshBuffList()
 
-	if arg_3_2 == FightEnum.EffectType.BUFFADD then
-		local var_3_2 = lua_skill_buff.configDict[arg_3_3]
+	if effectType == FightEnum.EffectType.BUFFADD then
+		local buffCO = lua_skill_buff.configDict[buffId]
 
-		if var_3_2 and var_3_2.isNoShow == 0 and arg_3_0.curBuffItemCount ~= 0 then
-			arg_3_0.buffItemList[arg_3_0.curBuffItemCount]:playAni("appear")
+		if buffCO and buffCO.isNoShow == 0 and self.curBuffItemCount ~= 0 then
+			self.buffItemList[self.curBuffItemCount]:playAni("appear")
 		end
 	end
 
-	if arg_3_2 == FightEnum.EffectType.BUFFUPDATE then
-		for iter_3_2, iter_3_3 in ipairs(arg_3_0.buffItemList) do
-			if arg_3_4 == iter_3_3.buffMO.uid then
-				local var_3_3 = FightDataHelper.tempMgr.buffDurationDic[arg_3_1]
+	if effectType == FightEnum.EffectType.BUFFUPDATE then
+		for i, buffItem in ipairs(self.buffItemList) do
+			if buff_uid == buffItem.buffMO.uid then
+				local lastDuration = FightDataHelper.tempMgr.buffDurationDic[entityId]
 
-				var_3_3 = var_3_3 and var_3_3[arg_3_4]
+				lastDuration = lastDuration and lastDuration[buff_uid]
 
-				if var_3_3 and var_3_3 < iter_3_3.buffMO.duration then
-					iter_3_3:playAni("text")
+				if lastDuration and lastDuration < buffItem.buffMO.duration then
+					buffItem:playAni("text")
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.playDeleteAniDone(arg_4_0)
-	if arg_4_0.deleteBuffItemList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0.deleteBuffItemList) do
-			iter_4_1:closeAni()
-			gohelper.setActive(iter_4_1.go, false)
-			table.insert(arg_4_0.buffItemList, iter_4_1)
+function FightNameUIBuffMgr:playDeleteAniDone()
+	if self.deleteBuffItemList then
+		for _, buffItem in ipairs(self.deleteBuffItemList) do
+			buffItem:closeAni()
+			gohelper.setActive(buffItem.go, false)
+			table.insert(self.buffItemList, buffItem)
 		end
 
-		arg_4_0.deleteBuffItemList = {}
+		self.deleteBuffItemList = {}
 	end
 
-	table.sort(arg_4_0.buffItemList, var_0_0.sortBuffItem)
-	arg_4_0:refreshBuffList()
+	table.sort(self.buffItemList, FightNameUIBuffMgr.sortBuffItem)
+	self:refreshBuffList()
 end
 
-function var_0_0.sortBuffItem(arg_5_0, arg_5_1)
-	return arg_5_0.originIndex < arg_5_1.originIndex
+function FightNameUIBuffMgr.sortBuffItem(item1, item2)
+	return item1.originIndex < item2.originIndex
 end
 
-function var_0_0.sortBuffMo(arg_6_0, arg_6_1)
-	if arg_6_0.time ~= arg_6_1.time then
-		return arg_6_0.time < arg_6_1.time
+function FightNameUIBuffMgr.sortBuffMo(buffMO1, buffMO2)
+	if buffMO1.time ~= buffMO2.time then
+		return buffMO1.time < buffMO2.time
 	end
 
-	return arg_6_0.id < arg_6_1.id
+	return buffMO1.id < buffMO2.id
 end
 
-function var_0_0.refreshBuffList(arg_7_0)
-	local var_7_0 = arg_7_0.entity:getMO()
+function FightNameUIBuffMgr:refreshBuffList()
+	local entityMO = self.entity:getMO()
 
-	if not var_7_0 then
+	if not entityMO then
 		return
 	end
 
-	local var_7_1 = var_7_0:getBuffList()
-	local var_7_2 = FightBuffHelper.filterBuffType(var_7_1, FightBuffTipsView.filterTypeKey)
+	local buffMOs = entityMO:getBuffList()
 
-	FightSkillBuffMgr.instance:dealStackerBuff(var_7_2)
-	table.sort(var_7_2, var_0_0.sortBuffMo)
+	buffMOs = FightBuffHelper.filterBuffType(buffMOs, FightBuffTipsView.filterTypeKey)
 
-	local var_7_3 = var_7_2 and #var_7_2 or 0
-	local var_7_4 = 0
+	FightSkillBuffMgr.instance:dealStackerBuff(buffMOs)
+	table.sort(buffMOs, FightNameUIBuffMgr.sortBuffMo)
 
-	arg_7_0.buffItemOriginIndex = arg_7_0.buffItemOriginIndex or 0
+	local count = buffMOs and #buffMOs or 0
+	local itemCount = 0
 
-	local var_7_5 = arg_7_0.deleteBuffItemList and #arg_7_0.deleteBuffItemList or 0
+	self.buffItemOriginIndex = self.buffItemOriginIndex or 0
 
-	for iter_7_0 = 1, var_7_3 do
-		local var_7_6 = var_7_2[iter_7_0]
-		local var_7_7 = lua_skill_buff.configDict[var_7_6.buffId]
+	local del_item_list_count = self.deleteBuffItemList and #self.deleteBuffItemList or 0
 
-		if var_7_7 and var_7_7.isNoShow == 0 and var_7_4 + var_7_5 < FightEnum.MaxBuffIconCount then
-			var_7_4 = var_7_4 + 1
+	for i = 1, count do
+		local buffMO = buffMOs[i]
+		local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-			local var_7_8 = arg_7_0.buffItemList[var_7_4]
+		if buffCO and buffCO.isNoShow == 0 and itemCount + del_item_list_count < FightEnum.MaxBuffIconCount then
+			itemCount = itemCount + 1
 
-			if not var_7_8 then
-				local var_7_9 = gohelper.cloneInPlace(arg_7_0.goBuffItem, "buff" .. var_7_4)
+			local buffItem = self.buffItemList[itemCount]
 
-				var_7_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_9, FightBuffItem)
+			if not buffItem then
+				local buffGO = gohelper.cloneInPlace(self.goBuffItem, "buff" .. itemCount)
 
-				var_7_8:setTipsOffset(435, 0)
-				table.insert(arg_7_0.buffItemList, var_7_8)
+				buffItem = MonoHelper.addNoUpdateLuaComOnceToGo(buffGO, FightBuffItem)
 
-				arg_7_0.buffItemOriginIndex = arg_7_0.buffItemOriginIndex + 1
-				var_7_8.originIndex = arg_7_0.buffItemOriginIndex
+				buffItem:setTipsOffset(435, 0)
+				table.insert(self.buffItemList, buffItem)
+
+				self.buffItemOriginIndex = self.buffItemOriginIndex + 1
+				buffItem.originIndex = self.buffItemOriginIndex
 			end
 
-			gohelper.setActive(var_7_8.go, true)
-			var_7_8:updateBuffMO(var_7_6)
+			gohelper.setActive(buffItem.go, true)
+			buffItem:updateBuffMO(buffMO)
 		end
 	end
 
-	arg_7_0.curBuffItemCount = var_7_4
+	self.curBuffItemCount = itemCount
 
-	for iter_7_1 = var_7_4 + 1, #arg_7_0.buffItemList do
-		arg_7_0.buffItemList[iter_7_1]:closeAni()
-		gohelper.setActive(arg_7_0.buffItemList[iter_7_1].go, false)
+	for i = itemCount + 1, #self.buffItemList do
+		self.buffItemList[i]:closeAni()
+		gohelper.setActive(self.buffItemList[i].go, false)
 	end
 
-	arg_7_0.buffLineCount = Mathf.Ceil((var_7_4 + var_7_5) / var_0_1)
+	self.buffLineCount = Mathf.Ceil((itemCount + del_item_list_count) / BuffCount1Line)
 
-	local var_7_10 = arg_7_0.buffLineCount * 34.5 - 24
+	local height = self.buffLineCount * 34.5 - 24
 
-	recthelper.setAnchorY(arg_7_0.opContainerTr, var_7_10)
+	recthelper.setAnchorY(self.opContainerTr, height)
 end
 
-function var_0_0.getBuffLineCount(arg_8_0)
-	return arg_8_0.buffLineCount
+function FightNameUIBuffMgr:getBuffLineCount()
+	return self.buffLineCount
 end
 
-function var_0_0.showPoisoningEffect(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.buffItemList) do
-		if iter_9_1.buffMO.buffId == arg_9_1.id then
-			iter_9_1:showPoisoningEffect()
+function FightNameUIBuffMgr:showPoisoningEffect(buffCO)
+	for _, buffItem in ipairs(self.buffItemList) do
+		if buffItem.buffMO.buffId == buffCO.id then
+			buffItem:showPoisoningEffect()
 		end
 	end
 end
 
-function var_0_0._onMultiHpChange(arg_10_0, arg_10_1)
-	if arg_10_0.entity and arg_10_0.entity.id == arg_10_1 then
-		arg_10_0:refreshBuffList()
+function FightNameUIBuffMgr:_onMultiHpChange(entityId)
+	if self.entity and self.entity.id == entityId then
+		self:refreshBuffList()
 	end
 end
 
-function var_0_0._onGMForceRefreshNameUIBuff(arg_11_0, arg_11_1)
-	if arg_11_0.entity and arg_11_0.entity.id == arg_11_1 then
-		arg_11_0:refreshBuffList()
+function FightNameUIBuffMgr:_onGMForceRefreshNameUIBuff(entityId)
+	if self.entity and self.entity.id == entityId then
+		self:refreshBuffList()
 	end
 end
 
-function var_0_0._onAfterForceUpdatePerformanceData(arg_12_0)
-	arg_12_0:refreshBuffList()
+function FightNameUIBuffMgr:_onAfterForceUpdatePerformanceData()
+	self:refreshBuffList()
 end
 
-function var_0_0._onCoverPerformanceEntityData(arg_13_0, arg_13_1)
-	if arg_13_1 ~= arg_13_0.entity.id then
+function FightNameUIBuffMgr:_onCoverPerformanceEntityData(entityId)
+	if entityId ~= self.entity.id then
 		return
 	end
 
-	arg_13_0:refreshBuffList()
+	self:refreshBuffList()
 end
 
-return var_0_0
+return FightNameUIBuffMgr

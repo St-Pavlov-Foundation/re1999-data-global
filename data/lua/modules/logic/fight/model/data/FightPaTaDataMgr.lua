@@ -1,166 +1,169 @@
-﻿module("modules.logic.fight.model.data.FightPaTaDataMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/data/FightPaTaDataMgr.lua
 
-local var_0_0 = FightDataClass("FightPaTaDataMgr", FightDataMgrBase)
+module("modules.logic.fight.model.data.FightPaTaDataMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.bossInfoList = {}
+local FightPaTaDataMgr = FightDataClass("FightPaTaDataMgr", FightDataMgrBase)
+
+function FightPaTaDataMgr:onConstructor()
+	self.bossInfoList = {}
 end
 
-function var_0_0.sortSkillInfo(arg_2_0, arg_2_1)
-	return arg_2_0.powerLow < arg_2_1.powerLow
+function FightPaTaDataMgr.sortSkillInfo(skillInfoA, skillInfoB)
+	return skillInfoA.powerLow < skillInfoB.powerLow
 end
 
-function var_0_0.updateData(arg_3_0, arg_3_1)
-	if not arg_3_1.attacker.assistBossInfo then
+function FightPaTaDataMgr:updateData(fightData)
+	if not fightData.attacker.assistBossInfo then
 		return
 	end
 
-	local var_3_0 = arg_3_1.attacker.assistBossInfo
+	local assistBossInfo = fightData.attacker.assistBossInfo
 
-	arg_3_0.currCd = var_3_0.currCd
-	arg_3_0.cfgCd = var_3_0.cdCfg
-	arg_3_0.formId = var_3_0.formId
-	arg_3_0.roundUseLimit = var_3_0.roundUseLimit
-	arg_3_0.exceedUseFree = var_3_0.exceedUseFree
-	arg_3_0.params = var_3_0.params
-	arg_3_0.preUsePower = 0
-	arg_3_0.preCostCd = 0
-	arg_3_0.useCardCount = 0
+	self.currCd = assistBossInfo.currCd
+	self.cfgCd = assistBossInfo.cdCfg
+	self.formId = assistBossInfo.formId
+	self.roundUseLimit = assistBossInfo.roundUseLimit
+	self.exceedUseFree = assistBossInfo.exceedUseFree
+	self.params = assistBossInfo.params
+	self.preUsePower = 0
+	self.preCostCd = 0
+	self.useCardCount = 0
 
-	arg_3_0:updateSkill(var_3_0.skills)
+	self:updateSkill(assistBossInfo.skills)
 end
 
-function var_0_0.switchBossSkill(arg_4_0, arg_4_1)
-	if not arg_4_1 then
+function FightPaTaDataMgr:switchBossSkill(assistBossInfo)
+	if not assistBossInfo then
 		return
 	end
 
-	arg_4_0.currCd = arg_4_1.currCd
-	arg_4_0.cfgCd = arg_4_1.cdCfg
-	arg_4_0.formId = arg_4_1.formId
+	self.currCd = assistBossInfo.currCd
+	self.cfgCd = assistBossInfo.cdCfg
+	self.formId = assistBossInfo.formId
 
-	arg_4_0:updateSkill(arg_4_1.skills)
+	self:updateSkill(assistBossInfo.skills)
 end
 
-function var_0_0.updateSkill(arg_5_0, arg_5_1)
-	tabletool.clear(arg_5_0.bossInfoList)
+function FightPaTaDataMgr:updateSkill(skillList)
+	tabletool.clear(self.bossInfoList)
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_0 = FightAssistBossSkillInfoMo.New()
+	for _, skillInfo in ipairs(skillList) do
+		local mo = FightAssistBossSkillInfoMo.New()
 
-		var_5_0:init(iter_5_1)
-		table.insert(arg_5_0.bossInfoList, var_5_0)
+		mo:init(skillInfo)
+		table.insert(self.bossInfoList, mo)
 	end
 
-	table.sort(arg_5_0.bossInfoList, var_0_0.sortSkillInfo)
+	table.sort(self.bossInfoList, FightPaTaDataMgr.sortSkillInfo)
 end
 
-function var_0_0.changeScore(arg_6_0, arg_6_1)
-	arg_6_0.score = arg_6_0.score and arg_6_0.score + arg_6_1 or arg_6_1
+function FightPaTaDataMgr:changeScore(offsetScore)
+	self.score = self.score and self.score + offsetScore or offsetScore
 end
 
-function var_0_0.getScore(arg_7_0)
-	return arg_7_0.score
+function FightPaTaDataMgr:getScore()
+	return self.score
 end
 
-function var_0_0.hadCD(arg_8_0)
-	return arg_8_0.cfgCd and arg_8_0.cfgCd > 0
+function FightPaTaDataMgr:hadCD()
+	return self.cfgCd and self.cfgCd > 0
 end
 
-function var_0_0.getCurCD(arg_9_0)
-	return arg_9_0.currCd + arg_9_0.preCostCd
+function FightPaTaDataMgr:getCurCD()
+	return self.currCd + self.preCostCd
 end
 
-function var_0_0.setCurrCD(arg_10_0, arg_10_1)
-	arg_10_0.currCd = tonumber(arg_10_1)
+function FightPaTaDataMgr:setCurrCD(cd)
+	self.currCd = tonumber(cd)
 end
 
-function var_0_0.getFromId(arg_11_0)
-	return arg_11_0.formId + 1
+function FightPaTaDataMgr:getFromId()
+	return self.formId + 1
 end
 
-function var_0_0.getAssistBossPower(arg_12_0)
-	local var_12_0 = arg_12_0:getAssistBossMo()
-	local var_12_1 = var_12_0 and var_12_0:getPowerInfo(FightEnum.PowerType.AssistBoss)
-	local var_12_2 = var_12_1 and var_12_1.num or 0
-	local var_12_3 = var_12_1 and var_12_1.max or 0
+function FightPaTaDataMgr:getAssistBossPower()
+	local assistBossMo = self:getAssistBossMo()
+	local powerInfo = assistBossMo and assistBossMo:getPowerInfo(FightEnum.PowerType.AssistBoss)
+	local power = powerInfo and powerInfo.num or 0
+	local powerMax = powerInfo and powerInfo.max or 0
 
-	return var_12_2 - arg_12_0.preUsePower, var_12_3
+	return power - self.preUsePower, powerMax
 end
 
-function var_0_0.getAssistBossServerPower(arg_13_0)
-	local var_13_0 = arg_13_0:getAssistBossMo()
-	local var_13_1 = var_13_0 and var_13_0:getPowerInfo(FightEnum.PowerType.AssistBoss)
-	local var_13_2 = var_13_1 and var_13_1.num or 0
-	local var_13_3 = var_13_1 and var_13_1.max or 0
+function FightPaTaDataMgr:getAssistBossServerPower()
+	local assistBossMo = self:getAssistBossMo()
+	local powerInfo = assistBossMo and assistBossMo:getPowerInfo(FightEnum.PowerType.AssistBoss)
+	local power = powerInfo and powerInfo.num or 0
+	local powerMax = powerInfo and powerInfo.max or 0
 
-	return var_13_2, var_13_3
+	return power, powerMax
 end
 
-function var_0_0.getAssistBossMo(arg_14_0)
-	return arg_14_0.dataMgr.entityMgr:getAssistBoss()
+function FightPaTaDataMgr:getAssistBossMo()
+	return self.dataMgr.entityMgr:getAssistBoss()
 end
 
-function var_0_0.playAssistBossSkill(arg_15_0, arg_15_1)
-	arg_15_0.preUsePower = arg_15_0.preUsePower + arg_15_0:getNeedPower(arg_15_1)
-	arg_15_0.useCardCount = arg_15_0.useCardCount + 1
-	arg_15_0.preCostCd = arg_15_0.preCostCd + arg_15_0.cfgCd
+function FightPaTaDataMgr:playAssistBossSkill(skillInfo)
+	self.preUsePower = self.preUsePower + self:getNeedPower(skillInfo)
+	self.useCardCount = self.useCardCount + 1
+	self.preCostCd = self.preCostCd + self.cfgCd
 end
 
-function var_0_0.getNeedPower(arg_16_0, arg_16_1)
-	if arg_16_0.exceedUseFree ~= 0 and arg_16_0.useCardCount >= arg_16_0.exceedUseFree then
+function FightPaTaDataMgr:getNeedPower(skillInfo)
+	if self.exceedUseFree ~= 0 and self.useCardCount >= self.exceedUseFree then
 		return 0
 	end
 
-	return arg_16_1.needPower
+	return skillInfo.needPower
 end
 
-function var_0_0.playAssistBossSkillBySkillId(arg_17_0, arg_17_1)
-	for iter_17_0 = #arg_17_0.bossInfoList, 1, -1 do
-		local var_17_0 = arg_17_0.bossInfoList[iter_17_0]
+function FightPaTaDataMgr:playAssistBossSkillBySkillId(skillId)
+	for i = #self.bossInfoList, 1, -1 do
+		local skillInfo = self.bossInfoList[i]
 
-		if var_17_0.skillId == arg_17_1 then
-			arg_17_0:playAssistBossSkill(var_17_0)
+		if skillInfo.skillId == skillId then
+			self:playAssistBossSkill(skillInfo)
 
 			return
 		end
 	end
 end
 
-function var_0_0.resetOp(arg_18_0)
-	arg_18_0.preUsePower = 0
-	arg_18_0.useCardCount = 0
-	arg_18_0.preCostCd = 0
+function FightPaTaDataMgr:resetOp()
+	self.preUsePower = 0
+	self.useCardCount = 0
+	self.preCostCd = 0
 end
 
-function var_0_0.canUseSkill(arg_19_0)
-	if arg_19_0.roundUseLimit ~= 0 then
-		return arg_19_0.useCardCount < arg_19_0.roundUseLimit
+function FightPaTaDataMgr:canUseSkill()
+	if self.roundUseLimit ~= 0 then
+		return self.useCardCount < self.roundUseLimit
 	end
 
-	local var_19_0 = lua_tower_const.configDict[115]
+	local co = lua_tower_const.configDict[115]
+	local maxCount = co and tonumber(co.value) or 20
 
-	return (var_19_0 and tonumber(var_19_0.value) or 20) > arg_19_0.useCardCount
+	return maxCount > self.useCardCount
 end
 
-function var_0_0.getCurUseSkillInfo(arg_20_0)
-	local var_20_0 = arg_20_0:getAssistBossPower()
+function FightPaTaDataMgr:getCurUseSkillInfo()
+	local power = self:getAssistBossPower()
 
-	for iter_20_0 = #arg_20_0.bossInfoList, 1, -1 do
-		local var_20_1 = arg_20_0.bossInfoList[iter_20_0]
+	for i = #self.bossInfoList, 1, -1 do
+		local skillInfo = self.bossInfoList[i]
 
-		if var_20_0 >= var_20_1.powerLow and var_20_0 >= arg_20_0:getNeedPower(var_20_1) then
-			return var_20_1
+		if power >= skillInfo.powerLow and power >= self:getNeedPower(skillInfo) then
+			return skillInfo
 		end
 	end
 end
 
-function var_0_0.getUseCardCount(arg_21_0)
-	return arg_21_0.useCardCount
+function FightPaTaDataMgr:getUseCardCount()
+	return self.useCardCount
 end
 
-function var_0_0.getBossSkillInfoList(arg_22_0)
-	return arg_22_0.bossInfoList
+function FightPaTaDataMgr:getBossSkillInfoList()
+	return self.bossInfoList
 end
 
-return var_0_0
+return FightPaTaDataMgr

@@ -1,269 +1,284 @@
-﻿module("modules.logic.seasonver.act166.controller.Season166Controller", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/controller/Season166Controller.lua
 
-local var_0_0 = class("Season166Controller", BaseController)
+module("modules.logic.seasonver.act166.controller.Season166Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Season166Controller = class("Season166Controller", BaseController)
+
+function Season166Controller:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function Season166Controller:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0.handleReceiveActChanged, arg_3_0)
+function Season166Controller:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self.handleReceiveActChanged, self)
 end
 
-function var_0_0.handleReceiveActChanged(arg_4_0, arg_4_1)
-	logNormal("handleReceiveActChanged : " .. tostring(arg_4_1))
+function Season166Controller:handleReceiveActChanged(actId)
+	logNormal("handleReceiveActChanged : " .. tostring(actId))
 
-	local var_4_0 = ActivityModel.instance:getOnlineActIdByType(Season166Enum.ActType)
+	local actList = ActivityModel.instance:getOnlineActIdByType(Season166Enum.ActType)
 
-	if var_4_0 then
-		Activity166Rpc.instance:sendGet166InfosRequest(var_4_0[1])
+	if actList then
+		Activity166Rpc.instance:sendGet166InfosRequest(actList[1])
 	end
 end
 
-function var_0_0.openSeasonView(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1 or {}
+function Season166Controller:openSeasonView(param)
+	local viewParam = param or {}
 
-	var_5_0.actId = arg_5_1.actId or Season166Enum.ActId
+	viewParam.actId = param.actId or Season166Enum.ActId
 
-	Activity166Rpc.instance:sendGet166InfosRequest(var_5_0.actId, function()
-		arg_5_0:openSeasonMainView(var_5_0)
-	end, arg_5_0)
+	Activity166Rpc.instance:sendGet166InfosRequest(viewParam.actId, function()
+		self:openSeasonMainView(viewParam)
+	end, self)
 end
 
-function var_0_0.openSeasonMainView(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.actId or Season166Model.instance:getCurSeasonId()
-	local var_7_1, var_7_2 = arg_7_0:getSeasonEnterCloseTimeStamp(var_7_0)
+function Season166Controller:openSeasonMainView(param)
+	local actId = param.actId or Season166Model.instance:getCurSeasonId()
+	local endTime, offsetSecond = self:getSeasonEnterCloseTimeStamp(actId)
 
-	if not ActivityModel.instance:isActOnLine(var_7_0) or var_7_2 <= 0 then
-		logError(var_7_0 .. " not online!")
+	if not ActivityModel.instance:isActOnLine(actId) or offsetSecond <= 0 then
+		logError(actId .. " not online!")
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.Season166MainView, arg_7_1)
+	ViewMgr.instance:openView(ViewName.Season166MainView, param)
 end
 
-function var_0_0.openSeasonBaseSpotView(arg_8_0, arg_8_1)
-	ViewMgr.instance:openView(ViewName.Season166BaseSpotView, arg_8_1)
+function Season166Controller:openSeasonBaseSpotView(param)
+	ViewMgr.instance:openView(ViewName.Season166BaseSpotView, param)
 end
 
-function var_0_0.openSeasonTrainView(arg_9_0, arg_9_1)
-	ViewMgr.instance:openView(ViewName.Season166TrainView, arg_9_1)
+function Season166Controller:openSeasonTrainView(param)
+	ViewMgr.instance:openView(ViewName.Season166TrainView, param)
 end
 
-function var_0_0.openSeasonTeachView(arg_10_0, arg_10_1)
-	ViewMgr.instance:openView(ViewName.Season166TeachView, arg_10_1)
+function Season166Controller:openSeasonTeachView(param)
+	ViewMgr.instance:openView(ViewName.Season166TeachView, param)
 end
 
-function var_0_0.enterSeasonTeachView(arg_11_0, arg_11_1)
-	local var_11_0 = Season166Config.instance:getSeasonConstGlobalCo(Season166Enum.TeachStoryConstId)
-	local var_11_1 = tonumber(var_11_0.value)
+function Season166Controller:enterSeasonTeachView(param)
+	local teachConstCo = Season166Config.instance:getSeasonConstGlobalCo(Season166Enum.TeachStoryConstId)
+	local teachStoryId = tonumber(teachConstCo.value)
+	local isStoryFinished = StoryModel.instance:isStoryFinished(teachStoryId)
 
-	if StoryModel.instance:isStoryFinished(var_11_1) then
-		arg_11_0:openSeasonTeachView(arg_11_1)
+	if isStoryFinished then
+		self:openSeasonTeachView(param)
 	else
-		local var_11_2 = {}
+		local storyParam = {}
 
-		var_11_2.mark = true
+		storyParam.mark = true
 
-		StoryController.instance:playStory(var_11_1, var_11_2, arg_11_0.openSeasonTeachView, arg_11_0, arg_11_1)
+		StoryController.instance:playStory(teachStoryId, storyParam, self.openSeasonTeachView, self, param)
 	end
 end
 
-function var_0_0.openHeroGroupFightView(arg_12_0, arg_12_1)
-	ViewMgr.instance:openView(ViewName.Season166HeroGroupFightView, arg_12_1)
+function Season166Controller:openHeroGroupFightView(param)
+	ViewMgr.instance:openView(ViewName.Season166HeroGroupFightView, param)
 end
 
-function var_0_0.openSeason166TargetView(arg_13_0)
-	local var_13_0 = Season166Model.instance:getCurSeasonId()
-	local var_13_1 = Season166Model.instance:getBattleContext()
+function Season166Controller:openSeason166TargetView()
+	local actId = Season166Model.instance:getCurSeasonId()
+	local battleContext = Season166Model.instance:getBattleContext()
 
-	if var_13_1 and var_13_1.baseId and var_13_1.baseId > 0 then
+	if battleContext and battleContext.baseId and battleContext.baseId > 0 then
 		ViewMgr.instance:openView(ViewName.Season166HeroGroupTargetView, {
-			actId = var_13_0,
-			baseId = var_13_1.baseId
+			actId = actId,
+			baseId = battleContext.baseId
 		})
 	end
 end
 
-function var_0_0.isSeason166EpisodeType(arg_14_0)
-	return arg_14_0 == DungeonEnum.EpisodeType.Season166Base or arg_14_0 == DungeonEnum.EpisodeType.Season166Train or arg_14_0 == DungeonEnum.EpisodeType.Season166Teach
+function Season166Controller.isSeason166EpisodeType(episodeType)
+	return episodeType == DungeonEnum.EpisodeType.Season166Base or episodeType == DungeonEnum.EpisodeType.Season166Train or episodeType == DungeonEnum.EpisodeType.Season166Teach
 end
 
-function var_0_0.getMaxHeroGroupCount()
-	local var_15_0 = Season166HeroGroupModel.instance.episodeId
-	local var_15_1 = (var_15_0 and lua_episode.configDict[var_15_0]).battleId
+function Season166Controller.getMaxHeroGroupCount()
+	local episodeId = Season166HeroGroupModel.instance.episodeId
+	local episodeCo = episodeId and lua_episode.configDict[episodeId]
+	local battleId = episodeCo.battleId
+	local battleCo = battleId and lua_battle.configDict[battleId]
 
-	return (var_15_1 and lua_battle.configDict[var_15_1]).roleNum
+	return battleCo.roleNum
 end
 
-function var_0_0.openResultPanel(arg_16_0)
+function Season166Controller:openResultPanel()
 	ViewMgr.instance:openView(ViewName.Season166ResultPanel)
 end
 
-function var_0_0.openTalentInfoView(arg_17_0, arg_17_1)
-	ViewMgr.instance:openView(ViewName.Season166TalentInfoView, arg_17_1)
+function Season166Controller:openTalentInfoView(param)
+	ViewMgr.instance:openView(ViewName.Season166TalentInfoView, param)
 end
 
-function var_0_0.checkProcessFightReconnect(arg_18_0)
-	local var_18_0 = FightModel.instance:getFightReason()
-	local var_18_1 = var_18_0.episodeId
-	local var_18_2 = DungeonConfig.instance:getEpisodeCO(var_18_1)
+function Season166Controller:checkProcessFightReconnect()
+	local fightReason = FightModel.instance:getFightReason()
+	local episodeId = fightReason.episodeId
+	local co = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_18_2 and var_0_0.isSeason166EpisodeType(var_18_2.type) then
-		local var_18_3 = Season166Config.instance:getSeasonConfigByEpisodeId(var_18_1)
-		local var_18_4
-		local var_18_5 = var_18_2.type == DungeonEnum.EpisodeType.Season166Teach and 0 or var_18_3.talentId or Season166Model.getPrefsTalent()
+	if co and Season166Controller.isSeason166EpisodeType(co.type) then
+		local config = Season166Config.instance:getSeasonConfigByEpisodeId(episodeId)
+		local talentId
 
-		Season166Model.instance:setBattleContext(var_18_3.activityId, var_18_1, var_18_3.baseId, var_18_5, var_18_3.trainId, var_18_3.teachId)
+		talentId = co.type == DungeonEnum.EpisodeType.Season166Teach and 0 or config.talentId or Season166Model.getPrefsTalent()
 
-		local var_18_6 = var_18_0.type == FightEnum.FightReason.DungeonRecord
-		local var_18_7 = var_18_0.multiplication
+		Season166Model.instance:setBattleContext(config.activityId, episodeId, config.baseId, talentId, config.trainId, config.teachId)
 
-		var_18_7 = var_18_7 and var_18_7 > 0 and var_18_7 or 1
+		local isReplay = fightReason.type == FightEnum.FightReason.DungeonRecord
+		local multiplication = fightReason.multiplication
 
-		FightController.instance:setFightParamByEpisodeId(var_18_1, var_18_6, var_18_7, var_18_0.battleId)
-		Season166HeroGroupModel.instance:setParam(var_18_0.battleId, var_18_1, false, true)
+		multiplication = multiplication and multiplication > 0 and multiplication or 1
+
+		FightController.instance:setFightParamByEpisodeId(episodeId, isReplay, multiplication, fightReason.battleId)
+		Season166HeroGroupModel.instance:setParam(fightReason.battleId, episodeId, false, true)
 	end
 end
 
-local function var_0_1(arg_19_0)
-	if string.nilorempty(arg_19_0) then
-		return arg_19_0
+local function prefabKeyAddActId(key)
+	if string.nilorempty(key) then
+		return key
 	end
 
-	local var_19_0 = Season166Model.instance:getCurSeasonId() or 0
+	local actId = Season166Model.instance:getCurSeasonId() or 0
+	local result = string.format("Season166_%s_%s", actId, key)
 
-	return (string.format("Season166_%s_%s", var_19_0, arg_19_0))
+	return result
 end
 
-function var_0_0.savePlayerPrefs(arg_20_0, arg_20_1, arg_20_2)
-	if string.nilorempty(arg_20_1) or not arg_20_2 then
+function Season166Controller:savePlayerPrefs(key, value)
+	if string.nilorempty(key) or not value then
 		return
 	end
 
-	local var_20_0 = var_0_1(arg_20_1)
+	local uniqueKey = prefabKeyAddActId(key)
+	local isNumber = type(value) == "number"
 
-	if type(arg_20_2) == "number" then
-		GameUtil.playerPrefsSetNumberByUserId(var_20_0, arg_20_2)
+	if isNumber then
+		GameUtil.playerPrefsSetNumberByUserId(uniqueKey, value)
 	else
-		GameUtil.playerPrefsSetStringByUserId(var_20_0, arg_20_2)
+		GameUtil.playerPrefsSetStringByUserId(uniqueKey, value)
 	end
 end
 
-function var_0_0.getPlayerPrefs(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_2 or ""
+function Season166Controller:getPlayerPrefs(key, defaultValue)
+	local value = defaultValue or ""
 
-	if string.nilorempty(arg_21_1) then
-		return var_21_0
+	if string.nilorempty(key) then
+		return value
 	end
 
-	local var_21_1 = var_0_1(arg_21_1)
+	local uniqueKey = prefabKeyAddActId(key)
+	local isNumber = type(value) == "number"
 
-	if type(var_21_0) == "number" then
-		var_21_0 = GameUtil.playerPrefsGetNumberByUserId(var_21_1, var_21_0)
+	if isNumber then
+		value = GameUtil.playerPrefsGetNumberByUserId(uniqueKey, value)
 	else
-		var_21_0 = GameUtil.playerPrefsGetStringByUserId(var_21_1, var_21_0)
+		value = GameUtil.playerPrefsGetStringByUserId(uniqueKey, value)
 	end
 
-	return var_21_0
+	return value
 end
 
-function var_0_0.loadDictFromStr(arg_22_0, arg_22_1)
-	local var_22_0 = {}
+function Season166Controller:loadDictFromStr(jsonStr)
+	local result = {}
 
-	if not string.nilorempty(arg_22_1) then
-		var_22_0 = cjson.decode(arg_22_1)
+	if not string.nilorempty(jsonStr) then
+		result = cjson.decode(jsonStr)
 	end
 
-	return var_22_0
+	return result
 end
 
-function var_0_0.getSeasonEnterCloseTimeStamp(arg_23_0, arg_23_1)
-	local var_23_0 = ActivityModel.instance:getActMO(arg_23_1)
+function Season166Controller:getSeasonEnterCloseTimeStamp(actId)
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
 
-	if not var_23_0 then
+	if not actInfoMo then
 		return 0
 	end
 
-	local var_23_1 = Season166Config.instance:getSeasonConstNum(arg_23_1, Season166Enum.CloseSeasonEnterTime)
-	local var_23_2 = var_23_0:getRealStartTimeStamp()
-	local var_23_3 = var_23_0:getRealEndTimeStamp()
-	local var_23_4 = var_23_2 + var_23_1 * TimeUtil.OneDaySecond
-	local var_23_5 = var_23_1 > 0 and var_23_4 or var_23_3
-	local var_23_6 = var_23_5 - ServerTime.now()
+	local closeEnterTimeOffset = Season166Config.instance:getSeasonConstNum(actId, Season166Enum.CloseSeasonEnterTime)
+	local startTimeStamp = actInfoMo:getRealStartTimeStamp()
+	local endTimeStamp = actInfoMo:getRealEndTimeStamp()
+	local enterCloseTime = startTimeStamp + closeEnterTimeOffset * TimeUtil.OneDaySecond
+	local endTime = closeEnterTimeOffset > 0 and enterCloseTime or endTimeStamp
+	local offsetSecond = endTime - ServerTime.now()
 
-	return var_23_5, var_23_6
+	return endTime, offsetSecond
 end
 
-function var_0_0.tryGetToastAsset(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._toastLoader and not arg_24_0._toastLoader.isLoading then
-		return (arg_24_0._toastLoader:getAssetItem(Season166Enum.ToastPath):GetResource(Season166Enum.ToastPath))
+function Season166Controller:tryGetToastAsset(callback, callbackObj)
+	if self._toastLoader and not self._toastLoader.isLoading then
+		local assetItem = self._toastLoader:getAssetItem(Season166Enum.ToastPath)
+		local toastPrefab = assetItem:GetResource(Season166Enum.ToastPath)
+
+		return toastPrefab
 	end
 
-	if not arg_24_0._toastLoader then
-		arg_24_0._toastLoader = MultiAbLoader.New()
+	if not self._toastLoader then
+		self._toastLoader = MultiAbLoader.New()
 
-		arg_24_0._toastLoader:addPath(Season166Enum.ToastPath)
-		arg_24_0._toastLoader:startLoad(arg_24_1, arg_24_2)
+		self._toastLoader:addPath(Season166Enum.ToastPath)
+		self._toastLoader:startLoad(callback, callbackObj)
 	end
 
 	return nil
 end
 
-function var_0_0.fillToastObj(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = ToastCallbackGroup.New()
+function Season166Controller:fillToastObj(toastObj, toastParam)
+	local callbackGroup = ToastCallbackGroup.New()
 
-	var_25_0.onClose = arg_25_0.onCloseWhenToastRemove
-	var_25_0.onCloseObj = arg_25_0
-	var_25_0.onCloseParam = arg_25_2
-	var_25_0.onOpen = arg_25_0.onOpenToast
-	var_25_0.onOpenObj = arg_25_0
-	var_25_0.onOpenParam = arg_25_2
-	arg_25_1.callbackGroup = var_25_0
+	callbackGroup.onClose = self.onCloseWhenToastRemove
+	callbackGroup.onCloseObj = self
+	callbackGroup.onCloseParam = toastParam
+	callbackGroup.onOpen = self.onOpenToast
+	callbackGroup.onOpenObj = self
+	callbackGroup.onOpenParam = toastParam
+	toastObj.callbackGroup = callbackGroup
 end
 
-function var_0_0.onOpenToast(arg_26_0, arg_26_1, arg_26_2)
-	arg_26_1.item = Season166ToastItem.New()
+function Season166Controller:onOpenToast(toastParam, toastItem)
+	toastParam.item = Season166ToastItem.New()
 
-	arg_26_1.item:init(arg_26_2, arg_26_1)
+	toastParam.item:init(toastItem, toastParam)
 end
 
-function var_0_0.onCloseWhenToastRemove(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_1.item then
-		arg_27_1.item:dispose()
+function Season166Controller:onCloseWhenToastRemove(toastParam, toastItem)
+	if toastParam.item then
+		toastParam.item:dispose()
 
-		arg_27_1.item = nil
+		toastParam.item = nil
 	end
 end
 
-function var_0_0.showToast(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_1 == Season166Enum.ToastType.Talent and luaLang("p_season166resultview_txt_tips") or luaLang("season166_newinfo_unlock")
-	local var_28_1 = arg_28_1 == Season166Enum.ToastType.Talent and 1 or 2
-	local var_28_2 = {
-		toastTip = var_28_0,
-		icon = var_28_1
+function Season166Controller:showToast(toastType)
+	local toastTipInfo = toastType == Season166Enum.ToastType.Talent and luaLang("p_season166resultview_txt_tips") or luaLang("season166_newinfo_unlock")
+	local iconPath = toastType == Season166Enum.ToastType.Talent and 1 or 2
+	local toastParam = {
+		toastTip = toastTipInfo,
+		icon = iconPath
 	}
 
-	ToastController.instance:showToastWithCustomData(ToastEnum.Season166ReportNotUnlock, arg_28_0.fillToastObj, arg_28_0, var_28_2)
+	ToastController.instance:showToastWithCustomData(ToastEnum.Season166ReportNotUnlock, self.fillToastObj, self, toastParam)
 end
 
-function var_0_0.enterReportItem(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = Season166Model.instance:getActInfo(arg_29_1)
-	local var_29_1 = var_29_0 and var_29_0:getInformationMO(arg_29_2)
-	local var_29_2 = {
-		actId = arg_29_1,
-		infoId = arg_29_2,
-		unlockState = var_29_1 and Season166Enum.UnlockState or Season166Enum.LockState
-	}
+function Season166Controller:enterReportItem(actId, infoId)
+	local actInfo = Season166Model.instance:getActInfo(actId)
+	local infoMo = actInfo and actInfo:getInformationMO(infoId)
+	local param = {}
 
-	var_0_0.instance:dispatchEvent(Season166Event.ClickInfoReportItem, var_29_2)
+	param.actId = actId
+	param.infoId = infoId
+
+	local unlockState = infoMo and Season166Enum.UnlockState or Season166Enum.LockState
+
+	param.unlockState = unlockState
+
+	Season166Controller.instance:dispatchEvent(Season166Event.ClickInfoReportItem, param)
 end
 
-var_0_0.instance = var_0_0.New()
+Season166Controller.instance = Season166Controller.New()
 
-return var_0_0
+return Season166Controller

@@ -1,101 +1,103 @@
-﻿module("modules.logic.explore.model.mo.ExploreInteractInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/ExploreInteractInfoMO.lua
 
-local var_0_0 = pureTable("ExploreInteractInfoMO")
+module("modules.logic.explore.model.mo.ExploreInteractInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1
-	arg_1_0.step = 0
-	arg_1_0.status = 1
-	arg_1_0.status2 = ""
-	arg_1_0.statusInfo = {}
+local ExploreInteractInfoMO = pureTable("ExploreInteractInfoMO")
+
+function ExploreInteractInfoMO:init(id)
+	self.id = id
+	self.step = 0
+	self.status = 1
+	self.status2 = ""
+	self.statusInfo = {}
 end
 
-function var_0_0.initNO(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0.status
-	local var_2_1 = arg_2_0.status2
+function ExploreInteractInfoMO:initNO(exploreInteract)
+	local preStatus = self.status
+	local preStatus2 = self.status2
 
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.status = arg_2_1.status
-	arg_2_0.status2 = arg_2_1.status2
-	arg_2_0.type = arg_2_1.type
-	arg_2_0.step = arg_2_1.step
-	arg_2_0.posx = arg_2_1.posx
-	arg_2_0.posy = arg_2_1.posy
-	arg_2_0.dir = arg_2_1.dir
+	self.id = exploreInteract.id
+	self.status = exploreInteract.status
+	self.status2 = exploreInteract.status2
+	self.type = exploreInteract.type
+	self.step = exploreInteract.step
+	self.posx = exploreInteract.posx
+	self.posy = exploreInteract.posy
+	self.dir = exploreInteract.dir
 
-	local var_2_2 = arg_2_0.statusInfo or {}
+	local preStateInfo = self.statusInfo or {}
 
-	if string.nilorempty(arg_2_0.status2) then
-		arg_2_0.statusInfo = {}
+	if string.nilorempty(self.status2) then
+		self.statusInfo = {}
 	else
-		arg_2_0.statusInfo = cjson.decode(arg_2_0.status2)
+		self.statusInfo = cjson.decode(self.status2)
 	end
 
-	if var_2_0 ~= arg_2_0.status then
-		arg_2_0:onStatusChange(var_2_0, arg_2_0.status)
+	if preStatus ~= self.status then
+		self:onStatusChange(preStatus, self.status)
 	end
 
-	if var_2_1 ~= arg_2_0.status2 then
-		arg_2_0:onStatus2Change(var_2_2, arg_2_0.statusInfo)
-	end
-end
-
-function var_0_0.updateStatus(arg_3_0, arg_3_1)
-	if arg_3_0.status ~= arg_3_1 then
-		local var_3_0 = arg_3_0.status
-
-		arg_3_0.status = arg_3_1
-
-		arg_3_0:onStatusChange(var_3_0, arg_3_0.status)
+	if preStatus2 ~= self.status2 then
+		self:onStatus2Change(preStateInfo, self.statusInfo)
 	end
 end
 
-function var_0_0.updateStatus2(arg_4_0, arg_4_1)
-	if arg_4_0.status2 ~= arg_4_1 then
-		local var_4_0 = arg_4_0.status2
+function ExploreInteractInfoMO:updateStatus(status)
+	if self.status ~= status then
+		local preStatus = self.status
 
-		arg_4_0.status2 = arg_4_1
+		self.status = status
 
-		local var_4_1 = arg_4_0.statusInfo or {}
+		self:onStatusChange(preStatus, self.status)
+	end
+end
 
-		if string.nilorempty(arg_4_0.status2) then
-			arg_4_0.statusInfo = {}
+function ExploreInteractInfoMO:updateStatus2(status2)
+	if self.status2 ~= status2 then
+		local preStatus = self.status2
+
+		self.status2 = status2
+
+		local preStateInfo = self.statusInfo or {}
+
+		if string.nilorempty(self.status2) then
+			self.statusInfo = {}
 		else
-			arg_4_0.statusInfo = cjson.decode(arg_4_0.status2)
+			self.statusInfo = cjson.decode(self.status2)
 		end
 
-		arg_4_0:onStatus2Change(var_4_1, arg_4_0.statusInfo)
+		self:onStatus2Change(preStateInfo, self.statusInfo)
 	end
 end
 
-function var_0_0.getBitByIndex(arg_5_0, arg_5_1)
-	local var_5_0 = ExploreHelper.getBit(arg_5_0.status, arg_5_1)
+function ExploreInteractInfoMO:getBitByIndex(index)
+	local bitVal = ExploreHelper.getBit(self.status, index)
 
-	return bit.rshift(var_5_0, arg_5_1 - 1)
+	return bit.rshift(bitVal, index - 1)
 end
 
-function var_0_0.setBitByIndex(arg_6_0, arg_6_1, arg_6_2)
-	local var_6_0 = arg_6_0.status
+function ExploreInteractInfoMO:setBitByIndex(index, v)
+	local preStatus = self.status
 
-	arg_6_0.status = ExploreHelper.setBit(arg_6_0.status, arg_6_1, arg_6_2 == 1)
+	self.status = ExploreHelper.setBit(self.status, index, v == 1)
 
-	if var_6_0 ~= arg_6_0.status then
-		arg_6_0:onStatusChange(var_6_0, arg_6_0.status)
+	if preStatus ~= self.status then
+		self:onStatusChange(preStatus, self.status)
 	end
 end
 
-function var_0_0.onStatusChange(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = bit.bxor(arg_7_1, arg_7_2)
+function ExploreInteractInfoMO:onStatusChange(preStatus, nowStatus)
+	local changeBit = bit.bxor(preStatus, nowStatus)
 
-	if var_7_0 == 0 then
+	if changeBit == 0 then
 		return
 	end
 
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitStatusChange, arg_7_0.id, var_7_0)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitStatusChange, self.id, changeBit)
 end
 
-function var_0_0.onStatus2Change(arg_8_0, arg_8_1, arg_8_2)
-	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitStatus2Change, arg_8_0.id, arg_8_1, arg_8_2)
+function ExploreInteractInfoMO:onStatus2Change(preStatuInfo, nowStatuInfo)
+	ExploreController.instance:dispatchEvent(ExploreEvent.OnUnitStatus2Change, self.id, preStatuInfo, nowStatuInfo)
 end
 
-return var_0_0
+return ExploreInteractInfoMO

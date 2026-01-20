@@ -1,75 +1,77 @@
-﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_ResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/warmup/view/V2a4_WarmUp_ResultView.lua
 
-local var_0_0 = class("V2a4_WarmUp_ResultView", BaseView)
+module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_ResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagepanelbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_panelbg1")
-	arg_1_0._simagepanelbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_panelbg2")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._txtfail = gohelper.findChildText(arg_1_0.viewGO, "#go_fail/#txt_fail")
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._txtsuccess = gohelper.findChildText(arg_1_0.viewGO, "#go_success/#txt_success")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local V2a4_WarmUp_ResultView = class("V2a4_WarmUp_ResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a4_WarmUp_ResultView:onInitView()
+	self._simagepanelbg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_panelbg1")
+	self._simagepanelbg2 = gohelper.findChildSingleImage(self.viewGO, "#simage_panelbg2")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._txtfail = gohelper.findChildText(self.viewGO, "#go_fail/#txt_fail")
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._txtsuccess = gohelper.findChildText(self.viewGO, "#go_success/#txt_success")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function V2a4_WarmUp_ResultView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function V2a4_WarmUp_ResultView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-local var_0_1 = SLFramework.AnimatorPlayer
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function V2a4_WarmUp_ResultView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._animPlayer = var_0_1.Get(arg_5_0.viewGO)
+function V2a4_WarmUp_ResultView:_editableInitView()
+	self._animPlayer = csAnimatorPlayer.Get(self.viewGO)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	gohelper.setActive(arg_6_0._gofail, not arg_6_0:_isSucc())
-	gohelper.setActive(arg_6_0._gosuccess, arg_6_0:_isSucc())
+function V2a4_WarmUp_ResultView:onUpdateParam()
+	gohelper.setActive(self._gofail, not self:_isSucc())
+	gohelper.setActive(self._gosuccess, self:_isSucc())
 
-	arg_6_0._txtsuccess.text = arg_6_0:_desc()
-	arg_6_0._txtfail.text = arg_6_0:_desc()
+	self._txtsuccess.text = self:_desc()
+	self._txtfail.text = self:_desc()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:onUpdateParam()
-	arg_7_0._animPlayer:Play(arg_7_0:_isSucc() and "success" or "fail", nil, nil)
-	AudioMgr.instance:trigger(arg_7_0:_isSucc() and AudioEnum.UI.play_ui_diqiu_yure_success_20249043 or AudioEnum.UI.play_ui_mln_remove_effect_20249042)
+function V2a4_WarmUp_ResultView:onOpen()
+	self:onUpdateParam()
+	self._animPlayer:Play(self:_isSucc() and "success" or "fail", nil, nil)
+	AudioMgr.instance:trigger(self:_isSucc() and AudioEnum.UI.play_ui_diqiu_yure_success_20249043 or AudioEnum.UI.play_ui_mln_remove_effect_20249042)
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:_callCloseCallback()
+function V2a4_WarmUp_ResultView:onClose()
+	self:_callCloseCallback()
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function V2a4_WarmUp_ResultView:onDestroyView()
 	return
 end
 
-function var_0_0._isSucc(arg_10_0)
-	return arg_10_0.viewParam.isSucc
+function V2a4_WarmUp_ResultView:_isSucc()
+	return self.viewParam.isSucc
 end
 
-function var_0_0._desc(arg_11_0)
-	return arg_11_0.viewParam.desc
+function V2a4_WarmUp_ResultView:_desc()
+	return self.viewParam.desc
 end
 
-function var_0_0._callCloseCallback(arg_12_0)
-	local var_12_0 = arg_12_0.viewParam.closeCb
+function V2a4_WarmUp_ResultView:_callCloseCallback()
+	local cb = self.viewParam.closeCb
 
-	if var_12_0 then
-		var_12_0(arg_12_0.viewParam.closeCbObj)
+	if cb then
+		cb(self.viewParam.closeCbObj)
 	end
 end
 
-return var_0_0
+return V2a4_WarmUp_ResultView

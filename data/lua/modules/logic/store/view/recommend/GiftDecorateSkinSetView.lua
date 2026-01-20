@@ -1,54 +1,56 @@
-﻿module("modules.logic.store.view.recommend.GiftDecorateSkinSetView", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/recommend/GiftDecorateSkinSetView.lua
 
-local var_0_0 = class("GiftDecorateSkinSetView", StoreRecommendBaseSubView)
+module("modules.logic.store.view.recommend.GiftDecorateSkinSetView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_bg")
-	arg_1_0._simagedec = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/Left/#simage_dec")
-	arg_1_0._btnlook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/Left/#btn_look")
-	arg_1_0._txtduration = gohelper.findChildText(arg_1_0.viewGO, "view/Right/txt_tips/#txt_duration")
-	arg_1_0._txtprice = gohelper.findChildText(arg_1_0.viewGO, "view/Right/#txt_price")
-	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/Right/#btn_buy")
+local GiftDecorateSkinSetView = class("GiftDecorateSkinSetView", StoreRecommendBaseSubView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function GiftDecorateSkinSetView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "view/#simage_bg")
+	self._simagedec = gohelper.findChildSingleImage(self.viewGO, "view/Left/#simage_dec")
+	self._btnlook = gohelper.findChildButtonWithAudio(self.viewGO, "view/Left/#btn_look")
+	self._txtduration = gohelper.findChildText(self.viewGO, "view/Right/txt_tips/#txt_duration")
+	self._txtprice = gohelper.findChildText(self.viewGO, "view/Right/#txt_price")
+	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "view/Right/#btn_buy")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	if arg_2_0._btnlook then
-		arg_2_0._btnlook:AddClickListener(arg_2_0._btnlookOnClick, arg_2_0)
+function GiftDecorateSkinSetView:addEvents()
+	if self._btnlook then
+		self._btnlook:AddClickListener(self._btnlookOnClick, self)
 	end
 
-	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0._btnlook then
-		arg_3_0._btnlook:RemoveClickListener()
+function GiftDecorateSkinSetView:removeEvents()
+	if self._btnlook then
+		self._btnlook:RemoveClickListener()
 	end
 
-	arg_3_0._btnbuy:RemoveClickListener()
+	self._btnbuy:RemoveClickListener()
 end
 
-function var_0_0._btnlookOnClick(arg_4_0)
-	arg_4_0:_jumpByIndex(2)
+function GiftDecorateSkinSetView:_btnlookOnClick()
+	self:_jumpByIndex(2)
 end
 
-function var_0_0._btnbuyOnClick(arg_5_0)
-	arg_5_0:_jumpByIndex(1)
+function GiftDecorateSkinSetView:_btnbuyOnClick()
+	self:_jumpByIndex(1)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	var_0_0.super.onOpen(arg_6_0)
+function GiftDecorateSkinSetView:onOpen()
+	GiftDecorateSkinSetView.super.onOpen(self)
 
-	arg_6_0._systyemjumpList = string.split(arg_6_0.config.systemJumpCode, " ")
+	self._systyemjumpList = string.split(self.config.systemJumpCode, " ")
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0._jumpByIndex(arg_7_0, arg_7_1)
-	if arg_7_0:_isBought() then
+function GiftDecorateSkinSetView:_jumpByIndex(index)
+	if self:_isBought() then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
@@ -56,76 +58,76 @@ function var_0_0._jumpByIndex(arg_7_0, arg_7_1)
 
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_7_0.config and arg_7_0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = arg_7_0.config and arg_7_0.config.name or "GiftDecorateSkinSetView"
+		[StatEnum.EventProperties.RecommendPageId] = tostring(self.config and self.config.id or ""),
+		[StatEnum.EventProperties.RecommendPageName] = self.config and self.config.name or "GiftDecorateSkinSetView"
 	})
 
-	if arg_7_0._systyemjumpList and arg_7_0._systyemjumpList[arg_7_1] then
-		GameFacade.jumpByAdditionParam(arg_7_0._systyemjumpList[arg_7_1])
+	if self._systyemjumpList and self._systyemjumpList[index] then
+		GameFacade.jumpByAdditionParam(self._systyemjumpList[index])
 	end
 end
 
-function var_0_0._getIsBought(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function GiftDecorateSkinSetView:_getIsBought(relation)
+	if not relation then
 		return false
 	end
 
-	local var_8_0 = arg_8_1[1]
-	local var_8_1 = arg_8_1[2]
+	local relationType = relation[1]
+	local relationId = relation[2]
 
-	if not var_8_0 or not var_8_1 then
+	if not relationType or not relationId then
 		return false
 	end
 
-	local var_8_2 = StoreModel.instance:getGoodsMO(var_8_1)
+	local storePackageGoodsMO = StoreModel.instance:getGoodsMO(relationId)
 
-	if var_8_2 == nil or var_8_2:isSoldOut() then
+	if storePackageGoodsMO == nil or storePackageGoodsMO:isSoldOut() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._isBought(arg_9_0)
-	if not string.nilorempty(arg_9_0.config.relations) then
-		local var_9_0 = GameUtil.splitString2(arg_9_0.config.relations, true)
+function GiftDecorateSkinSetView:_isBought()
+	if not string.nilorempty(self.config.relations) then
+		local relations = GameUtil.splitString2(self.config.relations, true)
 
-		if var_9_0[1] then
-			return arg_9_0:_getIsBought(var_9_0[1])
+		if relations[1] then
+			return self:_getIsBought(relations[1])
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_10_0)
-	if arg_10_0.config == nil then
+function GiftDecorateSkinSetView:refreshUI()
+	if self.config == nil then
 		return
 	end
 
-	arg_10_0._txtduration.text = StoreController.instance:getRecommendStoreTime(arg_10_0.config)
+	self._txtduration.text = StoreController.instance:getRecommendStoreTime(self.config)
 
-	if arg_10_0._txtprice then
-		local var_10_0, var_10_1 = arg_10_0:_getCostSymbolAndPrice(arg_10_0._systyemjumpList and arg_10_0._systyemjumpList[1])
+	if self._txtprice then
+		local symbol1, price1 = self:_getCostSymbolAndPrice(self._systyemjumpList and self._systyemjumpList[1])
 
-		if var_10_0 then
-			arg_10_0._txtprice.text = string.format("<size=48>%s</size>%s", var_10_0, var_10_1)
+		if symbol1 then
+			self._txtprice.text = string.format("<size=48>%s</size>%s", symbol1, price1)
 		end
 	end
 end
 
-function var_0_0._getCostSymbolAndPrice(arg_11_0, arg_11_1)
-	if not arg_11_1 or arg_11_1 == "" then
+function GiftDecorateSkinSetView:_getCostSymbolAndPrice(systemJumpCode)
+	if not systemJumpCode or systemJumpCode == "" then
 		return
 	end
 
-	local var_11_0 = string.splitToNumber(arg_11_1, "#")
+	local paramsList = string.splitToNumber(systemJumpCode, "#")
 
-	if type(var_11_0) ~= "table" or #var_11_0 < 2 then
+	if type(paramsList) ~= "table" or #paramsList < 2 then
 		return
 	end
 
-	local var_11_1 = var_11_0[2]
+	local jumpGoodsId = paramsList[2]
 
-	return PayModel.instance:getProductPrice(var_11_1), ""
+	return PayModel.instance:getProductPrice(jumpGoodsId), ""
 end
 
-return var_0_0
+return GiftDecorateSkinSetView

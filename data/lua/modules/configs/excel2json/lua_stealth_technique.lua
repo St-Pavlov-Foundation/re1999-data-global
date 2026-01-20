@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_stealth_technique", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_stealth_technique.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_stealth_technique", package.seeall)
+
+local lua_stealth_technique = {}
+local fields = {
 	mainTitleId = 2,
 	picture = 6,
 	subTitle = 5,
@@ -11,17 +13,17 @@ local var_0_1 = {
 	content = 7,
 	subTitleId = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	content = 3,
 	mainTitle = 1,
 	subTitle = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_stealth_technique.onLoad(json)
+	lua_stealth_technique.configList, lua_stealth_technique.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_stealth_technique

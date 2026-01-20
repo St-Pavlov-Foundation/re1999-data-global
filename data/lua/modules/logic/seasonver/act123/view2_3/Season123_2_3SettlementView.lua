@@ -1,239 +1,246 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3SettlementView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3SettlementView.lua
 
-local var_0_0 = class("Season123_2_3SettlementView", BaseViewExtended)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3SettlementView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosettlement = gohelper.findChild(arg_1_0.viewGO, "#go_settlement")
-	arg_1_0._gospecialmarket = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/#go_specialmarket")
-	arg_1_0._simagespecialbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_settlement/#go_specialmarket/#simage_specialbg")
-	arg_1_0._animationEvent = arg_1_0._gosettlement:GetComponent(typeof(ZProj.AnimationEventWrap))
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_settlement/#btn_close")
-	arg_1_0._simagedecorate6 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_settlement/decorate/mask/#simage_decorate6")
-	arg_1_0._simagedecorate10 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_settlement/decorate/mask/#simage_decorate10")
-	arg_1_0._txtindex = gohelper.findChildText(arg_1_0.viewGO, "#go_settlement/left/#simage_circlebg/#txt_index")
-	arg_1_0._txtlevelnamecn = gohelper.findChildText(arg_1_0.viewGO, "#go_settlement/left/#txt_levelnamecn")
-	arg_1_0._simageherodecorate = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_settlement/right/herocard/#simage_herodecorate")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_bottom/#go_rewards")
-	arg_1_0._scrollrewards = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_settlement/right/layout/#go_bottom/#go_rewards/mask/#scroll_rewards")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_bottom/#go_rewards/mask/#scroll_rewards/Viewport/Content/#go_rewarditem")
-	arg_1_0._gohero1 = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero1")
-	arg_1_0._gohero2 = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero2")
-	arg_1_0._gohero3 = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero3")
-	arg_1_0._gohero4 = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero4")
-	arg_1_0._gosupercard1 = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/herocard/#go_supercard1")
-	arg_1_0._gosupercard2 = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/herocard/#go_supercard2")
-	arg_1_0._gofightsucc = gohelper.findChild(arg_1_0.viewGO, "#go_fightsucc")
-	arg_1_0._simagefightsuccbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_fightsucc/#simage_fightsuccbg")
-	arg_1_0._btnclosetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_fightsucc/#btn_closetip")
-	arg_1_0._gocoverrecordpart = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/#go_cover_record_part")
-	arg_1_0._btncoverrecord = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_settlement/#go_cover_record_part/#btn_cover_record")
-	arg_1_0._txtcurroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
-	arg_1_0._txtmaxroundcount = gohelper.findChildText(arg_1_0.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
-	arg_1_0._goCoverLessThan = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/middle/#go_lessthan")
-	arg_1_0._goCoverMuchThan = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/middle/#go_muchthan")
-	arg_1_0._goCoverEqual = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/middle/#go_equal")
-	arg_1_0._gofriendpart = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/#go_cover_friend_part")
-	arg_1_0._txtfriendtip = gohelper.findChildText(arg_1_0.viewGO, "#go_settlement/#go_cover_friend_part/tipbg/container/#txt_tips")
-	arg_1_0._btnconfirmfriend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_settlement/#go_cover_friend_part/#btn_cover_friend")
-	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_bottom")
-	arg_1_0._gospace = gohelper.findChild(arg_1_0.viewGO, "#go_settlement/right/layout/#go_space")
-	arg_1_0._btnstat = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_settlement/right/layout/middle/#btn_stat")
-	arg_1_0._totalTime = gohelper.findChildText(arg_1_0.viewGO, "#go_settlement/right/layout/#go_bottom/totaltime/#go_bestcircle/#txt_time")
-	arg_1_0._totalTimeBlue = gohelper.findChildText(arg_1_0.viewGO, "#go_settlement/right/layout/#go_bottom/totaltime/#go_bestcircle/#txt_timeblue")
+local Season123_2_3SettlementView = class("Season123_2_3SettlementView", BaseViewExtended)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123_2_3SettlementView:onInitView()
+	self._gosettlement = gohelper.findChild(self.viewGO, "#go_settlement")
+	self._gospecialmarket = gohelper.findChild(self.viewGO, "#go_settlement/#go_specialmarket")
+	self._simagespecialbg = gohelper.findChildSingleImage(self.viewGO, "#go_settlement/#go_specialmarket/#simage_specialbg")
+	self._animationEvent = self._gosettlement:GetComponent(typeof(ZProj.AnimationEventWrap))
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_settlement/#btn_close")
+	self._simagedecorate6 = gohelper.findChildSingleImage(self.viewGO, "#go_settlement/decorate/mask/#simage_decorate6")
+	self._simagedecorate10 = gohelper.findChildSingleImage(self.viewGO, "#go_settlement/decorate/mask/#simage_decorate10")
+	self._txtindex = gohelper.findChildText(self.viewGO, "#go_settlement/left/#simage_circlebg/#txt_index")
+	self._txtlevelnamecn = gohelper.findChildText(self.viewGO, "#go_settlement/left/#txt_levelnamecn")
+	self._simageherodecorate = gohelper.findChildSingleImage(self.viewGO, "#go_settlement/right/herocard/#simage_herodecorate")
+	self._gorewards = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_bottom/#go_rewards")
+	self._scrollrewards = gohelper.findChildScrollRect(self.viewGO, "#go_settlement/right/layout/#go_bottom/#go_rewards/mask/#scroll_rewards")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_bottom/#go_rewards/mask/#scroll_rewards/Viewport/Content/#go_rewarditem")
+	self._gohero1 = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero1")
+	self._gohero2 = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero2")
+	self._gohero3 = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero3")
+	self._gohero4 = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_top/herogroup/#go_hero4")
+	self._gosupercard1 = gohelper.findChild(self.viewGO, "#go_settlement/right/herocard/#go_supercard1")
+	self._gosupercard2 = gohelper.findChild(self.viewGO, "#go_settlement/right/herocard/#go_supercard2")
+	self._gofightsucc = gohelper.findChild(self.viewGO, "#go_fightsucc")
+	self._simagefightsuccbg = gohelper.findChildSingleImage(self.viewGO, "#go_fightsucc/#simage_fightsuccbg")
+	self._btnclosetip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_fightsucc/#btn_closetip")
+	self._gocoverrecordpart = gohelper.findChild(self.viewGO, "#go_settlement/#go_cover_record_part")
+	self._btncoverrecord = gohelper.findChildButtonWithAudio(self.viewGO, "#go_settlement/#go_cover_record_part/#btn_cover_record")
+	self._txtcurroundcount = gohelper.findChildText(self.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/current/#txt_curroundcount")
+	self._txtmaxroundcount = gohelper.findChildText(self.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/memory/#txt_maxroundcount")
+	self._goCoverLessThan = gohelper.findChild(self.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/middle/#go_lessthan")
+	self._goCoverMuchThan = gohelper.findChild(self.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/middle/#go_muchthan")
+	self._goCoverEqual = gohelper.findChild(self.viewGO, "#go_settlement/#go_cover_record_part/tipbg/container/middle/#go_equal")
+	self._gofriendpart = gohelper.findChild(self.viewGO, "#go_settlement/#go_cover_friend_part")
+	self._txtfriendtip = gohelper.findChildText(self.viewGO, "#go_settlement/#go_cover_friend_part/tipbg/container/#txt_tips")
+	self._btnconfirmfriend = gohelper.findChildButtonWithAudio(self.viewGO, "#go_settlement/#go_cover_friend_part/#btn_cover_friend")
+	self._gobottom = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_bottom")
+	self._gospace = gohelper.findChild(self.viewGO, "#go_settlement/right/layout/#go_space")
+	self._btnstat = gohelper.findChildButtonWithAudio(self.viewGO, "#go_settlement/right/layout/middle/#btn_stat")
+	self._totalTime = gohelper.findChildText(self.viewGO, "#go_settlement/right/layout/#go_bottom/totaltime/#go_bestcircle/#txt_time")
+	self._totalTimeBlue = gohelper.findChildText(self.viewGO, "#go_settlement/right/layout/#go_bottom/totaltime/#go_bestcircle/#txt_timeblue")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnstat:AddClickListener(arg_2_0._btnstatOnClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btncoverrecord, arg_2_0._onBtnCoverRecordClick, arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._btnconfirmfriend, arg_2_0._onBtnConfirmFriendClick, arg_2_0)
-	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, arg_2_0._onCoverDungeonRecordReply, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, arg_2_0._onGetFightRecordGroupReply, arg_2_0)
-	arg_2_0._animationEvent:AddEventListener("reward", arg_2_0._onRewardShow, arg_2_0)
+function Season123_2_3SettlementView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnstat:AddClickListener(self._btnstatOnClick, self)
+	self:addClickCb(self._btncoverrecord, self._onBtnCoverRecordClick, self)
+	self:addClickCb(self._btnconfirmfriend, self._onBtnConfirmFriendClick, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnCoverDungeonRecordReply, self._onCoverDungeonRecordReply, self)
+	FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
+	self._animationEvent:AddEventListener("reward", self._onRewardShow, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnstat:RemoveClickListener()
-	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, arg_3_0._onGetFightRecordGroupReply, arg_3_0)
-	arg_3_0._animationEvent:RemoveEventListener("reward")
+function Season123_2_3SettlementView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnstat:RemoveClickListener()
+	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, self._onGetFightRecordGroupReply, self)
+	self._animationEvent:RemoveEventListener("reward")
 end
 
-function var_0_0._btnstatOnClick(arg_4_0)
+function Season123_2_3SettlementView:_btnstatOnClick()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0._showSettlement(arg_5_0)
-	arg_5_0._startTime = Time.realtimeSinceStartup
+function Season123_2_3SettlementView:_showSettlement()
+	self._startTime = Time.realtimeSinceStartup
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_season_clearing)
-	gohelper.setActive(arg_5_0._gosettlement, true)
-	gohelper.setActive(arg_5_0._gospecialmarket, true)
-	arg_5_0:_checkNewRecord()
-	arg_5_0:_detectCoverRecord()
-	arg_5_0:_detectAddFriend()
-	TaskDispatcher.runDelay(arg_5_0._dailyShowHero, arg_5_0, 0.6)
+	gohelper.setActive(self._gosettlement, true)
+	gohelper.setActive(self._gospecialmarket, true)
+	self:_checkNewRecord()
+	self:_detectCoverRecord()
+	self:_detectAddFriend()
+	TaskDispatcher.runDelay(self._dailyShowHero, self, 0.6)
 end
 
-function var_0_0._onRewardShow(arg_6_0)
-	arg_6_0:_showSettlementReward()
+function Season123_2_3SettlementView:_onRewardShow()
+	self:_showSettlementReward()
 end
 
-function var_0_0._dailyShowHero(arg_7_0)
-	arg_7_0._heroIndex = 0
+function Season123_2_3SettlementView:_dailyShowHero()
+	self._heroIndex = 0
 
-	TaskDispatcher.runRepeat(arg_7_0._showHeroItem, arg_7_0, 0.03, #arg_7_0._heroList)
-	TaskDispatcher.runDelay(arg_7_0._showGetCardView, arg_7_0, 1.5)
+	TaskDispatcher.runRepeat(self._showHeroItem, self, 0.03, #self._heroList)
+	TaskDispatcher.runDelay(self._showGetCardView, self, 1.5)
 end
 
-function var_0_0._showHeroItem(arg_8_0)
-	arg_8_0._heroIndex = arg_8_0._heroIndex + 1
+function Season123_2_3SettlementView:_showHeroItem()
+	self._heroIndex = self._heroIndex + 1
 
-	gohelper.setActive(arg_8_0._heroList[arg_8_0._heroIndex].viewGO, true)
+	gohelper.setActive(self._heroList[self._heroIndex].viewGO, true)
 end
 
-function var_0_0._showGetCardView(arg_9_0)
-	if arg_9_0.equip_cards then
-		arg_9_0._showTipsFlow = FlowSequence.New()
+function Season123_2_3SettlementView:_showGetCardView()
+	if self.equip_cards then
+		self._showTipsFlow = FlowSequence.New()
 
-		arg_9_0._showTipsFlow:addWork(Season123_2_3SettlementTipsWork.New())
-		arg_9_0._showTipsFlow:registerDoneListener(arg_9_0._onShowTipsFlowDone, arg_9_0)
+		self._showTipsFlow:addWork(Season123_2_3SettlementTipsWork.New())
+		self._showTipsFlow:registerDoneListener(self._onShowTipsFlowDone, self)
 
-		local var_9_0 = {}
+		local data = {}
 
-		var_9_0.delayTime = 0
+		data.delayTime = 0
 
-		arg_9_0._showTipsFlow:start(var_9_0)
+		self._showTipsFlow:start(data)
 	end
 end
 
-function var_0_0._onShowTipsFlowDone(arg_10_0)
-	arg_10_0.equip_cards = nil
+function Season123_2_3SettlementView:_onShowTipsFlowDone()
+	self.equip_cards = nil
 end
 
-function var_0_0._checkNewRecord(arg_11_0)
+function Season123_2_3SettlementView:_checkNewRecord()
 	if FightResultModel.instance.updateDungeonRecord then
 		GameFacade.showToast(ToastEnum.FightNewRecord)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_no_requirement)
 	end
 end
 
-function var_0_0._onCoverDungeonRecordReply(arg_12_0, arg_12_1)
-	arg_12_0._hasSendCoverRecord = true
+function Season123_2_3SettlementView:_onCoverDungeonRecordReply(isCover)
+	self._hasSendCoverRecord = true
 
-	gohelper.setActive(arg_12_0._gocoverrecordpart, false)
+	gohelper.setActive(self._gocoverrecordpart, false)
 
-	if arg_12_1 then
+	if isCover then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_no_requirement)
 		GameFacade.showToast(ToastEnum.FightSuccIsCover)
 	end
 end
 
-function var_0_0._detectCoverRecord(arg_13_0)
-	gohelper.setActive(arg_13_0._gocoverrecordpart, FightResultModel.instance.canUpdateDungeonRecord or false)
+function Season123_2_3SettlementView:_detectCoverRecord()
+	gohelper.setActive(self._gocoverrecordpart, FightResultModel.instance.canUpdateDungeonRecord or false)
 
 	if FightResultModel.instance.canUpdateDungeonRecord then
-		arg_13_0._txtcurroundcount.text = FightResultModel.instance.newRecordRound or ""
-		arg_13_0._txtmaxroundcount.text = FightResultModel.instance.oldRecordRound or ""
+		self._txtcurroundcount.text = FightResultModel.instance.newRecordRound or ""
+		self._txtmaxroundcount.text = FightResultModel.instance.oldRecordRound or ""
 
-		gohelper.setActive(arg_13_0._goCoverLessThan, FightResultModel.instance.newRecordRound < FightResultModel.instance.oldRecordRound)
-		gohelper.setActive(arg_13_0._goCoverMuchThan, FightResultModel.instance.newRecordRound > FightResultModel.instance.oldRecordRound)
-		gohelper.setActive(arg_13_0._goCoverEqual, FightResultModel.instance.newRecordRound == FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(self._goCoverLessThan, FightResultModel.instance.newRecordRound < FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(self._goCoverMuchThan, FightResultModel.instance.newRecordRound > FightResultModel.instance.oldRecordRound)
+		gohelper.setActive(self._goCoverEqual, FightResultModel.instance.newRecordRound == FightResultModel.instance.oldRecordRound)
 
 		if FightResultModel.instance.newRecordRound >= FightResultModel.instance.oldRecordRound then
-			arg_13_0._txtcurroundcount.color = GameUtil.parseColor("#272525")
+			self._txtcurroundcount.color = GameUtil.parseColor("#272525")
 		else
-			arg_13_0._txtcurroundcount.color = GameUtil.parseColor("#AC5320")
+			self._txtcurroundcount.color = GameUtil.parseColor("#AC5320")
 		end
 	end
 end
 
-function var_0_0._onBtnCoverRecordClick(arg_14_0)
+function Season123_2_3SettlementView:_onBtnCoverRecordClick()
 	DungeonRpc.instance:sendCoverDungeonRecordRequest(true)
 end
 
-function var_0_0._detectAddFriend(arg_15_0)
-	local var_15_0 = true
-	local var_15_1 = FightResultModel.instance.assistUserId or 0
+function Season123_2_3SettlementView:_detectAddFriend()
+	local isFriend = true
+	local assistUserId = FightResultModel.instance.assistUserId or 0
+	local numAssistUserId = tonumber(assistUserId)
 
-	if tonumber(var_15_1) ~= 0 then
-		var_15_0 = SocialModel.instance:isMyFriendByUserId(var_15_1)
+	if numAssistUserId ~= 0 then
+		isFriend = SocialModel.instance:isMyFriendByUserId(assistUserId)
 	end
 
-	local var_15_2 = false
-	local var_15_3 = Season123Model.instance:getBattleContext()
-	local var_15_4 = var_15_3 and var_15_3.actId or nil
-	local var_15_5 = var_15_3 and var_15_3.stage or nil
+	local isStageFinish = false
+	local battleContext = Season123Model.instance:getBattleContext()
+	local actId = battleContext and battleContext.actId or nil
+	local stage = battleContext and battleContext.stage or nil
 
-	if var_15_4 and var_15_5 then
-		var_15_2 = Season123ProgressUtils.checkStageIsFinish(var_15_4, var_15_5)
+	if actId and stage then
+		isStageFinish = Season123ProgressUtils.checkStageIsFinish(actId, stage)
 	end
 
-	local var_15_6 = not var_15_0 and var_15_2
+	local isShowAddFriend = not isFriend and isStageFinish
 
-	if var_15_6 then
-		local var_15_7 = FightResultModel.instance.assistNickname or ""
+	if isShowAddFriend then
+		local assistNickname = FightResultModel.instance.assistNickname or ""
 
-		arg_15_0._txtfriendtip.text = formatLuaLang("season123_add_assist_friend", var_15_7)
+		self._txtfriendtip.text = formatLuaLang("season123_add_assist_friend", assistNickname)
 	end
 
-	gohelper.setActive(arg_15_0._gofriendpart, var_15_6)
+	gohelper.setActive(self._gofriendpart, isShowAddFriend)
 end
 
-function var_0_0._onBtnConfirmFriendClick(arg_16_0)
-	local var_16_0 = FightResultModel.instance.assistUserId or 0
+function Season123_2_3SettlementView:_onBtnConfirmFriendClick()
+	local assistUserId = FightResultModel.instance.assistUserId or 0
 
-	if var_16_0 ~= 0 and not SocialController.instance:AddFriend(var_16_0, arg_16_0._onAddAssistFriendReply, arg_16_0) then
-		arg_16_0:_onAddAssistFriendReply()
+	if assistUserId ~= 0 then
+		local result = SocialController.instance:AddFriend(assistUserId, self._onAddAssistFriendReply, self)
+
+		if not result then
+			self:_onAddAssistFriendReply()
+		end
 	end
 end
 
-function var_0_0._onAddAssistFriendReply(arg_17_0)
-	gohelper.setActive(arg_17_0._gofriendpart, false)
+function Season123_2_3SettlementView:_onAddAssistFriendReply()
+	gohelper.setActive(self._gofriendpart, false)
 end
 
-function var_0_0._editableInitView(arg_18_0)
-	arg_18_0._simagedecorate10:LoadImage(ResUrl.getSeasonIcon("img_circle.png"))
-	arg_18_0._simagefightsuccbg:LoadImage(ResUrl.getSeasonIcon("full/diejia_bj.png"))
-	arg_18_0._simageherodecorate:LoadImage(ResUrl.getSeasonIcon("jiesuan_zhujue.png"))
-	arg_18_0._simagespecialbg:LoadImage(ResUrl.getSeasonIcon("full/img_bg3.png"))
+function Season123_2_3SettlementView:_editableInitView()
+	self._simagedecorate10:LoadImage(ResUrl.getSeasonIcon("img_circle.png"))
+	self._simagefightsuccbg:LoadImage(ResUrl.getSeasonIcon("full/diejia_bj.png"))
+	self._simageherodecorate:LoadImage(ResUrl.getSeasonIcon("jiesuan_zhujue.png"))
+	self._simagespecialbg:LoadImage(ResUrl.getSeasonIcon("full/img_bg3.png"))
 
-	arg_18_0._gocardempty1 = gohelper.findChild(arg_18_0._gosupercard1, "#go_supercardempty")
-	arg_18_0._gocardpos1 = gohelper.findChild(arg_18_0._gosupercard1, "#go_supercardpos")
-	arg_18_0._gocardempty2 = gohelper.findChild(arg_18_0._gosupercard2, "#go_supercardempty")
-	arg_18_0._gocardpos2 = gohelper.findChild(arg_18_0._gosupercard2, "#go_supercardpos")
+	self._gocardempty1 = gohelper.findChild(self._gosupercard1, "#go_supercardempty")
+	self._gocardpos1 = gohelper.findChild(self._gosupercard1, "#go_supercardpos")
+	self._gocardempty2 = gohelper.findChild(self._gosupercard2, "#go_supercardempty")
+	self._gocardpos2 = gohelper.findChild(self._gosupercard2, "#go_supercardpos")
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_season_succeed)
-	gohelper.setActive(arg_18_0._gofightsucc, true)
-	gohelper.setActive(arg_18_0._gosettlement, false)
+	gohelper.setActive(self._gofightsucc, true)
+	gohelper.setActive(self._gosettlement, false)
 
-	arg_18_0._fightsucc_click = gohelper.getClick(arg_18_0._gofightsucc)
+	self._fightsucc_click = gohelper.getClick(self._gofightsucc)
 end
 
-function var_0_0._btncloseOnClick(arg_19_0)
-	if Time.realtimeSinceStartup - arg_19_0._startTime < 2.5 then
+function Season123_2_3SettlementView:_btncloseOnClick()
+	if Time.realtimeSinceStartup - self._startTime < 2.5 then
 		return
 	end
 
-	if arg_19_0.equip_cards then
+	if self.equip_cards then
 		return
 	end
 
-	arg_19_0:closeThis()
+	self:closeThis()
 
-	local var_19_0 = FightModel.instance:getAfterStory()
+	local storyId = FightModel.instance:getAfterStory()
 
-	if var_19_0 > 0 and not StoryModel.instance:isStoryFinished(var_19_0) then
-		local var_19_1 = {}
+	if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+		local param = {}
 
-		var_19_1.mark = true
-		var_19_1.episodeId = DungeonModel.instance.curSendEpisodeId
+		param.mark = true
+		param.episodeId = DungeonModel.instance.curSendEpisodeId
 
-		StoryController.instance:playStory(var_19_0, var_19_1, function()
+		StoryController.instance:playStory(storyId, param, function()
 			FightSuccView.onStoryEnd()
 		end)
 
@@ -243,183 +250,187 @@ function var_0_0._btncloseOnClick(arg_19_0)
 	FightSuccView.onStoryEnd()
 end
 
-function var_0_0.onOpen(arg_21_0)
-	arg_21_0._startTime = Time.realtimeSinceStartup
-	arg_21_0._episode_config = lua_episode.configDict[FightResultModel.instance:getEpisodeId()]
-	arg_21_0._battleContext = Season123Model.instance:getBattleContext()
+function Season123_2_3SettlementView:onOpen()
+	self._startTime = Time.realtimeSinceStartup
+	self._episode_config = lua_episode.configDict[FightResultModel.instance:getEpisodeId()]
+	self._battleContext = Season123Model.instance:getBattleContext()
 
-	local var_21_0 = arg_21_0._battleContext.layer or 1
+	local layer = self._battleContext.layer or 1
 
-	arg_21_0._config = Season123Config.instance:getSeasonEpisodeCo(Season123Model.instance:getCurSeasonId(), arg_21_0._battleContext.stage, var_21_0)
+	self._config = Season123Config.instance:getSeasonEpisodeCo(Season123Model.instance:getCurSeasonId(), self._battleContext.stage, layer)
 
-	local var_21_1 = Season123ProgressUtils.getResultBg(arg_21_0._config.stagePicture)
+	local urlStr = Season123ProgressUtils.getResultBg(self._config.stagePicture)
 
-	if not string.nilorempty(var_21_1) then
-		arg_21_0._simagedecorate6:LoadImage(var_21_1)
+	if not string.nilorempty(urlStr) then
+		self._simagedecorate6:LoadImage(urlStr)
 	end
 
-	arg_21_0._txtindex.text = string.format("%02d", var_21_0)
-	arg_21_0._txtlevelnamecn.text = arg_21_0._episode_config.name
+	self._txtindex.text = string.format("%02d", layer)
+	self._txtlevelnamecn.text = self._episode_config.name
 
 	Season123Controller.instance:checkAndHandleEffectEquip({
 		actId = Season123Model.instance:getCurSeasonId(),
-		stage = arg_21_0._battleContext.stage,
-		layer = var_21_0
+		stage = self._battleContext.stage,
+		layer = layer
 	})
-	arg_21_0:_refreshRound()
+	self:_refreshRound()
 
-	local var_21_2 = {}
+	local reward_list = {}
 
-	tabletool.addValues(var_21_2, FightResultModel.instance:getFirstMaterialDataList())
-	tabletool.addValues(var_21_2, FightResultModel.instance:getExtraMaterialDataList())
-	tabletool.addValues(var_21_2, FightResultModel.instance:getMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getFirstMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getExtraMaterialDataList())
+	tabletool.addValues(reward_list, FightResultModel.instance:getMaterialDataList())
 
-	if #var_21_2 == 0 then
-		var_21_2 = arg_21_0:getCurEpisodeRewards()
+	if #reward_list == 0 then
+		reward_list = self:getCurEpisodeRewards()
 	end
 
-	local var_21_3 = {}
+	local equip_cards = {}
 
-	for iter_21_0 = #var_21_2, 1, -1 do
-		local var_21_4 = var_21_2[iter_21_0]
+	for i = #reward_list, 1, -1 do
+		local data = reward_list[i]
 
-		if var_21_4.materilType == MaterialEnum.MaterialType.Season123EquipCard then
-			table.insert(var_21_3, var_21_4.materilId)
+		if data.materilType == MaterialEnum.MaterialType.Season123EquipCard then
+			table.insert(equip_cards, data.materilId)
 		end
 	end
 
-	arg_21_0:_onHeroItemLoaded()
+	self:_onHeroItemLoaded()
 
-	if #var_21_3 > 0 then
-		arg_21_0.equip_cards = var_21_3
+	if #equip_cards > 0 then
+		self.equip_cards = equip_cards
 	end
 
-	arg_21_0.reward_list = var_21_2
+	self.reward_list = reward_list
 
-	TaskDispatcher.runDelay(arg_21_0._delayClosetip, arg_21_0, 1.5)
+	TaskDispatcher.runDelay(self._delayClosetip, self, 1.5)
 
-	if #var_21_2 == 0 then
+	if #reward_list == 0 then
 		if FightResultModel.instance.firstPass then
 			logError("服务器没有下发奖励")
 		end
 
-		gohelper.setActive(arg_21_0._gorewards, false)
+		gohelper.setActive(self._gorewards, false)
 	end
 
-	gohelper.setActive(arg_21_0._gobottom, #var_21_2 > 0)
+	gohelper.setActive(self._gobottom, #reward_list > 0)
 
-	arg_21_0._reward_list = var_21_2
-	CameraMgr.instance:getCameraRootAnimator().enabled = false
+	self._reward_list = reward_list
 
-	NavigateMgr.instance:addEscape(arg_21_0.viewName, arg_21_0._btncloseOnClick, arg_21_0)
+	local animComp = CameraMgr.instance:getCameraRootAnimator()
+
+	animComp.enabled = false
+
+	NavigateMgr.instance:addEscape(self.viewName, self._btncloseOnClick, self)
 end
 
-function var_0_0._refreshRound(arg_22_0)
-	local var_22_0 = Season123Model.instance:getActInfo(arg_22_0._battleContext.actId)
+function Season123_2_3SettlementView:_refreshRound()
+	local seasonMO = Season123Model.instance:getActInfo(self._battleContext.actId)
 
-	if not var_22_0 then
+	if not seasonMO then
 		return
 	end
 
-	if arg_22_0._battleContext.stage and arg_22_0._battleContext.layer then
-		local var_22_1 = var_22_0:getStageMO(arg_22_0._battleContext.stage)
+	if self._battleContext.stage and self._battleContext.layer then
+		local stageMO = seasonMO:getStageMO(self._battleContext.stage)
 
-		if not var_22_1 then
+		if not stageMO then
 			return
 		end
 
-		local var_22_2 = var_22_1.episodeMap[arg_22_0._battleContext.layer]
+		local episodeMO = stageMO.episodeMap[self._battleContext.layer]
 
-		if var_22_2 and var_22_2.round then
-			local var_22_3 = tostring(var_22_2.round)
-			local var_22_4 = arg_22_0._battleContext.actId
-			local var_22_5 = arg_22_0._battleContext.stage
-			local var_22_6 = arg_22_0._battleContext.layer
-			local var_22_7 = Season123Controller.instance:isReduceRound(var_22_4, var_22_5, var_22_6) and "<color=#eecd8c>%s</color>" or "%s"
+		if episodeMO and episodeMO.round then
+			local totalTimeStr = tostring(episodeMO.round)
+			local actId = self._battleContext.actId
+			local stage = self._battleContext.stage
+			local layer = self._battleContext.layer
+			local isReduceRound = Season123Controller.instance:isReduceRound(actId, stage, layer)
+			local passRoundFormat = isReduceRound and "<color=#eecd8c>%s</color>" or "%s"
 
-			arg_22_0._totalTime.text = string.format(var_22_7, var_22_3)
-			arg_22_0._totalTimeBlue.text = var_22_3
+			self._totalTime.text = string.format(passRoundFormat, totalTimeStr)
+			self._totalTimeBlue.text = totalTimeStr
 		end
 	end
 end
 
-function var_0_0._showSettlementReward(arg_23_0)
-	local var_23_0 = gohelper.findChild(arg_23_0._scrollrewards.gameObject, "Viewport/Content")
+function Season123_2_3SettlementView:_showSettlementReward()
+	local parent_root = gohelper.findChild(self._scrollrewards.gameObject, "Viewport/Content")
 
-	gohelper.addChild(arg_23_0.viewGO, arg_23_0._gorewarditem)
-	arg_23_0:com_createObjList(arg_23_0._onRewardItemShow, arg_23_0.reward_list, var_23_0, arg_23_0._gorewarditem, nil, 0.1)
+	gohelper.addChild(self.viewGO, self._gorewarditem)
+	self:com_createObjList(self._onRewardItemShow, self.reward_list, parent_root, self._gorewarditem, nil, 0.1)
 end
 
-function var_0_0._onRewardItemShow(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = gohelper.findChild(arg_24_1, "go_prop")
-	local var_24_1 = gohelper.findChild(arg_24_1, "go_receive")
+function Season123_2_3SettlementView:_onRewardItemShow(obj, data, index)
+	local itemIconGO = gohelper.findChild(obj, "go_prop")
+	local receiveGO = gohelper.findChild(obj, "go_receive")
 
-	if arg_24_2.materilType == MaterialEnum.MaterialType.Season123EquipCard then
-		local var_24_2 = Season123_2_3CelebrityCardItem.New()
+	if data.materilType == MaterialEnum.MaterialType.Season123EquipCard then
+		local cardItem = Season123_2_3CelebrityCardItem.New()
 
-		var_24_2:init(gohelper.findChild(var_24_0, "cardicon"), arg_24_2.materilId)
+		cardItem:init(gohelper.findChild(itemIconGO, "cardicon"), data.materilId)
 
-		arg_24_0._equipAwardCards = arg_24_0._equipAwardCards or {}
+		self._equipAwardCards = self._equipAwardCards or {}
 
-		table.insert(arg_24_0._equipAwardCards, var_24_2)
+		table.insert(self._equipAwardCards, cardItem)
 	else
-		local var_24_3 = IconMgr.instance:getCommonPropListItemIcon(var_24_0)
+		local itemIcon = IconMgr.instance:getCommonPropListItemIcon(itemIconGO)
 
-		var_24_3._index = arg_24_3
+		itemIcon._index = index
 
-		function var_24_3.callback(arg_25_0)
-			arg_25_0:setCountFontSize(40)
-			arg_25_0:hideName()
+		function itemIcon.callback(item)
+			item:setCountFontSize(40)
+			item:hideName()
 		end
 
-		var_24_3:onUpdateMO(arg_24_2)
-		var_24_3:_setItem()
+		itemIcon:onUpdateMO(data)
+		itemIcon:_setItem()
 
-		local var_24_4 = not FightResultModel.instance.firstPass
-		local var_24_5 = var_24_4 and "#7b7b7b" or "#ffffff"
+		local hasGetReward = not FightResultModel.instance.firstPass
+		local color = hasGetReward and "#7b7b7b" or "#ffffff"
 
-		var_24_3:setItemColor(var_24_5)
-		gohelper.setActive(var_24_1, var_24_4)
+		itemIcon:setItemColor(color)
+		gohelper.setActive(receiveGO, hasGetReward)
 	end
 end
 
-function var_0_0.getCurEpisodeRewards(arg_26_0)
-	local var_26_0 = arg_26_0._battleContext.actId
-	local var_26_1 = arg_26_0._battleContext.stage
-	local var_26_2 = arg_26_0._battleContext.layer
-	local var_26_3 = Season123Config.instance:getSeasonEpisodeCo(var_26_0, var_26_1, var_26_2)
+function Season123_2_3SettlementView:getCurEpisodeRewards()
+	local actId = self._battleContext.actId
+	local stage = self._battleContext.stage
+	local layer = self._battleContext.layer
+	local episodeCo = Season123Config.instance:getSeasonEpisodeCo(actId, stage, layer)
 
-	if not var_26_3 then
+	if not episodeCo then
 		return nil
 	end
 
-	local var_26_4 = {}
-	local var_26_5 = DungeonModel.instance:getEpisodeFirstBonus(var_26_3.episodeId)
-	local var_26_6 = FightEnum.FightBonusTag.AdditionBonus
+	local rewardDataTab = {}
+	local rewards = DungeonModel.instance:getEpisodeFirstBonus(episodeCo.episodeId)
+	local bonusTag = FightEnum.FightBonusTag.AdditionBonus
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_5) do
-		local var_26_7 = {
-			materilType = iter_26_1[1],
-			materilId = iter_26_1[2],
-			quantity = iter_26_1[3]
+	for index, rewardItemData in ipairs(rewards) do
+		local bonus = {
+			materilType = rewardItemData[1],
+			materilId = rewardItemData[2],
+			quantity = rewardItemData[3]
 		}
 
-		if var_26_7.materilType ~= MaterialEnum.MaterialType.Faith and var_26_7.materilType ~= MaterialEnum.MaterialType.Exp then
-			local var_26_8 = MaterialDataMO.New()
+		if bonus.materilType ~= MaterialEnum.MaterialType.Faith and bonus.materilType ~= MaterialEnum.MaterialType.Exp then
+			local materialDataMO = MaterialDataMO.New()
 
-			var_26_8.bonusTag = var_26_6
+			materialDataMO.bonusTag = bonusTag
 
-			var_26_8:init(var_26_7)
-			table.insert(var_26_4, var_26_8)
+			materialDataMO:init(bonus)
+			table.insert(rewardDataTab, materialDataMO)
 		end
 	end
 
-	table.sort(var_26_4, FightResultModel._sortMaterial)
+	table.sort(rewardDataTab, FightResultModel._sortMaterial)
 
-	return var_26_4
+	return rewardDataTab
 end
 
-local var_0_1 = {
+local HeroItemPosTab = {
 	{
 		Vector2.New(136.2, 196)
 	},
@@ -440,248 +451,249 @@ local var_0_1 = {
 	}
 }
 
-function var_0_0._onHeroItemLoaded(arg_27_0)
-	arg_27_0._heroList = {}
-	arg_27_0._hero_obj_list = arg_27_0:getUserDataTb_()
+function Season123_2_3SettlementView:_onHeroItemLoaded()
+	self._heroList = {}
+	self._hero_obj_list = self:getUserDataTb_()
 
-	local var_27_0 = arg_27_0.viewContainer:getSetting().otherRes.itemRes
+	local setting = self.viewContainer:getSetting()
+	local resPath = setting.otherRes.itemRes
 
-	for iter_27_0 = 1, 4 do
-		local var_27_1 = arg_27_0.viewContainer:getResInst(var_27_0, arg_27_0["_gohero" .. iter_27_0])
+	for i = 1, 4 do
+		local hero_item = self.viewContainer:getResInst(resPath, self["_gohero" .. i])
 
-		gohelper.setActive(var_27_1, false)
-		table.insert(arg_27_0._hero_obj_list, var_27_1)
+		gohelper.setActive(hero_item, false)
+		table.insert(self._hero_obj_list, hero_item)
 	end
 
-	gohelper.setActive(arg_27_0._gosupercard1, false)
-	gohelper.setActive(arg_27_0._gosupercard2, false)
+	gohelper.setActive(self._gosupercard1, false)
+	gohelper.setActive(self._gosupercard2, false)
 
-	local var_27_2 = FightModel.instance:getFightParam()
-	local var_27_3 = FightModel.instance:getBattleId()
-	local var_27_4 = var_27_3 and lua_battle.configDict[var_27_3]
-	local var_27_5 = var_27_4 and var_27_4.playerMax or ModuleEnum.HeroCountInGroup
-	local var_27_6 = FightModel.instance.curFightModel
+	local fight_param = FightModel.instance:getFightParam()
+	local battleId = FightModel.instance:getBattleId()
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local playerMax = battleCO and battleCO.playerMax or ModuleEnum.HeroCountInGroup
+	local is_replay = FightModel.instance.curFightModel
 
-	if not var_27_6 then
-		local var_27_7 = {}
-		local var_27_8 = {}
+	if not is_replay then
+		local trailDict = {}
+		local hero_list = {}
 
-		for iter_27_1, iter_27_2 in ipairs(var_27_2.mySideUids) do
-			table.insert(var_27_8, iter_27_2)
+		for i, v in ipairs(fight_param.mySideUids) do
+			table.insert(hero_list, v)
 		end
 
-		for iter_27_3, iter_27_4 in ipairs(var_27_2.mySideSubUids) do
-			table.insert(var_27_8, iter_27_4)
+		for i, v in ipairs(fight_param.mySideSubUids) do
+			table.insert(hero_list, v)
 		end
 
-		local var_27_9 = {}
+		local equip_dic = {}
 
-		for iter_27_5, iter_27_6 in ipairs(var_27_2.equips) do
-			var_27_9[iter_27_6.heroUid] = iter_27_6
+		for i, v in ipairs(fight_param.equips) do
+			equip_dic[v.heroUid] = v
 		end
 
-		local var_27_10 = {}
+		local equip123_dic = {}
 
-		for iter_27_7, iter_27_8 in ipairs(var_27_2.activity104Equips) do
-			var_27_10[iter_27_8.heroUid] = iter_27_8
+		for i, v in ipairs(fight_param.activity104Equips) do
+			equip123_dic[v.heroUid] = v
 		end
 
-		if var_27_2.trialHeroList then
-			for iter_27_9, iter_27_10 in ipairs(var_27_2.trialHeroList) do
-				local var_27_11 = iter_27_10.pos
+		if fight_param.trialHeroList then
+			for i, v in ipairs(fight_param.trialHeroList) do
+				local pos = v.pos
 
-				if var_27_11 < 0 then
-					var_27_11 = var_27_5 - var_27_11
+				if pos < 0 then
+					pos = playerMax - pos
 				end
 
-				var_27_7[var_27_11] = iter_27_10
+				trailDict[pos] = v
 
-				table.insert(var_27_8, var_27_11, 0)
+				table.insert(hero_list, pos, 0)
 			end
 		end
 
-		for iter_27_11 = 1, 4 do
-			if var_27_7[iter_27_11] then
-				local var_27_12 = lua_hero_trial.configDict[var_27_7[iter_27_11].trialId][0]
+		for i = 1, 4 do
+			if trailDict[i] then
+				local trialCo = lua_hero_trial.configDict[trailDict[i].trialId][0]
 
-				if var_27_12 then
-					local var_27_13 = tostring(var_27_12.heroId - 1099511627776)
-					local var_27_14 = var_27_7[iter_27_11].equipUid
-					local var_27_15 = var_27_10[var_27_13] and var_27_10[var_27_13].equipUid
-					local var_27_16 = arg_27_0:openSubView(Season123_2_3SettlementHeroItem, arg_27_0._hero_obj_list[iter_27_11], nil, var_27_6, nil, var_27_14, var_27_15, nil, var_27_7[iter_27_11])
+				if trialCo then
+					local hero_uid = tostring(trialCo.heroId - 1099511627776)
+					local equip = trailDict[i].equipUid
+					local equip_104 = equip123_dic[hero_uid] and equip123_dic[hero_uid].equipUid
+					local heroItem = self:openSubView(Season123_2_3SettlementHeroItem, self._hero_obj_list[i], nil, is_replay, nil, equip, equip_104, nil, trailDict[i])
 
-					table.insert(arg_27_0._heroList, var_27_16)
+					table.insert(self._heroList, heroItem)
 				end
 			else
-				local var_27_17 = var_27_8[iter_27_11]
-				local var_27_18 = var_27_17 ~= "0" and var_27_9[var_27_17] and var_27_9[var_27_17].equipUid
-				local var_27_19 = var_27_17 ~= "0" and var_27_10[var_27_17] and var_27_10[var_27_17].equipUid
-				local var_27_20 = arg_27_0:openSubView(Season123_2_3SettlementHeroItem, arg_27_0._hero_obj_list[iter_27_11], nil, var_27_6, var_27_17, var_27_18, var_27_19)
+				local hero_uid = hero_list[i]
+				local equip = hero_uid ~= "0" and equip_dic[hero_uid] and equip_dic[hero_uid].equipUid
+				local equip_104 = hero_uid ~= "0" and equip123_dic[hero_uid] and equip123_dic[hero_uid].equipUid
+				local heroItem = self:openSubView(Season123_2_3SettlementHeroItem, self._hero_obj_list[i], nil, is_replay, hero_uid, equip, equip_104)
 
-				if var_27_17 ~= "0" then
-					table.insert(arg_27_0._heroList, var_27_20)
+				if hero_uid ~= "0" then
+					table.insert(self._heroList, heroItem)
 				end
 			end
 		end
 
-		arg_27_0:_refreshHeroItemPos()
+		self:_refreshHeroItemPos()
 
-		local var_27_21 = "-100000"
+		local character_uid = "-100000"
 
-		if var_27_10[var_27_21] then
-			local var_27_22 = var_27_10[var_27_21].equipUid
+		if equip123_dic[character_uid] then
+			local mainCardUids = equip123_dic[character_uid].equipUid
 
-			if var_27_22 then
-				arg_27_0:setMainPosCardItemByUid(1, var_27_22[1])
-				arg_27_0:setMainPosCardItemByUid(2, var_27_22[2])
+			if mainCardUids then
+				self:setMainPosCardItemByUid(1, mainCardUids[1])
+				self:setMainPosCardItemByUid(2, mainCardUids[2])
 			end
 		end
 	else
-		FightRpc.instance:sendGetFightRecordGroupRequest(var_27_2.episodeId)
+		FightRpc.instance:sendGetFightRecordGroupRequest(fight_param.episodeId)
 	end
 end
 
-function var_0_0.setMainPosCardItemByUid(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = arg_28_0["_gosupercard" .. tostring(arg_28_1)]
-	local var_28_1 = arg_28_0._battleContext.actId
-	local var_28_2 = Season123Model.instance:getActInfo(var_28_1)
-	local var_28_3 = Season123Model.instance:getUnlockCardIndex(Activity123Enum.MainCharPos, arg_28_1)
+function Season123_2_3SettlementView:setMainPosCardItemByUid(index, equipUid)
+	local goParent = self["_gosupercard" .. tostring(index)]
+	local actId = self._battleContext.actId
+	local seasonMO = Season123Model.instance:getActInfo(actId)
+	local slotIndex = Season123Model.instance:getUnlockCardIndex(Activity123Enum.MainCharPos, index)
 
-	if not var_28_2.unlockIndexSet[var_28_3] then
-		gohelper.setActive(var_28_0, false)
+	if not seasonMO.unlockIndexSet[slotIndex] then
+		gohelper.setActive(goParent, false)
 	else
-		gohelper.setActive(var_28_0, true)
+		gohelper.setActive(goParent, true)
 
-		local var_28_4 = arg_28_0["_gocardempty" .. tostring(arg_28_1)]
-		local var_28_5 = arg_28_0["_gocardpos" .. tostring(arg_28_1)]
+		local goEmpty = self["_gocardempty" .. tostring(index)]
+		local goPos = self["_gocardpos" .. tostring(index)]
 
-		if arg_28_2 and arg_28_2 ~= "0" then
-			gohelper.setActive(var_28_4, false)
-			gohelper.setActive(var_28_5, true)
-			arg_28_0:openSubView(Season123_2_3CelebrityCardGetItem, Season123_2_3CelebrityCardItem.AssetPath, var_28_5, arg_28_2, true)
+		if equipUid and equipUid ~= "0" then
+			gohelper.setActive(goEmpty, false)
+			gohelper.setActive(goPos, true)
+			self:openSubView(Season123_2_3CelebrityCardGetItem, Season123_2_3CelebrityCardItem.AssetPath, goPos, equipUid, true)
 		else
-			gohelper.setActive(var_28_4, true)
-			gohelper.setActive(var_28_5, false)
+			gohelper.setActive(goEmpty, true)
+			gohelper.setActive(goPos, false)
 		end
 	end
 end
 
-function var_0_0._refreshHeroItemPos(arg_29_0)
-	local var_29_0 = arg_29_0._heroList and #arg_29_0._heroList or 0
+function Season123_2_3SettlementView:_refreshHeroItemPos()
+	local count = self._heroList and #self._heroList or 0
 
-	if var_29_0 <= 0 then
+	if count <= 0 then
 		return
 	end
 
-	local var_29_1 = var_0_1[var_29_0]
+	local posCfg = HeroItemPosTab[count]
 
-	for iter_29_0 = 1, var_29_0 do
-		recthelper.setAnchor(arg_29_0._heroList[iter_29_0].viewGO.transform.parent, var_29_1[iter_29_0].x, var_29_1[iter_29_0].y)
+	for i = 1, count do
+		recthelper.setAnchor(self._heroList[i].viewGO.transform.parent, posCfg[i].x, posCfg[i].y)
 	end
 end
 
-function var_0_0._onGetFightRecordGroupReply(arg_30_0, arg_30_1)
-	for iter_30_0 = 1, 4 do
-		local var_30_0 = arg_30_0._hero_obj_list[iter_30_0]
-		local var_30_1 = arg_30_1:getHeroByIndex(iter_30_0)
-		local var_30_2 = arg_30_1.replay_equip_data[var_30_1]
-		local var_30_3 = arg_30_1.replay_activity104Equip_data[var_30_1]
-		local var_30_4 = arg_30_1.replay_hero_data[var_30_1]
+function Season123_2_3SettlementView:_onGetFightRecordGroupReply(fightGroupMO)
+	for i = 1, 4 do
+		local obj = self._hero_obj_list[i]
+		local hero = fightGroupMO:getHeroByIndex(i)
+		local equip = fightGroupMO.replay_equip_data[hero]
+		local equip_104 = fightGroupMO.replay_activity104Equip_data[hero]
+		local replay_data = fightGroupMO.replay_hero_data[hero]
 
-		if not var_30_4 then
-			for iter_30_1, iter_30_2 in pairs(arg_30_1.replay_hero_data) do
-				if iter_30_2.heroId == var_30_1 then
-					var_30_4 = iter_30_2
+		if not replay_data then
+			for _, v in pairs(fightGroupMO.replay_hero_data) do
+				if v.heroId == hero then
+					replay_data = v
 
 					break
 				end
 			end
 		end
 
-		local var_30_5 = arg_30_0:openSubView(Season123_2_3SettlementHeroItem, var_30_0, nil, true, var_30_1, var_30_2, var_30_3, var_30_4)
+		local heroItem = self:openSubView(Season123_2_3SettlementHeroItem, obj, nil, true, hero, equip, equip_104, replay_data)
 
-		if var_30_1 ~= "0" then
-			table.insert(arg_30_0._heroList, var_30_5)
+		if hero ~= "0" then
+			table.insert(self._heroList, heroItem)
 		end
 	end
 
-	arg_30_0:_refreshHeroItemPos()
+	self:_refreshHeroItemPos()
 
-	local var_30_6 = "-100000"
+	local character_uid = "-100000"
 
-	if arg_30_1.replay_activity104Equip_data[var_30_6] then
-		local var_30_7 = arg_30_1.replay_activity104Equip_data[var_30_6][1]
-		local var_30_8 = arg_30_1.replay_activity104Equip_data[var_30_6][2]
+	if fightGroupMO.replay_activity104Equip_data[character_uid] then
+		local mainEquip1 = fightGroupMO.replay_activity104Equip_data[character_uid][1]
+		local mainEquip2 = fightGroupMO.replay_activity104Equip_data[character_uid][2]
 
-		arg_30_0:setMainPosCardItemById(1, var_30_7)
-		arg_30_0:setMainPosCardItemById(2, var_30_8)
+		self:setMainPosCardItemById(1, mainEquip1)
+		self:setMainPosCardItemById(2, mainEquip2)
 	end
 end
 
-function var_0_0.setMainPosCardItemById(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0
+function Season123_2_3SettlementView:setMainPosCardItemById(index, mainEquip)
+	local equipId
 
-	if arg_31_2 then
-		var_31_0 = arg_31_2.equipId
+	if mainEquip then
+		equipId = mainEquip.equipId
 	end
 
-	local var_31_1 = arg_31_0["_gosupercard" .. tostring(arg_31_1)]
-	local var_31_2 = arg_31_0._battleContext.actId
-	local var_31_3 = Season123Model.instance:getActInfo(var_31_2)
-	local var_31_4 = Season123Model.instance:getUnlockCardIndex(Activity123Enum.MainCharPos, arg_31_1)
+	local goParent = self["_gosupercard" .. tostring(index)]
+	local actId = self._battleContext.actId
+	local seasonMO = Season123Model.instance:getActInfo(actId)
+	local slotIndex = Season123Model.instance:getUnlockCardIndex(Activity123Enum.MainCharPos, index)
 
-	if not var_31_3.unlockIndexSet[var_31_4] then
-		gohelper.setActive(var_31_1, false)
+	if not seasonMO.unlockIndexSet[slotIndex] then
+		gohelper.setActive(goParent, false)
 	else
-		gohelper.setActive(var_31_1, true)
+		gohelper.setActive(goParent, true)
 
-		local var_31_5 = arg_31_0["_gocardempty" .. tostring(arg_31_1)]
-		local var_31_6 = arg_31_0["_gocardpos" .. tostring(arg_31_1)]
+		local goEmpty = self["_gocardempty" .. tostring(index)]
+		local goPos = self["_gocardpos" .. tostring(index)]
 
-		if var_31_0 and var_31_0 ~= 0 then
-			gohelper.setActive(var_31_5, false)
-			gohelper.setActive(var_31_6, true)
-			arg_31_0:openSubView(Season123_2_3CelebrityCardGetItem, Season123_2_3CelebrityCardItem.AssetPath, var_31_6, nil, nil, var_31_0)
+		if equipId and equipId ~= 0 then
+			gohelper.setActive(goEmpty, false)
+			gohelper.setActive(goPos, true)
+			self:openSubView(Season123_2_3CelebrityCardGetItem, Season123_2_3CelebrityCardItem.AssetPath, goPos, nil, nil, equipId)
 		else
-			gohelper.setActive(var_31_5, true)
-			gohelper.setActive(var_31_6, false)
+			gohelper.setActive(goEmpty, true)
+			gohelper.setActive(goPos, false)
 		end
 	end
 end
 
-function var_0_0._delayClosetip(arg_32_0)
-	gohelper.setActive(arg_32_0._gofightsucc, false)
-	arg_32_0:_showSettlement()
+function Season123_2_3SettlementView:_delayClosetip()
+	gohelper.setActive(self._gofightsucc, false)
+	self:_showSettlement()
 end
 
-function var_0_0.onClose(arg_33_0)
-	if arg_33_0._equipAwardCards then
-		for iter_33_0, iter_33_1 in ipairs(arg_33_0._equipAwardCards) do
-			iter_33_1:destroy()
+function Season123_2_3SettlementView:onClose()
+	if self._equipAwardCards then
+		for i, v in ipairs(self._equipAwardCards) do
+			v:destroy()
 		end
 
-		arg_33_0._equipAwardCards = nil
+		self._equipAwardCards = nil
 	end
 
-	if arg_33_0._showTipsFlow then
-		arg_33_0._showTipsFlow:stop()
+	if self._showTipsFlow then
+		self._showTipsFlow:stop()
 
-		arg_33_0._showTipsFlow = nil
+		self._showTipsFlow = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_33_0._showHeroItem, arg_33_0)
-	TaskDispatcher.cancelTask(arg_33_0._dailyShowHero, arg_33_0)
-	TaskDispatcher.cancelTask(arg_33_0._showGetCardView, arg_33_0)
-	TaskDispatcher.cancelTask(arg_33_0._delayClosetip, arg_33_0)
-	arg_33_0._simagedecorate6:UnLoadImage()
-	arg_33_0._simagedecorate10:UnLoadImage()
-	arg_33_0._simagefightsuccbg:UnLoadImage()
-	arg_33_0._simageherodecorate:UnLoadImage()
-	arg_33_0._simagespecialbg:UnLoadImage()
+	TaskDispatcher.cancelTask(self._showHeroItem, self)
+	TaskDispatcher.cancelTask(self._dailyShowHero, self)
+	TaskDispatcher.cancelTask(self._showGetCardView, self)
+	TaskDispatcher.cancelTask(self._delayClosetip, self)
+	self._simagedecorate6:UnLoadImage()
+	self._simagedecorate10:UnLoadImage()
+	self._simagefightsuccbg:UnLoadImage()
+	self._simageherodecorate:UnLoadImage()
+	self._simagespecialbg:UnLoadImage()
 
-	if FightResultModel.instance.canUpdateDungeonRecord and not arg_33_0._hasSendCoverRecord then
+	if FightResultModel.instance.canUpdateDungeonRecord and not self._hasSendCoverRecord then
 		DungeonRpc.instance:sendCoverDungeonRecordRequest(false)
 	end
 end
 
-return var_0_0
+return Season123_2_3SettlementView

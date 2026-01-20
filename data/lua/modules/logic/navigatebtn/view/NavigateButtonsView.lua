@@ -1,261 +1,263 @@
-﻿module("modules.logic.navigatebtn.view.NavigateButtonsView", package.seeall)
+﻿-- chunkname: @modules/logic/navigatebtn/view/NavigateButtonsView.lua
 
-local var_0_0 = class("NavigateButtonsView", BaseView)
+module("modules.logic.navigatebtn.view.NavigateButtonsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._btnhome = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_home")
-	arg_1_0._btnhelp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_help")
-	arg_1_0._imageclose = gohelper.findChildImage(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._imagehome = gohelper.findChildImage(arg_1_0.viewGO, "#btn_home")
-	arg_1_0._imagehelp = gohelper.findChildImage(arg_1_0.viewGO, "#btn_help")
+local NavigateButtonsView = class("NavigateButtonsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function NavigateButtonsView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._btnhome = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_home")
+	self._btnhelp = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_help")
+	self._imageclose = gohelper.findChildImage(self.viewGO, "#btn_close")
+	self._imagehome = gohelper.findChildImage(self.viewGO, "#btn_home")
+	self._imagehelp = gohelper.findChildImage(self.viewGO, "#btn_help")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnhome:AddClickListener(arg_2_0._btnhomeOnClick, arg_2_0)
-	arg_2_0._btnhelp:AddClickListener(arg_2_0._btnhelpOnClick, arg_2_0)
+function NavigateButtonsView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnhome:AddClickListener(self._btnhomeOnClick, self)
+	self._btnhelp:AddClickListener(self._btnhelpOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnhome:RemoveClickListener()
-	arg_3_0._btnhelp:RemoveClickListener()
+function NavigateButtonsView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnhome:RemoveClickListener()
+	self._btnhelp:RemoveClickListener()
 end
 
-var_0_0.DefaultHelpId = 100
+NavigateButtonsView.DefaultHelpId = 100
 
-function var_0_0.ctor(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7)
-	if not arg_4_1 then
-		arg_4_0.param = {
+function NavigateButtonsView:ctor(param, helpId, closeCallback, homeCallback, helpCallback, callbackObj, useLightBtn)
+	if not param then
+		self.param = {
 			true,
 			true,
 			true
 		}
 	else
-		arg_4_0.param = arg_4_1
+		self.param = param
 	end
 
-	if not arg_4_2 then
-		arg_4_0.helpId = var_0_0.DefaultHelpId
+	if not helpId then
+		self.helpId = NavigateButtonsView.DefaultHelpId
 	else
-		arg_4_0.helpId = arg_4_2
+		self.helpId = helpId
 	end
 
-	if arg_4_7 == nil then
-		arg_4_0._useLightBtn = true
+	if useLightBtn == nil then
+		self._useLightBtn = true
 	else
-		arg_4_0._useLightBtn = arg_4_7
+		self._useLightBtn = useLightBtn
 	end
 
-	arg_4_0._extendBtns = arg_4_0:getUserDataTb_()
-	arg_4_0._closeCallback = arg_4_3
-	arg_4_0._homeCallback = arg_4_4
-	arg_4_0._helpCallback = arg_4_5
-	arg_4_0._callbackObj = arg_4_6
-	arg_4_0._animEnabled = true
-	arg_4_0.initDone = false
-	arg_4_0.needReplaceCloseBtnAudioId = false
-	arg_4_0.replaceCloseBtnAudioId = 0
-	arg_4_0.needReplaceHomeBtnAudioId = false
-	arg_4_0.replaceHomeBtnAudioId = 0
-	arg_4_0.needReplaceHelpBtnAudioId = false
-	arg_4_0.replaceHelpBtnAudioId = 0
+	self._extendBtns = self:getUserDataTb_()
+	self._closeCallback = closeCallback
+	self._homeCallback = homeCallback
+	self._helpCallback = helpCallback
+	self._callbackObj = callbackObj
+	self._animEnabled = true
+	self.initDone = false
+	self.needReplaceCloseBtnAudioId = false
+	self.replaceCloseBtnAudioId = 0
+	self.needReplaceHomeBtnAudioId = false
+	self.replaceHomeBtnAudioId = 0
+	self.needReplaceHelpBtnAudioId = false
+	self.replaceHelpBtnAudioId = 0
 end
 
-function var_0_0.setOpenCallback(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._has_onOpen then
-		if arg_5_1 then
-			arg_5_1(arg_5_2)
+function NavigateButtonsView:setOpenCallback(callback, callbackTarget)
+	if self._has_onOpen then
+		if callback then
+			callback(callbackTarget)
 		end
 
 		return
 	end
 
-	arg_5_0._openCallback = arg_5_1
-	arg_5_0._openCallbackTarget = arg_5_2
+	self._openCallback = callback
+	self._openCallbackTarget = callbackTarget
 end
 
-function var_0_0.addExtendBtn(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = arg_6_0._extendBtns[arg_6_1]
+function NavigateButtonsView:addExtendBtn(siblingIndex, iconName, callback, callbackTarget)
+	local btnParams = self._extendBtns[siblingIndex]
 
-	if var_6_0 then
-		return var_6_0[1]
+	if btnParams then
+		return btnParams[1]
 	end
 
-	local var_6_1 = gohelper.cloneInPlace(arg_6_0._btnhelp.gameObject)
+	local extendBtnGo = gohelper.cloneInPlace(self._btnhelp.gameObject)
 
-	gohelper.setActive(var_6_1, true)
-	gohelper.addUIClickAudio(var_6_1)
+	gohelper.setActive(extendBtnGo, true)
+	gohelper.addUIClickAudio(extendBtnGo)
 
-	local var_6_2 = SLFramework.UGUI.ButtonWrap.Get(var_6_1)
+	local extendBtn = SLFramework.UGUI.ButtonWrap.Get(extendBtnGo)
 
-	var_6_2:AddClickListener(arg_6_0._extendBtnClick, arg_6_0, arg_6_1)
+	extendBtn:AddClickListener(self._extendBtnClick, self, siblingIndex)
 
-	arg_6_0._extendBtns[arg_6_1] = {
-		var_6_2,
-		arg_6_3,
-		arg_6_4
+	self._extendBtns[siblingIndex] = {
+		extendBtn,
+		callback,
+		callbackTarget
 	}
 
-	if arg_6_2 then
-		local var_6_3 = var_6_2:GetComponent(gohelper.Type_Image)
+	if iconName then
+		local img = extendBtn:GetComponent(gohelper.Type_Image)
 
-		UISpriteSetMgr.instance:setCommonSprite(var_6_3, arg_6_2)
+		UISpriteSetMgr.instance:setCommonSprite(img, iconName)
 	end
 
-	gohelper.setSibling(var_6_1, arg_6_1)
+	gohelper.setSibling(extendBtnGo, siblingIndex)
 
-	return var_6_2
+	return extendBtn
 end
 
-function var_0_0.getExtendBtn(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._extendBtns[arg_7_1]
+function NavigateButtonsView:getExtendBtn(index)
+	local btnParams = self._extendBtns[index]
 
-	if var_7_0 then
-		return var_7_0[1]
+	if btnParams then
+		return btnParams[1]
 	end
 end
 
-function var_0_0._extendBtnClick(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._extendBtns[arg_8_1]
+function NavigateButtonsView:_extendBtnClick(index)
+	local btnParams = self._extendBtns[index]
 
-	if not var_8_0 then
+	if not btnParams then
 		return
 	end
 
-	local var_8_1 = var_8_0[2]
-	local var_8_2 = var_8_0[3]
+	local callback = btnParams[2]
+	local callbackTarget = btnParams[3]
 
-	if var_8_1 then
-		var_8_1(var_8_2)
+	if callback then
+		callback(callbackTarget)
 	end
 end
 
-function var_0_0.setLight(arg_9_0, arg_9_1)
-	if arg_9_1 == nil then
-		arg_9_0._useLightBtn = true
+function NavigateButtonsView:setLight(useLightBtn)
+	if useLightBtn == nil then
+		self._useLightBtn = true
 	else
-		arg_9_0._useLightBtn = arg_9_1
+		self._useLightBtn = useLightBtn
 	end
 end
 
-function var_0_0.setCloseCheck(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._closeCheckFunc = arg_10_1
-	arg_10_0._closeCheckObj = arg_10_2
+function NavigateButtonsView:setCloseCheck(closeCheckFunc, closeCheckObj)
+	self._closeCheckFunc = closeCheckFunc
+	self._closeCheckObj = closeCheckObj
 end
 
-function var_0_0.setHomeCheck(arg_11_0, arg_11_1, arg_11_2)
-	arg_11_0._homeCheckFunc = arg_11_1
-	arg_11_0._homeCheckObj = arg_11_2
+function NavigateButtonsView:setHomeCheck(homeCheckFunc, homeCheckObj)
+	self._homeCheckFunc = homeCheckFunc
+	self._homeCheckObj = homeCheckObj
 end
 
-function var_0_0.setOverrideClose(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._overrideCloseFunc = arg_12_1
-	arg_12_0._overrideCloseObj = arg_12_2
+function NavigateButtonsView:setOverrideClose(overrideCloseFunc, overrideCloseObj)
+	self._overrideCloseFunc = overrideCloseFunc
+	self._overrideCloseObj = overrideCloseObj
 end
 
-function var_0_0.setOverrideHome(arg_13_0, arg_13_1, arg_13_2)
-	arg_13_0._overrideHomeFunc = arg_13_1
-	arg_13_0._overrideHomeFuncObj = arg_13_2
+function NavigateButtonsView:setOverrideHome(overrideHomeFunc, overrideHomeObj)
+	self._overrideHomeFunc = overrideHomeFunc
+	self._overrideHomeFuncObj = overrideHomeObj
 end
 
-function var_0_0.setOverrideHelp(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0._overrideHelpFunc = arg_14_1
-	arg_14_0._overrideHelpObj = arg_14_2
+function NavigateButtonsView:setOverrideHelp(overrideHelpFunc, overrideHelpObj)
+	self._overrideHelpFunc = overrideHelpFunc
+	self._overrideHelpObj = overrideHelpObj
 end
 
-function var_0_0.setHelpId(arg_15_0, arg_15_1)
-	if arg_15_0.helpId == arg_15_1 then
+function NavigateButtonsView:setHelpId(helpId)
+	if self.helpId == helpId then
 		return
 	end
 
-	arg_15_0.helpId = arg_15_1
+	self.helpId = helpId
 
-	arg_15_0:setParam({
-		arg_15_0.param[1],
-		arg_15_0.param[2],
+	self:setParam({
+		self.param[1],
+		self.param[2],
 		true
 	})
 end
 
-function var_0_0.hideHelpIcon(arg_16_0)
-	if arg_16_0.helpId == var_0_0.DefaultHelpId then
+function NavigateButtonsView:hideHelpIcon()
+	if self.helpId == NavigateButtonsView.DefaultHelpId then
 		return
 	end
 
-	arg_16_0.helpId = var_0_0.DefaultHelpId
+	self.helpId = NavigateButtonsView.DefaultHelpId
 
-	arg_16_0:setParam({
-		arg_16_0.param[1],
-		arg_16_0.param[2],
+	self:setParam({
+		self.param[1],
+		self.param[2],
 		false
 	})
 end
 
-function var_0_0.setAnimEnabled(arg_17_0, arg_17_1)
-	arg_17_0._animEnabled = arg_17_1
+function NavigateButtonsView:setAnimEnabled(value)
+	self._animEnabled = value
 end
 
-function var_0_0._onEscBtnClick(arg_18_0)
-	if arg_18_0.param[1] and arg_18_0._btnclose.gameObject.activeInHierarchy then
-		arg_18_0:_btncloseOnClick()
+function NavigateButtonsView:_onEscBtnClick()
+	if self.param[1] and self._btnclose.gameObject.activeInHierarchy then
+		self:_btncloseOnClick()
 	end
 end
 
-function var_0_0._btncloseOnClick(arg_19_0)
-	if arg_19_0._closeCheckFunc and not arg_19_0._closeCheckFunc(arg_19_0._closeCheckObj, arg_19_0._reallyClose, arg_19_0) then
+function NavigateButtonsView:_btncloseOnClick()
+	if self._closeCheckFunc and not self._closeCheckFunc(self._closeCheckObj, self._reallyClose, self) then
 		return
 	end
 
-	if arg_19_0._overrideCloseFunc then
-		arg_19_0._overrideCloseFunc(arg_19_0._overrideCloseObj)
-
-		return
-	end
-
-	arg_19_0:_reallyClose()
-end
-
-function var_0_0._reallyClose(arg_20_0)
-	local var_20_0 = arg_20_0.viewContainer.viewName
-
-	if ViewMgr.instance:isOpen(var_20_0) then
-		ViewMgr.instance:closeView(var_20_0, nil, true)
-	end
-
-	if arg_20_0._closeCallback then
-		arg_20_0._closeCallback(arg_20_0._callbackObj)
-	end
-end
-
-function var_0_0._btnhomeOnClick(arg_21_0)
-	if arg_21_0._homeCheckFunc and not arg_21_0._homeCheckFunc(arg_21_0._homeCheckObj, arg_21_0._reallyHome, arg_21_0) then
-		return
-	end
-
-	if arg_21_0._overrideHomeFunc then
-		arg_21_0._overrideHomeFunc(arg_21_0._overrideHomeFuncObj)
+	if self._overrideCloseFunc then
+		self._overrideCloseFunc(self._overrideCloseObj)
 
 		return
 	end
 
-	arg_21_0:_reallyHome()
+	self:_reallyClose()
 end
 
-function var_0_0._reallyHome(arg_22_0)
-	var_0_0.homeClick()
+function NavigateButtonsView:_reallyClose()
+	local viewName = self.viewContainer.viewName
 
-	if arg_22_0._homeCallback then
-		arg_22_0._homeCallback(arg_22_0._callbackObj)
+	if ViewMgr.instance:isOpen(viewName) then
+		ViewMgr.instance:closeView(viewName, nil, true)
+	end
+
+	if self._closeCallback then
+		self._closeCallback(self._callbackObj)
 	end
 end
 
-function var_0_0.homeClick()
+function NavigateButtonsView:_btnhomeOnClick()
+	if self._homeCheckFunc and not self._homeCheckFunc(self._homeCheckObj, self._reallyHome, self) then
+		return
+	end
+
+	if self._overrideHomeFunc then
+		self._overrideHomeFunc(self._overrideHomeFuncObj)
+
+		return
+	end
+
+	self:_reallyHome()
+end
+
+function NavigateButtonsView:_reallyHome()
+	NavigateButtonsView.homeClick()
+
+	if self._homeCallback then
+		self._homeCallback(self._callbackObj)
+	end
+end
+
+function NavigateButtonsView.homeClick()
 	NavigateMgr.instance:dispatchEvent(NavigateEvent.BeforeClickHome)
 
 	DungeonModel.instance.curSendEpisodeId = nil
@@ -266,13 +268,13 @@ function var_0_0.homeClick()
 		ViewMgr.instance:closeAllPopupViews(nil, true)
 		MainController.instance:enterMainScene(true, false)
 
-		local var_23_0 = GameSceneMgr.instance:getCurSceneType()
-		local var_23_1 = ViewMgr.instance:isOpen(ViewName.MainView)
-		local var_23_2 = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain)
+		local curScene = GameSceneMgr.instance:getCurSceneType()
+		local isOpenMain = ViewMgr.instance:isOpen(ViewName.MainView)
+		local dontOpenMain = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain)
 
-		if not var_23_1 and var_23_0 == SceneType.Main and not var_23_2 then
+		if not isOpenMain and curScene == SceneType.Main and not dontOpenMain then
 			ViewMgr.instance:openView(ViewName.MainView)
-		elseif var_23_1 and var_23_2 then
+		elseif isOpenMain and dontOpenMain then
 			ViewMgr.instance:closeView(ViewName.MainView)
 		end
 	end
@@ -280,198 +282,200 @@ function var_0_0.homeClick()
 	NavigateMgr.instance:dispatchEvent(NavigateEvent.ClickHome)
 end
 
-function var_0_0._btnhelpOnClick(arg_24_0)
-	if not HelpController.instance:checkGuideStepLock(arg_24_0.helpId) then
+function NavigateButtonsView:_btnhelpOnClick()
+	if not HelpController.instance:checkGuideStepLock(self.helpId) then
 		return
 	end
 
-	if arg_24_0._overrideHelpFunc then
-		arg_24_0._overrideHelpFunc(arg_24_0._overrideHelpObj)
+	if self._overrideHelpFunc then
+		self._overrideHelpFunc(self._overrideHelpObj)
 
 		return
 	end
 
-	HelpController.instance:showHelp(arg_24_0.helpId)
+	HelpController.instance:showHelp(self.helpId)
 
-	if arg_24_0._helpCallback then
-		arg_24_0._helpCallback(arg_24_0._callbackObj)
+	if self._helpCallback then
+		self._helpCallback(self._callbackObj)
 	end
 end
 
-function var_0_0._changeIconState(arg_25_0)
-	if not arg_25_0._initialized then
+function NavigateButtonsView:_changeIconState()
+	if not self._initialized then
 		return
 	end
 
-	if arg_25_0._useLightBtn then
-		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imageclose, "btn_back_light")
-		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imagehome, "btn_home_light")
+	if self._useLightBtn then
+		UISpriteSetMgr.instance:setCommonSprite(self._imageclose, "btn_back_light")
+		UISpriteSetMgr.instance:setCommonSprite(self._imagehome, "btn_home_light")
 	else
-		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imageclose, "btn_back_dark")
-		UISpriteSetMgr.instance:setCommonSprite(arg_25_0._imagehome, "btn_home_dark")
+		UISpriteSetMgr.instance:setCommonSprite(self._imageclose, "btn_back_dark")
+		UISpriteSetMgr.instance:setCommonSprite(self._imagehome, "btn_home_dark")
 	end
 end
 
-function var_0_0._editableInitView(arg_26_0)
-	arg_26_0._anim = arg_26_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function NavigateButtonsView:_editableInitView()
+	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.addUIClickAudio(arg_26_0._btnhome.gameObject, AudioEnum.UI.play_ui_common_pause)
+	gohelper.addUIClickAudio(self._btnhome.gameObject, AudioEnum.UI.play_ui_common_pause)
 
-	arg_26_0._initialized = true
+	self._initialized = true
 
-	arg_26_0:refreshUI()
+	self:refreshUI()
 
-	arg_26_0.initDone = true
+	self.initDone = true
 end
 
-function var_0_0.refreshUI(arg_27_0)
-	gohelper.setActive(arg_27_0._btnclose and arg_27_0._btnclose.gameObject, arg_27_0.param[1])
-	gohelper.setActive(arg_27_0._btnhome and arg_27_0._btnhome.gameObject, arg_27_0.param[2])
-	arg_27_0:_updateHelpBtn()
+function NavigateButtonsView:refreshUI()
+	gohelper.setActive(self._btnclose and self._btnclose.gameObject, self.param[1])
+	gohelper.setActive(self._btnhome and self._btnhome.gameObject, self.param[2])
+	self:_updateHelpBtn()
 end
 
-function var_0_0._updateHelpBtn(arg_28_0)
-	if arg_28_0._helpVisible then
-		gohelper.setActive(arg_28_0._btnhelp and arg_28_0._btnhelp.gameObject, arg_28_0._helpVisible)
+function NavigateButtonsView:_updateHelpBtn()
+	if self._helpVisible then
+		gohelper.setActive(self._btnhelp and self._btnhelp.gameObject, self._helpVisible)
 	else
-		gohelper.setActive(arg_28_0._btnhelp and arg_28_0._btnhelp.gameObject, arg_28_0.param[3] and HelpController.instance:checkGuideStepLock(arg_28_0.helpId))
+		gohelper.setActive(self._btnhelp and self._btnhelp.gameObject, self.param[3] and HelpController.instance:checkGuideStepLock(self.helpId))
 	end
 end
 
-function var_0_0.setParam(arg_29_0, arg_29_1)
-	arg_29_0.param = arg_29_1
+function NavigateButtonsView:setParam(param)
+	self.param = param
 
-	arg_29_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.showHelpBtnIcon(arg_30_0)
-	arg_30_0:setParam({
-		arg_30_0.param[1],
-		arg_30_0.param[2],
+function NavigateButtonsView:showHelpBtnIcon()
+	self:setParam({
+		self.param[1],
+		self.param[2],
 		true
 	})
 end
 
-function var_0_0.changerHelpId(arg_31_0, arg_31_1)
-	arg_31_0.helpId = arg_31_1
+function NavigateButtonsView:changerHelpId(helpId)
+	self.helpId = helpId
 
-	arg_31_0:showHelpBtnIcon()
+	self:showHelpBtnIcon()
 end
 
-function var_0_0.resetCloseBtnAudioId(arg_32_0, arg_32_1)
-	if arg_32_0.initDone then
-		arg_32_0:_resetCloseBtnAudioId(arg_32_1)
+function NavigateButtonsView:resetCloseBtnAudioId(audioId)
+	if self.initDone then
+		self:_resetCloseBtnAudioId(audioId)
 	else
-		arg_32_0.needReplaceCloseBtnAudioId = true
-		arg_32_0.replaceCloseBtnAudioId = arg_32_1
+		self.needReplaceCloseBtnAudioId = true
+		self.replaceCloseBtnAudioId = audioId
 	end
 end
 
-function var_0_0._resetCloseBtnAudioId(arg_33_0, arg_33_1)
-	if arg_33_1 ~= 0 then
-		gohelper.addUIClickAudio(arg_33_0._btnclose.gameObject, arg_33_1)
+function NavigateButtonsView:_resetCloseBtnAudioId(audioId)
+	if audioId ~= 0 then
+		gohelper.addUIClickAudio(self._btnclose.gameObject, audioId)
 	else
-		gohelper.removeUIClickAudio(arg_33_0._btnclose.gameObject)
+		gohelper.removeUIClickAudio(self._btnclose.gameObject)
 	end
 end
 
-function var_0_0.resetHomeBtnAudioId(arg_34_0, arg_34_1)
-	if arg_34_0.initDone then
-		arg_34_0:_resetHomeBtnAudioId(arg_34_1)
+function NavigateButtonsView:resetHomeBtnAudioId(audioId)
+	if self.initDone then
+		self:_resetHomeBtnAudioId(audioId)
 	else
-		arg_34_0.needReplaceHomeBtnAudioId = true
-		arg_34_0.replaceHomeBtnAudioId = arg_34_1
+		self.needReplaceHomeBtnAudioId = true
+		self.replaceHomeBtnAudioId = audioId
 	end
 end
 
-function var_0_0._resetHomeBtnAudioId(arg_35_0, arg_35_1)
-	if arg_35_1 ~= 0 then
-		gohelper.addUIClickAudio(arg_35_0._btnhome.gameObject, arg_35_1)
+function NavigateButtonsView:_resetHomeBtnAudioId(audioId)
+	if audioId ~= 0 then
+		gohelper.addUIClickAudio(self._btnhome.gameObject, audioId)
 	else
-		gohelper.removeUIClickAudio(arg_35_0._btnhome.gameObject)
+		gohelper.removeUIClickAudio(self._btnhome.gameObject)
 	end
 end
 
-function var_0_0.resetHelpBtnAudioId(arg_36_0, arg_36_1)
-	if arg_36_0.initDone then
-		arg_36_0:_resetHelpBtnAudioId(arg_36_1)
+function NavigateButtonsView:resetHelpBtnAudioId(audioId)
+	if self.initDone then
+		self:_resetHelpBtnAudioId(audioId)
 	else
-		arg_36_0.needReplaceHelpBtnAudioId = true
-		arg_36_0.replaceHelpBtnAudioId = arg_36_1
+		self.needReplaceHelpBtnAudioId = true
+		self.replaceHelpBtnAudioId = audioId
 	end
 end
 
-function var_0_0._resetHelpBtnAudioId(arg_37_0, arg_37_1)
-	if arg_37_1 ~= 0 then
-		gohelper.addUIClickAudio(arg_37_0._btnhelp.gameObject, arg_37_1)
+function NavigateButtonsView:_resetHelpBtnAudioId(audioId)
+	if audioId ~= 0 then
+		gohelper.addUIClickAudio(self._btnhelp.gameObject, audioId)
 	else
-		gohelper.removeUIClickAudio(arg_37_0._btnhelp.gameObject)
+		gohelper.removeUIClickAudio(self._btnhelp.gameObject)
 	end
 end
 
-function var_0_0.setHelpVisible(arg_38_0, arg_38_1)
-	arg_38_0._helpVisible = arg_38_1
+function NavigateButtonsView:setHelpVisible(value)
+	self._helpVisible = value
 
-	if not arg_38_0._btnhelp then
+	if not self._btnhelp then
 		return
 	end
 
-	gohelper.setActive(arg_38_0._btnhelp.gameObject, arg_38_1)
+	gohelper.setActive(self._btnhelp.gameObject, value)
 end
 
-function var_0_0.resetOnCloseViewAudio(arg_39_0, arg_39_1)
-	arg_39_0:resetCloseBtnAudioId(arg_39_1)
-	arg_39_0:resetHomeBtnAudioId(arg_39_1)
+function NavigateButtonsView:resetOnCloseViewAudio(audioId)
+	self:resetCloseBtnAudioId(audioId)
+	self:resetHomeBtnAudioId(audioId)
 end
 
-function var_0_0.onDestroyView(arg_40_0)
-	for iter_40_0, iter_40_1 in pairs(arg_40_0._extendBtns) do
-		iter_40_1[1]:RemoveClickListener()
-	end
-end
+function NavigateButtonsView:onDestroyView()
+	for k, v in pairs(self._extendBtns) do
+		local btn = v[1]
 
-function var_0_0.onOpen(arg_41_0)
-	if arg_41_0._anim and arg_41_0._animEnabled then
-		arg_41_0._anim:Play(UIAnimationName.Open, 0, 0)
-	end
-
-	NavigateMgr.instance:addEscape(arg_41_0.viewContainer.viewName, arg_41_0._onEscBtnClick, arg_41_0, true)
-
-	if arg_41_0.needReplaceCloseBtnAudioId then
-		arg_41_0:_resetCloseBtnAudioId(arg_41_0.replaceCloseBtnAudioId)
-
-		arg_41_0.needReplaceCloseBtnAudioId = false
-	end
-
-	if arg_41_0.needReplaceHomeBtnAudioId then
-		arg_41_0:_resetHomeBtnAudioId(arg_41_0.replaceHomeBtnAudioId)
-
-		arg_41_0.needReplaceHomeBtnAudioId = false
-	end
-
-	if arg_41_0.needReplaceHelpBtnAudioId then
-		arg_41_0:_resetHomeBtnAudioId(arg_41_0.replaceHelpBtnAudioId)
-
-		arg_41_0.needReplaceHelpBtnAudioId = false
-	end
-
-	if arg_41_0._openCallback then
-		arg_41_0._openCallback(arg_41_0._openCallbackTarget)
-	end
-
-	arg_41_0:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, arg_41_0._gudieEnd, arg_41_0)
-end
-
-function var_0_0._gudieEnd(arg_42_0)
-	arg_42_0:_updateHelpBtn()
-end
-
-function var_0_0.onClose(arg_43_0)
-	if arg_43_0._anim and arg_43_0._animEnabled then
-		arg_43_0._anim:Play(UIAnimationName.Close, 0, 0)
+		btn:RemoveClickListener()
 	end
 end
 
-var_0_0.prefabPath = "ui/viewres/common/commonbtnsview.prefab"
+function NavigateButtonsView:onOpen()
+	if self._anim and self._animEnabled then
+		self._anim:Play(UIAnimationName.Open, 0, 0)
+	end
 
-return var_0_0
+	NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._onEscBtnClick, self, true)
+
+	if self.needReplaceCloseBtnAudioId then
+		self:_resetCloseBtnAudioId(self.replaceCloseBtnAudioId)
+
+		self.needReplaceCloseBtnAudioId = false
+	end
+
+	if self.needReplaceHomeBtnAudioId then
+		self:_resetHomeBtnAudioId(self.replaceHomeBtnAudioId)
+
+		self.needReplaceHomeBtnAudioId = false
+	end
+
+	if self.needReplaceHelpBtnAudioId then
+		self:_resetHomeBtnAudioId(self.replaceHelpBtnAudioId)
+
+		self.needReplaceHelpBtnAudioId = false
+	end
+
+	if self._openCallback then
+		self._openCallback(self._openCallbackTarget)
+	end
+
+	self:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, self._gudieEnd, self)
+end
+
+function NavigateButtonsView:_gudieEnd()
+	self:_updateHelpBtn()
+end
+
+function NavigateButtonsView:onClose()
+	if self._anim and self._animEnabled then
+		self._anim:Play(UIAnimationName.Close, 0, 0)
+	end
+end
+
+NavigateButtonsView.prefabPath = "ui/viewres/common/commonbtnsview.prefab"
+
+return NavigateButtonsView

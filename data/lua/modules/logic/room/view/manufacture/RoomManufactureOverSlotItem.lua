@@ -1,387 +1,395 @@
-﻿module("modules.logic.room.view.manufacture.RoomManufactureOverSlotItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomManufactureOverSlotItem.lua
 
-local var_0_0 = class("RoomManufactureOverSlotItem", UserDataDispose)
-local var_0_1 = 1
-local var_0_2 = "slotItem"
-local var_0_3 = 20
+module("modules.logic.room.view.manufacture.RoomManufactureOverSlotItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local RoomManufactureOverSlotItem = class("RoomManufactureOverSlotItem", UserDataDispose)
+local FIRST_INDEX = 1
+local IN_POOL_NAME = "slotItem"
+local OFFSET = 20
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.trans = arg_1_0.go.transform
-	arg_1_0.parent = arg_1_2
+function RoomManufactureOverSlotItem:ctor(go, parent)
+	self:__onInit()
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self.go = go
+	self.trans = self.go.transform
+	self.parent = parent
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 
-	arg_1_0:addEventListeners()
+	self:addEventListeners()
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._gocontent = gohelper.findChild(arg_2_0.go, "content")
-	arg_2_0._golocked = gohelper.findChild(arg_2_0.go, "content/#go_locked")
-	arg_2_0._gounlocked = gohelper.findChild(arg_2_0.go, "content/#go_unlocked")
-	arg_2_0._imgquality = gohelper.findChildImage(arg_2_0.go, "content/#go_unlocked/slotItemHead/#image_quality")
-	arg_2_0._goadd = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/slotItemHead/#go_add")
-	arg_2_0._goitem = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/slotItemHead/#go_item")
-	arg_2_0._gowrong = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/slotItemHead/#go_wrong")
-	arg_2_0._gowrongwait = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/slotItemHead/#go_wrong/#go_wait")
-	arg_2_0._gowrongstop = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/slotItemHead/#go_wrong/#go_stop")
-	arg_2_0._goget = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/slotItemHead/#go_get")
-	arg_2_0._gopause = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/pause")
-	arg_2_0._iconwrongstatus = gohelper.findChildImage(arg_2_0.go, "content/#go_unlocked/pause/#simage_status")
-	arg_2_0._imagepausebarValue = gohelper.findChildImage(arg_2_0.go, "content/#go_unlocked/pause/#simage_barValue")
-	arg_2_0._gorunning = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/producing")
-	arg_2_0._imagerunningbarValue = gohelper.findChildImage(arg_2_0.go, "content/#go_unlocked/producing/#simage_barValue")
-	arg_2_0._txtrunningTime = gohelper.findChildText(arg_2_0.go, "content/#go_unlocked/producing/#txt_time")
-	arg_2_0._goselected = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/#go_selected")
-	arg_2_0._goAddEff = gohelper.findChild(arg_2_0.go, "content/#go_unlocked/#add")
-	arg_2_0._btnremove = gohelper.findChildButtonWithAudio(arg_2_0.go, "content/#btn_remove")
-	arg_2_0._gobtnremove = arg_2_0._btnremove.gameObject
-	arg_2_0._btnclick = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#btn_click")
-	arg_2_0._btnmove = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#btn_move")
-	arg_2_0._gobtnmove = arg_2_0._btnmove.gameObject
-	arg_2_0._gomoveup = gohelper.findChild(arg_2_0.go, "#btn_move/#go_up")
-	arg_2_0._gomovedown = gohelper.findChild(arg_2_0.go, "#btn_move/#go_down")
+function RoomManufactureOverSlotItem:_editableInitView()
+	self._gocontent = gohelper.findChild(self.go, "content")
+	self._golocked = gohelper.findChild(self.go, "content/#go_locked")
+	self._gounlocked = gohelper.findChild(self.go, "content/#go_unlocked")
+	self._imgquality = gohelper.findChildImage(self.go, "content/#go_unlocked/slotItemHead/#image_quality")
+	self._goadd = gohelper.findChild(self.go, "content/#go_unlocked/slotItemHead/#go_add")
+	self._goitem = gohelper.findChild(self.go, "content/#go_unlocked/slotItemHead/#go_item")
+	self._gowrong = gohelper.findChild(self.go, "content/#go_unlocked/slotItemHead/#go_wrong")
+	self._gowrongwait = gohelper.findChild(self.go, "content/#go_unlocked/slotItemHead/#go_wrong/#go_wait")
+	self._gowrongstop = gohelper.findChild(self.go, "content/#go_unlocked/slotItemHead/#go_wrong/#go_stop")
+	self._goget = gohelper.findChild(self.go, "content/#go_unlocked/slotItemHead/#go_get")
+	self._gopause = gohelper.findChild(self.go, "content/#go_unlocked/pause")
+	self._iconwrongstatus = gohelper.findChildImage(self.go, "content/#go_unlocked/pause/#simage_status")
+	self._imagepausebarValue = gohelper.findChildImage(self.go, "content/#go_unlocked/pause/#simage_barValue")
+	self._gorunning = gohelper.findChild(self.go, "content/#go_unlocked/producing")
+	self._imagerunningbarValue = gohelper.findChildImage(self.go, "content/#go_unlocked/producing/#simage_barValue")
+	self._txtrunningTime = gohelper.findChildText(self.go, "content/#go_unlocked/producing/#txt_time")
+	self._goselected = gohelper.findChild(self.go, "content/#go_unlocked/#go_selected")
+	self._goAddEff = gohelper.findChild(self.go, "content/#go_unlocked/#add")
+	self._btnremove = gohelper.findChildButtonWithAudio(self.go, "content/#btn_remove")
+	self._gobtnremove = self._btnremove.gameObject
+	self._btnclick = gohelper.findChildClickWithDefaultAudio(self.go, "#btn_click")
+	self._btnmove = gohelper.findChildClickWithDefaultAudio(self.go, "#btn_move")
+	self._gobtnmove = self._btnmove.gameObject
+	self._gomoveup = gohelper.findChild(self.go, "#btn_move/#go_up")
+	self._gomovedown = gohelper.findChild(self.go, "#btn_move/#go_down")
 
-	arg_2_0:reset()
+	self:reset()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0._btnclick:AddClickListener(arg_3_0._onClick, arg_3_0)
-	arg_3_0._btnremove:AddClickListener(arg_3_0._btnremoveOnClick, arg_3_0)
-	arg_3_0._btnmove:AddClickListener(arg_3_0._btnmoveOnClick, arg_3_0)
-	arg_3_0:addEventCb(ManufactureController.instance, ManufactureEvent.PlayAddManufactureItemEff, arg_3_0._onAddManufactureItem, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onViewChange, arg_3_0)
-	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function RoomManufactureOverSlotItem:addEventListeners()
+	self._btnclick:AddClickListener(self._onClick, self)
+	self._btnremove:AddClickListener(self._btnremoveOnClick, self)
+	self._btnmove:AddClickListener(self._btnmoveOnClick, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.PlayAddManufactureItemEff, self._onAddManufactureItem, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onViewChange, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	arg_4_0._btnclick:RemoveClickListener()
-	arg_4_0._btnremove:RemoveClickListener()
-	arg_4_0._btnmove:RemoveClickListener()
-	arg_4_0:removeEventCb(ManufactureController.instance, ManufactureEvent.PlayAddManufactureItemEff, arg_4_0._onAddManufactureItem, arg_4_0)
-	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0._onViewChange, arg_4_0)
-	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0)
+function RoomManufactureOverSlotItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self._btnremove:RemoveClickListener()
+	self._btnmove:RemoveClickListener()
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.PlayAddManufactureItemEff, self._onAddManufactureItem, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onViewChange, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._onClick(arg_5_0)
-	local var_5_0 = arg_5_0:getBelongBuilding()
+function RoomManufactureOverSlotItem:_onClick()
+	local belongBuildingUid = self:getBelongBuilding()
 
-	ManufactureController.instance:clickSlotItem(var_5_0, arg_5_0.slotId, true, nil, arg_5_0.index)
+	ManufactureController.instance:clickSlotItem(belongBuildingUid, self.slotId, true, nil, self.index)
 end
 
-function var_0_0._btnremoveOnClick(arg_6_0)
-	local var_6_0 = arg_6_0:getBelongBuilding()
+function RoomManufactureOverSlotItem:_btnremoveOnClick()
+	local belongBuildingUid = self:getBelongBuilding()
 
-	ManufactureController.instance:clickRemoveSlotManufactureItem(var_6_0, arg_6_0.slotId)
+	ManufactureController.instance:clickRemoveSlotManufactureItem(belongBuildingUid, self.slotId)
 end
 
-function var_0_0._btnmoveOnClick(arg_7_0)
-	local var_7_0 = arg_7_0:getBelongBuilding()
+function RoomManufactureOverSlotItem:_btnmoveOnClick()
+	local belongBuildingUid = self:getBelongBuilding()
 
-	ManufactureController.instance:moveManufactureItem(var_7_0, arg_7_0.slotId, arg_7_0._isShowDown)
+	ManufactureController.instance:moveManufactureItem(belongBuildingUid, self.slotId, self._isShowDown)
 end
 
-function var_0_0.onChangeSelectedSlotItem(arg_8_0)
-	arg_8_0:refreshSelected()
-	arg_8_0:checkBtnShow()
+function RoomManufactureOverSlotItem:onChangeSelectedSlotItem()
+	self:refreshSelected()
+	self:checkBtnShow()
 end
 
-function var_0_0._onAddManufactureItem(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function RoomManufactureOverSlotItem:_onAddManufactureItem(playEffDict)
+	if not playEffDict then
 		return
 	end
 
-	local var_9_0 = arg_9_0:getBelongBuilding()
-	local var_9_1 = arg_9_0:getSlotId()
+	local belongBuildingUid = self:getBelongBuilding()
+	local slotId = self:getSlotId()
 
-	if arg_9_1[var_9_0] and arg_9_1[var_9_0][var_9_1] then
-		arg_9_0:playAddManufactureItemEff()
+	if playEffDict[belongBuildingUid] and playEffDict[belongBuildingUid][slotId] then
+		self:playAddManufactureItemEff()
 	end
 end
 
-function var_0_0._onCloseView(arg_10_0, arg_10_1)
-	if arg_10_1 == ViewName.RoomOneKeyView and arg_10_0._playEffWaitCloseView then
-		arg_10_0:playAddManufactureItemEff()
+function RoomManufactureOverSlotItem:_onCloseView(viewName)
+	if viewName == ViewName.RoomOneKeyView and self._playEffWaitCloseView then
+		self:playAddManufactureItemEff()
 	end
 
-	arg_10_0:_onViewChange(arg_10_1)
+	self:_onViewChange(viewName)
 end
 
-function var_0_0._onViewChange(arg_11_0, arg_11_1)
-	if arg_11_1 ~= ViewName.RoomManufactureAddPopView then
+function RoomManufactureOverSlotItem:_onViewChange(viewName)
+	if viewName ~= ViewName.RoomManufactureAddPopView then
 		return
 	end
 
-	arg_11_0:checkBtnShow()
+	self:checkBtnShow()
 end
 
-function var_0_0.getBelongBuilding(arg_12_0)
-	if not arg_12_0.parent then
+function RoomManufactureOverSlotItem:getBelongBuilding()
+	if not self.parent then
 		return
 	end
 
-	local var_12_0, var_12_1 = arg_12_0.parent:getViewBuilding()
+	local belongBuildingUid, belongBuildingMO = self.parent:getViewBuilding()
 
-	return var_12_0, var_12_1
+	return belongBuildingUid, belongBuildingMO
 end
 
-function var_0_0.getSlotId(arg_13_0)
-	return arg_13_0.slotId
+function RoomManufactureOverSlotItem:getSlotId()
+	return self.slotId
 end
 
-function var_0_0.getItemWidth(arg_14_0)
-	return (recthelper.getWidth(arg_14_0.trans))
+function RoomManufactureOverSlotItem:getItemWidth()
+	local itemWidth = recthelper.getWidth(self.trans)
+
+	return itemWidth
 end
 
-function var_0_0.setData(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0.slotId = arg_15_1
-	arg_15_0.index = arg_15_2
-	arg_15_0._playEffWaitCloseView = false
+function RoomManufactureOverSlotItem:setData(slotId, index)
+	self.slotId = slotId
+	self.index = index
+	self._playEffWaitCloseView = false
 
-	local var_15_0 = ""
-	local var_15_1, var_15_2 = arg_15_0:getBelongBuilding()
-	local var_15_3
-	local var_15_4
+	local name = ""
+	local _, belongBuildingMO = self:getBelongBuilding()
+	local buildingId, priority
 
-	if var_15_2 then
-		var_15_3 = var_15_2.buildingId
-		var_15_4 = var_15_2:getSlotPriority(arg_15_0.slotId)
+	if belongBuildingMO then
+		buildingId = belongBuildingMO.buildingId
+		priority = belongBuildingMO:getSlotPriority(self.slotId)
 	end
 
-	if var_15_4 then
-		var_15_0 = string.format("bId-%s_id-%s_i-%s_p-%s", var_15_3, arg_15_0.slotId, arg_15_0.index, var_15_4)
+	if priority then
+		name = string.format("bId-%s_id-%s_i-%s_p-%s", buildingId, self.slotId, self.index, priority)
 	else
-		var_15_0 = string.format("bId-%s_id-%s_i-%s", var_15_3, arg_15_0.slotId, arg_15_0.index)
+		name = string.format("bId-%s_id-%s_i-%s", buildingId, self.slotId, self.index)
 	end
 
-	arg_15_0:setPos()
+	self:setPos()
 
-	arg_15_0.go.name = var_15_0
+	self.go.name = name
 
-	arg_15_0:refresh()
-	arg_15_0:checkBtnShow()
-	gohelper.setActive(arg_15_0.go, true)
+	self:refresh()
+	self:checkBtnShow()
+	gohelper.setActive(self.go, true)
 end
 
-function var_0_0.setPos(arg_16_0, arg_16_1)
-	local var_16_0 = 0
-	local var_16_1 = 0
+function RoomManufactureOverSlotItem:setPos(pos)
+	local posX = 0
+	local posY = 0
 
-	if arg_16_1 then
-		var_16_0 = arg_16_1.x
-		var_16_1 = arg_16_1.y
+	if pos then
+		posX = pos.x
+		posY = pos.y
 	else
-		local var_16_2 = arg_16_0:getItemWidth()
+		local itemWidth = self:getItemWidth()
 
-		var_16_0 = (var_16_2 + RoomManufactureEnum.OverviewSlotItemSpace) * (arg_16_0.index - 1) + var_16_2 / 2
+		posX = (itemWidth + RoomManufactureEnum.OverviewSlotItemSpace) * (self.index - 1) + itemWidth / 2
 	end
 
-	transformhelper.setLocalPosXY(arg_16_0.trans, var_16_0 + var_0_3, var_16_1)
+	transformhelper.setLocalPosXY(self.trans, posX + OFFSET, posY)
 end
 
-function var_0_0.refresh(arg_17_0)
-	arg_17_0:checkState()
-	arg_17_0:refreshMoveBtn()
-	arg_17_0:refreshManufactureItem()
-	arg_17_0:refreshTime()
-	arg_17_0:refreshSelected()
-	arg_17_0:checkBtnShow()
-	arg_17_0:refreshWrong()
+function RoomManufactureOverSlotItem:refresh()
+	self:checkState()
+	self:refreshMoveBtn()
+	self:refreshManufactureItem()
+	self:refreshTime()
+	self:refreshSelected()
+	self:checkBtnShow()
+	self:refreshWrong()
 end
 
-function var_0_0.checkState(arg_18_0)
-	local var_18_0, var_18_1 = arg_18_0:getBelongBuilding()
-	local var_18_2 = var_18_1 and var_18_1:getSlotState(arg_18_0.slotId) or false
+function RoomManufactureOverSlotItem:checkState()
+	local _, belongBuildingMO = self:getBelongBuilding()
+	local newSlotState = belongBuildingMO and belongBuildingMO:getSlotState(self.slotId) or false
 
-	if arg_18_0._curViewSlotState == var_18_2 then
+	if self._curViewSlotState == newSlotState then
 		return
 	end
 
-	arg_18_0._curViewSlotState = var_18_2
+	self._curViewSlotState = newSlotState
 
-	local var_18_3 = false
-	local var_18_4 = false
-	local var_18_5 = false
-	local var_18_6 = false
-	local var_18_7 = false
-	local var_18_8 = not arg_18_0._curViewSlotState or arg_18_0._curViewSlotState == RoomManufactureEnum.SlotState.Locked
+	local isNone = false
+	local isRunning = false
+	local isWait = false
+	local isStop = false
+	local isComplete = false
+	local isLocked = not self._curViewSlotState or self._curViewSlotState == RoomManufactureEnum.SlotState.Locked
 
-	if not var_18_8 then
-		var_18_3 = arg_18_0._curViewSlotState == RoomManufactureEnum.SlotState.None
-		var_18_4 = arg_18_0._curViewSlotState == RoomManufactureEnum.SlotState.Running
-		var_18_5 = arg_18_0._curViewSlotState == RoomManufactureEnum.SlotState.Wait
-		var_18_6 = arg_18_0._curViewSlotState == RoomManufactureEnum.SlotState.Stop
-		var_18_7 = arg_18_0._curViewSlotState == RoomManufactureEnum.SlotState.Complete
+	if not isLocked then
+		isNone = self._curViewSlotState == RoomManufactureEnum.SlotState.None
+		isRunning = self._curViewSlotState == RoomManufactureEnum.SlotState.Running
+		isWait = self._curViewSlotState == RoomManufactureEnum.SlotState.Wait
+		isStop = self._curViewSlotState == RoomManufactureEnum.SlotState.Stop
+		isComplete = self._curViewSlotState == RoomManufactureEnum.SlotState.Complete
 	end
 
-	gohelper.setActive(arg_18_0._golocked, var_18_8)
-	gohelper.setActive(arg_18_0._gounlocked, not var_18_8)
-	gohelper.setActive(arg_18_0._goadd, var_18_3)
+	gohelper.setActive(self._golocked, isLocked)
+	gohelper.setActive(self._gounlocked, not isLocked)
+	gohelper.setActive(self._goadd, isNone)
 
-	local var_18_9 = var_18_4 or var_18_5 or var_18_6 or var_18_7
+	local isShowItem = isRunning or isWait or isStop or isComplete
 
-	gohelper.setActive(arg_18_0._goitem, var_18_9)
-	gohelper.setActive(arg_18_0._goget, var_18_7)
-	gohelper.setActive(arg_18_0._gorunning, var_18_4)
-	gohelper.setActive(arg_18_0._gopause, var_18_6)
-	arg_18_0:refreshTime()
+	gohelper.setActive(self._goitem, isShowItem)
+	gohelper.setActive(self._goget, isComplete)
+	gohelper.setActive(self._gorunning, isRunning)
+	gohelper.setActive(self._gopause, isStop)
+	self:refreshTime()
 end
 
-function var_0_0.refreshManufactureItem(arg_19_0)
-	local var_19_0, var_19_1 = arg_19_0:getBelongBuilding()
-	local var_19_2 = var_19_1 and var_19_1:getSlotManufactureItemId(arg_19_0.slotId)
+function RoomManufactureOverSlotItem:refreshManufactureItem()
+	local _, belongBuildingMO = self:getBelongBuilding()
+	local manufactureItemId = belongBuildingMO and belongBuildingMO:getSlotManufactureItemId(self.slotId)
 
-	if not var_19_2 or var_19_2 == 0 then
+	if not manufactureItemId or manufactureItemId == 0 then
 		return
 	end
 
-	local var_19_3 = var_19_2 and ManufactureConfig.instance:getItemId(var_19_2)
+	local itemId = manufactureItemId and ManufactureConfig.instance:getItemId(manufactureItemId)
 
-	if not var_19_3 then
+	if not itemId then
 		return
 	end
 
-	if not arg_19_0._itemIcon then
-		arg_19_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_19_0._goitem)
+	if not self._itemIcon then
+		self._itemIcon = IconMgr.instance:getCommonItemIcon(self._goitem)
 
-		arg_19_0._itemIcon:isEnableClick(false)
-		arg_19_0._itemIcon:isShowQuality(false)
+		self._itemIcon:isEnableClick(false)
+		self._itemIcon:isShowQuality(false)
 	end
 
-	local var_19_4 = ManufactureConfig.instance:getBatchIconPath(var_19_2)
+	local batchIconPath = ManufactureConfig.instance:getBatchIconPath(manufactureItemId)
 
-	arg_19_0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, var_19_3, nil, nil, nil, {
-		specificIcon = var_19_4
+	self._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, itemId, nil, nil, nil, {
+		specificIcon = batchIconPath
 	})
 
-	local var_19_5 = arg_19_0._itemIcon:getRare()
-	local var_19_6 = RoomManufactureEnum.RareImageMap[var_19_5]
+	local rare = self._itemIcon:getRare()
+	local qualityImg = RoomManufactureEnum.RareImageMap[rare]
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_19_0._imgquality, var_19_6)
+	UISpriteSetMgr.instance:setCritterSprite(self._imgquality, qualityImg)
 end
 
-function var_0_0.refreshTime(arg_20_0)
-	local var_20_0 = ""
-	local var_20_1 = 0
-	local var_20_2, var_20_3 = arg_20_0:getBelongBuilding()
+function RoomManufactureOverSlotItem:refreshTime()
+	local strRemainTime = ""
+	local totalProgress = 0
+	local _, belongBuildingMO = self:getBelongBuilding()
 
-	if var_20_3 then
-		var_20_1 = var_20_3:getSlotProgress(arg_20_0.slotId)
-		var_20_0 = var_20_3:getSlotRemainStrTime(arg_20_0.slotId)
+	if belongBuildingMO then
+		totalProgress = belongBuildingMO:getSlotProgress(self.slotId)
+		strRemainTime = belongBuildingMO:getSlotRemainStrTime(self.slotId)
 	end
 
-	arg_20_0._imagepausebarValue.fillAmount = var_20_1
-	arg_20_0._imagerunningbarValue.fillAmount = var_20_1
-	arg_20_0._txtrunningTime.text = var_20_0
+	self._imagepausebarValue.fillAmount = totalProgress
+	self._imagerunningbarValue.fillAmount = totalProgress
+	self._txtrunningTime.text = strRemainTime
 end
 
-function var_0_0.refreshMoveBtn(arg_21_0)
-	arg_21_0._isShowDown = arg_21_0.index == var_0_1
+function RoomManufactureOverSlotItem:refreshMoveBtn()
+	self._isShowDown = self.index == FIRST_INDEX
 
-	gohelper.setActive(arg_21_0._gomoveup, not arg_21_0._isShowDown)
-	gohelper.setActive(arg_21_0._gomovedown, arg_21_0._isShowDown)
+	gohelper.setActive(self._gomoveup, not self._isShowDown)
+	gohelper.setActive(self._gomovedown, self._isShowDown)
 end
 
-function var_0_0.refreshSelected(arg_22_0)
-	local var_22_0 = false
+function RoomManufactureOverSlotItem:refreshSelected()
+	local isSelected = false
 
-	if arg_22_0.slotId then
-		local var_22_1, var_22_2 = ManufactureModel.instance:getSelectedSlot()
-		local var_22_3 = arg_22_0:getBelongBuilding()
+	if self.slotId then
+		local selectedBuildingUid, selectedSlot = ManufactureModel.instance:getSelectedSlot()
+		local belongBuildingUid = self:getBelongBuilding()
 
-		if var_22_1 and var_22_3 == var_22_1 then
-			var_22_0 = true
+		if selectedBuildingUid and belongBuildingUid == selectedBuildingUid then
+			isSelected = true
 		end
 	end
 
-	gohelper.setActive(arg_22_0._goselected, var_22_0)
+	gohelper.setActive(self._goselected, isSelected)
 end
 
-function var_0_0.checkBtnShow(arg_23_0)
-	local var_23_0 = false
-	local var_23_1 = false
-	local var_23_2, var_23_3 = arg_23_0:getBelongBuilding()
-	local var_23_4 = ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView)
+function RoomManufactureOverSlotItem:checkBtnShow()
+	local isShowRemoveBtn = false
+	local isShowMoveBtn = false
+	local belongBuildingUid, belongBuildingMO = self:getBelongBuilding()
+	local isShowAddPop = ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView)
 
-	if var_23_3 and var_23_4 and arg_23_0._curViewSlotState ~= RoomManufactureEnum.SlotState.Complete then
-		local var_23_5 = ManufactureModel.instance:getSelectedSlot()
+	if belongBuildingMO and isShowAddPop and self._curViewSlotState ~= RoomManufactureEnum.SlotState.Complete then
+		local selectedBuildingUid = ManufactureModel.instance:getSelectedSlot()
 
-		if var_23_5 and var_23_2 == var_23_5 then
-			local var_23_6 = var_23_3:getSlotManufactureItemId(arg_23_0.slotId)
+		if selectedBuildingUid and belongBuildingUid == selectedBuildingUid then
+			local manufactureItem = belongBuildingMO:getSlotManufactureItemId(self.slotId)
 
-			if var_23_6 and var_23_6 ~= 0 then
-				var_23_0 = true
-				var_23_1 = var_23_3:getOccupySlotCount(true) > var_0_1
+			if manufactureItem and manufactureItem ~= 0 then
+				isShowRemoveBtn = true
+
+				local count = belongBuildingMO:getOccupySlotCount(true)
+
+				isShowMoveBtn = count > FIRST_INDEX
 			end
 		end
 	end
 
-	gohelper.setActive(arg_23_0._gobtnremove, var_23_0)
-	gohelper.setActive(arg_23_0._gobtnmove, var_23_1)
+	gohelper.setActive(self._gobtnremove, isShowRemoveBtn)
+	gohelper.setActive(self._gobtnmove, isShowMoveBtn)
 end
 
-function var_0_0.refreshWrong(arg_24_0)
-	local var_24_0 = arg_24_0:getBelongBuilding()
-	local var_24_1 = RoomManufactureEnum.DefaultPauseIcon
-	local var_24_2 = ManufactureModel.instance:getManufactureWrongType(var_24_0, arg_24_0.slotId)
+function RoomManufactureOverSlotItem:refreshWrong()
+	local belongBuildingUid = self:getBelongBuilding()
+	local wrongIcon = RoomManufactureEnum.DefaultPauseIcon
+	local wrongType = ManufactureModel.instance:getManufactureWrongType(belongBuildingUid, self.slotId)
 
-	if var_24_2 then
-		local var_24_3 = RoomManufactureEnum.ManufactureWrongDisplay[var_24_2]
+	if wrongType then
+		local displaySetting = RoomManufactureEnum.ManufactureWrongDisplay[wrongType]
 
-		if var_24_3 then
-			var_24_1 = var_24_3.icon
+		if displaySetting then
+			wrongIcon = displaySetting.icon
 		end
 
-		local var_24_4 = var_24_2 == RoomManufactureEnum.ManufactureWrongType.WaitPreMat
+		local isWaitMat = wrongType == RoomManufactureEnum.ManufactureWrongType.WaitPreMat
 
-		gohelper.setActive(arg_24_0._gowrongwait, var_24_4)
-		gohelper.setActive(arg_24_0._gowrongstop, not var_24_4)
+		gohelper.setActive(self._gowrongwait, isWaitMat)
+		gohelper.setActive(self._gowrongstop, not isWaitMat)
 	end
 
-	if not string.nilorempty(var_24_1) then
-		UISpriteSetMgr.instance:setRoomSprite(arg_24_0._iconwrongstatus, var_24_1)
+	if not string.nilorempty(wrongIcon) then
+		UISpriteSetMgr.instance:setRoomSprite(self._iconwrongstatus, wrongIcon)
 	end
 
-	gohelper.setActive(arg_24_0._iconwrongstatus, var_24_1)
-	gohelper.setActive(arg_24_0._gowrong, var_24_2)
+	gohelper.setActive(self._iconwrongstatus, wrongIcon)
+	gohelper.setActive(self._gowrong, wrongType)
 end
 
-function var_0_0.playAddManufactureItemEff(arg_25_0)
-	if ViewMgr.instance:isOpen(ViewName.RoomOneKeyView) then
-		arg_25_0._playEffWaitCloseView = true
+function RoomManufactureOverSlotItem:playAddManufactureItemEff()
+	local isOpenOneKeyView = ViewMgr.instance:isOpen(ViewName.RoomOneKeyView)
+
+	if isOpenOneKeyView then
+		self._playEffWaitCloseView = true
 	else
-		gohelper.setActive(arg_25_0._goAddEff, false)
-		gohelper.setActive(arg_25_0._goAddEff, true)
+		gohelper.setActive(self._goAddEff, false)
+		gohelper.setActive(self._goAddEff, true)
 
-		arg_25_0._playEffWaitCloseView = false
+		self._playEffWaitCloseView = false
 	end
 end
 
-function var_0_0.everySecondCall(arg_26_0)
-	if arg_26_0._curViewSlotState == RoomManufactureEnum.SlotState.Running then
-		arg_26_0:refreshTime()
+function RoomManufactureOverSlotItem:everySecondCall()
+	if self._curViewSlotState == RoomManufactureEnum.SlotState.Running then
+		self:refreshTime()
 	end
 end
 
-function var_0_0.reset(arg_27_0)
-	arg_27_0.slotId = nil
-	arg_27_0.index = nil
-	arg_27_0._curViewSlotState = nil
-	arg_27_0._isShowDown = nil
-	arg_27_0.go.name = var_0_2
-	arg_27_0._playEffWaitCloseView = false
+function RoomManufactureOverSlotItem:reset()
+	self.slotId = nil
+	self.index = nil
+	self._curViewSlotState = nil
+	self._isShowDown = nil
+	self.go.name = IN_POOL_NAME
+	self._playEffWaitCloseView = false
 
-	gohelper.setActive(arg_27_0.go, false)
+	gohelper.setActive(self.go, false)
 end
 
-function var_0_0.destroy(arg_28_0)
-	arg_28_0:removeEventListeners()
-	arg_28_0:reset()
-	arg_28_0:__onDispose()
+function RoomManufactureOverSlotItem:destroy()
+	self:removeEventListeners()
+	self:reset()
+	self:__onDispose()
 end
 
-return var_0_0
+return RoomManufactureOverSlotItem

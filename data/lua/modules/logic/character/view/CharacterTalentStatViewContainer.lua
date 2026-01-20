@@ -1,13 +1,15 @@
-﻿module("modules.logic.character.view.CharacterTalentStatViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterTalentStatViewContainer.lua
 
-local var_0_0 = class("CharacterTalentStatViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterTalentStatViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CharacterTalentStatViewContainer = class("CharacterTalentStatViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, CharacterTalentStatView.New())
+function CharacterTalentStatViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, CharacterTalentStatView.New())
+
+	return views
 end
 
-return var_0_0
+return CharacterTalentStatViewContainer

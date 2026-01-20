@@ -1,16 +1,18 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowStartStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/chess/step/EliminateChessShowStartStep.lua
 
-local var_0_0 = class("EliminateChessShowStartStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessShowStartStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
+local EliminateChessShowStartStep = class("EliminateChessShowStartStep", EliminateChessStepBase)
 
-	EliminateChessController.instance:openNoticeView(true, false, false, false, 0, var_1_0, arg_1_0._onPlayEnd, arg_1_0)
+function EliminateChessShowStartStep:onStart()
+	local time = self._data
+
+	EliminateChessController.instance:openNoticeView(true, false, false, false, 0, time, self._onPlayEnd, self)
 end
 
-function var_0_0._onPlayEnd(arg_2_0)
+function EliminateChessShowStartStep:_onPlayEnd()
 	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.Match3ChessBeginViewClose)
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return EliminateChessShowStartStep

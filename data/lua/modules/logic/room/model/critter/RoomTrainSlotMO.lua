@@ -1,24 +1,26 @@
-﻿module("modules.logic.room.model.critter.RoomTrainSlotMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomTrainSlotMO.lua
 
-local var_0_0 = pureTable("RoomTrainSlotMO")
+module("modules.logic.room.model.critter.RoomTrainSlotMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.isLock = arg_1_1.isLock
+local RoomTrainSlotMO = pureTable("RoomTrainSlotMO")
+
+function RoomTrainSlotMO:init(info)
+	self.id = info.id
+	self.isLock = info.isLock
 end
 
-function var_0_0.setCritterMO(arg_2_0, arg_2_1)
-	arg_2_0.critterMO = arg_2_1
+function RoomTrainSlotMO:setCritterMO(critterMO)
+	self.critterMO = critterMO
 end
 
-function var_0_0.setWaitingCritterUid(arg_3_0, arg_3_1)
-	arg_3_0.waitingTrainUid = arg_3_1
+function RoomTrainSlotMO:setWaitingCritterUid(critterUid)
+	self.waitingTrainUid = critterUid
 end
 
-function var_0_0.isFree(arg_4_0)
-	if not arg_4_0.isLock and arg_4_0.critterMO == nil then
+function RoomTrainSlotMO:isFree()
+	if not self.isLock and self.critterMO == nil then
 		return true
 	end
 end
 
-return var_0_0
+return RoomTrainSlotMO

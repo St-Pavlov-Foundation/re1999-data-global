@@ -1,49 +1,51 @@
-﻿module("modules.logic.versionactivity1_2.enter.view.VersionActivityEnterBaseView1_2", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/enter/view/VersionActivityEnterBaseView1_2.lua
 
-local var_0_0 = class("VersionActivityEnterBaseView1_2", BaseView)
+module("modules.logic.versionactivity1_2.enter.view.VersionActivityEnterBaseView1_2", package.seeall)
 
-var_0_0.ShowActTagEnum = {
+local VersionActivityEnterBaseView1_2 = class("VersionActivityEnterBaseView1_2", BaseView)
+
+VersionActivityEnterBaseView1_2.ShowActTagEnum = {
 	ShowNewStage = 1,
 	ShowNewAct = 0
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_time")
-	arg_1_0._txtremaintime = gohelper.findChildText(arg_1_0.viewGO, "logo/#txt_remaintime")
-	arg_1_0._btnreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_replay")
+function VersionActivityEnterBaseView1_2:onInitView()
+	self._txttime = gohelper.findChildText(self.viewGO, "logo/#txt_time")
+	self._txtremaintime = gohelper.findChildText(self.viewGO, "logo/#txt_remaintime")
+	self._btnreplay = gohelper.findChildButtonWithAudio(self.viewGO, "entrance/#btn_replay")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnreplay:AddClickListener(arg_2_0._btnReplayOnClick, arg_2_0)
+function VersionActivityEnterBaseView1_2:addEvents()
+	self._btnreplay:AddClickListener(self._btnReplayOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnreplay:RemoveClickListener()
+function VersionActivityEnterBaseView1_2:removeEvents()
+	self._btnreplay:RemoveClickListener()
 end
 
-var_0_0.ActUnlockAnimationDuration = 2
+VersionActivityEnterBaseView1_2.ActUnlockAnimationDuration = 2
 
-function var_0_0._btnReplayOnClick(arg_4_0)
-	local var_4_0 = ActivityModel.instance:getActMO(arg_4_0.actId)
-	local var_4_1 = var_4_0 and var_4_0.config and var_4_0.config.storyId
+function VersionActivityEnterBaseView1_2:_btnReplayOnClick()
+	local activityMo = ActivityModel.instance:getActMO(self.actId)
+	local storyId = activityMo and activityMo.config and activityMo.config.storyId
 
-	if not var_4_1 then
-		logError(string.format("act id %s dot config story id", var_4_1))
+	if not storyId then
+		logError(string.format("act id %s dot config story id", storyId))
 
 		return
 	end
 
-	StoryController.instance:playStory(var_4_1, nil, nil, nil, {
+	StoryController.instance:playStory(storyId, nil, nil, nil, {
 		isVersionActivityPV = true
 	})
 end
 
-function var_0_0.defaultCheckActivityCanClick(arg_5_0, arg_5_1)
-	local var_5_0, var_5_1, var_5_2 = ActivityHelper.getActivityStatusAndToast(arg_5_1.actId)
+function VersionActivityEnterBaseView1_2:defaultCheckActivityCanClick(activityItem)
+	local status, toastId, paramList = ActivityHelper.getActivityStatusAndToast(activityItem.actId)
 
-	if var_5_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_5_1 then
-			GameFacade.showToastWithTableParam(var_5_1, var_5_2)
+	if status ~= ActivityEnum.ActivityStatus.Normal then
+		if toastId then
+			GameFacade.showToastWithTableParam(toastId, paramList)
 		end
 
 		AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_closehouse)
@@ -54,514 +56,529 @@ function var_0_0.defaultCheckActivityCanClick(arg_5_0, arg_5_1)
 	return true
 end
 
-function var_0_0._activityBtnOnClick(arg_6_0, arg_6_1)
-	if arg_6_1.actId == ActivityEnum.PlaceholderActivityId then
+function VersionActivityEnterBaseView1_2:_activityBtnOnClick(activityItem)
+	if activityItem.actId == ActivityEnum.PlaceholderActivityId then
 		return
 	end
 
-	if not (arg_6_0["checkActivityCanClickFunc" .. arg_6_1.index] or arg_6_0.defaultCheckActivityCanClick)(arg_6_0, arg_6_1) then
+	local checkFunc = self["checkActivityCanClickFunc" .. activityItem.index]
+
+	checkFunc = checkFunc or self.defaultCheckActivityCanClick
+
+	if not checkFunc(self, activityItem) then
 		return
 	end
 
-	if arg_6_1.audioId then
-		AudioMgr.instance:trigger(arg_6_1.audioId)
+	if activityItem.audioId then
+		AudioMgr.instance:trigger(activityItem.audioId)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_sign)
 	end
 
-	local var_6_0 = arg_6_0["onClickActivity" .. arg_6_1.index]
+	local clickCallback = self["onClickActivity" .. activityItem.index]
 
-	if var_6_0 then
-		var_6_0(arg_6_0)
+	if clickCallback then
+		clickCallback(self)
 	end
 end
 
-function var_0_0.initActivityItem(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_0:getUserDataTb_()
+function VersionActivityEnterBaseView1_2:initActivityItem(index, actId, goActivityContainer)
+	local activityItem = self:getUserDataTb_()
 
-	var_7_0.index = arg_7_1
-	var_7_0.actId = arg_7_2
-	var_7_0.rootGo = arg_7_3
-	var_7_0.activityCo = ActivityConfig.instance:getActivityCo(arg_7_2)
-	var_7_0.openId = var_7_0.activityCo and var_7_0.activityCo.openId
-	var_7_0.redDotId = var_7_0.activityCo and var_7_0.activityCo.redDotId
-	var_7_0.goNormal = gohelper.findChild(arg_7_3, "normal")
-	var_7_0.imageNormal = gohelper.findChildImage(arg_7_3, "normal/bg")
-	var_7_0.txtActivityName = gohelper.findChildText(arg_7_3, "normal/txt_actname")
-	var_7_0.goLockContainer = gohelper.findChild(arg_7_3, "lockContainer")
-	var_7_0.goDefaultLock = gohelper.findChild(arg_7_3, "lockContainer/go_defaultlock")
-	var_7_0.txtLock = gohelper.findChildText(arg_7_3, "lockContainer/go_defaultlock/txt_lock")
-	var_7_0.goLockSuo = gohelper.findChild(arg_7_3, "lockContainer/go_defaultlock/suo_icon")
-	var_7_0.goRedPoint = gohelper.findChild(arg_7_3, "redpoint")
-	var_7_0.goRedPointTag = gohelper.findChild(arg_7_3, "tag")
-	var_7_0.goRedPointTagNewAct = gohelper.findChild(arg_7_3, "tag/new_act")
-	var_7_0.goRedPointTagNewEpisode = gohelper.findChild(arg_7_3, "tag/new_episode")
-	var_7_0.goTime = gohelper.findChild(arg_7_3, "timeContainer")
-	var_7_0.txtTime = gohelper.findChildText(arg_7_3, "timeContainer/time")
-	var_7_0.txtRemainTime = gohelper.findChildText(arg_7_3, "timeContainer/remain_time")
-	var_7_0.click = gohelper.findChildClick(arg_7_3, "clickarea")
+	activityItem.index = index
+	activityItem.actId = actId
+	activityItem.rootGo = goActivityContainer
+	activityItem.activityCo = ActivityConfig.instance:getActivityCo(actId)
+	activityItem.openId = activityItem.activityCo and activityItem.activityCo.openId
+	activityItem.redDotId = activityItem.activityCo and activityItem.activityCo.redDotId
+	activityItem.goNormal = gohelper.findChild(goActivityContainer, "normal")
+	activityItem.imageNormal = gohelper.findChildImage(goActivityContainer, "normal/bg")
+	activityItem.txtActivityName = gohelper.findChildText(goActivityContainer, "normal/txt_actname")
+	activityItem.goLockContainer = gohelper.findChild(goActivityContainer, "lockContainer")
+	activityItem.goDefaultLock = gohelper.findChild(goActivityContainer, "lockContainer/go_defaultlock")
+	activityItem.txtLock = gohelper.findChildText(goActivityContainer, "lockContainer/go_defaultlock/txt_lock")
+	activityItem.goLockSuo = gohelper.findChild(goActivityContainer, "lockContainer/go_defaultlock/suo_icon")
+	activityItem.goRedPoint = gohelper.findChild(goActivityContainer, "redpoint")
+	activityItem.goRedPointTag = gohelper.findChild(goActivityContainer, "tag")
+	activityItem.goRedPointTagNewAct = gohelper.findChild(goActivityContainer, "tag/new_act")
+	activityItem.goRedPointTagNewEpisode = gohelper.findChild(goActivityContainer, "tag/new_episode")
+	activityItem.goTime = gohelper.findChild(goActivityContainer, "timeContainer")
+	activityItem.txtTime = gohelper.findChildText(goActivityContainer, "timeContainer/time")
+	activityItem.txtRemainTime = gohelper.findChildText(goActivityContainer, "timeContainer/remain_time")
+	activityItem.click = gohelper.findChildClick(goActivityContainer, "clickarea")
 
-	var_7_0.click:AddClickListener(arg_7_0._activityBtnOnClick, arg_7_0, var_7_0)
-	gohelper.setActive(var_7_0.goRedPointTag, true)
-	gohelper.setActive(var_7_0.goRedPointTagNewAct, false)
-	gohelper.setActive(var_7_0.goRedPointTagNewEpisode, false)
-	gohelper.setActive(var_7_0.goDefaultLock, true)
+	activityItem.click:AddClickListener(self._activityBtnOnClick, self, activityItem)
+	gohelper.setActive(activityItem.goRedPointTag, true)
+	gohelper.setActive(activityItem.goRedPointTagNewAct, false)
+	gohelper.setActive(activityItem.goRedPointTagNewEpisode, false)
+	gohelper.setActive(activityItem.goDefaultLock, true)
 
-	var_7_0.redPointTagAnimator = var_7_0.goRedPointTag and var_7_0.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
+	activityItem.redPointTagAnimator = activityItem.goRedPointTag and activityItem.goRedPointTag:GetComponent(typeof(UnityEngine.Animator))
 
-	return var_7_0
+	return activityItem
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.animator = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_8_0.activityGoContainerList = {}
-	arg_8_0.activityItemList = {}
-	arg_8_0.playedNewActTagAnimationIdList = nil
+function VersionActivityEnterBaseView1_2:_editableInitView()
+	self.animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.activityGoContainerList = {}
+	self.activityItemList = {}
+	self.playedNewActTagAnimationIdList = nil
 
-	arg_8_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_8_0.checkNeedRefreshUI, arg_8_0)
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_8_0.checkNeedRefreshUI, arg_8_0)
-	arg_8_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_8_0.refreshAllNewActOpenTagUI, arg_8_0)
-	arg_8_0:addEventCb(NavigateMgr.instance, NavigateEvent.BeforeClickHome, arg_8_0.beforeClickHome, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0.everyMinuteCall, arg_8_0, TimeUtil.OneMinuteSecond)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.checkNeedRefreshUI, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.checkNeedRefreshUI, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, self.refreshAllNewActOpenTagUI, self)
+	self:addEventCb(NavigateMgr.instance, NavigateEvent.BeforeClickHome, self.beforeClickHome, self)
+	TaskDispatcher.runRepeat(self.everyMinuteCall, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0.beforeClickHome(arg_9_0)
-	arg_9_0.clickedHome = true
+function VersionActivityEnterBaseView1_2:beforeClickHome()
+	self.clickedHome = true
 end
 
-function var_0_0.checkNeedRefreshUI(arg_10_0)
-	if not ViewHelper.instance:checkViewOnTheTop(arg_10_0.viewName) then
+function VersionActivityEnterBaseView1_2:checkNeedRefreshUI()
+	if not ViewHelper.instance:checkViewOnTheTop(self.viewName) then
 		return
 	end
 
-	if arg_10_0.clickedHome then
+	if self.clickedHome then
 		return
 	end
 
-	arg_10_0:refreshUI()
-	ActivityStageHelper.recordActivityStage(arg_10_0.activityIdList)
+	self:refreshUI()
+	ActivityStageHelper.recordActivityStage(self.activityIdList)
 end
 
-function var_0_0.initViewParam(arg_11_0)
-	arg_11_0.actId = arg_11_0.viewParam.actId
-	arg_11_0.skipOpenAnim = arg_11_0.viewParam.skipOpenAnim
-	arg_11_0.activityIdList = arg_11_0.viewParam.activityIdList
+function VersionActivityEnterBaseView1_2:initViewParam()
+	self.actId = self.viewParam.actId
+	self.skipOpenAnim = self.viewParam.skipOpenAnim
+	self.activityIdList = self.viewParam.activityIdList
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
-	arg_12_0:initViewParam()
-	arg_12_0:refreshUI()
+function VersionActivityEnterBaseView1_2:onUpdateParam()
+	self:initViewParam()
+	self:refreshUI()
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0.onOpening = true
+function VersionActivityEnterBaseView1_2:onOpen()
+	self.onOpening = true
 
-	arg_13_0:initViewParam()
-	arg_13_0:initActivityNode()
-	arg_13_0:initActivityItemList()
-	arg_13_0:initActivityName()
-	arg_13_0:refreshUI()
-	arg_13_0:playOpenAnimation()
+	self:initViewParam()
+	self:initActivityNode()
+	self:initActivityItemList()
+	self:initActivityName()
+	self:refreshUI()
+	self:playOpenAnimation()
 end
 
-function var_0_0.initActivityNode(arg_14_0)
-	local var_14_0
+function VersionActivityEnterBaseView1_2:initActivityNode()
+	local goContainer
 
-	for iter_14_0 = 1, #arg_14_0.activityIdList do
-		local var_14_1 = arg_14_0.activityGoContainerList[iter_14_0]
+	for i = 1, #self.activityIdList do
+		goContainer = self.activityGoContainerList[i]
 
-		if not var_14_1 then
-			local var_14_2 = string.format("entrance/activityContainer%s/act", iter_14_0)
+		if not goContainer then
+			local act = string.format("entrance/activityContainer%s/act", i)
 
-			var_14_1 = gohelper.findChild(arg_14_0.viewGO, var_14_2)
+			goContainer = gohelper.findChild(self.viewGO, act)
 
-			if gohelper.isNil(var_14_1) then
-				logError("not found container node : entrance/activityContainer" .. iter_14_0)
+			if gohelper.isNil(goContainer) then
+				logError("not found container node : entrance/activityContainer" .. i)
 			end
 
-			table.insert(arg_14_0.activityGoContainerList, var_14_1)
+			table.insert(self.activityGoContainerList, goContainer)
 		end
 
-		gohelper.setActive(var_14_1, true)
+		gohelper.setActive(goContainer, true)
 	end
 
-	for iter_14_1 = #arg_14_0.activityIdList + 1, #arg_14_0.activityGoContainerList do
-		gohelper.setActive(arg_14_0.activityGoContainerList[iter_14_1], false)
-	end
-end
-
-function var_0_0.initActivityItemList(arg_15_0)
-	for iter_15_0 = 1, #arg_15_0.activityIdList do
-		table.insert(arg_15_0.activityItemList, arg_15_0:initActivityItem(iter_15_0, arg_15_0.activityIdList[iter_15_0], arg_15_0.activityGoContainerList[iter_15_0]))
+	for i = #self.activityIdList + 1, #self.activityGoContainerList do
+		gohelper.setActive(self.activityGoContainerList[i], false)
 	end
 end
 
-function var_0_0.initActivityName(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0.activityItemList) do
-		iter_16_1.txtActivityName.text = iter_16_1.activityCo.name
+function VersionActivityEnterBaseView1_2:initActivityItemList()
+	for i = 1, #self.activityIdList do
+		table.insert(self.activityItemList, self:initActivityItem(i, self.activityIdList[i], self.activityGoContainerList[i]))
 	end
 end
 
-function var_0_0.getVersionActivityItem(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.activityItemList) do
-		if iter_17_1.actId == arg_17_1 then
-			return iter_17_1
+function VersionActivityEnterBaseView1_2:initActivityName()
+	for _, activityItem in ipairs(self.activityItemList) do
+		activityItem.txtActivityName.text = activityItem.activityCo.name
+	end
+end
+
+function VersionActivityEnterBaseView1_2:getVersionActivityItem(actId)
+	for _, activityItem in ipairs(self.activityItemList) do
+		if activityItem.actId == actId then
+			return activityItem
 		end
 	end
 end
 
-function var_0_0.playOpenAnimation(arg_18_0)
-	if arg_18_0.skipOpenAnim then
-		arg_18_0.animator:Play(UIAnimationName.Idle)
+function VersionActivityEnterBaseView1_2:playOpenAnimation()
+	if self.skipOpenAnim then
+		self.animator:Play(UIAnimationName.Idle)
 
-		arg_18_0.onOpening = false
+		self.onOpening = false
 	else
 		UIBlockMgrExtend.setNeedCircleMv(false)
-		UIBlockMgr.instance:startBlock(arg_18_0.viewName .. "playOpenAnimation")
+		UIBlockMgr.instance:startBlock(self.viewName .. "playOpenAnimation")
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity1_2.play_ui_lvhu_open)
-		arg_18_0.animator:Play(UIAnimationName.Open)
-		TaskDispatcher.runDelay(arg_18_0.onOpenAnimationDone, arg_18_0, 2.167)
+		self.animator:Play(UIAnimationName.Open)
+		TaskDispatcher.runDelay(self.onOpenAnimationDone, self, 2.167)
 	end
 end
 
-function var_0_0.refreshUI(arg_19_0)
-	arg_19_0:refreshCenterActUI()
-	arg_19_0:refreshActivityUI()
+function VersionActivityEnterBaseView1_2:refreshUI()
+	self:refreshCenterActUI()
+	self:refreshActivityUI()
 end
 
-function var_0_0.refreshCenterActUI(arg_20_0)
-	local var_20_0 = ActivityModel.instance:getActivityInfo()[arg_20_0.actId]
+function VersionActivityEnterBaseView1_2:refreshCenterActUI()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
 
-	if arg_20_0._txttime then
+	if self._txttime then
 		if LangSettings.instance:isEn() then
-			arg_20_0._txttime.text = string.format("<color=#578425>%s ~ %s</color>", var_20_0:getStartTimeStr(), var_20_0:getEndTimeStr())
+			self._txttime.text = string.format("<color=#578425>%s ~ %s</color>", actInfoMo:getStartTimeStr(), actInfoMo:getEndTimeStr())
 		else
-			arg_20_0._txttime.text = string.format("<color=#578425>%s ~ %s(UTC+8)</color>", var_20_0:getStartTimeStr(), var_20_0:getEndTimeStr())
+			self._txttime.text = string.format("<color=#578425>%s ~ %s(UTC+8)</color>", actInfoMo:getStartTimeStr(), actInfoMo:getEndTimeStr())
 		end
 	end
 
-	if arg_20_0._txtremaintime then
-		local var_20_1 = var_20_0:getRealEndTimeStamp() - ServerTime.now()
-		local var_20_2 = Mathf.Floor(var_20_1 / TimeUtil.OneDaySecond)
-		local var_20_3 = var_20_1 % TimeUtil.OneDaySecond
-		local var_20_4 = Mathf.Floor(var_20_3 / TimeUtil.OneHourSecond)
-		local var_20_5 = var_20_2 .. luaLang("time_day") .. var_20_4 .. luaLang("time_hour2")
+	if self._txtremaintime then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+		local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
+		local hourSecond = offsetSecond % TimeUtil.OneDaySecond
+		local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+		local remainTime = day .. luaLang("time_day") .. hour .. luaLang("time_hour2")
 
 		if LangSettings.instance:isEn() then
-			var_20_5 = var_20_2 .. luaLang("time_day") .. " " .. var_20_4 .. luaLang("time_hour2")
+			remainTime = day .. luaLang("time_day") .. " " .. hour .. luaLang("time_hour2")
 		end
 
-		arg_20_0._txtremaintime.text = string.format(luaLang("remain"), var_20_5)
+		self._txtremaintime.text = string.format(luaLang("remain"), remainTime)
 	end
 end
 
-function var_0_0.refreshActivityUI(arg_21_0)
-	arg_21_0.playedActTagAudio = false
-	arg_21_0.playedActUnlockAudio = false
+function VersionActivityEnterBaseView1_2:refreshActivityUI()
+	self.playedActTagAudio = false
+	self.playedActUnlockAudio = false
 
-	for iter_21_0, iter_21_1 in ipairs(arg_21_0.activityItemList) do
-		arg_21_0:refreshActivityItem(iter_21_1)
+	for _, activityItem in ipairs(self.activityItemList) do
+		self:refreshActivityItem(activityItem)
 	end
 end
 
-function var_0_0.defaultBeforePlayActUnlockAnimation(arg_22_0, arg_22_1)
-	local var_22_0 = gohelper.findChild(arg_22_1.rootGo, "lockContainer/go_defaultlock/circle")
+function VersionActivityEnterBaseView1_2:defaultBeforePlayActUnlockAnimation(activityItem)
+	local circleGo = gohelper.findChild(activityItem.rootGo, "lockContainer/go_defaultlock/circle")
 
-	gohelper.setActive(var_22_0, false)
-	gohelper.setActive(arg_22_1.txtLock.gameObject, false)
-	gohelper.setActive(arg_22_1.goLockContainer, true)
-	gohelper.setActive(arg_22_1.goDefaultLock, true)
+	gohelper.setActive(circleGo, false)
+	gohelper.setActive(activityItem.txtLock.gameObject, false)
+	gohelper.setActive(activityItem.goLockContainer, true)
+	gohelper.setActive(activityItem.goDefaultLock, true)
 end
 
-function var_0_0.refreshActivityItem(arg_23_0, arg_23_1)
-	if arg_23_1.actId == ActivityEnum.PlaceholderActivityId then
+function VersionActivityEnterBaseView1_2:refreshActivityItem(activityItem)
+	if activityItem.actId == ActivityEnum.PlaceholderActivityId then
 		return
 	end
 
-	local var_23_0 = ActivityHelper.getActivityStatus(arg_23_1.actId)
+	local activityStatus = ActivityHelper.getActivityStatus(activityItem.actId)
 
-	logNormal("act id : " .. arg_23_1.actId .. ", status : " .. var_23_0)
+	logNormal("act id : " .. activityItem.actId .. ", status : " .. activityStatus)
 
-	local var_23_1 = var_23_0 == ActivityEnum.ActivityStatus.Normal
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
 
-	if var_23_1 and not VersionActivityBaseController.instance:isPlayedUnlockAnimation(arg_23_1.actId) then
-		arg_23_1.lockAnimator = arg_23_1.goDefaultLock and arg_23_1.goDefaultLock:GetComponent(typeof(UnityEngine.Animator))
+	if isNormalStatus and not VersionActivityBaseController.instance:isPlayedUnlockAnimation(activityItem.actId) then
+		activityItem.lockAnimator = activityItem.goDefaultLock and activityItem.goDefaultLock:GetComponent(typeof(UnityEngine.Animator))
 
-		if arg_23_1.lockAnimator then
-			(arg_23_0["beforePlayActUnlockAnimationActivity" .. arg_23_1.index] or arg_23_0.defaultBeforePlayActUnlockAnimation)(arg_23_0, arg_23_1)
-			arg_23_0:playActUnlockAnimation(arg_23_1)
+		if activityItem.lockAnimator then
+			local beforeFunc = self["beforePlayActUnlockAnimationActivity" .. activityItem.index]
+
+			beforeFunc = beforeFunc or self.defaultBeforePlayActUnlockAnimation
+
+			beforeFunc(self, activityItem)
+			self:playActUnlockAnimation(activityItem)
 		else
-			arg_23_0:refreshLockUI(arg_23_1, var_23_0)
+			self:refreshLockUI(activityItem, activityStatus)
 		end
 	else
-		arg_23_0:refreshLockUI(arg_23_1, var_23_0)
+		self:refreshLockUI(activityItem, activityStatus)
 	end
 
-	arg_23_0:refreshTimeContainer(arg_23_1, var_23_0)
-	arg_23_0:refreshRedDotContainer(arg_23_1, var_23_1)
+	self:refreshTimeContainer(activityItem, activityStatus)
+	self:refreshRedDotContainer(activityItem, isNormalStatus)
 
-	local var_23_2 = arg_23_0["onRefreshActivity" .. arg_23_1.index]
+	local refreshUICallback = self["onRefreshActivity" .. activityItem.index]
 
-	if var_23_2 then
-		var_23_2(arg_23_0, arg_23_1)
+	if refreshUICallback then
+		refreshUICallback(self, activityItem)
 	end
 end
 
-function var_0_0.refreshLockUI(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_2 == ActivityEnum.ActivityStatus.Normal
+function VersionActivityEnterBaseView1_2:refreshLockUI(activityItem, activityStatus)
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_24_1.goLockContainer, not var_24_0)
-	gohelper.setActive(arg_24_1.goLockSuo, arg_24_2 == ActivityEnum.ActivityStatus.NotOpen or arg_24_2 == ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(activityItem.goLockContainer, not isNormalStatus)
+	gohelper.setActive(activityItem.goLockSuo, activityStatus == ActivityEnum.ActivityStatus.NotOpen or activityStatus == ActivityEnum.ActivityStatus.NotUnlock)
 
-	if not var_24_0 and arg_24_1.txtLock then
-		local var_24_1 = ""
+	if not isNormalStatus and activityItem.txtLock then
+		local lockText = ""
 
-		if arg_24_2 == ActivityEnum.ActivityStatus.NotOpen then
-			local var_24_2 = ActivityModel.instance:getActivityInfo()[arg_24_1.actId]
+		if activityStatus == ActivityEnum.ActivityStatus.NotOpen then
+			local actInfoMo = ActivityModel.instance:getActivityInfo()[activityItem.actId]
 
-			var_24_1 = string.format(luaLang("test_task_unlock_time"), var_24_2:getRemainTimeStr2ByOpenTime())
-		elseif arg_24_2 == ActivityEnum.ActivityStatus.Expired then
-			var_24_1 = luaLang("p_activityenter_finish")
-		elseif arg_24_2 == ActivityEnum.ActivityStatus.NotUnlock then
-			var_24_1 = luaLang("p_versionactivitytripenter_lock")
-		elseif arg_24_2 == ActivityEnum.ActivityStatus.NotOnLine then
-			var_24_1 = luaLang("p_activityenter_finish")
-		elseif arg_24_2 == ActivityEnum.ActivityStatus.None then
-			var_24_1 = luaLang("p_activityenter_finish")
+			lockText = string.format(luaLang("test_task_unlock_time"), actInfoMo:getRemainTimeStr2ByOpenTime())
+		elseif activityStatus == ActivityEnum.ActivityStatus.Expired then
+			lockText = luaLang("p_activityenter_finish")
+		elseif activityStatus == ActivityEnum.ActivityStatus.NotUnlock then
+			lockText = luaLang("p_versionactivitytripenter_lock")
+		elseif activityStatus == ActivityEnum.ActivityStatus.NotOnLine then
+			lockText = luaLang("p_activityenter_finish")
+		elseif activityStatus == ActivityEnum.ActivityStatus.None then
+			lockText = luaLang("p_activityenter_finish")
 		end
 
-		arg_24_1.txtLock.text = var_24_1
+		activityItem.txtLock.text = lockText
 	end
 end
 
-function var_0_0.refreshTimeContainer(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = arg_25_2 == ActivityEnum.ActivityStatus.Normal
+function VersionActivityEnterBaseView1_2:refreshTimeContainer(activityItem, activityStatus)
+	local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_25_1.goTime, var_25_0)
+	gohelper.setActive(activityItem.goTime, isNormalStatus)
 
-	if not var_25_0 then
+	if not isNormalStatus then
 		return
 	end
 
-	local var_25_1 = ActivityModel.instance:getActivityInfo()[arg_25_1.actId]
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[activityItem.actId]
 
-	if arg_25_1.txtTime then
-		arg_25_1.txtTime.text = var_25_1:getStartTimeStr() .. "~" .. var_25_1:getEndTimeStr()
+	if activityItem.txtTime then
+		activityItem.txtTime.text = actInfoMo:getStartTimeStr() .. "~" .. actInfoMo:getEndTimeStr()
 	end
 
-	if arg_25_1.txtRemainTime then
-		if var_25_0 then
-			arg_25_1.txtRemainTime.text = string.format(luaLang("remain"), var_25_1:getRemainTimeStr2ByEndTime())
+	if activityItem.txtRemainTime then
+		if isNormalStatus then
+			activityItem.txtRemainTime.text = string.format(luaLang("remain"), actInfoMo:getRemainTimeStr2ByEndTime())
 		else
-			arg_25_1.txtRemainTime.text = ""
+			activityItem.txtRemainTime.text = ""
 		end
 	end
 end
 
-function var_0_0.refreshRedDotContainer(arg_26_0, arg_26_1, arg_26_2)
-	if arg_26_2 and arg_26_1.redDotId and arg_26_1.redDotId ~= 0 then
-		RedDotController.instance:addRedDot(arg_26_1.goRedPoint, arg_26_1.redDotId)
+function VersionActivityEnterBaseView1_2:refreshRedDotContainer(activityItem, isNormalStatus)
+	if isNormalStatus and activityItem.redDotId and activityItem.redDotId ~= 0 then
+		RedDotController.instance:addRedDot(activityItem.goRedPoint, activityItem.redDotId)
 	end
 
-	arg_26_0:refreshRedDotTag(arg_26_1, arg_26_2)
+	self:refreshRedDotTag(activityItem, isNormalStatus)
 end
 
-function var_0_0.refreshRedDotTag(arg_27_0, arg_27_1, arg_27_2)
-	gohelper.setActive(arg_27_1.goRedPointTag, arg_27_2)
-	gohelper.setActive(arg_27_1.goRedPointTagNewAct, false)
-	gohelper.setActive(arg_27_1.goRedPointTagNewEpisode, false)
+function VersionActivityEnterBaseView1_2:refreshRedDotTag(activityItem, isNormalStatus)
+	gohelper.setActive(activityItem.goRedPointTag, isNormalStatus)
+	gohelper.setActive(activityItem.goRedPointTagNewAct, false)
+	gohelper.setActive(activityItem.goRedPointTagNewEpisode, false)
 
-	arg_27_1.showTag = nil
+	activityItem.showTag = nil
 
-	if arg_27_2 then
-		if not ActivityEnterMgr.instance:isEnteredActivity(arg_27_1.actId) then
-			arg_27_1.showTag = var_0_0.ShowActTagEnum.ShowNewAct
+	if isNormalStatus then
+		local isShowNewAct = not ActivityEnterMgr.instance:isEnteredActivity(activityItem.actId)
 
-			arg_27_0:playActTagAnimation(arg_27_1)
-		elseif ActivityModel.instance:getActivityInfo()[arg_27_1.actId]:isNewStageOpen() then
-			arg_27_1.showTag = var_0_0.ShowActTagEnum.ShowNewStage
+		if isShowNewAct then
+			activityItem.showTag = VersionActivityEnterBaseView1_2.ShowActTagEnum.ShowNewAct
 
-			arg_27_0:playActTagAnimation(arg_27_1)
+			self:playActTagAnimation(activityItem)
+		else
+			local actInfoMo = ActivityModel.instance:getActivityInfo()[activityItem.actId]
+
+			if actInfoMo:isNewStageOpen() then
+				activityItem.showTag = VersionActivityEnterBaseView1_2.ShowActTagEnum.ShowNewStage
+
+				self:playActTagAnimation(activityItem)
+			end
 		end
 	end
 end
 
-function var_0_0.refreshAllNewActOpenTagUI(arg_28_0)
-	for iter_28_0, iter_28_1 in ipairs(arg_28_0.activityItemList) do
-		local var_28_0 = ActivityHelper.getActivityStatus(iter_28_1.actId) == ActivityEnum.ActivityStatus.Normal
+function VersionActivityEnterBaseView1_2:refreshAllNewActOpenTagUI()
+	for _, activityItem in ipairs(self.activityItemList) do
+		local activityStatus = ActivityHelper.getActivityStatus(activityItem.actId)
+		local isNormalStatus = activityStatus == ActivityEnum.ActivityStatus.Normal
 
-		gohelper.setActive(iter_28_1.goRedPointTag, var_28_0)
-		gohelper.setActive(iter_28_1.goRedPointTagNewAct, var_28_0 and not ActivityEnterMgr.instance:isEnteredActivity(iter_28_1.actId))
+		gohelper.setActive(activityItem.goRedPointTag, isNormalStatus)
+		gohelper.setActive(activityItem.goRedPointTagNewAct, isNormalStatus and not ActivityEnterMgr.instance:isEnteredActivity(activityItem.actId))
 	end
 end
 
-function var_0_0.isPlayedActTagAnimation(arg_29_0, arg_29_1)
-	if not arg_29_0.playedNewActTagAnimationIdList then
+function VersionActivityEnterBaseView1_2:isPlayedActTagAnimation(actId)
+	if not self.playedNewActTagAnimationIdList then
 		return false
 	end
 
-	return tabletool.indexOf(arg_29_0.playedNewActTagAnimationIdList, arg_29_1)
+	return tabletool.indexOf(self.playedNewActTagAnimationIdList, actId)
 end
 
-function var_0_0.playActTagAnimation(arg_30_0, arg_30_1)
-	if arg_30_0.onOpening or arg_30_0.playingUnlockAnimation then
-		arg_30_0.needPlayNewActTagActIdList = arg_30_0.needPlayNewActTagActIdList or {}
+function VersionActivityEnterBaseView1_2:playActTagAnimation(activityItem)
+	if self.onOpening or self.playingUnlockAnimation then
+		self.needPlayNewActTagActIdList = self.needPlayNewActTagActIdList or {}
 
-		if not tabletool.indexOf(arg_30_0.needPlayNewActTagActIdList, arg_30_1.actId) then
-			table.insert(arg_30_0.needPlayNewActTagActIdList, arg_30_1.actId)
+		if not tabletool.indexOf(self.needPlayNewActTagActIdList, activityItem.actId) then
+			table.insert(self.needPlayNewActTagActIdList, activityItem.actId)
 		end
 	else
-		arg_30_0:_playActTagAnimation(arg_30_1)
+		self:_playActTagAnimation(activityItem)
 	end
 end
 
-function var_0_0._playActTagAnimation(arg_31_0, arg_31_1)
-	if arg_31_1.showTag == var_0_0.ShowActTagEnum.ShowNewAct then
-		gohelper.setActive(arg_31_1.goRedPointTagNewAct, true)
-	elseif arg_31_1.showTag == var_0_0.ShowActTagEnum.ShowNewStage then
-		gohelper.setActive(arg_31_1.goRedPointTagNewEpisode, true)
+function VersionActivityEnterBaseView1_2:_playActTagAnimation(activityItem)
+	if activityItem.showTag == VersionActivityEnterBaseView1_2.ShowActTagEnum.ShowNewAct then
+		gohelper.setActive(activityItem.goRedPointTagNewAct, true)
+	elseif activityItem.showTag == VersionActivityEnterBaseView1_2.ShowActTagEnum.ShowNewStage then
+		gohelper.setActive(activityItem.goRedPointTagNewEpisode, true)
 	end
 
-	arg_31_0.playedNewActTagAnimationIdList = arg_31_0.playedNewActTagAnimationIdList or {}
+	self.playedNewActTagAnimationIdList = self.playedNewActTagAnimationIdList or {}
 
-	if not arg_31_1.redPointTagAnimator then
-		table.insert(arg_31_0.playedNewActTagAnimationIdList, arg_31_1.actId)
+	if not activityItem.redPointTagAnimator then
+		table.insert(self.playedNewActTagAnimationIdList, activityItem.actId)
 
 		return
 	end
 
-	if not arg_31_0:isPlayedActTagAnimation(arg_31_1.actId) then
-		arg_31_1.redPointTagAnimator:Play(UIAnimationName.Open)
-		table.insert(arg_31_0.playedNewActTagAnimationIdList, arg_31_1.actId)
+	if not self:isPlayedActTagAnimation(activityItem.actId) then
+		activityItem.redPointTagAnimator:Play(UIAnimationName.Open)
+		table.insert(self.playedNewActTagAnimationIdList, activityItem.actId)
 
-		if not arg_31_0.playedActTagAudio then
+		if not self.playedActTagAudio then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_open)
 
-			arg_31_0.playedActTagAudio = true
+			self.playedActTagAudio = true
 		end
 	end
 end
 
-function var_0_0.playActUnlockAnimation(arg_32_0, arg_32_1)
-	if arg_32_0.onOpening then
-		arg_32_0.needPlayUnlockAnimationActIdList = arg_32_0.needPlayUnlockAnimationActIdList or {}
+function VersionActivityEnterBaseView1_2:playActUnlockAnimation(activityItem)
+	if self.onOpening then
+		self.needPlayUnlockAnimationActIdList = self.needPlayUnlockAnimationActIdList or {}
 
-		if not tabletool.indexOf(arg_32_0.needPlayUnlockAnimationActIdList, arg_32_1.actId) then
-			table.insert(arg_32_0.needPlayUnlockAnimationActIdList, arg_32_1.actId)
+		if not tabletool.indexOf(self.needPlayUnlockAnimationActIdList, activityItem.actId) then
+			table.insert(self.needPlayUnlockAnimationActIdList, activityItem.actId)
 		end
 	else
-		arg_32_0:_playActUnlockAnimation(arg_32_1)
+		self:_playActUnlockAnimation(activityItem)
 	end
 end
 
-function var_0_0._playActUnlockAnimation(arg_33_0, arg_33_1)
-	if not arg_33_1 then
+function VersionActivityEnterBaseView1_2:_playActUnlockAnimation(activityItem)
+	if not activityItem then
 		return
 	end
 
-	VersionActivityBaseController.instance:playedActivityUnlockAnimation(arg_33_1.actId)
+	VersionActivityBaseController.instance:playedActivityUnlockAnimation(activityItem.actId)
 
-	if arg_33_1.lockAnimator then
-		arg_33_1.lockAnimator:Play(UIAnimationName.Open, 0, 0)
-		arg_33_0:playTimeUnlock(arg_33_1)
+	if activityItem.lockAnimator then
+		activityItem.lockAnimator:Play(UIAnimationName.Open, 0, 0)
+		self:playTimeUnlock(activityItem)
 
-		if not arg_33_0.playedActUnlockAudio then
+		if not self.playedActUnlockAudio then
 			AudioMgr.instance:trigger(AudioEnum.VersionActivity1_2.play_ui_lvhu_level_unlock)
 
-			arg_33_0.playedActUnlockAudio = true
+			self.playedActUnlockAudio = true
 		end
 
-		arg_33_0.playingUnlockAnimation = true
+		self.playingUnlockAnimation = true
 
-		TaskDispatcher.runDelay(arg_33_0.playUnlockAnimationDone, arg_33_0, var_0_0.ActUnlockAnimationDuration)
+		TaskDispatcher.runDelay(self.playUnlockAnimationDone, self, VersionActivityEnterBaseView1_2.ActUnlockAnimationDuration)
 	end
 end
 
-function var_0_0.playTimeUnlock(arg_34_0, arg_34_1)
-	arg_34_1.timeAnimator = arg_34_1.goTime and arg_34_1.goTime:GetComponent(typeof(UnityEngine.Animator))
+function VersionActivityEnterBaseView1_2:playTimeUnlock(activityItem)
+	activityItem.timeAnimator = activityItem.goTime and activityItem.goTime:GetComponent(typeof(UnityEngine.Animator))
 
-	if arg_34_1.timeAnimator then
-		arg_34_0.needPlayTimeUnlockList = arg_34_0.needPlayTimeUnlockList or {}
+	if activityItem.timeAnimator then
+		self.needPlayTimeUnlockList = self.needPlayTimeUnlockList or {}
 
-		if not tabletool.indexOf(arg_34_0.needPlayTimeUnlockList, arg_34_1) then
-			table.insert(arg_34_0.needPlayTimeUnlockList, arg_34_1)
+		if not tabletool.indexOf(self.needPlayTimeUnlockList, activityItem) then
+			table.insert(self.needPlayTimeUnlockList, activityItem)
 		end
 	end
 end
 
-function var_0_0.playAllTimeUnlockAnimation(arg_35_0)
-	if arg_35_0.needPlayTimeUnlockList then
-		for iter_35_0, iter_35_1 in ipairs(arg_35_0.needPlayTimeUnlockList) do
-			if iter_35_1.timeAnimator then
-				gohelper.setActive(iter_35_1.goTime, true)
-				iter_35_1.timeAnimator:Play(UIAnimationName.Open, 0, 0)
+function VersionActivityEnterBaseView1_2:playAllTimeUnlockAnimation()
+	if self.needPlayTimeUnlockList then
+		for _, activityItem in ipairs(self.needPlayTimeUnlockList) do
+			if activityItem.timeAnimator then
+				gohelper.setActive(activityItem.goTime, true)
+				activityItem.timeAnimator:Play(UIAnimationName.Open, 0, 0)
 			end
 		end
 	end
 end
 
-function var_0_0.playUnlockAnimationDone(arg_36_0)
-	arg_36_0.playingUnlockAnimation = false
+function VersionActivityEnterBaseView1_2:playUnlockAnimationDone()
+	self.playingUnlockAnimation = false
 
-	arg_36_0:playAllTimeUnlockAnimation()
-	arg_36_0:playAllNewTagAnimation()
+	self:playAllTimeUnlockAnimation()
+	self:playAllNewTagAnimation()
 end
 
-function var_0_0.onOpenAnimationDone(arg_37_0)
-	UIBlockMgr.instance:endBlock(arg_37_0.viewName .. "playOpenAnimation")
+function VersionActivityEnterBaseView1_2:onOpenAnimationDone()
+	UIBlockMgr.instance:endBlock(self.viewName .. "playOpenAnimation")
 	UIBlockMgrExtend.setNeedCircleMv(true)
 
-	arg_37_0.onOpening = false
+	self.onOpening = false
 
-	if not ViewHelper.instance:checkViewOnTheTop(arg_37_0.viewName) then
-		arg_37_0.needPlayUnlockAnimationActIdList = nil
+	if not ViewHelper.instance:checkViewOnTheTop(self.viewName) then
+		self.needPlayUnlockAnimationActIdList = nil
 
 		return
 	end
 
-	if arg_37_0.needPlayUnlockAnimationActIdList then
-		for iter_37_0, iter_37_1 in ipairs(arg_37_0.needPlayUnlockAnimationActIdList) do
-			arg_37_0:_playActUnlockAnimation(arg_37_0:getVersionActivityItem(iter_37_1))
+	if self.needPlayUnlockAnimationActIdList then
+		for _, actId in ipairs(self.needPlayUnlockAnimationActIdList) do
+			self:_playActUnlockAnimation(self:getVersionActivityItem(actId))
 		end
 
-		arg_37_0.needPlayUnlockAnimationActIdList = nil
+		self.needPlayUnlockAnimationActIdList = nil
 	end
 
-	if not arg_37_0.playingUnlockAnimation then
-		arg_37_0:playAllNewTagAnimation()
+	if not self.playingUnlockAnimation then
+		self:playAllNewTagAnimation()
 	end
 end
 
-function var_0_0.playAllNewTagAnimation(arg_38_0)
-	if arg_38_0.needPlayNewActTagActIdList then
-		for iter_38_0, iter_38_1 in ipairs(arg_38_0.needPlayNewActTagActIdList) do
-			arg_38_0:_playActTagAnimation(arg_38_0:getVersionActivityItem(iter_38_1))
+function VersionActivityEnterBaseView1_2:playAllNewTagAnimation()
+	if self.needPlayNewActTagActIdList then
+		for _, actId in ipairs(self.needPlayNewActTagActIdList) do
+			self:_playActTagAnimation(self:getVersionActivityItem(actId))
 		end
 
-		arg_38_0.needPlayNewActTagActIdList = nil
+		self.needPlayNewActTagActIdList = nil
 	end
 end
 
-function var_0_0.everyMinuteCall(arg_39_0)
-	if not ViewHelper.instance:checkViewOnTheTop(arg_39_0.viewName) then
+function VersionActivityEnterBaseView1_2:everyMinuteCall()
+	if not ViewHelper.instance:checkViewOnTheTop(self.viewName) then
 		return
 	end
 
-	arg_39_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_40_0)
-	UIBlockMgr.instance:endBlock(arg_40_0.viewName .. "playOpenAnimation")
+function VersionActivityEnterBaseView1_2:onClose()
+	UIBlockMgr.instance:endBlock(self.viewName .. "playOpenAnimation")
 	UIBlockMgrExtend.setNeedCircleMv(true)
-	TaskDispatcher.cancelTask(arg_40_0.everyMinuteCall, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0.onOpenAnimationDone, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0.playUnlockAnimationDone, arg_40_0)
+	TaskDispatcher.cancelTask(self.everyMinuteCall, self)
+	TaskDispatcher.cancelTask(self.onOpenAnimationDone, self)
+	TaskDispatcher.cancelTask(self.playUnlockAnimationDone, self)
 end
 
-function var_0_0.onDestroyView(arg_41_0)
-	for iter_41_0, iter_41_1 in ipairs(arg_41_0.activityItemList) do
-		iter_41_1.click:RemoveClickListener()
+function VersionActivityEnterBaseView1_2:onDestroyView()
+	for _, activityItem in ipairs(self.activityItemList) do
+		activityItem.click:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return VersionActivityEnterBaseView1_2

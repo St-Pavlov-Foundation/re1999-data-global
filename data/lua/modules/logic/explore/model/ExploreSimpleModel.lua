@@ -1,56 +1,58 @@
-﻿module("modules.logic.explore.model.ExploreSimpleModel", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/ExploreSimpleModel.lua
 
-local var_0_0 = class("ExploreSimpleModel", BaseModel)
+module("modules.logic.explore.model.ExploreSimpleModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.nowMapId = 0
-	arg_1_0.chapterInfos = {}
-	arg_1_0.mapInfos = {}
-	arg_1_0.unLockMaps = {}
-	arg_1_0.unLockChapters = {}
-	arg_1_0.localData = nil
-	arg_1_0.taskRed = nil
-	arg_1_0.isShowBag = false
+local ExploreSimpleModel = class("ExploreSimpleModel", BaseModel)
+
+function ExploreSimpleModel:onInit()
+	self.nowMapId = 0
+	self.chapterInfos = {}
+	self.mapInfos = {}
+	self.unLockMaps = {}
+	self.unLockChapters = {}
+	self.localData = nil
+	self.taskRed = nil
+	self.isShowBag = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:onInit()
+function ExploreSimpleModel:reInit()
+	self:onInit()
 end
 
-function var_0_0.onGetInfo(arg_3_0, arg_3_1)
-	arg_3_0.nowMapId = arg_3_1.lastMapId
-	arg_3_0.isShowBag = arg_3_1.isShowBag
+function ExploreSimpleModel:onGetInfo(msg)
+	self.nowMapId = msg.lastMapId
+	self.isShowBag = msg.isShowBag
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.chapterSimple) do
-		local var_3_0 = ExploreChapterSimpleMo.New()
+	for _, v in ipairs(msg.chapterSimple) do
+		local mo = ExploreChapterSimpleMo.New()
 
-		var_3_0:init(iter_3_1)
+		mo:init(v)
 
-		arg_3_0.chapterInfos[iter_3_1.chapterId] = var_3_0
+		self.chapterInfos[v.chapterId] = mo
 	end
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_1.unlockMapIds) do
-		arg_3_0.unLockMaps[iter_3_3] = true
+	for _, v in ipairs(msg.unlockMapIds) do
+		self.unLockMaps[v] = true
 
-		local var_3_1 = ExploreConfig.instance:getMapIdConfig(iter_3_3)
+		local mapCo = ExploreConfig.instance:getMapIdConfig(v)
 
-		if var_3_1 then
-			arg_3_0.unLockChapters[var_3_1.chapterId] = true
+		if mapCo then
+			self.unLockChapters[mapCo.chapterId] = true
 		end
 	end
 
-	for iter_3_4, iter_3_5 in ipairs(arg_3_1.mapSimple) do
-		local var_3_2 = ExploreMapSimpleMo.New()
+	for _, v in ipairs(msg.mapSimple) do
+		local mo = ExploreMapSimpleMo.New()
 
-		var_3_2:init(iter_3_5)
+		mo:init(v)
 
-		arg_3_0.mapInfos[iter_3_5.mapId] = var_3_2
+		self.mapInfos[v.mapId] = mo
 	end
 end
 
-function var_0_0.setShowBag(arg_4_0)
-	if not arg_4_0.isShowBag then
-		arg_4_0.isShowBag = true
+function ExploreSimpleModel:setShowBag()
+	if not self.isShowBag then
+		self.isShowBag = true
 
 		if isDebugBuild then
 			ExploreController.instance:dispatchEvent(ExploreEvent.ShowBagBtn)
@@ -58,25 +60,25 @@ function var_0_0.setShowBag(arg_4_0)
 	end
 end
 
-function var_0_0.getChapterIndex(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1 or not arg_5_2 then
+function ExploreSimpleModel:getChapterIndex(chapterId, episodeId)
+	if not chapterId or not episodeId then
 		return 1, 1
 	end
 
-	local var_5_0 = DungeonConfig.instance:getExploreChapterList()
+	local list = DungeonConfig.instance:getExploreChapterList()
 
-	for iter_5_0 = #var_5_0, 1, -1 do
-		local var_5_1 = DungeonConfig.instance:getChapterEpisodeCOList(var_5_0[iter_5_0].id)
+	for i = #list, 1, -1 do
+		local episodeCoList = DungeonConfig.instance:getChapterEpisodeCOList(list[i].id)
 
-		for iter_5_1 = #var_5_1, 1, -1 do
-			if not arg_5_1 or not arg_5_2 then
-				local var_5_2 = lua_explore_scene.configDict[var_5_0[iter_5_0].id][var_5_1[iter_5_1].id]
+		for j = #episodeCoList, 1, -1 do
+			if not chapterId or not episodeId then
+				local mapCo = lua_explore_scene.configDict[list[i].id][episodeCoList[j].id]
 
-				if arg_5_0:getMapIsUnLock(var_5_2.id) then
-					return iter_5_0, iter_5_1, var_5_0[iter_5_0].id, var_5_1[iter_5_1].id
+				if self:getMapIsUnLock(mapCo.id) then
+					return i, j, list[i].id, episodeCoList[j].id
 				end
-			elseif var_5_0[iter_5_0].id == arg_5_1 and var_5_1[iter_5_1].id == arg_5_2 then
-				return iter_5_0, iter_5_1, arg_5_1, arg_5_2
+			elseif list[i].id == chapterId and episodeCoList[j].id == episodeId then
+				return i, j, chapterId, episodeId
 			end
 		end
 	end
@@ -84,417 +86,411 @@ function var_0_0.getChapterIndex(arg_5_0, arg_5_1, arg_5_2)
 	return 1, 1
 end
 
-function var_0_0.getMapIsUnLock(arg_6_0, arg_6_1)
-	return arg_6_0.unLockMaps[arg_6_1] or false
+function ExploreSimpleModel:getMapIsUnLock(mapId)
+	return self.unLockMaps[mapId] or false
 end
 
-function var_0_0.setNowMapId(arg_7_0, arg_7_1)
-	arg_7_0.nowMapId = arg_7_1
+function ExploreSimpleModel:setNowMapId(mapId)
+	self.nowMapId = mapId
 end
 
-function var_0_0.onGetArchive(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getMapConfig()
+function ExploreSimpleModel:onGetArchive(id)
+	local mapCo = self:getMapConfig()
 
-	if not var_8_0 then
+	if not mapCo then
 		logError("没有地图数据？？")
 
 		return
 	end
 
-	if not arg_8_0.chapterInfos[var_8_0.chapterId] then
+	if not self.chapterInfos[mapCo.chapterId] then
 		return
 	end
 
-	arg_8_0:markArchive(var_8_0.chapterId, true, arg_8_1)
-	arg_8_0.chapterInfos[var_8_0.chapterId]:onGetArchive(arg_8_1)
+	self:markArchive(mapCo.chapterId, true, id)
+	self.chapterInfos[mapCo.chapterId]:onGetArchive(id)
 end
 
-function var_0_0.getChapterMo(arg_9_0, arg_9_1)
-	return arg_9_0.chapterInfos[arg_9_1]
+function ExploreSimpleModel:getChapterMo(chapterId)
+	return self.chapterInfos[chapterId]
 end
 
-function var_0_0.isChapterFinish(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getChapterMo(arg_10_1)
+function ExploreSimpleModel:isChapterFinish(chapterId)
+	local mo = self:getChapterMo(chapterId)
 
-	return var_10_0 and var_10_0.isFinish or false
+	return mo and mo.isFinish or false
 end
 
-function var_0_0.onGetBonus(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getMapConfig()
+function ExploreSimpleModel:onGetBonus(id, options)
+	local mapCo = self:getMapConfig()
 
-	if not var_11_0 then
+	if not mapCo then
 		logError("没有地图数据？？")
 
 		return
 	end
 
-	if not arg_11_0.chapterInfos[var_11_0.chapterId] then
+	if not self.chapterInfos[mapCo.chapterId] then
 		return
 	end
 
-	arg_11_0.chapterInfos[var_11_0.chapterId]:onGetBonus(arg_11_1, arg_11_2)
+	self.chapterInfos[mapCo.chapterId]:onGetBonus(id, options)
 end
 
-function var_0_0.onGetCoin(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = ExploreModel.instance:getMapId()
+function ExploreSimpleModel:onGetCoin(coinType, nowCount)
+	local mapId = ExploreModel.instance:getMapId()
 
-	if not arg_12_0.mapInfos[var_12_0] then
-		arg_12_0.mapInfos[var_12_0] = ExploreMapSimpleMo.New()
+	if not self.mapInfos[mapId] then
+		self.mapInfos[mapId] = ExploreMapSimpleMo.New()
 	end
 
-	arg_12_0.mapInfos[var_12_0]:onGetCoin(arg_12_1, arg_12_2)
+	self.mapInfos[mapId]:onGetCoin(coinType, nowCount)
 end
 
-function var_0_0.getMapConfig(arg_13_0)
-	return (ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId()))
+function ExploreSimpleModel:getMapConfig()
+	local mapCo = ExploreConfig.instance:getMapIdConfig(ExploreModel.instance:getMapId())
+
+	return mapCo
 end
 
-function var_0_0.getBonusIsGet(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_0.mapInfos[arg_14_1] then
+function ExploreSimpleModel:getBonusIsGet(mapId, bonusId)
+	if not self.mapInfos[mapId] then
 		return false
 	end
 
-	return arg_14_0.mapInfos[arg_14_1].bonusIds[arg_14_2] or false
+	return self.mapInfos[mapId].bonusIds[bonusId] or false
 end
 
-function var_0_0.setBonusIsGet(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0.mapInfos[arg_15_1] then
-		arg_15_0.mapInfos[arg_15_1] = ExploreMapSimpleMo.New()
+function ExploreSimpleModel:setBonusIsGet(mapId, bonusId)
+	if not self.mapInfos[mapId] then
+		self.mapInfos[mapId] = ExploreMapSimpleMo.New()
 	end
 
-	arg_15_0.mapInfos[arg_15_1].bonusIds[arg_15_2] = true
+	self.mapInfos[mapId].bonusIds[bonusId] = true
 end
 
-function var_0_0.getCoinCountByMapId(arg_16_0, arg_16_1)
-	local var_16_0 = 0
-	local var_16_1 = 0
-	local var_16_2 = 0
-	local var_16_3 = 0
-	local var_16_4 = 0
-	local var_16_5 = 0
-	local var_16_6 = arg_16_0.mapInfos[arg_16_1]
+function ExploreSimpleModel:getCoinCountByMapId(mapId)
+	local bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal = 0, 0, 0, 0, 0, 0
+	local mo = self.mapInfos[mapId]
 
-	if var_16_6 then
-		var_16_0 = var_16_6.bonusNum
-		var_16_1 = var_16_6.goldCoin
-		var_16_2 = var_16_6.purpleCoin
-		var_16_3 = var_16_6.bonusNumTotal
-		var_16_4 = var_16_6.goldCoinTotal
-		var_16_5 = var_16_6.purpleCoinTotal
+	if mo then
+		bonusNum = mo.bonusNum
+		goldCoin = mo.goldCoin
+		purpleCoin = mo.purpleCoin
+		bonusNumTotal = mo.bonusNumTotal
+		goldCoinTotal = mo.goldCoinTotal
+		purpleCoinTotal = mo.purpleCoinTotal
 	end
 
-	return var_16_0, var_16_1, var_16_2, var_16_3, var_16_4, var_16_5
+	return bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal
 end
 
-function var_0_0.getChapterCoinCount(arg_17_0, arg_17_1)
-	local var_17_0 = ExploreConfig.instance:getMapIdsByChapter(arg_17_1)
-	local var_17_1 = 0
-	local var_17_2 = 0
-	local var_17_3 = 0
-	local var_17_4 = 0
-	local var_17_5 = 0
-	local var_17_6 = 0
+function ExploreSimpleModel:getChapterCoinCount(chapterId)
+	local mapIds = ExploreConfig.instance:getMapIdsByChapter(chapterId)
+	local bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal = 0, 0, 0, 0, 0, 0
 
-	for iter_17_0, iter_17_1 in pairs(var_17_0) do
-		local var_17_7 = arg_17_0.mapInfos[iter_17_1]
+	for _, mapId in pairs(mapIds) do
+		local mo = self.mapInfos[mapId]
 
-		if var_17_7 then
-			var_17_1 = var_17_1 + var_17_7.bonusNum
-			var_17_2 = var_17_2 + var_17_7.goldCoin
-			var_17_3 = var_17_3 + var_17_7.purpleCoin
-			var_17_4 = var_17_4 + var_17_7.bonusNumTotal
-			var_17_5 = var_17_5 + var_17_7.goldCoinTotal
-			var_17_6 = var_17_6 + var_17_7.purpleCoinTotal
+		if mo then
+			bonusNum = bonusNum + mo.bonusNum
+			goldCoin = goldCoin + mo.goldCoin
+			purpleCoin = purpleCoin + mo.purpleCoin
+			bonusNumTotal = bonusNumTotal + mo.bonusNumTotal
+			goldCoinTotal = goldCoinTotal + mo.goldCoinTotal
+			purpleCoinTotal = purpleCoinTotal + mo.purpleCoinTotal
 		end
 	end
 
-	return var_17_1, var_17_2, var_17_3, var_17_4, var_17_5, var_17_6
+	return bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal
 end
 
-function var_0_0.isChapterCoinFull(arg_18_0, arg_18_1)
-	local var_18_0, var_18_1, var_18_2, var_18_3, var_18_4, var_18_5 = arg_18_0:getChapterCoinCount(arg_18_1)
+function ExploreSimpleModel:isChapterCoinFull(chapterId)
+	local bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal = self:getChapterCoinCount(chapterId)
 
-	return var_18_0 == var_18_3 and var_18_1 == var_18_4 and var_18_2 == var_18_5
+	return bonusNum == bonusNumTotal and goldCoin == goldCoinTotal and purpleCoin == purpleCoinTotal
 end
 
-function var_0_0.getMapCoinCount(arg_19_0, arg_19_1)
-	arg_19_1 = arg_19_1 or ExploreModel.instance:getMapId()
+function ExploreSimpleModel:getMapCoinCount(mapId)
+	mapId = mapId or ExploreModel.instance:getMapId()
 
-	local var_19_0 = arg_19_0.mapInfos[arg_19_1]
+	local mo = self.mapInfos[mapId]
 
-	if not var_19_0 then
+	if not mo then
 		return 0, 0, 0, 0, 0, 0
 	end
 
-	return var_19_0.bonusNum, var_19_0.goldCoin, var_19_0.purpleCoin, var_19_0.bonusNumTotal, var_19_0.goldCoinTotal, var_19_0.purpleCoinTotal
+	return mo.bonusNum, mo.goldCoin, mo.purpleCoin, mo.bonusNumTotal, mo.goldCoinTotal, mo.purpleCoinTotal
 end
 
-function var_0_0.getChapterIsUnLock(arg_20_0, arg_20_1)
-	return arg_20_0.unLockChapters[arg_20_1] or false
+function ExploreSimpleModel:getChapterIsUnLock(chapterId)
+	return self.unLockChapters[chapterId] or false
 end
 
-function var_0_0.checkTaskRed(arg_21_0)
-	arg_21_0.taskRed = {}
+function ExploreSimpleModel:checkTaskRed()
+	self.taskRed = {}
 
-	local var_21_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Explore)
+	local tasks = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Explore)
 
-	if not var_21_0 then
+	if not tasks then
 		return
 	end
 
-	for iter_21_0, iter_21_1 in pairs(var_21_0) do
-		local var_21_1 = lua_task_explore.configDict[iter_21_1.id]
+	for _, taskMo in pairs(tasks) do
+		local co = lua_task_explore.configDict[taskMo.id]
 
-		if var_21_1 and iter_21_1.progress >= var_21_1.maxProgress and iter_21_1.finishCount <= 0 then
-			local var_21_2 = string.splitToNumber(var_21_1.listenerParam, "#")
+		if co and taskMo.progress >= co.maxProgress and taskMo.finishCount <= 0 then
+			local taskParam = string.splitToNumber(co.listenerParam, "#")
 
-			arg_21_0.taskRed[var_21_2[1]] = arg_21_0.taskRed[var_21_2[1]] or {}
-			arg_21_0.taskRed[var_21_2[1]][var_21_2[2]] = true
+			self.taskRed[taskParam[1]] = self.taskRed[taskParam[1]] or {}
+			self.taskRed[taskParam[1]][taskParam[2]] = true
 		end
 	end
 end
 
-function var_0_0.getTaskRed(arg_22_0, arg_22_1, arg_22_2)
-	return arg_22_0.taskRed and arg_22_0.taskRed[arg_22_1] and arg_22_0.taskRed[arg_22_1][arg_22_2] or false
+function ExploreSimpleModel:getTaskRed(chapterId, coinType)
+	return self.taskRed and self.taskRed[chapterId] and self.taskRed[chapterId][coinType] or false
 end
 
-function var_0_0.markChapterNew(arg_23_0, arg_23_1)
-	arg_23_0:_getLocalData()
+function ExploreSimpleModel:markChapterNew(chapterId)
+	self:_getLocalData()
 
-	if arg_23_0:getChapterIsNew(arg_23_1) then
-		local var_23_0 = tostring(arg_23_1)
+	if self:getChapterIsNew(chapterId) then
+		local key = tostring(chapterId)
 
-		if arg_23_0.localData[var_23_0] then
-			arg_23_0.localData[var_23_0].isMark = true
+		if self.localData[key] then
+			self.localData[key].isMark = true
 		else
-			arg_23_0.localData[var_23_0] = {
+			self.localData[key] = {
 				isMark = true
 			}
 		end
 
-		arg_23_0:savePrefData()
+		self:savePrefData()
 	end
 end
 
-function var_0_0.markChapterShowUnlock(arg_24_0, arg_24_1)
-	arg_24_0:_getLocalData()
+function ExploreSimpleModel:markChapterShowUnlock(chapterId)
+	self:_getLocalData()
 
-	if not arg_24_0:getChapterIsShowUnlock(arg_24_1) then
-		local var_24_0 = tostring(arg_24_1)
+	if not self:getChapterIsShowUnlock(chapterId) then
+		local key = tostring(chapterId)
 
-		if arg_24_0.localData[var_24_0] then
-			arg_24_0.localData[var_24_0].isShowUnlock = true
+		if self.localData[key] then
+			self.localData[key].isShowUnlock = true
 		else
-			arg_24_0.localData[var_24_0] = {
+			self.localData[key] = {
 				isShowUnlock = true
 			}
 		end
 
-		arg_24_0:savePrefData()
+		self:savePrefData()
 	end
 end
 
-function var_0_0.markEpisodeShowUnlock(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0:_getLocalData()
+function ExploreSimpleModel:markEpisodeShowUnlock(chapterId, episodeId)
+	self:_getLocalData()
 
-	if not arg_25_0:getEpisodeIsShowUnlock(arg_25_1, arg_25_2) then
-		local var_25_0 = tostring(arg_25_1)
-		local var_25_1 = arg_25_0.localData[var_25_0]
+	if not self:getEpisodeIsShowUnlock(chapterId, episodeId) then
+		local key = tostring(chapterId)
+		local data = self.localData[key]
 
-		if not var_25_1 then
-			var_25_1 = {}
-			arg_25_0.localData[var_25_0] = var_25_1
+		if not data then
+			data = {}
+			self.localData[key] = data
 		end
 
-		if not var_25_1.unLockEpisodes then
-			var_25_1.unLockEpisodes = {}
+		local unLockEpisodes = data.unLockEpisodes
+
+		if not unLockEpisodes then
+			unLockEpisodes = {}
+			data.unLockEpisodes = unLockEpisodes
 		end
 
-		table.insert(var_25_1.unLockEpisodes, arg_25_2)
-		arg_25_0:savePrefData()
+		table.insert(data.unLockEpisodes, episodeId)
+		self:savePrefData()
 	end
 end
 
-function var_0_0.markArchive(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	arg_26_0:_getLocalData()
+function ExploreSimpleModel:markArchive(chapterId, isNew, id)
+	self:_getLocalData()
 
-	if arg_26_2 or not arg_26_2 and arg_26_0:getHaveNewArchive(arg_26_1) ~= arg_26_2 then
-		local var_26_0 = tostring(arg_26_1)
+	if isNew or not isNew and self:getHaveNewArchive(chapterId) ~= isNew then
+		local key = tostring(chapterId)
 
-		if arg_26_2 then
-			arg_26_0.localData[var_26_0] = arg_26_0.localData[var_26_0] or {}
-			arg_26_0.localData[var_26_0].archive = arg_26_0.localData[var_26_0].archive or {}
+		if isNew then
+			self.localData[key] = self.localData[key] or {}
+			self.localData[key].archive = self.localData[key].archive or {}
 
-			table.insert(arg_26_0.localData[var_26_0].archive, arg_26_3)
-		elseif arg_26_0.localData[var_26_0] then
-			arg_26_0.localData[var_26_0].archive = nil
+			table.insert(self.localData[key].archive, id)
+		elseif self.localData[key] then
+			self.localData[key].archive = nil
 		end
 
-		arg_26_0:savePrefData()
+		self:savePrefData()
 	end
 end
 
-function var_0_0.getChapterIsNew(arg_27_0, arg_27_1)
-	if not arg_27_0:getChapterIsUnLock(arg_27_1) then
+function ExploreSimpleModel:getChapterIsNew(chapterId)
+	if not self:getChapterIsUnLock(chapterId) then
 		return false
 	end
 
-	arg_27_0:_getLocalData()
+	self:_getLocalData()
 
-	local var_27_0 = tostring(arg_27_1)
+	local key = tostring(chapterId)
 
-	return not arg_27_0.localData[var_27_0] or not arg_27_0.localData[var_27_0].isMark
+	return not self.localData[key] or not self.localData[key].isMark
 end
 
-function var_0_0.getChapterIsShowUnlock(arg_28_0, arg_28_1)
-	if not arg_28_0:getChapterIsUnLock(arg_28_1) then
+function ExploreSimpleModel:getChapterIsShowUnlock(chapterId)
+	if not self:getChapterIsUnLock(chapterId) then
 		return false
 	end
 
-	arg_28_0:_getLocalData()
+	self:_getLocalData()
 
-	local var_28_0 = tostring(arg_28_1)
+	local key = tostring(chapterId)
 
-	return arg_28_0.localData[var_28_0] and arg_28_0.localData[var_28_0].isShowUnlock
+	return self.localData[key] and self.localData[key].isShowUnlock
 end
 
-function var_0_0.getEpisodeIsShowUnlock(arg_29_0, arg_29_1, arg_29_2)
-	if not arg_29_0:getChapterIsUnLock(arg_29_1) then
+function ExploreSimpleModel:getEpisodeIsShowUnlock(chapterId, episodeId)
+	if not self:getChapterIsUnLock(chapterId) then
 		return false
 	end
 
-	arg_29_0:_getLocalData()
+	self:_getLocalData()
 
-	local var_29_0 = tostring(arg_29_1)
-	local var_29_1 = arg_29_0.localData[var_29_0]
+	local key = tostring(chapterId)
+	local data = self.localData[key]
 
-	if not var_29_1 or not var_29_1.unLockEpisodes then
+	if not data or not data.unLockEpisodes then
 		return false
 	end
 
-	return tabletool.indexOf(var_29_1.unLockEpisodes, arg_29_2) and true or false
+	return tabletool.indexOf(data.unLockEpisodes, episodeId) and true or false
 end
 
-function var_0_0.getCollectFullIsShow(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	if not arg_30_0:getChapterIsUnLock(arg_30_1) then
+function ExploreSimpleModel:getCollectFullIsShow(chapterId, collectType, episodeId)
+	if not self:getChapterIsUnLock(chapterId) then
 		return false
 	end
 
-	arg_30_0:_getLocalData()
+	self:_getLocalData()
 
-	local var_30_0 = tostring(arg_30_1)
-	local var_30_1 = arg_30_0.localData[var_30_0]
+	local key = tostring(chapterId)
+	local data = self.localData[key]
 
-	if var_30_1 and arg_30_3 then
-		var_30_1 = var_30_1[tostring(arg_30_3)]
+	if data and episodeId then
+		data = data[tostring(episodeId)]
 	end
 
-	if not var_30_1 then
+	if not data then
 		return false
 	end
 
-	arg_30_2 = string.format("collect%d", arg_30_2)
+	collectType = string.format("collect%d", collectType)
 
-	return var_30_1[arg_30_2] or false
+	return data[collectType] or false
 end
 
-function var_0_0.markCollectFullIsShow(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	if not arg_31_0:getChapterIsUnLock(arg_31_1) then
+function ExploreSimpleModel:markCollectFullIsShow(chapterId, collectType, episodeId)
+	if not self:getChapterIsUnLock(chapterId) then
 		return false
 	end
 
-	if not arg_31_0:getCollectFullIsShow(arg_31_1, arg_31_2, arg_31_3) then
-		local var_31_0 = tostring(arg_31_1)
-		local var_31_1 = arg_31_0.localData[var_31_0]
+	if not self:getCollectFullIsShow(chapterId, collectType, episodeId) then
+		local key = tostring(chapterId)
+		local data = self.localData[key]
 
-		if not var_31_1 then
-			var_31_1 = {}
-			arg_31_0.localData[var_31_0] = {}
+		if not data then
+			data = {}
+			self.localData[key] = {}
 		end
 
-		arg_31_2 = string.format("collect%d", arg_31_2)
+		collectType = string.format("collect%d", collectType)
 
-		if arg_31_3 then
-			arg_31_3 = tostring(arg_31_3)
-			var_31_1 = arg_31_0.localData[var_31_0][arg_31_3]
+		if episodeId then
+			episodeId = tostring(episodeId)
+			data = self.localData[key][episodeId]
 
-			if not var_31_1 then
-				var_31_1 = {}
-				arg_31_0.localData[var_31_0][arg_31_3] = var_31_1
+			if not data then
+				data = {}
+				self.localData[key][episodeId] = data
 			end
 		end
 
-		var_31_1[arg_31_2] = true
+		data[collectType] = true
 
-		arg_31_0:savePrefData()
+		self:savePrefData()
 	end
 end
 
-function var_0_0.getLastSelectMap(arg_32_0)
-	arg_32_0:_getLocalData()
+function ExploreSimpleModel:getLastSelectMap()
+	self:_getLocalData()
 
-	local var_32_0 = arg_32_0.localData.lastChapterId
-	local var_32_1 = arg_32_0.localData.lastEpisodeId
+	local chapterId, episodeId = self.localData.lastChapterId, self.localData.lastEpisodeId
 
-	return var_32_0, var_32_1
+	return chapterId, episodeId
 end
 
-function var_0_0.setLastSelectMap(arg_33_0, arg_33_1, arg_33_2)
-	arg_33_0:_getLocalData()
+function ExploreSimpleModel:setLastSelectMap(chapterId, episodeId)
+	self:_getLocalData()
 
-	arg_33_0.localData.lastChapterId, arg_33_0.localData.lastEpisodeId = arg_33_1, arg_33_2
+	self.localData.lastChapterId, self.localData.lastEpisodeId = chapterId, episodeId
 
-	arg_33_0:savePrefData()
+	self:savePrefData()
 end
 
-function var_0_0.getHaveNewArchive(arg_34_0, arg_34_1)
-	arg_34_0:_getLocalData()
+function ExploreSimpleModel:getHaveNewArchive(chapterId)
+	self:_getLocalData()
 
-	local var_34_0 = tostring(arg_34_1)
+	local key = tostring(chapterId)
 
-	return arg_34_0.localData[var_34_0] and arg_34_0.localData[var_34_0].archive or false
+	return self.localData[key] and self.localData[key].archive or false
 end
 
-function var_0_0.getNewArchives(arg_35_0, arg_35_1)
-	arg_35_0:_getLocalData()
+function ExploreSimpleModel:getNewArchives(chapterId)
+	self:_getLocalData()
 
-	local var_35_0 = tostring(arg_35_1)
+	local key = tostring(chapterId)
 
-	return arg_35_0.localData[var_35_0] and arg_35_0.localData[var_35_0].archive or {}
+	return self.localData[key] and self.localData[key].archive or {}
 end
 
-function var_0_0._getLocalData(arg_36_0)
-	if not arg_36_0.localData then
-		local var_36_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.ExploreRedDotData .. PlayerModel.instance:getMyUserId(), "")
+function ExploreSimpleModel:_getLocalData()
+	if not self.localData then
+		local data = PlayerPrefsHelper.getString(PlayerPrefsKey.ExploreRedDotData .. PlayerModel.instance:getMyUserId(), "")
 
-		if string.nilorempty(var_36_0) then
-			arg_36_0.localData = {}
+		if string.nilorempty(data) then
+			self.localData = {}
 		else
-			arg_36_0.localData = cjson.decode(var_36_0)
+			self.localData = cjson.decode(data)
 		end
 	end
 
-	return arg_36_0.localData
+	return self.localData
 end
 
-function var_0_0.setDelaySave(arg_37_0, arg_37_1)
-	arg_37_0._delaySave = arg_37_1
+function ExploreSimpleModel:setDelaySave(isDelaySave)
+	self._delaySave = isDelaySave
 
-	if not arg_37_0._delaySave then
-		arg_37_0:savePrefData()
+	if not self._delaySave then
+		self:savePrefData()
 	end
 end
 
-function var_0_0.savePrefData(arg_38_0)
-	if arg_38_0._delaySave then
+function ExploreSimpleModel:savePrefData()
+	if self._delaySave then
 		return
 	end
 
-	local var_38_0 = cjson.encode(arg_38_0.localData)
+	local str = cjson.encode(self.localData)
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.ExploreRedDotData .. PlayerModel.instance:getMyUserId(), var_38_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.ExploreRedDotData .. PlayerModel.instance:getMyUserId(), str)
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreSimpleModel.instance = ExploreSimpleModel.New()
 
-return var_0_0
+return ExploreSimpleModel

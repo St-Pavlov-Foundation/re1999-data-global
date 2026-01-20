@@ -1,134 +1,136 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorHeroSelectItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorHeroSelectItem.lua
 
-local var_0_0 = class("SkillEditorHeroSelectItem", ListScrollCell)
+module("modules.logic.fight.view.preview.SkillEditorHeroSelectItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._text = gohelper.findChildText(arg_1_1, "Text")
-	arg_1_0._text1 = gohelper.findChildText(arg_1_1, "imgSelect/Text")
-	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
-	arg_1_0._selectGO = gohelper.findChild(arg_1_1, "imgSelect")
+local SkillEditorHeroSelectItem = class("SkillEditorHeroSelectItem", ListScrollCell)
+
+function SkillEditorHeroSelectItem:init(go)
+	self._text = gohelper.findChildText(go, "Text")
+	self._text1 = gohelper.findChildText(go, "imgSelect/Text")
+	self._click = SLFramework.UGUI.UIClickListener.Get(go)
+	self._selectGO = gohelper.findChild(go, "imgSelect")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
+function SkillEditorHeroSelectItem:addEventListeners()
+	self._click:AddClickListener(self._onClickThis, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function SkillEditorHeroSelectItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function SkillEditorHeroSelectItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_4_0 = arg_4_1.co
+	local co = mo.co
 
 	if SkillEditorHeroSelectModel.instance.selectType == SkillEditorMgr.SelectType.Hero or SkillEditorHeroSelectModel.instance.selectType == SkillEditorMgr.SelectType.SubHero then
-		arg_4_0._text.text = var_4_0.skinId .. (var_4_0.name and "\n" .. var_4_0.name or "")
-		arg_4_0._text1.text = var_4_0.skinId .. (var_4_0.name and "\n" .. var_4_0.name or "")
+		self._text.text = co.skinId .. (co.name and "\n" .. co.name or "")
+		self._text1.text = co.skinId .. (co.name and "\n" .. co.name or "")
 	elseif SkillEditorHeroSelectModel.instance.selectType == SkillEditorMgr.SelectType.Monster then
-		local var_4_1 = FightConfig.instance:getSkinCO(var_4_0.skinId)
-		local var_4_2 = var_4_1 and var_4_1.name or nil
+		local skin_config = FightConfig.instance:getSkinCO(co.skinId)
+		local show_name = skin_config and skin_config.name or nil
 
-		if not var_4_1 then
-			logError("皮肤表找不到id,怪物模型id：", var_4_0.skinId)
+		if not skin_config then
+			logError("皮肤表找不到id,怪物模型id：", co.skinId)
 		end
 
-		arg_4_0._text.text = var_4_0.skinId .. (var_4_2 and "\n" .. var_4_2 or "")
-		arg_4_0._text1.text = var_4_0.skinId .. (var_4_2 and "\n" .. var_4_2 or "")
+		self._text.text = co.skinId .. (show_name and "\n" .. show_name or "")
+		self._text1.text = co.skinId .. (show_name and "\n" .. show_name or "")
 	elseif SkillEditorHeroSelectModel.instance.selectType == SkillEditorMgr.SelectType.Group then
-		local var_4_3 = string.splitToNumber(var_4_0.monster, "#")
-		local var_4_4 = lua_monster.configDict[var_4_3[1]]
+		local monsterIds = string.splitToNumber(co.monster, "#")
+		local monsterCO = lua_monster.configDict[monsterIds[1]]
 
-		for iter_4_0 = 2, #var_4_3 do
-			if tabletool.indexOf(string.splitToNumber(var_4_0.bossId, "#"), var_4_3[iter_4_0]) then
-				var_4_4 = lua_monster.configDict[var_4_3[iter_4_0]]
+		for i = 2, #monsterIds do
+			if tabletool.indexOf(string.splitToNumber(co.bossId, "#"), monsterIds[i]) then
+				monsterCO = lua_monster.configDict[monsterIds[i]]
 
 				break
 			end
 		end
 
-		arg_4_0._text.text = var_4_0.id .. (var_4_4 and var_4_4.name and "\n" .. var_4_4.name or "")
-		arg_4_0._text1.text = var_4_0.id .. (var_4_4 and var_4_4.name and "\n" .. var_4_4.name or "")
+		self._text.text = co.id .. (monsterCO and monsterCO.name and "\n" .. monsterCO.name or "")
+		self._text1.text = co.id .. (monsterCO and monsterCO.name and "\n" .. monsterCO.name or "")
 	else
-		arg_4_0._text.text = var_4_0.id .. (var_4_0.name and "\n" .. var_4_0.name or "")
-		arg_4_0._text1.text = var_4_0.id .. (var_4_0.name and "\n" .. var_4_0.name or "")
+		self._text.text = co.id .. (co.name and "\n" .. co.name or "")
+		self._text1.text = co.id .. (co.name and "\n" .. co.name or "")
 	end
 end
 
-function var_0_0.onSelect(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._selectGO, arg_5_1)
+function SkillEditorHeroSelectItem:onSelect(isSelect)
+	gohelper.setActive(self._selectGO, isSelect)
 end
 
-function var_0_0._onClickThis(arg_6_0)
-	arg_6_0._view:selectCell(arg_6_0._mo.id, true)
+function SkillEditorHeroSelectItem:_onClickThis()
+	self._view:selectCell(self._mo.id, true)
 
-	local var_6_0 = SkillEditorHeroSelectModel.instance.selectType
-	local var_6_1 = SkillEditorHeroSelectModel.instance.side
-	local var_6_2 = SkillEditorHeroSelectModel.instance.stancePosId
-	local var_6_3, var_6_4 = SkillEditorMgr.instance:getTypeInfo(var_6_1)
-	local var_6_5 = arg_6_0._mo.co
-	local var_6_6 = arg_6_0._mo.co.id
+	local selectType = SkillEditorHeroSelectModel.instance.selectType
+	local side = SkillEditorHeroSelectModel.instance.side
+	local stancePosId = SkillEditorHeroSelectModel.instance.stancePosId
+	local oldType, info = SkillEditorMgr.instance:getTypeInfo(side)
+	local co = self._mo.co
+	local newId = self._mo.co.id
 
-	if var_6_0 == SkillEditorMgr.SelectType.Group then
-		var_6_4.ids = {}
-		var_6_4.skinIds = {}
-		var_6_4.groupId = var_6_6
+	if selectType == SkillEditorMgr.SelectType.Group then
+		info.ids = {}
+		info.skinIds = {}
+		info.groupId = newId
 
-		local var_6_7 = lua_monster_group.configDict[var_6_6]
-		local var_6_8 = string.splitToNumber(var_6_7.monster, "#")
+		local monsterGroupCO = lua_monster_group.configDict[newId]
+		local monsterIds = string.splitToNumber(monsterGroupCO.monster, "#")
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_8) do
-			local var_6_9 = lua_monster.configDict[iter_6_1]
+		for _, monsterId in ipairs(monsterIds) do
+			local monsterCO = lua_monster.configDict[monsterId]
 
-			if var_6_9 then
-				local var_6_10 = FightConfig.instance:getSkinCO(var_6_9.skinId)
+			if monsterCO then
+				local skinCO = FightConfig.instance:getSkinCO(monsterCO.skinId)
 
-				if not var_6_10 or string.nilorempty(var_6_10.spine) then
-					GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, var_6_5.skinId or var_6_5.id)
+				if not skinCO or string.nilorempty(skinCO.spine) then
+					GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, co.skinId or co.id)
 
 					return
 				end
 
-				table.insert(var_6_4.ids, iter_6_1)
-				table.insert(var_6_4.skinIds, var_6_9.skinId)
+				table.insert(info.ids, monsterId)
+				table.insert(info.skinIds, monsterCO.skinId)
 			end
 		end
 
-		SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectStance, var_6_1, var_6_7.stanceId, false)
-	elseif var_6_0 == SkillEditorMgr.SelectType.SubHero then
-		SkillEditorMgr.instance:addSubHero(arg_6_0._mo.co.id, arg_6_0._mo.co.skinId)
+		SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectStance, side, monsterGroupCO.stanceId, false)
+	elseif selectType == SkillEditorMgr.SelectType.SubHero then
+		SkillEditorMgr.instance:addSubHero(self._mo.co.id, self._mo.co.skinId)
 
 		return
 	else
-		local var_6_11 = var_6_4.ids[1]
-		local var_6_12 = var_6_0 == SkillEditorMgr.SelectType.Hero and arg_6_0._mo.co or lua_monster.configDict[var_6_6]
-		local var_6_13 = FightConfig.instance:getSkinCO(var_6_12.skinId)
+		local firstId = info.ids[1]
+		local co = selectType == SkillEditorMgr.SelectType.Hero and self._mo.co or lua_monster.configDict[newId]
+		local skinCO = FightConfig.instance:getSkinCO(co.skinId)
 
-		if not var_6_13 or string.nilorempty(var_6_13.spine) then
-			GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, var_6_12.skinId or var_6_12.id)
+		if not skinCO or string.nilorempty(skinCO.spine) then
+			GameFacade.showToast(ToastEnum.SkillEditorHeroSelect, co.skinId or co.id)
 
 			return
 		end
 
-		if var_6_2 then
-			var_6_4.ids[var_6_2] = var_6_6
-			var_6_4.skinIds[var_6_2] = var_6_12.skinId
+		if stancePosId then
+			info.ids[stancePosId] = newId
+			info.skinIds[stancePosId] = co.skinId
 		else
-			for iter_6_2, iter_6_3 in ipairs(var_6_4.ids) do
-				if iter_6_3 == var_6_11 or var_6_3 ~= var_6_0 then
-					var_6_4.ids[iter_6_2] = var_6_6
-					var_6_4.skinIds[iter_6_2] = var_6_12.skinId
+			for i, id in ipairs(info.ids) do
+				if id == firstId or oldType ~= selectType then
+					info.ids[i] = newId
+					info.skinIds[i] = co.skinId
 				end
 			end
 		end
 
-		var_6_4.groupId = nil
+		info.groupId = nil
 	end
 
-	SkillEditorMgr.instance:setTypeInfo(var_6_1, var_6_0, var_6_4.ids, var_6_4.skinIds, var_6_4.groupId)
-	SkillEditorMgr.instance:refreshInfo(var_6_1)
-	SkillEditorMgr.instance:rebuildEntitys(var_6_1)
-	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, var_6_1)
+	SkillEditorMgr.instance:setTypeInfo(side, selectType, info.ids, info.skinIds, info.groupId)
+	SkillEditorMgr.instance:refreshInfo(side)
+	SkillEditorMgr.instance:rebuildEntitys(side)
+	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, side)
 end
 
-return var_0_0
+return SkillEditorHeroSelectItem

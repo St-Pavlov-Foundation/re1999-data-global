@@ -1,126 +1,135 @@
-﻿module("modules.logic.sp01.assassin2.controller.AssassinStealthGameHelper", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/AssassinStealthGameHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.sp01.assassin2.controller.AssassinStealthGameHelper", package.seeall)
 
-function var_0_0.getSelectedHeroPointType()
-	local var_1_0
-	local var_1_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+local AssassinStealthGameHelper = _M
 
-	if var_1_1 then
-		local var_1_2 = AssassinStealthGameModel.instance:getMapId()
-		local var_1_3, var_1_4 = var_1_1:getPos()
+function AssassinStealthGameHelper.getSelectedHeroPointType()
+	local result
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
 
-		var_1_0 = AssassinConfig.instance:getGridPointType(var_1_2, var_1_3, var_1_4)
+	if heroGameMo then
+		local mapId = AssassinStealthGameModel.instance:getMapId()
+		local heroGridId, heroPointIndex = heroGameMo:getPos()
+
+		result = AssassinConfig.instance:getGridPointType(mapId, heroGridId, heroPointIndex)
 	end
 
-	return var_1_0
+	return result
 end
 
-function var_0_0.getSelectedHeroMoveActId(arg_2_0, arg_2_1)
-	local var_2_0 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+function AssassinStealthGameHelper.getSelectedHeroMoveActId(targetGridId, targetPointIndex)
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
 
-	if not var_2_0 then
+	if not heroGameMo then
 		return
 	end
 
-	local var_2_1
-	local var_2_2 = var_2_0:getPos()
-	local var_2_3 = var_2_0:getStatus()
-	local var_2_4 = var_0_0.getSelectedHeroPointType() == AssassinEnum.StealthGamePointType.Tower
-	local var_2_5 = var_2_2 == arg_2_0
+	local result
+	local heroGridId = heroGameMo:getPos()
+	local heroStatus = heroGameMo:getStatus()
+	local heroPointType = AssassinStealthGameHelper.getSelectedHeroPointType()
+	local isHeroInTower = heroPointType == AssassinEnum.StealthGamePointType.Tower
+	local isSameGrid = heroGridId == targetGridId
 
-	if arg_2_1 then
-		local var_2_6 = AssassinStealthGameModel.instance:getMapId()
-		local var_2_7 = AssassinConfig.instance:getGridPointType(var_2_6, arg_2_0, arg_2_1)
-		local var_2_8 = var_2_7 == AssassinEnum.StealthGamePointType.HayStack
-		local var_2_9 = var_2_7 == AssassinEnum.StealthGamePointType.Garden
-		local var_2_10 = var_2_7 == AssassinEnum.StealthGamePointType.Tower
+	if targetPointIndex then
+		local mapId = AssassinStealthGameModel.instance:getMapId()
+		local targetPointType = AssassinConfig.instance:getGridPointType(mapId, targetGridId, targetPointIndex)
+		local targetPointIsHayStack = targetPointType == AssassinEnum.StealthGamePointType.HayStack
+		local targetPointIsGarden = targetPointType == AssassinEnum.StealthGamePointType.Garden
+		local targetPointIsTower = targetPointType == AssassinEnum.StealthGamePointType.Tower
 
-		if var_2_4 then
-			if var_2_8 then
-				var_2_1 = AssassinEnum.HeroAct.Jump
+		if isHeroInTower then
+			if targetPointIsHayStack then
+				result = AssassinEnum.HeroAct.Jump
 			end
-		elseif var_2_10 then
-			if AssassinConfig.instance:getTowerGridDict(var_2_6, arg_2_0, arg_2_1)[var_2_2] then
-				var_2_1 = AssassinEnum.HeroAct.ClimbTower
+		elseif targetPointIsTower then
+			local towerGridDict = AssassinConfig.instance:getTowerGridDict(mapId, targetGridId, targetPointIndex)
+
+			if towerGridDict[heroGridId] then
+				result = AssassinEnum.HeroAct.ClimbTower
 			end
-		elseif var_2_5 and (var_2_8 or var_2_9) and var_2_3 == AssassinEnum.HeroStatus.Stealth then
-			var_2_1 = AssassinEnum.HeroAct.Hide
+		elseif isSameGrid and (targetPointIsHayStack or targetPointIsGarden) and heroStatus == AssassinEnum.HeroStatus.Stealth then
+			result = AssassinEnum.HeroAct.Hide
 		end
-	elseif var_2_4 then
-		var_2_1 = AssassinEnum.HeroAct.LeaveTower
-	elseif var_2_5 then
-		if var_2_3 == AssassinEnum.HeroStatus.Hide then
-			var_2_1 = AssassinEnum.HeroAct.LeaveHide
+	elseif isHeroInTower then
+		result = AssassinEnum.HeroAct.LeaveTower
+	elseif isSameGrid then
+		if heroStatus == AssassinEnum.HeroStatus.Hide then
+			result = AssassinEnum.HeroAct.LeaveHide
 		end
 	else
-		var_2_1 = AssassinEnum.HeroAct.Move
+		result = AssassinEnum.HeroAct.Move
 	end
 
-	return var_2_1
+	return result
 end
 
-function var_0_0.getSelectedHeroAttackActId(arg_3_0)
-	local var_3_0 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
-	local var_3_1
+function AssassinStealthGameHelper.getSelectedHeroAttackActId(argsEnemyUid)
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local enemyGameMo
 
-	if arg_3_0 then
-		var_3_1 = AssassinStealthGameModel.instance:getEnemyMo(arg_3_0, true)
+	if argsEnemyUid then
+		enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(argsEnemyUid, true)
 	else
-		var_3_1 = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
+		enemyGameMo = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
 	end
 
-	if not var_3_0 or not var_3_1 then
+	if not heroGameMo or not enemyGameMo then
 		return
 	end
 
-	if var_0_0.getSelectedHeroPointType() == AssassinEnum.StealthGamePointType.Tower then
+	local heroPointType = AssassinStealthGameHelper.getSelectedHeroPointType()
+	local isInTower = heroPointType == AssassinEnum.StealthGamePointType.Tower
+
+	if isInTower then
 		return
 	end
 
-	local var_3_2 = var_3_0:getPos()
+	local heroGridId = heroGameMo:getPos()
+	local enemyGridId = enemyGameMo:getPos()
 
-	if var_3_2 ~= var_3_1:getPos() then
+	if heroGridId ~= enemyGridId then
 		return
 	end
 
-	local var_3_3
-	local var_3_4
-	local var_3_5 = var_3_0:getStatus()
-	local var_3_6 = var_3_5 == AssassinEnum.HeroStatus.Stealth
-	local var_3_7 = var_3_5 == AssassinEnum.HeroStatus.Expose
+	local actId, togetherActId
+	local selectedHeroStatus = heroGameMo:getStatus()
+	local selectedHeroIsStealth = selectedHeroStatus == AssassinEnum.HeroStatus.Stealth
+	local selectedHeroIsExpose = selectedHeroStatus == AssassinEnum.HeroStatus.Expose
 
-	if var_3_6 then
-		var_3_3 = AssassinEnum.HeroAct.Ambush
-	elseif var_3_7 then
-		var_3_3 = AssassinEnum.HeroAct.Attack
+	if selectedHeroIsStealth then
+		actId = AssassinEnum.HeroAct.Ambush
+	elseif selectedHeroIsExpose then
+		actId = AssassinEnum.HeroAct.Attack
 	end
 
-	if var_3_6 or var_3_7 then
-		local var_3_8 = var_3_0:getUid()
-		local var_3_9 = AssassinStealthGameModel.instance:getGridEntityIdList(var_3_2, false, var_3_8)
+	if selectedHeroIsStealth or selectedHeroIsExpose then
+		local curHeroUid = heroGameMo:getUid()
+		local sameGridHeroUidList = AssassinStealthGameModel.instance:getGridEntityIdList(heroGridId, false, curHeroUid)
 
-		if #var_3_9 > 0 then
-			local var_3_10 = AssassinStealthGameModel.instance:getMapId()
+		if #sameGridHeroUidList > 0 then
+			local mapId = AssassinStealthGameModel.instance:getMapId()
 
-			for iter_3_0, iter_3_1 in ipairs(var_3_9) do
-				local var_3_11 = AssassinStealthGameModel.instance:getHeroMo(iter_3_1, true)
-				local var_3_12, var_3_13 = var_3_11:getPos()
+			for _, heroUid in ipairs(sameGridHeroUidList) do
+				local heroMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
+				local _, pointIndex = heroMo:getPos()
+				local pointType = AssassinConfig.instance:getGridPointType(mapId, heroGridId, pointIndex)
 
-				if AssassinConfig.instance:getGridPointType(var_3_10, var_3_2, var_3_13) ~= AssassinEnum.StealthGamePointType.Tower then
-					local var_3_14 = var_3_11:getStatus()
+				if pointType ~= AssassinEnum.StealthGamePointType.Tower then
+					local status = heroMo:getStatus()
 
-					if var_3_14 == AssassinEnum.HeroStatus.Stealth then
-						var_3_4 = AssassinEnum.HeroAct.AmbushTogether
+					if status == AssassinEnum.HeroStatus.Stealth then
+						togetherActId = AssassinEnum.HeroAct.AmbushTogether
 
 						break
-					elseif var_3_14 == AssassinEnum.HeroStatus.Expose then
-						if var_3_6 then
-							var_3_4 = AssassinEnum.HeroAct.AmbushTogether
+					elseif status == AssassinEnum.HeroStatus.Expose then
+						if selectedHeroIsStealth then
+							togetherActId = AssassinEnum.HeroAct.AmbushTogether
 
 							break
 						else
-							var_3_4 = AssassinEnum.HeroAct.AttackTogether
+							togetherActId = AssassinEnum.HeroAct.AttackTogether
 						end
 					end
 				end
@@ -128,244 +137,299 @@ function var_0_0.getSelectedHeroAttackActId(arg_3_0)
 		end
 	end
 
-	return var_3_3, var_3_4
+	return actId, togetherActId
 end
 
-function var_0_0.getSelectedHeroAssassinateActId(arg_4_0)
-	local var_4_0 = true
-	local var_4_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
-	local var_4_2
+function AssassinStealthGameHelper.getSelectedHeroAssassinateActId(argsEnemyUid)
+	local isBoss = true
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local enemyGameMo
 
-	if arg_4_0 then
-		var_4_2 = AssassinStealthGameModel.instance:getEnemyMo(arg_4_0, true)
+	if argsEnemyUid then
+		enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(argsEnemyUid, true)
 	else
-		var_4_2 = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
+		enemyGameMo = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
 	end
 
-	if var_4_2 then
-		local var_4_3 = var_4_2:getMonsterId()
+	if enemyGameMo then
+		local monsterId = enemyGameMo:getMonsterId()
 
-		var_4_0 = AssassinConfig.instance:getEnemyIsBoss(var_4_3)
+		isBoss = AssassinConfig.instance:getEnemyIsBoss(monsterId)
 	end
 
-	if not var_4_1 or var_4_0 then
+	if not heroGameMo or isBoss then
 		return
 	end
 
-	local var_4_4
-	local var_4_5 = var_4_1:getStatus()
+	local result
+	local status = heroGameMo:getStatus()
 
-	if var_4_5 == AssassinEnum.HeroStatus.Stealth then
-		var_4_4 = AssassinEnum.HeroAct.Assassinate
+	if status == AssassinEnum.HeroStatus.Stealth then
+		result = AssassinEnum.HeroAct.Assassinate
 
-		local var_4_6 = AssassinStealthGameModel.instance:getMapId()
-		local var_4_7, var_4_8 = var_4_1:getPos()
-		local var_4_9 = AssassinConfig.instance:getGridPointType(var_4_6, var_4_7, var_4_8)
-		local var_4_10 = AssassinConfig.instance:getGridType(var_4_6, var_4_7)
-		local var_4_11 = var_4_2:getPos()
+		local mapId = AssassinStealthGameModel.instance:getMapId()
+		local heroGridId, heroPointIndex = heroGameMo:getPos()
+		local pointType = AssassinConfig.instance:getGridPointType(mapId, heroGridId, heroPointIndex)
+		local heroGridType = AssassinConfig.instance:getGridType(mapId, heroGridId)
+		local enemyGridId = enemyGameMo:getPos()
+		local enemyGridType = AssassinConfig.instance:getGridType(mapId, enemyGridId)
+		local enemyIsInRoof = enemyGridType == AssassinEnum.StealthGameGridType.Roof
 
-		if not (AssassinConfig.instance:getGridType(var_4_6, var_4_11) == AssassinEnum.StealthGameGridType.Roof) and (var_4_10 == AssassinEnum.StealthGameGridType.Roof or var_4_9 == AssassinEnum.StealthGamePointType.Tower) then
-			var_4_4 = AssassinEnum.HeroAct.AirAssassinate
+		if not enemyIsInRoof and (heroGridType == AssassinEnum.StealthGameGridType.Roof or pointType == AssassinEnum.StealthGamePointType.Tower) then
+			result = AssassinEnum.HeroAct.AirAssassinate
 		end
-	elseif var_4_5 == AssassinEnum.HeroStatus.Hide then
-		var_4_4 = AssassinEnum.HeroAct.HideAssassinate
+	elseif status == AssassinEnum.HeroStatus.Hide then
+		result = AssassinEnum.HeroAct.HideAssassinate
 	end
 
-	return var_4_4
+	return result
 end
 
-function var_0_0.checkHero(arg_5_0)
-	local var_5_0 = AssassinEnum.HeroStatus.Dead
-	local var_5_1
+function AssassinStealthGameHelper.checkHero(argsHeroUid)
+	local status = AssassinEnum.HeroStatus.Dead
+	local heroGameMo
 
-	if arg_5_0 then
-		var_5_1 = AssassinStealthGameModel.instance:getHeroMo(arg_5_0)
+	if argsHeroUid then
+		heroGameMo = AssassinStealthGameModel.instance:getHeroMo(argsHeroUid)
 	else
-		var_5_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+		heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
 	end
 
-	if var_5_1 then
-		var_5_0 = var_5_1:getStatus()
+	if heroGameMo then
+		status = heroGameMo:getStatus()
 	end
 
-	return var_5_0 ~= AssassinEnum.HeroStatus.Dead
+	return status ~= AssassinEnum.HeroStatus.Dead
 end
 
-function var_0_0.isDeadEnemy(arg_6_0)
-	local var_6_0 = true
-	local var_6_1 = AssassinStealthGameModel.instance:getEnemyMo(arg_6_0)
+function AssassinStealthGameHelper.isDeadEnemy(enemyUid)
+	local result = true
+	local enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(enemyUid)
 
-	if var_6_1 then
-		var_6_0 = var_6_1:getIsDead()
+	if enemyGameMo then
+		result = enemyGameMo:getIsDead()
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.isCanSelectHero(arg_7_0)
-	if not var_0_0.checkHero(arg_7_0) then
+function AssassinStealthGameHelper.isCanSelectHero(heroUid)
+	local checkHeroResult = AssassinStealthGameHelper.checkHero(heroUid)
+
+	if not checkHeroResult then
 		return false
 	end
 
-	if AssassinStealthGameModel.instance:getSelectedSkillProp() then
+	local selectedSkillPropId = AssassinStealthGameModel.instance:getSelectedSkillProp()
+
+	if selectedSkillPropId then
 		return false
 	end
 
-	return (AssassinStealthGameModel.instance:isPlayerTurn())
+	local isPlayerTurn = AssassinStealthGameModel.instance:isPlayerTurn()
+
+	return isPlayerTurn
 end
 
-function var_0_0.isSelectedHeroCanMoveTo(arg_8_0, arg_8_1)
-	if not var_0_0.checkHero() then
+function AssassinStealthGameHelper.isSelectedHeroCanMoveTo(targetGridId, targetPointIndex)
+	local checkHeroResult = AssassinStealthGameHelper.checkHero()
+
+	if not checkHeroResult then
 		return false
 	end
 
-	if AssassinStealthGameModel.instance:getSelectedSkillProp() then
+	local selectedSkillPropId = AssassinStealthGameModel.instance:getSelectedSkillProp()
+
+	if selectedSkillPropId then
 		return false
 	end
 
-	local var_8_0 = AssassinStealthGameModel.instance:getMapId()
+	local mapId = AssassinStealthGameModel.instance:getMapId()
+	local isShow = AssassinConfig.instance:isShowGrid(mapId, targetGridId)
 
-	if not AssassinConfig.instance:isShowGrid(var_8_0, arg_8_0) then
+	if not isShow then
 		return false
 	end
 
-	if arg_8_1 then
-		if AssassinStealthGameModel.instance:getGridPointEntity(arg_8_0, arg_8_1) then
+	if targetPointIndex then
+		local posEntityUid = AssassinStealthGameModel.instance:getGridPointEntity(targetGridId, targetPointIndex)
+
+		if posEntityUid then
 			return false
 		end
-	elseif not AssassinStealthGameModel.instance:getGridEmptyPointIndex(arg_8_0) then
-		return false
+	else
+		local emptyPointIndex = AssassinStealthGameModel.instance:getGridEmptyPointIndex(targetGridId)
+
+		if not emptyPointIndex then
+			return false
+		end
 	end
 
-	local var_8_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
-	local var_8_2, var_8_3 = var_8_1:getPos()
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local heroGridId, heroPointIndex = heroGameMo:getPos()
+	local heroPointType = AssassinStealthGameHelper.getSelectedHeroPointType()
+	local isInTower = heroPointType == AssassinEnum.StealthGamePointType.Tower
 
-	if var_0_0.getSelectedHeroPointType() == AssassinEnum.StealthGamePointType.Tower then
-		if not AssassinConfig.instance:getTowerGridDict(var_8_0, var_8_2, var_8_3)[arg_8_0] then
+	if isInTower then
+		local towerGridDict = AssassinConfig.instance:getTowerGridDict(mapId, heroGridId, heroPointIndex)
+
+		if not towerGridDict[targetGridId] then
 			return false
 		end
 	else
-		local var_8_4 = var_8_1:getStatus() == AssassinEnum.HeroStatus.Hide
+		local heroStatus = heroGameMo:getStatus()
+		local isHide = heroStatus == AssassinEnum.HeroStatus.Hide
+		local targetPointType = targetPointIndex and AssassinConfig.instance:getGridPointType(mapId, targetGridId, targetPointIndex)
 
-		if (arg_8_1 and AssassinConfig.instance:getGridPointType(var_8_0, arg_8_0, arg_8_1)) == AssassinEnum.StealthGamePointType.Tower then
-			local var_8_5 = AssassinConfig.instance:getTowerGridDict(var_8_0, arg_8_0, arg_8_1)
+		if targetPointType == AssassinEnum.StealthGamePointType.Tower then
+			local towerGridDict = AssassinConfig.instance:getTowerGridDict(mapId, targetGridId, targetPointIndex)
 
-			if var_8_4 or not var_8_5[var_8_2] then
+			if isHide or not towerGridDict[heroGridId] then
 				return false
 			end
 		else
-			local var_8_6 = var_8_4 and AssassinEnum.StealthConst.HideMoveDis or AssassinEnum.StealthConst.MoveDis
-			local var_8_7, var_8_8 = AssassinConfig.instance:getGridPos(var_8_0, var_8_2)
-			local var_8_9, var_8_10 = AssassinConfig.instance:getGridPos(var_8_0, arg_8_0)
-			local var_8_11 = var_8_7 - var_8_9
-			local var_8_12 = var_8_8 - var_8_10
+			local moveDis = isHide and AssassinEnum.StealthConst.HideMoveDis or AssassinEnum.StealthConst.MoveDis
+			local heroX, heroY = AssassinConfig.instance:getGridPos(mapId, heroGridId)
+			local targetX, targetY = AssassinConfig.instance:getGridPos(mapId, targetGridId)
+			local dx = heroX - targetX
+			local dy = heroY - targetY
 
-			if var_8_6 * var_8_6 < var_8_11 * var_8_11 + var_8_12 * var_8_12 then
+			if moveDis * moveDis < dx * dx + dy * dy then
 				return false
 			end
 		end
 	end
 
-	if var_0_0.isHasWallBetweenGrid(var_8_2, arg_8_0) then
+	local isHasWall = AssassinStealthGameHelper.isHasWallBetweenGrid(heroGridId, targetGridId)
+
+	if isHasWall then
 		return false
 	end
 
-	local var_8_13 = var_0_0.getSelectedHeroMoveActId(arg_8_0, arg_8_1)
+	local moveActId = AssassinStealthGameHelper.getSelectedHeroMoveActId(targetGridId, targetPointIndex)
 
-	if not var_8_13 then
+	if not moveActId then
 		return false
 	end
 
-	return var_8_1:getActionPoint() >= AssassinConfig.instance:getAssassinActPower(var_8_13)
+	local curAp = heroGameMo:getActionPoint()
+	local needAp = AssassinConfig.instance:getAssassinActPower(moveActId)
+
+	return needAp <= curAp
 end
 
-function var_0_0.isAdjacentGrid(arg_9_0, arg_9_1)
-	local var_9_0 = AssassinStealthGameModel.instance:getMapId()
-	local var_9_1, var_9_2 = AssassinConfig.instance:getGridPos(var_9_0, arg_9_0)
-	local var_9_3, var_9_4 = AssassinConfig.instance:getGridPos(var_9_0, arg_9_1)
+function AssassinStealthGameHelper.isAdjacentGrid(gridId1, gridId2)
+	local mapId = AssassinStealthGameModel.instance:getMapId()
+	local x1, y1 = AssassinConfig.instance:getGridPos(mapId, gridId1)
+	local x2, y2 = AssassinConfig.instance:getGridPos(mapId, gridId2)
 
-	if not var_9_1 or not var_9_2 or not var_9_3 or not var_9_4 then
+	if not x1 or not y1 or not x2 or not y2 then
 		return false
 	end
 
-	return math.abs(var_9_1 - var_9_3) + math.abs(var_9_2 - var_9_4) == AssassinEnum.StealthConst.AdjacentDis
+	local xDis = math.abs(x1 - x2)
+	local yDis = math.abs(y1 - y2)
+	local totalDis = xDis + yDis
+
+	return totalDis == AssassinEnum.StealthConst.AdjacentDis
 end
 
-function var_0_0.isHasWallBetweenGrid(arg_10_0, arg_10_1)
-	if not var_0_0.isAdjacentGrid(arg_10_0, arg_10_1) then
+function AssassinStealthGameHelper.isHasWallBetweenGrid(gridId1, gridId2)
+	local isAdjacent = AssassinStealthGameHelper.isAdjacentGrid(gridId1, gridId2)
+
+	if not isAdjacent then
 		return false
 	end
 
-	local var_10_0
-	local var_10_1 = AssassinStealthGameModel.instance:getMapId()
-	local var_10_2, var_10_3 = AssassinConfig.instance:getGridPos(var_10_1, arg_10_0)
-	local var_10_4, var_10_5 = AssassinConfig.instance:getGridPos(var_10_1, arg_10_1)
+	local strWallId
+	local mapId = AssassinStealthGameModel.instance:getMapId()
+	local x1, y1 = AssassinConfig.instance:getGridPos(mapId, gridId1)
+	local x2, y2 = AssassinConfig.instance:getGridPos(mapId, gridId2)
 
-	if var_10_2 ~= var_10_4 then
-		local var_10_6 = var_10_2 < var_10_4 and var_10_2 or var_10_4
+	if x1 ~= x2 then
+		local wallX = x1 < x2 and x1 or x2
 
-		var_10_0 = string.format("%s%s%s", AssassinEnum.StealthConst.VerWallSign, var_10_6, var_10_3)
+		strWallId = string.format("%s%s%s", AssassinEnum.StealthConst.VerWallSign, wallX, y1)
 	else
-		local var_10_7 = var_10_3 < var_10_5 and var_10_3 or var_10_5
+		local wallY = y1 < y2 and y1 or y2
 
-		var_10_0 = string.format("%s%s%s", AssassinEnum.StealthConst.HorWallSign, var_10_2, var_10_7)
+		strWallId = string.format("%s%s%s", AssassinEnum.StealthConst.HorWallSign, x1, wallY)
 	end
 
-	return (AssassinConfig.instance:isShowWall(var_10_1, tonumber(var_10_0)))
+	local hasWall = AssassinConfig.instance:isShowWall(mapId, tonumber(strWallId))
+
+	return hasWall
 end
 
-function var_0_0.isSelectedHeroCanInteract()
-	if not var_0_0.checkHero() then
+function AssassinStealthGameHelper.isSelectedHeroCanInteract()
+	local checkHeroResult = AssassinStealthGameHelper.checkHero()
+
+	if not checkHeroResult then
 		return false
 	end
 
-	local var_11_0 = AssassinStealthGameModel.instance:getSelectedHeroGameMo():getPos()
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local heroGridId = heroGameMo:getPos()
+	local result = AssassinStealthGameModel.instance:isQTEInteractGrid(heroGridId)
 
-	return (AssassinStealthGameModel.instance:isQTEInteractGrid(var_11_0))
+	return result
 end
 
-function var_0_0.isSelectedHeroCanSelectEnemy(arg_12_0)
-	if not var_0_0.checkHero() then
+function AssassinStealthGameHelper.isSelectedHeroCanSelectEnemy(enemyUid)
+	local checkHeroResult = AssassinStealthGameHelper.checkHero()
+
+	if not checkHeroResult then
 		return false
 	end
 
-	if var_0_0.isDeadEnemy(arg_12_0) then
+	local isDead = AssassinStealthGameHelper.isDeadEnemy(enemyUid)
+
+	if isDead then
 		return false
 	end
 
-	local var_12_0 = false
-	local var_12_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
-	local var_12_2 = AssassinStealthGameModel.instance:getEnemyMo(arg_12_0)
-	local var_12_3, var_12_4 = var_12_1:getPos()
-	local var_12_5 = var_12_2:getPos()
+	local gridCheckResult = false
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(enemyUid)
+	local heroGridId, heroPointIndex = heroGameMo:getPos()
+	local enemyGridId = enemyGameMo:getPos()
 
-	if var_12_5 ~= var_12_3 then
-		local var_12_6 = AssassinStealthGameModel.instance:getMapId()
-		local var_12_7 = AssassinConfig.instance:getGridType(var_12_6, var_12_5) == AssassinEnum.StealthGameGridType.Roof
-		local var_12_8 = var_12_2:getMonsterId()
-		local var_12_9 = not AssassinConfig.instance:getEnemyIsBoss(var_12_8) and not var_12_7
+	if enemyGridId ~= heroGridId then
+		local mapId = AssassinStealthGameModel.instance:getMapId()
+		local enemyGridType = AssassinConfig.instance:getGridType(mapId, enemyGridId)
+		local enemyIsInRoof = enemyGridType == AssassinEnum.StealthGameGridType.Roof
+		local monsterId = enemyGameMo:getMonsterId()
+		local isBoss = AssassinConfig.instance:getEnemyIsBoss(monsterId)
+		local canBeAirAssassin = not isBoss and not enemyIsInRoof
+		local status = heroGameMo:getStatus()
 
-		if var_12_1:getStatus() == AssassinEnum.HeroStatus.Stealth and var_12_9 then
-			local var_12_10 = AssassinConfig.instance:getGridType(var_12_6, var_12_3)
-			local var_12_11 = var_0_0.getSelectedHeroPointType()
+		if status == AssassinEnum.HeroStatus.Stealth and canBeAirAssassin then
+			local heroGridType = AssassinConfig.instance:getGridType(mapId, heroGridId)
+			local heroPointType = AssassinStealthGameHelper.getSelectedHeroPointType()
 
-			if var_12_10 == AssassinEnum.StealthGameGridType.Roof then
-				if var_0_0.isAdjacentGrid(var_12_3, var_12_5) then
-					var_12_0 = true
+			if heroGridType == AssassinEnum.StealthGameGridType.Roof then
+				local isAdjacent = AssassinStealthGameHelper.isAdjacentGrid(heroGridId, enemyGridId)
+
+				if isAdjacent then
+					gridCheckResult = true
 				end
-			elseif var_12_11 == AssassinEnum.StealthGamePointType.Tower and AssassinConfig.instance:getTowerGridDict(var_12_6, var_12_3, var_12_4)[var_12_5] then
-				var_12_0 = true
+			elseif heroPointType == AssassinEnum.StealthGamePointType.Tower then
+				local towerGridDict = AssassinConfig.instance:getTowerGridDict(mapId, heroGridId, heroPointIndex)
+
+				if towerGridDict[enemyGridId] then
+					gridCheckResult = true
+				end
 			end
 		end
 	else
-		var_12_0 = true
+		gridCheckResult = true
 	end
 
-	if var_12_0 then
-		local var_12_12 = var_0_0.getSelectedHeroAssassinateActId(arg_12_0)
-		local var_12_13, var_12_14 = var_0_0.getSelectedHeroAttackActId(arg_12_0)
+	if gridCheckResult then
+		local assassinateActId = AssassinStealthGameHelper.getSelectedHeroAssassinateActId(enemyUid)
+		local attackId, togetherAttackActId = AssassinStealthGameHelper.getSelectedHeroAttackActId(enemyUid)
 
-		if var_12_12 or var_12_13 or var_12_14 then
+		if assassinateActId or attackId or togetherAttackActId then
 			return true
 		end
 	end
@@ -373,409 +437,477 @@ function var_0_0.isSelectedHeroCanSelectEnemy(arg_12_0)
 	return false
 end
 
-function var_0_0.isSelectedHeroCanRemoveEnemyBody(arg_13_0)
-	if not var_0_0.checkHero() then
+function AssassinStealthGameHelper.isSelectedHeroCanRemoveEnemyBody(enemyUid)
+	local checkHeroResult = AssassinStealthGameHelper.checkHero()
+
+	if not checkHeroResult then
 		return false
 	end
 
-	if AssassinStealthGameModel.instance:getSelectedSkillProp() then
+	local selectedSkillPropId = AssassinStealthGameModel.instance:getSelectedSkillProp()
+
+	if selectedSkillPropId then
 		return false
 	end
 
-	if var_0_0.getSelectedHeroPointType() == AssassinEnum.StealthGamePointType.Tower then
+	local heroPointType = AssassinStealthGameHelper.getSelectedHeroPointType()
+	local isHeroInTower = heroPointType == AssassinEnum.StealthGamePointType.Tower
+
+	if isHeroInTower then
 		return false
 	end
 
-	if not var_0_0.isDeadEnemy(arg_13_0) then
+	local isDead = AssassinStealthGameHelper.isDeadEnemy(enemyUid)
+
+	if not isDead then
 		return false
 	end
 
-	local var_13_0 = AssassinStealthGameModel.instance:getEnemyMo(arg_13_0)
+	local enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(enemyUid)
 
-	if not var_13_0 then
+	if not enemyGameMo then
 		return
 	end
 
-	local var_13_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
-	local var_13_2 = var_13_0:getPos()
-	local var_13_3 = var_13_1:getPos()
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local enemyGridId = enemyGameMo:getPos()
+	local heroGridId = heroGameMo:getPos()
 
-	if var_13_2 ~= var_13_3 then
+	if enemyGridId ~= heroGridId then
 		return false
 	end
 
-	if AssassinStealthGameModel.instance:isHasAliveEnemy(var_13_3) then
+	local hasAliveEnemy = AssassinStealthGameModel.instance:isHasAliveEnemy(heroGridId)
+
+	if hasAliveEnemy then
 		return false
 	end
 
-	return var_13_1:getActionPoint() >= AssassinConfig.instance:getAssassinActPower(AssassinEnum.HeroAct.HandleBody)
+	local curAp = heroGameMo:getActionPoint()
+	local needAp = AssassinConfig.instance:getAssassinActPower(AssassinEnum.HeroAct.HandleBody)
+
+	return needAp <= curAp
 end
 
-function var_0_0.isCanUseSkillProp(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = false
-	local var_14_1 = AssassinStealthGameModel.instance:getHeroMo(arg_14_0, true)
+function AssassinStealthGameHelper.isCanUseSkillProp(heroUid, skillPropId, isSkill)
+	local isHasSkillProp = false
+	local gameHeroMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
 
-	if var_14_1 then
-		var_14_0 = var_14_1:hasSkillProp(arg_14_1, arg_14_2, true)
+	if gameHeroMo then
+		isHasSkillProp = gameHeroMo:hasSkillProp(skillPropId, isSkill, true)
 	end
 
-	if not var_14_0 then
+	if not isHasSkillProp then
 		return false
 	end
 
-	local var_14_2 = AssassinStealthGameModel.instance:getMapId()
-	local var_14_3, var_14_4 = var_14_1:getPos()
-	local var_14_5 = AssassinConfig.instance:getGridType(var_14_2, var_14_3)
+	local mapId = AssassinStealthGameModel.instance:getMapId()
+	local heroGridId, heroPointIndex = gameHeroMo:getPos()
+	local heroGridType = AssassinConfig.instance:getGridType(mapId, heroGridId)
 
-	if arg_14_2 then
-		if var_14_5 == AssassinEnum.StealthGameGridType.Water then
+	if isSkill then
+		if heroGridType == AssassinEnum.StealthGameGridType.Water then
 			return false
 		end
-	elseif AssassinConfig.instance:getAssassinItemType(arg_14_1) == AssassinEnum.ItemType.AirCraft and var_14_5 ~= AssassinEnum.StealthGameGridType.Roof and AssassinConfig.instance:getGridPointType(var_14_2, var_14_3, var_14_4) ~= AssassinEnum.StealthGamePointType.Tower then
+	else
+		local itemType = AssassinConfig.instance:getAssassinItemType(skillPropId)
+
+		if itemType == AssassinEnum.ItemType.AirCraft and heroGridType ~= AssassinEnum.StealthGameGridType.Roof then
+			local heroPointType = AssassinConfig.instance:getGridPointType(mapId, heroGridId, heroPointIndex)
+
+			if heroPointType ~= AssassinEnum.StealthGamePointType.Tower then
+				return false
+			end
+		end
+	end
+
+	local checkLimit = AssassinStealthGameHelper._checkSkillPropUseLimit(heroUid, skillPropId, isSkill)
+
+	if not checkLimit then
 		return false
 	end
 
-	if not var_0_0._checkSkillPropUseLimit(arg_14_0, arg_14_1, arg_14_2) then
-		return false
-	end
+	local checkCost = AssassinStealthGameHelper._checkSkillPropCost(heroUid, skillPropId, isSkill)
 
-	if not var_0_0._checkSkillPropCost(arg_14_0, arg_14_1, arg_14_2) then
+	if not checkCost then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._checkSkillPropUseLimit(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = 0
-	local var_15_1 = 0
+function AssassinStealthGameHelper._checkSkillPropUseLimit(heroUid, skillPropId, isSkill)
+	local roundLimit, timesLimit = 0, 0
 
-	if arg_15_2 then
-		var_15_0 = AssassinConfig.instance:getAssassinSkillRoundLimit(arg_15_1)
-		var_15_1 = AssassinConfig.instance:getAssassinSkillTimesLimit(arg_15_1)
+	if isSkill then
+		roundLimit = AssassinConfig.instance:getAssassinSkillRoundLimit(skillPropId)
+		timesLimit = AssassinConfig.instance:getAssassinSkillTimesLimit(skillPropId)
 	else
-		var_15_0 = AssassinConfig.instance:getAssassinItemRoundLimit(arg_15_1)
+		roundLimit = AssassinConfig.instance:getAssassinItemRoundLimit(skillPropId)
 	end
 
-	local var_15_2 = AssassinStealthGameModel.instance:getHeroMo(arg_15_0, true)
-	local var_15_3 = var_15_2:getSkillPropRoundUseCount(arg_15_1, arg_15_2)
-	local var_15_4 = var_15_2:getSkillPropTotalUseCount(arg_15_1, arg_15_2)
-	local var_15_5 = var_15_0 ~= 0 and var_15_0 <= var_15_3
-	local var_15_6 = var_15_1 ~= 0 and var_15_1 <= var_15_4
+	local gameHeroMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
+	local roundUseCount = gameHeroMo:getSkillPropRoundUseCount(skillPropId, isSkill)
+	local totalUseCount = gameHeroMo:getSkillPropTotalUseCount(skillPropId, isSkill)
+	local isRoundLimit = roundLimit ~= 0 and roundLimit <= roundUseCount
+	local isTimeLimit = timesLimit ~= 0 and timesLimit <= totalUseCount
 
-	return not var_15_5 and not var_15_6
+	return not isRoundLimit and not isTimeLimit
 end
 
-function var_0_0._checkSkillPropCost(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = 0
+function AssassinStealthGameHelper._checkSkillPropCost(heroUid, skillPropId, isSkill)
+	local costAP = 0
 
-	if arg_16_2 then
-		local var_16_1, var_16_2 = AssassinConfig.instance:getAssassinSkillCost(arg_16_1)
+	if isSkill then
+		local costType, cost = AssassinConfig.instance:getAssassinSkillCost(skillPropId)
 
-		if var_16_1 == AssassinEnum.SkillCostType.AP then
-			var_16_0 = var_16_2
+		if costType == AssassinEnum.SkillCostType.AP then
+			costAP = cost
 		else
-			logError(string.format("AssassinStealthGameHelper._checkSkillPropCost error, not support cost type:%s", var_16_1))
+			logError(string.format("AssassinStealthGameHelper._checkSkillPropCost error, not support cost type:%s", costType))
 
 			return false
 		end
 	else
-		var_16_0 = AssassinConfig.instance:getAssassinItemCostPoint(arg_16_1)
+		costAP = AssassinConfig.instance:getAssassinItemCostPoint(skillPropId)
 	end
 
-	return var_16_0 <= AssassinStealthGameModel.instance:getHeroMo(arg_16_0, true):getActionPoint()
+	local gameHeroMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
+	local curAP = gameHeroMo:getActionPoint()
+
+	return costAP <= curAP
 end
 
-function var_0_0.isSelectedHeroCanUseSkillPropToHero(arg_17_0)
-	if not var_0_0.checkHero() then
+function AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToHero(targetHeroUid)
+	local checkHeroResult = AssassinStealthGameHelper.checkHero()
+
+	if not checkHeroResult then
 		return false
 	end
 
-	local var_17_0 = AssassinStealthGameModel.instance:getHeroMo(arg_17_0, true)
+	local targetHeroGameMo = AssassinStealthGameModel.instance:getHeroMo(targetHeroUid, true)
 
-	if not var_17_0 then
+	if not targetHeroGameMo then
 		return false
 	end
 
-	local var_17_1, var_17_2 = AssassinStealthGameModel.instance:getSelectedSkillProp()
+	local selectedSkillPropId, selectedIsSkill = AssassinStealthGameModel.instance:getSelectedSkillProp()
 
-	if not var_17_1 then
+	if not selectedSkillPropId then
 		return false
 	end
 
-	local var_17_3 = AssassinConfig.instance:getSkillPropTargetType(var_17_1, var_17_2)
+	local targetType = AssassinConfig.instance:getSkillPropTargetType(selectedSkillPropId, selectedIsSkill)
 
-	if var_17_3 ~= AssassinEnum.SkillPropTargetType.Hero then
+	if targetType ~= AssassinEnum.SkillPropTargetType.Hero then
 		return false
 	end
 
-	if not var_0_0._skillPropTargetCheck(var_17_1, var_17_2, var_17_3, arg_17_0) then
+	local targetCheck = AssassinStealthGameHelper._skillPropTargetCheck(selectedSkillPropId, selectedIsSkill, targetType, targetHeroUid)
+
+	if not targetCheck then
 		return false
 	end
 
-	local var_17_4 = AssassinStealthGameModel.instance:getSelectedHeroGameMo():getPos()
-	local var_17_5 = var_17_0:getPos()
+	local selectedHeroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local selectedHeroGridId = selectedHeroGameMo:getPos()
+	local targetGridId = targetHeroGameMo:getPos()
+	local rangeCheck = AssassinStealthGameHelper._checkSkillPropRange(selectedSkillPropId, selectedIsSkill, selectedHeroGridId, targetGridId)
 
-	if not var_0_0._checkSkillPropRange(var_17_1, var_17_2, var_17_4, var_17_5) then
+	if not rangeCheck then
 		return false
 	end
 
-	if var_17_2 then
-		local var_17_6 = false
+	if selectedIsSkill then
+		local isTargetDead = false
 
-		if var_17_1 ~= AssassinEnum.Skill.Cure and var_17_1 ~= AssassinEnum.Skill.CureAll then
-			local var_17_7 = AssassinStealthGameModel.instance:getHeroMo(arg_17_0, true)
+		if selectedSkillPropId ~= AssassinEnum.Skill.Cure and selectedSkillPropId ~= AssassinEnum.Skill.CureAll then
+			local targetHeroGameMO = AssassinStealthGameModel.instance:getHeroMo(targetHeroUid, true)
 
-			if var_17_7 then
-				var_17_6 = var_17_7:getStatus() == AssassinEnum.HeroStatus.Dead
+			if targetHeroGameMO then
+				local targetHeroStatus = targetHeroGameMO:getStatus()
+
+				isTargetDead = targetHeroStatus == AssassinEnum.HeroStatus.Dead
 			else
-				var_17_6 = true
+				isTargetDead = true
 			end
 		end
 
-		if var_17_6 then
+		if isTargetDead then
 			return false
 		end
 
-		if var_17_1 == AssassinEnum.Skill.AddAp and arg_17_0 == AssassinStealthGameModel.instance:getSelectedHero() then
-			return false
+		if selectedSkillPropId == AssassinEnum.Skill.AddAp then
+			local selectedHeroUid = AssassinStealthGameModel.instance:getSelectedHero()
+
+			if targetHeroUid == selectedHeroUid then
+				return false
+			end
 		end
 	end
 
 	return true
 end
 
-function var_0_0.isSelectedHeroCanUseSkillPropToEnemy(arg_18_0)
-	if not var_0_0.checkHero() then
+function AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(targetEnemyUid)
+	local checkHeroResult = AssassinStealthGameHelper.checkHero()
+
+	if not checkHeroResult then
 		return false
 	end
 
-	local var_18_0, var_18_1 = AssassinStealthGameModel.instance:getSelectedSkillProp()
+	local selectedSkillPropId, selectedIsSkill = AssassinStealthGameModel.instance:getSelectedSkillProp()
 
-	if not var_18_0 then
+	if not selectedSkillPropId then
 		return false
 	end
 
-	local var_18_2 = AssassinConfig.instance:getSkillPropTargetType(var_18_0, var_18_1)
+	local targetType = AssassinConfig.instance:getSkillPropTargetType(selectedSkillPropId, selectedIsSkill)
 
-	if var_18_2 ~= AssassinEnum.SkillPropTargetType.Enemy then
+	if targetType ~= AssassinEnum.SkillPropTargetType.Enemy then
 		return false
 	end
 
-	local var_18_3 = AssassinStealthGameModel.instance:getEnemyMo(arg_18_0)
-	local var_18_4 = var_18_3:getMonsterId()
+	local enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(targetEnemyUid)
+	local monsterId = enemyGameMo:getMonsterId()
+	local isBoss = AssassinConfig.instance:getEnemyIsBoss(monsterId)
 
-	if AssassinConfig.instance:getEnemyIsBoss(var_18_4) then
+	if isBoss then
 		return false
 	end
 
-	if not var_18_1 and AssassinConfig.instance:getAssassinItemType(var_18_0) == AssassinEnum.ItemType.ThrowingKnife and AssassinConfig.instance:getEnemyType(var_18_4) == AssassinEnum.EnemyType.Heavy then
+	if not selectedIsSkill then
+		local itemType = AssassinConfig.instance:getAssassinItemType(selectedSkillPropId)
+
+		if itemType == AssassinEnum.ItemType.ThrowingKnife then
+			local enemyType = AssassinConfig.instance:getEnemyType(monsterId)
+
+			if enemyType == AssassinEnum.EnemyType.Heavy then
+				return false
+			end
+		end
+	end
+
+	local isDead = AssassinStealthGameHelper.isDeadEnemy(targetEnemyUid)
+
+	if isDead then
 		return false
 	end
 
-	if var_0_0.isDeadEnemy(arg_18_0) then
+	local targetCheck = AssassinStealthGameHelper._skillPropTargetCheck(selectedSkillPropId, selectedIsSkill, targetType, targetEnemyUid)
+
+	if not targetCheck then
 		return false
 	end
 
-	if not var_0_0._skillPropTargetCheck(var_18_0, var_18_1, var_18_2, arg_18_0) then
-		return false
-	end
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local selectedHeroGridId = heroGameMo:getPos()
+	local targetGridId = enemyGameMo:getPos()
+	local rangeCheck = AssassinStealthGameHelper._checkSkillPropRange(selectedSkillPropId, selectedIsSkill, selectedHeroGridId, targetGridId)
 
-	local var_18_5 = AssassinStealthGameModel.instance:getSelectedHeroGameMo():getPos()
-	local var_18_6 = var_18_3:getPos()
-
-	if not var_0_0._checkSkillPropRange(var_18_0, var_18_1, var_18_5, var_18_6) then
-		return false
-	end
-
-	return true
-end
-
-function var_0_0.isSelectedHeroCanUseSkillPropToGrid(arg_19_0)
-	local var_19_0 = AssassinStealthGameModel.instance:getMapId()
-
-	if not AssassinConfig.instance:isShowGrid(var_19_0, arg_19_0) then
-		return false
-	end
-
-	if not var_0_0.checkHero() then
-		return false
-	end
-
-	local var_19_1, var_19_2 = AssassinStealthGameModel.instance:getSelectedSkillProp()
-
-	if not var_19_1 then
-		return false
-	end
-
-	local var_19_3 = AssassinConfig.instance:getSkillPropTargetType(var_19_1, var_19_2)
-
-	if var_19_3 ~= AssassinEnum.SkillPropTargetType.Grid then
-		return false
-	end
-
-	if not var_0_0._skillPropTargetCheck(var_19_1, var_19_2, var_19_3, arg_19_0) then
-		return false
-	end
-
-	local var_19_4 = AssassinStealthGameModel.instance:getSelectedHeroGameMo():getPos()
-
-	if not var_0_0._checkSkillPropRange(var_19_1, var_19_2, var_19_4, arg_19_0) then
+	if not rangeCheck then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._skillPropTargetCheck(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = true
-	local var_20_1 = arg_20_3
+function AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToGrid(targetGridId)
+	local mapId = AssassinStealthGameModel.instance:getMapId()
+	local isShow = AssassinConfig.instance:isShowGrid(mapId, targetGridId)
 
-	if arg_20_2 == AssassinEnum.SkillPropTargetType.Hero then
-		local var_20_2 = AssassinStealthGameModel.instance:getHeroMo(arg_20_3, true)
-
-		var_20_1 = var_20_2 and var_20_2:getPos()
-	elseif arg_20_2 == AssassinEnum.SkillPropTargetType.Enemy then
-		local var_20_3 = AssassinStealthGameModel.instance:getEnemyMo(arg_20_3, true)
-
-		var_20_1 = var_20_3 and var_20_3:getPos()
+	if not isShow then
+		return false
 	end
 
-	local var_20_4
-	local var_20_5
+	local checkHeroResult = AssassinStealthGameHelper.checkHero()
 
-	if arg_20_1 then
-		var_20_4, var_20_5 = AssassinConfig.instance:getAssassinSkillTargetCheck(arg_20_0)
+	if not checkHeroResult then
+		return false
+	end
+
+	local selectedSkillPropId, selectedIsSkill = AssassinStealthGameModel.instance:getSelectedSkillProp()
+
+	if not selectedSkillPropId then
+		return false
+	end
+
+	local targetType = AssassinConfig.instance:getSkillPropTargetType(selectedSkillPropId, selectedIsSkill)
+
+	if targetType ~= AssassinEnum.SkillPropTargetType.Grid then
+		return false
+	end
+
+	local targetCheck = AssassinStealthGameHelper._skillPropTargetCheck(selectedSkillPropId, selectedIsSkill, targetType, targetGridId)
+
+	if not targetCheck then
+		return false
+	end
+
+	local heroGameMo = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local selectedHeroGridId = heroGameMo:getPos()
+	local rangeCheck = AssassinStealthGameHelper._checkSkillPropRange(selectedSkillPropId, selectedIsSkill, selectedHeroGridId, targetGridId)
+
+	if not rangeCheck then
+		return false
+	end
+
+	return true
+end
+
+function AssassinStealthGameHelper._skillPropTargetCheck(skillPropId, isSkill, targetType, targetId)
+	local result = true
+	local targetGridId = targetId
+
+	if targetType == AssassinEnum.SkillPropTargetType.Hero then
+		local heroMo = AssassinStealthGameModel.instance:getHeroMo(targetId, true)
+
+		targetGridId = heroMo and heroMo:getPos()
+	elseif targetType == AssassinEnum.SkillPropTargetType.Enemy then
+		local enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(targetId, true)
+
+		targetGridId = enemyGameMo and enemyGameMo:getPos()
+	end
+
+	local checkType, checkParam
+
+	if isSkill then
+		checkType, checkParam = AssassinConfig.instance:getAssassinSkillTargetCheck(skillPropId)
 	else
-		var_20_4, var_20_5 = AssassinConfig.instance:getAssassinItemTargetCheck(arg_20_0)
+		checkType, checkParam = AssassinConfig.instance:getAssassinItemTargetCheck(skillPropId)
 	end
 
-	if var_20_4 then
-		if var_20_4 == AssassinEnum.SkillPropTargetCheckType.GridType then
-			local var_20_6 = AssassinStealthGameModel.instance:getMapId()
+	if checkType then
+		if checkType == AssassinEnum.SkillPropTargetCheckType.GridType then
+			local mapId = AssassinStealthGameModel.instance:getMapId()
+			local gridType = AssassinConfig.instance:getGridType(mapId, targetGridId)
 
-			var_20_0 = AssassinConfig.instance:getGridType(var_20_6, var_20_1) == var_20_5
-		elseif var_20_4 == AssassinEnum.SkillPropTargetCheckType.EnemyRefreshPoint then
-			local var_20_7 = AssassinStealthGameModel.instance:getMissionId()
-			local var_20_8 = AssassinStealthGameModel.instance:isAlertBellRing()
-			local var_20_9, var_20_10 = AssassinConfig.instance:getStealthMissionRefresh(var_20_7)
-			local var_20_11 = var_20_8 and var_20_10 or var_20_9
+			result = gridType == checkParam
+		elseif checkType == AssassinEnum.SkillPropTargetCheckType.EnemyRefreshPoint then
+			local missionId = AssassinStealthGameModel.instance:getMissionId()
+			local isAlertBellRing = AssassinStealthGameModel.instance:isAlertBellRing()
+			local refreshId1, refreshId2 = AssassinConfig.instance:getStealthMissionRefresh(missionId)
+			local refreshId = isAlertBellRing and refreshId2 or refreshId1
 
-			if var_20_11 and var_20_11 > 0 then
-				local var_20_12 = false
-				local var_20_13 = AssassinConfig.instance:getEnemyRefreshPositionList(var_20_11)
+			if refreshId and refreshId > 0 then
+				local isRefreshPoint = false
+				local refreshPositionList = AssassinConfig.instance:getEnemyRefreshPositionList(refreshId)
 
-				for iter_20_0, iter_20_1 in ipairs(var_20_13) do
-					if var_20_1 == iter_20_1[1] then
-						var_20_12 = true
+				for _, position in ipairs(refreshPositionList) do
+					local gridId = position[1]
+
+					if targetGridId == gridId then
+						isRefreshPoint = true
 
 						break
 					end
 				end
 
-				var_20_0 = var_20_12
+				result = isRefreshPoint
 			end
 		else
-			var_20_0 = false
+			result = false
 
-			logError(string.format("AssassinStealthGameHelper._skillPropTargetCheck error, not support check type:%s", var_20_4))
+			logError(string.format("AssassinStealthGameHelper._skillPropTargetCheck error, not support check type:%s", checkType))
 		end
 	end
 
-	return var_20_0
+	return result
 end
 
-function var_0_0._checkSkillPropRange(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = true
-	local var_21_1
-	local var_21_2
+function AssassinStealthGameHelper._checkSkillPropRange(skillPropId, isSkill, curGridId, targetGridId)
+	local result = true
+	local rangeType, range
 
-	if arg_21_1 then
-		var_21_1, var_21_2 = AssassinConfig.instance:getAssassinSkillRange(arg_21_0)
+	if isSkill then
+		rangeType, range = AssassinConfig.instance:getAssassinSkillRange(skillPropId)
 	else
-		var_21_1, var_21_2 = AssassinConfig.instance:getAssassinItemRange(arg_21_0)
+		rangeType, range = AssassinConfig.instance:getAssassinItemRange(skillPropId)
 	end
 
-	if var_21_1 then
-		local var_21_3 = AssassinStealthGameModel.instance:getMapId()
+	if rangeType then
+		local mapId = AssassinStealthGameModel.instance:getMapId()
 
-		if var_21_1 == AssassinEnum.RangeType.StraightLine then
-			local var_21_4, var_21_5 = AssassinConfig.instance:getGridPos(var_21_3, arg_21_2)
-			local var_21_6, var_21_7 = AssassinConfig.instance:getGridPos(var_21_3, arg_21_3)
-			local var_21_8 = var_21_4 - var_21_6
-			local var_21_9 = var_21_5 - var_21_7
+		if rangeType == AssassinEnum.RangeType.StraightLine then
+			local curX, curY = AssassinConfig.instance:getGridPos(mapId, curGridId)
+			local targetX, targetY = AssassinConfig.instance:getGridPos(mapId, targetGridId)
+			local dx = curX - targetX
+			local dy = curY - targetY
 
-			if var_21_2 * var_21_2 < var_21_8 * var_21_8 + var_21_9 * var_21_9 then
+			if range * range < dx * dx + dy * dy then
 				return false
 			end
 		else
-			var_21_0 = false
+			result = false
 
-			logError(string.format("AssassinStealthGameHelper._checkSkillPropRange error, not support range type:%s", var_21_1))
+			logError(string.format("AssassinStealthGameHelper._checkSkillPropRange error, not support range type:%s", rangeType))
 		end
 	end
 
-	return var_21_0
+	return result
 end
 
-function var_0_0.getEffectUrl(arg_22_0)
-	return string.format("ui/viewres/sp01/assassin2/assassinstealth_skill/%s.prefab", arg_22_0)
+function AssassinStealthGameHelper.getEffectUrl(resName)
+	return string.format("ui/viewres/sp01/assassin2/assassinstealth_skill/%s.prefab", resName)
 end
 
-function var_0_0.isHeroCanBeScan(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = false
-	local var_23_1 = AssassinStealthGameModel.instance:getEventId()
-	local var_23_2 = AssassinConfig.instance:getEventType(var_23_1)
-	local var_23_3 = AssassinStealthGameModel.instance:getHeroMo(arg_23_0, true)
+function AssassinStealthGameHelper.isHeroCanBeScan(heroUid, argsHeroStatus, actId)
+	local result = false
+	local eventId = AssassinStealthGameModel.instance:getEventId()
+	local eventType = AssassinConfig.instance:getEventType(eventId)
+	local heroGameMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
 
-	if var_23_2 ~= AssassinEnum.EventType.NotExpose and var_23_3 then
-		if arg_23_2 and arg_23_2 ~= AssassinEnum.HeroAct.Move then
-			if arg_23_2 == AssassinEnum.HeroAct.LeaveHide or arg_23_2 == AssassinEnum.HeroAct.LeaveTower then
-				var_23_0 = true
+	if eventType ~= AssassinEnum.EventType.NotExpose and heroGameMo then
+		if actId and actId ~= AssassinEnum.HeroAct.Move then
+			if actId == AssassinEnum.HeroAct.LeaveHide or actId == AssassinEnum.HeroAct.LeaveTower then
+				result = true
 			end
 		else
-			local var_23_4 = AssassinStealthGameModel.instance:getMapId()
-			local var_23_5, var_23_6 = var_23_3:getPos()
-			local var_23_7 = AssassinConfig.instance:getGridPointType(var_23_4, var_23_5, var_23_6) == AssassinEnum.StealthGamePointType.Tower
-			local var_23_8 = (arg_23_1 or var_23_3:getStatus()) == AssassinEnum.HeroStatus.Stealth
+			local mapId = AssassinStealthGameModel.instance:getMapId()
+			local gridId, pointIndex = heroGameMo:getPos()
+			local pointType = AssassinConfig.instance:getGridPointType(mapId, gridId, pointIndex)
+			local isInTower = pointType == AssassinEnum.StealthGamePointType.Tower
+			local status = argsHeroStatus or heroGameMo:getStatus()
+			local isStealth = status == AssassinEnum.HeroStatus.Stealth
 
-			if not var_23_7 and var_23_8 then
-				var_23_0 = true
+			if not isInTower and isStealth then
+				result = true
 			end
 		end
 	end
 
-	return var_23_0
+	return result
 end
 
-function var_0_0.isGridEnemyWillScan(arg_24_0)
-	local var_24_0 = AssassinStealthGameModel.instance:getMapId()
+function AssassinStealthGameHelper.isGridEnemyWillScan(gridId)
+	local mapId = AssassinStealthGameModel.instance:getMapId()
+	local isShow = AssassinConfig.instance:isShowGrid(mapId, gridId)
 
-	if not AssassinConfig.instance:isShowGrid(var_24_0, arg_24_0) then
+	if not isShow then
 		return false
 	end
 
-	local var_24_1 = false
-	local var_24_2 = AssassinStealthGameModel.instance:getGridMo(arg_24_0)
-	local var_24_3 = var_24_2 and var_24_2:hasTrapType(AssassinEnum.StealGameTrapType.Smog)
+	local result = false
+	local gridMo = AssassinStealthGameModel.instance:getGridMo(gridId)
+	local gridHasSmog = gridMo and gridMo:hasTrapType(AssassinEnum.StealGameTrapType.Smog)
 
-	if var_24_2 and not var_24_3 then
-		local var_24_4 = AssassinStealthGameModel.instance:getGridEntityIdList(arg_24_0, true)
+	if gridMo and not gridHasSmog then
+		local enemyUidList = AssassinStealthGameModel.instance:getGridEntityIdList(gridId, true)
 
-		for iter_24_0, iter_24_1 in ipairs(var_24_4) do
-			local var_24_5 = AssassinStealthGameModel.instance:getEnemyMo(iter_24_1, true)
-			local var_24_6 = var_24_5 and var_24_5:getIsDead()
-			local var_24_7 = var_24_5 and var_24_5:hasBuffType(AssassinEnum.StealGameBuffType.Petrifaction)
+		for _, enemyUid in ipairs(enemyUidList) do
+			local enemyGameMo = AssassinStealthGameModel.instance:getEnemyMo(enemyUid, true)
+			local isDead = enemyGameMo and enemyGameMo:getIsDead()
+			local isPetrified = enemyGameMo and enemyGameMo:hasBuffType(AssassinEnum.StealGameBuffType.Petrifaction)
 
-			if var_24_5 and not var_24_6 and not var_24_7 then
-				var_24_1 = true
+			if enemyGameMo and not isDead and not isPetrified then
+				result = true
 
 				break
 			end
 		end
 	end
 
-	return var_24_1
+	return result
 end
 
-return var_0_0
+return AssassinStealthGameHelper

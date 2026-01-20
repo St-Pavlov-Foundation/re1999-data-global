@@ -1,84 +1,86 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueEndingInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/model/mo/RogueEndingInfoMO.lua
 
-local var_0_0 = pureTable("RogueEndingInfoMO")
+module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueEndingInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._activityId = arg_1_1.activityId
-	arg_1_0._difficulty = arg_1_1.difficulty
-	arg_1_0._heros = arg_1_1.heroId
-	arg_1_0._roomId = arg_1_1.roomId
-	arg_1_0._roomNum = arg_1_1.roomNum
-	arg_1_0._currencyTotal = arg_1_1.currencyTotal
-	arg_1_0._collections = arg_1_1.collections
-	arg_1_0._isFinish = arg_1_1.isFinish
-	arg_1_0._score = arg_1_1.score
-	arg_1_0._doubleScore = arg_1_1.doubleScore
-	arg_1_0._bonus = arg_1_1.bonus
-	arg_1_0._ending = arg_1_1.ending
-	arg_1_0._layer = arg_1_1.layer
-	arg_1_0._failReason = arg_1_1.failReason
+local RogueEndingInfoMO = pureTable("RogueEndingInfoMO")
 
-	arg_1_0:initFinishEvents(arg_1_1)
+function RogueEndingInfoMO:init(info)
+	self._activityId = info.activityId
+	self._difficulty = info.difficulty
+	self._heros = info.heroId
+	self._roomId = info.roomId
+	self._roomNum = info.roomNum
+	self._currencyTotal = info.currencyTotal
+	self._collections = info.collections
+	self._isFinish = info.isFinish
+	self._score = info.score
+	self._doubleScore = info.doubleScore
+	self._bonus = info.bonus
+	self._ending = info.ending
+	self._layer = info.layer
+	self._failReason = info.failReason
 
-	arg_1_0._isEnterEndingFlow = false
+	self:initFinishEvents(info)
+
+	self._isEnterEndingFlow = false
 end
 
-function var_0_0.initFinishEvents(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.finishEvents
+function RogueEndingInfoMO:initFinishEvents(info)
+	local events = info.finishEvents
 
-	arg_2_0.finishEventList = arg_2_0.finishEventList or {}
+	self.finishEventList = self.finishEventList or {}
 
-	tabletool.clear(arg_2_0.finishEventList)
+	tabletool.clear(self.finishEventList)
 
-	if var_2_0 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-			table.insert(arg_2_0.finishEventList, iter_2_1)
+	if events then
+		for _, finishEventId in ipairs(events) do
+			table.insert(self.finishEventList, finishEventId)
 		end
 	end
 end
 
-function var_0_0.getFinishEventList(arg_3_0)
-	return arg_3_0.finishEventList
+function RogueEndingInfoMO:getFinishEventList()
+	return self.finishEventList
 end
 
-function var_0_0.getFinishEventNum(arg_4_0)
-	return arg_4_0.finishEventList and #arg_4_0.finishEventList or 0
+function RogueEndingInfoMO:getFinishEventNum()
+	return self.finishEventList and #self.finishEventList or 0
 end
 
-function var_0_0.getLayer(arg_5_0)
-	return arg_5_0._layer
+function RogueEndingInfoMO:getLayer()
+	return self._layer
 end
 
-function var_0_0.getRoomNum(arg_6_0)
-	return arg_6_0._roomNum
+function RogueEndingInfoMO:getRoomNum()
+	return self._roomNum
 end
 
-function var_0_0.getDifficulty(arg_7_0)
-	return arg_7_0._difficulty
+function RogueEndingInfoMO:getDifficulty()
+	return self._difficulty
 end
 
-function var_0_0.getScore(arg_8_0)
-	return arg_8_0._score
+function RogueEndingInfoMO:getScore()
+	return self._score
 end
 
-function var_0_0.isDoubleScore(arg_9_0)
-	return arg_9_0._doubleScore > 0
+function RogueEndingInfoMO:isDoubleScore()
+	return self._doubleScore > 0
 end
 
-function var_0_0.isFinish(arg_10_0)
-	return arg_10_0._isFinish
+function RogueEndingInfoMO:isFinish()
+	return self._isFinish
 end
 
-function var_0_0.getFailReason(arg_11_0)
-	return arg_11_0._failReason
+function RogueEndingInfoMO:getFailReason()
+	return self._failReason
 end
 
-function var_0_0.onEnterEndingFlow(arg_12_0)
-	arg_12_0._isEnterEndingFlow = true
+function RogueEndingInfoMO:onEnterEndingFlow()
+	self._isEnterEndingFlow = true
 end
 
-function var_0_0.isEnterEndingFlow(arg_13_0)
-	return arg_13_0._isEnterEndingFlow
+function RogueEndingInfoMO:isEnterEndingFlow()
+	return self._isEnterEndingFlow
 end
 
-return var_0_0
+return RogueEndingInfoMO

@@ -1,239 +1,242 @@
-﻿module("modules.logic.fight.view.FightViewSurvivalBossHp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewSurvivalBossHp.lua
 
-local var_0_0 = class("FightViewSurvivalBossHp", FightViewBossHp)
+module("modules.logic.fight.view.FightViewSurvivalBossHp", package.seeall)
 
-var_0_0.DefaultOneMaxHp = 10000
+local FightViewSurvivalBossHp = class("FightViewSurvivalBossHp", FightViewBossHp)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+FightViewSurvivalBossHp.DefaultOneMaxHp = 10000
 
-	arg_1_0.txtSurvivalHpCount = gohelper.findChildText(arg_1_0.viewGO, "Alpha/bossHp/mask/container/#txt_survival_hp_count")
+function FightViewSurvivalBossHp:onInitView()
+	FightViewSurvivalBossHp.super.onInitView(self)
 
-	gohelper.setActive(arg_1_0.txtSurvivalHpCount.gameObject, true)
+	self.txtSurvivalHpCount = gohelper.findChildText(self.viewGO, "Alpha/bossHp/mask/container/#txt_survival_hp_count")
 
-	arg_1_0.bgHp = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/mask/container/unlimitedhp")
-	arg_1_0.bgHpGo = arg_1_0.bgHp.gameObject
+	gohelper.setActive(self.txtSurvivalHpCount.gameObject, true)
 
-	gohelper.setActive(arg_1_0.bgHpGo, true)
+	self.bgHp = gohelper.findChildImage(self.viewGO, "Alpha/bossHp/mask/container/unlimitedhp")
+	self.bgHpGo = self.bgHp.gameObject
 
-	arg_1_0.shieldHp = arg_1_0._imgHpShield
+	gohelper.setActive(self.bgHpGo, true)
 
-	gohelper.setActive(arg_1_0.shieldHp.gameObject, true)
+	self.shieldHp = self._imgHpShield
 
-	arg_1_0.hp = arg_1_0._imgHp
+	gohelper.setActive(self.shieldHp.gameObject, true)
 
-	gohelper.setActive(arg_1_0.hp.gameObject, true)
+	self.hp = self._imgHp
 
-	arg_1_0.tweenHp = 0
-	arg_1_0.tweenShieldHp = 0
-	arg_1_0.targetHp = 0
-	arg_1_0.targetShieldHp = 0
+	gohelper.setActive(self.hp.gameObject, true)
 
-	local var_1_0 = FightDataHelper.fieldMgr.battleId
-	local var_1_1 = lua_battle.configDict[var_1_0]
-	local var_1_2 = var_1_1 and var_1_1.bossHpType
-	local var_1_3 = not string.nilorempty(var_1_2) and FightStrUtil.instance:getSplitCache(var_1_2, "#")
+	self.tweenHp = 0
+	self.tweenShieldHp = 0
+	self.targetHp = 0
+	self.targetShieldHp = 0
 
-	arg_1_0.oneMaxHp = var_1_3 and tonumber(var_1_3[2]) or var_0_0.DefaultOneMaxHp
+	local battleId = FightDataHelper.fieldMgr.battleId
+	local battleCo = lua_battle.configDict[battleId]
+	local type = battleCo and battleCo.bossHpType
+	local typeArr = not string.nilorempty(type) and FightStrUtil.instance:getSplitCache(type, "#")
+
+	self.oneMaxHp = typeArr and tonumber(typeArr[2]) or FightViewSurvivalBossHp.DefaultOneMaxHp
 end
 
-function var_0_0._updateUI(arg_2_0)
-	if not arg_2_0._bossEntityMO then
+function FightViewSurvivalBossHp:_updateUI()
+	if not self._bossEntityMO then
 		return
 	end
 
-	arg_2_0:directUpdateHp()
-	arg_2_0:refreshImageIcon()
-	arg_2_0:_refreshCareer()
-	arg_2_0:_detectBossHpSign()
-	arg_2_0:_detectBossMultiHp()
+	self:directUpdateHp()
+	self:refreshImageIcon()
+	self:_refreshCareer()
+	self:_detectBossHpSign()
+	self:_detectBossMultiHp()
 end
 
-function var_0_0.refreshImageIcon(arg_3_0)
-	if not arg_3_0._bossEntityMO then
+function FightViewSurvivalBossHp:refreshImageIcon()
+	if not self._bossEntityMO then
 		return
 	end
 
-	local var_3_0 = lua_monster.configDict[arg_3_0._bossEntityMO.modelId]
-	local var_3_1 = var_3_0 and FightConfig.instance:getSkinCO(var_3_0.skinId)
-	local var_3_2 = var_3_1 and var_3_1.headIcon
+	local monsterCO = lua_monster.configDict[self._bossEntityMO.modelId]
+	local skinCO = monsterCO and FightConfig.instance:getSkinCO(monsterCO.skinId)
+	local headIcon = skinCO and skinCO.headIcon
 
-	if not string.nilorempty(var_3_2) then
-		gohelper.setActive(arg_3_0._imgHead.gameObject, true)
-		gohelper.getSingleImage(arg_3_0._imgHead.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_3_1.headIcon))
+	if not string.nilorempty(headIcon) then
+		gohelper.setActive(self._imgHead.gameObject, true)
+		gohelper.getSingleImage(self._imgHead.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinCO.headIcon))
 
-		if var_3_0.heartVariantId ~= 0 then
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(var_3_0.heartVariantId), arg_3_0._imgHeadIcon)
+		if monsterCO.heartVariantId ~= 0 then
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(monsterCO.heartVariantId), self._imgHeadIcon)
 		end
 	else
-		gohelper.setActive(arg_3_0._imgHead.gameObject, false)
+		gohelper.setActive(self._imgHead.gameObject, false)
 	end
 end
 
-function var_0_0.directUpdateHp(arg_4_0)
-	if not arg_4_0._bossEntityMO then
+function FightViewSurvivalBossHp:directUpdateHp()
+	if not self._bossEntityMO then
 		return
 	end
 
-	local var_4_0 = arg_4_0._bossEntityMO.attrMO.hp
-	local var_4_1 = arg_4_0._bossEntityMO.currentHp
-	local var_4_2 = math.min(math.max(0, var_4_1), var_4_0)
+	local maxHp = self._bossEntityMO.attrMO.hp
+	local currentHp = self._bossEntityMO.currentHp
 
-	arg_4_0.tweenHp = var_4_2
-	arg_4_0.targetHp = var_4_2
-	arg_4_0.tweenShieldHp = arg_4_0._bossEntityMO.shieldValue
-	arg_4_0.targetShieldHp = arg_4_0._bossEntityMO.shieldValue
+	currentHp = math.min(math.max(0, currentHp), maxHp)
+	self.tweenHp = currentHp
+	self.targetHp = currentHp
+	self.tweenShieldHp = self._bossEntityMO.shieldValue
+	self.targetShieldHp = self._bossEntityMO.shieldValue
 
-	arg_4_0:refreshHpAndShield()
-	arg_4_0:refreshReduceHP()
+	self:refreshHpAndShield()
+	self:refreshReduceHP()
 end
 
-function var_0_0._tweenFillAmount(arg_5_0, arg_5_1)
-	arg_5_0:directUpdateHp()
+function FightViewSurvivalBossHp:_tweenFillAmount(duration)
+	self:directUpdateHp()
 end
 
-function var_0_0.onCoverPerformanceEntityData(arg_6_0, arg_6_1)
-	if not arg_6_0._bossEntityMO or arg_6_1 ~= arg_6_0._bossEntityMO.id then
+function FightViewSurvivalBossHp:onCoverPerformanceEntityData(entityId)
+	if not self._bossEntityMO or entityId ~= self._bossEntityMO.id then
 		return
 	end
 
-	arg_6_0:directUpdateHp()
+	self:directUpdateHp()
 end
 
-var_0_0.HpDuration = 0.5
+FightViewSurvivalBossHp.HpDuration = 0.5
 
-function var_0_0._onHpChange(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_2 == 0 then
+function FightViewSurvivalBossHp:_onHpChange(defender, num)
+	if num == 0 then
 		return
 	end
 
-	if not arg_7_0._bossEntityMO then
+	if not self._bossEntityMO then
 		return
 	end
 
-	if arg_7_1.id ~= arg_7_0._bossEntityMO.id then
+	if defender.id ~= self._bossEntityMO.id then
 		return
 	end
 
-	if arg_7_2 < 0 then
-		gohelper.setActive(arg_7_0._goHpEffect, true)
+	if num < 0 then
+		gohelper.setActive(self._goHpEffect, true)
 
-		arg_7_0._aniHpEffect.enabled = true
-		arg_7_0._aniHpEffect.speed = 1
+		self._aniHpEffect.enabled = true
+		self._aniHpEffect.speed = 1
 
-		arg_7_0._aniHpEffect:Play("hpeffect", 0, 0)
+		self._aniHpEffect:Play("hpeffect", 0, 0)
 	end
 
-	arg_7_0:clearHpTween()
+	self:clearHpTween()
 
-	local var_7_0 = arg_7_0._bossEntityMO.attrMO.hp
+	local maxHp = self._bossEntityMO.attrMO.hp
 
-	arg_7_0.targetHp = arg_7_0.targetHp + arg_7_2
-	arg_7_0.targetHp = math.min(math.max(0, arg_7_0.targetHp), var_7_0)
-	arg_7_0.hpTweenId = ZProj.TweenHelper.DOTweenFloat(arg_7_0.tweenHp, arg_7_0.targetHp, var_0_0.HpDuration, arg_7_0.frameSetHp, arg_7_0.onHpTweenDone, arg_7_0)
+	self.targetHp = self.targetHp + num
+	self.targetHp = math.min(math.max(0, self.targetHp), maxHp)
+	self.hpTweenId = ZProj.TweenHelper.DOTweenFloat(self.tweenHp, self.targetHp, FightViewSurvivalBossHp.HpDuration, self.frameSetHp, self.onHpTweenDone, self)
 end
 
-function var_0_0.frameSetHp(arg_8_0, arg_8_1)
-	arg_8_0.tweenHp = arg_8_1
+function FightViewSurvivalBossHp:frameSetHp(value)
+	self.tweenHp = value
 
-	arg_8_0:refreshHpAndShield()
+	self:refreshHpAndShield()
 end
 
-function var_0_0.onHpTweenDone(arg_9_0)
-	arg_9_0.tweenHp = arg_9_0.targetHp
+function FightViewSurvivalBossHp:onHpTweenDone()
+	self.tweenHp = self.targetHp
 
-	arg_9_0:refreshHpAndShield()
+	self:refreshHpAndShield()
 end
 
-function var_0_0._onShieldChange(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_0._bossEntityMO then
+function FightViewSurvivalBossHp:_onShieldChange(defender, num)
+	if not self._bossEntityMO then
 		return
 	end
 
-	if arg_10_1.id ~= arg_10_0._bossEntityMO.id then
+	if defender.id ~= self._bossEntityMO.id then
 		return
 	end
 
-	arg_10_0:clearShieldTween()
+	self:clearShieldTween()
 
-	arg_10_0.targetShieldHp = arg_10_0._bossEntityMO.shieldValue
-	arg_10_0.shieldTweenId = ZProj.TweenHelper.DOTweenFloat(arg_10_0.tweenShieldHp, arg_10_0.targetShieldHp, var_0_0.HpDuration, arg_10_0.frameSetShield, arg_10_0.onShieldTweenDone, arg_10_0)
+	self.targetShieldHp = self._bossEntityMO.shieldValue
+	self.shieldTweenId = ZProj.TweenHelper.DOTweenFloat(self.tweenShieldHp, self.targetShieldHp, FightViewSurvivalBossHp.HpDuration, self.frameSetShield, self.onShieldTweenDone, self)
 end
 
-function var_0_0.frameSetShield(arg_11_0, arg_11_1)
-	arg_11_0.tweenShieldHp = arg_11_1
+function FightViewSurvivalBossHp:frameSetShield(value)
+	self.tweenShieldHp = value
 
-	arg_11_0:refreshHpAndShield()
+	self:refreshHpAndShield()
 end
 
-function var_0_0.onShieldTweenDone(arg_12_0)
-	arg_12_0.tweenShieldHp = arg_12_0.targetShieldHp
+function FightViewSurvivalBossHp:onShieldTweenDone()
+	self.tweenShieldHp = self.targetShieldHp
 
-	arg_12_0:refreshHpAndShield()
+	self:refreshHpAndShield()
 end
 
-function var_0_0.refreshHpAndShield(arg_13_0)
-	local var_13_0, var_13_1 = arg_13_0:_getFillAmount()
+function FightViewSurvivalBossHp:refreshHpAndShield()
+	local hpFillAmount, shieldFillAmount = self:_getFillAmount()
 
-	arg_13_0.hp.fillAmount = var_13_0
-	arg_13_0.shieldHp.fillAmount = var_13_1
+	self.hp.fillAmount = hpFillAmount
+	self.shieldHp.fillAmount = shieldFillAmount
 
-	arg_13_0:_changeShieldPos(var_13_0)
-	arg_13_0:refreshHpCount()
-	arg_13_0:refreshHpColor()
-	arg_13_0:refreshReduceHP()
+	self:_changeShieldPos(hpFillAmount)
+	self:refreshHpCount()
+	self:refreshHpColor()
+	self:refreshReduceHP()
 end
 
-function var_0_0._getFillAmount(arg_14_0)
-	if not arg_14_0._bossEntityMO then
+function FightViewSurvivalBossHp:_getFillAmount()
+	if not self._bossEntityMO then
 		return 0, 0
 	end
 
-	local var_14_0 = arg_14_0.oneMaxHp
-	local var_14_1 = arg_14_0.tweenHp % var_14_0
+	local oneMaxHp = self.oneMaxHp
+	local curHp = self.tweenHp % oneMaxHp
 
-	if var_14_1 == 0 and arg_14_0.tweenHp > 0 then
-		var_14_1 = var_14_0
+	if curHp == 0 and self.tweenHp > 0 then
+		curHp = oneMaxHp
 	end
 
-	local var_14_2 = var_14_1 / var_14_0
-	local var_14_3 = 0
+	local hpPercent = curHp / oneMaxHp
+	local shieldPercent = 0
 
-	if var_14_0 >= arg_14_0.tweenShieldHp + var_14_1 then
-		var_14_2 = var_14_1 / var_14_0
-		var_14_3 = (arg_14_0.tweenShieldHp + var_14_1) / var_14_0
+	if oneMaxHp >= self.tweenShieldHp + curHp then
+		hpPercent = curHp / oneMaxHp
+		shieldPercent = (self.tweenShieldHp + curHp) / oneMaxHp
 	else
-		var_14_2 = var_14_1 / (var_14_1 + arg_14_0.tweenShieldHp)
-		var_14_3 = 1
+		hpPercent = curHp / (curHp + self.tweenShieldHp)
+		shieldPercent = 1
 	end
 
-	recthelper.setAnchorX(arg_14_0._hp_container_tran, 0)
+	recthelper.setAnchorX(self._hp_container_tran, 0)
 
-	return var_14_2, var_14_3
+	return hpPercent, shieldPercent
 end
 
-var_0_0.HpCountColor = {
+FightViewSurvivalBossHp.HpCountColor = {
 	Shield = "#1A1A1A",
 	Normal = "#FFFFFF"
 }
 
-function var_0_0.refreshHpCount(arg_15_0)
-	local var_15_0 = arg_15_0.tweenHp
-	local var_15_1 = math.ceil(var_15_0 / arg_15_0.oneMaxHp)
+function FightViewSurvivalBossHp:refreshHpCount()
+	local curHp = self.tweenHp
+	local count = math.ceil(curHp / self.oneMaxHp)
 
-	arg_15_0.txtSurvivalHpCount.text = "×" .. tostring(var_15_1)
+	self.txtSurvivalHpCount.text = "×" .. tostring(count)
 
-	local var_15_2 = arg_15_0.tweenShieldHp > 0 and var_0_0.HpCountColor.Shield or var_0_0.HpCountColor.Normal
+	local hasShield = self.tweenShieldHp > 0
+	local color = hasShield and FightViewSurvivalBossHp.HpCountColor.Shield or FightViewSurvivalBossHp.HpCountColor.Normal
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_15_0.txtSurvivalHpCount, var_15_2)
+	SLFramework.UGUI.GuiHelper.SetColor(self.txtSurvivalHpCount, color)
 end
 
-local var_0_1 = {
+local Threshold = {
 	0.3333333333333333,
 	0.6666666666666666,
 	1
 }
-local var_0_2 = {
+local Color = {
 	{
 		"#B33E2D",
 		"#6F2216"
@@ -248,82 +251,86 @@ local var_0_2 = {
 	}
 }
 
-function var_0_0.refreshHpColor(arg_16_0)
-	if not arg_16_0._bossEntityMO then
+function FightViewSurvivalBossHp:refreshHpColor()
+	if not self._bossEntityMO then
 		return
 	end
 
-	local var_16_0 = arg_16_0._bossEntityMO
-	local var_16_1 = var_16_0.attrMO and var_16_0.attrMO.hp > 0 and var_16_0.attrMO.hp or 1
-	local var_16_2 = arg_16_0.tweenHp
-	local var_16_3 = arg_16_0:getColor()
+	local entityMO = self._bossEntityMO
+	local maxHp = entityMO.attrMO and entityMO.attrMO.hp > 0 and entityMO.attrMO.hp or 1
+	local curHp = self.tweenHp
+	local color = self:getColor()
 
-	if var_16_2 <= arg_16_0.oneMaxHp then
-		SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.hp, var_16_3[1][1])
-		gohelper.setActive(arg_16_0.bgHpGo, false)
+	if curHp <= self.oneMaxHp then
+		SLFramework.UGUI.GuiHelper.SetColor(self.hp, color[1][1])
+		gohelper.setActive(self.bgHpGo, false)
 
 		return
 	end
 
-	local var_16_4 = var_16_2 / var_16_1
-	local var_16_5 = 1
-	local var_16_6 = arg_16_0:getThreshold()
+	local rate = curHp / maxHp
+	local curThresholdIndex = 1
+	local threshold = self:getThreshold()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_6) do
-		if var_16_4 <= iter_16_1 then
-			var_16_5 = iter_16_0
+	for index, thresholdValue in ipairs(threshold) do
+		if rate <= thresholdValue then
+			curThresholdIndex = index
 
 			break
 		end
 	end
 
-	local var_16_7 = arg_16_0:getColor()
+	local color = self:getColor()
 
-	gohelper.setActive(arg_16_0.bgHpGo, true)
+	gohelper.setActive(self.bgHpGo, true)
 
-	local var_16_8 = var_16_7[var_16_5]
+	local colorList = color[curThresholdIndex]
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.hp, var_16_8[1])
-	SLFramework.UGUI.GuiHelper.SetColor(arg_16_0.bgHp, var_16_8[2])
+	SLFramework.UGUI.GuiHelper.SetColor(self.hp, colorList[1])
+	SLFramework.UGUI.GuiHelper.SetColor(self.bgHp, colorList[2])
 end
 
-function var_0_0.clearHpTween(arg_17_0)
-	if arg_17_0.hpTweenId then
-		ZProj.TweenHelper.KillById(arg_17_0.hpTweenId)
+function FightViewSurvivalBossHp:clearHpTween()
+	if self.hpTweenId then
+		ZProj.TweenHelper.KillById(self.hpTweenId)
 
-		arg_17_0.hpTweenId = nil
+		self.hpTweenId = nil
 	end
 end
 
-function var_0_0.clearShieldTween(arg_18_0)
-	if arg_18_0.shieldTweenId then
-		ZProj.TweenHelper.KillById(arg_18_0.shieldTweenId)
+function FightViewSurvivalBossHp:clearShieldTween()
+	if self.shieldTweenId then
+		ZProj.TweenHelper.KillById(self.shieldTweenId)
 
-		arg_18_0.shieldTweenId = nil
+		self.shieldTweenId = nil
 	end
 end
 
-function var_0_0.getThreshold(arg_19_0)
-	return var_0_1
+function FightViewSurvivalBossHp:getThreshold()
+	return Threshold
 end
 
-function var_0_0.getColor(arg_20_0)
-	return var_0_2
+function FightViewSurvivalBossHp:getColor()
+	return Color
 end
 
-function var_0_0._checkBossAndUpdate(arg_21_0)
-	var_0_0.super._checkBossAndUpdate(arg_21_0)
+function FightViewSurvivalBossHp:_checkBossAndUpdate()
+	FightViewSurvivalBossHp.super._checkBossAndUpdate(self)
 
-	if not arg_21_0._bossEntityMO then
-		arg_21_0:clearShieldTween()
-		arg_21_0:clearHpTween()
+	if not self._bossEntityMO then
+		self:clearShieldTween()
+		self:clearHpTween()
 	end
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	arg_22_0:clearShieldTween()
-	arg_22_0:clearHpTween()
-	var_0_0.super.onDestroyView(arg_22_0)
+function FightViewSurvivalBossHp:onAiJiAoFakeDecreaseHp(entityId)
+	return
 end
 
-return var_0_0
+function FightViewSurvivalBossHp:onDestroyView()
+	self:clearShieldTween()
+	self:clearHpTween()
+	FightViewSurvivalBossHp.super.onDestroyView(self)
+end
+
+return FightViewSurvivalBossHp

@@ -1,8 +1,10 @@
-﻿module("modules.logic.critter.config.CritterConfig", package.seeall)
+﻿-- chunkname: @modules/logic/critter/config/CritterConfig.lua
 
-local var_0_0 = class("CritterConfig", BaseConfig)
+module("modules.logic.critter.config.CritterConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local CritterConfig = class("CritterConfig", BaseConfig)
+
+function CritterConfig:reqConfigNames()
 	return {
 		"critter_const",
 		"critter",
@@ -23,530 +25,539 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function CritterConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+function CritterConfig:onConfigLoaded(configName, configTable)
+	local funcName = string.format("%sConfigLoaded", configName)
+	local configLoadedFunc = self[funcName]
 
-	if var_3_0 then
-		var_3_0(arg_3_0, arg_3_2)
+	if configLoadedFunc then
+		configLoadedFunc(self, configTable)
 	end
 end
 
-function var_0_0.critter_interaction_effectConfigLoaded(arg_4_0, arg_4_1)
-	arg_4_0._commonInteractionEffDict = {}
+function CritterConfig:critter_interaction_effectConfigLoaded(configTable)
+	self._commonInteractionEffDict = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_1.configDict) do
-		for iter_4_2, iter_4_3 in pairs(iter_4_1) do
-			if string.nilorempty(iter_4_3.animName) then
-				if not string.nilorempty(iter_4_3.effectKey) then
-					arg_4_0._commonInteractionEffDict[iter_4_2] = iter_4_3
+	for skinId, effCfgDict in pairs(configTable.configDict) do
+		for id, cfg in pairs(effCfgDict) do
+			if string.nilorempty(cfg.animName) then
+				if not string.nilorempty(cfg.effectKey) then
+					self._commonInteractionEffDict[id] = cfg
 				else
-					logError(string.format("CritterConfig:critter_interaction_effectConfigLoaded error, cfg no animName and effectKey, skinId:%s id:%s", iter_4_0, iter_4_2))
+					logError(string.format("CritterConfig:critter_interaction_effectConfigLoaded error, cfg no animName and effectKey, skinId:%s id:%s", skinId, id))
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.critter_interaction_audioConfigLoaded(arg_5_0, arg_5_1)
-	arg_5_0._critterAudioDict = {}
+function CritterConfig:critter_interaction_audioConfigLoaded(configTable)
+	self._critterAudioDict = {}
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_1.configDict) do
-		for iter_5_2, iter_5_3 in pairs(iter_5_1) do
-			local var_5_0 = string.splitToNumber(iter_5_3.audioId, "#")
+	for critterId, audioCfgDict in pairs(configTable.configDict) do
+		for animState, cfg in pairs(audioCfgDict) do
+			local idArr = string.splitToNumber(cfg.audioId, "#")
 
-			if var_5_0 and #var_5_0 > 0 then
-				local var_5_1 = arg_5_0._critterAudioDict[iter_5_0] or {}
+			if idArr and #idArr > 0 then
+				local critterDict = self._critterAudioDict[critterId] or {}
 
-				var_5_1[iter_5_2] = var_5_1[iter_5_2] or {}
+				critterDict[animState] = critterDict[animState] or {}
 
-				tabletool.addValues(var_5_1[iter_5_2], var_5_0)
+				tabletool.addValues(critterDict[animState], idArr)
 
-				arg_5_0._critterAudioDict[iter_5_0] = var_5_1
+				self._critterAudioDict[critterId] = critterDict
 			end
 		end
 	end
 end
 
-function var_0_0.getCritterConstStr(arg_6_0, arg_6_1)
-	local var_6_0
-	local var_6_1 = lua_critter_const.configDict[arg_6_1]
+function CritterConfig:getCritterConstStr(constId)
+	local result
+	local cfg = lua_critter_const.configDict[constId]
 
-	if var_6_1 then
-		var_6_0 = var_6_1.value
+	if cfg then
+		result = cfg.value
 
-		if string.nilorempty(var_6_0) then
-			var_6_0 = var_6_1.value2
+		if string.nilorempty(result) then
+			result = cfg.value2
 		end
 	else
-		logError(string.format("CritterConfig:getCritterConstStr error, cfg is nil, id:%s", arg_6_1))
+		logError(string.format("CritterConfig:getCritterConstStr error, cfg is nil, id:%s", constId))
 	end
 
-	return var_6_0
+	return result
 end
 
-function var_0_0.getCritterCfg(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = lua_critter.configDict[arg_7_1]
+function CritterConfig:getCritterCfg(critterId, nilError)
+	local cfg = lua_critter.configDict[critterId]
 
-	if not var_7_0 and arg_7_2 then
-		logError(string.format("CritterConfig:getCritterCfg error, cfg is nil, critterId:%s", arg_7_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterCfg error, cfg is nil, critterId:%s", critterId))
 	end
 
-	return var_7_0
+	return cfg
 end
 
-function var_0_0.getCritterName(arg_8_0, arg_8_1)
-	local var_8_0 = ""
-	local var_8_1 = arg_8_0:getCritterCfg(arg_8_1, true)
+function CritterConfig:getCritterName(critterId)
+	local result = ""
+	local cfg = self:getCritterCfg(critterId, true)
 
-	if var_8_1 then
-		var_8_0 = var_8_1.name
+	if cfg then
+		result = cfg.name
 	end
 
-	return var_8_0
+	return result
 end
 
-function var_0_0.getCritterRare(arg_9_0, arg_9_1)
-	local var_9_0
-	local var_9_1 = arg_9_0:getCritterCfg(arg_9_1, true)
+function CritterConfig:getCritterRare(critterId)
+	local result
+	local cfg = self:getCritterCfg(critterId, true)
 
-	if var_9_1 then
-		var_9_0 = var_9_1.rare
+	if cfg then
+		result = cfg.rare
 	end
 
-	return var_9_0
+	return result
 end
 
-function var_0_0.getCritterCatalogue(arg_10_0, arg_10_1)
-	local var_10_0
-	local var_10_1 = arg_10_0:getCritterCfg(arg_10_1, true)
+function CritterConfig:getCritterCatalogue(critterId)
+	local result
+	local cfg = self:getCritterCfg(critterId, true)
 
-	if var_10_1 then
-		var_10_0 = var_10_1.catalogue
+	if cfg then
+		result = cfg.catalogue
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.getCritterNormalSkin(arg_11_0, arg_11_1)
-	local var_11_0
-	local var_11_1 = arg_11_0:getCritterCfg(arg_11_1, true)
+function CritterConfig:getCritterNormalSkin(critterId)
+	local result
+	local cfg = self:getCritterCfg(critterId, true)
 
-	if var_11_1 then
-		var_11_0 = var_11_1.normalSkin
+	if cfg then
+		result = cfg.normalSkin
 	end
 
-	return var_11_0
+	return result
 end
 
-function var_0_0.getCritterMutateSkin(arg_12_0, arg_12_1)
-	local var_12_0
-	local var_12_1 = arg_12_0:getCritterCfg(arg_12_1, true)
+function CritterConfig:getCritterMutateSkin(critterId)
+	local result
+	local cfg = self:getCritterCfg(critterId, true)
 
-	if var_12_1 then
-		var_12_0 = var_12_1.mutateSkin
+	if cfg then
+		result = cfg.mutateSkin
 	end
 
-	return var_12_0
+	return result
 end
 
-function var_0_0.getCritterSpecialRate(arg_13_0, arg_13_1)
-	local var_13_0 = 0
-	local var_13_1 = arg_13_0:getCritterCfg(arg_13_1, true)
+function CritterConfig:getCritterSpecialRate(critterId)
+	local result = 0
+	local cfg = self:getCritterCfg(critterId, true)
 
-	if var_13_1 then
-		var_13_0 = var_13_1.specialRate
+	if cfg then
+		result = cfg.specialRate
 	end
 
-	return var_13_0
+	return result
 end
 
-function var_0_0.isFavoriteFood(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = false
+function CritterConfig:isFavoriteFood(critterId, foodItemId)
+	local result = false
 
-	if not arg_14_0._critterFavoriteFoodDict then
-		arg_14_0._critterFavoriteFoodDict = {}
+	if not self._critterFavoriteFoodDict then
+		self._critterFavoriteFoodDict = {}
 	end
 
-	if arg_14_1 then
-		local var_14_1 = arg_14_0._critterFavoriteFoodDict[arg_14_1]
+	if critterId then
+		local critterFoodDict = self._critterFavoriteFoodDict[critterId]
 
-		if not var_14_1 then
-			var_14_1 = arg_14_0:getFoodLikeDict(arg_14_1)
-			arg_14_0._critterFavoriteFoodDict[arg_14_1] = var_14_1
+		if not critterFoodDict then
+			critterFoodDict = self:getFoodLikeDict(critterId)
+			self._critterFavoriteFoodDict[critterId] = critterFoodDict
 		end
 
-		var_14_0 = var_14_1[arg_14_2] or false
+		result = critterFoodDict[foodItemId] or false
 	end
 
-	return var_14_0
+	return result
 end
 
-function var_0_0.getFoodLikeDict(arg_15_0, arg_15_1)
-	local var_15_0 = {}
-	local var_15_1 = arg_15_0:getCritterCfg(arg_15_1, true)
-	local var_15_2 = GameUtil.splitString2(var_15_1 and var_15_1.foodLike)
+function CritterConfig:getFoodLikeDict(critterId)
+	local result = {}
+	local cfg = self:getCritterCfg(critterId, true)
+	local foodItemList = GameUtil.splitString2(cfg and cfg.foodLike)
 
-	if var_15_2 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_2) do
-			var_15_0[tonumber(iter_15_1[1])] = true
+	if foodItemList then
+		for _, itemId in ipairs(foodItemList) do
+			local foodItemId = tonumber(itemId[1])
+
+			result[foodItemId] = true
 		end
 	end
 
-	return var_15_0
+	return result
 end
 
-function var_0_0.getCritterCount(arg_16_0)
+function CritterConfig:getCritterCount()
 	return #lua_critter.configList
 end
 
-function var_0_0.getCritterSkinCfg(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = lua_critter_skin.configDict[arg_17_1]
+function CritterConfig:getCritterSkinCfg(skinId, nilError)
+	local cfg = lua_critter_skin.configDict[skinId]
 
-	if not var_17_0 and arg_17_2 then
-		logError(string.format("CritterConfig:getCritterSkinCfg error, cfg is nil, skinId:%s", arg_17_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterSkinCfg error, cfg is nil, skinId:%s", skinId))
 	end
 
-	return var_17_0
+	return cfg
 end
 
-function var_0_0.getCritterHeadIcon(arg_18_0, arg_18_1)
-	local var_18_0
-	local var_18_1 = arg_18_0:getCritterSkinCfg(arg_18_1, true)
+function CritterConfig:getCritterHeadIcon(skinId)
+	local result
+	local cfg = self:getCritterSkinCfg(skinId, true)
 
-	if var_18_1 then
-		var_18_0 = var_18_1.headIcon
+	if cfg then
+		result = cfg.headIcon
 	end
 
-	return var_18_0
+	return result
 end
 
-function var_0_0.getCritterLargeIcon(arg_19_0, arg_19_1)
-	local var_19_0
-	local var_19_1 = arg_19_0:getCritterSkinCfg(arg_19_1, true)
+function CritterConfig:getCritterLargeIcon(skinId)
+	local result
+	local cfg = self:getCritterSkinCfg(skinId, true)
 
-	if var_19_1 then
-		var_19_0 = var_19_1.largeIcon
+	if cfg then
+		result = cfg.largeIcon
 	end
 
-	return var_19_0
+	return result
 end
 
-function var_0_0.getCritterAttributeCfg(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = lua_critter_attribute.configDict[arg_20_1]
+function CritterConfig:getCritterAttributeCfg(attributeId, nilError)
+	local cfg = lua_critter_attribute.configDict[attributeId]
 
-	if not var_20_0 and arg_20_2 then
-		logError(string.format("CritterConfig:getCritterAttributeCfg error, cfg is nil, attributeId:%s", arg_20_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterAttributeCfg error, cfg is nil, attributeId:%s", attributeId))
 	end
 
-	return var_20_0
+	return cfg
 end
 
-function var_0_0.getCritterAttributeLevelCfg(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = lua_critter_attribute_level.configDict[arg_21_1]
+function CritterConfig:getCritterAttributeLevelCfg(level, nilError)
+	local cfg = lua_critter_attribute_level.configDict[level]
 
-	if not var_21_0 and arg_21_2 then
-		logError(string.format("CritterConfig:getCritterAttributeLevelCfg error, cfg is nil, level:%s", arg_21_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterAttributeLevelCfg error, cfg is nil, level:%s", level))
 	end
 
-	return var_21_0
+	return cfg
 end
 
-function var_0_0.getCritterAttributeLevelCfgByValue(arg_22_0, arg_22_1)
-	local var_22_0 = lua_critter_attribute_level.configList
-	local var_22_1
+function CritterConfig:getCritterAttributeLevelCfgByValue(value)
+	local cfgList = lua_critter_attribute_level.configList
+	local tempCfg
 
-	for iter_22_0 = 1, #var_22_0 do
-		local var_22_2 = var_22_0[iter_22_0]
+	for i = 1, #cfgList do
+		local cfg = cfgList[i]
 
-		if arg_22_1 >= var_22_2.minValue and (var_22_1 == nil or var_22_1.level < var_22_2.level) then
-			var_22_1 = var_22_2
+		if value >= cfg.minValue and (tempCfg == nil or tempCfg.level < cfg.level) then
+			tempCfg = cfg
 		end
 	end
 
-	return var_22_1
+	return tempCfg
 end
 
-function var_0_0.getMaxCritterAttributeLevelCfg(arg_23_0)
-	if arg_23_0._critterAttributeLevelMaxCfg == nil then
-		local var_23_0 = lua_critter_attribute_level.configList
-		local var_23_1
+function CritterConfig:getMaxCritterAttributeLevelCfg()
+	if self._critterAttributeLevelMaxCfg == nil then
+		local cfgList = lua_critter_attribute_level.configList
+		local tempCfg
 
-		for iter_23_0 = 1, #var_23_0 do
-			local var_23_2 = var_23_0[iter_23_0]
+		for i = 1, #cfgList do
+			local cfg = cfgList[i]
 
-			if var_23_1 == nil or var_23_1.level < var_23_2.level then
-				var_23_1 = var_23_2
+			if tempCfg == nil or tempCfg.level < cfg.level then
+				tempCfg = cfg
 			end
 		end
 
-		arg_23_0._critterAttributeLevelMaxCfg = var_23_1
+		self._critterAttributeLevelMaxCfg = tempCfg
 	end
 
-	return arg_23_0._critterAttributeLevelMaxCfg
+	return self._critterAttributeLevelMaxCfg
 end
 
-function var_0_0.getCritterAttributeMax(arg_24_0)
-	arg_24_0:getMaxCritterAttributeLevelCfg()
+function CritterConfig:getCritterAttributeMax()
+	self:getMaxCritterAttributeLevelCfg()
 
-	return arg_24_0._critterAttributeLevelMaxCfg.minValue
+	return self._critterAttributeLevelMaxCfg.minValue
 end
 
-function var_0_0.getCritterTagCfg(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = lua_critter_tag.configDict[arg_25_1]
+function CritterConfig:getCritterTagCfg(tagId, nilError)
+	local cfg = lua_critter_tag.configDict[tagId]
 
-	if not var_25_0 and arg_25_2 then
-		logError(string.format("CritterConfig:getCritterTagCfg error, cfg is nil, tagId:%s", arg_25_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterTagCfg error, cfg is nil, tagId:%s", tagId))
 	end
 
-	return var_25_0
+	return cfg
 end
 
-function var_0_0.getCritterTrainEventCfg(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = lua_critter_train_event.configDict[arg_26_1]
+function CritterConfig:getCritterTrainEventCfg(eventId, nilError)
+	local cfg = lua_critter_train_event.configDict[eventId]
 
-	if not var_26_0 and arg_26_2 then
-		logError(string.format("CritterConfig:getCritterTrainEventCfg error, cfg is nil, eventId:%s", arg_26_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterTrainEventCfg error, cfg is nil, eventId:%s", eventId))
 	end
 
-	return var_26_0
+	return cfg
 end
 
-function var_0_0.getCritterHeroPreferenceCfg(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = lua_critter_hero_preference.configDict[arg_27_1]
+function CritterConfig:getCritterHeroPreferenceCfg(heroId, nilError)
+	local cfg = lua_critter_hero_preference.configDict[heroId]
 
-	if not var_27_0 and arg_27_2 then
-		logError(string.format("CritterConfig:getCritterHeroPreferenceCfg error, cfg is nil, heroId:%s", arg_27_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterHeroPreferenceCfg error, cfg is nil, heroId:%s", heroId))
 	end
 
-	return var_27_0
+	return cfg
 end
 
-function var_0_0.getCritterSummonCfg(arg_28_0, arg_28_1, arg_28_2)
-	local var_28_0 = lua_critter_summon.configDict[arg_28_1]
+function CritterConfig:getCritterSummonCfg(summonId, nilError)
+	local cfg = lua_critter_summon.configDict[summonId]
 
-	if not var_28_0 and arg_28_2 then
-		logError(string.format("CritterConfig:getCritterSummonCfg error, cfg is nil, summonId:%s", arg_28_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterSummonCfg error, cfg is nil, summonId:%s", summonId))
 	end
 
-	return var_28_0
+	return cfg
 end
 
-function var_0_0.getCritterSummonPoolCfg(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = lua_critter_summon_pool.configDict[arg_29_1]
+function CritterConfig:getCritterSummonPoolCfg(poolId, nilError)
+	local cfg = lua_critter_summon_pool.configDict[poolId]
 
-	if not var_29_0 and arg_29_2 then
-		logError(string.format("CritterConfig:getCritterSummonPoolCfg error, cfg is nil, summonId:%s", arg_29_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterSummonPoolCfg error, cfg is nil, summonId:%s", poolId))
 	end
 
-	return var_29_0
+	return cfg
 end
 
-function var_0_0.getCritterFilterTypeCfg(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0 = lua_critter_filter_type.configDict[arg_30_1]
+function CritterConfig:getCritterFilterTypeCfg(filterType, nilError)
+	local cfg = lua_critter_filter_type.configDict[filterType]
 
-	if not var_30_0 and arg_30_2 then
-		logError(string.format("CritterConfig:getCritterFilterTypeCfg error, cfg is nil, id:%s", arg_30_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterFilterTypeCfg error, cfg is nil, id:%s", filterType))
 	end
 
-	return var_30_0
+	return cfg
 end
 
-function var_0_0.getCritterTabDataList(arg_31_0, arg_31_1)
-	local var_31_0 = {}
-	local var_31_1 = arg_31_0:getCritterFilterTypeCfg(arg_31_1, true)
+function CritterConfig:getCritterTabDataList(filterType)
+	local result = {}
+	local cfg = self:getCritterFilterTypeCfg(filterType, true)
 
-	if var_31_1 then
-		local var_31_2 = string.splitToNumber(var_31_1.filterTab, "#")
-		local var_31_3 = {}
+	if cfg then
+		local filterTabList = string.splitToNumber(cfg.filterTab, "#")
+		local nameList = {}
 
-		if arg_31_1 == CritterEnum.FilterType.Race then
-			for iter_31_0, iter_31_1 in ipairs(var_31_2) do
-				var_31_3[iter_31_0] = arg_31_0:getCritterCatalogueCfg(iter_31_1).name
+		if filterType == CritterEnum.FilterType.Race then
+			for i, filterTab in ipairs(filterTabList) do
+				local categoryCfg = self:getCritterCatalogueCfg(filterTab)
+
+				nameList[i] = categoryCfg.name
 			end
 		else
-			var_31_3 = string.split(var_31_1.tabName, "#")
+			nameList = string.split(cfg.tabName, "#")
 		end
 
-		local var_31_4 = string.split(var_31_1.tabIcon, "#")
+		local iconList = string.split(cfg.tabIcon, "#")
 
-		for iter_31_2, iter_31_3 in ipairs(var_31_2) do
-			var_31_0[iter_31_2] = {
-				filterTab = iter_31_3,
-				name = var_31_3[iter_31_2],
-				icon = var_31_4[iter_31_2]
+		for i, filterTab in ipairs(filterTabList) do
+			local tabData = {
+				filterTab = filterTab,
+				name = nameList[i],
+				icon = iconList[i]
 			}
+
+			result[i] = tabData
 		end
 	end
 
-	return var_31_0
+	return result
 end
 
-function var_0_0.getCritterEffectList(arg_32_0, arg_32_1)
-	if not arg_32_0._critterSkinEffectDict then
-		arg_32_0._critterSkinEffectDict = {}
-		arg_32_0._critterSkinAnimEffectDict = {}
+function CritterConfig:getCritterEffectList(skinId)
+	if not self._critterSkinEffectDict then
+		self._critterSkinEffectDict = {}
+		self._critterSkinAnimEffectDict = {}
 
-		local var_32_0 = arg_32_0._critterSkinEffectDict
+		local dict = self._critterSkinEffectDict
 
-		for iter_32_0, iter_32_1 in ipairs(lua_critter_interaction_effect.configList) do
-			if not var_32_0[iter_32_1.skinId] then
-				var_32_0[iter_32_1.skinId] = {}
-				arg_32_0._critterSkinAnimEffectDict[iter_32_1.skinId] = {}
+		for i, cfg in ipairs(lua_critter_interaction_effect.configList) do
+			if not dict[cfg.skinId] then
+				dict[cfg.skinId] = {}
+				self._critterSkinAnimEffectDict[cfg.skinId] = {}
 			end
 
-			table.insert(var_32_0[iter_32_1.skinId], iter_32_1)
+			table.insert(dict[cfg.skinId], cfg)
 
-			local var_32_1 = arg_32_0._critterSkinAnimEffectDict[iter_32_1.skinId]
+			local nameDict = self._critterSkinAnimEffectDict[cfg.skinId]
 
-			if not var_32_1[iter_32_1.animName] then
-				var_32_1[iter_32_1.animName] = {}
+			if not nameDict[cfg.animName] then
+				nameDict[cfg.animName] = {}
 			end
 
-			table.insert(var_32_1[iter_32_1.animName], iter_32_1)
+			table.insert(nameDict[cfg.animName], cfg)
 		end
 	end
 
-	return arg_32_0._critterSkinEffectDict[arg_32_1]
+	return self._critterSkinEffectDict[skinId]
 end
 
-function var_0_0.getCritterCommonInteractionEffCfg(arg_33_0, arg_33_1)
-	local var_33_0
+function CritterConfig:getCritterCommonInteractionEffCfg(interactEffectId)
+	local result
 
-	if arg_33_0._commonInteractionEffDict then
-		var_33_0 = arg_33_0._commonInteractionEffDict[arg_33_1]
+	if self._commonInteractionEffDict then
+		result = self._commonInteractionEffDict[interactEffectId]
 	end
 
-	return var_33_0
+	return result
 end
 
-function var_0_0.getAllCritterCommonInteractionEffKeyList(arg_34_0)
-	local var_34_0 = {}
+function CritterConfig:getAllCritterCommonInteractionEffKeyList()
+	local result = {}
 
-	if arg_34_0._commonInteractionEffDict then
-		for iter_34_0, iter_34_1 in pairs(arg_34_0._commonInteractionEffDict) do
-			var_34_0[#var_34_0 + 1] = iter_34_1.effectKey
+	if self._commonInteractionEffDict then
+		for _, cfg in pairs(self._commonInteractionEffDict) do
+			result[#result + 1] = cfg.effectKey
 		end
 	end
 
-	return var_34_0
+	return result
 end
 
-function var_0_0.getCritterEffectListByAnimName(arg_35_0, arg_35_1, arg_35_2)
-	if not arg_35_0._critterSkinAnimEffectDict then
-		arg_35_0:getCritterEffectList(arg_35_1)
+function CritterConfig:getCritterEffectListByAnimName(skinId, animName)
+	if not self._critterSkinAnimEffectDict then
+		self:getCritterEffectList(skinId)
 	end
 
-	return arg_35_0._critterSkinAnimEffectDict[arg_35_1] and arg_35_0._critterSkinAnimEffectDict[arg_35_1][arg_35_2]
+	return self._critterSkinAnimEffectDict[skinId] and self._critterSkinAnimEffectDict[skinId][animName]
 end
 
-function var_0_0.getCritterRareCfg(arg_36_0, arg_36_1, arg_36_2)
-	local var_36_0 = lua_critter_rare.configDict[arg_36_1]
+function CritterConfig:getCritterRareCfg(rare, nilError)
+	local cfg = lua_critter_rare.configDict[rare]
 
-	if not var_36_0 and arg_36_2 then
-		logError(string.format("CritterConfig:getCritterRareCfg error, cfg is nil, summonId:%s", arg_36_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterRareCfg error, cfg is nil, summonId:%s", rare))
 	end
 
-	return var_36_0
+	return cfg
 end
 
-function var_0_0.getCritterInteractionAudioList(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = {}
+function CritterConfig:getCritterInteractionAudioList(critterId, animState)
+	local result = {}
 
-	if arg_37_0._critterAudioDict and arg_37_0._critterAudioDict[arg_37_1] then
-		var_37_0 = arg_37_0._critterAudioDict[arg_37_1][arg_37_2] or {}
+	if self._critterAudioDict and self._critterAudioDict[critterId] then
+		result = self._critterAudioDict[critterId][animState] or {}
 	end
 
-	return var_37_0
+	return result
 end
 
-function var_0_0.getCritterCatalogueCfg(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = lua_critter_catalogue.configDict[arg_38_1]
+function CritterConfig:getCritterCatalogueCfg(id, nilError)
+	local cfg = lua_critter_catalogue.configDict[id]
 
-	if not var_38_0 and arg_38_2 then
-		logError(string.format("CritterConfig:getCritterCatalogueCfg error, cfg is nil, id:%s", arg_38_1))
+	if not cfg and nilError then
+		logError(string.format("CritterConfig:getCritterCatalogueCfg error, cfg is nil, id:%s", id))
 	end
 
-	return var_38_0
+	return cfg
 end
 
-function var_0_0.getBaseCard(arg_39_0, arg_39_1)
-	local var_39_0 = arg_39_0:getCritterCatalogueCfg(arg_39_1)
+function CritterConfig:getBaseCard(id)
+	local cfg = self:getCritterCatalogueCfg(id)
+	local result = cfg and cfg.baseCard
 
-	return var_39_0 and var_39_0.baseCard
+	return result
 end
 
-function var_0_0.isHasCatalogueChildId(arg_40_0, arg_40_1, arg_40_2)
-	if not arg_40_0._catalogueChildIdMapDict then
-		arg_40_0:_initCatalogueChildIdList_()
+function CritterConfig:isHasCatalogueChildId(parentId, childId)
+	if not self._catalogueChildIdMapDict then
+		self:_initCatalogueChildIdList_()
 	end
 
-	return arg_40_0._catalogueChildIdMapDict[arg_40_1] and arg_40_0._catalogueChildIdMapDict[arg_40_1][arg_40_2]
+	return self._catalogueChildIdMapDict[parentId] and self._catalogueChildIdMapDict[parentId][childId]
 end
 
-function var_0_0.getCatalogueChildIdMap(arg_41_0, arg_41_1)
-	if not arg_41_0._catalogueChildIdMapDict then
-		arg_41_0:_initCatalogueChildIdList_()
+function CritterConfig:getCatalogueChildIdMap(id)
+	if not self._catalogueChildIdMapDict then
+		self:_initCatalogueChildIdList_()
 	end
 
-	return arg_41_0._catalogueChildIdMapDict[arg_41_1]
+	return self._catalogueChildIdMapDict[id]
 end
 
-function var_0_0.getCatalogueChildIdList(arg_42_0, arg_42_1)
-	if not arg_42_0._catalogueChildIdsDict then
-		arg_42_0:_initCatalogueChildIdList_()
+function CritterConfig:getCatalogueChildIdList(id)
+	if not self._catalogueChildIdsDict then
+		self:_initCatalogueChildIdList_()
 	end
 
-	return arg_42_0._catalogueChildIdsDict[arg_42_1]
+	return self._catalogueChildIdsDict[id]
 end
 
-function var_0_0._initCatalogueChildIdList_(arg_43_0)
-	if not arg_43_0._catalogueChildIdsDict then
-		arg_43_0._catalogueChildIdsDict = {}
-		arg_43_0._catalogueChildIdMapDict = {}
+function CritterConfig:_initCatalogueChildIdList_()
+	if not self._catalogueChildIdsDict then
+		self._catalogueChildIdsDict = {}
+		self._catalogueChildIdMapDict = {}
 
-		local var_43_0 = lua_critter_catalogue.configList
+		local cfgList = lua_critter_catalogue.configList
 
-		for iter_43_0 = 1, #var_43_0 do
-			local var_43_1 = var_43_0[iter_43_0].id
-			local var_43_2, var_43_3 = arg_43_0:_findCatalogueChildIdList_(var_43_1, var_43_0)
+		for i = 1, #cfgList do
+			local cfg = cfgList[i]
+			local id = cfg.id
+			local idList, idDict = self:_findCatalogueChildIdList_(id, cfgList)
 
-			arg_43_0._catalogueChildIdsDict[var_43_1] = var_43_2
-			arg_43_0._catalogueChildIdMapDict[var_43_1] = var_43_3
+			self._catalogueChildIdsDict[id] = idList
+			self._catalogueChildIdMapDict[id] = idDict
 		end
 	end
 end
 
-function var_0_0._findCatalogueChildIdList_(arg_44_0, arg_44_1, arg_44_2)
-	local var_44_0 = {}
-	local var_44_1 = {}
-	local var_44_2 = 0
+function CritterConfig:_findCatalogueChildIdList_(parentId, cfgList)
+	local childIds = {}
+	local childIdMap = {}
+	local nextIdx = 0
 
-	while arg_44_1 do
-		for iter_44_0 = 1, #arg_44_2 do
-			local var_44_3 = arg_44_2[iter_44_0]
+	while parentId do
+		for i = 1, #cfgList do
+			local childCfg = cfgList[i]
 
-			if var_44_3.parentId == arg_44_1 and not var_44_1[var_44_3.id] then
-				var_44_1[var_44_3.id] = true
+			if childCfg.parentId == parentId and not childIdMap[childCfg.id] then
+				childIdMap[childCfg.id] = true
 
-				table.insert(var_44_0, var_44_3.id)
+				table.insert(childIds, childCfg.id)
 			end
 		end
 
-		var_44_2 = var_44_2 + 1
-		arg_44_1 = var_44_0[var_44_2]
+		nextIdx = nextIdx + 1
+		parentId = childIds[nextIdx]
 	end
 
-	return var_44_0, var_44_1
+	return childIds, childIdMap
 end
 
-function var_0_0.getPatienceChangeCfg(arg_45_0, arg_45_1)
-	return lua_critter_patience_change.configDict[arg_45_1]
+function CritterConfig:getPatienceChangeCfg(buildingType)
+	return lua_critter_patience_change.configDict[buildingType]
 end
 
-var_0_0.instance = var_0_0.New()
+CritterConfig.instance = CritterConfig.New()
 
-return var_0_0
+return CritterConfig

@@ -1,129 +1,131 @@
-﻿module("modules.logic.versionactivity2_6.newinsight.view.ActivityInsightShowTaskItem_2_6", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/newinsight/view/ActivityInsightShowTaskItem_2_6.lua
 
-local var_0_0 = class("ActivityInsightShowTaskItem_2_6", LuaCompBase)
+module("modules.logic.versionactivity2_6.newinsight.view.ActivityInsightShowTaskItem_2_6", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.go = arg_1_1
-	arg_1_0._index = arg_1_2
-	arg_1_0._anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goinfo = gohelper.findChild(arg_1_1, "root/info")
-	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_1, "root/info/txt_taskdes")
-	arg_1_0._txtprocess = gohelper.findChildText(arg_1_1, "root/info/txt_process")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_1, "root/scroll_reward/Viewport/go_rewardContent")
-	arg_1_0._gonotget = gohelper.findChild(arg_1_1, "root/go_notget")
-	arg_1_0._btngoto = gohelper.findChildButtonWithAudio(arg_1_1, "root/go_notget/btn_goto")
-	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_1, "root/go_notget/btn_canget")
-	arg_1_0._btnuse = gohelper.findChildButtonWithAudio(arg_1_1, "root/go_notget/btn_use")
-	arg_1_0._goget = gohelper.findChild(arg_1_1, "root/go_get")
+local ActivityInsightShowTaskItem_2_6 = class("ActivityInsightShowTaskItem_2_6", LuaCompBase)
 
-	gohelper.setActive(arg_1_0.go, false)
+function ActivityInsightShowTaskItem_2_6:init(go, index)
+	self.go = go
+	self._index = index
+	self._anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self._goinfo = gohelper.findChild(go, "root/info")
+	self._txttaskdes = gohelper.findChildText(go, "root/info/txt_taskdes")
+	self._txtprocess = gohelper.findChildText(go, "root/info/txt_process")
+	self._gorewards = gohelper.findChild(go, "root/scroll_reward/Viewport/go_rewardContent")
+	self._gonotget = gohelper.findChild(go, "root/go_notget")
+	self._btngoto = gohelper.findChildButtonWithAudio(go, "root/go_notget/btn_goto")
+	self._btncanget = gohelper.findChildButtonWithAudio(go, "root/go_notget/btn_canget")
+	self._btnuse = gohelper.findChildButtonWithAudio(go, "root/go_notget/btn_use")
+	self._goget = gohelper.findChild(go, "root/go_get")
 
-	arg_1_0._rewardItems = {}
+	gohelper.setActive(self.go, false)
 
-	arg_1_0:addEvents()
+	self._rewardItems = {}
+
+	self:addEvents()
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btngoto:AddClickListener(arg_2_0._btngotoOnClick, arg_2_0)
-	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
-	arg_2_0._btnuse:AddClickListener(arg_2_0._btnuseOnClick, arg_2_0)
+function ActivityInsightShowTaskItem_2_6:addEvents()
+	self._btngoto:AddClickListener(self._btngotoOnClick, self)
+	self._btncanget:AddClickListener(self._btncangetOnClick, self)
+	self._btnuse:AddClickListener(self._btnuseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btngoto:RemoveClickListener()
-	arg_3_0._btncanget:RemoveClickListener()
-	arg_3_0._btnuse:RemoveClickListener()
+function ActivityInsightShowTaskItem_2_6:removeEvents()
+	self._btngoto:RemoveClickListener()
+	self._btncanget:RemoveClickListener()
+	self._btnuse:RemoveClickListener()
 end
 
-function var_0_0._btngotoOnClick(arg_4_0)
-	if arg_4_0._config.jumpId > 0 then
-		GameFacade.jump(arg_4_0._config.jumpId)
+function ActivityInsightShowTaskItem_2_6:_btngotoOnClick()
+	if self._config.jumpId > 0 then
+		GameFacade.jump(self._config.jumpId)
 	end
 end
 
-function var_0_0._btncangetOnClick(arg_5_0)
-	TaskRpc.instance:sendFinishTaskRequest(arg_5_0._config.id)
+function ActivityInsightShowTaskItem_2_6:_btncangetOnClick()
+	TaskRpc.instance:sendFinishTaskRequest(self._config.id)
 end
 
-function var_0_0._btnuseOnClick(arg_6_0)
-	local var_6_0 = {
-		id = arg_6_0._config.itemId
-	}
+function ActivityInsightShowTaskItem_2_6:_btnuseOnClick()
+	local data = {}
 
-	var_6_0.uid = ItemInsightModel.instance:getEarliestExpireInsight(var_6_0.id).uid
+	data.id = self._config.itemId
+	data.uid = ItemInsightModel.instance:getEarliestExpireInsight(data.id).uid
 
-	GiftController.instance:openGiftInsightHeroChoiceView(var_6_0)
+	GiftController.instance:openGiftInsightHeroChoiceView(data)
 end
 
-function var_0_0.setTask(arg_7_0, arg_7_1)
-	arg_7_0._taskId = arg_7_1
+function ActivityInsightShowTaskItem_2_6:setTask(taskId)
+	self._taskId = taskId
 
-	arg_7_0:refresh()
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_8_0)
-	arg_8_0._taskMO = TaskModel.instance:getTaskById(arg_8_0._taskId)
+function ActivityInsightShowTaskItem_2_6:refresh()
+	self._taskMO = TaskModel.instance:getTaskById(self._taskId)
 
-	gohelper.setActive(arg_8_0._goclick, false)
-	gohelper.setActive(arg_8_0.go, true)
+	gohelper.setActive(self._goclick, false)
+	gohelper.setActive(self.go, true)
 
-	arg_8_0._config = Activity172Config.instance:getAct172TaskById(arg_8_0._taskId)
-	arg_8_0._txttaskdes.text = arg_8_0._config.desc
-	arg_8_0._txtprocess.text = string.format("%s/%s", arg_8_0._taskMO.progress, arg_8_0._config.maxProgress)
+	self._config = Activity172Config.instance:getAct172TaskById(self._taskId)
+	self._txttaskdes.text = self._config.desc
+	self._txtprocess.text = string.format("%s/%s", self._taskMO.progress, self._config.maxProgress)
 
-	arg_8_0:_refreshTaskRewards()
-	arg_8_0:_refreshBtns()
+	self:_refreshTaskRewards()
+	self:_refreshBtns()
 end
 
-function var_0_0._refreshBtns(arg_9_0)
-	gohelper.setActive(arg_9_0._goget, false)
-	gohelper.setActive(arg_9_0._gonotget, false)
-	gohelper.setActive(arg_9_0._btnuse.gameObject, false)
-	gohelper.setActive(arg_9_0._btncanget.gameObject, false)
-	gohelper.setActive(arg_9_0._btngoto.gameObject, false)
+function ActivityInsightShowTaskItem_2_6:_refreshBtns()
+	gohelper.setActive(self._goget, false)
+	gohelper.setActive(self._gonotget, false)
+	gohelper.setActive(self._btnuse.gameObject, false)
+	gohelper.setActive(self._btncanget.gameObject, false)
+	gohelper.setActive(self._btngoto.gameObject, false)
 
-	if arg_9_0._taskMO.finishCount >= 1 then
-		local var_9_0 = ActivityEnum.Activity.V2a6_NewInsight
+	if self._taskMO.finishCount >= 1 then
+		local activityId = ActivityEnum.Activity.V2a6_NewInsight
+		local hasUse = ActivityType172Model.instance:isTaskHasUsed(activityId, self._taskId)
 
-		if not ActivityType172Model.instance:isTaskHasUsed(var_9_0, arg_9_0._taskId) and arg_9_0._config.itemId ~= 0 then
-			gohelper.setActive(arg_9_0._gonotget, true)
-			gohelper.setActive(arg_9_0._btnuse.gameObject, true)
+		if not hasUse and self._config.itemId ~= 0 then
+			gohelper.setActive(self._gonotget, true)
+			gohelper.setActive(self._btnuse.gameObject, true)
 		else
-			gohelper.setActive(arg_9_0._goget, true)
+			gohelper.setActive(self._goget, true)
 		end
-	elseif arg_9_0._taskMO.hasFinished then
-		gohelper.setActive(arg_9_0._gonotget, true)
-		gohelper.setActive(arg_9_0._btncanget.gameObject, true)
+	elseif self._taskMO.hasFinished then
+		gohelper.setActive(self._gonotget, true)
+		gohelper.setActive(self._btncanget.gameObject, true)
 	else
-		gohelper.setActive(arg_9_0._gonotget, true)
-		gohelper.setActive(arg_9_0._btngoto.gameObject, true)
+		gohelper.setActive(self._gonotget, true)
+		gohelper.setActive(self._btngoto.gameObject, true)
 	end
 end
 
-function var_0_0._refreshTaskRewards(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._rewardItems) do
-		gohelper.setActive(iter_10_1.go, false)
+function ActivityInsightShowTaskItem_2_6:_refreshTaskRewards()
+	for _, v in pairs(self._rewardItems) do
+		gohelper.setActive(v.go, false)
 	end
 
-	local var_10_0 = string.split(arg_10_0._config.bonus, "|")
+	local rewards = string.split(self._config.bonus, "|")
 
-	for iter_10_2 = 1, #var_10_0 do
-		local var_10_1 = string.splitToNumber(var_10_0[iter_10_2], "#")
+	for i = 1, #rewards do
+		local itemCo = string.splitToNumber(rewards[i], "#")
 
-		if not arg_10_0._rewardItems[iter_10_2] then
-			arg_10_0._rewardItems[iter_10_2] = IconMgr.instance:getCommonPropItemIcon(arg_10_0._gorewards)
+		if not self._rewardItems[i] then
+			self._rewardItems[i] = IconMgr.instance:getCommonPropItemIcon(self._gorewards)
 		end
 
-		gohelper.setActive(arg_10_0._rewardItems[iter_10_2].go, true)
-		arg_10_0._rewardItems[iter_10_2]:setMOValue(var_10_1[1], var_10_1[2], var_10_1[3])
-		arg_10_0._rewardItems[iter_10_2]:setScale(0.7)
-		arg_10_0._rewardItems[iter_10_2]:setCountFontSize(46)
-		arg_10_0._rewardItems[iter_10_2]:setHideLvAndBreakFlag(true)
+		gohelper.setActive(self._rewardItems[i].go, true)
+		self._rewardItems[i]:setMOValue(itemCo[1], itemCo[2], itemCo[3])
+		self._rewardItems[i]:setScale(0.7)
+		self._rewardItems[i]:setCountFontSize(46)
+		self._rewardItems[i]:setHideLvAndBreakFlag(true)
 	end
 end
 
-function var_0_0.destroy(arg_11_0)
-	arg_11_0:removeEvents()
+function ActivityInsightShowTaskItem_2_6:destroy()
+	self:removeEvents()
 end
 
-return var_0_0
+return ActivityInsightShowTaskItem_2_6

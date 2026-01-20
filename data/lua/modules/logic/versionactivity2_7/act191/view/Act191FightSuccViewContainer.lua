@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_7.act191.view.Act191FightSuccViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/view/Act191FightSuccViewContainer.lua
 
-local var_0_0 = class("Act191FightSuccViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_7.act191.view.Act191FightSuccViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act191FightSuccViewContainer = class("Act191FightSuccViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act191FightSuccView.New())
+function Act191FightSuccViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act191FightSuccView.New())
+
+	return views
 end
 
-return var_0_0
+return Act191FightSuccViewContainer

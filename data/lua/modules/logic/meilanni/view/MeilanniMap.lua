@@ -1,338 +1,349 @@
-﻿module("modules.logic.meilanni.view.MeilanniMap", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniMap.lua
 
-local var_0_0 = class("MeilanniMap", BaseView)
+module("modules.logic.meilanni.view.MeilanniMap", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local MeilanniMap = class("MeilanniMap", BaseView)
+
+function MeilanniMap:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MeilanniMap:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MeilanniMap:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0:_initMap()
+function MeilanniMap:_editableInitView()
+	self:_initMap()
 end
 
-function var_0_0.setScenePosSafety(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_0._sceneTrans then
+function MeilanniMap:setScenePosSafety(targetPos, tween)
+	if not self._sceneTrans then
 		return
 	end
 
-	if arg_5_1.x < arg_5_0._mapMinX then
-		arg_5_1.x = arg_5_0._mapMinX
-	elseif arg_5_1.x > arg_5_0._mapMaxX then
-		arg_5_1.x = arg_5_0._mapMaxX
+	if targetPos.x < self._mapMinX then
+		targetPos.x = self._mapMinX
+	elseif targetPos.x > self._mapMaxX then
+		targetPos.x = self._mapMaxX
 	end
 
-	if arg_5_1.y < arg_5_0._mapMinY then
-		arg_5_1.y = arg_5_0._mapMinY
-	elseif arg_5_1.y > arg_5_0._mapMaxY then
-		arg_5_1.y = arg_5_0._mapMaxY
+	if targetPos.y < self._mapMinY then
+		targetPos.y = self._mapMinY
+	elseif targetPos.y > self._mapMaxY then
+		targetPos.y = self._mapMaxY
 	end
 
-	if arg_5_2 then
-		ZProj.TweenHelper.DOLocalMove(arg_5_0._sceneTrans, arg_5_1.x, arg_5_1.y, 0, 0.26)
+	if tween then
+		ZProj.TweenHelper.DOLocalMove(self._sceneTrans, targetPos.x, targetPos.y, 0, 0.26)
 	else
-		arg_5_0._sceneTrans.localPosition = arg_5_1
+		self._sceneTrans.localPosition = targetPos
 	end
 end
 
-function var_0_0._initCamera(arg_6_0)
-	local var_6_0 = CameraMgr.instance:getMainCamera()
+function MeilanniMap:_initCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_6_0.orthographic = true
+	camera.orthographic = true
 
-	transformhelper.setLocalRotation(var_6_0.transform, 0, 0, 0)
+	transformhelper.setLocalRotation(camera.transform, 0, 0, 0)
 
-	local var_6_1 = GameUtil.getAdapterScale()
+	local scale = GameUtil.getAdapterScale()
 
-	var_6_0.orthographicSize = MeilanniEnum.orthographicSize * var_6_1
+	camera.orthographicSize = MeilanniEnum.orthographicSize * scale
 end
 
-function var_0_0._resetCamera(arg_7_0)
-	local var_7_0 = CameraMgr.instance:getMainCamera()
+function MeilanniMap:_resetCamera()
+	local camera = CameraMgr.instance:getMainCamera()
 
-	var_7_0.orthographicSize = MeilanniEnum.orthographicSize
-	var_7_0.orthographic = false
+	camera.orthographicSize = MeilanniEnum.orthographicSize
+	camera.orthographic = false
 end
 
-function var_0_0._initMap(arg_8_0)
-	local var_8_0 = CameraMgr.instance:getMainCameraTrs().parent
-	local var_8_1 = CameraMgr.instance:getSceneRoot()
+function MeilanniMap:_initMap()
+	local mainTrans = CameraMgr.instance:getMainCameraTrs().parent
+	local sceneRoot = CameraMgr.instance:getSceneRoot()
 
-	arg_8_0._sceneRoot = UnityEngine.GameObject.New("MeilanniMap")
+	self._sceneRoot = UnityEngine.GameObject.New("MeilanniMap")
 
-	local var_8_2, var_8_3, var_8_4 = transformhelper.getLocalPos(var_8_0)
+	local x, y, z = transformhelper.getLocalPos(mainTrans)
 
-	transformhelper.setLocalPos(arg_8_0._sceneRoot.transform, 0, var_8_3, 0)
-	gohelper.addChild(var_8_1, arg_8_0._sceneRoot)
+	transformhelper.setLocalPos(self._sceneRoot.transform, 0, y, 0)
+	gohelper.addChild(sceneRoot, self._sceneRoot)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function MeilanniMap:onUpdateParam()
 	return
 end
 
-function var_0_0._showMap(arg_10_0)
-	local var_10_0 = arg_10_0._mapInfo:getCurEpisodeInfo().episodeConfig
+function MeilanniMap:_showMap()
+	local episodeInfo = self._mapInfo:getCurEpisodeInfo()
+	local curMap = episodeInfo.episodeConfig
 
-	arg_10_0:_changeMap(var_10_0)
+	self:_changeMap(curMap)
 end
 
-function var_0_0._changeMap(arg_11_0, arg_11_1)
-	if arg_11_0._mapCfg == arg_11_1 then
+function MeilanniMap:_changeMap(curMap)
+	if self._mapCfg == curMap then
 		return
 	end
 
-	if not arg_11_0._oldMapLoader then
-		arg_11_0._oldMapLoader = arg_11_0._mapLoader
-		arg_11_0._oldSceneGo = arg_11_0._sceneGo
-		arg_11_0._oldSceneTrans = arg_11_0._sceneTrans
-	elseif arg_11_0._mapLoader then
-		arg_11_0._mapLoader:dispose()
+	if not self._oldMapLoader then
+		self._oldMapLoader = self._mapLoader
+		self._oldSceneGo = self._sceneGo
+		self._oldSceneTrans = self._sceneTrans
+	elseif self._mapLoader then
+		self._mapLoader:dispose()
 
-		arg_11_0._mapLoader = nil
+		self._mapLoader = nil
 	end
 
-	arg_11_0._mapCfg = arg_11_1
+	self._mapCfg = curMap
 
-	local var_11_0 = arg_11_1.res
+	local url = curMap.res
 
-	arg_11_0:_loadMap(var_11_0)
+	self:_loadMap(url)
 end
 
-function var_0_0._loadMap(arg_12_0, arg_12_1)
-	arg_12_0._mapLoader = MultiAbLoader.New()
+function MeilanniMap:_loadMap(url)
+	self._mapLoader = MultiAbLoader.New()
 
-	arg_12_0._mapLoader:addPath(arg_12_1)
-	arg_12_0._mapLoader:startLoad(function(arg_13_0)
-		local var_13_0 = arg_12_0._oldSceneGo
+	self._mapLoader:addPath(url)
+	self._mapLoader:startLoad(function(multiAbLoader)
+		local oldSceneGo = self._oldSceneGo
 
-		arg_12_0._oldSceneGo = nil
+		self._oldSceneGo = nil
 
-		arg_12_0:disposeOldMap()
+		self:disposeOldMap()
 
-		local var_13_1 = arg_12_0._mapLoader:getAssetItem(arg_12_1):GetResource(arg_12_1)
+		local assetItem = self._mapLoader:getAssetItem(url)
+		local mainPrefab = assetItem:GetResource(url)
 
-		arg_12_0._sceneGo = gohelper.clone(var_13_1, arg_12_0._sceneRoot)
+		self._sceneGo = gohelper.clone(mainPrefab, self._sceneRoot)
 
-		gohelper.setActive(arg_12_0._sceneGo, true)
+		gohelper.setActive(self._sceneGo, true)
 
-		arg_12_0._sceneTrans = arg_12_0._sceneGo.transform
+		self._sceneTrans = self._sceneGo.transform
 
-		arg_12_0:_startFade(var_13_0, arg_12_0._sceneGo)
+		self:_startFade(oldSceneGo, self._sceneGo)
 	end)
 end
 
-function var_0_0._startFade(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_1 then
+function MeilanniMap:_startFade(oldSceneGo, newSceneGo)
+	if not oldSceneGo then
 		return
 	end
 
-	arg_14_2:GetComponent(typeof(UnityEngine.Animator)).enabled = false
+	local animator = newSceneGo:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setAsLastSibling(arg_14_1)
+	animator.enabled = false
 
-	arg_14_0._oldSceneGoAnim = arg_14_1
-	arg_14_0._newSceneGoAnim = arg_14_2
-	arg_14_0._oldMats = arg_14_0:_collectMats(arg_14_1)
-	arg_14_0._newMats = arg_14_0:_collectMats(arg_14_2)
+	gohelper.setAsLastSibling(oldSceneGo)
 
-	arg_14_0:_frameUpdateNew(0)
-	arg_14_0:_fadeOld()
+	self._oldSceneGoAnim = oldSceneGo
+	self._newSceneGoAnim = newSceneGo
+	self._oldMats = self:_collectMats(oldSceneGo)
+	self._newMats = self:_collectMats(newSceneGo)
 
-	local var_14_0 = 0.5
+	self:_frameUpdateNew(0)
+	self:_fadeOld()
 
-	TaskDispatcher.runDelay(arg_14_0._fadeNew, arg_14_0, var_14_0)
+	local delayTime = 0.5
+
+	TaskDispatcher.runDelay(self._fadeNew, self, delayTime)
 end
 
-function var_0_0._fadeOld(arg_15_0)
-	local var_15_0 = 1
-	local var_15_1 = 0
-	local var_15_2 = 2
+function MeilanniMap:_fadeOld()
+	local oldStartValue = 1
+	local oldEndValue = 0
+	local oldFadeTime = 2
 
-	ZProj.TweenHelper.DOTweenFloat(var_15_0, var_15_1, var_15_2, arg_15_0._frameUpdateOld, arg_15_0._fadeInFinishOld, arg_15_0)
+	ZProj.TweenHelper.DOTweenFloat(oldStartValue, oldEndValue, oldFadeTime, self._frameUpdateOld, self._fadeInFinishOld, self)
 end
 
-function var_0_0._fadeNew(arg_16_0)
-	local var_16_0 = 0
-	local var_16_1 = 1
-	local var_16_2 = 1.5
+function MeilanniMap:_fadeNew()
+	local newStartValue = 0
+	local newEndValue = 1
+	local newFadeTime = 1.5
 
-	ZProj.TweenHelper.DOTweenFloat(var_16_0, var_16_1, var_16_2, arg_16_0._frameUpdateNew, arg_16_0._fadeInFinishNew, arg_16_0)
+	ZProj.TweenHelper.DOTweenFloat(newStartValue, newEndValue, newFadeTime, self._frameUpdateNew, self._fadeInFinishNew, self)
 end
 
-function var_0_0._collectMats(arg_17_0, arg_17_1)
-	local var_17_0 = {}
-	local var_17_1 = arg_17_1:GetComponentsInChildren(typeof(UnityEngine.Renderer))
+function MeilanniMap:_collectMats(go)
+	local mats = {}
+	local meshRenderList = go:GetComponentsInChildren(typeof(UnityEngine.Renderer))
 
-	for iter_17_0 = 0, var_17_1.Length - 1 do
-		local var_17_2 = var_17_1[iter_17_0].material
+	for i = 0, meshRenderList.Length - 1 do
+		local mat = meshRenderList[i].material
 
-		table.insert(var_17_0, var_17_2)
+		table.insert(mats, mat)
 	end
 
-	return var_17_0
+	return mats
 end
 
-function var_0_0._updateMatAlpha(arg_18_0, arg_18_1, arg_18_2)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-		if iter_18_1:HasProperty("_MainCol") then
-			local var_18_0 = iter_18_1:GetColor("_MainCol")
+function MeilanniMap:_updateMatAlpha(mats, value)
+	for i, mat in ipairs(mats) do
+		if mat:HasProperty("_MainCol") then
+			local color = mat:GetColor("_MainCol")
 
-			var_18_0.a = arg_18_2
+			color.a = value
 
-			iter_18_1:SetColor("_MainCol", var_18_0)
+			mat:SetColor("_MainCol", color)
 		end
 	end
 end
 
-function var_0_0._frameUpdateNew(arg_19_0, arg_19_1)
-	arg_19_0:_updateMatAlpha(arg_19_0._newMats, arg_19_1)
+function MeilanniMap:_frameUpdateNew(value)
+	self:_updateMatAlpha(self._newMats, value)
 end
 
-function var_0_0._fadeInFinishNew(arg_20_0, arg_20_1)
-	arg_20_0:_updateMatAlpha(arg_20_0._newMats, 1)
+function MeilanniMap:_fadeInFinishNew(value)
+	self:_updateMatAlpha(self._newMats, 1)
 
-	arg_20_0._newSceneGoAnim = nil
+	self._newSceneGoAnim = nil
 end
 
-function var_0_0._frameUpdateOld(arg_21_0, arg_21_1)
-	arg_21_0:_updateMatAlpha(arg_21_0._oldMats, arg_21_1)
+function MeilanniMap:_frameUpdateOld(value)
+	self:_updateMatAlpha(self._oldMats, value)
 end
 
-function var_0_0._fadeInFinishOld(arg_22_0, arg_22_1)
-	if arg_22_0._oldSceneGoAnim then
-		gohelper.destroy(arg_22_0._oldSceneGoAnim)
+function MeilanniMap:_fadeInFinishOld(value)
+	if self._oldSceneGoAnim then
+		gohelper.destroy(self._oldSceneGoAnim)
 
-		arg_22_0._oldSceneGoAnim = nil
+		self._oldSceneGoAnim = nil
 	end
 end
 
-function var_0_0._initCanvas(arg_23_0)
-	local var_23_0 = arg_23_0._mapLoader:getAssetItem(arg_23_0._canvasUrl):GetResource(arg_23_0._canvasUrl)
+function MeilanniMap:_initCanvas()
+	local assetItem = self._mapLoader:getAssetItem(self._canvasUrl)
+	local mainPrefab = assetItem:GetResource(self._canvasUrl)
 
-	arg_23_0._sceneCanvasGo = gohelper.clone(var_23_0, arg_23_0._sceneGo)
-	arg_23_0._sceneCanvas = arg_23_0._sceneCanvasGo:GetComponent("Canvas")
-	arg_23_0._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
+	self._sceneCanvasGo = gohelper.clone(mainPrefab, self._sceneGo)
+	self._sceneCanvas = self._sceneCanvasGo:GetComponent("Canvas")
+	self._sceneCanvas.worldCamera = CameraMgr.instance:getMainCamera()
 end
 
-function var_0_0._initScene(arg_24_0)
-	arg_24_0._mapSize = gohelper.findChild(arg_24_0._sceneGo, "root/size"):GetComponentInChildren(typeof(UnityEngine.BoxCollider)).size
+function MeilanniMap:_initScene()
+	local sizeGo = gohelper.findChild(self._sceneGo, "root/size")
+	local box = sizeGo:GetComponentInChildren(typeof(UnityEngine.BoxCollider))
 
-	local var_24_0
+	self._mapSize = box.size
 
-	if GameUtil.getAdapterScale() ~= 1 then
-		var_24_0 = ViewMgr.instance:getUILayer(UILayerName.Hud)
+	local canvasGo
+	local scale = GameUtil.getAdapterScale()
+
+	if scale ~= 1 then
+		canvasGo = ViewMgr.instance:getUILayer(UILayerName.Hud)
 	else
-		var_24_0 = ViewMgr.instance:getUIRoot()
+		canvasGo = ViewMgr.instance:getUIRoot()
 	end
 
-	local var_24_1 = var_24_0.transform:GetWorldCorners()
-	local var_24_2 = var_24_1[1]
-	local var_24_3 = var_24_1[3]
+	local worldcorners = canvasGo.transform:GetWorldCorners()
+	local posTL = worldcorners[1]
+	local posBR = worldcorners[3]
 
-	arg_24_0._viewWidth = math.abs(var_24_3.x - var_24_2.x)
-	arg_24_0._viewHeight = math.abs(var_24_3.y - var_24_2.y)
-	arg_24_0._mapMinX = var_24_2.x - (arg_24_0._mapSize.x - arg_24_0._viewWidth)
-	arg_24_0._mapMaxX = var_24_2.x
-	arg_24_0._mapMinY = var_24_2.y
-	arg_24_0._mapMaxY = var_24_2.y + (arg_24_0._mapSize.y - arg_24_0._viewHeight)
+	self._viewWidth = math.abs(posBR.x - posTL.x)
+	self._viewHeight = math.abs(posBR.y - posTL.y)
+	self._mapMinX = posTL.x - (self._mapSize.x - self._viewWidth)
+	self._mapMaxX = posTL.x
+	self._mapMinY = posTL.y
+	self._mapMaxY = posTL.y + (self._mapSize.y - self._viewHeight)
 
-	if arg_24_0._oldScenePos then
-		arg_24_0._sceneTrans.localPosition = arg_24_0._oldScenePos
+	if self._oldScenePos then
+		self._sceneTrans.localPosition = self._oldScenePos
 	end
 
-	arg_24_0._oldScenePos = nil
+	self._oldScenePos = nil
 end
 
-function var_0_0._setInitPos(arg_25_0, arg_25_1)
-	if not arg_25_0._mapCfg then
+function MeilanniMap:_setInitPos(tween)
+	if not self._mapCfg then
 		return
 	end
 
-	local var_25_0 = arg_25_0._mapCfg.initPos
-	local var_25_1 = string.splitToNumber(var_25_0, "#")
+	local pos = self._mapCfg.initPos
+	local posParam = string.splitToNumber(pos, "#")
 
-	arg_25_0:setScenePosSafety(Vector3(var_25_1[1], var_25_1[2], 0), arg_25_1)
+	self:setScenePosSafety(Vector3(posParam[1], posParam[2], 0), tween)
 end
 
-function var_0_0.disposeOldMap(arg_26_0)
-	if arg_26_0._sceneTrans then
-		arg_26_0._oldScenePos = arg_26_0._sceneTrans.localPosition
+function MeilanniMap:disposeOldMap()
+	if self._sceneTrans then
+		self._oldScenePos = self._sceneTrans.localPosition
 	else
-		arg_26_0._oldScenePos = nil
+		self._oldScenePos = nil
 	end
 
-	if arg_26_0._oldMapLoader then
-		arg_26_0._oldMapLoader:dispose()
+	if self._oldMapLoader then
+		self._oldMapLoader:dispose()
 
-		arg_26_0._oldMapLoader = nil
+		self._oldMapLoader = nil
 	end
 
-	if arg_26_0._oldSceneGo then
-		gohelper.destroy(arg_26_0._oldSceneGo)
+	if self._oldSceneGo then
+		gohelper.destroy(self._oldSceneGo)
 
-		arg_26_0._oldSceneGo = nil
-	end
-end
-
-function var_0_0.onOpen(arg_27_0)
-	arg_27_0._mapId = MeilanniModel.instance:getCurMapId()
-	arg_27_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_27_0._mapId)
-
-	arg_27_0:addEventCb(MainController.instance, MainEvent.OnSceneClose, arg_27_0._onSceneClose, arg_27_0)
-	arg_27_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_27_0._onScreenResize, arg_27_0)
-	arg_27_0:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, arg_27_0._episodeInfoUpdate, arg_27_0)
-	arg_27_0:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, arg_27_0._resetMap, arg_27_0)
-	arg_27_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_27_0._onCloseView, arg_27_0)
-	arg_27_0:_initCamera()
-	arg_27_0:_showMap()
-end
-
-function var_0_0._onCloseView(arg_28_0, arg_28_1)
-	if arg_28_1 == ViewName.DungeonMapView then
-		arg_28_0:_initCamera()
+		self._oldSceneGo = nil
 	end
 end
 
-function var_0_0._resetMap(arg_29_0)
-	arg_29_0:_showMap()
+function MeilanniMap:onOpen()
+	self._mapId = MeilanniModel.instance:getCurMapId()
+	self._mapInfo = MeilanniModel.instance:getMapInfo(self._mapId)
+
+	self:addEventCb(MainController.instance, MainEvent.OnSceneClose, self._onSceneClose, self)
+	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.episodeInfoUpdate, self._episodeInfoUpdate, self)
+	self:addEventCb(MeilanniController.instance, MeilanniEvent.resetMap, self._resetMap, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:_initCamera()
+	self:_showMap()
 end
 
-function var_0_0._episodeInfoUpdate(arg_30_0)
-	MeilanniAnimationController.instance:addDelayCall(arg_30_0._showMap, arg_30_0, nil, MeilanniEnum.changeMapTime, MeilanniAnimationController.changeMapLayer)
+function MeilanniMap:_onCloseView(viewName)
+	if viewName == ViewName.DungeonMapView then
+		self:_initCamera()
+	end
 end
 
-function var_0_0._onScreenResize(arg_31_0)
-	local var_31_0 = CameraMgr.instance:getMainCamera()
-	local var_31_1 = GameUtil.getAdapterScale()
-
-	var_31_0.orthographicSize = MeilanniEnum.orthographicSize * var_31_1
+function MeilanniMap:_resetMap()
+	self:_showMap()
 end
 
-function var_0_0._onSceneClose(arg_32_0)
+function MeilanniMap:_episodeInfoUpdate()
+	MeilanniAnimationController.instance:addDelayCall(self._showMap, self, nil, MeilanniEnum.changeMapTime, MeilanniAnimationController.changeMapLayer)
+end
+
+function MeilanniMap:_onScreenResize()
+	local camera = CameraMgr.instance:getMainCamera()
+	local scale = GameUtil.getAdapterScale()
+
+	camera.orthographicSize = MeilanniEnum.orthographicSize * scale
+end
+
+function MeilanniMap:_onSceneClose()
 	return
 end
 
-function var_0_0.onClose(arg_33_0)
-	arg_33_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_33_0._onCloseView, arg_33_0)
-	arg_33_0:_resetCamera()
+function MeilanniMap:onClose()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:_resetCamera()
 end
 
-function var_0_0.onDestroyView(arg_34_0)
-	gohelper.destroy(arg_34_0._sceneRoot)
-	arg_34_0:disposeOldMap()
+function MeilanniMap:onDestroyView()
+	gohelper.destroy(self._sceneRoot)
+	self:disposeOldMap()
 
-	if arg_34_0._mapLoader then
-		arg_34_0._mapLoader:dispose()
+	if self._mapLoader then
+		self._mapLoader:dispose()
 	end
 end
 
-return var_0_0
+return MeilanniMap

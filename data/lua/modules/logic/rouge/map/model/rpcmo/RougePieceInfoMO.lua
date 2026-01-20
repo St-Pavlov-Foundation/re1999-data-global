@@ -1,40 +1,42 @@
-﻿module("modules.logic.rouge.map.model.rpcmo.RougePieceInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/model/rpcmo/RougePieceInfoMO.lua
 
-local var_0_0 = pureTable("RougePieceInfoMO")
+module("modules.logic.rouge.map.model.rpcmo.RougePieceInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.index = arg_1_1.index
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.talkId = arg_1_1.talkId
-	arg_1_0.finish = arg_1_1.finish
-	arg_1_0.selectId = arg_1_1.selectId
+local RougePieceInfoMO = pureTable("RougePieceInfoMO")
 
-	arg_1_0:updateTriggerStr(arg_1_1.triggerStr)
+function RougePieceInfoMO:init(pieceInfo)
+	self.index = pieceInfo.index
+	self.id = pieceInfo.id
+	self.talkId = pieceInfo.talkId
+	self.finish = pieceInfo.finish
+	self.selectId = pieceInfo.selectId
 
-	arg_1_0.pieceCo = RougeMapConfig.instance:getPieceCo(arg_1_0.id)
+	self:updateTriggerStr(pieceInfo.triggerStr)
+
+	self.pieceCo = RougeMapConfig.instance:getPieceCo(self.id)
 end
 
-function var_0_0.update(arg_2_0, arg_2_1)
-	arg_2_0.finish = arg_2_1.finish
-	arg_2_0.selectId = arg_2_1.selectId
+function RougePieceInfoMO:update(pieceInfo)
+	self.finish = pieceInfo.finish
+	self.selectId = pieceInfo.selectId
 
-	arg_2_0:updateTriggerStr(arg_2_1.triggerStr)
+	self:updateTriggerStr(pieceInfo.triggerStr)
 end
 
-function var_0_0.updateTriggerStr(arg_3_0, arg_3_1)
-	if string.nilorempty(arg_3_1) or arg_3_1 == "null" then
-		arg_3_0.triggerStr = nil
+function RougePieceInfoMO:updateTriggerStr(triggerStr)
+	if string.nilorempty(triggerStr) or triggerStr == "null" then
+		self.triggerStr = nil
 	else
-		arg_3_0.triggerStr = cjson.decode(arg_3_1)
+		self.triggerStr = cjson.decode(triggerStr)
 	end
 end
 
-function var_0_0.getPieceCo(arg_4_0)
-	return arg_4_0.pieceCo
+function RougePieceInfoMO:getPieceCo()
+	return self.pieceCo
 end
 
-function var_0_0.isFinish(arg_5_0)
-	return arg_5_0.finish
+function RougePieceInfoMO:isFinish()
+	return self.finish
 end
 
-return var_0_0
+return RougePieceInfoMO

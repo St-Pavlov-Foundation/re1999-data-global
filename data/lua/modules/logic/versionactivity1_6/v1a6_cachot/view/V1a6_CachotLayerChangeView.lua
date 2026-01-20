@@ -1,73 +1,74 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotLayerChangeView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotLayerChangeView.lua
 
-local var_0_0 = class("V1a6_CachotLayerChangeView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotLayerChangeView", package.seeall)
 
-function var_0_0.onOpen(arg_1_0)
-	arg_1_0._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+local V1a6_CachotLayerChangeView = class("V1a6_CachotLayerChangeView", BaseView)
 
-	if not arg_1_0._rogueInfo then
+function V1a6_CachotLayerChangeView:onOpen()
+	self._rogueInfo = V1a6_CachotModel.instance:getRogueInfo()
+
+	if not self._rogueInfo then
 		return
 	end
 
-	local var_1_0 = lua_rogue_room.configDict[arg_1_0._rogueInfo.room]
+	local roomCo = lua_rogue_room.configDict[self._rogueInfo.room]
 
-	if not var_1_0 then
+	if not roomCo then
 		return
 	end
 
-	arg_1_0._gotabs = {}
-	arg_1_0._difficulty = arg_1_0._rogueInfo.difficulty
+	self._gotabs = {}
+	self._difficulty = self._rogueInfo.difficulty
 
-	for iter_1_0 = 1, 2 do
-		local var_1_1 = arg_1_0._gotabs[iter_1_0]
-		local var_1_2 = var_1_0.layer
+	for i = 1, 2 do
+		local item = self._gotabs[i]
+		local layer = roomCo.layer
 
-		if iter_1_0 == 1 then
-			var_1_2 = var_1_2 - 1
+		if i == 1 then
+			layer = layer - 1
 		end
 
-		if not var_1_1 then
-			local var_1_3 = arg_1_0:getUserDataTb_()
+		if not item then
+			item = self:getUserDataTb_()
+			item.simagelevel = gohelper.findChildSingleImage(self.viewGO, i .. "/#simage_level" .. i)
+			item.gohard = gohelper.findChild(self.viewGO, i .. "/#go_hard")
+			item.txtlevel = gohelper.findChildText(self.viewGO, i .. "/#txt_level")
 
-			var_1_3.simagelevel = gohelper.findChildSingleImage(arg_1_0.viewGO, iter_1_0 .. "/#simage_level" .. iter_1_0)
-			var_1_3.gohard = gohelper.findChild(arg_1_0.viewGO, iter_1_0 .. "/#go_hard")
-			var_1_3.txtlevel = gohelper.findChildText(arg_1_0.viewGO, iter_1_0 .. "/#txt_level")
+			table.insert(self._gotabs, item)
+			item.simagelevel:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_layerchange_level_" .. layer))
 
-			table.insert(arg_1_0._gotabs, var_1_3)
-			var_1_3.simagelevel:LoadImage(ResUrl.getV1a6CachotIcon("v1a6_cachot_layerchange_level_" .. var_1_2))
-
-			if var_1_2 >= 3 then
-				gohelper.setActive(var_1_3.gohard, true)
+			if layer >= 3 then
+				gohelper.setActive(item.gohard, true)
 			else
-				gohelper.setActive(var_1_3.gohard, false)
+				gohelper.setActive(item.gohard, false)
 			end
 
-			var_1_3.txtlevel.text = V1a6_CachotRoomConfig.instance:getLayerName(var_1_2, arg_1_0._difficulty)
+			item.txtlevel.text = V1a6_CachotRoomConfig.instance:getLayerName(layer, self._difficulty)
 		end
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_dungeon_1_6_floor_load)
-	TaskDispatcher.runDelay(arg_1_0.checkViewIsOpenFinish, arg_1_0, 2.5)
+	TaskDispatcher.runDelay(self.checkViewIsOpenFinish, self, 2.5)
 end
 
-function var_0_0._onOpenView(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.V1a6_CachotMainView or arg_2_1 == ViewName.V1a6_CachotRoomView then
-		TaskDispatcher.runDelay(arg_2_0.closeThis, arg_2_0, 0.2)
+function V1a6_CachotLayerChangeView:_onOpenView(viewName)
+	if viewName == ViewName.V1a6_CachotMainView or viewName == ViewName.V1a6_CachotRoomView then
+		TaskDispatcher.runDelay(self.closeThis, self, 0.2)
 	end
 end
 
-function var_0_0.checkViewIsOpenFinish(arg_3_0)
+function V1a6_CachotLayerChangeView:checkViewIsOpenFinish()
 	if ViewMgr.instance:isOpenFinish(ViewName.V1a6_CachotMainView) or ViewMgr.instance:isOpenFinish(ViewName.V1a6_CachotRoomView) then
-		arg_3_0:closeThis()
+		self:closeThis()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_3_0._onOpenView, arg_3_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenView, self)
 	end
 end
 
-function var_0_0.onClose(arg_4_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_4_0._onOpenView, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.closeThis, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.checkViewIsOpenFinish, arg_4_0)
+function V1a6_CachotLayerChangeView:onClose()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self._onOpenView, self)
+	TaskDispatcher.cancelTask(self.closeThis, self)
+	TaskDispatcher.cancelTask(self.checkViewIsOpenFinish, self)
 end
 
-return var_0_0
+return V1a6_CachotLayerChangeView

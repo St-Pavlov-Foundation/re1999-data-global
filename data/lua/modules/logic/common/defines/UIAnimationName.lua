@@ -1,6 +1,8 @@
-﻿module("modules.logic.common.defines.UIAnimationName", package.seeall)
+﻿-- chunkname: @modules/logic/common/defines/UIAnimationName.lua
 
-return {
+module("modules.logic.common.defines.UIAnimationName", package.seeall)
+
+local UIAnimationName = {
 	Loop = "loop",
 	Out = "out",
 	Voice = "voice",
@@ -23,3 +25,5 @@ return {
 	Back = "back",
 	SwitchOpen = "switch_open"
 }
+
+return UIAnimationName

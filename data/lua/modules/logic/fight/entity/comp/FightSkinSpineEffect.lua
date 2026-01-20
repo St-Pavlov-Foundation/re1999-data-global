@@ -1,132 +1,134 @@
-﻿module("modules.logic.fight.entity.comp.FightSkinSpineEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/FightSkinSpineEffect.lua
 
-local var_0_0 = class("FightSkinSpineEffect", LuaCompBase)
-local var_0_1 = {
+module("modules.logic.fight.entity.comp.FightSkinSpineEffect", package.seeall)
+
+local FightSkinSpineEffect = class("FightSkinSpineEffect", LuaCompBase)
+local SetSpineAlphaBeforeAddEffect = {
 	buff_jjhhy = true
 }
-local var_0_2 = {
+local DontHideEffectOnSkillStart = {
 	buff_jjhhy = true
 }
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._effectWrapDict = nil
-	arg_1_0._monsterEffect = {}
+function FightSkinSpineEffect:ctor(entity)
+	self.entity = entity
+	self._effectWrapDict = nil
+	self._monsterEffect = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._spine = arg_2_0.entity.spine
+function FightSkinSpineEffect:init(go)
+	self._spine = self.entity.spine
 
-	arg_2_0._spine:registerCallback(UnitSpine.Evt_OnLoaded, arg_2_0._onLoaded, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_2_0._onSkillPlayStart, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
+	self._spine:registerCallback(UnitSpine.Evt_OnLoaded, self._onLoaded, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._spine:unregisterCallback(UnitSpine.Evt_OnLoaded, arg_3_0._onLoaded, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_3_0._onSkillPlayStart, arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayShowSpine, arg_3_0)
+function FightSkinSpineEffect:removeEventListeners()
+	self._spine:unregisterCallback(UnitSpine.Evt_OnLoaded, self._onLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	TaskDispatcher.cancelTask(self._delayShowSpine, self)
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	arg_4_0._effectWrapDict = nil
+function FightSkinSpineEffect:onDestroy()
+	self._effectWrapDict = nil
 end
 
-function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_0.entity == arg_5_1 then
-		arg_5_0:_setMonsterEffectActive(false, arg_5_0.__cname)
+function FightSkinSpineEffect:_onSkillPlayStart(entity, skillId, fightStepData)
+	if self.entity == entity then
+		self:_setMonsterEffectActive(false, self.__cname)
 	end
 end
 
-function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_0.entity == arg_6_1 then
-		arg_6_0:_setMonsterEffectActive(true, arg_6_0.__cname)
+function FightSkinSpineEffect:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if self.entity == entity then
+		self:_setMonsterEffectActive(true, self.__cname)
 	end
 end
 
-function var_0_0._setMonsterEffectActive(arg_7_0, arg_7_1, arg_7_2)
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._monsterEffect) do
-		if not var_0_2[iter_7_0] then
-			iter_7_1:setActive(arg_7_1, arg_7_2)
+function FightSkinSpineEffect:_setMonsterEffectActive(state, sign)
+	for effectName, effectWrap in pairs(self._monsterEffect) do
+		if not DontHideEffectOnSkillStart[effectName] then
+			effectWrap:setActive(state, sign)
 		end
 	end
 end
 
-function var_0_0._onLoaded(arg_8_0)
-	local var_8_0 = arg_8_0.entity:getMO()
-	local var_8_1 = FightConfig.instance:getSkinCO(var_8_0.skin)
+function FightSkinSpineEffect:_onLoaded()
+	local entityMO = self.entity:getMO()
+	local skinCO = FightConfig.instance:getSkinCO(entityMO.skin)
 
-	if not string.nilorempty(var_8_1.effect) then
-		local var_8_2 = string.split(var_8_1.effect, "#")
-		local var_8_3 = string.split(var_8_1.effectHangPoint, "#")
+	if not string.nilorempty(skinCO.effect) then
+		local effectArr = string.split(skinCO.effect, "#")
+		local effectHangPointArr = string.split(skinCO.effectHangPoint, "#")
 
-		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-			arg_8_0:_addEffect(iter_8_1, var_8_3[iter_8_0])
+		for i, v in ipairs(effectArr) do
+			self:_addEffect(v, effectHangPointArr[i])
 		end
 
-		arg_8_0:_setSpineAlphaForRoleEffect(var_8_2)
+		self:_setSpineAlphaForRoleEffect(effectArr)
 	end
 
-	local var_8_4 = lua_monster.configDict[var_8_0.modelId]
+	local monsterCO = lua_monster.configDict[entityMO.modelId]
 
-	if var_8_4 and not string.nilorempty(var_8_4.effect) then
-		local var_8_5 = string.split(var_8_4.effect, "#")
-		local var_8_6 = string.split(var_8_4.effectHangPoint, "#")
+	if monsterCO and not string.nilorempty(monsterCO.effect) then
+		local effectArr = string.split(monsterCO.effect, "#")
+		local effectHangPointArr = string.split(monsterCO.effectHangPoint, "#")
 
-		for iter_8_2, iter_8_3 in ipairs(var_8_5) do
-			arg_8_0._monsterEffect[iter_8_3] = arg_8_0:_addEffect(iter_8_3, var_8_6[iter_8_2])
+		for i, v in ipairs(effectArr) do
+			self._monsterEffect[v] = self:_addEffect(v, effectHangPointArr[i])
 		end
 
-		arg_8_0:_setSpineAlphaForRoleEffect(var_8_5)
+		self:_setSpineAlphaForRoleEffect(effectArr)
 	end
 end
 
-function var_0_0._setSpineAlphaForRoleEffect(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
-		if var_0_1[iter_9_1] then
-			arg_9_0.entity.spineRenderer:setAlpha(0, 0)
-			TaskDispatcher.runDelay(arg_9_0._delayShowSpine, arg_9_0, 0.1)
+function FightSkinSpineEffect:_setSpineAlphaForRoleEffect(effectArr)
+	for _, effect in ipairs(effectArr) do
+		if SetSpineAlphaBeforeAddEffect[effect] then
+			self.entity.spineRenderer:setAlpha(0, 0)
+			TaskDispatcher.runDelay(self._delayShowSpine, self, 0.1)
 
 			break
 		end
 	end
 end
 
-function var_0_0._delayShowSpine(arg_10_0)
-	arg_10_0.entity.spineRenderer:setAlpha(1)
+function FightSkinSpineEffect:_delayShowSpine()
+	self.entity.spineRenderer:setAlpha(1)
 end
 
-function var_0_0._addEffect(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0.entity.effect:addHangEffect(arg_11_1, arg_11_2)
+function FightSkinSpineEffect:_addEffect(effect, effectHangPoint)
+	local effectWrap = self.entity.effect:addHangEffect(effect, effectHangPoint)
 
-	var_11_0:setLocalPos(0, 0, 0)
-	FightRenderOrderMgr.instance:onAddEffectWrap(arg_11_0.entity.id, var_11_0)
+	effectWrap:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(self.entity.id, effectWrap)
 
-	arg_11_0._effectWrapDict = arg_11_0._effectWrapDict or {}
-	arg_11_0._effectWrapDict[arg_11_1] = var_11_0
+	self._effectWrapDict = self._effectWrapDict or {}
+	self._effectWrapDict[effect] = effectWrap
 
-	return var_11_0
+	return effectWrap
 end
 
-function var_0_0.hideEffects(arg_12_0, arg_12_1)
-	if arg_12_0._effectWrapDict then
-		for iter_12_0, iter_12_1 in pairs(arg_12_0._effectWrapDict) do
-			if not var_0_2[iter_12_0] then
-				iter_12_1:setActive(false, arg_12_1)
+function FightSkinSpineEffect:hideEffects(sign)
+	if self._effectWrapDict then
+		for effectName, effectWrap in pairs(self._effectWrapDict) do
+			if not DontHideEffectOnSkillStart[effectName] then
+				effectWrap:setActive(false, sign)
 			end
 		end
 	end
 end
 
-function var_0_0.showEffects(arg_13_0, arg_13_1)
-	if arg_13_0._effectWrapDict then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._effectWrapDict) do
-			if not var_0_2[iter_13_0] then
-				iter_13_1:setActive(true, arg_13_1)
+function FightSkinSpineEffect:showEffects(sign)
+	if self._effectWrapDict then
+		for effectName, effectWrap in pairs(self._effectWrapDict) do
+			if not DontHideEffectOnSkillStart[effectName] then
+				effectWrap:setActive(true, sign)
 			end
 		end
 	end
 end
 
-return var_0_0
+return FightSkinSpineEffect

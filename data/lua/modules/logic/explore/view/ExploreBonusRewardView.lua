@@ -1,79 +1,81 @@
-﻿module("modules.logic.explore.view.ExploreBonusRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBonusRewardView.lua
 
-local var_0_0 = class("ExploreBonusRewardView", BaseView)
+module("modules.logic.explore.view.ExploreBonusRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
-	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gobtnsitem = gohelper.findChild(arg_1_0.viewGO, "#go_btns/#btn_level")
-	arg_1_0._txtnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "top/title/#txt_num")
+local ExploreBonusRewardView = class("ExploreBonusRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ExploreBonusRewardView:onInitView()
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1")
+	self._btnclose2 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close2")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gobtnsitem = gohelper.findChild(self.viewGO, "#go_btns/#btn_level")
+	self._txtnum = gohelper.findChildTextMesh(self.viewGO, "top/title/#txt_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnclose2:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function ExploreBonusRewardView:addEvents()
+	self._btnclose1:AddClickListener(self.closeThis, self)
+	self._btnclose2:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose1:RemoveClickListener()
-	arg_3_0._btnclose2:RemoveClickListener()
+function ExploreBonusRewardView:removeEvents()
+	self._btnclose1:RemoveClickListener()
+	self._btnclose2:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
+function ExploreBonusRewardView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_2.play_ui_lvhu_level_unlock)
 
-	local var_4_0 = arg_4_0.viewParam
-	local var_4_1 = DungeonConfig.instance:getChapterEpisodeCOList(var_4_0.id)
+	local chapterCo = self.viewParam
+	local episodeCoList = DungeonConfig.instance:getChapterEpisodeCOList(chapterCo.id)
 
-	arg_4_0._episodeCoList = var_4_1
-	arg_4_0._btns = {}
+	self._episodeCoList = episodeCoList
+	self._btns = {}
 
-	gohelper.CreateObjList(arg_4_0, arg_4_0.createItem, var_4_1, arg_4_0._gobtns, arg_4_0._gobtnsitem)
+	gohelper.CreateObjList(self, self.createItem, episodeCoList, self._gobtns, self._gobtnsitem)
 
-	local var_4_2, var_4_3, var_4_4, var_4_5, var_4_6, var_4_7 = ExploreSimpleModel.instance:getChapterCoinCount(var_4_0.id)
+	local bonusNum, goldCoin, purpleCoin, bonusNumTotal, goldCoinTotal, purpleCoinTotal = ExploreSimpleModel.instance:getChapterCoinCount(chapterCo.id)
 
-	arg_4_0._txtnum.text = string.format("<color=#f68736>%d</color>/%d", var_4_2, var_4_5)
+	self._txtnum.text = string.format("<color=#f68736>%d</color>/%d", bonusNum, bonusNumTotal)
 
-	arg_4_0:onClickLevel(1)
+	self:onClickLevel(1)
 end
 
-function var_0_0.createItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = gohelper.findChildTextMesh(arg_5_1, "#txt_name")
-	local var_5_1 = gohelper.findChild(arg_5_1, "#select_btn")
+function ExploreBonusRewardView:createItem(obj, data, index)
+	local name = gohelper.findChildTextMesh(obj, "#txt_name")
+	local select = gohelper.findChild(obj, "#select_btn")
 
-	var_5_0.text = arg_5_2.name
+	name.text = data.name
 
-	local var_5_2 = gohelper.findChildImage(arg_5_1, "")
-	local var_5_3 = gohelper.findButtonWithAudio(arg_5_1)
+	local bg = gohelper.findChildImage(obj, "")
+	local btn = gohelper.findButtonWithAudio(obj)
 
-	arg_5_0:addClickCb(var_5_3, arg_5_0.onClickLevel, arg_5_0, arg_5_3)
+	self:addClickCb(btn, self.onClickLevel, self, index)
 
-	arg_5_0._btns[arg_5_3] = {
-		var_5_0,
-		var_5_2,
-		var_5_1
+	self._btns[index] = {
+		name,
+		bg,
+		select
 	}
 end
 
-function var_0_0.onClickLevel(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._episodeCoList[arg_6_1]
+function ExploreBonusRewardView:onClickLevel(index)
+	local episodeCo = self._episodeCoList[index]
 
-	ExploreTaskModel.instance:getTaskList(0):setList(ExploreConfig.instance:getRewardConfig(arg_6_0.viewParam.id, var_6_0.id))
+	ExploreTaskModel.instance:getTaskList(0):setList(ExploreConfig.instance:getRewardConfig(self.viewParam.id, episodeCo.id))
 
-	for iter_6_0 = 1, #arg_6_0._btns do
-		ZProj.UGUIHelper.SetColorAlpha(arg_6_0._btns[iter_6_0][1], iter_6_0 == arg_6_1 and 1 or 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(arg_6_0._btns[iter_6_0][2], iter_6_0 == arg_6_1 and 1 or 0.3)
-		gohelper.setActive(arg_6_0._btns[iter_6_0][3], iter_6_0 == arg_6_1)
+	for i = 1, #self._btns do
+		ZProj.UGUIHelper.SetColorAlpha(self._btns[i][1], i == index and 1 or 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(self._btns[i][2], i == index and 1 or 0.3)
+		gohelper.setActive(self._btns[i][3], i == index)
 	end
 end
 
-function var_0_0.onClickModalMask(arg_7_0)
-	arg_7_0:closeThis()
+function ExploreBonusRewardView:onClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return ExploreBonusRewardView

@@ -1,115 +1,119 @@
-﻿module("modules.logic.herogrouppreset.view.HeroGroupPresetFightView", package.seeall)
+﻿-- chunkname: @modules/logic/herogrouppreset/view/HeroGroupPresetFightView.lua
 
-local var_0_0 = class("HeroGroupPresetFightView", BaseView)
+module("modules.logic.herogrouppreset.view.HeroGroupPresetFightView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnmodifyname = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
-	arg_1_0._btnchangeteam = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changeteam")
-	arg_1_0._txtherogroupname = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/Label")
+local HeroGroupPresetFightView = class("HeroGroupPresetFightView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HeroGroupPresetFightView:onInitView()
+	self._btnmodifyname = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changename")
+	self._btnchangeteam = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/#btn_changeteam")
+	self._txtherogroupname = gohelper.findChildText(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/Label")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	if arg_2_0._btnchangeteam then
-		arg_2_0._btnchangeteam:AddClickListener(arg_2_0._changeTeam, arg_2_0)
+function HeroGroupPresetFightView:addEvents()
+	if self._btnchangeteam then
+		self._btnchangeteam:AddClickListener(self._changeTeam, self)
 	end
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	if arg_3_0._btnchangeteam then
-		arg_3_0._btnchangeteam:RemoveClickListener()
+function HeroGroupPresetFightView:removeEvents()
+	if self._btnchangeteam then
+		self._btnchangeteam:RemoveClickListener()
 	end
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goherogroupcontain = gohelper.findChild(arg_4_0.viewGO, "herogroupcontain")
+function HeroGroupPresetFightView:_editableInitView()
+	self._goherogroupcontain = gohelper.findChild(self.viewGO, "herogroupcontain")
 
-	arg_4_0:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UseHeroGroup, arg_4_0._onUseHeroGroup, arg_4_0)
-	arg_4_0:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UpdateGroupName, arg_4_0._onUpdateGroupName, arg_4_0)
+	self:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UseHeroGroup, self._onUseHeroGroup, self)
+	self:addEventCb(HeroGroupPresetController.instance, HeroGroupPresetEvent.UpdateGroupName, self._onUpdateGroupName, self)
 	HeroGroupPresetController.instance:initCopyHeroGroupList()
 end
 
-function var_0_0._onUpdateGroupName(arg_5_0)
-	arg_5_0:_updateHeroGroupName()
+function HeroGroupPresetFightView:_onUpdateGroupName()
+	self:_updateHeroGroupName()
 end
 
-function var_0_0.onClose(arg_6_0)
+function HeroGroupPresetFightView:onClose()
 	HeroGroupPresetController.instance:revertCurHeroGroup()
 	HeroGroupPresetController.instance:clearCopyList()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:_initChangeTeam()
+function HeroGroupPresetFightView:onOpen()
+	self:_initChangeTeam()
 end
 
-function var_0_0._onUseHeroGroup(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1.subId
+function HeroGroupPresetFightView:_onUseHeroGroup(param)
+	local selectIndex = param.subId
 
-	if HeroGroupModel.instance:setHeroGroupSelectIndex(var_8_0) then
+	if HeroGroupModel.instance:setHeroGroupSelectIndex(selectIndex) then
 		HeroGroupModel.instance:_setSingleGroup()
 
-		local var_8_1 = arg_8_0.viewContainer:getHeroGroupFightView()
+		local fightView = self.viewContainer:getHeroGroupFightView()
 
-		var_8_1:_checkEquipClothSkill()
-		GameFacade.showToast(var_8_1._changeToastId or ToastEnum.SeasonGroupChanged)
+		fightView:_checkEquipClothSkill()
+		GameFacade.showToast(fightView._changeToastId or ToastEnum.SeasonGroupChanged)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-		gohelper.setActive(arg_8_0._goherogroupcontain, false)
-		gohelper.setActive(arg_8_0._goherogroupcontain, true)
+		gohelper.setActive(self._goherogroupcontain, false)
+		gohelper.setActive(self._goherogroupcontain, true)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyGroupSelectIndex)
 	end
 
-	arg_8_0:_updateHeroGroupName()
+	self:_updateHeroGroupName()
 end
 
-function var_0_0._initChangeTeam(arg_9_0)
-	if not HeroGroupModel.instance:getPresetHeroGroupType() then
+function HeroGroupPresetFightView:_initChangeTeam()
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
+
+	if not heroGroupType then
 		return
 	end
 
-	local var_9_0 = gohelper.findChild(arg_9_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/arrow")
+	local arrow = gohelper.findChild(self.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup/arrow")
 
-	gohelper.setActive(var_9_0, false)
-	gohelper.setActive(arg_9_0._btnmodifyname, false)
-	gohelper.setActive(arg_9_0._btnchangeteam, true)
-	arg_9_0:_updateHeroGroupName()
+	gohelper.setActive(arrow, false)
+	gohelper.setActive(self._btnmodifyname, false)
+	gohelper.setActive(self._btnchangeteam, true)
+	self:_updateHeroGroupName()
 end
 
-function var_0_0._updateHeroGroupName(arg_10_0)
-	local var_10_0 = HeroGroupModel.instance:getPresetHeroGroupType()
+function HeroGroupPresetFightView:_updateHeroGroupName()
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
 
-	if not var_10_0 then
+	if not heroGroupType then
 		return
 	end
 
-	local var_10_1 = arg_10_0:_getGroupSubId()
-	local var_10_2 = HeroGroupPresetHeroGroupNameController.instance:getName(var_10_0, var_10_1)
+	local index = self:_getGroupSubId()
+	local name = HeroGroupPresetHeroGroupNameController.instance:getName(heroGroupType, index)
 
-	arg_10_0._txtherogroupname.text = var_10_2
+	self._txtherogroupname.text = name
 end
 
-function var_0_0._changeTeam(arg_11_0)
-	local var_11_0 = HeroGroupModel.instance:getPresetHeroGroupType()
+function HeroGroupPresetFightView:_changeTeam()
+	local heroGroupType = HeroGroupModel.instance:getPresetHeroGroupType()
 
 	HeroGroupPresetController.instance:openHeroGroupPresetTeamView({
-		subId = arg_11_0:_getGroupSubId(),
+		subId = self:_getGroupSubId(),
 		showType = HeroGroupPresetEnum.ShowType.Fight,
 		heroGroupTypeList = {
-			var_11_0
+			heroGroupType
 		}
 	})
 end
 
-function var_0_0._getGroupSubId(arg_12_0)
+function HeroGroupPresetFightView:_getGroupSubId()
 	if HeroGroupModel.instance.heroGroupType == ModuleEnum.HeroGroupType.General then
-		local var_12_0 = HeroGroupSnapshotModel.instance:getCurSnapshotId()
+		local snapshotId = HeroGroupSnapshotModel.instance:getCurSnapshotId()
 
-		return HeroGroupSnapshotModel.instance:getCurGroupId(var_12_0)
+		return HeroGroupSnapshotModel.instance:getCurGroupId(snapshotId)
 	end
 
 	return HeroGroupModel.instance.curGroupSelectIndex
 end
 
-return var_0_0
+return HeroGroupPresetFightView

@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114DiceViewWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114DiceViewWork.lua
 
-local var_0_0 = class("Activity114DiceViewWork", Activity114OpenViewWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114DiceViewWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if arg_1_0.context.diceResult then
-		arg_1_0._viewName = ViewName.Activity114DiceView
+local Activity114DiceViewWork = class("Activity114DiceViewWork", Activity114OpenViewWork)
 
-		var_0_0.super.onStart(arg_1_0, arg_1_1)
+function Activity114DiceViewWork:onStart(context)
+	if self.context.diceResult then
+		self._viewName = ViewName.Activity114DiceView
+
+		Activity114DiceViewWork.super.onStart(self, context)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return Activity114DiceViewWork

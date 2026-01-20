@@ -1,13 +1,15 @@
-﻿module("modules.logic.activity.view.show.ActivityDreamShowViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/show/ActivityDreamShowViewContainer.lua
 
-local var_0_0 = class("ActivityDreamShowViewContainer", BaseViewContainer)
+module("modules.logic.activity.view.show.ActivityDreamShowViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local ActivityDreamShowViewContainer = class("ActivityDreamShowViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, ActivityDreamShowView.New())
+function ActivityDreamShowViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, ActivityDreamShowView.New())
+
+	return views
 end
 
-return var_0_0
+return ActivityDreamShowViewContainer

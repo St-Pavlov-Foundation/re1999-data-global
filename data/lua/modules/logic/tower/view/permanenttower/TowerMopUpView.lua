@@ -1,297 +1,303 @@
-﻿module("modules.logic.tower.view.permanenttower.TowerMopUpView", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/permanenttower/TowerMopUpView.lua
 
-local var_0_0 = class("TowerMopUpView", BaseView)
+module("modules.logic.tower.view.permanenttower.TowerMopUpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btncloseFullView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeFullView")
-	arg_1_0._gomopupTip = gohelper.findChild(arg_1_0.viewGO, "#go_mopupTip")
-	arg_1_0._txttipDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_mopupTip/#txt_tipDesc")
-	arg_1_0._btncloseMopupTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mopupTip/#btn_closeMopupTip")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._txtcurPassLayer = gohelper.findChildText(arg_1_0.viewGO, "progress/#txt_curPassLayer")
-	arg_1_0._txtcurAltitude = gohelper.findChildText(arg_1_0.viewGO, "progress/#txt_curPassLayer/#txt_curAltitude")
-	arg_1_0._txtrewardtip = gohelper.findChildText(arg_1_0.viewGO, "rewardtip/#txt_rewardtip")
-	arg_1_0._imageprogressBar = gohelper.findChildImage(arg_1_0.viewGO, "progressbar/#image_progressBar")
-	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "progressbar/#image_progress")
-	arg_1_0._goprogressContent = gohelper.findChild(arg_1_0.viewGO, "progressbar/#go_progressContent")
-	arg_1_0._goprogressItem = gohelper.findChild(arg_1_0.viewGO, "progressbar/#go_progressContent/#go_progressItem")
-	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "rewardpreview/#go_rewardContent")
-	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "rewardpreview/#go_rewardContent/#go_rewardItem")
-	arg_1_0._txtmopupNum = gohelper.findChildText(arg_1_0.viewGO, "mopuptip/#txt_mopupNum")
-	arg_1_0._imageticket = gohelper.findChildImage(arg_1_0.viewGO, "mopuptip/#txt_mopupNum/#image_ticket")
-	arg_1_0._btnmopupTip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mopuptip/#btn_mopupTip")
-	arg_1_0._btnmulti = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_multi")
-	arg_1_0._txtcurMulti = gohelper.findChildText(arg_1_0.viewGO, "#btn_multi/#txt_curMulti")
-	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#btn_multi/#go_arrow")
-	arg_1_0._gomultiscroll = gohelper.findChild(arg_1_0.viewGO, "#go_multiscroll")
-	arg_1_0._gomultiContent = gohelper.findChild(arg_1_0.viewGO, "#go_multiscroll/Viewport/#go_multiContent")
-	arg_1_0._gomultitem = gohelper.findChild(arg_1_0.viewGO, "#go_multiscroll/Viewport/#go_multiContent/#go_multitem")
-	arg_1_0._btnmopup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_mopup")
-	arg_1_0._imagemopupBg = gohelper.findChildImage(arg_1_0.viewGO, "#btn_mopup/#image_mopupBg")
-	arg_1_0._txtmopup = gohelper.findChildText(arg_1_0.viewGO, "#btn_mopup/#txt_mopup")
-	arg_1_0._txtmopupCount = gohelper.findChildText(arg_1_0.viewGO, "#btn_mopup/#txt_mopupCount")
-	arg_1_0._imagecost = gohelper.findChildImage(arg_1_0.viewGO, "#btn_mopup/#image_cost")
-	arg_1_0._btncloseMultiScroll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeMultiScroll")
-	arg_1_0._gomultiSelectEffect = gohelper.findChild(arg_1_0.viewGO, "rewardpreview/vx_eff")
+local TowerMopUpView = class("TowerMopUpView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TowerMopUpView:onInitView()
+	self._btncloseFullView = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeFullView")
+	self._gomopupTip = gohelper.findChild(self.viewGO, "#go_mopupTip")
+	self._txttipDesc = gohelper.findChildText(self.viewGO, "#go_mopupTip/#txt_tipDesc")
+	self._btncloseMopupTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_mopupTip/#btn_closeMopupTip")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._txtcurPassLayer = gohelper.findChildText(self.viewGO, "progress/#txt_curPassLayer")
+	self._txtcurAltitude = gohelper.findChildText(self.viewGO, "progress/#txt_curPassLayer/#txt_curAltitude")
+	self._txtrewardtip = gohelper.findChildText(self.viewGO, "rewardtip/#txt_rewardtip")
+	self._imageprogressBar = gohelper.findChildImage(self.viewGO, "progressbar/#image_progressBar")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "progressbar/#image_progress")
+	self._goprogressContent = gohelper.findChild(self.viewGO, "progressbar/#go_progressContent")
+	self._goprogressItem = gohelper.findChild(self.viewGO, "progressbar/#go_progressContent/#go_progressItem")
+	self._gorewardContent = gohelper.findChild(self.viewGO, "rewardpreview/#go_rewardContent")
+	self._gorewardItem = gohelper.findChild(self.viewGO, "rewardpreview/#go_rewardContent/#go_rewardItem")
+	self._txtmopupNum = gohelper.findChildText(self.viewGO, "mopuptip/#txt_mopupNum")
+	self._imageticket = gohelper.findChildImage(self.viewGO, "mopuptip/#txt_mopupNum/#image_ticket")
+	self._btnmopupTip = gohelper.findChildButtonWithAudio(self.viewGO, "mopuptip/#btn_mopupTip")
+	self._btnmulti = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_multi")
+	self._txtcurMulti = gohelper.findChildText(self.viewGO, "#btn_multi/#txt_curMulti")
+	self._goarrow = gohelper.findChild(self.viewGO, "#btn_multi/#go_arrow")
+	self._gomultiscroll = gohelper.findChild(self.viewGO, "#go_multiscroll")
+	self._gomultiContent = gohelper.findChild(self.viewGO, "#go_multiscroll/Viewport/#go_multiContent")
+	self._gomultitem = gohelper.findChild(self.viewGO, "#go_multiscroll/Viewport/#go_multiContent/#go_multitem")
+	self._btnmopup = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_mopup")
+	self._imagemopupBg = gohelper.findChildImage(self.viewGO, "#btn_mopup/#image_mopupBg")
+	self._txtmopup = gohelper.findChildText(self.viewGO, "#btn_mopup/#txt_mopup")
+	self._txtmopupCount = gohelper.findChildText(self.viewGO, "#btn_mopup/#txt_mopupCount")
+	self._imagecost = gohelper.findChildImage(self.viewGO, "#btn_mopup/#image_cost")
+	self._btncloseMultiScroll = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closeMultiScroll")
+	self._gomultiSelectEffect = gohelper.findChild(self.viewGO, "rewardpreview/vx_eff")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btncloseMopupTip:AddClickListener(arg_2_0._btncloseMopupTipOnClick, arg_2_0)
-	arg_2_0._btncloseFullView:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnmopupTip:AddClickListener(arg_2_0._btnmopupTipOnClick, arg_2_0)
-	arg_2_0._btnmulti:AddClickListener(arg_2_0._btnmultiOnClick, arg_2_0)
-	arg_2_0._btnmopup:AddClickListener(arg_2_0._btnmopupOnClick, arg_2_0)
-	arg_2_0._btncloseMultiScroll:AddClickListener(arg_2_0._btnmultiOnClick, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_2_0.refreshUI, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_2_0.checkReddotShow, arg_2_0)
-	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, arg_2_0.refreshUI, arg_2_0)
+function TowerMopUpView:addEvents()
+	self._btncloseMopupTip:AddClickListener(self._btncloseMopupTipOnClick, self)
+	self._btncloseFullView:AddClickListener(self._btncloseOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnmopupTip:AddClickListener(self._btnmopupTipOnClick, self)
+	self._btnmulti:AddClickListener(self._btnmultiOnClick, self)
+	self._btnmopup:AddClickListener(self._btnmopupOnClick, self)
+	self._btncloseMultiScroll:AddClickListener(self._btnmultiOnClick, self)
+	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshUI, self)
+	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.checkReddotShow, self)
+	self:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, self.refreshUI, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btncloseMopupTip:RemoveClickListener()
-	arg_3_0._btncloseFullView:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnmopupTip:RemoveClickListener()
-	arg_3_0._btnmulti:RemoveClickListener()
-	arg_3_0._btnmopup:RemoveClickListener()
-	arg_3_0._btncloseMultiScroll:RemoveClickListener()
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, arg_3_0.refreshUI, arg_3_0)
-	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, arg_3_0.checkReddotShow, arg_3_0)
+function TowerMopUpView:removeEvents()
+	self._btncloseMopupTip:RemoveClickListener()
+	self._btncloseFullView:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
+	self._btnmopupTip:RemoveClickListener()
+	self._btnmulti:RemoveClickListener()
+	self._btnmopup:RemoveClickListener()
+	self._btncloseMultiScroll:RemoveClickListener()
+	self:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, self.refreshUI, self)
+	self:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, self.checkReddotShow, self)
 end
 
-var_0_0.progressItemWidth = 157
-var_0_0.multiItemHeight = 92
+TowerMopUpView.progressItemWidth = 157
+TowerMopUpView.multiItemHeight = 92
 
-function var_0_0._btncloseMopupTipOnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._gomopupTip, false)
+function TowerMopUpView:_btncloseMopupTipOnClick()
+	gohelper.setActive(self._gomopupTip, false)
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function TowerMopUpView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnmopupTipOnClick(arg_6_0)
-	gohelper.setActive(arg_6_0._gomopupTip, true)
+function TowerMopUpView:_btnmopupTipOnClick()
+	gohelper.setActive(self._gomopupTip, true)
 end
 
-function var_0_0._btnmultiOnClick(arg_7_0)
-	arg_7_0.isMultiExpand = not arg_7_0.isMultiExpand
+function TowerMopUpView:_btnmultiOnClick()
+	self.isMultiExpand = not self.isMultiExpand
 
-	arg_7_0:refreshMultiScroll()
+	self:refreshMultiScroll()
 end
 
-function var_0_0.onMultiItemClick(arg_8_0, arg_8_1)
-	arg_8_0.curSelectMulti = arg_8_1
+function TowerMopUpView:onMultiItemClick(index)
+	self.curSelectMulti = index
 
-	gohelper.setActive(arg_8_0._gomultiSelectEffect, false)
-	gohelper.setActive(arg_8_0._gomultiSelectEffect, true)
-	arg_8_0:refreshMultiUI()
-	arg_8_0:refreshRewarwd()
-	arg_8_0:_btnmultiOnClick()
+	gohelper.setActive(self._gomultiSelectEffect, false)
+	gohelper.setActive(self._gomultiSelectEffect, true)
+	self:refreshMultiUI()
+	self:refreshRewarwd()
+	self:_btnmultiOnClick()
 end
 
-function var_0_0._btnmopupOnClick(arg_9_0)
-	if TowerModel.instance:getMopUpTimes() - arg_9_0.curSelectMulti < 0 then
+function TowerMopUpView:_btnmopupOnClick()
+	local curMopUpTimes = TowerModel.instance:getMopUpTimes()
+
+	if curMopUpTimes - self.curSelectMulti < 0 then
 		GameFacade.showToast(ToastEnum.TowerMopUpNotEnoughTimes)
 	else
-		TowerRpc.instance:sendTowerMopUpRequest(arg_9_0.curSelectMulti)
+		TowerRpc.instance:sendTowerMopUpRequest(self.curSelectMulti)
 	end
 end
 
-function var_0_0._editableInitView(arg_10_0)
-	arg_10_0.multiItemTab = arg_10_0:getUserDataTb_()
+function TowerMopUpView:_editableInitView()
+	self.multiItemTab = self:getUserDataTb_()
 
-	gohelper.setActive(arg_10_0._gomultitem, false)
-	gohelper.setActive(arg_10_0._gomopupTip, false)
-	gohelper.setActive(arg_10_0._gomultiSelectEffect, false)
+	gohelper.setActive(self._gomultitem, false)
+	gohelper.setActive(self._gomopupTip, false)
+	gohelper.setActive(self._gomultiSelectEffect, false)
 
-	arg_10_0.curSelectMulti = 1
-	arg_10_0.isMultiExpand = false
+	self.curSelectMulti = 1
+	self.isMultiExpand = false
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function TowerMopUpView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
+function TowerMopUpView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_fight_ripple_entry)
-	arg_12_0:createMopUpMultiItem()
-	arg_12_0:refreshUI()
-	arg_12_0:checkReddotShow()
+	self:createMopUpMultiItem()
+	self:refreshUI()
+	self:checkReddotShow()
 end
 
-function var_0_0.createMopUpMultiItem(arg_13_0)
-	for iter_13_0 = 1, 4 do
-		local var_13_0 = {
-			go = gohelper.clone(arg_13_0._gomultitem, arg_13_0._gomultiContent, "multi" .. iter_13_0)
-		}
+function TowerMopUpView:createMopUpMultiItem()
+	for i = 1, 4 do
+		local multiItem = {}
 
-		var_13_0.select = gohelper.findChild(var_13_0.go, "selecticon")
-		var_13_0.num = gohelper.findChildText(var_13_0.go, "num")
-		var_13_0.line = gohelper.findChild(var_13_0.go, "line")
-		var_13_0.posY = (iter_13_0 - 1) * var_0_0.multiItemHeight
-		var_13_0.click = gohelper.getClick(var_13_0.go)
+		multiItem.go = gohelper.clone(self._gomultitem, self._gomultiContent, "multi" .. i)
+		multiItem.select = gohelper.findChild(multiItem.go, "selecticon")
+		multiItem.num = gohelper.findChildText(multiItem.go, "num")
+		multiItem.line = gohelper.findChild(multiItem.go, "line")
+		multiItem.posY = (i - 1) * TowerMopUpView.multiItemHeight
+		multiItem.click = gohelper.getClick(multiItem.go)
 
-		var_13_0.click:AddClickListener(arg_13_0.onMultiItemClick, arg_13_0, iter_13_0)
-		gohelper.setActive(var_13_0.go, true)
+		multiItem.click:AddClickListener(self.onMultiItemClick, self, i)
+		gohelper.setActive(multiItem.go, true)
 
-		var_13_0.num.text = luaLang("multiple") .. iter_13_0
+		multiItem.num.text = luaLang("multiple") .. i
 
-		recthelper.setAnchorY(var_13_0.go.transform, var_13_0.posY)
-		gohelper.setActive(var_13_0.line, iter_13_0 ~= 4)
-		table.insert(arg_13_0.multiItemTab, var_13_0)
+		recthelper.setAnchorY(multiItem.go.transform, multiItem.posY)
+		gohelper.setActive(multiItem.line, i ~= 4)
+		table.insert(self.multiItemTab, multiItem)
 	end
 end
 
-function var_0_0.refreshUI(arg_14_0)
-	arg_14_0.curPassLayer = TowerPermanentModel.instance.curPassLayer
-	arg_14_0._txtcurPassLayer.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_layer"), {
-		arg_14_0.curPassLayer
+function TowerMopUpView:refreshUI()
+	self.curPassLayer = TowerPermanentModel.instance.curPassLayer
+	self._txtcurPassLayer.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_layer"), {
+		self.curPassLayer
 	})
-	arg_14_0._txtcurAltitude.text = string.format("%sM", arg_14_0.curPassLayer * 10)
-	arg_14_0.curMaxMopUpConfig = TowerConfig.instance:getMaxMopUpConfigByLayerId(arg_14_0.curPassLayer)
+	self._txtcurAltitude.text = string.format("%sM", self.curPassLayer * 10)
+	self.curMaxMopUpConfig = TowerConfig.instance:getMaxMopUpConfigByLayerId(self.curPassLayer)
 
-	if not arg_14_0.curMaxMopUpConfig then
+	if not self.curMaxMopUpConfig then
 		logError("未达到扫荡层，不应该打开扫荡界面")
 
 		return
 	end
 
-	arg_14_0:refreshMopUpTimes()
-	arg_14_0:refreshProgress()
-	arg_14_0:refreshRewarwd()
-	arg_14_0:refreshMultiUI()
+	self:refreshMopUpTimes()
+	self:refreshProgress()
+	self:refreshRewarwd()
+	self:refreshMultiUI()
 end
 
-function var_0_0.refreshMopUpTimes(arg_15_0)
-	local var_15_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpRecoverTime)
-	local var_15_1 = TowerModel.instance:getMopUpTimes()
-	local var_15_2 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
+function TowerMopUpView:refreshMopUpTimes()
+	local MopUpRecoverTime = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpRecoverTime)
+	local curMopUpTimes = TowerModel.instance:getMopUpTimes()
+	local maxMopUpTimes = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
 
-	arg_15_0._txttipDesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_tipdesc"), {
-		var_15_0,
-		var_15_2,
-		var_15_1
+	self._txttipDesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_tipdesc"), {
+		MopUpRecoverTime,
+		maxMopUpTimes,
+		curMopUpTimes
 	})
-	arg_15_0._txtmopupNum.text = string.format("%s/%s", var_15_1, var_15_2)
+	self._txtmopupNum.text = string.format("%s/%s", curMopUpTimes, maxMopUpTimes)
 
-	local var_15_3 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
+	local ticketId = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MopUpTicketIcon)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_15_0._imageticket, var_15_3 .. "_1", true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageticket, ticketId .. "_1", true)
 end
 
-function var_0_0.refreshProgress(arg_16_0)
-	local var_16_0 = TowerConfig.instance:getTowerMopUpCoList()
-	local var_16_1 = arg_16_0.curMaxMopUpConfig.id
-	local var_16_2 = Mathf.Min(var_16_1 + 1, #var_16_0)
-	local var_16_3 = var_16_2 == var_16_1
-	local var_16_4 = TowerConfig.instance:getTowerMopUpCo(var_16_2)
+function TowerMopUpView:refreshProgress()
+	local mopupConfigList = TowerConfig.instance:getTowerMopUpCoList()
+	local curMopUpId = self.curMaxMopUpConfig.id
+	local nextMopUpId = Mathf.Min(curMopUpId + 1, #mopupConfigList)
+	local isMaxMopUpLevel = nextMopUpId == curMopUpId
+	local nextMopUpConfig = TowerConfig.instance:getTowerMopUpCo(nextMopUpId)
 
-	if var_16_3 then
-		arg_16_0._txtrewardtip.text = luaLang("mopup_rewardtip_max")
+	if isMaxMopUpLevel then
+		self._txtrewardtip.text = luaLang("mopup_rewardtip_max")
 	else
-		arg_16_0._txtrewardtip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_rewardtip"), {
-			var_16_4.layerNum
+		self._txtrewardtip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_rewardtip"), {
+			nextMopUpConfig.layerNum
 		})
 	end
 
-	gohelper.CreateObjList(arg_16_0, arg_16_0.progressItemShow, var_16_0, arg_16_0._goprogressContent, arg_16_0._goprogressItem)
+	gohelper.CreateObjList(self, self.progressItemShow, mopupConfigList, self._goprogressContent, self._goprogressItem)
 
-	local var_16_5 = (#var_16_0 - 1) * var_0_0.progressItemWidth
+	local totalWidth = (#mopupConfigList - 1) * TowerMopUpView.progressItemWidth
 
-	recthelper.setWidth(arg_16_0._imageprogressBar.transform, var_16_5)
+	recthelper.setWidth(self._imageprogressBar.transform, totalWidth)
 
-	local var_16_6 = 0
+	local progressWidth = 0
 
-	if not var_16_3 then
-		var_16_6 = (var_16_1 - 1) * var_0_0.progressItemWidth + (arg_16_0.curPassLayer - arg_16_0.curMaxMopUpConfig.layerNum) / (var_16_4.layerNum - arg_16_0.curMaxMopUpConfig.layerNum) * var_0_0.progressItemWidth
+	if not isMaxMopUpLevel then
+		local preWidth = (curMopUpId - 1) * TowerMopUpView.progressItemWidth
+		local curWidth = (self.curPassLayer - self.curMaxMopUpConfig.layerNum) / (nextMopUpConfig.layerNum - self.curMaxMopUpConfig.layerNum) * TowerMopUpView.progressItemWidth
+
+		progressWidth = preWidth + curWidth
 	else
-		var_16_6 = var_16_5
+		progressWidth = totalWidth
 	end
 
-	recthelper.setWidth(arg_16_0._imageprogress.transform, var_16_6)
+	recthelper.setWidth(self._imageprogress.transform, progressWidth)
 end
 
-function var_0_0.progressItemShow(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = gohelper.findChild(arg_17_1, "go_normal")
-	local var_17_1 = gohelper.findChild(arg_17_1, "go_get")
-	local var_17_2 = gohelper.findChildText(arg_17_1, "txt_num")
-	local var_17_3 = arg_17_2.layerNum
+function TowerMopUpView:progressItemShow(obj, data, index)
+	local goNormal = gohelper.findChild(obj, "go_normal")
+	local goGet = gohelper.findChild(obj, "go_get")
+	local txtNum = gohelper.findChildText(obj, "txt_num")
+	local layerNum = data.layerNum
 
-	gohelper.setActive(var_17_0, var_17_3 > arg_17_0.curPassLayer)
-	gohelper.setActive(var_17_1, var_17_3 <= arg_17_0.curPassLayer)
+	gohelper.setActive(goNormal, layerNum > self.curPassLayer)
+	gohelper.setActive(goGet, layerNum <= self.curPassLayer)
 
-	var_17_2.text = arg_17_2.layerNum
+	txtNum.text = data.layerNum
 end
 
-function var_0_0.refreshRewarwd(arg_18_0)
-	local var_18_0 = GameUtil.splitString2(arg_18_0.curMaxMopUpConfig.reward, true)
+function TowerMopUpView:refreshRewarwd()
+	local rewardList = GameUtil.splitString2(self.curMaxMopUpConfig.reward, true)
 
-	gohelper.CreateObjList(arg_18_0, arg_18_0.rewardItemShow, var_18_0, arg_18_0._gorewardContent, arg_18_0._gorewardItem)
+	gohelper.CreateObjList(self, self.rewardItemShow, rewardList, self._gorewardContent, self._gorewardItem)
 end
 
-function var_0_0.rewardItemShow(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	local var_19_0 = gohelper.findChild(arg_19_1, "go_itempos")
-	local var_19_1 = IconMgr.instance:getCommonPropItemIcon(var_19_0)
-	local var_19_2 = arg_19_2[3] * arg_19_0.curSelectMulti
+function TowerMopUpView:rewardItemShow(obj, data, index)
+	local itemPos = gohelper.findChild(obj, "go_itempos")
+	local item = IconMgr.instance:getCommonPropItemIcon(itemPos)
+	local num = data[3] * self.curSelectMulti
 
-	var_19_1:setMOValue(arg_19_2[1], arg_19_2[2], var_19_2)
-	var_19_1:setHideLvAndBreakFlag(true)
-	var_19_1:hideEquipLvAndBreak(true)
-	var_19_1:setCountFontSize(51)
+	item:setMOValue(data[1], data[2], num)
+	item:setHideLvAndBreakFlag(true)
+	item:hideEquipLvAndBreak(true)
+	item:setCountFontSize(51)
 end
 
-function var_0_0.refreshMultiUI(arg_20_0)
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.multiItemTab) do
-		gohelper.setActive(iter_20_1.select, iter_20_0 == arg_20_0.curSelectMulti)
+function TowerMopUpView:refreshMultiUI()
+	for index, multiItem in ipairs(self.multiItemTab) do
+		gohelper.setActive(multiItem.select, index == self.curSelectMulti)
 	end
 
-	local var_20_0 = TowerModel.instance:getMopUpTimes()
+	local curMopUpTimes = TowerModel.instance:getMopUpTimes()
 
-	arg_20_0._txtmopup.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_times"), {
-		GameUtil.getNum2Chinese(arg_20_0.curSelectMulti)
+	self._txtmopup.text = GameUtil.getSubPlaceholderLuaLang(luaLang("mopup_times"), {
+		GameUtil.getNum2Chinese(self.curSelectMulti)
 	})
-	arg_20_0._txtmopupCount.text = string.format("-%s", arg_20_0.curSelectMulti)
+	self._txtmopupCount.text = string.format("-%s", self.curSelectMulti)
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_20_0._txtmopupCount, var_20_0 - arg_20_0.curSelectMulti < 0 and "#800015" or "#070706")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtmopupCount, curMopUpTimes - self.curSelectMulti < 0 and "#800015" or "#070706")
 
-	arg_20_0._txtcurMulti.text = luaLang("multiple") .. arg_20_0.curSelectMulti
+	self._txtcurMulti.text = luaLang("multiple") .. self.curSelectMulti
 
-	arg_20_0:refreshMultiScroll()
+	self:refreshMultiScroll()
 end
 
-function var_0_0.refreshMultiScroll(arg_21_0)
-	transformhelper.setLocalScale(arg_21_0._goarrow.transform, 1, arg_21_0.isMultiExpand and -1 or 1, 1)
-	gohelper.setActive(arg_21_0._gomultiscroll, arg_21_0.isMultiExpand)
-	gohelper.setActive(arg_21_0._btncloseMultiScroll.gameObject, arg_21_0.isMultiExpand)
+function TowerMopUpView:refreshMultiScroll()
+	transformhelper.setLocalScale(self._goarrow.transform, 1, self.isMultiExpand and -1 or 1, 1)
+	gohelper.setActive(self._gomultiscroll, self.isMultiExpand)
+	gohelper.setActive(self._btncloseMultiScroll.gameObject, self.isMultiExpand)
 end
 
-function var_0_0.checkReddotShow(arg_22_0)
-	local var_22_0 = TowerModel.instance:getMopUpTimes()
-	local var_22_1 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
+function TowerMopUpView:checkReddotShow()
+	local curMopUpTimes = TowerModel.instance:getMopUpTimes()
+	local maxMopUpTimes = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.MaxMopUpTimes)
 
-	if var_22_0 == tonumber(var_22_1) then
+	if curMopUpTimes == tonumber(maxMopUpTimes) then
 		TimeUtil.setDayFirstLoginRed(TowerEnum.LocalPrefsKey.MopUpDailyRefresh)
 	end
 end
 
-function var_0_0.onClose(arg_23_0)
-	for iter_23_0, iter_23_1 in ipairs(arg_23_0.multiItemTab) do
-		iter_23_1.click:RemoveClickListener()
+function TowerMopUpView:onClose()
+	for index, multiItem in ipairs(self.multiItemTab) do
+		multiItem.click:RemoveClickListener()
 	end
 
 	TowerController.instance:checkMopUpReddotShow()
 	TowerController.instance:dispatchEvent(TowerEvent.RefreshTowerReddot)
 end
 
-function var_0_0.onDestroyView(arg_24_0)
+function TowerMopUpView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TowerMopUpView

@@ -1133,7 +1133,7 @@
     "group": 10308,
     "score": 200,
     "effectDesc": "language_10095659",
-    "effectDesc2": "language_10095660",
+    "effectDesc2": "language_10103650",
     "desc": "language_10085180",
     "tag": "103",
     "effect": "1000027#1030012",
@@ -2198,7 +2198,7 @@
   {
     "id": 7000316,
     "extendCost": 400,
-    "group": 10015,
+    "group": 10009,
     "score": 250,
     "effectDesc": "language_10095802",
     "effectDesc2": "language_10095803",
@@ -2210,7 +2210,7 @@
   {
     "id": 7000317,
     "extendCost": 400,
-    "group": 10017,
+    "group": 10010,
     "score": 250,
     "effectDesc": "language_10095804",
     "effectDesc2": "language_10095790",
@@ -2234,7 +2234,7 @@
   {
     "id": 7000319,
     "extendCost": 400,
-    "group": 10022,
+    "group": 10012,
     "score": 250,
     "effectDesc": "language_10095807",
     "effectDesc2": "language_10095808",
@@ -2246,7 +2246,7 @@
   {
     "id": 7000320,
     "extendCost": 400,
-    "group": 10023,
+    "group": 10013,
     "score": 250,
     "effectDesc": "language_10095809",
     "effectDesc2": "language_10095810",

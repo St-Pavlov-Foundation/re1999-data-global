@@ -1,11 +1,13 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkSelectTarotViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkSelectTarotViewContainer.lua
 
-local var_0_0 = class("WeekWalkSelectTarotViewContainer", BaseViewContainer)
+module("modules.logic.weekwalk.view.WeekWalkSelectTarotViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local WeekWalkSelectTarotViewContainer = class("WeekWalkSelectTarotViewContainer", BaseViewContainer)
+
+function WeekWalkSelectTarotViewContainer:buildViews()
 	return {
 		WeekWalkSelectTarotView.New()
 	}
 end
 
-return var_0_0
+return WeekWalkSelectTarotViewContainer

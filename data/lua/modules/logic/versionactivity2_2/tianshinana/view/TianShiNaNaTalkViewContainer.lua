@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaTalkViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/tianshinana/view/TianShiNaNaTalkViewContainer.lua
 
-local var_0_0 = class("TianShiNaNaTalkViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaTalkViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local TianShiNaNaTalkViewContainer = class("TianShiNaNaTalkViewContainer", BaseViewContainer)
+
+function TianShiNaNaTalkViewContainer:buildViews()
 	return {
 		TianShiNaNaTalkView.New()
 	}
 end
 
-return var_0_0
+return TianShiNaNaTalkViewContainer

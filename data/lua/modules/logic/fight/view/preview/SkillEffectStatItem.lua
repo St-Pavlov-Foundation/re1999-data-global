@@ -1,37 +1,39 @@
-﻿module("modules.logic.fight.view.preview.SkillEffectStatItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEffectStatItem.lua
 
-local var_0_0 = class("SkillEffectStatItem", ListScrollCell)
+module("modules.logic.fight.view.preview.SkillEffectStatItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "title/txtName")
-	arg_1_0._txtSystem = gohelper.findChildText(arg_1_1, "title/txtSystem")
-	arg_1_0._txtParticle = gohelper.findChildText(arg_1_1, "title/txtParticle")
-	arg_1_0._txtMaterial = gohelper.findChildText(arg_1_1, "title/txtMaterial")
-	arg_1_0._txtTexture = gohelper.findChildText(arg_1_1, "title/txtTexture")
-	arg_1_0._clickName = SLFramework.UGUI.UIClickListener.Get(arg_1_0._txtName.gameObject)
+local SkillEffectStatItem = class("SkillEffectStatItem", ListScrollCell)
+
+function SkillEffectStatItem:init(go)
+	self._txtName = gohelper.findChildText(go, "title/txtName")
+	self._txtSystem = gohelper.findChildText(go, "title/txtSystem")
+	self._txtParticle = gohelper.findChildText(go, "title/txtParticle")
+	self._txtMaterial = gohelper.findChildText(go, "title/txtMaterial")
+	self._txtTexture = gohelper.findChildText(go, "title/txtTexture")
+	self._clickName = SLFramework.UGUI.UIClickListener.Get(self._txtName.gameObject)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._clickName:AddClickListener(arg_2_0._onClickName, arg_2_0)
+function SkillEffectStatItem:addEventListeners()
+	self._clickName:AddClickListener(self._onClickName, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._clickName:RemoveClickListener()
+function SkillEffectStatItem:removeEventListeners()
+	self._clickName:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
-	arg_4_0._txtName.text = arg_4_1.name
-	arg_4_0._txtSystem.text = arg_4_1.particleSystem
-	arg_4_0._txtParticle.text = arg_4_1.particleCount
-	arg_4_0._txtMaterial.text = arg_4_1.materialCount
-	arg_4_0._txtTexture.text = arg_4_1.textureCount
+function SkillEffectStatItem:onUpdateMO(mo)
+	self._mo = mo
+	self._txtName.text = mo.name
+	self._txtSystem.text = mo.particleSystem
+	self._txtParticle.text = mo.particleCount
+	self._txtMaterial.text = mo.materialCount
+	self._txtTexture.text = mo.textureCount
 end
 
-function var_0_0._onClickName(arg_5_0)
-	if not gohelper.isNil(arg_5_0._mo.go) then
-		ZProj.GameHelper.SetSelection(arg_5_0._mo.go)
+function SkillEffectStatItem:_onClickName()
+	if not gohelper.isNil(self._mo.go) then
+		ZProj.GameHelper.SetSelection(self._mo.go)
 	end
 end
 
-return var_0_0
+return SkillEffectStatItem

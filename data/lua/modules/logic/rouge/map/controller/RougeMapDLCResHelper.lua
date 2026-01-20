@@ -1,86 +1,92 @@
-﻿module("modules.logic.rouge.map.controller.RougeMapDLCResHelper", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/controller/RougeMapDLCResHelper.lua
 
-local var_0_0 = class("RougeMapDLCResHelper")
+module("modules.logic.rouge.map.controller.RougeMapDLCResHelper", package.seeall)
 
-function var_0_0.handleLoadMapDLCRes(arg_1_0, ...)
-	local var_1_0 = var_0_0._getMapDLCResHandle(arg_1_0)
+local RougeMapDLCResHelper = class("RougeMapDLCResHelper")
 
-	if not var_1_0 then
+function RougeMapDLCResHelper.handleLoadMapDLCRes(version, ...)
+	local handle = RougeMapDLCResHelper._getMapDLCResHandle(version)
+
+	if not handle then
 		return
 	end
 
-	var_1_0(...)
+	handle(...)
 end
 
-function var_0_0._getMapDLCResHandle(arg_2_0)
-	var_0_0._initHandleLoadMapDLCRes()
+function RougeMapDLCResHelper._getMapDLCResHandle(version)
+	RougeMapDLCResHelper._initHandleLoadMapDLCRes()
 
-	return var_0_0._mapDLCResLoadHandleMap[arg_2_0]
+	local handle = RougeMapDLCResHelper._mapDLCResLoadHandleMap[version]
+
+	return handle
 end
 
-function var_0_0._loadMapDLCResHandle_101(arg_3_0, arg_3_1)
-	arg_3_1.fogPrefab = arg_3_0:getAssetItem(RougeMapEnum.FogMaterialUrl):GetResource()
+function RougeMapDLCResHelper._loadMapDLCResHandle_101(loader, map)
+	map.fogPrefab = loader:getAssetItem(RougeMapEnum.FogMaterialUrl):GetResource()
 end
 
-function var_0_0._initHandleLoadMapDLCRes()
-	if not var_0_0._mapDLCResLoadHandleMap then
-		var_0_0._mapDLCResLoadHandleMap = {
-			[RougeDLCEnum.DLCEnum.DLC_101] = var_0_0._loadMapDLCResHandle_101
+function RougeMapDLCResHelper._initHandleLoadMapDLCRes()
+	if not RougeMapDLCResHelper._mapDLCResLoadHandleMap then
+		RougeMapDLCResHelper._mapDLCResLoadHandleMap = {
+			[RougeDLCEnum.DLCEnum.DLC_101] = RougeMapDLCResHelper._loadMapDLCResHandle_101
 		}
 	end
 end
 
-function var_0_0.handleCreateMapDLC(arg_5_0, ...)
-	local var_5_0 = var_0_0._getCreateMapDLCHandle(arg_5_0)
+function RougeMapDLCResHelper.handleCreateMapDLC(version, ...)
+	local handle = RougeMapDLCResHelper._getCreateMapDLCHandle(version)
 
-	if not var_5_0 then
+	if not handle then
 		return
 	end
 
-	var_5_0(...)
+	handle(...)
 end
 
-function var_0_0._getCreateMapDLCHandle(arg_6_0)
-	var_0_0._initHandleCreateMapDLC()
+function RougeMapDLCResHelper._getCreateMapDLCHandle(version)
+	RougeMapDLCResHelper._initHandleCreateMapDLC()
 
-	return var_0_0._mapDLCHandleMap[arg_6_0]
+	local handle = RougeMapDLCResHelper._mapDLCHandleMap[version]
+
+	return handle
 end
 
-function var_0_0._createMapDLCHandle_101(arg_7_0)
-	local var_7_0 = gohelper.findChild(arg_7_0.mapGo, "root/BackGround")
-	local var_7_1 = gohelper.clone(arg_7_0.fogPrefab, var_7_0, "fog")
+function RougeMapDLCResHelper._createMapDLCHandle_101(map)
+	local goBackGround = gohelper.findChild(map.mapGo, "root/BackGround")
+	local fogInst = gohelper.clone(map.fogPrefab, goBackGround, "fog")
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, RougeMapFogEffect)
+	MonoHelper.addNoUpdateLuaComOnceToGo(fogInst, RougeMapFogEffect)
 end
 
-function var_0_0._initHandleCreateMapDLC()
-	if not var_0_0._mapDLCHandleMap then
-		var_0_0._mapDLCHandleMap = {
-			[RougeDLCEnum.DLCEnum.DLC_101] = var_0_0._createMapDLCHandle_101
+function RougeMapDLCResHelper._initHandleCreateMapDLC()
+	if not RougeMapDLCResHelper._mapDLCHandleMap then
+		RougeMapDLCResHelper._mapDLCHandleMap = {
+			[RougeDLCEnum.DLCEnum.DLC_101] = RougeMapDLCResHelper._createMapDLCHandle_101
 		}
 	end
 end
 
-function var_0_0.addMapDLCRes(arg_9_0, arg_9_1, arg_9_2)
-	var_0_0._initMapDLCResUrl()
+function RougeMapDLCResHelper.addMapDLCRes(mapType, versions, loader)
+	RougeMapDLCResHelper._initMapDLCResUrl()
 
-	local var_9_0 = RougeMapHelper._mapDLCResUrlMap[arg_9_0]
-	local var_9_1 = {}
+	local mapResSet = RougeMapHelper._mapDLCResUrlMap[mapType]
+	local resMap = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1 or {}) do
-		local var_9_2 = var_9_0 and var_9_0[iter_9_1]
+	for _, version in ipairs(versions or {}) do
+		local versionResList = mapResSet and mapResSet[version]
 
-		for iter_9_2, iter_9_3 in ipairs(var_9_2 or {}) do
-			if not var_9_1[iter_9_3] then
-				arg_9_2:addPath(iter_9_3)
+		for _, resUrl in ipairs(versionResList or {}) do
+			if not resMap[resUrl] then
+				loader:addPath(resUrl)
 
-				var_9_1[iter_9_3] = true
+				resMap[resUrl] = true
 			end
 		end
 	end
 end
 
-function var_0_0._initMapDLCResUrl()
+function RougeMapDLCResHelper._initMapDLCResUrl()
 	if not RougeMapHelper._mapDLCResUrlMap then
 		RougeMapHelper._mapDLCResUrlMap = {
 			[RougeMapEnum.MapType.Normal] = {
@@ -92,4 +98,4 @@ function var_0_0._initMapDLCResUrl()
 	end
 end
 
-return var_0_0
+return RougeMapDLCResHelper

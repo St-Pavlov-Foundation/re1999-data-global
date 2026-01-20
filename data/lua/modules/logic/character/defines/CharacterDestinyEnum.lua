@@ -1,30 +1,32 @@
-﻿module("modules.logic.character.defines.CharacterDestinyEnum", package.seeall)
+﻿-- chunkname: @modules/logic/character/defines/CharacterDestinyEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.character.defines.CharacterDestinyEnum", package.seeall)
 
-var_0_0.DestinyStoneOpenLevelConstId = {
+local CharacterDestinyEnum = _M
+
+CharacterDestinyEnum.DestinyStoneOpenLevelConstId = {
 	[4] = ConstEnum.UnlockDestinyHeroLevel5,
 	[5] = ConstEnum.UnlockDestinyHeroLevel6
 }
-var_0_0.DestinyUpBaseAttr = {
+CharacterDestinyEnum.DestinyUpBaseAttr = {
 	CharacterEnum.AttrId.HpBase,
 	CharacterEnum.AttrId.AttackBase,
 	CharacterEnum.AttrId.DefenseBase,
 	CharacterEnum.AttrId.MdefenseBase
 }
-var_0_0.DestinyUpBaseAttrPercent = {
+CharacterDestinyEnum.DestinyUpBaseAttrPercent = {
 	CharacterEnum.AttrId.HpPercent,
 	CharacterEnum.AttrId.AttackPercent,
 	CharacterEnum.AttrId.DefensePercent,
 	CharacterEnum.AttrId.MdefensePercent
 }
-var_0_0.DestinyUpSpecialAttr = {
+CharacterDestinyEnum.DestinyUpSpecialAttr = {
 	CharacterEnum.AttrId.ReboundDmg,
 	CharacterEnum.AttrId.ExtraDmg,
 	CharacterEnum.AttrId.ReuseDmg,
 	CharacterEnum.AttrId.PoisonAddRate
 }
-var_0_0.DestinyUpBaseParseAttr = {
+CharacterDestinyEnum.DestinyUpBaseParseAttr = {
 	[CharacterEnum.AttrId.Hp] = {
 		CharacterEnum.AttrId.HpBase,
 		CharacterEnum.AttrId.HpPercent
@@ -42,36 +44,39 @@ var_0_0.DestinyUpBaseParseAttr = {
 		CharacterEnum.AttrId.MdefensePercent
 	}
 }
-var_0_0.SlotTitle = {
+CharacterDestinyEnum.SlotTitle = {
 	[1] = "character_destiny_slot_title_1",
 	[6] = "character_destiny_slot_title_2"
 }
-var_0_0.EffectItemCount = 4
-var_0_0.SlotViewAnim = {
-	CloseLock = "close_lock",
+CharacterDestinyEnum.EffectItemCount = 4
+CharacterDestinyEnum.SlotViewAnim = {
 	OpenUnlock = "open_unlock",
+	Switch = "switch",
 	LockIdle = "lock_idle",
-	LevelUp = "leveup",
 	CloseUnlock = "close_unlock",
 	OpenLock = "open_lock",
 	Unlock = "unlock",
+	CloseLock = "close_lock",
+	LevelUp = "leveup",
 	UnlockIdle = "unlock_idle"
 }
-var_0_0.StoneViewAnim = {
+CharacterDestinyEnum.StoneViewAnim = {
 	SwitchLeft = "switch_left",
-	Idle = "idle",
+	Switch_reshape = "switch_reshape",
 	Close = "close",
 	LevelUp = "leveup",
 	SwitchRight = "switch_right",
+	Switch_normal = "switch_normal",
+	Idle = "idle",
 	Open = "open"
 }
-var_0_0.AnimEventName = {
+CharacterDestinyEnum.AnimEventName = {
 	RefreshView = "RefreshView",
 	UnlockAttrAnim = "UnlockAttrAnim",
 	UnlockEnd = "UnlockEnd",
 	LevelUpEnd = "LevelUpEnd"
 }
-var_0_0.SlotTend = {
+CharacterDestinyEnum.SlotTend = {
 	{
 		TitleColor = "#ff938a",
 		TitleIconName = "character_destiny_icon_1",
@@ -98,7 +103,7 @@ var_0_0.SlotTend = {
 		RuneColor = Color(0.4823529411764706, 0.32941176470588235, 0.5882352941176471, 1)
 	}
 }
-var_0_0.RomanNum = {
+CharacterDestinyEnum.RomanNum = {
 	"Ⅰ",
 	"Ⅱ",
 	"Ⅲ",
@@ -109,5 +114,9 @@ var_0_0.RomanNum = {
 	"Ⅷ",
 	"Ⅸ"
 }
+CharacterDestinyEnum.StoneType = {
+	Reshape = 1,
+	Normal = 0
+}
 
-return var_0_0
+return CharacterDestinyEnum

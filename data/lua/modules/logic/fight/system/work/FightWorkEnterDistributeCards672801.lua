@@ -1,94 +1,96 @@
-﻿module("modules.logic.fight.system.work.FightWorkEnterDistributeCards672801", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEnterDistributeCards672801.lua
 
-local var_0_0 = class("FightWorkEnterDistributeCards672801", FightWorkItem)
+module("modules.logic.fight.system.work.FightWorkEnterDistributeCards672801", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.fightViewHandCard = arg_1_1
-	arg_1_0.distributeCards = arg_1_2
-	arg_1_0.effectList = {}
+local FightWorkEnterDistributeCards672801 = class("FightWorkEnterDistributeCards672801", FightWorkItem)
+
+function FightWorkEnterDistributeCards672801:onConstructor(fightViewHandCard, distributeCards)
+	self.fightViewHandCard = fightViewHandCard
+	self.distributeCards = distributeCards
+	self.effectList = {}
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = {
+function FightWorkEnterDistributeCards672801:onStart()
+	local urlList = {
 		"ui/viewres/fight/fightskin/0001/fight_skin_down_0001.prefab",
 		"ui/viewres/fight/fightskin/0001/fight_skin_up_0001.prefab",
 		"ui/animations/dynamic/fightcarditem_skin_0001.controller"
 	}
-	local var_2_1 = {
-		arg_2_0.fightViewHandCard.skinDownEffectRoot,
-		arg_2_0.fightViewHandCard.skinUpEffectRoot
+	local parentRootList = {
+		self.fightViewHandCard.skinDownEffectRoot,
+		self.fightViewHandCard.skinUpEffectRoot
 	}
 
-	arg_2_0:cancelFightWorkSafeTimer()
-	arg_2_0:com_loadListAsset(var_2_0, arg_2_0.onLoaded, arg_2_0.onAllLoaded, var_2_1)
+	self:cancelFightWorkSafeTimer()
+	self:com_loadListAsset(urlList, self.onLoaded, self.onAllLoaded, parentRootList)
 end
 
-function var_0_0.onLoaded(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_1 then
-		if arg_3_3 then
-			local var_3_0 = arg_3_2:GetResource()
+function FightWorkEnterDistributeCards672801:onLoaded(success, loader, parentRoot)
+	if success then
+		if parentRoot then
+			local obj = loader:GetResource()
 
-			table.insert(arg_3_0.effectList, gohelper.clone(var_3_0, arg_3_3))
+			table.insert(self.effectList, gohelper.clone(obj, parentRoot))
 		else
-			arg_3_0.runtimeAnimatorController = arg_3_2:GetResource()
+			self.runtimeAnimatorController = loader:GetResource()
 		end
 	end
 end
 
-function var_0_0.onAllLoaded(arg_4_0)
-	local var_4_0 = FightDataHelper.handCardMgr.handCard
+function FightWorkEnterDistributeCards672801:onAllLoaded()
+	local handCard = FightDataHelper.handCardMgr.handCard
 
-	tabletool.addValues(var_4_0, arg_4_0.distributeCards)
-	FightCardDataHelper.combineCardListForPerformance(var_4_0)
-	arg_4_0.fightViewHandCard:_updateHandCards()
+	tabletool.addValues(handCard, self.distributeCards)
+	FightCardDataHelper.combineCardListForPerformance(handCard)
+	self.fightViewHandCard:_updateHandCards()
 
-	local var_4_1 = arg_4_0.fightViewHandCard._handCardItemList
+	local cardItemList = self.fightViewHandCard._handCardItemList
 
-	gohelper.setActive(arg_4_0.effectList[1], false)
-	gohelper.setActive(arg_4_0.effectList[2], false)
+	gohelper.setActive(self.effectList[1], false)
+	gohelper.setActive(self.effectList[2], false)
 
-	local var_4_2 = FightModel.instance:getUISpeed()
-	local var_4_3 = arg_4_0:com_registWorkDoneFlowSequence()
+	local speed = FightModel.instance:getUISpeed()
+	local sequence = self:com_registWorkDoneFlowSequence()
 
-	var_4_3:registWork(FightWorkDelayTimer, 0.5 / var_4_2)
-	var_4_3:registWork(FightWorkFunction, arg_4_0.showEffect, arg_4_0)
+	sequence:registWork(FightWorkDelayTimer, 0.5 / speed)
+	sequence:registWork(FightWorkFunction, self.showEffect, self)
 
-	local var_4_4 = var_4_3:registWork(FightWorkFlowParallel)
+	local parallel = sequence:registWork(FightWorkFlowParallel)
 
-	for iter_4_0 = 1, #var_4_0 do
-		local var_4_5 = var_4_1[iter_4_0]
+	for i = 1, #handCard do
+		local tarCard = cardItemList[i]
 
-		gohelper.setActive(var_4_5.go, false)
+		gohelper.setActive(tarCard.go, false)
 
-		local var_4_6 = var_4_4:registWork(FightWorkFlowSequence)
-		local var_4_7 = var_4_5._innerGO
+		local cardFlow = parallel:registWork(FightWorkFlowSequence)
+		local obj = tarCard._innerGO
 
-		var_4_6:registWork(FightWorkDelayTimer, 0.06 / var_4_2 * iter_4_0)
-		var_4_6:registWork(FightWorkFunction, arg_4_0.showCard, arg_4_0, var_4_5)
-		var_4_6:registWork(FightWorkPlayAnimator, var_4_7, "fightcarditem_skin_0001", var_4_2, var_4_5._onCardAniFinish, var_4_5)
+		cardFlow:registWork(FightWorkDelayTimer, 0.06 / speed * i)
+		cardFlow:registWork(FightWorkFunction, self.showCard, self, tarCard)
+		cardFlow:registWork(FightWorkPlayAnimator, obj, "fightcarditem_skin_0001", speed, tarCard._onCardAniFinish, tarCard)
 	end
 
-	var_4_3:start()
+	sequence:start()
 end
 
-function var_0_0.showCard(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_1.go, true)
+function FightWorkEnterDistributeCards672801:showCard(tarCard)
+	gohelper.setActive(tarCard.go, true)
 
-	arg_5_1._cardAni.runtimeAnimatorController = arg_5_0.runtimeAnimatorController
+	tarCard._cardAni.runtimeAnimatorController = self.runtimeAnimatorController
 end
 
-function var_0_0.showEffect(arg_6_0)
-	gohelper.setActive(arg_6_0.effectList[1], true)
-	gohelper.setActive(arg_6_0.effectList[2], true)
-	arg_6_0:com_registTimer(function()
+function FightWorkEnterDistributeCards672801:showEffect()
+	gohelper.setActive(self.effectList[1], true)
+	gohelper.setActive(self.effectList[2], true)
+	self:com_registTimer(function()
 		AudioMgr.instance:trigger(20300021)
 	end, 0.5 / FightModel.instance:getSpeed())
 end
 
-function var_0_0.onDestructor(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.effectList) do
-		gohelper.destroy(iter_8_1)
+function FightWorkEnterDistributeCards672801:onDestructor()
+	for i, v in ipairs(self.effectList) do
+		gohelper.destroy(v)
 	end
 end
 
-return var_0_0
+return FightWorkEnterDistributeCards672801

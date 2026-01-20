@@ -1,12 +1,14 @@
-﻿module("modules.logic.survival.model.map.SurvivalScenePropMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/SurvivalScenePropMo.lua
 
-local var_0_0 = pureTable("SurvivalScenePropMo")
+module("modules.logic.survival.model.map.SurvivalScenePropMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.magmaStatus = arg_1_1.magmaStatus
-	arg_1_0.radarPosition = SurvivalHexNode.New(arg_1_1.radarHex.q, arg_1_1.radarHex.r)
-	arg_1_0.teleportGate = arg_1_1.teleportGate
-	arg_1_0.teleportGateHex = SurvivalHexNode.New(arg_1_1.teleportGateHex.q, arg_1_1.teleportGateHex.r)
+local SurvivalScenePropMo = pureTable("SurvivalScenePropMo")
+
+function SurvivalScenePropMo:init(data)
+	self.magmaStatus = data.magmaStatus
+	self.radarPosition = SurvivalHexNode.New(data.radarHex.q, data.radarHex.r)
+	self.teleportGate = data.teleportGate
+	self.teleportGateHex = SurvivalHexNode.New(data.teleportGateHex.q, data.teleportGateHex.r)
 end
 
-return var_0_0
+return SurvivalScenePropMo

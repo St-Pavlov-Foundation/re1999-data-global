@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotLayerChangeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotLayerChangeViewContainer.lua
 
-local var_0_0 = class("V1a6_CachotLayerChangeViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotLayerChangeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local V1a6_CachotLayerChangeViewContainer = class("V1a6_CachotLayerChangeViewContainer", BaseViewContainer)
+
+function V1a6_CachotLayerChangeViewContainer:buildViews()
 	return {
 		V1a6_CachotLayerChangeView.New()
 	}
 end
 
-return var_0_0
+return V1a6_CachotLayerChangeViewContainer

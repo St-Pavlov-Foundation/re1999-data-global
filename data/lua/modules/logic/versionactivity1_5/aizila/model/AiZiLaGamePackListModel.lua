@@ -1,61 +1,63 @@
-﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGamePackListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/model/AiZiLaGamePackListModel.lua
 
-local var_0_0 = class("AiZiLaGamePackListModel", ListScrollModel)
+module("modules.logic.versionactivity1_5.aizila.model.AiZiLaGamePackListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	local var_1_0 = {}
+local AiZiLaGamePackListModel = class("AiZiLaGamePackListModel", ListScrollModel)
 
-	tabletool.addValues(var_1_0, AiZiLaGameModel.instance:getItemList())
+function AiZiLaGamePackListModel:init()
+	local dataList = {}
 
-	if #var_1_0 > 1 then
-		table.sort(var_1_0, var_0_0.sortFunc)
+	tabletool.addValues(dataList, AiZiLaGameModel.instance:getItemList())
+
+	if #dataList > 1 then
+		table.sort(dataList, AiZiLaGamePackListModel.sortFunc)
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(dataList)
 end
 
-function var_0_0.sortFunc(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getConfig()
-	local var_2_1 = arg_2_1:getConfig()
+function AiZiLaGamePackListModel.sortFunc(a, b)
+	local aCfg = a:getConfig()
+	local bCfg = b:getConfig()
 
-	if var_2_0.rare ~= var_2_1.rare then
-		return var_2_0.rare > var_2_1.rare
+	if aCfg.rare ~= bCfg.rare then
+		return aCfg.rare > bCfg.rare
 	end
 
-	local var_2_2 = arg_2_0:getQuantity()
-	local var_2_3 = arg_2_1:getQuantity()
+	local acount = a:getQuantity()
+	local bcount = b:getQuantity()
 
-	if var_2_2 ~= var_2_3 then
-		return var_2_3 < var_2_2
+	if acount ~= bcount then
+		return bcount < acount
 	end
 
-	if arg_2_0.itemId ~= arg_2_1.itemId then
-		return arg_2_0.itemId < arg_2_1.itemId
-	end
-end
-
-function var_0_0._refreshSelect(arg_3_0)
-	local var_3_0 = arg_3_0:getById(arg_3_0._selectItemId)
-
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._scrollViews) do
-		iter_3_1:setSelect(var_3_0)
+	if a.itemId ~= b.itemId then
+		return a.itemId < b.itemId
 	end
 end
 
-function var_0_0.setSelect(arg_4_0, arg_4_1)
-	arg_4_0._selectItemId = arg_4_1
+function AiZiLaGamePackListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectItemId)
 
-	arg_4_0:_refreshSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
+	end
 end
 
-function var_0_0.getSelect(arg_5_0)
-	return arg_5_0._selectItemId
+function AiZiLaGamePackListModel:setSelect(itemId)
+	self._selectItemId = itemId
+
+	self:_refreshSelect()
 end
 
-function var_0_0.getSelectMO(arg_6_0)
-	return arg_6_0:getById(arg_6_0._selectItemId)
+function AiZiLaGamePackListModel:getSelect()
+	return self._selectItemId
 end
 
-var_0_0.instance = var_0_0.New()
+function AiZiLaGamePackListModel:getSelectMO()
+	return self:getById(self._selectItemId)
+end
 
-return var_0_0
+AiZiLaGamePackListModel.instance = AiZiLaGamePackListModel.New()
+
+return AiZiLaGamePackListModel

@@ -1,13 +1,15 @@
-﻿module("modules.logic.player.view.PlayerModifyNameViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerModifyNameViewContainer.lua
 
-local var_0_0 = class("PlayerModifyNameViewContainer", BaseViewContainer)
+module("modules.logic.player.view.PlayerModifyNameViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local PlayerModifyNameViewContainer = class("PlayerModifyNameViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, PlayerModifyNameView.New())
+function PlayerModifyNameViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, PlayerModifyNameView.New())
+
+	return views
 end
 
-return var_0_0
+return PlayerModifyNameViewContainer

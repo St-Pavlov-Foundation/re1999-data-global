@@ -1,163 +1,170 @@
-﻿local var_0_0 = _G.getGlobal("Partial_GMTool")
-local var_0_1 = _G.addGlobalModule
-local var_0_2 = string.format
-local var_0_3 = _G.debug.getupvalue
+﻿-- chunkname: @modules/logic/gm/GMTool__LuaConfigHooker.lua
 
-local function var_0_4(arg_1_0, arg_1_1)
-	if not arg_1_1 or not arg_1_0 then
+local getGlobal = _G.getGlobal
+local GMTool = getGlobal("Partial_GMTool")
+local addGlobalModule = _G.addGlobalModule
+local sf = string.format
+local debug_getupvalue = _G.debug.getupvalue
+
+local function _copy(dst, src)
+	if not src or not dst then
 		return
 	end
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-		arg_1_0[iter_1_0] = iter_1_1
+	for k, v in pairs(src) do
+		dst[k] = v
 	end
 end
 
-local var_0_5 = {
-	onClear = function(arg_2_0)
-		arg_2_0._sConfigInfo = arg_2_0._sConfigInfo or {}
+local M = {}
 
-		if arg_2_0._isEnabledMlString == false then
-			arg_2_0:toggleSwitchMlString()
-		end
+function M:onClear()
+	self._sConfigInfo = self._sConfigInfo or {}
 
-		arg_2_0._isEnabledMlString = true
-
-		return arg_2_0
-	end,
-	_isValid = function(arg_3_0, arg_3_1)
-		if not arg_3_1 then
-			return false
-		end
-
-		return arg_3_0._sConfigInfo[arg_3_1] and true or false
-	end,
-	_try_inject = function(arg_4_0, arg_4_1)
-		if string.nilorempty(arg_4_1) then
-			return
-		end
-
-		local var_4_0 = arg_4_1
-		local var_4_1 = getModulePath(var_4_0)
-
-		if not var_4_1 then
-			logError(var_0_2("[GMTool__LuaConfigHooker] please re gen require_modules.lua error moduleName: %s", var_4_0))
-
-			return
-		end
-
-		local var_4_2 = var_0_1(var_4_1, var_4_0)
-
-		if not var_4_2 then
-			logError(var_0_2("[GMTool__LuaConfigHooker] please re gen require_modules.lua error modulePath: %s", var_4_1))
-
-			return
-		end
-
-		arg_4_0:_validate(var_4_2, var_4_0)
-	end
-}
-local var_0_6 = "lua_"
-
-function var_0_5._validate(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = var_0_3(arg_5_1.onLoad, 1) or arg_5_2
-	local var_5_1
-
-	function arg_5_1._name()
-		return var_5_0
+	if self._isEnabledMlString == false then
+		self:toggleSwitchMlString()
 	end
 
-	local var_5_2 = {}
+	self._isEnabledMlString = true
 
-	arg_5_0._sConfigInfo[var_5_0] = {
+	return self
+end
+
+function M:_isValid(k)
+	if not k then
+		return false
+	end
+
+	return self._sConfigInfo[k] and true or false
+end
+
+function M:_try_inject(name)
+	if string.nilorempty(name) then
+		return
+	end
+
+	local moduleName = name
+	local modulePath = getModulePath(moduleName)
+
+	if not modulePath then
+		logError(sf("[GMTool__LuaConfigHooker] please re gen require_modules.lua error moduleName: %s", moduleName))
+
+		return
+	end
+
+	local lua_table = addGlobalModule(modulePath, moduleName)
+
+	if not lua_table then
+		logError(sf("[GMTool__LuaConfigHooker] please re gen require_modules.lua error modulePath: %s", modulePath))
+
+		return
+	end
+
+	self:_validate(lua_table, moduleName)
+end
+
+local kLuaTableNamePrefix = "lua_"
+
+function M:_validate(lua_table, opt_name)
+	local name, _ = debug_getupvalue(lua_table.onLoad, 1) or opt_name
+
+	function lua_table._name()
+		return name
+	end
+
+	local mlStringKeyBackup = {}
+
+	self._sConfigInfo[name] = {
 		fields = false,
 		primaryKey = false,
 		mlStringKey = false,
-		name = var_5_0,
-		mlStringKeyBackup = var_5_2
+		name = name,
+		mlStringKeyBackup = mlStringKeyBackup
 	}
 
-	function arg_5_1._fields()
-		return arg_5_0:_getUpvalue(arg_5_1, "fields")
+	function lua_table._fields()
+		return self:_getUpvalue(lua_table, "fields")
 	end
 
-	function arg_5_1._primaryKey()
-		return arg_5_0:_getUpvalue(arg_5_1, "primaryKey")
+	function lua_table._primaryKey()
+		return self:_getUpvalue(lua_table, "primaryKey")
 	end
 
-	function arg_5_1._mlStringKey()
-		return arg_5_0:_getUpvalue(arg_5_1, "mlStringKey")
+	function lua_table._mlStringKey()
+		return self:_getUpvalue(lua_table, "mlStringKey")
 	end
 
-	function arg_5_1._mlStringKeyBackup()
-		return var_5_2
+	function lua_table._mlStringKeyBackup()
+		return mlStringKeyBackup
 	end
 
-	var_0_4(var_5_2, arg_5_1._mlStringKey())
+	_copy(mlStringKeyBackup, lua_table._mlStringKey())
 end
 
-function var_0_5._getUpvalue(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_1._name()
-	local var_11_1 = arg_11_0._sConfigInfo[var_11_0]
+function M:_getUpvalue(lua_table, upvalueKey)
+	local name = lua_table._name()
+	local configInfo = self._sConfigInfo[name]
 
-	if not var_11_1[arg_11_2] then
-		var_11_1[arg_11_2] = var_0_0.util.getUpvalue(arg_11_1.onLoad, arg_11_2, 1, 10)
+	if not configInfo[upvalueKey] then
+		configInfo[upvalueKey] = GMTool.util.getUpvalue(lua_table.onLoad, upvalueKey, 1, 10)
 	end
 
-	return var_11_1[arg_11_2]
+	return configInfo[upvalueKey]
 end
 
-function var_0_5._setActiveLangKey(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_1._mlStringKey()
-	local var_12_1 = arg_12_1._mlStringKeyBackup()
+function M:_setActiveLangKey(lua_table, isActive)
+	local mlstringKey = lua_table._mlStringKey()
+	local mlStringKeyBackup = lua_table._mlStringKeyBackup()
 
-	if arg_12_2 then
-		var_0_4(var_12_0, var_12_1)
+	if isActive then
+		_copy(mlstringKey, mlStringKeyBackup)
 	else
-		for iter_12_0, iter_12_1 in pairs(var_12_0 or {}) do
-			rawset(var_12_0, iter_12_0, nil)
+		for k, _ in pairs(mlstringKey or {}) do
+			rawset(mlstringKey, k, nil)
 		end
 	end
 end
 
-function var_0_5.toggleSwitchMlString(arg_13_0)
-	local var_13_0 = not arg_13_0._isEnabledMlString
+function M:toggleSwitchMlString()
+	local isActive = not self._isEnabledMlString
 
-	logNormal("Toggle Switch MlString: " .. var_0_0.util.colorBoolStr(var_13_0))
+	logNormal("Toggle Switch MlString: " .. GMTool.util.colorBoolStr(isActive))
 
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._sConfigInfo) do
-		local var_13_1 = iter_13_1.name
-		local var_13_2 = _G[var_13_1]
+	for _, v in pairs(self._sConfigInfo) do
+		local name = v.name
+		local lua_table = _G[name]
 
-		arg_13_0:_setActiveLangKey(var_13_2, var_13_0)
+		self:_setActiveLangKey(lua_table, isActive)
 	end
 
-	arg_13_0._isEnabledMlString = var_13_0
+	self._isEnabledMlString = isActive
 end
 
-var_0_0._LuaConfigHooker = var_0_5:onClear()
+GMTool._LuaConfigHooker = M:onClear()
 
-local var_0_7 = {
+local kHookList = {
 	"lua_language_coder",
 	"lua_language_prefab"
 }
 
-local function var_0_8()
-	for iter_14_0, iter_14_1 in ipairs(var_0_7) do
-		var_0_5:_try_inject(iter_14_1)
+local function _hook_example()
+	for _, moduleName in ipairs(kHookList) do
+		M:_try_inject(moduleName)
 	end
 end
 
-local var_0_9 = "modules.configs.excel2json.lua_"
+local kModulePathPrefix = "modules.configs.excel2json.lua_"
 
-;(function()
-	local var_15_0 = _G.moduleNameToPath
+local function hookOnce()
+	local moduleNameToPath = _G.moduleNameToPath
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		if var_0_0.util.startsWith(iter_15_1, var_0_9) then
-			var_0_5:_try_inject(iter_15_0)
+	for moduleName, modulePath in pairs(moduleNameToPath) do
+		if GMTool.util.startsWith(modulePath, kModulePathPrefix) then
+			M:_try_inject(moduleName)
 		end
 	end
-end)()
+end
+
+hookOnce()
 
 return {}

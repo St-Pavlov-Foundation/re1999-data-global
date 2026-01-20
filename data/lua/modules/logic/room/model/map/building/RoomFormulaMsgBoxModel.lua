@@ -1,25 +1,27 @@
-﻿module("modules.logic.room.model.map.building.RoomFormulaMsgBoxModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/building/RoomFormulaMsgBoxModel.lua
 
-local var_0_0 = class("RoomFormulaMsgBoxModel", ListScrollModel)
+module("modules.logic.room.model.map.building.RoomFormulaMsgBoxModel", package.seeall)
 
-function var_0_0.setCostItemList(arg_1_0, arg_1_1)
-	table.sort(arg_1_1, function(arg_2_0, arg_2_1)
-		if arg_2_0.type ~= arg_2_1.type then
-			return arg_2_1.type == MaterialEnum.MaterialType.Currency
+local RoomFormulaMsgBoxModel = class("RoomFormulaMsgBoxModel", ListScrollModel)
+
+function RoomFormulaMsgBoxModel:setCostItemList(itemList)
+	table.sort(itemList, function(a, b)
+		if a.type ~= b.type then
+			return b.type == MaterialEnum.MaterialType.Currency
 		end
 
-		local var_2_0 = ItemModel.instance:getItemConfig(arg_2_0.type, arg_2_0.id)
-		local var_2_1 = ItemModel.instance:getItemConfig(arg_2_1.type, arg_2_1.id)
+		local aConfig = ItemModel.instance:getItemConfig(a.type, a.id)
+		local bConfig = ItemModel.instance:getItemConfig(b.type, b.id)
 
-		if var_2_0.rare ~= var_2_1.rare then
-			return var_2_0.rare > var_2_1.rare
-		elseif arg_2_0.id ~= arg_2_1.id then
-			return arg_2_0.id < arg_2_1.id
+		if aConfig.rare ~= bConfig.rare then
+			return aConfig.rare > bConfig.rare
+		elseif a.id ~= b.id then
+			return a.id < b.id
 		end
 	end)
-	arg_1_0:setList(arg_1_1)
+	self:setList(itemList)
 end
 
-var_0_0.instance = var_0_0.New()
+RoomFormulaMsgBoxModel.instance = RoomFormulaMsgBoxModel.New()
 
-return var_0_0
+return RoomFormulaMsgBoxModel

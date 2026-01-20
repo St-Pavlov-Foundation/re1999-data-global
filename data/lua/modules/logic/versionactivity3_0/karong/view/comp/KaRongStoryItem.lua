@@ -1,147 +1,149 @@
-﻿module("modules.logic.versionactivity3_0.karong.view.comp.KaRongStoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/karong/view/comp/KaRongStoryItem.lua
 
-local var_0_0 = class("KaRongStoryItem", LuaCompBase)
-local var_0_1 = 1.5
-local var_0_2 = "KaRongDrawController;KaRongDrawEvent;OnGameFinished"
+module("modules.logic.versionactivity3_0.karong.view.comp.KaRongStoryItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#btn_click")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stagename")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "unlock/info/star1/#go_star")
-	arg_1_0._anim = arg_1_1:GetComponent(gohelper.Type_Animator)
-	arg_1_0._gostarAnim = gohelper.findChild(arg_1_0._gostar, "#image_Star")
-	arg_1_0._animStar = arg_1_0._gostarAnim:GetComponent(gohelper.Type_Animation)
-	arg_1_0._gostarNo = gohelper.findChild(arg_1_0.viewGO, "unlock/info/star1/no")
-	arg_1_0._gostagenormal = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagenormal")
-	arg_1_0._gostagenormal2 = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagenormal2")
-	arg_1_0._gostagefinish = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagefinish")
-	arg_1_0._gostagefinish2 = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagefinish2")
-	arg_1_0._txtstageNum = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stageNum")
-	arg_1_0._goCurrent = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_Current")
+local KaRongStoryItem = class("KaRongStoryItem", LuaCompBase)
+local WaitSecBeforPlayAfterStory = 1.5
+local WaitEventWorkParam = "KaRongDrawController;KaRongDrawEvent;OnGameFinished"
 
-	arg_1_0:addEventCb(RoleActivityController.instance, RoleActivityEvent.StoryItemClick, arg_1_0.onStoryItemClick, arg_1_0)
-	arg_1_0:setFocusFlag(false)
+function KaRongStoryItem:init(go)
+	self.viewGO = go
+	self.transform = go.transform
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/#btn_click")
+	self._txtname = gohelper.findChildText(self.viewGO, "unlock/info/#txt_stagename")
+	self._gostar = gohelper.findChild(self.viewGO, "unlock/info/star1/#go_star")
+	self._anim = go:GetComponent(gohelper.Type_Animator)
+	self._gostarAnim = gohelper.findChild(self._gostar, "#image_Star")
+	self._animStar = self._gostarAnim:GetComponent(gohelper.Type_Animation)
+	self._gostarNo = gohelper.findChild(self.viewGO, "unlock/info/star1/no")
+	self._gostagenormal = gohelper.findChild(self.viewGO, "unlock/#go_stagenormal")
+	self._gostagenormal2 = gohelper.findChild(self.viewGO, "unlock/#go_stagenormal2")
+	self._gostagefinish = gohelper.findChild(self.viewGO, "unlock/#go_stagefinish")
+	self._gostagefinish2 = gohelper.findChild(self.viewGO, "unlock/#go_stagefinish2")
+	self._txtstageNum = gohelper.findChildText(self.viewGO, "unlock/info/#txt_stageNum")
+	self._goCurrent = gohelper.findChild(self.viewGO, "unlock/#go_Current")
+
+	self:addEventCb(RoleActivityController.instance, RoleActivityEvent.StoryItemClick, self.onStoryItemClick, self)
+	self:setFocusFlag(false)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnOnClick, arg_2_0)
+function KaRongStoryItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function KaRongStoryItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnOnClick(arg_4_0)
-	if not arg_4_0.unlock then
+function KaRongStoryItem:_btnOnClick()
+	if not self.unlock then
 		GameFacade.showToast(ToastEnum.DungeonIsLockNormal)
 
 		return
 	end
 
-	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.StoryItemClick, arg_4_0.index)
+	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.StoryItemClick, self.index)
 end
 
-function var_0_0.onStoryItemClick(arg_5_0, arg_5_1)
-	if arg_5_0.index == arg_5_1 then
+function KaRongStoryItem:onStoryItemClick(index)
+	if self.index == index then
 		return
 	end
 
-	arg_5_0:destroyWorkFlow()
+	self:destroyWorkFlow()
 end
 
-function var_0_0.setParam(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.config = arg_6_1
-	arg_6_0.id = arg_6_1.id
-	arg_6_0.actId = arg_6_3
-	arg_6_0.index = arg_6_2
+function KaRongStoryItem:setParam(co, _index, _actId)
+	self.config = co
+	self.id = co.id
+	self.actId = _actId
+	self.index = _index
 
-	arg_6_0:_refreshUI()
+	self:_refreshUI()
 end
 
-local var_0_3 = "#F3F3DC"
-local var_0_4 = "AEAEAE"
+local LockedTitleColor = "#F3F3DC"
+local UnlockedTitleColor = "AEAEAE"
 
-function var_0_0._refreshUI(arg_7_0)
-	arg_7_0:refreshStatus()
+function KaRongStoryItem:_refreshUI()
+	self:refreshStatus()
 
-	arg_7_0._txtname.text = arg_7_0.config.name
+	self._txtname.text = self.config.name
 
-	if arg_7_0.unlock then
-		arg_7_0._txtstageNum.text = string.format("<color=#A6AD82>0%s</color>", arg_7_0.index)
+	if self.unlock then
+		self._txtstageNum.text = string.format("<color=#A6AD82>0%s</color>", self.index)
 	else
-		arg_7_0._txtstageNum.text = string.format("<color=#AEAEAE>0%s</color>", arg_7_0.index)
+		self._txtstageNum.text = string.format("<color=#AEAEAE>0%s</color>", self.index)
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_7_0._txtname, arg_7_0.unlock and var_0_4 or var_0_3)
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtname, self.unlock and UnlockedTitleColor or LockedTitleColor)
 end
 
-function var_0_0.refreshStatus(arg_8_0)
-	arg_8_0.unlock = RoleActivityModel.instance:isLevelUnlock(arg_8_0.actId, arg_8_0.id)
-	arg_8_0.isPass = RoleActivityModel.instance:isLevelPass(arg_8_0.actId, arg_8_0.id)
+function KaRongStoryItem:refreshStatus()
+	self.unlock = RoleActivityModel.instance:isLevelUnlock(self.actId, self.id)
+	self.isPass = RoleActivityModel.instance:isLevelPass(self.actId, self.id)
 
-	gohelper.setActive(arg_8_0._gostar, arg_8_0.isPass)
-	gohelper.setActive(arg_8_0._gostarNo, not arg_8_0.isPass)
+	gohelper.setActive(self._gostar, self.isPass)
+	gohelper.setActive(self._gostarNo, not self.isPass)
 
-	arg_8_0.hasElement = Activity176Config.instance:getElementCo(arg_8_0.actId, arg_8_0.id) ~= nil
+	self.hasElement = Activity176Config.instance:getElementCo(self.actId, self.id) ~= nil
 
-	gohelper.setActive(arg_8_0._gostagenormal, not arg_8_0.unlock and not arg_8_0.hasElement)
-	gohelper.setActive(arg_8_0._gostagenormal2, not arg_8_0.unlock and arg_8_0.hasElement)
-	gohelper.setActive(arg_8_0._gostagefinish, arg_8_0.unlock and not arg_8_0.hasElement)
-	gohelper.setActive(arg_8_0._gostagefinish2, arg_8_0.unlock and arg_8_0.hasElement)
+	gohelper.setActive(self._gostagenormal, not self.unlock and not self.hasElement)
+	gohelper.setActive(self._gostagenormal2, not self.unlock and self.hasElement)
+	gohelper.setActive(self._gostagefinish, self.unlock and not self.hasElement)
+	gohelper.setActive(self._gostagefinish2, self.unlock and self.hasElement)
 end
 
-function var_0_0.lockStatus(arg_9_0)
-	gohelper.setActive(arg_9_0._gostagefinish, true)
-	gohelper.setActive(arg_9_0._gostar, false)
-	gohelper.setActive(arg_9_0._gostarNo, true)
+function KaRongStoryItem:lockStatus()
+	gohelper.setActive(self._gostagefinish, true)
+	gohelper.setActive(self._gostar, false)
+	gohelper.setActive(self._gostarNo, true)
 end
 
-function var_0_0.isUnlock(arg_10_0)
-	return arg_10_0.unlock
+function KaRongStoryItem:isUnlock()
+	return self.unlock
 end
 
-function var_0_0.playStory(arg_11_0)
-	arg_11_0:destroyWorkFlow()
+function KaRongStoryItem:playStory()
+	self:destroyWorkFlow()
 
-	arg_11_0._flow = FlowSequence.New()
+	self._flow = FlowSequence.New()
 
-	if not arg_11_0.isPass then
-		arg_11_0._flow:addWork(FunctionWork.New(arg_11_0.onStartEpisode, arg_11_0))
+	if not self.isPass then
+		self._flow:addWork(FunctionWork.New(self.onStartEpisode, self))
 	end
 
-	if arg_11_0.config.beforeStory ~= 0 then
-		arg_11_0._flow:addWork(PlayStoryWork.New(arg_11_0.config.beforeStory))
+	if self.config.beforeStory ~= 0 then
+		self._flow:addWork(PlayStoryWork.New(self.config.beforeStory))
 	end
 
-	local var_11_0 = Activity176Config.instance:getElementCo(arg_11_0.actId, arg_11_0.id)
+	local littleGameCo = Activity176Config.instance:getElementCo(self.actId, self.id)
 
-	if var_11_0 then
-		arg_11_0._flow:addWork(FunctionWork.New(KaRongDrawController.openGame, KaRongDrawController.instance, var_11_0))
-		arg_11_0._flow:addWork(WaitEventWork.New(var_0_2))
+	if littleGameCo then
+		self._flow:addWork(FunctionWork.New(KaRongDrawController.openGame, KaRongDrawController.instance, littleGameCo))
+		self._flow:addWork(WaitEventWork.New(WaitEventWorkParam))
 	end
 
-	if not arg_11_0.isPass then
-		arg_11_0._flow:addWork(FunctionWork.New(arg_11_0.onFinishedEpisode, arg_11_0))
+	if not self.isPass then
+		self._flow:addWork(FunctionWork.New(self.onFinishedEpisode, self))
 	end
 
-	if var_11_0 then
-		arg_11_0._flow:addWork(FunctionWork.New(arg_11_0._lockScreen, arg_11_0, true))
-		arg_11_0._flow:addWork(WorkWaitSeconds.New(var_0_1))
-		arg_11_0._flow:addWork(BpCloseViewWork.New(ViewName.KaRongDrawView))
-		arg_11_0._flow:addWork(FunctionWork.New(arg_11_0._lockScreen, arg_11_0, false))
+	if littleGameCo then
+		self._flow:addWork(FunctionWork.New(self._lockScreen, self, true))
+		self._flow:addWork(WorkWaitSeconds.New(WaitSecBeforPlayAfterStory))
+		self._flow:addWork(BpCloseViewWork.New(ViewName.KaRongDrawView))
+		self._flow:addWork(FunctionWork.New(self._lockScreen, self, false))
 	end
 
-	if arg_11_0.config.afterStory ~= 0 then
-		arg_11_0._flow:addWork(PlayStoryWork.New(arg_11_0.config.afterStory))
+	if self.config.afterStory ~= 0 then
+		self._flow:addWork(PlayStoryWork.New(self.config.afterStory))
 	end
 
-	arg_11_0._flow:start()
+	self._flow:start()
 end
 
-function var_0_0._lockScreen(arg_12_0, arg_12_1)
-	if arg_12_1 then
+function KaRongStoryItem:_lockScreen(lock)
+	if lock then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("KaRongStoryItem")
 	else
@@ -150,53 +152,53 @@ function var_0_0._lockScreen(arg_12_0, arg_12_1)
 	end
 end
 
-function var_0_0.onStartEpisode(arg_13_0)
-	DungeonRpc.instance:sendStartDungeonRequest(arg_13_0.config.chapterId, arg_13_0.id)
+function KaRongStoryItem:onStartEpisode()
+	DungeonRpc.instance:sendStartDungeonRequest(self.config.chapterId, self.id)
 end
 
-function var_0_0.onFinishedEpisode(arg_14_0)
+function KaRongStoryItem:onFinishedEpisode()
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(arg_14_0.id)
+	DungeonModel.instance:setLastSendEpisodeId(self.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
 end
 
-function var_0_0.destroyWorkFlow(arg_15_0)
-	if arg_15_0._flow then
-		arg_15_0._flow:destroy()
+function KaRongStoryItem:destroyWorkFlow()
+	if self._flow then
+		self._flow:destroy()
 
-		arg_15_0._flow = nil
+		self._flow = nil
 	end
 end
 
-function var_0_0.playFinish(arg_16_0)
+function KaRongStoryItem:playFinish()
 	AudioMgr.instance:trigger(AudioEnum3_0.ActKaRong.play_ui_lushang_karong_finish)
-	arg_16_0._anim:Play("finish")
+	self._anim:Play("finish")
 end
 
-function var_0_0.playUnlock(arg_17_0)
+function KaRongStoryItem:playUnlock()
 	AudioMgr.instance:trigger(AudioEnum3_0.ActKaRong.play_ui_lushang_karong_unlock)
-	arg_17_0._anim:Play("unlock")
-	gohelper.setActive(arg_17_0._gostagefinish, not arg_17_0.hasElement)
-	gohelper.setActive(arg_17_0._gostagefinish2, arg_17_0.hasElement)
+	self._anim:Play("unlock")
+	gohelper.setActive(self._gostagefinish, not self.hasElement)
+	gohelper.setActive(self._gostagefinish2, self.hasElement)
 end
 
-function var_0_0.playStarAnim(arg_18_0)
-	arg_18_0:refreshStatus()
-	arg_18_0._animStar:Play()
+function KaRongStoryItem:playStarAnim()
+	self:refreshStatus()
+	self._animStar:Play()
 end
 
-function var_0_0.setFocusFlag(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._goCurrent, arg_19_1)
+function KaRongStoryItem:setFocusFlag(isFocus)
+	gohelper.setActive(self._goCurrent, isFocus)
 end
 
-function var_0_0.getFocusFlagTran(arg_20_0)
-	return arg_20_0._goCurrent.transform
+function KaRongStoryItem:getFocusFlagTran()
+	return self._goCurrent.transform
 end
 
-function var_0_0.onDestroy(arg_21_0)
-	arg_21_0:destroyWorkFlow()
-	arg_21_0:_lockScreen(false)
+function KaRongStoryItem:onDestroy()
+	self:destroyWorkFlow()
+	self:_lockScreen(false)
 end
 
-return var_0_0
+return KaRongStoryItem

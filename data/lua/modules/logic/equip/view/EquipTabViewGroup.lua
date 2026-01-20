@@ -1,21 +1,23 @@
-﻿module("modules.logic.equip.view.EquipTabViewGroup", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipTabViewGroup.lua
 
-local var_0_0 = class("EquipTabViewGroup", TabViewGroup)
+module("modules.logic.equip.view.EquipTabViewGroup", package.seeall)
 
-function var_0_0.onUpdateParam(arg_1_0)
-	arg_1_0:onOpen()
+local EquipTabViewGroup = class("EquipTabViewGroup", TabViewGroup)
+
+function EquipTabViewGroup:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.playCloseAnimation(arg_2_0)
-	if arg_2_0:_hasLoaded(arg_2_0._curTabId) then
-		local var_2_0 = arg_2_0._tabViews[arg_2_0._curTabId]
+function EquipTabViewGroup:playCloseAnimation()
+	if self:_hasLoaded(self._curTabId) then
+		local tabview = self._tabViews[self._curTabId]
 
-		if isTypeOf(var_2_0, MultiView) then
-			var_2_0:callChildrenFunc("playCloseAnimation")
+		if isTypeOf(tabview, MultiView) then
+			tabview:callChildrenFunc("playCloseAnimation")
 		else
-			var_2_0:playCloseAnimation()
+			tabview:playCloseAnimation()
 		end
 	end
 end
 
-return var_0_0
+return EquipTabViewGroup

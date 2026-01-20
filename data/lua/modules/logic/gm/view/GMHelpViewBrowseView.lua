@@ -1,111 +1,114 @@
-﻿module("modules.logic.gm.view.GMHelpViewBrowseView", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMHelpViewBrowseView.lua
 
-local var_0_0 = class("GMHelpViewBrowseView", BaseView)
-local var_0_1 = {
+module("modules.logic.gm.view.GMHelpViewBrowseView", package.seeall)
+
+local GMHelpViewBrowseView = class("GMHelpViewBrowseView", BaseView)
+local State = {
 	hide = 3,
 	tweening = 2,
 	show = 1
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._rect = gohelper.findChild(arg_1_0.viewGO, "view").transform
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnClose")
-	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnShow")
-	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/btnHide")
-	arg_1_0._inputSearch = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "view/title/InputField")
-	arg_1_0._tabBtnList = arg_1_0:getUserDataTb_()
+function GMHelpViewBrowseView:onInitView()
+	self._rect = gohelper.findChild(self.viewGO, "view").transform
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnClose")
+	self._btnShow = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnShow")
+	self._btnHide = gohelper.findChildButtonWithAudio(self.viewGO, "view/btnHide")
+	self._inputSearch = gohelper.findChildTextMeshInputField(self.viewGO, "view/title/InputField")
+	self._tabBtnList = self:getUserDataTb_()
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "view/tab").transform
-	local var_1_1 = var_1_0.childCount
+	local tabParentGO = gohelper.findChild(self.viewGO, "view/tab")
+	local tabParentTr = tabParentGO.transform
+	local tabCount = tabParentTr.childCount
 
-	for iter_1_0 = 1, var_1_1 do
-		local var_1_2 = var_1_0:GetChild(iter_1_0 - 1)
-		local var_1_3 = gohelper.findButtonWithAudio(var_1_2.gameObject)
+	for i = 1, tabCount do
+		local tabTr = tabParentTr:GetChild(i - 1)
+		local tabBtn = gohelper.findButtonWithAudio(tabTr.gameObject)
 
-		table.insert(arg_1_0._tabBtnList, var_1_3)
+		table.insert(self._tabBtnList, tabBtn)
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnShow:AddClickListener(arg_2_0._onClickShow, arg_2_0)
-	arg_2_0._btnHide:AddClickListener(arg_2_0._onClickHide, arg_2_0)
-	arg_2_0._inputSearch:AddOnValueChanged(arg_2_0._onSearchValueChanged, arg_2_0)
+function GMHelpViewBrowseView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnShow:AddClickListener(self._onClickShow, self)
+	self._btnHide:AddClickListener(self._onClickHide, self)
+	self._inputSearch:AddOnValueChanged(self._onSearchValueChanged, self)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._tabBtnList) do
-		iter_2_1:AddClickListener(arg_2_0._onClickTab, arg_2_0, iter_2_0)
+	for i, tabBtn in ipairs(self._tabBtnList) do
+		tabBtn:AddClickListener(self._onClickTab, self, i)
 	end
 end
 
-function var_0_0._onClickShow(arg_3_0)
-	if arg_3_0._state == var_0_1.hide then
-		arg_3_0._state = var_0_1.tweening
-		arg_3_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_3_0._rect, 0, 0.2, arg_3_0._onShow, arg_3_0)
+function GMHelpViewBrowseView:_onClickShow()
+	if self._state == State.hide then
+		self._state = State.tweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, 0, 0.2, self._onShow, self)
 	end
 end
 
-function var_0_0._onShow(arg_4_0)
-	arg_4_0._tweenId = nil
-	arg_4_0._state = var_0_1.show
+function GMHelpViewBrowseView:_onShow()
+	self._tweenId = nil
+	self._state = State.show
 
-	arg_4_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._onClickHide(arg_5_0)
-	if arg_5_0._state == var_0_1.show then
-		arg_5_0._state = var_0_1.tweening
-		arg_5_0._tweenId = ZProj.TweenHelper.DOAnchorPosX(arg_5_0._rect, -800, 0.2, arg_5_0._onHide, arg_5_0)
+function GMHelpViewBrowseView:_onClickHide()
+	if self._state == State.show then
+		self._state = State.tweening
+		self._tweenId = ZProj.TweenHelper.DOAnchorPosX(self._rect, -800, 0.2, self._onHide, self)
 	end
 end
 
-function var_0_0._onHide(arg_6_0)
-	arg_6_0._tweenId = nil
-	arg_6_0._state = var_0_1.hide
+function GMHelpViewBrowseView:_onHide()
+	self._tweenId = nil
+	self._state = State.hide
 
-	arg_6_0:_updateBtns()
+	self:_updateBtns()
 end
 
-function var_0_0._updateBtns(arg_7_0)
-	gohelper.setActive(arg_7_0._btnShow.gameObject, arg_7_0._state == var_0_1.hide)
-	gohelper.setActive(arg_7_0._btnHide.gameObject, arg_7_0._state == var_0_1.show)
+function GMHelpViewBrowseView:_updateBtns()
+	gohelper.setActive(self._btnShow.gameObject, self._state == State.hide)
+	gohelper.setActive(self._btnHide.gameObject, self._state == State.show)
 end
 
-function var_0_0._onSearchValueChanged(arg_8_0, arg_8_1)
-	GMHelpViewBrowseModel.instance:setSearch(arg_8_1)
+function GMHelpViewBrowseView:_onSearchValueChanged(value)
+	GMHelpViewBrowseModel.instance:setSearch(value)
 end
 
-function var_0_0._onClickTab(arg_9_0, arg_9_1)
-	GMHelpViewBrowseModel.instance:setListByTabMode(arg_9_1)
+function GMHelpViewBrowseView:_onClickTab(tabMode)
+	GMHelpViewBrowseModel.instance:setListByTabMode(tabMode)
 end
 
-function var_0_0.removeEvents(arg_10_0)
-	arg_10_0._btnClose:RemoveClickListener()
-	arg_10_0._btnShow:RemoveClickListener()
-	arg_10_0._btnHide:RemoveClickListener()
-	arg_10_0._inputSearch:RemoveOnValueChanged()
+function GMHelpViewBrowseView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnShow:RemoveClickListener()
+	self._btnHide:RemoveClickListener()
+	self._inputSearch:RemoveOnValueChanged()
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._tabBtnList) do
-		iter_10_1:RemoveClickListener()
+	for _, tabBtn in ipairs(self._tabBtnList) do
+		tabBtn:RemoveClickListener()
 	end
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function GMHelpViewBrowseView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._state = var_0_1.show
+function GMHelpViewBrowseView:onOpen()
+	self._state = State.show
 
-	arg_12_0:_updateBtns()
-	arg_12_0:_onClickTab(GMHelpViewBrowseModel.tabModeEnum.helpView)
+	self:_updateBtns()
+	self:_onClickTab(GMHelpViewBrowseModel.tabModeEnum.helpView)
 end
 
-function var_0_0.onClose(arg_13_0)
-	if arg_13_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_13_0._tweenId)
+function GMHelpViewBrowseView:onClose()
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_13_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-return var_0_0
+return GMHelpViewBrowseView

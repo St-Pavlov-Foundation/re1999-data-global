@@ -1,261 +1,262 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupEditItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotHeroGroupEditItem.lua
 
-local var_0_0 = class("V1a6_CachotHeroGroupEditItem", ListScrollCell)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotHeroGroupEditItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
-	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
+local V1a6_CachotHeroGroupEditItem = class("V1a6_CachotHeroGroupEditItem", ListScrollCell)
 
-	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
+function V1a6_CachotHeroGroupEditItem:init(go)
+	self._heroGOParent = gohelper.findChild(go, "hero")
+	self._heroItem = IconMgr.instance:getCommonHeroItem(self._heroGOParent)
 
-	arg_1_0._hptextwhite = gohelper.findChildText(arg_1_1, "hpbg/hptextwhite")
-	arg_1_0._hptextred = gohelper.findChildText(arg_1_1, "hpbg/hptextred")
-	arg_1_0._hpimage = gohelper.findChildImage(arg_1_1, "hpbg/hp")
-	arg_1_0._goselect = gohelper.findChild(arg_1_1, "#go_select")
-	arg_1_0._gohp = gohelper.findChild(arg_1_1, "#go_hp")
-	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_1, "#go_hp/#slider_hp")
-	arg_1_0._godead = gohelper.findChild(arg_1_1, "#go_dead")
+	self._heroItem:addClickListener(self._onItemClick, self)
 
-	gohelper.setActive(arg_1_0._goselect, false)
-	gohelper.setActive(arg_1_0._gohp, false)
-	gohelper.setActive(arg_1_0._godead, false)
-	arg_1_0:_initObj(arg_1_1)
+	self._hptextwhite = gohelper.findChildText(go, "hpbg/hptextwhite")
+	self._hptextred = gohelper.findChildText(go, "hpbg/hptextred")
+	self._hpimage = gohelper.findChildImage(go, "hpbg/hp")
+	self._goselect = gohelper.findChild(go, "#go_select")
+	self._gohp = gohelper.findChild(go, "#go_hp")
+	self._sliderhp = gohelper.findChildSlider(go, "#go_hp/#slider_hp")
+	self._godead = gohelper.findChild(go, "#go_dead")
+
+	gohelper.setActive(self._goselect, false)
+	gohelper.setActive(self._gohp, false)
+	gohelper.setActive(self._godead, false)
+	self:_initObj(go)
 end
 
-function var_0_0._initObj(arg_2_0, arg_2_1)
-	arg_2_0._animator = arg_2_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
-	arg_2_0._isSelect = false
-	arg_2_0._enableDeselect = true
+function V1a6_CachotHeroGroupEditItem:_initObj(go)
+	self._animator = self._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+	self._isSelect = false
+	self._enableDeselect = true
 
-	transformhelper.setLocalScale(arg_2_1.transform, 0.8, 0.8, 1)
+	transformhelper.setLocalScale(go.transform, 0.8, 0.8, 1)
 
-	arg_2_0._heroGroupModel = V1a6_CachotHeroGroupModel.instance
-	arg_2_0._heroSingleGroupModel = V1a6_CachotHeroSingleGroupModel.instance
+	self._heroGroupModel = V1a6_CachotHeroGroupModel.instance
+	self._heroSingleGroupModel = V1a6_CachotHeroSingleGroupModel.instance
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_3_0._onSkinChanged, arg_3_0)
-	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, arg_3_0.updateTrialRepeat, arg_3_0)
+function V1a6_CachotHeroGroupEditItem:addEventListeners()
+	self:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, self._onSkinChanged, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, self.updateTrialRepeat, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function V1a6_CachotHeroGroupEditItem:removeEventListeners()
 	return
 end
 
-function var_0_0._onSkinChanged(arg_5_0)
-	arg_5_0._heroItem:updateHero()
+function V1a6_CachotHeroGroupEditItem:_onSkinChanged()
+	self._heroItem:updateHero()
 end
 
-function var_0_0.setAdventureBuff(arg_6_0, arg_6_1)
-	arg_6_0._heroItem:setAdventureBuff(arg_6_1)
+function V1a6_CachotHeroGroupEditItem:setAdventureBuff(buffId)
+	self._heroItem:setAdventureBuff(buffId)
 end
 
-function var_0_0.updateLimitStatus(arg_7_0)
+function V1a6_CachotHeroGroupEditItem:updateLimitStatus()
 	if HeroGroupQuickEditListModel.instance.adventure then
-		gohelper.setActive(arg_7_0._gohp, false)
+		gohelper.setActive(self._gohp, false)
 
-		local var_7_0 = WeekWalkModel.instance:getCurMapHeroCd(arg_7_0._mo.config.id)
+		local cd = WeekWalkModel.instance:getCurMapHeroCd(self._mo.config.id)
 
-		arg_7_0._heroItem:setInjury(var_7_0 > 0)
+		self._heroItem:setInjury(cd > 0)
 	else
-		gohelper.setActive(arg_7_0._gohp, false)
+		gohelper.setActive(self._gohp, false)
 
-		if arg_7_0._heroGroupModel:isRestrict(arg_7_0._mo.uid) then
-			arg_7_0._heroItem:setRestrict(true)
+		if self._heroGroupModel:isRestrict(self._mo.uid) then
+			self._heroItem:setRestrict(true)
 		else
-			arg_7_0._heroItem:setRestrict(false)
+			self._heroItem:setRestrict(false)
 		end
 	end
 end
 
-function var_0_0._updateBySeatLevel(arg_8_0)
-	local var_8_0 = arg_8_0._mo.level
-	local var_8_1 = var_8_0
-	local var_8_2 = V1a6_CachotHeroGroupEditListModel.instance:getSeatLevel()
+function V1a6_CachotHeroGroupEditItem:_updateBySeatLevel()
+	local originalLevel = self._mo.level
+	local level = originalLevel
+	local seatLevel = V1a6_CachotHeroGroupEditListModel.instance:getSeatLevel()
 
-	if var_8_2 then
-		var_8_1 = V1a6_CachotTeamModel.instance:getHeroMaxLevel(arg_8_0._mo, var_8_2)
+	if seatLevel then
+		level = V1a6_CachotTeamModel.instance:getHeroMaxLevel(self._mo, seatLevel)
 	end
 
-	local var_8_3, var_8_4 = HeroConfig.instance:getShowLevel(var_8_1)
-	local var_8_5 = var_8_0 ~= var_8_1
+	local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+	local convertLevel = originalLevel ~= level
 
-	arg_8_0._heroItem._lvTxt.text = tostring(var_8_3)
+	self._heroItem._lvTxt.text = tostring(showLevel)
 
-	local var_8_6
-	local var_8_7
-	local var_8_8 = "#FFFFFF"
-	local var_8_9
+	local txtColor, iconColor
+	local nameColor = "#FFFFFF"
 
-	if var_8_5 then
-		var_8_6 = "#bfdaff"
-		var_8_9 = "#81abe5"
+	if convertLevel then
+		txtColor = "#bfdaff"
+		iconColor = "#81abe5"
 	else
-		var_8_6 = "#E9E9E9"
-		var_8_9 = "#F6F3EC"
+		txtColor = "#E9E9E9"
+		iconColor = "#F6F3EC"
 	end
 
-	if arg_8_0._isDead then
-		var_8_8 = "#6F6F6F"
-		var_8_6 = "#6F6F6F"
-		var_8_9 = "#595959"
+	if self._isDead then
+		nameColor = "#6F6F6F"
+		txtColor = "#6F6F6F"
+		iconColor = "#595959"
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._heroItem._lvTxt, var_8_6)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._heroItem._lvTxtEn, var_8_6)
-	arg_8_0._heroItem:_fillStarContentColor(arg_8_0._mo.config.rare, var_8_4, var_8_9)
-	SLFramework.UGUI.GuiHelper.SetColor(arg_8_0._heroItem._nameCnTxt, var_8_8)
-	gohelper.setActive(arg_8_0._heroItem._maskgray, arg_8_0._isDead)
+	SLFramework.UGUI.GuiHelper.SetColor(self._heroItem._lvTxt, txtColor)
+	SLFramework.UGUI.GuiHelper.SetColor(self._heroItem._lvTxtEn, txtColor)
+	self._heroItem:_fillStarContentColor(self._mo.config.rare, rank, iconColor)
+	SLFramework.UGUI.GuiHelper.SetColor(self._heroItem._nameCnTxt, nameColor)
+	gohelper.setActive(self._heroItem._maskgray, self._isDead)
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._mo = arg_9_1
+function V1a6_CachotHeroGroupEditItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_9_0._heroItem:onUpdateMO(arg_9_1)
+	self._heroItem:onUpdateMO(mo)
 
-	if not arg_9_1:isTrial() then
-		local var_9_0 = HeroGroupBalanceHelper.getHeroBalanceLv(arg_9_1.heroId)
+	if not mo:isTrial() then
+		local lv = HeroGroupBalanceHelper.getHeroBalanceLv(mo.heroId)
 
-		if var_9_0 > arg_9_1.level then
-			arg_9_0._heroItem:setBalanceLv(var_9_0)
+		if lv > mo.level then
+			self._heroItem:setBalanceLv(lv)
 		end
 	end
 
-	arg_9_0:updateLimitStatus()
-	arg_9_0:updateTrialTag()
-	arg_9_0:updateTrialRepeat()
+	self:updateLimitStatus()
+	self:updateTrialTag()
+	self:updateTrialRepeat()
 
-	local var_9_1 = V1a6_CachotHeroGroupEditListModel.instance:isInTeamHero(arg_9_0._mo.uid)
+	local inteam = V1a6_CachotHeroGroupEditListModel.instance:isInTeamHero(self._mo.uid)
 
-	arg_9_0._inTeam = var_9_1
+	self._inTeam = inteam
 
-	arg_9_0._heroItem:setNewShow(false)
-	arg_9_0._heroItem:setInteam(var_9_1)
-	arg_9_0:_updateCachot()
-	arg_9_0:_updateBySeatLevel()
+	self._heroItem:setNewShow(false)
+	self._heroItem:setInteam(inteam)
+	self:_updateCachot()
+	self:_updateBySeatLevel()
 end
 
-function var_0_0._updateCachot(arg_10_0)
+function V1a6_CachotHeroGroupEditItem:_updateCachot()
 	if V1a6_CachotHeroGroupEditListModel.instance:getHeroGroupEditType() == V1a6_CachotEnum.HeroGroupEditType.Init then
 		return
 	end
 
-	local var_10_0 = V1a6_CachotModel.instance:getTeamInfo():getHeroHp(arg_10_0._mo.heroId)
+	local teamInfo = V1a6_CachotModel.instance:getTeamInfo()
+	local hpInfo = teamInfo:getHeroHp(self._mo.heroId)
 
-	if not var_10_0 then
+	if not hpInfo then
 		return
 	end
 
-	local var_10_1 = var_10_0 and var_10_0.life or 0
+	local hpValue = hpInfo and hpInfo.life or 0
 
-	gohelper.setActive(arg_10_0._gohp, true)
-	arg_10_0._sliderhp:SetValue(var_10_1 / 1000)
+	gohelper.setActive(self._gohp, true)
+	self._sliderhp:SetValue(hpValue / 1000)
 
-	local var_10_2 = var_10_1 <= 0
+	local isDead = hpValue <= 0
 
-	gohelper.setActive(arg_10_0._godead, var_10_2)
-	arg_10_0._heroItem:setDamage(var_10_2)
+	gohelper.setActive(self._godead, isDead)
+	self._heroItem:setDamage(isDead)
 
-	arg_10_0._heroItem._isInjury = false
-	arg_10_0._isDead = var_10_2
+	self._heroItem._isInjury = false
+	self._isDead = isDead
 end
 
-function var_0_0.updateTrialTag(arg_11_0)
-	local var_11_0
+function V1a6_CachotHeroGroupEditItem:updateTrialTag()
+	local txt
 
-	if arg_11_0._mo:isTrial() then
-		var_11_0 = luaLang("herogroup_trial_tag0")
+	if self._mo:isTrial() then
+		txt = luaLang("herogroup_trial_tag0")
 	end
 
-	arg_11_0._heroItem:setTrialTxt(var_11_0)
+	self._heroItem:setTrialTxt(txt)
 end
 
-function var_0_0.updateTrialRepeat(arg_12_0)
-	local var_12_0 = arg_12_0._heroSingleGroupModel:getById(arg_12_0._view.viewContainer.viewParam.singleGroupMOId)
+function V1a6_CachotHeroGroupEditItem:updateTrialRepeat()
+	local singleGroupMO = self._heroSingleGroupModel:getById(self._view.viewContainer.viewParam.singleGroupMOId)
 
-	if var_12_0 and not var_12_0:isEmpty() and (var_12_0.trial and var_12_0:getTrialCO().heroId == arg_12_0._mo.heroId or not var_12_0.trial and (not var_12_0:getHeroCO() or var_12_0:getHeroCO().id == arg_12_0._mo.heroId)) then
-		if not var_12_0.trial and not var_12_0.aid and not var_12_0:getHeroCO() then
-			logError("编队界面角色不存在 uid：" .. tostring(var_12_0.id))
+	if singleGroupMO and not singleGroupMO:isEmpty() and (singleGroupMO.trial and singleGroupMO:getTrialCO().heroId == self._mo.heroId or not singleGroupMO.trial and (not singleGroupMO:getHeroCO() or singleGroupMO:getHeroCO().id == self._mo.heroId)) then
+		if not singleGroupMO.trial and not singleGroupMO.aid and not singleGroupMO:getHeroCO() then
+			logError("编队界面角色不存在 uid：" .. tostring(singleGroupMO.id))
 		end
 
-		arg_12_0._heroItem:setTrialRepeat(false)
+		self._heroItem:setTrialRepeat(false)
 
 		return
 	end
 
-	local var_12_1 = V1a6_CachotHeroGroupEditListModel.instance:isRepeatHero(arg_12_0._mo.heroId, arg_12_0._mo.uid)
+	local isRepeat = V1a6_CachotHeroGroupEditListModel.instance:isRepeatHero(self._mo.heroId, self._mo.uid)
 
-	arg_12_0._heroItem:setTrialRepeat(var_12_1)
+	self._heroItem:setTrialRepeat(isRepeat)
 end
 
-function var_0_0.onSelect(arg_13_0, arg_13_1)
-	arg_13_0._isSelect = arg_13_1
+function V1a6_CachotHeroGroupEditItem:onSelect(select)
+	self._isSelect = select
 
-	arg_13_0._heroItem:setSelect(arg_13_1)
+	self._heroItem:setSelect(select)
 
-	if arg_13_1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_13_0._mo)
+	if select then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, self._mo)
 	end
 end
 
-function var_0_0._onItemClick(arg_14_0)
+function V1a6_CachotHeroGroupEditItem:_onItemClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_14_0._heroItem:getIsRepeat() then
+	if self._heroItem:getIsRepeat() then
 		GameFacade.showToast(ToastEnum.TrialIsJoin)
 
 		return
 	end
 
-	local var_14_0 = arg_14_0._heroSingleGroupModel:getById(arg_14_0._view.viewContainer.viewParam.singleGroupMOId)
+	local singleGroupMO = self._heroSingleGroupModel:getById(self._view.viewContainer.viewParam.singleGroupMOId)
 
-	if arg_14_0._mo:isTrial() and not arg_14_0._heroSingleGroupModel:isInGroup(arg_14_0._mo.uid) and (var_14_0:isEmpty() or not var_14_0.trial) and V1a6_CachotHeroGroupEditListModel.instance:isTrialLimit() then
+	if self._mo:isTrial() and not self._heroSingleGroupModel:isInGroup(self._mo.uid) and (singleGroupMO:isEmpty() or not singleGroupMO.trial) and V1a6_CachotHeroGroupEditListModel.instance:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return
 	end
 
-	if arg_14_0._mo.isPosLock or not var_14_0:isEmpty() and var_14_0.trialPos then
+	if self._mo.isPosLock or not singleGroupMO:isEmpty() and singleGroupMO.trialPos then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if arg_14_0._heroGroupModel:isRestrict(arg_14_0._mo.uid) then
-		local var_14_1 = arg_14_0._heroGroupModel:getCurrentBattleConfig()
-		local var_14_2 = var_14_1 and var_14_1.restrictReason
+	if self._heroGroupModel:isRestrict(self._mo.uid) then
+		local battleCo = self._heroGroupModel:getCurrentBattleConfig()
+		local restrictReason = battleCo and battleCo.restrictReason
 
-		if not string.nilorempty(var_14_2) then
-			ToastController.instance:showToastWithString(var_14_2)
+		if not string.nilorempty(restrictReason) then
+			ToastController.instance:showToastWithString(restrictReason)
 		end
 
 		return
 	end
 
-	if V1a6_CachotHeroGroupEditListModel.instance:getHeroGroupEditType() == V1a6_CachotEnum.HeroGroupEditType.Event and arg_14_0._inTeam then
+	if V1a6_CachotHeroGroupEditListModel.instance:getHeroGroupEditType() == V1a6_CachotEnum.HeroGroupEditType.Event and self._inTeam then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast03)
 
 		return
 	end
 
-	if arg_14_0._isSelect and arg_14_0._enableDeselect and not arg_14_0._mo.isPosLock then
-		arg_14_0._view:selectCell(arg_14_0._index, false)
+	if self._isSelect and self._enableDeselect and not self._mo.isPosLock then
+		self._view:selectCell(self._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		arg_14_0._view:selectCell(arg_14_0._index, true)
+		self._view:selectCell(self._index, true)
 	end
 end
 
-function var_0_0.enableDeselect(arg_15_0, arg_15_1)
-	arg_15_0._enableDeselect = arg_15_1
+function V1a6_CachotHeroGroupEditItem:enableDeselect(enable)
+	self._enableDeselect = enable
 end
 
-function var_0_0.onDestroy(arg_16_0)
+function V1a6_CachotHeroGroupEditItem:onDestroy()
 	return
 end
 
-function var_0_0.getAnimator(arg_17_0)
-	return arg_17_0._animator
+function V1a6_CachotHeroGroupEditItem:getAnimator()
+	return self._animator
 end
 
-return var_0_0
+return V1a6_CachotHeroGroupEditItem

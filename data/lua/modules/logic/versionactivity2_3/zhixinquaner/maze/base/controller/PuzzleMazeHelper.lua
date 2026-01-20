@@ -1,43 +1,45 @@
-﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.controller.PuzzleMazeHelper", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/zhixinquaner/maze/base/controller/PuzzleMazeHelper.lua
 
-local var_0_0 = _M
-local var_0_1 = PuzzleEnum.dir.left
-local var_0_2 = PuzzleEnum.dir.right
-local var_0_3 = PuzzleEnum.dir.down
-local var_0_4 = PuzzleEnum.dir.up
+module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.controller.PuzzleMazeHelper", package.seeall)
 
-function var_0_0.formatPos(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	if arg_1_2 < arg_1_0 then
-		arg_1_0, arg_1_2 = arg_1_2, arg_1_0
+local PuzzleMazeHelper = _M
+local LEFT = PuzzleEnum.dir.left
+local RIGHT = PuzzleEnum.dir.right
+local DOWN = PuzzleEnum.dir.down
+local UP = PuzzleEnum.dir.up
+
+function PuzzleMazeHelper.formatPos(x1, y1, x2, y2)
+	if x2 < x1 then
+		x1, x2 = x2, x1
 	end
 
-	if arg_1_3 < arg_1_1 then
-		arg_1_1, arg_1_3 = arg_1_3, arg_1_1
+	if y2 < y1 then
+		y1, y2 = y2, y1
 	end
 
-	return arg_1_0, arg_1_1, arg_1_2, arg_1_3
+	return x1, y1, x2, y2
 end
 
-function var_0_0.getFromToDir(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	if arg_2_0 ~= arg_2_2 then
-		if arg_2_1 ~= arg_2_3 then
+function PuzzleMazeHelper.getFromToDir(fromX, fromY, toX, toY)
+	if fromX ~= toX then
+		if fromY ~= toY then
 			return nil
 		end
 
-		return arg_2_0 < arg_2_2 and var_0_2 or var_0_1
+		return fromX < toX and RIGHT or LEFT
 	else
-		return arg_2_1 < arg_2_3 and var_0_4 or var_0_3
+		return fromY < toY and UP or DOWN
 	end
 end
 
-function var_0_0.getPosKey(arg_3_0, arg_3_1)
-	return string.format("%s_%s", arg_3_0, arg_3_1)
+function PuzzleMazeHelper.getPosKey(x, y)
+	return string.format("%s_%s", x, y)
 end
 
-function var_0_0.getLineKey(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0, var_4_1, var_4_2, var_4_3 = var_0_0.formatPos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function PuzzleMazeHelper.getLineKey(x1, y1, x2, y2)
+	local x1_f, y1_f, x2_f, y2_f = PuzzleMazeHelper.formatPos(x1, y1, x2, y2)
 
-	return string.format("%s_%s_%s_%s", var_4_0, var_4_1, var_4_2, var_4_3)
+	return string.format("%s_%s_%s_%s", x1_f, y1_f, x2_f, y2_f)
 end
 
-return var_0_0
+return PuzzleMazeHelper

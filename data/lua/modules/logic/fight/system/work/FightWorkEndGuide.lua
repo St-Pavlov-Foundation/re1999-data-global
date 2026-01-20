@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkEndGuide", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEndGuide.lua
 
-local var_0_0 = class("FightWorkEndGuide", BaseWork)
+module("modules.logic.fight.system.work.FightWorkEndGuide", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	FightController.instance:GuideFlowPauseAndContinue("OnGuideFightEndPause", FightEvent.OnGuideFightEndPause, FightEvent.OnGuideFightEndContinue, arg_1_0._done, arg_1_0)
+local FightWorkEndGuide = class("FightWorkEndGuide", BaseWork)
+
+function FightWorkEndGuide:onStart()
+	FightController.instance:GuideFlowPauseAndContinue("OnGuideFightEndPause", FightEvent.OnGuideFightEndPause, FightEvent.OnGuideFightEndContinue, self._done, self)
 end
 
-function var_0_0._done(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkEndGuide:_done()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEndGuide

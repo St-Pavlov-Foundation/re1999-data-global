@@ -1,36 +1,38 @@
-﻿module("modules.logic.fight.system.work.FightWorkSpCardAddContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSpCardAddContainer.lua
 
-local var_0_0 = class("FightWorkSpCardAddContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkSpCardAddContainer", package.seeall)
+
+local FightWorkSpCardAddContainer = class("FightWorkSpCardAddContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.SPCARDADD] = true,
 	[FightEnum.EffectType.CHANGETOTEMPCARD] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:getAdjacentSameEffectList(var_0_1, true)
-	local var_1_1 = arg_1_0:com_registWorkDoneFlowParallel()
-	local var_1_2 = var_1_1:registWork(FightWorkFlowSequence)
-	local var_1_3 = 0
+function FightWorkSpCardAddContainer:onStart()
+	local list = self:getAdjacentSameEffectList(parallelEffectType, true)
+	local flow = self:com_registWorkDoneFlowParallel()
+	local sequence = flow:registWork(FightWorkFlowSequence)
+	local count = 0
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_4 = iter_1_1.actEffectData.effectType
-		local var_1_5 = FightStepBuilder.ActEffectWorkCls[var_1_4]
+	for i, data in ipairs(list) do
+		local effectType = data.actEffectData.effectType
+		local class = FightStepBuilder.ActEffectWorkCls[effectType]
 
-		if var_1_4 == FightEnum.EffectType.SPCARDADD then
-			var_1_3 = var_1_3 + 1
-			var_1_2 = var_1_1:registWork(FightWorkFlowSequence)
+		if effectType == FightEnum.EffectType.SPCARDADD then
+			count = count + 1
+			sequence = flow:registWork(FightWorkFlowSequence)
 
-			var_1_2:registWork(FightWorkDelayTimer, 0.1 * var_1_3)
+			sequence:registWork(FightWorkDelayTimer, 0.1 * count)
 		end
 
-		var_1_2:registWork(var_1_5, iter_1_1.fightStepData, iter_1_1.actEffectData)
+		sequence:registWork(class, data.fightStepData, data.actEffectData)
 	end
 
-	var_1_1:start()
+	flow:start()
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkSpCardAddContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkSpCardAddContainer

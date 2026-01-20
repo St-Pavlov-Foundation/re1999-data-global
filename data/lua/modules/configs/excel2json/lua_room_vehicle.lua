@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_room_vehicle", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_room_vehicle.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_room_vehicle", package.seeall)
+
+local lua_room_vehicle = {}
+local fields = {
 	audioStop = 14,
 	radius = 5,
 	audioTurn = 9,
@@ -28,15 +30,15 @@ local var_0_1 = {
 	thirdCameraId = 21,
 	audioWalk = 13
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_room_vehicle.onLoad(json)
+	lua_room_vehicle.configList, lua_room_vehicle.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_room_vehicle

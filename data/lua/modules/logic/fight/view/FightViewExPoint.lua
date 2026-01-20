@@ -1,105 +1,111 @@
-﻿module("modules.logic.fight.view.FightViewExPoint", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewExPoint.lua
 
-local var_0_0 = class("FightViewExPoint", BaseView)
+module("modules.logic.fight.view.FightViewExPoint", package.seeall)
 
-function var_0_0.addEvents(arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_1_0._onStartSequenceFinish, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_1_0._onRoundSequenceFinish, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnMoveHandCard, arg_1_0._onMoveHandCard, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, arg_1_0._onCombineOneCard, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, arg_1_0._onPlayHandCard, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnRevertCard, arg_1_0._onRevertCard, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.CancelOperation, arg_1_0._onCancelOperation, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_1_0._onResetCard, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.RespBeginRound, arg_1_0._respBeginRound, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
-	arg_1_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_1_0.onStageChange, arg_1_0)
+local FightViewExPoint = class("FightViewExPoint", BaseView)
+
+function FightViewExPoint:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnMoveHandCard, self._onMoveHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, self._onCombineOneCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRevertCard, self._onRevertCard, self)
+	self:addEventCb(FightController.instance, FightEvent.CancelOperation, self._onCancelOperation, self)
+	self:addEventCb(FightController.instance, FightEvent.OnResetCard, self._onResetCard, self)
+	self:addEventCb(FightController.instance, FightEvent.RespBeginRound, self._respBeginRound, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
 end
 
-function var_0_0.removeEvents(arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_2_0._onStartSequenceFinish, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnMoveHandCard, arg_2_0._onMoveHandCard, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, arg_2_0._onCombineOneCard, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, arg_2_0._onPlayHandCard, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnRevertCard, arg_2_0._onRevertCard, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.CancelOperation, arg_2_0._onCancelOperation, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.RespBeginRound, arg_2_0._respBeginRound, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, arg_2_0._onSkillPlayStart, arg_2_0)
-	arg_2_0:removeEventCb(FightController.instance, FightEvent.StageChanged, arg_2_0.onStageChange, arg_2_0)
+function FightViewExPoint:removeEvents()
+	self:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnMoveHandCard, self._onMoveHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, self._onCombineOneCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRevertCard, self._onRevertCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.CancelOperation, self._onCancelOperation, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnResetCard, self._onResetCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.RespBeginRound, self._respBeginRound, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
+	self:removeEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChange, self)
 end
 
-function var_0_0._onStartSequenceFinish(arg_3_0)
+function FightViewExPoint:_onStartSequenceFinish()
 	return
 end
 
-function var_0_0._onRoundSequenceFinish(arg_4_0)
+function FightViewExPoint:_onRoundSequenceFinish()
 	FightDataHelper.operationDataMgr:applyNextRoundActPoint()
 end
 
-function var_0_0._onMoveHandCard(arg_5_0, arg_5_1, arg_5_2)
-	if not arg_5_1.moveCanAddExpoint then
+function FightViewExPoint:_onMoveHandCard(operation, cardInfoMO)
+	if not operation.moveCanAddExpoint then
 		return
 	end
 
-	local var_5_0 = FightDataHelper.operationDataMgr.extraMoveAct
+	local extraMoveAct = FightDataHelper.operationDataMgr.extraMoveAct
 
-	if var_5_0 > 0 then
-		if var_5_0 < #FightDataHelper.operationDataMgr:getMoveCardOpCostActList() then
-			arg_5_0:_onMoveOrCombine(arg_5_2.uid, true)
+	if extraMoveAct > 0 then
+		local ops = FightDataHelper.operationDataMgr:getMoveCardOpCostActList()
+
+		if extraMoveAct < #ops then
+			self:_onMoveOrCombine(cardInfoMO.uid, true)
 		end
 	else
-		arg_5_0:_onMoveOrCombine(arg_5_2.uid, true)
+		self:_onMoveOrCombine(cardInfoMO.uid, true)
 	end
 end
 
-function var_0_0._onCombineOneCard(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_1.combineCanAddExpoint then
+function FightViewExPoint:_onCombineOneCard(cardInfoMO, isUniversalCombine)
+	if not cardInfoMO.combineCanAddExpoint then
 		return
 	end
 
-	if not arg_6_2 then
-		arg_6_0:_onMoveOrCombine(arg_6_1.uid, false)
+	if not isUniversalCombine then
+		self:_onMoveOrCombine(cardInfoMO.uid, false)
 	end
 end
 
-function var_0_0._onMoveOrCombine(arg_7_0, arg_7_1, arg_7_2)
+function FightViewExPoint:_onMoveOrCombine(entityId, isMove)
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
 
-	local var_7_0 = FightDataHelper.entityMgr:getById(arg_7_1)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
-	if not var_7_0 then
+	if not entityMO then
 		return
 	end
 
-	if var_7_0:getMoveCardAddExPoint() < 1 then
+	local moveCardAddExPoint = entityMO:getMoveCardAddExPoint()
+
+	if moveCardAddExPoint < 1 then
 		return
 	end
 
-	local var_7_1 = FightBuffHelper.getTransferExPointUid(var_7_0)
+	local addExPointUid = FightBuffHelper.getTransferExPointUid(entityMO)
 
-	if var_7_1 then
-		local var_7_2 = FightDataHelper.entityMgr:getById(var_7_1)
-		local var_7_3 = var_7_2 and var_7_2.exPointType == var_7_0.exPointType
+	if addExPointUid then
+		local transferEntityMo = FightDataHelper.entityMgr:getById(addExPointUid)
+		local sameType = transferEntityMo and transferEntityMo.exPointType == entityMO.exPointType
 
-		if var_7_2 and var_7_3 then
-			var_7_2:onMoveCardExPoint(arg_7_2)
-			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, var_7_1)
+		if transferEntityMo and sameType then
+			transferEntityMo:onMoveCardExPoint(isMove)
+			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, addExPointUid)
 		else
-			var_7_0:onMoveCardExPoint(arg_7_2)
-			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, arg_7_1)
+			entityMO:onMoveCardExPoint(isMove)
+			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, entityId)
 		end
 	else
-		var_7_0:onMoveCardExPoint(arg_7_2)
-		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, arg_7_1)
+		entityMO:onMoveCardExPoint(isMove)
+		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, entityId)
 	end
 end
 
-function var_0_0._onPlayHandCard(arg_8_0, arg_8_1)
-	if not arg_8_1.playCanAddExpoint then
+function FightViewExPoint:_onPlayHandCard(cardInfoMO)
+	if not cardInfoMO.playCanAddExpoint then
 		return
 	end
 
@@ -107,81 +113,83 @@ function var_0_0._onPlayHandCard(arg_8_0, arg_8_1)
 		return
 	end
 
-	local var_8_0 = FightDataHelper.entityMgr:getById(arg_8_1.uid)
+	local entityMO = FightDataHelper.entityMgr:getById(cardInfoMO.uid)
 
-	if not var_8_0 then
+	if not entityMO then
 		return
 	end
 
-	if var_8_0:getPlayCardAddExPoint() < 1 then
+	local playCardAddExPoint = entityMO:getPlayCardAddExPoint()
+
+	if playCardAddExPoint < 1 then
 		return
 	end
 
-	local var_8_1 = FightBuffHelper.getTransferExPointUid(var_8_0)
+	local addExPointUid = FightBuffHelper.getTransferExPointUid(entityMO)
 
-	if var_8_1 then
-		local var_8_2 = FightDataHelper.entityMgr:getById(var_8_1)
-		local var_8_3 = var_8_2 and var_8_2.exPointType == var_8_0.exPointType
+	if addExPointUid then
+		local transferEntityMo = FightDataHelper.entityMgr:getById(addExPointUid)
+		local sameType = transferEntityMo and transferEntityMo.exPointType == entityMO.exPointType
 
-		if var_8_2 and var_8_3 then
-			var_8_2:onPlayCardExPoint(arg_8_1.skillId)
-			FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, var_8_1)
+		if transferEntityMo and sameType then
+			transferEntityMo:onPlayCardExPoint(cardInfoMO.skillId)
+			FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, addExPointUid)
 		else
-			var_8_0:onPlayCardExPoint(arg_8_1.skillId)
-			FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, arg_8_1.uid)
+			entityMO:onPlayCardExPoint(cardInfoMO.skillId)
+			FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, cardInfoMO.uid)
 		end
 	else
-		var_8_0:onPlayCardExPoint(arg_8_1.skillId)
-		FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, arg_8_1.uid)
+		entityMO:onPlayCardExPoint(cardInfoMO.skillId)
+		FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, cardInfoMO.uid)
 	end
 end
 
-function var_0_0._onRevertCard(arg_9_0, arg_9_1)
+function FightViewExPoint:_onRevertCard(cardOp)
 	return
 end
 
-function var_0_0._onCancelOperation(arg_10_0)
-	arg_10_0.last_move_point = {}
+function FightViewExPoint:_onCancelOperation()
+	self.last_move_point = {}
 
-	local var_10_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = iter_10_1:getMO()
+	for _, entity in ipairs(entityList) do
+		local entity_mo = entity:getMO()
 
-		if var_10_1 then
-			arg_10_0.last_move_point[var_10_1.uid] = var_10_1.moveCardExPoint
+		if entity_mo then
+			self.last_move_point[entity_mo.uid] = entity_mo.moveCardExPoint
 		end
 	end
 end
 
-function var_0_0._onResetCard(arg_11_0)
-	local var_11_0 = FightDataHelper.entityMgr:getAllEntityData()
+function FightViewExPoint:_onResetCard()
+	local entityDataDic = FightDataHelper.entityMgr:getAllEntityData()
 
-	for iter_11_0, iter_11_1 in pairs(var_11_0) do
-		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, iter_11_1.id)
+	for k, entityMO in pairs(entityDataDic) do
+		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, entityMO.id)
 	end
 end
 
-function var_0_0._respBeginRound(arg_12_0)
-	local var_12_0 = FightDataHelper.entityMgr:getMyNormalList()
+function FightViewExPoint:_respBeginRound()
+	local entityList = FightDataHelper.entityMgr:getMyNormalList()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		iter_12_1:applyMoveCardExPoint()
+	for _, entityMO in ipairs(entityList) do
+		entityMO:applyMoveCardExPoint()
 	end
 
-	local var_12_1 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
+	entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
 
-	for iter_12_2, iter_12_3 in ipairs(var_12_1) do
-		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, iter_12_3.id)
+	for _, entity in ipairs(entityList) do
+		FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, entity.id)
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+function FightViewExPoint:_onSkillPlayStart(entity, skillId, fightStepData)
 	return
 end
 
-function var_0_0.onStageChange(arg_14_0, arg_14_1)
+function FightViewExPoint:onStageChange(stage)
 	return
 end
 
-return var_0_0
+return FightViewExPoint

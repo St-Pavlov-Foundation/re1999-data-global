@@ -1,46 +1,48 @@
-﻿module("modules.common.utils.StringExtend", package.seeall)
+﻿-- chunkname: @modules/common/utils/StringExtend.lua
 
-local var_0_0 = StringExtend
+module("modules.common.utils.StringExtend", package.seeall)
 
-function var_0_0.activateExtend()
+local StringExtend = StringExtend
+
+function StringExtend.activateExtend()
 	return
 end
 
 if isDebugBuild then
-	local var_0_1 = string.split
+	local srcSplit = string.split
 
-	function string.split(arg_2_0, arg_2_1)
+	function string.split(input, delimiter)
 		if GameUtil.needLogInFightSceneUseStringFunc() then
 			logError("战斗场景中不要用`string.split`, 用`FightStrUtil.getSplitCache`代替")
 		end
 
-		return var_0_1(arg_2_0, arg_2_1)
+		return srcSplit(input, delimiter)
 	end
 
-	local var_0_2 = string.splitToNumber
+	local srcSplitToNumber = string.splitToNumber
 
-	function string.splitToNumber(arg_3_0, arg_3_1)
+	function string.splitToNumber(input, delimiter)
 		if GameUtil.needLogInFightSceneUseStringFunc() then
 			logError("战斗场景中不要用`string.splitToNumber`, 用`FightStrUtil.getSplitToNumberCache`代替")
 		end
 
-		return var_0_2(arg_3_0, arg_3_1)
+		return srcSplitToNumber(input, delimiter)
 	end
 end
 
-function string.replaceSpace(arg_4_0)
+function string.replaceSpace(input)
 	if LangSettings.instance:isKr() or LangSettings.instance:isEn() then
-		return arg_4_0
+		return input
 	end
 
-	return string.gsub(arg_4_0, " ", " ")
+	return string.gsub(input, " ", " ")
 end
 
-function string.delBracketContent(arg_5_0)
-	arg_5_0 = string.gsub(arg_5_0, "%b()", "")
-	arg_5_0 = string.gsub(arg_5_0, "（.-）", "")
+function string.delBracketContent(input)
+	input = string.gsub(input, "%b()", "")
+	input = string.gsub(input, "（.-）", "")
 
-	return arg_5_0
+	return input
 end
 
-return var_0_0
+return StringExtend

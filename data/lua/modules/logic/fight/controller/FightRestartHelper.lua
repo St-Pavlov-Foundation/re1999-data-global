@@ -1,50 +1,55 @@
-﻿module("modules.logic.fight.controller.FightRestartHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightRestartHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.fight.controller.FightRestartHelper", package.seeall)
 
-function var_0_0.tryRestart()
-	local var_1_0 = FightModel.instance:getRecordMO()
+local FightRestartHelper = _M
 
-	if var_1_0 and var_1_0.fightResult == FightEnum.FightResult.Succ then
+function FightRestartHelper.tryRestart()
+	local fightRecordMO = FightModel.instance:getRecordMO()
+
+	if fightRecordMO and fightRecordMO.fightResult == FightEnum.FightResult.Succ then
 		return false
 	end
 
-	local var_1_1 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
-	local var_1_2 = var_1_1 and var_1_1.type
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+	local episodeType = episodeCo and episodeCo.type
 
-	if not var_1_2 then
+	if not episodeType then
 		return false
 	end
 
-	var_0_0._initHandle()
+	FightRestartHelper._initHandle()
 
-	local var_1_3 = var_0_0.handleDict[var_1_2]
+	local handle = FightRestartHelper.handleDict[episodeType]
 
-	return var_1_3 and var_1_3()
+	return handle and handle()
 end
 
-function var_0_0._initHandle()
-	if not var_0_0.handleDict then
-		var_0_0.handleDict = {
-			[DungeonEnum.EpisodeType.Cachot] = var_0_0.tryRestartCachot,
-			[DungeonEnum.EpisodeType.Rouge] = var_0_0.tryRestartRouge
+function FightRestartHelper._initHandle()
+	if not FightRestartHelper.handleDict then
+		FightRestartHelper.handleDict = {
+			[DungeonEnum.EpisodeType.Cachot] = FightRestartHelper.tryRestartCachot,
+			[DungeonEnum.EpisodeType.Rouge] = FightRestartHelper.tryRestartRouge
 		}
 	end
 end
 
-function var_0_0.tryRestartCachot()
-	if ActivityHelper.getActivityStatus(V1a6_CachotEnum.ActivityId) ~= ActivityEnum.ActivityStatus.Normal then
+function FightRestartHelper.tryRestartCachot()
+	local status = ActivityHelper.getActivityStatus(V1a6_CachotEnum.ActivityId)
+
+	if status ~= ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	local var_3_0 = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
+	local topEventMo = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
 
-	if var_3_0 then
-		local var_3_1 = V1a6_CachotModel.instance:getRogueInfo().difficulty
-		local var_3_2 = lua_rogue_difficulty.configDict[var_3_1].retries - var_3_0:getRetries() + 1
+	if topEventMo then
+		local difficulty = V1a6_CachotModel.instance:getRogueInfo().difficulty
+		local difficultyCo = lua_rogue_difficulty.configDict[difficulty]
+		local count = difficultyCo.retries - topEventMo:getRetries() + 1
 
-		if var_3_2 > 0 then
-			MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.V1a6CachotMsgBox05, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightRestartMgr.fastRestart, var_0_0.onExitCachot, nil, FightGameMgr.restartMgr, nil, nil, var_3_2)
+		if count > 0 then
+			MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.V1a6CachotMsgBox05, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightRestartMgr.fastRestart, FightRestartHelper.onExitCachot, nil, FightGameMgr.restartMgr, nil, nil, count)
 
 			return true
 		end
@@ -53,12 +58,12 @@ function var_0_0.tryRestartCachot()
 	return false
 end
 
-function var_0_0.onExitCachot()
+function FightRestartHelper.onExitCachot()
 	RogueRpc.instance:sendAbortRogueRequest(V1a6_CachotEnum.ActivityId)
 	FightGameMgr.playMgr:_PlayEnd()
 end
 
-function var_0_0.tryRestartRouge()
+function FightRestartHelper.tryRestartRouge()
 	if (SLFramework.FrameworkSettings.IsEditor or isDebugBuild) and RougeEditorController.instance:isAllowAbortFight() then
 		GMRpc.instance:sendGMRequest("rougeSetRetryNum 1 0")
 
@@ -75,26 +80,26 @@ function var_0_0.tryRestartRouge()
 		return false
 	end
 
-	local var_5_0 = RougeModel.instance:getFightResultInfo()
+	local fightResultMo = RougeModel.instance:getFightResultInfo()
 
-	if not var_5_0 then
+	if not fightResultMo then
 		return false
 	end
 
-	local var_5_1 = RougeMapConfig.instance:getFightRetryNum()
+	local maxNum = RougeMapConfig.instance:getFightRetryNum()
 
-	if var_5_1 < var_5_0.retryNum then
+	if maxNum < fightResultMo.retryNum then
 		return false
 	end
 
-	MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.RougeFightFailConfirm, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightRestartMgr.fastRestart, var_0_0.onExitFight, nil, FightGameMgr.restartMgr, nil, nil, var_5_1 - var_5_0.retryNum + 1)
+	MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.RougeFightFailConfirm, MsgBoxEnum.BoxType.Yes_No, luaLang("cachot_continue_fight"), "RE CHALLENGE", luaLang("cachot_abort_fight"), "QUIT", FightRestartMgr.fastRestart, FightRestartHelper.onExitFight, nil, FightGameMgr.restartMgr, nil, nil, maxNum - fightResultMo.retryNum + 1)
 
 	return true
 end
 
-function var_0_0.onExitFight()
+function FightRestartHelper.onExitFight()
 	RougeRpc.instance:sendRougeAbortRequest(RougeModel.instance:getSeason() or 1)
 	FightGameMgr.playMgr:_PlayEnd()
 end
 
-return var_0_0
+return FightRestartHelper

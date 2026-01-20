@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle10", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/specialIdle/EntitySpecialIdle10.lua
 
-local var_0_0 = class("EntitySpecialIdle10", UserDataDispose)
+module("modules.logic.fight.entity.specialIdle.EntitySpecialIdle10", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local EntitySpecialIdle10 = class("EntitySpecialIdle10", UserDataDispose)
 
-	arg_1_0._entity = arg_1_1
+function EntitySpecialIdle10:ctor(entity)
+	self:__onInit()
+
+	self._entity = entity
 end
 
-function var_0_0.releaseSelf(arg_2_0)
-	arg_2_0._entity = nil
+function EntitySpecialIdle10:releaseSelf()
+	self._entity = nil
 
-	arg_2_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return EntitySpecialIdle10

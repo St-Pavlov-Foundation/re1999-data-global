@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErInterludeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/molideer/view/game/MoLiDeErInterludeViewContainer.lua
 
-local var_0_0 = class("MoLiDeErInterludeViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.molideer.view.game.MoLiDeErInterludeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MoLiDeErInterludeViewContainer = class("MoLiDeErInterludeViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MoLiDeErInterludeView.New())
+function MoLiDeErInterludeViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MoLiDeErInterludeView.New())
+
+	return views
 end
 
-return var_0_0
+return MoLiDeErInterludeViewContainer

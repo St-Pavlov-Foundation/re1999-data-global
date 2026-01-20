@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_dice_dialogue", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_dice_dialogue.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_dice_dialogue", package.seeall)
+
+local lua_dice_dialogue = {}
+local fields = {
 	speaker = 3,
 	desc = 4,
 	line = 5,
@@ -9,17 +11,17 @@ local var_0_1 = {
 	id = 1,
 	step = 2
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"step"
 }
-local var_0_3 = {
+local mlStringKey = {
 	speaker = 1,
 	desc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_dice_dialogue.onLoad(json)
+	lua_dice_dialogue.configList, lua_dice_dialogue.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_dice_dialogue

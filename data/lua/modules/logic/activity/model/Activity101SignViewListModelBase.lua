@@ -1,46 +1,48 @@
-﻿module("modules.logic.activity.model.Activity101SignViewListModelBase", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/Activity101SignViewListModelBase.lua
 
-local var_0_0 = class("Activity101SignViewListModelBase", ListScrollModel)
+module("modules.logic.activity.model.Activity101SignViewListModelBase", package.seeall)
 
-function var_0_0.getViewportItemCount(arg_1_0)
+local Activity101SignViewListModelBase = class("Activity101SignViewListModelBase", ListScrollModel)
+
+function Activity101SignViewListModelBase:getViewportItemCount()
 	return 7.2
 end
 
-function var_0_0.setList(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:getList()
+function Activity101SignViewListModelBase:setList(dataList)
+	local oldDataList = self:getList()
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_1 = arg_2_1[iter_2_0]
+	for i, oldMo in ipairs(oldDataList) do
+		local newMo = dataList[i]
 
-		if var_2_1 then
-			var_2_1.__isPlayedOpenAnim = iter_2_1.__isPlayedOpenAnim
+		if newMo then
+			newMo.__isPlayedOpenAnim = oldMo.__isPlayedOpenAnim
 		end
 	end
 
-	var_0_0.super.setList(arg_2_0, arg_2_1)
+	Activity101SignViewListModelBase.super.setList(self, dataList)
 end
 
-function var_0_0.setDefaultPinStartIndex(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_2 = arg_3_2 or 1
+function Activity101SignViewListModelBase:setDefaultPinStartIndex(dataList, awardIndex)
+	awardIndex = awardIndex or 1
 
-	if not arg_3_1 or #arg_3_1 == 0 then
-		arg_3_0:setStartPinIndex(1)
+	if not dataList or #dataList == 0 then
+		self:setStartPinIndex(1)
 
 		return
 	end
 
-	local var_3_0 = #arg_3_1
-	local var_3_1 = math.max(1, math.ceil(var_3_0 - arg_3_0:getViewportItemCount()))
+	local maxItemCount = #dataList
+	local inActiveItemCount = math.max(1, math.ceil(maxItemCount - self:getViewportItemCount()))
 
-	arg_3_0:setStartPinIndex(var_3_1 < arg_3_2 and var_3_1 or 1)
+	self:setStartPinIndex(inActiveItemCount < awardIndex and inActiveItemCount or 1)
 end
 
-function var_0_0.setStartPinIndex(arg_4_0, arg_4_1)
-	arg_4_0._startPinIndex = arg_4_1
+function Activity101SignViewListModelBase:setStartPinIndex(index)
+	self._startPinIndex = index
 end
 
-function var_0_0.getStartPinIndex(arg_5_0)
-	return arg_5_0._startPinIndex or 1
+function Activity101SignViewListModelBase:getStartPinIndex()
+	return self._startPinIndex or 1
 end
 
-return var_0_0
+return Activity101SignViewListModelBase

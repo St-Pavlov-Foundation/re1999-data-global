@@ -1,40 +1,42 @@
-﻿module("modules.logic.activity.controller.chessmap.event.ActivityChessStateBattle", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/event/ActivityChessStateBattle.lua
 
-local var_0_0 = class("ActivityChessStateBattle", ActivityChessStateBase)
+module("modules.logic.activity.controller.chessmap.event.ActivityChessStateBattle", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local ActivityChessStateBattle = class("ActivityChessStateBattle", ActivityChessStateBase)
+
+function ActivityChessStateBattle:start()
 	logNormal("ActivityChessStateBattle start")
 
-	local var_1_0 = arg_1_0.originData.battleId
-	local var_1_1 = arg_1_0.originData.activityId
-	local var_1_2 = arg_1_0.originData.interactId
+	local battleId = self.originData.battleId
+	local actId = self.originData.activityId
+	local interactId = self.originData.interactId
 
 	if ViewMgr.instance:isOpenFinish(ViewName.ActivityChessGame) then
-		arg_1_0:startBattle()
+		self:startBattle()
 	else
-		ActivityChessGameController.instance:registerCallback(ActivityChessEvent.GameViewOpened, arg_1_0.onOpenViewFinish, arg_1_0)
+		ActivityChessGameController.instance:registerCallback(ActivityChessEvent.GameViewOpened, self.onOpenViewFinish, self)
 	end
 end
 
-function var_0_0.onOpenViewFinish(arg_2_0, arg_2_1)
-	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, arg_2_0.onOpenViewFinish, arg_2_0)
+function ActivityChessStateBattle:onOpenViewFinish(viewParam)
+	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, self.onOpenViewFinish, self)
 
-	if arg_2_1 and arg_2_1.fromRefuseBattle then
-		local var_2_0 = arg_2_0.originData.activityId
+	if viewParam and viewParam.fromRefuseBattle then
+		local actId = self.originData.activityId
 
-		Activity109Rpc.instance:sendAct109AbortRequest(var_2_0, arg_2_0.onReceiveAboveGame, arg_2_0)
+		Activity109Rpc.instance:sendAct109AbortRequest(actId, self.onReceiveAboveGame, self)
 	else
-		arg_2_0:startBattle()
+		self:startBattle()
 	end
 end
 
-function var_0_0.startBattle(arg_3_0)
-	Activity109ChessController.instance:enterActivityFight(arg_3_0.originData.battleId)
+function ActivityChessStateBattle:startBattle()
+	Activity109ChessController.instance:enterActivityFight(self.originData.battleId)
 	ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.EventFinishPlay)
 end
 
-function var_0_0.onReceiveAboveGame(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 ~= 0 then
+function ActivityChessStateBattle:onReceiveAboveGame(cmd, resultCode)
+	if resultCode ~= 0 then
 		return
 	end
 
@@ -42,8 +44,8 @@ function var_0_0.onReceiveAboveGame(arg_4_0, arg_4_1, arg_4_2)
 	ActivityChessGameController.instance:gameOver()
 end
 
-function var_0_0.dispose(arg_5_0)
-	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, arg_5_0.onOpenViewFinish, arg_5_0)
+function ActivityChessStateBattle:dispose()
+	ActivityChessGameController.instance:unregisterCallback(ActivityChessEvent.GameViewOpened, self.onOpenViewFinish, self)
 end
 
-return var_0_0
+return ActivityChessStateBattle

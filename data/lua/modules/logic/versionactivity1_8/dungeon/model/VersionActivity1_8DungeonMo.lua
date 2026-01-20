@@ -1,101 +1,112 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.model.VersionActivity1_8DungeonMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/model/VersionActivity1_8DungeonMo.lua
 
-local var_0_0 = pureTable("VersionActivity1_8DungeonMo", VersionActivityDungeonBaseMo)
+module("modules.logic.versionactivity1_8.dungeon.model.VersionActivity1_8DungeonMo", package.seeall)
 
-function var_0_0.updateEpisodeId(arg_1_0, arg_1_1)
-	local var_1_0
+local VersionActivity1_8DungeonMo = pureTable("VersionActivity1_8DungeonMo", VersionActivityDungeonBaseMo)
 
-	if arg_1_1 then
-		var_1_0 = arg_1_1
+function VersionActivity1_8DungeonMo:updateEpisodeId(episodeId)
+	local tmpEpisodeId
 
-		local var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_0)
+	if episodeId then
+		tmpEpisodeId = episodeId
 
-		if var_1_1.chapterId == arg_1_0.activityDungeonConfig.story2ChapterId or var_1_1.chapterId == arg_1_0.activityDungeonConfig.story3ChapterId then
-			while var_1_1.chapterId ~= arg_1_0.activityDungeonConfig.story1ChapterId do
-				var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_1.preEpisode)
+		local episodeCo = DungeonConfig.instance:getEpisodeCO(tmpEpisodeId)
+
+		if episodeCo.chapterId == self.activityDungeonConfig.story2ChapterId or episodeCo.chapterId == self.activityDungeonConfig.story3ChapterId then
+			while episodeCo.chapterId ~= self.activityDungeonConfig.story1ChapterId do
+				episodeCo = DungeonConfig.instance:getEpisodeCO(episodeCo.preEpisode)
 			end
 		end
 
-		var_1_0 = var_1_1.id
+		tmpEpisodeId = episodeCo.id
 	else
-		local var_1_2 = DungeonConfig.instance:getChapterEpisodeCOList(arg_1_0.chapterId)
+		local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(self.chapterId)
+		local isPassAll = DungeonModel.instance:hasPassAllChapterEpisode(self.chapterId)
 
-		if DungeonModel.instance:hasPassAllChapterEpisode(arg_1_0.chapterId) then
-			if arg_1_0:getIsInSideMission() then
-				local var_1_3 = var_1_2[#var_1_2]
+		if isPassAll then
+			local isInSideMission = self:getIsInSideMission()
 
-				var_1_0 = var_1_3 and var_1_3.id
+			if isInSideMission then
+				local lastEpisodeCfg = episodeList[#episodeList]
+				local lastEpisodeId = lastEpisodeCfg and lastEpisodeCfg.id
+
+				tmpEpisodeId = lastEpisodeId
 			end
 		else
-			local var_1_4
+			local dungeonMo
 
-			for iter_1_0, iter_1_1 in ipairs(var_1_2) do
-				if (iter_1_1 and DungeonModel.instance:getEpisodeInfo(iter_1_1.id) or nil) and arg_1_0:checkEpisodeUnLock(iter_1_1) then
-					var_1_0 = iter_1_1.id
+			for _, episodeCfg in ipairs(episodeList) do
+				dungeonMo = episodeCfg and DungeonModel.instance:getEpisodeInfo(episodeCfg.id) or nil
+
+				if dungeonMo and self:checkEpisodeUnLock(episodeCfg) then
+					tmpEpisodeId = episodeCfg.id
 				end
 			end
 		end
 	end
 
-	if var_1_0 then
-		arg_1_0.episodeId = var_1_0
+	if tmpEpisodeId then
+		self.episodeId = tmpEpisodeId
 	else
-		arg_1_0.episodeId = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(arg_1_0.chapterId)
+		self.episodeId = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(self.chapterId)
 	end
 end
 
-function var_0_0.getIsInSideMission(arg_2_0)
-	local var_2_0 = false
+function VersionActivity1_8DungeonMo:getIsInSideMission()
+	local result = false
+	local isUnlockedSideMission = Activity157Model.instance:getIsSideMissionUnlocked()
 
-	if not Activity157Model.instance:getIsSideMissionUnlocked() then
-		return var_2_0
+	if not isUnlockedSideMission then
+		return result
 	end
 
-	local var_2_1 = DungeonConfig.instance:getChapterEpisodeCOList(arg_2_0.chapterId)
-	local var_2_2 = var_2_1[#var_2_1]
-	local var_2_3 = var_2_2 and var_2_2.id
+	local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(self.chapterId)
+	local lastEpisodeCfg = episodeList[#episodeList]
+	local lastEpisodeId = lastEpisodeCfg and lastEpisodeCfg.id
 
-	if not var_2_3 then
-		return var_2_0
+	if not lastEpisodeId then
+		return result
 	end
 
-	local var_2_4 = Activity157Model.instance:getActId()
-	local var_2_5 = VersionActivity1_8DungeonConfig.instance:getEpisodeMapConfig(var_2_3)
-	local var_2_6 = VersionActivity1_8DungeonModel.instance:getElementCoList(var_2_5.id)
+	local actId = Activity157Model.instance:getActId()
+	local mapCfg = VersionActivity1_8DungeonConfig.instance:getEpisodeMapConfig(lastEpisodeId)
+	local elementCoList = VersionActivity1_8DungeonModel.instance:getElementCoList(mapCfg.id)
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_6) do
-		local var_2_7 = iter_2_1.id
-		local var_2_8 = Activity157Config.instance:getMissionIdByElementId(var_2_4, var_2_7)
+	for _, elementCo in ipairs(elementCoList) do
+		local elementId = elementCo.id
+		local act157MissionId = Activity157Config.instance:getMissionIdByElementId(actId, elementId)
+		local isSideMission = act157MissionId and Activity157Config.instance:isSideMission(actId, act157MissionId)
 
-		if var_2_8 and Activity157Config.instance:isSideMission(var_2_4, var_2_8) then
-			local var_2_9 = Activity157Config.instance:getMissionGroup(var_2_4, var_2_8)
+		if isSideMission then
+			local act157MissionGroupId = Activity157Config.instance:getMissionGroup(actId, act157MissionId)
+			local isFinish = Activity157Model.instance:isFinishMission(act157MissionGroupId, act157MissionId)
 
-			if not Activity157Model.instance:isFinishMission(var_2_9, var_2_8) then
-				var_2_0 = true
+			if not isFinish then
+				result = true
 
 				break
 			end
 		end
 	end
 
-	return var_2_0
+	return result
 end
 
-function var_0_0.checkEpisodeUnLock(arg_3_0, arg_3_1)
-	if not arg_3_1 then
+function VersionActivity1_8DungeonMo:checkEpisodeUnLock(episodeCo)
+	if not episodeCo then
 		return true
 	end
 
-	local var_3_0 = arg_3_1.elementList
+	local listStr = episodeCo.elementList
 
-	if string.nilorempty(var_3_0) then
+	if string.nilorempty(listStr) then
 		return true
 	end
 
-	local var_3_1 = string.splitToNumber(var_3_0, "#")
+	local elementIdList = string.splitToNumber(listStr, "#")
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-		if not DungeonMapModel.instance:elementIsFinished(iter_3_1) then
+	for _, elementId in ipairs(elementIdList) do
+		if not DungeonMapModel.instance:elementIsFinished(elementId) then
 			return false
 		end
 	end
@@ -103,4 +114,4 @@ function var_0_0.checkEpisodeUnLock(arg_3_0, arg_3_1)
 	return true
 end
 
-return var_0_0
+return VersionActivity1_8DungeonMo

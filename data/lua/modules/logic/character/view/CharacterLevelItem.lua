@@ -1,202 +1,216 @@
-﻿module("modules.logic.character.view.CharacterLevelItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterLevelItem.lua
 
-local var_0_0 = class("CharacterLevelItem", ListScrollCellExtend)
-local var_0_1 = 1
-local var_0_2 = 0.75
-local var_0_3 = 1
-local var_0_4 = 0.5
+module("modules.logic.character.view.CharacterLevelItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._click = gohelper.getClickWithDefaultAudio(arg_1_0.viewGO)
-	arg_1_0._gocurlv = gohelper.findChild(arg_1_0.viewGO, "#go_curLv")
-	arg_1_0._transcurlv = arg_1_0._gocurlv.transform
-	arg_1_0._txtcurlv = gohelper.findChildText(arg_1_0.viewGO, "#go_curLv/#txt_curLvNum")
-	arg_1_0._txtlvnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_LvNum")
-	arg_1_0._translvnum = arg_1_0._txtlvnum.transform
-	arg_1_0._txtefflvnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_LvNum/#txt_leveleffect")
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#go_line")
-	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "#go_Max")
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local CharacterLevelItem = class("CharacterLevelItem", ListScrollCellExtend)
+local MAX_SCALE = 1
+local MIN_SCALE = 0.75
+local MAX_ALPHA = 1
+local MIN_ALPHA = 0.5
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterLevelItem:onInitView()
+	self._click = gohelper.getClickWithDefaultAudio(self.viewGO)
+	self._gocurlv = gohelper.findChild(self.viewGO, "#go_curLv")
+	self._transcurlv = self._gocurlv.transform
+	self._txtcurlv = gohelper.findChildText(self.viewGO, "#go_curLv/#txt_curLvNum")
+	self._txtlvnum = gohelper.findChildText(self.viewGO, "#txt_LvNum")
+	self._translvnum = self._txtlvnum.transform
+	self._txtefflvnum = gohelper.findChildText(self.viewGO, "#txt_LvNum/#txt_leveleffect")
+	self._goline = gohelper.findChild(self.viewGO, "#go_line")
+	self._gomax = gohelper.findChild(self.viewGO, "#go_Max")
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0.onClick, arg_2_0)
-	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onItemChanged, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, arg_2_0._onPlayLevelUpEff, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, arg_2_0._onChangePreviewLevel, arg_2_0)
-	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, arg_2_0._onLevelScrollChange, arg_2_0)
+function CharacterLevelItem:addEvents()
+	self._click:AddClickListener(self.onClick, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, self._onPlayLevelUpEff, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, self._onChangePreviewLevel, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, self._onLevelScrollChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
-	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onItemChanged, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, arg_3_0._onPlayLevelUpEff, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, arg_3_0._onChangePreviewLevel, arg_3_0)
-	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, arg_3_0._onLevelScrollChange, arg_3_0)
+function CharacterLevelItem:removeEvents()
+	self._click:RemoveClickListener()
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onItemChanged, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onItemChanged, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, self._onPlayLevelUpEff, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, self._onChangePreviewLevel, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, self._onLevelScrollChange, self)
 end
 
-function var_0_0.onClick(arg_4_0)
-	if not arg_4_0._mo then
+function CharacterLevelItem:onClick()
+	if not self._mo then
 		return
 	end
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpClickLevel, arg_4_0._mo.level)
+	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpClickLevel, self._mo.level)
 end
 
-function var_0_0._onItemChanged(arg_5_0)
-	if not arg_5_0._view then
+function CharacterLevelItem:_onItemChanged()
+	if not self._view then
 		return
 	end
 
-	local var_5_0 = arg_5_0._view.viewContainer
+	local container = self._view.viewContainer
+	local waitHeroLevelUpRefresh = container and container:getWaitHeroLevelUpRefresh()
 
-	if var_5_0 and var_5_0:getWaitHeroLevelUpRefresh() then
+	if waitHeroLevelUpRefresh then
 		return
 	end
 
-	arg_5_0:refresh()
+	self:refresh()
 end
 
-function var_0_0._onPlayLevelUpEff(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._mo and arg_6_0._mo.heroId
+function CharacterLevelItem:_onPlayLevelUpEff(level)
+	local heroId = self._mo and self._mo.heroId
+	local heroMO = heroId and HeroModel.instance:getByHeroId(heroId)
 
-	if not (var_6_0 and HeroModel.instance:getByHeroId(var_6_0)) then
+	if not heroMO then
 		return
 	end
 
-	if arg_6_0._mo.level == arg_6_1 then
-		arg_6_0._animator:Play("click", 0, 0)
+	if self._mo.level == level then
+		self._animator:Play("click", 0, 0)
 	end
 end
 
-function var_0_0._onChangePreviewLevel(arg_7_0, arg_7_1)
-	if not arg_7_0._view then
+function CharacterLevelItem:_onChangePreviewLevel(previewLevel)
+	if not self._view then
 		return
 	end
 
-	local var_7_0 = arg_7_0._view.viewContainer
+	local container = self._view.viewContainer
+	local waitHeroLevelUpRefresh = container and container:getWaitHeroLevelUpRefresh()
 
-	if var_7_0 and var_7_0:getWaitHeroLevelUpRefresh() then
+	if waitHeroLevelUpRefresh then
 		return
 	end
 
-	arg_7_0:refreshCurLevelMark()
+	self:refreshCurLevelMark()
 end
 
-function var_0_0._onLevelScrollChange(arg_8_0, arg_8_1)
-	arg_8_1 = arg_8_1 and math.abs(arg_8_1) or 0
+function CharacterLevelItem:_onLevelScrollChange(contentOffset)
+	contentOffset = contentOffset and math.abs(contentOffset) or 0
 
-	if arg_8_1 > arg_8_0._itemOffset then
-		arg_8_0:refreshScale(-arg_8_1, -arg_8_0._rightBoundary, -arg_8_0._itemOffset)
+	if contentOffset > self._itemOffset then
+		self:refreshScale(-contentOffset, -self._rightBoundary, -self._itemOffset)
 	else
-		arg_8_0:refreshScale(arg_8_1, arg_8_0._leftBoundary, arg_8_0._itemOffset)
+		self:refreshScale(contentOffset, self._leftBoundary, self._itemOffset)
 	end
 end
 
-function var_0_0._editableInitView(arg_9_0)
+function CharacterLevelItem:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
-	arg_10_0._mo = arg_10_1
+function CharacterLevelItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_10_0 = arg_10_0._view.viewContainer:getLevelItemWidth()
-	local var_10_1 = var_10_0 / 2
+	local container = self._view.viewContainer
+	local itemWidth = container:getLevelItemWidth()
+	local halfWidth = itemWidth / 2
 
-	arg_10_0._itemOffset = (arg_10_0._index - 1) * var_10_0
-	arg_10_0._rightBoundary = arg_10_0._itemOffset + var_10_1
-	arg_10_0._leftBoundary = arg_10_0._itemOffset - var_10_1
+	self._itemOffset = (self._index - 1) * itemWidth
+	self._rightBoundary = self._itemOffset + halfWidth
+	self._leftBoundary = self._itemOffset - halfWidth
 
-	arg_10_0:refresh()
+	self:refresh()
 
-	local var_10_2 = arg_10_0._view.viewContainer.characterLevelUpView:getContentOffset()
+	local contentOffset = self._view.viewContainer.characterLevelUpView:getContentOffset()
 
-	arg_10_0:_onLevelScrollChange(var_10_2)
-	arg_10_0._animator:Play("idle", 0, 0)
+	self:_onLevelScrollChange(contentOffset)
+	self._animator:Play("idle", 0, 0)
 end
 
-function var_0_0.refresh(arg_11_0)
-	local var_11_0 = arg_11_0._mo and HeroConfig.instance:getShowLevel(arg_11_0._mo.level) or ""
+function CharacterLevelItem:refresh()
+	local txtLv = self._mo and HeroConfig.instance:getShowLevel(self._mo.level) or ""
 
-	arg_11_0._txtcurlv.text = var_11_0
-	arg_11_0._txtlvnum.text = var_11_0
-	arg_11_0._txtefflvnum.text = var_11_0
+	self._txtcurlv.text = txtLv
+	self._txtlvnum.text = txtLv
+	self._txtefflvnum.text = txtLv
 
-	local var_11_1 = arg_11_0._mo and arg_11_0._mo.heroId
-	local var_11_2 = var_11_1 and HeroModel.instance:getByHeroId(var_11_1)
+	local heroId = self._mo and self._mo.heroId
+	local heroMO = heroId and HeroModel.instance:getByHeroId(heroId)
 
-	if not var_11_2 then
+	if not heroMO then
 		return
 	end
 
-	local var_11_3 = true
-	local var_11_4 = var_11_2.level
-	local var_11_5 = arg_11_0._mo.level
-	local var_11_6 = HeroConfig.instance:getLevelUpItems(var_11_1, var_11_4, var_11_5)
+	local hasEnough = true
+	local curLevel = heroMO.level
+	local itemLv = self._mo.level
+	local costItemList = HeroConfig.instance:getLevelUpItems(heroId, curLevel, itemLv)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_6) do
-		local var_11_7 = tonumber(iter_11_1.type)
-		local var_11_8 = tonumber(iter_11_1.id)
+	for _, costItem in ipairs(costItemList) do
+		local type = tonumber(costItem.type)
+		local id = tonumber(costItem.id)
+		local costQuantity = tonumber(costItem.quantity)
+		local hasQuantity = ItemModel.instance:getItemQuantity(type, id)
 
-		if tonumber(iter_11_1.quantity) > ItemModel.instance:getItemQuantity(var_11_7, var_11_8) then
-			var_11_3 = false
+		if hasQuantity < costQuantity then
+			hasEnough = false
 
 			break
 		end
 	end
 
-	local var_11_9 = var_11_0
+	local txtLvWithColor = txtLv
 
-	if not var_11_3 then
-		var_11_9 = string.format("<color=#793426>%s</color>", var_11_0)
+	if not hasEnough then
+		txtLvWithColor = string.format("<color=#793426>%s</color>", txtLv)
 	end
 
-	arg_11_0._txtlvnum.text = var_11_9
+	self._txtlvnum.text = txtLvWithColor
 
-	local var_11_10 = CharacterModel.instance:getrankEffects(var_11_1, var_11_2.rank)[1]
+	local curRankMaxLv = CharacterModel.instance:getrankEffects(heroId, heroMO.rank)[1]
 
-	gohelper.setActive(arg_11_0._gomax, var_11_5 == var_11_10)
-	arg_11_0:refreshCurLevelMark()
+	gohelper.setActive(self._gomax, itemLv == curRankMaxLv)
+	self:refreshCurLevelMark()
 end
 
-function var_0_0.refreshCurLevelMark(arg_12_0)
-	local var_12_0 = false
-	local var_12_1 = arg_12_0._mo and arg_12_0._mo.heroId
-	local var_12_2 = var_12_1 and HeroModel.instance:getByHeroId(var_12_1)
+function CharacterLevelItem:refreshCurLevelMark()
+	local isMarkCurLevel = false
+	local heroId = self._mo and self._mo.heroId
+	local heroMO = heroId and HeroModel.instance:getByHeroId(heroId)
 
-	if var_12_2 then
-		local var_12_3 = arg_12_0._mo.level
-		local var_12_4 = arg_12_0._view.viewContainer
+	if heroMO then
+		local itemLv = self._mo.level
+		local container = self._view.viewContainer
+		local localUpLevel = container:getLocalUpLevel()
+		local curLevel = localUpLevel or heroMO.level
+		local isCurLevelItem = itemLv == curLevel
 
-		if var_12_3 == (var_12_4:getLocalUpLevel() or var_12_2.level) then
-			var_12_0 = var_12_4.characterLevelUpView.previewLevel ~= var_12_3
+		if isCurLevelItem then
+			local previewLevel = container.characterLevelUpView.previewLevel
+
+			isMarkCurLevel = previewLevel ~= itemLv
 		end
 	end
 
-	gohelper.setActive(arg_12_0._gocurlv, var_12_0)
-	gohelper.setActive(arg_12_0._goline, not var_12_0)
-	gohelper.setActive(arg_12_0._txtlvnum.gameObject, not var_12_0)
+	gohelper.setActive(self._gocurlv, isMarkCurLevel)
+	gohelper.setActive(self._goline, not isMarkCurLevel)
+	gohelper.setActive(self._txtlvnum.gameObject, not isMarkCurLevel)
 end
 
-function var_0_0.refreshScale(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if not arg_13_1 or not arg_13_2 or not arg_13_3 then
+function CharacterLevelItem:refreshScale(factor, minFactor, maxFactor)
+	if not factor or not minFactor or not maxFactor then
 		return
 	end
 
-	local var_13_0 = GameUtil.remap(arg_13_1, arg_13_2, arg_13_3, var_0_2, var_0_1)
+	local scale = GameUtil.remap(factor, minFactor, maxFactor, MIN_SCALE, MAX_SCALE)
 
-	transformhelper.setLocalScale(arg_13_0._translvnum, var_13_0, var_13_0, var_13_0)
+	transformhelper.setLocalScale(self._translvnum, scale, scale, scale)
 
-	local var_13_1
+	local alpha = GameUtil.remap(factor, minFactor, maxFactor, MIN_ALPHA, MAX_ALPHA)
+	local color = self._txtlvnum.color
 
-	var_13_1.a, var_13_1 = GameUtil.remap(arg_13_1, arg_13_2, arg_13_3, var_0_4, var_0_3), arg_13_0._txtlvnum.color
-	arg_13_0._txtlvnum.color = var_13_1
+	color.a = alpha
+	self._txtlvnum.color = color
 end
 
-return var_0_0
+return CharacterLevelItem

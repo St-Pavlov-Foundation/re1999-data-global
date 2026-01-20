@@ -1,82 +1,84 @@
-﻿module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/coopergarland/view/CooperGarlandResultView.lua
 
-local var_0_0 = class("CooperGarlandResultView", BaseView)
+module("modules.logic.versionactivity2_7.coopergarland.view.CooperGarlandResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
-	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem")
-	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_finish")
-	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem/result/#go_unfinish")
-	arg_1_0._gobtn = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
-	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_quitgame")
-	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btn/#btn_restart")
-	arg_1_0._btnsuccessClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_successClick")
+local CooperGarlandResultView = class("CooperGarlandResultView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CooperGarlandResultView:onInitView()
+	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+	self._gotargetitem = gohelper.findChild(self.viewGO, "targets/#go_targetitem")
+	self._gofinish = gohelper.findChild(self.viewGO, "targets/#go_targetitem/result/#go_finish")
+	self._gounfinish = gohelper.findChild(self.viewGO, "targets/#go_targetitem/result/#go_unfinish")
+	self._gobtn = gohelper.findChild(self.viewGO, "#go_btn")
+	self._btnquitgame = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_quitgame")
+	self._btnrestart = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btn/#btn_restart")
+	self._btnsuccessClick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_successClick")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
-	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
-	arg_2_0._btnsuccessClick:AddClickListener(arg_2_0._btnsuccessClickOnClick, arg_2_0)
+function CooperGarlandResultView:addEvents()
+	self._btnquitgame:AddClickListener(self._btnquitgameOnClick, self)
+	self._btnrestart:AddClickListener(self._btnrestartOnClick, self)
+	self._btnsuccessClick:AddClickListener(self._btnsuccessClickOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnquitgame:RemoveClickListener()
-	arg_3_0._btnrestart:RemoveClickListener()
-	arg_3_0._btnsuccessClick:RemoveClickListener()
+function CooperGarlandResultView:removeEvents()
+	self._btnquitgame:RemoveClickListener()
+	self._btnrestart:RemoveClickListener()
+	self._btnsuccessClick:RemoveClickListener()
 end
 
-function var_0_0._btnquitgameOnClick(arg_4_0)
-	CooperGarlandStatHelper.instance:sendGameExit(arg_4_0.viewName)
+function CooperGarlandResultView:_btnquitgameOnClick()
+	CooperGarlandStatHelper.instance:sendGameExit(self.viewName)
 	CooperGarlandController.instance:exitGame()
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnrestartOnClick(arg_5_0)
-	CooperGarlandStatHelper.instance:sendMapReset(arg_5_0.viewName)
+function CooperGarlandResultView:_btnrestartOnClick()
+	CooperGarlandStatHelper.instance:sendMapReset(self.viewName)
 	CooperGarlandController.instance:resetGame()
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._btnsuccessClickOnClick(arg_6_0)
+function CooperGarlandResultView:_btnsuccessClickOnClick()
 	CooperGarlandController.instance:exitGame()
-	arg_6_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
+function CooperGarlandResultView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function CooperGarlandResultView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.isWin
+function CooperGarlandResultView:onOpen()
+	local isWin = self.viewParam and self.viewParam.isWin
 
-	gohelper.setActive(arg_9_0._gosuccess, var_9_0)
-	gohelper.setActive(arg_9_0._btnsuccessClick, var_9_0)
-	gohelper.setActive(arg_9_0._gofail, not var_9_0)
-	gohelper.setActive(arg_9_0._gobtn, not var_9_0)
-	gohelper.setActive(arg_9_0._gotargetitem, var_9_0)
-	gohelper.setActive(arg_9_0._gofinish, var_9_0)
-	gohelper.setActive(arg_9_0._gounfinish, not var_9_0)
+	gohelper.setActive(self._gosuccess, isWin)
+	gohelper.setActive(self._btnsuccessClick, isWin)
+	gohelper.setActive(self._gofail, not isWin)
+	gohelper.setActive(self._gobtn, not isWin)
+	gohelper.setActive(self._gotargetitem, isWin)
+	gohelper.setActive(self._gofinish, isWin)
+	gohelper.setActive(self._gounfinish, not isWin)
 
-	local var_9_1 = var_9_0 and AudioEnum2_7.CooperGarland.play_ui_pkls_endpoint_arrival or AudioEnum2_7.CooperGarland.play_ui_pkls_challenge_fail
+	local audioId = isWin and AudioEnum2_7.CooperGarland.play_ui_pkls_endpoint_arrival or AudioEnum2_7.CooperGarland.play_ui_pkls_challenge_fail
 
-	AudioMgr.instance:trigger(var_9_1)
+	AudioMgr.instance:trigger(audioId)
 end
 
-function var_0_0.onClose(arg_10_0)
+function CooperGarlandResultView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function CooperGarlandResultView:onDestroyView()
 	return
 end
 
-return var_0_0
+return CooperGarlandResultView

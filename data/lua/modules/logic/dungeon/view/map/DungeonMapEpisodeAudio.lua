@@ -1,153 +1,163 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapEpisodeAudio", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapEpisodeAudio.lua
 
-local var_0_0 = class("DungeonMapEpisodeAudio", LuaCompBase)
+module("modules.logic.dungeon.view.map.DungeonMapEpisodeAudio", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.scroll = arg_1_1
+local DungeonMapEpisodeAudio = class("DungeonMapEpisodeAudio", LuaCompBase)
 
-	if arg_1_0.scroll.content then
-		arg_1_0._contentWidth = recthelper.getWidth(arg_1_0.scroll.content)
+function DungeonMapEpisodeAudio:ctor(param)
+	self.scroll = param
+
+	if self.scroll.content then
+		self._contentWidth = recthelper.getWidth(self.scroll.content)
 	else
-		arg_1_0._contentWidth = recthelper.getWidth(arg_1_0.scroll.transform)
+		self._contentWidth = recthelper.getWidth(self.scroll.transform)
 	end
 
-	arg_1_0._intervalSampleOffset = 0.1
-	arg_1_0._intervalSampleStop = 0.1
-	arg_1_0._intervalSpeedX = 100
-	arg_1_0._startPlayOffset = 0.81
-	arg_1_0._startPlayOffsetDraging = 0.08
-	arg_1_0._stopPlayOffset = 0.8
-	arg_1_0._stopPlayOffsetDraging = 0.075
-	arg_1_0._defaultSfxRepeatTime = 6
-	arg_1_0._speedUpTweenTime = 2
-	arg_1_0._rightEdge = 0.99
-	arg_1_0._pixelOffsetMoveFactor = 0.03
-	arg_1_0._normalizeOffsetMoveFactor = 280
-	arg_1_0._speedFactor = 0.7
-	arg_1_0._scrollSfxDuration = arg_1_0._defaultSfxRepeatTime
-	arg_1_0._isDraging = true
-	arg_1_0._isDisposed = false
+	self._intervalSampleOffset = 0.1
+	self._intervalSampleStop = 0.1
+	self._intervalSpeedX = 100
+	self._startPlayOffset = 0.81
+	self._startPlayOffsetDraging = 0.08
+	self._stopPlayOffset = 0.8
+	self._stopPlayOffsetDraging = 0.075
+	self._defaultSfxRepeatTime = 6
+	self._speedUpTweenTime = 2
+	self._rightEdge = 0.99
+	self._pixelOffsetMoveFactor = 0.03
+	self._normalizeOffsetMoveFactor = 280
+	self._speedFactor = 0.7
+	self._scrollSfxDuration = self._defaultSfxRepeatTime
+	self._isDraging = true
+	self._isDisposed = false
 end
 
-function var_0_0.onDragBegin(arg_2_0)
-	arg_2_0._isDraging = true
+function DungeonMapEpisodeAudio:onDragBegin()
+	self._isDraging = true
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
-	arg_2_0:_resetPlayingStatus()
+	self:_resetPlayingStatus()
 end
 
-function var_0_0.onDragEnd(arg_3_0)
-	arg_3_0:onUpdate()
+function DungeonMapEpisodeAudio:onDragEnd()
+	self:onUpdate()
 
-	arg_3_0._isDraging = false
+	self._isDraging = false
 end
 
-function var_0_0.onClickDown(arg_4_0)
+function DungeonMapEpisodeAudio:onClickDown()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_start)
 end
 
-function var_0_0.onUpdate(arg_5_0)
-	if arg_5_0.scroll and not arg_5_0._isDisposed then
-		local var_5_0
+function DungeonMapEpisodeAudio:onUpdate()
+	if self.scroll and not self._isDisposed then
+		local curX
 
-		if arg_5_0.scroll.content then
-			var_5_0 = recthelper.getAnchorX(arg_5_0.scroll.content) * arg_5_0._pixelOffsetMoveFactor
+		if self.scroll.content then
+			curX = recthelper.getAnchorX(self.scroll.content) * self._pixelOffsetMoveFactor
 		else
-			var_5_0 = arg_5_0.scroll.horizontalNormalizedPosition * arg_5_0._normalizeOffsetMoveFactor
+			curX = self.scroll.horizontalNormalizedPosition * self._normalizeOffsetMoveFactor
 		end
 
-		arg_5_0:_onValueChangeForStartOrStop(var_5_0)
-		arg_5_0:_onValueChangeCheckReplay(var_5_0)
-		arg_5_0:_onValueChangeSampleOffset(var_5_0)
+		self:_onValueChangeForStartOrStop(curX)
+		self:_onValueChangeCheckReplay(curX)
+		self:_onValueChangeSampleOffset(curX)
 	end
 end
 
-function var_0_0._onValueChangeSampleOffset(arg_6_0, arg_6_1)
-	if arg_6_0._scrollAudioTime and arg_6_0._scrollSampleOffsetX then
-		if Time.realtimeSinceStartup - arg_6_0._scrollAudioTime >= arg_6_0._intervalSampleOffset then
-			arg_6_0:_onUpdateRTPCSpeed(arg_6_1)
+function DungeonMapEpisodeAudio:_onValueChangeSampleOffset(x)
+	if self._scrollAudioTime and self._scrollSampleOffsetX then
+		local deltaTime = Time.realtimeSinceStartup - self._scrollAudioTime
 
-			arg_6_0._scrollAudioTime = Time.realtimeSinceStartup
-			arg_6_0._scrollSampleOffsetX = arg_6_1
+		if deltaTime >= self._intervalSampleOffset then
+			self:_onUpdateRTPCSpeed(x)
+
+			self._scrollAudioTime = Time.realtimeSinceStartup
+			self._scrollSampleOffsetX = x
 		end
 	else
-		arg_6_0._scrollAudioTime = Time.realtimeSinceStartup
-		arg_6_0._scrollSampleOffsetX = arg_6_1
+		self._scrollAudioTime = Time.realtimeSinceStartup
+		self._scrollSampleOffsetX = x
 	end
 end
 
-function var_0_0._onUpdateRTPCSpeed(arg_7_0, arg_7_1)
-	local var_7_0 = math.abs(arg_7_1 - arg_7_0._scrollSampleOffsetX)
+function DungeonMapEpisodeAudio:_onUpdateRTPCSpeed(x)
+	local deltaPosX = math.abs(x - self._scrollSampleOffsetX)
 
-	arg_7_0._scrollSfxDuration = (arg_7_0._scrollSfxDuration + arg_7_0._defaultSfxRepeatTime + (var_7_0 - 0.5) * arg_7_0._speedUpTweenTime) * 0.5
+	self._scrollSfxDuration = (self._scrollSfxDuration + self._defaultSfxRepeatTime + (deltaPosX - 0.5) * self._speedUpTweenTime) * 0.5
 
-	local var_7_1 = var_7_0 * arg_7_0._speedFactor
+	local value = deltaPosX * self._speedFactor
 
-	if arg_7_0._lastRtpcValue == var_7_1 then
+	if self._lastRtpcValue == value then
 		return
 	end
 
-	arg_7_0._lastRtpcValue = var_7_1
+	self._lastRtpcValue = value
 
-	AudioMgr.instance:setRTPCValue(AudioEnum.UI.RTPC_ui_checkpoint_movespeed, arg_7_0._lastRtpcValue)
+	AudioMgr.instance:setRTPCValue(AudioEnum.UI.RTPC_ui_checkpoint_movespeed, self._lastRtpcValue)
 end
 
-function var_0_0._onValueChangeForStartOrStop(arg_8_0, arg_8_1)
-	if arg_8_0._scrollingPlayX and arg_8_0._scrollAudioStopTime then
-		if Time.realtimeSinceStartup - arg_8_0._scrollAudioStopTime > arg_8_0._intervalSampleStop then
-			local var_8_0 = math.abs(arg_8_1 - arg_8_0._scrollingPlayX)
-			local var_8_1 = arg_8_0._startPlayOffset
-			local var_8_2 = arg_8_0._stopPlayOffset
+function DungeonMapEpisodeAudio:_onValueChangeForStartOrStop(x)
+	if self._scrollingPlayX and self._scrollAudioStopTime then
+		local deltaTime = Time.realtimeSinceStartup - self._scrollAudioStopTime
 
-			if arg_8_0._isDraging then
-				var_8_1 = arg_8_0._startPlayOffsetDraging
-				var_8_2 = arg_8_0._stopPlayOffsetDraging
+		if deltaTime > self._intervalSampleStop then
+			local deltaPosX = math.abs(x - self._scrollingPlayX)
+			local startOffset = self._startPlayOffset
+			local stopOffset = self._stopPlayOffset
+
+			if self._isDraging then
+				startOffset = self._startPlayOffsetDraging
+				stopOffset = self._stopPlayOffsetDraging
 			end
 
-			if var_8_1 <= var_8_0 and not arg_8_0._isScrollPlaying then
+			if startOffset <= deltaPosX and not self._isScrollPlaying then
 				AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
 				AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain)
-				arg_8_0:_onUpdateRTPCSpeed(arg_8_1)
+				self:_onUpdateRTPCSpeed(x)
 
-				arg_8_0._scrollPlayingStartTime = Time.realtimeSinceStartup
-				arg_8_0._isScrollPlaying = true
-				arg_8_0._isFirstTimeDragPlay = false
+				self._scrollPlayingStartTime = Time.realtimeSinceStartup
+				self._isScrollPlaying = true
+				self._isFirstTimeDragPlay = false
 			end
 
-			if var_8_0 < var_8_2 and arg_8_0._isScrollPlaying then
+			if deltaPosX < stopOffset and self._isScrollPlaying then
 				AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
-				arg_8_0:_resetPlayingStatus(arg_8_1)
+				self:_resetPlayingStatus(x)
 			end
 
-			arg_8_0._scrollingPlayX = arg_8_1
-			arg_8_0._scrollAudioStopTime = Time.realtimeSinceStartup
+			self._scrollingPlayX = x
+			self._scrollAudioStopTime = Time.realtimeSinceStartup
 		end
 	else
-		arg_8_0._scrollAudioStopTime = Time.realtimeSinceStartup
-		arg_8_0._scrollingPlayX = arg_8_1
+		self._scrollAudioStopTime = Time.realtimeSinceStartup
+		self._scrollingPlayX = x
 	end
 end
 
-function var_0_0._onValueChangeCheckReplay(arg_9_0, arg_9_1)
-	if arg_9_0._isScrollPlaying and arg_9_0._scrollPlayingStartTime and arg_9_0._scrollSampleOffsetX and Time.realtimeSinceStartup - arg_9_0._scrollPlayingStartTime >= arg_9_0._scrollSfxDuration then
-		arg_9_0:_resetPlayingStatus(arg_9_1)
+function DungeonMapEpisodeAudio:_onValueChangeCheckReplay(x)
+	if self._isScrollPlaying and self._scrollPlayingStartTime and self._scrollSampleOffsetX then
+		local passTime = Time.realtimeSinceStartup - self._scrollPlayingStartTime
+
+		if passTime >= self._scrollSfxDuration then
+			self:_resetPlayingStatus(x)
+		end
 	end
 end
 
-function var_0_0._resetPlayingStatus(arg_10_0, arg_10_1)
-	arg_10_0._isScrollPlaying = false
-	arg_10_0._scrollingPlayX = arg_10_1
+function DungeonMapEpisodeAudio:_resetPlayingStatus(x)
+	self._isScrollPlaying = false
+	self._scrollingPlayX = x
 end
 
-function var_0_0.dispose(arg_11_0)
+function DungeonMapEpisodeAudio:dispose()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
 
-	arg_11_0._isDisposed = true
-	arg_11_0.scroll = nil
+	self._isDisposed = true
+	self.scroll = nil
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0.scroll = nil
+function DungeonMapEpisodeAudio:onDestroy()
+	self.scroll = nil
 end
 
-return var_0_0
+return DungeonMapEpisodeAudio

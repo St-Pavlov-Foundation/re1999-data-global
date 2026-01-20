@@ -1,89 +1,91 @@
-﻿module("modules.logic.character.view.recommed.CharacterRecommedHeroIcon", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/recommed/CharacterRecommedHeroIcon.lua
 
-local var_0_0 = class("CharacterRecommedHeroIcon", ListScrollCell)
+module("modules.logic.character.view.recommed.CharacterRecommedHeroIcon", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobossEmpty = gohelper.findChild(arg_1_0.viewGO, "go_empty")
-	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "go_container")
-	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_container/simage_heroicon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.viewGO, "go_container/image_career")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "go_container/rare")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "go_container/#go_selected")
+local CharacterRecommedHeroIcon = class("CharacterRecommedHeroIcon", ListScrollCell)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "clickarea")
+function CharacterRecommedHeroIcon:onInitView()
+	self._gobossEmpty = gohelper.findChild(self.viewGO, "go_empty")
+	self._gocontainer = gohelper.findChild(self.viewGO, "go_container")
+	self._simageheroicon = gohelper.findChildSingleImage(self.viewGO, "go_container/simage_heroicon")
+	self._imagecareer = gohelper.findChildImage(self.viewGO, "go_container/image_career")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "go_container/rare")
+	self._goselected = gohelper.findChild(self.viewGO, "go_container/#go_selected")
 
-	arg_1_0._btnclick = SLFramework.UGUI.UIClickListener.Get(var_1_0)
+	local clickarea = gohelper.findChild(self.viewGO, "clickarea")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._btnclick = SLFramework.UGUI.UIClickListener.Get(clickarea)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function CharacterRecommedHeroIcon:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function CharacterRecommedHeroIcon:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
+function CharacterRecommedHeroIcon:_btnclickOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	if arg_4_0._clickCB and arg_4_0._clickCBobj then
-		arg_4_0._clickCB(arg_4_0._clickCBobj)
+	if self._clickCB and self._clickCBobj then
+		self._clickCB(self._clickCBobj)
 	end
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0.viewGO = arg_5_1
+function CharacterRecommedHeroIcon:init(go)
+	self.viewGO = go
 
-	arg_5_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	gohelper.setActive(arg_6_0._goselected, false)
+function CharacterRecommedHeroIcon:_editableInitView()
+	gohelper.setActive(self._goselected, false)
 end
 
-function var_0_0._editableAddEvents(arg_7_0)
+function CharacterRecommedHeroIcon:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_8_0)
+function CharacterRecommedHeroIcon:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._mo = arg_9_1
+function CharacterRecommedHeroIcon:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_9_0:_refreshHero()
+	self:_refreshHero()
 end
 
-function var_0_0._refreshHero(arg_10_0)
-	local var_10_0 = arg_10_0._mo:getHeroConfig()
-	local var_10_1 = arg_10_0._mo:getHeroSkinConfig()
+function CharacterRecommedHeroIcon:_refreshHero()
+	local heroConfig = self._mo:getHeroConfig()
+	local skinConfig = self._mo:getHeroSkinConfig()
 
-	arg_10_0._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(var_10_1.headIcon))
-	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagecareer, "lssx_" .. tostring(var_10_0.career))
-	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagerare, "equipbar" .. CharacterEnum.Color[var_10_0.rare])
+	self._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(heroConfig.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagerare, "equipbar" .. CharacterEnum.Color[heroConfig.rare])
 end
 
-function var_0_0.SetGrayscale(arg_11_0, arg_11_1)
-	ZProj.UGUIHelper.SetGrayscale(arg_11_0._simageheroicon.gameObject, arg_11_1)
-	ZProj.UGUIHelper.SetGrayscale(arg_11_0._imagecareer.gameObject, arg_11_1)
+function CharacterRecommedHeroIcon:SetGrayscale(isGray)
+	ZProj.UGUIHelper.SetGrayscale(self._simageheroicon.gameObject, isGray)
+	ZProj.UGUIHelper.SetGrayscale(self._imagecareer.gameObject, isGray)
 end
 
-function var_0_0.setClickCallback(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._clickCB = arg_12_1
-	arg_12_0._clickCBobj = arg_12_2
+function CharacterRecommedHeroIcon:setClickCallback(cb, cbobj)
+	self._clickCB = cb
+	self._clickCBobj = cbobj
 end
 
-function var_0_0.onSelect(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0._goselected, arg_13_1)
+function CharacterRecommedHeroIcon:onSelect(isSelect)
+	gohelper.setActive(self._goselected, isSelect)
 end
 
-function var_0_0.onDestroy(arg_14_0)
+function CharacterRecommedHeroIcon:onDestroy()
 	return
 end
 
-return var_0_0
+return CharacterRecommedHeroIcon

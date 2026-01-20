@@ -1,112 +1,124 @@
-﻿module("modules.spine.LightSpine", package.seeall)
+﻿-- chunkname: @modules/spine/LightSpine.lua
 
-local var_0_0 = class("LightSpine", BaseSpine)
+module("modules.spine.LightSpine", package.seeall)
 
-var_0_0.TypeSkeletonAnimation = typeof(Spine.Unity.SkeletonAnimation)
-var_0_0.TypeSpineAnimationEvent = typeof(ZProj.SpineAnimationEvent)
+local LightSpine = class("LightSpine", BaseSpine)
 
-function var_0_0.Create(arg_1_0, arg_1_1)
-	local var_1_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+LightSpine.TypeSkeletonAnimation = typeof(Spine.Unity.SkeletonAnimation)
+LightSpine.TypeSpineAnimationEvent = typeof(ZProj.SpineAnimationEvent)
 
-	var_1_0._isStory = arg_1_1
+function LightSpine.Create(gameObj, isStory)
+	local ret = MonoHelper.addNoUpdateLuaComOnceToGo(gameObj, LightSpine)
 
-	return var_1_0
+	ret._isStory = isStory
+
+	return ret
 end
 
-function var_0_0._onResLoaded(arg_2_0)
-	arg_2_0._sharedMaterials = nil
-	arg_2_0._retryGetSharedMats = 0
+function LightSpine:_onResLoaded()
+	self._sharedMaterials = nil
+	self._retryGetSharedMats = 0
 
-	var_0_0.super._onResLoaded(arg_2_0)
+	LightSpine.super._onResLoaded(self)
 end
 
-function var_0_0.getBoundsMinMaxPos(arg_3_0)
-	local var_3_0 = arg_3_0:getRenderer().bounds
+function LightSpine:getBoundsMinMaxPos()
+	local meshRenderer = self:getRenderer()
+	local bounds = meshRenderer.bounds
 
-	return var_3_0.min, var_3_0.max
+	return bounds.min, bounds.max
 end
 
-function var_0_0.initSkeletonComponent(arg_4_0)
-	arg_4_0._skeletonComponent = arg_4_0._spineGo:GetComponent(var_0_0.TypeSkeletonAnimation)
+function LightSpine:initSkeletonComponent()
+	self._skeletonComponent = self._spineGo:GetComponent(LightSpine.TypeSkeletonAnimation)
 
-	arg_4_0._skeletonComponent:Initialize(false)
+	self._skeletonComponent:Initialize(false)
 
-	arg_4_0._skeletonComponent.freeze = arg_4_0._bFreeze
-	arg_4_0._animationEvent = var_0_0.TypeSpineAnimationEvent
-	arg_4_0._mountroot = gohelper.findChild(arg_4_0._spineGo, "mountroot")
+	self._skeletonComponent.freeze = self._bFreeze
+	self._animationEvent = LightSpine.TypeSpineAnimationEvent
+	self._mountroot = gohelper.findChild(self._spineGo, "mountroot")
 end
 
-function var_0_0.changeRenderQueue(arg_5_0, arg_5_1)
+function LightSpine:changeRenderQueue(value)
 	return
 end
 
-function var_0_0.setStencilRef(arg_6_0, arg_6_1)
-	if gohelper.isNil(arg_6_0._spineGo) then
+function LightSpine:setStencilRef(iValue)
+	if gohelper.isNil(self._spineGo) then
 		return
 	end
 
-	local var_6_0 = arg_6_0:getSharedMats()
-	local var_6_1 = var_6_0.Length
+	local mats = self:getSharedMats()
+	local len = mats.Length
 
-	for iter_6_0 = 0, var_6_1 - 1 do
-		var_6_0[iter_6_0]:SetFloat(ShaderPropertyId.Stencil, arg_6_1)
+	for i = 0, len - 1 do
+		local material = mats[i]
+
+		material:SetFloat(ShaderPropertyId.Stencil, iValue)
 	end
 
-	if arg_6_0._mountroot then
-		gohelper.setActive(arg_6_0._mountroot, arg_6_1 == 0)
+	if self._mountroot then
+		gohelper.setActive(self._mountroot, iValue == 0)
 	end
 end
 
-function var_0_0.setStencilValues(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if gohelper.isNil(arg_7_0._spineGo) then
+function LightSpine:setStencilValues(ref, comp, op)
+	if gohelper.isNil(self._spineGo) then
 		return
 	end
 
-	local var_7_0 = arg_7_0:getSharedMats()
-	local var_7_1 = var_7_0.Length
+	local mats = self:getSharedMats()
+	local len = mats.Length
 
-	for iter_7_0 = 0, var_7_1 - 1 do
-		local var_7_2 = var_7_0[iter_7_0]
+	for i = 0, len - 1 do
+		local material = mats[i]
 
-		var_7_2:SetFloat(ShaderPropertyId.Stencil, arg_7_1)
-		var_7_2:SetFloat(ShaderPropertyId.StencilComp, arg_7_2)
-		var_7_2:SetFloat(ShaderPropertyId.StencilOp, arg_7_3)
+		material:SetFloat(ShaderPropertyId.Stencil, ref)
+		material:SetFloat(ShaderPropertyId.StencilComp, comp)
+		material:SetFloat(ShaderPropertyId.StencilOp, op)
 	end
 end
 
-function var_0_0.getSharedMats(arg_8_0)
-	if not arg_8_0._sharedMaterials then
-		arg_8_0._sharedMaterials = arg_8_0:getRenderer().sharedMaterials
-	elseif arg_8_0._retryGetSharedMats and arg_8_0._retryGetSharedMats <= 6 then
-		arg_8_0._retryGetSharedMats = arg_8_0._retryGetSharedMats + 1
-		arg_8_0._sharedMaterials = arg_8_0:getRenderer().sharedMaterials
+function LightSpine:getSharedMats()
+	if not self._sharedMaterials then
+		local render = self:getRenderer()
 
-		if arg_8_0._sharedMaterials.Length > 1 then
-			arg_8_0._retryGetSharedMats = nil
+		self._sharedMaterials = render.sharedMaterials
+	elseif self._retryGetSharedMats and self._retryGetSharedMats <= 6 then
+		self._retryGetSharedMats = self._retryGetSharedMats + 1
+
+		local render = self:getRenderer()
+
+		self._sharedMaterials = render.sharedMaterials
+
+		if self._sharedMaterials.Length > 1 then
+			self._retryGetSharedMats = nil
 		end
 	end
 
-	return arg_8_0._sharedMaterials
+	return self._sharedMaterials
 end
 
-function var_0_0.setMainColor(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getSharedMats()
-	local var_9_1 = var_9_0.Length
+function LightSpine:setMainColor(color)
+	local mats = self:getSharedMats()
+	local len = mats.Length
 
-	for iter_9_0 = 0, var_9_1 - 1 do
-		local var_9_2 = var_9_0[iter_9_0]
+	for i = 0, len - 1 do
+		local material = mats[i]
 
-		MaterialUtil.setMainColor(var_9_2, arg_9_1)
+		MaterialUtil.setMainColor(material, color)
 	end
 end
 
-function var_0_0.setLumFactor(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0:getSharedMats()
-	local var_10_1 = var_10_0.Length
+function LightSpine:setLumFactor(value)
+	local mats = self:getSharedMats()
+	local len = mats.Length
 
-	for iter_10_0 = 0, var_10_1 - 1 do
-		var_10_0[iter_10_0]:SetFloat(ShaderPropertyId.LumFactor, arg_10_1)
+	for i = 0, len - 1 do
+		local material = mats[i]
+
+		material:SetFloat(ShaderPropertyId.LumFactor, value)
 	end
 end
 
-return var_0_0
+return LightSpine

@@ -1,127 +1,133 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6PlayerSelectSkillItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/view/LengZhou6PlayerSelectSkillItem.lua
 
-local var_0_0 = class("LengZhou6PlayerSelectSkillItem", ListScrollCellExtend)
+module("modules.logic.versionactivity2_7.lengzhou6.view.LengZhou6PlayerSelectSkillItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goSelected = gohelper.findChild(arg_1_0.viewGO, "#go_Selected")
-	arg_1_0._txtSkillDescr = gohelper.findChildText(arg_1_0.viewGO, "#txt_SkillDescr")
-	arg_1_0._txtSkillName = gohelper.findChildText(arg_1_0.viewGO, "#txt_SkillDescr/#txt_SkillName")
-	arg_1_0._imageSkillIIcon = gohelper.findChildImage(arg_1_0.viewGO, "#txt_SkillDescr/Skill/SkillIconMask/#image_SkillIIcon")
-	arg_1_0._imageSkillSmallIcon = gohelper.findChildImage(arg_1_0.viewGO, "#txt_SkillDescr/Skill/#image_SkillSmallIcon")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_SkillDescr/Skill/#image_SkillSmallIcon/#txt_num")
-	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "#txt_SkillDescr/#txt_Round")
-	arg_1_0._goClick = gohelper.findChild(arg_1_0.viewGO, "#txt_SkillDescr/#go_Click")
+local LengZhou6PlayerSelectSkillItem = class("LengZhou6PlayerSelectSkillItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function LengZhou6PlayerSelectSkillItem:onInitView()
+	self._goSelected = gohelper.findChild(self.viewGO, "#go_Selected")
+	self._txtSkillDescr = gohelper.findChildText(self.viewGO, "#txt_SkillDescr")
+	self._txtSkillName = gohelper.findChildText(self.viewGO, "#txt_SkillDescr/#txt_SkillName")
+	self._imageSkillIIcon = gohelper.findChildImage(self.viewGO, "#txt_SkillDescr/Skill/SkillIconMask/#image_SkillIIcon")
+	self._imageSkillSmallIcon = gohelper.findChildImage(self.viewGO, "#txt_SkillDescr/Skill/#image_SkillSmallIcon")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#txt_SkillDescr/Skill/#image_SkillSmallIcon/#txt_num")
+	self._txtRound = gohelper.findChildText(self.viewGO, "#txt_SkillDescr/#txt_Round")
+	self._goClick = gohelper.findChild(self.viewGO, "#txt_SkillDescr/#go_Click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function LengZhou6PlayerSelectSkillItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function LengZhou6PlayerSelectSkillItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function LengZhou6PlayerSelectSkillItem:_editableInitView()
 	return
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	arg_5_0._skillGoClick = SLFramework.UGUI.UIClickListener.Get(arg_5_0._goClick)
+function LengZhou6PlayerSelectSkillItem:_editableAddEvents()
+	self._skillGoClick = SLFramework.UGUI.UIClickListener.Get(self._goClick)
 
-	arg_5_0._skillGoClick:AddClickListener(arg_5_0._select, arg_5_0)
+	self._skillGoClick:AddClickListener(self._select, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	if arg_6_0._skillGoClick then
-		arg_6_0._skillGoClick:RemoveClickListener()
+function LengZhou6PlayerSelectSkillItem:_editableRemoveEvents()
+	if self._skillGoClick then
+		self._skillGoClick:RemoveClickListener()
 
-		arg_6_0._skillGoClick = nil
+		self._skillGoClick = nil
 	end
 end
 
-function var_0_0._select(arg_7_0)
-	if arg_7_0._skillId == nil then
+function LengZhou6PlayerSelectSkillItem:_select()
+	if self._skillId == nil then
 		return
 	end
 
-	if LengZhou6GameModel.instance:isSelectSkill(arg_7_0._skillId) then
+	local isSelect = LengZhou6GameModel.instance:isSelectSkill(self._skillId)
+
+	if isSelect then
 		return
 	end
 
-	LengZhou6GameModel.instance:setPlayerSelectSkillId(arg_7_0._selectIndex, arg_7_0._skillId)
-	arg_7_0:refreshSelect()
+	LengZhou6GameModel.instance:setPlayerSelectSkillId(self._selectIndex, self._skillId)
+	self:refreshSelect()
 	AudioMgr.instance:trigger(AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_refresh)
-	LengZhou6GameController.instance:dispatchEvent(LengZhou6Event.PlayerSelectFinish, arg_7_0._selectIndex, arg_7_0._skillId)
+	LengZhou6GameController.instance:dispatchEvent(LengZhou6Event.PlayerSelectFinish, self._selectIndex, self._skillId)
 end
 
-function var_0_0.initSkill(arg_8_0, arg_8_1)
-	arg_8_0._skillId = arg_8_1
-	arg_8_0._config = LengZhou6Config.instance:getEliminateBattleSkill(arg_8_1)
+function LengZhou6PlayerSelectSkillItem:initSkill(skillId)
+	self._skillId = skillId
+	self._config = LengZhou6Config.instance:getEliminateBattleSkill(skillId)
 
-	if arg_8_0._config ~= nil then
-		arg_8_0:initItem()
-		arg_8_0:refreshSelect()
+	if self._config ~= nil then
+		self:initItem()
+		self:refreshSelect()
 	end
 end
 
-function var_0_0.initSelectIndex(arg_9_0, arg_9_1)
-	arg_9_0._selectIndex = arg_9_1
+function LengZhou6PlayerSelectSkillItem:initSelectIndex(index)
+	self._selectIndex = index
 end
 
-function var_0_0.refreshSelect(arg_10_0)
-	local var_10_0 = LengZhou6GameModel.instance:isSelectSkill(arg_10_0._skillId)
+function LengZhou6PlayerSelectSkillItem:refreshSelect()
+	local isSelect = LengZhou6GameModel.instance:isSelectSkill(self._skillId)
 
-	gohelper.setActive(arg_10_0._goSelected, var_10_0)
+	gohelper.setActive(self._goSelected, isSelect)
 end
 
-function var_0_0.initItem(arg_11_0)
-	if arg_11_0._config.type == LengZhou6Enum.SkillType.active then
-		arg_11_0._txtRound.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("lengZhou6_skill_round"), arg_11_0._config.cd)
+function LengZhou6PlayerSelectSkillItem:initItem()
+	local isActive = self._config.type == LengZhou6Enum.SkillType.active
+
+	if isActive then
+		self._txtRound.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("lengZhou6_skill_round"), self._config.cd)
 	else
-		arg_11_0._txtRound.text = luaLang("lengZhou6_skill_round_end")
+		self._txtRound.text = luaLang("lengZhou6_skill_round_end")
 	end
 
-	arg_11_0._txtSkillDescr.text = arg_11_0._config.desc
+	self._txtSkillDescr.text = self._config.desc
 
-	local var_11_0 = arg_11_0._config.icon
+	local icon = self._config.icon
 
-	if var_11_0 ~= nil then
-		local var_11_1 = string.split(var_11_0, "#")
+	if icon ~= nil then
+		local icons = string.split(icon, "#")
 
-		UISpriteSetMgr.instance:setHisSaBethSprite(arg_11_0._imageSkillIIcon, var_11_1[1])
+		UISpriteSetMgr.instance:setHisSaBethSprite(self._imageSkillIIcon, icons[1])
 
-		local var_11_2 = var_11_1[2] ~= nil
+		local haveSmallIcon = icons[2] ~= nil
 
-		if var_11_2 then
-			UISpriteSetMgr.instance:setHisSaBethSprite(arg_11_0._imageSkillSmallIcon, var_11_1[2])
+		if haveSmallIcon then
+			UISpriteSetMgr.instance:setHisSaBethSprite(self._imageSkillSmallIcon, icons[2])
 		end
 
-		gohelper.setActive(arg_11_0._imageSkillSmallIcon.gameObject, var_11_2)
+		gohelper.setActive(self._imageSkillSmallIcon.gameObject, haveSmallIcon)
 	end
 
-	local var_11_3 = arg_11_0._config.effect
+	local effect = self._config.effect
 
-	if var_11_3 ~= nil then
-		local var_11_4 = string.split(var_11_3, "#")
+	if effect ~= nil then
+		local effects = string.split(effect, "#")
 
-		if var_11_4[1] == LengZhou6Enum.SkillEffect.DealsDamage then
-			local var_11_5 = tonumber(var_11_4[2])
+		if effects[1] == LengZhou6Enum.SkillEffect.DealsDamage then
+			local num = tonumber(effects[2])
 
-			arg_11_0._txtnum.text = var_11_5
+			self._txtnum.text = num
 		end
 
-		gohelper.setActive(arg_11_0._txtnum.gameObject, var_11_4[1] == LengZhou6Enum.SkillEffect.DealsDamage)
+		gohelper.setActive(self._txtnum.gameObject, effects[1] == LengZhou6Enum.SkillEffect.DealsDamage)
 	end
 
-	arg_11_0._txtSkillName.text = arg_11_0._config.name
+	self._txtSkillName.text = self._config.name
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function LengZhou6PlayerSelectSkillItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return LengZhou6PlayerSelectSkillItem

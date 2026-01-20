@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_2.act169.model.SummonNewCustomPickViewMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/act169/model/SummonNewCustomPickViewMo.lua
 
-local var_0_0 = class("SummonNewCustomPickViewMo")
+module("modules.logic.versionactivity2_2.act169.model.SummonNewCustomPickViewMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.activityId = arg_1_1
-	arg_1_0.heroId = arg_1_2
-	arg_1_0.selectId = arg_1_2
+local SummonNewCustomPickViewMo = class("SummonNewCustomPickViewMo")
+
+function SummonNewCustomPickViewMo:ctor(activityId, heroId)
+	self.activityId = activityId
+	self.heroId = heroId
+	self.selectId = heroId
 end
 
-return var_0_0
+return SummonNewCustomPickViewMo

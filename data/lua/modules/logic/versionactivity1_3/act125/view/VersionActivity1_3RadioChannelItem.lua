@@ -1,71 +1,74 @@
-﻿module("modules.logic.versionactivity1_3.act125.view.VersionActivity1_3RadioChannelItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act125/view/VersionActivity1_3RadioChannelItem.lua
 
-local var_0_0 = class("VersionActivity1_3RadioChannelItem", ListScrollCell)
+module("modules.logic.versionactivity1_3.act125.view.VersionActivity1_3RadioChannelItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._txtFMChannelNumSelected = gohelper.findChildText(arg_1_1, "txt_FMChannelNumSelected")
-	arg_1_0._txtFMChannelNumUnSelected = gohelper.findChildText(arg_1_1, "txt_FMChannelNumUnSelected")
-	arg_1_0._click = gohelper.getClick(arg_1_1)
+local VersionActivity1_3RadioChannelItem = class("VersionActivity1_3RadioChannelItem", ListScrollCell)
+
+function VersionActivity1_3RadioChannelItem:init(go)
+	self.go = go
+	self._txtFMChannelNumSelected = gohelper.findChildText(go, "txt_FMChannelNumSelected")
+	self._txtFMChannelNumUnSelected = gohelper.findChildText(go, "txt_FMChannelNumUnSelected")
+	self._click = gohelper.getClick(go)
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	Activity125Controller.instance:registerCallback(Activity125Event.OnFMScrollValueChange, arg_2_0._refreshFMSliderItem, arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
+function VersionActivity1_3RadioChannelItem:addEventListeners()
+	Activity125Controller.instance:registerCallback(Activity125Event.OnFMScrollValueChange, self._refreshFMSliderItem, self)
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	Activity125Controller.instance:unregisterCallback(Activity125Event.OnFMScrollValueChange, arg_3_0._refreshFMSliderItem, arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function VersionActivity1_3RadioChannelItem:removeEventListeners()
+	Activity125Controller.instance:unregisterCallback(Activity125Event.OnFMScrollValueChange, self._refreshFMSliderItem, self)
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function VersionActivity1_3RadioChannelItem:onUpdateMO(mo)
+	self._mo = mo
 
-	gohelper.setActive(arg_4_0._txtFMChannelNumSelected.gameObject, not arg_4_1.isEmpty)
-	gohelper.setActive(arg_4_0._txtFMChannelNumUnSelected.gameObject, not arg_4_1.isEmpty)
+	gohelper.setActive(self._txtFMChannelNumSelected.gameObject, not mo.isEmpty)
+	gohelper.setActive(self._txtFMChannelNumUnSelected.gameObject, not mo.isEmpty)
 
-	arg_4_0._id = arg_4_1.id
+	self._id = mo.id
 
-	if arg_4_1.isEmpty then
+	if mo.isEmpty then
 		return
 	end
 
-	arg_4_0._txtFMChannelNumSelected.text = arg_4_1.value
-	arg_4_0._txtFMChannelNumUnSelected.text = arg_4_1.value
+	self._txtFMChannelNumSelected.text = mo.value
+	self._txtFMChannelNumUnSelected.text = mo.value
 end
 
-local var_0_1 = 0.05
+local channelOffset = 0.05
 
-function var_0_0._refreshFMSliderItem(arg_5_0, arg_5_1)
-	local var_5_0 = transformhelper.getPos(arg_5_0.go.transform)
-	local var_5_1 = Mathf.Abs(var_5_0 - arg_5_1) <= var_0_1
+function VersionActivity1_3RadioChannelItem:_refreshFMSliderItem(fmsliderPingPosX)
+	local channelItemPosX = transformhelper.getPos(self.go.transform)
+	local distance = Mathf.Abs(channelItemPosX - fmsliderPingPosX)
+	local isSelected = distance <= channelOffset
 
-	arg_5_0:onSelect(false)
+	self:onSelect(false)
 
-	if var_5_1 then
-		arg_5_0._view:selectCell(arg_5_0._index, true)
+	if isSelected then
+		self._view:selectCell(self._index, true)
 	end
 end
 
-function var_0_0._onClick(arg_6_0)
-	if arg_6_0._index and not arg_6_0._mo.isEmpty then
-		arg_6_0._view:selectCell(arg_6_0._index, true)
-		Activity125Controller.instance:dispatchEvent(Activity125Event.OnChannelItemClick, arg_6_0._id)
+function VersionActivity1_3RadioChannelItem:_onClick()
+	if self._index and not self._mo.isEmpty then
+		self._view:selectCell(self._index, true)
+		Activity125Controller.instance:dispatchEvent(Activity125Event.OnChannelItemClick, self._id)
 	end
 end
 
-function var_0_0.onSelect(arg_7_0, arg_7_1)
-	gohelper.setActive(arg_7_0._txtFMChannelNumSelected.gameObject, arg_7_1 and not arg_7_0._mo.isEmpty)
-	gohelper.setActive(arg_7_0._txtFMChannelNumUnSelected.gameObject, not arg_7_1 and not arg_7_0._mo.isEmpty)
+function VersionActivity1_3RadioChannelItem:onSelect(isSelect)
+	gohelper.setActive(self._txtFMChannelNumSelected.gameObject, isSelect and not self._mo.isEmpty)
+	gohelper.setActive(self._txtFMChannelNumUnSelected.gameObject, not isSelect and not self._mo.isEmpty)
 
-	if arg_7_1 then
-		Activity125Controller.instance:dispatchEvent(Activity125Event.OnChannelSelected, arg_7_0._id)
+	if isSelect then
+		Activity125Controller.instance:dispatchEvent(Activity125Event.OnChannelSelected, self._id)
 	end
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function VersionActivity1_3RadioChannelItem:onDestroy()
 	return
 end
 
-return var_0_0
+return VersionActivity1_3RadioChannelItem

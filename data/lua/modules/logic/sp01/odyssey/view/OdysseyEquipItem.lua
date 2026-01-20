@@ -1,194 +1,201 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyEquipItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyEquipItem.lua
 
-local var_0_0 = class("OdysseyEquipItem", ListScrollCellExtend)
+module("modules.logic.sp01.odyssey.view.OdysseyEquipItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imageRare = gohelper.findChildImage(arg_1_0.viewGO, "rare")
-	arg_1_0._simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "icon")
-	arg_1_0._goCount = gohelper.findChild(arg_1_0.viewGO, "countbg")
-	arg_1_0._txtCount = gohelper.findChildText(arg_1_0.viewGO, "count")
-	arg_1_0._goSuit = gohelper.findChild(arg_1_0.viewGO, "suit")
-	arg_1_0._imageSuit = gohelper.findChildImage(arg_1_0.viewGO, "suit/image_suitIcon")
-	arg_1_0._goHero = gohelper.findChild(arg_1_0.viewGO, "hero")
-	arg_1_0._simageHeroIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "hero/simage_heroIcon")
-	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "click")
-	arg_1_0._goSelect = gohelper.findChild(arg_1_0.viewGO, "go_select")
-	arg_1_0._goReddot = gohelper.findChild(arg_1_0.viewGO, "go_reddot")
-	arg_1_0._goExpIcon = gohelper.findChild(arg_1_0.viewGO, "expIcon")
-	arg_1_0._goTalentIcon = gohelper.findChild(arg_1_0.viewGO, "talentIcon")
-	arg_1_0.fontSize = arg_1_0._txtCount.fontSize
-	arg_1_0.countBgScale = transformhelper.getLocalScale(arg_1_0._goCount.transform)
-	arg_1_0._goUnknowSuitIcon = gohelper.findChild(arg_1_0.viewGO, "unknowSuitIcon")
+local OdysseyEquipItem = class("OdysseyEquipItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function OdysseyEquipItem:onInitView()
+	self._imageRare = gohelper.findChildImage(self.viewGO, "rare")
+	self._simageIcon = gohelper.findChildSingleImage(self.viewGO, "icon")
+	self._goCount = gohelper.findChild(self.viewGO, "countbg")
+	self._txtCount = gohelper.findChildText(self.viewGO, "count")
+	self._goSuit = gohelper.findChild(self.viewGO, "suit")
+	self._imageSuit = gohelper.findChildImage(self.viewGO, "suit/image_suitIcon")
+	self._goHero = gohelper.findChild(self.viewGO, "hero")
+	self._simageHeroIcon = gohelper.findChildSingleImage(self.viewGO, "hero/simage_heroIcon")
+	self._btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "click")
+	self._goSelect = gohelper.findChild(self.viewGO, "go_select")
+	self._goReddot = gohelper.findChild(self.viewGO, "go_reddot")
+	self._goExpIcon = gohelper.findChild(self.viewGO, "expIcon")
+	self._goTalentIcon = gohelper.findChild(self.viewGO, "talentIcon")
+	self.fontSize = self._txtCount.fontSize
+	self.countBgScale = transformhelper.getLocalScale(self._goCount.transform)
+	self._goUnknowSuitIcon = gohelper.findChild(self.viewGO, "unknowSuitIcon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
-	arg_2_0._enableDeselect = true
+function OdysseyEquipItem:_editableInitView()
+	self._enableDeselect = true
 
-	arg_2_0:hideIcon()
+	self:hideIcon()
 end
 
-function var_0_0.hideIcon(arg_3_0)
-	gohelper.setActive(arg_3_0._goSuit, false)
-	gohelper.setActive(arg_3_0._goHero, false)
-	gohelper.setActive(arg_3_0._goExpIcon, false)
-	gohelper.setActive(arg_3_0._goTalentIcon, false)
-	gohelper.setActive(arg_3_0._goUnknowSuitIcon, false)
+function OdysseyEquipItem:hideIcon()
+	gohelper.setActive(self._goSuit, false)
+	gohelper.setActive(self._goHero, false)
+	gohelper.setActive(self._goExpIcon, false)
+	gohelper.setActive(self._goTalentIcon, false)
+	gohelper.setActive(self._goUnknowSuitIcon, false)
 end
 
-function var_0_0.addEvents(arg_4_0)
-	arg_4_0._btnClick:AddClickListener(arg_4_0.onClick, arg_4_0)
+function OdysseyEquipItem:addEvents()
+	self._btnClick:AddClickListener(self.onClick, self)
 end
 
-function var_0_0.removeEvents(arg_5_0)
-	arg_5_0._btnClick:RemoveClickListener()
+function OdysseyEquipItem:removeEvents()
+	self._btnClick:RemoveClickListener()
 end
 
-function var_0_0.onSelect(arg_6_0, arg_6_1)
-	arg_6_0._isSelect = arg_6_1
+function OdysseyEquipItem:onSelect(isSelect)
+	self._isSelect = isSelect
 
-	gohelper.setActive(arg_6_0._goSelect, arg_6_1)
+	gohelper.setActive(self._goSelect, isSelect)
 
-	if arg_6_0._isSelect then
-		OdysseyItemModel.instance:setHasClickItem(arg_6_0.mo.uid)
-		gohelper.setActive(arg_6_0._goReddot, false)
+	if self._isSelect then
+		OdysseyItemModel.instance:setHasClickItem(self.mo.uid)
+		gohelper.setActive(self._goReddot, false)
 		OdysseyController.instance:dispatchEvent(OdysseyEvent.OnRefreshBagReddot)
 	end
 end
 
-function var_0_0.onClick(arg_7_0)
-	logNormal("奥德赛道具点击 id: " .. tostring(arg_7_0.itemId) .. "uid : " .. tostring(arg_7_0.mo.uid))
+function OdysseyEquipItem:onClick()
+	logNormal("奥德赛道具点击 id: " .. tostring(self.itemId) .. "uid : " .. tostring(self.mo.uid))
 
-	if arg_7_0.itemConfig.type == OdysseyEnum.ItemType.Item and OdysseyItemModel.instance:getItemCount(arg_7_0.itemId) > 0 == false then
-		logNormal("奥德赛 任务道具数量不足")
+	if self.itemConfig.type == OdysseyEnum.ItemType.Item then
+		local haveItem = OdysseyItemModel.instance:getItemCount(self.itemId) > 0
 
-		return
-	end
+		if haveItem == false then
+			logNormal("奥德赛 任务道具数量不足")
 
-	local var_7_0 = arg_7_0._isSelect and arg_7_0._enableDeselect
-
-	if var_7_0 and arg_7_0.bagType == OdysseyEnum.BagType.Bag then
-		return
-	end
-
-	if var_7_0 then
-		arg_7_0._view:selectCell(arg_7_0._index, false)
-	else
-		arg_7_0._view:selectCell(arg_7_0._index, true)
-	end
-
-	OdysseyItemModel.instance:setHasClickItem(arg_7_0.mo.uid)
-	OdysseyController.instance:dispatchEvent(OdysseyEvent.OnEquipItemSelect, not var_7_0 and arg_7_0.mo or nil)
-	gohelper.setActive(arg_7_0._goReddot, false)
-end
-
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0.mo = arg_8_1
-	arg_8_0.bagType = arg_8_1.type
-
-	local var_8_0 = arg_8_1.itemMo
-
-	arg_8_0.itemId = var_8_0.id
-	arg_8_0.itemConfig = var_8_0.config
-	arg_8_0.isNewFlag = var_8_0:isNew()
-
-	arg_8_0:initItemInfo()
-end
-
-function var_0_0.initItemInfo(arg_9_0)
-	gohelper.setActive(arg_9_0._goSuit, arg_9_0.itemType == OdysseyEnum.ItemType.Equip and arg_9_0.itemConfig and arg_9_0.itemConfig.suitId > 0)
-
-	if arg_9_0.itemConfig.type == OdysseyEnum.ItemType.Item then
-		local var_9_0 = OdysseyItemModel.instance:getItemCount(arg_9_0.itemId) > 0
-
-		gohelper.setActive(arg_9_0._simageIcon, var_9_0)
-		gohelper.setActive(arg_9_0._goUnknowSuitIcon, not var_9_0)
-
-		if var_9_0 then
-			arg_9_0._simageIcon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(arg_9_0.itemConfig.icon))
+			return
 		end
-	elseif arg_9_0.itemConfig.type == OdysseyEnum.ItemType.Equip then
-		gohelper.setActive(arg_9_0._simageIcon, true)
-		arg_9_0._simageIcon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(arg_9_0.itemConfig.icon))
 	end
 
-	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_9_0._imageRare, "odyssey_item_quality" .. arg_9_0.itemConfig.rare)
+	local haveSelect = self._isSelect and self._enableDeselect
 
-	local var_9_1 = OdysseyItemModel.instance:isHasClickItem(arg_9_0.mo.uid)
+	if haveSelect and self.bagType == OdysseyEnum.BagType.Bag then
+		return
+	end
 
-	gohelper.setActive(arg_9_0._goReddot, not var_9_1 and arg_9_0.isNewFlag)
-	arg_9_0:setShowCountState(false)
-	arg_9_0:refreshItemEquipState()
-	arg_9_0:refreshEquipSuitState()
-	arg_9_0:setFontScale()
+	if haveSelect then
+		self._view:selectCell(self._index, false)
+	else
+		self._view:selectCell(self._index, true)
+	end
+
+	OdysseyItemModel.instance:setHasClickItem(self.mo.uid)
+	OdysseyController.instance:dispatchEvent(OdysseyEvent.OnEquipItemSelect, not haveSelect and self.mo or nil)
+	gohelper.setActive(self._goReddot, false)
 end
 
-function var_0_0.refreshItemEquipState(arg_10_0)
-	local var_10_0 = arg_10_0.bagType == OdysseyEnum.BagType.FightPrepare and arg_10_0.itemConfig.type == OdysseyEnum.ItemType.Equip
-	local var_10_1 = false
+function OdysseyEquipItem:onUpdateMO(mo)
+	self.mo = mo
+	self.bagType = mo.type
 
-	if var_10_0 then
-		local var_10_2 = OdysseyHeroGroupModel.instance:getCurHeroGroup().odysseyEquipDic[arg_10_0.mo.uid]
+	local itemMo = mo.itemMo
 
-		if var_10_2 then
-			local var_10_3 = var_10_2.heroId
+	self.itemId = itemMo.id
+	self.itemConfig = itemMo.config
+	self.isNewFlag = itemMo:isNew()
 
-			if var_10_3 ~= 0 then
-				local var_10_4
+	self:initItemInfo()
+end
 
-				if var_10_3 < 0 then
-					local var_10_5 = lua_hero_trial.configDict[-var_10_3][0]
+function OdysseyEquipItem:initItemInfo()
+	gohelper.setActive(self._goSuit, self.itemType == OdysseyEnum.ItemType.Equip and self.itemConfig and self.itemConfig.suitId > 0)
 
-					var_10_4 = SkinConfig.instance:getSkinCo(var_10_5.skin)
+	if self.itemConfig.type == OdysseyEnum.ItemType.Item then
+		local haveItem = OdysseyItemModel.instance:getItemCount(self.itemId) > 0
+
+		gohelper.setActive(self._simageIcon, haveItem)
+		gohelper.setActive(self._goUnknowSuitIcon, not haveItem)
+
+		if haveItem then
+			self._simageIcon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(self.itemConfig.icon))
+		end
+	elseif self.itemConfig.type == OdysseyEnum.ItemType.Equip then
+		gohelper.setActive(self._simageIcon, true)
+		self._simageIcon:LoadImage(ResUrl.getSp01OdysseyItemSingleBg(self.itemConfig.icon))
+	end
+
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imageRare, "odyssey_item_quality" .. self.itemConfig.rare)
+
+	local isHasClickItem = OdysseyItemModel.instance:isHasClickItem(self.mo.uid)
+
+	gohelper.setActive(self._goReddot, not isHasClickItem and self.isNewFlag)
+	self:setShowCountState(false)
+	self:refreshItemEquipState()
+	self:refreshEquipSuitState()
+	self:setFontScale()
+end
+
+function OdysseyEquipItem:refreshItemEquipState()
+	local showEquip = self.bagType == OdysseyEnum.BagType.FightPrepare and self.itemConfig.type == OdysseyEnum.ItemType.Equip
+	local haveHero = false
+
+	if showEquip then
+		local curHeroGroupMo = OdysseyHeroGroupModel.instance:getCurHeroGroup()
+		local equipInfo = curHeroGroupMo.odysseyEquipDic[self.mo.uid]
+
+		if equipInfo then
+			local heroId = equipInfo.heroId
+
+			if heroId ~= 0 then
+				local skinCo
+
+				if heroId < 0 then
+					local trialCo = lua_hero_trial.configDict[-heroId][0]
+
+					skinCo = SkinConfig.instance:getSkinCo(trialCo.skin)
 				else
-					local var_10_6 = HeroModel.instance:getByHeroId(var_10_3)
+					local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-					var_10_4 = SkinConfig.instance:getSkinCo(var_10_6.skin)
+					skinCo = SkinConfig.instance:getSkinCo(heroMo.skin)
 				end
 
-				if var_10_4 == nil then
-					logError("奥德赛角色活动 角色皮肤表id为空：装备uid：" .. tostring(arg_10_0.mo.uid))
+				if skinCo == nil then
+					logError("奥德赛角色活动 角色皮肤表id为空：装备uid：" .. tostring(self.mo.uid))
 				else
-					var_10_1 = true
+					haveHero = true
 
-					local var_10_7 = ResUrl.getRoomHeadIcon(var_10_4.headIcon)
+					local heroIconPath = ResUrl.getRoomHeadIcon(skinCo.headIcon)
 
-					arg_10_0._simageHeroIcon:LoadImage(var_10_7)
+					self._simageHeroIcon:LoadImage(heroIconPath)
 				end
 			end
 		end
 	end
 
-	gohelper.setActive(arg_10_0._goHero, var_10_0 and var_10_1)
+	gohelper.setActive(self._goHero, showEquip and haveHero)
 end
 
-function var_0_0.refreshEquipSuitState(arg_11_0)
-	local var_11_0 = arg_11_0.itemConfig.type == OdysseyEnum.ItemType.Equip
+function OdysseyEquipItem:refreshEquipSuitState()
+	local showSuit = self.itemConfig.type == OdysseyEnum.ItemType.Equip
 
-	gohelper.setActive(arg_11_0._goSuit, var_11_0)
+	gohelper.setActive(self._goSuit, showSuit)
 
-	if var_11_0 then
-		local var_11_1 = OdysseyConfig.instance:getEquipSuitConfig(arg_11_0.itemConfig.suitId)
+	if showSuit then
+		local suitConfig = OdysseyConfig.instance:getEquipSuitConfig(self.itemConfig.suitId)
 
-		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(arg_11_0._imageSuit, var_11_1.icon)
+		UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(self._imageSuit, suitConfig.icon)
 	end
 end
 
-function var_0_0.setFontScale(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0.viewGO.transform.parent
-	local var_12_1 = var_12_0 and transformhelper.getLocalScale(var_12_0) or 1
+function OdysseyEquipItem:setFontScale(scale)
+	local parentTrans = self.viewGO.transform.parent
+	local parentScale = parentTrans and transformhelper.getLocalScale(parentTrans) or 1
 
-	transformhelper.setLocalScale(arg_12_0._goCount.transform, arg_12_0.countBgScale, arg_12_1 or arg_12_0.countBgScale / var_12_1, arg_12_0.countBgScale)
+	transformhelper.setLocalScale(self._goCount.transform, self.countBgScale, scale or self.countBgScale / parentScale, self.countBgScale)
 
-	arg_12_0._txtCount.fontSize = arg_12_0.fontSize * (arg_12_1 or 1 / var_12_1)
+	self._txtCount.fontSize = self.fontSize * (scale or 1 / parentScale)
 end
 
-function var_0_0.setShowCountState(arg_13_0, arg_13_1)
-	gohelper.setActive(arg_13_0._goCount, arg_13_1)
-	gohelper.setActive(arg_13_0._txtCount, arg_13_1)
+function OdysseyEquipItem:setShowCountState(showCountState)
+	gohelper.setActive(self._goCount, showCountState)
+	gohelper.setActive(self._txtCount, showCountState)
 end
 
-return var_0_0
+return OdysseyEquipItem

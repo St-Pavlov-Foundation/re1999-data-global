@@ -1,8 +1,10 @@
-﻿module("modules.logic.fight.fightcomponent.FightTweenType", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightTweenType.lua
 
-local var_0_0 = {}
+module("modules.logic.fight.fightcomponent.FightTweenType", package.seeall)
 
-return {
+local FightTweenType = {}
+
+FightTweenType = {
 	DOAnchorPosY = "DOAnchorPosY",
 	DOTweenFloat = "DOTweenFloat",
 	DORotate = "DORotate",
@@ -25,3 +27,5 @@ return {
 	DOLocalRotate = "DOLocalRotate",
 	DOMoveX = "DOMoveX"
 }
+
+return FightTweenType

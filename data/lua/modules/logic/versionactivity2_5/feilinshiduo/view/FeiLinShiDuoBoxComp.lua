@@ -1,326 +1,336 @@
-﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoBoxComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/feilinshiduo/view/FeiLinShiDuoBoxComp.lua
 
-local var_0_0 = class("FeiLinShiDuoBoxComp", LuaCompBase)
+module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoBoxComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.boxTrans = arg_1_0.go.transform
-	arg_1_0.moveSpeed = FeiLinShiDuoEnum.PlayerMoveSpeed
-	arg_1_0.fallAddSpeed = FeiLinShiDuoEnum.FallSpeed
+local FeiLinShiDuoBoxComp = class("FeiLinShiDuoBoxComp", LuaCompBase)
 
-	arg_1_0:resetData()
+function FeiLinShiDuoBoxComp:init(go)
+	self.go = go
+	self.boxTrans = self.go.transform
+	self.moveSpeed = FeiLinShiDuoEnum.PlayerMoveSpeed
+	self.fallAddSpeed = FeiLinShiDuoEnum.FallSpeed
+
+	self:resetData()
 end
 
-function var_0_0.resetData(arg_2_0)
-	arg_2_0.isGround = true
-	arg_2_0.fallYSpeed = 0
-	arg_2_0.deltaMoveX = 0
-	arg_2_0.curInPlaneItem = nil
-	arg_2_0.planeStartPosX = 0
-	arg_2_0.planeEndPosX = 0
-	arg_2_0.isTopBox = false
-	arg_2_0.topBoxOffset = -10000
-	arg_2_0.topBoxDeltaMove = arg_2_0.deltaMoveX
-	arg_2_0.bottomBoxMap = {}
+function FeiLinShiDuoBoxComp:resetData()
+	self.isGround = true
+	self.fallYSpeed = 0
+	self.deltaMoveX = 0
+	self.curInPlaneItem = nil
+	self.planeStartPosX = 0
+	self.planeEndPosX = 0
+	self.isTopBox = false
+	self.topBoxOffset = -10000
+	self.topBoxDeltaMove = self.deltaMoveX
+	self.bottomBoxMap = {}
 end
 
-function var_0_0.initData(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.itemInfo = arg_3_1
-	arg_3_0.sceneViewCls = arg_3_2
-	arg_3_0.boxElementMap = FeiLinShiDuoGameModel.instance:getElementMap()[FeiLinShiDuoEnum.ObjectType.Box]
+function FeiLinShiDuoBoxComp:initData(mapItemInfo, viewCls)
+	self.itemInfo = mapItemInfo
+	self.sceneViewCls = viewCls
+
+	local elementMap = FeiLinShiDuoGameModel.instance:getElementMap()
+
+	self.boxElementMap = elementMap[FeiLinShiDuoEnum.ObjectType.Box]
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, arg_4_0.resetData, arg_4_0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.CleanTopBoxBottomInfo, arg_4_0.cleanTopBoxBottomInfo, arg_4_0)
+function FeiLinShiDuoBoxComp:addEventListeners()
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, self.resetData, self)
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.CleanTopBoxBottomInfo, self.cleanTopBoxBottomInfo, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, arg_5_0.resetData, arg_5_0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.CleanTopBoxBottomInfo, arg_5_0.cleanTopBoxBottomInfo, arg_5_0)
+function FeiLinShiDuoBoxComp:removeEventListeners()
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, self.resetData, self)
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.CleanTopBoxBottomInfo, self.cleanTopBoxBottomInfo, self)
 end
 
-function var_0_0.cleanTopBoxBottomInfo(arg_6_0)
-	if arg_6_0.isTopBox then
-		arg_6_0.bottomBoxMap = {}
+function FeiLinShiDuoBoxComp:cleanTopBoxBottomInfo()
+	if self.isTopBox then
+		self.bottomBoxMap = {}
 	end
 end
 
-function var_0_0.onTick(arg_7_0)
-	arg_7_0:handleEvent()
+function FeiLinShiDuoBoxComp:onTick()
+	self:handleEvent()
 end
 
-function var_0_0.handleEvent(arg_8_0)
-	if not arg_8_0.sceneViewCls then
+function FeiLinShiDuoBoxComp:handleEvent()
+	if not self.sceneViewCls then
 		return
 	end
 
-	if FeiLinShiDuoGameModel.instance:getElementShowState(arg_8_0.itemInfo) and not arg_8_0:checkBoxInPlane() then
-		arg_8_0:checkBoxFall()
+	if FeiLinShiDuoGameModel.instance:getElementShowState(self.itemInfo) and not self:checkBoxInPlane() then
+		self:checkBoxFall()
 	end
 end
 
-function var_0_0.checkBoxFall(arg_9_0, arg_9_1)
-	if arg_9_0.deltaMoveX and arg_9_0.itemInfo or arg_9_0.isTopBox then
-		local var_9_0 = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(arg_9_0.boxTrans.localPosition.x, arg_9_0.boxTrans.localPosition.y, arg_9_0.itemInfo, FeiLinShiDuoEnum.checkDir.Bottom, nil, {
+function FeiLinShiDuoBoxComp:checkBoxFall(isChangeColor)
+	if self.deltaMoveX and self.itemInfo or self.isTopBox then
+		local isTouchElementList = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(self.boxTrans.localPosition.x, self.boxTrans.localPosition.y, self.itemInfo, FeiLinShiDuoEnum.checkDir.Bottom, nil, {
 			FeiLinShiDuoEnum.ObjectType.Option,
 			FeiLinShiDuoEnum.ObjectType.Start
 		})
 
-		if #var_9_0 == 0 then
-			arg_9_0.isGround = false
-			arg_9_0.fallYSpeed = arg_9_0.fallYSpeed + arg_9_0.fallAddSpeed
+		if #isTouchElementList == 0 then
+			self.isGround = false
+			self.fallYSpeed = self.fallYSpeed + self.fallAddSpeed
 
-			if not arg_9_0.isTopBox then
-				local var_9_1 = FeiLinShiDuoGameModel.instance:getElementShowStateMap()
-				local var_9_2 = arg_9_0.boxTrans.localPosition.x
+			if not self.isTopBox then
+				local elementShowStateMap = FeiLinShiDuoGameModel.instance:getElementShowStateMap()
+				local fallPosX = self.boxTrans.localPosition.x
 
-				if arg_9_0.curInPlaneItem and var_9_1[arg_9_0.curInPlaneItem.id] and arg_9_0.deltaMoveX ~= 0 then
-					var_9_2 = arg_9_0.deltaMoveX > 0 and arg_9_0.planeEndPosX or arg_9_0.planeStartPosX - arg_9_0.itemInfo.width
+				if self.curInPlaneItem and elementShowStateMap[self.curInPlaneItem.id] and self.deltaMoveX ~= 0 then
+					fallPosX = self.deltaMoveX > 0 and self.planeEndPosX or self.planeStartPosX - self.itemInfo.width
 				end
 
-				transformhelper.setLocalPosXY(arg_9_0.boxTrans, var_9_2, arg_9_0.boxTrans.localPosition.y - arg_9_0.fallYSpeed * Time.deltaTime)
+				transformhelper.setLocalPosXY(self.boxTrans, fallPosX, self.boxTrans.localPosition.y - self.fallYSpeed * Time.deltaTime)
 			else
-				local var_9_3 = arg_9_1 and arg_9_0.boxTrans.localPosition.y or arg_9_0.boxTrans.localPosition.y - FeiLinShiDuoEnum.HalfSlotWidth
-				local var_9_4 = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(arg_9_0.boxTrans.localPosition.x, var_9_3, arg_9_0.itemInfo, FeiLinShiDuoEnum.checkDir.Bottom, arg_9_0.boxElementMap)
-				local var_9_5 = arg_9_0.boxTrans.localPosition.x
+				local checkY = isChangeColor and self.boxTrans.localPosition.y or self.boxTrans.localPosition.y - FeiLinShiDuoEnum.HalfSlotWidth
+				local fallCheckTouchBoxList = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(self.boxTrans.localPosition.x, checkY, self.itemInfo, FeiLinShiDuoEnum.checkDir.Bottom, self.boxElementMap)
+				local fallPosX = self.boxTrans.localPosition.x
 
-				if #var_9_4 == 0 then
-					if not FeiLinShiDuoGameModel.instance:getElementShowState(arg_9_0.bottomBoxItemInfo) then
-						var_9_5 = arg_9_0.boxTrans.localPosition.x
-					elseif arg_9_0.bottomBoxItemInfo and Mathf.Abs(arg_9_0.boxTrans.localPosition.x + arg_9_0.itemInfo.width / 2 - (arg_9_0.bottomBoxItemInfo.pos[1] + arg_9_0.bottomBoxItemInfo.width / 2)) > arg_9_0.itemInfo.width / 2 + arg_9_0.bottomBoxItemInfo.width / 2 then
-						var_9_5 = arg_9_0.boxTrans.localPosition.x
+				if #fallCheckTouchBoxList == 0 then
+					if not FeiLinShiDuoGameModel.instance:getElementShowState(self.bottomBoxItemInfo) then
+						fallPosX = self.boxTrans.localPosition.x
+					elseif self.bottomBoxItemInfo and Mathf.Abs(self.boxTrans.localPosition.x + self.itemInfo.width / 2 - (self.bottomBoxItemInfo.pos[1] + self.bottomBoxItemInfo.width / 2)) > self.itemInfo.width / 2 + self.bottomBoxItemInfo.width / 2 then
+						fallPosX = self.boxTrans.localPosition.x
 					else
-						var_9_5 = arg_9_0.topBoxDeltaMove > 0 and arg_9_0.bottomBoxItemInfo.pos[1] + arg_9_0.bottomBoxItemInfo.width or arg_9_0.bottomBoxItemInfo.pos[1] - arg_9_0.itemInfo.width
+						fallPosX = self.topBoxDeltaMove > 0 and self.bottomBoxItemInfo.pos[1] + self.bottomBoxItemInfo.width or self.bottomBoxItemInfo.pos[1] - self.itemInfo.width
 					end
 				end
 
-				transformhelper.setLocalPosXY(arg_9_0.boxTrans, var_9_5, arg_9_0.boxTrans.localPosition.y - arg_9_0.fallYSpeed * Time.deltaTime)
+				transformhelper.setLocalPosXY(self.boxTrans, fallPosX, self.boxTrans.localPosition.y - self.fallYSpeed * Time.deltaTime)
 			end
 		else
-			if not arg_9_0.isGround then
-				arg_9_0.boxTrans.localPosition = arg_9_0:fixStandPos(var_9_0)
+			if not self.isGround then
+				self.boxTrans.localPosition = self:fixStandPos(isTouchElementList)
 
 				AudioMgr.instance:trigger(AudioEnum.FeiLinShiDuo.play_ui_activity_organ_open)
 				FeiLinShiDuoGameController.instance:dispatchEvent(FeiLinShiDuoEvent.CleanTopBoxBottomInfo)
 			end
 
-			arg_9_0.isGround = true
-			arg_9_0.fallYSpeed = 0
-			arg_9_0.deltaMoveX = 0
-			arg_9_0.isTopBox = false
+			self.isGround = true
+			self.fallYSpeed = 0
+			self.deltaMoveX = 0
+			self.isTopBox = false
 
-			for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-				if iter_9_1.type == FeiLinShiDuoEnum.ObjectType.Box then
-					arg_9_0.isTopBox = true
-					arg_9_0.topBoxOffset = iter_9_1.pos[1] - arg_9_0.boxTrans.localPosition.x
-					arg_9_0.bottomBoxItemInfo = iter_9_1
-					arg_9_0.bottomBoxMap[arg_9_0.bottomBoxItemInfo.id] = arg_9_0.topBoxOffset
+			for _, mapItem in ipairs(isTouchElementList) do
+				if mapItem.type == FeiLinShiDuoEnum.ObjectType.Box then
+					self.isTopBox = true
+					self.topBoxOffset = mapItem.pos[1] - self.boxTrans.localPosition.x
+					self.bottomBoxItemInfo = mapItem
+					self.bottomBoxMap[self.bottomBoxItemInfo.id] = self.topBoxOffset
 
 					break
 				end
 			end
 
-			if not arg_9_0.isTopBox then
-				arg_9_0.bottomBoxMap = {}
+			if not self.isTopBox then
+				self.bottomBoxMap = {}
 			end
 		end
 
-		local var_9_6 = {
-			arg_9_0.boxTrans.localPosition.x,
-			arg_9_0.boxTrans.localPosition.y
+		local posTab = {
+			self.boxTrans.localPosition.x,
+			self.boxTrans.localPosition.y
 		}
 
-		FeiLinShiDuoGameModel.instance:updateBoxPos(arg_9_0.itemInfo.id, var_9_6)
+		FeiLinShiDuoGameModel.instance:updateBoxPos(self.itemInfo.id, posTab)
 	end
 end
 
-function var_0_0.setMove(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = arg_10_3 and arg_10_3.isBox
-	local var_10_1 = arg_10_3 and arg_10_3.isTopBox
+function FeiLinShiDuoBoxComp:setMove(trans, deltaMoveX, boxParam, isChangeColor)
+	local isBox = boxParam and boxParam.isBox
+	local isTopBox = boxParam and boxParam.isTopBox
 
-	if not arg_10_0.isGround or arg_10_0:checkBoxInPlane() then
+	if not self.isGround or self:checkBoxInPlane() then
 		return
 	end
 
-	if arg_10_0.deltaMoveX == 0 then
-		arg_10_0.deltaMoveX = arg_10_2
+	if self.deltaMoveX == 0 then
+		self.deltaMoveX = deltaMoveX
 	end
 
-	if arg_10_0.deltaMoveX ~= arg_10_2 then
+	if self.deltaMoveX ~= deltaMoveX then
 		return
 	end
 
-	arg_10_0.isTopBox = var_10_1
+	self.isTopBox = isTopBox
 
-	local var_10_2, var_10_3, var_10_4 = arg_10_0:getBoxInColorPlane(arg_10_0.boxTrans.localPosition.x + (arg_10_0.deltaMoveX >= 0 and -FeiLinShiDuoEnum.HalfSlotWidth or arg_10_0.itemInfo.width + FeiLinShiDuoEnum.HalfSlotWidth), arg_10_0.boxTrans.localPosition.y - 2, arg_10_0.curInPlaneItem)
+	local curInPlaneItem, planeStartPosX, planeEndPosX = self:getBoxInColorPlane(self.boxTrans.localPosition.x + (self.deltaMoveX >= 0 and -FeiLinShiDuoEnum.HalfSlotWidth or self.itemInfo.width + FeiLinShiDuoEnum.HalfSlotWidth), self.boxTrans.localPosition.y - 2, self.curInPlaneItem)
 
-	arg_10_0.curInPlaneItem = var_10_2
-	arg_10_0.planeStartPosX = var_10_3 or arg_10_0.planeStartPosX
-	arg_10_0.planeEndPosX = var_10_4 or arg_10_0.planeEndPosX
+	self.curInPlaneItem = curInPlaneItem
+	self.planeStartPosX = planeStartPosX or self.planeStartPosX
+	self.planeEndPosX = planeEndPosX or self.planeEndPosX
 
-	if var_10_0 then
-		local var_10_5, var_10_6 = FeiLinShiDuoGameModel.instance:checkForwardCanMove(arg_10_0.boxTrans.localPosition.x, arg_10_0.boxTrans.localPosition.y, arg_10_2, arg_10_0.itemInfo, var_10_0)
+	if isBox then
+		local boxCanMove, touchPosX = FeiLinShiDuoGameModel.instance:checkForwardCanMove(self.boxTrans.localPosition.x, self.boxTrans.localPosition.y, deltaMoveX, self.itemInfo, isBox)
 
-		arg_10_0.topBoxDeltaMove = arg_10_0.deltaMoveX
+		self.topBoxDeltaMove = self.deltaMoveX
 
-		if var_10_5 then
-			if arg_10_0.isTopBox then
-				arg_10_0.bottomBoxTrans = arg_10_1
-				arg_10_0.bottomBoxItemInfo = arg_10_3.itemInfo
+		if boxCanMove then
+			if self.isTopBox then
+				self.bottomBoxTrans = trans
+				self.bottomBoxItemInfo = boxParam.itemInfo
 
-				local var_10_7 = arg_10_0.bottomBoxMap[arg_10_0.bottomBoxItemInfo.id]
+				local tempTopBoxOffset = self.bottomBoxMap[self.bottomBoxItemInfo.id]
 
-				if not var_10_7 or arg_10_0.topBoxOffset == -10000 then
-					arg_10_0.topBoxOffset = arg_10_0.bottomBoxItemInfo.pos[1] - arg_10_0.boxTrans.localPosition.x
-					arg_10_0.bottomBoxMap[arg_10_0.bottomBoxItemInfo.id] = arg_10_0.topBoxOffset
-					var_10_7 = arg_10_0.topBoxOffset
+				if not tempTopBoxOffset or self.topBoxOffset == -10000 then
+					self.topBoxOffset = self.bottomBoxItemInfo.pos[1] - self.boxTrans.localPosition.x
+					self.bottomBoxMap[self.bottomBoxItemInfo.id] = self.topBoxOffset
+					tempTopBoxOffset = self.topBoxOffset
 				end
 
-				arg_10_0.topBoxOffset = var_10_7
+				self.topBoxOffset = tempTopBoxOffset
 
-				transformhelper.setLocalPosXY(arg_10_0.boxTrans, arg_10_0.bottomBoxItemInfo.pos[1] - arg_10_0.topBoxOffset, arg_10_0.boxTrans.localPosition.y)
+				transformhelper.setLocalPosXY(self.boxTrans, self.bottomBoxItemInfo.pos[1] - self.topBoxOffset, self.boxTrans.localPosition.y)
 			else
-				transformhelper.setLocalPosXY(arg_10_0.boxTrans, arg_10_1.localPosition.x + (arg_10_0.deltaMoveX >= 0 and arg_10_3.itemInfo.width or -arg_10_0.itemInfo.width), arg_10_0.boxTrans.localPosition.y)
+				transformhelper.setLocalPosXY(self.boxTrans, trans.localPosition.x + (self.deltaMoveX >= 0 and boxParam.itemInfo.width or -self.itemInfo.width), self.boxTrans.localPosition.y)
 			end
 		else
-			arg_10_0.topBoxDeltaMove = arg_10_0.isTopBox and -arg_10_0.deltaMoveX or arg_10_0.deltaMoveX
+			self.topBoxDeltaMove = self.isTopBox and -self.deltaMoveX or self.deltaMoveX
 
-			transformhelper.setLocalPosXY(arg_10_0.boxTrans, arg_10_0.deltaMoveX > 0 and var_10_6 - arg_10_0.itemInfo.width or var_10_6, arg_10_0.boxTrans.localPosition.y)
+			transformhelper.setLocalPosXY(self.boxTrans, self.deltaMoveX > 0 and touchPosX - self.itemInfo.width or touchPosX, self.boxTrans.localPosition.y)
 		end
-	elseif FeiLinShiDuoGameModel.instance:checkForwardCanMove(arg_10_1.localPosition.x + arg_10_0.deltaMoveX * (FeiLinShiDuoEnum.HalfSlotWidth + 1), arg_10_1.localPosition.y + FeiLinShiDuoEnum.HalfSlotWidth / 2, arg_10_0.deltaMoveX) and not arg_10_4 then
-		transformhelper.setLocalPosXY(arg_10_0.boxTrans, arg_10_1.localPosition.x + arg_10_0.deltaMoveX * FeiLinShiDuoEnum.HalfSlotWidth / 2 + (arg_10_0.deltaMoveX >= 0 and 0 or -arg_10_0.itemInfo.width), arg_10_0.boxTrans.localPosition.y)
+	else
+		local playerCanMoveForward = FeiLinShiDuoGameModel.instance:checkForwardCanMove(trans.localPosition.x + self.deltaMoveX * (FeiLinShiDuoEnum.HalfSlotWidth + 1), trans.localPosition.y + FeiLinShiDuoEnum.HalfSlotWidth / 2, self.deltaMoveX)
+
+		if playerCanMoveForward and not isChangeColor then
+			transformhelper.setLocalPosXY(self.boxTrans, trans.localPosition.x + self.deltaMoveX * FeiLinShiDuoEnum.HalfSlotWidth / 2 + (self.deltaMoveX >= 0 and 0 or -self.itemInfo.width), self.boxTrans.localPosition.y)
+		end
 	end
 
-	local var_10_8 = {
-		arg_10_0.boxTrans.localPosition.x,
-		arg_10_0.boxTrans.localPosition.y
+	local posTab = {
+		self.boxTrans.localPosition.x,
+		self.boxTrans.localPosition.y
 	}
 
-	FeiLinShiDuoGameModel.instance:updateBoxPos(arg_10_0.itemInfo.id, var_10_8)
-	arg_10_0:boxTouchElement()
+	FeiLinShiDuoGameModel.instance:updateBoxPos(self.itemInfo.id, posTab)
+	self:boxTouchElement()
 end
 
-function var_0_0.getBoxInColorPlane(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	if arg_11_3 then
-		local var_11_0, var_11_1 = arg_11_0:getPlaneWidthRange(arg_11_3.id)
+function FeiLinShiDuoBoxComp:getBoxInColorPlane(posX, posY, curInPlaneItem)
+	if curInPlaneItem then
+		local planeStartPosX, planeEndPosX = self:getPlaneWidthRange(curInPlaneItem.id)
 
-		if var_11_0 <= arg_11_1 and arg_11_1 <= var_11_1 then
-			return arg_11_3, var_11_0, var_11_1
+		if planeStartPosX <= posX and posX <= planeEndPosX then
+			return curInPlaneItem, planeStartPosX, planeEndPosX
 		end
 	end
 
-	local var_11_2 = FeiLinShiDuoGameModel.instance:getElementMap()
-	local var_11_3 = {}
-	local var_11_4 = var_11_2[FeiLinShiDuoEnum.ObjectType.ColorPlane] or {}
-	local var_11_5 = var_11_2[FeiLinShiDuoEnum.ObjectType.Box] or {}
-	local var_11_6 = var_11_2[FeiLinShiDuoEnum.ObjectType.Wall] or {}
-	local var_11_7 = var_11_2[FeiLinShiDuoEnum.ObjectType.Trap] or {}
-	local var_11_8 = var_11_2[FeiLinShiDuoEnum.ObjectType.Stairs] or {}
+	local elementMap = FeiLinShiDuoGameModel.instance:getElementMap()
+	local standeItems = {}
+	local colorPlaneItems = elementMap[FeiLinShiDuoEnum.ObjectType.ColorPlane] or {}
+	local boxItems = elementMap[FeiLinShiDuoEnum.ObjectType.Box] or {}
+	local wallItems = elementMap[FeiLinShiDuoEnum.ObjectType.Wall] or {}
+	local trapItems = elementMap[FeiLinShiDuoEnum.ObjectType.Trap] or {}
+	local stairsItems = elementMap[FeiLinShiDuoEnum.ObjectType.Stairs] or {}
 
-	for iter_11_0, iter_11_1 in pairs(var_11_6) do
-		table.insert(var_11_3, iter_11_1)
+	for index, item in pairs(wallItems) do
+		table.insert(standeItems, item)
 	end
 
-	for iter_11_2, iter_11_3 in pairs(var_11_4) do
-		table.insert(var_11_3, iter_11_3)
+	for index, item in pairs(colorPlaneItems) do
+		table.insert(standeItems, item)
 	end
 
-	for iter_11_4, iter_11_5 in pairs(var_11_5) do
-		table.insert(var_11_3, iter_11_5)
+	for index, item in pairs(boxItems) do
+		table.insert(standeItems, item)
 	end
 
-	for iter_11_6, iter_11_7 in pairs(var_11_7) do
-		table.insert(var_11_3, iter_11_7)
+	for index, item in pairs(trapItems) do
+		table.insert(standeItems, item)
 	end
 
-	for iter_11_8, iter_11_9 in pairs(var_11_8) do
-		table.insert(var_11_3, iter_11_9)
+	for index, item in pairs(stairsItems) do
+		table.insert(standeItems, item)
 	end
 
-	for iter_11_10, iter_11_11 in pairs(var_11_3) do
-		local var_11_9, var_11_10 = arg_11_0:getPlaneWidthRange(iter_11_11.id)
+	for _, mapItem in pairs(standeItems) do
+		local planeStartPosX, planeEndPosX = self:getPlaneWidthRange(mapItem.id)
 
-		if var_11_9 <= arg_11_1 and arg_11_1 <= var_11_10 and arg_11_2 > iter_11_11.pos[2] and arg_11_2 <= iter_11_11.pos[2] + iter_11_11.height then
-			return iter_11_11, var_11_9, var_11_10
+		if planeStartPosX <= posX and posX <= planeEndPosX and posY > mapItem.pos[2] and posY <= mapItem.pos[2] + mapItem.height then
+			return mapItem, planeStartPosX, planeEndPosX
 		end
 	end
 end
 
-function var_0_0.getPlaneWidthRange(arg_12_0, arg_12_1)
-	local var_12_0 = FeiLinShiDuoGameModel.instance:getInterElementMap()[arg_12_1] or {}
-	local var_12_1 = var_12_0.pos[1]
-	local var_12_2 = var_12_0.pos[1] + var_12_0.width
+function FeiLinShiDuoBoxComp:getPlaneWidthRange(id)
+	local elementMap = FeiLinShiDuoGameModel.instance:getInterElementMap()
+	local planeItem = elementMap[id] or {}
+	local startPosX = planeItem.pos[1]
+	local endPosX = planeItem.pos[1] + planeItem.width
 
-	return var_12_1, var_12_2
+	return startPosX, endPosX
 end
 
-function var_0_0.fixStandPos(arg_13_0, arg_13_1)
-	local var_13_0, var_13_1 = FeiLinShiDuoGameModel.instance:getFixStandePos(arg_13_1, arg_13_0.boxTrans.localPosition.x, arg_13_0.boxTrans.localPosition.y)
+function FeiLinShiDuoBoxComp:fixStandPos(isTouchElementList)
+	local subItemBLPos, subItemTRPos = FeiLinShiDuoGameModel.instance:getFixStandePos(isTouchElementList, self.boxTrans.localPosition.x, self.boxTrans.localPosition.y)
 
-	if var_13_0 and var_13_1 then
-		return Vector3(arg_13_0.boxTrans.localPosition.x, var_13_1.y, 0)
+	if subItemBLPos and subItemTRPos then
+		return Vector3(self.boxTrans.localPosition.x, subItemTRPos.y, 0)
 	end
 
-	return arg_13_0.boxTrans.localPosition
+	return self.boxTrans.localPosition
 end
 
-function var_0_0.boxTouchElement(arg_14_0)
-	if arg_14_0.isGround and arg_14_0.deltaMoveX ~= 0 then
-		local var_14_0 = arg_14_0.deltaMoveX > 0 and FeiLinShiDuoEnum.checkDir.Right or FeiLinShiDuoEnum.checkDir.Left
-		local var_14_1 = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(arg_14_0.boxTrans.localPosition.x + arg_14_0.deltaMoveX, arg_14_0.boxTrans.localPosition.y, arg_14_0.itemInfo, var_14_0)
+function FeiLinShiDuoBoxComp:boxTouchElement()
+	if self.isGround and self.deltaMoveX ~= 0 then
+		local checkDir = self.deltaMoveX > 0 and FeiLinShiDuoEnum.checkDir.Right or FeiLinShiDuoEnum.checkDir.Left
+		local forwardTouchElementList = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(self.boxTrans.localPosition.x + self.deltaMoveX, self.boxTrans.localPosition.y, self.itemInfo, checkDir)
 
-		if #var_14_1 > 0 then
-			for iter_14_0, iter_14_1 in pairs(var_14_1) do
-				if iter_14_1.type == FeiLinShiDuoEnum.ObjectType.Box then
-					local var_14_2 = {}
-					local var_14_3 = arg_14_0.sceneViewCls:getBoxComp(iter_14_1.id)
+		if #forwardTouchElementList > 0 then
+			for _, element in pairs(forwardTouchElementList) do
+				if element.type == FeiLinShiDuoEnum.ObjectType.Box then
+					local boxParam = {}
+					local boxComp = self.sceneViewCls:getBoxComp(element.id)
 
-					var_14_2.touchElementData = iter_14_1
-					var_14_2.isBox = true
-					var_14_2.isTopBox = false
-					var_14_2.itemInfo = arg_14_0.itemInfo
+					boxParam.touchElementData = element
+					boxParam.isBox = true
+					boxParam.isTopBox = false
+					boxParam.itemInfo = self.itemInfo
 
-					var_14_3:setMove(arg_14_0.boxTrans, arg_14_0.deltaMoveX, var_14_2)
+					boxComp:setMove(self.boxTrans, self.deltaMoveX, boxParam)
 				end
 			end
 		end
 
-		local var_14_4 = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(arg_14_0.boxTrans.localPosition.x, arg_14_0.boxTrans.localPosition.y, arg_14_0.itemInfo, FeiLinShiDuoEnum.checkDir.Top)
+		local topTouchElementList = FeiLinShiDuoGameModel.instance:checkItemTouchElemenet(self.boxTrans.localPosition.x, self.boxTrans.localPosition.y, self.itemInfo, FeiLinShiDuoEnum.checkDir.Top)
 
-		if #var_14_4 > 0 then
-			for iter_14_2, iter_14_3 in pairs(var_14_4) do
-				if iter_14_3.type == FeiLinShiDuoEnum.ObjectType.Box then
-					local var_14_5 = {}
-					local var_14_6 = arg_14_0.sceneViewCls:getBoxComp(iter_14_3.id)
+		if #topTouchElementList > 0 then
+			for _, element in pairs(topTouchElementList) do
+				if element.type == FeiLinShiDuoEnum.ObjectType.Box then
+					local boxParam = {}
+					local boxComp = self.sceneViewCls:getBoxComp(element.id)
 
-					var_14_5.touchElementData = iter_14_3
-					var_14_5.isBox = true
-					var_14_5.isTopBox = true
-					var_14_5.itemInfo = arg_14_0.itemInfo
+					boxParam.touchElementData = element
+					boxParam.isBox = true
+					boxParam.isTopBox = true
+					boxParam.itemInfo = self.itemInfo
 
-					var_14_6:setMove(arg_14_0.boxTrans, arg_14_0.deltaMoveX, var_14_5)
+					boxComp:setMove(self.boxTrans, self.deltaMoveX, boxParam)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.checkBoxInPlane(arg_15_0)
-	local var_15_0 = FeiLinShiDuoGameModel.instance:getElementMap()
-	local var_15_1 = {}
-	local var_15_2 = var_15_0[FeiLinShiDuoEnum.ObjectType.ColorPlane] or {}
+function FeiLinShiDuoBoxComp:checkBoxInPlane()
+	local elementMap = FeiLinShiDuoGameModel.instance:getElementMap()
+	local checkElementList = {}
+	local colorPlaneItems = elementMap[FeiLinShiDuoEnum.ObjectType.ColorPlane] or {}
 
-	for iter_15_0, iter_15_1 in pairs(var_15_2) do
-		table.insert(var_15_1, iter_15_1)
+	for index, item in pairs(colorPlaneItems) do
+		table.insert(checkElementList, item)
 	end
 
-	for iter_15_2, iter_15_3 in pairs(var_15_1) do
-		if FeiLinShiDuoGameModel.instance:getElementShowState(iter_15_3) and FeiLinShiDuoGameModel.instance:getElementShowState(arg_15_0.itemInfo) then
-			local var_15_3 = arg_15_0.itemInfo.pos[1] + arg_15_0.itemInfo.width / 2
-			local var_15_4 = iter_15_3.pos[1] + iter_15_3.width / 2
+	for _, checkItem in pairs(checkElementList) do
+		if FeiLinShiDuoGameModel.instance:getElementShowState(checkItem) and FeiLinShiDuoGameModel.instance:getElementShowState(self.itemInfo) then
+			local curItemCenterPosX = self.itemInfo.pos[1] + self.itemInfo.width / 2
+			local checkItemCenterPosX = checkItem.pos[1] + checkItem.width / 2
 
-			if Mathf.Abs(var_15_3 - var_15_4) < arg_15_0.itemInfo.width / 2 + iter_15_3.width / 2 - 2 * FeiLinShiDuoEnum.touchCheckRange and Mathf.Abs(arg_15_0.itemInfo.pos[2] - iter_15_3.pos[2]) < FeiLinShiDuoEnum.HalfSlotWidth / 4 then
+			if Mathf.Abs(curItemCenterPosX - checkItemCenterPosX) < self.itemInfo.width / 2 + checkItem.width / 2 - 2 * FeiLinShiDuoEnum.touchCheckRange and Mathf.Abs(self.itemInfo.pos[2] - checkItem.pos[2]) < FeiLinShiDuoEnum.HalfSlotWidth / 4 then
 				return true
 			end
 		end
@@ -329,8 +339,8 @@ function var_0_0.checkBoxInPlane(arg_15_0)
 	return false
 end
 
-function var_0_0.getShowState(arg_16_0)
-	return FeiLinShiDuoGameModel.instance:getElementShowState(arg_16_0.itemInfo)
+function FeiLinShiDuoBoxComp:getShowState()
+	return FeiLinShiDuoGameModel.instance:getElementShowState(self.itemInfo)
 end
 
-return var_0_0
+return FeiLinShiDuoBoxComp

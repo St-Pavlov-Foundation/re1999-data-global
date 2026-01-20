@@ -1,20 +1,22 @@
-﻿module("modules.logic.necrologiststory.view.control.NecrologistStoryControlStopAudio", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/control/NecrologistStoryControlStopAudio.lua
 
-local var_0_0 = class("NecrologistStoryControlStopAudio", NecrologistStoryControlMgrItem)
+module("modules.logic.necrologiststory.view.control.NecrologistStoryControlStopAudio", package.seeall)
 
-function var_0_0.onPlayControl(arg_1_0)
-	arg_1_0:stopAudio()
-	arg_1_0:onPlayControlFinish()
+local NecrologistStoryControlStopAudio = class("NecrologistStoryControlStopAudio", NecrologistStoryControlMgrItem)
+
+function NecrologistStoryControlStopAudio:onPlayControl()
+	self:stopAudio()
+	self:onPlayControlFinish()
 end
 
-function var_0_0.stopAudio(arg_2_0)
-	local var_2_0 = string.split(arg_2_0.controlParam, "#")
-	local var_2_1 = tonumber(var_2_0[2]) or 0
-	local var_2_2 = tonumber(var_2_0[1])
+function NecrologistStoryControlStopAudio:stopAudio()
+	local attr = string.split(self.controlParam, "#")
+	local outTime = tonumber(attr[2]) or 0
+	local audioId = tonumber(attr[1])
 
-	if var_2_2 then
-		AudioEffectMgr.instance:stopAudio(var_2_2, var_2_1)
+	if audioId then
+		AudioEffectMgr.instance:stopAudio(audioId, outTime)
 	end
 end
 
-return var_0_0
+return NecrologistStoryControlStopAudio

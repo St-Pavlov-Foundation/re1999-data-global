@@ -1,23 +1,25 @@
-﻿module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightViewLevel", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/rolestory/RoleStoryHeroGroupFightViewLevel.lua
 
-local var_0_0 = class("RoleStoryHeroGroupFightViewLevel", HeroGroupFightViewLevel)
+module("modules.logic.dungeon.view.rolestory.RoleStoryHeroGroupFightViewLevel", package.seeall)
 
-function var_0_0._showEnemyList(arg_1_0)
-	var_0_0.super._showEnemyList(arg_1_0)
+local RoleStoryHeroGroupFightViewLevel = class("RoleStoryHeroGroupFightViewLevel", HeroGroupFightViewLevel)
 
-	arg_1_0._txtrecommendlevel.text = luaLang("common_none")
+function RoleStoryHeroGroupFightViewLevel:_showEnemyList()
+	RoleStoryHeroGroupFightViewLevel.super._showEnemyList(self)
+
+	self._txtrecommendlevel.text = luaLang("common_none")
 end
 
-function var_0_0._onEnemyItemShow(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0 = gohelper.findChildImage(arg_2_1, "icon")
-	local var_2_1 = gohelper.findChild(arg_2_1, "icon/kingIcon")
-	local var_2_2 = gohelper.findChildTextMesh(arg_2_1, "enemycount")
+function RoleStoryHeroGroupFightViewLevel:_onEnemyItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
+	local kingIcon = gohelper.findChild(obj, "icon/kingIcon")
+	local enemy_count = gohelper.findChildTextMesh(obj, "enemycount")
 
-	UISpriteSetMgr.instance:setCommonSprite(var_2_0, "lssx_" .. tostring(arg_2_2.career))
+	UISpriteSetMgr.instance:setCommonSprite(icon, "lssx_" .. tostring(data.career))
 
-	var_2_2.text = ""
+	enemy_count.text = ""
 
-	gohelper.setActive(var_2_1, arg_2_3 <= arg_2_0._enemy_boss_end_index)
+	gohelper.setActive(kingIcon, index <= self._enemy_boss_end_index)
 end
 
-return var_0_0
+return RoleStoryHeroGroupFightViewLevel

@@ -1,41 +1,44 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/model/Activity124RewardListModel.lua
 
-local var_0_0 = class("Activity124RewardListModel", ListScrollModel)
+module("modules.logic.versionactivity1_3.armpipe.model.Activity124RewardListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = {}
-	local var_1_1 = Activity124Config.instance:getEpisodeList(arg_1_1)
+local Activity124RewardListModel = class("Activity124RewardListModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-		local var_1_2 = Activity124RewardMO.New()
+function Activity124RewardListModel:init(actId)
+	local dataList = {}
+	local episodeCfgList = Activity124Config.instance:getEpisodeList(actId)
 
-		var_1_2:init(iter_1_1)
-		table.insert(var_1_0, var_1_2)
+	for _, episodeCfg in ipairs(episodeCfgList) do
+		local mo = Activity124RewardMO.New()
+
+		mo:init(episodeCfg)
+		table.insert(dataList, mo)
 	end
 
-	table.sort(var_1_0, var_0_0.sortMO)
-	arg_1_0:setList(var_1_0)
+	table.sort(dataList, Activity124RewardListModel.sortMO)
+	self:setList(dataList)
 end
 
-function var_0_0.sortMO(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:isHasReard()
+function Activity124RewardListModel.sortMO(objA, objB)
+	local isHasReardA = objA:isHasReard()
+	local isHasReardB = objB:isHasReard()
 
-	if var_2_0 ~= arg_2_1:isHasReard() then
-		return var_2_0
+	if isHasReardA ~= isHasReardB then
+		return isHasReardA
 	end
 
-	local var_2_1 = arg_2_0:isReceived()
-	local var_2_2 = arg_2_1:isReceived()
+	local receivedA = objA:isReceived()
+	local receivedB = objB:isReceived()
 
-	if var_2_1 ~= var_2_2 then
-		return var_2_2
+	if receivedA ~= receivedB then
+		return receivedB
 	end
 
-	if arg_2_0.id ~= arg_2_1.id then
-		return arg_2_0.id < arg_2_1.id
+	if objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity124RewardListModel.instance = Activity124RewardListModel.New()
 
-return var_0_0
+return Activity124RewardListModel

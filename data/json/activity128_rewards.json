@@ -3006,5 +3006,197 @@
     "rewardPointNum": 850000,
     "reward": "2#26#100",
     "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 1,
+    "stage": 1,
+    "rewardPointNum": 50000,
+    "reward": "2#26#50",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 2,
+    "stage": 1,
+    "rewardPointNum": 150000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 3,
+    "stage": 1,
+    "rewardPointNum": 300000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 4,
+    "stage": 1,
+    "rewardPointNum": 500000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 5,
+    "stage": 1,
+    "rewardPointNum": 800000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 6,
+    "stage": 1,
+    "rewardPointNum": 1250000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 7,
+    "stage": 1,
+    "rewardPointNum": 2500000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 8,
+    "stage": 1,
+    "rewardPointNum": 5000000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 9,
+    "stage": 2,
+    "rewardPointNum": 50000,
+    "reward": "2#26#50",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 10,
+    "stage": 2,
+    "rewardPointNum": 150000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 11,
+    "stage": 2,
+    "rewardPointNum": 300000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 12,
+    "stage": 2,
+    "rewardPointNum": 500000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 13,
+    "stage": 2,
+    "rewardPointNum": 800000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 14,
+    "stage": 2,
+    "rewardPointNum": 1250000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 15,
+    "stage": 2,
+    "rewardPointNum": 2500000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 16,
+    "stage": 2,
+    "rewardPointNum": 5000000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 17,
+    "stage": 3,
+    "rewardPointNum": 50000,
+    "reward": "2#26#50",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 18,
+    "stage": 3,
+    "rewardPointNum": 150000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 19,
+    "stage": 3,
+    "rewardPointNum": 300000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 20,
+    "stage": 3,
+    "rewardPointNum": 500000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 21,
+    "stage": 3,
+    "rewardPointNum": 800000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 22,
+    "stage": 3,
+    "rewardPointNum": 1250000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 23,
+    "stage": 3,
+    "rewardPointNum": 2500000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 13230,
+    "id": 24,
+    "stage": 3,
+    "rewardPointNum": 5000000,
+    "reward": "2#26#100",
+    "display": 0
   }
 ]

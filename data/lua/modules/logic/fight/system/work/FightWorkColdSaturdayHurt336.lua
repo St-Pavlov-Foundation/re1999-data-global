@@ -1,60 +1,65 @@
-﻿module("modules.logic.fight.system.work.FightWorkColdSaturdayHurt336", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkColdSaturdayHurt336.lua
 
-local var_0_0 = class("FightWorkColdSaturdayHurt336", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkColdSaturdayHurt336", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.reserveStr
-	local var_1_1 = arg_1_0.actEffectData.targetId
-	local var_1_2 = arg_1_0.actEffectData.effectNum
-	local var_1_3 = FightHelper.getEntity(var_1_0)
+local FightWorkColdSaturdayHurt336 = class("FightWorkColdSaturdayHurt336", FightEffectBase)
 
-	if not var_1_3 then
-		arg_1_0:onDone(true)
+function FightWorkColdSaturdayHurt336:onStart()
+	local fromId = self.actEffectData.reserveStr
+	local toId = self.actEffectData.targetId
+	local layer = self.actEffectData.effectNum
+	local entity = FightHelper.getEntity(fromId)
 
-		return
-	end
-
-	if not FightHelper.getEntity(var_1_1) then
-		arg_1_0:onDone(true)
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_4 = var_1_3:getMO().skin
-	local var_1_5 = FightStepData.New(FightDef_pb.FightStep())
+	local toEntity = FightHelper.getEntity(toId)
 
-	var_1_5.isFakeStep = true
-	var_1_5.fromId = var_1_0
-	var_1_5.toId = var_1_1
-	var_1_5.actType = FightEnum.ActType.SKILL
+	if not toEntity then
+		self:onDone(true)
 
-	table.insert(var_1_5.actEffect, arg_1_0.actEffectData)
-
-	local var_1_6 = lua_fight_she_fa_ignite.configDict[var_1_4] or lua_fight_she_fa_ignite.configDict[0]
-	local var_1_7 = {}
-
-	for iter_1_0, iter_1_1 in pairs(var_1_6) do
-		table.insert(var_1_7, iter_1_1)
+		return
 	end
 
-	table.sort(var_1_7, var_0_0.sortConfig)
+	local entityMO = entity:getMO()
+	local skin = entityMO.skin
+	local fightStepData = FightStepData.New(FightDef_pb.FightStep())
 
-	for iter_1_2, iter_1_3 in ipairs(var_1_7) do
-		if var_1_2 <= iter_1_3.layer then
-			var_1_6 = iter_1_3
+	fightStepData.isFakeStep = true
+	fightStepData.fromId = fromId
+	fightStepData.toId = toId
+	fightStepData.actType = FightEnum.ActType.SKILL
+
+	table.insert(fightStepData.actEffect, self.actEffectData)
+
+	local config = lua_fight_she_fa_ignite.configDict[skin] or lua_fight_she_fa_ignite.configDict[0]
+	local configList = {}
+
+	for k, v in pairs(config) do
+		table.insert(configList, v)
+	end
+
+	table.sort(configList, FightWorkColdSaturdayHurt336.sortConfig)
+
+	for i, v in ipairs(configList) do
+		if layer <= v.layer then
+			config = v
 
 			break
 		end
 	end
 
-	local var_1_8 = var_1_6.timeline
-	local var_1_9 = var_1_3.skill:registTimelineWork(var_1_8, var_1_5)
+	local timeline = config.timeline
+	local work = entity.skill:registTimelineWork(timeline, fightStepData)
 
-	arg_1_0:playWorkAndDone(var_1_9)
+	self:playWorkAndDone(work)
 end
 
-function var_0_0.sortConfig(arg_2_0, arg_2_1)
-	return arg_2_0.layer < arg_2_1.layer
+function FightWorkColdSaturdayHurt336.sortConfig(item1, item2)
+	return item1.layer < item2.layer
 end
 
-return var_0_0
+return FightWorkColdSaturdayHurt336

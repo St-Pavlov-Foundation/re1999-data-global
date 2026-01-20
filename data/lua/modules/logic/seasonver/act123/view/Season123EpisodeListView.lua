@@ -1,327 +1,332 @@
-﻿module("modules.logic.seasonver.act123.view.Season123EpisodeListView", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view/Season123EpisodeListView.lua
 
-local var_0_0 = class("Season123EpisodeListView", BaseView)
+module("modules.logic.seasonver.act123.view.Season123EpisodeListView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnheroes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_heroes")
-	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._btndetails = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_details")
-	arg_1_0._gostageitem = gohelper.findChild(arg_1_0.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content/#go_stageitem")
-	arg_1_0._btntipreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_tipreward")
-	arg_1_0._gorewardRedDot = gohelper.findChild(arg_1_0.viewGO, "#btn_tipreward/#go_rewardredpoint")
-	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_rewards")
-	arg_1_0._goscrollstory = gohelper.findChild(arg_1_0.viewGO, "#go_story/chapterlist/#scroll_chapter")
-	arg_1_0._btnadditionruledetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_additionruletips/tips/#btn_additionruledetail")
-	arg_1_0._goentranceitem = gohelper.findChild(arg_1_0.viewGO, "#go_entrance_item")
-	arg_1_0._goframe = gohelper.findChild(arg_1_0.viewGO, "selectframe")
-	arg_1_0._animTipReward = arg_1_0._btntipreward:GetComponent(gohelper.Type_Animation)
-	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btnmask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "mask")
+local Season123EpisodeListView = class("Season123EpisodeListView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season123EpisodeListView:onInitView()
+	self._btnheroes = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_heroes")
+	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._btndetails = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_details")
+	self._gostageitem = gohelper.findChild(self.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content/#go_stageitem")
+	self._btntipreward = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_tipreward")
+	self._gorewardRedDot = gohelper.findChild(self.viewGO, "#btn_tipreward/#go_rewardredpoint")
+	self._gorewards = gohelper.findChild(self.viewGO, "#go_rewards")
+	self._goscrollstory = gohelper.findChild(self.viewGO, "#go_story/chapterlist/#scroll_chapter")
+	self._btnadditionruledetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_additionruletips/tips/#btn_additionruledetail")
+	self._goentranceitem = gohelper.findChild(self.viewGO, "#go_entrance_item")
+	self._goframe = gohelper.findChild(self.viewGO, "selectframe")
+	self._animTipReward = self._btntipreward:GetComponent(gohelper.Type_Animation)
+	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._btnmask = gohelper.findChildButtonWithAudio(self.viewGO, "mask")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnheroes:AddClickListener(arg_2_0._btnheroesOnClick, arg_2_0)
-	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
-	arg_2_0._btndetails:AddClickListener(arg_2_0._btndetailsOnClick, arg_2_0)
-	arg_2_0._btntipreward:AddClickListener(arg_2_0._btntiprewardOnClick, arg_2_0)
-	arg_2_0._btnadditionruledetail:AddClickListener(arg_2_0._btnadditionruleDetailOnClick, arg_2_0)
-	arg_2_0._btnmask:AddClickListener(arg_2_0._btnMaskOnClick, arg_2_0)
+function Season123EpisodeListView:addEvents()
+	self._btnheroes:AddClickListener(self._btnheroesOnClick, self)
+	self._btnreset:AddClickListener(self._btnresetOnClick, self)
+	self._btndetails:AddClickListener(self._btndetailsOnClick, self)
+	self._btntipreward:AddClickListener(self._btntiprewardOnClick, self)
+	self._btnadditionruledetail:AddClickListener(self._btnadditionruleDetailOnClick, self)
+	self._btnmask:AddClickListener(self._btnMaskOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnheroes:RemoveClickListener()
-	arg_3_0._btnreset:RemoveClickListener()
-	arg_3_0._btndetails:RemoveClickListener()
-	arg_3_0._btntipreward:RemoveClickListener()
-	arg_3_0._btnadditionruledetail:RemoveClickListener()
-	arg_3_0._btnmask:RemoveClickListener()
+function Season123EpisodeListView:removeEvents()
+	self._btnheroes:RemoveClickListener()
+	self._btnreset:RemoveClickListener()
+	self._btndetails:RemoveClickListener()
+	self._btntipreward:RemoveClickListener()
+	self._btnadditionruledetail:RemoveClickListener()
+	self._btnmask:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._stageItems = {}
-	arg_4_0._scrollCanvasGroup = gohelper.onceAddComponent(arg_4_0.viewGO, typeof(UnityEngine.CanvasGroup))
-	arg_4_0._scrollStory = gohelper.findChildScrollRect(arg_4_0._goscrollstory, "")
-	arg_4_0._goScroll = gohelper.findChild(arg_4_0.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content")
-	arg_4_0._rectScroll = arg_4_0._goScroll.transform
-	arg_4_0._heightScroll = recthelper.getHeight(arg_4_0._scrollStory.transform)
-	arg_4_0._heightItem = recthelper.getHeight(arg_4_0._gostageitem.transform)
-	arg_4_0._heightSpace = 24
-	arg_4_0._goempty3 = gohelper.findChild(arg_4_0.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty3")
-	arg_4_0._goempty4 = gohelper.findChild(arg_4_0.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty4")
+function Season123EpisodeListView:_editableInitView()
+	self._stageItems = {}
+	self._scrollCanvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+	self._scrollStory = gohelper.findChildScrollRect(self._goscrollstory, "")
+	self._goScroll = gohelper.findChild(self.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content")
+	self._rectScroll = self._goScroll.transform
+	self._heightScroll = recthelper.getHeight(self._scrollStory.transform)
+	self._heightItem = recthelper.getHeight(self._gostageitem.transform)
+	self._heightSpace = 24
+	self._goempty3 = gohelper.findChild(self.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty3")
+	self._goempty4 = gohelper.findChild(self.viewGO, "#go_story/chapterlist/#scroll_chapter/Viewport/Content/empty4")
 
-	gohelper.setActive(arg_4_0._gorewards, false)
-	gohelper.setActive(arg_4_0._goframe, false)
-	TaskDispatcher.runDelay(arg_4_0.delayAddScrollAudio, arg_4_0, 0.6)
+	gohelper.setActive(self._gorewards, false)
+	gohelper.setActive(self._goframe, false)
+	TaskDispatcher.runDelay(self.delayAddScrollAudio, self, 0.6)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._stageItems then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0._stageItems) do
-			iter_5_1.btnSelf:RemoveClickListener()
-			iter_5_1.simagechaptericon:UnLoadImage()
+function Season123EpisodeListView:onDestroyView()
+	if self._stageItems then
+		for _, item in pairs(self._stageItems) do
+			item.btnSelf:RemoveClickListener()
+			item.simagechaptericon:UnLoadImage()
 		end
 
-		arg_5_0._stageItems = nil
+		self._stageItems = nil
 	end
 
 	Season123EpisodeListController.instance:onCloseView()
-	UIBlockMgr.instance:endBlock(var_0_0.SCROLL_ANIM_BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(Season123EpisodeListView.SCROLL_ANIM_BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 
-	if arg_5_0._tweenIdScroll then
-		ZProj.TweenHelper.KillById(arg_5_0._tweenIdScroll)
+	if self._tweenIdScroll then
+		ZProj.TweenHelper.KillById(self._tweenIdScroll)
 
-		arg_5_0._tweenIdScroll = nil
+		self._tweenIdScroll = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_5_0.handlePlayScrollAnimCompleted, arg_5_0)
+	TaskDispatcher.cancelTask(self.handlePlayScrollAnimCompleted, self)
 
-	if arg_5_0._centerItem then
-		arg_5_0._centerItem:dispose()
+	if self._centerItem then
+		self._centerItem:dispose()
 
-		arg_5_0._centerItem = nil
+		self._centerItem = nil
 	end
 
-	if arg_5_0._drag then
-		arg_5_0._drag:RemoveDragBeginListener()
-		arg_5_0._drag:RemoveDragEndListener()
+	if self._drag then
+		self._drag:RemoveDragBeginListener()
+		self._drag:RemoveDragEndListener()
 
-		arg_5_0._drag = nil
+		self._drag = nil
 	end
 
-	if arg_5_0._touch then
-		arg_5_0._touch:RemoveClickDownListener()
+	if self._touch then
+		self._touch:RemoveClickDownListener()
 
-		arg_5_0._touch = nil
+		self._touch = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_5_0.delayAddScrollAudio, arg_5_0)
+	TaskDispatcher.cancelTask(self.delayAddScrollAudio, self)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.actId
-	local var_6_1 = arg_6_0.viewParam.stage
+function Season123EpisodeListView:onOpen()
+	local actId = self.viewParam.actId
+	local stage = self.viewParam.stage
 
-	logNormal(string.format("episode actId=%s, stage=%s", var_6_0, var_6_1))
-	Season123EpisodeListController.instance:onOpenView(var_6_0, var_6_1)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.EpisodeViewRefresh, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.StageInfoChanged, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:addEventCb(Season123Controller.instance, Season123Event.ResetCloseEpisodeList, arg_6_0.closeThis, arg_6_0)
-	arg_6_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_6_0.OnDotChange, arg_6_0)
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0.onCloseView, arg_6_0)
+	logNormal(string.format("episode actId=%s, stage=%s", actId, stage))
+	Season123EpisodeListController.instance:onOpenView(actId, stage)
+	self:addEventCb(Season123Controller.instance, Season123Event.GetActInfo, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.EpisodeViewRefresh, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.StageInfoChanged, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.TaskUpdated, self.refreshUI, self)
+	self:addEventCb(Season123Controller.instance, Season123Event.ResetCloseEpisodeList, self.closeThis, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, self.OnDotChange, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 
-	local var_6_2 = ActivityModel.instance:getActMO(var_6_0)
+	local actMO = ActivityModel.instance:getActMO(actId)
 
-	if not var_6_2 or not var_6_2:isOpen() or var_6_2:isExpired() then
+	if not actMO or not actMO:isOpen() or actMO:isExpired() then
 		return
 	end
 
-	arg_6_0:initCenter()
-	arg_6_0:refreshUI()
+	self:initCenter()
+	self:refreshUI()
 
-	local var_6_3 = Season123EpisodeListModel.instance:getList()
+	local layerDatas = Season123EpisodeListModel.instance:getList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_3) do
-		if iter_6_1.id == Season123EpisodeListModel.instance:getCurrentChallengeLayer() then
-			local var_6_4 = arg_6_0:getScrollToIndexY(iter_6_0)
+	for i, layerData in ipairs(layerDatas) do
+		if layerData.id == Season123EpisodeListModel.instance:getCurrentChallengeLayer() then
+			local targetY = self:getScrollToIndexY(i)
 
-			recthelper.setAnchorY(arg_6_0._rectScroll, var_6_4)
+			recthelper.setAnchorY(self._rectScroll, targetY)
 		end
 	end
 
-	Season123EpisodeListController.instance:processJumpParam(arg_6_0.viewParam)
-	RedDotController.instance:addRedDot(arg_6_0._gorewardRedDot, RedDotEnum.DotNode.Season123StageReward, arg_6_0.viewParam.stage)
+	Season123EpisodeListController.instance:processJumpParam(self.viewParam)
+	RedDotController.instance:addRedDot(self._gorewardRedDot, RedDotEnum.DotNode.Season123StageReward, self.viewParam.stage)
 end
 
-function var_0_0.onClose(arg_7_0)
+function Season123EpisodeListView:onClose()
 	return
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:refreshStageList()
-	arg_8_0:refreshCenter()
+function Season123EpisodeListView:refreshUI()
+	self:refreshStageList()
+	self:refreshCenter()
 
-	local var_8_0 = Season123EpisodeListModel.instance:inCurrentStage() or Season123ProgressUtils.checkStageIsFinish(Season123EpisodeListModel.instance.activityId, Season123EpisodeListModel.instance.stage)
+	local inStage = Season123EpisodeListModel.instance:inCurrentStage() or Season123ProgressUtils.checkStageIsFinish(Season123EpisodeListModel.instance.activityId, Season123EpisodeListModel.instance.stage)
 
-	gohelper.setActive(arg_8_0._btnreset, var_8_0)
+	gohelper.setActive(self._btnreset, inStage)
 end
 
-function var_0_0.refreshStageList(arg_9_0)
-	local var_9_0 = Season123EpisodeListModel.instance:getList()
-	local var_9_1 = {}
+function Season123EpisodeListView:refreshStageList()
+	local layerDatas = Season123EpisodeListModel.instance:getList()
+	local processSet = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		local var_9_2 = arg_9_0:getOrCreateLayerItem(iter_9_0)
+	for i, layerData in ipairs(layerDatas) do
+		local item = self:getOrCreateLayerItem(i)
 
-		arg_9_0:refreshSingleItem(iter_9_0, var_9_2, iter_9_1)
+		self:refreshSingleItem(i, item, layerData)
 
-		var_9_1[var_9_2] = true
+		processSet[item] = true
 	end
 
-	for iter_9_2, iter_9_3 in pairs(arg_9_0._stageItems) do
-		gohelper.setActive(iter_9_3.go, var_9_1[iter_9_3])
+	for _, item in pairs(self._stageItems) do
+		gohelper.setActive(item.go, processSet[item])
 	end
 
-	gohelper.setAsLastSibling(arg_9_0._goempty3)
-	gohelper.setAsLastSibling(arg_9_0._goempty4)
+	gohelper.setAsLastSibling(self._goempty3)
+	gohelper.setAsLastSibling(self._goempty4)
 end
 
-function var_0_0.getOrCreateLayerItem(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._stageItems[arg_10_1]
+function Season123EpisodeListView:getOrCreateLayerItem(index)
+	local item = self._stageItems[index]
 
-	if not var_10_0 then
-		local var_10_1 = gohelper.cloneInPlace(arg_10_0._gostageitem, "stage_item" .. arg_10_1)
+	if not item then
+		local go = gohelper.cloneInPlace(self._gostageitem, "stage_item" .. index)
 
-		var_10_0 = arg_10_0:getUserDataTb_()
-		var_10_0.go = var_10_1
-		var_10_0.txtName = gohelper.findChildText(var_10_1, "#txt_name")
-		var_10_0.gofinish = gohelper.findChild(var_10_1, "#go_done")
-		var_10_0.goUnfinish = gohelper.findChild(var_10_1, "#go_unfinished")
-		var_10_0.txtPassRound = gohelper.findChildText(var_10_1, "#go_done/#txt_num")
-		var_10_0.golock = gohelper.findChild(var_10_1, "#go_locked")
-		var_10_0.simagechaptericon = gohelper.findChildSingleImage(var_10_1, "#simage_chapterIcon")
-		var_10_0.goselected = gohelper.findChild(var_10_1, "selectframe")
-		var_10_0.goEnemyList = gohelper.findChild(var_10_1, "enemyList")
-		var_10_0.goEnemyItem = gohelper.findChild(var_10_1, "enemyList/#go_enemyteam/enemyList/go_enemyitem")
-		var_10_0.txtchapter = gohelper.findChildText(var_10_1, "#go_chpt/#txt_chpt")
-		var_10_0.btnSelf = gohelper.findChildButtonWithAudio(var_10_1, "#btn_self")
+		item = self:getUserDataTb_()
+		item.go = go
+		item.txtName = gohelper.findChildText(go, "#txt_name")
+		item.gofinish = gohelper.findChild(go, "#go_done")
+		item.goUnfinish = gohelper.findChild(go, "#go_unfinished")
+		item.txtPassRound = gohelper.findChildText(go, "#go_done/#txt_num")
+		item.golock = gohelper.findChild(go, "#go_locked")
+		item.simagechaptericon = gohelper.findChildSingleImage(go, "#simage_chapterIcon")
+		item.goselected = gohelper.findChild(go, "selectframe")
+		item.goEnemyList = gohelper.findChild(go, "enemyList")
+		item.goEnemyItem = gohelper.findChild(go, "enemyList/#go_enemyteam/enemyList/go_enemyitem")
+		item.txtchapter = gohelper.findChildText(go, "#go_chpt/#txt_chpt")
+		item.btnSelf = gohelper.findChildButtonWithAudio(go, "#btn_self")
 
-		var_10_0.btnSelf:AddClickListener(arg_10_0.onItemClick, arg_10_0, arg_10_1)
-		gohelper.setActive(var_10_0.go, true)
+		item.btnSelf:AddClickListener(self.onItemClick, self, index)
+		gohelper.setActive(item.go, true)
 
-		arg_10_0._stageItems[arg_10_1] = var_10_0
+		self._stageItems[index] = item
 	end
 
-	return var_10_0
+	return item
 end
 
-function var_0_0.refreshSingleItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_2.txtchapter.text = string.format("%02d", arg_11_3.cfg.layer)
+function Season123EpisodeListView:refreshSingleItem(index, item, data)
+	item.txtchapter.text = string.format("%02d", data.cfg.layer)
 
-	local var_11_0 = Season123Model.instance:getSingleBgFolder()
+	local folder = Season123Model.instance:getSingleBgFolder()
 
-	if not string.nilorempty(var_11_0) then
-		arg_11_2.simagechaptericon:LoadImage(ResUrl.getSeason123EpisodeIcon(var_11_0, arg_11_3.cfg.stagePicture))
+	if not string.nilorempty(folder) then
+		item.simagechaptericon:LoadImage(ResUrl.getSeason123EpisodeIcon(folder, data.cfg.stagePicture))
 	end
 
-	arg_11_0:refreshSingleItemLock(arg_11_1, arg_11_2, arg_11_3)
-	arg_11_0:refreshSingleItemFinished(arg_11_1, arg_11_2, arg_11_3)
+	self:refreshSingleItemLock(index, item, data)
+	self:refreshSingleItemFinished(index, item, data)
 
-	local var_11_1 = arg_11_3.cfg.layer == Season123EpisodeListModel.instance.curSelectLayer
+	local isSelect = data.cfg.layer == Season123EpisodeListModel.instance.curSelectLayer
 
-	gohelper.setActive(arg_11_2.goselected, var_11_1)
+	gohelper.setActive(item.goselected, isSelect)
 
-	if var_11_1 then
-		arg_11_0._gocurrentselected = arg_11_2.goselected
-	end
-end
-
-function var_0_0.refreshSingleItemLock(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = Season123EpisodeListModel.instance:isEpisodeUnlock(arg_12_3.cfg.layer)
-
-	gohelper.setActive(arg_12_2.golock, not var_12_0)
-
-	local var_12_1 = var_12_0 and "#FFFFFF" or "#FFFFFF"
-
-	SLFramework.UGUI.GuiHelper.SetColor(arg_12_2.txtchapter, var_12_1)
-end
-
-function var_0_0.refreshSingleItemFinished(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = Season123EpisodeListModel.instance:isEpisodeUnlock(arg_13_3.cfg.layer)
-	local var_13_1 = arg_13_3.isFinished
-
-	gohelper.setActive(arg_13_2.gofinish, var_13_1)
-	gohelper.setActive(arg_13_2.txtPassRound, var_13_1)
-	gohelper.setActive(arg_13_2.goUnfinish, not var_13_1 and var_13_0)
-
-	if var_13_1 then
-		arg_13_2.txtPassRound.text = tostring(arg_13_3.round)
+	if isSelect then
+		self._gocurrentselected = item.goselected
 	end
 end
 
-function var_0_0.refreshCenter(arg_14_0)
-	if arg_14_0._centerItem then
-		arg_14_0._centerItem:refreshUI()
+function Season123EpisodeListView:refreshSingleItemLock(index, item, data)
+	local isUnlock = Season123EpisodeListModel.instance:isEpisodeUnlock(data.cfg.layer)
+
+	gohelper.setActive(item.golock, not isUnlock)
+
+	local color = isUnlock and "#FFFFFF" or "#FFFFFF"
+
+	SLFramework.UGUI.GuiHelper.SetColor(item.txtchapter, color)
+end
+
+function Season123EpisodeListView:refreshSingleItemFinished(index, item, data)
+	local isUnlock = Season123EpisodeListModel.instance:isEpisodeUnlock(data.cfg.layer)
+	local isFinished = data.isFinished
+
+	gohelper.setActive(item.gofinish, isFinished)
+	gohelper.setActive(item.txtPassRound, isFinished)
+	gohelper.setActive(item.goUnfinish, not isFinished and isUnlock)
+
+	if isFinished then
+		item.txtPassRound.text = tostring(data.round)
 	end
 end
 
-function var_0_0.initCenter(arg_15_0)
-	arg_15_0._centerItem = Season123EpisodeListCenter.New()
-
-	arg_15_0._centerItem:init(arg_15_0._goentranceitem)
-	arg_15_0._centerItem:initData(arg_15_0.viewParam.actId, arg_15_0.viewParam.stage)
+function Season123EpisodeListView:refreshCenter()
+	if self._centerItem then
+		self._centerItem:refreshUI()
+	end
 end
 
-var_0_0.OutOfBoundOffset = 280
-var_0_0.DelayEnterEpisodeTime = 0.2
-var_0_0.SCROLL_ANIM_BLOCK_KEY = "Season123EpisodeListView_scrollanim"
+function Season123EpisodeListView:initCenter()
+	self._centerItem = Season123EpisodeListCenter.New()
 
-function var_0_0.playScrollAnim(arg_16_0, arg_16_1)
-	UIBlockMgr.instance:startBlock(var_0_0.SCROLL_ANIM_BLOCK_KEY)
+	self._centerItem:init(self._goentranceitem)
+	self._centerItem:initData(self.viewParam.actId, self.viewParam.stage)
+end
+
+Season123EpisodeListView.OutOfBoundOffset = 280
+Season123EpisodeListView.DelayEnterEpisodeTime = 0.2
+Season123EpisodeListView.SCROLL_ANIM_BLOCK_KEY = "Season123EpisodeListView_scrollanim"
+
+function Season123EpisodeListView:playScrollAnim(index)
+	UIBlockMgr.instance:startBlock(Season123EpisodeListView.SCROLL_ANIM_BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
-	arg_16_0._scrollCanvasGroup.interactable = false
-	arg_16_0._scrollCanvasGroup.blocksRaycasts = false
-	arg_16_0._scrollStory.movementType = 0
+	self._scrollCanvasGroup.interactable = false
+	self._scrollCanvasGroup.blocksRaycasts = false
+	self._scrollStory.movementType = 0
 
-	if arg_16_0._tweenIdScroll then
-		ZProj.TweenHelper.KillById(arg_16_0._tweenIdScroll)
+	if self._tweenIdScroll then
+		ZProj.TweenHelper.KillById(self._tweenIdScroll)
 	end
 
-	TaskDispatcher.cancelTask(arg_16_0.handlePlayScrollAnimCompleted, arg_16_0)
+	TaskDispatcher.cancelTask(self.handlePlayScrollAnimCompleted, self)
 
-	local var_16_0 = arg_16_0:getScrollToIndexY(arg_16_1)
-	local var_16_1 = recthelper.getAnchorY(arg_16_0._rectScroll) - var_16_0
+	local targetY = self:getScrollToIndexY(index)
+	local curY = recthelper.getAnchorY(self._rectScroll)
+	local deltaY = curY - targetY
 
-	if var_16_1 > var_0_0.OutOfBoundOffset then
-		arg_16_0._tweenIdScroll = ZProj.TweenHelper.DOAnchorPosY(arg_16_0._rectScroll, var_16_0 + var_0_0.OutOfBoundOffset, var_0_0.DelayEnterEpisodeTime, arg_16_0.handlePlayScrollAnimCompleted, arg_16_0)
-	elseif var_16_1 < -var_0_0.OutOfBoundOffset then
-		arg_16_0._tweenIdScroll = ZProj.TweenHelper.DOAnchorPosY(arg_16_0._rectScroll, var_16_0 - var_0_0.OutOfBoundOffset, var_0_0.DelayEnterEpisodeTime, arg_16_0.handlePlayScrollAnimCompleted, arg_16_0)
+	if deltaY > Season123EpisodeListView.OutOfBoundOffset then
+		self._tweenIdScroll = ZProj.TweenHelper.DOAnchorPosY(self._rectScroll, targetY + Season123EpisodeListView.OutOfBoundOffset, Season123EpisodeListView.DelayEnterEpisodeTime, self.handlePlayScrollAnimCompleted, self)
+	elseif deltaY < -Season123EpisodeListView.OutOfBoundOffset then
+		self._tweenIdScroll = ZProj.TweenHelper.DOAnchorPosY(self._rectScroll, targetY - Season123EpisodeListView.OutOfBoundOffset, Season123EpisodeListView.DelayEnterEpisodeTime, self.handlePlayScrollAnimCompleted, self)
 	else
-		arg_16_0._viewAnimator:Play(UIAnimationName.Close, 0, 0)
-		TaskDispatcher.runDelay(arg_16_0.handlePlayScrollAnimCompleted, arg_16_0, var_0_0.DelayEnterEpisodeTime)
+		self._viewAnimator:Play(UIAnimationName.Close, 0, 0)
+		TaskDispatcher.runDelay(self.handlePlayScrollAnimCompleted, self, Season123EpisodeListView.DelayEnterEpisodeTime)
 	end
 end
 
-function var_0_0.handlePlayScrollAnimCompleted(arg_17_0)
-	arg_17_0._scrollCanvasGroup.interactable = true
-	arg_17_0._scrollCanvasGroup.blocksRaycasts = true
+function Season123EpisodeListView:handlePlayScrollAnimCompleted()
+	self._scrollCanvasGroup.interactable = true
+	self._scrollCanvasGroup.blocksRaycasts = true
 
-	UIBlockMgr.instance:endBlock(var_0_0.SCROLL_ANIM_BLOCK_KEY)
+	UIBlockMgr.instance:endBlock(Season123EpisodeListView.SCROLL_ANIM_BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	Season123EpisodeListController.instance:enterEpisode(true)
 
-	arg_17_0._scrollStory.movementType = 1
+	self._scrollStory.movementType = 1
 end
 
-function var_0_0.getScrollToIndexY(arg_18_0, arg_18_1)
-	local var_18_0 = 1
+function Season123EpisodeListView:getScrollToIndexY(index)
+	local decorateCount = 1
 
-	return (arg_18_1 - 0.5 + var_18_0) * arg_18_0._heightItem + (arg_18_1 - 1 + var_18_0) * arg_18_0._heightSpace - arg_18_0._heightScroll * 0.5
+	return (index - 0.5 + decorateCount) * self._heightItem + (index - 1 + decorateCount) * self._heightSpace - self._heightScroll * 0.5
 end
 
-function var_0_0.onItemClick(arg_19_0, arg_19_1)
-	local var_19_0 = Season123EpisodeListModel.instance:getByIndex(arg_19_1)
+function Season123EpisodeListView:onItemClick(index)
+	local data = Season123EpisodeListModel.instance:getByIndex(index)
 
-	if not var_19_0 then
+	if not data then
 		return
 	end
 
-	if Season123EpisodeListModel.instance:isEpisodeUnlock(var_19_0.cfg.layer) then
-		local var_19_1 = var_19_0.cfg.layer
+	local isUnlock = Season123EpisodeListModel.instance:isEpisodeUnlock(data.cfg.layer)
 
-		if arg_19_0._gocurrentselected then
-			gohelper.setActive(arg_19_0._gocurrentselected, false)
+	if isUnlock then
+		local layer = data.cfg.layer
+
+		if self._gocurrentselected then
+			gohelper.setActive(self._gocurrentselected, false)
 		end
 
-		Season123EpisodeListController.instance:setSelectLayer(var_19_1)
-		arg_19_0:playScrollAnim(arg_19_1)
+		Season123EpisodeListController.instance:setSelectLayer(layer)
+		self:playScrollAnim(index)
 	else
 		GameFacade.showToast(ToastEnum.SeasonEpisodeIsLock)
 
@@ -329,27 +334,28 @@ function var_0_0.onItemClick(arg_19_0, arg_19_1)
 	end
 end
 
-function var_0_0._btnheroesOnClick(arg_20_0)
-	local var_20_0 = arg_20_0.viewParam.actId
+function Season123EpisodeListView:_btnheroesOnClick()
+	local actId = self.viewParam.actId
+	local actMO = Season123Model.instance:getActInfo(actId)
 
-	if not Season123Model.instance:getActInfo(var_20_0) then
+	if not actMO then
 		return
 	end
 
-	local var_20_1 = Season123EpisodeListModel.instance.curSelectLayer
+	local layer = Season123EpisodeListModel.instance.curSelectLayer
 
-	if var_20_1 == 0 then
+	if layer == 0 then
 		return
 	end
 
 	ViewMgr.instance:openView(Season123Controller.instance:getShowHeroViewName(), {
-		actId = var_20_0,
+		actId = actId,
 		stage = Season123EpisodeListModel.instance.stage,
-		layer = var_20_1
+		layer = layer
 	})
 end
 
-function var_0_0._btnresetOnClick(arg_21_0)
+function Season123EpisodeListView:_btnresetOnClick()
 	Season123Controller.instance:openResetView({
 		actId = Season123EpisodeListModel.instance.activityId,
 		stage = Season123EpisodeListModel.instance.stage,
@@ -357,73 +363,77 @@ function var_0_0._btnresetOnClick(arg_21_0)
 	})
 end
 
-function var_0_0._btndetailsOnClick(arg_22_0)
-	if Season123EpisodeListModel.instance:getCurrentChallengeLayer() == 0 then
+function Season123EpisodeListView:_btndetailsOnClick()
+	local layer = Season123EpisodeListModel.instance:getCurrentChallengeLayer()
+
+	if layer == 0 then
 		return
 	end
 
 	Season123EpisodeListController.instance:openDetails()
 end
 
-function var_0_0._btntiprewardOnClick(arg_23_0)
+function Season123EpisodeListView:_btntiprewardOnClick()
 	Season123Controller.instance:openSeasonTaskView({
 		actId = Season123EpisodeListModel.instance.activityId,
 		stage = Season123EpisodeListModel.instance.stage
 	})
 end
 
-function var_0_0._btnadditionruleDetailOnClick(arg_24_0)
-	local var_24_0 = Season123EpisodeListModel.instance.activityId
-	local var_24_1 = Season123EpisodeListModel.instance.stage
-	local var_24_2 = {
-		actId = var_24_0,
-		stage = var_24_1
+function Season123EpisodeListView:_btnadditionruleDetailOnClick()
+	local actId = Season123EpisodeListModel.instance.activityId
+	local stage = Season123EpisodeListModel.instance.stage
+	local param = {
+		actId = actId,
+		stage = stage
 	}
 
-	Season123Controller.instance:openSeasonAdditionRuleTipView(var_24_2)
+	Season123Controller.instance:openSeasonAdditionRuleTipView(param)
 end
 
-function var_0_0._btnMaskOnClick(arg_25_0)
-	arg_25_0.viewContainer:_overrideCloseFunc()
+function Season123EpisodeListView:_btnMaskOnClick()
+	self.viewContainer:_overrideCloseFunc()
 end
 
-function var_0_0.OnDotChange(arg_26_0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Season123StageReward, arg_26_0.viewParam.stage) then
-		arg_26_0._animTipReward:Play("btn_tipreward_loop")
+function Season123EpisodeListView:OnDotChange()
+	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.Season123StageReward, self.viewParam.stage)
+
+	if isDotShow then
+		self._animTipReward:Play("btn_tipreward_loop")
 	else
-		arg_26_0._animTipReward:Play("btn_tipreward")
+		self._animTipReward:Play("btn_tipreward")
 	end
 end
 
-function var_0_0.onCloseView(arg_27_0, arg_27_1)
-	if arg_27_1 == ViewName.Season123EpisodeDetailView then
-		arg_27_0:refreshStageList()
-		arg_27_0._viewAnimator:Play(UIAnimationName.Open, 0, 0)
+function Season123EpisodeListView:onCloseView(viewName)
+	if viewName == ViewName.Season123EpisodeDetailView then
+		self:refreshStageList()
+		self._viewAnimator:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function var_0_0.delayAddScrollAudio(arg_28_0)
-	arg_28_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_28_0._goscrollstory, Season123EpisodeListScrollAudio, arg_28_0._scrollStory)
-	arg_28_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_28_0._goscrollstory)
+function Season123EpisodeListView:delayAddScrollAudio()
+	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._goscrollstory, Season123EpisodeListScrollAudio, self._scrollStory)
+	self._drag = SLFramework.UGUI.UIDragListener.Get(self._goscrollstory)
 
-	arg_28_0._drag:AddDragBeginListener(arg_28_0._onDragBegin, arg_28_0)
-	arg_28_0._drag:AddDragEndListener(arg_28_0._onDragEnd, arg_28_0)
+	self._drag:AddDragBeginListener(self._onDragBegin, self)
+	self._drag:AddDragEndListener(self._onDragEnd, self)
 
-	arg_28_0._touch = SLFramework.UGUI.UIClickListener.Get(arg_28_0._goscrollstory)
+	self._touch = SLFramework.UGUI.UIClickListener.Get(self._goscrollstory)
 
-	arg_28_0._touch:AddClickDownListener(arg_28_0._onClickDown, arg_28_0)
+	self._touch:AddClickDownListener(self._onClickDown, self)
 end
 
-function var_0_0._onDragBegin(arg_29_0)
-	arg_29_0._audioScroll:onDragBegin()
+function Season123EpisodeListView:_onDragBegin()
+	self._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEnd(arg_30_0)
-	arg_30_0._audioScroll:onDragEnd()
+function Season123EpisodeListView:_onDragEnd()
+	self._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDown(arg_31_0)
-	arg_31_0._audioScroll:onClickDown()
+function Season123EpisodeListView:_onClickDown()
+	self._audioScroll:onClickDown()
 end
 
-return var_0_0
+return Season123EpisodeListView

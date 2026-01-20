@@ -1,48 +1,50 @@
-﻿module("modules.logic.survival.controller.work.SurvivalSceneOperationLogPushWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/SurvivalSceneOperationLogPushWork.lua
 
-local var_0_0 = class("SurvivalSceneOperationLogPushWork", SurvivalMsgPushWork)
+module("modules.logic.survival.controller.work.SurvivalSceneOperationLogPushWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0
+local SurvivalSceneOperationLogPushWork = class("SurvivalSceneOperationLogPushWork", SurvivalMsgPushWork)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._msg.data) do
-		local var_1_1 = SurvivalLogMo.New()
+function SurvivalSceneOperationLogPushWork:onStart(context)
+	local npcItems
 
-		var_1_1:init(iter_1_1)
-		SurvivalController.instance:showToast(var_1_1:getLogStr())
+	for k, v in ipairs(self._msg.data) do
+		local logMo = SurvivalLogMo.New()
 
-		if var_1_1.isNpcRecr then
-			var_1_0 = var_1_0 or {}
+		logMo:init(v)
+		SurvivalController.instance:showToast(logMo:getLogStr())
 
-			local var_1_2 = SurvivalBagItemMo.New()
+		if logMo.isNpcRecr then
+			npcItems = npcItems or {}
 
-			var_1_2:init({
+			local itemMo = SurvivalBagItemMo.New()
+
+			itemMo:init({
 				count = 1,
-				id = var_1_1.isNpcRecr
+				id = logMo.isNpcRecr
 			})
-			table.insert(var_1_0, var_1_2)
+			table.insert(npcItems, itemMo)
 		end
 	end
 
-	if var_1_0 then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0.onViewClose, arg_1_0)
+	if npcItems then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onViewClose, self)
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalGetRewardView, {
-			items = var_1_0,
+			items = npcItems,
 			title = luaLang("survival_reward_npc_title")
 		})
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.onViewClose(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.SurvivalGetRewardView then
-		arg_2_0:onDone(true)
+function SurvivalSceneOperationLogPushWork:onViewClose(viewName)
+	if viewName == ViewName.SurvivalGetRewardView then
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0.onViewClose, arg_3_0)
+function SurvivalSceneOperationLogPushWork:clearWork()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onViewClose, self)
 end
 
-return var_0_0
+return SurvivalSceneOperationLogPushWork

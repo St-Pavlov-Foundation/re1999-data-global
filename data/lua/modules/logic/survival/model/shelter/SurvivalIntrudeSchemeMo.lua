@@ -1,21 +1,23 @@
-﻿module("modules.logic.survival.model.shelter.SurvivalIntrudeSchemeMo", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/shelter/SurvivalIntrudeSchemeMo.lua
 
-local var_0_0 = pureTable("SurvivalIntrudeSchemeMo")
+module("modules.logic.survival.model.shelter.SurvivalIntrudeSchemeMo", package.seeall)
 
-function var_0_0.setData(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.survivalIntrudeScheme = arg_1_1
-	arg_1_0.point = arg_1_2
-	arg_1_0.intrudeSchemeCfg = lua_survival_shelter_intrude_scheme.configDict[arg_1_0.survivalIntrudeScheme.id]
+local SurvivalIntrudeSchemeMo = pureTable("SurvivalIntrudeSchemeMo")
+
+function SurvivalIntrudeSchemeMo:setData(survivalIntrudeScheme, point)
+	self.survivalIntrudeScheme = survivalIntrudeScheme
+	self.point = point
+	self.intrudeSchemeCfg = lua_survival_shelter_intrude_scheme.configDict[self.survivalIntrudeScheme.id]
 end
 
-function var_0_0.getDisplayIcon(arg_2_0)
-	local var_2_0 = arg_2_0.intrudeSchemeCfg.icon
+function SurvivalIntrudeSchemeMo:getDisplayIcon()
+	local path = self.intrudeSchemeCfg.icon
 
-	if arg_2_0.survivalIntrudeScheme.repress then
-		var_2_0 = "survival_new_bossbuff1_0"
+	if self.survivalIntrudeScheme.repress then
+		path = "survival_new_bossbuff1_0"
 	end
 
-	return var_2_0
+	return path
 end
 
-return var_0_0
+return SurvivalIntrudeSchemeMo

@@ -1,68 +1,70 @@
-﻿module("modules.logic.season.controller.Activity104EquipComposeController", package.seeall)
+﻿-- chunkname: @modules/logic/season/controller/Activity104EquipComposeController.lua
 
-local var_0_0 = class("Activity104EquipComposeController", BaseController)
+module("modules.logic.season.controller.Activity104EquipComposeController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity104EquipComposeController = class("Activity104EquipComposeController", BaseController)
+
+function Activity104EquipComposeController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity104EquipComposeController:onInitFinish()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function Activity104EquipComposeController:reInit()
 	return
 end
 
-function var_0_0.onOpenView(arg_4_0, arg_4_1)
-	Activity104Controller.instance:registerCallback(Activity104Event.GetAct104ItemChange, arg_4_0.handleItemChanged, arg_4_0)
-	Activity104EquipItemComposeModel.instance:initDatas(arg_4_1)
+function Activity104EquipComposeController:onOpenView(actId)
+	Activity104Controller.instance:registerCallback(Activity104Event.GetAct104ItemChange, self.handleItemChanged, self)
+	Activity104EquipItemComposeModel.instance:initDatas(actId)
 end
 
-function var_0_0.onCloseView(arg_5_0)
-	Activity104Controller.instance:unregisterCallback(Activity104Event.GetAct104ItemChange, arg_5_0.handleItemChanged, arg_5_0)
+function Activity104EquipComposeController:onCloseView()
+	Activity104Controller.instance:unregisterCallback(Activity104Event.GetAct104ItemChange, self.handleItemChanged, self)
 	Activity104EquipItemComposeModel.instance:clear()
 end
 
-function var_0_0.changeSelectCard(arg_6_0, arg_6_1)
-	if Activity104EquipItemComposeModel.instance:isEquipSelected(arg_6_1) then
-		Activity104EquipItemComposeModel.instance:unloadEquip(arg_6_1)
-		arg_6_0:notifyUpdateView()
+function Activity104EquipComposeController:changeSelectCard(itemUid)
+	if Activity104EquipItemComposeModel.instance:isEquipSelected(itemUid) then
+		Activity104EquipItemComposeModel.instance:unloadEquip(itemUid)
+		self:notifyUpdateView()
 	else
-		local var_6_0 = Activity104EquipItemComposeModel.instance:getSelectedRare()
-		local var_6_1 = Activity104EquipItemComposeModel.instance:getEquipMO(arg_6_1)
+		local targetRare = Activity104EquipItemComposeModel.instance:getSelectedRare()
+		local itemMO = Activity104EquipItemComposeModel.instance:getEquipMO(itemUid)
 
-		if not var_6_1 then
+		if not itemMO then
 			return
 		end
 
-		local var_6_2 = SeasonConfig.instance:getSeasonEquipCo(var_6_1.itemId)
+		local itemCO = SeasonConfig.instance:getSeasonEquipCo(itemMO.itemId)
 
-		if not var_6_2 then
+		if not itemCO then
 			return
 		end
 
-		if var_6_0 ~= nil and var_6_2.rare ~= var_6_0 then
+		if targetRare ~= nil and itemCO.rare ~= targetRare then
 			GameFacade.showToast(ToastEnum.SeasonChangeSelectCard)
 
 			return
 		end
 
-		Activity104EquipItemComposeModel.instance:setSelectEquip(arg_6_1)
-		arg_6_0:notifyUpdateView()
+		Activity104EquipItemComposeModel.instance:setSelectEquip(itemUid)
+		self:notifyUpdateView()
 	end
 end
 
-function var_0_0.notifyUpdateView(arg_7_0)
+function Activity104EquipComposeController:notifyUpdateView()
 	Activity104EquipItemComposeModel.instance:onModelUpdate()
-	arg_7_0:dispatchEvent(Activity104Event.OnComposeDataChanged)
+	self:dispatchEvent(Activity104Event.OnComposeDataChanged)
 end
 
-function var_0_0.checkMaterialHasEquiped(arg_8_0)
-	for iter_8_0 = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
-		local var_8_0 = Activity104EquipItemComposeModel.instance.curSelectMap[iter_8_0]
+function Activity104EquipComposeController:checkMaterialHasEquiped()
+	for pos = 1, Activity104EquipItemComposeModel.ComposeMaxCount do
+		local itemUid = Activity104EquipItemComposeModel.instance.curSelectMap[pos]
 
-		if Activity104EquipItemComposeModel.instance:getEquipedHeroUid(var_8_0) then
+		if Activity104EquipItemComposeModel.instance:getEquipedHeroUid(itemUid) then
 			return true
 		end
 	end
@@ -70,55 +72,57 @@ function var_0_0.checkMaterialHasEquiped(arg_8_0)
 	return false
 end
 
-function var_0_0.sendCompose(arg_9_0)
+function Activity104EquipComposeController:sendCompose()
 	if Activity104EquipItemComposeModel.instance:isMaterialAllReady() then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_celebrity_synthesis)
 		Activity104Rpc.instance:sendComposeActivity104EquipRequest(Activity104EquipItemComposeModel.instance.activityId, Activity104EquipItemComposeModel.instance:getMaterialList())
 	end
 end
 
-function var_0_0.handleItemChanged(arg_10_0)
+function Activity104EquipComposeController:handleItemChanged()
 	Activity104EquipItemComposeModel.instance:initItemMap()
 	Activity104EquipItemComposeModel.instance:checkResetCurSelected()
 	Activity104EquipItemComposeModel.instance:initPosList()
 	Activity104EquipItemComposeModel.instance:initList()
-	arg_10_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-function var_0_0.setSelectTag(arg_11_0, arg_11_1)
+function Activity104EquipComposeController:setSelectTag(tagIndex)
 	if Activity104EquipItemComposeModel.instance.tagModel then
-		Activity104EquipItemComposeModel.instance.tagModel:selectTagIndex(arg_11_1)
-		arg_11_0:handleItemChanged()
+		Activity104EquipItemComposeModel.instance.tagModel:selectTagIndex(tagIndex)
+		self:handleItemChanged()
 	end
 end
 
-function var_0_0.setSelectFilterId(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getFilterModel2()
+function Activity104EquipComposeController:setSelectFilterId(index)
+	local countModel = self:getFilterModel2()
 
-	if var_12_0 then
-		var_12_0:selectIndex(arg_12_1)
-		arg_12_0:handleItemChanged()
+	if countModel then
+		countModel:selectIndex(index)
+		self:handleItemChanged()
 	end
 end
 
-function var_0_0.getFilterModel(arg_13_0)
+function Activity104EquipComposeController:getFilterModel()
 	return Activity104EquipItemComposeModel.instance.tagModel
 end
 
-function var_0_0.getFilterModel2(arg_14_0)
+function Activity104EquipComposeController:getFilterModel2()
 	return Activity104EquipItemComposeModel.instance.countModel
 end
 
-function var_0_0.autoSelectEquip(arg_15_0)
-	if not Activity104EquipItemComposeModel.instance:checkAutoSelectEquip() then
+function Activity104EquipComposeController:autoSelectEquip()
+	local result = Activity104EquipItemComposeModel.instance:checkAutoSelectEquip()
+
+	if not result then
 		GameFacade.showToast(ToastEnum.SeasonEquipAutoSelectFail)
 	end
 
-	arg_15_0:notifyUpdateView()
+	self:notifyUpdateView()
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104EquipComposeController.instance = Activity104EquipComposeController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(Activity104EquipComposeController.instance)
 
-return var_0_0
+return Activity104EquipComposeController

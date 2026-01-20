@@ -2,181 +2,289 @@
   {
     "activityId": 12807,
     "round": 1,
-    "coinNum": 3
+    "coinNum": 3,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 2,
-    "coinNum": 4
+    "coinNum": 4,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 3,
-    "coinNum": 5
+    "coinNum": 5,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 4,
-    "coinNum": 6
+    "coinNum": 6,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 5,
-    "coinNum": 7
+    "coinNum": 7,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 6,
-    "coinNum": 8
+    "coinNum": 8,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 7,
-    "coinNum": 9
+    "coinNum": 9,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 8,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 9,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 10,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 11,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12807,
     "round": 12,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 1,
-    "coinNum": 3
+    "coinNum": 3,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 2,
-    "coinNum": 4
+    "coinNum": 4,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 3,
-    "coinNum": 5
+    "coinNum": 5,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 4,
-    "coinNum": 6
+    "coinNum": 6,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 5,
-    "coinNum": 7
+    "coinNum": 7,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 6,
-    "coinNum": 8
+    "coinNum": 8,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 7,
-    "coinNum": 9
+    "coinNum": 9,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 8,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 9,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 10,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 11,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12808,
     "round": 12,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 1,
-    "coinNum": 3
+    "coinNum": 3,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 2,
-    "coinNum": 4
+    "coinNum": 4,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 3,
-    "coinNum": 5
+    "coinNum": 5,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 4,
-    "coinNum": 6
+    "coinNum": 6,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 5,
-    "coinNum": 7
+    "coinNum": 7,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 6,
-    "coinNum": 8
+    "coinNum": 8,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 7,
-    "coinNum": 9
+    "coinNum": 9,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 8,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 9,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 10,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 11,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
   },
   {
     "activityId": 12809,
     "round": 12,
-    "coinNum": 10
+    "coinNum": 10,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 1,
+    "coinNum": 3,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 2,
+    "coinNum": 4,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 3,
+    "coinNum": 5,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 4,
+    "coinNum": 6,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 5,
+    "coinNum": 7,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 6,
+    "coinNum": 8,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 7,
+    "coinNum": 9,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 8,
+    "coinNum": 10,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 9,
+    "coinNum": 10,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 10,
+    "coinNum": 10,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 11,
+    "coinNum": 10,
+    "refreshCost": 1
+  },
+  {
+    "activityId": 13211,
+    "round": 12,
+    "coinNum": 10,
+    "refreshCost": 1
   }
 ]

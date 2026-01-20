@@ -1,45 +1,47 @@
-﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.DungeonMapInteractive1_2Item", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/versionactivity1_2dungeon/view/DungeonMapInteractive1_2Item.lua
 
-local var_0_0 = class("DungeonMapInteractive1_2Item", BaseViewExtended)
+module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.DungeonMapInteractive1_2Item", package.seeall)
 
-function var_0_0._OnClickElement(arg_1_0, arg_1_1)
-	arg_1_0._config = arg_1_1._config
+local DungeonMapInteractive1_2Item = class("DungeonMapInteractive1_2Item", BaseViewExtended)
 
-	local var_1_0 = arg_1_0._config.type
+function DungeonMapInteractive1_2Item:_OnClickElement(mapElement)
+	self._config = mapElement._config
 
-	if var_1_0 == DungeonEnum.ElementType.DailyEpisode then
-		local var_1_1 = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapinteractiveitem16.prefab"
+	local tarType = self._config.type
 
-		arg_1_0:openSubView(VersionActivity_1_2_DungeonMapInteractiveItem16, var_1_1, arg_1_0.viewGO, arg_1_0._config)
-	elseif var_1_0 == DungeonEnum.ElementType.Activity1_2Building_Repair then
-		local var_1_2 = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapinteractiveitem102.prefab"
+	if tarType == DungeonEnum.ElementType.DailyEpisode then
+		local url = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapinteractiveitem16.prefab"
 
-		arg_1_0:openSubView(VersionActivity_1_2_DungeonMapInteractiveItem102, var_1_2, arg_1_0.viewGO, arg_1_0._config, arg_1_1)
-	elseif var_1_0 == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
-		local var_1_3 = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmaplevelupitem.prefab"
+		self:openSubView(VersionActivity_1_2_DungeonMapInteractiveItem16, url, self.viewGO, self._config)
+	elseif tarType == DungeonEnum.ElementType.Activity1_2Building_Repair then
+		local url = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapinteractiveitem102.prefab"
 
-		arg_1_0:openSubView(VersionActivity_1_2_DungeonMapLevelUpItem, var_1_3, arg_1_0.viewGO, arg_1_0._config)
-	elseif var_1_0 == DungeonEnum.ElementType.Activity1_2Building_Trap then
-		local var_1_4 = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmaptrapitem.prefab"
+		self:openSubView(VersionActivity_1_2_DungeonMapInteractiveItem102, url, self.viewGO, self._config, mapElement)
+	elseif tarType == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
+		local url = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmaplevelupitem.prefab"
 
-		arg_1_0:openSubView(VersionActivity_1_2_DungeonMapTrapItem, var_1_4, arg_1_0.viewGO, arg_1_0._config)
-	elseif var_1_0 == DungeonEnum.ElementType.Activity1_2Fight then
-		local var_1_5 = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapitem105.prefab"
+		self:openSubView(VersionActivity_1_2_DungeonMapLevelUpItem, url, self.viewGO, self._config)
+	elseif tarType == DungeonEnum.ElementType.Activity1_2Building_Trap then
+		local url = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmaptrapitem.prefab"
 
-		arg_1_0:openSubView(VersionActivity_1_2_DungeonMapItem105, var_1_5, arg_1_0.viewGO, arg_1_0._config)
-	elseif var_1_0 == DungeonEnum.ElementType.Activity1_2Note then
-		local var_1_6 = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapitem105.prefab"
+		self:openSubView(VersionActivity_1_2_DungeonMapTrapItem, url, self.viewGO, self._config)
+	elseif tarType == DungeonEnum.ElementType.Activity1_2Fight then
+		local url = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapitem105.prefab"
 
-		arg_1_0:openSubView(VersionActivity_1_2_DungeonMapItem107, var_1_6, arg_1_0.viewGO, arg_1_0._config)
+		self:openSubView(VersionActivity_1_2_DungeonMapItem105, url, self.viewGO, self._config)
+	elseif tarType == DungeonEnum.ElementType.Activity1_2Note then
+		local url = "ui/viewres/versionactivity_1_2/map/versionactivity_1_2_dungeonmapitem105.prefab"
+
+		self:openSubView(VersionActivity_1_2_DungeonMapItem107, url, self.viewGO, self._config)
 	else
-		arg_1_0.viewContainer.mapScene:createInteractiveItem()
-		arg_1_0.viewContainer.mapScene._interactiveItem:_OnClickElement(arg_1_1)
+		self.viewContainer.mapScene:createInteractiveItem()
+		self.viewContainer.mapScene._interactiveItem:_OnClickElement(mapElement)
 	end
 end
 
-function var_0_0.destroySubView(arg_2_0, arg_2_1)
-	var_0_0.super.destroySubView(arg_2_0, arg_2_1)
+function DungeonMapInteractive1_2Item:destroySubView(handler)
+	DungeonMapInteractive1_2Item.super.destroySubView(self, handler)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true)
 end
 
-return var_0_0
+return DungeonMapInteractive1_2Item

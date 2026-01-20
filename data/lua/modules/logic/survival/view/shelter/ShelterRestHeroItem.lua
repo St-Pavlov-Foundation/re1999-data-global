@@ -1,97 +1,101 @@
-﻿module("modules.logic.survival.view.shelter.ShelterRestHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterRestHeroItem.lua
 
-local var_0_0 = class("ShelterRestHeroItem", ListScrollCellExtend)
+module("modules.logic.survival.view.shelter.ShelterRestHeroItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	local var_1_0 = arg_1_0.viewGO
+local ShelterRestHeroItem = class("ShelterRestHeroItem", ListScrollCellExtend)
 
-	arg_1_0._goHeroRoot = gohelper.findChild(var_1_0, "#go_HaveHero")
-	arg_1_0._goEmpty = gohelper.findChild(var_1_0, "#go_Empty")
-	arg_1_0._goLock = gohelper.findChild(var_1_0, "#go_Locked")
-	arg_1_0._goAssit = gohelper.findChild(arg_1_0._goHeroRoot, "assit")
+function ShelterRestHeroItem:onInitView()
+	local go = self.viewGO
 
-	local var_1_1 = gohelper.findChild(arg_1_0._goHeroRoot, "hero")
+	self._goHeroRoot = gohelper.findChild(go, "#go_HaveHero")
+	self._goEmpty = gohelper.findChild(go, "#go_Empty")
+	self._goLock = gohelper.findChild(go, "#go_Locked")
+	self._goAssit = gohelper.findChild(self._goHeroRoot, "assit")
 
-	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(var_1_1)
+	local heroGo = gohelper.findChild(self._goHeroRoot, "hero")
 
-	arg_1_0._heroItem:setStyle_CharacterBackpack()
-	arg_1_0._heroItem:hideFavor(true)
-	arg_1_0._heroItem:setSelectFrameSize(245, 583, 0, -12)
+	self._heroItem = IconMgr.instance:getCommonHeroItem(heroGo)
 
-	arg_1_0._clickThis = gohelper.getClick(var_1_0)
+	self._heroItem:setStyle_CharacterBackpack()
+	self._heroItem:hideFavor(true)
+	self._heroItem:setSelectFrameSize(245, 583, 0, -12)
 
-	gohelper.setActive(arg_1_0._goLock, false)
+	self._clickThis = gohelper.getClick(go)
 
-	arg_1_0._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0._goHeroRoot, SurvivalHeroHealthPart)
+	gohelper.setActive(self._goLock, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._healthPart = MonoHelper.addNoUpdateLuaComOnceToGo(self._goHeroRoot, SurvivalHeroHealthPart)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0._clickThis, arg_2_0._onClickThis, arg_2_0)
+function ShelterRestHeroItem:addEvents()
+	self:addClickCb(self._clickThis, self._onClickThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeClickCb(arg_3_0._clickThis)
+function ShelterRestHeroItem:removeEvents()
+	self:removeClickCb(self._clickThis)
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function ShelterRestHeroItem:_editableInitView()
 	return
 end
 
-function var_0_0._onClickThis(arg_5_0)
-	if arg_5_0._isLock then
+function ShelterRestHeroItem:_onClickThis()
+	if self._isLock then
 		return
 	end
 
-	if SurvivalShelterModel.instance:getWeekInfo():isAllHeroHealth() then
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	if weekInfo:isAllHeroHealth() then
 		GameFacade.showToast(ToastEnum.SurvivalRestTips)
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.ShelterRestHeroSelectView, {
-		index = arg_5_0._index,
-		buildingId = arg_5_0.mo.buildingId
+		index = self._index,
+		buildingId = self.mo.buildingId
 	})
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0.mo = arg_6_1
+function ShelterRestHeroItem:onUpdateMO(mo)
+	self.mo = mo
 
-	local var_6_0 = arg_6_1.pos == nil
+	local isLock = mo.pos == nil
 
-	arg_6_0._isLock = var_6_0
+	self._isLock = isLock
 
-	local var_6_1 = arg_6_1.heroId or 0
-	local var_6_2 = var_6_1 == 0
+	local heroId = mo.heroId or 0
+	local isEmpty = heroId == 0
 
-	gohelper.setActive(arg_6_0._goLock, var_6_0)
-	gohelper.setActive(arg_6_0._goEmpty, not var_6_0 and var_6_2)
-	gohelper.setActive(arg_6_0._goHeroRoot, not var_6_0 and not var_6_2)
+	gohelper.setActive(self._goLock, isLock)
+	gohelper.setActive(self._goEmpty, not isLock and isEmpty)
+	gohelper.setActive(self._goHeroRoot, not isLock and not isEmpty)
 
-	if var_6_2 then
+	if isEmpty then
 		return
 	end
 
-	local var_6_3 = HeroModel.instance:getByHeroId(var_6_1)
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
 
-	arg_6_0._heroItem:onUpdateMO(var_6_3)
-	arg_6_0._heroItem:setNewShow(false)
+	self._heroItem:onUpdateMO(heroMo)
+	self._heroItem:setNewShow(false)
 
-	local var_6_4 = SurvivalBalanceHelper.getHeroBalanceLv(var_6_1)
+	local lv = SurvivalBalanceHelper.getHeroBalanceLv(heroId)
 
-	if var_6_4 > var_6_3.level then
-		arg_6_0._heroItem:setBalanceLv(var_6_4)
+	if lv > heroMo.level then
+		self._heroItem:setBalanceLv(lv)
 	end
 
-	arg_6_0._healthPart:setHeroId(var_6_1)
+	self._healthPart:setHeroId(heroId)
 end
 
-function var_0_0.onDestroyView(arg_7_0)
+function ShelterRestHeroItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return ShelterRestHeroItem

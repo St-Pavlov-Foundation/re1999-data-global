@@ -1,33 +1,37 @@
-﻿module("modules.logic.guide.controller.action.impl.GuideActionEnterEpisode", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/GuideActionEnterEpisode.lua
 
-local var_0_0 = class("GuideActionEnterEpisode", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.GuideActionEnterEpisode", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local GuideActionEnterEpisode = class("GuideActionEnterEpisode", BaseGuideAction)
 
-	local var_1_0 = string.splitToNumber(arg_1_0.actionParam, "#")
-	local var_1_1 = var_1_0[1]
-	local var_1_2 = var_1_0[2]
-	local var_1_3 = var_1_1 and lua_episode.configDict[var_1_1]
+function GuideActionEnterEpisode:onStart(context)
+	GuideActionEnterEpisode.super.onStart(self, context)
 
-	if var_1_3 then
-		if DungeonConfig.instance:getChapterCO(var_1_3.chapterId).type == DungeonEnum.ChapterType.Newbie then
-			DungeonFightController.instance:enterNewbieFight(var_1_3.chapterId, var_1_1)
+	local temp = string.splitToNumber(self.actionParam, "#")
+	local episodeId = temp[1]
+	local showSettlement = temp[2]
+	local episodeCO = episodeId and lua_episode.configDict[episodeId]
+
+	if episodeCO then
+		local chapterCO = DungeonConfig.instance:getChapterCO(episodeCO.chapterId)
+
+		if chapterCO.type == DungeonEnum.ChapterType.Newbie then
+			DungeonFightController.instance:enterNewbieFight(episodeCO.chapterId, episodeId)
 		else
-			DungeonFightController.instance:enterFight(var_1_3.chapterId, var_1_1, nil)
+			DungeonFightController.instance:enterFight(episodeCO.chapterId, episodeId, nil)
 		end
 
-		local var_1_4 = FightModel.instance:getFightParam()
+		local fightParam = FightModel.instance:getFightParam()
 
-		if var_1_2 == 0 then
-			var_1_4:setShowSettlement(false)
+		if showSettlement == 0 then
+			fightParam:setShowSettlement(false)
 		end
 
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	else
-		logError("Guide episode id nil, guide_" .. arg_1_0.guideId .. "_" .. arg_1_0.stepId)
-		arg_1_0:onDone(false)
+		logError("Guide episode id nil, guide_" .. self.guideId .. "_" .. self.stepId)
+		self:onDone(false)
 	end
 end
 
-return var_0_0
+return GuideActionEnterEpisode

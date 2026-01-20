@@ -1,27 +1,30 @@
-﻿module("modules.configs.excel2json.lua_auto_chess_rank", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_auto_chess_rank.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_auto_chess_rank", package.seeall)
+
+local lua_auto_chess_rank = {}
+local fields = {
 	reward = 8,
 	name = 4,
 	protection = 5,
 	score = 6,
 	rankId = 2,
 	isShow = 9,
+	maxRound = 10,
 	icon = 3,
 	activityId = 1,
 	round2Score = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"rankId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	name = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_auto_chess_rank.onLoad(json)
+	lua_auto_chess_rank.configList, lua_auto_chess_rank.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_auto_chess_rank

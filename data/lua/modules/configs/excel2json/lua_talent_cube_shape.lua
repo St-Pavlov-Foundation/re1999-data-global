@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_talent_cube_shape", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_talent_cube_shape.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_talent_cube_shape", package.seeall)
+
+local lua_talent_cube_shape = {}
+local fields = {
 	id = 1,
 	shape = 2,
 	icon = 4,
 	sort = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_talent_cube_shape.onLoad(json)
+	lua_talent_cube_shape.configList, lua_talent_cube_shape.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_talent_cube_shape

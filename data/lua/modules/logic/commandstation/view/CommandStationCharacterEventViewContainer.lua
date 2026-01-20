@@ -1,36 +1,38 @@
-﻿module("modules.logic.commandstation.view.CommandStationCharacterEventViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/commandstation/view/CommandStationCharacterEventViewContainer.lua
 
-local var_0_0 = class("CommandStationCharacterEventViewContainer", BaseViewContainer)
+module("modules.logic.commandstation.view.CommandStationCharacterEventViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local CommandStationCharacterEventViewContainer = class("CommandStationCharacterEventViewContainer", BaseViewContainer)
 
-	arg_1_0._mainView = CommandStationCharacterEventView.New()
+function CommandStationCharacterEventViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._mainView)
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
+	self._mainView = CommandStationCharacterEventView.New()
 
-	return var_1_0
+	table.insert(views, self._mainView)
+	table.insert(views, TabViewGroup.New(1, "#go_lefttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function CommandStationCharacterEventViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		arg_2_0.navigateView:setOverrideClose(arg_2_0._navigateClose, arg_2_0)
+		self.navigateView:setOverrideClose(self._navigateClose, self)
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0._navigateClose(arg_3_0)
-	arg_3_0._mainView:checkClose()
+function CommandStationCharacterEventViewContainer:_navigateClose()
+	self._mainView:checkClose()
 end
 
-return var_0_0
+return CommandStationCharacterEventViewContainer

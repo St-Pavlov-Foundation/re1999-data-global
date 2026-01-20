@@ -1,23 +1,25 @@
-﻿module("modules.logic.video.controller.VideoController", package.seeall)
+﻿-- chunkname: @modules/logic/video/controller/VideoController.lua
 
-local var_0_0 = class("VideoController", BaseController)
+module("modules.logic.video.controller.VideoController", package.seeall)
 
-function var_0_0.openFullScreenVideoView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
+local VideoController = class("VideoController", BaseController)
+
+function VideoController:openFullScreenVideoView(videoPath, videoAudio, videoDuration, doneCb, doneCbObj, params)
 	ViewMgr.instance:openView(ViewName.FullScreenVideoView, {
-		videoPath = arg_1_1,
-		videoAudio = arg_1_2,
-		videoDuration = arg_1_3,
-		doneCb = arg_1_4,
-		doneCbObj = arg_1_5,
-		waitViewOpen = arg_1_6 and arg_1_6.waitViewOpen,
-		noShowBlackBg = arg_1_6 and arg_1_6.noShowBlackBg,
-		getVideoPlayer = arg_1_6 and arg_1_6.getVideoPlayer,
-		setVideoPlayer = arg_1_6 and arg_1_6.setVideoPlayer
+		videoPath = videoPath,
+		videoAudio = videoAudio,
+		videoDuration = videoDuration,
+		doneCb = doneCb,
+		doneCbObj = doneCbObj,
+		waitViewOpen = params and params.waitViewOpen,
+		noShowBlackBg = params and params.noShowBlackBg,
+		getVideoPlayer = params and params.getVideoPlayer,
+		setVideoPlayer = params and params.setVideoPlayer
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+VideoController.instance = VideoController.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+LuaEventSystem.addEventMechanism(VideoController.instance)
 
-return var_0_0
+return VideoController

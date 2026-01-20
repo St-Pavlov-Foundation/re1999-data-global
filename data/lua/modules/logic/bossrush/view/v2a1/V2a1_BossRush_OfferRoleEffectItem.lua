@@ -1,235 +1,239 @@
-﻿module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_OfferRoleEffectItem", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v2a1/V2a1_BossRush_OfferRoleEffectItem.lua
 
-local var_0_0 = class("V2a1_BossRush_OfferRoleEffectItem", BaseChildView)
+module("modules.logic.bossrush.view.v2a1.V2a1_BossRush_OfferRoleEffectItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "image_Line")
+local V2a1_BossRush_OfferRoleEffectItem = class("V2a1_BossRush_OfferRoleEffectItem", BaseChildView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a1_BossRush_OfferRoleEffectItem:onInitView()
+	self._goline = gohelper.findChild(self.viewGO, "image_Line")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V2a1_BossRush_OfferRoleEffectItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V2a1_BossRush_OfferRoleEffectItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._txt = arg_4_0.viewGO:GetComponent(gohelper.Type_TextMesh)
+function V2a1_BossRush_OfferRoleEffectItem:_editableInitView()
+	self._txt = self.viewGO:GetComponent(gohelper.Type_TextMesh)
 end
 
-local var_0_1 = "OfferRoleEffectItem_skillNameDesc"
+local placeholder = "OfferRoleEffectItem_skillNameDesc"
 
-function var_0_0.activeLine(arg_5_0, arg_5_1)
-	gohelper.setActive(arg_5_0._goline, arg_5_1)
+function V2a1_BossRush_OfferRoleEffectItem:activeLine(isActive)
+	gohelper.setActive(self._goline, isActive)
 end
 
-function var_0_0.updateInfo(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.parentView = arg_6_1
-	arg_6_0._needUseSkillEffDescList = {}
-	arg_6_0._needUseSkillEffDescList2 = {}
-	arg_6_0._heroId = arg_6_3
+function V2a1_BossRush_OfferRoleEffectItem:updateInfo(parentView, desc, heroId)
+	self.parentView = parentView
+	self._needUseSkillEffDescList = {}
+	self._needUseSkillEffDescList2 = {}
+	self._heroId = heroId
 
-	local var_6_0, var_6_1, var_6_2 = arg_6_0:_parseDesc(arg_6_2)
+	local _, skillName, skillIndex = self:_parseDesc(desc)
 
-	arg_6_0._skillIndex = var_6_2
-	arg_6_2 = arg_6_0:addLink(arg_6_2)
-	arg_6_2 = string.gsub(arg_6_2, "▩(%d)%%s", var_0_1)
-	arg_6_2 = arg_6_0:addNumColor(arg_6_2)
+	self._skillIndex = skillIndex
+	desc = self:addLink(desc)
+	desc = string.gsub(desc, "▩(%d)%%s", placeholder)
+	desc = self:addNumColor(desc)
 
-	local var_6_3 = arg_6_0:_buildSkillNameLinkTag(var_6_1)
+	local skillNameDesc = self:_buildSkillNameLinkTag(skillName)
 
-	arg_6_2 = string.gsub(arg_6_2, var_0_1, var_6_3)
-	arg_6_0._hyperLinkClick = arg_6_0.viewGO:GetComponent(typeof(ZProj.TMPHyperLinkClick))
+	desc = string.gsub(desc, placeholder, skillNameDesc)
+	self._hyperLinkClick = self.viewGO:GetComponent(typeof(ZProj.TMPHyperLinkClick))
 
-	arg_6_0._hyperLinkClick:SetClickListener(arg_6_0._onHyperLinkClick, arg_6_0)
+	self._hyperLinkClick:SetClickListener(self._onHyperLinkClick, self)
 
-	arg_6_0._txt.text = arg_6_2
-	arg_6_0._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0.viewGO.gameObject, FixTmpBreakLine)
+	self._txt.text = desc
+	self._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO.gameObject, FixTmpBreakLine)
 
-	arg_6_0._fixTmpBreakLine:refreshTmpContent(arg_6_0.viewGO)
+	self._fixTmpBreakLine:refreshTmpContent(self.viewGO)
 end
 
-function var_0_0._parseDesc(arg_7_0, arg_7_1)
-	local var_7_0, var_7_1, var_7_2 = string.find(arg_7_1, "▩(%d)%%s")
+function V2a1_BossRush_OfferRoleEffectItem:_parseDesc(desc)
+	local _, _, skillIndex = string.find(desc, "▩(%d)%%s")
 
-	if not var_7_2 then
-		return arg_7_1
+	if not skillIndex then
+		return desc
 	end
 
-	local var_7_3 = tonumber(var_7_2)
-	local var_7_4
+	skillIndex = tonumber(skillIndex)
 
-	if var_7_3 == 0 then
-		var_7_4 = SkillConfig.instance:getpassiveskillsCO(arg_7_0._heroId)[1].skillPassive
+	local skillId
+
+	if skillIndex == 0 then
+		skillId = SkillConfig.instance:getpassiveskillsCO(self._heroId)[1].skillPassive
 	else
-		var_7_4 = SkillConfig.instance:getHeroBaseSkillIdDict(arg_7_0._heroId)[var_7_3]
+		skillId = SkillConfig.instance:getHeroBaseSkillIdDict(self._heroId)[skillIndex]
 	end
 
-	if not var_7_4 then
-		return arg_7_1
+	if not skillId then
+		return desc
 	end
 
-	local var_7_5 = lua_skill.configDict[var_7_4].name
+	local skillName = lua_skill.configDict[skillId].name
 
-	return arg_7_1, var_7_5, var_7_3
+	return desc, skillName, skillIndex
 end
 
-local var_0_2 = "#7e99d0"
+local skillTypeColor = "#7e99d0"
 
-function var_0_0._buildSkillNameLinkTag(arg_8_0, arg_8_1)
-	local var_8_0 = var_0_2
+function V2a1_BossRush_OfferRoleEffectItem:_buildSkillNameLinkTag(skillName)
+	local color = skillTypeColor
+	local desc = skillName and string.format(luaLang("V2a1_BossRush_OfferRoleEffectItem_skillname_link_overseas"), color, skillName) or ""
 
-	return arg_8_1 and string.format(luaLang("V2a1_BossRush_OfferRoleEffectItem_skillname_link_overseas"), var_8_0, arg_8_1) or ""
+	return desc
 end
 
-function var_0_0.addLink(arg_9_0, arg_9_1)
-	arg_9_1 = string.gsub(arg_9_1, "%[(.-)%]", arg_9_0.addLinkCb1)
-	arg_9_1 = string.gsub(arg_9_1, "【(.-)】", arg_9_0.addLinkCb2)
+function V2a1_BossRush_OfferRoleEffectItem:addLink(desc)
+	desc = string.gsub(desc, "%[(.-)%]", self.addLinkCb1)
+	desc = string.gsub(desc, "【(.-)】", self.addLinkCb2)
 
-	return arg_9_1
+	return desc
 end
 
-local function var_0_3(arg_10_0, arg_10_1)
-	local var_10_0 = SkillConfig.instance:getSkillEffectDescCoByName(arg_10_1)
+local function getBuffLink(format, skillName)
+	local co = SkillConfig.instance:getSkillEffectDescCoByName(skillName)
 
-	arg_10_1 = SkillHelper.removeRichTag(arg_10_1)
+	skillName = SkillHelper.removeRichTag(skillName)
 
-	if not var_10_0 then
-		return arg_10_1
+	if not co then
+		return skillName
 	end
 
-	local var_10_1 = var_0_2
+	local color = skillTypeColor
 
-	arg_10_1 = string.format(arg_10_0, arg_10_1)
+	skillName = string.format(format, skillName)
 
-	if not var_10_0.notAddLink or var_10_0.notAddLink == 0 then
-		return string.format("<color=%s><u><link=%s>%s</link></u></color>", var_10_1, var_10_0.id, arg_10_1)
+	if not co.notAddLink or co.notAddLink == 0 then
+		return string.format("<color=%s><u><link=%s>%s</link></u></color>", color, co.id, skillName)
 	end
 
-	return string.format("<color=%s>%s</color>", var_10_1, arg_10_1)
+	return string.format("<color=%s>%s</color>", color, skillName)
 end
 
-function var_0_0.addLinkCb1(arg_11_0)
-	local var_11_0 = "[%s]"
+function V2a1_BossRush_OfferRoleEffectItem.addLinkCb1(skillName)
+	local format = "[%s]"
 
-	return var_0_3(var_11_0, arg_11_0)
+	return getBuffLink(format, skillName)
 end
 
-function var_0_0.addLinkCb2(arg_12_0)
-	local var_12_0 = "【%s】"
+function V2a1_BossRush_OfferRoleEffectItem.addLinkCb2(skillName)
+	local format = "【%s】"
 
-	return var_0_3(var_12_0, arg_12_0)
+	return getBuffLink(format, skillName)
 end
 
-function var_0_0.addNumColor(arg_13_0, arg_13_1)
-	arg_13_1 = arg_13_0:filterRichText(arg_13_1)
+function V2a1_BossRush_OfferRoleEffectItem:addNumColor(desc)
+	desc = self:filterRichText(desc)
 
-	local var_13_0 = SkillHelper.getColorFormat("#deaa79", "%1")
+	local colorFormat = SkillHelper.getColorFormat("#deaa79", "%1")
 
-	arg_13_1 = string.gsub(arg_13_1, "[+-]?[%d%./%%]+", var_13_0)
-	arg_13_1 = arg_13_0:revertRichText(arg_13_1)
+	desc = string.gsub(desc, "[+-]?[%d%./%%]+", colorFormat)
+	desc = self:revertRichText(desc)
 
-	return arg_13_1
+	return desc
 end
 
-function var_0_0.replaceColorFunc(arg_14_0)
-	if string.find(arg_14_0, "[<>]") then
-		return arg_14_0
+function V2a1_BossRush_OfferRoleEffectItem.replaceColorFunc(text)
+	if string.find(text, "[<>]") then
+		return text
 	end
 end
 
-var_0_0.richTextList = {}
-var_0_0.replaceText = "▩replace▩"
-var_0_0.replaceIndex = 0
+V2a1_BossRush_OfferRoleEffectItem.richTextList = {}
+V2a1_BossRush_OfferRoleEffectItem.replaceText = "▩replace▩"
+V2a1_BossRush_OfferRoleEffectItem.replaceIndex = 0
 
-function var_0_0.filterRichText(arg_15_0, arg_15_1)
-	tabletool.clear(var_0_0.richTextList)
+function V2a1_BossRush_OfferRoleEffectItem:filterRichText(desc)
+	tabletool.clear(V2a1_BossRush_OfferRoleEffectItem.richTextList)
 
-	arg_15_1 = string.gsub(arg_15_1, "(<.->)", arg_15_0._filterRichText)
+	desc = string.gsub(desc, "(<.->)", self._filterRichText)
 
-	return arg_15_1
+	return desc
 end
 
-function var_0_0._filterRichText(arg_16_0)
-	table.insert(var_0_0.richTextList, arg_16_0)
+function V2a1_BossRush_OfferRoleEffectItem._filterRichText(richText)
+	table.insert(V2a1_BossRush_OfferRoleEffectItem.richTextList, richText)
 
-	return var_0_0.replaceText
+	return V2a1_BossRush_OfferRoleEffectItem.replaceText
 end
 
-function var_0_0.revertRichText(arg_17_0, arg_17_1)
-	var_0_0.replaceIndex = 0
-	arg_17_1 = string.gsub(arg_17_1, var_0_0.replaceText, arg_17_0._revertRichText)
+function V2a1_BossRush_OfferRoleEffectItem:revertRichText(desc)
+	V2a1_BossRush_OfferRoleEffectItem.replaceIndex = 0
+	desc = string.gsub(desc, V2a1_BossRush_OfferRoleEffectItem.replaceText, self._revertRichText)
 
-	tabletool.clear(var_0_0.richTextList)
+	tabletool.clear(V2a1_BossRush_OfferRoleEffectItem.richTextList)
 
-	return arg_17_1
+	return desc
 end
 
-function var_0_0._revertRichText(arg_18_0)
-	var_0_0.replaceIndex = var_0_0.replaceIndex + 1
+function V2a1_BossRush_OfferRoleEffectItem._revertRichText(text)
+	V2a1_BossRush_OfferRoleEffectItem.replaceIndex = V2a1_BossRush_OfferRoleEffectItem.replaceIndex + 1
 
-	return var_0_0.richTextList[var_0_0.replaceIndex] or ""
+	return V2a1_BossRush_OfferRoleEffectItem.richTextList[V2a1_BossRush_OfferRoleEffectItem.replaceIndex] or ""
 end
 
-function var_0_0._onHyperLinkClick(arg_19_0, arg_19_1, arg_19_2)
+function V2a1_BossRush_OfferRoleEffectItem:_onHyperLinkClick(data, clickPosition)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if arg_19_1 ~= "skillIndex" then
-		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_19_1), CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
-	elseif arg_19_0._skillIndex == 0 then
-		local var_19_0 = {}
+	if data ~= "skillIndex" then
+		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(data), CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], CommonBuffTipEnum.Pivot.Right)
+	elseif self._skillIndex == 0 then
+		local info = {}
 
-		var_19_0.tag = "passiveskill"
-		var_19_0.heroid = arg_19_0._heroId
-		var_19_0.tipPos = Vector2.New(-292, -51.1)
-		var_19_0.anchorParams = {
+		info.tag = "passiveskill"
+		info.heroid = self._heroId
+		info.tipPos = Vector2.New(-292, -51.1)
+		info.anchorParams = {
 			Vector2.New(1, 0.5),
 			Vector2.New(1, 0.5)
 		}
-		var_19_0.buffTipsX = -776
+		info.buffTipsX = -776
 
-		local var_19_1 = HeroMo.New()
-		local var_19_2 = HeroConfig.instance:getHeroCO(arg_19_0._heroId)
+		local heroMo = HeroMo.New()
+		local config = HeroConfig.instance:getHeroCO(self._heroId)
 
-		var_19_1:init(var_19_0, var_19_2)
+		heroMo:init(info, config)
 
-		var_19_1.passiveSkillLevel = {}
+		heroMo.passiveSkillLevel = {}
 
-		for iter_19_0 = 1, 3 do
-			table.insert(var_19_1.passiveSkillLevel, iter_19_0)
+		for i = 1, 3 do
+			table.insert(heroMo.passiveSkillLevel, i)
 		end
 
-		var_19_0.heroMo = var_19_1
+		info.heroMo = heroMo
 
-		CharacterController.instance:openCharacterTipView(var_19_0)
+		CharacterController.instance:openCharacterTipView(info)
 	else
-		local var_19_3 = {}
-		local var_19_4 = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(arg_19_0._heroId)
+		local info = {}
+		local skillDict = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(self._heroId)
 
-		var_19_3.super = arg_19_0._skillIndex == 3
-		var_19_3.skillIdList = var_19_4[arg_19_0._skillIndex]
-		var_19_3.monsterName = HeroConfig.instance:getHeroCO(arg_19_0._heroId).name
-		var_19_3.anchorX = -500
+		info.super = self._skillIndex == 3
+		info.skillIdList = skillDict[self._skillIndex]
+		info.monsterName = HeroConfig.instance:getHeroCO(self._heroId).name
+		info.anchorX = -500
 
-		ViewMgr.instance:openView(ViewName.SkillTipView, var_19_3)
+		ViewMgr.instance:openView(ViewName.SkillTipView, info)
 	end
 end
 
-function var_0_0.onOpen(arg_20_0)
+function V2a1_BossRush_OfferRoleEffectItem:onOpen()
 	return
 end
 
-function var_0_0.onClose(arg_21_0)
+function V2a1_BossRush_OfferRoleEffectItem:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function V2a1_BossRush_OfferRoleEffectItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return V2a1_BossRush_OfferRoleEffectItem

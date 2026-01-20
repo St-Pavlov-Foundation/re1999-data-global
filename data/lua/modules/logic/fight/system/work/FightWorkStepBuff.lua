@@ -1,95 +1,111 @@
-﻿module("modules.logic.fight.system.work.FightWorkStepBuff", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkStepBuff.lua
 
-local var_0_0 = class("FightWorkStepBuff", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkStepBuff", package.seeall)
 
-function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.buff
+local FightWorkStepBuff = class("FightWorkStepBuff", FightEffectBase)
 
-	arg_1_0._buffUid = var_1_0 and var_1_0.uid
-	arg_1_0._buffId = var_1_0 and var_1_0.buffId
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
+function FightWorkStepBuff:beforePlayEffectData()
+	local buff = self.actEffectData.buff
 
-	if not arg_1_0._entityMO then
+	self._buffUid = buff and buff.uid
+	self._buffId = buff and buff.buffId
+	self._entityId = self.actEffectData.targetId
+	self._entityMO = FightDataHelper.entityMgr:getById(self._entityId)
+
+	if not self._entityMO then
 		return
 	end
 
-	local var_1_1 = arg_1_0._entityMO:getBuffMO(arg_1_0._buffUid)
+	local curMO = self._entityMO:getBuffMO(self._buffUid)
 
-	arg_1_0._oldBuffMO = FightHelper.deepCopySimpleWithMeta(var_1_1)
+	self._oldBuffMO = FightHelper.deepCopySimpleWithMeta(curMO)
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._entityMO then
-		arg_2_0:onDone(true)
+function FightWorkStepBuff:onStart()
+	if not self._entityMO then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0._entityId)
+	local entity = FightHelper.getEntity(self._entityId)
 
-	if not var_2_0 then
-		arg_2_0:onDone(true)
-
-		return
-	end
-
-	if not var_2_0.buff then
-		arg_2_0:onDone(true)
+	if not entity then
+		self:onDone(true)
 
 		return
 	end
 
-	var_0_0.updateWaitTime = FightBuffHelper.canPlayDormantBuffAni(arg_2_0.actEffectData, arg_2_0.fightStepData)
+	if not entity.buff then
+		self:onDone(true)
 
-	local var_2_1 = arg_2_0.actEffectData.effectType
+		return
+	end
 
-	if var_2_1 == FightEnum.EffectType.BUFFADD or var_2_1 == FightEnum.EffectType.BUFFUPDATE then
-		arg_2_0._newBuffMO = arg_2_0._entityMO:getBuffMO(arg_2_0._buffUid)
+	FightWorkStepBuff.updateWaitTime = FightBuffHelper.canPlayDormantBuffAni(self.actEffectData, self.fightStepData)
 
-		if not arg_2_0._newBuffMO then
-			arg_2_0:onDone(true)
+	local effectType = self.actEffectData.effectType
+
+	if effectType == FightEnum.EffectType.BUFFADD or effectType == FightEnum.EffectType.BUFFUPDATE then
+		self._newBuffMO = self._entityMO:getBuffMO(self._buffUid)
+
+		if not self._newBuffMO then
+			self:onDone(true)
 
 			return
 		end
 	end
 
-	if var_2_1 == FightEnum.EffectType.BUFFADD then
-		var_2_0.buff:addBuff(arg_2_0._newBuffMO, false, arg_2_0.fightStepData.stepUid)
-	elseif var_2_1 == FightEnum.EffectType.BUFFDEL or var_2_1 == FightEnum.EffectType.BUFFDELNOEFFECT then
-		var_2_0.buff:delBuff(arg_2_0._buffUid)
-	elseif var_2_1 == FightEnum.EffectType.BUFFUPDATE then
-		var_2_0.buff:updateBuff(arg_2_0._newBuffMO, arg_2_0._oldBuffMO or arg_2_0._newBuffMO, arg_2_0.actEffectData)
+	if effectType == FightEnum.EffectType.BUFFADD then
+		entity.buff:addBuff(self._newBuffMO, false, self.fightStepData.stepUid)
+	elseif effectType == FightEnum.EffectType.BUFFDEL or effectType == FightEnum.EffectType.BUFFDELNOEFFECT then
+		entity.buff:delBuff(self._buffUid)
+	elseif effectType == FightEnum.EffectType.BUFFUPDATE then
+		entity.buff:updateBuff(self._newBuffMO, self._oldBuffMO or self._newBuffMO, self.actEffectData)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, arg_2_0._entityId, var_2_1, arg_2_0._buffId, arg_2_0._buffUid, arg_2_0.actEffectData.configEffect, arg_2_0.actEffectData.buff)
+	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, self._entityId, effectType, self._buffId, self._buffUid, self.actEffectData.configEffect, self.actEffectData.buff)
 
-	local var_2_2 = FightDataHelper.tempMgr.buffDurationDic[arg_2_0._entityId]
+	local durationDic = FightDataHelper.tempMgr.buffDurationDic[self._entityId]
 
-	if not var_2_2 then
-		var_2_2 = {}
-		FightDataHelper.tempMgr.buffDurationDic[arg_2_0._entityId] = var_2_2
+	if not durationDic then
+		durationDic = {}
+		FightDataHelper.tempMgr.buffDurationDic[self._entityId] = durationDic
 	end
 
-	var_2_2[arg_2_0._buffUid] = arg_2_0.actEffectData.buff.duration
+	durationDic[self._buffUid] = self.actEffectData.buff.duration
 
-	if var_0_0.canPlayDormantBuffAni then
-		arg_2_0:com_registTimer(arg_2_0._delayDone, var_0_0.updateWaitTime / FightModel.instance:getSpeed())
+	if FightWorkStepBuff.canPlayDormantBuffAni then
+		self:com_registTimer(self._delayDone, FightWorkStepBuff.updateWaitTime / FightModel.instance:getSpeed())
 
 		return
 	end
 
-	if arg_2_0._buffId == 229601 then
-		arg_2_0:com_registTimer(arg_2_0._delayDone, 1.5)
+	if self._buffId == 229601 then
+		self:com_registTimer(self._delayDone, 1.5)
 
 		return
 	end
 
-	arg_2_0:onDone(true)
+	self:defaultLogic()
 end
 
-function var_0_0.clearWork(arg_3_0)
+function FightWorkStepBuff:defaultLogic()
+	local workList
+
+	if effectType == FightEnum.EffectType.BUFFADD then
+		workList = FightMsgMgr.sendMsg(FightMsgId.GetAddBuffShowWork, self._entityId, self._buffUid)
+	elseif effectType == FightEnum.EffectType.BUFFDEL or effectType == FightEnum.EffectType.BUFFDELNOEFFECT then
+		workList = FightMsgMgr.sendMsg(FightMsgId.GetRemoveBuffShowWork, self._entityId, self._buffUid)
+	elseif effectType == FightEnum.EffectType.BUFFUPDATE then
+		workList = FightMsgMgr.sendMsg(FightMsgId.GetUpdateBuffShowWork, self._entityId, self._buffUid)
+	end
+
+	self:playWorkAndDone(workList)
+end
+
+function FightWorkStepBuff:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkStepBuff

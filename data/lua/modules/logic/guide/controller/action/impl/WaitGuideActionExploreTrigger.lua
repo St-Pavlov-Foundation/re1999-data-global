@@ -1,20 +1,22 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreTrigger", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionExploreTrigger.lua
 
-local var_0_0 = class("WaitGuideActionExploreTrigger", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreTrigger", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	ExploreController.instance:registerCallback(ExploreEvent.ExploreTriggerGuide, arg_1_0._onTriggerGuide, arg_1_0)
+local WaitGuideActionExploreTrigger = class("WaitGuideActionExploreTrigger", BaseGuideAction)
+
+function WaitGuideActionExploreTrigger:onStart(context)
+	ExploreController.instance:registerCallback(ExploreEvent.ExploreTriggerGuide, self._onTriggerGuide, self)
 end
 
-function var_0_0._onTriggerGuide(arg_2_0, arg_2_1)
-	if arg_2_0.guideId == arg_2_1 then
-		ExploreController.instance:unregisterCallback(ExploreEvent.ExploreTriggerGuide, arg_2_0._onTriggerGuide, arg_2_0)
-		arg_2_0:onDone(true)
+function WaitGuideActionExploreTrigger:_onTriggerGuide(guideId)
+	if self.guideId == guideId then
+		ExploreController.instance:unregisterCallback(ExploreEvent.ExploreTriggerGuide, self._onTriggerGuide, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.ExploreTriggerGuide, arg_3_0._onTriggerGuide, arg_3_0)
+function WaitGuideActionExploreTrigger:clearWork()
+	ExploreController.instance:unregisterCallback(ExploreEvent.ExploreTriggerGuide, self._onTriggerGuide, self)
 end
 
-return var_0_0
+return WaitGuideActionExploreTrigger

@@ -1,15 +1,19 @@
-﻿module("modules.logic.versionactivity1_4.act136.view.Activity136ViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act136/view/Activity136ViewContainer.lua
 
-local var_0_0 = class("Activity136ViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_4.act136.view.Activity136ViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	return {
+local Activity136ViewContainer = class("Activity136ViewContainer", BaseViewContainer)
+
+function Activity136ViewContainer:buildViews()
+	local views = {
 		Activity136View.New()
 	}
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function Activity136ViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return Activity136ViewContainer

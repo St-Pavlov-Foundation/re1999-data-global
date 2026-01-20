@@ -1,40 +1,46 @@
-﻿module("modules.logic.room.model.gift.RoomGiftShowBuildingMo", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/gift/RoomGiftShowBuildingMo.lua
 
-local var_0_0 = pureTable("RoomGiftShowBuildingMo")
+module("modules.logic.room.model.gift.RoomGiftShowBuildingMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.config = arg_1_1
-	arg_1_0.rare = arg_1_0.config.rare or 0
-	arg_1_0.subTypeIndex = 2
-	arg_1_0.subType = RoomBlockGiftEnum.SubType[arg_1_0.subTypeIndex]
-	arg_1_0.itemCofig = ItemModel.instance:getItemConfig(arg_1_0.subType, arg_1_1.id)
-	arg_1_0.numLimit = arg_1_0.config.numLimit
-	arg_1_0.isSelect = false
+local RoomGiftShowBuildingMo = pureTable("RoomGiftShowBuildingMo")
+
+function RoomGiftShowBuildingMo:init(co)
+	self.id = co.id
+	self.config = co
+	self.rare = self.config.rare or 0
+	self.subTypeIndex = 2
+	self.subType = RoomBlockGiftEnum.SubType[self.subTypeIndex]
+	self.itemCofig = ItemModel.instance:getItemConfig(self.subType, co.id)
+	self.numLimit = self.config.numLimit
+	self.isSelect = false
 end
 
-function var_0_0.getIcon(arg_2_0)
-	if arg_2_0.config then
-		if arg_2_0.config.canLevelUp then
-			for iter_2_0 = 0, 3 do
-				local var_2_0 = RoomConfig.instance:getLevelGroupConfig(arg_2_0.id, iter_2_0)
+function RoomGiftShowBuildingMo:getIcon()
+	if self.config then
+		if self.config.canLevelUp then
+			for i = 0, 3 do
+				local levelCfg = RoomConfig.instance:getLevelGroupConfig(self.id, i)
 
-				if var_2_0 and not string.nilorempty(var_2_0.icon) then
-					return var_2_0.icon
+				if levelCfg and not string.nilorempty(levelCfg.icon) then
+					return levelCfg.icon
 				end
 			end
 		end
 
-		return arg_2_0.config.icon
+		return self.config.icon
 	end
 end
 
-function var_0_0.getBuildingAreaConfig(arg_3_0)
-	return (RoomConfig.instance:getBuildingAreaConfig(arg_3_0.config.areaId))
+function RoomGiftShowBuildingMo:getBuildingAreaConfig()
+	local co = RoomConfig.instance:getBuildingAreaConfig(self.config.areaId)
+
+	return co
 end
 
-function var_0_0.isCollect(arg_4_0)
-	return ItemModel.instance:getItemQuantity(arg_4_0.subType, arg_4_0.id) >= arg_4_0.numLimit
+function RoomGiftShowBuildingMo:isCollect()
+	local quantity = ItemModel.instance:getItemQuantity(self.subType, self.id)
+
+	return quantity >= self.numLimit
 end
 
-return var_0_0
+return RoomGiftShowBuildingMo

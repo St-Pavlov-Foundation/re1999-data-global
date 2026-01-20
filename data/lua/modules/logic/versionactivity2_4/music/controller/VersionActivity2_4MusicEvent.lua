@@ -1,25 +1,27 @@
-﻿module("modules.logic.versionactivity2_4.music.controller.VersionActivity2_4MusicEvent", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/controller/VersionActivity2_4MusicEvent.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_4.music.controller.VersionActivity2_4MusicEvent", package.seeall)
 
-var_0_0.ClickChapterItem = var_0_1()
-var_0_0.ClickTrackItem = var_0_1()
-var_0_0.UpdateSelectedTrackIndex = var_0_1()
-var_0_0.UpdateTrackList = var_0_1()
-var_0_0.ActionStatusChange = var_0_1()
-var_0_0.TrackDelSelectedChange = var_0_1()
-var_0_0.InstrumentSelectChange = var_0_1()
-var_0_0.StartRecord = var_0_1()
-var_0_0.RecordPause = var_0_1()
-var_0_0.RecordContinue = var_0_1()
-var_0_0.RecordFrame = var_0_1()
-var_0_0.EndRecord = var_0_1()
-var_0_0.StartPlay = var_0_1()
-var_0_0.EndPlay = var_0_1()
-var_0_0.PlayFrame = var_0_1()
-var_0_0.EpisodeStoryBeforeFinished = var_0_1()
-var_0_0.BeatModeEnd = var_0_1()
-var_0_0.Skip = var_0_1()
+local VersionActivity2_4MusicEvent = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+VersionActivity2_4MusicEvent.ClickChapterItem = _get()
+VersionActivity2_4MusicEvent.ClickTrackItem = _get()
+VersionActivity2_4MusicEvent.UpdateSelectedTrackIndex = _get()
+VersionActivity2_4MusicEvent.UpdateTrackList = _get()
+VersionActivity2_4MusicEvent.ActionStatusChange = _get()
+VersionActivity2_4MusicEvent.TrackDelSelectedChange = _get()
+VersionActivity2_4MusicEvent.InstrumentSelectChange = _get()
+VersionActivity2_4MusicEvent.StartRecord = _get()
+VersionActivity2_4MusicEvent.RecordPause = _get()
+VersionActivity2_4MusicEvent.RecordContinue = _get()
+VersionActivity2_4MusicEvent.RecordFrame = _get()
+VersionActivity2_4MusicEvent.EndRecord = _get()
+VersionActivity2_4MusicEvent.StartPlay = _get()
+VersionActivity2_4MusicEvent.EndPlay = _get()
+VersionActivity2_4MusicEvent.PlayFrame = _get()
+VersionActivity2_4MusicEvent.EpisodeStoryBeforeFinished = _get()
+VersionActivity2_4MusicEvent.BeatModeEnd = _get()
+VersionActivity2_4MusicEvent.Skip = _get()
+
+return VersionActivity2_4MusicEvent

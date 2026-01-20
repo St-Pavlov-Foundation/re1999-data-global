@@ -1,63 +1,65 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.EliminateChessMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/mo/EliminateChessMO.lua
 
-local var_0_0 = class("EliminateChessMO")
+module("modules.logic.versionactivity2_2.eliminate.model.mo.EliminateChessMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.x = 1
-	arg_1_0.y = 1
-	arg_1_0.startX = 1
-	arg_1_0.startY = 1
-	arg_1_0.id = -1
-	arg_1_0._status = EliminateEnum.ChessState.Normal
-	arg_1_0._chessBoardType = EliminateEnum.ChessBoardType.Normal
+local EliminateChessMO = class("EliminateChessMO")
+
+function EliminateChessMO:ctor()
+	self.x = 1
+	self.y = 1
+	self.startX = 1
+	self.startY = 1
+	self.id = -1
+	self._status = EliminateEnum.ChessState.Normal
+	self._chessBoardType = EliminateEnum.ChessBoardType.Normal
 end
 
-function var_0_0.setXY(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.x = arg_2_1
-	arg_2_0.y = arg_2_2
+function EliminateChessMO:setXY(x, y)
+	self.x = x
+	self.y = y
 end
 
-function var_0_0.setStartXY(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.startX = arg_3_1
-	arg_3_0.startY = arg_3_2
+function EliminateChessMO:setStartXY(x, y)
+	self.startX = x
+	self.startY = y
 end
 
-function var_0_0.setChessId(arg_4_0, arg_4_1)
-	arg_4_0.id = arg_4_1
+function EliminateChessMO:setChessId(id)
+	self.id = id
 end
 
-function var_0_0.setStatus(arg_5_0, arg_5_1)
-	arg_5_0._status = arg_5_1
+function EliminateChessMO:setStatus(status)
+	self._status = status
 end
 
-function var_0_0.setChessBoardType(arg_6_0, arg_6_1)
-	arg_6_0._chessBoardType = arg_6_1
+function EliminateChessMO:setChessBoardType(chessBoardType)
+	self._chessBoardType = chessBoardType
 end
 
-function var_0_0.getChessBoardType(arg_7_0)
-	return arg_7_0._chessBoardType
+function EliminateChessMO:getChessBoardType()
+	return self._chessBoardType
 end
 
-function var_0_0.getStatus(arg_8_0)
-	return arg_8_0._status
+function EliminateChessMO:getStatus()
+	return self._status
 end
 
-function var_0_0.getMoveTime(arg_9_0)
+function EliminateChessMO:getMoveTime()
 	return EliminateEnum.AniTime.Drop
 end
 
-function var_0_0.getInitMoveTime(arg_10_0)
+function EliminateChessMO:getInitMoveTime()
 	return EliminateEnum.AniTime.InitDrop
 end
 
-function var_0_0.clear(arg_11_0)
-	arg_11_0.x = 1
-	arg_11_0.y = 1
-	arg_11_0.startX = 1
-	arg_11_0.startY = 1
-	arg_11_0.id = -1
-	arg_11_0._status = EliminateEnum.ChessState.Normal
-	arg_11_0._chessBoardType = EliminateEnum.ChessBoardType.Normal
+function EliminateChessMO:clear()
+	self.x = 1
+	self.y = 1
+	self.startX = 1
+	self.startY = 1
+	self.id = -1
+	self._status = EliminateEnum.ChessState.Normal
+	self._chessBoardType = EliminateEnum.ChessBoardType.Normal
 end
 
-return var_0_0
+return EliminateChessMO

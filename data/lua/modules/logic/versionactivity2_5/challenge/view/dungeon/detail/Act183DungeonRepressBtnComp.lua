@@ -1,81 +1,85 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonRepressBtnComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonRepressBtnComp.lua
 
-local var_0_0 = class("Act183DungeonRepressBtnComp", Act183DungeonBaseComp)
-local var_0_1 = 25
-local var_0_2 = 0
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonRepressBtnComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	var_0_0.super.init(arg_1_0, arg_1_1)
+local Act183DungeonRepressBtnComp = class("Act183DungeonRepressBtnComp", Act183DungeonBaseComp)
+local HasRepress_RepressBtnTxtPosX = 25
+local NotRepress_RepressBtnTxtPosX = 0
 
-	arg_1_0._btnrepress = gohelper.getClickWithDefaultAudio(arg_1_0.go)
-	arg_1_0._txtbtnrepress = gohelper.findChildText(arg_1_0.go, "txt_Cn")
-	arg_1_0._gosetrepresshero = gohelper.findChild(arg_1_0.go, "#go_setrepresshero")
-	arg_1_0._simagerepressheroicon = gohelper.findChildSingleImage(arg_1_0.go, "#go_setrepresshero/#simage_repressheroicon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_0.go, "#go_setrepresshero/#image_Career")
+function Act183DungeonRepressBtnComp:init(go)
+	Act183DungeonRepressBtnComp.super.init(self, go)
+
+	self._btnrepress = gohelper.getClickWithDefaultAudio(self.go)
+	self._txtbtnrepress = gohelper.findChildText(self.go, "txt_Cn")
+	self._gosetrepresshero = gohelper.findChild(self.go, "#go_setrepresshero")
+	self._simagerepressheroicon = gohelper.findChildSingleImage(self.go, "#go_setrepresshero/#simage_repressheroicon")
+	self._imagecareer = gohelper.findChildImage(self.go, "#go_setrepresshero/#image_Career")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0:addEventCb(Act183Controller.instance, Act183Event.OnUpdateBadgeDetailVisible, arg_2_0._onUpdateBadgeDetailVisible, arg_2_0)
-	arg_2_0._btnrepress:AddClickListener(arg_2_0._btnrepressOnClick, arg_2_0)
+function Act183DungeonRepressBtnComp:addEventListeners()
+	self:addEventCb(Act183Controller.instance, Act183Event.OnUpdateBadgeDetailVisible, self._onUpdateBadgeDetailVisible, self)
+	self._btnrepress:AddClickListener(self._btnrepressOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnrepress:RemoveClickListener()
+function Act183DungeonRepressBtnComp:removeEventListeners()
+	self._btnrepress:RemoveClickListener()
 end
 
-function var_0_0._btnrepressOnClick(arg_4_0)
-	local var_4_0 = {
-		activityId = arg_4_0._activityId,
-		episodeMo = arg_4_0._episodeMo
+function Act183DungeonRepressBtnComp:_btnrepressOnClick()
+	local params = {
+		activityId = self._activityId,
+		episodeMo = self._episodeMo
 	}
 
-	Act183Controller.instance:openAct183RepressView(var_4_0)
+	Act183Controller.instance:openAct183RepressView(params)
 end
 
-function var_0_0.updateInfo(arg_5_0, arg_5_1)
-	var_0_0.super.updateInfo(arg_5_0, arg_5_1)
+function Act183DungeonRepressBtnComp:updateInfo(episodeMo)
+	Act183DungeonRepressBtnComp.super.updateInfo(self, episodeMo)
 
-	arg_5_0._isCanReRepress = arg_5_0._groupEpisodeMo:isEpisodeCanReRepress(arg_5_0._episodeId)
+	self._isCanReRepress = self._groupEpisodeMo:isEpisodeCanReRepress(self._episodeId)
 end
 
-function var_0_0.checkIsVisible(arg_6_0)
-	return arg_6_0._isCanReRepress
+function Act183DungeonRepressBtnComp:checkIsVisible()
+	return self._isCanReRepress
 end
 
-function var_0_0.show(arg_7_0)
-	var_0_0.super.show(arg_7_0)
+function Act183DungeonRepressBtnComp:show()
+	Act183DungeonRepressBtnComp.super.show(self)
 
-	local var_7_0 = arg_7_0._episodeMo:getRepressHeroMo()
-	local var_7_1 = var_7_0 ~= nil
+	local repressHeroMo = self._episodeMo:getRepressHeroMo()
+	local hasRepress = repressHeroMo ~= nil
 
-	gohelper.setActive(arg_7_0._gosetrepresshero, var_7_1)
+	gohelper.setActive(self._gosetrepresshero, hasRepress)
 
-	local var_7_2 = var_7_1 and var_0_1 or var_0_2
+	local repressTxtPosX = hasRepress and HasRepress_RepressBtnTxtPosX or NotRepress_RepressBtnTxtPosX
 
-	recthelper.setAnchorX(arg_7_0._txtbtnrepress.transform, var_7_2)
+	recthelper.setAnchorX(self._txtbtnrepress.transform, repressTxtPosX)
 
-	if not var_7_1 then
+	if not hasRepress then
 		return
 	end
 
-	local var_7_3 = var_7_0:getHeroIconUrl()
+	local iconUrl = repressHeroMo:getHeroIconUrl()
 
-	arg_7_0._simagerepressheroicon:LoadImage(var_7_3)
+	self._simagerepressheroicon:LoadImage(iconUrl)
 
-	local var_7_4 = var_7_0:getHeroCarrer()
+	local career = repressHeroMo:getHeroCarrer()
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_7_0._imagecareer, "lssx_" .. tostring(var_7_4))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(career))
 end
 
-function var_0_0._onUpdateBadgeDetailVisible(arg_8_0, arg_8_1)
-	if arg_8_0:checkIsVisible() then
-		gohelper.setActive(arg_8_0.go, not arg_8_1)
+function Act183DungeonRepressBtnComp:_onUpdateBadgeDetailVisible(isVisible)
+	local isRepressBtnVisible = self:checkIsVisible()
+
+	if isRepressBtnVisible then
+		gohelper.setActive(self.go, not isVisible)
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0._simagerepressheroicon:UnLoadImage()
-	var_0_0.super.onDestroy(arg_9_0)
+function Act183DungeonRepressBtnComp:onDestroy()
+	self._simagerepressheroicon:UnLoadImage()
+	Act183DungeonRepressBtnComp.super.onDestroy(self)
 end
 
-return var_0_0
+return Act183DungeonRepressBtnComp

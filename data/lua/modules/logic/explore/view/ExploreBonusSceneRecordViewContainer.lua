@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreBonusSceneRecordViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreBonusSceneRecordViewContainer.lua
 
-local var_0_0 = class("ExploreBonusSceneRecordViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreBonusSceneRecordViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreBonusSceneRecordViewContainer = class("ExploreBonusSceneRecordViewContainer", BaseViewContainer)
+
+function ExploreBonusSceneRecordViewContainer:buildViews()
 	return {
 		ExploreBonusSceneRecordView.New()
 	}
 end
 
-return var_0_0
+return ExploreBonusSceneRecordViewContainer

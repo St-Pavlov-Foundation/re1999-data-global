@@ -1,138 +1,140 @@
-﻿module("modules.logic.versionactivity2_1.aergusi.model.AergusiDialogModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_1/aergusi/model/AergusiDialogModel.lua
 
-local var_0_0 = class("AergusiDialogModel", BaseModel)
+module("modules.logic.versionactivity2_1.aergusi.model.AergusiDialogModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local AergusiDialogModel = class("AergusiDialogModel", BaseModel)
+
+function AergusiDialogModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curGroup = 0
-	arg_2_0._curStep = 0
-	arg_2_0._targetList = {}
-	arg_2_0._errorOperates = {}
-	arg_2_0._promptOperates = {}
+function AergusiDialogModel:reInit()
+	self._curGroup = 0
+	self._curStep = 0
+	self._targetList = {}
+	self._errorOperates = {}
+	self._promptOperates = {}
 end
 
-function var_0_0.setDialogGroup(arg_3_0, arg_3_1)
-	arg_3_0._curGroup = arg_3_1
-	arg_3_0._curStep = 0
+function AergusiDialogModel:setDialogGroup(group)
+	self._curGroup = group
+	self._curStep = 0
 end
 
-function var_0_0.getCurDialogGroup(arg_4_0)
-	if arg_4_0._curGroup == 0 then
-		local var_4_0 = AergusiModel.instance:getCurEpisode()
+function AergusiDialogModel:getCurDialogGroup()
+	if self._curGroup == 0 then
+		local episodeId = AergusiModel.instance:getCurEpisode()
 
-		arg_4_0._curGroup = AergusiConfig.instance:getEpisodeConfig(nil, var_4_0).initialDialog
+		self._curGroup = AergusiConfig.instance:getEpisodeConfig(nil, episodeId).initialDialog
 	end
 
-	return arg_4_0._curGroup
+	return self._curGroup
 end
 
-function var_0_0.setCurDialogStep(arg_5_0, arg_5_1)
-	arg_5_0._curStep = arg_5_1
+function AergusiDialogModel:setCurDialogStep(step)
+	self._curStep = step
 end
 
-function var_0_0.getCurDialogStep(arg_6_0)
-	if arg_6_0._curStep == 0 then
-		local var_6_0 = arg_6_0:getCurDialogGroup()
+function AergusiDialogModel:getCurDialogStep()
+	if self._curStep == 0 then
+		local group = self:getCurDialogGroup()
 
-		arg_6_0._curStep = arg_6_0:getGroupFirstStep(var_6_0)
+		self._curStep = self:getGroupFirstStep(group)
 	end
 
-	return arg_6_0._curStep
+	return self._curStep
 end
 
-function var_0_0.getGroupFirstStep(arg_7_0, arg_7_1)
-	local var_7_0 = AergusiConfig.instance:getEvidenceDialogConfigs(arg_7_1)
-	local var_7_1 = {}
+function AergusiDialogModel:getGroupFirstStep(groupId)
+	local configs = AergusiConfig.instance:getEvidenceDialogConfigs(groupId)
+	local nextSteps = {}
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		table.insert(var_7_1, iter_7_1.nextStep)
+	for _, v in pairs(configs) do
+		table.insert(nextSteps, v.nextStep)
 	end
 
-	for iter_7_2, iter_7_3 in pairs(var_7_0) do
-		for iter_7_4, iter_7_5 in pairs(var_7_1) do
-			if iter_7_3.stepId == iter_7_5 then
+	for _, v in pairs(configs) do
+		for _, nextStep in pairs(nextSteps) do
+			if v.stepId == nextStep then
 				break
 			end
 		end
 
-		return iter_7_3.stepId
+		return v.stepId
 	end
 
 	return 1
 end
 
-function var_0_0.setCurDialogProcess(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._curGroup = arg_8_1
-	arg_8_0._curStep = arg_8_2
+function AergusiDialogModel:setCurDialogProcess(groupId, stepId)
+	self._curGroup = groupId
+	self._curStep = stepId
 end
 
-function var_0_0.getCurDialogProcess(arg_9_0)
-	local var_9_0 = arg_9_0:getCurDialogGroup()
-	local var_9_1 = arg_9_0:getCurDialogStep()
+function AergusiDialogModel:getCurDialogProcess()
+	local group = self:getCurDialogGroup()
+	local step = self:getCurDialogStep()
 
-	return var_9_0, var_9_1
+	return group, step
 end
 
-function var_0_0.clearDialogProcess(arg_10_0)
-	arg_10_0:reInit()
+function AergusiDialogModel:clearDialogProcess()
+	self:reInit()
 end
 
-function var_0_0.getDialogStepList(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getGroupFirstStep(arg_11_1)
-	local var_11_1 = {}
+function AergusiDialogModel:getDialogStepList(groupId)
+	local firstStep = self:getGroupFirstStep(groupId)
+	local stepCoList = {}
 
-	local function var_11_2(arg_12_0)
-		local var_12_0 = AergusiConfig.instance:getDialogConfig(arg_11_1, arg_12_0)
+	local function getnextstepco(stepId)
+		local stepCo = AergusiConfig.instance:getDialogConfig(groupId, stepId)
 
-		table.insert(var_11_1, var_12_0)
+		table.insert(stepCoList, stepCo)
 
-		if var_12_0.nextStep > 0 then
-			return var_11_2(var_12_0.nextStep)
+		if stepCo.nextStep > 0 then
+			return getnextstepco(stepCo.nextStep)
 		end
 	end
 
-	var_11_2(var_11_0)
+	getnextstepco(firstStep)
 
-	return var_11_1
+	return stepCoList
 end
 
-function var_0_0.addPromptOperate(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_2 then
-		if not arg_13_0._promptOperates.inClue then
-			arg_13_0._promptOperates.inClue = {}
+function AergusiDialogModel:addPromptOperate(data, isInClue)
+	if isInClue then
+		if not self._promptOperates.inClue then
+			self._promptOperates.inClue = {}
 		end
 
-		table.insert(arg_13_0._promptOperates.inClue, arg_13_1)
+		table.insert(self._promptOperates.inClue, data)
 	else
-		if not arg_13_0._promptOperates.inEvidence then
-			arg_13_0._promptOperates.inEvidence = {}
+		if not self._promptOperates.inEvidence then
+			self._promptOperates.inEvidence = {}
 		end
 
-		table.insert(arg_13_0._promptOperates.inEvidence, arg_13_1)
+		table.insert(self._promptOperates.inEvidence, data)
 	end
 end
 
-function var_0_0.isOperateHasPrompted(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_2 then
-		if not arg_14_0._promptOperates.inClue then
-			arg_14_0._promptOperates.inClue = {}
+function AergusiDialogModel:isOperateHasPrompted(data, isInClue)
+	if isInClue then
+		if not self._promptOperates.inClue then
+			self._promptOperates.inClue = {}
 		end
 
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._promptOperates.inClue) do
-			if iter_14_1.groupId == arg_14_1.groupId and iter_14_1.stepId == arg_14_1.stepId and iter_14_1.clueId == arg_14_1.clueId then
+		for _, v in pairs(self._promptOperates.inClue) do
+			if v.groupId == data.groupId and v.stepId == data.stepId and v.clueId == data.clueId then
 				return true
 			end
 		end
 	else
-		if not arg_14_0._promptOperates.inEvidence then
-			arg_14_0._promptOperates.inEvidence = {}
+		if not self._promptOperates.inEvidence then
+			self._promptOperates.inEvidence = {}
 		end
 
-		for iter_14_2, iter_14_3 in pairs(arg_14_0._promptOperates.inEvidence) do
-			if iter_14_3.groupId == arg_14_1.groupId and iter_14_3.stepId == arg_14_1.stepId and iter_14_3.type == arg_14_1.type then
+		for _, v in pairs(self._promptOperates.inEvidence) do
+			if v.groupId == data.groupId and v.stepId == data.stepId and v.type == data.type then
 				return true
 			end
 		end
@@ -141,76 +143,76 @@ function var_0_0.isOperateHasPrompted(arg_14_0, arg_14_1, arg_14_2)
 	return false
 end
 
-function var_0_0.getLastPromptOperate(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 then
-		if not arg_15_0._promptOperates.inClue then
-			arg_15_0._promptOperates.inClue = {}
+function AergusiDialogModel:getLastPromptOperate(isInClue, stepId)
+	if isInClue then
+		if not self._promptOperates.inClue then
+			self._promptOperates.inClue = {}
 		end
 
-		for iter_15_0, iter_15_1 in pairs(arg_15_0._promptOperates.inClue) do
-			if iter_15_1.stepId == arg_15_2 then
-				return iter_15_1
+		for _, v in pairs(self._promptOperates.inClue) do
+			if v.stepId == stepId then
+				return v
 			end
 		end
 
-		return arg_15_0._promptOperates.inClue[#arg_15_0._promptOperates.inClue]
+		return self._promptOperates.inClue[#self._promptOperates.inClue]
 	end
 
-	if not arg_15_0._promptOperates.inEvidence then
-		arg_15_0._promptOperates.inEvidence = {}
+	if not self._promptOperates.inEvidence then
+		self._promptOperates.inEvidence = {}
 	end
 
-	return arg_15_0._promptOperates.inEvidence[#arg_15_0._promptOperates.inEvidence]
+	return self._promptOperates.inEvidence[#self._promptOperates.inEvidence]
 end
 
-function var_0_0.getNextPromptOperate(arg_16_0, arg_16_1)
-	local var_16_0 = AergusiConfig.instance:getDialogConfigs(arg_16_0._curGroup)
+function AergusiDialogModel:getNextPromptOperate(isInClue)
+	local dialogCos = AergusiConfig.instance:getDialogConfigs(self._curGroup)
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		if iter_16_1.condition ~= "" then
-			local var_16_1 = string.splitToNumber(iter_16_1.condition, "#")
+	for _, v in pairs(dialogCos) do
+		if v.condition ~= "" then
+			local conditions = string.splitToNumber(v.condition, "#")
 
-			if var_16_1[1] == AergusiEnum.OperationType.Submit then
-				local var_16_2 = {
-					groupId = arg_16_0._curGroup,
-					stepId = iter_16_1.stepId,
-					type = AergusiEnum.OperationType.Submit
-				}
+			if conditions[1] == AergusiEnum.OperationType.Submit then
+				local data = {}
 
-				if arg_16_1 then
-					var_16_2.clueId = var_16_1[2]
+				data.groupId = self._curGroup
+				data.stepId = v.stepId
+				data.type = AergusiEnum.OperationType.Submit
 
-					if not arg_16_0:isOperateHasPrompted(var_16_2, true) then
-						return var_16_2
+				if isInClue then
+					data.clueId = conditions[2]
+
+					if not self:isOperateHasPrompted(data, true) then
+						return data
 					end
-				elseif not arg_16_0:isOperateHasPrompted(var_16_2, false) then
-					return var_16_2
+				elseif not self:isOperateHasPrompted(data, false) then
+					return data
 				end
-			elseif var_16_1[1] == AergusiEnum.OperationType.Refutation then
-				local var_16_3 = {
-					groupId = arg_16_0._curGroup,
-					stepId = iter_16_1.stepId,
-					type = AergusiEnum.OperationType.Refutation
-				}
+			elseif conditions[1] == AergusiEnum.OperationType.Refutation then
+				local data = {}
 
-				if arg_16_1 then
-					var_16_3.clueId = var_16_1[2]
+				data.groupId = self._curGroup
+				data.stepId = v.stepId
+				data.type = AergusiEnum.OperationType.Refutation
 
-					if not arg_16_0:isOperateHasPrompted(var_16_3, true) then
-						return var_16_3
+				if isInClue then
+					data.clueId = conditions[2]
+
+					if not self:isOperateHasPrompted(data, true) then
+						return data
 					end
-				elseif not arg_16_0:isOperateHasPrompted(var_16_3, false) then
-					return var_16_3
+				elseif not self:isOperateHasPrompted(data, false) then
+					return data
 				end
-			elseif var_16_1[1] == AergusiEnum.OperationType.Probe then
-				local var_16_4 = {
-					groupId = arg_16_0._curGroup,
-					stepId = iter_16_1.stepId,
-					type = AergusiEnum.OperationType.Probe
-				}
+			elseif conditions[1] == AergusiEnum.OperationType.Probe then
+				local data = {}
 
-				if not arg_16_0:isOperateHasPrompted(var_16_4) then
-					return var_16_4
+				data.groupId = self._curGroup
+				data.stepId = v.stepId
+				data.type = AergusiEnum.OperationType.Probe
+
+				if not self:isOperateHasPrompted(data) then
+					return data
 				end
 			end
 		end
@@ -219,21 +221,23 @@ function var_0_0.getNextPromptOperate(arg_16_0, arg_16_1)
 	return nil
 end
 
-function var_0_0.getLeftPromptTimes(arg_17_0)
-	local var_17_0 = AergusiModel.instance:getCurEpisode()
+function AergusiDialogModel:getLeftPromptTimes()
+	local curEpisode = AergusiModel.instance:getCurEpisode()
+	local evidenceInfo = AergusiModel.instance:getEvidenceInfo(curEpisode)
 
-	return AergusiModel.instance:getEvidenceInfo(var_17_0).tipCount
+	return evidenceInfo.tipCount
 end
 
-function var_0_0.getLeftErrorTimes(arg_18_0)
-	local var_18_0 = AergusiModel.instance:getCurEpisode()
+function AergusiDialogModel:getLeftErrorTimes()
+	local curEpisode = AergusiModel.instance:getCurEpisode()
+	local evidenceInfo = AergusiModel.instance:getEvidenceInfo(curEpisode)
 
-	return AergusiModel.instance:getEvidenceInfo(var_18_0).hp
+	return evidenceInfo.hp
 end
 
-function var_0_0.isOperateHasError(arg_19_0, arg_19_1)
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._errorOperates) do
-		if iter_19_1.groupId == arg_19_1.groupId and iter_19_1.stepId == arg_19_1.stepId and iter_19_1.type == arg_19_1.type then
+function AergusiDialogModel:isOperateHasError(data)
+	for _, v in pairs(self._errorOperates) do
+		if v.groupId == data.groupId and v.stepId == data.stepId and v.type == data.type then
 			return true
 		end
 	end
@@ -241,9 +245,9 @@ function var_0_0.isOperateHasError(arg_19_0, arg_19_1)
 	return false
 end
 
-function var_0_0.isCurClueHasOperateError(arg_20_0, arg_20_1, arg_20_2)
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._errorOperates) do
-		if iter_20_1.groupId == arg_20_0._curGroup and iter_20_1.stepId == arg_20_1 and iter_20_1.clueId == arg_20_2 then
+function AergusiDialogModel:isCurClueHasOperateError(stepId, clueId)
+	for _, v in pairs(self._errorOperates) do
+		if v.groupId == self._curGroup and v.stepId == stepId and v.clueId == clueId then
 			return true
 		end
 	end
@@ -251,90 +255,91 @@ function var_0_0.isCurClueHasOperateError(arg_20_0, arg_20_1, arg_20_2)
 	return false
 end
 
-function var_0_0.addErrorOperate(arg_21_0, arg_21_1)
-	table.insert(arg_21_0._errorOperates, arg_21_1)
+function AergusiDialogModel:addErrorOperate(data)
+	table.insert(self._errorOperates, data)
 end
 
-function var_0_0.getTargetGroupList(arg_22_0)
-	return arg_22_0._targetList
+function AergusiDialogModel:getTargetGroupList()
+	return self._targetList
 end
 
-function var_0_0.addTargetGroup(arg_23_0, arg_23_1)
-	table.insert(arg_23_0._targetList, arg_23_1)
+function AergusiDialogModel:addTargetGroup(groupId)
+	table.insert(self._targetList, groupId)
 end
 
-function var_0_0.getFinishedTargetGroupCount(arg_24_0)
-	return #arg_24_0._targetList > 0 and #arg_24_0._targetList - 1 or 0
+function AergusiDialogModel:getFinishedTargetGroupCount()
+	return #self._targetList > 0 and #self._targetList - 1 or 0
 end
 
-function var_0_0.setShowingGroup(arg_25_0, arg_25_1)
-	arg_25_0._showinggroup = arg_25_1
+function AergusiDialogModel:setShowingGroup(show)
+	self._showinggroup = show
 end
 
-function var_0_0.getShowingGroupState(arg_26_0)
-	return arg_26_0._showinggroup
+function AergusiDialogModel:getShowingGroupState()
+	return self._showinggroup
 end
 
-function var_0_0.getBubbleFirstStep(arg_27_0, arg_27_1)
-	local var_27_0 = AergusiConfig.instance:getBubbleConfigs(arg_27_1)
-	local var_27_1 = {}
+function AergusiDialogModel:getBubbleFirstStep(bubbleId)
+	local configs = AergusiConfig.instance:getBubbleConfigs(bubbleId)
+	local nextSteps = {}
 
-	for iter_27_0, iter_27_1 in pairs(var_27_0) do
-		table.insert(var_27_1, iter_27_1.nextStep)
+	for _, v in pairs(configs) do
+		table.insert(nextSteps, v.nextStep)
 	end
 
-	for iter_27_2, iter_27_3 in pairs(var_27_0) do
-		for iter_27_4, iter_27_5 in pairs(var_27_1) do
-			if iter_27_3.stepId == iter_27_5 then
+	for _, v in pairs(configs) do
+		for _, nextStep in pairs(nextSteps) do
+			if v.stepId == nextStep then
 				break
 			end
 		end
 
-		return iter_27_3.stepId
+		return v.stepId
 	end
 
 	return 1
 end
 
-function var_0_0.getBubbleStepList(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0:getBubbleFirstStep(arg_28_1)
-	local var_28_1 = {}
+function AergusiDialogModel:getBubbleStepList(bubbleId)
+	local firstStep = self:getBubbleFirstStep(bubbleId)
+	local stepCoList = {}
 
-	local function var_28_2(arg_29_0)
-		local var_29_0 = AergusiConfig.instance:getBubbleConfig(arg_28_1, arg_29_0)
+	local function getnextstepco(stepId)
+		local stepCo = AergusiConfig.instance:getBubbleConfig(bubbleId, stepId)
 
-		table.insert(var_28_1, var_29_0)
+		table.insert(stepCoList, stepCo)
 
-		if var_29_0.nextStep > 0 then
-			return var_28_2(var_29_0.nextStep)
+		if stepCo.nextStep > 0 then
+			return getnextstepco(stepCo.nextStep)
 		end
 	end
 
-	var_28_2(var_28_0)
+	getnextstepco(firstStep)
 
-	return var_28_1
+	return stepCoList
 end
 
-function var_0_0.setUnlockAutoShow(arg_30_0, arg_30_1)
-	arg_30_0._unlockShow = arg_30_1
+function AergusiDialogModel:setUnlockAutoShow(show)
+	self._unlockShow = show
 end
 
-function var_0_0.getUnlockAutoShow(arg_31_0)
-	local var_31_0 = AergusiModel.instance:getCurEpisode()
+function AergusiDialogModel:getUnlockAutoShow()
+	local episodeId = AergusiModel.instance:getCurEpisode()
+	local isPassed = AergusiModel.instance:isEpisodePassed(episodeId)
 
-	if AergusiModel.instance:isEpisodePassed(var_31_0) then
+	if isPassed then
 		return false
 	end
 
-	local var_31_1 = AergusiModel.instance:getUnlockAutoTipProcess()
+	local processes = AergusiModel.instance:getUnlockAutoTipProcess()
 
-	if var_31_1[1] == arg_31_0._curGroup and var_31_1[2] == arg_31_0._curStep then
+	if processes[1] == self._curGroup and processes[2] == self._curStep then
 		return true
 	end
 
-	return arg_31_0._unlockShow
+	return self._unlockShow
 end
 
-var_0_0.instance = var_0_0.New()
+AergusiDialogModel.instance = AergusiDialogModel.New()
 
-return var_0_0
+return AergusiDialogModel

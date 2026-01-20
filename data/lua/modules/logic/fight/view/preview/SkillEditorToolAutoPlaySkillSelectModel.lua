@@ -1,25 +1,29 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorToolAutoPlaySkillSelectModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorToolAutoPlaySkillSelectModel.lua
 
-local var_0_0 = class("SkillEditorToolAutoPlaySkillSelectModel", ListScrollModel)
+module("modules.logic.fight.view.preview.SkillEditorToolAutoPlaySkillSelectModel", package.seeall)
 
-function var_0_0.selectAll(arg_1_0)
-	arg_1_0._selectList = SkillEditorToolAutoPlaySkillModel.instance:getList()
+local SkillEditorToolAutoPlaySkillSelectModel = class("SkillEditorToolAutoPlaySkillSelectModel", ListScrollModel)
 
-	arg_1_0:setList(arg_1_0._selectList)
+function SkillEditorToolAutoPlaySkillSelectModel:selectAll()
+	local list = SkillEditorToolAutoPlaySkillModel.instance:getList()
+
+	self._selectList = list
+
+	self:setList(self._selectList)
 end
 
-function var_0_0.cancelSelectAll(arg_2_0)
-	if not arg_2_0._selectList or #arg_2_0._selectList == 0 then
+function SkillEditorToolAutoPlaySkillSelectModel:cancelSelectAll()
+	if not self._selectList or #self._selectList == 0 then
 		return
 	end
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._selectList) do
-		arg_2_0:remove(iter_2_1)
+	for index, mo in ipairs(self._selectList) do
+		self:remove(mo)
 	end
 
-	arg_2_0._selectList = {}
+	self._selectList = {}
 end
 
-var_0_0.instance = var_0_0.New()
+SkillEditorToolAutoPlaySkillSelectModel.instance = SkillEditorToolAutoPlaySkillSelectModel.New()
 
-return var_0_0
+return SkillEditorToolAutoPlaySkillSelectModel
